@@ -53,9 +53,6 @@ export class ScrollSection extends CanvasSectionObject {
 	}
 
 	public onInitialize (): void {
-		this.sectionProperties.mapPane = (<HTMLElement>(document.querySelectorAll('.leaflet-map-pane')[0]));
-		this.sectionProperties.defaultCursorStyle = this.sectionProperties.mapPane.style.cursor;
-
 		this.sectionProperties.previousDragDistance = null;
 
 		this.sectionProperties.scrollBarThickness = 6 * app.roundedDpiScale;
@@ -139,37 +136,27 @@ export class ScrollSection extends CanvasSectionObject {
 		app.activeDocument.activeView.scroll(e.x, e.y);
 	}
 
+	public cancelAutoScroll(): void {
+		clearInterval(this.autoScrollTimer);
+		this.autoScrollTimer = null;
+		this.map.isAutoScrolling = false;
+	}
+
 	// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 	public onScrollVelocity (e: any): void {
 		if (e.vx === 0 && e.vy === 0) {
-			clearInterval(this.autoScrollTimer);
-			this.autoScrollTimer = null;
-			this.map.isAutoScrolling = false;
+			this.cancelAutoScroll();
 		} else {
 			clearInterval(this.autoScrollTimer);
 			this.map.isAutoScrolling = true;
 			this.autoScrollTimer = setInterval(window.L.bind(function() {
 				this.onScrollBy({x: e.vx, y: e.vy});
-				// Unfortunately, dragging outside the map doesn't work for the map element.
-				// We will keep this until we remove leaflet.
-				if (window.L.Map.THIS.mouse
-				&& window.L.Map.THIS.mouse._mouseDown
-				&& this.containerObject.targetBoundSectionListContains(app.CSections.Tiles.name)
-				&& (<any>window).mode.isDesktop()
-				&& this.containerObject.isDraggingSomething()
-				&& window.L.Map.THIS._docLayer._docType === 'spreadsheet') {
-					var temp = [e.pos.x, e.pos.y];
-					var tempPos = [(this.isRTL() ? this.map._size.x - temp[0] : temp[0]) * app.dpiScale, temp[1] * app.dpiScale];
-					tempPos = [tempPos[0] + app.activeDocument.activeView.viewedRectangle.pX1, tempPos[1] + app.activeDocument.activeView.viewedRectangle.pY1];
-					tempPos = [Math.round(tempPos[0] * app.pixelsToTwips), Math.round(tempPos[1] * app.pixelsToTwips)];
-					window.L.Map.THIS._docLayer._postMouseEvent('move', tempPos[0], tempPos[1], 1, 1, 0);
-				}
 			}, this), 100);
 		}
 	}
 
 	// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-	public onHandleAutoScroll (e :any): void {
+	public onHandleAutoScroll (e: any): void {
 		var vx = 0;
 		var vy = 0;
 
@@ -462,11 +449,6 @@ export class ScrollSection extends CanvasSectionObject {
 		}
 
 		this.decreaseScrollBarThickness();
-
-		// just in case if we have blinking cursor visible
-		// we need to change cursor from default style
-		if (this.map._docLayer._cursorMarker)
-			this.map._docLayer._cursorMarker.setMouseCursor();
 	}
 
 	private hideVerticalScrollBar (): void {
@@ -479,11 +461,6 @@ export class ScrollSection extends CanvasSectionObject {
 		if (!(<any>window).mode.isDesktop() || app.map._docLayer._docType !== 'spreadsheet') { // On desktop, we don't want to hide the vertical scroll bar.
 			this.sectionProperties.drawVerticalScrollBar = false;
 		}
-
-		// just in case if we have blinking cursor visible
-		// we need to change cursor from default style
-		if (this.map._docLayer._cursorMarker)
-			this.map._docLayer._cursorMarker.setMouseCursor();
 	}
 
 	private showHorizontalScrollBar (): void {
@@ -547,9 +524,7 @@ export class ScrollSection extends CanvasSectionObject {
 		else this.hideVerticalScrollBar();
 
 		if (this.sectionProperties.mouseIsOnHorizontalScrollBar || this.sectionProperties.mouseIsOnVerticalScrollBar)
-			this.sectionProperties.mapPane.style.cursor = 'pointer';
-		else
-			this.sectionProperties.mapPane.style.cursor = this.sectionProperties.defaultCursorStyle;
+			this.context.canvas.style.cursor = 'pointer';
 	}
 
 	public onMouseLeave (): void {
@@ -847,23 +822,6 @@ export class ScrollSection extends CanvasSectionObject {
 			this.sectionProperties.pointerSyncWithHorizontalScrollBar = true; // Default.
 		}
 
-		// Unfortunately, dragging outside the map doesn't work for the map element.
-		// We will keep this until we remove leaflet.
-		else if (window.L.Map.THIS.mouse && window.L.Map.THIS.mouse._mouseDown
-			&& this.containerObject.targetBoundSectionListContains(app.CSections.Tiles.name)
-			&& (<any>window).mode.isDesktop()
-			&& this.containerObject.isDraggingSomething()
-			&& window.L.Map.THIS._docLayer._docType === 'spreadsheet') {
-
-			var temp = this.containerObject.getPositionOnMouseUp();
-			var tempPos = [temp[0] * app.dpiScale, temp[1] * app.dpiScale];
-			tempPos = [tempPos[0] + app.activeDocument.activeView.viewedRectangle.pX1, tempPos[1] + app.activeDocument.activeView.viewedRectangle.pY1];
-			tempPos = [Math.round(tempPos[0] * app.pixelsToTwips), Math.round(tempPos[1] * app.pixelsToTwips)];
-			this.onScrollVelocity({ vx: 0, vy: 0 }); // Cancel auto scrolling.
-			window.L.Map.THIS.mouse._mouseDown = false;
-			window.L.Map.THIS._docLayer._postMouseEvent('buttonup', tempPos[0], tempPos[1], 1, 1, 0);
-		}
-
 		this.sectionProperties.previousDragDistance = null;
 		this.onMouseMove(point, null, e);
 	}
@@ -901,7 +859,13 @@ export class ScrollSection extends CanvasSectionObject {
 	}
 
 	public onMouseWheel (point: cool.SimplePoint, delta: Array<number>, e: WheelEvent): void {
-		if (e.ctrlKey) return;
+		if (e.ctrlKey) {
+			e.preventDefault();
+			e.stopImmediatePropagation();
+			this.stopPropagating();
+			app.map.scrollHandler._onWheelScroll(e);
+			return;
+		}
 
 		this.map.fire('closepopups'); // close all popups when scrolling
 

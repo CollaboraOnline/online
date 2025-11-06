@@ -40,6 +40,7 @@
     "hr": "%SERVICE_ROOT%/browser/%VERSION%/l10n/ui-hr.json",
     "hsb": "%SERVICE_ROOT%/browser/%VERSION%/l10n/ui-hsb.json",
     "hu": "%SERVICE_ROOT%/browser/%VERSION%/l10n/ui-hu.json",
+    "hy": "%SERVICE_ROOT%/browser/%VERSION%/l10n/ui-hy.json",
     "id": "%SERVICE_ROOT%/browser/%VERSION%/l10n/ui-id.json",
     "is": "%SERVICE_ROOT%/browser/%VERSION%/l10n/ui-is.json",
     "it": "%SERVICE_ROOT%/browser/%VERSION%/l10n/ui-it.json",

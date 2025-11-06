@@ -71,6 +71,7 @@ interface JSBuilder {
 	_preventDocumentLosingFocusOnClick: (container: Element) => void;
 	_cleanText: (text: string) => string;
 	_expanderHandler: any; // FIXME: use handlers getter instead
+	_makeIdUnique: (id: string) => string;
 }
 
 // widget handler, returns true if child nodes should be still processed by the builder
@@ -97,6 +98,7 @@ interface DialogResponse {
 
 interface DialogJSON extends WidgetJSON {
 	dialogid: string; // unique id for a dialog type, not instance
+	collapsed?: boolean; // if dialog is in collapsed mode
 	responses?: Array<DialogResponse>;
 }
 
@@ -327,6 +329,7 @@ interface TreeWidgetJSON extends WidgetJSON {
 	entries: Array<TreeEntryJSON>;
 	headers: Array<TreeHeaderJSON>; // header columns
 	highlightTerm?: string; // what, if any, entries are we highlighting?
+	ignoreFocus?: boolean; // When true, does't focus to selected item automatically.
 }
 
 interface IconViewEntry {
@@ -351,6 +354,13 @@ interface EditWidgetJSON extends WidgetJSON {
 	password: boolean; // is password field
 	hidden: boolean; // is hidden, TODO: duplicate?
 	changedCallback: any; // callback  for 'change' event
+}
+
+// type: 'checkbox'
+interface CheckboxWidgetJSON extends WidgetJSON {
+	text: string;
+	checked?: boolean; // checkbox state
+	hidden?: boolean;
 }
 
 interface SeparatorWidgetJSON extends WidgetJSON {

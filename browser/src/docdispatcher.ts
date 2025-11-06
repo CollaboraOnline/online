@@ -262,6 +262,8 @@ class Dispatcher {
 			$('#toolbar-down').hide();
 			$('#showsearchbar').removeClass('over');
 			$('#toolbar-search').show();
+			if (!app.isReadOnly() && app.map.isReadOnlyMode())
+				$('#mobile-edit-button').hide();
 			window.L.DomUtil.get('search-input').focus();
 		};
 		this.actionsMap['hidesearchbar'] = () => {
@@ -704,6 +706,14 @@ class Dispatcher {
 			)
 				app.map.sendUnoCommand('.uno:TrackChanges?TrackChanges:bool=false');
 			else app.map.sendUnoCommand('.uno:TrackChangesInAllViews');
+		};
+
+		this.actionsMap['acceptTrackedChangeToNext'] = function () {
+			app.map.sendUnoCommand('.uno:AcceptTrackedChangeToNext');
+		};
+
+		this.actionsMap['rejectTrackedChangeToNext'] = function () {
+			app.map.sendUnoCommand('.uno:RejectTrackedChangeToNext');
 		};
 	}
 

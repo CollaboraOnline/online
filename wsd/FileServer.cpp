@@ -1773,8 +1773,10 @@ FileServerRequestHandler::ResourceAccessDetails FileServerRequestHandler::prepro
 
         std::string brandProductURL = ConfigUtil::getConfigValue<std::string>(config, "user_interface.brandProductURL", "");
         std::string brandProductName = ConfigUtil::getConfigValue<std::string>(config, "user_interface.brandProductName", "");
+        std::string logoUrl = ConfigUtil::getConfigValue<std::string>(config, "user_interface.logoURL", "");
         Poco::replaceInPlace(preprocess, std::string("%PRODUCT_BRANDING_NAME%"), brandProductName);
         Poco::replaceInPlace(preprocess, std::string("%PRODUCT_BRANDING_URL%"), brandProductURL);
+        Poco::replaceInPlace(preprocess, std::string("%LOGO_URL%"), logoUrl);
     #endif
 
     Poco::replaceInPlace(preprocess, std::string("%ENABLE_WELCOME_MSG%"), enableWelcomeMessage);
@@ -2203,7 +2205,21 @@ void FileServerRequestHandler::fetchSettingFile(const Poco::Net::HTTPRequest& re
     }
 
     Poco::URI dicUrl(fileUrl);
-    dicUrl.addQueryParameter("access_token", accessToken);
+    const auto& queryParams = dicUrl.getQueryParameters();
+    bool hasAccessToken = false;
+    for (const auto& param : queryParams)
+    {
+        if (param.first == "access_token")
+        {
+            hasAccessToken = true;
+            LOG_INF("File URL already contains access_token, skipping append");
+            break;
+        }
+    }
+    if (!hasAccessToken)
+    {
+        dicUrl.addQueryParameter("access_token", accessToken);
+    }
     if (noAuthHeader)
     {
         dicUrl.addQueryParameter("no_auth_header", "1");

@@ -31,8 +31,8 @@ class NotebookbarBase extends JSDialogComponent {
 
 	// when we show the UI
 	public onAdd() {
-		this.impl.create();
-		this.setupContainer(this.impl.container);
+		this.setupContainer(undefined);
+		this.impl.create(this.container);
 		if (this.builder) {
 			this.map.on(
 				'commandstatechanged',
@@ -66,7 +66,18 @@ class NotebookbarBase extends JSDialogComponent {
 	}
 
 	protected setupContainer(parentContainer?: HTMLElement) {
-		this.container = parentContainer;
+		// remove old toolbar
+		let toolbar = window.L.DomUtil.get('toolbar-up');
+		if (toolbar) toolbar.outerHTML = '';
+		// create toolbar from template
+		$('#toolbar-logo').after(this.map.toolbarUpTemplate.cloneNode(true));
+		toolbar = window.L.DomUtil.get('toolbar-up');
+
+		this.container = window.L.DomUtil.create(
+			'div',
+			'notebookbar-scroll-wrapper',
+			toolbar,
+		);
 	}
 
 	protected onJSUpdate(e: any) {
@@ -105,10 +116,6 @@ class NotebookbarBase extends JSDialogComponent {
 		this.impl?.reloadShortcutsBar();
 	}
 
-	public showNotebookbarButton(buttonId: string, show: boolean) {
-		this.impl?.showNotebookbarButton(buttonId, show);
-	}
-
 	public showNotebookbarCommand(commandId: string, show: boolean) {
 		this.impl?.showNotebookbarCommand(commandId, show);
 	}
@@ -133,12 +140,12 @@ class NotebookbarBase extends JSDialogComponent {
 
 	// customization
 
-	public showItem(id: string, show?: boolean) {
-		this.impl?.showItem(id /* no show used */);
+	public showItem(id: string, show?: boolean): boolean {
+		return this.impl?.showItem(id /* no show used */);
 	}
 
-	public hideItem(id: string) {
-		this.impl?.hideItem(id);
+	public hideItem(id: string): boolean {
+		return this.impl?.hideItem(id);
 	}
 }
 

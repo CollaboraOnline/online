@@ -22,6 +22,8 @@
 
 #include <chrono>
 
+using namespace std::literals;
+
 /// This is to test that: if a file initially fails to load for some transient
 /// reason, f.e. timeout, then a subsequent load where there is no such failure
 /// should succeed.
@@ -75,7 +77,7 @@ public:
         if (_getFileCount++ == 0)
         {
             TST_LOG("handleGetFileRequest: force timeout for 1st load\n");
-            std::this_thread::sleep_for(std::chrono::milliseconds(5000));
+            std::this_thread::sleep_for(5000ms);
             return true;
         }
         return WopiTestServer::handleGetFileRequest(request, socket);

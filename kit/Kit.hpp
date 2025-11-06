@@ -365,6 +365,9 @@ private:
                                         const std::string& backgroundTheme,
                                         const std::string& userPrivateInfo);
 
+    /// Returns true iff at least one session is loaded.
+    bool haveLoadedSessions() const;
+
 public:
     bool processInputEnabled() const;
 

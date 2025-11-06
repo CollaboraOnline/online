@@ -32,6 +32,7 @@
 
 #include <sstream>
 
+using namespace std::literals;
 using namespace Poco::Net;
 
 // Inside the WSD process
@@ -77,10 +78,10 @@ public:
 
         // Note that this is expected for both living and closed documents.
         // This failed when either case didn't add the custom header.
-        LOK_ASSERT_EQUAL(std::string("true"), httpResponse->get("X-COOL-Clipboard"));
+        LOK_ASSERT_EQUAL_STR("true", httpResponse->get("X-COOL-Clipboard"));
 
         // We should mark clipboard responses as non-cacheable.
-        LOK_ASSERT_EQUAL(std::string("no-cache"), httpResponse->get("Cache-Control"));
+        LOK_ASSERT_EQUAL_STR("no-cache", httpResponse->get("Cache-Control"));
 
         TST_LOG("getClipboard: sent request: " << clipPathAndQuery);
 
@@ -404,9 +405,9 @@ public:
         socket->asyncShutdown();
 
         LOK_ASSERT_MESSAGE("Expected successful disconnection of the WebSocket 2",
-                           socket2->waitForDisconnection(std::chrono::seconds(5)));
+                           socket2->waitForDisconnection(5s));
         LOK_ASSERT_MESSAGE("Expected successful disconnection of the WebSocket 0",
-                           socket->waitForDisconnection(std::chrono::seconds(5)));
+                           socket->waitForDisconnection(5s));
     }
 
     void postCloseTest()

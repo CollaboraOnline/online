@@ -9,9 +9,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-/// <reference path="./refs/globals.ts"/>
-/// <reference path="./helper/util.ts"/>
-/// <reference path="../src/app/Rectangle.ts"/>
+describe('Rectangle', function() {
 
 var assert = require('assert').strict;
 
@@ -361,4 +359,6 @@ describe('coordinate API tests', function () {
 
 	}); // coords.forEach
 
-}); // root describe
+}); // describe('coordinate API tests', function () {
+
+}); // root describe.

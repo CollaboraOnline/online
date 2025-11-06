@@ -136,7 +136,7 @@ void HTTPServerTest::testCoolGet()
         = http::get(_uri.toString(), pathAndQuery);
 
     LOK_ASSERT_EQUAL(http::StatusCode::OK, httpResponse->statusLine().statusCode());
-    LOK_ASSERT_EQUAL(std::string("text/html"), httpResponse->header().getContentType());
+    LOK_ASSERT_EQUAL_STR("text/html", httpResponse->header().getContentType());
 
     //FIXME: Replace with own URI parser.
     Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, pathAndQuery);
@@ -191,11 +191,11 @@ void HTTPServerTest::testCoolPostPoco()
 
                 Poco::URI uri(split[j]);
                 TST_LOG("URL - " << split[j]);
-                LOK_ASSERT_EQUAL(std::string(""), uri.getUserInfo());
+                LOK_ASSERT_EQUAL_STR("", uri.getUserInfo());
                 LOK_ASSERT(uri.getPath() == std::string("") ||
                            uri.getPath() == std::string("*"));
-                LOK_ASSERT_EQUAL(std::string(""), uri.getQuery());
-                LOK_ASSERT_EQUAL(std::string(""), uri.getFragment());
+                LOK_ASSERT_EQUAL_STR("", uri.getQuery());
+                LOK_ASSERT_EQUAL_STR("", uri.getFragment());
             }
         }
     }
@@ -252,7 +252,7 @@ void HTTPServerTest::testCoolPost()
         httpSession->syncRequest(httpRequest, http::Session::getDefaultTimeout());
 
     LOK_ASSERT_EQUAL(http::StatusCode::OK, httpResponse->statusLine().statusCode());
-    LOK_ASSERT_EQUAL(std::string("text/html"), httpResponse->header().getContentType());
+    LOK_ASSERT_EQUAL_STR("text/html", httpResponse->header().getContentType());
 
     const std::string& html = httpResponse->getBody();
     fprintf(stderr, "%s\n", html.c_str());

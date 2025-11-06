@@ -661,12 +661,12 @@ namespace Util
     /// Format: Thu Jan 27 03:45:27.123 2022
     std::string getSystemClockAsString(const std::chrono::system_clock::time_point time)
     {
-        const auto ms = std::chrono::time_point_cast<std::chrono::milliseconds>(time);
+        const auto ms = std::chrono::round<std::chrono::milliseconds>(time);
         const std::time_t t = std::chrono::system_clock::to_time_t(ms);
-        const int msFraction =
-            std::chrono::duration_cast<std::chrono::milliseconds>(time.time_since_epoch())
-                .count() %
-            1000;
+        // Round to nearest millisecond, rather than truncating with duration_cast().
+        const auto msSinceEpoch =
+            std::chrono::round<std::chrono::milliseconds>(time.time_since_epoch());
+        const int msFraction = msSinceEpoch.count() % 1000;
 
         std::tm tm;
         time_t_to_localtime(t, tm);

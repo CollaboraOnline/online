@@ -59,9 +59,11 @@ cmake_list= \
             ../wsd/ClientSession.cpp \
             ../wsd/DocumentBroker.cpp \
             ../wsd/COOLWSD.cpp \
+            ../wsd/dumpWsdState.cpp \
             ../wsd/ClientRequestDispatcher.cpp \
             ../wsd/RequestDetails.cpp \
             ../wsd/RequestVettingStation.cpp \
+            ../wsd/SlideCache.cpp \
             ../wsd/Storage.cpp \
             ../wsd/TileCache.cpp \
             ../wsd/coolwsd-fork.cpp

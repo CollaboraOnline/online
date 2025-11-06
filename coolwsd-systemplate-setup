@@ -142,7 +142,7 @@ find $LOCALBASE/share -name '*.pcf.gz' | xargs rm -f
 
 # Same for /usr/local/share/fonts
 
-if test "$LOCALBASE" != "usr/local/"; then
+if test -d /${LOCALBASE}/local/share/fonts ; then
     mkdir -p $LOCALBASE/local/share || exit 1
     ${CP} -r -p -L /${LOCALBASE}/local/share/fonts $LOCALBASE/local/share
 

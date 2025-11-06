@@ -13,7 +13,7 @@
  * Control.ColumnHeader
  */
 
-/* global _UNO app UNOModifier */
+/* global _UNO app */
 namespace cool {
 
 export class ColumnHeader extends Header {
@@ -27,7 +27,6 @@ export class ColumnHeader extends Header {
 	cursor: string = 'col-resize';
 
 	_current: number;
-	_resizeHandleSize: number;
 	_selection: SelectionRange;
 
 	constructor(cursor?: string) {
@@ -41,22 +40,14 @@ export class ColumnHeader extends Header {
 		this._map = window.L.Map.THIS;
 		this._isColumn = true;
 		this._current = -1;
-		this._resizeHandleSize = 15 * app.dpiScale;
+		this.resizeHandleSize = 15 * app.dpiScale;
 		this._selection = {start: -1, end: -1};
 		this._mouseOverEntry = null;
 		this._lastMouseOverIndex = undefined;
 		this._hitResizeArea = false;
 		this.sectionProperties.docLayer = this._map._docLayer;
 
-		this._selectionBackgroundGradient = [ '#3465A4', '#729FCF', '#004586' ];
-
-		this._map.on('move zoomchanged sheetgeometrychanged splitposchanged', this._updateCanvas, this);
-		this._map.on('darkmodechanged', this._reInitRowColumnHeaderStylesAfterModeChange, this);
-
-		this._initHeaderEntryStyles('spreadsheet-header-column');
-		this._initHeaderEntryHoverStyles('spreadsheet-header-column-hover');
-		this._initHeaderEntrySelectedStyles('spreadsheet-header-column-selected');
-		this._initHeaderEntryResizeStyles('spreadsheet-header-column-resize');
+		super.onInitialize();
 
 		this._menuItem = {
 			'.uno:InsertColumnsBefore': {
@@ -105,6 +96,16 @@ export class ColumnHeader extends Header {
 		this._headerInfo = new cool.HeaderInfo(this._map, true /* isCol */);
 	}
 
+	isMouseOverResizeArea(start: number, end:number, position: number, entryIsCurrent: boolean) : boolean {
+		const isRTL = this.isCalcRTL();
+		// NOTE: From a geometric perspective resizeAreaStart is really "resizeAreaEnd" in RTL case.
+		let resizeAreaStart = isRTL ? Math.min(start + this.borderResizeHandle * app.dpiScale, end) : Math.max(start, end - this.borderResizeHandle * app.dpiScale);
+		if (entryIsCurrent || (window as any).mode.isMobile()) {
+			resizeAreaStart = isRTL ? start + this.resizeHandleSize : end - this.resizeHandleSize;
+		}
+		return isRTL ? (position < resizeAreaStart) : (position > resizeAreaStart);
+	}
+
 	drawHeaderEntry (entry: HeaderEntryData): void {
 		if (!entry)
 			return;
@@ -133,7 +134,7 @@ export class ColumnHeader extends Header {
 		this.context.fillRect(startX, 0, entry.size, this.size[1]);
 
 		// draw resize handle
-		const handleSize = this._resizeHandleSize;
+		const handleSize = this.resizeHandleSize;
 		if (entry.isCurrent && entry.size > 2 * handleSize && !this.inResize()) {
 			const center = isRTL ? startX + handleSize / 2 : startX + entry.size - handleSize / 2;
 			const y = 2 * app.dpiScale;
@@ -201,10 +202,10 @@ export class ColumnHeader extends Header {
 
 		let modifier = 0;
 		if (e.shiftKey) {
-			modifier += UNOModifier.SHIFT;
+			modifier += app.UNOModifier.SHIFT;
 		}
 		if (e.ctrlKey) {
-			modifier += UNOModifier.CTRL;
+			modifier += app.UNOModifier.CTRL;
 		}
 
 		this._selectColumn(col, modifier);
@@ -276,13 +277,17 @@ export class ColumnHeader extends Header {
 	setOptimalWidthAuto(): void {
 		if (this._mouseOverEntry) {
 			const extra = {
-				aExtraHeight: {
+				aExtraWidth: {
 					type: 'unsigned short',
-					value: 0
+					value: 200
+				},
+				Column: {
+					type: 'unsigned short',
+					value: this._mouseOverEntry.index + 1 // 1-based
 				}
 			};
 
-			this._map.sendUnoCommand('.uno:SetOptimalColumnWidthDirect', extra);
+			this._map.sendUnoCommand('.uno:SetOptimalColumnWidth', extra);
 		}
 	}
 

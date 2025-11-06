@@ -81,6 +81,7 @@ class TreeViewControl {
 	readonly PAGE_ENTRY_PREFIX = '-$#~';
 	readonly PAGE_ENTRY_SUFFIX = '~#$-';
 	readonly PAGE_DIVIDER_ROW_CLASS = 'page-divider-row';
+	_ignoreFocus: boolean = false;
 
 	constructor(data: TreeWidgetJSON, builder: JSBuilder) {
 		this._container = window.L.DomUtil.create(
@@ -91,6 +92,7 @@ class TreeViewControl {
 		this._rows = new Map<string, HTMLElement>();
 		if (data.labelledBy)
 			this._container.setAttribute('aria-labelledby', data.labelledBy);
+		if (data.ignoreFocus !== undefined) this._ignoreFocus = data.ignoreFocus;
 	}
 
 	get Container() {
@@ -677,7 +679,7 @@ class TreeViewControl {
 		level: number,
 		selectionElement: HTMLInputElement,
 	) {
-		let td, expander, span, text, img, icon, iconId, iconName, link, innerText;
+		let td, expander, span, text, img;
 
 		const rowElements = [];
 
@@ -784,7 +786,7 @@ class TreeViewControl {
 				doubleClickFunction,
 			);
 
-			this.setupEntryKeyEvent(
+			this.setupEntryKeyboardEvents(
 				tr,
 				entry,
 				selectionElement,
@@ -872,7 +874,7 @@ class TreeViewControl {
 		}
 	}
 
-	setupEntryKeyEvent(
+	setupEntryKeyboardEvents(
 		tr: HTMLElement,
 		entry: TreeEntryJSON,
 		selectionElement: HTMLInputElement,
@@ -882,22 +884,37 @@ class TreeViewControl {
 		if (entry.enabled === false) return;
 
 		tr.addEventListener('keydown', (event) => {
+			let preventDef = false;
+
 			if (event.key === ' ' && expander) {
 				expander.click();
-				tr.focus();
-				event.preventDefault();
-				event.stopPropagation();
+				preventDef = true;
 			} else if (event.key === 'Enter' || event.key === ' ') {
 				clickFunction(event);
 				if (selectionElement) selectionElement.click();
 				if (expander) {
 					expander.click();
 				}
-				tr.focus();
-				event.preventDefault();
-				event.stopPropagation();
+				preventDef = true;
+			} else if (event.key === 'ArrowLeft') {
+				// Always collapse if expanded
+				if (expander && !window.L.DomUtil.hasClass(tr, 'collapsed')) {
+					expander.click();
+					preventDef = true;
+				}
+			} else if (event.key === 'ArrowRight') {
+				// Always expand if collapsed
+				if (expander && window.L.DomUtil.hasClass(tr, 'collapsed')) {
+					expander.click();
+					preventDef = true;
+				}
 			} else if (event.key === 'Tab') {
 				if (!window.L.DomUtil.hasClass(tr, 'selected')) this.unselectEntry(tr); // remove tabIndex
+			}
+
+			if (preventDef) {
+				event.preventDefault();
+				event.stopPropagation();
 			}
 		});
 	}
@@ -940,7 +957,8 @@ class TreeViewControl {
 		window.L.DomUtil.addClass(span, 'selected');
 		span.setAttribute('aria-selected', 'true');
 		span.tabIndex = 0;
-		span.focus();
+		if (!this._ignoreFocus) span.focus();
+
 		if (checkbox) checkbox.removeAttribute('tabindex');
 	}
 
@@ -1264,6 +1282,31 @@ class TreeViewControl {
 				`.ui-treeview-entry:not(.${this.PAGE_DIVIDER_ROW_CLASS})`,
 			);
 			this.handleKeyEvent(event, listElements, builder, data);
+		});
+	}
+
+	setupFocusOutHandler() {
+		this._container.addEventListener('focusout', (event) => {
+			app.layoutingService.appendLayoutingTask(() => {
+				const activeElement = document.activeElement as HTMLElement;
+				const isFocusInTreeView =
+					activeElement && this._container.contains(activeElement);
+
+				if (!isFocusInTreeView) {
+					const listElements = this._container.querySelectorAll(
+						`.ui-treeview-entry:not(.${this.PAGE_DIVIDER_ROW_CLASS})`,
+					);
+					this.restoreInitialTabIndexes(
+						Array.from(listElements) as Array<HTMLElement>,
+					);
+				}
+			});
+		});
+	}
+
+	restoreInitialTabIndexes(listElements: Array<HTMLElement>) {
+		listElements.forEach((entry: HTMLElement) => {
+			entry.tabIndex = 0;
 		});
 	}
 
@@ -1685,8 +1728,14 @@ class TreeViewControl {
 		(this._container as any).highlightEntries =
 			this.highlightEntries.bind(this);
 
+		// Prevent grab_focus(in executeActionImpl) from focusing the container
+		(this._container as any).onFocus = () => {
+			// no-op: focus is already on the correct row
+		};
+
 		this.setupDragAndDrop(data, builder);
 		this.setupKeyEvents(data, builder);
+		this.setupFocusOutHandler();
 
 		if (this._isRealTree) {
 			this._container.setAttribute('role', 'treegrid');

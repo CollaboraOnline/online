@@ -128,11 +128,9 @@ window.L.Map = window.L.Evented.extend({
 		this.addHandler('keyboard', window.L.Map.Keyboard);
 		this.addHandler('dragging', window.L.Map.Drag);
 		this.dragging.disable(); // FIXME: before unification, this was only called when on a touch device or in a mobile cypress test
-		// It would be better to split dragging.disable into a touch version and a mouse version but this looks like it will require a major rework of its own...
-		this.addHandler('mouse', window.L.Map.Mouse);
+
 		this.addHandler('scrollHandler', window.L.Map.Scroll);
 		this.addHandler('doubleClickZoom', window.L.Map.DoubleClickZoom);
-		this.addHandler('touchGesture', window.L.Map.TouchGesture);
 		this.dragging._draggable._manualDrag = window.touch.isTouchEvent;
 
 		if (this.options.imagePath) {
@@ -144,11 +142,6 @@ window.L.Map = window.L.Evented.extend({
 		this._progressBar = window.L.progressOverlay(new cool.Point.toPoint(150, 25));
 
 		this._debug = new app.DebugManager(this);
-		this.on('docloaded', function() {
-			if (this.options.debug && !this._debug.debugOn) {
-				this._debug.toggle();
-			}
-		});
 
 		this.on('modificationindicatorinitialized', function() {
 			this._modIndicatorInitialized = true;
@@ -280,6 +273,9 @@ window.L.Map = window.L.Evented.extend({
 		});
 
 		this.on('docloaded', function(e) {
+			if (this.options.debug && !this._debug.debugOn)
+				this._debug.toggle();
+
 			this._docLoaded = e.status;
 			if (this._docLoaded) {
 				app.idleHandler.notifyActive();
@@ -294,6 +290,7 @@ window.L.Map = window.L.Evented.extend({
 				}
 
 				app.activeDocument.activeView.sendClientVisibleArea(true);
+				app.serverConnectionService.onDocumentLoaded();
 			} else if (this._docLayer && app.sectionContainer) {
 				// remove the comments and changes
 				var commentSection = app.sectionContainer.getSectionWithName(app.CSections.CommentList.name);
@@ -825,17 +822,12 @@ window.L.Map = window.L.Evented.extend({
 	invalidateSize: function (debounceMoveend, oldSize) {
 		if (!this._loaded) { return this; }
 
-		if (!oldSize)
-			oldSize = this.getSize();
-
+		if (!oldSize) oldSize = this.getSize();
 		this._sizeChanged = true;
+		const newSize = this.getSize();
 
-		var newSize = this.getSize(),
-		    oldCenter = oldSize.divideBy(2).round(),
-		    newCenter = newSize.divideBy(2).round(),
-		    offset = oldCenter.subtract(newCenter);
-
-		if (!offset.x && !offset.y) { return this; }
+		if (oldSize.x === newSize.x && oldSize.y === newSize.y)
+			return this;
 
 		this.fire('move');
 
@@ -867,6 +859,9 @@ window.L.Map = window.L.Evented.extend({
 		var handler = this[name] = new HandlerClass(this);
 
 		this._handlers.push(handler);
+
+		if (name === 'scrollHandler')
+			this.scrollHandler = handler; // Reference for external use.
 
 		if (this.options[name]) {
 			handler.enable();

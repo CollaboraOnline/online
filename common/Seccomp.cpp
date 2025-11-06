@@ -272,7 +272,8 @@ bool lockdown([[maybe_unused]] Type type)
 
 namespace Rlimit {
 
-void setRLimit(rlim_t confLim, int resource, const std::string &resourceText, const std::string &unitText)
+void setRLimit(rlim_t confLim, int resource, const std::string& resourceText,
+               const std::string& unitText)
 {
     rlim_t lim = confLim;
     if (lim <= 0)
@@ -295,10 +296,24 @@ void setRLimit(rlim_t confLim, int resource, const std::string &resourceText, co
             LOG_INF(resourceText << " is " << setLimTextWithUnit << " after setting it to " << limTextWithUnit << '.');
         }
         else
-            LOG_SYS("Failed to get " << resourceText << '.');
+            LOG_SYS("Failed to get " << resourceText << " after trying to set it to "
+                                     << limTextWithUnit);
     }
     else
-        LOG_INF("Ignored setting " << resourceText << " to " << limTextWithUnit << '.');
+    {
+        rlimit rlim = { 0, 0 };
+        if (getrlimit(resource, &rlim) == 0)
+        {
+            const std::string curLimTextWithUnit(
+                (rlim.rlim_max == RLIM_INFINITY) ? "unlimited"
+                                                 : std::to_string(rlim.rlim_max) + ' ' + unitText);
+            LOG_INF("Ignored setting " << resourceText << " to " << limTextWithUnit
+                                       << ", current limit is " << curLimTextWithUnit);
+        }
+        else
+            LOG_SYS("Failed to get " << resourceText << " while ignoring to set it to "
+                                     << limTextWithUnit);
+    }
 }
 
 bool handleSetrlimitCommand(const StringVector& tokens)

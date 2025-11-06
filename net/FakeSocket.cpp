@@ -343,20 +343,22 @@ void fakeSocketWaitAny(int timeoutUs)
 
     std::unique_lock<std::mutex> lock(theMutex);
 
-    // This check must be run under theMutex taken, so that we
-    // don't enter wait()/wait_until() if we've got new events
+    // Use fakeSocketHasAnyPendingActivityGlobal as wait predicate,
+    // so that we:
+    // a) don't enter wait()/wait_until() if we've got new events
     // that we might have missed since the last poll()
+    // b) ignore spurious wakeups
     if (fakeSocketHasAnyPendingActivityGlobal())
         return;
 
     if (timeoutUs < 0)
     {
-        theCV.wait(lock);
+        theCV.wait(lock, [](){ return fakeSocketHasAnyPendingActivityGlobal(); });
         return;
     }
 
     auto const deadline = std::chrono::steady_clock::now() + std::chrono::microseconds(timeoutUs);
-    theCV.wait_until(lock, deadline);
+    theCV.wait_until(lock, deadline, [](){ return fakeSocketHasAnyPendingActivityGlobal(); });
 }
 
 int fakeSocketPoll(struct pollfd *pollfds, int nfds, int timeout)

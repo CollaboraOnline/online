@@ -26,6 +26,8 @@
 #include <Poco/Net/HTTPRequest.h>
 #include <Poco/Util/LayeredConfiguration.h>
 
+using namespace std::literals;
+
 /// Test slow saving/uploading.
 /// We modify the document, save, and immediately
 /// modify again followed by closing the connection.
@@ -56,7 +58,7 @@ public:
         , _inputCount(0)
     {
         // We need more time than the default.
-        setTimeout(std::chrono::minutes(10));
+        setTimeout(10min);
     }
 
     std::unique_ptr<http::Response>
@@ -66,9 +68,9 @@ public:
         LOK_ASSERT_STATE(_phase, Phase::WaitPutFile);
 
         // Triggered while closing.
-        LOK_ASSERT_EQUAL(std::string("false"), request.get("X-COOL-WOPI-IsAutosave"));
+        LOK_ASSERT_EQUAL_STR("false", request.get("X-COOL-WOPI-IsAutosave"));
 
-        LOK_ASSERT_EQUAL(std::string("true"), request.get("X-COOL-WOPI-IsModifiedByUser"));
+        LOK_ASSERT_EQUAL_STR("true", request.get("X-COOL-WOPI-IsModifiedByUser"));
 
         passTest("Document uploaded on closing as expected.");
         return nullptr;
@@ -166,7 +168,7 @@ public:
         , _uploadCount(0)
     {
         // We need more time than the default.
-        setTimeout(std::chrono::minutes(2));
+        setTimeout(2min);
     }
 
     std::unique_ptr<http::Response>
@@ -175,18 +177,18 @@ public:
         ++_uploadCount;
         TST_LOG("PutFile #" << _uploadCount);
 
-        LOK_ASSERT_EQUAL(std::string("false"), request.get("X-COOL-WOPI-IsAutosave"));
-        LOK_ASSERT_EQUAL(std::string("false"), request.get("X-COOL-WOPI-IsExitSave"));
+        LOK_ASSERT_EQUAL_STR("false", request.get("X-COOL-WOPI-IsAutosave"));
+        LOK_ASSERT_EQUAL_STR("false", request.get("X-COOL-WOPI-IsExitSave"));
 
         if (_phase == Phase::WaitPutFile)
         {
-            LOK_ASSERT_EQUAL(std::string("true"), request.get("X-COOL-WOPI-IsModifiedByUser"));
+            LOK_ASSERT_EQUAL_STR("true", request.get("X-COOL-WOPI-IsModifiedByUser"));
             LOK_ASSERT_EQUAL_MESSAGE("Expected to be in Phase::WaitPutFile", 1, _uploadCount);
             TRANSITION_STATE(_phase, Phase::Done);
         }
         else
         {
-            LOK_ASSERT_EQUAL(std::string("false"), request.get("X-COOL-WOPI-IsModifiedByUser"));
+            LOK_ASSERT_EQUAL_STR("false", request.get("X-COOL-WOPI-IsModifiedByUser"));
             LOK_ASSERT_STATE(_phase, Phase::Done);
             // LOK_ASSERT_EQUAL_MESSAGE("Expected to be in Phase::WaitPutFile", 2, _uploadCount);
         }
@@ -250,7 +252,7 @@ public:
             break;
             case Phase::Done:
             {
-                if (_stopwatch.elapsed(std::chrono::minutes(1)))
+                if (_stopwatch.elapsed(1min))
                 {
                     passTest("No unexpected conditions met");
                 }

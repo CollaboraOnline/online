@@ -266,7 +266,7 @@ class LOUtil {
 			closemobile: 'closedocmobile',
 			'file-saveas': 'saveas',
 			'home-search': 'recsearch',
-			searchdialog3finitialfocusreplace3abool3dtrue: 'searchdialog',
+			searchdialog3finitialfocusreplace3abool3dtrue: 'searchreplace',
 			'addmb-menu': 'ok',
 			closetablet: 'view',
 			defineprintarea: 'menuprintranges',
@@ -476,6 +476,8 @@ class LOUtil {
 			graphicfiltersharpen: 'graphicfiltersharpen',
 			graphicfiltersobel: 'graphicfiltersobel',
 			effects: 'pictureeffectsmenu',
+			selectsheetview: 'selecttable',
+			exitsheetview: 'delete',
 		};
 		if (iconURLAliases[cleanName]) {
 			cleanName = iconURLAliases[cleanName];

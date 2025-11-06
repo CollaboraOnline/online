@@ -12,10 +12,9 @@
 /*
  */
 
-/* global _UNO app UNOModifier */
+/* global _UNO app */
 
 declare var _UNO: any;
-declare var UNOModifier: any;
 
 namespace cool {
 
@@ -30,7 +29,6 @@ export class RowHeader extends cool.Header {
 	cursor: string = 'row-resize';
 
 	_current: number;
-	_resizeHandleSize: number;
 	_selection: SelectionRange;
 
 	constructor(cursor?: string) {
@@ -44,22 +42,14 @@ export class RowHeader extends cool.Header {
 		this._map = window.L.Map.THIS;
 		this._isColumn = false;
 		this._current = -1;
-		this._resizeHandleSize = 15 * app.dpiScale;
+		this.resizeHandleSize = 15 * app.dpiScale;
 		this._selection = {start: -1, end: -1};
 		this._mouseOverEntry = null;
 		this._lastMouseOverIndex = undefined;
 		this._hitResizeArea = false;
 		this.sectionProperties.docLayer = this._map._docLayer;
 
-		this._selectionBackgroundGradient = [ '#3465A4', '#729FCF', '#004586' ];
-
-		this._map.on('move zoomchanged sheetgeometrychanged splitposchanged', this._updateCanvas, this);
-		this._map.on('darkmodechanged', this._reInitRowColumnHeaderStylesAfterModeChange, this);
-
-		this._initHeaderEntryStyles('spreadsheet-header-row');
-		this._initHeaderEntryHoverStyles('spreadsheet-header-row-hover');
-		this._initHeaderEntrySelectedStyles('spreadsheet-header-row-selected');
-		this._initHeaderEntryResizeStyles('spreadsheet-header-row-resize');
+		super.onInitialize();
 
 		this._menuItem = {
 			'.uno:InsertRowsBefore': {
@@ -108,6 +98,14 @@ export class RowHeader extends cool.Header {
 		this._headerInfo = new cool.HeaderInfo(this._map, false /* isCol */);
 	}
 
+	isMouseOverResizeArea(start: number, end:number, position: number, entryIsCurrent: boolean) : boolean {
+		let resizeAreaStart = Math.max(start, end - this.borderResizeHandle * app.dpiScale);
+		if (entryIsCurrent || (window as any).mode.isMobile()) {
+			resizeAreaStart =  end - this.resizeHandleSize;
+		}
+		return position > resizeAreaStart;
+	}
+
 	drawHeaderEntry (entry: HeaderEntryData): void {
 		if (!entry)
 			return;
@@ -135,7 +133,7 @@ export class RowHeader extends cool.Header {
 		this.context.fillRect(0, startY, this.size[0], entry.size);
 
 		// draw resize handle
-		const handleSize = this._resizeHandleSize;
+		const handleSize = this.resizeHandleSize;
 		if (entry.isCurrent && entry.size > 2 * handleSize && !this.inResize()) {
 			const center = startY + entry.size - handleSize / 2;
 			const x = 2 * app.dpiScale;
@@ -196,10 +194,10 @@ export class RowHeader extends cool.Header {
 
 		let modifier = 0;
 		if (e.shiftKey) {
-			modifier += UNOModifier.SHIFT;
+			modifier += app.UNOModifier.SHIFT;
 		}
 		if (e.ctrlKey) {
-			modifier += UNOModifier.CTRL;
+			modifier += app.UNOModifier.CTRL;
 		}
 
 		this._selectRow(row, modifier);

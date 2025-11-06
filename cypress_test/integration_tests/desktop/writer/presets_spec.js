@@ -20,7 +20,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Preset tests.', function()
 		ceHelper.type('Flu');
 
 		// F3
-		cy.get('@clipboard').trigger('keydown', { key: "F3", code: "F3", which: 114 })
+		cy.get('@clipboard').trigger('keydown', { key: "F3", code: "F3", which: 114, force: true })
 
 		writerHelper.selectAllTextOfDoc();
 		helper.copy();
@@ -49,7 +49,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Preset tests.', function()
 		ceHelper.type('Cold');
 
 		// F3
-		cy.get('@clipboard').trigger('keydown', { key: "F3", code: "F3", which: 114 })
+		cy.get('@clipboard').trigger('keydown', { key: "F3", code: "F3", which: 114, force: true })
 
 		writerHelper.selectAllTextOfDoc();
 		helper.copy();

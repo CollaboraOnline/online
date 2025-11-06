@@ -5,12 +5,6 @@ var mobileHelper = require('../../common/mobile_helper');
 
 describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Delete Objects', function() {
 
-	var eventOptions = {
-		force: true,
-		button: 0,
-		pointerType: 'mouse'
-	};
-
 	beforeEach(function() {
 		helper.setupAndLoadDocument('impress/delete_objects.odp');
 
@@ -19,13 +13,16 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Delete Objects', function()
 
 	it('Delete Text', function() {
 		helper.setDummyClipboardForCopy();
-		cy.cGet('.leaflet-layer').dblclick('center');
+		cy.cGet('#document-container').dblclick('center');
 
-		cy.wait(100);
+		cy.wait(500);
 
 		helper.typeIntoDocument('text');
+		cy.wait(500);
 
 		helper.selectAllText();
+		cy.wait(500);
+
 		helper.copy();
 
 		helper.expectTextForClipboard('text');
@@ -57,10 +54,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Delete Objects', function()
 
 		//deletion
 
-		cy.cGet('.leaflet-layer')
-			.trigger('pointerdown', eventOptions)
-			.wait(1000)
-			.trigger('pointerup', eventOptions);
+		cy.cGet('#document-container').trigger('contextmenu', 'center');
 
 		cy.cGet('body').contains('.menu-entry-with-icon', 'Delete')
 			.should('be.visible').click();
@@ -88,10 +82,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Delete Objects', function()
 			.should('exist');
 
 		//delete
-		cy.cGet('.leaflet-layer')
-			.trigger('pointerdown', eventOptions)
-			.wait(1000)
-			.trigger('pointerup', eventOptions);
+		cy.cGet('#document-container').trigger('contextmenu', 'center');
 
 		cy.cGet('.menu-entry-icon.delete').parent()
 			.click();
@@ -116,10 +107,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Delete Objects', function()
 		cy.cGet('#test-div-shapeHandlesSection')
 			.should('exist');
 
-		cy.cGet('.leaflet-layer')
-			.trigger('pointerdown', eventOptions)
-			.wait(1000)
-			.trigger('pointerup', eventOptions);
+		cy.cGet('#document-container').trigger('contextmenu', 'center');
 
 		cy.cGet('body').contains('.menu-entry-with-icon', 'Delete')
 			.should('be.visible').click();
@@ -137,10 +125,12 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Delete Objects', function()
 		cy.cGet('#test-div-shapeHandlesSection')
 			.should('exist');
 
-		cy.cGet('.leaflet-layer')
-			.trigger('pointerdown', eventOptions)
-			.wait(1000)
-			.trigger('pointerup', eventOptions);
+		cy.cGet('#test-div-shape-handle-1').then(function(items) {
+			const rect = items[0].getBoundingClientRect();
+			const x = rect.left + rect.width / 2;
+			const y = rect.bottom + 30;
+			cy.cGet('#document-canvas').trigger('contextmenu', x, y);
+		});
 
 		cy.cGet('body').contains('.menu-entry-with-icon', 'Delete')
 			.should('be.visible').click();

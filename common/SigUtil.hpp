@@ -54,6 +54,9 @@ namespace SigUtil
     /// Add a message on a view to a round-robin buffer to be dumped on fatal signal
     void addActivity(const std::string &id, const std::string &message);
 
+    /// Dump recent activity to the signal log
+    void signalLogActivity();
+
     /// Called to flag that we are running in unattended mode, not interactive.
     /// In unattended mode we know there is no one to attach a debugger on
     /// faulting, so we do not wait unnecessarily. Otherwise, we wait for 60s.

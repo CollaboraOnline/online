@@ -67,12 +67,9 @@ function onDemandRenderer(
 			observer.observe(placeholder);
 		}
 	};
-	if (TileManager.isReceivedFirstTile()) {
-		setupOnDemandRenderer();
-	} else {
-		// No first tile yet, delay sending the render request.
-		TileManager.appendAfterFirstTileTask(setupOnDemandRenderer);
-	}
+
+	// If no first tile yet, delay sending the render request.
+	TileManager.appendAfterFirstTileTask(setupOnDemandRenderer);
 }
 
 JSDialog.OnDemandRenderer = onDemandRenderer;

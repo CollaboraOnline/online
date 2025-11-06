@@ -313,7 +313,7 @@ window.L.Clipboard = window.L.Class.extend({
 	_dataTransferDownloadAndPasteAsync: async function(src, fallbackHtml) {
 		// FIXME: add a timestamp in the links (?) ignore old / un-responsive servers (?)
 		let response;
-
+		const errorMessage = _('Failed to download clipboard, please re-copy');
 		try {
 			response = await this._doAsyncDownload(
 				'GET', src, null, false,
@@ -326,7 +326,8 @@ window.L.Clipboard = window.L.Class.extend({
 			if (this._isStubHtml(fallbackHtml))
 			{
 				// Let the user know they haven't really copied document content.
-				this._map.uiManager.showInfoModal('data transfer warning', '', _('Failed to download clipboard, please re-copy'));
+				window.app.console.error('Clipboard: failed to download - ' + errorMessage);
+				this._map.uiManager.showInfoModal('data-transfer-warning', '', errorMessage);
 				return;
 			}
 
@@ -357,17 +358,22 @@ window.L.Clipboard = window.L.Class.extend({
 		var formData = new FormData();
 		formData.append('data', response, 'clipboard');
 
-		await this._doAsyncDownload(
-			'POST', this.getMetaURL(), formData, false,
-			function(progress) { return 50 + progress/2; }
-		);
+		try {
+			await this._doAsyncDownload(
+				'POST', this.getMetaURL(), formData, false,
+				function(progress) { return 50 + progress/2; }
+			);
 
-		if (this._checkAndDisablePasteSpecial()) {
-			window.app.console.log('up-load done, now paste special');
-			app.socket.sendMessage('uno .uno:PasteSpecial');
-		} else {
-			window.app.console.log('up-load done, now paste');
-			app.socket.sendMessage('uno .uno:Paste');
+			if (this._checkAndDisablePasteSpecial()) {
+				window.app.console.log('up-load done, now paste special');
+				app.socket.sendMessage('uno .uno:PasteSpecial');
+			} else {
+				window.app.console.log('up-load done, now paste');
+				app.socket.sendMessage('uno .uno:Paste');
+			}
+		} catch (_error) {
+			window.app.console.error('Clipboard: failed to download - error');
+			this._map.uiManager.showInfoModal('data-transfer-warning', '', errorMessage);
 		}
 	},
 
@@ -406,7 +412,7 @@ window.L.Clipboard = window.L.Class.extend({
 		return true;
 	},
 
-	// Returns true if it finished synchronously, and false if it have started an async operation
+	// Returns true if it finished synchronously, and false if it has started an async operation
 	// that will likely end at a later time (required to avoid closing progress bar in paste(ev))
 	// FIXME: This comment is a lie if dataTransferToDocumentFallback is called, as it calls _doAsyncDownload
 	dataTransferToDocument: function (dataTransfer, preferInternal, htmlText, usePasteKeyEvent) {
@@ -816,7 +822,8 @@ window.L.Clipboard = window.L.Class.extend({
 	// Gets status of a copy/paste command from the remote Kit
     _onCommandResult: function(e) {
         if (e.commandName === '.uno:Copy' || e.commandName === '.uno:Cut' || e.commandName === '.uno:CopyHyperlinkLocation' || e.commandName === '.uno:CopySlide') {
-			window.app.console.log('Resolve clipboard command promise ' + e.commandName);
+			window.app.console.log('Resolve clipboard command promise ' + e.commandName
+				+ ' with queue length: ' + this._commandCompletion.length);
 			while (this._commandCompletion.length > 0)
 			{
 				let a = this._commandCompletion.shift();

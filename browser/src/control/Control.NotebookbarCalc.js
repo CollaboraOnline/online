@@ -1385,6 +1385,74 @@ window.L.Control.NotebookbarCalc = window.L.Control.NotebookbarWriter.extend({
 
 	getViewTab: function() {
 		var content = [
+			app.isExperimentalMode() ?
+			{
+				'type': 'overflowgroup',
+				'id': 'view-sheetview',
+				'name':_('Sheet View'),
+				'accessibility': { focusBack: true,	combination: 'SV', de: null },
+				'children' : [
+					{
+						'type': 'container',
+						'children': [
+							{
+								'type': 'container',
+								'children': [
+									{
+										'id': 'sheetview_combobox',
+										'type': 'combobox',
+										'text': 'Default',
+										'entries': [
+											_('Default View')
+										],
+										'selectedCount': '1',
+										'selectedEntries': [
+											'1'
+										],
+										'command': '.uno:CurrentSheetView',
+										'accessibility': { focusBack: true,	combination: 'FS', de: null }
+									}
+								]
+							},
+							{
+								'type': 'toolbox',
+								'children': [
+									{
+										'id': 'selectsheetview',
+										'type': 'toolitem',
+										'text': _('Select Sheet View'),
+										'command': '.uno:SelectSheetView',
+										'accessibility': { focusBack: true,	combination: 'SS', de: null }
+									},
+									{
+										'id': 'newsheetview',
+										'type': 'toolitem',
+										'text': _('New Sheet View'),
+										'command': '.uno:NewSheetView',
+										'accessibility': { focusBack: true,	combination: 'NS', de: null }
+									},
+									{
+										'id': 'removesheetview',
+										'type': 'toolitem',
+										'text': _('Remove Sheet View'),
+										'command': '.uno:RemoveSheetView',
+										'accessibility': { focusBack: true,	combination: 'RS', de: null }
+									},
+									{
+										'id': 'exitsheetview',
+										'type': 'toolitem',
+										'text': _('Exit Sheet View'),
+										'command': '.uno:ExitSheetView',
+										'accessibility': { focusBack: true,	combination: 'ES', de: null }
+									},
+								]
+							}
+						],
+						'vertical': 'true'
+					},
+				]
+			} : {},
+			app.isExperimentalMode() ? { type: 'separator', id: 'layout-sheetview-break', orientation: 'vertical' } : {},
 			{
 				'type': 'overflowgroup',
 				'id': 'view-freeze',
@@ -1566,6 +1634,7 @@ window.L.Control.NotebookbarCalc = window.L.Control.NotebookbarWriter.extend({
 				'command': '.uno:Navigator',
 				'accessibility': { focusBack: true,	combination: 'N', de: null }
 			},
+
 		];
 
 		return this.getTabPage('View', content);
@@ -2435,6 +2504,7 @@ window.L.Control.NotebookbarCalc = window.L.Control.NotebookbarWriter.extend({
 	},
 
 	getReviewTab: function() {
+		// Note: when adding track changes elements, consider this._map['wopi'].HideChangeTrackingControls
 		var content = [
 			{
 				'id': 'review-spell-dialog',

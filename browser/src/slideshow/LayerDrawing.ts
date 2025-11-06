@@ -151,6 +151,22 @@ class LayerDrawing {
 		return this.helper.getSlideInfo(slideHash);
 	}
 
+	private getDocWidth(): number {
+		return this.helper.getDocWidth();
+	}
+
+	private getDocHeight(): number {
+		return this.helper.getDocHeight();
+	}
+
+	private setDocWidth(slideWidth: number): void {
+		this.helper.setDocWidth(slideWidth);
+	}
+
+	private setDocHeight(slideHeight: number): void {
+		this.helper.setDocHeight(slideHeight);
+	}
+
 	public getSlide(slideNumber: number): ImageBitmap {
 		const startSlideHash = this.helper.getSlideHash(slideNumber);
 		return this.slideCache.get(startSlideHash);
@@ -451,6 +467,14 @@ class LayerDrawing {
 		prefetch: boolean = false,
 		compressedLayers: boolean = false,
 	) {
+		if (
+			slideInfo.slideWidth > this.getDocWidth() ||
+			slideInfo.slideHeight > this.getDocHeight()
+		) {
+			this.setDocWidth(slideInfo.slideWidth);
+			this.setDocHeight(slideInfo.slideHeight);
+			this.onUpdatePresentationInfo();
+		}
 		const slideHash = slideInfo.hash;
 		const backgroundRendered = this.drawBackground(slideHash);
 		const masterPageRendered = this.drawMasterPage(slideHash);
@@ -466,7 +490,7 @@ class LayerDrawing {
 
 		app.socket.sendMessage(
 			`getslide hash=${slideInfo.hash} part=${slideInfo.index} width=${this.canvasWidth} height=${this.canvasHeight} ` +
-				`renderBackground=${backgroundRendered ? 0 : 1} renderMasterPage=${masterPageRendered ? 0 : 1} devicePixelRatio=${window.devicePixelRatio} compressedLayers=${compressedLayers ? 1 : 0}`,
+				`renderBackground=${backgroundRendered ? 0 : 1} renderMasterPage=${masterPageRendered ? 0 : 1} devicePixelRatio=${window.devicePixelRatio} compressedLayers=${compressedLayers ? 1 : 0} uniqueID=${slideInfo.uniqueID}`,
 		);
 	}
 

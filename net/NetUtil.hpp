@@ -15,6 +15,7 @@
 #include <functional>
 #include <string>
 #include <memory>
+#include <string_view>
 #include <vector>
 
 // This file hosts network related common functionality
@@ -110,13 +111,13 @@ void asyncConnect(const std::string& host, const std::string& port, bool isSSL,
 std::shared_ptr<StreamSocket>
 connect(std::string uri, const std::shared_ptr<ProtocolHandlerInterface>& protocolHandler);
 
-inline std::string getDefaultPortForScheme(const std::string& scheme)
+inline std::string_view getDefaultPortForScheme(const std::string_view scheme)
 {
     if (scheme == "https://" || scheme == "wss://")
         return "443";
     if (scheme == "http://" || scheme == "ws://")
         return "80";
-    return std::string();
+    return std::string_view();
 }
 
 // Returns true if both URIs are equivalent for an origin check. Implicit

@@ -26,6 +26,8 @@
 #include <utility>
 #include "Util.hpp"
 
+#include <optional>
+
 class DocumentBroker;
 
 /// Represents a session to a COOL client, in the WSD process.
@@ -69,6 +71,11 @@ public:
 
     /// Handle kit-to-client message.
     bool handleKitToClientMessage(const std::shared_ptr<Message>& payload);
+
+    std::optional<bool>
+    handleOpenDocKitToClientMessage(const std::shared_ptr<Message>& payload,
+                                    const std::shared_ptr<DocumentBroker>& docBroker,
+                                    const std::shared_ptr<StreamSocket>& saveAsSocket);
 
     /// Integer id of the view in the kit process, or -1 if unknown
     int getKitViewId() const { return _kitViewId; }
@@ -292,6 +299,18 @@ public:
 
     void uploadBrowserSettingsToWopiHost();
 
+    void setViewSettingsJSON(const Poco::SharedPtr<Poco::JSON::Object>& jsonObject)
+    {
+        _viewSettingsJSON = jsonObject;
+    }
+
+    Poco::SharedPtr<Poco::JSON::Object> getViewSettingsJSON() const
+    {
+        return _viewSettingsJSON;
+    }
+
+    void uploadViewSettingsToWopiHost();
+
     /// Override parsedDocOption values we get from browser setting json
     /// Because when client sends `load url` it doesn't have information about browser setting json
     void overrideDocOption();
@@ -332,6 +351,8 @@ private:
 
     bool sendFontRendering(const char* buffer, int length, const StringVector& tokens,
                            const std::shared_ptr<DocumentBroker>& docBroker);
+    bool handleGetSlideRequest(const StringVector& tokens,
+                               const std::shared_ptr<DocumentBroker>& docBroker);
 
     bool forwardToChild(const std::string& message,
                         const std::shared_ptr<DocumentBroker>& docBroker);
@@ -358,6 +379,14 @@ private:
     /// Abort conversion due to failure.
     void abortConversion(const std::shared_ptr<DocumentBroker>& docBroker,
                          const std::shared_ptr<StreamSocket>& saveAsSocket, std::string errorKind);
+
+#if !MOBILEAPP
+
+    /// Handles saveas: and exportas: in handleKitToClientMessage.
+    bool handleSaveAs(const std::shared_ptr<Message>& payload,
+                      const std::shared_ptr<DocumentBroker>& docBroker,
+                      const std::shared_ptr<StreamSocket>& saveAsSocket);
+#endif // !MOBILEAPP
 
 private:
     /// URI with which client made request to us
@@ -472,6 +501,8 @@ private:
 
     /// If Session is for convert-to
     bool _isConvertTo;
+
+    Poco::SharedPtr<Poco::JSON::Object> _viewSettingsJSON;
 };
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

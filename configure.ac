@@ -3,7 +3,7 @@
 
 AC_PREREQ([2.63])
 
-AC_INIT([coolwsd], [25.04.7.0], [https://github.com/CollaboraOnline/online/issues], [coolwsd], [https://collaboraonline.github.io/])
+AC_INIT([coolwsd], [25.04.8.0], [https://github.com/CollaboraOnline/online/issues], [coolwsd], [https://collaboraonline.github.io/])
 LT_INIT([shared, disable-static, dlopen])
 
 AM_INIT_AUTOMAKE([1.10 foreign subdir-objects tar-pax -Wno-portability])
@@ -983,6 +983,10 @@ dnl capability. Compare to ENABLE_WASM.
 AM_CONDITIONAL([ENABLE_WASM_FALLBACK], [test -n "$with_wasm_fallback"])
 WASM_BUILDDIR="$with_wasm_fallback"
 AC_SUBST(WASM_BUILDDIR)
+AS_IF([test -n "$with_wasm_fallback"],
+      [WASM_SUPPORT_ENABLE=true],
+      [WASM_SUPPORT_ENABLE=false])
+AC_SUBST(WASM_SUPPORT_ENABLE)
 
 AM_CONDITIONAL([ENABLE_WASM_ADDITIONAL_FILES], [test -n "$with_wasm_additional_files"])
 WASM_ADDITIONAL_FILES="$with_wasm_additional_files"
@@ -1048,7 +1052,8 @@ else
       <enable type=\"bool\" desc=\"Controls whether the welcome screen should be shown to the users on new install and updates. When enabled, your custom welcome screen must be created at /usr/share/coolwsd/browser/dist/welcome/welcome.html.\" default=\"false\">false</enable>
     </welcome>"
     CONFIG_INTERFACE_FRAGMENT="<brandProductName desc=\"Change the displayed name the application will have for the user.\" type=\"string\"></brandProductName>
-    <brandProductURL desc=\"Change the product URL, empty makes disable the link\" type=\"string\">https://www.collaboraonline.com</brandProductURL>"
+    <brandProductURL desc=\"Change the product URL, empty makes disable the link\" type=\"string\">https://www.collaboraonline.com</brandProductURL>
+    <logoURL desc=\"Change the URL of the logo used by Collabora Online, use none to hide it.\" type=\"string\"></logoURL>"
 fi
 
 AC_SUBST([WELCOME_CONFIG_FRAGMENT])
@@ -1465,7 +1470,7 @@ fi
 AM_CONDITIONAL([ENABLE_SSL], [$ENABLE_SSL])
 AC_SUBST(ENABLE_SSL)
 
-AS_IF([test "$ENABLE_ANDROIDAPP" != "true" -a "$host_os" != "emscripten"],
+AS_IF([test "$mobile_app" != "true" -a "$host_os" != "emscripten"],
       [AC_CHECK_HEADERS([security/pam_appl.h],
                         [],
                         [AC_MSG_ERROR([header security/pam_appl.h not found, install PAM development package])])
@@ -1979,9 +1984,8 @@ if test "$enable_iosapp" = "yes"; then
 fi
 
 if test "$enable_androidapp" = "yes"; then
-    AC_CONFIG_FILES([$srcdir/android/build.gradle:android/build.gradle.in
-                 $srcdir/android/app/build.gradle:android/app/build.gradle.in
-                 $srcdir/android/lib/build.gradle:android/lib/build.gradle.in
+    AC_CONFIG_FILES([
+                 $srcdir/android/variables.gradle:android/variables.gradle.in
                  $srcdir/android/app/appSettings.gradle:android/app/appSettings.gradle.in
                  $srcdir/android/lib/libSettings.gradle:android/lib/libSettings.gradle.in
                  $srcdir/android/lib/src/main/cpp/CMakeLists.txt:android/lib/src/main/cpp/CMakeLists.txt.in])

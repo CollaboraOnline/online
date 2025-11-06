@@ -18,6 +18,7 @@
 interface ViewSetting {
 	zoteroAPIKey?: string;
 	accessibilityState: boolean;
+	signatureCertificate?: string;
 }
 
 class ServerConnectionService {
@@ -26,6 +27,10 @@ class ServerConnectionService {
 	}
 
 	// below methods should be sorted in expected order of execution to help understand the init
+
+	public onBasicUI() {
+		app.console.debug('ServerConnectionService: onBasicUI');
+	}
 
 	public onViewSetting(viewSetting: ViewSetting) {
 		app.console.debug('ServerConnectionService: onViewSetting');
@@ -58,6 +63,16 @@ class ServerConnectionService {
 			app.console.debug('ServerConnectionService: initialize accessibility');
 			app.map.lockAccessibilityOn();
 		}
+	}
+
+	public onSpecializedUI(docType: string) {
+		app.console.debug('ServerConnectionService: onSpecializedUI - ' + docType);
+		app.map.fire('initializedui');
+	}
+
+	/// see _appLoadedConditions in Map.Wopi.js
+	public onDocumentLoaded() {
+		app.console.debug('ServerConnectionService: onDocumentLoaded');
 	}
 
 	public onFirstTileReceived() {

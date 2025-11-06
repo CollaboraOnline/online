@@ -508,7 +508,10 @@ window.L.CalcTileLayer = window.L.CanvasTileLayer.extend({
 					this._printRanges[info[i]['sheet']] = info[i]['ranges'];
 			}
 
-			if (firstSelectedPart) this._switchSplitPanesContext();
+			if (firstSelectedPart)
+				this._switchSplitPanesContext();
+
+			this._map.fire('statusupdated');
 		} else {
 			this._adjustCanvasSectionsForLayoutChange();
 		}
@@ -907,7 +910,7 @@ window.L.CalcTileLayer = window.L.CanvasTileLayer.extend({
 				if (this._map._docLayer._cursorMarker)
 					this._map._docLayer._cursorMarker.remove();
 
-				var grid = document.querySelector('.leaflet-map-pane');
+				var grid = document.getElementById('document-canvas');
 				grid.classList.add('spreadsheet-cursor');
 				grid.style.cursor = '';
 			}

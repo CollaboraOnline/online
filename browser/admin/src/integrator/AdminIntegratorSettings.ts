@@ -44,6 +44,14 @@ interface ConfigData {
 	xcu: ConfigItem[] | null;
 }
 
+interface ViewSettings {
+	accessibilityState: boolean;
+	zoteroAPIKey: string;
+	signatureCert: string;
+	signatureKey: string;
+	signatureCa: string;
+}
+
 interface SectionConfig {
 	sectionTitle: string;
 	sectionDesc: string;
@@ -140,9 +148,13 @@ class SettingIframe {
 	private wordbook;
 	private xcuEditor;
 	private _viewSetting;
+	private xcuInitializationAttempted = false;
 	private _viewSettingLabels = {
 		accessibilityState: _('Accessibility'),
 		zoteroAPIKey: 'Zotero',
+		signatureCert: _('Signature Certificate'),
+		signatureKey: _('Signature Key'),
+		signatureCa: _('Signature CA'),
 	};
 	private readonly settingLabels: Record<string, string> = {
 		darkTheme: _('Dark Mode'),
@@ -177,7 +189,7 @@ class SettingIframe {
 		PageTile: _('Tile pages'),
 		Booklet: _('Booklet'),
 		BookletFront: _('Booklet front'),
-		BookletBack: _('Booket back'),
+		BookletBack: _('Booklet back'),
 		PageName: _('Page name'),
 		Date: _('Date'),
 		Time: _('Time'),
@@ -241,7 +253,7 @@ class SettingIframe {
 	init(): void {
 		this.initWindowVariables();
 		this.insertConfigSections();
-		void this.fetchAndPopulateSharedConfigs();
+		this.fetchAndPopulateSharedConfigs();
 		this.wordbook = (window as any).WordBook;
 	}
 
@@ -502,6 +514,25 @@ class SettingIframe {
 			onChangeHandler(inputEl);
 		});
 		return inputEl;
+	}
+
+	private createTextArea(
+		id: string,
+		placeholder: string = '',
+		text: string = '',
+		onChangeHandler = (textarea) => {},
+	) {
+		const textareaEl = document.createElement('textarea');
+		textareaEl.id = id;
+		textareaEl.value = text.replace(/\\n/g, '\n');
+		textareaEl.placeholder = placeholder;
+		textareaEl.classList.add('dic-input-container', 'signature-textarea');
+		textareaEl.rows = 6;
+
+		textareaEl.addEventListener('change', () => {
+			onChangeHandler(textareaEl);
+		});
+		return textareaEl;
 	}
 
 	private createButton(id: string, text: string) {
@@ -1291,7 +1322,7 @@ class SettingIframe {
 		return extraActionsDiv;
 	}
 
-	private generateViewSettingUI(data: any) {
+	private generateViewSettingUI(data: ViewSettings) {
 		this._viewSetting = data;
 		const settingsContainer = document.getElementById('allConfigSection');
 		if (!settingsContainer) {
@@ -1320,15 +1351,64 @@ class SettingIframe {
 
 		fieldset.appendChild(this.createLegend(_('Option')));
 
-		for (const key in data) {
+		const allViewSettingsKeys: (keyof ViewSettings)[] = [
+			'accessibilityState',
+			'zoteroAPIKey',
+			'signatureCert',
+			'signatureKey',
+			'signatureCa',
+		];
+
+		for (const key of allViewSettingsKeys) {
 			const label = this._viewSettingLabels[key];
 			if (!label) {
 				continue;
 			}
-			if (typeof data[key] === 'boolean') {
+
+			const value = data[key] ?? (typeof data[key] === 'boolean' ? false : '');
+
+			if (typeof value === 'boolean') {
 				fieldset.appendChild(this.createViewSettingCheckbox(key, data, label));
-			} else if (typeof data[key] === 'string') {
-				fieldset.appendChild(this.createViewSettingsTextBox(key, data));
+			} else if (typeof value === 'string') {
+				// Add Zotero section with description
+				if (key === 'zoteroAPIKey') {
+					fieldset.appendChild(this.createHeading('Zotero'));
+					const zoteroDescription = this.createParagraph(
+						_(
+							'To use Zotero specify your API key here. You can create your API key in your ',
+						),
+					);
+					zoteroDescription.className = 'view-setting-description';
+
+					const zoteroAccountLink = document.createElement('a');
+					zoteroAccountLink.href = 'https://www.zotero.org/settings/keys';
+					zoteroAccountLink.target = '_blank';
+					zoteroAccountLink.textContent = _('Zotero account API settings');
+
+					zoteroDescription.appendChild(zoteroAccountLink);
+
+					fieldset.appendChild(zoteroDescription);
+					fieldset.appendChild(this.createViewSettingsTextBox(key, data, true));
+				}
+				// Add Document Signing section with description (only once for first field)
+				else if (key === 'signatureCert') {
+					fieldset.appendChild(this.createHeading(_('Document Signing')));
+					const signingDesc = document.createElement('p');
+					signingDesc.className = 'view-setting-description';
+					signingDesc.textContent = _(
+						'To use document signing, specify your signing certificate, key and CA chain here.',
+					);
+					fieldset.appendChild(signingDesc);
+					fieldset.appendChild(
+						this.createViewSettingsTextBox(key, data, false, true),
+					);
+				}
+				// Add remaining signature fields with smaller labels
+				else if (key === 'signatureKey' || key === 'signatureCa') {
+					fieldset.appendChild(
+						this.createViewSettingsTextBox(key, data, false, true),
+					);
+				}
 			}
 		}
 
@@ -1342,21 +1422,31 @@ class SettingIframe {
 		return legend;
 	}
 
-	private createViewSettingsTextBox(key: string, data: any): HTMLDivElement {
-		const text = data[key];
-		let result: HTMLDivElement = document.createElement('div');
-		if (key === 'zoteroAPIKey') {
-			result = this.createZoteroConfig(text, data);
-		}
-		return result;
+	private createViewSettingsTextBox(
+		key: keyof ViewSettings,
+		data: ViewSettings,
+		skipHeading: boolean = false,
+		isSmallHeading: boolean = false,
+	): HTMLDivElement {
+		const text = data[key] as string;
+		const label = this._viewSettingLabels[key] || key;
+
+		return this.createInputField(
+			key as string,
+			label,
+			text,
+			data,
+			skipHeading,
+			isSmallHeading,
+		);
 	}
 
 	private createViewSettingCheckbox(
-		key: string,
-		data: any,
+		key: keyof ViewSettings,
+		data: ViewSettings,
 		label: string,
 	): HTMLSpanElement {
-		const isChecked = data[key];
+		const isChecked = data[key] as boolean;
 		let isDisabled = false;
 		let warningText: string | null = null;
 
@@ -1371,7 +1461,7 @@ class SettingIframe {
 
 		// Replaced direct checkbox input creation with the new helper
 		return this.createCheckbox(
-			key,
+			key as string,
 			isChecked && !isDisabled,
 			label,
 			(inputCheckbox, checkboxWrapper, materialIconContainer) => {
@@ -1384,7 +1474,7 @@ class SettingIframe {
 				materialIconContainer.innerHTML = currentChecked
 					? this.SVG_ICONS.checkboxMarked
 					: this.SVG_ICONS.checkboxBlankOutline;
-				data[key] = currentChecked;
+				(data as any)[key] = currentChecked;
 			},
 			isDisabled,
 			warningText,
@@ -1392,53 +1482,18 @@ class SettingIframe {
 	}
 
 	private createViewSettingActions(): HTMLDivElement {
-		const actionsContainer = document.createElement('div');
-		actionsContainer.classList.add('xcu-editor-actions');
-
-		const resetButton = this.createButtonWithIcon(
-			'xcu-reset-button',
-			'reset', // Use icon key
-			_('Reset to default View settings'),
-			['button--vue-secondary', 'xcu-reset-icon'],
-			async (button) => {
-				const confirmed = window.confirm(
-					_('Are you sure you want to reset View Settings?'),
-				);
-				if (!confirmed) {
-					return;
-				}
-				button.disabled = true;
-				const defaultViewSetting = {
-					accessibilityState: false,
-					zoteroAPIKey: '',
-				};
-				await this.uploadViewSettingFile(
+		return this.createSettingsActions(
+			'viewsettings',
+			'View Settings',
+			'viewsetting.json',
+			() => this.getDefaultViewSettings(),
+			() => this._viewSetting,
+			(settings) =>
+				this.uploadViewSettingFile(
 					'viewsetting.json',
-					JSON.stringify(defaultViewSetting),
-				);
-				button.disabled = false;
-			},
-			true,
+					JSON.stringify(settings),
+				),
 		);
-		actionsContainer.appendChild(resetButton);
-
-		const saveButton = this.createButtonWithText(
-			'xcu-save-button',
-			_('Save'),
-			_('Save View Settings'),
-			['button-primary'],
-			async (button) => {
-				button.disabled = true;
-				await this.uploadViewSettingFile(
-					'viewsetting.json',
-					JSON.stringify(this._viewSetting),
-				);
-				button.disabled = false;
-			},
-		);
-		actionsContainer.appendChild(saveButton);
-
-		return actionsContainer;
 	}
 
 	private async populateSharedConfigUI(data: ConfigData): Promise<void> {
@@ -1470,12 +1525,15 @@ class SettingIframe {
 			if (data.viewsetting && data.viewsetting.length > 0) {
 				const fileId = data.viewsetting[0].uri;
 				const fetchContent = await this.fetchSettingFile(fileId);
-				if (fetchContent) this.generateViewSettingUI(JSON.parse(fetchContent));
+				if (fetchContent) {
+					const loadedSettings = JSON.parse(fetchContent);
+					// Merge with default values to ensure all fields are present
+					const defaultViewSetting = this.getDefaultViewSettings();
+					const mergedSettings = { ...defaultViewSetting, ...loadedSettings };
+					this.generateViewSettingUI(mergedSettings);
+				}
 			} else {
-				const defaultViewSetting = {
-					accessibilityState: false,
-					zoteroAPIKey: '',
-				};
+				const defaultViewSetting = this.getDefaultViewSettings();
 				this.generateViewSettingUI(defaultViewSetting);
 			}
 
@@ -1520,9 +1578,23 @@ class SettingIframe {
 			);
 		} else {
 			// If user doesn't have any xcu file, we generate with default settings...
-			this.xcuEditor = new (window as any).Xcu('documentView.xcu', null);
-			this.xcuEditor.generateXcuAndUpload();
-			return await this.fetchAndPopulateSharedConfigs();
+			try {
+				if (!this.xcuInitializationAttempted) {
+					this.xcuInitializationAttempted = true;
+					this.xcuEditor = new (window as any).Xcu('documentView.xcu', null);
+					await this.xcuEditor.generateXcuAndUpload();
+					return await this.fetchAndPopulateSharedConfigs();
+				} else {
+					document.getElementById('xcu-section')?.remove();
+					console.warn('XCU file not found and automatic creation failed.');
+				}
+			} catch (error) {
+				console.error(
+					'Something went wrong while generating or uploading xcu file:',
+					error,
+				);
+				document.getElementById('xcu-section')?.remove();
+			}
 		}
 
 		if (data.autotext)
@@ -1560,24 +1632,119 @@ class SettingIframe {
 		return result;
 	}
 
-	private createZoteroConfig(APIKey: string = '', data) {
-		const zoteroContainer = document.createElement('div');
+	private createInputField(
+		key: string,
+		label: string,
+		value: string = '',
+		data: any,
+		skipHeading: boolean = false,
+		isSmallHeading: boolean = false,
+	): HTMLDivElement {
+		const container = document.createElement('div');
+		container.id = `${key}container`;
+		container.classList.add('view-input-container');
 
-		zoteroContainer.id = 'zoterocontainer';
-		zoteroContainer.classList.add('section');
-		zoteroContainer.appendChild(this.createHeading('Zotero'));
+		// Add heading unless skipped
+		if (!skipHeading) {
+			const heading = this.createHeading(label);
+			if (isSmallHeading) {
+				heading.classList.add('view-setting-small-label');
+			}
+			container.appendChild(heading);
+		}
 
-		const zotero = this.createTextInput(
-			'zotero',
-			_('Enter Zotero API Key'),
-			APIKey,
-			(input) => {
-				data['zoteroAPIKey'] = input.value;
+		const isSignatureField = [
+			'signatureCert',
+			'signatureKey',
+			'signatureCa',
+		].includes(key);
+
+		if (isSignatureField) {
+			const textarea = this.createTextArea(
+				key as string,
+				_(`Enter ${label}`),
+				value,
+				(textareaElement) => {
+					(data as any)[key] = textareaElement.value;
+				},
+			);
+			container.appendChild(textarea);
+		} else {
+			const input = this.createTextInput(
+				key as string,
+				_(`Enter ${label}`),
+				value,
+				(inputElement) => {
+					(data as any)[key] = inputElement.value;
+				},
+			);
+			container.appendChild(input);
+		}
+
+		return container;
+	}
+
+	private createSettingsActions(
+		prefix: string,
+		settingsName: string,
+		filename: string,
+		getDefaultSettings: () => any,
+		getCurrentSettings: () => any,
+		uploadSettings: (settings: any) => Promise<void>,
+	): HTMLDivElement {
+		const actionsContainer = document.createElement('div');
+		actionsContainer.classList.add('xcu-editor-actions');
+
+		const resetButton = this.createButtonWithIcon(
+			`${prefix}-reset-button`,
+			'reset',
+			_(`Reset to default ${settingsName}`),
+			['button--vue-secondary', `${prefix}-reset-icon`],
+			async (button) => {
+				const confirmed = window.confirm(
+					_(`Are you sure you want to reset ${settingsName}?`),
+				);
+				if (!confirmed) {
+					return;
+				}
+				button.disabled = true;
+				const defaultSettings = getDefaultSettings();
+				await uploadSettings(defaultSettings);
+				button.disabled = false;
+			},
+			true,
+		);
+		actionsContainer.appendChild(resetButton);
+
+		const saveButton = this.createButtonWithText(
+			`${prefix}-save-button`,
+			_('Save'),
+			_(`Save ${settingsName}`),
+			['button-primary'],
+			async (button) => {
+				button.disabled = true;
+				const currentSettings = getCurrentSettings();
+				console.log(
+					`${settingsName} - Current settings being saved:`,
+					currentSettings,
+				);
+				await uploadSettings(currentSettings);
+				button.disabled = false;
 			},
 		);
-		zoteroContainer.appendChild(zotero);
+		actionsContainer.appendChild(saveButton);
 
-		return zoteroContainer;
+		return actionsContainer;
+	}
+
+	private getDefaultViewSettings(): ViewSettings {
+		return {
+			accessibilityState: false,
+			zoteroAPIKey: '',
+			signatureCert: '',
+			signatureKey: '',
+			signatureCa: '',
+		};
 	}
 
 	private getConfigType(): string {
@@ -1626,7 +1793,14 @@ class SettingIframe {
 	}
 
 	private getFilename(uri: string, removeExtension = true): string {
-		let filename = uri.substring(uri.lastIndexOf('/') + 1);
+		const url = new URL(uri, window.location.origin);
+		let filename = url.searchParams.get('file_name');
+		if (!filename) {
+			// Remove query parameters from url
+			uri = uri.split('?')[0];
+			filename = uri.substring(uri.lastIndexOf('/') + 1);
+		}
+
 		if (removeExtension) {
 			filename = filename.replace(/\.[^.]+$/, '');
 		}

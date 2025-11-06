@@ -15,13 +15,56 @@
  *                               notebookbar widgets in the core.
  */
 
+enum NotebookbarBasedSidebarId {
+	Animations = 'animations',
+	Transitions = 'transitions',
+}
+
 class SidebarFromNotebookbarPanel extends Sidebar {
+	models: Map<string, JSDialogModelState>;
+
+	/// converts notebookbar tab into sidebar-compatible JSON
+	convertToModel(id: string, raw: NotebookbarTabContent): JSDialogJSON {
+		return {
+			id: id,
+			jsontype: 'sidebar',
+			type: 'container',
+			dialogid: '0',
+			children: raw,
+			vertical: true,
+		} as any as JSDialogJSON;
+	}
+
+	appendModel(
+		id: NotebookbarBasedSidebarId,
+		name: string,
+		notebookbarTab: NotebookbarTab,
+	) {
+		this.models.set(id, new JSDialogModelState(name));
+		this.models
+			.get(id)
+			?.fullUpdate(this.convertToModel(name, notebookbarTab.getContent()));
+	}
+
 	constructor(map: any) {
 		super(map);
 
 		// transitions panel is now in the notebookbar in the core
 		this.type = this.allowedJsonType = SidebarType.Notebookbar;
 		this.builder?.setWindowId(WindowId.Notebookbar);
+
+		// we need to store all the variants and just copy them to the parent class model if needed
+		this.models = new Map<string, JSDialogModelState>();
+		this.appendModel(
+			NotebookbarBasedSidebarId.Animations,
+			'AnimationsSidebar',
+			JSDialog.ImpressAnimationTab,
+		);
+		this.appendModel(
+			NotebookbarBasedSidebarId.Transitions,
+			'TransitionsSidebar',
+			JSDialog.ImpressTransitionTab,
+		);
 
 		this.map.off('sidebar', this.onSidebar, this); // from Sidebar class
 		this.map.on('customsidebar', this.onSidebar, this);
@@ -32,6 +75,28 @@ class SidebarFromNotebookbarPanel extends Sidebar {
 		this.map.off('customsidebar');
 	}
 
+	/// apply to the cached model too
+	protected onJSUpdate(e: any) {
+		var data = e.data;
+
+		if (data.jsontype !== this.allowedJsonType) return false;
+
+		for (const [id, model] of this.models) model.widgetUpdate(data);
+
+		return super.onJSUpdate(e);
+	}
+
+	/// apply to the cached model too
+	protected onJSAction(e: any) {
+		var data = e.data;
+
+		if (data.jsontype !== this.allowedJsonType) return false;
+
+		for (const [id, model] of this.models) model.widgetAction(data);
+
+		return super.onJSAction(e);
+	}
+
 	public openTransitionsSidebar() {
 		// we need to clean the core based sidebars
 		this.closeSidebar();
@@ -39,9 +104,9 @@ class SidebarFromNotebookbarPanel extends Sidebar {
 		// TODO: change state of old sidebar uno commands
 
 		this.openSidebar(
-			'transitions',
+			NotebookbarBasedSidebarId.Transitions,
 			_('Transitions'),
-			JSDialog.ImpressTransitionTab.getContent(),
+			this.models.get(NotebookbarBasedSidebarId.Transitions)?.getSnapshot(),
 		);
 	}
 
@@ -52,9 +117,9 @@ class SidebarFromNotebookbarPanel extends Sidebar {
 		// TODO: change state of old sidebar uno commands
 
 		this.openSidebar(
-			'animations',
+			NotebookbarBasedSidebarId.Animations,
 			_('Animations'),
-			JSDialog.ImpressAnimationTab.getContent(),
+			this.models.get(NotebookbarBasedSidebarId.Animations)?.getSnapshot(),
 		);
 	}
 

@@ -297,6 +297,10 @@ class InitializerBase {
 		if (typeof productURL === 'string' && productURL.length) {
 			window.brandProductURL = productURL;
 		}
+		let logoURL = document.getElementById("init-logo-url").value;
+		if (typeof logoURL === 'string' && logoURL.length) {
+			window.logoURL= logoURL;
+		}
 
 		this.initiateCoolParams();
 	}
@@ -1915,7 +1919,7 @@ function getInitializerClass() {
 				if (global.deviceFormFactor) {
 					msg += ' deviceFormFactor=' + global.deviceFormFactor;
 				}
-				var spellOnline = window.prefs.get('SpellOnline');
+				var spellOnline = window.prefs.get('spellOnline');
 				if (spellOnline) {
 					msg += ' spellOnline=' + spellOnline;
 				}

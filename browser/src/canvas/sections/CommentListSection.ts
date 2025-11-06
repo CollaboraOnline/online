@@ -22,6 +22,15 @@ window.L.Map.include({
 			cool.CommentSection.showCommentEditingWarning();
 			return;
 		}
+
+		/*
+			if the user inserts a new comment when all the comments
+			are hidden, the new comment also goes into hiding as it
+			is saved. so we show all the comments instead of hiding
+			the newly inserted one.
+		*/
+		app.map.showComments(true);
+
 		var avatar = undefined;
 		var author = this.getViewName(this._docLayer._viewId);
 		if (author in this._viewInfoByUserName) {
@@ -37,16 +46,16 @@ window.L.Map.include({
 		});
 	},
 
-	showResolvedComments: function(on: any) {
+	showResolvedComments: function(on: boolean = false) {
 		var unoCommand = '.uno:ShowResolvedAnnotations';
 		this.sendUnoCommand(unoCommand);
 		app.sectionContainer.getSectionWithName(app.CSections.CommentList.name).setViewResolved(on);
-		this.uiManager.setDocTypePref('ShowResolved', on ? true : false);
+		this.uiManager.setDocTypePref('ShowResolved', on);
 	},
 
-	showComments: function(on: any) {
+	showComments: function(on: boolean = false) {
 		app.sectionContainer.getSectionWithName(app.CSections.CommentList.name).setView(on);
-		this.uiManager.setDocTypePref('showannotations', on ? true : false);
+		this.uiManager.setDocTypePref('showannotations', on);
 		this.fire('commandstatechanged', {commandName : 'showannotations', state : on ? 'true': 'false'});
 		this.fire('showannotationschanged', {state: on ? 'true': 'false'});
 	}
@@ -77,11 +86,14 @@ export class CommentSection extends CanvasSectionObject {
 		collapsedCommentWidth: number;
 		showSelectedBigger: boolean;
 		commentsAreListed: boolean;
+		show: boolean;
+		showResolved: boolean;
 		[key: string]: any;
 		canvasContainerTop: number; // The top pixel of the document container. Added to positions of comments.
 		canvasContainerLeft: number;
 	};
 	disableLayoutAnimation: boolean = false;
+
 	mobileCommentId: string = 'new-annotation-dialog';
 	mobileCommentModalId: string;
 
@@ -108,7 +120,7 @@ export class CommentSection extends CanvasSectionObject {
 		this.sectionProperties.selectedComment = null;
 		this.sectionProperties.arrow = null;
 		this.sectionProperties.show = null;
-		this.sectionProperties.showResolved = null;
+		this.sectionProperties.showResolved = false;
 		this.sectionProperties.marginY = 10 * app.dpiScale;
 		this.sectionProperties.offset = 5 * app.dpiScale;
 		this.sectionProperties.width = Math.round(1 * app.dpiScale); // Configurable variable.
@@ -257,7 +269,7 @@ export class CommentSection extends CanvasSectionObject {
 	}
 
 	public setCollapsed(): void {
-		if (this.isEditing()) {
+		if (this.sectionProperties.show != true || this.isEditing()) {
 			return;
 		}
 
@@ -280,7 +292,7 @@ export class CommentSection extends CanvasSectionObject {
 		}
 	}
 
-	private calculateAvailableSpace() {
+	public calculateAvailableSpace() {
 		var availableSpace = (this.containerObject.getDocumentAnchorSection().size[0] - app.activeDocument.fileSize.pX) * 0.5;
 		availableSpace = Math.round(availableSpace / app.dpiScale);
 		return availableSpace;
@@ -290,7 +302,18 @@ export class CommentSection extends CanvasSectionObject {
 		if (!this.containerObject.getDocumentAnchorSection() || app.map._docLayer._docType === 'spreadsheet' || (<any>window).mode.isMobile())
 			return false;
 		const availableSpace = this.calculateAvailableSpace();
-
+		/*
+			in case the comment section is half hidden and there
+			is some space on the left side of the document (since
+			the document is centered), we don't collapse the comments.
+			the comments section doesn't end up in such layout normally,
+			either the user resized the window, or zoomed in. both of
+			those events are being listened to in ViewLayoutWriter and
+			when that happens, `ViewLayoutWriter` moves the document to
+			the left in function `adjustDocumentMarginsForComments`.
+		*/
+		if (app.activeDocument.activeView.viewHasEnoughSpaceToShowFullWidthComments())
+			return false;
 		return availableSpace < this.sectionProperties.commentWidth && availableSpace > this.sectionProperties.collapsedCommentWidth;
 	}
 
@@ -640,6 +663,7 @@ export class CommentSection extends CanvasSectionObject {
 			}
 		}
 		this.checkSize();
+		app.map.fire('deleteannotation');
 	}
 
 	public click (annotation: any): void {
@@ -1361,6 +1385,7 @@ export class CommentSection extends CanvasSectionObject {
 			this.select(comment);
 		}
 
+		app.map.fire('insertannotation');
 		return comment;
 	}
 
@@ -1586,7 +1611,7 @@ export class CommentSection extends CanvasSectionObject {
 							app.definitions.CommentSection.needFocus = annotation;
 						}
 						annotation.sectionProperties.container.style.visibility = 'visible';
-						annotation.sectionProperties.autoSave.innerText = _('Autosaved');
+						annotation.focusLost();
 						if (app.map._docLayer._docType === 'spreadsheet')
 							annotation.show();
 						if (autoSavedComment.sectionProperties.data.id === 'new')
@@ -1660,7 +1685,7 @@ export class CommentSection extends CanvasSectionObject {
 				this.update();
 
 				if (CommentSection.autoSavedComment) {
-					CommentSection.autoSavedComment.sectionProperties.autoSave.innerText = _('Autosaved');
+					modified.focusLost();
 					if (app.map._docLayer._docType === 'spreadsheet')
 						modified.show();
 					modified.edit();
@@ -1881,7 +1906,7 @@ export class CommentSection extends CanvasSectionObject {
 			subList[i].sectionProperties.container.style.left = String(Math.round(actualPosition[0] / app.dpiScale) + this.sectionProperties.canvasContainerLeft) + 'px';
 			subList[i].sectionProperties.container.style.top = String(Math.round(lastY / app.dpiScale) + this.sectionProperties.canvasContainerTop) + 'px';
 
-			if (!subList[i].isEdit())
+			if (this.sectionProperties.show != false && !subList[i].isEdit())
 				subList[i].show();
 		}
 		return lastY;
@@ -1926,10 +1951,18 @@ export class CommentSection extends CanvasSectionObject {
 			var isRTL = document.documentElement.dir === 'rtl';
 
 			if (selectedComment) {
-				// FIXME: getBoundingClientRect is expensive and this is a hot path (called continuously during animations and scrolling)
-				const posX = (this.sectionProperties.showSelectedBigger ?
-								Math.round((document.getElementById('document-container').getBoundingClientRect().width - subList[i].sectionProperties.container.getBoundingClientRect().width)/2) :
+				const commentWidth = this.sectionProperties.commentWidth;
+				const documentCanvasWidth = (document.getElementById('document-canvas') as any).width;
+				let posX = (this.sectionProperties.showSelectedBigger ?
+								Math.round((documentCanvasWidth - commentWidth)/2) :
 								Math.round(actualPosition[0] / app.dpiScale) - this.sectionProperties.deflectionOfSelectedComment * (isRTL ? -1 : 1));
+				// if on selection full comment is not visible bring it fully inside view, helps in narrow windows and tablets
+				if (isRTL && posX < 0)
+					posX = 0;
+				else if (posX + commentWidth > documentCanvasWidth)
+				{
+					posX = documentCanvasWidth - commentWidth;
+				}
 
 				subList[i].sectionProperties.container.style.left = String(posX + this.sectionProperties.canvasContainerLeft) + 'px';
 				subList[i].sectionProperties.container.style.top = String(Math.round(lastY / app.dpiScale) + this.sectionProperties.canvasContainerTop) + 'px';
@@ -1940,7 +1973,7 @@ export class CommentSection extends CanvasSectionObject {
 			}
 
 			lastY += (subList[i].getCommentHeight(relayout) * app.dpiScale);
-			if (!subList[i].isEdit())
+			if (this.sectionProperties.show != false && !subList[i].isEdit())
 				subList[i].show();
 		}
 		return lastY;
@@ -2005,7 +2038,8 @@ export class CommentSection extends CanvasSectionObject {
 		else {
 			var svg: SVGElement = (<any>document.createElementNS('http://www.w3.org/2000/svg', 'svg'));
 			svg.setAttribute('version', '1.1');
-			svg.style.zIndex = '9';
+			svg.style.zIndex = '12';
+			svg.style.pointerEvents = 'none';
 			svg.id = 'comment-arrow-container';
 			svg.style.position = 'absolute';
 			svg.style.top = svg.style.left = svg.style.right = svg.style.bottom = '0';
@@ -2185,7 +2219,7 @@ export class CommentSection extends CanvasSectionObject {
 		return index;
 	}
 
-	public setViewResolved (state: any): void {
+	public setViewResolved (state: boolean): void {
 		this.sectionProperties.showResolved = state;
 
 		for (var idx = 0; idx < this.sectionProperties.commentList.length;idx++) {
@@ -2204,13 +2238,24 @@ export class CommentSection extends CanvasSectionObject {
 		this.update();
 	}
 
-	public setView (state: any): void {
+	/*
+		also consider whether the comment to be shown is a resolved
+		comment and if so then check if the `showResolved` toggle
+		is on or off.
+	*/
+	public setView(state: boolean): void {
 		this.sectionProperties.show = state;
-		for (var idx = 0; idx < this.sectionProperties.commentList.length;idx++) {
-			if (state == false)
+		const commentShouldCollapse = this.shouldCollapse();
+
+		for (var idx = 0; idx < this.sectionProperties.commentList.length; idx++) {
+			if (state == false) {
 				this.sectionProperties.commentList[idx].hide();
-			else
+			} else if (this.sectionProperties.commentList[idx].sectionProperties.data.resolved != 'true' || this.sectionProperties.showResolved == true) {
 				this.sectionProperties.commentList[idx].show();
+				if (commentShouldCollapse) {
+					this.sectionProperties.commentList[idx].setCollapsed();
+				}
+			}
 		}
 	}
 

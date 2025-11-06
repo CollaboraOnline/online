@@ -103,6 +103,10 @@ To open desktop tests in the test runner:
 
     make run-desktop
 
+`xorg-xhost` is required to run the interactive test runner,
+see `Makefile.am` for details. If missing, `make run-desktop`
+fails with an error: Missing X server or $DISPLAY.
+
 To open mobile tests in the test runner:
 
     make run-mobile

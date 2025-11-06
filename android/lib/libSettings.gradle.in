@@ -10,4 +10,5 @@ ext {
     liboApplicationId   = '@ANDROID_PACKAGE_NAME@'
     liboBrandingDir     = '@APP_BRANDING_DIR@'
     liboGooglePlay      = '@APP_GOOGLE_PLAY@'
+    liboAbiSplit        = [@ANDROID_ABI_SPLIT@]
 }

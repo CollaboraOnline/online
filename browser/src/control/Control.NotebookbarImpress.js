@@ -494,20 +494,22 @@ window.L.Control.NotebookbarImpress = window.L.Control.NotebookbarWriter.extend(
 					'command': 'presenterconsole',
 					'accessibility': { focusBack: true, combination: 'PC', de: null }
 				}: {},
-			!window.ThisIsAMobileApp && app.isExperimentalMode() ?
+			!window.ThisIsAMobileApp ?
 				{
 					'id': 'slide-presentation-follow-me',
 					'type': 'bigcustomtoolitem',
 					'text': _('Start Follow-me Presentation'),
 					'command': 'followmepresentation',
+					'visible': app.isExperimentalMode(),
 					'accessibility': { focusBack: true, combination: 'PL', de: null }
 				} : {},
-			!window.ThisIsAMobileApp && app.isExperimentalMode() ?
+			!window.ThisIsAMobileApp ?
 				{
 					'id': 'slide-presentation-follow',
 					'type': 'bigcustomtoolitem',
 					'text': _('Follow Presentation'),
 					'command': 'followpresentation',
+					'visible': app.isExperimentalMode(),
 					'accessibility': { focusBack: true, combination: 'PF', de: null }
 				} : {},
 			{ type: 'separator', id: 'slide-zoomin-break', orientation: 'vertical' },
@@ -1908,6 +1910,7 @@ window.L.Control.NotebookbarImpress = window.L.Control.NotebookbarWriter.extend(
 	},
 
 	getReviewTab: function() {
+		// Note: when adding track changes elements, consider this._map['wopi'].HideChangeTrackingControls
 		var content = [
 			{
 				'id': 'review-spell-dialog',

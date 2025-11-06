@@ -17,7 +17,7 @@
  * text area itself.
  */
 
-/* global app _ */
+/* global app _ CursorHandler */
 
 window.L.TextInput = window.L.Layer.extend({
 	initialize: function() {
@@ -65,13 +65,7 @@ window.L.TextInput = window.L.Layer.extend({
 		this._initLayout();
 
 		// Under-caret orange marker.
-		this._cursorHandler = window.L.marker(new window.L.LatLng(0, 0), {
-			icon: window.L.divIcon({
-				className: 'leaflet-cursor-handler',
-				iconSize: null
-			}),
-			draggable: true
-		}).on('dragend', this._onCursorHandlerDragEnd, this);
+		this._addCursorHandler();
 
 		// Auto-correct characters can trigger auto-correction, but
 		// must be sent as key-up/down if we want correction.
@@ -108,6 +102,18 @@ window.L.TextInput = window.L.Layer.extend({
 			'57': 105   // 9
 		};
 
+	},
+
+	_addCursorHandler() {
+		if (document.getElementById('canvas-container')) {
+			this._cursorHandler = new CursorHandler();
+			app.sectionContainer.addSection(this._cursorHandler);
+		}
+		else {
+			app.layoutingService.appendLayoutingTask(() => {
+				this._addCursorHandler();
+			});
+		}
 	},
 
 	hasAccessibilitySupport: function() {
@@ -167,7 +173,8 @@ window.L.TextInput = window.L.Layer.extend({
 		window.L.DomEvent.off(this._textArea, 'focus blur', this._onFocusBlur, this);
 		window.L.DomEvent.off(this._map.getContainer(), 'mousedown touchstart', this._abortComposition, this);
 
-		this._map.removeLayer(this._cursorHandler);
+		if (this._cursorHandler)
+			app.sectionContainer.removeSection(this._cursorHandler.name);
 	},
 
 	disable: function () {
@@ -497,10 +504,6 @@ window.L.TextInput = window.L.Layer.extend({
 			return;
 		}
 
-		// Fetch top and bottom coords of caret
-		var top = this._map._docLayer._twipsToLatLng({ x: app.file.textCursor.rectangle.x1, y: app.file.textCursor.rectangle.y1 });
-		var bottom = this._map._docLayer._twipsToLatLng({ x: app.file.textCursor.rectangle.x1, y: app.file.textCursor.rectangle.y2 });
-
 		if (!this._map._docLayer._cursorMarker.isDomAttached()) {
 			// Display caret
 			this._map._docLayer._cursorMarker.add();
@@ -509,12 +512,15 @@ window.L.TextInput = window.L.Layer.extend({
 
 		// Move and display under-caret marker
 
-		if (window.touch.currentlyUsingTouchscreen() && this._map._docLayer._textCSelections.empty()) {
-			this._cursorHandler.setLatLng(bottom).addTo(this._map);
-		} else {
-			this._map.removeLayer(this._cursorHandler);
+		if (window.touch.currentlyUsingTouchscreen() && this._map._docLayer._textCSelections.empty() && this._cursorHandler) {
+			this._cursorHandler.setPosition(app.file.textCursor.rectangle.pX1, app.file.textCursor.rectangle.pY2 + (0 * app.dpiScale));
+			this._cursorHandler.setShowSection(true);
+		} else if (this._cursorHandler) {
+			this._cursorHandler.setShowSection(false);
 		}
 
+		// Fetch top and bottom coords of caret
+		var top = this._map._docLayer._twipsToLatLng({ x: app.file.textCursor.rectangle.x1, y: app.file.textCursor.rectangle.y1 });
 		// Move the hidden text area with the cursor
 		this._latlng = window.L.latLng(top);
 		this.update();
@@ -531,7 +537,10 @@ window.L.TextInput = window.L.Layer.extend({
 		}
 		if (this._map._docLayer._cursorMarker.isDomAttached())
 			this._map._docLayer._cursorMarker.remove();
-		this._map.removeLayer(this._cursorHandler);
+
+		if (this._cursorHandler)
+			this._cursorHandler.setShowSection(false);
+
 		// shape handlers visible again (if selected)
 		this._map.fire('handlerstatus', {hidden: false});
 	},
@@ -1561,6 +1570,34 @@ window.L.TextInput = window.L.Layer.extend({
 		msg += '    is collapsed: ' + selection.isCollapsed + '\n';
 
 		window.app.console.log(msg);
+	},
+
+	onAccessibilityCaretChange: function () {
+		window.app.console.warn('invalid call: ' + (new Error()).stack);
+	},
+
+	onAccessibilityTextSelectionChanged: function () {
+		window.app.console.warn('invalid call: ' + (new Error()).stack);
+	},
+
+	onAccessibilityFocusedCellChanged: function () {
+		window.app.console.warn('invalid call: ' + (new Error()).stack);
+	},
+
+	onAccessibilityEditingInSelectionState: function () {
+		window.app.console.warn('invalid call: ' + (new Error()).stack);
+	},
+
+	onAccessibilitySelectionChanged: function () {
+		window.app.console.warn('invalid call: ' + (new Error()).stack);
+	},
+
+	setA11yFocusedParagraph: function () {
+		window.app.console.warn('invalid call: ' + (new Error()).stack);
+	},
+
+	setA11yCaretPosition: function () {
+		window.app.console.warn('invalid call: ' + (new Error()).stack);
 	}
 });
 

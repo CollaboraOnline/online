@@ -26,7 +26,7 @@ describe(['tagmultiuser'], 'Joining a document should not trigger an invalidatio
 		// Turn off SpellChecking by default because grammar checking,
 		// when available, currently adds an extra empty update when
 		// grammar checking kicks in at server-side idle after a change.
-		localStorage.setItem('SpellOnline', false);
+		localStorage.setItem('spellOnline', false);
 		helper.setupAndLoadDocument('writer/invalidations.odt',
 																/* skipDocumentCheck */ true,
 																/* isMulti */ true);
@@ -81,7 +81,7 @@ describe(['tagmultiuser'], 'Joining a document should not trigger an invalidatio
 
 		cy.cSetActiveFrame('#iframe1');
 		writerHelper.selectAllTextOfDoc();
-		cy.cGet('.leaflet-layer').click({force:true});
+		cy.cGet('#document-container').click({force:true});
 		cy.cGet('#toolbar-down #StateWordCount', { timeout: 60 }).should('have.text', '1 word, 1 character');
 
 		cy.cGet('.empty-deltas').then(($before) => {
@@ -101,7 +101,7 @@ describe(['tagmultiuser'], 'Joining a document should not trigger an invalidatio
 
 			cy.cSetActiveFrame('#iframe1');
 			writerHelper.selectAllTextOfDoc();
-			cy.cGet('.leaflet-layer').click({force:true});
+			cy.cGet('#document-container').click({force:true});
 			cy.cGet('#toolbar-down #StateWordCount', { timeout: 60 }).should('have.text', '1 word, 1 character');
 
 			ceHelper.type('X');

@@ -14,15 +14,32 @@ class DocumentBase {
 	public readonly type: string = 'DocumentBase';
 	public activeView: ViewLayoutBase;
 	public tableMiddleware: TableMiddleware;
+	public selectionMiddleware: ImpressSelectionMiddleware | null;
+	public mouseControl: MouseControl | null = null;
 
 	protected _fileSize: cool.SimplePoint;
 
 	constructor() {
-		this.activeView = new ViewLayoutBase();
+		if (app.map._docLayer._docType === 'text') {
+			this.activeView = new ViewLayoutWriter();
+		} else {
+			this.activeView = new ViewLayoutBase();
+		}
 		this._fileSize = new cool.SimplePoint(0, 0);
 		this.tableMiddleware = new TableMiddleware();
 
 		this.tableMiddleware.setupTableOverlay();
+
+		if (app.map._docLayer._docType === 'presentation')
+			this.selectionMiddleware = new ImpressSelectionMiddleware();
+		else this.selectionMiddleware = null;
+
+		this.addSections();
+	}
+
+	private addSections() {
+		this.mouseControl = new MouseControl(app.CSections.MouseControl.name);
+		app.sectionContainer.addSection(this.mouseControl);
 	}
 
 	public get fileSize(): cool.SimplePoint {

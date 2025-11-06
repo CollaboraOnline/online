@@ -56,6 +56,10 @@
 #include "DocumentViewController.h"
 #endif
 
+#if WASMAPP
+#include "wasmapp.hpp"
+#endif
+
 #include <climits>
 #include <fstream>
 #include <memory>
@@ -727,6 +731,9 @@ bool ChildSession::_handleInput(const char *buffer, int length)
                 bool result = unoCommand(unoSave);
                 if (result)
                 {
+#if WASMAPP
+                    saveToServer();
+#endif
                     LogUiCommands uiLog(*this);
                     uiLog.logSaveLoad("save", Poco::URI(getJailedFilePath()).getPath(), timeStart);
                 }
@@ -965,6 +972,7 @@ bool ChildSession::loadDocument(const StringVector& tokens)
     if (!loaded || _viewId < 0)
     {
         LOG_ERR("Failed to get LoKitDocument instance for [" << getJailedFilePathAnonym() << ']');
+        sendTextFrameAndLogError("error: cmd=load kind=faileddocloading");
         return false;
     }
 
@@ -1112,11 +1120,10 @@ bool ChildSession::sendFontRendering(const StringVector& tokens)
     const auto start = std::chrono::steady_clock::now();
     // renderFont use a default font size (25) when width and height are 0
     int width = 0, height = 0;
-    unsigned char* ptrFont = nullptr;
 
     getLOKitDocument()->setView(_viewId);
 
-    ptrFont = getLOKitDocument()->renderFont(decodedFont.c_str(), decodedChar.c_str(), &width, &height);
+    ScopedBytes ptrFont(getLOKitDocument()->renderFont(decodedFont.c_str(), decodedChar.c_str(), &width, &height));
 
     const auto duration = std::chrono::steady_clock::now() - start;
     const auto elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(duration);
@@ -1129,7 +1136,7 @@ bool ChildSession::sendFontRendering(const StringVector& tokens)
 
     const auto mode = static_cast<LibreOfficeKitTileMode>(getLOKitDocument()->getTileMode());
 
-    if (Png::encodeBufferToPNG(ptrFont, width, height, output, mode))
+    if (Png::encodeBufferToPNG(ptrFont.get(), width, height, output, mode))
     {
         bSuccess = sendTextFrame(output.data(), output.size());
     }
@@ -1138,7 +1145,6 @@ bool ChildSession::sendFontRendering(const StringVector& tokens)
         bSuccess = sendTextFrameAndLogError("error: cmd=renderfont kind=failure");
     }
 
-    std::free(ptrFont);
     return bSuccess;
 }
 
@@ -1157,6 +1163,23 @@ bool ChildSession::getStatus()
     }
 
     return sendTextFrame("status: " + status);
+}
+
+bool ChildSession::getPartStatus()
+{
+    std::string status;
+
+    getLOKitDocument()->setView(_viewId);
+
+    status = LOKitHelper::documentStatus(getLOKitDocument()->get(), true);
+
+    if (status.empty())
+    {
+        LOG_ERR("Failed to get part status.");
+        return false;
+    }
+
+    return sendTextFrame("partstatus:" + status);
 }
 
 namespace
@@ -1194,7 +1217,6 @@ void insertUserNames(const std::map<int, UserInfo>& viewInfo, std::string& json)
 bool ChildSession::getCommandValues(const StringVector& tokens)
 {
     bool success;
-    char* values;
     std::string command;
     if (tokens.size() != 2 || !getTokenString(tokens[1], "command", command))
     {
@@ -1206,26 +1228,22 @@ bool ChildSession::getCommandValues(const StringVector& tokens)
 
     if (command == ".uno:DocumentRepair")
     {
-        char* undo;
-        values = getLOKitDocument()->getCommandValues(".uno:Redo");
-        undo = getLOKitDocument()->getCommandValues(".uno:Undo");
+        LOKitHelper::ScopedString values(getLOKitDocument()->getCommandValues(".uno:Redo"));
+        LOKitHelper::ScopedString undo(getLOKitDocument()->getCommandValues(".uno:Undo"));
         std::ostringstream jsonTemplate;
         jsonTemplate << "{\"commandName\":\".uno:DocumentRepair\",\"Redo\":"
-                     << (values == nullptr ? "" : values)
-                     << ",\"Undo\":" << (undo == nullptr ? "" : undo) << "}";
+                     << (values.get() == nullptr ? "" : values.get())
+                     << ",\"Undo\":" << (undo.get() == nullptr ? "" : undo.get()) << "}";
         std::string json = jsonTemplate.str();
         // json only contains view IDs, insert matching user names.
         std::map<int, UserInfo> viewInfo = _docManager->getViewInfo();
         insertUserNames(viewInfo, json);
         success = sendTextFrame("commandvalues: " + json);
-        std::free(values);
-        std::free(undo);
     }
     else
     {
-        values = getLOKitDocument()->getCommandValues(command.c_str());
-        success = sendTextFrame("commandvalues: " + std::string(values == nullptr ? "{}" : values));
-        std::free(values);
+        LOKitHelper::ScopedString values(getLOKitDocument()->getCommandValues(command.c_str()));
+        success = sendTextFrame("commandvalues: " + std::string(values.get() == nullptr ? "{}" : values.get()));
     }
 
     return success;
@@ -2436,9 +2454,9 @@ uint64_t hashSubBuffer(unsigned char* pixmap, size_t startX, size_t startY,
 }
 }
 
-bool ChildSession::renderNextSlideLayer(SlideCompressor &scomp,
-                                        const unsigned width, const unsigned height,
-                                        double devicePixelRatio, bool& done, bool isCompressed = false)
+bool ChildSession::renderNextSlideLayer(SlideCompressor& scomp, const unsigned width,
+                                        const unsigned height, double devicePixelRatio, bool& done,
+                                        const std::string& cacheKey, bool isCompressed = false)
 {
     // FIXME: we need a multi-user / view cache somewhere here (?)
     auto pixmap = std::make_shared<std::vector<unsigned char>>(static_cast<size_t>(4) * width * height);
@@ -2458,15 +2476,12 @@ bool ChildSession::renderNextSlideLayer(SlideCompressor &scomp,
         {
             std::string json = jsonMsg;
             Poco::JSON::Parser parser;
-            Poco::JSON::Object::Ptr root;
-            if (EnableExperimental){
-                root = parser.parse(json).extract<Poco::JSON::Object::Ptr>();
+            Poco::JSON::Object::Ptr root = parser.parse(json).extract<Poco::JSON::Object::Ptr>();
+            root->set("cacheKey", cacheKey);
+            if (EnableExperimental)
                 root->set("isCompressed", isCompressed);
 
-                std::stringstream ss;
-                root->stringify(ss);
-                json = ss.str();
-            }
+            json = JsonUtil::jsonToString(root);
 
             if (!isBitmapLayer)
             {
@@ -2508,10 +2523,7 @@ bool ChildSession::renderNextSlideLayer(SlideCompressor &scomp,
                     root = parser.parse(json).extract<Poco::JSON::Object::Ptr>();
                     root->set("width", width);
                     root->set("height", height);
-
-                    std::stringstream updatedSs;
-                    root->stringify(updatedSs);
-                    json = updatedSs.str();
+                    json = JsonUtil::jsonToString(root);
                 }
 
                 std::string response = "slidelayer: " + json;
@@ -2640,7 +2652,8 @@ bool ChildSession::renderSlide(const StringVector& tokens)
     SlideCompressor scomp(_docManager->getSyncPool());
     while (!done)
     {
-        success = renderNextSlideLayer(scomp, bufferWidth, bufferHeight, devicePixelRatio, done, compressedLayers);
+        success = renderNextSlideLayer(scomp, bufferWidth, bufferHeight, devicePixelRatio, done,
+                                       tokens.substrFromToken(1), compressedLayers);
         if (!success)
             break;
     }
@@ -2656,7 +2669,10 @@ bool ChildSession::renderSlide(const StringVector& tokens)
 
     std::string msg = "sliderenderingcomplete: ";
     if (EnableExperimental) {
-        msg += std::string("{\"status\": \"") + (success ? "success" : "fail") + "\", \"slidehash\": \"" + hash + "\", \"compressedLayers\": " + (compressedLayers ? "true" : "false") + "}";
+        msg += std::string("{\"status\": \"") + (success ? "success" : "fail") +
+               "\", \"slidehash\": \"" + hash +
+               "\", \"compressedLayers\": " + (compressedLayers ? "true" : "false") +
+               ", \"cacheKey\": \"" + tokens.substrFromToken(1) + "\"}";
     } else {
         msg += (success ? "success" : "fail");
     }
@@ -3488,8 +3504,7 @@ bool ChildSession::sendProgressFrame(const char* id, const std::string& jsonProp
 void ChildSession::loKitCallback(const int type, const std::string& payload)
 {
     const char* const typeName = lokCallbackTypeToString(type);
-    LOG_TRC("ChildSession::loKitCallback [" << getName() << "]: " << typeName << " [" << payload
-                                            << ']');
+    LOG_TRC("ChildSession::loKitCallback: " << typeName << " [" << payload << ']');
 
     if (!Util::isMobileApp() && UnitKit::get().filterLoKitCallback(type, payload))
         return;
@@ -3627,7 +3642,16 @@ void ChildSession::loKitCallback(const int type, const std::string& payload)
         else if (payload.find(".uno:ModifiedStatus") != std::string::npos)
         {
             if (!_docManager->trackDocModifiedState(payload))
+            {
+                LOG_TRC("Forwarding " << payload << " after tracking modified state");
                 sendTextFrame("statechanged: " + payload);
+            }
+            else
+                LOG_TRC("Ignoring " << payload << " after tracking modified state");
+        }
+        else if (payload.find(".uno:CurrentPageResize") != std::string::npos)
+        {
+            getPartStatus();
         }
         else
             sendTextFrame("statechanged: " + payload);

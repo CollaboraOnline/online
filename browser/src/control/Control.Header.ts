@@ -48,12 +48,30 @@ export class Header extends CanvasSectionObject {
 	_dragDistance: number[];
 	_isColumn: boolean;
 	cursor: string;
+	resizeHandleSize: number;
+	borderResizeHandle = 3;
 
 	getFont: () => string;
 
 	constructor (name: string) {
 		super(name);
 	}
+
+	onInitialize(): void {
+		this._selectionBackgroundGradient = [ '#3465A4', '#729FCF', '#004586' ];
+
+		this._map.on('move zoomchanged sheetgeometrychanged splitposchanged', this._updateCanvas, this);
+		this._map.on('darkmodechanged', this._reInitRowColumnHeaderStylesAfterModeChange, this);
+		this._map.on('statusupdated', this._handleStatusUpdated, this);
+
+		this._reInitRowColumnHeaderStylesAfterModeChange();
+	}
+
+	_handleStatusUpdated(): void {
+		this._reInitRowColumnHeaderStylesAfterModeChange();
+	}
+
+	isMouseOverResizeArea(start: number, end:number, position: number, entryIsCurrent: boolean): boolean {return false;}
 
 	_initHeaderEntryStyles (className: string): void {
 		const baseElem = document.getElementsByTagName('body')[0];
@@ -128,7 +146,7 @@ export class Header extends CanvasSectionObject {
 		return (!!this._headerInfo.getElementData(index)?.isCurrent) || (!!this._headerInfo.getElementData(index)?.isHighlighted);
 	}
 
-	onContextMenu(evt: MouseEvent): void {
+	onContextMenu(point: cool.SimplePoint, evt: MouseEvent): void {
 		if ((window as any).mode.isMobile() && this._map.isEditMode()) {
 			(window as any).contextMenuWizard = true;
 			this._map.fire('mobilewizard', {data: this._menuData});
@@ -148,18 +166,45 @@ export class Header extends CanvasSectionObject {
 
 	_reInitRowColumnHeaderStylesAfterModeChange(): void {
 		// add a separation to update row/column DOM element info
+		var isSheetView = app.calc.isSelectedPartSheetView();
+		var isSheetViewSynced = app.calc.isSelectedPartSheetViewSynced();
+
 		if (this._isColumn) {
 			// update column DOM element info
-			this._initHeaderEntryStyles('spreadsheet-header-column');
-			this._initHeaderEntryHoverStyles('spreadsheet-header-column-hover');
-			this._initHeaderEntrySelectedStyles('spreadsheet-header-column-selected');
+			if (isSheetView && !isSheetViewSynced) {
+				this._initHeaderEntryStyles('spreadsheet-header-sheetview-unsynced-column');
+				this._initHeaderEntryHoverStyles('spreadsheet-header-sheetview-column-hover');
+				this._initHeaderEntrySelectedStyles('spreadsheet-header-sheetview-column-selected');
+			}
+			else if (isSheetView) {
+				this._initHeaderEntryStyles('spreadsheet-header-sheetview-column');
+				this._initHeaderEntryHoverStyles('spreadsheet-header-sheetview-column-hover');
+				this._initHeaderEntrySelectedStyles('spreadsheet-header-sheetview-column-selected');
+			}
+			else {
+				this._initHeaderEntryStyles('spreadsheet-header-column');
+				this._initHeaderEntryHoverStyles('spreadsheet-header-column-hover');
+				this._initHeaderEntrySelectedStyles('spreadsheet-header-column-selected');
+			}
 			this._initHeaderEntryResizeStyles('spreadsheet-header-column-resize');
 		}
 		else {
 			// update row DOM element info
-			this._initHeaderEntryStyles('spreadsheet-header-row');
-			this._initHeaderEntryHoverStyles('spreadsheet-header-row-hover');
-			this._initHeaderEntrySelectedStyles('spreadsheet-header-row-selected');
+			if (isSheetView && !isSheetViewSynced) {
+				this._initHeaderEntryStyles('spreadsheet-header-sheetview-unsynced-row');
+				this._initHeaderEntryHoverStyles('spreadsheet-header-sheetview-row-hover');
+				this._initHeaderEntrySelectedStyles('spreadsheet-header-sheetview-row-selected');
+			}
+			else if (isSheetView) {
+				this._initHeaderEntryStyles('spreadsheet-header-sheetview-row');
+				this._initHeaderEntryHoverStyles('spreadsheet-header-sheetview-row-hover');
+				this._initHeaderEntrySelectedStyles('spreadsheet-header-sheetview-row-selected');
+			}
+			else {
+				this._initHeaderEntryStyles('spreadsheet-header-row');
+				this._initHeaderEntryHoverStyles('spreadsheet-header-row-hover');
+				this._initHeaderEntrySelectedStyles('spreadsheet-header-row-selected');
+			}
 			this._initHeaderEntryResizeStyles('spreadsheet-header-row-resize');
 		}
 	}
@@ -448,13 +493,7 @@ export class Header extends CanvasSectionObject {
 			const end = isRTL ? this.size[0] - entry.pos + entry.size : entry.pos;
 			const start = end - entry.size;
 			if (position >= start && position < end) {
-				// NOTE: From a geometric perspective resizeAreaStart is really "resizeAreaEnd" in RTL case.
-				let resizeAreaStart = isRTL ? Math.min(start + 3 * app.dpiScale, end) : Math.max(start, end - 3 * app.dpiScale);
-				if (entry.isCurrent || (window as any).mode.isMobile()) {
-					resizeAreaStart = isRTL ? start + this._resizeHandleSize : end - this._resizeHandleSize;
-				}
-				const isMouseOverResizeArea = isRTL ? (position < resizeAreaStart) : (position > resizeAreaStart);
-				result = {entry: entry, hit: isMouseOverResizeArea};
+				result = {entry: entry, hit: this.isMouseOverResizeArea(start, end, position, entry.isCurrent)};
 				return true;
 			}
 		}.bind(this));
@@ -479,7 +518,7 @@ export class Header extends CanvasSectionObject {
 	}
 
 	onMouseEnter(): void {
-		this.containerObject.getCanvasStyle().cursor = this._cursor;
+		this.context.canvas.style.cursor = this._cursor;
 		this._bindContextMenu();
 	}
 
@@ -497,7 +536,6 @@ export class Header extends CanvasSectionObject {
 			this._mouseOverEntry = null;
 		}
 		this._hitResizeArea = false;
-		this.containerObject.getCanvasStyle().cursor = 'default';
 	}
 
 	_bindContextMenu(): void {
@@ -575,7 +613,7 @@ export class Header extends CanvasSectionObject {
 
 			if (isMouseOverResizeArea !== this._hitResizeArea) { // Do we need to change cursor (to resize or pointer).
 				const cursor = isMouseOverResizeArea ? this._resizeCursor : this._cursor;
-				this.containerObject.getCanvasStyle().cursor = cursor;
+				this.context.canvas.style.cursor = cursor;
 				this._hitResizeArea = isMouseOverResizeArea;
 			}
 		}
@@ -587,7 +625,7 @@ export class Header extends CanvasSectionObject {
 				return;
 			if (this._dragEntry)
 				return;
-			const modifier = typeof this._lastSelectedIndex === 'number' && this._lastSelectedIndex >= 0 ? UNOModifier.SHIFT : 0;
+			const modifier = typeof this._lastSelectedIndex === 'number' && this._lastSelectedIndex >= 0 ? app.UNOModifier.SHIFT : 0;
 			this._lastSelectedIndex = this._mouseOverEntry.index;
 			this.selectIndex(this._mouseOverEntry.index, modifier);
 		}

@@ -20,16 +20,6 @@ interface DelayedMessageInterface {
 	msg: string;
 }
 
-interface CompleteTraceEvent {
-	id: number;
-	tid: number;
-	active: boolean;
-	args: any;
-	begin: DOMHighResTimeStamp;
-	finish(): void;
-	abort(): void;
-}
-
 interface CoolHTMLImageElement extends HTMLImageElement {
 	completeTraceEvent?: CompleteTraceEvent;
 
@@ -47,52 +37,4 @@ interface SlurpMessageEvent extends MessageEvent {
 	imageIsComplete?: boolean;
 	callback?: DefCallBack;
 	reason?: string;
-}
-
-interface Command {
-	filename?: string;
-	url?: string;
-	type?: string;
-	mode?: number;
-	id?: string;
-	errorCmd?: string;
-	errorCode?: string;
-	errorKind?: string;
-	jail?: string;
-	dir?: string;
-	downloadid?: string;
-	name?: string;
-	port?: string;
-	font?: string;
-	char?: string;
-	viewid?: string;
-	nviewid?: string;
-	params?: string[];
-	rendercount?: number;
-	wireId?: string;
-	title?: string;
-	dialogwidth?: string;
-	dialogheight?: string;
-	rectangle?: string;
-	hiddenparts?: number[];
-	rtlParts?: number[];
-	protectedParts?: number[];
-	hash?: string;
-	nopng?: boolean;
-	username?: string;
-	pageRectangleList?: number[][];
-	lastcolumn?: number;
-	lastrow?: number;
-	readonly?: number;
-
-	x?: number;
-	y?: number;
-	tileWidth?: number;
-	tileHeight?: number;
-	width?: number;
-	height?: number;
-	zoom?: number;
-	part?: number;
-	parts?: number;
-	selectedPart?: number;
 }

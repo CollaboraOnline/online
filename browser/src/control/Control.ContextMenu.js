@@ -43,7 +43,7 @@ window.L.Control.ContextMenu = window.L.Control.extend({
 					  'ArrangeFrameMenu', 'ArrangeMenu', 'BringToFront', 'ObjectForwardOne', 'ObjectBackOne', 'SendToBack',
 					  'RotateMenu', 'RotateLeft', 'RotateRight', 'TransformDialog', 'FormatLine', 'FormatArea',
 					  'FormatChartArea', 'InsertTitles', 'InsertRemoveAxes',
-					  'DeleteLegend', 'DiagramType', 'DataRanges', 'DiagramData', 'View3D',
+					  'DeleteLegend', 'DiagramType', 'DataRanges', 'DiagramData', 'View3D', 'ManageThemes',
 					  'FormatWall', 'FormatFloor', 'FormatLegend', 'FormatTitle', 'FormatDataSeries',
 					  'FormatAxis', 'FormatMajorGrid', 'FormatMinorGrid', 'FormatDataLabels',
 					  'FormatDataLabel', 'FormatDataPoint', 'FormatMeanValue', 'FormatXErrorBars', 'FormatYErrorBars',
@@ -54,7 +54,9 @@ window.L.Control.ContextMenu = window.L.Control.extend({
 					  'SpellCheckIgnoreAll', 'LanguageStatus', 'SpellCheckApplySuggestion', 'PageDialog',
 					  'CompressGraphic', 'GraphicDialog', 'InsertCaptionDialog',
 					  'AnimationEffects', 'ExecuteAnimationEffect',
-					  'NextTrackedChange', 'PreviousTrackedChange', 'RejectTrackedChange', 'AcceptTrackedChange', 'ReinstateTrackedChange', 'InsertAnnotation'],
+					  'InsertAnnotation', 'FormatGroup', 'FormatUngroup'],
+
+			tracking: ['NextTrackedChange', 'PreviousTrackedChange', 'RejectTrackedChange', 'AcceptTrackedChange', 'ReinstateTrackedChange'],
 
 			text: ['TableInsertMenu',
 				   'InsertRowsBefore', 'InsertRowsAfter', 'InsertColumnsBefore', 'InsertColumnsAfter',
@@ -128,18 +130,20 @@ window.L.Control.ContextMenu = window.L.Control.extend({
 			app.map._docLayer._resetReferencesMarks();
 		}
 
-		$.contextMenu('destroy', '.leaflet-layer');
+		$.contextMenu('destroy', '#canvas-container');
 		this.hasContextMenu = false;
 	},
 
-	_onMouseDown: function(e) {
-		this._prevMousePos = {x: e.originalEvent.pageX, y: e.originalEvent.pageY};
+	_onMouseDown: function() {
+		if (app.activeDocument && app.activeDocument.mouseControl)
+			this._prevMousePos = app.activeDocument.mouseControl.getMousePagePosition();
 
 		this._onClosePopup();
 	},
 
-	_onMouseUp: function (e) {
-		this._currMousePos = { x: e.originalEvent.pageX, y: e.originalEvent.pageY };
+	_onMouseUp: function () {
+		if (app.activeDocument && app.activeDocument.mouseControl)
+			this._currMousePos = app.activeDocument.mouseControl.getMousePagePosition();
 	},
 
 	_onKeyDown: function(e) {
@@ -187,7 +191,7 @@ window.L.Control.ContextMenu = window.L.Control.extend({
 			map.fire('mobilewizard', {data: menuData});
 		} else {
 			window.L.installContextMenu({
-				selector: '.leaflet-layer',
+				selector: '#canvas-container',
 				className: 'cool-font on-the-fly-context-menu',
 				trigger: 'none',
 				zIndex: 1500,
@@ -226,10 +230,9 @@ window.L.Control.ContextMenu = window.L.Control.extend({
 					}
 				}
 			});
-			if (autoFillContextMenu)
-				$('.leaflet-layer').contextMenu(this._currMousePos);
-			else
-				$('.leaflet-layer').contextMenu(this._prevMousePos);
+
+			const position = app.activeDocument.mouseControl.getMousePagePosition();
+			$('#canvas-container').contextMenu(position);
 			$('.context-menu-root').focus();
 			this.hasContextMenu = true;
 		}
@@ -312,6 +315,7 @@ window.L.Control.ContextMenu = window.L.Control.extend({
 
 				if (commandName !== 'None' &&
 					this.options.whitelist.general.indexOf(commandName) === -1 &&
+					(this._map['wopi'].HideChangeTrackingControls || this.options.whitelist.tracking.indexOf(commandName) === -1) &&
 					!(docType === 'text' && this.options.whitelist.text.indexOf(commandName) !== -1) &&
 					!(docType === 'spreadsheet' && this.options.whitelist.spreadsheet.indexOf(commandName) !== -1) &&
 					!(docType === 'presentation' && this.options.whitelist.presentation.indexOf(commandName) !== -1) &&

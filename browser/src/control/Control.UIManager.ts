@@ -362,6 +362,8 @@ class UIManager extends window.L.Control {
 	 * Initializes basic UI components.
 	 */
 	initializeBasicUI(): void {
+		app.console.debug('UIManager: initialize basic UI');
+
 		this.initializeMenubarAndTopToolbar();
 
 		if (window.mode.isMobile()) {
@@ -451,6 +453,8 @@ class UIManager extends window.L.Control {
 		this.map.on('hidebusy', (e: any) => {
 			fadeoutBusyPopup();
 		});
+
+		app.serverConnectionService.onBasicUI();
 	}
 
 	/**
@@ -458,6 +462,8 @@ class UIManager extends window.L.Control {
 	 * @param docType - Document type (e.g. 'spreadsheet', 'presentation', 'text').
 	 */
 	initializeSpecializedUI(docType: string): void {
+		app.console.debug('UIManager: initialize specialized UI for: ' + docType);
+
 		var isDesktop = window.mode.isDesktop();
 		var currentMode = this.getCurrentMode();
 		var enableNotebookbar = currentMode === 'notebookbar' && !app.isReadOnly();
@@ -545,7 +551,7 @@ class UIManager extends window.L.Control {
 			JSDialog.PresentationBar(this.map);
 			this.map.sidebarFromNotebookbar = JSDialog.SidebarFromNotebookbarPanel(this.map);
 		}
-		if ((window.mode.isTablet() || window.mode.isDesktop()) && !app.isReadOnly()) {
+		if (window.mode.isTablet() || window.mode.isDesktop()) {
 			this.map.navigator.initializeNavigator(docType);
 		}
 
@@ -553,14 +559,33 @@ class UIManager extends window.L.Control {
 
 		this.refreshTheme();
 
+		var startFolloMePresntationGet = this.map.isPresentationOrDrawing() && window.coolParams.get('startFollowMePresentation');
 		var startPresentationGet = this.map.isPresentationOrDrawing() && window.coolParams.get('startPresentation');
 		// check for "presentation" dispatch event only after document gets fully loaded
-		this.map.on('docloaded', function() {
-			if (startPresentationGet === 'true' || startPresentationGet === '1') {
+		const startPresentation = () => {
+			if (startFolloMePresntationGet === 'true' || startFolloMePresntationGet === '1') {
+				const dispatchFollowPresentation = () => {
+					app.dispatcher.dispatch('followpresentation');
+					this.map.off('slideshowfollowon', dispatchFollowPresentation);
+				}
+				// have to wait until we get all the leader slide details
+				// if we start the follow me presentation directly then
+				// it will start from beginning and not where the leader is
+				// This also help with if the follow me presentation is not running
+				this.map.on('slideshowfollowon', dispatchFollowPresentation);
+			}
+			else if (startPresentationGet === 'true' || startPresentationGet === '1') {
 				app.dispatcher.dispatch('presentation');
 			}
-		});
+
+			// docloaded event is fired multiple times, unfortunately
+            // but presentation should start only once
+			this.map.off('docloaded', startPresentation);
+		};
+		this.map.on('docloaded', startPresentation);
 		this.map.contextToolbar = new ContextToolbar(this.map);
+
+		app.serverConnectionService.onSpecializedUI(docType);
 	}
 
 	/**
@@ -597,6 +622,10 @@ class UIManager extends window.L.Control {
 					app.socket.sendMessage('uno .uno:SidebarShow');
 					app.socket.sendMessage('uno .uno:CustomAnimation');
 					this.map.sidebar.setupTargetDeck('.uno:CustomAnimation');
+				} else if (this.getBooleanDocTypePref('SdMasterPagesDeck', false)) {
+					app.socket.sendMessage('uno .uno:SidebarShow');
+					app.socket.sendMessage('uno .uno:MasterSlidesPanel');
+					this.map.sidebar.setupTargetDeck('.uno:MasterSlidesPanel');
 				}
 			} else if (showSidebar && this.getBooleanDocTypePref('StyleListDeck', false)) {
 				app.socket.sendMessage('uno .uno:SidebarShow');
@@ -932,10 +961,13 @@ class UIManager extends window.L.Control {
 
 		if (this.getCurrentMode() === 'classic')
 			this.insertButtonToClassicToolbar(button);
-		else if (this.notebookbar)
+
+		// we always  create notebookbar component, it should get the button in advance
+		// in case of mode switch done by user later
+		if (this.notebookbar)
 			this.notebookbar.insertButtonToShortcuts(button);
 		else
-			app.console.debug('UIManager: no notebookbar yet to insert button: ' + JSON.stringify(button));
+			app.console.error('UIManager: no notebookbar yet to insert button: ' + JSON.stringify(button));
 	}
 
 	/**
@@ -979,22 +1011,22 @@ class UIManager extends window.L.Control {
 	 */
 	showButton(buttonId: string, show: boolean): void {
 		var found = false;
-		if (this.getCurrentMode() === 'classic') {
+
+		if (show)
+			delete this.hiddenButtons[buttonId];
+		else
+			this.hiddenButtons[buttonId] = true;
+
+		if (this.getCurrentMode() === 'classic')
 			found = this.showButtonInClassicToolbar(buttonId, show);
-		} else {
-			if (show) {
-				delete this.hiddenButtons[buttonId];
-			} else {
-				this.hiddenButtons[buttonId] = true;
-			}
-			this.notebookbar.reloadShortcutsBar();
-			found = this.notebookbar.showNotebookbarButton(buttonId, show);
+
+		if (this.notebookbar) {
+			if (this.getCurrentMode() === 'notebookbar') this.notebookbar.reloadShortcutsBar();
+			found = show ? this.notebookbar.showItem(buttonId) : this.notebookbar.hideItem(buttonId);
 		}
 
-		if (!found) {
-			window.app.console.error('Button with id "' + buttonId + '" not found.');
-			return;
-		}
+		if (!found)
+			window.app.console.error('UIManager: Button with id "' + buttonId + '" not found.');
 	}
 
 	/**
@@ -1056,23 +1088,24 @@ class UIManager extends window.L.Control {
 	 * @param show - Flag to show (true) or hide (false).
 	 */
 	showCommand(command: string, show: boolean): void {
-		if (show) {
+		if (show)
 			delete this.hiddenCommands[command];
-		} else {
+		else
 			this.hiddenCommands[command] = true;
-		}
+
 		var found = false;
 		if (this.getCurrentMode() === 'classic') {
 			found ||= this.showCommandInClassicToolbar(command, show);
 			found ||= this.showCommandInMenubar(command, show);
-		} else {
-			this.notebookbar.reloadShortcutsBar();
+		}
+
+		if (this.notebookbar) {
+			if (this.getCurrentMode() === 'notebookbar') this.notebookbar.reloadShortcutsBar();
 			found ||= this.notebookbar.showNotebookbarCommand(command, show);
 		}
 
-		if (!found) {
-			window.app.console.error('Item with command "' + command + '" not found.');
-		}
+		if (!found)
+			window.app.console.error('UIManager: Item with command "' + command + '" not found.');
 	}
 
 	/**
@@ -1491,6 +1524,9 @@ class UIManager extends window.L.Control {
 	blockUI(event: any): void {
 		this.blockedUI = true;
 		this.map.fire('showbusy', {label: event ? event.message : null});
+
+		const canvas = document.getElementById('document-canvas');
+		if (canvas) canvas.style.pointerEvents = 'none'; // To remove the need for checking isUIBlocked.
 	}
 
 	/**
@@ -1499,6 +1535,9 @@ class UIManager extends window.L.Control {
 	unblockUI(): void {
 		this.blockedUI = false;
 		this.map.fire('hidebusy');
+
+		const canvas = document.getElementById('document-canvas');
+		if (canvas) canvas.style.pointerEvents = '';
 	}
 
 	// Document area tooltip

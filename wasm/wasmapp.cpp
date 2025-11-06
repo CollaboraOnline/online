@@ -20,10 +20,15 @@
 
 #include <emscripten/fetch.h>
 
+#include <cassert>
+#include <cstdio>
 #include <cstdlib>
+#include <memory>
 
 int coolwsd_server_socket_fd = -1;
 
+static char const * tempFile; // null when operating on a local file in the Emscripten file system
+static std::string remoteUrl;
 static std::string fileURL;
 static int fakeClientFd;
 static int closeNotificationPipeForForwardingThread[2] = {-1, -1};
@@ -145,15 +150,60 @@ void handle_cool_message(const char *string_value)
     }
 }
 
+namespace {
+struct FileClose {
+    void operator ()(FILE * f) { std::fclose(f); }
+};
+}
+
+void saveToServer() {
+    if (tempFile == nullptr) {
+        return;
+    }
+    long n;
+    std::unique_ptr<char[]> buf;
+    {
+        auto const f = std::unique_ptr<FILE, FileClose>(std::fopen(tempFile, "r"));
+        if (f.get() == nullptr) {
+            LOG_WRN("Failed to open " << tempFile << " for reading"); //TODO
+            return;
+        }
+        int e = std::fseek(f.get(), 0, SEEK_END);
+        if (e != 0) {
+            LOG_WRN("Failed to seek in " << tempFile); //TODO
+            return;
+        }
+        n = std::ftell(f.get());
+        if (n == -1) {
+            LOG_WRN("Failed to get size of " << tempFile); //TODO
+            return;
+        }
+        buf = std::make_unique<char[]>(n);
+        std::rewind(f.get());
+        std::size_t n2 = std::fread(buf.get(), 1, n, f.get());
+        assert(n >= 0);
+        if (n2 != static_cast<unsigned long>(n)) {
+            LOG_WRN("Failed to get read " << tempFile); //TODO
+            return;
+        }
+    }
+    emscripten_fetch_attr_t attr;
+    emscripten_fetch_attr_init(&attr);
+    strcpy(attr.requestMethod, "POST");
+    attr.attributes = EMSCRIPTEN_FETCH_SYNCHRONOUS; //TODO: make this asynchronous
+    attr.requestData = buf.get();
+    attr.requestDataSize = n;
+    emscripten_fetch_t * fetch = emscripten_fetch(&attr, remoteUrl.c_str());
+    emscripten_fetch_close(fetch);
+    LOG_TRC("Saved " << tempFile << " back to <" << remoteUrl << ">: " << fetch->status);
+    //TODO: handle fetch->status != 200
+}
+
 int main(int argc, char* argv_main[])
 {
     std::cout << "================ Here is main()" << std::endl;
 
-    if (argc < 2)
-    {
-        std::cout << "Error: expected argument with document URL not found" << std::endl;
-        return 1;
-    }
+    assert(argc == 3);
 
     Log::initialize("WASM", "error", false, false, {}, false, {});
     Util::setThreadName("main");
@@ -175,32 +225,31 @@ int main(int argc, char* argv_main[])
         {
             Util::setThreadName("COOLWSD::run");
 
-            const std::string docURL = std::string(argv_main[1]);
-            const std::string encodedWOPI = std::string(argv_main[2]);
-            const std::string isWOPI = std::string(argv_main[3]);
+            const std::string docKind = std::string(argv_main[1]);
+            const std::string docDesc = std::string(argv_main[2]);
 
-            if (isWOPI == "true")
+            if (docKind == "server")
             {
-                std::string url = "/wasm/" + encodedWOPI;
+                remoteUrl = "/wasm/" + docDesc;
 
-                printf("isWOPI is %s: Fetching from url %s\n", isWOPI.c_str(), url.c_str());
+                printf("Fetching from url %s\n", remoteUrl.c_str());
 
                 emscripten_fetch_attr_t attr;
                 emscripten_fetch_attr_init(&attr);
                 strcpy(attr.requestMethod, "GET");
                 attr.attributes = EMSCRIPTEN_FETCH_LOAD_TO_MEMORY | EMSCRIPTEN_FETCH_SYNCHRONOUS;
                 emscripten_fetch_t* fetch = emscripten_fetch(
-                    &attr, url.data()); // Blocks here until the operation is complete.
+                    &attr, remoteUrl.data()); // Blocks here until the operation is complete.
                 if (fetch->status == 200)
                 {
                     printf("Finished downloading %llu bytes from URL %s.\n", fetch->numBytes,
                            fetch->url);
-                    char const FILE_PATH[] = "/tempdoc";
-                    FILE* f = fopen(FILE_PATH, "w");
+                    tempFile = "/tempdoc";
+                    FILE* f = fopen(tempFile, "w");
                     const int wrote = fwrite(fetch->data, 1, fetch->numBytes, f);
                     fclose(f);
-                    printf("Wrote %d bytes into %s\n", wrote, FILE_PATH);
-                    fileURL = std::string("file://") + FILE_PATH;
+                    printf("Wrote %d bytes into %s\n", wrote, tempFile);
+                    fileURL = std::string("file://") + tempFile;
                 }
                 else
                 {
@@ -210,9 +259,13 @@ int main(int argc, char* argv_main[])
                 }
                 emscripten_fetch_close(fetch);
             }
+            else if (docKind == "local")
+            {
+                fileURL = docDesc;
+            }
             else
             {
-                fileURL = docURL;
+                assert(false);
             }
 
             COOLWSD *coolwsd = new COOLWSD();

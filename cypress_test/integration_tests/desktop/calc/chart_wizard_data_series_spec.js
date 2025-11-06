@@ -15,7 +15,8 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Chart wizard data series d
 
 		// Open chart wizard via notebookbar Insert tab
 		cy.cGet('#Insert-tab-label').click();
-		cy.cGet('#insert-insert-object-chart').click();
+		// do not click the hidden overflow button
+		cy.cGet('#Insert .unoInsertObjectChart').eq(0).click();
 
 		// Wait for Chart Type dialog to appear
 		cy.cGet('.lokdialog_container').should('be.visible');

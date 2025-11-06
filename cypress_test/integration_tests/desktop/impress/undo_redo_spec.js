@@ -12,7 +12,6 @@ describe(['tagdesktop'], 'Editing Operations', function() {
 		impressHelper.dblclickOnSelectedShape();
 		helper.typeIntoDocument('{ctrl+a}');
 		helper.copy();
-		impressHelper.dblclickOnSelectedShape();
 		helper.clipboardTextShouldBeDifferentThan('Hello World');
 	}
 
@@ -37,10 +36,12 @@ describe(['tagdesktop'], 'Editing Operations', function() {
 		desktopHelper.selectZoomLevel('30', false);
 
 		impressHelper.selectTextShapeInTheCenter();
+		cy.wait(500); // Wait a little for server response.
 		impressHelper.dblclickOnSelectedShape();
 	});
 
 	function undo() {
+		cy.wait(500); // Same, wait for server response.
 		helper.typeIntoDocument('Hello World');
 		expectTypedText();
 		helper.typeIntoDocument('{ctrl+z}');
@@ -56,6 +57,7 @@ describe(['tagdesktop'], 'Editing Operations', function() {
 		helper.setDummyClipboardForCopy();
 		undo();
 		helper.typeIntoDocument('{ctrl+y}');
+		cy.wait(500); // Wait a little for server response.
 		expectTypedText();
 	});
 

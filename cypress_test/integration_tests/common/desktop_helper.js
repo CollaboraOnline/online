@@ -43,6 +43,12 @@ function hideSidebarImpress() {
 	cy.log('<< hideSidebarImpress - end');
 }
 
+function sidebarToggle() {
+	cy.log('>> sidebarToggle');
+	// for notebookbar
+	cy.cGet('#optionscontainer [id^="SidebarDeck.PropertyDeck"] button').click();
+}
+
 // Make the status bar visible if it's hidden at the moment.
 // We use the menu option under 'View' menu to make it visible.
 function showStatusBarIfHidden() {
@@ -312,6 +318,26 @@ function insertComment(text = 'some text0', save = true) {
 	cy.log('<< insertComment - end');
 }
 
+
+function toggleComments(resolved = false) {
+	cy.log('>> toggleComments - start');
+
+	var mode = Cypress.env('USER_INTERFACE');
+	if (mode === 'notebookbar') {
+		cy.cGet('#Review-tab-label').click();
+		if (resolved) cy.cGet('#review-show-resolved-annotations').click();
+		else cy.cGet('#showannotations').click();
+		// to avoid notebookbar collapse in subsequent calls to toggleComments.
+		cy.cGet('#Home-tab-label').click();
+	} else {
+		cy.cGet('#menu-view').click();
+		if (resolved) cy.cGet('#menu-showresolved').click();
+		else cy.cGet('#menu-showannotations').click();
+	}
+
+	cy.log('>> toggleComments - end');
+}
+
 function switchUIToNotebookbar() {
 	cy.log('>> switchUIToNotebookbar - start');
 
@@ -530,6 +556,7 @@ module.exports.insertImage = insertImage;
 module.exports.insertVideo = insertVideo;
 module.exports.deleteImage = deleteImage;
 module.exports.insertComment = insertComment;
+module.exports.toggleComments = toggleComments;
 module.exports.actionOnSelector = actionOnSelector;
 module.exports.assertScrollbarPosition = assertScrollbarPosition;
 module.exports.pressKey = pressKey;
@@ -543,3 +570,4 @@ module.exports.scrollViewDown = scrollViewDown;
 module.exports.updateFollowingUsers = updateFollowingUsers;
 module.exports.assertVisiblePage = assertVisiblePage;
 module.exports.closeNavigatorSidebar = closeNavigatorSidebar;
+module.exports.sidebarToggle = sidebarToggle;

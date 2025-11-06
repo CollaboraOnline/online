@@ -85,12 +85,13 @@ function _iconViewEntry(
 	//id is needed to find the element to regain focus after widget is updated. see updateWidget in Control.JSDialogBuilder.js
 	entryContainer.id = parentData.id + '_' + entry.row;
 
-	// By default `aria-presed` should be false
-	entryContainer.setAttribute('aria-pressed', 'false');
+	entryContainer.setAttribute('role', 'option');
+	// By default `aria-selected` should be false
+	entryContainer.setAttribute('aria-selected', 'false');
 
 	if (entry.selected && entry.selected === true) {
 		$(entryContainer).addClass('selected');
-		entryContainer.setAttribute('aria-pressed', 'true');
+		entryContainer.setAttribute('aria-selected', 'true');
 	}
 
 	if (entry.ondemand) {
@@ -129,7 +130,11 @@ function _iconViewEntry(
 			//avoid re-selecting already selected entry
 			if ($(entryContainer).hasClass('selected')) return;
 
-			$('#' + parentData.id + ' .ui-iconview-entry').removeClass('selected');
+			$('#' + parentData.id + ' .ui-iconview-entry').each(function () {
+				$(this).removeClass('selected');
+				this.setAttribute('aria-selected', 'false');
+			});
+
 			builder.callback('iconview', 'select', parentData, entry.row, builder);
 			if (singleClick) {
 				builder.callback(
@@ -143,9 +148,15 @@ function _iconViewEntry(
 		});
 
 		entryContainer.addEventListener('contextmenu', function (e: Event) {
-			$('#' + parentData.id + ' .ui-iconview-entry').removeClass('selected');
+			$('#' + parentData.id + ' .ui-iconview-entry').each(function () {
+				$(this).removeClass('selected');
+				this.setAttribute('aria-selected', 'false');
+			});
+
 			builder.callback('iconview', 'select', parentData, entry.row, builder);
 			$(entryContainer).addClass('selected');
+			entryContainer.setAttribute('aria-selected', 'true');
+
 			builder.callback(
 				'iconview',
 				'contextmenu',
@@ -182,6 +193,8 @@ JSDialog.iconView = function (
 		parentContainer,
 	);
 	container.id = data.id;
+	container.setAttribute('role', 'listbox');
+
 	if (data.labelledBy)
 		container.setAttribute('aria-labelledby', data.labelledBy);
 
@@ -224,7 +237,12 @@ JSDialog.iconView = function (
 	}
 
 	container.onSelect = (position: number) => {
-		$(container).children('.selected').removeClass('selected');
+		$(container)
+			.children('.selected')
+			.each(function () {
+				$(this).removeClass('selected');
+				this.setAttribute('aria-selected', 'false');
+			});
 
 		const entry =
 			container.children.length > position
@@ -233,6 +251,8 @@ JSDialog.iconView = function (
 
 		if (entry) {
 			window.L.DomUtil.addClass(entry, 'selected');
+			entry.setAttribute('aria-selected', 'true');
+
 			if (builder.options.useScrollAnimation !== false) {
 				const blockOption = JSDialog.ScrollIntoViewBlockOption('nearest');
 				entry.scrollIntoView({
@@ -292,6 +312,28 @@ JSDialog.iconView = function (
 			builder.callback('iconview', 'select', data, selectedIndex, builder);
 		else if (e.key === 'Enter')
 			builder.callback('iconview', 'activate', data, selectedIndex, builder);
+	});
+
+	// ensures that aria-selected is updated on initial focus on iconview entries
+	container.addEventListener('focusin', function (e: FocusEvent) {
+		const target = e.target as HTMLElement;
+
+		if (
+			!target.classList.contains('ui-iconview-entry') ||
+			target.getAttribute('aria-selected') === 'true'
+		)
+			return;
+
+		// remove aria-selected from previously selected entry
+		const previouslySelected = container.querySelector(
+			'.ui-iconview-entry[aria-selected="true"]',
+		);
+		if (previouslySelected) {
+			previouslySelected.setAttribute('aria-selected', 'false');
+		}
+
+		// set aria-selected on focused entry
+		target.setAttribute('aria-selected', 'true');
 	});
 
 	return false;

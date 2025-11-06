@@ -63,3 +63,23 @@ describe(['tagdesktop'], 'Notebookbar review operations.', function() {
 		cy.cGet('#Review-tab-label').should('have.class', 'selected');
 	});
 });
+
+describe(['tagdesktop'], 'HideChangeTrackingControls mode tests.', function() {
+	it('Check that track change controls are not shown', function() {
+		helper.setupAndLoadDocument('writer/hide_change_tracking_controls.odt', /* isMultiUser */ false, /* copyCertificates copies .wopi.json */ true);
+		desktopHelper.switchUIToNotebookbar();
+		cy.viewport(1920,1080);
+
+		cy.cGet('.notebookbar #Review-tab-label').click();
+		cy.cGet('.notebookbar #Review-container').should('exist');
+		cy.cGet('.notebookbar #review-tracking').should('not.exist');
+		cy.cGet('.notebookbar .unoTrackChanges').should('not.exist');
+		cy.cGet('.notebookbar .unoShowTrackedChanges').should('not.exist');
+		cy.cGet('.notebookbar .unoNextTrackedChange').should('not.exist');
+		cy.cGet('.notebookbar .unoPreviousTrackedChange').should('not.exist');
+		cy.cGet('.notebookbar .unoAcceptTrackedChangeToNext').should('not.exist');
+		cy.cGet('.notebookbar .unoRejectTrackedChangeToNext').should('not.exist');
+		cy.cGet('.notebookbar .unoReinstateTrackedChange').should('not.exist');
+		cy.cGet('.notebookbar .unoAcceptTrackedChanges').should('not.exist');
+	});
+});

@@ -110,7 +110,9 @@ class JSDialogModelState {
 
 			if (JSDialog.verbose) {
 				app.console.debug(
-					'JSDialogModelState: widgetUpdate\n\nBEFORE: ' +
+					'JSDialogModelState: ' +
+						this.componentName +
+						' widgetUpdate\n\nBEFORE: ' +
 						before +
 						'\n\nAFTER: ' +
 						this.safeStringify(this.getById(id)),
@@ -133,9 +135,15 @@ class JSDialogModelState {
 		if (found) {
 			if (JSDialog.verbose) {
 				app.console.debug(
-					'JSDialogModelState: widgetAction ' + data.data.control_id,
+					'JSDialogModelState: ' +
+						this.componentName +
+						' widgetAction ' +
+						data.data.control_id,
 				);
 			}
+
+			if (data.data.action_type === 'show') found.visible = true;
+			else if (data.data.action_type === 'hide') found.visible = false;
 		}
 	}
 
@@ -149,8 +157,13 @@ class JSDialogModelState {
 		}
 
 		const found = JSDialogModelState.findWidgetById(widgetId, this.model);
-		if (!found)
-			app.console.debug('JSDialogModelState: not found id: ' + widgetId);
+		if (!found && JSDialog.verbose)
+			app.console.debug(
+				'JSDialogModelState: ' +
+					this.componentName +
+					' not found id: ' +
+					widgetId,
+			);
 		return found;
 	}
 

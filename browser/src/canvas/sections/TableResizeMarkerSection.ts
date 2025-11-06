@@ -36,9 +36,8 @@ class TableResizeMarkerSection extends HTMLObjectSection {
 		this.sectionProperties.bottomMost = 0;
 		this.sectionProperties.dragStartPosition = null;
 		this.sectionProperties.initialPosition = this.position.slice();
-
-		this.moveHTMLObjectToMapElement();
-		this.mirrorEventsFromSourceToCanvasSectionContainer(this.getHTMLObject());
+		this.sectionProperties.hoverCursor =
+			markerType === 'column' ? 'col-resize' : 'row-resize';
 	}
 
 	private calculateLeftMostAndRightMostAvailableX() {
@@ -59,20 +58,16 @@ class TableResizeMarkerSection extends HTMLObjectSection {
 		if (!previous) {
 			// First column marker.
 			this.sectionProperties.leftMost = this.position[0] - 1000;
-			this.sectionProperties.rightMost =
-				next.position[0] -
-				app.activeDocument.tableMiddleware.resizeMarkerMaxApproximation;
-		} else if (!next) {
-			// Last column marker.
+		} else {
 			this.sectionProperties.leftMost =
 				previous.position[0] +
 				app.activeDocument.tableMiddleware.resizeMarkerMaxApproximation;
+		}
+
+		if (!next) {
+			// Last column marker.
 			this.sectionProperties.rightMost = this.position[0] + 1000;
 		} else {
-			// Middle column markers.
-			this.sectionProperties.leftMost =
-				previous.position[0] +
-				app.activeDocument.tableMiddleware.resizeMarkerMaxApproximation;
 			this.sectionProperties.rightMost =
 				next.position[0] -
 				app.activeDocument.tableMiddleware.resizeMarkerMaxApproximation;
@@ -94,31 +89,21 @@ class TableResizeMarkerSection extends HTMLObjectSection {
 						this.sectionProperties.index + 1
 					];
 
-		if (!previous && !next) {
+		if (!previous) {
 			// First row marker.
 			this.sectionProperties.topMost =
 				app.activeDocument.tableMiddleware.getTableTopY() +
 				app.activeDocument.tableMiddleware.resizeMarkerMaxApproximation;
-			this.sectionProperties.bottomMost = this.position[1] + 1000;
-		} else if (!previous) {
-			// First row marker.
-			this.sectionProperties.topMost =
-				app.activeDocument.tableMiddleware.getTableTopY() +
-				app.activeDocument.tableMiddleware.resizeMarkerMaxApproximation;
-			this.sectionProperties.bottomMost =
-				next.position[1] -
-				app.activeDocument.tableMiddleware.resizeMarkerMaxApproximation;
-		} else if (!next) {
-			// Last row marker.
+		} else {
 			this.sectionProperties.topMost =
 				previous.position[1] +
 				app.activeDocument.tableMiddleware.resizeMarkerMaxApproximation;
+		}
+
+		if (!next) {
+			// Last row marker.
 			this.sectionProperties.bottomMost = this.position[1] + 1000;
 		} else {
-			// Middle row markers.
-			this.sectionProperties.topMost =
-				previous.position[1] +
-				app.activeDocument.tableMiddleware.resizeMarkerMaxApproximation;
 			this.sectionProperties.bottomMost =
 				next.position[1] -
 				app.activeDocument.tableMiddleware.resizeMarkerMaxApproximation;
@@ -126,21 +111,22 @@ class TableResizeMarkerSection extends HTMLObjectSection {
 	}
 
 	public onMouseEnter(point: cool.SimplePoint, e: MouseEvent): void {
-		this.stopPropagating(e);
-
 		// Calculate on mouse enter so we don't need to recaulculate on every mouse move.
 		if (this.sectionProperties.markerType === 'column')
 			this.calculateLeftMostAndRightMostAvailableX();
 		else this.calculateTopMostAndBottomMostAvailableY();
+
+		this.getHTMLObject().classList.add('hovered');
+
+		this.context.canvas.style.cursor = this.sectionProperties.hoverCursor;
 	}
 
 	public onMouseLeave(point: cool.SimplePoint, e: MouseEvent): void {
-		this.stopPropagating(e);
 		this.sectionProperties.dragStartPosition = null;
+		this.getHTMLObject().classList.remove('hovered');
 	}
 
 	public onMouseDown(point: cool.SimplePoint, e: MouseEvent): void {
-		this.stopPropagating(e);
 		this.sectionProperties.dragStartPosition = point;
 		if ((<any>window).mode.isMobile() || (<any>window).mode.isTablet()) {
 			this.calculateLeftMostAndRightMostAvailableX();
@@ -224,7 +210,6 @@ class TableResizeMarkerSection extends HTMLObjectSection {
 	}
 
 	public onMouseUp(point: cool.SimplePoint, e: MouseEvent): void {
-		this.stopPropagating(e);
 		this.sectionProperties.dragStartPosition = null;
 
 		if (
@@ -277,8 +262,6 @@ class TableResizeMarkerSection extends HTMLObjectSection {
 		e: MouseEvent,
 	): void {
 		if (this.containerObject.isDraggingSomething()) {
-			this.stopPropagating(e);
-
 			// We only allow horizontal movement for column markers and vertical for row markers.
 
 			if (this.sectionProperties.markerType === 'column')

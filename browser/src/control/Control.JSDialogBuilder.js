@@ -94,7 +94,7 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 		this._controlHandlers['progressbar'] = JSDialog.progressbar;
 		this._controlHandlers['pagemarginentry'] = JSDialog.pageMarginEntry;
 		this._controlHandlers['pagesizeentry'] = JSDialog.pageSizeEntry;
-		this._controlHandlers['checkbox'] = this._checkboxControl;
+		this._controlHandlers['checkbox'] = JSDialog.Checkbox;
 		this._controlHandlers['basespinfield'] = this.baseSpinField;
 		this._controlHandlers['spinfield'] = this._spinfieldControl;
 		this._controlHandlers['metricfield'] = this._metricfieldControl;
@@ -914,80 +914,6 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 		};
 	},
 
-	_rayCastingSensitivity: 10, // Pixels
-
-	_findFocusableParent: function(container, currentElement, element, arrowUp) {
-		if (!element)
-			return null;
-		else if (element.tagName === 'NAV' && arrowUp) {
-			return element;
-		}
-		else if (element.tabIndex === -1 || element.tagName == 'A') {
-			return this._findFocusableParent(container, currentElement, element.parentNode, arrowUp);
-		}
-		else if (container.contains(element) && currentElement !== element && !currentElement.contains(element) && !element.disabled) {
-			return element;
-		}
-		else
-			return null;
-	},
-
-	_rayCastToNextElement: function(container, currentElement, boundingRectangle, startX, startY, diffX, diffY, arrowUp) {
-		let count = 0;
-		let foundElement;
-		while (count <= 60) {
-			count++;
-			startX += diffX;
-			startY += diffY;
-
-			foundElement = document.elementFromPoint(startX, startY);
-			foundElement = this._findFocusableParent(container, currentElement, foundElement, arrowUp);
-			if (foundElement) break;
-
-			// If we are here, we'll try secondary and tertiary rays.
-			if (diffX === 0) {
-				foundElement = document.elementFromPoint(boundingRectangle.left, startY);
-				foundElement = this._findFocusableParent(container, currentElement, foundElement, arrowUp);
-				if (foundElement) break;
-
-				foundElement = document.elementFromPoint(boundingRectangle.right, startY);
-				foundElement = this._findFocusableParent(container, currentElement, foundElement, arrowUp);
-				if (foundElement) break;
-			}
-			else if (diffY === 0) {
-				foundElement = document.elementFromPoint(startX, boundingRectangle.top);
-				foundElement = this._findFocusableParent(container, currentElement, foundElement, arrowUp);
-				if (foundElement) break;
-
-				foundElement = document.elementFromPoint(startX, boundingRectangle.bottom);
-				foundElement = this._findFocusableParent(container, currentElement, foundElement, arrowUp);
-				if (foundElement) break;
-			}
-		}
-
-		if (count === 60)
-			return null;
-		else
-			return foundElement;
-	},
-
-	_findNextElementInContainer: function(container, currentElement, direction) {
-		let boundingRectangle = currentElement.getBoundingClientRect();
-		let startX = boundingRectangle.left + (boundingRectangle.right - boundingRectangle.left) / 2;
-		let startY = boundingRectangle.top + (boundingRectangle.bottom - boundingRectangle.top) / 2;
-
-		let diffX = 0;
-		let diffY = 0;
-
-		if (direction === 'ArrowLeft' || direction === 'ArrowRight')
-			diffX = direction === 'ArrowRight' ? (this._rayCastingSensitivity) : (this._rayCastingSensitivity * -1);
-
-		if (direction === 'ArrowUp' || direction === 'ArrowDown')
-			diffY = direction === 'ArrowDown' ? (this._rayCastingSensitivity) : (this._rayCastingSensitivity * -1);
-
-		return this._rayCastToNextElement(container, currentElement, boundingRectangle, startX, startY, diffX, diffY, direction === 'ArrowUp');
-	},
-
 	_tabsControlHandler: function(parentContainer, data, builder, tabTooltip) {
 		if (tabTooltip === undefined) {
 			tabTooltip = '';
@@ -1130,7 +1056,7 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 							if (e.key === 'Tab')
 								e.preventDefault();
 							let container = document.getElementsByClassName('ui-tabs-content notebookbar');
-							let elementToFocus = this._findNextElementInContainer(container[0], currentElement, key);
+							let elementToFocus = JSDialog.FindNextElementInContainer(container[0], currentElement, key);
 							if (elementToFocus && elementToFocus.tagName !== 'NAV')
 								elementToFocus.focus();
 							else if (elementToFocus)
@@ -1167,61 +1093,6 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 			var child = item.children[0];
 			builder.build(parentContainer, [child]);
 		}
-		return false;
-	},
-
-	_checkboxControl: function(parentContainer, data, builder) {
-		var div = window.L.DomUtil.createWithId('div', data.id, parentContainer);
-		window.L.DomUtil.addClass(div, 'checkbutton');
-		window.L.DomUtil.addClass(div, builder.options.cssClass);
-
-		var checkbox = window.L.DomUtil.create('input', builder.options.cssClass, div);
-		checkbox.type = 'checkbox';
-		checkbox.id = data.id + '-input';
-		checkbox.tabIndex = '0';
-
-		var checkboxLabel = window.L.DomUtil.create('label', builder.options.cssClass, div);
-		checkboxLabel.id = data.id + '-label';
-		checkboxLabel.textContent = builder._cleanText(data.text);
-		checkboxLabel.htmlFor = data.id + '-input';
-
-		var toggleFunction = function() {
-			if (div.hasAttribute('disabled'))
-				return;
-
-			builder.callback('checkbox', 'change', div, this.checked, builder);
-		};
-
-		const isDisabled = data.enabled === false;
-		if (isDisabled) {
-			div.setAttribute('disabled', 'true');
-			div.disabled = true;
-			checkbox.setAttribute('disabled', 'true');
-			checkbox.disabled = true;
-			checkbox.setAttribute('aria-disabled', true);
-		}
-
-		JSDialog.SynchronizeDisabledState(div, [checkbox, checkboxLabel]);
-
-		checkbox.addEventListener('change', toggleFunction);
-
-		var updateFunction = function() {
-			if (div.hasAttribute('disabled'))
-				return;
-
-			var state = data.checked;
-
-			if (state && state === 'true' || state === true || state === 1 || state === '1')
-				$(checkbox).prop('checked', true);
-			else if (state)
-				$(checkbox).prop('checked', false);
-		};
-
-		updateFunction();
-
-		if (data.hidden)
-			$(checkbox).hide();
-
 		return false;
 	},
 
@@ -1400,6 +1271,7 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 		var wrapper = window.L.DomUtil.create('div', wrapperClass + ' ui-pushbutton-wrapper ' + builder.options.cssClass, parentContainer); // need for locking overlay
 		wrapper.id = data.id;
 		var pushbutton = window.L.DomUtil.create('button', 'ui-pushbutton ' + builder.options.cssClass, wrapper);
+		pushbutton.id = wrapper.id + '-button';
 		pushbutton.setAttribute('tabindex', '0');
 		builder._setAccessKey(pushbutton, builder._getAccessKeyFromText(data.text));
 		var pushbuttonText = builder._customPushButtonTextForId(data.id) !== '' ? builder._customPushButtonTextForId(data.id) : builder._cleanText(data.text);

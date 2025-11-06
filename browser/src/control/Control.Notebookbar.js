@@ -29,7 +29,6 @@ window.L.Control.Notebookbar = window.L.Control.extend({
 	FORMULAS_TAB_ID: 'Formula-tab-label',
 
 	additionalShortcutButtons: [],
-	hiddenItems: [],
 
 	setBuilder: function(builder, model) {
 		this.builder = builder;
@@ -50,20 +49,13 @@ window.L.Control.Notebookbar = window.L.Control.extend({
 	},
 
 	// on show
-	create: function() {
+	create: function(container) {
 		var docType = this._map.getDocType();
 
 		if (document.documentElement.dir === 'rtl')
 			this._RTL = true;
 
-		// remove old toolbar
-		var toolbar = window.L.DomUtil.get('toolbar-up');
-		if (toolbar)
-			toolbar.outerHTML = '';
-
-		// create toolbar from template
-		$('#toolbar-logo').after(this.map.toolbarUpTemplate.cloneNode(true));
-		this.parentContainer = window.L.DomUtil.get('toolbar-up');
+		this.container = container;
 
 		this.loadTab();
 
@@ -89,28 +81,41 @@ window.L.Control.Notebookbar = window.L.Control.extend({
 
 		var docLogoHeader = window.L.DomUtil.create('div', '');
 		docLogoHeader.id = 'document-header';
+		if (!window.logoURL || window.logoURL != "none") {
+			var docLogoHeader = window.L.DomUtil.create('div', '');
+			docLogoHeader.id = 'document-header';
 
-		var iconClass = 'document-logo';
-		var iconTooltip;
-		if (docType === 'text') {
-			iconClass += ' writer-icon-img';
-			iconTooltip = 'Writer';
-		} else if (docType === 'spreadsheet') {
-			iconClass += ' calc-icon-img';
-			iconTooltip = 'Calc';
-		} else if (docType === 'presentation') {
-			iconClass += ' impress-icon-img';
-			iconTooltip = 'Impress';
-		} else if (docType === 'drawing') {
-			iconClass += ' draw-icon-img';
-			iconTooltip = 'Draw';
+			var iconClass = 'document-logo';
+			var iconTooltip;
+			if (!window.logoURL) {
+				if (docType === 'text') {
+					iconClass += ' writer-icon-img';
+					iconTooltip = 'Writer';
+				} else if (docType === 'spreadsheet') {
+					iconClass += ' calc-icon-img';
+					iconTooltip = 'Calc';
+				} else if (docType === 'presentation') {
+					iconClass += ' impress-icon-img';
+					iconTooltip = 'Impress';
+				} else if (docType === 'drawing') {
+					iconClass += ' draw-icon-img';
+					iconTooltip = 'Draw';
+				}
+			}
+			var docLogo = window.L.DomUtil.create('div', iconClass, docLogoHeader);
+			$(docLogo).data('id', 'document-logo');
+			$(docLogo).data('type', 'action');
+			if (iconTooltip) {
+				docLogo.setAttribute('data-cooltip', iconTooltip);
+			}
+			window.L.control.attachTooltipEventListener(docLogo, this.map);
+			$('.main-nav').prepend(docLogoHeader);
+
+			if (window.logoURL) {
+				docLogo.style.backgroundImage = "url(" + window.logoURL + ")";
+			}
 		}
-		var docLogo = window.L.DomUtil.create('div', iconClass, docLogoHeader);
-		$(docLogo).data('id', 'document-logo');
-		$(docLogo).data('type', 'action');
-		docLogo.setAttribute('data-cooltip', iconTooltip);
-		window.L.control.attachTooltipEventListener(docLogo, this.map);
-		$('.main-nav').prepend(docLogoHeader);
+
 		var isDarkMode = window.prefs.getBoolean('darkTheme');
 		if (!isDarkMode)
 			$('#invertbackground').hide();
@@ -130,6 +135,7 @@ window.L.Control.Notebookbar = window.L.Control.extend({
 			this.floatingNavIcon.classList.remove('hasnotebookbar');
 		$('.main-nav #document-header').remove();
 		this.clearNotebookbar();
+		$(this.container).remove();
 	},
 
 	onUpdatePermission: function(e) {
@@ -197,15 +203,12 @@ window.L.Control.Notebookbar = window.L.Control.extend({
 		$('.root-container.notebookbar').remove();
 		$('.notebookbar-tabs-container').remove();
 		$('.notebookbar-shortcuts-bar').remove();
-		$(this.container).remove();
 	},
 
 	loadTab: function() {
 		app.console.debug('Notebookbar: loadTab');
 
 		this.clearNotebookbar();
-
-		this.container = window.L.DomUtil.create('div', 'notebookbar-scroll-wrapper', this.parentContainer);
 
 		this.builder.build(this.container, [this.model.getSnapshot()]);
 
@@ -310,8 +313,13 @@ window.L.Control.Notebookbar = window.L.Control.extend({
 	},
 
 	reloadShortcutsBar: function() {
-		$('.notebookbar-shortcuts-bar').remove();
-		this.createShortcutsBar();
+		if (!document.querySelector('.notebookbar-shortcuts-bar'))
+			return;
+
+		app.layoutingService.appendLayoutingTask(() => {
+			$('.notebookbar-shortcuts-bar').remove();
+			this.createShortcutsBar();
+		});
 	},
 
 	insertButtonToShortcuts: function(button) {
@@ -341,20 +349,6 @@ window.L.Control.Notebookbar = window.L.Control.extend({
 		this.reloadShortcutsBar();
 	},
 
-	showNotebookbarButton: function(buttonId, show) {
-		var button = $(this.container).find('#' + buttonId);
-		if (button) {
-			if (show) {
-				button.show();
-			} else {
-				button.hide();
-			}
-			return true;
-		} else {
-			return false;
-		}
-	},
-
 	showNotebookbarCommand: function(commandId, show) {
 		var cssClass;
 		if (commandId.indexOf('.uno:') == 0) {
@@ -364,6 +358,7 @@ window.L.Control.Notebookbar = window.L.Control.extend({
 		}
 		var button = $(this.container).find('div.' + cssClass);
 		if (button) {
+			// TODO: remember state like this.showItem
 			if (show) {
 				button.show();
 			} else {
@@ -438,10 +433,14 @@ window.L.Control.Notebookbar = window.L.Control.extend({
 	showButton: function (id, show) {
 		if (!id) return;
 
-		this.builder.executeAction(this.parentContainer, {
-			control_id: id,
-			control: { id: id },
-			action_type: show ? 'show' : 'hide',
+		this.builder.executeAction(this.container, {
+			id: this.builder.windowId,
+			action: 'action',
+			jsontype: 'notebookbar',
+			data: {
+				control_id: id,
+				action_type: show ? 'show' : 'hide',
+			}
 		});
 
 		JSDialog.RefreshScrollables();
@@ -679,22 +678,28 @@ window.L.Control.Notebookbar = window.L.Control.extend({
 
 	// dynamically show/hide items
 
+	// use getter to hide usage of UIManager's hiddenItems for centralization
+	getHiddenItems() {
+		if (!this._map || !this._map.uiManager)
+			return null;
+
+		return this._map.uiManager.hiddenItems;
+	},
+
 	hideItem: function(itemId) {
 		app.console.debug('Notebookbar: hide item: ' + itemId);
 
-		if (!this.hiddenItems.includes(itemId)) {
-			this.hiddenItems.push(itemId);
-			this.showItemImpl(itemId, false);
-		}
+		this.showItemImpl(itemId, false);
+
+		return true;
 	},
 
 	showItem: function(itemId) {
 		app.console.debug('Notebookbar: show item: ' + itemId);
 
-		if (this.hiddenItems.includes(itemId)) {
-			this.hiddenItems.splice(this.hiddenItems.indexOf(itemId), 1);
-			this.showItemImpl(itemId, true);
-		}
+		this.showItemImpl(itemId, true);
+
+		return true;
 	},
 
 	showItemImpl: function(itemId, show) {

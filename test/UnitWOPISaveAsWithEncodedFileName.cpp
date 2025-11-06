@@ -34,7 +34,8 @@ public:
     void assertPutRelativeFileRequest(const Poco::Net::HTTPRequest& request) override
     {
         // spec says UTF-7...
-        LOK_ASSERT_EQUAL(std::string("/path/to/hello+ACU-20world.pdf"), request.get("X-WOPI-SuggestedTarget"));
+        LOK_ASSERT_EQUAL_STR("/path/to/hello+ACU-20world.pdf",
+                             request.get("X-WOPI-SuggestedTarget"));
 
         // make sure it is a pdf - or at least that it is larger than what it
         // used to be

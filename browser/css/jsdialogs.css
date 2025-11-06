@@ -51,6 +51,11 @@
 	width: max-content;
 	max-width: 1000px;
 }
+
+#AcceptRejectChangesDialog #writerchanges {
+	padding-top: 0;
+}
+
 #AcceptRejectChangesDialog #RedlineViewPage.jsdialog.ui-grid-cell {
 	display: flex;
 	flex-direction: column;
@@ -59,6 +64,59 @@
 #AcceptRejectChangesDialog #RedlineFilterPage .ui-timefield {
 	margin: 5px;
 }
+
+#AcceptRejectChangesDialog .ui-treeview-headers { 
+	grid-template-columns: 120px 120px 150px 130px;
+	position: sticky;
+	top: 0;
+	background-color: var(--color-background-lighter) !important;
+	z-index: 1;
+}
+
+#AcceptRejectChangesDialog .jsdialog.ui-treeview-entry { 
+	padding: 0 !important;
+	height: 26px;
+}
+
+/* treeview that has an expander column */
+#AcceptRejectChangesDialog .jsdialog.ui-treeview-entry:has(> .ui-treeview-expander-column) {
+	grid-template-columns: 20px 100px 120px 150px 130px;
+}
+
+/* treeview that does not have an expander column */
+#AcceptRejectChangesDialog .jsdialog.ui-treeview-entry:not(:has(> .ui-treeview-expander-column)) {
+	grid-template-columns: 120px 120px 150px 130px;
+}
+
+#AcceptRejectChangesDialog .jsdialog.ui-treeview-entry .ui-treeview-icon-column + div,
+#AcceptRejectChangesDialog .ui-treeview-headers .ui-treeview-icon-column {
+	display: none;
+}
+
+#AcceptRejectChangesDialog #writerchanges.ui-treeview {
+	max-height: 300px;
+}
+
+#writerchanges.ui-treeview .jsdialog.ui-treeview-entry[aria-level='2'] .ui-treeview-expander-column,
+#writerchanges.ui-treeview .jsdialog.ui-treeview-entry[aria-level='2'] .ui-treeview-icon-column {
+	padding-left: 2.5ch;
+}
+
+#writerchanges.ui-treeview .jsdialog.ui-treeview-entry[aria-level='3'] .ui-treeview-expander-column,
+#writerchanges.ui-treeview .jsdialog.ui-treeview-entry[aria-level='3'] .ui-treeview-icon-column {
+	padding-left: 4.5ch;
+}
+
+#writerchanges.ui-treeview .jsdialog.ui-treeview-entry[aria-level='4'] .ui-treeview-expander-column,
+#writerchanges.ui-treeview .jsdialog.ui-treeview-entry[aria-level='4'] .ui-treeview-icon-column {
+	padding-left: 6.5ch;
+}
+
+#writerchanges.ui-treeview .jsdialog.ui-treeview-entry[aria-level='5'] .ui-treeview-expander-column,
+#writerchanges.ui-treeview .jsdialog.ui-treeview-entry[aria-level='5'] .ui-treeview-icon-column {
+	padding-left: 8.5ch;
+}
+
 .jsdialog.one-child-popup {
 	border: 0;
 	margin: 0 !important;
@@ -2364,7 +2422,6 @@ button.menubutton.sidebar > span {
 
 #FormulaDialog .ui-tabs-content.jsdialog {
 	grid-auto-columns: 250px;
-	margin-right: 0.2em;
 	margin-top: 0px;
 }
 
@@ -2375,6 +2432,34 @@ button.menubutton.sidebar > span {
 #FormulaDialog #ALTBOX #headline {
 	font-weight: bold;
 }
+
+/* text-area overflow on function wizard window */
+
+#FormulaDialog #ed_formula.ui-textarea {
+	max-width: 392px;
+}
+
+#FormulaDialog #tabcontrol {
+	margin-inline-end: 10px;
+}
+
+#FormulaDialog .ui-tabpage > div > .ui-grid-cell > :not(.ui-pushbutton-wrapper) {
+	margin: auto 4px;
+}
+
+#FormulaDialog .ui-pushbutton-wrapper {
+	background: initial;
+}
+
+#FormulaDialog {
+	/* don't leave white area below the functions if right panel is short */
+	height: 100%;
+}
+
+#FormulaDialog .ui-textarea {
+	margin-top: 10px;
+}
+
 
 div [id^='TemplateDialog'] {
 	min-width: 590px;
@@ -2636,13 +2721,6 @@ kbd,
 	justify-content: start;
 }
 
-
-/* text-area overflow on function wizard window */
-
-#FormulaDialog #ed_formula.ui-textarea {
-	max-width: 392px;
-}
-
 #showcomments-container[default-state='true'],
 #insertmode-container[default-state='true'],
 #permissionmode-container[default-state='true'],
@@ -2883,4 +2961,43 @@ kbd,
 	font-size: var(--default-font-size);
 	line-height: var(--default-height);
 	padding-left: inherit;
+}
+
+#sheets-buttons-toolbox #sheetlist.menubutton:hover {
+	border: 1px solid var(--color-btn-border);
+	background-color: var(--color-background-tabs-group);
+}
+
+#sheetlist-entries .ui-combobox-entry.selected span {
+	background-color: rgba(var(--doc-type)) !important;
+	color: var(--color-primary-text) !important;
+	border: 1px solid rgba(var(--doc-type)) !important;
+}
+
+#sheets-buttons-toolbox #sheetlist.menubutton {
+	padding: 0;
+	margin: 0;
+	box-sizing: inherit;
+}
+
+#sheetlist .arrowbackground {
+	display: none;
+}
+
+#sheets-buttons-toolbox #sheetlist-button img {
+	margin-inline-end: 0;
+}
+
+div [id^='themeview'] {
+	grid-template-columns: 1fr 1fr;
+	width: 420px;
+}
+div [id^='themeview1col'] {
+	grid-template-columns: 1fr;
+	width: 220px;
+}
+
+div [id^='themeview'].ui-iconview-entry, div [id^='themeview1col'].ui-iconview-entry {
+	width: 200px;
+	height: 146px
 }

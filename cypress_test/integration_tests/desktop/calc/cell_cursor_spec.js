@@ -56,8 +56,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Test jumping on large cell
 describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Test Cell Selections', function() {
 	beforeEach(function() {
 		helper.setupAndLoadDocument('calc/empty-selections.ods');
-
-		cy.cGet('[id="SidebarDeck.PropertyDeck"]').click();
+		desktopHelper.sidebarToggle();
 		cy.cGet('#sidebar-dock-wrapper').should('not.be.visible');
 	});
 
@@ -81,7 +80,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Test Cell Selections', fun
 
 		cy.wait(500);
 
-		cy.cGet('#map').compareSnapshot('selections', 0.02);
+		cy.cGet('#document-container').compareSnapshot('selections', 0.02);
 	});
 });
 

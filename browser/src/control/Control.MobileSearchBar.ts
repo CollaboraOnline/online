@@ -24,10 +24,16 @@ class MobileSearchBar extends Toolbar {
 			{
 				type: 'customtoolitem',
 				id: 'hidesearchbar',
-				w2icon: 'unfold',
+				w2icon: 'prevrecord',
 				text: _('Hide the search bar'),
 			},
 			{ type: 'searchedit', id: 'search', placeholder: _('Search'), text: '' },
+			{
+				type: 'customtoolitem',
+				id: 'cancelsearch',
+				text: _('Clear the search field'),
+				enabled: false,
+			},
 			{
 				type: 'customtoolitem',
 				id: 'searchprev',
@@ -41,12 +47,6 @@ class MobileSearchBar extends Toolbar {
 				text: _UNO('.uno:DownSearch'),
 				enabled: false,
 				pressAndHold: true,
-			},
-			{
-				type: 'customtoolitem',
-				id: 'cancelsearch',
-				text: _('Clear the search field'),
-				visible: false,
 			},
 			{ type: 'spacer', id: 'left' },
 		];

@@ -28,6 +28,8 @@
 
 #include "UnitTimeoutBase.hpp"
 
+using namespace std::literals;
+
 /// Test suite class for inactivity across WS and Http.
 class UnitTimeoutInactivity : public UnitTimeoutBase0
 {
@@ -36,12 +38,12 @@ class UnitTimeoutInactivity : public UnitTimeoutBase0
 
     void configure(Poco::Util::LayeredConfiguration& /* config */) override
     {
-        // net::Defaults.inactivityTimeout = std::chrono::seconds(3600);
-        net::Defaults.inactivityTimeout = std::chrono::milliseconds(360);
+        // net::Defaults.inactivityTimeout = 3600s;
+        net::Defaults.inactivityTimeout = 360ms;
         //
         // The following WSPing setup would cause ping/pong packages avoiding the inactivity TO
         //   net::Defaults.wsPingAvgTimeout = std::chrono::microseconds(25);
-        //   net::Defaults.wsPingInterval = std::chrono::milliseconds(30);
+        //   net::Defaults.wsPingInterval = 30ms;
     }
 
 public:

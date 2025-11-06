@@ -22,6 +22,8 @@
 #include <Unit.hpp>
 #include <helpers.hpp>
 
+using namespace std::literals;
+
 namespace
 {
 std::string getFontList(const std::string& message, const std::string& testname)
@@ -30,7 +32,7 @@ std::string getFontList(const std::string& message, const std::string& testname)
     const Poco::Dynamic::Var result = parser.parse(message);
     const auto& command = result.extract<Poco::JSON::Object::Ptr>();
     std::string text = command->get("commandName").toString();
-    LOK_ASSERT_EQUAL(std::string(".uno:CharFontName"), text);
+    LOK_ASSERT_EQUAL_STR(".uno:CharFontName", text);
     text = command->get("commandValues").toString();
     return text;
 }
@@ -68,7 +70,7 @@ UnitBase::TestResult UnitClose::testCloseAfterClose()
 
         // 5 seconds timeout
         LOK_ASSERT_MESSAGE("Expected successful disconnection of the WebSocket",
-                           socket->waitForDisconnection(std::chrono::seconds(5)));
+                           socket->waitForDisconnection(5s));
 
         // Verify that we get back a close frame.
         LOK_ASSERT_EQUAL(static_cast<int>(Poco::Net::WebSocket::FRAME_OP_CLOSE),
@@ -179,10 +181,10 @@ UnitBase::TestResult UnitClose::testAlertAllUsers()
             StringVector tokens(StringVector::tokenize(response.substr(6), ' '));
             std::string cmd;
             COOLProtocol::getTokenString(tokens, "cmd", cmd);
-            LOK_ASSERT_EQUAL(std::string("internal"), cmd);
+            LOK_ASSERT_EQUAL_STR("internal", cmd);
             std::string kind;
             COOLProtocol::getTokenString(tokens, "kind", kind);
-            LOK_ASSERT_EQUAL(std::string("diskfull"), kind);
+            LOK_ASSERT_EQUAL_STR("diskfull", kind);
         }
     }
     catch (const Poco::Exception& exc)

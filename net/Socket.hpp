@@ -389,7 +389,7 @@ public:
     // Ensure that no further input is processed from this socket
     virtual void ignoreInput()
     {
-        LOG_TRC("Ignore further input on socket.");
+        LOG_TRC("Ignore further input on socket");
         _ignoreInput = true;
     }
 
@@ -644,7 +644,7 @@ public:
     virtual int sendTextMessage(const char* msg, size_t len, bool flush = false) const = 0;
 
     /// Convenience wrapper
-    int sendTextMessage(const std::string &msg, bool flush = false) const
+    int sendTextMessage(const std::string_view msg, bool flush = false) const
     {
         ASSERT_CORRECT_THREAD();
         return sendTextMessage(msg.data(), msg.size(), flush);
@@ -1300,7 +1300,7 @@ public:
     void asyncShutdown()
     {
         _shutdownSignalled = true;
-        LOG_TRC("Async shutdown requested.");
+        LOG_TRC("Async shutdown requested");
     }
 
     void ignoreInput() override

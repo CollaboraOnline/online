@@ -236,10 +236,22 @@ public:
     {
     }
 
+    ~BackgroundSaveWatchdog()
+    {
+        if (!_saveCompleted)
+        {
+            LOG_WRN("BgSave watchdog for " << getpid()
+                                           << " is destroyed while save hadn't yet completed");
+            complete(); // Clean up.
+        }
+    }
+
     void complete()
     {
         _saveCompleted = true;
         _watchdogCV.notify_all();
+        if (_watchdogThread.joinable())
+            _watchdogThread.join();
     }
 
 private:
@@ -257,7 +269,7 @@ void Document::shutdownBackgroundWatchdog()
         BgSaveWatchdog->complete();
 }
 
-#endif
+#endif // !MOBILEAPP
 
 namespace
 {
@@ -478,7 +490,7 @@ namespace
         } else
             LOG_TRC("link(\"" << fpath << "\", \"" << newPath.c_str() << "\") failed: " << strerror(errno)
                     << ". Will copy.");
-        if (!FileUtil::copy(fpath, newPath.c_str(), /*log=*/false, /*throw_on_error=*/false))
+        if (!FileUtil::copy(fpath, newPath, /*log=*/false, /*throw_on_error=*/false))
         {
             LOG_FTL("Failed to copy or link [" << fpath << "] to [" << newPath << "]. Exiting.");
             Util::forcedExit(EX_SOFTWARE);
@@ -1087,6 +1099,8 @@ void Document::trimIfInactive()
     SigUtil::addActivity("trimIfInactive");
     _loKit->trimMemory(4096);
     _deltaGen->dropCache();
+    // Inform docbroker that document has (deep) trimmed memory
+    sendTextFrame("memorytrimmed:");
 }
 
 void Document::trimAfterInactivity()
@@ -1217,7 +1231,7 @@ void Document::trimAfterInactivity()
 
     if (type == LOK_CALLBACK_DOCUMENT_PASSWORD_RESET)
     {
-        Document* document = dynamic_cast<Document*>(descriptor->getDoc());
+        Document* document = descriptor->getDoc();
         Poco::JSON::Object::Ptr object;
         if (document && JsonUtil::parseJSON(payload, object))
         {
@@ -1233,7 +1247,7 @@ void Document::trimAfterInactivity()
     }
     else if (type == LOK_CALLBACK_VIEW_RENDER_STATE)
     {
-        Document* document = dynamic_cast<Document*>(descriptor->getDoc());
+        Document* document = descriptor->getDoc();
         if (document)
         {
             std::shared_ptr<ChildSession> session = document->findSessionByViewId(descriptor->getViewId());
@@ -1291,20 +1305,18 @@ bool Document::onLoad(const std::string& sessionId,
     std::shared_ptr<ChildSession> session = it->second;
     try
     {
-        if (!load(session, renderOpts))
+        if (load(session, renderOpts))
         {
-            return false;
+            return true;
         }
     }
     catch (const std::exception &exc)
     {
-        LOG_ERR("Exception while loading url [" << uriAnonym <<
-                "] for session [" << sessionId << "]: " << exc.what());
-        session->sendTextFrameAndLogError("error: cmd=load kind=faileddocloading");
-        return false;
+        LOG_ERR("Exception while loading url [" << uriAnonym << "] for session [" << sessionId
+                                                << "]: " << exc.what());
     }
 
-    return true;
+    return false;
 }
 
 void Document::onUnload(const ChildSession& session)
@@ -1324,7 +1336,7 @@ void Document::onUnload(const ChildSession& session)
     }
 
     // If we have no more sessions, we have nothing more to do.
-    if (!Util::isMobileApp() && _sessions.empty())
+    if (!Util::isMobileApp() && !haveLoadedSessions())
     {
         // Sanity check.
         std::ostringstream msg;
@@ -1378,6 +1390,19 @@ void Document::onUnload(const ChildSession& session)
         // Broadcast updated view info
         notifyViewInfo();
     }
+}
+
+bool Document::haveLoadedSessions() const
+{
+    for (const auto& session : _sessions)
+    {
+        if (session.second->isDocLoaded())
+        {
+            return true;
+        }
+    }
+
+    return false;
 }
 
 void Document::updateActivityHeader() const
@@ -1574,10 +1599,9 @@ bool Document::forkToSave(const std::function<void()>& childSave, int viewId)
 
         Util::sleepFromEnvIfSet("KitBackgroundSave", "SLEEPBACKGROUNDFORDEBUGGER");
 
-#if !MOBILEAPP
         assert(!BgSaveWatchdog && "Unexpected to have BackgroundSaveWatchdog instance");
-        BgSaveWatchdog = std::make_unique<BackgroundSaveWatchdog>(_mobileAppDocId, Util::getThreadId());
-#endif
+        BgSaveWatchdog =
+            std::make_unique<BackgroundSaveWatchdog>(_mobileAppDocId, Util::getThreadId());
 
         UnitKit::get().postBackgroundSaveFork();
 
@@ -1669,7 +1693,7 @@ void Document::reapZombieChildren()
     }
 }
 
-#endif
+#endif // !MOBILEAPP
 
 namespace
 {
@@ -2172,6 +2196,12 @@ std::shared_ptr<lok::Document> Document::load(const std::shared_ptr<ChildSession
 
     const int viewId = _loKitDocument->getView();
     session->setViewId(viewId);
+    if (viewId < 0)
+    {
+        LOG_ERR("Failed to load view into document url [" << anonymizeUrl(_url) << "] for session ["
+                                                          << sessionId << ']');
+        return nullptr;
+    }
 
     _sessionUserInfo[viewId] = UserInfo(session->getViewUserId(), session->getViewUserName(),
                                         session->getViewUserExtraInfo(), session->getViewUserPrivateInfo(),
@@ -2646,7 +2676,8 @@ void Document::notifySyntheticUnmodifiedState()
     // no need to change core state that happened earlier
     if (_modified == ModifiedState::UnModifiedButSaving)
     {
-        LOG_TRC("document was not modified while background saving");
+        LOG_TRC("document was not modified while background saving; sending synthetic "
+                ".uno:ModifiedStatus=false");
         _modified = ModifiedState::UnModified;
         notifyAll("statechanged: .uno:ModifiedStatus=false");
     }
@@ -2656,8 +2687,8 @@ bool Document::trackDocModifiedState(const std::string &stateChanged)
 {
     bool filter = false;
 
-    StringVector tokens(StringVector::tokenize(stateChanged, '='));
-    bool modified = tokens.size() > 1 && tokens.equals(1, "true");
+    const StringVector tokens(StringVector::tokenize(stateChanged, '='));
+    const bool modified = tokens.size() > 1 && tokens.equals(1, "true");
     ModifiedState newState = _modified;
     // NB. since 'modified' state is (oddly) notified per view we get
     // several duplicate transitions from state A -> A again.
@@ -2686,9 +2717,14 @@ bool Document::trackDocModifiedState(const std::string &stateChanged)
         // else duplicate
         break;
     }
+
     if (_modified != newState)
+    {
         LOG_TRC("Transition modified state from " << name(_modified) << " to " << name(newState));
-    _modified = newState;
+        _modified = newState;
+    }
+    else
+        LOG_TRC("Modified state remains " << name(_modified) << " after " << stateChanged);
 
     return filter;
 }
@@ -3382,8 +3418,10 @@ void lokit_main(
 
         // initialize while we have access to /proc/self/task
         threadCounter.reset(new Util::ThreadCounter());
+#ifdef FDCOUNTER_USABLE
         // initialize while we have access to /proc/self/fd
         fdCounter.reset(new Util::FDCounter());
+#endif
 
         bool usingMountNamespace = false;
         std::chrono::milliseconds jailSetupTime(0);
@@ -3782,7 +3820,13 @@ void lokit_main(
                     "You are running in a significantly less secure mode.");
         }
         else
+        {
+#if DISABLE_SECCOMP == 0
             hasSeccomp = true;
+#else
+            hasSeccomp = false;
+#endif
+        }
 
         rlimit rlim = { 0, 0 };
         if (getrlimit(RLIMIT_AS, &rlim) == 0)
@@ -3865,10 +3909,9 @@ void lokit_main(
         // Are we bind mounting ?
         pathAndQuery.append(std::string("&adms_bindmounted=") +
                             (JailUtil::isBindMountingEnabled() ? "ok" : "slow"));
-        // Are we using a container ?
+        // Are we using a container - either chroot or namespace ?
         pathAndQuery.append(std::string("&adms_contained=") +
-                            ((ChildSession::NoCapsForKit || !usingMountNamespace) ?
-                             "uncontained" : "ok"));
+                            (ChildSession::NoCapsForKit ? "uncontained" : "ok"));
         // How slow was the jail setup ?
         pathAndQuery.append(std::string("&adms_info_setup_ms=") +
                             std::to_string(jailSetupTime.count()));
@@ -4259,6 +4302,8 @@ void dump_kit_state()
 {
     std::ostringstream oss(Util::makeDumpStateStream());
     oss << "Start Kit " << getpid() << " Dump State:\n";
+
+    SigUtil::signalLogActivity();
 
     KitSocketPoll::dumpGlobalState(oss);
 

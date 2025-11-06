@@ -107,6 +107,12 @@ namespace FileUtil
     /// -> /chroot/tmp/cool-jailId/tmp/user/doc/childId
     std::string buildLocalPathToJail(bool usingMountNamespaces, std::string localJailRoot, std::string jailPath);
 
+    // returns two strings
+    //   the first is the local path to the jailPath under localJailRoot as seen outside the jail
+    //   the second is that path as seen inside the jail, taking into account if capabilities are available.
+    std::pair<std::string, std::string> buildPathsToJail(bool usingMountNamespaces, bool noCapsForKit,
+                                                         std::string localJailRoot, std::string jailDir);
+
     // We work around some of the mess of using the same sources both on the server side and in unit
     // tests with conditional compilation based on BUILDING_TESTS.
 

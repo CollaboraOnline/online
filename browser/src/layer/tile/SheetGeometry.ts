@@ -10,7 +10,6 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
-/* global L */
 
 namespace cool {
 
@@ -361,22 +360,11 @@ export class SheetGeometry {
 			this._rows.getSize(unit));
 	}
 
-	// Returns the cell rectangle in SimpleRectangle.
-	public getCellSimpleRectangle(columnIndex: number, rowIndex: number, zoomScale: number = null): cool.SimpleRectangle {
-		var horizPosSize = this._columns.getElementData(columnIndex, zoomScale);
-		var vertPosSize = this._rows.getElementData(rowIndex, zoomScale);
-
-		/*
-			We need to create the SimpleRectangle as if the info is sent from the core side.
-			app.twipsToPixels is used internally in SimpleRectangle. That variable includes the scale. So we divide here to neutralize.
-			And dpiScale is used internally for CSS pixels. So we don't use dpiScale here but 15 const.
-		*/
-		return new cool.SimpleRectangle(
-			horizPosSize.startpos * 15 / zoomScale,
-			vertPosSize.startpos * 15 / zoomScale,
-			horizPosSize.size * 15 / zoomScale,
-			vertPosSize.size * 15 / zoomScale
-		);
+	// Returns the cell rectangle as SimpleRectangle in tile twips.
+	public getCellSimpleRectangle(columnIndex: number, rowIndex: number): cool.SimpleRectangle {
+		const horizPosSize = this._columns.getElementData(columnIndex);
+		const vertPosSize = this._rows.getElementData(rowIndex);
+		return cool.SimpleRectangle.fromCorePixels([horizPosSize.startpos, vertPosSize.startpos, horizPosSize.size, vertPosSize.size]);
 	}
 
 	// Returns the core pixel position/size of the requested cell at a specified zoom.

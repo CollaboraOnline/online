@@ -85,7 +85,7 @@ class ServerAuditDialog {
 					'SDK: seccomp',
 					'',
 				],
-				ok: [_('system call security filtering enabled'), 'SDK: seccomp', ''],
+				ok: [_('System call security filtering enabled'), 'SDK: seccomp', ''],
 			},
 
 			hardwarewarning: {
@@ -119,7 +119,7 @@ class ServerAuditDialog {
 					'',
 					'',
 				],
-				ok: [_('direct network connection'), '', ''],
+				ok: [_('Direct network connection'), '', ''],
 			},
 
 			is_admin: {
@@ -158,7 +158,7 @@ class ServerAuditDialog {
 
 			info_namespaces: {
 				priority: 30,
-				true: [_('Using namespaces.'), 'SDK: nocaps', ''],
+				true: [_('Using namespaces'), 'SDK: nocaps', ''],
 				false: [_('Not using namespaces'), 'SDK: nocaps', ''],
 			},
 		};
@@ -166,9 +166,17 @@ class ServerAuditDialog {
 
 	public open() {
 		const serverEntries = this.getEntries(app.serverAudit);
-		const clientEntries = this.getEntries(ClientAuditor.performClientAudit());
+		app.clientAudit = ClientAuditor.performClientAudit();
+		const clientEntries = this.getEntries(app.clientAudit);
 		const allEntries = serverEntries.concat(clientEntries);
-		// FIXME: sort allEntries to have errors at the top ...
+
+		// Sort errors to the top
+		allEntries.sort((a, b) => {
+			const aIsError = a.columns[0].collapsed === 'serverauditerror.svg';
+			const bIsError = b.columns[0].collapsed === 'serverauditerror.svg';
+			if (aIsError !== bIsError) return aIsError ? -1 : 1;
+			return 0; // keep internal order, already sorted by priority
+		});
 
 		const dialogBuildEvent = {
 			data: this.getJSON(allEntries),
@@ -224,8 +232,13 @@ class ServerAuditDialog {
 						row: 0,
 						columns: [
 							good ? okIcon : errorIcon,
-							{ text: _('Document container started in') },
-							{ text: entry.status + ' ms' },
+							{
+								text: _('Document container started in {1} ms').replace(
+									'{1}',
+									entry.status,
+								),
+							},
+							{ text: '' },
 						],
 					} as TreeEntryJSON);
 				} else console.warn('Unknown server audit info: ' + entry.code);
@@ -357,7 +370,7 @@ class ServerAuditDialog {
 			// and if the current view isadminuser
 			if (hasErrors && app.isAdminUser) {
 				this.map.uiManager.showSnackbar(
-					_('Check security warnings of your server'),
+					_('Check warnings of your server'),
 					_('OPEN'),
 					this.open.bind(this),
 				);

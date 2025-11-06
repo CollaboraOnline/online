@@ -9,12 +9,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-#include <chrono>
 #include <config.h>
-
-#include <memory>
-#include <ostream>
-#include <string>
 
 #include <Poco/Exception.h>
 #include <Poco/RegularExpression.h>
@@ -24,6 +19,13 @@
 #include <Png.hpp>
 #include <Unit.hpp>
 #include <helpers.hpp>
+
+#include <chrono>
+#include <memory>
+#include <ostream>
+#include <string>
+
+using namespace std::literals;
 
 namespace
 {
@@ -218,16 +220,16 @@ UnitBase::TestResult UnitInsertDelete::testPasteBlank()
         helpers::getResponseMessage(wsSession, "textselection:", testname);
 
         TST_LOG("deleteAll");
-        helpers::deleteAll(wsSession, testname, std::chrono::seconds(3));
+        helpers::deleteAll(wsSession, testname, 3s);
 
         // Paste nothing into it.
         TST_LOG("paste mimetype=text/plain;charset=utf-8");
         helpers::sendAndDrain(wsSession, "paste mimetype=text/plain;charset=utf-8\n", testname, "",
-                              std::chrono::milliseconds(500));
+                              500ms);
 
         // Check if the document contains the pasted text.
         TST_LOG("selectAll");
-        helpers::selectAll(wsSession, testname, std::chrono::milliseconds(200), 2);
+        helpers::selectAll(wsSession, testname, 200ms, 2);
 
         TST_LOG("gettextselection");
         helpers::sendTextFrame(wsSession, "gettextselection mimetype=text/plain;charset=utf-8", testname);

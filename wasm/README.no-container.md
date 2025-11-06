@@ -75,11 +75,12 @@ The below steps should get one up and running.
 
 ### Served from a COOL instance
 
-Once the build is done, copy the browser/dist to a safe locataion.
-E.g. cp -a browser/dist dist_wasm
-Next, re-configure Online and rebuild with normal config/settings (i.e. without WASM).
+Once the build is done, copy the full (source and) build directory to a safe locataion.
+E.g. cp -a . ../wasm
+Next, re-configure Online and rebuild with normal config/settings (i.e. without WASM) plus
+--enable-wasm-fallback=... specifying an absolute path to the above WASM build directory.
 
-You will need to set "Enable WASM support" to true in coolwsd.xml.in, and you may need to increase
+You may need to increase
 MaxFileSizeToCacheInBytes in wsd/FileServer.cpp to avoid
 ```
 [ coolwsd ] ERR  Failed to read file [.../browser/dist/wasm/online.wasm] or is too large to cache and serve| wsd/FileServer.cpp:1285
@@ -88,9 +89,6 @@ failures.
 
 Alternatively to re-configuring the existing Online build directory, you may have opted to build
 WASM in a separate directory.
-Either way, in the normal Online build directory, copy the wasm dist directory
-into the browser/dist, like this:
-cp -a dist_wasm browser/dist/wasm
 
 Now point your browser to some https://localhost:9980/browser/c85d8681f3/wasm.html?file_path=/some/existing/document
 (where /some/existing/document denotes some exisiting document made available by that server).

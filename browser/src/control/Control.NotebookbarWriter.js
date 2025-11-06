@@ -424,7 +424,7 @@ window.L.Control.NotebookbarWriter = window.L.Control.Notebookbar.extend({
 		var hasAccessibilitySupport = window.enableAccessibility;
 		var hasAccessibilityCheck = this.map.getDocType() === 'text';
 		var hasAbout = window.L.DomUtil.get('about-dialog') !== null;
-		var hasServerAudit = !this.hiddenItems.includes('server-audit');
+		var hasServerAudit = this.getHiddenItems() ? !this.getHiddenItems().includes('server-audit') : true;
 
 		var content = [
 				{
@@ -2169,6 +2169,7 @@ window.L.Control.NotebookbarWriter = window.L.Control.Notebookbar.extend({
 	},
 
 	getReviewTab: function() {
+		var hideChangeTrackingControls = this._map['wopi'].HideChangeTrackingControls;
 		var content = [
 			{
 				'id': 'review-spelling-and-grammar-dialog',
@@ -2303,8 +2304,8 @@ window.L.Control.NotebookbarWriter = window.L.Control.Notebookbar.extend({
 					},
 				]
 			},
-			{ type: 'separator', id: 'review-deletecomment-break', orientation: 'vertical' },
-			{
+			hideChangeTrackingControls ? {} : { type: 'separator', id: 'review-deletecomment-break', orientation: 'vertical' },
+			hideChangeTrackingControls ? {} : {
 				'type': 'overflowgroup',
 				'id': 'review-tracking',
 				'name':_('Tracking'),
@@ -2356,94 +2357,20 @@ window.L.Control.NotebookbarWriter = window.L.Control.Notebookbar.extend({
 						'vertical': 'true'
 					},
 					{
-						'type': 'container',
-						'children': [
-							{
-								'type': 'toolbox',
-								'children': [
-									{
-										'id': 'review-accept-tracked-change',
-										'type': 'toolitem',
-										'text': _UNO('.uno:AcceptTrackedChange', 'text'),
-										'command': '.uno:AcceptTrackedChange',
-										'accessibility': { focusBack: true, combination: 'AC', de: 'AC' }
-									}
-								]
-							},
-							{
-								'type': 'toolbox',
-								'children': [
-									{
-										'id': 'review-reject-tracked-change',
-										'type': 'toolitem',
-										'text': _UNO('.uno:RejectTrackedChange', 'text'),
-										'command': '.uno:RejectTrackedChange',
-										'accessibility': { focusBack: true, combination: 'JR', de: 'JR' }
-									}
-								]
-							}
-						],
-						'vertical': 'true'
+						'id': 'review-accept-tracked-change:AcceptTrackedChangesMenu',
+						'type': 'menubutton',
+						'text': _UNO('.uno:AcceptTrackedChange', 'text'),
+						'applyCallback': 'acceptTrackedChangeToNext',
+						'command': '.uno:AcceptTrackedChangeToNext',
+						'accessibility': { focusBack: true, combination: 'AC', de: 'AC' }
 					},
 					{
-						'type': 'container',
-						'children': [
-							{
-								'type': 'toolbox',
-								'children': [
-									{
-										'id': 'review-accept-tracked-change-to-next',
-										'type': 'toolitem',
-										'text': _UNO('.uno:AcceptTrackedChangeToNext', 'text'),
-										'command': '.uno:AcceptTrackedChangeToNext',
-										'accessibility': { focusBack: true, combination: 'AM', de: 'AM' }
-									}
-								]
-							},
-							{
-								'type': 'toolbox',
-								'children': [
-									{
-										'id': 'review-reject-tracked-change-to-next',
-										'type': 'toolitem',
-										'text': _UNO('.uno:RejectTrackedChangeToNext', 'text'),
-										'command': '.uno:RejectTrackedChangeToNext',
-										'accessibility': { focusBack: true, combination: 'JM', de: 'JM' }
-									}
-								]
-							}
-						],
-						'vertical': 'true'
-					},
-					{
-						'type': 'container',
-						'children': [
-							{
-								'type': 'toolbox',
-								'children': [
-									{
-										'id': 'acceptalltrackedchanges',
-										'type': 'customtoolitem',
-										'text': _UNO('.uno:AcceptAllTrackedChanges', 'text'),
-										'command': '.uno:AcceptAllTrackedChanges',
-										'accessibility': { focusBack: true, combination: 'AL', de: 'AL' }
-									}
-								]
-							},
-							{
-								'type': 'toolbox',
-								'children': [
-									{
-										'id': 'rejectalltrackedchanges',
-										'type': 'customtoolitem',
-										'text': _UNO('.uno:RejectAllTrackedChanges', 'text'),
-										'command': '.uno:RejectAllTrackedChanges',
-										'accessibility': { focusBack: true, combination: 'JL', de: 'JL' }
-									}
-								]
-							}
-						],
-						'vertical': 'true'
+						'id': 'review-reject-tracked-change:RejectTrackedChangesMenu',
+						'type': 'menubutton',
+						'text': _UNO('.uno:RejectTrackedChange', 'text'),
+						'applyCallback': 'rejectTrackedChangeToNext',
+						'command': '.uno:RejectTrackedChangeToNext',
+						'accessibility': { focusBack: true, combination: 'JR', de: 'JR' }
 					},
 					{
 						'type': 'container',

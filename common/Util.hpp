@@ -18,6 +18,7 @@
 #include <cstdint>
 #include <cstring>
 #include <algorithm>
+#include <iomanip>
 #include <limits>
 #include <mutex>
 #include <sstream>
@@ -26,9 +27,7 @@
 #include <string_view>
 #include <utility>
 #include <cctype>
-
 #include <memory.h>
-
 #include <thread>
 
 #include <Poco/File.h>
@@ -59,6 +58,10 @@ extern "C"
 #else
 #define THREAD_UNSAFE_DUMP_BEGIN
 #define THREAD_UNSAFE_DUMP_END
+#endif
+
+#ifdef __linux__
+#define FDCOUNTER_USABLE 1
 #endif
 
 /// Format minutes with the units suffix until we migrate to C++20.
@@ -181,12 +184,25 @@ namespace Util
         int count();
     };
 
+    #ifdef __FreeBSD__
+    /// Needs to open dirent before forking in Kit process
+    class ThreadCounter
+    {
+        pid_t pid;
+    public:
+        ThreadCounter();
+        ~ThreadCounter();
+        /// Get number of items in this directory or -1 on error
+        int count();
+    };
+    #else
     /// Needs to open dirent before forking in Kit process
     class ThreadCounter : public DirectoryCounter
     {
     public:
         ThreadCounter() : DirectoryCounter("/proc/self/task") {}
     };
+    #endif
 
     /// Needs to open dirent before forking in Kit process
     class FDCounter : public DirectoryCounter
@@ -1059,7 +1075,8 @@ int main(int argc, char**argv)
 
     /// Converter between two different clocks,
     /// such as system_clock and stead_clock.
-    /// Note: by nature this has limited accuracy.
+    /// Note: by nature this has limited accuracy due to the latency
+    /// between reading the Src and Dst clocks (typically a few nanos).
     template <typename Dst, typename Src, typename Enable = void>
     Dst convertChronoClock(const Src time)
     {
@@ -1095,17 +1112,45 @@ int main(int argc, char**argv)
         return getSteadyClockAsString(time);
     }
 
+    /// Stringify the given time and print the difference from 'now' in
+    /// a human-friendly format. E.g. Thu Oct 09 02:15:25.682 2025 (4h 43m 32s 211ms ago)
     template <typename U, typename T> std::string getTimeForLog(const U& now, const T& time)
     {
-        const auto elapsed = now - convertChronoClock<U>(time);
-        const auto elapsedM = std::chrono::duration_cast<std::chrono::minutes>(elapsed);
-        const auto elapsedS = std::chrono::duration_cast<std::chrono::seconds>(elapsed) - elapsedM;
-        const auto elapsedMS =
-            std::chrono::duration_cast<std::chrono::milliseconds>(elapsed) - elapsedS;
+        const auto timeU = convertChronoClock<U>(time);
+        // The above conversion will cause minor delays, so there will be
+        // a difference even when now == time. For that, we ignore anything sub-micorsecond.
+        const bool past = std::chrono::round<std::chrono::milliseconds>(now - timeU) >=
+                          std::chrono::milliseconds::zero();
+        const auto elapsed =
+            std::chrono::round<std::chrono::milliseconds>(past ? now - timeU : timeU - now);
+
+        const auto elapsedH = std::chrono::duration_cast<std::chrono::hours>(elapsed);
+        const auto elapsedMin =
+            std::chrono::duration_cast<std::chrono::minutes>(elapsed - elapsedH);
+        const auto elapsedSec =
+            std::chrono::duration_cast<std::chrono::seconds>(elapsed - elapsedH - elapsedMin);
+        const auto elapsedMs = std::chrono::duration_cast<std::chrono::milliseconds>(
+            elapsed - elapsedH - elapsedMin - elapsedSec);
+
+        assert(elapsedH + elapsedMin + elapsedSec + elapsedMs ==
+                   std::chrono::duration_cast<std::chrono::milliseconds>(elapsed) &&
+               "Time-difference mismatch, likely a rounding error");
 
         std::stringstream ss;
-        ss << getClockAsString(time) << " (" << elapsedM << ' ' << elapsedS << ' ' << elapsedMS
-           << " ago)";
+        ss << getClockAsString(timeU) << " (";
+
+        // Don't stringify 0 units, except for ms.
+        if (elapsedH != std::chrono::hours::zero())
+            ss << elapsedH << ' ';
+
+        if (elapsedMin != std::chrono::minutes::zero())
+            ss << elapsedMin << ' ';
+
+        if (elapsedSec != std::chrono::seconds::zero())
+            ss << elapsedSec << ' ';
+
+        ss << std::setprecision(3) << elapsedMs;
+        ss << (past ? " ago)" : " later)");
         return ss.str();
     }
 
@@ -1294,7 +1339,7 @@ int main(int argc, char**argv)
     /// Concatenate the given elements in a container to each other using
     /// the delimiter of choice.
     template <typename T, typename U = const char*>
-    inline std::string join(const T& elements, const U& delimiter = ", ")
+    inline std::string join(const T& elements, const U& delimiter)
     {
         std::ostringstream oss;
         bool first = true;
@@ -1330,22 +1375,35 @@ int main(int argc, char**argv)
     }
 
     /// Stringify elements from a container of pairs with a delimiter to a stream.
-    template <typename S, typename T>
-    void joinPair(S& stream, const T& container, const std::string_view delimiter = " / ")
+    template <typename S, typename T, typename... Delimiters>
+    void joinPair(S& stream, T&& container, Delimiters&&... delimiters)
     {
         unsigned i = 0;
         for (const auto& pair : container)
         {
-            stream << (i++ ? delimiter : "") << pair;
+            if (i++)
+            {
+                (stream << ... << std::forward<Delimiters>(delimiters));
+            }
+
+            stream << pair;
         }
     }
 
     /// Stringify elements from a container of pairs with a delimiter to string.
-    template <typename T>
-    std::string joinPair(const T& container, const std::string_view delimiter = " / ")
+    template <typename T, typename... Delimiters>
+    std::string joinPair(T&& container, Delimiters&&... delimiters)
     {
         std::ostringstream oss;
-        joinPair(oss, container, delimiter);
+        joinPair(oss, std::forward<T>(container), std::forward<Delimiters>(delimiters)...);
+        return oss.str();
+    }
+
+    /// Stringify elements from a container of pairs with a delimiter to string.
+    template <typename T> std::string joinPair(T&& container)
+    {
+        std::ostringstream oss;
+        joinPair(oss, std::forward<T>(container), " / ");
         return oss.str();
     }
 

@@ -133,7 +133,7 @@ class Menubar extends window.L.Control {
 				{name: _UNO('.uno:PasteSpecial', 'text'), uno: '.uno:PasteSpecial'},
 				{name: _UNO('.uno:SelectAll', 'text'), uno: '.uno:SelectAll'},
 				{type: 'separator'},
-				{uno: '.uno:SearchDialog'},
+				{uno: '.uno:SearchDialog', id: 'searchreplace'},
 				{type: 'separator'},
 				{name: _UNO('.uno:ChangesMenu', 'text'), id: 'changesmenu', type: 'menu', menu: [
 					{uno: '.uno:TrackChanges'},
@@ -472,7 +472,7 @@ class Menubar extends window.L.Control {
 				{name: _UNO('.uno:PasteSpecial', 'presentation'), uno: '.uno:PasteSpecial'},
 				{name: _UNO('.uno:SelectAll', 'presentation'), uno: '.uno:SelectAll'},
 				{type: 'separator'},
-				{uno: '.uno:SearchDialog'}
+				{uno: '.uno:SearchDialog', id: 'searchreplace'}
 			]},
 			{name: _UNO('.uno:ViewMenu', 'presentation'), id: 'view', type: 'menu',
 			 menu: (window.mode.isTablet() ? [
@@ -501,6 +501,7 @@ class Menubar extends window.L.Control {
 				   {type: 'separator'},
 				   {uno: '.uno:ModifyPage'},
 					 {name: _UNO('.uno:SlideChangeWindow', 'presentation', true), id: 'transitiondeck', type: 'action'},
+					 {uno: '.uno:MasterSlidesPanel'},
 					 {uno: '.uno:CustomAnimation'}, // core version
 				   //{name: _UNO('.uno:CustomAnimation', 'presentation', true), id: 'animationdeck', type: 'action'}, // online version
 				])},
@@ -635,7 +636,7 @@ class Menubar extends window.L.Control {
 				{name: _UNO('.uno:PasteSpecial', 'presentation'), uno: '.uno:PasteSpecial'},
 				{name: _UNO('.uno:SelectAll', 'presentation'), uno: '.uno:SelectAll'},
 				{type: 'separator'},
-				{uno: '.uno:SearchDialog'}
+				{uno: '.uno:SearchDialog', id: 'searchreplace'}
 			]},
 			{name: _UNO('.uno:ViewMenu', 'presentation'), id: 'view', type: 'menu',
 			 menu: (window.mode.isTablet() ? [
@@ -783,7 +784,7 @@ class Menubar extends window.L.Control {
 				{name: _UNO('.uno:PasteSpecial', 'text'), uno: '.uno:PasteSpecial'},
 				{name: _UNO('.uno:SelectAll', 'text'), uno: '.uno:SelectAll'},
 				{type: 'separator'},
-				{uno: '.uno:SearchDialog'}
+				{uno: '.uno:SearchDialog', id: 'searchreplace'}
 			]},
 			{name: _UNO('.uno:ViewMenu', 'spreadsheet'), id: 'view', type: 'menu',
 			 menu: (window.mode.isTablet() ? [
@@ -1035,7 +1036,7 @@ class Menubar extends window.L.Control {
 		],
 
 		mobiletext:  [
-			{name: _('Search'), id: 'searchdialog', type: 'action'},
+			{name: _('Search'), id: 'recsearch', type: 'action'},
 			{name: _UNO('.uno:PickList', 'text'), id: 'file', type: 'menu', menu: [
 				{name: _UNO('.uno:Save', 'text'), id: 'save', type: 'action'},
 				{name: _UNO('.uno:SaveAs', 'text'), id: 'saveas', type: 'action'},
@@ -1101,7 +1102,7 @@ class Menubar extends window.L.Control {
 		],
 
 		mobilepresentation: [
-			{name: _('Search'), id: 'searchdialog', type: 'action'},
+			{name: _('Search'), id: 'recsearch', type: 'action'},
 			{name: _UNO('.uno:PickList', 'presentation'), id: 'file', type: 'menu', menu: [
 				{name: _UNO('.uno:Save', 'presentation'), id: 'save', type: 'action'},
 				{name: _UNO('.uno:SaveAs', 'presentation'), id: 'saveas', type: 'action'},
@@ -1166,7 +1167,7 @@ class Menubar extends window.L.Control {
 		],
 
 		mobiledrawing: [
-			{name: _('Search'), id: 'searchdialog', type: 'action'},
+			{name: _('Search'), id: 'recsearch', type: 'action'},
 			{name: _UNO('.uno:PickList', 'presentation'), id: 'file', type: 'menu', menu: [
 				{name: _UNO('.uno:Save', 'presentation'), id: 'save', type: 'action'},
 				{name: _UNO('.uno:SaveAs', 'presentation'), id: 'saveas', type: 'action'},
@@ -1221,7 +1222,7 @@ class Menubar extends window.L.Control {
 		],
 
 		mobilespreadsheet: [
-			{name: _('Search'), id: 'searchdialog', type: 'action'},
+			{name: _('Search'), id: 'recsearch', type: 'action'},
 			{name: _UNO('.uno:PickList', 'spreadsheet'), id: 'file', type: 'menu', menu: [
 				{name: _UNO('.uno:Save', 'spreadsheet'), id: 'save', type: 'action'},
 				{name: _UNO('.uno:SaveAs', 'spreadsheet'), id: 'saveas', type: 'action'},
@@ -2048,7 +2049,7 @@ class Menubar extends window.L.Control {
 				if (type === 'unocommand') { // disable all uno commands
 					// Except the ones listed in allowedViewModeCommands:
 					var allowed = this.options.allowedViewModeCommands.includes(uno);
-					if (!allowed && app.isRedlineManagementAllowed()) {
+					if (!allowed && app.isRedlineManagementAllowed() && !this._map['wopi'].HideChangeTrackingControls) {
 						allowed = this.options.allowedRedlineManagementModeCommands.includes(uno);
 					}
 					if (!allowed) {
@@ -2077,7 +2078,7 @@ class Menubar extends window.L.Control {
 							break;
 						}
 					}
-					if (!allowed && app.isRedlineManagementAllowed())
+					if (!allowed && app.isRedlineManagementAllowed() && !this._map['wopi'].HideChangeTrackingControls)
 						allowed = this.options.allowedRedlineManagementModeActions.includes(id);
 					if (id === 'insertcomment' && (this._map.getDocType() !== 'drawing' && !app.isCommentEditingAllowed()))
 						allowed = false;
@@ -2305,15 +2306,8 @@ class Menubar extends window.L.Control {
 			app.dispatcher.dispatch('closeapp');
 		} else if (id === 'repair') {
 			app.dispatcher.dispatch('repair');
-		} else if (id === 'searchdialog') {
-			if (this._map.isReadOnlyMode()) {
-				$('#toolbar-down').hide();
-				$('#toolbar-search').show();
-				$('#mobile-edit-button').hide();
-				window.L.DomUtil.get('search-input').focus();
-			} else {
-				this._map.sendUnoCommand('.uno:SearchDialog');
-			}
+		} else if (id === 'recsearch') {
+			app.dispatcher.dispatch('showsearchbar');
 		} else if (id === 'inserttextbox') {
 			this._map.sendUnoCommand('.uno:Text?CreateDirectly:bool=true');
 		} else if (id === 'pagesetup') {
@@ -2398,21 +2392,27 @@ class Menubar extends window.L.Control {
 	 * Creates the file icon in the menubar header.
 	 */
 	private _createFileIcon(): void {
-		var liItem = window.L.DomUtil.create('li', '');
-		liItem.id = 'document-header';
-		liItem.setAttribute('role', 'menuitem');
-		var aItem = window.L.DomUtil.create('div', 'document-logo', liItem);
-		$(aItem).data('id', 'document-logo');
-		$(aItem).data('type', 'action');
-		aItem.setAttribute('role', 'img');
-		aItem.setAttribute('aria-label', _('file type icon'));
+		if (!(window.logoURL && window.logoURL == "none")) {
+			var liItem = window.L.DomUtil.create('li', '');
+			liItem.id = 'document-header';
+			liItem.setAttribute('role', 'menuitem');
+			var aItem = window.L.DomUtil.create('div', 'document-logo', liItem);
+			$(aItem).data('id', 'document-logo');
+			$(aItem).data('type', 'action');
+			aItem.setAttribute('role', 'img');
+			aItem.setAttribute('aria-label', _('file type icon'));
 
-		if (this._menubarCont != null)
-			this._menubarCont.insertBefore(liItem, this._menubarCont.firstChild);
+			if (window.logoURL) {
+				aItem.style.backgroundImage = "url(" + window.logoURL + ")";
+			}
 
-		var $docLogo = $(aItem);
-		$docLogo.bind('click', {self: this}, this._createDocument);
-		$docLogo.bind('click', this._createDocument.bind(this));
+			if (this._menubarCont != null)
+				this._menubarCont.insertBefore(liItem, this._menubarCont.firstChild);
+
+			var $docLogo = $(aItem);
+			$docLogo.bind('click', {self: this}, this._createDocument);
+			$docLogo.bind('click', this._createDocument.bind(this));
+		}
 	}
 
 	/**
@@ -2435,7 +2435,7 @@ class Menubar extends window.L.Control {
 		}
 		if (this._map.isReadOnlyMode() && menuItem.type === 'menu') {
 			var found = this.options.allowedReadonlyMenus.includes(menuItem.id);
-			if (!found && app.isRedlineManagementAllowed())
+			if (!found && app.isRedlineManagementAllowed() && !this._map['wopi'].HideChangeTrackingControls)
 				found = this.options.allowedRedlineManagementMenus.includes(menuItem.id);
 			if (!found)
 				return false;

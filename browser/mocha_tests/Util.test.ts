@@ -9,13 +9,9 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-/// <reference path="./refs/globals.ts"/>
-/// <reference path="./helper/util.ts"/>
-/// <reference path="../src/app/Util.ts"/>
-
 var assert = require('assert');
 
-describe('Util static members tests', function () {
+describe('Util', function () {
 
 	describe('stamp()', function () {
 		const obj1 = { _leaflet_id: -1 };

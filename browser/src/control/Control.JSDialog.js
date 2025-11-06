@@ -14,7 +14,7 @@
  * window.L.Control.JSDialog - class which creates and updates dialogs, popups, snackbar
  */
 
-/* global JSDialog Hammer app _ cool */
+/* global JSDialog Hammer app _ cool AutoCompleteDialogId */
 window.L.Control.JSDialog = window.L.Control.extend({
 	options: {},
 	dialogs: {},
@@ -47,8 +47,10 @@ window.L.Control.JSDialog = window.L.Control.extend({
 	hasDialogOpened: function() {
 		var dialogs = this.dialogs;
 		return Object.keys(dialogs)
-			.filter(function (key) {
-				return key != 'snackbar' && dialogs[key].isDropdown !== true;
+			.filter((key) => {
+				return key != 'snackbar'
+					&& dialogs[key].isDropdown !== true
+					&& !this.isAutoCompleteId(key);
 			})
 			.length > 0;
 	},
@@ -63,6 +65,10 @@ window.L.Control.JSDialog = window.L.Control.extend({
 		return Object.keys(this.dialogs)
 			.filter(function (key) { return key == 'snackbar'; })
 			.length > 0;
+	},
+
+	isAutoCompleteId: function(dialogId) {
+		return Object.values(AutoCompleteDialogId).includes(dialogId);
 	},
 
 	clearDialog: function(id) {
@@ -316,7 +322,7 @@ window.L.Control.JSDialog = window.L.Control.extend({
 		defaultButton.style.display = 'none';
 		defaultButton.onclick = function() {
 			if (instance.defaultButtonId) {
-				var button = instance.form.querySelector('#' + instance.defaultButtonId);
+				const button = instance.form.querySelector('#' + instance.defaultButtonId + ' button');
 				if (button)
 					button.click();
 			}
@@ -365,7 +371,6 @@ window.L.Control.JSDialog = window.L.Control.extend({
 		instance.builder.build(instance.content, [instance]);
 		instance.builder.setContainer(instance.content);
 		var primaryBtn = instance.content.querySelector('#' + instance.defaultButtonId + ' button');
-		instance.primaryButton = primaryBtn;
 		if (primaryBtn)
 			window.L.DomUtil.addClass(primaryBtn, 'button-primary');
 	},
@@ -498,7 +503,7 @@ window.L.Control.JSDialog = window.L.Control.extend({
 			}
 		}
 
-		if (firstFocusableElement && document.activeElement !== firstFocusableElement && instance.canHaveFocus) {
+		if (firstFocusableElement && document.activeElement !== firstFocusableElement && !instance.isAutoCompletePopup) {
 			// for tab control case we have more then 1 element that can be focusable so select the first tab for the list
 			firstFocusableElement = firstFocusableElement.length > 0 ? firstFocusableElement[0] : firstFocusableElement;
 			firstFocusableElement.focus();
@@ -658,19 +663,11 @@ window.L.Control.JSDialog = window.L.Control.extend({
 
 		if (app.calc.autoFilterCell) {
 			// This is an AutoFilterDialog. We have the row and column indexes. Get cell rectangle with this info.
-			cellRectangle = app.map._docLayer.sheetGeometry.getCellSimpleRectangle(
-				app.calc.autoFilterCell.column,
-				app.calc.autoFilterCell.row,
-				app.getScale()
-			);
+			cellRectangle = app.map._docLayer.sheetGeometry.getCellSimpleRectangle(app.calc.autoFilterCell.column, app.calc.autoFilterCell.row);
 		}
 		else if (app.calc.pivotTableFilterCell) {
 			// This is a pivot table filter dialog. We have the row and column indexes. Get cell rectangle with this info.
-			cellRectangle = app.map._docLayer.sheetGeometry.getCellSimpleRectangle(
-				app.calc.pivotTableFilterCell.column,
-				app.calc.pivotTableFilterCell.row,
-				app.getScale()
-			);
+			cellRectangle = app.map._docLayer.sheetGeometry.getCellSimpleRectangle(app.calc.pivotTableFilterCell.column, app.calc.pivotTableFilterCell.row);
 		}
 		else {
 			// This is a Cell DropDown. We will use current cell's rectangle.
@@ -767,10 +764,14 @@ window.L.Control.JSDialog = window.L.Control.extend({
 		// We will pass this here and there, so we can split the code into smaller functions.
 		// Then we will save this into this.dialogs[].
 		var instance = e.data;
+		if (JSDialog.verbose) app.console.debug(instance);
 
 		// Save last focused element, we will set the focus back to this element after this popup is closed.
-		if (!this.dialogs[instance.id] || !this.dialogs[instance.id].lastFocusedElement) // Avoid to reset while updates.
+		if (this.dialogs[instance.id] && this.dialogs[instance.id].lastFocusedElement) {
+			instance.lastFocusedElement = this.dialogs[instance.id].lastFocusedElement;
+		} else if (!this.dialogs[instance.id] || !this.dialogs[instance.id].lastFocusedElement) { // Avoid to reset while updates.
 			instance.lastFocusedElement = document.activeElement;
+		}
 
 		instance.callback = e.callback;
 		instance.isSnackbar = e.data.type === 'snackbar';
@@ -858,6 +859,9 @@ window.L.Control.JSDialog = window.L.Control.extend({
 
 			this.createContainer(instance, documentFragment);
 			this.createDialog(instance);
+
+			const modifyCallback = JSDialog.getDialogModificationCallback(instance.dialogid);
+			if (modifyCallback) modifyCallback(instance);
 
 			// FIXME: remove this auto-bound instance so it will be clear what is passed
 			instance.updatePos = this.setPosition.bind(this, instance);
@@ -1048,21 +1052,6 @@ window.L.Control.JSDialog = window.L.Control.extend({
 		var keyCode = event.keyCode;
 
 		switch (keyCode) {
-		case 13:
-			// ENTER
-			var dialogKeys = Object.keys(this.dialogs);
-			if (dialogKeys.length) {
-				const lastKey = dialogKeys[dialogKeys.length - 1];
-				const dialogInfo = this.dialogs[lastKey];
-				if (dialogInfo && dialogInfo.dialogid === "FindReplaceDialog") {
-					const primaryButton = dialogInfo.primaryButton;
-					if (primaryButton) {
-						primaryButton.click();
-						return true;
-					}
-				}
-			}
-			break;
 		case 27:
 			// ESC
 			var dialogKeys = Object.keys(this.dialogs);

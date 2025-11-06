@@ -1238,7 +1238,7 @@ ClientRequestDispatcher::MessageResult ClientRequestDispatcher::handleMessage(Po
 
             // Tunnel to WASM.
             _wopiProxy = std::make_unique<WopiProxy>(_id, requestDetails, socket);
-            _wopiProxy->handleRequest(COOLWSD::getWebServerPoll(), disposition);
+            _wopiProxy->handleRequest(message, COOLWSD::getWebServerPoll(), disposition);
         }
         else
         {
@@ -1704,6 +1704,19 @@ bool ClientRequestDispatcher::handleClipboardRequest(const Poco::Net::HTTPReques
             docBroker = it->second;
     }
 
+    DocumentBroker::ClipboardRequest type;
+    if (request.getMethod() != Poco::Net::HTTPRequest::HTTP_GET)
+        type = DocumentBroker::CLIP_REQUEST_SET;
+    else
+    {
+        if (mime == "text/html")
+            type = DocumentBroker::CLIP_REQUEST_GET_RICH_HTML_ONLY;
+        else if (mime == "text/html,text/plain;charset=utf-8")
+            type = DocumentBroker::CLIP_REQUEST_GET_HTML_PLAIN_ONLY;
+        else
+            type = DocumentBroker::CLIP_REQUEST_GET;
+    }
+
     // If we have a valid docBroker, use it.
     // Note: there is a race here as DocBroker may
     // have already exited its SocketPoll, but we
@@ -1713,28 +1726,26 @@ bool ClientRequestDispatcher::handleClipboardRequest(const Poco::Net::HTTPReques
     if (docBroker && docBroker->isAlive())
     {
         std::string jailClipFile, clipFile;
-        DocumentBroker::ClipboardRequest type;
-        if (request.getMethod() == Poco::Net::HTTPRequest::HTTP_GET)
+        if (type == DocumentBroker::CLIP_REQUEST_SET)
         {
-            if (mime == "text/html")
-                type = DocumentBroker::CLIP_REQUEST_GET_RICH_HTML_ONLY;
-            else if (mime == "text/html,text/plain;charset=utf-8")
-                type = DocumentBroker::CLIP_REQUEST_GET_HTML_PLAIN_ONLY;
-            else
-                type = DocumentBroker::CLIP_REQUEST_GET;
-        }
-        else
-        {
-            type = DocumentBroker::CLIP_REQUEST_SET;
+            if (!docBroker->getSessionFromClipboardTag(viewId, tag))
+            {
+                LOG_ERR_S("Unknown tag [" << tag << "] for view [" << viewId << "] on request to URL: " << request.getURI());
+                // we got the wrong tag.
+                HttpHelper::sendErrorAndShutdown(http::StatusCode::BadRequest, socket, "wrong tag");
+                return true;
+            }
 
-            std::string clipDir = JAILED_DOCUMENT_ROOT + std::string("clipboards");
             std::string clipName = "setclipboard." + tag;
 
             std::string jailId = docBroker->getJailId();
-            const Poco::Path filePath(FileUtil::buildLocalPathToJail(
-                COOLWSD::EnableMountNamespaces, COOLWSD::ChildRoot + jailId, clipDir));
-            clipFile = filePath.toString() + '/' + clipName;
-            jailClipFile = clipDir + '/' + clipName;
+
+            auto [clipDir, jailDir] = FileUtil::buildPathsToJail(COOLWSD::EnableMountNamespaces, COOLWSD::NoCapsForKit,
+                                                                 COOLWSD::ChildRoot + jailId,
+                                                                 JAILED_DOCUMENT_ROOT + std::string("clipboards"));
+
+            clipFile = clipDir + '/' + clipName;
+            jailClipFile = jailDir + '/' + clipName;
 
             ClipboardPartHandler handler(clipFile);
             Poco::Net::HTMLForm form(request, message, handler);
@@ -1764,7 +1775,7 @@ bool ClientRequestDispatcher::handleClipboardRequest(const Poco::Net::HTTPReques
         LOG_TRC_S("queued clipboard command " << type << " on docBroker fetch");
     }
     // fallback to persistent clipboards if we can
-    else if (!DocumentBroker::lookupSendClipboardTag(socket, tag, false))
+    else if (!DocumentBroker::handlePersistentClipboardRequest(type, socket, tag, false))
     {
         LOG_ERR_S("Invalid clipboard request to server ["
                   << serverId << "] with tag [" << tag << "] and broker [" << docKey

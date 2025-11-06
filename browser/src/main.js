@@ -101,7 +101,8 @@ if (window.ThisIsTheEmscriptenApp) {
 	var docParamsPart = docParamsString ? (docURL.includes('?') ? '&' : '?') + docParamsString : '';
 	var encodedWOPI = encodeURIComponent(docURL + docParamsPart);
 
-	globalThis.Module = createEmscriptenModule(docURL, encodedWOPI, isWopi);
+	globalThis.Module = createEmscriptenModule(
+		isWopi ? 'server' : 'local', isWopi ? encodedWOPI : docURL);
 	globalThis.Module.onRuntimeInitialized = function() {
 		map.loadDocument(global.socket);
 	};

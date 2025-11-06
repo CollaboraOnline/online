@@ -360,7 +360,8 @@ window.L.Map.include({
 
 		if ((command.startsWith('.uno:Sidebar') && !command.startsWith('.uno:SidebarShow')) ||
 			command.startsWith('.uno:CustomAnimation') || command.startsWith('.uno:ModifyPage') ||
-			command.startsWith('.uno:SidebarDeck') || command.startsWith('.uno:EditStyle')) {
+			command.startsWith('.uno:MasterSlidesPanel') || command.startsWith('.uno:SidebarDeck') || 
+			command.startsWith('.uno:EditStyle')) {
 
 			// sidebar control is present only in desktop/tablet case
 			if (this.sidebar) {
@@ -381,7 +382,8 @@ window.L.Map.include({
 			'.uno:Signature', '.uno:PrepareSignature', '.uno:DownloadSignature', '.uno:InsertSignatureLine',
 			'.uno:ShowResolvedAnnotations',
 			'.uno:ToolbarMode?Mode:string=notebookbar_online.ui', '.uno:ToolbarMode?Mode:string=Default',
-			'.uno:ExportToEPUB', '.uno:ExportToPDF', '.uno:ExportDirectToPDF', '.uno:MoveKeepInsertMode', '.uno:ShowRuler'];
+			'.uno:ExportToEPUB', '.uno:ExportToPDF', '.uno:ExportDirectToPDF', '.uno:MoveKeepInsertMode', '.uno:ShowRuler',
+			'.uno:Navigator'];
 		if (app.isCommentEditingAllowed()) {
 			allowedCommands.push('.uno:InsertAnnotation','.uno:DeleteCommentThread', '.uno:DeleteAnnotation', '.uno:DeleteNote',
 				'.uno:DeleteComment', '.uno:ReplyComment', '.uno:ReplyToAnnotation', '.uno:PromoteComment', '.uno:ResolveComment',
@@ -418,7 +420,7 @@ window.L.Map.include({
 			if (val && (json === undefined || json === null)) {
 				 // because it is toggle, state has to be the opposite
 				var state = !(val === 'true');
-				window.prefs.set('SpellOnline', state);
+				window.prefs.set('spellOnline', state);
 			}
 		}
 
@@ -819,15 +821,16 @@ window.L.Map.include({
 		var searchInput = window.L.DomUtil.get('search-input');
 		app.searchService.resetSelection();
 		if (toolbar) {
-			toolbar.showItem('cancelsearch', false);
+			if (!window.mode.isMobile()) {
+				toolbar.showItem('cancelsearch', false);
+			}
 			toolbar.enableItem('searchprev', false);
 			toolbar.enableItem('searchnext', false);
 		}
 		searchInput.value = '';
 		if (window.mode.isMobile()) {
 			searchInput.focus();
-			// odd, but on mobile we need to invoke it twice
-			toolbar.showItem('cancelsearch', false);
+			toolbar.enableItem('cancelsearch', false);
 		}
 
 		this._onGotFocus();

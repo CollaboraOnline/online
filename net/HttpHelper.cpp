@@ -25,7 +25,7 @@
 #include <common/Util.hpp>
 #include <net/Socket.hpp>
 
-namespace HttpHelper
+namespace
 {
 void sendUncompressedFileContent(const std::shared_ptr<StreamSocket>& socket,
                                  const std::string& path, const int bufferSize)
@@ -71,9 +71,9 @@ void sendDeflatedFileContent(const std::shared_ptr<StreamSocket>& socket, const 
     }
 }
 
-static void sendFileImpl(const std::shared_ptr<StreamSocket>& socket, const std::string& path,
-                         http::Response& response, const bool noCache,
-                         const bool deflate, const bool headerOnly, const bool closeSocket)
+void sendFileImpl(const std::shared_ptr<StreamSocket>& socket, const std::string& path,
+                  http::Response& response, const bool noCache, const bool deflate,
+                  const bool headerOnly, const bool closeSocket)
 {
     FileUtil::Stat st(path);
     if (st.bad())
@@ -136,6 +136,10 @@ static void sendFileImpl(const std::shared_ptr<StreamSocket>& socket, const std:
     }
 }
 
+} // namespace
+
+namespace HttpHelper
+{
 void sendFile(const std::shared_ptr<StreamSocket>& socket, const std::string& path,
               http::Response& response, const bool noCache,
               const bool deflate, const bool headerOnly)

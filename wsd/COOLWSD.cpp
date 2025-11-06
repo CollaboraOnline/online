@@ -775,7 +775,7 @@ std::string COOLWSD::ConfigFile = COOLWSD_CONFIGDIR "/coolwsd.xml";
 std::string COOLWSD::ConfigDir = COOLWSD_CONFIGDIR "/conf.d";
 bool COOLWSD::EnableTraceEventLogging = false;
 bool COOLWSD::EnableAccessibility = false;
-bool COOLWSD::EnableMountNamespaces= false;
+bool COOLWSD::EnableMountNamespaces = false;
 FILE *COOLWSD::TraceEventFile = NULL;
 std::string COOLWSD::LogLevel = "trace";
 std::string COOLWSD::LogLevelStartup = "trace";
@@ -962,10 +962,10 @@ std::shared_ptr<ChildProcess> getNewChild_Blocks(const std::shared_ptr<SocketPol
                                    LOG_TRC("Predicate for NewChildrenCV wait: NewChildren.size()=" << NewChildren.size());
 
                                    // find a candidate with matching configId
-                                   auto found =
-                                       std::find_if(NewChildren.begin(), NewChildren.end(), [configId](auto candidate)->bool {
-                                           return candidate->getConfigId() == configId;
-                                       });
+                                   auto found = std::find_if(
+                                       NewChildren.begin(), NewChildren.end(),
+                                       [configId](const auto& candidate) -> bool
+                                       { return candidate->getConfigId() == configId; });
 
                                    const bool candidateMatch = found != NewChildren.end();
                                    // move this candidate into the last position
@@ -1049,14 +1049,14 @@ public:
         return POLLIN;
     }
 
-    bool watch(std::string configFile);
+    bool watch(std::string_view configFile);
 
 private:
     int m_watchedCount = 0;
     bool m_stopOnConfigChange;
 };
 
-bool InotifySocket::watch(const std::string configFile)
+bool InotifySocket::watch(const std::string_view configFile)
 {
     LOG_TRC("Inotify - Attempting to watch " << configFile << ", in addition to current "
                                              << m_watchedCount << " watched files");
@@ -1069,7 +1069,7 @@ bool InotifySocket::watch(const std::string configFile)
     }
 
     int watchedStatus;
-    watchedStatus = inotify_add_watch(getFD(), configFile.c_str(), IN_MODIFY);
+    watchedStatus = inotify_add_watch(getFD(), configFile.data(), IN_MODIFY);
 
     if (watchedStatus == -1)
         LOG_WRN("Inotify - Failed to watch config file " << configFile);
@@ -1319,7 +1319,7 @@ void COOLWSD::innerInitialize(Poco::Util::Application& self)
     // Initialize the config subsystem.
     LayeredConfiguration& conf = config();
 
-    const std::unordered_map<std::string, std::string> defAppConfig =
+    const std::unordered_map<std::string, std::string>& defAppConfig =
         ConfigUtil::getDefaultAppConfig();
 
     // Set default values, in case they are missing from the config file.
@@ -1696,9 +1696,6 @@ void COOLWSD::innerInitialize(Poco::Util::Application& self)
             << (ConfigUtil::isSSLTermination() ? "enabled." : "disabled."));
 
     std::string allowedLanguages(config().getString("allowed_languages"));
-    // Core <= 7.0.
-    setenv("LOK_WHITELIST_LANGUAGES", allowedLanguages.c_str(), 1);
-    // Core >= 7.1.
     setenv("LOK_ALLOWLIST_LANGUAGES", allowedLanguages.c_str(), 1);
 
 #endif // !MOBILEAPP
@@ -2262,60 +2259,6 @@ void COOLWSD::initializeSSL()
 #else
     LOG_INF("SSL is unavailable in this build.");
 #endif
-}
-
-void COOLWSD::dumpNewSessionTrace(const std::string& id, const std::string& sessionId, const std::string& uri, const std::string& path)
-{
-    if (TraceDumper)
-    {
-        try
-        {
-            TraceDumper->newSession(id, sessionId, uri, path);
-        }
-        catch (const std::exception& exc)
-        {
-            LOG_ERR("Exception in tracer newSession: " << exc.what());
-        }
-    }
-}
-
-void COOLWSD::dumpEndSessionTrace(const std::string& id, const std::string& sessionId, const std::string& uri)
-{
-    if (TraceDumper)
-    {
-        try
-        {
-            TraceDumper->endSession(id, sessionId, uri);
-        }
-        catch (const std::exception& exc)
-        {
-            LOG_ERR("Exception in tracer newSession: " << exc.what());
-        }
-    }
-}
-
-void COOLWSD::dumpEventTrace(const std::string& id, const std::string& sessionId, const std::string& data)
-{
-    if (TraceDumper)
-    {
-        TraceDumper->writeEvent(id, sessionId, data);
-    }
-}
-
-void COOLWSD::dumpIncomingTrace(const std::string& id, const std::string& sessionId, const std::string& data)
-{
-    if (TraceDumper)
-    {
-        TraceDumper->writeIncoming(id, sessionId, data);
-    }
-}
-
-void COOLWSD::dumpOutgoingTrace(const std::string& id, const std::string& sessionId, const std::string& data)
-{
-    if (TraceDumper)
-    {
-        TraceDumper->writeOutgoing(id, sessionId, data);
-    }
 }
 
 void COOLWSD::defineOptions(Poco::Util::OptionSet& optionSet)
@@ -3910,7 +3853,9 @@ int COOLWSD::innerMain()
         // Unit test timeout
         if (UnitWSD::isUnitTesting() && !SigUtil::getShutdownRequestFlag())
         {
-            UnitWSD::get().checkTimeout(timeSinceStartMs);
+            if (auto const unit = UnitWSD::getMaybeNull()) {
+                unit->checkTimeout(timeSinceStartMs);
+            }
         }
 
 #if !MOBILEAPP
@@ -4218,15 +4163,6 @@ int COOLWSD::main(const std::vector<std::string>& /*args*/)
     } catch (...) {
         cleanup(returnValue);
         throw;
-    }
-
-    const int unitReturnValue = UnitBase::uninit();
-    if (unitReturnValue != EXIT_OK)
-    {
-        // Overwrite the return value if the unit-test failed.
-        LOG_INF("Overwriting process [coolwsd] exit status ["
-                << returnValue << "] with unit-test status: " << unitReturnValue);
-        returnValue = unitReturnValue;
     }
 
     cleanup(returnValue);

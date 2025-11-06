@@ -101,7 +101,7 @@ private:
         // For now we only set one cookie
         LOK_ASSERT_EQUAL(1, static_cast<int>(cookies.size()));
         // and it is jwt=
-        LOK_ASSERT_EQUAL(std::string("jwt"), cookies[0].getName());
+        LOK_ASSERT_EQUAL_STR("jwt", cookies[0].getName());
 
         // Check cookie properties
         const std::string cookiePath = cookies[0].getPath();
@@ -202,7 +202,7 @@ private:
 
         // FIXME: we really should wait for the subscription to be
         // registered and have a reply to avoid a race here.
-        std::this_thread::sleep_for(std::chrono::milliseconds(250));
+        std::this_thread::sleep_for(250ms);
 
         std::string documentPath1, documentURL1;
         helpers::getDocumentPathAndURL("hello.odt", documentPath1, documentURL1, "unitAdmin-hello.odt ");
@@ -408,7 +408,7 @@ public:
     UnitAdmin()
         : _uri(helpers::getTestServerURI() + "/browser/dist/admin/admin.html")
     {
-        setTimeout(std::chrono::seconds(60));
+        setTimeout(60s);
 
         // Register tests here.
         _tests.push_back(&UnitAdmin::testIncorrectPassword);

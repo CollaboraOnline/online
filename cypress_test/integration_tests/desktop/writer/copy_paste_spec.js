@@ -11,7 +11,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Clipboard operations.', fu
 
 		cy.getFrameWindow().then(win => {
 			const selectionStart = win.TextSelections.getStartRectangle();
-			cy.cGet('#map').rightclick(selectionStart.pX1, selectionStart.pY1);
+			cy.cGet('#document-container').rightclick(selectionStart.pX1, selectionStart.pY1);
 		});
 
 		helper.setDummyClipboardForCopy();

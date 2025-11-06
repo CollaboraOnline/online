@@ -428,14 +428,14 @@ protected:
                     TST_LOG("FakeWOPIHost: Handling PutRelativeFile (#"
                             << _countPutRelative << "): " << uriReq.getPath());
 
-                    LOK_ASSERT_EQUAL(std::string("PUT_RELATIVE"), request.get("X-WOPI-Override"));
+                    LOK_ASSERT_EQUAL_STR("PUT_RELATIVE", request.get("X-WOPI-Override"));
                     assertPutRelativeFileRequest(request);
                     content = "{ \"Name\":\"hello world%1.pdf\", \"Url\":\"" + wopiURL + "\" }";
                 }
                 else
                 {
                     // rename file; response should be the file name without the url and the extension
-                    LOK_ASSERT_EQUAL(std::string("RENAME_FILE"), request.get("X-WOPI-Override"));
+                    LOK_ASSERT_EQUAL_STR("RENAME_FILE", request.get("X-WOPI-Override"));
                     assertRenameFileRequest(request);
                     content = "{ \"Name\":\"hello\", \"Url\":\"" + wopiURL + "\" }";
                 }
@@ -531,10 +531,13 @@ protected:
                                              [](const std::pair<std::string, std::string>& pair)
                                              { return pair.first == "testname"; });
 
-        LOK_ASSERT_MESSAGE_SILENT("Request belongs to an unknown test", testnameIt != params.end());
-
-        const std::string target = StringVector::tokenize(testnameIt->second, '/')[0];
-        LOK_ASSERT_EQUAL_MESSAGE("Request belongs to a different test", getTestname(), target);
+        // Some URLs might not have the testname parameter.
+        LOK_CHECK_MESSAGE_SILENT("Request belongs to an unknown test", testnameIt != params.end());
+        if (testnameIt != params.end())
+        {
+            const std::string target = StringVector::tokenize(testnameIt->second, '/')[0];
+            LOK_ASSERT_EQUAL_MESSAGE("Request belongs to a different test", getTestname(), target);
+        }
     }
 
     /// Here we act as a WOPI server, so that we have a server that responds to

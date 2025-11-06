@@ -19,6 +19,8 @@
 #include <helpers.hpp>
 #include <net/HttpRequest.hpp>
 
+using namespace std::literals;
+
 // Inside the WSD process
 class UnitProxy : public UnitWSD
 {
@@ -32,7 +34,7 @@ public:
           _poll(std::make_shared<SocketPoll>("proxy-poll")),
           _sentRequest(false)
     {
-        setTimeout(std::chrono::seconds(10));
+        setTimeout(10s);
     }
 
     void invokeWSDTest() override
@@ -43,7 +45,7 @@ public:
 
         auto httpSession = http::Session::create(helpers::getTestServerURI());
 
-        httpSession->setTimeout(std::chrono::seconds(9));
+        httpSession->setTimeout(9s);
 
         // Request from rating.collaboraonline.com.
         _req = http::Request("/browser/a90f83c/foo/remote/static/lokit-extra-img.svg");

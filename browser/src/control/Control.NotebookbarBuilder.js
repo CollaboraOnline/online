@@ -267,12 +267,12 @@ window.L.Control.NotebookbarBuilder = window.L.Control.JSDialogBuilder.extend({
 	},
 
 	_overriddenTabsControlHandler: function(parentContainer, data, builder) {
+		data.isNotebookbar = true;
 		data.tabs = builder.wizard.getTabs();
 		return builder._tabsControlHandler(parentContainer, data, builder, _('Tap to collapse'));
 	},
 
 	_overriddenTabPageHandler: function(parentContainer, data, builder) {
-		data.isNotebookbar = true;
 		var result = builder._tabPageHandler(parentContainer, data, builder);
 
 		var tabPage = parentContainer.lastChild;

@@ -43,6 +43,8 @@
 #include <string>
 #include <thread>
 
+using namespace std::literals;
+
 /// When enabled, in addition to the loopback
 /// server, an external server will be used
 /// to check for regressions.
@@ -223,7 +225,7 @@ void HttpRequestTests::testBadResponse()
     auto httpSession = http::Session::create(_localUri);
     if (httpSession)
     {
-        httpSession->setTimeout(std::chrono::seconds(1));
+        httpSession->setTimeout(1s);
         const std::shared_ptr<const http::Response> httpResponse =
             httpSession->syncRequest(httpRequest);
 
@@ -252,7 +254,7 @@ void HttpRequestTests::testGoodResponse()
     auto httpSession = http::Session::create(_localUri);
     if (httpSession)
     {
-        httpSession->setTimeout(std::chrono::seconds(1));
+        httpSession->setTimeout(1s);
         const std::shared_ptr<const http::Response> httpResponse =
             httpSession->syncRequest(httpRequest);
 
@@ -263,12 +265,10 @@ void HttpRequestTests::testGoodResponse()
         LOK_ASSERT_EQUAL(http::StatusCode::OK, httpResponse->statusLine().statusCode());
         LOK_ASSERT(httpResponse->statusLine().statusCategory() ==
                    http::StatusLine::StatusCodeClass::Successful);
-        LOK_ASSERT_EQUAL(std::string("HTTP/1.1"), httpResponse->statusLine().httpVersion());
-        LOK_ASSERT_EQUAL(std::string("OK"), httpResponse->statusLine().reasonPhrase());
-        LOK_ASSERT_EQUAL(std::string("text/html;charset=utf-8"),
-                         httpResponse->header().getContentType());
-        LOK_ASSERT_EQUAL(std::string("Wed, 02 Jun 2021 02:30:52 GMT"),
-                         httpResponse->header().get("Date"));
+        LOK_ASSERT_EQUAL_STR("HTTP/1.1", httpResponse->statusLine().httpVersion());
+        LOK_ASSERT_EQUAL_STR("OK", httpResponse->statusLine().reasonPhrase());
+        LOK_ASSERT_EQUAL_STR("text/html;charset=utf-8", httpResponse->header().getContentType());
+        LOK_ASSERT_EQUAL_STR("Wed, 02 Jun 2021 02:30:52 GMT", httpResponse->header().get("Date"));
 
         LOK_ASSERT_EQUAL(std::string(), httpResponse->getBody());
     }
@@ -353,7 +353,7 @@ void HttpRequestTests::testSimpleGetSync()
     http::Request httpRequest(std::move(URL));
 
     auto httpSession = http::Session::create(_localUri);
-    httpSession->setTimeout(std::chrono::seconds(1));
+    httpSession->setTimeout(1s);
 
     for (int i = 0; i < 5; ++i)
     {
@@ -368,8 +368,8 @@ void HttpRequestTests::testSimpleGetSync()
         LOK_ASSERT_EQUAL(http::StatusCode::OK, httpResponse->statusLine().statusCode());
         LOK_ASSERT(httpResponse->statusLine().statusCategory()
                    == http::StatusLine::StatusCodeClass::Successful);
-        LOK_ASSERT_EQUAL(std::string("HTTP/1.1"), httpResponse->statusLine().httpVersion());
-        LOK_ASSERT_EQUAL(std::string("OK"), httpResponse->statusLine().reasonPhrase());
+        LOK_ASSERT_EQUAL_STR("HTTP/1.1", httpResponse->statusLine().httpVersion());
+        LOK_ASSERT_EQUAL_STR("OK", httpResponse->statusLine().reasonPhrase());
 
         LOK_ASSERT_EQUAL(pocoResponse.second, httpResponse->getBody());
         LOK_ASSERT_EQUAL(body, httpResponse->getBody());
@@ -404,8 +404,8 @@ void HttpRequestTests::testChunkedGetSync()
         LOK_ASSERT_EQUAL(http::StatusCode::OK, httpResponse->statusLine().statusCode());
         LOK_ASSERT(httpResponse->statusLine().statusCategory()
                    == http::StatusLine::StatusCodeClass::Successful);
-        LOK_ASSERT_EQUAL(std::string("HTTP/1.1"), httpResponse->statusLine().httpVersion());
-        LOK_ASSERT_EQUAL(std::string("OK"), httpResponse->statusLine().reasonPhrase());
+        LOK_ASSERT_EQUAL_STR("HTTP/1.1", httpResponse->statusLine().httpVersion());
+        LOK_ASSERT_EQUAL_STR("OK", httpResponse->statusLine().reasonPhrase());
 
         LOK_ASSERT_EQUAL(pocoResponse.second, httpResponse->getBody());
         LOK_ASSERT_EQUAL(body, httpResponse->getBody());
@@ -440,8 +440,8 @@ void HttpRequestTests::testChunkedGetSync_External()
         LOK_ASSERT_EQUAL(http::StatusCode::OK, httpResponse->statusLine().statusCode());
         LOK_ASSERT(httpResponse->statusLine().statusCategory()
                    == http::StatusLine::StatusCodeClass::Successful);
-        LOK_ASSERT_EQUAL(std::string("HTTP/1.1"), httpResponse->statusLine().httpVersion());
-        LOK_ASSERT_EQUAL(std::string("OK"), httpResponse->statusLine().reasonPhrase());
+        LOK_ASSERT_EQUAL_STR("HTTP/1.1", httpResponse->statusLine().httpVersion());
+        LOK_ASSERT_EQUAL_STR("OK", httpResponse->statusLine().reasonPhrase());
 
         LOK_ASSERT_EQUAL(pocoResponse.second, httpResponse->getBody());
     }
@@ -696,7 +696,7 @@ void HttpRequestTests::testTimeout()
 
     auto httpSession = http::Session::create(_localUri);
 
-    httpSession->setTimeout(std::chrono::milliseconds(1)); // Very short interval.
+    httpSession->setTimeout(1ms); // Very short interval.
 
     const std::shared_ptr<const http::Response> httpResponse
         = httpSession->syncRequest(httpRequest);
@@ -767,7 +767,7 @@ void HttpRequestTests::testOnFinished_Timeout()
 
     auto httpSession = http::Session::create(_localUri);
 
-    httpSession->setTimeout(std::chrono::milliseconds(1)); // Very short interval.
+    httpSession->setTimeout(1ms); // Very short interval.
 
     bool completed = false;
     httpSession->setFinishedHandler([&](const std::shared_ptr<http::Session>& session) {
@@ -804,7 +804,7 @@ void HttpRequestTests::testPost()
     auto httpSession = http::Session::create(_localUri);
     if (httpSession)
     {
-        httpSession->setTimeout(std::chrono::seconds(5));
+        httpSession->setTimeout(5s);
         const std::shared_ptr<const http::Response> httpResponse =
             httpSession->syncRequest(httpRequest);
 
@@ -815,10 +815,9 @@ void HttpRequestTests::testPost()
         LOK_ASSERT_EQUAL(http::StatusCode::OK, httpResponse->statusLine().statusCode());
         LOK_ASSERT(httpResponse->statusLine().statusCategory() ==
                    http::StatusLine::StatusCodeClass::Successful);
-        LOK_ASSERT_EQUAL(std::string("HTTP/1.1"), httpResponse->statusLine().httpVersion());
-        LOK_ASSERT_EQUAL(std::string("OK"), httpResponse->statusLine().reasonPhrase());
-        LOK_ASSERT_EQUAL(std::string("text/html;charset=utf-8"),
-                         httpResponse->header().getContentType());
+        LOK_ASSERT_EQUAL_STR("HTTP/1.1", httpResponse->statusLine().httpVersion());
+        LOK_ASSERT_EQUAL_STR("OK", httpResponse->statusLine().reasonPhrase());
+        LOK_ASSERT_EQUAL_STR("text/html;charset=utf-8", httpResponse->header().getContentType());
 
         LOK_ASSERT_EQUAL_STR(data, httpResponse->getBody());
     }

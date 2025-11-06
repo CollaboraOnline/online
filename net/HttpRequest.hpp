@@ -672,7 +672,7 @@ public:
         os << indent << "http::Request: " << _version << ' ' << _verb << ' ' << _url;
         os << indent << "\tstage: " << name(_stage);
         os << indent << "\theaders: ";
-        Util::joinPair(os, _header, indent + '\t');
+        Util::joinPair(os, _header, indent, '\t');
     }
 
 protected:
@@ -1261,7 +1261,7 @@ public:
     }
 
 private:
-    inline void logPrefix(std::ostream& os) const { os << '#' << _fd << ": "; }
+    void logPrefix(std::ostream& os) const { os << '#' << _fd << ": "; }
 
     void finish(State newState)
     {
@@ -1367,8 +1367,7 @@ public:
             return nullptr;
         }
 
-        scheme = Util::toLower(std::move(scheme));
-        const bool secure = (scheme == "https://" || scheme == "wss://");
+        const bool secure = (Util::iequal(scheme, "https://") || Util::iequal(scheme, "wss://"));
         const auto protocol = secure ? Protocol::HttpSsl : Protocol::HttpUnencrypted;
         if (portString.empty())
             return create(std::move(hostname), protocol, getDefaultPort(protocol));
@@ -1625,7 +1624,7 @@ public:
     }
 
 private:
-    inline void logPrefix(std::ostream& os) const { os << '#' << _fd << ": "; }
+    void logPrefix(std::ostream& os) const { os << '#' << _fd << ": "; }
 
     /// Make a synchronous request.
     bool syncRequestImpl(SocketPoll& poller)
@@ -2040,7 +2039,7 @@ inline const std::shared_ptr<const http::Response>
 get(const std::string& url, std::chrono::milliseconds timeout = Session::getDefaultTimeout())
 {
     auto httpSession = http::Session::create(url);
-    return httpSession->syncRequest(http::Request(net::parseUrl(url)), timeout);
+    return httpSession->syncRequest(http::Request(std::string(net::parseUrl(url))), timeout);
 }
 
 /// HTTP Get synchronously given a url and a path.

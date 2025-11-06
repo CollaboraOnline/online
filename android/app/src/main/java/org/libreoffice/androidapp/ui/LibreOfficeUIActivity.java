@@ -19,7 +19,9 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.pm.ShortcutInfo;
 import android.content.pm.ShortcutManager;
+import android.content.res.Configuration;
 import android.database.Cursor;
+import android.graphics.Insets;
 import android.graphics.drawable.Icon;
 import android.hardware.usb.UsbManager;
 import android.net.Uri;
@@ -42,6 +44,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
+import android.view.WindowInsets;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.animation.OvershootInterpolator;
@@ -84,8 +88,8 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -168,10 +172,6 @@ public class LibreOfficeUIActivity extends AppCompatActivity implements Settings
 
         SettingsListenerModel.getInstance().setListener(this);
 
-        // Register the LOActivity events broadcast receiver
-        LocalBroadcastManager.getInstance(this).registerReceiver(mLOActivityReceiver,
-              new IntentFilter(LOActivity.LO_ACTIVITY_BROADCAST));
-
         // init UI and populate with contents from the provider
         createUI();
 
@@ -207,6 +207,16 @@ public class LibreOfficeUIActivity extends AppCompatActivity implements Settings
             }
         }
         // TODO FileUtilities.sortFiles(filePaths, sortMode);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            recentRecyclerView.setOnApplyWindowInsetsListener((v, windowInsets) -> {
+                Insets insets = windowInsets.getInsets(WindowInsets.Type.systemBars());
+
+                v.setPadding(insets.left, 0, insets.right, insets.bottom);
+
+                return WindowInsets.CONSUMED;
+            });
+        }
 
         recentRecyclerView.setLayoutManager(isViewModeList() ? new LinearLayoutManager(this) : new GridLayoutManager(this, 2));
         recentRecyclerView.setAdapter(new RecentFilesAdapter(this, recentUris));
@@ -296,6 +306,15 @@ public class LibreOfficeUIActivity extends AppCompatActivity implements Settings
         });
         drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.document_locations, R.string.close_document_locations) {
             @Override
+            public void onDrawerSlide(View drawerView, float slideOffset) {
+                boolean lightMode = (getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_YES) == 0;
+
+                if (lightMode) { // Even in light mode, the status bar still has a dark background when opened... the navigation bar is unaffected
+                    boolean lightStatusBar = slideOffset < 0.5;
+                    WindowCompat.getInsetsController(getWindow(), getWindow().getDecorView()).setAppearanceLightStatusBars(lightStatusBar);
+                }
+            }
+            @Override
             public void onDrawerOpened(View drawerView) {
                 super.onDrawerOpened(drawerView);
 
@@ -349,12 +368,6 @@ public class LibreOfficeUIActivity extends AppCompatActivity implements Settings
                 navigationDrawer.requestFocus(); // Make keypad navigation easier
                 collapseFabMenu();
             }
-
-            @Override
-            public void onDrawerClosed(View drawerView) {
-                super.onDrawerClosed(drawerView);
-                supportInvalidateOptionsMenu();
-            }
         };
         drawerToggle.setDrawerIndicatorEnabled(true);
         drawerLayout.addDrawerListener(drawerToggle);
@@ -366,6 +379,21 @@ public class LibreOfficeUIActivity extends AppCompatActivity implements Settings
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            WindowCompat.enableEdgeToEdge(getWindow());
+            boolean lightMode = (getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_YES) == 0;
+            WindowCompat.getInsetsController(getWindow(), getWindow().getDecorView()).setAppearanceLightStatusBars(lightMode);
+            WindowCompat.getInsetsController(getWindow(), getWindow().getDecorView()).setAppearanceLightNavigationBars(lightMode);
+
+            toolbar.setOnApplyWindowInsetsListener((v, windowInsets) -> {
+                Insets insets = windowInsets.getInsets(WindowInsets.Type.systemBars());
+
+                v.setPadding(0, insets.top, 0, 0);
+
+                return WindowInsets.CONSUMED;
+            });
+        }
 
         actionBar = getSupportActionBar();
 
@@ -400,11 +428,26 @@ public class LibreOfficeUIActivity extends AppCompatActivity implements Settings
     private void setupFloatingActionButton() {
         editFAB = findViewById(R.id.editFAB);
         if (LOActivity.isChromeOS(this)) {
-            int dp = (int)getResources().getDisplayMetrics().density;
-            ConstraintLayout.LayoutParams layoutParams = (ConstraintLayout.LayoutParams)editFAB.getLayoutParams();
+            int dp = (int) getResources().getDisplayMetrics().density;
+            ConstraintLayout.LayoutParams layoutParams = (ConstraintLayout.LayoutParams) editFAB.getLayoutParams();
             layoutParams.leftToLeft = ConstraintLayout.LayoutParams.PARENT_ID;
             layoutParams.bottomMargin = dp * 24;
             editFAB.setCustomSize(dp * 70);
+        }
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            editFAB.setOnApplyWindowInsetsListener((v, windowInsets) -> {
+                Insets insets = windowInsets.getInsets(WindowInsets.Type.systemBars() | (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE ? WindowInsets.Type.systemOverlays() : 0));
+
+                ViewGroup.MarginLayoutParams mlp = (ViewGroup.MarginLayoutParams) v.getLayoutParams();
+                mlp.leftMargin = insets.left;
+                mlp.rightMargin = insets.right;
+                int dp = (int) getResources().getDisplayMetrics().density;
+                mlp.bottomMargin = insets.bottom + (LOActivity.isChromeOS(this) ? dp * 24 : 0);
+                v.setLayoutParams(mlp);
+
+                return WindowInsets.CONSUMED;
+            });
         }
 
         editFAB.setOnClickListener(new OnClickListener() {
@@ -876,20 +919,6 @@ public class LibreOfficeUIActivity extends AppCompatActivity implements Settings
         //Log.d(LOGTAG, currentDirectory.toString() + Integer.toString(filterMode));
     }
 
-    /** Receiver for receiving messages from LOActivity - like that Save was performed and similar. */
-    private final BroadcastReceiver mLOActivityReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            String event = intent.getStringExtra(LOActivity.LO_ACTION_EVENT);
-            Log.d(LOGTAG, "Received a message from LOActivity: " + event);
-
-            // Handle various events from LOActivity
-            if (event.equals("SAVE")) {
-                // TODO probably kill this, we don't need to do anything here any more
-            }
-        }
-    };
-
     /** Uploading back when we return from the LOActivity. */
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -967,7 +996,6 @@ public class LibreOfficeUIActivity extends AppCompatActivity implements Settings
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        LocalBroadcastManager.getInstance(this).unregisterReceiver(mLOActivityReceiver);
         Log.d(LOGTAG, "onDestroy");
     }
 

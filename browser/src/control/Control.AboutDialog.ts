@@ -237,17 +237,23 @@ class AboutDialog {
 	}
 
 	private copyVersionInfoToClipboard() {
-		let text =
-			'COOLWSD version: ' +
-			this.getVersionInfoFromClass('coolwsd-version') +
-			'\n';
-		text +=
-			'LOKit version: ' + this.getVersionInfoFromClass('lokit-version') + '\n';
-		text += 'Served by: ' + document.getElementById('os-info').innerText + '\n';
-		text +=
-			'Server ID: ' + document.getElementById('coolwsd-id').innerText + '\n';
-		text +=
-			'WOPI host: ' + document.getElementById('wopi-host-id').innerText + '\n';
+		let text = '';
+
+		const addLine = (label: string, value?: string | null): void => {
+			if (value && value.trim() !== '') {
+				text += `${label}: ${value}\n`;
+			}
+		};
+
+		addLine(
+			'COOLWSD version',
+			this.getVersionInfoFromClass?.('coolwsd-version'),
+		);
+		addLine('LOKit version', this.getVersionInfoFromClass?.('lokit-version'));
+		addLine('Served by', document.getElementById('os-info')?.innerText);
+		addLine('Server ID', document.getElementById('coolwsd-id')?.innerText);
+		addLine('WOPI host', document.getElementById('wopi-host-id')?.innerText);
+
 		text = text.replace(/\u00A0/g, ' ');
 
 		if (navigator.clipboard && window.isSecureContext) {

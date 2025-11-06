@@ -34,6 +34,7 @@
 #include "net/WebSocketHandler.hpp"
 #include "Storage.hpp"
 #include "ServerAuditUtil.hpp"
+#include "SlideCache.hpp"
 
 #include "common/SigUtil.hpp"
 #include "common/Session.hpp"
@@ -53,6 +54,7 @@ class LockContext;
 class PresetsInstallTask;
 class TileCache;
 class Message;
+class SlideLayerCacheMap;
 
 namespace Poco {
     namespace JSON {
@@ -272,7 +274,7 @@ public:
 
     /// setup the transfer of a socket into this DocumentBroker poll.
     void setupTransfer(SocketPoll& from, const std::weak_ptr<StreamSocket>& socket,
-                       const SocketDisposition::MoveFunction& transferFn);
+                       SocketDisposition::MoveFunction transferFn);
 
     /// Flag for termination. Note that this doesn't save any unsaved changes in the document
     void stop(const std::string& reason);
@@ -377,7 +379,7 @@ public:
 
     std::string getJailRoot() const;
 
-    /// Add a new session. Returns the new number of sessions.
+    /// Loads and adds a new session. Returns the new number of sessions.
     std::size_t addSession(const std::shared_ptr<ClientSession>& session,
                            std::unique_ptr<WopiStorage::WOPIFileInfo> wopiFileInfo = nullptr);
 
@@ -417,10 +419,23 @@ public:
         _cursorHeight = h;
     }
 
+    void clearCaches();
+
     void invalidateTiles(const std::string& tiles, CanonicalViewId canonicalViewId)
     {
         // Remove from cache.
         _tileCache->invalidateTiles(tiles, canonicalViewId);
+        //Tiles invalidate also mean slidelayers are also invalid now
+        // slides modified so need to rerender on request
+        invalidateSlideLayerCache();
+    }
+
+    void invalidateSlideLayerCache()
+    {
+        // TODO:
+        // Currently can't detect which slide was modified and
+        // based on our key choice can't remove just cache for particular slide
+        _slideLayerCache.erase_all();
     }
 
     void handleTileRequest(const StringVector &tokens, bool forceKeyframe,
@@ -430,17 +445,24 @@ public:
     void sendRequestedTiles(const std::shared_ptr<ClientSession>& session);
     void sendTileCombine(const TileCombined& tileCombined);
 
+    void handleGetSlideRequest(const StringVector& tokens,
+                               const std::shared_ptr<ClientSession>& session);
+
     enum ClipboardRequest : std::uint8_t {
         CLIP_REQUEST_SET,
         CLIP_REQUEST_GET,
         CLIP_REQUEST_GET_RICH_HTML_ONLY,
         CLIP_REQUEST_GET_HTML_PLAIN_ONLY,
     };
+
+    std::shared_ptr<ClientSession> getSessionFromClipboardTag(const std::string &viewId, const std::string &tag);
+
     void handleClipboardRequest(ClipboardRequest type,  const std::shared_ptr<StreamSocket> &socket,
                                 const std::string &viewId, const std::string &tag,
                                 const std::string &clipFile);
-    static bool lookupSendClipboardTag(const std::shared_ptr<StreamSocket> &socket,
-                                       const std::string &tag, bool sendError = false);
+    static bool handlePersistentClipboardRequest(ClipboardRequest type,
+                                                 const std::shared_ptr<StreamSocket> &socket,
+                                                 const std::string &tag, bool sendError = false);
 
     void handleMediaRequest(std::string_view range, const std::shared_ptr<Socket>& socket,
                             const std::string& tag);
@@ -451,7 +473,7 @@ public:
     /// True if any flag to close or terminate is set.
     bool isUnloadingUnrecoverably() const
     {
-        return isMarkedToDestroy() || _docState.isCloseRequested() ||
+        return isMarkedToDestroy() || _docState.isCloseRequested() || _stop ||
                SigUtil::getShutdownRequestFlag();
     }
 
@@ -691,6 +713,7 @@ private:
     void handleTileResponse(const std::shared_ptr<Message>& message);
     void handleDialogPaintResponse(const std::vector<char>& payload, bool child);
     void handleTileCombinedResponse(const std::shared_ptr<Message>& message);
+    void handleSlideLayerResponse(const std::shared_ptr<Message>& message);
     void handleDialogRequest(const std::string& dialogCmd);
 
     /// Invoked to issue a save before renaming the document filename.
@@ -873,9 +896,11 @@ private:
     /// This includes only those that are loaded and not waiting disconnection.
     std::size_t countActiveSessions() const;
 
-    /// Loads a new session and adds to the sessions container.
-    std::size_t addSessionInternal(const std::shared_ptr<ClientSession>& session,
-                                   std::unique_ptr<WopiStorage::WOPIFileInfo> wopiFileInfo);
+    /// Returns the number of sessions still loading.
+    std::size_t countLoadingSessions() const;
+
+    /// Notify and remove the loading sessions that we're unloading.
+    void failLoadingSessions(bool remove);
 
     /// Starts the Kit <-> DocumentBroker shutdown handshake
     void disconnectSessionInternal(const std::shared_ptr<ClientSession>& session);
@@ -1606,7 +1631,7 @@ private:
         /// Transitions to Status::Live, implying the document has loaded.
         void setLive()
         {
-            LOG_TRC("Setting DocumentState to Status::Live from " << name(_status));
+            LOG_TRC("Setting DocumentState to Loaded and Live");
             // assert(_status == Status::Loading
             //        && "Document wasn't in Loading state to transition to Status::Live");
             _loaded = true;
@@ -1713,6 +1738,14 @@ private:
     std::string applyViewAccessibility(const std::string& message,
                                        const std::string& viewId);
 
+    /// Apply signature view settings to the message
+    std::string applySignViewSettings(const std::string& message,
+                                      const std::shared_ptr<ClientSession>& session);
+
+    /// Apply all view settings (signature and accessibility) to the message
+    std::string applyViewSetting(const std::string& message, const std::string& viewId,
+                                 const std::shared_ptr<ClientSession>& session);
+
     /// What type are we: affects priority.
     const Poco::URI _uriPublic;
 
@@ -1793,6 +1826,9 @@ private:
 
     std::unique_ptr<TileCache> _tileCache;
 
+    /// Cached slide layer for slideshow
+    SlideLayerCacheMap _slideLayerCache;
+
     std::unique_ptr<LockContext> _lockCtx;
 
 #if !MOBILEAPP
@@ -1845,6 +1881,8 @@ private:
     bool _isViewFileExtension;
 
     bool _isViewSettingsAccessibilityEnabled;
+
+    bool _isViewSettingsUpdated;
 
     /// True iff the config per_document.always_save_on_exit is true.
     const bool _alwaysSaveOnExit : 1;

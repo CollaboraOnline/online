@@ -206,6 +206,9 @@ window.L.Map.include({
 			this._textInput.setSwitchedToEditMode();
 		}
 
+		if (app.map['stateChangeHandler'].getItemValue('EditDoc') === 'false')
+			app.map.sendUnoCommand('.uno:EditDoc?Editable:bool=true');
+
 		app.events.fire('updatepermission', {perm : perm});
 
 		if (this._docLayer._docType === 'text') {

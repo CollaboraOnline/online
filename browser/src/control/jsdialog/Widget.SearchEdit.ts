@@ -92,11 +92,19 @@ class SearchEditWidget extends EditWidget {
 		if (this.edit.input.value === '') {
 			toolbar.enableItem('searchprev', false);
 			toolbar.enableItem('searchnext', false);
-			toolbar.showItem('cancelsearch', false);
+			if (window.mode.isMobile()) {
+				toolbar.enableItem('cancelsearch', false);
+			} else {
+				toolbar.showItem('cancelsearch', false);
+			}
 		} else {
 			toolbar.enableItem('searchprev', true);
 			toolbar.enableItem('searchnext', true);
-			toolbar.showItem('cancelsearch', true);
+			if (window.mode.isMobile()) {
+				toolbar.enableItem('cancelsearch', true);
+			} else {
+				toolbar.showItem('cancelsearch', true);
+			}
 		}
 	}
 

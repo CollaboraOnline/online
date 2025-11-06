@@ -16,57 +16,8 @@
 
 app.definitions.Socket = class Socket extends SocketBase {
 
-	getParameterValue(s) {
-		var i = s.indexOf('=');
-		if (i === -1)
-			return undefined;
-		return s.substring(i+1);
-	}
-
 	constructor(map) {
 		super(map);
-	}
-
-	getWebSocketBaseURI(map) {
-		return window.makeWsUrlWopiSrc('/cool/', map.options.doc + '?' + $.param(map.options.docParams));
-	}
-
-	connect(socket) {
-		var map = this._map;
-		map.options.docParams['permission'] = app.getPermission();
-		if (this.socket) {
-			this.close();
-		}
-		if (socket && (socket.readyState === 1 || socket.readyState === 0)) {
-			this.socket = socket;
-		} else if (window.ThisIsAMobileApp) {
-			// We have already opened the FakeWebSocket or MobileSocket over in global.js
-			// With the FakeWebSocket do we then set this.socket at all?
-			// With the MobileSocket we definitely do - this is load-bearing for opening password protected documents
-		} else	{
-			try {
-				this.socket = window.createWebSocket(this.getWebSocketBaseURI(map));
-				window.socket = this.socket;
-			} catch (e) {
-				this._map.fire('error', {msg: _('Oops, there is a problem connecting to {productname}: ').replace('{productname}', (typeof brandProductName !== 'undefined' ? brandProductName : 'Collabora Online Development Edition (unbranded)')) + e, cmd: 'socket', kind: 'failed', id: 3});
-				return;
-			}
-		}
-
-		this.socket.onerror = window.L.bind(this._onSocketError, this);
-		this.socket.onclose = window.L.bind(this._onSocketClose, this);
-		this.socket.onopen = window.L.bind(this._onSocketOpen, this);
-		this.socket.onmessage = window.L.bind(this._slurpMessage, this);
-		this.socket.binaryType = 'arraybuffer';
-		if (map.options.docParams.access_token && parseInt(map.options.docParams.access_token_ttl)) {
-			var tokenExpiryWarning = 900 * 1000; // Warn when 15 minutes remain
-			clearTimeout(this._accessTokenExpireTimeout);
-			this._accessTokenExpireTimeout = setTimeout(window.L.bind(this._sessionExpiredWarning, this),
-			                                            parseInt(map.options.docParams.access_token_ttl) - Date.now() - tokenExpiryWarning);
-		}
-
-		// process messages for early socket connection
-		this._emptyQueue();
 	}
 
 	_emptyQueue() {
@@ -152,18 +103,6 @@ app.definitions.Socket = class Socket extends SocketBase {
 		}
 	}
 
-	sendTraceEvent(name, ph, timeRange, args, id, tid) {
-		if (timeRange === undefined)
-			timeRange = 'ts=' + Math.round(performance.now() * 1000);
-		if (!id)
-			id = 1;
-		if (!tid)
-			tid = 1;
-		this.sendMessage('TRACEEVENT name=' + JSON.stringify(name) + ' ph=' + ph +
-				 ' ' + timeRange + ' id=' + id + ' tid=' + tid +
-				 this._stringifyArgs(args));
-	}
-
 	_doSend(msg) {
 		// Only attempt to log text frames, not binary ones.
 		if (typeof msg === 'string')
@@ -229,7 +168,7 @@ app.definitions.Socket = class Socket extends SocketBase {
 			};
 			msg += ' options=' + JSON.stringify(options);
 		}
-		var spellOnline = window.prefs.get('SpellOnline');
+		var spellOnline = window.prefs.get('spellOnline');
 		if (spellOnline) {
 			msg += ' spellOnline=' + spellOnline;
 		}
@@ -1012,7 +951,7 @@ app.definitions.Socket = class Socket extends SocketBase {
 			|| command.errorCmd === 'downloadas'
 			|| command.errorCmd === 'exportas')  {
 
-			if (command.errorCmd === 'saveas') {
+			if (command.errorCmd !== 'storage') {
 				this._map.fire('postMessage', {
 					msgId: 'Action_Save_Resp',
 					args: {
@@ -1392,7 +1331,7 @@ app.definitions.Socket = class Socket extends SocketBase {
 			app.serverConnectionService.onViewSetting(settingJSON);
 		}
 
-		if (textMsg.startsWith('downloadas:')) {
+		if (textMsg.startsWith('downloadas:') || textMsg.startsWith('exportas:')) {
 			var postMessageObj = {
 				success: true,
 				result: 'exportas',
@@ -1756,249 +1695,6 @@ app.definitions.Socket = class Socket extends SocketBase {
 
 		if (!this._map['wopi'].DisableInactiveMessages && app.sectionContainer && !app.sectionContainer.testing)
 			this._map.uiManager.showSnackbar(_('The server has been disconnected.'));
-	}
-
-	parseServerCmd(msg) {
-		var tokens = msg.split(/[ \n]+/);
-		var command = {};
-		for (var i = 0; i < tokens.length; i++) {
-			if (tokens[i].substring(0, 9) === 'tileposx=') {
-				command.x = parseInt(tokens[i].substring(9));
-			}
-			else if (tokens[i].substring(0, 9) === 'tileposy=') {
-				command.y = parseInt(tokens[i].substring(9));
-			}
-			else if (tokens[i].substring(0, 2) === 'x=') {
-				command.x = parseInt(tokens[i].substring(2));
-			}
-			else if (tokens[i].substring(0, 2) === 'y=') {
-				command.y = parseInt(tokens[i].substring(2));
-			}
-			else if (tokens[i].substring(0, 10) === 'tilewidth=') {
-				command.tileWidth = parseInt(tokens[i].substring(10));
-			}
-			else if (tokens[i].substring(0, 11) === 'tileheight=') {
-				command.tileHeight = parseInt(tokens[i].substring(11));
-			}
-			else if (tokens[i].substring(0, 6) === 'width=') {
-				command.width = parseInt(tokens[i].substring(6));
-			}
-			else if (tokens[i].substring(0, 7) === 'height=') {
-				command.height = parseInt(tokens[i].substring(7));
-			}
-			else if (tokens[i].substring(0, 5) === 'part=') {
-				command.part = parseInt(tokens[i].substring(5));
-			}
-			else if (tokens[i].substring(0, 6) === 'parts=') {
-				command.parts = parseInt(tokens[i].substring(6));
-			}
-			else if (tokens[i].substring(0, 5) === 'mode=') {
-				command.mode = parseInt(tokens[i].substring(5));
-			}
-			else if (tokens[i].substring(0, 8) === 'current=') {
-				command.selectedPart = parseInt(tokens[i].substring(8));
-			}
-			else if (tokens[i].substring(0, 3) === 'id=') {
-				// remove newline characters
-				command.id = tokens[i].substring(3).replace(/(\r\n|\n|\r)/gm, '');
-			}
-			else if (tokens[i].substring(0, 5) === 'type=') {
-				// remove newline characters
-				command.type = tokens[i].substring(5).replace(/(\r\n|\n|\r)/gm, '');
-			}
-			else if (tokens[i].substring(0, 4) === 'cmd=') {
-				command.errorCmd = tokens[i].substring(4);
-			}
-			else if (tokens[i].substring(0, 5) === 'code=') {
-				command.errorCode = tokens[i].substring(5);
-			}
-			else if (tokens[i].substring(0, 5) === 'kind=') {
-				command.errorKind = tokens[i].substring(5);
-			}
-			else if (tokens[i].substring(0, 5) === 'jail=') {
-				command.jail = tokens[i].substring(5);
-			}
-			else if (tokens[i].substring(0, 4) === 'dir=') {
-				command.dir = tokens[i].substring(4);
-			}
-			else if (tokens[i].substring(0, 11) === 'downloadid=') {
-				command.downloadid = tokens[i].substring(11);
-			}
-			else if (tokens[i].substring(0, 5) === 'name=') {
-				command.name = tokens[i].substring(5);
-			}
-			else if (tokens[i].substring(0, 9) === 'filename=') {
-				command.filename = tokens[i].substring(9);
-			}
-			else if (tokens[i].substring(0, 5) === 'port=') {
-				command.port = tokens[i].substring(5);
-			}
-			else if (tokens[i].substring(0, 5) === 'font=') {
-				command.font = tokens[i].substring(5);
-			}
-			else if (tokens[i].substring(0, 5) === 'char=') {
-				command.char = tokens[i].substring(5);
-			}
-			else if (tokens[i].substring(0, 4) === 'url=') {
-				command.url = tokens[i].substring(4);
-			}
-			else if (tokens[i].substring(0, 7) === 'viewid=') {
-				command.viewid = tokens[i].substring(7);
-			}
-			else if (tokens[i].substring(0, 8) === 'nviewid=') {
-				command.nviewid = tokens[i].substring(8);
-			}
-			else if (tokens[i].substring(0, 7) === 'params=') {
-				command.params = tokens[i].substring(7).split(',');
-			}
-			else if (tokens[i].substring(0, 12) === 'rendercount=') {
-				command.rendercount = parseInt(tokens[i].substring(12));
-			}
-			else if (tokens[i].startsWith('wid=')) {
-				command.wireId = this.getParameterValue(tokens[i]);
-			}
-			else if (tokens[i].substring(0, 6) === 'title=') {
-				command.title = tokens[i].substring(6);
-			}
-			else if (tokens[i].substring(0, 12) === 'dialogwidth=') {
-				command.dialogwidth = tokens[i].substring(12);
-			}
-			else if (tokens[i].substring(0, 13) === 'dialogheight=') {
-				command.dialogheight = tokens[i].substring(13);
-			}
-			else if (tokens[i].substring(0, 10) === 'rectangle=') {
-				command.rectangle = tokens[i].substring(10);
-			}
-			else if (tokens[i].substring(0, 12) === 'hiddenparts=') {
-				var hiddenparts = tokens[i].substring(12).split(',');
-				command.hiddenparts = [];
-				hiddenparts.forEach(function (item) {
-					command.hiddenparts.push(parseInt(item));
-				});
-			}
-			else if (tokens[i].startsWith('rtlparts=')) {
-				var rtlParts = tokens[i].substring(9).split(',');
-				command.rtlParts = [];
-				rtlParts.forEach(function (item) {
-					command.rtlParts.push(parseInt(item));
-				});
-			}
-			else if (tokens[i].startsWith('protectedparts=')) {
-				var protectedParts = tokens[i].substring(15).split(',');
-				command.protectedParts = [];
-				protectedParts.forEach(function (item) {
-					command.protectedParts.push(parseInt(item));
-				});
-			}
-			else if (tokens[i].startsWith('hash=')) {
-				command.hash = tokens[i].substring('hash='.length);
-			}
-			else if (tokens[i] === 'nopng') {
-				command.nopng = true;
-			}
-			else if (tokens[i].substring(0, 9) === 'username=') {
-				command.username = tokens[i].substring(9);
-			}
-			else if (tokens[i].startsWith('pagerectangles=')) {
-				command.pageRectangleList = tokens[i].substring(15).split(';');
-				command.pageRectangleList = command.pageRectangleList.map(function(element) {
-					element = element.split(',');
-					return [parseInt(element[0]), parseInt(element[1]), parseInt(element[2]), parseInt(element[3])];
-				});
-			}
-			else if (tokens[i].startsWith('lastcolumn=')) {
-				command.lastcolumn = parseInt(tokens[i].substring(11));
-			}
-			else if (tokens[i].startsWith('lastrow=')) {
-				command.lastrow = parseInt(tokens[i].substring(8));
-			}
-			else if (tokens[i].startsWith('readonly=')) {
-				command.readonly = parseInt(tokens[i].substring(9));
-			}
-		}
-		if (command.tileWidth && command.tileHeight && this._map._docLayer) {
-			var defaultZoom = this._map.options.zoom;
-			var scale = command.tileWidth / this._map._docLayer.options.tileWidthTwips;
-			// scale = 1.2 ^ (defaultZoom - zoom)
-			// zoom = defaultZoom -log(scale) / log(1.2)
-			command.zoom = Math.round(defaultZoom - Math.log(scale) / Math.log(1.2));
-		}
-		return command;
-	}
-
-	_stringifyArgs(args) {
-		return (args == null ? '' : (' args=' + JSON.stringify(args)));
-	}
-
-	createAsyncTraceEvent(name, args) {
-		if (!this.traceEventRecordingToggle)
-			return null;
-
-		var result = {};
-		result.id = this.asyncTraceEventCounter++;
-		result.tid = this.asyncTracePseudoThread++;
-		result.active = true;
-		result.args = args;
-
-		this.sendTraceEvent(name, 'S', undefined, args, result.id, result.tid);
-
-		var that = this;
-		result.finish = function () {
-			that.asyncTracePseudoThread--;
-			if (this.active) {
-				that.sendTraceEvent(name, 'F', undefined, this.args, this.id, this.tid);
-				this.active = false;
-			}
-		};
-		result.abort = function () {
-			that.asyncTracePseudoThread--;
-			this.active = false;
-		};
-		return result;
-	}
-
-	createCompleteTraceEvent(name, args) {
-		if (!this.traceEventRecordingToggle)
-			return null;
-
-		var result = {};
-		result.active = true;
-		result.begin = performance.now();
-		result.args = args;
-		var that = this;
-		result.finish = function () {
-			if (this.active) {
-				var now = performance.now();
-				that.sendTraceEvent(name, 'X', 'ts=' + Math.round(this.begin * 1000) +
-						    ' dur=' + Math.round((now - this.begin) * 1000),
-						    args);
-				this.active = false;
-			}
-		};
-		result.abort = function () {
-			this.active = false;
-		};
-		return result;
-	}
-
-	// something we can grok quickly in the trace viewer
-	createCompleteTraceEventFromEvent(textMsg) {
-		if (!this.traceEventRecordingToggle)
-			return null;
-
-		var pretty;
-		if (!textMsg)
-			pretty = 'blob';
-		else {
-			var idx = textMsg.indexOf(':');
-			if (idx > 0)
-				pretty = textMsg.substring(0,idx);
-			else if (textMsg.length < 25)
-				pretty = textMsg;
-			else
-				pretty = textMsg.substring(0, 25);
-		}
-		return this.createCompleteTraceEvent(pretty, { message: textMsg });
 	}
 
 	manualReconnect(timeout) {

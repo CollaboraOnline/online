@@ -126,7 +126,7 @@ class NavigatorPanel extends SidebarBase {
 
 		// Create the close button inside the div
 		this.closeNavButton = window.L.DomUtil.create(
-			'span',
+			'button',
 			'close-navigation-button',
 			closeNavWrapper,
 		);
@@ -136,15 +136,25 @@ class NavigatorPanel extends SidebarBase {
 		window.L.control.attachTooltipEventListener(this.closeNavButton, this.map);
 		this.closeNavButton.setAttribute('tabindex', '0');
 
-		this.closeNavButton.addEventListener(
-			'click',
-			function () {
-				this.closeNavigation();
-				if (app.showNavigator) {
-					app.map.sendUnoCommand('.uno:Navigator');
+		const clickFunction = function () {
+			this.closeNavigation();
+			if (app.showNavigator) {
+				app.map.sendUnoCommand('.uno:Navigator');
+			}
+			app.map.focus();
+		}.bind(this);
+
+		this.closeNavButton.addEventListener('click', clickFunction);
+
+		this.navigationPanel.addEventListener(
+			'keydown',
+			function (e: KeyboardEvent) {
+				if (e.code === 'Escape') {
+					clickFunction();
+					e.preventDefault();
+					e.stopPropagation();
 				}
-				app.map.focus();
-			}.bind(this),
+			},
 		);
 
 		const contentDivs = [];
@@ -304,8 +314,7 @@ class NavigatorPanel extends SidebarBase {
 				} else {
 					app.map.sendUnoCommand('.uno:Navigator');
 				}
-				// TODO: handle properly keyboard navigation in navigator: ESC to exit, close button
-				app.map.focus();
+				this.focusSearch();
 			}.bind(this),
 		);
 	}
@@ -315,11 +324,7 @@ class NavigatorPanel extends SidebarBase {
 		this.builder.setWindowId(navigatorData.id);
 		this.container.innerHTML = '';
 
-		if (
-			navigatorData.action === 'close' ||
-			window.app.file.disableSidebar ||
-			this.map.isReadOnlyMode()
-		) {
+		if (navigatorData.action === 'close') {
 			this.closeSidebar();
 		} else if (navigatorData.children) {
 			if (navigatorData.children.length) {
@@ -449,6 +454,7 @@ class NavigatorPanel extends SidebarBase {
 		if (!searchInput) return;
 
 		app.layoutingService.appendLayoutingTask(() => {
+			searchInput.select();
 			searchInput.focus();
 		});
 	}
@@ -483,6 +489,73 @@ class NavigatorPanel extends SidebarBase {
 		this.builder.build(wrapper, [data], false);
 	}
 
+	useDefaultCallback(
+		objectType: string,
+		eventType: string,
+		object: any,
+		data: any,
+		builder: JSBuilder,
+	) {
+		super.callback(objectType, eventType, object, data, builder);
+	}
+
+	getSearchTerm(): string | null {
+		const searchInput = document.getElementById(
+			'navigator-search-input',
+		) as HTMLInputElement;
+
+		if (searchInput) return searchInput.value;
+		else return null;
+	}
+
+	useSearchCallback(
+		objectType: string,
+		eventType: string,
+		object: any,
+		builder: JSBuilder,
+	) {
+		// Switch to "Results tab" first.
+		if (eventType === 'activate') {
+			const resultsTab = this.navigationPanel.querySelector(
+				'#tab-quick-find:not(.selected)',
+			) as HTMLElement;
+			if (resultsTab) resultsTab.click();
+		}
+
+		const nextButton = this.navigationPanel.querySelector(
+			'#findnext button',
+		) as HTMLElement;
+		const nextButtonVisible =
+			nextButton && (nextButton as any).checkVisibility();
+		const searchTerm = this.getSearchTerm();
+
+		if (!searchTerm) return; // There is something wrong. If search input doesn't exist, nothing to do below.
+
+		const termChanged = searchTerm !== this.highlightTerm;
+		this.highlightTerm = searchTerm;
+		const newSearch = termChanged || !nextButtonVisible;
+
+		if (newSearch) {
+			if (object.id === 'navigator-search-button')
+				super.callback('edit', 'activate', { id: 'Find' }, searchTerm, builder);
+			else
+				super.callback(
+					objectType,
+					eventType,
+					{ id: 'Find' },
+					searchTerm,
+					builder,
+				);
+		} else if (nextButton) nextButton.click();
+
+		// Update outline highlighting
+		// Note: only update on 'activate' or button pressed events to be consistent with results tab
+		if (eventType === 'activate') {
+			var treeContainer = document.getElementById('contenttree') as any;
+			if (treeContainer) treeContainer.highlightEntries(searchTerm);
+		}
+	}
+
 	override callback(
 		objectType: string,
 		eventType: string,
@@ -490,35 +563,12 @@ class NavigatorPanel extends SidebarBase {
 		data: any,
 		builder: JSBuilder,
 	): void {
-		let searchTerm = '';
-		// Update results tab
-		if (object.id === 'navigator-search-button') {
-			searchTerm = (
-				document.getElementById('navigator-search-input') as HTMLInputElement
-			).value;
-			super.callback('edit', 'activate', { id: 'Find' }, searchTerm, builder);
-		} else if (object.id === 'navigator-search') {
-			searchTerm = data;
-			super.callback(
-				objectType,
-				eventType,
-				{ id: 'Find' },
-				searchTerm,
-				builder,
-			);
-		}
-		// Update outline highlighting
-		// Note: only update on 'activate' or button pressed events to be consistent with results tab
-		if (
-			(object.id == 'navigator-search' && eventType == 'activate') ||
-			object.id == 'navigator-search-button'
-		) {
-			var treeContainer = document.getElementById('contenttree') as any;
-			if (treeContainer) treeContainer.highlightEntries(searchTerm);
-			this.highlightTerm = searchTerm;
+		if (!['navigator-search-button', 'navigator-search'].includes(object.id)) {
+			this.useDefaultCallback(objectType, eventType, object, data, builder);
 			return;
+		} else {
+			this.useSearchCallback(objectType, eventType, object, builder);
 		}
-		super.callback(objectType, eventType, object, data, builder);
 	}
 }
 

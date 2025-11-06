@@ -50,7 +50,7 @@ describe(['tagdesktop'], 'Idle', function() {
 		cy.cGet('#sidebar-dock-wrapper').should('be.visible').then(($sidebar) => {
 			// If it's not visible, click on SidebarDeck.PropertyDeck to make it visible
 			if (!$sidebar.is(':visible')) {
-				cy.cGet('#SidebarDeck.PropertyDeck').click();
+				desktopHelper.sidebarToggle();
 			}
 		});
 		cy.cGet('div.sidebar#Underline > .arrowbackground').click();

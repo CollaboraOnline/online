@@ -175,6 +175,7 @@ body {
 	position: fixed;
 }
 #document-container {
+	font-family: var(--cool-font);
 	background-color: var(--color-main-background);
 	position: relative;
 	margin: 0;
@@ -241,7 +242,7 @@ body {
 	cursor: col-resize;
 }
 
-.table-column-resize-marker:hover {
+.table-column-resize-marker.hovered {
 	margin-left: 0px;
 	margin-top: 0px;
 	width: var(--btn-size);
@@ -249,7 +250,6 @@ body {
 	background-image: url('images/table-column-resize-marker-hover.svg');
 	background-size: 100% 100%;
 	background-repeat: no-repeat;
-	cursor: col-resize;
 }
 
 .table-row-resize-marker {
@@ -260,10 +260,9 @@ body {
 	background-image: url('images/table-row-resize-marker.svg');
 	background-size: 100% 100%;
 	background-repeat: no-repeat;
-	cursor: row-resize;
 }
 
-.table-row-resize-marker:hover {
+.table-row-resize-marker.hovered {
 	margin-left: 0px;
 	margin-top: 0px;
 	width: var(--btn-size);
@@ -271,7 +270,6 @@ body {
 	background-image: url('images/table-row-resize-marker-hover.svg');
 	background-size: 100% 100%;
 	background-repeat: no-repeat;
-	cursor: row-resize;
 }
 
 .table-select-marker {
@@ -279,7 +277,6 @@ body {
 	width: var(--btn-size);
 	height: var(--btn-size);
 	background: url('images/table-row-or-column-select-marker.svg') no-repeat center center /12px;
-	cursor: pointer;
 }
 
 .table-select-marker::before {
@@ -580,7 +577,7 @@ body {
 	-moz-user-select: text;
 	-webkit-user-select: text;
 	-ms-user-select: text;
-	z-index: 10;
+	z-index: 12;
 	width: 250px;
 	transition: left .25s;
 }
@@ -771,6 +768,15 @@ body {
 	z-index: 0;
 }
 
+.leaflet-control-container {
+	z-index: 12;
+	width: 100%;
+	position: absolute;
+	height: 100%;
+	user-select: none;
+	pointer-events: none;
+}
+
 .avatar-img {
 	border: solid 2px;
 	border-radius: 50%;
@@ -814,7 +820,11 @@ body {
 }
 
 .cool-annotation-menu, .cool-annotation-menu-redline {
-	background: url('images/submenu.svg') no-repeat center/contain !important;
+	background: url('images/lc_more.svg') no-repeat center/contain !important;
+}
+
+[data-theme='dark'] .cool-annotation-menu, .cool-annotation-menu-redline {
+	background: url('images/dark/lc_more.svg') no-repeat center/contain !important;
 }
 
 .cool-annotation-menu:hover, .cool-annotation-menu-redline:hover, .cool-redline-accept-button:hover, .cool-redline-reject-button:hover {
@@ -825,9 +835,13 @@ body {
 	font-size: var(--default-font-size);
 }
 
-.cool-annotation-autosavelabel {
-	font-size: var(--default-font-size);
-	opacity: 75%;
+.annotation-button-autosaved {
+	color: var(--color-primary-dark) !important;
+	background-color: #e1e8f9 !important;
+}
+
+.annotation-button-delete {
+	color: var(--color-error) !important;
 }
 
 .cool-annotation-menubar {
@@ -1007,19 +1021,28 @@ body {
 
 .form-field-frame {
 	border: 1px solid;
-	position: absolute;
 	height: 100%;
 	border-radius: var(--border-radius);
+	text-align: right;
+	display: block;
+	min-width: auto;
+	margin: auto;
+}
+
+.form-field-button-container {
+	display: inline-block;
+	height: 100%;
 }
 
 .form-field-button {
 	background-color: var(--color-background-lighter);
-	position: absolute;
 	border: 1px solid;
 	height: 100%;
-	box-sizing: content-box;
 	padding: 0px;
+	width: 100%;
 	border-radius: var(--border-radius);
+	min-width: auto;
+	margin: auto;
 }
 
 .form-field-button:hover, .form-field-button:focus {
@@ -1032,10 +1055,13 @@ body {
 }
 
 .drop-down-field-list {
-	position: absolute;
+	display: block;
 	border: 1px solid;
 	cursor: pointer;
 	background: var(--color-background-lighter);
+	width: fit-content;
+	min-width: 100%;
+	white-space: nowrap;
 }
 
 .drop-down-field-list-item {
@@ -1215,8 +1241,10 @@ body {
 	background-position: 0;
 }
 
-#mentionPopup {
+#mentionPopup,
+#mentionPopupList {
 	min-width: 100px;
+	min-height: 100px;
 }
 
 #mentionPopup .lokdialog.ui-dialog-content.ui-widget-content {
@@ -1351,7 +1379,32 @@ body {
 }
 
 .table-add-col-row-marker.hovered {
-	cursor: pointer;
 	background-color: var(--color-insert-marker-background-dark) !important;
 	background: url('images/insert-plus-marker-hover.svg') no-repeat center center /20px;
+}
+
+.chart-select-theme {
+	border-radius: 4px;
+	background-color: var(--color-insert-marker-background) !important;
+	box-shadow: 1px var(--color-box-shadow);
+	background: url('images/lc_selecttheme.svg') no-repeat center center /20px;
+}
+
+.chart-select-theme.hovered {
+	cursor: pointer;
+	background-color: var(--color-insert-marker-background-dark) !important;
+	background: url('images/lc_selecttheme.svg') no-repeat center center /20px;
+}
+
+.chart-save-to-new-theme {
+	border-radius: 4px;
+	background-color: var(--color-insert-marker-background) !important;
+	box-shadow: 1px var(--color-box-shadow);
+	background: url('images/lc_chartsavetonewtheme.svg') no-repeat center center /20px;
+}
+
+.chart-save-to-new-theme.hovered {
+	cursor: pointer;
+	background-color: var(--color-insert-marker-background-dark) !important;
+	background: url('images/lc_chartsavetonewtheme.svg') no-repeat center center /20px;
 }
