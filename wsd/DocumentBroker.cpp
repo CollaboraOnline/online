@@ -3673,7 +3673,7 @@ void DocumentBroker::autoSaveAndStop(const std::string& reason)
         // very late, or not at all. We care that there is nothing to upload
         // and the last save succeeded, possibly because there was no
         // modifications, and there has been no activity since.
-        LOG_ASSERT_MSG(_saveManager.lastSaveRequestTime() < _saveManager.lastSaveResponseTime(),
+        LOG_ASSERT_MSG(_saveManager.lastSaveRequestTime() <= _saveManager.lastSaveResponseTime(),
                        "Unexpected active save in flight");
         LOG_ASSERT_MSG(!_saveManager.isSaving(), "Unexpected active save in flight");
         if (!haveModifyActivityAfterSaveRequest() && _saveManager.lastSaveSuccessful())

@@ -29,6 +29,13 @@ struct CommandStateChange: Decodable {
     let state: String
 }
 
+/// The structure we expect in the COMMANDRESULT payload.
+struct CommandResult: Decodable {
+    let commandName: String
+    let success: Bool?
+    let wasModified: Bool?
+}
+
 /// Window controller that manages the document window & menus
 class WindowController: NSWindowController, NSMenuItemValidation {
 
