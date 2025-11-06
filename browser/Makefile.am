@@ -185,6 +185,7 @@ COOL_CSS_LST =\
 	$(srcdir)/css/helpdialog.css \
 	$(srcdir)/css/btns.css \
 	$(srcdir)/css/notebookbar.css \
+	$(srcdir)/css/backstage.css \
 	$(srcdir)/css/jssidebar.css \
 	$(srcdir)/css/override-smartmenus.css \
 	$(srcdir)/css/jquery-ui-lightness.css \
@@ -512,6 +513,7 @@ COOL_JS_LST =\
 	src/control/Control.NotebookbarImpress.js \
 	src/control/Control.NotebookbarDraw.js \
 	src/control/Control.NotebookbarBuilder.js \
+	src/control/Control.BackstageView.ts \
 	src/control/Control.ContextToolbar.ts \
 	src/control/Control.Layers.js \
 	src/control/Control.SidebarBase.ts \

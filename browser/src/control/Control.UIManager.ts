@@ -541,6 +541,17 @@ class UIManager extends window.L.Control {
 			// makeSpaceForNotebookbar call in onUpdatePermission
 		}
 
+		if (window.ThisIsTheQtApp || window.ThisIsTheWindowsApp) {
+			if (!this.map.backstageView) {
+				this.map.backstageView = new window.L.Control.BackstageView(this.map);
+				console.log('UIManager: BackstageView created and attached to map');
+			} else {
+				console.log('UIManager: BackstageView already exists');
+			}
+		} else {
+			console.log('UIManager: Not a CODA app, skipping backstage view initialization');
+		}
+
 		if (!window.prefs.getBoolean(`${docType}.ShowToolbar`, true)) {
 			this.collapseNotebookbar();
 		}

@@ -226,6 +226,20 @@ window.L.Control.NotebookbarBuilder = window.L.Control.JSDialogBuilder.extend({
 		tabs[t].setAttribute('data-cooltip', tooltipExpanded);
 		window.L.control.attachTooltipEventListener(tabs[t], builder.map);
 		return function(event) {
+			var isFileTab = tabIds[t] === 'File-tab-label' || tabIds[t] === 'File';
+			var isCODAApp = window.ThisIsTheQtApp || window.ThisIsTheWindowsApp;
+
+			if (isFileTab && isCODAApp) {
+				if (builder.map.backstageView) {
+					console.log('NotebookbarBuilder: Calling backstageView.toggle()');
+					builder.map.backstageView.toggle();
+				} else {
+					console.error('NotebookbarBuilder: backstageView is NOT initialized!');
+				}
+				event.preventDefault();
+				return;
+			}
+
 			var tabIsSelected = $(tabs[t]).hasClass('selected');
 			var notebookbarIsCollapsed = builder.wizard.isCollapsed();
 
