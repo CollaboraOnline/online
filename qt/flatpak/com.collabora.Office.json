@@ -43,8 +43,8 @@
     },
     "append-path": "/usr/lib/sdk/node20/bin:/usr/lib/libexec",
     "env": {
-      "CFLAGS": "-O2",
-      "CXXFLAGS": "-O2",
+      "CFLAGS": "-O2 -g",
+      "CXXFLAGS": "-O2 -g",
       "NINJA_STATUS": "[%p | %f/%t] "
     }
   },
