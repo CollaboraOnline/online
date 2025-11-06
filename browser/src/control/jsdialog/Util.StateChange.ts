@@ -38,8 +38,10 @@ function synchronizeDisabledState(source: Element, targets: Array<Element>) {
 		for (const i in targets) {
 				if (enable) {
 					targets[i].removeAttribute('disabled');
+					targets[i].removeAttribute('aria-disabled');
 				} else {
 					targets[i].setAttribute('disabled', 'true');
+					targets[i].setAttribute('aria-disabled', 'true');
 				}
 			}
 		});
