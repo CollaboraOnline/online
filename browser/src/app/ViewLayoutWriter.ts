@@ -52,7 +52,7 @@ class ViewLayoutWriter extends ViewLayoutBase {
 
 		const haveEnoughLeftMarginForMove =
 			spacingInfo.commentSectionWidth -
-				(spacingInfo.documentMarginsWidth + offset) <
+				(spacingInfo.documentMarginsWidth + offset) <=
 			spacingInfo.documentMarginsWidth - offset;
 
 		return commentsWiderThanRightMargin && haveEnoughLeftMarginForMove;
