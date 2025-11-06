@@ -222,11 +222,7 @@ Java_org_libreoffice_androidlib_LOActivity_postMobileMessageNative(JNIEnv *env, 
             LOG_DBG("Actually sending to Online:" << fileURL);
 
             // Send the document URL to COOLWSD to setup the docBroker URL
-            struct pollfd pollfd;
-            pollfd.fd = currentFakeClientFd;
-            pollfd.events = POLLOUT;
-            fakeSocketPoll(&pollfd, 1, -1);
-            fakeSocketWrite(currentFakeClientFd, fileURL.c_str(), fileURL.size());
+            fakeSocketWriteQueue(currentFakeClientFd, fileURL.c_str(), fileURL.size());
         }
         else if (strcmp(string_value, "BYE") == 0)
         {
@@ -237,15 +233,7 @@ Java_org_libreoffice_androidlib_LOActivity_postMobileMessageNative(JNIEnv *env, 
         else
         {
             // Send the message to COOLWSD
-            char *string_copy = strdup(string_value);
-
-            struct pollfd pollfd;
-            pollfd.fd = currentFakeClientFd;
-            pollfd.events = POLLOUT;
-            fakeSocketPoll(&pollfd, 1, -1);
-            fakeSocketWrite(currentFakeClientFd, string_copy, strlen(string_copy));
-
-            free(string_copy);
+            fakeSocketWriteQueue(currentFakeClientFd, string_value, strlen(string_value));
         }
     }
     else
