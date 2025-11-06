@@ -415,7 +415,6 @@ window.L.Map.Keyboard = window.L.Handler.extend({
 			return;
 		}
 		else if (this._map._docLayer && (this._map._docLayer._docType === 'presentation' || this._map._docLayer._docType === 'drawing') && this._map._docLayer._preview.partsFocused === true) {
-
 			if (!this.modifier && (ev.keyCode === this.keyCodes.DOWN || ev.keyCode === this.keyCodes.UP ||
 				               ev.keyCode === this.keyCodes.RIGHT || ev.keyCode === this.keyCodes.LEFT ||
 				               ev.keyCode === this.keyCodes.PAGEDOWN || ev.keyCode === this.keyCodes.PAGEUP ||
@@ -440,20 +439,19 @@ window.L.Map.Keyboard = window.L.Handler.extend({
 					this._map.deletePage(this._map._docLayer._selectedPart);
 				}
 				ev.preventDefault();
-				return;
 			}
-			else if (ev.ctrlKey) {
-				if (!ev.altKey && ev.keyCode === this.keyCodes.HOME)
-					this._map.setPart(0);
-				else if (!ev.altKey && ev.keyCode === this.keyCodes.END)
-					this._map.setPart(this._map._docLayer._parts - 1);
-				else {
-					this._handleCtrlCommand(ev);
-					return;
-				}
+			else if (ev.ctrlKey && !ev.altKey && ev.keyCode === this.keyCodes.HOME)
+				app.map.setPart(0);
+			else if (ev.ctrlKey && !ev.altKey && ev.keyCode === this.keyCodes.END)
+				app.map.setPart(app.map._docLayer._parts - 1);
+			else if (ev.ctrlKey && !ev.altKey && this.keyCodes.C.includes(ev.keyCode)) {
+				app.map._clip.clearSelection();
+				app.map._clip.setTextSelectionType('slide');
 			}
-			else {
+			else if (!ev.ctrlKey) {
 				this._map._docLayer._preview.partsFocused = false;
+				app.map._clip.clearSelection();
+				app.map.focus();
 			}
 		}
 	},
