@@ -448,7 +448,7 @@ window.L.Control.NotebookbarWriter = window.L.Control.Notebookbar.extend({
 	},
 
 	getHelpTab: function() {
-		var hasLatestUpdates = window.enableWelcomeMessage;
+		let hasLatestUpdates = window.enableWelcomeMessage || window.mode.isCODesktop();
 		var hasFeedback = this.map.feedback;
 		var hasAccessibilitySupport = window.enableAccessibility;
 		var hasAccessibilityCheck = this.map.getDocType() === 'text';
