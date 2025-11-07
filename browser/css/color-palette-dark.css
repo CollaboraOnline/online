@@ -75,6 +75,7 @@
 
 	--color-quickfind-border: #444;
 	--scrollbar-color: #c0bfbc transparent;
+	--color-background-hover: #363636;
 }
 
 [data-bg-theme='dark'] {
