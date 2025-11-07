@@ -388,6 +388,10 @@ class Document: NSDocument {
             // TODO: add "dir" if needed
         ]
 
+        /*if isWelcome {
+            components.queryItems?.append(URLQueryItem(name: "welcome", value: "true"))
+        }*/
+
         let finalURL = components.url!
         let request = URLRequest(url: finalURL)
         let urlDir = url.deletingLastPathComponent()
