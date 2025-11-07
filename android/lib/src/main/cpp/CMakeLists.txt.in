@@ -40,6 +40,7 @@ add_library(androidapp SHARED
             ../../../../../wsd/COOLWSD.cpp
             ../../../../../wsd/dumpWsdState.cpp
             ../../../../../wsd/ClientRequestDispatcher.cpp
+            ../../../../../wsd/KitWSDGlobals.cpp
             ../../../../../wsd/RequestDetails.cpp
             ../../../../../wsd/RequestVettingStation.cpp
             ../../../../../wsd/SlideCache.cpp

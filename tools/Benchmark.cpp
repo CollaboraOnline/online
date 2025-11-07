@@ -16,7 +16,6 @@
 
 #include <chrono>
 
-#include <common/Globals.hpp>
 #include <common/Png.hpp>
 #include <kit/Delta.hpp>
 

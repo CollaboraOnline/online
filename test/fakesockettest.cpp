@@ -33,7 +33,6 @@
 #define MOBILEAPP 1 // A bit ugly, but currently FakeSocket.hpp is surrounded by a MOBILEAPP ifdef,
                     // and probably it is not a good idea to remove that?
 #include "FakeSocket.hpp"
-#include "Globals.hpp"
 
 bool EnableExperimental = false;
 

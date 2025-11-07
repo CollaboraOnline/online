@@ -9,16 +9,16 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-#include "config.h"
-#include "Common.hpp"
-#include "Kit.hpp"
+#pragma once
 
-int ClientPortNumber = DEFAULT_CLIENT_PORT_NUMBER;
-std::string MasterLocation;
+#include <config.h>
 
-int main (int argc, char **argv)
-{
-    return forkit_main(argc, argv);
-}
+#if !MOBILEAPP
+
+#include "kit/BgSaveWatchDog.hpp"
+
+std::unique_ptr<BackgroundSaveWatchdog> BackgroundSaveWatchdog::Instance;
+
+#endif
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

@@ -115,7 +115,11 @@ loolconfig
 loadtest
 unittest
 clientnb
+libglobals.a
+libkitglobals.a
+libkitwsdglobals.a
 libsimd.a
+libwsdglobals.a
 coolwsd-inproc
 coolbench
 

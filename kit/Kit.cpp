@@ -99,6 +99,7 @@
 #include <common/SigUtil.hpp>
 #include <common/TraceEvent.hpp>
 #include <common/Watchdog.hpp>
+#include <BgSaveWatchDog.hpp>
 #endif
 
 #if MOBILEAPP
@@ -187,86 +188,75 @@ static bool pushToMainThread(LibreOfficeKitCallback cb, int type, const char* p,
 static LokHookFunction2* initFunction = nullptr;
 
 #if !MOBILEAPP
-class BackgroundSaveWatchdog
-{
-public:
-    BackgroundSaveWatchdog(unsigned mobileAppDocId, int savingTid)
-        : _saveCompleted(false)
-        , _watchdogThread(
-            // mobileAppDocId is on the stack, so capture it by value.
-              [mobileAppDocId, savingTid, this]()
+
+BackgroundSaveWatchdog::BackgroundSaveWatchdog(unsigned mobileAppDocId, int savingTid)
+    : _saveCompleted(false)
+    , _watchdogThread(
+        // mobileAppDocId is on the stack, so capture it by value.
+          [mobileAppDocId, savingTid, this]()
+          {
+              Util::setThreadName("kitbgsv_" + Util::encodeId(mobileAppDocId, 3) + "_wdg");
+
+              const auto timeout = std::chrono::seconds(
+                  ConfigUtil::getInt("per_document.bgsave_timeout_secs", 120));
+
+              const auto saveStart = std::chrono::steady_clock::now();
+
+              std::unique_lock<std::mutex> lock(_watchdogMutex);
+
+              LOG_TRC("Starting bgsave watchdog with " << timeout << " timeout");
+              if (_watchdogCV.wait_for(lock, timeout,
+                                       [this]() { return _saveCompleted.load(); }))
               {
-                  Util::setThreadName("kitbgsv_" + Util::encodeId(mobileAppDocId, 3) + "_wdg");
+                  // Done!
+                  LOG_TRC("BgSave finished in time");
+              }
+              else
+              {
+                  auto saveDuration = std::chrono::duration_cast<std::chrono::seconds>(std::chrono::steady_clock::now() - saveStart);
 
-                  const auto timeout = std::chrono::seconds(
-                      ConfigUtil::getInt("per_document.bgsave_timeout_secs", 120));
+                  // Failed!
+                  LOG_WRN("BgSave timed out and will self-destroy process " << getpid() <<
+                          " (config timeout: " << timeout << ", real timeout: " << saveDuration << ")");
+                  Log::shutdown(); // Flush logs.
+                  // this attempts to get the saving-thread to generate a backtrace
+                  Util::killThreadById(savingTid, SIGABRT);
 
-                  const auto saveStart = std::chrono::steady_clock::now();
+                  // It is possible that this process will not exit cleanly after
+                  // handling SIGABRT, so instead after some time fall-back to this:
 
-                  std::unique_lock<std::mutex> lock(_watchdogMutex);
+                  // raise(3) will exit the current thread, not the process.
+                  // coverity[sleep : SUPPRESS] - don't report sleep with lock held
+                  sleep(30); // long enough for a trace ?
+                  std::cerr << "BgSave failed to terminate after SIGABRT - will hard self-destroy process " << getpid() << std::endl;
+                  ::kill(0, SIGKILL); // kill(2) is trapped by seccomp.
+              }
+          })
+{
+}
 
-                  LOG_TRC("Starting bgsave watchdog with " << timeout << " timeout");
-                  if (_watchdogCV.wait_for(lock, timeout,
-                                           [this]() { return _saveCompleted.load(); }))
-                  {
-                      // Done!
-                      LOG_TRC("BgSave finished in time");
-                  }
-                  else
-                  {
-                      auto saveDuration = std::chrono::duration_cast<std::chrono::seconds>(std::chrono::steady_clock::now() - saveStart);
-
-                      // Failed!
-                      LOG_WRN("BgSave timed out and will self-destroy process " << getpid() <<
-                              " (config timeout: " << timeout << ", real timeout: " << saveDuration << ")");
-                      Log::shutdown(); // Flush logs.
-                      // this attempts to get the saving-thread to generate a backtrace
-                      Util::killThreadById(savingTid, SIGABRT);
-
-                      // It is possible that this process will not exit cleanly after
-                      // handling SIGABRT, so instead after some time fall-back to this:
-
-                      // raise(3) will exit the current thread, not the process.
-                      // coverity[sleep : SUPPRESS] - don't report sleep with lock held
-                      sleep(30); // long enough for a trace ?
-                      std::cerr << "BgSave failed to terminate after SIGABRT - will hard self-destroy process " << getpid() << std::endl;
-                      ::kill(0, SIGKILL); // kill(2) is trapped by seccomp.
-                  }
-              })
+BackgroundSaveWatchdog::~BackgroundSaveWatchdog()
+{
+    if (!_saveCompleted)
     {
+        LOG_WRN("BgSave watchdog for " << getpid()
+                                       << " is destroyed while save hadn't yet completed");
+        complete(); // Clean up.
     }
+}
 
-    ~BackgroundSaveWatchdog()
-    {
-        if (!_saveCompleted)
-        {
-            LOG_WRN("BgSave watchdog for " << getpid()
-                                           << " is destroyed while save hadn't yet completed");
-            complete(); // Clean up.
-        }
-    }
-
-    void complete()
-    {
-        _saveCompleted = true;
-        _watchdogCV.notify_all();
-        if (_watchdogThread.joinable())
-            _watchdogThread.join();
-    }
-
-private:
-    std::atomic_bool _saveCompleted; ///< Defend against spurious wakes.
-    std::condition_variable _watchdogCV;
-    std::mutex _watchdogMutex;
-    std::thread _watchdogThread;
-};
-
-static std::unique_ptr<BackgroundSaveWatchdog> BgSaveWatchdog;
+void BackgroundSaveWatchdog::complete()
+{
+    _saveCompleted = true;
+    _watchdogCV.notify_all();
+    if (_watchdogThread.joinable())
+        _watchdogThread.join();
+}
 
 void Document::shutdownBackgroundWatchdog()
 {
-    if (BgSaveWatchdog)
-        BgSaveWatchdog->complete();
+    if (BackgroundSaveWatchdog::Instance)
+        BackgroundSaveWatchdog::Instance->complete();
 }
 
 #endif // !MOBILEAPP
@@ -1599,8 +1589,8 @@ bool Document::forkToSave(const std::function<void()>& childSave, int viewId)
 
         Util::sleepFromEnvIfSet("KitBackgroundSave", "SLEEPBACKGROUNDFORDEBUGGER");
 
-        assert(!BgSaveWatchdog && "Unexpected to have BackgroundSaveWatchdog instance");
-        BgSaveWatchdog =
+        assert(!BackgroundSaveWatchdog::Instance && "Unexpected to have BackgroundSaveWatchdog instance");
+        BackgroundSaveWatchdog::Instance =
             std::make_unique<BackgroundSaveWatchdog>(_mobileAppDocId, Util::getThreadId());
 
         UnitKit::get().postBackgroundSaveFork();

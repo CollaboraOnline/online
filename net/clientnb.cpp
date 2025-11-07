@@ -18,8 +18,6 @@
 #include <memory>
 #include <assert.h>
 
-#include <common/Globals.hpp>
-
 #include <Poco/Net/HTMLForm.h>
 #include <Poco/Net/HTTPClientSession.h>
 #include <Poco/Net/HTTPSClientSession.h>

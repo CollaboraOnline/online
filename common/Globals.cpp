@@ -9,16 +9,6 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-#include "config.h"
-#include "Common.hpp"
-#include "Kit.hpp"
-
-int ClientPortNumber = DEFAULT_CLIENT_PORT_NUMBER;
-std::string MasterLocation;
-
-int main (int argc, char **argv)
-{
-    return forkit_main(argc, argv);
-}
+#include "Globals.hpp"
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

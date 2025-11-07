@@ -11,6 +11,7 @@
 
 #pragma once
 
+#include <config.h>
 #include "Anonymizer.hpp"
 #include "StaticLogHelper.hpp"
 
