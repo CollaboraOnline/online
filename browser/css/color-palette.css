@@ -84,6 +84,7 @@
 	--color-treeview-highlight-text: #222;
 	--color-quickfind-border: #e1dfdd;
 	--scrollbar-color: #c0bfbc #fafafa;
+	--color-background-hover: #F5F5F5;
 }
 
 [data-bg-theme='light'] {

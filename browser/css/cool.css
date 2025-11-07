@@ -789,7 +789,6 @@ body {
 	box-sizing: border-box;
 	width: var(--default-width); /* Width of new image */
 	height: var(--default-height); /* Height of new image */
-	background: url('images/user.svg') center 3px no-repeat;
 }
 
 .leaflet-container .leaflet-pane.leaflet-calc-background-pane {
@@ -876,6 +875,8 @@ body {
 
 .cool-annotation-menu:hover, .cool-annotation-menu-redline:hover, .cool-redline-accept-button:hover, .cool-redline-reject-button:hover, .cool-annotation-menu-edit:hover {
 	border: 1px solid var(--color-border-darker);
+	background-color: var(--color-background-hover) !important;
+	border-radius: 16px;
 }
 
 .cool-annotation-date {
