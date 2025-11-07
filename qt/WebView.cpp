@@ -16,6 +16,7 @@
 #include "FakeSocket.hpp"
 #include "MobileApp.hpp"
 #include "qt.hpp"
+#include <Poco/URI.h>
 
 #include <cstdlib>
 #include <cstring>
@@ -122,7 +123,7 @@ std::pair<int, int> getWindowSize(bool isWelcome)
     return { width, height };
 }
 
-void WebView::load(const std::string& fileURL)
+void WebView::load(const Poco::URI& fileURL)
 {
     _document = {
         ._fileURL = fileURL,
@@ -143,20 +144,19 @@ void WebView::load(const std::string& fileURL)
     channel->registerObject("bridge", bridge);
     _webView->page()->setWebChannel(channel);
 
-    const std::string urlAndQuery = std::string("file://") + getTopSrcDir(TOPSRCDIR) +
-                                    "/browser/dist/cool.html"
-                                    "?file_path=" +
-                                    _document._fileURL +
-                                    "&permission=edit"
-                                    "&lang=" +
-                                    getUILanguage() +
-                                    "&appdocid=" +
-                                    std::to_string(_document._appDocId) +
-                                    "&userinterfacemode=notebookbar" +
-                                    (_isWelcome ? "&welcome=true" : "");
+    Poco::URI urlAndQuery(std::string("file://") + getTopSrcDir(TOPSRCDIR) +
+                          "/browser/dist/cool.html");
+    urlAndQuery.addQueryParameter("file_path", _document._fileURL.toString());
+    urlAndQuery.addQueryParameter("permission", "edit");
+    urlAndQuery.addQueryParameter("lang", getUILanguage());
+    urlAndQuery.addQueryParameter("appdocid", std::to_string(_document._appDocId));
+    urlAndQuery.addQueryParameter("userinterfacemode", "notebookbar");
+    if (_isWelcome)
+        urlAndQuery.addQueryParameter("welcome", "true");
 
-    LOG_TRC("Open URL: " << urlAndQuery);
-    _webView->load(QUrl(QString::fromStdString(urlAndQuery)));
+    const std::string urlAndQueryStr = urlAndQuery.toString();
+    LOG_TRC("Open URL: " << urlAndQueryStr);
+    _webView->load(QUrl(QString::fromStdString(urlAndQueryStr)));
 
     auto size = getWindowSize(_isWelcome);
     if (_isWelcome && loadingOverlay)
