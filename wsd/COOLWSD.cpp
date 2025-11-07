@@ -78,12 +78,12 @@
 #include <Poco/Util/XMLConfiguration.h>
 
 #include <common/Anonymizer.hpp>
-#include <common/Globals.hpp>
 #include <ClientRequestDispatcher.hpp>
 #include <Common.hpp>
 #include <Clipboard.hpp>
 #include <Crypto.hpp>
 #include <DelaySocket.hpp>
+#include <wsd/COOLWSDServer.hpp>
 #include <wsd/DocumentBroker.hpp>
 #include <wsd/Process.hpp>
 #include <common/JsonUtil.hpp>
@@ -818,17 +818,6 @@ static std::string UnitTestLibrary;
 
 unsigned int COOLWSD::NumPreSpawnedChildren = 0;
 std::unique_ptr<TraceFileWriter> COOLWSD::TraceDumper;
-#if !MOBILEAPP
-std::unique_ptr<ClipboardCache> COOLWSD::SavedClipboards;
-
-/// The file request handler used for file-serving.
-std::unique_ptr<FileServerRequestHandler> COOLWSD::FileRequestHandler;
-#endif
-
-/// This thread polls basic web serving, and handling of
-/// websockets before upgrade: when upgraded they go to the
-/// relevant DocumentBroker poll instead.
-static std::shared_ptr<TerminatingPoll> WebServerPoll;
 
 class PrisonPoll : public TerminatingPoll
 {
@@ -1139,10 +1128,6 @@ void InotifySocket::handlePoll(SocketDisposition & /* disposition */, std::chron
 
 #endif // if !MOBILEAPP
 #endif // #ifdef __linux__
-
-/// The Web Server instance with the accept socket poll thread.
-class COOLWSDServer;
-static std::unique_ptr<COOLWSDServer> Server;
 
 #if !MOBILEAPP
 
@@ -2165,7 +2150,7 @@ void COOLWSD::innerInitialize(Poco::Util::Application& self)
         std::make_unique<FileServerRequestHandler>(COOLWSD::FileServerRoot);
 #endif
 
-    WebServerPoll = std::make_unique<TerminatingPoll>("websrv_poll");
+    COOLWSDServer::WebServerPoll = std::make_unique<TerminatingPoll>("websrv_poll");
 
 #if !MOBILEAPP
     net::AsyncDNS::startAsyncDNS();
@@ -2176,7 +2161,7 @@ void COOLWSD::innerInitialize(Poco::Util::Application& self)
 
     PrisonerPoll = std::make_unique<PrisonPoll>();
 
-    Server = std::make_unique<COOLWSDServer>();
+    COOLWSDServer::Instance = std::make_unique<COOLWSDServer>();
 
     LOG_TRC("Initialize StorageBase");
     StorageBase::initialize();
@@ -3228,305 +3213,283 @@ class PrisonerSocketFactory final : public SocketFactory
     }
 };
 
-/// The main server thread.
-///
-/// Waits for the connections from the cools, and creates the
-/// websockethandlers accordingly.
-class COOLWSDServer
+COOLWSDServer::COOLWSDServer()
+    : _acceptPoll("accept_poll")
+#if !MOBILEAPP
+    , _admin(Admin::instance())
+#endif
 {
-    COOLWSDServer(COOLWSDServer&& other) = delete;
-    const COOLWSDServer& operator=(COOLWSDServer&& other) = delete;
-public:
-    COOLWSDServer()
-        : _acceptPoll("accept_poll")
-#if !MOBILEAPP
-        , _admin(Admin::instance())
-#endif
-    {
-    }
+}
 
-    ~COOLWSDServer()
-    {
-        stop();
-    }
+COOLWSDServer::~COOLWSDServer()
+{
+    stop();
+}
 
-    std::shared_ptr<ServerSocket> findClientPort()
-    {
-        return findServerPort();
-    }
+std::shared_ptr<ServerSocket> COOLWSDServer::findClientPort()
+{
+    return findServerPort();
+}
 
-    void startPrisoners()
-    {
-        PrisonerPoll->startThread();
-        PrisonerPoll->insertNewSocket(findPrisonerServerPort());
-    }
+void COOLWSDServer::startPrisoners()
+{
+    PrisonerPoll->startThread();
+    PrisonerPoll->insertNewSocket(findPrisonerServerPort());
+}
 
-    static void stopPrisoners()
-    {
-        PrisonerPoll->joinThread();
-    }
+// static
+void COOLWSDServer::stopPrisoners()
+{
+    PrisonerPoll->joinThread();
+}
 
-    void start(std::shared_ptr<ServerSocket>&& serverSocket)
-    {
+void COOLWSDServer::start(std::shared_ptr<ServerSocket>&& serverSocket)
+{
 #if MOBILEAPP
-        coolwsd_server_socket_fd = serverSocket->getFD();
+    coolwsd_server_socket_fd = serverSocket->getFD();
 #endif
 
-        _acceptPoll.startThread();
-        _acceptPoll.insertNewSocket(std::move(serverSocket));
+    _acceptPoll.startThread();
+    _acceptPoll.insertNewSocket(std::move(serverSocket));
 
-        WebServerPoll->startThread();
+    WebServerPoll->startThread();
 
 #if !MOBILEAPP
-        _admin.start();
+    _admin.start();
 #endif
-    }
+}
 
-    void stop()
+void COOLWSDServer::stop()
+{
+    _acceptPoll.joinThread();
+    if (WebServerPoll)
+        WebServerPoll->joinThread();
+#if !MOBILEAPP
+    _admin.stop();
+#endif
+}
+
+void COOLWSDServer::dumpState(std::ostream& os) const
+{
+    // FIXME: add some stop-world magic before doing the dump(?)
+    ThreadChecks::Inhibit = true;
+
+    std::string version, hash;
+    Util::getVersionInfo(version, hash);
+
+    THREAD_UNSAFE_DUMP_BEGIN
+    os << "COOLWSDServer: " << version << " - " << hash << " state dumping"
+#if !MOBILEAPP
+       << "\n  Kit version: " << COOLWSD::LOKitVersion << "\n  Ports: server "
+       << ClientPortNumber << " prisoner " << MasterLocation
+       << "\n  SSL: " << (ConfigUtil::isSslEnabled() ? "https" : "http")
+       << "\n  SSL-Termination: " << (ConfigUtil::isSSLTermination() ? "yes" : "no")
+       << "\n  Security " << (COOLWSD::NoCapsForKit ? "no" : "") << " chroot, "
+       << (COOLWSD::NoSeccomp ? "no" : "") << " api lockdown"
+       << "\n  Admin: " << (COOLWSD::AdminEnabled ? "enabled" : "disabled")
+       << "\n  RouteToken: " << COOLWSD::RouteToken
+#endif
+       << "\n  Uptime (seconds): " <<
+        std::chrono::duration_cast<std::chrono::seconds>(
+            std::chrono::steady_clock::now() - COOLWSD::StartTime).count()
+       << "\n  TerminationFlag: " << SigUtil::getTerminationFlag()
+       << "\n  isShuttingDown: " << SigUtil::getShutdownRequestFlag()
+       << "\n  NewChildren: " << NewChildren.size() << " (" << NewChildren.capacity() << ')'
+       << "\n  OutstandingForks: " << TotalOutstandingForks
+       << "\n  NumPreSpawnedChildren: " << COOLWSD::NumPreSpawnedChildren
+       << "\n  ChildSpawnTimeoutMs: " << ChildSpawnTimeoutMs.load()
+#if !MOBILEAPP
+       << "\n  of which ConvertTo: " << ConvertToBroker::getInstanceCount()
+#endif
+       << "\n  vs. MaxDocuments: " << COOLWSD::MaxDocuments
+       << "\n  NumConnections: " << COOLWSD::NumConnections
+       << "\n  vs. MaxConnections: " << COOLWSD::MaxConnections
+       << "\n  SysTemplate: " << COOLWSD::SysTemplate
+       << "\n  LoTemplate: " << COOLWSD::LoTemplate
+       << "\n  ChildRoot: " << COOLWSD::ChildRoot
+       << "\n  FileServerRoot: " << COOLWSD::FileServerRoot
+       << "\n  ServiceRoot: " << COOLWSD::ServiceRoot
+       << "\n  LOKitVersion: " << COOLWSD::LOKitVersion
+       << "\n  HostIdentifier: " << Util::getProcessIdentifier()
+       << "\n  ConfigFile: " << COOLWSD::ConfigFile
+       << "\n  ConfigDir: " << COOLWSD::ConfigDir
+       << "\n  LogLevel: " << COOLWSD::LogLevel
+       << "\n  LogDisabledAreas: " << COOLWSD::LogDisabledAreas
+       << "\n  AnonymizeUserData: " << (COOLWSD::AnonymizeUserData ? "yes" : "no")
+       << "\n  CheckCoolUser: " << (COOLWSD::CheckCoolUser ? "yes" : "no")
+       << "\n  IsProxyPrefixEnabled: " << (COOLWSD::IsProxyPrefixEnabled ? "yes" : "no")
+       << "\n  OverrideWatermark: " << COOLWSD::OverrideWatermark
+       << "\n  UserInterface: " << COOLWSD::UserInterface
+       << "\n  Total PSS: " << Util::getProcessTreePss(getpid()) << " KB"
+       << "\n  Config: " << LoggableConfigEntries
+        ;
+    THREAD_UNSAFE_DUMP_END
+
+    std::string smap;
+    if (const ssize_t size = FileUtil::readFile("/proc/self/smaps_rollup", smap); size <= 0)
+        os << "\n  smaps_rollup: <unavailable>";
+    else
+        os << "\n  smaps_rollup: " << Util::replace(std::move(smap), "\n", "\n\t");
+
+#if !MOBILEAPP
+    if (FetchHttpSession)
     {
-        _acceptPoll.joinThread();
-        if (WebServerPoll)
-            WebServerPoll->joinThread();
-#if !MOBILEAPP
-        _admin.stop();
-#endif
+        os << "\nFetchHttpSession:\n";
+        FetchHttpSession->dumpState(os, "\n  ");
     }
-
-    void dumpState(std::ostream& os) const
-    {
-        // FIXME: add some stop-world magic before doing the dump(?)
-        ThreadChecks::Inhibit = true;
-
-        std::string version, hash;
-        Util::getVersionInfo(version, hash);
-
-        THREAD_UNSAFE_DUMP_BEGIN
-        os << "COOLWSDServer: " << version << " - " << hash << " state dumping"
-#if !MOBILEAPP
-           << "\n  Kit version: " << COOLWSD::LOKitVersion << "\n  Ports: server "
-           << ClientPortNumber << " prisoner " << MasterLocation
-           << "\n  SSL: " << (ConfigUtil::isSslEnabled() ? "https" : "http")
-           << "\n  SSL-Termination: " << (ConfigUtil::isSSLTermination() ? "yes" : "no")
-           << "\n  Security " << (COOLWSD::NoCapsForKit ? "no" : "") << " chroot, "
-           << (COOLWSD::NoSeccomp ? "no" : "") << " api lockdown"
-           << "\n  Admin: " << (COOLWSD::AdminEnabled ? "enabled" : "disabled")
-           << "\n  RouteToken: " << COOLWSD::RouteToken
-#endif
-           << "\n  Uptime (seconds): " <<
-            std::chrono::duration_cast<std::chrono::seconds>(
-                std::chrono::steady_clock::now() - COOLWSD::StartTime).count()
-           << "\n  TerminationFlag: " << SigUtil::getTerminationFlag()
-           << "\n  isShuttingDown: " << SigUtil::getShutdownRequestFlag()
-           << "\n  NewChildren: " << NewChildren.size() << " (" << NewChildren.capacity() << ')'
-           << "\n  OutstandingForks: " << TotalOutstandingForks
-           << "\n  NumPreSpawnedChildren: " << COOLWSD::NumPreSpawnedChildren
-           << "\n  ChildSpawnTimeoutMs: " << ChildSpawnTimeoutMs.load()
-#if !MOBILEAPP
-           << "\n  of which ConvertTo: " << ConvertToBroker::getInstanceCount()
-#endif
-           << "\n  vs. MaxDocuments: " << COOLWSD::MaxDocuments
-           << "\n  NumConnections: " << COOLWSD::NumConnections
-           << "\n  vs. MaxConnections: " << COOLWSD::MaxConnections
-           << "\n  SysTemplate: " << COOLWSD::SysTemplate
-           << "\n  LoTemplate: " << COOLWSD::LoTemplate
-           << "\n  ChildRoot: " << COOLWSD::ChildRoot
-           << "\n  FileServerRoot: " << COOLWSD::FileServerRoot
-           << "\n  ServiceRoot: " << COOLWSD::ServiceRoot
-           << "\n  LOKitVersion: " << COOLWSD::LOKitVersion
-           << "\n  HostIdentifier: " << Util::getProcessIdentifier()
-           << "\n  ConfigFile: " << COOLWSD::ConfigFile
-           << "\n  ConfigDir: " << COOLWSD::ConfigDir
-           << "\n  LogLevel: " << COOLWSD::LogLevel
-           << "\n  LogDisabledAreas: " << COOLWSD::LogDisabledAreas
-           << "\n  AnonymizeUserData: " << (COOLWSD::AnonymizeUserData ? "yes" : "no")
-           << "\n  CheckCoolUser: " << (COOLWSD::CheckCoolUser ? "yes" : "no")
-           << "\n  IsProxyPrefixEnabled: " << (COOLWSD::IsProxyPrefixEnabled ? "yes" : "no")
-           << "\n  OverrideWatermark: " << COOLWSD::OverrideWatermark
-           << "\n  UserInterface: " << COOLWSD::UserInterface
-           << "\n  Total PSS: " << Util::getProcessTreePss(getpid()) << " KB"
-           << "\n  Config: " << LoggableConfigEntries
-            ;
-        THREAD_UNSAFE_DUMP_END
-
-        std::string smap;
-        if (const ssize_t size = FileUtil::readFile("/proc/self/smaps_rollup", smap); size <= 0)
-            os << "\n  smaps_rollup: <unavailable>";
-        else
-            os << "\n  smaps_rollup: " << Util::replace(std::move(smap), "\n", "\n\t");
-
-#if !MOBILEAPP
-        if (FetchHttpSession)
-        {
-            os << "\nFetchHttpSession:\n";
-            FetchHttpSession->dumpState(os, "\n  ");
-        }
-        else
+    else
 #endif // !MOBILEAPP
-        {
-            os << "\nFetchHttpSession: null\n";
-        }
-
-        os << "\nServer poll:\n";
-        _acceptPoll.dumpState(os);
-
-        os << "\nWeb Server poll:\n";
-        WebServerPoll->dumpState(os);
-
-        os << "\nPrisoner poll:\n";
-        PrisonerPoll->dumpState(os);
-
-#if !MOBILEAPP
-        _admin.dumpMetrics(); // Dump the state from the Admin poll thread.
-
-        // If we have any delaying work going on.
-        os << '\n';
-        Delay::dumpState(os);
-
-        // If we have any DNS work going on.
-        os << '\n';
-        net::AsyncDNS::dumpState(os);
-
-        os << '\n';
-        COOLWSD::SavedClipboards->dumpState(os);
-
-        os << '\n';
-        COOLWSD::FileRequestHandler->dumpState(os);
-#endif
-
-        {
-            std::lock_guard<std::mutex> docBrokerLock(DocBrokersMutex);
-            os << "\nDocument Broker polls " << "[ " << DocBrokers.size() << " ]:\n";
-            for (auto& i : DocBrokers)
-                i.second->dumpState(os);
-        }
-
-#if !MOBILEAPP
-        os << "\nConverter count: " << ConvertToBroker::getInstanceCount() << '\n';
-#endif
-
-        os << "\nDone COOLWSDServer state dumping.\n";
-
-        ThreadChecks::Inhibit = false;
+    {
+        os << "\nFetchHttpSession: null\n";
     }
 
-private:
-    class AcceptPoll : public TerminatingPoll {
-    public:
-        AcceptPoll(const std::string &threadName) :
-            TerminatingPoll(threadName) {}
+    os << "\nServer poll:\n";
+    _acceptPoll.dumpState(os);
 
-        void wakeupHook() override
-        {
-            SigUtil::checkDumpGlobalState(dump_state);
-        }
-    };
-    /// This thread & poll accepts incoming connections.
-    AcceptPoll _acceptPoll;
+    os << "\nWeb Server poll:\n";
+    WebServerPoll->dumpState(os);
+
+    os << "\nPrisoner poll:\n";
+    PrisonerPoll->dumpState(os);
 
 #if !MOBILEAPP
-    Admin& _admin;
+    _admin.dumpMetrics(); // Dump the state from the Admin poll thread.
+
+    // If we have any delaying work going on.
+    os << '\n';
+    Delay::dumpState(os);
+
+    // If we have any DNS work going on.
+    os << '\n';
+    net::AsyncDNS::dumpState(os);
+
+    os << '\n';
+    COOLWSD::SavedClipboards->dumpState(os);
+
+    os << '\n';
+    COOLWSD::FileRequestHandler->dumpState(os);
 #endif
 
-    /// Create the internal only, local socket for forkit / kits prisoners to talk to.
-    std::shared_ptr<ServerSocket> findPrisonerServerPort()
     {
-        std::shared_ptr<SocketFactory> factory = std::make_shared<PrisonerSocketFactory>();
+        std::lock_guard<std::mutex> docBrokerLock(DocBrokersMutex);
+        os << "\nDocument Broker polls " << "[ " << DocBrokers.size() << " ]:\n";
+        for (auto& i : DocBrokers)
+            i.second->dumpState(os);
+    }
+
 #if !MOBILEAPP
-        auto socket = std::make_shared<LocalServerSocket>(
-                        std::chrono::steady_clock::now(), *PrisonerPoll, factory);
+    os << "\nConverter count: " << ConvertToBroker::getInstanceCount() << '\n';
+#endif
 
-        std::string location = socket->bind();
-        if (!location.length())
-        {
-            LOG_FTL("Failed to create local unix domain socket. Exiting.");
-            Util::forcedExit(EX_SOFTWARE);
-            return nullptr;
-        }
+    os << "\nDone COOLWSDServer state dumping.\n";
 
-        if (!socket->listen())
-        {
-            LOG_FTL("Failed to listen on local unix domain socket at " << location << ". Exiting.");
-            Util::forcedExit(EX_SOFTWARE);
-        }
+    ThreadChecks::Inhibit = false;
+}
 
-        LOG_INF("Listening to prisoner connections on " << location);
-        MasterLocation = std::move(location);
+/// Create the internal only, local socket for forkit / kits prisoners to talk to.
+std::shared_ptr<ServerSocket> COOLWSDServer::findPrisonerServerPort()
+{
+    std::shared_ptr<SocketFactory> factory = std::make_shared<PrisonerSocketFactory>();
+#if !MOBILEAPP
+    auto socket = std::make_shared<LocalServerSocket>(
+                    std::chrono::steady_clock::now(), *PrisonerPoll, factory);
+
+    std::string location = socket->bind();
+    if (!location.length())
+    {
+        LOG_FTL("Failed to create local unix domain socket. Exiting.");
+        Util::forcedExit(EX_SOFTWARE);
+        return nullptr;
+    }
+
+    if (!socket->listen())
+    {
+        LOG_FTL("Failed to listen on local unix domain socket at " << location << ". Exiting.");
+        Util::forcedExit(EX_SOFTWARE);
+    }
+
+    LOG_INF("Listening to prisoner connections on " << location);
+    MasterLocation = std::move(location);
 #ifndef HAVE_ABSTRACT_UNIX_SOCKETS
-        if(!socket->link(COOLWSD::SysTemplate + "/0" + MasterLocation))
-        {
-            LOG_FTL("Failed to hardlink local unix domain socket into a jail. Exiting.");
-            Util::forcedExit(EX_SOFTWARE);
-        }
+    if(!socket->link(COOLWSD::SysTemplate + "/0" + MasterLocation))
+    {
+        LOG_FTL("Failed to hardlink local unix domain socket into a jail. Exiting.");
+        Util::forcedExit(EX_SOFTWARE);
+    }
 #endif
 #else
-        constexpr int UNUSED_PORT_NUMBER = 0;
-        std::shared_ptr<ServerSocket> socket
-            = ServerSocket::create(ServerSocket::Type::Public, UNUSED_PORT_NUMBER,
-                                   ClientPortProto, std::chrono::steady_clock::now(), *PrisonerPoll, factory);
+    constexpr int UNUSED_PORT_NUMBER = 0;
+    std::shared_ptr<ServerSocket> socket
+        = ServerSocket::create(ServerSocket::Type::Public, UNUSED_PORT_NUMBER,
+                               ClientPortProto, std::chrono::steady_clock::now(), *PrisonerPoll, factory);
 
-        PrisonerServerSocketFD = socket->getFD();
-        LOG_INF("Listening to prisoner connections on #" << PrisonerServerSocketFD);
+    PrisonerServerSocketFD = socket->getFD();
+    LOG_INF("Listening to prisoner connections on #" << PrisonerServerSocketFD);
 #endif
-        return socket;
-    }
+    return socket;
+}
 
-    /// Create the externally listening public socket
-    std::shared_ptr<ServerSocket> findServerPort()
+/// Create the externally listening public socket
+std::shared_ptr<ServerSocket> COOLWSDServer::findServerPort()
+{
+    std::shared_ptr<SocketFactory> factory;
+    std::chrono::steady_clock::time_point now = std::chrono::steady_clock::now();
+
+    if (ClientPortNumber <= 0)
     {
-        std::shared_ptr<SocketFactory> factory;
-        std::chrono::steady_clock::time_point now = std::chrono::steady_clock::now();
-
-        if (ClientPortNumber <= 0)
-        {
-            // Avoid using the default port for unit-tests altogether.
-            // This avoids interfering with a running test instance.
-            ClientPortNumber = DEFAULT_CLIENT_PORT_NUMBER + (UnitWSD::isUnitTesting() ? 1 : 0);
-        }
+        // Avoid using the default port for unit-tests altogether.
+        // This avoids interfering with a running test instance.
+        ClientPortNumber = DEFAULT_CLIENT_PORT_NUMBER + (UnitWSD::isUnitTesting() ? 1 : 0);
+    }
 
 #if ENABLE_SSL
-        if (ConfigUtil::isSslEnabled())
-            factory = std::make_shared<SslSocketFactory>();
-        else
+    if (ConfigUtil::isSslEnabled())
+        factory = std::make_shared<SslSocketFactory>();
+    else
 #endif
-            factory = std::make_shared<PlainSocketFactory>();
+        factory = std::make_shared<PlainSocketFactory>();
 
-        std::shared_ptr<ServerSocket> socket = ServerSocket::create(
-            ClientListenAddr, ClientPortNumber, ClientPortProto, now, *WebServerPoll, factory);
+    std::shared_ptr<ServerSocket> socket = ServerSocket::create(
+        ClientListenAddr, ClientPortNumber, ClientPortProto, now, *WebServerPoll, factory);
 
 #if !MOBILEAPP
-        const int firstPortNumber = ClientPortNumber;
+    const int firstPortNumber = ClientPortNumber;
 #endif
-        while (!socket &&
+    while (!socket &&
 #ifdef BUILDING_TESTS
-               true
+           true
 #else
-               UnitWSD::isUnitTesting()
+           UnitWSD::isUnitTesting()
 #endif
-            )
-        {
-            ++ClientPortNumber;
-            LOG_INF("Client port " << (ClientPortNumber - 1) << " is busy, trying "
-                                   << ClientPortNumber);
-            socket = ServerSocket::create(ClientListenAddr, ClientPortNumber, ClientPortProto,
-                                          now, *WebServerPoll, factory);
-        }
+        )
+    {
+        ++ClientPortNumber;
+        LOG_INF("Client port " << (ClientPortNumber - 1) << " is busy, trying "
+                               << ClientPortNumber);
+        socket = ServerSocket::create(ClientListenAddr, ClientPortNumber, ClientPortProto,
+                                      now, *WebServerPoll, factory);
+    }
 
 #if !MOBILEAPP
-        if (!socket)
-        {
-            LOG_FTL("Failed to listen on Server port(s) (" << firstPortNumber << '-'
-                                                           << ClientPortNumber << "). Exiting");
-            Util::forcedExit(EX_SOFTWARE);
-        }
-
-        LOG_INF('#' << socket->getFD() << " Listening to client connections on port "
-                    << ClientPortNumber);
-#else
-        LOG_INF("Listening to client connections on #" << socket->getFD());
-#endif
-        return socket;
+    if (!socket)
+    {
+        LOG_FTL("Failed to listen on Server port(s) (" << firstPortNumber << '-'
+                                                       << ClientPortNumber << "). Exiting");
+        Util::forcedExit(EX_SOFTWARE);
     }
-};
+
+    LOG_INF('#' << socket->getFD() << " Listening to client connections on port "
+                << ClientPortNumber);
+#else
+    LOG_INF("Listening to client connections on #" << socket->getFD());
+#endif
+    return socket;
+}
+
+void COOLWSDServer::AcceptPoll::wakeupHook()
+{
+    SigUtil::checkDumpGlobalState(dump_state);
+}
 
 #if !MOBILEAPP
 void COOLWSD::processFetchUpdate(const std::shared_ptr<SocketPoll>& poll)
@@ -3663,9 +3626,9 @@ int COOLWSD::innerMain()
     ClientRequestDispatcher::InitStaticFileContentCache();
 
     // Allocate our port - passed to prisoners.
-    assert(Server && "The COOLWSDServer instance does not exist.");
+    assert(COOLWSDServer::Instance && "The COOLWSDServer instance does not exist.");
     // allocate port & hold temporarily.
-    std::shared_ptr<ServerSocket> serverPort = Server->findClientPort();
+    std::shared_ptr<ServerSocket> serverPort = COOLWSDServer::Instance->findClientPort();
 
 #if !MOBILEAPP
     TmpFontDir = ChildRoot + JailUtil::CHILDROOT_TMP_INCOMING_PATH;
@@ -3673,7 +3636,7 @@ int COOLWSD::innerMain()
 
     // Start the internal prisoner server and spawn forkit,
     // which in turn forks first child.
-    Server->startPrisoners();
+    COOLWSDServer::Instance->startPrisoners();
 
 // No need to "have at least one child" beforehand on mobile
 #if !MOBILEAPP
@@ -3753,7 +3716,7 @@ int COOLWSD::innerMain()
     Anonymizer::mapAnonymized("contents", "contents");
 
     // Start the server.
-    Server->start(std::move(serverPort));
+    COOLWSDServer::Instance->start(std::move(serverPort));
 
 #if WASMAPP
     // It is not at all obvious that this is the ideal place to do the HULLO thing and call onopen
@@ -3940,7 +3903,7 @@ int COOLWSD::innerMain()
         // Otherwise, in production, we should probably respond
         // with some error that we are recycling. But for now,
         // don't change the behavior and stop listening.
-        Server->stop();
+        COOLWSDServer::Instance->stop();
     }
 
     // atexit handlers tend to free Admin before Documents
@@ -4038,14 +4001,14 @@ int COOLWSD::innerMain()
     }
 #endif
 
-    Server->stopPrisoners();
+    COOLWSDServer::Instance->stopPrisoners();
 
     SigUtil::addActivity("prisoners stopped");
 
     if (UnitWSD::isUnitTesting())
     {
-        Server->stop();
-        Server.reset();
+        COOLWSDServer::Instance->stop();
+        COOLWSDServer::Instance.reset();
     }
 
     PrisonerPoll.reset();
@@ -4056,7 +4019,7 @@ int COOLWSD::innerMain()
 
     SigUtil::addActivity("async DNS stopped");
 
-    WebServerPoll.reset();
+    COOLWSDServer::WebServerPoll.reset();
 
     // Terminate child processes
     LOG_INF("Requesting child processes to terminate.");
@@ -4104,18 +4067,18 @@ int COOLWSD::innerMain()
 
 std::shared_ptr<TerminatingPoll> COOLWSD:: getWebServerPoll ()
 {
-    return WebServerPoll;
+    return COOLWSDServer::WebServerPoll;
 }
 
 void COOLWSD::cleanup([[maybe_unused]] int returnValue)
 {
     try
     {
-        Server.reset();
+        COOLWSDServer::Instance.reset();
 
         PrisonerPoll.reset();
 
-        WebServerPoll.reset();
+        COOLWSDServer::WebServerPoll.reset();
 
 #if !MOBILEAPP
         SavedClipboards.reset();
@@ -4286,8 +4249,8 @@ void dump_state()
     std::ostringstream oss(Util::makeDumpStateStream());
     oss << "Start WSD " << getpid() << " Dump State:\n";
 
-    if (Server)
-        Server->dumpState(oss);
+    if (COOLWSDServer::Instance)
+        COOLWSDServer::Instance->dumpState(oss);
 
     oss << "\nMalloc info [" << getpid() << "]: \n\t"
         << Util::replace(Util::getMallocInfo(), "\n", "\n\t") << '\n';

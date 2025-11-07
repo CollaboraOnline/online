@@ -75,7 +75,6 @@ bool filterTests(CPPUNIT_NS::TestRunner& runner, CPPUNIT_NS::Test* testRegistry,
 }
 
 #ifdef STANDALONE_CPPUNIT
-#include <common/Globals.hpp>
 
 static bool IsDebugrun = false;
 

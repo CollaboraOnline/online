@@ -9,16 +9,21 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-#include "config.h"
-#include "Common.hpp"
-#include "Kit.hpp"
+#pragma once
 
-int ClientPortNumber = DEFAULT_CLIENT_PORT_NUMBER;
-std::string MasterLocation;
+#include <config.h>
+#include <Clipboard.hpp>
+#include <FileServer.hpp>
+#include "wsd/COOLWSDServer.hpp"
 
-int main (int argc, char **argv)
-{
-    return forkit_main(argc, argv);
-}
+#if !MOBILEAPP
+std::unique_ptr<ClipboardCache> COOLWSD::SavedClipboards;
+
+std::unique_ptr<FileServerRequestHandler> COOLWSD::FileRequestHandler;
+#endif
+
+std::shared_ptr<TerminatingPoll> COOLWSDServer::WebServerPoll;
+
+std::unique_ptr<COOLWSDServer> COOLWSDServer::Instance;
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

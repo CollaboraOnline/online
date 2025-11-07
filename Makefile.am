@@ -113,11 +113,14 @@ if !HAVE_CLANG
 AM_LDFLAGS += -pthread
 endif
 
+coolwsd_LDADD = libwsdglobals.a
+coolconfig_LDADD = libglobals.a
+
 if ENABLE_SSL
 AM_LDFLAGS += ${OPENSSL_LIBS}
 else
-coolwsd_LDADD = ${OPENSSL_LIBS}
-coolconfig_LDADD = ${OPENSSL_LIBS}
+coolwsd_LDADD += ${OPENSSL_LIBS}
+coolconfig_LDADD += ${OPENSSL_LIBS}
 endif
 
 AM_ETAGSFLAGS = --c++-kinds=+p --fields=+iaS --extra=+q -R --totals=yes --exclude=browser/node_modules --exclude=browser/dist *
@@ -219,6 +222,8 @@ connect_SOURCES = tools/Connect.cpp \
                   common/Util-server.cpp \
                   common/Util-unix.cpp
 
+connect_LDADD = libglobals.a
+
 lokitclient_SOURCES = common/Log.cpp \
                       common/DummyTraceEventEmitter.cpp \
                       tools/KitClient.cpp \
@@ -229,16 +234,27 @@ lokitclient_SOURCES = common/Log.cpp \
                       common/Util-server.cpp \
                       common/Util-unix.cpp
 
-noinst_LIBRARIES = libsimd.a
+lokitclient_LDADD = libglobals.a
+
+noinst_LIBRARIES = libsimd.a libglobals.a libkitglobals.a libwsdglobals.a libkitwsdglobals.a
+
 libsimd_a_SOURCES = kit/DeltaSimd.c
 libsimd_a_CFLAGS = @SIMD_CFLAGS@
+
+libglobals_a_SOURCES = common/Globals.cpp
+
+libkitglobals_a_SOURCES = kit/KitGlobals.cpp
+
+libwsdglobals_a_SOURCES = wsd/WSDGlobals.cpp
+
+libkitwsdglobals_a_SOURCES = wsd/KitWSDGlobals.cpp
 
 coolforkit_sources = kit/ChildSession.cpp \
                      kit/ForKit.cpp \
                      kit/Kit.cpp \
                      kit/KitWebSocket.cpp
 
-coolforkit_ldadd = libsimd.a
+coolforkit_ldadd = libsimd.a libkitglobals.a
 
 coolforkit_caps_SOURCES = $(coolforkit_sources) \
                           $(shared_sources) \
@@ -258,8 +274,12 @@ coolwsd_inproc_SOURCES = $(coolwsd_sources) \
                          $(coolforkit_sources) \
                          wsd/coolwsd-inproc.cpp
 
-coolwsd_inproc_LDADD = ${coolwsd_LDADD} \
-                       ${coolforkit_ldadd}
+coolwsd_inproc_LDADD = libsimd.a libkitwsdglobals.a
+
+if !ENABLE_SSL
+coolwsd_inproc_LDADD += ${OPENSSL_LIBS}
+endif
+
 endif
 
 if ENABLE_LIBFUZZER
@@ -273,6 +293,7 @@ common_fuzzer_sources = \
 		       common/DummyTraceEventEmitter.cpp \
 		       $(coolwsd_sources) \
 		       wsd/coolwsd-inproc.cpp \
+		       wsd/KitWSDGlobals.cpp \
 		       $(coolforkit_sources) \
 		       $(shared_sources)
 
@@ -319,6 +340,8 @@ clientnb_SOURCES = net/clientnb.cpp \
                    common/Util-server.cpp \
                    common/Util-unix.cpp
 
+clientnb_LDADD = libsimd.a libglobals.a
+
 coolmount_SOURCES = tools/mount.cpp \
                     common/CoolMount.cpp
 
@@ -333,7 +356,7 @@ coolbench_SOURCES = tools/Benchmark.cpp \
                     common/Util-unix.cpp \
                     common/Simd.cpp
 
-coolbench_LDADD = libsimd.a
+coolbench_LDADD = libsimd.a libglobals.a
 
 coolconvert_SOURCES = tools/Tool.cpp
 
@@ -343,6 +366,8 @@ coolstress_CPPFLAGS = ${coolstress_TDOC_CPPFLAGS} ${include_paths} \
 coolstress_SOURCES = tools/Stress.cpp \
                      common/DummyTraceEventEmitter.cpp \
                      $(shared_sources)
+
+coolstress_LDADD = libglobals.a
 
 coolconfig_SOURCES = tools/Config.cpp \
                     tools/ConfigMigrationAssistant.cpp \
@@ -359,11 +384,14 @@ coolsocketdump_SOURCES = tools/WebSocketDump.cpp \
 			 common/DummyTraceEventEmitter.cpp \
 			 $(shared_sources)
 
+coolsocketdump_LDADD = libglobals.a
+
 wsd_headers = wsd/Admin.hpp \
               wsd/AdminModel.hpp \
               wsd/Auth.hpp \
               wsd/CacheUtil.hpp \
               wsd/COOLWSD.hpp \
+              wsd/COOLWSDServer.hpp \
               wsd/ClientRequestDispatcher.hpp \
               wsd/ClientSession.hpp \
               wsd/ContentSecurityPolicy.hpp \
@@ -393,6 +421,7 @@ wsd_headers = wsd/Admin.hpp \
               wsd/TileCache.hpp \
               wsd/TileDesc.hpp \
               wsd/TraceFile.hpp \
+              wsd/WSDGlobals.hpp \
               wsd/UserMessages.hpp \
               wsd/wopi/CheckFileInfo.hpp \
               wsd/wopi/StorageConnectionManager.hpp \
@@ -438,6 +467,8 @@ shared_headers = common/Anonymizer.hpp \
                  common/ThreadPool.hpp \
                  common/Watchdog.hpp \
                  common/base64.hpp \
+                 kit/BgSaveWatchDog.hpp \
+                 kit/KitGlobals.hpp \
                  kit/KitQueue.hpp \
                  kit/LogUI.hpp \
                  net/AsyncDNS.hpp \

@@ -137,6 +137,7 @@ AM_CPPFLAGS = -pthread -I$(top_srcdir) -DBUILDING_TESTS -DLOK_ABORT_ON_ASSERTION
 
 wsd_sources = \
 	../kit/Kit.cpp \
+	../kit/KitGlobals.cpp \
 	../kit/KitWebSocket.cpp \
 	../kit/TestStubs.cpp \
 	../wsd/FileServerUtil.cpp \
@@ -187,8 +188,10 @@ common_sources = \
 	../net/NetUtil.cpp \
 	../wsd/Auth.cpp
 
+globals_sources = ../common/Globals.cpp
+
 unithttplib_CPPFLAGS = -I$(top_srcdir) -DBUILDING_TESTS -DSTANDALONE_CPPUNIT -g
-unithttplib_SOURCES = $(common_sources) test.cpp HttpRequestTests.cpp
+unithttplib_SOURCES = $(common_sources) $(globals_sources) test.cpp HttpRequestTests.cpp
 unithttplib_LDADD = $(CPPUNIT_LIBS)
 
 unittest_CPPFLAGS = -I$(top_srcdir) -DBUILDING_TESTS -DSTANDALONE_CPPUNIT -g
@@ -210,7 +213,7 @@ unit_base_la_LIBADD += -lssl -lcrypto
 endif
 
 fakesockettest_CPPFLAGS = -g
-fakesockettest_SOURCES = fakesockettest.cpp  ../net/FakeSocket.cpp ../common/DummyTraceEventEmitter.cpp ../common/Log.cpp ../common/Util.cpp ../common/Util-server.cpp ../common/Util-unix.cpp
+fakesockettest_SOURCES = fakesockettest.cpp  ../net/FakeSocket.cpp ../common/DummyTraceEventEmitter.cpp ../common/Log.cpp ../common/Util.cpp ../common/Util-server.cpp ../common/Util-unix.cpp ../common/Globals.cpp
 fakesockettest_LDADD = $(CPPUNIT_LIBS)
 
 # old-style unit tests - bootstrapped via UnitClient
