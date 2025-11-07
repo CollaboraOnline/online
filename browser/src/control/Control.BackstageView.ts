@@ -221,7 +221,7 @@ class BackstageView extends window.L.Class {
 		name.textContent = template.name;
 		card.appendChild(name);
 		
-		window.L.DomEvent.on(card, 'click', () => this.createNewDocument(), this);
+		window.L.DomEvent.on(card, 'click', () => this.createNewDocument(template), this);
 		return card;
 	}
 
@@ -385,8 +385,19 @@ class BackstageView extends window.L.Class {
 		this.hide();
 	}
 
-	private createNewDocument(): void {
-		window.postMobileMessage('uno .uno:Open');
+	private createNewDocument(template: TemplateData): void {
+		// Map template types to the appropriate UNO command.
+		const commandMap: Record<string, string> = {
+			'writer': '.uno:NewDoc',
+			'calc': '.uno:NewDocSpreadsheet',
+			'impress': '.uno:NewDocPresentation',
+		};
+
+		const command = template.type && commandMap[template.type]
+			? commandMap[template.type]
+			: '.uno:NewDoc';
+
+		this.sendUnoCommand(command);
 		this.hide();
 	}
 
