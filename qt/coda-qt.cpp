@@ -723,7 +723,7 @@ int main(int argc, char** argv)
     if (argParser.isSet(debugOption))
         logLevel = "trace";
 
-    Log::initialize("Mobile", logLevel);
+    Log::initialize(QApplication::applicationName().toStdString(), logLevel);
     Util::setThreadName("main");
 
     fakeSocketSetLoggingCallback([](const std::string& line) { LOG_TRC_NOFILE(line); });
