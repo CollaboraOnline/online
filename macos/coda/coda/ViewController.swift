@@ -206,6 +206,19 @@ class ViewController: NSViewController, WKScriptMessageHandlerWithReply, WKNavig
                     */
                     return (nil, nil)
                 }
+                else if body == "WELCOME" {
+                    guard let url = Bundle.main.url(forResource: "welcome-slideshow", withExtension: "odp", subdirectory: "welcome") else {
+                        COWrapper.LOG_ERR("welcome/welcome-slideshow.odp not found in bundle")
+                        return (nil, nil)
+                    }
+
+                    // Let AppKit open it like any other document; our loadDocument(_:) will mark it read-only.
+                    NSDocumentController.shared.openDocument(withContentsOf: url, display: true) { doc, _, err in
+                        if let err { COWrapper.LOG_ERR("Failed to open welcome: \(err.localizedDescription)") }
+                    }
+
+                    return (nil, nil)
+                }
                 else if body.hasPrefix("downloadas ") {
                     COWrapper.LOG_ERR("TODO: Implement downloadas")
                     /*
