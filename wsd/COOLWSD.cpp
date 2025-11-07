@@ -1225,6 +1225,8 @@ void COOLWSD::requestTerminateSpareKits()
     }
 }
 
+extern std::string getCurrentCGroupPath();
+
 void COOLWSD::setupChildRoot(const bool UseMountNamespaces)
 {
     JailUtil::disableBindMounting(); // Default to assume failure
@@ -1253,6 +1255,7 @@ void COOLWSD::setupChildRoot(const bool UseMountNamespaces)
             else
                 LOG_ERR("creating usernamespace for mount user failed.");
         }
+        fprintf(stderr, "after we are group %s\n", getCurrentCGroupPath().c_str());
 
         // Setup the jails.
         JailUtil::cleanupJails(CleanupChildRoot);
@@ -1308,6 +1311,104 @@ void COOLWSD::innerInitialize(Poco::Util::Application& self)
     if (geteuid() == 0 && CheckCoolUser)
     {
         throw std::runtime_error("Do not run as root. Please run as cool user.");
+    }
+#endif
+
+    std::string cgroup = getCurrentCGroupPath();
+    fprintf(stderr, "before we are group %s\n", cgroup.c_str());
+    std::string cgrouppath = "/sys/fs/cgroup" + cgroup;
+
+    std::string subcgrouppath = cgrouppath + "/coolwsd";
+    fprintf(stderr, "make thing %s\n", subcgrouppath.c_str());
+    if (FileUtil::makeDirectory(subcgrouppath) < 0)
+    {
+        fprintf(stderr, "all not ok\n");
+    }
+    else
+    {
+        fprintf(stderr, "created sub cgroup of %s\n", subcgrouppath.c_str());
+    }
+
+    // https://systemd.io/CGROUP_DELEGATION
+    // i-like-islands option, no-processes-in-inner-nodes rule
+    // move this process into a subgroup, so there is no process
+    // in this group directly, which then makes it possible to
+    // write to cgroup.subtree_control which would otherwise fail
+    // (somewhat silently)
+    std::ofstream subtreeProcs(subcgrouppath + "/cgroup.procs");
+    subtreeProcs << getpid();
+    if (!subtreeProcs)
+    {
+        fprintf(stderr, "all not ok\n");
+    }
+    else
+    {
+        fprintf(stderr, "added/moved myself, aka %d to group %s\n", getpid(), subcgrouppath.c_str());
+    }
+    subtreeProcs.close();
+
+    std::string subtreeControlPath = cgrouppath + "/cgroup.subtree_control";
+    std::ofstream subtreeControlFile(subtreeControlPath);
+    if (!subtreeControlFile.good())
+        fprintf(stderr, "all not ok\n");
+    else
+    {
+       fprintf(stderr, "attempt to enable in %s\n", subtreeControlPath.c_str());
+       subtreeControlFile << "+memory";
+    }
+
+    if (!subtreeControlFile.good())
+        fprintf(stderr, "all not ok\n");
+    else
+        fprintf(stderr, "all ok on writing memory thing\n");
+    subtreeControlFile.close();
+
+#if 0
+    if (!cgroup.empty())
+    {
+        assert(cgroup[0] == '/');
+
+        std::vector<std::string> availableControllers;
+        std::ifstream controllerFile(cgrouppath + "/cgroup.controllers");
+        if (!controllerFile.good())
+            fprintf(stderr, "all not ok\n");
+        else
+        {
+            std::string token;
+            while (controllerFile >> token)
+            {
+                fprintf(stderr, "controller %s available\n", token.c_str());
+                availableControllers.push_back(token);
+            }
+        }
+
+        std::string subcgrouppath = cgrouppath + "/coolwsd-" + std::to_string(getpid());
+        fprintf(stderr, "make thing %s\n", subcgrouppath.c_str());
+        if (FileUtil::makeDirectory(subcgrouppath) < 0)
+        {
+            fprintf(stderr, "all not ok\n");
+        }
+        else
+        {
+            fprintf(stderr, "all ok\n");
+        }
+
+        std::ofstream subtreeControlFile(subcgrouppath + "/cgroup.subtree_control");
+        if (!subtreeControlFile.good())
+            fprintf(stderr, "all not ok\n");
+        else
+        {
+            for (const auto& availableController : availableControllers)
+            {
+                fprintf(stderr, "attempt to enable %s in %s\n", availableController.c_str(), subcgrouppath.c_str());
+                subtreeControlFile << "+" << availableController;
+            }
+        }
+
+        if (!subtreeControlFile.good())
+            fprintf(stderr, "all not ok\n");
+        else
+            fprintf(stderr, "all ok\n");
     }
 #endif
 

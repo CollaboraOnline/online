@@ -63,8 +63,8 @@ static void mapuser(uid_t origuid, uid_t newuid, gid_t origgid, gid_t newgid)
 bool enterMountingNS(uid_t uid, gid_t gid)
 {
 #ifdef __linux__
-    // Put this process into its own user and mount namespace.
-    if (unshare(CLONE_NEWNS | CLONE_NEWUSER) != 0)
+    // Put this process into its own user, mount and cgroup namespace.
+    if (unshare(CLONE_NEWNS | CLONE_NEWUSER /*| CLONE_NEWCGROUP*/) != 0)
     {
         // having multiple threads is a source of failure f.e.
         LOG_ERR("enterMountingNS, unshare failed: " << strerror(errno));

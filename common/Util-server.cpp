@@ -32,8 +32,6 @@ extern char** environ;
 
 #include <Poco/Exception.h>
 
-namespace
-{
 const char* startsWith(const char* line, const char* tag, std::size_t tagLen)
 {
     assert(strlen(tag) == tagLen);
@@ -89,9 +87,9 @@ std::size_t getFromCGroup(const std::string& group, const std::string& key)
     return num;
 }
 
-std::string getCurrentCGroupPath()
+std::string getCGroupPath(pid_t pid)
 {
-    std::ifstream file("/proc/self/cgroup");
+    std::ifstream file("/proc/" + std::to_string(pid) + "/cgroup");
     if (file.is_open())
     {
         std::string line;
@@ -105,6 +103,11 @@ std::string getCurrentCGroupPath()
         }
     }
     return "/";
+}
+
+std::string getCurrentCGroupPath()
+{
+    return getCGroupPath(getpid());
 }
 
 bool isCGroupV2() { return std::ifstream("/sys/fs/cgroup/cgroup.controllers").good(); }
@@ -135,7 +138,6 @@ std::size_t getFromCGroupV2(const std::string& key)
     }
     return num;
 }
-} // namespace
 
 namespace Util
 {
@@ -386,11 +388,14 @@ std::size_t getMemoryUsagePSS(const pid_t pid)
     return 0;
 }
 
-std::size_t getProcessTreePss(pid_t pid)
+std::size_t getProcessTreePssImpl(pid_t pid)
 {
+    size_t pss = 0;
+    fprintf(stderr, "start for getProcessTreePssImpl %d\n", pid);
+
     try
     {
-        std::size_t pss = getMemoryUsagePSS(pid);
+        pss = getMemoryUsagePSS(pid);
 
         const std::string root = "/proc/" + std::to_string(pid) + "/task/";
 
@@ -406,18 +411,85 @@ std::size_t getProcessTreePss(pid_t pid)
                 const auto pair = Util::i32FromString(child);
                 if (pair.second)
                 {
-                    pss += getProcessTreePss(pair.first);
+                    pss += getProcessTreePssImpl(pair.first);
                 }
             }
         }
-
-        return pss;
     }
     catch (const std::exception&)
     {
     }
 
-    return 0;
+    fprintf(stderr, "end for getProcessTreePssImpl %d\n", pid);
+    return pss;
+}
+
+std::size_t getProcessTreePss(pid_t pid)
+{
+    fprintf(stderr, "start for getProcessTreePss %d\n", pid);
+
+    std::string memoryCurrentPath = "/sys/fs/cgroup/" + getCGroupPath(pid) + "/memory.current";
+    fprintf(stderr, "opening %s\n", memoryCurrentPath.c_str());
+    std::ifstream memoryCurrent(memoryCurrentPath);
+    if (!memoryCurrent.good())
+        fprintf(stderr, "FAIL 1\n");
+    size_t memoryCurrentBytes;
+    memoryCurrent >> memoryCurrentBytes;
+    if (!memoryCurrent.good())
+        fprintf(stderr, "FAIL 2\n");
+
+    std::string memoryStatPath = "/sys/fs/cgroup/" + getCGroupPath(pid) + "/memory.stat";
+    fprintf(stderr, "opening %s\n", memoryStatPath.c_str());
+    std::ifstream memoryStat(memoryStatPath);
+    if (!memoryStat.good())
+        fprintf(stderr, "FAIL 1\n");
+    size_t memoryInactiveFile(0);
+    std::string key;
+    size_t value;
+    while (memoryStat)
+    {
+        memoryStat >> key;
+        memoryStat >> value;
+        if (key == "inactive_file")
+        {
+            memoryInactiveFile = value;
+            break;
+        }
+    }
+
+    size_t pss = 0;
+
+    try
+    {
+        pss = getMemoryUsagePSS(pid);
+
+        const std::string root = "/proc/" + std::to_string(pid) + "/task/";
+
+        std::vector<std::string> tids;
+        Poco::File(root).list(tids);
+
+        for (const std::string& tid : tids)
+        {
+            std::ifstream children(root + tid + "/children");
+            std::string child;
+            while (children >> child)
+            {
+                const auto pair = Util::i32FromString(child);
+                if (pair.second)
+                {
+                    pss += getProcessTreePssImpl(pair.first);
+                }
+            }
+        }
+    }
+    catch (const std::exception&)
+    {
+    }
+
+    fprintf(stderr, "got %ld and %ld %ld, so %ld\n", pss, memoryCurrentBytes, memoryInactiveFile, (memoryCurrentBytes - memoryInactiveFile) / 1024);
+
+    fprintf(stderr, "end for getProcessTreePss %d\n", pid);
+    return pss;
 }
 
 std::size_t getMemoryUsageRSS(const pid_t pid)

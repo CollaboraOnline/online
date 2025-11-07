@@ -450,8 +450,11 @@ void sleepForDebugger()
     Util::sleepFromEnvIfSet("Kit", "SLEEPKITFORDEBUGGER");
 }
 
+extern std::string getCurrentCGroupPath();
+
 static int forkKit(const std::function<void()> &childFunc,
                    const std::string& childProcessName,
+                   const std::string& jailId,
                    const std::function<void(pid_t)> &parentFunc)
 {
     pid_t pid = 0;
@@ -467,6 +470,29 @@ static int forkKit(const std::function<void()> &childFunc,
         SocketPoll::PollWatchdog->joinThread();
 
     Log::preFork();
+
+    fprintf(stderr, "forkKit %s %s\n", childProcessName.c_str(), jailId.c_str());
+
+    std::string subcgrouppath;
+    if (!jailId.empty())
+    {
+        std::string cgroup = getCurrentCGroupPath();
+        fprintf(stderr, "forkit is in group %s\n", cgroup.c_str());
+        if (cgroup.ends_with("/coolwsd"))
+            cgroup = cgroup.substr(0, cgroup.size() - 8);
+        std::string cgrouppath = "/sys/fs/cgroup" + cgroup;
+
+        subcgrouppath = cgrouppath + "/" + jailId;
+        fprintf(stderr, "make thing %s\n", subcgrouppath.c_str());
+        if (FileUtil::makeDirectory(subcgrouppath) < 0)
+        {
+            fprintf(stderr, "all not ok\n");
+        }
+        else
+        {
+            fprintf(stderr, "created sub cgroup of %s\n", subcgrouppath.c_str());
+        }
+    }
 
     pid = fork();
     if (!pid)
@@ -500,6 +526,20 @@ static int forkKit(const std::function<void()> &childFunc,
     }
     else
     {
+        if (!subcgrouppath.empty())
+        {
+            std::ofstream subtreeProcs(subcgrouppath + "/cgroup.procs");
+            subtreeProcs << pid;
+            if (!subtreeProcs)
+            {
+                fprintf(stderr, "all not ok\n");
+            }
+            else
+            {
+                fprintf(stderr, "added %d to group %s\n", pid, subcgrouppath.c_str());
+            }
+        }
+
         if (hasWatchDog)
         {
             // restart parent watchdog if there was one
@@ -538,7 +578,7 @@ static int createLibreOfficeKit(const std::string& childRoot,
     pid_t childPid = 0;
     if (Util::isKitInProcess())
     {
-        std::thread([childRoot, jailId = std::move(jailId), configId, sysTemplate,
+        std::thread([childRoot, jailId, configId, sysTemplate,
                      loTemplate, queryVersion, sysTemplateIncomplete] {
             sleepForDebugger();
             lokit_main(childRoot, jailId, configId, sysTemplate, loTemplate, true,
@@ -558,7 +598,7 @@ static int createLibreOfficeKit(const std::string& childRoot,
                        DisplayVersion, sysTemplateIncomplete, spareKitId);
         };
 
-        auto parentFunc = [childRoot, jailId = std::move(jailId)](int pid)
+        auto parentFunc = [childRoot, jailId](int pid)
         {
             // Parent
             if (pid < 0)
@@ -573,7 +613,7 @@ static int createLibreOfficeKit(const std::string& childRoot,
         };
 
         std::string processName = "kit_spare_" + Util::encodeId(spareKitId, 3);
-        childPid = forkKit(childFunc, processName, parentFunc);
+        childPid = forkKit(childFunc, processName, jailId, parentFunc);
     }
 
     const auto duration = (std::chrono::steady_clock::now() - startForkingTime);
@@ -657,7 +697,7 @@ static int createSubForKit(const std::string& subForKitIdent,
     };
 
     std::string processName = "subforkit_" + Util::encodeId(subForKitId, 3);
-    childPid = forkKit(childFunc, processName, parentFunc);
+    childPid = forkKit(childFunc, processName, "", parentFunc);
 
     const auto duration = (std::chrono::steady_clock::now() - startForkingTime);
     const auto durationMs = std::chrono::duration_cast<std::chrono::milliseconds>(duration);
