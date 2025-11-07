@@ -43,6 +43,27 @@ namespace COOLProtocol
         "urp:"
     };
 
+    static bool isMessageOfType(const char* message, const std::string& type, int length)
+    {
+        if (length < type.length() + 2)
+            return false;
+        for (int i = 0; i < type.length(); i++)
+            if (message[i] != type[i])
+                return false;
+        return true;
+    }
+
+    static bool isBinaryMessage(const char *buffer, int length)
+    {
+        for (auto i : COOLProtocol::binaryMessageTypes)
+        {
+            if (isMessageOfType(buffer, i, length))
+                return true;
+        }
+
+        return false;
+    }
+
     inline std::string GetProtocolVersion()
     {
         return std::to_string(ProtocolMajorVersionNumber) + '.'
