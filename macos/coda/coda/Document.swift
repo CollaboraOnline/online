@@ -412,26 +412,12 @@ class Document: NSDocument {
         return msgStr.prefix(100) + (msgStr.count > 100 ? "..." : "")
     }
 
-    /**
-     * Check if the message is of the given type.
-     */
-    private func isMessageOfType(_ buffer: UnsafePointer<CChar>, _ prefix: String, length: Int) -> Bool {
-        let msgData = Data(bytes: buffer, count: min(length, prefix.count))
-        guard let msgStr = String(data: msgData, encoding: .utf8) else { return false }
-        return msgStr == prefix
-    }
-
     @objc
     func send2JS(_ buffer: UnsafePointer<CChar>, length: Int) {
         let abbrMsg = abbreviatedMessage(buffer: buffer, length: length)
         COWrapper.LOG_TRC("To JS: \(abbrMsg)")
 
-        let binaryMessage = (isMessageOfType(buffer, "tile:", length: length) ||
-                             isMessageOfType(buffer, "tilecombine:", length: length) ||
-                             isMessageOfType(buffer, "delta:", length: length) ||
-                             isMessageOfType(buffer, "renderfont:", length: length) ||
-                             isMessageOfType(buffer, "rendersearchlist:", length: length) ||
-                             isMessageOfType(buffer, "windowpaint:", length: length))
+        let binaryMessage = COWrapper.isBinaryMessage(buffer, length: length)
 
         let pretext = binaryMessage
             ? "window.TheFakeWebSocket.onmessage({'data': window.atob('"
