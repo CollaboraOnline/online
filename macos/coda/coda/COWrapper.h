@@ -27,6 +27,8 @@
 + (void)setClipboardWith:(Document *_Nonnull)document from:(NSPasteboard *_Nonnull)pasteboard NS_SWIFT_NAME(setClipboard(_:from:));
 + (bool)sendToInternalWith:(Document *_Nonnull)document content:(NSString *_Nonnull)content NS_SWIFT_NAME(sendToInternalClipboard(_:content:));
 
++ (bool)isBinaryMessage:(const char *_Nonnull)buffer length:(NSInteger)length;
+
 + (int)generateNewAppDocId;
 + (int)fakeSocketSocket;
 

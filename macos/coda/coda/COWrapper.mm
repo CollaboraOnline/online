@@ -337,6 +337,13 @@ static std::thread coolwsdThread;
 }
 
 /**
+ * Reuse the common implementation of the check if the message is binary.
+ */
++ (bool)isBinaryMessage:(const char *_Nonnull)buffer length:(NSInteger)length {
+    return COOLProtocol::isBinaryMessage(buffer, static_cast<size_t>(length));
+}
+
+/**
  * We keep a running count of opening documents here. This is not necessarily in sync with the
  * DocBrokerId in DocumentBroker due to potential parallelism when opening multiple documents in
  * quick succession.
