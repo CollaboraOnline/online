@@ -11,8 +11,12 @@
 
 #include <config.h>
 
-#include <iostream>
+#include <common/Anonymizer.hpp>
+#include <common/FileUtil.hpp>
+
 #include <filesystem>
+#include <iostream>
+#include <string>
 
 #include <dirent.h>
 #include <ftw.h>
@@ -30,9 +34,6 @@
 #include <sys/param.h>
 #include <sys/mount.h>
 #endif
-
-#include <common/Anonymizer.hpp>
-#include <common/FileUtil.hpp>
 
 namespace FileUtil
 {
@@ -359,13 +360,13 @@ namespace FileUtil
         }
     }
 
-    std::vector<std::string> getDirEntries(const std::string dirPath)
+    std::vector<std::string> getDirEntries(const std::string& dirPath)
     {
         std::vector<std::string> names;
-        DIR *dir = opendir(dirPath.c_str());
+        DIR* dir = opendir(dirPath.data());
         if (!dir)
         {
-            LOG_DBG("Read from non-existent directory " + dirPath);
+            LOG_DBG("Read from non-existent directory " << dirPath);
             return names;
         }
         struct dirent *i;

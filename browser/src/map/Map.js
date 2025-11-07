@@ -126,16 +126,9 @@ window.L.Map = window.L.Evented.extend({
 		this.callInitHooks();
 
 		this.addHandler('keyboard', window.L.Map.Keyboard);
-		this.addHandler('dragging', window.L.Map.Drag);
-		this.dragging.disable(); // FIXME: before unification, this was only called when on a touch device or in a mobile cypress test
 
 		this.addHandler('scrollHandler', window.L.Map.Scroll);
-		this.addHandler('doubleClickZoom', window.L.Map.DoubleClickZoom);
-		this.dragging._draggable._manualDrag = window.touch.isTouchEvent;
 
-		if (this.options.imagePath) {
-			window.L.Icon.Default.imagePath = this.options.imagePath;
-		}
 		this._addLayers(this.options.layers);
 		app.socket = new app.definitions.Socket(this);
 
@@ -1306,20 +1299,12 @@ window.L.Map = window.L.Evented.extend({
 	},
 
 	_initPanes: function () {
-		var panes = this._panes = {};
+		this._panes = {};
 		this._paneRenderers = {};
 
 		this._mapPane = this.createPane('mapPane', this._container);
 
-		this.createPane('shadowPane');
 		this.createPane('overlayPane');
-		this.createPane('markerPane');
-		this.createPane('formfieldPane');
-
-		if (!this.options.markerZoomAnimation) {
-			window.L.DomUtil.addClass(panes.markerPane, 'leaflet-zoom-hide');
-			window.L.DomUtil.addClass(panes.shadowPane, 'leaflet-zoom-hide');
-		}
 	},
 
 
@@ -1613,8 +1598,7 @@ window.L.Map = window.L.Evented.extend({
 		if (e.type !== 'keypress' && e.type !== 'keyup' && e.type !== 'keydown' &&
 			e.type !== 'copy' && e.type !== 'cut' && e.type !== 'paste' &&
 		    e.type !== 'compositionstart' && e.type !== 'compositionupdate' && e.type !== 'compositionend' && e.type !== 'textInput') {
-			data.containerPoint = target instanceof window.L.Marker ?
-				this.latLngToContainerPoint(target.getLatLng()) : this.mouseEventToContainerPoint(e);
+			data.containerPoint = this.mouseEventToContainerPoint(e);
 			data.layerPoint = this.containerPointToLayerPoint(data.containerPoint);
 			data.latlng = this.layerPointToLatLng(data.layerPoint);
 		}

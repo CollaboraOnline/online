@@ -87,10 +87,6 @@ JSDialog.grid = function (
 
 		for (let col = 0; col < cols; col++) {
 			const child = _getGridChild(data.children, row, col);
-			const isMergedCell =
-				prevChild &&
-				prevChild.width &&
-				parseInt(prevChild.left) + parseInt(prevChild.width) > col;
 
 			if (child) {
 				if (!child.id || child.id === '')
@@ -108,9 +104,6 @@ JSDialog.grid = function (
 
 				processedChildren.push(child);
 				prevChild = child;
-			} else if (!isMergedCell) {
-				// empty placeholder to keep correct order
-				window.L.DomUtil.create('div', 'ui-grid-cell', table);
 			}
 		}
 	}

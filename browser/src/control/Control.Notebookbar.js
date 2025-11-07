@@ -79,8 +79,6 @@ window.L.Control.Notebookbar = window.L.Control.extend({
 			this.floatingNavIcon.classList.add('hasnotebookbar');
 		document.getElementById('document-container').classList.add('notebookbar-active');
 
-		var docLogoHeader = window.L.DomUtil.create('div', '');
-		docLogoHeader.id = 'document-header';
 		if (!window.logoURL || window.logoURL != "none") {
 			var docLogoHeader = window.L.DomUtil.create('div', '');
 			docLogoHeader.id = 'document-header';

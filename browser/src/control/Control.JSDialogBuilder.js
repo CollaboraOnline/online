@@ -370,14 +370,26 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 		if (data.step != undefined) {
 			// we don't want to show error popups due to browser step validation
 			// so be sure all the values will be acceptted, check only precision
-			var step = getPrecision(data.step);
-			var value = data.value ? getPrecision(data.value) : 1;
-			var minStep = getPrecision(data.min);
-			var maxStep = getPrecision(data.max);
 
-			step = Math.min(step, value, minStep, maxStep);
+			// these are set by core when there is no explicit min/max.
+			const noMin = -2147483648;
+			const noMax =  2147483647;
+			if (data.min === noMin && data.max === noMax && data.step === 1) {
+				// This is to allow decimal points in user input
+				// and the step button will increment/decrement
+				// according to current value's precision.
+				$(spinfield).attr('step', 'any');
 
-			$(spinfield).attr('step', step);
+			} else {
+				var step = getPrecision(data.step);
+				var value = data.value ? getPrecision(data.value) : 1;
+				var minStep = getPrecision(data.min);
+				var maxStep = getPrecision(data.max);
+
+				step = Math.min(step, value, minStep, maxStep);
+
+				$(spinfield).attr('step', step);
+			}
 		}
 
 		const isDisabled = data.enabled === false;
@@ -2581,14 +2593,16 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 		control.id = '';
 
 		buildFunc.bind(this)(temporaryParent, [data], false);
-		var backupGridSpan = control.style.gridColumn;
+		var backupGridColSpan = control.style.gridColumn;
+		var backupGridRowSpan = control.style.gridRow;
 
 		control.replaceWith(temporaryParent.firstChild)
 
 		var newControl = container.querySelector('[id=\'' + elementId + '\']');
 		if (newControl) {
 			newControl.scrollTop = scrollTop;
-			newControl.style.gridColumn = backupGridSpan;
+			newControl.style.gridColumn = backupGridColSpan;
+			newControl.style.gridRow = backupGridRowSpan;
 
 			// todo: is that needed? should be in widget impl?
 			if (data.has_default === true && (data.type === 'pushbutton' || data.type === 'okbutton')) {
@@ -2611,6 +2625,37 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 		});
 	},
 
+	// Helper to compose the grid style for the row or column with span
+	_composeGridStyle: function(pos, size) {
+		let span, grid;
+		if (size) {
+			span = 'span ' + parseInt(size);
+		}
+		if (pos) {
+			grid = parseInt(pos) + 1;
+		}
+		if (span) {
+			if (grid) {
+				return grid + ' / ' + span;
+			}
+			return span;
+		}
+		return grid;
+	},
+
+	// Helper to set the grid styles for the row and column with span
+	_setGridStyles: function(control, data) {
+		let gridColumn = this._composeGridStyle(data.left, data.width);
+		if (gridColumn) {
+			control.style.gridColumn = gridColumn;
+		}
+
+		let gridRow = this._composeGridStyle(data.top, data.height);
+		if (gridRow) {
+			control.style.gridRow = gridRow;
+		}
+	},
+
 	postProcess: function(parent, data) {
 		if (!parent || !data || !data.id || data.id === '')
 			return;
@@ -2623,8 +2668,8 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 				window.L.DomUtil.addClass(parent, 'hidden');
 		}
 
-		if (control && data.width) {
-			control.style.gridColumn = 'span ' + parseInt(data.width);
+		if (control) {
+			this._setGridStyles(control, data);
 		}
 
 		// natural tab-order when using keyboard navigation
@@ -2743,9 +2788,7 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 				$(table).addClass('ui-grid-cell');
 
 				// if 'table' has no id - postprocess won't work...
-				if (childData.width) {
-					table.style.gridColumn = 'span ' + parseInt(childData.width);
-				}
+				this._setGridStyles(table, childData);
 
 				var childObject = table;
 

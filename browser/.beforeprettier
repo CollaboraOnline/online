@@ -103,8 +103,6 @@
 /src/dom/Draggable.js
 /src/dom/NotebookbarAccessibility.js
 /src/dom/NotebookbarAccessibilityDefinitions.js
-/src/dom/PosAnimation.js
-/src/dom/PosAnimation.Timer.js
 /src/errormessages.js
 /src/geo/crs/CRS.js
 /src/geo/LatLng.js
@@ -120,11 +118,6 @@
 /src/layer/LayerGroup.js
 /src/layer/marker/A11yTextInput.js
 /src/layer/marker/Cursor.ts
-/src/layer/marker/DivIcon.js
-/src/layer/marker/Icon.Default.js
-/src/layer/marker/Icon.js
-/src/layer/marker/Marker.Drag.js
-/src/layer/marker/Marker.js
 /src/layer/marker/ProgressOverlay.js
 /src/layer/marker/TextInput.js
 /src/layer/SplitPanesContext.ts
@@ -163,7 +156,6 @@
 /src/layer/tile/SheetSwitch.ts
 /src/canvas/sections/TilesSection.ts
 /src/layer/tile/WriterTileLayer.js
-/src/layer/vector/Canvas.js
 /src/layer/vector/CanvasOverlay.ts
 /src/layer/vector/CDarkOverlay.ts
 /src/layer/vector/CEventsHandler.ts
@@ -174,18 +166,8 @@
 /src/layer/vector/CPolyline.ts
 /src/layer/vector/CPolyUtil.ts
 /src/layer/vector/CRectangle.ts
-/src/layer/vector/Path.Drag.js
-/src/layer/vector/Path.Drag.Transform.js
-/src/layer/vector/Path.js
-/src/layer/vector/Path.Transform.Util.js
-/src/layer/vector/Polygon.js
-/src/layer/vector/Polyline.js
-/src/layer/vector/Rectangle.js
-/src/layer/vector/Renderer.js
 /src/main.js
 /src/map/Clipboard.js
-/src/map/handler/Map.DoubleClickZoom.js
-/src/map/handler/Map.Drag.js
 /src/map/handler/Map.Feedback.js
 /src/map/handler/Map.FileInserter.js
 /src/map/handler/Map.Keyboard.js

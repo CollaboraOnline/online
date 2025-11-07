@@ -54,6 +54,7 @@ cmake_list= \
             ../kit/KitQueue.cpp \
             ../kit/LogUI.cpp \
             ../kit/KitWebSocket.cpp \
+            ../net/HttpRequest.cpp \
             ../net/FakeSocket.cpp \
             ../net/Socket.cpp \
             ../wsd/ClientSession.cpp \

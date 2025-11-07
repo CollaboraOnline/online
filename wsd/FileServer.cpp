@@ -672,7 +672,7 @@ bool FileServerRequestHandler::isAdminLoggedIn(const HTTPRequest& request, http:
     };
 
     // search for presets file in test/data/presets directory
-    std::vector<asset> getAssetVec(PresetType type)
+    static std::vector<asset> getAssetVec(PresetType type)
     {
         std::string searchDir = "test/data/presets";
         std::vector<asset> assetVec;

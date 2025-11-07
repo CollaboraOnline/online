@@ -1383,7 +1383,7 @@ int main(int argc, char**argv)
         {
             if (i++)
             {
-                (stream << ... << std::forward<Delimiters>(delimiters));
+                (stream << ... << delimiters);
             }
 
             stream << pair;

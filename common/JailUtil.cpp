@@ -117,7 +117,8 @@ bool enterUserNS(uid_t uid, gid_t gid)
 #endif
 }
 
-bool coolmount(const std::string& arg, std::string source, std::string target, bool silent = false)
+static bool coolmount(const std::string& arg, std::string source, std::string target,
+                      bool silent = false)
 {
     source = Util::rtrim(source, '/');
     target = Util::rtrim(target, '/');

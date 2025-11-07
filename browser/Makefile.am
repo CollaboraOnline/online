@@ -369,30 +369,15 @@ COOL_JS_LST =\
 	src/layer/marker/ProgressOverlay.js \
 	src/layer/marker/TextInput.js \
 	src/layer/marker/A11yTextInput.js \
-	src/layer/marker/Icon.js \
-	src/layer/marker/Icon.Default.js \
-	src/layer/marker/Marker.js \
-	src/layer/marker/DivIcon.js \
 	src/layer/LayerGroup.js \
-	src/layer/vector/Renderer.js \
-	src/layer/vector/Path.js \
 	src/geometry/LineUtil.js \
-	src/layer/vector/Polyline.js \
 	src/geometry/PolyUtil.js \
-	src/layer/vector/Polygon.js \
-	src/layer/vector/Rectangle.js \
 	src/core/Handler.js \
-	src/layer/vector/Path.Drag.Transform.js \
-	src/layer/vector/Path.Drag.js \
-	src/layer/vector/Path.Transform.Util.js \
-	src/layer/vector/Canvas.js \
 	src/dom/DomEvent.js \
 	src/dom/Draggable.js \
 	src/dom/NotebookbarAccessibilityDefinitions.js \
 	src/dom/NotebookbarAccessibility.js \
-	src/map/handler/Map.Drag.js \
 	src/map/handler/Map.Scroll.js \
-	src/map/handler/Map.DoubleClickZoom.js \
 	src/dom/DomEvent.Pointer.js \
 	src/map/handler/Map.Keyboard.js \
 	src/map/handler/Map.KeyboardShortcuts.ts \
@@ -406,7 +391,6 @@ COOL_JS_LST =\
 	src/map/handler/Map.FileInserter.js \
 	src/map/handler/Map.StateChanges.js \
 	src/map/handler/Map.WOPI.js \
-	src/layer/marker/Marker.Drag.js \
 	src/control/Control.AboutDialog.ts \
 	src/control/Control.Toolbar.js \
 	src/control/Control.Command.js \
@@ -648,8 +632,6 @@ COOL_JS_LST =\
 	src/slideshow/operation/SRotate.ts \
 	src/slideshow/operation/SScale.ts \
 	src/slideshow/operation/STranslate.ts \
-	src/dom/PosAnimation.js \
-	src/dom/PosAnimation.Timer.js \
 	src/control/Control.Scroll.Annotation.js \
 	src/main.js
 
