@@ -3945,8 +3945,6 @@ std::size_t DocumentBroker::removeSession(const std::shared_ptr<ClientSession>& 
         {
             LOG_WRN("Failed to upload presets for session [" << id << "]: " << exc.what());
         }
-#endif
-#ifndef IOS
         if (activeSessionCount <= 1 && !isConvertTo())
         {
             // rescue clipboard before shutdown.
