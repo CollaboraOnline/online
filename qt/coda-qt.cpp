@@ -21,6 +21,9 @@
 #include "qt.hpp"
 
 #include <Poco/MemoryStream.h>
+#include <Poco/JSON/Parser.h>
+#include <Poco/JSON/Object.h>
+#include <Poco/Dynamic/Var.h>
 
 #include <QApplication>
 #include <QByteArray>
@@ -476,7 +479,7 @@ QVariant Bridge::cool(const QString& messageStr)
         struct stat st;
         if (FileUtil::getStatOfFile(welcomePath, st) == 0)
         {
-            std::string fileURL = Poco::URI(Poco::Path(welcomePath)).toString();
+            Poco::URI fileURL{Poco::Path(welcomePath)};
             QTimer::singleShot(0, [fileURL]() {
                 WebView* webViewInstance = new WebView(nullptr, Application::getProfile(), /*isWelcome*/ true);
                 webViewInstance->load(fileURL);
@@ -551,7 +554,7 @@ QVariant Bridge::cool(const QString& messageStr)
         if (!filePath.isEmpty())
         {
             WebView* webViewInstance = new WebView(nullptr, Application::getProfile());
-            webViewInstance->load(filePath.toStdString());
+            webViewInstance->load(Poco::URI(filePath.toStdString()));
         }
     }
     else if (message == "uno .uno:CloseWin")
@@ -593,7 +596,7 @@ QVariant Bridge::cool(const QString& messageStr)
             format.erase(0, strlen("direct-"));
 
         // Build a suggested filename from the current document
-        const QUrl docUrl(QString::fromStdString(_document._fileURL));
+        const QUrl docUrl(QString::fromStdString(_document._fileURL.toString()));
         const QString docPath = docUrl.isLocalFile() ? docUrl.toLocalFile() : docUrl.toString();
         const QFileInfo docInfo(docPath);
         const QString baseName = docInfo.completeBaseName().isEmpty()
@@ -745,7 +748,7 @@ int main(int argc, char** argv)
     for (auto const & file : files)
     {
         // Resolve absolute file URL to pass into Online
-        std::string fileURL = Poco::URI(Poco::Path(std::string(file.toUtf8()))).toString();
+        Poco::URI fileURL(Poco::Path(std::string(file.toUtf8())));
         WebView* webViewInstance = new WebView(nullptr, Application::getProfile());
         webViewInstance->load(fileURL);
     }

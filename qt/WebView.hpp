@@ -16,6 +16,7 @@
 #include <QWebEngineView>
 #include "Document.hpp"
 #include <QMainWindow>
+#include <Poco/URI.h>
 
 class WebView
 {
@@ -23,7 +24,7 @@ public:
     explicit WebView(QWidget* parent, QWebEngineProfile* profile, bool isWelcome = false);
     QWebEngineView* webEngineView() { return _webView; }
 
-    void load(const std::string& fileURL);
+    void load(const Poco::URI& fileURL);
 
 private:
     QMainWindow* _mainWindow;
