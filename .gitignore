@@ -181,6 +181,7 @@ qt/coda-qt
 qt/flatpak/.flatpak-builder
 # CODA-Q generated files by Qt6's moc
 *.moc.cpp
+.fenv
 
 # backup and temporary editor files: the only convenience rules allowed here.
 *~
