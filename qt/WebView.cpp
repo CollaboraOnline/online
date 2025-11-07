@@ -129,7 +129,7 @@ std::pair<int, int> getWindowSize(bool isWelcome)
     return { width, height };
 }
 
-void WebView::load(const Poco::URI& fileURL)
+void WebView::load(const Poco::URI& fileURL, bool newFile)
 {
     _document = {
         ._fakeClientFd = fakeSocketSocket(),
@@ -142,7 +142,10 @@ void WebView::load(const Poco::URI& fileURL)
         try
         {
             Poco::Path originalPath(fileURL.getPath());
-            _document._saveLocationURI = fileURL;
+            if (!newFile)
+            {
+                _document._saveLocationURI = fileURL;
+            }
 
             const std::string tempDirectoryPath = FileUtil::createRandomTmpDir();
             const std::string& fileName = originalPath.getFileName();
@@ -207,6 +210,46 @@ void WebView::load(const Poco::URI& fileURL)
     }
     _mainWindow->resize(size.first, size.second);
     _mainWindow->show();
+}
+
+WebView* WebView::createNewDocument(QWidget* parent, QWebEngineProfile* profile, const std::string& templateType)
+{
+    // Map template type to template filename
+    std::string templateFileName;
+    if (templateType == "odp")
+    {
+        templateFileName = "Presentation.odp";
+    }
+    else if (templateType == "odt")
+    {
+        templateFileName = "Text Document.odt";
+    }
+    else if (templateType == "ods")
+    {
+        templateFileName = "Spreadsheet.ods";
+    }
+    else
+    {
+        LOG_ERR("Unknown template type: " << templateType);
+        return nullptr;
+    }
+
+    // TODO: get rid of the hardcoded template path, preferably it should be somewhere under the browser/dist/...
+    const std::string templatePath = getTopSrcDir(TOPSRCDIR) + "/windows/coda/templates/" + templateFileName;
+
+    struct stat st;
+    if (FileUtil::getStatOfFile(templatePath, st) != 0)
+    {
+        LOG_ERR("Template file not found: " << templatePath);
+        return nullptr;
+    }
+
+    // Create WebView and load template without save location
+    WebView* webViewInstance = new WebView(parent, profile, false);
+    Poco::URI templateURI{Poco::Path(templatePath)};
+    webViewInstance->load(templateURI, true);
+
+    return webViewInstance;
 }
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
