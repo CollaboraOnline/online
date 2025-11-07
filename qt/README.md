@@ -10,7 +10,8 @@ libraries: Qt6Core Qt6Widgets Qt6Gui Qt6WebEngineCore Qt6WebChannel Qt6WebEngine
 
 Run `./autogen.sh`, then configure
 ```sh
-./configure --enable-qtapp --with-lo-path=/path/to/core/instdir --with-lokit-path=/path/to/core/include --enable-debug
+./configure --enable-qtapp --with-lo-path=/path/to/core/instdir --with-lokit-path=/path/to/core/include --enable-debug CXXFLAGS="-O2 -g -fPIC"
+
 ```
 Adjust the paths to `--with-lo-path` and `--with-lokit-path`.
 
