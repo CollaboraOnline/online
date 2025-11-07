@@ -973,7 +973,7 @@ $(DIST_FOLDER)/welcome/%: $(srcdir)/welcome/%
 	fi
 endif
 
-WELCOME_SLIDESHOW_ODP = $(srcdir)/welcome/welcome-slideshow.odp
+WELCOME_SLIDESHOW_ODP = $(srcdir)/dist/welcome/welcome-slideshow.odp
 WELCOME_PO_DIR = $(srcdir)/po
 WELCOME_PO_FILES = $(wildcard $(WELCOME_PO_DIR)/welcome-slideshow-*.po)
 EXTRACT_ODF_SCRIPT = $(abs_top_srcdir)/scripts/extract_odf_text.py
