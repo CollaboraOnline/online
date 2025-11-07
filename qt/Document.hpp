@@ -11,12 +11,14 @@
 
 #pragma once
 
+#include <Poco/URI.h>
 #include <string>
+
 namespace coda
 {
 struct DocumentData
 {
-    std::string _fileURL;
+    Poco::URI _fileURL;
     int _fakeClientFd = -1;
     unsigned _appDocId = 0;
 };
