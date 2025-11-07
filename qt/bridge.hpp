@@ -27,6 +27,10 @@ class Bridge : public QObject
     QWebEngineView* _webView;
     QSvgWidget* _loadingOverlay;
 
+    std::string promptSaveLocation();
+    bool saveDocument(const std::string& savePath);
+    bool saveDocumentAs();
+
 public:
     explicit Bridge(QObject* parent, coda::DocumentData& document, QWebEngineView* webView, QSvgWidget* svgOverlay = nullptr)
         : QObject(parent)

@@ -24,7 +24,8 @@ public:
     explicit WebView(QWidget* parent, QWebEngineProfile* profile, bool isWelcome = false);
     QWebEngineView* webEngineView() { return _webView; }
 
-    void load(const Poco::URI& fileURL);
+    void load(const Poco::URI& fileURL, bool newFile = false);
+    static WebView* createNewDocument(QWidget* parent, QWebEngineProfile* profile, const std::string& templateType);
 
 private:
     QMainWindow* _mainWindow;

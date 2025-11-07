@@ -437,6 +437,114 @@ namespace
     }
 }
 
+std::string Bridge::promptSaveLocation()
+{
+    // Prompt user to pick a save location
+    const QUrl docUrl(QString::fromStdString(
+        !_document._saveLocationURI.empty()
+            ? _document._saveLocationURI.toString()
+            : _document._fileURL.toString()));
+    const QString docPath = docUrl.isLocalFile() ? docUrl.toLocalFile() : docUrl.toString();
+    const QFileInfo docInfo(docPath);
+    QString baseName = docInfo.completeBaseName().isEmpty()
+                         ? QStringLiteral("document")
+                         : docInfo.completeBaseName();
+
+    // Determine file extension from document type
+    QString extension;
+    lok::Document* loKitDoc = DocumentData::get(_document._appDocId).loKitDocument;
+    if (loKitDoc)
+    {
+        const int docType = loKitDoc->getDocumentType();
+        switch (docType)
+        {
+            case LOK_DOCTYPE_TEXT:
+                extension = "odt";
+                break;
+            case LOK_DOCTYPE_SPREADSHEET:
+                extension = "ods";
+                break;
+            case LOK_DOCTYPE_PRESENTATION:
+                extension = "odp";
+                break;
+            case LOK_DOCTYPE_DRAWING:
+                extension = "odg";
+                break;
+            default:
+                break;
+        }
+    }
+
+    QString suggestedName = baseName + (extension.isEmpty() ? "" : "." + extension);
+
+    QString fileFilter;
+    if (extension == "odt")
+        fileFilter = QObject::tr("Text Documents (*.odt);;All Files (*)");
+    else if (extension == "ods")
+        fileFilter = QObject::tr("Spreadsheets (*.ods);;All Files (*)");
+    else if (extension == "odp")
+        fileFilter = QObject::tr("Presentations (*.odp);;All Files (*)");
+    else
+        fileFilter = QObject::tr("All Files (*)");
+
+    const QString destPath = QFileDialog::getSaveFileName(
+        _webView,
+        QObject::tr("Save Document"),
+        QDir::home().filePath(suggestedName),
+        fileFilter);
+
+    if (destPath.isEmpty())
+    {
+        LOG_INF("Save cancelled by user");
+        return {};
+    }
+
+    return destPath.toStdString();
+}
+
+bool Bridge::saveDocument(const std::string& savePath)
+{
+    const std::string tempPath = Poco::Path(_document._fileURL.getPath()).toString();
+
+    if (FileUtil::copyAtomic(tempPath, savePath, false))
+    {
+        LOG_INF("Successfully saved file to location: " << savePath);
+        return true;
+    }
+    else
+    {
+        LOG_ERR("Failed to copy temp file to location: " << savePath);
+        return false;
+    }
+}
+
+bool Bridge::saveDocumentAs()
+{
+    std::string savePath = promptSaveLocation();
+    if (savePath.empty())
+        return false;
+
+    // Update saveLocationURI for future saves
+    _document._saveLocationURI = Poco::URI(Poco::Path(savePath));
+
+    // Update document name in the WebView UI
+    QString fileName = QString::fromStdString(Poco::Path(savePath).getFileName());
+    if (!fileName.isEmpty())
+    {
+        // Use base64 encoding to safely pass the filename to JavaScript
+        QByteArray fileNameUtf8 = fileName.toUtf8();
+        QByteArray base64 = fileNameUtf8.toBase64();
+
+        QString js = QString("var input = $('#document-name-input'); "
+                            "var fileName = window.b64d('") + QString::fromUtf8(base64) + QString("'); "
+                            "input.val(fileName); "
+                            "input.attr('data-cooltip', fileName);");
+        evalJS(js.toStdString());
+    }
+
+   return saveDocument(savePath);
+}
+
 QVariant Bridge::cool(const QString& messageStr)
 {
     constexpr std::string_view CLIPBOARDSET = "CLIPBOARDSET ";
@@ -565,17 +673,19 @@ QVariant Bridge::cool(const QString& messageStr)
         if (commandName != ".uno:Save" || !success || !wasModified)
             return {};
 
-        // Early return if not using temp files (e.g. welcome slideshow)
+        // Early return if the file is opened in-place (e.g. welcome slideshow)
         if (_document._fileURL == _document._saveLocationURI)
             return {};
 
-        const std::string originalPath = Poco::Path(_document._saveLocationURI.getPath()).toString();
-        const std::string tempPath = Poco::Path(_document._fileURL.getPath()).toString();
-
-        if (FileUtil::copyAtomic(tempPath, originalPath, false))
-            LOG_INF("Successfully saved file to original location: " << originalPath);
+        if (_document._saveLocationURI.empty())
+        {
+            saveDocumentAs();
+        }
         else
-            LOG_ERR("Failed to copy temp file back to original location: " << originalPath);
+        {
+            const std::string savePath = Poco::Path(_document._saveLocationURI.getPath()).toString();
+            saveDocument(savePath);
+        }
     }
     else if (message == "BYE")
     {
@@ -634,6 +744,34 @@ QVariant Bridge::cool(const QString& messageStr)
             WebView* webViewInstance = new WebView(nullptr, Application::getProfile());
             webViewInstance->load(Poco::URI(filePath.toStdString()));
         }
+    }
+    else if (message == "uno .uno:NewDoc" || message == "uno .uno:NewDocText")
+    {
+        WebView* webViewInstance = WebView::createNewDocument(nullptr, Application::getProfile(), "odt");
+        if (!webViewInstance)
+        {
+            LOG_ERR("Failed to create new text document");
+        }
+    }
+    else if (message == "uno .uno:NewDocSpreadsheet")
+    {
+        WebView* webViewInstance = WebView::createNewDocument(nullptr, Application::getProfile(), "ods");
+        if (!webViewInstance)
+        {
+            LOG_ERR("Failed to create new spreadsheet");
+        }
+    }
+    else if (message == "uno .uno:NewDocPresentation")
+    {
+        WebView* webViewInstance = WebView::createNewDocument(nullptr, Application::getProfile(), "odp");
+        if (!webViewInstance)
+        {
+            LOG_ERR("Failed to create new presentation");
+        }
+    }
+    else if (message == "uno .uno:SaveAs")
+    {
+        saveDocumentAs();
     }
     else if (message == "uno .uno:CloseWin")
     {
@@ -786,19 +924,34 @@ int main(int argc, char** argv)
     QApplication::setWindowIcon(QIcon::fromTheme("com.collabora.Office.startcenter"));
 
     QCommandLineParser argParser;
+    argParser.setApplicationDescription("Collabora Office - Desktop Office Suite");
+    argParser.addHelpOption();
+    argParser.addVersionOption();
+
     QCommandLineOption debugOption(
         QStringList() << "d" << "debug",
         "Enable debug output."
     );
+    QCommandLineOption textDocumentOption(
+        QStringList() << "textdocument",
+        "Create a new text document."
+    );
+    QCommandLineOption spreadsheetOption(
+        QStringList() << "spreadsheet",
+        "Create a new spreadsheet."
+    );
+    QCommandLineOption presentationOption(
+        QStringList() << "presentation",
+        "Create a new presentation."
+    );
+
     argParser.addOption(debugOption);
+    argParser.addOption(textDocumentOption);
+    argParser.addOption(spreadsheetOption);
+    argParser.addOption(presentationOption);
+    argParser.addPositionalArgument("DOCUMENT", "Document file(s) to open", "[DOCUMENT...]");
     argParser.process(app);
     QStringList files = argParser.positionalArguments();
-
-    if (files.size() < 1)
-    {
-        fprintf(stderr, "Usage: %s [--debug] DOCUMENT [DOCUMENT...]\n", argv[0]);
-        _exit(1);
-    }
 
     std::string logLevel = "warning";
     if (argParser.isSet(debugOption))
@@ -823,12 +976,34 @@ int main(int argc, char** argv)
 
     Application::initialize();
 
-    for (auto const & file : files)
+    if (files.size() > 0)
     {
-        // Resolve absolute file URL to pass into Online
-        Poco::URI fileURL(Poco::Path(std::string(file.toUtf8())));
-        WebView* webViewInstance = new WebView(nullptr, Application::getProfile());
-        webViewInstance->load(fileURL);
+        for (auto const & file : files)
+        {
+            // Resolve absolute file URL to pass into Online
+            Poco::URI fileURL(Poco::Path(std::string(file.toUtf8())));
+            WebView* webViewInstance = new WebView(nullptr, Application::getProfile());
+            webViewInstance->load(fileURL);
+        }
+    }
+    else
+    {
+        // No files provided - create a new document
+        std::string templateType = "odt";
+
+        if (argParser.isSet(presentationOption))
+            templateType = "odp";
+        else if (argParser.isSet(spreadsheetOption))
+            templateType = "ods";
+        else if (argParser.isSet(textDocumentOption))
+            templateType = "odt";
+
+        WebView* webViewInstance = WebView::createNewDocument(nullptr, Application::getProfile(), templateType);
+        if (!webViewInstance)
+        {
+            LOG_ERR("Failed to create new document");
+            return 1;
+        }
     }
 
     auto const ret = app.exec();
