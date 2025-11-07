@@ -18,12 +18,14 @@
 #include "Clipboard.hpp"
 #include "Protocol.hpp"
 #include "Util.hpp"
+#include "FileUtil.hpp"
 #include "qt.hpp"
 
 #include <Poco/MemoryStream.h>
 #include <Poco/JSON/Parser.h>
 #include <Poco/JSON/Object.h>
 #include <Poco/Dynamic/Var.h>
+#include <Poco/Path.h>
 
 #include <QApplication>
 #include <QByteArray>
@@ -410,11 +412,38 @@ void Bridge::debug(const QString& msg) { LOG_TRC_NOFILE("From JS: debug: " << ms
 
 void Bridge::error(const QString& msg) { LOG_TRC_NOFILE("From JS: error: " << msg.toStdString()); }
 
+namespace
+{
+    // Helper to extract JSON object from message (finds '{' and parses from there)
+    Poco::JSON::Object::Ptr parseJsonFromMessage(const std::string& message, size_t prefixLen)
+    {
+        std::string jsonPart = message.substr(prefixLen);
+        size_t jsonStart = jsonPart.find('{');
+        if (jsonStart == std::string::npos)
+            return nullptr;
+
+        jsonPart = jsonPart.substr(jsonStart);
+        try
+        {
+            Poco::JSON::Parser parser;
+            Poco::Dynamic::Var result = parser.parse(jsonPart);
+            return result.extract<Poco::JSON::Object::Ptr>();
+        }
+        catch (const std::exception& e)
+        {
+            LOG_ERR("Failed to parse JSON: " << e.what());
+            return nullptr;
+        }
+    }
+}
+
 QVariant Bridge::cool(const QString& messageStr)
 {
     constexpr std::string_view CLIPBOARDSET = "CLIPBOARDSET ";
     constexpr std::string_view DOWNLOADAS = "downloadas ";
     constexpr std::string_view HYPERLINK = "HYPERLINK ";
+    constexpr std::string_view COMMANDSTATECHANGED = "COMMANDSTATECHANGED ";
+    constexpr std::string_view COMMANDRESULT = "COMMANDRESULT ";
 
     const std::string message = messageStr.toStdString();
     LOG_TRC_NOFILE("From JS: cool: " << message);
@@ -469,7 +498,7 @@ QVariant Bridge::cool(const QString& messageStr)
         p.fd = _document._fakeClientFd;
         p.events = POLLOUT;
         fakeSocketPoll(&p, 1, -1);
-        std::string message(_document._fileURL +
+        std::string message(_document._fileURL.toString() +
                             (" " + std::to_string(_document._appDocId)));
         fakeSocketWrite(_document._fakeClientFd, message.c_str(), message.size());
     }
@@ -507,10 +536,59 @@ QVariant Bridge::cool(const QString& messageStr)
             },
             Qt::QueuedConnection);
     }
+    else if (message.starts_with(COMMANDSTATECHANGED))
+    {
+        const auto object = parseJsonFromMessage(message, COMMANDSTATECHANGED.size());
+        if (!object)
+            return {};
+
+        const std::string commandName = object->get("commandName").toString();
+        if (commandName != ".uno:ModifiedStatus")
+            return {};
+
+        const bool isModified = (object->get("state").toString() == "true");
+        LOG_TRC_NOFILE("Document modified status changed: " << (isModified ? "modified" : "unmodified"));
+        // Could store this in DocumentData for future use and prompt on exit if they want to save.
+        // or maybe better of to do all that as well in JavaScript where the info should be available anyways.
+    }
+    else if (message.starts_with(COMMANDRESULT))
+    {
+        const auto object = parseJsonFromMessage(message, COMMANDRESULT.size());
+        if (!object)
+            return {};
+
+        const std::string commandName = object->get("commandName").toString();
+        const bool success = object->get("success").convert<bool>();
+        const bool wasModified = object->get("wasModified").convert<bool>();
+
+        // Only handle successful .uno:Save commands that modified the document
+        if (commandName != ".uno:Save" || !success || !wasModified)
+            return {};
+
+        // Early return if not using temp files (e.g. welcome slideshow)
+        if (_document._fileURL == _document._saveLocationURI)
+            return {};
+
+        const std::string originalPath = Poco::Path(_document._saveLocationURI.getPath()).toString();
+        const std::string tempPath = Poco::Path(_document._fileURL.getPath()).toString();
+
+        if (FileUtil::copyAtomic(tempPath, originalPath, false))
+            LOG_INF("Successfully saved file to original location: " << originalPath);
+        else
+            LOG_ERR("Failed to copy temp file back to original location: " << originalPath);
+    }
     else if (message == "BYE")
     {
         LOG_TRC_NOFILE("Document window terminating on JavaScript side → closing fake socket");
         fakeSocketClose(closeNotificationPipeForForwardingThread[0]);
+
+        // Clean up temporary directory if there was one
+        if (_document._fileURL != _document._saveLocationURI)
+        {
+            const std::string tempDirectoryPath = Poco::Path(_document._fileURL.getPath()).parent().toString();
+            FileUtil::removeFile(tempDirectoryPath, true);
+            LOG_INF("Cleaned up temporary directory: " << tempDirectoryPath);
+        }
 
         QTimer::singleShot(0, [this]() {
             if (_webView)
@@ -596,7 +674,7 @@ QVariant Bridge::cool(const QString& messageStr)
             format.erase(0, strlen("direct-"));
 
         // Build a suggested filename from the current document
-        const QUrl docUrl(QString::fromStdString(_document._fileURL.toString()));
+        const QUrl docUrl(QString::fromStdString(_document._saveLocationURI.toString()));
         const QString docPath = docUrl.isLocalFile() ? docUrl.toLocalFile() : docUrl.toString();
         const QFileInfo docInfo(docPath);
         const QString baseName = docInfo.completeBaseName().isEmpty()

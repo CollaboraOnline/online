@@ -15,8 +15,11 @@
 #include <QMainWindow>
 #include "FakeSocket.hpp"
 #include "MobileApp.hpp"
+#include "FileUtil.hpp"
+#include "Log.hpp"
 #include "qt.hpp"
 #include <Poco/URI.h>
+#include <Poco/Path.h>
 
 #include <cstdlib>
 #include <cstring>
@@ -30,6 +33,9 @@
 #include <QScreen>
 #include <QWebEngineFullScreenRequest>
 #include <QWebEngineSettings>
+#include <QFile>
+#include <QFileInfo>
+#include <QDir>
 
 namespace
 {
@@ -126,10 +132,43 @@ std::pair<int, int> getWindowSize(bool isWelcome)
 void WebView::load(const Poco::URI& fileURL)
 {
     _document = {
-        ._fileURL = fileURL,
         ._fakeClientFd = fakeSocketSocket(),
         ._appDocId = generateNewAppDocId(),
     };
+
+    // operate on a temp copy of the file
+    if (!_isWelcome && fileURL.getScheme() == "file")
+    {
+        try
+        {
+            Poco::Path originalPath(fileURL.getPath());
+            _document._saveLocationURI = fileURL;
+
+            const std::string tempDirectoryPath = FileUtil::createRandomTmpDir();
+            const std::string& fileName = originalPath.getFileName();
+
+            Poco::Path tempFilePath(tempDirectoryPath, fileName);
+            const std::string tempFilePathStr = tempFilePath.toString();
+            if (!FileUtil::copyAtomic(originalPath.toString(), tempFilePath.toString(), false))
+            {
+                LOG_ERR("Failed to copy file to temporary location: " << tempFilePath.toString());
+                return;
+            }
+
+            _document._fileURL = Poco::URI(tempFilePath);
+        }
+        catch (const std::exception& e)
+        {
+            LOG_ERR("Exception while copying file to temp: " << e.what());
+            return;
+        }
+    }
+    else
+    {
+        // For welcome-slideshow use original URL directly
+        _document._saveLocationURI = fileURL;
+        _document._fileURL = fileURL;
+    }
 
     // setup js c++ communication
     QWebChannel* channel = new QWebChannel(_webView->page());
