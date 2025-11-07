@@ -429,13 +429,24 @@ def writeTranslations(onlineDir, translationsDir, strings):
         f.write('{\n')
 
         writeComma = False
+
         for key in sorted(translations.keys()):
             if writeComma:
                 f.write(',\n')
             else:
                 writeComma = True
+
+            value = translations[key]
+
+            # Remove trailing access keys like " (~T)", they are unused
+            value = re.sub(r' \(~[A-Z]\)', '', value)
+
+            # Sometimes translation contains ~ when source does not, and it may leak
+            if '~' not in key:
+                value = value.replace('~', '')
+
             f.write('"' + key.replace('"', '\\\"') + '":"' +
-                    translations[key].replace('"', '\\\"') + '"')
+                    value.replace('"', '\\\"') + '"')
 
         f.write('\n}\n')
 
