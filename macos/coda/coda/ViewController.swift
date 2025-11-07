@@ -158,69 +158,6 @@ class ViewController: NSViewController, WKScriptMessageHandlerWithReply, WKNavig
                         } catch {}
                     }
                 }
-                else if body == "SLIDESHOW" {
-                    COWrapper.LOG_ERR("TODO: Implement slideshow")
-                    /*
-
-                    // Create the SVG for the slideshow
-                    // You need to wrap the C++ functions used here
-                    // Example:
-                    // self.slideshowFile = FileUtil.createRandomTmpDir() + "/slideshow.svg"
-                    // self.slideshowURL = URL(fileURLWithPath: self.slideshowFile)
-                    // DocumentData.get(self.document.appDocId).loKitDocument.saveAs(self.slideshowURL.absoluteString, "svg", nil)
-
-                    // Add a new full-screen WebView displaying the slideshow
-                    let configuration = WKWebViewConfiguration()
-                    let userContentController = WKUserContentController()
-                    userContentController.add(self, name: "lok")
-                    configuration.userContentController = userContentController
-
-                    self.slideshowWebView = WKWebView(frame: .zero, configuration: configuration)
-                    self.slideshowWebView?.becomeFirstResponder()
-                    self.slideshowWebView?.contentMode = .scaleAspectFit
-                    self.slideshowWebView?.translatesAutoresizingMaskIntoConstraints = false
-                    self.slideshowWebView?.navigationDelegate = self
-                    self.slideshowWebView?.uiDelegate = self
-
-                    self.webView.isHidden = true
-
-                    self.view.addSubview(self.slideshowWebView!)
-                    self.view.bringSubviewToFront(self.slideshowWebView!)
-
-                    // Add constraints
-                    if let slideshowWebView = self.slideshowWebView {
-                        NSLayoutConstraint.activate([
-                            slideshowWebView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
-                            slideshowWebView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
-                            slideshowWebView.topAnchor.constraint(equalTo: self.view.topAnchor),
-                            slideshowWebView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor)
-                        ])
-                    }
-
-                    if let slideshowURL = self.slideshowURL {
-                        let request = URLRequest(url: slideshowURL)
-                        self.slideshowWebView?.load(request)
-                    }
-                     */
-
-                    return (nil, nil)
-                }
-                else if body == "EXITSLIDESHOW" {
-                    COWrapper.LOG_ERR("TODO: Implement EXITSLIDESHOW")
-                    /*
-                    // Remove the slideshow file
-                    do {
-                        try FileManager.default.removeItem(atPath: self.slideshowFile)
-                    } catch {
-                        COOLWrapper.LOG_ERR("Failed to remove slideshow file: \(error)")
-                    }
-
-                    self.slideshowWebView?.removeFromSuperview()
-                    self.slideshowWebView = nil
-                    self.webView.isHidden = false
-                    */
-                    return (nil, nil)
-                }
                 else if body == "PRINT" {
                     document.printDocument(self)
                     return (nil, nil)
