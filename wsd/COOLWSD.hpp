@@ -307,11 +307,6 @@ private:
 
     /// Settings passed from the command-line to override those in the config file.
     std::unordered_map<std::string, std::string> _overrideSettings;
-
-#if MOBILEAPP
-public:
-    static int prisonerServerSocketFD;
-#endif
 };
 
 void setKitInProcess();
