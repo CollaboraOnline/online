@@ -1019,7 +1019,7 @@ bool SocketPoll::insertNewUnixSocket(
 
 #else
 
-void SocketPoll::insertNewFakeSocket(
+bool SocketPoll::insertNewFakeSocket(
     int peerSocket,
     const std::shared_ptr<ProtocolHandlerInterface>& websocketHandler)
 {
@@ -1041,6 +1041,7 @@ void SocketPoll::insertNewFakeSocket(
             LOG_TRC("Sending 'hello' instead of HTTP GET for now");
             socket->send("hello");
             insertNewSocket(socket);
+            return true;
         }
         else
         {
@@ -1048,6 +1049,7 @@ void SocketPoll::insertNewFakeSocket(
             fakeSocketClose(fd);
         }
     }
+    return false;
 }
 #endif
 

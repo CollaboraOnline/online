@@ -993,7 +993,7 @@ public:
         const std::shared_ptr<WebSocketHandler>& websocketHandler,
         const std::vector<int>* shareFDs = nullptr);
 #else
-    void insertNewFakeSocket(
+    bool insertNewFakeSocket(
         int peerSocket,
         const std::shared_ptr<ProtocolHandlerInterface>& websocketHandler);
 #endif
