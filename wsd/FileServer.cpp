@@ -665,7 +665,7 @@ bool FileServerRequestHandler::isAdminLoggedIn(const HTTPRequest& request, http:
         socket->send(httpResponse);
     }
 
-    enum PresetType
+    enum class PresetType : std::uint8_t
     {
         Shared,
         User,
