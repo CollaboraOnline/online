@@ -583,21 +583,30 @@ QVariant Bridge::cool(const QString& messageStr)
                     {
                         if (pfd[1].revents & POLLIN)
                         {
-                            fakeSocketClose(closeNotificationPipeForForwardingThread[1]);
-                            fakeSocketClose(_document._fakeClientFd);
-                            return; // document closed
+                            break; // document closed
                         }
                         if (pfd[0].revents & POLLIN)
                         {
                             int n = fakeSocketAvailableDataLength(_document._fakeClientFd);
                             if (n == 0)
-                                return;
+                            {
+                                LOG_TRC("Socket closed #" << _document._fakeClientFd);
+                                break;
+                            }
                             std::vector<char> buf(n);
                             fakeSocketRead(_document._fakeClientFd, buf.data(), n);
                             send2JS(buf);
                         }
+                        if (pfd[0].revents & POLLERR)
+                        {
+                            LOG_TRC("Socket error #" << _document._fakeClientFd);
+                            break;
+                        }
                     }
                 }
+                LOG_TRC("Closing message pump thread");
+                fakeSocketClose(closeNotificationPipeForForwardingThread[1]);
+                fakeSocketClose(_document._fakeClientFd);
             })
             .detach();
 
