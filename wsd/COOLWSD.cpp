@@ -150,7 +150,12 @@ std::map<std::string, std::chrono::steady_clock::time_point> LastSubForKitBroker
 Poco::AutoPtr<Poco::Util::XMLConfiguration> KitXmlConfig;
 std::string LoggableConfigEntries;
 
-#if !MOBILEAPP
+#if MOBILEAPP
+
+// Or can this be retrieved in some other way?
+int PrisonerServerSocketFD;
+
+#else // MOBILEAPP
 
 /// Funky latency simulation basic delay (ms)
 std::size_t SimulatedLatencyMs = 0;
@@ -170,13 +175,6 @@ std::atomic<std::chrono::milliseconds> ChildSpawnTimeoutMs =
 
 std::atomic<unsigned> COOLWSD::NumConnections;
 std::unordered_set<std::string> COOLWSD::EditFileExtensions;
-
-#if MOBILEAPP
-
-// Or can this be retrieved in some other way?
-int COOLWSD::prisonerServerSocketFD;
-
-#endif // !MOBILEAPP
 
 extern "C"
 {
@@ -957,9 +955,9 @@ std::shared_ptr<ChildProcess> getNewChild_Blocks(const std::shared_ptr<SocketPol
 #else
                     Util::setThreadName("lokit_main_" + Util::encodeId(mobileAppDocId, 3));
 #endif
-                    // Ugly to have that static global COOLWSD::prisonerServerSocketFD, Otoh we know
+                    // Ugly to have that static global PrisonerServerSocketFD, Otoh we know
                     // there is just one COOLWSD object. (Even in real Online.)
-                    lokit_main(COOLWSD::prisonerServerSocketFD, COOLWSD::UserInterface, mobileAppDocId);
+                    lokit_main(PrisonerServerSocketFD, COOLWSD::UserInterface, mobileAppDocId);
                 }).detach();
 #endif // MOBILEAPP
 
@@ -3460,8 +3458,8 @@ private:
             = ServerSocket::create(ServerSocket::Type::Public, UNUSED_PORT_NUMBER,
                                    ClientPortProto, std::chrono::steady_clock::now(), *PrisonerPoll, factory);
 
-        COOLWSD::prisonerServerSocketFD = socket->getFD();
-        LOG_INF("Listening to prisoner connections on #" << COOLWSD::prisonerServerSocketFD);
+        PrisonerServerSocketFD = socket->getFD();
+        LOG_INF("Listening to prisoner connections on #" << PrisonerServerSocketFD);
 #endif
         return socket;
     }
