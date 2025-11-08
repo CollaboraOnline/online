@@ -484,13 +484,20 @@ int fakeSocketConnect(int fd1, int fd2)
         return -1;
     }
 
-    if (!pair2.listening || pair2.connectingFd != -1)
+    if (!pair2.listening)
     {
         FAKESOCKET_LOG("FakeSocket ECONNREFUSED: Connect #" << fd1 << " to #" << fd2 << flush());
         errno = ECONNREFUSED;
         return -1;
     }
 
+    // FIXME: This is grim - we should have a queue of fds and
+    // accept should pop them off the queue - for now block on
+    // the other thread's accept completing.
+    while (pair2.connectingFd != -1)
+        theCV.wait(lock);
+
+    assert(pair2.connectingFd == -1);
     pair2.connectingFd = fd1;
     theCV.notify_all();
 
