@@ -195,4 +195,30 @@ final class DocumentController: NSDocumentController {
         case .presentation: return ("Presentation", "odp")
         }
     }
+
+    /**
+     * Opens the bundled welcome file (welcome/welcome-slideshow.odp).
+     */
+    func openWelcome() {
+        guard let url = Bundle.main.url(forResource: "welcome-slideshow", withExtension: "odp", subdirectory: "welcome") else {
+            COWrapper.LOG_ERR("welcome/welcome.odp not found in bundle")
+            return
+        }
+
+        do {
+            let type = try self.typeForContents(of: url)
+            guard let doc = try self.makeDocument(withContentsOf: url, ofType: type) as? Document else {
+                throw NSError(domain: "Welcome", code: 1, userInfo: [NSLocalizedDescriptionKey: "Unexpected document class"])
+            }
+
+            // Flag before windows/controllers are created, so VC will pass welcome=true into the webview
+            doc.isWelcome = true
+
+            self.addDocument(doc)
+            doc.makeWindowControllers()
+            doc.showWindows()
+        } catch {
+            COWrapper.LOG_ERR("Failed to open welcome-slideshow document: \(error.localizedDescription)")
+        }
+    }
 }
