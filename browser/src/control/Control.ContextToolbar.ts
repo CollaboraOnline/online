@@ -23,15 +23,16 @@ class ContextToolbar extends JSDialogComponent {
 	disappearingBoundary: number = 150; // px
 	additionalContextButtons: Array<ToolItemWidgetJSON> = [];
 
-	constructor(map: any) {
+	constructor(map: MapInterface) {
 		super(map, 'ContextToolbar', 'notebookbar');
 		this.createBuilder();
 		this.setupContainer(undefined);
+		this.registerMessageHandlers();
 	}
 
 	protected createBuilder() {
 		this.builder = new window.L.control.notebookbarBuilder({
-			windowId: -2,
+			windowId: WindowId.Notebookbar,
 			mobileWizard: this,
 			map: this.map,
 			cssClass: 'notebookbar',
@@ -78,19 +79,13 @@ class ContextToolbar extends JSDialogComponent {
 			this.initialized = true;
 		}
 
-		this.registerMessageHandlers();
-
 		document.addEventListener('pointermove', this.pointerMove);
-		this.map.on('commandstatechanged', this.onCommandStateChanged, this);
 		this.changeOpacity(1);
 		this.showHideToolbar(true);
 	}
 
 	hideContextToolbar(): void {
-		this.unregisterMessageHandlers();
-
 		document.removeEventListener('pointermove', this.pointerMove);
-		this.map.off('commandstatechanged', this.onCommandStateChanged, this);
 		this.showHideToolbar(false);
 	}
 
@@ -408,20 +403,5 @@ class ContextToolbar extends JSDialogComponent {
 
 	changeOpacity(opacity: number) {
 		this.container.style.opacity = opacity.toString();
-	}
-
-	onCommandStateChanged(e: any): void {
-		var commandName = e.commandName;
-		if (commandName === '.uno:CharFontName') {
-			const control: any = this.container.querySelector('#fontnamecombobox');
-			if (control && typeof control.onSetText === 'function') {
-				control.onSetText(e.state);
-			}
-		} else if (commandName === '.uno:FontHeight') {
-			const control: any = this.container.querySelector('#fontsizecombobox');
-			if (control && typeof control.onSetText === 'function') {
-				control.onSetText(e.state);
-			}
-		}
 	}
 }
