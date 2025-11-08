@@ -46,7 +46,7 @@ class BackstageView extends window.L.Class {
 
 	private createContainer(): HTMLElement {
 		const container = this.createElement('div', 'backstage-view hidden', 'backstage-view');
-		
+
 		const header = this.createHeader();
 		container.appendChild(header);
 
@@ -65,7 +65,7 @@ class BackstageView extends window.L.Class {
 	private createHeader(): HTMLElement {
 		const header = this.createElement('div', 'backstage-header');
 		const backButton = this.createElement('button', 'backstage-back-button') as HTMLButtonElement;
-		
+
 		backButton.textContent = '← Back';
 		backButton.title = 'Back to document';
 		window.L.DomEvent.on(backButton, 'click', () => this.hide(), this);
@@ -80,7 +80,7 @@ class BackstageView extends window.L.Class {
 
 		tabConfigs.forEach(config => {
 			if (config.visible === false) return;
-			
+
 			const tabElement = this.createTabElement(config);
 			sidebar.appendChild(tabElement);
 		});
@@ -91,15 +91,15 @@ class BackstageView extends window.L.Class {
 	private createTabElement(config: BackstageTabConfig): HTMLElement {
 		const element = this.createElement('div', 'backstage-sidebar-item');
 		element.id = `backstage-${config.id}`;
-		
+
 		const label = this.createElement('span');
 		label.textContent = config.label;
 		element.appendChild(label);
-		
-		const action = config.type === 'view' 
+
+		const action = config.type === 'view'
 			? () => this.handleViewTab(config)
 			: () => this.handleActionTab(config);
-		
+
 		window.L.DomEvent.on(element, 'click', action, this);
 		return element;
 	}
@@ -183,10 +183,10 @@ class BackstageView extends window.L.Class {
 		this.addSectionHeader('Document Info', 'Manage document history, repairs, and properties');
 
 		const container = this.createElement('div', 'backstage-info-container');
-		
+
 		const actionsColumn = this.createInfoActionsColumn();
 		const propertiesColumn = this.createInfoPropertiesColumn();
-		
+
 		container.appendChild(actionsColumn);
 		container.appendChild(propertiesColumn);
 		this.contentArea.appendChild(container);
@@ -216,11 +216,11 @@ class BackstageView extends window.L.Class {
 
 	private createTemplateCard(template: TemplateData): HTMLElement {
 		const card = this.createElement('div', 'backstage-template-card');
-		
+
 		const name = this.createElement('div', 'template-name');
 		name.textContent = template.name;
 		card.appendChild(name);
-		
+
 		window.L.DomEvent.on(card, 'click', () => this.createNewDocument(template), this);
 		return card;
 	}
@@ -238,15 +238,15 @@ class BackstageView extends window.L.Class {
 
 	private createExportCard(format: ExportFormatData): HTMLElement {
 		const card = this.createElement('div', 'backstage-format-card');
-		
+
 		const icon = this.createElement('div', 'format-icon');
 		icon.textContent = format.name;
 		card.appendChild(icon);
-		
+
 		const description = this.createElement('div', 'format-description');
 		description.textContent = format.description;
 		card.appendChild(description);
-		
+
 		window.L.DomEvent.on(card, 'click', () => this.exportDocument(format.id), this);
 		return card;
 	}
