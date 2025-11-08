@@ -649,7 +649,12 @@ static void prespawnChildren()
     }
 }
 
-#endif
+#else // MOBILEAPP
+static void prespawnChildren()
+{
+    // Nothing to do.
+}
+#endif // MOBILEAPP
 
 static size_t addNewChild(std::shared_ptr<ChildProcess> child)
 {
@@ -2670,20 +2675,22 @@ void COOLWSD::setLogLevelsOfKits(const std::string& level)
 /// Really do the house-keeping
 void PrisonPoll::wakeupHook()
 {
-#if !MOBILEAPP
-    THREAD_UNSAFE_DUMP_BEGIN
-    LOG_TRC("PrisonerPoll - wakes up with " << NewChildren.size() <<
-            " new children and " << DocBrokers.size() << " brokers and " <<
-            TotalOutstandingForks << " kits forking");
-    THREAD_UNSAFE_DUMP_END
-
-    if (!COOLWSD::checkAndRestoreForKit())
+    if constexpr (!Util::isMobileApp())
     {
-        // No children have died.
-        // Make sure we have sufficient reserves.
-        prespawnChildren();
+        THREAD_UNSAFE_DUMP_BEGIN
+        LOG_TRC("PrisonerPoll - wakes up with " << NewChildren.size() << " new children and "
+                                                << DocBrokers.size() << " brokers and "
+                                                << TotalOutstandingForks << " kits forking");
+        THREAD_UNSAFE_DUMP_END
+
+        if (!COOLWSD::checkAndRestoreForKit())
+        {
+            // No children have died.
+            // Make sure we have sufficient reserves.
+            prespawnChildren();
+        }
     }
-#endif
+
     std::unique_lock<std::mutex> docBrokersLock(DocBrokersMutex, std::defer_lock);
     if (docBrokersLock.try_lock())
     {

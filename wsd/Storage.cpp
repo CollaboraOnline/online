@@ -185,7 +185,7 @@ StorageBase::StorageType StorageBase::validate(const Poco::URI& uri,
         LOG_DBG("Local Storage is disabled in this build. Enable in the config file.");
 #endif // ENABLE_LOCAL_FILESYSTEM
     }
-#if !MOBILEAPP
+#if !MOBILEAPP // Breaks IOS when removed.
     else if (HostUtil::isWopiEnabled())
     {
         const auto& targetHost = uri.getHost();
