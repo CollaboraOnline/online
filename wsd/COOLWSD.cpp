@@ -112,11 +112,6 @@ using Poco::Util::Option;
 
 /// Port for external clients to connect to
 int ClientPortNumber = 0;
-/// Protocols to listen on
-Socket::Type ClientPortProto = Socket::Type::All;
-
-/// INET address to listen on
-ServerSocket::Type ClientListenAddr = ServerSocket::Type::Public;
 
 #if !MOBILEAPP
 /// UDS address for kits to connect to.
@@ -129,35 +124,43 @@ std::mutex COOLWSD::RemoteConfigMutex;
 std::shared_ptr<http::Session> FetchHttpSession;
 #endif
 
-// Tracks the set of prisoners / children waiting to be used.
-static std::mutex NewChildrenMutex;
-static std::condition_variable NewChildrenCV;
-static std::vector<std::shared_ptr<ChildProcess> > NewChildren;
+/// The DocBrokers container; used from elsewhere as well.
+std::map<std::string, std::shared_ptr<DocumentBroker>> DocBrokers;
+std::mutex DocBrokersMutex; ///< Protects DocBrokers.
 
-static std::atomic<int> TotalOutstandingForks(0);
+namespace
+{
+
+/// Protocols to listen on
+Socket::Type ClientPortProto = Socket::Type::All;
+
+/// INET address to listen on
+ServerSocket::Type ClientListenAddr = ServerSocket::Type::Public;
+
+// Tracks the set of prisoners / children waiting to be used.
+std::mutex NewChildrenMutex;
+std::condition_variable NewChildrenCV;
+std::vector<std::shared_ptr<ChildProcess>> NewChildren;
+
+std::atomic<int> TotalOutstandingForks(0);
 std::map<std::string, int> OutstandingForks;
 std::map<std::string, std::chrono::steady_clock::time_point> LastForkRequestTimes;
 typedef std::map<std::string, std::shared_ptr<ForKitProcess>> SubForKitMap;
 SubForKitMap SubForKitProcs;
 std::map<std::string, std::chrono::steady_clock::time_point> LastSubForKitBrokerExitTimes;
-std::map<std::string, std::shared_ptr<DocumentBroker>> DocBrokers;
-std::mutex DocBrokersMutex;
-static Poco::AutoPtr<Poco::Util::XMLConfiguration> KitXmlConfig;
-static std::string LoggableConfigEntries;
-
-extern "C"
-{
-    void dump_state(void); /* easy for gdb */
-    void forwardSigUsr2();
-}
+Poco::AutoPtr<Poco::Util::XMLConfiguration> KitXmlConfig;
+std::string LoggableConfigEntries;
 
 #if ENABLE_DEBUG && !MOBILEAPP
-static std::chrono::milliseconds careerSpanMs(std::chrono::milliseconds::zero());
+std::chrono::milliseconds careerSpanMs(std::chrono::milliseconds::zero());
 #endif
 
 /// The timeout for a child to spawn, initially high, then reset to the default.
 std::atomic<std::chrono::milliseconds> ChildSpawnTimeoutMs =
     std::chrono::milliseconds(CHILD_SPAWN_TIMEOUT_MS);
+
+} // namespace
+
 std::atomic<unsigned> COOLWSD::NumConnections;
 std::unordered_set<std::string> COOLWSD::EditFileExtensions;
 
@@ -166,12 +169,18 @@ std::unordered_set<std::string> COOLWSD::EditFileExtensions;
 // Or can this be retrieved in some other way?
 int COOLWSD::prisonerServerSocketFD;
 
-#else
+#else // MOBILEAPP
 
 /// Funky latency simulation basic delay (ms)
 static std::size_t SimulatedLatencyMs = 0;
 
-#endif
+#endif // !MOBILEAPP
+
+extern "C"
+{
+    void dump_state(void); /* easy for gdb */
+    void forwardSigUsr2();
+}
 
 void COOLWSD::appendAllowedHostsFrom(LayeredConfiguration& conf, const std::string& root, std::vector<std::string>& allowed)
 {
@@ -536,7 +545,7 @@ static void forkChildren(const std::string& configId, const int number)
     }
 }
 
-bool queueMessageToForKit(const std::string& message);
+static bool queueMessageToForKit(const std::string& message);
 
 bool COOLWSD::ensureSubForKit(const std::string& configId)
 {
@@ -4264,7 +4273,7 @@ void alertAllUsers(const std::string& msg)
 
 #endif
 
-void forwardSignal(const int signum);
+static void forwardSignal(const int signum);
 
 void dump_state()
 {
