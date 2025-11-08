@@ -27,10 +27,8 @@
 #include <cerrno>
 #include <chrono>
 #include <climits>
-#include <cstdlib>
 #include <cstring>
 #include <functional>
-#include <iostream>
 #include <memory>
 #include <mutex>
 #include <thread>

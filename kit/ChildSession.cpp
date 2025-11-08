@@ -22,16 +22,9 @@
 #define LOK_USE_UNSTABLE_API
 #include <LibreOfficeKit/LibreOfficeKitEnums.h>
 
-#include <Poco/StreamCopier.h>
 #include <Poco/URI.h>
-#include <Poco/BinaryReader.h>
 #include <Poco/Base64Decoder.h>
 #if !MOBILEAPP
-#include <Poco/Net/HTTPResponse.h>
-#include <Poco/Net/HTTPSClientSession.h>
-#include <Poco/Net/SSLManager.h>
-#include <Poco/Net/KeyConsoleHandler.h>
-#include <Poco/Net/AcceptCertificateHandler.h>
 #endif
 
 #ifdef __ANDROID__

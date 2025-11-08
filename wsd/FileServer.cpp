@@ -28,7 +28,6 @@
 #include <Util.hpp>
 #include <JsonUtil.hpp>
 #include <common/ConfigUtil.hpp>
-#include <Poco/Net/HTTPClientSession.h>
 #include <wopi/StorageConnectionManager.hpp>
 #include <common/Authorization.hpp>
 #include <common/LangUtil.hpp>
@@ -52,7 +51,6 @@
 #include <Poco/Net/NameValueCollection.h>
 #include <Poco/Net/NetException.h>
 #include <Poco/RegularExpression.h>
-#include <Poco/Runnable.h>
 #include <Poco/SHA1Engine.h>
 #include <Poco/StreamCopier.h>
 #include <Poco/URI.h>

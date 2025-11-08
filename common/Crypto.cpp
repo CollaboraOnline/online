@@ -18,7 +18,6 @@
 
 #include <fstream>
 #include <sstream>
-#include <iostream>
 
 #include "Log.hpp"
 #include "Crypto.hpp"

@@ -77,12 +77,8 @@
 
 #include <Poco/Base64Encoder.h>
 #include <Poco/HexBinaryEncoder.h>
-#include <Poco/ConsoleChannel.h>
 #include <Poco/Exception.h>
-#include <Poco/Format.h>
 
-#include <Poco/TemporaryFile.h>
-#include <Poco/Util/Application.h>
 #include <Poco/URI.h>
 
 // for version info

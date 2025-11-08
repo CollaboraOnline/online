@@ -39,9 +39,7 @@
 #include <Poco/StreamCopier.h>
 #include <Poco/URI.h>
 
-#include <cctype>
 #include <ios>
-#include <map>
 #include <memory>
 #include <sstream>
 #include <string>
