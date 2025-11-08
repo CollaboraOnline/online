@@ -121,7 +121,6 @@ std::string COOLWSD::BuyProductUrl;
 std::string COOLWSD::LatestVersion;
 std::mutex COOLWSD::FetchUpdateMutex;
 std::mutex COOLWSD::RemoteConfigMutex;
-std::shared_ptr<http::Session> FetchHttpSession;
 #endif
 
 /// The DocBrokers container; used from elsewhere as well.
@@ -151,9 +150,17 @@ std::map<std::string, std::chrono::steady_clock::time_point> LastSubForKitBroker
 Poco::AutoPtr<Poco::Util::XMLConfiguration> KitXmlConfig;
 std::string LoggableConfigEntries;
 
-#if ENABLE_DEBUG && !MOBILEAPP
+#if !MOBILEAPP
+
+/// Funky latency simulation basic delay (ms)
+std::size_t SimulatedLatencyMs = 0;
+std::shared_ptr<http::Session> FetchHttpSession;
+
+#if ENABLE_DEBUG
 std::chrono::milliseconds careerSpanMs(std::chrono::milliseconds::zero());
 #endif
+
+#endif // !MOBILEAPP
 
 /// The timeout for a child to spawn, initially high, then reset to the default.
 std::atomic<std::chrono::milliseconds> ChildSpawnTimeoutMs =
@@ -168,11 +175,6 @@ std::unordered_set<std::string> COOLWSD::EditFileExtensions;
 
 // Or can this be retrieved in some other way?
 int COOLWSD::prisonerServerSocketFD;
-
-#else // MOBILEAPP
-
-/// Funky latency simulation basic delay (ms)
-static std::size_t SimulatedLatencyMs = 0;
 
 #endif // !MOBILEAPP
 
