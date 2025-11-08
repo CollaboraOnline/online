@@ -66,8 +66,8 @@ class BackstageView extends window.L.Class {
 		const header = this.createElement('div', 'backstage-header');
 		const backButton = this.createElement('button', 'backstage-back-button') as HTMLButtonElement;
 
-		backButton.textContent = '← Back';
-		backButton.title = 'Back to document';
+		backButton.textContent = _('← Back');
+		backButton.title = _('Back to document');
 		window.L.DomEvent.on(backButton, 'click', () => this.hide(), this);
 
 		header.appendChild(backButton);
@@ -106,15 +106,15 @@ class BackstageView extends window.L.Class {
 
 	private getTabsConfig(): BackstageTabConfig[] {
 		return [
-			{ id: 'home', label: 'Home', type: 'view', viewType: 'home', visible: true },
-			{ id: 'new', label: 'New', type: 'view', viewType: 'templates', visible: true },
-			{ id: 'open', label: 'Open', type: 'action', actionType: 'open', visible: true },
-			{ id: 'share', label: 'Share', type: 'action', actionType: 'share', visible: this.isFeatureEnabled('share') },
-			{ id: 'info', label: 'Info', type: 'view', viewType: 'info', visible: true },
-			{ id: 'save', label: 'Save', type: 'action', actionType: 'save', visible: this.isFeatureEnabled('save') },
-			{ id: 'saveas', label: 'Save As', type: 'action', actionType: 'saveas', visible: this.isFeatureEnabled('saveAs') },
-			{ id: 'print', label: 'Print', type: 'action', actionType: 'print', visible: this.isFeatureEnabled('print') },
-			{ id: 'export', label: 'Export', type: 'view', viewType: 'export', visible: true },
+			{ id: 'home', label: _('Home'), type: 'view', viewType: 'home', visible: true },
+			{ id: 'new', label: _('New'), type: 'view', viewType: 'templates', visible: true },
+			{ id: 'open', label: _('Open'), type: 'action', actionType: 'open', visible: true },
+			{ id: 'share', label: _('Share'), type: 'action', actionType: 'share', visible: this.isFeatureEnabled('share') },
+			{ id: 'info', label: _('Info'), type: 'view', viewType: 'info', visible: true },
+			{ id: 'save', label: _('Save'), type: 'action', actionType: 'save', visible: this.isFeatureEnabled('save') },
+			{ id: 'saveas', label: _('Save As'), type: 'action', actionType: 'saveas', visible: this.isFeatureEnabled('saveAs') },
+			{ id: 'print', label: _('Print'), type: 'action', actionType: 'print', visible: this.isFeatureEnabled('print') },
+			{ id: 'export', label: _('Export'), type: 'view', viewType: 'export', visible: true },
 		];
 	}
 
@@ -162,14 +162,14 @@ class BackstageView extends window.L.Class {
 		this.setActiveTab('backstage-home');
 		this.clearContent();
 
-		this.addSectionHeader('Recent', 'Recently opened documents will appear here');
+		this.addSectionHeader(_('Recent'), _('Recently opened documents will appear here'));
 	}
 
 	private renderNewView(): void {
 		this.setActiveTab('backstage-new');
 		this.clearContent();
 
-		this.addSectionHeader('New Document', 'Create a new blank document');
+		this.addSectionHeader(_('New Document'), _('Create a new blank document'));
 
 		const templates = this.getTemplatesData();
 		const grid = this.createTemplateGrid(templates);
@@ -180,7 +180,7 @@ class BackstageView extends window.L.Class {
 		this.setActiveTab('backstage-info');
 		this.clearContent();
 
-		this.addSectionHeader('Document Info', 'Manage document history, repairs, and properties');
+		this.addSectionHeader(_('Document Info'), _('Manage document history, repairs, and properties'));
 
 		const container = this.createElement('div', 'backstage-info-container');
 
@@ -196,7 +196,7 @@ class BackstageView extends window.L.Class {
 		this.setActiveTab('backstage-export');
 		this.clearContent();
 
-		this.addSectionHeader('Export As', 'Export your document to a different file format');
+		this.addSectionHeader(_('Export As'), _('Export your document to a different file format'));
 
 		const formats = this.getExportFormatsData();
 		const grid = this.createExportGrid(formats);
@@ -254,11 +254,11 @@ class BackstageView extends window.L.Class {
 	private createInfoActionsColumn(): HTMLElement {
 		const column = this.createElement('div', 'backstage-info-actions');
 
-		const historyButton = this.createActionButton('File History', () => this.executeRevisionHistory());
+		const historyButton = this.createActionButton(_('File History'), () => this.executeRevisionHistory());
 		column.appendChild(historyButton);
 
 		if (this.isFeatureEnabled('repair')) {
-			const repairButton = this.createActionButton('Repair Document', () => this.executeRepair());
+			const repairButton = this.createActionButton(_('Repair Document'), () => this.executeRepair());
 			column.appendChild(repairButton);
 		}
 
@@ -269,10 +269,10 @@ class BackstageView extends window.L.Class {
 		const column = this.createElement('div', 'backstage-info-properties');
 
 		const header = this.createElement('h3', 'backstage-section-header');
-		header.textContent = 'Properties';
+		header.textContent = _('Properties');
 		column.appendChild(header);
 
-		const button = this.createPrimaryButton('View Properties...', () => this.executeDocumentProperties());
+		const button = this.createPrimaryButton(_('View Properties...'), () => this.executeDocumentProperties());
 		column.appendChild(button);
 
 		return column;
@@ -321,21 +321,21 @@ class BackstageView extends window.L.Class {
 
 	private getTemplatesData(): TemplateData[] {
 		return [
-			{ name: 'Blank Document', type: 'writer' },
-			{ name: 'Blank Spreadsheet', type: 'calc' },
-			{ name: 'Blank Presentation', type: 'impress' },
+			{ name: _('Blank Document'), type: 'writer' },
+			{ name: _('Blank Spreadsheet'), type: 'calc' },
+			{ name: _('Blank Presentation'), type: 'impress' },
 		];
 	}
 
 	private getExportFormatsData(): ExportFormatData[] {
 		return [
-			{ id: 'pdf', name: 'PDF', description: 'Portable Document' },
-			{ id: 'docx', name: 'DOCX', description: 'Word Document' },
-			{ id: 'xlsx', name: 'XLSX', description: 'Excel Spreadsheet' },
-			{ id: 'pptx', name: 'PPTX', description: 'PowerPoint' },
-			{ id: 'odt', name: 'ODT', description: 'OpenDocument Text' },
-			{ id: 'ods', name: 'ODS', description: 'OpenDocument Spreadsheet' },
-			{ id: 'odp', name: 'ODP', description: 'OpenDocument Presentation' },
+			{ id: 'pdf', name: 'PDF', description: _('Portable Document') },
+			{ id: 'docx', name: 'DOCX', description: _('Word Document') },
+			{ id: 'xlsx', name: 'XLSX', description: _('Excel Spreadsheet') },
+			{ id: 'pptx', name: 'PPTX', description: _('PowerPoint Presentation') },
+			{ id: 'odt', name: 'ODT', description: _('OpenDocument Text') },
+			{ id: 'ods', name: 'ODS', description: _('OpenDocument Spreadsheet') },
+			{ id: 'odp', name: 'ODP', description: _('OpenDocument Presentation') },
 		];
 	}
 
