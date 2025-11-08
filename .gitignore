@@ -233,3 +233,4 @@ windows/coda/config.props
 .flatpak-builder/
 qt/flatpak/build-dir/
 qt/flatpak/repo/
+qt/translations/*.qm
