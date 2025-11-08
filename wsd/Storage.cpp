@@ -121,7 +121,7 @@ void StorageBase::initialize()
 
 #if !MOBILEAPP
 
-bool isLocalhost(const std::string& targetHost)
+static bool isLocalhost(const std::string& targetHost)
 {
     const std::string targetAddress = net::resolveHostAddress(targetHost);
 
