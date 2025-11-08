@@ -181,7 +181,7 @@ static int URPfromLoFDs[2] { -1, -1 };
 // Abnormally we get LOK events from another thread, which must be
 // push safely into our main poll loop to process to keep all
 // socket buffer & event processing in a single, thread.
-bool pushToMainThread(LibreOfficeKitCallback cb, int type, const char *p, void *data);
+static bool pushToMainThread(LibreOfficeKitCallback cb, int type, const char* p, void* data);
 
 [[maybe_unused]]
 static LokHookFunction2* initFunction = nullptr;
@@ -1931,7 +1931,8 @@ std::map<std::string, int> Document::getViewColors()
                 Poco::JSON::Array::Ptr authorsArray = root->get("authors").extract<Poco::JSON::Array::Ptr>();
                 for (auto& authorVar: *authorsArray)
                 {
-                    Poco::JSON::Object::Ptr authorObj = authorVar.extract<Poco::JSON::Object::Ptr>();
+                    const Poco::JSON::Object::Ptr& authorObj =
+                        authorVar.extract<Poco::JSON::Object::Ptr>();
                     std::string authorName = authorObj->get("name").convert<std::string>();
                     int colorValue = authorObj->get("color").convert<int>();
                     viewColors[authorName] = colorValue;
@@ -3134,6 +3135,11 @@ void documentViewCallback(const int type, const char* payload, void* data)
     Document::ViewCallback(type, payload, data);
 }
 
+#ifndef BUILDING_TESTS
+
+namespace
+{
+
 /// Called by LOK main-loop the central location for data processing.
 int pollCallback(void* data, int timeoutUs)
 {
@@ -3253,10 +3259,6 @@ void wakeCallback(void* data)
 #endif
 }
 
-#ifndef BUILDING_TESTS
-
-namespace
-{
 #if !MOBILEAPP
 
 extern "C"

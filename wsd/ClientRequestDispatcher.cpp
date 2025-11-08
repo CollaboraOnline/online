@@ -114,11 +114,10 @@ inline void shutdownLimitReached(const std::shared_ptr<ProtocolHandlerInterface>
 /// Otherwise, creates and adds a new one to DocBrokers.
 /// May return null if terminating or MaxDocuments limit is reached.
 /// Returns the error message, if any, when no DocBroker is created/found.
-std::pair<std::shared_ptr<DocumentBroker>, std::string>
+extern std::pair<std::shared_ptr<DocumentBroker>, std::string>
 findOrCreateDocBroker(DocumentBroker::ChildType type, const std::string& uri,
-                      const std::string& docKey, const std::string& configId,
-                      const std::string& id, const Poco::URI& uriPublic,
-                      unsigned mobileAppDocId)
+                      const std::string& docKey, const std::string& configId, const std::string& id,
+                      const Poco::URI& uriPublic, unsigned mobileAppDocId)
 {
     LOG_INF("Find or create DocBroker for docKey ["
             << docKey << "] for session [" << id << "] on url ["
@@ -389,7 +388,7 @@ public:
 };
 
 /// Constructs ConvertToBroker implamentation based on request type
-std::shared_ptr<ConvertToBroker>
+static std::shared_ptr<ConvertToBroker>
 getConvertToBrokerImplementation(const std::string& requestType, const std::string& fromPath,
                                  const Poco::URI& uriPublic, const std::string& docKey,
                                  const std::string& format, const std::string& options,
@@ -660,7 +659,7 @@ void ClientRequestDispatcher::onConnect(const std::shared_ptr<StreamSocket>& soc
 /// Starts an asynchronous CheckFileInfo request in parallel to serving
 /// static files. At this point, we don't have the client's WebSocket
 /// yet, and we're proactively trying to authenticate the client.
-void launchAsyncCheckFileInfo(
+static void launchAsyncCheckFileInfo(
     const std::string& id, const FileServerRequestHandler::ResourceAccessDetails& accessDetails,
     std::unordered_map<std::string, std::shared_ptr<RequestVettingStation>>& requestVettingStations,
     const std::size_t highWatermark)
