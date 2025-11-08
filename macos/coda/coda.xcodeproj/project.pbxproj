@@ -24,20 +24,12 @@
 		BE44ACCF2D7F067500BFA3B2 /* Crypto-stub.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BE44ACCE2D7F067500BFA3B2 /* Crypto-stub.cpp */; };
 		BE44ACD12D7F073000BFA3B2 /* Unit-mobile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BE44ACD02D7F073000BFA3B2 /* Unit-mobile.cpp */; };
 		BE44ACDA2D7F089200BFA3B2 /* RequestVettingStation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BE44ACD92D7F089200BFA3B2 /* RequestVettingStation.cpp */; };
-		BE44ACFC2D7F1F6B00BFA3B2 /* branding-mobile.css in Resources */ = {isa = PBXBuildFile; fileRef = BE44ACF82D7F1F6B00BFA3B2 /* branding-mobile.css */; };
-		BE44ACFD2D7F1F6B00BFA3B2 /* branding-unsupported.js in Resources */ = {isa = PBXBuildFile; fileRef = BE44ACFB2D7F1F6B00BFA3B2 /* branding-unsupported.js */; };
-		BE44ACFE2D7F1F6B00BFA3B2 /* branding.js in Resources */ = {isa = PBXBuildFile; fileRef = BE44ACF62D7F1F6B00BFA3B2 /* branding.js */; };
-		BE44ACFF2D7F1F6B00BFA3B2 /* branding-desktop.css in Resources */ = {isa = PBXBuildFile; fileRef = BE44ACF72D7F1F6B00BFA3B2 /* branding-desktop.css */; };
-		BE44AD002D7F1F6B00BFA3B2 /* branding-tablet.css in Resources */ = {isa = PBXBuildFile; fileRef = BE44ACF92D7F1F6B00BFA3B2 /* branding-tablet.css */; };
-		BE44AD012D7F1F6B00BFA3B2 /* branding.css in Resources */ = {isa = PBXBuildFile; fileRef = BE44ACF52D7F1F6B00BFA3B2 /* branding.css */; };
-		BE44AD022D7F1F6B00BFA3B2 /* branding-unsupported.css in Resources */ = {isa = PBXBuildFile; fileRef = BE44ACFA2D7F1F6B00BFA3B2 /* branding-unsupported.css */; };
 		BE4C620E2D59E85500047DF2 /* MobileApp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BE4C62062D59E85500047DF2 /* MobileApp.cpp */; };
 		BE4C620F2D59E85500047DF2 /* Util-macos.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BE4C620C2D59E85500047DF2 /* Util-macos.cpp */; };
 		BE4C625E2D5A3DDA00047DF2 /* Kit.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BE4C625D2D5A3DDA00047DF2 /* Kit.cpp */; };
 		BE4C62612D5B736200047DF2 /* coolwsd.xml in Resources */ = {isa = PBXBuildFile; fileRef = BE4C62602D5B736200047DF2 /* coolwsd.xml */; };
 		BE5FDE372DAD3DCF00C48DB2 /* LogUI.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BE5FDE362DAD3DCF00C48DB2 /* LogUI.cpp */; };
 		BE862C4D2EB9066E0061664E /* templates in Resources */ = {isa = PBXBuildFile; fileRef = BE862C4C2EB9066E0061664E /* templates */; };
-		BE862CC42EBE26C60061664E /* welcome in Resources */ = {isa = PBXBuildFile; fileRef = BE862CC32EBE26C60061664E /* welcome */; };
 		BE9115AE2CECBD3100C597B2 /* FileUtil-unix.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BE9115AD2CECBD3100C597B2 /* FileUtil-unix.cpp */; };
 		BE9115B02CECBECF00C597B2 /* Util-unix.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BE9115AF2CECBECF00C597B2 /* Util-unix.cpp */; };
 		BEA2636D2CBE38E20007435A /* Uri.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BEA2636A2CBE38E20007435A /* Uri.cpp */; };
@@ -110,13 +102,6 @@
 		BE44ACD02D7F073000BFA3B2 /* Unit-mobile.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = "Unit-mobile.cpp"; path = "../../../../common/Unit-mobile.cpp"; sourceTree = "<group>"; };
 		BE44ACD82D7F089200BFA3B2 /* RequestVettingStation.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = RequestVettingStation.hpp; path = ../../../../wsd/RequestVettingStation.hpp; sourceTree = "<group>"; };
 		BE44ACD92D7F089200BFA3B2 /* RequestVettingStation.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = RequestVettingStation.cpp; path = ../../../../wsd/RequestVettingStation.cpp; sourceTree = "<group>"; };
-		BE44ACF52D7F1F6B00BFA3B2 /* branding.css */ = {isa = PBXFileReference; lastKnownFileType = text.css; name = branding.css; path = ../../../browser/dist/branding.css; sourceTree = "<group>"; };
-		BE44ACF62D7F1F6B00BFA3B2 /* branding.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; name = branding.js; path = ../../../browser/dist/branding.js; sourceTree = "<group>"; };
-		BE44ACF72D7F1F6B00BFA3B2 /* branding-desktop.css */ = {isa = PBXFileReference; lastKnownFileType = text.css; name = "branding-desktop.css"; path = "../../../browser/dist/branding-desktop.css"; sourceTree = "<group>"; };
-		BE44ACF82D7F1F6B00BFA3B2 /* branding-mobile.css */ = {isa = PBXFileReference; lastKnownFileType = text.css; name = "branding-mobile.css"; path = "../../../browser/dist/branding-mobile.css"; sourceTree = "<group>"; };
-		BE44ACF92D7F1F6B00BFA3B2 /* branding-tablet.css */ = {isa = PBXFileReference; lastKnownFileType = text.css; name = "branding-tablet.css"; path = "../../../browser/dist/branding-tablet.css"; sourceTree = "<group>"; };
-		BE44ACFA2D7F1F6B00BFA3B2 /* branding-unsupported.css */ = {isa = PBXFileReference; lastKnownFileType = text.css; name = "branding-unsupported.css"; path = "../../../browser/dist/branding-unsupported.css"; sourceTree = "<group>"; };
-		BE44ACFB2D7F1F6B00BFA3B2 /* branding-unsupported.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; name = "branding-unsupported.js"; path = "../../../browser/dist/branding-unsupported.js"; sourceTree = "<group>"; };
 		BE4C61FF2D59E85500047DF2 /* Common.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = Common.hpp; path = ../../../../common/Common.hpp; sourceTree = "<group>"; };
 		BE4C62012D59E85500047DF2 /* Crypto.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = Crypto.hpp; path = ../../../../common/Crypto.hpp; sourceTree = "<group>"; };
 		BE4C62052D59E85500047DF2 /* MobileApp.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = MobileApp.hpp; path = ../../../../common/MobileApp.hpp; sourceTree = "<group>"; };
@@ -133,7 +118,6 @@
 		BE5FDE352DAD3DCF00C48DB2 /* LogUI.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = LogUI.hpp; path = ../../../../kit/LogUI.hpp; sourceTree = "<group>"; };
 		BE5FDE362DAD3DCF00C48DB2 /* LogUI.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = LogUI.cpp; path = ../../../../kit/LogUI.cpp; sourceTree = "<group>"; };
 		BE862C4C2EB9066E0061664E /* templates */ = {isa = PBXFileReference; lastKnownFileType = folder; name = templates; path = ../../../windows/coda/templates; sourceTree = "<group>"; };
-		BE862CC32EBE26C60061664E /* welcome */ = {isa = PBXFileReference; lastKnownFileType = folder; name = welcome; path = ../../browser/dist/welcome; sourceTree = "<group>"; };
 		BE9115AD2CECBD3100C597B2 /* FileUtil-unix.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = "FileUtil-unix.cpp"; path = "../../../../common/FileUtil-unix.cpp"; sourceTree = "<group>"; };
 		BE9115AF2CECBECF00C597B2 /* Util-unix.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = "Util-unix.cpp"; path = "../../../../common/Util-unix.cpp"; sourceTree = "<group>"; };
 		BEA263522CBE38E20007435A /* Authorization.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = Authorization.hpp; path = ../../../../common/Authorization.hpp; sourceTree = "<group>"; };
@@ -202,25 +186,9 @@
 			);
 			target = BECC4BAA2CBD3FA300A120B3 /* coda */;
 		};
-		BE862CC22EBE26AD0061664E /* Exceptions for "welcome" folder in "coda" target */ = {
-			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
-			membershipExceptions = (
-				"welcome-slideshow.odp",
-			);
-			target = BECC4BAA2CBD3FA300A120B3 /* coda */;
-		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		BE862CC02EBE25440061664E /* welcome */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			exceptions = (
-				BE862CC22EBE26AD0061664E /* Exceptions for "welcome" folder in "coda" target */,
-			);
-			name = welcome;
-			path = /Users/kendy/Projects/collabora/online/browser/dist/welcome;
-			sourceTree = "<absolute>";
-		};
 		BECC4BAD2CBD3FA300A120B3 /* coda */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
@@ -271,14 +239,6 @@
 			children = (
 				BE22AA9B2CC7AE7400385A9C /* images */,
 				BE862C4C2EB9066E0061664E /* templates */,
-				BE862CC02EBE25440061664E /* welcome */,
-				BE44ACF52D7F1F6B00BFA3B2 /* branding.css */,
-				BE44ACF62D7F1F6B00BFA3B2 /* branding.js */,
-				BE44ACF72D7F1F6B00BFA3B2 /* branding-desktop.css */,
-				BE44ACF82D7F1F6B00BFA3B2 /* branding-mobile.css */,
-				BE44ACF92D7F1F6B00BFA3B2 /* branding-tablet.css */,
-				BE44ACFA2D7F1F6B00BFA3B2 /* branding-unsupported.css */,
-				BE44ACFB2D7F1F6B00BFA3B2 /* branding-unsupported.js */,
 				BE22492D2CC79BAE00385A9C /* bundle.css */,
 				BE22492E2CC79BAE00385A9C /* bundle.js */,
 				BE22492B2CC79AD700385A9C /* cool.html */,
@@ -412,7 +372,6 @@
 		BECC4BA22CBD3FA300A120B3 = {
 			isa = PBXGroup;
 			children = (
-				BE862CC32EBE26C60061664E /* welcome */,
 				BE22492A2CC79AAC00385A9C /* Resources */,
 				BEA2637D2CBE39C30007435A /* Online */,
 				BECC4BAD2CBD3FA300A120B3 /* coda */,
@@ -451,7 +410,6 @@
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
-				BE862CC02EBE25440061664E /* welcome */,
 				BECC4BAD2CBD3FA300A120B3 /* coda */,
 			);
 			name = coda;
@@ -559,7 +517,6 @@
 			files = (
 				BE22AA9C2CC7AE7400385A9C /* images in Resources */,
 				BE862C4D2EB9066E0061664E /* templates in Resources */,
-				BE862CC42EBE26C60061664E /* welcome in Resources */,
 				BEF5CE8F2D633CE60006FD77 /* discovery.xml in Resources */,
 				BE4C62612D5B736200047DF2 /* coolwsd.xml in Resources */,
 				BE2252292CC79BAE00385A9C /* bundle.js in Resources */,
@@ -569,13 +526,6 @@
 				BE16C9F02CD51F58005E5960 /* hello.odt in Resources */,
 				BE2257AD2CC79BAE00385A9C /* bundle.css in Resources */,
 				BE22492C2CC79AD700385A9C /* cool.html in Resources */,
-				BE44ACFC2D7F1F6B00BFA3B2 /* branding-mobile.css in Resources */,
-				BE44ACFD2D7F1F6B00BFA3B2 /* branding-unsupported.js in Resources */,
-				BE44ACFE2D7F1F6B00BFA3B2 /* branding.js in Resources */,
-				BE44ACFF2D7F1F6B00BFA3B2 /* branding-desktop.css in Resources */,
-				BE44AD002D7F1F6B00BFA3B2 /* branding-tablet.css in Resources */,
-				BE44AD012D7F1F6B00BFA3B2 /* branding.css in Resources */,
-				BE44AD022D7F1F6B00BFA3B2 /* branding-unsupported.css in Resources */,
 				BEEF3F862CE2139E00ABE785 /* coolkitconfig.xcu in Resources */,
 				BEA264162CBE7A770007435A /* Config.xcconfig in Resources */,
 			);
@@ -614,7 +564,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Copy lokit to the bundle\nif [ -z \"$LO_PATH\" ]; then\n  echo \"Error: LO_PATH is not set. Please configure it in Config.xcconfig.\"\n  exit 1\nfi\n\necho \"Copying $LO_PATH/Contents/ to ${CONFIGURATION_BUILD_DIR}/${PRODUCT_NAME}.app/Contents/\"\nrsync -av \\\n    --exclude 'gengal' --exclude 'opencltest' --exclude 'soffice' --exclude 'uno' \\\n    --exclude 'unopkg' --exclude 'uri-encode' --exclude 'QuickLookPreview.*' \\\n    --exclude 'Info.plist' --exclude 'PlugIns' --exclude 'Spotlight' \\\n    \"$LO_PATH/Contents/\" \"${CONFIGURATION_BUILD_DIR}/${PRODUCT_NAME}.app/Contents/\"\n\n# Re-sign the dylibs for Release (not needed for development)\nif [ \"$CONFIGURATION\" = \"Release\" ]; then\n  SIGN_ID=\"$EXPANDED_CODE_SIGN_IDENTITY\"\n  for f in \"${CONFIGURATION_BUILD_DIR}/${PRODUCT_NAME}.app/Contents/Frameworks/\"*.dylib; do\n    [ -f \"$f\" ] || continue\n    codesign --force --sign \"$SIGN_ID\" --timestamp \"$f\"\n  done\nfi\n";
+			shellScript = "# Copy lokit to the bundle\nif [ -z \"$LO_PATH\" ]; then\n  echo \"Error: LO_PATH is not set. Please configure it in Config.xcconfig.\"\n  exit 1\nfi\n\necho \"Copying $LO_PATH/Contents/ to ${CONFIGURATION_BUILD_DIR}/${PRODUCT_NAME}.app/Contents/\"\nrsync -av \\\n    --exclude 'gengal' --exclude 'opencltest' --exclude 'soffice' --exclude 'uno' \\\n    --exclude 'unopkg' --exclude 'uri-encode' --exclude 'QuickLookPreview.*' \\\n    --exclude 'Info.plist' --exclude 'PlugIns' --exclude 'Spotlight' \\\n    \"$LO_PATH/Contents/\" \"${CONFIGURATION_BUILD_DIR}/${PRODUCT_NAME}.app/Contents/\"\n\n# Re-sign the dylibs for Release (not needed for development)\nif [ \"$CONFIGURATION\" = \"Release\" ]; then\n  SIGN_ID=\"$EXPANDED_CODE_SIGN_IDENTITY\"\n  for f in \"${CONFIGURATION_BUILD_DIR}/${PRODUCT_NAME}.app/Contents/Frameworks/\"*.dylib; do\n    [ -f \"$f\" ] || continue\n    codesign --force --sign \"$SIGN_ID\" --timestamp \"$f\"\n  done\nfi\n\n# Copy branding if it exists\nRESOURCES=\"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}\"\nfor I in branding-desktop.css branding-mobile.css branding-tablet.css branding-unsupported.css branding-unsupported.js branding.css branding.js welcome ; do\n  SRC=\"$SRCROOT/../../browser/dist/$I\"\n  rm -rf \"$RESOURCES/$I\"\n  cp -a \"$SRC\" \"$RESOURCES/\" 2>/dev/null || echo \"Skipping non-existing $SRC\"\ndone\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
