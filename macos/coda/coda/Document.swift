@@ -30,9 +30,6 @@ class Document: NSDocument {
     @objc
     var appDocId: Int32 = -1
 
-    /// Is this a read-only document?
-    private var readOnly: Bool = false
-
     /// The webview that contains the document.
     var webView: WKWebView!
 
@@ -42,6 +39,9 @@ class Document: NSDocument {
     /// The URL of the temporary file that represents the "live" version of the document.
     @objc
     var tempFileURL: URL?
+
+    /// This is the welcome slideshow (that needs a special parameter when opening)
+    var isWelcome = false
 
     /** Parameters for a deferred Save / Save As… request. */
     private struct PendingSave {
@@ -364,9 +364,8 @@ class Document: NSDocument {
     /**
      * Initiate loading of cool.html, which also triggers loading of the document via lokit.
      */
-    func loadDocumentInWebView(webView: WKWebView, readOnly: Bool) {
+    func loadDocumentInWebView(webView: WKWebView, permission: String, isWelcome: Bool) {
         self.webView = webView
-        self.readOnly = readOnly
 
         self.appDocId = COWrapper.generateNewAppDocId()
         self.fakeClientFd = COWrapper.fakeSocketSocket()
@@ -376,7 +375,6 @@ class Document: NSDocument {
         }
 
         var components = URLComponents(url: url, resolvingAgainstBaseURL: false)!
-        let permission = readOnly ? "readonly" : "edit"
         let lang = Locale.preferredLanguages.first ?? "en-US"
 
         components.queryItems = [
@@ -388,9 +386,9 @@ class Document: NSDocument {
             // TODO: add "dir" if needed
         ]
 
-        /*if isWelcome {
+        if isWelcome {
             components.queryItems?.append(URLQueryItem(name: "welcome", value: "true"))
-        }*/
+        }
 
         let finalURL = components.url!
         let request = URLRequest(url: finalURL)
