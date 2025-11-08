@@ -68,3 +68,37 @@ bridge.moc.cpp: bridge.hpp
 CLEANFILES = $(BUILT_SOURCES)
 
 coda_qt_SOURCES = coda-qt.cpp WebView.cpp $(BUILT_SOURCES) $(cmake_list)
+
+### --- Qt translations integration begin ---
+
+# List of translation languages
+LANGS = ar bg ca cs da de el eo es eu fi fr gl he hr hu hy id is it ja ko lo nb nl oc pl pt pt_BR sq ru sk sl sv tr uk vi zh_CN zh_TW
+
+# Translation source (.ts) and compiled (.qm) files
+TS_FILES = $(addprefix translations/coda_,$(addsuffix .ts,$(LANGS)))
+QM_FILES = $(TS_FILES:.ts=.qm)
+
+# Rule: generate .qm from .ts
+%.qm: %.ts
+	@$(LRELEASE) $< -qm $@
+
+# Update .ts files from source code
+update-translations:
+	@$(LUPDATE) $(top_srcdir) -ts $(TS_FILES)
+
+# Build all translations
+translations: $(QM_FILES)
+
+# Include translations in normal build and install
+all-local: translations
+install-data-local: translations
+
+# Where to install translations
+translationsdir = $(datadir)/coda-qt/translations
+translations_DATA = $(QM_FILES)
+
+# Distribute sources and clean up generated files
+EXTRA_DIST = $(TS_FILES)
+CLEANFILES = $(QM_FILES)
+
+### --- Qt translations integration end ---

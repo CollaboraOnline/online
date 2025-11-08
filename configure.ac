@@ -1579,6 +1579,11 @@ AS_IF([test "$ENABLE_QTAPP" = true],
              AC_MSG_ERROR([moc not found. Please install Qt development tools.])
        fi
        AC_SUBST(MOC)
+       AC_PATH_PROGS(LRELEASE, [lrelease6 lrelease-qt6 lrelease], [:])
+       AC_PATH_PROGS(LUPDATE,  [lupdate6  lupdate-qt6  lupdate],  [:])
+       if test "x$LRELEASE" = "x:"; then
+             AC_MSG_ERROR([lrelease or lrelease6 not found – please install Qt Linguist tools])
+       fi
 ])
 
 AM_CONDITIONAL([ENABLE_DEBUG], [test "$ENABLE_DEBUG" = "true"])

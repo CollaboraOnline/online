@@ -60,6 +60,8 @@
 #include <QPrinterInfo>
 #include <QDir>
 #include <QStandardPaths>
+#include <QLocale>
+#include <QTranslator>
 
 #include <algorithm>
 #include <cassert>
@@ -920,6 +922,17 @@ QWebEngineProfile* Application::getProfile() { return globalProfile; }
 int main(int argc, char** argv)
 {
     QApplication app(argc, argv);
+
+    QTranslator translator;
+    QString locale = QLocale::system().name();
+    QString appDir = QCoreApplication::applicationDirPath();
+    QString dataDir = QDir(appDir + "/../share/coda-qt").absolutePath();
+
+    if (translator.load("coda_" + locale, appDir + "/translations"))
+        app.installTranslator(&translator);
+    else if (translator.load("coda_" + locale, dataDir + "/translations"))
+        app.installTranslator(&translator);
+
     QApplication::setApplicationName("Collabora Office");
     QApplication::setWindowIcon(QIcon::fromTheme("com.collabora.Office.startcenter"));
 
