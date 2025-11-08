@@ -202,7 +202,8 @@ public:
     Util::Rectangle getNormalizedVisibleArea() const;
 
     /// The client's visible area can be divided into a maximum of 4 panes.
-    enum SplitPaneName {
+    enum SplitPaneName : std::uint8_t
+    {
         TOPLEFT_PANE,
         TOPRIGHT_PANE,
         BOTTOMLEFT_PANE,

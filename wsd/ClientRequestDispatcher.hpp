@@ -18,6 +18,7 @@
 #include <wopi/WopiProxy.hpp>
 #endif // !MOBILEAPP
 
+#include <cstdint>
 #include <string>
 #include <memory>
 
@@ -119,7 +120,12 @@ private:
 
     void sendResult(const std::shared_ptr<StreamSocket>& socket, CheckStatus result);
 
-    enum MessageResult { ServedAsync, ServedSync, Ignore };
+    enum class MessageResult : std::uint8_t
+    {
+        ServedAsync,
+        ServedSync,
+        Ignore
+    };
 
     MessageResult handleMessage(Poco::Net::HTTPRequest& request,
                                 std::istream& message,
