@@ -23,7 +23,6 @@
 #include <Poco/JSON/JSONException.h>
 #include <Poco/JSON/Object.h>
 #include <Poco/JSON/Parser.h>
-#include <Poco/JSON/JSONException.h>
 
 namespace JsonUtil
 {
