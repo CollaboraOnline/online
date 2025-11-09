@@ -239,7 +239,7 @@ public:
     std::chrono::milliseconds getWopiDownloadDuration() const { return _wopiDownloadDuration; }
     void setWopiUploadDuration(const std::chrono::milliseconds wopiUploadDuration) { _wopiUploadDuration = wopiUploadDuration; }
     std::chrono::milliseconds getWopiUploadDuration() const { return _wopiUploadDuration; }
-    void setProcSMapsFp(std::weak_ptr<FILE> procSMaps) { _procSMaps = procSMaps; }
+    void setProcSMapsFp(std::weak_ptr<FILE> procSMaps) { _procSMaps = std::move(procSMaps); }
     bool hasMemDirtyChanged() const { return _hasMemDirtyChanged; }
     void setMemDirtyChanged(bool changeStatus) { _hasMemDirtyChanged = changeStatus; }
     time_t getBadBehaviorDetectionTime() const { return _badBehaviorDetectionTime; }
