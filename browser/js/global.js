@@ -2026,6 +2026,8 @@ function getInitializerClass() {
 
 				msg += ' timezone=' + Intl.DateTimeFormat().resolvedOptions().timeZone;
 				msg += ' clientvisiblearea=' + window.makeClientVisibleArea();
+		
+				if (global.coolParams.get('welcome') === 'true') msg += ' batch=true';
 
 				global.socket.send(msg);
 			}
