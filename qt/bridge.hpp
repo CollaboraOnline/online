@@ -25,7 +25,6 @@ class Bridge : public QObject
 
     coda::DocumentData _document;
     QWebEngineView* _webView;
-    QSvgWidget* _loadingOverlay;
 
     std::string promptSaveLocation();
     bool saveDocument(const std::string& savePath);
@@ -36,7 +35,6 @@ public:
         : QObject(parent)
         , _document(document)
         , _webView(webView)
-        , _loadingOverlay(svgOverlay)
     {
     }
 
