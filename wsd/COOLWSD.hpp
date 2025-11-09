@@ -213,6 +213,9 @@ public:
     /// child kit processes and cleans up DocBrokers.
     static void doHousekeeping();
 
+    /// Clean up spent DocBrokers.
+    static void cleanupDocBrokers();
+
     static void checkDiskSpaceAndWarnClients(bool cacheLastCheck);
 
     static void checkSessionLimitsAndWarnClients();
