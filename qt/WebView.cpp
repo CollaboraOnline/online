@@ -90,6 +90,9 @@ WebView::WebView(QWidget* parent, QWebEngineProfile* profile, bool isWelcome)
 {
     _mainWindow->setCentralWidget(_webView);
 
+    if (isWelcome)
+        _mainWindow->setWindowFlags(Qt::FramelessWindowHint);
+
     QWebEnginePage* page = new QWebEnginePage(profile, _webView);
     _webView->setPage(page);
 
