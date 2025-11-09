@@ -506,8 +506,13 @@ window.L.Control.NotebookbarImpress = window.L.Control.NotebookbarWriter.extend(
 				'command': 'presentation-currentslide',
 				'accessibility': { focusBack: true, combination: 'FC', de: null }
 			},
-			!window.ThisIsAMobileApp ? { type: 'separator', id: 'slide-show-presentation', orientation: 'vertical' } : {},
-			!window.ThisIsAMobileApp ?
+			!window.ThisIsAMobileApp || window.mode.isCODesktop() ?
+				{
+					type: 'separator',
+					id: 'slide-show-presentation',
+					orientation: 'vertical'
+				} : {},
+			!window.ThisIsAMobileApp || window.mode.isCODesktop() ?
 				{
 					'id': 'slide-presentation-in-window',
 					'type': 'bigcustomtoolitem',
