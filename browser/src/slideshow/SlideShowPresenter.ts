@@ -1171,7 +1171,6 @@ class SlideShowPresenter {
 	/// called when user triggers the presentation using UI
 	_onStart(that: any) {
 		this._startSlide = that?.startSlideNumber ?? 0;
-		this._isWelcomePresentation = that?.isWelcomePresentation ?? false;
 		if (!this._onPrepareScreen(false))
 			// opens full screen, has to be on user interaction
 			return;
@@ -1186,6 +1185,7 @@ class SlideShowPresenter {
 
 	/// called when user triggers the in-window presentation using UI
 	_onStartInWindow(that: any) {
+		this._isWelcomePresentation = that?.isWelcomePresentation ?? false;
 		this.sendSlideShowFollowMessage('newfollowmepresentation');
 		this._startSlide = that?.startSlideNumber ?? 0;
 		this._startEffect = that?.startEffectNumber;
