@@ -4,19 +4,19 @@ msgstr "Collabora Office"
 
 #: browser/welcome/welcome-slideshow.odp:2
 msgid "Same look, same code"
-msgstr "Gleicher Look, gleicher Code"
+msgstr "Gleiche Oberfläche, dieselben Features"
 
 #: browser/welcome/welcome-slideshow.odp:3
 msgid "Your files, your device"
-msgstr "Ihre Dateien, Ihr Gerät"
+msgstr "Kontrolle über Deine Dateien, auf Deinem Gerät"
 
 #: browser/welcome/welcome-slideshow.odp:4
 msgid "Find out more!"
-msgstr "Erfahren Sie mehr!"
+msgstr "Erfahre mehr!"
 
 #: browser/welcome/welcome-slideshow.odp:5
 msgid "Open it and feel instantly at home:"
-msgstr "Öffne es und fühle dich sofort wie zu Hause:"
+msgstr "Anwendung starten und sofort wie zu Hause fühlen:"
 
 #: browser/welcome/welcome-slideshow.odp:6
 msgid "ODF or DOCX"
@@ -24,11 +24,11 @@ msgstr "ODF oder DOCX"
 
 #: browser/welcome/welcome-slideshow.odp:7
 msgid "Quick edits or deep dives"
-msgstr "Schnelle Bearbeitungen oder detaillierte Analysen"
+msgstr "Schnelles Bearbeiten - oder detaillierte Analysen"
 
 #: browser/welcome/welcome-slideshow.odp:8
 msgid "A clean, beautiful interface"
-msgstr "Eine saubere, schöne Benutzeroberfläche"
+msgstr "Eine aufgeräumte, angenehme Bedienoberfläche"
 
 #: browser/welcome/welcome-slideshow.odp:9
 msgid "Next"
@@ -40,15 +40,15 @@ msgstr "Die vertraute, leistungsstarke Collabora Online-Erfahrung"
 
 #: browser/welcome/welcome-slideshow.odp:11
 msgid "Now locally on Windows, macOS, and Linux"
-msgstr "Jetzt lokal unter Windows, macOS und Linux"
+msgstr "Jetzt auch offline unter Windows, macOS und Linux"
 
 #: browser/welcome/welcome-slideshow.odp:12
 msgid "Enjoy editing your documents locally with an intuitive, intelligent interface"
-msgstr "Bearbeiten Sie Ihre Dokumente ganz einfach lokal mit einer intuitiven, intelligenten Benutzeroberfläche."
+msgstr "Bearbeite Dokumente ganz einfach lokal mit einer intuitiven, smarten Bedienoberfläche"
 
 #: browser/welcome/welcome-slideshow.odp:13
 msgid "Navigator bar with document search"
-msgstr "Bearbeiten Sie Ihre Dokumente ganz einfach lokal mit einer intuitiven, intelligenten Benutzeroberfläche."
+msgstr "Navigationsleiste mit Dokumentsuche"
 
 #: browser/welcome/welcome-slideshow.odp:14
 msgid "Helpful quick access examples"
@@ -56,7 +56,7 @@ msgstr "Nützliche Beispiele für den Schnellzugriff"
 
 #: browser/welcome/welcome-slideshow.odp:15
 msgid "Create and edit tables within documents"
-msgstr "Erstellen und bearbeiten Sie Tabellen innerhalb von Dokumenten."
+msgstr "Erstelle und bearbeite Tabellen innerhalb von Dokumenten"
 
 #: browser/welcome/welcome-slideshow.odp:16
 msgid "Powerful data and charting tools"
@@ -64,15 +64,15 @@ msgstr "Leistungsstarke Daten- und Diagrammtools"
 
 #: browser/welcome/welcome-slideshow.odp:17
 msgid "Privacy by design"
-msgstr "Datenschutz durch Technikgestaltung"
+msgstr "Datenschutz von Grund auf"
 
 #: browser/welcome/welcome-slideshow.odp:18
 msgid "Fully open source – no hidden processes, no telemetry"
-msgstr "Vollständig quelloffen – keine versteckten Prozesse, keine Telemetrie"
+msgstr "Vollständig open source – keine versteckten Prozesse, keine Telemetrie"
 
 #: browser/welcome/welcome-slideshow.odp:19
 msgid "Documents never leave your device – unless you say so"
-msgstr "Dokumente verlassen niemals Ihr Gerät – es sei denn, Sie geben dies ausdrücklich frei."
+msgstr "Deine Dokumente verlassen das Gerät nicht – es sei denn, Du gibst sie ausdrücklich frei"
 
 #: browser/welcome/welcome-slideshow.odp:20
 msgid "Collabora Office Desktop"
@@ -80,17 +80,17 @@ msgstr "Collabora Office Desktop"
 
 #: browser/welcome/welcome-slideshow.odp:21
 msgid "Take back control"
-msgstr "Die Kontrolle zurückgewinnen"
+msgstr "Übernehme die Kontrolle wieder selber"
 
 #: browser/welcome/welcome-slideshow.odp:22
 msgid "We’re excited to share this release with our community"
-msgstr "Wir freuen uns, diese Veröffentlichung mit unserer Community zu teilen."
+msgstr "Wir freuen uns, dieses Release mit der Gemeinschaft zu teilen"
 
 #: browser/welcome/welcome-slideshow.odp:23
 msgid "Try it out. Break things. Let us know what works and what doesn’t."
-msgstr "Probieren Sie es aus. Brechen Sie Dinge. Lassen Sie uns wissen, was funktioniert und was nicht."
+msgstr "Probier es aus. Teste, experimentiere und lass uns wissen, was funktioniert - und was nicht"
 
 #: browser/welcome/welcome-slideshow.odp:24
 msgid "Together, we're building a privacy-respecting, open, and elegant office suite for everyone."
-msgstr "Gemeinsam entwickeln wir eine datenschutzkonforme, offene und elegante Office-Suite für alle."
+msgstr "Gemeinsam entwickeln wir eine datensparsame, offene und elegante Office-Suite - für alle."
 
