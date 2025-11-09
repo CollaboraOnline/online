@@ -183,8 +183,8 @@ public:
     /// Message that is about to be sent via the websocket.
     /// To override, handle onFilterSendWebSocketMessage or any of the onDocument...() handlers.
     /// Returns true to stop processing the message further.
-    bool filterSendWebSocketMessage(const char* data, const std::size_t len, const WSOpCode code,
-                                    const bool flush, int& unitReturn);
+    bool filterSendWebSocketMessage(const char* data, std::size_t len, WSOpCode code, bool flush,
+                                    int& unitReturn);
 
     /// Hook the disk space check
     virtual bool filterCheckDiskSpace(const std::string & /* path */,

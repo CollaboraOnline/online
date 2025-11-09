@@ -225,7 +225,7 @@ public:
     std::size_t
     uploadLocalFileToStorageAsync(const Authorization& auth, LockContext& lockCtx,
                                   const std::string& saveAsPath, const std::string& saveAsFilename,
-                                  const bool isRename, const Attributes&,
+                                  bool isRename, const Attributes&,
                                   const std::shared_ptr<SocketPoll>& socketPoll,
                                   const AsyncUploadCallback& asyncUploadCallback) override;
 

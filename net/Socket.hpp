@@ -1606,18 +1606,17 @@ public:
     /// returns true if we did any re-sizing/movement of _inBuffer.
     bool compactChunks(MessageMap& map);
 
-    ssize_t readHeader(const std::string_view clientName, std::istream& message,
-                       size_t messagesize, Poco::Net::HTTPRequest& request,
+    ssize_t readHeader(std::string_view clientName, std::istream& message, size_t messagesize,
+                       Poco::Net::HTTPRequest& request,
                        std::chrono::duration<float, std::milli> delayMs);
 
     /// Detects if we have an HTTP header in the provided message and
     /// populates a request for that.
-    bool parseHeader(const std::string_view clientName, size_t headerSize, size_t bufferSize,
+    bool parseHeader(std::string_view clientName, size_t headerSize, size_t bufferSize,
                      const Poco::Net::HTTPRequest& request,
-                     std::chrono::duration<float, std::milli> delayMs,
-                     MessageMap& map);
+                     std::chrono::duration<float, std::milli> delayMs, MessageMap& map);
 
-    void handleExpect(const std::string_view expect);
+    void handleExpect(std::string_view expect);
 
     bool checkChunks(const Poco::Net::HTTPRequest& request, size_t headerSize, MessageMap& map,
                      std::chrono::duration<float, std::milli> delayMs);

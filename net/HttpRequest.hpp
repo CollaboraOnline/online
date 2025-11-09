@@ -841,8 +841,8 @@ private:
     /// the offset to the end of the marker, true if last boundary}.
     /// The first value is -1 when there is not enough data.
     /// The second value is 0, if no end is found, -1 for invalid data.
-    std::tuple<int64_t, int64_t, bool> findBoundary(const std::string_view data,
-                                                    const std::string_view delimiter, int64_t off);
+    std::tuple<int64_t, int64_t, bool> findBoundary(std::string_view data,
+                                                    std::string_view delimiter, int64_t off);
 
     /// Finds and parses the next part.
     int64_t parsePart(std::string_view data, Header& header, std::string_view& body);

@@ -1090,7 +1090,7 @@ int main(int argc, char**argv)
 
     /// Converts from system_clock to string for debugging / tracing.
     /// Format (local time): Thu Jan 27 03:45:27.123 2022
-    std::string getSystemClockAsString(const std::chrono::system_clock::time_point time);
+    std::string getSystemClockAsString(std::chrono::system_clock::time_point time);
 
     /// conversion from steady_clock for debugging / tracing
     /// Format (local time): Thu Jan 27 03:45:27.123 2022
