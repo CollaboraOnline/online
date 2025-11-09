@@ -295,7 +295,7 @@ public:
 
     void proxyOpenRequest(const std::shared_ptr<StreamSocket>& socket,
                           std::shared_ptr<ClientSession>& clientSession, const std::string& id,
-                          const Poco::URI& uriPublic, const bool isReadOnly,
+                          const Poco::URI& uriPublic, bool isReadOnly,
                           const RequestDetails& requestDetails);
 
     /// Thread safe termination of this broker if it has a lingering thread
@@ -645,7 +645,7 @@ private:
     /// Checks if we really need to request tile rendering or it's in progress
     /// returns true if all tiles are of the same part and size so can be grouped
     inline bool requestTileRendering(TileDesc& tile, bool forceKeyFrame, int version,
-                                     const std::chrono::steady_clock::time_point now,
+                                     std::chrono::steady_clock::time_point now,
                                      std::vector<TileDesc>& tilesNeedsRendering,
                                      const std::shared_ptr<ClientSession>& session);
 

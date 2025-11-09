@@ -238,7 +238,7 @@ public:
     /// Otherwise returns false to signify a subscription already exists.
     bool subscribeToTileRendering(const TileDesc& tile,
                                   const std::shared_ptr<ClientSession>& subscriber,
-                                  const std::chrono::steady_clock::time_point now);
+                                  std::chrono::steady_clock::time_point now);
 
     /// Cancels all tile requests by the given subscriber.
     std::string cancelTiles(const std::shared_ptr<ClientSession>& subscriber);
