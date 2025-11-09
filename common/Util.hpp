@@ -1188,6 +1188,15 @@ int main(int argc, char**argv)
 #endif
     }
 
+    constexpr bool isDebugEnabled()
+    {
+#ifdef ENABLE_DEBUG
+        return ENABLE_DEBUG;
+#else
+        return false;
+#endif
+    }
+
     void setKitInProcess(bool value);
     bool isKitInProcess();
 

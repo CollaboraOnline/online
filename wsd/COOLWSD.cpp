@@ -1572,19 +1572,22 @@ void COOLWSD::innerInitialize(Poco::Util::Application& self)
                              : COOLWSD::WASMActivationState::Disabled;
 
 #if ENABLE_DEBUG
+    //if (Util::isDebugEnabled())
+    //{
     if (ConfigUtil::getConfigValue<bool>(conf, "wasm.force", false))
     {
         if (COOLWSD::WASMState != COOLWSD::WASMActivationState::Enabled)
         {
-            LOG_FTL(
-                "WASM is not enabled; cannot force serving WASM. Please set wasm.enabled to true "
-                "in coolwsd.xml first");
+            LOG_FTL("WASM is not enabled; cannot force serving WASM. Please set wasm.enabled "
+                    "to true "
+                    "in coolwsd.xml first");
             Util::forcedExit(EX_SOFTWARE);
         }
 
         LOG_INF("WASM is force-enabled. All documents will be loaded through WASM");
         COOLWSD::WASMState = COOLWSD::WASMActivationState::Forced;
     }
+//}
 #endif
 
     // Get anonymization settings.
@@ -1630,10 +1633,14 @@ void COOLWSD::innerInitialize(Poco::Util::Application& self)
                 "Please reduce logging level to debug or lower in coolwsd.xml to prevent leaking sensitive user data.";
             LOG_FTL(failure);
             std::cerr << '\n' << failure << std::endl;
-#if ENABLE_DEBUG
-            std::cerr << "\nIf you have used 'make run', edit coolwsd.xml and make sure you have removed "
-                         "'--o:logging.level=trace' from the command line in Makefile.am.\n" << std::endl;
-#endif
+
+            if (Util::isDebugEnabled())
+            {
+                std::cerr << "\nIf you have used 'make run', edit coolwsd.xml and make sure you "
+                             "have removed "
+                             "'--o:logging.level=trace' from the command line in Makefile.am.\n"
+                          << std::endl;
+            }
             Util::forcedExit(EX_SOFTWARE);
         }
     }
