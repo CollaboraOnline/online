@@ -178,14 +178,8 @@ void WebView::load(const Poco::URI& fileURL, bool newFile)
 
     // setup js c++ communication
     QWebChannel* channel = new QWebChannel(_webView->page());
-    QSvgWidget* loadingOverlay = nullptr;
-    if (_isWelcome)
-    {
-        const std::string svgPath = getTopSrcDir(TOPSRCDIR) + "/browser/dist/welcome/welcome.svg";
-        loadingOverlay = new QSvgWidget(QString::fromStdString(svgPath), _webView);
-    }
 
-    auto bridge = new Bridge(channel, _document, _webView, loadingOverlay);
+    auto bridge = new Bridge(channel, _document, _webView);
     channel->registerObject("bridge", bridge);
     _webView->page()->setWebChannel(channel);
 
@@ -204,13 +198,6 @@ void WebView::load(const Poco::URI& fileURL, bool newFile)
     _webView->load(QUrl(QString::fromStdString(urlAndQueryStr)));
 
     auto size = getWindowSize(_isWelcome);
-    if (_isWelcome && loadingOverlay)
-    {
-        loadingOverlay->resize(size.first, size.second);
-        loadingOverlay->setStyleSheet("background-color: white;");
-        loadingOverlay->raise();
-        loadingOverlay->show();
-    }
     _mainWindow->resize(size.first, size.second);
     _mainWindow->show();
 }
