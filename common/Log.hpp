@@ -190,6 +190,7 @@ static constexpr std::size_t skipPathPrefix(const char (&s)[N], std::size_t n = 
 // so we need an indirection to expand macros before using the result.
 #define CONCATINATE_IMPL(X, Y) X##Y
 #define CONCATINATE(X, Y) CONCATINATE_IMPL(X, Y)
+#define UNIQUE_VAR(X) CONCATINATE(X, __LINE__)
 #define STRINGIFY(X) #X
 #define STRING(X) STRINGIFY(X)
 
@@ -226,23 +227,23 @@ static constexpr std::size_t skipPathPrefix(const char (&s)[N], std::size_t n = 
         }                                       \
     } while (false)
 
-
-#define LOG_BODY_(LVL, X, PREFIX, END)        \
-    char b_[1024];                              \
-    std::ostringstream oss_(                    \
-        Log::prefix<sizeof(b_) - 1>(b_, #LVL),  \
-        std::ostringstream::ate);               \
-    PREFIX(oss_);                               \
-    oss_ << std::boolalpha << X;                \
-    END(oss_);                                  \
+#define LOG_BODY_(LVL, X, PREFIX, END)                                                             \
+    char UNIQUE_VAR(buffer)[1024];                                                                 \
+    std::ostringstream oss_(Log::prefix<sizeof(UNIQUE_VAR(buffer)) - 1>(UNIQUE_VAR(buffer), #LVL), \
+                            std::ostringstream::ate);                                              \
+    PREFIX(oss_);                                                                                  \
+    oss_ << std::boolalpha << X;                                                                   \
+    END(oss_);                                                                                     \
     LOG_LOG(LVL, oss_.str())
 
 /// Unconditionally log. LVL can be anything converted to string.
 #define LOG_UNCONDITIONAL(LVL, X)                                                                  \
     do                                                                                             \
     {                                                                                              \
-        char b_[1024];                                                                             \
-        std::ostringstream oss_(Log::prefix<sizeof(b_) - 1>(b_, #LVL), std::ostringstream::ate);   \
+        char UNIQUE_VAR(buffer)[1024];                                                             \
+        std::ostringstream oss_(                                                                   \
+            Log::prefix<sizeof(UNIQUE_VAR(buffer)) - 1>(UNIQUE_VAR(buffer), #LVL),                 \
+            std::ostringstream::ate);                                                              \
         logPrefix(oss_);                                                                           \
         oss_ << std::boolalpha << X;                                                               \
         LOG_END(oss_);                                                                             \
@@ -357,14 +358,14 @@ static constexpr std::size_t skipPathPrefix(const char (&s)[N], std::size_t n = 
 #define LOG_ASSERT_INTERNAL(condition, message, LOG)                                               \
     do                                                                                             \
     {                                                                                              \
-        auto&& CONCATINATE(cond, __LINE__) = !!(condition);                                        \
-        if (!CONCATINATE(cond, __LINE__))                                                          \
+        auto&& UNIQUE_VAR(cond) = !!(condition);                                                   \
+        if (!UNIQUE_VAR(cond))                                                                     \
         {                                                                                          \
-            std::ostringstream CONCATINATE(oss, __LINE__);                                         \
-            CONCATINATE(oss, __LINE__) << message;                                                 \
-            const auto CONCATINATE(msg, __LINE__) = CONCATINATE(oss, __LINE__).str();              \
+            std::ostringstream UNIQUE_VAR(oss);                                                    \
+            UNIQUE_VAR(oss) << message;                                                            \
+            const auto UNIQUE_VAR(msg) = UNIQUE_VAR(oss).str();                                    \
             LOG("ERROR: Assertion failure: "                                                       \
-                << (CONCATINATE(msg, __LINE__).empty() ? "" : CONCATINATE(msg, __LINE__) + ". ")   \
+                << (UNIQUE_VAR(msg).empty() ? "" : UNIQUE_VAR(msg) + ". ")                         \
                 << "Condition: " << STRING(condition));                                            \
             assert(!STRING(condition)); /* NOLINT(misc-static-assert) */                           \
         }                                                                                          \
