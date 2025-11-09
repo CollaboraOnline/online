@@ -1682,10 +1682,15 @@ void COOLWSD::innerInitialize(Poco::Util::Application& self)
                 "Please reduce logging level to debug or lower in coolwsd.xml to prevent leaking sensitive user data.";
             LOG_FTL(failure);
             std::cerr << '\n' << failure << std::endl;
-#if ENABLE_DEBUG
-            std::cerr << "\nIf you have used 'make run', edit coolwsd.xml and make sure you have removed "
-                         "'--o:logging.level=trace' from the command line in Makefile.am.\n" << std::endl;
-#endif
+
+            if constexpr (Util::isDebugEnabled())
+            {
+                std::cerr << "\nIf you have used 'make run', edit coolwsd.xml and make sure you "
+                             "have removed "
+                             "'--o:logging.level=trace' from the command line in Makefile.am.\n"
+                          << std::endl;
+            }
+
             Util::forcedExit(EX_SOFTWARE);
         }
     }
