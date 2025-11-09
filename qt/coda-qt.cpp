@@ -630,22 +630,6 @@ QVariant Bridge::cool(const QString& messageStr)
             LOG_TRC_NOFILE("Welcome slideshow not found at: " << welcomePath);
         }
     }
-    else if (message == "SHOW_WELCOME") // delete svg overlay and show welcome
-    {
-        // Schedule deletion on the GUI thread
-        QMetaObject::invokeMethod(
-            _loadingOverlay,
-            [this]()
-            {
-                if (_loadingOverlay)
-                {
-                    _loadingOverlay->hide();
-                    _loadingOverlay->deleteLater();
-                    _loadingOverlay = nullptr;
-                }
-            },
-            Qt::QueuedConnection);
-    }
     else if (message.starts_with(COMMANDSTATECHANGED))
     {
         const auto object = parseJsonFromMessage(message, COMMANDSTATECHANGED.size());
