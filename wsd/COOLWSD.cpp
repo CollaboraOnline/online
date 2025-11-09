@@ -449,10 +449,10 @@ void cleanupDocBrokers()
             docBroker->dispose();
             it = DocBrokers.erase(it);
             continue;
-        } else {
-            activeConfigs.insert(docBroker->getConfigId());
-            ++it;
         }
+
+        activeConfigs.insert(docBroker->getConfigId());
+        ++it;
     }
 
     if (count != DocBrokers.size())
