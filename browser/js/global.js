@@ -630,6 +630,34 @@ function getInitializerClass() {
 	}
 }
 
+function showWelcomeSVG() {
+	const loaderDiv = document.createElement('div');
+	loaderDiv.id = 'welcome-loader';
+	loaderDiv.style.cssText = `
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background-color: #faf8fc;
+        z-index: 9999;
+        opacity: 1;
+        transition: opacity 0.8s ease-out;
+    `;
+
+	const img = document.createElement('img');
+	img.src = 'welcome/welcome.svg';
+	img.alt = 'Welcome';
+	img.style.cssText = `
+        width: 100%;
+        height: 100%;
+        object-fit: fill;
+    `;
+
+	loaderDiv.appendChild(img);
+	document.body.insertBefore(loaderDiv, document.body.firstChild);
+}
+
 (function (global) {
 	const initializer = getInitializerClass();
 	initializer.afterInitialization();
@@ -1925,6 +1953,7 @@ function getInitializerClass() {
 		return new TextDecoder().decode(bytes);
 	};
 
+
 	// Create a WebSocket to the server
 	// FIXME The Android and iOS apps use the new approach, other apps should follow
 	if (global.ThisIsAMobileApp && !global.ThisIsTheAndroidApp && !global.ThisIsTheiOSApp) {
@@ -2027,8 +2056,11 @@ function getInitializerClass() {
 				msg += ' timezone=' + Intl.DateTimeFormat().resolvedOptions().timeZone;
 				msg += ' clientvisiblearea=' + window.makeClientVisibleArea();
 		
-				if (global.coolParams.get('welcome') === 'true') msg += ' batch=true';
-
+				if (global.coolParams.get('welcome') === 'true') {
+					msg += ' batch=true';
+					showWelcomeSVG();
+				}
+				
 				global.socket.send(msg);
 			}
 		};
