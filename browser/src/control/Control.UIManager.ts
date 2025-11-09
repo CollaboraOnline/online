@@ -498,10 +498,11 @@ class UIManager extends window.L.Control {
 				this.map.on('slideshowfollowon', dispatchFollowPresentation);
 			} else if (
 				startPresentationGet === 'true' ||
-				startPresentationGet === '1' ||
-				startWelcomePresentation === 'true'
+				startPresentationGet === '1'
 			) {
 				app.dispatcher.dispatch('presentation');
+			} else if (startWelcomePresentation === 'true') {
+				app.dispatcher.dispatch('presentinwindow');
 			}
 
 			// docloaded event is fired multiple times, unfortunately

@@ -516,9 +516,16 @@ class Dispatcher {
 
 		this.actionsMap['presentinwindow'] = this.actionsMap['present-in-window'] =
 			() => {
+				const welcomePresentation =
+					window.coolParams.get('welcome') === 'true' ? true : false;
 				if ((window as any).canvasSlideshowEnabled)
-					app.map.fire('newpresentinwindow');
-				else app.map.fire('presentinwindow');
+					app.map.fire('newpresentinwindow', {
+						isWelcomePresentation: welcomePresentation,
+					});
+				else
+					app.map.fire('presentinwindow', {
+						isWelcomePresentation: welcomePresentation,
+					});
 			};
 
 		this.actionsMap['followmepresentation'] = this.actionsMap[
