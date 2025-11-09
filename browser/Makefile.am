@@ -18,13 +18,19 @@ else
 L10N_IOS_ALL_JS = $(DIST_FOLDER)/l10n-all.js
 L10N_JSON = $(L10N_IOS_ALL_JS)
 
-$(L10N_IOS_ALL_JS) : $(wildcard $(srcdir)/po/ui-*.po) $(shell find $(srcdir)/l10n -name '*.*') $(srcdir)/util/create-l10n-all-js.pl
+$(L10N_IOS_ALL_JS) : $(wildcard $(srcdir)/po/ui-*.po) $(wildcard $(srcdir)/po/help-*.po) $(shell find $(srcdir)/l10n -name '*.*') $(srcdir)/util/create-l10n-all-js.pl
 	for F in $(wildcard $(srcdir)/po/ui-*.po); do \
+		$(srcdir)/util/po2json.py $$F -o $$F.json; \
+	done
+	for F in $(wildcard $(srcdir)/po/help-*.po); do \
 		$(srcdir)/util/po2json.py $$F -o $$F.json; \
 	done
 	@mkdir -p $(dir $@)
 	perl $(srcdir)/util/create-l10n-all-js.pl >$@
 	for F in $(wildcard $(srcdir)/po/ui-*.po); do \
+		rm $$F.json; \
+	done
+	for F in $(wildcard $(srcdir)/po/help-*.po); do \
 		rm $$F.json; \
 	done
 endif

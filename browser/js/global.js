@@ -1820,6 +1820,29 @@ function showWelcomeSVG() {
 		}
 	};
 
+	// Save the original method to call it when not in "mobile app"  mode
+	const originalStringToLocaleString = String.prototype.toLocaleString;
+
+	String.prototype.toLocaleString = function () {
+		// `this` is the string being localized
+		const string = this.valueOf();
+
+		if (global.ThisIsAMobileApp) {
+			if (global.LOCALIZATIONS && Object.prototype.hasOwnProperty.call(global.LOCALIZATIONS, string)) {
+				let result = global.LOCALIZATIONS[string];
+				if (global.LANG === 'de-CH') {
+					result = result.replace(/ß/g, 'ss');
+				}
+				return result;
+			} else {
+				return string;
+			}
+		} else {
+			// fallback to original
+			return originalStringToLocaleString.call(this);
+		}
+	};
+
 	global._ = function (string) {
 		// In the mobile app case we can't use the stuff from l10n-for-node, as that assumes HTTP.
 		if (global.ThisIsAMobileApp || global.ThisIsTheWindowsApp) {

@@ -15,6 +15,7 @@ sub readwhole($) {
 sub insert($) {
     my ($locale) = @_;
     my $ui = readwhole($path . "po/ui-$locale.po.json");
+    my $help = readwhole($path . "po/help-$locale.po.json");
     # Different convention: Change underscore to hyphen.
     $locale =~ s/_/-/;
     my $uno = readwhole($path . "l10n/uno/$locale.json");
@@ -23,7 +24,7 @@ sub insert($) {
     # po2json.py starts with "{" not followed by a newline and ends
     # with a "}" without any final newline. The json files that are in
     # the repo start with "{\n" and end with "}\n".
-    return substr($ui, 0, length($ui)-1) . ",\n" . substr($uno, 2, length($uno)-4) . ",\n" . substr($locore, 2, length($locore)-3);
+    return substr($ui, 0, length($ui)-1) . ",\n" . substr($help, 1, length($help)-2) . ",\n" . substr($uno, 2, length($uno)-4) . ",\n" . substr($locore, 2, length($locore)-3);
 }
 
 # The list of locales handled in the JavaScript we output below is
