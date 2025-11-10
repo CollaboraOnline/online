@@ -1725,7 +1725,8 @@ window.L.Control.NotebookbarWriter = window.L.Control.Notebookbar.extend({
 							{
 								'id': 'showruler',
 								'class': 'unoshowruler',
-								'type': 'customtoolitem',
+								'type': 'checkbox',
+								'command': 'showruler',
 								'text': _('Ruler'),
 								'accessibility': { focusBack: true, combination: 'R', de: 'L' }
 							}
