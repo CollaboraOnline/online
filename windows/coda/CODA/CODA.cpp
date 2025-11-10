@@ -1724,6 +1724,9 @@ int APIENTRY wWinMain(HINSTANCE hInstance, HINSTANCE, PWSTR, int showWindowMode)
 
     appName = Util::string_to_wide_string(APP_NAME);
 
+    if (!SUCCEEDED(CoInitializeEx(NULL, COINIT_APARTMENTTHREADED | COINIT_DISABLE_OLE1DDE)))
+        fatal("CoInitializeEx() failed");
+
     PWSTR appDataFolder;
     SHGetKnownFolderPath(FOLDERID_LocalAppData, 0, NULL, &appDataFolder);
     localAppData = Util::wide_string_to_string(std::wstring(appDataFolder) + L"\\" + appName);
@@ -1744,9 +1747,6 @@ int APIENTRY wWinMain(HINSTANCE hInstance, HINSTANCE, PWSTR, int showWindowMode)
     // COOLWSD_LOGLEVEL comes from the project file and differs for Debug and Release builds.
     Log::initialize("CODA", COOLWSD_LOGLEVEL);
     Util::setThreadName("main");
-
-    if (!SUCCEEDED(CoInitializeEx(NULL, COINIT_APARTMENTTHREADED | COINIT_DISABLE_OLE1DDE)))
-        fatal("CoInitializeEx() failed");
 
     persistentWindowSizeStoreOK =
         (persistentWindowSizeStore.open
