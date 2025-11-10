@@ -64,12 +64,6 @@ inline void setupKitEnvironment(const std::string& userInterface)
 
     options += ":sc_print_twips_msgs";
 
-#ifdef MACOS
-    // The "legacy way" (with repeating fonts) crashes CODA at the moment,
-    // enable the new behavior
-    options += ":compact_fonts";
-#endif
-
     ::setenv("SAL_LOK_OPTIONS", options.c_str(), 0);
 }
 
