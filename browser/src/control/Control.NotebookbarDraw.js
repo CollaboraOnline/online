@@ -490,7 +490,8 @@ window.L.Control.NotebookbarDraw = window.L.Control.NotebookbarImpress.extend({
 							{
 								'id': 'showruler',
 								'class': 'unoshowruler',
-								'type': 'customtoolitem',
+								'type': 'checkbox',
+								'command': 'showruler',
 								'text': _('Ruler'),
 								'accessibility': { focusBack: true, combination: 'R', de: 'L' }
 							}
@@ -502,7 +503,8 @@ window.L.Control.NotebookbarDraw = window.L.Control.NotebookbarImpress.extend({
 							{
 								'id': 'showstatusbar',
 								'class': 'unoshowstatusbar',
-								'type': 'customtoolitem',
+								'type': 'checkbox',
+								'command': 'showstatusbar',
 								'text': _('Status Bar'),
 								'accessibility': { focusBack: true, combination: 'SB', de: null }
 							}
