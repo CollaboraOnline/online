@@ -2130,11 +2130,11 @@ export class CommentSection extends CanvasSectionObject {
 		if (availableSpace < this.sectionProperties.commentWidth && !this.isCollapsed)
 			horizontalScroll = (app.activeDocument.fileSize.cX + this.sectionProperties.commentWidth) * app.pixelsToTwips * app.dpiScale;
 
-		if (lastY > app.activeDocument.fileSize.pY) {
+		if (lastY > app.activeDocument.fileSize.pY && app.activeDocument.activeView.type !== 'ViewLayoutMultiPage') {
 			app.activeDocument.activeView.viewSize = new cool.SimplePoint(horizontalScroll, lastY * app.pixelsToTwips);
 			this.containerObject.requestReDraw();
 		}
-		else
+		else if (app.activeDocument.activeView.type !== 'ViewLayoutMultiPage')
 			app.activeDocument.activeView.viewSize = new cool.SimplePoint(horizontalScroll, app.activeDocument.fileSize.y);
 
 		this.disableLayoutAnimation = false;
