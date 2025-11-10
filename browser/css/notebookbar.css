@@ -594,6 +594,12 @@ label.notebookbar.ui-checkbox-label {
 
 /* Review Tab */
 
+/* View Tab */
+
+#View-container #showstatusbar {
+	width: 109px;
+}
+
 /* Help tab */
 
 /* File tab */
