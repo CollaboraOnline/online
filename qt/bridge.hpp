@@ -24,6 +24,7 @@ class Bridge : public QObject
 
     coda::DocumentData _document;
     QWebEngineView* _webView;
+    int _closeNotificationPipeForForwardingThread[2];
 
     std::string promptSaveLocation();
     bool saveDocument(const std::string& savePath);
@@ -34,8 +35,11 @@ public:
         : QObject(parent)
         , _document(document)
         , _webView(webView)
+        , _closeNotificationPipeForForwardingThread{ -1, -1 }
     {
     }
+
+    ~Bridge() override;
 
     // TODO: move these to webview...
     // Helper: post JavaScript code safely on GUI thread
