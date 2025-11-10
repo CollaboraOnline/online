@@ -78,7 +78,6 @@ const int SHOW_JS_MAXLEN = 300;
 
 int coolwsd_server_socket_fd = -1;
 static COOLWSD* coolwsd = nullptr;
-static int closeNotificationPipeForForwardingThread[2]{ -1, -1 };
 static std::thread coolwsdThread;
 QWebEngineProfile* Application::globalProfile = nullptr;
 
@@ -364,6 +363,12 @@ static void printDocument(unsigned appDocId, QWidget* parent = nullptr)
     FileUtil::unlinkFile(tempFile);
 }
 
+Bridge::~Bridge() {
+    if (_document._fakeClientFd != -1) {
+        fakeSocketClose(_document._fakeClientFd);
+    }
+}
+
 void Bridge::evalJS(const std::string& script)
 {
     // Ensure execution on GUI thread – queued if needed
@@ -565,7 +570,7 @@ QVariant Bridge::cool(const QString& messageStr)
         int rc = fakeSocketConnect(_document._fakeClientFd, coolwsd_server_socket_fd);
         assert(rc != -1);
 
-        fakeSocketPipe2(closeNotificationPipeForForwardingThread);
+        fakeSocketPipe2(_closeNotificationPipeForForwardingThread);
 
         // Thread pumping Online → JS
         std::thread(
@@ -577,7 +582,7 @@ QVariant Bridge::cool(const QString& messageStr)
                     struct pollfd pfd[2];
                     pfd[0].fd = _document._fakeClientFd;
                     pfd[0].events = POLLIN;
-                    pfd[1].fd = closeNotificationPipeForForwardingThread[1];
+                    pfd[1].fd = _closeNotificationPipeForForwardingThread[1];
                     pfd[1].events = POLLIN;
                     if (fakeSocketPoll(pfd, 2, -1) > 0)
                     {
@@ -605,7 +610,7 @@ QVariant Bridge::cool(const QString& messageStr)
                     }
                 }
                 LOG_TRC("Closing message pump thread");
-                fakeSocketClose(closeNotificationPipeForForwardingThread[1]);
+                fakeSocketClose(_closeNotificationPipeForForwardingThread[1]);
                 fakeSocketClose(_document._fakeClientFd);
             })
             .detach();
@@ -679,7 +684,7 @@ QVariant Bridge::cool(const QString& messageStr)
     else if (message == "BYE")
     {
         LOG_TRC_NOFILE("Document window terminating on JavaScript side → closing fake socket");
-        fakeSocketClose(closeNotificationPipeForForwardingThread[0]);
+        fakeSocketClose(_closeNotificationPipeForForwardingThread[0]);
 
         // Clean up temporary directory if there was one
         if (_document._fileURL != _document._saveLocationURI)
@@ -866,7 +871,6 @@ void disableA11y() { qputenv("QT_LINUX_ACCESSIBILITY_ALWAYS_ON", "0"); }
 static void stopServer() {
     LOG_TRC("Requesting shutdown");
     SigUtil::requestShutdown();
-    fakeSocketClose(closeNotificationPipeForForwardingThread[0]);
 
     // wait until coolwsdThread is torn down, so that we don't start cleaning up too early
     coolwsdThread.join();
