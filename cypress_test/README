@@ -189,6 +189,19 @@ The implementation of interference testing can be found in
 cypress_test/integration_tests/common/interference_user_spec.js
 test file.
 
+Running multi-user tests
+------------------------
+
+Multi-user test files are in `integration_tests/multiuser` directory.
+
+To run the multi-user tests on the shell:
+
+    make check-multi [spec=writer/notebookbar_spec.js]
+
+To run the multi-user tests in the interactive test runner:
+
+    make run-multi [spec=writer/notebookbar_spec.js]
+
 Running tests in different browsers
 -----------------------------------
 
