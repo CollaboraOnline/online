@@ -58,6 +58,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Test Cell Selections', fun
 		helper.setupAndLoadDocument('calc/empty-selections.ods');
 		desktopHelper.sidebarToggle();
 		cy.cGet('#sidebar-dock-wrapper').should('not.be.visible');
+		cy.viewport(1000, 660);
 	});
 
 	it('Check non-range cell selection with CTRL', function() {
