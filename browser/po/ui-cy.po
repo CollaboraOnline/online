@@ -8,17 +8,17 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-11-04 22:40+0100\n"
-"PO-Revision-Date: 2025-11-03 17:51+0000\n"
+"PO-Revision-Date: 2025-11-08 11:51+0000\n"
 "Last-Translator: Rhoslyn Prys <rprys@posteo.net>\n"
 "Language-Team: Welsh <https://hosted.weblate.org/projects/collabora-online/"
 "ui/cy/>\n"
-"Language: \n"
+"Language: cy\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=6; plural=(n==0) ? 0 : (n==1) ? 1 : (n==2) ? 2 : "
 "(n==3) ? 3 :(n==6) ? 4 : 5;\n"
-"X-Generator: Weblate 5.14.1-dev\n"
+"X-Generator: Weblate 5.15-dev\n"
 
 #: admin/admin.strings.js:15
 msgid "Admin console"
@@ -2811,23 +2811,23 @@ msgstr "Gwedd Dalen"
 
 #: src/control/Control.NotebookbarCalc.js:1406
 msgid "Default View"
-msgstr ""
+msgstr "Golwg Rhagosodedig"
 
 #: src/control/Control.NotebookbarCalc.js:1423
 msgid "Select Sheet View"
-msgstr ""
+msgstr "Dewis Golwg Taflen"
 
 #: src/control/Control.NotebookbarCalc.js:1430
 msgid "New Sheet View"
-msgstr ""
+msgstr "Golwg Taflen Newydd"
 
 #: src/control/Control.NotebookbarCalc.js:1437
 msgid "Remove Sheet View"
-msgstr ""
+msgstr "Tynnu Golwg Taflen"
 
 #: src/control/Control.NotebookbarCalc.js:1444
 msgid "Exit Sheet View"
-msgstr ""
+msgstr "Gadael Golwg Taflen"
 
 #: src/control/Control.NotebookbarCalc.js:1459
 msgid "Freeze"
@@ -3252,7 +3252,7 @@ msgstr "Perfformiad gwael didoli pob cais rhwydwaith."
 
 #: src/control/Control.ServerAuditDialog.ts:122
 msgid "Direct network connection"
-msgstr ""
+msgstr "Cysylltiad rhwydwaith uniongyrchol"
 
 #: src/control/Control.ServerAuditDialog.ts:128
 msgid "The IsAdminUser property is not set by integration"
@@ -3280,15 +3280,15 @@ msgstr "Nid yw'r Integreiddiwr yn barod ar gyfer galwadau PostMessage"
 
 #: src/control/Control.ServerAuditDialog.ts:161
 msgid "Using namespaces"
-msgstr ""
+msgstr "Defnyddio gofod enwau"
 
 #: src/control/Control.ServerAuditDialog.ts:162
 msgid "Not using namespaces"
-msgstr ""
+msgstr "Ddim yn defnyddio gofod enwau"
 
 #: src/control/Control.ServerAuditDialog.ts:236
 msgid "Document container started in {1} ms"
-msgstr ""
+msgstr "Cychwynnodd cynhwysydd dogfen ymhen {1} ms"
 
 #: src/control/Control.ServerAuditDialog.ts:306
 msgid "Status"
@@ -3303,9 +3303,8 @@ msgid "Alerts:"
 msgstr "Rhybuddion:"
 
 #: src/control/Control.ServerAuditDialog.ts:373
-#, fuzzy
 msgid "Check warnings of your server"
-msgstr "Gwiriwch rybuddion diogelwch eich gweinydd"
+msgstr "Gwiriwch rybuddion eich gweinydd"
 
 #: src/control/Control.ServerAuditDialog.ts:374
 msgid "OPEN"
@@ -3333,7 +3332,7 @@ msgstr "Mewnosod dalen"
 
 #: src/control/Control.SheetsBar.js:88
 msgid "Show sheet list"
-msgstr ""
+msgstr "Dangos rhestr taflen"
 
 #: src/control/Control.StatusBar.js:156
 msgid "On"
@@ -4197,7 +4196,7 @@ msgstr "Diweddar"
 
 #: src/control/jsdialog/Widget.PageMarginEntry.ts:40
 msgid "Page margin options"
-msgstr ""
+msgstr "Dewisiadau ymyl tudalen"
 
 #: src/control/jsdialog/Widget.PageMarginEntry.ts:121
 msgid "Top: {top}"
@@ -5089,7 +5088,6 @@ msgid "Collabora Online Development Edition"
 msgstr "Fersiwn Datblygiadol Ar-lein Collabora"
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.p:28-7
-#, fuzzy
 msgid ""
 "Enjoy the latest developments in online productivity, free for you to use, "
 "to explore and to use with others in the browser. Various <a "
@@ -5097,28 +5095,27 @@ msgid ""
 "solutions/collabora-office-android-ios/\">apps</a> are also available for "
 "mobile."
 msgstr ""
-"Mwynhewch y datblygiadau diweddaraf mewn cynhyrchiant ar-lein. Mae nhw am "
+"Mwynhewch y datblygiadau diweddaraf mewn cynhyrchiant ar-lein, ar gael am "
 "ddim i chi eu defnyddio, eu harchwilio a'u defnyddio gydag eraill, i gyd o "
-"fewn eich porwr. Mae <a target=\"_blank\" href=\"https://www.collaboraonline."
-"com/solutions/collabora-office-android-ios/\">apiau</a> amrywiol hefyd ar "
-"gael ar gyfer ffonau symudol a thabledi."
+"fewn eich porwr. Mae <a target=\"_blank\" rel=\"noopener\" href="
+"\"https://www.collaboraonline.com/solutions/collabora-office-android-ios/\""
+">apiau</a> amrywiol hefyd ar gael ar gyfer ffonau symudol a thabledi."
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h1:37-7
 msgid "Discover All The Changes"
 msgstr "Darganfod yr Holl Newidiadau"
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.p:39-7
-#, fuzzy
 msgid ""
 "Check the <a target=\"_blank\" rel=\"noopener\" href=\"https://www."
 "collaboraonline.com/code-25-04-release-notes/\">release notes</a> and learn "
 "all about: The latest Collabora Online Development Edition, aimed at home "
 "users and small teams."
 msgstr ""
-"Darllenwch y <a target=\"_blank\" href=\"https://www.collaboraonline.com/"
-"code-25-04-release-notes/\">nodiadau rhyddhau</a> a dysgwch bopeth am: Y "
-"Fersiwn Datblygiadol Ar-lein Collabora diweddaraf, wedi'i anelu at "
-"ddefnyddwyr cartref a thimau bach."
+"Darllenwch y <a target=\"_blank\" rel=\"noopener\" href="
+"\"https://www.collaboraonline.com/code-25-04-release-notes/\">nodiadau "
+"rhyddhau</a> a dysgwch bopeth am: Y Fersiwn Datblygiadol Ar-lein Collabora "
+"diweddaraf, wedi'i anelu at ddefnyddwyr cartref a thimau bach."
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h1:48-7
 msgid "Get Involved"
@@ -5129,7 +5126,6 @@ msgid "https://collaboraonline.github.io/"
 msgstr "https://collaboraonline.github.io/"
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.p:50-7
-#, fuzzy
 msgid ""
 "Are you interested in contributing but don’t know where to start? Head over "
 "to the <a target=\"_blank\" rel=\"noopener\" href=\"https://collaboraonline."
@@ -5141,13 +5137,14 @@ msgid ""
 "report</a> with all the essential steps on how to reproduce it."
 msgstr ""
 "Oes gennych chi ddiddordeb mewn cyfrannu ond ddim yn gwybod ble i ddechrau? "
-"Ewch draw i'r <a target=\"_blank\" href=\"https://collaboraonline.github.io/"
-"post/build-code/\">cyfarwyddiadau cam wrth gam</a> ac adeiladu CODE o'r "
-"dechrau. Gallwch hefyd helpu gyda <a target=\"_blank\" href=\"https"
-"://collaboraonline.github.io/post/translate/\">chyfieithiadau</a> neu drwy "
-"<a target=\"_blank\" href=\"https://collaboraonline.github.io/post/filebugs/"
-"\">ffeilio adroddiad gwall</a> gyda'r holl gamau hanfodol ar sut i'w "
-"atgynhyrchu."
+"Ewch draw i'r <a target=\"_blank\" rel=\"noopener\" href="
+"\"https://collaboraonline.github.io/post/build-code/\">cyfarwyddiadau cam "
+"wrth gam</a> ac adeiladu CODE o'r dechrau. Gallwch hefyd helpu gyda <a "
+"target=\"_blank\" rel=\"noopener\" href="
+"\"https://collaboraonline.github.io/post/translate/\">chyfieithiadau</a> neu "
+"drwy <a target=\"_blank\" rel=\"noopener\" href="
+"\"https://collaboraonline.github.io/post/filebugs/\">ffeilio adroddiad "
+"gwall</a> gyda'r holl gamau hanfodol ar sut i'w atgynhyrchu."
 
 #: welcome/welcome.html%2Bhtml.body.div.div:55-5
 msgid ""
