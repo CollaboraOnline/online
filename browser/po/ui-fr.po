@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-11-04 22:40+0100\n"
-"PO-Revision-Date: 2025-11-05 14:58+0000\n"
+"PO-Revision-Date: 2025-11-08 11:51+0000\n"
 "Last-Translator: Méven Car <meven.car@collabora.com>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/collabora-online/"
 "ui/fr/>\n"
@@ -2671,7 +2671,7 @@ msgstr "Renommer"
 #: src/control/Control.NotebookbarImpress.js:739
 #: src/control/Control.NotebookbarWriter.js:589
 msgid "Clipboard"
-msgstr ""
+msgstr "Presse-papier"
 
 #: src/control/Control.NotebookbarCalc.js:470
 #: src/control/Control.NotebookbarDraw.js:671
@@ -3122,16 +3122,16 @@ msgstr "Image de fond"
 
 #: src/control/Control.NotebookbarImpress.js:2070
 msgid "Merge & Split"
-msgstr ""
+msgstr "Fusion et Division"
 
 #: src/control/Control.NotebookbarImpress.js:2109
 #: src/control/Control.NotebookbarWriter.js:2555
 msgid "Select"
-msgstr ""
+msgstr "Sélectionner"
 
 #: src/control/Control.NotebookbarImpress.js:2718
 msgid "Effects"
-msgstr ""
+msgstr "Effets"
 
 #: src/control/Control.NotebookbarWriter.js:75
 msgid "Form"
@@ -3160,7 +3160,7 @@ msgstr "Faire défiler vers le bas"
 
 #: src/control/Control.NotebookbarWriter.js:1098
 msgid "Lists/Bullets"
-msgstr ""
+msgstr "Listes/Puces"
 
 #: src/control/Control.NotebookbarWriter.js:1385
 msgid "Header & Footer"
