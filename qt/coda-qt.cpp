@@ -55,6 +55,7 @@
 #include <QMetaObject>
 #include <QMimeData>
 #include <QObject>
+#include <QPointer>
 #include <QPrinterInfo>
 #include <QProcess>
 #include <QPushButton>
@@ -62,6 +63,7 @@
 #include <QSet>
 #include <QStandardPaths>
 #include <QString>
+#include <QTabWidget>
 #include <QThread>
 #include <QTimer>
 #include <QTranslator>
@@ -646,16 +648,17 @@ void Bridge::saveDocumentAs()
 static void closeStarterScreen()
 {
     WebView* starterScreen = WebView::findStarterScreen();
-    if (starterScreen)
-    {
-        LOG_TRC("Closing starter screen after document action");
-        QTimer::singleShot(0, [starterScreen]() {
-            if (starterScreen->getMainWindow())
-            {
-                starterScreen->getMainWindow()->close();
-            }
-        });
-    }
+    if (!starterScreen)
+        return;
+    
+    LOG_TRC("Closing starter screen tab after document action");
+    starterScreen->closeTab();
+}
+
+bool Bridge::promptSaveAs()
+{
+    saveDocumentAs();
+    return true;
 }
 
 QVariant Bridge::cool(const QString& messageStr)
@@ -795,6 +798,7 @@ QVariant Bridge::cool(const QString& messageStr)
         }
 
         LOG_TRC_NOFILE("Document modified status changed: " << (_modified ? "modified" : "unmodified"));
+        emit modifiedChanged(_modified);
     }
     else if (message.starts_with(COMMANDRESULT))
     {
@@ -845,7 +849,10 @@ QVariant Bridge::cool(const QString& messageStr)
             else
             {
                 const std::string savePath = Poco::Path(_document._saveLocationURI.getPath()).toString();
-                saveDocument(savePath);
+                if (saveDocument(savePath)) {
+                    _modified = false;
+                    emit modifiedChanged(_modified);
+                }
             }
         }
     }
@@ -865,13 +872,42 @@ QVariant Bridge::cool(const QString& messageStr)
         QTimer::singleShot(0, [this]() {
             if (_webView)
             {
-                QWidget* topLevel = _webView->window();
-                if (topLevel)
+                // If the web view was added to a QTabWidget, remove that tab
+                // instead of closing the entire top-level window.
+                QWidget* parentWidget = _webView->parentWidget();
+                QTabWidget* tabWidget = qobject_cast<QTabWidget*>(parentWidget);
+                if (tabWidget)
                 {
-                    LOG_INF("Closing document window");
-                    topLevel->hide();
-                    topLevel->close();
-                    topLevel->deleteLater();
+                    int index = tabWidget->indexOf(_webView);
+                    if (index != -1)
+                    {
+                        // Try to prompt for save via owning WebView before closing
+                        quint64 ownerPtr = _webView->property("webview_owner").toULongLong();
+                        WebView* owner = reinterpret_cast<WebView*>((quintptr)ownerPtr);
+                        bool okToClose = true;
+                        if (owner)
+                            okToClose = owner->confirmClose();
+                        if (okToClose)
+                        {
+                            tabWidget->removeTab(index);
+                        }
+                        else
+                        {
+                            return; // user cancelled
+                        }
+                    }
+                    _webView->deleteLater();
+                }
+                else
+                {
+                    QWidget* topLevel = _webView->window();
+                    if (topLevel)
+                    {
+                        LOG_INF("Closing document window");
+                        topLevel->hide();
+                        topLevel->close();
+                        topLevel->deleteLater();
+                    }
                 }
             }
         });
@@ -968,10 +1004,32 @@ QVariant Bridge::cool(const QString& messageStr)
     }
     else if (message == "uno .uno:CloseWin")
     {
-        // Close the main window associated with this web view
-        if (_webView && _webView->window())
+        // Close the tab if present, otherwise close the main window;
+        if (_webView)
         {
-            _webView->window()->close();
+            QWidget* parentWidget = _webView->parentWidget();
+            QTabWidget* tabWidget = qobject_cast<QTabWidget*>(parentWidget);
+            if (tabWidget)
+            {
+                int index = tabWidget->indexOf(_webView);
+                if (index != -1)
+                {
+                    quint64 ownerPtr = _webView->property("webview_owner").toULongLong();
+                    WebView* owner = reinterpret_cast<WebView*>((quintptr)ownerPtr);
+                    bool okToClose = true;
+                    if (owner)
+                        okToClose = owner->confirmClose();
+                    if (okToClose)
+                        tabWidget->removeTab(index);
+                    else
+                        return {};
+                }
+                _webView->deleteLater();
+            }
+            else if (_webView->window())
+            {
+                _webView->window()->close();
+            }
         }
     }
     else if (message == "PRINT")

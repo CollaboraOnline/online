@@ -63,6 +63,8 @@ public:
     ~WebView();
     CODAWebEngineView* webEngineView() { return _webView.get(); }
     QMainWindow* mainWindow() { return _mainWindow; }
+    // Prompt to save if modified and return true if it's OK to close the document
+    bool confirmClose();
 
     void load(const Poco::URI& fileURL = Poco::URI(), bool newFile = false, bool isStarterMode = false);
     static WebView* createNewDocument(QWebEngineProfile* profile, const std::string& templateType, const std::string& templatePath = "");
@@ -71,6 +73,7 @@ public:
     static WebView* findStarterScreen();
     static const std::vector<WebView*>& getAllInstances() { return s_instances; }
     void activateWindow();
+    void closeTab();
     const Poco::URI& getSaveLocationURI() const { return _document._saveLocationURI; }
     bool isDocumentModified() const;
     bool isPendingSave() const;
