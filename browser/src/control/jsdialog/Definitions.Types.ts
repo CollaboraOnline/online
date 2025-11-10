@@ -359,6 +359,7 @@ interface EditWidgetJSON extends WidgetJSON {
 // type: 'checkbox'
 interface CheckboxWidgetJSON extends WidgetJSON {
 	text: string;
+	command?: string; // used to just execute uno command or dispatch command instead of sending message
 	checked?: boolean; // checkbox state
 	hidden?: boolean;
 }
