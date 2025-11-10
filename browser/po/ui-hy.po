@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-11-04 22:40+0100\n"
-"PO-Revision-Date: 2025-11-04 21:38+0000\n"
+"PO-Revision-Date: 2025-11-08 11:51+0000\n"
 "Last-Translator: Tigran Zargaryan <tigranflib@gmail.com>\n"
 "Language-Team: Armenian <https://hosted.weblate.org/projects/"
 "collabora-online/ui/hy/>\n"
-"Language: \n"
+"Language: hy\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 5.14.1-dev\n"
+"X-Generator: Weblate 5.15-dev\n"
 
 #: admin/admin.strings.js:15
 msgid "Admin console"
@@ -2819,23 +2819,23 @@ msgstr "Թերթի տեսք"
 
 #: src/control/Control.NotebookbarCalc.js:1406
 msgid "Default View"
-msgstr ""
+msgstr "Լռելյայն տեսք"
 
 #: src/control/Control.NotebookbarCalc.js:1423
 msgid "Select Sheet View"
-msgstr ""
+msgstr "Ընտրել թերթիկի տեսքը"
 
 #: src/control/Control.NotebookbarCalc.js:1430
 msgid "New Sheet View"
-msgstr ""
+msgstr "Նոր թերթիկի տեսք"
 
 #: src/control/Control.NotebookbarCalc.js:1437
 msgid "Remove Sheet View"
-msgstr ""
+msgstr "Հեռացնել թերթիկի տեսքը"
 
 #: src/control/Control.NotebookbarCalc.js:1444
 msgid "Exit Sheet View"
-msgstr ""
+msgstr "Ելք թերթիկի դիտումից"
 
 #: src/control/Control.NotebookbarCalc.js:1459
 msgid "Freeze"
@@ -5097,7 +5097,6 @@ msgid "Collabora Online Development Edition"
 msgstr "Collabora Online Զարգացման տարբերակ"
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.p:28-7
-#, fuzzy
 msgid ""
 "Enjoy the latest developments in online productivity, free for you to use, "
 "to explore and to use with others in the browser. Various <a "
@@ -5108,25 +5107,25 @@ msgstr ""
 "Վայելեք առցանց արտադրողականության վերջին զարգացումները, որոնք անվճար են ձեզ "
 "համար՝ օգտագործելու, ուսումնասիրելու և զննարկիչում ուրիշների հետ "
 "օգտագործելու համար: Բջջային հեռախոսների համար հասանելի են նաև տարբեր <a "
-"target=\"_blank\" href=\"https://www.collaboraonline.com/solutions/"
-"collabora-office-android-ios/\">հավելվածներ</a>:"
+"target=\"_blank\" rel=\"noopener\" href="
+"\"https://www.collaboraonline.com/solutions/collabora-office-android-ios/\""
+">apps</a>:"
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h1:37-7
 msgid "Discover All The Changes"
 msgstr "Բացահայտեք բոլոր փոփոխությունները"
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.p:39-7
-#, fuzzy
 msgid ""
 "Check the <a target=\"_blank\" rel=\"noopener\" href=\"https://www."
 "collaboraonline.com/code-25-04-release-notes/\">release notes</a> and learn "
 "all about: The latest Collabora Online Development Edition, aimed at home "
 "users and small teams."
 msgstr ""
-"Ստուգեք <a target=\"_blank\" href=\"https://www.collaboraonline.com/"
-"code-25-04-release-notes/\">թողարկման նշումները</a> և իմացեք ամեն ինչ "
-"Collabora-ի առցանց մշակման վերջին տարբերակի մասին, որը նախատեսված է տանը "
-"օգտագործման և փոքր թիմերի համար:"
+"Ստուգեք <a target=\"_blank\" rel=\"noopener\" href="
+"\"https://www.collaboraonline.com/code-25-04-release-notes/\">թողարկման "
+"նշումները</a> և իմացեք ամեն ինչ Collabora-ի առցանց մշակման վերջին տարբերակի "
+"մասին, որը նախատեսված է տանը օգտագործման և փոքր թիմերի համար:"
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h1:48-7
 msgid "Get Involved"
@@ -5137,7 +5136,6 @@ msgid "https://collaboraonline.github.io/"
 msgstr "https://collaboraonline.github.io/"
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.p:50-7
-#, fuzzy
 msgid ""
 "Are you interested in contributing but don’t know where to start? Head over "
 "to the <a target=\"_blank\" rel=\"noopener\" href=\"https://collaboraonline."
@@ -5149,12 +5147,14 @@ msgid ""
 "report</a> with all the essential steps on how to reproduce it."
 msgstr ""
 "Հետաքրքրվա՞ծ եք ներդրում ունենալով, բայց չգիտե՞ք որտեղից սկսել: Անցեք <a "
-"target=\"_blank\" href=\"https://collaboraonline.github.io/post/build-code/\""
-">քայլ առ քայլ հրահանգներին</a> և կառուցեք CODE-ը զրոյից: Կարող եք նաև օգնել "
-"<a target=\"_blank\" href=\"https://collaboraonline.github.io/post/translate/"
-"\">թարգմանությունների</a> հարցում կամ <a target=\"_blank\" href=\"https"
-"://collaboraonline.github.io/post/filebugs/\">սխալի մասին հաղորդում "
-"ներկայացնելով</a>՝ այն վերարտադրելու բոլոր անհրաժեշտ քայլերով:"
+"target=\"_blank\" rel=\"noopener\" href="
+"\"https://collaboraonline.github.io/post/build-code/\">քայլ առ քայլ "
+"հրահանգներ</a> և կառուցեք CODE-ը զրոյից։ Դուք կարող եք նաև օգնել <a target="
+"\"_blank\" rel=\"noopener\" href="
+"\"https://collaboraonline.github.io/post/translate/\">թարգմանություններ</a> "
+"կամ <a target=\"_blank\" rel=\"noopener\" href="
+"\"https://collaboraonline.github.io/post/filebugs/\">սխալի մասին հաղորդում "
+"ներկայացնելը</a> ՝ այն վերարտադրելու բոլոր անհրաժեշտ քայլերով:"
 
 #: welcome/welcome.html%2Bhtml.body.div.div:55-5
 msgid ""
