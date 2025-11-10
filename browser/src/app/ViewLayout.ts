@@ -16,6 +16,7 @@ class ScrollProperties {
 	minimumVerticalScrollSize: number = 80 * app.roundedDpiScale;
 	verticalScrollRatio: number = 0;
 	startY: number = 0; // Start position of the vertical scroll bar on canvas.
+	viewY: number = 0; // Corresponding view position of startY.
 	verticalScrollStep: number = 0; // Quick scroll step.
 
 	xOffset: number = 0;
@@ -24,6 +25,7 @@ class ScrollProperties {
 	minimumHorizontalScrollSize: number = 80 * app.roundedDpiScale;
 	horizontalScrollRatio: number = 0;
 	startX: number = 0;
+	viewX: number = 0; // Corresponding view position of startX.
 	horizontalScrollStep: number = 0;
 
 	usableThickness: number = 20 * app.roundedDpiScale;
@@ -170,7 +172,7 @@ class ViewLayoutBase {
 		this._documentAnchorPosition = newPosition;
 	}
 
-	private getDocumentAnchorSection(): CanvasSectionObject {
+	protected getDocumentAnchorSection(): CanvasSectionObject {
 		return app.sectionContainer.getDocumentAnchorSection();
 	}
 
