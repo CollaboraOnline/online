@@ -2,9 +2,15 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: core-hu\n"
+"PO-Revision-Date: 2025-11-10 16:33+0000\n"
+"Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
+"Language-Team: Hungarian <https://hosted.weblate.org/projects/"
+"collabora-online/lokit/hu/>\n"
 "Language: hu\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.15-dev\n"
 
 #. ygDfy
 #: module_graphicfilter.ulf
@@ -13,7 +19,7 @@ msgctxt ""
 "STR_NAME_MODULE_OPTIONAL_GRFFLT_FLASH\n"
 "LngText.text"
 msgid "Macromedia Flash (SWF)"
-msgstr ""
+msgstr "Macromedia Flash (SWF)"
 
 #. qAk8E
 #: module_graphicfilter.ulf
@@ -22,7 +28,7 @@ msgctxt ""
 "STR_DESC_MODULE_OPTIONAL_GRFFLT_FLASH\n"
 "LngText.text"
 msgid "Macromedia Flash (SWF) Export Filter"
-msgstr ""
+msgstr "Macromedia Flash (SWF) exportszűrő"
 
 #. vcMGk
 #: folderitem_ooo.ulf
@@ -35,6 +41,8 @@ msgid ""
 "Technology, provided by Collabora Productivity. See "
 "https://collaboraoffice.com"
 msgstr ""
+"Collabora Office, a LibreOffice-technológián alapuló irodai programcsomag a "
+"Collabora Productivity kiadásában. További infó: https://collaboraoffice.com"
 
 #. 4rBwc
 #: include/svx/strings.hrc:1040
@@ -46,31 +54,31 @@ msgstr ""
 #: svx/uiconfig/ui/dropdownfielddialog.ui:31
 msgctxt "dropdownDialog|OK"
 msgid "OK"
-msgstr ""
+msgstr "OK"
 
 #. 54Dmg
 #: svx/uiconfig/ui/dropdownfielddialog.ui:44
 msgctxt "dropdownDialog|CANCEL"
 msgid "Cancel"
-msgstr ""
+msgstr "Mégse"
 
 #. gPAYw
 #: svx/uiconfig/ui/findreplacedialog.ui:67
 msgctxt "findreplacedialog|find_tab_btn"
 msgid "Find"
-msgstr ""
+msgstr "Keresés"
 
 #. uknDS
 #: svx/uiconfig/ui/findreplacedialog.ui:80
 msgctxt "findreplacedialog|replace_tab_btn"
 msgid "Replace"
-msgstr ""
+msgstr "Csere"
 
 #. 7MFsT
 #: uui/inc/strings.hrc:84
 msgctxt "STR_READONLY_FONT_TITLE"
 msgid "Font Disallows Editing"
-msgstr ""
+msgstr "A betűkészlet nem engedi a szerkesztést"
 
 #. YRahp
 #: uui/inc/strings.hrc:85
@@ -81,6 +89,12 @@ msgid ""
 "Pressing [ No ] will drop these fonts from the document:\n"
 "$(ARG1)"
 msgstr ""
+"A dokumentumba olyan betűkészletek vannak beágyazva, amelyek tiltják a "
+"szerkesztést.\n"
+"Megnyitás csak olvasható módban?\n"
+"A [ Nem ] gombra kattintás azt fogja eredményezni, hogy a kérdéses "
+"betűkészletek eltávolításra kerülnek a dokumentumból:\n"
+"$(ARG1)"
 
 #. 4NkMk
 #: readme.xrm
@@ -92,96 +106,98 @@ msgid ""
 "For more information please visit ${PRODUCTNAME} home page at <a "
 "href=\"https://collaboraoffice.com\">https://CollaboraOffice.com/</a>."
 msgstr ""
+"További információkért látogasson el a ${PRODUCTNAME} honlapjára a <a href="
+"\"https://collaboraoffice.com\">https://CollaboraOffice.com/</a> címen."
 
 #. SbQew
 #: chart2/inc/strings.hrc:51
 msgctxt "STR_PAGE_COLOR_PALETTE"
 msgid "Color Palette"
-msgstr ""
+msgstr "Színpaletta"
 
 #. YZBr8
 #: chart2/inc/strings.hrc:52
 msgctxt "STR_PAGE_GRADIENT_PRESETS"
 msgid "Gradients"
-msgstr ""
+msgstr "Színátmenetek"
 
 #. DWGVf
 #: chart2/uiconfig/ui/chartcolorpalettepopup.ui:46
 msgctxt "chartcolorpalettepopup|colorfulwin"
 msgid "Colorful"
-msgstr ""
+msgstr "Színes"
 
 #. xmAmH
 #: chart2/uiconfig/ui/chartcolorpalettepopup.ui:98
 msgctxt "chartcolorpalettepopup|monochromaticwin"
 msgid "Monochromatic"
-msgstr ""
+msgstr "Egyszínű"
 
 #. DrjDt
 #: chart2/uiconfig/ui/chartgradientpalettepopup.ui:46
 msgctxt "chartgradientpalettepopup|lightwin"
 msgid "Light Variations"
-msgstr ""
+msgstr "Halványabb változatok"
 
 #. Y3PP5
 #: chart2/uiconfig/ui/chartgradientpalettepopup.ui:97
 msgctxt "chartgradientpalettepopup|darkwin"
 msgid "Dark Variations"
-msgstr ""
+msgstr "Sötétebb változatok"
 
 #. WWm9R
 #: chart2/uiconfig/ui/chartthemepopup.ui:51
 msgctxt "chartthemepopup|managechartstyle"
 msgid "_Manage chart styles"
-msgstr ""
+msgstr "_Diagramstílusok kezelése"
 
 #. BFxBa
 #: chart2/uiconfig/ui/dlg_Theme.ui:16
 msgctxt "dlg_Theme|ChartThemeDialog"
 msgid "Manage Chart Styles"
-msgstr ""
+msgstr "Diagramstílusok kezelése"
 
 #. kqBFK
 #: chart2/uiconfig/ui/dlg_Theme.ui:46
 msgctxt "dlg_Theme|iconviewlabel|tooltip_text"
 msgid "Selectable chart styles list."
-msgstr ""
+msgstr "A kiválasztható diagramstílusok listája."
 
 #. WsSmE
 #: chart2/uiconfig/ui/dlg_Theme.ui:51
 msgctxt "dlg_Theme|iconviewlabel"
 msgid "_Chart styles:"
-msgstr ""
+msgstr "_Diagramstílusok:"
 
 #. DYH5e
 #: chart2/uiconfig/ui/dlg_Theme.ui:122
 msgctxt "dlg_Theme|chartload"
 msgid "_Load style to chart"
-msgstr ""
+msgstr "_Stílus betöltése a diagramhoz"
 
 #. YWkrA
 #: chart2/uiconfig/ui/dlg_Theme.ui:134
 msgctxt "dlg_Theme|chartsave"
 msgid "_Save to styles"
-msgstr ""
+msgstr "_Mentés a stílusok közé"
 
 #. h8L8Y
 #: chart2/uiconfig/ui/dlg_Theme.ui:146
 msgctxt "dlg_Theme|chartdelete"
 msgid "_Delete style"
-msgstr ""
+msgstr "_Stílus törlése"
 
 #. g5qPU
 #: chart2/uiconfig/ui/dlg_Theme.ui:158
 msgctxt "dlg_Theme|chartsavenew"
 msgid "Save to _new style"
-msgstr ""
+msgstr "Me_ntés új stílusba"
 
 #. GPgLR
 #: chart2/uiconfig/ui/dlg_Theme.ui:183
 msgctxt "dlg_Theme|chartmanage"
 msgid "_Manage chart styles"
-msgstr ""
+msgstr "_Diagramstílusok kezelése"
 
 #. NMcqp
 #: chart2/uiconfig/ui/sidebarcolors.ui:30
