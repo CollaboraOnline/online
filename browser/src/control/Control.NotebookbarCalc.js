@@ -1595,7 +1595,8 @@ window.L.Control.NotebookbarCalc = window.L.Control.NotebookbarWriter.extend({
 							{
 								'id': 'showstatusbar',
 								'class': 'unoshowstatusbar',
-								'type': 'customtoolitem',
+								'type': 'checkbox',
+								'command': 'showstatusbar',
 								'text': _('Status Bar'),
 								'accessibility': { focusBack: true,	combination: 'SB', de: null }
 							}
