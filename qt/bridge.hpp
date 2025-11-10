@@ -16,7 +16,6 @@
 #include <QVariant>
 #include <string>
 #include "Document.hpp"
-#include <QSvgWidget>
 
 // Qt ⇄ JavaScript bridge
 class Bridge : public QObject
@@ -31,7 +30,7 @@ class Bridge : public QObject
     bool saveDocumentAs();
 
 public:
-    explicit Bridge(QObject* parent, coda::DocumentData& document, QWebEngineView* webView, QSvgWidget* svgOverlay = nullptr)
+    explicit Bridge(QObject* parent, coda::DocumentData& document, QWebEngineView* webView)
         : QObject(parent)
         , _document(document)
         , _webView(webView)
