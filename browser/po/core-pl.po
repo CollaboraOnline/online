@@ -2,9 +2,16 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: core-pl\n"
+"PO-Revision-Date: 2025-11-10 16:33+0000\n"
+"Last-Translator: Matthaiks <kitynska@gmail.com>\n"
+"Language-Team: Polish <https://hosted.weblate.org/projects/collabora-online/"
+"lokit/pl/>\n"
 "Language: pl\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=n==1 ? 0 : n%10>=2 && n%10<=4 && "
+"(n%100<10 || n%100>=20) ? 1 : 2;\n"
+"X-Generator: Weblate 5.15-dev\n"
 
 #. ygDfy
 #: module_graphicfilter.ulf
@@ -13,7 +20,7 @@ msgctxt ""
 "STR_NAME_MODULE_OPTIONAL_GRFFLT_FLASH\n"
 "LngText.text"
 msgid "Macromedia Flash (SWF)"
-msgstr ""
+msgstr "Macromedia Flash (SWF)"
 
 #. qAk8E
 #: module_graphicfilter.ulf
@@ -22,7 +29,7 @@ msgctxt ""
 "STR_DESC_MODULE_OPTIONAL_GRFFLT_FLASH\n"
 "LngText.text"
 msgid "Macromedia Flash (SWF) Export Filter"
-msgstr ""
+msgstr "Filtr eksportu Macromedia Flash (SWF)"
 
 #. vcMGk
 #: folderitem_ooo.ulf
@@ -35,42 +42,44 @@ msgid ""
 "Technology, provided by Collabora Productivity. See "
 "https://collaboraoffice.com"
 msgstr ""
+"Collabora Office, pakiet biurowy oparty na technologii LibreOffice, "
+"dostarczany przez Collabora Productivity. Zobacz https://collaboraoffice.com"
 
 #. 4rBwc
 #: include/svx/strings.hrc:1040
 msgctxt "RID_SVXSTR_PASTE_AS_DIALOG_TITLE"
 msgid "Paste As"
-msgstr ""
+msgstr "Wklej jako"
 
 #. aNZNw
 #: svx/uiconfig/ui/dropdownfielddialog.ui:31
 msgctxt "dropdownDialog|OK"
 msgid "OK"
-msgstr ""
+msgstr "OK"
 
 #. 54Dmg
 #: svx/uiconfig/ui/dropdownfielddialog.ui:44
 msgctxt "dropdownDialog|CANCEL"
 msgid "Cancel"
-msgstr ""
+msgstr "Anuluj"
 
 #. gPAYw
 #: svx/uiconfig/ui/findreplacedialog.ui:67
 msgctxt "findreplacedialog|find_tab_btn"
 msgid "Find"
-msgstr ""
+msgstr "Znajdź"
 
 #. uknDS
 #: svx/uiconfig/ui/findreplacedialog.ui:80
 msgctxt "findreplacedialog|replace_tab_btn"
 msgid "Replace"
-msgstr ""
+msgstr "Zamień"
 
 #. 7MFsT
 #: uui/inc/strings.hrc:84
 msgctxt "STR_READONLY_FONT_TITLE"
 msgid "Font Disallows Editing"
-msgstr ""
+msgstr "Czcionka nie pozwala na edycję"
 
 #. YRahp
 #: uui/inc/strings.hrc:85
@@ -81,6 +90,12 @@ msgid ""
 "Pressing [ No ] will drop these fonts from the document:\n"
 "$(ARG1)"
 msgstr ""
+"Co najmniej jedna czcionka osadzona w dokumencie nie ma uprawnień do edycji."
+"\n"
+"Otworzyć dokument w trybie tylko do odczytu?\n"
+"Naciśnięcie przycisku [ Nie ] spowoduje usunięcie tych czcionek z dokumentu:"
+"\n"
+"$(ARG1)"
 
 #. 4NkMk
 #: readme.xrm
@@ -92,66 +107,68 @@ msgid ""
 "For more information please visit ${PRODUCTNAME} home page at <a "
 "href=\"https://collaboraoffice.com\">https://CollaboraOffice.com/</a>."
 msgstr ""
+"Więcej informacji znajdziesz na stronie głównej ${PRODUCTNAME} pod adresem "
+"<a href=\"https://collaboraoffice.com\">https://CollaboraOffice.com/</a>."
 
 #. SbQew
 #: chart2/inc/strings.hrc:51
 msgctxt "STR_PAGE_COLOR_PALETTE"
 msgid "Color Palette"
-msgstr ""
+msgstr "Paleta kolorów"
 
 #. YZBr8
 #: chart2/inc/strings.hrc:52
 msgctxt "STR_PAGE_GRADIENT_PRESETS"
 msgid "Gradients"
-msgstr ""
+msgstr "Gradienty"
 
 #. DWGVf
 #: chart2/uiconfig/ui/chartcolorpalettepopup.ui:46
 msgctxt "chartcolorpalettepopup|colorfulwin"
 msgid "Colorful"
-msgstr ""
+msgstr "Kolorowy"
 
 #. xmAmH
 #: chart2/uiconfig/ui/chartcolorpalettepopup.ui:98
 msgctxt "chartcolorpalettepopup|monochromaticwin"
 msgid "Monochromatic"
-msgstr ""
+msgstr "Monochromatyczny"
 
 #. DrjDt
 #: chart2/uiconfig/ui/chartgradientpalettepopup.ui:46
 msgctxt "chartgradientpalettepopup|lightwin"
 msgid "Light Variations"
-msgstr ""
+msgstr "Jasne wariacje"
 
 #. Y3PP5
 #: chart2/uiconfig/ui/chartgradientpalettepopup.ui:97
 msgctxt "chartgradientpalettepopup|darkwin"
 msgid "Dark Variations"
-msgstr ""
+msgstr "Ciemne wariacje"
 
 #. WWm9R
 #: chart2/uiconfig/ui/chartthemepopup.ui:51
 msgctxt "chartthemepopup|managechartstyle"
 msgid "_Manage chart styles"
-msgstr ""
+msgstr "_Zarządzaj stylami wykresu"
 
 #. BFxBa
 #: chart2/uiconfig/ui/dlg_Theme.ui:16
 msgctxt "dlg_Theme|ChartThemeDialog"
 msgid "Manage Chart Styles"
-msgstr ""
+msgstr "Zarządzaj stylami wykresu"
 
 #. kqBFK
 #: chart2/uiconfig/ui/dlg_Theme.ui:46
 msgctxt "dlg_Theme|iconviewlabel|tooltip_text"
 msgid "Selectable chart styles list."
-msgstr ""
+msgstr "Lista dostępnych stylów wykresu."
 
 #. WsSmE
 #: chart2/uiconfig/ui/dlg_Theme.ui:51
 msgctxt "dlg_Theme|iconviewlabel"
 msgid "_Chart styles:"
-msgstr ""
+msgstr "Style _wykresu:"
 
 #. DYH5e
 #: chart2/uiconfig/ui/dlg_Theme.ui:122
@@ -609,8 +626,8 @@ msgid ""
 "This setting enables you to export the document as a .pdf file containing "
 "two file formats: PDF and ODF as an attachment. "
 msgstr ""
-"To ustawienie umożliwia wyeksportowanie dokumentu jako pliku .pdf "
-"zawierającego dwa formaty plików: PDF i ODF."
+"To ustawienie umożliwia eksportowanie dokumentu jako pliku .pdf "
+"zawierającego dwa formaty plików: PDF i ODF jako załącznik. "
 
 #. NCgBM
 #: filter/uiconfig/ui/pdfgeneralpage.ui:583
@@ -619,8 +636,9 @@ msgid ""
 "Select the PDF version. PDF/A version variants creates an ISO 19005 "
 "compliant PDF file, ideal for long-term document preservation."
 msgstr ""
-"Tworzy plik PDF zgodny z ISO 19005-2, idealny do długotrwałego "
-"przechowywania dokumentów"
+"Wybierz wersję PDF. Warianty wersji PDF/A umożliwiają utworzenie pliku PDF "
+"zgodnego z normą ISO 19005, idealnego do długoterminowego przechowywania "
+"dokumentów."
 
 #. Ac3Ga
 #: filter/uiconfig/ui/pdfgeneralpage.ui:587
