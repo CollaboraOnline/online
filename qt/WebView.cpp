@@ -21,6 +21,7 @@
 #include <Poco/URI.h>
 #include <Poco/Path.h>
 
+#include <cassert>
 #include <cstdlib>
 #include <cstring>
 
@@ -82,12 +83,29 @@ std::string getUILanguage()
 
     return lang;
 }
+
+class Window: public QMainWindow {
+public:
+    Window(QWidget * parent, WebView * owner): QMainWindow(parent), owner_(owner) {}
+
+private:
+    void closeEvent(QCloseEvent * ev) override {
+        auto const p = owner_;
+        owner_ = nullptr;
+        assert(p != nullptr);
+        delete p;
+        QMainWindow::closeEvent(ev);
+    }
+
+    WebView * owner_;
+};
 } // namespace
 
 WebView::WebView(QWidget* parent, QWebEngineProfile* profile, bool isWelcome)
-    : _mainWindow(new QMainWindow(parent))
+    : _mainWindow(new Window(parent, this))
     , _webView(new QWebEngineView(_mainWindow))
     , _isWelcome(isWelcome)
+    , _bridge(nullptr)
 {
     _mainWindow->setCentralWidget(_webView);
 
@@ -108,6 +126,13 @@ WebView::WebView(QWidget* parent, QWebEngineProfile* profile, bool isWelcome)
                              _mainWindow->showNormal();
                          request.accept();
                      });
+}
+
+WebView::~WebView() {
+    if (_bridge != nullptr) {
+        _webView->page()->webChannel()->deregisterObject(_bridge);
+        delete _bridge;
+    }
 }
 
 std::pair<int, int> getWindowSize(bool isWelcome)
@@ -180,8 +205,9 @@ void WebView::load(const Poco::URI& fileURL, bool newFile)
     // setup js c++ communication
     QWebChannel* channel = new QWebChannel(_webView->page());
 
-    auto bridge = new Bridge(channel, _document, _webView);
-    channel->registerObject("bridge", bridge);
+    assert(_bridge == nullptr);
+    _bridge = new Bridge(channel, _document, _webView);
+    channel->registerObject("bridge", _bridge);
     _webView->page()->setWebChannel(channel);
 
     Poco::URI urlAndQuery(std::string("file://") + getTopSrcDir(TOPSRCDIR) +
