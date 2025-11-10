@@ -51,6 +51,9 @@ public:
 
     ~Bridge() override;
 
+    // Exposed helpers for external callers
+    bool promptSaveAs();
+
     // TODO: move these to webview...
     // Helper: post JavaScript code safely on GUI thread
     void evalJS(const std::string& script);
@@ -59,6 +62,9 @@ public:
     void send2JS(const std::vector<char>& buffer);
 
     bool isModified() const { return _modified; }
+signals:
+    // Emitted when the modified state changes (true = document has unsaved changes)
+    void modifiedChanged(bool modified);
 
 public slots: // called from JavaScript
     // Called from JS via window.postMobileMessage
