@@ -119,21 +119,19 @@ function removeShapeSelection() {
 	cy.log('>> removeShapeSelection - start');
 
 	// Remove selection with clicking on the top-left corner of the slide
-	cy.waitUntil(function() {
-		cy.cGet('.leaflet-canvas-container canvas')
-			.then(function(items) {
-				var XPos = items[0].getBoundingClientRect().left + 10;
-				var YPos = items[0].getBoundingClientRect().top + 10;
-				cy.cGet('body').click(XPos, YPos);
-				cy.cGet('body').type('{esc}');
-				cy.cGet('body').type('{esc}');
-			});
+	cy.cGet('.leaflet-canvas-container canvas')
+		.then(function(items) {
+			var XPos = items[0].getBoundingClientRect().left + 10;
+			var YPos = items[0].getBoundingClientRect().top + 10;
+			cy.cGet('body').click(XPos, YPos);
+			cy.cGet('body').type('{esc}');
+			cy.cGet('body').type('{esc}');
+		});
 
-		return cy.cGet('#document-container')
-			.then(function(overlay) {
-				return overlay.children('svg').length === 0;
-			});
-	});
+	cy.cGet('#document-container')
+		.should(function(overlay) {
+			expect(overlay.children('svg').length).to.equal(0);
+		});
 
 	cy.cGet('.leaflet-drag-transform-marker').should('not.exist');
 
