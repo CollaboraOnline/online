@@ -18,10 +18,13 @@
 #include <QMainWindow>
 #include <Poco/URI.h>
 
+class Bridge;
+
 class WebView
 {
 public:
     explicit WebView(QWidget* parent, QWebEngineProfile* profile, bool isWelcome = false);
+    ~WebView();
     QWebEngineView* webEngineView() { return _webView; }
 
     void load(const Poco::URI& fileURL, bool newFile = false);
@@ -32,6 +35,7 @@ private:
     QWebEngineView* _webView;
     coda::DocumentData _document;
     bool _isWelcome;
+    Bridge* _bridge;
 };
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
