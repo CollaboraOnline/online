@@ -38,12 +38,12 @@ msgctxt ""
 "LngText.text"
 msgid ""
 "Collabora Office, the office productivity suite based on LibreOffice "
-"Technology, provided by Collabora Productivity. See "
-"https://collaboraoffice.com"
+"Technology, provided by Collabora Productivity. See https://collaboraoffice."
+"com"
 msgstr ""
 "Collabora Office, kontorsproduktivitetspaketet baserat på LibreOffice-"
-"teknik, som tillhandahålls av Collabora Productivity. Se "
-"https://collaboraoffice.com"
+"teknik, som tillhandahålls av Collabora Productivity. Se https://"
+"collaboraoffice.com"
 
 #. 4rBwc
 #: include/svx/strings.hrc:1040
@@ -106,8 +106,8 @@ msgid ""
 "For more information please visit ${PRODUCTNAME} home page at <a "
 "href=\"https://collaboraoffice.com\">https://CollaboraOffice.com/</a>."
 msgstr ""
-"För mer information gå till hemsidan för ${PRODUCTNAME} på <a href="
-"\"https://collaboraoffice.com\">https://CollaboraOffice.com/</a>."
+"För mer information gå till hemsidan för ${PRODUCTNAME} på <a href=\"https://"
+"collaboraoffice.com\">https://CollaboraOffice.com/</a>."
 
 #. SbQew
 #: chart2/inc/strings.hrc:51
@@ -201,25 +201,30 @@ msgstr "Hantera stilar för diagram"
 
 #. NMcqp
 #: chart2/uiconfig/ui/sidebarcolors.ui:30
-msgctxt "sidebarcellappearance|bordertype|tooltip_text"
+msgctxt "sidebarcolors|bordertype|tooltip_text"
 msgid "Allow to select a color palette to apply to current chart data series."
 msgstr ""
 "Tillåt val av färgpalett för att tillämpa på aktuella diagramdataserier."
 
 #. FXK8B
-#: chart2/uiconfig/ui/sidebargradients.ui:42
-#: sc/uiconfig/scalc/ui/sidebarcellappearance.ui:87
-msgctxt "sidebarcellappearance|cellbordertype-atkobject"
+#: chart2/uiconfig/ui/sidebarcolors.ui:42
+msgctxt "sidebarcolors|cellbordertype-atkobject"
 msgid "Border Style"
 msgstr "Inramningsstil"
 
 #. vDwKf
 #: chart2/uiconfig/ui/sidebargradients.ui:30
-msgctxt "sidebarcellappearance|bordertype|tooltip_text"
+msgctxt "sidebargradients|bordertype|tooltip_text"
 msgid ""
 "Allow to select a gradient palette to apply to current chart data series."
 msgstr ""
 "Tillåt val av toningspalett för att tillämpa på aktuella diagramdataserier."
+
+#. FXK8B
+#: chart2/uiconfig/ui/sidebargradients.ui:42
+msgctxt "sidebargradients|cellbordertype-atkobject"
+msgid "Border Style"
+msgstr "Inramningsstil"
 
 #. Aiqg6
 #: chart2/uiconfig/ui/sidebartheme.ui:25
@@ -436,7 +441,8 @@ msgstr "Kolumn"
 msgctxt "columnpage|extended_tip|column-iconview"
 msgid ""
 "Enter the number of columns that you want in the page, frame, or section."
-msgstr "Ange antalet kolumner som du vill ha på sidan, i ramen eller avsnittet."
+msgstr ""
+"Ange antalet kolumner som du vill ha på sidan, i ramen eller avsnittet."
 
 #. Ci9GE
 #: sw/uiconfig/swriter/ui/spellmenu.ui:34
@@ -579,8 +585,7 @@ msgstr ""
 msgctxt "impswfdialog|exportall"
 msgid "Export _all slides (uncheck to export current slide)"
 msgstr ""
-"Exportera alla presentationsbilder (kryssa ur för att exportera aktuell "
-"bild)"
+"Exportera alla presentationsbilder (kryssa ur för att exportera aktuell bild)"
 
 #. CB9hD
 #: filter/uiconfig/ui/impswfdialog.ui:155
@@ -641,8 +646,8 @@ msgid ""
 "Select the PDF version. PDF/A version variants creates an ISO 19005 "
 "compliant PDF file, ideal for long-term document preservation."
 msgstr ""
-"Skapar en PDF enligt ISO 19005-2, som är lämplig för dokument som ska lagras"
-" på lång sikt."
+"Skapar en PDF enligt ISO 19005-2, som är lämplig för dokument som ska lagras "
+"på lång sikt."
 
 #. Ac3Ga
 #: filter/uiconfig/ui/pdfgeneralpage.ui:587
@@ -674,8 +679,8 @@ msgid ""
 "PDF tags will be written."
 msgstr ""
 "Konverterar till formatet PDF/A-2b eller PDF/A-1b. Detta definieras som ett "
-"elektroniskt dokumentfilformat för långvarig bevarande. Alla teckensnitt som"
-" användes i källdokumentet kommer att bäddas in i den genererade PDF-filen. "
+"elektroniskt dokumentfilformat för långvarig bevarande. Alla teckensnitt som "
+"användes i källdokumentet kommer att bäddas in i den genererade PDF-filen. "
 "PDF-taggar kommer att skrivas."
 
 #. te76B
@@ -986,7 +991,8 @@ msgstr "Lägg till i ordbok"
 #: ImpressWindowState.xcu
 msgctxt ""
 "ImpressWindowState.xcu\n"
-"..ImpressWindowState.UIElements.States.private:resource/popupmenu/pagepanecanvas\n"
+"..ImpressWindowState.UIElements.States.private:resource/popupmenu/"
+"pagepanecanvas\n"
 "UIName\n"
 "value.text"
 msgid "Slide Sorter/Pane (Canvas)"
@@ -996,7 +1002,8 @@ msgstr "Bildsortering/Panel (Canvas)"
 #: ImpressWindowState.xcu
 msgctxt ""
 "ImpressWindowState.xcu\n"
-"..ImpressWindowState.UIElements.States.private:resource/popupmenu/pagepanecanvasmaster\n"
+"..ImpressWindowState.UIElements.States.private:resource/popupmenu/"
+"pagepanecanvasmaster\n"
 "UIName\n"
 "value.text"
 msgid "Master Slide Sorter/Pane (Canvas)"
@@ -1221,8 +1228,7 @@ msgstr "Matris"
 #: sc/inc/scfuncs.hrc:4269
 msgctxt "SC_OPCODE_CHOOSEROWS"
 msgid "The array containing the rows to be returned in the new array."
-msgstr ""
-"Matrisen som innehåller raderna som ska returneras i den nya matrisen."
+msgstr "Matrisen som innehåller raderna som ska returneras i den nya matrisen."
 
 #. PDBbE
 #: sc/inc/scfuncs.hrc:4270
@@ -1268,11 +1274,10 @@ msgstr "Rader"
 #: sc/inc/scfuncs.hrc:4281
 msgctxt "SC_OPCODE_DROP"
 msgid ""
-"The number of rows to drop. A negative value drops from the end of the "
-"array."
+"The number of rows to drop. A negative value drops from the end of the array."
 msgstr ""
-"Antalet rader som ska exkluderas. Ett negativt värde tar bort från slutet av"
-" matrisen."
+"Antalet rader som ska exkluderas. Ett negativt värde tar bort från slutet av "
+"matrisen."
 
 #. 6sAoA
 #: sc/inc/scfuncs.hrc:4282
@@ -1287,8 +1292,8 @@ msgid ""
 "The number of columns to drop. A negative value drops from the end of the "
 "array."
 msgstr ""
-"Antalet kolumner som ska exkluderas. Ett negativt värde tar bort från slutet"
-" av matrisen."
+"Antalet kolumner som ska exkluderas. Ett negativt värde tar bort från slutet "
+"av matrisen."
 
 #. cXvVY
 #: sc/inc/scfuncs.hrc:4289
@@ -1336,8 +1341,8 @@ msgstr "Kolumner"
 #: sc/inc/scfuncs.hrc:4295
 msgctxt "SC_OPCODE_EXPAND"
 msgid ""
-"The number of columns in the expanded array. If missing, columns will not be"
-" expanded."
+"The number of columns in the expanded array. If missing, columns will not be "
+"expanded."
 msgstr ""
 "Antalet kolumner i den expanderade matrisen. Om det saknas kommer kolumner "
 "inte att utökas."
@@ -1417,8 +1422,8 @@ msgid ""
 "Returns a specified number of contiguous rows or columns from the start or "
 "end of an array."
 msgstr ""
-"Returnerar ett angivet antal sammanhängande rader eller kolumner från början"
-" eller slutet av en matris."
+"Returnerar ett angivet antal sammanhängande rader eller kolumner från början "
+"eller slutet av en matris."
 
 #. dFLFb
 #: sc/inc/scfuncs.hrc:4324
@@ -1442,8 +1447,7 @@ msgstr "Rader"
 #: sc/inc/scfuncs.hrc:4327
 msgctxt "SC_OPCODE_TAKE"
 msgid ""
-"The number of rows to take. A negative value takes from the end of the "
-"array."
+"The number of rows to take. A negative value takes from the end of the array."
 msgstr ""
 "Antal rader som ska tas. Ett negativt värde tar från slutet av matrisen."
 
@@ -1460,8 +1464,7 @@ msgid ""
 "The number of columns to take. A negative value takes from the end of the "
 "array."
 msgstr ""
-"Antalet kolumner som ska tas. Ett negativt värde tar från slutet av "
-"matrisen."
+"Antalet kolumner som ska tas. Ett negativt värde tar från slutet av matrisen."
 
 #. GwyMB
 #: sc/inc/scfuncs.hrc:4335
@@ -1504,11 +1507,11 @@ msgstr "Instansnummer"
 #: sc/inc/scfuncs.hrc:4341
 msgctxt "SC_OPCODE_TEXTAFTER"
 msgid ""
-"The instance of the delimiter after which to extract text. The default is 1."
-" A negative number starts searching from the end."
+"The instance of the delimiter after which to extract text. The default is 1. "
+"A negative number starts searching from the end."
 msgstr ""
-"Instansen av avgränsaren efter vilken text ska extraheras. Standardvärdet är"
-" 1. Ett negativt tal börjar söka från slutet."
+"Instansen av avgränsaren efter vilken text ska extraheras. Standardvärdet är "
+"1. Ett negativt tal börjar söka från slutet."
 
 #. fpoGj
 #: sc/inc/scfuncs.hrc:4342
@@ -1757,8 +1760,8 @@ msgid ""
 "blanks cells and cells with error."
 msgstr ""
 "Om man ska ignorera vissa typer av värden. 0 eller utelämnad - behåll alla "
-"värden (standard). 1 - ignorera tomma celler. 2 - ignorera celler med fel. 3"
-" - ignorera tomma celler och celler med fel."
+"värden (standard). 1 - ignorera tomma celler. 2 - ignorera celler med fel. 3 "
+"- ignorera tomma celler och celler med fel."
 
 #. qNLAi
 #: sc/inc/scfuncs.hrc:4394
@@ -1809,8 +1812,8 @@ msgid ""
 "blanks cells and cells with error."
 msgstr ""
 "Om man ska ignorera vissa typer av värden. 0 eller utelämnad - behåll alla "
-"värden (standard). 1 - ignorera tomma celler. 2 - ignorera celler med fel. 3"
-" - ignorera tomma celler och celler med fel."
+"värden (standard). 1 - ignorera tomma celler. 2 - ignorera celler med fel. 3 "
+"- ignorera tomma celler och celler med fel."
 
 #. E4XDf
 #: sc/inc/scfuncs.hrc:4406
@@ -1969,3 +1972,9 @@ msgstr "Tillgängliga vyer för bladvisning."
 msgctxt "sheetviewbox|sheetview_combobox|accessible_name"
 msgid "Sheet View"
 msgstr "Vy för bladvisning"
+
+#. FXK8B
+#: sc/uiconfig/scalc/ui/sidebarcellappearance.ui:87
+msgctxt "sidebarcellappearance|cellbordertype-atkobject"
+msgid "Border Style"
+msgstr "Inramningsstil"

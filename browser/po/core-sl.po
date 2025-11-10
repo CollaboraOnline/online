@@ -32,8 +32,8 @@ msgctxt ""
 "LngText.text"
 msgid ""
 "Collabora Office, the office productivity suite based on LibreOffice "
-"Technology, provided by Collabora Productivity. See "
-"https://collaboraoffice.com"
+"Technology, provided by Collabora Productivity. See https://collaboraoffice."
+"com"
 msgstr ""
 
 #. 4rBwc
@@ -185,23 +185,30 @@ msgstr ""
 
 #. NMcqp
 #: chart2/uiconfig/ui/sidebarcolors.ui:30
-msgctxt "sidebarcellappearance|bordertype|tooltip_text"
+msgctxt "sidebarcolors|bordertype|tooltip_text"
 msgid "Allow to select a color palette to apply to current chart data series."
 msgstr ""
 
 #. FXK8B
-#: chart2/uiconfig/ui/sidebargradients.ui:42
-#: sc/uiconfig/scalc/ui/sidebarcellappearance.ui:87
-msgctxt "sidebarcellappearance|cellbordertype-atkobject"
+#: chart2/uiconfig/ui/sidebarcolors.ui:42
+#, fuzzy
+msgctxt "sidebarcolors|cellbordertype-atkobject"
 msgid "Border Style"
 msgstr "Slog obrobe"
 
 #. vDwKf
 #: chart2/uiconfig/ui/sidebargradients.ui:30
-msgctxt "sidebarcellappearance|bordertype|tooltip_text"
+msgctxt "sidebargradients|bordertype|tooltip_text"
 msgid ""
 "Allow to select a gradient palette to apply to current chart data series."
 msgstr ""
+
+#. FXK8B
+#: chart2/uiconfig/ui/sidebargradients.ui:42
+#, fuzzy
+msgctxt "sidebargradients|cellbordertype-atkobject"
+msgid "Border Style"
+msgstr "Slog obrobe"
 
 #. Aiqg6
 #: chart2/uiconfig/ui/sidebartheme.ui:25
@@ -652,8 +659,8 @@ msgid ""
 msgstr ""
 "Pretvori v zapis PDF/A-2b ali PDF/A-1b. Ta je določen kot elektronski zapis "
 "datotek dokumentov za dolgoročno hrambo. Vse pisave, uporabljene v izvornem "
-"dokumentu, bodo vdelane v ustvarjeno datoteko PDF. Zapisane bodo tudi značke"
-" PDF."
+"dokumentu, bodo vdelane v ustvarjeno datoteko PDF. Zapisane bodo tudi značke "
+"PDF."
 
 #. te76B
 #: filter/uiconfig/ui/pdfgeneralpage.ui:620
@@ -963,7 +970,8 @@ msgstr ""
 #: ImpressWindowState.xcu
 msgctxt ""
 "ImpressWindowState.xcu\n"
-"..ImpressWindowState.UIElements.States.private:resource/popupmenu/pagepanecanvas\n"
+"..ImpressWindowState.UIElements.States.private:resource/popupmenu/"
+"pagepanecanvas\n"
 "UIName\n"
 "value.text"
 msgid "Slide Sorter/Pane (Canvas)"
@@ -973,7 +981,8 @@ msgstr ""
 #: ImpressWindowState.xcu
 msgctxt ""
 "ImpressWindowState.xcu\n"
-"..ImpressWindowState.UIElements.States.private:resource/popupmenu/pagepanecanvasmaster\n"
+"..ImpressWindowState.UIElements.States.private:resource/popupmenu/"
+"pagepanecanvasmaster\n"
 "UIName\n"
 "value.text"
 msgid "Master Slide Sorter/Pane (Canvas)"
@@ -1243,8 +1252,7 @@ msgstr "Vrstice"
 #: sc/inc/scfuncs.hrc:4281
 msgctxt "SC_OPCODE_DROP"
 msgid ""
-"The number of rows to drop. A negative value drops from the end of the "
-"array."
+"The number of rows to drop. A negative value drops from the end of the array."
 msgstr ""
 "Število vrstic, ki jih želite izpustiti. Negativna vrednost izpušča s konca "
 "matrike."
@@ -1308,11 +1316,10 @@ msgstr ""
 #: sc/inc/scfuncs.hrc:4295
 msgctxt "SC_OPCODE_EXPAND"
 msgid ""
-"The number of columns in the expanded array. If missing, columns will not be"
-" expanded."
+"The number of columns in the expanded array. If missing, columns will not be "
+"expanded."
 msgstr ""
-"Število stolpcev v razširjeni matriki. Če manjka, stolpci ne bodo "
-"razširjeni."
+"Število stolpcev v razširjeni matriki. Če manjka, stolpci ne bodo razširjeni."
 
 #. QPyBK
 #: sc/inc/scfuncs.hrc:4296
@@ -1414,8 +1421,7 @@ msgstr "Vrstice"
 #: sc/inc/scfuncs.hrc:4327
 msgctxt "SC_OPCODE_TAKE"
 msgid ""
-"The number of rows to take. A negative value takes from the end of the "
-"array."
+"The number of rows to take. A negative value takes from the end of the array."
 msgstr ""
 "Število vrstic, ki jih želite vzeti. Negativno število jemlje s konca "
 "matrike."
@@ -1476,11 +1482,11 @@ msgstr "Številka pojavitve"
 #: sc/inc/scfuncs.hrc:4341
 msgctxt "SC_OPCODE_TEXTAFTER"
 msgid ""
-"The instance of the delimiter after which to extract text. The default is 1."
-" A negative number starts searching from the end."
+"The instance of the delimiter after which to extract text. The default is 1. "
+"A negative number starts searching from the end."
 msgstr ""
-"Pojavitev ločila, po kateri želite izvleči besedilo. Privzeta vrednost je 1."
-" Negativna vrednost pomeni iskanje s konca."
+"Pojavitev ločila, po kateri želite izvleči besedilo. Privzeta vrednost je 1. "
+"Negativna vrednost pomeni iskanje s konca."
 
 #. fpoGj
 #: sc/inc/scfuncs.hrc:4342
@@ -1493,8 +1499,8 @@ msgstr "Način ujemanja"
 msgctxt "SC_OPCODE_TEXTAFTER"
 msgid "Set to 1 to perform a case-insensitive match. The default is 0."
 msgstr ""
-"Nastavite na 1, da dobite zadetke ne glede na ujemanje velikih in malih črk."
-" Privzeta vrednost je 0."
+"Nastavite na 1, da dobite zadetke ne glede na ujemanje velikih in malih črk. "
+"Privzeta vrednost je 0."
 
 #. nAF2s
 #: sc/inc/scfuncs.hrc:4344
@@ -1579,8 +1585,8 @@ msgstr "Način ujemanja"
 msgctxt "SC_OPCODE_TEXTBEFORE"
 msgid "Set to 1 to perform a case-insensitive match. The default is 0."
 msgstr ""
-"Nastavite na 1, da dobite zadetke ne glede na ujemanje velikih in malih črk."
-" Privzeta vrednost je 0."
+"Nastavite na 1, da dobite zadetke ne glede na ujemanje velikih in malih črk. "
+"Privzeta vrednost je 0."
 
 #. sACA2
 #: sc/inc/scfuncs.hrc:4362
@@ -1677,8 +1683,8 @@ msgstr "Način ujemanja"
 msgctxt "SC_OPCODE_TEXTSPLIT"
 msgid "Set to 1 to perform a case-insensitive match. The default is 0."
 msgstr ""
-"Nastavite na 1, da dobite zadetke ne glede na ujemanje velikih in malih črk."
-" Privzeta vrednost je 0."
+"Nastavite na 1, da dobite zadetke ne glede na ujemanje velikih in malih črk. "
+"Privzeta vrednost je 0."
 
 #. vXECz
 #: sc/inc/scfuncs.hrc:4382
@@ -1725,8 +1731,8 @@ msgid ""
 "blanks cells and cells with error."
 msgstr ""
 "Ali naj bodo določene vrste vrednosti prezrte. 0 ali izpuščeno: ohrani vse "
-"vrednosti (privzeto). 1: prezri prazne celice. 2: prezri celice z napako. 3:"
-" prezri prazne celice in celice z napako."
+"vrednosti (privzeto). 1: prezri prazne celice. 2: prezri celice z napako. 3: "
+"prezri prazne celice in celice z napako."
 
 #. qNLAi
 #: sc/inc/scfuncs.hrc:4394
@@ -1777,8 +1783,8 @@ msgid ""
 "blanks cells and cells with error."
 msgstr ""
 "Ali naj bodo določene vrste vrednosti prezrte. 0 ali izpuščeno: ohrani vse "
-"vrednosti (privzeto). 1: prezri prazne celice. 2: prezri celice z napako. 3:"
-" prezri prazne celice in celice z napako."
+"vrednosti (privzeto). 1: prezri prazne celice. 2: prezri celice z napako. 3: "
+"prezri prazne celice in celice z napako."
 
 #. E4XDf
 #: sc/inc/scfuncs.hrc:4406
@@ -1933,3 +1939,9 @@ msgstr ""
 msgctxt "sheetviewbox|sheetview_combobox|accessible_name"
 msgid "Sheet View"
 msgstr ""
+
+#. FXK8B
+#: sc/uiconfig/scalc/ui/sidebarcellappearance.ui:87
+msgctxt "sidebarcellappearance|cellbordertype-atkobject"
+msgid "Border Style"
+msgstr "Slog obrobe"

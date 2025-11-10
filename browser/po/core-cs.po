@@ -32,8 +32,8 @@ msgctxt ""
 "LngText.text"
 msgid ""
 "Collabora Office, the office productivity suite based on LibreOffice "
-"Technology, provided by Collabora Productivity. See "
-"https://collaboraoffice.com"
+"Technology, provided by Collabora Productivity. See https://collaboraoffice."
+"com"
 msgstr ""
 
 #. 4rBwc
@@ -185,23 +185,30 @@ msgstr ""
 
 #. NMcqp
 #: chart2/uiconfig/ui/sidebarcolors.ui:30
-msgctxt "sidebarcellappearance|bordertype|tooltip_text"
+msgctxt "sidebarcolors|bordertype|tooltip_text"
 msgid "Allow to select a color palette to apply to current chart data series."
 msgstr ""
 
 #. FXK8B
-#: chart2/uiconfig/ui/sidebargradients.ui:42
-#: sc/uiconfig/scalc/ui/sidebarcellappearance.ui:87
-msgctxt "sidebarcellappearance|cellbordertype-atkobject"
+#: chart2/uiconfig/ui/sidebarcolors.ui:42
+#, fuzzy
+msgctxt "sidebarcolors|cellbordertype-atkobject"
 msgid "Border Style"
 msgstr "Styl ohraničení"
 
 #. vDwKf
 #: chart2/uiconfig/ui/sidebargradients.ui:30
-msgctxt "sidebarcellappearance|bordertype|tooltip_text"
+msgctxt "sidebargradients|bordertype|tooltip_text"
 msgid ""
 "Allow to select a gradient palette to apply to current chart data series."
 msgstr ""
+
+#. FXK8B
+#: chart2/uiconfig/ui/sidebargradients.ui:42
+#, fuzzy
+msgctxt "sidebargradients|cellbordertype-atkobject"
+msgid "Border Style"
+msgstr "Styl ohraničení"
 
 #. Aiqg6
 #: chart2/uiconfig/ui/sidebartheme.ui:25
@@ -609,8 +616,8 @@ msgid ""
 "This setting enables you to export the document as a .pdf file containing "
 "two file formats: PDF and ODF as an attachment. "
 msgstr ""
-"Toto nastavení umožňuje exportovat dokument jako soubor .pdf, který obsahuje"
-" dva formáty souboru: PDF a ODF."
+"Toto nastavení umožňuje exportovat dokument jako soubor .pdf, který obsahuje "
+"dva formáty souboru: PDF a ODF."
 
 #. NCgBM
 #: filter/uiconfig/ui/pdfgeneralpage.ui:583
@@ -964,7 +971,8 @@ msgstr "Přidat do slovníku"
 #: ImpressWindowState.xcu
 msgctxt ""
 "ImpressWindowState.xcu\n"
-"..ImpressWindowState.UIElements.States.private:resource/popupmenu/pagepanecanvas\n"
+"..ImpressWindowState.UIElements.States.private:resource/popupmenu/"
+"pagepanecanvas\n"
 "UIName\n"
 "value.text"
 msgid "Slide Sorter/Pane (Canvas)"
@@ -974,7 +982,8 @@ msgstr ""
 #: ImpressWindowState.xcu
 msgctxt ""
 "ImpressWindowState.xcu\n"
-"..ImpressWindowState.UIElements.States.private:resource/popupmenu/pagepanecanvasmaster\n"
+"..ImpressWindowState.UIElements.States.private:resource/popupmenu/"
+"pagepanecanvasmaster\n"
 "UIName\n"
 "value.text"
 msgid "Master Slide Sorter/Pane (Canvas)"
@@ -1244,8 +1253,7 @@ msgstr "Řádky"
 #: sc/inc/scfuncs.hrc:4281
 msgctxt "SC_OPCODE_DROP"
 msgid ""
-"The number of rows to drop. A negative value drops from the end of the "
-"array."
+"The number of rows to drop. A negative value drops from the end of the array."
 msgstr ""
 "Počet řádků, které se mají vynechat. Záporná hodnota znamená, že se "
 "vynechají řádky od konce matice."
@@ -1309,8 +1317,8 @@ msgstr ""
 #: sc/inc/scfuncs.hrc:4295
 msgctxt "SC_OPCODE_EXPAND"
 msgid ""
-"The number of columns in the expanded array. If missing, columns will not be"
-" expanded."
+"The number of columns in the expanded array. If missing, columns will not be "
+"expanded."
 msgstr ""
 "Počet sloupců rozšířené matice. Není-li zadán, počet sloupců se nezvětší."
 
@@ -1351,8 +1359,8 @@ msgid ""
 "Array 1, Array 2,... The following arrays to append. If an array has fewer "
 "rows, #N/A error will be returned in the additional rows."
 msgstr ""
-"Matice 1, Matice 2,... Další spojované matice. Pokud má matice méně řádků, v"
-" řádcích navíc bude chyba #N/A."
+"Matice 1, Matice 2,... Další spojované matice. Pokud má matice méně řádků, v "
+"řádcích navíc bude chyba #N/A."
 
 #. 7zS24
 #: sc/inc/scfuncs.hrc:4313
@@ -1379,8 +1387,8 @@ msgid ""
 "Array 1, Array 2,... The following arrays to append. If an array has fewer "
 "columns, #N/A error will be returned in the additional columns."
 msgstr ""
-"Matice 1, Matice 2,... Další spojované matice. Pokud má matice méně sloupců,"
-" ve sloupcích navíc bude chyba #N/A."
+"Matice 1, Matice 2,... Další spojované matice. Pokud má matice méně sloupců, "
+"ve sloupcích navíc bude chyba #N/A."
 
 #. JnsYT
 #: sc/inc/scfuncs.hrc:4323
@@ -1414,11 +1422,10 @@ msgstr "Řádky"
 #: sc/inc/scfuncs.hrc:4327
 msgctxt "SC_OPCODE_TAKE"
 msgid ""
-"The number of rows to take. A negative value takes from the end of the "
-"array."
+"The number of rows to take. A negative value takes from the end of the array."
 msgstr ""
-"Počet řádků, které se mají převzít. Záporná hodnota znamená, že se převezmou"
-" řádky od konce matice."
+"Počet řádků, které se mají převzít. Záporná hodnota znamená, že se převezmou "
+"řádky od konce matice."
 
 #. HJQKW
 #: sc/inc/scfuncs.hrc:4328
@@ -1476,8 +1483,8 @@ msgstr "Číslo instance"
 #: sc/inc/scfuncs.hrc:4341
 msgctxt "SC_OPCODE_TEXTAFTER"
 msgid ""
-"The instance of the delimiter after which to extract text. The default is 1."
-" A negative number starts searching from the end."
+"The instance of the delimiter after which to extract text. The default is 1. "
+"A negative number starts searching from the end."
 msgstr ""
 "Instance oddělovače, po které se má text extrahovat. Výchozí je 1. Záporné "
 "číslo znamená počítání od konce."
@@ -1507,8 +1514,8 @@ msgstr "Porovnávání konce"
 msgctxt "SC_OPCODE_TEXTAFTER"
 msgid "Set to 1 to treat the end of text as a delimiter. The default is 0."
 msgstr ""
-"Nastavte na 1, chcete-li s koncem textu zacházet jako s oddělovačem. Výchozí"
-" je 0."
+"Nastavte na 1, chcete-li s koncem textu zacházet jako s oddělovačem. Výchozí "
+"je 0."
 
 #. PG6qj
 #: sc/inc/scfuncs.hrc:4346
@@ -1594,8 +1601,8 @@ msgstr "Porovnávání konce"
 msgctxt "SC_OPCODE_TEXTBEFORE"
 msgid "Set to 1 to treat the end of text as a delimiter. The default is 0."
 msgstr ""
-"Nastavte na 1, chcete-li s koncem textu zacházet jako s oddělovačem. Výchozí"
-" je 0."
+"Nastavte na 1, chcete-li s koncem textu zacházet jako s oddělovačem. Výchozí "
+"je 0."
 
 #. aCnZX
 #: sc/inc/scfuncs.hrc:4364
@@ -1742,8 +1749,8 @@ msgid ""
 "Scan the array by column. FALSE or omitted (default) - the array is scanned "
 "by row. TRUE - the array is scanned by column."
 msgstr ""
-"Způsob procházení matice. NEPRAVDA nebo vynecháno (výchozí) - matice se bude"
-" procházet po řádcích. PRAVDA - matice se bude procházet po sloupcích."
+"Způsob procházení matice. NEPRAVDA nebo vynecháno (výchozí) - matice se bude "
+"procházet po řádcích. PRAVDA - matice se bude procházet po sloupcích."
 
 #. PGyxj
 #: sc/inc/scfuncs.hrc:4401
@@ -1794,8 +1801,8 @@ msgid ""
 "Scan the array by column. FALSE or omitted (default) - the array is scanned "
 "by row. TRUE - the array is scanned by column."
 msgstr ""
-"Způsob procházení matice. NEPRAVDA nebo vynecháno (výchozí) - matice se bude"
-" procházet po řádcích. PRAVDA - matice se bude procházet po sloupcích."
+"Způsob procházení matice. NEPRAVDA nebo vynecháno (výchozí) - matice se bude "
+"procházet po řádcích. PRAVDA - matice se bude procházet po sloupcích."
 
 #. oBDEA
 #: sc/inc/scfuncs.hrc:4437
@@ -1934,3 +1941,9 @@ msgstr ""
 msgctxt "sheetviewbox|sheetview_combobox|accessible_name"
 msgid "Sheet View"
 msgstr ""
+
+#. FXK8B
+#: sc/uiconfig/scalc/ui/sidebarcellappearance.ui:87
+msgctxt "sidebarcellappearance|cellbordertype-atkobject"
+msgid "Border Style"
+msgstr "Styl ohraničení"

@@ -32,8 +32,8 @@ msgctxt ""
 "LngText.text"
 msgid ""
 "Collabora Office, the office productivity suite based on LibreOffice "
-"Technology, provided by Collabora Productivity. See "
-"https://collaboraoffice.com"
+"Technology, provided by Collabora Productivity. See https://collaboraoffice."
+"com"
 msgstr ""
 
 #. 4rBwc
@@ -185,23 +185,30 @@ msgstr ""
 
 #. NMcqp
 #: chart2/uiconfig/ui/sidebarcolors.ui:30
-msgctxt "sidebarcellappearance|bordertype|tooltip_text"
+msgctxt "sidebarcolors|bordertype|tooltip_text"
 msgid "Allow to select a color palette to apply to current chart data series."
 msgstr ""
 
 #. FXK8B
-#: chart2/uiconfig/ui/sidebargradients.ui:42
-#: sc/uiconfig/scalc/ui/sidebarcellappearance.ui:87
-msgctxt "sidebarcellappearance|cellbordertype-atkobject"
+#: chart2/uiconfig/ui/sidebarcolors.ui:42
+#, fuzzy
+msgctxt "sidebarcolors|cellbordertype-atkobject"
 msgid "Border Style"
 msgstr "邊框樣式"
 
 #. vDwKf
 #: chart2/uiconfig/ui/sidebargradients.ui:30
-msgctxt "sidebarcellappearance|bordertype|tooltip_text"
+msgctxt "sidebargradients|bordertype|tooltip_text"
 msgid ""
 "Allow to select a gradient palette to apply to current chart data series."
 msgstr ""
+
+#. FXK8B
+#: chart2/uiconfig/ui/sidebargradients.ui:42
+#, fuzzy
+msgctxt "sidebargradients|cellbordertype-atkobject"
+msgid "Border Style"
+msgstr "邊框樣式"
 
 #. Aiqg6
 #: chart2/uiconfig/ui/sidebartheme.ui:25
@@ -646,8 +653,8 @@ msgid ""
 "used in the source document will be embedded into the generated PDF file. "
 "PDF tags will be written."
 msgstr ""
-"製作 PDF/A-2b 或 PDF/A-1b 格式。這是為了長期保存而定義的電子文件檔格式。所有來源文件中使用的字型都會內嵌至生成的 PDF "
-"檔中。也會寫入 PDF 標籤。"
+"製作 PDF/A-2b 或 PDF/A-1b 格式。這是為了長期保存而定義的電子文件檔格式。所有"
+"來源文件中使用的字型都會內嵌至生成的 PDF 檔中。也會寫入 PDF 標籤。"
 
 #. te76B
 #: filter/uiconfig/ui/pdfgeneralpage.ui:620
@@ -957,7 +964,8 @@ msgstr "新增至字典"
 #: ImpressWindowState.xcu
 msgctxt ""
 "ImpressWindowState.xcu\n"
-"..ImpressWindowState.UIElements.States.private:resource/popupmenu/pagepanecanvas\n"
+"..ImpressWindowState.UIElements.States.private:resource/popupmenu/"
+"pagepanecanvas\n"
 "UIName\n"
 "value.text"
 msgid "Slide Sorter/Pane (Canvas)"
@@ -967,7 +975,8 @@ msgstr ""
 #: ImpressWindowState.xcu
 msgctxt ""
 "ImpressWindowState.xcu\n"
-"..ImpressWindowState.UIElements.States.private:resource/popupmenu/pagepanecanvasmaster\n"
+"..ImpressWindowState.UIElements.States.private:resource/popupmenu/"
+"pagepanecanvasmaster\n"
 "UIName\n"
 "value.text"
 msgid "Master Slide Sorter/Pane (Canvas)"
@@ -1235,8 +1244,7 @@ msgstr "列"
 #: sc/inc/scfuncs.hrc:4281
 msgctxt "SC_OPCODE_DROP"
 msgid ""
-"The number of rows to drop. A negative value drops from the end of the "
-"array."
+"The number of rows to drop. A negative value drops from the end of the array."
 msgstr "要移除的列數。負數會從陣列的末端開始刪除。"
 
 #. 6sAoA
@@ -1295,8 +1303,8 @@ msgstr ""
 #: sc/inc/scfuncs.hrc:4295
 msgctxt "SC_OPCODE_EXPAND"
 msgid ""
-"The number of columns in the expanded array. If missing, columns will not be"
-" expanded."
+"The number of columns in the expanded array. If missing, columns will not be "
+"expanded."
 msgstr "擴充陣列中的欄數。如果缺少，則不會擴充欄。"
 
 #. QPyBK
@@ -1335,7 +1343,9 @@ msgctxt "SC_OPCODE_HSTACK"
 msgid ""
 "Array 1, Array 2,... The following arrays to append. If an array has fewer "
 "rows, #N/A error will be returned in the additional rows."
-msgstr "陣列 1, 陣列 2,... 以下要追加的陣列。若陣列的列數較少，將會在額外的列中回傳 #N/A。"
+msgstr ""
+"陣列 1, 陣列 2,... 以下要追加的陣列。若陣列的列數較少，將會在額外的列中回傳 "
+"#N/A。"
 
 #. 7zS24
 #: sc/inc/scfuncs.hrc:4313
@@ -1361,7 +1371,9 @@ msgctxt "SC_OPCODE_VSTACK"
 msgid ""
 "Array 1, Array 2,... The following arrays to append. If an array has fewer "
 "columns, #N/A error will be returned in the additional columns."
-msgstr "陣列 1, 陣列 2,... 以下要追加的陣列。若陣列的欄數較少，將會在額外的欄中回傳 #N/A。"
+msgstr ""
+"陣列 1, 陣列 2,... 以下要追加的陣列。若陣列的欄數較少，將會在額外的欄中回傳 "
+"#N/A。"
 
 #. JnsYT
 #: sc/inc/scfuncs.hrc:4323
@@ -1393,8 +1405,7 @@ msgstr "列"
 #: sc/inc/scfuncs.hrc:4327
 msgctxt "SC_OPCODE_TAKE"
 msgid ""
-"The number of rows to take. A negative value takes from the end of the "
-"array."
+"The number of rows to take. A negative value takes from the end of the array."
 msgstr "要取得的列數。負數會從陣列的末端開始。"
 
 #. HJQKW
@@ -1451,8 +1462,8 @@ msgstr "實體編號"
 #: sc/inc/scfuncs.hrc:4341
 msgctxt "SC_OPCODE_TEXTAFTER"
 msgid ""
-"The instance of the delimiter after which to extract text. The default is 1."
-" A negative number starts searching from the end."
+"The instance of the delimiter after which to extract text. The default is 1. "
+"A negative number starts searching from the end."
 msgstr "要在其後擷取文字的分隔符實體。預設為 1，負數則從尾端開始搜尋。"
 
 #. fpoGj
@@ -1625,7 +1636,8 @@ msgctxt "SC_OPCODE_TEXTSPLIT"
 msgid ""
 "Set to TRUE to ignore consecutive delimiters otherwise it creates an empty "
 "cell. The default is FALSE."
-msgstr "設定為 TRUE 會忽略連續的分隔符，否則會建立一個空的儲存格。預設為 FALSE。"
+msgstr ""
+"設定為 TRUE 會忽略連續的分隔符，否則會建立一個空的儲存格。預設為 FALSE。"
 
 #. kkAYp
 #: sc/inc/scfuncs.hrc:4380
@@ -1683,7 +1695,8 @@ msgid ""
 "(default). 1 - ignore blank cells. 2 - ignore cells with error. 3 - ignore "
 "blanks cells and cells with error."
 msgstr ""
-"是否忽略某些類型的值。0 或省略 - 保留所有值（預設）。1 - 忽略空白儲存格。2 - 忽略有錯誤的儲存格。3 - 忽略空白儲存格與有錯誤的儲存格。"
+"是否忽略某些類型的值。0 或省略 - 保留所有值（預設）。1 - 忽略空白儲存格。2 - "
+"忽略有錯誤的儲存格。3 - 忽略空白儲存格與有錯誤的儲存格。"
 
 #. qNLAi
 #: sc/inc/scfuncs.hrc:4394
@@ -1697,7 +1710,8 @@ msgctxt "SC_OPCODE_TOCOL"
 msgid ""
 "Scan the array by column. FALSE or omitted (default) - the array is scanned "
 "by row. TRUE - the array is scanned by column."
-msgstr "逐欄掃描陣列。FALSE 或省略（預設）- 陣列逐列掃描。TRUE - 陣列逐欄掃描。"
+msgstr ""
+"逐欄掃描陣列。FALSE 或省略（預設）- 陣列逐列掃描。TRUE - 陣列逐欄掃描。"
 
 #. PGyxj
 #: sc/inc/scfuncs.hrc:4401
@@ -1731,7 +1745,8 @@ msgid ""
 "(default). 1 - ignore blank cells. 2 - ignore cells with error. 3 - ignore "
 "blanks cells and cells with error."
 msgstr ""
-"是否忽略某些類型的值。0 或省略 - 保留所有值（預設）。1 - 忽略空白儲存格。2 - 忽略有錯誤的儲存格。3 - 忽略空白儲存格與有錯誤的儲存格。"
+"是否忽略某些類型的值。0 或省略 - 保留所有值（預設）。1 - 忽略空白儲存格。2 - "
+"忽略有錯誤的儲存格。3 - 忽略空白儲存格與有錯誤的儲存格。"
 
 #. E4XDf
 #: sc/inc/scfuncs.hrc:4406
@@ -1745,7 +1760,8 @@ msgctxt "SC_OPCODE_TOROW"
 msgid ""
 "Scan the array by column. FALSE or omitted (default) - the array is scanned "
 "by row. TRUE - the array is scanned by column."
-msgstr "逐欄掃描陣列。FALSE 或省略（預設）- 陣列逐列掃描。TRUE - 陣列逐欄掃描。"
+msgstr ""
+"逐欄掃描陣列。FALSE 或省略（預設）- 陣列逐列掃描。TRUE - 陣列逐欄掃描。"
 
 #. oBDEA
 #: sc/inc/scfuncs.hrc:4437
@@ -1880,3 +1896,9 @@ msgstr ""
 msgctxt "sheetviewbox|sheetview_combobox|accessible_name"
 msgid "Sheet View"
 msgstr ""
+
+#. FXK8B
+#: sc/uiconfig/scalc/ui/sidebarcellappearance.ui:87
+msgctxt "sidebarcellappearance|cellbordertype-atkobject"
+msgid "Border Style"
+msgstr "邊框樣式"

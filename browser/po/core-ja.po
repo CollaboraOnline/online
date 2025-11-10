@@ -32,8 +32,8 @@ msgctxt ""
 "LngText.text"
 msgid ""
 "Collabora Office, the office productivity suite based on LibreOffice "
-"Technology, provided by Collabora Productivity. See "
-"https://collaboraoffice.com"
+"Technology, provided by Collabora Productivity. See https://collaboraoffice."
+"com"
 msgstr ""
 
 #. 4rBwc
@@ -185,22 +185,27 @@ msgstr ""
 
 #. NMcqp
 #: chart2/uiconfig/ui/sidebarcolors.ui:30
-msgctxt "sidebarcellappearance|bordertype|tooltip_text"
+msgctxt "sidebarcolors|bordertype|tooltip_text"
 msgid "Allow to select a color palette to apply to current chart data series."
 msgstr ""
 
 #. FXK8B
-#: chart2/uiconfig/ui/sidebargradients.ui:42
-#: sc/uiconfig/scalc/ui/sidebarcellappearance.ui:87
-msgctxt "sidebarcellappearance|cellbordertype-atkobject"
+#: chart2/uiconfig/ui/sidebarcolors.ui:42
+msgctxt "sidebarcolors|cellbordertype-atkobject"
 msgid "Border Style"
 msgstr ""
 
 #. vDwKf
 #: chart2/uiconfig/ui/sidebargradients.ui:30
-msgctxt "sidebarcellappearance|bordertype|tooltip_text"
+msgctxt "sidebargradients|bordertype|tooltip_text"
 msgid ""
 "Allow to select a gradient palette to apply to current chart data series."
+msgstr ""
+
+#. FXK8B
+#: chart2/uiconfig/ui/sidebargradients.ui:42
+msgctxt "sidebargradients|cellbordertype-atkobject"
+msgid "Border Style"
 msgstr ""
 
 #. Aiqg6
@@ -557,7 +562,9 @@ msgstr ""
 #: filter/uiconfig/ui/impswfdialog.ui:136
 msgctxt "impswfdialog|exportall"
 msgid "Export _all slides (uncheck to export current slide)"
-msgstr "すべてのスライドをエクスポートする (チェックオフで現在のスライドをエクスポート)(_A)"
+msgstr ""
+"すべてのスライドをエクスポートする (チェックオフで現在のスライドをエクスポー"
+"ト)(_A)"
 
 #. CB9hD
 #: filter/uiconfig/ui/impswfdialog.ui:155
@@ -607,7 +614,9 @@ msgctxt "pdfgeneralpage|extended_tip|embed"
 msgid ""
 "This setting enables you to export the document as a .pdf file containing "
 "two file formats: PDF and ODF as an attachment. "
-msgstr "この設定では、PDFとODFの2つのファイル形式を含む.pdfファイルとしてドキュメントをエクスポートできます。"
+msgstr ""
+"この設定では、PDFとODFの2つのファイル形式を含む.pdfファイルとしてドキュメント"
+"をエクスポートできます。"
 
 #. NCgBM
 #: filter/uiconfig/ui/pdfgeneralpage.ui:583
@@ -646,7 +655,9 @@ msgid ""
 "used in the source document will be embedded into the generated PDF file. "
 "PDF tags will be written."
 msgstr ""
-"PDF/A-2b、またはPDF/A-1b形式に変換します。これは、長期保存用の電子文書ファイル形式と定義されています。生成されたPDFファイルには、元の文書で使用されていたすべてのフォントが埋め込まれます。PDFタグも書き込まれます。"
+"PDF/A-2b、またはPDF/A-1b形式に変換します。これは、長期保存用の電子文書ファイ"
+"ル形式と定義されています。生成されたPDFファイルには、元の文書で使用されていた"
+"すべてのフォントが埋め込まれます。PDFタグも書き込まれます。"
 
 #. te76B
 #: filter/uiconfig/ui/pdfgeneralpage.ui:620
@@ -956,7 +967,8 @@ msgstr "辞書の編集"
 #: ImpressWindowState.xcu
 msgctxt ""
 "ImpressWindowState.xcu\n"
-"..ImpressWindowState.UIElements.States.private:resource/popupmenu/pagepanecanvas\n"
+"..ImpressWindowState.UIElements.States.private:resource/popupmenu/"
+"pagepanecanvas\n"
 "UIName\n"
 "value.text"
 msgid "Slide Sorter/Pane (Canvas)"
@@ -966,7 +978,8 @@ msgstr ""
 #: ImpressWindowState.xcu
 msgctxt ""
 "ImpressWindowState.xcu\n"
-"..ImpressWindowState.UIElements.States.private:resource/popupmenu/pagepanecanvasmaster\n"
+"..ImpressWindowState.UIElements.States.private:resource/popupmenu/"
+"pagepanecanvasmaster\n"
 "UIName\n"
 "value.text"
 msgid "Master Slide Sorter/Pane (Canvas)"
@@ -1234,9 +1247,9 @@ msgstr "行"
 #: sc/inc/scfuncs.hrc:4281
 msgctxt "SC_OPCODE_DROP"
 msgid ""
-"The number of rows to drop. A negative value drops from the end of the "
-"array."
-msgstr "除外する行数を指定します。負の数を指定すると、行列の末尾から除外されます。"
+"The number of rows to drop. A negative value drops from the end of the array."
+msgstr ""
+"除外する行数を指定します。負の数を指定すると、行列の末尾から除外されます。"
 
 #. 6sAoA
 #: sc/inc/scfuncs.hrc:4282
@@ -1250,7 +1263,8 @@ msgctxt "SC_OPCODE_DROP"
 msgid ""
 "The number of columns to drop. A negative value drops from the end of the "
 "array."
-msgstr "除外する列数を指定します。負の数を指定すると行列の末尾から除外されます。"
+msgstr ""
+"除外する列数を指定します。負の数を指定すると行列の末尾から除外されます。"
 
 #. cXvVY
 #: sc/inc/scfuncs.hrc:4289
@@ -1294,8 +1308,8 @@ msgstr ""
 #: sc/inc/scfuncs.hrc:4295
 msgctxt "SC_OPCODE_EXPAND"
 msgid ""
-"The number of columns in the expanded array. If missing, columns will not be"
-" expanded."
+"The number of columns in the expanded array. If missing, columns will not be "
+"expanded."
 msgstr "拡張する配列の列数。省略すると、列は拡張されません。"
 
 #. QPyBK
@@ -1334,7 +1348,9 @@ msgctxt "SC_OPCODE_HSTACK"
 msgid ""
 "Array 1, Array 2,... The following arrays to append. If an array has fewer "
 "rows, #N/A error will be returned in the additional rows."
-msgstr "行列1、行列2のように結合する行列を指定します。行列の行数が少ない場合、結合された行には#N/Aエラーが返されます。"
+msgstr ""
+"行列1、行列2のように結合する行列を指定します。行列の行数が少ない場合、結合さ"
+"れた行には#N/Aエラーが返されます。"
 
 #. 7zS24
 #: sc/inc/scfuncs.hrc:4313
@@ -1360,7 +1376,9 @@ msgctxt "SC_OPCODE_VSTACK"
 msgid ""
 "Array 1, Array 2,... The following arrays to append. If an array has fewer "
 "columns, #N/A error will be returned in the additional columns."
-msgstr "行列1、行列2のように結合する行列を指定します。行列の列数が少ない場合、結合した列には#N/Aエラーが返されます。"
+msgstr ""
+"行列1、行列2のように結合する行列を指定します。行列の列数が少ない場合、結合し"
+"た列には#N/Aエラーが返されます。"
 
 #. JnsYT
 #: sc/inc/scfuncs.hrc:4323
@@ -1392,8 +1410,7 @@ msgstr "行"
 #: sc/inc/scfuncs.hrc:4327
 msgctxt "SC_OPCODE_TAKE"
 msgid ""
-"The number of rows to take. A negative value takes from the end of the "
-"array."
+"The number of rows to take. A negative value takes from the end of the array."
 msgstr "取得する行数。負の値を指定すると行列の末尾から取得されます。"
 
 #. HJQKW
@@ -1450,9 +1467,11 @@ msgstr "出現場所"
 #: sc/inc/scfuncs.hrc:4341
 msgctxt "SC_OPCODE_TEXTAFTER"
 msgid ""
-"The instance of the delimiter after which to extract text. The default is 1."
-" A negative number starts searching from the end."
-msgstr "何個目の区切り文字の後のテキストを抽出するか指定します。既定値は1です。負の数を指定すると末尾から検索が開始されます。"
+"The instance of the delimiter after which to extract text. The default is 1. "
+"A negative number starts searching from the end."
+msgstr ""
+"何個目の区切り文字の後のテキストを抽出するか指定します。既定値は1です。負の数"
+"を指定すると末尾から検索が開始されます。"
 
 #. fpoGj
 #: sc/inc/scfuncs.hrc:4342
@@ -1476,7 +1495,8 @@ msgstr ""
 #: sc/inc/scfuncs.hrc:4345
 msgctxt "SC_OPCODE_TEXTAFTER"
 msgid "Set to 1 to treat the end of text as a delimiter. The default is 0."
-msgstr "1を指定すると、テキストの末尾が区切り文字として扱われます。既定値は0です。"
+msgstr ""
+"1を指定すると、テキストの末尾が区切り文字として扱われます。既定値は0です。"
 
 #. PG6qj
 #: sc/inc/scfuncs.hrc:4346
@@ -1532,7 +1552,9 @@ msgctxt "SC_OPCODE_TEXTBEFORE"
 msgid ""
 "The instance of the delimiter before which to extract text. The default is "
 "1. A negative number starts searching from the end."
-msgstr "何個目の区切り文字の前のテキストを抽出するか指定します。既定値は1です。負の数を指定すると末尾から検索が開始されます。"
+msgstr ""
+"何個目の区切り文字の前のテキストを抽出するか指定します。既定値は1です。負の数"
+"を指定すると末尾から検索が開始されます。"
 
 #. Adzeh
 #: sc/inc/scfuncs.hrc:4360
@@ -1556,7 +1578,8 @@ msgstr ""
 #: sc/inc/scfuncs.hrc:4363
 msgctxt "SC_OPCODE_TEXTBEFORE"
 msgid "Set to 1 to treat the end of text as a delimiter. The default is 0."
-msgstr "1を指定すると、テキストの末尾が区切り文字として扱われます。既定値は0です。"
+msgstr ""
+"1を指定すると、テキストの末尾が区切り文字として扱われます。既定値は0です。"
 
 #. aCnZX
 #: sc/inc/scfuncs.hrc:4364
@@ -1624,7 +1647,9 @@ msgctxt "SC_OPCODE_TEXTSPLIT"
 msgid ""
 "Set to TRUE to ignore consecutive delimiters otherwise it creates an empty "
 "cell. The default is FALSE."
-msgstr "連続する区切り文字を無視する場合は、TRUEを指定します。それ以外の場合は、空のセルが作成されます。既定値はFALSEです。"
+msgstr ""
+"連続する区切り文字を無視する場合は、TRUEを指定します。それ以外の場合は、空の"
+"セルが作成されます。既定値はFALSEです。"
 
 #. kkAYp
 #: sc/inc/scfuncs.hrc:4380
@@ -1682,7 +1707,9 @@ msgid ""
 "(default). 1 - ignore blank cells. 2 - ignore cells with error. 3 - ignore "
 "blanks cells and cells with error."
 msgstr ""
-"特定の種類の値を無視します。0または省略すると、すべての値を保持します（既定）。1は空のセルを無視します。2はエラーのセルを無視します。3は空のセルとエラーのセルを無視します。"
+"特定の種類の値を無視します。0または省略すると、すべての値を保持します（既"
+"定）。1は空のセルを無視します。2はエラーのセルを無視します。3は空のセルとエ"
+"ラーのセルを無視します。"
 
 #. qNLAi
 #: sc/inc/scfuncs.hrc:4394
@@ -1730,7 +1757,9 @@ msgid ""
 "(default). 1 - ignore blank cells. 2 - ignore cells with error. 3 - ignore "
 "blanks cells and cells with error."
 msgstr ""
-"特定の種類の値を無視します。0または省略すると、すべての値が保持されます（既定）。1は空のセルを無視します。2はエラーのセルを無視します。3は空のセルとエラーのセルを無視します。"
+"特定の種類の値を無視します。0または省略すると、すべての値が保持されます（既"
+"定）。1は空のセルを無視します。2はエラーのセルを無視します。3は空のセルとエ"
+"ラーのセルを無視します。"
 
 #. E4XDf
 #: sc/inc/scfuncs.hrc:4406
@@ -1878,4 +1907,10 @@ msgstr ""
 #: sc/uiconfig/scalc/ui/sheetviewbox.ui:17
 msgctxt "sheetviewbox|sheetview_combobox|accessible_name"
 msgid "Sheet View"
+msgstr ""
+
+#. FXK8B
+#: sc/uiconfig/scalc/ui/sidebarcellappearance.ui:87
+msgctxt "sidebarcellappearance|cellbordertype-atkobject"
+msgid "Border Style"
 msgstr ""

@@ -32,8 +32,8 @@ msgctxt ""
 "LngText.text"
 msgid ""
 "Collabora Office, the office productivity suite based on LibreOffice "
-"Technology, provided by Collabora Productivity. See "
-"https://collaboraoffice.com"
+"Technology, provided by Collabora Productivity. See https://collaboraoffice."
+"com"
 msgstr ""
 
 #. 4rBwc
@@ -185,23 +185,30 @@ msgstr ""
 
 #. NMcqp
 #: chart2/uiconfig/ui/sidebarcolors.ui:30
-msgctxt "sidebarcellappearance|bordertype|tooltip_text"
+msgctxt "sidebarcolors|bordertype|tooltip_text"
 msgid "Allow to select a color palette to apply to current chart data series."
 msgstr ""
 
 #. FXK8B
-#: chart2/uiconfig/ui/sidebargradients.ui:42
-#: sc/uiconfig/scalc/ui/sidebarcellappearance.ui:87
-msgctxt "sidebarcellappearance|cellbordertype-atkobject"
+#: chart2/uiconfig/ui/sidebarcolors.ui:42
+#, fuzzy
+msgctxt "sidebarcolors|cellbordertype-atkobject"
 msgid "Border Style"
 msgstr "Randstijl"
 
 #. vDwKf
 #: chart2/uiconfig/ui/sidebargradients.ui:30
-msgctxt "sidebarcellappearance|bordertype|tooltip_text"
+msgctxt "sidebargradients|bordertype|tooltip_text"
 msgid ""
 "Allow to select a gradient palette to apply to current chart data series."
 msgstr ""
+
+#. FXK8B
+#: chart2/uiconfig/ui/sidebargradients.ui:42
+#, fuzzy
+msgctxt "sidebargradients|cellbordertype-atkobject"
+msgid "Border Style"
+msgstr "Randstijl"
 
 #. Aiqg6
 #: chart2/uiconfig/ui/sidebartheme.ui:25
@@ -965,7 +972,8 @@ msgstr "Aan woordenboek toevoegen"
 #: ImpressWindowState.xcu
 msgctxt ""
 "ImpressWindowState.xcu\n"
-"..ImpressWindowState.UIElements.States.private:resource/popupmenu/pagepanecanvas\n"
+"..ImpressWindowState.UIElements.States.private:resource/popupmenu/"
+"pagepanecanvas\n"
 "UIName\n"
 "value.text"
 msgid "Slide Sorter/Pane (Canvas)"
@@ -975,7 +983,8 @@ msgstr ""
 #: ImpressWindowState.xcu
 msgctxt ""
 "ImpressWindowState.xcu\n"
-"..ImpressWindowState.UIElements.States.private:resource/popupmenu/pagepanecanvasmaster\n"
+"..ImpressWindowState.UIElements.States.private:resource/popupmenu/"
+"pagepanecanvasmaster\n"
 "UIName\n"
 "value.text"
 msgid "Master Slide Sorter/Pane (Canvas)"
@@ -1251,8 +1260,7 @@ msgstr "Rijen"
 #: sc/inc/scfuncs.hrc:4281
 msgctxt "SC_OPCODE_DROP"
 msgid ""
-"The number of rows to drop. A negative value drops from the end of the "
-"array."
+"The number of rows to drop. A negative value drops from the end of the array."
 msgstr ""
 "Het aantal te verwijderen rijen. Een negatieve waarde verdwijnt van het "
 "einde van de matrix."
@@ -1319,8 +1327,8 @@ msgstr ""
 #: sc/inc/scfuncs.hrc:4295
 msgctxt "SC_OPCODE_EXPAND"
 msgid ""
-"The number of columns in the expanded array. If missing, columns will not be"
-" expanded."
+"The number of columns in the expanded array. If missing, columns will not be "
+"expanded."
 msgstr ""
 "Het aantal kolommen in de uitgebreide matrix. Als deze ontbreken, worden de "
 "kolommen niet uitgebreid."
@@ -1362,8 +1370,8 @@ msgid ""
 "Array 1, Array 2,... The following arrays to append. If an array has fewer "
 "rows, #N/A error will be returned in the additional rows."
 msgstr ""
-"Matrix 1, Matrix 2,... De volgende matrixen om toe te voegen. Als een matrix"
-" minder rijen heeft, wordt de fout #N/B geretourneerd in de extra rijen."
+"Matrix 1, Matrix 2,... De volgende matrixen om toe te voegen. Als een matrix "
+"minder rijen heeft, wordt de fout #N/B geretourneerd in de extra rijen."
 
 #. 7zS24
 #: sc/inc/scfuncs.hrc:4313
@@ -1390,9 +1398,8 @@ msgid ""
 "Array 1, Array 2,... The following arrays to append. If an array has fewer "
 "columns, #N/A error will be returned in the additional columns."
 msgstr ""
-"Matrix 1, Matrix 2,... De volgende matrixen om toe te voegen. Als een matrix"
-" minder kolommen heeft, wordt de fout #N/B geretourneerd in de extra "
-"kolommen."
+"Matrix 1, Matrix 2,... De volgende matrixen om toe te voegen. Als een matrix "
+"minder kolommen heeft, wordt de fout #N/B geretourneerd in de extra kolommen."
 
 #. JnsYT
 #: sc/inc/scfuncs.hrc:4323
@@ -1426,11 +1433,10 @@ msgstr "Rijen"
 #: sc/inc/scfuncs.hrc:4327
 msgctxt "SC_OPCODE_TAKE"
 msgid ""
-"The number of rows to take. A negative value takes from the end of the "
-"array."
+"The number of rows to take. A negative value takes from the end of the array."
 msgstr ""
-"Het aantal rijen dat genomen moet worden. Een negatieve waarde wordt aan het"
-" einde van de matrix opgehaald."
+"Het aantal rijen dat genomen moet worden. Een negatieve waarde wordt aan het "
+"einde van de matrix opgehaald."
 
 #. HJQKW
 #: sc/inc/scfuncs.hrc:4328
@@ -1491,8 +1497,8 @@ msgstr "Instantienummer"
 #: sc/inc/scfuncs.hrc:4341
 msgctxt "SC_OPCODE_TEXTAFTER"
 msgid ""
-"The instance of the delimiter after which to extract text. The default is 1."
-" A negative number starts searching from the end."
+"The instance of the delimiter after which to extract text. The default is 1. "
+"A negative number starts searching from the end."
 msgstr ""
 "Het scheidingsteken waarna tekst moet worden geëxtraheerd. De "
 "standaardwaarde is 1. Een negatief getal begint met zoeken vanaf het einde."
@@ -1675,8 +1681,8 @@ msgstr "Rijscheidingsteken"
 msgctxt "SC_OPCODE_TEXTSPLIT"
 msgid "The text to delimit the rows. Multiple delimiters can be supplied."
 msgstr ""
-"De tekst om de rijen te scheiden. Er kunnen meerdere scheidingstekens worden"
-" opgegeven."
+"De tekst om de rijen te scheiden. Er kunnen meerdere scheidingstekens worden "
+"opgegeven."
 
 #. jD3sa
 #: sc/inc/scfuncs.hrc:4378
@@ -1691,8 +1697,8 @@ msgid ""
 "Set to TRUE to ignore consecutive delimiters otherwise it creates an empty "
 "cell. The default is FALSE."
 msgstr ""
-"Op WAAR instellen om opeenvolgende scheidingstekens te negeren, anders wordt"
-" er een lege cel aangemaakt. De standaardwaarde is ONWAAR."
+"Op WAAR instellen om opeenvolgende scheidingstekens te negeren, anders wordt "
+"er een lege cel aangemaakt. De standaardwaarde is ONWAAR."
 
 #. kkAYp
 #: sc/inc/scfuncs.hrc:4380
@@ -1755,8 +1761,8 @@ msgid ""
 "blanks cells and cells with error."
 msgstr ""
 "Of bepaalde typen waardes moeten worden genegeerd. 0 of weggelaten - alle "
-"waardes behouden (standaard). 1 - lege cellen negeren. 2 - cellen met fouten"
-" negeren. 3 - lege cellen en cellen met fouten negeren."
+"waardes behouden (standaard). 1 - lege cellen negeren. 2 - cellen met fouten "
+"negeren. 3 - lege cellen en cellen met fouten negeren."
 
 #. qNLAi
 #: sc/inc/scfuncs.hrc:4394
@@ -1807,8 +1813,8 @@ msgid ""
 "blanks cells and cells with error."
 msgstr ""
 "Of bepaalde typen waardes moeten worden genegeerd. 0 of weggelaten - alle "
-"waardes behouden (standaard). 1 - lege cellen negeren. 2 - cellen met fouten"
-" negeren. 3 - lege cellen en cellen met fouten negeren."
+"waardes behouden (standaard). 1 - lege cellen negeren. 2 - cellen met fouten "
+"negeren. 3 - lege cellen en cellen met fouten negeren."
 
 #. E4XDf
 #: sc/inc/scfuncs.hrc:4406
@@ -1879,8 +1885,8 @@ msgid ""
 "Wraps the provided row or column of values by rows after a specified number "
 "of elements to form a new array."
 msgstr ""
-"Omvat de opgegeven rij of kolom met waardes in rijen na een opgegeven aantal"
-" elementen om een nieuwe matrix te vormen."
+"Omvat de opgegeven rij of kolom met waardes in rijen na een opgegeven aantal "
+"elementen om een nieuwe matrix te vormen."
 
 #. 7esii
 #: sc/inc/scfuncs.hrc:4450
@@ -1963,3 +1969,9 @@ msgstr ""
 msgctxt "sheetviewbox|sheetview_combobox|accessible_name"
 msgid "Sheet View"
 msgstr ""
+
+#. FXK8B
+#: sc/uiconfig/scalc/ui/sidebarcellappearance.ui:87
+msgctxt "sidebarcellappearance|cellbordertype-atkobject"
+msgid "Border Style"
+msgstr "Randstijl"
