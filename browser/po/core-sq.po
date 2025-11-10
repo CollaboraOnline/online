@@ -2,9 +2,15 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: core-sq\n"
+"PO-Revision-Date: 2025-11-10 16:33+0000\n"
+"Last-Translator: Besnik Bleta <besnik@programeshqip.org>\n"
+"Language-Team: Albanian <https://hosted.weblate.org/projects/"
+"collabora-online/lokit/sq/>\n"
 "Language: sq\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.15-dev\n"
 
 #. ygDfy
 #: module_graphicfilter.ulf
@@ -541,7 +547,7 @@ msgstr ""
 #: filter/uiconfig/ui/impswfdialog.ui:14
 msgctxt "impswfdialog|ImpSWFDialog"
 msgid "Flash (SWF) Options"
-msgstr "Mundësitë për Flash (SWF)"
+msgstr "Mundësi për Flash (SWF)"
 
 #. S2cVZ
 #: filter/uiconfig/ui/impswfdialog.ui:100
@@ -569,19 +575,19 @@ msgstr ""
 #: filter/uiconfig/ui/impswfdialog.ui:175
 msgctxt "impswfdialog|exportbackgrounds"
 msgid "Export _backgrounds"
-msgstr "Eksporto _sfondet"
+msgstr "Eksporto _sfonde"
 
 #. rBFG6
 #: filter/uiconfig/ui/impswfdialog.ui:189
 msgctxt "impswfdialog|exportbackgroundobjects"
 msgid "Export back_ground objects"
-msgstr "Eksporto objektet e _sfondit"
+msgstr "Eksporto objekte _sfondi"
 
 #. P8j2y
 #: filter/uiconfig/ui/impswfdialog.ui:203
 msgctxt "impswfdialog|exportslidecontents"
 msgid "Export _slide contents"
-msgstr "Eksporto _përmbajtjen e diapozitivit"
+msgstr "Eksporto _lëndë diapozitivi"
 
 #. DzHf3
 #: filter/uiconfig/ui/impswfdialog.ui:229
@@ -651,7 +657,7 @@ msgstr ""
 #: filter/uiconfig/ui/pdfgeneralpage.ui:620
 msgctxt "pdfgeneralpage|pdf_version"
 msgid "PDF_ Version:"
-msgstr "Konflikt në versionin PDF"
+msgstr ""
 
 #. tCrYc
 #: filter/uiconfig/ui/pdfgeneralpage.ui:677
@@ -809,7 +815,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Clear"
-msgstr "~Pastro"
+msgstr "Spastroje"
 
 #. BFrek
 #: ChartCommands.xcu
@@ -819,7 +825,7 @@ msgctxt ""
 "ContextLabel\n"
 "value.text"
 msgid "Clear ~Direct Formatting"
-msgstr "Pastro formatimin e ~drejtpërdrejtë"
+msgstr "Spastro Formatim të ~Drejtpërdrejtë"
 
 #. NfNdn
 #: ChartCommands.xcu
@@ -829,7 +835,7 @@ msgctxt ""
 "TooltipLabel\n"
 "value.text"
 msgid "Clear Direct Formatting"
-msgstr "Pastro Formatimin e Drejtpërdrejtë"
+msgstr "Spastro Formatim të Drejtpërdrejtë"
 
 #. vsnyF
 #: DrawImpressCommands.xcu
@@ -849,7 +855,7 @@ msgctxt ""
 "ContextLabel\n"
 "value.text"
 msgid "~Select Table"
-msgstr "Zgjedhe tabelën"
+msgstr "~Përzgjidhni Tabelë"
 
 #. zz8gB
 #: DrawImpressCommands.xcu
@@ -979,7 +985,7 @@ msgctxt ""
 "Title\n"
 "value.text"
 msgid "Character"
-msgstr "Shkronja"
+msgstr "Shenjë"
 
 #. eAgA4
 #: Sidebar.xcu
