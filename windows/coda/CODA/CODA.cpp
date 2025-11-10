@@ -479,6 +479,12 @@ static HRESULT CDialogEventHandler_CreateInstance(REFIID riid, void** ppv)
 
 static void processMessage(WindowData& data, wil::unique_cotaskmem_string& message);
 
+[[noreturn]] static void fatal(const std::string& message)
+{
+    MessageBoxW(hiddenOwnerWindow, Util::string_to_wide_string(message).c_str(), L"ERROR", MB_OK);
+    std::abort();
+}
+
 static std::wstring new_document(CODA_OPEN_CONTROL id)
 {
     // Copy a template to the user's document folder. Where else? Should we let the user decide
@@ -500,7 +506,7 @@ static std::wstring new_document(CODA_OPEN_CONTROL id)
             templateExtension = L"odp";
             break;
         default:
-            std::abort();
+            fatal("Unexpected case in new_document()");
     }
 
     const auto templateSourcePath = Util::string_to_wide_string(app_installation_path) +
@@ -1073,7 +1079,7 @@ static FilenameAndUri fileOpenDialog()
 
     if (!SUCCEEDED(CoCreateInstance(CLSID_FileOpenDialog, NULL, CLSCTX_INPROC_SERVER,
                                     IID_IFileOpenDialog, reinterpret_cast<void**>(&dialog))))
-        std::abort();
+        fatal("CoCreateInstance(CLSID_FileOpenDialog) failed");
 
     COMDLG_FILTERSPEC filter[] = {
         { _(L"Normal files"),
@@ -1082,49 +1088,49 @@ static FilenameAndUri fileOpenDialog()
     };
 
     if (!SUCCEEDED(dialog->SetFileTypes(sizeof(filter) / sizeof(filter[0]), &filter[0])))
-        std::abort();
+        fatal("dialog->SetFileTypes() failed");
 
     wchar_t title[100];
     StringCbPrintfW(title, sizeof(title), _(L"Select document to edit in %s"), appName.c_str());
     if (!SUCCEEDED(dialog->SetTitle(title)))
-        std::abort();
+        fatal("StringCbPrintfW() failed");
 
     IFileDialogEvents* dialogEvents = NULL;
     if (!SUCCEEDED(CDialogEventHandler_CreateInstance(IID_PPV_ARGS(&dialogEvents))))
-        std::abort();
+        fatal("CDialogEventHandler_CreateInstance() failed");
 
     DWORD cookie = 0;
     if (!SUCCEEDED(dialog->Advise(dialogEvents, &cookie)))
-        std::abort();
+        fatal("dialog->Advise() failed");
 
     IFileDialogCustomize* dialogCustomisation = NULL;
     if (!SUCCEEDED(dialog->QueryInterface(IID_PPV_ARGS(&dialogCustomisation))))
-        std::abort();
+        fatal("dialog->QueryInterface() failed");
 
     customisationToDialog[dialogCustomisation] = dialog;
 
     if (!SUCCEEDED(dialogCustomisation->AddSeparator((DWORD)CODA_OPEN_CONTROL::SEP1)))
-        std::abort();
+        fatal("dialogCustomisation->AddSeparator() failed");
 
     if (!SUCCEEDED(dialogCustomisation->StartVisualGroup(CODA_GROUP_OPEN, _(L"Create new"))))
-        std::abort();
+        fatal("dialogCustomisation->StartVisualGroup() failed");
 
     if (!SUCCEEDED(dialogCustomisation->AddPushButton((DWORD)CODA_OPEN_CONTROL::NEW_TEXT,
                                                       _(L"Text document"))))
-        std::abort();
+        fatal("dialogCustomisation->AddPushButton() failed");
 
     if (!SUCCEEDED(dialogCustomisation->AddPushButton((DWORD)CODA_OPEN_CONTROL::NEW_SPREADSHEET,
                                                       _(L"Spreadsheet"))))
-        std::abort();
+        fatal("dialogCustomisation->AddPushButton() failed");
 
     if (!SUCCEEDED(dialogCustomisation->AddPushButton((DWORD)CODA_OPEN_CONTROL::NEW_PRESENTATION,
                                                       _(L"Presentation"))))
-        std::abort();
+        fatal("dialogCustomisation->AddPushButton() failed");
 
     dialogCustomisation->EndVisualGroup();
 
     if (!SUCCEEDED(dialogCustomisation->AddSeparator((DWORD)CODA_OPEN_CONTROL::SEP2)))
-        std::abort();
+        fatal("dialogCustomisation->AddSeparator() failed");
 
     dialogCustomisation->Release();
 
@@ -1142,11 +1148,11 @@ static FilenameAndUri fileOpenDialog()
     {
         IShellItem* item;
         if (!SUCCEEDED(dialog->GetResult(&item)))
-            std::abort();
+            fatal("dialog->GetResult() failed");
 
         PWSTR fileSysPath;
         if (!SUCCEEDED(item->GetDisplayName(SIGDN_FILESYSPATH, &fileSysPath)))
-            std::abort();
+            fatal("item->GetDisplayName() failed");
 
         path = Poco::Path(Util::wide_string_to_string(std::wstring(fileSysPath)));
 
@@ -1168,20 +1174,20 @@ static FilenameAndUri fileSaveDialog(const std::string& name, const std::string&
 
     if (!SUCCEEDED(CoCreateInstance(CLSID_FileSaveDialog, NULL, CLSCTX_INPROC_SERVER,
                                     IID_IFileSaveDialog, reinterpret_cast<void**>(&dialog))))
-        std::abort();
+        fatal("CoCreateInstance(CLSID_FileSaveDialog) failed");
 
     FILEOPENDIALOGOPTIONS options;
 
     if (!SUCCEEDED(dialog->GetOptions(&options)))
-        std::abort();
+        fatal("dialog->GetOptions() failed");
 
     options |= FOS_STRICTFILETYPES;
 
     if (!SUCCEEDED(dialog->SetOptions(options)))
-        std::abort();
+        fatal("dialog->SetOptions() failed");
 
     if (!SUCCEEDED(dialog->SetDefaultExtension(Util::string_to_wide_string(extension).c_str())))
-        std::abort();
+        fatal("dialog->SetDefaultExtension() failed");
 
     wchar_t* extensionCopy = _wcsdup(Util::string_to_wide_string("*." + extension).c_str());
 
@@ -1190,10 +1196,10 @@ static FilenameAndUri fileSaveDialog(const std::string& name, const std::string&
     };
 
     if (!SUCCEEDED(dialog->SetFileTypes(sizeof(filter) / sizeof(filter[0]), &filter[0])))
-        std::abort();
+        fatal("dialog->SetFileTypes() failed");
 
     if (!SUCCEEDED(dialog->SetFileName(Util::string_to_wide_string(name).c_str())))
-        std::abort();
+        fatal("dialog->SetFileName() failed");
 
     if (folder != "")
     {
@@ -1204,7 +1210,7 @@ static FilenameAndUri fileSaveDialog(const std::string& name, const std::string&
         if (SUCCEEDED(SHCreateItemFromParsingName(wfolder.c_str(), nullptr, IID_PPV_ARGS(&psiFolder))))
         {
             if (!SUCCEEDED(dialog->SetFolder(psiFolder)))
-                std::abort();
+                fatal("dialog->SetFolder() failed");
             psiFolder->Release();
         }
     }
@@ -1216,11 +1222,11 @@ static FilenameAndUri fileSaveDialog(const std::string& name, const std::string&
 
     IShellItem* item;
     if (!SUCCEEDED(dialog->GetResult(&item)))
-        std::abort();
+        fatal("dialog->GetResult() failed");
 
     PWSTR fileSysPath;
     if (!SUCCEEDED(item->GetDisplayName(SIGDN_FILESYSPATH, &fileSysPath)))
-        std::abort();
+        fatal("item->GetDisplayName() failed");
 
     auto path = Poco::Path(Util::wide_string_to_string(std::wstring(fileSysPath)));
     CoTaskMemFree(fileSysPath);
@@ -1683,7 +1689,7 @@ static void processMessage(WindowData& data, wil::unique_cotaskmem_string& messa
             else if (s.substr(4) == L"presentation")
                 id = CODA_OPEN_CONTROL::NEW_PRESENTATION;
             else
-                std::abort();
+                fatal("Unexpected new-something message");
 
             auto path = Poco::Path(Util::wide_string_to_string(new_document(id)));
             openCOOLWindow({ path.getFileName(), Poco::URI(path).toString() }, PERMISSION::EDIT);
@@ -1740,7 +1746,7 @@ int APIENTRY wWinMain(HINSTANCE hInstance, HINSTANCE, PWSTR, int showWindowMode)
     Util::setThreadName("main");
 
     if (!SUCCEEDED(CoInitializeEx(NULL, COINIT_APARTMENTTHREADED | COINIT_DISABLE_OLE1DDE)))
-        std::abort();
+        fatal("CoInitializeEx() failed");
 
     persistentWindowSizeStoreOK =
         (persistentWindowSizeStore.open
