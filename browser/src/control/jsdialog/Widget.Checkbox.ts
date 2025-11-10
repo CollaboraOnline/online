@@ -67,7 +67,13 @@ JSDialog.Checkbox = function (
 	const label = _createCheckboxLabel(container, data, builder);
 
 	checkbox.addEventListener('change', () => {
-		if (container.hasAttribute('disabled')) return;
+		if (container.getAttribute('disabled') === 'true') return;
+
+		if (data.command) {
+			app.dispatcher.dispatch(data.command);
+			return;
+		}
+
 		builder.callback(
 			'checkbox',
 			'change',
@@ -77,24 +83,53 @@ JSDialog.Checkbox = function (
 		);
 	});
 
-	if (data.enabled === false) {
-		container.setAttribute('disabled', 'true');
-		container.disabled = true;
-		checkbox.setAttribute('disabled', 'true');
-		checkbox.disabled = true;
-		checkbox.setAttribute('aria-disabled', true);
-	}
+	const setDisabled = (disable: boolean) => {
+		if (disable) {
+			container.setAttribute('disabled', 'true');
+			container.disabled = true;
+			checkbox.setAttribute('disabled', 'true');
+			checkbox.disabled = true;
+			checkbox.setAttribute('aria-disabled', true);
+		} else {
+			container.setAttribute('disabled', 'false');
+			container.disabled = false;
+			checkbox.setAttribute('disabled', 'false');
+			checkbox.disabled = false;
+			checkbox.setAttribute('aria-disabled', false);
+		}
+	};
+
+	setDisabled(data.enabled === false);
 
 	JSDialog.SynchronizeDisabledState(container, [checkbox, label]);
 
-	if (!container.hasAttribute('disabled')) {
-		const state = data.checked;
+	const toggleFunction = () => {
+		if (container.getAttribute('disabled') === 'true') return;
+
+		const items = app.map['stateChangeHandler'];
+		const state = data.command
+			? items.getItemValue(data.command) === 'true'
+			: data.checked;
+
 		if (state === true) {
 			$(checkbox).prop('checked', true);
 		} else if (state) {
 			$(checkbox).prop('checked', false);
 		}
-	}
+	};
+
+	toggleFunction();
+
+	app.map.on(
+		'commandstatechanged',
+		function (e: any) {
+			if (e.commandName === data.command) {
+				toggleFunction();
+				setDisabled(e.disabled || e.state == 'disabled');
+			}
+		},
+		this,
+	);
 
 	if (data.hidden) $(checkbox).hide();
 	return false;
