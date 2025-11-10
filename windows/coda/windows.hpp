@@ -15,4 +15,6 @@ extern const char *user_name;
 extern std::string app_installation_path;
 extern std::string app_installation_uri;
 
+extern void load_next_document();
+
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
