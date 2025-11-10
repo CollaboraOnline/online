@@ -231,8 +231,9 @@ class SlideShowPresenter {
 		this.setFollower(true);
 		switch (info.type) {
 			case 'newfollowmepresentation':
-				this.setFollowing(true);
 				this.showFollow(false);
+				if (this._checkAlreadyPresenting()) break;
+				this.setFollowing(true);
 				this._onStartInWindow({
 					startSlideNumber:
 						this._slideShowNavigator.getLeaderSlide() === -1

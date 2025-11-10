@@ -560,19 +560,37 @@ class UIManager extends window.L.Control {
 		this.refreshTheme();
 
 		var startFolloMePresntationGet = this.map.isPresentationOrDrawing() && window.coolParams.get('startFollowMePresentation');
+		var presentationLeaderIdGet = this.map.isPresentationOrDrawing() && window.coolParams.get('presentationLeaderId');
 		var startPresentationGet = this.map.isPresentationOrDrawing() && window.coolParams.get('startPresentation');
 		// check for "presentation" dispatch event only after document gets fully loaded
+		// in case if the leader is defined we have to wait a little longer to get the viewer info
 		const startPresentation = () => {
 			if (startFolloMePresntationGet === 'true' || startFolloMePresntationGet === '1') {
 				const dispatchFollowPresentation = () => {
 					app.dispatcher.dispatch('followpresentation');
 					this.map.off('slideshowfollowon', dispatchFollowPresentation);
 				}
-				// have to wait until we get all the leader slide details
-				// if we start the follow me presentation directly then
-				// it will start from beginning and not where the leader is
-				// This also help with if the follow me presentation is not running
-				this.map.on('slideshowfollowon', dispatchFollowPresentation);
+
+				if (presentationLeaderIdGet !== ''){
+					// we can start presentation and wait for the leader
+					var myViewId = this.map._docLayer._viewId;
+					if (!myViewId)
+						return;
+					var myViewData = this.map._viewInfo[myViewId];
+					if (myViewData.userid === presentationLeaderIdGet) {
+						app.dispatcher.dispatch('followmepresentation');
+					}
+					else {
+						app.dispatcher.dispatch('followpresentation');
+					}
+				}
+				else {
+					// have to wait until we get all the leader slide details
+					// if we start the follow me presentation directly then
+					// it will start from beginning and not where the leader is
+					// This also help with if the follow me presentation is not running
+					this.map.on('slideshowfollowon', dispatchFollowPresentation);
+				}
 			}
 			else if (startPresentationGet === 'true' || startPresentationGet === '1') {
 				app.dispatcher.dispatch('presentation');
@@ -580,9 +598,13 @@ class UIManager extends window.L.Control {
 
 			// docloaded event is fired multiple times, unfortunately
             // but presentation should start only once
+			this.map.off('updateviewslist', startPresentation);
 			this.map.off('docloaded', startPresentation);
 		};
-		this.map.on('docloaded', startPresentation);
+		if (presentationLeaderIdGet !== '')
+			this.map.on('updateviewslist', startPresentation);
+		else
+			this.map.on('docloaded', startPresentation);
 		this.map.contextToolbar = new ContextToolbar(this.map);
 
 		app.serverConnectionService.onSpecializedUI(docType);
