@@ -63,7 +63,6 @@ window.L.Control.Notebookbar = window.L.Control.extend({
 		app.events.on('contextchange', this.onContextChange);
 		app.events.on('updatepermission', this.onUpdatePermission.bind(this));
 		this.map.on('statusbarchanged', this.onStatusbarChange, this);
-		this.map.on('rulerchanged', this.onRulerChange, this);
 		this.map.on('darkmodechanged', this.onDarkModeToggleChange, this);
 		this.map.on('showannotationschanged', this.onShowAnnotationsChange, this);
 		this.map.on('a11ystatechanged', this.onAccessibilityToggleChange, this);
@@ -564,15 +563,6 @@ window.L.Control.Notebookbar = window.L.Control.extend({
 		}
 		else {
 			$('#showstatusbar').removeClass('selected');
-		}
-	},
-
-	onRulerChange: function() {
-		if (this.map.uiManager.isRulerVisible()) {
-			$('#showruler').addClass('selected');
-		}
-		else {
-			$('#showruler').removeClass('selected');
 		}
 	},
 

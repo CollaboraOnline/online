@@ -678,6 +678,10 @@ class UIManager extends window.L.Control {
 				interactive: interactiveRuler,
 				showruler: showRuler
 			});
+
+			const rulerState = showRuler ? 'true' : 'false';
+			this.map['stateChangeHandler'].setItemValue('showruler', rulerState);
+			this._map.fire('commandstatechanged', {commandName : 'showruler', state : rulerState});
 		}
 	}
 
