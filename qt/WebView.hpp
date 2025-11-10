@@ -63,6 +63,8 @@ public:
     ~WebView();
     CODAWebEngineView* webEngineView() { return _webView.get(); }
     QMainWindow* mainWindow() { return _mainWindow; }
+    // Prompt to save if modified and return true if it's OK to close the document
+    bool confirmClose();
 
     void load(const Poco::URI& fileURL = Poco::URI(), bool newFile = false, bool isStarterMode = false);
     static WebView* createNewDocument(QWebEngineProfile* profile, const std::string& templateType, const std::string& templatePath = "");
