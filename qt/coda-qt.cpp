@@ -917,7 +917,8 @@ int main(int argc, char** argv)
     else if (translator.load("coda_" + locale, dataDir + "/translations"))
         app.installTranslator(&translator);
 
-    QApplication::setApplicationName("Collabora Office");
+    // default application name
+    QApplication::setApplicationName(APP_NAME);
     QApplication::setWindowIcon(QIcon::fromTheme("com.collabora.Office.startcenter"));
 
     QCommandLineParser argParser;

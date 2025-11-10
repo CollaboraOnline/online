@@ -389,7 +389,7 @@ class UIManager extends window.L.Control {
 
 		window.setupToolbar(this.map);
 
-		if (!((window as any).ThisIsTheWindowsApp || (window as any).ThisIsTheMacOSApp)) {
+		if (!((window as any).ThisIsTheWindowsApp || (window as any).ThisIsTheMacOSApp || (window as any).ThisIsTheQtApp)) {
 			this.documentNameInput = window.L.control.documentNameInput();
 			this.map.addControl(this.documentNameInput);
 		}
