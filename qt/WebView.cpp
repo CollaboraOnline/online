@@ -36,6 +36,7 @@
 #include <QFile>
 #include <QFileInfo>
 #include <QDir>
+#include <QApplication>
 
 namespace
 {
@@ -195,6 +196,8 @@ void WebView::load(const Poco::URI& fileURL, bool newFile)
 
     const std::string urlAndQueryStr = urlAndQuery.toString();
     LOG_TRC("Open URL: " << urlAndQueryStr);
+    Poco::Path uriPath(_document._fileURL.getPath());
+    QApplication::setApplicationName(QString::fromStdString(uriPath.getFileName()) + " - " APP_NAME);
     _webView->load(QUrl(QString::fromStdString(urlAndQueryStr)));
 
     auto size = getWindowSize(_isWelcome);
