@@ -28,6 +28,8 @@ public:
     explicit WebView(QWebEngineProfile* profile, bool isWelcome = false);
     ~WebView();
     QWebEngineView* webEngineView() { return _webView.get(); }
+    // Prompt to save if modified and return true if it's OK to close the document
+    bool confirmClose();
 
     void load(const Poco::URI& fileURL, bool newFile = false);
     static WebView* createNewDocument(QWebEngineProfile* profile, const std::string& templateType, const std::string& templatePath = "");
@@ -42,7 +44,6 @@ public:
 private:
     // query gnome font scaling factor and apply it to the web view
     void queryGnomeFontScalingUpdateZoom();
-    QMainWindow* _mainWindow;
     std::unique_ptr<QWebEngineView> _webView;
     coda::DocumentData _document;
     bool _isWelcome;
