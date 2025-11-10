@@ -120,6 +120,7 @@ static const wchar_t dummyWindowClass[] = L"CODADummyFileDialogOwnerWindow";
 static HWND hiddenOwnerWindow;
 
 static const int CODA_WM_EXECUTESCRIPT = WM_APP + 1;
+static const int CODA_WM_LOADNEXTDOCUMENT = WM_APP + 2;
 
 constexpr int CODA_GROUP_OPEN = 1000;
 
@@ -152,6 +153,11 @@ static FilenameAndUri fileSaveDialog(const std::string& name, const std::string&
 
 static std::wstring new_document(CODA_OPEN_CONTROL id);
 static void openCOOLWindow(const FilenameAndUri& filenameAndUri, PERMISSION permission);
+
+// List of documents to open passed on the command line. We open the next one only as soon as the
+// previous one has finished loading.
+static std::vector<FilenameAndUri> filenamesAndUris;
+static int currentCommandLineDocumentIndex;
 
 // Temporary l10n function for the few UI strings here in this file
 static const wchar_t* _(const wchar_t* english)
@@ -379,6 +385,14 @@ static const wchar_t* _(const wchar_t* english)
     }
 
     return english;
+}
+
+void load_next_document()
+{
+    // Open the next document from the command line, if any. Post a message to one randomly selected
+    // document window.
+    if (currentCommandLineDocumentIndex < filenamesAndUris.size() - 1)
+        PostMessageW(windowData.begin()->second.hWnd, CODA_WM_LOADNEXTDOCUMENT, 0, 0);
 }
 
 // ================ Sample code (MIT licensed). With app-specific modifications in the dialog event handler.
@@ -1412,6 +1426,14 @@ static LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM l
             std::free((char*)wParam);
             break;
 
+        case CODA_WM_LOADNEXTDOCUMENT:
+            if (currentCommandLineDocumentIndex < filenamesAndUris.size() - 1)
+            {
+                currentCommandLineDocumentIndex++;
+                openCOOLWindow(filenamesAndUris[currentCommandLineDocumentIndex], PERMISSION::EDIT);
+            }
+            break;
+
         default:
             return DefWindowProc(hWnd, message, wParam, lParam);
             break;
@@ -1745,7 +1767,7 @@ int APIENTRY wWinMain(HINSTANCE hInstance, HINSTANCE, PWSTR, int showWindowMode)
         uiLanguage = Util::wide_string_to_string(bcp47);
 
     // COOLWSD_LOGLEVEL comes from the project file and differs for Debug and Release builds.
-    Log::initialize("CODA", COOLWSD_LOGLEVEL);
+    Log::initialize("CODA", "trace");
     Util::setThreadName("main");
 
     persistentWindowSizeStoreOK =
@@ -1785,18 +1807,20 @@ int APIENTRY wWinMain(HINSTANCE hInstance, HINSTANCE, PWSTR, int showWindowMode)
         ShowWindow(hiddenOwnerWindow, SW_HIDE);
     }
 
-    FilenameAndUri filenameAndUri;
     if (__argc == 1 || wcscmp(__wargv[1], L"--disable-background-networking") == 0)
     {
-        filenameAndUri = fileOpenDialog();
+        filenamesAndUris.push_back(fileOpenDialog());
         // If initial dialog is cancelled, just quit
-        if (filenameAndUri.filename == "")
+        if (filenamesAndUris[0].filename == "")
             std::exit(0);
     }
     else
     {
-        auto path = Poco::Path(Util::wide_string_to_string(__wargv[1]));
-        filenameAndUri = { path.getFileName(), Poco::URI(path).toString() };
+        for (int i = 1; i < __argc; i++)
+        {
+            auto path = Poco::Path(Util::wide_string_to_string(__wargv[i]));
+            filenamesAndUris.push_back({ path.getFileName(), Poco::URI(path).toString() });
+        }
     }
 
     fakeSocketSetLoggingCallback([](const std::string& line) { LOG_TRC_NOFILE(line); });
@@ -1844,7 +1868,10 @@ int APIENTRY wWinMain(HINSTANCE hInstance, HINSTANCE, PWSTR, int showWindowMode)
         }
    }
 
-    openCOOLWindow(filenameAndUri, PERMISSION::EDIT);
+    currentCommandLineDocumentIndex = 0;
+
+    // Open the first documnt here, then open the rest one by one once the previous has loaded.
+    openCOOLWindow(filenamesAndUris[0], PERMISSION::EDIT);
 
     MSG msg;
     while (GetMessage(&msg, NULL, 0, 0))
