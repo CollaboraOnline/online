@@ -184,22 +184,27 @@ msgstr ""
 
 #. NMcqp
 #: chart2/uiconfig/ui/sidebarcolors.ui:30
-msgctxt "sidebarcellappearance|bordertype|tooltip_text"
+msgctxt "sidebarcolors|bordertype|tooltip_text"
 msgid "Allow to select a color palette to apply to current chart data series."
 msgstr ""
 
 #. FXK8B
-#: chart2/uiconfig/ui/sidebargradients.ui:42
-#: sc/uiconfig/scalc/ui/sidebarcellappearance.ui:87
-msgctxt "sidebarcellappearance|cellbordertype-atkobject"
+#: chart2/uiconfig/ui/sidebarcolors.ui:42
+msgctxt "sidebarcolors|cellbordertype-atkobject"
 msgid "Border Style"
 msgstr ""
 
 #. vDwKf
 #: chart2/uiconfig/ui/sidebargradients.ui:30
-msgctxt "sidebarcellappearance|bordertype|tooltip_text"
+msgctxt "sidebargradients|bordertype|tooltip_text"
 msgid ""
 "Allow to select a gradient palette to apply to current chart data series."
+msgstr ""
+
+#. FXK8B
+#: chart2/uiconfig/ui/sidebargradients.ui:42
+msgctxt "sidebargradients|cellbordertype-atkobject"
+msgid "Border Style"
 msgstr ""
 
 #. Aiqg6
@@ -1872,4 +1877,10 @@ msgstr ""
 #: sc/uiconfig/scalc/ui/sheetviewbox.ui:17
 msgctxt "sheetviewbox|sheetview_combobox|accessible_name"
 msgid "Sheet View"
+msgstr ""
+
+#. FXK8B
+#: sc/uiconfig/scalc/ui/sidebarcellappearance.ui:87
+msgctxt "sidebarcellappearance|cellbordertype-atkobject"
+msgid "Border Style"
 msgstr ""

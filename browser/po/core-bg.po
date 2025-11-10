@@ -32,8 +32,8 @@ msgctxt ""
 "LngText.text"
 msgid ""
 "Collabora Office, the office productivity suite based on LibreOffice "
-"Technology, provided by Collabora Productivity. See "
-"https://collaboraoffice.com"
+"Technology, provided by Collabora Productivity. See https://collaboraoffice."
+"com"
 msgstr ""
 
 #. 4rBwc
@@ -185,23 +185,30 @@ msgstr ""
 
 #. NMcqp
 #: chart2/uiconfig/ui/sidebarcolors.ui:30
-msgctxt "sidebarcellappearance|bordertype|tooltip_text"
+msgctxt "sidebarcolors|bordertype|tooltip_text"
 msgid "Allow to select a color palette to apply to current chart data series."
 msgstr ""
 
 #. FXK8B
-#: chart2/uiconfig/ui/sidebargradients.ui:42
-#: sc/uiconfig/scalc/ui/sidebarcellappearance.ui:87
-msgctxt "sidebarcellappearance|cellbordertype-atkobject"
+#: chart2/uiconfig/ui/sidebarcolors.ui:42
+#, fuzzy
+msgctxt "sidebarcolors|cellbordertype-atkobject"
 msgid "Border Style"
 msgstr "Стил на канта"
 
 #. vDwKf
 #: chart2/uiconfig/ui/sidebargradients.ui:30
-msgctxt "sidebarcellappearance|bordertype|tooltip_text"
+msgctxt "sidebargradients|bordertype|tooltip_text"
 msgid ""
 "Allow to select a gradient palette to apply to current chart data series."
 msgstr ""
+
+#. FXK8B
+#: chart2/uiconfig/ui/sidebargradients.ui:42
+#, fuzzy
+msgctxt "sidebargradients|cellbordertype-atkobject"
+msgid "Border Style"
+msgstr "Стил на канта"
 
 #. Aiqg6
 #: chart2/uiconfig/ui/sidebartheme.ui:25
@@ -600,8 +607,8 @@ msgstr "Експортиране на OLE обекти като JPEG"
 msgctxt "pdfgeneralpage|embed|tooltip_text"
 msgid "Creates a PDF that embeds the original ODF file as an attachment."
 msgstr ""
-"Създава PDF файл, в който е вграден оригиналът във формат ODF като прикрепен"
-" файл."
+"Създава PDF файл, в който е вграден оригиналът във формат ODF като прикрепен "
+"файл."
 
 #. JS7DG
 #: filter/uiconfig/ui/pdfgeneralpage.ui:556
@@ -652,10 +659,10 @@ msgid ""
 "used in the source document will be embedded into the generated PDF file. "
 "PDF tags will be written."
 msgstr ""
-"Преобразува към формата PDF/A-2b или PDF/A-1b – файлов формат за дългосрочно"
-" съхранение на електронни документи. Всички шрифтове, използвани в документа"
-" източник, ще бъдат вградени в създадения PDF файл. Ще бъдат записани "
-"етикети на PDF."
+"Преобразува към формата PDF/A-2b или PDF/A-1b – файлов формат за дългосрочно "
+"съхранение на електронни документи. Всички шрифтове, използвани в документа "
+"източник, ще бъдат вградени в създадения PDF файл. Ще бъдат записани етикети "
+"на PDF."
 
 #. te76B
 #: filter/uiconfig/ui/pdfgeneralpage.ui:620
@@ -965,7 +972,8 @@ msgstr "Добавяне в речника"
 #: ImpressWindowState.xcu
 msgctxt ""
 "ImpressWindowState.xcu\n"
-"..ImpressWindowState.UIElements.States.private:resource/popupmenu/pagepanecanvas\n"
+"..ImpressWindowState.UIElements.States.private:resource/popupmenu/"
+"pagepanecanvas\n"
 "UIName\n"
 "value.text"
 msgid "Slide Sorter/Pane (Canvas)"
@@ -975,7 +983,8 @@ msgstr ""
 #: ImpressWindowState.xcu
 msgctxt ""
 "ImpressWindowState.xcu\n"
-"..ImpressWindowState.UIElements.States.private:resource/popupmenu/pagepanecanvasmaster\n"
+"..ImpressWindowState.UIElements.States.private:resource/popupmenu/"
+"pagepanecanvasmaster\n"
 "UIName\n"
 "value.text"
 msgid "Master Slide Sorter/Pane (Canvas)"
@@ -1221,8 +1230,8 @@ msgid ""
 "Excludes a specified number of contiguous rows or columns from the start or "
 "end of an array."
 msgstr ""
-"Изключва указан брой последователни редове или колони от началото или кря на"
-" масив."
+"Изключва указан брой последователни редове или колони от началото или кря на "
+"масив."
 
 #. W6FYc
 #: sc/inc/scfuncs.hrc:4278
@@ -1246,8 +1255,7 @@ msgstr "Редове"
 #: sc/inc/scfuncs.hrc:4281
 msgctxt "SC_OPCODE_DROP"
 msgid ""
-"The number of rows to drop. A negative value drops from the end of the "
-"array."
+"The number of rows to drop. A negative value drops from the end of the array."
 msgstr ""
 "Броят редове за премахване. При отрицателна стойност се премахват редове от "
 "края на масива."
@@ -1312,8 +1320,8 @@ msgstr ""
 #: sc/inc/scfuncs.hrc:4295
 msgctxt "SC_OPCODE_EXPAND"
 msgid ""
-"The number of columns in the expanded array. If missing, columns will not be"
-" expanded."
+"The number of columns in the expanded array. If missing, columns will not be "
+"expanded."
 msgstr ""
 "Броят колони в разширения масив. Ако е пропуснат, колоните няма да бъдат "
 "разширени."
@@ -1418,8 +1426,7 @@ msgstr "Редове"
 #: sc/inc/scfuncs.hrc:4327
 msgctxt "SC_OPCODE_TAKE"
 msgid ""
-"The number of rows to take. A negative value takes from the end of the "
-"array."
+"The number of rows to take. A negative value takes from the end of the array."
 msgstr ""
 "Броят редове за вземане. При отрицателна стойност се вземат редове от края "
 "на масива."
@@ -1480,8 +1487,8 @@ msgstr "Номер на срещане"
 #: sc/inc/scfuncs.hrc:4341
 msgctxt "SC_OPCODE_TEXTAFTER"
 msgid ""
-"The instance of the delimiter after which to extract text. The default is 1."
-" A negative number starts searching from the end."
+"The instance of the delimiter after which to extract text. The default is 1. "
+"A negative number starts searching from the end."
 msgstr ""
 "Срещането на разделителя, след което да се извлече текст. Подразбира се 1. "
 "Отрицателно число означава търсене от края."
@@ -1522,8 +1529,8 @@ msgstr "При ненамерен"
 msgctxt "SC_OPCODE_TEXTAFTER"
 msgid "The value returned if no match is found. The default is #N/A."
 msgstr ""
-"Стойността, която се връща, ако не е намерено съответствие. Подразбира се "
-"#N/A."
+"Стойността, която се връща, ако не е намерено съответствие. Подразбира се #N/"
+"A."
 
 #. f88EE
 #: sc/inc/scfuncs.hrc:4353
@@ -1607,8 +1614,8 @@ msgstr "При ненамерен"
 msgctxt "SC_OPCODE_TEXTBEFORE"
 msgid "The value returned if no match is found. The default is #N/A."
 msgstr ""
-"Стойността, която се връща, ако не е намерено съответствие. Подразбира се "
-"#N/A."
+"Стойността, която се връща, ако не е намерено съответствие. Подразбира се #N/"
+"A."
 
 #. wdZTd
 #: sc/inc/scfuncs.hrc:4371
@@ -1667,8 +1674,8 @@ msgid ""
 "Set to TRUE to ignore consecutive delimiters otherwise it creates an empty "
 "cell. The default is FALSE."
 msgstr ""
-"Задайте TRUE, ако искате да се игнорират последователните разделители, иначе"
-" ще се създава празна клетка. Подразбира се FALSE."
+"Задайте TRUE, ако искате да се игнорират последователните разделители, иначе "
+"ще се създава празна клетка. Подразбира се FALSE."
 
 #. kkAYp
 #: sc/inc/scfuncs.hrc:4380
@@ -1726,8 +1733,8 @@ msgid ""
 "(default). 1 - ignore blank cells. 2 - ignore cells with error. 3 - ignore "
 "blanks cells and cells with error."
 msgstr ""
-"Дали да се игнорират определени видове стойности. 0 или пропуснат – запазват"
-" се всички стойности (подразбира се). 1 – игнорират се празните клетки. 2 – "
+"Дали да се игнорират определени видове стойности. 0 или пропуснат – запазват "
+"се всички стойности (подразбира се). 1 – игнорират се празните клетки. 2 – "
 "игнорират се клетките с грешки. 3 – игнорират се празните клетки и клетките "
 "с грешки."
 
@@ -1779,8 +1786,8 @@ msgid ""
 "(default). 1 - ignore blank cells. 2 - ignore cells with error. 3 - ignore "
 "blanks cells and cells with error."
 msgstr ""
-"Дали да се игнорират определени видове стойности. 0 или пропуснат – запазват"
-" се всички стойности (подразбира се). 1 – игнорират се празните клетки. 2 – "
+"Дали да се игнорират определени видове стойности. 0 или пропуснат – запазват "
+"се всички стойности (подразбира се). 1 – игнорират се празните клетки. 2 – "
 "игнорират се клетките с грешки. 3 – игнорират се празните клетки и клетките "
 "с грешки."
 
@@ -1937,3 +1944,9 @@ msgstr ""
 msgctxt "sheetviewbox|sheetview_combobox|accessible_name"
 msgid "Sheet View"
 msgstr ""
+
+#. FXK8B
+#: sc/uiconfig/scalc/ui/sidebarcellappearance.ui:87
+msgctxt "sidebarcellappearance|cellbordertype-atkobject"
+msgid "Border Style"
+msgstr "Стил на канта"

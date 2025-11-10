@@ -9,8 +9,8 @@ msgstr ""
 "Language: pl\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=n==1 ? 0 : n%10>=2 && n%10<=4 && "
-"(n%100<10 || n%100>=20) ? 1 : 2;\n"
+"Plural-Forms: nplurals=3; plural=n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
+"|| n%100>=20) ? 1 : 2;\n"
 "X-Generator: Weblate 5.15-dev\n"
 
 #. ygDfy
@@ -39,8 +39,8 @@ msgctxt ""
 "LngText.text"
 msgid ""
 "Collabora Office, the office productivity suite based on LibreOffice "
-"Technology, provided by Collabora Productivity. See "
-"https://collaboraoffice.com"
+"Technology, provided by Collabora Productivity. See https://collaboraoffice."
+"com"
 msgstr ""
 "Collabora Office, pakiet biurowy oparty na technologii LibreOffice, "
 "dostarczany przez Collabora Productivity. Zobacz https://collaboraoffice.com"
@@ -90,11 +90,11 @@ msgid ""
 "Pressing [ No ] will drop these fonts from the document:\n"
 "$(ARG1)"
 msgstr ""
-"Co najmniej jedna czcionka osadzona w dokumencie nie ma uprawnień do edycji."
-"\n"
+"Co najmniej jedna czcionka osadzona w dokumencie nie ma uprawnień do "
+"edycji.\n"
 "Otworzyć dokument w trybie tylko do odczytu?\n"
-"Naciśnięcie przycisku [ Nie ] spowoduje usunięcie tych czcionek z dokumentu:"
-"\n"
+"Naciśnięcie przycisku [ Nie ] spowoduje usunięcie tych czcionek z "
+"dokumentu:\n"
 "$(ARG1)"
 
 #. 4NkMk
@@ -202,27 +202,32 @@ msgstr "_Zarządzaj stylami wykresu"
 
 #. NMcqp
 #: chart2/uiconfig/ui/sidebarcolors.ui:30
-msgctxt "sidebarcellappearance|bordertype|tooltip_text"
+msgctxt "sidebarcolors|bordertype|tooltip_text"
 msgid "Allow to select a color palette to apply to current chart data series."
 msgstr ""
 "Umożliwia wybór palety kolorów, która zostanie zastosowana do bieżącej serii "
 "danych wykresu."
 
 #. FXK8B
-#: chart2/uiconfig/ui/sidebargradients.ui:42
-#: sc/uiconfig/scalc/ui/sidebarcellappearance.ui:87
-msgctxt "sidebarcellappearance|cellbordertype-atkobject"
+#: chart2/uiconfig/ui/sidebarcolors.ui:42
+msgctxt "sidebarcolors|cellbordertype-atkobject"
 msgid "Border Style"
 msgstr "Styl krawędzi"
 
 #. vDwKf
 #: chart2/uiconfig/ui/sidebargradients.ui:30
-msgctxt "sidebarcellappearance|bordertype|tooltip_text"
+msgctxt "sidebargradients|bordertype|tooltip_text"
 msgid ""
 "Allow to select a gradient palette to apply to current chart data series."
 msgstr ""
 "Umożliwia wybranie palety gradientów, która zostanie zastosowana do bieżącej "
 "serii danych wykresu."
+
+#. FXK8B
+#: chart2/uiconfig/ui/sidebargradients.ui:42
+msgctxt "sidebargradients|cellbordertype-atkobject"
+msgid "Border Style"
+msgstr "Styl krawędzi"
 
 #. Aiqg6
 #: chart2/uiconfig/ui/sidebartheme.ui:25
@@ -992,7 +997,8 @@ msgstr "Dodaj do słownika"
 #: ImpressWindowState.xcu
 msgctxt ""
 "ImpressWindowState.xcu\n"
-"..ImpressWindowState.UIElements.States.private:resource/popupmenu/pagepanecanvas\n"
+"..ImpressWindowState.UIElements.States.private:resource/popupmenu/"
+"pagepanecanvas\n"
 "UIName\n"
 "value.text"
 msgid "Slide Sorter/Pane (Canvas)"
@@ -1002,7 +1008,8 @@ msgstr "Sorter slajdów / panel (płótno)"
 #: ImpressWindowState.xcu
 msgctxt ""
 "ImpressWindowState.xcu\n"
-"..ImpressWindowState.UIElements.States.private:resource/popupmenu/pagepanecanvasmaster\n"
+"..ImpressWindowState.UIElements.States.private:resource/popupmenu/"
+"pagepanecanvasmaster\n"
 "UIName\n"
 "value.text"
 msgid "Master Slide Sorter/Pane (Canvas)"
@@ -1276,8 +1283,7 @@ msgstr "Wiersze"
 #: sc/inc/scfuncs.hrc:4281
 msgctxt "SC_OPCODE_DROP"
 msgid ""
-"The number of rows to drop. A negative value drops from the end of the "
-"array."
+"The number of rows to drop. A negative value drops from the end of the array."
 msgstr ""
 "Liczba wierszy do pominięcia. Wartość ujemna powoduje pominięcie z końca "
 "macierzy."
@@ -1343,8 +1349,8 @@ msgstr "Kolumny"
 #: sc/inc/scfuncs.hrc:4295
 msgctxt "SC_OPCODE_EXPAND"
 msgid ""
-"The number of columns in the expanded array. If missing, columns will not be"
-" expanded."
+"The number of columns in the expanded array. If missing, columns will not be "
+"expanded."
 msgstr ""
 "Liczba kolumn w rozszerzonej macierzy. Jeśli brak, kolumny nie zostaną "
 "rozszerzone."
@@ -1449,8 +1455,7 @@ msgstr "Wiersze"
 #: sc/inc/scfuncs.hrc:4327
 msgctxt "SC_OPCODE_TAKE"
 msgid ""
-"The number of rows to take. A negative value takes from the end of the "
-"array."
+"The number of rows to take. A negative value takes from the end of the array."
 msgstr ""
 "Liczba wierszy do wycinki. Wartość ujemna pobierana jest od końca macierzy."
 
@@ -1509,8 +1514,8 @@ msgstr "Numer wystąpienia"
 #: sc/inc/scfuncs.hrc:4341
 msgctxt "SC_OPCODE_TEXTAFTER"
 msgid ""
-"The instance of the delimiter after which to extract text. The default is 1."
-" A negative number starts searching from the end."
+"The instance of the delimiter after which to extract text. The default is 1. "
+"A negative number starts searching from the end."
 msgstr ""
 "Wystąpienie ogranicznika, po którym ma zostać wyodrębniony tekst. Domyślnie "
 "jest to 1. Liczba ujemna rozpoczyna wyszukiwanie od końca."
@@ -1554,8 +1559,7 @@ msgstr "Jeśli nie znaleziono"
 msgctxt "SC_OPCODE_TEXTAFTER"
 msgid "The value returned if no match is found. The default is #N/A."
 msgstr ""
-"Wartość zwracana, jeśli nie znaleziono dopasowania. Domyślna wartość to "
-"#N/D."
+"Wartość zwracana, jeśli nie znaleziono dopasowania. Domyślna wartość to #N/D."
 
 #. f88EE
 #: sc/inc/scfuncs.hrc:4353
@@ -1642,8 +1646,7 @@ msgstr "Jeśli nie znaleziono"
 msgctxt "SC_OPCODE_TEXTBEFORE"
 msgid "The value returned if no match is found. The default is #N/A."
 msgstr ""
-"Wartość zwracana, jeśli nie znaleziono dopasowania. Domyślna wartość to "
-"#N/D."
+"Wartość zwracana, jeśli nie znaleziono dopasowania. Domyślna wartość to #N/D."
 
 #. wdZTd
 #: sc/inc/scfuncs.hrc:4371
@@ -1978,3 +1981,9 @@ msgstr "Dostępne widoki arkuszy."
 msgctxt "sheetviewbox|sheetview_combobox|accessible_name"
 msgid "Sheet View"
 msgstr "Widok arkusza"
+
+#. FXK8B
+#: sc/uiconfig/scalc/ui/sidebarcellappearance.ui:87
+msgctxt "sidebarcellappearance|cellbordertype-atkobject"
+msgid "Border Style"
+msgstr "Styl krawędzi"

@@ -32,8 +32,8 @@ msgctxt ""
 "LngText.text"
 msgid ""
 "Collabora Office, the office productivity suite based on LibreOffice "
-"Technology, provided by Collabora Productivity. See "
-"https://collaboraoffice.com"
+"Technology, provided by Collabora Productivity. See https://collaboraoffice."
+"com"
 msgstr ""
 
 #. 4rBwc
@@ -185,23 +185,30 @@ msgstr ""
 
 #. NMcqp
 #: chart2/uiconfig/ui/sidebarcolors.ui:30
-msgctxt "sidebarcellappearance|bordertype|tooltip_text"
+msgctxt "sidebarcolors|bordertype|tooltip_text"
 msgid "Allow to select a color palette to apply to current chart data series."
 msgstr ""
 
 #. FXK8B
-#: chart2/uiconfig/ui/sidebargradients.ui:42
-#: sc/uiconfig/scalc/ui/sidebarcellappearance.ui:87
-msgctxt "sidebarcellappearance|cellbordertype-atkobject"
+#: chart2/uiconfig/ui/sidebarcolors.ui:42
+#, fuzzy
+msgctxt "sidebarcolors|cellbordertype-atkobject"
 msgid "Border Style"
 msgstr "Gaya Batas"
 
 #. vDwKf
 #: chart2/uiconfig/ui/sidebargradients.ui:30
-msgctxt "sidebarcellappearance|bordertype|tooltip_text"
+msgctxt "sidebargradients|bordertype|tooltip_text"
 msgid ""
 "Allow to select a gradient palette to apply to current chart data series."
 msgstr ""
+
+#. FXK8B
+#: chart2/uiconfig/ui/sidebargradients.ui:42
+#, fuzzy
+msgctxt "sidebargradients|cellbordertype-atkobject"
+msgid "Border Style"
+msgstr "Gaya Batas"
 
 #. Aiqg6
 #: chart2/uiconfig/ui/sidebartheme.ui:25
@@ -609,8 +616,8 @@ msgid ""
 "This setting enables you to export the document as a .pdf file containing "
 "two file formats: PDF and ODF as an attachment. "
 msgstr ""
-"Pengaturan ini memungkinkan Anda untuk mengekspor dokumen sebagai berkas "
-".pdf yang berisi dua format berkas: PDF dan ODF."
+"Pengaturan ini memungkinkan Anda untuk mengekspor dokumen sebagai berkas ."
+"pdf yang berisi dua format berkas: PDF dan ODF."
 
 #. NCgBM
 #: filter/uiconfig/ui/pdfgeneralpage.ui:583
@@ -651,9 +658,9 @@ msgid ""
 "used in the source document will be embedded into the generated PDF file. "
 "PDF tags will be written."
 msgstr ""
-"Mengkonversi ke format PDF/A-2B atau PDF/A-1B. Ini ditentukan sebagai format"
-" berkas dokumen elektronik untuk pelestarian jangka panjang. Semua fonta "
-"yang digunakan dalam dokumen sumber akan tertanam ke dalam berkas PDF yang "
+"Mengkonversi ke format PDF/A-2B atau PDF/A-1B. Ini ditentukan sebagai format "
+"berkas dokumen elektronik untuk pelestarian jangka panjang. Semua fonta yang "
+"digunakan dalam dokumen sumber akan tertanam ke dalam berkas PDF yang "
 "dihasilkan. Tag PDF akan ditulis."
 
 #. te76B
@@ -964,7 +971,8 @@ msgstr "Tambah Ke Kamus"
 #: ImpressWindowState.xcu
 msgctxt ""
 "ImpressWindowState.xcu\n"
-"..ImpressWindowState.UIElements.States.private:resource/popupmenu/pagepanecanvas\n"
+"..ImpressWindowState.UIElements.States.private:resource/popupmenu/"
+"pagepanecanvas\n"
 "UIName\n"
 "value.text"
 msgid "Slide Sorter/Pane (Canvas)"
@@ -974,7 +982,8 @@ msgstr ""
 #: ImpressWindowState.xcu
 msgctxt ""
 "ImpressWindowState.xcu\n"
-"..ImpressWindowState.UIElements.States.private:resource/popupmenu/pagepanecanvasmaster\n"
+"..ImpressWindowState.UIElements.States.private:resource/popupmenu/"
+"pagepanecanvasmaster\n"
 "UIName\n"
 "value.text"
 msgid "Master Slide Sorter/Pane (Canvas)"
@@ -1219,8 +1228,8 @@ msgid ""
 "Excludes a specified number of contiguous rows or columns from the start or "
 "end of an array."
 msgstr ""
-"Mengecualikan sejumlah baris atau kolom bersebelahan tertentu dari awal atau"
-" akhir suatu larik."
+"Mengecualikan sejumlah baris atau kolom bersebelahan tertentu dari awal atau "
+"akhir suatu larik."
 
 #. W6FYc
 #: sc/inc/scfuncs.hrc:4278
@@ -1244,8 +1253,7 @@ msgstr "Baris"
 #: sc/inc/scfuncs.hrc:4281
 msgctxt "SC_OPCODE_DROP"
 msgid ""
-"The number of rows to drop. A negative value drops from the end of the "
-"array."
+"The number of rows to drop. A negative value drops from the end of the array."
 msgstr ""
 
 #. 6sAoA
@@ -1307,8 +1315,8 @@ msgstr ""
 #: sc/inc/scfuncs.hrc:4295
 msgctxt "SC_OPCODE_EXPAND"
 msgid ""
-"The number of columns in the expanded array. If missing, columns will not be"
-" expanded."
+"The number of columns in the expanded array. If missing, columns will not be "
+"expanded."
 msgstr ""
 "Cacah kolom dalam larik yang diperluas. Jika tidak ada, kolom tidak akan "
 "diperluas."
@@ -1388,8 +1396,8 @@ msgid ""
 "Returns a specified number of contiguous rows or columns from the start or "
 "end of an array."
 msgstr ""
-"Mengembalikan sejumlah baris atau kolom berturutan yang ditentukan dari awal"
-" atau akhir suatu larik."
+"Mengembalikan sejumlah baris atau kolom berturutan yang ditentukan dari awal "
+"atau akhir suatu larik."
 
 #. dFLFb
 #: sc/inc/scfuncs.hrc:4324
@@ -1413,10 +1421,8 @@ msgstr "Baris"
 #: sc/inc/scfuncs.hrc:4327
 msgctxt "SC_OPCODE_TAKE"
 msgid ""
-"The number of rows to take. A negative value takes from the end of the "
-"array."
-msgstr ""
-"Cacah baris yang akan diambil. Nilai negatif diambil dari akhir larik."
+"The number of rows to take. A negative value takes from the end of the array."
+msgstr "Cacah baris yang akan diambil. Nilai negatif diambil dari akhir larik."
 
 #. HJQKW
 #: sc/inc/scfuncs.hrc:4328
@@ -1430,8 +1436,7 @@ msgctxt "SC_OPCODE_TAKE"
 msgid ""
 "The number of columns to take. A negative value takes from the end of the "
 "array."
-msgstr ""
-"Cacah kolom yang akan diambil. Nilai negatif diambil dari akhir larik."
+msgstr "Cacah kolom yang akan diambil. Nilai negatif diambil dari akhir larik."
 
 #. GwyMB
 #: sc/inc/scfuncs.hrc:4335
@@ -1475,8 +1480,8 @@ msgstr "Nomor Instansi"
 #: sc/inc/scfuncs.hrc:4341
 msgctxt "SC_OPCODE_TEXTAFTER"
 msgid ""
-"The instance of the delimiter after which to extract text. The default is 1."
-" A negative number starts searching from the end."
+"The instance of the delimiter after which to extract text. The default is 1. "
+"A negative number starts searching from the end."
 msgstr ""
 "Instansi pembatas yang digunakan untuk mengekstrak teks. Nilai bakunya "
 "adalah 1. Angka negatif memulai pencarian dari akhir."
@@ -1668,8 +1673,8 @@ msgid ""
 "Set to TRUE to ignore consecutive delimiters otherwise it creates an empty "
 "cell. The default is FALSE."
 msgstr ""
-"Atur ke TRUE untuk mengabaikan pembatas yang berurutan, jika tidak, sel akan"
-" kosong. Nilai bakunya adalah FALSE."
+"Atur ke TRUE untuk mengabaikan pembatas yang berurutan, jika tidak, sel akan "
+"kosong. Nilai bakunya adalah FALSE."
 
 #. kkAYp
 #: sc/inc/scfuncs.hrc:4380
@@ -1746,8 +1751,8 @@ msgid ""
 "Scan the array by column. FALSE or omitted (default) - the array is scanned "
 "by row. TRUE - the array is scanned by column."
 msgstr ""
-"Memindai larik per kolom. FALSE atau dihilangkan (baku) - larik dipindai per"
-" baris. TRUE - larik dipindai per kolom."
+"Memindai larik per kolom. FALSE atau dihilangkan (baku) - larik dipindai per "
+"baris. TRUE - larik dipindai per kolom."
 
 #. PGyxj
 #: sc/inc/scfuncs.hrc:4401
@@ -1798,8 +1803,8 @@ msgid ""
 "Scan the array by column. FALSE or omitted (default) - the array is scanned "
 "by row. TRUE - the array is scanned by column."
 msgstr ""
-"Memindai larik per kolom. FALSE atau dihilangkan (baku) - larik dipindai per"
-" baris. TRUE - larik dipindai per kolom."
+"Memindai larik per kolom. FALSE atau dihilangkan (baku) - larik dipindai per "
+"baris. TRUE - larik dipindai per kolom."
 
 #. oBDEA
 #: sc/inc/scfuncs.hrc:4437
@@ -1938,3 +1943,9 @@ msgstr ""
 msgctxt "sheetviewbox|sheetview_combobox|accessible_name"
 msgid "Sheet View"
 msgstr ""
+
+#. FXK8B
+#: sc/uiconfig/scalc/ui/sidebarcellappearance.ui:87
+msgctxt "sidebarcellappearance|cellbordertype-atkobject"
+msgid "Border Style"
+msgstr "Gaya Batas"

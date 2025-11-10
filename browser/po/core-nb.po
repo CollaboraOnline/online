@@ -32,8 +32,8 @@ msgctxt ""
 "LngText.text"
 msgid ""
 "Collabora Office, the office productivity suite based on LibreOffice "
-"Technology, provided by Collabora Productivity. See "
-"https://collaboraoffice.com"
+"Technology, provided by Collabora Productivity. See https://collaboraoffice."
+"com"
 msgstr ""
 
 #. 4rBwc
@@ -185,23 +185,30 @@ msgstr ""
 
 #. NMcqp
 #: chart2/uiconfig/ui/sidebarcolors.ui:30
-msgctxt "sidebarcellappearance|bordertype|tooltip_text"
+msgctxt "sidebarcolors|bordertype|tooltip_text"
 msgid "Allow to select a color palette to apply to current chart data series."
 msgstr ""
 
 #. FXK8B
-#: chart2/uiconfig/ui/sidebargradients.ui:42
-#: sc/uiconfig/scalc/ui/sidebarcellappearance.ui:87
-msgctxt "sidebarcellappearance|cellbordertype-atkobject"
+#: chart2/uiconfig/ui/sidebarcolors.ui:42
+#, fuzzy
+msgctxt "sidebarcolors|cellbordertype-atkobject"
 msgid "Border Style"
 msgstr "Kantstil"
 
 #. vDwKf
 #: chart2/uiconfig/ui/sidebargradients.ui:30
-msgctxt "sidebarcellappearance|bordertype|tooltip_text"
+msgctxt "sidebargradients|bordertype|tooltip_text"
 msgid ""
 "Allow to select a gradient palette to apply to current chart data series."
 msgstr ""
+
+#. FXK8B
+#: chart2/uiconfig/ui/sidebargradients.ui:42
+#, fuzzy
+msgctxt "sidebargradients|cellbordertype-atkobject"
+msgid "Border Style"
+msgstr "Kantstil"
 
 #. Aiqg6
 #: chart2/uiconfig/ui/sidebartheme.ui:25
@@ -654,9 +661,9 @@ msgid ""
 "PDF tags will be written."
 msgstr ""
 "Konverterer til PDF/A-2b- eller PDF/A-1b-format. Dette er definert som et "
-"elektronisk dokumentfilformat for langvarig bevaring. Alle skriftene som ble"
-" brukt i kildedokumentet, blir innebygd i den genererte PDF-filen. PDF-koder"
-" blir skrevet."
+"elektronisk dokumentfilformat for langvarig bevaring. Alle skriftene som ble "
+"brukt i kildedokumentet, blir innebygd i den genererte PDF-filen. PDF-koder "
+"blir skrevet."
 
 #. te76B
 #: filter/uiconfig/ui/pdfgeneralpage.ui:620
@@ -966,7 +973,8 @@ msgstr "Legg til i ordbok"
 #: ImpressWindowState.xcu
 msgctxt ""
 "ImpressWindowState.xcu\n"
-"..ImpressWindowState.UIElements.States.private:resource/popupmenu/pagepanecanvas\n"
+"..ImpressWindowState.UIElements.States.private:resource/popupmenu/"
+"pagepanecanvas\n"
 "UIName\n"
 "value.text"
 msgid "Slide Sorter/Pane (Canvas)"
@@ -976,7 +984,8 @@ msgstr ""
 #: ImpressWindowState.xcu
 msgctxt ""
 "ImpressWindowState.xcu\n"
-"..ImpressWindowState.UIElements.States.private:resource/popupmenu/pagepanecanvasmaster\n"
+"..ImpressWindowState.UIElements.States.private:resource/popupmenu/"
+"pagepanecanvasmaster\n"
 "UIName\n"
 "value.text"
 msgid "Master Slide Sorter/Pane (Canvas)"
@@ -1183,8 +1192,7 @@ msgstr "Kolonne "
 #: sc/inc/scfuncs.hrc:4261
 msgctxt "SC_OPCODE_CHOOSECOLS"
 msgid "Column 1, Column 2,... The list of column numbers to be returned."
-msgstr ""
-"Kolonne 1, kolonne 2,... Listen over kolonnenumre som skal returneres."
+msgstr "Kolonne 1, kolonne 2,... Listen over kolonnenumre som skal returneres."
 
 #. 78gQu
 #: sc/inc/scfuncs.hrc:4267
@@ -1202,8 +1210,7 @@ msgstr "Matrise"
 #: sc/inc/scfuncs.hrc:4269
 msgctxt "SC_OPCODE_CHOOSEROWS"
 msgid "The array containing the rows to be returned in the new array."
-msgstr ""
-"Matrisen som inneholder radene som skal returneres i den nye matrisen."
+msgstr "Matrisen som inneholder radene som skal returneres i den nye matrisen."
 
 #. PDBbE
 #: sc/inc/scfuncs.hrc:4270
@@ -1249,8 +1256,7 @@ msgstr "Rader"
 #: sc/inc/scfuncs.hrc:4281
 msgctxt "SC_OPCODE_DROP"
 msgid ""
-"The number of rows to drop. A negative value drops from the end of the "
-"array."
+"The number of rows to drop. A negative value drops from the end of the array."
 msgstr ""
 "Antall rader som skal droppes. En negativ verdi droppes fra slutten av "
 "matrisen."
@@ -1317,8 +1323,8 @@ msgstr ""
 #: sc/inc/scfuncs.hrc:4295
 msgctxt "SC_OPCODE_EXPAND"
 msgid ""
-"The number of columns in the expanded array. If missing, columns will not be"
-" expanded."
+"The number of columns in the expanded array. If missing, columns will not be "
+"expanded."
 msgstr ""
 "Antall rader i den utvidede matrisen. Hvis den mangler, vil ikke rader bli "
 "lagt til."
@@ -1424,8 +1430,7 @@ msgstr "Rader"
 #: sc/inc/scfuncs.hrc:4327
 msgctxt "SC_OPCODE_TAKE"
 msgid ""
-"The number of rows to take. A negative value takes from the end of the "
-"array."
+"The number of rows to take. A negative value takes from the end of the array."
 msgstr ""
 "Antall rader som skal hentes. En negativ verdi hentes fra slutten av "
 "matrisen."
@@ -1487,8 +1492,8 @@ msgstr "Instansnummer"
 #: sc/inc/scfuncs.hrc:4341
 msgctxt "SC_OPCODE_TEXTAFTER"
 msgid ""
-"The instance of the delimiter after which to extract text. The default is 1."
-" A negative number starts searching from the end."
+"The instance of the delimiter after which to extract text. The default is 1. "
+"A negative number starts searching from the end."
 msgstr ""
 "Forekomsten av skilletegnet som teksten skal trekkes ut etter. "
 "Standardverdien er 1. Søket starter fra slutten av et negativt tall."
@@ -1538,8 +1543,7 @@ msgstr ""
 #: sc/inc/scfuncs.hrc:4353
 msgctxt "SC_OPCODE_TEXTBEFORE"
 msgid "Returns the text that occurs before a given substring or delimiter."
-msgstr ""
-"Returnerer teksten som står før en gitt delstreng eller et skilletegn."
+msgstr "Returnerer teksten som står før en gitt delstreng eller et skilletegn."
 
 #. NNriC
 #: sc/inc/scfuncs.hrc:4354
@@ -1626,8 +1630,7 @@ msgstr ""
 #: sc/inc/scfuncs.hrc:4371
 msgctxt "SC_OPCODE_TEXTSPLIT"
 msgid "Splits text by a given delimiter to an array of multiple cells."
-msgstr ""
-"Splitter tekst med et gitt skilletegn til en matrise med flere celler."
+msgstr "Splitter tekst med et gitt skilletegn til en matrise med flere celler."
 
 #. DH7h4
 #: sc/inc/scfuncs.hrc:4372
@@ -1740,8 +1743,8 @@ msgid ""
 "blanks cells and cells with error."
 msgstr ""
 "Om man skal ignorere visse typer verdier. 0 eller utelatt - behold alle "
-"verdier (standard). 1 - ignorer tomme celler. 2 - ignorer celler med feil. 3"
-" - ignorer tomme celler og celler med feil."
+"verdier (standard). 1 - ignorer tomme celler. 2 - ignorer celler med feil. 3 "
+"- ignorer tomme celler og celler med feil."
 
 #. qNLAi
 #: sc/inc/scfuncs.hrc:4394
@@ -1791,8 +1794,8 @@ msgid ""
 "(default). 1 - ignore blank cells. 2 - ignore cells with error. 3 - ignore "
 "blanks cells and cells with error."
 msgstr ""
-"Om man skal ignorere visse typer verdier. 0 eller de som er utelatt - behold"
-" alle verdier (standard). 1 - ignorer tomme celler. 2 - ignorer celler med "
+"Om man skal ignorere visse typer verdier. 0 eller de som er utelatt - behold "
+"alle verdier (standard). 1 - ignorer tomme celler. 2 - ignorer celler med "
 "feil. 3 - ignorer tomme celler og celler med feil."
 
 #. E4XDf
@@ -1948,3 +1951,9 @@ msgstr ""
 msgctxt "sheetviewbox|sheetview_combobox|accessible_name"
 msgid "Sheet View"
 msgstr ""
+
+#. FXK8B
+#: sc/uiconfig/scalc/ui/sidebarcellappearance.ui:87
+msgctxt "sidebarcellappearance|cellbordertype-atkobject"
+msgid "Border Style"
+msgstr "Kantstil"

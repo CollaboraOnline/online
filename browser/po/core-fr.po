@@ -32,8 +32,8 @@ msgctxt ""
 "LngText.text"
 msgid ""
 "Collabora Office, the office productivity suite based on LibreOffice "
-"Technology, provided by Collabora Productivity. See "
-"https://collaboraoffice.com"
+"Technology, provided by Collabora Productivity. See https://collaboraoffice."
+"com"
 msgstr ""
 
 #. 4rBwc
@@ -185,23 +185,30 @@ msgstr ""
 
 #. NMcqp
 #: chart2/uiconfig/ui/sidebarcolors.ui:30
-msgctxt "sidebarcellappearance|bordertype|tooltip_text"
+msgctxt "sidebarcolors|bordertype|tooltip_text"
 msgid "Allow to select a color palette to apply to current chart data series."
 msgstr ""
 
 #. FXK8B
-#: chart2/uiconfig/ui/sidebargradients.ui:42
-#: sc/uiconfig/scalc/ui/sidebarcellappearance.ui:87
-msgctxt "sidebarcellappearance|cellbordertype-atkobject"
+#: chart2/uiconfig/ui/sidebarcolors.ui:42
+#, fuzzy
+msgctxt "sidebarcolors|cellbordertype-atkobject"
 msgid "Border Style"
 msgstr "Style de bordure"
 
 #. vDwKf
 #: chart2/uiconfig/ui/sidebargradients.ui:30
-msgctxt "sidebarcellappearance|bordertype|tooltip_text"
+msgctxt "sidebargradients|bordertype|tooltip_text"
 msgid ""
 "Allow to select a gradient palette to apply to current chart data series."
 msgstr ""
+
+#. FXK8B
+#: chart2/uiconfig/ui/sidebargradients.ui:42
+#, fuzzy
+msgctxt "sidebargradients|cellbordertype-atkobject"
+msgid "Border Style"
+msgstr "Style de bordure"
 
 #. Aiqg6
 #: chart2/uiconfig/ui/sidebartheme.ui:25
@@ -965,7 +972,8 @@ msgstr "Ajouter au dictionnaire"
 #: ImpressWindowState.xcu
 msgctxt ""
 "ImpressWindowState.xcu\n"
-"..ImpressWindowState.UIElements.States.private:resource/popupmenu/pagepanecanvas\n"
+"..ImpressWindowState.UIElements.States.private:resource/popupmenu/"
+"pagepanecanvas\n"
 "UIName\n"
 "value.text"
 msgid "Slide Sorter/Pane (Canvas)"
@@ -975,7 +983,8 @@ msgstr ""
 #: ImpressWindowState.xcu
 msgctxt ""
 "ImpressWindowState.xcu\n"
-"..ImpressWindowState.UIElements.States.private:resource/popupmenu/pagepanecanvasmaster\n"
+"..ImpressWindowState.UIElements.States.private:resource/popupmenu/"
+"pagepanecanvasmaster\n"
 "UIName\n"
 "value.text"
 msgid "Master Slide Sorter/Pane (Canvas)"
@@ -1169,8 +1178,7 @@ msgstr "Matrice"
 #: sc/inc/scfuncs.hrc:4259
 msgctxt "SC_OPCODE_CHOOSECOLS"
 msgid "The array containing the columns to be returned in the new array."
-msgstr ""
-"La matrice contenant les colonnes à renvoyer dans la nouvelle matrice."
+msgstr "La matrice contenant les colonnes à renvoyer dans la nouvelle matrice."
 
 #. EuvxU
 #: sc/inc/scfuncs.hrc:4260
@@ -1246,8 +1254,7 @@ msgstr "Lignes"
 #: sc/inc/scfuncs.hrc:4281
 msgctxt "SC_OPCODE_DROP"
 msgid ""
-"The number of rows to drop. A negative value drops from the end of the "
-"array."
+"The number of rows to drop. A negative value drops from the end of the array."
 msgstr ""
 "Nombre de lignes à supprimer. Une valeur négative supprime la fin d'une "
 "matrice."
@@ -1314,8 +1321,8 @@ msgstr ""
 #: sc/inc/scfuncs.hrc:4295
 msgctxt "SC_OPCODE_EXPAND"
 msgid ""
-"The number of columns in the expanded array. If missing, columns will not be"
-" expanded."
+"The number of columns in the expanded array. If missing, columns will not be "
+"expanded."
 msgstr ""
 "Nombre de colonnes dans la matrice développée. Si ce nombre est manquant, "
 "les colonnes ne seront pas étendues."
@@ -1422,8 +1429,7 @@ msgstr "Lignes"
 #: sc/inc/scfuncs.hrc:4327
 msgctxt "SC_OPCODE_TAKE"
 msgid ""
-"The number of rows to take. A negative value takes from the end of the "
-"array."
+"The number of rows to take. A negative value takes from the end of the array."
 msgstr ""
 "Le nombre de lignes à prendre. Une valeur négative prend à partir de la fin "
 "de la matrice."
@@ -1485,8 +1491,8 @@ msgstr "Numéro d'instance"
 #: sc/inc/scfuncs.hrc:4341
 msgctxt "SC_OPCODE_TEXTAFTER"
 msgid ""
-"The instance of the delimiter after which to extract text. The default is 1."
-" A negative number starts searching from the end."
+"The instance of the delimiter after which to extract text. The default is 1. "
+"A negative number starts searching from the end."
 msgstr ""
 "Instance du délimiteur à partir duquel extraire le texte. La valeur par "
 "défaut est 1. Un nombre négatif permet de lancer la recherche depuis la fin."
@@ -1502,8 +1508,8 @@ msgstr "Mode Correspondre"
 msgctxt "SC_OPCODE_TEXTAFTER"
 msgid "Set to 1 to perform a case-insensitive match. The default is 0."
 msgstr ""
-"Définissez la valeur sur 1 pour effectuer une correspondance insensible à la"
-" casse. La valeur par défaut est 0."
+"Définissez la valeur sur 1 pour effectuer une correspondance insensible à la "
+"casse. La valeur par défaut est 0."
 
 #. nAF2s
 #: sc/inc/scfuncs.hrc:4344
@@ -1516,8 +1522,8 @@ msgstr "Correspondre à la fin"
 msgctxt "SC_OPCODE_TEXTAFTER"
 msgid "Set to 1 to treat the end of text as a delimiter. The default is 0."
 msgstr ""
-"Définissez la valeur sur 1 pour traiter la fin du texte comme un délimiteur."
-" La valeur par défaut est 0."
+"Définissez la valeur sur 1 pour traiter la fin du texte comme un délimiteur. "
+"La valeur par défaut est 0."
 
 #. PG6qj
 #: sc/inc/scfuncs.hrc:4346
@@ -1530,8 +1536,8 @@ msgstr "Si Non trouvé"
 msgctxt "SC_OPCODE_TEXTAFTER"
 msgid "The value returned if no match is found. The default is #N/A."
 msgstr ""
-"Valeur renvoyée si aucune correspondance n'est trouvée. La valeur par défaut"
-" est #N/D."
+"Valeur renvoyée si aucune correspondance n'est trouvée. La valeur par défaut "
+"est #N/D."
 
 #. f88EE
 #: sc/inc/scfuncs.hrc:4353
@@ -1591,8 +1597,8 @@ msgstr "Mode Correspondre"
 msgctxt "SC_OPCODE_TEXTBEFORE"
 msgid "Set to 1 to perform a case-insensitive match. The default is 0."
 msgstr ""
-"Définissez la valeur sur 1 pour effectuer une correspondance insensible à la"
-" casse. La valeur par défaut est 0."
+"Définissez la valeur sur 1 pour effectuer une correspondance insensible à la "
+"casse. La valeur par défaut est 0."
 
 #. sACA2
 #: sc/inc/scfuncs.hrc:4362
@@ -1605,8 +1611,8 @@ msgstr "Correspondre à la fin"
 msgctxt "SC_OPCODE_TEXTBEFORE"
 msgid "Set to 1 to treat the end of text as a delimiter. The default is 0."
 msgstr ""
-"Définissez la valeur sur 1 pour traiter la fin du texte comme un délimiteur."
-" La valeur par défaut est 0."
+"Définissez la valeur sur 1 pour traiter la fin du texte comme un délimiteur. "
+"La valeur par défaut est 0."
 
 #. aCnZX
 #: sc/inc/scfuncs.hrc:4364
@@ -1619,16 +1625,15 @@ msgstr "Si Non trouvé"
 msgctxt "SC_OPCODE_TEXTBEFORE"
 msgid "The value returned if no match is found. The default is #N/A."
 msgstr ""
-"Valeur renvoyée si aucune correspondance n'est trouvée. La valeur par défaut"
-" est #N/D."
+"Valeur renvoyée si aucune correspondance n'est trouvée. La valeur par défaut "
+"est #N/D."
 
 #. wdZTd
 #: sc/inc/scfuncs.hrc:4371
 msgctxt "SC_OPCODE_TEXTSPLIT"
 msgid "Splits text by a given delimiter to an array of multiple cells."
 msgstr ""
-"Divise le texte par un délimiteur donné en une matrice de plusieurs "
-"cellules."
+"Divise le texte par un délimiteur donné en une matrice de plusieurs cellules."
 
 #. DH7h4
 #: sc/inc/scfuncs.hrc:4372
@@ -1695,8 +1700,8 @@ msgstr "Mode Correspondre"
 msgctxt "SC_OPCODE_TEXTSPLIT"
 msgid "Set to 1 to perform a case-insensitive match. The default is 0."
 msgstr ""
-"Définissez la valeur sur 1 pour effectuer une correspondance insensible à la"
-" casse. La valeur par défaut est 0."
+"Définissez la valeur sur 1 pour effectuer une correspondance insensible à la "
+"casse. La valeur par défaut est 0."
 
 #. vXECz
 #: sc/inc/scfuncs.hrc:4382
@@ -1953,3 +1958,9 @@ msgstr ""
 msgctxt "sheetviewbox|sheetview_combobox|accessible_name"
 msgid "Sheet View"
 msgstr ""
+
+#. FXK8B
+#: sc/uiconfig/scalc/ui/sidebarcellappearance.ui:87
+msgctxt "sidebarcellappearance|cellbordertype-atkobject"
+msgid "Border Style"
+msgstr "Style de bordure"

@@ -32,8 +32,8 @@ msgctxt ""
 "LngText.text"
 msgid ""
 "Collabora Office, the office productivity suite based on LibreOffice "
-"Technology, provided by Collabora Productivity. See "
-"https://collaboraoffice.com"
+"Technology, provided by Collabora Productivity. See https://collaboraoffice."
+"com"
 msgstr ""
 
 #. 4rBwc
@@ -185,22 +185,27 @@ msgstr ""
 
 #. NMcqp
 #: chart2/uiconfig/ui/sidebarcolors.ui:30
-msgctxt "sidebarcellappearance|bordertype|tooltip_text"
+msgctxt "sidebarcolors|bordertype|tooltip_text"
 msgid "Allow to select a color palette to apply to current chart data series."
 msgstr ""
 
 #. FXK8B
-#: chart2/uiconfig/ui/sidebargradients.ui:42
-#: sc/uiconfig/scalc/ui/sidebarcellappearance.ui:87
-msgctxt "sidebarcellappearance|cellbordertype-atkobject"
+#: chart2/uiconfig/ui/sidebarcolors.ui:42
+msgctxt "sidebarcolors|cellbordertype-atkobject"
 msgid "Border Style"
 msgstr ""
 
 #. vDwKf
 #: chart2/uiconfig/ui/sidebargradients.ui:30
-msgctxt "sidebarcellappearance|bordertype|tooltip_text"
+msgctxt "sidebargradients|bordertype|tooltip_text"
 msgid ""
 "Allow to select a gradient palette to apply to current chart data series."
+msgstr ""
+
+#. FXK8B
+#: chart2/uiconfig/ui/sidebargradients.ui:42
+msgctxt "sidebargradients|cellbordertype-atkobject"
+msgid "Border Style"
 msgstr ""
 
 #. Aiqg6
@@ -618,8 +623,8 @@ msgid ""
 "Select the PDF version. PDF/A version variants creates an ISO 19005 "
 "compliant PDF file, ideal for long-term document preservation."
 msgstr ""
-"Vytvorí PDF súbor podľa ISO 19005-2, ktorý je určený na dlhodobé uchovávanie"
-" dokumentov"
+"Vytvorí PDF súbor podľa ISO 19005-2, ktorý je určený na dlhodobé uchovávanie "
+"dokumentov"
 
 #. Ac3Ga
 #: filter/uiconfig/ui/pdfgeneralpage.ui:587
@@ -963,7 +968,8 @@ msgstr "Pridať do slovníka"
 #: ImpressWindowState.xcu
 msgctxt ""
 "ImpressWindowState.xcu\n"
-"..ImpressWindowState.UIElements.States.private:resource/popupmenu/pagepanecanvas\n"
+"..ImpressWindowState.UIElements.States.private:resource/popupmenu/"
+"pagepanecanvas\n"
 "UIName\n"
 "value.text"
 msgid "Slide Sorter/Pane (Canvas)"
@@ -973,7 +979,8 @@ msgstr ""
 #: ImpressWindowState.xcu
 msgctxt ""
 "ImpressWindowState.xcu\n"
-"..ImpressWindowState.UIElements.States.private:resource/popupmenu/pagepanecanvasmaster\n"
+"..ImpressWindowState.UIElements.States.private:resource/popupmenu/"
+"pagepanecanvasmaster\n"
 "UIName\n"
 "value.text"
 msgid "Master Slide Sorter/Pane (Canvas)"
@@ -1243,11 +1250,10 @@ msgstr "Riadky"
 #: sc/inc/scfuncs.hrc:4281
 msgctxt "SC_OPCODE_DROP"
 msgid ""
-"The number of rows to drop. A negative value drops from the end of the "
-"array."
+"The number of rows to drop. A negative value drops from the end of the array."
 msgstr ""
-"Počet riadkov na vyradenie. Pri zadaní zápornej hodnoty sa vyraďuje od konca"
-" poľa."
+"Počet riadkov na vyradenie. Pri zadaní zápornej hodnoty sa vyraďuje od konca "
+"poľa."
 
 #. 6sAoA
 #: sc/inc/scfuncs.hrc:4282
@@ -1262,8 +1268,8 @@ msgid ""
 "The number of columns to drop. A negative value drops from the end of the "
 "array."
 msgstr ""
-"Počet stĺpcov na vyradenie. Pri zadaní zápornej hodnoty sa vyraďuje od konca"
-" poľa."
+"Počet stĺpcov na vyradenie. Pri zadaní zápornej hodnoty sa vyraďuje od konca "
+"poľa."
 
 #. cXvVY
 #: sc/inc/scfuncs.hrc:4289
@@ -1307,8 +1313,8 @@ msgstr ""
 #: sc/inc/scfuncs.hrc:4295
 msgctxt "SC_OPCODE_EXPAND"
 msgid ""
-"The number of columns in the expanded array. If missing, columns will not be"
-" expanded."
+"The number of columns in the expanded array. If missing, columns will not be "
+"expanded."
 msgstr "Počet stĺpcov v rozšírenom poli. Ak chýba, stĺpce sa nebudú dopĺňať."
 
 #. QPyBK
@@ -1382,8 +1388,8 @@ msgid ""
 "Returns a specified number of contiguous rows or columns from the start or "
 "end of an array."
 msgstr ""
-"Vráti zadaný počet susediacich riadkov alebo stĺpcov od začiatku alebo konca"
-" poľa."
+"Vráti zadaný počet susediacich riadkov alebo stĺpcov od začiatku alebo konca "
+"poľa."
 
 #. dFLFb
 #: sc/inc/scfuncs.hrc:4324
@@ -1407,8 +1413,7 @@ msgstr "Riadky"
 #: sc/inc/scfuncs.hrc:4327
 msgctxt "SC_OPCODE_TAKE"
 msgid ""
-"The number of rows to take. A negative value takes from the end of the "
-"array."
+"The number of rows to take. A negative value takes from the end of the array."
 msgstr ""
 "Počet riadkov, ktoré treba prebrať. Záporná hodnota znamená preberanie od "
 "konca poľa."
@@ -1469,8 +1474,8 @@ msgstr ""
 #: sc/inc/scfuncs.hrc:4341
 msgctxt "SC_OPCODE_TEXTAFTER"
 msgid ""
-"The instance of the delimiter after which to extract text. The default is 1."
-" A negative number starts searching from the end."
+"The instance of the delimiter after which to extract text. The default is 1. "
+"A negative number starts searching from the end."
 msgstr ""
 
 #. fpoGj
@@ -1701,8 +1706,8 @@ msgid ""
 "(default). 1 - ignore blank cells. 2 - ignore cells with error. 3 - ignore "
 "blanks cells and cells with error."
 msgstr ""
-"Či sa majú ignorovať určité typy hodnôt. 0 alebo vynechané - ponechať všetky"
-" hodnoty (predvolené), 1 - Ignorovať prázdne bunky, 2 - Ignorovať bunky s "
+"Či sa majú ignorovať určité typy hodnôt. 0 alebo vynechané - ponechať všetky "
+"hodnoty (predvolené), 1 - Ignorovať prázdne bunky, 2 - Ignorovať bunky s "
 "chybou, 3 - Ignorovať prázdne bunky a bunky s chybou."
 
 #. qNLAi
@@ -1753,8 +1758,8 @@ msgid ""
 "(default). 1 - ignore blank cells. 2 - ignore cells with error. 3 - ignore "
 "blanks cells and cells with error."
 msgstr ""
-"Či sa majú ignorovať určité typy hodnôt. 0 alebo vynechané - ponechať všetky"
-" hodnoty (predvolené), 1 - Ignorovať prázdne bunky, 2 - Ignorovať bunky s "
+"Či sa majú ignorovať určité typy hodnôt. 0 alebo vynechané - ponechať všetky "
+"hodnoty (predvolené), 1 - Ignorovať prázdne bunky, 2 - Ignorovať bunky s "
 "chybou, 3 - Ignorovať prázdne bunky a bunky s chybou."
 
 #. E4XDf
@@ -1905,4 +1910,10 @@ msgstr ""
 #: sc/uiconfig/scalc/ui/sheetviewbox.ui:17
 msgctxt "sheetviewbox|sheetview_combobox|accessible_name"
 msgid "Sheet View"
+msgstr ""
+
+#. FXK8B
+#: sc/uiconfig/scalc/ui/sidebarcellappearance.ui:87
+msgctxt "sidebarcellappearance|cellbordertype-atkobject"
+msgid "Border Style"
 msgstr ""

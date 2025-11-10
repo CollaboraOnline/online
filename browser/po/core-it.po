@@ -32,8 +32,8 @@ msgctxt ""
 "LngText.text"
 msgid ""
 "Collabora Office, the office productivity suite based on LibreOffice "
-"Technology, provided by Collabora Productivity. See "
-"https://collaboraoffice.com"
+"Technology, provided by Collabora Productivity. See https://collaboraoffice."
+"com"
 msgstr ""
 
 #. 4rBwc
@@ -185,23 +185,30 @@ msgstr ""
 
 #. NMcqp
 #: chart2/uiconfig/ui/sidebarcolors.ui:30
-msgctxt "sidebarcellappearance|bordertype|tooltip_text"
+msgctxt "sidebarcolors|bordertype|tooltip_text"
 msgid "Allow to select a color palette to apply to current chart data series."
 msgstr ""
 
 #. FXK8B
-#: chart2/uiconfig/ui/sidebargradients.ui:42
-#: sc/uiconfig/scalc/ui/sidebarcellappearance.ui:87
-msgctxt "sidebarcellappearance|cellbordertype-atkobject"
+#: chart2/uiconfig/ui/sidebarcolors.ui:42
+#, fuzzy
+msgctxt "sidebarcolors|cellbordertype-atkobject"
 msgid "Border Style"
 msgstr "Stile bordo"
 
 #. vDwKf
 #: chart2/uiconfig/ui/sidebargradients.ui:30
-msgctxt "sidebarcellappearance|bordertype|tooltip_text"
+msgctxt "sidebargradients|bordertype|tooltip_text"
 msgid ""
 "Allow to select a gradient palette to apply to current chart data series."
 msgstr ""
+
+#. FXK8B
+#: chart2/uiconfig/ui/sidebargradients.ui:42
+#, fuzzy
+msgctxt "sidebargradients|cellbordertype-atkobject"
+msgid "Border Style"
+msgstr "Stile bordo"
 
 #. Aiqg6
 #: chart2/uiconfig/ui/sidebartheme.ui:25
@@ -965,7 +972,8 @@ msgstr "Aggiungi al dizionario"
 #: ImpressWindowState.xcu
 msgctxt ""
 "ImpressWindowState.xcu\n"
-"..ImpressWindowState.UIElements.States.private:resource/popupmenu/pagepanecanvas\n"
+"..ImpressWindowState.UIElements.States.private:resource/popupmenu/"
+"pagepanecanvas\n"
 "UIName\n"
 "value.text"
 msgid "Slide Sorter/Pane (Canvas)"
@@ -975,7 +983,8 @@ msgstr ""
 #: ImpressWindowState.xcu
 msgctxt ""
 "ImpressWindowState.xcu\n"
-"..ImpressWindowState.UIElements.States.private:resource/popupmenu/pagepanecanvasmaster\n"
+"..ImpressWindowState.UIElements.States.private:resource/popupmenu/"
+"pagepanecanvasmaster\n"
 "UIName\n"
 "value.text"
 msgid "Master Slide Sorter/Pane (Canvas)"
@@ -1246,11 +1255,10 @@ msgstr "Righe"
 #: sc/inc/scfuncs.hrc:4281
 msgctxt "SC_OPCODE_DROP"
 msgid ""
-"The number of rows to drop. A negative value drops from the end of the "
-"array."
+"The number of rows to drop. A negative value drops from the end of the array."
 msgstr ""
-"Numero di righe da eliminare. Un valore negativo elimina le righe dalla fine"
-" della matrice."
+"Numero di righe da eliminare. Un valore negativo elimina le righe dalla fine "
+"della matrice."
 
 #. 6sAoA
 #: sc/inc/scfuncs.hrc:4282
@@ -1314,8 +1322,8 @@ msgstr ""
 #: sc/inc/scfuncs.hrc:4295
 msgctxt "SC_OPCODE_EXPAND"
 msgid ""
-"The number of columns in the expanded array. If missing, columns will not be"
-" expanded."
+"The number of columns in the expanded array. If missing, columns will not be "
+"expanded."
 msgstr ""
 "Numero di colonne nella matrice espansa. Se non specificato, le colonne non "
 "verranno estese."
@@ -1359,8 +1367,8 @@ msgid ""
 "rows, #N/A error will be returned in the additional rows."
 msgstr ""
 "Matrice 1, Matrice 2,... Le seguenti matrici da aggiungere. Se una matrice "
-"contiene meno righe, nelle righe supplementari viene restituito l'errore "
-"#N/D."
+"contiene meno righe, nelle righe supplementari viene restituito l'errore #N/"
+"D."
 
 #. 7zS24
 #: sc/inc/scfuncs.hrc:4313
@@ -1388,8 +1396,8 @@ msgid ""
 "columns, #N/A error will be returned in the additional columns."
 msgstr ""
 "Matrice 1, Matrice 2,... Le seguenti matrici da aggiungere. Se una matrice "
-"contiene meno colonne, nelle colonne supplementari verrà restituito l'errore"
-" #N/D."
+"contiene meno colonne, nelle colonne supplementari verrà restituito l'errore "
+"#N/D."
 
 #. JnsYT
 #: sc/inc/scfuncs.hrc:4323
@@ -1423,8 +1431,7 @@ msgstr "Righe"
 #: sc/inc/scfuncs.hrc:4327
 msgctxt "SC_OPCODE_TAKE"
 msgid ""
-"The number of rows to take. A negative value takes from the end of the "
-"array."
+"The number of rows to take. A negative value takes from the end of the array."
 msgstr ""
 "Numero di righe da estrarre. Un valore negativo estrae le righe a partire "
 "dalla fine della matrice."
@@ -1487,8 +1494,8 @@ msgstr "Numero di istanza"
 #: sc/inc/scfuncs.hrc:4341
 msgctxt "SC_OPCODE_TEXTAFTER"
 msgid ""
-"The instance of the delimiter after which to extract text. The default is 1."
-" A negative number starts searching from the end."
+"The instance of the delimiter after which to extract text. The default is 1. "
+"A negative number starts searching from the end."
 msgstr ""
 "Istanza del delimitatore dopo il quale estrarre il testo. Il valore "
 "predefinito è 1. Un numero negativo avvia la ricerca dalla fine."
@@ -1668,8 +1675,7 @@ msgstr "Delimitatore di riga"
 #: sc/inc/scfuncs.hrc:4377
 msgctxt "SC_OPCODE_TEXTSPLIT"
 msgid "The text to delimit the rows. Multiple delimiters can be supplied."
-msgstr ""
-"Testo che delimita le righe. Possono essere inseriti più delimitatori."
+msgstr "Testo che delimita le righe. Possono essere inseriti più delimitatori."
 
 #. jD3sa
 #: sc/inc/scfuncs.hrc:4378
@@ -1746,8 +1752,8 @@ msgid ""
 "(default). 1 - ignore blank cells. 2 - ignore cells with error. 3 - ignore "
 "blanks cells and cells with error."
 msgstr ""
-"Indica se ignorare determinati tipi di valori. 0 od omesso: mantiene tutti i"
-" valori (impostazione predefinita). 1: ignora le celle vuote. 2: ignora le "
+"Indica se ignorare determinati tipi di valori. 0 od omesso: mantiene tutti i "
+"valori (impostazione predefinita). 1: ignora le celle vuote. 2: ignora le "
 "celle con errori. 3: ignora le celle vuote e le celle con errori."
 
 #. qNLAi
@@ -1799,8 +1805,8 @@ msgid ""
 "(default). 1 - ignore blank cells. 2 - ignore cells with error. 3 - ignore "
 "blanks cells and cells with error."
 msgstr ""
-"Indica se ignorare determinati tipi di valori. 0 od omesso: mantiene tutti i"
-" valori (impostazione predefinita). 1: ignora le celle vuote. 2: ignora le "
+"Indica se ignorare determinati tipi di valori. 0 od omesso: mantiene tutti i "
+"valori (impostazione predefinita). 1: ignora le celle vuote. 2: ignora le "
 "celle con errori. 3: ignora le celle vuote e le celle con errori."
 
 #. E4XDf
@@ -1959,3 +1965,9 @@ msgstr ""
 msgctxt "sheetviewbox|sheetview_combobox|accessible_name"
 msgid "Sheet View"
 msgstr ""
+
+#. FXK8B
+#: sc/uiconfig/scalc/ui/sidebarcellappearance.ui:87
+msgctxt "sidebarcellappearance|cellbordertype-atkobject"
+msgid "Border Style"
+msgstr "Stile bordo"

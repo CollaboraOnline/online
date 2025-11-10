@@ -32,8 +32,8 @@ msgctxt ""
 "LngText.text"
 msgid ""
 "Collabora Office, the office productivity suite based on LibreOffice "
-"Technology, provided by Collabora Productivity. See "
-"https://collaboraoffice.com"
+"Technology, provided by Collabora Productivity. See https://collaboraoffice."
+"com"
 msgstr ""
 
 #. 4rBwc
@@ -185,22 +185,27 @@ msgstr ""
 
 #. NMcqp
 #: chart2/uiconfig/ui/sidebarcolors.ui:30
-msgctxt "sidebarcellappearance|bordertype|tooltip_text"
+msgctxt "sidebarcolors|bordertype|tooltip_text"
 msgid "Allow to select a color palette to apply to current chart data series."
 msgstr ""
 
 #. FXK8B
-#: chart2/uiconfig/ui/sidebargradients.ui:42
-#: sc/uiconfig/scalc/ui/sidebarcellappearance.ui:87
-msgctxt "sidebarcellappearance|cellbordertype-atkobject"
+#: chart2/uiconfig/ui/sidebarcolors.ui:42
+msgctxt "sidebarcolors|cellbordertype-atkobject"
 msgid "Border Style"
 msgstr ""
 
 #. vDwKf
 #: chart2/uiconfig/ui/sidebargradients.ui:30
-msgctxt "sidebarcellappearance|bordertype|tooltip_text"
+msgctxt "sidebargradients|bordertype|tooltip_text"
 msgid ""
 "Allow to select a gradient palette to apply to current chart data series."
+msgstr ""
+
+#. FXK8B
+#: chart2/uiconfig/ui/sidebargradients.ui:42
+msgctxt "sidebargradients|cellbordertype-atkobject"
+msgid "Border Style"
 msgstr ""
 
 #. Aiqg6
@@ -609,8 +614,8 @@ msgid ""
 "This setting enables you to export the document as a .pdf file containing "
 "two file formats: PDF and ODF as an attachment. "
 msgstr ""
-"Bu ayar belgenizi PDF ve ODF biçimlerini içeren bir .pdf dosyası olarak dışa"
-" aktarmanızı sağlar."
+"Bu ayar belgenizi PDF ve ODF biçimlerini içeren bir .pdf dosyası olarak dışa "
+"aktarmanızı sağlar."
 
 #. NCgBM
 #: filter/uiconfig/ui/pdfgeneralpage.ui:583
@@ -652,9 +657,9 @@ msgid ""
 "PDF tags will be written."
 msgstr ""
 "PDF/A-2b veya PDF/A-1b biçimine dönüştürür. Bu dosya biçimi uzun dönem "
-"saklama için elektronik belge biçimi olarak tanımlanmaktadır. Kaynak belgede"
-" kullanılan bütün yazı tipleri oluşturulan PDF dosyasının içine "
-"gömülecektir. PDF etiketleri yazılacaktır."
+"saklama için elektronik belge biçimi olarak tanımlanmaktadır. Kaynak belgede "
+"kullanılan bütün yazı tipleri oluşturulan PDF dosyasının içine gömülecektir. "
+"PDF etiketleri yazılacaktır."
 
 #. te76B
 #: filter/uiconfig/ui/pdfgeneralpage.ui:620
@@ -964,7 +969,8 @@ msgstr ""
 #: ImpressWindowState.xcu
 msgctxt ""
 "ImpressWindowState.xcu\n"
-"..ImpressWindowState.UIElements.States.private:resource/popupmenu/pagepanecanvas\n"
+"..ImpressWindowState.UIElements.States.private:resource/popupmenu/"
+"pagepanecanvas\n"
 "UIName\n"
 "value.text"
 msgid "Slide Sorter/Pane (Canvas)"
@@ -974,7 +980,8 @@ msgstr ""
 #: ImpressWindowState.xcu
 msgctxt ""
 "ImpressWindowState.xcu\n"
-"..ImpressWindowState.UIElements.States.private:resource/popupmenu/pagepanecanvasmaster\n"
+"..ImpressWindowState.UIElements.States.private:resource/popupmenu/"
+"pagepanecanvasmaster\n"
 "UIName\n"
 "value.text"
 msgid "Master Slide Sorter/Pane (Canvas)"
@@ -1242,8 +1249,7 @@ msgstr ""
 #: sc/inc/scfuncs.hrc:4281
 msgctxt "SC_OPCODE_DROP"
 msgid ""
-"The number of rows to drop. A negative value drops from the end of the "
-"array."
+"The number of rows to drop. A negative value drops from the end of the array."
 msgstr ""
 
 #. 6sAoA
@@ -1302,8 +1308,8 @@ msgstr ""
 #: sc/inc/scfuncs.hrc:4295
 msgctxt "SC_OPCODE_EXPAND"
 msgid ""
-"The number of columns in the expanded array. If missing, columns will not be"
-" expanded."
+"The number of columns in the expanded array. If missing, columns will not be "
+"expanded."
 msgstr ""
 
 #. QPyBK
@@ -1400,8 +1406,7 @@ msgstr ""
 #: sc/inc/scfuncs.hrc:4327
 msgctxt "SC_OPCODE_TAKE"
 msgid ""
-"The number of rows to take. A negative value takes from the end of the "
-"array."
+"The number of rows to take. A negative value takes from the end of the array."
 msgstr ""
 
 #. HJQKW
@@ -1458,8 +1463,8 @@ msgstr ""
 #: sc/inc/scfuncs.hrc:4341
 msgctxt "SC_OPCODE_TEXTAFTER"
 msgid ""
-"The instance of the delimiter after which to extract text. The default is 1."
-" A negative number starts searching from the end."
+"The instance of the delimiter after which to extract text. The default is 1. "
+"A negative number starts searching from the end."
 msgstr ""
 
 #. fpoGj
@@ -1884,4 +1889,10 @@ msgstr ""
 #: sc/uiconfig/scalc/ui/sheetviewbox.ui:17
 msgctxt "sheetviewbox|sheetview_combobox|accessible_name"
 msgid "Sheet View"
+msgstr ""
+
+#. FXK8B
+#: sc/uiconfig/scalc/ui/sidebarcellappearance.ui:87
+msgctxt "sidebarcellappearance|cellbordertype-atkobject"
+msgid "Border Style"
 msgstr ""

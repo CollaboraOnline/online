@@ -32,8 +32,8 @@ msgctxt ""
 "LngText.text"
 msgid ""
 "Collabora Office, the office productivity suite based on LibreOffice "
-"Technology, provided by Collabora Productivity. See "
-"https://collaboraoffice.com"
+"Technology, provided by Collabora Productivity. See https://collaboraoffice."
+"com"
 msgstr ""
 
 #. 4rBwc
@@ -185,23 +185,30 @@ msgstr ""
 
 #. NMcqp
 #: chart2/uiconfig/ui/sidebarcolors.ui:30
-msgctxt "sidebarcellappearance|bordertype|tooltip_text"
+msgctxt "sidebarcolors|bordertype|tooltip_text"
 msgid "Allow to select a color palette to apply to current chart data series."
 msgstr ""
 
 #. FXK8B
-#: chart2/uiconfig/ui/sidebargradients.ui:42
-#: sc/uiconfig/scalc/ui/sidebarcellappearance.ui:87
-msgctxt "sidebarcellappearance|cellbordertype-atkobject"
+#: chart2/uiconfig/ui/sidebarcolors.ui:42
+#, fuzzy
+msgctxt "sidebarcolors|cellbordertype-atkobject"
 msgid "Border Style"
 msgstr "Estilo de bordo"
 
 #. vDwKf
 #: chart2/uiconfig/ui/sidebargradients.ui:30
-msgctxt "sidebarcellappearance|bordertype|tooltip_text"
+msgctxt "sidebargradients|bordertype|tooltip_text"
 msgid ""
 "Allow to select a gradient palette to apply to current chart data series."
 msgstr ""
+
+#. FXK8B
+#: chart2/uiconfig/ui/sidebargradients.ui:42
+#, fuzzy
+msgctxt "sidebargradients|cellbordertype-atkobject"
+msgid "Border Style"
+msgstr "Estilo de bordo"
 
 #. Aiqg6
 #: chart2/uiconfig/ui/sidebartheme.ui:25
@@ -959,7 +966,8 @@ msgstr "Engadir ao dicionario"
 #: ImpressWindowState.xcu
 msgctxt ""
 "ImpressWindowState.xcu\n"
-"..ImpressWindowState.UIElements.States.private:resource/popupmenu/pagepanecanvas\n"
+"..ImpressWindowState.UIElements.States.private:resource/popupmenu/"
+"pagepanecanvas\n"
 "UIName\n"
 "value.text"
 msgid "Slide Sorter/Pane (Canvas)"
@@ -969,7 +977,8 @@ msgstr ""
 #: ImpressWindowState.xcu
 msgctxt ""
 "ImpressWindowState.xcu\n"
-"..ImpressWindowState.UIElements.States.private:resource/popupmenu/pagepanecanvasmaster\n"
+"..ImpressWindowState.UIElements.States.private:resource/popupmenu/"
+"pagepanecanvasmaster\n"
 "UIName\n"
 "value.text"
 msgid "Master Slide Sorter/Pane (Canvas)"
@@ -1240,8 +1249,7 @@ msgstr "Filas"
 #: sc/inc/scfuncs.hrc:4281
 msgctxt "SC_OPCODE_DROP"
 msgid ""
-"The number of rows to drop. A negative value drops from the end of the "
-"array."
+"The number of rows to drop. A negative value drops from the end of the array."
 msgstr ""
 "O número de filas que hai que retirar. Un valor negativo retira desde o "
 "final da matriz."
@@ -1307,8 +1315,8 @@ msgstr ""
 #: sc/inc/scfuncs.hrc:4295
 msgctxt "SC_OPCODE_EXPAND"
 msgid ""
-"The number of columns in the expanded array. If missing, columns will not be"
-" expanded."
+"The number of columns in the expanded array. If missing, columns will not be "
+"expanded."
 msgstr ""
 "O número de columnas da matriz expandida. Se faltan, non se expanden as "
 "columnas."
@@ -1413,8 +1421,7 @@ msgstr "Filas"
 #: sc/inc/scfuncs.hrc:4327
 msgctxt "SC_OPCODE_TAKE"
 msgid ""
-"The number of rows to take. A negative value takes from the end of the "
-"array."
+"The number of rows to take. A negative value takes from the end of the array."
 msgstr ""
 "O número de filas que hai que tomar. Un valor negativo toma desde o fin da "
 "matriz."
@@ -1476,8 +1483,8 @@ msgstr "Número da instancia"
 #: sc/inc/scfuncs.hrc:4341
 msgctxt "SC_OPCODE_TEXTAFTER"
 msgid ""
-"The instance of the delimiter after which to extract text. The default is 1."
-" A negative number starts searching from the end."
+"The instance of the delimiter after which to extract text. The default is 1. "
+"A negative number starts searching from the end."
 msgstr ""
 "A instancia do delimitador despois da que extraer o texto. Por omisión, 1. "
 "Un número negativo comeza a busca polo final."
@@ -1522,8 +1529,7 @@ msgstr "O valor devolto se non se atopa coincidencia. Por omisión é #N/DISP."
 #: sc/inc/scfuncs.hrc:4353
 msgctxt "SC_OPCODE_TEXTBEFORE"
 msgid "Returns the text that occurs before a given substring or delimiter."
-msgstr ""
-"Devolve o texto que aparece antes dunha subcadea ou delimitador datos."
+msgstr "Devolve o texto que aparece antes dunha subcadea ou delimitador datos."
 
 #. NNriC
 #: sc/inc/scfuncs.hrc:4354
@@ -1562,8 +1568,8 @@ msgid ""
 "The instance of the delimiter before which to extract text. The default is "
 "1. A negative number starts searching from the end."
 msgstr ""
-"A instancia do delimitador antes da que extraer o texto. Por omisión é 1. Un"
-" número negativo comeza a busca polo final."
+"A instancia do delimitador antes da que extraer o texto. Por omisión é 1. Un "
+"número negativo comeza a busca polo final."
 
 #. Adzeh
 #: sc/inc/scfuncs.hrc:4360
@@ -1642,8 +1648,7 @@ msgstr "Delimitador de filas"
 #: sc/inc/scfuncs.hrc:4377
 msgctxt "SC_OPCODE_TEXTSPLIT"
 msgid "The text to delimit the rows. Multiple delimiters can be supplied."
-msgstr ""
-"O texto para delimitar as filas. Pódense indicar varios delimitadores."
+msgstr "O texto para delimitar as filas. Pódense indicar varios delimitadores."
 
 #. jD3sa
 #: sc/inc/scfuncs.hrc:4378
@@ -1922,3 +1927,9 @@ msgstr ""
 msgctxt "sheetviewbox|sheetview_combobox|accessible_name"
 msgid "Sheet View"
 msgstr ""
+
+#. FXK8B
+#: sc/uiconfig/scalc/ui/sidebarcellappearance.ui:87
+msgctxt "sidebarcellappearance|cellbordertype-atkobject"
+msgid "Border Style"
+msgstr "Estilo de bordo"
