@@ -405,6 +405,7 @@
 			buildPhases = (
 				BECC4BA72CBD3FA300A120B3 /* Sources */,
 				BECC4BA82CBD3FA300A120B3 /* Frameworks */,
+				BEA82CDF2EC2201700CDC5A6 /* ShellScript */,
 				BECC4BA92CBD3FA300A120B3 /* Resources */,
 				BEE076602CDA3024004111EF /* ShellScript */,
 			);
@@ -552,6 +553,24 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		BEA82CDF2EC2201700CDC5A6 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Make sure the JS bits are up-to-date: run make in the login shell (so that Homebrew etc. is set up)\nset -e\nexec \"${SHELL:-/bin/zsh}\" -lic 'make -C \"$SRCROOT/../..\" all'\n";
+		};
 		BEE076602CDA3024004111EF /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			alwaysOutOfDate = 1;
