@@ -32,7 +32,7 @@ function _createCheckboxControl(
 ) {
 	const checkbox = window.L.DomUtil.create(
 		'input',
-		builder.options.cssClass,
+		builder.options.cssClass + ' ui-checkbox-input',
 		parentContainer,
 	);
 	checkbox.type = 'checkbox';
@@ -48,7 +48,7 @@ function _createCheckboxLabel(
 ) {
 	const label = window.L.DomUtil.create(
 		'label',
-		builder.options.cssClass,
+		builder.options.cssClass + ' ui-checkbox-label',
 		parentContainer,
 	);
 	label.id = data.id + '-label';
