@@ -1796,7 +1796,7 @@ int APIENTRY wWinMain(HINSTANCE hInstance, HINSTANCE, PWSTR, int showWindowMode)
     else
     {
         auto path = Poco::Path(Util::wide_string_to_string(__wargv[1]));
-        filenameAndUri = { Poco::URI(path).toString(), path.getFileName() };
+        filenameAndUri = { path.getFileName(), Poco::URI(path).toString() };
     }
 
     fakeSocketSetLoggingCallback([](const std::string& line) { LOG_TRC_NOFILE(line); });
