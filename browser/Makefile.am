@@ -844,8 +844,7 @@ build-cool: \
 	$(DIST_FOLDER)/bundle.js \
 	$(DIST_FOLDER)/cool.html \
 	$(WASM_FILES) \
-	$(WASM_FALLBACK_FILES) \
-	update-welcome-slideshow
+	$(WASM_FALLBACK_FILES)
 	@echo "build cool completed"
 if APP_HAS_BRANDING
 	@if test -d "$(APP_BRANDING_DIR)" ; then cp -a "$(APP_BRANDING_DIR)"/branding* $(DIST_FOLDER)/ ; fi
@@ -972,29 +971,6 @@ $(DIST_FOLDER)/welcome/%: $(srcdir)/welcome/%
 		`ln -sf $(abs_srcdir)/$< $@`; \
 	fi
 endif
-
-WELCOME_SLIDESHOW_ODP = $(srcdir)/dist/welcome/welcome-slideshow.odp
-WELCOME_PO_DIR = $(srcdir)/po
-WELCOME_PO_FILES = $(wildcard $(WELCOME_PO_DIR)/welcome-slideshow-*.po)
-EXTRACT_ODF_SCRIPT = $(abs_top_srcdir)/scripts/extract_odf_text.py
-CREATE_L10N_SCRIPT = $(abs_top_srcdir)/scripts/create_l10n_welcome_slideshow.py
-
-update-welcome-slideshow-pot: $(EXTRACT_ODF_SCRIPT)
-	@if [ -f "$(WELCOME_SLIDESHOW_ODP)" ]; then \
-		echo "Extracting text from welcome-slideshow.odp..."; \
-		mkdir -p $(dir $@); \
-		python3 $(EXTRACT_ODF_SCRIPT) $(WELCOME_SLIDESHOW_ODP) -o $@; \
-	else \
-		echo "Warning: welcome-slideshow.odp not found, skipping extracting"; \
-	fi
-
-update-welcome-slideshow: $(WELCOME_PO_FILES) $(CREATE_L10N_SCRIPT)
-	@if [ -f "$(WELCOME_SLIDESHOW_ODP)" ]; then \
-		echo "Updating welcome-slideshow.odp with translations..."; \
-		python3 $(CREATE_L10N_SCRIPT) $(WELCOME_PO_DIR) $(WELCOME_SLIDESHOW_ODP); \
-	else \
-		echo "Warning: welcome-slideshow.odp not found, skipping update"; \
-	fi
 
 if ENABLE_DEBUG
 SourceMap=--allowJs true --sourceMap true --inlineSources true
