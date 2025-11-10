@@ -62,6 +62,20 @@ describe(['tagdesktop'], 'Notebookbar checkbox widgets', function() {
 		cy.cGet('#showruler-input').should('not.be.checked');
 		cy.cGet('.cool-ruler').should('not.be.visible');
 	});
+
+	it('StatusBar Toggle', function() {
+		cy.cGet('#showstatusbar').should('be.visible');
+		cy.cGet('#showstatusbar-input').should('be.visible').should('be.checked');
+		cy.cGet('#toolbar-down').should('be.visible');
+
+		cy.cGet('#showstatusbar-input').uncheck();
+		cy.cGet('#showstatusbar-input').should('not.be.checked');
+		cy.cGet('#toolbar-down').should('not.be.visible');
+
+		cy.cGet('#showstatusbar-input').check();
+		cy.cGet('#showstatusbar-input').should('be.checked');
+		cy.cGet('#toolbar-down').should('be.visible');
+	});
 });
 
 describe(['tagdesktop'], 'Notebookbar review operations.', function() {
