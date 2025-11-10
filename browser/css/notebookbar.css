@@ -336,6 +336,16 @@ html[data-theme='dark'] .savemodified.unotoolbutton .unobutton img {
 	grid-column: 2;
 }
 
+.notebookbar.ui-checkbox {
+	display: flex;
+	flex-direction: row;
+}
+
+label.notebookbar.ui-checkbox-label {
+	font-family: var(--cool-font);
+	font-size: var(--header-font-size);
+}
+
 #table-HomeTab .unospan-uptoolbar:not(.disabled) {
 	border-top-left-radius: 12px;
 	border-bottom-left-radius: 12px;
