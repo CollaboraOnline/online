@@ -7,16 +7,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-11-04 22:40+0100\n"
-"PO-Revision-Date: 2025-05-22 04:01+0000\n"
+"PO-Revision-Date: 2025-11-06 15:51+0000\n"
 "Last-Translator: ButterflyOfFire <boffire@users.noreply.hosted.weblate.org>\n"
 "Language-Team: Kabyle <https://hosted.weblate.org/projects/collabora-online/"
 "ui/kab/>\n"
-"Language: \n"
+"Language: kab\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 5.12-dev\n"
+"X-Generator: Weblate 5.15-dev\n"
 "X-POOTLE-MTIME: 1463059003.000000\n"
 
 #: admin/admin.strings.js:15
@@ -345,7 +345,7 @@ msgstr "Envoyé"
 
 #: admin/src/AdminSocketAnalytics.js:255
 msgid "Connections"
-msgstr ""
+msgstr "Tuqqniwin"
 
 #: admin/src/AdminSocketBase.js:62
 msgid "Server has been shut down; please reload the page."
@@ -376,14 +376,12 @@ msgid "Signature Certificate"
 msgstr ""
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:156
-#, fuzzy
 msgid "Signature Key"
-msgstr "Azmul"
+msgstr "Tasarut n uzmul"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:157
-#, fuzzy
 msgid "Signature CA"
-msgstr "Azmul"
+msgstr "Azmul CA"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:160
 #: src/control/Control.Menubar.ts:171 src/control/Control.Menubar.ts:496
@@ -440,11 +438,11 @@ msgstr ""
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:174
 msgid "Print"
-msgstr ""
+msgstr "Siggez"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:175
 msgid "Other"
-msgstr ""
+msgstr "Tiyyaḍ"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:176
 #: src/control/Control.NotebookbarImpress.js:669
@@ -484,18 +482,18 @@ msgstr ""
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:185
 msgid "Content"
-msgstr ""
+msgstr "Agbur"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:186
 msgid "Drawing"
-msgstr ""
+msgstr "Asuneɣ"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:187
 #: src/control/Control.NotebookbarDraw.js:1224
 #: src/control/Control.NotebookbarDraw.js:1424
 #: src/control/Control.NotebookbarWriter.js:1221
 msgid "Page"
-msgstr ""
+msgstr "Asebter"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:188
 msgid "Fit to page"
@@ -568,9 +566,8 @@ msgid "Images"
 msgstr ""
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:204
-#, fuzzy
 msgid "Tables"
-msgstr "Tafelwit"
+msgstr "Tifelwa"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:205
 msgid "Controls"
@@ -755,7 +752,7 @@ msgstr ""
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:1352
 msgid "Option"
-msgstr ""
+msgstr "Tanefrunt"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:1378
 msgid ""
@@ -768,9 +765,8 @@ msgid "Zotero account API settings"
 msgstr ""
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:1395
-#, fuzzy
 msgid "Document Signing"
-msgstr "Iɣewwaren n isemli"
+msgstr "Asizmel n isemli"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:1399
 msgid ""
@@ -814,7 +810,7 @@ msgstr ""
 #: admin/src/integrator/WordBook.ts:338
 #: src/control/Notebookbar.ImpressAnimationTab.ts:67
 msgid "Add"
-msgstr ""
+msgstr "Rnu"
 
 #: admin/src/integrator/WordBook.ts:466
 msgid "Invalid dictionary format. Please check the file."
@@ -1001,9 +997,8 @@ msgid "Update"
 msgstr "Leqqem"
 
 #: src/canvas/sections/CommentSection.ts:45
-#, fuzzy
 msgid "Edit comment"
-msgstr "Ẓreg isemli"
+msgstr "Ẓreg awennit"
 
 #: src/canvas/sections/CommentSection.ts:46
 msgid "Reply comment"
@@ -1148,9 +1143,8 @@ msgstr "Abrid"
 
 #: src/control/Control.DocumentRepair.js:27
 #: src/control/Control.DocumentRepair.js:28
-#, fuzzy
 msgid "Repair Document"
-msgstr "Snifel isem n isemli"
+msgstr "Seggem isemli"
 
 #: src/control/Control.DocumentRepair.js:124
 #: src/control/Control.UserList.ts:387
@@ -1232,7 +1226,7 @@ msgstr ""
 
 #: src/control/Control.ESignature.ts:127
 msgid "Andorra"
-msgstr ""
+msgstr "Undurra"
 
 #: src/control/Control.ESignature.ts:128
 msgid "United Arab Emirates"
@@ -1264,7 +1258,7 @@ msgstr ""
 
 #: src/control/Control.ESignature.ts:135
 msgid "Azerbaijan"
-msgstr ""
+msgstr "Azerbijan"
 
 #: src/control/Control.ESignature.ts:136
 msgid "Bosnia and Herzegovina"
@@ -1284,7 +1278,7 @@ msgstr "Brazil"
 
 #: src/control/Control.ESignature.ts:140
 msgid "Belarus"
-msgstr ""
+msgstr "Byilurusya"
 
 #: src/control/Control.ESignature.ts:141
 msgid "Canada"
@@ -1300,7 +1294,7 @@ msgstr "Cili"
 
 #: src/control/Control.ESignature.ts:144
 msgid "China"
-msgstr ""
+msgstr "Ccinwa"
 
 #: src/control/Control.ESignature.ts:145
 msgid "Cyprus"
@@ -1344,7 +1338,7 @@ msgstr "Jurjya"
 
 #: src/control/Control.ESignature.ts:155
 msgid "Guernsey"
-msgstr ""
+msgstr "Gernsey"
 
 #: src/control/Control.ESignature.ts:156
 msgid "Greece"
@@ -1368,7 +1362,7 @@ msgstr "Irland"
 
 #: src/control/Control.ESignature.ts:161
 msgid "Israel"
-msgstr ""
+msgstr "Israyil"
 
 #: src/control/Control.ESignature.ts:162
 msgid "India"
@@ -1412,7 +1406,7 @@ msgstr "Luksumburg"
 
 #: src/control/Control.ESignature.ts:172
 msgid "Latvia"
-msgstr ""
+msgstr "Liṭunya"
 
 #: src/control/Control.ESignature.ts:173
 msgid "Monaco"
@@ -1440,7 +1434,7 @@ msgstr "Meksik"
 
 #: src/control/Control.ESignature.ts:179
 msgid "Netherlands"
-msgstr ""
+msgstr "Huland"
 
 #: src/control/Control.ESignature.ts:180
 msgid "Norway"
@@ -1472,7 +1466,7 @@ msgstr "Rumanya"
 
 #: src/control/Control.ESignature.ts:187
 msgid "Serbia"
-msgstr ""
+msgstr "Sirbya"
 
 #: src/control/Control.ESignature.ts:188
 msgid "Russian Federation"
@@ -1680,9 +1674,8 @@ msgid "Columns"
 msgstr "Colonnes"
 
 #: src/control/Control.JSDialogBuilder.js:2400
-#, fuzzy
 msgid "Insert Table"
-msgstr "Ger tafelwit"
+msgstr "Ger-d tafelwit"
 
 #: src/control/Control.LanguageDialog.js:64 src/control/Control.Menubar.ts:393
 #: src/control/Control.Menubar.ts:395 src/control/Control.Menubar.ts:397
@@ -1740,7 +1733,7 @@ msgstr ""
 #: src/control/Control.Menubar.ts:1174 src/control/Control.Menubar.ts:1181
 #: src/control/Control.Menubar.ts:1229 src/control/Control.Menubar.ts:1239
 msgid "Export as"
-msgstr ""
+msgstr "Sifeḍ am"
 
 #: src/control/Control.Menubar.ts:103 src/control/Control.Menubar.ts:110
 #: src/control/Control.Menubar.ts:435 src/control/Control.Menubar.ts:441
@@ -1791,7 +1784,7 @@ msgstr ""
 #: src/control/Control.Menubar.ts:1052 src/control/Control.Menubar.ts:1117
 #: src/control/Control.Menubar.ts:1181 src/control/Control.Menubar.ts:1239
 msgid "Download as"
-msgstr ""
+msgstr "Zdem-d am"
 
 #: src/control/Control.Menubar.ts:111 src/control/Control.Menubar.ts:442
 #: src/control/Control.Menubar.ts:619 src/control/Control.Menubar.ts:760
@@ -1815,7 +1808,7 @@ msgstr ""
 #: src/control/Control.NotebookbarWriter.js:412
 #: src/map/handler/Map.Settings.ts:73
 msgid "Options"
-msgstr ""
+msgstr "Tixtiṛiyin"
 
 #: src/control/Control.Menubar.ts:123 src/control/Control.Menubar.ts:462
 #: src/control/Control.Menubar.ts:626 src/control/Control.Menubar.ts:774
@@ -1967,9 +1960,8 @@ msgid "Insert Picture"
 msgstr ""
 
 #: src/control/Control.Menubar.ts:380 src/control/Control.Menubar.ts:1345
-#, fuzzy
 msgid "Insert Date"
-msgstr "Ger tafelwit"
+msgstr "Ger-d azemz"
 
 #: src/control/Control.Menubar.ts:381 src/control/Control.Menubar.ts:1346
 #: src/control/Control.NotebookbarCalc.js:326
@@ -2306,9 +2298,8 @@ msgid "Use Tabbed view"
 msgstr ""
 
 #: src/control/Control.Menubar.ts:2124
-#, fuzzy
 msgid "Insert Shape"
-msgstr "Ger tafelwit"
+msgstr "Ger-d talɣa"
 
 #: src/control/Control.Menubar.ts:2208
 msgid "The signature line can now be moved or resized as needed."
@@ -2373,7 +2364,7 @@ msgstr ""
 
 #: src/control/Control.NavigatorPanel.ts:470
 msgid "Search..."
-msgstr ""
+msgstr "Nadi..."
 
 #: src/control/Control.QuickFindPanel.ts:97
 msgid "Type in the search box to find anything in your document"
@@ -2397,11 +2388,11 @@ msgstr ""
 
 #: src/control/Notebookbar.ImpressAnimationTab.ts:105
 msgid "Category"
-msgstr ""
+msgstr "Taggayt"
 
 #: src/control/Notebookbar.ImpressAnimationTab.ts:120
 msgid "Start"
-msgstr ""
+msgstr "Tazwara"
 
 #: src/control/Notebookbar.ImpressAnimationTab.ts:140
 msgid "Effect"
@@ -2443,9 +2434,8 @@ msgstr ""
 #: src/control/Notebookbar.WriterReferencesTab.ts:312
 #: src/control/Control.NotebookbarDraw.js:1576
 #: src/control/Control.NotebookbarImpress.js:1634
-#, fuzzy
 msgid "Field"
-msgstr "Urtiyen"
+msgstr "Urti"
 
 #: src/control/Sidebar.FromNotebookbarPanel.ts:121
 msgid "Animations"
@@ -2510,7 +2500,7 @@ msgstr ""
 #: src/control/Control.NotebookbarWriter.js:965
 #: src/control/Control.NotebookbarWriter.js:2432
 msgid "Insert"
-msgstr ""
+msgstr "Ger"
 
 #: src/control/Control.NotebookbarCalc.js:42
 #: src/control/Control.NotebookbarDraw.js:1282
@@ -2518,9 +2508,8 @@ msgid "Page Layout"
 msgstr ""
 
 #: src/control/Control.NotebookbarCalc.js:48
-#, fuzzy
 msgid "Formulas"
-msgstr "Tanfalit"
+msgstr "Tinfaliyin"
 
 #: src/control/Control.NotebookbarCalc.js:54
 msgid "Data"
@@ -2531,7 +2520,7 @@ msgstr "Isefka"
 #: src/control/Control.NotebookbarImpress.js:110
 #: src/control/Control.NotebookbarWriter.js:63
 msgid "Review"
-msgstr ""
+msgstr "Asenqed"
 
 #: src/control/Control.NotebookbarCalc.js:66
 #: src/control/Control.NotebookbarDraw.js:88
@@ -2544,9 +2533,8 @@ msgstr ""
 #: src/control/Control.NotebookbarDraw.js:101
 #: src/control/Control.NotebookbarImpress.js:129
 #: src/control/Control.NotebookbarWriter.js:88
-#, fuzzy
 msgid "Shape"
-msgstr "Talɣiwin"
+msgstr "Talɣa"
 
 #: src/control/Control.NotebookbarCalc.js:79
 #: src/control/Control.NotebookbarDraw.js:108
@@ -2725,7 +2713,7 @@ msgstr ""
 #: src/control/Control.NotebookbarCalc.js:1107
 #: src/control/Control.NotebookbarWriter.js:1813
 msgid "Size"
-msgstr ""
+msgstr "Tiddi"
 
 #: src/control/Control.NotebookbarCalc.js:1168
 msgid "Row Height"
@@ -2850,11 +2838,11 @@ msgstr ""
 #: src/control/Control.NotebookbarWriter.js:3002
 #: src/control/Control.NotebookbarWriter.js:3325
 msgid "Group"
-msgstr ""
+msgstr "Segrew"
 
 #: src/control/Control.NotebookbarCalc.js:1663
 msgid "Ungroup"
-msgstr ""
+msgstr "Freq"
 
 #: src/control/Control.NotebookbarCalc.js:1685
 msgid "Pivot Table"
@@ -2890,9 +2878,8 @@ msgid "Insert Function"
 msgstr ""
 
 #: src/control/Control.NotebookbarCalc.js:2021
-#, fuzzy
 msgid "Function Library"
-msgstr "Amarag n twuri"
+msgstr "Tamkarḍit n twuri"
 
 #: src/control/Control.NotebookbarCalc.js:2035
 msgid "AutoSum"
@@ -2937,9 +2924,8 @@ msgstr ""
 #: src/control/Control.NotebookbarCalc.js:2560
 #: src/control/Control.NotebookbarImpress.js:1966
 #: src/control/Control.NotebookbarWriter.js:2236
-#, fuzzy
 msgid "Comments"
-msgstr "Commentaire"
+msgstr "Iwenniten"
 
 #: src/control/Control.NotebookbarCalc.js:2665
 msgid "Format Cells"
@@ -2993,7 +2979,7 @@ msgstr ""
 
 #: src/control/Control.NotebookbarImpress.js:96
 msgid "Design"
-msgstr ""
+msgstr "Afeṣṣel"
 
 #: src/control/Control.NotebookbarImpress.js:104
 msgid "Slide Show"
@@ -3039,7 +3025,7 @@ msgstr ""
 
 #: src/control/Control.NotebookbarImpress.js:811
 msgid "New"
-msgstr ""
+msgstr "Amaynut"
 
 #: src/control/Control.NotebookbarImpress.js:822
 #: src/control/Control.NotebookbarImpress.js:1826
@@ -3053,7 +3039,7 @@ msgstr ""
 
 #: src/control/Control.NotebookbarImpress.js:844
 msgid "Character"
-msgstr ""
+msgstr "Asekkil"
 
 #: src/control/Control.NotebookbarImpress.js:1105
 msgid "Spacing & Color"
@@ -3078,7 +3064,7 @@ msgstr ""
 #: src/control/Control.NotebookbarImpress.js:2109
 #: src/control/Control.NotebookbarWriter.js:2555
 msgid "Select"
-msgstr ""
+msgstr "Fren"
 
 #: src/control/Control.NotebookbarImpress.js:2718
 msgid "Effects"
@@ -3123,7 +3109,7 @@ msgstr ""
 
 #: src/control/Control.NotebookbarWriter.js:1539
 msgid "Symbols"
-msgstr ""
+msgstr "Izamulen"
 
 #: src/control/Control.NotebookbarWriter.js:1592
 msgid "Rich Text"
@@ -3301,9 +3287,8 @@ msgid "Scroll to the last sheet"
 msgstr ""
 
 #: src/control/Control.SheetsBar.js:81
-#, fuzzy
 msgid "Insert sheet"
-msgstr "Ger tafelwit"
+msgstr "Ger-d tiferkit"
 
 #: src/control/Control.SheetsBar.js:88
 msgid "Show sheet list"
@@ -3426,9 +3411,8 @@ msgid "Insert table"
 msgstr "Ger tafelwit"
 
 #: src/control/Control.TopToolbar.js:192
-#, fuzzy
 msgid "Insert shapes"
-msgstr "Ger tafelwit"
+msgstr "Ger-d talɣiwin"
 
 #: src/control/Control.TopToolbar.js:194
 msgid "Insert connectors"
@@ -3444,7 +3428,7 @@ msgstr ""
 
 #: src/control/Control.UIManager.ts:1164
 msgid "Show Menu"
-msgstr ""
+msgstr "Sken-d umuɣ"
 
 #: src/control/Control.UserList.ts:56
 msgid "{user} has joined"
@@ -3759,11 +3743,11 @@ msgstr ""
 
 #: src/control/jsdialog/Definitions.Menu.ts:116
 msgid "Wide"
-msgstr ""
+msgstr "Ahrawan"
 
 #: src/control/jsdialog/Definitions.Menu.ts:121
 msgid "Narrow"
-msgstr ""
+msgstr "Udyiq"
 
 #: src/control/jsdialog/Definitions.Menu.ts:164
 msgid "Min"
@@ -3791,19 +3775,19 @@ msgstr "Agama"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1502
 msgid "A6"
-msgstr ""
+msgstr "A6"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1503
 msgid "A5"
-msgstr ""
+msgstr "A5"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1504
 msgid "A4"
-msgstr ""
+msgstr "A4"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1505
 msgid "A3"
-msgstr ""
+msgstr "A3"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1506
 msgid "B6 (ISO)"
@@ -3859,7 +3843,7 @@ msgstr ""
 
 #: src/control/jsdialog/Definitions.Menu.ts:1519
 msgid "User"
-msgstr ""
+msgstr "Aseqdac"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1520
 msgid "DL Envelope"
@@ -4115,11 +4099,11 @@ msgstr ""
 
 #: src/control/jsdialog/Definitions.Menu.ts:2303
 msgid "Grayscale"
-msgstr ""
+msgstr "Iswiren n umelliɣdi"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2308
 msgid "Black/White"
-msgstr ""
+msgstr "Aberkan/Amellal"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2313
 msgid "Watermark"
