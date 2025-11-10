@@ -42,6 +42,28 @@ describe(['tagdesktop'], 'Notebookbar tests.', function() {
 	});
 });
 
+describe(['tagdesktop'], 'Notebookbar checkbox widgets', function() {
+	beforeEach(function() {
+		helper.setupAndLoadDocument('writer/notebookbar.odt');
+		desktopHelper.switchUIToNotebookbar();
+		cy.cGet('#View-tab-label').click();
+	});
+
+	it('Ruler Toggle', function() {
+		cy.cGet('#showruler').should('be.visible');
+		cy.cGet('#showruler-input').should('be.visible').should('not.be.checked');
+		cy.cGet('.cool-ruler').should('not.be.visible');
+
+		cy.cGet('#showruler-input').check();
+		cy.cGet('#showruler-input').should('be.checked');
+		cy.cGet('.cool-ruler').should('be.visible');
+
+		cy.cGet('#showruler-input').uncheck();
+		cy.cGet('#showruler-input').should('not.be.checked');
+		cy.cGet('.cool-ruler').should('not.be.visible');
+	});
+});
+
 describe(['tagdesktop'], 'Notebookbar review operations.', function() {
 	it.skip('Go to the next change', function() {
 		// Given a document where the first redline is inside a table:
