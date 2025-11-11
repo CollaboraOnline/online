@@ -135,7 +135,7 @@ enum class CODA_OPEN_CONTROL : DWORD
     SEP2
 };
 
-enum class PERMISSION { EDIT, READONLY, VIEW, WELCOME };
+enum class PERMISSION { EDIT, NEW_DOCUMENT, READONLY, VIEW, WELCOME };
 
 constexpr int CODA_OPEN_DIALOG_CREATE_NEW_INSTEAD = 123456;
 
@@ -1590,6 +1590,7 @@ static void openCOOLWindow(const FilenameAndUri& filenameAndUri, PERMISSION perm
                                 std::string("&appdocid=") + std::to_string(data.appDocId) +
                                 std::string("&userinterfacemode=notebookbar"
                                             "&dir=ltr") +
+                                (permission == PERMISSION::NEW_DOCUMENT ? "&isnewdocument=true" : "") +
                                 (permission == PERMISSION::WELCOME ? "&welcome=true" : "");
 
                             webView->Navigate(Util::string_to_wide_string(coolURL).c_str());
@@ -1683,7 +1684,15 @@ static void processMessage(WindowData& data, wil::unique_cotaskmem_string& messa
         {
             auto filenameAndUri = fileOpenDialog();
             if (filenameAndUri.filename != "")
-                openCOOLWindow(filenameAndUri, PERMISSION::EDIT);
+            {
+                if (new_document_created != L"")
+                {
+                    openCOOLWindow(filenameAndUri, PERMISSION::NEW_DOCUMENT);
+                    new_document_created = L"";
+                }
+                else
+                    openCOOLWindow(filenameAndUri, PERMISSION::EDIT);
+            }
         }
         else if (s == L"uno .uno:CloseWin")
         {
@@ -1702,7 +1711,7 @@ static void processMessage(WindowData& data, wil::unique_cotaskmem_string& messa
                 fatal("Unexpected new-something message");
 
             auto path = Poco::Path(Util::wide_string_to_string(new_document(id)));
-            openCOOLWindow({ path.getFileName(), Poco::URI(path).toString() }, PERMISSION::EDIT);
+            openCOOLWindow({ path.getFileName(), Poco::URI(path).toString() }, PERMISSION::NEW_DOCUMENT);
         }
         else
         {
@@ -1859,7 +1868,13 @@ int APIENTRY wWinMain(HINSTANCE hInstance, HINSTANCE, PWSTR, int showWindowMode)
     currentCommandLineDocumentIndex = 0;
 
     // Open the first documnt here, then open the rest one by one once the previous has loaded.
-    openCOOLWindow(filenamesAndUris[0], PERMISSION::EDIT);
+    if (new_document_created != L"")
+    {
+        openCOOLWindow(filenamesAndUris[0], PERMISSION::NEW_DOCUMENT);
+        new_document_created = L"";
+    }
+    else
+        openCOOLWindow(filenamesAndUris[0], PERMISSION::EDIT);
 
     MSG msg;
     while (GetMessage(&msg, NULL, 0, 0))
