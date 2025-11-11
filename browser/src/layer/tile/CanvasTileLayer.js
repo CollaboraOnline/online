@@ -869,7 +869,7 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 		    'dpiscale=' + window.devicePixelRatio + ' ' +
 		    'zoompercent=' + this._map.getZoomPercent()
 
-		if (this._clientZoom !== newClientZoom || forceUpdate) {
+		if (this._clientZoom !== newClientZoom || forceUpdate || this.isImpress()) {
 			// the zoom level has changed
 			app.socket.sendMessage('clientzoom ' + newClientZoom);
 
@@ -1384,6 +1384,14 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 				const event = eventInfo.substring(0, parameterStartIndex).trim();
 				const parameter = JSON.parse(eventInfo.substring(parameterStartIndex));
 				this._map.fire(event, parameter);
+			}
+		} else if (textMsg.startsWith('changepagezoom:')) {
+			const payload = textMsg.substring('changepagezoom:'.length).trim();
+			const strZoomPercent = payload.match(/\d+/);
+			const zoomPercent = strZoomPercent ? parseInt(strZoomPercent[0], 10) : NaN;
+			if (zoomPercent) {
+				const zoomIndex = this._map.getZoomIndex(zoomPercent);
+				this._map.setZoom(zoomIndex, null, false);
 			}
 		}
 	},
