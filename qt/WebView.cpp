@@ -38,6 +38,9 @@
 #include <QFileInfo>
 #include <QDir>
 #include <QApplication>
+#include <algorithm>
+
+std::vector<WebView*> WebView::s_instances;
 
 namespace
 {
@@ -126,9 +129,13 @@ WebView::WebView(QWidget* parent, QWebEngineProfile* profile, bool isWelcome)
                              _mainWindow->showNormal();
                          request.accept();
                      });
+
+    s_instances.push_back(this);
 }
 
 WebView::~WebView() {
+    std::erase(s_instances, this);
+
     if (_bridge != nullptr) {
         _webView->page()->webChannel()->deregisterObject(_bridge);
         delete _bridge;
@@ -271,6 +278,28 @@ WebView* WebView::createNewDocument(QWidget* parent, QWebEngineProfile* profile,
     webViewInstance->load(templateURI, true);
 
     return webViewInstance;
+}
+
+WebView* WebView::findOpenDocument(const Poco::URI& documentURI)
+{
+    for (WebView* instance : s_instances)
+    {
+        if (!instance->_document._saveLocationURI.empty() &&
+            instance->_document._saveLocationURI.getPath() == documentURI.getPath())
+        {
+            return instance;
+        }
+    }
+    return nullptr;
+}
+
+void WebView::activateWindow()
+{
+    if (_mainWindow)
+    {
+        _mainWindow->raise();
+        _mainWindow->activateWindow();
+    }
 }
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

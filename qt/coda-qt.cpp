@@ -20,6 +20,7 @@
 #include "Util.hpp"
 #include "FileUtil.hpp"
 #include "qt.hpp"
+#include "DBusService.hpp"
 
 #include <Poco/MemoryStream.h>
 #include <Poco/JSON/Parser.h>
@@ -955,6 +956,35 @@ int main(int argc, char** argv)
 
     fakeSocketSetLoggingCallback([](const std::string& line) { LOG_TRC_NOFILE(line); });
 
+    QStringList absoluteFiles;
+    QString templateType;
+
+    if (files.size() > 0)
+    {
+        // Convert relative paths to absolute paths
+        for (const QString& file : files)
+        {
+            QFileInfo fileInfo(file);
+            absoluteFiles << fileInfo.absoluteFilePath();
+        }
+    }
+    else
+    {
+        if (argParser.isSet(presentationOption))
+            templateType = "odp";
+        else if (argParser.isSet(spreadsheetOption))
+            templateType = "ods";
+        else if (argParser.isSet(textDocumentOption))
+            templateType = "odt";
+    }
+
+    // single-instance using DBus: try to forward to existing instance
+    if (DBusService::tryForwardToExistingInstance(absoluteFiles, templateType))
+    {
+        // Successfully forwarded to existing instance, exit
+        return 0;
+    }
+
     // COOLWSD in a background thread
     coolwsdThread = std::thread(
         []
@@ -969,34 +999,20 @@ int main(int argc, char** argv)
 
     Application::initialize();
 
-    if (files.size() > 0)
+    // register DBus service and object
+    DBusService* dbusService = new DBusService(&app);
+    DBusService::registerService(dbusService);
+
+    if (!absoluteFiles.isEmpty())
     {
-        for (auto const & file : files)
-        {
-            // Resolve absolute file URL to pass into Online
-            Poco::URI fileURL(Poco::Path(std::string(file.toUtf8())));
-            WebView* webViewInstance = new WebView(nullptr, Application::getProfile());
-            webViewInstance->load(fileURL);
-        }
+        coda::openFiles(absoluteFiles);
     }
     else
     {
-        // No files provided - create a new document
-        std::string templateType = "odt";
-
-        if (argParser.isSet(presentationOption))
-            templateType = "odp";
-        else if (argParser.isSet(spreadsheetOption))
-            templateType = "ods";
-        else if (argParser.isSet(textDocumentOption))
+        if (templateType.isEmpty())
             templateType = "odt";
 
-        WebView* webViewInstance = WebView::createNewDocument(nullptr, Application::getProfile(), templateType);
-        if (!webViewInstance)
-        {
-            LOG_ERR("Failed to create new document");
-            return 1;
-        }
+        coda::openNewDocument(templateType);
     }
 
     auto const ret = app.exec();

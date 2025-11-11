@@ -30,12 +30,19 @@ public:
     void load(const Poco::URI& fileURL, bool newFile = false);
     static WebView* createNewDocument(QWidget* parent, QWebEngineProfile* profile, const std::string& templateType);
 
+    static WebView* findOpenDocument(const Poco::URI& documentURI);
+    static const std::vector<WebView*>& getAllInstances() { return s_instances; }
+    void activateWindow();
+    const Poco::URI& getSaveLocationURI() const { return _document._saveLocationURI; }
+
 private:
     QMainWindow* _mainWindow;
     QWebEngineView* _webView;
     coda::DocumentData _document;
     bool _isWelcome;
     Bridge* _bridge;
+
+    static std::vector<WebView*> s_instances;
 };
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
