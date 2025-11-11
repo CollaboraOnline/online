@@ -1,0 +1,42 @@
+/* -*- Mode: C++; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4; fill-column: 100 -*- */
+/*
+ * Copyright the Collabora Online contributors.
+ *
+ * SPDX-License-Identifier: MPL-2.0
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
+#pragma once
+
+#include <QObject>
+#include <QStringList>
+#include <QString>
+
+namespace coda
+{
+    void openFiles(const QStringList& files);
+    void openNewDocument(const QString& templateType);
+}
+
+class DBusService : public QObject
+{
+    Q_OBJECT
+    Q_CLASSINFO("D-Bus Interface", "com.collabora.Office")
+
+public:
+    explicit DBusService(QObject* parent = nullptr);
+
+    static bool tryForwardToExistingInstance(const QStringList& files, const QString& templateType);
+    static bool registerService(DBusService* service);
+
+public slots:
+    void openFiles(const QStringList& files);
+    void openNewDocument(const QString& templateType);
+    void activate();
+};
+
+/* vim:set shiftwidth=4 softtabstop=4 expandtab: */
+

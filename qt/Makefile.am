@@ -61,13 +61,15 @@ cmake_list= \
 
 
 # Sources that will be created by Qt's MOC
-BUILT_SOURCES = bridge.moc.cpp
+BUILT_SOURCES = bridge.moc.cpp DBusService.moc.cpp
 bridge.moc.cpp: bridge.hpp
+	$(MOC) $(MOCFLAGS) -o $@ $<
+DBusService.moc.cpp: DBusService.hpp
 	$(MOC) $(MOCFLAGS) -o $@ $<
 
 CLEANFILES = $(BUILT_SOURCES)
 
-coda_qt_SOURCES = coda-qt.cpp WebView.cpp $(BUILT_SOURCES) $(cmake_list)
+coda_qt_SOURCES = coda-qt.cpp WebView.cpp DBusService.cpp $(BUILT_SOURCES) $(cmake_list)
 
 ### --- Qt translations integration begin ---
 
