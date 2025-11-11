@@ -210,8 +210,10 @@ void WebView::load(const Poco::URI& fileURL, bool newFile)
     channel->registerObject("bridge", _bridge);
     _webView->page()->setWebChannel(channel);
 
-    Poco::URI urlAndQuery(std::string("file://") + getTopSrcDir(TOPSRCDIR) +
-                          "/browser/dist/cool.html");
+    Poco::Path coolHtmlPath(getTopSrcDir(TOPSRCDIR));
+    coolHtmlPath.append("/browser/dist/cool.html");
+    Poco::URI urlAndQuery(coolHtmlPath);
+    urlAndQuery.setScheme("file");
     urlAndQuery.addQueryParameter("file_path", _document._fileURL.toString());
     urlAndQuery.addQueryParameter("permission", "edit");
     urlAndQuery.addQueryParameter("lang", getUILanguage());
