@@ -40,14 +40,14 @@ namespace coda
                 continue;
             }
 
-            WebView* webViewInstance = new WebView(nullptr, Application::getProfile());
+            WebView* webViewInstance = new WebView(Application::getProfile());
             webViewInstance->load(fileURL);
         }
     }
 
     void openNewDocument(const QString& templateType)
     {
-        WebView* webViewInstance = WebView::createNewDocument(nullptr, Application::getProfile(), templateType.toStdString());
+        WebView* webViewInstance = WebView::createNewDocument(Application::getProfile(), templateType.toStdString());
         if (!webViewInstance)
         {
             LOG_ERR("Failed to create new document");

@@ -104,8 +104,8 @@ private:
 };
 } // namespace
 
-WebView::WebView(QWidget* parent, QWebEngineProfile* profile, bool isWelcome)
-    : _mainWindow(new Window(parent, this))
+WebView::WebView(QWebEngineProfile* profile, bool isWelcome)
+    : _mainWindow(new Window(nullptr, this))
     , _webView(new QWebEngineView(_mainWindow))
     , _isWelcome(isWelcome)
     , _bridge(nullptr)
@@ -259,7 +259,7 @@ void WebView::load(const Poco::URI& fileURL, bool newFile)
     _mainWindow->show();
 }
 
-WebView* WebView::createNewDocument(QWidget* parent, QWebEngineProfile* profile, const std::string& templateType)
+WebView* WebView::createNewDocument(QWebEngineProfile* profile, const std::string& templateType)
 {
     // Map template type to template filename
     std::string templateFileName;
@@ -292,7 +292,7 @@ WebView* WebView::createNewDocument(QWidget* parent, QWebEngineProfile* profile,
     }
 
     // Create WebView and load template without save location
-    WebView* webViewInstance = new WebView(parent, profile, false);
+    WebView* webViewInstance = new WebView(profile, false);
     Poco::URI templateURI{Poco::Path(templatePath)};
     webViewInstance->load(templateURI, true);
 
