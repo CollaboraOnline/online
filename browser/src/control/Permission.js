@@ -108,7 +108,7 @@ window.L.Map.include({
 	_shouldStartReadOnly: function () {
 		if (this.isLockedReadOnlyUser())
 			return true;
-		if (window.mode.isCODesktop()) {
+		if (window.mode.isCODesktop() && !window.mode.isNewDocument()) {
 			return true;
 		}
 		var fileName = this['wopi'].BaseFileName;
