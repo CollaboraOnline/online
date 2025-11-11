@@ -673,7 +673,7 @@ void Bridge::createDocumentFromTemplate(const QString& requestedType, const QStr
 
     const QByteArray destinationUtf8 = destinationPath.toUtf8();
     const Poco::URI fileURL{ Poco::Path(destinationUtf8.constData()) };
-    auto* webViewInstance = new WebView(nullptr, Application::getProfile());
+    auto* webViewInstance = new WebView(Application::getProfile());
     webViewInstance->load(fileURL, /*newFile*/ true);
 }
 
@@ -858,7 +858,7 @@ QVariant Bridge::cool(const QString& messageStr)
         {
             Poco::URI fileURL{Poco::Path(welcomePath)};
             QTimer::singleShot(0, [fileURL]() {
-                WebView* webViewInstance = new WebView(nullptr, Application::getProfile(), /*isWelcome*/ true);
+                WebView* webViewInstance = new WebView(Application::getProfile(), /*isWelcome*/ true);
                 webViewInstance->load(fileURL);
             });
             LOG_TRC_NOFILE("Opening welcome slideshow: " << welcomePath);
@@ -965,13 +965,13 @@ QVariant Bridge::cool(const QString& messageStr)
         );
         if (!filePath.isEmpty())
         {
-            WebView* webViewInstance = new WebView(nullptr, Application::getProfile());
+            WebView* webViewInstance = new WebView(Application::getProfile());
             webViewInstance->load(Poco::URI(filePath.toStdString()));
         }
     }
     else if (message == "uno .uno:NewDoc" || message == "uno .uno:NewDocText")
     {
-        WebView* webViewInstance = WebView::createNewDocument(nullptr, Application::getProfile(), "odt");
+        WebView* webViewInstance = WebView::createNewDocument(Application::getProfile(), "odt");
         if (!webViewInstance)
         {
             LOG_ERR("Failed to create new text document");
@@ -979,7 +979,7 @@ QVariant Bridge::cool(const QString& messageStr)
     }
     else if (message == "uno .uno:NewDocSpreadsheet")
     {
-        WebView* webViewInstance = WebView::createNewDocument(nullptr, Application::getProfile(), "ods");
+        WebView* webViewInstance = WebView::createNewDocument(Application::getProfile(), "ods");
         if (!webViewInstance)
         {
             LOG_ERR("Failed to create new spreadsheet");
@@ -987,7 +987,7 @@ QVariant Bridge::cool(const QString& messageStr)
     }
     else if (message == "uno .uno:NewDocPresentation")
     {
-        WebView* webViewInstance = WebView::createNewDocument(nullptr, Application::getProfile(), "odp");
+        WebView* webViewInstance = WebView::createNewDocument(Application::getProfile(), "odp");
         if (!webViewInstance)
         {
             LOG_ERR("Failed to create new presentation");
