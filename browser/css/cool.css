@@ -25,6 +25,7 @@
 	--btn-size-s: 20px;
 	--btn-img-size-s: calc(var(--btn-size-s) - var(--btn-padding) * 2);
 
+	--border-radius-s: 2px;
 	--border-radius: 4px; /* buttons, widgets */
 	--border-radius-large: 10px; /* dialog */
 
@@ -732,6 +733,7 @@ body {
 	width: 100%;
 	margin-bottom: 8px;
 	box-sizing: border-box;
+	border-radius: var(--border-radius-s);
 }
 
 .cool-annotation-textarea a:link,
