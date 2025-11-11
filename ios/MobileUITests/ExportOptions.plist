@@ -6,5 +6,10 @@
   <string>release-testing</string>
   <key>uploadSymbols</key>
   <true/>
+  <key>provisioningProfiles</key>
+  <dict>
+    <key>com.collabora.office.Mobile</key>
+    <string>Browserstack distribution</string>
+  </dict>
 </dict>
 </plist>
