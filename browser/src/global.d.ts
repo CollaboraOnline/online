@@ -288,6 +288,7 @@ interface Window {
 		isDesktop(): boolean;
 		isTablet(): boolean;
 		isCODesktop(): boolean;
+		isNewDocument(): boolean;
 		getDeviceFormFactor(): string;
 	};
 	prefs: {
