@@ -231,8 +231,15 @@ void WebView::load(const Poco::URI& fileURL, bool newFile)
 
     const std::string urlAndQueryStr = urlAndQuery.toString();
     LOG_TRC("Open URL: " << urlAndQueryStr);
+
     Poco::Path uriPath(_document._fileURL.getPath());
-    QApplication::setApplicationName(QString::fromStdString(uriPath.getFileName()) + " - " APP_NAME);
+    QString fileName = QString::fromStdString(uriPath.getFileName());
+    QString applicationTitle = fileName + " - " APP_NAME;
+    QApplication::setApplicationName(applicationTitle);
+    // set file name in window title
+    if (_webView && _webView->window())
+        _webView->window()->setWindowTitle(applicationTitle);
+
     _webView->load(QUrl(QString::fromStdString(urlAndQueryStr)));
 
     auto size = getWindowSize(_isWelcome);
