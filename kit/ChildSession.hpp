@@ -260,6 +260,7 @@ private:
     void updateCursorPosition(const std::string &rect);
     void updateCursorPositionJSON(const std::string &payload);
     std::string getJailDocRoot() const;
+    std::string getZoomPercent(const std::string &payload);
 
 public:
     // simple one line for priming

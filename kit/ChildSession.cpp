@@ -3655,6 +3655,11 @@ void ChildSession::loKitCallback(const int type, const std::string& payload)
         {
             getPartStatus();
         }
+        else if (payload.find(".uno:PageZoomChange") != std::string::npos)
+        {
+            std::string zoomPercent = getZoomPercent(payload);
+            sendTextFrame("changepagezoom:" + zoomPercent);
+        }
         else
             sendTextFrame("statechanged: " + payload);
 
@@ -4311,6 +4316,19 @@ void ChildSession::updateCursorPositionJSON(const std::string &rect)
     const Poco::Dynamic::Var result = parser.parse(rect);
     const auto& command = result.extract<Poco::JSON::Object::Ptr>();
     updateCursorPosition(command->get("rectangle").toString());
+}
+
+std::string ChildSession::getZoomPercent(const std::string &payload)
+{
+    const auto eq = payload.find('=');
+    if (eq == std::string::npos || eq + 1 >= payload.size())
+        return std::string();
+
+    size_t i = eq + 1;
+    while (i < payload.size() && std::isdigit(payload[i]))
+        ++i;
+
+    return payload.substr(eq + 1, i - (eq + 1));
 }
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

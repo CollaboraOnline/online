@@ -663,7 +663,6 @@ window.L.Map = window.L.Evented.extend({
 	},
 
 	setZoom: function (zoom, options, animate) {
-
 		// do not animate zoom when in a cypress test.
 		if (animate && window.L.Browser.cypressTest)
 			animate = false;
@@ -968,6 +967,34 @@ window.L.Map = window.L.Evented.extend({
 			break;
 		}
 		return zoomPercent;
+	},
+
+	getZoomIndex: function(zoomPercent) {
+		let zoomIndex = 0;
+		switch(zoomPercent) {
+			case 20: zoomIndex = 1; break;
+			case 25: zoomIndex = 2; break;
+			case 30: zoomIndex = 3; break;
+			case 35: zoomIndex = 4; break;
+			case 40: zoomIndex = 5; break;
+			case 50: zoomIndex = 6; break;
+			case 60: zoomIndex = 7; break;
+			case 70: zoomIndex = 8; break;
+			case 85: zoomIndex = 9; break;
+			case 100: zoomIndex = 10; break;
+			case 120: zoomIndex = 11; break;
+			case 150: zoomIndex = 12; break;
+			case 170: zoomIndex = 13; break;
+			case 200: zoomIndex = 14; break;
+			case 235: zoomIndex = 15; break;
+			case 280: zoomIndex = 16; break;
+			case 335: zoomIndex = 17; break;
+			case 400: zoomIndex = 18; break;
+			default:
+			//TODO: calculate the nearest index
+				zoomIndex = 10;
+		}
+		return zoomIndex;
 	},
 
 	getBounds: function () {
