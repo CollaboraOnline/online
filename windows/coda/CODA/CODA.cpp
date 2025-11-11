@@ -1755,7 +1755,7 @@ int APIENTRY wWinMain(HINSTANCE hInstance, HINSTANCE, PWSTR, int showWindowMode)
         uiLanguage = Util::wide_string_to_string(bcp47);
 
     // COOLWSD_LOGLEVEL comes from the project file and differs for Debug and Release builds.
-    Log::initialize("CODA", "trace");
+    Log::initialize("CODA", COOLWSD_LOGLEVEL);
     Util::setThreadName("main");
 
     persistentWindowSizeStoreOK =
