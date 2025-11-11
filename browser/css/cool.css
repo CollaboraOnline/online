@@ -727,7 +727,8 @@ body {
 	color: var(--color-main-text);
 	overflow-x: hidden;
 	padding: 2px;
-	height: 54px;
+	max-height: var(--annotation-input-size);
+	min-height: calc(var(--default-font-size) * 4);
 	width: 100%;
 	margin-bottom: 8px;
 	box-sizing: border-box;
