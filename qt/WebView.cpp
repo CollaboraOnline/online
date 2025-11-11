@@ -112,8 +112,20 @@ WebView::WebView(QWidget* parent, QWebEngineProfile* profile, bool isWelcome)
 {
     _mainWindow->setCentralWidget(_webView);
 
-    if (isWelcome)
+    QScreen* screen = QGuiApplication::primaryScreen();
+    QRect screenGeometry = screen->availableGeometry();
+
+    if (_isWelcome)
+    {
         _mainWindow->setWindowFlags(Qt::FramelessWindowHint);
+    }
+    else
+    {
+        // Use 1/3 of screen size, but enforce reasonable bounds
+        int minWidth = qBound(800, screenGeometry.width() / 3, 1400);
+        int minHeight = qBound(600, screenGeometry.height() / 3, 1000);
+        _mainWindow->setMinimumSize(minWidth, minHeight);
+    }
 
     QWebEnginePage* page = new QWebEnginePage(profile, _webView);
     _webView->setPage(page);
