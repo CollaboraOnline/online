@@ -626,6 +626,8 @@ class SlideShowPresenter {
 		container.style.display = 'flex';
 		container.style.padding = '2px';
 		container.style.borderRadius = '25px';
+		container.style.left = '50%';
+		container.style.transform = 'translateX(-50%)';
 	}
 
 	private _onA11yString(target: any) {
@@ -673,11 +675,21 @@ class SlideShowPresenter {
 
 	private _initializeSlideNavWidget(container: HTMLDivElement): void {
 		const closeImg = window.L.DomUtil.create('img', 'left-img', container);
+		const setImgSize = (img: HTMLImageElement) => {
+			img.style.width = '48px';
+			img.style.height = '48px';
+			img.style.flex = '1 1 25%';
+			img.style.marginInlineStart = '5px';
+			img.style.maxWidth = '100%';
+			img.style.borderRadius = '100%';
+		};
 		closeImg.id = 'endshow';
 		const slideshowCloseText = _('End Show');
 		app.LOUtil.setImage(closeImg, 'slideshow-exit.svg', this._map);
 		closeImg.setAttribute('aria-label', slideshowCloseText);
 		closeImg.setAttribute('data-cooltip', slideshowCloseText);
+		setImgSize(closeImg);
+		closeImg.style.marginInlineStart = 0;
 		window.L.control.attachTooltipEventListener(closeImg, this._map);
 		closeImg.addEventListener('click', this._onQuit);
 
@@ -686,6 +698,7 @@ class SlideShowPresenter {
 		const slideshowPrevText = _('Previous');
 		leftImg.setAttribute('aria-label', slideshowPrevText);
 		leftImg.setAttribute('data-cooltip', slideshowPrevText);
+		setImgSize(leftImg);
 		window.L.control.attachTooltipEventListener(leftImg, this._map);
 		app.LOUtil.setImage(leftImg, 'slideshow-slidePrevious.svg', this._map);
 		leftImg.addEventListener('click', this._onPrevSlide);
@@ -696,6 +709,7 @@ class SlideShowPresenter {
 		window.L.control.attachTooltipEventListener(rightImg, this._map);
 		rightImg.setAttribute('aria-label', slideshowNextText);
 		rightImg.setAttribute('data-cooltip', slideshowNextText);
+		setImgSize(rightImg);
 		app.LOUtil.setImage(rightImg, 'slideshow-slideNext.svg', this._map);
 		rightImg.addEventListener('click', this._onNextSlide);
 
@@ -708,6 +722,7 @@ class SlideShowPresenter {
 		const slideshowAnimIniText = _('Disable Animations');
 		animationsImage.setAttribute('aria-label', slideshowAnimIniText);
 		animationsImage.setAttribute('data-cooltip', slideshowAnimIniText);
+		setImgSize(animationsImage);
 		window.L.control.attachTooltipEventListener(animationsImage, this._map);
 		app.LOUtil.setImage(animationsImage, 'slideshow-transition.svg', this._map);
 		animationsImage.addEventListener(
@@ -733,6 +748,7 @@ class SlideShowPresenter {
 			window.L.control.attachTooltipEventListener(FollowImg, this._map);
 			FollowImg.setAttribute('aria-label', followText);
 			FollowImg.setAttribute('data-cooltip', followText);
+			setImgSize(FollowImg);
 			app.LOUtil.setImage(FollowImg, 'slideshow-slideNext.svg', this._map);
 			FollowImg.addEventListener('click', (e: Event) => {
 				e.stopPropagation();
