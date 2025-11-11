@@ -1763,8 +1763,13 @@ int APIENTRY wWinMain(HINSTANCE hInstance, HINSTANCE, PWSTR, int showWindowMode)
                               bcp47, LOCALE_NAME_MAX_LENGTH, 0))
         uiLanguage = Util::wide_string_to_string(bcp47);
 
+    // Allow overriding log level in the debugger. Note that logging *always* goes just to
+    // OutputDebugString() if running under a debugger. Never to stderr or stdout.
+    const char* loglevel = std::getenv("CODA_LOGLEVEL");
     // COOLWSD_LOGLEVEL comes from the project file and differs for Debug and Release builds.
-    Log::initialize("CODA", COOLWSD_LOGLEVEL);
+    if (!loglevel)
+        loglevel = COOLWSD_LOGLEVEL;
+    Log::initialize("CODA", loglevel);
     Util::setThreadName("main");
 
     persistentWindowSizeStoreOK =
