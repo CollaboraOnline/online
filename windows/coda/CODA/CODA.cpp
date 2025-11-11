@@ -1698,19 +1698,18 @@ static void processMessage(WindowData& data, wil::unique_cotaskmem_string& messa
         {
             PostMessageW(data.hWnd, WM_CLOSE, 0, 0);
         }
-        else if (s.starts_with(L"uno .uno:NewDoc"))
+        else if (s.starts_with(L"newdoc type="))
         {
-            s = s.substr(15);
+            s = s.substr(12);
             CODA_OPEN_CONTROL id;
-            if (s == L"")
+            if (s == L"writer")
                 id = CODA_OPEN_CONTROL::NEW_TEXT;
-            else if (s == L"Spreadsheet")
+            else if (s == L"calc")
                 id = CODA_OPEN_CONTROL::NEW_SPREADSHEET;
-            else if (s == L"Presentation")
+            else if (s == L"impress")
                 id = CODA_OPEN_CONTROL::NEW_PRESENTATION;
             else
-                fatal("Unexpected uno .uno:NewDoc* message");
-
+                fatal("Unexpected type in newdoc message");
             auto path = Poco::Path(Util::wide_string_to_string(new_document(id)));
             openCOOLWindow({ path.getFileName(), Poco::URI(path).toString() }, PERMISSION::NEW_DOCUMENT);
         }
