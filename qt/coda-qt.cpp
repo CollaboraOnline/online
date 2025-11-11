@@ -27,6 +27,9 @@
 #include <Poco/JSON/Object.h>
 #include <Poco/Dynamic/Var.h>
 #include <Poco/Path.h>
+#include <Poco/URI.h>
+#include <Poco/Zip/Compress.h>
+#include <Poco/Zip/ZipCommon.h>
 
 #include <QApplication>
 #include <QByteArray>
@@ -35,6 +38,7 @@
 #include <QCommandLineParser>
 #include <QDesktopServices>
 #include <QDir>
+#include <QDirIterator>
 #include <QTemporaryFile>
 #include <QProcess>
 #include <QFileDialog>
@@ -71,6 +75,8 @@
 #include <poll.h>
 #include <string>
 #include <thread>
+#include <fstream>
+#include <sstream>
 #include "WebView.hpp"
 
 const char* user_name = "Dummy";
@@ -443,6 +449,232 @@ namespace
             return nullptr;
         }
     }
+
+    QString extensionForDocumentType(const QString& type, bool isTemplateFile)
+    {
+        const QString lowered = type.toLower();
+        if (lowered == QLatin1String("calc"))
+            return isTemplateFile ? QStringLiteral(".ots") : QStringLiteral(".ods");
+        if (lowered == QLatin1String("impress"))
+            return isTemplateFile ? QStringLiteral(".otp") : QStringLiteral(".odp");
+        return isTemplateFile ? QStringLiteral(".ott") : QStringLiteral(".odt");
+    }
+
+    QString resolveTemplatePath(const QString& templateKey, const QString& repoRoot)
+    {
+        if (templateKey.isEmpty())
+            return QString();
+
+        QFileInfo directInfo(templateKey);
+        if (directInfo.isAbsolute() && directInfo.exists())
+            return directInfo.absoluteFilePath();
+
+        QDir root(repoRoot);
+        const QString browserTemplates =
+            root.filePath(QStringLiteral("browser/templates/") + templateKey);
+        QFileInfo browserInfo(browserTemplates);
+        if (browserInfo.exists())
+            return browserInfo.absoluteFilePath();
+
+        const QString fallback = root.filePath(templateKey);
+        QFileInfo fallbackInfo(fallback);
+        if (fallbackInfo.exists())
+            return fallbackInfo.absoluteFilePath();
+
+        return QString();
+    }
+
+    bool packageTemplateDirectory(const QString& sourceDir, const QString& destinationFile)
+    {
+        QDir baseDir(sourceDir);
+        if (!baseDir.exists())
+            return false;
+
+        std::ofstream out(destinationFile.toStdString(), std::ios::binary | std::ios::trunc);
+        if (!out.good())
+            return false;
+
+        Poco::Zip::Compress compressor(out, true);
+
+        const QFileInfo mimetypeInfo(baseDir.filePath(QStringLiteral("mimetype")));
+        if (mimetypeInfo.exists() && mimetypeInfo.isFile())
+        {
+            compressor.addFile(Poco::Path(mimetypeInfo.absoluteFilePath().toStdString()),
+                            Poco::Path("mimetype"), Poco::Zip::ZipCommon::CM_STORE);
+        }
+
+        QDirIterator it(sourceDir, QDir::Files, QDirIterator::Subdirectories);
+        while (it.hasNext())
+        {
+            const QString filePath = it.next();
+            const QString relative = baseDir.relativeFilePath(filePath);
+            if (relative == QLatin1String("mimetype"))
+                continue;
+
+            compressor.addFile(Poco::Path(filePath.toStdString()), Poco::Path(relative.toStdString()));
+        }
+
+        compressor.close();
+        out.flush();
+        return out.good();
+    }
+
+} // namespace
+
+void Bridge::createDocumentFromTemplate(const QString& requestedType, const QString& templateKey)
+{
+    const QString type =
+        requestedType.isEmpty() ? QStringLiteral("writer") : requestedType.toLower();
+
+    QString basePath;
+    if (const char* envPath = std::getenv("COOL_TOPSRCDIR"); envPath && *envPath)
+        basePath = QString::fromLocal8Bit(envPath);
+    else
+        basePath = QStringLiteral(TOPSRCDIR);
+
+    QDir tempDir(QDir::tempPath());
+    const QString subDir = QStringLiteral("coda-newdocs");
+    if (!tempDir.exists(subDir) && !tempDir.mkpath(subDir))
+    {
+        LOG_ERR("newdoc: unable to create temporary folder '" << subDir.toStdString() << "'");
+        return;
+    }
+
+    QString destinationPath;
+
+    if (templateKey.isEmpty())
+    {
+        struct BuiltinTemplate
+        {
+            QString documentType;
+            QString relativePath;
+        };
+
+        static const BuiltinTemplate builtinTemplates[] = {
+            { QStringLiteral("writer"),
+              QStringLiteral("ios/Mobile/Resources/Templates/Blank.ott") },
+            { QStringLiteral("calc"), QStringLiteral("ios/Mobile/Resources/Templates/Blank.ots") },
+            { QStringLiteral("impress"),
+              QStringLiteral("ios/Mobile/Resources/Templates/Blank.otp") },
+        };
+
+        const BuiltinTemplate* selected = &builtinTemplates[0];
+        for (const BuiltinTemplate& info : builtinTemplates)
+        {
+            if (info.documentType.compare(type, Qt::CaseInsensitive) == 0)
+            {
+                selected = &info;
+                break;
+            }
+        }
+
+        const QString templatePath = QDir(basePath).filePath(selected->relativePath);
+        QFile source(templatePath);
+        if (!source.exists())
+        {
+            LOG_ERR("newdoc: template not found at '" << templatePath.toStdString() << "'");
+            return;
+        }
+        if (!source.open(QIODevice::ReadOnly))
+        {
+            LOG_ERR("newdoc: failed to open template '" << templatePath.toStdString() << "'");
+            return;
+        }
+
+        const QByteArray templateBytes = source.readAll();
+        source.close();
+
+        if (templateBytes.isEmpty())
+        {
+            LOG_ERR("newdoc: template '" << templatePath.toStdString() << "' is empty");
+            return;
+        }
+
+        const QString pattern = tempDir.filePath(QStringLiteral("coda-newdocs/blank-XXXXXX") +
+                                                 extensionForDocumentType(type, false));
+        QTemporaryFile temp(pattern);
+        temp.setAutoRemove(false);
+
+        if (!temp.open())
+        {
+            LOG_ERR("newdoc: failed to create temporary file");
+            return;
+        }
+
+        const qint64 written = temp.write(templateBytes);
+        if (written != templateBytes.size())
+        {
+            LOG_ERR("newdoc: failed to write template to temporary file");
+            temp.remove();
+            return;
+        }
+
+        temp.flush();
+        destinationPath = temp.fileName();
+        temp.close();
+    }
+    else
+    {
+        const QString resolvedPath = resolveTemplatePath(templateKey, basePath);
+        if (resolvedPath.isEmpty())
+        {
+            LOG_ERR("newdoc: unable to resolve template key '" << templateKey.toStdString() << "'");
+            return;
+        }
+
+        QFileInfo templateInfo(resolvedPath);
+
+        QString suffix;
+        if (templateInfo.isDir())
+            suffix = extensionForDocumentType(type, true);
+        else
+            suffix = QStringLiteral(".") + templateInfo.suffix();
+
+        const QString pattern =
+            tempDir.filePath(QStringLiteral("coda-newdocs/template-XXXXXX") + suffix);
+        QTemporaryFile temp(pattern);
+        temp.setAutoRemove(false);
+        if (!temp.open())
+        {
+            LOG_ERR("newdoc: failed to create temporary file for template '"
+                    << templateKey.toStdString() << "'");
+            return;
+        }
+
+        destinationPath = temp.fileName();
+        temp.close();
+        QFile::remove(destinationPath);
+
+        bool success = false;
+        if (templateInfo.isDir())
+        {
+            success = packageTemplateDirectory(templateInfo.absoluteFilePath(), destinationPath);
+        }
+        else
+        {
+            success = QFile::copy(templateInfo.absoluteFilePath(), destinationPath);
+        }
+
+        if (!success)
+        {
+            LOG_ERR("newdoc: failed to materialize template '" << templateKey.toStdString() << "'");
+            QFile::remove(destinationPath);
+            return;
+        }
+    }
+
+    QFileInfo resultInfo(destinationPath);
+    if (!resultInfo.exists() || resultInfo.size() <= 0)
+    {
+        LOG_ERR("newdoc: temporary document '" << destinationPath.toStdString() << "' is invalid");
+        QFile::remove(destinationPath);
+        return;
+    }
+
+    const QByteArray destinationUtf8 = destinationPath.toUtf8();
+    const Poco::URI fileURL{ Poco::Path(destinationUtf8.constData()) };
+    auto* webViewInstance = new WebView(nullptr, Application::getProfile());
+    webViewInstance->load(fileURL, /*newFile*/ true);
 }
 
 std::string Bridge::promptSaveLocation()
@@ -547,7 +779,7 @@ bool Bridge::saveDocumentAs()
             _webView->window()->setWindowTitle(applicationTitle);
     }
 
-   return saveDocument(savePath);
+    return saveDocument(savePath);
 }
 
 QVariant Bridge::cool(const QString& messageStr)
@@ -852,6 +1084,30 @@ QVariant Bridge::cool(const QString& messageStr)
     {
         QString qurl = QString::fromStdString(message.substr(HYPERLINK.size()));
         QDesktopServices::openUrl(QUrl::fromUserInput(qurl));
+    }
+    else if (message.rfind("newdoc", 0) == 0)
+    {
+        std::string type = "writer";
+        std::string templateKey;
+        if (message.size() > std::strlen("newdoc"))
+        {
+            std::string args = message.substr(std::strlen("newdoc"));
+            std::istringstream iss(args);
+            std::string token;
+            while (iss >> token)
+            {
+                if (token.rfind("type=", 0) == 0 && token.size() > 5)
+                    type = token.substr(5);
+                else if (token.rfind("template=", 0) == 0 && token.size() > 9)
+                    templateKey = token.substr(9);
+            }
+        }
+
+        QString templatePath;
+        if (!templateKey.empty())
+            templatePath = QUrl::fromPercentEncoding(QString::fromStdString(templateKey).toUtf8());
+
+        createDocumentFromTemplate(QString::fromStdString(type), templatePath);
     }
     else
     {

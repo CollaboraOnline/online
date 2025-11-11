@@ -12,7 +12,7 @@ AM_CPPFLAGS = -pthread \
               ${warning_flags} \
               ${include_paths}
 
-AM_LDFLAGS = -pthread ${QT6_LIBS} -ldl $(ZSTD_LIBS) ${PNG_LIBS}
+AM_LDFLAGS = -pthread ${QT6_LIBS} -ldl $(ZSTD_LIBS) ${PNG_LIBS} -lPocoZip
 
 # Android's CMakefile list re-worked:
 

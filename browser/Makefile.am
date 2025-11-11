@@ -830,6 +830,12 @@ if ENABLE_WASM_FALLBACK
 WASM_FALLBACK_FILES += $(DIST_FOLDER)/wasm
 endif
 
+TEMPLATE_MANIFEST = $(DIST_FOLDER)/templates/templates.json
+TEMPLATE_PREVIEW_IMAGES = \
+	$(DIST_FOLDER)/images/templates/preview/blank_writer.png \
+	$(DIST_FOLDER)/images/templates/preview/blank_spreadsheet.png \
+	$(DIST_FOLDER)/images/templates/preview/blank_presentation.png
+
 $(TYPESCRIPT_JS_DIR)/%.js: $(srcdir)/%.ts
 	@mkdir -p $(dir $@)
 	$(QUIET_TSC) $(builddir)/node_modules/typescript/bin/tsc --outFile $@ $<
@@ -850,7 +856,9 @@ build-cool: \
 	$(DIST_FOLDER)/bundle.js \
 	$(DIST_FOLDER)/cool.html \
 	$(WASM_FILES) \
-	$(WASM_FALLBACK_FILES)
+	$(WASM_FALLBACK_FILES) \
+	$(TEMPLATE_MANIFEST) \
+	$(TEMPLATE_PREVIEW_IMAGES)
 	@echo "build cool completed"
 if APP_HAS_BRANDING
 	@if test -d "$(APP_BRANDING_DIR)" ; then cp -a "$(APP_BRANDING_DIR)"/branding* $(DIST_FOLDER)/ ; fi
@@ -864,6 +872,14 @@ if ENABLE_CYPRESS
 	cp -a  "$(srcdir)/../cypress_test/data/multiuser/cypress-multiuser.html" "$(DIST_FOLDER)/cypress-multiuser.html"
 	@echo "Added HTML file for multiuser tests"
 endif
+
+$(TEMPLATE_MANIFEST): $(srcdir)/util/generate-templates-manifest.js
+	@mkdir -p $(dir $@)
+	@$(NODE) $(srcdir)/util/generate-templates-manifest.js --lo-path "$(LO_PATH)" --out "$@"
+
+$(DIST_FOLDER)/images/templates/preview/%.png: $(srcdir)/images/templates/preview/%.png
+	@mkdir -p $(dir $@)
+	@cp $< $@
 
 $(DIST_FOLDER)/admin-bundle.js: $(COOL_ADMIN_DST) \
 	$(INTERMEDIATE_DIR)/admin-src.js
