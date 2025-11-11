@@ -23,12 +23,12 @@ class Bridge;
 class WebView
 {
 public:
-    explicit WebView(QWidget* parent, QWebEngineProfile* profile, bool isWelcome = false);
+    explicit WebView(QWebEngineProfile* profile, bool isWelcome = false);
     ~WebView();
     QWebEngineView* webEngineView() { return _webView; }
 
     void load(const Poco::URI& fileURL, bool newFile = false);
-    static WebView* createNewDocument(QWidget* parent, QWebEngineProfile* profile, const std::string& templateType);
+    static WebView* createNewDocument(QWebEngineProfile* profile, const std::string& templateType);
 
     static WebView* findOpenDocument(const Poco::URI& documentURI);
     static const std::vector<WebView*>& getAllInstances() { return s_instances; }
