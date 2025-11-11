@@ -539,16 +539,6 @@ bool Bridge::saveDocumentAs()
     QString fileName = QString::fromStdString(Poco::Path(savePath).getFileName());
     if (!fileName.isEmpty())
     {
-        // Use base64 encoding to safely pass the filename to JavaScript
-        QByteArray fileNameUtf8 = fileName.toUtf8();
-        QByteArray base64 = fileNameUtf8.toBase64();
-
-        QString js = QString("var input = $('#document-name-input'); "
-                            "var fileName = window.b64d('") + QString::fromUtf8(base64) + QString("'); "
-                            "input.val(fileName); "
-                            "input.attr('data-cooltip', fileName);");
-        evalJS(js.toStdString());
-
         QString applicationTitle = fileName + " - " APP_NAME;
         QApplication::setApplicationName(applicationTitle);
 
