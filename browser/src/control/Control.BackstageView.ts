@@ -17,12 +17,47 @@ interface BackstageTabConfig {
 	type: 'view' | 'action';
 	visible?: boolean;
 	viewType?: 'home' | 'templates' | 'info' | 'export';
-	actionType?: 'open' | 'save' | 'saveas' | 'print' | 'share' | 'repair' | 'properties' | 'history';
+	actionType?:
+		| 'open'
+		| 'save'
+		| 'saveas'
+		| 'print'
+		| 'share'
+		| 'repair'
+		| 'properties'
+		| 'history';
 }
 
+interface TemplateTypeMap {
+	writer: 'writer';
+	calc: 'calc';
+	impress: 'impress';
+}
+
+type TemplateType = TemplateTypeMap[keyof TemplateTypeMap];
+
 interface TemplateData {
+	id: string;
 	name: string;
-	type: string;
+	type: TemplateType;
+	path?: string;
+	preview?: string;
+	featured?: boolean;
+	searchText: string;
+}
+
+interface TemplateManifestEntry {
+	id?: string;
+	name?: string;
+	type?: string;
+	category?: string;
+	path: string;
+	preview?: string | null;
+	featured?: boolean;
+}
+
+interface TemplateManifest {
+	templates?: TemplateManifestEntry[];
 }
 
 interface ExportFormatData {
@@ -36,6 +71,14 @@ class BackstageView extends window.L.Class {
 	private contentArea!: HTMLElement;
 	private isVisible: boolean = false;
 	private readonly map: any;
+	private templates: TemplateManifestEntry[] | null = null;
+	private templatesPromise: Promise<void> | null = null;
+	private templatesLoadError: boolean = false;
+	private activeTemplateType: TemplateType = 'writer';
+	private templateSearchQuery: string = '';
+	private templateGridContainer: HTMLElement | null = null;
+	private templateFeaturedRowContainer: HTMLElement | null = null;
+	private templateSearchContainer: HTMLElement | null = null;
 
 	constructor(map: any) {
 		super();
@@ -45,7 +88,11 @@ class BackstageView extends window.L.Class {
 	}
 
 	private createContainer(): HTMLElement {
-		const container = this.createElement('div', 'backstage-view hidden', 'backstage-view');
+		const container = this.createElement(
+			'div',
+			'backstage-view hidden',
+			'backstage-view',
+		);
 
 		const header = this.createHeader();
 		container.appendChild(header);
@@ -64,9 +111,12 @@ class BackstageView extends window.L.Class {
 
 	private createHeader(): HTMLElement {
 		const header = this.createElement('div', 'backstage-header');
-		const backButton = this.createElement('button', 'backstage-back-button') as HTMLButtonElement;
+		const backButton = this.createElement(
+			'button',
+			'backstage-back-button',
+		) as HTMLButtonElement;
 
-		backButton.textContent = _('← Back');
+		backButton.textContent = '← ' + _('Back');
 		backButton.title = _('Back to document');
 		window.L.DomEvent.on(backButton, 'click', () => this.hide(), this);
 
@@ -78,8 +128,9 @@ class BackstageView extends window.L.Class {
 		const sidebar = this.createElement('div', 'backstage-sidebar');
 		const tabConfigs = this.getTabsConfig();
 
-		tabConfigs.forEach(config => {
+		tabConfigs.forEach((config) => {
 			if (config.visible === false) return;
+
 
 			const tabElement = this.createTabElement(config);
 			sidebar.appendChild(tabElement);
@@ -92,13 +143,15 @@ class BackstageView extends window.L.Class {
 		const element = this.createElement('div', 'backstage-sidebar-item');
 		element.id = `backstage-${config.id}`;
 
+
 		const label = this.createElement('span');
 		label.textContent = config.label;
 		element.appendChild(label);
 
-		const action = config.type === 'view'
-			? () => this.handleViewTab(config)
-			: () => this.handleActionTab(config);
+		const action =
+			config.type === 'view'
+				? () => this.handleViewTab(config)
+				: () => this.handleActionTab(config);
 
 		window.L.DomEvent.on(element, 'click', action, this);
 		return element;
@@ -106,43 +159,103 @@ class BackstageView extends window.L.Class {
 
 	private getTabsConfig(): BackstageTabConfig[] {
 		return [
-			{ id: 'home', label: _('Home'), type: 'view', viewType: 'home', visible: true },
-			{ id: 'new', label: _('New'), type: 'view', viewType: 'templates', visible: true },
-			{ id: 'open', label: _('Open'), type: 'action', actionType: 'open', visible: true },
-			{ id: 'share', label: _('Share'), type: 'action', actionType: 'share', visible: this.isFeatureEnabled('share') },
-			{ id: 'info', label: _('Info'), type: 'view', viewType: 'info', visible: true },
-			{ id: 'save', label: _('Save'), type: 'action', actionType: 'save', visible: this.isFeatureEnabled('save') },
-			{ id: 'saveas', label: _('Save As'), type: 'action', actionType: 'saveas', visible: this.isFeatureEnabled('saveAs') },
-			{ id: 'print', label: _('Print'), type: 'action', actionType: 'print', visible: this.isFeatureEnabled('print') },
-			{ id: 'export', label: _('Export'), type: 'view', viewType: 'export', visible: true },
+			{
+				id: 'home',
+				label: _('Home'),
+				type: 'view',
+				viewType: 'home',
+				visible: true,
+			},
+			{
+				id: 'new',
+				label: _('New'),
+				type: 'view',
+				viewType: 'templates',
+				visible: true,
+			},
+			{
+				id: 'open',
+				label: _('Open'),
+				type: 'action',
+				actionType: 'open',
+				visible: true,
+			},
+			{
+				id: 'share',
+				label: _('Share'),
+				type: 'action',
+				actionType: 'share',
+				visible: this.isFeatureEnabled('share'),
+			},
+			{
+				id: 'info',
+				label: _('Info'),
+				type: 'view',
+				viewType: 'info',
+				visible: true,
+			},
+			{
+				id: 'save',
+				label: _('Save'),
+				type: 'action',
+				actionType: 'save',
+				visible: this.isFeatureEnabled('save'),
+			},
+			{
+				id: 'saveas',
+				label: _('Save As'),
+				type: 'action',
+				actionType: 'saveas',
+				visible: this.isFeatureEnabled('saveAs'),
+			},
+			{
+				id: 'print',
+				label: _('Print'),
+				type: 'action',
+				actionType: 'print',
+				visible: this.isFeatureEnabled('print'),
+			},
+			{
+				id: 'export',
+				label: _('Export'),
+				type: 'view',
+				viewType: 'export',
+				visible: true,
+			},
 		];
 	}
 
 	private handleViewTab(config: BackstageTabConfig): void {
 		const viewRenderers: Record<string, () => void> = {
-			'home': () => this.renderHomeView(),
-			'templates': () => this.renderNewView(),
-			'info': () => this.renderInfoView(),
-			'export': () => this.renderExportView(),
+			home: () => this.renderHomeView(),
+			templates: () => this.renderNewView(),
+			info: () => this.renderInfoView(),
+			export: () => this.renderExportView(),
 		};
 
-		const renderer = viewRenderers[config.viewType!];
+		const viewType = config.viewType;
+		if (!viewType) return;
+
+		const renderer = viewRenderers[viewType];
 		if (renderer) renderer();
 	}
 
 	private handleActionTab(config: BackstageTabConfig): void {
 		const actionHandlers: Record<string, () => void> = {
-			'open': () => this.executeOpen(),
-			'save': () => this.executeSave(),
-			'saveas': () => this.executeSaveAs(),
-			'print': () => this.executePrint(),
-			'share': () => this.executeShare(),
-			'repair': () => this.executeRepair(),
-			'properties': () => this.executeDocumentProperties(),
-			'history': () => this.executeRevisionHistory(),
+			open: () => this.executeOpen(),
+			save: () => this.executeSave(),
+			saveas: () => this.executeSaveAs(),
+			print: () => this.executePrint(),
+			share: () => this.executeShare(),
+			repair: () => this.executeRepair(),
+			properties: () => this.executeDocumentProperties(),
+			history: () => this.executeRevisionHistory(),
 		};
 
-		const handler = actionHandlers[config.actionType!];
+		const actionType = config.actionType;
+		if (!actionType) return;
+
+		const handler = actionHandlers[actionType];
 		if (handler) handler();
 	}
 
@@ -162,30 +275,57 @@ class BackstageView extends window.L.Class {
 		this.setActiveTab('backstage-home');
 		this.clearContent();
 
-		this.addSectionHeader(_('Recent'), _('Recently opened documents will appear here'));
+		this.addSectionHeader(
+			_('Recent'),
+			_('Recently opened documents will appear here'),
+		);
 	}
 
 	private renderNewView(): void {
 		this.setActiveTab('backstage-new');
 		this.clearContent();
+		this.templateGridContainer = null;
+		this.templateFeaturedRowContainer = null;
+		this.templateSearchContainer = null;
 
-		this.addSectionHeader(_('New Document'), _('Create a new blank document'));
+		this.addSectionHeader(
+			_('New Document'),
+			_('Start from a template or a blank file'),
+		);
+
+		if (!this.templates) {
+			this.renderTemplatesLoadingState();
+			this.loadTemplatesData().then(() => {
+				if (this.isVisible) this.renderNewView();
+			});
+			return;
+		}
 
 		const templates = this.getTemplatesData();
-		const grid = this.createTemplateGrid(templates);
-		this.contentArea.appendChild(grid);
+		if (templates.length === 0) {
+			this.renderEmptyTemplatesState();
+			return;
+		}
+
+		const explorer = this.renderTemplateExplorer(templates);
+		this.contentArea.appendChild(explorer);
 	}
 
 	private renderInfoView(): void {
 		this.setActiveTab('backstage-info');
 		this.clearContent();
 
-		this.addSectionHeader(_('Document Info'), _('Manage document history, repairs, and properties'));
+		this.addSectionHeader(
+			_('Document Info'),
+			_('Manage document history, repairs, and properties'),
+		);
 
 		const container = this.createElement('div', 'backstage-info-container');
 
+
 		const actionsColumn = this.createInfoActionsColumn();
 		const propertiesColumn = this.createInfoPropertiesColumn();
+
 
 		container.appendChild(actionsColumn);
 		container.appendChild(propertiesColumn);
@@ -196,39 +336,20 @@ class BackstageView extends window.L.Class {
 		this.setActiveTab('backstage-export');
 		this.clearContent();
 
-		this.addSectionHeader(_('Export As'), _('Export your document to a different file format'));
+		this.addSectionHeader(
+			_('Export As'),
+			_('Export your document to a different file format'),
+		);
 
 		const formats = this.getExportFormatsData();
 		const grid = this.createExportGrid(formats);
 		this.contentArea.appendChild(grid);
 	}
 
-	private createTemplateGrid(templates: TemplateData[]): HTMLElement {
-		const grid = this.createElement('div', 'backstage-templates-grid');
-
-		templates.forEach(template => {
-			const card = this.createTemplateCard(template);
-			grid.appendChild(card);
-		});
-
-		return grid;
-	}
-
-	private createTemplateCard(template: TemplateData): HTMLElement {
-		const card = this.createElement('div', 'backstage-template-card');
-
-		const name = this.createElement('div', 'template-name');
-		name.textContent = template.name;
-		card.appendChild(name);
-
-		window.L.DomEvent.on(card, 'click', () => this.createNewDocument(template), this);
-		return card;
-	}
-
 	private createExportGrid(formats: ExportFormatData[]): HTMLElement {
 		const grid = this.createElement('div', 'backstage-formats-grid');
 
-		formats.forEach(format => {
+		formats.forEach((format) => {
 			const card = this.createExportCard(format);
 			grid.appendChild(card);
 		});
@@ -239,26 +360,39 @@ class BackstageView extends window.L.Class {
 	private createExportCard(format: ExportFormatData): HTMLElement {
 		const card = this.createElement('div', 'backstage-format-card');
 
+
 		const icon = this.createElement('div', 'format-icon');
 		icon.textContent = format.name;
 		card.appendChild(icon);
+
 
 		const description = this.createElement('div', 'format-description');
 		description.textContent = format.description;
 		card.appendChild(description);
 
-		window.L.DomEvent.on(card, 'click', () => this.exportDocument(format.id), this);
+		window.L.DomEvent.on(
+			card,
+			'click',
+			() => this.exportDocument(format.id),
+			this,
+		);
 		return card;
 	}
 
 	private createInfoActionsColumn(): HTMLElement {
 		const column = this.createElement('div', 'backstage-info-actions');
 
-		const historyButton = this.createActionButton(_('File History'), () => this.executeRevisionHistory());
+		const historyButton = this.createActionButton(
+			_('File History'),
+			() => this.executeRevisionHistory(),
+		);
 		column.appendChild(historyButton);
 
 		if (this.isFeatureEnabled('repair')) {
-			const repairButton = this.createActionButton(_('Repair Document'), () => this.executeRepair());
+			const repairButton = this.createActionButton(
+				_('Repair Document'),
+				() => this.executeRepair(),
+			);
 			column.appendChild(repairButton);
 		}
 
@@ -272,27 +406,46 @@ class BackstageView extends window.L.Class {
 		header.textContent = _('Properties');
 		column.appendChild(header);
 
-		const button = this.createPrimaryButton(_('View Properties...'), () => this.executeDocumentProperties());
+		const button = this.createPrimaryButton(
+			_('View Properties...'),
+			() => this.executeDocumentProperties(),
+		);
 		column.appendChild(button);
 
 		return column;
 	}
 
-	private createElement(tag: string, className?: string, id?: string): HTMLElement {
+	private createElement(
+		tag: string,
+		className?: string,
+		id?: string,
+	): HTMLElement {
 		const element = window.L.DomUtil.create(tag, className || '');
 		if (id) element.id = id;
 		return element;
 	}
 
-	private createActionButton(label: string, onClick: () => void): HTMLButtonElement {
-		const button = this.createElement('button', 'backstage-info-button') as HTMLButtonElement;
+	private createActionButton(
+		label: string,
+		onClick: () => void,
+	): HTMLButtonElement {
+		const button = this.createElement(
+			'button',
+			'backstage-info-button',
+		) as HTMLButtonElement;
 		button.textContent = label;
 		window.L.DomEvent.on(button, 'click', onClick, this);
 		return button;
 	}
 
-	private createPrimaryButton(label: string, onClick: () => void): HTMLButtonElement {
-		const button = this.createElement('button', 'backstage-action-button') as HTMLButtonElement;
+	private createPrimaryButton(
+		label: string,
+		onClick: () => void,
+	): HTMLButtonElement {
+		const button = this.createElement(
+			'button',
+			'backstage-action-button',
+		) as HTMLButtonElement;
 		button.textContent = label;
 		window.L.DomEvent.on(button, 'click', onClick, this);
 		return button;
@@ -303,7 +456,10 @@ class BackstageView extends window.L.Class {
 		titleElement.textContent = title;
 		this.contentArea.appendChild(titleElement);
 
-		const descElement = this.createElement('p', 'backstage-content-description');
+		const descElement = this.createElement(
+			'p',
+			'backstage-content-description',
+		);
 		descElement.textContent = description;
 		this.contentArea.appendChild(descElement);
 	}
@@ -320,22 +476,417 @@ class BackstageView extends window.L.Class {
 	}
 
 	private getTemplatesData(): TemplateData[] {
-		return [
-			{ name: _('Blank Document'), type: 'writer' },
-			{ name: _('Blank Spreadsheet'), type: 'calc' },
-			{ name: _('Blank Presentation'), type: 'impress' },
-		];
+		const entries = this.templates || [];
+		const templates: TemplateData[] = [];
+
+		entries.forEach((entry) => {
+			const absolutePath = entry.path;
+			if (!absolutePath) return;
+
+			const type = this.normalizeTemplateType(entry.type, absolutePath);
+			if (!type) return;
+
+			const name = entry.name || this.deriveDisplayName(absolutePath);
+			const id = entry.id || this.slugify(name + absolutePath);
+			const searchComponents = [name, type, absolutePath];
+
+			templates.push({
+				id,
+				name,
+				type,
+				path: absolutePath,
+				preview: entry.preview || undefined,
+				featured: !!entry.featured,
+				searchText: searchComponents.join(' ').toLowerCase(),
+			});
+		});
+
+		return templates.sort((a, b) =>
+			a.name.localeCompare(b.name, undefined, { sensitivity: 'base' }),
+		);
+	}
+
+	private async loadTemplatesData(): Promise<void> {
+		if (this.templatesPromise) return this.templatesPromise;
+
+		const loader = (async () => {
+			try {
+				const entries = await this.fetchTemplateManifest(
+					'templates/templates.json',
+				);
+				this.templates = entries;
+				this.templatesLoadError = false;
+			} catch (error) {
+				console.error('Unable to load templates manifest', error);
+				this.templates = [];
+				this.templatesLoadError = true;
+			}
+		})();
+
+		this.templatesPromise = loader.finally(() => {
+			this.templatesPromise = null;
+		});
+
+		return this.templatesPromise;
+	}
+
+	private renderTemplatesLoadingState(): void {
+			this.renderEmptyStateMessage(_('Loading templates…'));
+	}
+
+	private renderEmptyTemplatesState(): void {
+		if (this.templatesLoadError) {
+			this.renderEmptyStateMessage(
+				_(
+					'Templates could not be loaded. Try again later or start from a blank document.',
+				),
+			);
+			return;
+		}
+
+		this.renderEmptyStateMessage(
+			_('No templates available. Start with a blank document to begin.'),
+		);
+	}
+
+	private renderEmptyStateMessage(message: string): void {
+		const wrapper = this.createElement('div', 'backstage-templates-empty');
+
+		const info = this.createElement('p', 'backstage-content-description');
+		info.textContent = message;
+		wrapper.appendChild(info);
+
+		const blankTemplate = this.getBlankTemplate(
+			this.detectTemplateTypeFromDoc(),
+		);
+		const buttonLabel = blankTemplate
+			? blankTemplate.name
+			: _('Blank Document');
+		const button = this.createPrimaryButton(
+			`${_('Create')} ${buttonLabel}`,
+			() => {
+				if (blankTemplate) this.triggerNewDocument(blankTemplate);
+			},
+		);
+		wrapper.appendChild(button);
+
+		this.contentArea.appendChild(wrapper);
+	}
+
+	private renderTemplateExplorer(allTemplates: TemplateData[]): HTMLElement {
+		const previousType = this.activeTemplateType;
+		const detectedType = this.detectTemplateTypeFromDoc();
+		if (detectedType !== previousType) this.templateSearchQuery = '';
+		this.activeTemplateType = detectedType;
+
+		const container = this.createElement('div', 'backstage-template-explorer');
+
+		const filteredTemplates = this.getFilteredTemplates(allTemplates);
+
+		const featuredRow = this.renderFeaturedRow();
+		if (featuredRow) {
+			container.appendChild(featuredRow);
+			this.templateFeaturedRowContainer = featuredRow;
+		} else {
+			this.templateFeaturedRowContainer = null;
+		}
+
+		const search = this.renderTemplateSearch();
+		this.templateSearchContainer = search;
+		container.appendChild(search);
+
+		const grid = this.renderTemplateGrid(filteredTemplates);
+		this.templateGridContainer = grid;
+		container.appendChild(grid);
+
+		return container;
+	}
+
+	private renderTemplateSearch(): HTMLElement {
+		const container = this.createElement('div', 'template-search');
+		const input = this.createElement(
+			'input',
+			'template-search-input',
+		) as HTMLInputElement;
+		input.type = 'search';
+		input.placeholder = _('Search templates');
+		input.value = this.templateSearchQuery;
+
+		window.L.DomEvent.on(
+			input,
+			'input',
+			() => {
+				this.templateSearchQuery = input.value || '';
+				this.updateTemplateGrid();
+			},
+			this,
+		);
+
+		container.appendChild(input);
+		return container;
+	}
+
+	private getFilteredTemplates(allTemplates: TemplateData[]): TemplateData[] {
+		const query = this.templateSearchQuery.trim().toLowerCase();
+		return allTemplates.filter((template) => {
+			if (template.type !== this.activeTemplateType) return false;
+			if (!query) return true;
+			return template.searchText.includes(query);
+		});
+	}
+
+	private renderFeaturedRow(): HTMLElement | null {
+		const blankTemplate = this.getBlankTemplate(this.activeTemplateType);
+		if (!blankTemplate) return null;
+
+		const query = this.templateSearchQuery.trim().toLowerCase();
+		if (query && !blankTemplate.searchText.includes(query)) return null;
+
+		const row = this.createElement('div', 'template-featured-row');
+		row.appendChild(
+			this.createTemplateCard(blankTemplate, {
+				variant: 'featured',
+				isBlank: true,
+			}),
+		);
+		return row;
+	}
+
+	private renderTemplateGrid(templates: TemplateData[]): HTMLElement {
+		const grid = this.createElement('div', 'backstage-templates-grid');
+
+		if (!templates.length) {
+			const empty = this.createElement('div', 'template-grid-empty');
+			empty.textContent = _('No templates match your search.');
+			grid.appendChild(empty);
+			return grid;
+		}
+
+		templates.forEach((template) => {
+			grid.appendChild(this.createTemplateCard(template));
+		});
+
+		return grid;
+	}
+
+	private updateTemplateGrid(): void {
+		if (!this.templates || !this.templateGridContainer) return;
+
+		const allTemplates = this.getTemplatesData();
+		const filteredTemplates = this.getFilteredTemplates(allTemplates);
+		const newGrid = this.renderTemplateGrid(filteredTemplates);
+		this.templateGridContainer.replaceWith(newGrid);
+		this.templateGridContainer = newGrid;
+
+		const newFeaturedRow = this.renderFeaturedRow();
+		if (this.templateFeaturedRowContainer) {
+			if (newFeaturedRow) {
+				this.templateFeaturedRowContainer.replaceWith(newFeaturedRow);
+				this.templateFeaturedRowContainer = newFeaturedRow;
+			} else {
+				this.templateFeaturedRowContainer.remove();
+				this.templateFeaturedRowContainer = null;
+			}
+		} else if (
+			newFeaturedRow &&
+			this.templateSearchContainer &&
+			this.templateSearchContainer.parentElement
+		) {
+			this.templateSearchContainer.parentElement.insertBefore(
+				newFeaturedRow,
+				this.templateSearchContainer,
+			);
+			this.templateFeaturedRowContainer = newFeaturedRow;
+		}
+	}
+
+	private getTemplateTypeLabel(type: TemplateType): string {
+		switch (type) {
+			case 'writer':
+				return _('Writer');
+			case 'calc':
+				return _('Calc');
+			case 'impress':
+				return _('Impress');
+			default:
+				return type;
+		}
+	}
+
+	private createTemplateCard(
+		template: TemplateData,
+		options: { variant?: 'featured'; isBlank?: boolean } = {},
+	): HTMLElement {
+		const card = this.createElement('div', 'backstage-template-card');
+		if (options.variant === 'featured') card.classList.add('is-featured');
+		if (options.isBlank) card.classList.add('is-blank');
+
+		const previewWrapper = this.createElement('div', 'template-thumbnail');
+		const preview = this.createElement('img') as HTMLImageElement;
+		preview.alt = template.name;
+		if (template.preview) preview.src = template.preview;
+		else preview.src = this.getDefaultPreview(template.type);
+		previewWrapper.appendChild(preview);
+		card.appendChild(previewWrapper);
+
+		const name = this.createElement('div', 'template-name');
+		name.textContent = template.name;
+		card.appendChild(name);
+
+		window.L.DomEvent.on(
+			card,
+			'click',
+			() => this.triggerNewDocument(template),
+			this,
+		);
+		return card;
+	}
+
+	private getDefaultPreview(type: TemplateType): string {
+		const previews: Record<TemplateType, string> = {
+			writer: 'images/filetype/writer.svg',
+			calc: 'images/filetype/calc.svg',
+			impress: 'images/filetype/impress.svg',
+		};
+		return previews[type] || 'images/filetype/document.svg';
+	}
+
+	private getBlankTemplate(type: TemplateType): TemplateData | null {
+		let name: string;
+		let previewPath: string | undefined;
+		switch (type) {
+			case 'calc':
+				name = _('Blank Spreadsheet');
+				previewPath = 'images/templates/preview/blank_spreadsheet.png';
+				break;
+			case 'impress':
+				name = _('Blank Presentation');
+				previewPath = 'images/templates/preview/blank_presentation.png';
+				break;
+			case 'writer':
+			default:
+				name = _('Blank Document');
+				previewPath = 'images/templates/preview/blank_writer.png';
+				break;
+		}
+
+		return {
+			id: `blank-${type}`,
+			name,
+			type,
+			preview: previewPath,
+			searchText: `${name.toLowerCase()} ${type} blank`,
+		};
+	}
+
+	private detectTypeFromPath(templatePath: string): TemplateType | null {
+		const extension = templatePath.split('.').pop()?.toLowerCase() || '';
+		const map: Record<string, TemplateType> = {
+			ott: 'writer',
+			oth: 'writer',
+			otm: 'writer',
+			ots: 'calc',
+			otp: 'impress',
+		};
+		return map[extension] || null;
+	}
+
+	private normalizeTemplateType(
+		entryType: string | undefined,
+		templatePath: string,
+	): TemplateType | null {
+		const normalized = (entryType || '').toLowerCase();
+		if (
+			normalized === 'writer' ||
+			normalized === 'calc' ||
+			normalized === 'impress'
+		)
+			return normalized as TemplateType;
+		return this.detectTypeFromPath(templatePath);
+	}
+
+	private slugify(value: string): string {
+		return value
+			.toLowerCase()
+			.replace(/[^a-z0-9]+/g, '-')
+			.replace(/^-+|-+$/g, '')
+			.replace(/-{2,}/g, '-');
+	}
+
+	private deriveDisplayName(templatePath: string): string {
+		const baseName = templatePath.split(/[\\/]/).pop() || templatePath;
+		const nameWithoutExtension = baseName.replace(/\.[^.]+$/, '');
+		return nameWithoutExtension
+			.replace(/[_-]+/g, ' ')
+			.replace(/\s+/g, ' ')
+			.replace(/\b\w/g, (char) => char.toUpperCase());
+	}
+
+	private async fetchTemplateManifest(
+		manifestPath: string,
+	): Promise<TemplateManifestEntry[]> {
+		if (window.location.protocol === 'file:') {
+			return this.fetchTemplateManifestViaXHR(manifestPath);
+		}
+
+		const response = await fetch(manifestPath, { cache: 'no-store' });
+		if (!response.ok) throw new Error('Failed to load template manifest');
+
+		return this.parseManifest(await response.json());
+	}
+
+	private fetchTemplateManifestViaXHR(
+		manifestPath: string,
+	): Promise<TemplateManifestEntry[]> {
+		return new Promise((resolve, reject) => {
+			const xhr = new XMLHttpRequest();
+			xhr.open('GET', manifestPath, true);
+			xhr.responseType = 'text';
+			xhr.onload = () => {
+				const success =
+					xhr.status === 0 || (xhr.status >= 200 && xhr.status < 400);
+				if (!success) {
+					reject(
+						new Error(
+							`Failed to load template manifest (status ${xhr.status})`,
+						),
+					);
+					return;
+				}
+
+				try {
+					const payload = JSON.parse(xhr.responseText);
+					resolve(this.parseManifest(payload));
+				} catch (error) {
+					reject(error);
+				}
+			};
+			xhr.onerror = () =>
+				reject(new Error('XHR failed while loading template manifest'));
+			xhr.send();
+		});
+	}
+
+	private parseManifest(payload: any): TemplateManifestEntry[] {
+		let entries: TemplateManifestEntry[] = [];
+		if (payload && Array.isArray((payload as TemplateManifest).templates)) {
+			entries = (payload as TemplateManifest)
+				.templates as TemplateManifestEntry[];
+		} else if (Array.isArray(payload)) {
+			entries = payload as TemplateManifestEntry[];
+		}
+		return entries.filter((entry) => !!entry.path);
 	}
 
 	private getExportFormatsData(): ExportFormatData[] {
 		return [
-			{ id: 'pdf', name: 'PDF', description: _('Portable Document') },
-			{ id: 'docx', name: 'DOCX', description: _('Word Document') },
-			{ id: 'xlsx', name: 'XLSX', description: _('Excel Spreadsheet') },
-			{ id: 'pptx', name: 'PPTX', description: _('PowerPoint Presentation') },
-			{ id: 'odt', name: 'ODT', description: _('OpenDocument Text') },
-			{ id: 'ods', name: 'ODS', description: _('OpenDocument Spreadsheet') },
-			{ id: 'odp', name: 'ODP', description: _('OpenDocument Presentation') },
+			{ id: 'pdf', name: _('PDF'), description: _('Portable Document') },
+			{ id: 'docx', name: _('DOCX'), description: _('Word Document') },
+			{ id: 'xlsx', name: _('XLSX'), description: _('Excel Spreadsheet') },
+			{ id: 'pptx', name: _('PPTX'), description: _('PowerPoint Presentation') },
+			{ id: 'odt', name: _('ODT'), description: _('OpenDocument Text') },
+			{ id: 'ods', name: _('ODS'), description: _('OpenDocument Spreadsheet') },
+			{ id: 'odp', name: _('ODP'), description: _('OpenDocument Presentation') },
 		];
 	}
 
@@ -385,19 +936,14 @@ class BackstageView extends window.L.Class {
 		this.hide();
 	}
 
-	private createNewDocument(template: TemplateData): void {
-		// Map template types to the appropriate UNO command.
-		const commandMap: Record<string, string> = {
-			'writer': '.uno:NewDoc',
-			'calc': '.uno:NewDocSpreadsheet',
-			'impress': '.uno:NewDocPresentation',
-		};
+	private triggerNewDocument(template: TemplateData): void {
+		const docType = template.type || 'writer';
+		const params: string[] = ['type=' + docType];
+		if (template.path) {
+			params.push('template=' + encodeURIComponent(template.path));
+		}
 
-		const command = template.type && commandMap[template.type]
-			? commandMap[template.type]
-			: '.uno:NewDoc';
-
-		this.sendUnoCommand(command);
+		window.postMobileMessage('newdoc ' + params.join(' '));
 		this.hide();
 	}
 
@@ -468,7 +1014,20 @@ class BackstageView extends window.L.Class {
 			this.map.focus();
 		}
 	}
+
+	private detectTemplateTypeFromDoc(): TemplateType {
+		const docLayer = this.map && this.map._docLayer;
+		const docType = docLayer && docLayer._docType;
+		switch (docType) {
+			case 'spreadsheet':
+				return 'calc';
+			case 'presentation':
+			case 'drawing':
+				return 'impress';
+			default:
+				return 'writer';
+		}
+	}
 }
 
 window.L.Control.BackstageView = BackstageView;
-
