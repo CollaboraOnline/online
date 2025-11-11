@@ -548,6 +548,13 @@ bool Bridge::saveDocumentAs()
                             "input.val(fileName); "
                             "input.attr('data-cooltip', fileName);");
         evalJS(js.toStdString());
+
+        QString applicationTitle = fileName + " - " APP_NAME;
+        QApplication::setApplicationName(applicationTitle);
+
+        // Update file name in window title
+        if (_webView && _webView->window())
+            _webView->window()->setWindowTitle(applicationTitle);
     }
 
    return saveDocument(savePath);
