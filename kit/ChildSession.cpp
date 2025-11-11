@@ -968,8 +968,8 @@ bool ChildSession::loadDocument(const StringVector& tokens)
     const bool loaded = _docManager->onLoad(getId(), getJailedFilePathAnonym(), renderOpts);
     if (!loaded || _viewId < 0)
     {
+        // Failed and communicated with the reason; do not send errors to the client.
         LOG_ERR("Failed to get LoKitDocument instance for [" << getJailedFilePathAnonym() << ']');
-        sendTextFrameAndLogError("error: cmd=load kind=faileddocloading");
         return false;
     }
 
