@@ -221,13 +221,7 @@ class ViewLayoutBase {
 		}
 	}
 
-	public refreshScrollProperties(): any {
-		const documentAnchor = this.getDocumentAnchorSection();
-
-		// The length of the railway that the scroll bar moves on up & down or left & right.
-		this.calculateVerticalScrollLength(documentAnchor);
-		this.calculateHorizontalScrollLength(documentAnchor);
-
+	protected calculateTheScrollSizes() {
 		// Sizes of the scroll bars.
 		this.scrollProperties.verticalScrollSize = Math.round(
 			Math.pow(this.scrollProperties.verticalScrollLength, 2) /
@@ -251,6 +245,17 @@ class ViewLayoutBase {
 		)
 			this.scrollProperties.verticalScrollSize =
 				this.scrollProperties.minimumVerticalScrollSize;
+	}
+
+	public refreshScrollProperties(): any {
+		const documentAnchor = this.getDocumentAnchorSection();
+
+		// The length of the railway that the scroll bar moves on up & down or left & right.
+		this.calculateVerticalScrollLength(documentAnchor);
+		this.calculateHorizontalScrollLength(documentAnchor);
+
+		// Sizes of the scroll bars.
+		this.calculateTheScrollSizes();
 
 		// 1px scrolling = xpx document height / width.
 		this.scrollProperties.horizontalScrollRatio =
