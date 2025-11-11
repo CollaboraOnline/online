@@ -247,12 +247,12 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 		var charCode = (typeof e.which == 'undefined') ? e.keyCode : e.which;
 		var charStr = String.fromCharCode(charCode);
 		var regex = new RegExp('^[0-9\\' + this._decimal + '\\' + this._minusSign + ']+$');
-		if (!charStr.match(regex))
+		if (!charStr.match(regex) && charCode !== 13)
 			return e.preventDefault();
 
 		var value = e.target.value;
 		if (!value)
-			return e.preventDefault();
+			return;
 
 		// no dup
 		if (this._decimal === charStr || this._minusSign === charStr) {
@@ -423,7 +423,7 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 	},
 
 	listenNumericChanges: function (data, builder, controls, customCallback) {
-		controls.spinfield.addEventListener('input', function() {
+		controls.spinfield.addEventListener('change', function() {
 			if (!this.checkValidity())
 				return;
 
