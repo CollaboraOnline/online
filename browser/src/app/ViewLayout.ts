@@ -46,6 +46,7 @@ class ViewLayoutBase {
 	protected _viewSize: cool.SimplePoint; // Scrollable area.
 	protected _documentAnchorPosition: number[]; // The position of document section on the canvas. Always canvas (core) pixels, no need for SimplePoint class.
 	public scrollProperties: ScrollProperties = new ScrollProperties();
+	protected currentCoordList: Array<TileCoordData> = [];
 
 	constructor() {
 		this._viewedRectangle = new cool.SimpleRectangle(0, 0, 0, 0);
@@ -275,6 +276,20 @@ class ViewLayoutBase {
 		// Properties for quick scrolling.
 		this.scrollProperties.verticalScrollStep = documentAnchor.size[1] / 2;
 		this.scrollProperties.horizontalScrollStep = documentAnchor.size[0] / 2;
+	}
+
+	public areViewTilesReady(): boolean {
+		for (let i = 0; i < this.currentCoordList.length; i++) {
+			const tempTile = TileManager.get(this.currentCoordList[i]);
+
+			if (!tempTile || tempTile.needsFetch()) return false;
+		}
+
+		return true;
+	}
+
+	public getCurrentCoordList(): Array<TileCoordData> {
+		return this.currentCoordList;
 	}
 
 	// virtual function implemented by the children
