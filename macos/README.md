@@ -51,7 +51,6 @@ autogen.input:
 
     # Distro
     --with-distro=CPMacOS-LOKit
-    --enable-headless
     --disable-mergelibs
 
     # Overrides for the debug builds
@@ -60,9 +59,8 @@ autogen.input:
 
     --enable-werror
     --enable-symbols
+    # If you don't want localizations
     --without-lang
-    --without-system-dicts
-    --without-myspell-dicts
 
 ## Configure Collabora Online
 
