@@ -1962,6 +1962,9 @@ class TileManager {
 			this.updateFileBasedView();
 			return;
 		}
+		else if (app.activeDocument.activeView.type === 'ViewLayoutMultiPage')
+			return;
+
 
 		if (!center) {
 			center = map.getCenter();
@@ -2161,42 +2164,18 @@ class TileManager {
 		);
 	}
 
-	/*
-		Checks the visible tiles in current zoom level.
-		Marks the visible ones as current.
-	*/
-	public static updateLayoutView(bounds: any): any {
-		const queue = this.getMissingTiles(
-			bounds,
-			Math.round(app.map.getZoom()),
-			true,
-		);
+	public static checkRequestTiles(coordList: TileCoordData[]): void {
+		const tileCombineQueue = [];
+		for (var i = 0; i < coordList.length; i++) {
+			let tile = TileManager.get(coordList[i]);
 
-		if (queue.length > 0) this.addTiles(queue, true);
-	}
+			if (!tile) tile = TileManager.createTile(coordList[i]);
 
-	public static getVisibleCoordList(
-		rectangle: cool.SimpleRectangle = app.activeDocument.activeView
-			.viewedRectangle,
-	) {
-		const coordList = Array<TileCoordData>();
-		const zoom = app.map.getZoom();
-
-		for (const tile of this.tiles.values()) {
-			const coords = tile.coords;
-			if (
-				coords.z === zoom &&
-				rectangle.intersectsRectangle([
-					coords.x * app.pixelsToTwips,
-					coords.y * app.pixelsToTwips,
-					this.tileSize * app.pixelsToTwips,
-					this.tileSize * app.pixelsToTwips,
-				])
-			)
-				coordList.push(coords);
+			if (tile.needsFetch()) tileCombineQueue.push(coordList[i]);
+			else this.makeTileCurrent(tile);
 		}
 
-		return coordList;
+		TileManager.sendTileCombineRequest(tileCombineQueue);
 	}
 
 	public static updateFileBasedView(
