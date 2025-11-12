@@ -191,15 +191,10 @@ class SlideShowNavigator {
 		);
 
 		this.slideShowHandler.exitSlideShow();
-		setTimeout(
-			function () {
-				this.endPresentation(true);
-				this.currentSlide = undefined;
-				this.prevSlide = undefined;
-				this.removeHandlers();
-			}.bind(this),
-			500,
-		);
+		this.endPresentation(true);
+		this.currentSlide = undefined;
+		this.prevSlide = undefined;
+		this.removeHandlers();
 	}
 
 	switchSlide(nOffset: number, bSkipTransition: boolean) {
