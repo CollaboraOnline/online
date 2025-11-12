@@ -2,9 +2,16 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: core-uk\n"
+"PO-Revision-Date: 2025-11-12 12:52+0000\n"
+"Last-Translator: Максим Горпиніч <gorpinicmaksim0@gmail.com>\n"
+"Language-Team: Ukrainian <https://hosted.weblate.org/projects/"
+"collabora-online/lokit/uk/>\n"
 "Language: uk\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"X-Generator: Weblate 5.15-dev\n"
 
 #. ygDfy
 #: module_graphicfilter.ulf
@@ -13,7 +20,7 @@ msgctxt ""
 "STR_NAME_MODULE_OPTIONAL_GRFFLT_FLASH\n"
 "LngText.text"
 msgid "Macromedia Flash (SWF)"
-msgstr ""
+msgstr "Macromedia Flash (SWF)"
 
 #. qAk8E
 #: module_graphicfilter.ulf
@@ -22,7 +29,7 @@ msgctxt ""
 "STR_DESC_MODULE_OPTIONAL_GRFFLT_FLASH\n"
 "LngText.text"
 msgid "Macromedia Flash (SWF) Export Filter"
-msgstr ""
+msgstr "Фільтр експорту Macromedia Flash (SWF)"
 
 #. vcMGk
 #: folderitem_ooo.ulf
@@ -35,42 +42,45 @@ msgid ""
 "Technology, provided by Collabora Productivity. See https://collaboraoffice."
 "com"
 msgstr ""
+"Collabora Office — це офісний пакет для продуктивності, заснований на "
+"технології LibreOffice, який надає Collabora Productivity. Див. "
+"https://collaboraoffice.com"
 
 #. 4rBwc
 #: include/svx/strings.hrc:1040
 msgctxt "RID_SVXSTR_PASTE_AS_DIALOG_TITLE"
 msgid "Paste As"
-msgstr ""
+msgstr "Вставити як"
 
 #. aNZNw
 #: svx/uiconfig/ui/dropdownfielddialog.ui:31
 msgctxt "dropdownDialog|OK"
 msgid "OK"
-msgstr ""
+msgstr "OK"
 
 #. 54Dmg
 #: svx/uiconfig/ui/dropdownfielddialog.ui:44
 msgctxt "dropdownDialog|CANCEL"
 msgid "Cancel"
-msgstr ""
+msgstr "Скасувати"
 
 #. gPAYw
 #: svx/uiconfig/ui/findreplacedialog.ui:67
 msgctxt "findreplacedialog|find_tab_btn"
 msgid "Find"
-msgstr ""
+msgstr "Знайти"
 
 #. uknDS
 #: svx/uiconfig/ui/findreplacedialog.ui:80
 msgctxt "findreplacedialog|replace_tab_btn"
 msgid "Replace"
-msgstr ""
+msgstr "Замінити"
 
 #. 7MFsT
 #: uui/inc/strings.hrc:84
 msgctxt "STR_READONLY_FONT_TITLE"
 msgid "Font Disallows Editing"
-msgstr ""
+msgstr "Шрифт забороняє редагування"
 
 #. YRahp
 #: uui/inc/strings.hrc:85
@@ -81,6 +91,11 @@ msgid ""
 "Pressing [ No ] will drop these fonts from the document:\n"
 "$(ARG1)"
 msgstr ""
+"Один або декілька шрифтів, вбудованих у документ, не мають дозволу на "
+"редагування.\n"
+"Відкрити документ у режимі лише для читання?\n"
+"Натискання кнопки [ Ні ] призведе до видалення цих шрифтів з документа:\n"
+"$(ARG1)"
 
 #. 4NkMk
 #: readme.xrm
@@ -92,109 +107,113 @@ msgid ""
 "For more information please visit ${PRODUCTNAME} home page at <a "
 "href=\"https://collaboraoffice.com\">https://CollaboraOffice.com/</a>."
 msgstr ""
+"Для отримання додаткової інформації відвідайте головну сторінку "
+"${PRODUCTNAME} за адресою <a href=\"https://collaboraoffice.com\">https://"
+"CollaboraOffice.com/</a>."
 
 #. SbQew
 #: chart2/inc/strings.hrc:51
 msgctxt "STR_PAGE_COLOR_PALETTE"
 msgid "Color Palette"
-msgstr ""
+msgstr "Колірна палітра"
 
 #. YZBr8
 #: chart2/inc/strings.hrc:52
 msgctxt "STR_PAGE_GRADIENT_PRESETS"
 msgid "Gradients"
-msgstr ""
+msgstr "Градієнти"
 
 #. DWGVf
 #: chart2/uiconfig/ui/chartcolorpalettepopup.ui:46
 msgctxt "chartcolorpalettepopup|colorfulwin"
 msgid "Colorful"
-msgstr ""
+msgstr "Барвистий"
 
 #. xmAmH
 #: chart2/uiconfig/ui/chartcolorpalettepopup.ui:98
 msgctxt "chartcolorpalettepopup|monochromaticwin"
 msgid "Monochromatic"
-msgstr ""
+msgstr "Монохроматичний"
 
 #. DrjDt
 #: chart2/uiconfig/ui/chartgradientpalettepopup.ui:46
 msgctxt "chartgradientpalettepopup|lightwin"
 msgid "Light Variations"
-msgstr ""
+msgstr "Варіації світла"
 
 #. Y3PP5
 #: chart2/uiconfig/ui/chartgradientpalettepopup.ui:97
 msgctxt "chartgradientpalettepopup|darkwin"
 msgid "Dark Variations"
-msgstr ""
+msgstr "Темні варіації"
 
 #. WWm9R
 #: chart2/uiconfig/ui/chartthemepopup.ui:51
 msgctxt "chartthemepopup|managechartstyle"
 msgid "_Manage chart styles"
-msgstr ""
+msgstr "_Керування стилями діаграм"
 
 #. BFxBa
 #: chart2/uiconfig/ui/dlg_Theme.ui:16
 msgctxt "dlg_Theme|ChartThemeDialog"
 msgid "Manage Chart Styles"
-msgstr ""
+msgstr "Керування стилями діаграм"
 
 #. kqBFK
 #: chart2/uiconfig/ui/dlg_Theme.ui:46
 msgctxt "dlg_Theme|iconviewlabel|tooltip_text"
 msgid "Selectable chart styles list."
-msgstr ""
+msgstr "Список стилів діаграм, які можна вибрати."
 
 #. WsSmE
 #: chart2/uiconfig/ui/dlg_Theme.ui:51
 msgctxt "dlg_Theme|iconviewlabel"
 msgid "_Chart styles:"
-msgstr ""
+msgstr "Стилі діаграм:"
 
 #. DYH5e
 #: chart2/uiconfig/ui/dlg_Theme.ui:122
 msgctxt "dlg_Theme|chartload"
 msgid "_Load style to chart"
-msgstr ""
+msgstr "_Завантажити стиль до діаграми"
 
 #. YWkrA
 #: chart2/uiconfig/ui/dlg_Theme.ui:134
 msgctxt "dlg_Theme|chartsave"
 msgid "_Save to styles"
-msgstr ""
+msgstr "_Зберегти до стилів"
 
 #. h8L8Y
 #: chart2/uiconfig/ui/dlg_Theme.ui:146
 msgctxt "dlg_Theme|chartdelete"
 msgid "_Delete style"
-msgstr ""
+msgstr "_Видалити стиль"
 
 #. g5qPU
 #: chart2/uiconfig/ui/dlg_Theme.ui:158
 msgctxt "dlg_Theme|chartsavenew"
 msgid "Save to _new style"
-msgstr ""
+msgstr "Зберегти в _новому стилі"
 
 #. GPgLR
 #: chart2/uiconfig/ui/dlg_Theme.ui:183
 msgctxt "dlg_Theme|chartmanage"
 msgid "_Manage chart styles"
-msgstr ""
+msgstr "_Керування стилями діаграм"
 
 #. NMcqp
 #: chart2/uiconfig/ui/sidebarcolors.ui:30
 msgctxt "sidebarcolors|bordertype|tooltip_text"
 msgid "Allow to select a color palette to apply to current chart data series."
 msgstr ""
+"Дозволити вибрати колірну палітру для застосування до поточного ряду даних "
+"діаграми."
 
 #. FXK8B
 #: chart2/uiconfig/ui/sidebarcolors.ui:42
-#, fuzzy
 msgctxt "sidebarcolors|cellbordertype-atkobject"
 msgid "Border Style"
-msgstr "Стиль обрамлення"
+msgstr "Стиль межі"
 
 #. vDwKf
 #: chart2/uiconfig/ui/sidebargradients.ui:30
@@ -202,133 +221,134 @@ msgctxt "sidebargradients|bordertype|tooltip_text"
 msgid ""
 "Allow to select a gradient palette to apply to current chart data series."
 msgstr ""
+"Дозволяє вибрати палітру градієнтів для застосування до поточного ряду даних "
+"діаграми."
 
 #. FXK8B
 #: chart2/uiconfig/ui/sidebargradients.ui:42
-#, fuzzy
 msgctxt "sidebargradients|cellbordertype-atkobject"
 msgid "Border Style"
-msgstr "Стиль обрамлення"
+msgstr "Стиль межі"
 
 #. Aiqg6
 #: chart2/uiconfig/ui/sidebartheme.ui:25
 msgctxt "sidebartheme|themelist|tooltip_text"
 msgid "Allow to select a theme to apply to the current chart."
-msgstr ""
+msgstr "Дозволити вибрати тему для застосування до поточної діаграми."
 
 #. aGvuY
 #: chart2/uiconfig/ui/sidebartheme.ui:37
 msgctxt "sidebartheme|themetype-atkobject"
 msgid "Themes"
-msgstr ""
+msgstr "Теми"
 
 #. YB6Et
 #: chart2/uiconfig/ui/sidebartheme.ui:48
 msgctxt "sidebartheme|savetonew"
 msgid "_Save to new theme"
-msgstr ""
+msgstr "_Зберегти в новій темі"
 
 #. 4C556
 #: chart2/uiconfig/ui/sidebartype.ui:102
 msgctxt "sidebartype|3dschemeft"
 msgid "3D _Scheme:"
-msgstr ""
+msgstr "3D-схема:"
 
 #. x3adg
 #: chart2/uiconfig/ui/tp_ChartColorPalette.ui:68
 msgctxt "tp_ChartColorPalette|colorfulwin"
 msgid "Colorful"
-msgstr ""
+msgstr "Барвистий"
 
 #. 8QjnP
 #: chart2/uiconfig/ui/tp_ChartColorPalette.ui:126
 msgctxt "tp_ChartColorPalette|monochromaticwin"
 msgid "Monochromatic"
-msgstr ""
+msgstr "Монохроматичний"
 
 #. 6JxiC
 #: chart2/uiconfig/ui/tp_ChartGradients.ui:69
 msgctxt "tp_ChartGradients|lightwin"
 msgid "Light Variations"
-msgstr ""
+msgstr "Варіації світла"
 
 #. DmWVa
 #: chart2/uiconfig/ui/tp_ChartGradients.ui:128
 msgctxt "tp_ChartGradients|darkwin"
 msgid "Dark Variations"
-msgstr ""
+msgstr "Темні варіації"
 
 #. FG2rh
 #: chart2/uiconfig/ui/tp_ChartType.ui:114
 msgctxt "tp_ChartType|extended_tip|subtype_iconview"
 msgid "Select a sub type of the basic chart type."
-msgstr ""
+msgstr "Виберіть підтип базового типу діаграми."
 
 #. Wh4j6
 #: chart2/uiconfig/ui/tp_ChartType.ui:167
 msgctxt "tp_ChartType|3dschemeft"
 msgid "3D _Scheme:"
-msgstr ""
+msgstr "3D-схема:"
 
 #. EPGtZ
 #: cui/uiconfig/ui/hyperlinkinternetpage.ui:64
 msgctxt "hyperlinkinternetpage|target_label"
 msgid "Link:"
-msgstr ""
+msgstr "Посилання:"
 
 #. gfELk
 #: cui/uiconfig/ui/pageformatpage.ui:260
 msgctxt "pageformatpage|checkResizeAllPages"
 msgid "Resize all pages"
-msgstr ""
+msgstr "Змінити розмір усіх сторінок"
 
 #. NBdEp
 #: cui/uiconfig/ui/pickbulletpage.ui:45
 msgctxt "pickbulletpage|extended_tip|pick_bullet_iconview"
 msgid "Click the bullet style that you want to use."
-msgstr ""
+msgstr "Клацніть потрібний стиль маркованого списку."
 
 #. rkoDB
 #: cui/uiconfig/ui/pickgraphicpage.ui:45
 msgctxt "pickgraphicpage|extended_tip|pick_graphic_iconview"
 msgid "Click the graphics that you want to use as bullets."
-msgstr ""
+msgstr "Клацніть зображення, які потрібно використовувати як марковані списки."
 
 #. WGzy5
 #: cui/uiconfig/ui/picknumberingpage.ui:44
 msgctxt "picknumberingpage|extended_tip|pick_numbering_iconview"
 msgid "Click the numbering scheme that you want to use."
-msgstr ""
+msgstr "Клацніть схему нумерації, яку потрібно використовувати."
 
 #. avppC
 #: cui/uiconfig/ui/pickoutlinepage.ui:44
 msgctxt "pickoutlinepage|extended_tip|pick_outline_iconview"
 msgid "Click the outline style that you want to use."
-msgstr ""
+msgstr "Клацніть стиль контуру, який потрібно використовувати."
 
 #. qpArp
 #: cui/uiconfig/ui/toolbarmodedialog.ui:124
 msgctxt "ToolbarmodeDialog|radiobutton1"
 msgid "Compact"
-msgstr ""
+msgstr "Компактний"
 
 #. ZbYiG
 #: include/svtools/strings.hrc:71
 msgctxt "STR_FORMAT_ID_MARKDOWN"
 msgid "Markdown"
-msgstr ""
+msgstr "Уцінка"
 
 #. HASc5
 #: include/sfx2/strings.hrc:227
 msgctxt "STR_SID_QUICKFIND"
 msgid "Quick Find"
-msgstr ""
+msgstr "Швидкий пошук"
 
 #. 2VmCo
 #: sfx2/uiconfig/ui/licensedialog.ui:41
 msgctxt "licensedialog|eula"
 msgid "_EULA"
-msgstr ""
+msgstr "_EULA"
 
 #. jjkw7
 #: sfx2/uiconfig/ui/licensedialog.ui:85
@@ -338,30 +358,33 @@ msgid ""
 "End User License and Subscription Agreement; choose EULA to see exact "
 "details in English."
 msgstr ""
+"Бінарний пакет %PRODUCTNAME надається відповідно до умов Ліцензійної угоди "
+"кінцевого користувача та Угоди про підписку; виберіть EULA, щоб переглянути "
+"точні деталі англійською мовою."
 
 #. YHTHB
 #: sfx2/uiconfig/ui/templatepanel.ui:137
 msgctxt "templatepanel|accessible_name|watercan"
 msgid "Fill Format Mode"
-msgstr ""
+msgstr "Режим форматування заповнення"
 
 #. qvBEu
 #: sfx2/uiconfig/ui/templatepanel.ui:156
 msgctxt "templatepanel|accessible_name|new"
 msgid "New Style from Selection"
-msgstr ""
+msgstr "Новий стиль з добірки"
 
 #. 5ZAqh
 #: sfx2/uiconfig/ui/templatepanel.ui:174
 msgctxt "templatepanel|accessible_name|newmenu"
 msgid "Styles actions"
-msgstr ""
+msgstr "Дії зі стилями"
 
 #. 7NfdA
 #: sfx2/uiconfig/ui/templatepanel.ui:192
 msgctxt "templatepanel|accessible_name|update"
 msgid "Update Style"
-msgstr ""
+msgstr "Оновити стиль"
 
 #. BGAhD
 #: sfx2/uiconfig/ui/templatepanel.ui:242
@@ -373,56 +396,56 @@ msgstr "Підсвічування"
 #: sw/inc/strings.hrc:232
 msgctxt "STR_COLUMN_ICONVIEW_ITEM0"
 msgid "1 column"
-msgstr ""
+msgstr "1 колона"
 
 #. VAfCS
 #: sw/inc/strings.hrc:233
 msgctxt "STR_COLUMN_ICONVIEW_ITEM1"
 msgid "2 columns with equal size"
-msgstr ""
+msgstr "2 стовпці однакового розміру"
 
 #. g8pFG
 #: sw/inc/strings.hrc:234
 msgctxt "STR_COLUMN_ICONVIEW_ITEM2"
 msgid "3 columns with equal size"
-msgstr ""
+msgstr "3 стовпці однакового розміру"
 
 #. QJxAd
 #: sw/inc/strings.hrc:235
 msgctxt "STR_COLUMN_ICONVIEW_ITEM3"
 msgid "2 columns with different size (left > right)"
-msgstr ""
+msgstr "2 стовпці різного розміру (лівий > правий)"
 
 #. MHk4E
 #: sw/inc/strings.hrc:236
 msgctxt "STR_COLUMN_ICONVIEW_ITEM4"
 msgid "2 columns with different size (left < right)"
-msgstr ""
+msgstr "2 стовпці різного розміру (лівий < правий)"
 
 #. xPgHS
 #: sw/inc/strings.hrc:498
 msgctxt "STR_REINSTATE_REDLINE"
 msgid "Reinstate change: $1"
-msgstr ""
+msgstr "Відновити решту: $1"
 
 #. afEVQ
 #: sw/inc/strings.hrc:1536
 msgctxt "STR_COMPAT_OPT_UNDERLINETRAILINGSPACE"
 msgid "Underline Word-compatible trailing blanks"
-msgstr ""
+msgstr "Підкреслення пробілів, сумісних з Word"
 
 #. B3rfb
 #: sw/uiconfig/swriter/ui/columnpage.ui:122
 msgctxt "columnpage|columnft"
 msgid "Column"
-msgstr ""
+msgstr "Колонка"
 
 #. Lurdj
 #: sw/uiconfig/swriter/ui/columnpage.ui:868
 msgctxt "columnpage|extended_tip|column-iconview"
 msgid ""
 "Enter the number of columns that you want in the page, frame, or section."
-msgstr ""
+msgstr "Введіть потрібну кількість стовпців на сторінці, у фреймі або розділі."
 
 #. Ci9GE
 #: sw/uiconfig/swriter/ui/spellmenu.ui:34
@@ -434,7 +457,7 @@ msgstr "_Додати до словника (standard.dic)"
 #: sw/uiconfig/swriter/ui/wordcount-mobile.ui:643
 msgctxt "wordcount-mobile|comments"
 msgid "Comments"
-msgstr ""
+msgstr "Коментарі"
 
 #. SsL8u
 #: formula/inc/core_resource.hrc:2628
@@ -524,25 +547,25 @@ msgstr "WRAPROWS"
 #: formula/uiconfig/ui/functionpage.ui:80
 msgctxt "functionpage|label_category"
 msgid "_Category:"
-msgstr ""
+msgstr "_Категорія:"
 
 #. BNnFg
 #: formula/uiconfig/ui/functionpage.ui:115
 msgctxt "functionpage|label_function"
 msgid "_Function:"
-msgstr ""
+msgstr "_Функція:"
 
 #. zRASZ
 #: formula/uiconfig/ui/structpage.ui:28
 msgctxt "structpage|label_struct"
 msgid "Content:"
-msgstr ""
+msgstr "Зміст:"
 
 #. DPToC
 #: sd/uiconfig/simpress/ui/layoutpanel.ui:41
 msgctxt "layoutpanel|extended_tip|layoutpanel_icons"
 msgid "List of available layout templates."
-msgstr ""
+msgstr "Список доступних шаблонів макетів."
 
 #. Y3kBV
 #: filter/uiconfig/ui/impswfdialog.ui:14
@@ -616,7 +639,7 @@ msgid ""
 "two file formats: PDF and ODF as an attachment. "
 msgstr ""
 "Цей параметр дозволяє Вам експортувати документ як .pdf файл, що містить два "
-"файлових формати: PDF та ODF."
+"файлових формати: PDF та ODF. "
 
 #. NCgBM
 #: filter/uiconfig/ui/pdfgeneralpage.ui:583
@@ -625,8 +648,8 @@ msgid ""
 "Select the PDF version. PDF/A version variants creates an ISO 19005 "
 "compliant PDF file, ideal for long-term document preservation."
 msgstr ""
-"Створює сумісний із ISO 19005-2 файл PDF, ідеальний для довгострокового "
-"збереження документа"
+"Виберіть версію PDF. Варіанти версій PDF/A створюють PDF-файл, сумісний зі "
+"стандартом ISO 19005, ідеальний для довготривалого зберігання документів."
 
 #. Ac3Ga
 #: filter/uiconfig/ui/pdfgeneralpage.ui:587
@@ -666,7 +689,7 @@ msgstr ""
 #: filter/uiconfig/ui/pdfgeneralpage.ui:620
 msgctxt "pdfgeneralpage|pdf_version"
 msgid "PDF_ Version:"
-msgstr "Версія PDF_/A"
+msgstr "Версія PDF_/A:"
 
 #. tCrYc
 #: filter/uiconfig/ui/pdfgeneralpage.ui:677
@@ -694,7 +717,7 @@ msgctxt ""
 "UIName\n"
 "value.text"
 msgid "Markdown Document"
-msgstr ""
+msgstr "Документ Markdown"
 
 #. 9Q5Zj
 #: draw_flash_Export.xcu
@@ -704,7 +727,7 @@ msgctxt ""
 "UIName\n"
 "value.text"
 msgid "Macromedia Flash (SWF)"
-msgstr ""
+msgstr "Macromedia Flash (SWF)"
 
 #. MsYCr
 #: impress_flash_Export.xcu
@@ -714,7 +737,7 @@ msgctxt ""
 "UIName\n"
 "value.text"
 msgid "Macromedia Flash (SWF)"
-msgstr ""
+msgstr "Macromedia Flash (SWF)"
 
 #. FoizC
 #: CalcCommands.xcu
@@ -724,7 +747,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Current Sheet View"
-msgstr ""
+msgstr "Поточний вигляд аркуша"
 
 #. 3Ep4Y
 #: CalcCommands.xcu
@@ -734,7 +757,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Insert Function"
-msgstr ""
+msgstr "Вставити функцію"
 
 #. rxGTc
 #: CalcCommands.xcu
@@ -744,7 +767,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Print Grid Lines"
-msgstr ""
+msgstr "Друк ліній сітки"
 
 #. a35bF
 #: CalcCommands.xcu
@@ -754,7 +777,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "New Sheet View"
-msgstr ""
+msgstr "Новий вигляд аркуша"
 
 #. AKfar
 #: CalcCommands.xcu
@@ -764,7 +787,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Remove Sheet View"
-msgstr ""
+msgstr "Вилучити подання аркуша"
 
 #. M52nh
 #: CalcCommands.xcu
@@ -774,7 +797,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Switch To Next Sheet View"
-msgstr ""
+msgstr "Перейти до наступного подання аркуша"
 
 #. qfgad
 #: CalcCommands.xcu
@@ -784,7 +807,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Switch To Previous Sheet View"
-msgstr ""
+msgstr "Перейти до попереднього подання аркуша"
 
 #. FJEd2
 #: CalcCommands.xcu
@@ -794,7 +817,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Select Sheet View"
-msgstr ""
+msgstr "Вибрати подання аркуша"
 
 #. vCsC3
 #: CalcCommands.xcu
@@ -804,7 +827,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Exit Sheet View"
-msgstr ""
+msgstr "Вийти з режиму перегляду аркуша"
 
 #. uuvrm
 #: ChartCommands.xcu
@@ -814,7 +837,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Manage Themes..."
-msgstr ""
+msgstr "Керування темами..."
 
 #. 5LESd
 #: ChartCommands.xcu
@@ -854,7 +877,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "New Canvas Slide"
-msgstr ""
+msgstr "Новий слайд Canvas"
 
 #. w3Yib
 #: DrawImpressCommands.xcu
@@ -874,7 +897,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Re-order pages"
-msgstr ""
+msgstr "Зміна порядку сторінок"
 
 #. ca6bM
 #: GenericCommands.xcu
@@ -884,7 +907,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Slide Transitions"
-msgstr ""
+msgstr "Переходи між слайдами"
 
 #. 5pSJ6
 #: GenericCommands.xcu
@@ -894,7 +917,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Master Pages"
-msgstr ""
+msgstr "Головні сторінки"
 
 #. DCEaK
 #: GenericCommands.xcu
@@ -904,7 +927,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "~Hyperlink"
-msgstr ""
+msgstr "~Гіперпосилання"
 
 #. aFFu9
 #: GenericCommands.xcu
@@ -914,7 +937,7 @@ msgctxt ""
 "PopupLabel\n"
 "value.text"
 msgid "Insert Hyperlink..."
-msgstr ""
+msgstr "Вставити гіперпосилання..."
 
 #. czVMP
 #: GenericCommands.xcu
@@ -924,7 +947,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Nav~igator select comment."
-msgstr ""
+msgstr "Навігатор вибирає коментар."
 
 #. 77Q3c
 #: GenericCommands.xcu
@@ -934,7 +957,7 @@ msgctxt ""
 "TooltipLabel\n"
 "value.text"
 msgid "Select Comment In The Navigator Window/Sidebar"
-msgstr ""
+msgstr "Виберіть коментар у вікні навігатора/бічній панелі"
 
 #. 83Euq
 #: GenericCommands.xcu
@@ -944,7 +967,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Change record mode"
-msgstr ""
+msgstr "Змінити режим запису"
 
 #. nG2DH
 #: GenericCommands.xcu
@@ -954,7 +977,7 @@ msgctxt ""
 "ContextLabel\n"
 "value.text"
 msgid "Record mode"
-msgstr ""
+msgstr "Режим запису"
 
 #. fDK7V
 #: GenericCommands.xcu
@@ -975,7 +998,7 @@ msgctxt ""
 "UIName\n"
 "value.text"
 msgid "Slide Sorter/Pane (Canvas)"
-msgstr ""
+msgstr "Сортувальник слайдів/панель (полотно)"
 
 #. BQB9h
 #: ImpressWindowState.xcu
@@ -986,7 +1009,7 @@ msgctxt ""
 "UIName\n"
 "value.text"
 msgid "Master Slide Sorter/Pane (Canvas)"
-msgstr ""
+msgstr "Сортувальник/область головного слайда (полотно)"
 
 #. SYFXq
 #: Sidebar.xcu
@@ -1016,7 +1039,7 @@ msgctxt ""
 "Title\n"
 "value.text"
 msgid "Theme"
-msgstr ""
+msgstr "Тема"
 
 #. dgWCC
 #: Sidebar.xcu
@@ -1026,7 +1049,7 @@ msgctxt ""
 "Title\n"
 "value.text"
 msgid "Gradients"
-msgstr ""
+msgstr "Градієнти"
 
 #. ezFez
 #: WriterCommands.xcu
@@ -1036,7 +1059,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Reinstate and Move to Next"
-msgstr ""
+msgstr "Відновити та перейти до наступного"
 
 #. NmvTm
 #: WriterCommands.xcu
@@ -1046,7 +1069,7 @@ msgctxt ""
 "TooltipLabel\n"
 "value.text"
 msgid "Reinstate Track Change and select the next one"
-msgstr ""
+msgstr "Відновіть зміну відстеження та виберіть наступний"
 
 #. KVYrC
 #: WriterCommands.xcu
@@ -1056,7 +1079,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Reinstate All"
-msgstr ""
+msgstr "Відновити все"
 
 #. QkP7E
 #: WriterCommands.xcu
@@ -1066,7 +1089,7 @@ msgctxt ""
 "TooltipLabel\n"
 "value.text"
 msgid "Reinstate All Tracked Changes"
-msgstr ""
+msgstr "Відновити всі відстежені зміни"
 
 #. SRvKK
 #: WriterCommands.xcu
@@ -1076,7 +1099,7 @@ msgctxt ""
 "PopupLabel\n"
 "value.text"
 msgid "Reinstate All Changes"
-msgstr ""
+msgstr "Відновити всі зміни"
 
 #. 6w9UB
 #: WriterCommands.xcu
@@ -1086,7 +1109,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Reinstate"
-msgstr ""
+msgstr "Відновити"
 
 #. RgBxU
 #: WriterCommands.xcu
@@ -1096,7 +1119,7 @@ msgctxt ""
 "TooltipLabel\n"
 "value.text"
 msgid "Reinstate Track Change"
-msgstr ""
+msgstr "Відновити зміни відстеження"
 
 #. rTFtt
 #: WriterCommands.xcu
@@ -1106,7 +1129,7 @@ msgctxt ""
 "PopupLabel\n"
 "value.text"
 msgid "Reinstate Change"
-msgstr ""
+msgstr "Відновити зміни"
 
 #. duoP7
 #: WriterCommands.xcu
@@ -1116,7 +1139,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Record changes in this view"
-msgstr ""
+msgstr "Запис змін у цьому поданні"
 
 #. TADBE
 #: WriterCommands.xcu
@@ -1126,7 +1149,7 @@ msgctxt ""
 "ContextLabel\n"
 "value.text"
 msgid "~Changes in this view"
-msgstr ""
+msgstr "~Зміни в цьому поданні"
 
 #. nn4AU
 #: WriterCommands.xcu
@@ -1136,7 +1159,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Record changes in all views"
-msgstr ""
+msgstr "Запис змін у всіх переглядах"
 
 #. DJphX
 #: WriterCommands.xcu
@@ -1146,19 +1169,19 @@ msgctxt ""
 "ContextLabel\n"
 "value.text"
 msgid "~Changes in all views"
-msgstr ""
+msgstr "~Зміни у всіх переглядах"
 
 #. cG7BY
 #: sc/inc/globstr.hrc:592
 msgctxt "STR_SHEET_VIEW_DEFAULT_VIEW_NAME"
 msgid "Default View"
-msgstr ""
+msgstr "Стандартний вигляд"
 
 #. aYwkp
 #: sc/inc/globstr.hrc:593
 msgctxt "STR_SHEET_VIEW_TEMPORARY_NAME_TEMPLATE"
 msgid "Temporary View %1"
-msgstr ""
+msgstr "Тимчасовий перегляд %1"
 
 #. ADmez
 #: sc/inc/scfuncs.hrc:4257
@@ -1261,7 +1284,7 @@ msgstr ""
 #: sc/inc/scfuncs.hrc:4282
 msgctxt "SC_OPCODE_DROP"
 msgid "Columns"
-msgstr ""
+msgstr "Колонки"
 
 #. cAxPB
 #: sc/inc/scfuncs.hrc:4283
@@ -1311,7 +1334,7 @@ msgstr ""
 #: sc/inc/scfuncs.hrc:4294
 msgctxt "SC_OPCODE_EXPAND"
 msgid "Columns"
-msgstr ""
+msgstr "Колонки"
 
 #. EVAXE
 #: sc/inc/scfuncs.hrc:4295
@@ -1339,7 +1362,7 @@ msgstr "Значення кількості заповнення. Типовим
 #: sc/inc/scfuncs.hrc:4303
 msgctxt "SC_OPCODE_HSTACK"
 msgid "Appends arrays horizontally to create a larger array."
-msgstr ""
+msgstr "Додає масиви по горизонталі для створення більшого масиву."
 
 #. LnAFg
 #: sc/inc/scfuncs.hrc:4304 sc/inc/scfuncs.hrc:4306
@@ -1367,7 +1390,7 @@ msgstr ""
 #: sc/inc/scfuncs.hrc:4313
 msgctxt "SC_OPCODE_VSTACK"
 msgid "Appends arrays vertically to create a larger array."
-msgstr ""
+msgstr "Додає масиви вертикально для створення більшого масиву."
 
 #. rhVRC
 #: sc/inc/scfuncs.hrc:4314 sc/inc/scfuncs.hrc:4316
@@ -1432,7 +1455,7 @@ msgstr ""
 #: sc/inc/scfuncs.hrc:4328
 msgctxt "SC_OPCODE_TAKE"
 msgid "Columns"
-msgstr ""
+msgstr "Колонки"
 
 #. ZexcG
 #: sc/inc/scfuncs.hrc:4329
@@ -1709,7 +1732,7 @@ msgstr "Значення кількості заповнення. Типовим
 #: sc/inc/scfuncs.hrc:4389
 msgctxt "SC_OPCODE_TOCOL"
 msgid "Transforms an array into a single column."
-msgstr ""
+msgstr "Перетворює масив в один стовпець."
 
 #. UAzNC
 #: sc/inc/scfuncs.hrc:4390
@@ -1910,6 +1933,10 @@ msgid ""
 "individual cells first select all cells and toggle off the \"Protected\" "
 "option in the Format Cells dialog."
 msgstr ""
+"Охорона клітин діє лише після того, як поточний лист буде захищений. По "
+"замовчуванням всі клітини в листові захищені - для захисту окремих клітин "
+"спочатку виберіть усі клітини та відключіть опцію \"Захищений\" у діалозі "
+"Format Cells."
 
 #. FVsyY
 #: sc/uiconfig/scalc/ui/conditionaleasydialog.ui:8
@@ -1921,31 +1948,31 @@ msgstr "Виділити комірки..."
 #: sc/uiconfig/scalc/ui/selectsheetviewdialog.ui:18
 msgctxt "selectsheetviewdialog|SelectSheetView"
 msgid "Select Sheet View"
-msgstr ""
+msgstr "Вибрати подання аркуша"
 
 #. GTQJA
 #: sc/uiconfig/scalc/ui/selectsheetviewdialog.ui:44
 msgctxt "selectsheetviewdialog|extended_tip|ok"
 msgid "Saves all changes and closes dialog."
-msgstr ""
+msgstr "Зберігає всі зміни та закриває діалогове вікно."
 
 #. kGFYu
 #: sc/uiconfig/scalc/ui/selectsheetviewdialog.ui:63
 msgctxt "selectsheetviewdialog|extended_tip|cancel"
 msgid "Closes dialog and discards all changes."
-msgstr ""
+msgstr "Закриває діалогове вікно та скасовує всі зміни."
 
 #. sQPFE
 #: sc/uiconfig/scalc/ui/selectsheetviewdialog.ui:134
 msgctxt "selectsheetviewdialog|extended_tip|entry-list"
 msgid "Available sheet views."
-msgstr ""
+msgstr "Доступні подання аркушів."
 
 #. csyNB
 #: sc/uiconfig/scalc/ui/sheetviewbox.ui:17
 msgctxt "sheetviewbox|sheetview_combobox|accessible_name"
 msgid "Sheet View"
-msgstr ""
+msgstr "Перегляд аркуша"
 
 #. FXK8B
 #: sc/uiconfig/scalc/ui/sidebarcellappearance.ui:87
