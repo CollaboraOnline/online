@@ -1143,15 +1143,13 @@ class PresenterConsole {
 
 		window.removeEventListener('beforeunload', this._boundOnWindowClose);
 
-		this._presenter._stopFullScreen();
+		this._presenter.endPresentation(true);
 	}
 
 	_onConsoleClose() {
-		if (
-			this._presenter._slideShowWindowProxy &&
-			!this._presenter._slideShowWindowProxy.closed
-		)
-			this._presenter.slideshowWindowCleanUp();
+		if (this._presenter._slideShowWindowProxy) {
+			this._presenter.endPresentation(true);
+		}
 
 		this._proxyPresenter.removeEventListener('resize', this._boundOnResize);
 		this._proxyPresenter.removeEventListener('keydown', this._boundOnKeyDown);
