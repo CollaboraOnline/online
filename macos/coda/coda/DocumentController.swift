@@ -175,6 +175,9 @@ final class DocumentController: NSDocumentController {
                 throw NSError(domain: "NewDoc", code: 2, userInfo: [NSLocalizedDescriptionKey: "Unexpected document class"])
             }
 
+            // mark it as new document (for better UI handling)
+            doc.isNewDocument = true
+
             try doc.read(from: data, ofType: typeName) // <- seeds tempDirectoryURL/tempFileURL exactly like a normal open
 
             // Show it, using the usual controllers

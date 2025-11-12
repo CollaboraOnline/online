@@ -43,6 +43,9 @@ class Document: NSDocument {
     /// This is the welcome slideshow (that needs a special parameter when opening)
     var isWelcome = false
 
+    /// This is a newly created document (from a template).
+    var isNewDocument = false
+
     /** Parameters for a deferred Save / Save As… request. */
     private struct PendingSave {
         let url: URL
@@ -385,6 +388,10 @@ class Document: NSDocument {
             URLQueryItem(name: "userinterfacemode", value: "notebookbar"),
             // TODO: add "dir" if needed
         ]
+
+        if isNewDocument {
+            components.queryItems?.append(URLQueryItem(name: "isnewdocument", value: "true"))
+        }
 
         if isWelcome {
             components.queryItems?.append(URLQueryItem(name: "welcome", value: "true"))
