@@ -2,8 +2,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: core-ca\n"
-"PO-Revision-Date: 2025-11-11 11:54+0000\n"
-"Last-Translator: Héctor Gonzàlvez Escolano <hector.gie@gcloud.ua.es>\n"
+"PO-Revision-Date: 2025-11-12 17:32+0000\n"
+"Last-Translator: Ecron <ecron_89@hotmail.com>\n"
 "Language-Team: Catalan <https://hosted.weblate.org/projects/collabora-online/"
 "lokit/ca/>\n"
 "Language: ca\n"
@@ -28,7 +28,7 @@ msgctxt ""
 "STR_DESC_MODULE_OPTIONAL_GRFFLT_FLASH\n"
 "LngText.text"
 msgid "Macromedia Flash (SWF) Export Filter"
-msgstr "Filtres d'exportació Macromedia Flash (SWF)"
+msgstr "Filtre d'exportació del Macromedia Flash (SWF)"
 
 #. vcMGk
 #: folderitem_ooo.ulf
@@ -66,7 +66,7 @@ msgstr "Cancel·la"
 #: svx/uiconfig/ui/findreplacedialog.ui:67
 msgctxt "findreplacedialog|find_tab_btn"
 msgid "Find"
-msgstr "Cerca"
+msgstr "Troba"
 
 #. uknDS
 #: svx/uiconfig/ui/findreplacedialog.ui:80
@@ -78,7 +78,7 @@ msgstr "Substitueix"
 #: uui/inc/strings.hrc:84
 msgctxt "STR_READONLY_FONT_TITLE"
 msgid "Font Disallows Editing"
-msgstr "El tipus de lletra impedeix editar"
+msgstr "La família tipogràfica impedeix editar"
 
 #. YRahp
 #: uui/inc/strings.hrc:85
@@ -89,9 +89,9 @@ msgid ""
 "Pressing [ No ] will drop these fonts from the document:\n"
 "$(ARG1)"
 msgstr ""
-"Un o més tipus de lletra del document no permeten editar.\n"
-"Vols obrir el document en mode lectura?\n"
-"Si fas clic en [ No ] aquests tipus de lletra s'eliminaran del document:\n"
+"Una o més lletres tipogràfiques del document no permeten editar.\n"
+"Voleu obrir el document en mode lectura?\n"
+"En fer clic en [ No ], aquestes famílies s'eliminaran del document:\n"
 "$(ARG1)"
 
 #. 4NkMk
@@ -104,8 +104,8 @@ msgid ""
 "For more information please visit ${PRODUCTNAME} home page at <a "
 "href=\"https://collaboraoffice.com\">https://CollaboraOffice.com/</a>."
 msgstr ""
-"Per a més informació, per favor, visita la pàgina de ${PRODUCTNAME} en <a "
-"href=\"https://collaboraoffice.com\">https://CollaboraOffice.com/</a>."
+"Per a més informació, visiteu la pàgina de ${PRODUCTNAME} en <a href="
+"\"https://collaboraoffice.com\">https://CollaboraOffice.com/</a>."
 
 #. SbQew
 #: chart2/inc/strings.hrc:51
@@ -177,25 +177,25 @@ msgstr "_Carrega l'estil per al gràfic"
 #: chart2/uiconfig/ui/dlg_Theme.ui:134
 msgctxt "dlg_Theme|chartsave"
 msgid "_Save to styles"
-msgstr "_Desa en estils"
+msgstr "_Desa als estils"
 
 #. h8L8Y
 #: chart2/uiconfig/ui/dlg_Theme.ui:146
 msgctxt "dlg_Theme|chartdelete"
 msgid "_Delete style"
-msgstr "_Esborra l'estil"
+msgstr "_Suprimeix l'estil"
 
 #. g5qPU
 #: chart2/uiconfig/ui/dlg_Theme.ui:158
 msgctxt "dlg_Theme|chartsavenew"
 msgid "Save to _new style"
-msgstr "Desa en _nou estil"
+msgstr "Desa a un estil _nou"
 
 #. GPgLR
 #: chart2/uiconfig/ui/dlg_Theme.ui:183
 msgctxt "dlg_Theme|chartmanage"
 msgid "_Manage chart styles"
-msgstr "_Gestiona els estils de gràfics"
+msgstr "_Gestiona els estils dels gràfics"
 
 #. NMcqp
 #: chart2/uiconfig/ui/sidebarcolors.ui:30
@@ -207,10 +207,9 @@ msgstr ""
 
 #. FXK8B
 #: chart2/uiconfig/ui/sidebarcolors.ui:42
-#, fuzzy
 msgctxt "sidebarcolors|cellbordertype-atkobject"
 msgid "Border Style"
-msgstr "Estil de la vora"
+msgstr "Estil de les vores"
 
 #. vDwKf
 #: chart2/uiconfig/ui/sidebargradients.ui:30
@@ -218,121 +217,122 @@ msgctxt "sidebargradients|bordertype|tooltip_text"
 msgid ""
 "Allow to select a gradient palette to apply to current chart data series."
 msgstr ""
+"Permet seleccionar una paleta de gradients per a aplicar a la sèrie de dades "
+"del gràfic actual."
 
 #. FXK8B
 #: chart2/uiconfig/ui/sidebargradients.ui:42
-#, fuzzy
 msgctxt "sidebargradients|cellbordertype-atkobject"
 msgid "Border Style"
-msgstr "Estil de la vora"
+msgstr "Estil de les vores"
 
 #. Aiqg6
 #: chart2/uiconfig/ui/sidebartheme.ui:25
 msgctxt "sidebartheme|themelist|tooltip_text"
 msgid "Allow to select a theme to apply to the current chart."
-msgstr ""
+msgstr "Permet seleccionar un tema per a aplicar al gràfic actual."
 
 #. aGvuY
 #: chart2/uiconfig/ui/sidebartheme.ui:37
 msgctxt "sidebartheme|themetype-atkobject"
 msgid "Themes"
-msgstr ""
+msgstr "Temes"
 
 #. YB6Et
 #: chart2/uiconfig/ui/sidebartheme.ui:48
 msgctxt "sidebartheme|savetonew"
 msgid "_Save to new theme"
-msgstr ""
+msgstr "_Desa a un tema nou"
 
 #. 4C556
 #: chart2/uiconfig/ui/sidebartype.ui:102
 msgctxt "sidebartype|3dschemeft"
 msgid "3D _Scheme:"
-msgstr ""
+msgstr "E_squema 3D:"
 
 #. x3adg
 #: chart2/uiconfig/ui/tp_ChartColorPalette.ui:68
 msgctxt "tp_ChartColorPalette|colorfulwin"
 msgid "Colorful"
-msgstr ""
+msgstr "Colors vius"
 
 #. 8QjnP
 #: chart2/uiconfig/ui/tp_ChartColorPalette.ui:126
 msgctxt "tp_ChartColorPalette|monochromaticwin"
 msgid "Monochromatic"
-msgstr ""
+msgstr "Monocromàtica"
 
 #. 6JxiC
 #: chart2/uiconfig/ui/tp_ChartGradients.ui:69
 msgctxt "tp_ChartGradients|lightwin"
 msgid "Light Variations"
-msgstr ""
+msgstr "Tons clars"
 
 #. DmWVa
 #: chart2/uiconfig/ui/tp_ChartGradients.ui:128
 msgctxt "tp_ChartGradients|darkwin"
 msgid "Dark Variations"
-msgstr ""
+msgstr "Tons foscos"
 
 #. FG2rh
 #: chart2/uiconfig/ui/tp_ChartType.ui:114
 msgctxt "tp_ChartType|extended_tip|subtype_iconview"
 msgid "Select a sub type of the basic chart type."
-msgstr ""
+msgstr "Seleccioneu un subtipus per al tipus del gràfic bàsic."
 
 #. Wh4j6
 #: chart2/uiconfig/ui/tp_ChartType.ui:167
 msgctxt "tp_ChartType|3dschemeft"
 msgid "3D _Scheme:"
-msgstr ""
+msgstr "E_squema 3D:"
 
 #. EPGtZ
 #: cui/uiconfig/ui/hyperlinkinternetpage.ui:64
 msgctxt "hyperlinkinternetpage|target_label"
 msgid "Link:"
-msgstr ""
+msgstr "Enllaç:"
 
 #. gfELk
 #: cui/uiconfig/ui/pageformatpage.ui:260
 msgctxt "pageformatpage|checkResizeAllPages"
 msgid "Resize all pages"
-msgstr ""
+msgstr "Redimensiona totes les pàgines"
 
 #. NBdEp
 #: cui/uiconfig/ui/pickbulletpage.ui:45
 msgctxt "pickbulletpage|extended_tip|pick_bullet_iconview"
 msgid "Click the bullet style that you want to use."
-msgstr ""
+msgstr "Feu clic a l'estil de símbol de llista que voleu utilitzar."
 
 #. rkoDB
 #: cui/uiconfig/ui/pickgraphicpage.ui:45
 msgctxt "pickgraphicpage|extended_tip|pick_graphic_iconview"
 msgid "Click the graphics that you want to use as bullets."
-msgstr ""
+msgstr "Feu clic als gràfics que voleu utilitzar com a símbol de llista."
 
 #. WGzy5
 #: cui/uiconfig/ui/picknumberingpage.ui:44
 msgctxt "picknumberingpage|extended_tip|pick_numbering_iconview"
 msgid "Click the numbering scheme that you want to use."
-msgstr ""
+msgstr "Feu clic a l'esquema numèric que voleu utilitzar."
 
 #. avppC
 #: cui/uiconfig/ui/pickoutlinepage.ui:44
 msgctxt "pickoutlinepage|extended_tip|pick_outline_iconview"
 msgid "Click the outline style that you want to use."
-msgstr ""
+msgstr "Feu clic a l'estil d'esquema que voleu utilitzar."
 
 #. qpArp
 #: cui/uiconfig/ui/toolbarmodedialog.ui:124
 msgctxt "ToolbarmodeDialog|radiobutton1"
 msgid "Compact"
-msgstr ""
+msgstr "Compacte"
 
 #. ZbYiG
 #: include/svtools/strings.hrc:71
 msgctxt "STR_FORMAT_ID_MARKDOWN"
 msgid "Markdown"
-msgstr ""
+msgstr "Markdown"
 
 #. HASc5
 #: include/sfx2/strings.hrc:227
@@ -344,7 +344,7 @@ msgstr "Cerca ràpida"
 #: sfx2/uiconfig/ui/licensedialog.ui:41
 msgctxt "licensedialog|eula"
 msgid "_EULA"
-msgstr ""
+msgstr "_ALUF"
 
 #. jjkw7
 #: sfx2/uiconfig/ui/licensedialog.ui:85
@@ -354,91 +354,94 @@ msgid ""
 "End User License and Subscription Agreement; choose EULA to see exact "
 "details in English."
 msgstr ""
+"El paquet binari %PRODUCTNAME es posa a disposició sota els termes de "
+"l'Acord de Llicència i subscripció d'Usuari Final (ALUF). Trieu ALUF per a "
+"veure els detalls concrets en anglès."
 
 #. YHTHB
 #: sfx2/uiconfig/ui/templatepanel.ui:137
 msgctxt "templatepanel|accessible_name|watercan"
 msgid "Fill Format Mode"
-msgstr ""
+msgstr "Mode d'emplenament de format"
 
 #. qvBEu
 #: sfx2/uiconfig/ui/templatepanel.ui:156
 msgctxt "templatepanel|accessible_name|new"
 msgid "New Style from Selection"
-msgstr ""
+msgstr "Estil nou a partir de la selecció"
 
 #. 5ZAqh
 #: sfx2/uiconfig/ui/templatepanel.ui:174
 msgctxt "templatepanel|accessible_name|newmenu"
 msgid "Styles actions"
-msgstr ""
+msgstr "Accions dels estils"
 
 #. 7NfdA
 #: sfx2/uiconfig/ui/templatepanel.ui:192
 msgctxt "templatepanel|accessible_name|update"
 msgid "Update Style"
-msgstr ""
+msgstr "Actualitza l'estil"
 
 #. BGAhD
 #: sfx2/uiconfig/ui/templatepanel.ui:242
 msgctxt "commontemplate|STR_HIGHLIGHT_CHECKBOX"
 msgid "Highlight styles"
-msgstr "Indicadors"
+msgstr "Estils de realçament"
 
 #. 5xrhC
 #: sw/inc/strings.hrc:232
 msgctxt "STR_COLUMN_ICONVIEW_ITEM0"
 msgid "1 column"
-msgstr ""
+msgstr "1 columna"
 
 #. VAfCS
 #: sw/inc/strings.hrc:233
 msgctxt "STR_COLUMN_ICONVIEW_ITEM1"
 msgid "2 columns with equal size"
-msgstr ""
+msgstr "2 columnes de la mateixa mida"
 
 #. g8pFG
 #: sw/inc/strings.hrc:234
 msgctxt "STR_COLUMN_ICONVIEW_ITEM2"
 msgid "3 columns with equal size"
-msgstr ""
+msgstr "3 columnes de la mateixa mida"
 
 #. QJxAd
 #: sw/inc/strings.hrc:235
 msgctxt "STR_COLUMN_ICONVIEW_ITEM3"
 msgid "2 columns with different size (left > right)"
-msgstr ""
+msgstr "2 columnes de mida diferent (esquerra > dreta)"
 
 #. MHk4E
 #: sw/inc/strings.hrc:236
 msgctxt "STR_COLUMN_ICONVIEW_ITEM4"
 msgid "2 columns with different size (left < right)"
-msgstr ""
+msgstr "2 columnes de mida diferent (esquerra < dreta)"
 
 #. xPgHS
 #: sw/inc/strings.hrc:498
 msgctxt "STR_REINSTATE_REDLINE"
 msgid "Reinstate change: $1"
-msgstr ""
+msgstr "Restableix el canvi: $1"
 
 #. afEVQ
 #: sw/inc/strings.hrc:1536
 msgctxt "STR_COMPAT_OPT_UNDERLINETRAILINGSPACE"
 msgid "Underline Word-compatible trailing blanks"
-msgstr ""
+msgstr "Subratlla els espais en blanc finals compatibles amb el Microsoft Word"
 
 #. B3rfb
 #: sw/uiconfig/swriter/ui/columnpage.ui:122
 msgctxt "columnpage|columnft"
 msgid "Column"
-msgstr ""
+msgstr "Columna"
 
 #. Lurdj
 #: sw/uiconfig/swriter/ui/columnpage.ui:868
 msgctxt "columnpage|extended_tip|column-iconview"
 msgid ""
 "Enter the number of columns that you want in the page, frame, or section."
-msgstr ""
+msgstr "Introdueix el nombre de columnes que voleu en la pàgina, marc o secció."
 
 #. Ci9GE
 #: sw/uiconfig/swriter/ui/spellmenu.ui:34
@@ -450,115 +453,115 @@ msgstr "Afegeix al _diccionari (standard.dic)"
 #: sw/uiconfig/swriter/ui/wordcount-mobile.ui:643
 msgctxt "wordcount-mobile|comments"
 msgid "Comments"
-msgstr ""
+msgstr "Comentaris"
 
 #. SsL8u
 #: formula/inc/core_resource.hrc:2628
 msgctxt "RID_STRLIST_FUNCTION_NAMES"
 msgid "CHOOSECOLS"
-msgstr ""
+msgstr "CHOOSECOLS"
 
 #. zE6Vt
 #: formula/inc/core_resource.hrc:2629
 msgctxt "RID_STRLIST_FUNCTION_NAMES"
 msgid "CHOOSEROWS"
-msgstr ""
+msgstr "CHOOSEROWS"
 
 #. TxBq7
 #: formula/inc/core_resource.hrc:2630
 msgctxt "RID_STRLIST_FUNCTION_NAMES"
 msgid "DROP"
-msgstr ""
+msgstr "DROP"
 
 #. eTG8r
 #: formula/inc/core_resource.hrc:2631
 msgctxt "RID_STRLIST_FUNCTION_NAMES"
 msgid "EXPAND"
-msgstr ""
+msgstr "EXPAND"
 
 #. aJk9K
 #: formula/inc/core_resource.hrc:2632
 msgctxt "RID_STRLIST_FUNCTION_NAMES"
 msgid "HSTACK"
-msgstr ""
+msgstr "HSTACK"
 
 #. 4HnRz
 #: formula/inc/core_resource.hrc:2633
 msgctxt "RID_STRLIST_FUNCTION_NAMES"
 msgid "VSTACK"
-msgstr ""
+msgstr "VSTACK"
 
 #. JDHX2
 #: formula/inc/core_resource.hrc:2634
 msgctxt "RID_STRLIST_FUNCTION_NAMES"
 msgid "TAKE"
-msgstr ""
+msgstr "TAKE"
 
 #. CiTMM
 #: formula/inc/core_resource.hrc:2635
 msgctxt "RID_STRLIST_FUNCTION_NAMES"
 msgid "TEXTAFTER"
-msgstr ""
+msgstr "TEXTAFTER"
 
 #. Uz9jV
 #: formula/inc/core_resource.hrc:2636
 msgctxt "RID_STRLIST_FUNCTION_NAMES"
 msgid "TEXTBEFORE"
-msgstr ""
+msgstr "TEXTBEFORE"
 
 #. u2Nq4
 #: formula/inc/core_resource.hrc:2637
 msgctxt "RID_STRLIST_FUNCTION_NAMES"
 msgid "TEXTSPLIT"
-msgstr ""
+msgstr "TEXTSPLIT"
 
 #. FMVjv
 #: formula/inc/core_resource.hrc:2638
 msgctxt "RID_STRLIST_FUNCTION_NAMES"
 msgid "TOCOL"
-msgstr ""
+msgstr "TOCOL"
 
 #. xKDBC
 #: formula/inc/core_resource.hrc:2639
 msgctxt "RID_STRLIST_FUNCTION_NAMES"
 msgid "TOROW"
-msgstr ""
+msgstr "TOROW"
 
 #. UDke3
 #: formula/inc/core_resource.hrc:2642
 msgctxt "RID_STRLIST_FUNCTION_NAMES"
 msgid "WRAPCOLS"
-msgstr ""
+msgstr "WRAPCOLS"
 
 #. 3Tf94
 #: formula/inc/core_resource.hrc:2643
 msgctxt "RID_STRLIST_FUNCTION_NAMES"
 msgid "WRAPROWS"
-msgstr ""
+msgstr "WRAPROWS"
 
 #. Lrn3j
 #: formula/uiconfig/ui/functionpage.ui:80
 msgctxt "functionpage|label_category"
 msgid "_Category:"
-msgstr ""
+msgstr "_Categoria:"
 
 #. BNnFg
 #: formula/uiconfig/ui/functionpage.ui:115
 msgctxt "functionpage|label_function"
 msgid "_Function:"
-msgstr ""
+msgstr "_Funcions:"
 
 #. zRASZ
 #: formula/uiconfig/ui/structpage.ui:28
 msgctxt "structpage|label_struct"
 msgid "Content:"
-msgstr ""
+msgstr "Contingut:"
 
 #. DPToC
 #: sd/uiconfig/simpress/ui/layoutpanel.ui:41
 msgctxt "layoutpanel|extended_tip|layoutpanel_icons"
 msgid "List of available layout templates."
-msgstr ""
+msgstr "Llista de plantilles de disposició disponibles."
 
 #. Y3kBV
 #: filter/uiconfig/ui/impswfdialog.ui:14
@@ -600,13 +603,13 @@ msgstr "Exporta els _fons"
 #: filter/uiconfig/ui/impswfdialog.ui:189
 msgctxt "impswfdialog|exportbackgroundobjects"
 msgid "Export back_ground objects"
-msgstr "Exporta els o_bjectes del fons"
+msgstr "Exporta els _objectes del fons"
 
 #. P8j2y
 #: filter/uiconfig/ui/impswfdialog.ui:203
 msgctxt "impswfdialog|exportslidecontents"
 msgid "Export _slide contents"
-msgstr "E_xporta el contingut de la diapositiva"
+msgstr "Exporta el contingut de la diapo_sitiva"
 
 #. DzHf3
 #: filter/uiconfig/ui/impswfdialog.ui:229
@@ -634,7 +637,7 @@ msgid ""
 "two file formats: PDF and ODF as an attachment. "
 msgstr ""
 "Aquesta opció us permet fer l'exportació com un fitxer .pdf que conté dues "
-"versions del document, una en PDF i l'altra en ODF."
+"versions del document, una en PDF i l'altra en ODF. "
 
 #. NCgBM
 #: filter/uiconfig/ui/pdfgeneralpage.ui:583
@@ -643,8 +646,9 @@ msgid ""
 "Select the PDF version. PDF/A version variants creates an ISO 19005 "
 "compliant PDF file, ideal for long-term document preservation."
 msgstr ""
-"Crea un fitxer PDF que compleix l'especificació ISO 19005-2, ideal per a la "
-"conservació a llarg termini del document."
+"Seleccioneu la versió del PDF. Les variants de la versió PDF/A creen un "
+"fitxer PDF que compleix amb l'ISO 19005, ideal per a la preservació del "
+"document a llarg termini."
 
 #. Ac3Ga
 #: filter/uiconfig/ui/pdfgeneralpage.ui:587
@@ -662,7 +666,7 @@ msgstr "PDF 2.0"
 #: filter/uiconfig/ui/pdfgeneralpage.ui:592
 msgctxt "pdfgeneralpage|pdf_version"
 msgid "PDF/A-4 (PDF 2.0 base)"
-msgstr "PDF/A-4 (PDF 2.0 base)"
+msgstr "PDF/A-4 (base de PDF 2.0)"
 
 #. S7DSM
 #: filter/uiconfig/ui/pdfgeneralpage.ui:599
@@ -675,16 +679,19 @@ msgid ""
 "used in the source document will be embedded into the generated PDF file. "
 "PDF tags will be written."
 msgstr ""
-"Converteix al format PDF/A-2b o PDF/A-1b. Això es defineix com un fitxer de "
-"document electrònic per a preservació a llarg termini. Totes les lletres "
-"tipogràfiques que s'usen en el document original s'inseriran en el fitxer "
-"PDF generat. S'hi escriuran etiquetes PDF"
+"Les versions poden ser, o bé el PDF «clàssic» (p. ex. PDF 1.7, PDF 2.0), o "
+"el que compleixi amb PDF/A. PDF/A es defineix com un format de document "
+"electrònic per a la preservació i arxiu a llarg termini. Permet només un "
+"conjunt de característiques PDF reduït, compatibles amb aquest cas d'ús. Per "
+"exemple: Totes les famílies tipogràfiques que es van utilitzar en el "
+"document original s'incrustaran en el fitxer PDF generat. S'escriuran les "
+"etiquetes PDF."
 
 #. te76B
 #: filter/uiconfig/ui/pdfgeneralpage.ui:620
 msgctxt "pdfgeneralpage|pdf_version"
 msgid "PDF_ Version:"
-msgstr "Versió PDF_/A:"
+msgstr "Versió del PDF_:"
 
 #. tCrYc
 #: filter/uiconfig/ui/pdfgeneralpage.ui:677
@@ -712,7 +719,7 @@ msgctxt ""
 "UIName\n"
 "value.text"
 msgid "Markdown Document"
-msgstr ""
+msgstr "Document Markdown"
 
 #. 9Q5Zj
 #: draw_flash_Export.xcu
@@ -722,7 +729,7 @@ msgctxt ""
 "UIName\n"
 "value.text"
 msgid "Macromedia Flash (SWF)"
-msgstr ""
+msgstr "Macromedia Flash (SWF)"
 
 #. MsYCr
 #: impress_flash_Export.xcu
@@ -732,7 +739,7 @@ msgctxt ""
 "UIName\n"
 "value.text"
 msgid "Macromedia Flash (SWF)"
-msgstr ""
+msgstr "Macromedia Flash (SWF)"
 
 #. FoizC
 #: CalcCommands.xcu
@@ -742,7 +749,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Current Sheet View"
-msgstr ""
+msgstr "Disposició de full actual"
 
 #. 3Ep4Y
 #: CalcCommands.xcu
@@ -752,7 +759,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Insert Function"
-msgstr ""
+msgstr "Insereix una funció"
 
 #. rxGTc
 #: CalcCommands.xcu
@@ -762,7 +769,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Print Grid Lines"
-msgstr ""
+msgstr "Imprimeix les línies de la graella"
 
 #. a35bF
 #: CalcCommands.xcu
@@ -772,7 +779,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "New Sheet View"
-msgstr ""
+msgstr "Disposició de full nou"
 
 #. AKfar
 #: CalcCommands.xcu
@@ -782,7 +789,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Remove Sheet View"
-msgstr ""
+msgstr "Elimina la disposició del full"
 
 #. M52nh
 #: CalcCommands.xcu
@@ -792,7 +799,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Switch To Next Sheet View"
-msgstr ""
+msgstr "Canvia a la disposició de full següent"
 
 #. qfgad
 #: CalcCommands.xcu
@@ -802,7 +809,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Switch To Previous Sheet View"
-msgstr ""
+msgstr "Canvia a la disposició de full anterior"
 
 #. FJEd2
 #: CalcCommands.xcu
@@ -812,7 +819,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Select Sheet View"
-msgstr ""
+msgstr "Seleccioneu la disposició de full"
 
 #. vCsC3
 #: CalcCommands.xcu
@@ -822,7 +829,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Exit Sheet View"
-msgstr ""
+msgstr "Surt de la disposició de full"
 
 #. uuvrm
 #: ChartCommands.xcu
@@ -832,7 +839,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Manage Themes..."
-msgstr ""
+msgstr "Gestiona els temes..."
 
 #. 5LESd
 #: ChartCommands.xcu
@@ -842,7 +849,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Clear"
-msgstr "Neteja"
+msgstr "Esborra"
 
 #. BFrek
 #: ChartCommands.xcu
@@ -852,7 +859,7 @@ msgctxt ""
 "ContextLabel\n"
 "value.text"
 msgid "Clear ~Direct Formatting"
-msgstr "Neteja la formatació ~directa"
+msgstr "Esborra la formatació ~directa"
 
 #. NfNdn
 #: ChartCommands.xcu
@@ -862,7 +869,7 @@ msgctxt ""
 "TooltipLabel\n"
 "value.text"
 msgid "Clear Direct Formatting"
-msgstr "Neteja la formatació directa"
+msgstr "Esborra la formatació directa"
 
 #. vsnyF
 #: DrawImpressCommands.xcu
@@ -872,7 +879,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "New Canvas Slide"
-msgstr ""
+msgstr "Diapositiva de llenç nova"
 
 #. w3Yib
 #: DrawImpressCommands.xcu
@@ -882,7 +889,7 @@ msgctxt ""
 "ContextLabel\n"
 "value.text"
 msgid "~Select Table"
-msgstr "Selecciona la taula"
+msgstr "~Seleccioneu la taula"
 
 #. zz8gB
 #: DrawImpressCommands.xcu
@@ -892,7 +899,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Re-order pages"
-msgstr ""
+msgstr "Reordena les pàgines"
 
 #. ca6bM
 #: GenericCommands.xcu
@@ -902,7 +909,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Slide Transitions"
-msgstr ""
+msgstr "Transicions de diapositiva"
 
 #. 5pSJ6
 #: GenericCommands.xcu
@@ -912,7 +919,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Master Pages"
-msgstr ""
+msgstr "Pàgines mestres"
 
 #. DCEaK
 #: GenericCommands.xcu
@@ -922,7 +929,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "~Hyperlink"
-msgstr ""
+msgstr "~Enllaç"
 
 #. aFFu9
 #: GenericCommands.xcu
@@ -932,7 +939,7 @@ msgctxt ""
 "PopupLabel\n"
 "value.text"
 msgid "Insert Hyperlink..."
-msgstr ""
+msgstr "Insereix un enllaç..."
 
 #. czVMP
 #: GenericCommands.xcu
@@ -942,7 +949,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Nav~igator select comment."
-msgstr ""
+msgstr "Selecció de comentar~i al navegador."
 
 #. 77Q3c
 #: GenericCommands.xcu
@@ -952,7 +959,7 @@ msgctxt ""
 "TooltipLabel\n"
 "value.text"
 msgid "Select Comment In The Navigator Window/Sidebar"
-msgstr ""
+msgstr "Seleccioneu el comentari en la finestra/barra lateral del navegador"
 
 #. 83Euq
 #: GenericCommands.xcu
@@ -962,7 +969,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Change record mode"
-msgstr ""
+msgstr "Canvia el mode d'enregistrament"
 
 #. nG2DH
 #: GenericCommands.xcu
@@ -972,7 +979,7 @@ msgctxt ""
 "ContextLabel\n"
 "value.text"
 msgid "Record mode"
-msgstr ""
+msgstr "Mode d'enregistrament"
 
 #. fDK7V
 #: GenericCommands.xcu
@@ -1024,7 +1031,7 @@ msgctxt ""
 "Title\n"
 "value.text"
 msgid "Colors"
-msgstr "Color"
+msgstr "Colors"
 
 #. zz34M
 #: Sidebar.xcu
@@ -1034,7 +1041,7 @@ msgctxt ""
 "Title\n"
 "value.text"
 msgid "Theme"
-msgstr ""
+msgstr "Tema"
 
 #. dgWCC
 #: Sidebar.xcu
@@ -1044,7 +1051,7 @@ msgctxt ""
 "Title\n"
 "value.text"
 msgid "Gradients"
-msgstr ""
+msgstr "Gradients"
 
 #. ezFez
 #: WriterCommands.xcu
@@ -1054,7 +1061,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Reinstate and Move to Next"
-msgstr ""
+msgstr "Restableix i mou a la següent"
 
 #. NmvTm
 #: WriterCommands.xcu
@@ -1074,7 +1081,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Reinstate All"
-msgstr ""
+msgstr "Restableix-ho tot"
 
 #. QkP7E
 #: WriterCommands.xcu
@@ -1084,7 +1091,7 @@ msgctxt ""
 "TooltipLabel\n"
 "value.text"
 msgid "Reinstate All Tracked Changes"
-msgstr ""
+msgstr "Restableix tots els canvis registrats"
 
 #. SRvKK
 #: WriterCommands.xcu
@@ -1094,7 +1101,7 @@ msgctxt ""
 "PopupLabel\n"
 "value.text"
 msgid "Reinstate All Changes"
-msgstr ""
+msgstr "Restableix tots els canvis"
 
 #. 6w9UB
 #: WriterCommands.xcu
@@ -1104,7 +1111,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Reinstate"
-msgstr ""
+msgstr "Restableix"
 
 #. RgBxU
 #: WriterCommands.xcu
@@ -1114,7 +1121,7 @@ msgctxt ""
 "TooltipLabel\n"
 "value.text"
 msgid "Reinstate Track Change"
-msgstr ""
+msgstr "Restableix el canvi registrat"
 
 #. rTFtt
 #: WriterCommands.xcu
@@ -1124,7 +1131,7 @@ msgctxt ""
 "PopupLabel\n"
 "value.text"
 msgid "Reinstate Change"
-msgstr ""
+msgstr "Restableix el canvi"
 
 #. duoP7
 #: WriterCommands.xcu
@@ -1134,7 +1141,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Record changes in this view"
-msgstr ""
+msgstr "Registra els canvis en aquesta disposició"
 
 #. TADBE
 #: WriterCommands.xcu
@@ -1144,7 +1151,7 @@ msgctxt ""
 "ContextLabel\n"
 "value.text"
 msgid "~Changes in this view"
-msgstr ""
+msgstr "~Canvis en aquesta disposició"
 
 #. nn4AU
 #: WriterCommands.xcu
@@ -1154,7 +1161,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Record changes in all views"
-msgstr ""
+msgstr "Registra els canvis en totes les disposicions"
 
 #. DJphX
 #: WriterCommands.xcu
@@ -1164,19 +1171,19 @@ msgctxt ""
 "ContextLabel\n"
 "value.text"
 msgid "~Changes in all views"
-msgstr ""
+msgstr "~Canvis en totes les disposicions"
 
 #. cG7BY
 #: sc/inc/globstr.hrc:592
 msgctxt "STR_SHEET_VIEW_DEFAULT_VIEW_NAME"
 msgid "Default View"
-msgstr ""
+msgstr "Disposició predefinida"
 
 #. aYwkp
 #: sc/inc/globstr.hrc:593
 msgctxt "STR_SHEET_VIEW_TEMPORARY_NAME_TEMPLATE"
 msgid "Temporary View %1"
-msgstr ""
+msgstr "Disposició temporal %1"
 
 #. ADmez
 #: sc/inc/scfuncs.hrc:4257
@@ -1206,7 +1213,7 @@ msgstr "Columna "
 #: sc/inc/scfuncs.hrc:4261
 msgctxt "SC_OPCODE_CHOOSECOLS"
 msgid "Column 1, Column 2,... The list of column numbers to be returned."
-msgstr ""
+msgstr "Columna 1, Columna 2... La llista de nombres de columnes a retornar."
 
 #. 78gQu
 #: sc/inc/scfuncs.hrc:4267
@@ -1224,7 +1231,7 @@ msgstr "Matriu"
 #: sc/inc/scfuncs.hrc:4269
 msgctxt "SC_OPCODE_CHOOSEROWS"
 msgid "The array containing the rows to be returned in the new array."
-msgstr ""
+msgstr "La matriu que conté les files a retornar a la matriu nova."
 
 #. PDBbE
 #: sc/inc/scfuncs.hrc:4270
@@ -1236,7 +1243,7 @@ msgstr "Fila "
 #: sc/inc/scfuncs.hrc:4271
 msgctxt "SC_OPCODE_CHOOSEROWS"
 msgid "Row 1, Row 2,... The list of row numbers to be returned."
-msgstr ""
+msgstr "Fila 2, Fila 2... La llista de nombres de files a retornar."
 
 #. 4uTLx
 #: sc/inc/scfuncs.hrc:4277
@@ -1245,6 +1252,8 @@ msgid ""
 "Excludes a specified number of contiguous rows or columns from the start or "
 "end of an array."
 msgstr ""
+"Exclou un nombre específic de files o columnes contigües a l'inici o el "
+"final d'una matriu."
 
 #. W6FYc
 #: sc/inc/scfuncs.hrc:4278
@@ -1256,7 +1265,7 @@ msgstr "Matriu"
 #: sc/inc/scfuncs.hrc:4279
 msgctxt "SC_OPCODE_DROP"
 msgid "The array from which to drop rows or columns."
-msgstr ""
+msgstr "La matriu de la qual obtenir files o columnes."
 
 #. BFPt4
 #: sc/inc/scfuncs.hrc:4280
@@ -1270,12 +1279,14 @@ msgctxt "SC_OPCODE_DROP"
 msgid ""
 "The number of rows to drop. A negative value drops from the end of the array."
 msgstr ""
+"El nombre de files a obtenir. Un valor negatiu obté files des del final de "
+"la matriu."
 
 #. 6sAoA
 #: sc/inc/scfuncs.hrc:4282
 msgctxt "SC_OPCODE_DROP"
 msgid "Columns"
-msgstr ""
+msgstr "Columnes"
 
 #. cAxPB
 #: sc/inc/scfuncs.hrc:4283
@@ -1284,12 +1295,15 @@ msgid ""
 "The number of columns to drop. A negative value drops from the end of the "
 "array."
 msgstr ""
+"El nombre de columnes a obtenir. Un valor negatiu obté les columnes des del "
+"final de la matriu."
 
 #. cXvVY
 #: sc/inc/scfuncs.hrc:4289
 msgctxt "SC_OPCODE_EXPAND"
 msgid "Expands or pads an array to specified row and column dimensions."
 msgstr ""
+"Expandeix o contrau una matriu a una mida de fila o columna especificada."
 
 #. kuERH
 #: sc/inc/scfuncs.hrc:4290
