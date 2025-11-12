@@ -18,12 +18,15 @@
 #include <thread>
 #include "Document.hpp"
 
+class QMainWindow;
+
 // Qt ⇄ JavaScript bridge
 class Bridge : public QObject
 {
     Q_OBJECT
 
     coda::DocumentData _document;
+    QMainWindow* _window;
     QWebEngineView* _webView;
     int _closeNotificationPipeForForwardingThread[2];
     std::thread _app2js;
@@ -33,9 +36,10 @@ class Bridge : public QObject
     bool saveDocumentAs();
 
 public:
-    explicit Bridge(QObject* parent, coda::DocumentData& document, QWebEngineView* webView)
+    explicit Bridge(QObject* parent, coda::DocumentData& document, QMainWindow* window, QWebEngineView* webView)
         : QObject(parent)
         , _document(document)
+        , _window(window)
         , _webView(webView)
         , _closeNotificationPipeForForwardingThread{ -1, -1 }
     {
