@@ -2,10 +2,10 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: core-hu\n"
-"PO-Revision-Date: 2025-11-10 16:33+0000\n"
+"PO-Revision-Date: 2025-11-11 08:00+0000\n"
 "Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
-"Language-Team: Hungarian <https://hosted.weblate.org/projects/collabora-"
-"online/lokit/hu/>\n"
+"Language-Team: Hungarian <https://hosted.weblate.org/projects/"
+"collabora-online/lokit/hu/>\n"
 "Language: hu\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -48,7 +48,7 @@ msgstr ""
 #: include/svx/strings.hrc:1040
 msgctxt "RID_SVXSTR_PASTE_AS_DIALOG_TITLE"
 msgid "Paste As"
-msgstr ""
+msgstr "Beillesztés mint"
 
 #. aNZNw
 #: svx/uiconfig/ui/dropdownfielddialog.ui:31
@@ -204,12 +204,14 @@ msgstr "_Diagramstílusok kezelése"
 msgctxt "sidebarcolors|bordertype|tooltip_text"
 msgid "Allow to select a color palette to apply to current chart data series."
 msgstr ""
+"A diagram jelenlegi adatsorára alkalmazandó színpaletta kiválasztásának "
+"engedélyezése."
 
 #. FXK8B
 #: chart2/uiconfig/ui/sidebarcolors.ui:42
 msgctxt "sidebarcolors|cellbordertype-atkobject"
 msgid "Border Style"
-msgstr ""
+msgstr "Szegély stílusa"
 
 #. vDwKf
 #: chart2/uiconfig/ui/sidebargradients.ui:30
@@ -217,12 +219,14 @@ msgctxt "sidebargradients|bordertype|tooltip_text"
 msgid ""
 "Allow to select a gradient palette to apply to current chart data series."
 msgstr ""
+"A diagram jelenlegi adatsorára alkalmazandó gradienspaletta kiválasztásának "
+"engedélyezése."
 
 #. FXK8B
 #: chart2/uiconfig/ui/sidebargradients.ui:42
 msgctxt "sidebargradients|cellbordertype-atkobject"
 msgid "Border Style"
-msgstr ""
+msgstr "Szegély stílusa"
 
 #. Aiqg6
 #: chart2/uiconfig/ui/sidebartheme.ui:25
@@ -234,43 +238,43 @@ msgstr ""
 #: chart2/uiconfig/ui/sidebartheme.ui:37
 msgctxt "sidebartheme|themetype-atkobject"
 msgid "Themes"
-msgstr ""
+msgstr "Témák"
 
 #. YB6Et
 #: chart2/uiconfig/ui/sidebartheme.ui:48
 msgctxt "sidebartheme|savetonew"
 msgid "_Save to new theme"
-msgstr ""
+msgstr "_Mentés új témába"
 
 #. 4C556
 #: chart2/uiconfig/ui/sidebartype.ui:102
 msgctxt "sidebartype|3dschemeft"
 msgid "3D _Scheme:"
-msgstr ""
+msgstr "3D _séma:"
 
 #. x3adg
 #: chart2/uiconfig/ui/tp_ChartColorPalette.ui:68
 msgctxt "tp_ChartColorPalette|colorfulwin"
 msgid "Colorful"
-msgstr ""
+msgstr "Színes"
 
 #. 8QjnP
 #: chart2/uiconfig/ui/tp_ChartColorPalette.ui:126
 msgctxt "tp_ChartColorPalette|monochromaticwin"
 msgid "Monochromatic"
-msgstr ""
+msgstr "Egyszínű"
 
 #. 6JxiC
 #: chart2/uiconfig/ui/tp_ChartGradients.ui:69
 msgctxt "tp_ChartGradients|lightwin"
 msgid "Light Variations"
-msgstr ""
+msgstr "Halványabb változatok"
 
 #. DmWVa
 #: chart2/uiconfig/ui/tp_ChartGradients.ui:128
 msgctxt "tp_ChartGradients|darkwin"
 msgid "Dark Variations"
-msgstr ""
+msgstr "Sötétebb változatok"
 
 #. FG2rh
 #: chart2/uiconfig/ui/tp_ChartType.ui:114
@@ -282,19 +286,19 @@ msgstr ""
 #: chart2/uiconfig/ui/tp_ChartType.ui:167
 msgctxt "tp_ChartType|3dschemeft"
 msgid "3D _Scheme:"
-msgstr ""
+msgstr "3D _séma:"
 
 #. EPGtZ
 #: cui/uiconfig/ui/hyperlinkinternetpage.ui:64
 msgctxt "hyperlinkinternetpage|target_label"
 msgid "Link:"
-msgstr ""
+msgstr "Hivatkozás:"
 
 #. gfELk
 #: cui/uiconfig/ui/pageformatpage.ui:260
 msgctxt "pageformatpage|checkResizeAllPages"
 msgid "Resize all pages"
-msgstr ""
+msgstr "Minden oldal átméretezése"
 
 #. NBdEp
 #: cui/uiconfig/ui/pickbulletpage.ui:45
@@ -324,25 +328,25 @@ msgstr ""
 #: cui/uiconfig/ui/toolbarmodedialog.ui:124
 msgctxt "ToolbarmodeDialog|radiobutton1"
 msgid "Compact"
-msgstr ""
+msgstr "Kompakt"
 
 #. ZbYiG
 #: include/svtools/strings.hrc:71
 msgctxt "STR_FORMAT_ID_MARKDOWN"
 msgid "Markdown"
-msgstr ""
+msgstr "Markdown"
 
 #. HASc5
 #: include/sfx2/strings.hrc:227
 msgctxt "STR_SID_QUICKFIND"
 msgid "Quick Find"
-msgstr ""
+msgstr "Gyorskeresés"
 
 #. 2VmCo
 #: sfx2/uiconfig/ui/licensedialog.ui:41
 msgctxt "licensedialog|eula"
 msgid "_EULA"
-msgstr ""
+msgstr "_EULA"
 
 #. jjkw7
 #: sfx2/uiconfig/ui/licensedialog.ui:85
@@ -352,6 +356,9 @@ msgid ""
 "End User License and Subscription Agreement; choose EULA to see exact "
 "details in English."
 msgstr ""
+"A %PRODUCTNAME bináris csomagjára Végfelhasználói Licenc- és Előfizetési "
+"Szerződés vonatkozik. Az EULA gombra kattintva megtekintheti a pontos, angol "
+"nyelvű részleteket."
 
 #. YHTHB
 #: sfx2/uiconfig/ui/templatepanel.ui:137
@@ -387,31 +394,31 @@ msgstr "Kiemelés"
 #: sw/inc/strings.hrc:232
 msgctxt "STR_COLUMN_ICONVIEW_ITEM0"
 msgid "1 column"
-msgstr ""
+msgstr "1 oszlop"
 
 #. VAfCS
 #: sw/inc/strings.hrc:233
 msgctxt "STR_COLUMN_ICONVIEW_ITEM1"
 msgid "2 columns with equal size"
-msgstr ""
+msgstr "2 azonos méretű oszlop"
 
 #. g8pFG
 #: sw/inc/strings.hrc:234
 msgctxt "STR_COLUMN_ICONVIEW_ITEM2"
 msgid "3 columns with equal size"
-msgstr ""
+msgstr "3 azonos méretű oszlop"
 
 #. QJxAd
 #: sw/inc/strings.hrc:235
 msgctxt "STR_COLUMN_ICONVIEW_ITEM3"
 msgid "2 columns with different size (left > right)"
-msgstr ""
+msgstr "2 különböző méretű oszlop (bal > jobb)"
 
 #. MHk4E
 #: sw/inc/strings.hrc:236
 msgctxt "STR_COLUMN_ICONVIEW_ITEM4"
 msgid "2 columns with different size (left < right)"
-msgstr ""
+msgstr "2 különböző méretű oszlop (bal < jobb)"
 
 #. xPgHS
 #: sw/inc/strings.hrc:498
@@ -429,7 +436,7 @@ msgstr ""
 #: sw/uiconfig/swriter/ui/columnpage.ui:122
 msgctxt "columnpage|columnft"
 msgid "Column"
-msgstr ""
+msgstr "Oszlop"
 
 #. Lurdj
 #: sw/uiconfig/swriter/ui/columnpage.ui:868
