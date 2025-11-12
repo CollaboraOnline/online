@@ -137,7 +137,6 @@ AM_CPPFLAGS = -pthread -I$(top_srcdir) -DBUILDING_TESTS -DLOK_ABORT_ON_ASSERTION
 
 wsd_sources = \
 	../kit/Kit.cpp \
-	../kit/KitGlobals.cpp \
 	../kit/KitWebSocket.cpp \
 	../kit/TestStubs.cpp \
 	../wsd/FileServerUtil.cpp \
@@ -157,6 +156,7 @@ test_base_sources = \
 	UtilTests.cpp \
 	WopiProofTests.cpp \
 	UriTests.cpp \
+	TestGlobals.cpp \
 	$(wsd_sources)
 
 common_sources = \
@@ -198,6 +198,7 @@ unittest_CPPFLAGS = -I$(top_srcdir) -DBUILDING_TESTS -DSTANDALONE_CPPUNIT -g
 unittest_SOURCES = \
 	$(test_base_sources) \
 	$(common_sources) \
+	../common/Globals.cpp \
 	../wsd/TestStubs.cpp \
 	test.cpp
 
