@@ -2,9 +2,15 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: core-es\n"
+"PO-Revision-Date: 2025-11-12 12:52+0000\n"
+"Last-Translator: Adolfo Jayme Barrientos <fitojb@ubuntu.com>\n"
+"Language-Team: Spanish <https://hosted.weblate.org/projects/collabora-online/"
+"lokit/es/>\n"
 "Language: es\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.15-dev\n"
 
 #. ygDfy
 #: module_graphicfilter.ulf
@@ -22,7 +28,7 @@ msgctxt ""
 "STR_DESC_MODULE_OPTIONAL_GRFFLT_FLASH\n"
 "LngText.text"
 msgid "Macromedia Flash (SWF) Export Filter"
-msgstr ""
+msgstr "Filtro de exportación a Macromedia Flash (SWF)"
 
 #. vcMGk
 #: folderitem_ooo.ulf
@@ -35,36 +41,38 @@ msgid ""
 "Technology, provided by Collabora Productivity. See https://collaboraoffice."
 "com"
 msgstr ""
+"Collabora Office, el paquete de oficina basado en tecnología LibreOffice, "
+"proporcionado por Collabora Productivity. Visite https://collaboraoffice.com"
 
 #. 4rBwc
 #: include/svx/strings.hrc:1040
 msgctxt "RID_SVXSTR_PASTE_AS_DIALOG_TITLE"
 msgid "Paste As"
-msgstr ""
+msgstr "Pegar como"
 
 #. aNZNw
 #: svx/uiconfig/ui/dropdownfielddialog.ui:31
 msgctxt "dropdownDialog|OK"
 msgid "OK"
-msgstr ""
+msgstr "Aceptar"
 
 #. 54Dmg
 #: svx/uiconfig/ui/dropdownfielddialog.ui:44
 msgctxt "dropdownDialog|CANCEL"
 msgid "Cancel"
-msgstr ""
+msgstr "Cancelar"
 
 #. gPAYw
 #: svx/uiconfig/ui/findreplacedialog.ui:67
 msgctxt "findreplacedialog|find_tab_btn"
 msgid "Find"
-msgstr ""
+msgstr "Buscar"
 
 #. uknDS
 #: svx/uiconfig/ui/findreplacedialog.ui:80
 msgctxt "findreplacedialog|replace_tab_btn"
 msgid "Replace"
-msgstr ""
+msgstr "Reemplazar"
 
 #. 7MFsT
 #: uui/inc/strings.hrc:84
@@ -97,13 +105,13 @@ msgstr ""
 #: chart2/inc/strings.hrc:51
 msgctxt "STR_PAGE_COLOR_PALETTE"
 msgid "Color Palette"
-msgstr ""
+msgstr "Paleta de colores"
 
 #. YZBr8
 #: chart2/inc/strings.hrc:52
 msgctxt "STR_PAGE_GRADIENT_PRESETS"
 msgid "Gradients"
-msgstr ""
+msgstr "Degradados"
 
 #. DWGVf
 #: chart2/uiconfig/ui/chartcolorpalettepopup.ui:46
@@ -191,7 +199,6 @@ msgstr ""
 
 #. FXK8B
 #: chart2/uiconfig/ui/sidebarcolors.ui:42
-#, fuzzy
 msgctxt "sidebarcolors|cellbordertype-atkobject"
 msgid "Border Style"
 msgstr "Estilo de borde"
@@ -205,7 +212,6 @@ msgstr ""
 
 #. FXK8B
 #: chart2/uiconfig/ui/sidebargradients.ui:42
-#, fuzzy
 msgctxt "sidebargradients|cellbordertype-atkobject"
 msgid "Border Style"
 msgstr "Estilo de borde"
@@ -220,7 +226,7 @@ msgstr ""
 #: chart2/uiconfig/ui/sidebartheme.ui:37
 msgctxt "sidebartheme|themetype-atkobject"
 msgid "Themes"
-msgstr ""
+msgstr "Temas"
 
 #. YB6Et
 #: chart2/uiconfig/ui/sidebartheme.ui:48
@@ -274,13 +280,13 @@ msgstr ""
 #: cui/uiconfig/ui/hyperlinkinternetpage.ui:64
 msgctxt "hyperlinkinternetpage|target_label"
 msgid "Link:"
-msgstr ""
+msgstr "Enlace:"
 
 #. gfELk
 #: cui/uiconfig/ui/pageformatpage.ui:260
 msgctxt "pageformatpage|checkResizeAllPages"
 msgid "Resize all pages"
-msgstr ""
+msgstr "Redimensionar todas las páginas"
 
 #. NBdEp
 #: cui/uiconfig/ui/pickbulletpage.ui:45
@@ -322,7 +328,7 @@ msgstr ""
 #: include/sfx2/strings.hrc:227
 msgctxt "STR_SID_QUICKFIND"
 msgid "Quick Find"
-msgstr ""
+msgstr "Búsqueda rápida"
 
 #. 2VmCo
 #: sfx2/uiconfig/ui/licensedialog.ui:41
@@ -349,7 +355,7 @@ msgstr ""
 #: sfx2/uiconfig/ui/templatepanel.ui:156
 msgctxt "templatepanel|accessible_name|new"
 msgid "New Style from Selection"
-msgstr ""
+msgstr "Estilo nuevo desde selección"
 
 #. 5ZAqh
 #: sfx2/uiconfig/ui/templatepanel.ui:174
@@ -361,7 +367,7 @@ msgstr ""
 #: sfx2/uiconfig/ui/templatepanel.ui:192
 msgctxt "templatepanel|accessible_name|update"
 msgid "Update Style"
-msgstr ""
+msgstr "Actualizar estilo"
 
 #. BGAhD
 #: sfx2/uiconfig/ui/templatepanel.ui:242
@@ -373,19 +379,19 @@ msgstr "Indicadores"
 #: sw/inc/strings.hrc:232
 msgctxt "STR_COLUMN_ICONVIEW_ITEM0"
 msgid "1 column"
-msgstr ""
+msgstr "1 columna"
 
 #. VAfCS
 #: sw/inc/strings.hrc:233
 msgctxt "STR_COLUMN_ICONVIEW_ITEM1"
 msgid "2 columns with equal size"
-msgstr ""
+msgstr "2 columnas de igual tamaño"
 
 #. g8pFG
 #: sw/inc/strings.hrc:234
 msgctxt "STR_COLUMN_ICONVIEW_ITEM2"
 msgid "3 columns with equal size"
-msgstr ""
+msgstr "3 columnas de igual tamaño"
 
 #. QJxAd
 #: sw/inc/strings.hrc:235
@@ -415,7 +421,7 @@ msgstr ""
 #: sw/uiconfig/swriter/ui/columnpage.ui:122
 msgctxt "columnpage|columnft"
 msgid "Column"
-msgstr ""
+msgstr "Columna"
 
 #. Lurdj
 #: sw/uiconfig/swriter/ui/columnpage.ui:868
@@ -434,7 +440,7 @@ msgstr "Añadir al _diccionario (standard.dic)"
 #: sw/uiconfig/swriter/ui/wordcount-mobile.ui:643
 msgctxt "wordcount-mobile|comments"
 msgid "Comments"
-msgstr ""
+msgstr "Comentarios"
 
 #. SsL8u
 #: formula/inc/core_resource.hrc:2628
@@ -494,7 +500,7 @@ msgstr "TEXTOANTES"
 #: formula/inc/core_resource.hrc:2637
 msgctxt "RID_STRLIST_FUNCTION_NAMES"
 msgid "TEXTSPLIT"
-msgstr ""
+msgstr "DIVIDIRTEXTO"
 
 #. FMVjv
 #: formula/inc/core_resource.hrc:2638
@@ -524,25 +530,25 @@ msgstr "AJUSTARFILAS"
 #: formula/uiconfig/ui/functionpage.ui:80
 msgctxt "functionpage|label_category"
 msgid "_Category:"
-msgstr ""
+msgstr "_Categoría:"
 
 #. BNnFg
 #: formula/uiconfig/ui/functionpage.ui:115
 msgctxt "functionpage|label_function"
 msgid "_Function:"
-msgstr ""
+msgstr "_Función:"
 
 #. zRASZ
 #: formula/uiconfig/ui/structpage.ui:28
 msgctxt "structpage|label_struct"
 msgid "Content:"
-msgstr ""
+msgstr "Contenido:"
 
 #. DPToC
 #: sd/uiconfig/simpress/ui/layoutpanel.ui:41
 msgctxt "layoutpanel|extended_tip|layoutpanel_icons"
 msgid "List of available layout templates."
-msgstr ""
+msgstr "Lista de plantillas de disposición disponibles."
 
 #. Y3kBV
 #: filter/uiconfig/ui/impswfdialog.ui:14
@@ -576,13 +582,13 @@ msgstr "Exportar en _varios archivos"
 #: filter/uiconfig/ui/impswfdialog.ui:175
 msgctxt "impswfdialog|exportbackgrounds"
 msgid "Export _backgrounds"
-msgstr "Exportar los _fondos"
+msgstr "Exportar _fondos"
 
 #. rBFG6
 #: filter/uiconfig/ui/impswfdialog.ui:189
 msgctxt "impswfdialog|exportbackgroundobjects"
 msgid "Export back_ground objects"
-msgstr "Exportar los _objetos de fondo"
+msgstr "Exportar _objetos de fondo"
 
 #. P8j2y
 #: filter/uiconfig/ui/impswfdialog.ui:203
@@ -632,13 +638,13 @@ msgstr ""
 #: filter/uiconfig/ui/pdfgeneralpage.ui:587
 msgctxt "pdfgeneralpage|pdf_version"
 msgid "PDF 1.7"
-msgstr ""
+msgstr "PDF 1.7"
 
 #. D6SQE
 #: filter/uiconfig/ui/pdfgeneralpage.ui:588
 msgctxt "pdfgeneralpage|pdf_version"
 msgid "PDF 2.0"
-msgstr ""
+msgstr "PDF 2.0"
 
 #. Pk2QP
 #: filter/uiconfig/ui/pdfgeneralpage.ui:592
@@ -666,13 +672,13 @@ msgstr ""
 #: filter/uiconfig/ui/pdfgeneralpage.ui:620
 msgctxt "pdfgeneralpage|pdf_version"
 msgid "PDF_ Version:"
-msgstr "Versión de PDF_/A:"
+msgstr "_Versión de PDF:"
 
 #. tCrYc
 #: filter/uiconfig/ui/pdfgeneralpage.ui:677
 msgctxt "pdfgeneralpage|general_label"
 msgid "General"
-msgstr "General"
+msgstr "Generales"
 
 #. 9iu3h
 #: filter/uiconfig/ui/pdfgeneralpage.ui:821
@@ -694,7 +700,7 @@ msgctxt ""
 "UIName\n"
 "value.text"
 msgid "Markdown Document"
-msgstr ""
+msgstr "Documento Markdown"
 
 #. 9Q5Zj
 #: draw_flash_Export.xcu
@@ -704,7 +710,7 @@ msgctxt ""
 "UIName\n"
 "value.text"
 msgid "Macromedia Flash (SWF)"
-msgstr ""
+msgstr "Macromedia Flash (SWF)"
 
 #. MsYCr
 #: impress_flash_Export.xcu
@@ -714,7 +720,7 @@ msgctxt ""
 "UIName\n"
 "value.text"
 msgid "Macromedia Flash (SWF)"
-msgstr ""
+msgstr "Macromedia Flash (SWF)"
 
 #. FoizC
 #: CalcCommands.xcu
@@ -724,7 +730,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Current Sheet View"
-msgstr ""
+msgstr "Vista de hoja actual"
 
 #. 3Ep4Y
 #: CalcCommands.xcu
@@ -734,7 +740,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Insert Function"
-msgstr ""
+msgstr "Insertar función"
 
 #. rxGTc
 #: CalcCommands.xcu
@@ -754,7 +760,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "New Sheet View"
-msgstr ""
+msgstr "Vista de hoja nueva"
 
 #. AKfar
 #: CalcCommands.xcu
@@ -764,7 +770,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Remove Sheet View"
-msgstr ""
+msgstr "Quitar vista de hoja"
 
 #. M52nh
 #: CalcCommands.xcu
@@ -774,7 +780,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Switch To Next Sheet View"
-msgstr ""
+msgstr "Cambiar a vista de hoja siguiente"
 
 #. qfgad
 #: CalcCommands.xcu
@@ -784,7 +790,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Switch To Previous Sheet View"
-msgstr ""
+msgstr "Cambiar a vista de hoja anterior"
 
 #. FJEd2
 #: CalcCommands.xcu
@@ -794,7 +800,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Select Sheet View"
-msgstr ""
+msgstr "Seleccionar vista de hoja"
 
 #. vCsC3
 #: CalcCommands.xcu
@@ -804,7 +810,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Exit Sheet View"
-msgstr ""
+msgstr "Salir de vista de hoja"
 
 #. uuvrm
 #: ChartCommands.xcu
@@ -814,7 +820,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Manage Themes..."
-msgstr ""
+msgstr "Gestionar temas…"
 
 #. 5LESd
 #: ChartCommands.xcu
@@ -854,7 +860,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "New Canvas Slide"
-msgstr ""
+msgstr "Diapositiva lienzo nueva"
 
 #. w3Yib
 #: DrawImpressCommands.xcu
@@ -864,7 +870,7 @@ msgctxt ""
 "ContextLabel\n"
 "value.text"
 msgid "~Select Table"
-msgstr "Seleccionar tabla"
+msgstr "~Seleccionar tabla"
 
 #. zz8gB
 #: DrawImpressCommands.xcu
@@ -874,7 +880,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Re-order pages"
-msgstr ""
+msgstr "Reordenar páginas"
 
 #. ca6bM
 #: GenericCommands.xcu
@@ -884,7 +890,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Slide Transitions"
-msgstr ""
+msgstr "Transiciones entre diapositivas"
 
 #. 5pSJ6
 #: GenericCommands.xcu
@@ -894,7 +900,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Master Pages"
-msgstr ""
+msgstr "Patrones de página"
 
 #. DCEaK
 #: GenericCommands.xcu
@@ -904,7 +910,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "~Hyperlink"
-msgstr ""
+msgstr "~Hiperenlace"
 
 #. aFFu9
 #: GenericCommands.xcu
@@ -914,7 +920,7 @@ msgctxt ""
 "PopupLabel\n"
 "value.text"
 msgid "Insert Hyperlink..."
-msgstr ""
+msgstr "Insertar hiperenlace…"
 
 #. czVMP
 #: GenericCommands.xcu
@@ -944,7 +950,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Change record mode"
-msgstr ""
+msgstr "Cambiar modo de grabación"
 
 #. nG2DH
 #: GenericCommands.xcu
@@ -954,7 +960,7 @@ msgctxt ""
 "ContextLabel\n"
 "value.text"
 msgid "Record mode"
-msgstr ""
+msgstr "Modo de grabación"
 
 #. fDK7V
 #: GenericCommands.xcu
@@ -1016,7 +1022,7 @@ msgctxt ""
 "Title\n"
 "value.text"
 msgid "Theme"
-msgstr ""
+msgstr "Tema"
 
 #. dgWCC
 #: Sidebar.xcu
@@ -1026,7 +1032,7 @@ msgctxt ""
 "Title\n"
 "value.text"
 msgid "Gradients"
-msgstr ""
+msgstr "Degradados"
 
 #. ezFez
 #: WriterCommands.xcu
@@ -1116,7 +1122,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Record changes in this view"
-msgstr ""
+msgstr "Grabar cambios en esta vista"
 
 #. TADBE
 #: WriterCommands.xcu
@@ -1136,7 +1142,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Record changes in all views"
-msgstr ""
+msgstr "Grabar cambios en todas las vistas"
 
 #. DJphX
 #: WriterCommands.xcu
@@ -1152,13 +1158,13 @@ msgstr ""
 #: sc/inc/globstr.hrc:592
 msgctxt "STR_SHEET_VIEW_DEFAULT_VIEW_NAME"
 msgid "Default View"
-msgstr ""
+msgstr "Vista predeterminada"
 
 #. aYwkp
 #: sc/inc/globstr.hrc:593
 msgctxt "STR_SHEET_VIEW_TEMPORARY_NAME_TEMPLATE"
 msgid "Temporary View %1"
-msgstr ""
+msgstr "Vista temporal %1"
 
 #. ADmez
 #: sc/inc/scfuncs.hrc:4257
@@ -1258,7 +1264,7 @@ msgstr ""
 #: sc/inc/scfuncs.hrc:4282
 msgctxt "SC_OPCODE_DROP"
 msgid "Columns"
-msgstr ""
+msgstr "Columnas"
 
 #. cAxPB
 #: sc/inc/scfuncs.hrc:4283
@@ -1304,7 +1310,7 @@ msgstr ""
 #: sc/inc/scfuncs.hrc:4294
 msgctxt "SC_OPCODE_EXPAND"
 msgid "Columns"
-msgstr ""
+msgstr "Columnas"
 
 #. EVAXE
 #: sc/inc/scfuncs.hrc:4295
@@ -1415,7 +1421,7 @@ msgstr ""
 #: sc/inc/scfuncs.hrc:4328
 msgctxt "SC_OPCODE_TAKE"
 msgid "Columns"
-msgstr ""
+msgstr "Columnas"
 
 #. ZexcG
 #: sc/inc/scfuncs.hrc:4329
@@ -1607,7 +1613,7 @@ msgstr ""
 #: sc/inc/scfuncs.hrc:4374
 msgctxt "SC_OPCODE_TEXTSPLIT"
 msgid "Column Delimiter"
-msgstr ""
+msgstr "Delimitador de columnas"
 
 #. nfMAr
 #: sc/inc/scfuncs.hrc:4375
@@ -1619,7 +1625,7 @@ msgstr ""
 #: sc/inc/scfuncs.hrc:4376
 msgctxt "SC_OPCODE_TEXTSPLIT"
 msgid "Row Delimiter"
-msgstr ""
+msgstr "Delimitador de filas"
 
 #. dPnbc
 #: sc/inc/scfuncs.hrc:4377
@@ -1669,7 +1675,7 @@ msgstr ""
 #: sc/inc/scfuncs.hrc:4389
 msgctxt "SC_OPCODE_TOCOL"
 msgid "Transforms an array into a single column."
-msgstr ""
+msgstr "Transforma una matriz en una única columna."
 
 #. UAzNC
 #: sc/inc/scfuncs.hrc:4390
@@ -1716,7 +1722,7 @@ msgstr ""
 #: sc/inc/scfuncs.hrc:4401
 msgctxt "SC_OPCODE_TOROW"
 msgid "transforms an array into a single row."
-msgstr ""
+msgstr "Transforma una matriz en una única fila."
 
 #. W9bWe
 #: sc/inc/scfuncs.hrc:4402
@@ -1867,31 +1873,31 @@ msgstr ""
 #: sc/uiconfig/scalc/ui/selectsheetviewdialog.ui:18
 msgctxt "selectsheetviewdialog|SelectSheetView"
 msgid "Select Sheet View"
-msgstr ""
+msgstr "Seleccionar vista de hoja"
 
 #. GTQJA
 #: sc/uiconfig/scalc/ui/selectsheetviewdialog.ui:44
 msgctxt "selectsheetviewdialog|extended_tip|ok"
 msgid "Saves all changes and closes dialog."
-msgstr ""
+msgstr "Guarda todos los cambios y cierra el diálogo."
 
 #. kGFYu
 #: sc/uiconfig/scalc/ui/selectsheetviewdialog.ui:63
 msgctxt "selectsheetviewdialog|extended_tip|cancel"
 msgid "Closes dialog and discards all changes."
-msgstr ""
+msgstr "Cierra el diálogo y descarta todos los cambios."
 
 #. sQPFE
 #: sc/uiconfig/scalc/ui/selectsheetviewdialog.ui:134
 msgctxt "selectsheetviewdialog|extended_tip|entry-list"
 msgid "Available sheet views."
-msgstr ""
+msgstr "Vistas de hoja disponibles."
 
 #. csyNB
 #: sc/uiconfig/scalc/ui/sheetviewbox.ui:17
 msgctxt "sheetviewbox|sheetview_combobox|accessible_name"
 msgid "Sheet View"
-msgstr ""
+msgstr "Vista de hoja"
 
 #. FXK8B
 #: sc/uiconfig/scalc/ui/sidebarcellappearance.ui:87

@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-11-04 22:40+0200\n"
-"PO-Revision-Date: 2025-09-04 15:01+0000\n"
+"PO-Revision-Date: 2025-11-12 12:51+0000\n"
 "Last-Translator: Adolfo Jayme Barrientos <fitojb@ubuntu.com>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/collabora-online/"
 "help/es/>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Translate Toolkit 3.6.0\n"
+"X-Generator: Weblate 5.15-dev\n"
 
 #: html/cool-help.html%2Bdiv.h1:6-5
 msgid "Keyboard Shortcuts"
@@ -1420,11 +1420,11 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.h2:185-9
 msgid "Insert"
-msgstr ""
+msgstr "Ins"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:187-38
 msgid "Insert date"
-msgstr ""
+msgstr "Insertar fecha"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:187-76
 #, fuzzy
