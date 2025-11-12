@@ -15,6 +15,7 @@
 #include <QObject>
 #include <QVariant>
 #include <string>
+#include <thread>
 #include "Document.hpp"
 
 // Qt ⇄ JavaScript bridge
@@ -25,6 +26,7 @@ class Bridge : public QObject
     coda::DocumentData _document;
     QWebEngineView* _webView;
     int _closeNotificationPipeForForwardingThread[2];
+    std::thread _app2js;
 
     std::string promptSaveLocation();
     bool saveDocument(const std::string& savePath);
