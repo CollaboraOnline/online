@@ -28,7 +28,7 @@ public:
     QWebEngineView* webEngineView() { return _webView; }
 
     void load(const Poco::URI& fileURL, bool newFile = false);
-    static WebView* createNewDocument(QWebEngineProfile* profile, const std::string& templateType);
+    static WebView* createNewDocument(QWebEngineProfile* profile, const std::string& templateType, const std::string& templatePath = "");
 
     static WebView* findOpenDocument(const Poco::URI& documentURI);
     static const std::vector<WebView*>& getAllInstances() { return s_instances; }
