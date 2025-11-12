@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-11-04 22:40+0100\n"
-"PO-Revision-Date: 2025-11-08 11:51+0000\n"
+"PO-Revision-Date: 2025-11-12 12:51+0000\n"
 "Last-Translator: Tigran Zargaryan <tigranflib@gmail.com>\n"
 "Language-Team: Armenian <https://hosted.weblate.org/projects/"
 "collabora-online/ui/hy/>\n"
@@ -2904,7 +2904,7 @@ msgstr "Նկարազարդումներ"
 #: src/control/Control.NotebookbarImpress.js:1532
 #: src/control/Control.NotebookbarWriter.js:1297
 msgid "Shapes"
-msgstr "Ձևեր"
+msgstr "Որվագծեր"
 
 #: src/control/Control.NotebookbarCalc.js:1842
 #: src/control/Control.NotebookbarDraw.js:1591
