@@ -2098,6 +2098,33 @@ class Menubar extends window.L.Control {
 						}
 					}
 				}
+
+				const $menuItems = $(menu).children('li');
+
+				$menuItems.each((index, li) => {
+					const $aItem = $(li).children('a').first();
+					if (!$aItem.hasClass('separator')) return;
+
+					const $prevVisible = $(li).prevAll('li').filter(function() {
+						const $a = $(this).children('a').first();
+						return !$a.hasClass('separator') &&
+							$a.css('display') !== 'none' &&
+							$(this).css('display') !== 'none';
+					}).first();
+
+					const $nextVisible = $(li).nextAll('li').filter(function() {
+						const $a = $(this).children('a').first();
+						return !$a.hasClass('separator') &&
+							$a.css('display') !== 'none' &&
+							$(this).css('display') !== 'none';
+					}).first();
+
+					if ($prevVisible.length === 0 || $nextVisible.length === 0) {
+						$aItem.hide();
+					} else {
+						$aItem.show();
+					}
+				});
 			}
 
 			if (id === 'remotelink') {
@@ -2597,7 +2624,7 @@ class Menubar extends window.L.Control {
 			liItem.setAttribute('role', 'menuitem');
 			if (menu[i].id) {
 				liItem.id = 'menu-' + menu[i].id;
-				if (menu[i].id === 'closedocument' && this._map.isReadOnlyMode()) {
+				if (menu[i].id === 'closedocument' && isReadOnly) {
 					// see corresponding css rule for readonly class usage
 					window.L.DomUtil.addClass(liItem, 'readonly');
 				}
