@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-11-04 22:40+0100\n"
-"PO-Revision-Date: 2025-11-05 14:58+0000\n"
+"PO-Revision-Date: 2025-11-11 12:00+0000\n"
 "Last-Translator: Rob Pearson <rob.dunedin@gmail.com>\n"
 "Language-Team: English (New Zealand) <https://hosted.weblate.org/projects/"
 "collabora-online/ui/en_NZ/>\n"
@@ -2809,7 +2809,6 @@ msgid "Select Sheet View"
 msgstr "Select Sheet View"
 
 #: src/control/Control.NotebookbarCalc.js:1430
-#, fuzzy
 msgid "New Sheet View"
 msgstr "New Sheet View"
 
