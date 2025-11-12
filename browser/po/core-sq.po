@@ -2,10 +2,10 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: core-sq\n"
-"PO-Revision-Date: 2025-11-10 16:33+0000\n"
+"PO-Revision-Date: 2025-11-11 11:55+0000\n"
 "Last-Translator: Besnik Bleta <besnik@programeshqip.org>\n"
-"Language-Team: Albanian <https://hosted.weblate.org/projects/collabora-"
-"online/lokit/sq/>\n"
+"Language-Team: Albanian <https://hosted.weblate.org/projects/"
+"collabora-online/lokit/sq/>\n"
 "Language: sq\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -19,7 +19,7 @@ msgctxt ""
 "STR_NAME_MODULE_OPTIONAL_GRFFLT_FLASH\n"
 "LngText.text"
 msgid "Macromedia Flash (SWF)"
-msgstr ""
+msgstr "Macromedia Flash (SWF)"
 
 #. qAk8E
 #: module_graphicfilter.ulf
@@ -28,7 +28,7 @@ msgctxt ""
 "STR_DESC_MODULE_OPTIONAL_GRFFLT_FLASH\n"
 "LngText.text"
 msgid "Macromedia Flash (SWF) Export Filter"
-msgstr ""
+msgstr "Filtër Eksportimi Macromedia Flash (SWF)"
 
 #. vcMGk
 #: folderitem_ooo.ulf
@@ -41,42 +41,44 @@ msgid ""
 "Technology, provided by Collabora Productivity. See https://collaboraoffice."
 "com"
 msgstr ""
+"Collabora Office, suita për zyra, e bazuar në LibreOffice Technology, dhënë "
+"nga Collabora Productivity. Shihni https://collaboraoffice.com"
 
 #. 4rBwc
 #: include/svx/strings.hrc:1040
 msgctxt "RID_SVXSTR_PASTE_AS_DIALOG_TITLE"
 msgid "Paste As"
-msgstr ""
+msgstr "Ngjite Si"
 
 #. aNZNw
 #: svx/uiconfig/ui/dropdownfielddialog.ui:31
 msgctxt "dropdownDialog|OK"
 msgid "OK"
-msgstr ""
+msgstr "OK"
 
 #. 54Dmg
 #: svx/uiconfig/ui/dropdownfielddialog.ui:44
 msgctxt "dropdownDialog|CANCEL"
 msgid "Cancel"
-msgstr ""
+msgstr "Anuloje"
 
 #. gPAYw
 #: svx/uiconfig/ui/findreplacedialog.ui:67
 msgctxt "findreplacedialog|find_tab_btn"
 msgid "Find"
-msgstr ""
+msgstr "Gjej"
 
 #. uknDS
 #: svx/uiconfig/ui/findreplacedialog.ui:80
 msgctxt "findreplacedialog|replace_tab_btn"
 msgid "Replace"
-msgstr ""
+msgstr "Zëvendësoje"
 
 #. 7MFsT
 #: uui/inc/strings.hrc:84
 msgctxt "STR_READONLY_FONT_TITLE"
 msgid "Font Disallows Editing"
-msgstr ""
+msgstr "LLOJI I SHKRONJAVE S’LEJON PËRPUNIM"
 
 #. YRahp
 #: uui/inc/strings.hrc:85
@@ -87,6 +89,11 @@ msgid ""
 "Pressing [ No ] will drop these fonts from the document:\n"
 "$(ARG1)"
 msgstr ""
+"Një a disa lloje shkronjash të trupëzuar te dokumenti s’kanë leje përpunimi."
+"\n"
+"Të hapet dokumenti nën mënyrën vetëm-lexim?\n"
+"Shtypja e [ Jo ]-së do t’i heqë nga dokumenti këto lloje shkronjash:\n"
+"$(ARG1)"
 
 #. 4NkMk
 #: readme.xrm
@@ -98,102 +105,106 @@ msgid ""
 "For more information please visit ${PRODUCTNAME} home page at <a "
 "href=\"https://collaboraoffice.com\">https://CollaboraOffice.com/</a>."
 msgstr ""
+"Për më tepër informacion, ju lutemi vizitoni faqen hyrëse të ${PRODUCTNAME} "
+"te <a href=\"https://collaboraoffice.com\">https://CollaboraOffice.com/</a>."
 
 #. SbQew
 #: chart2/inc/strings.hrc:51
 msgctxt "STR_PAGE_COLOR_PALETTE"
 msgid "Color Palette"
-msgstr ""
+msgstr "Paletë Ngjyrash"
 
 #. YZBr8
 #: chart2/inc/strings.hrc:52
 msgctxt "STR_PAGE_GRADIENT_PRESETS"
 msgid "Gradients"
-msgstr ""
+msgstr "Gradientë"
 
 #. DWGVf
 #: chart2/uiconfig/ui/chartcolorpalettepopup.ui:46
 msgctxt "chartcolorpalettepopup|colorfulwin"
 msgid "Colorful"
-msgstr ""
+msgstr "Shumëngjyrëshe"
 
 #. xmAmH
 #: chart2/uiconfig/ui/chartcolorpalettepopup.ui:98
 msgctxt "chartcolorpalettepopup|monochromaticwin"
 msgid "Monochromatic"
-msgstr ""
+msgstr "Njëngjyrëshe"
 
 #. DrjDt
 #: chart2/uiconfig/ui/chartgradientpalettepopup.ui:46
 msgctxt "chartgradientpalettepopup|lightwin"
 msgid "Light Variations"
-msgstr ""
+msgstr "Variante të Çelët"
 
 #. Y3PP5
 #: chart2/uiconfig/ui/chartgradientpalettepopup.ui:97
 msgctxt "chartgradientpalettepopup|darkwin"
 msgid "Dark Variations"
-msgstr ""
+msgstr "Variante të Errët"
 
 #. WWm9R
 #: chart2/uiconfig/ui/chartthemepopup.ui:51
 msgctxt "chartthemepopup|managechartstyle"
 msgid "_Manage chart styles"
-msgstr ""
+msgstr "_Administroni stile grafiku"
 
 #. BFxBa
 #: chart2/uiconfig/ui/dlg_Theme.ui:16
 msgctxt "dlg_Theme|ChartThemeDialog"
 msgid "Manage Chart Styles"
-msgstr ""
+msgstr "Administroni Stile Grafikësh"
 
 #. kqBFK
 #: chart2/uiconfig/ui/dlg_Theme.ui:46
 msgctxt "dlg_Theme|iconviewlabel|tooltip_text"
 msgid "Selectable chart styles list."
-msgstr ""
+msgstr "Listë stilesh të përzgjedhshëm grafiku."
 
 #. WsSmE
 #: chart2/uiconfig/ui/dlg_Theme.ui:51
 msgctxt "dlg_Theme|iconviewlabel"
 msgid "_Chart styles:"
-msgstr ""
+msgstr "Stile _grafikësh:"
 
 #. DYH5e
 #: chart2/uiconfig/ui/dlg_Theme.ui:122
 msgctxt "dlg_Theme|chartload"
 msgid "_Load style to chart"
-msgstr ""
+msgstr "_Ngarkoje stilin te grafik"
 
 #. YWkrA
 #: chart2/uiconfig/ui/dlg_Theme.ui:134
 msgctxt "dlg_Theme|chartsave"
 msgid "_Save to styles"
-msgstr ""
+msgstr "_Ruaje te stile"
 
 #. h8L8Y
 #: chart2/uiconfig/ui/dlg_Theme.ui:146
 msgctxt "dlg_Theme|chartdelete"
 msgid "_Delete style"
-msgstr ""
+msgstr "_Fshije stilin"
 
 #. g5qPU
 #: chart2/uiconfig/ui/dlg_Theme.ui:158
 msgctxt "dlg_Theme|chartsavenew"
 msgid "Save to _new style"
-msgstr ""
+msgstr "Ruaje në stil të _ri"
 
 #. GPgLR
 #: chart2/uiconfig/ui/dlg_Theme.ui:183
 msgctxt "dlg_Theme|chartmanage"
 msgid "_Manage chart styles"
-msgstr ""
+msgstr "_Administroni stile grafikësh"
 
 #. NMcqp
 #: chart2/uiconfig/ui/sidebarcolors.ui:30
 msgctxt "sidebarcolors|bordertype|tooltip_text"
 msgid "Allow to select a color palette to apply to current chart data series."
 msgstr ""
+"Lejo të përzgjidhet një paletë ngjyrash për ta aplikuar te seritë e tanishme "
+"të të dhënave të grafikut."
 
 #. FXK8B
 #: chart2/uiconfig/ui/sidebarcolors.ui:42
@@ -207,6 +218,8 @@ msgctxt "sidebargradients|bordertype|tooltip_text"
 msgid ""
 "Allow to select a gradient palette to apply to current chart data series."
 msgstr ""
+"Lejo të përzgjidhet një paletë gradientësh për ta aplikuar te seritë e "
+"tanishme të të dhënave të grafikut."
 
 #. FXK8B
 #: chart2/uiconfig/ui/sidebargradients.ui:42
@@ -218,121 +231,121 @@ msgstr ""
 #: chart2/uiconfig/ui/sidebartheme.ui:25
 msgctxt "sidebartheme|themelist|tooltip_text"
 msgid "Allow to select a theme to apply to the current chart."
-msgstr ""
+msgstr "Lejoni të përzgjidhet një temë për ta aplikuar te grafiku i tanishëm."
 
 #. aGvuY
 #: chart2/uiconfig/ui/sidebartheme.ui:37
 msgctxt "sidebartheme|themetype-atkobject"
 msgid "Themes"
-msgstr ""
+msgstr "Tema"
 
 #. YB6Et
 #: chart2/uiconfig/ui/sidebartheme.ui:48
 msgctxt "sidebartheme|savetonew"
 msgid "_Save to new theme"
-msgstr ""
+msgstr "_Ruaje në temë të re"
 
 #. 4C556
 #: chart2/uiconfig/ui/sidebartype.ui:102
 msgctxt "sidebartype|3dschemeft"
 msgid "3D _Scheme:"
-msgstr ""
+msgstr "_Skemë 2D:"
 
 #. x3adg
 #: chart2/uiconfig/ui/tp_ChartColorPalette.ui:68
 msgctxt "tp_ChartColorPalette|colorfulwin"
 msgid "Colorful"
-msgstr ""
+msgstr "Shumëngjyrëshe"
 
 #. 8QjnP
 #: chart2/uiconfig/ui/tp_ChartColorPalette.ui:126
 msgctxt "tp_ChartColorPalette|monochromaticwin"
 msgid "Monochromatic"
-msgstr ""
+msgstr "Njëngjyrëshe"
 
 #. 6JxiC
 #: chart2/uiconfig/ui/tp_ChartGradients.ui:69
 msgctxt "tp_ChartGradients|lightwin"
 msgid "Light Variations"
-msgstr ""
+msgstr "Variante të Çelët"
 
 #. DmWVa
 #: chart2/uiconfig/ui/tp_ChartGradients.ui:128
 msgctxt "tp_ChartGradients|darkwin"
 msgid "Dark Variations"
-msgstr ""
+msgstr "Variante të Errët"
 
 #. FG2rh
 #: chart2/uiconfig/ui/tp_ChartType.ui:114
 msgctxt "tp_ChartType|extended_tip|subtype_iconview"
 msgid "Select a sub type of the basic chart type."
-msgstr ""
+msgstr "Përzgjidhni një nënlloj të llojit bazë të grafikëve."
 
 #. Wh4j6
 #: chart2/uiconfig/ui/tp_ChartType.ui:167
 msgctxt "tp_ChartType|3dschemeft"
 msgid "3D _Scheme:"
-msgstr ""
+msgstr "_Skemë 3D:"
 
 #. EPGtZ
 #: cui/uiconfig/ui/hyperlinkinternetpage.ui:64
 msgctxt "hyperlinkinternetpage|target_label"
 msgid "Link:"
-msgstr ""
+msgstr "Lidhje:"
 
 #. gfELk
 #: cui/uiconfig/ui/pageformatpage.ui:260
 msgctxt "pageformatpage|checkResizeAllPages"
 msgid "Resize all pages"
-msgstr ""
+msgstr "Ripërmasoji krejt faqet"
 
 #. NBdEp
 #: cui/uiconfig/ui/pickbulletpage.ui:45
 msgctxt "pickbulletpage|extended_tip|pick_bullet_iconview"
 msgid "Click the bullet style that you want to use."
-msgstr ""
+msgstr "Klikoni stilin me toptha që dëshironi të përdorni."
 
 #. rkoDB
 #: cui/uiconfig/ui/pickgraphicpage.ui:45
 msgctxt "pickgraphicpage|extended_tip|pick_graphic_iconview"
 msgid "Click the graphics that you want to use as bullets."
-msgstr ""
+msgstr "Klikoni elementët graikë që doni të përdoren si toptha."
 
 #. WGzy5
 #: cui/uiconfig/ui/picknumberingpage.ui:44
 msgctxt "picknumberingpage|extended_tip|pick_numbering_iconview"
 msgid "Click the numbering scheme that you want to use."
-msgstr ""
+msgstr "Klikoni skemën e numërimit që doni të përdoret."
 
 #. avppC
 #: cui/uiconfig/ui/pickoutlinepage.ui:44
 msgctxt "pickoutlinepage|extended_tip|pick_outline_iconview"
 msgid "Click the outline style that you want to use."
-msgstr ""
+msgstr "Klikoni stilin e përvijimit që doni të përdoret."
 
 #. qpArp
 #: cui/uiconfig/ui/toolbarmodedialog.ui:124
 msgctxt "ToolbarmodeDialog|radiobutton1"
 msgid "Compact"
-msgstr ""
+msgstr "Kompakte"
 
 #. ZbYiG
 #: include/svtools/strings.hrc:71
 msgctxt "STR_FORMAT_ID_MARKDOWN"
 msgid "Markdown"
-msgstr ""
+msgstr "Markdown"
 
 #. HASc5
 #: include/sfx2/strings.hrc:227
 msgctxt "STR_SID_QUICKFIND"
 msgid "Quick Find"
-msgstr ""
+msgstr "Gjetje e Shpejtë"
 
 #. 2VmCo
 #: sfx2/uiconfig/ui/licensedialog.ui:41
 msgctxt "licensedialog|eula"
 msgid "_EULA"
-msgstr ""
+msgstr "_EULA"
 
 #. jjkw7
 #: sfx2/uiconfig/ui/licensedialog.ui:85
@@ -342,6 +355,9 @@ msgid ""
 "End User License and Subscription Agreement; choose EULA to see exact "
 "details in English."
 msgstr ""
+"Paketa dyore e %PRODUCTNAME jepet sipas kushteve të Licencës së Përdoruesit "
+"të Thjeshtë dhe Marrëveshjes së Pajtimit; që të shihni me përpikëri "
+"hollësitë në anglisht, zgjidhni EULA."
 
 #. YHTHB
 #: sfx2/uiconfig/ui/templatepanel.ui:137
@@ -353,61 +369,61 @@ msgstr ""
 #: sfx2/uiconfig/ui/templatepanel.ui:156
 msgctxt "templatepanel|accessible_name|new"
 msgid "New Style from Selection"
-msgstr ""
+msgstr "Stil i Ri prej Përzgjedhjes"
 
 #. 5ZAqh
 #: sfx2/uiconfig/ui/templatepanel.ui:174
 msgctxt "templatepanel|accessible_name|newmenu"
 msgid "Styles actions"
-msgstr ""
+msgstr "Veprime stilesh"
 
 #. 7NfdA
 #: sfx2/uiconfig/ui/templatepanel.ui:192
 msgctxt "templatepanel|accessible_name|update"
 msgid "Update Style"
-msgstr ""
+msgstr "Përditësoni Stil"
 
 #. BGAhD
 #: sfx2/uiconfig/ui/templatepanel.ui:242
 msgctxt "commontemplate|STR_HIGHLIGHT_CHECKBOX"
 msgid "Highlight styles"
-msgstr ""
+msgstr "Stile theksimi"
 
 #. 5xrhC
 #: sw/inc/strings.hrc:232
 msgctxt "STR_COLUMN_ICONVIEW_ITEM0"
 msgid "1 column"
-msgstr ""
+msgstr "1 shtyllë"
 
 #. VAfCS
 #: sw/inc/strings.hrc:233
 msgctxt "STR_COLUMN_ICONVIEW_ITEM1"
 msgid "2 columns with equal size"
-msgstr ""
+msgstr "2 shtylla me madhësi të njëjtë"
 
 #. g8pFG
 #: sw/inc/strings.hrc:234
 msgctxt "STR_COLUMN_ICONVIEW_ITEM2"
 msgid "3 columns with equal size"
-msgstr ""
+msgstr "3 shtylla me madhësi të njëjtë"
 
 #. QJxAd
 #: sw/inc/strings.hrc:235
 msgctxt "STR_COLUMN_ICONVIEW_ITEM3"
 msgid "2 columns with different size (left > right)"
-msgstr ""
+msgstr "2 shtylla me madhësi të ndryshme (ajo majtas > ajo djathtas)"
 
 #. MHk4E
 #: sw/inc/strings.hrc:236
 msgctxt "STR_COLUMN_ICONVIEW_ITEM4"
 msgid "2 columns with different size (left < right)"
-msgstr ""
+msgstr "2 shtylla me madhësi të ndryshme (ajo majtas < ajo djathtas)"
 
 #. xPgHS
 #: sw/inc/strings.hrc:498
 msgctxt "STR_REINSTATE_REDLINE"
 msgid "Reinstate change: $1"
-msgstr ""
+msgstr "Riktheje ndryshimin: $1"
 
 #. afEVQ
 #: sw/inc/strings.hrc:1536
@@ -419,26 +435,26 @@ msgstr ""
 #: sw/uiconfig/swriter/ui/columnpage.ui:122
 msgctxt "columnpage|columnft"
 msgid "Column"
-msgstr ""
+msgstr "Shtyllë"
 
 #. Lurdj
 #: sw/uiconfig/swriter/ui/columnpage.ui:868
 msgctxt "columnpage|extended_tip|column-iconview"
 msgid ""
 "Enter the number of columns that you want in the page, frame, or section."
-msgstr ""
+msgstr "Jepni numrin e shtyllave që doni te faqja, korniza apo seksioni."
 
 #. Ci9GE
 #: sw/uiconfig/swriter/ui/spellmenu.ui:34
 msgctxt "spellmenu|add"
 msgid "Add to _Dictionary (standard.dic)"
-msgstr ""
+msgstr "Shtoje në _Fjalor (standard.dic)"
 
 #. FxkzA
 #: sw/uiconfig/swriter/ui/wordcount-mobile.ui:643
 msgctxt "wordcount-mobile|comments"
 msgid "Comments"
-msgstr ""
+msgstr "Komente"
 
 #. SsL8u
 #: formula/inc/core_resource.hrc:2628
@@ -456,13 +472,13 @@ msgstr ""
 #: formula/inc/core_resource.hrc:2630
 msgctxt "RID_STRLIST_FUNCTION_NAMES"
 msgid "DROP"
-msgstr ""
+msgstr "DROP"
 
 #. eTG8r
 #: formula/inc/core_resource.hrc:2631
 msgctxt "RID_STRLIST_FUNCTION_NAMES"
 msgid "EXPAND"
-msgstr ""
+msgstr "EXPAND"
 
 #. aJk9K
 #: formula/inc/core_resource.hrc:2632
@@ -480,7 +496,7 @@ msgstr ""
 #: formula/inc/core_resource.hrc:2634
 msgctxt "RID_STRLIST_FUNCTION_NAMES"
 msgid "TAKE"
-msgstr ""
+msgstr "TAKE"
 
 #. CiTMM
 #: formula/inc/core_resource.hrc:2635
@@ -504,7 +520,7 @@ msgstr ""
 #: formula/inc/core_resource.hrc:2638
 msgctxt "RID_STRLIST_FUNCTION_NAMES"
 msgid "TOCOL"
-msgstr ""
+msgstr "TOCOL"
 
 #. xKDBC
 #: formula/inc/core_resource.hrc:2639
@@ -528,25 +544,25 @@ msgstr ""
 #: formula/uiconfig/ui/functionpage.ui:80
 msgctxt "functionpage|label_category"
 msgid "_Category:"
-msgstr ""
+msgstr "_Kategori:"
 
 #. BNnFg
 #: formula/uiconfig/ui/functionpage.ui:115
 msgctxt "functionpage|label_function"
 msgid "_Function:"
-msgstr ""
+msgstr "_Funksion:"
 
 #. zRASZ
 #: formula/uiconfig/ui/structpage.ui:28
 msgctxt "structpage|label_struct"
 msgid "Content:"
-msgstr ""
+msgstr "Lëndë:"
 
 #. DPToC
 #: sd/uiconfig/simpress/ui/layoutpanel.ui:41
 msgctxt "layoutpanel|extended_tip|layoutpanel_icons"
 msgid "List of available layout templates."
-msgstr ""
+msgstr "Listë e gjedheve të gatshme skemash."
 
 #. Y3kBV
 #: filter/uiconfig/ui/impswfdialog.ui:14
@@ -569,12 +585,14 @@ msgstr ""
 msgctxt "impswfdialog|exportall"
 msgid "Export _all slides (uncheck to export current slide)"
 msgstr ""
+"Eksporto _krejt diapozitivat "
+"(që të eksportohet diapozitivi i tanishëm, hiqini shenjën)"
 
 #. CB9hD
 #: filter/uiconfig/ui/impswfdialog.ui:155
 msgctxt "impswfdialog|exportmultiplefiles"
 msgid "Export as _multiple files"
-msgstr ""
+msgstr "Eksportoje si sh_umë kartela"
 
 #. cDbFq
 #: filter/uiconfig/ui/impswfdialog.ui:175
@@ -598,19 +616,20 @@ msgstr "Eksporto _lëndë diapozitivi"
 #: filter/uiconfig/ui/impswfdialog.ui:229
 msgctxt "impswfdialog|exportsound"
 msgid "Export _Verilogix Slide Annotations"
-msgstr ""
+msgstr "Eksporto Shënime Diapozitivi _Verilogix"
 
 #. EAyk7
 #: filter/uiconfig/ui/impswfdialog.ui:243
 msgctxt "impswfdialog|exportoleasjpeg"
 msgid "Export OLE objects as _JPEG images"
-msgstr ""
+msgstr "Eksporto objekte OLE si figura _JPEG"
 
 #. eNsuA
 #: filter/uiconfig/ui/pdfgeneralpage.ui:550
 msgctxt "pdfgeneralpage|embed|tooltip_text"
 msgid "Creates a PDF that embeds the original ODF file as an attachment."
 msgstr ""
+"Krijon një PDF që trupëzon kartelën origjinale ODF si një bashkëngjitje."
 
 #. JS7DG
 #: filter/uiconfig/ui/pdfgeneralpage.ui:556
@@ -619,6 +638,8 @@ msgid ""
 "This setting enables you to export the document as a .pdf file containing "
 "two file formats: PDF and ODF as an attachment. "
 msgstr ""
+"Ky rregullim ju bën të mundur ta eksportoni dokumentin si një kartelë .pdf "
+"që përmban dy formate kartelash: PDF dhe ODF si një bashkëngjitje. "
 
 #. NCgBM
 #: filter/uiconfig/ui/pdfgeneralpage.ui:583
@@ -627,24 +648,27 @@ msgid ""
 "Select the PDF version. PDF/A version variants creates an ISO 19005 "
 "compliant PDF file, ideal for long-term document preservation."
 msgstr ""
+"Përzgjidhni versionin PDF. Variantet e versionit PDF/A krijojnë një kartelë "
+"PDF në pajtim me standardin ISO 19005, ideale për ruajtje afatgjatë "
+"dokumentesh."
 
 #. Ac3Ga
 #: filter/uiconfig/ui/pdfgeneralpage.ui:587
 msgctxt "pdfgeneralpage|pdf_version"
 msgid "PDF 1.7"
-msgstr ""
+msgstr "PDF 1.7"
 
 #. D6SQE
 #: filter/uiconfig/ui/pdfgeneralpage.ui:588
 msgctxt "pdfgeneralpage|pdf_version"
 msgid "PDF 2.0"
-msgstr ""
+msgstr "PDF 2.0"
 
 #. Pk2QP
 #: filter/uiconfig/ui/pdfgeneralpage.ui:592
 msgctxt "pdfgeneralpage|pdf_version"
 msgid "PDF/A-4 (PDF 2.0 base)"
-msgstr ""
+msgstr "PDF/A-4 (Bazë PDF 2.0)"
 
 #. S7DSM
 #: filter/uiconfig/ui/pdfgeneralpage.ui:599
@@ -662,7 +686,7 @@ msgstr ""
 #: filter/uiconfig/ui/pdfgeneralpage.ui:620
 msgctxt "pdfgeneralpage|pdf_version"
 msgid "PDF_ Version:"
-msgstr ""
+msgstr "Version_PDF-je:"
 
 #. tCrYc
 #: filter/uiconfig/ui/pdfgeneralpage.ui:677
@@ -674,13 +698,13 @@ msgstr "Të përgjithshme"
 #: filter/uiconfig/ui/pdfgeneralpage.ui:821
 msgctxt "pdfgeneralpage|forms_label"
 msgid "Forms"
-msgstr ""
+msgstr "Formularë"
 
 #. kvAZK
 #: filter/uiconfig/ui/pdfgeneralpage.ui:1077
 msgctxt "pdfgeneralpage|structure_label"
 msgid "Structure"
-msgstr ""
+msgstr "Strukturë"
 
 #. BXRtj
 #: Markdown.xcu
@@ -690,7 +714,7 @@ msgctxt ""
 "UIName\n"
 "value.text"
 msgid "Markdown Document"
-msgstr ""
+msgstr "Dokument Markdown"
 
 #. 9Q5Zj
 #: draw_flash_Export.xcu
@@ -700,7 +724,7 @@ msgctxt ""
 "UIName\n"
 "value.text"
 msgid "Macromedia Flash (SWF)"
-msgstr ""
+msgstr "Macromedia Flash (SWF)"
 
 #. MsYCr
 #: impress_flash_Export.xcu
@@ -710,7 +734,7 @@ msgctxt ""
 "UIName\n"
 "value.text"
 msgid "Macromedia Flash (SWF)"
-msgstr ""
+msgstr "Macromedia Flash (SWF)"
 
 #. FoizC
 #: CalcCommands.xcu
@@ -720,7 +744,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Current Sheet View"
-msgstr ""
+msgstr "Parje e Tanishme Flete"
 
 #. 3Ep4Y
 #: CalcCommands.xcu
@@ -730,7 +754,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Insert Function"
-msgstr ""
+msgstr "Futni Funksion"
 
 #. rxGTc
 #: CalcCommands.xcu
@@ -740,7 +764,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Print Grid Lines"
-msgstr ""
+msgstr "-L\t\tshtyp rreshta me fjalë të shkruara gabim"
 
 #. a35bF
 #: CalcCommands.xcu
@@ -750,7 +774,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "New Sheet View"
-msgstr ""
+msgstr "Parje e Re Flete"
 
 #. AKfar
 #: CalcCommands.xcu
@@ -760,7 +784,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Remove Sheet View"
-msgstr ""
+msgstr "Hiq Pamje Flete"
 
 #. M52nh
 #: CalcCommands.xcu
@@ -770,7 +794,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Switch To Next Sheet View"
-msgstr ""
+msgstr "Kalo te Parje Flete Pasuese"
 
 #. qfgad
 #: CalcCommands.xcu
@@ -780,7 +804,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Switch To Previous Sheet View"
-msgstr ""
+msgstr "Kalo te Parje Flete të Mëparshme"
 
 #. FJEd2
 #: CalcCommands.xcu
@@ -790,7 +814,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Select Sheet View"
-msgstr ""
+msgstr "Përzgjidhni Parje Flete"
 
 #. vCsC3
 #: CalcCommands.xcu
@@ -800,7 +824,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Exit Sheet View"
-msgstr ""
+msgstr "Dil nga Parje Flete"
 
 #. uuvrm
 #: ChartCommands.xcu
@@ -810,7 +834,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Manage Themes..."
-msgstr ""
+msgstr "Administroni Tema…"
 
 #. 5LESd
 #: ChartCommands.xcu
@@ -850,7 +874,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "New Canvas Slide"
-msgstr ""
+msgstr "Diapozitiv i Ri Canvas"
 
 #. w3Yib
 #: DrawImpressCommands.xcu
@@ -870,7 +894,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Re-order pages"
-msgstr ""
+msgstr "Rirendit faqe"
 
 #. ca6bM
 #: GenericCommands.xcu
@@ -880,7 +904,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Slide Transitions"
-msgstr ""
+msgstr "Tranzicion Diapozitivash"
 
 #. 5pSJ6
 #: GenericCommands.xcu
@@ -890,7 +914,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Master Pages"
-msgstr ""
+msgstr "Faqe Master"
 
 #. DCEaK
 #: GenericCommands.xcu
@@ -900,7 +924,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "~Hyperlink"
-msgstr ""
+msgstr "~Tejlidhje"
 
 #. aFFu9
 #: GenericCommands.xcu
@@ -910,7 +934,7 @@ msgctxt ""
 "PopupLabel\n"
 "value.text"
 msgid "Insert Hyperlink..."
-msgstr ""
+msgstr "Futni Tejlidhje…"
 
 #. czVMP
 #: GenericCommands.xcu
@@ -930,7 +954,7 @@ msgctxt ""
 "TooltipLabel\n"
 "value.text"
 msgid "Select Comment In The Navigator Window/Sidebar"
-msgstr ""
+msgstr "Përzgjidhni Koment te Dritare/Anështylli Menuje Lëvizjesh"
 
 #. 83Euq
 #: GenericCommands.xcu
@@ -940,7 +964,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Change record mode"
-msgstr ""
+msgstr "Ndryshoni mënyrë regjistrimi"
 
 #. nG2DH
 #: GenericCommands.xcu
@@ -950,7 +974,7 @@ msgctxt ""
 "ContextLabel\n"
 "value.text"
 msgid "Record mode"
-msgstr ""
+msgstr "Mënyra regjistrim"
 
 #. fDK7V
 #: GenericCommands.xcu
@@ -960,7 +984,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Add To Dictionary"
-msgstr ""
+msgstr "Shtoje Në Fjalor"
 
 #. zETLd
 #: ImpressWindowState.xcu
@@ -971,7 +995,7 @@ msgctxt ""
 "UIName\n"
 "value.text"
 msgid "Slide Sorter/Pane (Canvas)"
-msgstr ""
+msgstr "Renditës/Kuadrat Diapozitivash (Canvas)"
 
 #. BQB9h
 #: ImpressWindowState.xcu
@@ -1012,7 +1036,7 @@ msgctxt ""
 "Title\n"
 "value.text"
 msgid "Theme"
-msgstr ""
+msgstr "Temë"
 
 #. dgWCC
 #: Sidebar.xcu
@@ -1022,7 +1046,7 @@ msgctxt ""
 "Title\n"
 "value.text"
 msgid "Gradients"
-msgstr ""
+msgstr "Gradientë"
 
 #. ezFez
 #: WriterCommands.xcu
@@ -1032,7 +1056,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Reinstate and Move to Next"
-msgstr ""
+msgstr "Riktheje dhe Kalo te Pasuesi"
 
 #. NmvTm
 #: WriterCommands.xcu
@@ -1052,7 +1076,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Reinstate All"
-msgstr ""
+msgstr "Riktheji Krejt"
 
 #. QkP7E
 #: WriterCommands.xcu
@@ -1062,7 +1086,7 @@ msgctxt ""
 "TooltipLabel\n"
 "value.text"
 msgid "Reinstate All Tracked Changes"
-msgstr ""
+msgstr "Riktheni Krejt Ndryshimet e Ndjekura"
 
 #. SRvKK
 #: WriterCommands.xcu
@@ -1072,7 +1096,7 @@ msgctxt ""
 "PopupLabel\n"
 "value.text"
 msgid "Reinstate All Changes"
-msgstr ""
+msgstr "Riktheni Krejt Ndryshimet"
 
 #. 6w9UB
 #: WriterCommands.xcu
@@ -1082,7 +1106,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Reinstate"
-msgstr ""
+msgstr "Riktheje"
 
 #. RgBxU
 #: WriterCommands.xcu
@@ -1102,7 +1126,7 @@ msgctxt ""
 "PopupLabel\n"
 "value.text"
 msgid "Reinstate Change"
-msgstr ""
+msgstr "Riktheje Ndryshimin"
 
 #. duoP7
 #: WriterCommands.xcu
@@ -1112,7 +1136,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Record changes in this view"
-msgstr ""
+msgstr "Regjistro ndryshime në këtë pamje"
 
 #. TADBE
 #: WriterCommands.xcu
@@ -1122,7 +1146,7 @@ msgctxt ""
 "ContextLabel\n"
 "value.text"
 msgid "~Changes in this view"
-msgstr ""
+msgstr "~Ndryshime në këtë pamje"
 
 #. nn4AU
 #: WriterCommands.xcu
@@ -1132,7 +1156,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Record changes in all views"
-msgstr ""
+msgstr "Regjistro ndryshime në krejt pamjet"
 
 #. DJphX
 #: WriterCommands.xcu
@@ -1142,79 +1166,79 @@ msgctxt ""
 "ContextLabel\n"
 "value.text"
 msgid "~Changes in all views"
-msgstr ""
+msgstr "~Ndryshime në krejt parjet"
 
 #. cG7BY
 #: sc/inc/globstr.hrc:592
 msgctxt "STR_SHEET_VIEW_DEFAULT_VIEW_NAME"
 msgid "Default View"
-msgstr ""
+msgstr "Pamje Parazgjedhje"
 
 #. aYwkp
 #: sc/inc/globstr.hrc:593
 msgctxt "STR_SHEET_VIEW_TEMPORARY_NAME_TEMPLATE"
 msgid "Temporary View %1"
-msgstr ""
+msgstr "Parje e Përkohshme $1"
 
 #. ADmez
 #: sc/inc/scfuncs.hrc:4257
 msgctxt "SC_OPCODE_CHOOSECOLS"
 msgid "Returns the specified columns from an array."
-msgstr ""
+msgstr "Jep nga një matricë shtyllat e treguara."
 
 #. mgCeG
 #: sc/inc/scfuncs.hrc:4258
 msgctxt "SC_OPCODE_CHOOSECOLS"
 msgid "Array"
-msgstr ""
+msgstr "Matricë"
 
 #. vErtR
 #: sc/inc/scfuncs.hrc:4259
 msgctxt "SC_OPCODE_CHOOSECOLS"
 msgid "The array containing the columns to be returned in the new array."
-msgstr ""
+msgstr "Matrica që përmban shtyllat për t’u dhënë te matrica e re."
 
 #. EuvxU
 #: sc/inc/scfuncs.hrc:4260
 msgctxt "SC_OPCODE_CHOOSECOLS"
 msgid "Column "
-msgstr ""
+msgstr "Shtyllë "
 
 #. Akc9t
 #: sc/inc/scfuncs.hrc:4261
 msgctxt "SC_OPCODE_CHOOSECOLS"
 msgid "Column 1, Column 2,... The list of column numbers to be returned."
-msgstr ""
+msgstr "Shtylla 1, Shtylla 2,… Lista e numrave të shtyllave për t’u sjellë."
 
 #. 78gQu
 #: sc/inc/scfuncs.hrc:4267
 msgctxt "SC_OPCODE_CHOOSEROWS"
 msgid "Returns the specified rows from an array."
-msgstr ""
+msgstr "Jep nga një matricë rreshtat e treguar."
 
 #. JAg4y
 #: sc/inc/scfuncs.hrc:4268
 msgctxt "SC_OPCODE_CHOOSEROWS"
 msgid "Array"
-msgstr ""
+msgstr "Matricë"
 
 #. GFWtk
 #: sc/inc/scfuncs.hrc:4269
 msgctxt "SC_OPCODE_CHOOSEROWS"
 msgid "The array containing the rows to be returned in the new array."
-msgstr ""
+msgstr "Matrica që përmban rreshtat për t’u dhënë te matrica e re."
 
 #. PDBbE
 #: sc/inc/scfuncs.hrc:4270
 msgctxt "SC_OPCODE_CHOOSEROWS"
 msgid "Row "
-msgstr ""
+msgstr "Rresht "
 
 #. dXjgB
 #: sc/inc/scfuncs.hrc:4271
 msgctxt "SC_OPCODE_CHOOSEROWS"
 msgid "Row 1, Row 2,... The list of row numbers to be returned."
-msgstr ""
+msgstr "Rreshti 1, Rreshti 2,… Lista e numrave të rreshtave për t’u sjellë."
 
 #. 4uTLx
 #: sc/inc/scfuncs.hrc:4277
@@ -1223,24 +1247,26 @@ msgid ""
 "Excludes a specified number of contiguous rows or columns from the start or "
 "end of an array."
 msgstr ""
+"Përjashton një numër të caktuar rreshtash ose shtyllash të vazhdueshme nga "
+"fillimi apo fundi i një matrice."
 
 #. W6FYc
 #: sc/inc/scfuncs.hrc:4278
 msgctxt "SC_OPCODE_DROP"
 msgid "Array"
-msgstr ""
+msgstr "Matricë"
 
 #. zEu4G
 #: sc/inc/scfuncs.hrc:4279
 msgctxt "SC_OPCODE_DROP"
 msgid "The array from which to drop rows or columns."
-msgstr ""
+msgstr "Matrica prej të cilës të hiqen rreshta apo shtylla."
 
 #. BFPt4
 #: sc/inc/scfuncs.hrc:4280
 msgctxt "SC_OPCODE_DROP"
 msgid "Rows"
-msgstr ""
+msgstr "Rreshta"
 
 #. yyjnc
 #: sc/inc/scfuncs.hrc:4281
@@ -1248,12 +1274,14 @@ msgctxt "SC_OPCODE_DROP"
 msgid ""
 "The number of rows to drop. A negative value drops from the end of the array."
 msgstr ""
+"Numri i rreshtave për t’u hequr. Një vlerë negative sjell heqjen që prej "
+"fundit të matricës."
 
 #. 6sAoA
 #: sc/inc/scfuncs.hrc:4282
 msgctxt "SC_OPCODE_DROP"
 msgid "Columns"
-msgstr ""
+msgstr "Shtylla"
 
 #. cAxPB
 #: sc/inc/scfuncs.hrc:4283
@@ -1262,30 +1290,34 @@ msgid ""
 "The number of columns to drop. A negative value drops from the end of the "
 "array."
 msgstr ""
+"Numri i shtyllave për t’u hequr. Një vlerë negative sjell heqjen që prej "
+"fundit të matricës."
 
 #. cXvVY
 #: sc/inc/scfuncs.hrc:4289
 msgctxt "SC_OPCODE_EXPAND"
 msgid "Expands or pads an array to specified row and column dimensions."
 msgstr ""
+"Zgjeron, ose plotëson një matricë sa përmasat e treguara të rreshtave dhe "
+"shtyllave."
 
 #. kuERH
 #: sc/inc/scfuncs.hrc:4290
 msgctxt "SC_OPCODE_EXPAND"
 msgid "Array"
-msgstr ""
+msgstr "Matricë"
 
 #. E9YDC
 #: sc/inc/scfuncs.hrc:4291
 msgctxt "SC_OPCODE_EXPAND"
 msgid "The array to expand."
-msgstr ""
+msgstr "Matrica për t’u zgjeruar."
 
 #. EaNgG
 #: sc/inc/scfuncs.hrc:4292
 msgctxt "SC_OPCODE_EXPAND"
 msgid "Rows"
-msgstr ""
+msgstr "Rreshta"
 
 #. QzQiB
 #: sc/inc/scfuncs.hrc:4293
@@ -1294,12 +1326,14 @@ msgid ""
 "The number of rows in the expanded array. If missing, rows will not be "
 "expanded."
 msgstr ""
+"Numri i rreshtave te matrica e zgjeruar. Në mungoftë, numri i rreshtave s’do "
+"të rritet."
 
 #. qjcxB
 #: sc/inc/scfuncs.hrc:4294
 msgctxt "SC_OPCODE_EXPAND"
 msgid "Columns"
-msgstr ""
+msgstr "Shtylla"
 
 #. EVAXE
 #: sc/inc/scfuncs.hrc:4295
@@ -1308,36 +1342,38 @@ msgid ""
 "The number of columns in the expanded array. If missing, columns will not be "
 "expanded."
 msgstr ""
+"Numri i shtyllave te matrica e zgjeruar. Në mungoftë, numri i shtyllave s’do "
+"të rritet."
 
 #. QPyBK
 #: sc/inc/scfuncs.hrc:4296
 msgctxt "SC_OPCODE_EXPAND"
 msgid "Pad with"
-msgstr ""
+msgstr "Plotësoje me"
 
 #. kHatA
 #: sc/inc/scfuncs.hrc:4297
 msgctxt "SC_OPCODE_EXPAND"
 msgid "The value with which to pad. The default is #N/A."
-msgstr ""
+msgstr "Vlera me të cilën të plotësohet. Parazgjedhja është #N/A."
 
 #. m7qUf
 #: sc/inc/scfuncs.hrc:4303
 msgctxt "SC_OPCODE_HSTACK"
 msgid "Appends arrays horizontally to create a larger array."
-msgstr ""
+msgstr "Shton horizontalisht matrica, për të krijuar një matricë më të madhe."
 
 #. LnAFg
 #: sc/inc/scfuncs.hrc:4304 sc/inc/scfuncs.hrc:4306
 msgctxt "SC_OPCODE_HSTACK"
 msgid "Array"
-msgstr ""
+msgstr "Matricë"
 
 #. uHbHC
 #: sc/inc/scfuncs.hrc:4305
 msgctxt "SC_OPCODE_HSTACK"
 msgid "The first array to append."
-msgstr ""
+msgstr "Matrica e parë për t’u shtuar."
 
 #. QRA57
 #: sc/inc/scfuncs.hrc:4307
@@ -1346,24 +1382,26 @@ msgid ""
 "Array 1, Array 2,... The following arrays to append. If an array has fewer "
 "rows, #N/A error will be returned in the additional rows."
 msgstr ""
+"Matrica 1, Matrica 2,… Matricat vijuese që duhen shtuar Nëse një matricë ka "
+"më pak rreshta, #N/A error will be returned in the additional rows."
 
 #. 7zS24
 #: sc/inc/scfuncs.hrc:4313
 msgctxt "SC_OPCODE_VSTACK"
 msgid "Appends arrays vertically to create a larger array."
-msgstr ""
+msgstr "Shton vertikalisht matrica, për të krijuar një matricë më të madhe."
 
 #. rhVRC
 #: sc/inc/scfuncs.hrc:4314 sc/inc/scfuncs.hrc:4316
 msgctxt "SC_OPCODE_VSTACK"
 msgid "Array"
-msgstr ""
+msgstr "Matricë"
 
 #. tGHH9
 #: sc/inc/scfuncs.hrc:4315
 msgctxt "SC_OPCODE_VSTACK"
 msgid "The first array to append."
-msgstr ""
+msgstr "Matrica e parë për t’u shtuar."
 
 #. Kb6Xc
 #: sc/inc/scfuncs.hrc:4317
@@ -1372,6 +1410,8 @@ msgid ""
 "Array 1, Array 2,... The following arrays to append. If an array has fewer "
 "columns, #N/A error will be returned in the additional columns."
 msgstr ""
+"Matrica 1, Matrica 2,… Matricat vijuese q duhen shtuar Nëse një matricë ka "
+"më pak rreshta, #N/A error will be returned in the additional rows."
 
 #. JnsYT
 #: sc/inc/scfuncs.hrc:4323
@@ -1380,24 +1420,26 @@ msgid ""
 "Returns a specified number of contiguous rows or columns from the start or "
 "end of an array."
 msgstr ""
+"Jep një numër të dhëna rreshtash ose shtyllash të vazhdueshme nga fillim apo "
+"fundi i një matrice."
 
 #. dFLFb
 #: sc/inc/scfuncs.hrc:4324
 msgctxt "SC_OPCODE_TAKE"
 msgid "Array"
-msgstr ""
+msgstr "Matricë"
 
 #. ycFef
 #: sc/inc/scfuncs.hrc:4325
 msgctxt "SC_OPCODE_TAKE"
 msgid "The array from which to take rows or columns."
-msgstr ""
+msgstr "Matrica prej të cilët të merren rreshta ose shtylla."
 
 #. DzBCL
 #: sc/inc/scfuncs.hrc:4326
 msgctxt "SC_OPCODE_TAKE"
 msgid "Rows"
-msgstr ""
+msgstr "Rreshta"
 
 #. KBPBn
 #: sc/inc/scfuncs.hrc:4327
@@ -1405,12 +1447,14 @@ msgctxt "SC_OPCODE_TAKE"
 msgid ""
 "The number of rows to take. A negative value takes from the end of the array."
 msgstr ""
+"Numri i rreshtave për t’u marrë. Një vlerë negative sjell marrje nga fundi i "
+"matricës."
 
 #. HJQKW
 #: sc/inc/scfuncs.hrc:4328
 msgctxt "SC_OPCODE_TAKE"
 msgid "Columns"
-msgstr ""
+msgstr "Shtylla"
 
 #. ZexcG
 #: sc/inc/scfuncs.hrc:4329
@@ -1419,42 +1463,44 @@ msgid ""
 "The number of columns to take. A negative value takes from the end of the "
 "array."
 msgstr ""
+"Numri i shtyllave për t’u marrë. Një vlerë negative sjell marrje nga fundi i "
+"matricës."
 
 #. GwyMB
 #: sc/inc/scfuncs.hrc:4335
 msgctxt "SC_OPCODE_TEXTAFTER"
 msgid "Returns the text that occurs after a given substring or delimiter."
-msgstr ""
+msgstr "Jep tekstin që gjendet pas një nënvargu apo kufizuesi të dhënë."
 
 #. cicY2
 #: sc/inc/scfuncs.hrc:4336
 msgctxt "SC_OPCODE_TEXTAFTER"
 msgid "Text"
-msgstr ""
+msgstr "Tekst"
 
 #. 3WLYF
 #: sc/inc/scfuncs.hrc:4337
 msgctxt "SC_OPCODE_TEXTAFTER"
 msgid "The original text."
-msgstr ""
+msgstr "Teksti origjinal."
 
 #. z4pDr
 #: sc/inc/scfuncs.hrc:4338
 msgctxt "SC_OPCODE_TEXTAFTER"
 msgid "Delimiter"
-msgstr ""
+msgstr "Kufizues"
 
 #. YEbwu
 #: sc/inc/scfuncs.hrc:4339
 msgctxt "SC_OPCODE_TEXTAFTER"
 msgid "The delimiter. Multiple delimiters can be supplied."
-msgstr ""
+msgstr "Kufizuesi. Mund të jepen shumë kufizues."
 
 #. HPDvF
 #: sc/inc/scfuncs.hrc:4340
 msgctxt "SC_OPCODE_TEXTAFTER"
 msgid "Instance Number"
-msgstr ""
+msgstr "Numër Instance"
 
 #. DmVZL
 #: sc/inc/scfuncs.hrc:4341
@@ -1468,13 +1514,15 @@ msgstr ""
 #: sc/inc/scfuncs.hrc:4342
 msgctxt "SC_OPCODE_TEXTAFTER"
 msgid "Match Mode"
-msgstr ""
+msgstr "Mënyrë Përkimi"
 
 #. iSfJi
 #: sc/inc/scfuncs.hrc:4343
 msgctxt "SC_OPCODE_TEXTAFTER"
 msgid "Set to 1 to perform a case-insensitive match. The default is 0."
 msgstr ""
+"Që të kërkohet për përkime, pavarësisht shkrimit me të mëdha ose të vogla, "
+"vëreni 1. Parazgjedhja është 0."
 
 #. nAF2s
 #: sc/inc/scfuncs.hrc:4344
@@ -1487,54 +1535,56 @@ msgstr ""
 msgctxt "SC_OPCODE_TEXTAFTER"
 msgid "Set to 1 to treat the end of text as a delimiter. The default is 0."
 msgstr ""
+"Vëreni 1 që të trajtohet fundi i tekstit si një kufizues. Parazgjedhja është "
+"0."
 
 #. PG6qj
 #: sc/inc/scfuncs.hrc:4346
 msgctxt "SC_OPCODE_TEXTAFTER"
 msgid "If Not Found"
-msgstr ""
+msgstr "Në S’u Gjettë"
 
 #. vfgZc
 #: sc/inc/scfuncs.hrc:4347
 msgctxt "SC_OPCODE_TEXTAFTER"
 msgid "The value returned if no match is found. The default is #N/A."
-msgstr ""
+msgstr "Vlera që jepet nëse s’gjendet përkim. Parazgjedhja është #N/A."
 
 #. f88EE
 #: sc/inc/scfuncs.hrc:4353
 msgctxt "SC_OPCODE_TEXTBEFORE"
 msgid "Returns the text that occurs before a given substring or delimiter."
-msgstr ""
+msgstr "Jep tekstin që gjendet para një nënvargu apo kufizuesi të dhënë."
 
 #. NNriC
 #: sc/inc/scfuncs.hrc:4354
 msgctxt "SC_OPCODE_TEXTBEFORE"
 msgid "Text"
-msgstr ""
+msgstr "Tekst"
 
 #. HsEG8
 #: sc/inc/scfuncs.hrc:4355
 msgctxt "SC_OPCODE_TEXTBEFORE"
 msgid "The original text."
-msgstr ""
+msgstr "Teksti origjinal."
 
 #. E4a5z
 #: sc/inc/scfuncs.hrc:4356
 msgctxt "SC_OPCODE_TEXTBEFORE"
 msgid "Delimiter"
-msgstr ""
+msgstr "Kufizues"
 
 #. qDFZy
 #: sc/inc/scfuncs.hrc:4357
 msgctxt "SC_OPCODE_TEXTBEFORE"
 msgid "The delimiter. Multiple delimiters can be supplied."
-msgstr ""
+msgstr "Kufizuesi. Mund të jepen shumë kufizues."
 
 #. gNHAi
 #: sc/inc/scfuncs.hrc:4358
 msgctxt "SC_OPCODE_TEXTBEFORE"
 msgid "Instance Number"
-msgstr ""
+msgstr "Numër Instance"
 
 #. sD4zC
 #: sc/inc/scfuncs.hrc:4359
@@ -1548,13 +1598,15 @@ msgstr ""
 #: sc/inc/scfuncs.hrc:4360
 msgctxt "SC_OPCODE_TEXTBEFORE"
 msgid "Match Mode"
-msgstr ""
+msgstr "Mënyrë Përkimi"
 
 #. Pi2Ti
 #: sc/inc/scfuncs.hrc:4361
 msgctxt "SC_OPCODE_TEXTBEFORE"
 msgid "Set to 1 to perform a case-insensitive match. The default is 0."
 msgstr ""
+"Që të kërkohet për përkime, pavarësisht shkrimit me të mëdha ose të vogla, "
+"vëreni 1. Parazgjedhja është 0."
 
 #. sACA2
 #: sc/inc/scfuncs.hrc:4362
@@ -1567,18 +1619,20 @@ msgstr ""
 msgctxt "SC_OPCODE_TEXTBEFORE"
 msgid "Set to 1 to treat the end of text as a delimiter. The default is 0."
 msgstr ""
+"Vëreni 1 që të trajtohet fundi i tekstit si një kufizues. Parazgjedhja është "
+"0."
 
 #. aCnZX
 #: sc/inc/scfuncs.hrc:4364
 msgctxt "SC_OPCODE_TEXTBEFORE"
 msgid "If Not Found"
-msgstr ""
+msgstr "Në S’u Gjettë"
 
 #. xCZYH
 #: sc/inc/scfuncs.hrc:4365
 msgctxt "SC_OPCODE_TEXTBEFORE"
 msgid "The value returned if no match is found. The default is #N/A."
-msgstr ""
+msgstr "Vlera që jepet nëse s’gjendet përkim. Parazgjedhja është #N/A."
 
 #. wdZTd
 #: sc/inc/scfuncs.hrc:4371
@@ -1590,19 +1644,19 @@ msgstr ""
 #: sc/inc/scfuncs.hrc:4372
 msgctxt "SC_OPCODE_TEXTSPLIT"
 msgid "Text"
-msgstr ""
+msgstr "Tekst"
 
 #. dqSdF
 #: sc/inc/scfuncs.hrc:4373
 msgctxt "SC_OPCODE_TEXTSPLIT"
 msgid "The text to split."
-msgstr ""
+msgstr "Tekst për t’u ndarë."
 
 #. pdpxt
 #: sc/inc/scfuncs.hrc:4374
 msgctxt "SC_OPCODE_TEXTSPLIT"
 msgid "Column Delimiter"
-msgstr ""
+msgstr "Kufizues Shtyllash"
 
 #. nfMAr
 #: sc/inc/scfuncs.hrc:4375
@@ -1614,7 +1668,7 @@ msgstr ""
 #: sc/inc/scfuncs.hrc:4376
 msgctxt "SC_OPCODE_TEXTSPLIT"
 msgid "Row Delimiter"
-msgstr ""
+msgstr "Kufizues Rreshtash"
 
 #. dPnbc
 #: sc/inc/scfuncs.hrc:4377
@@ -1626,7 +1680,7 @@ msgstr ""
 #: sc/inc/scfuncs.hrc:4378
 msgctxt "SC_OPCODE_TEXTSPLIT"
 msgid "Ignore Empty"
-msgstr ""
+msgstr "Shpërfill të Zbrazëtat"
 
 #. 6LwdP
 #: sc/inc/scfuncs.hrc:4379
@@ -1635,54 +1689,58 @@ msgid ""
 "Set to TRUE to ignore consecutive delimiters otherwise it creates an empty "
 "cell. The default is FALSE."
 msgstr ""
+"Vëreni si TRUE, që të shpërfillen kufizues të njëpasnjëshëm, përndryshe "
+"krijon një kutizë të zbrazët. Parazgjedhja është FALSE."
 
 #. kkAYp
 #: sc/inc/scfuncs.hrc:4380
 msgctxt "SC_OPCODE_TEXTSPLIT"
 msgid "Match mode"
-msgstr ""
+msgstr "Mënyrë përkimi"
 
 #. iX8cx
 #: sc/inc/scfuncs.hrc:4381
 msgctxt "SC_OPCODE_TEXTSPLIT"
 msgid "Set to 1 to perform a case-insensitive match. The default is 0."
 msgstr ""
+"Që të kërkohet për përkime, pavarësisht shkrimit me të mëdha ose të vogla, "
+"vëreni 1. Parazgjedhja është 0."
 
 #. vXECz
 #: sc/inc/scfuncs.hrc:4382
 msgctxt "SC_OPCODE_TEXTSPLIT"
 msgid "Pad with"
-msgstr ""
+msgstr "Plotësoje me"
 
 #. h4db2
 #: sc/inc/scfuncs.hrc:4383
 msgctxt "SC_OPCODE_TEXTSPLIT"
 msgid "The value with which to pad. The default is #N/A."
-msgstr ""
+msgstr "Vlera me të cilën të plotësohet. Parazgjedhja është #N/A."
 
 #. DdFFE
 #: sc/inc/scfuncs.hrc:4389
 msgctxt "SC_OPCODE_TOCOL"
 msgid "Transforms an array into a single column."
-msgstr ""
+msgstr "Shndërron një matricë në një shtyllë njëshe."
 
 #. UAzNC
 #: sc/inc/scfuncs.hrc:4390
 msgctxt "SC_OPCODE_TOCOL"
 msgid "Array"
-msgstr ""
+msgstr "Matricë"
 
 #. CHojs
 #: sc/inc/scfuncs.hrc:4391
 msgctxt "SC_OPCODE_TOCOL"
 msgid "The range or array to return as a single column."
-msgstr ""
+msgstr "Intervali, ose matrica për t’u dhënë si një shtyllë njëshe."
 
 #. uACXu
 #: sc/inc/scfuncs.hrc:4392
 msgctxt "SC_OPCODE_TOCOL"
 msgid "Ignore"
-msgstr ""
+msgstr "Shpërfille"
 
 #. b7EQW
 #: sc/inc/scfuncs.hrc:4393
@@ -1692,6 +1750,9 @@ msgid ""
 "(default). 1 - ignore blank cells. 2 - ignore cells with error. 3 - ignore "
 "blanks cells and cells with error."
 msgstr ""
+"Të shpërfillen apo jo disa lloje vlerash. 0, ose pa vënë vlerë - mbaj krejt "
+"vlerat (parazgjedhje). 1 - shpërfill kutizat e zbrazëta. 2 - shpërfill "
+"kutiza me gabim. 3 - shpërfill kutiza të zbrazëta dhe kutiza me gabim."
 
 #. qNLAi
 #: sc/inc/scfuncs.hrc:4394
@@ -1711,25 +1772,25 @@ msgstr ""
 #: sc/inc/scfuncs.hrc:4401
 msgctxt "SC_OPCODE_TOROW"
 msgid "transforms an array into a single row."
-msgstr ""
+msgstr "shndërron një matricë në një rresht njësh."
 
 #. W9bWe
 #: sc/inc/scfuncs.hrc:4402
 msgctxt "SC_OPCODE_TOROW"
 msgid "Array"
-msgstr ""
+msgstr "Matricë"
 
 #. 5MEvT
 #: sc/inc/scfuncs.hrc:4403
 msgctxt "SC_OPCODE_TOROW"
 msgid "The range or array to return as a single row."
-msgstr ""
+msgstr "Intervali, ose matrica për t’u dhënë si një rresht njësh."
 
 #. AqqBC
 #: sc/inc/scfuncs.hrc:4404
 msgctxt "SC_OPCODE_TOROW"
 msgid "Ignore"
-msgstr ""
+msgstr "Shpërfille"
 
 #. wcpQF
 #: sc/inc/scfuncs.hrc:4405
@@ -1739,6 +1800,9 @@ msgid ""
 "(default). 1 - ignore blank cells. 2 - ignore cells with error. 3 - ignore "
 "blanks cells and cells with error."
 msgstr ""
+"Të shpërfillen apo jo disa lloje vlerash. 0, ose pa vënë vlerë - mbaj krejt "
+"vlerat (parazgjedhje). 1 - shpërfill kutizat e zbrazëta. 2 - shpërfill "
+"kutiza me gabim. 3 - shpërfill kutiza të zbrazëta dhe kutiza me gabim."
 
 #. E4XDf
 #: sc/inc/scfuncs.hrc:4406
@@ -1766,13 +1830,13 @@ msgstr ""
 #: sc/inc/scfuncs.hrc:4438
 msgctxt "SC_OPCODE_WRAPCOLS"
 msgid "Range"
-msgstr ""
+msgstr "Interval"
 
 #. nfZyj
 #: sc/inc/scfuncs.hrc:4439
 msgctxt "SC_OPCODE_WRAPCOLS"
 msgid "the range to wrap."
-msgstr ""
+msgstr "intervali për t’u mbështjellë."
 
 #. GE3HQ
 #: sc/inc/scfuncs.hrc:4440
@@ -1784,19 +1848,19 @@ msgstr ""
 #: sc/inc/scfuncs.hrc:4441
 msgctxt "SC_OPCODE_WRAPCOLS"
 msgid "The maximum number of values for each column."
-msgstr ""
+msgstr "Numri maksimum i vlerave për çdo shtyllë."
 
 #. zkjFB
 #: sc/inc/scfuncs.hrc:4442
 msgctxt "SC_OPCODE_WRAPCOLS"
 msgid "Pad with"
-msgstr ""
+msgstr "Plotësoje me"
 
 #. knbjc
 #: sc/inc/scfuncs.hrc:4443
 msgctxt "SC_OPCODE_WRAPCOLS"
 msgid "The value with which to pad. The default is #N/A."
-msgstr ""
+msgstr "."
 
 #. BDA7q
 #: sc/inc/scfuncs.hrc:4449
@@ -1810,13 +1874,13 @@ msgstr ""
 #: sc/inc/scfuncs.hrc:4450
 msgctxt "SC_OPCODE_WRAPROWS"
 msgid "Range"
-msgstr ""
+msgstr "Interval"
 
 #. FLJwx
 #: sc/inc/scfuncs.hrc:4451
 msgctxt "SC_OPCODE_WRAPROWS"
 msgid "the range to wrap."
-msgstr ""
+msgstr "intervali për t’u mbështjellë."
 
 #. aLHUi
 #: sc/inc/scfuncs.hrc:4452
@@ -1828,19 +1892,19 @@ msgstr ""
 #: sc/inc/scfuncs.hrc:4453
 msgctxt "SC_OPCODE_WRAPROWS"
 msgid "The maximum number of values for each row."
-msgstr ""
+msgstr "Numri maksimum i vlera për çdo rresht."
 
 #. iTCWg
 #: sc/inc/scfuncs.hrc:4454
 msgctxt "SC_OPCODE_WRAPROWS"
 msgid "Pad with"
-msgstr ""
+msgstr "Plotësoje me"
 
 #. e3K5s
 #: sc/inc/scfuncs.hrc:4455
 msgctxt "SC_OPCODE_WRAPROWS"
 msgid "The value with which to pad. The default is #N/A."
-msgstr ""
+msgstr "Vlera me të cilën të plotësohet. Parazgjedhja është #N/A."
 
 #. 4af9a
 #: sc/uiconfig/scalc/ui/cellprotectionpage.ui:99
@@ -1851,45 +1915,49 @@ msgid ""
 "individual cells first select all cells and toggle off the \"Protected\" "
 "option in the Format Cells dialog."
 msgstr ""
+"Mbrojtja e kutizave është në fuqi vetëm pasi të jetë mbrojtur fleta e "
+"tanishme. Si parazgjedhje, në një fletë janë të mbrojtura krejt kutizat - që "
+"të mbroni kutiza individuale së pari përzgjidhni krejt kutizat dhe "
+"çaktivizoni mundësinë “Mbrojtur”, te dialogu “Formatoni Kutiza”."
 
 #. FVsyY
 #: sc/uiconfig/scalc/ui/conditionaleasydialog.ui:8
 msgctxt "conditionaleasydialog|title"
 msgid "Highlight cells..."
-msgstr ""
+msgstr "Theksoni kutiza…"
 
 #. Q4fA3
 #: sc/uiconfig/scalc/ui/selectsheetviewdialog.ui:18
 msgctxt "selectsheetviewdialog|SelectSheetView"
 msgid "Select Sheet View"
-msgstr ""
+msgstr "Përzgjidhni Parje Flete"
 
 #. GTQJA
 #: sc/uiconfig/scalc/ui/selectsheetviewdialog.ui:44
 msgctxt "selectsheetviewdialog|extended_tip|ok"
 msgid "Saves all changes and closes dialog."
-msgstr ""
+msgstr "Ruan krejt ndryshimet dhe mbyll dialogun."
 
 #. kGFYu
 #: sc/uiconfig/scalc/ui/selectsheetviewdialog.ui:63
 msgctxt "selectsheetviewdialog|extended_tip|cancel"
 msgid "Closes dialog and discards all changes."
-msgstr ""
+msgstr "Mbyll dialogun dhe hedh tej krejt ndryshimet."
 
 #. sQPFE
 #: sc/uiconfig/scalc/ui/selectsheetviewdialog.ui:134
 msgctxt "selectsheetviewdialog|extended_tip|entry-list"
 msgid "Available sheet views."
-msgstr ""
+msgstr "Parje të gatshme fletësh."
 
 #. csyNB
 #: sc/uiconfig/scalc/ui/sheetviewbox.ui:17
 msgctxt "sheetviewbox|sheetview_combobox|accessible_name"
 msgid "Sheet View"
-msgstr ""
+msgstr "Parje Flete"
 
 #. FXK8B
 #: sc/uiconfig/scalc/ui/sidebarcellappearance.ui:87
 msgctxt "sidebarcellappearance|cellbordertype-atkobject"
 msgid "Border Style"
-msgstr ""
+msgstr "Stil Anësh"
