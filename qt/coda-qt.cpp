@@ -370,6 +370,10 @@ Bridge::~Bridge() {
     if (_document._fakeClientFd != -1) {
         fakeSocketClose(_document._fakeClientFd);
     }
+    if (_app2js.joinable()) {
+        fakeSocketClose(_closeNotificationPipeForForwardingThread[0]);
+        _app2js.join();
+    }
 }
 
 void Bridge::evalJS(const std::string& script)
@@ -575,7 +579,8 @@ QVariant Bridge::cool(const QString& messageStr)
         fakeSocketPipe2(_closeNotificationPipeForForwardingThread);
 
         // Thread pumping Online → JS
-        std::thread(
+        assert(!_app2js.joinable());
+        _app2js = std::thread(
             [this]
             {
                 Util::setThreadName("app2js");
@@ -614,8 +619,7 @@ QVariant Bridge::cool(const QString& messageStr)
                 LOG_TRC("Closing message pump thread");
                 fakeSocketClose(_closeNotificationPipeForForwardingThread[1]);
                 fakeSocketClose(_document._fakeClientFd);
-            })
-            .detach();
+            });
 
         // 1st request: the initial GET /?file_path=...  (mimic WebSocket upgrade)
         std::string message(_document._fileURL.toString() +
