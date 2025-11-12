@@ -2609,7 +2609,7 @@ void Document::drainQueue()
             }
         }
 
-        if (canRenderTiles())
+        if (!_sessions.empty() && canRenderTiles())
         {
             // Priority for tiles of visible part that intersect with an active viewport
             TilePrioritizer::Priority prio = TilePrioritizer::Priority::VERYHIGH;
