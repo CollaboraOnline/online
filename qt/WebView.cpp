@@ -239,6 +239,8 @@ void WebView::load(const Poco::URI& fileURL, bool newFile)
     urlAndQuery.addQueryParameter("lang", getUILanguage());
     urlAndQuery.addQueryParameter("appdocid", std::to_string(_document._appDocId));
     urlAndQuery.addQueryParameter("userinterfacemode", "notebookbar");
+    if (newFile)
+        urlAndQuery.addQueryParameter("isnewdocument", "true");
     if (_isWelcome)
         urlAndQuery.addQueryParameter("welcome", "true");
 
