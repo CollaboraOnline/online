@@ -107,6 +107,11 @@ COOL_ADMIN_SRC = $(shell find $(srcdir)/admin -name '*.html' -or -name '*.css' -
 COOL_ADMIN_ALL = $(shell find $(srcdir)/admin -name '*')
 COOL_ADMIN_DST = $(patsubst $(srcdir)/admin/%,$(DIST_FOLDER)/admin/%,$(COOL_ADMIN_SRC))
 
+if ENABLE_QTAPP
+COOL_TEMPLATES_SRC = $(shell find $(srcdir)/templates -name '*')
+COOL_TEMPLATES_DST = $(patsubst $(srcdir)/templates/%,$(DIST_FOLDER)/templates/%,$(COOL_TEMPLATES_SRC))
+endif
+
 define file_target
 $(1): $(2)
 	@mkdir -p $$(dir $$@)
@@ -845,6 +850,7 @@ build-cool: \
 	$(L10N_JSON) \
 	$(COOL_IMAGES_DST) \
 	$(COOL_IMAGES_CUSTOM_DST) \
+	$(COOL_TEMPLATES_DST) \
 	$(JQUERY_LIGHTNESS_DIST_IMAGES) \
 	$(JQUERY_MINIFIED_DIST_IMAGES) \
 	$(ADMIN_BUNDLE) \
@@ -1053,6 +1059,16 @@ $(DIST_FOLDER)/l10n/%.json: $(srcdir)/po/%.po
 $(DIST_FOLDER)/admin/%: $(srcdir)/admin/%
 	@mkdir -p $(dir $@)
 	@cp $< $@
+
+if ENABLE_QTAPP
+$(DIST_FOLDER)/templates/%: $(srcdir)/templates/%
+	@mkdir -p $(dir $@)
+	@if test -z '$(ENABLE_BROWSERSYNC)'; then \
+		`cp $< $@`; \
+	else \
+		`ln -sf $(abs_srcdir)/$< $@`; \
+	fi
+endif
 
 $(DIST_FOLDER)/wasm:
 	@mkdir -p $(dir $@)
