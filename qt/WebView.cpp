@@ -149,10 +149,13 @@ WebView::WebView(QWebEngineProfile* profile, bool isWelcome)
 WebView::~WebView() {
     std::erase(s_instances, this);
 
+    auto const channel = _webView->page()->webChannel();
     if (_bridge != nullptr) {
-        _webView->page()->webChannel()->deregisterObject(_bridge);
+        channel->deregisterObject(_bridge);
         delete _bridge;
     }
+    _webView->setPage(nullptr);
+    delete channel;
 }
 
 std::pair<int, int> getWindowSize(bool isWelcome)
