@@ -952,15 +952,15 @@ int main(int argc, char** argv)
         "Enable debug output."
     );
     QCommandLineOption textDocumentOption(
-        QStringList() << "textdocument",
+        QStringList() << "textdocument" << "writer",
         "Create a new text document."
     );
     QCommandLineOption spreadsheetOption(
-        QStringList() << "spreadsheet",
+        QStringList() << "spreadsheet" << "calc",
         "Create a new spreadsheet."
     );
     QCommandLineOption presentationOption(
-        QStringList() << "presentation",
+        QStringList() << "presentation" << "impress",
         "Create a new presentation."
     );
 
