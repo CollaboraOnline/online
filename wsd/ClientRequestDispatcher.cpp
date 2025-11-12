@@ -242,12 +242,15 @@ public:
 class ConvertToPartHandler : public Poco::Net::PartHandler
 {
     std::string _filename;
+    std::string _templateOptionFilename;
 
 public:
     std::string getFilename() const { return _filename; }
+    std::string getTemplateOptionFilename() const { return _templateOptionFilename; }
 
     /// Afterwards someone else is responsible for cleaning that up.
     void takeFile() { _filename.clear(); }
+    void takeTemplateOptionFile() { _templateOptionFilename.clear(); }
 
     ConvertToPartHandler() {}
 
@@ -257,6 +260,12 @@ public:
         {
             LOG_TRC("Remove un-handled temporary file '" << _filename << '\'');
             StatelessBatchBroker::removeFile(_filename);
+        }
+
+        if (!_templateOptionFilename.empty())
+        {
+            LOG_TRC("Remove un-handled template option file '" << _templateOptionFilename << '\'');
+            StatelessBatchBroker::removeFile(_templateOptionFilename);
         }
     }
 
@@ -295,12 +304,21 @@ public:
             tempPath.setFileName("incoming_file"); // A sensible name.
         else
             tempPath.setFileName(filenameParam.getFileName()); //TODO: Sanitize.
-        _filename = tempPath.toString();
-        LOG_DBG("Storing incoming file to: " << _filename);
+        bool isTemplateOption = params.has("name") && params.get("name") == "template";
+        if (isTemplateOption)
+        {
+            _templateOptionFilename = tempPath.toString();
+            LOG_DBG("Storing incoming template option file to: " << _templateOptionFilename);
+        }
+        else
+        {
+            _filename = tempPath.toString();
+            LOG_DBG("Storing incoming file to: " << _filename);
+        }
 
-        // Copy the stream to _filename.
+        // Copy the stream to the temp path.
         std::ofstream fileStream;
-        fileStream.open(_filename);
+        fileStream.open(tempPath.toString());
         Poco::StreamCopier::copyStream(stream, fileStream);
         fileStream.close();
     }
