@@ -46,7 +46,8 @@ final class NewDocumentViewController: NSViewController, WKScriptMessageHandler 
             webView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
 
-        webView.loadHTMLString(Self.html, baseURL: nil)
+        let baseURL = Bundle.main.resourceURL
+        webView.loadHTMLString(Self.html, baseURL: baseURL)
     }
 
     /**
@@ -75,17 +76,44 @@ final class NewDocumentViewController: NSViewController, WKScriptMessageHandler 
     <meta charset="utf-8">
     <meta name="viewport" content="initial-scale=1">
     <style>
-      :root { color-scheme: light dark; }
-      body   { font: 14px -apple-system, system-ui; margin: 24px; display: grid; gap: 14px; }
-      h2     { margin: 0 0 8px; font-size: 16px; font-weight: 600; }
-      button { padding: 10px 14px; border-radius: 8px; border: 1px solid rgba(0,0,0,.2); cursor: default; }
-      button:hover { filter: brightness(1.03); }
+      body   { margin: 24px; display: grid; gap: 14px; background-color: rgb(250,250,250); }
+      .intro { display: flex; align-items: center; gap: 20px; }
+      .intro-text { display: flex; flex-direction: column; justify-content: center; }
+      .header { font-family: carlito; font-size: 24px; color: black; font-weight: 700; }
+      .subtitle { fotn-family: carlito; font-size: 24px; color: black; font-weight: 400; }
+      .subtext { font-family: carlito; font-size: 16px; color: black; font-weight: 400; }
+      .btn-group { margins: 10px; }
+      .btn-group button { background-color: rgb(250,250,250); margin: 10px; width: 272px; height: 188px; float: left; padding: 10px 14px; border-radius: 8px; border: none; cursor: pointer; }
+      .btn-group button:hover { border: 1px solid rgb(132,184,234); }
     </style>
     <body>
-      <h2>Create</h2>
-      <button onclick="window.webkit.messageHandlers.newDoc.postMessage('text')">New Document</button>
-      <button onclick="window.webkit.messageHandlers.newDoc.postMessage('spreadsheet')">New Spreadsheet</button>
-      <button onclick="window.webkit.messageHandlers.newDoc.postMessage('presentation')">New Presentation</button>
+      <div class="intro">
+        <img src="images/logo.png" alt="logo icon" style="float: left; ">
+        <div class="intro-text">
+          <span class="header">Let's get started!</span><br />
+          <span class="subtitle">Start a new document from one of the following templates.</span>
+        </div>
+      </div>
+      <div class="btn-group">
+        <button onclick="window.webkit.messageHandlers.newDoc.postMessage('spreadsheet')">
+          <img src="images/x-office-spreadsheet.svg" alt="icon" width="56" height="64"><br />
+          <span class="header">Spreadsheet</span><br />
+          <span class="subtext">Great for tracking budgets, project<br />
+          tasks, or contact lists.</span>
+        </button>
+        <button onclick="window.webkit.messageHandlers.newDoc.postMessage('text')">
+          <img src="images/x-office-document.svg" alt="icon" width="56" height="64"><br />
+          <span class="header">Text Document</span><br />
+          <span class="subtext">Ideal for notes, reports,<br />
+          or formatted letters.</span>
+        </button>
+        <button onclick="window.webkit.messageHandlers.newDoc.postMessage('presentation')">
+          <img src="images/x-office-presentation.svg" alt="icon" width="56" height="64"><br />
+          <span class="header">Presentation</span><br />
+          <span class="subtext">Perfect for slideshows, pitches,<br />
+          or visual reports.</span>
+        </button>
+      </div>
     </body>
     """
 }
