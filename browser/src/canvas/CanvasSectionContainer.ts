@@ -1009,24 +1009,36 @@ class CanvasSectionContainer {
 		}
 	}
 
+	private getMyTopLeftForDocumentObject(section: CanvasSectionObject): number[] {
+		if (app.map._docLayer._docType === 'spreadsheet') {
+			return [
+				this.documentAnchor[0] +
+					section.position[0] -
+					(app.isXOrdinateInFrozenPane(section.position[0])
+						? 0
+						: app.activeDocument.activeView.viewedRectangle.pX1),
+				this.documentAnchor[1] +
+					section.position[1] -
+					(app.isYOrdinateInFrozenPane(section.position[1])
+						? 0
+						: app.activeDocument.activeView.viewedRectangle.pY1),
+			];
+		}
+		else {
+			return [
+				this.documentAnchor[0] + section.position[0] - app.activeDocument.activeView.viewedRectangle.pX1,
+				this.documentAnchor[1] + section.position[1] - app.activeDocument.activeView.viewedRectangle.pY1
+			];
+		}
+	}
+
 	// Called when document position is changed.
 	public onNewDocumentTopLeft() {
 		for (var i: number = 0; i < this.sections.length; i++) {
 			var section: CanvasSectionObject = this.sections[i];
 
 			if (section.documentObject === true) {
-				section.myTopLeft = [
-					this.documentAnchor[0] +
-						section.position[0] -
-						(app.isXOrdinateInFrozenPane(section.position[0])
-							? 0
-							: app.activeDocument.activeView.viewedRectangle.pX1),
-					this.documentAnchor[1] +
-						section.position[1] -
-						(app.isYOrdinateInFrozenPane(section.position[1])
-							? 0
-							: app.activeDocument.activeView.viewedRectangle.pY1),
-				];
+				section.myTopLeft = this.getMyTopLeftForDocumentObject(section);
 
 				const isVisible = this.isDocumentObjectVisible(section);
 				if (isVisible !== section.isVisible) {
