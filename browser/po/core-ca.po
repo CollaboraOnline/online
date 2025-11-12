@@ -2,9 +2,15 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: core-ca\n"
+"PO-Revision-Date: 2025-11-11 11:54+0000\n"
+"Last-Translator: Héctor Gonzàlvez Escolano <hector.gie@gcloud.ua.es>\n"
+"Language-Team: Catalan <https://hosted.weblate.org/projects/collabora-online/"
+"lokit/ca/>\n"
 "Language: ca\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.15-dev\n"
 
 #. ygDfy
 #: module_graphicfilter.ulf
@@ -13,7 +19,7 @@ msgctxt ""
 "STR_NAME_MODULE_OPTIONAL_GRFFLT_FLASH\n"
 "LngText.text"
 msgid "Macromedia Flash (SWF)"
-msgstr ""
+msgstr "Macromedia Flash (SWF)"
 
 #. qAk8E
 #: module_graphicfilter.ulf
@@ -22,7 +28,7 @@ msgctxt ""
 "STR_DESC_MODULE_OPTIONAL_GRFFLT_FLASH\n"
 "LngText.text"
 msgid "Macromedia Flash (SWF) Export Filter"
-msgstr ""
+msgstr "Filtres d'exportació Macromedia Flash (SWF)"
 
 #. vcMGk
 #: folderitem_ooo.ulf
@@ -35,42 +41,44 @@ msgid ""
 "Technology, provided by Collabora Productivity. See https://collaboraoffice."
 "com"
 msgstr ""
+"Collabora Office, el paquet ofimàtic basat en la tecnologia de LibreOffice, "
+"proporcionat per Collabora Productivity. Visiteu https://collaboraoffice.com"
 
 #. 4rBwc
 #: include/svx/strings.hrc:1040
 msgctxt "RID_SVXSTR_PASTE_AS_DIALOG_TITLE"
 msgid "Paste As"
-msgstr ""
+msgstr "Enganxa com a"
 
 #. aNZNw
 #: svx/uiconfig/ui/dropdownfielddialog.ui:31
 msgctxt "dropdownDialog|OK"
 msgid "OK"
-msgstr ""
+msgstr "D'acord"
 
 #. 54Dmg
 #: svx/uiconfig/ui/dropdownfielddialog.ui:44
 msgctxt "dropdownDialog|CANCEL"
 msgid "Cancel"
-msgstr ""
+msgstr "Cancel·la"
 
 #. gPAYw
 #: svx/uiconfig/ui/findreplacedialog.ui:67
 msgctxt "findreplacedialog|find_tab_btn"
 msgid "Find"
-msgstr ""
+msgstr "Cerca"
 
 #. uknDS
 #: svx/uiconfig/ui/findreplacedialog.ui:80
 msgctxt "findreplacedialog|replace_tab_btn"
 msgid "Replace"
-msgstr ""
+msgstr "Substitueix"
 
 #. 7MFsT
 #: uui/inc/strings.hrc:84
 msgctxt "STR_READONLY_FONT_TITLE"
 msgid "Font Disallows Editing"
-msgstr ""
+msgstr "El tipus de lletra impedeix editar"
 
 #. YRahp
 #: uui/inc/strings.hrc:85
@@ -81,6 +89,10 @@ msgid ""
 "Pressing [ No ] will drop these fonts from the document:\n"
 "$(ARG1)"
 msgstr ""
+"Un o més tipus de lletra del document no permeten editar.\n"
+"Vols obrir el document en mode lectura?\n"
+"Si fas clic en [ No ] aquests tipus de lletra s'eliminaran del document:\n"
+"$(ARG1)"
 
 #. 4NkMk
 #: readme.xrm
@@ -92,102 +104,106 @@ msgid ""
 "For more information please visit ${PRODUCTNAME} home page at <a "
 "href=\"https://collaboraoffice.com\">https://CollaboraOffice.com/</a>."
 msgstr ""
+"Per a més informació, per favor, visita la pàgina de ${PRODUCTNAME} en <a "
+"href=\"https://collaboraoffice.com\">https://CollaboraOffice.com/</a>."
 
 #. SbQew
 #: chart2/inc/strings.hrc:51
 msgctxt "STR_PAGE_COLOR_PALETTE"
 msgid "Color Palette"
-msgstr ""
+msgstr "Paleta de colors"
 
 #. YZBr8
 #: chart2/inc/strings.hrc:52
 msgctxt "STR_PAGE_GRADIENT_PRESETS"
 msgid "Gradients"
-msgstr ""
+msgstr "Gradients"
 
 #. DWGVf
 #: chart2/uiconfig/ui/chartcolorpalettepopup.ui:46
 msgctxt "chartcolorpalettepopup|colorfulwin"
 msgid "Colorful"
-msgstr ""
+msgstr "Colors vius"
 
 #. xmAmH
 #: chart2/uiconfig/ui/chartcolorpalettepopup.ui:98
 msgctxt "chartcolorpalettepopup|monochromaticwin"
 msgid "Monochromatic"
-msgstr ""
+msgstr "Monocromàtica"
 
 #. DrjDt
 #: chart2/uiconfig/ui/chartgradientpalettepopup.ui:46
 msgctxt "chartgradientpalettepopup|lightwin"
 msgid "Light Variations"
-msgstr ""
+msgstr "Tons clars"
 
 #. Y3PP5
 #: chart2/uiconfig/ui/chartgradientpalettepopup.ui:97
 msgctxt "chartgradientpalettepopup|darkwin"
 msgid "Dark Variations"
-msgstr ""
+msgstr "Tons foscos"
 
 #. WWm9R
 #: chart2/uiconfig/ui/chartthemepopup.ui:51
 msgctxt "chartthemepopup|managechartstyle"
 msgid "_Manage chart styles"
-msgstr ""
+msgstr "_Gestiona els estils del gràfic"
 
 #. BFxBa
 #: chart2/uiconfig/ui/dlg_Theme.ui:16
 msgctxt "dlg_Theme|ChartThemeDialog"
 msgid "Manage Chart Styles"
-msgstr ""
+msgstr "Gestiona els estils del gràfic"
 
 #. kqBFK
 #: chart2/uiconfig/ui/dlg_Theme.ui:46
 msgctxt "dlg_Theme|iconviewlabel|tooltip_text"
 msgid "Selectable chart styles list."
-msgstr ""
+msgstr "Llista d'estils de gràfic disponibles."
 
 #. WsSmE
 #: chart2/uiconfig/ui/dlg_Theme.ui:51
 msgctxt "dlg_Theme|iconviewlabel"
 msgid "_Chart styles:"
-msgstr ""
+msgstr "_Estils de gràfic:"
 
 #. DYH5e
 #: chart2/uiconfig/ui/dlg_Theme.ui:122
 msgctxt "dlg_Theme|chartload"
 msgid "_Load style to chart"
-msgstr ""
+msgstr "_Carrega l'estil per al gràfic"
 
 #. YWkrA
 #: chart2/uiconfig/ui/dlg_Theme.ui:134
 msgctxt "dlg_Theme|chartsave"
 msgid "_Save to styles"
-msgstr ""
+msgstr "_Desa en estils"
 
 #. h8L8Y
 #: chart2/uiconfig/ui/dlg_Theme.ui:146
 msgctxt "dlg_Theme|chartdelete"
 msgid "_Delete style"
-msgstr ""
+msgstr "_Esborra l'estil"
 
 #. g5qPU
 #: chart2/uiconfig/ui/dlg_Theme.ui:158
 msgctxt "dlg_Theme|chartsavenew"
 msgid "Save to _new style"
-msgstr ""
+msgstr "Desa en _nou estil"
 
 #. GPgLR
 #: chart2/uiconfig/ui/dlg_Theme.ui:183
 msgctxt "dlg_Theme|chartmanage"
 msgid "_Manage chart styles"
-msgstr ""
+msgstr "_Gestiona els estils de gràfics"
 
 #. NMcqp
 #: chart2/uiconfig/ui/sidebarcolors.ui:30
 msgctxt "sidebarcolors|bordertype|tooltip_text"
 msgid "Allow to select a color palette to apply to current chart data series."
 msgstr ""
+"Permet seleccionar una paleta de color per a aplicar-la a la sèrie de dades "
+"del gràfic actual."
 
 #. FXK8B
 #: chart2/uiconfig/ui/sidebarcolors.ui:42
@@ -322,7 +338,7 @@ msgstr ""
 #: include/sfx2/strings.hrc:227
 msgctxt "STR_SID_QUICKFIND"
 msgid "Quick Find"
-msgstr ""
+msgstr "Cerca ràpida"
 
 #. 2VmCo
 #: sfx2/uiconfig/ui/licensedialog.ui:41
