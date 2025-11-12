@@ -38,6 +38,7 @@
 #include <QFileInfo>
 #include <QDir>
 #include <QApplication>
+#include <QUrl>
 #include <algorithm>
 
 std::vector<WebView*> WebView::s_instances;
@@ -259,41 +260,34 @@ void WebView::load(const Poco::URI& fileURL, bool newFile)
     _mainWindow->show();
 }
 
-WebView* WebView::createNewDocument(QWebEngineProfile* profile, const std::string& templateType)
+WebView* WebView::createNewDocument(QWebEngineProfile* profile, const std::string& templateType, const std::string& templatePath)
 {
-    // Map template type to template filename
-    std::string templateFileName;
-    if (templateType == "odp")
+    const std::string basePath = getTopSrcDir(TOPSRCDIR);
+
+    Poco::URI templateURI;
+    // if templatePath is empty or doesn't exist fileToLoad is mapped to default templateType template
+    if (templatePath.empty() || !QFileInfo(QString::fromStdString(templatePath)).exists())
     {
-        templateFileName = "Presentation.odp";
-    }
-    else if (templateType == "odt")
-    {
-        templateFileName = "Text Document.odt";
-    }
-    else if (templateType == "ods")
-    {
-        templateFileName = "Spreadsheet.ods";
+        // Map template type to Windows template filename
+        std::string templateFileName;
+        if (templateType == "odp" || templateType == "impress")
+            templateFileName = "Presentation.odp";
+        else if (templateType == "odt" || templateType == "writer")
+            templateFileName = "Text Document.odt";
+        else if (templateType == "ods" || templateType == "calc")
+            templateFileName = "Spreadsheet.ods";
+        else
+            templateFileName = "Text Document.odt"; // default fallback
+
+        templateURI = Poco::URI(Poco::Path(basePath + "/windows/coda/templates/" + templateFileName));
     }
     else
     {
-        LOG_ERR("Unknown template type: " << templateType);
-        return nullptr;
+        templateURI = Poco::URI(Poco::Path(templatePath));
     }
 
-    // TODO: get rid of the hardcoded template path, preferably it should be somewhere under the browser/dist/...
-    const std::string templatePath = getTopSrcDir(TOPSRCDIR) + "/windows/coda/templates/" + templateFileName;
-
-    struct stat st;
-    if (FileUtil::getStatOfFile(templatePath, st) != 0)
-    {
-        LOG_ERR("Template file not found: " << templatePath);
-        return nullptr;
-    }
-
-    // Create WebView and load template without save location
+    // Create WebView and load template without a set save location
     WebView* webViewInstance = new WebView(profile, false);
-    Poco::URI templateURI{Poco::Path(templatePath)};
     webViewInstance->load(templateURI, true);
 
     return webViewInstance;

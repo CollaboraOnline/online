@@ -62,9 +62,6 @@ public slots: // called from JavaScript
     * the JavaScript value **undefined**.
     */
     QVariant cool(const QString& msg);
-
-private:
-    void createDocumentFromTemplate(const QString& type, const QString& templateKey);
 };
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
