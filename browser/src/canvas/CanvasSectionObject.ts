@@ -181,26 +181,6 @@ class CanvasSectionObject {
 			this.containerObject.createUpdateSingleDivElement(this);
 	}
 
-	/*
-		This function is (for now) required because sometimes
-		we need to handle the event before leaflet. So we check if the mouse pointer
-		is inside the section.
-	*/
-	containsPoint(point: number[]) {
-		if (
-			this.position[0] <= point[0] &&
-			this.position[0] + this.size[0] >= point[0]
-		) {
-			if (
-				this.position[1] <= point[1] &&
-				this.position[1] + this.size[1] >= point[1]
-			)
-				return true;
-		}
-
-		return false;
-	}
-
 	// All below functions should be included in their respective section definitions (or other classes), not here.
 	isCalcRTL(): boolean { return; }
 	setViewResolved(on: boolean): void { return; }
