@@ -69,28 +69,35 @@ void Cache::cacheConfigFile(const std::string& configId, const std::string& uri,
     if (CachePath.empty())
         return;
 
-    std::unique_lock<std::mutex> lock(CacheMutex);
+    try
+    {
+        std::unique_lock<std::mutex> lock(CacheMutex);
 
-    Poco::Path rootPath(CachePath, Uri::encode(configId));
-    rootPath.makeDirectory();
+        Poco::Path rootPath(CachePath, Uri::encode(configId));
+        rootPath.makeDirectory();
 
-    Poco::Path cachePath(rootPath, Uri::encode(uri));
-    cachePath.makeDirectory();
+        Poco::Path cachePath(rootPath, Uri::encode(uri));
+        cachePath.makeDirectory();
 
-    Poco::File(cachePath).createDirectories();
+        Poco::File(cachePath).createDirectories();
 
-    std::string cacheFileDir = cachePath.toString();
-    std::string cacheFile = Poco::Path(cacheFileDir, "contents").toString();
+        std::string cacheFileDir = cachePath.toString();
+        std::string cacheFile = Poco::Path(cacheFileDir, "contents").toString();
 
-    FileUtil::copyFileTo(filename, cacheFile);
+        FileUtil::copyFileTo(filename, cacheFile);
 
-    std::ofstream cacheStamp(Poco::Path(cacheFileDir, "stamp").toString());
-    cacheStamp << stamp << '\n';
-    cacheStamp.close();
+        std::ofstream cacheStamp(Poco::Path(cacheFileDir, "stamp").toString());
+        cacheStamp << stamp << '\n';
+        cacheStamp.close();
 
-    updateLastUsed(rootPath.toString());
+        updateLastUsed(rootPath.toString());
 
-    clearOutdatedConfigs();
+        clearOutdatedConfigs();
+    }
+    catch (const std::exception& exc)
+    {
+        LOG_ERR("Error while caching: " << filename << " of: " << exc.what());
+    }
 }
 
 void Cache::updateLastUsed(const std::string& path)
