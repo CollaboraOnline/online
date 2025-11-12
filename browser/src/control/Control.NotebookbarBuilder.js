@@ -227,9 +227,7 @@ window.L.Control.NotebookbarBuilder = window.L.Control.JSDialogBuilder.extend({
 		window.L.control.attachTooltipEventListener(tabs[t], builder.map);
 		return function(event) {
 			var isFileTab = tabIds[t] === 'File-tab-label' || tabIds[t] === 'File';
-			var isCODAApp = window.ThisIsTheQtApp || window.ThisIsTheWindowsApp;
-
-			if (isFileTab && isCODAApp) {
+			if (isFileTab && window.mode.isCODesktop()) {
 				if (builder.map.backstageView) {
 					console.log('NotebookbarBuilder: Calling backstageView.toggle()');
 					builder.map.backstageView.toggle();

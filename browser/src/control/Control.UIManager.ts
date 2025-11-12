@@ -542,7 +542,7 @@ class UIManager extends window.L.Control {
 			// makeSpaceForNotebookbar call in onUpdatePermission
 		}
 
-		if (window.ThisIsTheQtApp || window.ThisIsTheWindowsApp) {
+		if ((window as any).mode.isCODesktop()) {
 			if (!this.map.backstageView) {
 				this.map.backstageView = new window.L.Control.BackstageView(this.map);
 				console.log('UIManager: BackstageView created and attached to map');
