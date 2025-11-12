@@ -2,9 +2,16 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: core-he\n"
+"PO-Revision-Date: 2025-11-12 12:52+0000\n"
+"Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
+"Language-Team: Hebrew <https://hosted.weblate.org/projects/collabora-online/"
+"lokit/he/>\n"
 "Language: he\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=4; plural=(n == 1) ? 0 : ((n == 2) ? 1 : "
+"((n > 10 && n % 10 == 0) ? 2 : 3));\n"
+"X-Generator: Weblate 5.15-dev\n"
 
 #. ygDfy
 #: module_graphicfilter.ulf
@@ -22,7 +29,7 @@ msgctxt ""
 "STR_DESC_MODULE_OPTIONAL_GRFFLT_FLASH\n"
 "LngText.text"
 msgid "Macromedia Flash (SWF) Export Filter"
-msgstr ""
+msgstr "מסנן ייצוא Macromedia Flash (SWF)"
 
 #. vcMGk
 #: folderitem_ooo.ulf
@@ -206,7 +213,7 @@ msgstr ""
 #: chart2/uiconfig/ui/sidebargradients.ui:42
 msgctxt "sidebargradients|cellbordertype-atkobject"
 msgid "Border Style"
-msgstr ""
+msgstr "סגנון מסגרת"
 
 #. Aiqg6
 #: chart2/uiconfig/ui/sidebartheme.ui:25
@@ -613,8 +620,8 @@ msgid ""
 "This setting enables you to export the document as a .pdf file containing "
 "two file formats: PDF and ODF as an attachment. "
 msgstr ""
-"הגדרה זו מאפשרת לייצא את המסמך כקובץ pdf המכיל בתוכו שתי תצורות קבצים: PDF "
-"ו־ODF."
+"הגדרה זו מאפשרת לייצא את המסמך כקובץ pdf המכיל בתוכו שתי תצורות קבצים: PDF ו־"
+"ODF. "
 
 #. NCgBM
 #: filter/uiconfig/ui/pdfgeneralpage.ui:583
@@ -622,7 +629,7 @@ msgctxt "pdfgeneralpage|pdf_version|tooltip_text"
 msgid ""
 "Select the PDF version. PDF/A version variants creates an ISO 19005 "
 "compliant PDF file, ideal for long-term document preservation."
-msgstr "יוצר קובץ PDF תואם ISO 19005-2, מומלץ לשימור מסמכים לטווח ארוך"
+msgstr "יוצר קובץ PDF תואם ISO 19005-2, מומלץ לשימור מסמכים לטווח ארוך."
 
 #. Ac3Ga
 #: filter/uiconfig/ui/pdfgeneralpage.ui:587
@@ -1716,7 +1723,7 @@ msgstr ""
 #: sc/inc/scfuncs.hrc:4402
 msgctxt "SC_OPCODE_TOROW"
 msgid "Array"
-msgstr ""
+msgstr "מערך"
 
 #. 5MEvT
 #: sc/inc/scfuncs.hrc:4403
@@ -1728,7 +1735,7 @@ msgstr ""
 #: sc/inc/scfuncs.hrc:4404
 msgctxt "SC_OPCODE_TOROW"
 msgid "Ignore"
-msgstr ""
+msgstr "התעלמות"
 
 #. wcpQF
 #: sc/inc/scfuncs.hrc:4405
@@ -1743,7 +1750,7 @@ msgstr ""
 #: sc/inc/scfuncs.hrc:4406
 msgctxt "SC_OPCODE_TOROW"
 msgid "Scan by column"
-msgstr ""
+msgstr "סריקה לפי עמודה"
 
 #. 5bZRy
 #: sc/inc/scfuncs.hrc:4407
@@ -1765,37 +1772,37 @@ msgstr ""
 #: sc/inc/scfuncs.hrc:4438
 msgctxt "SC_OPCODE_WRAPCOLS"
 msgid "Range"
-msgstr ""
+msgstr "טווח"
 
 #. nfZyj
 #: sc/inc/scfuncs.hrc:4439
 msgctxt "SC_OPCODE_WRAPCOLS"
 msgid "the range to wrap."
-msgstr ""
+msgstr "הטווח לגלישה."
 
 #. GE3HQ
 #: sc/inc/scfuncs.hrc:4440
 msgctxt "SC_OPCODE_WRAPCOLS"
 msgid "Wrap count"
-msgstr ""
+msgstr "כמות גלישה"
 
 #. FWsCt
 #: sc/inc/scfuncs.hrc:4441
 msgctxt "SC_OPCODE_WRAPCOLS"
 msgid "The maximum number of values for each column."
-msgstr ""
+msgstr "מספר הערכים המרבי בכל עמודה."
 
 #. zkjFB
 #: sc/inc/scfuncs.hrc:4442
 msgctxt "SC_OPCODE_WRAPCOLS"
 msgid "Pad with"
-msgstr ""
+msgstr "ריפוד ב־"
 
 #. knbjc
 #: sc/inc/scfuncs.hrc:4443
 msgctxt "SC_OPCODE_WRAPCOLS"
 msgid "The value with which to pad. The default is #N/A."
-msgstr ""
+msgstr "הערך איתו לרפד. ברירת המחדל היא ‎#N/A."
 
 #. BDA7q
 #: sc/inc/scfuncs.hrc:4449
@@ -1809,37 +1816,37 @@ msgstr ""
 #: sc/inc/scfuncs.hrc:4450
 msgctxt "SC_OPCODE_WRAPROWS"
 msgid "Range"
-msgstr ""
+msgstr "טווח"
 
 #. FLJwx
 #: sc/inc/scfuncs.hrc:4451
 msgctxt "SC_OPCODE_WRAPROWS"
 msgid "the range to wrap."
-msgstr ""
+msgstr "הטווח לגלישה."
 
 #. aLHUi
 #: sc/inc/scfuncs.hrc:4452
 msgctxt "SC_OPCODE_WRAPROWS"
 msgid "Wrap count"
-msgstr ""
+msgstr "כמות גלישה"
 
 #. 3CEsK
 #: sc/inc/scfuncs.hrc:4453
 msgctxt "SC_OPCODE_WRAPROWS"
 msgid "The maximum number of values for each row."
-msgstr ""
+msgstr "מספר הערכים המרבי לכל שורה."
 
 #. iTCWg
 #: sc/inc/scfuncs.hrc:4454
 msgctxt "SC_OPCODE_WRAPROWS"
 msgid "Pad with"
-msgstr ""
+msgstr "ריפוד ב־"
 
 #. e3K5s
 #: sc/inc/scfuncs.hrc:4455
 msgctxt "SC_OPCODE_WRAPROWS"
 msgid "The value with which to pad. The default is #N/A."
-msgstr ""
+msgstr "הערך איתו לרפד. ברירת המחדל היא ‎#N/A."
 
 #. 4af9a
 #: sc/uiconfig/scalc/ui/cellprotectionpage.ui:99
@@ -1855,40 +1862,40 @@ msgstr ""
 #: sc/uiconfig/scalc/ui/conditionaleasydialog.ui:8
 msgctxt "conditionaleasydialog|title"
 msgid "Highlight cells..."
-msgstr ""
+msgstr "הדגשת תאים…"
 
 #. Q4fA3
 #: sc/uiconfig/scalc/ui/selectsheetviewdialog.ui:18
 msgctxt "selectsheetviewdialog|SelectSheetView"
 msgid "Select Sheet View"
-msgstr ""
+msgstr "בחירת תצוגת גיליון"
 
 #. GTQJA
 #: sc/uiconfig/scalc/ui/selectsheetviewdialog.ui:44
 msgctxt "selectsheetviewdialog|extended_tip|ok"
 msgid "Saves all changes and closes dialog."
-msgstr ""
+msgstr "שמירת כל השינויים וסגירת החלונית."
 
 #. kGFYu
 #: sc/uiconfig/scalc/ui/selectsheetviewdialog.ui:63
 msgctxt "selectsheetviewdialog|extended_tip|cancel"
 msgid "Closes dialog and discards all changes."
-msgstr ""
+msgstr "סגירת החלונית והתעלמות מכל השינויים."
 
 #. sQPFE
 #: sc/uiconfig/scalc/ui/selectsheetviewdialog.ui:134
 msgctxt "selectsheetviewdialog|extended_tip|entry-list"
 msgid "Available sheet views."
-msgstr ""
+msgstr "תצוגות גיליון זמינות."
 
 #. csyNB
 #: sc/uiconfig/scalc/ui/sheetviewbox.ui:17
 msgctxt "sheetviewbox|sheetview_combobox|accessible_name"
 msgid "Sheet View"
-msgstr ""
+msgstr "תצוגת גיליון"
 
 #. FXK8B
 #: sc/uiconfig/scalc/ui/sidebarcellappearance.ui:87
 msgctxt "sidebarcellappearance|cellbordertype-atkobject"
 msgid "Border Style"
-msgstr ""
+msgstr "סגנון מסגרת"

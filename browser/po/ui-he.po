@@ -8,17 +8,17 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-11-04 22:40+0100\n"
-"PO-Revision-Date: 2025-11-03 17:51+0000\n"
+"PO-Revision-Date: 2025-11-12 12:51+0000\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: Hebrew <https://hosted.weblate.org/projects/collabora-online/"
 "ui/he/>\n"
-"Language: \n"
+"Language: he\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=(n == 1) ? 0 : ((n == 2) ? 1 : ((n > 10 && "
-"n % 10 == 0) ? 2 : 3));\n"
-"X-Generator: Weblate 5.14.1-dev\n"
+"Plural-Forms: nplurals=4; plural=(n == 1) ? 0 : ((n == 2) ? 1 : "
+"((n > 10 && n % 10 == 0) ? 2 : 3));\n"
+"X-Generator: Weblate 5.15-dev\n"
 
 #: admin/admin.strings.js:15
 msgid "Admin console"
@@ -1815,9 +1815,8 @@ msgstr "קובץ HTML ‏(‎.html)"
 #: src/control/Control.NotebookbarImpress.js:438
 #: src/control/Control.NotebookbarWriter.js:412
 #: src/map/handler/Map.Settings.ts:73
-#, fuzzy
 msgid "Options"
-msgstr "אפשרות"
+msgstr "אפשרויות"
 
 #: src/control/Control.Menubar.ts:123 src/control/Control.Menubar.ts:462
 #: src/control/Control.Menubar.ts:626 src/control/Control.Menubar.ts:774
@@ -3081,9 +3080,8 @@ msgid "Select"
 msgstr ""
 
 #: src/control/Control.NotebookbarImpress.js:2718
-#, fuzzy
 msgid "Effects"
-msgstr "אפקט"
+msgstr "אפקטים"
 
 #: src/control/Control.NotebookbarWriter.js:75
 msgid "Form"
@@ -3256,9 +3254,8 @@ msgid "Integrator is not ready for PostMessage calls"
 msgstr "המשלב לא מוכן לקריאות PostMessage"
 
 #: src/control/Control.ServerAuditDialog.ts:161
-#, fuzzy
 msgid "Using namespaces"
-msgstr "שימוש במרחבי שם."
+msgstr "שימוש במרחבי שם"
 
 #: src/control/Control.ServerAuditDialog.ts:162
 msgid "Not using namespaces"
@@ -4049,75 +4046,75 @@ msgstr ""
 
 #: src/control/jsdialog/Definitions.Menu.ts:2086
 msgid "Medium/Medium (4.50 pt)"
-msgstr ""
+msgstr "בינוני/בינוני (4.50 נק׳)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2146
 msgid "Standard (4:3)"
-msgstr ""
+msgstr "רגיל (4:3)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2151
 msgid "Widescreen (16:9)"
-msgstr ""
+msgstr "מסך רחב (16:9)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2161
 msgid "Blank Slide"
-msgstr ""
+msgstr "שקופית ריקה"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2162
 msgid "Title Slide"
-msgstr ""
+msgstr "שקופית תוכן"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2163
 msgid "Title, Content"
-msgstr ""
+msgstr "כותרת, תוכן"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2164
 msgid "Title and 2 Content"
-msgstr ""
+msgstr "כותרת ותוכן 2"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2165
 msgid "Title Only"
-msgstr ""
+msgstr "כותרת בלבד"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2166
 msgid "Centered Text"
-msgstr ""
+msgstr "טקסט ממורכז"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2167
 msgid "Title, 2 Content and Content"
-msgstr ""
+msgstr "כותרת, תוכן 2 ותוכן"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2168
 msgid "Title, Content and 2 Content"
-msgstr ""
+msgstr "כותרת, תוכן ותוכן 2"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2169
 msgid "Title, 2 Content over Content"
-msgstr ""
+msgstr "כותרת, תוכן 2 על גבי תוכן"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2170
 msgid "Title, Content over Content"
-msgstr ""
+msgstr "כותרת, תוכן על תוכן"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2171
 msgid "Title, 4 Content"
-msgstr ""
+msgstr "כותרת, תוכן 4"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2172
 msgid "Title, 6 Content"
-msgstr ""
+msgstr "כותרת, תוכן 6"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2173
 msgid "Vertical Title, Text, Chart"
-msgstr ""
+msgstr "כותרת אנכית, טקסט, תרשים"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2174
 msgid "Vertical Title, Vertical Text"
-msgstr ""
+msgstr "כותרת אנכית, טקסט אנכי"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2175
 msgid "Title, Vertical Text"
-msgstr ""
+msgstr "כותרת, טקסט אנכי"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2176
 msgid "Title, Vertical Text, Clipart"
@@ -4125,24 +4122,23 @@ msgstr ""
 
 #: src/control/jsdialog/Definitions.Menu.ts:2303
 msgid "Grayscale"
-msgstr ""
+msgstr "גווני אפור"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2308
 msgid "Black/White"
-msgstr ""
+msgstr "שחור/לבן"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2313
 msgid "Watermark"
-msgstr ""
+msgstr "סימן מים"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2321
-#, fuzzy
 msgid "Insert comment"
 msgstr "הוספת תגובה"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2325
 msgid "Comments list"
-msgstr ""
+msgstr "רשימת הערות"
 
 #: src/control/jsdialog/Util.SnackbarController.ts:122
 msgid "Dismiss"
@@ -4167,31 +4163,31 @@ msgstr "אחרונים"
 
 #: src/control/jsdialog/Widget.PageMarginEntry.ts:40
 msgid "Page margin options"
-msgstr ""
+msgstr "אפשרויות שולי עמוד"
 
 #: src/control/jsdialog/Widget.PageMarginEntry.ts:121
 msgid "Top: {top}"
-msgstr ""
+msgstr "למעלה: {top}"
 
 #: src/control/jsdialog/Widget.PageMarginEntry.ts:126
 msgid "Left: {left}"
-msgstr ""
+msgstr "שמאל: {left}"
 
 #: src/control/jsdialog/Widget.PageMarginEntry.ts:136
 msgid "Bottom: {bottom}"
-msgstr ""
+msgstr "למטה: {bottom}"
 
 #: src/control/jsdialog/Widget.PageMarginEntry.ts:141
 msgid "Right: {right}"
-msgstr ""
+msgstr "ימין: {right}"
 
 #: src/control/jsdialog/Widget.PageMarginEntry.ts:165
 msgid "Custom Margins…"
-msgstr ""
+msgstr "שוליים בהתאמה אישית…"
 
 #: src/control/jsdialog/Widget.PageSizeEntry.ts:69
 msgid "More Paper Sizes..."
-msgstr ""
+msgstr "גודלי נייר נוספים…"
 
 #: src/control/jsdialog/Widget.HTMLContent.ts:46
 msgid "Read-only"
@@ -4208,7 +4204,7 @@ msgstr "מצב עריכה"
 
 #: src/control/jsdialog/Widget.HTMLContent.ts:83
 msgid "Number of Pages. Click to open the Go to Page dialog box."
-msgstr ""
+msgstr "מספר העמודים. יש ללחוץ כדי לפתוח את תיבת חלנית מעבר לעמוד."
 
 #: src/control/jsdialog/Widget.HTMLContent.ts:95
 msgid "Word Counter"
@@ -4993,16 +4989,16 @@ msgstr "לחיצה תסגור את המצגת…"
 
 #: src/slideshow/SlideShowPresenter.ts:676
 msgid "End Show"
-msgstr ""
+msgstr "סיום ההופעה"
 
 #: src/slideshow/SlideShowPresenter.ts:707
 #: src/slideshow/SlideShowPresenter.ts:719
 msgid "Disable Animations"
-msgstr ""
+msgstr "השבתת הנפשות"
 
 #: src/slideshow/SlideShowPresenter.ts:718
 msgid "Enable Animations"
-msgstr ""
+msgstr "הפעלת הנפשות"
 
 #: welcome/welcome.html%2Bhtml.head.title:9-3
 msgid "Collabora Online Welcome"
@@ -5018,7 +5014,6 @@ msgid "Collabora Online Development Edition"
 msgstr "מהדורת הפיתוח של Collabora Online"
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.p:28-7
-#, fuzzy
 msgid ""
 "Enjoy the latest developments in online productivity, free for you to use, "
 "to explore and to use with others in the browser. Various <a "
@@ -5028,24 +5023,25 @@ msgid ""
 msgstr ""
 "מזמינים אותך ליהנות מכל הפיתוחים העדכניים ביותר בכלי הפקה מקוונים, ללא עלות, "
 "למטרות חקירה ושימוש בשיתוף עם אחרים דרך הדפדפן. ישנם גם מגוון <a target="
-"\"_blank\" href=\"https://www.collaboraonline.com/solutions/"
-"collabora-office-android-ios/\">יישומונים</a> זמינים למכשירים ניידים."
+"\"_blank\" rel=\"noopener\" href="
+"\"https://www.collaboraonline.com/solutions/collabora-office-android-ios/\""
+">יישומונים</a> זמינים למכשירים ניידים."
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h1:37-7
 msgid "Discover All The Changes"
 msgstr "לגלות את כל השינויים"
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.p:39-7
-#, fuzzy
 msgid ""
 "Check the <a target=\"_blank\" rel=\"noopener\" href=\"https://www."
 "collaboraonline.com/code-25-04-release-notes/\">release notes</a> and learn "
 "all about: The latest Collabora Online Development Edition, aimed at home "
 "users and small teams."
 msgstr ""
-"ב<a target=\"_blank\" href=\"https://www.collaboraonline.com/"
-"code-25-04-release-notes/\">הערות ההפצה</a> אפשר ללמוד עוד על: מהדורת הפיתוח "
-"האחרונה של Collabora Online, שמיועדת למשתמשים ביתיים ולצוותים קטנים."
+"ב<a target=\"_blank\" rel=\"noopener\" href="
+"\"https://www.collaboraonline.com/code-25-04-release-notes/\">הערות ההפצה</"
+"a> אפשר ללמוד עוד על: מהדורת הפיתוח האחרונה של Collabora Online, שמיועדת "
+"למשתמשים ביתיים ולצוותים קטנים."
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h1:48-7
 msgid "Get Involved"
@@ -5056,7 +5052,6 @@ msgid "https://collaboraonline.github.io/"
 msgstr "https://collaboraonline.github.io/"
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.p:50-7
-#, fuzzy
 msgid ""
 "Are you interested in contributing but don’t know where to start? Head over "
 "to the <a target=\"_blank\" rel=\"noopener\" href=\"https://collaboraonline."
@@ -5068,11 +5063,13 @@ msgid ""
 "report</a> with all the essential steps on how to reproduce it."
 msgstr ""
 "מעניין אותך לתרום ולא ברור לך מאיפה להתחיל? כדאי לגשת אל <a target=\"_blank\""
-" href=\"https://collaboraonline.github.io/post/build-code/\">ההנחיות "
-"המפורטות</a> ולבנות את CODE מאפס. אפשר גם לעזור עם <a target=\"_blank\" href="
+" rel=\"noopener\" href=\"https://collaboraonline.github.io/post/build-code/\""
+">ההנחיות המפורטות</a> ולבנות את CODE מאפס. אפשר גם לעזור עם <a target="
+"\"_blank\" rel=\"noopener\" href="
 "\"https://collaboraonline.github.io/post/translate/\">תרגומים</a> או על ידי "
-"<a target=\"_blank\" href=\"https://collaboraonline.github.io/post/filebugs/"
-"\">הגשת דוח תקלה</a> עם כל הצעדים שדרושים כדי לשחזר אותה."
+"<a target=\"_blank\" rel=\"noopener\" href="
+"\"https://collaboraonline.github.io/post/filebugs/\">הגשת דוח תקלה</a> עם כל "
+"הצעדים שדרושים כדי לשחזר אותה."
 
 #: welcome/welcome.html%2Bhtml.body.div.div:55-5
 msgid ""
