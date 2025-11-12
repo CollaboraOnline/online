@@ -229,7 +229,7 @@ void WebView::load(const Poco::URI& fileURL, bool newFile)
     QWebChannel* channel = new QWebChannel(_webView->page());
 
     assert(_bridge == nullptr);
-    _bridge = new Bridge(channel, _document, _webView);
+    _bridge = new Bridge(channel, _document, _mainWindow, _webView);
     channel->registerObject("bridge", _bridge);
     _webView->page()->setWebChannel(channel);
 
