@@ -584,6 +584,7 @@ QVariant Bridge::cool(const QString& messageStr)
             [this]
             {
                 Util::setThreadName("app2js");
+                bool unexpectedClose = false;
                 while (true)
                 {
                     struct pollfd pfd[2];
@@ -603,6 +604,7 @@ QVariant Bridge::cool(const QString& messageStr)
                             if (n == 0)
                             {
                                 LOG_TRC("Socket closed #" << _document._fakeClientFd);
+                                unexpectedClose = true;
                                 break;
                             }
                             std::vector<char> buf(n);
@@ -612,6 +614,7 @@ QVariant Bridge::cool(const QString& messageStr)
                         if (pfd[0].revents & POLLERR)
                         {
                             LOG_TRC("Socket error #" << _document._fakeClientFd);
+                            unexpectedClose = true;
                             break;
                         }
                     }
@@ -619,6 +622,10 @@ QVariant Bridge::cool(const QString& messageStr)
                 LOG_TRC("Closing message pump thread");
                 fakeSocketClose(_closeNotificationPipeForForwardingThread[1]);
                 fakeSocketClose(_document._fakeClientFd);
+                if (unexpectedClose) {
+                    LOG_WRN("Unexpected closing of message pump thread; closing window now");
+                    QMetaObject::invokeMethod(_window, "close", Qt::QueuedConnection);
+                }
             });
 
         // 1st request: the initial GET /?file_path=...  (mimic WebSocket upgrade)
