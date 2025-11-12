@@ -128,9 +128,9 @@ final class DocumentController: NSDocumentController {
 
         // Simple titled window for the web view
         let w = NSWindow(contentViewController: vc)
-        w.title = "New"
+        w.title = "New Document"
         w.styleMask = [.titled, .closable, .miniaturizable]
-        w.setContentSize(NSSize(width: 520, height: 360))
+        w.setContentSize(NSSize(width: 1042, height: 782))
         w.center()
 
         let wc = NSWindowController(window: w)
