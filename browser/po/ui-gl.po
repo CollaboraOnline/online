@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-11-04 22:40+0100\n"
-"PO-Revision-Date: 2024-10-10 16:03+0000\n"
+"PO-Revision-Date: 2025-11-12 12:51+0000\n"
 "Last-Translator: \"Miguel A. Bouzada\" <mbouzada@gmail.com>\n"
 "Language-Team: Galician <https://hosted.weblate.org/projects/"
 "collabora-online/ui/gl/>\n"
-"Language: \n"
+"Language: gl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.8-dev\n"
+"X-Generator: Weblate 5.15-dev\n"
 
 #: admin/admin.strings.js:15
 msgid "Admin console"
@@ -25,7 +25,7 @@ msgstr "Consola de administración"
 
 #: admin/admin.strings.js:16
 msgid "Settings"
-msgstr "Configuración"
+msgstr "Axustes"
 
 #: admin/admin.strings.js:17
 msgid "Overview"
@@ -531,9 +531,8 @@ msgstr ""
 #: src/control/Control.NotebookbarCalc.js:771
 #: src/control/Control.NotebookbarWriter.js:1624
 #: src/control/Control.Zotero.js:1152 src/control/Control.Zotero.js:1604
-#, fuzzy
 msgid "Date"
-msgstr "~Datos"
+msgstr "Data"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:195
 #: src/control/Control.NotebookbarCalc.js:772
@@ -657,7 +656,7 @@ msgstr ""
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:350
 msgid "Document settings"
-msgstr ""
+msgstr "Axustes do documento"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:351
 #: admin/src/integrator/Xcu.ts:316
@@ -694,7 +693,7 @@ msgstr ""
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:621
 msgid "Interface Settings"
-msgstr ""
+msgstr "Axustes da interface"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:623
 msgid "Set default interface preferences."
@@ -702,7 +701,7 @@ msgstr ""
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:731
 msgid "Select a tab to browser settings."
-msgstr ""
+msgstr "Seleccione unha lapela para ver os axustes do navegador."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:744
 #: admin/src/integrator/Xcu.ts:376
@@ -717,7 +716,7 @@ msgstr ""
 #: admin/src/integrator/AdminIntegratorSettings.ts:765
 #: admin/src/integrator/Xcu.ts:405
 msgid "Save Document settings"
-msgstr ""
+msgstr "Gardar os axustes do documento"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:1106
 msgid "Notebookbar view"
@@ -754,11 +753,11 @@ msgstr "Editar"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:1341
 msgid "View Settings"
-msgstr ""
+msgstr "Axustes da vista"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:1342
 msgid "Adjust view settings."
-msgstr ""
+msgstr "Axustar os parámetros da vista."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:1352
 msgid "Option"
@@ -772,7 +771,7 @@ msgstr ""
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:1386
 msgid "Zotero account API settings"
-msgstr ""
+msgstr "Axustes da API da conta de Zotero"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:1395
 msgid "Document Signing"
@@ -836,11 +835,11 @@ msgstr ""
 
 #: admin/src/integrator/Xcu.ts:312
 msgid "Document Settings"
-msgstr ""
+msgstr "Axustes dos documentos"
 
 #: admin/src/integrator/Xcu.ts:363
 msgid "Select a tab to view settings."
-msgstr ""
+msgstr "Seleccione unha lapela para ver os axustes."
 
 #: admin/src/Util.js:26
 msgid "kB"
@@ -1774,9 +1773,8 @@ msgid "EPUB (.epub)"
 msgstr "EPUB (.epub)"
 
 #: src/control/Control.Menubar.ts:106 src/control/Control.UIManager.ts:325
-#, fuzzy
 msgid "Rename Document"
-msgstr "Reparar documento"
+msgstr "Cambiar o nome do documento"
 
 #: src/control/Control.Menubar.ts:107 src/control/Control.Menubar.ts:438
 #: src/control/Control.Menubar.ts:614 src/control/Control.Menubar.ts:756
@@ -1806,9 +1804,8 @@ msgstr "Descargar como"
 #: src/control/Control.NotebookbarBuilder.js:369
 #: src/control/Control.NotebookbarBuilder.js:403
 #: src/control/Control.NotebookbarBuilder.js:445
-#, fuzzy
 msgid "PDF Document (.pdf) as..."
-msgstr "Documento PDF (.pdf)"
+msgstr "Documento PDF (.pdf) como…"
 
 #: src/control/Control.Menubar.ts:117 src/control/Control.Menubar.ts:765
 msgid "HTML file (.html)"
@@ -1918,9 +1915,8 @@ msgstr "Orientación do texto"
 
 #: src/control/Control.Menubar.ts:330
 #: src/control/Notebookbar.WriterReferencesTab.ts:25
-#, fuzzy
 msgid "References"
-msgstr "Referencia~s"
+msgstr "Referencias"
 
 #: src/control/Control.Menubar.ts:333
 #: src/control/Notebookbar.WriterReferencesTab.ts:72
@@ -1975,9 +1971,8 @@ msgid "Insert Picture"
 msgstr ""
 
 #: src/control/Control.Menubar.ts:380 src/control/Control.Menubar.ts:1345
-#, fuzzy
 msgid "Insert Date"
-msgstr "Inserir táboa"
+msgstr "Inserir data"
 
 #: src/control/Control.Menubar.ts:381 src/control/Control.Menubar.ts:1346
 #: src/control/Control.NotebookbarCalc.js:326
@@ -2496,17 +2491,15 @@ msgstr ""
 #: src/control/Control.NotebookbarDraw.js:57
 #: src/control/Control.NotebookbarImpress.js:77
 #: src/control/Control.NotebookbarWriter.js:37
-#, fuzzy
 msgid "File"
-msgstr "~Ficheiro"
+msgstr "Ficheiro"
 
 #: src/control/Control.NotebookbarCalc.js:29
 #: src/control/Control.NotebookbarDraw.js:63
 #: src/control/Control.NotebookbarImpress.js:83
 #: src/control/Control.NotebookbarWriter.js:43
-#, fuzzy
 msgid "Home"
-msgstr "~Inicio"
+msgstr "Inicio"
 
 #: src/control/Control.NotebookbarCalc.js:36
 #: src/control/Control.NotebookbarCalc.js:1184
@@ -2517,9 +2510,8 @@ msgstr "~Inicio"
 #: src/control/Control.NotebookbarWriter.js:50
 #: src/control/Control.NotebookbarWriter.js:965
 #: src/control/Control.NotebookbarWriter.js:2432
-#, fuzzy
 msgid "Insert"
-msgstr "~Inserir"
+msgstr "Inserir"
 
 #: src/control/Control.NotebookbarCalc.js:42
 #: src/control/Control.NotebookbarDraw.js:1282
@@ -2531,23 +2523,20 @@ msgid "Formulas"
 msgstr ""
 
 #: src/control/Control.NotebookbarCalc.js:54
-#, fuzzy
 msgid "Data"
-msgstr "~Datos"
+msgstr "Datos"
 
 #: src/control/Control.NotebookbarCalc.js:60
 #: src/control/Control.NotebookbarDraw.js:82
 #: src/control/Control.NotebookbarImpress.js:110
 #: src/control/Control.NotebookbarWriter.js:63
-#, fuzzy
 msgid "Review"
-msgstr "~Revisión"
+msgstr "Revisión"
 
 #: src/control/Control.NotebookbarCalc.js:66
 #: src/control/Control.NotebookbarDraw.js:88
 #: src/control/Control.NotebookbarImpress.js:116
 #: src/control/Control.NotebookbarWriter.js:69
-#, fuzzy
 msgid "Format"
 msgstr "Formatar"
 
@@ -2570,9 +2559,8 @@ msgstr ""
 #: src/control/Control.NotebookbarDraw.js:115
 #: src/control/Control.NotebookbarImpress.js:150
 #: src/control/Control.NotebookbarWriter.js:102
-#, fuzzy
 msgid "View"
-msgstr "Vistas"
+msgstr "Vista"
 
 #: src/control/Control.NotebookbarCalc.js:92
 #: src/control/Control.NotebookbarCalc.js:1747
@@ -2585,9 +2573,8 @@ msgstr "Minigráfico"
 #: src/control/Control.NotebookbarImpress.js:156
 #: src/control/Control.NotebookbarWriter.js:108
 #: src/control/Control.ServerAuditDialog.ts:307
-#, fuzzy
 msgid "Help"
-msgstr "A~xuda"
+msgstr "Axuda"
 
 #: src/control/Control.NotebookbarCalc.js:157
 #: src/control/Control.NotebookbarImpress.js:218
@@ -2600,7 +2587,6 @@ msgstr ""
 #: src/control/Control.NotebookbarDraw.js:190
 #: src/control/Control.NotebookbarImpress.js:238
 #: src/control/Control.NotebookbarWriter.js:199
-#, fuzzy
 msgid "Export As"
 msgstr "Exportar como"
 
@@ -2975,9 +2961,8 @@ msgstr ""
 
 #: src/control/Control.NotebookbarDraw.js:76
 #: src/control/Control.NotebookbarWriter.js:56
-#, fuzzy
 msgid "Layout"
-msgstr "~Disposición"
+msgstr "Disposición"
 
 #: src/control/Control.NotebookbarDraw.js:94
 #: src/control/Control.NotebookbarDraw.js:1490
@@ -2985,9 +2970,8 @@ msgstr "~Disposición"
 #: src/control/Control.NotebookbarImpress.js:1501
 #: src/control/Control.NotebookbarWriter.js:81
 #: src/control/Control.NotebookbarWriter.js:1244
-#, fuzzy
 msgid "Table"
-msgstr "~Táboa"
+msgstr "Táboa"
 
 #: src/control/Control.NotebookbarDraw.js:321
 msgid "PDF Document (.pdf) - Expert"
@@ -3114,9 +3098,8 @@ msgstr ""
 
 #: src/control/Control.NotebookbarWriter.js:923
 #: src/control/Control.Zotero.js:827
-#, fuzzy
 msgid "Styles"
-msgstr "Estilo"
+msgstr "Estilos"
 
 #: src/control/Control.NotebookbarWriter.js:940
 msgid "Scroll up"
@@ -4611,6 +4594,11 @@ msgid ""
 "administrator. For more info on proxy configuration please checkout https://"
 "sdk.collaboraonline.com/docs/installation/Proxy_settings.html"
 msgstr ""
+"Produciuse un fallo ao estabelecer a conexión do conectador ou a conexión do "
+"conectador pechouse de xeito non agardado. O proxy inverso pode estar mal "
+"configurado, póñase en contacto coa administración. Para obter máis "
+"información sobre a configuración do proxy, consulte https://"
+"sdk.collaboraonline.com/docs/installation/Proxy_settings.html"
 
 #: src/errormessages.js:41
 msgid ""
@@ -4771,9 +4759,8 @@ msgid "Named Range"
 msgstr ""
 
 #: src/layer/tile/CanvasTileLayer.js:3504
-#, fuzzy
 msgid "No Comments"
-msgstr "Gardar comentarios"
+msgstr "Sen comentarios"
 
 #: src/main.js:131
 msgid "Warning! The browser you are using is not supported."

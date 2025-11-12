@@ -1,26 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="loading">A cargar...</string>
+    <string name="loading">Cargando…</string>
     <string name="cannot_open_file_chooser">Non é posíbel abrir o selector de ficheiros</string>
-    <string name="failed_to_insert_image">Non foi posíbel inserir imaxe</string>
-    <string name="failed_to_load_file">Non foi posíbel determinar que ficheiro cargar</string>
-    <string name="storage_permission_required">Requírese permiso de almacenamento</string>
-    <string name="temp_file_saving_disabled">Este ficheiro só permite a lectura e non pode ser gardado.</string>
+    <string name="failed_to_insert_image">Non foi posíbel inserir a imaxe</string>
+    <string name="failed_to_load_file">Produciuse un fallo ao determinar que ficheiro cargar</string>
+    <string name="storage_permission_required">Precisa de permiso de almacenamento</string>
+    <string name="temp_file_saving_disabled">Este ficheiro é só de lectura e non pode ser gardado.</string>
     <string name="saving">A gardar...</string>
-    <string name="preparing_for_the_first_start_after_an_update">Preparándose para o primeiro inicio despois dunha actualización.</string>
-    <string name="exiting">A saír...</string>
-    <string name="rate_our_app_text">Se gusta desta aplicación, déalle 5 estrelas no Google Play. As avaliacións positivas son a nosa mellor motivación.</string>
-    <string name="rate_our_app_title">Grazas por utilizar %1$s!</string>
+    <string name="preparing_for_the_first_start_after_an_update">Preparándose para o primeiro inicio após unha actualización.</string>
+    <string name="exiting">Saíndo…</string>
+    <string name="rate_our_app_text">Se gusta desta aplicación, déalle 5 estrelas no Google Play. As recensións positivas son a nosa mellor motivación.</string>
+    <string name="rate_our_app_title">Grazas por empregar %1$s!</string>
     <string name="later">Máis tarde</string>
     <string name="rate_now">Avaliar agora</string>
     <string name="file_chromeos_read_only">Non é posíbel gardar este ficheiro neste sitio, polo que se abre só para lectura. Móvao para os ficheiros de Play para un acceso de lectura e escritura completo.</string>
-    <string name="restarting">Reiniciando...</string>
-    <string name="cant_open_the_document">Non se puido abrilo documento</string>
+    <string name="restarting">Reiniciando…</string>
+    <string name="cant_open_the_document">Non foi posíbel abrir o documento</string>
     <string name="view_only">Só ver</string>
-    <string name="ask_for_copy">Este documento é só de lectura. Queres facer unha copia para editala\?</string>
+    <string name="ask_for_copy">Este documento é só de lectura. Quere facer unha copia para editala?</string>
     <string name="edit_copy">Editar unha copia</string>
     <string name="use_text">Empregar o formato Texto</string>
     <string name="use_odf">Empregar o formato ODF</string>
     <string name="ask_for_convert_odf">Confirme o formato do ficheiro</string>
-    <string name="convert_odf_message">Este documento pode conter formato ou contido que non poidan ser gardados no formato de ficheiro seleccionado agora, «Texto».</string>
+    <string name="convert_odf_message">Este documento pode conter formato ou contido que non poida ser gardado no formato de ficheiro seleccionado agora, «Texto».</string>
 </resources>

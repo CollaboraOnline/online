@@ -3,16 +3,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-11-04 22:40+0200\n"
-"PO-Revision-Date: 2020-09-23 07:49+0000\n"
-"Last-Translator: Xosé <xosecalvo@gmail.com>\n"
-"Language-Team: Galician <https://weblate.documentfoundation.org/projects/"
-"libo_online/loleaflet-help/gl/>\n"
+"PO-Revision-Date: 2025-11-12 12:51+0000\n"
+"Last-Translator: \"Miguel A. Bouzada\" <mbouzada@gmail.com>\n"
+"Language-Team: Galician <https://hosted.weblate.org/projects/"
+"collabora-online/help/gl/>\n"
 "Language: gl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Translate Toolkit 3.6.0\n"
+"X-Generator: Weblate 5.15-dev\n"
 
 #: html/cool-help.html%2Bdiv.h1:6-5
 msgid "Keyboard Shortcuts"
@@ -762,9 +762,8 @@ msgid "Switch cursor between text and header"
 msgstr "Alternar o cursor entre o texto e a cabeceira"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:81-102
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>PageUp</kbd>"
-msgstr "Ctrl+ AvPáx"
+msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Re Páx</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:82-38
 msgid "Extend the selection up one page"
@@ -797,27 +796,24 @@ msgid "Extend the selection down one page"
 msgstr "Estender a selección até unha páxina cara a abaixo"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:85-99
-#, fuzzy
 msgid "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>PageDown</kbd>"
-msgstr "Maiús+Av Páx"
+msgstr "<kbd>Maiús</kbd><span class=\"kbd--plus\">+</span><kbd>Av Páx</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:86-38
 msgid "Delete to beginning of word"
 msgstr "Eliminar até o inicio da palabra"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:86-92
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Backspace</kbd>"
-msgstr "Ctrl + Retroceso"
+msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Retroceso</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:87-38
 msgid "Delete to end of word"
 msgstr "Eliminar ata a fin da palabra"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:87-86
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Del</kbd>"
-msgstr "Ctrl + Supr"
+msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Supr</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:88-38
 msgid "Delete to beginning of sentence"
@@ -1036,11 +1032,12 @@ msgid "Insert endnote"
 msgstr "Inserir unha nota final"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:115-79
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class="
 "\"kbd--plus\">+</span><kbd>D</kbd>"
-msgstr "Ctrl + Alt + D"
+msgstr ""
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class="
+"\"kbd--plus\">+</span><kbd>D</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:116-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:167-38
@@ -1194,9 +1191,8 @@ msgid ""
 msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:141-188
-#, fuzzy
 msgid "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Page Down</kbd>"
-msgstr "Maiús+Av Páx"
+msgstr "<kbd>Maiús</kbd><span class=\"kbd--plus\">+</span><kbd>Av Páx</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:142-38
 msgid ""
@@ -1251,11 +1247,12 @@ msgid "Go to next sheet."
 msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:146-82
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class="
 "\"kbd--plus\">+</span><kbd>Page Down</kbd>"
-msgstr "Ctrl + Alt + D"
+msgstr ""
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class="
+"\"kbd--plus\">+</span><kbd>Av Páx</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:147-38
 msgid "Go to previous sheet."
@@ -1301,9 +1298,8 @@ msgid "Moves one screen page to the right."
 msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:150-100
-#, fuzzy
 msgid "<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Page Down</kbd>"
-msgstr "Maiús+Av Páx"
+msgstr "<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Av Páx</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:151-38
 msgid ""
@@ -1479,7 +1475,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.h2:185-9
 msgid "Insert"
-msgstr ""
+msgstr "Inserir"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:187-38
 msgid "Insert date"
@@ -2073,8 +2069,9 @@ msgid ""
 "You can also paste objects, such as images, if they are copied from the "
 "document you are working in."
 msgstr ""
-"Ao pegar contido do documento respéctase o formato. Tamén se poden pegar "
-"obxectos, como imaxes, se se copian do documento no que se está a traballar."
+"Ao pegar texto desde dentro do documento, respectarase o formato. Tamén pode "
+"pegar obxectos, como imaxes, se están copiados do documento no que está a "
+"traballar."
 
 #: html/cool-help.html%2Bdiv.div.div.p:444-5
 #, fuzzy
@@ -2290,7 +2287,6 @@ msgid "All spreadsheets functions and mathematical rules applies."
 msgstr "Aplícanse todas as funcións de folla de cálculo e regras matemáticas."
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:502-5
-#, fuzzy
 msgid ""
 "The formula language should be extremely familiar to any spreadsheet user, "
 "and is specified in great detail in the <a href=\"https://www.oasis-open.org/"
@@ -2298,9 +2294,10 @@ msgid ""
 "\"_blank\" rel=\"noopener noreferrer\">OASIS OpenFormula specification</a>."
 msgstr ""
 "A linguaxe de fórmulas deberíalle resultar ben familiar a calquera usuario "
-"de follas de cálculo e está especificada en detalle na <a href=\"https://www."
-"oasis-open.org/committees/download.php/16826/openformula-spec-20060221.html\""
-">Especificación OpenFormula da OASIS</a>."
+"de follas de cálculo e está especificada en detalle na <a href=\"https://"
+"www.oasis-open.org/committees/download.php/16826/openformula-spec-20060221."
+"html\" target=\"_blank\" rel=\"noopener noreferrer\">Especificación "
+"OpenFormula da OASIS</a>."
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:509-5
 msgid ""
@@ -3308,8 +3305,8 @@ msgid ""
 "The CSV data is loaded into the selected cell where you pasted, according to "
 "these settings."
 msgstr ""
-"Os datos en SCV cárganse na cela seleccionada na que pegue, segundo esta "
-"configuración."
+"Os datos en CSV cárganse na cela seleccionada onde os pegou, segundo estes "
+"axustes."
 
 #: html/cool-help.html%2Bdiv.div.div.div.h4:801-5
 msgid "How can I copy the formatting of existing cells to new ones?"
@@ -3351,11 +3348,11 @@ msgid ""
 "class=\"ui\">Clear Direct Formatting</span> or use the button in the toolbar."
 msgstr ""
 "O formato directo é o formato aplicado directamente ao contido seleccionado "
-"dun parágrafo ou dunha cela dunha folla de cálculo e sobreponse o seu "
-"formato de estilo asignado. Para restauar o formato á configuración do "
-"estilo, seleccione o texto ou a fola de cálculo e escolla <span class=\"ui\""
-">Formato</span> → <span class=\"ui\">Limpar formato directo</span> ou "
-"empregue o botón da barra de ferramentas."
+"dun parágrafo ou dunha cela dunha folla de cálculo e sobreponse ao seu "
+"formato de estilo asignado. Para restabelecer o formato á configuración de "
+"estilo, seleccione a cela de texto ou a fola de cálculo e escolla <span "
+"class=\"ui\">Formato</span> → <span class=\"ui\">Limpar formato directo</"
+"span> ou empregue o botón da barra de ferramentas."
 
 #: html/cool-help.html%2Bdiv.div.div.div.h4:814-5
 msgid "How do I rename a sheet?"
