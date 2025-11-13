@@ -294,6 +294,43 @@ class Document: NSDocument {
     }
 
     /**
+     * Restrict Save/Save As… formats to the document's current type, we currently can't change the type (yet).
+     */
+    override func writableTypes(for saveOperation: NSDocument.SaveOperationType) -> [String] {
+        // Ask super for the default list (from Info.plist)
+        let all = super.writableTypes(for: saveOperation)
+
+        // Determine our current type name (best effort)
+        guard let current = currentTypeNameForSavePanel() else {
+            return all  // fallback: keep default list if we can't determine
+        }
+
+        // If super’s list includes it, return only that; otherwise still force just current.
+        return all.contains(current) ? [current] : [current]
+    }
+
+    /**
+     * Best-effort detection of this document’s current type name.
+     */
+    private func currentTypeNameForSavePanel() -> String? {
+        // If the doc already knows its type, use it.
+        if let t = self.fileType { return t }
+
+        // If we were opened from a URL, ask the controller to infer it from contents.
+        if let url = self.fileURL {
+            return try? NSDocumentController.shared.typeForContents(of: url)
+        }
+
+        // Or try the tempFile
+        if let url = self.tempFileURL {
+            return try? NSDocumentController.shared.typeForContents(of: url)
+        }
+
+        // Fall back to the controller’s defaultType (may be nil).
+        return NSDocumentController.shared.defaultType
+    }
+
+    /**
      * Called by the system when the document is opened. The system provides the file contents as `Data`.
      * We create a non-predictable temporary directory using a UUID, and store the `data` there.
      */
