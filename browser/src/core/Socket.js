@@ -1220,9 +1220,9 @@ app.definitions.Socket = class Socket extends SocketBase {
 			if (app.isExperimentalMode()) {
 				SlideBitmapManager.handleSlideRenderingComplete(e);
 			} else {
-				const status = textMsg.substring('sliderenderingcomplete:'.length + 1);
+				const json = JSON.parse(textMsg.substring('sliderenderingcomplete:'.length + 1));
 				this._map.fire('sliderenderingcomplete', {
-					success: status === 'success'
+					success: json.status === 'success'
 				});
 			}
 			return;
