@@ -241,31 +241,24 @@ public:
 /// Also owns the file - cleaning it up when destroyed.
 class ConvertToPartHandler : public Poco::Net::PartHandler
 {
-    std::string _filename;
-    std::string _templateOptionFilename;
+    /// Parameter name -> filename map.
+    std::map<std::string, std::string> _filenames;
 
 public:
-    std::string getFilename() const { return _filename; }
-    std::string getTemplateOptionFilename() const { return _templateOptionFilename; }
+    const std::map<std::string, std::string>& getFilenames() const { return _filenames; }
 
     /// Afterwards someone else is responsible for cleaning that up.
-    void takeFile() { _filename.clear(); }
-    void takeTemplateOptionFile() { _templateOptionFilename.clear(); }
+    void takeFiles() { _filenames.clear(); }
 
     ConvertToPartHandler() {}
 
     virtual ~ConvertToPartHandler()
     {
-        if (!_filename.empty())
+        for (const auto& it : _filenames)
         {
-            LOG_TRC("Remove un-handled temporary file '" << _filename << '\'');
-            StatelessBatchBroker::removeFile(_filename);
-        }
-
-        if (!_templateOptionFilename.empty())
-        {
-            LOG_TRC("Remove un-handled template option file '" << _templateOptionFilename << '\'');
-            StatelessBatchBroker::removeFile(_templateOptionFilename);
+            const std::string& filename = it.second;
+            LOG_TRC("Remove un-handled temporary file '" << filename << '\'');
+            StatelessBatchBroker::removeFile(filename);
         }
     }
 
@@ -304,17 +297,13 @@ public:
             tempPath.setFileName("incoming_file"); // A sensible name.
         else
             tempPath.setFileName(filenameParam.getFileName()); //TODO: Sanitize.
-        bool isTemplateOption = params.has("name") && params.get("name") == "template";
-        if (isTemplateOption)
+        std::string paramName = "data";
+        if (params.has("name"))
         {
-            _templateOptionFilename = tempPath.toString();
-            LOG_DBG("Storing incoming template option file to: " << _templateOptionFilename);
+            paramName = params.get("name");
         }
-        else
-        {
-            _filename = tempPath.toString();
-            LOG_DBG("Storing incoming file to: " << _filename);
-        }
+        _filenames[paramName] = tempPath.toString();
+        LOG_DBG("Storing incoming file to: " << _filenames[paramName]);
 
         // Copy the stream to the temp path.
         std::ofstream fileStream;
@@ -2157,13 +2146,30 @@ bool ClientRequestDispatcher::handlePostRequest(const RequestDetails& requestDet
         if (requestDetails.equals(1, "convert-to") && format.empty())
             hasRequiredParameters = false;
 
-        const std::string fromPath = handler.getFilename();
+        const std::map<std::string, std::string> fromPaths = handler.getFilenames();
+        std::string fromPath;
+        auto it = fromPaths.find("data");
+        if (it != fromPaths.end())
+        {
+            fromPath = it->second;
+        }
+        if (fromPath.empty() && fromPaths.size() == 1)
+        {
+            // Compatibility: if there is a single stream, then allow any name and assume 'data'.
+            it = fromPaths.begin();
+            fromPath = it->second;
+        }
         LOG_INF("Conversion request for URI [" << fromPath << "] format [" << format << "].");
         if (!fromPath.empty() && hasRequiredParameters)
         {
             Poco::URI uriPublic = RequestDetails::sanitizeURI(fromPath);
             Poco::URI templateOptionUriPublic;
-            const std::string templateOptionFromPath = handler.getTemplateOptionFilename();
+            std::string templateOptionFromPath;
+            it = fromPaths.find("template");
+            if (it != fromPaths.end())
+            {
+                templateOptionFromPath = it->second;
+            }
             if (!templateOptionFromPath.empty())
             {
                 templateOptionUriPublic = RequestDetails::sanitizeURI(templateOptionFromPath);
@@ -2232,8 +2238,7 @@ bool ClientRequestDispatcher::handlePostRequest(const RequestDetails& requestDet
             auto docBroker = getConvertToBrokerImplementation(
                 requestDetails[1], fromPath, uriPublic, docKey, format, options, lang, target,
                 filter, encodedTransformJSON);
-            handler.takeFile();
-            handler.takeTemplateOptionFile();
+            handler.takeFiles();
 
             COOLWSD::cleanupDocBrokers();
 
@@ -2298,14 +2303,22 @@ bool ClientRequestDispatcher::handlePostRequest(const RequestDetails& requestDet
                 LOG_INF("Perform insertfile: " << formChildid << ", " << formName
                                                << ", filename: " << fileName);
                 Poco::File(dirPath).createDirectories();
-                Poco::File(handler.getFilename()).moveTo(fileName);
+                std::string filename;
+                const std::map<std::string, std::string>& filenames = handler.getFilenames();
+                if (!filenames.empty())
+                {
+                    // Expect a single parameter, don't care about the name.
+                    auto it = filenames.begin();
+                    filename = it->second;
+                }
+                Poco::File(filename).moveTo(fileName);
 
                 // Cleanup the directory after moving.
-                const std::string dir = Poco::Path(handler.getFilename()).parent().toString();
+                const std::string dir = Poco::Path(filename).parent().toString();
                 if (FileUtil::isEmptyDirectory(dir))
                     FileUtil::removeFile(dir);
 
-                handler.takeFile();
+                handler.takeFiles();
 
                 http::Response httpResponse(http::StatusCode::OK);
                 FileServerRequestHandler::hstsHeaders(httpResponse);
