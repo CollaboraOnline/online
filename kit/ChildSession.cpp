@@ -206,7 +206,8 @@ bool ChildSession::_handleInput(const char *buffer, int length)
     LogUiCommands logUndoRelatedcommandAtfunctionEnd(*this, &tokens);
     if (_isDocLoaded && Log::isLogUIEnabled() && _clientVisibleArea.getWidth() != 0)
     {
-        logUndoRelatedcommandAtfunctionEnd._lastUndoCount = atoi(getLOKitDocument()->getCommandValues(".uno:UndoCount"));
+        LOKitHelper::ScopedString undoCountString(getLOKitDocument()->getCommandValues(".uno:UndoCount"));
+        logUndoRelatedcommandAtfunctionEnd._lastUndoCount = undoCountString ? atoi(undoCountString.get()) : 0;
     }
 
     if (COOLProtocol::tokenIndicatesUserInteraction(tokens[0]))
