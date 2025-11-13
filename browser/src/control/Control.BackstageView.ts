@@ -112,7 +112,7 @@ class BackstageView extends window.L.Class {
 	private createHeader(): HTMLElement {
 		const header = this.createElement('div', 'backstage-header');
 		const title = this.createElement('span', 'backstage-header-title');
-		title.textContent = _('Collabora Office');
+		title.textContent = 'Collabora Office';
 
 		const closeButton = this.createElement('div', 'backstage-header-close');
 		closeButton.setAttribute('aria-label', _('Close backstage'));
