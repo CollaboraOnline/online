@@ -69,19 +69,27 @@ class ViewLayoutBase {
 		This is the base class. Does nothing special but provide the interface.
 	*/
 	public documentToViewX(point: cool.SimplePoint): number {
-		return point.pX - this._viewedRectangle.pX1 + this._documentAnchorPosition[0];
+		return (
+			point.pX - this._viewedRectangle.pX1 + this._documentAnchorPosition[0]
+		);
 	}
 
 	public documentToViewY(point: cool.SimplePoint): number {
-		return point.pY - this._viewedRectangle.pY1 + this._documentAnchorPosition[1];
+		return (
+			point.pY - this._viewedRectangle.pY1 + this._documentAnchorPosition[1]
+		);
 	}
 
 	public viewToDocumentX(point: cool.SimplePoint): number {
-		return point.pX + this._viewedRectangle.pX1 - this._documentAnchorPosition[0];
+		return (
+			point.pX + this._viewedRectangle.pX1 - this._documentAnchorPosition[0]
+		);
 	}
 
 	public viewToDocumentY(point: cool.SimplePoint): number {
-		return point.pY + this._viewedRectangle.pY1 - this._documentAnchorPosition[1];
+		return (
+			point.pY + this._viewedRectangle.pY1 - this._documentAnchorPosition[1]
+		);
 	}
 
 	public resetClientVisibleArea(): void {
@@ -269,13 +277,11 @@ class ViewLayoutBase {
 
 		// The start position of scroll bars on canvas.
 		this.scrollProperties.startX =
-			this.viewedRectangle.pX1 /
-				this.scrollProperties.horizontalScrollRatio +
+			this.viewedRectangle.pX1 / this.scrollProperties.horizontalScrollRatio +
 			this.scrollProperties.xOffset;
 
 		this.scrollProperties.startY =
-			this.viewedRectangle.pY1 /
-				this.scrollProperties.verticalScrollRatio +
+			this.viewedRectangle.pY1 / this.scrollProperties.verticalScrollRatio +
 			this.scrollProperties.yOffset;
 
 		// Properties for quick scrolling.

@@ -716,7 +716,7 @@ class Dispatcher {
 			app.map.sendUnoCommand('.uno:RejectTrackedChangeToNext');
 		};
 
-		this.actionsMap['multipageview'] = function() {
+		this.actionsMap['multipageview'] = function () {
 			const buttonElement = document.getElementById('multi-page-view');
 			const imageElement = buttonElement.querySelector('img');
 			let source = imageElement.src;
@@ -724,8 +724,7 @@ class Dispatcher {
 			if (source.indexOf('twopages.svg') !== -1) {
 				source = source.replace('twopages.svg', 'twopages_a.svg');
 				app.activeDocument.activeView = new ViewLayoutMultiPage();
-			}
-			else {
+			} else {
 				source = source.replace('twopages_a.svg', 'twopages.svg');
 				app.activeDocument.activeView = new ViewLayoutWriter();
 			}
@@ -733,7 +732,7 @@ class Dispatcher {
 			imageElement.src = source;
 			app.activeDocument.activeView.sendClientVisibleArea();
 			app.sectionContainer.requestReDraw();
-		}
+		};
 	}
 
 	private addMobileCommands() {
