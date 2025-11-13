@@ -1,6 +1,13 @@
 /* Backstage View Styles */
 
 .backstage-view {
+	/* Overriding color variables for moment - future plan would be show based on app open */
+	--color-primary: #5c2983;
+	--color-primary-lighter: #5c2983;
+	--color-primary-dark: #5c2983;
+	--color-on-primary: #ffffff;
+	--color-primary-text: #ffffff;
+
 	position: fixed;
 	top: 0;
 	left: 0;
@@ -19,17 +26,18 @@
 
 .backstage-header {
 	height: 48px;
-	background-color: var(--color-background-lighter);
+	background-color: var(--color-primary);
 	display: flex;
 	align-items: center;
 	padding: 0 20px;
 	box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+	color: var(--color-on-primary);
 }
 
 .backstage-back-button {
 	background: transparent;
 	border: none;
-	color: var(--color-primary);
+	color: var(--color-on-primary);
 	font-size: var(--medium-font-size);
 	cursor: pointer;
 	padding: 8px 16px;
@@ -39,11 +47,11 @@
 }
 
 .backstage-back-button:hover {
-	background-color: var(--color-background-dark);
+	background-color: var(--color-primary-lighter);
 }
 
 .backstage-back-button:active {
-	background-color: var(--color-background-darker);
+	background-color: var(--color-primary-dark);
 }
 
 .backstage-main-wrapper {
@@ -78,7 +86,7 @@
 
 .backstage-sidebar-item.active {
 	background-color: var(--color-primary-lighter);
-	color: var(--color-text-darker);
+	color: var(--color-primary-text);
 	font-weight: 600;
 	box-shadow: inset 3px 0 0 var(--color-primary);
 }
