@@ -223,7 +223,7 @@ window.L.Control.NotebookbarBuilder = window.L.Control.JSDialogBuilder.extend({
 	{
 		var tooltipCollapsed = _('Tap to expand');
 		var tooltipExpanded = _('Tap to collapse');
-		
+		if ($(tabs[t]).hasClass('selected'))
 		var isFileTab = tabIds[t] === 'File-tab-label' || tabIds[t] === 'File';
 		var isFileTabForCoda = isFileTab && window.mode.isCODesktop();
 		if (!isFileTabForCoda) {
@@ -249,10 +249,17 @@ window.L.Control.NotebookbarBuilder = window.L.Control.JSDialogBuilder.extend({
 
 			var accessibilityInputElementHasFocus = app.UI.notebookbarAccessibility && app.UI.notebookbarAccessibility.accessibilityInputElement === document.activeElement ? true: false;
 
+			for (var i = 0; i < tabs.length; i++) {
+				if (i !== t) {
+					tabs[i].setAttribute('data-cooltip', '');
+				}
+			}
+
 			if (tabIsSelected && !notebookbarIsCollapsed && !accessibilityInputElementHasFocus) {
 				builder.wizard.collapse();
-				tabs[t].setAttribute('data-cooltip', tooltipCollapsed);
-			} else if (notebookbarIsCollapsed) {
+				for (i = 0; i < tabs.length; i++)
+					tabs[i].setAttribute('data-cooltip', tooltipCollapsed);
+			} else {
 				builder.wizard.extend();
 				tabs[t].setAttribute('data-cooltip', tooltipExpanded);
 			}
@@ -260,12 +267,11 @@ window.L.Control.NotebookbarBuilder = window.L.Control.JSDialogBuilder.extend({
 			$(tabs[t]).addClass('selected');
 			tabs[t].setAttribute('aria-selected', 'true');
 			tabs[t].removeAttribute('tabindex');
-			for (var i = 0; i < tabs.length; i++) {
+			for (i = 0; i < tabs.length; i++) {
 				if (i !== t) {
 					$(tabs[i]).removeClass('selected');
 					tabs[i].setAttribute('aria-selected', 'false');
 					tabs[i].tabIndex = -1;
-					tabs[i].setAttribute('data-cooltip', '');
 					$(contentDivs[i]).addClass('hidden');
 				}
 			}
