@@ -77,9 +77,11 @@ ClientSession::ClientSession(
     const std::shared_ptr<DocumentBroker>& docBroker,
     const Poco::URI& uriPublic,
     const bool readOnly,
-    const RequestDetails &requestDetails)
+    const RequestDetails &requestDetails,
+    const Poco::URI& templateOptionUriPublic)
         : Session(ws, "ToClient-" + id, id, readOnly)
         , _uriPublic(uriPublic)
+        , _templateOptionUriPublic(templateOptionUriPublic)
         , _serverURL(requestDetails)
         , _auth(Authorization::create(uriPublic))
         , _docBroker(docBroker)

@@ -2162,6 +2162,12 @@ bool ClientRequestDispatcher::handlePostRequest(const RequestDetails& requestDet
         if (!fromPath.empty() && hasRequiredParameters)
         {
             Poco::URI uriPublic = RequestDetails::sanitizeURI(fromPath);
+            Poco::URI templateOptionUriPublic;
+            const std::string templateOptionFromPath = handler.getTemplateOptionFilename();
+            if (!templateOptionFromPath.empty())
+            {
+                templateOptionUriPublic = RequestDetails::sanitizeURI(templateOptionFromPath);
+            }
             const std::string docKey = RequestDetails::getDocKey(uriPublic);
 
             std::string options;
@@ -2227,6 +2233,7 @@ bool ClientRequestDispatcher::handlePostRequest(const RequestDetails& requestDet
                 requestDetails[1], fromPath, uriPublic, docKey, format, options, lang, target,
                 filter, encodedTransformJSON);
             handler.takeFile();
+            handler.takeTemplateOptionFile();
 
             COOLWSD::cleanupDocBrokers();
 
@@ -2234,7 +2241,7 @@ bool ClientRequestDispatcher::handlePostRequest(const RequestDetails& requestDet
             LOG_TRC("Have " << DocBrokers.size() << " DocBrokers after inserting [" << docKey
                             << "].");
 
-            if (!docBroker->startConversion(disposition, _id))
+            if (!docBroker->startConversion(disposition, _id, templateOptionUriPublic))
             {
                 LOG_WRN("Failed to create Client Session with id [" << _id << "] on docKey ["
                                                                     << docKey << "].");

@@ -522,7 +522,8 @@ void WopiStorage::updateLockStateAsync(const Authorization& auth, LockContext& l
 /// uri format: http://server/<...>/wopi*/files/<id>/content
 std::string WopiStorage::downloadStorageFileToLocal(const Authorization& auth,
                                                     LockContext& /*lockCtx*/,
-                                                    const std::string& templateUri)
+                                                    const std::string& templateUri,
+                                                    std::string& /*templateOptionLocalPath*/)
 {
     ProfileZone profileZone("WopiStorage::downloadStorageFileToLocal", { { "url", _fileUrl } });
 
