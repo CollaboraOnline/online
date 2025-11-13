@@ -220,8 +220,9 @@ window.L.Control.NotebookbarBuilder = window.L.Control.JSDialogBuilder.extend({
 	// overriden
 	_createTabClick: function(builder, t, tabs, contentDivs, tabIds)
 	{
-		var tooltipCollapsed = _('Tap to expand');
-		var tooltipExpanded = _('Tap to collapse');
+		const isDesktop = window.mode.isDesktop();
+		const tooltipCollapsed = isDesktop ? _('Click to expand') : _('Tap to expand');
+		const tooltipExpanded = isDesktop ? _('Click to collapse') : _('Tap to collapse');
 		if ($(tabs[t]).hasClass('selected'))
 			tabs[t].setAttribute('data-cooltip', tooltipExpanded);
 		window.L.control.attachTooltipEventListener(tabs[t], builder.map);
