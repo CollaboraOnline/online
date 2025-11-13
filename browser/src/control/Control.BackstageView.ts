@@ -111,21 +111,31 @@ class BackstageView extends window.L.Class {
 
 	private createHeader(): HTMLElement {
 		const header = this.createElement('div', 'backstage-header');
-		const backButton = this.createElement(
-			'button',
-			'backstage-back-button',
-		) as HTMLButtonElement;
+		const title = this.createElement('span', 'backstage-header-title');
+		title.textContent = _('Collabora Online');
 
-		backButton.textContent = '← ' + _('Back');
-		backButton.title = _('Back to document');
-		window.L.DomEvent.on(backButton, 'click', () => this.hide(), this);
+		const closeButton = this.createElement('div', 'backstage-header-close');
+		closeButton.setAttribute('aria-label', _('Close backstage'));
+		closeButton.title = _('Close backstage');
 
-		header.appendChild(backButton);
+		const closeBtn = this.createElement('span', 'backstage-header-close-icon');
+		closeBtn.setAttribute('aria-hidden', 'true');
+		closeBtn.textContent = '×';
+		closeButton.appendChild(closeBtn);
+
+		window.L.DomEvent.on(closeButton, 'click', () => this.hide(), this);
+
+		header.appendChild(title);
+		header.appendChild(closeButton);
 		return header;
 	}
 
 	private createSidebar(): HTMLElement {
 		const sidebar = this.createElement('div', 'backstage-sidebar');
+		const backButton = this.createSidebarBackBtn();
+		sidebar.appendChild(backButton);
+
+		const tabsContainer = this.createElement('div', 'backstage-sidebar-tabs');
 		const tabConfigs = this.getTabsConfig();
 
 		tabConfigs.forEach((config) => {
@@ -133,11 +143,29 @@ class BackstageView extends window.L.Class {
 
 
 			const tabElement = this.createTabElement(config);
-			sidebar.appendChild(tabElement);
+			tabsContainer.appendChild(tabElement);
 		});
 
+		sidebar.appendChild(tabsContainer);
 		return sidebar;
 	}
+
+	private createSidebarBackBtn(): HTMLElement {
+		const backButton = this.createElement('div', 'backstage-sidebar-back');
+
+		backButton.setAttribute('aria-label', _('Back to document'));
+		backButton.title = _('Back to document');
+
+		const icon = this.createElement('span', 'backstage-sidebar-back-icon');
+		icon.setAttribute('aria-hidden', 'true');
+		icon.textContent = '←';
+		backButton.appendChild(icon);
+
+		window.L.DomEvent.on(backButton, 'click', () => this.hide(), this);
+
+		return backButton;
+	}
+
 
 	private createTabElement(config: BackstageTabConfig): HTMLElement {
 		const element = this.createElement('div', 'backstage-sidebar-item');
