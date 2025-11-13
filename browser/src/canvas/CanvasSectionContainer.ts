@@ -1024,12 +1024,8 @@ class CanvasSectionContainer {
 						: app.activeDocument.activeView.viewedRectangle.pY1),
 			];
 		}
-		else {
-			return [
-				this.documentAnchor[0] + section.position[0] - app.activeDocument.activeView.viewedRectangle.pX1,
-				this.documentAnchor[1] + section.position[1] - app.activeDocument.activeView.viewedRectangle.pY1
-			];
-		}
+		else
+			return [section.documentPosition.vX, section.documentPosition.vY];
 	}
 
 	// Called when document position is changed.
@@ -1712,10 +1708,7 @@ class CanvasSectionContainer {
 			if (section.documentObject === true) { // "Document anchor" section should be processed before "document object" sections.
 				if (section.size && section.position) {
 					section.isLocated = true;
-					section.myTopLeft = [
-						this.documentAnchor[0] + section.position[0] - (app.isXOrdinateInFrozenPane(section.position[0]) ? 0 : app.activeDocument.activeView.viewedRectangle.pX1),
-						this.documentAnchor[1] + section.position[1] - (app.isYOrdinateInFrozenPane(section.position[1]) ? 0 : app.activeDocument.activeView.viewedRectangle.pY1)
-					];
+					section.myTopLeft = [section.documentPosition.vX, section.documentPosition.vY];
 				}
 			}
 			else if (section.boundToSection) { // Don't set boundToSection property for "window sections".
