@@ -220,7 +220,8 @@ StorageBase::StorageType StorageBase::validate(const Poco::URI& uri,
 }
 
 std::unique_ptr<StorageBase> StorageBase::create(const Poco::URI& uri, const std::string& jailRoot,
-                                                 const std::string& jailPath, bool takeOwnership)
+                                                 const std::string& jailPath, bool takeOwnership,
+                                                 const Poco::URI& templateOptionUri)
 {
     // FIXME: By the time this gets called we have already sent to the client three
     // 'progress:' messages: "id":"find", "id":"connect" and "id":"ready". We should ideally do the checks
@@ -256,7 +257,7 @@ std::unique_ptr<StorageBase> StorageBase::create(const Poco::URI& uri, const std
             break;
 
         case StorageBase::StorageType::Conversion:
-            return std::make_unique<LocalStorage>(uri, jailRoot, jailPath, /*takeOwnership=*/true);
+            return std::make_unique<LocalStorage>(uri, jailRoot, jailPath, /*takeOwnership=*/true, templateOptionUri);
             break;
 
 #if ENABLE_LOCAL_FILESYSTEM
@@ -305,15 +306,26 @@ std::unique_ptr<LocalStorage::LocalFileInfo> LocalStorage::getLocalFileInfo()
 
 std::string LocalStorage::downloadStorageFileToLocal(const Authorization& /*auth*/,
                                                      LockContext& /*lockCtx*/,
-                                                     const std::string& /*templateUri*/)
+                                                     const std::string& /*templateUri*/,
+                                                     std::string& templateOptionLocalPath)
 {
 #if !MOBILEAPP
     // /chroot/jailId/user/doc/childId/file.ext
     const std::string filename = Poco::Path(getUri().getPath()).getFileName();
+    std::string templateOptionFilename;
+    if (!getTemplateOptionUri().empty())
+    {
+        templateOptionFilename = Poco::Path(getTemplateOptionUri().getPath()).getFileName();
+    }
     setRootFilePath(Poco::Path(getLocalRootPath(), filename).toString());
     setRootFilePathAnonym(COOLWSD::anonymizeUrl(getRootFilePath()));
     LOG_INF("Public URI [" << COOLWSD::anonymizeUrl(getUri().getPath()) <<
             "] jailed to [" << getRootFilePathAnonym() << "].");
+    std::string templateOptionJailedFilePath;
+    if (!getTemplateOptionUri().empty())
+    {
+        templateOptionJailedFilePath = Poco::Path(getLocalRootPath(), templateOptionFilename).toString();
+    }
 
     // Despite the talk about URIs it seems that _uri is actually just a pathname here
     const std::string publicFilePath = getUri().getPath();
@@ -322,6 +334,7 @@ std::string LocalStorage::downloadStorageFileToLocal(const Authorization& /*auth
         LOG_ERR("Local file URI [" << publicFilePath << "] invalid or doesn't exist.");
         throw BadRequestException("Invalid URI: " + getUri().toString());
     }
+    std::string templateOptionPublicFilePath = getTemplateOptionUri().getPath();
 
     // Make sure the path is valid.
     const Poco::Path downloadPath = Poco::Path(getRootFilePath()).parent();
@@ -344,6 +357,14 @@ std::string LocalStorage::downloadStorageFileToLocal(const Authorization& /*auth
             const std::string dir = Poco::Path(publicFilePath).parent().toString();
             if (FileUtil::isEmptyDirectory(dir))
                 FileUtil::removeFile(dir);
+
+            if (!templateOptionPublicFilePath.empty())
+            {
+                Poco::File(templateOptionPublicFilePath).moveTo(templateOptionJailedFilePath);
+                const std::string templateOptionDir = Poco::Path(templateOptionPublicFilePath).parent().toString();
+                if (FileUtil::isEmptyDirectory(dir))
+                    FileUtil::removeFile(dir);
+            }
         }
         catch (const Poco::Exception& exc)
         {
@@ -386,9 +407,17 @@ std::string LocalStorage::downloadStorageFileToLocal(const Authorization& /*auth
 
     // Now return the jailed path.
     if (COOLWSD::NoCapsForKit)
+    {
+        if (!getTemplateOptionUri().empty())
+            templateOptionLocalPath = templateOptionJailedFilePath;
         return getRootFilePath();
+    }
     else
+    {
+        if (!getTemplateOptionUri().empty())
+            templateOptionLocalPath = Poco::Path(getJailPath(), templateOptionFilename).toString();
         return Poco::Path(getJailPath(), filename).toString();
+    }
 
 #else // MOBILEAPP
 

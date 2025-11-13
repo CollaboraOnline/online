@@ -661,6 +661,7 @@ private:
     /// Loads a document from the public URI into the jail.
     bool download(const std::shared_ptr<ClientSession>& session, const std::string& jailId,
                   const Poco::URI& uriPublic,
+                  const Poco::URI& templateOptionUriPublic,
                   std::unique_ptr<WopiStorage::WOPIFileInfo> wopiFileInfo);
 
     /// Actual document download and post-download processing.
@@ -1792,6 +1793,7 @@ private:
     const std::string _docId;
     std::string _uriJailed;
     std::string _uriJailedAnonym;
+    std::string _templateOptionUriJailed;
     std::string _jailId;
     std::string _filename;
 

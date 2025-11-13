@@ -339,7 +339,8 @@ public:
     /// localStorePath the absolute root path of the chroot.
     /// jailPath the path within the jail that the child uses for documents.
     StorageBase(const Poco::URI& uri, const std::string& localStorePath,
-                const std::string& jailPath)
+                const std::string& jailPath,
+                const Poco::URI& templateOptionUri = Poco::URI())
         : _fileInfo(/*size=*/0, /*filename=*/std::string(), /*ownerId=*/"cool",
                     /*modifiedTime=*/std::string())
         , _localStorePath(localStorePath)
@@ -347,12 +348,15 @@ public:
         , _isDownloaded(false)
     {
         setUri(uri);
+        setTemplateOptionUri(templateOptionUri);
         LOG_DBG("Storage ctor: " << COOLWSD::anonymizeUrl(_uri.toString()));
     }
 
     virtual ~StorageBase() { LOG_TRC("~StorageBase " << _uri.toString()); }
 
     const Poco::URI& getUri() const { return _uri; }
+
+    const Poco::URI& getTemplateOptionUri() const { return _templateOptionUri; }
 
     const std::string& getJailPath() const { return _jailPath; }
 
@@ -424,7 +428,8 @@ public:
     /// Returns a local file path for the given URI.
     /// If necessary copies the file locally first.
     virtual std::string downloadStorageFileToLocal(const Authorization& auth, LockContext& lockCtx,
-                                                   const std::string& templateUri) = 0;
+                                                   const std::string& templateUri,
+                                                   std::string& templateOptionLocalPath) = 0;
 
     /// The asynchronous upload completion callback function.
     using AsyncUploadCallback = std::function<void(const AsyncUpload&)>;
@@ -475,7 +480,8 @@ public:
     /// @takeOwnership is for local files that are temporary,
     /// such as convert-to requests.
     static std::unique_ptr<StorageBase> create(const Poco::URI& uri, const std::string& jailRoot,
-                                               const std::string& jailPath, bool takeOwnership);
+                                               const std::string& jailPath, bool takeOwnership,
+                                               const Poco::URI& templateOptionUri);
 
     virtual void dumpState(std::ostream& os, const std::string& indent = "\n  ") const
     {
@@ -525,11 +531,18 @@ protected:
         sanitizeUri(_uri);
     }
 
+    void setTemplateOptionUri(const Poco::URI& templateOptionUri)
+    {
+        _templateOptionUri = templateOptionUri;
+        sanitizeUri(_templateOptionUri);
+    }
+
     /// Returns the root path of the jail directory of docs.
     std::string getLocalRootPath() const;
 
 private:
     Poco::URI _uri;
+    Poco::URI _templateOptionUri;
     FileInfo _fileInfo;
     const std::string _localStorePath;
     const std::string _jailPath;
@@ -548,8 +561,9 @@ class LocalStorage final : public StorageBase
 {
 public:
     LocalStorage(const Poco::URI& uri, const std::string& localStorePath,
-                 const std::string& jailPath, [[maybe_unused]] bool isTemporaryFile)
-        : StorageBase(uri, localStorePath, jailPath)
+                 const std::string& jailPath, [[maybe_unused]] bool isTemporaryFile,
+                 const Poco::URI& templateOptionUri = Poco::URI())
+        : StorageBase(uri, localStorePath, jailPath, templateOptionUri)
 #if !MOBILEAPP
         , _isTemporaryFile(isTemporaryFile)
 #endif
@@ -603,7 +617,8 @@ public:
     }
 
     std::string downloadStorageFileToLocal(const Authorization& auth, LockContext& lockCtx,
-                                           const std::string& templateUri) override;
+                                           const std::string& templateUri,
+                                           std::string& templateOptionLocalPath) override;
 
     std::size_t
     uploadLocalFileToStorageAsync(const Authorization& auth, LockContext& lockCtx,
