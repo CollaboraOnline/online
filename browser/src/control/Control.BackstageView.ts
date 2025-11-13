@@ -731,11 +731,11 @@ class BackstageView extends window.L.Class {
 	private getTemplateTypeLabel(type: TemplateType): string {
 		switch (type) {
 			case 'writer':
-				return _('Writer');
+				return 'Writer';
 			case 'calc':
-				return _('Calc');
+				return 'Calc';
 			case 'impress':
-				return _('Impress');
+				return 'Impress';
 			default:
 				return type;
 		}
