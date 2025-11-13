@@ -292,6 +292,7 @@
     <ClCompile Include="..\..\..\wsd\dumpWsdState.cpp" />
     <ClCompile Include="..\..\..\wsd\RequestDetails.cpp" />
     <ClCompile Include="..\..\..\wsd\RequestVettingStation.cpp" />
+    <ClCompile Include="..\..\..\wsd\SlideCache.cpp" />
     <ClCompile Include="..\..\..\wsd\Storage.cpp" />
     <ClCompile Include="..\..\..\wsd\TileCache.cpp" />
     <ClCompile Include="..\..\..\wsd\coolwsd-fork.cpp" />

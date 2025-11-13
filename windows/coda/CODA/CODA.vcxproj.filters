@@ -119,6 +119,9 @@
     <ClCompile Include="..\..\..\wsd\RequestVettingStation.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\wsd\SlideCache.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\..\wsd\Storage.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
