@@ -361,6 +361,7 @@ public:
     bool isAsyncUploading() const;
 
     Poco::URI getPublicUri() const { return _uriPublic; }
+    const std::string& getTemplateOptionUriJailed() const { return _templateOptionUriJailed; }
     const std::string& getJailId() const { return _jailId; }
     const std::string& getDocKey() const { return _docKey; }
     // id of wopi shared config
