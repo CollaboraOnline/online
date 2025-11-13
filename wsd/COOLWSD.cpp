@@ -2140,6 +2140,13 @@ void COOLWSD::innerInitialize(Poco::Util::Application& self)
         }
 
         setenv("LOK_HOST_ALLOWLIST", allowedRegex.c_str(), true);
+
+#if !MOBILEAPP
+        if (!ConfigUtil::getConfigValue<bool>(conf, "ssl.ssl_verification", true)) {
+            // also disable host verification for allowed hosts
+            ::setenv("LOK_HOST_ALLOWLIST_EXEMPT_VERIFY_HOST", "1", true);
+        }
+#endif
     }
 
 #if !MOBILEAPP
