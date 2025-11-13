@@ -2495,9 +2495,11 @@ bool ChildSession::renderNextSlideLayer(SlideCompressor& scomp, const unsigned w
             std::string json = jsonMsg;
             Poco::JSON::Parser parser;
             Poco::JSON::Object::Ptr root = parser.parse(json).extract<Poco::JSON::Object::Ptr>();
-            root->set("cacheKey", cacheKey);
             if (EnableExperimental)
+            {
+                root->set("cacheKey", cacheKey);
                 root->set("isCompressed", isCompressed);
+             }
 
             json = JsonUtil::jsonToString(root);
 
@@ -2659,7 +2661,7 @@ bool ChildSession::renderSlide(const StringVector& tokens)
                                                            &bufferWidth, &bufferHeight,
                                                            renderBackground, renderMasterPage);
     if (!success) {
-        sendTextFrame("sliderenderingcomplete: fail");
+        sendTextFrame("sliderenderingcomplete: {\"status\": \"fail\"}");
         return false;
     }
 
@@ -2692,7 +2694,7 @@ bool ChildSession::renderSlide(const StringVector& tokens)
                "\", \"compressedLayers\": " + (compressedLayers ? "true" : "false") +
                ", \"cacheKey\": \"" + tokens.substrFromToken(1) + "\"}";
     } else {
-        msg += (success ? "success" : "fail");
+        msg += std::string("{\"status\": \"") + (success ? "success" : "fail") + "\"}";
     }
     sendTextFrame(msg);
 
