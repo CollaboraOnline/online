@@ -131,7 +131,7 @@ window.L.Map.include({
 		this.options.canTryLock = false; // don't respond to lockfailed anymore
 		$('#mobile-edit-button').hide();
 		this._enterEditMode('edit');
-		if (window.mode.isMobile() || window.mode.isTablet()) {
+		if (window.mode.isMobile() || window.mode.isTablet() || window.mode.isCODesktop()) {
 			this.fire('editorgotfocus');
 			this.fire('closemobilewizard');
 			// In the iOS/android app, just clicking the mobile-edit-button is
