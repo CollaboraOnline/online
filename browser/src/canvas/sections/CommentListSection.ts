@@ -28,8 +28,15 @@ window.L.Map.include({
 			are hidden, the new comment also goes into hiding as it
 			is saved. so we show all the comments instead of hiding
 			the newly inserted one.
+
+			comments in a 'spreadsheet' are hidden by default and
+			only visible on hover. therefore we wouldn't want to
+			show all the comments in a spreadsheet, this jumps the
+			view as all the comments are quickly shown and hidden
+			again.
 		*/
-		app.map.showComments(true);
+		if (app.map._docLayer._docType !== 'spreadsheet')
+			app.map.showComments(true);
 
 		var avatar = undefined;
 		var author = this.getViewName(this._docLayer._viewId);
