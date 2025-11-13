@@ -221,8 +221,9 @@ window.L.Control.NotebookbarBuilder = window.L.Control.JSDialogBuilder.extend({
 	// overriden
 	_createTabClick: function(builder, t, tabs, contentDivs, tabIds)
 	{
-		var tooltipCollapsed = _('Tap to expand');
-		var tooltipExpanded = _('Tap to collapse');
+		const isDesktop = window.mode.isDesktop();
+		const tooltipCollapsed = isDesktop ? _('Click to expand') : _('Tap to expand');
+		const tooltipExpanded = isDesktop ? _('Click to collapse') : _('Tap to collapse');
 		if ($(tabs[t]).hasClass('selected'))
 		var isFileTab = tabIds[t] === 'File-tab-label' || tabIds[t] === 'File';
 		var isFileTabForCoda = isFileTab && window.mode.isCODesktop();
