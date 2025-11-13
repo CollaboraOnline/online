@@ -22,6 +22,7 @@ class CanvasSectionObject {
 	boundToSection: string = null;
 	anchor: Array<string> | Array<Array<string>> = [];
 	documentObject: boolean; // If true, the section is a document object.
+	documentPosition: cool.SimplePoint = new cool.SimplePoint(0, 0); // Used with document objects.
 	// When section is a document object, its position should be the real position inside the document, in core pixels.
 	isVisible: boolean = false; // Is section visible on the viewed area of the document? This property is valid for document objects. This is managed by the section container.
 	showSection: boolean = true; // Show / hide section.
@@ -42,7 +43,10 @@ class CanvasSectionObject {
 	boundsList: Array<CanvasSectionObject> = []; // The sections those this section can propagate events to. Updated by container.
 
 	constructor(name: string) {
-		this.name= name;
+		this.name = name;
+
+		if (this.documentObject)
+			this.documentPosition = cool.SimplePoint.fromCorePixels([...this.position]);
 	}
 
 	onInitialize(): void { return; }
@@ -152,6 +156,8 @@ class CanvasSectionObject {
 		y = Math.round(y);
 		let sectionXcoord = x;
 		const positionAddition = app.activeDocument.activeView.viewedRectangle.clone();
+
+		this.documentPosition = cool.SimplePoint.fromCorePixels([x, y]);
 
 		if (this.isCalcRTL()) {
 			// the document coordinates are not always in sync(fixing that is non-trivial!), so use the latest from map.
