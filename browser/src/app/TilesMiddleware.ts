@@ -1961,10 +1961,8 @@ class TileManager {
 		if (app.file.fileBasedView) {
 			this.updateFileBasedView();
 			return;
-		}
-		else if (app.activeDocument.activeView.type === 'ViewLayoutMultiPage')
+		} else if (app.activeDocument.activeView.type === 'ViewLayoutMultiPage')
 			return;
-
 
 		if (!center) {
 			center = map.getCenter();
