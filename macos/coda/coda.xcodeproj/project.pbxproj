@@ -16,6 +16,7 @@
 		BE22557E2CC79BAE00385A9C /* global.js in Resources */ = {isa = PBXBuildFile; fileRef = BE2249312CC79BAE00385A9C /* global.js */; };
 		BE2257AD2CC79BAE00385A9C /* bundle.css in Resources */ = {isa = PBXBuildFile; fileRef = BE22492D2CC79BAE00385A9C /* bundle.css */; };
 		BE22AA9C2CC7AE7400385A9C /* images in Resources */ = {isa = PBXBuildFile; fileRef = BE22AA9B2CC7AE7400385A9C /* images */; };
+		BE252C5B2EC6667400349F71 /* SlideCache.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BE252C5A2EC6667400349F71 /* SlideCache.cpp */; };
 		BE44ACC02D7EFDE900BFA3B2 /* DummyTraceEventEmitter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BE44ACBF2D7EFDE900BFA3B2 /* DummyTraceEventEmitter.cpp */; };
 		BE44ACC22D7EFF1500BFA3B2 /* Util-mobile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BE44ACC12D7EFF1500BFA3B2 /* Util-mobile.cpp */; };
 		BE44ACC52D7F00B000BFA3B2 /* ClientRequestDispatcher.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BE44ACC42D7F00B000BFA3B2 /* ClientRequestDispatcher.cpp */; };
@@ -92,6 +93,8 @@
 		BE2249302CC79BAE00385A9C /* device-desktop.css */ = {isa = PBXFileReference; lastKnownFileType = text.css; name = "device-desktop.css"; path = "../../../browser/dist/device-desktop.css"; sourceTree = "<group>"; };
 		BE2249312CC79BAE00385A9C /* global.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; name = global.js; path = ../../../browser/dist/global.js; sourceTree = "<group>"; };
 		BE22AA9B2CC7AE7400385A9C /* images */ = {isa = PBXFileReference; lastKnownFileType = folder; name = images; path = ../../../browser/dist/images; sourceTree = "<group>"; };
+		BE252C592EC6667400349F71 /* SlideCache.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = SlideCache.hpp; path = ../../../../wsd/SlideCache.hpp; sourceTree = "<group>"; };
+		BE252C5A2EC6667400349F71 /* SlideCache.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = SlideCache.cpp; path = ../../../../wsd/SlideCache.cpp; sourceTree = "<group>"; };
 		BE44ACBF2D7EFDE900BFA3B2 /* DummyTraceEventEmitter.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = DummyTraceEventEmitter.cpp; path = ../../../../common/DummyTraceEventEmitter.cpp; sourceTree = "<group>"; };
 		BE44ACC12D7EFF1500BFA3B2 /* Util-mobile.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = "Util-mobile.cpp"; path = "../../../../common/Util-mobile.cpp"; sourceTree = "<group>"; };
 		BE44ACC32D7F00B000BFA3B2 /* ClientRequestDispatcher.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = ClientRequestDispatcher.hpp; path = ../../../../wsd/ClientRequestDispatcher.hpp; sourceTree = "<group>"; };
@@ -364,6 +367,8 @@
 				BEA264A92CBE99340007435A /* RequestDetails.cpp */,
 				BE44ACD82D7F089200BFA3B2 /* RequestVettingStation.hpp */,
 				BE44ACD92D7F089200BFA3B2 /* RequestVettingStation.cpp */,
+				BE252C592EC6667400349F71 /* SlideCache.hpp */,
+				BE252C5A2EC6667400349F71 /* SlideCache.cpp */,
 				BEA264B52CBE9BEF0007435A /* Storage.hpp */,
 				BEA264AB2CBE99340007435A /* Storage.cpp */,
 				BE4C623E2D59EBAC00047DF2 /* TileCache.hpp */,
@@ -606,6 +611,7 @@
 				BEF6F02D2DD1EC0200EA06BF /* RegexUtil.cpp in Sources */,
 				BEA2636E2CBE38E20007435A /* Util.cpp in Sources */,
 				BE44ACC22D7EFF1500BFA3B2 /* Util-mobile.cpp in Sources */,
+				BE252C5B2EC6667400349F71 /* SlideCache.cpp in Sources */,
 				BEA2636F2CBE38E20007435A /* Unit.cpp in Sources */,
 				BEA263702CBE38E20007435A /* Log-poco.cpp in Sources */,
 				BE44ACDA2D7F089200BFA3B2 /* RequestVettingStation.cpp in Sources */,
