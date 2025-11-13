@@ -4688,16 +4688,19 @@ void DocumentBroker::handleGetSlideRequest(const StringVector& tokens,
 
 void DocumentBroker::handleSlideLayerResponse(const std::shared_ptr<Message>& message)
 {
-    size_t pos = Util::findInVector(message->data(), "\n");
-    std::string msg(message->data().data(), pos == std::string::npos ? message->size() : pos);
-    Poco::JSON::Object::Ptr jsonPtr;
-    JsonUtil::parseJSON(msg, jsonPtr);
-    const std::string key = JsonUtil::getJSONValue<std::string>(jsonPtr, "cacheKey");
+    if (EnableExperimental)
+    {
+        size_t pos = Util::findInVector(message->data(), "\n");
+        std::string msg(message->data().data(), pos == std::string::npos ? message->size() : pos);
+        Poco::JSON::Object::Ptr jsonPtr;
+        JsonUtil::parseJSON(msg, jsonPtr);
+        const std::string key = JsonUtil::getJSONValue<std::string>(jsonPtr, "cacheKey");
 
-    // This message has forwardToken which can cause issue if reused for forwardToClient when using cache.
-    // But we ignore it because when reusing cache we only send data from the message and not entire message
-    _slideLayerCache.insert(key, message);
-    LOG_INF("Slideshow: Cached a slide layer with cache key: " << key);
+        // This message has forwardToken which can cause issue if reused for forwardToClient when using cache.
+        // But we ignore it because when reusing cache we only send data from the message and not entire message
+        _slideLayerCache.insert(key, message);
+        LOG_INF("Slideshow: Cached a slide layer with cache key: " << key);
+    }
     forwardToClient(message);
 }
 
