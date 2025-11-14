@@ -138,16 +138,23 @@ private:
 class CODAWebEngineView : public QWebEngineView
 {
 public:
-    CODAWebEngineView(QWidget *parent)
+    CODAWebEngineView(QMainWindow* parent)
         : QWebEngineView(parent)
+        , _mainWindow(parent)
     {
     }
     QWebEngineView* createWindow(QWebEnginePage::WebWindowType type) override
     {
-        QWebEngineView* ret = QWebEngineView::createWindow(type);
-        fprintf(stderr, "we expect %d to be %d, baseclass would return %p\n", type, QWebEnginePage::WebDialog, ret);
-        return ret;
+        WebView* webViewInstance = new WebView(Application::getProfile(), false);
+
+        QWebEngineView* newView = webViewInstance->webEngineView();
+        QMainWindow* newWindow = webViewInstance->mainWindow();
+        newWindow->show();
+
+        return newView;
     }
+private:
+    QMainWindow* _mainWindow;
 };
 
 WebView::WebView(QWebEngineProfile* profile, bool isWelcome)
