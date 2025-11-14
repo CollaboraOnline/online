@@ -31,48 +31,53 @@
 
 #include <QApplication>
 #include <QByteArray>
+#include <QCheckBox>
 #include <QClipboard>
+#include <QComboBox>
 #include <QCommandLineOption>
 #include <QCommandLineParser>
+#include <QDBusInterface>
+#include <QDBusReply>
 #include <QDesktopServices>
+#include <QDialog>
 #include <QDir>
-#include <QProcess>
 #include <QFileDialog>
 #include <QFileInfo>
+#include <QHBoxLayout>
+#include <QLabel>
+#include <QLineEdit>
+#include <QLocale>
 #include <QMainWindow>
+#include <QMessageBox>
 #include <QMetaObject>
 #include <QMimeData>
 #include <QObject>
+#include <QPrinterInfo>
+#include <QProcess>
+#include <QPushButton>
+#include <QStandardPaths>
+#include <QString>
 #include <QThread>
 #include <QTimer>
+#include <QTranslator>
 #include <QUrl>
+#include <QVBoxLayout>
+#include <QVariantMap>
 #include <QWebChannel>
 #include <QWebEngineProfile>
 #include <QWebEngineView>
-#include <QMessageBox>
-#include <QDialog>
-#include <QVBoxLayout>
-#include <QHBoxLayout>
-#include <QLabel>
-#include <QComboBox>
-#include <QCheckBox>
-#include <QLineEdit>
-#include <QPushButton>
-#include <QPrinterInfo>
-#include <QDir>
-#include <QStandardPaths>
-#include <QLocale>
-#include <QTranslator>
 
 #include <algorithm>
 #include <cassert>
 #include <cstdlib>
 #include <cstring>
+#include <fstream>
 #include <poll.h>
+#include <pwd.h>
+#include <sstream>
 #include <string>
 #include <thread>
-#include <fstream>
-#include <sstream>
+#include <unistd.h>
 #include "WebView.hpp"
 
 const char* user_name = nullptr;
@@ -83,6 +88,60 @@ int coolwsd_server_socket_fd = -1;
 static COOLWSD* coolwsd = nullptr;
 static std::thread coolwsdThread;
 QWebEngineProfile* Application::globalProfile = nullptr;
+
+static const char* getUserName()
+{
+    static QByteArray storage;
+    storage.clear();
+
+    QDBusInterface iface(
+        "org.freedesktop.portal.Desktop",
+        "/org/freedesktop/portal/desktop",
+        "org.freedesktop.portal.Accounts",
+        QDBusConnection::sessionBus()
+    );
+
+    QDBusReply<QVariantMap> reply = iface.call("GetUserInformation");
+
+    if (reply.isValid()) {
+        QVariantMap map = reply.value();
+
+        QString realName = map.value("realName").toString();
+        QString userName = map.value("userName").toString();
+
+        QString chosen;
+        if (!realName.isEmpty())
+            chosen = realName;
+        else if (!userName.isEmpty())
+            chosen = userName;
+
+        if (!chosen.isEmpty()) {
+            storage = chosen.toUtf8();
+            return storage.constData();
+        }
+    }
+
+    // fallback to /etc/passwd
+
+    struct passwd *pw = getpwuid(getuid());
+    if (pw) {
+        if (pw->pw_gecos && pw->pw_gecos[0] != '\0') {
+            QString gecos = QString::fromLocal8Bit(pw->pw_gecos);
+            QString full = gecos.section(',', 0, 0);
+
+            if (!full.isEmpty()) {
+                storage = full.toUtf8();
+                return storage.constData();
+            }
+        }
+
+        // fallback to Linux username
+        storage = QByteArray(pw->pw_name);
+        return storage.constData();
+    }
+
+    return nullptr;
+}
 
 static void getClipboard(unsigned appDocId)
 {
@@ -938,6 +997,8 @@ QWebEngineProfile* Application::getProfile() { return globalProfile; }
 int main(int argc, char** argv)
 {
     QApplication app(argc, argv);
+
+    user_name = getUserName();
 
     QTranslator translator;
     QString locale = QLocale::system().name();
