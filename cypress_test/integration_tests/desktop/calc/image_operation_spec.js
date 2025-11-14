@@ -26,8 +26,7 @@ describe(['tagdesktop'], 'Image Operation Tests', function() {
 		helper.assertImageSize(248, 63);
 
 		cy.cGet('#test-div-shape-handle-3').should('exist');
-		cy.cGet('#Crop').should('be.visible');
-		cy.cGet('#Crop').click();
+		cy.cGet('.unoCrop').should('be.visible').click();
 
 		cy.cGet('#test-div-shape-handle-3').then(($handle) => {
 			const rect = $handle[0].getBoundingClientRect();
