@@ -276,6 +276,10 @@ class ViewController: NSViewController, WKScriptMessageHandlerWithReply, WKNavig
                     }
                     return (nil, nil)
                 }
+                else if body == "uno .uno:Open" {
+                    // FIXME A real message would be preferred over intercepting a uno command; but this is what the backstage currently uses
+                    (NSDocumentController.shared as? DocumentController)?.focusOrPresentOpenPanel()
+                }
                 else {
                     // Just send the message
                     COWrapper.handleMessage(with: document, message: body)
