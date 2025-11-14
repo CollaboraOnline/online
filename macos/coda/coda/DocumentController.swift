@@ -91,7 +91,7 @@ final class DocumentController: NSDocumentController {
     /**
      * Opens the Open panel when no other documents or windows are presented.
      */
-    func focusOrPresentOpenPanel() {
+    func focusOrPresentOpenPanel(calledFromStartup: Bool = false) {
         if let panel = liveOpenPanel {
             // Focus the existing panel (sheet or app-modal).
             if let parent = panel.sheetParent {
@@ -101,6 +101,12 @@ final class DocumentController: NSDocumentController {
                 panel.makeKeyAndOrderFront(nil)
             }
             NSApp.activate(ignoringOtherApps: true)
+            return
+        }
+
+        // Don't present the Open panel during startup if there are any open windows
+        // (eg. when the user started the app from Finder with files to open)
+        if calledFromStartup && hasDocsOrWindows() {
             return
         }
 

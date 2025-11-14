@@ -25,9 +25,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         // We have to set the product name in the menu entries explicitly, there seems to be no automatic way to do that
         updateProductName()
 
-        // Finish window restoration, and try to open the Open panel if no document is open
-        DispatchQueue.main.async { [weak self] in
-            self?.documentController.focusOrPresentOpenPanel()
+        // Schedule opening of the Open panel if no document is open in 100ms
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) { [weak self] in
+            self?.documentController.focusOrPresentOpenPanel(calledFromStartup: true)
         }
     }
 
