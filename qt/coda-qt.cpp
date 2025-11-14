@@ -797,19 +797,24 @@ QVariant Bridge::cool(const QString& messageStr)
     }
     else if (message == "uno .uno:Open")
     {
-        const QString filePath = QFileDialog::getOpenFileName(
-            nullptr, QObject::tr("Open File"), QString(),
+        QFileDialog* dialog = new QFileDialog(
+            _webView, QObject::tr("Open File"), QString(),
             QObject::tr("All Files (*);;"
                         "Text Documents (*.odt *.ott *.doc *.docx *.rtf *.txt);;"
                         "Spreadsheets (*.ods *.ots *.xls *.xlsx *.csv);;"
                         "Presentations (*.odp *.otp *.ppt *.pptx)"
                         )
         );
-        if (!filePath.isEmpty())
-        {
+
+        dialog->setFileMode(QFileDialog::ExistingFile);
+        dialog->setAttribute(Qt::WA_DeleteOnClose);
+
+        QObject::connect(dialog, &QFileDialog::fileSelected, [](const QString& filePath) {
             WebView* webViewInstance = new WebView(Application::getProfile());
             webViewInstance->load(Poco::URI(filePath.toStdString()));
-        }
+        });
+
+        dialog->open();
     }
     else if (message == "uno .uno:NewDoc" || message == "uno .uno:NewDocText")
     {
