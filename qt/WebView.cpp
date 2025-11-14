@@ -135,9 +135,24 @@ private:
 };
 } // namespace
 
+class CODAWebEngineView : public QWebEngineView
+{
+public:
+    CODAWebEngineView(QWidget *parent)
+        : QWebEngineView(parent)
+    {
+    }
+    QWebEngineView* createWindow(QWebEnginePage::WebWindowType type) override
+    {
+        QWebEngineView* ret = QWebEngineView::createWindow(type);
+        fprintf(stderr, "we expect %d to be %d, baseclass would return %p\n", type, QWebEnginePage::WebDialog, ret);
+        return ret;
+    }
+};
+
 WebView::WebView(QWebEngineProfile* profile, bool isWelcome)
     : _mainWindow(new Window(nullptr, this))
-    , _webView(std::make_unique<QWebEngineView>(_mainWindow))
+    , _webView(std::make_unique<CODAWebEngineView>(_mainWindow))
     , _isWelcome(isWelcome)
     , _bridge(nullptr)
 {
