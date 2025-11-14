@@ -55,6 +55,19 @@ abstract class SlideRenderer {
 		this._activeLayers.clear();
 		this._renderedSlideIndex = slideInfo.indexInSlideShow;
 		this._slideTexture = currentSlideTexture;
+
+		// show welcome slideshow once 1st slide is rendered
+		if (
+			app.map.slideShowPresenter._isWelcomePresentation &&
+			slideInfo.index === 0 &&
+			window.mode.isCODesktop()
+		) {
+			const loader = document.getElementById('welcome-loader');
+			if (loader) {
+				loader.style.opacity = '0';
+				loader.parentNode.removeChild(loader);
+			}
+		}
 		requestAnimationFrame(this.render.bind(this));
 	}
 
