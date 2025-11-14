@@ -150,6 +150,7 @@ public:
         QWebEngineView* newView = webViewInstance->webEngineView();
         QMainWindow* newWindow = webViewInstance->mainWindow();
         newWindow->show();
+//        newWindow->showFullScreen();
 
         return newView;
     }
