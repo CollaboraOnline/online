@@ -196,6 +196,12 @@ WebView::WebView(QWebEngineProfile* profile, bool isWelcome)
                          request.accept();
                      });
 
+    QObject::connect(page, &QWebEnginePage::windowCloseRequested,
+                     [this]()
+                     {
+                        _mainWindow->close();
+                     });
+
     s_instances.push_back(this);
 }
 
