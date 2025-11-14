@@ -4220,7 +4220,8 @@ LogUiCommands::~LogUiCommands()
     // We have to check if undo-count-change happened because of it
     int undoAct = 0;
     int undoChg = 0;
-    undoAct = atoi(document->getCommandValues(".uno:UndoCount"));
+    LOKitHelper::ScopedString undoCountString(document->getCommandValues(".uno:UndoCount"));
+    undoAct = undoCountString ? atoi(undoCountString.get()) : 0;
     // If undo count decrease without an undo .uno:Undo, then it is probably a fake (when cap reached)
     if (_lastUndoCount!=undoAct && (_lastUndoCount<undoAct || actSubCmd == ".uno:Undo"))
     {
