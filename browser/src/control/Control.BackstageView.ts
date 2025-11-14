@@ -66,6 +66,18 @@ interface ExportFormatData {
 	description: string;
 }
 
+interface ExportOptionItem {
+	action: string;
+	text: string;
+	command?: string;
+}
+
+// todo: currently export as and downloadAs with pdf as not working, skipping for moment
+interface ExportSections {
+	exportAs: ExportOptionItem[];
+	downloadAs: ExportOptionItem[];
+}
+
 class BackstageView extends window.L.Class {
 	private readonly container: HTMLElement;
 	private contentArea!: HTMLElement;
@@ -364,44 +376,55 @@ class BackstageView extends window.L.Class {
 		this.setActiveTab('backstage-export');
 		this.clearContent();
 
-		this.addSectionHeader(
-			_('Export As'),
-			_('Export your document to a different file format'),
-		);
+		// extract list from notebookbar - incase need to add condition better to add there?
+		const exportOptions = this.getExportOptionsFromNotebookbar();
 
-		const formats = this.getExportFormatsData();
-		const grid = this.createExportGrid(formats);
-		this.contentArea.appendChild(grid);
+		if (exportOptions.downloadAs.length > 0) {
+			this.addSectionHeader(
+				_('Export Document'),
+				_('download your documents in different formats'),
+			);
+
+			const downloadAsGrid = this.createExportGridFromOptions(
+				exportOptions.downloadAs,
+			);
+			this.contentArea.appendChild(downloadAsGrid);
+		}
 	}
 
-	private createExportGrid(formats: ExportFormatData[]): HTMLElement {
+	private createExportGridFromOptions(
+		options: ExportOptionItem[],
+	): HTMLElement {
 		const grid = this.createElement('div', 'backstage-formats-grid');
 
-		formats.forEach((format) => {
-			const card = this.createExportCard(format);
+		options.forEach((option) => {
+			const card = this.createExportCardFromOption(option);
 			grid.appendChild(card);
 		});
 
 		return grid;
 	}
 
-	private createExportCard(format: ExportFormatData): HTMLElement {
+	private createExportCardFromOption(option: ExportOptionItem): HTMLElement {
 		const card = this.createElement('div', 'backstage-format-card');
 
+		const format = option.action.startsWith('downloadas-')
+			? option.action.substring('downloadas-'.length)
+			: '';
+		const extension = format ? `.${format}` : '';
 
 		const icon = this.createElement('div', 'format-icon');
-		icon.textContent = format.name;
+		icon.textContent = extension.toUpperCase().replace('.', '');
 		card.appendChild(icon);
 
-
 		const description = this.createElement('div', 'format-description');
-		description.textContent = format.description;
+		description.textContent = option.text;
 		card.appendChild(description);
 
 		window.L.DomEvent.on(
 			card,
 			'click',
-			() => this.exportDocument(format.id),
+			() => this.dispatchExportAction(option.action, option.command),
 			this,
 		);
 		return card;
@@ -906,17 +929,30 @@ class BackstageView extends window.L.Class {
 		return entries.filter((entry) => !!entry.path);
 	}
 
-	private getExportFormatsData(): ExportFormatData[] {
-		return [
-			{ id: 'pdf', name: _('PDF'), description: _('Portable Document') },
-			{ id: 'docx', name: _('DOCX'), description: _('Word Document') },
-			{ id: 'xlsx', name: _('XLSX'), description: _('Excel Spreadsheet') },
-			{ id: 'pptx', name: _('PPTX'), description: _('PowerPoint Presentation') },
-			{ id: 'odt', name: _('ODT'), description: _('OpenDocument Text') },
-			{ id: 'ods', name: _('ODS'), description: _('OpenDocument Spreadsheet') },
-			{ id: 'odp', name: _('ODP'), description: _('OpenDocument Presentation') },
-		];
+	private getDocTypeString(): string {
+		const docLayer = this.map && this.map._docLayer;
+		const docType = docLayer && docLayer._docType;
+		return docType || 'text';
 	}
+
+	private getExportOptionsFromNotebookbar(): ExportSections {
+		const docType = this.getDocTypeString();
+		const builder = new (window.L.Control.NotebookbarBuilder as any)();
+
+		let downloadAsOpts: ExportOptionItem[] = builder._getDownloadAsSubmenuOpts
+			? builder._getDownloadAsSubmenuOpts(docType) || []
+			: [];
+
+		downloadAsOpts = downloadAsOpts.filter(
+			(option) => option.action !== 'exportpdf' && option.command !== 'exportpdf',
+		);
+
+		return {
+			exportAs: [],
+			downloadAs: downloadAsOpts,
+		};
+	}
+
 
 	private executeOpen(): void {
 		this.sendUnoCommand('.uno:Open');
@@ -975,12 +1011,43 @@ class BackstageView extends window.L.Class {
 		this.hide();
 	}
 
-	private exportDocument(format: string): void {
-		if (this.map && this.map.downloadAs) {
-			this.map.downloadAs('document', format, '', 'export');
+	private dispatchExportAction(action: string, command?: string): void {
+		const actionToDispatch = command || action;
+
+		if (window.app && window.app.dispatcher) {
+			window.app.dispatcher.dispatch(actionToDispatch);
+		} else {
+			console.warn('app.dispatcher not available, using fallback');
+			this.handleExportFallback(actionToDispatch);
 		}
 		this.hide();
 	}
+	
+	private getBaseFileName(): string {  
+		const fileName = this.map?.['wopi']?.BaseFileName || 'document';  
+		const lastDot = fileName.lastIndexOf('.');  
+		return lastDot > 0 ? fileName.substring(0, lastDot) : fileName;  
+	}
+
+	private handleExportFallback(action: string): void {
+		if (action === 'exportdirectpdf') {
+			if (this.map && this.map.downloadAs) {
+				this.map.downloadAs(this.getBaseFileName() + '.pdf', 'pdf');
+			}
+			return;
+		}
+
+		if (action.startsWith('downloadas-')) {
+			const format = action.substring('downloadas-'.length);
+			if (this.map && this.map.downloadAs) {
+				this.map.downloadAs(this.getBaseFileName() + '.' + format, format);
+			}
+			return;
+		}
+
+		console.error('something want wrong with this action: ', action);
+	}
+
 
 	private sendUnoCommand(command: string): void {
 		if (this.map && this.map.sendUnoCommand) {
