@@ -319,6 +319,9 @@ public:
     /// Returns an error message in case of failure, otherwise an empty string.
     std::string handleRenameFileCommand(std::string sessionId, std::string newFilename);
 
+    /// Get whether the next save operation is an autosave.
+    bool isNextSaveAutosave() const;
+
     /// Handle the save response from Core and upload to storage as necessary.
     /// Also notifies clients of the result.
     void handleSaveResponse(const std::shared_ptr<ClientSession>& session,

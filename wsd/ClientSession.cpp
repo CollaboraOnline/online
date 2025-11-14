@@ -2350,14 +2350,25 @@ bool ClientSession::handleKitToClientMessage(const std::shared_ptr<Message>& pay
             {
                 Poco::JSON::Parser parser;
                 const Poco::Dynamic::Var parsedJSON = parser.parse(stringJSON);
-                const auto& object = parsedJSON.extract<Poco::JSON::Object::Ptr>();
+                auto object = parsedJSON.extract<Poco::JSON::Object::Ptr>();
                 if (object->get("commandName").toString() == ".uno:Save")
                 {
+                    // Capture isNextSaveAutosave flag before calling handleSaveResponse as it will reset the value!
+                    // Add it to the JSON so clients can differentiate between manual saves and autosaves
+                    const bool isAutosave = docBroker->isNextSaveAutosave();
+                    object->set("isAutosave", isAutosave);
+
                     // Save to Storage and log result.
                     docBroker->handleSaveResponse(client_from_this(), object);
 
                     if (!isCloseFrame())
-                        forwardToClient(payload);
+                    {
+                        // create new payload with the updated JSON
+                        std::ostringstream oss;
+                        object->stringify(oss);
+                        const std::string updatedMessage = "unocommandresult: " + oss.str();
+                        forwardToClient(std::make_shared<Message>(updatedMessage, Message::Dir::Out));
+                    }
 
                     return true;
                 }
