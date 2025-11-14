@@ -1210,21 +1210,26 @@ class UIManager extends window.L.Control {
 	// Ruler
 
 	/**
-	 * Shows the ruler.
+	 * Shows the rulers.
 	 */
 	showRuler(): void {
 		this._map.sendUnoCommand('.uno:ShowRuler');
-		$('.cool-ruler').show();
+
+		if (app.UI.horizontalRuler) app.UI.horizontalRuler.show();
+		if (app.UI.verticalRuler) app.UI.verticalRuler.show();
+
 		$('#map').addClass('hasruler');
 		this.setDocTypePref('ShowRuler', true);
 		this.map.fire('rulerchanged');
 	}
 
 	/**
-	 * Hides the ruler.
+	 * Hides the rulers.
 	 */
 	hideRuler(): void {
-		$('.cool-ruler').hide();
+		if (app.UI.horizontalRuler) app.UI.horizontalRuler.hide();
+		if (app.UI.verticalRuler) app.UI.verticalRuler.hide();
+
 		$('#map').removeClass('hasruler');
 		this.setDocTypePref('ShowRuler', false);
 		this.map.fire('rulerchanged');
