@@ -906,40 +906,45 @@ QVariant Bridge::cool(const QString& messageStr)
         const QString suggestedName = baseName + "." + QString::fromStdString(format);
 
         // Ask the user for the destination
-        const QString destPath = QFileDialog::getSaveFileName(
+        QFileDialog* dialog = new QFileDialog(
             _webView,
             QObject::tr("Export As"),
             QDir::home().filePath(suggestedName),
             QObject::tr("All Files (*)"));
 
-        if (destPath.isEmpty())
-            return {}; // user cancelled
+        dialog->setAcceptMode(QFileDialog::AcceptSave);
+        dialog->setAttribute(Qt::WA_DeleteOnClose);
 
-        // Export directly to the chosen path
-        lok::Document* loKitDoc = DocumentData::get(_document._appDocId).loKitDocument;
-        if (!loKitDoc)
-        {
-            LOG_ERR("downloadas: no loKitDocument");
-            return {};
-        }
+        unsigned appDocId = _document._appDocId;
+        QObject::connect(dialog, &QFileDialog::fileSelected,
+                        [appDocId, format](const QString& destPath) {
+            // Export directly to the chosen path
+            lok::Document* loKitDoc = DocumentData::get(appDocId).loKitDocument;
+            if (!loKitDoc)
+            {
+                LOG_ERR("downloadas: no loKitDocument");
+                return;
+            }
 
-        const QUrl destUrl = QUrl::fromLocalFile(destPath);
-        const QByteArray urlUtf8 =
-                destUrl.toString(QUrl::FullyEncoded | QUrl::PreferLocalFile).toUtf8();
-        const QByteArray fmtUtf8 = QString::fromStdString(format).toUtf8();
+            const QUrl destUrl = QUrl::fromLocalFile(destPath);
+            const QByteArray urlUtf8 =
+                    destUrl.toString(QUrl::FullyEncoded | QUrl::PreferLocalFile).toUtf8();
+            const QByteArray fmtUtf8 = QString::fromStdString(format).toUtf8();
 
-        loKitDoc->saveAs(urlUtf8.constData(), fmtUtf8.constData(), nullptr);
+            loKitDoc->saveAs(urlUtf8.constData(), fmtUtf8.constData(), nullptr);
 
-        // Verify save
-        const QFileInfo outInfo(destPath);
-        if (!outInfo.exists() || outInfo.size() <= 0)
-        {
-            LOG_ERR("downloadas: failed to save to '" << destPath.toStdString() << "'");
-            return {};
-        }
+            // Verify save
+            const QFileInfo outInfo(destPath);
+            if (!outInfo.exists() || outInfo.size() <= 0)
+            {
+                LOG_ERR("downloadas: failed to save to '" << destPath.toStdString() << "'");
+                return;
+            }
 
-        LOG_INF("downloadas: exported to " << destPath.toStdString());
-        return {};
+            LOG_INF("downloadas: exported to " << destPath.toStdString());
+        });
+
+        dialog->open();
     }
     else if (message.starts_with(HYPERLINK))
     {
