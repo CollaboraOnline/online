@@ -1,4 +1,4 @@
-/* global describe it cy beforeEach require Cypress */
+/* global expect describe it cy beforeEach require Cypress */
 
 var helper = require('../../common/helper');
 var desktopHelper = require('../../common/desktop_helper');
@@ -57,6 +57,36 @@ describe(['tagdesktop'], 'Notebookbar checkbox widgets', function() {
 		cy.cGet('#showruler-input').check();
 		cy.cGet('#showruler-input').should('be.checked');
 		cy.cGet('.cool-ruler').should('be.visible');
+
+		cy.cGet('#lo-fline-marker').should('exist');
+
+		// Move the indentation marker.
+		cy.cGet('#lo-fline-marker').then(function(items) {
+			expect(items).to.have.lengthOf(1);
+			const boundingRectangle = items[0].getBoundingClientRect();
+			const x1 = boundingRectangle.left;
+			const y1 = boundingRectangle.top;
+
+			cy.wrap(x1).as('x1');
+
+			cy.cGet('#lo-fline-marker').realMouseDown(x1, y1); // Press mouse button.
+			cy.wait(500);
+			cy.cGet('#lo-fline-marker').realMouseMove(x1 + 100, y1); // Move mouse.
+			cy.wait(500);
+			cy.cGet('#lo-fline-marker').realMouseUp(x1, y1); // Release mouse button.
+			cy.wait(500);
+			cy.cGet('#lo-fline-marker').realMouseMove(x1, y1); // Move mouse back.
+		});
+
+		cy.cGet('#lo-fline-marker').should('be.visible');
+		cy.cGet('#lo-fline-marker').then(function(items) {
+			expect(items).to.have.lengthOf(1);
+			const boundingRectangle = items[0].getBoundingClientRect();
+			const x = boundingRectangle.left;
+
+			cy.wait(1000);
+			cy.get('@x1').should('not.be.equal', x);
+		});
 
 		cy.cGet('#showruler-input').uncheck();
 		cy.cGet('#showruler-input').should('not.be.checked');

@@ -75,6 +75,11 @@ window.L.Map.StateChangeHandler = window.L.Handler.extend({
 			}
 		}
 
+		if (e.commandName === '.uno:LeftRightParaMargin') {
+			if (app.UI.horizontalRuler) app.UI.horizontalRuler._updateParagraphIndentations();
+			if (app.UI.verticalRuler) app.UI.verticalRuler._updateParagraphIndentations();
+		}
+
 		if (commandName == '.uno:PageLinks') {
 			let links = [];
 			if (state && state.links) {
