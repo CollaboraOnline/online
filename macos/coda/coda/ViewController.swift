@@ -212,8 +212,6 @@ class ViewController: NSViewController, WKScriptMessageHandlerWithReply, WKNavig
                     return (nil, nil)
                 }
                 else if body.hasPrefix("downloadas ") {
-                    COWrapper.LOG_ERR("TODO: Implement downloadas")
-                    /*
                     let messageBodyItems = body.components(separatedBy: " ")
                     var format: String?
                     if messageBodyItems.count >= 2 {
@@ -222,7 +220,7 @@ class ViewController: NSViewController, WKScriptMessageHandlerWithReply, WKNavig
                                 format = String(item.dropFirst("format=".count))
                             }
                         }
-                        guard let format = format else { return }
+                        guard let format = format else { return (nil, nil) }
 
                         // Handle special "direct-" formats
                         var adjustedFormat = format
@@ -235,28 +233,29 @@ class ViewController: NSViewController, WKScriptMessageHandlerWithReply, WKNavig
                         do {
                             try FileManager.default.createDirectory(at: tmpFileDirectory, withIntermediateDirectories: true, attributes: nil)
                         } catch {
-                            COOLWrapper.LOG_ERR("Could not create directory \(tmpFileDirectory.path)")
-                            return
+                            COWrapper.LOG_ERR("Could not create directory \(tmpFileDirectory.path)")
+                            return (nil, nil)
                         }
-                        let tmpFileName = self.document.copyFileURL.deletingPathExtension().lastPathComponent + "." + adjustedFormat
-                        self.downloadAsTmpURL = tmpFileDirectory.appendingPathComponent(tmpFileName)
+
+                        // Remove the original extension from the file name and add the adjustedFormat
+                        guard let tmpFileName = self.document?.tempFileURL?.deletingPathExtension().appendingPathExtension(adjustedFormat).lastPathComponent else { return (nil, nil) }
+                        let downloadAsTmpURL = tmpFileDirectory.appendingPathComponent(tmpFileName)
 
                         // Remove any existing file
                         do {
-                            try FileManager.default.removeItem(at: self.downloadAsTmpURL!)
+                            try FileManager.default.removeItem(at: downloadAsTmpURL)
                         } catch {
                             // File may not exist, ignore error
                         }
 
-                        // Save the document using your C++ code
-                        // Example:
-                        // DocumentData.get(self.document.appDocId).loKitDocument.saveAs(self.downloadAsTmpURL!.absoluteString, adjustedFormat, nil)
+                        // Perform the actual Save As
+                        COWrapper.saveAs(with: document, url: downloadAsTmpURL.absoluteString, format: adjustedFormat, filterOptions: nil)
 
                         // Verify the file was saved
-                        let fileExists = FileManager.default.fileExists(atPath: self.downloadAsTmpURL!.path)
+                        let fileExists = FileManager.default.fileExists(atPath: downloadAsTmpURL.path)
                         if !fileExists {
-                            COOLWrapper.LOG_ERR("Could not save to '\(self.downloadAsTmpURL!.path)'")
-                            return
+                            COWrapper.LOG_ERR("Could not save to '\(downloadAsTmpURL.path)'")
+                            return (nil, nil)
                         }
 
                         // Present a save panel to let the user choose where to save the file
@@ -266,17 +265,15 @@ class ViewController: NSViewController, WKScriptMessageHandlerWithReply, WKNavig
                         savePanel.begin { (result) in
                             if result == .OK, let url = savePanel.url {
                                 do {
-                                    try FileManager.default.copyItem(at: self.downloadAsTmpURL!, to: url)
+                                    try FileManager.default.copyItem(at: downloadAsTmpURL, to: url)
                                     // Remove the temporary file
-                                    try FileManager.default.removeItem(at: self.downloadAsTmpURL!)
+                                    try FileManager.default.removeItem(at: downloadAsTmpURL)
                                 } catch {
-                                    COOLWrapper.LOG_ERR("Error during file save: \(error)")
+                                    COWrapper.LOG_ERR("Error during file save: \(error)")
                                 }
                             }
                         }
-                        return
                     }
-                    */
                     return (nil, nil)
                 }
                 else {
