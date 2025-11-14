@@ -35,6 +35,14 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             let fileSubmenu = fileMenuItem.submenu,
             let shareItem = fileSubmenu.item(withTitle: "Share") {
             fileSubmenu.removeItem(shareItem)
+            if let editMenu = NSApp.mainMenu?.item(withTitle: "Edit")?.submenu {
+                let itemsToRemove = ["Writing Tools", "AutoFill", "Start Dictation", "Emoji & Symbols"]
+                for title in itemsToRemove {
+                    if let item = editMenu.item(withTitle: title) {
+                        editMenu.removeItem(item)
+                    }
+                }
+            }
         }
     }
 
