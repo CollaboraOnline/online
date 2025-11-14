@@ -40,6 +40,13 @@
 #include <QApplication>
 #include <QUrl>
 #include <algorithm>
+#include <QDBusInterface>
+#include <QDBusConnection>
+#include <QDBusMessage>
+#include <QDBusVariant>
+#include <QDBusPendingCallWatcher>
+#include <QDBusPendingReply>
+#include <QVariant>
 
 std::vector<WebView*> WebView::s_instances;
 
@@ -227,6 +234,8 @@ void WebView::load(const Poco::URI& fileURL, bool newFile)
 
     // setup js c++ communication
     QWebChannel* channel = new QWebChannel(_webView->page());
+    // query gnome font scaling factor asynchronously and apply it to the web view
+    queryGnomeFontScalingUpdateZoom();
 
     assert(_bridge == nullptr);
     _bridge = new Bridge(channel, _document, _mainWindow, _webView);
@@ -317,6 +326,53 @@ void WebView::activateWindow()
         _mainWindow->raise();
         _mainWindow->activateWindow();
     }
+}
+
+void WebView::queryGnomeFontScalingUpdateZoom()
+{
+    QDBusInterface portalInterface("org.freedesktop.portal.Desktop",
+                                   "/org/freedesktop/portal/desktop",
+                                   "org.freedesktop.portal.Settings",
+                                   QDBusConnection::sessionBus());
+
+    if (!portalInterface.isValid())
+        return;
+
+    QDBusPendingCall pendingCall = portalInterface.asyncCall("Read",
+                                                              "org.gnome.desktop.interface",
+                                                              "text-scaling-factor");
+
+    QDBusPendingCallWatcher* watcher = new QDBusPendingCallWatcher(pendingCall, _webView);
+    QObject::connect(watcher, &QDBusPendingCallWatcher::finished,
+                     [this](QDBusPendingCallWatcher* watcher)
+                     {
+                         QDBusPendingReply<QVariant> reply = *watcher;
+                         watcher->deleteLater();
+
+                         if (reply.isError())
+                             return;
+
+                         QVariant result = reply.value();
+                         // reply seems to be a (<<scalingFactor>>,)
+                         // i.e. a tuple where there's a double nested variant as the first element.
+                         if (!result.canConvert<QDBusVariant>())
+                             return;
+
+                         QDBusVariant dbusVariant = result.value<QDBusVariant>();
+                         QVariant innerVariant = dbusVariant.variant();
+
+                         // unwrap nested QDBusVariant if present
+                         if (innerVariant.canConvert<QDBusVariant>())
+                         {
+                             QDBusVariant innerDbusVariant = innerVariant.value<QDBusVariant>();
+                             innerVariant = innerDbusVariant.variant();
+                         }
+
+                         bool ok;
+                         double factor = innerVariant.toDouble(&ok);
+                         if (ok && _webView)
+                             _webView->setZoomFactor(factor);
+                     });
 }
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
