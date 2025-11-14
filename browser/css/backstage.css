@@ -382,6 +382,11 @@
 	text-align: center;
 	transition: all 0.2s ease;
 	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	gap: 8px;
 }
 
 .backstage-format-card:hover {
@@ -395,6 +400,10 @@
 	font-size: var(--medium-font-size);
 	font-weight: 600;
 	color: var(--color-primary);
+	min-height: 24px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
 }
 
 .format-description {
