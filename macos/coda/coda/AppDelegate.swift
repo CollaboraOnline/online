@@ -19,6 +19,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     private let documentController = DocumentController()
 
     func applicationDidFinishLaunching(_ aNotification: Notification) {
+        setUserName();
+
         // Initialize the COOLWSD
         COWrapper.startServer()
 

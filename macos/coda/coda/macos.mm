@@ -69,4 +69,49 @@ std::string getResourcePath(const char *name, const char *ext) {
     return std::string([path UTF8String]);
 }
 
+extern "C" void setUserName(void)
+{
+    static std::string storage;
+
+    @autoreleasepool {
+
+        // 1. Managed configuration
+        NSDictionary *managed = [[NSUserDefaults standardUserDefaults]
+            persistentDomainForName:@"com.apple.configuration.managed"];
+        if (managed) {
+            NSString *val = managed[@"userName"];
+            if (val) {
+                storage = [val UTF8String];
+                user_name = storage.c_str();
+                return;
+            }
+        }
+
+        // 2. Standard user defaults
+        NSString *udName = [[NSUserDefaults standardUserDefaults]
+                            stringForKey:@"userName"];
+        if (udName) {
+            storage = [udName UTF8String];
+            user_name = storage.c_str();
+            return;
+        }
+
+        // 3. System full name
+        NSString *full = NSFullUserName();
+        if (full.length > 0) {
+            storage = [full UTF8String];
+            user_name = storage.c_str();
+            return;
+        }
+
+        // 4. System username
+        NSString *shortName = NSUserName();
+        if (shortName.length > 0) {
+            storage = [shortName UTF8String];
+            user_name = storage.c_str();
+            return;
+        }
+    }
+}
+
 // vim:set shiftwidth=4 softtabstop=4 expandtab:
