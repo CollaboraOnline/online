@@ -278,18 +278,19 @@ static void printDocument(unsigned appDocId, QWidget* parent = nullptr)
     }
 
     // Create a simple custom print dialog, qt's print dialog is overkill for now.
-    QDialog customPrintDialog(parent);
-    customPrintDialog.setWindowTitle(QObject::tr("Print Document"));
-    customPrintDialog.setModal(true);
-    customPrintDialog.resize(400, 200);
+    QDialog* customPrintDialog = new QDialog(parent);
+    customPrintDialog->setWindowTitle(QObject::tr("Print Document"));
+    customPrintDialog->setModal(true);
+    customPrintDialog->resize(400, 200);
+    customPrintDialog->setAttribute(Qt::WA_DeleteOnClose);
 
-    QVBoxLayout* layout = new QVBoxLayout(&customPrintDialog);
+    QVBoxLayout* layout = new QVBoxLayout(customPrintDialog);
 
     // Printer selection
-    QLabel* printerLabel = new QLabel(QObject::tr("Select Printer:"), &customPrintDialog);
+    QLabel* printerLabel = new QLabel(QObject::tr("Select Printer:"), customPrintDialog);
     layout->addWidget(printerLabel);
 
-    QComboBox* printerCombo = new QComboBox(&customPrintDialog);
+    QComboBox* printerCombo = new QComboBox(customPrintDialog);
     // Get available printers
     QStringList printers = QPrinterInfo::availablePrinterNames();
     printerCombo->addItems(printers);
@@ -300,10 +301,10 @@ static void printDocument(unsigned appDocId, QWidget* parent = nullptr)
     layout->addWidget(printerCombo);
 
     // Print to file option
-    QCheckBox* printToFileCheck = new QCheckBox(QObject::tr("Print to File"), &customPrintDialog);
+    QCheckBox* printToFileCheck = new QCheckBox(QObject::tr("Print to File"), customPrintDialog);
     layout->addWidget(printToFileCheck);
 
-    QLineEdit* filePathEdit = new QLineEdit(&customPrintDialog);
+    QLineEdit* filePathEdit = new QLineEdit(customPrintDialog);
     filePathEdit->setPlaceholderText(QObject::tr("Enter file path..."));
     filePathEdit->setEnabled(false);
     layout->addWidget(filePathEdit);
@@ -315,31 +316,36 @@ static void printDocument(unsigned appDocId, QWidget* parent = nullptr)
                          filePathEdit->setEnabled(checked);
                          if (checked)
                          {
-                             QString fileName = QFileDialog::getSaveFileName(
+                             QFileDialog* fileDialog = new QFileDialog(
                                  filePathEdit, QObject::tr("Save Print Output As"),
                                  QDir::home().filePath("document.pdf"),
                                  QObject::tr("PDF Files (*.pdf);;All Files (*)"));
-                             if (!fileName.isEmpty())
-                             {
+
+                             fileDialog->setAcceptMode(QFileDialog::AcceptSave);
+                             fileDialog->setAttribute(Qt::WA_DeleteOnClose);
+
+                             QObject::connect(fileDialog, &QFileDialog::fileSelected,
+                                             [filePathEdit](const QString& fileName) {
                                  filePathEdit->setText(fileName);
-                             }
+                             });
+
+                             fileDialog->open();
                          }
                      });
 
     // Buttons
     QHBoxLayout* buttonLayout = new QHBoxLayout();
-    QPushButton* printButton = new QPushButton(QObject::tr("Print"), &customPrintDialog);
-    QPushButton* cancelButton = new QPushButton(QObject::tr("Cancel"), &customPrintDialog);
+    QPushButton* printButton = new QPushButton(QObject::tr("Print"), customPrintDialog);
+    QPushButton* cancelButton = new QPushButton(QObject::tr("Cancel"), customPrintDialog);
     buttonLayout->addWidget(printButton);
     buttonLayout->addWidget(cancelButton);
     layout->addLayout(buttonLayout);
 
-    // Connect buttons
-    QObject::connect(printButton, &QPushButton::clicked, &customPrintDialog, &QDialog::accept);
-    QObject::connect(cancelButton, &QPushButton::clicked, &customPrintDialog, &QDialog::reject);
+    // Connect print button
+    QObject::connect(printButton, &QPushButton::clicked,
+                     [customPrintDialog, printerCombo, printToFileCheck, filePathEdit, tempFile, parent]() {
+        customPrintDialog->accept();
 
-    if (customPrintDialog.exec() == QDialog::Accepted)
-    {
         // Check if user selected "Print to File"
         if (printToFileCheck->isChecked() && !filePathEdit->text().isEmpty())
         {
@@ -415,14 +421,20 @@ static void printDocument(unsigned appDocId, QWidget* parent = nullptr)
                                                                << "' using 'lp'");
             }
         }
-    }
-    else
-    {
-        LOG_INF("printDocument: Print cancelled by user");
-    }
 
-    // Clean up the temporary file
-    FileUtil::unlinkFile(tempFile);
+        // Clean up the temporary file
+        FileUtil::unlinkFile(tempFile);
+    });
+
+    // Connect cancel button
+    QObject::connect(cancelButton, &QPushButton::clicked,
+                     [customPrintDialog, tempFile]() {
+        customPrintDialog->reject();
+        LOG_INF("printDocument: Print cancelled by user");
+        FileUtil::unlinkFile(tempFile);
+    });
+
+    customPrintDialog->open();
 }
 
 Bridge::~Bridge() {
