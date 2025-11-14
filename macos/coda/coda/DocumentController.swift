@@ -147,7 +147,10 @@ final class DocumentController: NSDocumentController {
 
     enum NewKind { case text, spreadsheet, presentation }
 
-    private func createDocument(fromTemplateFor kind: NewKind) {
+    /**
+     * Copy content of the template (based on "kind") to NSDocument and trigger its editing.
+     */
+    func createDocument(fromTemplateFor kind: NewKind) {
         // Pick the template file in your bundle
         guard let (resName, ext) = templateNameAndExt(for: kind),
               let templatesURL = Bundle.main.url(forResource: resName, withExtension: ext, subdirectory: "templates")

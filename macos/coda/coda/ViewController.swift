@@ -276,6 +276,26 @@ class ViewController: NSViewController, WKScriptMessageHandlerWithReply, WKNavig
                     }
                     return (nil, nil)
                 }
+                else if body.hasPrefix("newdoc ") {
+                    let messageBodyItems = body.components(separatedBy: " ")
+                    var type: String?
+                    if messageBodyItems.count >= 2 {
+                        for item in messageBodyItems[1...] {
+                            if item.hasPrefix("type=") {
+                                type = String(item.dropFirst("type=".count))
+                            }
+                        }
+
+                        let kind: DocumentController.NewKind
+                        switch type {
+                            case "calc": kind = .spreadsheet
+                            case "impress": kind = .presentation
+                            default : kind = .text
+                        }
+
+                        (NSDocumentController.shared as? DocumentController)?.createDocument(fromTemplateFor: kind)
+                    }
+                }
                 else if body == "uno .uno:Open" {
                     // FIXME A real message would be preferred over intercepting a uno command; but this is what the backstage currently uses
                     (NSDocumentController.shared as? DocumentController)?.focusOrPresentOpenPanel()
