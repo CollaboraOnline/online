@@ -185,14 +185,6 @@ class Document: NSDocument {
 
         addWindowController(windowController)
 
-        if let win = windowController.window {
-            // Enable window tabbing
-            win.tabbingMode = .preferred
-            win.tabbingIdentifier = "CollaboraDocumentTab"
-            // Set minimum window size
-            win.minSize = NSSize(width: 800, height: 600)
-        }
-
         if let viewController = windowController.contentViewController as? ViewController {
             viewController.loadDocument(self)
         }
@@ -200,9 +192,33 @@ class Document: NSDocument {
         // Ensure the window exists so we can apply a default if no saved frame yet
         windowController.loadWindow()
         if let win = windowController.window {
-            win.minSize = NSSize(width: 800, height: 600)
+            if isWelcome {
+                // Border-less Welcome screen; we can't do it truly border-less (using .borderless),
+                // because then it doesn't auto-close when the slideshow finishes.
+                win.styleMask = [.titled, .resizable, .closable, .miniaturizable, .fullSizeContentView]
+                win.titleVisibility = .hidden
+                win.titlebarAppearsTransparent = true
+                win.isMovableByWindowBackground = true
 
-            if !win.setFrameUsingName(initialName) {
+                // Hide traffic lights
+                win.standardWindowButton(.closeButton)?.isHidden = true
+                win.standardWindowButton(.miniaturizeButton)?.isHidden = true
+                win.standardWindowButton(.zoomButton)?.isHidden = true
+            }
+            else {
+                // Prefer tabbed approach for documents
+                win.tabbingMode = .preferred
+                win.tabbingIdentifier = "CollaboraDocumentTab"
+            }
+
+            // Set minimum window size
+            win.minSize = NSSize(width: 800, height: 480)
+
+            if isWelcome {
+                win.maxSize = NSSize(width: 1280, height: 720)
+                FrameAutosaveHelper.applyDefaultFrame(win, widthFraction: 0.4, heightFraction: 0.4, ratio: 16.0/9.0)
+            }
+            else if !win.setFrameUsingName(initialName) {
                 FrameAutosaveHelper.applyDefaultFrame(win, widthFraction: 0.95, heightFraction: 0.95)
             }
         }
@@ -508,24 +524,57 @@ class Document: NSDocument {
  */
 private class FrameAutosaveHelper {
 
+
+    /**
+     * Helper function for handling Window's maxSize.
+     */
+    @inline(__always) private static func effMax(_ v: CGFloat) -> CGFloat { v > 0 ? v : .greatestFiniteMagnitude }
+
     /**
      * Resize window to fractions of visible width & height, and center it on the target screen.
      */
-    static func applyDefaultFrame(_ window: NSWindow, widthFraction: CGFloat, heightFraction: CGFloat) {
+    static func applyDefaultFrame(_ window: NSWindow, widthFraction: CGFloat, heightFraction: CGFloat, ratio: CGFloat? = nil) {
         // Choose the screen the window will appear on (fallback to main/first if unknown).
         let screen = window.screen ?? NSScreen.main ?? NSScreen.screens.first!
         let vf = screen.visibleFrame
 
-        // Fraction for width and height
+        // Fraction for width and height (ideal target before constraints)
         let targetW = floor(vf.width * widthFraction)
         let targetH = floor(vf.height * heightFraction)
 
         let minSize = window.minSize
         let maxSize = window.maxSize
 
-        // Respect any min/max constraints the window may have
-        let clampedW = max(minSize.width, min(maxSize.width > 0 ? maxSize.width : .greatestFiniteMagnitude, targetW))
-        let clampedH = max(minSize.height, min(maxSize.height > 0 ? maxSize.height : .greatestFiniteMagnitude, targetH))
+        let clampedW: CGFloat
+        let clampedH: CGFloat
+        if let r = ratio, r > 0 {
+            // Maintain aspect ratio r = width/height, drive by width primarily.
+            // Derive allowed width interval from BOTH width and height constraints.
+            let minAllowedW = max(minSize.width, r * minSize.height)
+            let maxAllowedW = min(effMax(maxSize.width), effMax(maxSize.height) * r)
+
+            // Start from target width; clamp into feasible interval.
+            var w = max(minAllowedW, min(maxAllowedW, targetW))
+            var h = w / r
+
+            // Defensive: after rounding, enforce height limits by nudging width accordingly (keep ratio).
+            if h < minSize.height {
+                h = minSize.height
+                w = r * h
+            }
+            else if maxSize.height > 0 && h > maxSize.height {
+                h = maxSize.height
+                w = r * h
+            }
+
+            clampedW = w
+            clampedH = h
+        }
+        else {
+            // No ratio requested -> independent clamping
+            clampedW = max(minSize.width, min(effMax(maxSize.width), targetW))
+            clampedH = max(minSize.height, min(effMax(maxSize.height), targetH))
+        }
 
         // Position so that the window is centered
         let x = vf.origin.x + (vf.width - clampedW) / 2.0
