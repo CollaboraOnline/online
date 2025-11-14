@@ -1905,9 +1905,8 @@ void Document::updateEditorSpeeds(int id, int speed)
 // Get the color value for all author names from the core
 std::map<std::string, int> Document::getViewColors()
 {
-    char* values = _loKitDocument->getCommandValues(".uno:TrackedChangeAuthors");
-    const std::string colorValues = std::string(values == nullptr ? "" : values);
-    std::free(values);
+    LOKitHelper::ScopedString values(_loKitDocument->getCommandValues(".uno:TrackedChangeAuthors"));
+    const std::string colorValues = std::string(values.get() == nullptr ? "" : values.get());
 
     std::map<std::string, int> viewColors;
     try
@@ -2162,11 +2161,11 @@ std::shared_ptr<lok::Document> Document::load(const std::shared_ptr<ChildSession
         default:
             // impress/draw currently cannot, so use the current document state
             // so simply joining doesn't toggle that shared spelling state
-            if (char* viewRenderState = _loKitDocument->getCommandValues(".uno:ViewRenderState"))
+            LOKitHelper::ScopedString viewRenderState(_loKitDocument->getCommandValues(".uno:ViewRenderState"));
+            if (viewRenderState.get())
             {
-                StringVector tokens(StringVector::tokenize(viewRenderState, strlen(viewRenderState), ';'));
+                StringVector tokens(StringVector::tokenize(viewRenderState.get(), strlen(viewRenderState.get()), ';'));
                 spellOnline = tokens[0] == "S" ? "true" : "false";
-                free(viewRenderState);
             }
             break;
         }
@@ -2226,10 +2225,10 @@ std::shared_ptr<lok::Document> Document::load(const std::shared_ptr<ChildSession
 
     session->initWatermark();
 
-    if (char* viewRenderState = _loKitDocument->getCommandValues(".uno:ViewRenderState"))
+    LOKitHelper::ScopedString viewRenderState(_loKitDocument->getCommandValues(".uno:ViewRenderState"));
+    if (viewRenderState.get())
     {
-        session->setViewRenderState(viewRenderState);
-        free(viewRenderState);
+        session->setViewRenderState(viewRenderState.get());
     }
 
     invalidateCanonicalId(session->getId());
