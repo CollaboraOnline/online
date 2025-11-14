@@ -520,7 +520,7 @@ window.L.Control.NotebookbarImpress = window.L.Control.NotebookbarWriter.extend(
 					'command': 'presentinwindow',
 					'accessibility': { focusBack: true, combination: 'PW', de: null }
 				} : {},
-			!window.ThisIsAMobileApp && window.canvasSlideshowEnabled ?
+			(!window.ThisIsAMobileApp || window.mode.isCODesktop()) && window.canvasSlideshowEnabled ?
 			  {
 					'id': 'slide-presentation-in-console',
 					'type': 'bigcustomtoolitem',
