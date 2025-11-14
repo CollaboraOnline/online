@@ -460,6 +460,9 @@ class MobileAppInitializer extends InitializerBase {
 		window.ThisIsAMobileApp = true;
 		window.HelpFile = document.getElementById("init-help-file").value;
 
+		// stash this so we can use it for presenter console despite
+		// MobileAppInitializer redirection of general 'open' use
+		window.origOpen = window.open;
 		// eslint-disable-next-line
 		window.open = function (url, windowName, windowFeatures) {
 		  window.postMobileMessage('HYPERLINK ' + url); /* don't call the 'normal' window.open on mobile at all */

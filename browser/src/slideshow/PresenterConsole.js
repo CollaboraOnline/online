@@ -213,6 +213,11 @@ class PresenterConsole {
 		}
 	}
 
+	_openPresenterWindow() {
+		const windowopen = (window.mode.isCODesktop() && window.origOpen) ? window.origOpen : window.open;
+		return windowopen('', '_blank', 'toolbar=0,scrollbars=0,location=0,statusbar=0,menubar=0,resizable=1,popup=true')
+	}
+
 	_onPresentInConsole() {
 		if (app.impress.notesMode) {
 			app.console.debug(
@@ -234,11 +239,7 @@ class PresenterConsole {
 			return;
 		}
 
-		this._proxyPresenter = window.open(
-			'',
-			'_blank',
-			'toolbar=0,scrollbars=0,location=0,statusbar=0,menubar=0,resizable=1,popup=true',
-		);
+		this._proxyPresenter = this._openPresenterWindow();
 		if (!this._proxyPresenter) {
 			this._presenter._notifyBlockedPresenting();
 			return;
