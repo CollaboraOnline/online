@@ -75,7 +75,7 @@
 #include <sstream>
 #include "WebView.hpp"
 
-const char* user_name = "Dummy";
+const char* user_name = nullptr;
 
 const int SHOW_JS_MAXLEN = 300;
 
