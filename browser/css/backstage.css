@@ -40,6 +40,20 @@
 	font-size: var(--medium-font-size);
 	letter-spacing: -0.01em;
 	color: var(--color-on-primary);
+	display: inline-flex;
+	align-items: center;
+	gap: 8px;
+}
+
+.backstage-header-title::before {
+	content: '';
+	display: inline-block;
+	width: 18px;
+	height: 18px;
+	background-image: url('images/collabora-office-white.svg');
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: contain;
 }
 
 .backstage-header-close {
@@ -101,7 +115,10 @@
 }
 
 .backstage-sidebar-item {
-	padding: 14px 24px;
+	display: flex;
+	align-items: center;
+	gap: 6px;
+	padding: 8px 24px;
 	cursor: pointer;
 	color: var(--color-main-text);
 	font-size: var(--medium-font-size);
@@ -109,6 +126,24 @@
 	position: relative;
 	margin: 2px 8px;
 	border-radius: var(--border-radius);
+}
+
+.backstage-sidebar-item::before {
+	content: '';
+	display: inline-block;
+	width: 24px;
+	height: 32px;
+	flex-shrink: 0;
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: 24px 24px;
+	opacity: 0.75;
+	transition: opacity 0.2s ease;
+}
+
+.backstage-sidebar-item:hover::before,
+.backstage-sidebar-item.active::before {
+	opacity: 1;
 }
 
 .backstage-sidebar-item:hover {
@@ -128,6 +163,46 @@
 
 .backstage-sidebar-item span {
 	font-size: var(--medium-font-size);
+	display: flex;
+	align-items: center;
+	line-height: 1.1;
+}
+
+#backstage-home::before {
+	background-image: url('images/lc_home.svg');
+}
+
+#backstage-new::before {
+	background-image: url('images/lc_newdoc.svg');
+}
+
+#backstage-open::before {
+	background-image: url('images/lc_open.svg');
+}
+
+#backstage-share::before {
+	background-image: url('images/lc_shareas.svg');
+}
+
+#backstage-info::before {
+	background-image: url('images/lc_printpreview.svg');
+}
+
+#backstage-save::before {
+	background-image: url('images/lc_save.svg');
+}
+
+#backstage-saveas::before {
+	
+	background-image: url('images/lc_saveacopy.svg');
+}
+
+#backstage-print::before {
+	background-image: url('images/lc_printlayout.svg');
+}
+
+#backstage-export::before {
+	background-image: url('images/lc_exportto.svg');
 }
 
 .backstage-content {
