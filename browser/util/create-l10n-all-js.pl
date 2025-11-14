@@ -46,63 +46,37 @@ if (underscore > 0) {
 
 if (false) {
     ;
-} else if (onlylang == 'ar') {
-    window.LOCALIZATIONS = " . insert('ar') . ";
-} else if (onlylang == 'cs') {
-    window.LOCALIZATIONS = " . insert('cs') . ";
-} else if (onlylang == 'da') {
-    window.LOCALIZATIONS = " . insert('da') . ";
-} else if (onlylang == 'de') {
-    window.LOCALIZATIONS = " . insert('de') . ";
-} else if (onlylang == 'el') {
-    window.LOCALIZATIONS = " . insert('el') . ";
-} else if (window.LANG == 'en-GB' || window.LANG == 'en_GB') {
-    window.LOCALIZATIONS = " . insert('en_GB') . ";
-} else if (onlylang == 'es') {
-    window.LOCALIZATIONS = " . insert('es') . ";
-} else if (onlylang == 'fr') {
-    window.LOCALIZATIONS = " . insert('fr') . ";
-} else if (onlylang == 'he') {
-    window.LOCALIZATIONS = " . insert('he') . ";
-} else if (onlylang == 'hu') {
-    window.LOCALIZATIONS = " . insert('hu') . ";
-} else if (onlylang == 'is') {
-    window.LOCALIZATIONS = " . insert('is') . ";
-} else if (onlylang == 'it') {
-    window.LOCALIZATIONS = " . insert('it') . ";
-} else if (onlylang == 'ja') {
-    window.LOCALIZATIONS = " . insert('ja') . ";
-} else if (onlylang == 'ko') {
-    window.LOCALIZATIONS = " . insert('ko') . ";
-} else if (onlylang == 'nb') {
-    window.LOCALIZATIONS = " . insert('nb') . ";
-} else if (onlylang == 'nl') {
-    window.LOCALIZATIONS = " . insert('nl') . ";
-} else if (onlylang == 'nn') {
-    window.LOCALIZATIONS = " . insert('nn') . ";
-} else if (onlylang == 'pl') {
-    window.LOCALIZATIONS = " . insert('pl') . ";
-} else if (window.LANG == 'pt-BR' || window.LANG == 'pt_BR') {
-    window.LOCALIZATIONS = " . insert('pt_BR') . ";
-} else if (onlylang == 'pt') {
-    window.LOCALIZATIONS = " . insert('pt') . ";
-} else if (onlylang == 'ru') {
-    window.LOCALIZATIONS = " . insert('ru') . ";
-} else if (onlylang == 'sk') {
-    window.LOCALIZATIONS = " . insert('sk') . ";
-} else if (onlylang == 'sl') {
-    window.LOCALIZATIONS = " . insert('sl') . ";
-} else if (onlylang == 'sv') {
-    window.LOCALIZATIONS = " . insert('sv') . ";
-} else if (onlylang == 'tr') {
-    window.LOCALIZATIONS = " . insert('tr') . ";
-} else if (onlylang == 'uk') {
-    window.LOCALIZATIONS = " . insert('uk') . ";
-} else if (window.LANG == 'zh-CN' || window.LANG == 'zh-Hans-CN' || window.LANG == 'zh_CN' || window.LANG == 'zh_Hans_CN'  ) {
-    window.LOCALIZATIONS = " . insert('zh_CN') . ";
-} else if (window.LANG == 'zh-TW' || window.LANG == 'zh-Hant-TW' || window.LANG == 'zh_TW' || window.LANG == 'zh_Hant_TW') {
-    window.LOCALIZATIONS = " . insert('zh_TW') . ";
-} else {
+}
+";
+
+# Simple languages that use onlylang == 'xx'
+my @simple = qw(
+   ar ca cs cy da de el es eu fi fr ga he hr hu hy id is it ja kk ko nl pl pt ro ru sk sl sq sv tr uk
+);
+
+# Languages that use window.LANG alias matching
+my %aliases = (
+    en_GB => [ 'en-GB', 'en_GB' ],
+    pt_BR => [ 'pt-BR', 'pt_BR' ],
+    zh_CN => [ 'zh-CN', 'zh-Hans-CN', 'zh_CN', 'zh_Hans_CN' ],
+    zh_TW => [ 'zh-TW', 'zh-Hant-TW', 'zh_TW', 'zh_Hant_TW' ],
+);
+
+for my $lang (@simple) {
+    print "else if (onlylang == '$lang') {\n";
+    print "    window.LOCALIZATIONS = " . insert($lang) . ";\n";
+    print "}\n";
+}
+
+for my $lang (sort keys %aliases) {
+    my $cond = join(' || ', map { "window.LANG == '$_'" } @{$aliases{$lang}});
+    print "else if ($cond) {\n";
+    print "    window.LOCALIZATIONS = " . insert($lang) . ";\n";
+    print "}\n";
+}
+
+print "
+else {
     window.LOCALIZATIONS = {};
 }
 ";
