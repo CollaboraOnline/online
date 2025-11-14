@@ -20,6 +20,7 @@
 #include <shlwapi.h>
 #include <shobjidl.h>
 #include <shobjidl_core.h>
+
 #include <wincrypt.h>
 
 #include "WebView2.h"
@@ -1728,10 +1729,65 @@ static void processMessage(WindowData& data, wil::unique_cotaskmem_string& messa
     }
 }
 
+extern "C" BOOLEAN WINAPI GetUserNameExW(
+    ULONG NameFormat,   // EXTENDED_NAME_FORMAT underlying type
+    LPWSTR lpNameBuffer,
+    PULONG nSize
+);
+
+// Helper: convert wchar_t* (UTF-16) to UTF-8 in a static buffer
+static const char* utf16_to_utf8(const wchar_t* wstr)
+{
+    static char utf8buf[512];
+
+    int bytes = WideCharToMultiByte(
+        CP_UTF8,
+        0,
+        wstr,
+        -1,
+        utf8buf,
+        sizeof(utf8buf),
+        NULL,
+        NULL);
+
+    if (bytes > 0)
+        return utf8buf;
+
+    return nullptr;
+}
+
+static const char* getUserName()
+{
+    static wchar_t buffer[256];
+    DWORD size;
+
+    // Try full display name
+    size = sizeof(buffer) / sizeof(wchar_t);
+
+    if (GetUserNameExW(3 /* NameDisplay */, buffer, &size)) {
+        if (buffer[0] != L'\0') {
+            return utf16_to_utf8(buffer);
+        }
+    }
+
+    // Fallback: login name
+    size = sizeof(buffer) / sizeof(wchar_t);
+
+    if (GetUserNameW(buffer, &size)) {
+        if (buffer[0] != L'\0') {
+            return utf16_to_utf8(buffer);
+        }
+    }
+
+    return nullptr;
+}
+
 int APIENTRY wWinMain(HINSTANCE hInstance, HINSTANCE, PWSTR, int showWindowMode)
 {
     appInstance = hInstance;
     appShowMode = showWindowMode;
+
+    user_name = getUserName();
 
     wchar_t fileName[1000];
     GetModuleFileNameW(NULL, fileName, sizeof(fileName) / sizeof(fileName[0]));
@@ -1872,7 +1928,7 @@ int APIENTRY wWinMain(HINSTANCE hInstance, HINSTANCE, PWSTR, int showWindowMode)
 
     currentCommandLineDocumentIndex = 0;
 
-    // Open the first documnt here, then open the rest one by one once the previous has loaded.
+    // Open the first document here, then open the rest one by one once the previous has loaded.
     if (new_document_created != L"")
     {
         openCOOLWindow(filenamesAndUris[0], PERMISSION::NEW_DOCUMENT);
