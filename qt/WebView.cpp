@@ -149,8 +149,30 @@ public:
 
         QWebEngineView* newView = webViewInstance->webEngineView();
         QMainWindow* newWindow = webViewInstance->mainWindow();
-        newWindow->show();
-//        newWindow->showFullScreen();
+
+        QScreen* primaryScreen = QGuiApplication::primaryScreen();
+
+        /* what we really want to happen by default is for the presenter
+         * console to appear on the laptop screen and the presentation
+         * on an external monitor. For now we'll assume the presentation
+         * is already on the primaryScreen, which is nearly always the laptop,
+         * and put the presenter console on the next available screen just
+         * to test that we can put it somewhere else at all */
+        QScreen* destScreen = primaryScreen;
+        QList<QScreen*> screens = QApplication::screens();
+        for (QScreen* screen : screens)
+        {
+            if (destScreen != screen)
+            {
+                destScreen = screen;
+                break;
+            }
+        }
+
+        newWindow->setScreen(destScreen);
+        newWindow->move(destScreen->geometry().topLeft());
+
+        newWindow->showFullScreen();
 
         return newView;
     }
