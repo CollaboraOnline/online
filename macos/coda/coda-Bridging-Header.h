@@ -3,3 +3,13 @@
 //
 
 #import "COWrapper.h"
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+void setUserName(void);
+
+#ifdef __cplusplus
+}
+#endif
