@@ -31,9 +31,9 @@ class Bridge : public QObject
     int _closeNotificationPipeForForwardingThread[2];
     std::thread _app2js;
 
-    std::string promptSaveLocation();
+    void promptSaveLocation(std::function<void(const std::string&)> callback);
     bool saveDocument(const std::string& savePath);
-    bool saveDocumentAs();
+    void saveDocumentAs();
 
 public:
     explicit Bridge(QObject* parent, coda::DocumentData& document, QMainWindow* window, QWebEngineView* webView)

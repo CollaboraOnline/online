@@ -523,7 +523,7 @@ namespace
 
 } // namespace
 
-std::string Bridge::promptSaveLocation()
+void Bridge::promptSaveLocation(std::function<void(const std::string&)> callback)
 {
     // Prompt user to pick a save location
     const QUrl docUrl(QString::fromStdString(
@@ -573,19 +573,20 @@ std::string Bridge::promptSaveLocation()
     else
         fileFilter = QObject::tr("All Files (*)");
 
-    const QString destPath = QFileDialog::getSaveFileName(
+    QFileDialog* dialog = new QFileDialog(
         _webView,
         QObject::tr("Save Document"),
         QDir::home().filePath(suggestedName),
         fileFilter);
 
-    if (destPath.isEmpty())
-    {
-        LOG_INF("Save cancelled by user");
-        return {};
-    }
+    dialog->setAcceptMode(QFileDialog::AcceptSave);
+    dialog->setAttribute(Qt::WA_DeleteOnClose);
 
-    return destPath.toStdString();
+    QObject::connect(dialog, &QFileDialog::fileSelected, [callback](const QString& destPath) {
+        callback(destPath.toStdString());
+    });
+
+    dialog->open();
 }
 
 bool Bridge::saveDocument(const std::string& savePath)
@@ -604,28 +605,29 @@ bool Bridge::saveDocument(const std::string& savePath)
     }
 }
 
-bool Bridge::saveDocumentAs()
+void Bridge::saveDocumentAs()
 {
-    std::string savePath = promptSaveLocation();
-    if (savePath.empty())
-        return false;
+    promptSaveLocation([this](const std::string& savePath) {
+        if (savePath.empty())
+            return;
 
-    // Update saveLocationURI for future saves
-    _document._saveLocationURI = Poco::URI(Poco::Path(savePath));
+        // Update saveLocationURI for future saves
+        _document._saveLocationURI = Poco::URI(Poco::Path(savePath));
 
-    // Update document name in the WebView UI
-    QString fileName = QString::fromStdString(Poco::Path(savePath).getFileName());
-    if (!fileName.isEmpty())
-    {
-        QString applicationTitle = fileName + " - " APP_NAME;
-        QApplication::setApplicationName(applicationTitle);
+        // Update document name in the WebView UI
+        QString fileName = QString::fromStdString(Poco::Path(savePath).getFileName());
+        if (!fileName.isEmpty())
+        {
+            QString applicationTitle = fileName + " - " APP_NAME;
+            QApplication::setApplicationName(applicationTitle);
 
         // Update file name in window title
-        if (_webView && _webView->window())
-            _webView->window()->setWindowTitle(applicationTitle);
-    }
+            if (_webView && _webView->window())
+                _webView->window()->setWindowTitle(applicationTitle);
+        }
 
-    return saveDocument(savePath);
+        saveDocument(savePath);
+    });
 }
 
 QVariant Bridge::cool(const QString& messageStr)
