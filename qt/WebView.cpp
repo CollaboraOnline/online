@@ -11,6 +11,7 @@
 
 #include "WebView.hpp"
 #include "bridge.hpp"
+#include "DetachableTabs.hpp"
 #include <QWebChannel>
 #include <QTabWidget>
 #include <QLabel>
@@ -347,20 +348,9 @@ WebView::WebView(QWebEngineProfile* profile, bool isWelcome)
     if (!s_mainWindow)
     {
         s_mainWindow = new QMainWindow(nullptr);
-        s_tabWidget = new QTabWidget(s_mainWindow);
+        s_tabWidget = new DetachableTabWidget(s_mainWindow);
         s_tabWidget->setTabsClosable(true);
         s_tabWidget->setMovable(true);
-
-        // Add a "+" button to create new documents
-        QPushButton* newTabButton = new QPushButton("+");
-        newTabButton->setMaximumWidth(30);
-        // Place the button in a corner widget with a right-aligned layout
-        QWidget* cornerWidget = new QWidget(s_tabWidget);
-        QHBoxLayout* cornerLayout = new QHBoxLayout(cornerWidget);
-        cornerLayout->setContentsMargins(0, 0, 0, 0);
-        cornerLayout->addStretch();
-        cornerLayout->addWidget(newTabButton);
-        s_tabWidget->setCornerWidget(cornerWidget, Qt::TopRightCorner);
 
         // Capture a local automatic pointer so the lambda can use it
         // safely (capturing the static local s_tabWidget directly is not
@@ -368,7 +358,18 @@ WebView::WebView(QWebEngineProfile* profile, bool isWelcome)
         QTabWidget* tabPtr = s_tabWidget;
         QMainWindow* mainPtr = s_mainWindow;
 
-        QObject::connect(newTabButton, &QPushButton::clicked,
+        DetachableTabWidget::tabSetupCallback = [tabPtr](QTabWidget* tabWidget) {
+            QPushButton* newTabButton = new QPushButton("+");
+            newTabButton->setMaximumWidth(30);
+
+            QWidget* cornerWidget = new QWidget(tabWidget);
+            QHBoxLayout* cornerLayout = new QHBoxLayout(cornerWidget);
+            cornerLayout->setContentsMargins(0, 0, 0, 0);
+            cornerLayout->addStretch();
+            cornerLayout->addWidget(newTabButton);
+            tabWidget->setCornerWidget(cornerWidget, Qt::TopRightCorner);
+
+            QObject::connect(newTabButton, &QPushButton::clicked,
                          [tabPtr]()
                          {
                              if (!tabPtr)
@@ -424,6 +425,10 @@ WebView::WebView(QWebEngineProfile* profile, bool isWelcome)
                                  }
                              }
                          });
+        };
+
+        // Now use the lambda to set up the tab widget
+        DetachableTabWidget::tabSetupCallback(s_tabWidget);
 
         QObject::connect(s_tabWidget, &QTabWidget::tabCloseRequested,
                          [tabPtr, mainPtr](int index)
