@@ -136,7 +136,7 @@ final class DocumentController: NSDocumentController {
         let w = NSWindow(contentViewController: vc)
         w.title = "New Document"
         w.styleMask = [.titled, .closable, .miniaturizable]
-        w.setContentSize(NSSize(width: 1042, height: 782))
+        w.setContentSize(NSSize(width: 1000, height: 640))
         w.center()
 
         let wc = NSWindowController(window: w)
