@@ -599,20 +599,6 @@ class BackstageView extends window.L.Class {
 		info.textContent = message;
 		wrapper.appendChild(info);
 
-		const blankTemplate = this.getBlankTemplate(
-			this.detectTemplateTypeFromDoc(),
-		);
-		const buttonLabel = blankTemplate
-			? blankTemplate.name
-			: _('Blank Document');
-		const button = this.createPrimaryButton(
-			`${_('Create')} ${buttonLabel}`,
-			() => {
-				if (blankTemplate) this.triggerNewDocument(blankTemplate);
-			},
-		);
-		wrapper.appendChild(button);
-
 		this.contentArea.appendChild(wrapper);
 	}
 
@@ -672,26 +658,34 @@ class BackstageView extends window.L.Class {
 	private getFilteredTemplates(allTemplates: TemplateData[]): TemplateData[] {
 		const query = this.templateSearchQuery.trim().toLowerCase();
 		return allTemplates.filter((template) => {
-			if (template.type !== this.activeTemplateType) return false;
 			if (!query) return true;
 			return template.searchText.includes(query);
 		});
 	}
 
 	private renderFeaturedRow(): HTMLElement | null {
-		const blankTemplate = this.getBlankTemplate(this.activeTemplateType);
-		if (!blankTemplate) return null;
+		const blankTemplates = [
+			this.getBlankTemplate('writer'),
+			this.getBlankTemplate('calc'),
+			this.getBlankTemplate('impress'),
+		].filter((t): t is TemplateData => t !== null);
 
 		const query = this.templateSearchQuery.trim().toLowerCase();
-		if (query && !blankTemplate.searchText.includes(query)) return null;
+		const filteredBlankTemplates = query
+			? blankTemplates.filter((t) => t.searchText.includes(query))
+			: blankTemplates;
+
+		if (filteredBlankTemplates.length === 0) return null;
 
 		const row = this.createElement('div', 'template-featured-row');
-		row.appendChild(
-			this.createTemplateCard(blankTemplate, {
-				variant: 'featured',
-				isBlank: true,
-			}),
-		);
+		filteredBlankTemplates.forEach((blankTemplate) => {
+			row.appendChild(
+				this.createTemplateCard(blankTemplate, {
+					variant: 'featured',
+					isBlank: true,
+				}),
+			);
+		});
 		return row;
 	}
 
