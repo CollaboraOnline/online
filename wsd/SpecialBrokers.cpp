@@ -64,9 +64,9 @@ void StatelessBatchBroker::removeFile(const std::string& uriOrig)
         FileUtil::removeFile(dir);
 }
 
-static std::atomic<std::size_t> gConvertToBrokerInstanceCouter;
+static std::atomic<std::size_t> gConvertToBrokerInstanceCounter;
 
-std::size_t ConvertToBroker::getInstanceCount() { return gConvertToBrokerInstanceCouter; }
+std::size_t ConvertToBroker::getInstanceCount() { return gConvertToBrokerInstanceCounter; }
 
 ConvertToBroker::ConvertToBroker(const std::string& uri, const Poco::URI& uriPublic,
                                  const std::string& docKey, const std::string& format,
@@ -84,7 +84,7 @@ ConvertToBroker::ConvertToBroker(const std::string& uri, const Poco::URI& uriPub
     CONFIG_STATIC const std::chrono::seconds limit_convert_secs(
         ConfigUtil::getConfigValue<std::chrono::seconds>("per_document.limit_convert_secs", 100));
     _limitLifeSeconds = limit_convert_secs;
-    ++gConvertToBrokerInstanceCouter;
+    ++gConvertToBrokerInstanceCounter;
 }
 
 ConvertToBroker::~ConvertToBroker() {}
@@ -181,7 +181,7 @@ void ConvertToBroker::dispose()
 {
     if (!_uriOrig.empty())
     {
-        gConvertToBrokerInstanceCouter--;
+        gConvertToBrokerInstanceCounter--;
         removeFile(_uriOrig);
         _uriOrig.clear();
     }
@@ -231,7 +231,7 @@ RenderSearchResultBroker::RenderSearchResultBroker(
     LOG_TRC("Created RenderSearchResultBroker: uri: ["
             << uri << "], uriPublic: [" << uriPublic.toString() << "], docKey: [" << docKey
             << "].");
-    gConvertToBrokerInstanceCouter++;
+    gConvertToBrokerInstanceCounter++;
 }
 
 RenderSearchResultBroker::~RenderSearchResultBroker() {}
