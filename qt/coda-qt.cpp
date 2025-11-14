@@ -443,19 +443,6 @@ static void printDocument(unsigned appDocId, QWidget* parent = nullptr)
     customPrintDialog->open();
 }
 
-static void exchangeMonitors(QWebEngineView* webView)
-{
-    if (!webView)
-        return;
-
-    QWidget* presentation = webView->window();
-
-    QScreen* laptopScreen = QGuiApplication::primaryScreen();
-    presentation->showNormal();
-    presentation->setScreen(laptopScreen);
-    presentation->move(laptopScreen->geometry().topLeft());
-}
-
 Bridge::~Bridge() {
     if (_document._fakeClientFd != -1) {
         fakeSocketClose(_document._fakeClientFd);
@@ -949,7 +936,8 @@ QVariant Bridge::cool(const QString& messageStr)
     }
     else if (message == "EXCHANGEMONITORS")
     {
-        exchangeMonitors(_webView);
+        if (_webView)
+            _webView->exchangeMonitors();
     }
     else if (message.starts_with(DOWNLOADAS))
     {

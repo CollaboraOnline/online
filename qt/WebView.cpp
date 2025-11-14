@@ -33,6 +33,7 @@
 #include <QKeySequence>
 #include <QGuiApplication>
 #include <QScreen>
+#include <QTimer>
 #include <QWebEngineFullScreenRequest>
 #include <QWebEngineSettings>
 #include <QFile>
@@ -135,50 +136,107 @@ private:
 };
 } // namespace
 
-class CODAWebEngineView : public QWebEngineView
+QWebEngineView* CODAWebEngineView::createWindow(QWebEnginePage::WebWindowType type)
 {
-public:
-    CODAWebEngineView(QMainWindow* parent)
-        : QWebEngineView(parent)
-        , _mainWindow(parent)
+    _presenterConsole = new WebView(Application::getProfile(), false);
+
+    QWebEngineView* consoleView = _presenterConsole->webEngineView();
+
+    QWebEnginePage* page = consoleView->page();
+
+    QObject::connect(page, &QWebEnginePage::windowCloseRequested,
+                     [this]()
+                     {
+                        QTimer::singleShot(0, [this]{
+
+                            QScreen* laptopScreen = QGuiApplication::primaryScreen();
+                            _mainWindow->showNormal();
+                            _mainWindow->setScreen(laptopScreen);
+                            _mainWindow->move(laptopScreen->geometry().topLeft());
+
+                            QMainWindow* consoleWindow = _presenterConsole->mainWindow();
+                            _presenterConsole = nullptr;
+                            consoleWindow->close();
+                        });
+                     });
+
+    QMainWindow* consoleWindow = _presenterConsole->mainWindow();
+
+    QScreen* laptopScreen = QGuiApplication::primaryScreen();
+
+    /* what we really want to happen by default is for the presenter
+     * console to appear on the laptop screen and the presentation
+     * on an external monitor. For now we'll assume the presentation
+     * is already on the laptopScreen, which is nearly always the laptop,
+     * and put the presenter console on the next available screen just
+     * to test that we can put it somewhere else at all */
+    QScreen* externalScreen = nullptr;
+    QList<QScreen*> screens = QApplication::screens();
+    for (QScreen* screen : screens)
     {
-    }
-    QWebEngineView* createWindow(QWebEnginePage::WebWindowType type) override
-    {
-        WebView* webViewInstance = new WebView(Application::getProfile(), false);
-
-        QWebEngineView* newView = webViewInstance->webEngineView();
-        QMainWindow* newWindow = webViewInstance->mainWindow();
-
-        QScreen* primaryScreen = QGuiApplication::primaryScreen();
-
-        /* what we really want to happen by default is for the presenter
-         * console to appear on the laptop screen and the presentation
-         * on an external monitor. For now we'll assume the presentation
-         * is already on the primaryScreen, which is nearly always the laptop,
-         * and put the presenter console on the next available screen just
-         * to test that we can put it somewhere else at all */
-        QScreen* destScreen = primaryScreen;
-        QList<QScreen*> screens = QApplication::screens();
-        for (QScreen* screen : screens)
+        if (screen != laptopScreen)
         {
-            if (destScreen != screen)
-            {
-                destScreen = screen;
-                break;
-            }
+            externalScreen = screen;
+            break;
         }
-
-        newWindow->setScreen(destScreen);
-        newWindow->move(destScreen->geometry().topLeft());
-
-        newWindow->showFullScreen();
-
-        return newView;
     }
-private:
-    QMainWindow* _mainWindow;
-};
+
+    if (externalScreen)
+    {
+        consoleWindow->setScreen(laptopScreen);
+        consoleWindow->move(laptopScreen->geometry().topLeft());
+        consoleWindow->showFullScreen();
+
+        _mainWindow->setScreen(externalScreen);
+        _mainWindow->move(externalScreen->geometry().topLeft());
+        _mainWindow->showFullScreen();
+    }
+
+    return consoleView;
+}
+
+void CODAWebEngineView::exchangeMonitors()
+{
+    if (!_presenterConsole)
+        return;
+
+    QList<QScreen*> screens = QApplication::screens();
+    if (screens.size() == 1)
+        return;
+
+    QMainWindow* consoleWindow = _presenterConsole->mainWindow();
+
+    _mainWindow->showNormal();
+    consoleWindow->showNormal();
+
+    size_t origConsoleScreen = 0;
+    size_t origPresentationScreen = 0;
+    for (size_t i = 0; i < screens.size(); ++i)
+    {
+        if (screens[i] == consoleWindow->screen())
+            origConsoleScreen = i;
+        if (screens[i] == _mainWindow->screen())
+            origPresentationScreen = i;
+    }
+
+    // Rotate the console screen and rotate the presentation screen
+    // every time the console catches up to it for the case there
+    // are more than two screens. Typically there's just two screens
+    // and they just swap.
+    size_t newConsoleScreen = (origConsoleScreen + 1) % screens.size();
+    size_t newPresentationScreen = origPresentationScreen;
+    if (newConsoleScreen == newPresentationScreen)
+        newPresentationScreen = (newPresentationScreen + 1) % screens.size();
+
+    consoleWindow->setScreen(screens[newConsoleScreen]);
+    consoleWindow->move(screens[newConsoleScreen]->geometry().topLeft());
+
+    _mainWindow->setScreen(screens[newPresentationScreen]);
+    _mainWindow->move(screens[newPresentationScreen]->geometry().topLeft());
+
+    _mainWindow->showFullScreen();
+    consoleWindow->showFullScreen();
+}
 
 WebView::WebView(QWebEngineProfile* profile, bool isWelcome)
     : _mainWindow(new Window(nullptr, this))
@@ -216,12 +274,6 @@ WebView::WebView(QWebEngineProfile* profile, bool isWelcome)
                          else
                              _mainWindow->showNormal();
                          request.accept();
-                     });
-
-    QObject::connect(page, &QWebEnginePage::windowCloseRequested,
-                     [this]()
-                     {
-                        _mainWindow->close();
                      });
 
     s_instances.push_back(this);

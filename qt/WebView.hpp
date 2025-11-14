@@ -21,13 +21,32 @@
 #include <Poco/URI.h>
 
 class Bridge;
+class WebView;
+
+class CODAWebEngineView : public QWebEngineView
+{
+public:
+    CODAWebEngineView(QMainWindow* parent)
+        : QWebEngineView(parent)
+        , _mainWindow(parent)
+        , _presenterConsole(nullptr)
+    {
+    }
+
+    void exchangeMonitors();
+private:
+    QMainWindow* _mainWindow;
+    WebView* _presenterConsole;
+
+    QWebEngineView* createWindow(QWebEnginePage::WebWindowType type) override;
+};
 
 class WebView
 {
 public:
     explicit WebView(QWebEngineProfile* profile, bool isWelcome = false);
     ~WebView();
-    QWebEngineView* webEngineView() { return _webView.get(); }
+    CODAWebEngineView* webEngineView() { return _webView.get(); }
     QMainWindow* mainWindow() { return _mainWindow; }
 
     void load(const Poco::URI& fileURL, bool newFile = false);
@@ -44,7 +63,7 @@ private:
     // query gnome font scaling factor and apply it to the web view
     void queryGnomeFontScalingUpdateZoom();
     QMainWindow* _mainWindow;
-    std::unique_ptr<QWebEngineView> _webView;
+    std::unique_ptr<CODAWebEngineView> _webView;
     coda::DocumentData _document;
     bool _isWelcome;
     Bridge* _bridge;
