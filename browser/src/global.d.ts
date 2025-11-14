@@ -223,6 +223,8 @@ interface Window {
 				fromBrowser: string;
 				notebookbarAccessibility: any;
 			};
+			horizontalRuler: HRuler | null;
+			verticalRuler: VRuler | null;
 		};
 		colorPalettes: any; // TODO declare according to Widget.ColorPicker.ts
 		colorNames: any; // TODO declare according to Widget.ColorPicker.ts

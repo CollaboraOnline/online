@@ -59,6 +59,8 @@ window.app = {
 			fromBrowser: window.L.Browser.lang, // Again in global.js.
 			notebookbarAccessibility: null,
 		},
+		horizontalRuler: null, // HRuler instance that is used in Writer, Impress and Draw.
+		verticalRuler: null, // VRuler instance that is used in Writer.
 	},
 	file: {
 		editComment: false,
