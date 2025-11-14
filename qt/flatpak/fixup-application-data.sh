@@ -18,12 +18,14 @@ sed -i -e 's/;Base;Math//' /app/share/applications/com.collabora.Office.desktop
 sed -i -E -z -e 's/\[Desktop Action (Base|Math)\]\nName=[^\n]+\nExec=[^\n]+\n+//g' \
  /app/share/applications/com.collabora.Office.desktop
 
-# Strip out all applications from Actions for now:
-sed -i -z 's/\nActions=Writer;Calc;Impress;Draw;\n/\n/' \
+# Strip out draw application from Actions for now:
+sed -i -e 's/;Draw//' /app/share/applications/com.collabora.Office.desktop
+sed -i -E -z -e 's/\[Desktop Action Draw\]\nName=[^\n]+\nExec=[^\n]+\n+//g' \
  /app/share/applications/com.collabora.Office.desktop
-sed -i -E -z \
- -e 's/\[Desktop Action (Calc|Draw|Impress|Writer)\]\nName=[^\n]+\nExec=[^\n]+\n+//g' \
- /app/share/applications/com.collabora.Office.desktop
+
+# Adapt calc, impress, writer application Action names:
+sed -i -e 's/^Name=Calc$/Name=Spreadsheet/' -e 's/^Name=Impress$/Name=Presentation/' \
+ -e 's/^Name=Writer$/Name=Document/' /app/share/applications/com.collabora.Office.desktop
 
 # Remove individual application desktop and icon files:
 rm /app/share/applications/com.collabora.Office.*.desktop
