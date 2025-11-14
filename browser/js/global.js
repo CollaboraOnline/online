@@ -643,7 +643,7 @@ function showWelcomeSVG() {
         width: 100vw;
         height: 100vh;
         background-color: #faf8fc;
-        z-index: 9999;
+        z-index: 9999999999;
         opacity: 1;
         transition: opacity 0.8s ease-out;
     `;
