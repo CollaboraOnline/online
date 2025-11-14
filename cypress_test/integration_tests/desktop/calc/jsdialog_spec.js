@@ -2,6 +2,7 @@
 
 /* global describe it cy require expect beforeEach */
 var helper = require('../../common/helper');
+var desktopHelper = require('../../common/desktop_helper');
 
 describe(['tagdesktop'], 'JSDialog unit test', function() {
 
@@ -98,19 +99,21 @@ describe(['tagdesktop'], 'JSDialog unit test', function() {
 
 	it('Open hybrid help dialog', function() {
 		cy.cGet('#Help-tab-label').click();
-		cy.cGet('#online-help').click();
+		cy.cGet('.unoOnlineHelp').click();
 		cy.cGet('#online-help-content').should('exist');
 	});
 
 	it('JSDialog dropdown', function() {
-		cy.cGet('#toolbar-up #home-conditional-format-menu-button').click();
+		cy.cGet('#toolbar-up #Home .unoConditionalFormatMenu:visible').click();
+
+		desktopHelper.getDropdown('home-conditional-format-menu').should('exist');
 
 		// Click on overlay to close
 		cy.cGet('.jsdialog-overlay').click();
 
 		// Dropdown should be closed
 		cy.cGet('.jsdialog-overlay').should('not.exist');
-		cy.cGet('#home-conditional-format-menu-dropdown').should('not.exist');
+		desktopHelper.getDropdown('home-conditional-format-menu').should('not.exist');
 	});
 
 	it('JSDialog check enable edit input', function() {
@@ -129,7 +132,7 @@ describe(['tagdesktop'], 'JSDialog unit test', function() {
 
 	it('JSDialog check data validity options', function() {
 		cy.cGet('#Data-tab-label').click();
-		cy.cGet('#data-validation').click();
+		cy.cGet('.unoValidation').click();
 
 		// On changing options other fields should toggle enable and disable
 		cy.cGet('#data-input').should('be.disabled');
@@ -145,7 +148,8 @@ describe(['tagdesktop'], 'JSDialog unit test', function() {
 		})
 
 		cy.cGet('#Format-tab-label').click();
-		cy.cGet('#format-style-dialog').click();
+		// FIXME: below button has class with "." inside, best to rework it
+		cy.cGet('#Format [id^="format-style-dialog"]:visible button').click();
 		cy.cGet('#filter-input').select('4');
 		cy.wait(500);
 		cy.cGet('#flatview .ui-treeview-entry').rightclick();

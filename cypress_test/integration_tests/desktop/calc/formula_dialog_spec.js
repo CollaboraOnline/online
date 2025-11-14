@@ -13,7 +13,7 @@ describe(['tagdesktop'], 'Formula dialog tests', function() {
 	it('Formula dialog visual regression test', function() {
 		cy.wait(1000);
 
-		cy.cGet('#functiondialog-button').click();
+		cy.cGet('.unoFunctionDialog.formulabar').click();
 		cy.cGet('#FormulaDialog').should('be.visible');
 
 		cy.cGet('#FormulaDialog #function .ui-treeview-expander:nth(2)').click();
