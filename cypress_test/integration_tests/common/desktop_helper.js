@@ -538,6 +538,10 @@ function assertVisiblePage(min, max, allPages) {
 	cy.cGet('#StatePageNumber').invoke('text').should('be.oneOf', expectedArray);
 }
 
+function getDropdown(dropdownId) {
+	return cy.cGet('[id^="' + dropdownId + '"].modalpopup');
+}
+
 module.exports.showSidebar = showSidebar;
 module.exports.hideSidebar = hideSidebar;
 module.exports.hideSidebarImpress = hideSidebarImpress;
@@ -571,3 +575,4 @@ module.exports.updateFollowingUsers = updateFollowingUsers;
 module.exports.assertVisiblePage = assertVisiblePage;
 module.exports.closeNavigatorSidebar = closeNavigatorSidebar;
 module.exports.sidebarToggle = sidebarToggle;
+module.exports.getDropdown = getDropdown;
