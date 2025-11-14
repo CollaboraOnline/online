@@ -753,23 +753,43 @@ QVariant Bridge::cool(const QString& messageStr)
         const std::string commandName = object->get("commandName").toString();
         const bool success = object->get("success").convert<bool>();
         const bool wasModified = success && object->get("wasModified").convert<bool>();
+        bool isAutosave = false;
+        if (object->has("isAutosave"))
+        {
+            isAutosave = object->get("isAutosave").convert<bool>();
+        }
 
-        // Only handle successful .uno:Save commands that modified the document
-        if (commandName != ".uno:Save" || !success || !wasModified)
+        // only handle successful .uno:Save commands
+        // let manually triggered saves through even if the document is not modified.
+        if (commandName != ".uno:Save" || !success || (!wasModified && isAutosave))
             return {};
 
         // Early return if the file is opened in-place (e.g. welcome slideshow)
         if (_document._fileURL == _document._saveLocationURI)
             return {};
 
-        if (_document._saveLocationURI.empty())
+
+        if (isAutosave)
         {
-            saveDocumentAs();
+            // for autosaves, only save if we have a save location already.
+            if (!_document._saveLocationURI.empty())
+            {
+                const std::string savePath = Poco::Path(_document._saveLocationURI.getPath()).toString();
+                saveDocument(savePath);
+            }
         }
         else
         {
-            const std::string savePath = Poco::Path(_document._saveLocationURI.getPath()).toString();
-            saveDocument(savePath);
+            // manual save - prompt for save location if needed
+            if (_document._saveLocationURI.empty())
+            {
+                saveDocumentAs();
+            }
+            else
+            {
+                const std::string savePath = Poco::Path(_document._saveLocationURI.getPath()).toString();
+                saveDocument(savePath);
+            }
         }
     }
     else if (message == "BYE")
