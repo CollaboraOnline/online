@@ -28,7 +28,7 @@ final class NewDocumentViewController: NSViewController, WKScriptMessageHandler 
     }
 
     /**
-     * Builds the WKWebView, installs the “newDoc” JS bridge, and loads the inline HTML.
+     * Builds the WKWebView, installs the “newDoc” JS bridge, and loads the HTML from the app bundle.
      */
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -46,8 +46,15 @@ final class NewDocumentViewController: NSViewController, WKScriptMessageHandler 
             webView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
 
-        let baseURL = Bundle.main.resourceURL
-        webView.loadHTMLString(Self.html, baseURL: baseURL)
+        // Load create-new-document.html from the bundle, allowing read access to its folder for relative assets.
+        if let url = Bundle.main.url(forResource: "create-new-document", withExtension: "html") {
+            let dir = url.deletingLastPathComponent()
+            webView.loadFileURL(url, allowingReadAccessTo: dir)
+        }
+        else {
+            NSLog("NewDocumentViewController: create-new-document.html not found in bundle")
+            webView.loadHTMLString("<p>Missing <code>create-new-document.html</code></p>", baseURL: nil)
+        }
     }
 
     /**
@@ -69,51 +76,4 @@ final class NewDocumentViewController: NSViewController, WKScriptMessageHandler 
     deinit {
         webView?.configuration.userContentController.removeScriptMessageHandler(forName: "newDoc")
     }
-
-    /** Inline HTML/CSS/JS for the 3-button chooser; posts “newDoc” messages back to Swift. */
-    static let html = """
-    <!doctype html>
-    <meta charset="utf-8">
-    <meta name="viewport" content="initial-scale=1">
-    <style>
-      body   { margin: 24px; display: grid; gap: 14px; background-color: rgb(250,250,250); }
-      .intro { display: flex; align-items: center; gap: 20px; }
-      .intro-text { display: flex; flex-direction: column; justify-content: center; }
-      .header { font-family: carlito; font-size: 24px; color: black; font-weight: 700; }
-      .subtitle { fotn-family: carlito; font-size: 24px; color: black; font-weight: 400; }
-      .subtext { font-family: carlito; font-size: 16px; color: black; font-weight: 400; }
-      .btn-group { margins: 10px; }
-      .btn-group button { background-color: rgb(250,250,250); margin: 10px; width: 272px; height: 188px; float: left; padding: 10px 14px; border-radius: 8px; border: none; cursor: pointer; }
-      .btn-group button:hover { border: 1px solid rgb(132,184,234); }
-    </style>
-    <body>
-      <div class="intro">
-        <img src="images/logo.png" alt="logo icon" style="float: left; ">
-        <div class="intro-text">
-          <span class="header">Let's get started!</span><br />
-          <span class="subtitle">Start a new document from one of the following templates.</span>
-        </div>
-      </div>
-      <div class="btn-group">
-        <button onclick="window.webkit.messageHandlers.newDoc.postMessage('spreadsheet')">
-          <img src="images/x-office-spreadsheet.svg" alt="icon" width="56" height="64"><br />
-          <span class="header">Spreadsheet</span><br />
-          <span class="subtext">Great for tracking budgets, project<br />
-          tasks, or contact lists.</span>
-        </button>
-        <button onclick="window.webkit.messageHandlers.newDoc.postMessage('text')">
-          <img src="images/x-office-document.svg" alt="icon" width="56" height="64"><br />
-          <span class="header">Text Document</span><br />
-          <span class="subtext">Ideal for notes, reports,<br />
-          or formatted letters.</span>
-        </button>
-        <button onclick="window.webkit.messageHandlers.newDoc.postMessage('presentation')">
-          <img src="images/x-office-presentation.svg" alt="icon" width="56" height="64"><br />
-          <span class="header">Presentation</span><br />
-          <span class="subtext">Perfect for slideshows, pitches,<br />
-          or visual reports.</span>
-        </button>
-      </div>
-    </body>
-    """
 }

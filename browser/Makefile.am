@@ -874,6 +874,10 @@ if APP_HAS_BRANDING
 	@echo "JS, HTML and CSS has been updated ($(DIST_FOLDER))."
 endif
 
+if ENABLE_MACOS
+	cp -a "$(srcdir)/create-new-document.html" $(DIST_FOLDER)/
+endif
+
 if ENABLE_CYPRESS
 	cp -a  "$(srcdir)/../cypress_test/data/multiuser/cypress-multiuser.html" "$(DIST_FOLDER)/cypress-multiuser.html"
 	@echo "Added HTML file for multiuser tests"
