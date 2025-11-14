@@ -18,6 +18,7 @@
 #include <thread>
 #include "Document.hpp"
 
+class CODAWebEngineView;
 class QMainWindow;
 
 // Qt ⇄ JavaScript bridge
@@ -27,7 +28,7 @@ class Bridge : public QObject
 
     coda::DocumentData _document;
     QMainWindow* _window;
-    QWebEngineView* _webView;
+    CODAWebEngineView* _webView;
     int _closeNotificationPipeForForwardingThread[2];
     std::thread _app2js;
     // the state of the document modified status as reported by the core
@@ -40,7 +41,7 @@ class Bridge : public QObject
     void saveDocumentAs();
 
 public:
-    explicit Bridge(QObject* parent, coda::DocumentData& document, QMainWindow* window, QWebEngineView* webView)
+    explicit Bridge(QObject* parent, coda::DocumentData& document, QMainWindow* window, CODAWebEngineView* webView)
         : QObject(parent)
         , _document(document)
         , _window(window)
