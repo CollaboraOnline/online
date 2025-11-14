@@ -2,42 +2,124 @@
 <meta charset="utf-8">
 <meta name="viewport" content="initial-scale=1">
 <style>
-  body   { margin: 24px; display: grid; gap: 14px; background-color: rgb(250,250,250); }
-  .intro { display: flex; align-items: center; gap: 20px; }
-  .intro-text { display: flex; flex-direction: column; justify-content: center; }
-  .header { font-family: carlito; font-size: 24px; color: black; font-weight: 700; }
-  .subtitle { fotn-family: carlito; font-size: 24px; color: black; font-weight: 400; }
-  .subtext { font-family: carlito; font-size: 16px; color: black; font-weight: 400; }
-  .btn-group { margins: 10px; }
-  .btn-group button { background-color: rgb(250,250,250); margin: 10px; width: 272px; height: 188px; float: left; padding: 10px 14px; border-radius: 8px; border: none; cursor: pointer; }
-  .btn-group button:hover { border: 1px solid rgb(132,184,234); }
+  /* Full-viewport layout with 48px padding all around */
+  html, body { height: 100%; }
+  body {
+    min-height: 100vh;
+    padding: 48px;                      /* 48pt frame around everything */
+    box-sizing: border-box;
+    display: grid;
+    grid-template-rows: auto 1fr;       /* intro, then remaining space */
+    row-gap: 32px;
+    background-color: rgb(250,250,250);
+    margin: 0;
+  }
+
+  /* Intro row: logo | divider | text */
+  .intro {
+    padding-top: 24px;
+    display: grid;
+    grid-template-columns: auto 1px 1fr;
+    column-gap: 20px;
+    align-items: center;
+  }
+
+  .logo { height: 94px; }
+  .divider {
+    width: 1px;
+    height: 94px;
+    background: rgba(0,0,0,0.15);
+  }
+
+  /* Stack header + subtitle and center them as a block vertically */
+  .intro-text{
+    display: grid;
+    align-content: center;   /* centers the group vertically within the intro row */
+    row-gap: 4px;            /* space between lines */
+    align-self: center;
+  }
+  .intro-text .header,
+  .intro-text .subtitle{
+    display: block;
+    margin: 0;
+    line-height: 1.2;
+  }
+  .intro-text br{ display:none; }
+
+  .header   { font-family: carlito, -apple-system, system-ui; font-size: 24px; color: black; font-weight: 700; }
+  .subtitle { font-family: carlito, -apple-system, system-ui; font-size: 24px; color: black; font-weight: 400; }
+  .subtext  { font-family: carlito, -apple-system, system-ui; font-size: 16px; color: black; font-weight: 400; }
+
+  /* The remaining area: vertically center the button group within it */
+  .btn-area {
+    display: grid;
+    align-content: center; /* centers content vertically within the 1fr track */
+  }
+
+  /* 3 equal columns, buttons fill their cells equally */
+  .btn-group {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 24px;
+    width: 100%;
+  }
+
+  /* Buttons: 16px padding, split into two equal halves (icon | text) */
+  .btn-group button {
+    background-color: rgb(250,250,250);
+    padding: 16px;                      /* required 16pt padding */
+    border-radius: 8px;
+    border: 1px solid transparent;
+    cursor: pointer;
+
+    display: grid;
+    grid-template-rows: 1fr 1fr;        /* upper half (icon), lower half (text) */
+    justify-items: center;              /* center horizontally */
+    align-items: start;                 /* top-align within each half */
+    height: 220px;                      /* adjust as desired */
+  }
+  .btn-group button:hover { border-color: rgb(132,184,234); }
+
+  .btn-icon { align-self: start; }
+  .btn-text { align-self: start; text-align: center; }
+  .btn-text .header { margin: 0 0 6px 0; }
+  .btn-text .subtext { margin: 0; line-height: 1.25; }
 </style>
 <body>
   <div class="intro">
-    <img src="images/logo.png" alt="logo icon" style="float: left; ">
+    <img class="logo" src="images/full-logo.svg" alt="logo">
+    <div class="divider" role="separator" aria-hidden="true"></div>
     <div class="intro-text">
-      <span class="header">Let's get started!</span><br />
+      <span class="header">Let's get started!</span>
       <span class="subtitle">Start a new document from one of the following templates.</span>
     </div>
   </div>
-  <div class="btn-group">
-    <button onclick="window.webkit.messageHandlers.newDoc.postMessage('spreadsheet')">
-      <img src="images/x-office-spreadsheet.svg" alt="icon" width="56" height="64"><br />
-      <span class="header">Spreadsheet</span><br />
-      <span class="subtext">Great for tracking budgets, project<br />
-      tasks, or contact lists.</span>
-    </button>
-    <button onclick="window.webkit.messageHandlers.newDoc.postMessage('text')">
-      <img src="images/x-office-document.svg" alt="icon" width="56" height="64"><br />
-      <span class="header">Text Document</span><br />
-      <span class="subtext">Ideal for notes, reports,<br />
-      or formatted letters.</span>
-    </button>
-    <button onclick="window.webkit.messageHandlers.newDoc.postMessage('presentation')">
-      <img src="images/x-office-presentation.svg" alt="icon" width="56" height="64"><br />
-      <span class="header">Presentation</span><br />
-      <span class="subtext">Perfect for slideshows, pitches,<br />
-      or visual reports.</span>
-    </button>
+
+  <div class="btn-area">
+    <div class="btn-group">
+      <button onclick="window.webkit.messageHandlers.newDoc.postMessage('spreadsheet')">
+        <img class="btn-icon" src="images/x-office-spreadsheet.svg" alt="Spreadsheet icon" width="56" height="64">
+        <div class="btn-text">
+          <div class="header">Spreadsheet</div>
+          <p class="subtext">Great for tracking budgets, project tasks, or contact lists.</p>
+        </div>
+      </button>
+
+      <button onclick="window.webkit.messageHandlers.newDoc.postMessage('text')">
+        <img class="btn-icon" src="images/x-office-document.svg" alt="Text document icon" width="56" height="64">
+        <div class="btn-text">
+          <div class="header">Text Document</div>
+          <p class="subtext">Ideal for notes, reports, or formatted letters.</p>
+        </div>
+      </button>
+
+      <button onclick="window.webkit.messageHandlers.newDoc.postMessage('presentation')">
+        <img class="btn-icon" src="images/x-office-presentation.svg" alt="Presentation icon" width="56" height="64">
+        <div class="btn-text">
+          <div class="header">Presentation</div>
+          <p class="subtext">Perfect for slideshows, pitches, or visual reports.</p>
+        </div>
+      </button>
+    </div>
   </div>
 </body>
