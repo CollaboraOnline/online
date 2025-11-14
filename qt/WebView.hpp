@@ -36,6 +36,8 @@ public:
     const Poco::URI& getSaveLocationURI() const { return _document._saveLocationURI; }
 
 private:
+    // query gnome font scaling factor and apply it to the web view
+    void queryGnomeFontScalingUpdateZoom();
     QMainWindow* _mainWindow;
     QWebEngineView* _webView;
     coda::DocumentData _document;
