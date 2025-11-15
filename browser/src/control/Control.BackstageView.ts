@@ -706,7 +706,6 @@ class BackstageView extends window.L.Class {
 	private getFilteredTemplates(allTemplates: TemplateData[]): TemplateData[] {
 		const query = this.templateSearchQuery.trim().toLowerCase();
 		return allTemplates.filter((template) => {
-			if (template.type !== this.activeTemplateType) return false;
 			if (!query) return true;
 			return template.searchText.includes(query);
 		});
