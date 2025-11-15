@@ -584,21 +584,30 @@ class BackstageView extends window.L.Class {
 			const id = entry.id || this.slugify(name + absolutePath);
 			const searchComponents = [name, type, absolutePath];
 
-			templates.push({
-				id,
-				name,
-				type,
-				path: absolutePath,
-				preview: entry.preview || undefined,
-				featured: !!entry.featured,
-				searchText: searchComponents.join(' ').toLowerCase(),
-			});
+		templates.push({
+			id,
+			name,
+			type,
+			path: absolutePath,
+			preview: entry.preview || undefined,
+			featured: !!entry.featured,
+			searchText: searchComponents.join(' ').toLowerCase(),
 		});
+	});
 
-		return templates.sort((a, b) =>
-			a.name.localeCompare(b.name, undefined, { sensitivity: 'base' }),
-		);
-	}
+	// Sort by type first (writer, calc, impress), then alphabetically by name
+	const typeOrder: Record<TemplateType, number> = {
+		writer: 1,
+		calc: 2,
+		impress: 3,
+	};
+
+	return templates.sort((a, b) => {
+		const typeComparison = typeOrder[a.type] - typeOrder[b.type];
+		if (typeComparison !== 0) return typeComparison;
+		return a.name.localeCompare(b.name, undefined, { sensitivity: 'base' });
+	});
+}
 
 	private async loadTemplatesData(): Promise<void> {
 		if (this.templatesPromise) return this.templatesPromise;
