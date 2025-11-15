@@ -544,8 +544,8 @@ function getCompactIcon(unoCommand) {
 }
 
 /// get icon for given uno command from notebookbar
-function getNbIcon(unoCommand) {
-	return cy.cGet('.notebookbar > .uno' + unoCommand + ' > button:visible');
+function getNbIcon(unoCommand, tabName) {
+	return cy.cGet((tabName ? '#' + tabName + '-container' : '') + '.notebookbar  .uno' + unoCommand + ' > button:visible');
 }
 
 /// get gropdown element for menu with given id
