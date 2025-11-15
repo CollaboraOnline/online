@@ -258,8 +258,8 @@
 	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
 	display: flex;
 	flex-direction: column;
-	gap: 10px;
 	align-items: center;
+	min-height: 200px;
 }
 
 .backstage-template-card.is-featured {
@@ -281,6 +281,8 @@
 	justify-content: center;
 	align-items: center;
 	background: transparent;
+	flex: 1;
+	min-height: 120px;
 }
 
 .template-thumbnail img {
@@ -295,6 +297,8 @@
 	font-size: var(--medium-font-size);
 	color: var(--color-main-text);
 	font-weight: 500;
+	margin-top: 10px;
+	width: 100%;
 }
 
 .backstage-template-explorer {
