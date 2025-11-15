@@ -185,15 +185,15 @@ namespace Util
 
     std::string replace(std::string result, const std::string& a, const std::string& b)
     {
-        const std::size_t aSize = a.size();
-        if (aSize > 0)
+        const std::size_t sizeA = a.size();
+        if (sizeA > 0)
         {
-            const std::size_t bSize = b.size();
+            const std::size_t sizeB = b.size();
             std::string::size_type pos = 0;
             while ((pos = result.find(a, pos)) != std::string::npos)
             {
-                result.replace(pos, aSize, b);
-                pos += bSize; // Skip the replacee to avoid endless recursion.
+                result.replace(pos, sizeA, b);
+                pos += sizeB; // Skip the replacee to avoid endless recursion.
             }
         }
 

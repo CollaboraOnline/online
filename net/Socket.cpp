@@ -248,17 +248,17 @@ bool SslStreamSocket::verifyCertificate()
         const std::string issuerName = X509_NAME_to_utf8(X509_get_issuer_name(x509));
         const std::string subjectName = X509_NAME_to_utf8(X509_get_subject_name(x509));
         std::string serialNumber;
-        BIGNUM* pBN = ASN1_INTEGER_to_BN(X509_get_serialNumber(const_cast<X509*>(x509)), 0);
-        if (pBN)
+        BIGNUM* Bn = ASN1_INTEGER_to_BN(X509_get_serialNumber(const_cast<X509*>(x509)), 0);
+        if (Bn)
         {
-            char* pSN = BN_bn2hex(pBN);
-            if (pSN)
+            char* Sn = BN_bn2hex(Bn);
+            if (Sn)
             {
-                serialNumber = pSN;
-                OPENSSL_free(pSN);
+                serialNumber = Sn;
+                OPENSSL_free(Sn);
             }
 
-            BN_free(pBN);
+            BN_free(Bn);
         }
 
         LOG_TRC("SSL cert issuer: " << issuerName << ", subject: " << subjectName

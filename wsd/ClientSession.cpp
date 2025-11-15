@@ -2062,13 +2062,13 @@ bool ClientSession::filterMessage(const std::string& message) const
     return allowed;
 }
 
-void ClientSession::setReadOnly(bool bVal)
+void ClientSession::setReadOnly(bool val)
 {
-    Session::setReadOnly(bVal);
+    Session::setReadOnly(val);
 
     // Also inform the client.
-    const std::string sPerm = isReadOnly() ? "readonly" : "edit";
-    sendTextFrame("perm: " + sPerm);
+    const std::string perm = isReadOnly() ? "readonly" : "edit";
+    sendTextFrame("perm: " + perm);
 }
 
 void ClientSession::sendFileMode(const bool readOnly, const bool editComments, bool manageRedlines)
@@ -2101,13 +2101,13 @@ bool ClientSession::attemptLock(const std::shared_ptr<DocumentBroker>& docBroker
         return false;
 
     std::string failReason;
-    const bool bResult = docBroker->attemptLock(*this, failReason);
-    if (bResult)
+    const bool result = docBroker->attemptLock(*this, failReason);
+    if (result)
         setReadOnly(false);
     else
         sendTextFrame("lockfailed:" + failReason);
 
-    return bResult;
+    return result;
 }
 
 bool ClientSession::hasQueuedMessages() const
@@ -2265,7 +2265,7 @@ bool ClientSession::handlePresentationInfo(const std::shared_ptr<Message>& paylo
     const std::string prefix = json.substr(0, iterator);
     json.erase(0, iterator); // Remove the prefix to parse the purse JSON part.
 
-    bool bModified = false;
+    bool modified = false;
 
     Poco::JSON::Object::Ptr rootObject;
     try
@@ -2297,7 +2297,7 @@ bool ClientSession::handlePresentationInfo(const std::shared_ptr<Message>& paylo
                                 const std::string mediaUrl =
                                     Uri::encode(createPublicURI("media", id, false), "&");
                                 video->set("url", mediaUrl); // Replace the url with the public one.
-                                bModified = true;
+                                modified = true;
                             }
                         }
                     }
@@ -2310,7 +2310,7 @@ bool ClientSession::handlePresentationInfo(const std::shared_ptr<Message>& paylo
         LOG_ERR("unocommandresult parsing failure: " << exception.what());
     }
 
-    if (bModified)
+    if (modified)
     {
         std::ostringstream mediaStr;
         rootObject->stringify(mediaStr);

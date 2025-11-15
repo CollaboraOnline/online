@@ -93,13 +93,13 @@ public:
         if (getLevel() < prio)
             return;
 #if POCO_VERSION >= 0x010C0501
-        Poco::Channel* pChannel = getChannel().get();
+        Poco::Channel* channel = getChannel().get();
 #else
-        auto pChannel = getChannel();
+        auto channel = getChannel();
 #endif
-        if (!pChannel)
+        if (!channel)
             return;
-        pChannel->log(Poco::Message(name(), text, prio));
+        channel->log(Poco::Message(name(), text, prio));
     }
 
     static Log::Level mapToLevel(Poco::Message::Priority prio)
@@ -679,12 +679,12 @@ namespace Log
 
     GenericLogger& logger()
     {
-        GenericLogger* pLogger = Static.getThreadLocalLogger();
-        if (pLogger != nullptr)
-            return *pLogger;
+        GenericLogger* logger = Static.getThreadLocalLogger();
+        if (logger != nullptr)
+            return *logger;
 
-        pLogger = Static.getLogger();
-        return pLogger ? *pLogger
+        logger = Static.getLogger();
+        return logger ? *logger
             : *static_cast<GenericLogger *>(
                 &GenericLogger::get(Static.getInited() ? Static.getName() : std::string()));
     }

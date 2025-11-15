@@ -199,7 +199,7 @@ private:
     bool selectText(const StringVector& tokens, LokEventTargetEnum target);
     bool selectGraphic(const StringVector& tokens);
     bool renderNextSlideLayer(SlideCompressor& scomp, unsigned width, unsigned height,
-                              double dDevicePixelRatio, bool& done, const std::string& cacheKey,
+                              double devicePixelRatio, bool& done, const std::string& cacheKey,
                               bool isCompressed);
     bool renderSlide(const StringVector& tokens);
     bool renderWindow(const StringVector& tokens);

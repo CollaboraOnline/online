@@ -563,9 +563,9 @@ bool COOLWSD::ensureSubForKit(const std::string& configId)
 
     COOLWSD::checkDiskSpaceAndWarnClients(false);
 
-    const std::string aMessage = "addforkit " + configId + '\n';
-    LOG_DBG("MasterToForKit: " << aMessage.substr(0, aMessage.length() - 1));
-    return queueMessageToForKit(aMessage);
+    const std::string answerMessage = "addforkit " + configId + '\n';
+    LOG_DBG("MasterToForKit: " << answerMessage.substr(0, answerMessage.length() - 1));
+    return queueMessageToForKit(answerMessage);
 }
 
 /// Cleans up dead children.

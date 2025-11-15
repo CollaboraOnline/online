@@ -133,12 +133,12 @@ public:
     bool hasSurface() const { return _x1 < _x2 && _y1 < _y2; }
 
     /// Returns whether this Rectangle intersects (partially contains) given Rectangle.
-    bool intersects(const Rectangle& rOther) const
+    bool intersects(const Rectangle& other) const
     {
-        const int x1 = std::max(_x1, rOther._x1);
-        const int y1 = std::max(_y1, rOther._y1);
-        const int x2 = std::min(_x2, rOther._x2);
-        const int y2 = std::min(_y2, rOther._y2);
+        const int x1 = std::max(_x1, other._x1);
+        const int y1 = std::max(_y1, other._y1);
+        const int x2 = std::min(_x2, other._x2);
+        const int y2 = std::min(_y2, other._y2);
         return x1 <= x2 && y1 <= y2;
     }
 

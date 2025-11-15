@@ -287,11 +287,11 @@ public:
             int chr = 97 + which;
             int key = 512 + which * 2;
 
-            bool bSpace = !(randMt() & 0300); // send a space
+            bool space = !(randMt() & 0300); // send a space
 
             msgs.push_back("key type=input char=" + std::to_string(chr) + " key=0");
             msgs.push_back("key type=up char=0 key=" + std::to_string(key));
-            if (bSpace)
+            if (space)
             {
                 msgs.push_back("key type=input char=32 key=0");
                 msgs.push_back("key type=up char=0 key=1284");
