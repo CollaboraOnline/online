@@ -14,7 +14,7 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 	});
 
 	it('Save.', function () {
-		cy.cGet('#bold').click();
+		desktopHelper.getCompactIcon('Bold').click();
 		cy.cGet('#save').click();
 
 		helper.reloadDocument(newFilePath);
@@ -39,8 +39,8 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 		helper.typeIntoDocument('{downarrow}');
 
 		// Apply bold and try to clone it to the whole word.
-		cy.cGet('#bold').click();
-		cy.cGet('#toolbar-up #formatpaintbrush').click();
+		desktopHelper.getCompactIcon('Bold').click();
+		desktopHelper.getCompactIcon('FormatPaintbrush').click();
 
 		calcHelper.clickOnFirstCell(true,false);
 
@@ -125,7 +125,7 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 
 	it('Clear Direct formatting.', function() {
 		helper.setDummyClipboardForCopy();
-		cy.cGet('#bold').click();
+		desktopHelper.getCompactIcon('Bold').click();
 
 		calcHelper.selectEntireSheet();
 		helper.copy();
@@ -159,7 +159,7 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 
 	it('Apply bold font.', function() {
 		helper.setDummyClipboardForCopy();
-		cy.cGet('#bold').click();
+		desktopHelper.getCompactIcon('Bold').click();
 		calcHelper.selectEntireSheet();
 		helper.copy();
 		cy.cGet('#copy-paste-container table td b').should('exist');
@@ -167,7 +167,7 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 
 	it('Apply underline.', function() {
 		helper.setDummyClipboardForCopy();
-		cy.cGet('#underline').click();
+		desktopHelper.getCompactIcon('Underline').click();
 		calcHelper.selectEntireSheet();
 		helper.copy();
 		cy.cGet('#copy-paste-container table td u').should('exist');
@@ -175,7 +175,7 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 
 	it('Apply italic.', function() {
 		helper.setDummyClipboardForCopy();
-		cy.cGet('#italic').click();
+		desktopHelper.getCompactIcon('Italic').click();
 		calcHelper.selectEntireSheet();
 		helper.copy();
 		cy.cGet('#copy-paste-container table td i').should('exist');
@@ -183,7 +183,7 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 
 	it('Apply strikethrough.', function() {
 		helper.setDummyClipboardForCopy();
-		cy.cGet('#strikeout').click();
+		desktopHelper.getCompactIcon('Strikeout').click();
 		calcHelper.selectEntireSheet();
 		helper.copy();
 		cy.cGet('#copy-paste-container table td s').should('exist');
@@ -237,7 +237,7 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 	it('Format as currency.', function() {
 		helper.setDummyClipboardForCopy();
 		cy.cGet('#toolbar-up #overflow-button-other-toptoolbar .arrowbackground').click();
-		cy.cGet('#numberformatcurrency').click();
+		desktopHelper.getCompactIcon('NumberFormatCurrency').click();
 
 		calcHelper.selectEntireSheet();
 		helper.copy();
@@ -251,7 +251,7 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 	it('Format as Percent.', function() {
 		helper.setDummyClipboardForCopy();
 		cy.cGet('#toolbar-up #overflow-button-other-toptoolbar .arrowbackground').click();
-		cy.cGet('#numberformatpercent').click();
+		desktopHelper.getCompactIcon('NumberFormatPercent').click();
 
 		calcHelper.selectEntireSheet();
 		helper.copy();

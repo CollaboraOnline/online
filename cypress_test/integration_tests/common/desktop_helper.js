@@ -538,6 +538,12 @@ function assertVisiblePage(min, max, allPages) {
 	cy.cGet('#StatePageNumber').invoke('text').should('be.oneOf', expectedArray);
 }
 
+/// get icon for given uno command from classic toolbar
+function getCompactIcon(unoCommand) {
+	return cy.cGet('#toolbar-up .uno' + unoCommand + ':visible');
+}
+
+/// get gropdown element for menu with given id
 function getDropdown(dropdownId) {
 	return cy.cGet('[id^="' + dropdownId + '"].modalpopup');
 }
@@ -575,4 +581,5 @@ module.exports.updateFollowingUsers = updateFollowingUsers;
 module.exports.assertVisiblePage = assertVisiblePage;
 module.exports.closeNavigatorSidebar = closeNavigatorSidebar;
 module.exports.sidebarToggle = sidebarToggle;
+module.exports.getCompactIcon = getCompactIcon;
 module.exports.getDropdown = getDropdown;
