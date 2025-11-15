@@ -339,11 +339,6 @@ class BackstageView extends window.L.Class {
 		}
 
 		const templates = this.getTemplatesData();
-		if (templates.length === 0) {
-			this.renderEmptyTemplatesState();
-			return;
-		}
-
 		const explorer = this.renderTemplateExplorer(templates);
 		this.contentArea.appendChild(explorer);
 	}
@@ -559,6 +554,10 @@ class BackstageView extends window.L.Class {
 				);
 				this.templates = entries;
 				this.templatesLoadError = false;
+				
+				if (!entries || entries.length === 0) {
+					console.error('Templates manifest loaded but contains no templates founded!');
+				}
 			} catch (error) {
 				console.error('Unable to load templates manifest', error);
 				this.templates = [];
@@ -574,31 +573,10 @@ class BackstageView extends window.L.Class {
 	}
 
 	private renderTemplatesLoadingState(): void {
-		this.renderEmptyStateMessage(_('Loading templates…'));
-	}
-
-	private renderEmptyTemplatesState(): void {
-		if (this.templatesLoadError) {
-			this.renderEmptyStateMessage(
-				_(
-					'Templates could not be loaded. Try again later or start from a blank document.',
-				),
-			);
-			return;
-		}
-
-		this.renderEmptyStateMessage(
-			_('No templates available. Start with a blank document to begin.'),
-		);
-	}
-
-	private renderEmptyStateMessage(message: string): void {
 		const wrapper = this.createElement('div', 'backstage-templates-empty');
-
 		const info = this.createElement('p', 'backstage-content-description');
-		info.textContent = message;
+		info.textContent = _('Loading templates…');
 		wrapper.appendChild(info);
-
 		this.contentArea.appendChild(wrapper);
 	}
 
@@ -620,9 +598,14 @@ class BackstageView extends window.L.Class {
 			this.templateFeaturedRowContainer = null;
 		}
 
-		const search = this.renderTemplateSearch();
-		this.templateSearchContainer = search;
-		container.appendChild(search);
+		// Only show search bar if there are custom templates to search through
+		if (allTemplates.length > 0) {
+			const search = this.renderTemplateSearch();
+			this.templateSearchContainer = search;
+			container.appendChild(search);
+		} else {
+			this.templateSearchContainer = null;
+		}
 
 		const grid = this.renderTemplateGrid(filteredTemplates);
 		this.templateGridContainer = grid;
@@ -693,9 +676,12 @@ class BackstageView extends window.L.Class {
 		const grid = this.createElement('div', 'backstage-templates-grid');
 
 		if (!templates.length) {
-			const empty = this.createElement('div', 'template-grid-empty');
-			empty.textContent = _('No templates match your search.');
-			grid.appendChild(empty);
+			// Only show "no match" message if user is actively searching
+			if (this.templateSearchQuery.trim()) {
+				const empty = this.createElement('div', 'template-grid-empty');
+				empty.textContent = _('No templates match your search.');
+				grid.appendChild(empty);
+			}
 			return grid;
 		}
 
@@ -724,14 +710,20 @@ class BackstageView extends window.L.Class {
 				this.templateFeaturedRowContainer.remove();
 				this.templateFeaturedRowContainer = null;
 			}
-		} else if (
-			newFeaturedRow &&
-			this.templateSearchContainer &&
-			this.templateSearchContainer.parentElement
-		) {
-			this.templateSearchContainer.parentElement.insertBefore(
+		} else if (newFeaturedRow && this.templateSearchContainer) {
+			// Only try to insert if search container exists
+			if (this.templateSearchContainer.parentElement) {
+				this.templateSearchContainer.parentElement.insertBefore(
+					newFeaturedRow,
+					this.templateSearchContainer,
+				);
+				this.templateFeaturedRowContainer = newFeaturedRow;
+			}
+		} else if (newFeaturedRow && this.templateGridContainer.parentElement) {
+			// If no search container, insert before grid
+			this.templateGridContainer.parentElement.insertBefore(
 				newFeaturedRow,
-				this.templateSearchContainer,
+				this.templateGridContainer,
 			);
 			this.templateFeaturedRowContainer = newFeaturedRow;
 		}
