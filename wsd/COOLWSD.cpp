@@ -1027,13 +1027,13 @@ class InotifySocket : public Socket
 public:
     InotifySocket(std::chrono::steady_clock::time_point creationTime):
         Socket(inotify_init1(IN_NONBLOCK), Socket::Type::Unix, creationTime)
-        , m_stopOnConfigChange(true)
+        , _stopOnConfigChange(true)
     {
         if (getFD() == -1)
         {
             LOG_WRN("Inotify - Failed to start a watcher for the configuration, disabling "
                     "stop_on_config_change");
-            m_stopOnConfigChange = false;
+            _stopOnConfigChange = false;
             return;
         }
 
@@ -1052,14 +1052,14 @@ public:
     bool watch(std::string_view configFile);
 
 private:
-    int m_watchedCount = 0;
-    bool m_stopOnConfigChange;
+    int _watchedCount = 0;
+    bool _stopOnConfigChange;
 };
 
 bool InotifySocket::watch(const std::string_view configFile)
 {
     LOG_TRC("Inotify - Attempting to watch " << configFile << ", in addition to current "
-                                             << m_watchedCount << " watched files");
+                                             << _watchedCount << " watched files");
 
     if (getFD() == -1)
     {
@@ -1074,7 +1074,7 @@ bool InotifySocket::watch(const std::string_view configFile)
     if (watchedStatus == -1)
         LOG_WRN("Inotify - Failed to watch config file " << configFile);
     else
-        m_watchedCount++;
+        _watchedCount++;
 
     return watchedStatus != -1;
 }
@@ -1082,8 +1082,8 @@ bool InotifySocket::watch(const std::string_view configFile)
 void InotifySocket::handlePoll(SocketDisposition & /* disposition */, std::chrono::steady_clock::time_point /* now */, int /* events */)
 {
     LOG_TRC("InotifyPoll - woken up. Reload on config change: "
-            << m_stopOnConfigChange << ", Watching " << m_watchedCount << " files");
-    if (!m_stopOnConfigChange)
+            << _stopOnConfigChange << ", Watching " << _watchedCount << " files");
+    if (!_stopOnConfigChange)
         return;
 
     char buf[4096];

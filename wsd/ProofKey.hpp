@@ -42,7 +42,7 @@ class Proof {
 public:
     Proof();
     VecOfStringPairs GetProofHeaders(const std::string& access_token, const std::string& uri) const;
-    const VecOfStringPairs& GetProofKeyAttributes() const { return m_aAttribs; }
+    const VecOfStringPairs& GetProofKeyAttributes() const { return _aAttribs; }
 private:
     static std::string ProofKeyPath();
 
@@ -63,8 +63,8 @@ private:
     // Signs bytes and returns base64-encoded string
     std::string SignProof(const std::vector<unsigned char>& proof) const;
 
-    std::unique_ptr<const Poco::Crypto::RSAKey> m_pKey;
-    VecOfStringPairs m_aAttribs;
+    std::unique_ptr<const Poco::Crypto::RSAKey> _pKey;
+    VecOfStringPairs _aAttribs;
 };
 
 
