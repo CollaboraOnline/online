@@ -76,7 +76,7 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 
 	it('Apply bold font.', function() {
 		helper.setDummyClipboardForCopy();
-		cy.cGet('.notebookbar > .unoBold > button').click();
+		desktopHelper.getNbIcon('Bold').click();
 		writerHelper.selectAllTextOfDoc();
 		helper.copy();
 		cy.cGet('#copy-paste-container p b').should('exist');
@@ -84,7 +84,7 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 
 	it('Apply italic font.', function() {
 		helper.setDummyClipboardForCopy();
-		cy.cGet('.notebookbar > .unoItalic > button').click();
+		desktopHelper.getNbIcon('Italic').click();
 		writerHelper.selectAllTextOfDoc();
 		helper.copy();
 		cy.cGet('#copy-paste-container p i').should('exist');
@@ -92,7 +92,7 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 
 	it('Apply underline.', function() {
 		helper.setDummyClipboardForCopy();
-		cy.cGet('.notebookbar > .unoUnderline > button').click();
+		desktopHelper.getNbIcon('Underline').click();
 		writerHelper.selectAllTextOfDoc();
 		helper.copy();
 		cy.cGet('#copy-paste-container p u').should('exist');
@@ -100,7 +100,7 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 
 	it('Apply strikethrough.', function() {
 		helper.setDummyClipboardForCopy();
-		cy.cGet('.notebookbar > .unoStrikeout > button').click();
+		desktopHelper.getNbIcon('Strikeout').click();
 		writerHelper.selectAllTextOfDoc();
 		helper.copy();
 		cy.cGet('#copy-paste-container p strike').should('exist');
@@ -117,7 +117,7 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 
 	it('Clear direct formatting', function() {
 		helper.setDummyClipboardForCopy();
-		cy.cGet('.notebookbar > .unoBold > button').click();
+		desktopHelper.getNbIcon('Bold').click();
 		writerHelper.selectAllTextOfDoc();
 		helper.copy();
 		cy.cGet('#copy-paste-container p b').should('exist');
@@ -128,7 +128,7 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 	});
 
 	it('Apply left/right alignment.', function() {
-		cy.cGet('#Home .notebookbar > .unoBold > button').click();
+		desktopHelper.getNbIcon('Bold').click();
 		writerHelper.selectAllTextOfDoc();
 		//cy.cGet('#copy-paste-container p').should('have.attr', 'align', 'right');
 		cy.cGet('#Home .notebookbar > .unoRightPara').click();
@@ -343,7 +343,7 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 	});
 
 	it('Save.', function() {
-		cy.cGet('.notebookbar > .unoBold > button').click();
+		desktopHelper.getNbIcon('Bold').click();
 		cy.cGet('.notebookbar-shortcuts-bar .unoSave').click();
 		helper.reloadDocument(newFilePath);
 		helper.setDummyClipboardForCopy();
@@ -369,7 +369,7 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 	it('Apply Undo/Redo.', function() {
 		helper.setDummyClipboardForCopy();
 		//Do
-		cy.cGet('.notebookbar .unoItalic button').click();
+		desktopHelper.getNbIcon('Italic').click();
 		helper.copy();
 		cy.wait(500); // wait for new clipboard
 		cy.cGet('#copy-paste-container p i').should('exist');
@@ -453,8 +453,8 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 		helper.textSelectionShouldExist();
 
 		// Apply bold and try to clone it to the whole word.
-		cy.cGet('.notebookbar > .unoBold > button').click();
-		cy.cGet('.notebookbar > .unoFormatPaintbrush').click();
+		desktopHelper.getNbIcon('Bold').click();
+		desktopHelper.getNbIcon('FormatPaintbrush').click();
 
 		// Click at the blinking cursor position.
 		cy.cGet('.leaflet-cursor.blinking-cursor')
@@ -508,7 +508,7 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 	it('Apply superscript.', function() {
 		helper.setDummyClipboardForCopy();
 		writerHelper.selectAllTextOfDoc();
-		cy.cGet('.notebookbar .unoSuperScript').click();
+		desktopHelper.getNbIcon('SuperScript').click();
 		cy.cGet('#document-container').click('center');
 		writerHelper.selectAllTextOfDoc();
 		helper.copy();
@@ -518,7 +518,7 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 	it('Apply subscript.', function() {
 		helper.setDummyClipboardForCopy();
 		writerHelper.selectAllTextOfDoc();
-		cy.cGet('.notebookbar .unoSubScript').click();
+		desktopHelper.getNbIcon('SubScript').click();
 		cy.cGet('#document-container').click('center');
 		writerHelper.selectAllTextOfDoc();
 		helper.copy();

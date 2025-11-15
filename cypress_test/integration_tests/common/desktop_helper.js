@@ -543,6 +543,11 @@ function getCompactIcon(unoCommand) {
 	return cy.cGet('#toolbar-up .uno' + unoCommand + ':visible');
 }
 
+/// get icon for given uno command from notebookbar
+function getNbIcon(unoCommand) {
+	return cy.cGet('.notebookbar > .uno' + unoCommand + ' > button:visible');
+}
+
 /// get gropdown element for menu with given id
 function getDropdown(dropdownId) {
 	return cy.cGet('[id^="' + dropdownId + '"].modalpopup');
@@ -582,4 +587,5 @@ module.exports.assertVisiblePage = assertVisiblePage;
 module.exports.closeNavigatorSidebar = closeNavigatorSidebar;
 module.exports.sidebarToggle = sidebarToggle;
 module.exports.getCompactIcon = getCompactIcon;
+module.exports.getNbIcon = getNbIcon; 
 module.exports.getDropdown = getDropdown;
