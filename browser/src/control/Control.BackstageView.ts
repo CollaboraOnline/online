@@ -349,17 +349,11 @@ class BackstageView extends window.L.Class {
 
 		this.addSectionHeader(
 			_('Document Info'),
-			_('Manage document history, repairs, and properties'),
+			_('View document properties and information'),
 		);
 
-		const container = this.createElement('div', 'backstage-info-container');
-
-		const actionsColumn = this.createInfoActionsColumn();
 		const propertiesColumn = this.createInfoPropertiesColumn();
-
-		container.appendChild(actionsColumn);
-		container.appendChild(propertiesColumn);
-		this.contentArea.appendChild(container);
+		this.contentArea.appendChild(propertiesColumn);
 	}
 
 	private renderExportView(): void {
@@ -420,23 +414,6 @@ class BackstageView extends window.L.Class {
 		return card;
 	}
 
-	private createInfoActionsColumn(): HTMLElement {
-		const column = this.createElement('div', 'backstage-info-actions');
-
-		const historyButton = this.createActionButton(_('File History'), () =>
-			this.executeRevisionHistory(),
-		);
-		column.appendChild(historyButton);
-
-		if (this.isFeatureEnabled('repair')) {
-			const repairButton = this.createActionButton(_('Repair Document'), () =>
-				this.executeRepair(),
-			);
-			column.appendChild(repairButton);
-		}
-
-		return column;
-	}
 
 	private createInfoPropertiesColumn(): HTMLElement {
 		const column = this.createElement('div', 'backstage-info-properties');
@@ -445,8 +422,12 @@ class BackstageView extends window.L.Class {
 		header.textContent = _('Properties');
 		column.appendChild(header);
 
-		const button = this.createPrimaryButton(_('View Properties...'), () =>
-			this.executeDocumentProperties(),
+		const propertiesList = this.createPropertiesList();
+		column.appendChild(propertiesList);
+
+		const button = this.createPrimaryButton(
+			_('More Property Info'),
+			() => this.executeDocumentProperties(),
 		);
 		column.appendChild(button);
 
@@ -463,18 +444,6 @@ class BackstageView extends window.L.Class {
 		return element;
 	}
 
-	private createActionButton(
-		label: string,
-		onClick: () => void,
-	): HTMLButtonElement {
-		const button = this.createElement(
-			'button',
-			'backstage-info-button',
-		) as HTMLButtonElement;
-		button.textContent = label;
-		window.L.DomEvent.on(button, 'click', onClick, this);
-		return button;
-	}
 
 	private createPrimaryButton(
 		label: string,
@@ -482,11 +451,98 @@ class BackstageView extends window.L.Class {
 	): HTMLButtonElement {
 		const button = this.createElement(
 			'button',
-			'backstage-action-button',
+			'backstage-property-button',
 		) as HTMLButtonElement;
 		button.textContent = label;
 		window.L.DomEvent.on(button, 'click', onClick, this);
 		return button;
+	}
+
+	private createPropertiesList(): HTMLElement {
+		const list = this.createElement('div', 'backstage-properties-list');
+
+		const properties = this.getDocumentProperties();
+
+		properties.forEach((prop) => {
+			if (prop.value) {
+				const item = this.createPropertyItem(prop.label, prop.value);
+				list.appendChild(item);
+			}
+		});
+
+		return list;
+	}
+
+	private createPropertyItem(label: string, value: string): HTMLElement {
+		const item = this.createElement('div', 'backstage-property-item');
+
+		const labelEl = this.createElement('div', 'property-label');
+		labelEl.textContent = label;
+		item.appendChild(labelEl);
+
+		const valueEl = this.createElement('div', 'property-value');
+		valueEl.textContent = value;
+		item.appendChild(valueEl);
+
+		return item;
+	}
+	
+	private getFileName = (wopi: any): string => {
+		if (wopi?.BreadcrumbDocName) return wopi.BreadcrumbDocName;
+		if (wopi?.BaseFileName) return wopi.BaseFileName;
+
+		const doc = this.map?.options?.doc;
+		if (doc) {
+			const filename = doc.split('/').pop()?.split('?')[0];
+			if (filename) return decodeURIComponent(filename);
+		}
+
+		return '';
+	};
+
+
+	private getDocumentProperties(): Array<{ label: string; value: string }> {
+		const docType = this.getDocTypeString();
+		const docLayer = this.map?._docLayer;
+		const wopi = this.map?.['wopi'];
+
+		const typeLabels: Record<
+			string,
+			{ type: string; parts: string }
+		> = {
+			text: { type: _('Text Document'), parts: _('Pages') },
+			spreadsheet: { type: _('Spreadsheet'), parts: _('Sheets') },
+			presentation: { type: _('Presentation'), parts: _('Slides') },
+			drawing: { type: _('Drawing'), parts: _('Pages') },
+		};
+
+		const config = typeLabels[docType] || {
+			type: _('Document'),
+			parts: _('Parts'),
+		};
+
+
+		const properties = [
+			{ label: _('Type'), value: config.type },
+			{
+				label: config.parts,
+				value: docLayer?._parts ? String(docLayer._parts) : '-',
+			},
+			{
+				label: _('Mode'),
+				value: this.map?.isEditMode() ? _('Edit') : _('View Only'),
+			},
+		];
+
+		const filename = this.getFileName(wopi);
+		if (filename) {
+			properties.splice(1, 0, {
+				label: _('File Name'),
+				value: filename,
+			});
+		}
+
+		return properties;
 	}
 
 	private addSectionHeader(title: string, description: string): void {
