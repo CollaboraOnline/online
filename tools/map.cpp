@@ -434,15 +434,15 @@ static void dumpPages(unsigned proc_id, unsigned parent_id, const char *type, co
         const char *style;
         if (parentData.size() > 0)
         {
-            bool bZeroParent = true;
+            bool zeroParent = true;
             for (size_t i = 0; i < pageData.size(); ++i)
             {
                 if (pageData[i] != parentData[i])
                     touched++;
                 if (parentData[i] != 0)
-                    bZeroParent = false;
+                    zeroParent = false;
             }
-            if (bZeroParent)
+            if (zeroParent)
             {
                 style = "zero parent page";
                 touched = 0; // ignore tedious diff.

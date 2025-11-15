@@ -260,10 +260,10 @@ VecOfStringPairs Proof::GetProofHeaders(const std::string& access_token, const s
     {
         int64_t ticks = DotNetTicks(std::chrono::system_clock::now());
         vec.emplace_back("X-WOPI-TimeStamp", std::to_string(ticks));
-        const auto sProof = SignProof(GetProof(access_token, uri, ticks));
-        vec.emplace_back("X-WOPI-Proof", sProof);
+        const auto proof = SignProof(GetProof(access_token, uri, ticks));
+        vec.emplace_back("X-WOPI-Proof", proof);
         // TODO: implement proper rotation; for now, just duplicate X-WOPI-Proof to X-WOPI-ProofOld
-        vec.emplace_back("X-WOPI-ProofOld", sProof);
+        vec.emplace_back("X-WOPI-ProofOld", proof);
     }
     return vec;
 }

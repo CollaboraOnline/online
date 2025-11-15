@@ -2058,10 +2058,10 @@ std::shared_ptr<lok::Document> Document::load(const std::shared_ptr<ChildSession
         _jailedUrl = loadUri;
         _isDocPasswordProtected = false;
 
-        const char* pURL = loadUri.c_str();
-        LOG_DBG("Calling lokit::documentLoad(" << anonymizeUrl(pURL) << ", \"" << options << "\")");
+        const char* url = loadUri.c_str();
+        LOG_DBG("Calling lokit::documentLoad(" << anonymizeUrl(url) << ", \"" << options << "\")");
         const auto start = std::chrono::steady_clock::now();
-        _loKitDocument.reset(_loKit->documentLoad(pURL, options.c_str()));
+        _loKitDocument.reset(_loKit->documentLoad(url, options.c_str()));
 #ifdef __ANDROID__
         _loKitDocumentForAndroidOnly = _loKitDocument;
         {
@@ -2073,7 +2073,7 @@ std::shared_ptr<lok::Document> Document::load(const std::shared_ptr<ChildSession
 #endif
         const auto duration = std::chrono::steady_clock::now() - start;
         const auto elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(duration);
-        LOG_DBG("Returned lokit::documentLoad(" << anonymizeUrl(pURL) << ") in " << elapsed);
+        LOG_DBG("Returned lokit::documentLoad(" << anonymizeUrl(url) << ") in " << elapsed);
 #ifdef IOS
         DocumentData::get(_mobileAppDocId).loKitDocument = _loKitDocument.get();
         {
@@ -2385,8 +2385,8 @@ bool Document::forwardToChild(const std::string_view prefix, const std::vector<c
     // By default we enable spell-checking, unless it's disabled explicitly.
     if (!spellOnline.empty())
     {
-        const bool bSet = (spellOnline != "false");
-        renderOptsObj->set(".uno:SpellOnline", makePropertyValue("boolean", bSet));
+        const bool set = (spellOnline != "false");
+        renderOptsObj->set(".uno:SpellOnline", makePropertyValue("boolean", set));
     }
 
     if (!theme.empty())
@@ -3278,14 +3278,14 @@ void copyCertificateDatabaseToTmp(Poco::Path const& jailPath)
         Poco::Path jailedCertDBPath(jailPath, "/tmp/certdb");
         Poco::File(jailedCertDBPath).createDirectories();
 
-        bool bCopied = false;
+        bool copied = false;
         for (const char* filename : { "cert8.db", "cert9.db", "secmod.db", "key3.db", "key4.db" })
         {
-            bool bResult = FileUtil::copy(Poco::Path(certificatePath, filename).toString(),
+            bool result = FileUtil::copy(Poco::Path(certificatePath, filename).toString(),
                                 Poco::Path(jailedCertDBPath, filename).toString(), false, false);
-            bCopied |= bResult;
+            copied |= result;
         }
-        if (bCopied)
+        if (copied)
         {
             LOG_INF("Certificate database files found in '" << certificatePathString << "' and were copied to the jail");
             ::setenv("LO_CERTIFICATE_DATABASE_PATH", "/tmp/certdb", 1);
@@ -3359,10 +3359,10 @@ void lokit_main(
     const std::string LogLevel = logLevel ? logLevel : "trace";
     const std::string LogLevelStartup = logLevelStartup ? logLevelStartup : "trace";
 
-    const bool bTraceStartup = (std::getenv("COOL_TRACE_STARTUP") != nullptr);
-    Log::initialize("kit", bTraceStartup ? LogLevelStartup : LogLevel, logColor, logToFile,
+    const bool traceStartup = (std::getenv("COOL_TRACE_STARTUP") != nullptr);
+    Log::initialize("kit", traceStartup ? LogLevelStartup : LogLevel, logColor, logToFile,
                     logProperties, logToFileUICmd, logPropertiesUICmd);
-    if (bTraceStartup && LogLevel != LogLevelStartup)
+    if (traceStartup && LogLevel != LogLevelStartup)
     {
         LOG_INF("Setting log-level to [" << LogLevelStartup << "] and delaying "
                 "setting to [" << LogLevel << "] until after Kit initialization.");
@@ -3988,7 +3988,7 @@ void lokit_main(
         // man 2 sigaction. So we simply waitpid(2) on SIGCHLD.
         SigUtil::setSigChildHandler(sigChildHandler);
 
-        if (bTraceStartup && LogLevel != LogLevelStartup)
+        if (traceStartup && LogLevel != LogLevelStartup)
         {
             LOG_INF("Kit initialization complete: setting log-level to [" << LogLevel << "] as configured.");
             Log::setLevel(LogLevel);

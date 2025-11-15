@@ -64,27 +64,27 @@ void StatelessBatchBroker::removeFile(const std::string& uriOrig)
         FileUtil::removeFile(dir);
 }
 
-static std::atomic<std::size_t> gConvertToBrokerInstanceCounter;
+static std::atomic<std::size_t> convertToBrokerInstanceCounter;
 
-std::size_t ConvertToBroker::getInstanceCount() { return gConvertToBrokerInstanceCounter; }
+std::size_t ConvertToBroker::getInstanceCount() { return convertToBrokerInstanceCounter; }
 
 ConvertToBroker::ConvertToBroker(const std::string& uri, const Poco::URI& uriPublic,
                                  const std::string& docKey, const std::string& format,
-                                 const std::string& sOptions, const std::string& lang)
+                                 const std::string& options, const std::string& lang)
     : StatelessBatchBroker(uri, uriPublic, docKey)
     , _format(format)
-    , _sOptions(sOptions)
+    , _sOptions(options)
     , _lang(lang)
 {
     LOG_TRC("Created ConvertToBroker: uri: ["
             << uri << "], uriPublic: [" << uriPublic.toString() << "], docKey: [" << docKey
-            << "], format: [" << format << "], options: [" << sOptions << "], lang: [" << lang
+            << "], format: [" << format << "], options: [" << options << "], lang: [" << lang
             << "].");
 
     CONFIG_STATIC const std::chrono::seconds limit_convert_secs(
         ConfigUtil::getConfigValue<std::chrono::seconds>("per_document.limit_convert_secs", 100));
     _limitLifeSeconds = limit_convert_secs;
-    ++gConvertToBrokerInstanceCounter;
+    ++convertToBrokerInstanceCounter;
 }
 
 ConvertToBroker::~ConvertToBroker() {}
@@ -181,7 +181,7 @@ void ConvertToBroker::dispose()
 {
     if (!_uriOrig.empty())
     {
-        gConvertToBrokerInstanceCounter--;
+        convertToBrokerInstanceCounter--;
         removeFile(_uriOrig);
         _uriOrig.clear();
     }
@@ -215,11 +215,11 @@ void ConvertToBroker::setLoaded()
     _clientSession->handleMessage(saveasRequest);
 }
 
-static std::atomic<std::size_t> gRenderSearchResultBrokerInstanceCouter;
+static std::atomic<std::size_t> renderSearchResultBrokerInstanceCouter;
 
 std::size_t RenderSearchResultBroker::getInstanceCount()
 {
-    return gRenderSearchResultBrokerInstanceCouter;
+    return renderSearchResultBrokerInstanceCouter;
 }
 
 RenderSearchResultBroker::RenderSearchResultBroker(
@@ -231,7 +231,7 @@ RenderSearchResultBroker::RenderSearchResultBroker(
     LOG_TRC("Created RenderSearchResultBroker: uri: ["
             << uri << "], uriPublic: [" << uriPublic.toString() << "], docKey: [" << docKey
             << "].");
-    gConvertToBrokerInstanceCounter++;
+    convertToBrokerInstanceCounter++;
 }
 
 RenderSearchResultBroker::~RenderSearchResultBroker() {}
@@ -288,7 +288,7 @@ void RenderSearchResultBroker::dispose()
 {
     if (!_uriOrig.empty())
     {
-        gRenderSearchResultBrokerInstanceCouter--;
+        renderSearchResultBrokerInstanceCouter--;
         removeFile(_uriOrig);
         _uriOrig.clear();
     }
@@ -296,9 +296,9 @@ void RenderSearchResultBroker::dispose()
 
 bool RenderSearchResultBroker::handleInput(const std::shared_ptr<Message>& message)
 {
-    bool bResult = DocumentBroker::handleInput(message);
+    bool result = DocumentBroker::handleInput(message);
 
-    if (bResult)
+    if (result)
     {
         auto const& messageData = message->data();
 
@@ -307,9 +307,9 @@ bool RenderSearchResultBroker::handleInput(const std::shared_ptr<Message>& messa
 
         if (messageData.size() >= commandStringVector.size())
         {
-            bool bEquals = std::equal(commandStringVector.begin(), commandStringVector.end(),
+            bool equals = std::equal(commandStringVector.begin(), commandStringVector.end(),
                                       messageData.begin());
-            if (bEquals)
+            if (equals)
             {
                 _responseData.resize(messageData.size() - commandStringVector.size());
                 std::copy(messageData.begin() + commandStringVector.size(), messageData.end(),
@@ -333,7 +333,7 @@ bool RenderSearchResultBroker::handleInput(const std::shared_ptr<Message>& messa
             }
         }
     }
-    return bResult;
+    return result;
 }
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

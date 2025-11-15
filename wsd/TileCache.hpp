@@ -376,8 +376,8 @@ public:
         const TileWireId curSeq = desc.getWireId();
         TileWireId last = it->getWireId();
         // id is not included in the hash.
-        auto pDesc = const_cast<TileDesc *>(&(*it));
-        pDesc->setWireId(curSeq);
+        auto descPointer = const_cast<TileDesc *>(&(*it));
+        descPointer->setWireId(curSeq);
         return last;
     }
 
@@ -387,8 +387,8 @@ public:
         if (it == _cache.end())
             return;
         // id is not included in the hash.
-        auto pDesc = const_cast<TileDesc *>(&(*it));
-        pDesc->setWireId(0);
+        auto descPointer = const_cast<TileDesc *>(&(*it));
+        descPointer->setWireId(0);
     }
 };
 

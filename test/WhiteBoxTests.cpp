@@ -703,28 +703,28 @@ void WhiteBoxTests::testJson()
     Poco::JSON::Object::Ptr object;
     LOK_ASSERT(JsonUtil::parseJSON(testString, object));
 
-    std::size_t iValue = 0;
-    JsonUtil::findJSONValue(object, "Size", iValue);
-    LOK_ASSERT_EQUAL(static_cast<std::size_t>(193551), iValue);
+    std::size_t intValue = 0;
+    JsonUtil::findJSONValue(object, "Size", intValue);
+    LOK_ASSERT_EQUAL(static_cast<std::size_t>(193551), intValue);
 
-    bool bValue = false;
-    JsonUtil::findJSONValue(object, "DisableCopy", bValue);
-    LOK_ASSERT_EQUAL(true, bValue);
+    bool boolValue = false;
+    JsonUtil::findJSONValue(object, "DisableCopy", boolValue);
+    LOK_ASSERT_EQUAL(true, boolValue);
 
-    std::string sValue;
-    JsonUtil::findJSONValue(object, "BaseFileName", sValue);
-    LOK_ASSERT_EQUAL_STR("SomeFile.pdf", sValue);
+    std::string stringValue;
+    JsonUtil::findJSONValue(object, "BaseFileName", stringValue);
+    LOK_ASSERT_EQUAL_STR("SomeFile.pdf", stringValue);
 
     // Don't accept inexact key names.
-    sValue.clear();
-    JsonUtil::findJSONValue(object, "basefilename", sValue);
-    LOK_ASSERT_EQUAL(std::string(), sValue);
+    stringValue.clear();
+    JsonUtil::findJSONValue(object, "basefilename", stringValue);
+    LOK_ASSERT_EQUAL(std::string(), stringValue);
 
-    JsonUtil::findJSONValue(object, "invalid", sValue);
-    LOK_ASSERT_EQUAL(std::string(), sValue);
+    JsonUtil::findJSONValue(object, "invalid", stringValue);
+    LOK_ASSERT_EQUAL(std::string(), stringValue);
 
-    JsonUtil::findJSONValue(object, "UserId", sValue);
-    LOK_ASSERT_EQUAL_STR("user@user.com", sValue);
+    JsonUtil::findJSONValue(object, "UserId", stringValue);
+    LOK_ASSERT_EQUAL_STR("user@user.com", stringValue);
 }
 
 void WhiteBoxTests::testAnonymization()

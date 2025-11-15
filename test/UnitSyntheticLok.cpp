@@ -152,10 +152,10 @@ public:
         const char *instdir, const char *userdir,
         LokHookFunction2 fn) override;
 
-    void postLOKDocumentEvent(int nType, const char* pPayload)
+    void postLOKDocumentEvent(int type, const char* payload)
     {
         assert(_docCallback);
-        _docCallback(nType, pPayload, _docCallbackData);
+        _docCallback(type, payload, _docCallbackData);
     }
 
     bool prePollCallback(int /* timeoutUs */)
@@ -177,7 +177,7 @@ public:
 
 extern "C" {
 
-    int syn_pollCallback(void* /* pData */, int timeoutUs)
+    int syn_pollCallback(void* /* data */, int timeoutUs)
     {
         assert(GlobalUnitKit);
         bool finished = UnitKit::get().isFinished();
@@ -188,30 +188,30 @@ extern "C" {
         return 0;
     }
 
-    void syn_wakeCallback(void* /* pData */)
+    void syn_wakeCallback(void* /* data */)
     {
         assert(GlobalUnitKit);
         GlobalUnitKit->_wakeCallback(GlobalUnitKit->_pollData);
     }
 
     void syn_registerCallback (LibreOfficeKitDocument* pThis,
-                               LibreOfficeKitCallback pCallback,
-                               void* pData)
+                               LibreOfficeKitCallback callback,
+                               void* data)
     {
         assert(GlobalUnitKit);
-        GlobalUnitKit->_docCallback = pCallback;
-        GlobalUnitKit->_docCallbackData = pData;
-        GlobalUnitKit->_docClassClean->registerCallback(pThis, pCallback, pData);
+        GlobalUnitKit->_docCallback = callback;
+        GlobalUnitKit->_docCallbackData = data;
+        GlobalUnitKit->_docClassClean->registerCallback(pThis, callback, data);
     }
 
     LibreOfficeKitDocument* syn_documentLoadWithOptions (LibreOfficeKit* pThis,
-                                                         const char* pURL,
-                                                         const char* pOptions)
+                                                         const char* url,
+                                                         const char* options)
     {
         assert(GlobalUnitKit);
 
         // chain to parent
-        LibreOfficeKitDocument *doc = GlobalUnitKit->_kitClassClean->documentLoadWithOptions(pThis, pURL, pOptions);
+        LibreOfficeKitDocument *doc = GlobalUnitKit->_kitClassClean->documentLoadWithOptions(pThis, url, options);
 
         GlobalUnitKit->_docClass = reinterpret_cast<LibreOfficeKitDocumentClass *>(memdup(doc->pClass, doc->pClass->nSize));
         GlobalUnitKit->_docClassClean = reinterpret_cast<LibreOfficeKitDocumentClass *>(memdup(doc->pClass, doc->pClass->nSize));
@@ -223,17 +223,17 @@ extern "C" {
     }
 
     void syn_runLoop (LibreOfficeKit* pThis,
-                      LibreOfficeKitPollCallback pPollCallback,
-                      LibreOfficeKitWakeCallback pWakeCallback,
-                      void* pData)
+                      LibreOfficeKitPollCallback pollCallback,
+                      LibreOfficeKitWakeCallback wakeCallback,
+                      void* data)
     {
         assert(GlobalUnitKit);
 
-        GlobalUnitKit->_pollCallback = pPollCallback;
-        GlobalUnitKit->_wakeCallback = pWakeCallback;
-        GlobalUnitKit->_pollData = pData;
+        GlobalUnitKit->_pollCallback = pollCallback;
+        GlobalUnitKit->_wakeCallback = wakeCallback;
+        GlobalUnitKit->_pollData = data;
 
-        GlobalUnitKit->_kitClassClean->runLoop(pThis, syn_pollCallback, syn_wakeCallback, pData);
+        GlobalUnitKit->_kitClassClean->runLoop(pThis, syn_pollCallback, syn_wakeCallback, data);
     }
 };
 

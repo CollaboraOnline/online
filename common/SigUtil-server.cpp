@@ -411,15 +411,15 @@ void resetTerminationFlags()
     void handleFatalSignal(const int signal, siginfo_t *info, void * /* uctxt */)
     {
         SigHandlerTrap guard;
-        const bool bReEntered = !guard.isExclusive();
+        const bool reEntered = !guard.isExclusive();
 
-        if (!bReEntered)
+        if (!reEntered)
             signalLogOpen();
 
         signalLogPrefix();
 
         // Heap corruption can re-enter through backtrace.
-        if (bReEntered)
+        if (reEntered)
             signalLog(" Fatal double signal received: ");
         else
             signalLog(" Fatal signal received: ");
@@ -455,7 +455,7 @@ void resetTerminationFlags()
 
         sigaction(signal, &action, nullptr);
 
-        if (!bReEntered)
+        if (!reEntered)
         {
             dumpBacktrace();
             signalLogClose();

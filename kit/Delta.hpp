@@ -88,7 +88,7 @@ class DeltaGenerator {
         class PixIterator final
         {
             const DeltaBitmapRow &_row;
-            unsigned int _nMask; // which mask to operate on
+            unsigned int _mask; // which mask to operate on
             uint32_t _lastPix; // last pixel (or possibly plain alpha)
             uint64_t _lastMask; // holding slot for mask
             uint64_t _bitToCheck; // which bit should we check.
@@ -96,7 +96,7 @@ class DeltaGenerator {
             const uint32_t *_endRleData; // end of pixel data
         public:
             PixIterator(const DeltaBitmapRow &row)
-                : _row(row), _nMask(0),
+                : _row(row), _mask(0),
                   _lastPix(0x00000000),
                   _lastMask(0),
                   _bitToCheck(0),
@@ -121,8 +121,8 @@ class DeltaGenerator {
 
                 if (!_bitToCheck)
                 { // slow path
-                    if (_nMask < 4)
-                        _lastMask = _row._rleMask[_nMask++];
+                    if (_mask < 4)
+                        _lastMask = _row._rleMask[_mask++];
                     else
                         _lastMask = 0xffffffffffffffff;
                     _bitToCheck = 1;
@@ -190,14 +190,14 @@ class DeltaGenerator {
 
     private:
         void initPixRowCpu(const uint32_t *from, uint32_t *scratch,
-                           size_t *scratchLen, uint64_t *rleMaskBlock,
+                           size_t *scratchLen, uint64_t *leMaskBlock,
                            unsigned int width)
         {
             uint32_t lastPix = 0x00000000; // transparency
             unsigned int x = 0, outp = 0;
 
             // non-accelerated path
-            for (unsigned int nMask = 0; nMask < 4; ++nMask)
+            for (unsigned int mask = 0; mask < 4; ++mask)
             {
                 uint64_t rleMask = 0;
                 uint64_t bitToSet = 1;
@@ -229,7 +229,7 @@ class DeltaGenerator {
                         }
                     }
                 }
-                rleMaskBlock[nMask] = rleMask;
+                leMaskBlock[mask] = rleMask;
             }
 
             if (x < width)
@@ -498,14 +498,14 @@ class DeltaGenerator {
     std::unordered_set<std::shared_ptr<DeltaData>, DeltaHasher, DeltaCompare> _deltaEntries;
     size_t _maxEntries;
 
-    void rebalanceDeltasT(bool bDropAll = false)
+    void rebalanceDeltasT(bool dropAll = false)
     {
         assert(!_deltaGuard.try_lock() && "Expected to have _deltaGuard lock taken");
 
-        if (_deltaEntries.size() > _maxEntries || bDropAll)
+        if (_deltaEntries.size() > _maxEntries || dropAll)
         {
             size_t toRemove = _deltaEntries.size();
-            if (!bDropAll)
+            if (!dropAll)
                 toRemove -= (_maxEntries * 3 / 4);
             std::vector<std::shared_ptr<DeltaData>> entries;
             entries.insert(entries.end(), _deltaEntries.begin(), _deltaEntries.end());
@@ -912,13 +912,13 @@ class DeltaGenerator {
         Blob img = std::make_shared<BlobData>();
         img->resize(1024*1024*4); // lots of extra space.
 
-        size_t const dSize = ZSTD_decompress(img->data(), img->size(), blob->data(), blob->size());
-        if (ZSTD_isError(dSize))
+        size_t const size = ZSTD_decompress(img->data(), img->size(), blob->data(), blob->size());
+        if (ZSTD_isError(size))
         {
-            LOG_ERR("Failed to decompress blob of size " << blob->size() << " with " << ZSTD_getErrorName(dSize));
+            LOG_ERR("Failed to decompress blob of size " << blob->size() << " with " << ZSTD_getErrorName(size));
             return Blob();
         }
-        img->resize(dSize);
+        img->resize(size);
 
 
         // cf. CanvasTileLayer's _applyDelta

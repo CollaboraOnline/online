@@ -540,15 +540,15 @@ void RemoteConfigPoll::fetchIndirectionEndpoint(std::map<std::string, std::strin
     //if number of allowed_websocket_origins defined in configuration are greater than number of allowed_websocket_origins
     //fetched from json or if the number of monitors shrinks with new json,
     //overwrite the remaining allowed_websocket_origins from config file to empty strings
-    bool bHaveMorePaths = true;
+    bool haveMorePaths = true;
     do
     {
         const std::string path = allowedWebsocketKey + '[' + std::to_string(i) + ']';
-        bHaveMorePaths = _conf.has(path);
-        if (bHaveMorePaths)
+        haveMorePaths = _conf.has(path);
+        if (haveMorePaths)
             newAppConfig.insert(std::make_pair(path, ""));
         i++;
-    } while (bHaveMorePaths);
+    } while (haveMorePaths);
 }
 
 void RemoteConfigPoll::fetchMonitors(std::map<std::string, std::string>& newAppConfig,

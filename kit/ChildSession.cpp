@@ -1086,7 +1086,7 @@ bool ChildSession::saveDocumentBackground([[maybe_unused]] const StringVector& t
 bool ChildSession::sendFontRendering(const StringVector& tokens)
 {
     std::string font, text, decodedFont, decodedChar;
-    bool bSuccess;
+    bool success;
 
     if (tokens.size() < 3 ||
         !getTokenString(tokens[1], "font", font))
@@ -1136,14 +1136,14 @@ bool ChildSession::sendFontRendering(const StringVector& tokens)
 
     if (Png::encodeBufferToPNG(ptrFont.get(), width, height, output, mode))
     {
-        bSuccess = sendTextFrame(output.data(), output.size());
+        success = sendTextFrame(output.data(), output.size());
     }
     else
     {
-        bSuccess = sendTextFrameAndLogError("error: cmd=renderfont kind=failure");
+        success = sendTextFrameAndLogError("error: cmd=renderfont kind=failure");
     }
 
-    return bSuccess;
+    return success;
 }
 
 bool ChildSession::getStatus()
@@ -2149,17 +2149,17 @@ bool ChildSession::dialogEvent(const StringVector& tokens)
 
 bool ChildSession::formFieldEvent(const char* buffer, int length, const StringVector& /*tokens*/)
 {
-    std::string sFirstLine = getFirstLine(buffer, length);
-    std::string sArguments = sFirstLine.substr(std::string("formfieldevent ").size());
+    std::string firstLine = getFirstLine(buffer, length);
+    std::string arguments = firstLine.substr(std::string("formfieldevent ").size());
 
-    if (sArguments.empty())
+    if (arguments.empty())
     {
         sendTextFrameAndLogError("error: cmd=formfieldevent kind=syntax");
         return false;
     }
 
     getLOKitDocument()->setView(_viewId);
-    getLOKitDocument()->sendFormFieldEvent(sArguments.c_str());
+    getLOKitDocument()->sendFormFieldEvent(arguments.c_str());
 
     return true;
 }
@@ -2209,11 +2209,11 @@ bool ChildSession::contentControlEvent(const StringVector& tokens)
 
 bool ChildSession::renderSearchResult(const char* buffer, int length, const StringVector& /*tokens*/)
 {
-    std::string sContent(buffer, length);
-    std::string sCommand("rendersearchresult ");
-    std::string sArguments = sContent.substr(sCommand.size());
+    std::string content(buffer, length);
+    std::string command("rendersearchresult ");
+    std::string arguments = content.substr(command.size());
 
-    if (sArguments.empty())
+    if (arguments.empty())
     {
         sendTextFrameAndLogError("error: cmd=rendersearchresult kind=syntax");
         return false;
@@ -2221,7 +2221,7 @@ bool ChildSession::renderSearchResult(const char* buffer, int length, const Stri
 
     getLOKitDocument()->setView(_viewId);
 
-    const auto eTileMode = static_cast<LibreOfficeKitTileMode>(getLOKitDocument()->getTileMode());
+    const auto tileMode = static_cast<LibreOfficeKitTileMode>(getLOKitDocument()->getTileMode());
 
     unsigned char* bitmapBuffer = nullptr;
 
@@ -2229,14 +2229,14 @@ bool ChildSession::renderSearchResult(const char* buffer, int length, const Stri
     int height = 0;
     size_t byteSize = 0;
 
-    bool bSuccess = getLOKitDocument()->renderSearchResult(sArguments.c_str(), &bitmapBuffer, &width, &height, &byteSize);
+    bool success = getLOKitDocument()->renderSearchResult(arguments.c_str(), &bitmapBuffer, &width, &height, &byteSize);
 
-    if (bSuccess && byteSize > 0)
+    if (success && byteSize > 0)
     {
         std::vector<char> output;
         output.reserve(byteSize * 3 / 4); // reserve 75% of original size
 
-        if (Png::encodeBufferToPNG(bitmapBuffer, width, height, output, eTileMode))
+        if (Png::encodeBufferToPNG(bitmapBuffer, width, height, output, tileMode))
         {
             constexpr std::string_view header = "rendersearchresult:\n";
             const size_t responseSize = header.size() + output.size();
@@ -2344,7 +2344,7 @@ bool ChildSession::unoCommand(const StringVector& tokens)
     SigUtil::addActivity(getId(), formatUnoCommandInfo(tokens[1]));
 
     // we need to get LOK_CALLBACK_UNO_COMMAND_RESULT callback when saving
-    const bool bNotify = (tokens.equals(1, ".uno:Save") ||
+    const bool notify = (tokens.equals(1, ".uno:Save") ||
                           tokens.equals(1, ".uno:Undo") ||
                           tokens.equals(1, ".uno:Redo") ||
                           tokens.equals(1, ".uno:Cut") ||
@@ -2354,7 +2354,7 @@ bool ChildSession::unoCommand(const StringVector& tokens)
                           tokens.startsWith(1, "vnd.sun.star.script:"));
 
     const std::string saveArgs = tokens.substrFromToken(2);
-    LOG_TRC("uno command " << tokens[1] << " " << saveArgs << " notify: " << bNotify);
+    LOG_TRC("uno command " << tokens[1] << " " << saveArgs << " notify: " << notify);
 
     // check that internal UNO commands don't make it to the core
     assert (!tokens.equals(1, ".uno:AutoSave"));
@@ -2370,7 +2370,7 @@ bool ChildSession::unoCommand(const StringVector& tokens)
         return true;
     }
 
-    getLOKitDocument()->postUnoCommand(tokens[1].c_str(), saveArgs.c_str(), bNotify);
+    getLOKitDocument()->postUnoCommand(tokens[1].c_str(), saveArgs.c_str(), notify);
     return true;
 }
 
@@ -2883,7 +2883,7 @@ std::string extractCertificate(const std::string & certificate)
 
 bool ChildSession::askSignatureStatus(const char* buffer, int length, const StringVector& /*tokens*/)
 {
-    bool bResult = true;
+    bool result = true;
 
     const std::string firstLine = getFirstLine(buffer, length);
     const char* data = buffer + firstLine.size() + 1;
@@ -2895,20 +2895,20 @@ bool ChildSession::askSignatureStatus(const char* buffer, int length, const Stri
 
     if (root)
     {
-        for (auto& rChainPtr : *root->getArray("certificates"))
+        for (auto& chainPtr : *root->getArray("certificates"))
         {
-            if (!rChainPtr.isString())
+            if (!chainPtr.isString())
                 return false;
 
-            std::string chainCertificate = rChainPtr;
+            std::string chainCertificate = chainPtr;
             std::string binaryChainCertificate;
             macaron::Base64::Decode(extractCertificate(chainCertificate), binaryChainCertificate);
 
-            bResult = getLOKitDocument()->addCertificate(
+            result = getLOKitDocument()->addCertificate(
                 reinterpret_cast<const unsigned char*>(binaryChainCertificate.data()),
                 binaryChainCertificate.size());
 
-            if (!bResult)
+            if (!result)
                 return false;
         }
     }
@@ -4153,9 +4153,9 @@ LogUiCommands::~LogUiCommands()
             if (keyCode >= 1024 && keyCode <= 1031)
             {
                 // arrow keys = 1024-1027  home/end = 1028-1029  page up/down = 1030-1031
-                const std::vector<std::string> aNnavigationKeys = {"down","up","left","right","home","end","page-up","page-down"};
+                const std::vector<std::string> navigationKeys = {"down","up","left","right","home","end","page-up","page-down"};
                 actCmd = "key";
-                actSubCmd += aNnavigationKeys[keyCode-1024];
+                actSubCmd += navigationKeys[keyCode-1024];
             }
             else
             {

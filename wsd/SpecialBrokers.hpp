@@ -52,7 +52,7 @@ class ConvertToBroker : public StatelessBatchBroker
 public:
     /// Construct DocumentBroker with URI and docKey
     ConvertToBroker(const std::string& uri, const Poco::URI& uriPublic, const std::string& docKey,
-                    const std::string& format, const std::string& sOptions,
+                    const std::string& format, const std::string& options,
                     const std::string& lang);
     virtual ~ConvertToBroker();
 

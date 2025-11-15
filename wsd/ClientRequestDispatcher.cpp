@@ -2091,9 +2091,9 @@ std::string ClientRequestDispatcher::getContentType(const std::string& fileName)
         { "pdf", "application/pdf" },
     };
 
-    const std::string sExt = Poco::Path(fileName).getExtension();
+    const std::string ext = Poco::Path(fileName).getExtension();
 
-    const auto it = contentTypes.find(sExt);
+    const auto it = contentTypes.find(ext);
     if (it != contentTypes.end())
         return it->second;
 
@@ -2102,11 +2102,11 @@ std::string ClientRequestDispatcher::getContentType(const std::string& fileName)
 
 bool ClientRequestDispatcher::isSpreadsheet(const std::string& fileName)
 {
-    const std::string sContentType = getContentType(fileName);
+    const std::string contentType = getContentType(fileName);
 
-    return sContentType == "application/vnd.oasis.opendocument.spreadsheet" ||
-           sContentType == "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" ||
-           sContentType == "application/vnd.ms-excel";
+    return contentType == "application/vnd.oasis.opendocument.spreadsheet" ||
+           contentType == "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" ||
+           contentType == "application/vnd.ms-excel";
 }
 
 bool ClientRequestDispatcher::handlePostRequest(const RequestDetails& requestDetails,
