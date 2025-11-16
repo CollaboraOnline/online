@@ -1364,6 +1364,7 @@ body {
 	height: 100%;
 	z-index: 1000000;
 	background-color: black;
+	border: none;
 }
 
 .table-add-col-row-marker {
