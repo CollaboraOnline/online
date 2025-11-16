@@ -272,8 +272,6 @@ def main():
         args.builddir = args.repo
 
     losubdir = ''
-    if args.coda:
-        losubdir = '/lo'
 
     workdir = os.path.join(args.outdir, 'tmp')
     if os.path.exists(workdir):

@@ -4,10 +4,10 @@
         <Package ID="%DISTNAME.%VER.%ARCH" ProcessorArchitecture="%ARCH" ManifestPath="%WORKDIR/AppxManifest.%ARCH.xml">
             <Files>
                 <File DestinationPath="**" SourcePath="%FILES/**"/>
-                <File ExcludePath="%FILES/lo/program/bootstrap.ini"/>
-                <File ExcludePath="%FILES/lo/**/*.exe"/>
-                <File ExcludePath="%FILES/lo/program/*.bin"/>		
-                <File DestinationPath="lo/program/bootstrap.ini" SourcePath="%BOOTSTRAP"/>
+                <File ExcludePath="%FILES/program/bootstrap.ini"/>
+                <File ExcludePath="%FILES/**/*.exe"/>
+                <File ExcludePath="%FILES/program/*.bin"/>
+                <File DestinationPath="program/bootstrap.ini" SourcePath="%BOOTSTRAP"/>
                 <File DestinationPath="Assets/*" SourcePath="%ASSETS/*"/>
                 <File DestinationPath="resources.pri" SourcePath="%PRI"/>
             </Files>
