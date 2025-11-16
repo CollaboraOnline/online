@@ -5,12 +5,36 @@
             <Files>
                 <File DestinationPath="**" SourcePath="%FILES/**"/>
                 <File ExcludePath="%FILES/program/bootstrap.ini"/>
-                <File ExcludePath="%FILES/**/*.exe"/>
+                <File ExcludePath="%FILES/program/gengal.exe"/>
+                <File ExcludePath="%FILES/program/gpgme-w32spawn.exe"/>
+                <File ExcludePath="%FILES/program/odbcconfig.exe"/>
+                <File ExcludePath="%FILES/program/python-core-3.10.19/bin/python.exe"/>
+                <File ExcludePath="%FILES/program/python.exe"/>
+                <File ExcludePath="%FILES/program/quickstart.exe"/>
+                <File ExcludePath="%FILES/program/regview.exe"/>
+                <File ExcludePath="%FILES/program/sbase.exe"/>
+                <File ExcludePath="%FILES/program/scalc.exe"/>
+                <File ExcludePath="%FILES/program/sdraw.exe"/>
+                <File ExcludePath="%FILES/program/senddoc.exe"/>
+                <File ExcludePath="%FILES/program/simpress.exe"/>
+                <File ExcludePath="%FILES/program/smath.exe"/>
+                <File ExcludePath="%FILES/program/soffice.exe"/>
+                <File ExcludePath="%FILES/program/soffice_safe.exe"/>
+                <File ExcludePath="%FILES/program/spsupp_helper.exe"/>
+                <File ExcludePath="%FILES/program/sweb.exe"/>
+                <File ExcludePath="%FILES/program/swriter.exe"/>
+                <File ExcludePath="%FILES/program/twain32shim.exe"/>
+                <File ExcludePath="%FILES/program/uno.exe"/>
+                <File ExcludePath="%FILES/program/unoinfo.exe"/>
+                <File ExcludePath="%FILES/program/unopkg.exe"/>
+                <File ExcludePath="%FILES/sdk/bin/cppumaker.exe"/>
+                <File ExcludePath="%FILES/sdk/bin/javamaker.exe"/>
+                <File ExcludePath="%FILES/sdk/bin/netmaker.exe"/>
+                <File ExcludePath="%FILES/sdk/bin/unoidl-write.exe"/>
                 <File ExcludePath="%FILES/program/*.bin"/>
                 <File DestinationPath="program/bootstrap.ini" SourcePath="%BOOTSTRAP"/>
                 <File DestinationPath="Assets/*" SourcePath="%ASSETS/*"/>
                 <File DestinationPath="resources.pri" SourcePath="%PRI"/>
-                <File Source="%FILES/program/Collabora Office.exe" Destination="program/Collabora Office.exe"/>
             </Files>
         </Package>
     </PackageFamily>
