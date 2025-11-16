@@ -4145,8 +4145,8 @@ std::future<LibreOfficeKit*> initKitRunLoopThread()
 #elif defined(MACOS)
                     lok_init_2((getBundlePath() + "/Contents/Frameworks").c_str(), getAppSupportURL().c_str());
 #elif defined(_WIN32)
-                    lok_init_2((app_installation_path + "lo\\program").c_str(),
-                               (app_installation_uri + "lo").c_str());
+                    lok_init_2(app_installation_path.c_str(),
+                               (app_installation_uri + "..").c_str());
 #endif
                 p.set_value(kit);
 

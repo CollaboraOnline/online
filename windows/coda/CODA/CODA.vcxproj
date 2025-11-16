@@ -76,6 +76,18 @@
   <PropertyGroup>
     <TargetName>$(APP_NAME)</TargetName>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">
+    <OutDir>$(SolutionDir)$(Platform)\$(Configuration)\program\</OutDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">
+    <OutDir>$(SolutionDir)$(Platform)\$(Configuration)\program\</OutDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <OutDir>$(SolutionDir)$(Platform)\$(Configuration)\program\</OutDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <OutDir>$(SolutionDir)$(Platform)\$(Configuration)\program\</OutDir>
+  </PropertyGroup>
   <PropertyGroup Label="UserMacros" />
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -154,103 +166,103 @@
   <ItemDefinitionGroup>
     <PostBuildEvent>
       <Command>
-        robocopy ..\..\..\browser\dist $(OutDir)cool *.* /E /XF debug.html framed.doc.html framed.html load.doc.html multidocs.html tsconfig.tsbuildinfo /XD src
-        xcopy ..\..\..\browser\dist\src\layer\tile\CanvasTileUtils.js $(OutDir)cool\src\layer\tile\ /f /y
-        xcopy ..\..\..\browser\dist\src\layer\tile\TileWorker.js $(OutDir)cool\src\layer\tile\ /f /y
-        xcopy $(LO_PATH) $(OutDir)lo\ /s /f /y /exclude:..\xcopy.excludes
-        del $(OutDir)..\Release\lo\program\avmedialo.dll
-        del $(OutDir)..\Release\lo\program\basctllo.dll
-        del $(OutDir)..\Release\lo\program\basprovlo.dll
-        del $(OutDir)..\Release\lo\program\canvasfactorylo.dll
-        del $(OutDir)..\Release\lo\program\canvastoolslo.dll
-        del $(OutDir)..\Release\lo\program\chartcontrollerlo.dll
-        del $(OutDir)..\Release\lo\program\chartcorelo.dll
-        del $(OutDir)..\Release\lo\program\configmgrlo.dll
-        del $(OutDir)..\Release\lo\program\cppcanvaslo.dll
-        del $(OutDir)..\Release\lo\program\ctllo.dll
-        del $(OutDir)..\Release\lo\program\dbtoolslo.dll
-        del $(OutDir)..\Release\lo\program\deployment.dll
-        del $(OutDir)..\Release\lo\program\deploymentmisclo.dll
-        del $(OutDir)..\Release\lo\program\directx9canvaslo.dll
-        del $(OutDir)..\Release\lo\program\docmodello.dll
-        del $(OutDir)..\Release\lo\program\drawinglayercorelo.dll
-        del $(OutDir)..\Release\lo\program\drawinglayerlo.dll
-        del $(OutDir)..\Release\lo\program\editenglo.dll
-        del $(OutDir)..\Release\lo\program\embobj.dll
-        del $(OutDir)..\Release\lo\program\emboleobj.dll
-        del $(OutDir)..\Release\lo\program\emfiolo.dll
-        del $(OutDir)..\Release\lo\program\emserlo.dll
-        del $(OutDir)..\Release\lo\program\evtattlo.dll
-        del $(OutDir)..\Release\lo\program\filterconfiglo.dll
-        del $(OutDir)..\Release\lo\program\forlo.dll
-        del $(OutDir)..\Release\lo\program\foruilo.dll
-        del $(OutDir)..\Release\lo\program\fps_officelo.dll
-        del $(OutDir)..\Release\lo\program\frmlo.dll
-        del $(OutDir)..\Release\lo\program\fsstoragelo.dll
-        del $(OutDir)..\Release\lo\program\fwklo.dll
-        del $(OutDir)..\Release\lo\program\gdipluscanvaslo.dll
-        del $(OutDir)..\Release\lo\program\guesslanglo.dll
-        del $(OutDir)..\Release\lo\program\helplinkerlo.dll
-        del $(OutDir)..\Release\lo\program\hyphenlo.dll
-        del $(OutDir)..\Release\lo\program\i18npoollo.dll
-        del $(OutDir)..\Release\lo\program\i18nsearchlo.dll
-        del $(OutDir)..\Release\lo\program\i18nutil.dll
-        del $(OutDir)..\Release\lo\program\icglo.dll
-        del $(OutDir)..\Release\lo\program\lnglo.dll
-        del $(OutDir)..\Release\lo\program\lnthlo.dll
-        del $(OutDir)..\Release\lo\program\localebe1lo.dll
-        del $(OutDir)..\Release\lo\program\msfilterlo.dll
-        del $(OutDir)..\Release\lo\program\mtfrendererlo.dll
-        del $(OutDir)..\Release\lo\program\numbertextlo.dll
-        del $(OutDir)..\Release\lo\program\odfflatxmllo.dll
-        del $(OutDir)..\Release\lo\program\offacclo.dll
-        del $(OutDir)..\Release\lo\program\oglcanvaslo.dll
-        del $(OutDir)..\Release\lo\program\ooxlo.dll
-        del $(OutDir)..\Release\lo\program\package2.dll
-        del $(OutDir)..\Release\lo\program\passwordcontainerlo.dll
-        del $(OutDir)..\Release\lo\program\sblo.dll
-        del $(OutDir)..\Release\lo\program\sfxlo.dll
-        del $(OutDir)..\Release\lo\program\simplecanvaslo.dll
-        del $(OutDir)..\Release\lo\program\sofficeapp.dll
-        del $(OutDir)..\Release\lo\program\sotlo.dll
-        del $(OutDir)..\Release\lo\program\spelllo.dll
-        del $(OutDir)..\Release\lo\program\spllo.dll
-        del $(OutDir)..\Release\lo\program\srtrs1.dll
-        del $(OutDir)..\Release\lo\program\stringresourcelo.dll
-        del $(OutDir)..\Release\lo\program\svgiolo.dll
-        del $(OutDir)..\Release\lo\program\svllo.dll
-        del $(OutDir)..\Release\lo\program\svtlo.dll
-        del $(OutDir)..\Release\lo\program\svxcorelo.dll
-        del $(OutDir)..\Release\lo\program\svxlo.dll
-        del $(OutDir)..\Release\lo\program\sysshlo.dll
-        del $(OutDir)..\Release\lo\program\textfdlo.dll
-        del $(OutDir)..\Release\lo\program\tklo.dll
-        del $(OutDir)..\Release\lo\program\ucb1.dll
-        del $(OutDir)..\Release\lo\program\ucpexpand1lo.dll
-        del $(OutDir)..\Release\lo\program\ucpextlo.dll
-        del $(OutDir)..\Release\lo\program\ucpfile1.dll
-        del $(OutDir)..\Release\lo\program\ucphier1.dll
-        del $(OutDir)..\Release\lo\program\ucpimagelo.dll
-        del $(OutDir)..\Release\lo\program\ucptdoc1lo.dll
-        del $(OutDir)..\Release\lo\program\unordflo.dll
-        del $(OutDir)..\Release\lo\program\unoxmllo.dll
-        del $(OutDir)..\Release\lo\program\updatefeedlo.dll
-        del $(OutDir)..\Release\lo\program\utllo.dll
-        del $(OutDir)..\Release\lo\program\uuilo.dll
-        del $(OutDir)..\Release\lo\program\vbaeventslo.dll
-        del $(OutDir)..\Release\lo\program\vbahelperlo.dll
-        del $(OutDir)..\Release\lo\program\vclcanvaslo.dll
-        del $(OutDir)..\Release\lo\program\vcllo.dll
-        del $(OutDir)..\Release\lo\program\xmlfalo.dll
-        del $(OutDir)..\Release\lo\program\xmlfdlo.dll
-        del $(OutDir)..\Release\lo\program\xmlscriptlo.dll
-        del $(OutDir)..\Release\lo\program\xoflo.dll
-        del $(OutDir)..\Release\lo\program\xolo.dll
-        del $(OutDir)..\Release\lo\program\xsec_xmlsec.dll
-        del $(OutDir)..\Release\lo\program\xsltdlglo.dll
-        del $(OutDir)..\Release\lo\program\xsltfilterlo.dll
-        del $(OutDir)..\Release\lo\program\xstor.dll
-        xcopy ..\templates $(OutDir)templates\ /s /f /y
+        robocopy ..\..\..\browser\dist $(OutDir)..\cool *.* /E /XF debug.html framed.doc.html framed.html load.doc.html multidocs.html tsconfig.tsbuildinfo /XD src
+        xcopy ..\..\..\browser\dist\src\layer\tile\CanvasTileUtils.js $(OutDir)..\cool\src\layer\tile\ /f /y
+        xcopy ..\..\..\browser\dist\src\layer\tile\TileWorker.js $(OutDir)..\cool\src\layer\tile\ /f /y
+        xcopy $(LO_PATH) $(OutDir)..\ /s /f /y /exclude:..\xcopy.excludes
+        del $(OutDir)..\..\Release\program\avmedialo.dll
+        del $(OutDir)..\..\Release\program\basctllo.dll
+        del $(OutDir)..\..\Release\program\basprovlo.dll
+        del $(OutDir)..\..\Release\program\canvasfactorylo.dll
+        del $(OutDir)..\..\Release\program\canvastoolslo.dll
+        del $(OutDir)..\..\Release\program\chartcontrollerlo.dll
+        del $(OutDir)..\..\Release\program\chartcorelo.dll
+        del $(OutDir)..\..\Release\program\configmgrlo.dll
+        del $(OutDir)..\..\Release\program\cppcanvaslo.dll
+        del $(OutDir)..\..\Release\program\ctllo.dll
+        del $(OutDir)..\..\Release\program\dbtoolslo.dll
+        del $(OutDir)..\..\Release\program\deployment.dll
+        del $(OutDir)..\..\Release\program\deploymentmisclo.dll
+        del $(OutDir)..\..\Release\program\directx9canvaslo.dll
+        del $(OutDir)..\..\Release\program\docmodello.dll
+        del $(OutDir)..\..\Release\program\drawinglayercorelo.dll
+        del $(OutDir)..\..\Release\program\drawinglayerlo.dll
+        del $(OutDir)..\..\Release\program\editenglo.dll
+        del $(OutDir)..\..\Release\program\embobj.dll
+        del $(OutDir)..\..\Release\program\emboleobj.dll
+        del $(OutDir)..\..\Release\program\emfiolo.dll
+        del $(OutDir)..\..\Release\program\emserlo.dll
+        del $(OutDir)..\..\Release\program\evtattlo.dll
+        del $(OutDir)..\..\Release\program\filterconfiglo.dll
+        del $(OutDir)..\..\Release\program\forlo.dll
+        del $(OutDir)..\..\Release\program\foruilo.dll
+        del $(OutDir)..\..\Release\program\fps_officelo.dll
+        del $(OutDir)..\..\Release\program\frmlo.dll
+        del $(OutDir)..\..\Release\program\fsstoragelo.dll
+        del $(OutDir)..\..\Release\program\fwklo.dll
+        del $(OutDir)..\..\Release\program\gdipluscanvaslo.dll
+        del $(OutDir)..\..\Release\program\guesslanglo.dll
+        del $(OutDir)..\..\Release\program\helplinkerlo.dll
+        del $(OutDir)..\..\Release\program\hyphenlo.dll
+        del $(OutDir)..\..\Release\program\i18npoollo.dll
+        del $(OutDir)..\..\Release\program\i18nsearchlo.dll
+        del $(OutDir)..\..\Release\program\i18nutil.dll
+        del $(OutDir)..\..\Release\program\icglo.dll
+        del $(OutDir)..\..\Release\program\lnglo.dll
+        del $(OutDir)..\..\Release\program\lnthlo.dll
+        del $(OutDir)..\..\Release\program\localebe1lo.dll
+        del $(OutDir)..\..\Release\program\msfilterlo.dll
+        del $(OutDir)..\..\Release\program\mtfrendererlo.dll
+        del $(OutDir)..\..\Release\program\numbertextlo.dll
+        del $(OutDir)..\..\Release\program\odfflatxmllo.dll
+        del $(OutDir)..\..\Release\program\offacclo.dll
+        del $(OutDir)..\..\Release\program\oglcanvaslo.dll
+        del $(OutDir)..\..\Release\program\ooxlo.dll
+        del $(OutDir)..\..\Release\program\package2.dll
+        del $(OutDir)..\..\Release\program\passwordcontainerlo.dll
+        del $(OutDir)..\..\Release\program\sblo.dll
+        del $(OutDir)..\..\Release\program\sfxlo.dll
+        del $(OutDir)..\..\Release\program\simplecanvaslo.dll
+        del $(OutDir)..\..\Release\program\sofficeapp.dll
+        del $(OutDir)..\..\Release\program\sotlo.dll
+        del $(OutDir)..\..\Release\program\spelllo.dll
+        del $(OutDir)..\..\Release\program\spllo.dll
+        del $(OutDir)..\..\Release\program\srtrs1.dll
+        del $(OutDir)..\..\Release\program\stringresourcelo.dll
+        del $(OutDir)..\..\Release\program\svgiolo.dll
+        del $(OutDir)..\..\Release\program\svllo.dll
+        del $(OutDir)..\..\Release\program\svtlo.dll
+        del $(OutDir)..\..\Release\program\svxcorelo.dll
+        del $(OutDir)..\..\Release\program\svxlo.dll
+        del $(OutDir)..\..\Release\program\sysshlo.dll
+        del $(OutDir)..\..\Release\program\textfdlo.dll
+        del $(OutDir)..\..\Release\program\tklo.dll
+        del $(OutDir)..\..\Release\program\ucb1.dll
+        del $(OutDir)..\..\Release\program\ucpexpand1lo.dll
+        del $(OutDir)..\..\Release\program\ucpextlo.dll
+        del $(OutDir)..\..\Release\program\ucpfile1.dll
+        del $(OutDir)..\..\Release\program\ucphier1.dll
+        del $(OutDir)..\..\Release\program\ucpimagelo.dll
+        del $(OutDir)..\..\Release\program\ucptdoc1lo.dll
+        del $(OutDir)..\..\Release\program\unordflo.dll
+        del $(OutDir)..\..\Release\program\unoxmllo.dll
+        del $(OutDir)..\..\Release\program\updatefeedlo.dll
+        del $(OutDir)..\..\Release\program\utllo.dll
+        del $(OutDir)..\..\Release\program\uuilo.dll
+        del $(OutDir)..\..\Release\program\vbaeventslo.dll
+        del $(OutDir)..\..\Release\program\vbahelperlo.dll
+        del $(OutDir)..\..\Release\program\vclcanvaslo.dll
+        del $(OutDir)..\..\Release\program\vcllo.dll
+        del $(OutDir)..\..\Release\program\xmlfalo.dll
+        del $(OutDir)..\..\Release\program\xmlfdlo.dll
+        del $(OutDir)..\..\Release\program\xmlscriptlo.dll
+        del $(OutDir)..\..\Release\program\xoflo.dll
+        del $(OutDir)..\..\Release\program\xolo.dll
+        del $(OutDir)..\..\Release\program\xsec_xmlsec.dll
+        del $(OutDir)..\..\Release\program\xsltdlglo.dll
+        del $(OutDir)..\..\Release\program\xsltfilterlo.dll
+        del $(OutDir)..\..\Release\program\xstor.dll
+        xcopy ..\templates $(OutDir)..\templates\ /s /f /y
       </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
