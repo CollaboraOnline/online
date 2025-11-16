@@ -319,7 +319,7 @@ public:
                Util::equal(_pathSegs, rhs._pathSegs);
     }
 
-    std::string toString() const
+    [[nodiscard]] std::string toString() const
     {
         std::ostringstream oss;
         oss << _uriString << ' ' << nameShort(_method)
