@@ -717,21 +717,22 @@ class Dispatcher {
 		};
 
 		this.actionsMap['multipageview'] = function () {
-			const buttonElement = document.getElementById('multi-page-view');
-			const imageElement = buttonElement.querySelector('img');
-			let source = imageElement.src;
+			if (app.activeDocument && app.activeDocument.activeView) {
+				let commandState = false;
+				if (app.activeDocument.activeView.type === 'ViewLayoutMultiPage') {
+					app.activeDocument.activeView = new ViewLayoutWriter();
+				} else {
+					app.activeDocument.activeView = new ViewLayoutMultiPage();
+					commandState = true;
+				}
 
-			if (source.indexOf('twopages.svg') !== -1) {
-				source = source.replace('twopages.svg', 'twopages_a.svg');
-				app.activeDocument.activeView = new ViewLayoutMultiPage();
-			} else {
-				source = source.replace('twopages_a.svg', 'twopages.svg');
-				app.activeDocument.activeView = new ViewLayoutWriter();
+				app.map.fire('commandstatechanged', {
+					commandName: 'multipageview',
+					state: commandState ? 'true' : 'false',
+				});
+				app.activeDocument.activeView.sendClientVisibleArea();
+				app.sectionContainer.requestReDraw();
 			}
-
-			imageElement.src = source;
-			app.activeDocument.activeView.sendClientVisibleArea();
-			app.sectionContainer.requestReDraw();
 		};
 	}
 

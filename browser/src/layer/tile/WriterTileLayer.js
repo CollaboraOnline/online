@@ -112,10 +112,7 @@ window.L.WriterTileLayer = window.L.CanvasTileLayer.extend({
 
 		if (sizeChanged) {
 			app.activeDocument.fileSize = new cool.SimplePoint(statusJSON.width, statusJSON.height);
-
-			// Views should be setting view size. But it has time.
-			if (app.activeDocument.activeView.type !== 'ViewLayoutMultiPage')
-				app.activeDocument.activeView.viewSize = app.activeDocument.fileSize.clone();
+			app.activeDocument.activeView.viewSize = app.activeDocument.fileSize.clone();
 
 			this._docType = statusJSON.type;
 			this._updateMaxBounds(true);
