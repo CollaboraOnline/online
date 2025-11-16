@@ -631,7 +631,7 @@ int64_t RequestParser::readData(const char* p, const int64_t len)
 #ifdef DEBUG_HTTP
                     LOG_TRC("New Chunk, "
                             << available << " bytes available\n"
-                            << HexUtil::dumpHex(std::string(p, std::min(available, 10 * 1024L))));
+                            << HexUtil::dumpHex(std::string(p, std::min(available, 10 * 1024UL))));
 #endif //DEBUG_HTTP
 
                     // Read ahead to see if we have enough data
