@@ -525,7 +525,7 @@ static std::wstring new_document(CODA_OPEN_CONTROL id)
     }
 
     const auto templateSourcePath = Util::string_to_wide_string(app_installation_path) +
-                                    L"templates\\" + templateBasename + L"." +
+                                    L"..\\templates\\" + templateBasename + L"." +
                                     templateExtension;
 
     PWSTR documents;
