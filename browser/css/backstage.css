@@ -269,8 +269,7 @@
 .backstage-template-card:hover {
 	background-color: var(--color-background-dark);
 	border-color: var(--color-primary);
-	box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-	transform: translateY(-2px);
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .template-thumbnail {
