@@ -624,6 +624,16 @@ class UIManager extends window.L.Control {
 		}
 
 		this.map.on('changeuimode', this.onChangeUIMode, this);
+		this.map.on('backstagehide', () => {
+			setTimeout(() => {
+				this.map.invalidateSize(); // triggers Leaflet layout recalculation
+				const docLayer = this.map._docLayer;
+				if (docLayer && docLayer._docType === 'spreadsheet') {
+					docLayer._resetClientVisArea();
+					docLayer._requestNewTiles();
+				}
+			}, 0);
+		});
 
 		this.refreshTheme();
 
