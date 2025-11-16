@@ -55,7 +55,8 @@ class TileCoordData {
 		return new cool.Point(this.x, this.y);
 	}
 
-	getPos2() {
+	// Returns SimplePoint. To replace getPos in the short term.
+	getPosSimplePoint() {
 		return cool.SimplePoint.fromCorePixels([this.x, this.y], this.part);
 	}
 
