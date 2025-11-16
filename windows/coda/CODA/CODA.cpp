@@ -1735,28 +1735,6 @@ extern "C" BOOLEAN WINAPI GetUserNameExW(
     PULONG nSize
 );
 
-static std::string utf16_to_utf8_str(const wchar_t* wstr)
-{
-    int needed = WideCharToMultiByte(
-        CP_UTF8, 0,
-        wstr, -1,
-        nullptr, 0,
-        nullptr, nullptr);
-
-    if (needed <= 1)
-        return std::string();
-
-    std::string out(needed - 1, '\0');
-
-    WideCharToMultiByte(
-        CP_UTF8, 0,
-        wstr, -1,
-        out.data(), needed,
-        nullptr, nullptr);
-
-    return out;
-}
-
 static const char* getUserName()
 {
     static wchar_t buffer[256];
@@ -1766,15 +1744,18 @@ static const char* getUserName()
     // Try full display name
     if (GetUserNameExW(3 /* NameDisplay */, buffer, &size)) {
         if (buffer[0] != L'\0') {
-            userNameStorage = utf16_to_utf8_str(buffer);
+            userNameStorage = Util::wide_string_to_string(std::wstring(buffer));
             return userNameStorage.c_str();
         }
     }
 
+    // Reset size before next call
+    size = sizeof(buffer) / sizeof(wchar_t);
+
     // Fallback: login name
     if (GetUserNameW(buffer, &size)) {
         if (buffer[0] != L'\0') {
-            userNameStorage = utf16_to_utf8_str(buffer);
+            userNameStorage = Util::wide_string_to_string(std::wstring(buffer));
             return userNameStorage.c_str();
         }
     }
