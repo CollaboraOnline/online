@@ -291,7 +291,7 @@ def main():
             patched = False
             for line in input:
                 if line.startswith('UserInstallation='):
-                    line = 'UserInstallation=$SYSUSERCONFIG/CollaboraOfficeDesktop/appx\n'
+                    line = 'UserInstallation=$SYSUSERCONFIG/' + args.distname + '/appx\n'
                     patched = True
                 output.write(line)
             if not patched:
