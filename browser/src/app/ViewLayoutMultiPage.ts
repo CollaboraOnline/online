@@ -411,4 +411,20 @@ class ViewLayoutMultiPage extends ViewLayoutBase {
 		this.resetViewLayout();
 		this.updateViewData();
 	}
+
+	public get viewSize() {
+		return this._viewSize;
+	}
+
+	public set viewSize(size: cool.SimplePoint) {
+		return; // Disable setting the size externally.
+	}
+
+	public get viewedRectangle() {
+		return this._viewedRectangle;
+	}
+
+	public set viewedRectangle(rectangle: cool.SimpleRectangle) {
+		return; // Disable setting the viewed rectangle externally.
+	}
 }

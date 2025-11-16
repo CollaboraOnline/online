@@ -196,7 +196,7 @@ export class TilesSection extends CanvasSectionObject {
 
 	// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 	private paintSimple (tile: any, async: boolean): void {
-		const tilePos: cool.SimplePoint = tile.coords.getPos2();
+		const tilePos: cool.SimplePoint = tile.coords.getPosSimplePoint();
 
 		if ((async || this.containerObject.isZoomChanged()) && !app.file.fileBasedView) {
 			// Non Calc tiles(handled by paintSimple) can have transparent pixels,
@@ -376,7 +376,7 @@ export class TilesSection extends CanvasSectionObject {
 			const tile = TileManager.get(visibleCoordList[i]);
 
 			if (tile && tile.isReadyToDraw()) {
-				const tilePos = tile.coords.getPos2();
+				const tilePos = tile.coords.getPosSimplePoint();
 
 				const layoutRectangle1 = view.documentRectangles[view.getClosestRectangleIndex(tilePos)];
 				const layoutRectangle2 = view.documentRectangles[view.getClosestRectangleIndex(cool.SimplePoint.fromCorePixels([tilePos.pX, tilePos.pY + TileManager.tileSize]))];
