@@ -6,11 +6,11 @@
                 <File DestinationPath="**" SourcePath="%FILES/**"/>
                 <File ExcludePath="%FILES/program/bootstrap.ini"/>
                 <File ExcludePath="%FILES/**/*.exe"/>
-                <File IncludePath="%FILES/program/Collabora Office.exe" />
                 <File ExcludePath="%FILES/program/*.bin"/>
                 <File DestinationPath="program/bootstrap.ini" SourcePath="%BOOTSTRAP"/>
                 <File DestinationPath="Assets/*" SourcePath="%ASSETS/*"/>
                 <File DestinationPath="resources.pri" SourcePath="%PRI"/>
+                <File Source="%FILES/program/Collabora Office.exe" Destination="program/Collabora Office.exe"/>
             </Files>
         </Package>
     </PackageFamily>
