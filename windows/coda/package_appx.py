@@ -271,8 +271,6 @@ def main():
     if not args.builddir:
         args.builddir = args.repo
 
-    losubdir = ''
-
     workdir = os.path.join(args.outdir, 'tmp')
     if os.path.exists(workdir):
         shutil.rmtree(workdir)
@@ -288,7 +286,7 @@ def main():
 
     # patch bootstrap.ini
     bootstrap_file = os.path.join(workdir, 'bootstrap.ini')
-    with open(os.path.join(args.files + losubdir , 'program/bootstrap.ini'), encoding='utf8') as input:
+    with open(os.path.join(args.files , 'program/bootstrap.ini'), encoding='utf8') as input:
         with open(bootstrap_file, mode='w', encoding='utf8') as output:
             patched = False
             for line in input:
@@ -318,7 +316,7 @@ def main():
 '''
 
     # build language resource list
-    resources = buildLangResouces(args.files + losubdir)
+    resources = buildLangResouces(args.files)
 
     # to use PackagingLayout, we must build the package. (Also potentially allows to build
     # several APPX for multiple platforms.)
@@ -345,7 +343,7 @@ def main():
                                      .replace('%PRI', path2win(pri_file)))
 
     # create PRI
-    subprocess.run([makepri_exe, 'new', '/pr', path2win(assetsrootdir), '/cf', path2win(os.path.join(scriptPath, 'MakePri.xml')), '/in', 'CollaboraProductivityLtd.CODA', '/of', path2win(pri_file)]).check_returncode()
+    subprocess.run([makepri_exe, 'new', '/pr', path2win(assetsrootdir), '/cf', path2win(os.path.join(scriptPath, 'MakePri.xml')), '/in', 'CollaboraProductivityLtd.CollaboraOfficeDesktop', '/of', path2win(pri_file)]).check_returncode()
 
     fileBaseName = args.distname + '.' + args.ver + '.' + args.arch + '.'
     appxName = os.path.join(workdir, fileBaseName + 'appx')
