@@ -715,7 +715,7 @@ static void do_hullo_handling_things(WindowData& data)
 
 static void do_welcome_handling_things(WindowData& data)
 {
-    const auto welcomeSlideshow = Poco::Path(app_installation_path + "cool\\welcome\\welcome-slideshow.odp");
+    const auto welcomeSlideshow = Poco::Path(app_installation_path + "..\\cool\\welcome\\welcome-slideshow.odp");
 
     if (!Poco::File(welcomeSlideshow).exists())
         return;
@@ -783,7 +783,7 @@ static void do_print(int appDocId)
     PROCESS_INFORMATION processInformation;
 
     if (!CreateProcessW(
-            Util::string_to_wide_string(app_installation_path + "PrintPDFAndDelete.exe").c_str(),
+            Util::string_to_wide_string(app_installation_path + "..\\PrintPDFAndDelete.exe").c_str(),
             Util::string_to_wide_string("PrintPDFAndDelete " + tempFileUri).data(), NULL, NULL,
             TRUE, 0, NULL, NULL, &startupInfo, &processInformation))
         LOG_ERR("CreateProcess failed: " << GetLastError());
@@ -1585,7 +1585,7 @@ static void openCOOLWindow(const FilenameAndUri& filenameAndUri, PERMISSION perm
 
                             const std::string coolURL =
                                 app_installation_uri +
-                                std::string("cool/cool.html?file_path=") + data.filenameAndUri.uri +
+                                std::string("../cool/cool.html?file_path=") + data.filenameAndUri.uri +
                                 std::string("&permission=edit") +
                                 std::string("&lang=") + uiLanguage +
                                 std::string("&appdocid=") + std::to_string(data.appDocId) +
