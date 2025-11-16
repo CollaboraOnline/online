@@ -1365,6 +1365,8 @@ body {
 	z-index: 1000000;
 	background-color: black;
 	border: none;
+	margin-top: -1px;
+	margin-left: -1px;
 }
 
 .table-add-col-row-marker {
