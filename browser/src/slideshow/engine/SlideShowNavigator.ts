@@ -290,7 +290,7 @@ class SlideShowNavigator {
 			this.currentSlide = nNewSlide;
 			const force = nNewSlide > this.theMetaPres.numberOfSlides;
 			if (force) this.quit();
-			else this.endPresentation(false);
+			else this.endPresentation(this.presenter._isWelcomePresentation);
 			return;
 		}
 

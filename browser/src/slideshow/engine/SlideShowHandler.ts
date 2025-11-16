@@ -346,10 +346,7 @@ class SlideShowHandler {
 		);
 		const sCurrSlideHash = this.theMetaPres.getCurrentSlideHash();
 
-		if (this.theMetaPres.isLastSlide(sCurrSlideHash)) {
-			if (this.presenter._isWelcomePresentation) this.slideShowNavigator.quit();
-			return;
-		}
+		if (this.theMetaPres.isLastSlide(sCurrSlideHash) && !this.presenter._isWelcomePresentation) return;
 
 		assert(
 			this.automaticAdvanceTimeout === null,
