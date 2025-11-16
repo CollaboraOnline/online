@@ -252,7 +252,7 @@ public:
             break;
             case Phase::Done:
             {
-                if (_stopwatch.elapsed(1min))
+                if (_stopwatch.elapsed(10s))
                 {
                     passTest("No unexpected conditions met");
                 }
