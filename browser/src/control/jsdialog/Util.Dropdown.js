@@ -122,7 +122,8 @@ JSDialog.OpenDropdown = function (id, popupParent, entries, innerCallback, popup
 					icon: entries[i].img,
 					checked: entries[i].checked || checkedValue,
 					selected: entries[i].selected,
-					hasSubMenu: !!entries[i].items
+					hasSubMenu: !!entries[i].items,
+					visible: entries[i].visible === undefined ? true : entries[i].visible,
 				};
 			break;
 		}
