@@ -95,12 +95,11 @@ namespace Log
                  char* buffer,
                  const char* level);
 
-    template <int Size> inline char* prefix(char buffer[Size], const char* level)
+    template <int Size> inline char* prefix(std::array<char, Size>& buffer, const char* level)
     {
         static_assert(Size >= 128, "Buffer size must be at least 128 bytes.");
 
-        const auto tp = std::chrono::system_clock::now();
-        return prefix(tp, buffer, level);
+        return prefix(std::chrono::system_clock::now(), buffer.data(), level);
     }
 
     /// is a certain level of logging enabled ?
@@ -239,8 +238,8 @@ static constexpr std::size_t skipPathPrefix(const char (&s)[N], std::size_t n = 
     } while (false)
 
 #define LOG_BODY_(LVL, X, PREFIX, END)                                                             \
-    char UNIQUE_VAR(buffer)[1024];                                                                 \
-    std::ostringstream oss_(Log::prefix<sizeof(UNIQUE_VAR(buffer)) - 1>(UNIQUE_VAR(buffer), #LVL), \
+    std::array<char, 1024> UNIQUE_VAR(buffer);                                                     \
+    std::ostringstream oss_(Log::prefix<UNIQUE_VAR(buffer).size()>(UNIQUE_VAR(buffer), #LVL),      \
                             std::ostringstream::ate);                                              \
     PREFIX(oss_);                                                                                  \
     oss_ << std::boolalpha << X;                                                                   \
@@ -251,10 +250,9 @@ static constexpr std::size_t skipPathPrefix(const char (&s)[N], std::size_t n = 
 #define LOG_UNCONDITIONAL(LVL, X)                                                                  \
     do                                                                                             \
     {                                                                                              \
-        char UNIQUE_VAR(buffer)[1024];                                                             \
-        std::ostringstream oss_(                                                                   \
-            Log::prefix<sizeof(UNIQUE_VAR(buffer)) - 1>(UNIQUE_VAR(buffer), #LVL),                 \
-            std::ostringstream::ate);                                                              \
+        std::array<char, 1024> UNIQUE_VAR(buffer);                                                 \
+        std::ostringstream oss_(Log::prefix<UNIQUE_VAR(buffer).size()>(UNIQUE_VAR(buffer), #LVL),  \
+                                std::ostringstream::ate);                                          \
         logPrefix(oss_);                                                                           \
         oss_ << std::boolalpha << X;                                                               \
         LOG_END(oss_);                                                                             \
