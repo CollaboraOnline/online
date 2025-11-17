@@ -15,7 +15,7 @@ const TEMPLATE_SELECTION = [
 	{ id: 'writer-styles-modern', type: 'writer', category: 'writer', relativePath: 'styles/Modern.ott', name: 'Modern Style' },
 	{ id: 'writer-styles-simple', type: 'writer', category: 'writer', relativePath: 'styles/Simple.ott', name: 'Simple Style' },
 
-	{ id: 'calc-default', type: 'calc', category: 'calc', relativePath: 'wizard/styles/default.ots', name: 'Default Spreadsheet' },
+	// { id: 'calc-default', type: 'calc', category: 'calc', relativePath: 'wizard/styles/default.ots', name: 'Default Spreadsheet' },
 
 	{ id: 'impress-beehive', type: 'impress', category: 'impress', relativePath: 'presnt/Beehive.otp', name: 'Beehive' },
 	{ id: 'impress-blue-curve', type: 'impress', category: 'impress', relativePath: 'presnt/Blue_Curve.otp', name: 'Blue Curve' },
