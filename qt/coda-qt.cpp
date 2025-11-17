@@ -729,6 +729,21 @@ QVariant Bridge::cool(const QString& messageStr)
             LOG_TRC_NOFILE("Welcome slideshow not found at: " << welcomePath);
         }
     }
+    else if (message == "LICENSE")
+    {
+        const std::string licensePath = getTopSrcDir(TOPSRCDIR) + "/../../collaboraoffice/LICENSE.html";
+        struct stat st;
+        if (FileUtil::getStatOfFile(licensePath, st) == 0)
+        {
+            const QUrl url = QUrl::fromLocalFile(QString::fromStdString(licensePath));
+            QDesktopServices::openUrl(url);
+            LOG_TRC_NOFILE("Opening LICENSE.html: " << licensePath);
+        }
+        else
+        {
+            LOG_TRC_NOFILE("LICENSE.html not found at: " << licensePath);
+        }
+    }
     else if (message.starts_with(COMMANDSTATECHANGED))
     {
         const auto object = parseJsonFromMessage(message, COMMANDSTATECHANGED.size());
