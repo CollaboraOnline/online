@@ -211,6 +211,15 @@ class ViewController: NSViewController, WKScriptMessageHandlerWithReply, WKNavig
                     (NSDocumentController.shared as? DocumentController)?.openWelcome()
                     return (nil, nil)
                 }
+                else if body == "LICENSE" {
+                    guard let url = Bundle.main.url(forResource: "LICENSE", withExtension: "html") else {
+                        COWrapper.LOG_ERR("LICENSE.html not found in bundle")
+                        return (nil, nil)
+                     }
+
+                     NSWorkspace.shared.open(url)
+                     return (nil, nil)
+                }
                 else if body.hasPrefix("downloadas ") {
                     let messageBodyItems = body.components(separatedBy: " ")
                     var format: String?
