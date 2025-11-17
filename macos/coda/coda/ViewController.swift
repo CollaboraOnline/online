@@ -11,6 +11,33 @@
 import Cocoa
 import WebKit
 
+final class ConsoleController: NSWindowController {
+    let webView: WKWebView
+
+    init(webView: WKWebView) {
+        self.webView = webView
+        let style: NSWindow.StyleMask = [.fullScreen, .fullSizeContentView, .closable, .resizable, .miniaturizable]
+        let window = NSWindow(contentRect: NSRect(x: 0, y: 0, width: 1000, height: 640),
+                              styleMask: style, backing: .buffered, defer: false)
+        super.init(window: window)
+
+        // put the webView into the window
+        webView.translatesAutoresizingMaskIntoConstraints = false
+        window.contentView?.addSubview(webView)
+
+        if let content = window.contentView {
+            NSLayoutConstraint.activate([
+                webView.leadingAnchor.constraint(equalTo: content.leadingAnchor),
+                webView.trailingAnchor.constraint(equalTo: content.trailingAnchor),
+                webView.topAnchor.constraint(equalTo: content.topAnchor),
+                webView.bottomAnchor.constraint(equalTo: content.bottomAnchor),
+            ])
+        }
+    }
+
+    required init?(coder: NSCoder) { fatalError("doesn't seem to matter") }
+}
+
 class ViewController: NSViewController, WKScriptMessageHandlerWithReply, WKNavigationDelegate, WKUIDelegate {
 
     /// Access to the NSDocument (document loading & saving infrastructure).
@@ -18,6 +45,8 @@ class ViewController: NSViewController, WKScriptMessageHandlerWithReply, WKNavig
 
     /// The actual webview holding the document.
     var webView: WKWebView!
+
+    var subWindow: ConsoleController!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -331,6 +360,15 @@ class ViewController: NSViewController, WKScriptMessageHandlerWithReply, WKNavig
 
     func webView(_ webView: WKWebView, createWebViewWith configuration: WKWebViewConfiguration, for navigationAction: WKNavigationAction, windowFeatures: WKWindowFeatures) -> WKWebView? {
         COWrapper.LOG_ERR("createWebViewWith \(navigationAction.request.url)")
-        return nil
+
+        configuration.preferences.isElementFullscreenEnabled = true
+        let consoleWebView = WKWebView(frame: .zero, configuration: configuration)
+
+        let wc = ConsoleController(webView: consoleWebView)
+        subWindow = wc
+
+        wc.showWindow(nil)
+
+        return consoleWebView
     }
 }
