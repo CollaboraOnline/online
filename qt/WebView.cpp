@@ -264,7 +264,7 @@ void WebView::load(const Poco::URI& fileURL, bool newFile)
     QString applicationTitle = fileName + " - " APP_NAME;
     QApplication::setApplicationName(applicationTitle);
     // set file name in window title
-    if (_webView && _webView->window())
+    if (_webView->window())
         _webView->window()->setWindowTitle(applicationTitle);
 
     _webView->load(QUrl(QString::fromStdString(urlAndQueryStr)));
@@ -370,7 +370,7 @@ void WebView::queryGnomeFontScalingUpdateZoom()
 
                          bool ok;
                          double factor = innerVariant.toDouble(&ok);
-                         if (ok && _webView)
+                         if (ok)
                              _webView->setZoomFactor(factor);
                      });
 }
