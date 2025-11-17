@@ -212,7 +212,7 @@ class BackstageView extends window.L.Class {
 			},
 			{
 				id: 'open',
-				label: _('Open'),
+				label: _UNO('.uno:Open'),
 				type: 'action',
 				actionType: 'open',
 				visible: true,
