@@ -91,12 +91,29 @@ class BackstageView extends window.L.Class {
 	private templateGridContainer: HTMLElement | null = null;
 	private templateFeaturedRowContainer: HTMLElement | null = null;
 	private templateSearchContainer: HTMLElement | null = null;
+	private saveTabElement: HTMLElement | null = null;
+
+	private actionHandlers: Record<string, () => void> = {
+		open: () => this.executeOpen(),
+		save: () => this.executeSave(),
+		saveas: () => this.executeSaveAs(),
+		print: () => this.executePrint(),
+		share: () => this.executeShare(),
+		repair: () => this.executeRepair(),
+		properties: () => this.executeDocumentProperties(),
+		history: () => this.executeRevisionHistory(),
+	};
 
 	constructor(map: any) {
 		super();
 		this.map = map;
 		this.container = this.createContainer();
 		document.body.appendChild(this.container);
+		this.map?.on('commandstatechanged', (e: any) => {
+			if (e.commandName === '.uno:ModifiedStatus') {
+				this.updateSaveButtonState();
+			}
+		}, this);
 	}
 
 	private createContainer(): HTMLElement {
@@ -180,6 +197,8 @@ class BackstageView extends window.L.Class {
 	private createTabElement(config: BackstageTabConfig): HTMLElement {
 		const element = this.createElement('div', 'backstage-sidebar-item');
 		element.id = `backstage-${config.id}`;
+
+		if (config.id === 'save') this.saveTabElement = element;
 
 		const label = this.createElement('span');
 		label.textContent = config.label;
@@ -278,21 +297,8 @@ class BackstageView extends window.L.Class {
 	}
 
 	private handleActionTab(config: BackstageTabConfig): void {
-		const actionHandlers: Record<string, () => void> = {
-			open: () => this.executeOpen(),
-			save: () => this.executeSave(),
-			saveas: () => this.executeSaveAs(),
-			print: () => this.executePrint(),
-			share: () => this.executeShare(),
-			repair: () => this.executeRepair(),
-			properties: () => this.executeDocumentProperties(),
-			history: () => this.executeRevisionHistory(),
-		};
-
-		const actionType = config.actionType;
-		if (!actionType) return;
-
-		const handler = actionHandlers[actionType];
+		if (config.actionType === 'save' && !this.isDocumentModified()) return;
+		const handler = this.actionHandlers[config.actionType || ''];
 		if (handler) handler();
 	}
 
@@ -1112,6 +1118,7 @@ class BackstageView extends window.L.Class {
 		$(this.container).removeClass('hidden');
 		this.hideDocumentContainer();
 		this.renderNewView();
+		this.updateSaveButtonState();
 		this.container.focus();
 		this.fireMapEvent('backstageshow');
 	}
@@ -1164,6 +1171,15 @@ class BackstageView extends window.L.Class {
 			default:
 				return 'writer';
 		}
+	}
+
+	private isDocumentModified(): boolean {
+		return this.map?.stateChangeHandler?.getItemValue('.uno:ModifiedStatus') === 'true';
+	}
+
+	private updateSaveButtonState(): void {
+		if (!this.saveTabElement) return;
+		this.saveTabElement.classList.toggle('disabled', !this.isDocumentModified());
 	}
 }
 
