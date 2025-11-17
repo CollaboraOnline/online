@@ -225,9 +225,9 @@ void resetTerminationFlags()
 
     void signalLogPrefix()
     {
-        char buffer[1024];
-        Log::prefix<sizeof(buffer) - 1>(buffer, "SIG");
-        signalLog(buffer);
+        std::array<char, 1024> buffer;
+        Log::prefix<buffer.size()>(buffer, "SIG");
+        signalLog(buffer.data());
     }
 
     // We need a signal safe means of writing messages
