@@ -1,25 +1,575 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Package xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10" xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10" xmlns:rescap="http://schemas.microsoft.com/appx/manifest/foundation/windows10/restrictedcapabilities" xmlns:desktop="http://schemas.microsoft.com/appx/manifest/desktop/windows10">
-    <Identity Name="CollaboraProductivityLtd.CollaboraOfficeDesktop" Version="%VER" Publisher="CN=E9F172FF-9203-4DB8-A589-184C7A58C071" ProcessorArchitecture="%ARCH"/>
-    <Properties>
-        <DisplayName>Collabora Office Desktop</DisplayName>
-        <PublisherDisplayName>Collabora Productivity Ltd</PublisherDisplayName>
-        <Logo>Assets/logo.png</Logo>
-    </Properties>
-    <Resources>
-        <Resource Language="en-US"/>
+<Package xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10"
+  xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10"
+  xmlns:rescap="http://schemas.microsoft.com/appx/manifest/foundation/windows10/restrictedcapabilities"
+  xmlns:desktop="http://schemas.microsoft.com/appx/manifest/desktop/windows10">
+  <Identity Name="CollaboraProductivityLtd.CollaboraOfficeDesktop" Version="%VER" Publisher="CN=E9F172FF-9203-4DB8-A589-184C7A58C071" ProcessorArchitecture="%ARCH"/>
+  <Properties>
+    <DisplayName>Collabora Office Desktop</DisplayName>
+    <PublisherDisplayName>Collabora Productivity Ltd</PublisherDisplayName>
+    <Logo>Assets/logo.png</Logo>
+  </Properties>
+  <Resources>
+    <Resource Language="en-US"/>
 %RES    </Resources>
-    <Dependencies>
-        <TargetDeviceFamily Name="Windows.Desktop" MinVersion="10.0.10240.0" MaxVersionTested="10.0.19041.508"/>
-        <PackageDependency Name="Microsoft.VCLibs.140.00.UWPDesktop" MinVersion="14.0.24210.0" Publisher="CN=Microsoft Corporation, O=Microsoft Corporation, L=Redmond, S=Washington, C=US"/>
-    </Dependencies>
-    <Capabilities>
-        <Capability Name="internetClient"/>
-        <rescap:Capability Name="runFullTrust"/>
-    </Capabilities>
-    <Applications>
-        <Application Id="CODA" Executable="program/Collabora Office.exe" EntryPoint="Windows.FullTrustApplication">
-            <uap:VisualElements DisplayName="Collabora Office Desktop" Description="sofficeUapDescription" Square150x150Logo="Assets/Square150x150Logo.png" Square44x44Logo="Assets/Square44x44Logo.png" BackgroundColor="white"/>
-        </Application>
-    </Applications>
+  <Dependencies>
+    <TargetDeviceFamily Name="Windows.Desktop" MinVersion="10.0.10240.0" MaxVersionTested="10.0.19041.508"/>
+    <PackageDependency Name="Microsoft.VCLibs.140.00.UWPDesktop" MinVersion="14.0.24210.0" Publisher="CN=Microsoft Corporation, O=Microsoft Corporation, L=Redmond, S=Washington, C=US"/>
+  </Dependencies>
+  <Capabilities>
+    <Capability Name="internetClient"/>
+    <rescap:Capability Name="runFullTrust"/>
+  </Capabilities>
+  <Applications>
+    <Application Id="CODA" Executable="program/Collabora Office.exe" EntryPoint="Windows.FullTrustApplication">
+      <uap:VisualElements DisplayName="Collabora Office Desktop" Description="sofficeUapDescription" Square150x150Logo="Assets/Square150x150Logo.png" Square44x44Logo="Assets/Square44x44Logo.png" BackgroundColor="white"/>
+      <Extensions>
+        <uap:Extension Category="windows.fileTypeAssociation">
+          <uap:FileTypeAssociation Name="calc8">
+            <uap:DisplayName>Calc 8</uap:DisplayName>
+            <uap:Logo>Assets/spreadsheet.png</uap:Logo>
+            <uap:SupportedFileTypes>
+              <uap:FileType>.ods</uap:FileType>
+            </uap:SupportedFileTypes>
+          </uap:FileTypeAssociation>
+        </uap:Extension>
+        <uap:Extension Category="windows.fileTypeAssociation">
+          <uap:FileTypeAssociation Name="calc8_template">
+            <uap:DisplayName>Calc 8 Template</uap:DisplayName>
+            <uap:Logo>Assets/spreadsheet-template.png</uap:Logo>
+            <uap:SupportedFileTypes>
+              <uap:FileType>.ots</uap:FileType>
+            </uap:SupportedFileTypes>
+          </uap:FileTypeAssociation>
+        </uap:Extension>
+        <uap:Extension Category="windows.fileTypeAssociation">
+          <uap:FileTypeAssociation Name="calc_dbase">
+            <uap:DisplayName>dBASE</uap:DisplayName>
+            <uap:Logo>Assets/spreadsheet.png</uap:Logo>
+            <uap:SupportedFileTypes>
+              <uap:FileType>.dbf</uap:FileType>
+            </uap:SupportedFileTypes>
+          </uap:FileTypeAssociation>
+        </uap:Extension>
+        <uap:Extension Category="windows.fileTypeAssociation">
+          <uap:FileTypeAssociation Name="calc_dif">
+            <uap:DisplayName>Data Interchange Format</uap:DisplayName>
+            <uap:Logo>Assets/spreadsheet.png</uap:Logo>
+            <uap:SupportedFileTypes>
+              <uap:FileType>.dif</uap:FileType>
+            </uap:SupportedFileTypes>
+          </uap:FileTypeAssociation>
+        </uap:Extension>
+        <uap:Extension Category="windows.fileTypeAssociation">
+          <uap:FileTypeAssociation Name="calc_ms_excel_97">
+            <uap:DisplayName>Excel 97–2003</uap:DisplayName>
+            <uap:Logo>Assets/spreadsheet.png</uap:Logo>
+            <uap:SupportedFileTypes>
+              <uap:FileType>.xls</uap:FileType>
+              <uap:FileType>.xlc</uap:FileType>
+              <uap:FileType>.xlm</uap:FileType>
+              <uap:FileType>.xlw</uap:FileType>
+              <uap:FileType>.xlk</uap:FileType>
+              <uap:FileType>.et</uap:FileType>
+            </uap:SupportedFileTypes>
+          </uap:FileTypeAssociation>
+        </uap:Extension>
+        <uap:Extension Category="windows.fileTypeAssociation">
+          <uap:FileTypeAssociation Name="calc_ms_excel_97_vorlagetemplate">
+            <uap:DisplayName>Excel 97–2000 Template</uap:DisplayName>
+            <uap:Logo>Assets/spreadsheet-template.png</uap:Logo>
+            <uap:SupportedFileTypes>
+              <uap:FileType>.xlt</uap:FileType>
+              <uap:FileType>.ett</uap:FileType>
+            </uap:SupportedFileTypes>
+          </uap:FileTypeAssociation>
+        </uap:Extension>
+        <uap:Extension Category="windows.fileTypeAssociation">
+          <uap:FileTypeAssociation Name="calc_ods_flatxml">
+            <uap:DisplayName>OpenDocument Spreadsheet (Flat XML)</uap:DisplayName>
+            <uap:Logo>Assets/spreadsheet.png</uap:Logo>
+            <uap:SupportedFileTypes>
+              <uap:FileType>.fods</uap:FileType>
+              <uap:FileType>.xml</uap:FileType>
+            </uap:SupportedFileTypes>
+          </uap:FileTypeAssociation>
+        </uap:Extension>
+        <uap:Extension Category="windows.fileTypeAssociation">
+          <uap:FileTypeAssociation Name="office_open_xml_spreadsheet">
+            <uap:DisplayName>Office Open XML Spreadsheet</uap:DisplayName>
+            <uap:Logo>Assets/spreadsheet.png</uap:Logo>
+            <uap:SupportedFileTypes>
+              <uap:FileType>.xlsx</uap:FileType>
+              <uap:FileType>.xlsm</uap:FileType>
+            </uap:SupportedFileTypes>
+          </uap:FileTypeAssociation>
+        </uap:Extension>
+        <uap:Extension Category="windows.fileTypeAssociation">
+          <uap:FileTypeAssociation Name="calc_staroffice_xml_calc">
+            <uap:DisplayName>Calc 6.0</uap:DisplayName>
+            <uap:Logo>Assets/spreadsheet.png</uap:Logo>
+            <uap:SupportedFileTypes>
+              <uap:FileType>.sxc</uap:FileType>
+            </uap:SupportedFileTypes>
+          </uap:FileTypeAssociation>
+        </uap:Extension>
+        <uap:Extension Category="windows.fileTypeAssociation">
+          <uap:FileTypeAssociation Name="calc_staroffice_xml_calc_template">
+            <uap:DisplayName>Calc 6.0 Template</uap:DisplayName>
+            <uap:Logo>Assets/spreadsheet-template.png</uap:Logo>
+            <uap:SupportedFileTypes>
+              <uap:FileType>.stc</uap:FileType>
+            </uap:SupportedFileTypes>
+          </uap:FileTypeAssociation>
+        </uap:Extension>
+        <uap:Extension Category="windows.fileTypeAssociation">
+          <uap:FileTypeAssociation Name="calc_sylk">
+            <uap:DisplayName>SYLK</uap:DisplayName>
+            <uap:Logo>Assets/spreadsheet.png</uap:Logo>
+            <uap:SupportedFileTypes>
+              <uap:FileType>.slk</uap:FileType>
+              <uap:FileType>.sylk</uap:FileType>
+            </uap:SupportedFileTypes>
+          </uap:FileTypeAssociation>
+        </uap:Extension>
+        <uap:Extension Category="windows.fileTypeAssociation">
+          <uap:FileTypeAssociation Name="chart8">
+            <uap:DisplayName>Chart 8</uap:DisplayName>
+            <uap:Logo>Assets/soffice.png</uap:Logo>
+            <uap:SupportedFileTypes>
+              <uap:FileType>.odc</uap:FileType>
+            </uap:SupportedFileTypes>
+          </uap:FileTypeAssociation>
+        </uap:Extension>
+        <uap:Extension Category="windows.fileTypeAssociation">
+          <uap:FileTypeAssociation Name="chart_staroffice_xml_chart">
+            <uap:DisplayName>Chart 6.0</uap:DisplayName>
+            <uap:Logo>Assets/soffice.png</uap:Logo>
+            <uap:SupportedFileTypes>
+              <uap:FileType>.sxs</uap:FileType>
+            </uap:SupportedFileTypes>
+          </uap:FileTypeAssociation>
+        </uap:Extension>
+        <uap:Extension Category="windows.fileTypeAssociation">
+          <uap:FileTypeAssociation Name="draw8">
+            <uap:DisplayName>Draw 8</uap:DisplayName>
+            <uap:Logo>Assets/presentation.png</uap:Logo>
+            <uap:SupportedFileTypes>
+              <uap:FileType>.odg</uap:FileType>
+            </uap:SupportedFileTypes>
+          </uap:FileTypeAssociation>
+        </uap:Extension>
+        <uap:Extension Category="windows.fileTypeAssociation">
+          <uap:FileTypeAssociation Name="draw8_template">
+            <uap:DisplayName>Draw 8 Template</uap:DisplayName>
+            <uap:Logo>Assets/drawing-template.png</uap:Logo>
+            <uap:SupportedFileTypes>
+              <uap:FileType>.otg</uap:FileType>
+            </uap:SupportedFileTypes>
+          </uap:FileTypeAssociation>
+        </uap:Extension>
+        <uap:Extension Category="windows.fileTypeAssociation">
+          <uap:FileTypeAssociation Name="draw_odg_flatxml">
+            <uap:DisplayName>OpenDocument Drawing (Flat XML)</uap:DisplayName>
+            <uap:Logo>Assets/drawing.png</uap:Logo>
+            <uap:SupportedFileTypes>
+              <uap:FileType>.fodg</uap:FileType>
+            </uap:SupportedFileTypes>
+          </uap:FileTypeAssociation>
+        </uap:Extension>
+        <uap:Extension Category="windows.fileTypeAssociation">
+          <uap:FileTypeAssociation Name="draw_staroffice_xml_draw">
+            <uap:DisplayName>OpenOffice.org 1.0 Drawing</uap:DisplayName>
+            <uap:Logo>Assets/drawing.png</uap:Logo>
+            <uap:SupportedFileTypes>
+              <uap:FileType>.sxd</uap:FileType>
+            </uap:SupportedFileTypes>
+          </uap:FileTypeAssociation>
+        </uap:Extension>
+        <uap:Extension Category="windows.fileTypeAssociation">
+          <uap:FileTypeAssociation Name="draw_staroffice_xml_draw_template">
+            <uap:DisplayName>Draw 6.0 Template</uap:DisplayName>
+            <uap:Logo>Assets/drawing-template.png</uap:Logo>
+            <uap:SupportedFileTypes>
+              <uap:FileType>.std</uap:FileType>
+            </uap:SupportedFileTypes>
+          </uap:FileTypeAssociation>
+        </uap:Extension>
+        <uap:Extension Category="windows.fileTypeAssociation">
+          <uap:FileTypeAssociation Name="generic_html">
+            <uap:DisplayName>HTML Document</uap:DisplayName>
+            <uap:Logo>Assets/text.png</uap:Logo>
+            <uap:SupportedFileTypes>
+              <uap:FileType>.html</uap:FileType>
+              <uap:FileType>.xhtml</uap:FileType>
+              <uap:FileType>.htm</uap:FileType>
+            </uap:SupportedFileTypes>
+          </uap:FileTypeAssociation>
+        </uap:Extension>
+        <uap:Extension Category="windows.fileTypeAssociation">
+          <uap:FileTypeAssociation Name="generic_markdown">
+            <uap:DisplayName>Markdown Document</uap:DisplayName>
+            <uap:Logo>Assets/text.png</uap:Logo>
+            <uap:SupportedFileTypes>
+              <uap:FileType>.md</uap:FileType>
+              <uap:FileType>.markdown</uap:FileType>
+            </uap:SupportedFileTypes>
+          </uap:FileTypeAssociation>
+        </uap:Extension>
+        <uap:Extension Category="windows.fileTypeAssociation">
+          <uap:FileTypeAssociation Name="generic_text">
+            <uap:DisplayName>Text</uap:DisplayName>
+            <uap:Logo>Assets/spreadsheet.png</uap:Logo>
+            <uap:SupportedFileTypes>
+              <uap:FileType>.csv</uap:FileType>
+              <uap:FileType>.tsv</uap:FileType>
+              <uap:FileType>.tab</uap:FileType>
+              <uap:FileType>.txt</uap:FileType>
+            </uap:SupportedFileTypes>
+          </uap:FileTypeAssociation>
+        </uap:Extension>
+        <uap:Extension Category="windows.fileTypeAssociation">
+          <uap:FileTypeAssociation Name="impress8">
+            <uap:DisplayName>Impress 8</uap:DisplayName>
+            <uap:Logo>Assets/presentation.png</uap:Logo>
+            <uap:SupportedFileTypes>
+              <uap:FileType>.odp</uap:FileType>
+            </uap:SupportedFileTypes>
+          </uap:FileTypeAssociation>
+        </uap:Extension>
+        <uap:Extension Category="windows.fileTypeAssociation">
+          <uap:FileTypeAssociation Name="impress8_template">
+            <uap:DisplayName>Impress 8 Template</uap:DisplayName>
+            <uap:Logo>Assets/presentation-template.png</uap:Logo>
+            <uap:SupportedFileTypes>
+              <uap:FileType>.otp</uap:FileType>
+            </uap:SupportedFileTypes>
+          </uap:FileTypeAssociation>
+        </uap:Extension>
+        <uap:Extension Category="windows.fileTypeAssociation">
+          <uap:FileTypeAssociation Name="impress_ms_powerpoint_97">
+            <uap:DisplayName>PowerPoint 97–2003</uap:DisplayName>
+            <uap:Logo>Assets/presentation.png</uap:Logo>
+            <uap:SupportedFileTypes>
+              <uap:FileType>.ppt</uap:FileType>
+              <uap:FileType>.dps</uap:FileType>
+            </uap:SupportedFileTypes>
+          </uap:FileTypeAssociation>
+        </uap:Extension>
+        <uap:Extension Category="windows.fileTypeAssociation">
+          <uap:FileTypeAssociation Name="impress_ms_powerpoint_97_autoplay">
+            <uap:DisplayName>PowerPoint 97–2003</uap:DisplayName>
+            <uap:Logo>Assets/presentation.png</uap:Logo>
+            <uap:SupportedFileTypes>
+              <uap:FileType>.pps</uap:FileType>
+            </uap:SupportedFileTypes>
+          </uap:FileTypeAssociation>
+        </uap:Extension>
+        <uap:Extension Category="windows.fileTypeAssociation">
+          <uap:FileTypeAssociation Name="impress_ms_powerpoint_97_vorlage">
+            <uap:DisplayName>PowerPoint 97–2000 Template</uap:DisplayName>
+            <uap:Logo>Assets/presentation-template.png</uap:Logo>
+            <uap:SupportedFileTypes>
+              <uap:FileType>.pot</uap:FileType>
+              <uap:FileType>.dpt</uap:FileType>
+            </uap:SupportedFileTypes>
+          </uap:FileTypeAssociation>
+        </uap:Extension>
+        <uap:Extension Category="windows.fileTypeAssociation">
+          <uap:FileTypeAssociation Name="impress_odp_flatxml">
+            <uap:DisplayName>OpenDocument Presentation (Flat XML)</uap:DisplayName>
+            <uap:Logo>Assets/presentation.png</uap:Logo>
+            <uap:SupportedFileTypes>
+              <uap:FileType>.fodp</uap:FileType>
+            </uap:SupportedFileTypes>
+          </uap:FileTypeAssociation>
+        </uap:Extension>
+        <uap:Extension Category="windows.fileTypeAssociation">
+          <uap:FileTypeAssociation Name="office_open_xml_presentation">
+            <uap:DisplayName>Office Open XML Presentation</uap:DisplayName>
+            <uap:Logo>Assets/presentation.png</uap:Logo>
+            <uap:SupportedFileTypes>
+              <uap:FileType>.pptx</uap:FileType>
+              <uap:FileType>.pptm</uap:FileType>
+            </uap:SupportedFileTypes>
+          </uap:FileTypeAssociation>
+        </uap:Extension>
+        <uap:Extension Category="windows.fileTypeAssociation">
+          <uap:FileTypeAssociation Name="office_open_xml_presentation_autoplay">
+            <uap:DisplayName>Office Open XML Presentation AutoPlay</uap:DisplayName>
+            <uap:Logo>Assets/presentation.png</uap:Logo>
+            <uap:SupportedFileTypes>
+              <uap:FileType>.ppsx</uap:FileType>
+            </uap:SupportedFileTypes>
+          </uap:FileTypeAssociation>
+        </uap:Extension>
+        <uap:Extension Category="windows.fileTypeAssociation">
+          <uap:FileTypeAssociation Name="office_open_xml_presentation_template">
+            <uap:DisplayName>Office Open XML Presentation Template</uap:DisplayName>
+            <uap:Logo>Assets/presentation-template.png</uap:Logo>
+            <uap:SupportedFileTypes>
+              <uap:FileType>.potx</uap:FileType>
+              <uap:FileType>.potm</uap:FileType>
+            </uap:SupportedFileTypes>
+          </uap:FileTypeAssociation>
+        </uap:Extension>
+        <uap:Extension Category="windows.fileTypeAssociation">
+          <uap:FileTypeAssociation Name="impress_staroffice_xml_impress">
+            <uap:DisplayName>OpenOffice.org 1.0 Presentation</uap:DisplayName>
+            <uap:Logo>Assets/presentation.png</uap:Logo>
+            <uap:SupportedFileTypes>
+              <uap:FileType>.sxi</uap:FileType>
+            </uap:SupportedFileTypes>
+          </uap:FileTypeAssociation>
+        </uap:Extension>
+        <uap:Extension Category="windows.fileTypeAssociation">
+          <uap:FileTypeAssociation Name="impress_staroffice_xml_impress_template">
+            <uap:DisplayName>Impress 6.0 Template</uap:DisplayName>
+            <uap:Logo>Assets/presentation-template.png</uap:Logo>
+            <uap:SupportedFileTypes>
+              <uap:FileType>.sti</uap:FileType>
+            </uap:SupportedFileTypes>
+          </uap:FileTypeAssociation>
+        </uap:Extension>
+        <uap:Extension Category="windows.fileTypeAssociation">
+          <uap:FileTypeAssociation Name="math8">
+            <uap:DisplayName>Math 8</uap:DisplayName>
+            <uap:Logo>Assets/formula.png</uap:Logo>
+            <uap:SupportedFileTypes>
+              <uap:FileType>.odf</uap:FileType>
+            </uap:SupportedFileTypes>
+          </uap:FileTypeAssociation>
+        </uap:Extension>
+        <uap:Extension Category="windows.fileTypeAssociation">
+          <uap:FileTypeAssociation Name="math_mathml_xml_math">
+            <uap:DisplayName>MathML 2.0</uap:DisplayName>
+            <uap:Logo>Assets/formula.png</uap:Logo>
+            <uap:SupportedFileTypes>
+              <uap:FileType>.mml</uap:FileType>
+            </uap:SupportedFileTypes>
+          </uap:FileTypeAssociation>
+        </uap:Extension>
+        <uap:Extension Category="windows.fileTypeAssociation">
+          <uap:FileTypeAssociation Name="math_mathtype_3x">
+            <uap:DisplayName>MathType3.x</uap:DisplayName>
+            <uap:Logo>Assets/formula.png</uap:Logo>
+            <uap:SupportedFileTypes>
+              <uap:FileType>.xxx</uap:FileType>
+            </uap:SupportedFileTypes>
+          </uap:FileTypeAssociation>
+        </uap:Extension>
+        <uap:Extension Category="windows.fileTypeAssociation">
+          <uap:FileTypeAssociation Name="math_staroffice_xml_math">
+            <uap:DisplayName>OpenOffice.org 1.0 Formula</uap:DisplayName>
+            <uap:Logo>Assets/formula.png</uap:Logo>
+            <uap:SupportedFileTypes>
+              <uap:FileType>.sxm</uap:FileType>
+            </uap:SupportedFileTypes>
+          </uap:FileTypeAssociation>
+        </uap:Extension>
+        <uap:Extension Category="windows.fileTypeAssociation">
+          <uap:FileTypeAssociation Name="ms_excel_2007_xml_template">
+            <uap:DisplayName>Excel 2007–365 Template</uap:DisplayName>
+            <uap:Logo>Assets/spreadsheet-template.png</uap:Logo>
+            <uap:SupportedFileTypes>
+              <uap:FileType>.xltx</uap:FileType>
+              <uap:FileType>.xltm</uap:FileType>
+            </uap:SupportedFileTypes>
+          </uap:FileTypeAssociation>
+        </uap:Extension>
+        <uap:Extension Category="windows.fileTypeAssociation">
+          <uap:FileTypeAssociation Name="starbase">
+            <uap:DisplayName>OpenDocument Database</uap:DisplayName>
+            <uap:Logo>Assets/database.png</uap:Logo>
+            <uap:SupportedFileTypes>
+              <uap:FileType>.odb</uap:FileType>
+            </uap:SupportedFileTypes>
+          </uap:FileTypeAssociation>
+        </uap:Extension>
+        <uap:Extension Category="windows.fileTypeAssociation">
+          <uap:FileTypeAssociation Name="starbasereport">
+            <uap:DisplayName>OpenDocument Database Report</uap:DisplayName>
+            <uap:Logo>Assets/soffice.png</uap:Logo>
+            <uap:SupportedFileTypes>
+              <uap:FileType>.orp</uap:FileType>
+            </uap:SupportedFileTypes>
+          </uap:FileTypeAssociation>
+        </uap:Extension>
+        <uap:Extension Category="windows.fileTypeAssociation">
+          <uap:FileTypeAssociation Name="unified_office_format_presentation">
+            <uap:DisplayName>Unified Office Format presentation</uap:DisplayName>
+            <uap:Logo>Assets/presentation.png</uap:Logo>
+            <uap:SupportedFileTypes>
+              <uap:FileType>.uop</uap:FileType>
+              <uap:FileType>.uof</uap:FileType>
+            </uap:SupportedFileTypes>
+          </uap:FileTypeAssociation>
+        </uap:Extension>
+        <uap:Extension Category="windows.fileTypeAssociation">
+          <uap:FileTypeAssociation Name="unified_office_format_spreadsheet">
+            <uap:DisplayName>Unified Office Format spreadsheet</uap:DisplayName>
+            <uap:Logo>Assets/spreadsheet.png</uap:Logo>
+            <uap:SupportedFileTypes>
+              <uap:FileType>.uos</uap:FileType>
+            </uap:SupportedFileTypes>
+          </uap:FileTypeAssociation>
+        </uap:Extension>
+        <uap:Extension Category="windows.fileTypeAssociation">
+          <uap:FileTypeAssociation Name="unified_office_format_text">
+            <uap:DisplayName>Unified Office Format text</uap:DisplayName>
+            <uap:Logo>Assets/text.png</uap:Logo>
+            <uap:SupportedFileTypes>
+              <uap:FileType>.uot</uap:FileType>
+            </uap:SupportedFileTypes>
+          </uap:FileTypeAssociation>
+        </uap:Extension>
+        <uap:Extension Category="windows.fileTypeAssociation">
+          <uap:FileTypeAssociation Name="writer8">
+            <uap:DisplayName>Writer 8</uap:DisplayName>
+            <uap:Logo>Assets/text.png</uap:Logo>
+            <uap:SupportedFileTypes>
+              <uap:FileType>.odt</uap:FileType>
+            </uap:SupportedFileTypes>
+          </uap:FileTypeAssociation>
+        </uap:Extension>
+        <uap:Extension Category="windows.fileTypeAssociation">
+          <uap:FileTypeAssociation Name="writer8_template">
+            <uap:DisplayName>Writer 8 Template</uap:DisplayName>
+            <uap:Logo>Assets/text-template.png</uap:Logo>
+            <uap:SupportedFileTypes>
+              <uap:FileType>.ott</uap:FileType>
+            </uap:SupportedFileTypes>
+          </uap:FileTypeAssociation>
+        </uap:Extension>
+        <uap:Extension Category="windows.fileTypeAssociation">
+          <uap:FileTypeAssociation Name="writerglobal8">
+            <uap:DisplayName>Writer 8 Master Document</uap:DisplayName>
+            <uap:Logo>Assets/master-document.png</uap:Logo>
+            <uap:SupportedFileTypes>
+              <uap:FileType>.odm</uap:FileType>
+            </uap:SupportedFileTypes>
+          </uap:FileTypeAssociation>
+        </uap:Extension>
+        <uap:Extension Category="windows.fileTypeAssociation">
+          <uap:FileTypeAssociation Name="writerglobal8_template">
+            <uap:DisplayName>Writer 8 Master Document Template</uap:DisplayName>
+            <uap:Logo>Assets/master-document.png</uap:Logo>
+            <uap:SupportedFileTypes>
+              <uap:FileType>.otm</uap:FileType>
+            </uap:SupportedFileTypes>
+          </uap:FileTypeAssociation>
+        </uap:Extension>
+        <uap:Extension Category="windows.fileTypeAssociation">
+          <uap:FileTypeAssociation Name="writerweb8_writer_template">
+            <uap:DisplayName>Writer/Web 8 Template</uap:DisplayName>
+            <uap:Logo>Assets/text-template.png</uap:Logo>
+            <uap:SupportedFileTypes>
+              <uap:FileType>.oth</uap:FileType>
+            </uap:SupportedFileTypes>
+          </uap:FileTypeAssociation>
+        </uap:Extension>
+        <uap:Extension Category="windows.fileTypeAssociation">
+          <uap:FileTypeAssociation Name="writer_globaldocument_staroffice_xml_writer_globaldocument">
+            <uap:DisplayName>Writer 6.0 Master Document</uap:DisplayName>
+            <uap:Logo>Assets/master-document.png</uap:Logo>
+            <uap:SupportedFileTypes>
+              <uap:FileType>.sxg</uap:FileType>
+            </uap:SupportedFileTypes>
+          </uap:FileTypeAssociation>
+        </uap:Extension>
+        <uap:Extension Category="windows.fileTypeAssociation">
+          <uap:FileTypeAssociation Name="writer_ms_word_2003_xml">
+            <uap:DisplayName>Word 2003 XML</uap:DisplayName>
+            <uap:Logo>Assets/text.png</uap:Logo>
+            <uap:SupportedFileTypes>
+              <uap:FileType>.doc</uap:FileType>
+            </uap:SupportedFileTypes>
+          </uap:FileTypeAssociation>
+        </uap:Extension>
+        <uap:Extension Category="windows.fileTypeAssociation">
+          <uap:FileTypeAssociation Name="writer_ms_word_2007">
+            <uap:DisplayName>Word 2007</uap:DisplayName>
+            <uap:Logo>Assets/text.png</uap:Logo>
+            <uap:SupportedFileTypes>
+              <uap:FileType>.docx</uap:FileType>
+            </uap:SupportedFileTypes>
+          </uap:FileTypeAssociation>
+        </uap:Extension>
+        <uap:Extension Category="windows.fileTypeAssociation">
+          <uap:FileTypeAssociation Name="writer_ms_word_2007_template">
+            <uap:DisplayName>Word 2007 Template</uap:DisplayName>
+            <uap:Logo>Assets/text-template.png</uap:Logo>
+            <uap:SupportedFileTypes>
+              <uap:FileType>.dotx</uap:FileType>
+              <uap:FileType>.dotm</uap:FileType>
+            </uap:SupportedFileTypes>
+          </uap:FileTypeAssociation>
+        </uap:Extension>
+        <uap:Extension Category="windows.fileTypeAssociation">
+          <uap:FileTypeAssociation Name="writer_ms_word_2007_vba">
+            <uap:DisplayName>Word 2007 VBA</uap:DisplayName>
+            <uap:Logo>Assets/text.png</uap:Logo>
+            <uap:SupportedFileTypes>
+              <uap:FileType>.docm</uap:FileType>
+            </uap:SupportedFileTypes>
+          </uap:FileTypeAssociation>
+        </uap:Extension>
+        <uap:Extension Category="windows.fileTypeAssociation">
+          <uap:FileTypeAssociation Name="writer_ms_word_97">
+            <uap:DisplayName>Word 97–2003</uap:DisplayName>
+            <uap:Logo>Assets/text.png</uap:Logo>
+            <uap:SupportedFileTypes>
+              <uap:FileType>.wps</uap:FileType>
+            </uap:SupportedFileTypes>
+          </uap:FileTypeAssociation>
+        </uap:Extension>
+        <uap:Extension Category="windows.fileTypeAssociation">
+          <uap:FileTypeAssociation Name="writer_ms_word_97_vorlage">
+            <uap:DisplayName>Word 97–2000 Template</uap:DisplayName>
+            <uap:Logo>Assets/text-template.png</uap:Logo>
+            <uap:SupportedFileTypes>
+              <uap:FileType>.dot</uap:FileType>
+              <uap:FileType>.wpt</uap:FileType>
+            </uap:SupportedFileTypes>
+          </uap:FileTypeAssociation>
+        </uap:Extension>
+        <uap:Extension Category="windows.fileTypeAssociation">
+          <uap:FileTypeAssociation Name="writer_odt_flatxml">
+            <uap:DisplayName>OpenDocument Text (Flat XML)</uap:DisplayName>
+            <uap:Logo>Assets/text.png</uap:Logo>
+            <uap:SupportedFileTypes>
+              <uap:FileType>.fodt</uap:FileType>
+            </uap:SupportedFileTypes>
+          </uap:FileTypeAssociation>
+        </uap:Extension>
+        <uap:Extension Category="windows.fileTypeAssociation">
+          <uap:FileTypeAssociation Name="writer_rich_text_format">
+            <uap:DisplayName>Rich Text Format</uap:DisplayName>
+            <uap:Logo>Assets/text.png</uap:Logo>
+            <uap:SupportedFileTypes>
+              <uap:FileType>.rtf</uap:FileType>
+            </uap:SupportedFileTypes>
+          </uap:FileTypeAssociation>
+        </uap:Extension>
+        <uap:Extension Category="windows.fileTypeAssociation">
+          <uap:FileTypeAssociation Name="writer_staroffice_xml_writer">
+            <uap:DisplayName>OpenOffice.org 1.0 Text Document</uap:DisplayName>
+            <uap:Logo>Assets/text.png</uap:Logo>
+            <uap:SupportedFileTypes>
+              <uap:FileType>.sxw</uap:FileType>
+            </uap:SupportedFileTypes>
+          </uap:FileTypeAssociation>
+        </uap:Extension>
+        <uap:Extension Category="windows.fileTypeAssociation">
+          <uap:FileTypeAssociation Name="writer_staroffice_xml_writer_template">
+            <uap:DisplayName>Writer 6.0 Template</uap:DisplayName>
+            <uap:Logo>Assets/text-template.png</uap:Logo>
+            <uap:SupportedFileTypes>
+              <uap:FileType>.stw</uap:FileType>
+            </uap:SupportedFileTypes>
+          </uap:FileTypeAssociation>
+        </uap:Extension>
+      </Extensions>
+    </Application>
+  </Applications>
 </Package>
