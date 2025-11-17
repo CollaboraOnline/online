@@ -115,6 +115,27 @@ describe(['tagdesktop'], 'Annotation Tests', function() {
 		cy.cGet('.annotation-button-autosaved').should('be.visible');
 		cy.cGet('.annotation-button-delete').should('be.visible');
 	});
+
+	it('View Jump', function() {
+		helper.typeIntoInputField(helper.addressInputSelector, 'A100');
+		desktopHelper.insertComment();
+		/* comments are hidden in calc by default, so no visibility assert */
+		cy.cGet('#comment-container-1').should('exist')
+		cy.cGet('#Home-tab-label').click();
+
+		helper.typeIntoInputField(helper.addressInputSelector, 'A150');
+		helper.typeIntoInputField(helper.addressInputSelector, 'A135');
+
+		/* 
+			NOTE: this scrollbar position might change in future. one can
+			get the new scrollbar position by printing `x` to the console
+			in `assertScrollbarPosition` function.
+		*/
+		desktopHelper.assertScrollbarPosition('vertical', 250, 250);
+		desktopHelper.insertComment('second comment', false);
+		desktopHelper.assertScrollbarPosition('vertical', 250, 250);
+	});
+
 });
 
 describe(['tagdesktop'], 'Annotation Autosave Tests', function() {
