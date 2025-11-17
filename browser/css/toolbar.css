@@ -1120,7 +1120,7 @@ button.leaflet-control-search-next
 .w2ui-icon.numberformattime { background: url('images/lc_numberformattime.svg') no-repeat center; }
 .w2ui-icon.numberformatscientific { background: url('images/lc_numberformatscientific.svg') no-repeat center; }
 .w2ui-icon.numberformatthousands { background: url('images/lc_numberformatthousands.svg') no-repeat center; }
-.w2ui-icon.numberformatincdecimals { background: url('images/lc_numberformatincdecimals.svg') no-repeat center; }
+.w2ui-icon.numberformatingdecimals { background: url('images/lc_numberformatingdecimals.svg') no-repeat center; }
 .w2ui-icon.numberformatdecdecimals { background: url('images/lc_numberformatdecdecimals.svg') no-repeat center; }
 .w2ui-icon.insertobjectchart { background: url('images/lc_drawchart.svg') no-repeat center; }
 .w2ui-icon.insertrowsafter { background: url('images/lc_insertrowsafter.svg') no-repeat center; }
@@ -1411,7 +1411,7 @@ button.leaflet-control-search-next
 [data-theme='dark'] .w2ui-icon.numberformattime { background: url('images/dark/lc_numberformattime.svg') no-repeat center; }
 [data-theme='dark'] .w2ui-icon.numberformatscientific { background: url('images/dark/lc_numberformatscientific.svg') no-repeat center; }
 [data-theme='dark'] .w2ui-icon.numberformatthousands { background: url('images/dark/lc_numberformatthousands.svg') no-repeat center; }
-[data-theme='dark'] .w2ui-icon.numberformatincdecimals { background: url('images/dark/lc_numberformatincdecimals.svg') no-repeat center; }
+[data-theme='dark'] .w2ui-icon.numberformatingdecimals { background: url('images/dark/lc_numberformatingdecimals.svg') no-repeat center; }
 [data-theme='dark'] .w2ui-icon.numberformatdecdecimals { background: url('images/dark/lc_numberformatdecdecimals.svg') no-repeat center; }
 [data-theme='dark'] .w2ui-icon.insertobjectchart { background: url('images/dark/lc_drawchart.svg') no-repeat center; }
 [data-theme='dark'] .w2ui-icon.insertrowsafter { background: url('images/dark/lc_insertrowsafter.svg') no-repeat center; }
