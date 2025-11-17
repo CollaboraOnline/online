@@ -684,7 +684,16 @@ class LOUtil {
 
 	public static isFileODF(map: any): boolean {
 		var ext = LOUtil.getFileExtension(map);
-		return ext === 'odt' || ext === 'ods' || ext === 'odp' || ext == 'odg';
+		return (
+			ext === 'odt' ||
+			ext === 'ods' ||
+			ext === 'odp' ||
+			ext === 'odg' ||
+			ext === 'fodt' ||
+			ext === 'fods' ||
+			ext === 'fodp' ||
+			ext === 'fodg'
+		);
 	}
 
 	public static containsDOMRect(
