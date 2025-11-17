@@ -130,7 +130,7 @@ class AboutDialog {
 			);
 
 		const links = content.querySelectorAll<HTMLAnchorElement>(
-			'#coolwsd-version a, #lokit-version a, #lokit-extra a, #license-information a'
+			'#coolwsd-version a, #lokit-version a, #lokit-extra a'
 		);
 
 		for (let i = 0; i < links.length; i++) {
@@ -144,12 +144,14 @@ class AboutDialog {
 		const licenseInformationElement = content.querySelector(
 			'#license-information',
 		) as HTMLElement;
-		const a = document.createElement('a');
-		a.href = 'https://col.la/lic';
-		a.textContent = _('License information');
-		a.target = '_blank';
-		a.rel = 'noopener';
-		licenseInformationElement.appendChild(a);
+		if(licenseInformationElement) {
+			const a = document.createElement('a');
+			a.href = 'javascript:void(0)';
+			//a.textContent = _('License information');
+			a.textContent = _UNO('.uno:ShowLicense');
+			a.addEventListener('click', () => window.postMobileMessage('LICENSE'));
+			licenseInformationElement.appendChild(a);
+		}
 
 		const slowProxyElement = content.querySelector(
 			'#slow-proxy',

@@ -237,7 +237,7 @@ m4_ifelse(MOBILEAPP,[true],
               <div id="routeToken"></div>
               <div id="timeZone"></div>
               m4_ifelse(MOBILEAPP,[],[<div id="wopi-host-id">%WOPI_HOST_ID%</div>],[<p></p>])
-              <div id="license-information"></div>
+              m4_ifelse(MOBILEAPP,[],[<p></p>],[<div id="license-information"></div>])
               <p class="about-dialog-info-div"><span dir="ltr">Copyright © _YEAR_, VENDOR.</span></p>
             </div>
           </div>
