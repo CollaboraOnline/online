@@ -189,7 +189,7 @@ class MobileBottomBar extends JSDialog.Toolbar {
 						{type: 'separator'},
 						{type: 'comboboxentry', id: 'numberformatthousands', text: _UNO('.uno:NumberFormatThousands', 'spreadsheet', true), uno: '.uno:NumberFormatThousands'},
 					]},
-				{type: 'toolitem', id: 'numberformatincdecimals', text: _UNO('.uno:NumberFormatIncDecimals', 'spreadsheet', true), command: '.uno:NumberFormatIncDecimals', disabled: true},
+				{type: 'toolitem', id: 'numberformatingdecimals', text: _UNO('.uno:NumberFormatIncDecimals', 'spreadsheet', true), command: '.uno:NumberFormatIncDecimals', disabled: true},
 				{type: 'toolitem', id: 'numberformatdecdecimals', text: _UNO('.uno:NumberFormatDecDecimals', 'spreadsheet', true), command: '.uno:NumberFormatDecDecimals', disabled: true},
 				{type: 'toolitem', id: 'crop', text: _UNO('.uno:Crop'), command: '.uno:Crop', context: ['Graphic']},
 			];

@@ -182,7 +182,7 @@ class TopToolbar extends JSDialog.Toolbar {
 			{type: 'toolitem',  id: 'numberformatcurrency', text: _UNO('.uno:NumberFormatCurrency', 'spreadsheet', true), visible: false, command: '.uno:NumberFormatCurrency'},
 			{type: 'toolitem',  id: 'numberformatpercent', text: _UNO('.uno:NumberFormatPercent', 'spreadsheet', true), visible: false, command: '.uno:NumberFormatPercent'},
 			{type: 'toolitem',  id: 'numberformatdecdecimals', text: _UNO('.uno:NumberFormatDecDecimals', 'spreadsheet', true), visible: false, command: '.uno:NumberFormatDecDecimals'},
-			{type: 'toolitem',  id: 'numberformatincdecimals', text: _UNO('.uno:NumberFormatIncDecimals', 'spreadsheet', true), visible: false, command: '.uno:NumberFormatIncDecimals'},
+			{type: 'toolitem',  id: 'numberformatingdecimals', text: _UNO('.uno:NumberFormatIncDecimals', 'spreadsheet', true), visible: false, command: '.uno:NumberFormatIncDecimals'},
 			{type: 'separator', orientation: 'vertical',   id: 'break-number', visible: false},
 			{type: 'button', id: 'gridvisible', img: 'gridvisible', hint: _UNO('.uno:GridVisible'), uno: 'GridVisible', hidden: true},
 			{type: 'button', id: 'griduse', img: 'griduse', hint: _UNO('.uno:GridUse'), uno: 'GridUse', hidden: true},
@@ -297,7 +297,7 @@ class TopToolbar extends JSDialog.Toolbar {
 			if (this.parentContainer) {
 				['reset', 'textalign', 'wraptextbutton', 'breakspacing', 'insertannotation', 'conditionalformatdialog',
 					'numberformatcurrency', 'numberformatpercent',
-					'numberformatincdecimals', 'numberformatdecdecimals', 'break-number', 'togglemergecells', 'breakmergecells',
+					'numberformatingdecimals', 'numberformatdecdecimals', 'break-number', 'togglemergecells', 'breakmergecells',
 					'setborderstyle', 'sortascending', 'sortdescending', 'breaksorting', 'backgroundcolor', 'breaksidebar', 'sidebar', 'printoptions'
 				].forEach((id) => {
 					this.showItem(id, true);
