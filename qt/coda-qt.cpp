@@ -747,7 +747,7 @@ QVariant Bridge::cool(const QString& messageStr)
 
         const std::string commandName = object->get("commandName").toString();
         const bool success = object->get("success").convert<bool>();
-        const bool wasModified = object->get("wasModified").convert<bool>();
+        const bool wasModified = success && object->get("wasModified").convert<bool>();
 
         // Only handle successful .uno:Save commands that modified the document
         if (commandName != ".uno:Save" || !success || !wasModified)
