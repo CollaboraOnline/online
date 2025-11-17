@@ -157,6 +157,16 @@
 	box-shadow: inset 3px 0 0 var(--color-primary);
 }
 
+.backstage-sidebar-item.disabled {
+	opacity: 0.5;
+	cursor: not-allowed;
+	pointer-events: none;
+}
+
+.backstage-sidebar-item.disabled:hover {
+	background-color: transparent;
+}
+
 .backstage-sidebar-item img {
 	display: none;
 }
