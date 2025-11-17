@@ -669,77 +669,92 @@ class SlideShowPresenter {
 			this._hideSlideControls.bind(this),
 			3000,
 		);
-	}
+	};
+
+	private _createSlideButton(
+  container: HTMLDivElement,
+  id: string,
+  className: string,
+  imgSrc: string,
+  label: string,
+  onClick: (e: Event) => void
+): HTMLImageElement {
+  const img = window.L.DomUtil.create('img', className, container);
+  img.id = id;
+  img.setAttribute('aria-label', label);
+  img.setAttribute('data-cooltip', label);
+  window.L.control.attachTooltipEventListener(img, this._map);
+  app.LOUtil.setImage(img, imgSrc, this._map);
+  img.addEventListener('click', onClick);
+  return img;
+}
+
 
 	private _initializeSlideNavWidget(container: HTMLDivElement): void {
-		const closeImg = window.L.DomUtil.create('img', 'left-img', container);
-		closeImg.id = 'endshow';
-		const slideshowCloseText = _('End Show');
-		app.LOUtil.setImage(closeImg, 'slideshow-exit.svg', this._map);
-		closeImg.setAttribute('aria-label', slideshowCloseText);
-		closeImg.setAttribute('data-cooltip', slideshowCloseText);
-		window.L.control.attachTooltipEventListener(closeImg, this._map);
-		closeImg.addEventListener('click', this._onQuit);
+	// end show button
+	this._createSlideButton(
+	container,
+	'endshow',
+	'left-img',
+	'slideshow-exit.svg',
+	_('End Show'),
+	this._onQuit
+	);
 
-		const leftImg = window.L.DomUtil.create('img', 'left-img', container);
-		leftImg.id = 'previous';
-		const slideshowPrevText = _('Previous');
-		leftImg.setAttribute('aria-label', slideshowPrevText);
-		leftImg.setAttribute('data-cooltip', slideshowPrevText);
-		window.L.control.attachTooltipEventListener(leftImg, this._map);
-		app.LOUtil.setImage(leftImg, 'slideshow-slidePrevious.svg', this._map);
-		leftImg.addEventListener('click', this._onPrevSlide);
+// previous slide button
+	this._createSlideButton(
+	container,
+	'previous',
+	'left-img',
+	'slideshow-slidePrevious.svg',
+	_('Previous'),
+	this._onPrevSlide
+	);
 
-		const rightImg = window.L.DomUtil.create('img', 'right-img', container);
-		rightImg.id = 'next';
-		const slideshowNextText = _('Next');
-		window.L.control.attachTooltipEventListener(rightImg, this._map);
-		rightImg.setAttribute('aria-label', slideshowNextText);
-		rightImg.setAttribute('data-cooltip', slideshowNextText);
-		app.LOUtil.setImage(rightImg, 'slideshow-slideNext.svg', this._map);
-		rightImg.addEventListener('click', this._onNextSlide);
+// next slide button
+	this._createSlideButton(
+    container,
+    'next',
+    'right-img',
+    'slideshow-slideNext.svg',
+    _('Next'),
+    this._onNextSlide);
+// disable/enable button
+	this._createSlideButton(
+    container,
+    'disableanimation',
+    'animations-img skipTransition-false',
+    'slideshow-transition.svg',
+    _('Disable Animations'),
+    (e: Event) => {
+        this._onA11yString(e.target);
+        this._navigateSkipTransition = !this._navigateSkipTransition;
+        const img = e.target as HTMLImageElement;
+        const slideshowAnimToggleText = this._navigateSkipTransition
+            ? _('Enable Animations')
+            : _('Disable Animations');
+        img.setAttribute('aria-label', slideshowAnimToggleText);
+        img.setAttribute('data-cooltip', slideshowAnimToggleText);
+        img.className = 'animations-img skipTransition-' + this._navigateSkipTransition;
+    }
+);
+// follow button
 
-		const animationsImage = window.L.DomUtil.create(
-			'img',
-			'animations-img skipTransition-false',
-			container,
-		);
-		animationsImage.id = 'disableanimation';
-		const slideshowAnimIniText = _('Disable Animations');
-		animationsImage.setAttribute('aria-label', slideshowAnimIniText);
-		animationsImage.setAttribute('data-cooltip', slideshowAnimIniText);
-		window.L.control.attachTooltipEventListener(animationsImage, this._map);
-		app.LOUtil.setImage(animationsImage, 'slideshow-transition.svg', this._map);
-		animationsImage.addEventListener(
-			'click',
-			function (this: SlideShowPresenter, e: Event) {
-				this._onA11yString(e.target);
-				this._navigateSkipTransition = !this._navigateSkipTransition;
-				const slideshowAnimToggleText = this._navigateSkipTransition
-					? _('Enable Animations')
-					: _('Disable Animations');
-				animationsImage.setAttribute('aria-label', slideshowAnimToggleText);
-				animationsImage.setAttribute('data-cooltip', slideshowAnimToggleText);
+if (this.isFollower()) {
+    this._createSlideButton(
+        container,
+        'follow',
+        'right-img',
+        'slideshow-slideNext.svg',
+        _('Follow Presentation'),
+        (e: Event) => {
+            e.stopPropagation();
+            this._onA11yString(e.target);
+            this._slideShowNavigator.followLeaderSlide();
+        }
+    );
+}
 
-				animationsImage.className =
-					'animations-img skipTransition-' + this._navigateSkipTransition;
-			}.bind(this),
-		);
-
-		if (this.isFollower()) {
-			const FollowImg = window.L.DomUtil.create('img', 'right-img', container);
-			FollowImg.id = 'follow';
-			const followText = _('Follow Presentation');
-			window.L.control.attachTooltipEventListener(FollowImg, this._map);
-			FollowImg.setAttribute('aria-label', followText);
-			FollowImg.setAttribute('data-cooltip', followText);
-			app.LOUtil.setImage(FollowImg, 'slideshow-slideNext.svg', this._map);
-			FollowImg.addEventListener('click', (e: Event) => {
-				e.stopPropagation();
-				this._onA11yString(e.target);
-				this._slideShowNavigator.followLeaderSlide();
-			});
-		}
 
 		// Make sure slide controls don't disappear when mouse is over them
 		container.addEventListener(
