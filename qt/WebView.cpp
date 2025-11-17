@@ -24,6 +24,7 @@
 #include <cassert>
 #include <cstdlib>
 #include <cstring>
+#include <memory>
 
 #include <QMenuBar>
 #include <QMenu>
@@ -114,11 +115,11 @@ private:
 
 WebView::WebView(QWebEngineProfile* profile, bool isWelcome)
     : _mainWindow(new Window(nullptr, this))
-    , _webView(new QWebEngineView(_mainWindow))
+    , _webView(std::make_unique<QWebEngineView>(_mainWindow))
     , _isWelcome(isWelcome)
     , _bridge(nullptr)
 {
-    _mainWindow->setCentralWidget(_webView);
+    _mainWindow->setCentralWidget(_webView.get());
 
     QScreen* screen = QGuiApplication::primaryScreen();
     QRect screenGeometry = screen->availableGeometry();
@@ -135,7 +136,7 @@ WebView::WebView(QWebEngineProfile* profile, bool isWelcome)
         _mainWindow->setMinimumSize(minWidth, minHeight);
     }
 
-    QWebEnginePage* page = new QWebEnginePage(profile, _webView);
+    QWebEnginePage* page = new QWebEnginePage(profile, _webView.get());
     _webView->setPage(page);
 
     page->settings()->setAttribute(QWebEngineSettings::FullScreenSupportEnabled, true);
@@ -238,7 +239,7 @@ void WebView::load(const Poco::URI& fileURL, bool newFile)
     queryGnomeFontScalingUpdateZoom();
 
     assert(_bridge == nullptr);
-    _bridge = new Bridge(channel, _document, _mainWindow, _webView);
+    _bridge = new Bridge(channel, _document, _mainWindow, _webView.get());
     channel->registerObject("bridge", _bridge);
     _webView->page()->setWebChannel(channel);
 
@@ -342,7 +343,7 @@ void WebView::queryGnomeFontScalingUpdateZoom()
                                                               "org.gnome.desktop.interface",
                                                               "text-scaling-factor");
 
-    QDBusPendingCallWatcher* watcher = new QDBusPendingCallWatcher(pendingCall, _webView);
+    QDBusPendingCallWatcher* watcher = new QDBusPendingCallWatcher(pendingCall, _webView.get());
     QObject::connect(watcher, &QDBusPendingCallWatcher::finished,
                      [this](QDBusPendingCallWatcher* watcher)
                      {
