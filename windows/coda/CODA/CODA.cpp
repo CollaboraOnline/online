@@ -1656,6 +1656,11 @@ static void processMessage(WindowData& data, wil::unique_cotaskmem_string& messa
         {
             do_open_hyperlink(data.hWnd, s.substr(10));
         }
+        else if (s == L"LICENSE")
+        {
+            std::wstring licensePath = Util::string_to_wide_string(app_installation_path + "..\\LICENSE.html");
+            ShellExecuteW(nullptr, L"open", licensePath.c_str(), nullptr, nullptr, SW_SHOWNORMAL);
+        }
         else if (s.starts_with(L"downloadas "))
         {
             // "downloadas name=document.rtf id=export format=rtf options="
