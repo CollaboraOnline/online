@@ -55,6 +55,7 @@
 #include <QPrinterInfo>
 #include <QProcess>
 #include <QPushButton>
+#include <QScreen>
 #include <QStandardPaths>
 #include <QString>
 #include <QThread>
@@ -440,6 +441,19 @@ static void printDocument(unsigned appDocId, QWidget* parent = nullptr)
     });
 
     customPrintDialog->open();
+}
+
+static void exchangeMonitors(QWebEngineView* webView)
+{
+    if (!webView)
+        return;
+
+    QWidget* presentation = webView->window();
+
+    QScreen* laptopScreen = QGuiApplication::primaryScreen();
+    presentation->showNormal();
+    presentation->setScreen(laptopScreen);
+    presentation->move(laptopScreen->geometry().topLeft());
 }
 
 Bridge::~Bridge() {
@@ -932,6 +946,10 @@ QVariant Bridge::cool(const QString& messageStr)
     else if (message == "PRINT")
     {
         printDocument(_document._appDocId, _webView);
+    }
+    else if (message == "EXCHANGEMONITORS")
+    {
+        exchangeMonitors(_webView);
     }
     else if (message.starts_with(DOWNLOADAS))
     {
