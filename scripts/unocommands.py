@@ -204,6 +204,11 @@ def extractToolbarCommands(path):
         if line.find("_UNO(") >= 0:
             commands += commandFromMenuLine(line)
 
+    f = open(path + '/browser/src/control/Control.AboutDialog.ts', 'r', encoding='utf-8')
+    for line in f:
+        if line.find("_UNO(") >= 0:
+            commands += commandFromMenuLine(line)
+
     # may the list unique
     return set(commands)
 
