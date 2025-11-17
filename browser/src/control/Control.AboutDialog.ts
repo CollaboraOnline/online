@@ -130,7 +130,7 @@ class AboutDialog {
 			);
 
 		const links = content.querySelectorAll<HTMLAnchorElement>(
-			'#coolwsd-version a, #lokit-version a, #lokit-extra a'
+			'#coolwsd-version a, #lokit-version a, #lokit-extra a, #license-information a'
 		);
 
 		for (let i = 0; i < links.length; i++) {
@@ -140,6 +140,16 @@ class AboutDialog {
 				window.open(link.href, '_blank');
 			});
 		}
+
+		const licenseInformationElement = content.querySelector(
+			'#license-information',
+		) as HTMLElement;
+		const a = document.createElement('a');
+		a.href = 'https://col.la/lic';
+		a.textContent = _('License information');
+		a.target = '_blank';
+		a.rel = 'noopener';
+		licenseInformationElement.appendChild(a);
 
 		const slowProxyElement = content.querySelector(
 			'#slow-proxy',
