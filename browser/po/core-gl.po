@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: core-gl\n"
-"PO-Revision-Date: 2025-11-12 12:52+0000\n"
+"PO-Revision-Date: 2025-11-13 17:52+0000\n"
 "Last-Translator: \"Miguel A. Bouzada\" <mbouzada@gmail.com>\n"
 "Language-Team: Galician <https://hosted.weblate.org/projects/"
 "collabora-online/lokit/gl/>\n"
@@ -90,6 +90,11 @@ msgid ""
 "Pressing [ No ] will drop these fonts from the document:\n"
 "$(ARG1)"
 msgstr ""
+"Un ou máis tipos de letra incrustados no documento non teñen permiso de "
+"edición.\n"
+"Quere abrir o documento en modo só de lectura?\n"
+"Ao premer [ Non ] eliminarase estes tipos de letra do documento:\n"
+"$(ARG1)"
 
 #. 4NkMk
 #: readme.xrm
@@ -156,53 +161,54 @@ msgstr "Xestionar os estilos dos gráficos"
 #: chart2/uiconfig/ui/dlg_Theme.ui:46
 msgctxt "dlg_Theme|iconviewlabel|tooltip_text"
 msgid "Selectable chart styles list."
-msgstr ""
+msgstr "Lista de estilos de gráficos seleccionábeis."
 
 #. WsSmE
 #: chart2/uiconfig/ui/dlg_Theme.ui:51
 msgctxt "dlg_Theme|iconviewlabel"
 msgid "_Chart styles:"
-msgstr ""
+msgstr "Estilos de _gráfico:"
 
 #. DYH5e
 #: chart2/uiconfig/ui/dlg_Theme.ui:122
 msgctxt "dlg_Theme|chartload"
 msgid "_Load style to chart"
-msgstr ""
+msgstr "_Cargar o estilo para o gráfico"
 
 #. YWkrA
 #: chart2/uiconfig/ui/dlg_Theme.ui:134
 msgctxt "dlg_Theme|chartsave"
 msgid "_Save to styles"
-msgstr ""
+msgstr "_Gardar en estilos"
 
 #. h8L8Y
 #: chart2/uiconfig/ui/dlg_Theme.ui:146
 msgctxt "dlg_Theme|chartdelete"
 msgid "_Delete style"
-msgstr ""
+msgstr "_Eliminar estilo"
 
 #. g5qPU
 #: chart2/uiconfig/ui/dlg_Theme.ui:158
 msgctxt "dlg_Theme|chartsavenew"
 msgid "Save to _new style"
-msgstr ""
+msgstr "Gardar nun estilo _novo"
 
 #. GPgLR
 #: chart2/uiconfig/ui/dlg_Theme.ui:183
 msgctxt "dlg_Theme|chartmanage"
 msgid "_Manage chart styles"
-msgstr ""
+msgstr "_Xestionar os estilos dos gráficos"
 
 #. NMcqp
 #: chart2/uiconfig/ui/sidebarcolors.ui:30
 msgctxt "sidebarcolors|bordertype|tooltip_text"
 msgid "Allow to select a color palette to apply to current chart data series."
 msgstr ""
+"Permite seleccionar unha paleta de cores para aplicar ás series de datos "
+"actuais do gráfico."
 
 #. FXK8B
 #: chart2/uiconfig/ui/sidebarcolors.ui:42
-#, fuzzy
 msgctxt "sidebarcolors|cellbordertype-atkobject"
 msgid "Border Style"
 msgstr "Estilo de bordo"
@@ -213,10 +219,11 @@ msgctxt "sidebargradients|bordertype|tooltip_text"
 msgid ""
 "Allow to select a gradient palette to apply to current chart data series."
 msgstr ""
+"Permite seleccionar unha paleta de degradados para aplicar ás series de "
+"datos actuais do gráfico."
 
 #. FXK8B
 #: chart2/uiconfig/ui/sidebargradients.ui:42
-#, fuzzy
 msgctxt "sidebargradients|cellbordertype-atkobject"
 msgid "Border Style"
 msgstr "Estilo de bordo"
@@ -225,121 +232,121 @@ msgstr "Estilo de bordo"
 #: chart2/uiconfig/ui/sidebartheme.ui:25
 msgctxt "sidebartheme|themelist|tooltip_text"
 msgid "Allow to select a theme to apply to the current chart."
-msgstr ""
+msgstr "Permite seleccionar un tema para aplicalo ao gráfico actual."
 
 #. aGvuY
 #: chart2/uiconfig/ui/sidebartheme.ui:37
 msgctxt "sidebartheme|themetype-atkobject"
 msgid "Themes"
-msgstr ""
+msgstr "Temas"
 
 #. YB6Et
 #: chart2/uiconfig/ui/sidebartheme.ui:48
 msgctxt "sidebartheme|savetonew"
 msgid "_Save to new theme"
-msgstr ""
+msgstr "_Gardar no novo tema"
 
 #. 4C556
 #: chart2/uiconfig/ui/sidebartype.ui:102
 msgctxt "sidebartype|3dschemeft"
 msgid "3D _Scheme:"
-msgstr ""
+msgstr "E_squema 3D:"
 
 #. x3adg
 #: chart2/uiconfig/ui/tp_ChartColorPalette.ui:68
 msgctxt "tp_ChartColorPalette|colorfulwin"
 msgid "Colorful"
-msgstr ""
+msgstr "A toda cor"
 
 #. 8QjnP
 #: chart2/uiconfig/ui/tp_ChartColorPalette.ui:126
 msgctxt "tp_ChartColorPalette|monochromaticwin"
 msgid "Monochromatic"
-msgstr ""
+msgstr "Monocromático"
 
 #. 6JxiC
 #: chart2/uiconfig/ui/tp_ChartGradients.ui:69
 msgctxt "tp_ChartGradients|lightwin"
 msgid "Light Variations"
-msgstr ""
+msgstr "Tons claros"
 
 #. DmWVa
 #: chart2/uiconfig/ui/tp_ChartGradients.ui:128
 msgctxt "tp_ChartGradients|darkwin"
 msgid "Dark Variations"
-msgstr ""
+msgstr "Tons escuros"
 
 #. FG2rh
 #: chart2/uiconfig/ui/tp_ChartType.ui:114
 msgctxt "tp_ChartType|extended_tip|subtype_iconview"
 msgid "Select a sub type of the basic chart type."
-msgstr ""
+msgstr "Seleccione un subtipo do tipo de gráfico básico."
 
 #. Wh4j6
 #: chart2/uiconfig/ui/tp_ChartType.ui:167
 msgctxt "tp_ChartType|3dschemeft"
 msgid "3D _Scheme:"
-msgstr ""
+msgstr "E_squema 3D:"
 
 #. EPGtZ
 #: cui/uiconfig/ui/hyperlinkinternetpage.ui:64
 msgctxt "hyperlinkinternetpage|target_label"
 msgid "Link:"
-msgstr ""
+msgstr "Ligazón:"
 
 #. gfELk
 #: cui/uiconfig/ui/pageformatpage.ui:260
 msgctxt "pageformatpage|checkResizeAllPages"
 msgid "Resize all pages"
-msgstr ""
+msgstr "Cambiar o tamaño de todas as páxinas"
 
 #. NBdEp
 #: cui/uiconfig/ui/pickbulletpage.ui:45
 msgctxt "pickbulletpage|extended_tip|pick_bullet_iconview"
 msgid "Click the bullet style that you want to use."
-msgstr ""
+msgstr "Prema no estilo de viñeta que quere empregar."
 
 #. rkoDB
 #: cui/uiconfig/ui/pickgraphicpage.ui:45
 msgctxt "pickgraphicpage|extended_tip|pick_graphic_iconview"
 msgid "Click the graphics that you want to use as bullets."
-msgstr ""
+msgstr "Prema nos gráficos que queira empregar como viñetas."
 
 #. WGzy5
 #: cui/uiconfig/ui/picknumberingpage.ui:44
 msgctxt "picknumberingpage|extended_tip|pick_numbering_iconview"
 msgid "Click the numbering scheme that you want to use."
-msgstr ""
+msgstr "Prema no esquema de numeración que quere empregar."
 
 #. avppC
 #: cui/uiconfig/ui/pickoutlinepage.ui:44
 msgctxt "pickoutlinepage|extended_tip|pick_outline_iconview"
 msgid "Click the outline style that you want to use."
-msgstr ""
+msgstr "Prema no estilo de contorno que quere empregar."
 
 #. qpArp
 #: cui/uiconfig/ui/toolbarmodedialog.ui:124
 msgctxt "ToolbarmodeDialog|radiobutton1"
 msgid "Compact"
-msgstr ""
+msgstr "Compacto"
 
 #. ZbYiG
 #: include/svtools/strings.hrc:71
 msgctxt "STR_FORMAT_ID_MARKDOWN"
 msgid "Markdown"
-msgstr ""
+msgstr "Markdown"
 
 #. HASc5
 #: include/sfx2/strings.hrc:227
 msgctxt "STR_SID_QUICKFIND"
 msgid "Quick Find"
-msgstr ""
+msgstr "Busca rápida"
 
 #. 2VmCo
 #: sfx2/uiconfig/ui/licensedialog.ui:41
 msgctxt "licensedialog|eula"
 msgid "_EULA"
-msgstr ""
+msgstr "_ALUF"
 
 #. jjkw7
 #: sfx2/uiconfig/ui/licensedialog.ui:85
@@ -349,91 +356,94 @@ msgid ""
 "End User License and Subscription Agreement; choose EULA to see exact "
 "details in English."
 msgstr ""
+"O paquete binario %PRODUCTNAME está dispoñíbel suxeito aos termos do Acordo "
+"de Licenza e Subscrición de Usuario Final; Seleccione ALUF para ver os "
+"detalles concretos en inglés."
 
 #. YHTHB
 #: sfx2/uiconfig/ui/templatepanel.ui:137
 msgctxt "templatepanel|accessible_name|watercan"
 msgid "Fill Format Mode"
-msgstr ""
+msgstr "Modo de recheo do formato"
 
 #. qvBEu
 #: sfx2/uiconfig/ui/templatepanel.ui:156
 msgctxt "templatepanel|accessible_name|new"
 msgid "New Style from Selection"
-msgstr ""
+msgstr "Estilo novo desde a selección"
 
 #. 5ZAqh
 #: sfx2/uiconfig/ui/templatepanel.ui:174
 msgctxt "templatepanel|accessible_name|newmenu"
 msgid "Styles actions"
-msgstr ""
+msgstr "Accións dos estilos"
 
 #. 7NfdA
 #: sfx2/uiconfig/ui/templatepanel.ui:192
 msgctxt "templatepanel|accessible_name|update"
 msgid "Update Style"
-msgstr ""
+msgstr "Actualizar o estilo"
 
 #. BGAhD
 #: sfx2/uiconfig/ui/templatepanel.ui:242
 msgctxt "commontemplate|STR_HIGHLIGHT_CHECKBOX"
 msgid "Highlight styles"
-msgstr "Salientar"
+msgstr "Estilos de realce"
 
 #. 5xrhC
 #: sw/inc/strings.hrc:232
 msgctxt "STR_COLUMN_ICONVIEW_ITEM0"
 msgid "1 column"
-msgstr ""
+msgstr "1 columna"
 
 #. VAfCS
 #: sw/inc/strings.hrc:233
 msgctxt "STR_COLUMN_ICONVIEW_ITEM1"
 msgid "2 columns with equal size"
-msgstr ""
+msgstr "2 columnas do mesmo tamaño"
 
 #. g8pFG
 #: sw/inc/strings.hrc:234
 msgctxt "STR_COLUMN_ICONVIEW_ITEM2"
 msgid "3 columns with equal size"
-msgstr ""
+msgstr "3 columnas do mesmo tamaño"
 
 #. QJxAd
 #: sw/inc/strings.hrc:235
 msgctxt "STR_COLUMN_ICONVIEW_ITEM3"
 msgid "2 columns with different size (left > right)"
-msgstr ""
+msgstr "2 columnas de diferente tamaño (esquerda > dereita)"
 
 #. MHk4E
 #: sw/inc/strings.hrc:236
 msgctxt "STR_COLUMN_ICONVIEW_ITEM4"
 msgid "2 columns with different size (left < right)"
-msgstr ""
+msgstr "2 columnas de diferente tamaño (esquerda < dereita)"
 
 #. xPgHS
 #: sw/inc/strings.hrc:498
 msgctxt "STR_REINSTATE_REDLINE"
 msgid "Reinstate change: $1"
-msgstr ""
+msgstr "Restabelecer o cambio: $1"
 
 #. afEVQ
 #: sw/inc/strings.hrc:1536
 msgctxt "STR_COMPAT_OPT_UNDERLINETRAILINGSPACE"
 msgid "Underline Word-compatible trailing blanks"
-msgstr ""
+msgstr "Subliñar os espazos finais en branco compatíbeis con Word de Microsoft"
 
 #. B3rfb
 #: sw/uiconfig/swriter/ui/columnpage.ui:122
 msgctxt "columnpage|columnft"
 msgid "Column"
-msgstr ""
+msgstr "Columna"
 
 #. Lurdj
 #: sw/uiconfig/swriter/ui/columnpage.ui:868
 msgctxt "columnpage|extended_tip|column-iconview"
 msgid ""
 "Enter the number of columns that you want in the page, frame, or section."
-msgstr ""
+msgstr "Introduza o número de columnas que quere na páxina, marco ou sección."
 
 #. Ci9GE
 #: sw/uiconfig/swriter/ui/spellmenu.ui:34
@@ -445,7 +455,7 @@ msgstr "Engadir ao _dicionario (standard.dic)"
 #: sw/uiconfig/swriter/ui/wordcount-mobile.ui:643
 msgctxt "wordcount-mobile|comments"
 msgid "Comments"
-msgstr ""
+msgstr "Comentarios"
 
 #. SsL8u
 #: formula/inc/core_resource.hrc:2628
@@ -535,31 +545,31 @@ msgstr "DISPORFILAS"
 #: formula/uiconfig/ui/functionpage.ui:80
 msgctxt "functionpage|label_category"
 msgid "_Category:"
-msgstr ""
+msgstr "_Categoria:"
 
 #. BNnFg
 #: formula/uiconfig/ui/functionpage.ui:115
 msgctxt "functionpage|label_function"
 msgid "_Function:"
-msgstr ""
+msgstr "_Función:"
 
 #. zRASZ
 #: formula/uiconfig/ui/structpage.ui:28
 msgctxt "structpage|label_struct"
 msgid "Content:"
-msgstr ""
+msgstr "Contido:"
 
 #. DPToC
 #: sd/uiconfig/simpress/ui/layoutpanel.ui:41
 msgctxt "layoutpanel|extended_tip|layoutpanel_icons"
 msgid "List of available layout templates."
-msgstr ""
+msgstr "Lista de modelos de disposición dispoñíbeis."
 
 #. Y3kBV
 #: filter/uiconfig/ui/impswfdialog.ui:14
 msgctxt "impswfdialog|ImpSWFDialog"
 msgid "Flash (SWF) Options"
-msgstr "Opcións do Flash (SWF)"
+msgstr "Opcións de Flash (SWF)"
 
 #. S2cVZ
 #: filter/uiconfig/ui/impswfdialog.ui:100
@@ -599,7 +609,7 @@ msgstr "Exportar os _obxectos do fondo"
 #: filter/uiconfig/ui/impswfdialog.ui:203
 msgctxt "impswfdialog|exportslidecontents"
 msgid "Export _slide contents"
-msgstr "Exportar o condido das diapositiva_s"
+msgstr "Exportar o contido das diapositiva_s"
 
 #. DzHf3
 #: filter/uiconfig/ui/impswfdialog.ui:229
@@ -627,7 +637,7 @@ msgid ""
 "two file formats: PDF and ODF as an attachment. "
 msgstr ""
 "Este axuste permite exportar o documento como un ficheiro .pdf que contén "
-"dous formatos de ficheiro: PDF e ODF."
+"dous formatos de ficheiro: PDF e ODF. "
 
 #. NCgBM
 #: filter/uiconfig/ui/pdfgeneralpage.ui:583
@@ -636,8 +646,9 @@ msgid ""
 "Select the PDF version. PDF/A version variants creates an ISO 19005 "
 "compliant PDF file, ideal for long-term document preservation."
 msgstr ""
-"Crea un ficheiro PDF conforme con ISO 19005-2, ideal para a conservación de "
-"documentos a longo prazo."
+"Seleccione a versión do PDF. As variantes da versión PDF/A crean un ficheiro "
+"PDF conforme á norma ISO 19005, ideal para a preservación de documentos a "
+"longo prazo."
 
 #. Ac3Ga
 #: filter/uiconfig/ui/pdfgeneralpage.ui:587
@@ -667,13 +678,19 @@ msgid ""
 "that are compatible with that use case. For example: All fonts that were "
 "used in the source document will be embedded into the generated PDF file. "
 "PDF tags will be written."
-msgstr "Converte aos formatos PDF/A-2b ou PDF/A-1b."
+msgstr ""
+"As versións poden ser PDF «clásicas» (e. d. PDF 1.7, PDF 2.0) ou conformes "
+"con PDF/A. PDF/A defínese como un formato de ficheiro de documento "
+"electrónico para a súa conservación e arquivo a longo prazo. Só permite un "
+"subconxunto de funcións PDF que son compatíbeis con ese caso de uso. Por "
+"exemplo: Todos os tipos de letra que se utilizaron no documento de orixe "
+"serán incorporados no ficheiro PDF xerado. Escribiranse etiquetas PDF."
 
 #. te76B
 #: filter/uiconfig/ui/pdfgeneralpage.ui:620
 msgctxt "pdfgeneralpage|pdf_version"
 msgid "PDF_ Version:"
-msgstr "Versión PDF_/A:"
+msgstr "Versión do PDF_:"
 
 #. tCrYc
 #: filter/uiconfig/ui/pdfgeneralpage.ui:677
@@ -701,7 +718,7 @@ msgctxt ""
 "UIName\n"
 "value.text"
 msgid "Markdown Document"
-msgstr ""
+msgstr "Documento Markdown"
 
 #. 9Q5Zj
 #: draw_flash_Export.xcu
@@ -711,7 +728,7 @@ msgctxt ""
 "UIName\n"
 "value.text"
 msgid "Macromedia Flash (SWF)"
-msgstr ""
+msgstr "Macromedia Flash (SWF)"
 
 #. MsYCr
 #: impress_flash_Export.xcu
@@ -721,7 +738,7 @@ msgctxt ""
 "UIName\n"
 "value.text"
 msgid "Macromedia Flash (SWF)"
-msgstr ""
+msgstr "Macromedia Flash (SWF)"
 
 #. FoizC
 #: CalcCommands.xcu
@@ -731,7 +748,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Current Sheet View"
-msgstr ""
+msgstr "Vista da folla actual"
 
 #. 3Ep4Y
 #: CalcCommands.xcu
@@ -741,7 +758,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Insert Function"
-msgstr ""
+msgstr "Inserir unha función"
 
 #. rxGTc
 #: CalcCommands.xcu
@@ -751,7 +768,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Print Grid Lines"
-msgstr ""
+msgstr "Imprimir as liñas de grella"
 
 #. a35bF
 #: CalcCommands.xcu
@@ -761,7 +778,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "New Sheet View"
-msgstr ""
+msgstr "Nova vista de folla"
 
 #. AKfar
 #: CalcCommands.xcu
@@ -771,7 +788,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Remove Sheet View"
-msgstr ""
+msgstr "Retirar a vista de folla"
 
 #. M52nh
 #: CalcCommands.xcu
@@ -781,7 +798,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Switch To Next Sheet View"
-msgstr ""
+msgstr "Cambiar á seguinte vista de folla"
 
 #. qfgad
 #: CalcCommands.xcu
@@ -791,7 +808,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Switch To Previous Sheet View"
-msgstr ""
+msgstr "Cambiar á vista de folla anterior"
 
 #. FJEd2
 #: CalcCommands.xcu
@@ -801,7 +818,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Select Sheet View"
-msgstr ""
+msgstr "Seleccionar a vista de folla"
 
 #. vCsC3
 #: CalcCommands.xcu
@@ -811,7 +828,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Exit Sheet View"
-msgstr ""
+msgstr "Saír da vista da folla"
 
 #. uuvrm
 #: ChartCommands.xcu
@@ -821,7 +838,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Manage Themes..."
-msgstr ""
+msgstr "Xestionar os temas…"
 
 #. 5LESd
 #: ChartCommands.xcu
@@ -841,7 +858,7 @@ msgctxt ""
 "ContextLabel\n"
 "value.text"
 msgid "Clear ~Direct Formatting"
-msgstr "Limpar formato ~directo"
+msgstr "Limpar o formato ~directo"
 
 #. NfNdn
 #: ChartCommands.xcu
@@ -851,7 +868,7 @@ msgctxt ""
 "TooltipLabel\n"
 "value.text"
 msgid "Clear Direct Formatting"
-msgstr "Limpar formato directo"
+msgstr "Limpar o formato directo"
 
 #. vsnyF
 #: DrawImpressCommands.xcu
@@ -861,7 +878,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "New Canvas Slide"
-msgstr ""
+msgstr "Nova diapositiva de lenzo"
 
 #. w3Yib
 #: DrawImpressCommands.xcu
@@ -871,7 +888,7 @@ msgctxt ""
 "ContextLabel\n"
 "value.text"
 msgid "~Select Table"
-msgstr "Seleccionar táboa"
+msgstr "~Seleccionar a táboa"
 
 #. zz8gB
 #: DrawImpressCommands.xcu
@@ -881,7 +898,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Re-order pages"
-msgstr ""
+msgstr "Reordenar as páxinas"
 
 #. ca6bM
 #: GenericCommands.xcu
@@ -891,7 +908,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Slide Transitions"
-msgstr ""
+msgstr "Transicions de diapositivas"
 
 #. 5pSJ6
 #: GenericCommands.xcu
@@ -901,7 +918,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Master Pages"
-msgstr ""
+msgstr "Páxinas principais"
 
 #. DCEaK
 #: GenericCommands.xcu
@@ -911,7 +928,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "~Hyperlink"
-msgstr ""
+msgstr "~Hiperligazón"
 
 #. aFFu9
 #: GenericCommands.xcu
@@ -921,7 +938,7 @@ msgctxt ""
 "PopupLabel\n"
 "value.text"
 msgid "Insert Hyperlink..."
-msgstr ""
+msgstr "Inserir hiperligazón…"
 
 #. czVMP
 #: GenericCommands.xcu
@@ -931,7 +948,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Nav~igator select comment."
-msgstr ""
+msgstr "Selección de comentar~io no navegador."
 
 #. 77Q3c
 #: GenericCommands.xcu
@@ -941,7 +958,7 @@ msgctxt ""
 "TooltipLabel\n"
 "value.text"
 msgid "Select Comment In The Navigator Window/Sidebar"
-msgstr ""
+msgstr "Seleccione o comentario na xanela/barra lateral do navegador"
 
 #. 83Euq
 #: GenericCommands.xcu
@@ -951,7 +968,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Change record mode"
-msgstr "Cambiar modo de rexistro"
+msgstr "Cambiar o modo de rexistro"
 
 #. nG2DH
 #: GenericCommands.xcu
@@ -982,7 +999,7 @@ msgctxt ""
 "UIName\n"
 "value.text"
 msgid "Slide Sorter/Pane (Canvas)"
-msgstr ""
+msgstr "Clasificador/Panel de diapositivas (Lenzo)"
 
 #. BQB9h
 #: ImpressWindowState.xcu
@@ -993,7 +1010,7 @@ msgctxt ""
 "UIName\n"
 "value.text"
 msgid "Master Slide Sorter/Pane (Canvas)"
-msgstr ""
+msgstr "Clasificador principal de diapositivas/Panel (Lenzo)"
 
 #. SYFXq
 #: Sidebar.xcu
@@ -1023,7 +1040,7 @@ msgctxt ""
 "Title\n"
 "value.text"
 msgid "Theme"
-msgstr ""
+msgstr "Tema"
 
 #. dgWCC
 #: Sidebar.xcu
@@ -1033,7 +1050,7 @@ msgctxt ""
 "Title\n"
 "value.text"
 msgid "Gradients"
-msgstr ""
+msgstr "Degradados"
 
 #. ezFez
 #: WriterCommands.xcu
@@ -1043,7 +1060,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Reinstate and Move to Next"
-msgstr ""
+msgstr "Restaurar e pasar á seguinte"
 
 #. NmvTm
 #: WriterCommands.xcu
@@ -1053,7 +1070,7 @@ msgctxt ""
 "TooltipLabel\n"
 "value.text"
 msgid "Reinstate Track Change and select the next one"
-msgstr ""
+msgstr "Restaurar o control de cambios e seleccionar a seguinte"
 
 #. KVYrC
 #: WriterCommands.xcu
@@ -1063,7 +1080,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Reinstate All"
-msgstr ""
+msgstr "Restaurar todo"
 
 #. QkP7E
 #: WriterCommands.xcu
@@ -1073,7 +1090,7 @@ msgctxt ""
 "TooltipLabel\n"
 "value.text"
 msgid "Reinstate All Tracked Changes"
-msgstr ""
+msgstr "Restaurar todos os cambios rastrexados"
 
 #. SRvKK
 #: WriterCommands.xcu
@@ -1083,7 +1100,7 @@ msgctxt ""
 "PopupLabel\n"
 "value.text"
 msgid "Reinstate All Changes"
-msgstr ""
+msgstr "Restaurar todos os cambios"
 
 #. 6w9UB
 #: WriterCommands.xcu
@@ -1103,7 +1120,7 @@ msgctxt ""
 "TooltipLabel\n"
 "value.text"
 msgid "Reinstate Track Change"
-msgstr "Restaurar cambio de rexistro"
+msgstr "Restaurar control de cambios"
 
 #. rTFtt
 #: WriterCommands.xcu
@@ -1113,7 +1130,7 @@ msgctxt ""
 "PopupLabel\n"
 "value.text"
 msgid "Reinstate Change"
-msgstr "Restaurar cambio"
+msgstr "Restaurar o cambio"
 
 #. duoP7
 #: WriterCommands.xcu
@@ -1123,7 +1140,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Record changes in this view"
-msgstr "Rexistrar cambios nesta vista"
+msgstr "Rexistrar os cambios nesta vista"
 
 #. TADBE
 #: WriterCommands.xcu
@@ -1143,7 +1160,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Record changes in all views"
-msgstr "Rexistrar cambios en todas as vistas"
+msgstr "Rexistrar os cambios en todas as vistas"
 
 #. DJphX
 #: WriterCommands.xcu
@@ -1159,13 +1176,13 @@ msgstr "~Cambios en todas as vistas"
 #: sc/inc/globstr.hrc:592
 msgctxt "STR_SHEET_VIEW_DEFAULT_VIEW_NAME"
 msgid "Default View"
-msgstr ""
+msgstr "Vista predeterminada"
 
 #. aYwkp
 #: sc/inc/globstr.hrc:593
 msgctxt "STR_SHEET_VIEW_TEMPORARY_NAME_TEMPLATE"
 msgid "Temporary View %1"
-msgstr ""
+msgstr "Vista temporal %1"
 
 #. ADmez
 #: sc/inc/scfuncs.hrc:4257
@@ -1196,7 +1213,7 @@ msgstr "Columna "
 msgctxt "SC_OPCODE_CHOOSECOLS"
 msgid "Column 1, Column 2,... The list of column numbers to be returned."
 msgstr ""
-"Columna 1, Columna 2,... a lista de números de columna que hai que devolver."
+"Columna 1, Columna 2, … a lista de números de columna que hai que devolver."
 
 #. 78gQu
 #: sc/inc/scfuncs.hrc:4267
@@ -1226,7 +1243,7 @@ msgstr "Fila "
 #: sc/inc/scfuncs.hrc:4271
 msgctxt "SC_OPCODE_CHOOSEROWS"
 msgid "Row 1, Row 2,... The list of row numbers to be returned."
-msgstr "Fila 1, Fila 2,... A lista de números de fila que hai que devolver."
+msgstr "Fila 1, Fila 2, … A lista de números de fila que hai que devolver."
 
 #. 4uTLx
 #: sc/inc/scfuncs.hrc:4277
@@ -1235,7 +1252,7 @@ msgid ""
 "Excludes a specified number of contiguous rows or columns from the start or "
 "end of an array."
 msgstr ""
-"Exclúe un número determinado de filas ou columnas contiguos do comezo ou do "
+"Exclúe un número determinado de filas ou columnas contiguas do comezo ou do "
 "final da matriz."
 
 #. W6FYc
@@ -1269,7 +1286,7 @@ msgstr ""
 #: sc/inc/scfuncs.hrc:4282
 msgctxt "SC_OPCODE_DROP"
 msgid "Columns"
-msgstr ""
+msgstr "Columnas"
 
 #. cAxPB
 #: sc/inc/scfuncs.hrc:4283
@@ -1286,7 +1303,7 @@ msgstr ""
 msgctxt "SC_OPCODE_EXPAND"
 msgid "Expands or pads an array to specified row and column dimensions."
 msgstr ""
-"Expande ou completa unha matriz até as dimensións de filas e columnas "
+"Expande ou completa unha matriz ata as dimensións de filas e columnas "
 "indicadas."
 
 #. kuERH
@@ -1314,13 +1331,14 @@ msgid ""
 "The number of rows in the expanded array. If missing, rows will not be "
 "expanded."
 msgstr ""
-"O número de filas da matriz expandida. Se falta, non se expanden as filas."
+"O número de filas da matriz expandida. Se for omitido, non se expandiran as "
+"filas."
 
 #. qjcxB
 #: sc/inc/scfuncs.hrc:4294
 msgctxt "SC_OPCODE_EXPAND"
 msgid "Columns"
-msgstr ""
+msgstr "Columnas"
 
 #. EVAXE
 #: sc/inc/scfuncs.hrc:4295
@@ -1329,8 +1347,8 @@ msgid ""
 "The number of columns in the expanded array. If missing, columns will not be "
 "expanded."
 msgstr ""
-"O número de columnas da matriz expandida. Se faltan, non se expanden as "
-"columnas."
+"O número de columnas da matriz expandida. Se for omitido, non se expandiran "
+"as columnas."
 
 #. QPyBK
 #: sc/inc/scfuncs.hrc:4296
@@ -1348,7 +1366,7 @@ msgstr "O valor co que encher. Por omisión é #N/DISP."
 #: sc/inc/scfuncs.hrc:4303
 msgctxt "SC_OPCODE_HSTACK"
 msgid "Appends arrays horizontally to create a larger array."
-msgstr ""
+msgstr "Amece matrices horizontalmente para crear unha matriz máis grande."
 
 #. LnAFg
 #: sc/inc/scfuncs.hrc:4304 sc/inc/scfuncs.hrc:4306
@@ -1376,7 +1394,7 @@ msgstr ""
 #: sc/inc/scfuncs.hrc:4313
 msgctxt "SC_OPCODE_VSTACK"
 msgid "Appends arrays vertically to create a larger array."
-msgstr ""
+msgstr "Amece matrices verticalmente para crear unha matriz máis grande."
 
 #. rhVRC
 #: sc/inc/scfuncs.hrc:4314 sc/inc/scfuncs.hrc:4316
@@ -1441,7 +1459,7 @@ msgstr ""
 #: sc/inc/scfuncs.hrc:4328
 msgctxt "SC_OPCODE_TAKE"
 msgid "Columns"
-msgstr ""
+msgstr "Columnas"
 
 #. ZexcG
 #: sc/inc/scfuncs.hrc:4329
@@ -1705,7 +1723,7 @@ msgstr "O valor co que encher. Por omisión é #N/DISP."
 #: sc/inc/scfuncs.hrc:4389
 msgctxt "SC_OPCODE_TOCOL"
 msgid "Transforms an array into a single column."
-msgstr ""
+msgstr "Transforma unha matriz nunha columna única."
 
 #. UAzNC
 #: sc/inc/scfuncs.hrc:4390
@@ -1733,7 +1751,7 @@ msgid ""
 "(default). 1 - ignore blank cells. 2 - ignore cells with error. 3 - ignore "
 "blanks cells and cells with error."
 msgstr ""
-"Se ignorar determinados tipos de valores. = ou omitido - manter todos os "
+"Se ignorar determinados tipos de valores. 0 ou omitido - manter todos os "
 "valores (predeterminado). 1 - ignorar celas baleiras. 2 - ignorar celas con "
 "erros. 3 - ignorar celas baleiras e celas con erros."
 
@@ -1750,14 +1768,14 @@ msgid ""
 "Scan the array by column. FALSE or omitted (default) - the array is scanned "
 "by row. TRUE - the array is scanned by column."
 msgstr ""
-"Examinar a matriz por columna FALSO ou omitido (predeterminado) - a matriz "
-"examínase por columna. VERDADEIRO - a matriz examínase por columna."
+"Examinar a matriz por columna. FALSO ou omitido (predeterminado) - a matriz "
+"examínase por fila. VERDADEIRO - a matriz examínase por columna."
 
 #. PGyxj
 #: sc/inc/scfuncs.hrc:4401
 msgctxt "SC_OPCODE_TOROW"
 msgid "transforms an array into a single row."
-msgstr "transforma unha matriz nunha fila única."
+msgstr "Transforma unha matriz nunha fila única."
 
 #. W9bWe
 #: sc/inc/scfuncs.hrc:4402
@@ -1785,7 +1803,7 @@ msgid ""
 "(default). 1 - ignore blank cells. 2 - ignore cells with error. 3 - ignore "
 "blanks cells and cells with error."
 msgstr ""
-"Se ignorar determinados tipos de valores. = ou omitido - manter todos os "
+"Se ignorar determinados tipos de valores. 0 ou omitido - manter todos os "
 "valores (predeterminado). 1 - ignorar celas baleiras. 2 - ignorar celas con "
 "erros. 3 - ignorar celas baleiras e celas con erros."
 
@@ -1802,8 +1820,8 @@ msgid ""
 "Scan the array by column. FALSE or omitted (default) - the array is scanned "
 "by row. TRUE - the array is scanned by column."
 msgstr ""
-"Examinar a matriz por columna FALSO ou omitido (predeterminado) - a matriz "
-"examínase por columna. VERDADEIRO - a matriz examínase por columna."
+"Examinar a matriz por columna. FALSO ou omitido (predeterminado) - a matriz "
+"examínase por fila. VERDADEIRO - a matriz examínase por columna."
 
 #. oBDEA
 #: sc/inc/scfuncs.hrc:4437
@@ -1812,6 +1830,8 @@ msgid ""
 "Wraps the provided row or column of values by columns after a specified "
 "number of elements to form a new array."
 msgstr ""
+"Axusta a fila ou columna de valores proporcionada por columnas despois dun "
+"número especificado de elementos para formar unha nova matriz."
 
 #. fC6RK
 #: sc/inc/scfuncs.hrc:4438
@@ -1823,13 +1843,13 @@ msgstr "Intervalo"
 #: sc/inc/scfuncs.hrc:4439
 msgctxt "SC_OPCODE_WRAPCOLS"
 msgid "the range to wrap."
-msgstr ""
+msgstr "O intervalo para axustar."
 
 #. GE3HQ
 #: sc/inc/scfuncs.hrc:4440
 msgctxt "SC_OPCODE_WRAPCOLS"
 msgid "Wrap count"
-msgstr ""
+msgstr "Contaxe do axuste"
 
 #. FWsCt
 #: sc/inc/scfuncs.hrc:4441
@@ -1856,6 +1876,8 @@ msgid ""
 "Wraps the provided row or column of values by rows after a specified number "
 "of elements to form a new array."
 msgstr ""
+"Axusta a fila ou columna de valores proporcionada por filas despois dun "
+"número especificado de elementos para formar unha nova matriz."
 
 #. 7esii
 #: sc/inc/scfuncs.hrc:4450
@@ -1867,13 +1889,13 @@ msgstr "Intervalo"
 #: sc/inc/scfuncs.hrc:4451
 msgctxt "SC_OPCODE_WRAPROWS"
 msgid "the range to wrap."
-msgstr ""
+msgstr "O intervalo para axustar."
 
 #. aLHUi
 #: sc/inc/scfuncs.hrc:4452
 msgctxt "SC_OPCODE_WRAPROWS"
 msgid "Wrap count"
-msgstr ""
+msgstr "Contaxe do axuste"
 
 #. 3CEsK
 #: sc/inc/scfuncs.hrc:4453
@@ -1902,42 +1924,46 @@ msgid ""
 "individual cells first select all cells and toggle off the \"Protected\" "
 "option in the Format Cells dialog."
 msgstr ""
+"A protección de celas só é efectiva despois de que a folla actual estea "
+"protexida. Por omisión, todas as celas dunha folla están protexidas: para "
+"protexer as celas individuais, primeiro seleccione todas as celas e "
+"desactive a opción «Protexida» no diálogo Formatar celas."
 
 #. FVsyY
 #: sc/uiconfig/scalc/ui/conditionaleasydialog.ui:8
 msgctxt "conditionaleasydialog|title"
 msgid "Highlight cells..."
-msgstr "Realzar celas..."
+msgstr "Realzar celas…"
 
 #. Q4fA3
 #: sc/uiconfig/scalc/ui/selectsheetviewdialog.ui:18
 msgctxt "selectsheetviewdialog|SelectSheetView"
 msgid "Select Sheet View"
-msgstr ""
+msgstr "Seleccionar a vista de folla"
 
 #. GTQJA
 #: sc/uiconfig/scalc/ui/selectsheetviewdialog.ui:44
 msgctxt "selectsheetviewdialog|extended_tip|ok"
 msgid "Saves all changes and closes dialog."
-msgstr ""
+msgstr "Garda todos os cambios e pecha o diálogo."
 
 #. kGFYu
 #: sc/uiconfig/scalc/ui/selectsheetviewdialog.ui:63
 msgctxt "selectsheetviewdialog|extended_tip|cancel"
 msgid "Closes dialog and discards all changes."
-msgstr ""
+msgstr "Pecha o diálogo e descarta todos os cambios."
 
 #. sQPFE
 #: sc/uiconfig/scalc/ui/selectsheetviewdialog.ui:134
 msgctxt "selectsheetviewdialog|extended_tip|entry-list"
 msgid "Available sheet views."
-msgstr ""
+msgstr "Vistas de folla dispoñíbeis."
 
 #. csyNB
 #: sc/uiconfig/scalc/ui/sheetviewbox.ui:17
 msgctxt "sheetviewbox|sheetview_combobox|accessible_name"
 msgid "Sheet View"
-msgstr ""
+msgstr "Vista de folla"
 
 #. FXK8B
 #: sc/uiconfig/scalc/ui/sidebarcellappearance.ui:87
