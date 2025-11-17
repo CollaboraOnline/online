@@ -30,6 +30,7 @@ class ViewController: NSViewController, WKScriptMessageHandlerWithReply, WKNavig
         contentController.addScriptMessageHandler(self, contentWorld: .page, name: "clipboard")
 
         let config = WKWebViewConfiguration()
+        config.preferences.isElementFullscreenEnabled = true
         config.userContentController = contentController
 
         // Create the web view
