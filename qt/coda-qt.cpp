@@ -894,6 +894,14 @@ QVariant Bridge::cool(const QString& messageStr)
             LOG_ERR("Failed to create new presentation");
         }
     }
+    else if (message == "uno .uno:NewDocDraw")
+    {
+        WebView* webViewInstance = WebView::createNewDocument(Application::getProfile(), "draw");
+        if (!webViewInstance)
+        {
+            LOG_ERR("Failed to create new drawing");
+        }
+    }
     else if (message == "uno .uno:SaveAs")
     {
         saveDocumentAs();
@@ -997,7 +1005,7 @@ QVariant Bridge::cool(const QString& messageStr)
         // template is optional and not always there
         std::string args = message.substr(NEWDOCTYPE.size());
 
-        // templateType is one of "writer", "calc" or "impress"
+        // templateType is one of "writer", "calc", "draw", or "impress"
         auto [templateType, templateArgs] = Util::split(args, ' ');
 
         std::string templatePath;
@@ -1099,11 +1107,16 @@ int main(int argc, char** argv)
         QStringList() << "presentation" << "impress",
         "Create a new presentation."
     );
+    QCommandLineOption drawingOption(
+        QStringList() << "drawing" << "draw",
+        "Create a new vector drawing."
+    );
 
     argParser.addOption(debugOption);
     argParser.addOption(textDocumentOption);
     argParser.addOption(spreadsheetOption);
     argParser.addOption(presentationOption);
+    argParser.addOption(drawingOption);
     argParser.addPositionalArgument("DOCUMENT", "Document file(s) to open", "[DOCUMENT...]");
     argParser.process(app);
     QStringList files = argParser.positionalArguments();
@@ -1137,6 +1150,8 @@ int main(int argc, char** argv)
             templateType = "calc";
         else if (argParser.isSet(textDocumentOption))
             templateType = "writer";
+        else if (argParser.isSet(drawingOption))
+            templateType = "draw";
     }
 
     // single-instance using DBus: try to forward to existing instance
