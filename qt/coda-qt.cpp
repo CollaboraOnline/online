@@ -202,17 +202,22 @@ static void setClipboard(unsigned appDocId)
     if (!clipboard)
         return;
 
-    const QString qText = clipboard->text(QClipboard::Clipboard);
-    if (qText.isEmpty())
-        return;
-
-    QByteArray utf8Text = qText.toUtf8();
-
-    const char* mimeTypes[] = { "text/plain;charset=utf-8" };
-    const size_t sizes[] = { static_cast<size_t>(utf8Text.size()) };
-    const char* streams[] = { utf8Text.constData() };
-
-    DocumentData::get(appDocId).loKitDocument->setClipboard(1, mimeTypes, sizes, streams);
+    std::vector<std::string> mimeTypes;
+    std::vector<char const *> mimeTypePtrs;
+    std::vector<std::size_t> sizes;
+    std::vector<char const *> streams;
+    auto const data = clipboard->mimeData(QClipboard::Clipboard);
+    for (auto const & format: data->formats()) {
+        mimeTypes.push_back(format.toStdString());
+        auto const stream = data->data(format);
+        sizes.push_back(stream.size());
+        streams.push_back(stream.data());
+    }
+    for (auto const & type: mimeTypes) {
+        mimeTypePtrs.push_back(type.c_str());
+    }
+    DocumentData::get(appDocId).loKitDocument->setClipboard(
+        mimeTypes.size(), mimeTypePtrs.data(), sizes.data(), streams.data());
 }
 
 static void setClipboardFromContent(unsigned appDocId, const std::string& content)
