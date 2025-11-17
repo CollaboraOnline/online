@@ -289,6 +289,8 @@ WebView* WebView::createNewDocument(QWebEngineProfile* profile, const std::strin
             templateFileName = "TextDocument.odt";
         else if (templateType == "calc")
             templateFileName = "Spreadsheet.ods";
+        else if (templateType == "draw")
+            templateFileName = "Drawing.odg";
 
         Poco::Path templatePathObj(getTopSrcDir(TOPSRCDIR));
         templatePathObj.append("browser/dist/templates");
