@@ -11,7 +11,7 @@
 import Cocoa
 import WebKit
 
-class ViewController: NSViewController, WKScriptMessageHandlerWithReply, WKNavigationDelegate {
+class ViewController: NSViewController, WKScriptMessageHandlerWithReply, WKNavigationDelegate, WKUIDelegate {
 
     /// Access to the NSDocument (document loading & saving infrastructure).
     var document: Document!
@@ -36,6 +36,7 @@ class ViewController: NSViewController, WKScriptMessageHandlerWithReply, WKNavig
         // Create the web view
         webView = WKWebView(frame: .zero, configuration: config)
         webView.navigationDelegate = self
+        webView.uiDelegate = self
 
 #if DEBUG
         // Enable possibility to debug the webview from Safari
@@ -326,5 +327,10 @@ class ViewController: NSViewController, WKScriptMessageHandlerWithReply, WKNavig
         }
 
         return (nil, nil)
+    }
+
+    func webView(_ webView: WKWebView, createWebViewWith configuration: WKWebViewConfiguration, for navigationAction: WKNavigationAction, windowFeatures: WKWindowFeatures) -> WKWebView? {
+        COWrapper.LOG_ERR("createWebViewWith \(navigationAction.request.url)")
+        return nil
     }
 }
