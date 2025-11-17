@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: core-hy\n"
-"PO-Revision-Date: 2025-11-12 12:52+0000\n"
+"PO-Revision-Date: 2025-11-13 17:52+0000\n"
 "Last-Translator: Tigran Zargaryan <tigranflib@gmail.com>\n"
 "Language-Team: Armenian <https://hosted.weblate.org/projects/"
 "collabora-online/lokit/hy/>\n"
@@ -28,7 +28,7 @@ msgctxt ""
 "STR_DESC_MODULE_OPTIONAL_GRFFLT_FLASH\n"
 "LngText.text"
 msgid "Macromedia Flash (SWF) Export Filter"
-msgstr "Macromedia Flash (SWF) Export Filter"
+msgstr "Macromedia Flash (SWF) Արտահանման զտիչ"
 
 #. vcMGk
 #: folderitem_ooo.ulf
