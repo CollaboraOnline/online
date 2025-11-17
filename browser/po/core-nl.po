@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: core-nl\n"
-"PO-Revision-Date: 2025-11-12 17:32+0000\n"
+"PO-Revision-Date: 2025-11-13 17:52+0000\n"
 "Last-Translator: Sebastiaan Veld <sebastiaan.veld@gmail.com>\n"
 "Language-Team: Dutch <https://hosted.weblate.org/projects/collabora-online/"
 "lokit/nl/>\n"
@@ -644,7 +644,7 @@ msgid ""
 "two file formats: PDF and ODF as an attachment. "
 msgstr ""
 "Met deze instelling kunt u het document exporteren als een .pdf-bestand met "
-"twee bestandsindelingen: PDF en ODF."
+"twee bestandsindelingen: PDF en ODF als bijlage. "
 
 #. NCgBM
 #: filter/uiconfig/ui/pdfgeneralpage.ui:583
@@ -653,8 +653,8 @@ msgid ""
 "Select the PDF version. PDF/A version variants creates an ISO 19005 "
 "compliant PDF file, ideal for long-term document preservation."
 msgstr ""
-"Creëert een ISO 19005-2 compliant PDF-bestand, ideaal voor lange termijn "
-"document-instandhouding"
+"Selecteer de PDF-versie. PDF/A-versievarianten maken een ISO 19005-conform "
+"PDF-bestand, ideaal voor het langdurig bewaren van documenten."
 
 #. Ac3Ga
 #: filter/uiconfig/ui/pdfgeneralpage.ui:587
@@ -672,7 +672,7 @@ msgstr "PDF 2.0"
 #: filter/uiconfig/ui/pdfgeneralpage.ui:592
 msgctxt "pdfgeneralpage|pdf_version"
 msgid "PDF/A-4 (PDF 2.0 base)"
-msgstr "PDF/A-4 (PDF 2.0 base)"
+msgstr "PDF/A-4 (PDF 2.0 basis)"
 
 #. S7DSM
 #: filter/uiconfig/ui/pdfgeneralpage.ui:599
@@ -753,7 +753,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Current Sheet View"
-msgstr ""
+msgstr "Huidige bladweergave"
 
 #. 3Ep4Y
 #: CalcCommands.xcu
@@ -763,7 +763,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Insert Function"
-msgstr ""
+msgstr "Functie invoegen"
 
 #. rxGTc
 #: CalcCommands.xcu
@@ -773,7 +773,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Print Grid Lines"
-msgstr ""
+msgstr "Rasterlijnen afdrukken"
 
 #. a35bF
 #: CalcCommands.xcu
@@ -783,7 +783,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "New Sheet View"
-msgstr ""
+msgstr "Nieuwe bladweergave"
 
 #. AKfar
 #: CalcCommands.xcu
@@ -793,7 +793,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Remove Sheet View"
-msgstr ""
+msgstr "Bladweergave verwijderen"
 
 #. M52nh
 #: CalcCommands.xcu
@@ -803,7 +803,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Switch To Next Sheet View"
-msgstr ""
+msgstr "Overschakelen naar volgende bladweergave"
 
 #. qfgad
 #: CalcCommands.xcu
@@ -813,7 +813,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Switch To Previous Sheet View"
-msgstr ""
+msgstr "Overschakelen naar vorige bladweergave"
 
 #. FJEd2
 #: CalcCommands.xcu
@@ -823,7 +823,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Select Sheet View"
-msgstr ""
+msgstr "Selecteer bladweergave"
 
 #. vCsC3
 #: CalcCommands.xcu
@@ -833,7 +833,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Exit Sheet View"
-msgstr ""
+msgstr "Bladweergave verlaten"
 
 #. uuvrm
 #: ChartCommands.xcu
@@ -843,7 +843,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Manage Themes..."
-msgstr ""
+msgstr "Thema's beheren..."
 
 #. 5LESd
 #: ChartCommands.xcu
@@ -883,7 +883,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "New Canvas Slide"
-msgstr ""
+msgstr "Nieuwe dia"
 
 #. w3Yib
 #: DrawImpressCommands.xcu
@@ -903,7 +903,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Re-order pages"
-msgstr ""
+msgstr "Pagina's opnieuw ordenen"
 
 #. ca6bM
 #: GenericCommands.xcu
@@ -913,7 +913,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Slide Transitions"
-msgstr ""
+msgstr "Diawissels"
 
 #. 5pSJ6
 #: GenericCommands.xcu
@@ -923,7 +923,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Master Pages"
-msgstr ""
+msgstr "Masterpagina's"
 
 #. DCEaK
 #: GenericCommands.xcu
@@ -933,7 +933,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "~Hyperlink"
-msgstr ""
+msgstr "~Hyperlink"
 
 #. aFFu9
 #: GenericCommands.xcu
@@ -943,7 +943,7 @@ msgctxt ""
 "PopupLabel\n"
 "value.text"
 msgid "Insert Hyperlink..."
-msgstr ""
+msgstr "Hyperlink invoegen..."
 
 #. czVMP
 #: GenericCommands.xcu
@@ -953,7 +953,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Nav~igator select comment."
-msgstr ""
+msgstr "Nav~igator selecteer notitie."
 
 #. 77Q3c
 #: GenericCommands.xcu
@@ -963,7 +963,7 @@ msgctxt ""
 "TooltipLabel\n"
 "value.text"
 msgid "Select Comment In The Navigator Window/Sidebar"
-msgstr ""
+msgstr "Selecteer Notitie in het navigatievenster/zijbalk"
 
 #. 83Euq
 #: GenericCommands.xcu
@@ -1004,7 +1004,7 @@ msgctxt ""
 "UIName\n"
 "value.text"
 msgid "Slide Sorter/Pane (Canvas)"
-msgstr ""
+msgstr "Dia sorteren/venster (Canvas)"
 
 #. BQB9h
 #: ImpressWindowState.xcu
@@ -1015,7 +1015,7 @@ msgctxt ""
 "UIName\n"
 "value.text"
 msgid "Master Slide Sorter/Pane (Canvas)"
-msgstr ""
+msgstr "Master-dia sorteren/paneel (Canvas)"
 
 #. SYFXq
 #: Sidebar.xcu
@@ -1045,7 +1045,7 @@ msgctxt ""
 "Title\n"
 "value.text"
 msgid "Theme"
-msgstr ""
+msgstr "Thema"
 
 #. dgWCC
 #: Sidebar.xcu
@@ -1055,7 +1055,7 @@ msgctxt ""
 "Title\n"
 "value.text"
 msgid "Gradients"
-msgstr ""
+msgstr "Kleurverlopen"
 
 #. ezFez
 #: WriterCommands.xcu
@@ -1181,13 +1181,13 @@ msgstr "~Wijzigingen in alle weergaves"
 #: sc/inc/globstr.hrc:592
 msgctxt "STR_SHEET_VIEW_DEFAULT_VIEW_NAME"
 msgid "Default View"
-msgstr ""
+msgstr "Standaardweergave"
 
 #. aYwkp
 #: sc/inc/globstr.hrc:593
 msgctxt "STR_SHEET_VIEW_TEMPORARY_NAME_TEMPLATE"
 msgid "Temporary View %1"
-msgstr ""
+msgstr "Tijdelijk weergeven %1"
 
 #. ADmez
 #: sc/inc/scfuncs.hrc:4257
@@ -1296,7 +1296,7 @@ msgstr ""
 #: sc/inc/scfuncs.hrc:4282
 msgctxt "SC_OPCODE_DROP"
 msgid "Columns"
-msgstr ""
+msgstr "Kolommen"
 
 #. cAxPB
 #: sc/inc/scfuncs.hrc:4283
@@ -1348,7 +1348,7 @@ msgstr ""
 #: sc/inc/scfuncs.hrc:4294
 msgctxt "SC_OPCODE_EXPAND"
 msgid "Columns"
-msgstr ""
+msgstr "Kolommen"
 
 #. EVAXE
 #: sc/inc/scfuncs.hrc:4295
@@ -1376,7 +1376,7 @@ msgstr "De waarde waarmee moet worden opgevuld. De standaardwaarde is #N/B."
 #: sc/inc/scfuncs.hrc:4303
 msgctxt "SC_OPCODE_HSTACK"
 msgid "Appends arrays horizontally to create a larger array."
-msgstr ""
+msgstr "Voegt reeksen horizontaal toe om een grotere reeks te maken."
 
 #. LnAFg
 #: sc/inc/scfuncs.hrc:4304 sc/inc/scfuncs.hrc:4306
@@ -1404,7 +1404,7 @@ msgstr ""
 #: sc/inc/scfuncs.hrc:4313
 msgctxt "SC_OPCODE_VSTACK"
 msgid "Appends arrays vertically to create a larger array."
-msgstr ""
+msgstr "Voegt reeksen verticaal toe om een grotere reeks te maken."
 
 #. rhVRC
 #: sc/inc/scfuncs.hrc:4314 sc/inc/scfuncs.hrc:4316
@@ -1469,7 +1469,7 @@ msgstr ""
 #: sc/inc/scfuncs.hrc:4328
 msgctxt "SC_OPCODE_TAKE"
 msgid "Columns"
-msgstr ""
+msgstr "Kolommen"
 
 #. ZexcG
 #: sc/inc/scfuncs.hrc:4329
@@ -1759,7 +1759,7 @@ msgstr ""
 #: sc/inc/scfuncs.hrc:4389
 msgctxt "SC_OPCODE_TOCOL"
 msgid "Transforms an array into a single column."
-msgstr ""
+msgstr "Zet een reeks om in een enkele kolom."
 
 #. UAzNC
 #: sc/inc/scfuncs.hrc:4390
@@ -1960,6 +1960,10 @@ msgid ""
 "individual cells first select all cells and toggle off the \"Protected\" "
 "option in the Format Cells dialog."
 msgstr ""
+"Celbescherming is alleen effectief nadat het huidige blad is beveiligd. "
+"Standaard zijn alle cellen in een blad beveiligd. Om afzonderlijke cellen te "
+"beveiligen, selecteert u eerst alle cellen en schakelt u de optie ‘Beveiligd’"
+" uit in het dialoogvenster ‘Cellen opmaken’."
 
 #. FVsyY
 #: sc/uiconfig/scalc/ui/conditionaleasydialog.ui:8
@@ -1971,31 +1975,31 @@ msgstr "Cellen markeren..."
 #: sc/uiconfig/scalc/ui/selectsheetviewdialog.ui:18
 msgctxt "selectsheetviewdialog|SelectSheetView"
 msgid "Select Sheet View"
-msgstr ""
+msgstr "Selecteer bladweergave"
 
 #. GTQJA
 #: sc/uiconfig/scalc/ui/selectsheetviewdialog.ui:44
 msgctxt "selectsheetviewdialog|extended_tip|ok"
 msgid "Saves all changes and closes dialog."
-msgstr ""
+msgstr "Slaat alle wijzigingen op en sluit het dialoogvenster."
 
 #. kGFYu
 #: sc/uiconfig/scalc/ui/selectsheetviewdialog.ui:63
 msgctxt "selectsheetviewdialog|extended_tip|cancel"
 msgid "Closes dialog and discards all changes."
-msgstr ""
+msgstr "Sluit het dialoogvenster en verwijdert alle wijzigingen."
 
 #. sQPFE
 #: sc/uiconfig/scalc/ui/selectsheetviewdialog.ui:134
 msgctxt "selectsheetviewdialog|extended_tip|entry-list"
 msgid "Available sheet views."
-msgstr ""
+msgstr "Beschikbare bladweergaven."
 
 #. csyNB
 #: sc/uiconfig/scalc/ui/sheetviewbox.ui:17
 msgctxt "sheetviewbox|sheetview_combobox|accessible_name"
 msgid "Sheet View"
-msgstr ""
+msgstr "Bladweergave"
 
 #. FXK8B
 #: sc/uiconfig/scalc/ui/sidebarcellappearance.ui:87
