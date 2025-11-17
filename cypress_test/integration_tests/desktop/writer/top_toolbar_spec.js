@@ -8,9 +8,9 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 	var newFilePath;
 
 	beforeEach(function() {
+		cy.viewport(1920,1080);
 		newFilePath = helper.setupAndLoadDocument('writer/top_toolbar.odt');
 		desktopHelper.switchUIToNotebookbar();
-		cy.viewport(1920,1080);
 
 		if (Cypress.env('INTEGRATION') === 'nextcloud') {
 			desktopHelper.showSidebar();
@@ -26,7 +26,7 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 
 	it('Apply highlight color.', function() {
 		helper.setDummyClipboardForCopy();
-		desktopHelper.actionOnSelector('backColor', (selector) => { cy.cGet(selector).click(); });
+		desktopHelper.getNbIconArrow('CharBackColor', 'Home').click();
 		desktopHelper.selectColorFromPalette('FFB66C');
 		writerHelper.selectAllTextOfDoc();
 		helper.copy();
@@ -36,20 +36,18 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 
 	it('Apply transparent highlight color.', function() {
 		helper.setDummyClipboardForCopy();
-		desktopHelper.actionOnSelector('backColor',
-			(selector) => { cy.cGet(selector.replace('.unoarrow', '') + ' .unobutton').click(); });
+		desktopHelper.getNbIcon('CharBackColor', 'Home').first().click();
 		writerHelper.selectAllTextOfDoc();
 		helper.copy();
 		cy.cGet('#copy-paste-container p font span')
 			.should('have.attr', 'style', 'background: transparent');
-		desktopHelper.actionOnSelector('backColor',
-			(selector) => { cy.cGet(selector.replace('.unoarrow', '') + ' .selected-color')
-				.should('have.attr', 'style', 'background-color: transparent; border-color: var(--color-border);') });
+		desktopHelper.getNbIcon('CharBackColor').find('.selected-color')
+				.should('have.attr', 'style', 'background-color: transparent; border-color: var(--color-border);');
 	});
 
 	it('Apply font color.', function() {
 		helper.setDummyClipboardForCopy();
-		desktopHelper.actionOnSelector('fontColor', (selector) => { cy.cGet(selector).click(); });
+		desktopHelper.getNbIconArrow('FontColor', 'Home').click();
 		desktopHelper.selectColorFromPalette('3FAF46');
 		writerHelper.selectAllTextOfDoc();
 		helper.copy();

@@ -548,6 +548,11 @@ function getNbIcon(unoCommand, tabName) {
 	return cy.cGet((tabName ? '#' + tabName + '-container' : '') + '.notebookbar  .uno' + unoCommand + ' > button:visible');
 }
 
+/// get icon arrow for given uno command from notebookbar to open the dropdown
+function getNbIconArrow(unoCommand, tabName) {
+	return cy.cGet((tabName ? '#' + tabName + '-container' : '') + '.notebookbar  .uno' + unoCommand + ' > .arrowbackground:visible');
+}
+
 /// get gropdown element for menu with given id
 function getDropdown(dropdownId) {
 	return cy.cGet('[id^="' + dropdownId + '"].modalpopup');
@@ -587,5 +592,6 @@ module.exports.assertVisiblePage = assertVisiblePage;
 module.exports.closeNavigatorSidebar = closeNavigatorSidebar;
 module.exports.sidebarToggle = sidebarToggle;
 module.exports.getCompactIcon = getCompactIcon;
-module.exports.getNbIcon = getNbIcon; 
+module.exports.getNbIcon = getNbIcon;
+module.exports.getNbIconArrow = getNbIconArrow;
 module.exports.getDropdown = getDropdown;
