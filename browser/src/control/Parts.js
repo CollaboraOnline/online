@@ -13,7 +13,7 @@
  */
 
 /* global app _ cool */
-/* global _ JSDialog app OtherViewCellCursorSection TileManager */
+/* global _ JSDialog app OtherViewCellCursorSection TileManager OtherViewCursorSection */
 
 window.L.Map.include({
 	/*
@@ -112,7 +112,7 @@ window.L.Map.include({
 		});
 
 		OtherViewCellCursorSection.updateVisibilities();
-		app.definitions.otherViewCursorSection.updateVisibilities();
+		OtherViewCursorSection.updateVisibilities();
 		app.definitions.otherViewGraphicSelectionSection.updateVisibilities();
 		docLayer.eachView(docLayer._viewSelections, docLayer._onUpdateTextViewSelection, docLayer);
 		docLayer._clearSelections(calledFromSetPartHandler);
