@@ -691,70 +691,69 @@ class SlideShowPresenter {
 
 
 	private _initializeSlideNavWidget(container: HTMLDivElement): void {
-	// end show button
-	this._createSlideButton(
-	container,
-	'endshow',
-	'left-img',
-	'slideshow-exit.svg',
-	_('End Show'),
-	this._onQuit
-	);
+		const buttonConfigs = [
+			{
+				id: 'endshow',
+				className: 'left-img',
+				imgSrc: 'slideshow-exit.svg',
+				label: _('End Show'),
+				onClick: this._onQuit
+			},
+			{
+				id: 'previous',
+				className: 'left-img',
+				imgSrc: 'slideshow-slidePrevious.svg',
+				label: _('Previous'),
+				onClick: this._onPrevSlide
+			},
+			{
+				id: 'next',
+				className: 'right-img',
+				imgSrc: 'slideshow-slideNext.svg',
+				label: _('Next'),
+				onClick: this._onNextSlide
+			}
+		];
 
-// previous slide button
-	this._createSlideButton(
-	container,
-	'previous',
-	'left-img',
-	'slideshow-slidePrevious.svg',
-	_('Previous'),
-	this._onPrevSlide
-	);
+		for (const config of buttonConfigs) {
+			this._createSlideButton(container, config.id, config.className, config.imgSrc, config.label, config.onClick);
+		}
 
-// next slide button
-	this._createSlideButton(
-    container,
-    'next',
-    'right-img',
-    'slideshow-slideNext.svg',
-    _('Next'),
-    this._onNextSlide);
-// disable/enable button
-	this._createSlideButton(
-    container,
-    'disableanimation',
-    'animations-img skipTransition-false',
-    'slideshow-transition.svg',
-    _('Disable Animations'),
-    (e: Event) => {
-        this._onA11yString(e.target);
-        this._navigateSkipTransition = !this._navigateSkipTransition;
-        const img = e.target as HTMLImageElement;
-        const slideshowAnimToggleText = this._navigateSkipTransition
-            ? _('Enable Animations')
-            : _('Disable Animations');
-        img.setAttribute('aria-label', slideshowAnimToggleText);
-        img.setAttribute('data-cooltip', slideshowAnimToggleText);
-        img.className = 'animations-img skipTransition-' + this._navigateSkipTransition;
-    }
-);
-// follow button
+		// disable/enable button
+		this._createSlideButton(
+			container,
+			'disableanimation',
+			'animations-img skipTransition-false',
+			'slideshow-transition.svg',
+			_('Disable Animations'),
+			(e: Event) => {
+				this._onA11yString(e.target);
+				this._navigateSkipTransition = !this._navigateSkipTransition;
+				const img = e.target as HTMLImageElement;
+				const slideshowAnimToggleText = this._navigateSkipTransition
+					? _('Enable Animations')
+					: _('Disable Animations');
+				img.setAttribute('aria-label', slideshowAnimToggleText);
+				img.setAttribute('data-cooltip', slideshowAnimToggleText);
+				img.className = 'animations-img skipTransition-' + this._navigateSkipTransition;
+			}
+		);
 
-if (this.isFollower()) {
-    this._createSlideButton(
-        container,
-        'follow',
-        'right-img',
-        'slideshow-slideNext.svg',
-        _('Follow Presentation'),
-        (e: Event) => {
-            e.stopPropagation();
-            this._onA11yString(e.target);
-            this._slideShowNavigator.followLeaderSlide();
-        }
-    );
-}
-
+		// follow button
+		if (this.isFollower()) {
+			this._createSlideButton(
+				container,
+				'follow',
+				'right-img',
+				'slideshow-slideNext.svg',
+				_('Follow Presentation'),
+				(e: Event) => {
+					e.stopPropagation();
+					this._onA11yString(e.target);
+					this._slideShowNavigator.followLeaderSlide();
+				}
+			);
+		}
 
 		// Make sure slide controls don't disappear when mouse is over them
 		container.addEventListener(
