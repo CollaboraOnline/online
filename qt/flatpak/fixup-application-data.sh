@@ -11,7 +11,7 @@ for i in /app/share/applications/com.collabora.Office.{calc,draw,impress,writer}
 done
 
 # Paste in full CODA description:
-sed -i -e 's/Collabora Office Desktop is a powerful office suite./Collabora Office Desktop brings the familiar Collabora Online experience to your computer - so you can create, edit, and present with a beautiful, modern UI. Built on trusted LibreOffice technology and backed by the largest team of LibreOffice developers worldwide, it delivers excellent interoperability with ODF and Microsoft Office formats (DOCX/XLSX/PPTX), and exports to PDF with ease. Your documents stay on your device unless you choose to share them - privacy by design./' \
+sed -i -e 's/Collabora Office Desktop is a powerful office suite./Collabora Office Desktop brings the familiar Collabora Online experience to your computer - so you can create, edit, and present with a beautiful, modern UI. Built on trusted LibreOffice technology and backed by the largest team of LibreOffice developers worldwide, it delivers excellent interoperability with ODF and Microsoft Office formats (DOCX\/XLSX\/PPTX), and exports to PDF with ease. Your documents stay on your device unless you choose to share them - privacy by design./' \
  /app/share/appdata/com.collabora.Office.appdata.xml
 # Paste in CODA screenshots:
 sed -i -e 's/writer.png/https:\/\/col.la\/codelinuxwriter/' \
