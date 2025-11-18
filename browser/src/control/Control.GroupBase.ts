@@ -64,9 +64,9 @@ export abstract class GroupBase extends CanvasSectionObject {
 
 		this._map.on('sheetgeometrychanged', this.update, this);
 		this._map.on('viewrowcolumnheaders', this.update, this);
-		this._map.on('darkmodechanged', this._groupBaseColors, this);
+		this._map.on('darkmodechanged', this._updateColors, this);
 		this._createFont();
-		this._groupBaseColors();
+		this._updateColors();
 		this.update();
 		this.isRemoved = false;
 	}
@@ -109,11 +109,9 @@ export abstract class GroupBase extends CanvasSectionObject {
 		return this._cachedColors;
 	}
 
-	private _groupBaseColors(): void {
-		const colors = this.getColors();
-		this.backgroundColor = colors.backgroundColor;
-		this.borderColor = colors.borderColor;
-		this._textColor = colors.textColor;
+	protected _updateColors(): void {
+		this._cachedColors = null; // reset cache
+		this.getColors(); // refresh the cache
 	}
 
 	// This returns the required width for the section.
