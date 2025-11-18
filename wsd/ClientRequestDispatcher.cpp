@@ -1386,25 +1386,6 @@ bool ClientRequestDispatcher::handleWopiDiscoveryRequest(
     return true;
 }
 
-
-// NB: these names are part of the published API, and should not be renamed or altered but can be expanded
-STATE_ENUM(CheckStatus,
-    Ok,
-    NotHttpSuccess,
-    HostNotFound,
-    WopiHostNotAllowed,
-    UnspecifiedError,
-    ConnectionAborted,
-    CertificateValidation,
-    SelfSignedCertificate,
-    ExpiredCertificate,
-    SslHandshakeFail,
-    MissingSsl,
-    NotHttps,
-    NoScheme,
-    Timeout,
-);
-
 void ClientRequestDispatcher::sendResult(const std::shared_ptr<StreamSocket>& socket, CheckStatus result)
 {
     std::string output = R"({"status": ")" + JsonUtil::escapeJSONValue(nameShort(result)) + "\"}\n";
