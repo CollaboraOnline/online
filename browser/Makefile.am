@@ -320,6 +320,7 @@ COOL_JS_LST =\
 	src/canvas/sections/TilesSection.ts \
 	src/canvas/sections/AutoFillMarkerSection.ts \
 	src/canvas/sections/ImpressSelectionRectangle.ts \
+	src/canvas/sections/TableFillMarkerSection.ts \
 	src/canvas/sections/TableResizeMarkerSection.ts \
 	src/canvas/sections/TableSelectMarkerSection.ts \
 	src/canvas/sections/FocusCellSection.ts \
