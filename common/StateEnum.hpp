@@ -53,20 +53,20 @@
 #define STATE_ENUM(NAME, ...)                                                                      \
     enum class NAME : char;                                                                        \
     /* Returns the state name only, without the namespace. */                                      \
-    [[maybe_unused]] static inline constexpr std::string_view nameShort(NAME e) noexcept           \
+    [[maybe_unused]] static inline constexpr std::string_view nameShort(NAME elm) noexcept         \
     {                                                                                              \
-        constexpr std::string_view NAME##_names[] = { FOR_EACH(STRINGIFY1, NAME, __VA_ARGS__) };   \
-        assert(static_cast<unsigned>(e) < N_ELEMENTS(NAME##_names) &&                              \
-               "Enum value is out of range.");                                                     \
-        return NAME##_names[static_cast<int>(e)];                                                  \
+        constexpr std::array<std::string_view, COUNT_ARGS(__VA_ARGS__)> NAME##_names = { FOR_EACH( \
+            STRINGIFY1, NAME, __VA_ARGS__) };                                                      \
+        assert(static_cast<unsigned>(elm) < NAME##_names.size() && "Enum value is out of range."); \
+        return NAME##_names[static_cast<int>(elm)];                                                \
     }                                                                                              \
     /* Returns the state name with the namespace. */                                               \
-    [[maybe_unused]] static inline constexpr std::string_view name(NAME e) noexcept                \
+    [[maybe_unused]] static inline constexpr std::string_view name(NAME elm) noexcept              \
     {                                                                                              \
-        constexpr std::string_view NAME##_names[] = { FOR_EACH(STRINGIFY2, NAME, __VA_ARGS__) };   \
-        assert(static_cast<unsigned>(e) < N_ELEMENTS(NAME##_names) &&                              \
-               "Enum value is out of range.");                                                     \
-        return NAME##_names[static_cast<int>(e)];                                                  \
+        constexpr std::array<std::string_view, COUNT_ARGS(__VA_ARGS__)> NAME##_names = { FOR_EACH( \
+            STRINGIFY2, NAME, __VA_ARGS__) };                                                      \
+        assert(static_cast<unsigned>(elm) < NAME##_names.size() && "Enum value is out of range."); \
+        return NAME##_names[static_cast<int>(elm)];                                                \
     }                                                                                              \
     [[maybe_unused]] static constexpr size_t NAME##Max = COUNT_ARGS(__VA_ARGS__);                  \
     enum class NAME : char                                                                         \
