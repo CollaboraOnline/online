@@ -80,13 +80,14 @@ class ViewLayoutBase {
 		);
 	}
 
-	public viewToDocumentX(point: cool.SimplePoint): number {
+	// Unmodified canvas coordinate, no scroll included.
+	public canvasToDocumentX(point: cool.SimplePoint): number {
 		return (
 			point.pX + this._viewedRectangle.pX1 - this._documentAnchorPosition[0]
 		);
 	}
 
-	public viewToDocumentY(point: cool.SimplePoint): number {
+	public canvasToDocumentY(point: cool.SimplePoint): number {
 		return (
 			point.pY + this._viewedRectangle.pY1 - this._documentAnchorPosition[1]
 		);
