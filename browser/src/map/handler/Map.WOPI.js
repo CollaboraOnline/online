@@ -683,6 +683,13 @@ window.L.Map.WOPI = window.L.Handler.extend({
 				app.socket.sendMessage(blob);
 			}
 		}
+		else if (msg.MessageId == 'Action_Copy') {
+			// Request the current text selection in some format.
+			if (msg.Values && msg.Values.Mimetype && this._map._clip) {
+				this._map._clip.setActionCopy(true);
+				app.socket.sendMessage('gettextselection mimetype=' + msg.Values.Mimetype);
+			}
+		}
 		else if (msg.MessageId === 'Action_ShowBusy') {
 			if (msg.Values && msg.Values.Label) {
 				this._map.fire('showbusy', {label: msg.Values.Label});

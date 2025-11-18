@@ -1051,6 +1051,21 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 		}
 		else if (textMsg.startsWith('textselectioncontent:')) {
 			let textMsgContent = textMsg.substr(22);
+
+			if (this._map._clip && this._map._clip.isActionCopy()) {
+				// This is the Action_Copy PostMessage API, create the response and
+				// don't touch the clipboard.
+				this._map._clip.setActionCopy(false);
+				const message = {
+					msgId: 'Action_Copy_Resp',
+					args: {
+						content: textMsgContent
+					}
+				};
+				this._map.fire('postMessage', message);
+				return;
+			}
+
 			let textMsgHtml = '';
 			let textMsgPlainText = '';
 			if (textMsgContent.startsWith('{')) {
