@@ -661,6 +661,7 @@ void ClientRequestDispatcher::onConnect(const std::shared_ptr<StreamSocket>& soc
                           << ") to ClientRequestDispatcher " << this);
 }
 
+#if !MOBILEAPP
 /// Starts an asynchronous CheckFileInfo request in parallel to serving
 /// static files. At this point, we don't have the client's WebSocket
 /// yet, and we're proactively trying to authenticate the client.
@@ -716,7 +717,6 @@ static void launchAsyncCheckFileInfo(
     }
 }
 
-#if !MOBILEAPP
 static void socketEraseConsumedBytes(const std::shared_ptr<StreamSocket>& socket,
                                      ssize_t headerSize,
                                      ssize_t contentSize,
