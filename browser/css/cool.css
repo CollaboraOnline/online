@@ -1360,13 +1360,14 @@ body {
 	left: 0;
 	bottom: 0;
 	right: 0;
-	width: 100%;
-	height: 100%;
 	z-index: 1000000;
 	background-color: black;
 	border: none;
-	margin-top: -1px;
-	margin-left: -1px;
+
+	/* hairline-fix */
+	width: calc(100% + 2px);
+	height: calc(100% + 2px);
+	transform: translate(-1px, -1px);
 }
 
 .table-add-col-row-marker {
