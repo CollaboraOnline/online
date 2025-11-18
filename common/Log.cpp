@@ -44,10 +44,11 @@ thread_local std::int32_t OwnThreadIdIndex = 0;
 std::int32_t ThreadIdArray[256];
 std::atomic_int32_t NextThreadIdIndex(0);
 #endif // !NDEBUG
-} // namespace
 
 /// Which log areas should be disabled
 bool AreasDisabled[Log::AreaMax] = { false, };
+
+} // namespace
 
 /// Wrapper to expose protected 'log' and genericise
 class GenericLogger : public Poco::Logger
@@ -392,6 +393,9 @@ namespace Log
     extern StaticHelper Static;
     extern StaticUIHelper StaticUILog;
 
+    namespace
+    {
+
     bool IsShutdown = false;
 
     /// Convert an unsigned number to ascii with 0 padding.
@@ -464,6 +468,7 @@ namespace Log
 
         return buf + i;
     }
+    } // namespace
 
     char* prefix(const std::chrono::time_point<std::chrono::system_clock>& tp,
                  char* buffer,
@@ -668,6 +673,9 @@ namespace Log
         }
     }
 
+    namespace
+    {
+
     GenericLogger& logger()
     {
         GenericLogger* pLogger = Static.getThreadLocalLogger();
@@ -692,11 +700,12 @@ namespace Log
                 &GenericLogger::get(StaticUILog.getInited() ? StaticUILog.getName() : std::string()));
     }
 
+    } // namespace
+
     bool isLogUIEnabled()
     {
-        if (StaticUILog.getThreadLocalLogger() || StaticUILog.getLogger())
-            return true;
-        return false;
+        return (StaticUILog.getThreadLocalLogger() != nullptr) ||
+               (StaticUILog.getLogger() != nullptr);
     }
 
     void logUI(Level l, const std::string &text)
@@ -856,8 +865,7 @@ namespace Log
 
     const std::string& getLogLevelName(const std::string& channel)
     {
-        unsigned int wsdLogLevel =
-            Log::logger().get(channel).getLevel();
+        const int wsdLogLevel = GenericLogger::get(channel).getLevel();
         return levelList[wsdLogLevel];
     }
 
@@ -875,12 +883,12 @@ namespace Log
 
         // Get the list of channels..
         std::vector<std::string> nameList;
-        Log::logger().names(nameList);
+        GenericLogger::names(nameList);
 
         if (std::find(std::begin(levelList), std::end(levelList), level) == std::end(levelList))
             lvl = "debug";
 
-        Log::logger().get(channel).setLevel(lvl);
+        GenericLogger::get(channel).setLevel(lvl);
     }
 
 } // namespace Log
