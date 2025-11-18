@@ -851,6 +851,7 @@ inline void sendText(std::shared_ptr<http::WebSocketSession>& socket, const std:
     }
 }
 
+//
 inline void saveTileAs(const std::vector<char> &tileResponse,
                        const std::string &filename,
                        const std::string &testname)

@@ -1534,21 +1534,21 @@ class TileManager {
 
 		if (resetBorder) this._borders = undefined;
 
-		var interval = 250;
-		var idleTime = 750;
-		this._preFetchPart = this._docLayer._selectedPart;
-		this._preFetchMode = this._docLayer._selectedMode;
-		this._preFetchIdle = setTimeout(
-			window.L.bind(function () {
-				this._tilesPreFetcher = setInterval(
-					window.L.bind(this.preFetchTiles, this),
-					interval,
-				);
-				this._preFetchIdle = undefined;
-				this._cumTileCount = 0;
-			}, this),
-			idleTime,
-		);
+		// var interval = 250;
+		// var idleTime = 750;
+		// this._preFetchPart = this._docLayer._selectedPart;
+		// this._preFetchMode = this._docLayer._selectedMode;
+		// this._preFetchIdle = setTimeout(
+		// 	window.L.bind(function () {
+		// 		this._tilesPreFetcher = setInterval(
+		// 			window.L.bind(this.preFetchTiles, this),
+		// 			interval,
+		// 		);
+		// 		this._preFetchIdle = undefined;
+		// 		this._cumTileCount = 0;
+		// 	}, this),
+		// 	idleTime,
+		// );
 	}
 
 	public static clearPreFetch() {

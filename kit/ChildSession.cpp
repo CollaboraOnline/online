@@ -2113,8 +2113,27 @@ bool ChildSession::mouseEvent(const StringVector& tokens,
     return true;
 }
 
+//
 bool ChildSession::dialogEvent(const StringVector& tokens)
 {
+
+    // if (dialogEvent == click on pushbutton) // check this
+    //     setenv("SPECIALDEBUGGING", "1", true);
+    // fprintf(stderr, "--inChildSession----\n");
+
+    for (size_t i = 0; i < tokens.size(); i++)
+    {
+        // printf("--i: %ld: %s\n", i, tokens[i].c_str());
+        if (tokens[i].find("ok") != std::string::npos)
+        {
+            fprintf(stderr, "-----OK CLICKED----");
+            printf("--i: %ld: %s\n", i, tokens[i].c_str());
+
+            setenv("SPECIALDEBUGGING", "1", true);
+
+        }
+    }
+
     if (tokens.size() <= 2)
     {
         sendTextFrameAndLogError("error: cmd=dialogevent kind=syntax");

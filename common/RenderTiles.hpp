@@ -31,6 +31,22 @@
 
 namespace RenderTiles
 {
+
+inline void saveTileAs(const std::vector<char> &tileResponse,
+                       const std::string &filename)
+{
+    const std::string firstLine = COOLProtocol::getFirstLine(tileResponse);
+    std::vector<char> res(tileResponse.begin() + firstLine.size() + 1, tileResponse.end());
+    std::stringstream streamRes;
+    std::copy(res.begin(), res.end(), std::ostream_iterator<char>(streamRes));
+    std::fstream outStream(filename, std::ios::out);
+    outStream.write(res.data(), res.size());
+    outStream.close();
+    // TST_LOG("Saved [" << firstLine << "] to [" << filename << ']');
+}
+
+
+
     struct Buffer {
         unsigned char *_data;
         Buffer()
@@ -64,6 +80,7 @@ namespace RenderTiles
         return nextId;
     }
 
+    //
     bool doRender(
         const std::shared_ptr<lok::Document>& document, DeltaGenerator& deltaGen,
         TileCombined& tileCombined, ThreadPool& pngPool,
@@ -128,14 +145,39 @@ namespace RenderTiles
                                 pixmapWidth, pixmapHeight,
                                 renderArea.getLeft(), renderArea.getTop(),
                                 renderArea.getWidth(), renderArea.getHeight());
+
+        fprintf(stderr, "renderTiles is happening in pid %d and tid %d\n", getpid(), gettid());
+
+        const auto mode = static_cast<LibreOfficeKitTileMode>(document->getTileMode());
+
+        if (getenv("SPECIALDEBUGGING"))
+        {
+            printf("--i: %s\n", "---SPECIALDEBUGGING");
+
+            std::vector<char> tmpData;
+            if (!Png::encodeSubBufferToPNG(pixmap.data(), 0, 0, pixmapWidth, pixmapHeight,
+                                           pixmapWidth, pixmapHeight, tmpData, mode))
+            {
+                fprintf(stderr, "total failure\n");
+                return false;
+            }
+
+            static int pngDumpCounter = 0;
+            std::stringstream ss;
+            ss << "/tmp/area-" << pngDumpCounter++ << "-x-" << renderArea.getLeft() << "-y-" << renderArea.getTop() << ".png";
+
+            FILE *f = fopen(ss.str().c_str(), "w");
+            fwrite(tmpData.data(), tmpData.size(), 1, f);
+            fclose(f);
+        }
+
+
         auto duration = std::chrono::steady_clock::now() - start;
         const auto elapsedUs = std::chrono::duration_cast<std::chrono::microseconds>(duration);
         LOG_DBG("paintPartTile      " << tileRecs.size() << " tiles at ("
                 << renderArea.getLeft() << ", " << renderArea.getTop() << "), ("
                 << renderArea.getWidth() << ", " << renderArea.getHeight() << ") "
                 << " took " << elapsedUs << " (" << area / elapsedUs.count() << " MP/s).");
-
-        const auto mode = static_cast<LibreOfficeKitTileMode>(document->getTileMode());
 
         const size_t pixmapSize = 4 * pixmapWidth * pixmapHeight;
         std::vector<char> output;
@@ -183,6 +225,28 @@ namespace RenderTiles
                     {
                         std::vector< char > data;
                         data.reserve(pixmapWidth * pixmapHeight * 1);
+
+                        if (getenv("SPECIALDEBUGGING"))
+                        {
+                            printf("--i: %s\n", "---SPECIALDEBUGGING");
+
+                            std::vector<char> tmpData;
+                            if (!Png::encodeSubBufferToPNG(pixmap.data(), offsetX, offsetY, pixelWidth, pixelHeight,
+                                                           pixmapWidth, pixmapHeight, tmpData, mode))
+                            {
+                                fprintf(stderr, "total failure\n");
+                                return;
+                            }
+
+                            static int pngDumpCounter = 0;
+                            std::stringstream ss;
+                            ss << "/tmp/tile-" << pngDumpCounter++ << "-x-" << positionX << "-y-" << positionY << ".png";
+
+                            FILE *f = fopen(ss.str().c_str(), "w");
+                            fwrite(tmpData.data(), tmpData.size(), 1, f);
+                            fclose(f);
+                        }
+
 
                         // FIXME: don't try to store & create deltas for read-only documents.
                         if (!tiles[tileIndex].isPreview())

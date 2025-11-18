@@ -126,9 +126,12 @@ class ViewLayoutBase {
 			Math.round(splitPos.y);
 
 		if (
-			this.clientVisibleAreaCommand !== newClientVisibleAreaCommand ||
-			forceUpdate
+			this.clientVisibleAreaCommand !== newClientVisibleAreaCommand 
+			 || forceUpdate
 		) {
+
+			// if (dialogEvent == click on pushbutton) setenv("SPECIALDEBUGGING", "1", true);
+
 			// Only update on some change
 			if (app.map._docLayer._ySplitter) {
 				app.map._docLayer._ySplitter.onPositionChange();

@@ -1351,7 +1351,8 @@ bool DocumentBroker::doDownloadDocument(const Authorization& auth,
             timepoint); // Used to detect modifications.
     }
 
-    const bool dontUseCache = Util::isMobileApp();
+    // const bool dontUseCache = Util::isMobileApp();
+    const bool dontUseCache = true;
 
     _tileCache = std::make_unique<TileCache>(_storage->getUri().toString(),
                                              _saveManager.getLastModifiedLocalTime(), dontUseCache);
