@@ -376,7 +376,7 @@ class InitializerBase {
 
 	initializeViewMode() {
 		const darkTheme = window.coolParams.get('darkTheme');
-		if (darkTheme) { window.uiDefaults = { 'darkTheme': true }; }
+		if (darkTheme) { window.uiDefaults = { 'darkTheme': 'true' }; }
 	}
 
 	afterInitialization() {

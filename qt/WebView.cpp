@@ -50,6 +50,7 @@
 #include <QDBusPendingCallWatcher>
 #include <QDBusPendingReply>
 #include <QVariant>
+#include <QtDBus/QtDBus>
 
 std::vector<WebView*> WebView::s_instances;
 
@@ -210,6 +211,31 @@ std::pair<int, int> getWindowSize(bool isWelcome)
     return { width, height };
 }
 
+std::optional<bool> portalPrefersDark() {
+    QDBusInterface iface(
+        "org.freedesktop.portal.Desktop",
+        "/org/freedesktop/portal/desktop",
+        "org.freedesktop.portal.Settings",
+        QDBusConnection::sessionBus()
+    );
+    if (!iface.isValid()) return std::nullopt;
+
+    QDBusReply<QVariant> reply = iface.call("Read",
+        "org.freedesktop.appearance", "color-scheme");
+    if (!reply.isValid()) return std::nullopt;
+
+    QVariant v = reply.value();
+    if (v.userType() == qMetaTypeId<QDBusVariant>())
+        v = qvariant_cast<QDBusVariant>(v).variant();
+
+    bool ok = false;
+    const uint code = v.toUInt(&ok);
+    if (!ok || code == 0) return std::nullopt;     // 0 = no preference
+    if (code == 1) return true;                    // 1 = prefer dark
+    if (code == 2) return false;                   // 2 = prefer light
+    return std::nullopt;
+}
+
 void WebView::load(const Poco::URI& fileURL, bool newFile)
 {
     _document = {
@@ -273,6 +299,9 @@ void WebView::load(const Poco::URI& fileURL, bool newFile)
     urlAndQuery.addQueryParameter("lang", getUILanguage());
     urlAndQuery.addQueryParameter("appdocid", std::to_string(_document._appDocId));
     urlAndQuery.addQueryParameter("userinterfacemode", "notebookbar");
+
+    if (portalPrefersDark())
+        urlAndQuery.addQueryParameter("darkTheme", "true");
     if (newFile)
         urlAndQuery.addQueryParameter("isnewdocument", "true");
     if (_isWelcome)
