@@ -33,7 +33,7 @@ public:
         StaticFileContentCache["discovery.xml"] = getDiscoveryXML();
     }
 
-    typedef std::function<void(bool)> AsyncFn;
+    using AsyncFn = std::function<void(bool)>;
 
     /// Uninitialize static data.
     static void uninitialize()
