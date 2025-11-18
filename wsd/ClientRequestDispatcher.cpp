@@ -64,6 +64,7 @@
 #include <map>
 #include <memory>
 #include <string>
+#include <string_view>
 #include <vector>
 
 std::map<std::string, std::string> ClientRequestDispatcher::StaticFileContentCache;
@@ -1146,7 +1147,7 @@ ClientRequestDispatcher::MessageResult ClientRequestDispatcher::handleMessage(Po
                 bool skipAuthentication = ConfigUtil::getConfigValue<bool>(
                     "security.enable_metrics_unauthenticated", false);
                 if (!skipAuthentication)
-                    if (!COOLWSD::FileRequestHandler->isAdminLoggedIn(request, *response))
+                    if (!FileServerRequestHandler::isAdminLoggedIn(request, *response))
                         throw Poco::Net::NotAuthenticatedException("Invalid admin login");
             }
             catch (const Poco::Net::NotAuthenticatedException& exc)
@@ -2754,8 +2755,11 @@ void ClientRequestDispatcher::CleanupRequestVettingStations()
 
 #if !MOBILEAPP
 
+namespace
+{
+
 /// Create the /hosting/capabilities JSON and return as string.
-static std::string getCapabilitiesJson(bool convertToAvailable)
+std::string getCapabilitiesJson(bool convertToAvailable)
 {
     // Can the convert-to be used?
     Poco::JSON::Object::Ptr convert_to = new Poco::JSON::Object;
@@ -2830,8 +2834,8 @@ static std::string getCapabilitiesJson(bool convertToAvailable)
 }
 
 /// Send the /hosting/capabilities JSON to socket
-static void sendCapabilities(bool convertToAvailable, bool closeConnection,
-                             const std::weak_ptr<StreamSocket>& socketWeak)
+void sendCapabilities(bool convertToAvailable, bool closeConnection,
+                      const std::weak_ptr<StreamSocket>& socketWeak)
 {
     std::shared_ptr<StreamSocket> socket = socketWeak.lock();
     if (!socket)
@@ -2851,6 +2855,8 @@ static void sendCapabilities(bool convertToAvailable, bool closeConnection,
         socket->send(httpResponse);
     LOG_INF("Sent capabilities.json successfully.");
 }
+
+} // namespace
 
 bool ClientRequestDispatcher::handleCapabilitiesRequest(const Poco::Net::HTTPRequest& request,
                                                         const std::shared_ptr<StreamSocket>& socket)
@@ -2872,6 +2878,6 @@ bool ClientRequestDispatcher::handleCapabilitiesRequest(const Poco::Net::HTTPReq
     return false;
 }
 
-#endif
+#endif // !MOBILEAPP
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
