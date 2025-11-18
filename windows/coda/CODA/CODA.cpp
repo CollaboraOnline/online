@@ -770,6 +770,7 @@ static void do_bye_handling_things(const WindowData& data)
 
     // Close one end of the socket pair, that will wake up the forwarding thread above
     fakeSocketClose(data.closeNotificationPipeForForwardingThread[0]);
+    PostMessageW(data.hWnd, WM_CLOSE, 0, 0);
 }
 
 static void do_print(int appDocId)
