@@ -1,4 +1,4 @@
-/* global describe it cy require */
+/* global describe it cy require expect */
 
 var helper = require('../../common/helper');
 
@@ -31,5 +31,42 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Clipboard operations.', fu
 
 		let expected = '    • first\n    • second\n    • third';
 		cy.cGet('#copy-plain-container').should('have.text', expected);
+	});
+
+	it('Copy text as markdown.', function() {
+		// Given a document with 3 words: middle word is italic:
+		helper.setupAndLoadDocument('writer/copy_markdown.odt');
+		cy.getFrameWindow().then(function(win) {
+			const winParent = win.parent;
+			cy.stub(winParent, 'postMessage').as('postMessage').callsFake((message) => {
+				expect(message).to.satisfy(message => {
+					const json = JSON.parse(message);
+					if (json.MessageId != 'Action_Copy_Resp') {
+						return false;
+					}
+					return json.Values.content == 'foo *bar* baz\n';
+				});
+			});
+		});
+
+		// When copying the document text as markdown:
+		helper.selectAllText();
+		cy.getFrameWindow().then(function(win) {
+			// Same as using framed.doc.html's "Send a message" frame:
+			// - message set to 'Action_Copy'
+			// - values set to '{"Mimetype": "text/markdown;charset=utf-8"}'
+			const message = {
+				'MessageId': 'Action_Copy',
+				'Values': {
+					'Mimetype': 'text/markdown;charset=utf-8'
+				}
+			};
+			win.postMessage(JSON.stringify(message), '*');
+		});
+
+		// Then make sure we get markdown:
+		// Without the accompanying fix in place, this test would have failed with:
+		// expected postMessage to have been called at least once, but it was never called
+		cy.get('@postMessage').should('be.called');
 	});
 });

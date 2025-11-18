@@ -32,6 +32,8 @@ window.L.Clipboard = window.L.Class.extend({
 		this._unoCommandForCopyCutPaste = null;
 		// Tracks if we're in paste special mode for the navigator.clipboard case
 		this._navigatorClipboardPasteSpecial = false;
+		// Is handling an 'Action_Copy' in progress?
+		this._isActionCopy = false;
 
 		var div = document.createElement('div');
 		this._dummyDiv = div;
@@ -1251,6 +1253,14 @@ window.L.Clipboard = window.L.Class.extend({
 		this._selectionContent = this._originWrapBody(text);
 		this._selectionPlainTextContent = text;
 		this._scheduleHideDownload();
+	},
+
+	setActionCopy: function(isActionCopy) {
+		this._isActionCopy = isActionCopy;
+	},
+
+	isActionCopy: function() {
+		return this._isActionCopy;
 	},
 
 	// complexselection: message
