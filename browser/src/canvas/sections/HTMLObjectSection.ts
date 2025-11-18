@@ -90,8 +90,7 @@ class HTMLObjectSection extends CanvasSectionObject {
 	}
 
 	public getPosition(): cool.SimplePoint {
-		const twips = [Math.round(this.position[0] * app.pixelsToTwips), Math.round(this.position[1] * app.pixelsToTwips)];
-		return new cool.SimplePoint(twips[0], twips[1]);
+		return this.documentPosition.clone();
 	}
 
 	public onRemove(): void {
