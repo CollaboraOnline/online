@@ -848,7 +848,7 @@ body {
 	vertical-align: top;
 	border: 1px solid transparent !important;
 	display: inline-block !important;
-	cursor: pointer;
+	cursor: inherit;
 	box-sizing: border-box;
 }
 
@@ -901,6 +901,8 @@ body {
 	justify-content: flex-end;
 	align-items: center;
 	column-gap: 4px;
+	cursor: pointer;
+	padding: 0 !important;
 }
 
 .cool-annotation-child-line {
