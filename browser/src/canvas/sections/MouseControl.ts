@@ -66,6 +66,37 @@ class MouseControl extends CanvasSectionObject {
 		return buttons;
 	}
 
+	/*
+		We need to map view coordinates to document coordinates.
+		When user clicks at a position on the screen, we have its document coordinate according to
+		traditional document view: It starts from top-left and ends at bottom-right. Now the new ViewLayouts
+		can paint multiple parts at the same time and they can paint objects in different locations than the objects' original positions.
+		This means that the point user clicks/taps may not overlap with the document through simple math.
+		During this transition phase (to view layouts), we need both point.pX and point.vX properties. Later, we may use only vX, vY etc.
+
+		This function should be used only for real user interactions. If you want to simulate a click at a certain position, call _postMouseEvent directly.
+	*/
+	private postCoreMouseEvent(
+		eventType: string,
+		point: cool.SimplePoint,
+		clickCount: number,
+		buttons: number,
+		modifier: number,
+	) {
+		const viewToDocumentPos = point.clone();
+
+		// Just send the point unmodified for now.
+
+		app.map._docLayer._postMouseEvent(
+			eventType,
+			viewToDocumentPos.x,
+			viewToDocumentPos.y,
+			clickCount,
+			buttons,
+			modifier,
+		);
+	}
+
 	public onContextMenu(point: cool.SimplePoint, e: MouseEvent): void {
 		// We need this to prevent native context menu.
 		e.preventDefault();
@@ -76,11 +107,11 @@ class MouseControl extends CanvasSectionObject {
 
 		const buttons = app.LOButtons.right;
 		const modifier = this.readModifier(e);
+
 		if (modifier === 0) {
-			app.map._docLayer._postMouseEvent(
+			this.postCoreMouseEvent(
 				'buttondown',
-				this.currentPosition.x,
-				this.currentPosition.y,
+				this.currentPosition,
 				1,
 				buttons,
 				modifier,
@@ -104,7 +135,7 @@ class MouseControl extends CanvasSectionObject {
 		};
 	}
 
-	// This useful when a section handles the event but wants to set the document mouse position.
+	// This is useful when a section handles the event but wants to set the document mouse position.
 	public setMousePosition(point: cool.SimplePoint) {
 		this.currentPosition = point.clone();
 	}
@@ -114,17 +145,6 @@ class MouseControl extends CanvasSectionObject {
 			app.activeDocument.activeView.viewedRectangle.pX1 + point.pX;
 		this.currentPosition.pY =
 			app.activeDocument.activeView.viewedRectangle.pY1 + point.pY;
-	}
-
-	private sendMouseMove(count: number, buttons: number, modifier: number) {
-		app.map._docLayer._postMouseEvent(
-			'move',
-			this.currentPosition.x,
-			this.currentPosition.y,
-			count,
-			buttons,
-			modifier,
-		);
 	}
 
 	private setCursorType() {
@@ -247,7 +267,13 @@ class MouseControl extends CanvasSectionObject {
 
 		if (!this.containerObject.isDraggingSomething()) {
 			this.mouseMoveTimer = setTimeout(() => {
-				this.sendMouseMove(count, buttons, modifier);
+				this.postCoreMouseEvent(
+					'move',
+					this.currentPosition,
+					count,
+					buttons,
+					modifier,
+				);
 			}, 100);
 		} else if (e.type === 'touchmove' && this.positionOnMouseDown) {
 			// For non-touch events, we can select text etc, so we send the mouse button events to core while dragging.
@@ -268,10 +294,9 @@ class MouseControl extends CanvasSectionObject {
 			);
 		} else {
 			if (!this.mouseDownSent && this.positionOnMouseDown) {
-				app.map._docLayer._postMouseEvent(
+				this.postCoreMouseEvent(
 					'buttondown',
-					this.positionOnMouseDown.x,
-					this.positionOnMouseDown.y,
+					this.positionOnMouseDown,
 					count,
 					buttons,
 					modifier,
@@ -288,7 +313,13 @@ class MouseControl extends CanvasSectionObject {
 				});
 			} else app.map.fire('scrollvelocity', { vx: 0, vy: 0 });
 
-			this.sendMouseMove(count, buttons, modifier);
+			this.postCoreMouseEvent(
+				'move',
+				this.currentPosition,
+				count,
+				buttons,
+				modifier,
+			);
 		}
 
 		app.idleHandler.notifyActive();
@@ -309,10 +340,9 @@ class MouseControl extends CanvasSectionObject {
 		this.refreshPosition(point);
 
 		if (this.mouseDownSent) {
-			app.map._docLayer._postMouseEvent(
+			this.postCoreMouseEvent(
 				'buttonup',
-				this.currentPosition.x,
-				this.currentPosition.y,
+				this.currentPosition,
 				1,
 				this.readButtons(e),
 				this.readModifier(e),
@@ -393,18 +423,16 @@ class MouseControl extends CanvasSectionObject {
 		if (this.clickTimer) clearTimeout(this.clickTimer);
 		else {
 			// Old code always sends the first click, so do we.
-			app.map._docLayer._postMouseEvent(
+			this.postCoreMouseEvent(
 				'buttondown',
-				sendingPosition.x,
-				sendingPosition.y,
+				sendingPosition,
 				1,
 				buttons,
 				modifier,
 			);
-			app.map._docLayer._postMouseEvent(
+			this.postCoreMouseEvent(
 				'buttonup',
-				sendingPosition.x,
-				sendingPosition.y,
+				sendingPosition,
 				1,
 				buttons,
 				modifier,
@@ -420,18 +448,16 @@ class MouseControl extends CanvasSectionObject {
 
 		this.clickTimer = setTimeout(() => {
 			if (this.clickCount > 1) {
-				app.map._docLayer._postMouseEvent(
+				this.postCoreMouseEvent(
 					'buttondown',
-					sendingPosition.x,
-					sendingPosition.y,
+					sendingPosition,
 					this.clickCount,
 					buttons,
 					modifier,
 				);
-				app.map._docLayer._postMouseEvent(
+				this.postCoreMouseEvent(
 					'buttonup',
-					sendingPosition.x,
-					sendingPosition.y,
+					sendingPosition,
 					this.clickCount,
 					buttons,
 					modifier,
@@ -545,18 +571,16 @@ class MouseControl extends CanvasSectionObject {
 		const modifier = this.readModifier(e);
 
 		// Move the cursor, so that the insert position is as close to the drop coordinates as possible.
-		app.map._docLayer._postMouseEvent(
+		this.postCoreMouseEvent(
 			'buttondown',
-			this.currentPosition.x,
-			this.currentPosition.y,
+			this.currentPosition,
 			1,
 			buttons,
 			modifier,
 		);
-		app.map._docLayer._postMouseEvent(
+		this.postCoreMouseEvent(
 			'buttonup',
-			this.currentPosition.x,
-			this.currentPosition.y,
+			this.currentPosition,
 			1,
 			buttons,
 			modifier,
