@@ -1058,7 +1058,11 @@ void WhiteBoxTests::testJsonUtilEscapeJSONValue()
     LOK_ASSERT_EQUAL(JsonUtil::escapeJSONValue(in), expected);
 }
 
+namespace
+{
 STATE_ENUM(TestState, First, Second, Last);
+}
+
 void WhiteBoxTests::testStateEnum()
 {
     constexpr std::string_view testname = __func__;
