@@ -180,5 +180,3 @@ class OtherViewCursorSection extends HTMLObjectSection {
 		app.sectionContainer.requestReDraw();
 	}
 }
-
-app.definitions.otherViewCursorSection = OtherViewCursorSection;
