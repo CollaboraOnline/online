@@ -71,40 +71,39 @@ void logSyntaxErrorDetails(const StringVector& tokens, const std::string& firstL
 }
 }
 
-ClientSession::ClientSession(
-    const std::shared_ptr<ProtocolHandlerInterface>& ws,
-    const std::string& id,
-    const std::shared_ptr<DocumentBroker>& docBroker,
-    const Poco::URI& uriPublic,
-    const bool readOnly,
-    const RequestDetails &requestDetails,
-    const Poco::URI& templateOptionUriPublic)
-        : Session(ws, "ToClient-" + id, id, readOnly)
-        , _uriPublic(uriPublic)
-        , _templateOptionUriPublic(templateOptionUriPublic)
-        , _serverURL(requestDetails)
-        , _auth(Authorization::create(uriPublic))
-        , _docBroker(docBroker)
-        , _lastStateTime(std::chrono::steady_clock::now())
-        , _clientVisibleArea(0, 0, 0, 0)
-        , _keyEvents(1)
-        , _splitX(0)
-        , _splitY(0)
-        , _clientSelectedPart(-1)
-        , _clientSelectedMode(0)
-        , _tileWidthPixel(0)
-        , _tileHeightPixel(0)
-        , _tileWidthTwips(0)
-        , _tileHeightTwips(0)
-        , _kitViewId(-1)
-        , _canonicalViewId(CanonicalViewId::None)
-        , _state(SessionState::DETACHED)
-        , _isDocumentOwner(false)
-        , _isTextDocument(false)
-        , _thumbnailSession(false)
-        , _sentAudit(false)
-        , _sentBrowserSetting(false)
-        , _isConvertTo(false)
+ClientSession::ClientSession(const std::shared_ptr<ProtocolHandlerInterface>& ws,
+                             const std::string& id,
+                             const std::shared_ptr<DocumentBroker>& docBroker,
+                             const Poco::URI& uriPublic, const bool readOnly,
+                             const RequestDetails& requestDetails,
+                             const Poco::URI& templateOptionUriPublic)
+    : Session(ws, "ToClient-" + id, id, readOnly)
+    , _uriPublic(uriPublic)
+    , _templateOptionUriPublic(templateOptionUriPublic)
+    , _serverURL(requestDetails)
+    , _auth(Authorization::create(uriPublic))
+    , _docBroker(docBroker)
+    , _lastStateTime(std::chrono::steady_clock::now())
+    , _clientVisibleArea(0, 0, 0, 0)
+    , _keyEvents(1)
+    , _performanceCounterEpoch(0)
+    , _splitX(0)
+    , _splitY(0)
+    , _clientSelectedPart(-1)
+    , _clientSelectedMode(0)
+    , _tileWidthPixel(0)
+    , _tileHeightPixel(0)
+    , _tileWidthTwips(0)
+    , _tileHeightTwips(0)
+    , _kitViewId(-1)
+    , _canonicalViewId(CanonicalViewId::None)
+    , _state(SessionState::DETACHED)
+    , _isDocumentOwner(false)
+    , _isTextDocument(false)
+    , _thumbnailSession(false)
+    , _sentAudit(false)
+    , _sentBrowserSetting(false)
+    , _isConvertTo(false)
 {
     const std::size_t curConnections = ++COOLWSD::NumConnections;
     LOG_INF("ClientSession ctor [" << getName() << "] for URI: [" << _uriPublic.toString()
