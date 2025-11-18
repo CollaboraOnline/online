@@ -58,6 +58,10 @@ class OverflowManager {
 				' req: ' +
 				requiredWidth,
 		);
+
+		// not yet known width -> do not assume it is small to prevent scrollbars
+		if (requiredWidth === 0) return true;
+
 		return maxWidth < requiredWidth;
 	}
 
