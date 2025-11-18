@@ -863,22 +863,25 @@ QVariant Bridge::cool(const QString& messageStr)
     }
     else if (message == "uno .uno:Open")
     {
-        QFileDialog* dialog = new QFileDialog(
-            _webView, QObject::tr("Open File"), QString(),
-            QObject::tr("All Files (*);;"
-                        "Text Documents (*.odt *.ott *.doc *.docx *.rtf *.txt);;"
-                        "Spreadsheets (*.ods *.ots *.xls *.xlsx *.csv);;"
-                        "Presentations (*.odp *.otp *.ppt *.pptx)"
-                        )
-        );
+        QFileDialog* dialog =
+            new QFileDialog(_webView, QObject::tr("Open File"), QString(),
+                            QObject::tr("All Files (*);;"
+                                        "Text Documents (*.odt *.ott *.doc *.docx *.rtf *.txt);;"
+                                        "Spreadsheets (*.ods *.ots *.xls *.xlsx *.csv);;"
+                                        "Presentations (*.odp *.otp *.ppt *.pptx)"));
 
-        dialog->setFileMode(QFileDialog::ExistingFile);
+        dialog->setFileMode(QFileDialog::ExistingFiles);
         dialog->setAttribute(Qt::WA_DeleteOnClose);
 
-        QObject::connect(dialog, &QFileDialog::fileSelected, [](const QString& filePath) {
-            WebView* webViewInstance = new WebView(Application::getProfile());
-            webViewInstance->load(Poco::URI(filePath.toStdString()));
-        });
+        QObject::connect(dialog, &QFileDialog::filesSelected,
+                         [](const QStringList& filePaths)
+                         {
+                             for (const QString& filePath : filePaths)
+                             {
+                                 WebView* webViewInstance = new WebView(Application::getProfile());
+                                 webViewInstance->load(Poco::URI(filePath.toStdString()));
+                             }
+                         });
 
         dialog->open();
     }
