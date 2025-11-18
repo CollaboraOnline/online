@@ -84,7 +84,7 @@ using Poco::Util::Application;
 // We have files that are at least 2.5 MB already.
 // WASM files are in the order of 30 MB, however,
 constexpr auto MaxFileSizeToCacheInBytes = 50 * 1024 * 1024;
-constexpr std::string_view MetaViewPort = "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1, minimum-scale=1\">";
+constexpr std::string_view MetaViewPort = "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1, minimum-scale=1, interactive-widget=resizes-content\">";
 
 namespace
 {

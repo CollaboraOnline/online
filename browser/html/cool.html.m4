@@ -31,7 +31,7 @@ m4_ifelse(IOSAPP,[true],
 <meta charset="utf-8">
 m4_ifelse(MOBILEAPP, [true],
 [
-  <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no">
+  <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no, interactive-widget=resizes-content">
 ],
 [
   %BROWSER_VIEWPORT%
