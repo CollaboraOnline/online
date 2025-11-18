@@ -4,6 +4,8 @@
 	display: flex;
 	overflow-x: auto;
 	overflow-y: hidden;
+	scrollbar-color: var(--scrollbar-color);
+	scrollbar-width: var(--scrollbar-width);
 }
 
 /* stretch the fields */

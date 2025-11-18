@@ -169,6 +169,8 @@ div#autoFillPreviewTooltip .lokdialog.ui-dialog-content.ui-widget-content {
 	background-color: var(--color-background-lighter) !important;
 	font-family: var(--jquery-ui-font);
 	line-height: 1.5;
+	scrollbar-color: var(--scrollbar-color);
+	scrollbar-width: var(--scrollbar-width);
 }
 [data-docType='spreadsheet'] .jsdialog-container .ui-dialog-content,
 [data-docType='text'] .jsdialog-container .ui-dialog-content {
@@ -308,6 +310,8 @@ td.jsdialog > [id^='table-box']:not(.sidebar) {
 	overflow: auto;
 	max-height: 500px;
 	max-width: 650px;
+	scrollbar-width: var(--scrollbar-width);
+	scrollbar-color: var(--scrollbar-color);
 }
 /* - Also used in SpellingDialog where suggestion come in form
      of an image*/
@@ -632,6 +636,8 @@ algned to the bottom */
 	line-height: var(--default-height);
 	align-content: start;
 	justify-content: stretch;
+	scrollbar-width: var(--scrollbar-width);
+	scrollbar-color: var(--scrollbar-color);
 }
 
 .modalpopup .ui-treeview {
@@ -2946,6 +2952,8 @@ kbd,
 	max-height: min(470px, 45vh);
 	overflow-x: hidden;
 	overflow-y: auto;
+	scrollbar-width: var(--scrollbar-width);
+	scrollbar-color: var(--scrollbar-color);
 }
 
 /* Writer - Form - Properties(Dropdown) */
