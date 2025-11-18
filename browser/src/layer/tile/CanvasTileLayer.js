@@ -3,7 +3,7 @@
  * window.L.CanvasTileLayer is a layer with canvas based rendering.
  */
 
-/* global app JSDialog CanvasSectionContainer GraphicSelection CanvasOverlay CDarkOverlay CursorHeaderSection $ _ CPointSet CPolyUtil CPolygon Cursor CCellSelection PathGroupType UNOKey cool OtherViewCellCursorSection TileManager SplitSection TextSelections CellSelectionMarkers URLPopUpSection CalcValidityDropDown DocumentBase CellCursorSection FormFieldButton OtherViewCursorSection */
+/* global app JSDialog CanvasSectionContainer GraphicSelection CanvasOverlay CDarkOverlay CursorHeaderSection $ _ CPointSet CPolyUtil CPolygon Cursor CCellSelection PathGroupType UNOKey cool OtherViewCellCursorSection TileManager SplitSection TextSelections CellSelectionMarkers URLPopUpSection CalcValidityDropDown DocumentBase CellCursorSection FormFieldButton TextCursorSection */
 
 function clamp(num, min, max)
 {
@@ -1040,7 +1040,7 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 			// update tiles and selection because mode could be changed
 			TileManager.update();
 			app.definitions.otherViewGraphicSelectionSection.updateVisibilities();
-			OtherViewCursorSection.updateVisibilities();
+			TextCursorSection.updateVisibilities();
 			this.updateAllTextViewSelection();
 		}
 		else if (textMsg.startsWith('partstatus:')) {
@@ -1984,7 +1984,7 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 			for (let i = 0; i < rectangle.length; i++) rectangle[i] = parseInt(rectangle[i]);
 		}
 
-		OtherViewCursorSection.addOrUpdateOtherViewCursor(viewId, username, rectangle, parseInt(obj.part), mode);
+		TextCursorSection.addOrUpdateOtherViewCursor(viewId, username, rectangle, parseInt(obj.part), mode);
 
 		if (app.getFollowedViewId() === viewId && (app.isFollowingEditor() || app.isFollowingUser())) {
 			if (this._map.getDocType() === 'text' || this._map.getDocType() === 'presentation') {
@@ -2060,7 +2060,7 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 			return;
 		}
 
-		const section = OtherViewCursorSection.getViewCursorSection(viewId);
+		const section = TextCursorSection.getViewCursorSection(viewId);
 		if (section) {
 			const showCursor = obj.visible === 'true';
 			section.sectionProperties.showCursor = showCursor;
@@ -2086,7 +2086,7 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 			delete this._viewSelections[viewId];
 		}
 
-		OtherViewCursorSection.removeView(viewId);
+		TextCursorSection.removeView(viewId);
 
 		OtherViewCellCursorSection.removeView(viewId);
 		app.definitions.otherViewGraphicSelectionSection.removeView(viewId);
@@ -2933,7 +2933,7 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 		if (!this.isCalc())
 			this._replayPrintTwipsMsgs(false);
 		this._onUpdateCursor(null, true);
-		OtherViewCursorSection.updateVisibilities();
+		TextCursorSection.updateVisibilities();
 	},
 
 	_updateCursorPos: function () {
@@ -3023,7 +3023,7 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 
 		if (!app.file.textCursor.visible) {
 			this._updateCursorAndOverlay();
-			OtherViewCursorSection.updateVisibilities(true);
+			TextCursorSection.updateVisibilities(true);
 			return;
 		}
 
@@ -3078,7 +3078,7 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 
 		this._updateCursorAndOverlay();
 
-		OtherViewCursorSection.updateVisibilities();
+		TextCursorSection.updateVisibilities();
 	},
 
 	activateCursor: function () {
@@ -3145,7 +3145,7 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 			return;
 		}
 
-		const section = OtherViewCursorSection.getViewCursorSection(viewId);
+		const section = TextCursorSection.getViewCursorSection(viewId);
 
 		if (section && section.showSection) {
 			const point = new cool.SimplePoint(section.position[0] * app.pixelsToTwips, section.position[1] * app.pixelsToTwips);
@@ -3970,7 +3970,7 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 
 		TextSelections.hideHandles();
 
-		OtherViewCursorSection.updateVisibilities(true);
+		TextCursorSection.updateVisibilities(true);
 	},
 
 	postZoomAnimation: function () {

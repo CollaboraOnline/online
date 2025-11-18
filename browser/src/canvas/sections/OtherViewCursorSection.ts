@@ -12,7 +12,7 @@
 
 // This is used for other views' cursors.
 
-class OtherViewCursorSection extends HTMLObjectSection {
+class TextCursorSection extends HTMLObjectSection {
 	documentObject: boolean = true;
 	interactable: boolean = false; // We don't bother with events.
 	zIndex: number = app.CSections.DefaultForDocumentObjects.processingOrder;
@@ -21,7 +21,7 @@ class OtherViewCursorSection extends HTMLObjectSection {
 		app.CSections.DefaultForDocumentObjects.processingOrder;
 
 	static sectionNamePrefix = 'OtherViewCursor ';
-	static sectionPointers: Array<OtherViewCursorSection> = [];
+	static sectionPointers: Array<TextCursorSection> = [];
 
 	constructor(
 		viewId: number,
@@ -31,7 +31,7 @@ class OtherViewCursorSection extends HTMLObjectSection {
 		mode: number,
 	) {
 		super(
-			OtherViewCursorSection.sectionNamePrefix + viewId,
+			TextCursorSection.sectionNamePrefix + viewId,
 			rectangle.pWidth / app.dpiScale,
 			rectangle.pHeight / app.dpiScale,
 			new cool.SimplePoint(rectangle.x1, rectangle.y1),
@@ -95,12 +95,12 @@ class OtherViewCursorSection extends HTMLObjectSection {
 
 		rectangle.pWidth = 2 * app.dpiScale; // Width of the cursor.
 
-		const sectionName = OtherViewCursorSection.sectionNamePrefix + viewId;
-		let section: OtherViewCursorSection;
+		const sectionName = TextCursorSection.sectionNamePrefix + viewId;
+		let section: TextCursorSection;
 		if (app.sectionContainer.doesSectionExist(sectionName)) {
 			section = app.sectionContainer.getSectionWithName(
 				sectionName,
-			) as OtherViewCursorSection;
+			) as TextCursorSection;
 			section.sectionProperties.part = part;
 			section.sectionProperties.mode = mode;
 			section.size[0] = rectangle.pWidth;
@@ -113,7 +113,7 @@ class OtherViewCursorSection extends HTMLObjectSection {
 
 			section.setPosition(rectangle.pX1, rectangle.pY1);
 		} else {
-			section = new OtherViewCursorSection(
+			section = new TextCursorSection(
 				viewId,
 				color,
 				rectangle,
@@ -121,7 +121,7 @@ class OtherViewCursorSection extends HTMLObjectSection {
 				mode,
 			);
 			app.sectionContainer.addSection(section);
-			OtherViewCursorSection.sectionPointers.push(section);
+			TextCursorSection.sectionPointers.push(section);
 		}
 
 		section.setShowSection(section.checkMyVisibility());
@@ -144,13 +144,13 @@ class OtherViewCursorSection extends HTMLObjectSection {
 	}
 
 	public static removeView(viewId: number) {
-		const sectionName = OtherViewCursorSection.sectionNamePrefix + viewId;
+		const sectionName = TextCursorSection.sectionNamePrefix + viewId;
 		if (app.sectionContainer.doesSectionExist(sectionName)) {
 			const section = app.sectionContainer.getSectionWithName(
 				sectionName,
-			) as OtherViewCursorSection;
-			OtherViewCursorSection.sectionPointers.splice(
-				OtherViewCursorSection.sectionPointers.indexOf(section),
+			) as TextCursorSection;
+			TextCursorSection.sectionPointers.splice(
+				TextCursorSection.sectionPointers.indexOf(section),
 				1,
 			);
 			app.sectionContainer.removeSection(sectionName);
@@ -159,20 +159,20 @@ class OtherViewCursorSection extends HTMLObjectSection {
 	}
 
 	public static doesViewCursorSectionExist(viewId: number) {
-		const name = OtherViewCursorSection.sectionNamePrefix + viewId;
+		const name = TextCursorSection.sectionNamePrefix + viewId;
 		return app.sectionContainer.doesSectionExist(name);
 	}
 
 	public static getViewCursorSection(viewId: number) {
-		if (OtherViewCursorSection.doesViewCursorSectionExist(viewId)) {
-			const name = OtherViewCursorSection.sectionNamePrefix + viewId;
+		if (TextCursorSection.doesViewCursorSectionExist(viewId)) {
+			const name = TextCursorSection.sectionNamePrefix + viewId;
 			return app.sectionContainer.getSectionWithName(name);
 		} else return null;
 	}
 
 	public static updateVisibilities(hideCursors: boolean = false) {
-		for (let i = 0; i < OtherViewCursorSection.sectionPointers.length; i++) {
-			const section = OtherViewCursorSection.sectionPointers[i];
+		for (let i = 0; i < TextCursorSection.sectionPointers.length; i++) {
+			const section = TextCursorSection.sectionPointers[i];
 			section.setShowSection(section.checkMyVisibility());
 			if (hideCursors) section.getHTMLObject().style.opacity = '0';
 			else section.getHTMLObject().style.opacity = '1';
