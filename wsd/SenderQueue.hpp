@@ -203,7 +203,7 @@ private:
 private:
     mutable std::mutex _mutex;
     std::deque<Item> _queue;
-    typedef typename std::deque<Item>::value_type queue_item_t;
+    using queue_item_t = typename std::deque<Item>::value_type;
 };
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
