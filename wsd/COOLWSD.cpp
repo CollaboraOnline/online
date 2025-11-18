@@ -650,10 +650,7 @@ static void prespawnChildren()
 }
 
 #else // MOBILEAPP
-static void prespawnChildren()
-{
-    // Nothing to do.
-}
+void prespawnChildren();
 #endif // MOBILEAPP
 
 static size_t addNewChild(std::shared_ptr<ChildProcess> child)
