@@ -350,7 +350,6 @@ WebView::WebView(QWebEngineProfile* profile, bool isWelcome)
     {
         s_mainWindow = new QMainWindow(nullptr);
         s_tabWidget = new DetachableTabWidget(s_mainWindow);
-        s_tabWidget->setTabsClosable(true);
         s_tabWidget->setMovable(true);
 
         // Capture a local automatic pointer so the lambda can use it
