@@ -1404,7 +1404,7 @@ STATE_ENUM(CheckStatus,
 
 void ClientRequestDispatcher::sendResult(const std::shared_ptr<StreamSocket>& socket, CheckStatus result)
 {
-    std::string output = "{\"status\": \"" + JsonUtil::escapeJSONValue(nameShort(result)) + "\"}\n";
+    std::string output = R"({"status": ")" + JsonUtil::escapeJSONValue(nameShort(result)) + "\"}\n";
 
     http::Response jsonResponse(http::StatusCode::OK);
     FileServerRequestHandler::hstsHeaders(jsonResponse);
@@ -2604,7 +2604,7 @@ bool ClientRequestDispatcher::handleClientWsUpgrade(const Poco::Net::HTTPRequest
         }
 
         // Indicate to the client that document broker is searching.
-        static constexpr const char* const status = "progress: { \"id\":\"find\" }";
+        static constexpr const char* const status = R"(progress: { "id":"find" })";
         LOG_TRC("Sending to Client [" << status << ']');
         ws->sendMessage(status);
 

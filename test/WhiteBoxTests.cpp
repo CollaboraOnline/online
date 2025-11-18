@@ -508,14 +508,14 @@ void WhiteBoxTests::testRegexListMatcher()
     matcher.allow("www[0-9].*");
     LOK_ASSERT(matcher.match("www1example"));
 
-    matcher.allow("192\\.168\\..*\\..*");
+    matcher.allow(R"(192\.168\..*\..*)");
     LOK_ASSERT(matcher.match("192.168.1.1"));
     LOK_ASSERT(matcher.match("192.168.159.1"));
     LOK_ASSERT(matcher.match("192.168.1.134"));
     LOK_ASSERT(!matcher.match("192.169.1.1"));
     LOK_ASSERT(matcher.match("192.168.."));
 
-    matcher.deny("192\\.168\\.1\\..*");
+    matcher.deny(R"(192\.168\.1\..*)");
     LOK_ASSERT(!matcher.match("192.168.1.1"));
 
     matcher.allow("staging\\.collaboracloudsuite\\.com.*");
@@ -524,8 +524,8 @@ void WhiteBoxTests::testRegexListMatcher()
     LOK_ASSERT(!matcher.match("web.collaboracloudsuite"));
     LOK_ASSERT(!matcher.match("staging.collaboracloudsuite.com"));
 
-    matcher.allow("10\\.10\\.[0-9]{1,3}\\.[0-9]{1,3}");
-    matcher.deny("10\\.10\\.10\\.10");
+    matcher.allow(R"(10\.10\.[0-9]{1,3}\.[0-9]{1,3})");
+    matcher.deny(R"(10\.10\.10\.10)");
     LOK_ASSERT(matcher.match("10.10.001.001"));
     LOK_ASSERT(!matcher.match("10.10.10.10"));
     LOK_ASSERT(matcher.match("10.10.250.254"));
@@ -553,7 +553,7 @@ void WhiteBoxTests::testRegexListMatcher_Init()
     matcher.allow("www[0-9].*");
     LOK_ASSERT(matcher.match("www1example"));
 
-    matcher.allow("192\\.168\\..*\\..*");
+    matcher.allow(R"(192\.168\..*\..*)");
     LOK_ASSERT(!matcher.match("192.168.1.1"));
     LOK_ASSERT(!matcher.match("192.168.159.1"));
     LOK_ASSERT(!matcher.match("192.168.1.134"));
@@ -562,7 +562,7 @@ void WhiteBoxTests::testRegexListMatcher_Init()
 
     matcher.clear();
 
-    matcher.allow("192\\.168\\..*\\..*");
+    matcher.allow(R"(192\.168\..*\..*)");
     LOK_ASSERT(matcher.match("192.168.1.1"));
     LOK_ASSERT(matcher.match("192.168.159.1"));
     LOK_ASSERT(matcher.match("192.168.1.134"));
@@ -698,7 +698,7 @@ void WhiteBoxTests::testJson()
     constexpr std::string_view testname = __func__;
 
     static const char* testString =
-         "{\"BaseFileName\":\"SomeFile.pdf\",\"DisableCopy\":true,\"DisableExport\":true,\"DisableInactiveMessages\":true,\"DisablePrint\":true,\"EnableOwnerTermination\":true,\"HideExportOption\":true,\"HidePrintOption\":true,\"OwnerId\":\"id@owner.com\",\"PostMessageOrigin\":\"*\",\"Size\":193551,\"UserCanWrite\":true,\"UserFriendlyName\":\"Owning user\",\"UserId\":\"user@user.com\",\"WatermarkText\":null}";
+        R"({"BaseFileName":"SomeFile.pdf","DisableCopy":true,"DisableExport":true,"DisableInactiveMessages":true,"DisablePrint":true,"EnableOwnerTermination":true,"HideExportOption":true,"HidePrintOption":true,"OwnerId":"id@owner.com","PostMessageOrigin":"*","Size":193551,"UserCanWrite":true,"UserFriendlyName":"Owning user","UserId":"user@user.com","WatermarkText":null})";
 
     Poco::JSON::Object::Ptr object;
     LOK_ASSERT(JsonUtil::parseJSON(testString, object));
