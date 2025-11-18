@@ -188,6 +188,7 @@ class CanvasSectionContainer {
 	private scrollLineHeight: number = 30; // This will be overridden.
 	private mouseIsInside: boolean = false;
 	private inZoomAnimation: boolean = false;
+	private postZoomReplay: boolean = false;
 	private zoomChanged: boolean = false;
 	private documentAnchorSectionName: string = null; // This section's top left point declares the point where document starts.
 	private documentAnchor: Array<number> = null; // This is the point where document starts inside canvas element. Initial value shouldn't be [0, 0].
@@ -319,6 +320,14 @@ class CanvasSectionContainer {
 
 	public isInZoomAnimation (): boolean {
 		return this.inZoomAnimation;
+	}
+
+	public setPostZoomReplay (postZoomReplay: boolean) {
+		this.postZoomReplay = postZoomReplay;
+	}
+
+	public isPostZoomReplay (): boolean {
+		return this.postZoomReplay;
 	}
 
 	public setZoomChanged (zoomChanged: boolean) {
