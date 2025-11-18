@@ -4262,9 +4262,9 @@ void alertAllUsers(const std::string& msg)
 }
 #endif
 
-#endif
-
 static void forwardSignal(const int signum);
+
+#endif
 
 void dump_state()
 {
@@ -4319,12 +4319,12 @@ void forwardSigUsr2()
 #endif
 }
 
-void forwardSignal([[maybe_unused]] const int signum)
+#if !MOBILEAPP
+void forwardSignal(const int signum)
 {
     Util::assertIsLocked(DocBrokersMutex);
     Util::assertIsLocked(NewChildrenMutex);
 
-#if !MOBILEAPP
     const char* name = SigUtil::signalName(signum);
 
     if (COOLWSD::ForKitProcId > 0)
@@ -4351,8 +4351,8 @@ void forwardSignal([[maybe_unused]] const int signum)
             ::kill(docBroker->getPid(), signum);
         }
     }
-#endif
 }
+#endif
 
 // Avoid this in the Util::isFuzzing() case because libfuzzer defines its own main().
 #if !MOBILEAPP && !LIBFUZZER
