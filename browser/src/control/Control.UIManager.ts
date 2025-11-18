@@ -1286,8 +1286,7 @@ class UIManager extends window.L.Control {
 		if (this.isNotebookbarCollapsed() || this.isMenubarHidden())
 			return;
 
-		this.moveObjectVertically($('#formulabar'), -1);
-		$('#toolbar-wrapper').css('display', 'none');
+		$('#toolbar-row').css('display', 'none');
 
 		$('#document-container').addClass('tabs-collapsed');
 	}
@@ -1301,8 +1300,7 @@ class UIManager extends window.L.Control {
 		if (!this.isNotebookbarCollapsed())
 			return;
 
-		this.moveObjectVertically($('#formulabar'), 1);
-		$('#toolbar-wrapper').css('display', '');
+		$('#toolbar-row').css('display', '');
 
 		$('#document-container').removeClass('tabs-collapsed');
 	}
