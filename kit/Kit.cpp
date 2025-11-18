@@ -2221,7 +2221,10 @@ std::shared_ptr<lok::Document> Document::load(const std::shared_ptr<ChildSession
                                         session->getViewUserExtraInfo(), session->getViewUserPrivateInfo(),
                                         session->isReadOnly());
 
-    _loKitDocument->setViewLanguage(viewId, lang.c_str());
+    if (!lang.empty())
+    {
+        _loKitDocument->setViewLanguage(viewId, lang.c_str());
+    }
     _loKitDocument->setViewTimezone(viewId, userTimezone.c_str());
     _loKitDocument->setAccessibilityState(viewId, accessibilityState);
     if (session->isReadOnly())
