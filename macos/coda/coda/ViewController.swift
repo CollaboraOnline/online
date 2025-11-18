@@ -16,7 +16,7 @@ final class ConsoleController: NSWindowController {
 
     init(webView: WKWebView) {
         self.webView = webView
-        let style: NSWindow.StyleMask = [.fullScreen, .fullSizeContentView, .closable, .resizable, .miniaturizable]
+        let style: NSWindow.StyleMask = [.closable, .resizable, .miniaturizable]
         let window = NSWindow(contentRect: NSRect(x: 0, y: 0, width: 1000, height: 640),
                               styleMask: style, backing: .buffered, defer: false)
         super.init(window: window)
@@ -46,7 +46,11 @@ class ViewController: NSViewController, WKScriptMessageHandlerWithReply, WKNavig
     /// The actual webview holding the document.
     var webView: WKWebView!
 
-    var subWindow: ConsoleController!
+    var consoleWindow: ConsoleController!
+
+    var savedViewFrame: NSRect!
+
+    var observer: AnyObject!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -361,14 +365,90 @@ class ViewController: NSViewController, WKScriptMessageHandlerWithReply, WKNavig
     func webView(_ webView: WKWebView, createWebViewWith configuration: WKWebViewConfiguration, for navigationAction: WKNavigationAction, windowFeatures: WKWindowFeatures) -> WKWebView? {
         COWrapper.LOG_ERR("createWebViewWith \(navigationAction.request.url)")
 
-        configuration.preferences.isElementFullscreenEnabled = true
         let consoleWebView = WKWebView(frame: .zero, configuration: configuration)
+        consoleWebView.uiDelegate = self
 
         let wc = ConsoleController(webView: consoleWebView)
-        subWindow = wc
+        self.consoleWindow = wc
 
-        wc.showWindow(nil)
+        let window = view.window!
+
+        self.savedViewFrame = window.frame;
+
+        let screens = NSScreen.screens
+
+        var laptopScreen: NSScreen! = nil
+        var externalScreen: NSScreen! = nil
+
+        if (screens.count > 1)
+        {
+            // Lets see if there is are two monitors where one is built-in and one is not.
+            for screen in screens {
+                let viewDisplayID = screen.deviceDescription[NSDeviceDescriptionKey(rawValue: "NSScreenNumber")] as! CGDirectDisplayID
+                if (CGDisplayIsBuiltin(viewDisplayID) != 0) {
+                    if (laptopScreen == nil) {
+                        laptopScreen = screen
+                    }
+                } else {
+                    if (externalScreen == nil) {
+                        externalScreen = screen
+                    }
+                }
+            }
+
+            // If not then assume the main screen, which is just where the current activity is,
+            // is the laptop screen and pick another to be the external
+            if (laptopScreen == nil || externalScreen == nil) {
+                laptopScreen = NSScreen.main
+                for screen in screens {
+                    if (screen != laptopScreen) {
+                        externalScreen = screen;
+                        break;
+                    }
+                }
+            }
+
+            let behaviors: NSWindow.CollectionBehavior = [.fullScreenAllowsTiling, .fullScreenPrimary]
+
+            window.collectionBehavior = behaviors
+            window.setFrame(externalScreen.frame, display: true, animate: false)
+
+            // Observe full-screen exit, and at that point dispatch the attempt to restore
+            // original monitor, size & position. Otherwise we remain on the monitor we are
+            // presenting to.
+            let center = NotificationCenter.default
+            self.observer = center.addObserver(
+                forName: NSWindow.didExitFullScreenNotification,
+                object: window,
+                queue: OperationQueue.main) { _ in
+
+                    DispatchQueue.main.async {
+                        window.setFrame(self.savedViewFrame, display: true, animate: false)
+                        window.makeKeyAndOrderFront(nil)
+                    }
+
+                    center.removeObserver(self.observer!)
+            }
+
+            window.toggleFullScreen(nil)
+
+            let window2 = wc.window!;
+            window2.collectionBehavior = behaviors
+            window2.setFrame(laptopScreen.frame, display: true, animate: false)
+            window2.toggleFullScreen(nil)
+        }
 
         return consoleWebView
+    }
+
+    func webViewDidClose(_ webView: WKWebView) {
+        if (self.consoleWindow != nil && webView == self.consoleWindow.webView) {
+            self.consoleWindow.close()
+            self.consoleWindow = nil;
+
+            // this will trigger the restoration of original location/size
+            // via the convoluted observer stuff.
+            self.view.window!.toggleFullScreen(nil)
+        }
     }
 }
