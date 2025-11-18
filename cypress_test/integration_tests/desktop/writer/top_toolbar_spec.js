@@ -119,7 +119,7 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 		writerHelper.selectAllTextOfDoc();
 		helper.copy();
 		cy.cGet('#copy-paste-container p b').should('exist');
-		cy.cGet('.notebookbar > .unoResetAttributes').click();
+		desktopHelper.getNbIcon('ResetAttributes', 'Home').click();
 		writerHelper.selectAllTextOfDoc();
 		helper.copy();
 		cy.cGet('#copy-paste-container p b').should('not.exist');
@@ -129,20 +129,20 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 		desktopHelper.getNbIcon('Bold').click();
 		writerHelper.selectAllTextOfDoc();
 		//cy.cGet('#copy-paste-container p').should('have.attr', 'align', 'right');
-		cy.cGet('#Home .notebookbar > .unoRightPara').click();
+		desktopHelper.getNbIcon('RightPara', 'Home').click();
 		writerHelper.selectAllTextOfDoc();
 		//cy.cGet('#copy-paste-container p').should('have.attr', 'align', 'left');
 	});
 
 	it('Apply center alignment.', function() {
-		cy.cGet('#Home .notebookbar > .unoCenterPara').click();
+		desktopHelper.getNbIcon('CenterPara', 'Home').click();
 		writerHelper.selectAllTextOfDoc();
 		//cy.cGet('#copy-paste-container p').should('have.attr', 'align', 'center');
 	});
 
 	it('Apply justified.', function() {
 		helper.setDummyClipboardForCopy();
-		cy.cGet('#Home .notebookbar > div.unoJustifyPara > button.unobutton').click();
+		desktopHelper.getNbIcon('JustifyPara', 'Home').click();
 		writerHelper.selectAllTextOfDoc();
 		helper.copy();
 		cy.cGet('#copy-paste-container p').should('have.attr', 'align', 'justify');
@@ -197,7 +197,7 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 
 	it('Toggle numbered list.', function() {
 		helper.setDummyClipboardForCopy();
-		cy.cGet('#Home-container .unoDefaultNumbering').click();
+		desktopHelper.getNbIcon('DefaultNumbering', 'Home').click();
 		writerHelper.selectAllTextOfDoc();
 		helper.copy();
 		cy.cGet('#copy-paste-container ol').should('exist');
@@ -205,7 +205,7 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 
 	it('Toggle bulleted list.', function() {
 		helper.setDummyClipboardForCopy();
-		cy.cGet('#Home-container .unoDefaultBullet').filter(':visible').click();
+		desktopHelper.getNbIcon('DefaultBullet', 'Home').click();
 		writerHelper.selectAllTextOfDoc();
 		helper.copy();
 		cy.cGet('#copy-paste-container ul').should('exist');
@@ -214,7 +214,7 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 	it('Increase/Decrease Indent.', function() {
 		helper.setDummyClipboardForCopy();
 		//Increase indent
-		cy.cGet('#Home-container .unoIncrementIndent').click();
+		desktopHelper.getNbIcon('IncrementIndent', 'Home').click();
 		writerHelper.selectAllTextOfDoc();
 		helper.copy();
 		cy.cGet('#copy-paste-container p')
@@ -222,7 +222,7 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 			.should('contain', 'margin-left: 0.49in');
 
 		//Decrease indent
-		cy.cGet('#Home-container .unoDecrementIndent').click();
+		desktopHelper.getNbIcon('DecrementIndent', 'Home').click();
 		writerHelper.selectAllTextOfDoc();
 		helper.copy();
 		cy.cGet('#copy-paste-container p')
@@ -232,7 +232,7 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 
 	it('Insert/delete table.', function() {
 		helper.setDummyClipboardForCopy();
-		cy.cGet('#Home-container .unoInsertTable #home-insert-table-button').click();
+		desktopHelper.getNbIcon('InsertTable', 'Home').click();
 		cy.cGet('.inserttable-grid > .row > .col').eq(3).click();
 		helper.typeIntoDocument('{ctrl}a');
 		helper.copy();
@@ -243,7 +243,7 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 	});
 
 	it('Insert image.', function() {
-		cy.cGet('#Home-container .unoInsertGraphic').click({force: true});
+		desktopHelper.getNbIcon('InsertGraphic', 'Home').click();
 		cy.cGet('#insertgraphic[type=file]').attachFile('/desktop/writer/image_to_insert.png');
 		cy.cGet('#document-container svg g.Graphic').should('exist');
 	});
