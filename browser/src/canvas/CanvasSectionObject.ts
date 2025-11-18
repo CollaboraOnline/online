@@ -172,8 +172,8 @@ class CanvasSectionObject {
 		if (app.isYOrdinateInFrozenPane(y))
 			positionAddition.pY1 = 0;
 
-		this.myTopLeft[0] = this.containerObject.getDocumentAnchor()[0] + sectionXcoord - positionAddition.pX1;
-		this.myTopLeft[1] = this.containerObject.getDocumentAnchor()[1] + y - positionAddition.pY1;
+		this.myTopLeft[0] = this.documentPosition.vX;
+		this.myTopLeft[1] = this.documentPosition.vY;
 
 		this.position[0] = sectionXcoord;
 		this.position[1] = y;
