@@ -53,35 +53,40 @@
 #include <common/Watchdog.hpp>
 #include <kit/DeltaSimd.h>
 
-static bool NoCapsForKit = false;
-static bool NoSeccomp = false;
+namespace
+{
+
+bool NoCapsForKit = false;
+bool NoSeccomp = false;
 #if ENABLE_DEBUG
-static bool SingleKit = false;
+bool SingleKit = false;
 #endif
 
-static int parentPid;
+int parentPid;
 
-static std::string ForKitIdent;
+std::string ForKitIdent;
 
-static std::string UserInterface;
+std::string UserInterface;
 
-static bool DisplayVersion = false;
-static std::string UnitTestLibrary;
-static std::string LogLevel;
-static std::string LogDisabledAreas;
-static std::string LogLevelStartup;
-static std::atomic<unsigned> ForkCounter(0);
-static std::vector<std::string> SubForKitRequests;
+bool DisplayVersion = false;
+std::string UnitTestLibrary;
+std::string LogLevel;
+std::string LogDisabledAreas;
+std::string LogLevelStartup;
+std::atomic<unsigned> ForkCounter(0);
+std::vector<std::string> SubForKitRequests;
 
 /// The [child pid -> jail path] map.
-static std::map<pid_t, std::string> childJails;
+std::map<pid_t, std::string> childJails;
 /// The jails that need cleaning up. This should be small.
-static std::vector<std::string> cleanupJailPaths;
+std::vector<std::string> cleanupJailPaths;
 /// The [subforkit pid -> subforkit id] map.
-static std::map<pid_t, std::string> subForKitPids;
+std::map<pid_t, std::string> subForKitPids;
 
 /// The Main polling main-loop of this (single threaded) process
-static std::unique_ptr<SocketPoll> ForKitPoll;
+std::unique_ptr<SocketPoll> ForKitPoll;
+
+} // namespace
 
 extern "C" { void dump_forkit_state(void); /* easy for gdb */ }
 
@@ -216,8 +221,11 @@ protected:
     }
 };
 
+namespace
+{
+
 #if HAVE_LIBCAP
-static bool haveCapability(cap_value_t capability)
+bool haveCapability(cap_value_t capability)
 {
     using ScopedCaps = std::unique_ptr<std::remove_pointer<cap_t>::type, int (*)(void*)>;
     ScopedCaps caps(cap_get_proc(), cap_free);
@@ -271,7 +279,7 @@ static bool haveCapability(cap_value_t capability)
     return true;
 }
 
-static bool haveCorrectCapabilities()
+bool haveCorrectCapabilities()
 {
     bool result = true;
 
@@ -286,7 +294,7 @@ static bool haveCorrectCapabilities()
     return result;
 }
 #else
-static bool haveCorrectCapabilities()
+bool haveCorrectCapabilities()
 {
     // chroot() can only be called by root
     return getuid() == 0;
@@ -294,7 +302,7 @@ static bool haveCorrectCapabilities()
 #endif // HAVE_LIBCAP
 
 /// Check if some previously forked kids have died.
-static void cleanupChildren(const std::string& childRoot)
+void cleanupChildren(const std::string& childRoot)
 {
     if (Util::isKitInProcess())
         return;
@@ -449,9 +457,8 @@ void sleepForDebugger()
     Util::sleepFromEnvIfSet("Kit", "SLEEPKITFORDEBUGGER");
 }
 
-static int forkKit(const std::function<void()> &childFunc,
-                   const std::string& childProcessName,
-                   const std::function<void(pid_t)> &parentFunc)
+int forkKit(const std::function<void()>& childFunc, const std::string& childProcessName,
+            const std::function<void(pid_t)>& parentFunc)
 {
     pid_t pid = 0;
 
@@ -514,12 +521,9 @@ static int forkKit(const std::function<void()> &childFunc,
     return pid;
 }
 
-static int createLibreOfficeKit(const std::string& childRoot,
-                                const std::string& sysTemplate,
-                                const std::string& loTemplate,
-                                const std::string& configId,
-                                bool useMountNamespaces,
-                                bool queryVersion = false)
+int createLibreOfficeKit(const std::string& childRoot, const std::string& sysTemplate,
+                         const std::string& loTemplate, const std::string& configId,
+                         bool useMountNamespaces, bool queryVersion = false)
 {
     // Generate a jail ID to be used for in the jail path.
     std::string jailId = Util::rng::getFilename(16);
@@ -582,11 +586,9 @@ static int createLibreOfficeKit(const std::string& childRoot,
     return childPid;
 }
 
-static int createSubForKit(const std::string& subForKitIdent,
-                           const std::string& childRoot,
-                           const std::string& sysTemplate,
-                           const std::string& loTemplate,
-                           bool useMountNamespaces)
+int createSubForKit(const std::string& subForKitIdent, const std::string& childRoot,
+                    const std::string& sysTemplate, const std::string& loTemplate,
+                    bool useMountNamespaces)
 {
     static size_t subForKitId = 0;
     ++subForKitId;
@@ -665,10 +667,8 @@ static int createSubForKit(const std::string& subForKitIdent,
     return childPid;
 }
 
-static void createSubForKits(const std::string& childRoot,
-                             const std::string& sysTemplate,
-                             const std::string& loTemplate,
-                             bool useMountNamespaces)
+void createSubForKits(const std::string& childRoot, const std::string& sysTemplate,
+                      const std::string& loTemplate, bool useMountNamespaces)
 {
     std::vector<std::string> subForKitRequests = std::move(SubForKitRequests);
     for (const auto& subForKitIdent : subForKitRequests)
@@ -680,6 +680,8 @@ static void createSubForKits(const std::string& childRoot,
         }
     }
 }
+
+} // namespace
 
 void forkLibreOfficeKit(const std::string& childRoot,
                         const std::string& sysTemplate,
