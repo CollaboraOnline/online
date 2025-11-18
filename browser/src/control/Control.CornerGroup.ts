@@ -33,15 +33,7 @@ export class CornerGroup extends GroupBase {
 		this._map = window.L.Map.THIS;
 		this._map.on('sheetgeometrychanged', this.update, this);
 		this._map.on('viewrowcolumnheaders', this.update, this);
-		this._map.on('darkmodechanged', this._cornerGroupColors, this);
-
-		this._cornerGroupColors();
-	}
-
-	private _cornerGroupColors(): void {
-		const colors = this.getColors();
-		this.backgroundColor = colors.backgroundColor;
-		this.borderColor = colors.borderColor;
+		this._map.on('darkmodechanged', this._updateColors, this);
 	}
 
 	update(): void {
