@@ -201,7 +201,7 @@ void CODAWebEngineView::exchangeMonitors()
         return;
 
     QList<QScreen*> screens = QApplication::screens();
-    if (screens.size() == 1)
+    if (screens.size() < 2)
         return;
 
     QMainWindow* consoleWindow = _presenterConsole->mainWindow();

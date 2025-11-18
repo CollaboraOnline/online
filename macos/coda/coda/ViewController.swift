@@ -46,11 +46,13 @@ class ViewController: NSViewController, WKScriptMessageHandlerWithReply, WKNavig
     /// The actual webview holding the document.
     var webView: WKWebView!
 
-    var consoleWindow: ConsoleController!
+    var consoleController: ConsoleController!
 
     var savedViewFrame: NSRect!
 
-    var observer: AnyObject!
+    var mainWindowObserver: AnyObject!
+    var mainMonitorExchangeObserver: AnyObject!
+    var consoleMonitorExchangeObserver: AnyObject!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -197,6 +199,9 @@ class ViewController: NSViewController, WKScriptMessageHandlerWithReply, WKNavig
                 else if body == "PRINT" {
                     document.printDocument(self)
                     return (nil, nil)
+                }
+                else if body == "EXCHANGEMONITORS" {
+                    exchangeMonitors()
                 }
                 else if body == "FOCUSIFHWKBD" {
                     COWrapper.LOG_ERR("TODO: Implement FOCUSIFHWKBD")
@@ -362,18 +367,58 @@ class ViewController: NSViewController, WKScriptMessageHandlerWithReply, WKNavig
         return (nil, nil)
     }
 
+    func exchangeMonitors() {
+        if (self.consoleController == nil) {
+            return
+        }
+
+        let screens = NSScreen.screens
+        if (screens.count < 2) {
+            return
+        }
+
+        let mainWindow = view.window!
+        let consoleWindow = self.consoleController.window!
+
+        var origConsoleScreen = 0;
+        var origPresentationScreen = 0;
+        for i in 0...screens.count-1 {
+            if NSContainsRect(screens[i].frame, consoleWindow.frame) {
+                origConsoleScreen = i
+            }
+            if NSContainsRect(screens[i].frame, mainWindow.frame) {
+                origPresentationScreen = i
+            }
+        }
+
+        // Rotate the console screen and rotate the presentation screen
+        // every time the console catches up to it for the case there
+        // are more than two screens. Typically there's just two screens
+        // and they just swap.
+        let newConsoleScreen = (origConsoleScreen + 1) % screens.count
+        var newPresentationScreen = origPresentationScreen
+        if (newConsoleScreen == newPresentationScreen) {
+            newPresentationScreen = (newPresentationScreen + 1) % screens.count
+        }
+
+        NotificationCenter.default.removeObserver(self.mainWindowObserver!)
+        installExchangeMainMonitor(window: mainWindow, frame: screens[newPresentationScreen].frame)
+        mainWindow.toggleFullScreen(nil)
+
+        installExchangeConsoleMonitor(window: consoleWindow, frame: screens[newConsoleScreen].frame)
+        consoleWindow.toggleFullScreen(nil)
+    }
+
     func webView(_ webView: WKWebView, createWebViewWith configuration: WKWebViewConfiguration, for navigationAction: WKNavigationAction, windowFeatures: WKWindowFeatures) -> WKWebView? {
-        COWrapper.LOG_ERR("createWebViewWith \(navigationAction.request.url)")
 
         let consoleWebView = WKWebView(frame: .zero, configuration: configuration)
         consoleWebView.uiDelegate = self
 
-        let wc = ConsoleController(webView: consoleWebView)
-        self.consoleWindow = wc
+        self.consoleController = ConsoleController(webView: consoleWebView)
 
-        let window = view.window!
+        let mainWindow = view.window!
 
-        self.savedViewFrame = window.frame;
+        self.savedViewFrame = mainWindow.frame
 
         let screens = NSScreen.screens
 
@@ -402,49 +447,84 @@ class ViewController: NSViewController, WKScriptMessageHandlerWithReply, WKNavig
                 laptopScreen = NSScreen.main
                 for screen in screens {
                     if (screen != laptopScreen) {
-                        externalScreen = screen;
-                        break;
+                        externalScreen = screen
+                        break
                     }
                 }
             }
 
             let behaviors: NSWindow.CollectionBehavior = [.fullScreenAllowsTiling, .fullScreenPrimary]
 
-            window.collectionBehavior = behaviors
-            window.setFrame(externalScreen.frame, display: true, animate: false)
+            mainWindow.collectionBehavior = behaviors
+            mainWindow.setFrame(externalScreen.frame, display: true, animate: false)
+            installRestoreOnFullScreenExit(mainWindow: mainWindow)
+            mainWindow.toggleFullScreen(nil)
 
-            // Observe full-screen exit, and at that point dispatch the attempt to restore
-            // original monitor, size & position. Otherwise we remain on the monitor we are
-            // presenting to.
-            let center = NotificationCenter.default
-            self.observer = center.addObserver(
-                forName: NSWindow.didExitFullScreenNotification,
-                object: window,
-                queue: OperationQueue.main) { _ in
-
-                    DispatchQueue.main.async {
-                        window.setFrame(self.savedViewFrame, display: true, animate: false)
-                        window.makeKeyAndOrderFront(nil)
-                    }
-
-                    center.removeObserver(self.observer!)
-            }
-
-            window.toggleFullScreen(nil)
-
-            let window2 = wc.window!;
-            window2.collectionBehavior = behaviors
-            window2.setFrame(laptopScreen.frame, display: true, animate: false)
-            window2.toggleFullScreen(nil)
+            let consoleWindow = consoleController.window!
+            consoleWindow.collectionBehavior = behaviors
+            consoleWindow.setFrame(laptopScreen.frame, display: true, animate: false)
+            consoleWindow.toggleFullScreen(nil)
         }
 
         return consoleWebView
     }
 
+    func installRestoreOnFullScreenExit(mainWindow: NSWindow) {
+        // Observe full-screen exit, and at that point dispatch the attempt to restore
+        // original monitor, size & position. Otherwise we remain on the monitor we are
+        // presenting to.
+        let center = NotificationCenter.default
+        self.mainWindowObserver = center.addObserver(
+            forName: NSWindow.didExitFullScreenNotification,
+            object: mainWindow,
+            queue: OperationQueue.main) { _ in
+
+                DispatchQueue.main.async {
+                    mainWindow.setFrame(self.savedViewFrame, display: true, animate: false)
+                    mainWindow.makeKeyAndOrderFront(nil)
+                }
+
+                center.removeObserver(self.mainWindowObserver!)
+        }
+    }
+
+    func installExchangeMainMonitor(window: NSWindow, frame: NSRect) {
+        let center = NotificationCenter.default
+        self.mainMonitorExchangeObserver = center.addObserver(
+            forName: NSWindow.didExitFullScreenNotification,
+            object: window,
+            queue: OperationQueue.main) { _ in
+
+                DispatchQueue.main.async {
+                    window.setFrame(frame, display: true, animate: false)
+                    window.toggleFullScreen(nil)
+                }
+
+                self.installRestoreOnFullScreenExit(mainWindow: window)
+                center.removeObserver(self.mainMonitorExchangeObserver!)
+        }
+    }
+
+    func installExchangeConsoleMonitor(window: NSWindow, frame: NSRect) {
+        let center = NotificationCenter.default
+        self.consoleMonitorExchangeObserver = center.addObserver(
+            forName: NSWindow.didExitFullScreenNotification,
+            object: window,
+            queue: OperationQueue.main) { _ in
+
+                DispatchQueue.main.async {
+                    window.setFrame(frame, display: true, animate: false)
+                    window.toggleFullScreen(nil)
+                }
+
+                center.removeObserver(self.consoleMonitorExchangeObserver!)
+        }
+    }
+
     func webViewDidClose(_ webView: WKWebView) {
-        if (self.consoleWindow != nil && webView == self.consoleWindow.webView) {
-            self.consoleWindow.close()
-            self.consoleWindow = nil;
+        if (self.consoleController != nil && webView == self.consoleController.webView) {
+            self.consoleController.close()
+            self.consoleController = nil
 
             // this will trigger the restoration of original location/size
             // via the convoluted observer stuff.
