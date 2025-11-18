@@ -87,6 +87,7 @@ window.L.CalcTileLayer = window.L.CanvasTileLayer.extend({
 
 		app.sectionContainer.addSection(new app.definitions.AutoFillMarkerSection());
 		app.sectionContainer.addSection(new SplitterLinesSection());
+		app.sectionContainer.addSection(new app.definitions.TableFillMarkerSection());
 
 		this.insertMode = false;
 		this._resetInternalState();
@@ -931,6 +932,36 @@ window.L.CalcTileLayer = window.L.CanvasTileLayer.extend({
 		}
 		else if (e.commandName === 'PivotTableFilterInfo') {
 			app.calc.pivotTableFilterCell = { 'row': e.state.row, 'column': e.state.column };
+		}
+		else if (e.commandName === 'TableAutoFillInfo') {
+			this._onTableAutoFillStateChanged(e.state.rectangle);
+		}
+	},
+
+	_onTableAutoFillStateChanged: function (textMsg) {
+		var tablefillMarkerSection = app.sectionContainer.getSectionWithName(app.CSections.TableFillMarker.name);
+		if (textMsg.match('EMPTY')) {
+			if (tablefillMarkerSection)
+				tablefillMarkerSection.calculatePositionViaCorePixels(null);
+			this._tableAutoFillAreaPixels = null;
+		}
+		else
+		{
+			var strTwips = textMsg.match(/\d+/g);
+			if (strTwips != null && this._map.isEditMode()) {
+				var topLeftTwips = new cool.Point(parseInt(strTwips[0]), parseInt(strTwips[1]));
+				var offset = new cool.Point(parseInt(strTwips[2]), parseInt(strTwips[3]));
+
+				var topLeftPixels = this._twipsToCorePixels(topLeftTwips);
+				var offsetPixels = this._twipsToCorePixels(offset);
+				this._tableAutoFillAreaPixels = app.LOUtil.createRectangle(topLeftPixels.x, topLeftPixels.y, offsetPixels.x, offsetPixels.y);
+
+				if (tablefillMarkerSection)
+					tablefillMarkerSection.calculatePositionViaCorePixels([this._tableAutoFillAreaPixels.x1, this._tableAutoFillAreaPixels.y1]);
+			}
+			else {
+				this._tableAutoFillAreaPixels = null;
+			}
 		}
 	},
 
