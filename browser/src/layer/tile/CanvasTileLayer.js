@@ -2939,8 +2939,10 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 
 	_onZoomEnd: function () {
 		this._isZooming = false;
+		app.sectionContainer.setPostZoomReplay(true);
 		if (!this.isCalc())
 			this._replayPrintTwipsMsgs(false);
+		app.sectionContainer.setPostZoomReplay(false);
 		this._onUpdateCursor(null, true);
 		app.definitions.otherViewCursorSection.updateVisibilities();
 	},
@@ -3112,10 +3114,10 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 
 			var hasMobileWizardOpened = this._map.uiManager.mobileWizard ? this._map.uiManager.mobileWizard.isOpen() : false;
 			var hasIframeModalOpened = $('.iframe-dialog-modal').is(':visible');
-			// Don't show the keyboard when the Wizard is visible.
+			// Don't show the keyboard when the Wizard is visible, or when we have just been in a zoom
 			if (!window.mobileWizard && !window.pageMobileWizard &&
 				!window.insertionMobileWizard && !hasMobileWizardOpened &&
-				!JSDialog.IsAnyInputFocused() && !hasIframeModalOpened) {
+				!JSDialog.IsAnyInputFocused() && !hasIframeModalOpened && !app.sectionContainer.isPostZoomReplay()) {
 				// If the user is editing, show the keyboard, but don't change
 				// anything if nothing is changed.
 
