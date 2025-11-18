@@ -12,6 +12,7 @@
 #pragma once
 
 #include <functional>
+#include <vector>
 
 #include <QTabWidget>
 #include <QTabBar>
@@ -20,26 +21,30 @@
 #include <QDrag>
 #include <QMimeData>
 
+class DetachableTabWidget;
+
+static std::vector<DetachableTabWidget*> s_allTabWidgets;
 class DetachableTabBar : public QTabBar {
     Q_OBJECT
 public:
     explicit DetachableTabBar(QWidget* parent = nullptr);
 
 signals:
-    void detachTabRequested(int index, QPoint globalPos);
+    void detachTabRequested(QPoint globalPos, QWidget* tabWidget, const QString& tabLabel);
 
 protected:
     void mousePressEvent(QMouseEvent* event) override;
+    void mouseReleaseEvent(QMouseEvent* event) override;
     void mouseMoveEvent(QMouseEvent* event) override;
 
 private:
-    QPoint _dragStartPos;
 };
 
 class DetachableTabWidget : public QTabWidget {
     Q_OBJECT
 public:
     explicit DetachableTabWidget(QWidget* parent = nullptr);
+    ~DetachableTabWidget();
 
      // Set by WebView.cpp to customize tab setup (e.g. add "+" button)
     static std::function<void(QTabWidget*)> tabSetupCallback;
@@ -47,7 +52,12 @@ public:
     void addDetachableTab(QWidget* widget, const QString& label);
     void reattachTab(QWidget* widget, const QString& label);
 
+    DetachableTabBar *tabBar() const;
 private slots:
-    void handleDetachRequest(int index, QPoint globalPos);
+    void handleDetachRequest(QPoint globalPos, QWidget* tabWidget, const QString& tabLabel);
+    void dragEnterEvent(QDragEnterEvent* event) override;
+    void dropEvent(QDropEvent* event) override;
+
+private:
 };
 
