@@ -148,15 +148,22 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 		cy.cGet('#copy-paste-container p').should('have.attr', 'align', 'justify');
 	});
 
+	function selectLineSpacing(entry) {
+		desktopHelper.getNbIcon('LineSpacing').click();
+		desktopHelper.getDropdown('home-line-spacing').contains('.ui-combobox-entry', entry).click();
+	}
+
 	it('Apply Line spacing: 1 and 1.5', function() {
 		helper.setDummyClipboardForCopy();
-		cy.cGet('#Home .notebookbar .unoLineSpacing button').click();
-		cy.cGet('[id$=home-line-spacing-entries]').contains('.ui-combobox-entry', 'Line Spacing: 1.5').click();
+
+		selectLineSpacing('Line Spacing: 1.5');
+
 		writerHelper.selectAllTextOfDoc();
 		helper.copy();
 		cy.cGet('#copy-paste-container p').should('have.attr', 'style').should('contain', 'line-height: 150%');
-		cy.cGet('#Home .notebookbar .unoLineSpacing button').click();
-		cy.cGet('[id$=home-line-spacing-entries]').contains('.ui-combobox-entry', 'Line Spacing: 1').click();
+
+		selectLineSpacing('Line Spacing: 1');
+
 		writerHelper.selectAllTextOfDoc();
 		helper.copy();
 		cy.cGet('#copy-paste-container p').should('have.attr', 'style').should('contain', 'line-height: 100%');
@@ -164,8 +171,7 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 
 	it('Apply Line spacing: 2', function() {
 		helper.setDummyClipboardForCopy();
-		cy.cGet('#Home .notebookbar .unoLineSpacing button').click();
-		cy.cGet('[id$=home-line-spacing-entries]').contains('.ui-combobox-entry', 'Line Spacing: 2').click();
+		selectLineSpacing('Line Spacing: 2');
 		writerHelper.selectAllTextOfDoc();
 		helper.copy();
 		cy.cGet('#copy-paste-container p').should('have.attr', 'style').should('contain', 'line-height: 200%');
@@ -173,8 +179,7 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 
 	it('Increase/Decrease Paragraph spacing', function() {
 		helper.setDummyClipboardForCopy();
-		cy.cGet('.notebookbar .unoLineSpacing button').click();
-		cy.cGet('[id$=home-line-spacing-entries]').contains('.ui-combobox-entry', 'Increase Paragraph Spacing').click();
+		selectLineSpacing('Increase Paragraph Spacing');
 
 		writerHelper.selectAllTextOfDoc();
 		helper.copy();
@@ -184,8 +189,7 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 
 		writerHelper.selectAllTextOfDoc();
 
-		cy.cGet('.notebookbar .unoLineSpacing button').click();
-		cy.cGet('[id$=home-line-spacing-entries]').contains('.ui-combobox-entry', 'Decrease Paragraph Spacing').click();
+		selectLineSpacing('Decrease Paragraph Spacing');
 
 		writerHelper.selectAllTextOfDoc();
 		helper.copy();
