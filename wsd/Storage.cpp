@@ -307,6 +307,7 @@ std::unique_ptr<LocalStorage::LocalFileInfo> LocalStorage::getLocalFileInfo()
 std::string LocalStorage::downloadStorageFileToLocal(const Authorization& /*auth*/,
                                                      LockContext& /*lockCtx*/,
                                                      const std::string& /*templateUri*/,
+                                                     [[maybe_unused]]
                                                      std::string& templateOptionLocalPath)
 {
 #if !MOBILEAPP
