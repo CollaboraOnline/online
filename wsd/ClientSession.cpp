@@ -60,8 +60,12 @@ const int ClipboardTokenLengthBytes = 16;
 // home-use, disabled by default.
 const int ProxyAccessTokenLengthBytes = 32;
 
-static std::mutex GlobalSessionMapMutex;
-static std::unordered_map<std::string, std::weak_ptr<ClientSession>> GlobalSessionMap;
+namespace
+{
+std::mutex GlobalSessionMapMutex;
+std::unordered_map<std::string, std::weak_ptr<ClientSession>> GlobalSessionMap;
+
+} // namespace
 
 namespace
 {

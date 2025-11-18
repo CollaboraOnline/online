@@ -500,6 +500,9 @@ namespace Util
         return std::string::npos;
     }
 
+    namespace
+    {
+
     // For copyToMatch/seekToMatch
     bool processToMatch(std::istream& in, std::ostream* out, std::string_view search)
     {
@@ -557,6 +560,8 @@ namespace Util
             out->write(buffer, carrySize);
         return false;
     }
+
+    } // namespace
 
     bool seekToMatch(std::istream& in, std::string_view search)
     {

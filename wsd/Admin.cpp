@@ -1017,11 +1017,14 @@ void Admin::notifyForkit()
     COOLWSD::sendMessageToForKit(oss.str());
 }
 
+namespace
+{
 /// Similar to std::clamp(), old libstdc++ doesn't have it.
 template <typename T> T clamp(const T& n, const T& lower, const T& upper)
 {
     return std::max(lower, std::min(n, upper));
 }
+} // namespace
 
 void Admin::triggerMemoryCleanup(const size_t totalMem)
 {
