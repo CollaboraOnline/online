@@ -637,8 +637,8 @@ span.jsdialog.sidebar.ui-treeview-notexpandable {
 
 #quickfind-dock-wrapper #searchfinds {
 	overflow-y: auto;
-	scrollbar-width: thin;
-	scrollbar-color: var(--color-border) transparent;
+	scrollbar-width: var(--scrollbar-width);
+	scrollbar-color: var(--scrollbar-color);
 	max-height: calc(100vh - 350px);
 }
 

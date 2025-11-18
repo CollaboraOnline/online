@@ -59,6 +59,9 @@
 
 	/* Notebookbar */
 	--notebookbar-element-height: 64px;
+
+	/* Scrollbars */
+	--scrollbar-width: thin;
 }
 
 html {
@@ -347,8 +350,8 @@ body {
 	z-index: 990;
 	max-width: 350px;
 	overflow-y: auto;
-	scrollbar-width: thin;
-	scrollbar-color: var(--color-border) transparent;
+	scrollbar-width: var(--scrollbar-width);
+	scrollbar-color: var(--scrollbar-color);
 	height: 100%;
 }
 
@@ -644,7 +647,7 @@ body {
 	max-height: var(--annotation-input-size);
 	overflow: auto;
 	scrollbar-color: var(--scrollbar-color);
-	scrollbar-width: thin;
+	scrollbar-width: var(--scrollbar-width);
 }
 
 .cool-annotation-info-collapsed {
@@ -734,6 +737,8 @@ body {
 	margin-bottom: 8px;
 	box-sizing: border-box;
 	border-radius: var(--border-radius-s);
+	scrollbar-width: var(--scrollbar-width);
+	scrollbar-color: var(--scrollbar-color);
 }
 
 .cool-annotation-textarea a:link,
