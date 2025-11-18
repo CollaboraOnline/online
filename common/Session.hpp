@@ -37,7 +37,7 @@ class SessionMap : public std::map<std::string, std::shared_ptr<T> >
     std::map<std::string, CanonicalViewId> _canonicalIds;
 public:
     SessionMap() {
-        static_assert(std::is_base_of<Session, T>::value, "sessions must have base of Session");
+        static_assert(std::is_base_of_v<Session, T>, "sessions must have base of Session");
     }
 
     /// Generate a unique key for this set of view properties, only used by WSD
