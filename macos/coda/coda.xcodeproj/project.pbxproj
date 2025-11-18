@@ -889,7 +889,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MARKETING_VERSION = 25.04.6;
+				MARKETING_VERSION = 25.04.7;
 				OTHER_LDFLAGS = (
 					"-liconv",
 					"-lPocoFoundation",
@@ -951,7 +951,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MARKETING_VERSION = 25.04.6;
+				MARKETING_VERSION = 25.04.7;
 				OTHER_LDFLAGS = (
 					"-liconv",
 					"-lPocoFoundation",
