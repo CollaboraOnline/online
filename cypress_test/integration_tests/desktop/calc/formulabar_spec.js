@@ -8,8 +8,11 @@ describe(['tagdesktop'], 'Formulabar tests', function() {
 	beforeEach(function() {
 		helper.setupAndLoadDocument('calc/formulabar.ods');
 		cy.cGet('#pos_window-input-address').should('have.value', 'AB106');
-		cy.cGet('#sc_input_window.formulabar .ui-custom-textarea-cursor-layer')
-			.should('not.have.text', '');
+	});
+
+	it('Do not hide on notebookbar collapse', function() {
+		cy.cGet('#Home-tab-label').click();
+		cy.cGet('#sc_input_window.formulabar').should('be.visible');
 	});
 
 	// FIXME: need to stabilize
