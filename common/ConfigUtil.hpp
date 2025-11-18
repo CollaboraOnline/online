@@ -275,11 +275,9 @@ static std::string getPathFromConfig(const Poco::Util::AbstractConfiguration& co
 /// Returns the value for integral, floating-point, or string type
 /// of the specified application configuration,
 /// or the default, if one doesn't exist.
-template <typename T,
-          typename std::enable_if<std::is_integral<T>::value || std::is_floating_point<T>::value ||
-                                      std::is_same<T, std::string>::value,
-                                  void>::type* = nullptr>
+template <typename T>
 static T getConfigValue(const std::string& name, T def)
+    requires(std::is_integral_v<T> || std::is_floating_point_v<T> || std::is_same_v<T, std::string>)
 {
     if constexpr (Util::isFuzzing())
     {
@@ -336,9 +334,9 @@ inline T getConfigValue(const std::string& name, const typename T::rep def,
 /// Returns the chrono value of the specified application configuration,
 /// or the default, if one doesn't exist.
 /// By default, we expect non-negative values.
-template <typename T,
-          typename std::enable_if<std::is_integral<typename T::rep>::value>::type* = nullptr>
+template <typename T>
 inline T getConfigValue(const std::string& name, const T def, const T min = T(0))
+    requires std::is_integral_v<typename T::rep>
 {
     return getConfigValue<T>(name, def.count(), min.count());
 }
@@ -347,7 +345,7 @@ inline T getConfigValue(const std::string& name, const T def, const T min = T(0)
 /// or the default, if one doesn't exist.
 template <typename T> static T getConfigValueNonZero(const std::string& name, T def)
 {
-    static_assert(std::is_integral<T>::value, "Meaningless on non-integral types");
+    static_assert(std::is_integral_v<T>, "Meaningless on non-integral types");
 
     if constexpr (Util::isFuzzing())
     {

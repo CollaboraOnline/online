@@ -75,9 +75,9 @@
     }
 
 /// Support seamless serialization of STATE_ENUM to ostream.
-template <typename T, typename std::enable_if<std::is_same<
-                          decltype(name(T())), std::string_view>::value>::type* = nullptr>
+template <typename T>
 inline std::ostream& operator<<(std::ostream& os, const T state)
+    requires std::is_same_v<decltype(name(T())), std::string_view>
 {
     os << name(state);
     return os;

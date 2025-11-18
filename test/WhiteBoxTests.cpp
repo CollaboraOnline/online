@@ -858,7 +858,7 @@ void WhiteBoxTests::testIso8601Time()
     oss.str(std::string());
     t = Util::iso8601ToTimestamp("2019-09-02T17:12:17.874777Z", "LastModifiedTime");
     oss << t.time_since_epoch().count();
-    if (std::is_same<std::chrono::system_clock::period, std::nano>::value)
+    if (std::is_same_v<std::chrono::system_clock::period, std::nano>)
         LOK_ASSERT_EQUAL_STR("1567444337874777000", oss.str());
     else
         LOK_ASSERT_EQUAL_STR("1567444337874777", oss.str());
@@ -867,7 +867,7 @@ void WhiteBoxTests::testIso8601Time()
     oss.str(std::string());
     t = Util::iso8601ToTimestamp("2019-10-24T14:31:28.063730Z", "LastModifiedTime");
     oss << t.time_since_epoch().count();
-    if (std::is_same<std::chrono::system_clock::period, std::nano>::value)
+    if (std::is_same_v<std::chrono::system_clock::period, std::nano>)
         LOK_ASSERT_EQUAL_STR("1571927488063730000", oss.str());
     else
         LOK_ASSERT_EQUAL_STR("1571927488063730", oss.str());
@@ -898,7 +898,7 @@ void WhiteBoxTests::testIso8601Time()
 
         std::string t_in_micros_str = std::to_string(t_in_micros);
         std::string time_since_epoch_str = std::to_string(t.time_since_epoch().count());
-        if (!std::is_same<std::chrono::system_clock::period, std::nano>::value)
+        if (!std::is_same_v<std::chrono::system_clock::period, std::nano>)
         {
             // If the system clock has nanoseconds precision, the last 3 digits
             // of these strings may not match. For example,
