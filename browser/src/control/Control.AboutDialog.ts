@@ -147,7 +147,6 @@ class AboutDialog {
 		if(licenseInformationElement) {
 			const a = document.createElement('a');
 			a.href = 'javascript:void(0)';
-			//a.textContent = _('License information');
 			a.textContent = _UNO('.uno:ShowLicense');
 			a.addEventListener('click', () => window.postMobileMessage('LICENSE'));
 			licenseInformationElement.appendChild(a);
