@@ -154,7 +154,7 @@ private:
         else if (command == "progress:")
         {
             // find other progress commands with similar content
-            static constexpr std::string_view setvalueTag = "\"id\":\"setvalue\"";
+            static constexpr std::string_view setvalueTag = R"("id":"setvalue")";
             if (item->contains(setvalueTag))
             {
                 const auto& pos = std::find_if(_queue.begin(), _queue.end(),

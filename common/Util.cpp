@@ -318,13 +318,10 @@ namespace Util
 
         // Emit a metadata Trace Event identifying this thread. This will invoke a different function
         // depending on which executable this is in.
-        TraceEvent::emitOneRecordingIfEnabled("{\"name\":\"thread_name\",\"ph\":\"M\",\"args\":{\"name\":\""
-                                              + s
-                                              + "\"},\"pid\":"
-                                              + std::to_string(Util::getProcessId())
-                                              + ",\"tid\":"
-                                              + std::to_string(Util::getThreadId())
-                                              + "},\n");
+        TraceEvent::emitOneRecordingIfEnabled(
+            R"({"name":"thread_name","ph":"M","args":{"name":")" + s + R"("},"pid":)" +
+            std::to_string(Util::getProcessId()) +
+            ",\"tid\":" + std::to_string(Util::getThreadId()) + "},\n");
     }
 
     const char *getThreadName()

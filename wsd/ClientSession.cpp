@@ -116,14 +116,12 @@ ClientSession::ClientSession(
 
     // Emit metadata Trace Events for the synthetic pid used for the Trace Events coming in from the
     // client's cool, and for its dummy thread.
-    TraceEvent::emitOneRecordingIfEnabled("{\"name\":\"process_name\",\"ph\":\"M\",\"args\":{\"name\":\""
-                                          "cool-" + id
-                                          + "\"},\"pid\":"
-                                          + std::to_string(Util::getProcessId() + SYNTHETIC_COOL_PID_OFFSET)
-                                          + ",\"tid\":1},\n");
-    TraceEvent::emitOneRecordingIfEnabled("{\"name\":\"thread_name\",\"ph\":\"M\",\"args\":{\"name\":\"JS\"},\"pid\":"
-                                          + std::to_string(Util::getProcessId() + SYNTHETIC_COOL_PID_OFFSET)
-                                          + ",\"tid\":1},\n");
+    TraceEvent::emitOneRecordingIfEnabled(
+        R"({"name":"process_name","ph":"M","args":{"name":"cool-)" + id + R"("},"pid":)" +
+        std::to_string(Util::getProcessId() + SYNTHETIC_COOL_PID_OFFSET) + ",\"tid\":1},\n");
+    TraceEvent::emitOneRecordingIfEnabled(
+        R"({"name":"thread_name","ph":"M","args":{"name":"JS"},"pid":)" +
+        std::to_string(Util::getProcessId() + SYNTHETIC_COOL_PID_OFFSET) + ",\"tid\":1},\n");
 
     _browserSettingsJSON = new Poco::JSON::Object();
 }
@@ -1837,7 +1835,7 @@ bool ClientSession::loadDocument(const char* /*buffer*/, int /*length*/,
         }
         else if (!docBroker->getTemplateOptionUriJailed().empty())
         {
-            std::string options = "{\"TemplateURL\":{\"type\":\"string\",\"value\":\"" +
+            std::string options = R"({"TemplateURL":{"type":"string","value":")" +
                                   docBroker->getTemplateOptionUriJailed() + "\"}}";
             oss << " infilterOptions=" << options;
         }
@@ -2197,10 +2195,10 @@ bool ClientSession::postProcessCopyPayload(std::istream& in, std::ostream& out)
         const std::string meta = getClipboardURI();
         LOG_TRC("Inject clipboard cool origin of '" << meta << "'");
 
-        std::string origin = "<div id=\"meta-origin\" data-coolorigin=\"" + meta + "\">\n";
+        std::string origin = R"(<div id="meta-origin" data-coolorigin=")" + meta + "\">\n";
         if (json)
         {
-            origin = "<div id=\\\"meta-origin\\\" data-coolorigin=\\\"" + meta + "\\\">\\n";
+            origin = R"(<div id=\"meta-origin\" data-coolorigin=\")" + meta + R"(\">\n)";
         }
         out.write(origin.data(), origin.size());
 
@@ -2289,7 +2287,8 @@ bool ClientSession::handlePresentationInfo(const std::shared_ptr<Message>& paylo
 
                             if (!id.empty() && !url.empty())
                             {
-                                std::string original = "{ \"id\" : \"" + id + "\", \"url\" : \"" + url + "\" }";
+                                std::string original =
+                                    R"({ "id" : ")" + id + R"(", "url" : ")" + url + "\" }";
                                 docBroker->addEmbeddedMedia(id, original); // Capture the original message with internal URL.
 
                                 const std::string mediaUrl =
@@ -3615,7 +3614,7 @@ bool ClientSession::isTileInsideVisibleArea(const TileDesc& tile) const
 // 2. The clipboard payload parsing code in ClipboardData::read().
 bool ClientSession::preProcessSetClipboardPayload(std::istream& in, std::ostream& out)
 {
-    if (!Util::copyToMatch(in, out, "<div id=\"meta-origin\" data-coolorigin=\""))
+    if (!Util::copyToMatch(in, out, R"(<div id="meta-origin" data-coolorigin=")"))
         return false;
 
     const std::string_view endtag = "\">\n";
@@ -3682,7 +3681,7 @@ std::string ClientSession::processSVGContent(const std::string& svg)
 
         // Store the original json with the internal, temporary, file URI.
         const std::string fileUrl = svg.substr(start + 5, end - start - 5);
-        docBroker->addEmbeddedMedia(id, "{ \"action\":\"update\",\"id\":\"" + id + "\",\"url\":\"" +
+        docBroker->addEmbeddedMedia(id, R"({ "action":"update","id":")" + id + R"(","url":")" +
                                             fileUrl + "\"}");
 
         const std::string mediaUrl =
