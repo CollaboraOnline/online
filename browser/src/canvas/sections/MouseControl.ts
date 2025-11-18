@@ -85,7 +85,21 @@ class MouseControl extends CanvasSectionObject {
 	) {
 		const viewToDocumentPos = point.clone();
 
-		// Just send the point unmodified for now.
+		// Convert to pure canvas html element coordinate.
+		viewToDocumentPos.pX -=
+			app.activeDocument.activeView.viewedRectangle.pX1 +
+			app.sectionContainer.getDocumentAnchor()[0];
+		viewToDocumentPos.pY -=
+			app.activeDocument.activeView.viewedRectangle.pY1 +
+			app.sectionContainer.getDocumentAnchor()[1];
+
+		const pX =
+			app.activeDocument.activeView.canvasToDocumentX(viewToDocumentPos);
+		const pY =
+			app.activeDocument.activeView.canvasToDocumentY(viewToDocumentPos);
+
+		viewToDocumentPos.pX = pX;
+		viewToDocumentPos.pY = pY;
 
 		app.map._docLayer._postMouseEvent(
 			eventType,

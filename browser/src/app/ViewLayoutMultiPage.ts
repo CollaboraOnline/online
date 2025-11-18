@@ -276,9 +276,10 @@ class ViewLayoutMultiPage extends ViewLayoutBase {
 		);
 	}
 
-	public viewToDocumentX(point: cool.SimplePoint): number {
-		point.pX -= app.sectionContainer.getDocumentAnchor()[0];
-		point.pY -= app.sectionContainer.getDocumentAnchor()[1];
+	public canvasToDocumentX(point: cool.SimplePoint): number {
+		point.pX += this.scrollProperties.viewX;
+		point.pY += this.scrollProperties.viewY;
+
 		const index = this.getClosestRectangleIndex(point, false);
 
 		return (
@@ -287,9 +288,10 @@ class ViewLayoutMultiPage extends ViewLayoutBase {
 		);
 	}
 
-	public viewToDocumentY(point: cool.SimplePoint): number {
-		point.pX -= app.sectionContainer.getDocumentAnchor()[0];
-		point.pY -= app.sectionContainer.getDocumentAnchor()[1];
+	public canvasToDocumentY(point: cool.SimplePoint): number {
+		point.pX += this.scrollProperties.viewX;
+		point.pY += this.scrollProperties.viewY;
+
 		const index = this.getClosestRectangleIndex(point, false);
 
 		return (
