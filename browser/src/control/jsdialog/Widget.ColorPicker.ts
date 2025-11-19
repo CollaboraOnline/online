@@ -322,6 +322,8 @@ function updatePalette(
 	customContainer.replaceChildren();
 
 	const customInput = window.L.DomUtil.create('input', '', customContainer);
+	customInput.id = 'ui-color-picker-custom-input';
+	customInput.setAttribute('aria-label', _('Enter custom color in hex format'));
 	customInput.placeholder = '#FFF000';
 	customInput.maxlength = 7;
 	customInput.type = 'text';
