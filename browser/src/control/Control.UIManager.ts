@@ -502,10 +502,7 @@ class UIManager extends window.L.Control {
 			) {
 				app.dispatcher.dispatch('presentation');
 			} else if (startWelcomePresentation === 'true') {
-				if (window.ThisIsTheWindowsApp)
-					app.dispatcher.dispatch('presentation');
-				else
-					app.dispatcher.dispatch('presentinwindow');
+				app.dispatcher.dispatch('presentinwindow');
 			}
 
 			// docloaded event is fired multiple times, unfortunately

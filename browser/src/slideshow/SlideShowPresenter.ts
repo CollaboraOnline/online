@@ -1143,7 +1143,6 @@ class SlideShowPresenter {
 
 	/// called when user triggers the presentation using UI
 	_onStart(that: any) {
-		this._isWelcomePresentation = that?.isWelcomePresentation ?? false;
 		this._startSlide = that?.startSlideNumber ?? 0;
 		if (!this._onPrepareScreen(false))
 			// opens full screen, has to be on user interaction
