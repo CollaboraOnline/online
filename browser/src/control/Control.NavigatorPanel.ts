@@ -291,16 +291,17 @@ class NavigatorPanel extends SidebarBase {
 		// Create the button wrapper (square container)
 		const buttonWrapper = document.createElement('div');
 		buttonWrapper.className = 'navigator-btn-wrapper'; // Class for styling
-		buttonWrapper.setAttribute('aria-label', navigatorText);
 
 		// Create the button
 		const button = document.createElement('button');
 		button.className = 'ui-content unobutton';
 		button.id = 'floating-navigator';
 		button.accessKey = 'ZN';
+		button.setAttribute('aria-label', navigatorText);
 
 		// Create the image inside the button
 		const img = document.createElement('img');
+		img.alt = ''; // empty alt for accessibility
 		app.LOUtil.setImage(img, 'lc_navigator.svg', this.map);
 
 		// Append elements
