@@ -386,7 +386,7 @@ class LOUtil {
 			charttypepanel: 'diagramtype',
 			arrangeframemenu: 'arrangemenu',
 			bringtofront: 'arrangemenu',
-			scnumberformatpropertypanel: 'numberformatingdecimals',
+			scnumberformatpropertypanel: 'numberformatincdecimals',
 			graphicpropertypanel: 'graphicdialog',
 			rotateflipmenu: 'rotateleft',
 			outlinedown: 'movedown',
