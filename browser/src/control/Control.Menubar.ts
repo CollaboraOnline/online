@@ -580,7 +580,10 @@ class Menubar extends window.L.Control {
 				{name: _('Fullscreen presentation'), id: 'fullscreen-presentation', type: 'action'},
 				{name: _('Present current slide'), id: 'presentation-currentslide', type: 'action'},
 				{name: _('Present in new window'), id: 'present-in-window', type: 'action'},
-				{name: _('Presenter Console'), id: 'presentation-in-console', type: 'action'}]
+				...(!window.ThisIsAMobileApp ? [
+					{name: _('Presenter Console'), id: 'presentation-in-console', type: 'action'}
+				] : [])
+			]
 			},
 			{name: _UNO('.uno:ToolsMenu', 'presentation'), id: 'tools', type: 'menu', menu: [
 				{uno: '.uno:SpellDialog'},
