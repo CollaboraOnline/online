@@ -39,6 +39,7 @@
 #include <QFile>
 #include <QFileInfo>
 #include <QDir>
+#include <QLabel>
 #include <QApplication>
 #include <QUrl>
 #include <QCloseEvent>
@@ -145,19 +146,18 @@ QWebEngineView* CODAWebEngineView::createWindow(QWebEnginePage::WebWindowType ty
     QWebEnginePage* page = consoleView->page();
 
     QObject::connect(page, &QWebEnginePage::windowCloseRequested,
-                     [this]()
-                     {
-                        QTimer::singleShot(0, [this]{
+                     [this]() {
+                         QMainWindow* consoleWindow = _presenterConsole->mainWindow();
+                         _presenterConsole = nullptr;
+                         consoleWindow->close();
 
-                            QScreen* laptopScreen = QGuiApplication::primaryScreen();
-                            _mainWindow->showNormal();
-                            _mainWindow->setScreen(laptopScreen);
-                            _mainWindow->move(laptopScreen->geometry().topLeft());
+                         _mainWindow->setCentralWidget(this);
+                         _presenterFSWindow->setCentralWidget(nullptr);
 
-                            QMainWindow* consoleWindow = _presenterConsole->mainWindow();
-                            _presenterConsole = nullptr;
-                            consoleWindow->close();
-                        });
+                         _presenterFSWindow->close();
+                         _presenterFSWindow.reset();
+
+                         _mainWindow->setEnabled(true);
                      });
 
     QMainWindow* consoleWindow = _presenterConsole->mainWindow();
@@ -187,9 +187,20 @@ QWebEngineView* CODAWebEngineView::createWindow(QWebEnginePage::WebWindowType ty
         consoleWindow->move(laptopScreen->geometry().topLeft());
         consoleWindow->showFullScreen();
 
-        _mainWindow->setScreen(externalScreen);
-        _mainWindow->move(externalScreen->geometry().topLeft());
-        _mainWindow->showFullScreen();
+        // Move the contents into the presentation window so the original
+        // window will remain in position, so we can work around the
+        // stubbornness of wayland to allow restoring a window back to its
+        // original size and position on the screen it started on.
+        _presenterFSWindow = std::make_unique<QMainWindow>(nullptr);
+        _presenterFSWindow->setCentralWidget(this);
+        QLabel* label = new QLabel(QObject::tr("Presenting"));
+        label->setAlignment(Qt::AlignCenter);
+        _mainWindow->setCentralWidget(label);
+        _mainWindow->setEnabled(false);
+
+        _presenterFSWindow->setScreen(externalScreen);
+        _presenterFSWindow->move(externalScreen->geometry().topLeft());
+        _presenterFSWindow->showFullScreen();
     }
 
     return consoleView;
@@ -212,11 +223,11 @@ void CODAWebEngineView::exchangeMonitors()
     {
         if (screens[i] == consoleWindow->screen())
             origConsoleScreen = i;
-        if (screens[i] == _mainWindow->screen())
+        if (screens[i] == _presenterFSWindow->screen())
             origPresentationScreen = i;
     }
 
-    _mainWindow->hide();
+    _presenterFSWindow->hide();
     consoleWindow->hide();
 
     // Rotate the console screen and rotate the presentation screen
@@ -231,11 +242,11 @@ void CODAWebEngineView::exchangeMonitors()
     consoleWindow->setScreen(screens[newConsoleScreen]);
     consoleWindow->move(screens[newConsoleScreen]->geometry().topLeft());
 
-    _mainWindow->setScreen(screens[newPresentationScreen]);
-    _mainWindow->move(screens[newPresentationScreen]->geometry().topLeft());
+    _presenterFSWindow->setScreen(screens[newPresentationScreen]);
+    _presenterFSWindow->move(screens[newPresentationScreen]->geometry().topLeft());
 
-    _mainWindow->showFullScreen();
-    _mainWindow->show();
+    _presenterFSWindow->showFullScreen();
+    _presenterFSWindow->show();
     consoleWindow->showFullScreen();
     consoleWindow->show();
 }
