@@ -33,7 +33,9 @@ public:
     {
     }
 
+    void arrangePresentationWindows();
     void exchangeMonitors();
+
 private:
     QMainWindow* _mainWindow;
     // Given the general inability of wayland based environments
