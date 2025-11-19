@@ -36,6 +36,12 @@ public:
     void exchangeMonitors();
 private:
     QMainWindow* _mainWindow;
+    // Given the general inability of wayland based environments
+    // to restore a window's position, especially after moving
+    // it to another monitor full-screen, use a throwaway window
+    // for full-screen presentations, and leave the pre-full-screen
+    // on the original screen for reuse post-presentation
+    std::unique_ptr<QMainWindow> _presenterFSWindow;
     WebView* _presenterConsole;
 
     QWebEngineView* createWindow(QWebEnginePage::WebWindowType type) override;
