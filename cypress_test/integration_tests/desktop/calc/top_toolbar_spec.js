@@ -211,7 +211,7 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 		helper.setDummyClipboardForCopy();
 		// Add decimal place
 		cy.cGet('#toolbar-up #overflow-button-other-toptoolbar .arrowbackground').click();
-		cy.cGet('#numberformatingdecimals').click();
+		cy.cGet('#numberformatincdecimals').click();
 		calcHelper.selectEntireSheet();
 		helper.copy();
 
