@@ -24,6 +24,7 @@ class Cursor {
 	private cursor: HTMLDivElement;
 	private map: any;
 	private blinkTimeout: NodeJS.Timeout;
+	private blinkSuspendTimeout: any;
 	private visible: boolean = false;
 	private domAttached: boolean = false;
 
@@ -83,7 +84,7 @@ class Cursor {
 			$('.leaflet-interactive').css('cursor', 'text');
 		}
 		this.addCursorClass(app.file.textCursor.visible);
-		this.setOpacity(app.file.textCursor.visible ? 1: 0);
+		this.setOpacity(app.file.textCursor.visible ? 1 : 0);
 	}
 
 	remove() {
@@ -125,7 +126,7 @@ class Cursor {
 	}
 
 	onResize = () => {
-		if (window.devicePixelRatio !== 1 )
+		if (window.devicePixelRatio !== 1)
 			this.cursor.style.width = this.width / window.devicePixelRatio + 'px';
 		else
 			this.cursor.style.removeProperty('width');
@@ -271,7 +272,12 @@ class Cursor {
 		// Restart blinking animation
 		if (this.blink) {
 			window.L.DomUtil.removeClass(this.cursor, 'blinking-cursor');
-			window.L.DomUtil.addClass(this.cursor, 'blinking-cursor');
+			if (this.blinkSuspendTimeout) {
+				clearTimeout(this.blinkSuspendTimeout);
+			}
+			this.blinkSuspendTimeout = setTimeout(() => {
+				window.L.DomUtil.addClass(this.cursor, 'blinking-cursor');
+			}, 500);
 		}
 	}
 
