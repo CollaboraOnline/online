@@ -1,17 +1,17 @@
 {
   "id": "com.collabora.Office",
   "runtime": "org.kde.Platform",
-  "runtime-version": "6.9",
+  "runtime-version": "6.10",
   "sdk": "org.kde.Sdk",
   "base": "io.qt.qtwebengine.BaseApp",
-  "base-version": "6.9",
+  "base-version": "6.10",
   "separate-locales": false,
   "sdk-extensions": [
     "org.freedesktop.Sdk.Extension.node20"
   ],
   "add-build-extensions": {
     "org.freedesktop.Sdk.Extension.node20": {
-      "version": "24.08"
+      "version": "25.08"
     }
   },
   "command": "coda-qt",
@@ -34,18 +34,8 @@
     "--device=dri"
   ],
   "build-options": {
-    "arch": {
-      "x86_64": {
-        "prepend-pkg-config-path": "/app/lib/x86_64-linux-gnu/pkgconfig"
-      },
-      "aarch64": {
-        "prepend-pkg-config-path": "/app/lib/aarch64-linux-gnu/pkgconfig"
-      }
-    },
     "append-path": "/usr/lib/sdk/node20/bin:/usr/lib/libexec",
     "env": {
-      "CFLAGS": "-O2 -g",
-      "CXXFLAGS": "-O2 -g",
       "NINJA_STATUS": "[%p | %f/%t] "
     }
   },
@@ -112,8 +102,8 @@
       "sources": [
         {
           "type": "archive",
-          "url": "https://kerberos.org/dist/krb5/1.21/krb5-1.21.3.tar.gz",
-          "sha256": "b7a4cd5ead67fb08b980b21abd150ff7217e85ea320c9ed0c6dadd304840ad35",
+          "url": "https://kerberos.org/dist/krb5/1.22/krb5-1.22.1.tar.gz",
+          "sha256": "1a8832b8cad923ebbf1394f67e2efcf41e3a49f460285a66e35adec8fa0053af",
           "x-checker-data": {
             "type": "html",
             "url": "https://kerberos.org/dist/",
@@ -129,7 +119,7 @@
         {
 	  "type": "git",
 	  "url" : "https://gerrit.libreoffice.org/core",
-	  "commit": "distro/collabora/co-25.04"
+	  "branch": "distro/collabora/co-25.04"
         },
         {
           "type": "file",
@@ -794,7 +784,6 @@
       "builddir": true,
       "config-opts": [
         "-DCMAKE_BUILD_TYPE=Release",
-        "-DCMAKE_INSTALL_PREFIX=/app",
         "-DCMAKE_POSITION_INDEPENDENT_CODE=ON",
         "-DBUILD_SHARED_LIBS=OFF",
         "-DENABLE_TESTS=OFF",
@@ -819,23 +808,8 @@
         {
           "type": "git",
           "url": "https://github.com/pocoproject/poco.git",
-          "tag": "poco-1.12.5-release"
-        }
-      ],
-      "cleanup": [ "*" ]
-    },
-    {
-      "name": "zstd",
-      "buildsystem": "simple",
-      "build-commands": [
-        "make -j${FLATPAK_BUILDER_N_JOBS} PREFIX=/app ZSTD_LEGACY_SUPPORT=0 BUILD_STATIC=1 BUILD_SHARED=0",
-        "make install PREFIX=/app BUILD_STATIC=1 BUILD_SHARED=0"
-      ],
-      "sources": [
-        {
-          "type": "git",
-          "url": "https://github.com/facebook/zstd.git",
-          "tag": "v1.5.7"
+          "tag": "poco-1.12.5-release",
+          "commit": "c04dfdbc37882f298d3178b3875cd67c38ea7d78"
         }
       ],
       "cleanup": [ "*" ]
@@ -843,30 +817,30 @@
     {
       "name": "python3-lxml",
       "buildsystem": "simple",
-      "build-options": {
-        "build-args": [
-          "--share=network"
-        ]
-      },
       "build-commands": [
-        "python3 -m ensurepip || true",
-        "python3 -m pip install --no-cache-dir --upgrade pip",
-        "python3 -m pip install --no-cache-dir --prefix=/app 'lxml>=5.2,<5.3'"
+        "pip3 install --verbose --exists-action=i --no-index --find-links=\"file://${PWD}\" --prefix=${FLATPAK_DEST} \"lxml==5.2.2\" --no-build-isolation"
+      ],
+      "sources": [
+        {
+          "type": "file",
+          "url": "https://files.pythonhosted.org/packages/63/f7/ffbb6d2eb67b80a45b8a0834baa5557a14a5ffce0979439e7cd7f0c4055b/lxml-5.2.2.tar.gz",
+          "sha256": "bb2dc4898180bea79863d5487e5f9c7c34297414bad54bcd0f0852aee9cfdb87"
+        }
       ],
       "cleanup": [ "*" ]
     },
     {
       "name": "python3-polib",
       "buildsystem": "simple",
-      "build-options": {
-        "build-args": [
-          "--share=network"
-        ]
-      },
       "build-commands": [
-        "python3 -m ensurepip || true",
-        "python3 -m pip install --no-cache-dir --upgrade pip",
-        "python3 -m pip install --no-cache-dir --prefix=/app 'polib>=1.2,<1.3'"
+        "pip3 install --verbose --exists-action=i --no-index --find-links=\"file://${PWD}\" --prefix=${FLATPAK_DEST} \"polib>=1.2,<1.3\" --no-build-isolation"
+      ],
+      "sources": [
+        {
+          "type": "file",
+          "url": "https://files.pythonhosted.org/packages/6b/99/45bb1f9926efe370c6dbe324741c749658e44cb060124f28dad201202274/polib-1.2.0-py2.py3-none-any.whl",
+          "sha256": "1c77ee1b81feb31df9bca258cbc58db1bbb32d10214b173882452c73af06d62d"
+        }
       ],
       "cleanup": [ "*" ]
     },
@@ -875,8 +849,7 @@
       "buildsystem": "autotools",
       "config-opts": [
         "--disable-static",
-        "--enable-shared",
-        "--prefix=/app"
+        "--enable-shared"
       ],
       "sources": [
         {
@@ -890,34 +863,48 @@
     {
       "name": "rsync",
       "buildsystem": "autotools",
-      "config-opts": [
-        "--prefix=/app"
-      ],
       "sources": [
         {
           "type": "archive",
-          "url": "https://download.samba.org/pub/rsync/src/rsync-3.3.0.tar.gz",
-          "sha256": "7399e9a6708c32d678a72a63219e96f23be0be2336e50fd1348498d07041df90"
+          "url": "https://download.samba.org/pub/rsync/src/rsync-3.4.1.tar.gz",
+          "sha256": "2924bcb3a1ed8b551fc101f740b9f0fe0a202b115027647cf69850d65fd88c52"
         }
       ],
       "cleanup": [ "*" ]
     },
     {
       "name": "collabora-online",
-      "buildsystem": "simple",
+      "buildsystem": "autotools",
       "build-options": {
+        "arch": {
+          "x86_64": {
+            "prepend-pkg-config-path": "/app/lib/x86_64-linux-gnu/pkgconfig"
+          },
+          "aarch64": {
+            "prepend-pkg-config-path": "/app/lib/aarch64-linux-gnu/pkgconfig"
+          }
+        },
         "build-args": [
           "--share=network"
         ]
       },
-      "build-commands": [
-        "./autogen.sh",
-        "./configure --enable-qtapp --enable-silent-rules --disable-ssl --prefix=/app --with-poco-includes=/app/include --with-poco-libs=/app/lib --with-lokit-path=/app/core/include --with-lo-path=/app/collaboraoffice '--with-vendor=Collabora Productivity Limited' '--with-app-name=Collabora Office' --with-info-url=https://collaboraonline.com/",
-        "make clean && make -j${FLATPAK_BUILDER_N_JOBS} install",
-        "python3 scripts/insert-coda-license.py /app/collaboraoffice/LICENSE.html CODA-THIRDPARTYLICENSES.html"
+      "config-opts": [
+        "--enable-qtapp",
+        "--enable-silent-rules",
+        "--disable-ssl",
+        "--with-poco-includes=/app/include",
+        "--with-poco-libs=/app/lib",
+        "--with-lokit-path=/app/core/include",
+        "--with-lo-path=/app/collaboraoffice",
+        "--with-vendor=Collabora Productivity Limited",
+        "--with-app-name=Collabora Office",
+        "--with-info-url=https://collaboraonline.com/"
       ],
       "ensure-writable": [
-        "/app/collaboraoffice/LICENSE.html"
+        "/collaboraoffice/LICENSE.html"
+      ],
+      "post-install": [
+        "python3 scripts/insert-coda-license.py /app/collaboraoffice/LICENSE.html CODA-THIRDPARTYLICENSES.html"
       ],
       "sources": [
         {
