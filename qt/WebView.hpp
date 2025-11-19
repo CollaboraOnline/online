@@ -33,6 +33,8 @@ public:
     {
     }
 
+    ~CODAWebEngineView();
+
     void arrangePresentationWindows();
     void exchangeMonitors();
 
@@ -45,6 +47,8 @@ private:
     // on the original screen for reuse post-presentation
     std::unique_ptr<QMainWindow> _presenterFSWindow;
     WebView* _presenterConsole;
+    QMetaObject::Connection _screenAdded;
+    QMetaObject::Connection _screenRemoved;
 
     QWebEngineView* createWindow(QWebEnginePage::WebWindowType type) override;
 };
