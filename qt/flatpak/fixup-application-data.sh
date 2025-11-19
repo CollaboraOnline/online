@@ -30,7 +30,7 @@ sed -i -E -z -e 's/\[Desktop Action (Base|Math)\]\nName=[^\n]+\nExec=[^\n]+\n+//
 
 # Adapt calc, impress, writer, draw application Action names:
 sed -i -e 's/^Name=Calc$/Name=Spreadsheet/' -e 's/^Name=Impress$/Name=Presentation/' \
- -e 's/^Name=Writer$/Name=Textdocument/' -e 's/^Name=Draw$/Name=Drawing/' /app/share/applications/com.collabora.Office.desktop
+ -e 's/^Name=Writer$/Name=Text Document/' -e 's/^Name=Draw$/Name=Drawing/' /app/share/applications/com.collabora.Office.desktop
 
 # Remove individual application desktop and icon files:
 rm /app/share/applications/com.collabora.Office.*.desktop
