@@ -66,6 +66,19 @@ struct FilenameAndUri
     std::string uri;
 };
 
+// Use enum class to automatically get non-overlapping values. On the other hand, then we need to
+// cast the values to the underlying type when using them.
+enum class CODA_OPEN_CONTROL : DWORD
+{
+    SEP1,
+    NEW_TEXT,
+    NEW_SPREADSHEET,
+    NEW_PRESENTATION,
+    SEP2
+};
+
+enum class PERMISSION { EDIT, NEW_DOCUMENT, READONLY, VIEW, WELCOME };
+
 // Various document window speficic data
 struct WindowData
 {
@@ -77,6 +90,7 @@ struct WindowData
     int fakeClientFd;
     int closeNotificationPipeForForwardingThread[2];
     FilenameAndUri filenameAndUri;
+    PERMISSION permission;
     int appDocId;
     DWORD lastOwnClipboardModification;
     DWORD lastAnyonesClipboardModification;
@@ -124,19 +138,6 @@ static const int CODA_WM_EXECUTESCRIPT = WM_APP + 1;
 static const int CODA_WM_LOADNEXTDOCUMENT = WM_APP + 2;
 
 constexpr int CODA_GROUP_OPEN = 1000;
-
-// Use enum class to automatically get non-overlapping values. On the other hand, then we need to
-// cast the values to the underlying type when using them.
-enum class CODA_OPEN_CONTROL : DWORD
-{
-    SEP1,
-    NEW_TEXT,
-    NEW_SPREADSHEET,
-    NEW_PRESENTATION,
-    SEP2
-};
-
-enum class PERMISSION { EDIT, NEW_DOCUMENT, READONLY, VIEW, WELCOME };
 
 constexpr int CODA_OPEN_DIALOG_CREATE_NEW_INSTEAD = 123456;
 
@@ -770,7 +771,10 @@ static void do_bye_handling_things(const WindowData& data)
 
     // Close one end of the socket pair, that will wake up the forwarding thread above
     fakeSocketClose(data.closeNotificationPipeForForwardingThread[0]);
-    PostMessageW(data.hWnd, WM_CLOSE, 0, 0);
+
+    // For the welcome slideshow we need to close the window ourselves
+    if (data.permission == PERMISSION::WELCOME)
+        PostMessageW(data.hWnd, WM_CLOSE, 0, 0);
 }
 
 static void do_print(int appDocId)
@@ -1508,6 +1512,7 @@ static void openCOOLWindow(const FilenameAndUri& filenameAndUri, PERMISSION perm
     data.lastOwnClipboardModification = 0;
     data.lastAnyonesClipboardModification = 1;
     data.filenameAndUri = filenameAndUri;
+    data.permission = permission;
 
     if (maximize)
         ShowWindow(hWnd, SW_MAXIMIZE);
