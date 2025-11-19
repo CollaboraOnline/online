@@ -145,6 +145,54 @@ private:
 };
 } // namespace
 
+void CODAWebEngineView::arrangePresentationWindows()
+{
+    if (!_presenterFSWindow)
+        return;
+
+    QScreen* laptopScreen = QGuiApplication::primaryScreen();
+
+    /* what we really want to happen by default is for the presenter
+     * console to appear on the laptop screen and the presentation
+     * on an external monitor. For now we'll assume the presentation
+     * is already on the laptopScreen, which is nearly always the laptop,
+     * and put the presenter console on the next available screen just
+     * to test that we can put it somewhere else at all */
+    QScreen* externalScreen = nullptr;
+    QList<QScreen*> screens = QApplication::screens();
+    for (QScreen* screen : screens)
+    {
+        if (screen != laptopScreen)
+        {
+            externalScreen = screen;
+            break;
+        }
+    }
+
+    _presenterFSWindow->hide();
+    QScreen* presenterScreen = externalScreen ? externalScreen : laptopScreen;
+    _presenterFSWindow->setScreen(presenterScreen);
+    _presenterFSWindow->move(presenterScreen->geometry().topLeft());
+    _presenterFSWindow->showFullScreen();
+
+    Window* consoleWindow = _presenterConsole ? static_cast<Window*>(_presenterConsole->mainWindow()) : nullptr;
+    if (consoleWindow)
+    {
+        consoleWindow->hide();
+        consoleWindow->setScreen(laptopScreen);
+        if (externalScreen)
+        {
+            consoleWindow->move(laptopScreen->geometry().topLeft());
+            consoleWindow->showFullScreen();
+        }
+        else
+        {
+            consoleWindow->showNormal();
+            consoleWindow->show();
+        }
+    }
+}
+
 QWebEngineView* CODAWebEngineView::createWindow(QWebEnginePage::WebWindowType type)
 {
     _presenterConsole = new WebView(Application::getProfile(), false);
@@ -184,41 +232,7 @@ QWebEngineView* CODAWebEngineView::createWindow(QWebEnginePage::WebWindowType ty
     _mainWindow->setCentralWidget(label);
     _mainWindow->setEnabled(false);
 
-    QScreen* laptopScreen = QGuiApplication::primaryScreen();
-
-    /* what we really want to happen by default is for the presenter
-     * console to appear on the laptop screen and the presentation
-     * on an external monitor. For now we'll assume the presentation
-     * is already on the laptopScreen, which is nearly always the laptop,
-     * and put the presenter console on the next available screen just
-     * to test that we can put it somewhere else at all */
-    QScreen* externalScreen = nullptr;
-    QList<QScreen*> screens = QApplication::screens();
-    for (QScreen* screen : screens)
-    {
-        if (screen != laptopScreen)
-        {
-            externalScreen = screen;
-            break;
-        }
-    }
-
-    if (externalScreen)
-    {
-        _presenterFSWindow->setScreen(externalScreen);
-        _presenterFSWindow->move(externalScreen->geometry().topLeft());
-    }
-
-    _presenterFSWindow->showFullScreen();
-
-    if (externalScreen)
-    {
-        consoleWindow->setScreen(laptopScreen);
-        consoleWindow->move(laptopScreen->geometry().topLeft());
-        consoleWindow->showFullScreen();
-    }
-    else
-        consoleWindow->show();
+    arrangePresentationWindows();
 
     return consoleView;
 }
