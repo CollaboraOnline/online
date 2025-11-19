@@ -372,8 +372,8 @@ void DeltaTests::testRleIdentical()
     {
         for (int y2 = 0; y2 < 256; y2++)
         {
-            auto &row = data.getRow(y);
-            auto &row2 = data2.getRow(y2);
+            const auto& row = data.getRow(y);
+            const auto& row2 = data2.getRow(y2);
             if (row.identical(row2))
             {
                 DeltaGenerator::DeltaBitmapRow::PixIterator it(row);

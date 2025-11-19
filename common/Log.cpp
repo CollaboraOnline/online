@@ -67,7 +67,7 @@ public:
         // loggers and we can't access the internal mutex.
         if (find(name))
             throw Poco::ExistsException();
-        auto log = new GenericLogger(name, std::move(chan), lvl);
+        auto* log = new GenericLogger(name, std::move(chan), lvl);
         add(log);
         return *log;
     }
@@ -633,11 +633,11 @@ namespace Log
         }
         catch (ExistsException&)
         {
-            auto logger = static_cast<GenericLogger *>(&Poco::Logger::get(Static.getName()));
+            auto* logger = static_cast<GenericLogger*>(&Poco::Logger::get(Static.getName()));
             Static.setLogger(logger);
         }
 
-        auto logger = Static.getLogger();
+        auto* logger = Static.getLogger();
 
         const std::string level = logLevel.empty() ? std::string("trace") : logLevel;
         logger->setLevel(level);
@@ -667,7 +667,8 @@ namespace Log
             }
             catch (ExistsException&)
             {
-                auto loggerUILog = static_cast<GenericLogger *>(&Poco::Logger::get(StaticUILog.getName()));
+                auto* loggerUILog =
+                    static_cast<GenericLogger*>(&Poco::Logger::get(StaticUILog.getName()));
                 StaticUILog.setLogger(loggerUILog);
             }
         }
