@@ -548,6 +548,11 @@ function getNbIcon(unoCommand, tabName) {
 	return cy.cGet((tabName ? '#' + tabName + '-container' : '') + '.notebookbar  .uno' + unoCommand + ' > button:visible');
 }
 
+/// get icon arrow for given uno command from classic toolbar to open the dropdown
+function getCompactIconArrow(unoCommand) {
+	return cy.cGet('#toolbar-up .uno' + unoCommand + ' > .arrowbackground:visible');
+}
+
 /// get icon arrow for given uno command from notebookbar to open the dropdown
 function getNbIconArrow(unoCommand, tabName) {
 	return cy.cGet((tabName ? '#' + tabName + '-container' : '') + '.notebookbar  .uno' + unoCommand + ' > .arrowbackground:visible');
@@ -593,5 +598,6 @@ module.exports.closeNavigatorSidebar = closeNavigatorSidebar;
 module.exports.sidebarToggle = sidebarToggle;
 module.exports.getCompactIcon = getCompactIcon;
 module.exports.getNbIcon = getNbIcon;
+module.exports.getCompactIconArrow = getCompactIconArrow;
 module.exports.getNbIconArrow = getNbIconArrow;
 module.exports.getDropdown = getDropdown;
