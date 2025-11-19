@@ -1863,11 +1863,16 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 			if (data.command)
 				window.L.DomUtil.addClass(div, data.command.replace(':', '').replace('.', ''));
 
-			if (isRealUnoCommand)
+			if (isRealUnoCommand) {
+				// there is a problem with JSON crafted manually on the JS side
+				// we do not have warranty the id we passed is the one used in the DOM
+				// updates might then fail to find such item
+				// we need to remember the original ID
+				div.setAttribute('modelId', id);
 				id = JSDialog.MakeIdUnique(id);
+			}
 
 			div.id = id;
-			data.id = id; // change in input data for postprocess
 
 			var buttonId = id + '-button';
 
@@ -2395,15 +2400,24 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 		builder._explorableMenu(parentContainer, title, data.children, builder, content, data.id);
 	},
 
+	_getItemById: function(container, id) {
+		const plainId = this._removeMenuId(id);
+		// prefer the modelId first which is unique within single component, DOM id might be changed due to conflict
+		let control = container.querySelector('[modelId=\'' + plainId + '\']');
+		if (!control)
+			control = container.querySelector('[id=\'' + plainId + '\']');
+		return control;
+	},
+
 	// executes actions like changing the selection without rebuilding the widget
 	executeAction: function(container, data) {
 		app.layoutingService.appendLayoutingTask(() => { this.executeActionImpl(container, data); });
 	},
 
 	executeActionImpl: function(container, data) {
-		var control = container.querySelector('[id=\'' + this._removeMenuId(data.control_id) + '\']');
+		let control = this._getItemById(container, this._removeMenuId(data.control_id));
 		if (!control && data.control)
-			control = container.querySelector('[id=\'' + this._removeMenuId(data.control.id) + '\']');
+			control = this._getItemById(container, this._removeMenuId(data.control.id));
 		if (!control) {
 			window.app.console.warn('executeAction: not found control with id: "' + data.control_id + '"');
 			return;
@@ -2545,8 +2559,8 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 	},
 
 	_updateWidgetImpl: function (container, data, buildFunc) {
-		var elementId = this._removeMenuId(data.id);
-		var control = container.querySelector('[id=\'' + elementId + '\']');
+		const elementId = this._removeMenuId(data.id);
+		const control = this._getItemById(container, elementId);
 		if (!control) {
 			window.app.console.warn('jsdialogupdate: not found control with id: "' + elementId + '"');
 			return;
@@ -2635,7 +2649,7 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 		if (!parent || !data || !data.id || data.id === '')
 			return;
 
-		var control = parent.querySelector('[id=\'' + data.id + '\']');
+		const control = this._getItemById(parent, data.id);
 		if (data.visible === 'false' || data.visible === false) {
 			if (control)
 				window.L.DomUtil.addClass(control, 'hidden');
