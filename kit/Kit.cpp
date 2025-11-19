@@ -1918,7 +1918,7 @@ std::map<std::string, int> Document::getViewColors()
             if (root->get("authors").type() == typeid(Poco::JSON::Array::Ptr))
             {
                 Poco::JSON::Array::Ptr authorsArray = root->get("authors").extract<Poco::JSON::Array::Ptr>();
-                for (auto& authorVar: *authorsArray)
+                for (const auto& authorVar : *authorsArray)
                 {
                     const Poco::JSON::Object::Ptr& authorObj =
                         authorVar.extract<Poco::JSON::Object::Ptr>();
@@ -3187,7 +3187,7 @@ int pollCallback(void* data, int timeoutUs)
 // Do we have any pending input events from coolwsd ?
 bool anyInputCallback(void* data, int mostUrgentPriority)
 {
-    auto kitSocketPoll = reinterpret_cast<KitSocketPoll*>(data);
+    auto* kitSocketPoll = reinterpret_cast<KitSocketPoll*>(data);
     const std::shared_ptr<Document>& document = kitSocketPoll->getDocument();
 
     if (document)

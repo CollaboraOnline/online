@@ -244,7 +244,7 @@ class DeltaGenerator {
 
         void initRow(const uint32_t *from, unsigned int width)
         {
-            auto scratch = static_cast<uint32_t*>(alloca(sizeof(uint32_t) * width));
+            auto* scratch = static_cast<uint32_t*>(alloca(sizeof(uint32_t) * width));
 
             bool done = false;
             if (simd::HasAVX2 && width == 256)
@@ -845,7 +845,7 @@ class DeltaGenerator {
             outb.size = maxCompressed;
             outb.pos = 0;
 
-            auto packedLine = static_cast<unsigned char*>(alloca(rowSize));
+            auto* packedLine = static_cast<unsigned char*>(alloca(rowSize));
 
             for (int y = 0; y < height; ++y)
             {

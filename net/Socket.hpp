@@ -1407,7 +1407,7 @@ public:
         msg.msg_iovlen = 1;
 
         const size_t fds_size = sizeof(int) * fds.size();
-        auto adata = static_cast<char*>(alloca(CMSG_SPACE(fds_size)));
+        auto* adata = static_cast<char*>(alloca(CMSG_SPACE(fds_size)));
         cmsghdr *cmsg = (cmsghdr*)adata;
         cmsg->cmsg_type = SCM_RIGHTS;
         cmsg->cmsg_level = SOL_SOCKET;
