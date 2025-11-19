@@ -357,7 +357,7 @@ WebView::WebView(QWebEngineProfile* profile, bool isWelcome)
         QTabWidget* tabPtr = s_tabWidget;
         QMainWindow* mainPtr = s_mainWindow;
 
-        DetachableTabWidget::tabSetupCallback = [tabPtr](QTabWidget* tabWidget) {
+        DetachableTabWidget::tabSetupCallback = [this](QTabWidget* tabWidget) {
             QPushButton* newTabButton = new QPushButton("+");
             newTabButton->setMaximumWidth(30);
 
@@ -368,61 +368,9 @@ WebView::WebView(QWebEngineProfile* profile, bool isWelcome)
             cornerLayout->addWidget(newTabButton);
             tabWidget->setCornerWidget(cornerWidget, Qt::TopRightCorner);
 
-            QObject::connect(newTabButton, &QPushButton::clicked,
-                         [tabPtr]()
-                         {
-                             if (!tabPtr)
-                                 return;
-                             // Show a dialog to select document type
-                             QDialog dialog(tabPtr);
-                             dialog.setWindowTitle(QObject::tr("New Document"));
-                             dialog.setModal(true);
-                             dialog.setMinimumWidth(300);
-
-                             QVBoxLayout* layout = new QVBoxLayout(&dialog);
-                             QLabel* label = new QLabel(QObject::tr("Select document type:"));
-                             layout->addWidget(label);
-
-                             QPushButton* textBtn = new QPushButton(QObject::tr("Text Document"));
-                             QPushButton* sheetBtn = new QPushButton(QObject::tr("Spreadsheet"));
-                             QPushButton* slideBtn = new QPushButton(QObject::tr("Presentation"));
-                             layout->addWidget(textBtn);
-                             layout->addWidget(sheetBtn);
-                             layout->addWidget(slideBtn);
-
-                             QObject::connect(textBtn, &QPushButton::clicked,
-                                              [&dialog]()
-                                              {
-                                                  dialog.setProperty("docType", "writer");
-                                                  dialog.accept();
-                                              });
-                             QObject::connect(sheetBtn, &QPushButton::clicked,
-                                              [&dialog]()
-                                              {
-                                                  dialog.setProperty("docType", "calc");
-                                                  dialog.accept();
-                                              });
-                             QObject::connect(slideBtn, &QPushButton::clicked,
-                                              [&dialog]()
-                                              {
-                                                  dialog.setProperty("docType", "impress");
-                                                  dialog.accept();
-                                              });
-
-                             if (dialog.exec() == QDialog::Accepted)
-                             {
-                                 QString docType = dialog.property("docType").toString();
-                                 if (!docType.isEmpty())
-                                 {
-                                     WebView* webViewInstance = WebView::createNewDocument(
-                                         Application::getProfile(), docType.toStdString());
-                                     if (!webViewInstance)
-                                     {
-                                         LOG_ERR("Failed to create new document of type: "
-                                                 << docType.toStdString());
-                                     }
-                                 }
-                             }
+            QObject::connect(newTabButton, &QPushButton::clicked, [this]() {
+                            if (this && this->_bridge)
+                                this->_bridge->evalJS("app.map.backstageView.show();");
                          });
         };
 
