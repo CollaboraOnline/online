@@ -257,7 +257,8 @@ function createPaletteSwitch(
 		paletteListbox,
 	);
 
-	listbox.setAttribute('aria-labelledby', 'color-palette');
+	listbox.id = 'color-palette-listbox';
+	listbox.setAttribute('aria-label', _('Color palette'));
 	listbox.setAttribute('tabindex', '0');
 
 	for (const i in window.app.colorPalettes) {
