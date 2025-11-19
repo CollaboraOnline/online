@@ -30,6 +30,7 @@ class Bridge : public QObject
     QWebEngineView* _webView;
     int _closeNotificationPipeForForwardingThread[2];
     std::thread _app2js;
+    bool _modified;
 
     void promptSaveLocation(std::function<void(const std::string&)> callback);
     bool saveDocument(const std::string& savePath);
@@ -42,6 +43,7 @@ public:
         , _window(window)
         , _webView(webView)
         , _closeNotificationPipeForForwardingThread{ -1, -1 }
+        , _modified(false)
     {
     }
 
@@ -53,6 +55,8 @@ public:
 
     // send Online → JS
     void send2JS(const std::vector<char>& buffer);
+
+    bool isModified() const { return _modified; }
 
 public slots: // called from JavaScript
     // Called from JS via window.postMobileMessage
