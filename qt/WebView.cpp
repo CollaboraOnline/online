@@ -188,6 +188,7 @@ void CODAWebEngineView::arrangePresentationWindows()
         else
         {
             consoleWindow->showNormal();
+            consoleWindow->resize(consoleWindow->sizeHint());
             consoleWindow->show();
         }
     }
@@ -233,6 +234,16 @@ QWebEngineView* CODAWebEngineView::createWindow(QWebEnginePage::WebWindowType ty
     _mainWindow->setEnabled(false);
 
     arrangePresentationWindows();
+
+    _screenRemoved = QObject::connect(qApp, &QGuiApplication::screenRemoved,
+                     [this]() {
+                        arrangePresentationWindows();
+                     });
+
+    _screenAdded = QObject::connect(qApp, &QGuiApplication::screenAdded,
+                     [this]() {
+                        arrangePresentationWindows();
+                     });
 
     return consoleView;
 }
@@ -280,6 +291,14 @@ void CODAWebEngineView::exchangeMonitors()
     _presenterFSWindow->show();
     consoleWindow->showFullScreen();
     consoleWindow->show();
+}
+
+CODAWebEngineView::~CODAWebEngineView()
+{
+    if (_screenAdded)
+        QObject::disconnect(_screenAdded);
+    if (_screenRemoved)
+        QObject::disconnect(_screenRemoved);
 }
 
 WebView::WebView(QWebEngineProfile* profile, bool isWelcome)
