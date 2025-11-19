@@ -118,7 +118,7 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 		// Despite the selection is there, merge cells needs more time here.
 		cy.wait(1000);
 
-		cy.cGet('#toolbar-up #togglemergecells').click();
+		desktopHelper.getCompactIcon('ToggleMergeCells').click();
 
 		desktopHelper.checkDialogAndClose('Merge Cells');
 	});
@@ -131,7 +131,7 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 		helper.copy();
 
 		cy.cGet('#copy-paste-container table td b').should('exist');
-		cy.cGet('#reset').click();
+		desktopHelper.getCompactIcon('ResetAttributes').click();
 
 		calcHelper.selectEntireSheet();
 		helper.copy();
@@ -191,7 +191,7 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 
 	it('Apply highlight color.', function() {
 		helper.setDummyClipboardForCopy();
-		cy.cGet('#backgroundcolor .arrowbackground').click();
+		desktopHelper.getCompactIconArrow('BackgroundColor').click();
 		desktopHelper.selectColorFromPalette('3FAF46');
 		calcHelper.selectEntireSheet();
 		helper.copy();
@@ -200,7 +200,7 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 
 	it('Apply font color.', function() {
 		helper.setDummyClipboardForCopy();
-		cy.cGet('#fontcolor .arrowbackground').click();
+		desktopHelper.getCompactIconArrow('Color').click();
 		desktopHelper.selectColorFromPalette('FFB66C');
 		calcHelper.selectEntireSheet();
 		helper.copy();
@@ -210,8 +210,8 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 	it('Add/Delete decimal places', function() {
 		helper.setDummyClipboardForCopy();
 		// Add decimal place
-		cy.cGet('#toolbar-up #overflow-button-other-toptoolbar .arrowbackground').click();
-		cy.cGet('#numberformatincdecimals').click();
+		desktopHelper.getCompactIconArrow('DefaultNumbering').click();
+		desktopHelper.getCompactIcon('NumberFormatIncDecimals').click();
 		calcHelper.selectEntireSheet();
 		helper.copy();
 
@@ -223,8 +223,8 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 		// Delete Decimal place
 		calcHelper.clickOnFirstCell();
 
-		cy.cGet('#toolbar-up #overflow-button-other-toptoolbar .arrowbackground').click();
-		cy.cGet('#numberformatdecdecimals').click();
+		desktopHelper.getCompactIconArrow('DefaultNumbering').click();
+		desktopHelper.getCompactIcon('NumberFormatDecDecimals').click();
 
 		calcHelper.selectEntireSheet();
 		helper.copy();
@@ -236,7 +236,7 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 
 	it('Format as currency.', function() {
 		helper.setDummyClipboardForCopy();
-		cy.cGet('#toolbar-up #overflow-button-other-toptoolbar .arrowbackground').click();
+		desktopHelper.getCompactIconArrow('DefaultNumbering').click();
 		desktopHelper.getCompactIcon('NumberFormatCurrency').click();
 
 		calcHelper.selectEntireSheet();
@@ -250,7 +250,7 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 
 	it('Format as Percent.', function() {
 		helper.setDummyClipboardForCopy();
-		cy.cGet('#toolbar-up #overflow-button-other-toptoolbar .arrowbackground').click();
+		desktopHelper.getCompactIconArrow('DefaultNumbering').click();
 		desktopHelper.getCompactIcon('NumberFormatPercent').click();
 
 		calcHelper.selectEntireSheet();
