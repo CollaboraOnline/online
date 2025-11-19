@@ -491,6 +491,12 @@ export class ScrollSection extends CanvasSectionObject {
 			this.containerObject.requestReDraw();
 	}
 
+	private setCursorForScrollBar(): void {
+		this.context.canvas.style.cursor = 'pointer';
+		if (this.context.canvas.classList.contains('spreadsheet-cursor'))
+			this.context.canvas.classList.remove('spreadsheet-cursor');
+	}
+
 	private isMouseOnScrollBar (point: cool.SimplePoint): void {
 		const scrollProps: ScrollProperties = (app.activeDocument as DocumentBase).activeView.scrollProperties;
 		const documentAnchor: CanvasSectionObject = app.sectionContainer.getSectionWithName(app.CSections.Tiles.name);
@@ -523,8 +529,9 @@ export class ScrollSection extends CanvasSectionObject {
 		}
 		else this.hideVerticalScrollBar();
 
-		if (this.sectionProperties.mouseIsOnHorizontalScrollBar || this.sectionProperties.mouseIsOnVerticalScrollBar)
-			this.context.canvas.style.cursor = 'pointer';
+		if (this.sectionProperties.mouseIsOnHorizontalScrollBar || this.sectionProperties.mouseIsOnVerticalScrollBar) {
+			this.setCursorForScrollBar();
+		}
 	}
 
 	public onMouseLeave (): void {
@@ -643,8 +650,7 @@ export class ScrollSection extends CanvasSectionObject {
 
 			this.sectionProperties.previousDragDistance[1] = dragDistance[1];
 
-			e.stopPropagation(); // Don't propagate to map.
-			this.stopPropagating(); // Don't propagate to bound sections.
+			this.stopPropagating(); // Don't propagate to other sections.
 		}
 		else if (this.sectionProperties.clickScrollHorizontal && this.containerObject.isDraggingSomething()) {
 			if (!this.sectionProperties.previousDragDistance) {
@@ -660,11 +666,12 @@ export class ScrollSection extends CanvasSectionObject {
 				this.scrollHorizontalWithOffset(actualDistance);
 
 			this.sectionProperties.previousDragDistance[0] = dragDistance[0];
-			e.stopPropagation(); // Don't propagate to map.
-			this.stopPropagating(); // Don't propagate to bound sections.
+			this.stopPropagating(); // Don't propagate to other sections.
 		}
 		else {
 			this.isMouseOnScrollBar(position);
+			if (this.sectionProperties.mouseIsOnVerticalScrollBar || this.sectionProperties.mouseIsOnHorizontalScrollBar)
+				this.stopPropagating(); // Don't propagate to other sections.
 		}
 	}
 
