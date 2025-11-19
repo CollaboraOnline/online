@@ -765,7 +765,12 @@ QVariant Bridge::cool(const QString& messageStr)
 
         const std::string commandName = object->get("commandName").toString();
         const bool success = object->get("success").convert<bool>();
-        const bool wasModified = success && object->get("wasModified").convert<bool>();
+        bool wasModified = false;
+        if (object->has("wasModified"))
+        {
+            wasModified = object->get("wasModified").convert<bool>();
+        }
+
         bool isAutosave = false;
         if (object->has("isAutosave"))
         {
