@@ -104,9 +104,16 @@ std::string getUILanguage()
 class Window: public QMainWindow {
 public:
     Window(QWidget * parent, WebView * owner): QMainWindow(parent), owner_(owner) {}
+    void setCloseCallback(const std::function<void()>& closeCallback)
+    {
+        closeCallback_ = closeCallback;
+    }
 
 private:
     void closeEvent(QCloseEvent * ev) override {
+        if (closeCallback_)
+            closeCallback_();
+
         // prompt user if document has unsaved changes
         if (owner_->isDocumentModified() || owner_->isPendingSave())
         {
@@ -134,6 +141,7 @@ private:
     }
 
     WebView * owner_;
+    std::function<void()> closeCallback_;
 };
 } // namespace
 
@@ -142,14 +150,19 @@ QWebEngineView* CODAWebEngineView::createWindow(QWebEnginePage::WebWindowType ty
     _presenterConsole = new WebView(Application::getProfile(), false);
 
     QWebEngineView* consoleView = _presenterConsole->webEngineView();
-
     QWebEnginePage* page = consoleView->page();
-
     QObject::connect(page, &QWebEnginePage::windowCloseRequested,
                      [this]() {
+                         if (!_presenterConsole)
+                             return;
                          QMainWindow* consoleWindow = _presenterConsole->mainWindow();
-                         _presenterConsole = nullptr;
                          consoleWindow->close();
+                     });
+
+    Window* consoleWindow = static_cast<Window*>(_presenterConsole->mainWindow());
+    consoleWindow->setCloseCallback(
+                     [this]() {
+                         _presenterConsole = nullptr;
 
                          _mainWindow->setCentralWidget(this);
                          _presenterFSWindow->setCentralWidget(nullptr);
@@ -198,7 +211,6 @@ QWebEngineView* CODAWebEngineView::createWindow(QWebEnginePage::WebWindowType ty
 
     _presenterFSWindow->showFullScreen();
 
-    QMainWindow* consoleWindow = _presenterConsole->mainWindow();
     if (externalScreen)
     {
         consoleWindow->setScreen(laptopScreen);
