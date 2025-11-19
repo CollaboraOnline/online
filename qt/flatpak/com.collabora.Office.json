@@ -913,8 +913,7 @@
       "build-commands": [
         "./autogen.sh",
         "./configure --enable-qtapp --enable-silent-rules --disable-ssl --prefix=/app --with-poco-includes=/app/include --with-poco-libs=/app/lib --with-lokit-path=/app/core/include --with-lo-path=/app/collaboraoffice '--with-vendor=Collabora Productivity Limited' '--with-app-name=Collabora Office' --with-info-url=https://collaboraonline.com/",
-        "make clean && make -j${FLATPAK_BUILDER_N_JOBS} install",
-        "python3 scripts/insert-coda-license.py /app/collaboraoffice/LICENSE.html CODA-THIRDPARTYLICENSES.html"
+        "make clean && make -j${FLATPAK_BUILDER_N_JOBS} install"
       ],
       "sources": [
         {
