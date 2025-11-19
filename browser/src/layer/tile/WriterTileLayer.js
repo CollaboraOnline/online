@@ -51,6 +51,7 @@ window.L.WriterTileLayer = window.L.CanvasTileLayer.extend({
 				comment.parent = comment.parentId.toString();
 			});
 			app.sectionContainer.getSectionWithName(app.CSections.CommentList.name).importComments(values.comments);
+			app.map.fire('importannotations');
 		}
 		else if (values.redlines && values.redlines.length > 0) {
 			app.sectionContainer.getSectionWithName(app.CSections.CommentList.name).importChanges(values.redlines);
