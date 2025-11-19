@@ -796,6 +796,8 @@ class CanvasSectionContainer {
 					break; // Stop propagation.
 			}
 		}
+
+		this.lowestPropagatedBoundSection = null; // onMouseMove event doesn't clear the mouse positions, so we need to clear the property here.
 	}
 
 	private propagateOnMouseDown(section: CanvasSectionObject, position: Array<number>, e: MouseEvent) {
