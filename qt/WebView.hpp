@@ -36,6 +36,7 @@ public:
     static const std::vector<WebView*>& getAllInstances() { return s_instances; }
     void activateWindow();
     const Poco::URI& getSaveLocationURI() const { return _document._saveLocationURI; }
+    bool isDocumentModified() const;
 
 private:
     // query gnome font scaling factor and apply it to the web view

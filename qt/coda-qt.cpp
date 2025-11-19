@@ -754,10 +754,8 @@ QVariant Bridge::cool(const QString& messageStr)
         if (commandName != ".uno:ModifiedStatus")
             return {};
 
-        const bool isModified = (object->get("state").toString() == "true");
-        LOG_TRC_NOFILE("Document modified status changed: " << (isModified ? "modified" : "unmodified"));
-        // Could store this in DocumentData for future use and prompt on exit if they want to save.
-        // or maybe better of to do all that as well in JavaScript where the info should be available anyways.
+        _modified = (object->get("state").toString() == "true");
+        LOG_TRC_NOFILE("Document modified status changed: " << (_modified ? "modified" : "unmodified"));
     }
     else if (message.starts_with(COMMANDRESULT))
     {

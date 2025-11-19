@@ -40,6 +40,8 @@
 #include <QDir>
 #include <QApplication>
 #include <QUrl>
+#include <QCloseEvent>
+#include <QMessageBox>
 #include <algorithm>
 #include <QDBusInterface>
 #include <QDBusConnection>
@@ -102,6 +104,25 @@ public:
 
 private:
     void closeEvent(QCloseEvent * ev) override {
+        // prompt user if document has unsaved changes
+        if (owner_->isDocumentModified())
+        {
+            QMessageBox msgBox(this);
+            msgBox.setWindowTitle(QApplication::translate("WebView", "Unsaved Changes"));
+            msgBox.setText(QApplication::translate("WebView", "The document has unsaved changes. Do you want to close anyway?"));
+            msgBox.setStandardButtons(QMessageBox::Discard | QMessageBox::Cancel);
+            msgBox.setDefaultButton(QMessageBox::Cancel);
+            msgBox.setIcon(QMessageBox::Warning);
+
+            int ret = msgBox.exec();
+            if (ret == QMessageBox::Cancel)
+            {
+                // user chose not to exit
+                ev->ignore();
+                return;
+            }
+        }
+
         auto const p = owner_;
         owner_ = nullptr;
         assert(p != nullptr);
@@ -329,6 +350,11 @@ void WebView::activateWindow()
         _mainWindow->raise();
         _mainWindow->activateWindow();
     }
+}
+
+bool WebView::isDocumentModified() const
+{
+    return _bridge->isModified();
 }
 
 void WebView::queryGnomeFontScalingUpdateZoom()
