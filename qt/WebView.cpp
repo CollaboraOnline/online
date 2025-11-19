@@ -354,7 +354,7 @@ void WebView::activateWindow()
 
 bool WebView::isDocumentModified() const
 {
-    return _bridge->isModified();
+    return _bridge && _bridge->isModified();
 }
 
 void WebView::queryGnomeFontScalingUpdateZoom()
