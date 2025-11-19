@@ -54,6 +54,7 @@ class SelectionRectangle extends CanvasSectionObject {
 
 	public onMouseDown(point: cool.SimplePoint, e: MouseEvent): void {
 		this.sectionProperties.positionOnMouseDown = point;
+		app.map._docLayer._preview.partsFocused = false;
 	}
 
 	public onNewDocumentTopLeft(): void {
