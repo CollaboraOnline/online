@@ -412,15 +412,17 @@ JSDialog.colorPicker = function (
 		container,
 	);
 
-	const recentLabel = window.L.DomUtil.create('label', '', container);
+	const recentLabel = window.L.DomUtil.create('span', '', container);
+	recentLabel.id = 'ui-color-picker-recent-label';
 	recentLabel.innerText = _('Recent');
-	recentLabel.htmlFor = 'ui-color-picker-recent';
 
 	const recentContainer = window.L.DomUtil.createWithId(
 		'div',
 		'ui-color-picker-recent',
 		container,
 	);
+	recentContainer.setAttribute('role', 'radiogroup');
+	recentContainer.setAttribute('aria-labelledby', recentLabel.id);
 
 	updatePalette(
 		getCurrentPaletteName(),
