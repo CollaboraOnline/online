@@ -160,7 +160,16 @@ QWebEngineView* CODAWebEngineView::createWindow(QWebEnginePage::WebWindowType ty
                          _mainWindow->setEnabled(true);
                      });
 
-    QMainWindow* consoleWindow = _presenterConsole->mainWindow();
+    // Move the contents into the presentation window so the original
+    // window will remain in position, so we can work around the
+    // stubbornness of wayland to allow restoring a window back to its
+    // original size and position on the screen it started on.
+    _presenterFSWindow = std::make_unique<QMainWindow>(nullptr);
+    _presenterFSWindow->setCentralWidget(this);
+    QLabel* label = new QLabel(QObject::tr("Presenting"));
+    label->setAlignment(Qt::AlignCenter);
+    _mainWindow->setCentralWidget(label);
+    _mainWindow->setEnabled(false);
 
     QScreen* laptopScreen = QGuiApplication::primaryScreen();
 
@@ -183,25 +192,21 @@ QWebEngineView* CODAWebEngineView::createWindow(QWebEnginePage::WebWindowType ty
 
     if (externalScreen)
     {
+        _presenterFSWindow->setScreen(externalScreen);
+        _presenterFSWindow->move(externalScreen->geometry().topLeft());
+    }
+
+    _presenterFSWindow->showFullScreen();
+
+    QMainWindow* consoleWindow = _presenterConsole->mainWindow();
+    if (externalScreen)
+    {
         consoleWindow->setScreen(laptopScreen);
         consoleWindow->move(laptopScreen->geometry().topLeft());
         consoleWindow->showFullScreen();
-
-        // Move the contents into the presentation window so the original
-        // window will remain in position, so we can work around the
-        // stubbornness of wayland to allow restoring a window back to its
-        // original size and position on the screen it started on.
-        _presenterFSWindow = std::make_unique<QMainWindow>(nullptr);
-        _presenterFSWindow->setCentralWidget(this);
-        QLabel* label = new QLabel(QObject::tr("Presenting"));
-        label->setAlignment(Qt::AlignCenter);
-        _mainWindow->setCentralWidget(label);
-        _mainWindow->setEnabled(false);
-
-        _presenterFSWindow->setScreen(externalScreen);
-        _presenterFSWindow->move(externalScreen->geometry().topLeft());
-        _presenterFSWindow->showFullScreen();
     }
+    else
+        consoleWindow->show();
 
     return consoleView;
 }
