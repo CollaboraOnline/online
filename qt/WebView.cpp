@@ -206,9 +206,6 @@ void CODAWebEngineView::exchangeMonitors()
 
     QMainWindow* consoleWindow = _presenterConsole->mainWindow();
 
-    _mainWindow->showNormal();
-    consoleWindow->showNormal();
-
     size_t origConsoleScreen = 0;
     size_t origPresentationScreen = 0;
     for (size_t i = 0; i < screens.size(); ++i)
@@ -218,6 +215,9 @@ void CODAWebEngineView::exchangeMonitors()
         if (screens[i] == _mainWindow->screen())
             origPresentationScreen = i;
     }
+
+    _mainWindow->hide();
+    consoleWindow->hide();
 
     // Rotate the console screen and rotate the presentation screen
     // every time the console catches up to it for the case there
@@ -235,7 +235,9 @@ void CODAWebEngineView::exchangeMonitors()
     _mainWindow->move(screens[newPresentationScreen]->geometry().topLeft());
 
     _mainWindow->showFullScreen();
+    _mainWindow->show();
     consoleWindow->showFullScreen();
+    consoleWindow->show();
 }
 
 WebView::WebView(QWebEngineProfile* profile, bool isWelcome)
