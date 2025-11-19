@@ -62,6 +62,7 @@ class SelectionRectangle extends CanvasSectionObject {
 		if (e.type === 'touchstart') return;
 
 		this.sectionProperties.positionOnMouseDown = point;
+		app.map._docLayer._preview.partsFocused = false;
 	}
 
 	public onNewDocumentTopLeft(): void {
