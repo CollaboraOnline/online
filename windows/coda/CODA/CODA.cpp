@@ -1441,9 +1441,10 @@ static void openCOOLWindow(const FilenameAndUri& filenameAndUri, PERMISSION perm
     bool havePersistedSize = false;
 
     int width, height;
+    int welcomeX = CW_USEDEFAULT, welcomeY = CW_USEDEFAULT;
     bool maximize = false;
 
-    if (persistentWindowSizeStoreOK)
+    if (permission != PERMISSION::WELCOME && persistentWindowSizeStoreOK)
     {
         std::vector<uint8_t> value;
         if (persistentWindowSizeStore.get(filenameAndUri.uri.c_str(), value) == litecask::Status::Ok)
@@ -1471,7 +1472,10 @@ static void openCOOLWindow(const FilenameAndUri& filenameAndUri, PERMISSION perm
 
     if (!havePersistedSize)
     {
-        // Set size of document window to be 90% of monitor width and height.
+        // Set size of document window to be 90% of monitor width and height. For the welcome
+        // slideshow always set width:height to 16:9 because we know it is that aspect ratio.
+
+        // The welcome slideshow is displayed without decorations.
 
         // FIXME: Should we actually, at least for text documents, ideally peek into the document and
         // check what its page size is, and in the common case of a portrait orientation text document,
@@ -1487,20 +1491,57 @@ static void openCOOLWindow(const FilenameAndUri& filenameAndUri, PERMISSION perm
         monitorInfo.cbSize = sizeof(monitorInfo);
         if (monitor_of_dialog != NULL && GetMonitorInfoW(monitor_of_dialog, &monitorInfo))
         {
-            width = 0.9 * (monitorInfo.rcWork.right - monitorInfo.rcWork.left);
-            height = 0.9 * (monitorInfo.rcWork.bottom - monitorInfo.rcWork.top);
+            if (permission == PERMISSION::WELCOME)
+            {
+                double aspectRatio =
+                    (double)(monitorInfo.rcWork.right - monitorInfo.rcWork.left) / (monitorInfo.rcWork.bottom - monitorInfo.rcWork.top);
+                if (aspectRatio < 16.0/9.0)
+                {
+                    width = 0.9 * (monitorInfo.rcWork.right - monitorInfo.rcWork.left);
+                    welcomeX = monitorInfo.rcWork.left + 0.05 * (monitorInfo.rcWork.right - monitorInfo.rcWork.left);
+                    height = width / (16.0/9.0);
+                    welcomeY = monitorInfo.rcWork.top + ((monitorInfo.rcWork.bottom - monitorInfo.rcWork.top) - height) / 2;
+                }
+                else
+                {
+                    height = 0.9 * (monitorInfo.rcWork.bottom - monitorInfo.rcWork.top);
+                    welcomeY = monitorInfo.rcWork.top + 0.05 * (monitorInfo.rcWork.bottom - monitorInfo.rcWork.top);
+                    width = (16.0/9.0) * height;
+                    welcomeX = monitorInfo.rcWork.left + ((monitorInfo.rcWork.right - monitorInfo.rcWork.left) - width) / 2;
+                }
+            }
+            else
+            {
+                width = 0.9 * (monitorInfo.rcWork.right - monitorInfo.rcWork.left);
+                height = 0.9 * (monitorInfo.rcWork.bottom - monitorInfo.rcWork.top);
+            }
         }
         else
         {
-            width = 1200;
-            height = 900;
+            if (permission == PERMISSION::WELCOME)
+            {
+                width = 1280;
+                height = 720;
+            }
+            else
+            {
+                width = 1200;
+                height = 900;
+            }
         }
     }
 
-    HWND hWnd = CreateWindowW(
-        windowClass, Util::string_to_wide_string(filenameAndUri.filename + " - " APP_NAME).c_str(),
-        WS_OVERLAPPEDWINDOW, CW_USEDEFAULT, CW_USEDEFAULT, width, height, NULL, NULL, appInstance,
-        NULL);
+    HWND hWnd;
+    if (permission == PERMISSION::WELCOME)
+        hWnd = CreateWindowW(
+            windowClass, Util::string_to_wide_string(APP_NAME).c_str(),
+            WS_POPUP, welcomeX, welcomeY, width, height, NULL, NULL, appInstance,
+            NULL);
+    else
+        hWnd = CreateWindowW(
+            windowClass, Util::string_to_wide_string(filenameAndUri.filename + " - " APP_NAME).c_str(),
+            WS_OVERLAPPEDWINDOW, CW_USEDEFAULT, CW_USEDEFAULT, width, height, NULL, NULL, appInstance,
+            NULL);
 
     auto& data = windowData[hWnd];
     data.hWnd = hWnd;
