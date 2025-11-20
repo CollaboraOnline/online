@@ -165,6 +165,11 @@ function _menubuttonControl (parentContainer, data, builder) {
 		button.id = data.id;
 		button.title = data.text;
 		button.setAttribute('aria-haspopup', true);
+
+		if (data.aria && data.aria.label) {
+			button.setAttribute('aria-label', data.aria.label);
+		}
+
 		if (data.image) {
 			var image = window.L.DomUtil.create('img', '', button);
 			image.src = data.image;
