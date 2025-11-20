@@ -354,6 +354,7 @@ interface EditWidgetJSON extends WidgetJSON {
 	password: boolean; // is password field
 	hidden: boolean; // is hidden, TODO: duplicate?
 	changedCallback: any; // callback  for 'change' event
+	aria?: AriaAttributeJSON; // ARIA attributes
 }
 
 // type: 'checkbox'
@@ -366,4 +367,9 @@ interface CheckboxWidgetJSON extends WidgetJSON {
 
 interface SeparatorWidgetJSON extends WidgetJSON {
 	orientation: string;
+}
+
+interface AriaAttributeJSON {
+	label?: string;
+	description?: string;
 }

@@ -91,8 +91,17 @@ class EditWidget {
 
 		if (data.placeholder) {
 			edit.setAttribute('placeholder', data.placeholder);
+		}
+
+		if (data.labelledBy) {
+			edit.setAttribute('aria-labelledby', data.labelledBy + '-label');
+		}
+		else if (data.aria && data.aria.label) {
+			edit.setAttribute('aria-label', data.aria.label);
+		} else if (data.placeholder) {
 			edit.setAttribute('aria-label', data.placeholder);
 		}
+
 		return result;
 	}
 
