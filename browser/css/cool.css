@@ -726,7 +726,7 @@ body {
 .cool-annotation-textarea {
 	font-family: var(--cool-font) !important;
 	font-size: var(--default-font-size);
-	border: 1px solid var(--color-border);
+	border: 1px solid var(--color-text-lighter);
 	background-color: var(--color-background-dark);
 	color: var(--color-main-text);
 	overflow-x: hidden;
@@ -739,6 +739,7 @@ body {
 	border-radius: var(--border-radius-s);
 	scrollbar-width: var(--scrollbar-width);
 	scrollbar-color: var(--scrollbar-color);
+	outline: none !important;
 }
 
 .cool-annotation-textarea a:link,
