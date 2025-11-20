@@ -19,6 +19,7 @@ class OverflowManager {
 	parentContainer: HTMLElement;
 	data: ContainerWidgetJSON;
 	lastMaxWidth: number = -1;
+	scheduledRefresh: boolean = false;
 
 	constructor(parentContainer: Element, data: ContainerWidgetJSON) {
 		this.parentContainer = parentContainer as HTMLElement;
@@ -66,11 +67,15 @@ class OverflowManager {
 	}
 
 	onResize(event: Event) {
-		app.layoutingService.appendLayoutingTask(() => this.onRefresh(event));
+		if (!this.scheduledRefresh) {
+			app.layoutingService.appendLayoutingTask(() => this.onRefresh(event));
+			this.scheduledRefresh = true;
+		}
 	}
 
 	// sometimes we want to call it synchronously as it is already in the task (tab switch)
 	onRefresh(event: Event & { force?: boolean }) {
+		this.scheduledRefresh = false;
 		if (!this.parentContainer) return;
 		if (this.lastMaxWidth === window.innerWidth) return;
 
