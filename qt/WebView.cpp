@@ -12,6 +12,8 @@
 #include "WebView.hpp"
 #include "bridge.hpp"
 #include "DetachableTabs.hpp"
+#include "Window.hpp"
+
 #include <QWebChannel>
 #include <QTabWidget>
 #include <QLabel>
@@ -62,8 +64,6 @@
 
 std::vector<WebView*> WebView::s_instances;
 
-namespace
-{
 unsigned generateNewAppDocId()
 {
     static unsigned appIdCounter = 60407;
@@ -106,50 +106,6 @@ std::string getUILanguage()
 
     return lang;
 }
-
-class Window: public QMainWindow {
-public:
-    Window(QWidget * parent, WebView * owner): QMainWindow(parent), owner_(owner) {}
-    void setCloseCallback(const std::function<void()>& closeCallback)
-    {
-        closeCallback_ = closeCallback;
-    }
-
-private:
-    void closeEvent(QCloseEvent * ev) override {
-        if (closeCallback_)
-            closeCallback_();
-
-        // prompt user if document has unsaved changes
-        if (owner_->isDocumentModified() || owner_->isPendingSave())
-        {
-            QMessageBox msgBox(this);
-            msgBox.setWindowTitle(QApplication::translate("WebView", "Unsaved Changes"));
-            msgBox.setText(QApplication::translate("WebView", "The document has unsaved changes. Do you want to close anyway?"));
-            msgBox.setStandardButtons(QMessageBox::Discard | QMessageBox::Cancel);
-            msgBox.setDefaultButton(QMessageBox::Cancel);
-            msgBox.setIcon(QMessageBox::Warning);
-
-            int ret = msgBox.exec();
-            if (ret == QMessageBox::Cancel)
-            {
-                // user chose not to exit
-                ev->ignore();
-                return;
-            }
-        }
-
-        auto const p = owner_;
-        owner_ = nullptr;
-        assert(p != nullptr);
-        delete p;
-        QMainWindow::closeEvent(ev);
-    }
-
-    WebView * owner_;
-    std::function<void()> closeCallback_;
-};
-} // namespace
 
 void CODAWebEngineView::arrangePresentationWindows()
 {
@@ -336,57 +292,72 @@ CODAWebEngineView::~CODAWebEngineView()
 // Shared main window and tab widget (lazily created).
 static QMainWindow* s_mainWindow = nullptr;
 
-WebView::WebView(QWebEngineProfile* profile, bool isWelcome)
+WebView::WebView(QWebEngineProfile* profile, bool isWelcome, Window* targetWindow)
     :_webView(nullptr)
     , _isWelcome(isWelcome)
     , _bridge(nullptr)
 {
     QScreen* screen = QGuiApplication::primaryScreen();
     QRect screenGeometry = screen->availableGeometry();
-
-    static QTabWidget* s_tabWidget = nullptr;
-    if (!s_mainWindow)
+    // If a target window was provided explicitly, use it. Otherwise prefer
+    // the currently active `Window` (so new/open operations default to
+    // opening a tab in the current window). If `profile` is null we treat
+    // this as a special case and force creation of a new top-level window
+    // (this preserves the previous detach/new-window behavior used by
+    // the drag/detach code which passes nullptr profile).
+    bool forceNewWindow = (profile == nullptr);
+    if (targetWindow)
     {
-        s_mainWindow = new QMainWindow(nullptr);
-        s_tabWidget = new DetachableTabWidget(s_mainWindow);
-        s_tabWidget->setMovable(true);
+        _mainWindow = targetWindow;
+    }
+    else if (!forceNewWindow)
+    {
+        _mainWindow = qobject_cast<Window*>(QApplication::activeWindow());
+    }
 
-        // Capture a local automatic pointer so the lambda can use it
-        // safely (capturing the static local s_tabWidget directly is not
-        // allowed by the language).
-        QTabWidget* tabPtr = s_tabWidget;
-        QMainWindow* mainPtr = s_mainWindow;
+    bool createdWindow = false;
+    if (!_mainWindow)
+    {
+        _mainWindow = new Window(nullptr, this);
+        createdWindow = true;
+    }
 
-        DetachableTabWidget::tabSetupCallback = [this](QTabWidget* tabWidget) {
-            QPushButton* newTabButton = new QPushButton("+");
-            newTabButton->setMaximumWidth(30);
+    // Record whether we created the window so callers (load) can avoid
+    // resizing an existing application window when adding a tab.
+    _createdWindow = createdWindow;
 
-            QWidget* cornerWidget = new QWidget(tabWidget);
-            QHBoxLayout* cornerLayout = new QHBoxLayout(cornerWidget);
-            cornerLayout->setContentsMargins(0, 0, 0, 0);
-            cornerLayout->addStretch();
-            cornerLayout->addWidget(newTabButton);
-            tabWidget->setCornerWidget(cornerWidget, Qt::TopRightCorner);
+    if (createdWindow)
+    {
+        if (isWelcome)
+            _mainWindow->setWindowFlags(Qt::FramelessWindowHint);
+        else
+        {
+            int minWidth = qBound(800, screenGeometry.width() / 3, 1400);
+            int minHeight = qBound(600, screenGeometry.height() / 3, 1000);
+            _mainWindow->setMinimumSize(minWidth, minHeight);
+        }
+    }
 
-            QObject::connect(newTabButton, &QPushButton::clicked, [this]() {
-                            if (this && this->_bridge)
-                                this->_bridge->evalJS("app.map.backstageView.show();");
-                         });
-        };
+    Window *mainWindow = _mainWindow;
 
-        // Now use the lambda to set up the tab widget
-        DetachableTabWidget::tabSetupCallback(s_tabWidget);
+    // Determine or create a DetachableTabWidget for hosting tabs.
+    DetachableTabWidget* tabWidget = qobject_cast<DetachableTabWidget*>(_mainWindow->centralWidget());
+    if (!tabWidget)
+    {
+        // If we created the window, set up a new DetachableTabWidget and
+        // connect the signals. If we're reusing an existing window without
+        // a suitable central widget, create one here as well.
+        tabWidget = new DetachableTabWidget(_mainWindow);
+        QObject::connect(tabWidget, &DetachableTabWidget::plusButtonClicked, _mainWindow, &Window::plusClicked);
 
-        QObject::connect(s_tabWidget, &QTabWidget::tabCloseRequested,
-                         [tabPtr, mainPtr](int index)
+        QObject::connect(tabWidget, &QTabWidget::tabCloseRequested,
+                         [tabWidget, mainWindow](int index)
                          {
-                             if (!tabPtr)
+                             if (!tabWidget)
                                  return;
-                             QWidget* w = tabPtr->widget(index);
+                             QWidget* w = tabWidget->widget(index);
                              if (!w)
                                  return;
-                             // Attempt to find the owning WebView and ask it to
-                             // confirm close (prompt save if necessary).
                              quint64 ownerPtr = w->property("webview_owner").toULongLong();
                              WebView* owner = reinterpret_cast<WebView*>((quintptr)ownerPtr);
                              bool okToClose = true;
@@ -397,31 +368,34 @@ WebView::WebView(QWebEngineProfile* profile, bool isWelcome)
                              if (!okToClose)
                                  return; // user cancelled
 
-                             tabPtr->removeTab(index);
+                             if (owner)
+                                 owner->prepareForClose();
+
+                             tabWidget->removeTab(index);
                              if (w)
                                  w->deleteLater();
 
-                             // If that was the last tab, quit the application
-                             if (tabPtr->count() == 0)
+                             if (tabWidget->count() == 0)
                              {
-                                 if (mainPtr)
-                                     mainPtr->close();
+                                 if (mainWindow)
+                                     mainWindow->close();
                                  else
                                      QApplication::quit();
                              }
                          });
-        // Update main window title when tab changes
-        QObject::connect(s_tabWidget, QOverload<int>::of(&QTabWidget::currentChanged),
-                         [tabPtr, mainPtr](int index)
-                         {
-                             if (!mainPtr || !tabPtr || index < 0)
-                                 return;
-                             QString tabTitle = tabPtr->tabText(index);
-                             mainPtr->setWindowTitle(tabTitle + " - " APP_NAME);
-                         });
-        s_mainWindow->setCentralWidget(s_tabWidget);
-        s_mainWindow->resize(1024, 768);
-        s_mainWindow->show();
+
+        QObject::connect(tabWidget, QOverload<int>::of(&QTabWidget::currentChanged),
+                        [tabWidget, mainWindow](int index)
+                        {
+                            if (!mainWindow || !tabWidget || index < 0)
+                                return;
+                            QString tabTitle = tabWidget->tabText(index);
+                            mainWindow->setWindowTitle(tabTitle + " - " APP_NAME);
+                        });
+
+        _mainWindow->setCentralWidget(tabWidget);
+        if (createdWindow)
+            _mainWindow->show();
     }
 
     _webView = std::make_unique<CODAWebEngineView>(s_mainWindow);
@@ -429,21 +403,10 @@ WebView::WebView(QWebEngineProfile* profile, bool isWelcome)
     // close handlers can find the owning WebView instance
     _webView->setProperty("webview_owner", (qulonglong) reinterpret_cast<quintptr>(this));
     // Add a placeholder tab; the label will be updated in load().
-    int tabIndex = s_tabWidget->addTab(_webView.get(), QObject::tr("Document"));
+    int tabIndex = tabWidget->addTab(_webView.get(), QObject::tr("Document"));
     // Bring the new tab into focus
-    s_tabWidget->setCurrentIndex(tabIndex);
+    tabWidget->setCurrentIndex(tabIndex);
 
-    if (isWelcome)
-    {
-        s_mainWindow->setWindowFlags(Qt::FramelessWindowHint);
-    }
-    else
-    {
-        // Use 1/3 of screen size, but enforce reasonable bounds
-        int minWidth = qBound(800, screenGeometry.width() / 3, 1400);
-        int minHeight = qBound(600, screenGeometry.height() / 3, 1000);
-        s_mainWindow->setMinimumSize(minWidth, minHeight);
-    }
 
     QWebEnginePage* page = new QWebEnginePage(profile, _webView.get());
     _webView->setPage(page);
@@ -454,9 +417,9 @@ WebView::WebView(QWebEngineProfile* profile, bool isWelcome)
                      [this](QWebEngineFullScreenRequest request)
                      {
                          if (request.toggleOn())
-                             s_mainWindow->showFullScreen();
+                             _mainWindow->showFullScreen();
                          else
-                             s_mainWindow->showNormal();
+                             _mainWindow->showNormal();
                          request.accept();
                      });
 
@@ -468,6 +431,27 @@ WebView::~WebView()
     std::erase(s_instances, this);
 
     // Let Qt handle deletion of _webView and its page and _bridge
+}
+
+void WebView::prepareForClose()
+{
+    // If there's a bridge and a live web view, deregister the bridge from
+    // the QWebChannel so the JavaScript side won't attempt to call into
+    // deleted C++ objects. Then clear the bridge's webview pointer and
+    // delete the bridge.
+    if (_bridge && _webView)
+    {
+        QWebEnginePage* p = _webView->page();
+        if (p)
+        {
+            QWebChannel* ch = p->webChannel();
+            if (ch)
+                ch->deregisterObject(_bridge);
+        }
+        _bridge->clearWebView();
+        delete _bridge;
+        _bridge = nullptr;
+    }
 }
 
 bool WebView::confirmClose()
@@ -605,7 +589,7 @@ void WebView::load(const Poco::URI& fileURL, bool newFile, bool isStarterMode)
     queryGnomeFontScalingUpdateZoom();
 
     assert(_bridge == nullptr);
-    _bridge = new Bridge(channel, _document, s_mainWindow, _webView.get());
+    _bridge = new Bridge(channel, _document, _mainWindow, _webView.get());
     // Set the WebView as parent so the Bridge is deleted when the WebView is deleted
     _bridge->setParent(_webView.get());
     // Update the tab widget when the document modified state changes
@@ -636,6 +620,14 @@ void WebView::load(const Poco::URI& fileURL, bool newFile, bool isStarterMode)
                              tabWidget->setTabText(index, QStringLiteral("* ") + title);
                          else
                              tabWidget->setTabText(index, title);
+                        // If this webview's tab is the currently visible tab,
+                        // also update the top-level window title so detached
+                        // windows (or any window hosting this tab) reflect
+                        // changes such as the modified-state prefix.
+                        if (_mainWindow && tabWidget->currentIndex() == index)
+                        {
+                            _mainWindow->setWindowTitle(tabWidget->tabText(index) + " - " APP_NAME);
+                        }
                      });
     channel->registerObject("bridge", _bridge);
     _webView->page()->setWebChannel(channel);
@@ -709,8 +701,8 @@ void WebView::load(const Poco::URI& fileURL, bool newFile, bool isStarterMode)
     }
 
     auto size = getWindowSize(_isWelcome || isStarterMode);
-    // If this WebView has its own main window, apply sizing and show it.
-    if (s_mainWindow)
+    // If this WebView created its own window, apply sizing and show it.
+    if (_mainWindow && _createdWindow)
     {
         // TODO: Starter screen uses 1.5x welcome dimensions (width and height) as a temporary
         // solution. This should be refined with proper sizing logic based on user feedback.
@@ -719,14 +711,13 @@ void WebView::load(const Poco::URI& fileURL, bool newFile, bool isStarterMode)
             size.second = 1.5 * size.second;
         }
 
-        s_mainWindow->resize(size.first, size.second);
-        s_mainWindow->show();
+        _mainWindow->resize(size.first, size.second);
+        _mainWindow->show();
     }
-    else
+    else if (_mainWindow)
     {
-        // Update the tab label to the file name (or URL) so users can
-        // distinguish documents. Walk up the parent chain to find the
-        // QTabWidget because the direct parent may be an internal container.
+        // We are reusing an existing window (adding a tab): update the
+        // main window title to reflect the current tab without resizing.
         QWidget* p = _webView->parentWidget();
         QTabWidget* tabWidget = nullptr;
         while (p)
@@ -738,20 +729,15 @@ void WebView::load(const Poco::URI& fileURL, bool newFile, bool isStarterMode)
         }
         if (tabWidget)
         {
-            const QString title =
-                QString::fromStdString(Poco::Path(_document._fileURL.getPath()).getFileName());
+            const QString title = QString::fromStdString(Poco::Path(_document._fileURL.getPath()).getFileName());
             const int index = tabWidget->indexOf(_webView.get());
             if (index != -1)
             {
                 QString label = title.isEmpty() ? QObject::tr("Document") : title;
-                // If the document is currently modified, show a modified indicator
                 if (_bridge && _bridge->isModified())
                     label = QStringLiteral("* ") + label;
                 tabWidget->setTabText(index, label);
-                // Update the main window title to match the current tab
-                QMainWindow* mainWindow = qobject_cast<QMainWindow*>(tabWidget->window());
-                if (mainWindow)
-                    mainWindow->setWindowTitle(tabWidget->tabText(index) + " - " APP_NAME);
+                _mainWindow->setWindowTitle(tabWidget->tabText(index) + " - " APP_NAME);
             }
         }
     }
@@ -784,8 +770,11 @@ WebView* WebView::createNewDocument(QWebEngineProfile* profile, const std::strin
         templateURI = Poco::URI(Poco::Path(templatePath));
     }
 
-    // Create WebView and load template without a set save location
-    WebView* webViewInstance = new WebView(profile, false);
+    // Prefer adding the new document as a tab in the currently active
+    // Window. If no active window exists, a new top-level window will
+    // be created by the WebView constructor.
+    Window* activeWindow = qobject_cast<Window*>(QApplication::activeWindow());
+    WebView* webViewInstance = new WebView(profile, false, activeWindow);
     webViewInstance->load(templateURI, true);
 
     return webViewInstance;
@@ -818,10 +807,10 @@ WebView* WebView::findStarterScreen()
 
 void WebView::activateWindow()
 {
-    if (s_mainWindow)
+    if (_mainWindow)
     {
-        s_mainWindow->raise();
-        s_mainWindow->activateWindow();
+        _mainWindow->raise();
+        _mainWindow->activateWindow();
     }
 }
 
@@ -833,6 +822,14 @@ bool WebView::isDocumentModified() const
 bool WebView::isPendingSave() const
 {
     return _bridge && _bridge->isPendingSave();
+}
+
+void WebView::runJS(const QString& jsCode)
+{
+    if (_bridge)
+    {
+        _bridge->evalJS(jsCode.toStdString());
+    }
 }
 
 void WebView::queryGnomeFontScalingUpdateZoom()
