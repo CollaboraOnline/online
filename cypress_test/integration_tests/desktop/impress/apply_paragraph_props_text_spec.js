@@ -65,10 +65,10 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Apply paragraph properties
 		cy.cGet('#document-container g.Page .BulletChars')
 			.should('not.exist');
 
-		cy.cGet('#toolbar-up #overflow-button-other-toptoolbar .arrowbackground').click();
+		desktopHelper.getCompactIconArrow('DefaultNumbering').click();
 
 		// Apply bulleting
-		cy.cGet('#defaultbullet').click();
+		desktopHelper.getCompactIcon('DefaultBullet').click();
 
 		selectText();
 		cy.cGet('#document-container g.Page .BulletChars')
@@ -83,10 +83,10 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Apply paragraph properties
 		cy.cGet('#document-container g.Page .SVGTextShape tspan')
 			.should('not.have.attr', 'ooo:numbering-type');
 
-		cy.cGet('#toolbar-up #overflow-button-other-toptoolbar .arrowbackground').click();
+		desktopHelper.getCompactIconArrow('DefaultNumbering').click();
 
 		// Apply numbering
-		cy.cGet('#defaultnumbering').click();
+		desktopHelper.getCompactIcon('DefaultNumbering').click();
 
 		selectText();
 		cy.cGet('#document-container g.Page .SVGTextShape tspan')
@@ -100,7 +100,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Apply paragraph properties
 			.should('have.attr', 'y', '6600');
 
 		// Increase spacing
-		cy.cGet('#linespacing').click();
+		desktopHelper.getCompactIconArrow('LineSpacing').click();
 		cy.cGet('#linespacing-dropdown .ui-combobox-entry').contains('Increase Paragraph Spacing').click();
 
 		selectText();
@@ -108,7 +108,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Apply paragraph properties
 			.should('have.attr', 'y', '6700');
 
 		// Decrease spacing
-		cy.cGet('#linespacing').click();
+		desktopHelper.getCompactIconArrow('LineSpacing').click();
 		cy.cGet('#linespacing-dropdown .ui-combobox-entry').contains('Decrease Paragraph Spacing').click();
 
 		selectText();

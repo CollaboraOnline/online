@@ -360,7 +360,7 @@ function switchUIToCompact() {
 		var userInterfaceMode = win['0'].userInterfaceMode;
 		if (userInterfaceMode === 'notebookbar') {
 			cy.cGet('#View-tab-label').click();
-			cy.cGet('#toggleuimode').click();
+			getNbIcon('toggleuimode', 'View').click();
 		}
 	});
 
