@@ -43,17 +43,17 @@ namespace COOLProtocol
         "urp:"
     };
 
-    static inline bool isMessageOfType(const char* message, const std::string& type, int length)
+    static inline bool isMessageOfType(const char* message, const std::string& type, size_t length)
     {
         if (length < type.length() + 2)
             return false;
-        for (int i = 0; i < type.length(); i++)
+        for (size_t i = 0; i < type.length(); i++)
             if (message[i] != type[i])
                 return false;
         return true;
     }
 
-    static inline bool isBinaryMessage(const char *buffer, int length)
+    static inline bool isBinaryMessage(const char *buffer, size_t length)
     {
         for (auto i : COOLProtocol::binaryMessageTypes)
         {
