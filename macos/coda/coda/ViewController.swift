@@ -16,7 +16,7 @@ final class ConsoleController: NSWindowController {
 
     init(webView: WKWebView) {
         self.webView = webView
-        let style: NSWindow.StyleMask = [.closable, .resizable, .miniaturizable]
+        let style: NSWindow.StyleMask = [.titled, .closable, .resizable, .miniaturizable]
         let window = NSWindow(contentRect: NSRect(x: 0, y: 0, width: 1000, height: 640),
                               styleMask: style, backing: .buffered, defer: false)
         super.init(window: window)
@@ -380,8 +380,8 @@ class ViewController: NSViewController, WKScriptMessageHandlerWithReply, WKNavig
         let mainWindow = view.window!
         let consoleWindow = self.consoleController.window!
 
-        var origConsoleScreen = 0;
-        var origPresentationScreen = 0;
+        var origConsoleScreen = 0
+        var origPresentationScreen = 0
         for i in 0...screens.count-1 {
             if NSContainsRect(screens[i].frame, consoleWindow.frame) {
                 origConsoleScreen = i
@@ -425,45 +425,52 @@ class ViewController: NSViewController, WKScriptMessageHandlerWithReply, WKNavig
         var laptopScreen: NSScreen! = nil
         var externalScreen: NSScreen! = nil
 
-        if (screens.count > 1)
-        {
-            // Lets see if there is are two monitors where one is built-in and one is not.
+        // Lets see if there is are two monitors where one is built-in and one is not.
+        for screen in screens {
+            let viewDisplayID = screen.deviceDescription[NSDeviceDescriptionKey(rawValue: "NSScreenNumber")] as! CGDirectDisplayID
+            if (CGDisplayIsBuiltin(viewDisplayID) != 0) {
+                if (laptopScreen == nil) {
+                    laptopScreen = screen
+                }
+            } else {
+                if (externalScreen == nil) {
+                    externalScreen = screen
+                }
+            }
+        }
+
+        // If not then assume the main screen, which is just where the current activity is,
+        // is the laptop screen and pick another to be the external
+        if (laptopScreen == nil || externalScreen == nil) {
+            laptopScreen = NSScreen.main
+            externalScreen = nil
             for screen in screens {
-                let viewDisplayID = screen.deviceDescription[NSDeviceDescriptionKey(rawValue: "NSScreenNumber")] as! CGDirectDisplayID
-                if (CGDisplayIsBuiltin(viewDisplayID) != 0) {
-                    if (laptopScreen == nil) {
-                        laptopScreen = screen
-                    }
-                } else {
-                    if (externalScreen == nil) {
-                        externalScreen = screen
-                    }
+                if (screen != laptopScreen) {
+                    externalScreen = screen
+                    break
                 }
             }
+        }
 
-            // If not then assume the main screen, which is just where the current activity is,
-            // is the laptop screen and pick another to be the external
-            if (laptopScreen == nil || externalScreen == nil) {
-                laptopScreen = NSScreen.main
-                for screen in screens {
-                    if (screen != laptopScreen) {
-                        externalScreen = screen
-                        break
-                    }
-                }
+        mainWindow.collectionBehavior.insert(.fullScreenPrimary)
+        let presenterScreen: NSScreen = externalScreen != nil ? externalScreen : laptopScreen
+        mainWindow.setFrame(presenterScreen.frame, display: true, animate: false)
+        installRestoreOnFullScreenExit(mainWindow: mainWindow)
+        mainWindow.toggleFullScreen(nil)
+
+        let consoleWindow = consoleController.window
+        if (consoleWindow != nil) {
+            consoleWindow!.collectionBehavior.insert(.fullScreenPrimary)
+            consoleWindow!.collectionBehavior.insert(.fullScreenAuxiliary)
+            // Float over the presentation when they share a screen (auxiliary mode)
+            consoleWindow!.level = .floating
+
+            if (externalScreen != nil) {
+                consoleWindow!.setFrame(laptopScreen.frame, display: true, animate: false)
+                consoleWindow!.toggleFullScreen(nil)
+            } else {
+                consoleWindow!.makeKeyAndOrderFront(nil)
             }
-
-            let behaviors: NSWindow.CollectionBehavior = [.fullScreenAllowsTiling, .fullScreenPrimary]
-
-            mainWindow.collectionBehavior = behaviors
-            mainWindow.setFrame(externalScreen.frame, display: true, animate: false)
-            installRestoreOnFullScreenExit(mainWindow: mainWindow)
-            mainWindow.toggleFullScreen(nil)
-
-            let consoleWindow = consoleController.window!
-            consoleWindow.collectionBehavior = behaviors
-            consoleWindow.setFrame(laptopScreen.frame, display: true, animate: false)
-            consoleWindow.toggleFullScreen(nil)
         }
 
         return consoleWebView
