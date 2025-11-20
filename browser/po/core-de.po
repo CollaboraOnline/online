@@ -42,8 +42,8 @@ msgid ""
 "com"
 msgstr ""
 "Collabora Office, die auf LibreOffice-Technologie basierende Office-"
-"Produktivitätssuite von Collabora Productivity. Siehe "
-"https://collaboraoffice.com"
+"Produktivitätssuite von Collabora Productivity. Siehe https://"
+"collaboraoffice.com"
 
 #. 4rBwc
 #: include/svx/strings.hrc:1040
@@ -200,7 +200,7 @@ msgctxt "dlg_Theme|chartmanage"
 msgid "_Manage chart styles"
 msgstr "Diagrammstile _verwalten"
 
-#. NMcqp
+#. Yif9X
 #: chart2/uiconfig/ui/sidebarcolors.ui:30
 msgctxt "sidebarcolors|bordertype|tooltip_text"
 msgid "Allow to select a color palette to apply to current chart data series."
@@ -208,13 +208,13 @@ msgstr ""
 "Ermöglicht die Auswahl einer Farbpalette zur Anwendung auf die aktuelle "
 "Diagrammdatenreihe."
 
-#. FXK8B
+#. xGjwG
 #: chart2/uiconfig/ui/sidebarcolors.ui:42
 msgctxt "sidebarcolors|cellbordertype-atkobject"
 msgid "Border Style"
 msgstr "Umrandungsstil"
 
-#. vDwKf
+#. bEK2j
 #: chart2/uiconfig/ui/sidebargradients.ui:30
 msgctxt "sidebargradients|bordertype|tooltip_text"
 msgid ""
@@ -223,7 +223,7 @@ msgstr ""
 "Ermöglicht die Auswahl einer Gradientenpalette zur Anwendung auf die "
 "aktuelle Diagrammdatenreihe."
 
-#. FXK8B
+#. 3xZSQ
 #: chart2/uiconfig/ui/sidebargradients.ui:42
 msgctxt "sidebargradients|cellbordertype-atkobject"
 msgid "Border Style"
@@ -289,6 +289,12 @@ msgstr "Wählen Sie einen Untertyp des grundlegenden Diagrammtyps aus."
 msgctxt "tp_ChartType|3dschemeft"
 msgid "3D _Scheme:"
 msgstr "3D-_Schema:"
+
+#. ChTwx
+#: cui/inc/strings.hrc:481
+msgctxt "REG_CALCDBFOCUS"
+msgid "Table Style focus"
+msgstr ""
 
 #. EPGtZ
 #: cui/uiconfig/ui/hyperlinkinternetpage.ui:64
@@ -390,6 +396,12 @@ msgstr "Stil aktualisieren"
 msgctxt "commontemplate|STR_HIGHLIGHT_CHECKBOX"
 msgid "Highlight styles"
 msgstr "Hervorhebung"
+
+#. fCWMe
+#: sfx2/uiconfig/ui/templatepanel.ui:272
+msgctxt "templatepanel|filter-atkobject"
+msgid "Filter"
+msgstr ""
 
 #. 5xrhC
 #: sw/inc/strings.hrc:232
@@ -1017,6 +1029,17 @@ msgctxt ""
 msgid "Master Slide Sorter/Pane (Canvas)"
 msgstr ""
 
+#. kB8Ri
+#: Sidebar.xcu
+#, fuzzy
+msgctxt ""
+"Sidebar.xcu\n"
+"..Sidebar.Content.PanelList.ScDatabasePropertyPanel\n"
+"Title\n"
+"value.text"
+msgid "Table Style Options"
+msgstr "Stil-Aktionen"
+
 #. SYFXq
 #: Sidebar.xcu
 msgctxt ""
@@ -1177,14 +1200,26 @@ msgctxt ""
 msgid "~Changes in all views"
 msgstr "Änderungen in allen Ansichten"
 
+#. YwxEM
+#: sc/inc/globstr.hrc:70
+msgctxt "STR_UNDO_TABLETOTALS"
+msgid "Tabletotals"
+msgstr ""
+
+#. Gip2L
+#: sc/inc/globstr.hrc:211
+msgctxt "STR_TABLE_TOTAL"
+msgid "Summary"
+msgstr ""
+
 #. cG7BY
-#: sc/inc/globstr.hrc:592
+#: sc/inc/globstr.hrc:594
 msgctxt "STR_SHEET_VIEW_DEFAULT_VIEW_NAME"
 msgid "Default View"
 msgstr "Standardansicht"
 
 #. aYwkp
-#: sc/inc/globstr.hrc:593
+#: sc/inc/globstr.hrc:595
 msgctxt "STR_SHEET_VIEW_TEMPORARY_NAME_TEMPLATE"
 msgid "Temporary View %1"
 msgstr "Temporäre Ansicht %1"
@@ -2005,3 +2040,433 @@ msgstr "Blattansicht"
 msgctxt "sidebarcellappearance|cellbordertype-atkobject"
 msgid "Border Style"
 msgstr "Umrandungsstil"
+
+#. sBXLD
+#: sc/uiconfig/scalc/ui/sidebardatabase.ui:22
+msgctxt "sidebardatabase|chk_header_row"
+msgid "Show Header Row"
+msgstr ""
+
+#. ECtUM
+#: sc/uiconfig/scalc/ui/sidebardatabase.ui:36
+msgctxt "sidebardatabase|chk_total_row"
+msgid "Show Total Row"
+msgstr ""
+
+#. htZbK
+#: sc/uiconfig/scalc/ui/sidebardatabase.ui:50
+msgctxt "sidebardatabase|chk_filter_buttons"
+msgid "Show Filter Buttons"
+msgstr ""
+
+#. MjALC
+#: sc/uiconfig/scalc/ui/sidebardatabase.ui:86
+msgctxt "sidebardatabase|chk_banded_rows"
+msgid "Banded Rows"
+msgstr ""
+
+#. GVkZ2
+#: sc/uiconfig/scalc/ui/sidebardatabase.ui:100
+#, fuzzy
+msgctxt "sidebardatabase|chk_banded_cols"
+msgid "Banded Columns"
+msgstr "Spalten"
+
+#. S4bop
+#: sc/uiconfig/scalc/ui/sidebardatabase.ui:114
+#, fuzzy
+msgctxt "sidebardatabase|chk_first_column"
+msgid "First Column"
+msgstr "Spalte"
+
+#. QR56s
+#: sc/uiconfig/scalc/ui/sidebardatabase.ui:128
+#, fuzzy
+msgctxt "sidebardatabase|chk_last_column"
+msgid "Last Column"
+msgstr "Spalte"
+
+#. BJHqA
+#: sc/uiconfig/scalc/ui/sidebardatabase.ui:170
+#, fuzzy
+msgctxt "sidebardatabase|lbl_styles"
+msgid "Table Styles"
+msgstr "Stil aktualisieren"
+
+#. er8nh
+#: sc/uiconfig/scalc/ui/sidebardatabase.ui:187
+msgctxt "sidebardatabase|none"
+msgid "None"
+msgstr ""
+
+#. XXBL8
+#: sc/uiconfig/scalc/ui/sidebardatabase.ui:188
+msgctxt "sidebardatabase|tablestylelight1"
+msgid "Table Style Light 1"
+msgstr ""
+
+#. NaDRX
+#: sc/uiconfig/scalc/ui/sidebardatabase.ui:189
+msgctxt "sidebardatabase|tablestylelight2"
+msgid "Table Style Light 2"
+msgstr ""
+
+#. EWq9E
+#: sc/uiconfig/scalc/ui/sidebardatabase.ui:190
+msgctxt "sidebardatabase|tablestylelight3"
+msgid "Table Style Light 3"
+msgstr ""
+
+#. GdYaL
+#: sc/uiconfig/scalc/ui/sidebardatabase.ui:191
+msgctxt "sidebardatabase|tablestylelight4"
+msgid "Table Style Light 4"
+msgstr ""
+
+#. 8ZPyk
+#: sc/uiconfig/scalc/ui/sidebardatabase.ui:192
+msgctxt "sidebardatabase|tablestylelight5"
+msgid "Table Style Light 5"
+msgstr ""
+
+#. xcztA
+#: sc/uiconfig/scalc/ui/sidebardatabase.ui:193
+msgctxt "sidebardatabase|tablestylelight6"
+msgid "Table Style Light 6"
+msgstr ""
+
+#. pYufr
+#: sc/uiconfig/scalc/ui/sidebardatabase.ui:194
+msgctxt "sidebardatabase|tablestylelight7"
+msgid "Table Style Light 7"
+msgstr ""
+
+#. beC85
+#: sc/uiconfig/scalc/ui/sidebardatabase.ui:195
+msgctxt "sidebardatabase|tablestylelight8"
+msgid "Table Style Light 8"
+msgstr ""
+
+#. TSbAe
+#: sc/uiconfig/scalc/ui/sidebardatabase.ui:196
+msgctxt "sidebardatabase|tablestylelight9"
+msgid "Table Style Light 9"
+msgstr ""
+
+#. GPxe2
+#: sc/uiconfig/scalc/ui/sidebardatabase.ui:197
+msgctxt "sidebardatabase|tablestylelight10"
+msgid "Table Style Light 10"
+msgstr ""
+
+#. sedZT
+#: sc/uiconfig/scalc/ui/sidebardatabase.ui:198
+msgctxt "sidebardatabase|tablestylelight11"
+msgid "Table Style Light 11"
+msgstr ""
+
+#. VyEM2
+#: sc/uiconfig/scalc/ui/sidebardatabase.ui:199
+msgctxt "sidebardatabase|tablestylelight12"
+msgid "Table Style Light 12"
+msgstr ""
+
+#. FF2AT
+#: sc/uiconfig/scalc/ui/sidebardatabase.ui:200
+msgctxt "sidebardatabase|tablestylelight13"
+msgid "Table Style Light 13"
+msgstr ""
+
+#. pTuyt
+#: sc/uiconfig/scalc/ui/sidebardatabase.ui:201
+msgctxt "sidebardatabase|tablestylelight14"
+msgid "Table Style Light 14"
+msgstr ""
+
+#. zAgnL
+#: sc/uiconfig/scalc/ui/sidebardatabase.ui:202
+msgctxt "sidebardatabase|tablestylelight15"
+msgid "Table Style Light 15"
+msgstr ""
+
+#. L4B9t
+#: sc/uiconfig/scalc/ui/sidebardatabase.ui:203
+msgctxt "sidebardatabase|tablestylelight16"
+msgid "Table Style Light 16"
+msgstr ""
+
+#. ek54L
+#: sc/uiconfig/scalc/ui/sidebardatabase.ui:204
+msgctxt "sidebardatabase|tablestylelight17"
+msgid "Table Style Light 17"
+msgstr ""
+
+#. P6nBG
+#: sc/uiconfig/scalc/ui/sidebardatabase.ui:205
+msgctxt "sidebardatabase|tablestylelight18"
+msgid "Table Style Light 18"
+msgstr ""
+
+#. dnT2p
+#: sc/uiconfig/scalc/ui/sidebardatabase.ui:206
+msgctxt "sidebardatabase|tablestylelight19"
+msgid "Table Style Light 19"
+msgstr ""
+
+#. Bprxv
+#: sc/uiconfig/scalc/ui/sidebardatabase.ui:207
+msgctxt "sidebardatabase|tablestylelight20"
+msgid "Table Style Light 20"
+msgstr ""
+
+#. Z8foN
+#: sc/uiconfig/scalc/ui/sidebardatabase.ui:208
+msgctxt "sidebardatabase|tablestylelight21"
+msgid "Table Style Light 21"
+msgstr ""
+
+#. 2qyXC
+#: sc/uiconfig/scalc/ui/sidebardatabase.ui:209
+msgctxt "sidebardatabase|tablestylemedium1"
+msgid "Table Style Medium 1"
+msgstr ""
+
+#. MWzKk
+#: sc/uiconfig/scalc/ui/sidebardatabase.ui:210
+msgctxt "sidebardatabase|tablestylemedium2"
+msgid "Table Style Medium 2"
+msgstr ""
+
+#. fFFCC
+#: sc/uiconfig/scalc/ui/sidebardatabase.ui:211
+msgctxt "sidebardatabase|tablestylemedium3"
+msgid "Table Style Medium 3"
+msgstr ""
+
+#. FthwA
+#: sc/uiconfig/scalc/ui/sidebardatabase.ui:212
+msgctxt "sidebardatabase|tablestylemedium4"
+msgid "Table Style Medium 4"
+msgstr ""
+
+#. rCtpb
+#: sc/uiconfig/scalc/ui/sidebardatabase.ui:213
+msgctxt "sidebardatabase|tablestylemedium5"
+msgid "Table Style Medium 5"
+msgstr ""
+
+#. UJ6BA
+#: sc/uiconfig/scalc/ui/sidebardatabase.ui:214
+msgctxt "sidebardatabase|tablestylemedium6"
+msgid "Table Style Medium 6"
+msgstr ""
+
+#. EbA2b
+#: sc/uiconfig/scalc/ui/sidebardatabase.ui:215
+msgctxt "sidebardatabase|tablestylemedium7"
+msgid "Table Style Medium 7"
+msgstr ""
+
+#. XQS9X
+#: sc/uiconfig/scalc/ui/sidebardatabase.ui:216
+msgctxt "sidebardatabase|tablestylemedium8"
+msgid "Table Style Medium 8"
+msgstr ""
+
+#. Dho46
+#: sc/uiconfig/scalc/ui/sidebardatabase.ui:217
+msgctxt "sidebardatabase|tablestylemedium9"
+msgid "Table Style Medium 9"
+msgstr ""
+
+#. P7SBG
+#: sc/uiconfig/scalc/ui/sidebardatabase.ui:218
+msgctxt "sidebardatabase|tablestylemedium10"
+msgid "Table Style Medium 10"
+msgstr ""
+
+#. Rhfet
+#: sc/uiconfig/scalc/ui/sidebardatabase.ui:219
+msgctxt "sidebardatabase|tablestylemedium11"
+msgid "Table Style Medium 11"
+msgstr ""
+
+#. JEdqF
+#: sc/uiconfig/scalc/ui/sidebardatabase.ui:220
+msgctxt "sidebardatabase|tablestylemedium12"
+msgid "Table Style Medium 12"
+msgstr ""
+
+#. LWYBs
+#: sc/uiconfig/scalc/ui/sidebardatabase.ui:221
+msgctxt "sidebardatabase|tablestylemedium13"
+msgid "Table Style Medium 13"
+msgstr ""
+
+#. HiGPB
+#: sc/uiconfig/scalc/ui/sidebardatabase.ui:222
+msgctxt "sidebardatabase|tablestylemedium14"
+msgid "Table Style Medium 14"
+msgstr ""
+
+#. FKMSw
+#: sc/uiconfig/scalc/ui/sidebardatabase.ui:223
+msgctxt "sidebardatabase|tablestylemedium15"
+msgid "Table Style Medium 15"
+msgstr ""
+
+#. CuPuC
+#: sc/uiconfig/scalc/ui/sidebardatabase.ui:224
+msgctxt "sidebardatabase|tablestylemedium16"
+msgid "Table Style Medium 16"
+msgstr ""
+
+#. ACA7x
+#: sc/uiconfig/scalc/ui/sidebardatabase.ui:225
+msgctxt "sidebardatabase|tablestylemedium17"
+msgid "Table Style Medium 17"
+msgstr ""
+
+#. bcDbJ
+#: sc/uiconfig/scalc/ui/sidebardatabase.ui:226
+msgctxt "sidebardatabase|tablestylemedium18"
+msgid "Table Style Medium 18"
+msgstr ""
+
+#. d42En
+#: sc/uiconfig/scalc/ui/sidebardatabase.ui:227
+msgctxt "sidebardatabase|tablestylemedium19"
+msgid "Table Style Medium 19"
+msgstr ""
+
+#. pfyP6
+#: sc/uiconfig/scalc/ui/sidebardatabase.ui:228
+msgctxt "sidebardatabase|tablestylemedium20"
+msgid "Table Style Medium 20"
+msgstr ""
+
+#. n5kSb
+#: sc/uiconfig/scalc/ui/sidebardatabase.ui:229
+msgctxt "sidebardatabase|tablestylemedium21"
+msgid "Table Style Medium 21"
+msgstr ""
+
+#. mYnu7
+#: sc/uiconfig/scalc/ui/sidebardatabase.ui:230
+msgctxt "sidebardatabase|tablestylemedium22"
+msgid "Table Style Medium 22"
+msgstr ""
+
+#. jGs7c
+#: sc/uiconfig/scalc/ui/sidebardatabase.ui:231
+msgctxt "sidebardatabase|tablestylemedium23"
+msgid "Table Style Medium 23"
+msgstr ""
+
+#. vMAB3
+#: sc/uiconfig/scalc/ui/sidebardatabase.ui:232
+msgctxt "sidebardatabase|tablestylemedium24"
+msgid "Table Style Medium 24"
+msgstr ""
+
+#. xk5eg
+#: sc/uiconfig/scalc/ui/sidebardatabase.ui:233
+msgctxt "sidebardatabase|tablestylemedium25"
+msgid "Table Style Medium 25"
+msgstr ""
+
+#. sA3q2
+#: sc/uiconfig/scalc/ui/sidebardatabase.ui:234
+msgctxt "sidebardatabase|tablestylemedium26"
+msgid "Table Style Medium 26"
+msgstr ""
+
+#. usGBf
+#: sc/uiconfig/scalc/ui/sidebardatabase.ui:235
+msgctxt "sidebardatabase|tablestylemedium27"
+msgid "Table Style Medium 27"
+msgstr ""
+
+#. 32DXC
+#: sc/uiconfig/scalc/ui/sidebardatabase.ui:236
+msgctxt "sidebardatabase|tablestylemedium28"
+msgid "Table Style Medium 28"
+msgstr ""
+
+#. TiDzP
+#: sc/uiconfig/scalc/ui/sidebardatabase.ui:237
+msgctxt "sidebardatabase|tablestyledark1"
+msgid "Table Style Dark 1"
+msgstr ""
+
+#. jTCaC
+#: sc/uiconfig/scalc/ui/sidebardatabase.ui:238
+msgctxt "sidebardatabase|tablestyledark2"
+msgid "Table Style Dark 2"
+msgstr ""
+
+#. 2FCAs
+#: sc/uiconfig/scalc/ui/sidebardatabase.ui:239
+msgctxt "sidebardatabase|tablestyledark3"
+msgid "Table Style Dark 3"
+msgstr ""
+
+#. B3BJY
+#: sc/uiconfig/scalc/ui/sidebardatabase.ui:240
+msgctxt "sidebardatabase|tablestyledark4"
+msgid "Table Style Dark 4"
+msgstr ""
+
+#. TfBSE
+#: sc/uiconfig/scalc/ui/sidebardatabase.ui:241
+msgctxt "sidebardatabase|tablestyledark5"
+msgid "Table Style Dark 5"
+msgstr ""
+
+#. jvA93
+#: sc/uiconfig/scalc/ui/sidebardatabase.ui:242
+msgctxt "sidebardatabase|tablestyledark6"
+msgid "Table Style Dark 6"
+msgstr ""
+
+#. 2DAii
+#: sc/uiconfig/scalc/ui/sidebardatabase.ui:243
+msgctxt "sidebardatabase|tablestyledark7"
+msgid "Table Style Dark 7"
+msgstr ""
+
+#. B6GrN
+#: sc/uiconfig/scalc/ui/sidebardatabase.ui:244
+msgctxt "sidebardatabase|tablestyledark8"
+msgid "Table Style Dark 8"
+msgstr ""
+
+#. TcGzg
+#: sc/uiconfig/scalc/ui/sidebardatabase.ui:245
+msgctxt "sidebardatabase|tablestyledark9"
+msgid "Table Style Dark 9"
+msgstr ""
+
+#. DEL7d
+#: sc/uiconfig/scalc/ui/sidebardatabase.ui:246
+msgctxt "sidebardatabase|tablestyledark10"
+msgid "Table Style Dark 10"
+msgstr ""
+
+#. M2TB4
+#: sc/uiconfig/scalc/ui/sidebardatabase.ui:247
+msgctxt "sidebardatabase|tablestyledark11"
+msgid "Table Style Dark 11"
+msgstr ""
+
+#. CJUkb
+#: sc/uiconfig/scalc/ui/sidebardatabase.ui:251
+msgctxt "sidebardatabase|tablestylenames"
+msgid "Table Style Names"
+msgstr ""
+
+#. 3FfJ4
+#: sc/uiconfig/scalc/ui/sidebardatabase.ui:252
+msgctxt "sidebardatabase|defaulttablestylenames"
+msgid "Default Table Style Names"
+msgstr ""
