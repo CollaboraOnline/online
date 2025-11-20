@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-11-17 08:08+0100\n"
-"PO-Revision-Date: 2025-06-21 08:01+0000\n"
-"Last-Translator: Kasper Rud Jensen <kje@cbrain.com>\n"
+"PO-Revision-Date: 2025-11-20 07:05+0000\n"
+"Last-Translator: Lise H <lih@cbrain.com>\n"
 "Language-Team: Danish <https://hosted.weblate.org/projects/collabora-online/"
 "ui/da/>\n"
-"Language: \n"
+"Language: da\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.13-dev\n"
+"X-Generator: Weblate 5.15-dev\n"
 
 #: admin/admin.strings.js:15
 msgid "Admin console"
@@ -479,7 +479,7 @@ msgstr "Fastgør til gitter"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:181
 msgid "Empty Pages"
-msgstr ""
+msgstr "Tomme sider"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:182
 msgid "Force Breaks"
@@ -493,38 +493,40 @@ msgstr "Alle ark"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:185
 msgid "Content"
-msgstr ""
+msgstr "Indhold"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:186
 msgid "Drawing"
-msgstr ""
+msgstr "Tegning"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:187
 #: src/control/Control.NotebookbarDraw.js:1226
 #: src/control/Control.NotebookbarDraw.js:1426
 #: src/control/Control.NotebookbarWriter.js:1221
 msgid "Page"
-msgstr ""
+msgstr "Side"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:188
 msgid "Fit to page"
-msgstr ""
+msgstr "Tilpas til side"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:189
 msgid "Tile pages"
 msgstr ""
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:190
+#, fuzzy
 msgid "Booklet"
-msgstr ""
+msgstr "Hæfte"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:191
 msgid "Booklet front"
-msgstr ""
+msgstr "Hæfte forside"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:192
+#, fuzzy
 msgid "Booklet back"
-msgstr ""
+msgstr "Hæfte bagside"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:193
 msgid "Page name"
@@ -544,7 +546,7 @@ msgstr "Tid"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:196
 msgid "Hidden pages"
-msgstr ""
+msgstr "Skjulte sider"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:197
 msgid "From printer setup"
@@ -574,12 +576,11 @@ msgstr ""
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:203
 msgid "Images"
-msgstr ""
+msgstr "Billeder"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:204
-#, fuzzy
 msgid "Tables"
-msgstr "Tabel"
+msgstr "Tabeller"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:205
 msgid "Controls"
@@ -587,7 +588,7 @@ msgstr ""
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:206
 msgid "Background"
-msgstr ""
+msgstr "Baggrund"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:207
 msgid "Print Black"
@@ -595,7 +596,7 @@ msgstr ""
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:208
 msgid "Hidden text"
-msgstr ""
+msgstr "Skjult tekst"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:209
 msgid "Placeholders"
@@ -611,7 +612,7 @@ msgstr ""
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:212
 msgid "Brochure"
-msgstr ""
+msgstr "Brochure"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:213
 msgid "Brochure Right to Left"
@@ -619,11 +620,11 @@ msgstr ""
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:214
 msgid "Images and Objects"
-msgstr ""
+msgstr "Billeder og objekter"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:310
 msgid "Invalid JSON file"
-msgstr ""
+msgstr "Ugyldig JSON-fil"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:314
 msgid "Error reading file"
@@ -2394,11 +2395,11 @@ msgstr "Slides"
 
 #: src/control/Control.NavigatorPanel.ts:222
 msgid "Results"
-msgstr ""
+msgstr "Resultater"
 
 #: src/control/Control.NavigatorPanel.ts:470
 msgid "Search..."
-msgstr ""
+msgstr "Søg..."
 
 #: src/control/Control.QuickFindPanel.ts:97
 msgid "Type in the search box to find anything in your document"
@@ -2406,7 +2407,7 @@ msgstr ""
 
 #: src/control/Notebookbar.ImpressAnimationTab.ts:24
 msgid "Animation"
-msgstr ""
+msgstr "Animation"
 
 #: src/control/Notebookbar.ImpressAnimationTab.ts:41
 msgid "Applied animations"
@@ -2426,28 +2427,28 @@ msgstr ""
 
 #: src/control/Notebookbar.ImpressAnimationTab.ts:120
 msgid "Start"
-msgstr ""
+msgstr "Start"
 
 #: src/control/Notebookbar.ImpressAnimationTab.ts:140
 msgid "Effect"
-msgstr ""
+msgstr "Effekt"
 
 #: src/control/Notebookbar.ImpressTransitionTab.ts:24
 msgid "Transition"
-msgstr ""
+msgstr "Overgang"
 
 #: src/control/Notebookbar.ImpressTransitionTab.ts:41
 #: src/control/Sidebar.FromNotebookbarPanel.ts:108
 msgid "Transitions"
-msgstr ""
+msgstr "Overgange"
 
 #: src/control/Notebookbar.ImpressTransitionTab.ts:66
 msgid "Variant"
-msgstr ""
+msgstr "Variant"
 
 #: src/control/Notebookbar.ImpressTransitionTab.ts:81
 msgid "Duration"
-msgstr ""
+msgstr "Varighed"
 
 #: src/control/Notebookbar.ImpressTransitionTab.ts:108
 msgid "On mouse click"
@@ -2455,15 +2456,15 @@ msgstr ""
 
 #: src/control/Notebookbar.ImpressTransitionTab.ts:116
 msgid "After"
-msgstr ""
+msgstr "Efter"
 
 #: src/control/Notebookbar.WriterReferencesTab.ts:41
 msgid "Table of content"
-msgstr ""
+msgstr "Indholdsfortegnelse"
 
 #: src/control/Notebookbar.WriterReferencesTab.ts:95
 msgid "Footnote/Endnote"
-msgstr ""
+msgstr "Fodnote/Slutnote"
 
 #: src/control/Notebookbar.WriterReferencesTab.ts:312
 #: src/control/Control.NotebookbarDraw.js:1578
@@ -2474,7 +2475,7 @@ msgstr "Felter"
 
 #: src/control/Sidebar.FromNotebookbarPanel.ts:121
 msgid "Animations"
-msgstr ""
+msgstr "Animationer"
 
 #: src/control/Control.Notebookbar.js:628
 #: src/control/Control.NotebookbarCalc.js:194
@@ -2491,7 +2492,7 @@ msgstr "Del"
 
 #: src/control/Control.NotebookbarBuilder.js:224
 msgid "Click to expand"
-msgstr ""
+msgstr "Klik for at udvide"
 
 #: src/control/Control.NotebookbarBuilder.js:224
 msgid "Tap to expand"
@@ -2499,7 +2500,7 @@ msgstr "Tryk for at udvide"
 
 #: src/control/Control.NotebookbarBuilder.js:225
 msgid "Click to collapse"
-msgstr ""
+msgstr "Klik for at folde sammen"
 
 #: src/control/Control.NotebookbarBuilder.js:225
 #: src/control/Control.NotebookbarBuilder.js:280
@@ -2542,8 +2543,9 @@ msgstr "Hjem"
 #: src/control/Control.NotebookbarWriter.js:50
 #: src/control/Control.NotebookbarWriter.js:965
 #: src/control/Control.NotebookbarWriter.js:2434
+#, fuzzy
 msgid "Insert"
-msgstr "Indsæt"
+msgstr "Tilføj"
 
 #: src/control/Control.NotebookbarCalc.js:42
 #: src/control/Control.NotebookbarDraw.js:1284
@@ -2551,9 +2553,8 @@ msgid "Page Layout"
 msgstr "Sidelayout"
 
 #: src/control/Control.NotebookbarCalc.js:48
-#, fuzzy
 msgid "Formulas"
-msgstr "Formel"
+msgstr "Formler"
 
 #: src/control/Control.NotebookbarCalc.js:54
 msgid "Data"
@@ -2577,9 +2578,8 @@ msgstr "Format"
 #: src/control/Control.NotebookbarDraw.js:101
 #: src/control/Control.NotebookbarImpress.js:129
 #: src/control/Control.NotebookbarWriter.js:88
-#, fuzzy
 msgid "Shape"
-msgstr "Former"
+msgstr "Form"
 
 #: src/control/Control.NotebookbarCalc.js:79
 #: src/control/Control.NotebookbarDraw.js:108
@@ -2712,7 +2712,7 @@ msgstr "Tekst"
 
 #: src/control/Control.NotebookbarCalc.js:854
 msgid "Cells"
-msgstr ""
+msgstr "Celler"
 
 #: src/control/Control.NotebookbarCalc.js:956
 #: src/control/jsdialog/Definitions.Menu.ts:2298
@@ -2741,7 +2741,7 @@ msgstr "Dårligt"
 
 #: src/control/Control.NotebookbarCalc.js:1012
 msgid "Editing"
-msgstr ""
+msgstr "Redigering"
 
 #: src/control/Control.NotebookbarCalc.js:1036
 #: src/control/Control.NotebookbarDraw.js:1197
@@ -2753,12 +2753,12 @@ msgstr "Erstat"
 #: src/control/Control.NotebookbarCalc.js:1100
 #: src/control/Control.NotebookbarWriter.js:1808
 msgid "Margin"
-msgstr ""
+msgstr "Margin"
 
 #: src/control/Control.NotebookbarCalc.js:1107
 #: src/control/Control.NotebookbarWriter.js:1815
 msgid "Size"
-msgstr ""
+msgstr "Størrelse"
 
 #: src/control/Control.NotebookbarCalc.js:1168
 msgid "Row Height"
@@ -2851,7 +2851,7 @@ msgstr ""
 #: src/control/Control.NotebookbarImpress.js:539
 #: src/control/Control.NotebookbarWriter.js:1662
 msgid "Zoom"
-msgstr ""
+msgstr "Zoom"
 
 #: src/control/Control.NotebookbarCalc.js:1520
 #: src/control/Control.NotebookbarDraw.js:427
@@ -2882,8 +2882,9 @@ msgstr "Statusbjælke"
 #: src/control/Control.NotebookbarImpress.js:2931
 #: src/control/Control.NotebookbarWriter.js:3004
 #: src/control/Control.NotebookbarWriter.js:3327
+#, fuzzy
 msgid "Group"
-msgstr ""
+msgstr "Gruppér"
 
 #: src/control/Control.NotebookbarCalc.js:1664
 msgid "Ungroup"
@@ -2900,7 +2901,7 @@ msgstr ""
 #: src/control/Control.NotebookbarImpress.js:1456
 #: src/control/Control.NotebookbarWriter.js:1252
 msgid "Illustrations"
-msgstr ""
+msgstr "Illustrationer"
 
 #: src/control/Control.NotebookbarCalc.js:1798
 #: src/control/Control.NotebookbarDraw.js:1029
@@ -2928,8 +2929,9 @@ msgid "Function Library"
 msgstr "Funktionsguide"
 
 #: src/control/Control.NotebookbarCalc.js:2036
+#, fuzzy
 msgid "AutoSum"
-msgstr ""
+msgstr "AutoSum"
 
 #: src/control/Control.NotebookbarCalc.js:2049
 msgid "Financial"
@@ -2937,11 +2939,11 @@ msgstr ""
 
 #: src/control/Control.NotebookbarCalc.js:2067
 msgid "Logical"
-msgstr ""
+msgstr "Logisk"
 
 #: src/control/Control.NotebookbarCalc.js:2097
 msgid "Date & Time"
-msgstr ""
+msgstr "Dato & tidspunkt"
 
 #: src/control/Control.NotebookbarCalc.js:2109
 msgid "Lookup & Reference"
@@ -2964,19 +2966,19 @@ msgid "Sort"
 msgstr ""
 
 #: src/control/Control.NotebookbarCalc.js:2313
+#, fuzzy
 msgid "Filter"
-msgstr ""
+msgstr "Filtrér"
 
 #: src/control/Control.NotebookbarCalc.js:2561
 #: src/control/Control.NotebookbarImpress.js:1968
 #: src/control/Control.NotebookbarWriter.js:2238
-#, fuzzy
 msgid "Comments"
-msgstr "Kommentar"
+msgstr "Kommentarer"
 
 #: src/control/Control.NotebookbarCalc.js:2667
 msgid "Format Cells"
-msgstr ""
+msgstr "Formatér celler"
 
 #: src/control/Control.NotebookbarCalc.js:2813
 #: src/control/Control.NotebookbarCalc.js:3170
@@ -2984,7 +2986,7 @@ msgstr ""
 #: src/control/Control.NotebookbarWriter.js:2841
 #: src/control/Control.NotebookbarWriter.js:3164
 msgid "Wrap"
-msgstr ""
+msgstr "Ombryd"
 
 #: src/control/Control.NotebookbarCalc.js:3052
 #: src/control/Control.NotebookbarImpress.js:2687
@@ -3022,11 +3024,12 @@ msgstr "Lineal"
 #: src/control/Control.NotebookbarWriter.js:793
 #: src/control/Control.NotebookbarWriter.js:2607
 msgid "Paragraph"
-msgstr ""
+msgstr "Paragraf"
 
 #: src/control/Control.NotebookbarImpress.js:96
+#, fuzzy
 msgid "Design"
-msgstr ""
+msgstr "Design"
 
 #: src/control/Control.NotebookbarImpress.js:104
 msgid "Slide Show"
@@ -3072,7 +3075,7 @@ msgstr ""
 
 #: src/control/Control.NotebookbarImpress.js:813
 msgid "New"
-msgstr ""
+msgstr "Ny"
 
 #: src/control/Control.NotebookbarImpress.js:824
 #: src/control/Control.NotebookbarImpress.js:1828
@@ -4504,7 +4507,7 @@ msgstr ""
 
 #: src/dom/NotebookbarAccessibility.js:234
 msgid "{0} tab selected"
-msgstr "[0] tabs er valgt"
+msgstr "{0} tab er valgt"
 
 #: src/errormessages.js:22
 msgid "No disk space left on server."
@@ -5062,7 +5065,7 @@ msgstr "Ingen noter"
 
 #: src/slideshow/PresenterConsole.js:1355
 msgid "Repeat in {0} seconds"
-msgstr "Gentag om [0} sekunder"
+msgstr "Gentag om {0} sekunder"
 
 #: src/slideshow/PresenterConsole.js:1360
 #: src/slideshow/SlideShowPresenter.ts:564
@@ -5088,7 +5091,7 @@ msgstr "Collabora Online Velkommen"
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h1:26-7
 msgid "Explore The New {coolversion}"
-msgstr "Udforsk den nye [coolversion}"
+msgstr "Udforsk den nye {coolversion}"
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h2:27-7
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h2:38-7
@@ -5096,7 +5099,6 @@ msgid "Collabora Online Development Edition"
 msgstr "Collabora Online Development Edition"
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.p:28-7
-#, fuzzy
 msgid ""
 "Enjoy the latest developments in online productivity, free for you to use, "
 "to explore and to use with others in the browser. Various <a "
@@ -5106,26 +5108,25 @@ msgid ""
 msgstr ""
 "Få adgang til de nyeste muligheder inden for online produktivitet – frit "
 "tilgængeligt for dig, til udforskning og samarbejde direkte i browseren. "
-"Flere forskellige <a target=\"_blank\" href=\"https://www.collaboraonline."
-"com/solutions/collabora-office-android-ios/\">apps</a> er også tilgængelige "
-"for mobil."
+"Flere forskellige <a target=\"_blank\" rel=\"noopener\" href="
+"\"https://www.collaboraonline.com/solutions/collabora-office-android-ios/\"> "
+"er også tilgængelige for mobil."
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h1:37-7
 msgid "Discover All The Changes"
 msgstr "Se alle ændringerne"
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.p:39-7
-#, fuzzy
 msgid ""
 "Check the <a target=\"_blank\" rel=\"noopener\" href=\"https://www."
 "collaboraonline.com/code-25-04-release-notes/\">release notes</a> and learn "
 "all about: The latest Collabora Online Development Edition, aimed at home "
 "users and small teams."
 msgstr ""
-"Læs vores <a target=\"_blank\" href=\"https://www.collaboraonline.com/"
-"code-25-04-release-notes/\">release notes</a> og bliv klogere på: Den "
-"seneste Collabora Online Development Edition, henvendt til hjemmebrugere og "
-"mindre teams."
+"Læs vores<a target=\"_blank\" rel=\"noopener\" href="
+"\"https://www.collaboraonline.com/code-25-04-release-notes/\">og bliv "
+"klogere på: Den seneste Collabora Online Development Edition, henvendt til "
+"hjemmebrugere og mindre teams."
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h1:48-7
 msgid "Get Involved"
