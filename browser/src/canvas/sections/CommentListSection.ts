@@ -18,8 +18,12 @@ window.L.Map.include({
 	insertComment: function() {
 		if (this.stateChangeHandler.getItemValue('InsertAnnotation') === 'disabled')
 			return;
-		if (cool.Comment.isAnyEdit()) {
-			cool.CommentSection.showCommentEditingWarning();
+		const editingComment = cool.Comment.isAnyEdit();
+		const commentSection = app.sectionContainer.getSectionWithName(
+			app.CSections.CommentList.name
+		) as cool.CommentSection;
+		if (commentSection && editingComment) {
+			commentSection.navigateAndFocusComment(editingComment);
 			return;
 		}
 
@@ -180,9 +184,36 @@ export class CommentSection extends CanvasSectionObject {
 		}
 	}
 
-	public static showCommentEditingWarning (): void {
-		window.L.Map.THIS.uiManager.showInfoModal('annotation-editing', _('A comment is being edited'),
-		_('Please save or discard the comment currently being edited.'), null, _('Close'));
+	public navigateAndFocusComment(annotation: any): void {
+		if (!annotation) return;
+
+		this.scrollCommentIntoView(annotation);
+		this.highlightComment(annotation);
+		
+		if (this.sectionProperties.selectedComment !== annotation) {
+			this.select(annotation, true);
+		}
+		
+		annotation.focus();
+		this.addCommentAttention(annotation);
+	}
+
+	private addCommentAttention(annotation: any): void {
+		if (!annotation) return;
+		
+		const wrapper = annotation.sectionProperties.wrapper;
+		if (wrapper) {
+			wrapper.classList.add('cool-annotation-inedit');
+		}
+	}
+
+	private removeCommentAttention(annotation: any): void {
+		if (!annotation) return;
+
+		const wrapper = annotation.sectionProperties.wrapper;
+		if (wrapper) {
+			wrapper.classList.remove('cool-annotation-inedit');
+		}
 	}
 
 	private checkCollapseState(): void {
@@ -279,7 +310,6 @@ export class CommentSection extends CanvasSectionObject {
 		if (this.sectionProperties.show != true || this.isEditing()) {
 			return;
 		}
-
 		this.isCollapsed = true;
 		this.unselect();
 		for (var i: number = 0; i < this.sectionProperties.commentList.length; i++) {
@@ -747,12 +777,13 @@ export class CommentSection extends CanvasSectionObject {
 			this.map.sendUnoCommand('.uno:EditAnnotation', comment, true /* force */);
 		}
 		this.unselect();
+		this.removeCommentAttention(annotation);
 		this.map.focus();
 	}
 
 	public reply (annotation: any): void {
 		if (cool.Comment.isAnyEdit()) {
-			cool.CommentSection.showCommentEditingWarning();
+			this.navigateAndFocusComment(cool.Comment.isAnyEdit());
 			return;
 		}
 		if ((<any>window).mode.isMobile()) {
@@ -792,7 +823,7 @@ export class CommentSection extends CanvasSectionObject {
 
 	public modify (annotation: any): void {
 		if (cool.Comment.isAnyEdit()) {
-			cool.CommentSection.showCommentEditingWarning();
+			this.navigateAndFocusComment(cool.Comment.isAnyEdit());
 			return;
 		}
 		if ((<any>window).mode.isMobile()) {
@@ -1053,6 +1084,8 @@ export class CommentSection extends CanvasSectionObject {
 	}
 
 	public cancel (annotation: any): void {
+		this.removeCommentAttention(annotation);
+
 		if (annotation.sectionProperties.data.id === 'new') {
 			this.removeItem(annotation.sectionProperties.data.id);
 		}

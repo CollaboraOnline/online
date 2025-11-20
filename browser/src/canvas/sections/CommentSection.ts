@@ -1646,8 +1646,10 @@ export class Comment extends CanvasSectionObject {
 	public setCollapsed(): void {
 		this.isCollapsed = true;
 
-		if (this.sectionProperties.commentListSection.sectionProperties.show != false && !this.isEdit())
+		if (this.sectionProperties.commentListSection.sectionProperties.show != false && !this.isEdit()) {
 			this.show();
+			this.sectionProperties.commentListSection.removeCommentAttention(this);
+		}
 
 		if (this.isRootComment() || app.map._docLayer._docType === 'presentation' || app.map._docLayer._docType === 'drawing') {
 			this.sectionProperties.container.style.display = '';
