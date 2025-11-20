@@ -12,8 +12,8 @@
 /*
 	Shouldn't have any functions defined. See "docstatefunctions.js" for state functions.
 	Class definitions can be added into "definitions" property and used like in below examples:
-		* app.sectionContainer.addSection(new app.definitions.AutoFillMarkerSection());
-		* var autoFillSection = new app.definitions.AutoFillMarkerSection();
+		* app.sectionContainer.addSection(new app.definitions.CellFillMarkerSection());
+		* var cellFillSection = new app.definitions.CellFillMarkerSection();
 */
 window.app = {
 	/*

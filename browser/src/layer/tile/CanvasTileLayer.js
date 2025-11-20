@@ -1770,14 +1770,14 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 	},
 
 	_onCellCursorMsg: function (textMsg) {
-		var autofillMarkerSection = app.sectionContainer.getSectionWithName(app.CSections.AutoFillMarker.name);
+		var cellfillMarkerSection = app.sectionContainer.getSectionWithName(app.CSections.CellFillMarker.name);
 
 		var oldCursorAddress = app.calc.cellAddress.clone();
 
 		if (textMsg.match('EMPTY')) {
 			app.calc.cellCursorVisible = false;
-			if (autofillMarkerSection)
-				autofillMarkerSection.calculatePositionViaCellCursor(null);
+			if (cellfillMarkerSection)
+				cellfillMarkerSection.calculatePositionViaCellCursor(null);
 			if (this._map._clip)
 				this._map._clip.clearSelection();
 		}
@@ -1797,8 +1797,8 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 			app.calc.cellCursorVisible = true;
 
 			app.sectionContainer.onCellAddressChanged();
-			if (autofillMarkerSection)
-				autofillMarkerSection.calculatePositionViaCellCursor([app.calc.cellCursorRectangle.pX2, app.calc.cellCursorRectangle.pY2]);
+			if (cellfillMarkerSection)
+				cellfillMarkerSection.calculatePositionViaCellCursor([app.calc.cellCursorRectangle.pX2, app.calc.cellCursorRectangle.pY2]);
 		}
 
 		var sameAddress = oldCursorAddress.equals(app.calc.cellAddress.toArray());
@@ -2609,7 +2609,7 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 	},
 
 	_onCellSelectionAreaMsg: function (textMsg) {
-		var autofillMarkerSection = app.sectionContainer.getSectionWithName(app.CSections.AutoFillMarker.name);
+		var cellfillMarkerSection = app.sectionContainer.getSectionWithName(app.CSections.CellFillMarker.name);
 		var strTwips = textMsg.match(/\d+/g);
 		if (strTwips != null) {
 			var topLeftTwips = new cool.Point(parseInt(strTwips[0]), parseInt(strTwips[1]));
@@ -2622,16 +2622,16 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 			const adjustedTwipsHeight = boundsTwips.max.y - boundsTwips.min.y;
 			this._cellSelectionArea = new cool.SimpleRectangle(boundsTwips.min.x, boundsTwips.min.y, adjustedTwipsWidth, adjustedTwipsHeight);
 
-			if (autofillMarkerSection)
-				autofillMarkerSection.calculatePositionViaCellSelection([this._cellSelectionArea.pX2, this._cellSelectionArea.pY2]);
+			if (cellfillMarkerSection)
+				cellfillMarkerSection.calculatePositionViaCellSelection([this._cellSelectionArea.pX2, this._cellSelectionArea.pY2]);
 
 			this._updateScrollOnCellSelection(oldSelection, this._cellSelectionArea);
 
 			CellSelectionMarkers.update();
 		} else {
 			this._cellSelectionArea = null;
-			if (autofillMarkerSection)
-				autofillMarkerSection.calculatePositionViaCellSelection(null);
+			if (cellfillMarkerSection)
+				cellfillMarkerSection.calculatePositionViaCellSelection(null);
 			this._cellSelections = Array(0);
 			this._map.wholeColumnSelected = false; // Message related to whole column/row selection should be on the way, we should update the variables now.
 			this._map.wholeRowSelected = false;
