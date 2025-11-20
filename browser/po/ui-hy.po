@@ -8,11 +8,11 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-11-17 08:08+0100\n"
-"PO-Revision-Date: 2025-11-12 12:51+0000\n"
+"PO-Revision-Date: 2025-11-19 08:51+0000\n"
 "Last-Translator: Tigran Zargaryan <tigranflib@gmail.com>\n"
 "Language-Team: Armenian <https://hosted.weblate.org/projects/"
 "collabora-online/ui/hy/>\n"
-"Language: \n"
+"Language: hy\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -2496,7 +2496,7 @@ msgstr "Համօգտագործել"
 
 #: src/control/Control.NotebookbarBuilder.js:224
 msgid "Click to expand"
-msgstr ""
+msgstr "Սեղմեք՝ ընդարձակելու համար"
 
 #: src/control/Control.NotebookbarBuilder.js:224
 msgid "Tap to expand"
@@ -2504,7 +2504,7 @@ msgstr "Հպեք՝ ընդլայնելու համար"
 
 #: src/control/Control.NotebookbarBuilder.js:225
 msgid "Click to collapse"
-msgstr ""
+msgstr "Սեղմեք՝ ծալելու համար"
 
 #: src/control/Control.NotebookbarBuilder.js:225
 #: src/control/Control.NotebookbarBuilder.js:280
