@@ -490,8 +490,12 @@ window.L.Control.PartsPreview = window.L.Control.extend({
 	},
 
 	_setPart: function (e) {
-		if (cool.Comment.isAnyEdit()) {
-			cool.CommentSection.showCommentEditingWarning();
+		const editingComment = cool.Comment.isAnyEdit();
+		if (editingComment) {
+			const commentSection = app.sectionContainer.getSectionWithName(app.CSections.CommentList.name);
+			if (commentSection) {
+				commentSection.navigateAndFocusComment(editingComment);
+			}
 			return;
 		}
 

@@ -325,8 +325,12 @@ window.L.Control.Tabs = window.L.Control.extend({
 
 	// Set the part by index. Return true if cancelled.
 	_setPartIndex: function(index) {
-		if (cool.Comment.isAnyEdit()) {
-			cool.CommentSection.showCommentEditingWarning();
+		const editingComment = cool.Comment.isAnyEdit();
+		if (editingComment) {
+			const commentSection = app.sectionContainer.getSectionWithName(app.CSections.CommentList.name);
+			if (commentSection) {
+				commentSection.navigateAndFocusComment(editingComment);
+			}
 			return true;
 		}
 

@@ -799,6 +799,15 @@ body {
 	height: var(--default-height); /* Height of new image */
 }
 
+.cool-annotation-inedit {
+	outline: 2px solid rgb(var(--doc-type));
+	offset: -2px;
+}
+
+.cool-annotation-inedit .cool-font {
+	color: var(--color-error);
+}
+
 .leaflet-container .leaflet-pane.leaflet-calc-background-pane {
 	z-index: 0;
 }
