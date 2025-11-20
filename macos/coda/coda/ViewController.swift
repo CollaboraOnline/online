@@ -50,7 +50,7 @@ class ViewController: NSViewController, WKScriptMessageHandlerWithReply, WKNavig
 
     var savedViewFrame: NSRect!
 
-    var mainWindowObserver: AnyObject!
+    var mainWindowExitFSObserver: AnyObject!
     var mainMonitorExchangeObserver: AnyObject!
     var consoleMonitorExchangeObserver: AnyObject!
 
@@ -401,12 +401,12 @@ class ViewController: NSViewController, WKScriptMessageHandlerWithReply, WKNavig
             newPresentationScreen = (newPresentationScreen + 1) % screens.count
         }
 
-        NotificationCenter.default.removeObserver(self.mainWindowObserver!)
+        NotificationCenter.default.removeObserver(self.mainWindowExitFSObserver!)
         installExchangeMainMonitor(window: mainWindow, frame: screens[newPresentationScreen].frame)
-        mainWindow.toggleFullScreen(nil)
+        showNormal(window: mainWindow)
 
         installExchangeConsoleMonitor(window: consoleWindow, frame: screens[newConsoleScreen].frame)
-        consoleWindow.toggleFullScreen(nil)
+        showNormal(window: consoleWindow)
     }
 
     func webView(_ webView: WKWebView, createWebViewWith configuration: WKWebViewConfiguration, for navigationAction: WKNavigationAction, windowFeatures: WKWindowFeatures) -> WKWebView? {
@@ -415,11 +415,38 @@ class ViewController: NSViewController, WKScriptMessageHandlerWithReply, WKNavig
         consoleWebView.uiDelegate = self
 
         self.consoleController = ConsoleController(webView: consoleWebView)
+        let consoleWindow = consoleController.window
+        if (consoleWindow != nil) {
+            consoleWindow!.collectionBehavior.insert(.fullScreenPrimary)
+            // If forced to share screen with presentation allow it to participate in full screen mode
+            consoleWindow!.collectionBehavior.insert(.fullScreenAuxiliary)
+            // Float over the presentation in full screen mode if they share a screen (auxiliary mode)
+            consoleWindow!.level = .floating
+        }
 
         let mainWindow = view.window!
 
         self.savedViewFrame = mainWindow.frame
+        installRestoreOnFullScreenExit(mainWindow: mainWindow)
 
+        arrangePresentationWindows()
+
+        return consoleWebView
+    }
+
+    func showFullScreen(window: NSWindow) {
+        if (!window.styleMask.contains(NSWindow.StyleMask.fullScreen)) {
+            window.toggleFullScreen(nil);
+        }
+    }
+
+    func showNormal(window: NSWindow) {
+        if (window.styleMask.contains(NSWindow.StyleMask.fullScreen)) {
+            window.toggleFullScreen(nil);
+        }
+    }
+
+    func arrangePresentationWindows() {
         let screens = NSScreen.screens
 
         var laptopScreen: NSScreen! = nil
@@ -452,28 +479,19 @@ class ViewController: NSViewController, WKScriptMessageHandlerWithReply, WKNavig
             }
         }
 
-        mainWindow.collectionBehavior.insert(.fullScreenPrimary)
         let presenterScreen: NSScreen = externalScreen != nil ? externalScreen : laptopScreen
+        let mainWindow = self.view.window!
         mainWindow.setFrame(presenterScreen.frame, display: true, animate: false)
-        installRestoreOnFullScreenExit(mainWindow: mainWindow)
-        mainWindow.toggleFullScreen(nil)
+        showFullScreen(window: mainWindow)
 
-        let consoleWindow = consoleController.window
+        let consoleWindow = self.consoleController.window
         if (consoleWindow != nil) {
-            consoleWindow!.collectionBehavior.insert(.fullScreenPrimary)
-            consoleWindow!.collectionBehavior.insert(.fullScreenAuxiliary)
-            // Float over the presentation when they share a screen (auxiliary mode)
-            consoleWindow!.level = .floating
-
             if (externalScreen != nil) {
                 consoleWindow!.setFrame(laptopScreen.frame, display: true, animate: false)
-                consoleWindow!.toggleFullScreen(nil)
-            } else {
-                consoleWindow!.makeKeyAndOrderFront(nil)
+                showFullScreen(window: consoleWindow!)
             }
+            consoleWindow!.makeKeyAndOrderFront(nil)
         }
-
-        return consoleWebView
     }
 
     func installRestoreOnFullScreenExit(mainWindow: NSWindow) {
@@ -481,7 +499,7 @@ class ViewController: NSViewController, WKScriptMessageHandlerWithReply, WKNavig
         // original monitor, size & position. Otherwise we remain on the monitor we are
         // presenting to.
         let center = NotificationCenter.default
-        self.mainWindowObserver = center.addObserver(
+        self.mainWindowExitFSObserver = center.addObserver(
             forName: NSWindow.didExitFullScreenNotification,
             object: mainWindow,
             queue: OperationQueue.main) { _ in
@@ -491,7 +509,7 @@ class ViewController: NSViewController, WKScriptMessageHandlerWithReply, WKNavig
                     mainWindow.makeKeyAndOrderFront(nil)
                 }
 
-                center.removeObserver(self.mainWindowObserver!)
+                center.removeObserver(self.mainWindowExitFSObserver!)
         }
     }
 
@@ -504,11 +522,12 @@ class ViewController: NSViewController, WKScriptMessageHandlerWithReply, WKNavig
 
                 DispatchQueue.main.async {
                     window.setFrame(frame, display: true, animate: false)
-                    window.toggleFullScreen(nil)
+                    self.showFullScreen(window: window)
                 }
 
                 self.installRestoreOnFullScreenExit(mainWindow: window)
                 center.removeObserver(self.mainMonitorExchangeObserver!)
+                self.mainMonitorExchangeObserver = nil
         }
     }
 
@@ -521,10 +540,12 @@ class ViewController: NSViewController, WKScriptMessageHandlerWithReply, WKNavig
 
                 DispatchQueue.main.async {
                     window.setFrame(frame, display: true, animate: false)
-                    window.toggleFullScreen(nil)
+                    self.showFullScreen(window: window)
+                    window.makeKeyAndOrderFront(nil)
                 }
 
                 center.removeObserver(self.consoleMonitorExchangeObserver!)
+                self.consoleMonitorExchangeObserver = nil;
         }
     }
 
@@ -533,9 +554,16 @@ class ViewController: NSViewController, WKScriptMessageHandlerWithReply, WKNavig
             self.consoleController.close()
             self.consoleController = nil
 
+            if (self.mainMonitorExchangeObserver != nil) {
+                NotificationCenter.default.removeObserver(self.mainMonitorExchangeObserver!)
+            }
+            if (self.consoleMonitorExchangeObserver != nil) {
+                NotificationCenter.default.removeObserver(self.consoleMonitorExchangeObserver!)
+            }
+
             // this will trigger the restoration of original location/size
             // via the convoluted observer stuff.
-            self.view.window!.toggleFullScreen(nil)
+            showNormal(window: self.view.window!)
         }
     }
 }
