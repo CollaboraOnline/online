@@ -168,7 +168,7 @@ class BrowserProperties {
 			// Here "mobile" means "mobile phone" (at least for now). Has to match small screen size
 			// requirement.
 			isMobile: function() {
-				if (global.ThisIsTheWindowsApp || global.ThisIsTheQtApp)
+				if (global.ThisIsTheWindowsApp || global.ThisIsTheQtApp || global.ThisIsTheMacOSApp)
 					return false;
 
 				if (global.mode.isChromebook())
@@ -182,7 +182,7 @@ class BrowserProperties {
 			},
 			// Mobile device with big screen size.
 			isTablet: function() {
-				if (global.ThisIsTheWindowsApp || global.ThisIsTheQtApp)
+				if (global.ThisIsTheWindowsApp || global.ThisIsTheQtApp || global.ThisIsTheMacOSApp)
 					return false;
 
 				if (global.mode.isChromebook())
@@ -197,7 +197,7 @@ class BrowserProperties {
 				return window.coolParams.get('isnewdocument');
 			},
 			isDesktop: function() {
-				if (global.ThisIsTheWindowsApp || global.ThisIsTheQtApp)
+				if (global.ThisIsTheWindowsApp || global.ThisIsTheQtApp	|| global.ThisIsTheMacOSApp)
 					return true;
 
 				if (global.mode.isChromebook())
@@ -1036,7 +1036,7 @@ function showWelcomeSVG() {
 		// recognized without tapping again. This is an impossible problem, because browsers do not give us enough information
 		// Instead, let's just guess
 		guessOnscreenKeyboard: function() {
-			if (global.ThisIsTheWindowsApp || global.ThisIsTheQtApp)
+			if (global.ThisIsTheWindowsApp || global.ThisIsTheQtApp || global.ThisIsTheMacOSApp)
 				return false;
 			if (global.keyboard.onscreenKeyboardHint != undefined) return global.keyboard.onscreenKeyboardHint;
 			return (global.ThisIsAMobileApp && !global.ThisIsTheEmscriptenApp) || global.mode.isMobile() || global.mode.isTablet();
