@@ -1426,11 +1426,14 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 
 		var listbox = window.L.DomUtil.create('select', builder.options.cssClass + ' ui-listbox ', container);
 		listbox.id = data.id + '-input';
+
 		if (data.labelledBy)
 			listbox.setAttribute('aria-labelledby', data.labelledBy);
+		else if (data.aria && data.aria.label)
+			listbox.setAttribute('aria-label', data.aria.label);
+
 		var listboxArrow = window.L.DomUtil.create('span', builder.options.cssClass + ' ui-listbox-arrow', container);
 		listboxArrow.id = 'listbox-arrow-' + data.id;
-
 
 		if (data.enabled === false) {
 			container.disabled = true;
