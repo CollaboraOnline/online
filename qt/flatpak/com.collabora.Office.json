@@ -18,7 +18,6 @@
   "finish-args": [
     "--share=network",
     "--share=ipc",
-    "--socket=system-bus",
     "--socket=fallback-x11",
     "--socket=wayland",
     "--socket=pulseaudio",
@@ -32,6 +31,12 @@
     "--talk-name=org.gtk.vfs.*",
     "--talk-name=com.canonical.AppMenu.Registrar",
     "--device=dri"
+  ],
+  "cleanup-commands": [
+    "/app/cleanup-BaseApp.sh"
+  ],
+  "cleanup": [
+    "/share/man"
   ],
   "build-options": {
     "append-path": "/usr/lib/sdk/node20/bin:/usr/lib/libexec",
