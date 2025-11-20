@@ -455,14 +455,25 @@ Bridge::~Bridge() {
     }
 }
 
+void Bridge::clearWebView()
+{
+    _webView = nullptr;
+}
+
 void Bridge::evalJS(const std::string& script)
 {
-    // Ensure execution on GUI thread – queued if needed
-    QMetaObject::invokeMethod(
-        // TODO: fix needless `this` captures...
-        _webView, [this, script]
-        { _webView->page()->runJavaScript(QString::fromStdString(script)); },
-        Qt::QueuedConnection);
+    // Ensure execution on GUI thread – queued if needed. Use a QPointer
+    // snapshot so the lambda can safely detect if the view was deleted
+    // before the queued call runs.
+    QPointer<QWebEngineView> viewPtr = _webView;
+    QMetaObject::invokeMethod(QApplication::instance(), [viewPtr, script]() {
+        if (!viewPtr)
+            return;
+        QWebEnginePage* p = viewPtr->page();
+        if (!p)
+            return;
+        p->runJavaScript(QString::fromStdString(script));
+    }, Qt::QueuedConnection);
 }
 
 void Bridge::send2JS(const std::vector<char>& buffer)
@@ -646,9 +657,9 @@ static void closeStarterScreen()
     {
         LOG_TRC("Closing starter screen after document action");
         QTimer::singleShot(0, [starterScreen]() {
-            if (starterScreen->getMainWindow())
+            if (starterScreen->mainWindow())
             {
-                starterScreen->getMainWindow()->close();
+                starterScreen->mainWindow()->close();
             }
         });
     }
@@ -887,8 +898,11 @@ QVariant Bridge::cool(const QString& messageStr)
                             okToClose = owner->confirmClose();
                         if (okToClose)
                         {
-                            tabWidget->removeTab(index);
-                        }
+                                // Prepare and deregister bridge before removing
+                                if (owner)
+                                    owner->prepareForClose();
+                                tabWidget->removeTab(index);
+                            }
                         else
                         {
                             return; // user cancelled
@@ -951,10 +965,11 @@ QVariant Bridge::cool(const QString& messageStr)
         QObject::connect(dialog, &QFileDialog::filesSelected,
                          [](const QStringList& filePaths)
                          {
-                             // Open all selected files in new windows
+                             // Open file as a new tab in the active window when possible.
+                             Window* activeWindow = qobject_cast<Window*>(QApplication::activeWindow());
                              for (const QString& filePath : filePaths)
                              {
-                                 WebView* webViewInstance = new WebView(Application::getProfile());
+                                 WebView* webViewInstance = new WebView(Application::getProfile(), /*isWelcome*/ false, activeWindow);
                                  webViewInstance->load(Poco::URI(filePath.toStdString()));
                              }
                              // Close starter screen if it exists
@@ -1017,7 +1032,11 @@ QVariant Bridge::cool(const QString& messageStr)
                     if (owner)
                         okToClose = owner->confirmClose();
                     if (okToClose)
+                    {
+                        if (owner)
+                            owner->prepareForClose();
                         tabWidget->removeTab(index);
+                    }
                     else
                         return {};
                 }

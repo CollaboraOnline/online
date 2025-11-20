@@ -16,7 +16,9 @@
 #include <QObject>
 #include <QVariant>
 #include <QWebEngineView>
+#include "DetachableTabs.hpp"
 #include "Document.hpp"
+#include "Window.hpp"
 #include <QMainWindow>
 #include <Poco/URI.h>
 
@@ -59,12 +61,19 @@ private:
 class WebView
 {
 public:
-    explicit WebView(QWebEngineProfile* profile, bool isWelcome = false);
+    // If `targetWindow` is non-null, the new WebView will be added as a
+    // tab into that window's tab widget instead of creating a new top-level
+    // window. If `targetWindow` is null, the constructor will prefer the
+    // currently active `Window` when creating the tab (default behavior).
+    explicit WebView(QWebEngineProfile* profile, bool isWelcome = false, Window* targetWindow = nullptr);
     ~WebView();
     CODAWebEngineView* webEngineView() { return _webView.get(); }
-    QMainWindow* mainWindow() { return _mainWindow; }
+    Window* mainWindow() { return _mainWindow; }
     // Prompt to save if modified and return true if it's OK to close the document
     bool confirmClose();
+    // Prepare this WebView for being closed: unregister bridge and prevent
+    // further JS calls into the web view.
+    void prepareForClose();
 
     void load(const Poco::URI& fileURL = Poco::URI(), bool newFile = false, bool isStarterMode = false);
     static WebView* createNewDocument(QWebEngineProfile* profile, const std::string& templateType, const std::string& templatePath = "");
@@ -73,20 +82,26 @@ public:
     static WebView* findStarterScreen();
     static const std::vector<WebView*>& getAllInstances() { return s_instances; }
     void activateWindow();
+    // Update the main window pointer (used when a WebView is moved between windows).
+    void setMainWindow(Window* w) { _mainWindow = w; }
     const Poco::URI& getSaveLocationURI() const { return _document._saveLocationURI; }
     bool isDocumentModified() const;
     bool isPendingSave() const;
     bool isStarterScreen() const { return _document._fakeClientFd == -1 && _document._appDocId == 0; }
-    QMainWindow* getMainWindow() const { return _mainWindow; }
+
+    // Run the given javascript code via the bridge.
+    void runJS(const QString& jsCode);
 
 private:
     // query gnome font scaling factor and apply it to the web view
     void queryGnomeFontScalingUpdateZoom();
-    QMainWindow* _mainWindow;
+    Window *_mainWindow;
     std::unique_ptr<CODAWebEngineView> _webView;
     coda::DocumentData _document;
     bool _isWelcome;
     Bridge* _bridge;
+    // true if this WebView constructed a top-level Window for itself
+    bool _createdWindow = false;
 
     static std::vector<WebView*> s_instances;
 };
