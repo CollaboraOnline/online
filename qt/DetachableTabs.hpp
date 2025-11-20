@@ -22,6 +22,7 @@
 #include <QMimeData>
 
 class DetachableTabWidget;
+class Window;
 
 static std::vector<DetachableTabWidget*> s_allTabWidgets;
 class DetachableTabBar : public QTabBar {
@@ -46,13 +47,13 @@ public:
     explicit DetachableTabWidget(QWidget* parent = nullptr);
     ~DetachableTabWidget();
 
-     // Set by WebView.cpp to customize tab setup (e.g. add "+" button)
-    static std::function<void(QTabWidget*)> tabSetupCallback;
-
     void addDetachableTab(QWidget* widget, const QString& label);
-    void reattachTab(QWidget* widget, const QString& label);
 
     DetachableTabBar *tabBar() const;
+
+signals:
+    void plusButtonClicked();
+
 private slots:
     void handleDetachRequest(QPoint globalPos, QWidget* tabWidget, const QString& tabLabel);
     void dragEnterEvent(QDragEnterEvent* event) override;
