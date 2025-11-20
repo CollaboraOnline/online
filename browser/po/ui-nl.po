@@ -8,11 +8,11 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-11-17 08:08+0100\n"
-"PO-Revision-Date: 2025-11-05 14:58+0000\n"
+"PO-Revision-Date: 2025-11-20 07:05+0000\n"
 "Last-Translator: Sebastiaan Veld <sebastiaan.veld@gmail.com>\n"
 "Language-Team: Dutch <https://hosted.weblate.org/projects/collabora-online/"
 "ui/nl/>\n"
-"Language: \n"
+"Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -2500,7 +2500,7 @@ msgstr "Delen"
 
 #: src/control/Control.NotebookbarBuilder.js:224
 msgid "Click to expand"
-msgstr ""
+msgstr "Klik om uit te vouwen"
 
 #: src/control/Control.NotebookbarBuilder.js:224
 msgid "Tap to expand"
@@ -2508,7 +2508,7 @@ msgstr "Tik om uit te vouwen"
 
 #: src/control/Control.NotebookbarBuilder.js:225
 msgid "Click to collapse"
-msgstr ""
+msgstr "Klik om samen te vouwen"
 
 #: src/control/Control.NotebookbarBuilder.js:225
 #: src/control/Control.NotebookbarBuilder.js:280
