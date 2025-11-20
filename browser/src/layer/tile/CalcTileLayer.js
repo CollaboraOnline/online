@@ -85,7 +85,7 @@ window.L.CalcTileLayer = window.L.CanvasTileLayer.extend({
 			}
 		}.bind(this));
 
-		app.sectionContainer.addSection(new app.definitions.AutoFillMarkerSection());
+		app.sectionContainer.addSection(new app.definitions.CellFillMarkerSection());
 		app.sectionContainer.addSection(new SplitterLinesSection());
 		app.sectionContainer.addSection(new app.definitions.TableFillMarkerSection());
 
@@ -942,7 +942,7 @@ window.L.CalcTileLayer = window.L.CanvasTileLayer.extend({
 		var tablefillMarkerSection = app.sectionContainer.getSectionWithName(app.CSections.TableFillMarker.name);
 		if (textMsg.match('EMPTY')) {
 			if (tablefillMarkerSection)
-				tablefillMarkerSection.calculatePositionViaCorePixels(null);
+				tablefillMarkerSection.calculatePositionViaCellCursor(null);
 			this._tableAutoFillAreaPixels = null;
 		}
 		else
@@ -957,7 +957,7 @@ window.L.CalcTileLayer = window.L.CanvasTileLayer.extend({
 				this._tableAutoFillAreaPixels = app.LOUtil.createRectangle(topLeftPixels.x, topLeftPixels.y, offsetPixels.x, offsetPixels.y);
 
 				if (tablefillMarkerSection)
-					tablefillMarkerSection.calculatePositionViaCorePixels([this._tableAutoFillAreaPixels.x1, this._tableAutoFillAreaPixels.y1]);
+					tablefillMarkerSection.calculatePositionViaCellCursor([this._tableAutoFillAreaPixels.x1, this._tableAutoFillAreaPixels.y1]);
 			}
 			else {
 				this._tableAutoFillAreaPixels = null;
