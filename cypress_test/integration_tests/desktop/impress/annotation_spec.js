@@ -17,7 +17,7 @@ describe(['tagdesktop'], 'Annotation Tests', function() {
 			desktopHelper.hideSidebar();
 		}
 
-		cy.cGet('#options-modify-page').click();
+		desktopHelper.getNbIcon('ModifyPage').click();
 		desktopHelper.selectZoomLevel('50', false);
 	});
 
@@ -164,7 +164,7 @@ describe(['tagdesktop'], 'Collapsed Annotation Tests', function() {
 
 		helper.reloadDocument(newFilePath);
 		desktopHelper.closeNavigatorSidebar();
-		cy.cGet('#options-modify-page-button.selected').then(function(button) {button.click();});
+		desktopHelper.getNbIcon('ModifyPage.selected').click();
 		cy.cGet('.cool-annotation-img').click();
 		cy.cGet('.cool-annotation-content-wrapper').should('exist');
 		cy.cGet('[id^=annotation-content-area-]').should('have.text','some text0');
@@ -178,8 +178,7 @@ describe(['tagdesktop'], 'Comment Scrolling',function() {
 		cy.viewport(1500, 600);
 		helper.setupAndLoadDocument('impress/comment_switching.odp');
 		desktopHelper.switchUIToNotebookbar();
-
-		cy.cGet('#options-modify-page').click();
+		desktopHelper.getNbIcon('ModifyPage').click();
 		desktopHelper.selectZoomLevel('50', false);
 	});
 

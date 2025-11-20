@@ -58,11 +58,11 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Slide operations', functio
 	it('Duplicate slide', function() {
 		// Also check if comments are getting duplicated
 		desktopHelper.closeNavigatorSidebar();
-		cy.cGet('#options-modify-page').click();
+		desktopHelper.getNbIcon('ModifyPage').click();
 		desktopHelper.insertComment();
 		cy.cGet('[id^=annotation-content-area-]').should('include.text', 'some text0');
 		cy.cGet('#Insert-tab-label').click();
-		cy.cGet('#insert-duplicate-slide').click();
+		desktopHelper.getNbIcon('DuplicatePage', 'Insert').click();
 
 		impressHelper.assertNumberOfSlidePreviews(2);
 		cy.cGet('#SlideStatus').should('have.text', 'Slide 2 of 2');
