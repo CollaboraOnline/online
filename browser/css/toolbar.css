@@ -1753,11 +1753,11 @@ menu-entry-with-icon.padding-left + menu-entry-icon.width */
 }
 
 #followingChipBackground > #followingChip {
-	border-style: solid;
-	border-width: 2px;
+	box-shadow: 0 0 1px 0 rgba(0,0,0,0.8);
+	border: 2px solid transparent;
 	border-radius: calc(var(--btn-img-size));
 
-	height: var(--btn-img-size);
+	height: var(--btn-img-size-m);
 	padding-left: calc(var(--btn-img-size) * 0.4);
 	padding-right: calc(var(--btn-img-size) * 1.2);
 
@@ -1767,8 +1767,52 @@ menu-entry-with-icon.padding-left + menu-entry-icon.width */
 	align-items: center;
 
 	color: var(--color-main-text);
-	background-color: var(--color-main-background);
+	background-color: var(--color-background-followingchip);
 	box-sizing: border-box;
+}
+
+@keyframes after-content-following-fadeIn {
+	0% {
+		opacity: 0;
+		transform: translateY(-10px);
+	}
+	15% {
+		opacity: 1;
+		transform: translateY(0);
+	}
+	84% {
+		opacity: 1;
+		transform: translateY(0);
+	}
+	100% {
+		opacity: 0;
+		transform: translateY(-10px);
+	}
+}
+
+#main-document-content.after-content-following-animate::after {
+	animation: after-content-following-fadeIn 1.4s ease-out forwards;
+	animation-play-state: running;
+}
+
+#main-document-content::after {
+	animation-play-state: paused;
+	animation-fill-mode: backwards;
+	animation-iteration-count: 1;
+	opacity: 0;
+	content: var(--after-content-following);
+	background-color: var(--after-content-following-bg);
+	color: white;
+	font-family: var(--cool-font);
+	font-size: var(--tooltip-font-size);
+	padding: 4px;
+	border-bottom-left-radius: var(--border-radius);
+	border-bottom-right-radius: var(--border-radius);
+	display: flex;
+	z-index: 3000;
+	position: absolute;
+	left: 50%;
+	transform: translateX(-50%) translateY(-10px);
 }
 
 #userListSummaryBackground > #userListSummary {
@@ -1799,8 +1843,8 @@ menu-entry-with-icon.padding-left + menu-entry-icon.width */
 	margin-left: -10px;
 }
 
-#userListSummary:not(:hover) .avatar-img.following {
-	border-color: transparent !important;
+#userListSummary .avatar-img.following {
+	outline: 1px solid var(--color-background-lighter);
 }
 
 #userlist-dropdown {

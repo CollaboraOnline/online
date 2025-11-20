@@ -563,22 +563,38 @@ class UserList extends window.L.Control {
 
 		const following = this.getFollowedUser();
 
+		const topAvatarZIndex = this.options.userLimitHeaderWhenFollowing;
+		const documentCanvas = document.getElementById('document-canvas');
+		const mainDocumentContent = document.getElementById('main-document-content');
+		let FollowingWholabel = '';
+
 		if (following === undefined && !app.isFollowingEditor()) {
 			followingChipBackground.style.display = 'none';
+			mainDocumentContent.style.setProperty('--after-content-following', '');
+			documentCanvas.style.outline = 'none';
 			return;
 		}
 
-		const topAvatarZIndex = this.options.userLimitHeaderWhenFollowing;
-
 		if (app.isFollowingEditor()) {
-			followingChip.innerText = this.options.followingChipTextEditor;
-			followingChip.style.borderColor = 'var(--color-main-text)';
+			FollowingWholabel = this.options.followingChipTextEditor;
+			followingChip.innerText = FollowingWholabel;
+			// followingChip.style.borderColor = 'var(--color-main-text)';
 		} else {
-			followingChip.innerText = this.options.followingChipTextUser.replace(
+			FollowingWholabel = this.options.followingChipTextUser.replace(
 				'{user}',
 				following[1].username,
 			);
-			followingChip.style.borderColor = following[1].color;
+			followingChip.innerText = FollowingWholabel;
+			documentCanvas.style.outline = '2px solid ' + following[1].color;
+			documentCanvas.style.outlineOffset = '-2px';
+			mainDocumentContent.style.setProperty('--after-content-following', `"${FollowingWholabel}"`);
+			requestAnimationFrame(() => {
+				mainDocumentContent.classList.add('after-content-following-animate');
+			});
+			mainDocumentContent.addEventListener('animationend', () => {
+				mainDocumentContent.classList.remove('after-content-following-animate');
+			});
+			mainDocumentContent.style.setProperty('--after-content-following-bg', `${following[1].color}`);
 		}
 
 		followingChip.onclick = () => {
