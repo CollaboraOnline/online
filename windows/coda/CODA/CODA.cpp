@@ -571,30 +571,9 @@ static int generate_new_app_doc_id()
     return id++;
 }
 
-static bool isMessageOfType(const char* message, const std::string& type, int length)
-{
-    if (length < type.length() + 2)
-        return false;
-    for (int i = 0; i < type.length(); i++)
-        if (message[i] != type[i])
-            return false;
-    return true;
-}
-
 static void send2JS(const HWND hWnd, const char* buffer, int length)
 {
-    bool binaryMessage = false;
-
-    for (auto i : COOLProtocol::binaryMessageTypes)
-    {
-        if (isMessageOfType(buffer, i, length))
-        {
-            binaryMessage = true;
-            break;
-        }
-    }
-
-    std::string pretext{ binaryMessage
+    std::string pretext{ COOLProtocol::isBinaryMessage(buffer, static_cast<size_t>(length))
                              ? "window.TheFakeWebSocket.onmessage({'data': window.atob('"
                              : "window.TheFakeWebSocket.onmessage({'data': window.b64d('" };
     const std::string posttext{ "')});" };
