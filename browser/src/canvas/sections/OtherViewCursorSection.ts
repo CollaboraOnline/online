@@ -113,13 +113,7 @@ class TextCursorSection extends HTMLObjectSection {
 
 			section.setPosition(rectangle.pX1, rectangle.pY1);
 		} else {
-			section = new TextCursorSection(
-				viewId,
-				color,
-				rectangle,
-				part,
-				mode,
-			);
+			section = new TextCursorSection(viewId, color, rectangle, part, mode);
 			app.sectionContainer.addSection(section);
 			TextCursorSection.sectionPointers.push(section);
 		}
