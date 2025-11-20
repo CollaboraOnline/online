@@ -9,6 +9,8 @@
 
 #include <QApplication>
 #include <QWebEngineProfile>
+#include <Poco/Path.h>
+#include <Poco/File.h>
 #include "common/RecentFiles.hpp"
 
 extern int coolwsd_server_socket_fd;

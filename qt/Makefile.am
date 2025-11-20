@@ -67,12 +67,14 @@ cmake_list= \
 
 
 # Sources that will be created by Qt's MOC
-BUILT_SOURCES = bridge.moc.cpp DBusService.moc.cpp DetachableTabs.moc.cpp
+BUILT_SOURCES = bridge.moc.cpp DBusService.moc.cpp DetachableTabs.moc.cpp Window.moc.cpp
 bridge.moc.cpp: bridge.hpp
 	$(MOC) $(MOCFLAGS) -o $@ $<
 DBusService.moc.cpp: DBusService.hpp
 	$(MOC) $(MOCFLAGS) -o $@ $<
 DetachableTabs.moc.cpp: DetachableTabs.hpp
+	$(MOC) $(MOCFLAGS) -o $@ $<
+Window.moc.cpp: Window.hpp
 	$(MOC) $(MOCFLAGS) -o $@ $<
 
 CLEANFILES = $(BUILT_SOURCES)
@@ -82,7 +84,7 @@ if X86
 coda_qt_CXXFLAGS += -mno-direct-extern-access
 endif
 
-coda_qt_SOURCES = coda-qt.cpp WebView.cpp DBusService.cpp DetachableTabs.cpp $(BUILT_SOURCES) $(cmake_list)
+coda_qt_SOURCES = coda-qt.cpp WebView.cpp DBusService.cpp DetachableTabs.cpp Window.cpp $(BUILT_SOURCES) $(cmake_list)
 
 metainfodir = $(datadir)/metainfo
 metainfo_DATA = com.collaboraoffice.Office.metainfo.xml
