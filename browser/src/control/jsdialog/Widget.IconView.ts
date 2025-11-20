@@ -187,22 +187,22 @@ JSDialog.iconView = function (
 	data: IconViewJSON,
 	builder: JSBuilder,
 ) {
-	const container = window.L.DomUtil.create(
+	const iconview = window.L.DomUtil.create(
 		'div',
 		builder.options.cssClass + ' ui-iconview',
 		parentContainer,
 	);
-	container.id = data.id;
-	container.setAttribute('role', 'listbox');
+	iconview.id = data.id;
+	iconview.setAttribute('role', 'listbox');
 
 	if (data.labelledBy)
-		container.setAttribute('aria-labelledby', data.labelledBy);
+		iconview.setAttribute('aria-labelledby', data.labelledBy);
 
 	const disabled = data.enabled === false;
-	if (disabled) window.L.DomUtil.addClass(container, 'disabled');
+	if (disabled) window.L.DomUtil.addClass(iconview, 'disabled');
 
 	for (const i in data.entries) {
-		_iconViewEntry(container, data, data.entries[i], builder);
+		_iconViewEntry(iconview, data, data.entries[i], builder);
 	}
 
 	const updateAllIndexes = () => {
@@ -210,11 +210,11 @@ JSDialog.iconView = function (
 		// Step 1: Split the string by spaces:           ["96px", "96px", "96px"]
 		// Step 2: Remove any empty entries (if any):    ["96px", "96px", "96px"]
 		// Step 3: The length of this array is the number of columns in the grid.
-		const gridTemplateColumns = getComputedStyle(container).gridTemplateColumns;
+		const gridTemplateColumns = getComputedStyle(iconview).gridTemplateColumns;
 		const columns = gridTemplateColumns.split(' ').filter(Boolean).length;
 
 		if (columns > 0) {
-			const entries = container.querySelectorAll('.ui-iconview-entry');
+			const entries = iconview.querySelectorAll('.ui-iconview-entry');
 			entries.forEach((entry: HTMLElement, flatIndex: number) => {
 				const row = Math.floor(flatIndex / columns);
 				const column = flatIndex % columns;
@@ -227,17 +227,17 @@ JSDialog.iconView = function (
 	const resizeObserver = new ResizeObserver(() => {
 		updateAllIndexes();
 	});
-	resizeObserver.observe(container);
+	resizeObserver.observe(iconview);
 
 	// Do not animate on creation - eg. when opening sidebar with icon view it might move the app
-	const firstSelected = $(container).children('.selected').get(0);
+	const firstSelected = $(iconview).children('.selected').get(0);
 	if (firstSelected) {
 		const offsetTop = firstSelected.offsetTop;
-		container.scrollTop = offsetTop;
+		iconview.scrollTop = offsetTop;
 	}
 
-	container.onSelect = (position: number) => {
-		$(container)
+	iconview.onSelect = (position: number) => {
+		$(iconview)
 			.children('.selected')
 			.each(function () {
 				$(this).removeClass('selected');
@@ -245,8 +245,8 @@ JSDialog.iconView = function (
 			});
 
 		const entry =
-			container.children.length > position
-				? container.children[position]
+			iconview.children.length > position
+				? iconview.children[position]
 				: null;
 
 		if (entry) {
@@ -262,16 +262,16 @@ JSDialog.iconView = function (
 				});
 			} else {
 				const offsetTop = entry.offsetTop;
-				container.scrollTop = offsetTop;
+				iconview.scrollTop = offsetTop;
 			}
 		} else if (position != -1)
 			app.console.warn(
-				'not found entry: "' + position + '" in: "' + container.id + '"',
+				'not found entry: "' + position + '" in: "' + iconview.id + '"',
 			);
 	};
 
-	container.updateRenders = (pos: number) => {
-		const dropdown = container.querySelectorAll(
+	iconview.updateRenders = (pos: number) => {
+		const dropdown = iconview.querySelectorAll(
 			'.ui-iconview-entry, .ui-iconview-separator',
 		);
 		if (dropdown[pos]) {
@@ -294,15 +294,15 @@ JSDialog.iconView = function (
 		}
 	};
 
-	JSDialog.KeyboardGridNavigation(container);
-	container.addEventListener('keydown', function (e: KeyboardEvent) {
+	JSDialog.KeyboardGridNavigation(iconview);
+	iconview.addEventListener('keydown', function (e: KeyboardEvent) {
 		if (e.key !== 'Enter' && e.key !== ' ' && e.code !== 'Space') return;
 
 		const active = document.activeElement as HTMLElement;
 		if (!active || !active.classList.contains('ui-iconview-entry')) return;
 
 		const iconViewEntries = Array.from(
-			container.querySelectorAll('.ui-iconview-entry'),
+			iconview.querySelectorAll('.ui-iconview-entry'),
 		);
 		const selectedIndex = iconViewEntries.indexOf(active);
 
@@ -315,7 +315,7 @@ JSDialog.iconView = function (
 	});
 
 	// ensures that aria-selected is updated on initial focus on iconview entries
-	container.addEventListener('focusin', function (e: FocusEvent) {
+	iconview.addEventListener('focusin', function (e: FocusEvent) {
 		const target = e.target as HTMLElement;
 
 		if (
@@ -325,7 +325,7 @@ JSDialog.iconView = function (
 			return;
 
 		// remove aria-selected from previously selected entry
-		const previouslySelected = container.querySelector(
+		const previouslySelected = iconview.querySelector(
 			'.ui-iconview-entry[aria-selected="true"]',
 		);
 		if (previouslySelected) {
