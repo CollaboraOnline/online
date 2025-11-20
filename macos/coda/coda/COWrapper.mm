@@ -331,7 +331,7 @@ static std::thread coolwsdThread;
  * Reuse the common implementation of the check if the message is binary.
  */
 + (bool)isBinaryMessage:(const char *_Nonnull)buffer length:(NSInteger)length {
-    return COOLProtocol::isBinaryMessage(buffer, static_cast<int>(length));
+    return COOLProtocol::isBinaryMessage(buffer, static_cast<size_t>(length));
 }
 
 /**
