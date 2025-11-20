@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-11-17 08:08+0200\n"
-"PO-Revision-Date: 2025-11-17 07:00+0000\n"
+"PO-Revision-Date: 2025-11-20 07:05+0000\n"
 "Last-Translator: \"Miguel A. Bouzada\" <mbouzada@gmail.com>\n"
 "Language-Team: Galician <https://hosted.weblate.org/projects/"
 "collabora-online/help/gl/>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Translate Toolkit 3.6.0\n"
+"X-Generator: Weblate 5.15-dev\n"
 
 #: html/cool-help.html%2Bdiv.h1:6-5
 msgid "Keyboard Shortcuts"
@@ -508,20 +508,20 @@ msgstr "Subir o cursor unha liña"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:227-88
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:292-88
 msgid "Arrow Up"
-msgstr "Frecha cara a arriba"
+msgstr "Frecha cara arriba"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:65-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:228-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:293-38
 msgid "Select lines in upwards direction"
-msgstr "Seleccionar liñas de abaixo cara a arriba"
+msgstr "Seleccionar liñas de abaixo cara arriba"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:65-98
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:228-98
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:293-98
 msgid "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Arrow Up</kbd>"
 msgstr ""
-"<kbd>Maiús</kbd><span class=\"kbd--plus\">+</span><kbd>Frecha cara a "
+"<kbd>Maiús</kbd><span class=\"kbd--plus\">+</span><kbd>Frecha cara "
 "arriba</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:66-38
@@ -535,7 +535,7 @@ msgstr "Mover o cursor ao inicio do parágrafo anterior"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:294-115
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Arrow Up</kbd>"
 msgstr ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Frecha cara a "
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Frecha cara "
 "arriba</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:67-38
@@ -552,7 +552,7 @@ msgid ""
 "\"kbd--plus\">+</span><kbd>Arrow Up</kbd>"
 msgstr ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Maiús</kbd><span class="
-"\"kbd--plus\">+</span><kbd>Frecha cara a arriba</kbd>"
+"\"kbd--plus\">+</span><kbd>Frecha cara arriba</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:68-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:231-38
@@ -564,20 +564,20 @@ msgstr "Baixar o cursor unha liña"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:231-90
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:296-90
 msgid "Arrow Down"
-msgstr "Frecha cara a abaixo"
+msgstr "Frecha cara abaixo"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:69-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:232-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:297-38
 msgid "Select lines in downwards direction"
-msgstr "Seleccionar liñas de arriba cara a abaixo"
+msgstr "Seleccionar liñas de arriba cara abaixo"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:69-100
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:232-100
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:297-100
 msgid "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Arrow Down</kbd>"
 msgstr ""
-"<kbd>Maiús</kbd><span class=\"kbd--plus\">+</span><kbd>Frecha cara a "
+"<kbd>Maiús</kbd><span class=\"kbd--plus\">+</span><kbd>Frecha cara "
 "abaixo</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:70-38
@@ -591,7 +591,7 @@ msgstr "Mover o cursor ao inicio do parágrafo seguinte"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:298-111
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Arrow Down</kbd>"
 msgstr ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Frecha cara a "
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Frecha cara "
 "abaixo</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:71-38
@@ -608,7 +608,7 @@ msgid ""
 "\"kbd--plus\">+</span><kbd>Arrow Down</kbd>"
 msgstr ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Maiús</kbd><span class="
-"\"kbd--plus\">+</span><kbd>Frecha cara a abaixo</kbd>"
+"\"kbd--plus\">+</span><kbd>Frecha cara abaixo</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:72-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:235-38
@@ -736,7 +736,7 @@ msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>RePáx</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:82-38
 msgid "Extend the selection up one page"
-msgstr "Estender a selección até unha páxina cara a arriba"
+msgstr "Estender a selección até unha páxina cara arriba"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:82-97
 msgid "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>PageUp</kbd>"
@@ -760,7 +760,7 @@ msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>AvPáx</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:85-38
 msgid "Extend the selection down one page"
-msgstr "Estender a selección até unha páxina cara a abaixo"
+msgstr "Estender a selección até unha páxina cara abaixo"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:85-99
 msgid "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>PageDown</kbd>"
@@ -1139,7 +1139,7 @@ msgid ""
 "or extends the existing selection one page down."
 msgstr ""
 "Selecciona as celas desde a cela actual ata unha páxina da columna actual ou "
-"estende a selección existente unha páxina cara a abaixo."
+"estende a selección existente unha páxina cara abaixo."
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:141-188
 msgid "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Page Down</kbd>"
@@ -1190,7 +1190,7 @@ msgstr ""
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:144-241
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Up Arrow</kbd>"
 msgstr ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Frecha cara a "
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Frecha cara "
 "arriba</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:145-38
@@ -1206,7 +1206,7 @@ msgstr ""
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:145-246
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Down Arrow</kbd>"
 msgstr ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Frecha cara a "
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Frecha cara "
 "abaixo</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:146-38
@@ -1361,7 +1361,7 @@ msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>F1</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:169-38
 msgid "Fill Down"
-msgstr "Encher cara a abaixo"
+msgstr "Encher cara abaixo"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:175-38
 msgid "Set Optimal Column Width"
@@ -2003,7 +2003,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.h4:440-5
 msgid "Pasting"
-msgstr "Pegar"
+msgstr "Pegado"
 
 #: html/cool-help.html%2Bdiv.div.div.p:441-5
 msgid ""
@@ -2443,12 +2443,12 @@ msgid ""
 msgstr ""
 "<span class=\"productname\">{productname}</span> edita os documentos de "
 "texto do mesmo xeito que vostede edita un documento no escritorio. Fornece "
-"unha disposición do que se ve é o que se obtén (WYSIWYG) – que dispón o "
-"documento tal e como será impreso. As operacións de escrita, cortado, "
-"copiado e pegado de texto, inserción, redimensionamento, ancoraxe de imaxes, "
-"engadido e manipulación de táboas e gráficas son semellantes aos dun "
-"procesador de textos de escritorio. Empregue o teclado, os menús e as barras "
-"de ferramentas para interactuar co documento."
+"unha disposición do que se ve é o que se obtén (OQSVEOQSO - WYSIWYG) – que "
+"dispón o documento tal e como será impreso. As operacións de escrita, "
+"cortado, copiado e pegado de texto, inserción, redimensionamento, ancoraxe "
+"de imaxes, engadido e manipulación de táboas e gráficas son semellantes aos "
+"dun procesador de textos de escritorio. Empregue o teclado, os menús e as "
+"barras de ferramentas para interactuar co documento."
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:567-30
 msgid ""
