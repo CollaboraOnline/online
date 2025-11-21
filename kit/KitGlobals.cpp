@@ -9,7 +9,6 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-#include "common/Globals.hpp"
 #include "kit/KitGlobals.hpp"
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
