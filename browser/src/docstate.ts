@@ -27,8 +27,8 @@ window.app = {
 		CTRLMAC: 32768,
 	},
 	JSButtons: {
-		left: 0,
-		middle: 1,
+		left: 1,
+		middle: 4,
 		right: 2,
 	},
 	LOButtons: {

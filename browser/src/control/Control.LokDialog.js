@@ -712,9 +712,9 @@ window.L.Control.LokDialog = window.L.Control.extend({
 
 			var buttons = 0;
 			if (this._map['mouse']) {
-				buttons |= e.button === app.JSButtons.left ? app.LOButtons.left : 0;
-				buttons |= e.button === app.JSButtons.middle ? app.LOButtons.middle : 0;
-				buttons |= e.button === app.JSButtons.right ? app.LOButtons.right : 0;
+				buttons |= e.buttons === app.JSButtons.left ? app.LOButtons.left : 0;
+				buttons |= e.buttons === app.JSButtons.middle ? app.LOButtons.middle : 0;
+				buttons |= e.buttons === app.JSButtons.right ? app.LOButtons.right : 0;
 			} else {
 				buttons = 1;
 			}
@@ -1097,9 +1097,9 @@ window.L.Control.LokDialog = window.L.Control.extend({
 		window.L.DomEvent.on(canvas, 'mousedown mouseup', function(e) {
 			var buttons = 0;
 			if (this._map['mouse']) {
-				buttons |= e.button === app.JSButtons.left ? app.LOButtons.left : 0;
-				buttons |= e.button === app.JSButtons.middle ? app.LOButtons.middle : 0;
-				buttons |= e.button === app.JSButtons.right ? app.LOButtons.right : 0;
+				buttons |= e.buttons === app.JSButtons.left ? app.LOButtons.left : 0;
+				buttons |= e.buttons === app.JSButtons.middle ? app.LOButtons.middle : 0;
+				buttons |= e.buttons === app.JSButtons.right ? app.LOButtons.right : 0;
 			} else {
 				buttons = 1;
 			}
