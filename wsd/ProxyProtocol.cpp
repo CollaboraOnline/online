@@ -40,24 +40,25 @@ void DocumentBroker::handleProxyRequest(
 {
     std::shared_ptr<ClientSession> clientSession;
     if (requestDetails.equals(RequestDetails::Field::Command, "open"))
-        return proxyOpenRequest(socket, clientSession, id, uriPublic, isReadOnly, requestDetails);
-    else
     {
-        const std::string sessionId = requestDetails.getField(RequestDetails::Field::SessionId);
-        LOG_TRC("proxy: find session for " << _docKey << " with id " << sessionId);
-        for (const auto &it : _sessions)
+        return proxyOpenRequest(socket, clientSession, id, uriPublic, isReadOnly, requestDetails);
+    }
+
+    const std::string sessionId = requestDetails.getField(RequestDetails::Field::SessionId);
+    LOG_TRC("proxy: find session for " << _docKey << " with id " << sessionId);
+    for (const auto& it : _sessions)
+    {
+        if (it.second->getOrCreateProxyAccess() == sessionId)
         {
-            if (it.second->getOrCreateProxyAccess() == sessionId)
-            {
-                clientSession = it.second;
-                break;
-            }
+            clientSession = it.second;
+            break;
         }
-        if (!clientSession)
-        {
-            LOG_ERR("Invalid session id used " << sessionId);
-            throw BadRequestException("invalid session id");
-        }
+    }
+
+    if (!clientSession)
+    {
+        LOG_ERR("Invalid session id used " << sessionId);
+        throw BadRequestException("invalid session id");
     }
 
     auto protocol = clientSession->getProtocol();
