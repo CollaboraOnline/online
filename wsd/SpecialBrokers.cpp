@@ -95,7 +95,13 @@ bool ConvertToBroker::startConversion(SocketDisposition& disposition, const std:
         std::static_pointer_cast<ConvertToBroker>(shared_from_this());
 
     // Create a session to load the document.
-    const bool isReadOnly = docBroker->isReadOnly();
+    bool isReadOnly = docBroker->isReadOnly();
+    if (isReadOnly && additionalFileUrisPublic.contains("compare"))
+    {
+        // Comparing means modifying the new document to have redlines against the baseline, so all
+        // this to modify the throwaway document model.
+        isReadOnly = false;
+    }
     // FIXME: associate this with moveSocket (?)
     std::shared_ptr<ProtocolHandlerInterface> nullPtr;
     RequestDetails requestDetails("convert-to");
@@ -193,6 +199,18 @@ void ConvertToBroker::setLoaded()
 
     if (isGetThumbnail())
         return;
+
+    auto it = getAdditionalFileUrisJailed().find("compare");
+    if (it != getAdditionalFileUrisJailed().end())
+    {
+        // We have a baseline to compare against, do that before saving.
+        std::string unoCmd =
+            "uno .uno:CompareDocuments { \"URL\": { \"type\": \"string\", \"value\": \"" +
+            it->second +
+            "\" }, \"NoAcceptDialog\": { \"type\": \"boolean\", \"value\": \"true\" } }";
+        std::vector<char> unoRequest(unoCmd.begin(), unoCmd.end());
+        _clientSession->handleMessage(unoRequest);
+    }
 
     // FIXME: Check for security violations.
     Poco::Path toPath(getPublicUri().getPath());
