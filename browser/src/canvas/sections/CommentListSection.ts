@@ -1208,7 +1208,7 @@ export class CommentSection extends CanvasSectionObject {
 								this.modify.call(this, options.$trigger[0].annotation);
 							}.bind(this)
 						},
-						reply: (docLayer._docType !== 'text' && docLayer._docType !== 'presentation') ? undefined : {
+						reply: (docLayer._docType !== 'text') ? undefined : {
 							name: _('Reply'),
 							callback: function (key: any, options: any) {
 								this.reply.call(this, options.$trigger[0].annotation);
