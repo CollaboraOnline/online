@@ -91,8 +91,18 @@ class EditWidget {
 
 		if (data.placeholder) {
 			edit.setAttribute('placeholder', data.placeholder);
-			edit.setAttribute('aria-label', data.placeholder);
 		}
+
+		data.aria = data.aria || {};
+		if (!data.aria.label) data.aria.label = data.placeholder;
+
+		JSDialog.SetupA11yLabelForLabelableElement(
+			parentContainer,
+			edit,
+			data,
+			builder,
+		);
+
 		return result;
 	}
 
