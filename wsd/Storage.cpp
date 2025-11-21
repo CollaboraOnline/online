@@ -221,7 +221,7 @@ StorageBase::StorageType StorageBase::validate(const Poco::URI& uri,
 
 std::unique_ptr<StorageBase> StorageBase::create(const Poco::URI& uri, const std::string& jailRoot,
                                                  const std::string& jailPath, bool takeOwnership,
-                                                 const Poco::URI& templateOptionUri)
+                                                 const AdditionalFilePocoUris& additionalFileUrisPublic)
 {
     // FIXME: By the time this gets called we have already sent to the client three
     // 'progress:' messages: "id":"find", "id":"connect" and "id":"ready". We should ideally do the checks
@@ -257,7 +257,7 @@ std::unique_ptr<StorageBase> StorageBase::create(const Poco::URI& uri, const std
             break;
 
         case StorageBase::StorageType::Conversion:
-            return std::make_unique<LocalStorage>(uri, jailRoot, jailPath, /*takeOwnership=*/true, templateOptionUri);
+            return std::make_unique<LocalStorage>(uri, jailRoot, jailPath, /*takeOwnership=*/true, additionalFileUrisPublic);
             break;
 
 #if ENABLE_LOCAL_FILESYSTEM
@@ -308,24 +308,24 @@ std::string LocalStorage::downloadStorageFileToLocal(const Authorization& /*auth
                                                      LockContext& /*lockCtx*/,
                                                      const std::string& /*templateUri*/,
                                                      [[maybe_unused]]
-                                                     std::string& templateOptionLocalPath)
+                                                     AdditionalFilePaths& additionalFileLocalPaths)
 {
 #if !MOBILEAPP
     // /chroot/jailId/user/doc/childId/file.ext
     const std::string filename = Poco::Path(getUri().getPath()).getFileName();
-    std::string templateOptionFilename;
-    if (!getTemplateOptionUri().empty())
+    AdditionalFilePaths additionalFileFilenames;
+    for (const auto& it : getAdditionalFileUris())
     {
-        templateOptionFilename = Poco::Path(getTemplateOptionUri().getPath()).getFileName();
+        additionalFileFilenames[it.first] = Poco::Path(it.second.getPath()).getFileName();
     }
     setRootFilePath(Poco::Path(getLocalRootPath(), filename).toString());
     setRootFilePathAnonym(COOLWSD::anonymizeUrl(getRootFilePath()));
     LOG_INF("Public URI [" << COOLWSD::anonymizeUrl(getUri().getPath()) <<
             "] jailed to [" << getRootFilePathAnonym() << "].");
-    std::string templateOptionJailedFilePath;
-    if (!getTemplateOptionUri().empty())
+    AdditionalFilePaths additionalFileJailedFilePaths;
+    for (const auto& it : additionalFileFilenames)
     {
-        templateOptionJailedFilePath = Poco::Path(getLocalRootPath(), templateOptionFilename).toString();
+        additionalFileJailedFilePaths[it.first] = Poco::Path(getLocalRootPath(), it.second).toString();
     }
 
     // Despite the talk about URIs it seems that _uri is actually just a pathname here
@@ -335,7 +335,11 @@ std::string LocalStorage::downloadStorageFileToLocal(const Authorization& /*auth
         LOG_ERR("Local file URI [" << publicFilePath << "] invalid or doesn't exist.");
         throw BadRequestException("Invalid URI: " + getUri().toString());
     }
-    std::string templateOptionPublicFilePath = getTemplateOptionUri().getPath();
+    AdditionalFilePaths additionalFilePublicFilePaths;
+    for (const auto& it : getAdditionalFileUris())
+    {
+        additionalFilePublicFilePaths[it.first] = it.second.getPath();
+    }
 
     // Make sure the path is valid.
     const Poco::Path downloadPath = Poco::Path(getRootFilePath()).parent();
@@ -359,12 +363,12 @@ std::string LocalStorage::downloadStorageFileToLocal(const Authorization& /*auth
             if (FileUtil::isEmptyDirectory(dir))
                 FileUtil::removeFile(dir);
 
-            if (!templateOptionPublicFilePath.empty())
+            for (const auto& it : additionalFilePublicFilePaths)
             {
-                Poco::File(templateOptionPublicFilePath).moveTo(templateOptionJailedFilePath);
-                const std::string templateOptionDir = Poco::Path(templateOptionPublicFilePath).parent().toString();
-                if (FileUtil::isEmptyDirectory(dir))
-                    FileUtil::removeFile(dir);
+                Poco::File(it.second).moveTo(additionalFileJailedFilePaths[it.first]);
+                const std::string additionalFileDir = Poco::Path(it.second).parent().toString();
+                if (FileUtil::isEmptyDirectory(additionalFileDir))
+                    FileUtil::removeFile(additionalFileDir);
             }
         }
         catch (const Poco::Exception& exc)
@@ -409,14 +413,14 @@ std::string LocalStorage::downloadStorageFileToLocal(const Authorization& /*auth
     // Now return the jailed path.
     if (COOLWSD::NoCapsForKit)
     {
-        if (!getTemplateOptionUri().empty())
-            templateOptionLocalPath = templateOptionJailedFilePath;
+        for (const auto& it : additionalFileJailedFilePaths)
+            additionalFileLocalPaths[it.first] = it.second;
         return getRootFilePath();
     }
     else
     {
-        if (!getTemplateOptionUri().empty())
-            templateOptionLocalPath = Poco::Path(getJailPath(), templateOptionFilename).toString();
+        for (const auto& it : additionalFileFilenames)
+            additionalFileLocalPaths[it.first] = Poco::Path(getJailPath(), it.second).toString();
         return Poco::Path(getJailPath(), filename).toString();
     }
 

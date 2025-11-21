@@ -361,7 +361,7 @@ public:
     bool isAsyncUploading() const;
 
     Poco::URI getPublicUri() const { return _uriPublic; }
-    const std::string& getTemplateOptionUriJailed() const { return _templateOptionUriJailed; }
+    const AdditionalFilePaths& getAdditionalFileUrisJailed() const { return _additionalFileUrisJailed; }
     const std::string& getJailId() const { return _jailId; }
     const std::string& getDocKey() const { return _docKey; }
     // id of wopi shared config
@@ -662,7 +662,7 @@ private:
     /// Loads a document from the public URI into the jail.
     bool download(const std::shared_ptr<ClientSession>& session, const std::string& jailId,
                   const Poco::URI& uriPublic,
-                  const Poco::URI& templateOptionUriPublic,
+                  const AdditionalFilePocoUris& additionalFileUrisPublic,
                   std::unique_ptr<WopiStorage::WOPIFileInfo> wopiFileInfo);
 
     /// Actual document download and post-download processing.
@@ -1794,7 +1794,7 @@ private:
     const std::string _docId;
     std::string _uriJailed;
     std::string _uriJailedAnonym;
-    std::string _templateOptionUriJailed;
+    AdditionalFilePaths _additionalFileUrisJailed;
     std::string _jailId;
     std::string _filename;
 

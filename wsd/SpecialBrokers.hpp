@@ -60,7 +60,7 @@ public:
     const std::string& getLang() { return _lang; }
 
     /// Move socket to this broker for response & do conversion
-    bool startConversion(SocketDisposition& disposition, const std::string& id, const Poco::URI& templateOptionUriPublic);
+    bool startConversion(SocketDisposition& disposition, const std::string& id, const AdditionalFilePocoUris& additionalFileUrisPublic);
 
     /// When the load completes - lets start saving
     void setLoaded() override;

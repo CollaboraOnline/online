@@ -221,7 +221,7 @@ public:
     /// uri format: http://server/<...>/wopi*/files/<id>/content
     std::string downloadStorageFileToLocal(const Authorization& auth, LockContext& lockCtx,
                                            const std::string& templateUri,
-                                           std::string& templateOptionLocalPath) override;
+                                           AdditionalFilePaths& additionalFileLocalPaths) override;
 
     std::size_t
     uploadLocalFileToStorageAsync(const Authorization& auth, LockContext& lockCtx,

@@ -80,10 +80,10 @@ ClientSession::ClientSession(const std::shared_ptr<ProtocolHandlerInterface>& ws
                              const std::shared_ptr<DocumentBroker>& docBroker,
                              const Poco::URI& uriPublic, const bool readOnly,
                              const RequestDetails& requestDetails,
-                             const Poco::URI& templateOptionUriPublic)
+                             const AdditionalFilePocoUris& additionalFileUrisPublic)
     : Session(ws, "ToClient-" + id, id, readOnly)
     , _uriPublic(uriPublic)
-    , _templateOptionUriPublic(templateOptionUriPublic)
+    , _additionalFileUrisPublic(additionalFileUrisPublic)
     , _serverURL(requestDetails)
     , _auth(Authorization::create(uriPublic))
     , _docBroker(docBroker)
@@ -1836,10 +1836,10 @@ bool ClientSession::loadDocument(const char* /*buffer*/, int /*length*/,
         {
             oss << " infilterOptions=" << getInFilterOption();
         }
-        else if (!docBroker->getTemplateOptionUriJailed().empty())
+        else if (auto it = docBroker->getAdditionalFileUrisJailed().find("template"); it != docBroker->getAdditionalFileUrisJailed().end())
         {
             std::string options = R"({"TemplateURL":{"type":"string","value":")" +
-                                  docBroker->getTemplateOptionUriJailed() + "\"}}";
+                                  it->second + "\"}}";
             oss << " infilterOptions=" << options;
         }
 

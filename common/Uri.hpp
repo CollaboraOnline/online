@@ -13,6 +13,9 @@
 
 #include <string>
 #include <utility>
+#include <map>
+
+#include <Poco/URI.h>
 
 /// Represents a URI/URL with helpers to manipulate it.
 /// Intended to encapsulate, and then replace, Poco::URI.
@@ -64,5 +67,8 @@ public:
 private:
     std::string _uri;
 };
+
+using AdditionalFilePocoUris = std::map<std::string, Poco::URI>;
+using AdditionalFilePaths = std::map<std::string, std::string>;
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
