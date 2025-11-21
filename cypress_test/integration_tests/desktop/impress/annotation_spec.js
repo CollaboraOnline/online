@@ -56,7 +56,8 @@ describe(['tagdesktop'], 'Annotation Tests', function() {
 		cy.cGet('.annotation-marker').should('not.exist');
 	});
 
-	it('Reply',function() {
+	// Skipping reply tests in Impress since reply functionality is temporarily disabled.
+	it.skip('Reply',function() {
 		desktopHelper.insertComment();
 		cy.cGet('.annotation-marker').should('be.visible');
 		cy.cGet('.cool-annotation-content > div').should('contain','some text');
@@ -85,6 +86,16 @@ describe(['tagdesktop'], 'Annotation Tests', function() {
 		cy.realPress('Tab');
 		cy.cGet('.annotation-button-autosaved').should('be.visible');
 		cy.cGet('.annotation-button-delete').should('be.visible');
+	});
+
+	// This should be removed or updated once Reply is added.
+	it('Reply option should not be visible', function() {
+		desktopHelper.insertComment();
+		cy.cGet('.annotation-marker').should('exist');
+		cy.cGet('.cool-annotation-content > div').should('contain', 'some text');
+		cy.cGet('.cool-annotation-content-wrapper:visible .cool-annotation-menu').click();
+
+		cy.cGet('.context-menu-list .context-menu-item span').should('not.contain.text', 'Reply');
 	});
 });
 
@@ -132,7 +143,8 @@ describe(['tagdesktop'], 'Collapsed Annotation Tests', function() {
 		cy.cGet('.annotation-marker').should('not.exist');
 	});
 
-	it('Reply',function() {
+	// Skipping reply tests in Impress since reply functionality is temporarily disabled.
+	it.skip('Reply',function() {
 		desktopHelper.insertComment();
 		cy.cGet('.annotation-marker').should('be.visible');
 		cy.cGet('.cool-annotation-content > div').should('contain','some text');
@@ -345,7 +357,8 @@ describe(['tagdesktop'], 'Annotation Autosave Tests', function() {
 		cy.cGet('.cool-annotation-content > div').should('have.text','some text0');
 	});
 
-	it('Reply autosave',function() {
+	// Skipping reply tests in Impress since reply functionality is temporarily disabled.
+	it.skip('Reply autosave',function() {
 		desktopHelper.insertComment();
 		cy.cGet('.annotation-marker').should('be.visible');
 		cy.cGet('.cool-annotation-content > div').should('have.text','some text0');
@@ -364,7 +377,7 @@ describe(['tagdesktop'], 'Annotation Autosave Tests', function() {
 		cy.cGet('.cool-annotation-content > div').should('include.text','some reply text');
 	});
 
-	it('Reply autosave save',function() {
+	it.skip('Reply autosave save',function() {
 		desktopHelper.insertComment();
 		cy.cGet('.annotation-marker').should('be.visible');
 		cy.cGet('.cool-annotation-content > div').should('have.text','some text0');
@@ -389,7 +402,7 @@ describe(['tagdesktop'], 'Annotation Autosave Tests', function() {
 		cy.cGet('.cool-annotation-content > div').should('include.text','some reply text');
 	});
 
-	it('Reply autosave cancel',function() {
+	it.skip('Reply autosave cancel',function() {
 		desktopHelper.insertComment();
 		cy.cGet('.annotation-marker').should('be.visible');
 		cy.cGet('.cool-annotation-content > div').should('have.text','some text0');
