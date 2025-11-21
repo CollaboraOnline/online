@@ -30,7 +30,10 @@ class Bridge : public QObject
     QWebEngineView* _webView;
     int _closeNotificationPipeForForwardingThread[2];
     std::thread _app2js;
+    // the state of the document modified status as reported by the core
     bool _modified;
+    // if true, file was modified but not saved to _document._saveLocationURI
+    bool _pendingSave;
 
     void promptSaveLocation(std::function<void(const std::string&)> callback);
     bool saveDocument(const std::string& savePath);
@@ -44,6 +47,7 @@ public:
         , _webView(webView)
         , _closeNotificationPipeForForwardingThread{ -1, -1 }
         , _modified(false)
+        , _pendingSave(false)
     {
     }
 
@@ -57,6 +61,7 @@ public:
     void send2JS(const std::vector<char>& buffer);
 
     bool isModified() const { return _modified; }
+    bool isPendingSave() const { return _pendingSave; }
 
 public slots: // called from JavaScript
     // Called from JS via window.postMobileMessage

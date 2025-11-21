@@ -105,7 +105,7 @@ public:
 private:
     void closeEvent(QCloseEvent * ev) override {
         // prompt user if document has unsaved changes
-        if (owner_->isDocumentModified())
+        if (owner_->isDocumentModified() || owner_->isPendingSave())
         {
             QMessageBox msgBox(this);
             msgBox.setWindowTitle(QApplication::translate("WebView", "Unsaved Changes"));
@@ -355,6 +355,11 @@ void WebView::activateWindow()
 bool WebView::isDocumentModified() const
 {
     return _bridge && _bridge->isModified();
+}
+
+bool WebView::isPendingSave() const
+{
+    return _bridge && _bridge->isPendingSave();
 }
 
 void WebView::queryGnomeFontScalingUpdateZoom()

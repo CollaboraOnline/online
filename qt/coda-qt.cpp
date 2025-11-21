@@ -601,6 +601,7 @@ bool Bridge::saveDocument(const std::string& savePath)
     if (FileUtil::copyAtomic(tempPath, savePath, false))
     {
         LOG_INF("Successfully saved file to location: " << savePath);
+        _pendingSave = false;
         return true;
     }
     else
@@ -754,7 +755,15 @@ QVariant Bridge::cool(const QString& messageStr)
         if (commandName != ".uno:ModifiedStatus")
             return {};
 
+        bool previousModified = _modified;
         _modified = (object->get("state").toString() == "true");
+
+        // when modified changes from true to false, we have a save pending to the _saveLocationURI
+        if (previousModified && !_modified)
+        {
+            _pendingSave = true;
+        }
+
         LOG_TRC_NOFILE("Document modified status changed: " << (_modified ? "modified" : "unmodified"));
     }
     else if (message.starts_with(COMMANDRESULT))

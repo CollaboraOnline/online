@@ -37,6 +37,7 @@ public:
     void activateWindow();
     const Poco::URI& getSaveLocationURI() const { return _document._saveLocationURI; }
     bool isDocumentModified() const;
+    bool isPendingSave() const;
 
 private:
     // query gnome font scaling factor and apply it to the web view
