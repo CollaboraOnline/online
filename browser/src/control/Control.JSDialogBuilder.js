@@ -343,11 +343,10 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 		spinfield.setAttribute('autocomplete', 'off');
 
 		if (!data.labelledBy) {
-			builder._addAriaLabel(spinfield, data, builder);
+			JSDialog.AddAriaLabel(spinfield, data, builder);
 		}
 
 		controls['spinfield'] = spinfield;
-
 
 		if (data.unit && data.unit !== ':') {
 			var unit = window.L.DomUtil.create('span', builder.options.cssClass + ' spinfieldunit', div);
@@ -969,7 +968,7 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 				tab.textContent = title;
 				tab.setAttribute('role', 'tab');
 				tab.setAttribute('aria-controls', contentDiv.id);
-				builder._addAriaLabel(tab, item, builder);
+				JSDialog.AddAriaLabel(tab, item, builder);
 				builder._setAccessKey(tab, builder._getAccessKeyFromText(item.text));
 				builder._stressAccessKey(tab, tab.accessKey);
 
@@ -1336,7 +1335,7 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 		if (data.labelledBy) {
 			pushbutton.setAttribute('aria-labelledby', data.labelledBy);
 		} else {
-			builder._addAriaLabel(pushbutton, data, builder);
+			JSDialog.AddAriaLabel(pushbutton, data, builder);
 		}
 
 		const tooltipText = (data.aria && data.aria.label) || data.text;
@@ -1779,13 +1778,6 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 		}
 	},
 
-	_addAriaLabel(element, data, builder) {
-		if (data.aria)
-			element.setAttribute('aria-label', data.aria.label);
-		else if(data.text)
-			element.setAttribute('aria-label', builder._cleanText(data.text));
-	},
-
 	// Create a DOM node with an identifiable parent class
 	_createIdentifiable : function(type, classNames, parentContainer, data) {
 		return window.L.DomUtil.create(
@@ -1895,7 +1887,7 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 
 			itemsToSyncWithContainer.push(button);
 
-			builder._addAriaLabel(button, data, builder);
+			JSDialog.AddAriaLabel(button, data, builder);
 
 			if (!data.accessKey)
 				builder._setAccessKey(button, builder._getAccessKeyFromText(data.text));
