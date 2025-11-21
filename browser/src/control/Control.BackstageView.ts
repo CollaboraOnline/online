@@ -372,7 +372,7 @@ class BackstageView extends window.L.Class {
 		if (exportOptions.downloadAs.length > 0) {
 			this.addSectionHeader(
 				_('Export Document'),
-				_('download your documents in different formats'),
+				_('export your documents in different formats'),
 			);
 
 			const downloadAsGrid = this.createExportGridFromOptions(
