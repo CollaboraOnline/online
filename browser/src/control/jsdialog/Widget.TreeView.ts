@@ -90,8 +90,11 @@ class TreeViewControl {
 		);
 		this._container.id = data.id;
 		this._rows = new Map<string, HTMLElement>();
-		if (data.labelledBy)
-			this._container.setAttribute('aria-labelledby', data.labelledBy);
+		JSDialog.SetupA11yLabelForNonLabelableElement(
+			this._container,
+			data,
+			builder,
+		);
 		if (data.ignoreFocus !== undefined) this._ignoreFocus = data.ignoreFocus;
 	}
 

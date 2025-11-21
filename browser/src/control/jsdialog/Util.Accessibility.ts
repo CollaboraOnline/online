@@ -15,12 +15,30 @@
 
 declare var JSDialog: any;
 
+function setupA11yLabelForNonLabelableElement(
+	container: HTMLElement,
+	data: WidgetJSON,
+	builder: JSBuilder,
+) {
+	if (data.labelledBy)
+		container.setAttribute('aria-labelledby', data.labelledBy);
+	else JSDialog.AddAriaLabel(container, data, builder);
+}
+
 function addAriaLabel(element: HTMLElement, data: WidgetJSON, builder: JSBuilder) {
 	if (data.aria?.label && data.aria.label.trim())
 		element.setAttribute('aria-label', data.aria.label);
 	else if (data.text)
 		element.setAttribute('aria-label', builder._cleanText(data.text));
 }
+
+JSDialog.SetupA11yLabelForNonLabelableElement = function (
+	container: HTMLElement,
+	data: WidgetJSON,
+	builder: JSBuilder,
+) {
+	return setupA11yLabelForNonLabelableElement(container, data, builder);
+};
 
 JSDialog.AddAriaLabel = function (
 	element: HTMLElement,
