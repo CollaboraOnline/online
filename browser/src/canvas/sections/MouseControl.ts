@@ -59,9 +59,9 @@ class MouseControl extends CanvasSectionObject {
 
 	private readButtons(e: MouseEvent) {
 		let buttons = 0;
-		buttons |= e.button === app.JSButtons.left ? app.LOButtons.left : 0;
-		buttons |= e.button === app.JSButtons.middle ? app.LOButtons.middle : 0;
-		buttons |= e.button === app.JSButtons.right ? app.LOButtons.right : 0;
+		buttons |= e.buttons === app.JSButtons.left ? app.LOButtons.left : 0;
+		buttons |= e.buttons === app.JSButtons.middle ? app.LOButtons.middle : 0;
+		buttons |= e.buttons === app.JSButtons.right ? app.LOButtons.right : 0;
 
 		return buttons;
 	}
@@ -423,7 +423,9 @@ class MouseControl extends CanvasSectionObject {
 
 		if (!(<any>window).mode.isDesktop()) app.map.fire('closemobilewizard');
 
-		let buttons = this.readButtons(e);
+		// Right click is not supported. And click event doesn't have "buttons" property set. Safe to set it here to default.
+		let buttons = app.JSButtons.left;
+
 		let modifier = this.readModifier(e);
 		const sendingPosition = this.currentPosition.clone();
 
