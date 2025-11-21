@@ -58,10 +58,10 @@ public:
         config.setBool("storage.filesystem[@allow]", false);
     }
 
-    void sendConvertTo(std::unique_ptr<Poco::Net::HTTPClientSession>& session, const std::string& filename, bool isTemplate = false)
+    void sendConvertTo(std::unique_ptr<Poco::Net::HTTPClientSession>& session, const std::string& filename, bool isTemplate = false, bool isCompare = false)
     {
         std::string uri;
-        if (isTemplate)
+        if (isTemplate || isCompare)
         {
             uri = "/cool/convert-to";
         }
@@ -80,6 +80,14 @@ public:
             std::string templatePath = Poco::Path(TDOC, "template.docx").toString();
             form.addPart("template", new Poco::Net::FilePartSource(templatePath));
         }
+        else if (isCompare)
+        {
+            form.set("format", "rtf");
+            std::string dataPath = Poco::Path(TDOC, filename).toString();
+            form.addPart("data", new Poco::Net::FilePartSource(dataPath));
+            std::string comparePath = Poco::Path(TDOC, "old.docx").toString();
+            form.addPart("compare", new Poco::Net::FilePartSource(comparePath));
+        }
         else
         {
             form.set("format", "txt");
@@ -89,7 +97,7 @@ public:
         form.write(session->sendRequest(request));
     }
 
-    bool checkConvertTo(std::unique_ptr<Poco::Net::HTTPClientSession>& session, bool isTemplate = false)
+    bool checkConvertTo(std::unique_ptr<Poco::Net::HTTPClientSession>& session, bool isTemplate = false, bool isCompare = false)
     {
         Poco::Net::HTTPResponse response;
         std::stringstream stringStream;
@@ -101,7 +109,7 @@ public:
         }
 
         bool ret = response.getStatus() == Poco::Net::HTTPResponse::HTTPStatus::HTTP_OK;
-        if (!ret || !isTemplate)
+        if (!ret || !(isTemplate || isCompare))
         {
             if (!ret)
             {
@@ -112,16 +120,33 @@ public:
         }
 
         std::string responseString = stringStream.str();
-        if (responseString.find("DOCTYPE html") == std::string::npos)
+        if (isTemplate)
         {
-            TST_LOG("checkConvertTo: output is not HTML");
-            return false;
-        }
+            if (responseString.find("DOCTYPE html") == std::string::npos)
+            {
+                TST_LOG("checkConvertTo: output is not HTML");
+                return false;
+            }
 
-        if (responseString.find("background: #156082") == std::string::npos)
+            if (responseString.find("background: #156082") == std::string::npos)
+            {
+                TST_LOG("checkConvertTo: no template color in output");
+                return false;
+            }
+        }
+        else if (isCompare)
         {
-            TST_LOG("checkConvertTo: no template color in output");
-            return false;
+            if (!responseString.starts_with("{\\rtf"))
+            {
+                TST_LOG("checkConvertTo: output is not RTF");
+                return false;
+            }
+
+            if (responseString.find("\\deleted") == std::string::npos)
+            {
+                TST_LOG("checkConvertTo: no old content in output");
+                return false;
+            }
         }
 
         return true;
@@ -159,6 +184,18 @@ public:
                 // Without the accompanying fix in place, this test would have failed with:
                 // checkConvertTo: no template color in output
                 if(!checkConvertTo(session, /*isTemplate=*/true))
+                {
+                    exitTest(TestResult::Failed);
+                    return;
+                }
+
+                // Given a current docx + old docx:
+                // When comparing those documents and saving the result as RTF:
+                sendConvertTo(session, "new.docx", /*isTemplate=*/false, /*isCompare=*/true);
+                // Then make sure the output has content from the old document, too:
+                // Without the accompanying fix in place, this test would have failed with:
+                // checkConvertTo: no old content in output
+                if(!checkConvertTo(session, /*isTemplate=*/false, /*isCompare=*/true))
                 {
                     exitTest(TestResult::Failed);
                     return;
