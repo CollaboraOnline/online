@@ -2166,7 +2166,7 @@ bool ClientRequestDispatcher::handlePostRequest(const RequestDetails& requestDet
         {
             Poco::URI uriPublic = RequestDetails::sanitizeURI(fromPath);
             AdditionalFilePocoUris additionalFileUrisPublic;
-            for (const auto& key : {"template"})
+            for (const auto& key : {"template", "compare"})
             {
                 it = fromPaths.find(key);
                 if (it == fromPaths.end())
