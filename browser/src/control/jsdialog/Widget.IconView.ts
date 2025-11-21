@@ -195,8 +195,7 @@ JSDialog.iconView = function (
 	container.id = data.id;
 	container.setAttribute('role', 'listbox');
 
-	if (data.labelledBy)
-		container.setAttribute('aria-labelledby', data.labelledBy);
+	JSDialog.SetupA11yLabelForNonLabelableElement(container, data, builder);
 
 	const disabled = data.enabled === false;
 	if (disabled) window.L.DomUtil.addClass(container, 'disabled');
