@@ -956,7 +956,7 @@ void DocumentBroker::stop(const std::string& reason)
 bool DocumentBroker::download(
     const std::shared_ptr<ClientSession>& session, const std::string& jailId,
     const Poco::URI& uriPublic,
-    const Poco::URI& templateOptionUriPublic,
+    const AdditionalFilePocoUris& additionalFileUrisPublic,
     [[maybe_unused]] std::unique_ptr<WopiStorage::WOPIFileInfo> wopiFileInfo)
 {
     ASSERT_CORRECT_THREAD();
@@ -1010,7 +1010,7 @@ bool DocumentBroker::download(
         {
             _storage = StorageBase::create(uriPublic, jailRoot, jailPath.toString(),
                                            /*takeOwnership=*/isConvertTo(),
-                                           templateOptionUriPublic);
+                                           additionalFileUrisPublic);
         }
         catch (...)
         {
@@ -1284,8 +1284,8 @@ bool DocumentBroker::doDownloadDocument(const Authorization& auth,
 
     LOG_DBG("Download file for docKey [" << _docKey << ']');
     std::chrono::steady_clock::time_point start = std::chrono::steady_clock::now();
-    std::string templateOptionLocalPath;
-    std::string localPath = _storage->downloadStorageFileToLocal(auth, *_lockCtx, templateSource, templateOptionLocalPath);
+    AdditionalFilePaths additionalFileLocalPaths;
+    std::string localPath = _storage->downloadStorageFileToLocal(auth, *_lockCtx, templateSource, additionalFileLocalPaths);
     if (localPath.empty())
     {
         throw std::runtime_error("Failed to retrieve document from storage");
@@ -1322,11 +1322,11 @@ bool DocumentBroker::doDownloadDocument(const Authorization& auth,
     _uriJailed = Poco::URI(Poco::URI("file://"), localPathEncoded).toString();
     _uriJailedAnonym =
         Poco::URI(Poco::URI("file://"), COOLWSD::anonymizeUrl(localPathEncoded)).toString();
-    if (!templateOptionLocalPath.empty())
+    for (const auto& it : additionalFileLocalPaths)
     {
-        std::string templateOptionLocalPathEncoded;
-        Poco::URI::encode(templateOptionLocalPath, "#?", templateOptionLocalPathEncoded);
-        _templateOptionUriJailed = Poco::URI(Poco::URI("file://"), templateOptionLocalPathEncoded).toString();
+        std::string additionalFileLocalPathEncoded;
+        Poco::URI::encode(it.second, "#?", additionalFileLocalPathEncoded);
+        _additionalFileUrisJailed[it.first] = Poco::URI(Poco::URI("file://"), additionalFileLocalPathEncoded).toString();
     }
 
     _filename = filename;
@@ -3855,7 +3855,7 @@ std::size_t DocumentBroker::addSession(const std::shared_ptr<ClientSession>& ses
     {
         // First, download the document, since this can fail.
         if (!download(session, _childProcess->getJailId(), session->getPublicUri(),
-                      session->getTemplateOptionPublicUri(),
+                      session->getAdditionalFilePublicUri(),
                       std::move(wopiFileInfo)))
         {
             const auto msg = "Failed to load document with URI [" + session->getPublicUri().toString() + "].";

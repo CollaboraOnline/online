@@ -89,7 +89,7 @@ ConvertToBroker::ConvertToBroker(const std::string& uri, const Poco::URI& uriPub
 
 ConvertToBroker::~ConvertToBroker() {}
 
-bool ConvertToBroker::startConversion(SocketDisposition& disposition, const std::string& id, const Poco::URI& templateOptionUriPublic)
+bool ConvertToBroker::startConversion(SocketDisposition& disposition, const std::string& id, const AdditionalFilePocoUris& additionalFileUrisPublic)
 {
     std::shared_ptr<ConvertToBroker> docBroker =
         std::static_pointer_cast<ConvertToBroker>(shared_from_this());
@@ -101,7 +101,7 @@ bool ConvertToBroker::startConversion(SocketDisposition& disposition, const std:
     RequestDetails requestDetails("convert-to");
     _clientSession = std::make_shared<ClientSession>(nullPtr, id, docBroker, getPublicUri(),
                                                      isReadOnly, requestDetails,
-                                                     templateOptionUriPublic);
+                                                     additionalFileUrisPublic);
     _clientSession->construct();
 
     docBroker->setupTransfer(

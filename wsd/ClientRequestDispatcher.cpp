@@ -243,10 +243,10 @@ public:
 class ConvertToPartHandler : public Poco::Net::PartHandler
 {
     /// Parameter name -> filename map.
-    std::map<std::string, std::string> _filenames;
+    AdditionalFilePaths _filenames;
 
 public:
-    const std::map<std::string, std::string>& getFilenames() const { return _filenames; }
+    const AdditionalFilePaths& getFilenames() const { return _filenames; }
 
     /// Afterwards someone else is responsible for cleaning that up.
     void takeFiles() { _filenames.clear(); }
@@ -2148,7 +2148,7 @@ bool ClientRequestDispatcher::handlePostRequest(const RequestDetails& requestDet
         if (requestDetails.equals(1, "convert-to") && format.empty())
             hasRequiredParameters = false;
 
-        const std::map<std::string, std::string> fromPaths = handler.getFilenames();
+        const AdditionalFilePaths& fromPaths = handler.getFilenames();
         std::string fromPath;
         auto it = fromPaths.find("data");
         if (it != fromPaths.end())
@@ -2165,16 +2165,16 @@ bool ClientRequestDispatcher::handlePostRequest(const RequestDetails& requestDet
         if (!fromPath.empty() && hasRequiredParameters)
         {
             Poco::URI uriPublic = RequestDetails::sanitizeURI(fromPath);
-            Poco::URI templateOptionUriPublic;
-            std::string templateOptionFromPath;
-            it = fromPaths.find("template");
-            if (it != fromPaths.end())
+            AdditionalFilePocoUris additionalFileUrisPublic;
+            for (const auto& key : {"template"})
             {
-                templateOptionFromPath = it->second;
-            }
-            if (!templateOptionFromPath.empty())
-            {
-                templateOptionUriPublic = RequestDetails::sanitizeURI(templateOptionFromPath);
+                it = fromPaths.find(key);
+                if (it == fromPaths.end())
+                {
+                    continue;
+                }
+
+                additionalFileUrisPublic[key] = RequestDetails::sanitizeURI(it->second);
             }
             const std::string docKey = RequestDetails::getDocKey(uriPublic);
 
@@ -2248,7 +2248,7 @@ bool ClientRequestDispatcher::handlePostRequest(const RequestDetails& requestDet
             LOG_TRC("Have " << DocBrokers.size() << " DocBrokers after inserting [" << docKey
                             << "].");
 
-            if (!docBroker->startConversion(disposition, _id, templateOptionUriPublic))
+            if (!docBroker->startConversion(disposition, _id, additionalFileUrisPublic))
             {
                 LOG_WRN("Failed to create Client Session with id [" << _id << "] on docKey ["
                                                                     << docKey << "].");

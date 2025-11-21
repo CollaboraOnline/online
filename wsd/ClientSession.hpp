@@ -37,7 +37,7 @@ public:
     ClientSession(const std::shared_ptr<ProtocolHandlerInterface>& ws, const std::string& id,
                   const std::shared_ptr<DocumentBroker>& docBroker, const Poco::URI& uriPublic,
                   bool isReadOnly, const RequestDetails& requestDetails,
-                  const Poco::URI& templateOptionUriPublic = Poco::URI());
+                  const AdditionalFilePocoUris& additionalFileUrisPublic = {});
     void construct();
     virtual ~ClientSession();
 
@@ -176,7 +176,7 @@ public:
     /// the URI of the initial request.
     const Poco::URI& getPublicUri() const { return _uriPublic; }
 
-    const Poco::URI& getTemplateOptionPublicUri() const { return _templateOptionUriPublic; }
+    const AdditionalFilePocoUris& getAdditionalFilePublicUri() const { return _additionalFileUrisPublic; }
 
     /// The access token of this session.
     const Authorization& getAuthorization() const { return _auth; }
@@ -396,7 +396,7 @@ private:
     /// URI with which client made request to us
     const Poco::URI _uriPublic;
 
-    const Poco::URI _templateOptionUriPublic;
+    const AdditionalFilePocoUris _additionalFileUrisPublic;
 
     SenderQueue<std::shared_ptr<Message>> _senderQueue;
 
