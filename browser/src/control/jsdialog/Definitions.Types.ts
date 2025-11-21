@@ -27,6 +27,7 @@ interface WidgetJSON {
 	width?: string; // inside grid - width in number of columns
 	labelledBy?: string;
 	allyRole?: string;
+	aria?: AriaLabelAttributes; // ARIA Label attributes
 }
 
 interface JSBuilderOptions {
@@ -362,6 +363,11 @@ interface CheckboxWidgetJSON extends WidgetJSON {
 	command?: string; // used to just execute uno command or dispatch command instead of sending message
 	checked?: boolean; // checkbox state
 	hidden?: boolean;
+}
+
+interface AriaLabelAttributes {
+	label?: string;
+	description?: string;
 }
 
 interface SeparatorWidgetJSON extends WidgetJSON {
