@@ -125,7 +125,7 @@ private:
     bool _isWebSocket : 1;
     bool _closeConnection : 1;
 
-    static Method stringToMethod(std::string const & method);
+    static Method stringToMethod(std::string_view method);
 
     void dehexify();
     void processURI();
