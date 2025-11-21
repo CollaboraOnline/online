@@ -1535,16 +1535,20 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 		const labelableElements = ['INPUT', 'SELECT', 'TEXTAREA', 'BUTTON', 'METER', 'OUTPUT', 'PROGRESS'];
 
 		const updateLabelForAttribute = function(label, labelledControl) {
-			if (labelledControl.hasAttribute('aria-labelledby')) {
-				label.removeAttribute('for');
-			} else if (!labelableElements.includes(labelledControl.nodeName)
-				|| (labelledControl.nodeName === 'INPUT' && labelledControl.type === 'hidden')) {
-				// Use 'aria-labelledby' instead of 'for' for non-labelable elements
-				labelledControl.setAttribute('aria-labelledby', label.id);
-				label.removeAttribute('for');
-			} else {
+			const isLabelable = labelableElements.includes(labelledControl.nodeName);
+			const isHiddenInput = labelledControl.nodeName === 'INPUT' && labelledControl.type === 'hidden';
+
+			// For labelable element always use htmlFor
+			if (isLabelable && !isHiddenInput) {
+				labelledControl.removeAttribute('aria-labelledby');
+				labelledControl.removeAttribute('aria-label');
 				label.htmlFor = labelledControl.id;
+				return;
 			}
+
+			// For non-labelable element or hidden input always use aria-labelledby
+			labelledControl.setAttribute('aria-labelledby', label.id);
+			label.removeAttribute('for');
 		};
 
 		app.layoutingService.appendLayoutingTask(function () {
