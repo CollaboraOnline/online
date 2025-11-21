@@ -152,7 +152,8 @@ RequestDetails::RequestDetails(const std::string& wopiSrc, const std::vector<std
     processURI();
 }
 
-RequestDetails::Method RequestDetails::stringToMethod(std::string const & method) {
+RequestDetails::Method RequestDetails::stringToMethod(const std::string_view method)
+{
     if (method == "GET") {
         return Method::GET;
     } else if (method == "HEAD") {
