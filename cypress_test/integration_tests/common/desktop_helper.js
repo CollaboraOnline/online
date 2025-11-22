@@ -325,8 +325,8 @@ function toggleComments(resolved = false) {
 	var mode = Cypress.env('USER_INTERFACE');
 	if (mode === 'notebookbar') {
 		cy.cGet('#Review-tab-label').click();
-		if (resolved) cy.cGet('#review-show-resolved-annotations').click();
-		else cy.cGet('#showannotations').click();
+		if (resolved) getNbIcon('ShowResolvedAnnotations', 'Review').click();
+		else cy.cGet('.showannotations').click();
 		// to avoid notebookbar collapse in subsequent calls to toggleComments.
 		cy.cGet('#Home-tab-label').click();
 	} else {

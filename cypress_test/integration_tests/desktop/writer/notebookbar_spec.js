@@ -21,7 +21,7 @@ describe(['tagdesktop'], 'Notebookbar tests.', function() {
 	it('Apply bold font from dropdown in Format tab', function() {
 		helper.setDummyClipboardForCopy();
 		cy.cGet('.notebookbar #Format-tab-label').click();
-		cy.cGet('.notebookbar .unoFormatMenu .unoarrow').click();
+		desktopHelper.getNbIconArrow('FormatMenu', 'Format').click();
 		cy.cGet('#format-FormatMenu-dropdown').should('exist');
 		cy.cGet('#format-FormatMenu-dropdown #format-FormatMenu-entry-0').click(); // Bold
 		cy.cGet('#format-FormatMenu-dropdown').should('not.exist');

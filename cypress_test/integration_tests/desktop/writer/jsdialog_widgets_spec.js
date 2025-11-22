@@ -1,12 +1,13 @@
 /* global describe it cy require beforeEach */
 
 var helper = require('../../common/helper');
+var desktopHelper = require('../../common/desktop_helper');
 
 describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'JSDialog widgets visual tests', function() {
 	beforeEach(function() {
 		helper.setupAndLoadDocument('writer/help_dialog.odt');
 		cy.cGet('#Help-tab-label').click();
-		cy.cGet('#about-button').click();
+		desktopHelper.getNbIcon('About', 'Help').click();
 
 		cy.cGet('#modal-dialog-about-dialog-box')
 			.should('be.visible')
