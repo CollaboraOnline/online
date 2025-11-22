@@ -943,7 +943,7 @@ bool ChildSession::loadDocument(const StringVector& tokens)
     {
         Parser parser;
         Poco::Dynamic::Var var = parser.parse(getDocOptions());
-        Object::Ptr object = var.extract<Object::Ptr>();
+        const Object::Ptr& object = var.extract<Object::Ptr>();
         Poco::Dynamic::Var rendering = object->get("rendering");
         if (!rendering.isEmpty())
             renderOpts = rendering.toString();
@@ -3682,7 +3682,7 @@ void ChildSession::loKitCallback(const int type, const std::string& payload)
     {
         Parser parser;
         Poco::Dynamic::Var var = parser.parse(payload);
-        Object::Ptr object = var.extract<Object::Ptr>();
+        const Object::Ptr& object = var.extract<Object::Ptr>();
 
         auto commandName = object->get("commandName");
         auto success = object->get("success");
@@ -3739,7 +3739,7 @@ void ChildSession::loKitCallback(const int type, const std::string& payload)
             LOG_ERR("CALLBACK_ERROR: " << payload);
             Parser parser;
             Poco::Dynamic::Var var = parser.parse(payload);
-            Object::Ptr object = var.extract<Object::Ptr>();
+            const Object::Ptr& object = var.extract<Object::Ptr>();
 
             sendTextFrameAndLogError("error: cmd=" + object->get("cmd").toString() +
                     " kind=" + object->get("kind").toString() + " code=" + object->get("code").toString());
