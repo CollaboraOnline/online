@@ -47,7 +47,7 @@ public:
     };
 
 private:
-    typedef std::vector<std::vector<char>> BufferQueue;
+    using BufferQueue = std::vector<std::vector<char>>;
 
     std::vector<char> pop(BufferQueue &queue)
     {

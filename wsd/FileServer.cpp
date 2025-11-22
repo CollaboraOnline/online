@@ -586,7 +586,7 @@ bool FileServerRequestHandler::isAdminLoggedIn(const HTTPRequest& request, http:
     }
 
     // pair consist of type and path of the item which usually resides test/data folder
-    typedef std::pair<std::string, std::string> asset;
+    using asset = std::pair<std::string, std::string>;
 
     //handle requests for settings.json contents
     void handlePresetRequest(const std::string& kind, const std::string& etagString,

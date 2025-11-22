@@ -221,7 +221,7 @@ static HostEntry syncResolveDNS(const std::string& addressToCheck)
 #endif
 }
 
-typedef std::unique_ptr<sockaddr, void (*)(void*)> sockaddr_ptr;
+using sockaddr_ptr = std::unique_ptr<sockaddr, void (*)(void*)>;
 
 static sockaddr_ptr dupAddrWithPort(const sockaddr* addr, socklen_t addrLen, uint16_t port)
 {

@@ -19,7 +19,7 @@
 #include <common/Png.hpp>
 #include <kit/Delta.hpp>
 
-typedef std::vector<char> Pixmap;
+using Pixmap = std::vector<char>;
 
 std::vector<Pixmap> pixmaps;
 

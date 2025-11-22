@@ -19,7 +19,7 @@
 #include <chrono>
 #include <memory>
 
-typedef std::vector<std::pair<std::string, std::string>> VecOfStringPairs;
+using VecOfStringPairs = std::vector<std::pair<std::string, std::string>>;
 
 namespace Poco {
     namespace Crypto {

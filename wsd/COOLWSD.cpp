@@ -144,7 +144,7 @@ std::vector<std::shared_ptr<ChildProcess>> NewChildren;
 std::atomic<int> TotalOutstandingForks(0);
 std::map<std::string, int> OutstandingForks;
 std::map<std::string, std::chrono::steady_clock::time_point> LastForkRequestTimes;
-typedef std::map<std::string, std::shared_ptr<ForKitProcess>> SubForKitMap;
+using SubForKitMap = std::map<std::string, std::shared_ptr<ForKitProcess>>;
 SubForKitMap SubForKitProcs;
 std::map<std::string, std::chrono::steady_clock::time_point> LastSubForKitBrokerExitTimes;
 Poco::AutoPtr<Poco::Util::XMLConfiguration> KitXmlConfig;
