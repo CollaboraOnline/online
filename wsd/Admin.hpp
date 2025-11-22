@@ -170,7 +170,7 @@ public:
     void scheduleMonitorConnect(const std::string &uri, std::chrono::steady_clock::time_point when);
 
     void sendMetrics(const std::shared_ptr<StreamSocket>& socket,
-                     const std::shared_ptr<http::Response>& response);
+                     const std::shared_ptr<http::Response>& response) const;
 
     void setViewLoadDuration(const std::string& docKey, const std::string& sessionId, std::chrono::milliseconds viewLoadDuration);
     void setDocWopiDownloadDuration(const std::string& docKey, std::chrono::milliseconds wopiDownloadDuration);

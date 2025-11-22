@@ -1034,7 +1034,7 @@ void Document::renderTiles(TileCombined &tileCombined)
     }
 }
 
-bool Document::sendFrame(const char* buffer, int length, WSOpCode opCode)
+bool Document::sendFrame(const char* buffer, int length, WSOpCode opCode) const
 {
     try
     {

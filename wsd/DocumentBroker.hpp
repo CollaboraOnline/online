@@ -274,7 +274,7 @@ public:
 
     /// setup the transfer of a socket into this DocumentBroker poll.
     void setupTransfer(SocketPoll& from, const std::weak_ptr<StreamSocket>& socket,
-                       SocketDisposition::MoveFunction transferFn);
+                       SocketDisposition::MoveFunction transferFn) const;
 
     /// Flag for termination. Note that this doesn't save any unsaved changes in the document
     void stop(const std::string& reason);
@@ -313,7 +313,7 @@ public:
     /// If not yet locked, try to lock
     bool attemptLock(ClientSession& session, std::string& failReason);
 
-    bool isDocumentChangedInStorage() { return _documentChangedInStorage; }
+    bool isDocumentChangedInStorage() const { return _documentChangedInStorage; }
 
     /// Invoked by the client to rename the document filename.
     /// Returns an error message in case of failure, otherwise an empty string.
@@ -486,7 +486,7 @@ public:
     bool forwardToChild(const std::shared_ptr<ClientSession>& session, const std::string& message,
                         bool binary = false);
 
-    int getRenderedTileCount() { return _debugRenderedTileCount; }
+    int getRenderedTileCount() const { return _debugRenderedTileCount; }
 
     /// Ask the document broker to close. Makes sure that the document is saved.
     void closeDocument(const std::string& reason);
@@ -531,16 +531,10 @@ public:
                                   const std::shared_ptr<ClientSession>& session) const;
 
     /// Broadcasts 'blockui' command to all users with an optional message.
-    void blockUI(const std::string& msg)
-    {
-        broadcastMessage("blockui: " + msg);
-    }
+    void blockUI(const std::string& msg) const { broadcastMessage("blockui: " + msg); }
 
     /// Broadcasts 'unblockui' command to all users.
-    void unblockUI()
-    {
-        broadcastMessage("unblockui: ");
-    }
+    void unblockUI() const { broadcastMessage("unblockui: "); }
 
     /// Returns true iff an initial setting by the given name is already initialized.
     bool isInitialSettingSet(const std::string& name) const;
@@ -835,7 +829,7 @@ private:
      * @param errorMsg: Long error msg (Error message from WOPI host if any)
      */
     void broadcastSaveResult(bool success, std::string_view result,
-                             const std::string& errorMsg = std::string());
+                             const std::string& errorMsg = std::string()) const;
 
     /// Broadcasts to all sessions the last modification time of the document.
     void broadcastLastModificationTime(const std::shared_ptr<ClientSession>& session = nullptr) const;
@@ -1742,7 +1736,7 @@ private:
 
     /// Apply signature view settings to the message
     std::string applySignViewSettings(const std::string& message,
-                                      const std::shared_ptr<ClientSession>& session);
+                                      const std::shared_ptr<ClientSession>& session) const;
 
     /// Apply all view settings (signature and accessibility) to the message
     std::string applyViewSetting(const std::string& message, const std::string& viewId,

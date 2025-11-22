@@ -1262,7 +1262,7 @@ void Admin::getMetrics(std::ostream& metrics) const
 }
 
 void Admin::sendMetrics(const std::shared_ptr<StreamSocket>& socket,
-                        const std::shared_ptr<http::Response>& response)
+                        const std::shared_ptr<http::Response>& response) const
 {
     std::ostringstream oss;
     getMetrics(oss);
