@@ -243,7 +243,7 @@ std::string getHumanizedBytes(unsigned long bytes)
     switch (count)
     {
         case 0:
-            unit = "";
+            unit.clear();
             break;
         case 1:
             unit = "ki";

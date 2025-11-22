@@ -4132,8 +4132,8 @@ LogUiCommands::~LogUiCommands()
     int& lineCount = _session._lastUiCmdLinesLoggedCount;
     LogUiCommandsLine& line0 = _session._lastUiCmdLinesLogged[0];
     LogUiCommandsLine& line1 = _session._lastUiCmdLinesLogged[1];
-    std::string actCmd="";
-    std::string actSubCmd="";
+    std::string actCmd;
+    std::string actSubCmd;
     bool commandHandled = false;
     // drop, or modify some of the commands
     if (_tokens->equals(0, "key"))
@@ -4145,7 +4145,7 @@ LogUiCommands::~LogUiCommands()
         {
             uint32_t keyCode=0;
             (void)_tokens->getUInt32(3,"key",keyCode);
-            actSubCmd = "";
+            actSubCmd.clear();
             if (keyCode & 8192)
                 actSubCmd += "ctrl-";
             if (keyCode & 4096)

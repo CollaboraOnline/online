@@ -77,7 +77,7 @@ public:
         os << "\t\tqueue items: " << queueSize << '\n';
 
         std::size_t repeats = 0;
-        std::string lastStr = "";
+        std::string lastStr;
         for (const Item &item : _queue)
         {
             std::string itemStr = COOLProtocol::getAbbreviatedMessage(
