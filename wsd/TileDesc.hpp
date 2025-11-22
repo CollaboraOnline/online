@@ -829,7 +829,7 @@ protected:
 class TileCombinedBuilder : public TileCombined
 {
 public:
-    TileCombinedBuilder() : TileCombined() { }
+    TileCombinedBuilder() = default;
 
     void pushRendered(const TileDesc &desc, TileWireId wireId, size_t imgSize)
     {

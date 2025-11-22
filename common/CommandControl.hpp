@@ -36,7 +36,7 @@ class LockManager
     static void generateLockedCommandList();
 
 public:
-    LockManager();
+    LockManager() = delete;
     static const std::unordered_set<std::string>& getLockedCommandList();
     static const std::string getLockedCommandListString();
 

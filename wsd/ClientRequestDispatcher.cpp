@@ -251,9 +251,9 @@ public:
     /// Afterwards someone else is responsible for cleaning that up.
     void takeFiles() { _filenames.clear(); }
 
-    ConvertToPartHandler() {}
+    ConvertToPartHandler() = default;
 
-    virtual ~ConvertToPartHandler()
+    ~ConvertToPartHandler() override
     {
         for (const auto& it : _filenames)
         {

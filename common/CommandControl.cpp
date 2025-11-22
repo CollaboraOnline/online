@@ -33,8 +33,6 @@ bool LockManager::lockHostEnabled = false;
 std::string LockManager::translationPath = std::string();
 std::string LockManager::unlockLink = std::string();
 
-LockManager::LockManager() {}
-
 void LockManager::generateLockedCommandList()
 {
 #ifdef ENABLE_FEATURE_LOCK

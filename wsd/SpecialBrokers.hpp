@@ -37,7 +37,7 @@ public:
     {
     }
 
-    virtual ~StatelessBatchBroker() {}
+    virtual ~StatelessBatchBroker() = default;
 
     /// Cleanup path and its parent
     static void removeFile(const std::string& uri);

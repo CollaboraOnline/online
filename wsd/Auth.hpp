@@ -25,7 +25,7 @@
 class AuthBase
 {
 public:
-    virtual ~AuthBase() {}
+    virtual ~AuthBase() = default;
     /// Called to acquire an access token.
     virtual const std::string getAccessToken() = 0;
 

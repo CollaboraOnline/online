@@ -53,8 +53,7 @@ bool EnableExperimental = false;
 class CoolConfig final: public XMLConfiguration
 {
 public:
-    CoolConfig()
-        {}
+    CoolConfig() = default;
 };
 
 struct AdminConfig
