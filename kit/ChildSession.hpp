@@ -117,7 +117,8 @@ public:
     {
         if (_docManager == nullptr)
         {
-            LOG_TRC("ERR dropping - client-" + getId() + ' ' + std::string(buffer, length));
+            LOG_TRC("No DocManager; dropping message to client-"
+                    << getId() << ": " << std::string_view(buffer, length));
             return false;
         }
         const auto msg = "client-" + getId() + ' ' + std::string(buffer, length);
@@ -128,7 +129,7 @@ public:
     {
         if (_docManager == nullptr)
         {
-            LOG_TRC("ERR dropping binary - client-" + getId());
+            LOG_TRC("No DocManager; dropping binary to client-" << getId());
             return false;
         }
         const auto msg = "client-" + getId() + ' ' + std::string(buffer, length);
