@@ -2461,7 +2461,7 @@ bool ChildSession::renderNextSlideLayer(SlideCompressor& scomp, const unsigned w
     bool isBitmapLayer = false;
     char* msg = nullptr;
     done = getLOKitDocument()->renderNextSlideLayer(pixmap->data(), &isBitmapLayer, &devicePixelRatio, &msg);
-    std::string jsonMsg(msg);
+    std::string jsonMsg(msg != nullptr ? msg : "");
     free(msg);
 
     if (jsonMsg.empty())
