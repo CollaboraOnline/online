@@ -826,7 +826,7 @@ protected:
     bool _hasImgSizes : 1;
 };
 
-class TileCombinedBuilder : public TileCombined
+class TileCombinedBuilder final : public TileCombined
 {
 public:
     TileCombinedBuilder() = default;

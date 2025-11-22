@@ -26,7 +26,7 @@
  key consists of all the parameters browser sends us for particular slide rendering
  value vector will be in order layers should be rendered and displayed and last message will be sliderenderingcomplete
 */
-class SlideLayerCacheMap
+class SlideLayerCacheMap final
 {
     std::unordered_map<std::string, std::vector<std::shared_ptr<Message>>> cache_map;
 
