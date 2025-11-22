@@ -9,6 +9,8 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+#include <config.h>
+
 #include "SlideCache.hpp"
 
 void SlideLayerCacheMap::insert(const std::string& key, std::shared_ptr<Message> cachedData)

@@ -11,9 +11,8 @@
 
 #pragma once
 
-#include <config.h>
-#include "Anonymizer.hpp"
-#include "StaticLogHelper.hpp"
+#include <common/Anonymizer.hpp>
+#include <common/StaticLogHelper.hpp>
 
 // Order of construction is unspecified when static objects are defined in different translation units, so
 // put globals here and include this once to specify order of construction/destruction.

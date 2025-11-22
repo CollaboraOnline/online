@@ -11,10 +11,9 @@
 
 #pragma once
 
-#include <config.h>
-#include <Clipboard.hpp>
-#include <FileServer.hpp>
-#include "wsd/COOLWSDServer.hpp"
+#include <common/Clipboard.hpp>
+#include <wsd/COOLWSDServer.hpp>
+#include <wsd/FileServer.hpp>
 
 #if !MOBILEAPP
 std::unique_ptr<ClipboardCache> COOLWSD::SavedClipboards;

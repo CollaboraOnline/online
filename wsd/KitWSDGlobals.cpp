@@ -9,8 +9,10 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-#include <Globals.hpp>
-#include <WSDGlobals.hpp>
+#include <config.h>
+
+#include <common/Globals.hpp>
 #include <kit/KitGlobals.hpp>
+#include <wsd/WSDGlobals.hpp>
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
