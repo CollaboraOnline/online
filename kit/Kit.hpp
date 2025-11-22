@@ -221,28 +221,27 @@ public:
 
     void renderTiles(TileCombined& tileCombined);
 
-
-    bool sendTextFrame(const std::string& message)
+    bool sendTextFrame(const std::string& message) const
     {
         return sendFrame(message.data(), message.size());
     }
 
-    bool sendFrame(const char* buffer, int length, WSOpCode opCode = WSOpCode::Text);
+    bool sendFrame(const char* buffer, int length, WSOpCode opCode = WSOpCode::Text) const;
 
-    void alertNotAsync()
+    void alertNotAsync() const
     {
         // load unfortunately enables inputprocessing in some cases.
         if (processInputEnabled() && !_duringLoad && !isBackgroundSaveProcess())
             notifyAll("error: cmd=notasync kind=failure");
     }
 
-    void alertAllUsers(const std::string& cmd, const std::string& kind)
+    void alertAllUsers(const std::string& cmd, const std::string& kind) const
     {
         sendTextFrame("errortoall: cmd=" + cmd + " kind=" + kind);
     }
 
     /// Notify all views with the given message
-    bool notifyAll(const std::string& msg)
+    bool notifyAll(const std::string& msg) const
     {
         // Broadcast updated viewinfo to all clients.
         return sendTextFrame("client-all " + msg);

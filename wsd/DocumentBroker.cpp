@@ -264,7 +264,7 @@ void DocumentBroker::setupTransfer(SocketDisposition &disposition,
 }
 
 void DocumentBroker::setupTransfer(SocketPoll& from, const std::weak_ptr<StreamSocket>& socket,
-                                   SocketDisposition::MoveFunction transferFn)
+                                   SocketDisposition::MoveFunction transferFn) const
 {
     from.transferSocketTo(socket, getPoll(), std::move(transferFn), nullptr);
 }
@@ -3305,7 +3305,7 @@ void DocumentBroker::handleDocumentConflict()
 }
 
 void DocumentBroker::broadcastSaveResult(bool success, const std::string_view result,
-                                         const std::string& errorMsg)
+                                         const std::string& errorMsg) const
 {
     const std::string_view resultstr = success ? "true" : "false";
     // Some sane limit, otherwise we get problems transferring this to the client with large strings (can be a whole webpage)
@@ -5116,8 +5116,9 @@ bool DocumentBroker::forwardUrpToChild(const std::string& message)
     return _childProcess && _childProcess->sendUrpMessage(message);
 }
 
-std::string DocumentBroker::applySignViewSettings(const std::string& message,
-                                                  const std::shared_ptr<ClientSession>& session)
+std::string
+DocumentBroker::applySignViewSettings(const std::string& message,
+                                      const std::shared_ptr<ClientSession>& session) const
 {
     std::string finalMsg = message;
     if (!_isViewSettingsUpdated)

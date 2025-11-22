@@ -155,7 +155,7 @@ public:
 
     void setViewRenderState(const std::string& state) { _viewRenderState = state; }
 
-    bool getDumpTiles() { return _isDumpingTiles; }
+    bool getDumpTiles() const { return _isDumpingTiles; }
 
     void setDumpTiles(bool dumpTiles) { _isDumpingTiles = dumpTiles; }
 
