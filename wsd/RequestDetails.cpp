@@ -25,6 +25,7 @@
 
 #include <sstream>
 #include <stdexcept>
+#include <utility>
 
 namespace
 {
@@ -105,13 +106,13 @@ RequestDetails::RequestDetails(http::RequestParser& request, const std::string& 
     processURI();
 }
 
-RequestDetails::RequestDetails(const std::string &mobileURI)
-    : _method(Method::GET)
+RequestDetails::RequestDetails(std::string mobileURI)
+    : _uriString(std::move(mobileURI))
+    , _method(Method::GET)
     , _isProxy(false)
     , _isWebSocket(false)
     , _closeConnection(false)
 {
-    _uriString = mobileURI;
     dehexify();
     processURI();
 }
