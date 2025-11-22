@@ -1195,7 +1195,7 @@ void insertUserNames(const std::map<int, UserInfo>& viewInfo, std::string& json)
         if (direction->get("actions").type() == typeid(Poco::JSON::Array::Ptr))
         {
             Poco::JSON::Array::Ptr actions = direction->get("actions").extract<Poco::JSON::Array::Ptr>();
-            for (auto& actionVar : *actions)
+            for (const auto& actionVar : *actions)
             {
                 Poco::JSON::Object::Ptr action = actionVar.extract<Poco::JSON::Object::Ptr>();
                 int viewId = action->getValue<int>("viewId");
@@ -2895,7 +2895,7 @@ bool ChildSession::askSignatureStatus(const char* buffer, int length, const Stri
 
     if (root)
     {
-        for (auto& chainPtr : *root->getArray("certificates"))
+        for (const auto& chainPtr : *root->getArray("certificates"))
         {
             if (!chainPtr.isString())
                 return false;
