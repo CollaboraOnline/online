@@ -323,7 +323,7 @@ public:
 
         struct TileDescParseResults
         {
-            typedef std::pair<const std::string_view, int> arg_value;
+            using arg_value = std::pair<const std::string_view, int>;
 
             arg_value args[maxEnum] = {
                 { STRINGIFY(height), 0 },
@@ -665,7 +665,7 @@ public:
 
         struct TileCombinedParseResults
         {
-            typedef std::pair<const std::string_view, int> arg_value;
+            using arg_value = std::pair<const std::string_view, int>;
 
             arg_value args[maxEnum] = {
                 { STRINGIFY(height), 0 },

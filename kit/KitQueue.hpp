@@ -32,7 +32,7 @@ public:
     };
     virtual Priority getTilePriority(const TileDesc &) const { return Priority::NORMAL; }
 
-    typedef std::pair<CanonicalViewId, float> ViewIdInactivity;
+    using ViewIdInactivity = std::pair<CanonicalViewId, float>;
     virtual std::vector<ViewIdInactivity> getViewIdsByInactivity() const { return {}; }
 };
 
@@ -43,7 +43,7 @@ class KitQueue
 
     const TilePrioritizer &_prio;
 public:
-    typedef std::vector<char> Payload;
+    using Payload = std::vector<char>;
 
     KitQueue(const TilePrioritizer &prio) : _prio(prio) { }
     ~KitQueue() { }
@@ -178,7 +178,7 @@ private:
     std::vector<Payload> _queue;
 
     /// Queues of incoming tile requests from coolwsd
-    typedef std::pair<CanonicalViewId, std::vector<TileDesc>> viewTileQueue;
+    using viewTileQueue = std::pair<CanonicalViewId, std::vector<TileDesc>>;
     std::vector<viewTileQueue> _tileQueues;
 
     /// Queue of callbacks from Kit to send out to coolwsd

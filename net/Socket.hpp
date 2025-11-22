@@ -81,7 +81,7 @@ class SocketDisposition final
     STATE_ENUM(Type, CONTINUE, CLOSED, TRANSFER);
 
 public:
-    typedef std::function<void(const std::shared_ptr<Socket> &)> MoveFunction;
+    using MoveFunction = std::function<void(const std::shared_ptr<Socket>&)>;
 
     SocketDisposition(const std::shared_ptr<Socket> &socket)
         : _socket(socket)
@@ -997,7 +997,7 @@ public:
         const std::shared_ptr<ProtocolHandlerInterface>& websocketHandler);
 #endif
 
-    typedef std::function<void()> CallbackFn;
+    using CallbackFn = std::function<void()>;
 
     /// Add a callback to be invoked in the polling thread
     void addCallback(CallbackFn fn)
