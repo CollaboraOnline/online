@@ -77,15 +77,15 @@ namespace COOLProtocol
         return false;
     }
 
-    bool getTokenInteger(const std::string_view token, const std::string_view name, int& value);
-    bool getTokenUInt32(const std::string_view token, const std::string_view name, uint32_t& value);
-    bool getTokenUInt64(const std::string_view token, const std::string_view name, uint64_t& value);
-    bool getTokenString(const std::string_view token, const std::string_view name,
-                        std::string& value);
-    bool getTokenKeyword(const std::string_view token, const std::string_view name,
+    bool getTokenInteger(std::string_view token, std::string_view name, int& value);
+    bool getTokenUInt32(std::string_view token, std::string_view name, uint32_t& value);
+    bool getTokenUInt64(std::string_view token, std::string_view name, uint64_t& value);
+    bool getTokenString(std::string_view token, std::string_view name, std::string& value);
+    bool getTokenKeyword(std::string_view token, std::string_view name,
                          const std::map<std::string, int>& map, int& value);
 
-    bool getTokenKeyword(const StringVector& tokens, const std::string_view name, const std::map<std::string, int>& map, int& value);
+    bool getTokenKeyword(const StringVector& tokens, std::string_view name,
+                         const std::map<std::string, int>& map, int& value);
 
     inline bool getTokenInteger(const StringVector& tokens, const std::string_view name,
                                 int& value)
@@ -138,7 +138,7 @@ namespace COOLProtocol
         return false;
     }
 
-    bool getTokenStringFromMessage(const std::string_view message, const std::string_view name,
+    bool getTokenStringFromMessage(std::string_view message, std::string_view name,
                                    std::string& value);
 
     inline

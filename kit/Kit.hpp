@@ -53,7 +53,7 @@ void runKitLoopInAThread();
 
 bool globalPreinit(const std::string& loTemplate);
 /// Wrapper around private Document::ViewCallback().
-void documentViewCallback(const int type, const char* p, void* data);
+void documentViewCallback(int type, const char* p, void* data);
 
 class Document;
 class DeltaGenerator;
@@ -208,7 +208,7 @@ public:
     const std::string& getUrl() const { return _url; }
 
     /// Post the message - in the unipoll world we're in the right thread anyway
-    bool postMessage(const char* data, int size, const WSOpCode code) const;
+    bool postMessage(const char* data, int size, WSOpCode code) const;
 
     bool createSession(const std::string& sessionId);
 
@@ -255,8 +255,8 @@ public:
     void trimAfterInactivity();
 
     // LibreOfficeKit callback entry points
-    static void GlobalCallback(const int type, const char* p, void* data);
-    static void ViewCallback(const int type, const char* p, void* data);
+    static void GlobalCallback(int type, const char* p, void* data);
+    static void ViewCallback(int type, const char* p, void* data);
 
 private:
     /// Helper method to broadcast callback and its payload to all clients
@@ -357,7 +357,7 @@ private:
     std::shared_ptr<lok::Document> load(const std::shared_ptr<ChildSession>& session,
                                         const std::string& renderOpts);
 
-    bool forwardToChild(const std::string_view prefix, const std::vector<char>& payload);
+    bool forwardToChild(std::string_view prefix, const std::vector<char>& payload);
 
     static std::string makeRenderParams(const std::string& renderOpts, const std::string& userName,
                                         const std::string& spellOnline, const std::string& theme,
