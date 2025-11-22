@@ -111,7 +111,6 @@
 /src/geometry/Bounds.ts
 /src/geometry/LineUtil.js
 /src/geometry/Point.ts
-/src/geometry/PolyUtil.js
 /src/geometry/Transformation.ts
 /src/layer/CalcSplitPanesContext.ts
 /src/layer/Layer.js
