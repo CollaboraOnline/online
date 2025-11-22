@@ -45,12 +45,8 @@ std::map<std::string, std::string> getParams(const std::string& uri)
 #endif // ENABLE_DEBUG
         }
 
-        std::string key = Uri::decode(param.first);
-        std::string value = Uri::decode(param.second);
-        LOG_TRC("Decoding param [" << param.first << "] = [" << param.second << "] -> [" << key
-                                   << "] = [" << value << ']');
-
-        result.emplace(std::move(key), std::move(value));
+        LOG_TRC("Found param [" << param.first << "] = [" << param.second << ']');
+        result.emplace(param);
     }
 
     return result;
@@ -230,8 +226,9 @@ void RequestDetails::processURI()
     _fields[Field::Type] = _uriString.substr(off, posDocUri - off); // The first is always the type.
     std::string uriRes = _uriString.substr(posDocUri + 1);
 
-    const auto posLastWS = uriRes.rfind("/ws");
-    // DocumentURI is the second segment in cool URIs.
+    // Cool URI 2.0 starts with /cool/ws.
+    const bool isCool2 = _pathSegs.equals(0, "cool") && _pathSegs.equals(1, "ws");
+
     if (_pathSegs.equals(0, "cool") || _pathSegs.equals(0, "wasm"))
     {
         // Find the DocumentURI proper.
@@ -247,26 +244,55 @@ void RequestDetails::processURI()
 
     _fields[Field::WOPISrc] = getParam("WOPISrc");
 
+    // DocumentURI is the second segment in cool URIs.
+    if (isCool2)
+    {
+        // The params are now part of the main URI, not a sub-section (i.e. Document-URI).
+        _docUriParams = _params;
+        _docUriParams.erase("WOPISrc"); // Remove circular reference.
+        _docUriParams.erase("compat"); // This is internal (for proxies), not for the host.
+        std::string docUri;
+        docUri.reserve(_fields[Field::WOPISrc].size() + _docUriParams.size());
+        docUri = _fields[Field::WOPISrc];
+        bool first = true;
+        for (const auto& [key, value] : _docUriParams)
+        {
+            docUri += first ? '?' : '&';
+            docUri += key;
+            docUri += '=';
+            docUri += Uri::encode(value);
+            first = false;
+        }
+
+        _fields[Field::DocumentURI] = docUri;
+    }
+
     // &compat=
     std::string compat = getParam("compat");
+    std::string lastWS = compat;
     if (!compat.empty())
         _fields[Field::Compat] = std::move(compat);
 
-    // /ws[/<sessionId>/<command>/<serial>]
-    if (posLastWS != std::string::npos)
+    if (!isCool2)
     {
-        std::string lastWS = uriRes.substr(posLastWS);
-        const auto proxyTokens = StringVector::tokenize(std::move(lastWS), '/');
+        // /ws[/<sessionId>/<command>/<serial>]
+        const auto posLastWS = uriRes.rfind("/ws");
+        if (posLastWS != std::string::npos)
+        {
+            lastWS = uriRes.substr(posLastWS + 3);
+        }
+    }
+
+    const auto proxyTokens = StringVector::tokenize(std::move(lastWS), '/');
+    if (proxyTokens.size() > 0)
+    {
+        _fields[Field::SessionId] = proxyTokens[0];
         if (proxyTokens.size() > 1)
         {
-            _fields[Field::SessionId] = proxyTokens[1];
+            _fields[Field::Command] = proxyTokens[1];
             if (proxyTokens.size() > 2)
             {
-                _fields[Field::Command] = proxyTokens[2];
-                if (proxyTokens.size() > 3)
-                {
-                    _fields[Field::Serial] = proxyTokens[3];
-                }
+                _fields[Field::Serial] = proxyTokens[2];
             }
         }
     }
