@@ -42,7 +42,7 @@ public:
     {
     }
 
-    void insert(const std::string& key, const std::shared_ptr<Message> cachedData);
+    void insert(const std::string& key, std::shared_ptr<Message> cachedData);
 
     std::size_t reduceSizeTo(std::size_t desiredSize);
 

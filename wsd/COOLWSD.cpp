@@ -4262,7 +4262,7 @@ void alertAllUsers(const std::string& msg)
 }
 #endif
 
-static void forwardSignal(const int signum);
+static void forwardSignal(int signum);
 
 #endif
 

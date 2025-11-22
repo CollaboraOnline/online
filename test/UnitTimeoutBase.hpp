@@ -113,9 +113,9 @@ public:
 class UnitTimeoutBase1 : public UnitTimeoutBase0
 {
 public:
-    TestResult testHttp(const size_t connectionLimit, const size_t connectionsCount);
-    TestResult testWSPing(const size_t connectionLimit, const size_t connectionsCount);
-    TestResult testWSDChatPing(const size_t connectionLimit, const size_t connectionsCount);
+    TestResult testHttp(size_t connectionLimit, size_t connectionsCount);
+    TestResult testWSPing(size_t connectionLimit, size_t connectionsCount);
+    TestResult testWSDChatPing(size_t connectionLimit, size_t connectionsCount);
 
     UnitTimeoutBase1(const std::string& testname_)
         : UnitTimeoutBase0(testname_)
