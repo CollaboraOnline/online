@@ -31,8 +31,6 @@ public:
     {
     }
 
-    virtual ~ProxyProtocolHandler() { }
-
     /// Will be called exactly once by setHandler
     void onConnect(const std::shared_ptr<StreamSocket>& /* socket */) override {}
 

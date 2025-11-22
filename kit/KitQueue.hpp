@@ -19,7 +19,7 @@
 class TilePrioritizer
 {
 public:
-    virtual ~TilePrioritizer() {}
+    virtual ~TilePrioritizer() = default;
 
     enum class Priority : std::int8_t {
         NONE = -1,  // an error
@@ -46,7 +46,7 @@ public:
     using Payload = std::vector<char>;
 
     KitQueue(const TilePrioritizer &prio) : _prio(prio) { }
-    ~KitQueue() { }
+    ~KitQueue() = default;
 
     KitQueue(const KitQueue&) = delete;
     KitQueue& operator=(const KitQueue&) = delete;

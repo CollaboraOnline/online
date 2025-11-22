@@ -26,10 +26,7 @@ template <typename Item>
 class SenderQueue final
 {
 public:
-
-    SenderQueue()
-    {
-    }
+    SenderQueue() = default;
 
     size_t enqueue(const Item& item)
     {
