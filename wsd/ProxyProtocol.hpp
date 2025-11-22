@@ -22,7 +22,7 @@
  *
  * we use a trivial framing: [T(ext)|B(inary)]<hex-serial->\n<hex-length>\n<content>\n
  */
-class ProxyProtocolHandler : public ProtocolHandlerInterface
+class ProxyProtocolHandler final : public ProtocolHandlerInterface
 {
 public:
     ProxyProtocolHandler() :
