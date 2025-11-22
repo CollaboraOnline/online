@@ -11,16 +11,10 @@
 
 #pragma once
 
-#include <stdexcept>
-#include <algorithm>
-#include <functional>
-#include <map>
+#include <wsd/TileDesc.hpp>
+
 #include <string>
 #include <vector>
-
-#include "Log.hpp"
-#include "TileDesc.hpp"
-#include "Protocol.hpp"
 
 class TilePrioritizer
 {

@@ -11,23 +11,21 @@
 
 #pragma once
 
-#include <atomic>
-#include <cassert>
-#include <memory>
-#include <map>
-#include <ostream>
-#include <optional>
-#include <type_traits>
+#include <common/Log.hpp>
+#include <net/Socket.hpp>
+#include <wsd/TileDesc.hpp>
 
+#include <Poco/JSON/Object.h>
 #include <Poco/Path.h>
 #include <Poco/Types.h>
-#include <Poco/JSON/Object.h>
 
-#include "Protocol.hpp"
-#include "Log.hpp"
-#include "Message.hpp"
-#include "TileCache.hpp"
-#include "WebSocketHandler.hpp"
+#include <atomic>
+#include <cassert>
+#include <map>
+#include <memory>
+#include <optional>
+#include <ostream>
+#include <type_traits>
 
 class Session;
 

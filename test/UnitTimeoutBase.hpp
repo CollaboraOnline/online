@@ -11,19 +11,18 @@
 
 #include <config.h>
 
-#include <memory>
-#include <string>
-
-#include <HttpRequest.hpp>
-#include <Socket.hpp>
+#include <common/Unit.hpp>
+#include <common/Util.hpp>
+#include <net/HttpRequest.hpp>
+#include <net/Socket.hpp>
+#include <test/helpers.hpp>
+#include <test/lokassert.hpp>
+#include <wsd/UserMessages.hpp>
 
 #include <Poco/Util/LayeredConfiguration.h>
-#include <test/lokassert.hpp>
 
-#include <Unit.hpp>
-#include <UserMessages.hpp>
-#include <Util.hpp>
-#include <helpers.hpp>
+#include <memory>
+#include <string>
 #include <vector>
 
 /// Base test suite class for timeout and connection limit using HTTP and WS sessions.

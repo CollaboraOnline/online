@@ -11,6 +11,26 @@
 
 #pragma once
 
+#include <common/Authorization.hpp>
+#include <common/Log.hpp>
+#include <common/Session.hpp>
+#include <common/SigUtil.hpp>
+#include <common/Util.hpp>
+#include <net/Socket.hpp>
+#include <wsd/QuarantineUtil.hpp>
+#include <wsd/ServerAuditUtil.hpp>
+#include <wsd/SlideCache.hpp>
+#include <wsd/Storage.hpp>
+#include <wsd/TileCache.hpp>
+#include <wsd/TileDesc.hpp>
+
+#if !MOBILEAPP
+#include <wopi/WopiStorage.hpp>
+#include <wsd/Admin.hpp>
+#else // MOBILEAPP
+#include <common/MobileApp.hpp>
+#endif // MOBILEAPP
+
 #include <atomic>
 #include <chrono>
 #include <cstddef>
@@ -21,30 +41,9 @@
 #include <string>
 #include <utility>
 
+#include <Poco/JSON/Object.h>
 #include <Poco/SharedPtr.h>
 #include <Poco/URI.h>
-#include <Poco/JSON/Object.h>
-
-#include "Authorization.hpp"
-#include "Log.hpp"
-#include "QuarantineUtil.hpp"
-#include "TileDesc.hpp"
-#include "Util.hpp"
-#include "net/Socket.hpp"
-#include "net/WebSocketHandler.hpp"
-#include "Storage.hpp"
-#include "ServerAuditUtil.hpp"
-#include "SlideCache.hpp"
-
-#include "common/SigUtil.hpp"
-#include "common/Session.hpp"
-
-#if !MOBILEAPP
-#include "Admin.hpp"
-#include <wopi/WopiStorage.hpp>
-#else // MOBILEAPP
-#include <MobileApp.hpp>
-#endif // MOBILEAPP
 
 // Forwards.
 class PrisonerRequestDispatcher;

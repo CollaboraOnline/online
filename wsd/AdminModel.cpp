@@ -12,7 +12,6 @@
 #include <config.h>
 
 #include "AdminModel.hpp"
-#include "Uri.hpp"
 
 #include <chrono>
 #include <cmath>
