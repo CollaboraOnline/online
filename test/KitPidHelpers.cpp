@@ -26,8 +26,6 @@
 #include <string>
 #include <thread>
 
-std::string getPidList(const std::set<pid_t>& pids);
-
 std::set<pid_t> helpers::getKitPids() { return COOLWSD::getKitPids(); }
 
 std::set<pid_t> helpers::getSpareKitPids() { return COOLWSD::getSpareKitPids(); }
@@ -42,6 +40,9 @@ pid_t helpers::getForKitPid()
     return pid;
 }
 
+namespace
+{
+
 std::string getPidList(const std::set<pid_t>& pids)
 {
     std::ostringstream oss;
@@ -53,6 +54,8 @@ std::string getPidList(const std::set<pid_t>& pids)
     oss << "]";
     return oss.str();
 }
+
+} // namespace
 
 void helpers::logKitProcesses(const std::string& testname)
 {
