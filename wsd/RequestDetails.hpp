@@ -133,7 +133,7 @@ private:
 public:
     RequestDetails(Poco::Net::HTTPRequest &request, const std::string& serviceRoot);
     RequestDetails(http::RequestParser& request, const std::string& serviceRoot);
-    RequestDetails(const std::string &mobileURI);
+    RequestDetails(std::string mobileURI);
 
     /// Constructs from its components.
     /// wopiSrc is typically encoded.

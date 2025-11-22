@@ -11,7 +11,7 @@
 
 #include "SlideCache.hpp"
 
-void SlideLayerCacheMap::insert(const std::string& key, const std::shared_ptr<Message> cachedData)
+void SlideLayerCacheMap::insert(const std::string& key, std::shared_ptr<Message> cachedData)
 {
     if (cache_map.contains(key))
     {
@@ -24,7 +24,7 @@ void SlideLayerCacheMap::insert(const std::string& key, const std::shared_ptr<Me
     else
         insertion_order.push_back(key);
 
-    cache_map[key].push_back(cachedData);
+    cache_map[key].emplace_back(std::move(cachedData));
     reduceSizeTo(max_size);
 }
 
