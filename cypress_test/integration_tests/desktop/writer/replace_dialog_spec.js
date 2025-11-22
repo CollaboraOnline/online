@@ -22,7 +22,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Replace Dialog Tests', fun
     it('Replace button should open search dialog with replace tab active', function() {
         cy.viewport(1920,1080);
         // Click the Replace button from the notebookbar
-        cy.cGet('#home-search-dialog-button').click();
+        cy.cGet('#Home-container [id$="search-dialog"] button').click();
         cy.cGet('#FindReplaceDialog').should('be.visible');
 
         // Verify that the replace tab is active

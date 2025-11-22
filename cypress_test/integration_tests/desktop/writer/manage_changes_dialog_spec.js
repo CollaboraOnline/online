@@ -1,6 +1,7 @@
 /* global describe it cy beforeEach require  */
 
 var helper = require('../../common/helper');
+var desktopHelper = require('../../common/desktop_helper');
 
 describe(['tagdesktop', 'tagnextcloud', 'tagscreenshot'], 'Manage Changes Dialog', function () {
 
@@ -10,8 +11,8 @@ describe(['tagdesktop', 'tagnextcloud', 'tagscreenshot'], 'Manage Changes Dialog
 
 	it('Manage changes dialog visual test', function () {
 		cy.cGet('.notebookbar #Review-tab-label').click();
-		cy.cGet('.notebookbar #overflow-button-review-tracking').click();
-		cy.cGet('.notebookbar #review-accept-tracked-changes').click();
+		desktopHelper.getNbIconArrow('TrackChanges', 'Review').click();
+		desktopHelper.getNbIcon('AcceptTrackedChanges', 'Review').click();
 		cy.cGet('#AcceptRejectChangesDialog').should('be.visible');
 		cy.cGet('#writerchanges .ui-treeview-entry.ui-treeview-expandable[aria-level="1"] .ui-treeview-expander-column').click();
 		cy.wait(100);

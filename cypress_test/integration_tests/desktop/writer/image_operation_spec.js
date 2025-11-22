@@ -26,8 +26,7 @@ describe(['tagdesktop'], 'Image Operation Tests', function() {
 		insertImage();
 		helper.assertImageSize(248, 63);
 		cy.cGet('#test-div-shape-handle-3').should('exist');
-		cy.cGet('#Crop').should('be.visible');
-		cy.cGet('#Crop').click();
+		desktopHelper.getNbIcon('Crop', 'Picture').click();
 
 		cy.cGet('#test-div-shape-handle-3').then(($handle) => {
 			const rect = $handle[0].getBoundingClientRect();
