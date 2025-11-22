@@ -11,12 +11,10 @@
 
 #pragma once
 
-#include <config.h>
+#include <Common.hpp>
 
 #include <chrono>
 #include <set>
-
-#include <Common.hpp>
 
 namespace helpers
 {

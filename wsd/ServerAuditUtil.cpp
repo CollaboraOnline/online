@@ -9,8 +9,11 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+#include <config.h>
+
 #include "ServerAuditUtil.hpp"
-#include "Process.hpp"
+
+#include <wsd/Process.hpp>
 
 ServerAuditUtil::ServerAuditUtil()
     : _disabled(false)

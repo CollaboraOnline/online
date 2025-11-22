@@ -11,8 +11,6 @@
 
 #pragma once
 
-#include <config.h>
-
 #if !MOBILEAPP
 #include <poll.h>
 #include <unistd.h>
