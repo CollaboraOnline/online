@@ -850,18 +850,18 @@ bool Document::postMessage(const char* data, int size, const WSOpCode code) cons
 
             return socket->sendMessage(data, size, code, /*flush=*/true) > 0;
         }
-        else
-            LOG_TRC("Failed to forward to parent of save process: connection closed.");
+
+        LOG_TRC("Failed to forward to parent of save process: connection closed");
+        return false;
+    }
+
+    if (!_websocketHandler)
+    {
+        LOG_ERR("Child Doc: Bad socket while sending: " << getAbbreviatedMessage(data, size));
         return false;
     }
 
     LOG_TRC("postMessage called with: " << getAbbreviatedMessage(data, size));
-    if (!_websocketHandler)
-    {
-        LOG_ERR("Child Doc: Bad socket while sending [" << getAbbreviatedMessage(data, size) << "].");
-        return false;
-    }
-
     _websocketHandler->sendMessage(data, size, code, /*flush=*/true);
     return true;
 }
