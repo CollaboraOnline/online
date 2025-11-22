@@ -371,7 +371,6 @@ COOL_JS_LST =\
 	src/layer/marker/A11yTextInput.js \
 	src/layer/LayerGroup.js \
 	src/geometry/LineUtil.js \
-	src/geometry/PolyUtil.js \
 	src/core/Handler.js \
 	src/dom/DomEvent.js \
 	src/dom/Draggable.js \
