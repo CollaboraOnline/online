@@ -1392,19 +1392,7 @@ export class CommentSection extends CanvasSectionObject {
 		redline.anchorPix = this.numberArrayToCorePixFromTwips(redline.anchorPos, 0, 2);
 		redline.trackchange = true;
 		redline.text = redline.comment;
-		var rectangles = window.L.PolyUtil.rectanglesToPolygons(app.LOUtil.stringToRectangles(redline.textRange), app.map._docLayer);
-		if (rectangles.length > 0) {
-			redline.textSelected = window.L.polygon(rectangles, {
-				pointerEvents: 'all',
-				interactive: false,
-				fillOpacity: 0,
-				opacity: 0
-			});
-			redline.textSelected.addEventParent(this.map);
-			redline.textSelected.on('click', function() {
-				this.selectById(redline.id);
-			}, this);
-		}
+		redline.rectanglesOriginal = this.stringToRectangles(redline.textRange || redline.anchorPos || redline.rectangle); // This unmodified version will be kept for re-calculations.
 
 		return true;
 	}
