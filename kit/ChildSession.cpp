@@ -2667,16 +2667,17 @@ bool ChildSession::renderSlide(const StringVector& tokens)
 
     getLOKitDocument()->postSlideshowCleanup();
 
-    std::string msg = "sliderenderingcomplete: ";
-    if (EnableExperimental) {
-        msg += std::string("{\"status\": \"") + (success ? "success" : "fail") +
-               "\", \"slidehash\": \"" + hash +
-               "\", \"compressedLayers\": " + (compressedLayers ? "true" : "false") +
-               ", \"cacheKey\": \"" + tokens.substrFromToken(1) + "\"}";
-    } else {
-        msg += std::string("{\"status\": \"") + (success ? "success" : "fail") + "\"}";
+    std::ostringstream msg;
+    msg << "sliderenderingcomplete: " << R"({"status": ")" << (success ? "success" : "fail");
+    if (EnableExperimental)
+    {
+        msg << R"(", "slidehash": ")" << hash << R"(", "compressedLayers": )"
+            << (compressedLayers ? "true" : "false") << R"(, "cacheKey": ")"
+            << tokens.substrFromToken(1);
     }
-    sendTextFrame(msg);
+
+    msg << "\"}";
+    sendTextFrame(msg.str());
 
     return success;
 }
