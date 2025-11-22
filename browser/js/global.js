@@ -1786,6 +1786,20 @@ function getInitializerClass() {
 		return root + encodedDocUrl + '/ws';
 	};
 
+	// Form a valid new Cool WebSocket URL from its components.
+	// ws://localhost:9980/cool/ws?WOPISrc=<encoded-document-URI>[&<docParams>]
+	global.makeWopiCoolWsUrl = function (root, docParams) {
+		var wopiSrc = '';
+		if (global.wopiSrc != '') {
+			wopiSrc = '?WOPISrc=' + encodeURIComponent(global.wopiSrc);
+
+			if (global.routeToken != '')
+				wopiSrc += '&RouteToken=' + global.routeToken;
+		}
+
+		return root + '/ws' + wopiSrc + '&' + encodeURIComponent(docParams);
+	};
+
 	// Form a valid WS URL to the host with the given path and
 	// encode the document URL and params.
 	global.makeWsUrlWopiSrc = function (path, docUrlParams, suffix, wopiSrcParam) {
@@ -1839,9 +1853,13 @@ function getInitializerClass() {
 		global.socket = new global.FakeWebSocket();
 		global.TheFakeWebSocket = global.socket;
 	} else {
-		// The URL may already contain a query (e.g., 'http://server.tld/foo/wopi/files/bar?desktop=baz') - then just append more params
-		var docParamsPart = docParams ? (global.docURL.includes('?') ? '&' : '?') + docParams : '';
-		var websocketURI = global.makeWsUrlWopiSrc('/cool/', global.docURL + docParamsPart);
+		if (global.enableExperimentalFeatures) {
+			var websocketURI = global.makeWopiCoolWsUrl(global.makeWsUrl('/cool/'), docParams);
+		} else {
+			// The URL may already contain a query (e.g., 'http://server.tld/foo/wopi/files/bar?desktop=baz') - then just append more params
+			var docParamsPart = docParams ? (global.docURL.includes('?') ? '&' : '?') + docParams : '';
+			var websocketURI = global.makeWsUrlWopiSrc('/cool/', global.docURL + docParamsPart);
+		}
 		try {
 			global.socket = global.createWebSocket(websocketURI);
 		} catch (err) {
