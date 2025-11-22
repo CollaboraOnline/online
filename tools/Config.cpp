@@ -63,8 +63,9 @@ private:
     unsigned _pwdSaltLength = 128;
     unsigned _pwdIterations = 10000;
     unsigned _pwdHashLength = 128;
-    std::string _adminUser = "";
-    std::string _adminPwd = "";
+    std::string _adminUser;
+    std::string _adminPwd;
+
 public:
 
     void setPwdSaltLength(unsigned pwdSaltLength) { _pwdSaltLength = pwdSaltLength; }
