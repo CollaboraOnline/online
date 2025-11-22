@@ -249,7 +249,7 @@ public:
     }
 
     unsigned getMobileAppDocId() const { return _mobileAppDocId; }
-    const std::string getDocId() const { return _docId; }
+    const std::string& getDocId() const { return _docId; }
 
     /// See if we should clear out our memory
     void trimIfInactive();
