@@ -11,12 +11,12 @@
 
 #pragma once
 
+#include <common/Message.hpp>
+
 #include <string>
 #include <vector>
 #include <memory>
 #include <unordered_map>
-#include <queue>
-#include <common/Message.hpp>
 
 /**
  Used for caching rendered slide layers for slideshow

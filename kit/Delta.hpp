@@ -11,23 +11,23 @@
 
 #pragma once
 
-#include <vector>
+#include <common/Common.hpp>
+#include <common/FileUtil.hpp>
+#include <common/HexUtil.hpp>
+#include <common/Log.hpp>
+#include <common/Png.hpp>
+#include <common/Simd.hpp>
+#include <kit/DeltaSimd.h>
+#include <wsd/TileDesc.hpp>
+
+#include <cassert>
+#include <cstdint>
+#include <fstream>
 #include <memory>
 #include <unordered_set>
-#include <fstream>
-#include <assert.h>
+#include <vector>
 #include <zlib.h>
 #include <zstd.h>
-#include <stdint.h>
-
-#include <common/HexUtil.hpp>
-#include <Log.hpp>
-#include <Common.hpp>
-#include <FileUtil.hpp>
-#include <TileDesc.hpp>
-#include <Png.hpp>
-#include <Simd.hpp>
-#include <DeltaSimd.h>
 
 #ifndef TILE_WIRE_ID
 #  define TILE_WIRE_ID

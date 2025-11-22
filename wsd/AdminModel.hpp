@@ -11,6 +11,9 @@
 
 #pragma once
 
+#include <common/Log.hpp>
+#include <net/WebSocketHandler.hpp>
+
 #include <ctime>
 #include <deque>
 #include <memory>
@@ -18,10 +21,8 @@
 #include <set>
 #include <string>
 #include <utility>
-#include <Poco/URI.h>
 
-#include <common/Log.hpp>
-#include "net/WebSocketHandler.hpp"
+#include <Poco/URI.h>
 
 struct DocumentAggregateStats;
 

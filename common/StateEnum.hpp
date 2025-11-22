@@ -9,7 +9,6 @@
 
 #include <iosfwd>
 #include <type_traits>
-#include <string>
 #include <string_view>
 
 /// Enum macro specifically for state-machines.

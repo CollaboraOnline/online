@@ -11,20 +11,16 @@
 
 #pragma once
 
-#include <chrono>
-#include <unordered_map>
-#include <queue>
-
-#include <atomic>
+#include <common/Session.hpp>
+#include <kit/Kit.hpp>
+#include <kit/StateRecorder.hpp>
+#include <kit/Watermark.hpp>
 
 #define LOK_USE_UNSTABLE_API
 #include <LibreOfficeKit/LibreOfficeKit.hxx>
 
-#include "Common.hpp"
-#include "Kit.hpp"
-#include "Session.hpp"
-#include "Watermark.hpp"
-#include "StateRecorder.hpp"
+#include <chrono>
+#include <queue>
 
 class Document;
 class ChildSession;

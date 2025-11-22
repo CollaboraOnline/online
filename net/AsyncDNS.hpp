@@ -16,12 +16,11 @@
 #include <functional>
 #include <memory>
 #include <mutex>
-#include <optional>
 #include <queue>
 #include <string>
 #include <thread>
 
-#include <NetUtil.hpp>
+#include <net/NetUtil.hpp>
 
 class UnitWSD;
 
