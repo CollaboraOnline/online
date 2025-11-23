@@ -13,7 +13,8 @@ TYPESCRIPT_JS_DIR = $(builddir)/typescript_js
 export NODE_PATH=$(abs_builddir)/node_module
 
 if !ENABLE_MOBILEAPP
-L10N_JSON = $(patsubst $(srcdir)/po/%.po,$(DIST_FOLDER)/l10n/%.json,$(L10N_PO))
+L10N_JSON = $(patsubst $(srcdir)/po/help-%.po,$(DIST_FOLDER)/l10n/help-%.json,$(L10N_PO))
+L10N_JSON += $(patsubst $(srcdir)/po/ui-%.po,$(DIST_FOLDER)/l10n/ui-%.json,$(L10N_PO))
 else
 L10N_IOS_ALL_JS = $(DIST_FOLDER)/l10n-all.js
 L10N_JSON = $(L10N_IOS_ALL_JS)
@@ -1063,7 +1064,10 @@ $(DIST_FOLDER)/l10n/%: $(srcdir)/l10n/%
 	@mkdir -p $(dir $@)
 	@cp $< $@
 
-$(DIST_FOLDER)/l10n/%.json: $(srcdir)/po/%.po
+$(DIST_FOLDER)/l10n/help-%.json: $(srcdir)/po/help-%.po
+	@$(srcdir)/util/po2json.py --quiet $< -o $@
+
+$(DIST_FOLDER)/l10n/ui-%.json: $(srcdir)/po/ui-%.po
 	@$(srcdir)/util/po2json.py --quiet $< -o $@
 
 $(DIST_FOLDER)/admin/%: $(srcdir)/admin/%
