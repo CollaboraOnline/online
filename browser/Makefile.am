@@ -438,6 +438,7 @@ COOL_JS_LST =\
 	src/control/jsdialog/Util.KeyboardTabNavigation.ts \
 	src/control/jsdialog/Util.KeyboardGridNavigation.ts \
 	src/control/jsdialog/Util.KeyboardListNavigation.ts \
+	src/control/jsdialog/Util.KeyboardRadioGroupNavigation.ts \
 	src/control/jsdialog/Util.FocusCycle.js \
 	src/control/jsdialog/Util.FormulaBarSelectionHandle.ts \
 	src/control/jsdialog/Util.MessageRouter.ts \
