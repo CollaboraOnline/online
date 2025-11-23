@@ -2,10 +2,10 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: core-hu\n"
-"PO-Revision-Date: 2025-11-11 08:00+0000\n"
+"PO-Revision-Date: 2025-11-20 09:07+0000\n"
 "Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
-"Language-Team: Hungarian <https://hosted.weblate.org/projects/collabora-"
-"online/lokit/hu/>\n"
+"Language-Team: Hungarian <https://hosted.weblate.org/projects/"
+"collabora-online/lokit/hu/>\n"
 "Language: hu\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -400,7 +400,7 @@ msgstr "Kiemelés"
 #: sfx2/uiconfig/ui/templatepanel.ui:272
 msgctxt "templatepanel|filter-atkobject"
 msgid "Filter"
-msgstr ""
+msgstr "Szűrő"
 
 #. 5xrhC
 #: sw/inc/strings.hrc:232
@@ -557,25 +557,25 @@ msgstr "SORTÖRDELÉS"
 #: formula/uiconfig/ui/functionpage.ui:80
 msgctxt "functionpage|label_category"
 msgid "_Category:"
-msgstr ""
+msgstr "_Kategória:"
 
 #. BNnFg
 #: formula/uiconfig/ui/functionpage.ui:115
 msgctxt "functionpage|label_function"
 msgid "_Function:"
-msgstr ""
+msgstr "_Függvény:"
 
 #. zRASZ
 #: formula/uiconfig/ui/structpage.ui:28
 msgctxt "structpage|label_struct"
 msgid "Content:"
-msgstr ""
+msgstr "Tartalom:"
 
 #. DPToC
 #: sd/uiconfig/simpress/ui/layoutpanel.ui:41
 msgctxt "layoutpanel|extended_tip|layoutpanel_icons"
 msgid "List of available layout templates."
-msgstr ""
+msgstr "A rendelkezésre álló elrendezési sablonok listája."
 
 #. Y3kBV
 #: filter/uiconfig/ui/impswfdialog.ui:14
@@ -667,19 +667,19 @@ msgstr ""
 #: filter/uiconfig/ui/pdfgeneralpage.ui:587
 msgctxt "pdfgeneralpage|pdf_version"
 msgid "PDF 1.7"
-msgstr ""
+msgstr "PDF 1.7"
 
 #. D6SQE
 #: filter/uiconfig/ui/pdfgeneralpage.ui:588
 msgctxt "pdfgeneralpage|pdf_version"
 msgid "PDF 2.0"
-msgstr ""
+msgstr "PDF 2.0"
 
 #. Pk2QP
 #: filter/uiconfig/ui/pdfgeneralpage.ui:592
 msgctxt "pdfgeneralpage|pdf_version"
 msgid "PDF/A-4 (PDF 2.0 base)"
-msgstr ""
+msgstr "PDF/A-4 (PDF 2.0-alapú)"
 
 #. S7DSM
 #: filter/uiconfig/ui/pdfgeneralpage.ui:599
@@ -713,7 +713,7 @@ msgstr "Általános"
 #: filter/uiconfig/ui/pdfgeneralpage.ui:821
 msgctxt "pdfgeneralpage|forms_label"
 msgid "Forms"
-msgstr ""
+msgstr "Űrlapok"
 
 #. kvAZK
 #: filter/uiconfig/ui/pdfgeneralpage.ui:1077
@@ -729,7 +729,7 @@ msgctxt ""
 "UIName\n"
 "value.text"
 msgid "Markdown Document"
-msgstr ""
+msgstr "Markdown dokumentum"
 
 #. 9Q5Zj
 #: draw_flash_Export.xcu
@@ -739,7 +739,7 @@ msgctxt ""
 "UIName\n"
 "value.text"
 msgid "Macromedia Flash (SWF)"
-msgstr ""
+msgstr "Macromedia Flash (SWF)"
 
 #. MsYCr
 #: impress_flash_Export.xcu
@@ -749,7 +749,7 @@ msgctxt ""
 "UIName\n"
 "value.text"
 msgid "Macromedia Flash (SWF)"
-msgstr ""
+msgstr "Macromedia Flash (SWF)"
 
 #. FoizC
 #: CalcCommands.xcu
@@ -759,7 +759,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Current Sheet View"
-msgstr ""
+msgstr "Aktuális munkalapnézet"
 
 #. 3Ep4Y
 #: CalcCommands.xcu
@@ -769,7 +769,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Insert Function"
-msgstr ""
+msgstr "Függvény beillesztése"
 
 #. rxGTc
 #: CalcCommands.xcu
@@ -779,7 +779,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Print Grid Lines"
-msgstr ""
+msgstr "Rácsvonalak nyomtatása"
 
 #. a35bF
 #: CalcCommands.xcu
@@ -789,7 +789,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "New Sheet View"
-msgstr ""
+msgstr "Új munkalapnézet"
 
 #. AKfar
 #: CalcCommands.xcu
@@ -799,7 +799,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Remove Sheet View"
-msgstr ""
+msgstr "Munkalapnézet eltávolítása"
 
 #. M52nh
 #: CalcCommands.xcu
@@ -809,7 +809,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Switch To Next Sheet View"
-msgstr ""
+msgstr "Váltás a következő munkalapnézetre"
 
 #. qfgad
 #: CalcCommands.xcu
@@ -819,7 +819,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Switch To Previous Sheet View"
-msgstr ""
+msgstr "Váltás az előző munkalapnézetre"
 
 #. FJEd2
 #: CalcCommands.xcu
@@ -829,7 +829,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Select Sheet View"
-msgstr ""
+msgstr "Munkalapnézet választása"
 
 #. vCsC3
 #: CalcCommands.xcu
@@ -839,7 +839,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Exit Sheet View"
-msgstr ""
+msgstr "Kilépés a munkalapnézetből"
 
 #. uuvrm
 #: ChartCommands.xcu
@@ -849,7 +849,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Manage Themes..."
-msgstr ""
+msgstr "Témák kezelése..."
 
 #. 5LESd
 #: ChartCommands.xcu
@@ -919,7 +919,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Slide Transitions"
-msgstr ""
+msgstr "Diaátmenetek"
 
 #. 5pSJ6
 #: GenericCommands.xcu
@@ -1061,7 +1061,7 @@ msgctxt ""
 "Title\n"
 "value.text"
 msgid "Theme"
-msgstr ""
+msgstr "Téma"
 
 #. dgWCC
 #: Sidebar.xcu
@@ -1269,7 +1269,7 @@ msgstr ""
 #: sc/inc/scfuncs.hrc:4270
 msgctxt "SC_OPCODE_CHOOSEROWS"
 msgid "Row "
-msgstr ""
+msgstr "Sor "
 
 #. dXjgB
 #: sc/inc/scfuncs.hrc:4271
