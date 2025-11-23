@@ -22,9 +22,9 @@ describe(['tagdesktop'], 'Notebookbar tests.', function() {
 		helper.setDummyClipboardForCopy();
 		cy.cGet('.notebookbar #Format-tab-label').click();
 		desktopHelper.getNbIconArrow('FormatMenu', 'Format').click();
-		cy.cGet('#format-FormatMenu-dropdown').should('exist');
-		cy.cGet('#format-FormatMenu-dropdown #format-FormatMenu-entry-0').click(); // Bold
-		cy.cGet('#format-FormatMenu-dropdown').should('not.exist');
+		desktopHelper.getDropdown('format-FormatMenu').should('exist');
+		desktopHelper.getDropdown('format-FormatMenu').contains('.ui-combobox-entry', 'Bold').click();
+		desktopHelper.getDropdown('format-FormatMenu').should('not.exist');
 		writerHelper.selectAllTextOfDoc();
 		helper.copy();
 		cy.cGet('#copy-paste-container p b').should('exist');

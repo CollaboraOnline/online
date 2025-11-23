@@ -9,7 +9,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Track Changes', function (
 		cy.viewport(1400, 600);
 		helper.setupAndLoadDocument('writer/track_changes.odt');
 		desktopHelper.switchUIToCompact();
-		cy.cGet('#sidebar').click(); // Hide sidebar.
+		cy.cGet('#toolbar-up [id^="sidebar"] button:visible').click();
 		desktopHelper.selectZoomLevel('50', false);
 	});
 
@@ -41,7 +41,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Track Changes', function (
 		helper.typeIntoDocument('Hello World');
 		cy.wait(3000);
 		for (var n = 0; n < 2; n++) {
-			cy.cGet('#toolbar-up #overflow-button-other-toptoolbar .arrowbackground').click();
+			desktopHelper.getCompactIconArrow('DefaultNumbering').click();
 			cy.cGet('#insertannotation').click();
 			cy.cGet('#annotation-modify-textarea-new').type('some text' + n, { force: true });
 			cy.cGet('#annotation-save-new').click({force: true});
@@ -51,7 +51,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Track Changes', function (
 		}
 		enableRecord();
 
-		cy.cGet('#toolbar-up #overflow-button-other-toptoolbar .arrowbackground').click();
+		desktopHelper.getCompactIconArrow('DefaultNumbering').click();
 		cy.cGet('#insertannotation').click();
 		cy.cGet('#annotation-modify-textarea-new').type('some text2', { force: true });
 		cy.cGet('#annotation-save-new').click({force: true});
@@ -87,7 +87,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Track Changes', function (
 		helper.typeIntoDocument('Hello World');
 		cy.wait(3000);
 		for (var n = 0; n < 2; n++) {
-			cy.cGet('#toolbar-up #overflow-button-other-toptoolbar .arrowbackground').click();
+			desktopHelper.getCompactIconArrow('DefaultNumbering').click();
 			cy.cGet('#insertannotation').click();
 			cy.cGet('#annotation-modify-textarea-new').type('some text' + n, { force: true });
 			cy.cGet('#annotation-save-new').click({force: true});
@@ -97,7 +97,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Track Changes', function (
 		}
 		enableRecord();
 
-		cy.cGet('#toolbar-up #overflow-button-other-toptoolbar .arrowbackground').click();
+		desktopHelper.getCompactIconArrow('DefaultNumbering').click();
 		cy.cGet('#insertannotation').click();
 		cy.cGet('#annotation-modify-textarea-new').type('some text2', { force: true });
 		cy.cGet('#annotation-save-new').click({force: true});
@@ -133,7 +133,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Track Changes', function (
 
 	it.skip('Comment Undo-Redo', function () {
 		for (var n = 0; n < 2; n++) {
-			cy.cGet('#toolbar-up #overflow-button-other-toptoolbar .arrowbackground').click();
+			desktopHelper.getCompactIconArrow('DefaultNumbering').click();
 			cy.cGet('#insertannotation').click();
 			cy.cGet('#annotation-modify-textarea-new').type('some text' + n);
 			cy.cGet('#annotation-save-new').click();
@@ -143,7 +143,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Track Changes', function (
 		}
 		enableRecord();
 
-		cy.cGet('#toolbar-up #overflow-button-other-toptoolbar .arrowbackground').click();
+		desktopHelper.getCompactIconArrow('DefaultNumbering').click();
 		cy.cGet('#insertannotation').click();
 		cy.cGet('#annotation-modify-textarea-new').type('some text2');
 		cy.cGet('#annotation-save-new').click();

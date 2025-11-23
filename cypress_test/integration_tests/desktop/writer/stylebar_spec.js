@@ -9,7 +9,7 @@ describe(['tagdesktop'], 'Test style sidebar', function() {
 		cy.viewport(1920,1080);
 
 		cy.cGet('#Format-tab-label').click();
-		cy.cGet('#format-style-dialog').click();
+		cy.cGet('#toolbar-up [id^="format-style-dialog"] button:visible').click();
 	});
 
 	it('Style sidebar context menu on node with spaces', function() {

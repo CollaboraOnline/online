@@ -1,7 +1,6 @@
 /* global describe it cy beforeEach require */
 
 var helper = require('../../common/helper');
-var searchHelper = require('../../common/search_helper');
 var mobileHelper = require('../../common/mobile_helper');
 
 describe(['tagmobile'], 'Toolbar tests', function() {
