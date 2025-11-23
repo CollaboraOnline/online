@@ -380,7 +380,7 @@ void AdminSocketHandler::handleMessage(const std::vector<char> &payload)
         }
         else
         {
-            LOG_WRN("Document migration failed for dockey:" + dockey +
+            LOG_WRN("Document migration failed for dockey:" << dockey <<
                         ", reason has been changed");
         }
     }

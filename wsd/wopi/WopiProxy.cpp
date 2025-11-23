@@ -197,7 +197,7 @@ void WopiProxy::checkFileInfo(const std::shared_ptr<TerminatingPoll>& poll, cons
                 }
                 catch (const std::exception& ex)
                 {
-                    LOG_ERR("Could not download document from WOPI FileUrl [" + fileUrlAnonym +
+                    LOG_ERR("Could not download document from WOPI FileUrl [" << fileUrlAnonym <<
                                 "]. Will use default URL. Error: "
                             << ex.what());
                     // Fall-through.
@@ -219,7 +219,7 @@ void WopiProxy::checkFileInfo(const std::shared_ptr<TerminatingPoll>& poll, cons
             catch (const std::exception& ex)
             {
                 LOG_ERR(
-                    "Cannot download document from WOPI storage uri [" + uriAnonym + "]. Error: "
+                    "Cannot download document from WOPI storage uri [" << uriAnonym << "]. Error: "
                     << ex.what());
                 // Fall-through.
             }

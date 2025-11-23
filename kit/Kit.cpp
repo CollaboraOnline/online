@@ -2724,7 +2724,7 @@ bool Document::trackDocModifiedState(const std::string &stateChanged)
 
 void Document::disableBgSave(const std::string &reason)
 {
-    LOG_WRN("Disabled background save " + reason);
+    LOG_WRN("Disabled background save " << reason);
     _isBgSaveDisabled = true;
 }
 

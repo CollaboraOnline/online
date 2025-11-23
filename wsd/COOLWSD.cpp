@@ -1840,7 +1840,7 @@ void COOLWSD::innerInitialize(Poco::Util::Application& self)
                 LOG_WRN("Quarantine path is relative. Please use an absolute path for better "
                         "reliability");
 
-            LOG_DBG("Initializing quarantine at [" + path << ']');
+            LOG_DBG("Initializing quarantine at [" << path << ']');
             Quarantine::initialize(path);
         }
     }
@@ -1862,10 +1862,10 @@ void COOLWSD::innerInitialize(Poco::Util::Application& self)
             Poco::File p(path);
             try
             {
-                LOG_TRC("Creating cache directory [" + path << ']');
+                LOG_TRC("Creating cache directory [" << path << ']');
                 p.createDirectories();
 
-                LOG_DBG("Created cache directory [" + path << ']');
+                LOG_DBG("Created cache directory [" << path << ']');
             }
             catch (const std::exception& ex)
             {
@@ -3598,7 +3598,7 @@ void COOLWSD::innerMain()
     }
     if (locale)
     {
-        LOG_INF("Locale is set to " + std::string(locale));
+        LOG_INF("Locale is set to " << std::string(locale));
         ::setenv("LC_ALL", locale, 1);
     }
 #endif // !IOS

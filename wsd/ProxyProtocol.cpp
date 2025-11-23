@@ -336,7 +336,7 @@ int ProxyProtocolHandler::sendMessage(const char *msg, const size_t len, bool te
 int ProxyProtocolHandler::sendTextMessage(const char *msg, const size_t len, bool flush) const
 {
     ASSERT_CORRECT_THREAD();
-    LOG_TRC("ProxyHack - send text msg " + std::string(msg, len));
+    LOG_TRC("ProxyHack - send text msg " << std::string(msg, len));
     return const_cast<ProxyProtocolHandler *>(this)->sendMessage(msg, len, true, flush);
 }
 
