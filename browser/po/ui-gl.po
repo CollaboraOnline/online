@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-11-17 08:08+0100\n"
-"PO-Revision-Date: 2025-11-20 07:05+0000\n"
+"PO-Revision-Date: 2025-11-22 20:36+0000\n"
 "Last-Translator: \"Miguel A. Bouzada\" <mbouzada@gmail.com>\n"
 "Language-Team: Galician <https://hosted.weblate.org/projects/"
 "collabora-online/ui/gl/>\n"
@@ -3267,39 +3267,39 @@ msgstr "Conexión de rede directa"
 
 #: src/control/Control.ServerAuditDialog.ts:128
 msgid "The IsAdminUser property is not set by integration"
-msgstr "A propiedad IsAdminUser non foi definida pola integración"
+msgstr "A propiedad IsAdminUser non foi definida mediante integración"
 
 #: src/control/Control.ServerAuditDialog.ts:134
 msgid ""
 "Used deprecated is_admin field, integration should use IsAdminUser property "
 "instead"
 msgstr ""
-"Empregouse o campo is_admin obsoleto, no canto, en cambio, a integración "
-"debería usar a propiedade IsAdminUser"
+"Empregouse o campo is_admin obsoleto, en cambio, a integración debería usar "
+"a propiedade IsAdminUser"
 
 #: src/control/Control.ServerAuditDialog.ts:140
 msgid "The IsAdminUser user property is set by integration"
-msgstr ""
+msgstr "A propiedade de usuario IsAdminUser defínese mediante integración"
 
 #: src/control/Control.ServerAuditDialog.ts:148
 msgid "PostMessage API is initialized"
-msgstr ""
+msgstr "A API de PostMessage está inicializada"
 
 #: src/control/Control.ServerAuditDialog.ts:153
 msgid "Integrator is not ready for PostMessage calls"
-msgstr ""
+msgstr "O integrador non está preparado para chamadas PostMessage"
 
 #: src/control/Control.ServerAuditDialog.ts:161
 msgid "Using namespaces"
-msgstr ""
+msgstr "Empregando espazos de nome"
 
 #: src/control/Control.ServerAuditDialog.ts:162
 msgid "Not using namespaces"
-msgstr ""
+msgstr "Non se empregan espazos de nome"
 
 #: src/control/Control.ServerAuditDialog.ts:236
 msgid "Document container started in {1} ms"
-msgstr ""
+msgstr "Contedor de documentos iniciado en {1} ms"
 
 #: src/control/Control.ServerAuditDialog.ts:306
 msgid "Status"
@@ -3307,19 +3307,19 @@ msgstr "Estado"
 
 #: src/control/Control.ServerAuditDialog.ts:316
 msgid "No issues found"
-msgstr ""
+msgstr "No se atopou ningún problema"
 
 #: src/control/Control.ServerAuditDialog.ts:321
 msgid "Alerts:"
-msgstr ""
+msgstr "Alertas:"
 
 #: src/control/Control.ServerAuditDialog.ts:373
 msgid "Check warnings of your server"
-msgstr ""
+msgstr "Comprobe as advertencias do seu servidor"
 
 #: src/control/Control.ServerAuditDialog.ts:374
 msgid "OPEN"
-msgstr ""
+msgstr "ABRIR"
 
 #: src/control/Control.SheetsBar.js:51
 msgid "Scroll to the first sheet"
@@ -3343,16 +3343,16 @@ msgstr "Inserir folla"
 
 #: src/control/Control.SheetsBar.js:88
 msgid "Show sheet list"
-msgstr ""
+msgstr "Mostrar a lista de follas"
 
 #: src/control/Control.StatusBar.js:156
 msgid "On"
-msgstr ""
+msgstr "Activado"
 
 #: src/control/Control.StatusBar.js:158
 #: src/control/jsdialog/Definitions.Menu.ts:1767
 msgid "Off"
-msgstr ""
+msgstr "Desactivado"
 
 #: src/control/Control.StatusBar.js:191
 #: src/control/jsdialog/Definitions.Menu.ts:163
@@ -3361,12 +3361,12 @@ msgstr "Media"
 
 #: src/control/Control.StatusBar.js:192
 msgid "CountA"
-msgstr "ContarA"
+msgstr "ContaxeA"
 
 #: src/control/Control.StatusBar.js:193
 #: src/control/jsdialog/Definitions.Menu.ts:166
 msgid "Count"
-msgstr "Conta"
+msgstr "Contaxe"
 
 #: src/control/Control.StatusBar.js:194
 msgid "Maximum"
@@ -3390,26 +3390,28 @@ msgid ""
 "To prevent accidental changes, the author has set this file to open as view-"
 "only"
 msgstr ""
+"Para evitar cambios accidentais, o autor configurou este ficheiro para que "
+"se abra só para lectura"
 
 #: src/control/Control.StatusBar.js:451
 msgid "Select multiple cells"
-msgstr ""
+msgstr "Seleccionar varias celas"
 
 #: src/control/Control.StatusBar.js:468
 msgid "Selection mode: inactive"
-msgstr ""
+msgstr "Modo de selección: inactivo"
 
 #: src/control/Control.StatusBar.js:546
 msgid "Set Language for All text"
-msgstr ""
+msgstr "Definir idioma para todo o texto"
 
 #: src/control/Control.StatusBar.js:549
 msgid "Set Language for Paragraph"
-msgstr ""
+msgstr "Definir o idioma para o parágrafo"
 
 #: src/control/Control.StatusBar.js:550
 msgid "Set Language for Selection"
-msgstr ""
+msgstr "Definir o idioma para a selección"
 
 #: src/control/Control.Tabs.js:53
 msgid "Insert sheet before this"
@@ -3421,15 +3423,15 @@ msgstr "Inserir folla despois desta"
 
 #: src/control/Control.Tabs.js:97
 msgid "Move Sheet Left"
-msgstr ""
+msgstr "Mover a folla cara á esquerda"
 
 #: src/control/Control.Tabs.js:103
 msgid "Move Sheet Right"
-msgstr ""
+msgstr "Mover a folla cara á dereita"
 
 #: src/control/Control.Tabs.js:114
 msgid "Copy Sheet..."
-msgstr ""
+msgstr "Copiar a folla…"
 
 #: src/control/Control.Tabs.js:408
 msgid "Are you sure you want to delete sheet, {sheet}?"
@@ -3437,7 +3439,7 @@ msgstr "Confirma que desexa eliminar a folla «{sheet}»?"
 
 #: src/control/Control.Tabs.js:419
 msgid "Rename sheet"
-msgstr ""
+msgstr "Cambiar o nome da folla"
 
 #: src/control/Control.Tabs.js:419
 msgid "Enter new sheet name"
@@ -3453,7 +3455,7 @@ msgstr ""
 
 #: src/control/Control.TopToolbar.js:109
 msgid "Active Sheet"
-msgstr ""
+msgstr "Folla activa"
 
 #: src/control/Control.TopToolbar.js:123
 msgid "Default Style"
@@ -3469,7 +3471,7 @@ msgstr "Inserir formas"
 
 #: src/control/Control.TopToolbar.js:194
 msgid "Insert connectors"
-msgstr ""
+msgstr "Inserir conectadores"
 
 #: src/control/Control.TopToolbar.js:225 src/control/Control.UIManager.ts:1163
 msgid "Hide Menu"
@@ -3477,15 +3479,15 @@ msgstr "Agochar menú"
 
 #: src/control/Control.UIManager.ts:325
 msgid "Enter new name"
-msgstr ""
+msgstr "Introduza un novo nome"
 
 #: src/control/Control.UIManager.ts:1190
 msgid "Show Menu"
-msgstr ""
+msgstr "Mostrar menú"
 
 #: src/control/Control.UserList.ts:56
 msgid "{user} has joined"
-msgstr "{user} conectouse agora"
+msgstr "{user} uniuse"
 
 #: src/control/Control.UserList.ts:57
 msgid "{user} has left"
@@ -3505,7 +3507,7 @@ msgstr "Deixar de seguir"
 
 #: src/control/Control.UserList.ts:61
 msgid "Avatar for {user}"
-msgstr ""
+msgstr "Avatar de {user}"
 
 #: src/control/Control.UserList.ts:81
 msgid "%n users"
@@ -3521,7 +3523,7 @@ msgstr "0 usuarios"
 
 #: src/control/Control.UserList.ts:87
 msgid "User List Summary"
-msgstr ""
+msgstr "Resumo da lista de usuarios"
 
 #: src/control/Control.UserList.ts:495
 msgid "Following"
@@ -3529,25 +3531,27 @@ msgstr "Seguindo"
 
 #: src/control/Control.UserList.ts:552
 msgid "Always follow the editor"
-msgstr "Seguir sempre o editor"
+msgstr "Seguir sempre ao editor"
 
 #: src/control/Control.Zotero.js:143
 msgid "Zotero API key is not configured"
-msgstr ""
+msgstr "A chave da API do Zotero non está configurada"
 
 #: src/control/Control.Zotero.js:162
 msgid "Zotero API key is incorrect"
-msgstr ""
+msgstr "A chave da API do Zotero é incorreta"
 
 #: src/control/Control.Zotero.js:189
 msgid "Zotero Warning"
-msgstr ""
+msgstr "Advertencia de Zotero"
 
 #: src/control/Control.Zotero.js:190
 msgid ""
 "The document contains some citations which may be unreachable through web "
 "API. It may cause some problems while editing citations or bibliography."
 msgstr ""
+"O documento contén algunhas citas que poden ser inaccesíbeis a través da API "
+"web. Isto pode causar algúns problemas ao editar citas ou bibliografía."
 
 #: src/control/Control.Zotero.js:246 src/core/Socket.js:1253
 msgid "Loading..."
@@ -3557,7 +3561,7 @@ msgstr "Cargando…"
 #: src/slideshow/PresenterConsole.js:31
 #: src/slideshow/SlideShowPresenter.ts:686
 msgid "Previous"
-msgstr ""
+msgstr "Anterior"
 
 #: src/control/Control.Zotero.js:270 src/control/Control.Zotero.js:469
 #: src/slideshow/PresenterConsole.js:32
@@ -3571,115 +3575,119 @@ msgstr "Idioma:"
 
 #: src/control/Control.Zotero.js:307
 msgid "Store as:"
-msgstr ""
+msgstr "Almacenar como:"
 
 #: src/control/Control.Zotero.js:313 src/control/Control.Zotero.js:436
 msgid "Fields"
-msgstr ""
+msgstr "Campos"
 
 #: src/control/Control.Zotero.js:314 src/control/Control.Zotero.js:436
 msgid "Bookmarks"
-msgstr ""
+msgstr "Marcadores"
 
 #: src/control/Control.Zotero.js:434
 msgid "Footnotes"
-msgstr ""
+msgstr "Notas a rodapé"
 
 #: src/control/Control.Zotero.js:434
 msgid "Endnotes"
-msgstr ""
+msgstr "Notas finais"
 
 #: src/control/Control.Zotero.js:521
 msgid "My Publications"
-msgstr ""
+msgstr "As miñas publicacións"
 
 #: src/control/Control.Zotero.js:527 src/control/Control.Zotero.js:746
 msgid "My Library"
-msgstr ""
+msgstr "A miña biblioteca"
 
 #: src/control/Control.Zotero.js:528
 msgid "Group Libraries"
-msgstr ""
+msgstr "Bibliotecas do grupo"
 
 #: src/control/Control.Zotero.js:762
 msgid "Failed to load groups"
-msgstr ""
+msgstr "Produciuse un fallo ao carga os grupos"
 
 #: src/control/Control.Zotero.js:780 src/control/Control.Zotero.js:1124
 msgid "Failed to load collections"
-msgstr ""
+msgstr "Produciuse un fallo ao cargas as coleccións"
 
 #: src/control/Control.Zotero.js:788
 msgid "Loading references"
-msgstr ""
+msgstr "Cargando as referencias"
 
 #: src/control/Control.Zotero.js:822
 msgid "Citation Style"
-msgstr ""
+msgstr "Estilo de cita"
 
 #: src/control/Control.Zotero.js:827
 msgid "An error occurred while fetching style list"
-msgstr ""
+msgstr "Produciuse un erro ao recuperar a lista de estilos"
 
 #: src/control/Control.Zotero.js:835
 msgid "Failed to load styles"
-msgstr ""
+msgstr "Produciuse un erro ao cargar os estilos"
 
 #: src/control/Control.Zotero.js:1152 src/control/Control.Zotero.js:1604
 msgid "Title"
-msgstr ""
+msgstr "Título"
 
 #: src/control/Control.Zotero.js:1152 src/control/Control.Zotero.js:1604
 msgid "Creator(s)"
-msgstr ""
+msgstr "Creador(es)"
 
 #: src/control/Control.Zotero.js:1152 src/control/Control.Zotero.js:1604
 msgid "Your library is empty"
-msgstr ""
+msgstr "A súa biblioteca esta valeira"
 
 #: src/control/Control.Zotero.js:1164
 msgid "Failed to load items"
-msgstr ""
+msgstr "Produciuse un fallo ao cargar os elementos"
 
 #: src/control/Control.Zotero.js:1216
 msgid "Citation warning"
-msgstr ""
+msgstr "Advertencia de cita"
 
 #: src/control/Control.Zotero.js:1217
 msgid ""
 "Once citations are entered their storage and display type can not be "
 "changed."
 msgstr ""
+"Unha vez introducidas as citas, non poderá cambiar o seu almacenamento e "
+"tipo de vista."
 
 #: src/control/Control.Zotero.js:1218 src/control/Control.Zotero.js:1533
 msgid "Confirm"
-msgstr ""
+msgstr "Confirmar"
 
 #: src/control/Control.Zotero.js:1337
 msgid "Add Note"
-msgstr ""
+msgstr "Engadir nota"
 
 #: src/control/Control.Zotero.js:1340
 msgid "An error occurred while fetching notes"
-msgstr ""
+msgstr "Produciuse un erro ao recuperar as notas"
 
 #: src/control/Control.Zotero.js:1471
 msgid "Updated citations"
-msgstr ""
+msgstr "Actualizáronse as citas"
 
 #: src/control/Control.Zotero.js:1473
 msgid "Citations update failed"
-msgstr ""
+msgstr "Produciuse un fallo ao actualizar as notas"
 
 #: src/control/Control.Zotero.js:1477
 msgid "Updating citations"
-msgstr ""
+msgstr "Actualizando as citas"
 
 #: src/control/Control.Zotero.js:1532
 msgid ""
 "Unlinking citations will prevent Collabora Online from updating citations "
 "and bibliography in this document."
 msgstr ""
+"Desligar as citas impedirá que Collabora Online actualice as citas e a "
+"bibliografía deste documento."
 
 #: src/control/HRuler.ts:597 src/control/HRuler.ts:769
 msgid "Left Margin"
@@ -3695,11 +3703,11 @@ msgstr "Inserir tabulación"
 
 #: src/control/HRuler.ts:1100
 msgid "Delete tabstop"
-msgstr "Eliminar tabulación"
+msgstr "Eliminar a tabulación"
 
 #: src/control/Parts.js:490
 msgid "Show sheets"
-msgstr ""
+msgstr "Mostrar as follas"
 
 #: src/control/Permission.js:27 src/control/Permission.js:28
 msgid "Edit document"
@@ -3720,33 +3728,35 @@ msgstr "Non foi posíbel bloquear o documento."
 
 #: src/control/Permission.js:149
 msgid "Enter a file name"
-msgstr ""
+msgstr "Introduza o nome do ficheiro"
 
 #: src/control/Permission.js:168
 msgid "Save as ODF format"
-msgstr ""
+msgstr "Gardar en formato ODF"
 
 #: src/control/Permission.js:169
 msgid "Continue editing"
-msgstr ""
+msgstr "Continuar en modo edición"
 
 #: src/control/Permission.js:169
 msgid "Continue read only"
-msgstr ""
+msgstr "Continuar en modo de lectura"
 
 #: src/control/Permission.js:182
 msgid ""
 "This document may contain formatting or content that cannot be saved in the "
 "current file format."
 msgstr ""
+"Este documento pode conter formato ou contido que non é posíbel gardar no "
+"formato de ficheiro actual."
 
 #: src/control/Signing.js:21
 msgid "The document is not signed."
-msgstr ""
+msgstr "O documento non está asinado."
 
 #: src/control/Signing.js:32
 msgid "This document is digitally signed and the signature is valid."
-msgstr "Este documento asinouse dixitalmente e a sinatura é válida."
+msgstr "Este documento foi asinado dixitalmente e a sinatura é válida."
 
 #: src/control/Signing.js:36
 msgid "This document has an invalid signature."
@@ -3769,6 +3779,8 @@ msgid ""
 "The signature is OK, but the certificate could not be validated and the "
 "document is only partially signed."
 msgstr ""
+"A sinatura é correcta, mais non foi posíbel validar o certificado e a "
+"sinatura do documento é parcial."
 
 #: src/control/Toolbar.js:253 src/control/Toolbar.js:266
 msgid "Downloading..."
@@ -3784,40 +3796,40 @@ msgstr "A renomear..."
 
 #: src/control/VRuler.ts:374
 msgid "Top Margin"
-msgstr ""
+msgstr "Marxe superior"
 
 #: src/control/VRuler.ts:375
 msgid "Bottom Margin"
-msgstr ""
+msgstr "Marxe inferior"
 
 #: src/control/jsdialog/Definitions.Menu.ts:111
 #: src/control/jsdialog/Definitions.Menu.ts:1740
 msgid "Normal"
-msgstr ""
+msgstr "Normal"
 
 #: src/control/jsdialog/Definitions.Menu.ts:116
 msgid "Wide"
-msgstr ""
+msgstr "Largo"
 
 #: src/control/jsdialog/Definitions.Menu.ts:121
 msgid "Narrow"
-msgstr ""
+msgstr "Estreito"
 
 #: src/control/jsdialog/Definitions.Menu.ts:164
 msgid "Min"
-msgstr ""
+msgstr "Mín"
 
 #: src/control/jsdialog/Definitions.Menu.ts:165
 msgid "Max"
-msgstr ""
+msgstr "Máx"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1443
 msgid "Edit Single Sparkline"
-msgstr ""
+msgstr "Editar minigráfico de liña único"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1454
 msgid "Delete Single Sparkline"
-msgstr ""
+msgstr "Eiminar minigráfico de liña único"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1490
 msgid "Portrait"
@@ -3829,123 +3841,123 @@ msgstr "Apaisado"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1502
 msgid "A6"
-msgstr ""
+msgstr "A6"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1503
 msgid "A5"
-msgstr ""
+msgstr "A5"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1504
 msgid "A4"
-msgstr ""
+msgstr "A4"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1505
 msgid "A3"
-msgstr ""
+msgstr "A3"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1506
 msgid "B6 (ISO)"
-msgstr ""
+msgstr "B6 (ISO)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1507
 msgid "B5 (ISO)"
-msgstr ""
+msgstr "B5 (ISO)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1508
 msgid "B4 (ISO)"
-msgstr ""
+msgstr "B4 (ISO)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1509
 msgid "Letter"
-msgstr ""
+msgstr "Carta"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1510
 msgid "Legal"
-msgstr ""
+msgstr "Legal"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1511
 msgid "Long Bond"
-msgstr ""
+msgstr "Folio"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1512
 msgid "Tabloid"
-msgstr ""
+msgstr "Tabloide"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1513
 msgid "B6 (JIS)"
-msgstr ""
+msgstr "B6 (JIS)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1514
 msgid "B5 (JIS)"
-msgstr ""
+msgstr "B5 (JIS)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1515
 msgid "B4 (JIS)"
-msgstr ""
+msgstr "B4 (JIS)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1516
 msgid "16 Kai"
-msgstr ""
+msgstr "Kai 16"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1517
 msgid "32 Kai"
-msgstr ""
+msgstr "Kai 32"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1518
 msgid "Big 32 Kai"
-msgstr ""
+msgstr "Kai 32 grande"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1519
 msgid "User"
-msgstr ""
+msgstr "Usuario"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1520
 msgid "DL Envelope"
-msgstr ""
+msgstr "Sobre DL"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1521
 msgid "C6 Envelope"
-msgstr ""
+msgstr "Sobre C6"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1522
 msgid "C6/5 Envelope"
-msgstr ""
+msgstr "Sobre C6⁄5"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1523
 msgid "C5 Envelope"
-msgstr ""
+msgstr "Sobre C5"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1524
 msgid "C4 Envelope"
-msgstr ""
+msgstr "Sobre C4"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1527
 msgid "#6¾ Envelope"
-msgstr ""
+msgstr "Sobre do n.º 6¾"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1532
 msgid "#7¾ (Monarch) Envelope"
-msgstr ""
+msgstr "Sobre do n.º 7¾ (monarca)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1535
 msgid "#9 Envelope"
-msgstr ""
+msgstr "Sobre do n.º 9"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1536
 msgid "#10 Envelope"
-msgstr ""
+msgstr "Sobre do n.º 10"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1537
 msgid "#11 Envelope"
-msgstr ""
+msgstr "Sobre do n.º 11"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1538
 msgid "#12 Envelope"
-msgstr ""
+msgstr "Sobre do n.º 12"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1541
 msgid "Japanese Postcard"
-msgstr ""
+msgstr "Postal xaponesa"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1726
 msgid "Insert Local Image"
@@ -3953,215 +3965,215 @@ msgstr "Inserir imaxe local"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1732
 msgid "Insert Local Multimedia"
-msgstr ""
+msgstr "Inserir multimedia local"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1738
 msgid "Very Tight"
-msgstr ""
+msgstr "Moi reducido"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1739
 msgid "Tight"
-msgstr ""
+msgstr "Reducido"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1741
 msgid "Loose"
-msgstr ""
+msgstr "Amplo"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1742
 msgid "Very Loose"
-msgstr ""
+msgstr "Moi amplo"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1772
 msgid "All users"
-msgstr ""
+msgstr "Todos os usuarios"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1777
 msgid "This user"
-msgstr ""
+msgstr "Este usuario"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1911
 msgid "No Borders"
-msgstr ""
+msgstr "Sen bordos"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1917
 msgid "Left Border"
-msgstr ""
+msgstr "Bordo esquerdo"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1923
 msgid "Right Border"
-msgstr ""
+msgstr "Bordo dereito"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1929
 msgid "Left And Right Borders"
-msgstr ""
+msgstr "Bordos esquerdo e dereito"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1935
 msgid "Top Border"
-msgstr ""
+msgstr "Bordo superior"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1941
 msgid "Bottom Border"
-msgstr ""
+msgstr "Bordo inferior"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1947
 msgid "Top And Bottom Border"
-msgstr ""
+msgstr "Bordos superior e inferior"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1953
 msgid "Outer Border"
-msgstr ""
+msgstr "Bordo exterior"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1959
 msgid "All Horizontal Lines"
-msgstr ""
+msgstr "Todas as liñas horizontais"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1965
 msgid "Outer Border And Horizontal Lines"
-msgstr ""
+msgstr "Bordo exterior e liñas horizontais"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1971
 msgid "Outer Border and Vertical Lines"
-msgstr ""
+msgstr "Bordo exterior e liñas verticais"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1977
 msgid "Outer Borders And All Inner lines"
-msgstr ""
+msgstr "Bordos exteriores e todas as liñas interiores"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1982
 msgid "Line color"
-msgstr ""
+msgstr "Cor da liña"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1993
 msgid "Line style"
-msgstr "Estilo de liña"
+msgstr "Estilo da liña"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1996
 msgid "Hairline (0.05 pt)"
-msgstr ""
+msgstr "Finísima (0,05 pt)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2005
 msgid "Very thin (0.50 pt)"
-msgstr ""
+msgstr "Muy fina (0,50 pt)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2014
 msgid "Thin (0.75 pt)"
-msgstr ""
+msgstr "Fina (0,75 pt)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2023
 msgid "Medium (1.50 pt)"
-msgstr ""
+msgstr "Media (1,50 pt)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2032
 msgid "Thick (2.25 pt)"
-msgstr ""
+msgstr "Grosa (2,25 pt)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2041
 msgid "Extra thick (4.50 pt)"
-msgstr ""
+msgstr "Moi grosa (4,50 pt)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2050
 msgid "Double Hairline (1.10 pt)"
-msgstr ""
+msgstr "Finísima dobre (1,10 pt)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2059
 msgid "Double Hairline (2.35 pt)"
-msgstr ""
+msgstr "Finísima dobre (2,35 pt)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2068
 msgid "Thin/Medium (3.00 pt)"
-msgstr ""
+msgstr "Fina/media (3,00 pt)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2077
 msgid "Medium/Hairline (3.05 pt)"
-msgstr ""
+msgstr "Media/finísima (3,05 pt)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2086
 msgid "Medium/Medium (4.50 pt)"
-msgstr ""
+msgstr "Media/Media (4.50 pt)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2146
 msgid "Standard (4:3)"
-msgstr ""
+msgstr "Estándar (4∶3)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2151
 msgid "Widescreen (16:9)"
-msgstr ""
+msgstr "Panorámica (16∶9)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2161
 msgid "Blank Slide"
-msgstr ""
+msgstr "Diapositiva valeira"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2162
 msgid "Title Slide"
-msgstr ""
+msgstr "Diapositiva de título"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2163
 msgid "Title, Content"
-msgstr ""
+msgstr "Título, contido"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2164
 msgid "Title and 2 Content"
-msgstr ""
+msgstr "Título e 2.º contido"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2165
 msgid "Title Only"
-msgstr ""
+msgstr "Só título"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2166
 msgid "Centered Text"
-msgstr ""
+msgstr "Texto centrado"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2167
 msgid "Title, 2 Content and Content"
-msgstr ""
+msgstr "Título, 2.º contido e contido"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2168
 msgid "Title, Content and 2 Content"
-msgstr ""
+msgstr "Título, Contido e 2.º Contido"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2169
 msgid "Title, 2 Content over Content"
-msgstr ""
+msgstr "Título, 2.º contido sobre contido"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2170
 msgid "Title, Content over Content"
-msgstr ""
+msgstr "Título, contido sobre contido"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2171
 msgid "Title, 4 Content"
-msgstr ""
+msgstr "Título, 4.º Contido"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2172
 msgid "Title, 6 Content"
-msgstr ""
+msgstr "Título, 6.º contido"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2173
 msgid "Vertical Title, Text, Chart"
-msgstr ""
+msgstr "Título vertical, texto, gráfica"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2174
 msgid "Vertical Title, Vertical Text"
-msgstr ""
+msgstr "Título vertical, texto vertical"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2175
 msgid "Title, Vertical Text"
-msgstr ""
+msgstr "Título, texto vertical"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2176
 msgid "Title, Vertical Text, Clipart"
-msgstr ""
+msgstr "Título, texto vertical, imaxe predeseñada"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2303
 msgid "Grayscale"
-msgstr ""
+msgstr "Escala de grises"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2308
 msgid "Black/White"
-msgstr ""
+msgstr "Branco e negro"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2313
 msgid "Watermark"
-msgstr ""
+msgstr "Marca de auga"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2321
 msgid "Insert comment"
@@ -4169,56 +4181,56 @@ msgstr "Inserir comentario"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2325
 msgid "Comments list"
-msgstr ""
+msgstr "Lista de comentarios"
 
 #: src/control/jsdialog/Util.SnackbarController.ts:122
 msgid "Dismiss"
-msgstr ""
+msgstr "Descartar"
 
 #: src/control/jsdialog/Widget.ColorPicker.ts:46
 #: src/control/jsdialog/Widget.ColorPicker.ts:148
 msgid "Unknown color"
-msgstr ""
+msgstr "Cor desñecida"
 
 #: src/control/jsdialog/Widget.ColorPicker.ts:228
 msgid "No fill"
-msgstr ""
+msgstr "Sen encher"
 
 #: src/control/jsdialog/Widget.ColorPicker.ts:228
 msgid "Automatic"
-msgstr ""
+msgstr "Automático"
 
 #: src/control/jsdialog/Widget.ColorPicker.ts:413
 msgid "Recent"
-msgstr ""
+msgstr "Recente"
 
 #: src/control/jsdialog/Widget.PageMarginEntry.ts:40
 msgid "Page margin options"
-msgstr ""
+msgstr "Opcións de marxe de páxina"
 
 #: src/control/jsdialog/Widget.PageMarginEntry.ts:121
 msgid "Top: {top}"
-msgstr ""
+msgstr "Superior: {top}"
 
 #: src/control/jsdialog/Widget.PageMarginEntry.ts:126
 msgid "Left: {left}"
-msgstr ""
+msgstr "Esquerdo: {left}"
 
 #: src/control/jsdialog/Widget.PageMarginEntry.ts:136
 msgid "Bottom: {bottom}"
-msgstr ""
+msgstr "Inferior: {bottom}"
 
 #: src/control/jsdialog/Widget.PageMarginEntry.ts:141
 msgid "Right: {right}"
-msgstr ""
+msgstr "Dereito: {right}"
 
 #: src/control/jsdialog/Widget.PageMarginEntry.ts:165
 msgid "Custom Margins…"
-msgstr ""
+msgstr "Marxes personalizados…"
 
 #: src/control/jsdialog/Widget.PageSizeEntry.ts:69
 msgid "More Paper Sizes..."
-msgstr ""
+msgstr "Máis tamaños de papel…"
 
 #: src/control/jsdialog/Widget.HTMLContent.ts:46
 msgid "Read-only"
@@ -4227,19 +4239,19 @@ msgstr "Só lectura"
 #: src/control/jsdialog/Widget.HTMLContent.ts:47
 #: src/control/jsdialog/Widget.HTMLContent.ts:55
 msgid "Permission Mode"
-msgstr ""
+msgstr "Modo de permisos"
 
 #: src/control/jsdialog/Widget.HTMLContent.ts:54
 msgid "Edit mode"
-msgstr ""
+msgstr "Modo de edición"
 
 #: src/control/jsdialog/Widget.HTMLContent.ts:83
 msgid "Number of Pages. Click to open the Go to Page dialog box."
-msgstr ""
+msgstr "Número de páxinas. Prema para abrir o cadro de diálogo Ir á páxina."
 
 #: src/control/jsdialog/Widget.HTMLContent.ts:95
 msgid "Word Counter"
-msgstr "Conta de palabras"
+msgstr "Contaxe de palabras"
 
 #: src/control/jsdialog/Widget.HTMLContent.ts:104
 msgid "Number of Sheets"
@@ -4272,11 +4284,11 @@ msgstr "Número de páxinas"
 #: src/control/jsdialog/Widget.HTMLContent.ts:176
 #: src/control/jsdialog/Widget.HTMLContent.ts:188
 msgid "Your changes have been saved"
-msgstr ""
+msgstr "Gardáronse os seus cambios"
 
 #: src/control/jsdialog/Widget.HTMLContent.ts:200
 msgid "Show Comments"
-msgstr "Amosar comentarios"
+msgstr "Mostrar comentarios"
 
 #: src/control/jsdialog/Widget.MobileBorderSelector.js:96
 msgid "Cell borders"
@@ -4284,11 +4296,11 @@ msgstr "Bordos de cela"
 
 #: src/control/jsdialog/Widget.SidebarContainers.ts:72
 msgid "More options for {1}"
-msgstr ""
+msgstr "Máis opcións para {1}"
 
 #: src/control/jsdialog/Widget.TreeView.ts:1573
 msgid "Headings and objects that you add to the document will appear here"
-msgstr ""
+msgstr "Os títulos e obxectos que engada ao documento aparecerán aquí"
 
 #: src/app/SocketBase.ts:154
 msgid "Oops, there is a problem connecting to {productname}: "
