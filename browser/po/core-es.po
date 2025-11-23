@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: core-es\n"
-"PO-Revision-Date: 2025-11-12 12:52+0000\n"
+"PO-Revision-Date: 2025-11-22 09:55+0000\n"
 "Last-Translator: Adolfo Jayme Barrientos <fitojb@ubuntu.com>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/collabora-online/"
 "lokit/es/>\n"
@@ -1943,25 +1943,25 @@ msgstr "Estilo de borde"
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:22
 msgctxt "sidebardatabase|chk_header_row"
 msgid "Show Header Row"
-msgstr ""
+msgstr "Mostrar fila de cabecera"
 
 #. ECtUM
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:36
 msgctxt "sidebardatabase|chk_total_row"
 msgid "Show Total Row"
-msgstr ""
+msgstr "Mostrar fila de totales"
 
 #. htZbK
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:50
 msgctxt "sidebardatabase|chk_filter_buttons"
 msgid "Show Filter Buttons"
-msgstr ""
+msgstr "Mostrar botones de filtro"
 
 #. MjALC
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:86
 msgctxt "sidebardatabase|chk_banded_rows"
 msgid "Banded Rows"
-msgstr ""
+msgstr "Filas con bandas"
 
 #. GVkZ2
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:100
@@ -1995,133 +1995,133 @@ msgstr "Actualizar estilo"
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:187
 msgctxt "sidebardatabase|none"
 msgid "None"
-msgstr ""
+msgstr "Ninguno"
 
 #. XXBL8
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:188
 msgctxt "sidebardatabase|tablestylelight1"
 msgid "Table Style Light 1"
-msgstr ""
+msgstr "Estilo de tabla Claro 1"
 
 #. NaDRX
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:189
 msgctxt "sidebardatabase|tablestylelight2"
 msgid "Table Style Light 2"
-msgstr ""
+msgstr "Estilo de tabla Claro 2"
 
 #. EWq9E
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:190
 msgctxt "sidebardatabase|tablestylelight3"
 msgid "Table Style Light 3"
-msgstr ""
+msgstr "Estilo de tabla Claro 3"
 
 #. GdYaL
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:191
 msgctxt "sidebardatabase|tablestylelight4"
 msgid "Table Style Light 4"
-msgstr ""
+msgstr "Estilo de tabla Claro 4"
 
 #. 8ZPyk
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:192
 msgctxt "sidebardatabase|tablestylelight5"
 msgid "Table Style Light 5"
-msgstr ""
+msgstr "Estilo de tabla Claro 5"
 
 #. xcztA
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:193
 msgctxt "sidebardatabase|tablestylelight6"
 msgid "Table Style Light 6"
-msgstr ""
+msgstr "Estilo de tabla Claro 6"
 
 #. pYufr
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:194
 msgctxt "sidebardatabase|tablestylelight7"
 msgid "Table Style Light 7"
-msgstr ""
+msgstr "Estilo de tabla Claro 7"
 
 #. beC85
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:195
 msgctxt "sidebardatabase|tablestylelight8"
 msgid "Table Style Light 8"
-msgstr ""
+msgstr "Estilo de tabla Claro 8"
 
 #. TSbAe
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:196
 msgctxt "sidebardatabase|tablestylelight9"
 msgid "Table Style Light 9"
-msgstr ""
+msgstr "Estilo de tabla Claro 9"
 
 #. GPxe2
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:197
 msgctxt "sidebardatabase|tablestylelight10"
 msgid "Table Style Light 10"
-msgstr ""
+msgstr "Estilo de tabla Claro 10"
 
 #. sedZT
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:198
 msgctxt "sidebardatabase|tablestylelight11"
 msgid "Table Style Light 11"
-msgstr ""
+msgstr "Estilo de tabla Claro 11"
 
 #. VyEM2
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:199
 msgctxt "sidebardatabase|tablestylelight12"
 msgid "Table Style Light 12"
-msgstr ""
+msgstr "Estilo de tabla Claro 12"
 
 #. FF2AT
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:200
 msgctxt "sidebardatabase|tablestylelight13"
 msgid "Table Style Light 13"
-msgstr ""
+msgstr "Estilo de tabla Claro 13"
 
 #. pTuyt
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:201
 msgctxt "sidebardatabase|tablestylelight14"
 msgid "Table Style Light 14"
-msgstr ""
+msgstr "Estilo de tabla Claro 14"
 
 #. zAgnL
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:202
 msgctxt "sidebardatabase|tablestylelight15"
 msgid "Table Style Light 15"
-msgstr ""
+msgstr "Estilo de tabla Claro 15"
 
 #. L4B9t
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:203
 msgctxt "sidebardatabase|tablestylelight16"
 msgid "Table Style Light 16"
-msgstr ""
+msgstr "Estilo de tabla Claro 16"
 
 #. ek54L
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:204
 msgctxt "sidebardatabase|tablestylelight17"
 msgid "Table Style Light 17"
-msgstr ""
+msgstr "Estilo de tabla Claro 17"
 
 #. P6nBG
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:205
 msgctxt "sidebardatabase|tablestylelight18"
 msgid "Table Style Light 18"
-msgstr ""
+msgstr "Estilo de tabla Claro 18"
 
 #. dnT2p
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:206
 msgctxt "sidebardatabase|tablestylelight19"
 msgid "Table Style Light 19"
-msgstr ""
+msgstr "Estilo de tabla Claro 19"
 
 #. Bprxv
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:207
 msgctxt "sidebardatabase|tablestylelight20"
 msgid "Table Style Light 20"
-msgstr ""
+msgstr "Estilo de tabla Claro 20"
 
 #. Z8foN
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:208
 msgctxt "sidebardatabase|tablestylelight21"
 msgid "Table Style Light 21"
-msgstr ""
+msgstr "Estilo de tabla Claro 21"
 
 #. 2qyXC
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:209
@@ -2295,76 +2295,76 @@ msgstr ""
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:237
 msgctxt "sidebardatabase|tablestyledark1"
 msgid "Table Style Dark 1"
-msgstr ""
+msgstr "Estilo de tabla Oscuro 1"
 
 #. jTCaC
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:238
 msgctxt "sidebardatabase|tablestyledark2"
 msgid "Table Style Dark 2"
-msgstr ""
+msgstr "Estilo de tabla Oscuro 2"
 
 #. 2FCAs
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:239
 msgctxt "sidebardatabase|tablestyledark3"
 msgid "Table Style Dark 3"
-msgstr ""
+msgstr "Estilo de tabla Oscuro 3"
 
 #. B3BJY
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:240
 msgctxt "sidebardatabase|tablestyledark4"
 msgid "Table Style Dark 4"
-msgstr ""
+msgstr "Estilo de tabla Oscuro 4"
 
 #. TfBSE
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:241
 msgctxt "sidebardatabase|tablestyledark5"
 msgid "Table Style Dark 5"
-msgstr ""
+msgstr "Estilo de tabla Oscuro 5"
 
 #. jvA93
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:242
 msgctxt "sidebardatabase|tablestyledark6"
 msgid "Table Style Dark 6"
-msgstr ""
+msgstr "Estilo de tabla Oscuro 6"
 
 #. 2DAii
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:243
 msgctxt "sidebardatabase|tablestyledark7"
 msgid "Table Style Dark 7"
-msgstr ""
+msgstr "Estilo de tabla Oscuro 7"
 
 #. B6GrN
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:244
 msgctxt "sidebardatabase|tablestyledark8"
 msgid "Table Style Dark 8"
-msgstr ""
+msgstr "Estilo de tabla Oscuro 8"
 
 #. TcGzg
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:245
 msgctxt "sidebardatabase|tablestyledark9"
 msgid "Table Style Dark 9"
-msgstr ""
+msgstr "Estilo de tabla Oscuro 9"
 
 #. DEL7d
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:246
 msgctxt "sidebardatabase|tablestyledark10"
 msgid "Table Style Dark 10"
-msgstr ""
+msgstr "Estilo de tabla Oscuro 10"
 
 #. M2TB4
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:247
 msgctxt "sidebardatabase|tablestyledark11"
 msgid "Table Style Dark 11"
-msgstr ""
+msgstr "Estilo de tabla Oscuro 11"
 
 #. CJUkb
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:251
 msgctxt "sidebardatabase|tablestylenames"
 msgid "Table Style Names"
-msgstr ""
+msgstr "Nombres de estilos de tabla"
 
 #. 3FfJ4
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:252
 msgctxt "sidebardatabase|defaulttablestylenames"
 msgid "Default Table Style Names"
-msgstr ""
+msgstr "Nombres de estilos de tabla predeterminados"
