@@ -570,7 +570,7 @@ public:
             TileDesc desc = TileDesc::parse(tokens);
 
             sendMessage("tileprocessed tile=" + desc.generateID());
-            LOG_TST(_logPre << "Sent tileprocessed tile= " + desc.generateID());
+            LOG_TST(_logPre << "Sent tileprocessed tile= " << desc.generateID());
         }
         else if (tokens.equals(0, "error:"))
         {

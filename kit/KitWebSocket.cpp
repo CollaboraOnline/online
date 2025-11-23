@@ -299,7 +299,7 @@ void BgSaveParentWebSocketHandler::handleMessage(const std::vector<char>& data)
              object->get("jsontype").toString() == "formulabar"))
             // white-listing to avoid popup & dialog & other interactive errors
         {
-            LOG_DBG("Unexpected but benign jsdialog message from bgsave process " +
+            LOG_DBG("Unexpected but benign jsdialog message from bgsave process " <<
                     COOLProtocol::getAbbreviatedMessage(data));
             return;
         }
