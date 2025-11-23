@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-11-17 08:08+0100\n"
-"PO-Revision-Date: 2025-05-15 08:51+0000\n"
-"Last-Translator: blueskyxxz <xinxizhe@163.com>\n"
+"PO-Revision-Date: 2025-11-21 09:09+0000\n"
+"Last-Translator: TUCAOEVER5023416dba724da7 <814697582@qq.com>\n"
 "Language-Team: Chinese (Simplified Han script) <https://hosted.weblate.org/"
 "projects/collabora-online/ui/zh_Hans/>\n"
-"Language: \n"
+"Language: zh_CN\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 5.12-dev\n"
+"X-Generator: Weblate 5.15-dev\n"
 
 #: admin/admin.strings.js:15
 msgid "Admin console"
@@ -369,21 +369,19 @@ msgstr "您确定要关闭服务器吗？"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:153
 msgid "Accessibility"
-msgstr ""
+msgstr "辅助功能"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:155
 msgid "Signature Certificate"
-msgstr ""
+msgstr "签名证书"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:156
-#, fuzzy
 msgid "Signature Key"
-msgstr "签名"
+msgstr "签名秘钥"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:157
-#, fuzzy
 msgid "Signature CA"
-msgstr "签名"
+msgstr "签名CA"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:160
 #: src/control/Control.Menubar.ts:171 src/control/Control.Menubar.ts:496
@@ -395,41 +393,39 @@ msgstr "签名"
 #: src/control/Control.NotebookbarImpress.js:691
 #: src/control/Control.NotebookbarWriter.js:1763
 msgid "Dark Mode"
-msgstr "深色模式"
+msgstr "显示侧边栏"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:161
 msgid "Compact layout"
-msgstr ""
+msgstr "紧凑布局"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:162
-#, fuzzy
 msgid "Show status bar"
 msgstr "显示状态栏"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:163
 #: src/control/Control.Menubar.ts:168 src/control/Control.Menubar.ts:492
 msgid "Show Ruler"
-msgstr "显示标尺"
+msgstr "打印"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:164
 msgid "Accessibility Checker"
-msgstr ""
+msgstr "辅助功能检查器"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:165
 #: src/control/Control.NavigatorPanel.ts:282
 msgid "Navigator"
-msgstr "导航器"
+msgstr "同步坐标轴"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:166
 msgid "Show Sidebar"
-msgstr ""
+msgstr "显示侧边栏"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:167
 msgid "Custom Animation"
-msgstr ""
+msgstr "自定义动画"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:170
-#, fuzzy
 msgid "Style List"
 msgstr "样式列表"
 
@@ -438,117 +434,114 @@ msgstr "样式列表"
 #: src/control/Control.NotebookbarDraw.js:527
 #: src/control/Control.NotebookbarImpress.js:662
 msgid "Grid"
-msgstr ""
+msgstr "网格"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:174
 msgid "Print"
-msgstr ""
+msgstr "打印"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:175
 msgid "Other"
-msgstr ""
+msgstr "其他"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:176
 #: src/control/Control.NotebookbarImpress.js:671
 msgid "Show Grid"
-msgstr "显示网格"
+msgstr "平铺页面"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:177
-#, fuzzy
 msgid "Snap to grid"
 msgstr "对齐到网格"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:178
 #: admin/src/integrator/AdminIntegratorSettings.ts:184
-#, fuzzy
 msgid "Size to grid"
-msgstr "对齐到网格"
+msgstr "调整大小到网格"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:179
 msgid "Synchronize axes"
-msgstr ""
+msgstr "同步坐标轴"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:180
-#, fuzzy
 msgid "Snap grid"
-msgstr "对齐到网格"
+msgstr "捕捉到网格"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:181
 msgid "Empty Pages"
-msgstr ""
+msgstr "空白页"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:182
 msgid "Force Breaks"
-msgstr ""
+msgstr "强制换行"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:183
 #: src/control/Control.Menubar.ts:772 src/control/Control.TopToolbar.js:110
 #: src/control/jsdialog/Definitions.Menu.ts:1573
 msgid "All Sheets"
-msgstr "所有工作表"
+msgstr "讲义"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:185
 msgid "Content"
-msgstr ""
+msgstr "内容"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:186
 msgid "Drawing"
-msgstr ""
+msgstr "绘图"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:187
 #: src/control/Control.NotebookbarDraw.js:1226
 #: src/control/Control.NotebookbarDraw.js:1426
 #: src/control/Control.NotebookbarWriter.js:1221
 msgid "Page"
-msgstr ""
+msgstr "页面"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:188
 msgid "Fit to page"
-msgstr ""
+msgstr "适合页面大小"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:189
 msgid "Tile pages"
-msgstr ""
+msgstr "平铺页面"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:190
 msgid "Booklet"
-msgstr ""
+msgstr "小册子"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:191
 msgid "Booklet front"
-msgstr ""
+msgstr "小册子正面"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:192
 msgid "Booklet back"
-msgstr ""
+msgstr "小册子背面"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:193
 msgid "Page name"
-msgstr ""
+msgstr "页面名称"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:194
 #: src/control/Control.NotebookbarCalc.js:771
 #: src/control/Control.NotebookbarWriter.js:1624
 #: src/control/Control.Zotero.js:1152 src/control/Control.Zotero.js:1604
 msgid "Date"
-msgstr "日期"
+msgstr "宣传册 / 手册"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:195
 #: src/control/Control.NotebookbarCalc.js:772
 msgid "Time"
-msgstr "时间"
+msgstr "宣传册（从右到左）"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:196
 msgid "Hidden pages"
-msgstr ""
+msgstr "隐藏页面"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:197
 msgid "From printer setup"
-msgstr ""
+msgstr "来自打印机设置"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:198
 msgid "Presentation"
-msgstr "演示文稿"
+msgstr "读取文件错误"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:199
 #: src/control/Control.Zotero.js:1340 src/slideshow/PresenterConsole.js:33
@@ -557,7 +550,7 @@ msgstr "注释"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:200
 msgid "Handouts"
-msgstr ""
+msgstr "讲义"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:201
 #: src/control/Control.NavigatorPanel.ts:205
@@ -566,64 +559,63 @@ msgstr "大纲"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:202
 msgid "Handout horizontal"
-msgstr ""
+msgstr "讲义（横向）"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:203
 msgid "Images"
-msgstr ""
+msgstr "图片"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:204
-#, fuzzy
 msgid "Tables"
 msgstr "表格"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:205
 msgid "Controls"
-msgstr ""
+msgstr "控件"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:206
 msgid "Background"
-msgstr ""
+msgstr "背景"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:207
 msgid "Print Black"
-msgstr ""
+msgstr "打印黑色"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:208
 msgid "Hidden text"
-msgstr ""
+msgstr "隐藏文本"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:209
 msgid "Placeholders"
-msgstr ""
+msgstr "占位符"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:210
 msgid "Left pages"
-msgstr ""
+msgstr "左侧页面"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:211
 msgid "Right pages"
-msgstr ""
+msgstr "右侧页面"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:212
 msgid "Brochure"
-msgstr ""
+msgstr "手册"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:213
 msgid "Brochure Right to Left"
-msgstr ""
+msgstr "手册（从右到左）"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:214
 msgid "Images and Objects"
-msgstr ""
+msgstr "图像和对象"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:310
 msgid "Invalid JSON file"
-msgstr ""
+msgstr "无效的 JSON 文件"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:314
 msgid "Error reading file"
-msgstr ""
+msgstr "读取文件错误"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:326
 msgid "Autotext"
@@ -641,7 +633,6 @@ msgid "Upload Autotext"
 msgstr "上传自动文本"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:338
-#, fuzzy
 msgid "Custom dictionaries"
 msgstr "自定义字典"
 
@@ -662,7 +653,6 @@ msgstr "文档设置"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:351
 #: admin/src/integrator/Xcu.ts:316
-#, fuzzy
 msgid "Adjust how office documents behave."
 msgstr "调整Office文档的外观。"
 
@@ -696,14 +686,13 @@ msgstr "获取词典时出现一些错误。请尝试刷新页面。"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:621
 msgid "Interface Settings"
-msgstr ""
+msgstr "界面设置"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:623
 msgid "Set default interface preferences."
 msgstr "设置默认界面偏好。"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:731
-#, fuzzy
 msgid "Select a tab to browser settings."
 msgstr "选择一个选项卡查看设置详情。"
 
@@ -724,7 +713,7 @@ msgstr "保存文档设置"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:1106
 msgid "Notebookbar view"
-msgstr ""
+msgstr "笔记本栏视图"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:1113
 #: src/control/Control.NotebookbarCalc.js:1574
@@ -757,40 +746,39 @@ msgstr "编辑"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:1341
 msgid "View Settings"
-msgstr ""
+msgstr "视图设置"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:1342
 msgid "Adjust view settings."
-msgstr ""
+msgstr "调整视图设置。"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:1352
 msgid "Option"
-msgstr ""
+msgstr "选项"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:1378
 msgid ""
 "To use Zotero specify your API key here. You can create your API key in "
 "your "
-msgstr ""
+msgstr "要使用 Zotero，请在此处指定您的 API 密钥。 "
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:1386
 msgid "Zotero account API settings"
-msgstr ""
+msgstr "您可以在您的 Zotero 账户 API 设置中创建您的 API 密钥"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:1395
-#, fuzzy
 msgid "Document Signing"
-msgstr "文档设置"
+msgstr "文档签名"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:1399
 msgid ""
 "To use document signing, specify your signing certificate, key and CA chain "
 "here."
-msgstr ""
+msgstr "要使用文档签名，请在此处指定您的签名证书、密钥和 CA 链。"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:1457
 msgid "(Warning: Server accessibility must be enabled to toggle)"
-msgstr ""
+msgstr "（警告：必须启用服务器可访问性才能切换）"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:1766
 #: src/map/handler/Map.WOPI.js:714
@@ -898,11 +886,11 @@ msgstr " 秒"
 msgid ""
 "The system is currently adjusting resources. Please wait a moment while we "
 "retry your request..."
-msgstr ""
+msgstr "系统正在调整资源。请稍候片刻，我们正在重试您的请求..."
 
 #: js/global.js:1612
 msgid "The document is being migrated to a new server. Retrying shortly..."
-msgstr ""
+msgstr "文档正在迁移到新服务器。正在短期内重试..."
 
 #: js/global.js:1614
 msgid "Failed to get RouteToken from controller"
@@ -978,7 +966,7 @@ msgstr "全屏查看"
 
 #: src/canvas/sections/CommentListSection.ts:1254
 msgid "Show in navigator"
-msgstr ""
+msgstr "在导航器中显示"
 
 #: src/canvas/sections/CommentListSection.ts:1282
 #: src/control/Control.JSDialogBuilder.js:1708
@@ -1011,13 +999,12 @@ msgid "Update"
 msgstr "更新"
 
 #: src/canvas/sections/CommentSection.ts:45
-#, fuzzy
 msgid "Edit comment"
-msgstr "编辑文档"
+msgstr "编辑批注"
 
 #: src/canvas/sections/CommentSection.ts:46
 msgid "Reply comment"
-msgstr ""
+msgstr "回复评论"
 
 #: src/canvas/sections/CommentSection.ts:47
 msgid "Open menu"
@@ -1025,7 +1012,7 @@ msgstr "打开菜单"
 
 #: src/canvas/sections/CommentSection.ts:347
 msgid "Press Ctrl + Enter to post"
-msgstr ""
+msgstr "按 Ctrl + Enter 发布"
 
 #: src/canvas/sections/CommentSection.ts:411
 #: src/canvas/sections/CommentSection.ts:412
@@ -1081,7 +1068,7 @@ msgstr "“慢速代理”"
 
 #: src/control/Control.AboutDialog.ts:147
 msgid "Time zone:"
-msgstr ""
+msgstr "时区："
 
 #: src/control/Control.AboutDialog.ts:185
 msgid "Copy all version information in English"
@@ -1677,7 +1664,7 @@ msgstr "插入批注"
 
 #: src/control/Control.JSDialogBuilder.js:2056
 msgid "Open {name}"
-msgstr ""
+msgstr "打开 {name}"
 
 #: src/control/Control.JSDialogBuilder.js:2378
 #: src/control/Control.Menubar.ts:932
@@ -1824,7 +1811,7 @@ msgstr "HTML 文件（.html）"
 #: src/control/Control.NotebookbarWriter.js:412
 #: src/map/handler/Map.Settings.ts:73
 msgid "Options"
-msgstr ""
+msgstr "选项"
 
 #: src/control/Control.Menubar.ts:123 src/control/Control.Menubar.ts:462
 #: src/control/Control.Menubar.ts:626 src/control/Control.Menubar.ts:774
@@ -2376,87 +2363,86 @@ msgstr "幻灯片"
 
 #: src/control/Control.NavigatorPanel.ts:222
 msgid "Results"
-msgstr ""
+msgstr "结果"
 
 #: src/control/Control.NavigatorPanel.ts:470
 msgid "Search..."
-msgstr ""
+msgstr "搜索..."
 
 #: src/control/Control.QuickFindPanel.ts:97
 msgid "Type in the search box to find anything in your document"
-msgstr ""
+msgstr "在搜索框中输入以查找文档中的任何内容"
 
 #: src/control/Notebookbar.ImpressAnimationTab.ts:24
 msgid "Animation"
-msgstr ""
+msgstr "动画"
 
 #: src/control/Notebookbar.ImpressAnimationTab.ts:41
 msgid "Applied animations"
-msgstr ""
+msgstr "已应用的动画"
 
 #: src/control/Notebookbar.ImpressAnimationTab.ts:59
 msgid "Move Up"
-msgstr ""
+msgstr "上移"
 
 #: src/control/Notebookbar.ImpressAnimationTab.ts:75
 msgid "Move Down"
-msgstr ""
+msgstr "下移"
 
 #: src/control/Notebookbar.ImpressAnimationTab.ts:105
 msgid "Category"
-msgstr ""
+msgstr "类别"
 
 #: src/control/Notebookbar.ImpressAnimationTab.ts:120
 msgid "Start"
-msgstr ""
+msgstr "开始"
 
 #: src/control/Notebookbar.ImpressAnimationTab.ts:140
 msgid "Effect"
-msgstr ""
+msgstr "效果"
 
 #: src/control/Notebookbar.ImpressTransitionTab.ts:24
 msgid "Transition"
-msgstr ""
+msgstr "幻灯片切换"
 
 #: src/control/Notebookbar.ImpressTransitionTab.ts:41
 #: src/control/Sidebar.FromNotebookbarPanel.ts:108
 msgid "Transitions"
-msgstr ""
+msgstr "切换"
 
 #: src/control/Notebookbar.ImpressTransitionTab.ts:66
 msgid "Variant"
-msgstr ""
+msgstr "变体"
 
 #: src/control/Notebookbar.ImpressTransitionTab.ts:81
 msgid "Duration"
-msgstr ""
+msgstr "持续时间"
 
 #: src/control/Notebookbar.ImpressTransitionTab.ts:108
 msgid "On mouse click"
-msgstr ""
+msgstr "单击鼠标时"
 
 #: src/control/Notebookbar.ImpressTransitionTab.ts:116
 msgid "After"
-msgstr ""
+msgstr "之后"
 
 #: src/control/Notebookbar.WriterReferencesTab.ts:41
 msgid "Table of content"
-msgstr ""
+msgstr "目录"
 
 #: src/control/Notebookbar.WriterReferencesTab.ts:95
 msgid "Footnote/Endnote"
-msgstr ""
+msgstr "脚注"
 
 #: src/control/Notebookbar.WriterReferencesTab.ts:312
 #: src/control/Control.NotebookbarDraw.js:1578
 #: src/control/Control.NotebookbarImpress.js:1636
-#, fuzzy
 msgid "Field"
 msgstr "字段"
 
 #: src/control/Sidebar.FromNotebookbarPanel.ts:121
 msgid "Animations"
-msgstr ""
+msgstr "动画"
 
 #: src/control/Control.Notebookbar.js:628
 #: src/control/Control.NotebookbarCalc.js:194
@@ -2473,7 +2459,7 @@ msgstr "共享"
 
 #: src/control/Control.NotebookbarBuilder.js:224
 msgid "Click to expand"
-msgstr ""
+msgstr "点击展开"
 
 #: src/control/Control.NotebookbarBuilder.js:224
 msgid "Tap to expand"
@@ -2481,7 +2467,7 @@ msgstr "点击展开"
 
 #: src/control/Control.NotebookbarBuilder.js:225
 msgid "Click to collapse"
-msgstr ""
+msgstr "点击折叠"
 
 #: src/control/Control.NotebookbarBuilder.js:225
 #: src/control/Control.NotebookbarBuilder.js:280
@@ -2533,7 +2519,6 @@ msgid "Page Layout"
 msgstr "页面布局"
 
 #: src/control/Control.NotebookbarCalc.js:48
-#, fuzzy
 msgid "Formulas"
 msgstr "公式"
 
@@ -2559,7 +2544,6 @@ msgstr "格式"
 #: src/control/Control.NotebookbarDraw.js:101
 #: src/control/Control.NotebookbarImpress.js:129
 #: src/control/Control.NotebookbarWriter.js:88
-#, fuzzy
 msgid "Shape"
 msgstr "形状"
 
@@ -2637,7 +2621,7 @@ msgstr "重命名"
 #: src/control/Control.NotebookbarImpress.js:741
 #: src/control/Control.NotebookbarWriter.js:589
 msgid "Clipboard"
-msgstr ""
+msgstr "剪贴板"
 
 #: src/control/Control.NotebookbarCalc.js:470
 #: src/control/Control.NotebookbarDraw.js:673
@@ -2648,11 +2632,11 @@ msgstr "字体"
 #: src/control/Control.NotebookbarCalc.js:615
 #: src/control/Control.NotebookbarDraw.js:814
 msgid "Alignment"
-msgstr ""
+msgstr "对齐"
 
 #: src/control/Control.NotebookbarCalc.js:742
 msgid "Merge & Center"
-msgstr ""
+msgstr "合并后居中"
 
 #: src/control/Control.NotebookbarCalc.js:752
 #: src/control/Control.NotebookbarCalc.js:768
@@ -2694,7 +2678,7 @@ msgstr "文本"
 
 #: src/control/Control.NotebookbarCalc.js:854
 msgid "Cells"
-msgstr ""
+msgstr "单元格"
 
 #: src/control/Control.NotebookbarCalc.js:956
 #: src/control/jsdialog/Definitions.Menu.ts:2298
@@ -2723,7 +2707,7 @@ msgstr "坏"
 
 #: src/control/Control.NotebookbarCalc.js:1012
 msgid "Editing"
-msgstr ""
+msgstr "编辑"
 
 #: src/control/Control.NotebookbarCalc.js:1036
 #: src/control/Control.NotebookbarDraw.js:1197
@@ -2735,12 +2719,12 @@ msgstr "替换"
 #: src/control/Control.NotebookbarCalc.js:1100
 #: src/control/Control.NotebookbarWriter.js:1808
 msgid "Margin"
-msgstr ""
+msgstr "页边距"
 
 #: src/control/Control.NotebookbarCalc.js:1107
 #: src/control/Control.NotebookbarWriter.js:1815
 msgid "Size"
-msgstr ""
+msgstr "尺寸"
 
 #: src/control/Control.NotebookbarCalc.js:1168
 msgid "Row Height"
@@ -2785,7 +2769,7 @@ msgstr "删除列"
 #: src/control/Control.NotebookbarWriter.js:2896
 #: src/control/Control.NotebookbarWriter.js:3219
 msgid "Align"
-msgstr ""
+msgstr "对齐"
 
 #: src/control/Control.NotebookbarCalc.js:1329
 #: src/control/Control.NotebookbarCalc.js:2947
@@ -2798,42 +2782,42 @@ msgstr ""
 #: src/control/Control.NotebookbarWriter.js:2955
 #: src/control/Control.NotebookbarWriter.js:3278
 msgid "Arrange"
-msgstr ""
+msgstr "排列"
 
 #: src/control/Control.NotebookbarCalc.js:1392
 msgid "Sheet View"
-msgstr ""
+msgstr "工作表视图"
 
 #: src/control/Control.NotebookbarCalc.js:1406
 msgid "Default View"
-msgstr ""
+msgstr "默认视图"
 
 #: src/control/Control.NotebookbarCalc.js:1423
 msgid "Select Sheet View"
-msgstr ""
+msgstr "选择工作表视图"
 
 #: src/control/Control.NotebookbarCalc.js:1430
 msgid "New Sheet View"
-msgstr ""
+msgstr "新建工作表视图"
 
 #: src/control/Control.NotebookbarCalc.js:1437
 msgid "Remove Sheet View"
-msgstr ""
+msgstr "移除工作表视图"
 
 #: src/control/Control.NotebookbarCalc.js:1444
 msgid "Exit Sheet View"
-msgstr ""
+msgstr "退出工作表视图"
 
 #: src/control/Control.NotebookbarCalc.js:1459
 msgid "Freeze"
-msgstr ""
+msgstr "冻结"
 
 #: src/control/Control.NotebookbarCalc.js:1513
 #: src/control/Control.NotebookbarDraw.js:420
 #: src/control/Control.NotebookbarImpress.js:539
 #: src/control/Control.NotebookbarWriter.js:1662
 msgid "Zoom"
-msgstr ""
+msgstr "缩放"
 
 #: src/control/Control.NotebookbarCalc.js:1520
 #: src/control/Control.NotebookbarDraw.js:427
@@ -2865,15 +2849,15 @@ msgstr "状态栏"
 #: src/control/Control.NotebookbarWriter.js:3004
 #: src/control/Control.NotebookbarWriter.js:3327
 msgid "Group"
-msgstr ""
+msgstr "组合"
 
 #: src/control/Control.NotebookbarCalc.js:1664
 msgid "Ungroup"
-msgstr ""
+msgstr "取消组合"
 
 #: src/control/Control.NotebookbarCalc.js:1686
 msgid "Pivot Table"
-msgstr ""
+msgstr "数据透视表"
 
 #: src/control/Control.NotebookbarCalc.js:1735
 #: src/control/Control.NotebookbarDraw.js:1015
@@ -2882,7 +2866,7 @@ msgstr ""
 #: src/control/Control.NotebookbarImpress.js:1456
 #: src/control/Control.NotebookbarWriter.js:1252
 msgid "Illustrations"
-msgstr ""
+msgstr "插图"
 
 #: src/control/Control.NotebookbarCalc.js:1798
 #: src/control/Control.NotebookbarDraw.js:1029
@@ -2902,63 +2886,61 @@ msgstr "助手"
 
 #: src/control/Control.NotebookbarCalc.js:2014
 msgid "Insert Function"
-msgstr ""
+msgstr "插入函数"
 
 #: src/control/Control.NotebookbarCalc.js:2022
-#, fuzzy
 msgid "Function Library"
-msgstr "函数向导"
+msgstr "函数库"
 
 #: src/control/Control.NotebookbarCalc.js:2036
 msgid "AutoSum"
-msgstr ""
+msgstr "自动求和"
 
 #: src/control/Control.NotebookbarCalc.js:2049
 msgid "Financial"
-msgstr ""
+msgstr "财务"
 
 #: src/control/Control.NotebookbarCalc.js:2067
 msgid "Logical"
-msgstr ""
+msgstr "逻辑"
 
 #: src/control/Control.NotebookbarCalc.js:2097
 msgid "Date & Time"
-msgstr ""
+msgstr "日期和时间"
 
 #: src/control/Control.NotebookbarCalc.js:2109
 msgid "Lookup & Reference"
-msgstr ""
+msgstr "查找与引用"
 
 #: src/control/Control.NotebookbarCalc.js:2127
 msgid "Math & Trig"
-msgstr ""
+msgstr "数学和三角函数"
 
 #: src/control/Control.NotebookbarCalc.js:2139
 msgid "More Functions"
-msgstr ""
+msgstr "更多函数"
 
 #: src/control/Control.NotebookbarCalc.js:2184
 msgid "Range"
-msgstr ""
+msgstr "范围"
 
 #: src/control/Control.NotebookbarCalc.js:2267
 msgid "Sort"
-msgstr ""
+msgstr "排序"
 
 #: src/control/Control.NotebookbarCalc.js:2313
 msgid "Filter"
-msgstr ""
+msgstr "筛选"
 
 #: src/control/Control.NotebookbarCalc.js:2561
 #: src/control/Control.NotebookbarImpress.js:1968
 #: src/control/Control.NotebookbarWriter.js:2238
-#, fuzzy
 msgid "Comments"
 msgstr "批注"
 
 #: src/control/Control.NotebookbarCalc.js:2667
 msgid "Format Cells"
-msgstr ""
+msgstr "设置单元格格式"
 
 #: src/control/Control.NotebookbarCalc.js:2813
 #: src/control/Control.NotebookbarCalc.js:3170
@@ -2966,13 +2948,13 @@ msgstr ""
 #: src/control/Control.NotebookbarWriter.js:2841
 #: src/control/Control.NotebookbarWriter.js:3164
 msgid "Wrap"
-msgstr ""
+msgstr "自动换行"
 
 #: src/control/Control.NotebookbarCalc.js:3052
 #: src/control/Control.NotebookbarImpress.js:2687
 #: src/control/Control.NotebookbarWriter.js:3050
 msgid "Image Controls"
-msgstr ""
+msgstr "图像控件"
 
 #: src/control/Control.NotebookbarDraw.js:76
 #: src/control/Control.NotebookbarWriter.js:56
@@ -3004,15 +2986,15 @@ msgstr "标尺"
 #: src/control/Control.NotebookbarWriter.js:793
 #: src/control/Control.NotebookbarWriter.js:2607
 msgid "Paragraph"
-msgstr ""
+msgstr "段落"
 
 #: src/control/Control.NotebookbarImpress.js:96
 msgid "Design"
-msgstr ""
+msgstr "设计"
 
 #: src/control/Control.NotebookbarImpress.js:104
 msgid "Slide Show"
-msgstr ""
+msgstr "幻灯片放映"
 
 #: src/control/Control.NotebookbarImpress.js:143
 msgid "Master"
@@ -3032,16 +3014,16 @@ msgstr "显示在窗口中"
 
 #: src/control/Control.NotebookbarImpress.js:501
 msgid "Start Follow-me Presentation"
-msgstr ""
+msgstr "开始跟随演示"
 
 #: src/control/Control.NotebookbarImpress.js:510
 #: src/slideshow/SlideShowPresenter.ts:732
 msgid "Follow Presentation"
-msgstr ""
+msgstr "跟随演示"
 
 #: src/control/Control.NotebookbarImpress.js:639
 msgid "Slide Views"
-msgstr ""
+msgstr "幻灯片视图"
 
 #: src/control/Control.NotebookbarImpress.js:678
 msgid "Snap to Grid"
@@ -3050,55 +3032,54 @@ msgstr "对齐到网格"
 #: src/control/Control.NotebookbarImpress.js:802
 #: src/control/Control.NotebookbarImpress.js:1818
 msgid "Slide Layout"
-msgstr ""
+msgstr "幻灯片版式"
 
 #: src/control/Control.NotebookbarImpress.js:813
 msgid "New"
-msgstr ""
+msgstr "新建"
 
 #: src/control/Control.NotebookbarImpress.js:824
 #: src/control/Control.NotebookbarImpress.js:1828
-#, fuzzy
 msgid "Change Layout"
-msgstr "页面布局"
+msgstr "修改布局"
 
 #: src/control/Control.NotebookbarImpress.js:832
 #: src/control/Control.NotebookbarImpress.js:1835
 msgid "Reset Layout"
-msgstr ""
+msgstr "重置版式"
 
 #: src/control/Control.NotebookbarImpress.js:846
 msgid "Character"
-msgstr ""
+msgstr "字符"
 
 #: src/control/Control.NotebookbarImpress.js:1107
 msgid "Spacing & Color"
-msgstr ""
+msgstr "间距和颜色"
 
 #: src/control/Control.NotebookbarImpress.js:1796
 msgid "Master Slide Templates"
-msgstr ""
+msgstr "母版幻灯片模板"
 
 #: src/control/Control.NotebookbarImpress.js:1847
 msgid "Slide Size"
-msgstr ""
+msgstr "幻灯片大小"
 
 #: src/control/Control.NotebookbarImpress.js:1870
 msgid "Background Image"
-msgstr ""
+msgstr "背景图像"
 
 #: src/control/Control.NotebookbarImpress.js:2072
 msgid "Merge & Split"
-msgstr ""
+msgstr "合并与拆分"
 
 #: src/control/Control.NotebookbarImpress.js:2111
 #: src/control/Control.NotebookbarWriter.js:2557
 msgid "Select"
-msgstr ""
+msgstr "选择"
 
 #: src/control/Control.NotebookbarImpress.js:2720
 msgid "Effects"
-msgstr ""
+msgstr "效果"
 
 #: src/control/Control.NotebookbarWriter.js:75
 msgid "Form"
@@ -3127,19 +3108,19 @@ msgstr "向下滚动"
 
 #: src/control/Control.NotebookbarWriter.js:1098
 msgid "Lists/Bullets"
-msgstr ""
+msgstr "列表/项目符号"
 
 #: src/control/Control.NotebookbarWriter.js:1385
 msgid "Header & Footer"
-msgstr ""
+msgstr "页眉和页脚"
 
 #: src/control/Control.NotebookbarWriter.js:1454
 msgid "Section"
-msgstr ""
+msgstr "节"
 
 #: src/control/Control.NotebookbarWriter.js:1539
 msgid "Symbols"
-msgstr ""
+msgstr "符号"
 
 #: src/control/Control.NotebookbarWriter.js:1592
 msgid "Rich Text"
@@ -3155,24 +3136,23 @@ msgstr "下拉"
 
 #: src/control/Control.NotebookbarWriter.js:2313
 msgid "Tracking"
-msgstr ""
+msgstr "修订"
 
 #: src/control/Control.NotebookbarWriter.js:2495
 msgid "Split"
-msgstr ""
+msgstr "拆分"
 
 #: src/control/Control.NotebookbarWriter.js:2679
 msgid "Number Format"
-msgstr ""
+msgstr "数字格式"
 
 #: src/control/Control.PartsPreview.js:187
-#, fuzzy
 msgid "preview of page %1"
 msgstr "页面预览 %1"
 
 #: src/control/Control.PartsPreview.js:189
 msgid "Slide %1"
-msgstr ""
+msgstr "幻灯片 %1"
 
 #: src/control/Control.PartsPreview.js:262
 msgid "Paste Slide"
@@ -3205,21 +3185,21 @@ msgstr "SSL 验证无误"
 #: src/control/Control.ServerAuditDialog.ts:72
 msgid ""
 "Documents are not effectively contained: missing capabilities or namespaces."
-msgstr ""
+msgstr "文档未有效隔离：缺少功能或命名空间。"
 
 #: src/control/Control.ServerAuditDialog.ts:77
 msgid "Each document is securely contained"
-msgstr ""
+msgstr "每个文档都已安全隔离"
 
 #: src/control/Control.ServerAuditDialog.ts:83
 msgid ""
 "BPF filtering of potentially risky system calls (seccomp) is not enabled; a "
 "security hazard."
-msgstr ""
+msgstr "未启用潜在风险系统调用的 BPF 过滤 (seccomp)；存在安全隐患。"
 
 #: src/control/Control.ServerAuditDialog.ts:88
 msgid "System call security filtering enabled"
-msgstr ""
+msgstr "已启用系统调用安全过滤"
 
 #: src/control/Control.ServerAuditDialog.ts:95
 msgid ""
@@ -3233,19 +3213,19 @@ msgstr "硬件配置足以提供最佳性能"
 
 #: src/control/Control.ServerAuditDialog.ts:109
 msgid "Slow Kit jail setup with copying, cannot bind-mount."
-msgstr ""
+msgstr "Kit jail 设置缓慢（需复制），无法绑定挂载。"
 
 #: src/control/Control.ServerAuditDialog.ts:113
 msgid "Fast kit jail bind mounting enabled"
-msgstr ""
+msgstr "已启用快速 Kit jail 绑定挂载"
 
 #: src/control/Control.ServerAuditDialog.ts:118
 msgid "Poorly performing proxying of all network requests."
-msgstr ""
+msgstr "所有网络请求的代理性能较差。"
 
 #: src/control/Control.ServerAuditDialog.ts:122
 msgid "Direct network connection"
-msgstr ""
+msgstr "直接网络连接"
 
 #: src/control/Control.ServerAuditDialog.ts:128
 msgid "The IsAdminUser property is not set by integration"
@@ -3271,15 +3251,15 @@ msgstr "Integrator 尚未准备好为 PostMessage 调用"
 
 #: src/control/Control.ServerAuditDialog.ts:161
 msgid "Using namespaces"
-msgstr ""
+msgstr "正在使用命名空间"
 
 #: src/control/Control.ServerAuditDialog.ts:162
 msgid "Not using namespaces"
-msgstr ""
+msgstr "未使用命名空间"
 
 #: src/control/Control.ServerAuditDialog.ts:236
 msgid "Document container started in {1} ms"
-msgstr ""
+msgstr "文档容器在 {1} 毫秒内启动"
 
 #: src/control/Control.ServerAuditDialog.ts:306
 msgid "Status"
@@ -3294,7 +3274,6 @@ msgid "Alerts:"
 msgstr "警告："
 
 #: src/control/Control.ServerAuditDialog.ts:373
-#, fuzzy
 msgid "Check warnings of your server"
 msgstr "检查您服务器的安全警告"
 
@@ -3324,7 +3303,7 @@ msgstr "插入工作表"
 
 #: src/control/Control.SheetsBar.js:88
 msgid "Show sheet list"
-msgstr ""
+msgstr "显示工作表列表"
 
 #: src/control/Control.StatusBar.js:156
 msgid "On"
@@ -3776,11 +3755,11 @@ msgstr "正常"
 
 #: src/control/jsdialog/Definitions.Menu.ts:116
 msgid "Wide"
-msgstr ""
+msgstr "宽"
 
 #: src/control/jsdialog/Definitions.Menu.ts:121
 msgid "Narrow"
-msgstr ""
+msgstr "窄"
 
 #: src/control/jsdialog/Definitions.Menu.ts:164
 msgid "Min"
@@ -3792,139 +3771,139 @@ msgstr "最大值"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1443
 msgid "Edit Single Sparkline"
-msgstr ""
+msgstr "编辑单个迷你图"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1454
 msgid "Delete Single Sparkline"
-msgstr ""
+msgstr "删除单个迷你图"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1490
 msgid "Portrait"
-msgstr ""
+msgstr "纵向"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1496
 msgid "Landscape"
-msgstr ""
+msgstr "横向"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1502
 msgid "A6"
-msgstr ""
+msgstr "A6"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1503
 msgid "A5"
-msgstr ""
+msgstr "A5"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1504
 msgid "A4"
-msgstr ""
+msgstr "A4"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1505
 msgid "A3"
-msgstr ""
+msgstr "A3"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1506
 msgid "B6 (ISO)"
-msgstr ""
+msgstr "B6 (ISO)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1507
 msgid "B5 (ISO)"
-msgstr ""
+msgstr "B5 (ISO)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1508
 msgid "B4 (ISO)"
-msgstr ""
+msgstr "B4 (ISO)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1509
 msgid "Letter"
-msgstr ""
+msgstr "信纸 (Letter)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1510
 msgid "Legal"
-msgstr ""
+msgstr "法律专用纸 (Legal)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1511
 msgid "Long Bond"
-msgstr ""
+msgstr "长法律纸 (Long Bond)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1512
 msgid "Tabloid"
-msgstr ""
+msgstr "报纸 / 塔布勒纸 (Tabloid)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1513
 msgid "B6 (JIS)"
-msgstr ""
+msgstr "B6 (JIS)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1514
 msgid "B5 (JIS)"
-msgstr ""
+msgstr "B5 (JIS)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1515
 msgid "B4 (JIS)"
-msgstr ""
+msgstr "B4 (JIS)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1516
 msgid "16 Kai"
-msgstr ""
+msgstr "16 开"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1517
 msgid "32 Kai"
-msgstr ""
+msgstr "32 开"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1518
 msgid "Big 32 Kai"
-msgstr ""
+msgstr "大 32 开"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1519
 msgid "User"
-msgstr ""
+msgstr "用户自定义"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1520
 msgid "DL Envelope"
-msgstr ""
+msgstr "DL 信封"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1521
 msgid "C6 Envelope"
-msgstr ""
+msgstr "C6 信封"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1522
 msgid "C6/5 Envelope"
-msgstr ""
+msgstr "C6/5 信封"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1523
 msgid "C5 Envelope"
-msgstr ""
+msgstr "C5 信封"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1524
 msgid "C4 Envelope"
-msgstr ""
+msgstr "C4 信封"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1527
 msgid "#6¾ Envelope"
-msgstr ""
+msgstr "#6¾ 信封"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1532
 msgid "#7¾ (Monarch) Envelope"
-msgstr ""
+msgstr "#7¾ (Monarch) 信封"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1535
 msgid "#9 Envelope"
-msgstr ""
+msgstr "#9 信封"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1536
 msgid "#10 Envelope"
-msgstr ""
+msgstr "#10 信封"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1537
 msgid "#11 Envelope"
-msgstr ""
+msgstr "#11 信封"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1538
 msgid "#12 Envelope"
-msgstr ""
+msgstr "#12 信封"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1541
 msgid "Japanese Postcard"
-msgstr ""
+msgstr "日本明信片"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1726
 msgid "Insert Local Image"
@@ -3960,197 +3939,195 @@ msgstr "此用户"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1911
 msgid "No Borders"
-msgstr ""
+msgstr "无边框"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1917
 msgid "Left Border"
-msgstr ""
+msgstr "左边框"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1923
 msgid "Right Border"
-msgstr ""
+msgstr "右边框"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1929
 msgid "Left And Right Borders"
-msgstr ""
+msgstr "左右边框"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1935
 msgid "Top Border"
-msgstr ""
+msgstr "上边框"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1941
 msgid "Bottom Border"
-msgstr ""
+msgstr "下边框"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1947
 msgid "Top And Bottom Border"
-msgstr ""
+msgstr "上下边框"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1953
 msgid "Outer Border"
-msgstr ""
+msgstr "外侧边框"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1959
 msgid "All Horizontal Lines"
-msgstr ""
+msgstr "所有水平线"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1965
 msgid "Outer Border And Horizontal Lines"
-msgstr ""
+msgstr "外侧边框和水平线"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1971
 msgid "Outer Border and Vertical Lines"
-msgstr ""
+msgstr "外侧边框和垂直线"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1977
 msgid "Outer Borders And All Inner lines"
-msgstr ""
+msgstr "外侧边框和所有内部线"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1982
 msgid "Line color"
-msgstr ""
+msgstr "线条颜色"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1993
-#, fuzzy
 msgid "Line style"
 msgstr "线条样式:"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1996
 msgid "Hairline (0.05 pt)"
-msgstr ""
+msgstr "极细线 (0.05 pt)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2005
 msgid "Very thin (0.50 pt)"
-msgstr ""
+msgstr "非常细 (0.50 pt)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2014
 msgid "Thin (0.75 pt)"
-msgstr ""
+msgstr "细 (0.75 pt)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2023
 msgid "Medium (1.50 pt)"
-msgstr ""
+msgstr "中等 (1.50 pt)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2032
 msgid "Thick (2.25 pt)"
-msgstr ""
+msgstr "粗 (2.25 pt)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2041
 msgid "Extra thick (4.50 pt)"
-msgstr ""
+msgstr "加粗 (4.50 pt)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2050
 msgid "Double Hairline (1.10 pt)"
-msgstr ""
+msgstr "双极细线 (1.10 pt)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2059
 msgid "Double Hairline (2.35 pt)"
-msgstr ""
+msgstr "双极细线 (2.35 pt)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2068
 msgid "Thin/Medium (3.00 pt)"
-msgstr ""
+msgstr "细/中 (3.00 pt)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2077
 msgid "Medium/Hairline (3.05 pt)"
-msgstr ""
+msgstr "中/极细 (3.05 pt)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2086
 msgid "Medium/Medium (4.50 pt)"
-msgstr ""
+msgstr "中/中 (4.50 pt)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2146
 msgid "Standard (4:3)"
-msgstr ""
+msgstr "标准 (4:3)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2151
 msgid "Widescreen (16:9)"
-msgstr ""
+msgstr "宽屏 (16:9)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2161
 msgid "Blank Slide"
-msgstr ""
+msgstr "空白幻灯片"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2162
 msgid "Title Slide"
-msgstr ""
+msgstr "标题幻灯片"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2163
 msgid "Title, Content"
-msgstr ""
+msgstr "标题，内容"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2164
 msgid "Title and 2 Content"
-msgstr ""
+msgstr "标题和 2 个内容"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2165
 msgid "Title Only"
-msgstr ""
+msgstr "仅标题"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2166
 msgid "Centered Text"
-msgstr ""
+msgstr "居中文本"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2167
 msgid "Title, 2 Content and Content"
-msgstr ""
+msgstr "标题，2 个内容和内容"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2168
 msgid "Title, Content and 2 Content"
-msgstr ""
+msgstr "标题，内容和 2 个内容"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2169
 msgid "Title, 2 Content over Content"
-msgstr ""
+msgstr "标题，2 个内容在内容上方"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2170
 msgid "Title, Content over Content"
-msgstr ""
+msgstr "标题，内容在内容上方"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2171
 msgid "Title, 4 Content"
-msgstr ""
+msgstr "标题，4 个内容"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2172
 msgid "Title, 6 Content"
-msgstr ""
+msgstr "标题，6 个内容"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2173
 msgid "Vertical Title, Text, Chart"
-msgstr ""
+msgstr "垂直标题，文本，图表"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2174
 msgid "Vertical Title, Vertical Text"
-msgstr ""
+msgstr "垂直标题，垂直文本"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2175
 msgid "Title, Vertical Text"
-msgstr ""
+msgstr "标题，垂直文本"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2176
 msgid "Title, Vertical Text, Clipart"
-msgstr ""
+msgstr "标题，垂直文本，剪贴画"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2303
 msgid "Grayscale"
-msgstr ""
+msgstr "灰度"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2308
 msgid "Black/White"
-msgstr ""
+msgstr "黑白"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2313
 msgid "Watermark"
-msgstr ""
+msgstr "水印"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2321
-#, fuzzy
 msgid "Insert comment"
 msgstr "插入批注"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2325
 msgid "Comments list"
-msgstr ""
+msgstr "批注列表"
 
 #: src/control/jsdialog/Util.SnackbarController.ts:122
 msgid "Dismiss"
@@ -4175,31 +4152,31 @@ msgstr "最近"
 
 #: src/control/jsdialog/Widget.PageMarginEntry.ts:40
 msgid "Page margin options"
-msgstr ""
+msgstr "页边距选项"
 
 #: src/control/jsdialog/Widget.PageMarginEntry.ts:121
 msgid "Top: {top}"
-msgstr ""
+msgstr "上：{top}"
 
 #: src/control/jsdialog/Widget.PageMarginEntry.ts:126
 msgid "Left: {left}"
-msgstr ""
+msgstr "左：{left}"
 
 #: src/control/jsdialog/Widget.PageMarginEntry.ts:136
 msgid "Bottom: {bottom}"
-msgstr ""
+msgstr "下：{bottom}"
 
 #: src/control/jsdialog/Widget.PageMarginEntry.ts:141
 msgid "Right: {right}"
-msgstr ""
+msgstr "右：{right}"
 
 #: src/control/jsdialog/Widget.PageMarginEntry.ts:165
 msgid "Custom Margins…"
-msgstr ""
+msgstr "自定义页边距…"
 
 #: src/control/jsdialog/Widget.PageSizeEntry.ts:69
 msgid "More Paper Sizes..."
-msgstr ""
+msgstr "更多纸张大小..."
 
 #: src/control/jsdialog/Widget.HTMLContent.ts:46
 msgid "Read-only"
@@ -4216,7 +4193,7 @@ msgstr "编辑模式"
 
 #: src/control/jsdialog/Widget.HTMLContent.ts:83
 msgid "Number of Pages. Click to open the Go to Page dialog box."
-msgstr ""
+msgstr "页数。点击打开“转到页面”对话框。"
 
 #: src/control/jsdialog/Widget.HTMLContent.ts:95
 msgid "Word Counter"
@@ -4264,7 +4241,6 @@ msgid "Cell borders"
 msgstr "单元格边框"
 
 #: src/control/jsdialog/Widget.SidebarContainers.ts:72
-#, fuzzy
 msgid "More options for {1}"
 msgstr "用于 {name} 的更多选项"
 
@@ -4981,16 +4957,16 @@ msgstr "点击以退出演示…"
 
 #: src/slideshow/SlideShowPresenter.ts:677
 msgid "End Show"
-msgstr ""
+msgstr "结束放映"
 
 #: src/slideshow/SlideShowPresenter.ts:708
 #: src/slideshow/SlideShowPresenter.ts:720
 msgid "Disable Animations"
-msgstr ""
+msgstr "禁用动画"
 
 #: src/slideshow/SlideShowPresenter.ts:719
 msgid "Enable Animations"
-msgstr ""
+msgstr "启用动画"
 
 #: welcome/welcome.html%2Bhtml.head.title:9-3
 msgid "Collabora Online Welcome"
@@ -5006,7 +4982,6 @@ msgid "Collabora Online Development Edition"
 msgstr "Collabora Online 开发版本（CODE）"
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.p:28-7
-#, fuzzy
 msgid ""
 "Enjoy the latest developments in online productivity, free for you to use, "
 "to explore and to use with others in the browser. Various <a "
@@ -5015,24 +4990,25 @@ msgid ""
 "mobile."
 msgstr ""
 "享受在线生产力的最新发展，您可以在浏览器中免费使用、探索并与其他人一起使用。 "
-"各种<a target=\"_blank\" href=\"https://www.collaboraonline.com/solutions/"
-"collabora-office-android-ios/\">应用</a>也可用于移动设备。"
+"各种<a target=\"_blank\" rel=\"noopener\" href="
+"\"https://www.collaboraonline.com/solutions/collabora-office-android-ios/\">"
+"应用</a>也可用于移动设备。"
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h1:37-7
 msgid "Discover All The Changes"
 msgstr "检查所有更新"
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.p:39-7
-#, fuzzy
 msgid ""
 "Check the <a target=\"_blank\" rel=\"noopener\" href=\"https://www."
 "collaboraonline.com/code-25-04-release-notes/\">release notes</a> and learn "
 "all about: The latest Collabora Online Development Edition, aimed at home "
 "users and small teams."
 msgstr ""
-"请查阅<a target=\"_blank\" href=\"https://www.collaboraonline.com/"
-"code-25-04-release-notes/\">发布说明</a>，了解最新的针对家庭用户和小团队的 "
-"Collabora Online 开发版本（CODE）的所有信息。"
+"请查阅<a target=\"_blank\" rel=\"noopener\" href="
+"\"https://www.collaboraonline.com/code-25-04-release-notes/\">发布说明</a>，"
+"了解最新的针对家庭用户和小团队的 Collabora Online 开发版本（CODE）的所有信息"
+"。"
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h1:48-7
 msgid "Get Involved"
@@ -5043,7 +5019,6 @@ msgid "https://collaboraonline.github.io/"
 msgstr "https://collaboraonline.github.io/"
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.p:50-7
-#, fuzzy
 msgid ""
 "Are you interested in contributing but don’t know where to start? Head over "
 "to the <a target=\"_blank\" rel=\"noopener\" href=\"https://collaboraonline."
@@ -5054,12 +5029,13 @@ msgid ""
 "href=\"https://collaboraonline.github.io/post/filebugs/\">filing a bug "
 "report</a> with all the essential steps on how to reproduce it."
 msgstr ""
-"如果您有兴趣参与项目但不知道从何开始，请查看<a target=\"_blank\" href=\"https"
-"://collaboraonline.github.io/post/build-code/\">逐步说明</a>，从头开始构建 "
-"CODE。您也可以通过参与<a target=\"_blank\" href=\"https://collaboraonline."
-"github.io/post/translate/\">翻译</a>或通过<a target=\"_blank\" href=\"https"
-"://collaboraonline.github.io/post/filebugs/\""
-">提交错误报告</a>（报告中应包含问题如何重现的关键步骤）来加入到项目中。"
+"如果您有兴趣参与项目但不知道从何开始，请查看<a target=\"_blank\" rel="
+"\"noopener\" href=\"https://collaboraonline.github.io/post/build-code/\">逐步"
+"说明</a>，从头开始构建 CODE。您也可以通过参与<a target=\"_blank\" rel="
+"\"noopener\" href=\"https://collaboraonline.github.io/post/translate/\">翻译<"
+"/a>或通过<a target=\"_blank\" rel=\"noopener\" href="
+"\"https://collaboraonline.github.io/post/filebugs/\">提交错误报告</a>（报告中"
+"应包含问题如何重现的关键步骤）来加入到项目中。"
 
 #: welcome/welcome.html%2Bhtml.body.div.div:55-5
 msgid ""
