@@ -21,10 +21,12 @@ function KeyboardListNavigation(
 ) {
 	switch (event.key) {
 		case 'ArrowDown':
+		case 'ArrowRight':
 			moveToFocusableEntry(currentElement, 'next');
 			event.preventDefault();
 			break;
 		case 'ArrowUp':
+		case 'ArrowLeft':
 			moveToFocusableEntry(currentElement, 'previous');
 			event.preventDefault();
 			break;
@@ -71,9 +73,11 @@ function moveToFocusableEntry(
 	if (siblingElement) {
 		(siblingElement as HTMLElement).focus();
 		siblingElement.classList.add('selected');
+		siblingElement.setAttribute('tabindex', '0');
 		updateAriaSelected(siblingElement, 'true');
 
 		currentElement.classList.remove('selected');
+		currentElement.setAttribute('tabindex', '-1');
 		updateAriaSelected(currentElement, 'false');
 	}
 }
