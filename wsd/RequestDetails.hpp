@@ -172,7 +172,7 @@ public:
     }
 
     /// This is a per-document, per-user request key.
-    std::string getRequestKey() const
+    [[nodiscard]] std::string getRequestKey() const
     {
         const std::string wopiSrc = getField(RequestDetails::Field::WOPISrc);
         if (!wopiSrc.empty())
@@ -187,23 +187,23 @@ public:
     }
 
     /// The DocumentURI, decoded. Doesn't contain WOPISrc or any other appendages.
-    std::string getDocumentURI() const { return getField(Field::DocumentURI); }
+    [[nodiscard]] std::string getDocumentURI() const { return getField(Field::DocumentURI); }
 
     /// Returns the document-specific key from the DocumentURI.
-    std::string getDocKey() const
+    [[nodiscard]] std::string getDocKey() const
     {
         return RequestDetails::getDocKey(RequestDetails::sanitizeURI(getDocumentURI()));
     }
 
     /// The DocumentURI, decoded and sanitized. Doesn't contain WOPISrc or any other appendages.
-    std::string getDocumentURISanitized() const
+    [[nodiscard]] std::string getDocumentURISanitized() const
     {
         return sanitizeURI(getField(Field::DocumentURI)).toString();
     }
 
     /// Returns a key to be used with Online/Offline mode.
     /// This is based on the WOPISrc path + access_token.
-    std::string getLineModeKey(const std::string& access_token) const;
+    [[nodiscard]] std::string getLineModeKey(const std::string& access_token) const;
 
     const std::map<std::string, std::string>& getDocumentURIParams() const { return _docUriParams; }
 
