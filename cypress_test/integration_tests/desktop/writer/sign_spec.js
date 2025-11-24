@@ -22,6 +22,6 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Sign operations.', functio
 		cy.cGet('#DigitalSignaturesDialog #close.ui-pushbutton-wrapper button').click();
 
 		// Then make sure the resulting signature is valid:
-		cy.cGet('#signstatus-button div').should('have.class', 'sign_ok');
+		cy.cGet('[id^="signstatus"] div').should('have.class', 'sign_ok');
 	});
 });

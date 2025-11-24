@@ -23,6 +23,6 @@ describe(['tagdesktop'], 'Signature operations.', function() {
 		cy.cGet('#menu-signature').click();
 
 		// Then make sure the resulting signature is valid:
-		cy.cGet('#signstatus-button div').should('have.class', 'sign_ok');
+		cy.cGet('[id^="signstatus"] div').should('have.class', 'sign_ok');
 	});
 });
