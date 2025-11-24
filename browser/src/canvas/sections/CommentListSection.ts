@@ -137,6 +137,7 @@ export class CommentSection extends CanvasSectionObject {
 		this.sectionProperties.width = Math.round(1 * app.dpiScale); // Configurable variable.
 		this.sectionProperties.scrollAnnotation = null; // For impress, when 1 or more comments exist.
 		this.sectionProperties.commentWidth = 200 * 1.3 * app.dpiScale;
+		this.sectionProperties.commentWidthBigger =  588 * app.dpiScale;
 		this.sectionProperties.collapsedCommentWidth = 32 * 1.5 * app.dpiScale;
 		this.sectionProperties.collapsedMarginToTheEdge = 120; // CSS pixels.
 		this.sectionProperties.deflectionOfSelectedComment = 160; // CSS pixels.
@@ -1979,7 +1980,7 @@ export class CommentSection extends CanvasSectionObject {
 			var isRTL = document.documentElement.dir === 'rtl';
 
 			if (selectedComment) {
-				const commentWidth = this.sectionProperties.commentWidth;
+				const commentWidth = this.sectionProperties.showSelectedBigger ? this.sectionProperties.commentWidthBigger: this.sectionProperties.commentWidth;
 				const documentCanvasWidth = (document.getElementById('document-canvas') as any).width;
 				let posX = (this.sectionProperties.showSelectedBigger ?
 								Math.round((documentCanvasWidth - commentWidth)/2) :
