@@ -12,7 +12,7 @@
  * window.L.Control.PartsPreview
  */
 
-/* global _ app $ Hammer _UNO cool TileManager */
+/* global _ app $ Hammer _UNO cool */
 window.L.Control.PartsPreview = window.L.Control.extend({
 	options: {
 		fetchThumbnail: true,
