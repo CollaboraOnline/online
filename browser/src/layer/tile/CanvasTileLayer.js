@@ -4123,16 +4123,15 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 			found = false;
 		}
 
-		var ratio = TileManager.tileSize / app.tile.size.y;
-		var partHeightPixels = Math.round((this._partHeightTwips + this._spaceBetweenParts) * ratio);
-		var partWidthPixels = Math.round(this._partWidthTwips * ratio);
+		var partHeightPixels = Math.round((this._partHeightTwips + this._spaceBetweenParts) * app.twipsToPixels);
+		var partWidthPixels = Math.round(this._partWidthTwips * app.twipsToPixels);
 
 		var rectangle;
 		var maxArea = -1;
 		const viewedRectangle = app.activeDocument.activeView.viewedRectangle.pToArray();
 		const candidates = [];
 		for (i = 0; i < parts.length; i++) {
-			rectangle = [0, partHeightPixels * parts[i].part, partWidthPixels, partHeightPixels];
+			rectangle = [0, partHeightPixels * parts[i].part, partWidthPixels, Math.round(this._partHeightTwips * app.twipsToPixels)];
 			rectangle = app.LOUtil._getIntersectionRectangle(rectangle, viewedRectangle);
 			if (rectangle) {
 				const currentArea = rectangle[2] * rectangle[3];
