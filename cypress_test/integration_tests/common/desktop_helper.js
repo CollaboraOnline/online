@@ -34,10 +34,10 @@ function hideSidebar() {
 function hideSidebarImpress() {
 	cy.log('>> hideSidebarImpress - start');
 
-	cy.cGet('#modifypage').should('have.class', 'selected');
+	cy.cGet('.unoModifyPage').should('have.class', 'selected');
 	cy.cGet('#sidebar-dock-wrapper').should('be.visible').should('not.be.empty');
-	cy.cGet('#modifypage button').click();
-	cy.cGet('#modifypage').should('not.have.class', 'selected');
+	cy.cGet('.unoModifyPage button').click();
+	cy.cGet('.unoModifyPage').should('not.have.class', 'selected');
 	cy.cGet('#sidebar-dock-wrapper').should('not.be.visible');
 
 	cy.log('<< hideSidebarImpress - end');
