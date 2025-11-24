@@ -448,13 +448,13 @@ class ViewController: NSViewController, WKScriptMessageHandlerWithReply, WKNavig
 
     func showFullScreen(window: NSWindow) {
         if (!window.styleMask.contains(NSWindow.StyleMask.fullScreen)) {
-            window.toggleFullScreen(nil);
+            window.toggleFullScreen(nil)
         }
     }
 
     func showNormal(window: NSWindow) {
         if (window.styleMask.contains(NSWindow.StyleMask.fullScreen)) {
-            window.toggleFullScreen(nil);
+            window.toggleFullScreen(nil)
         }
     }
 
@@ -508,7 +508,7 @@ class ViewController: NSViewController, WKScriptMessageHandlerWithReply, WKNavig
         mainWindow.setFrame(presenterScreen.frame, display: true, animate: false)
         showFullScreen(window: mainWindow)
         mainWindow.makeKeyAndOrderFront(nil)
-        self.mainFullScreenActive = true;
+        self.mainFullScreenActive = true
 
         if (consoleWindow != nil) {
             installRestoreConsoleOnFullScreenExit(consoleWindow: consoleWindow!, frame: self.savedConsoleViewFrame)
@@ -516,7 +516,7 @@ class ViewController: NSViewController, WKScriptMessageHandlerWithReply, WKNavig
             if (externalScreen != nil) {
                 consoleWindow!.setFrame(laptopScreen.frame, display: true, animate: false)
                 showFullScreen(window: consoleWindow!)
-                self.consoleFullScreenActive = true;
+                self.consoleFullScreenActive = true
             } else {
                 consoleWindow!.setFrame(self.savedConsoleViewFrame, display: true, animate: false)
             }
@@ -589,12 +589,12 @@ class ViewController: NSViewController, WKScriptMessageHandlerWithReply, WKNavig
                     consoleWindow.setFrame(frame, display: true, animate: false)
                     consoleWindow.makeKeyAndOrderFront(nil)
 
-                    self.consoleFullScreenActive = false;
+                    self.consoleFullScreenActive = false
                     self.maybeDispatchRearrange()
                 }
 
                 center.removeObserver(self.consoleWindowExitFSObserver!)
-                self.consoleWindowExitFSObserver = nil;
+                self.consoleWindowExitFSObserver = nil
         }
     }
 
@@ -627,7 +627,7 @@ class ViewController: NSViewController, WKScriptMessageHandlerWithReply, WKNavig
                 if (self.screenCount != NSScreen.screens.count) {
                     self.screenCount = NSScreen.screens.count
                     if (!self.needRearrange) {
-                        self.needRearrange = true;
+                        self.needRearrange = true
                         // dispatch setting windows back to normal and rearrange,
                         // which will recreate at least the presentation window
                         // as fullscreen, when that is completed
@@ -658,7 +658,7 @@ class ViewController: NSViewController, WKScriptMessageHandlerWithReply, WKNavig
 
                 self.installRestoreConsoleOnFullScreenExit(consoleWindow: window, frame: self.savedConsoleViewFrame)
                 center.removeObserver(self.consoleMonitorExchangeObserver!)
-                self.consoleMonitorExchangeObserver = nil;
+                self.consoleMonitorExchangeObserver = nil
         }
     }
 
@@ -676,6 +676,10 @@ class ViewController: NSViewController, WKScriptMessageHandlerWithReply, WKNavig
             if (self.consoleMonitorExchangeObserver != nil) {
                 NotificationCenter.default.removeObserver(self.consoleMonitorExchangeObserver!)
             }
+            if (self.consoleWindowExitFSObserver != nil) {
+                NotificationCenter.default.removeObserver(self.consoleWindowExitFSObserver!)
+            }
+            self.consoleFullScreenActive = false
 
             // this will trigger the restoration of original location/size
             // via the convoluted observer stuff.
