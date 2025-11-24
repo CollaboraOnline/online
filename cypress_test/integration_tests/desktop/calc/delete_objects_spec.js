@@ -38,14 +38,16 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Delete Objects', function(
 	});
 
 	it('Delete Chart' , function() {
+		// Insert chart button not visible yet so click on the overflow button.
 		cy.cGet('#toolbar-up #overflow-button-other-toptoolbar .arrowbackground').click();
-		//insert
+		// Click on insert chart button.
 		cy.cGet('#insertobjectchart').click();
+		// Click on the ok button of chart jsdialog.
 		cy.cGet('.ui-pushbutton.jsdialog.button-primary').should($el => { expect(Cypress.dom.isDetached($el)).to.eq(false); }).click();
+		// Close the overflow toolbar. Doing this before closing the chart jsdialog does not work.
 		cy.cGet('.jsdialog-overlay').click();
 		cy.cGet('#test-div-shapeHandlesSection').should('exist');
-		cy.wait(300);
-		//delete
+		// delete
 		helper.typeIntoDocument('{del}');
 		cy.cGet('#test-div-shapeHandlesSection').should('not.exist');
 	});
