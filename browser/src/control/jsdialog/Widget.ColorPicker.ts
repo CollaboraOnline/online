@@ -124,6 +124,7 @@ function createColor(
 	widgetData: ColorPaletteWidgetData,
 	isCurrent: boolean,
 	themeColors: ThemeColor[],
+	groupName: string,
 ): Element {
 	const color = window.L.DomUtil.create(
 		'input',
@@ -131,7 +132,7 @@ function createColor(
 		parentContainer,
 	);
 	color.type = 'radio';
-	color.name = 'color';
+	color.name = groupName;
 	color.value = colorItem;
 	color.style.backgroundColor = '#' + colorItem;
 	color.setAttribute('index', index);
@@ -314,6 +315,7 @@ function updatePalette(
 				data,
 				currentColor == palette[i][j],
 				themeColors,
+				'palette-color',
 			);
 		}
 	}
@@ -361,6 +363,7 @@ function updatePalette(
 			data,
 			currentColor == customColors[i],
 			themeColors,
+			'custom-color',
 		);
 	}
 
@@ -376,6 +379,7 @@ function updatePalette(
 			data,
 			currentColor == recentColors[i],
 			themeColors,
+			'recent-color',
 		);
 	}
 }
