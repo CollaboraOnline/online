@@ -79,7 +79,7 @@ coda_qt_SOURCES = coda-qt.cpp WebView.cpp DBusService.cpp $(BUILT_SOURCES) $(cma
 ### --- Qt translations integration begin ---
 
 # List of translation languages
-LANGS = ar bg ca cs da de el eo es eu fi fr gl he hr hu hy id is it ja ko lo nb nl oc pl pt pt_BR sq ru sk sl sv tr uk vi zh_CN zh_TW
+LANGS = ar ca cs cy da de el es eu fi fr ga he hr hu hy id is it ja kk ko nl pl pt pt_BR ro ru sk sl sq sv tr uk zh_CN zh_TW
 
 # Translation source (.ts) and compiled (.qm) files
 TS_FILES = $(addprefix translations/coda_,$(addsuffix .ts,$(LANGS)))
