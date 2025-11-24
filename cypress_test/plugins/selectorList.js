@@ -22,7 +22,7 @@ module.exports.list = {
 	clearFormat: ['#Home .unoResetAttributes', '#toolbar-up #reset'],
 	hyperLink: ['#HyperlinkDialog', '#toolbar-up #link'],
 	insertShape: ['#BasicShapes', '#toolbar-up #insertshapes'],
-	save: ['#Save', '#toolbar-up #save'],
+	save: ['#Save', '#toolbar-up [id^="save"]'],
 	print: ['#Print', '#toolbar-up #print'],
 	undo: ['#Undo', '#toolbar-up #undo'],
 	redo: ['#Redo', '#toolbar-up #redo'],
