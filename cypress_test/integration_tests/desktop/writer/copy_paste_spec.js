@@ -37,16 +37,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Clipboard operations.', fu
 		// Given a document with 3 words: middle word is italic:
 		helper.setupAndLoadDocument('writer/copy_markdown.odt');
 		cy.getFrameWindow().then(function(win) {
-			const winParent = win.parent;
-			cy.stub(winParent, 'postMessage').as('postMessage').callsFake((message) => {
-				expect(message).to.satisfy(message => {
-					const json = JSON.parse(message);
-					if (json.MessageId != 'Action_Copy_Resp') {
-						return false;
-					}
-					return json.Values.content == 'foo *bar* baz\n';
-				});
-			});
+			cy.stub(win.parent, 'postMessage').as('postMessage');
 		});
 
 		// When copying the document text as markdown:
@@ -68,5 +59,10 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Clipboard operations.', fu
 		// Without the accompanying fix in place, this test would have failed with:
 		// expected postMessage to have been called at least once, but it was never called
 		cy.get('@postMessage').should('be.called');
+		cy.get('@postMessage').should(stub => {
+			const json = JSON.parse(stub.firstCall.args[0]);
+			expect(json.MessageId).to.equal('Action_Copy_Resp');
+			expect(json.Values.content).to.equal('foo *bar* baz\n');
+		});
 	});
 });
