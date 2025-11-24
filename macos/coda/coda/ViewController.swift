@@ -49,9 +49,16 @@ class ViewController: NSViewController, WKScriptMessageHandlerWithReply, WKNavig
     var consoleController: ConsoleController!
 
     var savedViewFrame: NSRect!
+    var savedConsoleViewFrame: NSRect!
 
+    var displayConnectionObserver: AnyObject!
+    var screenCount: Int = 0
+    var needRearrange: Bool = false
+    var mainFullScreenActive: Bool = false
+    var consoleFullScreenActive: Bool = false
     var mainWindowExitFSObserver: AnyObject!
     var mainMonitorExchangeObserver: AnyObject!
+    var consoleWindowExitFSObserver: AnyObject!
     var consoleMonitorExchangeObserver: AnyObject!
 
     override func viewDidLoad() {
@@ -402,10 +409,12 @@ class ViewController: NSViewController, WKScriptMessageHandlerWithReply, WKNavig
         }
 
         NotificationCenter.default.removeObserver(self.mainWindowExitFSObserver!)
-        installExchangeMainMonitor(window: mainWindow, frame: screens[newPresentationScreen].frame)
+        installChangeMainMonitor(window: mainWindow, frame: screens[newPresentationScreen].frame)
+        // toggle to normal to trigger restore full screen elsewhere
         showNormal(window: mainWindow)
 
-        installExchangeConsoleMonitor(window: consoleWindow, frame: screens[newConsoleScreen].frame)
+        NotificationCenter.default.removeObserver(self.consoleWindowExitFSObserver!)
+        installChangeConsoleMonitor(window: consoleWindow, frame: screens[newConsoleScreen].frame)
         showNormal(window: consoleWindow)
     }
 
@@ -422,12 +431,15 @@ class ViewController: NSViewController, WKScriptMessageHandlerWithReply, WKNavig
             consoleWindow!.collectionBehavior.insert(.fullScreenAuxiliary)
             // Float over the presentation in full screen mode if they share a screen (auxiliary mode)
             consoleWindow!.level = .floating
+            self.savedConsoleViewFrame = consoleWindow!.frame
+            self.savedConsoleViewFrame = NSRect(x: 0, y: 0, width: 640, height: 640)
         }
 
         let mainWindow = view.window!
 
+        installDisplayConnectionMonitor()
+
         self.savedViewFrame = mainWindow.frame
-        installRestoreOnFullScreenExit(mainWindow: mainWindow)
 
         arrangePresentationWindows()
 
@@ -447,6 +459,9 @@ class ViewController: NSViewController, WKScriptMessageHandlerWithReply, WKNavig
     }
 
     func arrangePresentationWindows() {
+        // The windows should not be full screen at this point
+        self.needRearrange = false
+
         let screens = NSScreen.screens
 
         var laptopScreen: NSScreen! = nil
@@ -479,41 +494,112 @@ class ViewController: NSViewController, WKScriptMessageHandlerWithReply, WKNavig
             }
         }
 
-        let presenterScreen: NSScreen = externalScreen != nil ? externalScreen : laptopScreen
-        let mainWindow = self.view.window!
-        mainWindow.setFrame(presenterScreen.frame, display: true, animate: false)
-        showFullScreen(window: mainWindow)
-
         let consoleWindow = self.consoleController.window
         if (consoleWindow != nil) {
+            consoleWindow!.setIsVisible(false)
+        }
+
+        let presenterScreen: NSScreen = externalScreen != nil ? externalScreen : laptopScreen
+        let mainWindow = self.view.window!
+        mainWindow.setIsVisible(false)
+
+        installRestorePresOnFullScreenExit(mainWindow: mainWindow, frame: self.savedViewFrame)
+
+        mainWindow.setFrame(presenterScreen.frame, display: true, animate: false)
+        showFullScreen(window: mainWindow)
+        mainWindow.makeKeyAndOrderFront(nil)
+        self.mainFullScreenActive = true;
+
+        if (consoleWindow != nil) {
+            installRestoreConsoleOnFullScreenExit(consoleWindow: consoleWindow!, frame: self.savedConsoleViewFrame)
+
             if (externalScreen != nil) {
                 consoleWindow!.setFrame(laptopScreen.frame, display: true, animate: false)
                 showFullScreen(window: consoleWindow!)
+                self.consoleFullScreenActive = true;
+            } else {
+                consoleWindow!.setFrame(self.savedConsoleViewFrame, display: true, animate: false)
             }
+
             consoleWindow!.makeKeyAndOrderFront(nil)
         }
     }
 
-    func installRestoreOnFullScreenExit(mainWindow: NSWindow) {
+    func maybeDispatchRearrange() {
+        if (!self.needRearrange) {
+            return
+        }
+        if (self.mainFullScreenActive) {
+            // considering rearrange, main is still fullscreen, defer
+            return
+        }
+        if (self.consoleFullScreenActive) {
+            // considering rearrange, console is still fullscreen, defer
+            return
+        }
+        DispatchQueue.main.async {
+            self.arrangePresentationWindows()
+        }
+    }
+
+    func installRestorePresOnFullScreenExit(mainWindow: NSWindow, frame: NSRect) {
         // Observe full-screen exit, and at that point dispatch the attempt to restore
         // original monitor, size & position. Otherwise we remain on the monitor we are
         // presenting to.
         let center = NotificationCenter.default
+        // didExitFullScreenNotification may not be fired on removing/adding screens
+        // but the window will have lost its fullscreen bit
+        if (self.mainWindowExitFSObserver != nil) {
+            center.removeObserver(self.mainWindowExitFSObserver!)
+        }
         self.mainWindowExitFSObserver = center.addObserver(
             forName: NSWindow.didExitFullScreenNotification,
             object: mainWindow,
             queue: OperationQueue.main) { _ in
 
                 DispatchQueue.main.async {
-                    mainWindow.setFrame(self.savedViewFrame, display: true, animate: false)
+                    mainWindow.setFrame(frame, display: true, animate: false)
                     mainWindow.makeKeyAndOrderFront(nil)
+
+                    self.mainFullScreenActive = false
+                    self.maybeDispatchRearrange()
                 }
 
                 center.removeObserver(self.mainWindowExitFSObserver!)
+                self.mainWindowExitFSObserver = nil
         }
     }
 
-    func installExchangeMainMonitor(window: NSWindow, frame: NSRect) {
+    func installRestoreConsoleOnFullScreenExit(consoleWindow: NSWindow, frame: NSRect) {
+        // Observe full-screen exit, and at that point dispatch the attempt to restore
+        // original monitor, size & position. Otherwise we remain on the monitor we are
+        // presenting to.
+        let center = NotificationCenter.default
+        // didExitFullScreenNotification may not be fired on removing/adding screens
+        // but the window will have lost its fullscreen bit
+        if (self.consoleWindowExitFSObserver != nil) {
+            center.removeObserver(self.consoleWindowExitFSObserver!)
+        }
+        self.consoleWindowExitFSObserver = center.addObserver(
+            forName: NSWindow.didExitFullScreenNotification,
+            object: consoleWindow,
+            queue: OperationQueue.main) { _ in
+
+                DispatchQueue.main.async {
+                    consoleWindow.setFrame(frame, display: true, animate: false)
+                    consoleWindow.makeKeyAndOrderFront(nil)
+
+                    self.consoleFullScreenActive = false;
+                    self.maybeDispatchRearrange()
+                }
+
+                center.removeObserver(self.consoleWindowExitFSObserver!)
+                self.consoleWindowExitFSObserver = nil;
+        }
+    }
+
+
+    func installChangeMainMonitor(window: NSWindow, frame: NSRect) {
         let center = NotificationCenter.default
         self.mainMonitorExchangeObserver = center.addObserver(
             forName: NSWindow.didExitFullScreenNotification,
@@ -525,13 +611,39 @@ class ViewController: NSViewController, WKScriptMessageHandlerWithReply, WKNavig
                     self.showFullScreen(window: window)
                 }
 
-                self.installRestoreOnFullScreenExit(mainWindow: window)
+                self.installRestorePresOnFullScreenExit(mainWindow: window, frame: self.savedViewFrame)
                 center.removeObserver(self.mainMonitorExchangeObserver!)
                 self.mainMonitorExchangeObserver = nil
         }
     }
 
-    func installExchangeConsoleMonitor(window: NSWindow, frame: NSRect) {
+    func installDisplayConnectionMonitor() {
+        self.screenCount = NSScreen.screens.count
+        let center = NotificationCenter.default
+        self.displayConnectionObserver = center.addObserver(
+            forName: NSApplication.didChangeScreenParametersNotification,
+            object: nil,
+            queue: OperationQueue.main) { _ in
+                if (self.screenCount != NSScreen.screens.count) {
+                    self.screenCount = NSScreen.screens.count
+                    if (!self.needRearrange) {
+                        self.needRearrange = true;
+                        // dispatch setting windows back to normal and rearrange,
+                        // which will recreate at least the presentation window
+                        // as fullscreen, when that is completed
+                        DispatchQueue.main.async {
+                            self.showNormal(window: self.view.window!)
+                            let consoleWindow = self.consoleController.window
+                            if (consoleWindow != nil) {
+                                self.showNormal(window: consoleWindow!)
+                            }
+                        }
+                    }
+                }
+        }
+    }
+
+    func installChangeConsoleMonitor(window: NSWindow, frame: NSRect) {
         let center = NotificationCenter.default
         self.consoleMonitorExchangeObserver = center.addObserver(
             forName: NSWindow.didExitFullScreenNotification,
@@ -544,6 +656,7 @@ class ViewController: NSViewController, WKScriptMessageHandlerWithReply, WKNavig
                     window.makeKeyAndOrderFront(nil)
                 }
 
+                self.installRestoreConsoleOnFullScreenExit(consoleWindow: window, frame: self.savedConsoleViewFrame)
                 center.removeObserver(self.consoleMonitorExchangeObserver!)
                 self.consoleMonitorExchangeObserver = nil;
         }
@@ -554,6 +667,9 @@ class ViewController: NSViewController, WKScriptMessageHandlerWithReply, WKNavig
             self.consoleController.close()
             self.consoleController = nil
 
+            if (self.displayConnectionObserver != nil) {
+                NotificationCenter.default.removeObserver(self.displayConnectionObserver!)
+            }
             if (self.mainMonitorExchangeObserver != nil) {
                 NotificationCenter.default.removeObserver(self.mainMonitorExchangeObserver!)
             }
