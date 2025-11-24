@@ -44,6 +44,7 @@ window.L.Map.WOPI = window.L.Handler.extend({
 	UserCanRename: false,
 	UserCanWrite: false,
 	DisablePresentation: false,
+	PresentationLeader: '',
 
 	_appLoadedConditions: {
 		docloaded: false,
@@ -155,6 +156,7 @@ window.L.Map.WOPI = window.L.Handler.extend({
 		this.EnableShare = !!wopiInfo['EnableShare'];
 		this.UserCanWrite = !!wopiInfo['UserCanWrite'];
 		this.DisablePresentation = wopiInfo['DisablePresentation'];
+		this.PresentationLeader = wopiInfo['PresentationLeader'];
 
 		if (this.UserCanWrite && !app.isReadOnly()) // There are 2 places that set the file permissions, WOPI and URI. Don't change permission if URI doesn't allow.
 			app.setPermission('edit');
