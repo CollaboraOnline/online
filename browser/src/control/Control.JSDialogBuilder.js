@@ -1312,8 +1312,11 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 
 		const isDisabled = data.enabled === false;
 		if (isDisabled) {
-			wrapper.setAttribute('disabled', 'disabled');
+			wrapper.setAttribute('disabled', 'true');
 			wrapper.setAttribute('aria-disabled', true);
+			pushbutton.setAttribute('disabled', 'true');
+			pushbutton.setAttribute('aria-disabled', true);
+			
 		}
 
 		JSDialog.SynchronizeDisabledState(wrapper, [pushbutton]);
