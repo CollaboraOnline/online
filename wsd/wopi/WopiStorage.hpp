@@ -61,6 +61,7 @@ public:
         const std::string& getFileUrl() const { return _fileUrl; }
         const std::string& getPostMessageOrigin() { return _postMessageOrigin; }
         const std::string& getHideUserList() { return _hideUserList; }
+        const std::string& getPresentationLeader() const { return _presentationLeader; }
 
         bool getUserCanWrite() const { return _userCanWrite; }
         void setHidePrintOption(bool hidePrintOption) { _hidePrintOption = hidePrintOption; }
@@ -185,6 +186,8 @@ public:
         bool _userCanOnlyComment = false;
         /// If user is limited to only managing redlines (accept/reject)
         bool _userCanOnlyManageRedlines = false;
+        /// Used for directly starting follow me presentation
+        std::string _presentationLeader;
     };
 
     WopiStorage(const Poco::URI& uri, const std::string& localStorePath,
