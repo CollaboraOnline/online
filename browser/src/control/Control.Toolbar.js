@@ -881,11 +881,12 @@ function processStateChangedCommand(commandName, state) {
 		}
 	}
 	else if (commandName === '.uno:ModifiedStatus') {
-		if (document.getElementById('save')) {
+		const saveIcon = document.querySelector('[id^="save"]');
+		if (saveIcon) {
 			if (state === 'true' && map.saveState)
 				map.saveState.showModifiedStatus();
 			else
-				document.getElementById('save').classList.remove('savemodified');
+				saveIcon.classList.remove('savemodified');
 		}
 		state = ''; // stop processing below
 	}

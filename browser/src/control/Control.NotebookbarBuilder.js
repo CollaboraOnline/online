@@ -156,16 +156,16 @@ window.L.Control.NotebookbarBuilder = window.L.Control.JSDialogBuilder.extend({
 			$('#applystyle').val(state).trigger('change');
 		}
 		else if (commandName === '.uno:ModifiedStatus') {
-			const saveEle = document.getElementById('save');
+			const saveEle = document.querySelector('[id^="save"].unotoolbutton');
 			if (saveEle) {
 				if (state === 'true' &&  this.map.saveState) {
 					this.map.saveState.showModifiedStatus();
-					const button = document.getElementById('file-save');
+					const button = document.querySelector('[id^="file-save"]');
 					if (button) button.classList.add('savemodified');
 				} else {
-					const button = document.getElementById('save');
+					const button = document.querySelector('[id^="save"]');
 					if (button) button.classList.remove('savemodified');
-					const fileButton = document.getElementById('file-save');
+					const fileButton = document.querySelector('[id^="file-save"]');
 					if (fileButton) fileButton.classList.remove('savemodified');
 				}
 			}
