@@ -923,10 +923,22 @@ window.L.Control.NotebookbarWriter = window.L.Control.Notebookbar.extend({
 			   'name':_('Styles'),
 			   'children' : [
 					{
-						   'id': 'stylesview',
-						   'type': 'iconview',
-						   'entries': [],
-						   'vertical': 'false'
+						'id': 'stylesview',
+						'type': 'iconview',
+						'entries': [],
+						'vertical': 'false',
+						'isExpandable': true,
+						'dropdownChildren': [
+							{ type: 'separator', id: 'anything-change-later', orientation: 'horizontal' },
+							{
+								'id': 'format-style-list-dialog',
+								'type': 'toolitem',
+								'text': _('Style list'),
+								'command': '.uno:SidebarDeck.StyleListDeck',
+								'icon': 'lc_stylepreviewmore.svg',
+								// 'accessibility': { focusBack: true, combination: 'SD', de: null }
+							}
+						],
 					},
 			   ]
 			},

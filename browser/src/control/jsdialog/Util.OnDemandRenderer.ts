@@ -16,6 +16,8 @@
 
 declare var JSDialog: any;
 
+// be it the render cache, or the window id, they are all builder specific
+// and i think we need that old builder while creating the new stylesview.
 function onDemandRenderer(
 	builder: JSBuilder,
 	controlId: string,

@@ -347,6 +347,8 @@ interface IconViewJSON extends WidgetJSON {
 	entries: Array<IconViewEntry>;
 	singleclickactivate: boolean; // activates element on single click instead of just selection
 	textWithIconEnabled: boolean; // To identify if we should add text below the icon or not.
+	isExpandable?: boolean;
+	dropdownChildren?: WidgetJSON; // to add further entries. do not nest iconviews !!!!! TODO: add this in code
 }
 
 interface EditWidgetJSON extends WidgetJSON {
