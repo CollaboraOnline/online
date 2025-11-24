@@ -210,7 +210,7 @@ export class TilesSection extends CanvasSectionObject {
 		if (app.file.fileBasedView) {
 			const partHeightPixels = Math.round((this.sectionProperties.docLayer._partHeightTwips + this.sectionProperties.docLayer._spaceBetweenParts) * app.twipsToPixels);
 
-			tilePos.pY = tile.coords.part * partHeightPixels + tile.coords.y - app.activeDocument.activeView.viewedRectangle.pY1;
+			tilePos.pY = tile.coords.part * partHeightPixels + tile.coords.y;
 		}
 
 		this.drawTileToCanvas(tile, this.context, tilePos.vX, tilePos.vY, TileManager.tileSize, TileManager.tileSize);
