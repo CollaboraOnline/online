@@ -433,10 +433,14 @@ window.L.Control.PartsPreview = window.L.Control.extend({
 	_scrollViewToPartPosition: function (partNumber, fromBottom) {
 		if (this._map._docLayer && this._map._docLayer._isZooming)
 			return;
+
+		if (partNumber < 0) partNumber = 0;
+		if (partNumber >= this._map._docLayer._parts) partNumber = this._map._docLayer._parts - 1;
+
 		var partHeightPixels = Math.round((this._map._docLayer._partHeightTwips + this._map._docLayer._spaceBetweenParts) * app.twipsToPixels);
 		var scrollTop = partHeightPixels * partNumber;
 		var viewHeight = app.sectionContainer.getViewSize()[1];
-		var currentScrollX = app.activeDocument.activeView.viewedRectangle.cX1;
+		var currentScrollX = app.activeDocument.activeView.viewedRectangle.pX1;
 
 		if (viewHeight > partHeightPixels && partNumber > 0)
 			scrollTop -= Math.round((viewHeight - partHeightPixels) * 0.5);
@@ -444,39 +448,18 @@ window.L.Control.PartsPreview = window.L.Control.extend({
 		// scroll to the bottom of the selected part/page instead of its top px
 		if (fromBottom)
 			scrollTop += partHeightPixels - viewHeight;
-		scrollTop = Math.round(scrollTop / app.dpiScale);
-		app.sectionContainer.getSectionWithName(app.CSections.Scroll.name).onScrollTo({x: currentScrollX, y: scrollTop});
+
+		app.activeDocument.activeView.scrollTo(currentScrollX, scrollTop);
 	},
 
 	_scrollViewByDirection: function(buttonType) {
 		if (this._map._docLayer && this._map._docLayer._isZooming)
 			return;
-		var ratio = TileManager.tileSize / app.tile.size.y;
-		var partHeightPixels = Math.round((this._map._docLayer._partHeightTwips + this._map._docLayer._spaceBetweenParts) * ratio);
-		var scroll = Math.floor(partHeightPixels / app.dpiScale);
 		var viewHeight = Math.floor(app.sectionContainer.getViewSize()[1]);
 		var viewHeightScaled = Math.round(Math.floor(viewHeight) / app.dpiScale);
 		var scrollBySize = Math.floor(viewHeightScaled * 0.75);
-		var topPx = app.activeDocument.activeView.viewedRectangle.cY1;
 		var currentScrollX = app.activeDocument.activeView.viewedRectangle.cX1;
 
-		if (buttonType === 'prev') {
-			if (this._map.getCurrentPartNumber() == 0) {
-				if (topPx - scrollBySize <= 0) {
-					this._scrollViewToPartPosition(0);
-					return;
-				}
-			}
-		} else if (buttonType === 'next') {
-			if (this._map._docLayer._parts == this._map.getCurrentPartNumber() + 1) {
-				scroll *= this._map.getCurrentPartNumber();
-				var veryEnd = scroll + (Math.floor(partHeightPixels / app.dpiScale) - viewHeightScaled);
-				if (topPx + viewHeightScaled >= veryEnd) {
-					this._scrollViewToPartPosition(this._map.getCurrentPartNumber(), true);
-					return;
-				}
-			}
-		}
 		app.sectionContainer.getSectionWithName(app.CSections.Scroll.name).onScrollBy({x: currentScrollX, y: buttonType === 'prev' ? -scrollBySize : scrollBySize});
 	},
 
@@ -505,7 +488,7 @@ window.L.Control.PartsPreview = window.L.Control.extend({
 
 			if (app.file.fileBasedView) {
 				this._map.setPart(partId);
-				this._scrollViewToPartPosition(part - 1);
+				this._scrollViewToPartPosition(partId);
 				return;
 			}
 
