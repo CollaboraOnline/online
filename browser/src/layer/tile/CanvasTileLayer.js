@@ -4129,19 +4129,32 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 
 		var rectangle;
 		var maxArea = -1;
-		var mostVisiblePart = 0;
 		const viewedRectangle = app.activeDocument.activeView.viewedRectangle.pToArray();
+		const candidates = [];
 		for (i = 0; i < parts.length; i++) {
 			rectangle = [0, partHeightPixels * parts[i].part, partWidthPixels, partHeightPixels];
 			rectangle = app.LOUtil._getIntersectionRectangle(rectangle, viewedRectangle);
 			if (rectangle) {
-				if (rectangle[2] * rectangle[3] > maxArea) {
-					maxArea = rectangle[2] * rectangle[3];
-					mostVisiblePart = parts[i].part;
+				const currentArea = rectangle[2] * rectangle[3];
+				if (currentArea > maxArea) {
+					candidates.length = 0;
+					maxArea = currentArea;
+					candidates.push({part: parts[i].part, area: currentArea});
 				}
+				else if (currentArea === maxArea)
+					candidates.push({part: parts[i].part, area: currentArea});
 			}
 		}
-		return mostVisiblePart;
+
+		// If one of the most visible parts is the selected part, return it.
+		for (let i = 0; i < candidates.length; i++) {
+			if (candidates[i].area === maxArea && candidates[i].part === this._selectedPart) {
+				return this._selectedPart;
+			}
+		}
+
+		// Otherwise return the first most visible part.
+		return candidates[0].part;
 	},
 
 	highlightCurrentPart: function (part) {
@@ -4164,10 +4177,10 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 			var partToSelect = this._getMostVisiblePart(queue);
 			if (this._selectedPart !== partToSelect) {
 				this._selectedPart = partToSelect;
-				this._preview._scrollToPart();
-				this.highlightCurrentPart(partToSelect);
 				app.socket.sendMessage('setclientpart part=' + this._selectedPart);
 			}
+			this._preview._scrollToPart();
+			this.highlightCurrentPart(partToSelect);
 		}
 	},
 

@@ -84,12 +84,6 @@ window.L.Map.include({
 
 		if (app.file.fileBasedView)
 		{
-			docLayer._selectedPart = docLayer._prevSelectedPart;
-			if (typeof(part) !== 'number') {
-				docLayer._preview._scrollViewByDirection(part);
-				this._docLayer._checkSelectedPart();
-				return;
-			}
 			docLayer._preview._scrollViewToPartPosition(docLayer._selectedPart);
 			this._docLayer._checkSelectedPart();
 			notifyServer(part);
