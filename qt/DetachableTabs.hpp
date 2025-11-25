@@ -50,6 +50,7 @@ public:
     void addDetachableTab(QWidget* widget, const QString& label);
 
     DetachableTabBar *tabBar() const;
+    void updateTabBarVisibility();
 
 signals:
     void plusButtonClicked();
