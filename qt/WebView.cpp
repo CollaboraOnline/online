@@ -377,6 +377,7 @@ WebView::WebView(QWebEngineProfile* profile, bool isWelcome, Window* targetWindo
                              tabWidget->removeTab(index);
                              if (w)
                                  w->deleteLater();
+                             tabWidget->updateTabBarVisibility();
 
                              if (tabWidget->count() == 0)
                              {
@@ -397,6 +398,7 @@ WebView::WebView(QWebEngineProfile* profile, bool isWelcome, Window* targetWindo
                         });
 
         _mainWindow->setCentralWidget(tabWidget);
+        tabWidget->updateTabBarVisibility();
         if (createdWindow)
             _mainWindow->show();
     }
@@ -409,6 +411,7 @@ WebView::WebView(QWebEngineProfile* profile, bool isWelcome, Window* targetWindo
     int tabIndex = tabWidget->addTab(_webView.get(), QObject::tr("Document"));
     // Bring the new tab into focus
     tabWidget->setCurrentIndex(tabIndex);
+    tabWidget->updateTabBarVisibility();
 
 
     QWebEnginePage* page = new QWebEnginePage(profile, _webView.get());
@@ -785,9 +788,7 @@ WebView* WebView::createNewDocument(QWebEngineProfile* profile, const std::strin
         templateURI = Poco::URI(Poco::Path(templatePath));
     }
 
-    // Prefer adding the new document as a tab in the currently active
-    // Window. If no active window exists, a new top-level window will
-    // be created by the WebView constructor.
+    // Add the new document as a tab in the currently active Window.
     Window* activeWindow = qobject_cast<Window*>(QApplication::activeWindow());
     WebView* webViewInstance = new WebView(profile, false, activeWindow);
     webViewInstance->load(templateURI, true);
