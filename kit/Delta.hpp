@@ -190,7 +190,7 @@ class DeltaGenerator {
 
     private:
         void initPixRowCpu(const uint32_t *from, uint32_t *scratch,
-                           size_t *scratchLen, uint64_t *leMaskBlock,
+                           size_t *scratchLen, uint64_t *rleMaskBlock,
                            unsigned int width)
         {
             uint32_t lastPix = 0x00000000; // transparency
@@ -229,7 +229,7 @@ class DeltaGenerator {
                         }
                     }
                 }
-                leMaskBlock[mask] = rleMask;
+                rleMaskBlock[mask] = rleMask;
             }
 
             if (x < width)
