@@ -71,6 +71,7 @@ public:
     Window* mainWindow() { return _mainWindow; }
     // Prompt to save if modified and return true if it's OK to close the document
     bool confirmClose();
+    bool confirmClose(const QString& documentName);
     // Prepare this WebView for being closed: unregister bridge and prevent
     // further JS calls into the web view.
     void prepareForClose();

@@ -355,6 +355,7 @@ WebView::WebView(QWebEngineProfile* profile, bool isWelcome, Window* targetWindo
                          {
                              if (!tabWidget)
                                  return;
+
                              QWidget* w = tabWidget->widget(index);
                              if (!w)
                                  return;
@@ -366,7 +367,9 @@ WebView::WebView(QWebEngineProfile* profile, bool isWelcome, Window* targetWindo
                                  okToClose = owner->confirmClose();
                              }
                              if (!okToClose)
+                             {
                                  return; // user cancelled
+                             }
 
                              if (owner)
                                  owner->prepareForClose();
@@ -456,6 +459,11 @@ void WebView::prepareForClose()
 
 bool WebView::confirmClose()
 {
+    return confirmClose(QString());
+}
+
+bool WebView::confirmClose(const QString& documentName)
+{
     // If there's no bridge or we don't know of modifications, allow close
     if (!_bridge)
         return true;
@@ -463,9 +471,16 @@ bool WebView::confirmClose()
     if (!_bridge->isModified())
         return true;
 
+    QString message;
+    if (documentName.isEmpty()) {
+        message = QObject::tr("The document has unsaved changes. Do you want to save them?");
+    } else {
+        message = QObject::tr("The document \"%1\" has unsaved changes. Do you want to save them?").arg(documentName);
+    }
+
     const QMessageBox::StandardButton choice = QMessageBox::warning(
         _webView.get(), QObject::tr("Save Document"),
-        QObject::tr("The document has unsaved changes. Do you want to save them?"),
+        message,
         QMessageBox::Save | QMessageBox::Discard | QMessageBox::Cancel);
 
     if (choice == QMessageBox::Save)
