@@ -915,6 +915,12 @@
         {
           "type": "dir",
           "path": "../../"
+        },
+        {
+          "type": "shell",
+          "commands": [
+            "autoreconf -vfi"
+          ]
         }
       ]
     },
