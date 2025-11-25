@@ -444,8 +444,11 @@ class SocketBase {
 	}
 
 	protected _getParameterByName(url: string, name: string): string {
-		name = name.replace(/[[]/, '\\[').replace(/[\]]/, '\\]');
-		const regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+		// Escape all regex characters.
+		const escape = (str: string): string => {
+			return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+		};
+		const regex = new RegExp('[\\?&]' + escape(name) + '=([^&#]*)');
 		const results = regex.exec(url);
 		return results === null ? '' : results[1].replace(/\+/g, ' ');
 	}
