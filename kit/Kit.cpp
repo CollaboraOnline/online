@@ -3587,12 +3587,14 @@ void lokit_main(
                 // ro bind-mount a replacement up-to-date /etc
                 if (sysTemplateIncomplete)
                 {
-                    LOG_INF("Mounting " << sysTemplateSubDir << " -> " << jailEtcDir);
-                    if (!JailUtil::bind(sysTemplateSubDir, jailEtcDir)
-                        || !JailUtil::remountReadonly(sysTemplateSubDir, jailEtcDir))
+                    const std::string sysTemplateSubDirEtc =
+                        Poco::Path(sysTemplateSubDir, "etc").toString();
+                    LOG_INF("Mounting " << sysTemplateSubDirEtc << " -> " << jailEtcDir);
+                    if (!JailUtil::bind(sysTemplateSubDirEtc, jailEtcDir) ||
+                        !JailUtil::remountReadonly(sysTemplateSubDirEtc, jailEtcDir))
                     {
-                        LOG_ERR("Failed to mount [" << sysTemplateSubDir << "] -> [" << jailEtcDir
-                                                    << "], will link/copy contents.");
+                        LOG_ERR("Failed to mount [" << sysTemplateSubDirEtc << "] -> ["
+                                                    << jailEtcDir << "], will link/copy contents.");
                         return false;
                     }
                 }
