@@ -196,6 +196,7 @@ final class DocumentController: NSDocumentController {
 
             // mark it as new document (for better UI handling)
             doc.isNewDocument = true
+            doc.documentType = typeName  // Store the type explicitly for icon display
 
             try doc.read(from: data, ofType: typeName) // <- seeds tempDirectoryURL/tempFileURL exactly like a normal open
 

@@ -21,6 +21,7 @@ coolwsd.spec
 coolwsd.xml
 aclocal.m4
 autom4te.cache
+coda.xcarchive
 config.h
 config_unused.h
 config_unused.h.in
@@ -46,6 +47,7 @@ common/support-public-key.hpp
 compile_commands.json
 **/gdb.txt
 macos/coolwsd/gmake-wrapper.sh
+macos/coda/coda/Assets.xcassets
 
 # Test stuff
 systemplate
