@@ -15,11 +15,20 @@
 
 namespace coda
 {
+enum DocumentType {
+    TYPE_UNKNOWN = 0,
+    TYPE_WRITER,
+    TYPE_CALC,
+    TYPE_IMPRESS,
+    TYPE_DRAW,
+};
+
 struct DocumentData
 {
     Poco::URI _fileURL;
     int _fakeClientFd = -1;
     unsigned _appDocId = 0;
+    DocumentType _type = TYPE_UNKNOWN;
 };
 
 unsigned generateNewAppDocId();
