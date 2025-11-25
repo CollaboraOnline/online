@@ -293,7 +293,6 @@ class NavigatorPanel extends SidebarBase {
 		button.className = 'ui-content unobutton';
 		button.id = 'floating-navigator';
 		button.accessKey = 'ZN';
-		button.setAttribute('aria-pressed', 'false');
 
 		// Create the image inside the button
 		const img = document.createElement('img');
