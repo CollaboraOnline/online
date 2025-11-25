@@ -66,6 +66,12 @@ struct FilenameAndUri
     std::string uri;
 };
 
+struct OpenDialogResult
+{
+    bool createdNew;
+    std::vector<FilenameAndUri> filenamesAndUris;
+};
+
 // Use enum class to automatically get non-overlapping values. On the other hand, then we need to
 // cast the values to the underlying type when using them.
 enum class CODA_OPEN_CONTROL : DWORD
@@ -156,10 +162,10 @@ static FilenameAndUri fileSaveDialog(const std::string& name, const std::string&
 static std::wstring new_document(CODA_OPEN_CONTROL id);
 static void openCOOLWindow(const FilenameAndUri& filenameAndUri, PERMISSION permission);
 
-// List of documents to open passed on the command line. We open the next one only as soon as the
-// previous one has finished loading.
-static std::vector<FilenameAndUri> filenamesAndUris;
-static int currentCommandLineDocumentIndex;
+// Vector of documents to open passed on the command line, or multiple documents to open selected in
+// a file open dialog. We open the next one only as soon as the previous one has finished loading.
+static std::vector<FilenameAndUri> filenamesAndUrisToOpen;
+static int currentFileToOpenIndex;
 
 // Temporary l10n function for the few UI strings here in this file
 static const wchar_t* _(const wchar_t* english)
@@ -393,7 +399,7 @@ void load_next_document()
 {
     // Open the next document from the command line, if any. Post a message to one randomly selected
     // document window.
-    if (currentCommandLineDocumentIndex < filenamesAndUris.size() - 1)
+    if (currentFileToOpenIndex < filenamesAndUrisToOpen.size() - 1)
         PostMessageW(windowData.begin()->second.hWnd, CODA_WM_LOADNEXTDOCUMENT, 0, 0);
 }
 
@@ -1081,7 +1087,7 @@ static void do_open_hyperlink(HWND hWnd, std::wstring url)
     ShellExecuteW(hWnd, NULL, url.c_str(), NULL, NULL, SW_SHOW);
 }
 
-static FilenameAndUri fileOpenDialog()
+static OpenDialogResult fileOpenDialog()
 {
     IFileOpenDialog* dialog;
 
@@ -1142,38 +1148,57 @@ static FilenameAndUri fileOpenDialog()
 
     dialogCustomisation->Release();
 
+    FILEOPENDIALOGOPTIONS options;
+    if (SUCCEEDED(dialog->GetOptions(&options)))
+    {
+        options |= FOS_ALLOWMULTISELECT;
+        dialog->SetOptions(options);
+    }
+
     HRESULT dialogResult = dialog->Show(hiddenOwnerWindow);
 
     if (!SUCCEEDED(dialogResult))
         return {};
 
-    Poco::Path path;
+    std::vector<FilenameAndUri> result;
+
     if (dialogResult == CODA_OPEN_DIALOG_CREATE_NEW_INSTEAD)
     {
-        path = Poco::Path(Util::wide_string_to_string(new_document_created));
+        auto path = Poco::Path(Util::wide_string_to_string(new_document_created));
+        result.push_back({ path.getFileName(), Poco::URI(path).toString() });
+        return { true, result };
     }
     else
     {
-        IShellItem* item;
-        if (!SUCCEEDED(dialog->GetResult(&item)))
-            fatal("dialog->GetResult() failed");
+        IShellItemArray* items;
+        if (!SUCCEEDED(dialog->GetResults(&items)))
+            fatal("dialog->GetResults() failed");
 
-        PWSTR fileSysPath;
-        if (!SUCCEEDED(item->GetDisplayName(SIGDN_FILESYSPATH, &fileSysPath)))
-            fatal("item->GetDisplayName() failed");
+        DWORD numItems;
+        if (!SUCCEEDED(items->GetCount(&numItems)))
+            fatal("items->GetCount() failed");
 
-        path = Poco::Path(Util::wide_string_to_string(std::wstring(fileSysPath)));
-
-        CoTaskMemFree(fileSysPath);
-
-        item->Release();
+        for (int i = 0; i < numItems; i++)
+        {
+            IShellItem* item;
+            PWSTR fileSysPath;
+            if (SUCCEEDED(items->GetItemAt(i, &item)) &&
+                SUCCEEDED(item->GetDisplayName(SIGDN_FILESYSPATH, &fileSysPath)))
+            {
+                auto path = Poco::Path(Util::wide_string_to_string(std::wstring(fileSysPath)));
+                result.push_back({ path.getFileName(), Poco::URI(path).toString() });
+                CoTaskMemFree(fileSysPath);
+                item->Release();
+            }
+        }
+        items->Release();
     }
     dialog->Unadvise(cookie);
     dialog->Release();
 
     customisationToDialog.erase(dialogCustomisation);
 
-    return { path.getFileName(), Poco::URI(path).toString() };
+    return { false, result };
 }
 
 static FilenameAndUri fileSaveDialog(const std::string& name, const std::string& folder, const std::string& extension)
@@ -1421,10 +1446,10 @@ static LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM l
             break;
 
         case CODA_WM_LOADNEXTDOCUMENT:
-            if (currentCommandLineDocumentIndex < filenamesAndUris.size() - 1)
+            if (currentFileToOpenIndex < filenamesAndUrisToOpen.size() - 1)
             {
-                currentCommandLineDocumentIndex++;
-                openCOOLWindow(filenamesAndUris[currentCommandLineDocumentIndex], PERMISSION::EDIT);
+                currentFileToOpenIndex++;
+                openCOOLWindow(filenamesAndUrisToOpen[currentFileToOpenIndex], PERMISSION::EDIT);
             }
             break;
 
@@ -1735,16 +1760,20 @@ static void processMessage(WindowData& data, wil::unique_cotaskmem_string& messa
         }
         else if (s == L"uno .uno:Open")
         {
-            auto filenameAndUri = fileOpenDialog();
-            if (filenameAndUri.filename != "")
+            auto openResult = fileOpenDialog();
+            if (openResult.filenamesAndUris.size() > 0)
             {
-                if (new_document_created != L"")
+                if (openResult.createdNew)
                 {
-                    openCOOLWindow(filenameAndUri, PERMISSION::NEW_DOCUMENT);
-                    new_document_created = L"";
+                    openCOOLWindow(openResult.filenamesAndUris[0], PERMISSION::NEW_DOCUMENT);
                 }
                 else
-                    openCOOLWindow(filenameAndUri, PERMISSION::EDIT);
+                {
+                    for (const auto& i: openResult.filenamesAndUris)
+                        filenamesAndUrisToOpen.push_back(i);
+
+                    load_next_document();
+                }
             }
         }
         else if (s == L"uno .uno:CloseWin")
@@ -1898,19 +1927,26 @@ int APIENTRY wWinMain(HINSTANCE hInstance, HINSTANCE, PWSTR, int showWindowMode)
         ShowWindow(hiddenOwnerWindow, SW_HIDE);
     }
 
+    PERMISSION permission = PERMISSION::EDIT;
     if (__argc == 1 || wcscmp(__wargv[1], L"--disable-background-networking") == 0)
     {
-        filenamesAndUris.push_back(fileOpenDialog());
+        auto openResult = fileOpenDialog();
         // If initial dialog is cancelled, just quit
-        if (filenamesAndUris[0].filename == "")
+        if (openResult.filenamesAndUris.size() == 0)
             std::exit(0);
+
+        if (openResult.createdNew)
+            permission = PERMISSION::NEW_DOCUMENT;
+
+        for (auto const& i: openResult.filenamesAndUris)
+            filenamesAndUrisToOpen.push_back(i);
     }
     else
     {
         for (int i = 1; i < __argc; i++)
         {
             auto path = Poco::Path(Util::wide_string_to_string(__wargv[i]));
-            filenamesAndUris.push_back({ path.getFileName(), Poco::URI(path).toString() });
+            filenamesAndUrisToOpen.push_back({ path.getFileName(), Poco::URI(path).toString() });
         }
     }
 
@@ -1959,16 +1995,10 @@ int APIENTRY wWinMain(HINSTANCE hInstance, HINSTANCE, PWSTR, int showWindowMode)
         }
    }
 
-    currentCommandLineDocumentIndex = 0;
+    currentFileToOpenIndex = 0;
 
     // Open the first document here, then open the rest one by one once the previous has loaded.
-    if (new_document_created != L"")
-    {
-        openCOOLWindow(filenamesAndUris[0], PERMISSION::NEW_DOCUMENT);
-        new_document_created = L"";
-    }
-    else
-        openCOOLWindow(filenamesAndUris[0], PERMISSION::EDIT);
+    openCOOLWindow(filenamesAndUrisToOpen[0], permission);
 
     MSG msg;
     while (GetMessage(&msg, NULL, 0, 0))
