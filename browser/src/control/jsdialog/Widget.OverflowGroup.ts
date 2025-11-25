@@ -330,6 +330,7 @@ JSDialog.OverflowGroup = function (
 		overflowGroupContainer,
 	);
 	overflowGroupInnerContainer.id = data.id + '-inner';
+	overflowGroupInnerContainer.setAttribute('role', 'group');
 
 	const contentContainer = window.L.DomUtil.create(
 		'div',
@@ -351,7 +352,10 @@ JSDialog.OverflowGroup = function (
 		builder.options.cssClass + ' ui-overflow-group-label',
 		bottomBar,
 	);
+	label.id = data.id + '-label';
 	if (data.name) label.innerText = data.name;
+
+	overflowGroupInnerContainer.setAttribute('aria-labelledby', label.id);
 
 	// content
 	if (data.children) builder.build(contentContainer, data.children, false);
