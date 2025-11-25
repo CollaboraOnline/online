@@ -64,63 +64,96 @@ void Window::closeEvent(QCloseEvent * ev) {
     if (closeCallback_) {
         closeCallback_();
     }
-    
-    auto const p = owner_;
-    owner_ = nullptr;
-    assert(p != nullptr);
-    if (p)
-    {
-        // If the underlying QWebEngineView has been reparented (moved to another
-        // window during a drag/drop), avoid prompting the user or deleting the
-        // WebView here because the document is now hosted elsewhere. We detect
-        // that by walking the widget parent chain of the web engine view and
-        // verifying whether it is still a child of this window.
-        QWidget* webWidget = p->webEngineView();
-        bool webWidgetStillInThisWindow = false;
-        if (webWidget) {
-            QWidget* parent = webWidget->parentWidget();
-            while (parent) {
-                if (parent == this) {
-                    webWidgetStillInThisWindow = true;
-                    break;
+
+    // Check if we have a tabbed interface
+    QTabWidget* tabWidget = qobject_cast<QTabWidget*>(centralWidget());
+
+    if (tabWidget && tabWidget->count() > 0) {
+        // Tabbed interface: prompt for each modified tab individually
+        for (int i = 0; i < tabWidget->count(); ++i) {
+            QWidget* w = tabWidget->widget(i);
+            if (w) {
+                quint64 ownerPtr = w->property("webview_owner").toULongLong();
+                WebView* webView = reinterpret_cast<WebView*>((quintptr)ownerPtr);
+
+                if (webView && webView->isDocumentModified()) {
+                    // Make this tab current so user can see which document they're being asked about
+                    tabWidget->setCurrentIndex(i);
+
+                    // Use the same confirmClose dialog as individual tab closes, but include document name
+                    QString tabText = tabWidget->tabText(i);
+                    // Remove the "* " prefix if present (indicates modified)
+                    if (tabText.startsWith("* ")) {
+                        tabText = tabText.mid(2);
+                    }
+                    bool okToClose = webView->confirmClose(tabText);
+
+                    if (!okToClose) {
+                        // User cancelled - abort window close
+                        ev->ignore();
+                        return;
+                    }
                 }
-                parent = parent->parentWidget();
             }
         }
 
-        // Only prompt about unsaved changes if the document is still hosted
-        // in this window. If it was moved to another window (reparented),
-        // don't ask the user to save here — the new host window will handle
-        // any required confirmation when it closes.
-        if (webWidgetStillInThisWindow && (p->isDocumentModified() || p->isPendingSave()))
-        {
-            QMessageBox msgBox(this);
-            msgBox.setWindowTitle(QApplication::translate("WebView", "Unsaved Changes"));
-            msgBox.setText(QApplication::translate("WebView", "The document has unsaved changes. Do you want to close anyway?"));
-            msgBox.setStandardButtons(QMessageBox::Discard | QMessageBox::Cancel);
-            msgBox.setDefaultButton(QMessageBox::Cancel);
-            msgBox.setIcon(QMessageBox::Warning);
-
-            int ret = msgBox.exec();
-            if (ret == QMessageBox::Cancel)
-            {
-                // user chose not to exit
-                ev->ignore();
-                // Restore owner_ so the window's state remains consistent.
-                owner_ = p;
-                return;
+        // User confirmed or no unsaved changes - clean up all tabs
+        for (int i = 0; i < tabWidget->count(); ++i) {
+            QWidget* w = tabWidget->widget(i);
+            if (w) {
+                quint64 ownerPtr = w->property("webview_owner").toULongLong();
+                WebView* webView = reinterpret_cast<WebView*>((quintptr)ownerPtr);
+                if (webView) {
+                    webView->prepareForClose();
+                    delete webView;
+                }
             }
         }
+    } else {
+        // Single document mode (no tabs or owner_ based)
+        auto const p = owner_;
+        owner_ = nullptr;
 
-        if (webWidgetStillInThisWindow) {
-            p->prepareForClose();
-            delete p;
-        } else {
-            // The web view was moved to another window — don't delete the
-            // WebView here. Just clear our owner_ pointer and continue closing
-            // this window.
+        if (p) {
+            // If the underlying QWebEngineView has been reparented (moved to another
+            // window during a drag/drop), avoid prompting the user or deleting the
+            // WebView here because the document is now hosted elsewhere.
+            QWidget* webWidget = p->webEngineView();
+            bool webWidgetStillInThisWindow = false;
+            if (webWidget) {
+                QWidget* parent = webWidget->parentWidget();
+                while (parent) {
+                    if (parent == this) {
+                        webWidgetStillInThisWindow = true;
+                        break;
+                    }
+                    parent = parent->parentWidget();
+                }
+            }
+
+            if (webWidgetStillInThisWindow && (p->isDocumentModified() || p->isPendingSave())) {
+                QMessageBox msgBox(this);
+                msgBox.setWindowTitle(QApplication::translate("WebView", "Unsaved Changes"));
+                msgBox.setText(QApplication::translate("WebView", "The document has unsaved changes. Do you want to close anyway?"));
+                msgBox.setStandardButtons(QMessageBox::Discard | QMessageBox::Cancel);
+                msgBox.setDefaultButton(QMessageBox::Cancel);
+                msgBox.setIcon(QMessageBox::Warning);
+
+                int ret = msgBox.exec();
+                if (ret == QMessageBox::Cancel) {
+                    ev->ignore();
+                    owner_ = p;
+                    return;
+                }
+            }
+
+            if (webWidgetStillInThisWindow) {
+                p->prepareForClose();
+                delete p;
+            }
         }
     }
+
     QMainWindow::closeEvent(ev);
 }
 
