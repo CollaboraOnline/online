@@ -61,6 +61,8 @@ public:
 private:
     // query gnome font scaling factor and apply it to the web view
     void queryGnomeFontScalingUpdateZoom();
+    // Set the tab icon based on document type
+    void updateTabIcon();
     Window *_mainWindow;
     std::unique_ptr<QWebEngineView> _webView;
     coda::DocumentData _document;

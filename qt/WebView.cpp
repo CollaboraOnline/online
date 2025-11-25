@@ -18,6 +18,7 @@
 #include <QTabWidget>
 #include <QLabel>
 #include <QMainWindow>
+#include <QMimeDatabase>
 #include <QPushButton>
 #include <QHBoxLayout>
 #include <QVBoxLayout>
@@ -212,6 +213,11 @@ WebView::WebView(QWebEngineProfile* profile, bool isWelcome, Window* targetWindo
                                 return;
                             QString tabTitle = tabWidget->tabText(index);
                             mainWindow->setWindowTitle(tabTitle + " - " APP_NAME);
+
+                            // Update window icon to match current tab
+                            QIcon tabIcon = tabWidget->tabIcon(index);
+                            if (!tabIcon.isNull())
+                                mainWindow->setWindowIcon(tabIcon);
                         });
 
         _mainWindow->setCentralWidget(tabWidget);
@@ -369,6 +375,8 @@ void WebView::load(const Poco::URI& fileURL, bool newFile)
         ._appDocId = generateNewAppDocId(),
     };
 
+    coda::DocumentType docType = coda::DocumentType::TYPE_UNKNOWN;
+
     // operate on a temp copy of the file
     if (!_isWelcome && fileURL.getScheme() == "file")
     {
@@ -383,6 +391,27 @@ void WebView::load(const Poco::URI& fileURL, bool newFile)
             const std::string tempDirectoryPath = FileUtil::createRandomTmpDir();
             const std::string& fileName = originalPath.getFileName();
             qDebug() << "Load called with fileName:" << QString::fromStdString(fileName) << " this is: " << this;
+
+            // Detect document type from the original file
+            QString mimeType = QMimeDatabase().mimeTypeForFile(QString::fromStdString(originalPath.toString())).name();
+
+            if (mimeType.startsWith("application/vnd.oasis.opendocument.text") ||
+                mimeType.startsWith("application/vnd.openxmlformats-officedocument.wordprocessingml") ||
+                mimeType.startsWith("application/msword"))
+                docType = coda::DocumentType::TYPE_WRITER;
+            else if (mimeType.startsWith("application/vnd.oasis.opendocument.spreadsheet") ||
+                     mimeType.startsWith("application/vnd.openxmlformats-officedocument.spreadsheetml") ||
+                     mimeType.startsWith("application/vnd.ms-excel"))
+                docType = coda::DocumentType::TYPE_CALC;
+            else if (mimeType.startsWith("application/vnd.oasis.opendocument.presentation") ||
+                     mimeType.startsWith("application/vnd.openxmlformats-officedocument.presentationml") ||
+                     mimeType.startsWith("application/vnd.ms-powerpoint"))
+                docType = coda::DocumentType::TYPE_IMPRESS;
+            else if (mimeType.startsWith("application/vnd.oasis.opendocument.graphics"))
+                docType = coda::DocumentType::TYPE_DRAW;
+
+            _document._type = docType;
+            updateTabIcon();
 
             Poco::Path tempFilePath(tempDirectoryPath, fileName);
             const std::string tempFilePathStr = tempFilePath.toString();
@@ -535,8 +564,96 @@ void WebView::load(const Poco::URI& fileURL, bool newFile)
                     label = QStringLiteral("* ") + label;
                 tabWidget->setTabText(index, label);
                 _mainWindow->setWindowTitle(tabWidget->tabText(index) + " - " APP_NAME);
+                updateTabIcon();
+                // Update the main window title to match the current tab
+                QMainWindow* mainWindow = qobject_cast<QMainWindow*>(tabWidget->window());
+                if (mainWindow)
+                    mainWindow->setWindowTitle(tabWidget->tabText(index) + " - " APP_NAME);
             }
         }
+    }
+}
+
+void WebView::updateTabIcon()
+{
+    if (_document._type == coda::DocumentType::TYPE_UNKNOWN)
+        return;
+
+    QWidget* p = _webView->parentWidget();
+    QTabWidget* tabWidget = nullptr;
+    while (p)
+    {
+        tabWidget = qobject_cast<QTabWidget*>(p);
+        if (tabWidget)
+            break;
+        p = p->parentWidget();
+    }
+
+    if (!tabWidget)
+        return;
+
+    int index = tabWidget->indexOf(_webView.get());
+    if (index == -1)
+        return;
+
+    QIcon icon;
+    QString themeName;
+    QString fallbackPath;
+
+    switch (_document._type)
+    {
+        case coda::DocumentType::TYPE_WRITER:
+            themeName = "x-office-document";
+            fallbackPath = QString::fromStdString(getTopSrcDir(TOPSRCDIR)) + "/browser/images/x-office-document.svg";
+            break;
+        case coda::DocumentType::TYPE_CALC:
+            themeName = "x-office-spreadsheet";
+            fallbackPath = QString::fromStdString(getTopSrcDir(TOPSRCDIR)) + "/browser/images/x-office-spreadsheet.svg";
+            break;
+        case coda::DocumentType::TYPE_IMPRESS:
+            themeName = "x-office-presentation";
+            fallbackPath = QString::fromStdString(getTopSrcDir(TOPSRCDIR)) + "/browser/images/x-office-presentation.svg";
+            break;
+        case coda::DocumentType::TYPE_DRAW:
+            themeName = "x-office-drawing";
+            fallbackPath = QString::fromStdString(getTopSrcDir(TOPSRCDIR)) + "/browser/images/x-office-drawing.svg";
+            break;
+        default:
+            break;
+    }
+
+    if (!themeName.isEmpty())
+    {
+        icon = QIcon::fromTheme(themeName);
+        // Fallback to loading from file if theme icon not found
+        if (icon.isNull())
+        {
+            qDebug() << "Theme icon" << themeName << "not found, trying fallback:" << fallbackPath;
+            icon = QIcon(fallbackPath);
+            if (icon.isNull())
+                qDebug() << "Fallback icon also failed to load!";
+        }
+        else
+        {
+            qDebug() << "Loaded theme icon:" << themeName;
+        }
+    }
+
+    if (!icon.isNull())
+    {
+        qDebug() << "Setting tab icon for index" << index;
+        tabWidget->setTabIcon(index, icon);
+
+        // Also set the window icon if this is the current tab
+        if (tabWidget->currentIndex() == index && _mainWindow)
+        {
+            qDebug() << "Setting window icon for current tab";
+            _mainWindow->setWindowIcon(icon);
+        }
+    }
+    else
+    {
+        qDebug() << "Icon is null, not setting tab icon";
     }
 }
 
