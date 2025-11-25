@@ -309,6 +309,12 @@ m4_ifelse(MOBILEAPP, [true],
   [<script type="text/javascript" src="%SERVICE_ROOT%/browser/%VERSION%/global.js"></script>]
 )
 
+m4_dnl Templates manifest (loaded as JS to avoid CORS issues with file:// protocol):
+m4_ifelse(MOBILEAPP, [true],
+  [<script type="text/javascript" src="templates/templates.js"></script>],
+  [<script type="text/javascript" src="%SERVICE_ROOT%/browser/%VERSION%/templates/templates.js"></script>]
+)
+
 m4_ifelse(MOBILEAPP,[true],
   <!-- This is for a mobile app so the script files are in the same folder -->
   m4_ifelse(EMSCRIPTENAPP, [true], [<script src="emscripten-module.js" defer></script>])

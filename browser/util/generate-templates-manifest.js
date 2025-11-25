@@ -79,12 +79,23 @@ function extractThumbnail(templatePath) {
 	}
 }
 
-function buildManifestEntries(templateRoot, previewsRoot) {
+function buildManifestEntries(templateRoot, previewsRoot, distTemplatesRoot) {
 	const entries = [];
 	for (const item of TEMPLATE_SELECTION) {
 		const absoluteTemplatePath = path.join(templateRoot, item.relativePath);
 		if (!fs.existsSync(absoluteTemplatePath)) {
 			console.warn(`Template not found: ${absoluteTemplatePath}`);
+			continue;
+		}
+
+		// Copy template file to dist directory with organized structure
+		const relativeDistPath = path.join(item.type, path.basename(item.relativePath));
+		const distTemplatePath = path.join(distTemplatesRoot, relativeDistPath);
+		ensureDir(path.dirname(distTemplatePath));
+		try {
+			fs.copyFileSync(absoluteTemplatePath, distTemplatePath);
+		} catch (error) {
+			console.warn(`Failed to copy template ${absoluteTemplatePath}: ${error.message}`);
 			continue;
 		}
 
@@ -107,7 +118,7 @@ function buildManifestEntries(templateRoot, previewsRoot) {
 			name: item.name,
 			type: item.type,
 			category: item.category,
-			path: absoluteTemplatePath,
+			path: path.posix.join('templates/files', relativeDistPath.replace(/\\/g, '/')),
 			preview: previewRelative,
 			featured: !!item.featured,
 		});
@@ -115,15 +126,24 @@ function buildManifestEntries(templateRoot, previewsRoot) {
 	return entries;
 }
 
-function writeManifest(outPath, templates, sourceRoot) {
+function writeManifest(outPath, templates) {
 	const manifest = {
 		generatedAt: new Date().toISOString(),
-		source: sourceRoot,
 		templates,
 	};
 
 	ensureDir(path.dirname(outPath));
-	fs.writeFileSync(outPath, JSON.stringify(manifest, null, 2), 'utf8');
+	
+	// Generate as JavaScript module instead of JSON to avoid CORS issues with file:// protocol
+	const jsContent = `// Auto-generated template manifest
+	// Generated at: ${manifest.generatedAt}
+	window.CODA_TEMPLATES = ${JSON.stringify(manifest.templates, null, '\t')};
+	`;
+	
+	// Write as .js file instead of .json
+	const jsOutPath = outPath.replace(/\.json$/, '.js');
+	fs.writeFileSync(jsOutPath, jsContent, 'utf8');
+	console.log(`Generated template manifest: ${jsOutPath} (${templates.length} templates)`);
 }
 
 (function main() {
@@ -138,18 +158,22 @@ function writeManifest(outPath, templates, sourceRoot) {
 
 	const templateRoot = loPath ? path.join(loPath, 'share', 'template', 'common') : null;
 	if (!templateRoot || !fs.existsSync(templateRoot)) {
-		writeManifest(outPath, [], templateRoot || '');
+		console.warn(`Template root not found: ${templateRoot}`);
+		writeManifest(outPath, []);
 		return;
 	}
 
 	const manifestDir = path.dirname(outPath);
 	const previewsRoot = path.join(manifestDir, 'previews');
+	const distTemplatesRoot = path.join(manifestDir, 'files');
+	
 	try {
 		fs.rmSync(previewsRoot, { recursive: true, force: true });
+		fs.rmSync(distTemplatesRoot, { recursive: true, force: true });
 	} catch (error) {
-		console.warn(`Failed to clean previews directory: ${error.message}`);
+		console.warn(`Failed to clean directories: ${error.message}`);
 	}
 
-	const entries = buildManifestEntries(templateRoot, previewsRoot);
-	writeManifest(outPath, entries, templateRoot);
+	const entries = buildManifestEntries(templateRoot, previewsRoot, distTemplatesRoot);
+	writeManifest(outPath, entries);
 })();

@@ -835,7 +835,7 @@ if ENABLE_WASM_FALLBACK
 WASM_FALLBACK_FILES += $(DIST_FOLDER)/wasm
 endif
 
-TEMPLATE_MANIFEST = $(DIST_FOLDER)/templates/templates.json
+TEMPLATE_MANIFEST = $(DIST_FOLDER)/templates/templates.js
 TEMPLATE_PREVIEW_IMAGES = \
 	$(DIST_FOLDER)/images/templates/preview/blank_writer.png \
 	$(DIST_FOLDER)/images/templates/preview/blank_spreadsheet.png \
