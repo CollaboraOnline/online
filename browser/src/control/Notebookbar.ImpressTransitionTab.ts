@@ -131,6 +131,11 @@ class ImpressTransitionTab implements NotebookbarTab {
 				type: 'separator',
 				orientation: 'vertical',
 			} as SeparatorWidgetJSON,
+			{
+				id: 'apply_to_all',
+				type: 'pushbutton',
+				text: _('Apply to All Slides'),
+			},
 		];
 
 		return content as NotebookbarTabContent;
