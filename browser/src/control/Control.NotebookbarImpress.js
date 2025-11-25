@@ -500,7 +500,6 @@ window.L.Control.NotebookbarImpress = window.L.Control.NotebookbarWriter.extend(
 					'type': 'bigcustomtoolitem',
 					'text': _('Start Follow-me Presentation'),
 					'command': 'followmepresentation',
-					'visible': app.isExperimentalMode(),
 					'accessibility': { focusBack: true, combination: 'PL', de: null }
 				} : {},
 			!window.ThisIsAMobileApp ?
@@ -509,7 +508,6 @@ window.L.Control.NotebookbarImpress = window.L.Control.NotebookbarWriter.extend(
 					'type': 'bigcustomtoolitem',
 					'text': _('Follow Presentation'),
 					'command': 'followpresentation',
-					'visible': app.isExperimentalMode(),
 					'accessibility': { focusBack: true, combination: 'PF', de: null }
 				} : {},
 			{ type: 'separator', id: 'slide-zoomin-break', orientation: 'vertical' },
