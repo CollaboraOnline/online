@@ -15,12 +15,20 @@
 
 namespace coda
 {
+    enum DocumentType {
+        TYPE_UNKNOWN = 0,
+        TYPE_WRITER,
+        TYPE_CALC,
+        TYPE_IMPRESS,
+        TYPE_DRAW,
+    };
 struct DocumentData
 {
     Poco::URI _fileURL; // Temp file path that COOL actually operates on
     int _fakeClientFd = -1;
     unsigned _appDocId = 0;
     Poco::URI _saveLocationURI; // Save location URI, that is only changed on save or auto-save.
+    DocumentType _type = TYPE_UNKNOWN;
 };
 } // namespace coda
 
