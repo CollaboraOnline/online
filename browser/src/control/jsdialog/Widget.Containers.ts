@@ -71,7 +71,7 @@ JSDialog.grid = function (
 	if (data.allyRole) {
 		table.role = data.allyRole;
 
-		if(data.allyRole === 'listbox')
+		if (data.allyRole === 'listbox')
 			table.setAttribute('aria-activedescendant', data.initialSelectedId);
 	}
 

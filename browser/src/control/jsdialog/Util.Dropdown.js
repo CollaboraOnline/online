@@ -123,7 +123,7 @@ JSDialog.OpenDropdown = function (id, popupParent, entries, innerCallback, popup
 					selected: (i === 0 && shouldSelectFirstEntry) ? true : entries[i].selected,
 					hasSubMenu: !!entries[i].items
 				};
-				if(entry.selected) initialSelectedId = entry.id;
+				if (entry.selected) initialSelectedId = entry.id;
 			break;
 		}
 

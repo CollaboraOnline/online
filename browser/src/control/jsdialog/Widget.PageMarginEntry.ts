@@ -111,7 +111,7 @@ function createPageMarginEntryWidget(data: any, builder: any): HTMLElement {
 			}
 		});
 
-		if(isFirstItem) {
+		if (isFirstItem) {
 			item.classList.add('selected');
 			item.setAttribute('aria-selected', 'true');
 			container.setAttribute('aria-activedescendant', item.id);
