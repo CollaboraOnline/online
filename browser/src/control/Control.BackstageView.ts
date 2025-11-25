@@ -620,14 +620,13 @@ class BackstageView extends window.L.Class {
 
 		const loader = (async () => {
 			try {
-				const entries = await this.fetchTemplateManifest(
-					'templates/templates.json',
-				);
+				// fetch templates from templates/templates.js build path
+				const entries = (window as any).CODA_TEMPLATES || [];
 				this.templates = entries;
 				this.templatesLoadError = false;
 				
 				if (!entries || entries.length === 0) {
-					console.error('Templates manifest loaded but contains no templates founded!');
+					console.warn('Templates manifest loaded but contains no templates!');
 				}
 			} catch (error) {
 				console.error('Unable to load templates manifest', error);
@@ -922,61 +921,6 @@ class BackstageView extends window.L.Class {
 			.replace(/\b\w/g, (char) => char.toUpperCase());
 	}
 
-	private async fetchTemplateManifest(
-		manifestPath: string,
-	): Promise<TemplateManifestEntry[]> {
-		if (window.location.protocol === 'file:') {
-			return this.fetchTemplateManifestViaXHR(manifestPath);
-		}
-
-		const response = await fetch(manifestPath, { cache: 'no-store' });
-		if (!response.ok) throw new Error('Failed to load template manifest');
-
-		return this.parseManifest(await response.json());
-	}
-
-	private fetchTemplateManifestViaXHR(
-		manifestPath: string,
-	): Promise<TemplateManifestEntry[]> {
-		return new Promise((resolve, reject) => {
-			const xhr = new XMLHttpRequest();
-			xhr.open('GET', manifestPath, true);
-			xhr.responseType = 'text';
-			xhr.onload = () => {
-				const success =
-					xhr.status === 0 || (xhr.status >= 200 && xhr.status < 400);
-				if (!success) {
-					reject(
-						new Error(
-							`Failed to load template manifest (status ${xhr.status})`,
-						),
-					);
-					return;
-				}
-
-				try {
-					const payload = JSON.parse(xhr.responseText);
-					resolve(this.parseManifest(payload));
-				} catch (error) {
-					reject(error);
-				}
-			};
-			xhr.onerror = () =>
-				reject(new Error('XHR failed while loading template manifest'));
-			xhr.send();
-		});
-	}
-
-	private parseManifest(payload: any): TemplateManifestEntry[] {
-		let entries: TemplateManifestEntry[] = [];
-		if (payload && Array.isArray((payload as TemplateManifest).templates)) {
-			entries = (payload as TemplateManifest)
-				.templates as TemplateManifestEntry[];
-		} else if (Array.isArray(payload)) {
-			entries = payload as TemplateManifestEntry[];
-		}
-		return entries.filter((entry) => !!entry.path);
-	}
 
 	private getDocTypeString(): string {
 		const docLayer = this.map && this.map._docLayer;
