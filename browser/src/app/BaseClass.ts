@@ -17,7 +17,7 @@ interface BaseClassOptions {
 }
 
 class BaseClass implements IDAble {
-	private baseOptions: BaseClassOptions;
+	private baseOptions?: BaseClassOptions;
 	public _leaflet_id: number = -1;
 
 	constructor(opts?: BaseClassOptions) {
