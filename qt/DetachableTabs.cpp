@@ -161,9 +161,17 @@ DetachableTabBar* DetachableTabWidget::tabBar() const {
     return static_cast<DetachableTabBar*>(QTabWidget::tabBar());
 }
 
+void DetachableTabWidget::updateTabBarVisibility() {
+    // Hide tab bar when there's only one tab, show it when there are multiple tabs
+    if (tabBar()) {
+        tabBar()->setVisible(count() > 1);
+    }
+}
+
 void DetachableTabWidget::addDetachableTab(QWidget* widget, const QString& label) {
     int newIndex = addTab(widget, label);
     Q_UNUSED(newIndex);
+    updateTabBarVisibility();
 }
 
 void DetachableTabWidget::handleDetachRequest(QPoint globalPos, QWidget* tabWidget, const QString& tabLabel) {
@@ -230,6 +238,7 @@ void DetachableTabWidget::handleDetachRequest(QPoint globalPos, QWidget* tabWidg
     newWindow->resize(800, 600);
     newWindow->show();
     newTabs->setObjectName(QString("tabwidget_%1").arg(++g_tabWidgetCounter));
+    updateTabBarVisibility();
 
     // Clear transient drag-start properties on the source and destination
     // tab bars so subsequent drags start fresh and are not misclassified
@@ -329,6 +338,7 @@ void DetachableTabWidget::dropEvent(QDropEvent* ev) {
 
     // Remove from source first, then reparent and add to target.
     source->removeTab(actualIndex);
+    source->updateTabBarVisibility();
 
     // Reparent and make sure the widget is visible in the target tab widget.
     tabWidget->setParent(this);
