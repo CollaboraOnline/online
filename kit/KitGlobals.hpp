@@ -13,6 +13,8 @@
 
 #include <config.h>
 
+#include "common/Globals.hpp"
+
 #if !MOBILEAPP
 
 #include "kit/BgSaveWatchDog.hpp"
