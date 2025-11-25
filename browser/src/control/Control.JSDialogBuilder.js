@@ -1995,7 +1995,8 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 			// Only set aria-expanded on the button if the arrow is not interactive
 			if (!isArrowInteractive)
 				button.setAttribute('aria-expanded', open);
-			arrowbackground.setAttribute('aria-expanded', open);
+			else
+				arrowbackground.setAttribute('aria-expanded', open);
 		};
 
 		var openToolBoxMenu = function(event) {
