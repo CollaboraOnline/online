@@ -269,14 +269,14 @@ class Cursor {
 		this.container.style.top = pos.y + 'px';
 		this.container.style.left = this.transformX(pos.x) + 'px';
 		this.container.style.zIndex = this.zIndex + '';
-		// Restart blinking animation
+		// Suspend blinking animation during cursor movement
 		if (this.blink) {
-			window.L.DomUtil.removeClass(this.cursor, 'blinking-cursor');
+			window.L.DomUtil.addClass(this.cursor, 'blinking-suspended');
 			if (this.blinkSuspendTimeout) {
 				clearTimeout(this.blinkSuspendTimeout);
 			}
 			this.blinkSuspendTimeout = setTimeout(() => {
-				window.L.DomUtil.addClass(this.cursor, 'blinking-cursor');
+				window.L.DomUtil.removeClass(this.cursor, 'blinking-suspended');
 			}, 500);
 		}
 	}
