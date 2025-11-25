@@ -46,6 +46,9 @@ class Document: NSDocument {
     /// This is a newly created document (from a template).
     var isNewDocument = false
 
+    /// The document type (UTI) for this document, set explicitly for new documents
+    var documentType: String?
+
     /** Parameters for a deferred Save / Save As… request. */
     private struct PendingSave {
         let url: URL
@@ -220,6 +223,37 @@ class Document: NSDocument {
             }
             else if !win.setFrameUsingName(initialName) {
                 FrameAutosaveHelper.applyDefaultFrame(win, widthFraction: 0.95, heightFraction: 0.95)
+            }
+
+            // Set window icon based on document type
+            let type = self.documentType ?? self.fileType ?? "org.oasis-open.opendocument.text"
+
+            // For new/untitled documents, we need to set a represented URL to make the icon button appear
+            if self.fileURL == nil && win.representedURL == nil {
+                // Create a temporary represented URL so the icon button appears
+                // Use the temp file URL if available, otherwise create a dummy one
+                if let tempURL = self.tempFileURL {
+                    win.representedURL = tempURL
+                } else {
+                    // Create a dummy URL with the appropriate extension
+                    let ext: String
+                    switch type {
+                    case let t where t.contains("spreadsheet"):
+                        ext = "ods"
+                    case let t where t.contains("presentation"):
+                        ext = "odp"
+                    case let t where t.contains("text"):
+                        ext = "odt"
+                    default:
+                        ext = "odt"
+                    }
+                    let dummyURL = URL(fileURLWithPath: "/tmp/Untitled.\(ext)")
+                    win.representedURL = dummyURL
+                }
+            }
+
+            if let icon = Document.iconForType(typeName: type) {
+                win.standardWindowButton(.documentIconButton)?.image = icon
             }
         }
 
@@ -529,6 +563,61 @@ class Document: NSDocument {
                 }
             }
         }
+    }
+
+    /// Returns the correct icon for a document type
+    static func iconForType(typeName: String) -> NSImage? {
+        // Try to load from named assets first (if .icns files are in Assets)
+        let iconName: String?
+        switch typeName {
+        case "org.oasis-open.opendocument.text",
+             "org.openoffice.text",
+             "com.microsoft.word.doc",
+             "org.openxmlformats.wordprocessingml.document",
+             "org.openxmlformats.wordprocessingml.document.macroEnabled",
+             "org.openxmlformats.wordprocessingml.template",
+             "org.openxmlformats.wordprocessingml.template.macroEnabled",
+             "public.rtf":
+            iconName = "oasis-text"
+        case "org.oasis-open.opendocument.spreadsheet",
+             "org.openoffice.spreadsheet",
+             "com.microsoft.excel.xls",
+             "org.openxmlformats.spreadsheetml.sheet",
+             "org.openxmlformats.spreadsheetml.sheet.macroEnabled",
+             "com.microsoft.excel.sheet.binary.macroEnabled",
+             "org.openxmlformats.spreadsheetml.template",
+             "org.openxmlformats.spreadsheetml.template.macroEnabled":
+            iconName = "oasis-spreadsheet"
+        case "org.oasis-open.opendocument.presentation",
+             "org.openoffice.presentation",
+             "com.microsoft.powerpoint.ppt",
+             "org.openxmlformats.presentationml.presentation",
+             "org.openxmlformats.presentationml.presentation.macroEnabled",
+             "org.openxmlformats.presentationml.template",
+             "org.openxmlformats.presentationml.template.macroEnabled":
+            iconName = "oasis-presentation"
+        case "org.oasis-open.opendocument.graphics",
+             "org.openoffice.graphics",
+             "org.libreoffice.visio-document":
+            iconName = "oasis-drawing"
+        default:
+            iconName = nil
+        }
+
+        // Try loading from Assets catalog
+        if let name = iconName, let image = NSImage(named: name) {
+            return image
+        }
+
+        // Try loading from bundle Resources (for .icns files)
+        if let name = iconName,
+           let resourcePath = Bundle.main.path(forResource: name, ofType: "icns"),
+           let image = NSImage(contentsOfFile: resourcePath) {
+            return image
+        }
+
+        // Fallback to system icon for the UTI
+        return NSWorkspace.shared.icon(forFileType: typeName)
     }
 }
 
