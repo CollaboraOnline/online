@@ -42,11 +42,10 @@ There is a flatpak manifest under `flatpak/com.collabora.Office.json`.
 Install following dependencies for building the flatpak.
 
 ```sh
-flatpak install org.kde.Sdk//6.9 \
-                org.kde.Platform//6.9 \
-                org.freedesktop.Sdk.Extension.node20//24.08 \
-                org.freedesktop.Sdk.Extension.openjdk21//24.08 \
-                io.qt.qtwebengine.BaseApp//6.9
+flatpak install org.kde.Sdk//6.10 \
+                org.kde.Platform//6.10 \
+                org.freedesktop.Sdk.Extension.node20//25.08 \
+                io.qt.qtwebengine.BaseApp//6.10
 ```
 
 Use flatpak-builder to create a flatpak.
