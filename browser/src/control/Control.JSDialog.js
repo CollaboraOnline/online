@@ -299,8 +299,9 @@ window.L.Control.JSDialog = window.L.Control.extend({
 
 		instance.form = window.L.DomUtil.create('form', 'jsdialog-container ui-dialog ui-widget-content lokdialog_container', instance.container);
 		instance.form.setAttribute('role', 'dialog');
-		instance.form.setAttribute('aria-labelledby', instance.title);
 		instance.form.setAttribute('autocomplete', 'off');
+		if (instance.title)
+			instance.form.setAttribute('aria-labelledby', instance.title);
 		// Prevent overlay from getting the click, except if we want click to dismiss
 		// Like in the case of the inactivity message.
 		// https://github.com/CollaboraOnline/online/issues/7403
