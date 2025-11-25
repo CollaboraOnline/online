@@ -919,40 +919,17 @@
       ]
     },
     {
-      "name": "build-sass",
-      "buildsystem": "simple",
-      "build-options": {
-        "append-path": "/usr/lib/sdk/node20/bin",
-        "env": {
-          "NPM_CONFIG_PREFIX": "/app"
-        },
-        "build-args": [
-          "--share=network"
-        ]
-      },
-      "build-commands": [
-        "npm install -g sass"
-      ],
-      "sources": [
-        {
-          "type": "script",
-          "commands": [
-            "true"
-          ]
-        }
-      ],
-      "cleanup": [ "*" ]
-    },
-    {
       "name": "collabora-online-branding",
       "buildsystem": "simple",
       "build-commands": [
-        "./brand.sh /app/collaboraoffice /app/share/coolwsd/browser/dist CO-theme"
+        "cp -a online-theme /app/collaboraoffice/share/theme_definitions/online/",
+        "cp -a branding* images welcome /app/share/coolwsd/browser/dist/"
       ],
       "sources": [
         {
-          "type": "dir",
-          "path": "../../../online-branding"
+          "type": "archive",
+          "url": "https://www.collaboraoffice.com/downloads/collabora-office-brand/collabora-office-brand.tar.gz",
+          "sha256": "883da5007ab6fd24980882875faed73a09d95f37b0238c3395e458dfd5c13cbc"
         }
       ]
     }
