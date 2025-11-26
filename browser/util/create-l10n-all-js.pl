@@ -51,7 +51,7 @@ if (false) {
 
 # Simple languages that use onlylang == 'xx'
 my @simple = qw(
-   ar ca cs cy da de el es eu fi fr ga he hr hu hy id is it ja kk ko nl pl pt ro ru sk sl sq sv tr uk
+   ar ca cs cy da de el es eu fi fr ga gl he hr hu hy id is it ja kk ko nl pl pt ro ru sk sl sq sv tr uk
 );
 
 # Languages that use window.LANG alias matching
