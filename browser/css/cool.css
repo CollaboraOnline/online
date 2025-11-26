@@ -220,6 +220,9 @@ body {
 	left: 50%;
 	transform: translate(-50%, -50%);
 	z-index: 1000;
+	background-color: var(--color-main-background);
+	padding: 20px;
+	border-radius: 8px;
 }
 
 .bucket-cursor {
