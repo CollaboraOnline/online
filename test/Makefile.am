@@ -215,7 +215,6 @@ unittest_CPPFLAGS = -I$(top_srcdir) -DBUILDING_TESTS -DSTANDALONE_CPPUNIT -g
 unittest_SOURCES = \
 	$(common_sources) \
 	$(test_base_sources) \
-	../common/Globals.cpp \
 	../wsd/TestStubs.cpp \
 	test.cpp
 
