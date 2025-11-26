@@ -61,7 +61,7 @@ function createMoreButton(
 	moreOptionsButton.className = 'ui-content unobutton';
 	moreOptionsButton.id = `${id}-more-button`;
 	moreOptionsButton.setAttribute('aria-label', `More options for ${id}`);
-	moreOptionsButton.setAttribute('aria-pressed', 'false');
+	moreOptionsButton.setAttribute('aria-haspopup', 'dialog');
 
 	const img = document.createElement('img');
 	img.alt = '';
