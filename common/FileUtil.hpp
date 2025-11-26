@@ -237,6 +237,7 @@ namespace FileUtil
     /// Reads the whole file to memory. Only for small files.
     std::unique_ptr<std::vector<char>> readFile(const std::string& path, int maxSize = 256 * 1024);
 
+    void copyDirectoryRecursive(const std::string& srcDir, const std::string& destDir, bool log);
     /// File/Directory stat helper.
     class Stat
     {
