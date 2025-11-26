@@ -356,6 +356,17 @@ class UIManager extends window.L.Control {
 
 		if (!isMobile && !enableNotebookbar)
 			this.map.topToolbar = JSDialog.TopToolbar(this.map);
+
+		// this will execute only when UI get initialized
+		if (!isMobile) {
+			this.topReadonlyBtn = document.getElementById('readonlyMode');
+			const label = this.topReadonlyBtn.querySelector(
+				'.unolabel',
+			) as HTMLElement | null;
+			if (label) {
+				label.textContent = _('Read-only');
+			}
+		}
 	}
 
 	/**
@@ -1464,6 +1475,23 @@ class UIManager extends window.L.Control {
 				app.socket.sendMessage('uno .uno:SidebarHide');
 			}
 		}
+		this.updateReadonlyIndicator();
+	}
+
+	/**
+	 * Updates visibility of the Read-only badge/button in the top toolbar.
+	*/
+	updateReadonlyIndicator(): void {
+		app.layoutingService.appendLayoutingTask(() =>{
+			if (!this.topReadonlyBtn)
+				return;
+
+			if (app.isReadOnly()) {
+				this.topReadonlyBtn.classList.remove('hidden');
+			} else {
+				this.topReadonlyBtn.classList.add('hidden');
+			}
+		})
 	}
 
 	refreshTheme(): void {
