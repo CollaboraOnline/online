@@ -89,6 +89,8 @@ enum class PERMISSION { EDIT, NEW_DOCUMENT, READONLY, VIEW, WELCOME };
 struct WindowData
 {
     HWND hWnd;
+    HWND hConsoleWnd = 0;
+    HWND hParentWnd = 0;
     RECT originalRect;
     LONG originalStyle;
     POINT previousSize; // After a WM_SIZE
@@ -711,12 +713,11 @@ static void do_welcome_handling_things(WindowData& data)
     openCOOLWindow({ welcomeSlideshow.getFileName(), Poco::URI(welcomeSlideshow).toString() }, PERMISSION::WELCOME);
 }
 
-static void enter_full_screen(WindowData& data)
+static void enter_full_screen(WindowData& data, HMONITOR monitor)
 {
     if (data.isFullScreen)
         return;
 
-    HMONITOR monitor = MonitorFromWindow(data.hWnd, MONITOR_DEFAULTTONEAREST);
     MONITORINFO monitorInfo = { sizeof(monitorInfo) };
     GetMonitorInfo(monitor, &monitorInfo);
 
@@ -1068,6 +1069,62 @@ static void do_open_hyperlink(HWND hWnd, std::wstring url)
     ShellExecuteW(hWnd, NULL, url.c_str(), NULL, NULL, SW_SHOW);
 }
 
+struct MonitorInfo
+{
+    HMONITOR hMonitor;
+    DWORD dwFlags;
+};
+
+typedef std::vector<MonitorInfo> Monitors;
+
+BOOL monitorEnum(HMONITOR monitor, HDC, LPRECT, LPARAM data)
+{
+    MONITORINFO monitorInfo = { sizeof(monitorInfo) };
+    GetMonitorInfo(monitor, &monitorInfo);
+
+    Monitors& monitors = *reinterpret_cast<Monitors*>(data);
+    monitors.push_back(MonitorInfo{monitor, monitorInfo.dwFlags});
+    return true;
+}
+
+Monitors getMonitors()
+{
+    Monitors monitors;
+    EnumDisplayMonitors(nullptr, nullptr, monitorEnum, reinterpret_cast<LPARAM>(&monitors));
+    return monitors;
+}
+
+static void exchangeMonitors(WindowData& data)
+{
+    Monitors monitors(getMonitors());
+    if (monitors.size() < 2)
+        return;
+
+    HMONITOR hConsoleMonitor = MonitorFromWindow(data.hConsoleWnd, MONITOR_DEFAULTTONEAREST);
+    HMONITOR hPresentationMonitor = MonitorFromWindow(data.hWnd, MONITOR_DEFAULTTONEAREST);
+
+    size_t origConsoleMonitor = 0;
+    size_t origPresentationMonitor = 0;
+    for (size_t i = 0; i < monitors.size(); ++i)
+    {
+        if (monitors[i].hMonitor == hConsoleMonitor)
+            origConsoleMonitor = i;
+        if (monitors[i].hMonitor == hPresentationMonitor)
+            origPresentationMonitor = i;
+    }
+
+    leave_full_screen(data);
+    leave_full_screen(windowData[data.hConsoleWnd]);
+
+    size_t newConsoleMonitor = (origConsoleMonitor + 1) % monitors.size();
+    size_t newPresentationMonitor = origPresentationMonitor;
+    if (newConsoleMonitor == newPresentationMonitor)
+        newPresentationMonitor = (newPresentationMonitor + 1) % monitors.size();
+
+    enter_full_screen(data, monitors[newPresentationMonitor].hMonitor);
+    enter_full_screen(windowData[data.hConsoleWnd], monitors[newConsoleMonitor].hMonitor);
+}
+
 static OpenDialogResult fileOpenDialog()
 {
     IFileOpenDialog* dialog;
@@ -1396,6 +1453,10 @@ static LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM l
 
                     DocumentData::deallocate(windowData[hWnd].appDocId);
                 }
+                else
+                {
+                    leave_full_screen(windowData[windowData[hWnd].hParentWnd]);
+                }
                 DestroyWindow(hWnd);
             }
             break;
@@ -1464,6 +1525,54 @@ static bool isLightTheme()
         return true;
 
     return value == 1;
+}
+
+static void arrangePresentationWindows(WindowData& data)
+{
+    Monitors monitors(getMonitors());
+
+    HMONITOR laptopMonitor = 0;
+    HMONITOR externalMonitor = 0;
+
+    for (const auto& monitor : monitors)
+    {
+        if (monitor.dwFlags & MONITORINFOF_PRIMARY)
+        {
+            if (!laptopMonitor)
+                laptopMonitor = monitor.hMonitor;
+        }
+        else
+        {
+            if (!externalMonitor)
+                externalMonitor = monitor.hMonitor;
+        }
+    }
+
+    if (!laptopMonitor || !externalMonitor)
+    {
+        laptopMonitor = MonitorFromWindow(data.hWnd, MONITOR_DEFAULTTONEAREST);
+        externalMonitor = 0;
+        for (const auto& monitor : monitors)
+        {
+            if (monitor.hMonitor != laptopMonitor)
+            {
+                externalMonitor = monitor.hMonitor;
+                break;
+            }
+        }
+    }
+
+    HMONITOR presenterMonitor = externalMonitor ? externalMonitor : laptopMonitor;
+
+    enter_full_screen(data, presenterMonitor);
+
+    if (data.hConsoleWnd)
+    {
+        if (externalMonitor)
+            enter_full_screen(windowData[data.hConsoleWnd], laptopMonitor);
+        else
+            leave_full_screen(windowData[data.hConsoleWnd]);
+    }
 }
 
 static void openCOOLWindow(const FilenameAndUri& filenameAndUri, PERMISSION permission)
@@ -1652,7 +1761,10 @@ static void openCOOLWindow(const FilenameAndUri& filenameAndUri, PERMISSION perm
                                         BOOL containsFullscreenElement;
                                         sender->get_ContainsFullScreenElement(&containsFullscreenElement);
                                         if (containsFullscreenElement)
-                                            enter_full_screen(data);
+                                        {
+                                            HMONITOR monitor = MonitorFromWindow(data.hWnd, MONITOR_DEFAULTTONEAREST);
+                                            enter_full_screen(data, monitor);
+                                        }
                                         else
                                             leave_full_screen(data);
                                         return S_OK;
@@ -1663,30 +1775,31 @@ static void openCOOLWindow(const FilenameAndUri& filenameAndUri, PERMISSION perm
                             // new windows appear to need to reuse the original env of the parent
                             webView->add_NewWindowRequested(
                                 Microsoft::WRL::Callback<ICoreWebView2NewWindowRequestedEventHandler>(
-                                    [env](ICoreWebView2* sender, ICoreWebView2NewWindowRequestedEventArgs* args)
+                                    [env, &data](ICoreWebView2* sender, ICoreWebView2NewWindowRequestedEventArgs* args)
                                     {
                                         wil::com_ptr<ICoreWebView2Deferral> deferral;
                                         args->GetDeferral(&deferral);
 
-                                        HWND hConsoleWnd = CreateWindowW(windowClass,
+                                        data.hConsoleWnd = CreateWindowW(windowClass,
                                                 Util::string_to_wide_string(APP_NAME).c_str(),
                                                 WS_OVERLAPPEDWINDOW,
                                                 CW_USEDEFAULT, CW_USEDEFAULT,
                                                 800, 640, NULL, NULL, appInstance, NULL);
 
-                                        auto& consoleData = windowData[hConsoleWnd];
-                                        consoleData.hWnd = hConsoleWnd;
+                                        auto& consoleData = windowData[data.hConsoleWnd];
+                                        consoleData.hWnd = data.hConsoleWnd;
+                                        consoleData.hParentWnd = data.hWnd;
                                         consoleData.isConsole = true;
                                         consoleData.previousSize.x = 800;
                                         consoleData.previousSize.y = 640;
 
-                                        ShowWindow(hConsoleWnd, appShowMode);
+                                        ShowWindow(data.hConsoleWnd, appShowMode);
 
                                         env->CreateCoreWebView2Controller(
-                                            hConsoleWnd,
+                                            data.hConsoleWnd,
                                             Microsoft::WRL::Callback<
                                                 ICoreWebView2CreateCoreWebView2ControllerCompletedHandler>(
-                                                [&consoleData, args, deferral](HRESULT result, ICoreWebView2Controller* controller) -> HRESULT
+                                                [&consoleData, &data, args, deferral](HRESULT result, ICoreWebView2Controller* controller) -> HRESULT
                                                 {
                                                     if (!controller)
                                                         return E_FAIL;
@@ -1717,6 +1830,9 @@ static void openCOOLWindow(const FilenameAndUri& filenameAndUri, PERMISSION perm
                                                     args->put_NewWindow(consoleData.webView.get());
                                                     args->put_Handled(TRUE);
                                                     deferral->Complete();
+
+                                                    arrangePresentationWindows(data);
+
                                                     return S_OK;
                                                 })
                                                 .Get());
@@ -1805,6 +1921,10 @@ static void processMessage(WindowData& data, wil::unique_cotaskmem_string& messa
         {
             std::wstring licensePath = Util::string_to_wide_string(app_installation_path + "..\\LICENSE.html");
             ShellExecuteW(nullptr, L"open", licensePath.c_str(), nullptr, nullptr, SW_SHOWNORMAL);
+        }
+        else if (s == L"EXCHANGEMONITORS")
+        {
+            exchangeMonitors(data);
         }
         else if (s.starts_with(L"downloadas "))
         {
