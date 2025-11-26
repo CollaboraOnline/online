@@ -104,11 +104,7 @@ class NavigatorPanel extends SidebarBase {
 			navContainer,
 		);
 
-		var navTitle = window.L.DomUtil.create(
-			'span',
-			'navigation-title',
-			navHeader,
-		);
+		var navTitle = window.L.DomUtil.create('h2', 'navigation-title', navHeader);
 		navTitle.textContent = _('Navigation');
 
 		// Create wrapper for search
