@@ -11,6 +11,15 @@
 
 #include <config.h>
 
+#include "Log.hpp"
+#include "StaticLogHelper.hpp"
+#include "Util.hpp"
+
+#include <Poco/AutoPtr.h>
+#include <Poco/FileChannel.h>
+#include <Poco/Logger.h>
+#include <Poco/Version.h>
+
 #include <atomic>
 #include <cassert>
 #include <cstdint>
@@ -20,18 +29,8 @@
 #include <iostream>
 #include <sstream>
 #include <string>
-#include <unordered_map>
-
 #include <unistd.h>
-
-#include <Poco/AutoPtr.h>
-#include <Poco/FileChannel.h>
-#include <Poco/Logger.h>
-#include <Poco/Version.h>
-
-#include "Log.hpp"
-#include "StaticLogHelper.hpp"
-#include "Util.hpp"
+#include <unordered_map>
 
 namespace
 {

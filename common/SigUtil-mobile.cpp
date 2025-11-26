@@ -10,12 +10,13 @@
  */
 
 #include <config.h>
-#include <Socket.hpp>
+
+#include "Log.hpp"
 #include "SigUtil.hpp"
+#include <Socket.hpp>
 
 #include <string>
 
-#include "Log.hpp"
 
 namespace
 {

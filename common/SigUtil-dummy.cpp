@@ -11,11 +11,11 @@
 
 #include <config.h>
 
+#include "Log.hpp"
 #include "SigUtil.hpp"
 
 #include <string>
 
-#include "Log.hpp"
 
 namespace SigUtil
 {
