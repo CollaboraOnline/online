@@ -82,7 +82,15 @@ map.addControl(map.uiManager);
 if (!window.L.Browser.cypressTest)
 	map.tooltip = window.L.control.tooltip();
 
-if (window.coolParams.get('welcome'))
+window.L.Map.THIS = map;
+app.map = map;
+app.idleHandler.map = map;
+
+if (window.coolParams.get('starterMode')) {
+	map.uiManager.initializeBackstageView();
+	return;
+}
+else if (window.coolParams.get('welcome'))
 	map.uiManager.initializeNonInteractiveUI();
 else
 	map.uiManager.initializeBasicUI();
@@ -93,10 +101,6 @@ if (wopiSrc === '' && filePath === '' && !window.ThisIsAMobileApp) {
 if (host === '' && !window.ThisIsAMobileApp) {
 	map.uiManager.showInfoModal('empty-host-url-modal', '', errorMessages.emptyhosturl, '', _('OK'), null, false);
 }
-
-window.L.Map.THIS = map;
-app.map = map;
-app.idleHandler.map = map;
 
 if (window.ThisIsTheEmscriptenApp) {
 	var docParamsString = $.param(docParams);
