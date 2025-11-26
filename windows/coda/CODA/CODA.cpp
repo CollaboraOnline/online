@@ -1536,7 +1536,9 @@ static LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM l
                 }
                 else
                 {
-                    leave_full_screen(windowData[windowData[hWnd].hParentWnd]);
+                    auto& parent = windowData[windowData[hWnd].hParentWnd];
+                    leave_full_screen(parent);
+                    parent.hConsoleWnd = 0;
                 }
                 DestroyWindow(hWnd);
             }
