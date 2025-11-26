@@ -1745,6 +1745,17 @@ class UIManager extends window.L.Control {
 			return this.mobileWizard.isOpen();
 	}
 
+	/**
+	 * Returns whether any context menu is currently open.
+	 */
+	isAnyContextMenuOpened(): boolean {
+		const contextMenu = document.querySelector(
+			'.context-menu-root:not([style*="display: none"])',
+		);
+
+		return contextMenu !== null;
+	}
+
 	// TODO: remove and use JSDialog.generateModalId directly
 	generateModalId(givenId: string): string {
 		return JSDialog.generateModalId(givenId);

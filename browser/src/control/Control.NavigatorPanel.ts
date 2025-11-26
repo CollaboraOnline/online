@@ -150,6 +150,11 @@ class NavigatorPanel extends SidebarBase {
 			'keydown',
 			function (e: KeyboardEvent) {
 				if (e.code === 'Escape') {
+					const contextMenu = app.map.uiManager.isAnyContextMenuOpened();
+					if (contextMenu) {
+						// Do not close navigator if any context menu is open
+						return;
+					}
 					clickFunction();
 					e.preventDefault();
 					e.stopPropagation();
