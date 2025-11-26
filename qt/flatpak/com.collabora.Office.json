@@ -29,7 +29,6 @@
     "--env=COOL_TOPSRCDIR=/app/share/coolwsd",
     "--env=LIBO_FLATPAK=1",
     "--talk-name=org.gtk.vfs.*",
-    "--talk-name=com.canonical.AppMenu.Registrar",
     "--device=dri"
   ],
   "cleanup-commands": [
