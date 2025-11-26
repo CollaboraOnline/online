@@ -91,6 +91,7 @@ struct WindowData
     HWND hWnd;
     HWND hConsoleWnd = 0;
     HWND hParentWnd = 0;
+    int numMonitors = 0;
     RECT originalRect;
     LONG originalStyle;
     POINT previousSize; // After a WM_SIZE
@@ -1318,6 +1319,55 @@ static FilenameAndUri fileSaveDialog(const std::string& name, const std::string&
     return { path.getFileName(), Poco::URI(path).toString() };
 }
 
+static void arrangePresentationWindows(WindowData& data)
+{
+    Monitors monitors(getMonitors());
+    data.numMonitors = monitors.size();
+
+    HMONITOR laptopMonitor = 0;
+    HMONITOR externalMonitor = 0;
+
+    for (const auto& monitor : monitors)
+    {
+        if (monitor.dwFlags & MONITORINFOF_PRIMARY)
+        {
+            if (!laptopMonitor)
+                laptopMonitor = monitor.hMonitor;
+        }
+        else
+        {
+            if (!externalMonitor)
+                externalMonitor = monitor.hMonitor;
+        }
+    }
+
+    if (!laptopMonitor || !externalMonitor)
+    {
+        laptopMonitor = MonitorFromWindow(data.hWnd, MONITOR_DEFAULTTONEAREST);
+        externalMonitor = 0;
+        for (const auto& monitor : monitors)
+        {
+            if (monitor.hMonitor != laptopMonitor)
+            {
+                externalMonitor = monitor.hMonitor;
+                break;
+            }
+        }
+    }
+
+    HMONITOR presenterMonitor = externalMonitor ? externalMonitor : laptopMonitor;
+
+    enter_full_screen(data, presenterMonitor);
+
+    if (data.hConsoleWnd)
+    {
+        if (externalMonitor)
+            enter_full_screen(windowData[data.hConsoleWnd], laptopMonitor);
+        else
+            leave_full_screen(windowData[data.hConsoleWnd]);
+    }
+}
+
 static LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
     switch (message)
@@ -1455,6 +1505,18 @@ static LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM l
         }
         break;
 
+        case WM_DISPLAYCHANGE:
+        {
+            auto& data = windowData[hWnd];
+            if (data.hConsoleWnd)
+            {
+                int numMonitors = getMonitors().size();
+                if (data.numMonitors != numMonitors)
+                    arrangePresentationWindows(data);
+            }
+        }
+        break;
+
         case WM_CLOSE:
             {
                 if (!windowData[hWnd].isConsole)
@@ -1536,54 +1598,6 @@ static bool isLightTheme()
         return true;
 
     return value == 1;
-}
-
-static void arrangePresentationWindows(WindowData& data)
-{
-    Monitors monitors(getMonitors());
-
-    HMONITOR laptopMonitor = 0;
-    HMONITOR externalMonitor = 0;
-
-    for (const auto& monitor : monitors)
-    {
-        if (monitor.dwFlags & MONITORINFOF_PRIMARY)
-        {
-            if (!laptopMonitor)
-                laptopMonitor = monitor.hMonitor;
-        }
-        else
-        {
-            if (!externalMonitor)
-                externalMonitor = monitor.hMonitor;
-        }
-    }
-
-    if (!laptopMonitor || !externalMonitor)
-    {
-        laptopMonitor = MonitorFromWindow(data.hWnd, MONITOR_DEFAULTTONEAREST);
-        externalMonitor = 0;
-        for (const auto& monitor : monitors)
-        {
-            if (monitor.hMonitor != laptopMonitor)
-            {
-                externalMonitor = monitor.hMonitor;
-                break;
-            }
-        }
-    }
-
-    HMONITOR presenterMonitor = externalMonitor ? externalMonitor : laptopMonitor;
-
-    enter_full_screen(data, presenterMonitor);
-
-    if (data.hConsoleWnd)
-    {
-        if (externalMonitor)
-            enter_full_screen(windowData[data.hConsoleWnd], laptopMonitor);
-        else
-            leave_full_screen(windowData[data.hConsoleWnd]);
-    }
 }
 
 static void openCOOLWindow(const FilenameAndUri& filenameAndUri, PERMISSION permission)
