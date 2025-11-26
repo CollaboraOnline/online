@@ -744,11 +744,22 @@ static void leave_full_screen(WindowData& data)
         return;
 
     SetWindowLong(data.hWnd, GWL_STYLE, data.originalStyle);
+
+    // Restore in two steps, position first, then size.
+    // So if we restore from external monitor at a different resolution than
+    // the laptop monitor, that a WM_DPICHANGED triggered from changing monitor
+    // (which gets processed during SetWindowPos) doesn't mangle the size.
     SetWindowPos(data.hWnd, NULL,
                  data.originalRect.left, data.originalRect.top,
                  data.originalRect.right - data.originalRect.left,
                  data.originalRect.bottom - data.originalRect.top,
-                 SWP_NOZORDER | SWP_FRAMECHANGED);
+                 SWP_NOZORDER | SWP_FRAMECHANGED | SWP_NOSIZE);
+    SetWindowPos(data.hWnd, NULL,
+                 data.originalRect.left, data.originalRect.top,
+                 data.originalRect.right - data.originalRect.left,
+                 data.originalRect.bottom - data.originalRect.top,
+                 SWP_NOZORDER | SWP_FRAMECHANGED | SWP_NOMOVE);
+
     data.isFullScreen = false;
 }
 
