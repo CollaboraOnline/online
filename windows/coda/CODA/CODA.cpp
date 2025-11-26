@@ -714,21 +714,25 @@ static void do_welcome_handling_things(WindowData& data)
     openCOOLWindow({ welcomeSlideshow.getFileName(), Poco::URI(welcomeSlideshow).toString() }, PERMISSION::WELCOME);
 }
 
-static void enter_full_screen(WindowData& data, HMONITOR monitor)
+static void enter_full_screen(WindowData& data, HMONITOR monitor, bool saveRestoreInfo)
 {
     if (data.isFullScreen)
         return;
 
-    MONITORINFO monitorInfo = { sizeof(monitorInfo) };
-    GetMonitorInfo(monitor, &monitorInfo);
+    LONG style = GetWindowLong(data.hWnd, GWL_STYLE);
 
-    GetWindowRect(data.hWnd, &data.originalRect);
+    if (saveRestoreInfo)
+    {
+        GetWindowRect(data.hWnd, &data.originalRect);
+        data.originalStyle = style;
+    }
 
     // Remove window borders and title bar
-    LONG style = GetWindowLong(data.hWnd, GWL_STYLE);
-    data.originalStyle = style;
     style &= ~(WS_OVERLAPPEDWINDOW);
     SetWindowLong(data.hWnd, GWL_STYLE, style);
+
+    MONITORINFO monitorInfo = { sizeof(monitorInfo) };
+    GetMonitorInfo(monitor, &monitorInfo);
 
     // Resize window to fill the entire monitor
     SetWindowPos(data.hWnd, NULL,
@@ -1133,8 +1137,8 @@ static void exchangeMonitors(WindowData& data)
     if (newConsoleMonitor == newPresentationMonitor)
         newPresentationMonitor = (newPresentationMonitor + 1) % monitors.size();
 
-    enter_full_screen(data, monitors[newPresentationMonitor].hMonitor);
-    enter_full_screen(windowData[data.hConsoleWnd], monitors[newConsoleMonitor].hMonitor);
+    enter_full_screen(data, monitors[newPresentationMonitor].hMonitor, false);
+    enter_full_screen(windowData[data.hConsoleWnd], monitors[newConsoleMonitor].hMonitor, false);
 }
 
 static OpenDialogResult fileOpenDialog()
@@ -1355,16 +1359,20 @@ static void arrangePresentationWindows(WindowData& data)
         }
     }
 
+    leave_full_screen(data);
+    if (data.hConsoleWnd)
+        leave_full_screen(windowData[data.hConsoleWnd]);
+
     HMONITOR presenterMonitor = externalMonitor ? externalMonitor : laptopMonitor;
 
-    enter_full_screen(data, presenterMonitor);
+    enter_full_screen(data, presenterMonitor, true);
 
     if (data.hConsoleWnd)
     {
         if (externalMonitor)
-            enter_full_screen(windowData[data.hConsoleWnd], laptopMonitor);
+            enter_full_screen(windowData[data.hConsoleWnd], laptopMonitor, true);
         else
-            leave_full_screen(windowData[data.hConsoleWnd]);
+            BringWindowToTop(data.hConsoleWnd);
     }
 }
 
@@ -1788,7 +1796,7 @@ static void openCOOLWindow(const FilenameAndUri& filenameAndUri, PERMISSION perm
                                         if (containsFullscreenElement)
                                         {
                                             HMONITOR monitor = MonitorFromWindow(data.hWnd, MONITOR_DEFAULTTONEAREST);
-                                            enter_full_screen(data, monitor);
+                                            enter_full_screen(data, monitor, true);
                                         }
                                         else
                                             leave_full_screen(data);
