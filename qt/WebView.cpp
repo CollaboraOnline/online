@@ -345,13 +345,13 @@ WebView::WebView(QWebEngineProfile* profile, bool isWelcome)
 WebView::~WebView() {
     std::erase(s_instances, this);
 
-    auto const channel = _webView->page()->webChannel();
-    if (_bridge != nullptr) {
-        channel->deregisterObject(_bridge);
+    // Only delete our bridge - Qt's parent-child ownership handles the rest
+    // Note: QWebChannel was created with page as parent: new QWebChannel(_webView->page())
+    // Qt will automatically delete it when page destructs - manual deletion causes double-free crash with multiple window open
+    if (_bridge) {
         delete _bridge;
+        _bridge = nullptr;
     }
-    _webView->setPage(nullptr);
-    delete channel;
 }
 
 std::pair<int, int> getWindowSize(bool isWelcome)
@@ -525,12 +525,57 @@ WebView* WebView::createNewDocument(QWebEngineProfile* profile, const std::strin
     return webViewInstance;
 }
 
+void WebView::loadStarterScreen()
+{
+    // for startup screen - we don't have to have a COOLWSD connection
+    _document._fakeClientFd = -1;
+    _document._appDocId = 0;
+
+    QWebChannel* channel = new QWebChannel(_webView->page());
+
+    assert(_bridge == nullptr);
+    _bridge = new Bridge(channel, _document, _mainWindow, _webView.get());
+    channel->registerObject("bridge", _bridge);
+    _webView->page()->setWebChannel(channel);
+    queryGnomeFontScalingUpdateZoom();
+
+    Poco::Path coolHtmlPath(getTopSrcDir(TOPSRCDIR));
+    coolHtmlPath.append("/browser/dist/cool.html");
+    Poco::URI urlAndQuery(coolHtmlPath);
+    urlAndQuery.setScheme("file");
+    urlAndQuery.addQueryParameter("starterMode", "true");
+
+    const std::string urlAndQueryStr = urlAndQuery.toString();
+    LOG_TRC("Open CODA Starter Screen URL (cool.html with starterMode): " << urlAndQueryStr);
+
+    QApplication::setApplicationName(APP_NAME);
+    if (_webView->window())
+        _webView->window()->setWindowTitle(QString(APP_NAME) + " - Start");
+
+    _webView->load(QUrl(QString::fromStdString(urlAndQueryStr)));
+
+    _mainWindow->resize(1000, 700);
+    _mainWindow->show();
+}
+
 WebView* WebView::findOpenDocument(const Poco::URI& documentURI)
 {
     for (WebView* instance : s_instances)
     {
         if (!instance->_document._saveLocationURI.empty() &&
             instance->_document._saveLocationURI.getPath() == documentURI.getPath())
+        {
+            return instance;
+        }
+    }
+    return nullptr;
+}
+
+WebView* WebView::findStarterScreen()
+{
+    for (WebView* instance : s_instances)
+    {
+        if (instance->isStarterScreen())
         {
             return instance;
         }

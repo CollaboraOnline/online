@@ -92,6 +92,7 @@ class BackstageView extends window.L.Class {
 	private templateFeaturedRowContainer: HTMLElement | null = null;
 	private templateSearchContainer: HTMLElement | null = null;
 	private saveTabElement: HTMLElement | null = null;
+	private readonly isStarterMode: boolean;
 
 	private actionHandlers: Record<string, () => void> = {
 		open: () => this.executeOpen(),
@@ -107,6 +108,7 @@ class BackstageView extends window.L.Class {
 	constructor(map: any) {
 		super();
 		this.map = map;
+		this.isStarterMode = (window as any).starterScreen;
 		this.container = this.createContainer();
 		document.body.appendChild(this.container);
 		this.map?.on('commandstatechanged', (e: any) => {
@@ -143,26 +145,35 @@ class BackstageView extends window.L.Class {
 		const title = this.createElement('span', 'backstage-header-title');
 		title.textContent = 'Collabora Office';
 
-		const closeButton = this.createElement('div', 'backstage-header-close');
-		closeButton.setAttribute('aria-label', _('Close backstage'));
-		closeButton.title = _('Close backstage');
-
-		const closeBtn = this.createElement('span', 'backstage-header-close-icon');
-		closeBtn.setAttribute('aria-hidden', 'true');
-		closeBtn.textContent = '×';
-		closeButton.appendChild(closeBtn);
-
-		window.L.DomEvent.on(closeButton, 'click', () => this.hide(), this);
-
 		header.appendChild(title);
-		header.appendChild(closeButton);
+
+		// Only show close button if not in starter screen mode
+		if (!this.isStarterMode) {
+			const closeButton = this.createElement('div', 'backstage-header-close');
+			closeButton.setAttribute('aria-label', _('Close backstage'));
+			closeButton.title = _('Close backstage');
+
+			const closeBtn = this.createElement('span', 'backstage-header-close-icon');
+			closeBtn.setAttribute('aria-hidden', 'true');
+			closeBtn.textContent = '×';
+			closeButton.appendChild(closeBtn);
+
+			window.L.DomEvent.on(closeButton, 'click', () => this.hide(), this);
+
+			header.appendChild(closeButton);
+		}
+
 		return header;
 	}
 
 	private createSidebar(): HTMLElement {
 		const sidebar = this.createElement('div', 'backstage-sidebar');
-		const backButton = this.createSidebarBackBtn();
-		sidebar.appendChild(backButton);
+		
+		// Only show back button if not in starter screen mode
+		if (!this.isStarterMode) {
+			const backButton = this.createSidebarBackBtn();
+			sidebar.appendChild(backButton);
+		}
 
 		const tabsContainer = this.createElement('div', 'backstage-sidebar-tabs');
 		const tabConfigs = this.getTabsConfig();
@@ -241,42 +252,42 @@ class BackstageView extends window.L.Class {
 				label: _('Share'),
 				type: 'action',
 				actionType: 'share',
-				visible: this.isFeatureEnabled('share'),
+				visible: !this.isStarterMode && this.isFeatureEnabled('share'),
 			},
 			{
 				id: 'info',
 				label: _('Info'),
 				type: 'view',
 				viewType: 'info',
-				visible: true,
+				visible: !this.isStarterMode,
 			},
 			{
 				id: 'save',
 				label: _('Save'),
 				type: 'action',
 				actionType: 'save',
-				visible: this.isFeatureEnabled('save'),
+				visible: !this.isStarterMode && this.isFeatureEnabled('save'),
 			},
 			{
 				id: 'saveas',
 				label: _('Save As'),
 				type: 'action',
 				actionType: 'saveas',
-				visible: this.isFeatureEnabled('saveAs'),
+				visible: !this.isStarterMode && this.isFeatureEnabled('saveAs'),
 			},
 			{
 				id: 'print',
 				label: _('Print'),
 				type: 'action',
 				actionType: 'print',
-				visible: this.isFeatureEnabled('print'),
+				visible: !this.isStarterMode && this.isFeatureEnabled('print'),
 			},
 			{
 				id: 'export',
 				label: _('Export'),
 				type: 'view',
 				viewType: 'export',
-				visible: true,
+				visible: !this.isStarterMode,
 			},
 		];
 	}
@@ -948,8 +959,11 @@ class BackstageView extends window.L.Class {
 	}
 
 	private executeOpen(): void {
-		this.sendUnoCommand('.uno:Open');
-		this.hide();
+		if (this.isStarterMode) {
+			window.postMobileMessage('uno .uno:Open');
+		} else {
+			this.sendUnoCommand('.uno:Open');
+		}
 	}
 
 	private executeSave(): void {
@@ -1001,7 +1015,10 @@ class BackstageView extends window.L.Class {
 		}
 
 		window.postMobileMessage('newdoc ' + params.join(' '));
-		this.hide();
+		
+		if (!this.isStarterMode) {
+			this.hide();
+		}
 	}
 
 	private dispatchExportAction(action: string, command?: string): void {
