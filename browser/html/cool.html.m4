@@ -153,6 +153,11 @@ m4_ifelse(MOBILEAPP,[true],
           </div>
           <div id="userListSummaryBackground"><button id="userListSummary"></button></div>
         </div>
+        <div id="viewMode">
+          <div class="unotoolbutton notebookbar ui-content unospan readonly inline hidden" tabindex="-1" id="readonlyMode">
+              <span class="ui-content unolabel"></span>
+          </div>
+        </div>
         <div id="closebuttonwrapperseparator"></div>
         <div id="closebuttonwrapper">
           <button class="closebuttonimage" id="closebutton" accesskey="ZC"></button>
