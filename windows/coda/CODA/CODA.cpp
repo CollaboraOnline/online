@@ -573,7 +573,8 @@ static int generate_new_app_doc_id()
 
 static void send2JS(const HWND hWnd, const char* buffer, int length)
 {
-    std::string pretext{ COOLProtocol::isBinaryMessage(buffer, static_cast<size_t>(length))
+    const bool binaryMessage = COOLProtocol::isBinaryMessage(buffer, static_cast<size_t>(length));
+    std::string pretext{ binaryMessage
                              ? "window.TheFakeWebSocket.onmessage({'data': window.atob('"
                              : "window.TheFakeWebSocket.onmessage({'data': window.b64d('" };
     const std::string posttext{ "')});" };
