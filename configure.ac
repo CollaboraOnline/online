@@ -171,12 +171,6 @@ AC_ARG_WITH([app-branding],
                               to be bundled and used by the iOS app. The directory structure is copied to
                               "browser/dist/branding" and that directory ends upp in the app bundle as "branding".]))
 
-AC_ARG_ENABLE([gtkapp],
-              AS_HELP_STRING([--enable-gtkapp],
-                             [Use in a tree where the only purpose is to build the gtk+ "app" that is supposed
-                              to work similarly to the iOS app, from the JavaScript and the pseudo WebSocket
-                              message plumbing point of view. See gtk/README.]))
-
 AC_ARG_ENABLE([qtapp],
               AS_HELP_STRING([--enable-qtapp],
                              [Use in a tree where the only purpose is to build the qt "app" that is supposed
@@ -1129,13 +1123,6 @@ else
 fi
 AC_SUBST(CUSTOM_ICONS_DIRECTORY)
 
-ENABLE_GTKAPP=
-if test "$enable_gtkapp" = "yes"; then
-   ENABLE_GTKAPP=true
-fi
-AC_SUBST(ENABLE_GTKAPP)
-AM_CONDITIONAL([ENABLE_GTKAPP], [test "$ENABLE_GTKAPP" = "true"])
-
 ENABLE_QTAPP=
 if test "$enable_qtapp" = "yes"; then
    ENABLE_QTAPP=true
@@ -1234,7 +1221,7 @@ AC_DEFINE_UNQUOTED([WELCOME_URL],["$WELCOME_URL"],[The welcome url of the build.
 
 # Test for build environment
 
-AS_IF([test "$ENABLE_GTKAPP" != true -a "$ENABLE_QTAPP" != true],
+AS_IF([test "$ENABLE_QTAPP" != true],
       [CXXFLAGS="$CXXFLAGS -Wall -Wextra -Woverloaded-virtual -Wshadow -Wundef"])
 
 CFLAGS="$CFLAGS -Wall -Wextra"
@@ -1565,13 +1552,6 @@ AS_IF([test "$ENABLE_WINDOWSAPP" != "true"],
       ]
 )
 
-dnl NB. this is a gtk3 frontend.
-webkit_try_older=
-AS_IF([test "$ENABLE_GTKAPP" = true],
-      [PKG_CHECK_MODULES([WEBKIT],[webkit2gtk-4.1],,[webkit_try_older=true])])
-AS_IF([test "$webkit_try_older" = true],
-      [PKG_CHECK_MODULES([WEBKIT],[webkit2gtk-4.0])])
-
 dnl config for qtapp frontend for cool
 AS_IF([test "$ENABLE_QTAPP" = true],
       [PKG_CHECK_MODULES([QT6],[Qt6Core Qt6Widgets Qt6Gui Qt6WebEngineCore Qt6WebChannel Qt6WebEngineWidgets Qt6DBus],,)
@@ -1596,7 +1576,7 @@ mobile_app=
 ENABLE_MOBILEAPP=
 MOBILEAPP=0
 AC_MSG_CHECKING([whether this is a mobile app])
-if test "$enable_gtkapp" = "yes" -o "$enable_iosapp" = "yes" -o "$enable_macosapp" = "yes" -o "$enable_windowsapp" = "yes" -o "$enable_androidapp" = "yes" -o "$host_os" = "emscripten" -o "$enable_qtapp" = "yes" ; then
+if test "$enable_iosapp" = "yes" -o "$enable_macosapp" = "yes" -o "$enable_windowsapp" = "yes" -o "$enable_androidapp" = "yes" -o "$host_os" = "emscripten" -o "$enable_qtapp" = "yes" ; then
      AC_MSG_RESULT([yes])
      mobile_app=true;
      MOBILEAPP=1
@@ -2184,7 +2164,6 @@ AM_CONDITIONAL([ENABLE_WASM_ZETAJS_EXAMPLE], [test "$ENABLE_WASM_ZETAJS_EXAMPLE"
 
 AC_CONFIG_FILES([Makefile
                  cypress_test/Makefile
-                 gtk/Makefile
                  qt/Makefile
                  wasm/Makefile
                  test/Makefile
