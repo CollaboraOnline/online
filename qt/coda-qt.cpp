@@ -637,6 +637,21 @@ void Bridge::saveDocumentAs()
     });
 }
 
+static void closeStarterScreen()
+{
+    WebView* starterScreen = WebView::findStarterScreen();
+    if (starterScreen)
+    {
+        LOG_TRC("Closing starter screen after document action");
+        QTimer::singleShot(0, [starterScreen]() {
+            if (starterScreen->getMainWindow())
+            {
+                starterScreen->getMainWindow()->close();
+            }
+        });
+    }
+}
+
 QVariant Bridge::cool(const QString& messageStr)
 {
     constexpr std::string_view CLIPBOARDSET = "CLIPBOARDSET ";
@@ -651,6 +666,12 @@ QVariant Bridge::cool(const QString& messageStr)
 
     if (message == "HULLO")
     {
+        // Skip for starter screen (no document connection needed)
+        if (_document._fakeClientFd == -1) {
+            LOG_TRC_NOFILE("Starter screen - skipping COOLWSD connection");
+            return {};
+        }
+
         // JS side fully initialised – open our fake WebSocket to COOLWSD
         assert(coolwsd_server_socket_fd != -1);
         int rc = fakeSocketConnect(_document._fakeClientFd, coolwsd_server_socket_fd);
@@ -877,11 +898,14 @@ QVariant Bridge::cool(const QString& messageStr)
         QObject::connect(dialog, &QFileDialog::filesSelected,
                          [](const QStringList& filePaths)
                          {
+                             // Open all selected files in new windows
                              for (const QString& filePath : filePaths)
                              {
                                  WebView* webViewInstance = new WebView(Application::getProfile());
                                  webViewInstance->load(Poco::URI(filePath.toStdString()));
                              }
+                             // Close starter screen if it exists
+                             closeStarterScreen();
                          });
 
         dialog->open();
@@ -1037,12 +1061,17 @@ QVariant Bridge::cool(const QString& messageStr)
             templatePath = QUrl::fromPercentEncoding(QByteArray(templateVal.data(), templateVal.size())).toStdString();
         }
 
+        // Always create new window
         WebView* webViewInstance = WebView::createNewDocument(
             Application::getProfile(), std::string(templateType), templatePath);
         if (!webViewInstance)
         {
             LOG_ERR("Failed to create new document of type: " << templateType);
+            return {};
         }
+
+        // If this was triggered from a starter screen, close it
+        closeStarterScreen();
     }
     else
     {
@@ -1204,12 +1233,14 @@ int main(int argc, char** argv)
     {
         coda::openFiles(absoluteFiles);
     }
+    else if (!templateType.isEmpty())
+    {
+        coda::openNewDocument(templateType);
+    }
     else
     {
-        if (templateType.isEmpty())
-            templateType = "writer";
-
-        coda::openNewDocument(templateType);
+        WebView* starterView = new WebView(Application::getProfile());
+        starterView->loadStarterScreen();
     }
 
     auto const ret = app.exec();

@@ -337,6 +337,9 @@ class InitializerBase {
 		}.bind(coolParams);
 
 		window.coolParams = coolParams;
+
+		// Starter Screen: Show BackstageView without document when app launches
+		window.starterScreen = coolParams.get('starterMode') === 'true';
 	}
 
 	loadCSSFiles() {
@@ -2120,7 +2123,7 @@ function showWelcomeSVG() {
 
 		global.socket.binaryType = 'arraybuffer';
 
-		if (global.ThisIsAMobileApp && !global.ThisIsTheEmscriptenApp) {
+		if (global.ThisIsAMobileApp && !global.ThisIsTheEmscriptenApp && !window.starterScreen) {
 			// This corresponds to the initial GET request when creating a WebSocket
 			// connection and tells the app's code that it is OK to start invoking
 			// TheFakeWebSocket's onmessage handler. The app code that handles this

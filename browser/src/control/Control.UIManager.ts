@@ -471,6 +471,24 @@ class UIManager extends window.L.Control {
 		app.serverConnectionService.onBasicUI();
 	}
 
+	initializeBackstageView(): void {
+		if (!(window as any).mode.isCODesktop())
+			return;
+
+		if (!this.map.backstageView) {
+			this.map.backstageView = new window.L.Control.BackstageView(this.map);
+			console.log('UIManager: BackstageView created for starter mode');
+		}
+
+		console.log('UIManager: Showing BackstageView for starter mode');
+		// Use requestAnimationFrame to ensure DOM is ready
+		window.requestAnimationFrame(() => {
+			if (this.map.backstageView) {
+				this.map.backstageView.show();
+			}
+		});
+	}
+
 	/**
 	 * Initializes specialized UI components based on the document type.
 	 * @param docType - Document type (e.g. 'spreadsheet', 'presentation', 'text').

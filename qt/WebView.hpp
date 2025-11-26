@@ -62,14 +62,18 @@ public:
     QMainWindow* mainWindow() { return _mainWindow; }
 
     void load(const Poco::URI& fileURL, bool newFile = false);
+    void loadStarterScreen();
     static WebView* createNewDocument(QWebEngineProfile* profile, const std::string& templateType, const std::string& templatePath = "");
 
     static WebView* findOpenDocument(const Poco::URI& documentURI);
+    static WebView* findStarterScreen();
     static const std::vector<WebView*>& getAllInstances() { return s_instances; }
     void activateWindow();
     const Poco::URI& getSaveLocationURI() const { return _document._saveLocationURI; }
     bool isDocumentModified() const;
     bool isPendingSave() const;
+    bool isStarterScreen() const { return _document._fakeClientFd == -1 && _document._appDocId == 0; }
+    QMainWindow* getMainWindow() const { return _mainWindow; }
 
 private:
     // query gnome font scaling factor and apply it to the web view
