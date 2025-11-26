@@ -103,6 +103,19 @@ m4_ifelse(MOBILEAPP,[true],
    <link rel="localizations" href="%SERVICE_ROOT%/browser/%VERSION%/l10n/help-localizations.json" type="application/vnd.oftn.l10n+json"/>
    <link rel="localizations" href="%SERVICE_ROOT%/browser/%VERSION%/l10n/uno-localizations.json" type="application/vnd.oftn.l10n+json"/>]
 )m4_dnl
+<script>
+// Apply dark theme immediately if darkTheme query parameter is present
+(function() {
+	var params = new URLSearchParams(window.location.search);
+	if (params.get('darkTheme') === 'true') {
+		document.documentElement.setAttribute('data-theme', 'dark');
+		var link = document.createElement('link');
+		link.setAttribute('rel', 'stylesheet');
+		link.setAttribute('href', 'm4_ifelse(MOBILEAPP,[],[%SERVICE_ROOT%/browser/%VERSION%/])color-palette-dark.css');
+		document.head.appendChild(link);
+	}
+})();
+</script>
 </head>
 
   <body>
