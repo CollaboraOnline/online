@@ -815,9 +815,11 @@
             "prepend-pkg-config-path": "/app/lib/aarch64-linux-gnu/pkgconfig"
           }
         },
-        "build-args": [
-          "--share=network"
-        ]
+        "env": {
+          "XDG_CACHE_HOME": "/run/build/collabora-online/flatpak-node/cache",
+          "npm_config_offline": "true",
+          "npm_config_cache": "/run/build/collabora-online/flatpak-node/npm-cache"
+        }
       },
       "config-opts": [
         "--enable-qtapp",
@@ -839,14 +841,16 @@
       ],
       "sources": [
         {
-          "type": "dir",
-          "path": "../../"
+          "type": "git",
+          "url": "https://github.com/CollaboraOnline/online.git",
+          "commit": "4e9ff688fcbf091da71535a63cc440e56ad151da",
+          "tag": "coda-2"
         },
         {
-          "type": "shell",
-          "commands": [
-            "autoreconf -vfi"
-          ]
+          "type": "archive",
+          "url": "https://github.com/CollaboraOnline/online/releases/download/for-code-assets/node_modules-25.04.7.tar.xz",
+          "sha256": "2ffa320633ef95679b22b3815ee628e61acaf00e68ae84245e2e0ab83b49c17b",
+          "dest": "browser/node_modules"
         }
       ]
     },
