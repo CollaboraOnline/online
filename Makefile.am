@@ -15,13 +15,6 @@ build-samples:
 
 if ENABLE_MOBILEAPP
 
-if ENABLE_GTKAPP
-SUBDIRS = gtk browser
-run:
-	gtk/mobile $(abs_top_builddir)/test/samples/writer-edit.fodt
-run-calc:
-	gtk/mobile $(abs_top_builddir)/test/samples/calc-edit.fods
-else
 if ENABLE_QTAPP
 SUBDIRS = qt browser
 else
@@ -30,7 +23,6 @@ SUBDIRS = wasm browser
 else !ENABLE_WASM
 SUBDIRS = browser
 endif !ENABLE_WASM
-endif
 endif
 
 else
