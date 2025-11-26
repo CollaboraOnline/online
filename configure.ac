@@ -260,7 +260,11 @@ AC_ARG_WITH([lokit-path],
 
 AC_ARG_WITH([lo-path],
             AS_HELP_STRING([--with-lo-path=<path>],
-                           [Path to a working installation directory or instdir of LibreOffice, to be used at runtime]))
+                           [For Collabora Online, the path to a working installation directory
+                           or instdir of Collabora Office, to be used at run-time.
+
+                           For CODA-W, a *Windows* format path to the core build instdir, used at build-time.
+                           All other configure script arguments that are paths are Unix (WSL) paths.]))
 
 AC_ARG_WITH([lo-sourcedir],
             AS_HELP_STRING([--with-lo-sourcedir=<path>],
@@ -269,7 +273,7 @@ AC_ARG_WITH([lo-sourcedir],
 
 AC_ARG_WITH([lo-builddir],
             AS_HELP_STRING([--with-lo-builddir=<path>],
-                           [Mandatory, and relevant, in a tree where building the iOS or Android app.
+                           [Mandatory, and relevant, in a tree where building the iOS or Android app, or CODA.
                             Path to a the build directory of the LibreOffice core source tree you want to use.
                             In case of macOS, you MUST manually edit the ios/Mobile.xcodeproj/project.pbxproj
                             file and change the references to "../ios-device" to refer to the corresponding
@@ -283,7 +287,7 @@ AC_ARG_WITH([lo-builddir],
 
                             If you are building Android for a single ABI only, you may optionally specify only
                             the core for your ABI without any colons. In this case, providing an armeabi-v7a core
-                            is not a requirement]))
+                            is not a requirement.]))
 
 AC_ARG_WITH([logfile],
             AS_HELP_STRING([--with-logfile=<path>],
