@@ -10,6 +10,11 @@ AM_INIT_AUTOMAKE([1.10 foreign subdir-objects tar-pax -Wno-portability])
 
 AC_CONFIG_MACRO_DIR([m4])
 
+# We don't want to require pkg-config and PKG_CHECK_MODULES on macOS
+# It may be missing, and then we'd generate broken shell code; but
+# let's guard against accidental use.
+m4_if(m4_esyscmd_s([uname -s]),Darwin,[m4_define([PKG_CHECK_MODULES],[AC_MSG_ERROR([It's not expected to use [PKG_CHECK_MODULES] on macOS, please fix configure.ac and make pkg-config a requirement if you really need it.])])],[])
+
 COOLWSD_VERSION_MAJOR=`echo $VERSION | awk -F. '{print $1}'`
 COOLWSD_VERSION_MINOR=`echo $VERSION | awk -F. '{print $2}'`
 COOLWSD_VERSION_MICRO=`echo $VERSION | awk -F. '{print $3}'`
