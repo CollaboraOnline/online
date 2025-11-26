@@ -567,11 +567,8 @@ ul {
 }
 
 .checkbox-radio-switch-input {
-  position: absolute;
-  z-index: -1;
-  opacity: 0 !important;
-  width: var(--icon-size);
-  height: var(--icon-size);
+  width: 18px;
+  height: 18px;
   margin: 4px calc((var(--default-clickable-area) - 16px) / 2);
 }
 
@@ -591,18 +588,6 @@ ul {
     calc((var(--default-clickable-area) - var(--icon-height)) / 2);
   width: 100%;
   max-width: fit-content;
-}
-
-.checkbox-content-icon {
-  width: var(--icon-size);
-  height: var(--icon-size);
-  color: var(--settings-btn-primary);
-}
-
-.checkbox-content-icon-disabled {
-  width: var(--icon-size);
-  height: var(--icon-size);
-  color: #6B7280
 }
 
 .checkbox-content {
