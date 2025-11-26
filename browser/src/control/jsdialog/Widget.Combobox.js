@@ -204,11 +204,9 @@ JSDialog.combobox = function (parentContainer, data, builder) {
 
 	var dropDownId = JSDialog.CreateDropdownEntriesId(data.id);
 	content.setAttribute('aria-expanded', false);
-	content.setAttribute('aria-controls', dropDownId);
 
 	var button = window.L.DomUtil.create('button', 'ui-combobox-button ' + builder.options.cssClass, container);
 	button.setAttribute('aria-expanded', false);
-	button.setAttribute('aria-controls', dropDownId);
 
 	const dataAriaLabel = data.aria && data.aria.label ? data.aria.label : '';
 	const buttonARIALabel = dataAriaLabel
@@ -228,6 +226,15 @@ JSDialog.combobox = function (parentContainer, data, builder) {
 	container._onDropDown = function (open) {
 		content.setAttribute('aria-expanded', open);
 		button.setAttribute('aria-expanded', open);
+
+		// Only set aria-controls when dropdown is open to avoid screen reader confusion
+		if (open) {
+			content.setAttribute('aria-controls', dropDownId);
+			button.setAttribute('aria-controls', dropDownId);
+		} else {
+			content.removeAttribute('aria-controls');
+			button.removeAttribute('aria-controls');
+		}
 	};
 
 	if (data.selectedCount > 0)
