@@ -589,6 +589,10 @@ body {
 
 .cool-annotation.annotation-pop-up {
 	width: 66ch;
+	/* Make sure the comment card is not cropped if the window is narrow: */
+	max-width: 95%;
+	/* Centered align comment: */
+	left: calc(50% - 33ch) !important;
 }
 
 .cool-annotation.tracked-deleted-comment-show {
