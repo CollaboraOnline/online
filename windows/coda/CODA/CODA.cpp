@@ -627,7 +627,7 @@ static void stopServer()
 
 static void do_hullo_handling_things(WindowData& data)
 {
-    // FIXME: Code snippet shared with gtk/mobile.cpp, factor out into separate file.
+    // FIXME: Code snippet shared with mobile.cpp, factor out into separate file.
 
     // Now we know that the JS has started completely
 
