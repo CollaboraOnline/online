@@ -64,7 +64,15 @@ JSDialog.Checkbox = function (
 ) {
 	const container = _createCheckboxContainer(parentContainer, data, builder);
 	const checkbox = _createCheckboxControl(container, data, builder);
-	const label = _createCheckboxLabel(container, data, builder);
+	let label: HTMLElement | null = null;
+	if (data.text) label = _createCheckboxLabel(container, data, builder);
+	else
+		JSDialog.SetupA11yLabelForLabelableElement(
+			parentContainer,
+			checkbox,
+			data,
+			builder,
+		);
 
 	checkbox.addEventListener('change', () => {
 		if (container.getAttribute('disabled') === 'true') return;
@@ -99,7 +107,10 @@ JSDialog.Checkbox = function (
 
 	setDisabled(data.enabled === false);
 
-	JSDialog.SynchronizeDisabledState(container, [checkbox, label]);
+	JSDialog.SynchronizeDisabledState(
+		container,
+		[checkbox, label].filter(Boolean),
+	); // filter(Boolean) removes nulls
 
 	const toggleFunction = () => {
 		if (container.getAttribute('disabled') === 'true') return;
