@@ -17,6 +17,7 @@
 #include <Protocol.hpp>
 
 #include <Poco/JSON/Parser.h>
+#include <Poco/JSON/Object.h>
 
 #include <deque>
 #include <mutex>
