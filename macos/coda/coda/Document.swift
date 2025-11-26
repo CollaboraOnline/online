@@ -450,6 +450,11 @@ class Document: NSDocument {
             // TODO: add "dir" if needed
         ]
 
+        // Add darkTheme parameter if user has dark mode enabled
+        if NSApp.effectiveAppearance.bestMatch(from: [.darkAqua, .aqua]) == .darkAqua {
+            components.queryItems?.append(URLQueryItem(name: "darkTheme", value: "true"))
+        }
+
         if isNewDocument {
             components.queryItems?.append(URLQueryItem(name: "isnewdocument", value: "true"))
         }
