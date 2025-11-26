@@ -3558,7 +3558,13 @@ void lokit_main(
 #if ENABLE_CHILDROOTS
             if (sysTemplateIncomplete && JailUtil::isBindMountingEnabled())
             {
-                Poco::File(Poco::Path(sysTemplateSubDir, "etc").toString()).createDirectories();
+                const std::string sysTemplateEtcDir = Poco::Path(sysTemplate, "etc").toString();
+                const std::string sysTemplateSubEtcDir =
+                    Poco::Path(sysTemplateSubDir, "etc").toString();
+                Poco::File(sysTemplateSubEtcDir).createDirectories();
+
+                FileUtil::copyDirectoryRecursive(sysTemplateEtcDir, sysTemplateSubEtcDir, false);
+
                 if (!JailUtil::SysTemplate::updateDynamicFiles(sysTemplateSubDir))
                 {
                     LOG_WRN("Failed to update the dynamic files in ["
