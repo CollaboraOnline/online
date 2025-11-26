@@ -826,6 +826,10 @@ input.clipboard {
 	font: var(--default-font-size)/1.5 var(--cool-font);
 }
 
+[data-theme='dark'] .leaflet-progress-label {
+	color: white !important;
+}
+
 .leaflet-progress-label.brand-label {
 	font-size: 0.875rem;
 	font-weight: bold;
