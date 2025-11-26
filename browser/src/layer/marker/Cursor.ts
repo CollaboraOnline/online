@@ -16,8 +16,7 @@ class Cursor {
 	headerName: string;
 	headerTimeout: number = 3000;
 
-	private position: cool.Point;
-	private size: cool.Point;
+	private rectangle: cool.SimpleRectangle;
 	private width: number;
 	private container: HTMLDivElement;
 	private cursorHeader: HTMLDivElement;
@@ -29,7 +28,7 @@ class Cursor {
 	private domAttached: boolean = false;
 
 	// position and size should be in core pixels.
-	constructor(position: cool.Point, size: cool.Point, map: any, options: any) {
+	constructor(rectangle: cool.SimpleRectangle, map: any, options: any) {
 		this.opacity = options.opacity !== undefined ? options.opacity : this.opacity;
 		this.zIndex = options.zIndex !== undefined ? options.zIndex : this.zIndex;
 		this.blink = options.blink !== undefined ? options.blink : this.blink;
@@ -38,8 +37,7 @@ class Cursor {
 		this.headerName = options.headerName !== undefined ? options.headerName : this.headerName;
 		this.headerTimeout = options.headerTimeout !== undefined ? options.headerTimeout : this.headerTimeout;
 
-		this.position = position;
-		this.size = size;
+		this.rectangle = rectangle;
 		this.map = map;
 
 		this.initLayout();
@@ -133,68 +131,29 @@ class Cursor {
 	}
 
 	// position and size should be in core pixels.
-	setPositionSize(position: cool.Point, size: cool.Point) {
-		this.position = position;
-		this.size = size;
+	setRectangle(rectangle: cool.SimpleRectangle) {
+		this.rectangle = rectangle;
 		this.update();
-	}
-
-	getPosition(): cool.Point {
-		return this.position;
 	}
 
 	private update() {
 		if (!this.container || !this.map || !this.map.hasDocBounds())
 			return;
 
-		var docBounds = <cool.Bounds>this.map.getCorePxDocBounds();
-		var inDocCursor = docBounds.contains(this.position);
-		// Calculate position and size in CSS pixels.
-		var viewBounds = <cool.Bounds>(this.map.getPixelBoundsCore());
-		var spCxt = this.map.getSplitPanesContext();
-		var origin = viewBounds.min.clone();
-		var paneSize = viewBounds.getSize();
-		var splitPos = new cool.Point(0, 0);
-		if (inDocCursor && spCxt) {
-			splitPos = spCxt.getSplitPos().multiplyBy(app.dpiScale);
-			if (this.position.x <= splitPos.x && this.position.x >= 0) {
-				origin.x = 0;
-				paneSize.x = splitPos.x;
-			}
-			else {
-				paneSize.x -= splitPos.x;
-			}
-
-			if (this.position.y <= splitPos.y && this.position.y >= 0) {
-				origin.y = 0;
-				paneSize.y = splitPos.y;
-			}
-			else {
-				paneSize.y -= splitPos.y;
-			}
-		}
-		var canvasOffset = this.position.subtract(origin);
-
-		if (inDocCursor) {
-			if (!app.isRectangleVisibleInTheDisplayedArea(app.file.textCursor.rectangle.toArray())) {
-				this.container.style.visibility = 'hidden';
-				this.visible = false;
-				this.addCursorClass(this.visible);
-				this.showCursorHeader();
-				return;
-			}
+		if (!app.isRectangleVisibleInTheDisplayedArea(app.file.textCursor.rectangle.toArray())) {
+			this.container.style.visibility = 'hidden';
+			this.visible = false;
+			this.addCursorClass(this.visible);
+			this.showCursorHeader();
+			return;
 		}
 
 		this.container.style.visibility = 'visible';
 		this.visible = true;
 		this.addCursorClass(this.visible);
 
-		var tileSectionPos = this.map._docLayer.getTileSectionPos();
 		// Compute tile-section offset in css pixels.
-		var pos = canvasOffset.add(tileSectionPos)._divideBy(app.dpiScale)._round();
-		var size = this.size.divideBy(app.dpiScale)._round();
-		this.setSize(size);
-		this.setPos(pos);
+		this.updatePositionAndSize();
 		this.showCursorHeader();
 	}
 
@@ -265,9 +224,23 @@ class Cursor {
 		return this.map._size.x - xpos;
 	}
 
-	private setPos(pos: cool.Point) {
-		this.container.style.top = pos.y + 'px';
-		this.container.style.left = this.transformX(pos.x) + 'px';
+	private updatePositionAndSize() {
+		let diffX = -app.activeDocument.activeView.viewedRectangle.pX1;
+		let diffY = -app.activeDocument.activeView.viewedRectangle.pY1;
+
+		if (app.map.getDocType() === 'spreadsheet') {
+			if (app.isXOrdinateInFrozenPane(this.rectangle.pX1))
+				diffX = 0;
+
+			if (app.isYOrdinateInFrozenPane(this.rectangle.pY1))
+				diffY = 0;
+		}
+
+		let x = Math.round((this.rectangle.pX1 + diffX + app.sectionContainer.getDocumentAnchor()[0]) / app.dpiScale);
+		let y = Math.round((this.rectangle.pY1 + diffY + app.sectionContainer.getDocumentAnchor()[1]) / app.dpiScale);
+
+		this.container.style.top = y + 'px';
+		this.container.style.left = this.transformX(x) + 'px';
 		this.container.style.zIndex = this.zIndex + '';
 		// Suspend blinking animation during cursor movement
 		if (this.blink) {
@@ -279,11 +252,9 @@ class Cursor {
 				window.L.DomUtil.removeClass(this.cursor, 'blinking-suspended');
 			}, 500);
 		}
-	}
 
-	private setSize(size: cool.Point) {
-		this.cursor.style.height = size.y + 'px';
-		this.container.style.top = '-' + (this.container.clientHeight - size.y - 2) / 2 + 'px';
+		this.cursor.style.height = this.rectangle.cHeight + 'px';
+		this.container.style.top = '-' + (this.container.clientHeight - this.rectangle.cHeight - 2) / 2 + 'px';
 	}
 
 	static hotSpot = new Map<string, cool.Point>([['fill', new cool.Point(7, 16)]]);

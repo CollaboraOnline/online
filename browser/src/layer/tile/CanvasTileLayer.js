@@ -2939,13 +2939,10 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 	},
 
 	_updateCursorPos: function () {
-		var cursorPos = new cool.Point(app.file.textCursor.rectangle.pX1, app.file.textCursor.rectangle.pY1);
-		var cursorSize = new cool.Point(app.file.textCursor.rectangle.pWidth, app.file.textCursor.rectangle.pHeight);
-
 		if (!this._cursorMarker) {
-			this._cursorMarker = new Cursor(cursorPos, cursorSize, this._map, { blink: true });
+			this._cursorMarker = new Cursor(app.file.textCursor.rectangle.clone(), this._map, { blink: true });
 		} else {
-			this._cursorMarker.setPositionSize(cursorPos, cursorSize);
+			this._cursorMarker.setRectangle(app.file.textCursor.rectangle.clone());
 		}
 	},
 
