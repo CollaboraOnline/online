@@ -10,18 +10,17 @@
  */
 
 #include <config.h>
-
 #include <ConfigUtil.hpp>
-
 #include <Util.hpp>
+
+#include <Poco/Util/AbstractConfiguration.h>
+#include <Poco/Util/XMLConfiguration.h>
 
 #include <cassert>
 #include <string>
 #include <sstream>
 #include <unordered_map>
 
-#include <Poco/Util/AbstractConfiguration.h>
-#include <Poco/Util/XMLConfiguration.h>
 
 namespace ConfigUtil
 {
