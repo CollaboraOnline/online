@@ -131,6 +131,7 @@ class LOUtil {
 		spinnerCanvas.height = 50;
 
 		const context = spinnerCanvas.getContext('2d');
+		Util.ensureValue(context);
 		context.lineWidth = 8;
 		context.strokeStyle = 'grey';
 		const x = spinnerCanvas.width / 2;
@@ -161,6 +162,7 @@ class LOUtil {
 
 	public static stringToBounds(bounds: string): cool.Bounds {
 		const numbers = bounds.match(/\d+/g);
+		Util.ensureValue(numbers);
 		const topLeft = cool.Point.toPoint(
 			parseInt(numbers[0]),
 			parseInt(numbers[1]),
