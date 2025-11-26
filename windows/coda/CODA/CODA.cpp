@@ -92,7 +92,8 @@ struct WindowData
     RECT originalRect;
     LONG originalStyle;
     POINT previousSize; // After a WM_SIZE
-    bool isFullScreen;
+    bool isFullScreen = false;
+    bool isConsole = false;
     int fakeClientFd;
     int closeNotificationPipeForForwardingThread[2];
     FilenameAndUri filenameAndUri;
@@ -1388,10 +1389,13 @@ static LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM l
 
         case WM_CLOSE:
             {
-                // FIXME: Should we make sure he document is saved? Or ask the user whether to save it?
-                do_bye_handling_things(windowData[hWnd]);
+                if (!windowData[hWnd].isConsole)
+                {
+                    // FIXME: Should we make sure he document is saved? Or ask the user whether to save it?
+                    do_bye_handling_things(windowData[hWnd]);
 
-                DocumentData::deallocate(windowData[hWnd].appDocId);
+                    DocumentData::deallocate(windowData[hWnd].appDocId);
+                }
                 DestroyWindow(hWnd);
             }
             break;
@@ -1599,7 +1603,7 @@ static void openCOOLWindow(const FilenameAndUri& filenameAndUri, PERMISSION perm
                     data.hWnd,
                     Microsoft::WRL::Callback<
                         ICoreWebView2CreateCoreWebView2ControllerCompletedHandler>(
-                        [&data, permission](HRESULT result, ICoreWebView2Controller* controller) -> HRESULT
+                        [&data, env, permission](HRESULT result, ICoreWebView2Controller* controller) -> HRESULT
                         {
                             if (!controller)
                                 return E_FAIL;
@@ -1651,6 +1655,73 @@ static void openCOOLWindow(const FilenameAndUri& filenameAndUri, PERMISSION perm
                                             enter_full_screen(data);
                                         else
                                             leave_full_screen(data);
+                                        return S_OK;
+                                    })
+                                    .Get(),
+                                nullptr);
+
+                            // new windows appear to need to reuse the original env of the parent
+                            webView->add_NewWindowRequested(
+                                Microsoft::WRL::Callback<ICoreWebView2NewWindowRequestedEventHandler>(
+                                    [env](ICoreWebView2* sender, ICoreWebView2NewWindowRequestedEventArgs* args)
+                                    {
+                                        wil::com_ptr<ICoreWebView2Deferral> deferral;
+                                        args->GetDeferral(&deferral);
+
+                                        HWND hConsoleWnd = CreateWindowW(windowClass,
+                                                Util::string_to_wide_string(APP_NAME).c_str(),
+                                                WS_OVERLAPPEDWINDOW,
+                                                CW_USEDEFAULT, CW_USEDEFAULT,
+                                                800, 640, NULL, NULL, appInstance, NULL);
+
+                                        auto& consoleData = windowData[hConsoleWnd];
+                                        consoleData.hWnd = hConsoleWnd;
+                                        consoleData.isConsole = true;
+                                        consoleData.previousSize.x = 800;
+                                        consoleData.previousSize.y = 640;
+
+                                        ShowWindow(hConsoleWnd, appShowMode);
+
+                                        env->CreateCoreWebView2Controller(
+                                            hConsoleWnd,
+                                            Microsoft::WRL::Callback<
+                                                ICoreWebView2CreateCoreWebView2ControllerCompletedHandler>(
+                                                [&consoleData, args, deferral](HRESULT result, ICoreWebView2Controller* controller) -> HRESULT
+                                                {
+                                                    if (!controller)
+                                                        return E_FAIL;
+
+                                                    ICoreWebView2* webView;
+                                                    controller->get_CoreWebView2(&webView);
+                                                    consoleData.webView = wil::com_ptr<ICoreWebView2>(webView);
+
+                                                    webView->add_WindowCloseRequested(
+                                                        Microsoft::WRL::Callback<ICoreWebView2WindowCloseRequestedEventHandler>(
+                                                            [&consoleData](ICoreWebView2* sender, IUnknown* args)
+                                                            {
+                                                                PostMessageW(consoleData.hWnd, WM_CLOSE, 0, 0);
+                                                                return S_OK;
+                                                            })
+                                                            .Get(),
+                                                        nullptr);
+
+                                                    controller->put_IsVisible(TRUE);
+
+                                                    consoleData.webViewController = controller;
+
+                                                    // Resize WebView to fit the bounds of the parent window
+                                                    RECT bounds;
+                                                    GetClientRect(consoleData.hWnd, &bounds);
+                                                    controller->put_Bounds(bounds);
+
+                                                    args->put_NewWindow(consoleData.webView.get());
+                                                    args->put_Handled(TRUE);
+                                                    deferral->Complete();
+                                                    return S_OK;
+                                                })
+                                                .Get());
+                                            return S_OK;
+
                                         return S_OK;
                                     })
                                     .Get(),
