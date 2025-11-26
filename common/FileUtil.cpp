@@ -220,6 +220,31 @@ namespace FileUtil
                           std::istreambuf_iterator<char>(lhs.rdbuf()));
     }
 
+    void copyDirectoryRecursive(const std::string& srcDir, const std::string& destDir, bool log)
+    {
+        namespace fs = std::filesystem;
+        try
+        {
+            for (const auto& entry : fs::recursive_directory_iterator(srcDir))
+            {
+                // Calculate relative path from source
+                const auto relativePath = fs::relative(entry.path(), srcDir);
+                const auto targetPath = fs::path(destDir) / relativePath;
+
+                // Create directory with writable permissions (default)
+                if (entry.is_directory())
+                    fs::create_directories(targetPath);
+                else if (entry.is_regular_file())
+                    FileUtil::copy(entry.path().string(), targetPath.string(), log, false);
+            }
+        }
+        catch (const std::exception& ex)
+        {
+            LOG_ERR("Failed to copy srcDir[" << srcDir << "to destDir[" << destDir
+                                             << "] with error[" << ex.what() << ']');
+        }
+    }
+
     std::unique_ptr<std::vector<char>> readFile(const std::string& path, int maxSize)
     {
         auto data = std::make_unique<std::vector<char>>(maxSize);
