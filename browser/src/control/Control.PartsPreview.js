@@ -277,6 +277,11 @@ window.L.Control.PartsPreview = window.L.Control.extend({
 						isHtmlName: true,
 						callback: function() { that._map.insertPage(nPos); }
 					}
+				},
+				events: {
+					hide: function() {
+						img.focus();
+					}
 				}
 			});
 		}, this);
@@ -368,6 +373,12 @@ window.L.Control.PartsPreview = window.L.Control.extend({
 							var part = that._findClickedPart(options.$trigger[0].parentNode);
 							return that._map._docLayer._docType === 'presentation' && !app.impress.isSlideHidden(parseInt(part) - 1);
 						}
+					}
+				},
+				events: {
+					hide: function() {
+						// Restore focus to the element that opened the menu
+						img.focus();
 					}
 				}
 			});
