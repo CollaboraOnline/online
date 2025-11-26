@@ -15,7 +15,7 @@ function _createCheckboxContainer(
 	parentContainer: HTMLElement,
 	data: CheckboxWidgetJSON,
 	builder: JSBuilder,
-) {
+): HTMLDivElement {
 	const container = window.L.DomUtil.create(
 		'div',
 		builder.options.cssClass + ' ui-checkbox checkbutton',
@@ -29,7 +29,7 @@ function _createCheckboxControl(
 	parentContainer: HTMLElement,
 	data: CheckboxWidgetJSON,
 	builder: JSBuilder,
-) {
+): HTMLInputElement {
 	const checkbox = window.L.DomUtil.create(
 		'input',
 		builder.options.cssClass + ' ui-checkbox-input',
@@ -45,7 +45,7 @@ function _createCheckboxLabel(
 	parentContainer: HTMLElement,
 	data: CheckboxWidgetJSON,
 	builder: JSBuilder,
-) {
+): HTMLLabelElement {
 	const label = window.L.DomUtil.create(
 		'label',
 		builder.options.cssClass + ' ui-checkbox-label',
@@ -86,16 +86,14 @@ JSDialog.Checkbox = function (
 	const setDisabled = (disable: boolean) => {
 		if (disable) {
 			container.setAttribute('disabled', 'true');
-			container.disabled = true;
-			checkbox.setAttribute('disabled', 'true');
+
 			checkbox.disabled = true;
-			checkbox.setAttribute('aria-disabled', true);
+			checkbox.setAttribute('aria-disabled', 'true');
 		} else {
-			container.setAttribute('disabled', 'false');
-			container.disabled = false;
-			checkbox.setAttribute('disabled', 'false');
+			container.removeAttribute('disabled');
+
 			checkbox.disabled = false;
-			checkbox.setAttribute('aria-disabled', false);
+			checkbox.removeAttribute('aria-disabled');
 		}
 	};
 
