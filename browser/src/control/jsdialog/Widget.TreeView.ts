@@ -68,6 +68,7 @@ var lastClickHelperId = '';
 
 class TreeViewControl {
 	_isRealTree: boolean;
+	_isListbox: boolean;
 	_container: HTMLElement;
 	_tbody: HTMLElement;
 	_thead: HTMLElement = null;
@@ -360,7 +361,7 @@ class TreeViewControl {
 		);
 		this._rows.set(String(entry.row), tr);
 		tr.setAttribute('level', String(level));
-		tr.setAttribute('role', 'row');
+		tr.setAttribute('role', this._isListbox ? 'option' : 'row');
 
 		let dummyColumns = 0;
 		if (this._hasState) dummyColumns++;
@@ -748,7 +749,9 @@ class TreeViewControl {
 				const element = rowElements[i];
 
 				// setup properties
-				element.setAttribute('role', 'gridcell');
+				if (!this._isListbox) {
+					element.setAttribute('role', 'gridcell');
+				}
 			}
 		}
 
@@ -1708,12 +1711,30 @@ class TreeViewControl {
 		});
 	}
 
+	isListbox(data: TreeWidgetJSON): boolean {
+		if (this.isRealTree(data)) return false;
+
+		const columns = TreeViewControl.countColumns(data);
+		if (columns !== 1) return false;
+
+		if (data.headers && data.headers.length > 0) return false;
+
+		if (data.entries) {
+			for (const entry of data.entries) {
+				if (entry.children && entry.children.length > 0) return false;
+			}
+		}
+
+		return true;
+	}
+
 	build(
 		data: TreeWidgetJSON,
 		builder: JSBuilder,
 		parentContainer: HTMLElement,
 	) {
 		this._isRealTree = this.isRealTree(data);
+		this._isListbox = this.isListbox(data);
 		this._columns = TreeViewControl.countColumns(data);
 		this._hasState = TreeViewControl.hasState(data);
 		this._hasIcon = TreeViewControl.hasIcon(data);
@@ -1741,7 +1762,8 @@ class TreeViewControl {
 			this._container.setAttribute('role', 'treegrid');
 			if (!data.headers || data.headers.length === 0)
 				window.L.DomUtil.addClass(this._container, 'ui-treeview-tree');
-		} else this._container.setAttribute('role', 'grid');
+		} else if (this._isListbox) this._container.setAttribute('role', 'listbox');
+		else this._container.setAttribute('role', 'grid');
 
 		this.preprocessColumnData(data.entries);
 		this.fillHeaders(data.headers, builder);
