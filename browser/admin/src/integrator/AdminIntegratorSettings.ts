@@ -959,7 +959,6 @@ class SettingIframe {
 		onClickHandler: (
 			checkboxInput: HTMLInputElement,
 			checkboxWrapper: HTMLSpanElement,
-			materialIconContainer: HTMLSpanElement, // This is the inner span holding the SVG
 		) => void,
 		isDisabled: boolean = false,
 		warningText: string | null = null,
@@ -979,23 +978,14 @@ class SettingIframe {
 		checkboxContent.id = id + '-content';
 		checkboxWrapper.appendChild(checkboxContent);
 
-		const checkboxContentIcon = document.createElement('span');
-		checkboxContentIcon.className = `${isDisabled ? 'checkbox-content-icon-disabled' : 'checkbox-content-icon'} checkbox-content-icon checkbox-radio-switch__icon ${isChecked ? '' : 'checkbox-content-icon--checked'}`;
-		checkboxContentIcon.ariaHidden = 'true';
-		checkboxContent.appendChild(checkboxContentIcon);
+		checkboxContent.appendChild(inputCheckbox);
 
-		const materialIconContainer = this.createMaterialDesignIconContainer(
-			isChecked
-				? this.SVG_ICONS.checkboxMarked
-				: this.SVG_ICONS.checkboxBlankOutline,
-		);
-		checkboxContentIcon.appendChild(materialIconContainer);
-
-		const textElement = document.createElement('span');
-		textElement.className =
+		const checkboxLabel = document.createElement('label');
+		checkboxLabel.className =
 			'checkbox-content__text checkbox-radio-switch__text';
-		textElement.textContent = labelText;
-		checkboxContent.appendChild(textElement);
+		checkboxLabel.textContent = labelText;
+		checkboxLabel.htmlFor = inputCheckbox.id;
+		checkboxContent.appendChild(checkboxLabel);
 
 		if (warningText) {
 			const warningEl = document.createElement('span');
@@ -1005,10 +995,19 @@ class SettingIframe {
 		}
 
 		if (!isDisabled) {
-			checkboxWrapper.addEventListener('click', () => {
-				onClickHandler(inputCheckbox, checkboxWrapper, materialIconContainer);
+			let that = this;
+			const checkboxClickHandler = function () {
+				onClickHandler(inputCheckbox, checkboxWrapper);
 				if (checkboxWrapper.id === 'Grid-ShowGrid-container') {
-					this.toggleGridOptionsVisibility(checkboxWrapper);
+					that.toggleGridOptionsVisibility(checkboxWrapper);
+				}
+			};
+
+			inputCheckbox.addEventListener('click', checkboxClickHandler);
+			inputCheckbox.addEventListener('keydown', (event) => {
+				if (event.key === ' ' || event.key === 'Enter') {
+					event.preventDefault();
+					inputCheckbox.click();
 				}
 			});
 			if (checkboxWrapper.id === 'Grid-ShowGrid-container') {
@@ -1034,17 +1033,12 @@ class SettingIframe {
 			uniqueId,
 			value,
 			labelText,
-			(inputCheckbox, checkboxWrapper, materialIconContainer) => {
-				const currentChecked = !inputCheckbox.checked;
-				inputCheckbox.checked = currentChecked;
+			(inputCheckbox, checkboxWrapper) => {
 				checkboxWrapper.classList.toggle(
 					'checkbox-radio-switch--checked',
-					!currentChecked,
+					!inputCheckbox.checked,
 				);
-				materialIconContainer.innerHTML = currentChecked
-					? this.SVG_ICONS.checkboxMarked
-					: this.SVG_ICONS.checkboxBlankOutline;
-				data[key] = currentChecked;
+				data[key] = inputCheckbox.checked;
 			},
 		);
 	}
@@ -1471,17 +1465,12 @@ class SettingIframe {
 			key as string,
 			isChecked && !isDisabled,
 			label,
-			(inputCheckbox, checkboxWrapper, materialIconContainer) => {
-				const currentChecked = !inputCheckbox.checked;
-				inputCheckbox.checked = currentChecked;
+			(inputCheckbox, checkboxWrapper) => {
 				checkboxWrapper.classList.toggle(
 					'checkbox-radio-switch--checked',
-					!currentChecked,
+					!inputCheckbox.checked,
 				);
-				materialIconContainer.innerHTML = currentChecked
-					? this.SVG_ICONS.checkboxMarked
-					: this.SVG_ICONS.checkboxBlankOutline;
-				(data as any)[key] = currentChecked;
+				(data as any)[key] = inputCheckbox.checked;
 			},
 			isDisabled,
 			warningText,
