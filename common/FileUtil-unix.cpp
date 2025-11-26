@@ -13,15 +13,13 @@
 
 #include <common/Anonymizer.hpp>
 #include <common/FileUtil.hpp>
-
-#include <filesystem>
-#include <iostream>
-#include <string>
-
 #include <dirent.h>
+#include <filesystem>
 #include <ftw.h>
 #include <grp.h>
+#include <iostream>
 #include <pwd.h>
+#include <string>
 #include <sys/stat.h>
 #include <sys/time.h>
 #include <unistd.h>

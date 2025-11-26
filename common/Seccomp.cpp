@@ -15,11 +15,19 @@
 
 #include <config.h>
 
-#include <sysexits.h>
 #include "Seccomp.hpp"
+
+#include <common/Log.hpp>
+#include <common/SigUtil.hpp>
 
 #include <dlfcn.h>
 #include <ftw.h>
+#include <sys/resource.h>
+#include <sys/time.h>
+#include <sysexits.h>
+#include <unistd.h>
+#include <utime.h>
+
 #ifdef __linux__
 #include <linux/audit.h>
 #include <linux/filter.h>
@@ -31,13 +39,6 @@
 #include <sys/prctl.h>
 #include <sys/syscall.h>
 #endif // __linux__
-#include <sys/resource.h>
-#include <sys/time.h>
-#include <unistd.h>
-#include <utime.h>
-
-#include <common/Log.hpp>
-#include <common/SigUtil.hpp>
 
 #if DISABLE_SECCOMP == 0
 #ifndef SYS_SECCOMP

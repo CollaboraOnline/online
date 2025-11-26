@@ -7,11 +7,14 @@
 
 #include <config.h>
 
-#include "Uri.hpp"
-#include <common/Util.hpp>
 #include <common/Log.hpp>
+#include <common/Util.hpp>
+
+#include "Uri.hpp"
 
 #include <Poco/URI.h>
+
+
 
 const std::string Uri::Reserved = ",/?:@&=+$#";
 
