@@ -1440,6 +1440,27 @@ static LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM l
     return 0;
 }
 
+// From https://stackoverflow.com/questions/51334674/how-to-detect-windows-10-light-dark-mode-in-win32-application
+
+static bool isLightTheme()
+{
+    int value;
+    DWORD cbData = 4;
+    auto res = RegGetValueW(
+        HKEY_CURRENT_USER,
+        L"Software\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize",
+        L"AppsUseLightTheme",
+        RRF_RT_REG_DWORD,
+        NULL,
+        &value,
+        &cbData);
+
+    if (res != ERROR_SUCCESS)
+        return true;
+
+    return value == 1;
+}
+
 static void openCOOLWindow(const FilenameAndUri& filenameAndUri, PERMISSION permission)
 {
     bool havePersistedSize = false;
@@ -1642,6 +1663,7 @@ static void openCOOLWindow(const FilenameAndUri& filenameAndUri, PERMISSION perm
                                 std::string("&appdocid=") + std::to_string(data.appDocId) +
                                 std::string("&userinterfacemode=notebookbar"
                                             "&dir=ltr") +
+                                (isLightTheme() ? "" : "&darkTheme=true") +
                                 (permission == PERMISSION::NEW_DOCUMENT ? "&isnewdocument=true" : "") +
                                 (permission == PERMISSION::WELCOME ? "&welcome=true" : "");
 
