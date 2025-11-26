@@ -485,6 +485,9 @@ class NavigatorPanel extends SidebarBase {
 							type: 'pushbutton',
 							text: '',
 							image: 'lc_recsearch.svg',
+							aria: {
+								label: _('Search'),
+							},
 						},
 					],
 				},
