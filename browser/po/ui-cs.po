@@ -12,8 +12,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-11-17 08:08+0100\n"
-"PO-Revision-Date: 2025-11-19 08:51+0000\n"
-"Last-Translator: Jiří Podhorecký <j.podhorecky@volny.cz>\n"
+"PO-Revision-Date: 2025-11-24 04:16+0000\n"
+"Last-Translator: Stanislav Horáček <stanislav.horacek@gmail.com>\n"
 "Language-Team: Czech <https://hosted.weblate.org/projects/collabora-online/"
 "ui/cs/>\n"
 "Language: cs\n"
@@ -356,7 +356,7 @@ msgstr "Spojení"
 
 #: admin/src/AdminSocketBase.js:62
 msgid "Server has been shut down; please reload the page."
-msgstr "Server byl vypnut, prosím načtěte stránku znovu."
+msgstr "Server byl vypnut, načtěte stránku znovu."
 
 #: admin/src/AdminSocketBase.js:72 admin/src/AdminSocketBase.js:73
 msgid "Connection error"
@@ -380,15 +380,15 @@ msgstr "Zpřístupnění"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:155
 msgid "Signature Certificate"
-msgstr "Podpisový certifikát"
+msgstr "Certifikát podpisu"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:156
 msgid "Signature Key"
-msgstr "Podpisový klíč"
+msgstr "Klíč podpisu"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:157
 msgid "Signature CA"
-msgstr "Podpis CA"
+msgstr "CA podpisu"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:160
 #: src/control/Control.Menubar.ts:171 src/control/Control.Menubar.ts:496
@@ -408,7 +408,7 @@ msgstr "Kompaktní rozvržení"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:162
 msgid "Show status bar"
-msgstr "Zobrazovat stavový řádek"
+msgstr "Zobrazit stavový řádek"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:163
 #: src/control/Control.Menubar.ts:168 src/control/Control.Menubar.ts:492
@@ -504,23 +504,23 @@ msgstr "Stránka"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:188
 msgid "Fit to page"
-msgstr "Přizpůsobit stránce"
+msgstr "Přizpůsobit rozměru stránky"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:189
 msgid "Tile pages"
-msgstr "Stránky dlaždicově"
+msgstr "Stránky jako dlaždice"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:190
 msgid "Booklet"
-msgstr "Knížečka"
+msgstr "Příručka"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:191
 msgid "Booklet front"
-msgstr "Přední strana brožury"
+msgstr "Přední stránka příručky"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:192
 msgid "Booklet back"
-msgstr "Zadní strana brožury"
+msgstr "Zadní stránka příručky"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:193
 msgid "Page name"
@@ -557,16 +557,16 @@ msgstr "Poznámky"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:200
 msgid "Handouts"
-msgstr "Letáky"
+msgstr "Podklady"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:201
 #: src/control/Control.NavigatorPanel.ts:205
 msgid "Outline"
-msgstr "Obrys"
+msgstr "Osnova"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:202
 msgid "Handout horizontal"
-msgstr "Leták vodorovně"
+msgstr "Podklady vodorovně"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:203
 msgid "Images"
@@ -594,7 +594,7 @@ msgstr "Skrytý text"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:209
 msgid "Placeholders"
-msgstr "Zástupné výplně"
+msgstr "Zástupná pole"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:210
 msgid "Left pages"
@@ -606,11 +606,11 @@ msgstr "Pravé stránky"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:212
 msgid "Brochure"
-msgstr "Brožura"
+msgstr "Příručka"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:213
 msgid "Brochure Right to Left"
-msgstr "Brožura zprava doleva"
+msgstr "Příručka zprava doleva"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:214
 msgid "Images and Objects"
@@ -705,7 +705,7 @@ msgstr "Nastavte výchozí předvolby rozhraní."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:731
 msgid "Select a tab to browser settings."
-msgstr "Vyberte kartu nastavení prohlížeče."
+msgstr "Výběrem karty zobrazíte nastavení."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:744
 #: admin/src/integrator/Xcu.ts:376
@@ -715,7 +715,7 @@ msgstr "Obnovení výchozího nastavení dokumentu"
 #: admin/src/integrator/AdminIntegratorSettings.ts:748
 #: admin/src/integrator/Xcu.ts:390
 msgid "Are you sure you want to reset Document settings?"
-msgstr "Opravdu chcete obnovit nastavení dokumentu?"
+msgstr "Opravdu si přejete obnovit nastavení dokumentu?"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:765
 #: admin/src/integrator/Xcu.ts:405
@@ -789,7 +789,7 @@ msgid ""
 "here."
 msgstr ""
 "Chcete-li použít podepisování dokumentů, zadejte zde svůj podpisový "
-"certifikát, klíč a řetězec certifikačních autorit."
+"certifikát, klíč a řetězec CA."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:1457
 msgid "(Warning: Server accessibility must be enabled to toggle)"
@@ -831,11 +831,11 @@ msgstr "Přidat"
 
 #: admin/src/integrator/WordBook.ts:466
 msgid "Invalid dictionary format. Please check the file."
-msgstr "Nesprávný formát slovníku. Zkontrolujte prosím soubor."
+msgstr "Nesprávný formát slovníku. Zkontrolujte soubor."
 
 #: admin/src/integrator/WordBook.ts:486
 msgid "Something went wrong while uploading dictionary file"
-msgstr "Při nahrávání slovníkového souboru se něco pokazilo"
+msgstr "Při nahrávání souboru se slovníkem souboru se něco pokazilo"
 
 #: admin/src/integrator/Xcu.ts:160 admin/src/integrator/Xcu.ts:172
 msgid "Something went wrong while loading Document settings."
@@ -951,7 +951,7 @@ msgstr "Odstranit"
 
 #: src/canvas/sections/CommentListSection.ts:1224
 msgid "Remove Thread"
-msgstr "Odebrat vlákno"
+msgstr "Odstranit vlákno"
 
 #: src/canvas/sections/CommentListSection.ts:1230
 msgid "Resolve"
@@ -983,7 +983,7 @@ msgstr "Otevřít v plném zobrazení"
 
 #: src/canvas/sections/CommentListSection.ts:1254
 msgid "Show in navigator"
-msgstr "Zobrazit v navigátoru"
+msgstr "Zobrazit v Navigátoru"
 
 #: src/canvas/sections/CommentListSection.ts:1282
 #: src/control/Control.JSDialogBuilder.js:1708
@@ -1054,7 +1054,7 @@ msgstr "Uloženo"
 
 #: src/canvas/sections/ShapeHandlesSection.ts:441
 msgid "Document contains unsupported media"
-msgstr "Dokument obsahuje nepodporované medium"
+msgstr "Dokument obsahuje nepodporovaná multimédia"
 
 #: src/canvas/sections/URLPopUpSection.ts:67
 msgid "Copy link location"
@@ -1880,7 +1880,7 @@ msgstr "Přepnout režim uživatelského rozhraní"
 #: src/control/Control.Menubar.ts:169 src/control/Control.Menubar.ts:493
 #: src/control/Control.Menubar.ts:660 src/control/Control.Menubar.ts:801
 msgid "Show Status Bar"
-msgstr "Zobrazovat stavový řádek"
+msgstr "Zobrazit stavový řádek"
 
 #: src/control/Control.Menubar.ts:170 src/control/Control.Menubar.ts:495
 #: src/control/Control.Menubar.ts:661 src/control/Control.Menubar.ts:802
@@ -2008,7 +2008,7 @@ msgstr "Vlastnosti"
 #: src/control/Control.Menubar.ts:401 src/control/Control.Menubar.ts:1090
 #: src/control/Control.NotebookbarWriter.js:472
 msgid "Screen Reading"
-msgstr "Mluvený komentář"
+msgstr "Čtení obrazovky"
 
 #: src/control/Control.Menubar.ts:414
 #: src/control/Control.NotebookbarWriter.js:436
@@ -3433,7 +3433,7 @@ msgstr "Kopírovat list…"
 
 #: src/control/Control.Tabs.js:408
 msgid "Are you sure you want to delete sheet, {sheet}?"
-msgstr "Opravdu si přejete smazat list, {sheet}?"
+msgstr "Opravdu si přejete smazat list {sheet}?"
 
 #: src/control/Control.Tabs.js:419
 msgid "Rename sheet"
@@ -3775,7 +3775,7 @@ msgid ""
 "The signature is OK, but the certificate could not be validated and the "
 "document is only partially signed."
 msgstr ""
-"Podpis je v pořádku, ale certifikát nemohl být ověřen a dokument je podepsán "
+"Podpis je v pořádku, ale certifikát nelze ověřit a dokument je podepsán "
 "pouze částečně."
 
 #: src/control/Toolbar.js:253 src/control/Toolbar.js:266
@@ -3961,7 +3961,7 @@ msgstr "Vložit místní obrázek"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1732
 msgid "Insert Local Multimedia"
-msgstr "Vložit místní multimédia"
+msgstr "Vložit lokální multimédia"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1738
 msgid "Very Tight"
