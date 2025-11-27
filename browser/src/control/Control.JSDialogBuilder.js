@@ -2551,7 +2551,7 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 	},
 
 	_removeMenuId: function (rawId) {
-		var elementId = rawId;
+		var elementId = typeof rawId === 'string' ? rawId : (rawId ? String(rawId) : rawId);
 		var separatorPos = elementId ? elementId.indexOf(':') : 0; // delete menuId
 		if (separatorPos > 0)
 			elementId = elementId.substr(0, separatorPos);
