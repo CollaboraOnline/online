@@ -290,7 +290,7 @@ class Dispatcher {
 			app.map.insertComment();
 		};
 
-		this.actionsMap['fold'] = this.actionsMap['hamburger-tablet'] = () => {
+		this.actionsMap['hamburger-tablet'] = () => {
 			app.map.uiManager.toggleMenubar();
 		};
 
