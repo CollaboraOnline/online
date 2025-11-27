@@ -26,9 +26,9 @@ class ChartContextButtonSection extends HTMLObjectSection {
 			32,
 			32,
 			new cool.SimplePoint(
-				GraphicSelection.rectangle.x2 +
+				(GraphicSelection.rectangle ? GraphicSelection.rectangle.x2 : 0) +
 					ChartContextButtonSection.sizeSpaceBetweenButtons * app.pixelsToTwips,
-				GraphicSelection.rectangle.y1 +
+				(GraphicSelection.rectangle ? GraphicSelection.rectangle.y1 : 0) +
 					buttonType *
 						app.pixelsToTwips *
 						(ChartContextButtonSection.sizeButtons +
@@ -85,6 +85,7 @@ class ChartContextButtonSection extends HTMLObjectSection {
 		// Position goes wrong when zoom change so update it when zoom changed.
 		if (this.lastZoom != origZoom) {
 			this.lastZoom = origZoom;
+			Util.ensureValue(GraphicSelection.rectangle);
 			var x = Math.round(
 				GraphicSelection.rectangle.x2 * app.twipsToPixels +
 					ChartContextButtonSection.sizeSpaceBetweenButtons,

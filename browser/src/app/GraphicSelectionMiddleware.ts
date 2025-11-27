@@ -14,13 +14,14 @@
 declare var JSDialog: any;
 
 class GraphicSelection {
-	public static rectangle: cool.SimpleRectangle = null;
+	public static rectangle: cool.SimpleRectangle | null = null;
 	public static extraInfo: any = null;
 	public static selectionAngle: number = 0;
-	public static handlesSection: ShapeHandlesSection = null;
-	public static chartContextToolbarSelectStyle: ChartContextButtonSection =
+	public static handlesSection: ShapeHandlesSection | null = null;
+	public static chartContextToolbarSelectStyle: ChartContextButtonSection | null =
 		null;
-	public static chartContextToolbarSaveStyle: ChartContextButtonSection = null;
+	public static chartContextToolbarSaveStyle: ChartContextButtonSection | null =
+		null;
 
 	public static hasActiveSelection() {
 		return this.rectangle !== null;
@@ -49,6 +50,7 @@ class GraphicSelection {
 		var videoDesc = JSON.parse(textMsg);
 
 		if (this.hasActiveSelection()) {
+			Util.ensureValue(this.rectangle);
 			videoDesc.width = this.rectangle.cWidth;
 			videoDesc.height = this.rectangle.cHeight;
 		}
@@ -88,6 +90,7 @@ class GraphicSelection {
 	}
 
 	static renderDarkOverlay() {
+		Util.ensureValue(this.rectangle);
 		var topLeft = new cool.Point(this.rectangle.pX1, this.rectangle.pY1);
 		var bottomRight = new cool.Point(this.rectangle.pX2, this.rectangle.pY2);
 
@@ -207,8 +210,12 @@ class GraphicSelection {
 
 			if (addHandlesSection) {
 				this.handlesSection = new app.definitions.shapeHandlesSection({});
+				Util.ensureValue(this.handlesSection);
 				app.sectionContainer.addSection(this.handlesSection);
 			}
+
+			Util.ensureValue(this.handlesSection);
+			Util.ensureValue(this.rectangle);
 
 			this.handlesSection.setPosition(this.rectangle.pX1, this.rectangle.pY1);
 
@@ -268,6 +275,7 @@ class GraphicSelection {
 				);
 			}
 			GraphicSelection.chartContextToolbarSelectStyle.updatePosition();
+			Util.ensureValue(GraphicSelection.chartContextToolbarSaveStyle);
 			GraphicSelection.chartContextToolbarSaveStyle.updatePosition();
 
 			if (GraphicSelection.chartContextToolbarSelectStyle) {
@@ -278,6 +286,7 @@ class GraphicSelection {
 			app.sectionContainer.removeSection(
 				GraphicSelection.chartContextToolbarSelectStyle.name,
 			);
+			Util.ensureValue(GraphicSelection.chartContextToolbarSaveStyle);
 			app.sectionContainer.removeSection(
 				GraphicSelection.chartContextToolbarSaveStyle.name,
 			);
@@ -421,6 +430,7 @@ class GraphicSelection {
 	*/
 	public static onTextCursorVisibility(event: any) {
 		if (this.hasActiveSelection()) {
+			Util.ensureValue(this.handlesSection);
 			if (event.detail.visible) this.handlesSection.interactable = false;
 			else this.handlesSection.interactable = true;
 		}
