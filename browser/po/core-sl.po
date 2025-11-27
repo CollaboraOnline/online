@@ -2,9 +2,16 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: core-sl\n"
+"PO-Revision-Date: 2025-11-27 12:40+0000\n"
+"Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
+"Language-Team: Slovenian <https://hosted.weblate.org/projects/"
+"collabora-online/lokit/sl/>\n"
 "Language: sl\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=4; plural=n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || "
+"n%100==4 ? 2 : 3;\n"
+"X-Generator: Weblate 5.15-dev\n"
 
 #. ygDfy
 #: module_graphicfilter.ulf
@@ -13,7 +20,7 @@ msgctxt ""
 "STR_NAME_MODULE_OPTIONAL_GRFFLT_FLASH\n"
 "LngText.text"
 msgid "Macromedia Flash (SWF)"
-msgstr ""
+msgstr "Macromedia Flash (SWF)"
 
 #. qAk8E
 #: module_graphicfilter.ulf
@@ -22,10 +29,11 @@ msgctxt ""
 "STR_DESC_MODULE_OPTIONAL_GRFFLT_FLASH\n"
 "LngText.text"
 msgid "Macromedia Flash (SWF) Export Filter"
-msgstr ""
+msgstr "Izvozni filter Macromedia Flash (SWF)"
 
 #. vcMGk
 #: folderitem_ooo.ulf
+#, fuzzy
 msgctxt ""
 "folderitem_ooo.ulf\n"
 "STR_FI_TOOLTIP_COFFICE\n"
@@ -35,42 +43,45 @@ msgid ""
 "Technology, provided by Collabora Productivity. See https://collaboraoffice."
 "com"
 msgstr ""
+"Collabora Office, pisarniški paket na temelju tehnologije LibreOffice "
+"Technology, zagotavlja Collabora Productivity. Glejte "
+"https://collaboraoffice.com"
 
 #. 4rBwc
 #: include/svx/strings.hrc:1040
 msgctxt "RID_SVXSTR_PASTE_AS_DIALOG_TITLE"
 msgid "Paste As"
-msgstr ""
+msgstr "Prilepi kot"
 
 #. aNZNw
 #: svx/uiconfig/ui/dropdownfielddialog.ui:31
 msgctxt "dropdownDialog|OK"
 msgid "OK"
-msgstr ""
+msgstr "V redu"
 
 #. 54Dmg
 #: svx/uiconfig/ui/dropdownfielddialog.ui:44
 msgctxt "dropdownDialog|CANCEL"
 msgid "Cancel"
-msgstr ""
+msgstr "Prekliči"
 
 #. gPAYw
 #: svx/uiconfig/ui/findreplacedialog.ui:67
 msgctxt "findreplacedialog|find_tab_btn"
 msgid "Find"
-msgstr ""
+msgstr "Najdi"
 
 #. uknDS
 #: svx/uiconfig/ui/findreplacedialog.ui:80
 msgctxt "findreplacedialog|replace_tab_btn"
 msgid "Replace"
-msgstr ""
+msgstr "Zamenjaj"
 
 #. 7MFsT
 #: uui/inc/strings.hrc:84
 msgctxt "STR_READONLY_FONT_TITLE"
 msgid "Font Disallows Editing"
-msgstr ""
+msgstr "Pisava ne dopušča urejanja"
 
 #. YRahp
 #: uui/inc/strings.hrc:85
@@ -81,6 +92,10 @@ msgid ""
 "Pressing [ No ] will drop these fonts from the document:\n"
 "$(ARG1)"
 msgstr ""
+"Ena ali več v dokument vdelanih pisav nima pravice do urejanja.\n"
+"Ali želite odpreti dokument v načinu samo za branje?\n"
+"Če izberete [ Ne ], boste iz dokumenta izpustili naslednje pisave:\n"
+"$(ARG1)"
 
 #. 4NkMk
 #: readme.xrm
@@ -92,106 +107,111 @@ msgid ""
 "For more information please visit ${PRODUCTNAME} home page at <a "
 "href=\"https://collaboraoffice.com\">https://CollaboraOffice.com/</a>."
 msgstr ""
+"Za več informacij obiščite domačo stran ${PRODUCTNAME} na naslovu <a href="
+"\"https://collaboraoffice.com\">https://CollaboraOffice.com/</a>"
 
 #. SbQew
 #: chart2/inc/strings.hrc:51
 msgctxt "STR_PAGE_COLOR_PALETTE"
 msgid "Color Palette"
-msgstr ""
+msgstr "Barvna paleta"
 
 #. YZBr8
 #: chart2/inc/strings.hrc:52
 msgctxt "STR_PAGE_GRADIENT_PRESETS"
 msgid "Gradients"
-msgstr ""
+msgstr "Prelivi"
 
 #. DWGVf
 #: chart2/uiconfig/ui/chartcolorpalettepopup.ui:46
 msgctxt "chartcolorpalettepopup|colorfulwin"
 msgid "Colorful"
-msgstr ""
+msgstr "Barvito"
 
 #. xmAmH
 #: chart2/uiconfig/ui/chartcolorpalettepopup.ui:98
 msgctxt "chartcolorpalettepopup|monochromaticwin"
 msgid "Monochromatic"
-msgstr ""
+msgstr "Monokromatsko"
 
 #. DrjDt
 #: chart2/uiconfig/ui/chartgradientpalettepopup.ui:46
+#, fuzzy
 msgctxt "chartgradientpalettepopup|lightwin"
 msgid "Light Variations"
-msgstr ""
+msgstr "Svetle inačice"
 
 #. Y3PP5
 #: chart2/uiconfig/ui/chartgradientpalettepopup.ui:97
+#, fuzzy
 msgctxt "chartgradientpalettepopup|darkwin"
 msgid "Dark Variations"
-msgstr ""
+msgstr "Temne inačice"
 
 #. WWm9R
 #: chart2/uiconfig/ui/chartthemepopup.ui:51
 msgctxt "chartthemepopup|managechartstyle"
 msgid "_Manage chart styles"
-msgstr ""
+msgstr "_Upravljaj sloge grafikona"
 
 #. BFxBa
 #: chart2/uiconfig/ui/dlg_Theme.ui:16
 msgctxt "dlg_Theme|ChartThemeDialog"
 msgid "Manage Chart Styles"
-msgstr ""
+msgstr "Upravljaj sloge grafikona"
 
 #. kqBFK
 #: chart2/uiconfig/ui/dlg_Theme.ui:46
 msgctxt "dlg_Theme|iconviewlabel|tooltip_text"
 msgid "Selectable chart styles list."
-msgstr ""
+msgstr "Seznam za izbor slogov grafikona."
 
 #. WsSmE
 #: chart2/uiconfig/ui/dlg_Theme.ui:51
 msgctxt "dlg_Theme|iconviewlabel"
 msgid "_Chart styles:"
-msgstr ""
+msgstr "Slogi gra_fikona:"
 
 #. DYH5e
 #: chart2/uiconfig/ui/dlg_Theme.ui:122
 msgctxt "dlg_Theme|chartload"
 msgid "_Load style to chart"
-msgstr ""
+msgstr "_Naloži slog v grafikon"
 
 #. YWkrA
 #: chart2/uiconfig/ui/dlg_Theme.ui:134
 msgctxt "dlg_Theme|chartsave"
 msgid "_Save to styles"
-msgstr ""
+msgstr "_Shrani med sloge"
 
 #. h8L8Y
 #: chart2/uiconfig/ui/dlg_Theme.ui:146
 msgctxt "dlg_Theme|chartdelete"
 msgid "_Delete style"
-msgstr ""
+msgstr "I_zbriši slog"
 
 #. g5qPU
 #: chart2/uiconfig/ui/dlg_Theme.ui:158
 msgctxt "dlg_Theme|chartsavenew"
 msgid "Save to _new style"
-msgstr ""
+msgstr "Shrani v _nov slog"
 
 #. GPgLR
 #: chart2/uiconfig/ui/dlg_Theme.ui:183
 msgctxt "dlg_Theme|chartmanage"
 msgid "_Manage chart styles"
-msgstr ""
+msgstr "_Upravljaj sloge grafikona"
 
 #. Yif9X
 #: chart2/uiconfig/ui/sidebarcolors.ui:30
 msgctxt "sidebarcolors|bordertype|tooltip_text"
 msgid "Allow to select a color palette to apply to current chart data series."
 msgstr ""
+"Dovolite izbor barvne palete, ki se bo uveljavila na trenutnem nizu podatkov "
+"grafikona."
 
 #. xGjwG
 #: chart2/uiconfig/ui/sidebarcolors.ui:42
-#, fuzzy
 msgctxt "sidebarcolors|cellbordertype-atkobject"
 msgid "Border Style"
 msgstr "Slog obrobe"
@@ -202,10 +222,11 @@ msgctxt "sidebargradients|bordertype|tooltip_text"
 msgid ""
 "Allow to select a gradient palette to apply to current chart data series."
 msgstr ""
+"Dovolite izbor paleto prelivov, ki se bo uveljavila na trenutnem nizu "
+"podatkov grafikona."
 
 #. 3xZSQ
 #: chart2/uiconfig/ui/sidebargradients.ui:42
-#, fuzzy
 msgctxt "sidebargradients|cellbordertype-atkobject"
 msgid "Border Style"
 msgstr "Slog obrobe"
@@ -214,220 +235,237 @@ msgstr "Slog obrobe"
 #: chart2/uiconfig/ui/sidebartheme.ui:25
 msgctxt "sidebartheme|themelist|tooltip_text"
 msgid "Allow to select a theme to apply to the current chart."
-msgstr ""
+msgstr "Dovolite izbor teme, ki se bo uveljavila na trenutnem grafikonu."
 
 #. aGvuY
 #: chart2/uiconfig/ui/sidebartheme.ui:37
 msgctxt "sidebartheme|themetype-atkobject"
 msgid "Themes"
-msgstr ""
+msgstr "Teme"
 
 #. YB6Et
 #: chart2/uiconfig/ui/sidebartheme.ui:48
 msgctxt "sidebartheme|savetonew"
 msgid "_Save to new theme"
-msgstr ""
+msgstr "_Shrani v novo temo"
 
 #. 4C556
 #: chart2/uiconfig/ui/sidebartype.ui:102
+#, fuzzy
 msgctxt "sidebartype|3dschemeft"
 msgid "3D _Scheme:"
-msgstr ""
+msgstr "3D-_shema:"
 
 #. x3adg
 #: chart2/uiconfig/ui/tp_ChartColorPalette.ui:68
 msgctxt "tp_ChartColorPalette|colorfulwin"
 msgid "Colorful"
-msgstr ""
+msgstr "Barvito"
 
 #. 8QjnP
 #: chart2/uiconfig/ui/tp_ChartColorPalette.ui:126
 msgctxt "tp_ChartColorPalette|monochromaticwin"
 msgid "Monochromatic"
-msgstr ""
+msgstr "Monokromatsko"
 
 #. 6JxiC
 #: chart2/uiconfig/ui/tp_ChartGradients.ui:69
+#, fuzzy
 msgctxt "tp_ChartGradients|lightwin"
 msgid "Light Variations"
-msgstr ""
+msgstr "Svetle inačice"
 
 #. DmWVa
 #: chart2/uiconfig/ui/tp_ChartGradients.ui:128
+#, fuzzy
 msgctxt "tp_ChartGradients|darkwin"
 msgid "Dark Variations"
-msgstr ""
+msgstr "Temne inačice"
 
 #. FG2rh
 #: chart2/uiconfig/ui/tp_ChartType.ui:114
+#, fuzzy
 msgctxt "tp_ChartType|extended_tip|subtype_iconview"
 msgid "Select a sub type of the basic chart type."
-msgstr ""
+msgstr "Izberite podvrsto osnovne vrste grafikona."
 
 #. Wh4j6
 #: chart2/uiconfig/ui/tp_ChartType.ui:167
+#, fuzzy
 msgctxt "tp_ChartType|3dschemeft"
 msgid "3D _Scheme:"
-msgstr ""
+msgstr "3D-_shema:"
 
 #. ChTwx
 #: cui/inc/strings.hrc:481
+#, fuzzy
 msgctxt "REG_CALCDBFOCUS"
 msgid "Table Style focus"
-msgstr ""
+msgstr "Pozornost sloga tabele"
 
 #. EPGtZ
 #: cui/uiconfig/ui/hyperlinkinternetpage.ui:64
 msgctxt "hyperlinkinternetpage|target_label"
 msgid "Link:"
-msgstr ""
+msgstr "Povezava:"
 
 #. gfELk
 #: cui/uiconfig/ui/pageformatpage.ui:260
 msgctxt "pageformatpage|checkResizeAllPages"
 msgid "Resize all pages"
-msgstr ""
+msgstr "Spremeni velikost vseh strani"
 
 #. NBdEp
 #: cui/uiconfig/ui/pickbulletpage.ui:45
+#, fuzzy
 msgctxt "pickbulletpage|extended_tip|pick_bullet_iconview"
 msgid "Click the bullet style that you want to use."
-msgstr ""
+msgstr "Izbere slog, ki ga želite uporabiti za oznake."
 
 #. rkoDB
 #: cui/uiconfig/ui/pickgraphicpage.ui:45
+#, fuzzy
 msgctxt "pickgraphicpage|extended_tip|pick_graphic_iconview"
 msgid "Click the graphics that you want to use as bullets."
-msgstr ""
+msgstr "Izbere grafični znak, ki ga želite uporabiti za oznake."
 
 #. WGzy5
 #: cui/uiconfig/ui/picknumberingpage.ui:44
 msgctxt "picknumberingpage|extended_tip|pick_numbering_iconview"
 msgid "Click the numbering scheme that you want to use."
-msgstr ""
+msgstr "Izberite način oštevilčevanja, ki ga želite uporabiti."
 
 #. avppC
 #: cui/uiconfig/ui/pickoutlinepage.ui:44
 msgctxt "pickoutlinepage|extended_tip|pick_outline_iconview"
 msgid "Click the outline style that you want to use."
-msgstr ""
+msgstr "Kliknite slog orisa, ki ga želite uporabiti."
 
 #. qpArp
 #: cui/uiconfig/ui/toolbarmodedialog.ui:124
+#, fuzzy
 msgctxt "ToolbarmodeDialog|radiobutton1"
 msgid "Compact"
-msgstr ""
+msgstr "Strnjeno"
 
 #. ZbYiG
 #: include/svtools/strings.hrc:71
 msgctxt "STR_FORMAT_ID_MARKDOWN"
 msgid "Markdown"
-msgstr ""
+msgstr "Markdown"
 
 #. HASc5
 #: include/sfx2/strings.hrc:227
 msgctxt "STR_SID_QUICKFIND"
 msgid "Quick Find"
-msgstr ""
+msgstr "Najdi hitro"
 
 #. 2VmCo
 #: sfx2/uiconfig/ui/licensedialog.ui:41
+#, fuzzy
 msgctxt "licensedialog|eula"
 msgid "_EULA"
-msgstr ""
+msgstr "_EULA"
 
 #. jjkw7
 #: sfx2/uiconfig/ui/licensedialog.ui:85
+#, fuzzy
 msgctxt "licensedialog|label2"
 msgid ""
 "%PRODUCTNAME binary package is made available subject to the terms of the "
 "End User License and Subscription Agreement; choose EULA to see exact "
 "details in English."
 msgstr ""
+"Binarni paket %PRODUCTNAME je dan na voljo pod pogoji Licence za končne "
+"uporabnike in Pogodbe o naročnini; izberite EULA, da si ogledate podrobnosti "
+"v angleškem jeziku."
 
 #. YHTHB
 #: sfx2/uiconfig/ui/templatepanel.ui:137
 msgctxt "templatepanel|accessible_name|watercan"
 msgid "Fill Format Mode"
-msgstr ""
+msgstr "Način kopiranja slogov"
 
 #. qvBEu
 #: sfx2/uiconfig/ui/templatepanel.ui:156
 msgctxt "templatepanel|accessible_name|new"
 msgid "New Style from Selection"
-msgstr ""
+msgstr "Nov slog iz izbora"
 
 #. 5ZAqh
 #: sfx2/uiconfig/ui/templatepanel.ui:174
 msgctxt "templatepanel|accessible_name|newmenu"
 msgid "Styles actions"
-msgstr ""
+msgstr "Dejanja slogov"
 
 #. 7NfdA
 #: sfx2/uiconfig/ui/templatepanel.ui:192
 msgctxt "templatepanel|accessible_name|update"
 msgid "Update Style"
-msgstr ""
+msgstr "Posodobi slog"
 
 #. BGAhD
 #: sfx2/uiconfig/ui/templatepanel.ui:242
+#, fuzzy
 msgctxt "commontemplate|STR_HIGHLIGHT_CHECKBOX"
 msgid "Highlight styles"
-msgstr "Izpostavi"
+msgstr "Izpostavi sloge"
 
 #. fCWMe
 #: sfx2/uiconfig/ui/templatepanel.ui:272
+#, fuzzy
 msgctxt "templatepanel|filter-atkobject"
 msgid "Filter"
-msgstr ""
+msgstr "Filter"
 
 #. 5xrhC
 #: sw/inc/strings.hrc:232
 msgctxt "STR_COLUMN_ICONVIEW_ITEM0"
 msgid "1 column"
-msgstr ""
+msgstr "1 stolpec"
 
 #. VAfCS
 #: sw/inc/strings.hrc:233
 msgctxt "STR_COLUMN_ICONVIEW_ITEM1"
 msgid "2 columns with equal size"
-msgstr ""
+msgstr "2 stolpca z enako velikostjo"
 
 #. g8pFG
 #: sw/inc/strings.hrc:234
 msgctxt "STR_COLUMN_ICONVIEW_ITEM2"
 msgid "3 columns with equal size"
-msgstr ""
+msgstr "3 stolpci z enako velikostjo"
 
 #. QJxAd
 #: sw/inc/strings.hrc:235
 msgctxt "STR_COLUMN_ICONVIEW_ITEM3"
 msgid "2 columns with different size (left > right)"
-msgstr ""
+msgstr "2 stolpca z različno velikostjo (levi > desni)"
 
 #. MHk4E
 #: sw/inc/strings.hrc:236
 msgctxt "STR_COLUMN_ICONVIEW_ITEM4"
 msgid "2 columns with different size (left < right)"
-msgstr ""
+msgstr "2 stolpca z različno velikostjo (levi < desni)"
 
 #. xPgHS
 #: sw/inc/strings.hrc:498
+#, fuzzy
 msgctxt "STR_REINSTATE_REDLINE"
 msgid "Reinstate change: $1"
-msgstr ""
+msgstr "Ponovno vzpostavi spremembo: $1"
 
 #. afEVQ
 #: sw/inc/strings.hrc:1536
 msgctxt "STR_COMPAT_OPT_UNDERLINETRAILINGSPACE"
 msgid "Underline Word-compatible trailing blanks"
-msgstr ""
+msgstr "Podčrtaj končne presledke, združljive z MS Word"
 
 #. B3rfb
 #: sw/uiconfig/swriter/ui/columnpage.ui:122
 msgctxt "columnpage|columnft"
 msgid "Column"
-msgstr ""
+msgstr "Stolpec"
 
 #. Lurdj
 #: sw/uiconfig/swriter/ui/columnpage.ui:868
@@ -435,6 +473,8 @@ msgctxt "columnpage|extended_tip|column-iconview"
 msgid ""
 "Enter the number of columns that you want in the page, frame, or section."
 msgstr ""
+"Vnesite število stolpcev, ki jih želite imeti na strani, v okviru ali v "
+"odseku."
 
 #. Ci9GE
 #: sw/uiconfig/swriter/ui/spellmenu.ui:34
@@ -446,7 +486,7 @@ msgstr "Dodaj v s_lovar (standard.dic)"
 #: sw/uiconfig/swriter/ui/wordcount-mobile.ui:643
 msgctxt "wordcount-mobile|comments"
 msgid "Comments"
-msgstr ""
+msgstr "Komentarji"
 
 #. SsL8u
 #: formula/inc/core_resource.hrc:2628
@@ -536,25 +576,25 @@ msgstr "WRAPROWS"
 #: formula/uiconfig/ui/functionpage.ui:80
 msgctxt "functionpage|label_category"
 msgid "_Category:"
-msgstr ""
+msgstr "_Kategorija:"
 
 #. BNnFg
 #: formula/uiconfig/ui/functionpage.ui:115
 msgctxt "functionpage|label_function"
 msgid "_Function:"
-msgstr ""
+msgstr "_Funkcija:"
 
 #. zRASZ
 #: formula/uiconfig/ui/structpage.ui:28
 msgctxt "structpage|label_struct"
 msgid "Content:"
-msgstr ""
+msgstr "Vsebina:"
 
 #. DPToC
 #: sd/uiconfig/simpress/ui/layoutpanel.ui:41
 msgctxt "layoutpanel|extended_tip|layoutpanel_icons"
 msgid "List of available layout templates."
-msgstr ""
+msgstr "Seznam razpoložljivih predlog postavitve."
 
 #. Y3kBV
 #: filter/uiconfig/ui/impswfdialog.ui:14
@@ -574,6 +614,7 @@ msgstr ""
 
 #. oDK6o
 #: filter/uiconfig/ui/impswfdialog.ui:136
+#, fuzzy
 msgctxt "impswfdialog|exportall"
 msgid "Export _all slides (uncheck to export current slide)"
 msgstr "Izvozi _vse prosojnice (sicer izvozi samo trenutno)"
@@ -618,7 +659,7 @@ msgstr "Predmete OLE izvozi kot slike _JPEG"
 #: filter/uiconfig/ui/pdfgeneralpage.ui:550
 msgctxt "pdfgeneralpage|embed|tooltip_text"
 msgid "Creates a PDF that embeds the original ODF file as an attachment."
-msgstr ""
+msgstr "Ustvari PDF, ki ima vdelano izvorno datoteko ODF kot priponko."
 
 #. JS7DG
 #: filter/uiconfig/ui/pdfgeneralpage.ui:556
@@ -628,35 +669,37 @@ msgid ""
 "two file formats: PDF and ODF as an attachment. "
 msgstr ""
 "Ta nastavitev omogoča izvoz dokumenta kot datoteke .pdf, ki vsebuje dve "
-"vrsti datotek: PDF in ODF."
+"vrsti datotek: PDF in ODF kot priponko. "
 
 #. NCgBM
 #: filter/uiconfig/ui/pdfgeneralpage.ui:583
+#, fuzzy
 msgctxt "pdfgeneralpage|pdf_version|tooltip_text"
 msgid ""
 "Select the PDF version. PDF/A version variants creates an ISO 19005 "
 "compliant PDF file, ideal for long-term document preservation."
 msgstr ""
-"Ustvari datoteko PDF, skladno s standardom ISO 19005-2, ki je idealna za "
-"dolgotrajno hrambo in arhiviranje dokumentov."
+"Izberite različico dokumenta PDF. Inačice različic PDF/A ustvarijo datoteko "
+"PDF, skladno s standardom ISO 19005-2, ki je idealna za dolgotrajno hrambo "
+"in arhiviranje dokumentov."
 
 #. Ac3Ga
 #: filter/uiconfig/ui/pdfgeneralpage.ui:587
 msgctxt "pdfgeneralpage|pdf_version"
 msgid "PDF 1.7"
-msgstr ""
+msgstr "PDF 1.7"
 
 #. D6SQE
 #: filter/uiconfig/ui/pdfgeneralpage.ui:588
 msgctxt "pdfgeneralpage|pdf_version"
 msgid "PDF 2.0"
-msgstr ""
+msgstr "PDF 2.0"
 
 #. Pk2QP
 #: filter/uiconfig/ui/pdfgeneralpage.ui:592
 msgctxt "pdfgeneralpage|pdf_version"
 msgid "PDF/A-4 (PDF 2.0 base)"
-msgstr ""
+msgstr "PDF/A-4 (na podlagi PDF 2.0)"
 
 #. S7DSM
 #: filter/uiconfig/ui/pdfgeneralpage.ui:599
@@ -669,16 +712,18 @@ msgid ""
 "used in the source document will be embedded into the generated PDF file. "
 "PDF tags will be written."
 msgstr ""
-"Pretvori v zapis PDF/A-2b ali PDF/A-1b. Ta je določen kot elektronski zapis "
-"datotek dokumentov za dolgoročno hrambo. Vse pisave, uporabljene v izvornem "
-"dokumentu, bodo vdelane v ustvarjeno datoteko PDF. Zapisane bodo tudi značke "
-"PDF."
+"Različice so lahko »klasični« PDF (t.j. PDF 1.7, PDF 2.0) ali zapis, skladen "
+"s PDF/A. Zapis PDF/A je določen kot elektronski zapis dokumentov za "
+"dolgoročno hrambo in arhiviranje. Ta omogoča le podnabor vseh "
+"funkcionalnosti zapisa PDF, ki so združljive s tem načinom uporabe. Primer: "
+"vse pisave, uporabljene v izvornem dokumentu, bodo vdelane v ustvarjeno "
+"datoteko PDF. Zapisane bodo tudi značke PDF."
 
 #. te76B
 #: filter/uiconfig/ui/pdfgeneralpage.ui:620
 msgctxt "pdfgeneralpage|pdf_version"
 msgid "PDF_ Version:"
-msgstr "Različica PDF/A:"
+msgstr "Različica PD_F:"
 
 #. tCrYc
 #: filter/uiconfig/ui/pdfgeneralpage.ui:677
@@ -690,7 +735,7 @@ msgstr "Splošno"
 #: filter/uiconfig/ui/pdfgeneralpage.ui:821
 msgctxt "pdfgeneralpage|forms_label"
 msgid "Forms"
-msgstr ""
+msgstr "Obrazci"
 
 #. kvAZK
 #: filter/uiconfig/ui/pdfgeneralpage.ui:1077
@@ -706,7 +751,7 @@ msgctxt ""
 "UIName\n"
 "value.text"
 msgid "Markdown Document"
-msgstr ""
+msgstr "Dokument Markdown"
 
 #. 9Q5Zj
 #: draw_flash_Export.xcu
@@ -716,7 +761,7 @@ msgctxt ""
 "UIName\n"
 "value.text"
 msgid "Macromedia Flash (SWF)"
-msgstr ""
+msgstr "Macromedia Flash (SWF)"
 
 #. MsYCr
 #: impress_flash_Export.xcu
@@ -726,7 +771,7 @@ msgctxt ""
 "UIName\n"
 "value.text"
 msgid "Macromedia Flash (SWF)"
-msgstr ""
+msgstr "Macromedia Flash (SWF)"
 
 #. FoizC
 #: CalcCommands.xcu
@@ -736,7 +781,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Current Sheet View"
-msgstr ""
+msgstr "Trenutni pogled delovnega lista"
 
 #. 3Ep4Y
 #: CalcCommands.xcu
@@ -746,17 +791,18 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Insert Function"
-msgstr ""
+msgstr "Vstavi funkcijo"
 
 #. rxGTc
 #: CalcCommands.xcu
+#, fuzzy
 msgctxt ""
 "CalcCommands.xcu\n"
 "..CalcCommands.UserInterface.Commands..uno:TogglePrintGrid\n"
 "Label\n"
 "value.text"
 msgid "Print Grid Lines"
-msgstr ""
+msgstr "Natisni mrežne črte"
 
 #. a35bF
 #: CalcCommands.xcu
@@ -766,7 +812,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "New Sheet View"
-msgstr ""
+msgstr "Nov pogled delovnega lista"
 
 #. AKfar
 #: CalcCommands.xcu
@@ -776,7 +822,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Remove Sheet View"
-msgstr ""
+msgstr "Odstrani pogled delovnega lista"
 
 #. M52nh
 #: CalcCommands.xcu
@@ -786,7 +832,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Switch To Next Sheet View"
-msgstr ""
+msgstr "Preklopi na naslednji pogled delovnega lista"
 
 #. qfgad
 #: CalcCommands.xcu
@@ -796,7 +842,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Switch To Previous Sheet View"
-msgstr ""
+msgstr "Preklopi na prejšnji pogled delovnega lista"
 
 #. FJEd2
 #: CalcCommands.xcu
@@ -806,7 +852,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Select Sheet View"
-msgstr ""
+msgstr "Izberite pogled delovnega lista"
 
 #. vCsC3
 #: CalcCommands.xcu
@@ -816,17 +862,18 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Exit Sheet View"
-msgstr ""
+msgstr "Izhod iz pogleda delovnega lista"
 
 #. uuvrm
 #: ChartCommands.xcu
+#, fuzzy
 msgctxt ""
 "ChartCommands.xcu\n"
 "..ChartCommands.UserInterface.Commands..uno:ManageThemes\n"
 "Label\n"
 "value.text"
 msgid "Manage Themes..."
-msgstr ""
+msgstr "Upravljaj teme ..."
 
 #. 5LESd
 #: ChartCommands.xcu
@@ -860,13 +907,14 @@ msgstr "Počisti neposredno oblikovanje"
 
 #. vsnyF
 #: DrawImpressCommands.xcu
+#, fuzzy
 msgctxt ""
 "DrawImpressCommands.xcu\n"
 "..DrawImpressCommands.UserInterface.Commands..uno:InsertCanvasSlide\n"
 "Label\n"
 "value.text"
 msgid "New Canvas Slide"
-msgstr ""
+msgstr "Nova prosojnica platna"
 
 #. w3Yib
 #: DrawImpressCommands.xcu
@@ -876,17 +924,18 @@ msgctxt ""
 "ContextLabel\n"
 "value.text"
 msgid "~Select Table"
-msgstr "Izberi tabelo"
+msgstr "Iz~beri tabelo"
 
 #. zz8gB
 #: DrawImpressCommands.xcu
+#, fuzzy
 msgctxt ""
 "DrawImpressCommands.xcu\n"
 "..DrawImpressCommands.UserInterface.Popups..uno:ReshufflePages\n"
 "Label\n"
 "value.text"
 msgid "Re-order pages"
-msgstr ""
+msgstr "Prerazvrsti strani"
 
 #. ca6bM
 #: GenericCommands.xcu
@@ -896,17 +945,18 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Slide Transitions"
-msgstr ""
+msgstr "Prehodi med prosojnicami"
 
 #. 5pSJ6
 #: GenericCommands.xcu
+#, fuzzy
 msgctxt ""
 "GenericCommands.xcu\n"
 "..GenericCommands.UserInterface.Commands..uno:SlideMasterPagesAll\n"
 "Label\n"
 "value.text"
 msgid "Master Pages"
-msgstr ""
+msgstr "Glavne strani/Matrice strani"
 
 #. DCEaK
 #: GenericCommands.xcu
@@ -916,7 +966,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "~Hyperlink"
-msgstr ""
+msgstr "~Hiperpovezava"
 
 #. aFFu9
 #: GenericCommands.xcu
@@ -926,7 +976,7 @@ msgctxt ""
 "PopupLabel\n"
 "value.text"
 msgid "Insert Hyperlink..."
-msgstr ""
+msgstr "Vstavi hiperpovezavo ..."
 
 #. czVMP
 #: GenericCommands.xcu
@@ -936,7 +986,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Nav~igator select comment."
-msgstr ""
+msgstr "~Izberi komentar v Krmarju"
 
 #. 77Q3c
 #: GenericCommands.xcu
@@ -946,7 +996,7 @@ msgctxt ""
 "TooltipLabel\n"
 "value.text"
 msgid "Select Comment In The Navigator Window/Sidebar"
-msgstr ""
+msgstr "Izberite komentar v oknu/stranski vrstici Krmarja."
 
 #. 83Euq
 #: GenericCommands.xcu
@@ -956,7 +1006,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Change record mode"
-msgstr "Spremeni sidro"
+msgstr "Spremeni način beleženja"
 
 #. nG2DH
 #: GenericCommands.xcu
@@ -966,7 +1016,7 @@ msgctxt ""
 "ContextLabel\n"
 "value.text"
 msgid "Record mode"
-msgstr "Zapis"
+msgstr "Način beleženja"
 
 #. fDK7V
 #: GenericCommands.xcu
@@ -976,7 +1026,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Add To Dictionary"
-msgstr ""
+msgstr "Dodaj v slovar"
 
 #. zETLd
 #: ImpressWindowState.xcu
@@ -987,7 +1037,7 @@ msgctxt ""
 "UIName\n"
 "value.text"
 msgid "Slide Sorter/Pane (Canvas)"
-msgstr ""
+msgstr "Pregledovalnik/podokno prosojnic (platno)"
 
 #. BQB9h
 #: ImpressWindowState.xcu
@@ -998,17 +1048,18 @@ msgctxt ""
 "UIName\n"
 "value.text"
 msgid "Master Slide Sorter/Pane (Canvas)"
-msgstr ""
+msgstr "Pregledovalnik/podokno matric prosojnic (platno)"
 
 #. kB8Ri
 #: Sidebar.xcu
+#, fuzzy
 msgctxt ""
 "Sidebar.xcu\n"
 "..Sidebar.Content.PanelList.ScDatabasePropertyPanel\n"
 "Title\n"
 "value.text"
 msgid "Table Style Options"
-msgstr ""
+msgstr "Možnosti sloga tabele"
 
 #. SYFXq
 #: Sidebar.xcu
@@ -1028,7 +1079,7 @@ msgctxt ""
 "Title\n"
 "value.text"
 msgid "Colors"
-msgstr "Barva"
+msgstr "Barve"
 
 #. zz34M
 #: Sidebar.xcu
@@ -1038,7 +1089,7 @@ msgctxt ""
 "Title\n"
 "value.text"
 msgid "Theme"
-msgstr ""
+msgstr "Tema"
 
 #. dgWCC
 #: Sidebar.xcu
@@ -1048,87 +1099,95 @@ msgctxt ""
 "Title\n"
 "value.text"
 msgid "Gradients"
-msgstr ""
+msgstr "Prelivi"
 
 #. ezFez
 #: WriterCommands.xcu
+#, fuzzy
 msgctxt ""
 "WriterCommands.xcu\n"
 "..WriterCommands.UserInterface.Commands..uno:ReinstateTrackedChangeToNext\n"
 "Label\n"
 "value.text"
 msgid "Reinstate and Move to Next"
-msgstr "Zavrni in se pomakni na naslednjo"
+msgstr "Ponovno vzpostavi in pojdi na naslednjo"
 
 #. NmvTm
 #: WriterCommands.xcu
+#, fuzzy
 msgctxt ""
 "WriterCommands.xcu\n"
 "..WriterCommands.UserInterface.Commands..uno:ReinstateTrackedChangeToNext\n"
 "TooltipLabel\n"
 "value.text"
 msgid "Reinstate Track Change and select the next one"
-msgstr "Zavrni spremembo in izberi naslednjo"
+msgstr "Ponovno vzpostavi sledenje spremembam in izberi naslednjo"
 
 #. KVYrC
 #: WriterCommands.xcu
+#, fuzzy
 msgctxt ""
 "WriterCommands.xcu\n"
 "..WriterCommands.UserInterface.Commands..uno:ReinstateAllTrackedChanges\n"
 "Label\n"
 "value.text"
 msgid "Reinstate All"
-msgstr "Posodobi vse"
+msgstr "Ponovno vzpostavi vse"
 
 #. QkP7E
 #: WriterCommands.xcu
+#, fuzzy
 msgctxt ""
 "WriterCommands.xcu\n"
 "..WriterCommands.UserInterface.Commands..uno:ReinstateAllTrackedChanges\n"
 "TooltipLabel\n"
 "value.text"
 msgid "Reinstate All Tracked Changes"
-msgstr "Zavrni vse spremembe"
+msgstr "Ponovno vzpostavi vse zabeležene spremembe"
 
 #. SRvKK
 #: WriterCommands.xcu
+#, fuzzy
 msgctxt ""
 "WriterCommands.xcu\n"
 "..WriterCommands.UserInterface.Commands..uno:ReinstateAllTrackedChanges\n"
 "PopupLabel\n"
 "value.text"
 msgid "Reinstate All Changes"
-msgstr "Zavrni vse spremembe"
+msgstr "Ponovno vzpostavi vse spremembe"
 
 #. 6w9UB
 #: WriterCommands.xcu
+#, fuzzy
 msgctxt ""
 "WriterCommands.xcu\n"
 "..WriterCommands.UserInterface.Commands..uno:ReinstateTrackedChange\n"
 "Label\n"
 "value.text"
 msgid "Reinstate"
-msgstr "Zasu~kaj"
+msgstr "Ponovno vzpostavi"
 
 #. RgBxU
 #: WriterCommands.xcu
+#, fuzzy
 msgctxt ""
 "WriterCommands.xcu\n"
 "..WriterCommands.UserInterface.Commands..uno:ReinstateTrackedChange\n"
 "TooltipLabel\n"
 "value.text"
 msgid "Reinstate Track Change"
-msgstr "Zavrni spremembo"
+msgstr "Ponovno vzpostavi beleženo spremembo"
 
 #. rTFtt
 #: WriterCommands.xcu
+#, fuzzy
 msgctxt ""
 "WriterCommands.xcu\n"
 "..WriterCommands.UserInterface.Commands..uno:ReinstateTrackedChange\n"
 "PopupLabel\n"
 "value.text"
 msgid "Reinstate Change"
-msgstr "Zavrni spremembo"
+msgstr "Ponovno vzpostavi spremembo"
 
 #. duoP7
 #: WriterCommands.xcu
@@ -1138,7 +1197,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Record changes in this view"
-msgstr ""
+msgstr "Beleži spremembe v tem pogledu"
 
 #. TADBE
 #: WriterCommands.xcu
@@ -1148,7 +1207,7 @@ msgctxt ""
 "ContextLabel\n"
 "value.text"
 msgid "~Changes in this view"
-msgstr "Spremeni velikost pisave"
+msgstr "~Spremembe v tem pogledu"
 
 #. nn4AU
 #: WriterCommands.xcu
@@ -1158,7 +1217,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Record changes in all views"
-msgstr ""
+msgstr "Beleži spremembe v vseh pogledih"
 
 #. DJphX
 #: WriterCommands.xcu
@@ -1168,31 +1227,32 @@ msgctxt ""
 "ContextLabel\n"
 "value.text"
 msgid "~Changes in all views"
-msgstr "Vse spre~membe v besedilu"
+msgstr "Spre~membe v vseh pogledih"
 
 #. YwxEM
 #: sc/inc/globstr.hrc:70
+#, fuzzy
 msgctxt "STR_UNDO_TABLETOTALS"
 msgid "Tabletotals"
-msgstr ""
+msgstr "Vrstice vsot tabele"
 
 #. Gip2L
 #: sc/inc/globstr.hrc:211
 msgctxt "STR_TABLE_TOTAL"
 msgid "Summary"
-msgstr ""
+msgstr "Povzetek"
 
 #. cG7BY
 #: sc/inc/globstr.hrc:594
 msgctxt "STR_SHEET_VIEW_DEFAULT_VIEW_NAME"
 msgid "Default View"
-msgstr ""
+msgstr "Privzeti pogled"
 
 #. aYwkp
 #: sc/inc/globstr.hrc:595
 msgctxt "STR_SHEET_VIEW_TEMPORARY_NAME_TEMPLATE"
 msgid "Temporary View %1"
-msgstr ""
+msgstr "Začasni pogled %1"
 
 #. ADmez
 #: sc/inc/scfuncs.hrc:4257
@@ -1295,7 +1355,7 @@ msgstr ""
 #: sc/inc/scfuncs.hrc:4282
 msgctxt "SC_OPCODE_DROP"
 msgid "Columns"
-msgstr ""
+msgstr "Stolpci"
 
 #. cAxPB
 #: sc/inc/scfuncs.hrc:4283
@@ -1344,7 +1404,7 @@ msgstr ""
 #: sc/inc/scfuncs.hrc:4294
 msgctxt "SC_OPCODE_EXPAND"
 msgid "Columns"
-msgstr ""
+msgstr "Stolpci"
 
 #. EVAXE
 #: sc/inc/scfuncs.hrc:4295
@@ -1371,7 +1431,7 @@ msgstr "Vrednost, s katero želite blaziniti. Privzeto je #N/A."
 #: sc/inc/scfuncs.hrc:4303
 msgctxt "SC_OPCODE_HSTACK"
 msgid "Appends arrays horizontally to create a larger array."
-msgstr ""
+msgstr "Pripne matrike vodoravno, da ustvarite večjo matriko."
 
 #. LnAFg
 #: sc/inc/scfuncs.hrc:4304 sc/inc/scfuncs.hrc:4306
@@ -1399,7 +1459,7 @@ msgstr ""
 #: sc/inc/scfuncs.hrc:4313
 msgctxt "SC_OPCODE_VSTACK"
 msgid "Appends arrays vertically to create a larger array."
-msgstr ""
+msgstr "Pripne matrike navpično, da ustvarite večjo matriko."
 
 #. rhVRC
 #: sc/inc/scfuncs.hrc:4314 sc/inc/scfuncs.hrc:4316
@@ -1464,7 +1524,7 @@ msgstr ""
 #: sc/inc/scfuncs.hrc:4328
 msgctxt "SC_OPCODE_TAKE"
 msgid "Columns"
-msgstr ""
+msgstr "Stolpci"
 
 #. ZexcG
 #: sc/inc/scfuncs.hrc:4329
@@ -1566,7 +1626,7 @@ msgstr "Vrnjena vrednost, če ni zadetkov. Privzeto je #N/A."
 #: sc/inc/scfuncs.hrc:4353
 msgctxt "SC_OPCODE_TEXTBEFORE"
 msgid "Returns the text that occurs before a given substring or delimiter."
-msgstr "Vrne besedilo, k se pojavi pred danim podnizom ali ločilom."
+msgstr "Vrne besedilo, ki se pojavi pred danim podnizom ali ločilom."
 
 #. NNriC
 #: sc/inc/scfuncs.hrc:4354
@@ -1736,7 +1796,7 @@ msgstr "Vrednost, s katero želite blaziniti. Privzeto je #N/A."
 #: sc/inc/scfuncs.hrc:4389
 msgctxt "SC_OPCODE_TOCOL"
 msgid "Transforms an array into a single column."
-msgstr ""
+msgstr "Preoblikuje matriko v en sam stolpec."
 
 #. UAzNC
 #: sc/inc/scfuncs.hrc:4390
@@ -1930,6 +1990,7 @@ msgstr "Vrednost, s katero želite blaziniti. Privzeto je #N/A."
 
 #. 4af9a
 #: sc/uiconfig/scalc/ui/cellprotectionpage.ui:99
+#, fuzzy
 msgctxt "cellprotectionpage|label1"
 msgid ""
 "Cell protection is only effective after the current sheet has been "
@@ -1937,6 +1998,10 @@ msgid ""
 "individual cells first select all cells and toggle off the \"Protected\" "
 "option in the Format Cells dialog."
 msgstr ""
+"Zaščita celice je učinkovita samo v primeru, ko je zaščiten tudi trenutni "
+"delovni list. Privzeto so zaščitene vse celice na delovnem listu. Če želite "
+"zaščititi posamezne celice, najprej izberite vse celice in preklopite "
+"možnost »Zaščiteno« v pogovornem oknu Oblikuj celice."
 
 #. FVsyY
 #: sc/uiconfig/scalc/ui/conditionaleasydialog.ui:8
@@ -1948,31 +2013,31 @@ msgstr "Poudari celice ..."
 #: sc/uiconfig/scalc/ui/selectsheetviewdialog.ui:18
 msgctxt "selectsheetviewdialog|SelectSheetView"
 msgid "Select Sheet View"
-msgstr ""
+msgstr "Izberite pogled delovnega lista"
 
 #. GTQJA
 #: sc/uiconfig/scalc/ui/selectsheetviewdialog.ui:44
 msgctxt "selectsheetviewdialog|extended_tip|ok"
 msgid "Saves all changes and closes dialog."
-msgstr ""
+msgstr "Shrani vse spremembe in zapre pogovorno okno."
 
 #. kGFYu
 #: sc/uiconfig/scalc/ui/selectsheetviewdialog.ui:63
 msgctxt "selectsheetviewdialog|extended_tip|cancel"
 msgid "Closes dialog and discards all changes."
-msgstr ""
+msgstr "Zapre pogovorno okno in opusti vse spremembe."
 
 #. sQPFE
 #: sc/uiconfig/scalc/ui/selectsheetviewdialog.ui:134
 msgctxt "selectsheetviewdialog|extended_tip|entry-list"
 msgid "Available sheet views."
-msgstr ""
+msgstr "Razpoložljivi pogledi delovnega lista."
 
 #. csyNB
 #: sc/uiconfig/scalc/ui/sheetviewbox.ui:17
 msgctxt "sheetviewbox|sheetview_combobox|accessible_name"
 msgid "Sheet View"
-msgstr ""
+msgstr "Pogled delovnega lista"
 
 #. FXK8B
 #: sc/uiconfig/scalc/ui/sidebarcellappearance.ui:87
@@ -1982,428 +2047,429 @@ msgstr "Slog obrobe"
 
 #. sBXLD
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:22
+#, fuzzy
 msgctxt "sidebardatabase|chk_header_row"
 msgid "Show Header Row"
-msgstr ""
+msgstr "Pokaži glavo stolpcev"
 
 #. ECtUM
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:36
+#, fuzzy
 msgctxt "sidebardatabase|chk_total_row"
 msgid "Show Total Row"
-msgstr ""
+msgstr "Pokaži vrstico vsote"
 
 #. htZbK
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:50
+#, fuzzy
 msgctxt "sidebardatabase|chk_filter_buttons"
 msgid "Show Filter Buttons"
-msgstr ""
+msgstr "Pokaži gumbe filtra"
 
 #. MjALC
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:86
 msgctxt "sidebardatabase|chk_banded_rows"
 msgid "Banded Rows"
-msgstr ""
+msgstr "Poudarjene vrstice"
 
 #. GVkZ2
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:100
 msgctxt "sidebardatabase|chk_banded_cols"
 msgid "Banded Columns"
-msgstr ""
+msgstr "Poudarjeni stolpci"
 
 #. S4bop
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:114
-#, fuzzy
 msgctxt "sidebardatabase|chk_first_column"
 msgid "First Column"
-msgstr "Stolpec "
+msgstr "Prvi stolpec"
 
 #. QR56s
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:128
-#, fuzzy
 msgctxt "sidebardatabase|chk_last_column"
 msgid "Last Column"
-msgstr "Stolpec "
+msgstr "Zadnji stolpec"
 
 #. BJHqA
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:170
 msgctxt "sidebardatabase|lbl_styles"
 msgid "Table Styles"
-msgstr ""
+msgstr "Slogi tabele"
 
 #. er8nh
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:187
 msgctxt "sidebardatabase|none"
 msgid "None"
-msgstr ""
+msgstr "Brez"
 
 #. XXBL8
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:188
 msgctxt "sidebardatabase|tablestylelight1"
 msgid "Table Style Light 1"
-msgstr ""
+msgstr "Svetli slog tabele 1"
 
 #. NaDRX
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:189
 msgctxt "sidebardatabase|tablestylelight2"
 msgid "Table Style Light 2"
-msgstr ""
+msgstr "Svetli slog tabele 2"
 
 #. EWq9E
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:190
 msgctxt "sidebardatabase|tablestylelight3"
 msgid "Table Style Light 3"
-msgstr ""
+msgstr "Svetli slog tabele 3"
 
 #. GdYaL
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:191
 msgctxt "sidebardatabase|tablestylelight4"
 msgid "Table Style Light 4"
-msgstr ""
+msgstr "Svetli slog tabele 4"
 
 #. 8ZPyk
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:192
 msgctxt "sidebardatabase|tablestylelight5"
 msgid "Table Style Light 5"
-msgstr ""
+msgstr "Svetli slog tabele 5"
 
 #. xcztA
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:193
 msgctxt "sidebardatabase|tablestylelight6"
 msgid "Table Style Light 6"
-msgstr ""
+msgstr "Svetli slog tabele 6"
 
 #. pYufr
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:194
 msgctxt "sidebardatabase|tablestylelight7"
 msgid "Table Style Light 7"
-msgstr ""
+msgstr "Svetli slog tabele 7"
 
 #. beC85
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:195
 msgctxt "sidebardatabase|tablestylelight8"
 msgid "Table Style Light 8"
-msgstr ""
+msgstr "Svetli slog tabele 8"
 
 #. TSbAe
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:196
 msgctxt "sidebardatabase|tablestylelight9"
 msgid "Table Style Light 9"
-msgstr ""
+msgstr "Svetli slog tabele 9"
 
 #. GPxe2
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:197
 msgctxt "sidebardatabase|tablestylelight10"
 msgid "Table Style Light 10"
-msgstr ""
+msgstr "Svetli slog tabele 10"
 
 #. sedZT
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:198
 msgctxt "sidebardatabase|tablestylelight11"
 msgid "Table Style Light 11"
-msgstr ""
+msgstr "Svetli slog tabele 11"
 
 #. VyEM2
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:199
 msgctxt "sidebardatabase|tablestylelight12"
 msgid "Table Style Light 12"
-msgstr ""
+msgstr "Svetli slog tabele 12"
 
 #. FF2AT
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:200
 msgctxt "sidebardatabase|tablestylelight13"
 msgid "Table Style Light 13"
-msgstr ""
+msgstr "Svetli slog tabele 13"
 
 #. pTuyt
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:201
 msgctxt "sidebardatabase|tablestylelight14"
 msgid "Table Style Light 14"
-msgstr ""
+msgstr "Svetli slog tabele 14"
 
 #. zAgnL
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:202
 msgctxt "sidebardatabase|tablestylelight15"
 msgid "Table Style Light 15"
-msgstr ""
+msgstr "Svetli slog tabele 15"
 
 #. L4B9t
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:203
 msgctxt "sidebardatabase|tablestylelight16"
 msgid "Table Style Light 16"
-msgstr ""
+msgstr "Svetli slog tabele 16"
 
 #. ek54L
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:204
 msgctxt "sidebardatabase|tablestylelight17"
 msgid "Table Style Light 17"
-msgstr ""
+msgstr "Svetli slog tabele 17"
 
 #. P6nBG
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:205
 msgctxt "sidebardatabase|tablestylelight18"
 msgid "Table Style Light 18"
-msgstr ""
+msgstr "Svetli slog tabele 18"
 
 #. dnT2p
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:206
 msgctxt "sidebardatabase|tablestylelight19"
 msgid "Table Style Light 19"
-msgstr ""
+msgstr "Svetli slog tabele 19"
 
 #. Bprxv
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:207
 msgctxt "sidebardatabase|tablestylelight20"
 msgid "Table Style Light 20"
-msgstr ""
+msgstr "Svetli slog tabele 20"
 
 #. Z8foN
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:208
 msgctxt "sidebardatabase|tablestylelight21"
 msgid "Table Style Light 21"
-msgstr ""
+msgstr "Svetli slog tabele 21"
 
 #. 2qyXC
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:209
 msgctxt "sidebardatabase|tablestylemedium1"
 msgid "Table Style Medium 1"
-msgstr ""
+msgstr "Srednji slog tabele 1"
 
 #. MWzKk
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:210
 msgctxt "sidebardatabase|tablestylemedium2"
 msgid "Table Style Medium 2"
-msgstr ""
+msgstr "Srednji slog tabele 2"
 
 #. fFFCC
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:211
 msgctxt "sidebardatabase|tablestylemedium3"
 msgid "Table Style Medium 3"
-msgstr ""
+msgstr "Srednji slog tabele 3"
 
 #. FthwA
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:212
 msgctxt "sidebardatabase|tablestylemedium4"
 msgid "Table Style Medium 4"
-msgstr ""
+msgstr "Srednji slog tabele 4"
 
 #. rCtpb
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:213
 msgctxt "sidebardatabase|tablestylemedium5"
 msgid "Table Style Medium 5"
-msgstr ""
+msgstr "Srednji slog tabele 5"
 
 #. UJ6BA
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:214
 msgctxt "sidebardatabase|tablestylemedium6"
 msgid "Table Style Medium 6"
-msgstr ""
+msgstr "Srednji slog tabele 6"
 
 #. EbA2b
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:215
 msgctxt "sidebardatabase|tablestylemedium7"
 msgid "Table Style Medium 7"
-msgstr ""
+msgstr "Srednji slog tabele 7"
 
 #. XQS9X
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:216
 msgctxt "sidebardatabase|tablestylemedium8"
 msgid "Table Style Medium 8"
-msgstr ""
+msgstr "Srednji slog tabele 8"
 
 #. Dho46
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:217
 msgctxt "sidebardatabase|tablestylemedium9"
 msgid "Table Style Medium 9"
-msgstr ""
+msgstr "Srednji slog tabele 9"
 
 #. P7SBG
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:218
 msgctxt "sidebardatabase|tablestylemedium10"
 msgid "Table Style Medium 10"
-msgstr ""
+msgstr "Srednji slog tabele 10"
 
 #. Rhfet
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:219
 msgctxt "sidebardatabase|tablestylemedium11"
 msgid "Table Style Medium 11"
-msgstr ""
+msgstr "Srednji slog tabele 11"
 
 #. JEdqF
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:220
 msgctxt "sidebardatabase|tablestylemedium12"
 msgid "Table Style Medium 12"
-msgstr ""
+msgstr "Srednji slog tabele 12"
 
 #. LWYBs
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:221
 msgctxt "sidebardatabase|tablestylemedium13"
 msgid "Table Style Medium 13"
-msgstr ""
+msgstr "Srednji slog tabele 13"
 
 #. HiGPB
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:222
 msgctxt "sidebardatabase|tablestylemedium14"
 msgid "Table Style Medium 14"
-msgstr ""
+msgstr "Srednji slog tabele 14"
 
 #. FKMSw
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:223
 msgctxt "sidebardatabase|tablestylemedium15"
 msgid "Table Style Medium 15"
-msgstr ""
+msgstr "Srednji slog tabele 15"
 
 #. CuPuC
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:224
 msgctxt "sidebardatabase|tablestylemedium16"
 msgid "Table Style Medium 16"
-msgstr ""
+msgstr "Srednji slog tabele 16"
 
 #. ACA7x
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:225
 msgctxt "sidebardatabase|tablestylemedium17"
 msgid "Table Style Medium 17"
-msgstr ""
+msgstr "Srednji slog tabele 17"
 
 #. bcDbJ
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:226
 msgctxt "sidebardatabase|tablestylemedium18"
 msgid "Table Style Medium 18"
-msgstr ""
+msgstr "Srednji slog tabele 18"
 
 #. d42En
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:227
 msgctxt "sidebardatabase|tablestylemedium19"
 msgid "Table Style Medium 19"
-msgstr ""
+msgstr "Srednji slog tabele 19"
 
 #. pfyP6
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:228
 msgctxt "sidebardatabase|tablestylemedium20"
 msgid "Table Style Medium 20"
-msgstr ""
+msgstr "Srednji slog tabele 20"
 
 #. n5kSb
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:229
 msgctxt "sidebardatabase|tablestylemedium21"
 msgid "Table Style Medium 21"
-msgstr ""
+msgstr "Srednji slog tabele 21"
 
 #. mYnu7
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:230
 msgctxt "sidebardatabase|tablestylemedium22"
 msgid "Table Style Medium 22"
-msgstr ""
+msgstr "Srednji slog tabele 22"
 
 #. jGs7c
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:231
 msgctxt "sidebardatabase|tablestylemedium23"
 msgid "Table Style Medium 23"
-msgstr ""
+msgstr "Srednji slog tabele 23"
 
 #. vMAB3
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:232
 msgctxt "sidebardatabase|tablestylemedium24"
 msgid "Table Style Medium 24"
-msgstr ""
+msgstr "Srednji slog tabele 24"
 
 #. xk5eg
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:233
 msgctxt "sidebardatabase|tablestylemedium25"
 msgid "Table Style Medium 25"
-msgstr ""
+msgstr "Srednji slog tabele 25"
 
 #. sA3q2
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:234
 msgctxt "sidebardatabase|tablestylemedium26"
 msgid "Table Style Medium 26"
-msgstr ""
+msgstr "Srednji slog tabele 26"
 
 #. usGBf
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:235
 msgctxt "sidebardatabase|tablestylemedium27"
 msgid "Table Style Medium 27"
-msgstr ""
+msgstr "Srednji slog tabele 27"
 
 #. 32DXC
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:236
 msgctxt "sidebardatabase|tablestylemedium28"
 msgid "Table Style Medium 28"
-msgstr ""
+msgstr "Srednji slog tabele 28"
 
 #. TiDzP
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:237
 msgctxt "sidebardatabase|tablestyledark1"
 msgid "Table Style Dark 1"
-msgstr ""
+msgstr "Temni slog tabele 1"
 
 #. jTCaC
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:238
 msgctxt "sidebardatabase|tablestyledark2"
 msgid "Table Style Dark 2"
-msgstr ""
+msgstr "Temni slog tabele 2"
 
 #. 2FCAs
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:239
 msgctxt "sidebardatabase|tablestyledark3"
 msgid "Table Style Dark 3"
-msgstr ""
+msgstr "Temni slog tabele 3"
 
 #. B3BJY
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:240
 msgctxt "sidebardatabase|tablestyledark4"
 msgid "Table Style Dark 4"
-msgstr ""
+msgstr "Temni slog tabele 4"
 
 #. TfBSE
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:241
 msgctxt "sidebardatabase|tablestyledark5"
 msgid "Table Style Dark 5"
-msgstr ""
+msgstr "Temni slog tabele 5"
 
 #. jvA93
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:242
 msgctxt "sidebardatabase|tablestyledark6"
 msgid "Table Style Dark 6"
-msgstr ""
+msgstr "Temni slog tabele 6"
 
 #. 2DAii
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:243
 msgctxt "sidebardatabase|tablestyledark7"
 msgid "Table Style Dark 7"
-msgstr ""
+msgstr "Temni slog tabele 7"
 
 #. B6GrN
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:244
 msgctxt "sidebardatabase|tablestyledark8"
 msgid "Table Style Dark 8"
-msgstr ""
+msgstr "Temni slog tabele 8"
 
 #. TcGzg
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:245
 msgctxt "sidebardatabase|tablestyledark9"
 msgid "Table Style Dark 9"
-msgstr ""
+msgstr "Temni slog tabele 9"
 
 #. DEL7d
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:246
 msgctxt "sidebardatabase|tablestyledark10"
 msgid "Table Style Dark 10"
-msgstr ""
+msgstr "Temni slog tabele 10"
 
 #. M2TB4
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:247
 msgctxt "sidebardatabase|tablestyledark11"
 msgid "Table Style Dark 11"
-msgstr ""
+msgstr "Temni slog tabele 11"
 
 #. CJUkb
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:251
 msgctxt "sidebardatabase|tablestylenames"
 msgid "Table Style Names"
-msgstr ""
+msgstr "Imena slogov tabele"
 
 #. 3FfJ4
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:252
 msgctxt "sidebardatabase|defaulttablestylenames"
 msgid "Default Table Style Names"
-msgstr ""
+msgstr "Privzeta imena slogov tabele"
