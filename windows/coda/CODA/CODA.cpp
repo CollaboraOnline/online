@@ -1807,7 +1807,8 @@ static void openCOOLWindow(const FilenameAndUri& filenameAndUri, PERMISSION perm
                                     .Get(),
                                 nullptr);
 
-                            // new windows appear to need to reuse the original env of the parent
+                            // New windows appear to need to reuse the original env of the parent, a good explanation
+                            // of use at: https://github.com/MicrosoftEdge/WebView2Feedback/discussions/4501#discussioncomment-9215801
                             webView->add_NewWindowRequested(
                                 Microsoft::WRL::Callback<ICoreWebView2NewWindowRequestedEventHandler>(
                                     [env, &data](ICoreWebView2* sender, ICoreWebView2NewWindowRequestedEventArgs* args)
