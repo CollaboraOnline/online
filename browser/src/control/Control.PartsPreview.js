@@ -43,6 +43,7 @@ window.L.Control.PartsPreview = window.L.Control.extend({
 		this._idNum = 0;
 		this._width = 0;
 		this._height = 0;
+		this.scrollTimer = null;
 	},
 
 	onAdd: function (map) {
@@ -404,8 +405,11 @@ window.L.Control.PartsPreview = window.L.Control.extend({
 		var node = this._partsPreviewCont.children[partNo];
 
 		if (node && (!this._previewTiles[partNo] || !this._isPreviewVisible(partNo))) {
-			setTimeout(function() {
+			if (this.scrollTimer) clearTimeout(this.scrollTimer);
+
+			 this.scrollTimer = setTimeout(() => {
 				node.scrollIntoView();
+				this.scrollTimer = null;
 			}, 50);
 		}
 	},
