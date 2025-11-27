@@ -1,0 +1,133 @@
+#
+# This file is part of the Collabora Office project.
+#
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at http://mozilla.org/MPL/2.0/.
+#
+# This file incorporates work covered by the following license notice:
+#
+#   Licensed to the Apache Software Foundation (ASF) under one or more
+#   contributor license agreements. See the NOTICE file distributed
+#   with this work for additional information regarding copyright
+#   ownership. The ASF licenses this file to you under the Apache
+#   License, Version 2.0 (the "License"); you may not use this file
+#   except in compliance with the License. You may obtain a copy of
+#   the License at http://www.apache.org/licenses/LICENSE-2.0 .
+#
+[Desktop Entry]
+Version=1.5
+Terminal=false
+NoDisplay=false
+Icon=com.collabora.Office.startcenter
+Type=Application
+Categories=Office;X-Red-Hat-Base;X-SuSE-Core-Office;
+Exec=coda-qt %F
+MimeType=application/clarisworks;application/docbook+xml;application/macwriteii;application/msword;application/prs.plucker;application/rtf;application/vnd.apple.pages;application/vnd.lotus-wordpro;application/vnd.ms-word;application/vnd.ms-word.document.macroEnabled.12;application/vnd.ms-word.template.macroEnabled.12;application/vnd.ms-works;application/vnd.oasis.opendocument.text;application/vnd.oasis.opendocument.text-flat-xml;application/vnd.oasis.opendocument.text-master;application/vnd.oasis.opendocument.text-master-template;application/vnd.oasis.opendocument.text-template;application/vnd.oasis.opendocument.text-web;application/vnd.openxmlformats-officedocument.wordprocessingml.document;application/vnd.openxmlformats-officedocument.wordprocessingml.template;application/vnd.palm;application/vnd.stardivision.writer-global;application/vnd.sun.xml.writer;application/vnd.sun.xml.writer.global;application/vnd.sun.xml.writer.template;application/vnd.wordperfect;application/wordperfect;application/x-abiword;application/x-aportisdoc;application/x-doc;application/x-extension-txt;application/x-fictionbook+xml;application/x-hwp;application/x-iwork-pages-sffpages;application/x-mswrite;application/x-pocket-word;application/x-sony-bbeb;application/x-starwriter;application/x-starwriter-global;application/x-t602;text/rtf;application/mspowerpoint;application/vnd.apple.keynote;application/vnd.ms-powerpoint;application/vnd.ms-powerpoint.presentation.macroEnabled.12;application/vnd.ms-powerpoint.slideshow.macroEnabled.12;application/vnd.ms-powerpoint.template.macroEnabled.12;application/vnd.oasis.opendocument.presentation;application/vnd.oasis.opendocument.presentation-flat-xml;application/vnd.oasis.opendocument.presentation-template;application/vnd.openxmlformats-officedocument.presentationml.presentation;application/vnd.openxmlformats-officedocument.presentationml.slide;application/vnd.openxmlformats-officedocument.presentationml.slideshow;application/vnd.openxmlformats-officedocument.presentationml.template;application/vnd.stardivision.impress;application/vnd.sun.xml.impress;application/vnd.sun.xml.impress.template;application/x-iwork-keynote-sffkey;application/x-starimpress;application/clarisworks;application/pdf;application/vnd.corel-draw;application/vnd.ms-publisher;application/vnd.oasis.opendocument.graphics;application/vnd.oasis.opendocument.graphics-flat-xml;application/vnd.oasis.opendocument.graphics-template;application/vnd.quark.quarkxpress;application/vnd.stardivision.draw;application/vnd.sun.xml.draw;application/vnd.sun.xml.draw.template;application/vnd.visio;application/x-pagemaker;application/x-stardraw;application/x-wpg;image/x-emf;image/x-freehand;image/x-wmf;application/clarisworks;application/csv;application/excel;application/msexcel;application/tab-separated-values;application/vnd.apache.parquet;application/vnd.apple.numbers;application/vnd.lotus-1-2-3;application/vnd.ms-excel;application/vnd.ms-excel.sheet.binary.macroEnabled.12;application/vnd.ms-excel.sheet.macroEnabled.12;application/vnd.ms-excel.template.macroEnabled.12;application/vnd.ms-works;application/vnd.oasis.opendocument.chart;application/vnd.oasis.opendocument.chart-template;application/vnd.oasis.opendocument.spreadsheet;application/vnd.oasis.opendocument.spreadsheet-flat-xml;application/vnd.oasis.opendocument.spreadsheet-template;application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;application/vnd.openxmlformats-officedocument.spreadsheetml.template;application/vnd.stardivision.calc;application/vnd.stardivision.chart;application/vnd.sun.xml.calc;application/vnd.sun.xml.calc.template;application/x-123;application/x-dbase;application/x-dbf;application/x-dos_ms_excel;application/x-excel;application/x-gnumeric;application/x-iwork-numbers-sffnumbers;application/x-ms-excel;application/x-msexcel;application/x-quattropro;application/x-starcalc;application/x-starchart;text/comma-separated-values;text/csv;text/spreadsheet;text/tab-separated-values;text/x-comma-separated-values;text/x-csv;application/vnd.openofficeorg.extension;x-scheme-handler/vnd.libreoffice.cmis;x-scheme-handler/vnd.sun.star.webdav;x-scheme-handler/vnd.sun.star.webdavs;x-scheme-handler/vnd.libreoffice.command;x-scheme-handler/ms-word;x-scheme-handler/ms-powerpoint;x-scheme-handler/ms-excel;x-scheme-handler/ms-visio;x-scheme-handler/ms-access;
+Name=Collabora Office
+GenericName=Office
+GenericName[ar]=مكتب
+GenericName[ca]=Oficina
+GenericName[cs]=Kancelář
+GenericName[cy]=Swyddfa
+GenericName[da]=Kontor
+GenericName[de]=Office
+GenericName[el]=Γραφείο
+GenericName[en]=Office
+GenericName[en_GB]=Office
+GenericName[es]=Programas de oficina
+GenericName[eu]=Bulegoa
+GenericName[fi]=Toimisto
+GenericName[fr]=Bureau
+GenericName[ga]=Oifig
+GenericName[gl]=Oficina
+GenericName[he]=משרד
+GenericName[hr]=Ured
+GenericName[hu]=Iroda
+GenericName[hy]=Գրասենյակ
+GenericName[id]=Perkantoran
+GenericName[is]=Skrifstofuforrit
+GenericName[it]=Ufficio
+GenericName[ja]=Office
+GenericName[kk]=Офис
+GenericName[ko]=오피스
+GenericName[nl]=Kantoor
+GenericName[pl]=Biuro
+GenericName[pt]=Escritório
+GenericName[pt_BR]=Office
+GenericName[ro]=Birou
+GenericName[ru]=Офис
+GenericName[sk]=Kancelária
+GenericName[sl]=Pisarniški paket
+GenericName[sq]=Zyrë
+GenericName[sv]=Kontor
+GenericName[tr]=Ofis
+GenericName[uk]=Офіс
+GenericName[zh_CN]=办公
+GenericName[zh_TW]=辦公
+Comment=Launch applications to create text documents, spreadsheets, presentations, drawings, or open recently used documents.
+Comment[ar]=Launch applications to create text documents, spreadsheets, presentations, drawings, or open recently used documents.
+Comment[ca]=Inicieu aplicacions per a crear documents de text, fulls de càlcul, presentacions, dibuixos, fórmules i bases de dades, o obriu documents usats recentment.
+Comment[cs]=Spouští aplikace pro vytváření textových dokumentů, sešitů, prezentací, kreseb, vzorců a databází nebo otevírá naposledy otevřené dokumenty.
+Comment[cy]=Agor rhaglenni er mwyn creu dogfennau testun, taenlenni, cyflwyniadau, lluniadau, fformiwlâu a chronfeydd data neu agor dogfennau a ddefnyddiwyd yn ddiweddar.
+Comment[da]=Start programmer til at oprette tekstdokumenter, regneark, præsentationer, tegninger, formler og databaser, eller åbn nyligt brugte dokumenter.
+Comment[de]=Eine Anwendung starten, um Textdokumente, Tabellendokumente, Präsentationen, Zeichnungen, Formeln und Datenbanken zu erstellen, oder kürzlich verwendete Dokumente öffnen.
+Comment[el]=Εκκίνηση εφαρμογών για τη δημιουργία εγγράφων κειμένου, υπολογιστικών φύλλων, παρουσιάσεων, σχεδίων, τύπων και βάσεων δεδομένων ή άνοιγμα εγγράφων που χρησιμοποιήθηκαν πρόσφατα.
+Comment[en]=Launch applications to create text documents, spreadsheets, presentations, drawings, or open recently used documents.
+Comment[en_GB]=Launch applications to create text documents, spreadsheets, presentations, drawings, formulae, and databases, or open recently used documents.
+Comment[es]=Inicie aplicaciones para crear documentos de texto, hojas de cálculo, presentaciones, dibujos, fórmulas y bases de datos, o abra documentos usados recientemente.
+Comment[eu]=Abiarazi testu-dokumentuak, kalkulu-orriak, aurkezpenak, marrazkiak, formulak eta datu-baseak sortzeko aplikazioak, edo ireki azken aldian erabilitako dokumentuak.
+Comment[fi]=Käynnistä sovelluksia, joilla luot tekstiasiakirjoja, laskentataulukoita, esityksiä, piirroksia, kaavoja ja tietokantoja tai avaa viimeaikaisia asiakirjoja.
+Comment[fr]=Lancer des applications pour créer des documents texte, des feuilles de calcul, des présentations, des dessins, des formules et des bases de données, ou ouvrir les documents récemment utilisés.
+Comment[ga]=Launch applications to create text documents, spreadsheets, presentations, drawings, or open recently used documents.
+Comment[gl]=Inicie aplicacións para crear documentos de texto, follas de cálculo, presentacións, debuxos, fórmulas e bases de datos ou abra documentos recentes.
+Comment[he]=הפעלת יישומים כדי ליצור מסמכי טקסט, גיליונות נתונים, מצגות, ציורים, נוסחאות ומסדי נתונים או לפתוח את המסמכים האחרונים שהיו בשימוש.
+Comment[hr]=Pokrenite aplikacije za stvaranje tekstualnih dokumenata, prezentacija, crteža, formula i baza podataka, ili otvorite nedavno korištene dokumente.
+Comment[hu]=Alkalmazások indítása szöveges dokumentumok, táblázatok, bemutatók, rajzok, képletek és adatbázisok létrehozásához vagy a legutóbbi dokumentumok megnyitása.
+Comment[hy]=Կառավարեք տվյալների բազաները, ստեղծեք հարցումներ և հաշվետվություններ՝ ձեր տեղեկատվությանը հետևելու և կառավարելու համար.
+Comment[id]=Meluncurkan aplikasi untuk membuat dokumen teks, lembar sebar, presentasi, gambar, rumus, dan basis data, atau membuka dokumen yang baru-baru ini dipakai.
+Comment[is]=Keyrðu forrit til að útbúa textaskjöl, töflureikna, kynningar, teikningar, formúlur og gagnagrunna, eða opnaðu nýleg skjöl.
+Comment[it]=Avvia applicazioni per creare documenti di testo, fogli di calcolo, presentazioni, disegni, formule e database, oppure apri i documenti recenti.
+Comment[ja]=アプリケーションを起動してテキスト文書、表計算、プレゼンテーションスライド、図形を使った画像編集、数式、データベースを作成したり、最近使用した文書を開くことができます。
+Comment[kk]=Мәтіндік құжаттар, электрондық кестелер, презентациялар, сызбалар, формулалар және дерекқорларды жасау үшін қолданбаларды жөнелту немесе жуырда пайдаланылған құжаттарды ашу.
+Comment[ko]=애플리케이션을 실행하여 텍스트 문서, 스프레드시트, 프레젠테이션, 드로잉, 수식, 데이터베이스를 만들거나 최근에 사용한 문서를 엽니다.
+Comment[nl]=Start applicaties om tekstdocumenten, werkbladen, presentaties, tekeningen, formules en databases te maken of recent gebruikte documenten te openen.
+Comment[pl]=Uruchamiaj aplikacje do tworzenia dokumentów tekstowych, arkuszy kalkulacyjnych, prezentacji, rysunków, formuł i baz danych lub otwieraj ostatnio używane dokumenty.
+Comment[pt]=Inicie aplicações para criar documentos de texto, folhas de cálculo, apresentações, desenhos, fórmulas e bases de dados ou abra documentos recentes.
+Comment[pt_BR]=Inicie aplicativos para criar documentos de texto, planilhas, apresentações, desenhos, fórmulas e bancos de dados ou abra documentos recém utilizados.
+Comment[ro]=Launch applications to create text documents, spreadsheets, presentations, drawings, or open recently used documents.
+Comment[ru]=Запуск приложений для создания текстовых документов, электронных таблиц, презентаций, рисунков, формул и баз данных или открытия недавно использованных документов.
+Comment[sk]=Spúšťa aplikácie na vytváranie textových a tabuľkových dokumentov, prezentácií, kresieb, vzorcov a databáz alebo otvára naposledy otvorené dokumenty.
+Comment[sl]=Zaženite programe, s katerimi lahko ustvarite besedilne dokumente, preglednice, predstavitve, risbe, formule in zbirke podatkov ali pa odprete nedavno uporabljene dokumente.
+Comment[sq]=Launch applications to create text documents, spreadsheets, presentations, drawings, or open recently used documents.
+Comment[sv]=Starta program för att skapa textdokument, kalkylblad, presentationer, ritningar, formler och databaser eller öppna nyligen använda dokument.
+Comment[tr]=Metin belgeleri, hesap tabloları, sunumlar, çizimler, formüller ve veritabanları oluşturmak veya son kullanılan belgeleri açmak için uygulamaları başlatın.
+Comment[uk]=Запуск програм для створення текстових документів, електронних таблиць, презентацій, малюнків, формул і баз даних або відкриття нещодавно використаних документів.
+Comment[zh_CN]=启动应用程序以创建文本文档、电子表格、演示文稿、绘图、公式和数据库，或者打开最近使用过的文档。
+Comment[zh_TW]=啟動應用程式以建立文字文件、試算表、簡報、繪圖、公式與資料庫，或是開啟最近使用的文件。
+StartupNotify=true
+X-GIO-NoFuse=true
+StartupWMClass=libreoffice-startcenter
+X-KDE-Protocols=file,http,webdav,webdavs
+
+##Define Actions
+Actions=Writer;Calc;Impress;Draw;
+X-Endless-Alias=collaboraoffice-startcenter
+
+[Desktop Action Writer]
+Name=Text Document
+Exec=coda-qt --writer
+
+[Desktop Action Calc]
+Name=Spreadsheet
+Exec=coda-qt --calc
+
+[Desktop Action Impress]
+Name=Presentation
+Exec=coda-qt --impress
+
+[Desktop Action Draw]
+Name=Drawing
+Exec=coda-qt --draw
+
+##End of actions menu
