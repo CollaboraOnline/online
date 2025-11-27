@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   version="1.1"
+   viewBox="0 0 16 16"
+   id="svg1"
+   sodipodi:docname="lc_iconviewexpander.svg"
+   inkscape:version="1.4.2 (ebf0e940d0, 2025-05-08)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs1" />
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:zoom="52.3125"
+     inkscape:cx="8.0095579"
+     inkscape:cy="8"
+     inkscape:window-width="1338"
+     inkscape:window-height="1038"
+     inkscape:window-x="1929"
+     inkscape:window-y="5"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg1" />
+  <path
+     d="m 4,12 h 8 V 8 7 5 4 H 11 10 9 8 7 6 5 4.47461 4 v 1 6 z M 5,11 V 8 H 6 6.47461 7 8 8.47461 9 10 10.47461 11 v 2.293 0.70703 H 5 Z M 5,7 V 5 H 6 V 7 Z M 7,7 V 5 H 8 V 7 Z M 9,7 V 5 h 1 v 2 z"
+     fill="#fafafa"
+     id="path1" />
+</svg>
