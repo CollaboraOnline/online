@@ -124,7 +124,7 @@ function _iconViewEntry(
 
 	if (!disabled) {
 		const singleClick = parentData.singleclickactivate === true;
-		$(entryContainer).click(function () {
+		$(entryContainer).on('click', function (event: JQuery.ClickEvent) {
 			entryContainer.setAttribute('tabindex', '0');
 			entryContainer.focus();
 			//avoid re-selecting already selected entry
@@ -135,25 +135,39 @@ function _iconViewEntry(
 				this.setAttribute('aria-selected', 'false');
 			});
 
-			builder.callback('iconview', 'select', parentData, entry.row, builder);
+			const data: IconViewEntrySelectionJSON = {
+				row: entry.row,
+				shiftKey: event.shiftKey,
+				ctrlKey: event.ctrlKey,
+				mousePressed: true,
+			}
+
+			builder.callback('iconview', 'select', parentData, data, builder);
 			if (singleClick) {
 				builder.callback(
 					'iconview',
 					'activate',
 					parentData,
-					entry.row,
+					data,
 					builder,
 				);
 			}
 		});
 
-		entryContainer.addEventListener('contextmenu', function (e: Event) {
+		entryContainer.addEventListener('contextmenu', function (event: JQuery.ContextMenuEvent) {
 			$('#' + parentData.id + ' .ui-iconview-entry').each(function () {
 				$(this).removeClass('selected');
 				this.setAttribute('aria-selected', 'false');
 			});
 
-			builder.callback('iconview', 'select', parentData, entry.row, builder);
+			const data: IconViewEntrySelectionJSON = {
+				row: entry.row,
+				shiftKey: event.shiftKey,
+				ctrlKey: event.ctrlKey,
+				mousePressed: true,
+			}
+
+			builder.callback('iconview', 'select', parentData, data, builder);
 			$(entryContainer).addClass('selected');
 			entryContainer.setAttribute('aria-selected', 'true');
 
@@ -161,14 +175,21 @@ function _iconViewEntry(
 				'iconview',
 				'contextmenu',
 				parentData,
-				entry.row,
+				data,
 				builder,
 			);
-			e.preventDefault();
+			event.preventDefault();
 		});
 
 		if (!singleClick) {
-			$(entryContainer).dblclick(function () {
+			$(entryContainer).on('dblclick', function (event: JQuery.DoubleClickEvent) {
+				const data: IconViewEntrySelectionJSON = {
+					row: entry.row,
+					shiftKey: event.shiftKey,
+					ctrlKey: event.ctrlKey,
+					mousePressed: true,
+				}
+
 				builder.callback(
 					'iconview',
 					'activate',
@@ -179,6 +200,22 @@ function _iconViewEntry(
 			});
 		}
 		builder._preventDocumentLosingFocusOnClick(entryContainer);
+
+		entryContainer.addEventListener('keydown', function (e: KeyboardEvent) {
+			if (e.key !== 'Enter' && e.key !== ' ' && e.code !== 'Space') return;
+
+			const data: IconViewEntrySelectionJSON = {
+				row: entry.row,
+				shiftKey: e.shiftKey,
+				ctrlKey: e.ctrlKey,
+				mousePressed: true, /* replicate mouse press */
+			}
+
+			if (e.key === ' ' || e.code === 'Space')
+				builder.callback('iconview', 'select', parentData, data, builder);
+			else if (e.key === 'Enter')
+				builder.callback('iconview', 'activate', parentData, data, builder);
+		});
 	}
 }
 
