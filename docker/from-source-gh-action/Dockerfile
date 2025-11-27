@@ -68,7 +68,9 @@ RUN chmod +x /start-collabora-online.sh
 
 # set up Collabora Online (normally done by postinstall script of package)
 # Fix permissions
-RUN adduser --quiet --system --group --home /opt/cool cool && \
+RUN setcap cap_fowner,cap_chown,cap_sys_chroot=ep /usr/bin/coolforkit-caps && \
+    setcap cap_sys_admin=ep /usr/bin/coolmount && \
+    adduser --quiet --system --group --home /opt/cool cool && \
     rm -rf /opt/cool || true && \
     mkdir -p /opt/cool/child-roots /opt/cool/cache && \
     chown cool: /opt/cool && \
