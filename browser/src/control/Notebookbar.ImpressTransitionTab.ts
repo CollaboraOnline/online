@@ -135,6 +135,7 @@ class ImpressTransitionTab implements NotebookbarTab {
 				id: 'apply_to_all',
 				type: 'pushbutton',
 				text: _('Apply to All Slides'),
+				image: app.LOUtil.getImageURL('lc_applytoallslides.svg'),
 			},
 		];
 
