@@ -364,6 +364,8 @@ class LOUtil {
 			masterslidespanel: 'masterslide',
 			slidemasterpage: 'masterslide',
 			tabledeletemenu: 'deletetable',
+			insertcalctable: 'inserttable',
+			removecalctable: 'deletetable',
 			tracechangemode: 'trackchanges',
 			deleteallannotation: 'deleteallnotes',
 			sdtabledesignpanel: 'tabledesign',

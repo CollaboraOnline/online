@@ -70,7 +70,7 @@ window.L.Control.ContextMenu = window.L.Control.extend({
 				   'AddToWordbook'],
 
 			spreadsheet: ['MergeCells', 'SplitCell', 'InsertCell', 'DeleteCell',
-				      'RecalcPivotTable', 'DataDataPilotRun', 'DeletePivotTable',
+				      'RecalcPivotTable', 'DataDataPilotRun', 'DeletePivotTable', 'InsertCalcTable', 'RemoveCalcTable',
 				      'FormatCellDialog', 'DeleteNote', 'SetAnchorToCell', 'SetAnchorToCellResize',
 				      'FormatSparklineMenu', 'InsertSparkline', 'DeleteSparkline', 'DeleteSparklineGroup',
 				      'EditSparklineGroup', 'EditSparkline', 'GroupSparklines', 'UngroupSparklines', 'AutoFill'],
@@ -103,7 +103,7 @@ window.L.Control.ContextMenu = window.L.Control.extend({
 			// text
 			'SpellingAndGrammarDialog', 'FontDialog', 'FontDialogForParagraph',
 			// spreadsheet
-			'FormatCellDialog', 'DataDataPilotRun',
+			'FormatCellDialog', 'DataDataPilotRun', 'InsertCalcTable',
 			'GroupSparklines', 'UngroupSparklines', 'AutoFill'
 		],
 
