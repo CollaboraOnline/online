@@ -150,11 +150,9 @@ class MouseControl extends CanvasSectionObject {
 		let diffY = app.activeDocument.activeView.viewedRectangle.pY1;
 
 		if (app.map.getDocType() === 'spreadsheet') {
-			if (app.isXOrdinateInFrozenPane(point.pX))
-				diffX = 0;
+			if (app.isXOrdinateInFrozenPane(point.pX)) diffX = 0;
 
-			if (app.isYOrdinateInFrozenPane(point.pY))
-				diffY = 0;
+			if (app.isYOrdinateInFrozenPane(point.pY)) diffY = 0;
 		}
 
 		this.currentPosition.pX = point.pX + diffX;
