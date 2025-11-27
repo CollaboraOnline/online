@@ -2233,23 +2233,7 @@ class Menubar extends window.L.Control {
 		} else if (id === 'remotemultimedia') {
 			this._map.fire('postMessage', {
 				msgId: 'UI_InsertFile', args: {
-					callback: 'Action_InsertMultimedia', mimeTypeFilter: [
-						'video/MP2T',
-						'video/mp4',
-						'video/mpeg',
-						'video/ogg',
-						'video/quicktime',
-						'video/webm',
-						'video/x-matroska',
-						'video/x-ms-wmv',
-						'video/x-msvideo',
-						'audio/aac',
-						'audio/flac',
-						'audio/mp4',
-						'audio/mpeg',
-						'audio/ogg',
-						'audio/x-wav',
-					]
+					callback: 'Action_InsertMultimedia', mimeTypeFilter: app.LOUtil.MediaMimeFilter
 				}
 			});
 		} else if (id === 'selectbackground') {
