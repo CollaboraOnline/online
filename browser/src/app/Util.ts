@@ -214,6 +214,7 @@ class Util {
 	public static getTextWidth(text: string, font: string): number {
 		const canvas = Util.getTempCanvas();
 		const context = canvas.getContext('2d');
+		this.ensureValue(context);
 		context.font = font;
 		const metrics = context.measureText(text);
 		return Math.floor(metrics.width);
