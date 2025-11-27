@@ -154,29 +154,40 @@ class CanvasSectionObject {
 
 		x = Math.round(x);
 		y = Math.round(y);
-		let sectionXcoord = x;
-		const positionAddition = app.activeDocument.activeView.viewedRectangle.clone();
 
+		// Setting the position.
+		this.position[0] = x;
+		this.position[1] = y;
 		this.documentPosition = cool.SimplePoint.fromCorePixels([x, y]);
 
-		if (this.isCalcRTL()) {
-			// the document coordinates are not always in sync(fixing that is non-trivial!), so use the latest from map.
-			const docLayer = this.sectionProperties.docLayer;
-			const docSize = docLayer._map.getPixelBoundsCore().getSize();
-			sectionXcoord = docSize.x - sectionXcoord - this.size[0];
+		// myTopLeft calculation. Keep Calc separate for now, until we have a ViewLayout class for Calc.
+		if (app.map.getDocType() === 'spreadsheet') {
+			let sectionXcoord = x;
+
+			if (this.isCalcRTL()) {
+				// the document coordinates are not always in sync(fixing that is non-trivial!), so use the latest from map.
+				const docSize = app.map.getPixelBoundsCore().getSize();
+				sectionXcoord = docSize.x - sectionXcoord - this.size[0];
+			}
+
+			const positionAddition = app.activeDocument.activeView.viewedRectangle.clone();
+			const documentAnchor = this.containerObject.getDocumentAnchor();
+
+			if (app.isXOrdinateInFrozenPane(sectionXcoord))
+				positionAddition.pX1 = 0;
+
+			if (app.isYOrdinateInFrozenPane(y))
+				positionAddition.pY1 = 0;
+
+			this.myTopLeft[0] = documentAnchor[0] + sectionXcoord - positionAddition.pX1;
+			this.myTopLeft[1] = documentAnchor[1] + y - positionAddition.pY1;
+		}
+		else {
+			this.myTopLeft[0] = this.documentPosition.vX;
+			this.myTopLeft[1] = this.documentPosition.vY;
 		}
 
-		if (app.isXOrdinateInFrozenPane(sectionXcoord))
-			positionAddition.pX1 = 0;
-
-		if (app.isYOrdinateInFrozenPane(y))
-			positionAddition.pY1 = 0;
-
-		this.myTopLeft[0] = this.documentPosition.vX;
-		this.myTopLeft[1] = this.documentPosition.vY;
-
-		this.position[0] = sectionXcoord;
-		this.position[1] = y;
+		// Visibility check.
 		const isVisible = this.containerObject.isDocumentObjectVisible(this);
 		if (isVisible !== this.isVisible) {
 			this.isVisible = isVisible;
