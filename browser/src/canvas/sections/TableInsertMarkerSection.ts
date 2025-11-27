@@ -39,7 +39,7 @@ class TableInsertMarkerSection extends HTMLObjectSection {
 		this.getHTMLObject()?.classList.remove('hovered');
 	}
 
-	public onClick(point: cool.SimplePoint, e: MouseEvent): void {
+	public onClick(point: cool.SimplePoint | null, e: MouseEvent): void {
 		if (this.sectionProperties.markerType === 'column') {
 			app.socket.sendMessage('uno .uno:InsertColumnsAfter');
 		} else {

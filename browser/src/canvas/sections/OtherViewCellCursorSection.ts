@@ -40,7 +40,7 @@ class OtherViewCellCursorSection extends CanvasSectionObject {
         this.sectionProperties.popUpTimer = null;
     }
 
-    onDraw(frameCount?: number, elapsedTime?: number): void {
+    onDraw(frameCount?: number | null, elapsedTime?: number | null): void {
         if (app.map._docLayer._isZooming)
             return;
 

@@ -131,20 +131,22 @@ class SplitterLinesSection extends CanvasSectionObject {
 	}
 
 	private GetColumnHeaderHeight(): number {
-		if (
-			this.containerObject.getSectionWithName(app.CSections.ColumnHeader.name)
-		) {
-			return this.containerObject.getSectionWithName(
-				app.CSections.ColumnHeader.name,
-			).size[1];
+		Util.ensureValue(this.containerObject);
+		const section = this.containerObject.getSectionWithName(
+			app.CSections.ColumnHeader.name,
+		);
+		if (section) {
+			return section.size[1];
 		} else return 0;
 	}
 
 	private GetRowHeaderWidth(): number {
-		if (this.containerObject.getSectionWithName(app.CSections.RowHeader.name)) {
-			return this.containerObject.getSectionWithName(
-				app.CSections.RowHeader.name,
-			).size[0];
+		Util.ensureValue(this.containerObject);
+		const section = this.containerObject.getSectionWithName(
+			app.CSections.RowHeader.name,
+		);
+		if (section) {
+			return section.size[0];
 		} else return 0;
 	}
 

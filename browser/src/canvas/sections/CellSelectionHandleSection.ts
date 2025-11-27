@@ -23,7 +23,8 @@ class CellSelectionHandle extends CanvasSectionObject {
 		this.size = [this.sectionProperties.circleRadius * 2, this.sectionProperties.circleRadius * 2];
 	}
 
-	private onDragEnd(point: cool.SimplePoint) {
+	private onDragEnd(point: cool.SimplePoint | null) {
+		Util.ensureValue(point);
 		app.map.focus();
 		app.map.fire('scrollvelocity', {vx: 0, vy: 0});
 
@@ -40,7 +41,8 @@ class CellSelectionHandle extends CanvasSectionObject {
 		app.map._docLayer._postSelectTextEvent(type, point.x, point.y);
 	}
 
-	private onDrag(point: cool.SimplePoint) {
+	private onDrag(point: cool.SimplePoint | null) {
+		Util.ensureValue(point);
 		point.pX += this.position[0];
 		point.pY += this.position[1];
 
@@ -58,7 +60,8 @@ class CellSelectionHandle extends CanvasSectionObject {
 		this.context.stroke();
 	}
 
-	onMouseMove(point: cool.SimplePoint, dragDistance: number[], e: MouseEvent): void {
+	onMouseMove(point: cool.SimplePoint | null, dragDistance: number[] | null, e: MouseEvent): void {
+		Util.ensureValue(this.containerObject);
 		e.stopPropagation();
 		if (this.containerObject.isDraggingSomething()) {
 			app.map.scrollingIsHandled = true;
@@ -67,12 +70,13 @@ class CellSelectionHandle extends CanvasSectionObject {
 		}
 	}
 
-	onMouseDown(point: cool.SimplePoint, e: MouseEvent): void {
+	onMouseDown(point: cool.SimplePoint | null, e: MouseEvent): void {
 		e.stopPropagation();
 		this.stopPropagating();
 	}
 
-	onMouseUp(point: cool.SimplePoint, e: MouseEvent): void {
+	onMouseUp(point: cool.SimplePoint | null, e: MouseEvent): void {
+		Util.ensureValue(this.containerObject);
 		e.stopPropagation();
 		if (this.containerObject.isDraggingSomething()) {
 			this.stopPropagating();

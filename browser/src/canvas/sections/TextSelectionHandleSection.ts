@@ -17,7 +17,8 @@ class TextSelectionHandle extends HTMLObjectSection {
 		super(sectionName, objectWidth, objectHeight, documentPosition, extraClass, showSection);
 	}
 
-	onDrag(point: cool.SimplePoint) {
+	onDrag(point: cool.SimplePoint | null) {
+		Util.ensureValue(point);
 		const candidateX = Math.round((this.myTopLeft[0] + point.pX) / app.dpiScale);
 		const candidateY = Math.round((this.myTopLeft[1] + point.pY) / app.dpiScale);
 
@@ -41,7 +42,8 @@ class TextSelectionHandle extends HTMLObjectSection {
 		this.getHTMLObject().style.opacity = value;
 	}
 
-	onDragEnd(point: cool.SimplePoint) {
+	onDragEnd(point: cool.SimplePoint | null) {
+		Util.ensureValue(point);
 		let x = this.position[0] + point.pX;
 		const y = this.position[1] + point.pY;
 		this.setPosition(x, y);
@@ -61,9 +63,10 @@ class TextSelectionHandle extends HTMLObjectSection {
 		}
 	}
 
-	onMouseMove(point: cool.SimplePoint, dragDistance: number[], e: MouseEvent): void {
+	onMouseMove(point: cool.SimplePoint | null, dragDistance: number[] | null, e: MouseEvent): void {
 		e.stopPropagation();
 		if (this.containerObject.isDraggingSomething()) {
+			Util.ensureValue(point);
 			this.stopPropagating();
 			this.onDrag(point);
 		}
@@ -76,19 +79,20 @@ class TextSelectionHandle extends HTMLObjectSection {
 			this.sectionProperties.objectDiv.style.display = 'none';
 	}
 
-	onClick(point: cool.SimplePoint, e: MouseEvent): void {
+	onClick(point: cool.SimplePoint | null, e: MouseEvent): void {
 		e.stopPropagation();
 		this.stopPropagating();
 	}
 
-	onMouseDown(point: cool.SimplePoint, e: MouseEvent): void {
+	onMouseDown(point: cool.SimplePoint | null, e: MouseEvent): void {
 		e.stopPropagation();
 		this.stopPropagating();
 	}
 
-	onMouseUp(point: cool.SimplePoint, e: MouseEvent): void {
+	onMouseUp(point: cool.SimplePoint | null, e: MouseEvent): void {
 		e.stopPropagation();
 		if (this.containerObject.isDraggingSomething()) {
+			Util.ensureValue(point);
 			this.stopPropagating();
 			this.onDragEnd(point);
 		}

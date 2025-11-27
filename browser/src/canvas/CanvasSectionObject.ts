@@ -14,12 +14,12 @@
 class CanvasSectionObject {
 	context: CanvasRenderingContext2D;
 	myTopLeft: Array<number> = [0, 0];
-	containerObject: CanvasSectionContainer = null;
-	readonly name: string = null;
-	backgroundColor: string = null; // Default is null (container's background color will be used).
+	containerObject: CanvasSectionContainer | null = null;
+	readonly name: string | null = null;
+	backgroundColor: string | null = null; // Default is null (container's background color will be used).
 	backgroundOpacity: number = 1; // Valid when backgroundColor is valid.
-	borderColor: string = null; // Default is null (no borders).
-	boundToSection: string = null;
+	borderColor: string | null = null; // Default is null (no borders).
+	boundToSection: string | null = null;
 	anchor: Array<string> | Array<Array<string>> = [];
 	documentObject: boolean; // If true, the section is a document object.
 	documentPosition: cool.SimplePoint = new cool.SimplePoint(0, 0); // Used with document objects.
@@ -52,9 +52,9 @@ class CanvasSectionObject {
 	onInitialize(): void { return; }
 	onCursorPositionChanged(newPosition: cool.SimpleRectangle): void { return; }
 	onCellAddressChanged(): void { return; }
-	onMouseMove(point: cool.SimplePoint, dragDistance: Array<number>, e: MouseEvent): void { return; }
-	onMouseDown(point: cool.SimplePoint, e: MouseEvent): void { return; }
-	onMouseUp(point: cool.SimplePoint, e: MouseEvent): void { return; }
+	onMouseMove(point: cool.SimplePoint | null, dragDistance: Array<number> | null, e: MouseEvent): void { return; }
+	onMouseDown(point: cool.SimplePoint | null, e: MouseEvent): void { return; }
+	onMouseUp(point: cool.SimplePoint | null, e: MouseEvent): void { return; }
 
 	setShowSection(show: boolean): void {
 		this.showSection = show;
@@ -67,7 +67,7 @@ class CanvasSectionObject {
 			this.onDocumentObjectVisibilityChange();
 		}
 
-		if (this.containerObject.testing) {
+		if (this.containerObject && this.containerObject.testing) {
 			this.containerObject.createUpdateSingleDivElement(this);
 		}
 	}
@@ -79,44 +79,48 @@ class CanvasSectionObject {
 	}
 
 	onDocumentObjectVisibilityChange(): void { return; }
-	onMouseEnter(point: cool.SimplePoint, e: MouseEvent): void { return; }
-	onMouseLeave(point: cool.SimplePoint, e: MouseEvent): void { return; }
-	onClick(point: cool.SimplePoint, e: MouseEvent): void { return; }
-	onDoubleClick(point: cool.SimplePoint, e: MouseEvent): void { return; }
-	onContextMenu(point: cool.SimplePoint, e: MouseEvent): void { return; }
-	onMouseWheel(point: cool.SimplePoint, delta: Array<number>, e: WheelEvent): void { return; }
+	onMouseEnter(point: cool.SimplePoint | null, e: MouseEvent): void { return; }
+	onMouseLeave(point: cool.SimplePoint | null, e: MouseEvent): void { return; }
+	onClick(point: cool.SimplePoint | null, e: MouseEvent): void { return; }
+	onDoubleClick(point: cool.SimplePoint | null, e: MouseEvent): void { return; }
+	onContextMenu(point: cool.SimplePoint | null, e: MouseEvent): void { return; }
+	onMouseWheel(point: cool.SimplePoint | null, delta: Array<number>, e: WheelEvent): void { return; }
 	onMultiTouchStart(e: TouchEvent): void { return; }
-	onMultiTouchMove(point: cool.SimplePoint, dragDistance: number, e: TouchEvent): void { return; }
+	onMultiTouchMove(point: cool.SimplePoint | null, dragDistance: number, e: TouchEvent): void { return; }
 	onMultiTouchEnd(e: TouchEvent): void { return; }
-	onDrop(point: cool.SimplePoint, e: DragEvent): void { return; }
+	onDrop(point: cool.SimplePoint | null, e: DragEvent): void { return; }
 	onResize(): void { return; }
-	onDraw(frameCount?: number, elapsedTime?: number): void { return; }
+	onDraw(frameCount?: number | null, elapsedTime?: number | null): void { return; }
 	onDrawArea(area?: cool.Bounds, paneTopLeft?: cool.Point, canvasContext?: CanvasRenderingContext2D): void { return; } // area is the area to be painted using canvasContext.
 	onAnimate(frameCount: number, elapsedTime: number): void { return; }
 	onAnimationEnded(frameCount: number, elapsedTime: number): void { return; } // frameCount, elapsedTime. Sections that will use animation, have to have this function defined.
 	onNewDocumentTopLeft(): void { return; }
 	onRemove(): void { return; } // This Function is called right before section is removed.
-	getHTMLObject(): HTMLElement { return; } // Implemented in HTMLObjectSection.
+	getHTMLObject(): HTMLElement | null { return null; } // Implemented in HTMLObjectSection.
 
 	setDrawingOrder(drawingOrder: number): void {
 		this.drawingOrder = drawingOrder;
+		Util.ensureValue(this.containerObject);
 		this.containerObject.updateBoundSectionLists();
 		this.containerObject.reNewAllSections();
 	}
 
 	setZIndex(zIndex: number): void {
 		this.zIndex = zIndex;
+		Util.ensureValue(this.containerObject);
 		this.containerObject.updateBoundSectionLists();
 		this.containerObject.reNewAllSections();
 	}
 
 	bindToSection(sectionName: string): void {
 		this.boundToSection = sectionName;
+		Util.ensureValue(this.containerObject);
 		this.containerObject.updateBoundSectionLists();
 		this.containerObject.reNewAllSections();
 	}
 
-	stopPropagating(e: MouseEvent = null): void {
+	stopPropagating(e: MouseEvent | null = null): void {
+		Util.ensureValue(this.containerObject);
 		this.containerObject.lowestPropagatedBoundSection = this.name;
 
 		// We shouldn't need e when we remove map element.
@@ -132,14 +136,18 @@ class CanvasSectionObject {
 	}
 
 	startAnimating(options: any): boolean {
+		Util.ensureValue(this.containerObject);
+		Util.ensureValue(this.name);
 		return this.containerObject.startAnimating(this.name, options);
 	}
 
 	resetAnimation(): void {
+		Util.ensureValue(this.containerObject);
+		Util.ensureValue(this.name);
 		this.containerObject.resetAnimation(this.name);
 	}
 
-	getTestDiv(): HTMLDivElement {
+	getTestDiv(): HTMLDivElement | null {
 		var element: HTMLDivElement = <HTMLDivElement>document.getElementById('test-div-' + this.name);
 		if (element)
 			return element;
@@ -188,7 +196,7 @@ class CanvasSectionObject {
 	}
 
 	// All below functions should be included in their respective section definitions (or other classes), not here.
-	isCalcRTL(): boolean { return; }
+	isCalcRTL(): boolean { return false; }
 	setViewResolved(on: boolean): void { return; }
 	setView(on: boolean): void { return; }
 	scrollVerticalWithOffset(offset: number): void { return; }

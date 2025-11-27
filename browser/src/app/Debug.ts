@@ -967,9 +967,9 @@ class DebugManager {
 				{
 					window.app.console.log('Automated User: Resize row smaller');
 					// Not necessary here, but nice to highlight the row being changed
-					app.sectionContainer
-						.getSectionWithName('row header')
-						._selectRow(1, 0);
+					const section = app.sectionContainer.getSectionWithName('row header');
+					Util.ensureValue(section);
+					section._selectRow(1, 0);
 					this._map.sendUnoCommand(
 						'.uno:RowHeight {"RowHeight":{"type":"unsigned short","value":200},"Row":{"type":"long","value":2}}',
 					);
@@ -980,9 +980,9 @@ class DebugManager {
 				{
 					window.app.console.log('Automated User: Resize row larger');
 					// Not necessary here, but nice to highlight the row being changed
-					app.sectionContainer
-						.getSectionWithName('row header')
-						._selectRow(1, 0);
+					const section = app.sectionContainer.getSectionWithName('row header');
+					Util.ensureValue(section);
+					section._selectRow(1, 0);
 					this._map.sendUnoCommand(
 						'.uno:RowHeight {"RowHeight":{"type":"unsigned short","value":2000},"Row":{"type":"long","value":2}}',
 					);
@@ -993,9 +993,9 @@ class DebugManager {
 				{
 					window.app.console.log('Automated User: Resize row auto');
 					// Selecting row is necessary here
-					app.sectionContainer
-						.getSectionWithName('row header')
-						._selectRow(1, 0);
+					const section = app.sectionContainer.getSectionWithName('row header');
+					Util.ensureValue(section);
+					section._selectRow(1, 0);
 					this._map.sendUnoCommand(
 						'.uno:SetOptimalRowHeight {"aExtraHeight":{"type":"unsigned short","value":0}}',
 					);
@@ -1006,9 +1006,10 @@ class DebugManager {
 				{
 					window.app.console.log('Automated User: Resize column smaller');
 					// Not necessary here, but nice to highlight the column being changed
-					app.sectionContainer
-						.getSectionWithName('column header')
-						._selectColumn(1, 0);
+					const section =
+						app.sectionContainer.getSectionWithName('column header');
+					Util.ensureValue(section);
+					section._selectColumn(1, 0);
 					this._map.sendUnoCommand(
 						'.uno:ColumnWidth {"ColumnWidth":{"type":"unsigned short","value":400},"Column":{"type":"long","value":2}}',
 					);
@@ -1019,9 +1020,10 @@ class DebugManager {
 				{
 					window.app.console.log('Automated User: Resize column larger');
 					// Not necessary here, but nice to highlight the column being changed
-					app.sectionContainer
-						.getSectionWithName('column header')
-						._selectColumn(1, 0);
+					const section =
+						app.sectionContainer.getSectionWithName('column header');
+					Util.ensureValue(section);
+					section._selectColumn(1, 0);
 					this._map.sendUnoCommand(
 						'.uno:ColumnWidth {"ColumnWidth":{"type":"unsigned short","value":8000},"Column":{"type":"long","value":2}}',
 					);
@@ -1032,9 +1034,10 @@ class DebugManager {
 				{
 					window.app.console.log('Automated User: Resize column auto');
 					// Selecting column is necessary here
-					app.sectionContainer
-						.getSectionWithName('column header')
-						._selectColumn(1, 0);
+					const section =
+						app.sectionContainer.getSectionWithName('column header');
+					Util.ensureValue(section);
+					section._selectColumn(1, 0);
 					this._map.sendUnoCommand(
 						'.uno:SetOptimalColumnWidth {"aExtraWidth":{"type":"unsigned short","value":200}}',
 					);
@@ -1052,12 +1055,10 @@ class DebugManager {
 				{
 					window.app.console.log('Automated User: Insert row');
 					// Select just this row first, doesn't work if multiple rows are selected
-					app.sectionContainer
-						.getSectionWithName('row header')
-						._selectRow(1, 0);
-					app.sectionContainer
-						.getSectionWithName('row header')
-						.insertRowAbove(1);
+					const section = app.sectionContainer.getSectionWithName('row header');
+					Util.ensureValue(section);
+					section._selectRow(1, 0);
+					section.insertRowAbove(1);
 					waitTime = 2000;
 				}
 				break;
@@ -1065,12 +1066,11 @@ class DebugManager {
 				{
 					window.app.console.log('Automated User: Delete column');
 					// Select just this column first, doesn't work if multiple columns are selected
-					app.sectionContainer
-						.getSectionWithName('column header')
-						._selectColumn(1, 0);
-					app.sectionContainer
-						.getSectionWithName('column header')
-						.insertColumnBefore(1);
+					const section =
+						app.sectionContainer.getSectionWithName('column header');
+					Util.ensureValue(section);
+					section._selectColumn(1, 0);
+					section.insertColumnBefore(1);
 					waitTime = 2000;
 				}
 				break;
@@ -1085,10 +1085,10 @@ class DebugManager {
 				{
 					window.app.console.log('Automated User: Delete row');
 					// Select just this row first, otherwise multiple rows could get deleted
-					app.sectionContainer
-						.getSectionWithName('row header')
-						._selectRow(1, 0);
-					app.sectionContainer.getSectionWithName('row header').deleteRow(1);
+					const section = app.sectionContainer.getSectionWithName('row header');
+					Util.ensureValue(section);
+					section._selectRow(1, 0);
+					section.deleteRow(1);
 					waitTime = 2000;
 				}
 				break;
@@ -1096,12 +1096,11 @@ class DebugManager {
 				{
 					window.app.console.log('Automated User: Delete column');
 					// Select just this column first, otherwise multiple columns could get deleted
-					app.sectionContainer
-						.getSectionWithName('column header')
-						._selectColumn(1, 0);
-					app.sectionContainer
-						.getSectionWithName('column header')
-						.deleteColumn(1);
+					const section =
+						app.sectionContainer.getSectionWithName('column header');
+					Util.ensureValue(section);
+					section._selectColumn(1, 0);
+					section.deleteColumn(1);
 					waitTime = 2000;
 				}
 				break;

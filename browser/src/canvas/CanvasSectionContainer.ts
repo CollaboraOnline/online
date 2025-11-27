@@ -164,36 +164,36 @@ class CanvasSectionContainer {
 	private width: number;
 	private height: number;
 	private needsResize: boolean = false;
-	private positionOnMouseDown: Array<number> = null;
-	private positionOnMouseUp: Array<number> = null;
-	private positionOnClick: Array<number> = null;
-	private positionOnDoubleClick: Array<number> = null;
-	private mousePosition: Array<number> = null;
-	private dragDistance: Array<number> = null;
+	private positionOnMouseDown: Array<number> | null = null;
+	private positionOnMouseUp: Array<number> | null = null;
+	private positionOnClick: Array<number> | null = null;
+	private positionOnDoubleClick: Array<number> | null = null;
+	private mousePosition: Array<number> | null = null;
+	private dragDistance: Array<number> | null = null;
 	private draggingSomething: boolean = false; // This will be managed by container, used by sections.
-	private sectionOnMouseDown: string = null; // (Will contain section name) When dragging, user can leave section borders, dragging will continue. Target section will be informed.
-	private sectionUnderMouse: string = null; // For mouse enter & leave events.
+	private sectionOnMouseDown: string | null = null; // (Will contain section name) When dragging, user can leave section borders, dragging will continue. Target section will be informed.
+	private sectionUnderMouse: string | null = null; // For mouse enter & leave events.
 	private draggingTolerance: number = 5; // This is for only desktop, mobile browsers seem to distinguish dragging and clicking nicely.
 	private multiTouch: boolean = false;
-	private touchCenter: Array<number> = null;
+	private touchCenter: Array<number> | null = null;
 	private longPressTimer: any = null;
 	private clearColor: string = '#f8f9fa';
 	private documentBackgroundColor = '#ffffff'; // This is the background color of the document
 	private useCSSForBackgroundColor = true;
 	private touchEventInProgress: boolean = false; // This prevents multiple calling of mouse down and up events.
 	public testing: boolean = false; // If this set to true, container will create a div element for every section. So, cypress tests can find where to click etc.
-	public lowestPropagatedBoundSection: string = null; // Event propagating to bound sections. The first section which stops propagating and the sections those are on top of that section, get the event.
-	public targetSection: string = null;
-	public activeSection: string = null;
+	public lowestPropagatedBoundSection: string | null = null; // Event propagating to bound sections. The first section which stops propagating and the sections those are on top of that section, get the event.
+	public targetSection: string | null = null;
+	public activeSection: string | null = null;
 	private scrollLineHeight: number = 30; // This will be overridden.
 	private mouseIsInside: boolean = false;
 	private inZoomAnimation: boolean = false;
 	private postZoomReplay: boolean = false;
 	private zoomChanged: boolean = false;
-	private documentAnchorSectionName: string = null; // This section's top left point declares the point where document starts.
-	private documentAnchor: Array<number> = null; // This is the point where document starts inside canvas element. Initial value shouldn't be [0, 0].
+	private documentAnchorSectionName: string | null = null; // This section's top left point declares the point where document starts.
+	private documentAnchor: Array<number> | null = null; // This is the point where document starts inside canvas element. Initial value shouldn't be [0, 0].
 	// Above 2 properties can be used with documentBounds.
-	private drawRequest: number = null;
+	private drawRequest: number | null = null;
 	private drawingPaused: number = 0;
 	private drawingEnabled: boolean = true;
 	private sectionsDirty: boolean = false;
@@ -203,16 +203,18 @@ class CanvasSectionContainer {
 	private windowSectionList: Array<CanvasSectionObject> = [];
 
 	// Below variables are related to animation feature.
-	private animatingSectionName: string = null; // The section that called startAnimating function. This variable is null when animations are not running.
-	private lastFrameStamp: number = null;
-	private continueAnimating: boolean = null;
-	private frameCount: number = null; // Frame count of the current animation.
-	private duration: number = null; // Duration for the animation.
-	private elapsedTime: number = null; // Time that passed since the animation started.
+	private animatingSectionName: string | null = null; // The section that called startAnimating function. This variable is null when animations are not running.
+	private lastFrameStamp: number | null = null;
+	private continueAnimating: boolean | null = null;
+	private frameCount: number | null = null; // Frame count of the current animation.
+	private duration: number | null = null; // Duration for the animation.
+	private elapsedTime: number | null = null; // Time that passed since the animation started.
 
 	constructor (canvasDOMElement: HTMLCanvasElement, disableDrawing?: boolean) {
 		this.canvas = canvasDOMElement;
-		this.context = canvasDOMElement.getContext('2d', { alpha: false });
+		const ctxt = canvasDOMElement.getContext('2d', { alpha: false });
+		Util.ensureValue(ctxt);
+		this.context = ctxt;
 		this.context.setTransform(1,0,0,1,0,0);
 		document.addEventListener('mousemove', this.onMouseMove.bind(this));
 		this.canvas.onmousedown = this.onMouseDown.bind(this);
@@ -268,7 +270,7 @@ class CanvasSectionContainer {
 	}
 
 	public setDocumentAnchorSection(sectionName: string) {
-		var section: CanvasSectionObject = this.getSectionWithName(sectionName);
+		var section: CanvasSectionObject | null = this.getSectionWithName(sectionName);
 		if (section) {
 			this.documentAnchorSectionName = sectionName;
 		}
@@ -281,7 +283,7 @@ class CanvasSectionContainer {
 		}
 	}
 
-	public getDocumentAnchorSection (): CanvasSectionObject {
+	public getDocumentAnchorSection (): CanvasSectionObject | null {
 		return this.getSectionWithName(this.documentAnchorSectionName);
 	}
 
@@ -444,9 +446,9 @@ class CanvasSectionContainer {
 		return [Math.round(x * app.dpiScale), Math.round(y * app.dpiScale)];
 	}
 
-	public getSectionWithName (name: string): CanvasSectionObject {
-		if (name) {
-			var section: CanvasSectionObject = this.sectionsByName.get(name);
+	public getSectionWithName (name: string | null): CanvasSectionObject | null {
+		if (name !== null) {
+			var section: CanvasSectionObject | undefined = this.sectionsByName.get(name);
 			if (section) {
 				return section;
 			}
@@ -458,6 +460,7 @@ class CanvasSectionContainer {
 	}
 
 	public getDocumentAnchor(): Array<number> {
+		Util.ensureValue(this.documentAnchor);
 		return [this.documentAnchor[0], this.documentAnchor[1]];
 	}
 
@@ -478,10 +481,12 @@ class CanvasSectionContainer {
 	}
 
 	public getDragDistance(): number[] {
+		if (this.dragDistance === null) return [];
 		return [...this.dragDistance];
 	}
 
 	public getPositionOnMouseUp(): number[] {
+		if (this.positionOnMouseUp === null) return [];
 		return [...this.positionOnMouseUp];
 	}
 
@@ -507,7 +512,7 @@ class CanvasSectionContainer {
 		if (!this.targetSection)
 			return false;
 		else {
-			var section: CanvasSectionObject = this.getSectionWithName(this.targetSection);
+			var section: CanvasSectionObject | null = this.getSectionWithName(this.targetSection);
 			if (section && section.boundsList) {
 				for (var i: number = 0; i < section.boundsList.length; i++) {
 					if (section.boundsList[i].name === sectionName)
@@ -520,7 +525,7 @@ class CanvasSectionContainer {
 		}
 	}
 
-	private updateBoundSectionList(section: CanvasSectionObject, sectionList: Array<CanvasSectionObject> = null): Array<CanvasSectionObject> {
+	private updateBoundSectionList(section: CanvasSectionObject, sectionList: Array<CanvasSectionObject> | null = null): Array<CanvasSectionObject> {
 		if (sectionList === null)
 			sectionList = new Array(0);
 
@@ -578,7 +583,7 @@ class CanvasSectionContainer {
 	// HACK: Typescript does not have the concept of friend classes hence this has to be public.
 	public updateBoundSectionLists() {
 		for (var i: number = 0; i < this.sections.length; i++) {
-			this.sections[i].boundsList = null;
+			this.sections[i].boundsList = [];
 			this.sections[i].boundsList = this.updateBoundSectionList(this.sections[i]);
 			this.orderBoundsList(this.sections[i]);
 		}
@@ -601,7 +606,7 @@ class CanvasSectionContainer {
 		if (this.width === 0 || this.height === 0) {
 			app.console.warn('Canvas width or height is zero.');
 			const documentContainer = document.getElementById('document-container');
-			if (documentContainer && documentContainer.clientWidth !== 0 || documentContainer.clientHeight !== 0) {
+			if (documentContainer && (documentContainer.clientWidth !== 0 || documentContainer.clientHeight !== 0)) {
 				if (app.map._docLayer) {
 					app.map._docLayer._syncTileContainerSize(true);
 					app.activeDocument.activeView.sendClientVisibleArea();
@@ -700,7 +705,7 @@ class CanvasSectionContainer {
 		this.targetSection = section.name;
 
 		var propagate: boolean = true;
-		var windowPosition: cool.SimplePoint = position ? cool.SimplePoint.fromCorePixels([position[0] + section.myTopLeft[0], position[1] + section.myTopLeft[1]]): null;
+		var windowPosition: cool.SimplePoint | null = position ? cool.SimplePoint.fromCorePixels([position[0] + section.myTopLeft[0], position[1] + section.myTopLeft[1]]): null;
 		for (var j: number = 0; j < this.windowSectionList.length; j++) {
 			var windowSection = this.windowSectionList[j];
 			if (windowSection.interactable)
@@ -725,7 +730,7 @@ class CanvasSectionContainer {
 		this.targetSection = section.name;
 
 		var propagate: boolean = true;
-		var windowPosition: cool.SimplePoint = position ? cool.SimplePoint.fromCorePixels([position[0] + section.myTopLeft[0], position[1] + section.myTopLeft[1]]): null;
+		var windowPosition: cool.SimplePoint | null = position ? cool.SimplePoint.fromCorePixels([position[0] + section.myTopLeft[0], position[1] + section.myTopLeft[1]]): null;
 		for (var j: number = 0; j < this.windowSectionList.length; j++) {
 			var windowSection = this.windowSectionList[j];
 			if (windowSection.interactable)
@@ -746,10 +751,10 @@ class CanvasSectionContainer {
 		}
 	}
 
-	private propagateOnMouseLeave(section: CanvasSectionObject, position: Array<number>, e: MouseEvent) {
+	private propagateOnMouseLeave(section: CanvasSectionObject, position: Array<number> | null, e: MouseEvent) {
 		this.targetSection = section.name;
 
-		var windowPosition: cool.SimplePoint = position ? cool.SimplePoint.fromCorePixels([position[0] + section.myTopLeft[0], position[1] + section.myTopLeft[1]]): null;
+		var windowPosition: cool.SimplePoint | null = position ? cool.SimplePoint.fromCorePixels([position[0] + section.myTopLeft[0], position[1] + section.myTopLeft[1]]): null;
 		if (!windowPosition) { // This event is valid only if the windowPosition is null for window sections. Otherwise mouse cannot leave from a section that is covering entire canvas element.
 			for (var j: number = 0; j < this.windowSectionList.length; j++) {
 				var windowSection = this.windowSectionList[j];
@@ -782,11 +787,11 @@ class CanvasSectionContainer {
 		}
 	}
 
-	private propagateOnMouseMove(section: CanvasSectionObject, position: Array<number>, dragDistance: Array<number>, e: MouseEvent) {
+	private propagateOnMouseMove(section: CanvasSectionObject, position: Array<number>, dragDistance: Array<number> | null, e: MouseEvent) {
 		this.targetSection = section.name;
 
 		var propagate: boolean = true;
-		var windowPosition: cool.SimplePoint = position ? cool.SimplePoint.fromCorePixels([position[0] + section.myTopLeft[0], position[1] + section.myTopLeft[1]]): null;
+		var windowPosition: cool.SimplePoint | null = position ? cool.SimplePoint.fromCorePixels([position[0] + section.myTopLeft[0], position[1] + section.myTopLeft[1]]): null;
 		for (var j: number = 0; j < this.windowSectionList.length; j++) {
 			var windowSection = this.windowSectionList[j];
 			if (windowSection.interactable)
@@ -813,7 +818,7 @@ class CanvasSectionContainer {
 		this.targetSection = section.name;
 
 		var propagate: boolean = true;
-		var windowPosition: cool.SimplePoint = position ? cool.SimplePoint.fromCorePixels([position[0] + section.myTopLeft[0], position[1] + section.myTopLeft[1]]): null;
+		var windowPosition: cool.SimplePoint | null = position ? cool.SimplePoint.fromCorePixels([position[0] + section.myTopLeft[0], position[1] + section.myTopLeft[1]]): null;
 		for (var j: number = 0; j < this.windowSectionList.length; j++) {
 			var windowSection = this.windowSectionList[j];
 			if (windowSection.interactable)
@@ -838,7 +843,7 @@ class CanvasSectionContainer {
 		this.targetSection = section.name;
 
 		var propagate: boolean = true;
-		var windowPosition: cool.SimplePoint = position ? cool.SimplePoint.fromCorePixels([position[0] + section.myTopLeft[0], position[1] + section.myTopLeft[1]]): null;
+		var windowPosition: cool.SimplePoint | null = position ? cool.SimplePoint.fromCorePixels([position[0] + section.myTopLeft[0], position[1] + section.myTopLeft[1]]): null;
 		for (var j: number = 0; j < this.windowSectionList.length; j++) {
 			var windowSection = this.windowSectionList[j];
 			if (windowSection.interactable)
@@ -863,7 +868,7 @@ class CanvasSectionContainer {
 		this.targetSection = section.name;
 
 		var propagate: boolean = true;
-		const windowPosition: cool.SimplePoint = position ? cool.SimplePoint.fromCorePixels([position[0] + section.myTopLeft[0], position[1] + section.myTopLeft[1]]): null;
+		const windowPosition: cool.SimplePoint | null = position ? cool.SimplePoint.fromCorePixels([position[0] + section.myTopLeft[0], position[1] + section.myTopLeft[1]]): null;
 		for (var j: number = 0; j < this.windowSectionList.length; j++) {
 			var windowSection = this.windowSectionList[j];
 			if (windowSection.interactable)
@@ -888,7 +893,7 @@ class CanvasSectionContainer {
 		this.targetSection = section.name;
 
 		var propagate: boolean = true;
-		var windowPosition: cool.SimplePoint = position ? cool.SimplePoint.fromCorePixels([position[0] + section.myTopLeft[0], position[1] + section.myTopLeft[1]]): null;
+		var windowPosition: cool.SimplePoint | null = position ? cool.SimplePoint.fromCorePixels([position[0] + section.myTopLeft[0], position[1] + section.myTopLeft[1]]): null;
 		for (var j: number = 0; j < this.windowSectionList.length; j++) {
 			var windowSection = this.windowSectionList[j];
 			if (windowSection.interactable)
@@ -937,7 +942,7 @@ class CanvasSectionContainer {
 		this.targetSection = section.name;
 
 		var propagate: boolean = true;
-		var windowPosition: cool.SimplePoint = position ? cool.SimplePoint.fromCorePixels([position[0] + section.myTopLeft[0], position[1] + section.myTopLeft[1]]): null;
+		var windowPosition: cool.SimplePoint | null = position ? cool.SimplePoint.fromCorePixels([position[0] + section.myTopLeft[0], position[1] + section.myTopLeft[1]]): null;
 		for (var j: number = 0; j < this.windowSectionList.length; j++) {
 			var windowSection = this.windowSectionList[j];
 			if (windowSection.interactable)
@@ -986,7 +991,7 @@ class CanvasSectionContainer {
 		this.targetSection = section.name;
 
 		var propagate: boolean = true;
-		const windowPosition: cool.SimplePoint = position ? cool.SimplePoint.fromCorePixels([position[0] + section.myTopLeft[0], position[1] + section.myTopLeft[1]]): null;
+		const windowPosition: cool.SimplePoint | null = position ? cool.SimplePoint.fromCorePixels([position[0] + section.myTopLeft[0], position[1] + section.myTopLeft[1]]): null;
 		for (var j: number = 0; j < this.windowSectionList.length; j++) {
 			var windowSection = this.windowSectionList[j];
 			if (windowSection.interactable)
@@ -1022,6 +1027,7 @@ class CanvasSectionContainer {
 
 	private getMyTopLeftForDocumentObject(section: CanvasSectionObject): number[] {
 		if (app.map._docLayer._docType === 'spreadsheet') {
+			Util.ensureValue(this.documentAnchor);
 			return [
 				this.documentAnchor[0] +
 					section.position[0] -
@@ -1137,9 +1143,10 @@ class CanvasSectionContainer {
 					}
 				}
 
-				var section: CanvasSectionObject;
+				let section: CanvasSectionObject | null;
 
 				if (this.draggingSomething) {
+					Util.ensureValue(this.positionOnMouseDown);
 					this.dragDistance = [this.mousePosition[0] - this.positionOnMouseDown[0], this.mousePosition[1] - this.positionOnMouseDown[1]];
 					section = this.getSectionWithName(this.sectionOnMouseDown);
 				}
@@ -1150,7 +1157,7 @@ class CanvasSectionContainer {
 				if (section && section.boundsList) {
 					if (section.name !== this.sectionUnderMouse) {
 						if (this.sectionUnderMouse !== null) {
-							var previousSection: CanvasSectionObject = this.getSectionWithName(this.sectionUnderMouse);
+							const previousSection: CanvasSectionObject | null = this.getSectionWithName(this.sectionUnderMouse);
 							if (previousSection)
 								this.propagateOnMouseLeave(previousSection, this.convertPositionToSectionLocale(previousSection, this.mousePosition), e);
 						}
@@ -1160,7 +1167,7 @@ class CanvasSectionContainer {
 					this.propagateOnMouseMove(section, this.convertPositionToSectionLocale(section, this.mousePosition), this.dragDistance, e);
 				}
 				else if (this.sectionUnderMouse !== null) {
-					var previousSection: CanvasSectionObject = this.getSectionWithName(this.sectionUnderMouse);
+					const previousSection: CanvasSectionObject | null = this.getSectionWithName(this.sectionUnderMouse);
 					if (previousSection)
 						this.propagateOnMouseLeave(previousSection, this.convertPositionToSectionLocale(previousSection, this.mousePosition), e);
 					this.sectionUnderMouse = null;
@@ -1199,7 +1206,7 @@ class CanvasSectionContainer {
 
 		if (e.button === 0 && !this.touchEventInProgress) {
 			this.positionOnMouseUp = this.convertPositionToCanvasLocale(e);
-			var section: CanvasSectionObject;
+			let section: CanvasSectionObject | null;
 			if (!this.draggingSomething) {
 				section = this.findSectionContainingPoint(this.positionOnMouseUp);
 			}
@@ -1234,11 +1241,12 @@ class CanvasSectionContainer {
 
 	public extendAnimationDuration(extendMs: number) {
 		if (this.getAnimatingSectionName()) { // Is animating.
+			if (this.duration === null) return;
 			this.duration += extendMs;
 		}
 	}
 
-	public getAnimationDuration(): number {
+	public getAnimationDuration(): number | null {
 		return this.duration;
 	}
 
@@ -1268,7 +1276,7 @@ class CanvasSectionContainer {
 		// This feature is enabled to create a better dragging experience.
 		if (!this.draggingSomething) {
 			if (this.sectionUnderMouse !== null) {
-				var section: CanvasSectionObject = this.getSectionWithName(this.sectionUnderMouse);
+				const section: CanvasSectionObject | null = this.getSectionWithName(this.sectionUnderMouse);
 				if (section)
 					this.propagateOnMouseLeave(section, null, e);
 				this.sectionUnderMouse = null;
@@ -1304,7 +1312,7 @@ class CanvasSectionContainer {
 		else if (!this.multiTouch) {
 			this.stopLongPress();
 			this.multiTouch = true;
-			var section: CanvasSectionObject = this.getSectionWithName(this.sectionOnMouseDown);
+			const section: CanvasSectionObject | null = this.getSectionWithName(this.sectionOnMouseDown);
 			if (section)
 				this.propagateOnMultiTouchStart(section, e);
 		}
@@ -1324,13 +1332,13 @@ class CanvasSectionContainer {
 			if (this.dragDistance[0] ** 2 + this.dragDistance[1] ** 2 > 0.1)
 				this.draggingSomething = true;
 
-			var section: CanvasSectionObject = this.getSectionWithName(this.sectionOnMouseDown);
+			const section: CanvasSectionObject | null = this.getSectionWithName(this.sectionOnMouseDown);
 			if (section) {
 				this.propagateOnMouseMove(section, this.convertPositionToSectionLocale(section, this.mousePosition), this.dragDistance, <MouseEvent><any>e);
 			}
 		}
 		else if (e.touches.length === 2) {
-			var section: CanvasSectionObject = this.getSectionWithName(this.sectionOnMouseDown);
+			const section: CanvasSectionObject | null = this.getSectionWithName(this.sectionOnMouseDown);
 			if (section) {
 				var diffX = Math.abs(e.touches[0].clientX - e.touches[1].clientX);
 				var diffY = Math.abs(e.touches[0].clientY - e.touches[1].clientY);
@@ -1351,7 +1359,7 @@ class CanvasSectionContainer {
 		this.stopLongPress();
 		if (!this.multiTouch) {
 			this.positionOnMouseUp = this.convertPositionToCanvasLocale(e);
-			var section: CanvasSectionObject;
+			let section: CanvasSectionObject | null;
 			if (!this.draggingSomething) {
 				section = this.findSectionContainingPoint(this.positionOnMouseUp);
 			}
@@ -1364,7 +1372,7 @@ class CanvasSectionContainer {
 		}
 		else if (e.touches.length === 0) {
 			this.multiTouch = false;
-			var section: CanvasSectionObject = this.getSectionWithName(this.sectionOnMouseDown);
+			const section: CanvasSectionObject | null = this.getSectionWithName(this.sectionOnMouseDown);
 			if (section) {
 				this.propagateOnMultiTouchEnd(section, e);
 			}
@@ -1622,8 +1630,8 @@ class CanvasSectionContainer {
 			}
 			else {
 				var count: number = section.anchor[index].length;
-				var targetSection: CanvasSectionObject = null;
-				var targetEdge: string = null;
+				let targetSection: CanvasSectionObject | null = null;
+				let targetEdge: string | null = null;
 				for (var i: number = 0; i < count - 1; i++) {
 					targetSection = this.getSectionWithName(section.anchor[index][i]);
 					if (targetSection) {
@@ -1672,6 +1680,9 @@ class CanvasSectionContainer {
 				}
 			}
 		}
+
+		// To let compiler know we don't return undefined since won't reach here.
+		return 0;
 	}
 
 	private expandSection(section: CanvasSectionObject) {
@@ -1702,7 +1713,7 @@ class CanvasSectionContainer {
 			const section = this.sections[i];
 			// Reset some values.
 			section.isLocated = false;
-			section.myTopLeft = null;
+			section.myTopLeft = [0, 0];
 
 			// Preserve the original size hint
 			if (typeof section.origSizeHint === 'undefined') {
@@ -1830,7 +1841,7 @@ class CanvasSectionContainer {
 	    return section.isLocated && section.showSection && (!section.documentObject || section.isVisible);
 	}
 
-	private drawSections (frameCount: number = null, elapsedTime: number = null) {
+	private drawSections (frameCount: number | null = null, elapsedTime: number | null = null) {
 
 		// Un-comment to debug duplicate rendering problems:
 		// const stack = new Error().stack;
@@ -1849,18 +1860,20 @@ class CanvasSectionContainer {
 		for (var i: number = 0; i < this.sections.length; i++) {
 			if (this.shouldDrawSection(this.sections[i])) {
 				this.context.translate(this.sections[i].myTopLeft[0], this.sections[i].myTopLeft[1]);
-				if (this.sections[i].backgroundColor) {
+				const backgroundColor = this.sections[i].backgroundColor;
+				if (backgroundColor !== null) {
 					this.context.globalAlpha = this.sections[i].backgroundOpacity;
-					this.context.fillStyle = this.sections[i].backgroundColor;
+					this.context.fillStyle = backgroundColor;
 					this.context.fillRect(0, 0, this.sections[i].size[0], this.sections[i].size[1]);
 					this.context.globalAlpha = 1;
 				}
 
 				this.sections[i].onDraw(frameCount, elapsedTime);
-				if (this.sections[i].borderColor) { // If section's border is set, draw its borders after section's "onDraw" function is called.
+				const borderColor = this.sections[i].borderColor;
+				if (borderColor !== null) { // If section's border is set, draw its borders after section's "onDraw" function is called.
 					var offset = this.sections[i].getLineOffset();
 					this.context.lineWidth = this.sections[i].getLineWidth();
-					this.context.strokeStyle = this.sections[i].borderColor;
+					this.context.strokeStyle = borderColor;
 					this.context.strokeRect(offset, offset, this.sections[i].size[0], this.sections[i].size[1]);
 				}
 
@@ -1875,7 +1888,7 @@ class CanvasSectionContainer {
 		return this.mouseIsInside;
 	}
 
-	public doesSectionExist (name: string): boolean {
+	public doesSectionExist (name: string | null): boolean {
 		if (name && typeof name === 'string') {
 			return this.sectionsByName.has(name);
 		}
@@ -1960,6 +1973,7 @@ class CanvasSectionContainer {
 	}
 
 	private pushSection (newSection: CanvasSectionObject) {
+		Util.ensureValue(newSection.name);
 		// Every section can draw from Point(0, 0), their drawings will be translated to myTopLeft position.
 		newSection.context = this.context;
 		newSection.containerObject = this;
@@ -1975,7 +1989,8 @@ class CanvasSectionContainer {
 			this.sectionsDirty = true;
 	}
 
-	public removeSection (name: string) {
+	public removeSection (name: string | null) {
+		if (name === null) return false;
 		var found: boolean = false;
 		for (var i: number = 0; i < this.sections.length; i++) {
 			if (this.sections[i].name === name) {
@@ -1984,7 +1999,6 @@ class CanvasSectionContainer {
 					document.body.removeChild(element);
 				this.sections[i].onRemove();
 				this.sectionsByName.delete(name);
-				this.sections[i] = null;
 				this.sections.splice(i, 1);
 				found = true;
 				break;
@@ -2005,15 +2019,18 @@ class CanvasSectionContainer {
 		}
 	}
 
-	private setAnimatingSectionName (sectionName: string) {
+	private setAnimatingSectionName (sectionName: string | null) {
 		this.animatingSectionName = sectionName;
 	}
 
-	public getAnimatingSectionName (): string {
+	public getAnimatingSectionName (): string | null {
 		return this.animatingSectionName;
 	}
 
 	private animate (timeStamp: number) {
+		if (this.lastFrameStamp === null) this.lastFrameStamp = 0;
+		if (this.elapsedTime === null) this.elapsedTime = 0;
+
 		if (this.lastFrameStamp > 0)
 			this.elapsedTime += Math.max(0, timeStamp - this.lastFrameStamp);
 
@@ -2023,8 +2040,9 @@ class CanvasSectionContainer {
 			this.continueAnimating = false;
 		}
 
-		var section: CanvasSectionObject = this.getSectionWithName(this.getAnimatingSectionName());
+		var section: CanvasSectionObject | null = this.getSectionWithName(this.getAnimatingSectionName());
 		if (this.continueAnimating) {
+			if (this.frameCount === null) this.frameCount = 0;
 			if (section) section.onAnimate(this.frameCount, this.elapsedTime);
 			this.frameCount++;
 			requestAnimationFrame(this.animate.bind(this));
@@ -2032,6 +2050,7 @@ class CanvasSectionContainer {
 		else {
 			if (section) {
 				section.isAnimating = false;
+				if (this.frameCount === null) this.frameCount = 0;
 				section.onAnimationEnded(this.frameCount, this.elapsedTime);
 			}
 
@@ -2080,7 +2099,9 @@ class CanvasSectionContainer {
 
 		if (!this.getAnimatingSectionName()) {
 			this.setAnimatingSectionName(sectionName);
-			this.getSectionWithName(sectionName).isAnimating = true;
+			const animatingSection = this.getSectionWithName(sectionName); 
+			Util.ensureValue(animatingSection);
+			animatingSection.isAnimating = true;
 			this.lastFrameStamp = 0;
 			this.continueAnimating = true;
 			this.duration = options.duration ? options.duration: null;

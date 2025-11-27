@@ -22,8 +22,8 @@ class PreloadMapSection extends CanvasSectionObject {
 	}
 
 	onDraw(
-		frameCount?: number,
-		elapsedTime?: number,
+		frameCount?: number | null,
+		elapsedTime?: number | null,
 		subsetBounds?: Bounds,
 	): void {
 		var docLayer = app.map._docLayer;

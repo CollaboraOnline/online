@@ -44,19 +44,19 @@ class ChartContextButtonSection extends HTMLObjectSection {
 		this.sectionProperties.lastInputEvent = null;
 	}
 
-	public onMouseEnter(point: cool.SimplePoint, e: MouseEvent): void {
+	public onMouseEnter(point: cool.SimplePoint | null, e: MouseEvent): void {
 		this.getHTMLObject()?.classList.add('hovered');
 	}
 
-	public onMouseLeave(point: cool.SimplePoint, e: MouseEvent): void {
+	public onMouseLeave(point: cool.SimplePoint | null, e: MouseEvent): void {
 		this.getHTMLObject()?.classList.remove('hovered');
 	}
 
-	public onMouseDown(point: cool.SimplePoint, e: MouseEvent): void {
+	public onMouseDown(point: cool.SimplePoint | null, e: MouseEvent): void {
 		this.stopEvents(e);
 	}
 
-	public onMouseUp(point: cool.SimplePoint, e: MouseEvent): void {
+	public onMouseUp(point: cool.SimplePoint | null, e: MouseEvent): void {
 		this.stopEvents(e);
 	}
 
@@ -68,7 +68,7 @@ class ChartContextButtonSection extends HTMLObjectSection {
 		e.stopImmediatePropagation();
 	}
 
-	public onClick(point: cool.SimplePoint, e: MouseEvent): void {
+	public onClick(point: cool.SimplePoint | null, e: MouseEvent): void {
 		if (this.sectionProperties.buttonType === 0) {
 			app.socket.sendMessage('uno .uno:SelectTheme');
 		} else {

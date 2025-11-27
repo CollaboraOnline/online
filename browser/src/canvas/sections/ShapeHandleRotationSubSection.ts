@@ -59,11 +59,11 @@ class ShapeHandleRotationSubSection extends CanvasSectionObject {
 		this.setPosition(this.sectionProperties.position.pX, this.sectionProperties.position.pY);
 	}
 
-	onMouseEnter(point: cool.SimplePoint, e: MouseEvent): void {
+	onMouseEnter(point: cool.SimplePoint | null, e: MouseEvent): void {
 		this.context.canvas.style.cursor = this.sectionProperties.cursorStyle;
 	}
 
-	onDraw(frameCount?: number, elapsedTime?: number): void {
+	onDraw(frameCount?: number | null, elapsedTime?: number | null): void {
 		this.context.fillStyle = 'white';
 		this.context.strokeStyle = 'black';
 		this.context.beginPath();
@@ -91,7 +91,8 @@ class ShapeHandleRotationSubSection extends CanvasSectionObject {
 		return initialAngle - newAngle;
 	}
 
-	onMouseUp(point: cool.SimplePoint, e: MouseEvent): void {
+	onMouseUp(point: cool.SimplePoint | null, e: MouseEvent): void {
+		Util.ensureValue(this.containerObject);
 		if (this.containerObject.isDraggingSomething()) {
 			if (this.sectionProperties.lastDraggingDistance) {
 				Util.ensureValue(GraphicSelection.rectangle);
@@ -118,7 +119,8 @@ class ShapeHandleRotationSubSection extends CanvasSectionObject {
 		}
 	}
 
-	onMouseMove(position: cool.SimplePoint, distance: number[]) {
+	onMouseMove(position: cool.SimplePoint | null, distance: number[]) {
+		Util.ensureValue(this.containerObject);
 		if (this.containerObject.isDraggingSomething()) {
 			this.sectionProperties.lastDraggingDistance = distance;
 

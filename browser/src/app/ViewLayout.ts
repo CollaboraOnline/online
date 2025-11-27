@@ -182,7 +182,7 @@ class ViewLayoutBase {
 		this._documentAnchorPosition = newPosition;
 	}
 
-	protected getDocumentAnchorSection(): CanvasSectionObject {
+	protected getDocumentAnchorSection(): CanvasSectionObject | null {
 		return app.sectionContainer.getDocumentAnchorSection();
 	}
 
@@ -258,6 +258,7 @@ class ViewLayoutBase {
 
 	public refreshScrollProperties(): any {
 		const documentAnchor = this.getDocumentAnchorSection();
+		if (documentAnchor === null) return;
 
 		// The length of the railway that the scroll bar moves on up & down or left & right.
 		this.calculateVerticalScrollLength(documentAnchor);
@@ -401,11 +402,17 @@ class ViewLayoutBase {
 		else scrollProps.moveBy = [0, pY]; // Create a new pending move event.
 	}
 
-	public canScrollHorizontal(documentAnchor: CanvasSectionObject): boolean {
+	public canScrollHorizontal(
+		documentAnchor: CanvasSectionObject | null,
+	): boolean {
+		if (documentAnchor === null) return false;
 		return this.viewSize.pX > documentAnchor.size[0];
 	}
 
-	public canScrollVertical(documentAnchor: CanvasSectionObject): boolean {
+	public canScrollVertical(
+		documentAnchor: CanvasSectionObject | null,
+	): boolean {
+		if (documentAnchor === null) return false;
 		return this.viewSize.pY > documentAnchor.size[1];
 	}
 

@@ -110,7 +110,7 @@ class TableResizeMarkerSection extends HTMLObjectSection {
 		}
 	}
 
-	public onMouseEnter(point: cool.SimplePoint, e: MouseEvent): void {
+	public onMouseEnter(point: cool.SimplePoint | null, e: MouseEvent): void {
 		// Calculate on mouse enter so we don't need to recaulculate on every mouse move.
 		if (this.sectionProperties.markerType === 'column')
 			this.calculateLeftMostAndRightMostAvailableX();
@@ -121,12 +121,12 @@ class TableResizeMarkerSection extends HTMLObjectSection {
 		this.context.canvas.style.cursor = this.sectionProperties.hoverCursor;
 	}
 
-	public onMouseLeave(point: cool.SimplePoint, e: MouseEvent): void {
+	public onMouseLeave(point: cool.SimplePoint | null, e: MouseEvent): void {
 		this.sectionProperties.dragStartPosition = null;
 		this.getHTMLObject().classList.remove('hovered');
 	}
 
-	public onMouseDown(point: cool.SimplePoint, e: MouseEvent): void {
+	public onMouseDown(point: cool.SimplePoint | null, e: MouseEvent): void {
 		this.sectionProperties.dragStartPosition = point;
 		if ((<any>window).mode.isMobile() || (<any>window).mode.isTablet()) {
 			this.calculateLeftMostAndRightMostAvailableX();
@@ -209,7 +209,8 @@ class TableResizeMarkerSection extends HTMLObjectSection {
 		);
 	}
 
-	public onMouseUp(point: cool.SimplePoint, e: MouseEvent): void {
+	public onMouseUp(point: cool.SimplePoint | null, e: MouseEvent): void {
+		Util.ensureValue(this.containerObject);
 		this.sectionProperties.dragStartPosition = null;
 
 		if (
@@ -221,6 +222,7 @@ class TableResizeMarkerSection extends HTMLObjectSection {
 	}
 
 	private columnDrag(point: cool.SimplePoint) {
+		Util.ensureValue(this.containerObject);
 		const dragDistance = [];
 		dragDistance.push(point.pX - this.sectionProperties.dragStartPosition.pX);
 		dragDistance.push(point.pY - this.sectionProperties.dragStartPosition.pY);
@@ -239,6 +241,7 @@ class TableResizeMarkerSection extends HTMLObjectSection {
 	}
 
 	private rowDrag(point: cool.SimplePoint) {
+		Util.ensureValue(this.containerObject);
 		const dragDistance = [];
 		dragDistance.push(point.pX - this.sectionProperties.dragStartPosition.pX);
 		dragDistance.push(point.pY - this.sectionProperties.dragStartPosition.pY);
@@ -257,11 +260,13 @@ class TableResizeMarkerSection extends HTMLObjectSection {
 	}
 
 	public onMouseMove(
-		point: cool.SimplePoint,
-		dragDistance: Array<number>,
+		point: cool.SimplePoint | null,
+		dragDistance: Array<number> | null,
 		e: MouseEvent,
 	): void {
+		Util.ensureValue(this.containerObject);
 		if (this.containerObject.isDraggingSomething()) {
+			Util.ensureValue(point);
 			// We only allow horizontal movement for column markers and vertical for row markers.
 
 			if (this.sectionProperties.markerType === 'column')
@@ -272,7 +277,8 @@ class TableResizeMarkerSection extends HTMLObjectSection {
 		}
 	}
 
-	onDraw(frameCount?: number, elapsedTime?: number): void {
+	onDraw(frameCount?: number | null, elapsedTime?: number | null): void {
+		Util.ensureValue(this.containerObject);
 		if (
 			this.containerObject.isDraggingSomething() &&
 			this.containerObject.targetSection === this.name

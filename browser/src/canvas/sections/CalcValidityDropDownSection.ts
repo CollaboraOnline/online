@@ -20,7 +20,7 @@ class CalcValidityDropDown extends HTMLObjectSection {
 		this.sectionProperties.mouseEntered = false;
 	}
 
-	public onMouseEnter(point: cool.SimplePoint, e: MouseEvent): void {
+	public onMouseEnter(point: cool.SimplePoint | null, e: MouseEvent): void {
 		this.sectionProperties.mouseEntered = true;
 	}
 
@@ -28,7 +28,8 @@ class CalcValidityDropDown extends HTMLObjectSection {
 		this.sectionProperties.mouseEntered = false;
 	}
 
-	public onClick(point: cool.SimplePoint, e: MouseEvent): void {
+	public onClick(point: cool.SimplePoint | null, e: MouseEvent): void {
+		Util.ensureValue(point);
 		e.stopPropagation();
 		e.preventDefault();
 		this.stopPropagating();

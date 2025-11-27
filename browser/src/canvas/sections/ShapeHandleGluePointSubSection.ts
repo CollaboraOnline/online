@@ -25,7 +25,7 @@ class ShapeHandleGluePointSubSection extends CanvasSectionObject {
 		this.sectionProperties.ownInfo = ownInfo;
 	}
 
-    onDraw(frameCount?: number, elapsedTime?: number): void {
+    onDraw(frameCount?: number | null, elapsedTime?: number | null): void {
         this.context.fillStyle = '#EE3E3E';
         this.context.beginPath();
         this.context.arc(0, 0, this.size[0] * 0.5, 0, Math.PI * 2);
