@@ -13,7 +13,7 @@
     <string name="pref_show_hidden_files_summary">Aktivera visning av dolda filer/mappar</string>
     <string name="pref_show_hidden_files">Dolda filer/mappar</string>
     <string name="file_exists_warning">En fil med det här namnet existerar redan och kommer att skrivas över.</string>
-    <string name="app_vendor">Denna utgåva tillhandahölls av $VENDOR.</string>
+    <string name="app_vendor">Denna utgåva tillhandahålls av $VENDOR.</string>
     <string name="sort">Sortera efter</string>
     <string name="action_cancel">Avbryt</string>
     <string name="directory_browser_label">Välj mapp</string>
@@ -96,7 +96,7 @@
     <string name="temp_file_saving_disabled">Denna fil är skrivskyddad, spara är inaktiverat.</string>
     <string name="pref_category_explorer">Inställningar för filhantering</string>
     <string name="grid_view">Rutnät</string>
-    <string name="no_recent_items">Öppna en fil med hjälp av mappikonen i verktygsfältet.</string>
+    <string name="no_recent_items">Öppna en fil genom att använda mapp-ikonen i verktygsfältet.</string>
     <string name="app_description">$APP_NAME är en användarvänlig och modern produktivitetssvit i öppen källkod för ordbehandling, kalkylark, presentationer med mera.</string>
     <string name="app_version_and_hash">Version: %1$s
 \nonline git-hash: %2$s
