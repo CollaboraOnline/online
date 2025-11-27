@@ -222,7 +222,7 @@ class TopToolbar extends JSDialog.Toolbar {
 			{type: 'customtoolitem',  id: 'slidechangewindow', text: _UNO('.uno:SlideChangeWindow', 'presentation', true), command: 'transitiondeck', icon: 'lc_slidechangewindow.svg', visible: false},
 			{type: 'toolitem',  id: 'customanimation', text: _UNO('.uno:CustomAnimation', 'presentation', true), command: '.uno:CustomAnimation', visible: false},
 			{type: 'toolitem',  id: 'masterslidespanel', text: _UNO('.uno:MasterSlidesPanel', 'presentation', true), command: '.uno:MasterSlidesPanel', visible: false},
-			{type: 'customtoolitem',  id: 'fold', text: _('Hide Menu'), desktop: true, mobile: false, visible: true},
+			// hamburger-tablet uses icon 'fold' mapped in the LOUtil.ts
 			{type: 'customtoolitem',  id: 'hamburger-tablet', desktop: false, mobile: false, tablet: true, iosapptablet: false, visible: false},
 		];
 
