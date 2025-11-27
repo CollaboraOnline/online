@@ -41,6 +41,10 @@ function _drawingAreaControl (parentContainer, data, builder) {
 	image.draggable = false;
 	image.ondragstart = function() { return false; };
 
+	if (data.canFocus) {
+		image.tabIndex = 0;
+	}
+
 	if (data.text) {
 		image.setAttribute('data-cooltip', data.text);
 
