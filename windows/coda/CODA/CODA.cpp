@@ -57,6 +57,20 @@ enum class ClipboardOp
     READ
 };
 
+// Use enum class to automatically get non-overlapping values. On the other hand, then we need to
+// cast back and forth here and there.
+enum class CODA_OPEN_CONTROL : DWORD
+{
+    NONE,
+    SEP1,
+    NEW_TEXT,
+    NEW_SPREADSHEET,
+    NEW_PRESENTATION,
+    SEP2
+};
+
+enum class PERMISSION { EDIT, NEW_DOCUMENT, READONLY, VIEW, WELCOME };
+
 struct FilenameAndUri
 {
     // Just the basename (and extension), without folder
@@ -68,22 +82,10 @@ struct FilenameAndUri
 
 struct OpenDialogResult
 {
-    bool createdNew;
+    bool createNew;
+    CODA_OPEN_CONTROL newId;
     std::vector<FilenameAndUri> filenamesAndUris;
 };
-
-// Use enum class to automatically get non-overlapping values. On the other hand, then we need to
-// cast the values to the underlying type when using them.
-enum class CODA_OPEN_CONTROL : DWORD
-{
-    SEP1,
-    NEW_TEXT,
-    NEW_SPREADSHEET,
-    NEW_PRESENTATION,
-    SEP2
-};
-
-enum class PERMISSION { EDIT, NEW_DOCUMENT, READONLY, VIEW, WELCOME };
 
 // Various document window speficic data
 struct WindowData
@@ -152,7 +154,6 @@ constexpr int CODA_GROUP_OPEN = 1000;
 constexpr int CODA_OPEN_DIALOG_CREATE_NEW_INSTEAD = 123456;
 
 // Ugly to use globals like this
-static std::wstring new_document_created;
 static HMONITOR monitor_of_dialog;
 
 // Map from IFileDialogCustomize pointer to the corresponding IFileDialog, so that we can close it prematurely
@@ -466,10 +467,7 @@ public:
     // IFileDialogControlEvents methods
     IFACEMETHODIMP OnButtonClicked(IFileDialogCustomize* dialogCustomisation, DWORD id)
     {
-        customisationToDialog[dialogCustomisation]->Close(CODA_OPEN_DIALOG_CREATE_NEW_INSTEAD);
-
-        new_document_created = new_document((CODA_OPEN_CONTROL) id);
-
+        customisationToDialog[dialogCustomisation]->Close(CODA_OPEN_DIALOG_CREATE_NEW_INSTEAD + id);
         return S_OK;
     };
 
@@ -539,26 +537,20 @@ static std::wstring new_document(CODA_OPEN_CONTROL id)
                                     L"..\\templates\\" + templateBasename + L"." +
                                     templateExtension;
 
-    PWSTR documents;
-    SHGetKnownFolderPath(FOLDERID_Documents, 0, NULL, &documents);
+    auto filenameAndUri = fileSaveDialog(Util::wide_string_to_string(templateBasename), "", Util::wide_string_to_string(templateExtension));
 
-    int counter = 0;
-    std::wstring templateCopyPath;
+    // If the user cancelled the dialog, retunr an empty string
+    if (filenameAndUri.uri == "")
+        return L"";
 
-    do
-    {
-        std::wstring number = L"";
-        if (counter > 0)
-            number = L" (" + std::to_wstring(counter) + L")";
+    auto path = Poco::URI(filenameAndUri.uri).getPath();
+    if (path.length() > 4 && path[0] == '/' && path[2] == ':' && path[3] == '/')
+        path = path.substr(1);
+    auto templateCopyPath = Util::string_to_wide_string(Poco::Path(path).toString());
 
-        templateCopyPath = std::wstring(documents) + L"\\" + templateBasename + number + L"." +
-                           templateExtension;
-        counter++;
-    } while (std::filesystem::exists(std::filesystem::path(templateCopyPath)));
-
-    std::filesystem::copy_file(templateSourcePath, templateCopyPath);
-
-    CoTaskMemFree(documents);
+    // The IFileSaveDialog warns if overwriting, so assume the user has noticed and allowed us to go
+    // ahead.
+    std::filesystem::copy_file(templateSourcePath, templateCopyPath, std::filesystem::copy_options::overwrite_existing);
 
     return templateCopyPath;
 }
@@ -1216,11 +1208,10 @@ static OpenDialogResult fileOpenDialog()
 
     std::vector<FilenameAndUri> result;
 
-    if (dialogResult == CODA_OPEN_DIALOG_CREATE_NEW_INSTEAD)
+    if (dialogResult >= CODA_OPEN_DIALOG_CREATE_NEW_INSTEAD + (int)CODA_OPEN_CONTROL::NEW_TEXT &&
+        dialogResult <= CODA_OPEN_DIALOG_CREATE_NEW_INSTEAD + (int)CODA_OPEN_CONTROL::NEW_PRESENTATION)
     {
-        auto path = Poco::Path(Util::wide_string_to_string(new_document_created));
-        result.push_back({ path.getFileName(), Poco::URI(path).toString() });
-        return { true, result };
+        return { true, (CODA_OPEN_CONTROL)(dialogResult - CODA_OPEN_DIALOG_CREATE_NEW_INSTEAD), result };
     }
     else
     {
@@ -1252,7 +1243,7 @@ static OpenDialogResult fileOpenDialog()
 
     customisationToDialog.erase(dialogCustomisation);
 
-    return { false, result };
+    return { false, CODA_OPEN_CONTROL::NONE, result };
 }
 
 static FilenameAndUri fileSaveDialog(const std::string& name, const std::string& folder, const std::string& extension)
@@ -2008,19 +1999,21 @@ static void processMessage(WindowData& data, wil::unique_cotaskmem_string& messa
         else if (s == L"uno .uno:Open")
         {
             auto openResult = fileOpenDialog();
-            if (openResult.filenamesAndUris.size() > 0)
+            if (openResult.createNew)
             {
-                if (openResult.createdNew)
+                auto newDocument = new_document(openResult.newId);
+                if (newDocument != L"")
                 {
-                    openCOOLWindow(openResult.filenamesAndUris[0], PERMISSION::NEW_DOCUMENT);
+                    auto path = Poco::Path(Util::wide_string_to_string(newDocument));
+                    openCOOLWindow({ path.getFileName(), Poco::URI(path).toString() }, PERMISSION::NEW_DOCUMENT);
                 }
-                else
-                {
-                    for (const auto& i: openResult.filenamesAndUris)
-                        filenamesAndUrisToOpen.push_back(i);
+            }
+            else if (openResult.filenamesAndUris.size() > 0)
+            {
+                for (const auto& i: openResult.filenamesAndUris)
+                    filenamesAndUrisToOpen.push_back(i);
 
-                    load_next_document();
-                }
+                load_next_document();
             }
         }
         else if (s == L"uno .uno:CloseWin")
@@ -2039,8 +2032,12 @@ static void processMessage(WindowData& data, wil::unique_cotaskmem_string& messa
                 id = CODA_OPEN_CONTROL::NEW_PRESENTATION;
             else
                 fatal("Unexpected type in newdoc message");
-            auto path = Poco::Path(Util::wide_string_to_string(new_document(id)));
-            openCOOLWindow({ path.getFileName(), Poco::URI(path).toString() }, PERMISSION::NEW_DOCUMENT);
+            auto newDocument = new_document(id);
+            if (newDocument != L"")
+            {
+                auto path = Poco::Path(Util::wide_string_to_string(newDocument));
+                openCOOLWindow({ path.getFileName(), Poco::URI(path).toString() }, PERMISSION::NEW_DOCUMENT);
+            }
         }
         else
         {
@@ -2178,15 +2175,25 @@ int APIENTRY wWinMain(HINSTANCE hInstance, HINSTANCE, PWSTR, int showWindowMode)
     if (__argc == 1 || wcscmp(__wargv[1], L"--disable-background-networking") == 0)
     {
         auto openResult = fileOpenDialog();
-        // If initial dialog is cancelled, just quit
-        if (openResult.filenamesAndUris.size() == 0)
-            std::exit(0);
-
-        if (openResult.createdNew)
+        if (openResult.createNew)
+        {
+            auto newDocument = new_document(openResult.newId);
+            if (newDocument == L"")
+                std::exit(0);
+            auto path = Poco::Path(Util::wide_string_to_string(newDocument));
+            filenamesAndUrisToOpen.push_back({ path.getFileName(), Poco::URI(path).toString() });
             permission = PERMISSION::NEW_DOCUMENT;
-
-        for (auto const& i: openResult.filenamesAndUris)
-            filenamesAndUrisToOpen.push_back(i);
+        }
+        else if (openResult.filenamesAndUris.size() == 0)
+        {
+            // If initial dialog is cancelled, just quit
+            std::exit(0);
+        }
+        else
+        {
+            for (auto const& i: openResult.filenamesAndUris)
+                filenamesAndUrisToOpen.push_back(i);
+        }
     }
     else
     {
