@@ -153,8 +153,7 @@ constexpr int CODA_GROUP_OPEN = 1000;
 
 constexpr int CODA_OPEN_DIALOG_CREATE_NEW_INSTEAD = 123456;
 
-// Ugly to use globals like this
-static HMONITOR monitor_of_dialog;
+static HMONITOR primaryMonitor;
 
 // Map from IFileDialogCustomize pointer to the corresponding IFileDialog, so that we can close it prematurely
 static std::map<IFileDialogCustomize*, IFileDialog*> customisationToDialog;
@@ -440,15 +439,6 @@ public:
     // IFileDialogEvents methods
     IFACEMETHODIMP OnFileOk(IFileDialog* pFD)
     {
-        IOleWindow* pOleWindow;
-        if (SUCCEEDED(pFD->QueryInterface(IID_PPV_ARGS(&pOleWindow))))
-        {
-            HWND hDialogWindow;
-            pOleWindow->GetWindow(&hDialogWindow);
-            monitor_of_dialog = MonitorFromWindow(hDialogWindow, MONITOR_DEFAULTTONEAREST);
-        }
-        else
-            monitor_of_dialog = NULL;
         return S_OK;
     };
 
@@ -1672,7 +1662,7 @@ static void openCOOLWindow(const FilenameAndUri& filenameAndUri, PERMISSION perm
         MONITORINFO monitorInfo;
 
         monitorInfo.cbSize = sizeof(monitorInfo);
-        if (monitor_of_dialog != NULL && GetMonitorInfoW(monitor_of_dialog, &monitorInfo))
+        if (GetMonitorInfoW(primaryMonitor, &monitorInfo))
         {
             if (permission == PERMISSION::WELCOME)
             {
@@ -2107,6 +2097,8 @@ int APIENTRY wWinMain(HINSTANCE hInstance, HINSTANCE, PWSTR, int showWindowMode)
 
     if (!SUCCEEDED(CoInitializeEx(NULL, COINIT_APARTMENTTHREADED | COINIT_DISABLE_OLE1DDE)))
         fatal("CoInitializeEx() failed");
+
+    primaryMonitor = MonitorFromPoint({ 0, 0 }, MONITOR_DEFAULTTOPRIMARY);
 
     PWSTR appDataFolder;
     SHGetKnownFolderPath(FOLDERID_LocalAppData, 0, NULL, &appDataFolder);
