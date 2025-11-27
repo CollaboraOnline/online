@@ -107,15 +107,7 @@ function _iconViewEntry(
 
 		// Add tabindex attribute for accessibility, enabling keyboard navigation in the icon preview
 		entryContainer.setAttribute('tabindex', '0');
-		JSDialog.OnDemandRenderer(
-			builder,
-			parentData.id,
-			'iconview',
-			entry.row,
-			placeholder,
-			entryContainer,
-			entry.text,
-		);
+		(parentContainer as any).requestRenders(entry, placeholder, entryContainer);
 	} else {
 		_createEntryImage(entryContainer, builder, entry, entry.image);
 	}
@@ -135,12 +127,17 @@ function _iconViewEntry(
 				this.setAttribute('aria-selected', 'false');
 			});
 
-			builder.callback('iconview', 'select', parentData, entry.row, builder);
+			(parentContainer as any).builderCallback(
+				'iconview',
+				'select',
+				entry.row,
+				builder,
+			);
+
 			if (singleClick) {
-				builder.callback(
+				(parentContainer as any).builderCallback(
 					'iconview',
 					'activate',
-					parentData,
 					entry.row,
 					builder,
 				);
@@ -153,14 +150,18 @@ function _iconViewEntry(
 				this.setAttribute('aria-selected', 'false');
 			});
 
-			builder.callback('iconview', 'select', parentData, entry.row, builder);
+			(parentContainer as any).builderCallback(
+				'iconview',
+				'select',
+				entry.row,
+				builder,
+			);
 			$(entryContainer).addClass('selected');
 			entryContainer.setAttribute('aria-selected', 'true');
 
-			builder.callback(
+			(parentContainer as any).builderCallback(
 				'iconview',
 				'contextmenu',
-				parentData,
 				entry.row,
 				builder,
 			);
@@ -169,10 +170,9 @@ function _iconViewEntry(
 
 		if (!singleClick) {
 			$(entryContainer).dblclick(function () {
-				builder.callback(
+				(parentContainer as any).builderCallback(
 					'iconview',
 					'activate',
-					parentData,
 					entry.row,
 					builder,
 				);
@@ -192,6 +192,7 @@ JSDialog.iconView = function (
 		builder.options.cssClass + ' ui-iconview',
 		parentContainer,
 	);
+
 	iconview.id = data.id;
 	iconview.setAttribute('role', 'listbox');
 
@@ -200,34 +201,6 @@ JSDialog.iconView = function (
 
 	const disabled = data.enabled === false;
 	if (disabled) window.L.DomUtil.addClass(iconview, 'disabled');
-
-	for (const i in data.entries) {
-		_iconViewEntry(iconview, data, data.entries[i], builder);
-	}
-
-	const updateAllIndexes = () => {
-		// Example: if gridTemplateColumns = "96px 96px 96px"
-		// Step 1: Split the string by spaces:           ["96px", "96px", "96px"]
-		// Step 2: Remove any empty entries (if any):    ["96px", "96px", "96px"]
-		// Step 3: The length of this array is the number of columns in the grid.
-		const gridTemplateColumns = getComputedStyle(iconview).gridTemplateColumns;
-		const columns = gridTemplateColumns.split(' ').filter(Boolean).length;
-
-		if (columns > 0) {
-			const entries = iconview.querySelectorAll('.ui-iconview-entry');
-			entries.forEach((entry: HTMLElement, flatIndex: number) => {
-				const row = Math.floor(flatIndex / columns);
-				const column = flatIndex % columns;
-				entry.setAttribute('index', row + ':' + column);
-			});
-		}
-	};
-
-	// update indexes on resize
-	const resizeObserver = new ResizeObserver(() => {
-		updateAllIndexes();
-	});
-	resizeObserver.observe(iconview);
 
 	// Do not animate on creation - eg. when opening sidebar with icon view it might move the app
 	const firstSelected = $(iconview).children('.selected').get(0);
@@ -245,9 +218,7 @@ JSDialog.iconView = function (
 			});
 
 		const entry =
-			iconview.children.length > position
-				? iconview.children[position]
-				: null;
+			iconview.children.length > position ? iconview.children[position] : null;
 
 		if (entry) {
 			window.L.DomUtil.addClass(entry, 'selected');
@@ -270,14 +241,43 @@ JSDialog.iconView = function (
 			);
 	};
 
-	iconview.updateRenders = (pos: number) => {
-		const dropdown = iconview.querySelectorAll(
+	iconview.requestRendersImpl = (
+		id: string,
+		entry: IconViewEntry,
+		placeholder: Element,
+		entryContainer: Element,
+	) => {
+		JSDialog.OnDemandRenderer(
+			builder,
+			id,
+			'iconview',
+			entry.row,
+			placeholder,
+			entryContainer,
+			entry.text,
+		);
+	};
+
+	iconview.requestRenders = (
+		entry: IconViewEntry,
+		placeholder: Element,
+		entryContainer: Element,
+	) => {
+		iconview.requestRendersImpl(data.id, entry, placeholder, entryContainer);
+	};
+
+	iconview.updateRendersImpl = (
+		pos: number,
+		id: string,
+		where: HTMLElement,
+	) => {
+		const dropdown = where.querySelectorAll(
 			'.ui-iconview-entry, .ui-iconview-separator',
 		);
 		if (dropdown[pos]) {
-			let container = dropdown[pos];
+			let container = dropdown[pos] as HTMLElement;
 			const entry = data.entries[pos];
-			const image = builder.rendersCache[data.id].images[pos];
+			const image = builder.rendersCache[id].images[pos];
 			const hasText = entry.text && data.textWithIconEnabled;
 
 			container.replaceChildren();
@@ -291,7 +291,22 @@ JSDialog.iconView = function (
 
 			_createEntryImage(container, builder, entry, image);
 			if (hasText) _createEntryText(container, entry);
+		} else {
+			app.console.debug('IconView: not found entry: ' + pos);
 		}
+	};
+
+	iconview.builderCallback = (
+		objectType: string,
+		eventType: string,
+		entryData: any,
+		builder: JSBuilder,
+	) => {
+		builder.callback(objectType, eventType, data, entryData, builder);
+	};
+
+	iconview.updateRenders = (pos: number) => {
+		iconview.updateRendersImpl(pos, data.id, iconview);
 	};
 
 	JSDialog.KeyboardGridNavigation(iconview);
@@ -309,14 +324,25 @@ JSDialog.iconView = function (
 		if (selectedIndex === -1) return;
 
 		if (e.key === ' ' || e.code === 'Space')
-			builder.callback('iconview', 'select', data, selectedIndex, builder);
+			iconview.builderCallback('iconview', 'select', selectedIndex, builder);
 		else if (e.key === 'Enter')
-			builder.callback('iconview', 'activate', data, selectedIndex, builder);
+			iconview.builderCallback('iconview', 'activate', selectedIndex, builder);
 	});
 
 	// ensures that aria-selected is updated on initial focus on iconview entries
 	iconview.addEventListener('focusin', function (e: FocusEvent) {
 		const target = e.target as HTMLElement;
+
+		/*
+		 * when the iconview is shown in a dropdown and is the first
+		 * child of the dropdown, it gets selected by default which
+		 * is not desirable as that shows a blue frame around the
+		 * iconview.
+		 */
+		if (target === iconview) {
+			target.setAttribute('tabindex', '-1');
+			return;
+		}
 
 		if (
 			!target.classList.contains('ui-iconview-entry') ||
@@ -334,6 +360,19 @@ JSDialog.iconView = function (
 
 		// set aria-selected on focused entry
 		target.setAttribute('aria-selected', 'true');
+	});
+
+	app.layoutingService.appendLayoutingTask(() => {
+		for (const i in data.entries) {
+			_iconViewEntry(iconview, data, data.entries[i], builder);
+		}
+
+		// Do not animate on creation - eg. when opening sidebar with icon view it might move the app
+		const firstSelected = $(iconview).children('.selected').get(0);
+		if (firstSelected) {
+			const offsetTop = firstSelected.offsetTop;
+			iconview.scrollTop = offsetTop;
+		}
 	});
 
 	return false;
