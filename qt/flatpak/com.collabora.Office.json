@@ -53,10 +53,6 @@
 	  "branch": "distro/collabora/co-25.04"
         },
         {
-          "type": "file",
-          "path": "fixup-application-data.sh"
-        },
-        {
           "commands": [
             "mkdir external/tarballs"
           ],
@@ -699,14 +695,16 @@
         "make clean",
         "make",
         "make distro-pack-install",
-        "make cmd cmd='$(SRCDIR)/solenv/bin/assemble-flatpak.sh com.collabora.Office'",
-        "./fixup-application-data.sh",
+        "make cmd cmd='$(SRCDIR)/solenv/bin/assemble-flatpak.sh org.libreoffice.LibreOffice'",
         "mkdir -p /app/core/include",
         "cp -r include/LibreOfficeKit /app/core/include/."
       ],
       "cleanup": [
               "/core",
-              "/bin/collaboraoffice"
+              "/bin/collaboraoffice",
+              "/share/icons",
+              "/share/appdata",
+              "/share/applications"
       ]
     },
     {
