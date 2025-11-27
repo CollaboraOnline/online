@@ -8,18 +8,17 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-11-17 08:08+0100\n"
-"PO-Revision-Date: 2022-04-12 07:41+0000\n"
-"Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
+"PO-Revision-Date: 2025-11-27 12:40+0000\n"
+"Last-Translator: dukezas <dukezas@gmail.com>\n"
 "Language-Team: Lithuanian <https://hosted.weblate.org/projects/"
 "collabora-online/ui/lt/>\n"
-"Language: \n"
+"Language: lt\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n % 10 == 1 && (n % 100 < 11 || n % 100 > "
-"19)) ? 0 : ((n % 10 >= 2 && n % 10 <= 9 && (n % 100 < 11 || n % 100 > 19)) ? "
-"1 : 2);\n"
-"X-Generator: Weblate 4.12-dev\n"
+"Plural-Forms: nplurals=3; plural="
+"(n%10==1 && n%100!=11 ? 0 : n%10>=2 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Generator: Weblate 5.15-dev\n"
 
 #: admin/admin.strings.js:15
 msgid "Admin console"
@@ -27,7 +26,7 @@ msgstr "Administratoriaus pultas"
 
 #: admin/admin.strings.js:16
 msgid "Settings"
-msgstr "Nuostatos"
+msgstr "Nustatymai"
 
 #: admin/admin.strings.js:17
 msgid "Overview"
@@ -35,7 +34,7 @@ msgstr "Apžvalga"
 
 #: admin/admin.strings.js:18
 msgid "(current)"
-msgstr "(veikiamasis)"
+msgstr "(esamas)"
 
 #: admin/admin.strings.js:19
 msgid "Analytics"
@@ -47,7 +46,7 @@ msgstr "Istorija"
 
 #: admin/admin.strings.js:21
 msgid "Log"
-msgstr ""
+msgstr "Registras"
 
 #: admin/admin.strings.js:22
 msgid "Dashboard"
@@ -55,30 +54,28 @@ msgstr "Skydelis"
 
 #: admin/admin.strings.js:23
 msgid "Users online"
-msgstr "Prisijungę naudotojai"
+msgstr "Prisijungę vartotojai"
 
 #: admin/admin.strings.js:24
 msgid "User Name"
-msgstr ""
+msgstr "Vartotojo vardas"
 
 #: admin/admin.strings.js:25
-#, fuzzy
 msgid "Documents open"
 msgstr "Atverti dokumentai"
 
 #: admin/admin.strings.js:26 admin/src/AdminSocketOverview.js:82
 #: admin/src/AdminSocketOverview.js:131 admin/src/AdminSocketOverview.js:358
 msgid " user(s)."
-msgstr ""
+msgstr " vartotojas(ai)."
 
 #: admin/admin.strings.js:27 admin/src/AdminSocketOverview.js:214
-#, fuzzy
 msgid " document(s) open."
-msgstr "Atverti dokumentai"
+msgstr " atverti dokumentai(as)."
 
 #: admin/admin.strings.js:28
 msgid "Number of Documents"
-msgstr ""
+msgstr "Dokumentų kiekis"
 
 #: admin/admin.strings.js:29
 msgid "Memory consumed"
@@ -86,11 +83,11 @@ msgstr "Naudojama atmintis"
 
 #: admin/admin.strings.js:30
 msgid "Bytes sent"
-msgstr ""
+msgstr "Išsiųsti bitai"
 
 #: admin/admin.strings.js:31
 msgid "Bytes received"
-msgstr ""
+msgstr "Gauti bitai"
 
 #: admin/admin.strings.js:32
 msgid "PID"
@@ -102,7 +99,7 @@ msgstr "Dokumentas"
 
 #: admin/admin.strings.js:34
 msgid "Views"
-msgstr ""
+msgstr "Peržiūros"
 
 #: admin/admin.strings.js:35
 msgid "Elapsed time"
@@ -110,19 +107,19 @@ msgstr "Praėjęs laikas"
 
 #: admin/admin.strings.js:36
 msgid "Idle time"
-msgstr ""
+msgstr "Prastovos laikas"
 
 #: admin/admin.strings.js:37
 msgid "Modified"
-msgstr ""
+msgstr "Modifikuotas"
 
 #: admin/admin.strings.js:38
 msgid "Uploaded"
-msgstr ""
+msgstr "Įkelta"
 
 #: admin/admin.strings.js:39
 msgid "WOPI host"
-msgstr ""
+msgstr "WOPI host'as"
 
 #: admin/admin.strings.js:40
 msgid "Kill"
@@ -134,15 +131,15 @@ msgstr "Grafikai"
 
 #: admin/admin.strings.js:42
 msgid "Memory Graph"
-msgstr ""
+msgstr "Atminties grafikas"
 
 #: admin/admin.strings.js:43
 msgid "CPU Graph"
-msgstr ""
+msgstr "CPU grafikas"
 
 #: admin/admin.strings.js:44
 msgid "Network Graph"
-msgstr ""
+msgstr "Tinklo grafikas"
 
 #: admin/admin.strings.js:45
 #: admin/src/integrator/AdminIntegratorSettings.ts:764
@@ -158,70 +155,69 @@ msgstr ""
 #: src/control/Control.NotebookbarImpress.js:30
 #: src/map/handler/Map.Settings.ts:82
 msgid "Save"
-msgstr "Įrašyti"
+msgstr "Įšsaugoti"
 
 #: admin/admin.strings.js:46
 msgid "Cache size of memory statistics"
-msgstr "Atminties podėlio dydžio statistika"
+msgstr "Atminties talpyklos dydžio statistika"
 
 #: admin/admin.strings.js:47
 msgid "Time interval of memory statistics (in ms)"
-msgstr ""
+msgstr "Atminties statistikos laiko intervalas (ms)"
 
 #: admin/admin.strings.js:48
-#, fuzzy
 msgid "Cache size of CPU statistics"
-msgstr "Atminties podėlio dydžio statistika"
+msgstr "CPU talpyklos dydžio statistika"
 
 #: admin/admin.strings.js:49
 msgid "Time interval of CPU statistics (in ms)"
-msgstr ""
+msgstr "CPU statistikos laiko intervalas (ms)"
 
 #: admin/admin.strings.js:50 admin/src/AdminSocketOverview.js:100
 msgid "Kill session."
-msgstr ""
+msgstr "Nutraukti sesiją."
 
 #: admin/admin.strings.js:51
 msgid "Maximum Document process virtual memory (in MB) - reduce only"
-msgstr ""
+msgstr "Maksimali dokumento apdorojimo virtualioji atmintis (MB) – tik mažinti"
 
 #: admin/admin.strings.js:52
 msgid "Maximum Document process stack memory (in KB) - reduce only"
 msgstr ""
+"Maksimali dokumentų apdorojimo stekinės atminties talpa (KB) – tik mažinti"
 
 #: admin/admin.strings.js:53
 msgid "Maximum file size allowed to write to disk (in MB) - reduce only"
-msgstr ""
+msgstr "Maksimalus failo dydis, kurį galima įrašyti į diską (MB) – tik mažinti"
 
 #: admin/admin.strings.js:54
-#, fuzzy
 msgid "Documents:"
-msgstr "Dokumentas"
+msgstr "Dokumentai:"
 
 #: admin/admin.strings.js:55
 msgid "Expired:"
-msgstr ""
+msgstr "Pasibaigęs:"
 
 #: admin/admin.strings.js:56 admin/src/AdminSocketBase.js:61
 #: src/control/Control.Zotero.js:211
 msgid "Refresh"
-msgstr ""
+msgstr "Atnaujinti"
 
 #: admin/admin.strings.js:57
 msgid "Shutdown Server"
-msgstr ""
+msgstr "Išjungti serverį"
 
 #: admin/admin.strings.js:58
 msgid "Server uptime"
-msgstr ""
+msgstr "Serverio veikimo laikas"
 
 #: admin/admin.strings.js:59
 msgid "Refresh Log"
-msgstr ""
+msgstr "Atnaujinti žurnalą"
 
 #: admin/admin.strings.js:60
 msgid "Channel Filter:"
-msgstr ""
+msgstr "Kanalų filtras:"
 
 #: admin/admin.strings.js:61 src/control/Control.JSDialogBuilder.js:515
 #: src/control/Control.StatusBar.js:198 src/control/Control.StatusBar.js:203
@@ -230,11 +226,11 @@ msgstr "Nieko"
 
 #: admin/admin.strings.js:62
 msgid "Set Log Levels"
-msgstr ""
+msgstr "Nustatyti žurnalo lygius"
 
 #: admin/admin.strings.js:63
 msgid "Log Levels"
-msgstr ""
+msgstr "Žurnalo lygiai"
 
 #: admin/admin.strings.js:64 src/canvas/sections/CommentListSection.ts:185
 #: src/control/Control.AlertDialog.js:32 src/control/Control.AlertDialog.js:38
@@ -243,19 +239,19 @@ msgstr ""
 #: src/core/Socket.js:311 src/core/Socket.js:1092 src/core/Socket.js:1097
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.div:51-7
 msgid "Close"
-msgstr ""
+msgstr "Uždaryti"
 
 #: admin/admin.strings.js:65
 msgid "Update Log Levels"
-msgstr ""
+msgstr "Atnaujinti žurnalo lygius"
 
 #: admin/admin.strings.js:66
 msgid "Version Information"
-msgstr ""
+msgstr "Versijos informacija"
 
 #: admin/admin.strings.js:67
 msgid "License"
-msgstr ""
+msgstr "Licencija"
 
 #: admin/admin.strings.js:68 src/control/Control.Menubar.ts:421
 #: src/control/Control.Menubar.ts:601 src/control/Control.Menubar.ts:740
@@ -268,31 +264,31 @@ msgstr "Apie"
 
 #: admin/src/AdminClusterOverview.js:105
 msgid "CPU History"
-msgstr ""
+msgstr "CPU istorija"
 
 #: admin/src/AdminClusterOverview.js:116
 msgid "Memory History"
-msgstr ""
+msgstr "Atminties istorija"
 
 #: admin/src/AdminClusterOverview.js:356
 msgid "Memory"
-msgstr ""
+msgstr "Atmintis"
 
 #: admin/src/AdminClusterOverview.js:540
 msgid "Please wait kubernetes cluster is scaling..."
-msgstr ""
+msgstr "Prašome palaukti, „Kubernetes“ klasteris keičiamas..."
 
 #: admin/src/AdminClusterOverview.js:550 admin/src/AdminSocketOverview.js:420
 msgid "Failed to set jwt authentication cookie over insecure connection"
-msgstr ""
+msgstr "Nepavyko nustatyti JWT autentifikavimo slapuko per nesaugų ryšį"
 
 #: admin/src/AdminClusterOverview.js:553 admin/src/AdminSocketOverview.js:424
 msgid "Failed to authenticate this session over protocol {0}"
-msgstr ""
+msgstr "Nepavyko autentifikuoti šios sesijos naudojant protokolą {0}"
 
 #: admin/src/AdminClusterOverview.js:558 admin/src/AdminSocketOverview.js:429
 msgid "Warning"
-msgstr ""
+msgstr "Perspėjimas"
 
 #: admin/src/AdminClusterOverview.js:560 admin/src/AdminSocketBase.js:63
 #: admin/src/AdminSocketBase.js:74 admin/src/AdminSocketOverview.js:108
@@ -320,7 +316,7 @@ msgstr ""
 #: src/slideshow/SlideShowPresenter.ts:1073
 #: src/slideshow/SlideShowPresenter.ts:1096
 msgid "OK"
-msgstr ""
+msgstr "Gerai"
 
 #: admin/src/AdminClusterOverview.js:561 admin/src/AdminSocketOverview.js:109
 #: admin/src/AdminSocketOverview.js:432 admin/src/AdminSocketSettings.js:48
@@ -339,23 +335,23 @@ msgstr ""
 #: src/control/Control.Zotero.js:360 src/core/Socket.js:1333
 #: src/map/handler/Map.Settings.ts:77
 msgid "Cancel"
-msgstr "Atsisakyti"
+msgstr "Atšaukti"
 
 #: admin/src/AdminSocketAnalytics.js:247
 msgid "Received"
-msgstr ""
+msgstr "Gauta"
 
 #: admin/src/AdminSocketAnalytics.js:251
 msgid "Sent"
-msgstr ""
+msgstr "Išsiųsta"
 
 #: admin/src/AdminSocketAnalytics.js:255
 msgid "Connections"
-msgstr ""
+msgstr "Ryšiai"
 
 #: admin/src/AdminSocketBase.js:62
 msgid "Server has been shut down; please reload the page."
-msgstr ""
+msgstr "Serveris buvo išjungtas; prašome perkrauti puslapį."
 
 #: admin/src/AdminSocketBase.js:72 admin/src/AdminSocketBase.js:73
 msgid "Connection error"
@@ -363,31 +359,31 @@ msgstr "Ryšio klaida"
 
 #: admin/src/AdminSocketOverview.js:106 admin/src/AdminSocketSettings.js:45
 msgid "Confirmation"
-msgstr ""
+msgstr "Patvirtinimas"
 
 #: admin/src/AdminSocketOverview.js:107
 msgid "Are you sure you want to terminate this session?"
-msgstr "Ar tikrai nutraukti šį seansą?"
+msgstr "Ar tikrai norite nutraukti šią sesiją?"
 
 #: admin/src/AdminSocketSettings.js:46
 msgid "Are you sure you want to shut down the server?"
-msgstr ""
+msgstr "Ar tikrai norite išjungti serverį?"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:153
 msgid "Accessibility"
-msgstr ""
+msgstr "Prieinamumas"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:155
 msgid "Signature Certificate"
-msgstr ""
+msgstr "Parašo sertifikatas"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:156
 msgid "Signature Key"
-msgstr ""
+msgstr "Parašo raktas"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:157
 msgid "Signature CA"
-msgstr ""
+msgstr "Parašo CA"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:160
 #: src/control/Control.Menubar.ts:171 src/control/Control.Menubar.ts:496
@@ -399,325 +395,330 @@ msgstr ""
 #: src/control/Control.NotebookbarImpress.js:691
 #: src/control/Control.NotebookbarWriter.js:1763
 msgid "Dark Mode"
-msgstr ""
+msgstr "Tamsus režimas"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:161
 msgid "Compact layout"
-msgstr ""
+msgstr "Kompaktiškas išdėstymas"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:162
 msgid "Show status bar"
-msgstr ""
+msgstr "Rodyti būsenos juostą"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:163
 #: src/control/Control.Menubar.ts:168 src/control/Control.Menubar.ts:492
 msgid "Show Ruler"
-msgstr ""
+msgstr "Rodyti liniuotę"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:164
 msgid "Accessibility Checker"
-msgstr ""
+msgstr "Prieinamumo tikrintuvas"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:165
 #: src/control/Control.NavigatorPanel.ts:282
 msgid "Navigator"
-msgstr ""
+msgstr "Navigatorius"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:166
 msgid "Show Sidebar"
-msgstr ""
+msgstr "Rodyti šoninę juostą"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:167
 msgid "Custom Animation"
-msgstr ""
+msgstr "Pasirinktinė animacija"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:170
 msgid "Style List"
-msgstr ""
+msgstr "Stilių sąrašas"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:173
 #: src/control/Control.NotebookbarCalc.js:1139
 #: src/control/Control.NotebookbarDraw.js:527
 #: src/control/Control.NotebookbarImpress.js:662
 msgid "Grid"
-msgstr ""
+msgstr "Tinklelis"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:174
 msgid "Print"
-msgstr ""
+msgstr "Spausdinti"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:175
 msgid "Other"
-msgstr ""
+msgstr "Kita"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:176
 #: src/control/Control.NotebookbarImpress.js:671
 msgid "Show Grid"
-msgstr ""
+msgstr "Rodyti tinklelį"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:177
 msgid "Snap to grid"
-msgstr ""
+msgstr "Prisegti prie tinklelio"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:178
 #: admin/src/integrator/AdminIntegratorSettings.ts:184
 msgid "Size to grid"
-msgstr ""
+msgstr "Dydis pagal tinklelį"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:179
 msgid "Synchronize axes"
-msgstr ""
+msgstr "Sinchronizuoti ašis"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:180
 msgid "Snap grid"
-msgstr ""
+msgstr "Pritraukiamas tinklelis"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:181
 msgid "Empty Pages"
-msgstr ""
+msgstr "Tušti lapai"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:182
 msgid "Force Breaks"
-msgstr ""
+msgstr "Priverstiniai pertraukimai"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:183
 #: src/control/Control.Menubar.ts:772 src/control/Control.TopToolbar.js:110
 #: src/control/jsdialog/Definitions.Menu.ts:1573
 msgid "All Sheets"
-msgstr ""
+msgstr "Visi lapai"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:185
 msgid "Content"
-msgstr ""
+msgstr "Turinys"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:186
 msgid "Drawing"
-msgstr ""
+msgstr "Piešinys"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:187
 #: src/control/Control.NotebookbarDraw.js:1226
 #: src/control/Control.NotebookbarDraw.js:1426
 #: src/control/Control.NotebookbarWriter.js:1221
 msgid "Page"
-msgstr ""
+msgstr "Lapas"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:188
 msgid "Fit to page"
-msgstr ""
+msgstr "Įtalpinti į lapą"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:189
 msgid "Tile pages"
-msgstr ""
+msgstr "Skaidyti lapus"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:190
 msgid "Booklet"
-msgstr ""
+msgstr "Bukletas"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:191
 msgid "Booklet front"
-msgstr ""
+msgstr "Bukleto priekis"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:192
 msgid "Booklet back"
-msgstr ""
+msgstr "Bukleto nugara"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:193
 msgid "Page name"
-msgstr ""
+msgstr "Lapo pavadinimas"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:194
 #: src/control/Control.NotebookbarCalc.js:771
 #: src/control/Control.NotebookbarWriter.js:1624
 #: src/control/Control.Zotero.js:1152 src/control/Control.Zotero.js:1604
 msgid "Date"
-msgstr ""
+msgstr "Data"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:195
 #: src/control/Control.NotebookbarCalc.js:772
 msgid "Time"
-msgstr ""
+msgstr "Laikas"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:196
 msgid "Hidden pages"
-msgstr ""
+msgstr "Paslėpti lapai"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:197
 msgid "From printer setup"
-msgstr ""
+msgstr "Iš spausdintuvo nustatymų"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:198
 msgid "Presentation"
-msgstr ""
+msgstr "Prezentacija"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:199
 #: src/control/Control.Zotero.js:1340 src/slideshow/PresenterConsole.js:33
 msgid "Notes"
-msgstr ""
+msgstr "Užrašai"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:200
 msgid "Handouts"
-msgstr ""
+msgstr "Dalomoji medžiaga"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:201
 #: src/control/Control.NavigatorPanel.ts:205
 msgid "Outline"
-msgstr ""
+msgstr "Kontūras"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:202
 msgid "Handout horizontal"
-msgstr ""
+msgstr "Dalomoji medžiaga horizontaliai"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:203
 msgid "Images"
-msgstr ""
+msgstr "Paveikslėliai"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:204
 msgid "Tables"
-msgstr ""
+msgstr "Lentelės"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:205
 msgid "Controls"
-msgstr ""
+msgstr "Valdikliai"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:206
 msgid "Background"
-msgstr ""
+msgstr "Fonas"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:207
 msgid "Print Black"
-msgstr ""
+msgstr "Spausdinti juodai"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:208
 msgid "Hidden text"
-msgstr ""
+msgstr "Paslėptas tekstas"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:209
 msgid "Placeholders"
-msgstr ""
+msgstr "Vietos rezervavimo žymės"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:210
 msgid "Left pages"
-msgstr ""
+msgstr "Kairieji lapai"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:211
 msgid "Right pages"
-msgstr ""
+msgstr "Dešinieji lapai"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:212
 msgid "Brochure"
-msgstr ""
+msgstr "Brošiūra"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:213
 msgid "Brochure Right to Left"
-msgstr ""
+msgstr "Brošiūra iš dešinės į kairę"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:214
 msgid "Images and Objects"
-msgstr ""
+msgstr "Vaizdai ir objektai"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:310
 msgid "Invalid JSON file"
-msgstr ""
+msgstr "Negaliojantis JSON failas"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:314
 msgid "Error reading file"
-msgstr ""
+msgstr "Klaida nuskaitant failą"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:326
 msgid "Autotext"
-msgstr ""
+msgstr "Automatinis tekstas"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:328
 msgid ""
 "Upload reusable text snippets (.bau). To insert the text in your document, "
 "type the shortcut for an AutoText entry and press F3."
 msgstr ""
+"Įkelkite daugkartinio naudojimo teksto fragmentus (.bau). Norėdami įterpti "
+"tekstą į dokumentą, įveskite automatinio teksto įrašo nuorodą ir paspauskite "
+"F3."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:334
 msgid "Upload Autotext"
-msgstr ""
+msgstr "Įkelti automatinį tekstą"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:338
 msgid "Custom dictionaries"
-msgstr ""
+msgstr "Pasirinktiniai žodynai"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:340
 msgid ""
 "Add or edit words in a spell check dictionary. Words in your wordbook (."
 "dic) will be available for spelling checks."
 msgstr ""
+"Pridėkite arba redaguokite žodžius rašybos tikrinimo žodyne. Žodžiai iš jūsų "
+"žodyno (.dic) bus pasiekiami rašybos tikrinimui."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:346
 msgid "Upload Wordbook"
-msgstr ""
+msgstr "Įkelti žodyną"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:350
 msgid "Document settings"
-msgstr ""
+msgstr "Dokumento nustatymai"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:351
 #: admin/src/integrator/Xcu.ts:316
 msgid "Adjust how office documents behave."
-msgstr ""
+msgstr "Koreguokite, kaip veikia ofiso dokumentai."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:357
 msgid "Upload Xcu"
-msgstr ""
+msgstr "Įkelti Xcu"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:408
 msgid "Shared Config URL is missing in initial variables."
-msgstr ""
+msgstr "Pradiniuose kintamuosiuose trūksta bendrinamo konfigūracijos URL."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:414
 msgid "Access token is missing in initial variables."
-msgstr ""
+msgstr "Pradiniuose kintamuosiuose trūksta prieigos žetono."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:450
 msgid "Something went wrong. Please try to refresh the page."
-msgstr ""
+msgstr "Kažkas nepavyko. Prašom pabandyti atnaujinti tinklapį."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:586
 msgid ""
 "Something went wrong while fetching setting file. Please try to refresh the "
 "page."
-msgstr ""
+msgstr "Įkeliant nustatymų failą įvyko klaida. Pabandykite atnaujinti puslapį."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:611
 msgid ""
 "Something went wrong while fetching wordbook. Please try to refresh the "
 "page."
-msgstr ""
+msgstr "Įkeliant žodyną įvyko klaida. Pabandykite atnaujinti puslapį."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:621
 msgid "Interface Settings"
-msgstr ""
+msgstr "Sąsajos nustatymai"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:623
 msgid "Set default interface preferences."
-msgstr ""
+msgstr "Nustatykite numatytąsias sąsajos nuostatas."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:731
 msgid "Select a tab to browser settings."
-msgstr ""
+msgstr "Pasirinkite skirtuką, kad pasiektumėte naršyklės nustatymus."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:744
 #: admin/src/integrator/Xcu.ts:376
 msgid "Reset to default Document settings"
-msgstr ""
+msgstr "Atkurti numatytuosius dokumento nustatymus"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:748
 #: admin/src/integrator/Xcu.ts:390
 msgid "Are you sure you want to reset Document settings?"
-msgstr ""
+msgstr "Ar tikrai norite iš naujo nustatyti dokumento nustatymus?"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:765
 #: admin/src/integrator/Xcu.ts:405
 msgid "Save Document settings"
-msgstr ""
+msgstr "Išsaugoti dokumento nustatymus"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:1106
 msgid "Notebookbar view"
-msgstr ""
+msgstr "Užrašinės juostos vaizdas"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:1113
 #: src/control/Control.NotebookbarCalc.js:1574
@@ -725,118 +726,122 @@ msgstr ""
 #: src/control/Control.NotebookbarImpress.js:593
 #: src/control/Control.NotebookbarWriter.js:1716
 msgid "Compact view"
-msgstr ""
+msgstr "Kompaktiškas vaizdas"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:1186
 msgid "Something went wrong while uploading the file. Please try again."
-msgstr ""
+msgstr "Įvyko klaida įkeliant failą. Prašom pabandyti iš naujo."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:1262
 #: src/canvas/sections/CommentSection.ts:1172
 #: src/canvas/sections/CommentSection.ts:1177
 #: src/control/Control.ContextMenu.js:253 src/docdispatcher.ts:557
 msgid "Delete"
-msgstr ""
+msgstr "Ištrinti"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:1300
 msgid ""
 "Something went wrong while deleting the file. Please try refreshing the "
 "page."
-msgstr ""
+msgstr "Įvyko klaida trinant failą. Prašom pabandyti atnaujinti tinklapį."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:1315
 msgid "Edit"
-msgstr "Taisa"
+msgstr "Redaguoti"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:1341
 msgid "View Settings"
-msgstr ""
+msgstr "Peržiūros nustatymus"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:1342
 msgid "Adjust view settings."
-msgstr ""
+msgstr "Koreguoti peržiūros nustatymus."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:1352
 msgid "Option"
-msgstr ""
+msgstr "Pasirinkimas"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:1378
 msgid ""
 "To use Zotero specify your API key here. You can create your API key in "
 "your "
 msgstr ""
+"Norėdami naudoti „Zotero“, nurodykite savo API raktą. API raktą galite "
+"susikurti savo "
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:1386
 msgid "Zotero account API settings"
-msgstr ""
+msgstr "„Zotero“ paskyros API nustatymai"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:1395
 msgid "Document Signing"
-msgstr ""
+msgstr "Dokumentų pasirašymas"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:1399
 msgid ""
 "To use document signing, specify your signing certificate, key and CA chain "
 "here."
 msgstr ""
+"Norėdami naudoti dokumentų pasirašymą, nurodykite savo pasirašymo "
+"sertifikatą, raktą ir CA grandinę."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:1457
 msgid "(Warning: Server accessibility must be enabled to toggle)"
-msgstr ""
+msgstr "(Įspėjimas: norint perjungti, serverio prieinamumas turi būti įjungtas)"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:1766
 #: src/map/handler/Map.WOPI.js:714
 msgid "Error"
-msgstr ""
+msgstr "Klaida"
 
 #: admin/src/integrator/WordBook.ts:117
 msgid "Standard dictionary"
-msgstr ""
+msgstr "Standartinis žodynas"
 
 #: admin/src/integrator/WordBook.ts:118
 msgid "Words are ignored by the spell checker"
-msgstr ""
+msgstr "Rašybos tikrintuvas ignoruoja žodžius"
 
 #: admin/src/integrator/WordBook.ts:122
 msgid "Dictionary of exceptions"
-msgstr ""
+msgstr "Išimčių žodynas"
 
 #: admin/src/integrator/WordBook.ts:123
 msgid "Exception words are underlined while checking spelling"
-msgstr ""
+msgstr "Tikrinant rašybą, žodžiai su išimtimis yra pabraukti"
 
 #: admin/src/integrator/WordBook.ts:132
 msgid "Loading Wordbook..."
-msgstr ""
+msgstr "Kraunamas žodynas..."
 
 #: admin/src/integrator/WordBook.ts:333
 msgid "Type to add a word"
-msgstr ""
+msgstr "Įveskite, kad pridėtumėte žodį"
 
 #: admin/src/integrator/WordBook.ts:338
 #: src/control/Notebookbar.ImpressAnimationTab.ts:67
 msgid "Add"
-msgstr ""
+msgstr "Pridėti"
 
 #: admin/src/integrator/WordBook.ts:466
 msgid "Invalid dictionary format. Please check the file."
-msgstr ""
+msgstr "Neteisingas žodyno formatas. Prašom patikrinti failą."
 
 #: admin/src/integrator/WordBook.ts:486
 msgid "Something went wrong while uploading dictionary file"
-msgstr ""
+msgstr "Įkeliant žodyno failą įvyko klaida"
 
 #: admin/src/integrator/Xcu.ts:160 admin/src/integrator/Xcu.ts:172
 msgid "Something went wrong while loading Document settings."
-msgstr ""
+msgstr "Įvyko klaida įkeliant dokumentų nustatymus."
 
 #: admin/src/integrator/Xcu.ts:312
 msgid "Document Settings"
-msgstr ""
+msgstr "Dokumentų nustatymai"
 
 #: admin/src/integrator/Xcu.ts:363
 msgid "Select a tab to view settings."
-msgstr ""
+msgstr "Pasirinkite skirtuką, kad peržiūrėtumėte nustatymus."
 
 #: admin/src/Util.js:26
 msgid "kB"
@@ -856,23 +861,23 @@ msgstr "TB"
 
 #: admin/src/Util.js:26
 msgid "PB"
-msgstr ""
+msgstr "PB"
 
 #: admin/src/Util.js:26
 msgid "EB"
-msgstr ""
+msgstr "EB"
 
 #: admin/src/Util.js:26
 msgid "ZB"
-msgstr ""
+msgstr "ZB"
 
 #: admin/src/Util.js:26
 msgid "YB"
-msgstr ""
+msgstr "YB"
 
 #: admin/src/Util.js:26
 msgid "BB"
-msgstr ""
+msgstr "BB"
 
 #: admin/src/Util.js:86 admin/src/Util.js:88
 msgid " hrs"
@@ -880,98 +885,99 @@ msgstr " val."
 
 #: admin/src/Util.js:92 admin/src/Util.js:94
 msgid " mins"
-msgstr " min."
+msgstr " min"
 
 #: admin/src/Util.js:97
 msgid " s"
-msgstr " sek."
+msgstr " sek"
 
 #: js/global.js:1610
 msgid ""
 "The system is currently adjusting resources. Please wait a moment while we "
 "retry your request..."
 msgstr ""
+"Šiuo metu sistema koreguoja išteklius. Prašome palaukti, kol pakartosime "
+"jūsų užklausą..."
 
 #: js/global.js:1612
 msgid "The document is being migrated to a new server. Retrying shortly..."
-msgstr ""
+msgstr "Dokumentas perkeliamas į naują serverį. Netrukus bandysime dar kartą..."
 
 #: js/global.js:1614
 msgid "Failed to get RouteToken from controller"
-msgstr ""
+msgstr "Nepavyko gauti „RouteToken“ iš valdiklio"
 
 #: src/app/Debug.ts:136
 msgid "Debug Tools"
-msgstr ""
+msgstr "Derinimo įrankiai"
 
 #: src/app/Debug.ts:138
 msgid "Ctrl+Shift+Alt+D to exit"
-msgstr ""
+msgstr "Ctrl+Shift+Alt+D kad išeiti"
 
 #: src/app/Debug.ts:1384
 msgid "Event handling has been delayed for an unexpectedly long time: {0}ms"
-msgstr ""
+msgstr "Įvykių apdorojimas buvo atidėtas netikėtai ilgam: {0}ms"
 
 #: src/canvas/sections/CommentListSection.ts:184
 msgid "A comment is being edited"
-msgstr ""
+msgstr "Komentaras redaguojamas"
 
 #: src/canvas/sections/CommentListSection.ts:185
 msgid "Please save or discard the comment currently being edited."
-msgstr ""
+msgstr "Prašome išsaugoti arba atmesti šiuo metu redaguojamą komentarą."
 
 #: src/canvas/sections/CommentListSection.ts:1206
 msgid "Modify"
-msgstr ""
+msgstr "Modifikuoti"
 
 #: src/canvas/sections/CommentListSection.ts:1212
 #: src/canvas/sections/CommentSection.ts:187
 #: src/canvas/sections/CommentSection.ts:498
 #: src/canvas/sections/CommentSection.ts:1259
 msgid "Reply"
-msgstr ""
+msgstr "Atsakyti"
 
 #: src/canvas/sections/CommentListSection.ts:1218
 #: src/control/Notebookbar.ImpressAnimationTab.ts:83
 msgid "Remove"
-msgstr ""
+msgstr "Pašalinti"
 
 #: src/canvas/sections/CommentListSection.ts:1224
 msgid "Remove Thread"
-msgstr ""
+msgstr "Pašalinti temą"
 
 #: src/canvas/sections/CommentListSection.ts:1230
-#, fuzzy
 msgid "Resolve"
-msgstr "Neaktualus"
+msgstr "Išspręsti"
 
 #: src/canvas/sections/CommentListSection.ts:1230
 msgid "Unresolve"
-msgstr ""
+msgstr "Atšaukti sprendimą"
 
 #: src/canvas/sections/CommentListSection.ts:1236
 msgid "Unresolve Thread"
-msgstr ""
+msgstr "Neišspręsti Thread"
 
 #: src/canvas/sections/CommentListSection.ts:1236
 msgid "Resolve Thread"
-msgstr ""
+msgstr "Išspręsti Thread"
 
 #: src/canvas/sections/CommentListSection.ts:1242
 msgid "Promote to top comment"
-msgstr ""
+msgstr "Pakelti į populiariausių komentarų sąrašą"
 
 #: src/canvas/sections/CommentListSection.ts:1248
 msgid "Show on the side"
-msgstr ""
+msgstr "Rodyti šone"
 
 #: src/canvas/sections/CommentListSection.ts:1248
 msgid "Open in full view"
-msgstr ""
+msgstr "Atidaryti per visą ekraną"
 
 #: src/canvas/sections/CommentListSection.ts:1254
 msgid "Show in navigator"
-msgstr ""
+msgstr "Rodyti navigatoriuje"
 
 #: src/canvas/sections/CommentListSection.ts:1282
 #: src/control/Control.JSDialogBuilder.js:1708
@@ -983,102 +989,102 @@ msgstr "Komentaras"
 #: src/canvas/sections/CommentListSection.ts:1504
 #: src/canvas/sections/CommentListSection.ts:1517
 msgid "Comments Updated"
-msgstr ""
+msgstr "Atnaujinti komentarai"
 
 #: src/canvas/sections/CommentListSection.ts:1505
 msgid "Another user has removed this comment."
-msgstr ""
+msgstr "Kitas vartotojas pašalino šį komentarą."
 
 #: src/canvas/sections/CommentListSection.ts:1518
 msgid ""
 "Another user has updated the comment. Would you like to overwrite those "
 "changes?"
 msgstr ""
+"Kitas naudotojas atnaujino komentarą. Ar norite perrašyti šiuos pakeitimus?"
 
 #: src/canvas/sections/CommentListSection.ts:1519 src/core/Socket.js:1337
 msgid "Overwrite"
-msgstr ""
+msgstr "Perrašyti"
 
 #: src/canvas/sections/CommentListSection.ts:1520
 msgid "Update"
-msgstr ""
+msgstr "Atnaujinti"
 
 #: src/canvas/sections/CommentSection.ts:45
 msgid "Edit comment"
-msgstr ""
+msgstr "Redaguoti komentarą"
 
 #: src/canvas/sections/CommentSection.ts:46
 msgid "Reply comment"
-msgstr ""
+msgstr "Atsakyti į komentarą"
 
 #: src/canvas/sections/CommentSection.ts:47
 msgid "Open menu"
-msgstr ""
+msgstr "Atverti meniu"
 
 #: src/canvas/sections/CommentSection.ts:347
 msgid "Press Ctrl + Enter to post"
-msgstr ""
+msgstr "Norėdami paskelbti, paspauskite Ctrl + Enter"
 
 #: src/canvas/sections/CommentSection.ts:411
 #: src/canvas/sections/CommentSection.ts:412
 msgid "Accept change"
-msgstr ""
+msgstr "Priimti pakeitimus"
 
 #: src/canvas/sections/CommentSection.ts:418
 #: src/canvas/sections/CommentSection.ts:419
 msgid "Reject change"
-msgstr ""
+msgstr "Atmesti pakeitimus"
 
 #: src/canvas/sections/CommentSection.ts:443
 msgid "Resolved"
-msgstr "Neaktualus"
+msgstr "Išspręstas"
 
 #: src/canvas/sections/CommentSection.ts:1171
 #: src/canvas/sections/CommentSection.ts:1176
 #: src/control/Control.SaveState.ts:53
-#, fuzzy
 msgid "Saved"
-msgstr "Įrašyti"
+msgstr "Įrašytas"
 
 #: src/canvas/sections/ShapeHandlesSection.ts:441
 msgid "Document contains unsupported media"
-msgstr ""
+msgstr "Dokumente yra nepalaikomos medijos"
 
 #: src/canvas/sections/URLPopUpSection.ts:67
 msgid "Copy link location"
-msgstr ""
+msgstr "Kopijuoti nuorodos vietą"
 
 #: src/canvas/sections/URLPopUpSection.ts:81
 msgid "Edit link"
-msgstr ""
+msgstr "Redaguoti nuorodą"
 
 #: src/canvas/sections/URLPopUpSection.ts:96
 msgid "Remove link"
-msgstr ""
+msgstr "Pašalinti nuorodą"
 
 #: src/control/ColorPicker.ts:270
 msgid "No color"
-msgstr ""
+msgstr "Bespalvis"
 
 #: src/control/ColorPicker.ts:275
 msgid "Automatic color"
-msgstr ""
+msgstr "Automatinė spalva"
 
 #: src/control/Control.AboutDialog.ts:112
 msgid "This version of {productname} is powered by"
-msgstr ""
+msgstr "Šią „{produktovardas}“ versiją teikia"
 
 #: src/control/Control.AboutDialog.ts:135
 msgid "\"Slow Proxy\""
-msgstr ""
+msgstr "„Lėtas tarpinis serveris“"
 
 #: src/control/Control.AboutDialog.ts:147
 msgid "Time zone:"
-msgstr ""
+msgstr "Laiko juosta:"
 
 #: src/control/Control.AboutDialog.ts:185
 msgid "Copy all version information in English"
-msgstr ""
+msgstr "Nukopijuokite visą versijos informaciją anglų kalba"
 
 #: src/control/Control.AddressInputField.ts:67
 msgid "cell address"
