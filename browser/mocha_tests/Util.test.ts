@@ -124,12 +124,20 @@ describe('Util', function () {
 			assert.strictEqual(Util.trim('ABC', '', 'ABCD'), 'ABC');
 		});
 
-		it('No prefix', function () {
+		it('No prefix in string', function () {
 			assert.strictEqual(Util.trim('XYZ', 'ABCD'), 'XYZ');
 		});
 
-		it('No suffix', function () {
+		it('No prefix provided', function () {
+			assert.strictEqual(Util.trim('   XYZ\n'), 'XYZ');
+		});
+
+		it('No suffix in string', function () {
 			assert.strictEqual(Util.trim('XYZ', '', 'ABCD'), 'XYZ');
+		});
+
+		it('No suffix provided', function () {
+			assert.strictEqual(Util.trim('TXYZT', 'T'), 'XYZ');
 		});
 
 		it('Multi prefix and suffix', function () {

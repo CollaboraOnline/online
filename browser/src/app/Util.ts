@@ -118,7 +118,7 @@ class Util {
 	public static trim(str: string, prefix?: string, suffix?: string): string {
 		if (!prefix) return str.trim ? str.trim() : str.replace(/^\s+|\s+$/g, '');
 		let result = Util.trimStart(str, prefix);
-		result = Util.trimEnd(result, suffix);
+		result = Util.trimEnd(result, suffix ? suffix : prefix);
 		return result;
 	}
 
