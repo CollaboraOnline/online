@@ -2225,10 +2225,17 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 
 	_onStateChangedMsg: function (textMsg) {
 		textMsg = textMsg.substr(14);
+		let json = null;
 
-		var isPureJSON = textMsg.indexOf('=') === -1 && textMsg.indexOf('{') !== -1;
-		if (isPureJSON) {
-			var json = JSON.parse(textMsg);
+		if (textMsg.trim().startsWith('{') && textMsg.trim().endsWith('}')) {
+			try {
+				json = JSON.parse(textMsg);
+			} catch (e) {
+				// Not a valid JSON.
+			}
+		}
+
+		if (json) {
 			// json.state as empty string is fine, for example it means no selection
 			// when json.commandName is '.uno:RowColSelCount'.
 			if (json.commandName && json.state !== undefined) {
