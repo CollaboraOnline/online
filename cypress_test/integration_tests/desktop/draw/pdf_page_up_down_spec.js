@@ -17,6 +17,25 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'PDF View Tests', function(
 		cy.cGet('#map').type('{pageup}');
 		cy.cGet('#map').type('{pageup}');
 		cy.cGet('#preview-frame-part-0 img').should('have.class', 'preview-img-currentpart');
+
+		// Page down to the end.
+		cy.cGet('#map').type('{pagedown}');
+		cy.cGet('#map').type('{pagedown}');
+		cy.cGet('#map').type('{pagedown}');
+		cy.cGet('#map').type('{pagedown}');
+		cy.cGet('#map').type('{pagedown}');
+		cy.cGet('#map').type('{pagedown}');
+		cy.cGet('#map').type('{pagedown}');
+		cy.cGet('#map').type('{pagedown}');
+		cy.cGet('#map').type('{pagedown}');
+		cy.cGet('#map').type('{pagedown}');
+		cy.cGet('#map').type('{pagedown}');
+		cy.cGet('#map').type('{pagedown}');
+		cy.cGet('#map').type('{pagedown}');
+		cy.cGet('#map').type('{pagedown}');
+
+		// We should have auto scrolled to the last page.
+		cy.cGet('#preview-frame-part-5').should('be.visible');
 	});
 
 	it.skip('PDF insert comment', { env: { 'pdf-view': true }, defaultCommandTimeout: 60000 }, function() {
