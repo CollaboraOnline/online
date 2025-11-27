@@ -106,6 +106,6 @@ translations_DATA = $(QM_FILES)
 
 # Distribute sources and clean up generated files
 EXTRA_DIST = $(TS_FILES)
-CLEANFILES = $(QM_FILES)
+CLEANFILES += $(QM_FILES)
 
 ### --- Qt translations integration end ---
