@@ -588,11 +588,11 @@ body {
 }
 
 .cool-annotation.annotation-pop-up {
-	width: 66ch;
 	/* Make sure the comment card is not cropped if the window is narrow: */
 	max-width: 95%;
-	/* Centered align comment: */
-	left: calc(50% - 33ch) !important;
+	max-height: 95%;
+	width: 66ch;
+	/* Centered align comment in TS, we cannot align it here with positon relative */
 }
 
 .cool-annotation.tracked-deleted-comment-show {
@@ -621,6 +621,10 @@ body {
 	display: flex;
 	flex-direction: column;
 	row-gap: 8px;
+}
+
+.annotation-active.annotation-pop-up .cool-annotation-content-wrapper {
+	font-size: var(--medium-font-size);
 }
 
 .cool-annotation-author-header {
