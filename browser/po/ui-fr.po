@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-11-17 08:08+0100\n"
-"PO-Revision-Date: 2025-11-17 07:22+0000\n"
-"Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
+"PO-Revision-Date: 2025-11-25 18:51+0000\n"
+"Last-Translator: Thibaut <thibaut.polge@gmail.com>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/collabora-online/"
 "ui/fr/>\n"
 "Language: fr\n"
@@ -4074,7 +4074,7 @@ msgstr ""
 
 #: src/control/jsdialog/Definitions.Menu.ts:1982
 msgid "Line color"
-msgstr ""
+msgstr "Couleur de ligne"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1993
 #, fuzzy
@@ -4083,47 +4083,47 @@ msgstr "Style de ligne :"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1996
 msgid "Hairline (0.05 pt)"
-msgstr ""
+msgstr "Le plus fin (0,05 pt)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2005
 msgid "Very thin (0.50 pt)"
-msgstr ""
+msgstr "Très fin (0,50 pt)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2014
 msgid "Thin (0.75 pt)"
-msgstr ""
+msgstr "Fin (0,75 pt)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2023
 msgid "Medium (1.50 pt)"
-msgstr ""
+msgstr "Moyen (1,50 pt)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2032
 msgid "Thick (2.25 pt)"
-msgstr ""
+msgstr "Épais (2,25 pt)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2041
 msgid "Extra thick (4.50 pt)"
-msgstr ""
+msgstr "Très épais (4,50 pt)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2050
 msgid "Double Hairline (1.10 pt)"
-msgstr ""
+msgstr "Double ligne (1,10 pt)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2059
 msgid "Double Hairline (2.35 pt)"
-msgstr ""
+msgstr "Double ligne (2,35 pt)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2068
 msgid "Thin/Medium (3.00 pt)"
-msgstr ""
+msgstr "Fin/Moyen (3,00 pt)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2077
 msgid "Medium/Hairline (3.05 pt)"
-msgstr ""
+msgstr "Moyen/fin (3,05 pt)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2086
 msgid "Medium/Medium (4.50 pt)"
-msgstr ""
+msgstr "Moyen/moyen (4,50 pt)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2146
 msgid "Standard (4:3)"
@@ -4216,7 +4216,7 @@ msgstr "Ajouter un commentaire"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2325
 msgid "Comments list"
-msgstr ""
+msgstr "Liste de commentaires"
 
 #: src/control/jsdialog/Util.SnackbarController.ts:122
 msgid "Dismiss"
@@ -4241,7 +4241,7 @@ msgstr "Récent"
 
 #: src/control/jsdialog/Widget.PageMarginEntry.ts:40
 msgid "Page margin options"
-msgstr ""
+msgstr "Options de marges de page"
 
 #: src/control/jsdialog/Widget.PageMarginEntry.ts:121
 msgid "Top: {top}"
@@ -4265,7 +4265,7 @@ msgstr "Marges perso…"
 
 #: src/control/jsdialog/Widget.PageSizeEntry.ts:69
 msgid "More Paper Sizes..."
-msgstr ""
+msgstr "Plus de tailles de papier..."
 
 #: src/control/jsdialog/Widget.HTMLContent.ts:46
 msgid "Read-only"
@@ -5128,11 +5128,11 @@ msgstr ""
 #: src/slideshow/SlideShowPresenter.ts:708
 #: src/slideshow/SlideShowPresenter.ts:720
 msgid "Disable Animations"
-msgstr ""
+msgstr "Désactiver les animations"
 
 #: src/slideshow/SlideShowPresenter.ts:719
 msgid "Enable Animations"
-msgstr ""
+msgstr "Activer les animations"
 
 #: welcome/welcome.html%2Bhtml.head.title:9-3
 msgid "Collabora Online Welcome"
