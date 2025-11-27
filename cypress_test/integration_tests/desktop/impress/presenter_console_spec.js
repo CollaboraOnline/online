@@ -70,6 +70,9 @@ describe(['tagdesktop'], 'Presenter Console.', function() {
 					// empty body
 				}
 
+				endPresentation() {
+
+				}
 			}
 
 			var fakePresenter = new FakePresenter();
