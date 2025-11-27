@@ -28,6 +28,7 @@ window.L.Control.NotebookbarBuilder = window.L.Control.JSDialogBuilder.extend({
 		this._controlHandlers['combobox'] = this._comboboxControl;
 		this._controlHandlers['exportmenubutton'] = this._exportMenuButton;
 		this._controlHandlers['tabcontrol'] = this._overriddenTabsControlHandler;
+		this._controlHandlers['iconview'] = JSDialog.notebookbarIconView;
 		this._controlHandlers['tabpage'] = this._overriddenTabPageHandler;
 
 		this._toolitemHandlers['.uno:XLineColor'] = JSDialog.colorPickerButton;
