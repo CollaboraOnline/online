@@ -404,18 +404,9 @@ window.L.Control.PartsPreview = window.L.Control.extend({
 		var node = this._partsPreviewCont.children[partNo];
 
 		if (node && (!this._previewTiles[partNo] || !this._isPreviewVisible(partNo))) {
-			var nodePos = this._direction === 'x' ? $(node).position().left : $(node).position().top;
-			var scrollDirection = window.mode.isDesktop() || window.mode.isTablet() ? 'scrollTop': (window.L.DomUtil.isPortrait() ? 'scrollLeft': 'scrollTop');
-			var that = this;
-			if (this._map._partsDirection < 0) {
-				setTimeout(function() {
-					that._partsPreviewCont[scrollDirection] += nodePos;
-				}, 50);
-			} else {
-				setTimeout(function() {
-					that._partsPreviewCont[scrollDirection] += nodePos;
-				}, 50);
-			}
+			setTimeout(function() {
+				node.scrollIntoView();
+			}, 50);
 		}
 	},
 
