@@ -1556,6 +1556,24 @@ static LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM l
             }
             break;
 
+        case WM_NCDESTROY:
+        {
+            // Maybe all windows should do this but just do consoles for now
+            auto it = windowData.find(hWnd);
+            if (it != windowData.end() && it->second.isConsole)
+            {
+                auto& data = it->second;
+                if (data.webViewController)
+                {
+                    data.webViewController->Close();
+                    data.webViewController = nullptr;
+                }
+                data.webView = nullptr;
+                windowData.erase(hWnd);
+            }
+            break;
+        }
+
         case WM_CLIPBOARDUPDATE:
             windowData[hWnd].lastAnyonesClipboardModification = GetClipboardSequenceNumber();
             break;
