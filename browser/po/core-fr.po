@@ -2,9 +2,15 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: core-fr\n"
+"PO-Revision-Date: 2025-11-25 18:51+0000\n"
+"Last-Translator: Thibaut <thibaut.polge@gmail.com>\n"
+"Language-Team: French <https://hosted.weblate.org/projects/collabora-online/"
+"lokit/fr/>\n"
 "Language: fr\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n > 1;\n"
+"X-Generator: Weblate 5.15-dev\n"
 
 #. ygDfy
 #: module_graphicfilter.ulf
@@ -13,7 +19,7 @@ msgctxt ""
 "STR_NAME_MODULE_OPTIONAL_GRFFLT_FLASH\n"
 "LngText.text"
 msgid "Macromedia Flash (SWF)"
-msgstr ""
+msgstr "Macromedia Flash (SWF)"
 
 #. qAk8E
 #: module_graphicfilter.ulf
