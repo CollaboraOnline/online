@@ -1044,9 +1044,27 @@ global.editorUpdate = editorUpdate;
 
 $(document).ready(function() {
 	// Attach insert file action
-	$('#insertgraphic').on('change', onInsertGraphic);
-	$('#insertmultimedia').on('change', onInsertMultimedia);
-	$('#selectbackground').on('change', onInsertBackground);
+	// Update supported media mime type insertion
+	const supportedGraphicMime = app.LOUtil.graphicMimeFilter.join(",");
+	const supportedMediaMime = app.LOUtil.mediaMimeFilter.join(",");
+
+	const insertgraphic = window.L.DomUtil.get('insertgraphic');
+	if (insertgraphic) {
+		insertgraphic.accept = supportedGraphicMime;
+		insertgraphic.addEventListener('change', onInsertGraphic);
+	}
+
+	const insertmultimedia = window.L.DomUtil.get('insertmultimedia');
+	if (insertmultimedia) {
+		insertmultimedia.accept = supportedMediaMime;
+		insertmultimedia.addEventListener('change', onInsertMultimedia);
+	}
+
+	const selectbackground = window.L.DomUtil.get('selectbackground');
+	if (selectbackground) {
+		selectbackground.accept = supportedGraphicMime;
+		selectbackground.addEventListener('change', onInsertBackground);
+	}
 });
 
 function setupToolbar(e) {

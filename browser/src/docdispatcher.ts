@@ -127,23 +127,7 @@ class Dispatcher {
 				msgId: 'UI_InsertFile',
 				args: {
 					callback: 'Action_InsertMultimedia',
-					mimeTypeFilter: [
-						'video/MP2T',
-						'video/mp4',
-						'video/mpeg',
-						'video/ogg',
-						'video/quicktime',
-						'video/webm',
-						'video/x-matroska',
-						'video/x-ms-wmv',
-						'video/x-msvideo',
-						'audio/aac',
-						'audio/flac',
-						'audio/mp4',
-						'audio/mpeg',
-						'audio/ogg',
-						'audio/x-wav',
-					],
+					mimeTypeFilter: app.LOUtil.MediaMimeFilter,
 				},
 			});
 		};
