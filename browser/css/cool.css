@@ -593,6 +593,15 @@ body {
 	max-height: 95%;
 	width: 66ch;
 	/* Centered align comment in TS, we cannot align it here with positon relative */
+	z-index: 1000;
+}
+.cool-annotation.annotation-pop-up:not(.annotation-active) > .cool-annotation-content-wrapper {
+	margin-right: 8px;
+}
+.cool-annotation.annotation-pop-up.annotation-active {
+	transition: transform 400ms cubic-bezier(0.2,0,0,1), box-shadow 400ms cubic-bezier(0.2,0,0,1);
+	will-change: transform, box-shadow;
+	box-shadow: 0 0 0 1000px rgba(var(--doc-type),0.15);
 }
 
 .cool-annotation.tracked-deleted-comment-show {
