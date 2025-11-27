@@ -360,11 +360,16 @@ class UIManager extends window.L.Control {
 		// this will execute only when UI get initialized
 		if (!isMobile) {
 			this.topReadonlyBtn = document.getElementById('readonlyMode');
-			const label = this.topReadonlyBtn.querySelector(
+			const label = this.topReadonlyBtn?.querySelector(
 				'.unolabel',
 			) as HTMLElement | null;
 			if (label) {
 				label.textContent = _('Read-only');
+				this.topReadonlyBtn.setAttribute('data-cooltip', _('Permission Mode'));
+				window.L.control.attachTooltipEventListener(
+					this.topReadonlyBtn,
+					this.map,
+				);
 			}
 		}
 	}
