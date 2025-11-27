@@ -1731,6 +1731,29 @@ window.L.Control.NotebookbarCalc = window.L.Control.NotebookbarWriter.extend({
 			{ type: 'separator', id: 'insert-deletepivottable-break', orientation: 'vertical' },
 			{
 				'type': 'overflowgroup',
+				'id': 'insert-calc-table',
+				'name':_('Table'),
+				'accessibility': { focusBack: true,	combination: 'IT', de: null },
+				'children' : [
+					{
+						'id': 'insert-insert-calc-table',
+						'type': 'bigtoolitem',
+						'text': _UNO('.uno:InsertCalcTable', 'spreadsheet'),
+						'command': '.uno:InsertCalcTable',
+						'accessibility': { focusBack: true,	combination: 'IT', de: null }
+					},
+					{
+						'id': 'insert-remove-calc-table',
+						'type': 'bigtoolitem',
+						'text': _UNO('.uno:RemoveCalcTable', 'spreadsheet'),
+						'command': '.uno:RemoveCalcTable',
+						'accessibility': { focusBack: true,	combination: 'DT', de: null }
+					},
+				]
+			},
+			{ type: 'separator', id: 'insert-deletecalctable-break', orientation: 'vertical' },
+			{
+				'type': 'overflowgroup',
 				'id': 'insert-illustrations',
 				'name':_('Illustrations'),
 				'accessibility': { focusBack: true,	combination: 'IC', de: null },
