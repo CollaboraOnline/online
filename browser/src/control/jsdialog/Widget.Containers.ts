@@ -39,10 +39,11 @@ JSDialog.container = function (
 	if ((data as GridWidgetJSON).cols && (data as GridWidgetJSON).rows)
 		return JSDialog.grid(parentContainer, data, builder);
 
-	if ((!data.id || data.id === '') && builder)
-		data.id = JSDialog.MakeIdUnique('unnamed-container');
+	let id = data.id;
+	if ((!id || id === '') && builder)
+		id = JSDialog.MakeIdUnique('unnamed-container');
 
-	if (parentContainer && !parentContainer.id) parentContainer.id = data.id;
+	if (parentContainer && !parentContainer.id) parentContainer.id = id;
 
 	return true;
 };
