@@ -225,19 +225,26 @@ class Cursor {
 	}
 
 	private updatePositionAndSize() {
-		let diffX = -app.activeDocument.activeView.viewedRectangle.pX1;
-		let diffY = -app.activeDocument.activeView.viewedRectangle.pY1;
+		let x;
+		let y;
 
 		if (app.map.getDocType() === 'spreadsheet') {
+			let diffX = -app.activeDocument.activeView.viewedRectangle.pX1;
+			let diffY = -app.activeDocument.activeView.viewedRectangle.pY1;
+
 			if (app.isXOrdinateInFrozenPane(this.rectangle.pX1))
 				diffX = 0;
 
 			if (app.isYOrdinateInFrozenPane(this.rectangle.pY1))
 				diffY = 0;
-		}
 
-		let x = Math.round((this.rectangle.pX1 + diffX + app.sectionContainer.getDocumentAnchor()[0]) / app.dpiScale);
-		let y = Math.round((this.rectangle.pY1 + diffY + app.sectionContainer.getDocumentAnchor()[1]) / app.dpiScale);
+			x = Math.round((this.rectangle.pX1 + diffX + app.sectionContainer.getDocumentAnchor()[0]) / app.dpiScale);
+			y = Math.round((this.rectangle.pY1 + diffY + app.sectionContainer.getDocumentAnchor()[1]) / app.dpiScale);
+		}
+		else {
+			x = Math.round(this.rectangle.v1X / app.dpiScale);
+			y = Math.round(this.rectangle.v1Y / app.dpiScale);
+		}
 
 		this.container.style.top = y + 'px';
 		this.container.style.left = this.transformX(x) + 'px';
