@@ -210,6 +210,22 @@ class ViewController: NSViewController, WKScriptMessageHandlerWithReply, WKNavig
                 else if body == "EXCHANGEMONITORS" {
                     exchangeMonitors()
                 }
+                else if body.hasPrefix("FULLSCREENPRESENTATION ") {
+                    let fullScreen = body.dropFirst("FULLSCREENPRESENTATION ".count) == "true"
+                    // this type of full screen window is under our control
+                    // so it can be moved to another monitor
+                    if (fullScreen) {
+
+                        installDisplayConnectionMonitor()
+                        let mainWindow = view.window!
+                        self.savedViewFrame = mainWindow.frame
+                        arrangePresentationWindows()
+
+                        arrangePresentationWindows()
+                    } else {
+                        endPresentation();
+                    }
+                }
                 else if body == "FOCUSIFHWKBD" {
                     COWrapper.LOG_ERR("TODO: Implement FOCUSIFHWKBD")
                     /*
@@ -389,22 +405,18 @@ class ViewController: NSViewController, WKScriptMessageHandlerWithReply, WKNavig
     }
 
     func exchangeMonitors() {
-        if (self.consoleController == nil) {
-            return
-        }
-
         let screens = NSScreen.screens
         if (screens.count < 2) {
             return
         }
 
         let mainWindow = view.window!
-        let consoleWindow = self.consoleController.window!
+        let consoleWindow = self.consoleController != nil ? self.consoleController.window : nil
 
         var origConsoleScreen = 0
         var origPresentationScreen = 0
         for i in 0...screens.count-1 {
-            if NSContainsRect(screens[i].frame, consoleWindow.frame) {
+            if (consoleWindow != nil && NSContainsRect(screens[i].frame, consoleWindow!.frame)) {
                 origConsoleScreen = i
             }
             if NSContainsRect(screens[i].frame, mainWindow.frame) {
@@ -412,13 +424,18 @@ class ViewController: NSViewController, WKScriptMessageHandlerWithReply, WKNavig
             }
         }
 
-        // Rotate the console screen and rotate the presentation screen
-        // every time the console catches up to it for the case there
-        // are more than two screens. Typically there's just two screens
-        // and they just swap.
         let newConsoleScreen = (origConsoleScreen + 1) % screens.count
         var newPresentationScreen = origPresentationScreen
-        if (newConsoleScreen == newPresentationScreen) {
+
+        if (consoleWindow != nil) {
+            // Rotate the console screen and rotate the presentation screen
+            // every time the console catches up to it for the case there
+            // are more than two screens. Typically there's just two screens
+            // and they just swap.
+            if (newConsoleScreen == newPresentationScreen) {
+                newPresentationScreen = (newPresentationScreen + 1) % screens.count
+            }
+        } else {
             newPresentationScreen = (newPresentationScreen + 1) % screens.count
         }
 
@@ -427,9 +444,23 @@ class ViewController: NSViewController, WKScriptMessageHandlerWithReply, WKNavig
         // toggle to normal to trigger restore full screen elsewhere
         showNormal(window: mainWindow)
 
-        NotificationCenter.default.removeObserver(self.consoleWindowExitFSObserver!)
-        installChangeConsoleMonitor(window: consoleWindow, frame: screens[newConsoleScreen].frame)
-        showNormal(window: consoleWindow)
+        if (consoleWindow != nil) {
+            if (self.consoleWindowExitFSObserver != nil) {
+                NotificationCenter.default.removeObserver(self.consoleWindowExitFSObserver!)
+            }
+            installChangeConsoleMonitor(window: consoleWindow!, frame: screens[newConsoleScreen].frame)
+            showNormal(window: consoleWindow!)
+        }
+    }
+
+    func startPresentation() {
+        let mainWindow = self.view.window!
+
+        installDisplayConnectionMonitor()
+
+        self.savedViewFrame = mainWindow.frame
+
+        arrangePresentationWindows()
     }
 
     func webView(_ webView: WKWebView, createWebViewWith configuration: WKWebViewConfiguration, for navigationAction: WKNavigationAction, windowFeatures: WKWindowFeatures) -> WKWebView? {
@@ -449,13 +480,7 @@ class ViewController: NSViewController, WKScriptMessageHandlerWithReply, WKNavig
             self.savedConsoleViewFrame = NSRect(x: 0, y: 0, width: 640, height: 640)
         }
 
-        let mainWindow = view.window!
-
-        installDisplayConnectionMonitor()
-
-        self.savedViewFrame = mainWindow.frame
-
-        arrangePresentationWindows()
+        self.startPresentation()
 
         return consoleWebView
     }
@@ -508,7 +533,7 @@ class ViewController: NSViewController, WKScriptMessageHandlerWithReply, WKNavig
             }
         }
 
-        let consoleWindow = self.consoleController.window
+        let consoleWindow = self.consoleController != nil ? self.consoleController.window : nil
         if (consoleWindow != nil) {
             consoleWindow!.setIsVisible(false)
         }
@@ -612,7 +637,6 @@ class ViewController: NSViewController, WKScriptMessageHandlerWithReply, WKNavig
         }
     }
 
-
     func installChangeMainMonitor(window: NSWindow, frame: NSRect) {
         let center = NotificationCenter.default
         self.mainMonitorExchangeObserver = center.addObserver(
@@ -647,7 +671,7 @@ class ViewController: NSViewController, WKScriptMessageHandlerWithReply, WKNavig
                         // as fullscreen, when that is completed
                         DispatchQueue.main.async {
                             self.showNormal(window: self.view.window!)
-                            let consoleWindow = self.consoleController.window
+                            let consoleWindow = self.consoleController != nil ? self.consoleController.window : nil
                             if (consoleWindow != nil) {
                                 self.showNormal(window: consoleWindow!)
                             }
@@ -676,11 +700,7 @@ class ViewController: NSViewController, WKScriptMessageHandlerWithReply, WKNavig
         }
     }
 
-    func webViewDidClose(_ webView: WKWebView) {
-        if (self.consoleController != nil && webView == self.consoleController.webView) {
-            self.consoleController.close()
-            self.consoleController = nil
-
+    func endPresentation() {
             if (self.displayConnectionObserver != nil) {
                 NotificationCenter.default.removeObserver(self.displayConnectionObserver!)
             }
@@ -693,11 +713,19 @@ class ViewController: NSViewController, WKScriptMessageHandlerWithReply, WKNavig
             if (self.consoleWindowExitFSObserver != nil) {
                 NotificationCenter.default.removeObserver(self.consoleWindowExitFSObserver!)
             }
-            self.consoleFullScreenActive = false
 
             // this will trigger the restoration of original location/size
             // via the convoluted observer stuff.
             showNormal(window: self.view.window!)
+    }
+
+    func webViewDidClose(_ webView: WKWebView) {
+        if (self.consoleController != nil && webView == self.consoleController.webView) {
+            self.consoleController.close()
+            self.consoleController = nil
+            self.consoleFullScreenActive = false
+
+            self.endPresentation();
         }
     }
 }
