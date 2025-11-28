@@ -4,6 +4,6 @@ root = true
 end_of_line = lf
 insert_final_newline = true
 
-[*.{js,ts}]
+[*.{js,ts,css}]
 charset = utf-8
 indent_style = tab
