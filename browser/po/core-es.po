@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: core-es\n"
-"PO-Revision-Date: 2025-11-22 09:55+0000\n"
+"PO-Revision-Date: 2025-11-28 09:31+0000\n"
 "Last-Translator: Adolfo Jayme Barrientos <fitojb@ubuntu.com>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/collabora-online/"
 "lokit/es/>\n"
@@ -322,13 +322,13 @@ msgstr ""
 #: cui/uiconfig/ui/toolbarmodedialog.ui:124
 msgctxt "ToolbarmodeDialog|radiobutton1"
 msgid "Compact"
-msgstr ""
+msgstr "Compacto"
 
 #. ZbYiG
 #: include/svtools/strings.hrc:71
 msgctxt "STR_FORMAT_ID_MARKDOWN"
 msgid "Markdown"
-msgstr ""
+msgstr "Markdown"
 
 #. HASc5
 #: include/sfx2/strings.hrc:227
@@ -385,7 +385,7 @@ msgstr "Indicadores"
 #: sfx2/uiconfig/ui/templatepanel.ui:272
 msgctxt "templatepanel|filter-atkobject"
 msgid "Filter"
-msgstr ""
+msgstr "Filtrar"
 
 #. 5xrhC
 #: sw/inc/strings.hrc:232
@@ -1014,7 +1014,7 @@ msgctxt ""
 "Title\n"
 "value.text"
 msgid "Table Style Options"
-msgstr ""
+msgstr "Opciones de estilo de tabla"
 
 #. SYFXq
 #: Sidebar.xcu
@@ -1186,7 +1186,7 @@ msgstr ""
 #: sc/inc/globstr.hrc:211
 msgctxt "STR_TABLE_TOTAL"
 msgid "Summary"
-msgstr ""
+msgstr "Resumen"
 
 #. cG7BY
 #: sc/inc/globstr.hrc:594
