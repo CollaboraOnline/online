@@ -402,48 +402,60 @@ std::optional<bool> portalPrefersDark() {
     return std::nullopt;
 }
 
-void WebView::load(const Poco::URI& fileURL, bool newFile)
+void WebView::load(const Poco::URI& fileURL, bool newFile, bool isStarterMode)
 {
-    _document = {
-        ._fakeClientFd = fakeSocketSocket(),
-        ._appDocId = generateNewAppDocId(),
-    };
-
-    // operate on a temp copy of the file
-    if (!_isWelcome && fileURL.getScheme() == "file")
+    if (isStarterMode)
     {
-        try
-        {
-            Poco::Path originalPath(fileURL.getPath());
-            if (!newFile)
-            {
-                _document._saveLocationURI = fileURL;
-            }
-
-            const std::string tempDirectoryPath = FileUtil::createRandomTmpDir();
-            const std::string& fileName = originalPath.getFileName();
-
-            Poco::Path tempFilePath(tempDirectoryPath, fileName);
-            const std::string tempFilePathStr = tempFilePath.toString();
-            if (!FileUtil::copyAtomic(originalPath.toString(), tempFilePath.toString(), false))
-            {
-                LOG_ERR("Failed to copy file to temporary location: " << tempFilePath.toString());
-                return;
-            }
-
-            _document._fileURL = Poco::URI(tempFilePath);
-        }
-        catch (const std::exception& e)
-        {
-            LOG_ERR("Exception while copying file to temp: " << e.what());
-            return;
-        }
+        // Starter screen mode: no COOLWSD connection needed
+        _document = {
+            ._fakeClientFd = -1,
+            ._appDocId = 0,
+        };
     }
     else
     {
-        // For welcome-slideshow use original URL directly
-        _document._saveLocationURI = fileURL;
-        _document._fileURL = fileURL;
+        // Normal document mode
+        _document = {
+            ._fakeClientFd = fakeSocketSocket(),
+            ._appDocId = generateNewAppDocId(),
+        };
+
+        // operate on a temp copy of the file
+        if (!_isWelcome && fileURL.getScheme() == "file")
+        {
+            try
+            {
+                Poco::Path originalPath(fileURL.getPath());
+                if (!newFile)
+                {
+                    _document._saveLocationURI = fileURL;
+                }
+
+                const std::string tempDirectoryPath = FileUtil::createRandomTmpDir();
+                const std::string& fileName = originalPath.getFileName();
+
+                Poco::Path tempFilePath(tempDirectoryPath, fileName);
+                const std::string tempFilePathStr = tempFilePath.toString();
+                if (!FileUtil::copyAtomic(originalPath.toString(), tempFilePath.toString(), false))
+                {
+                    LOG_ERR("Failed to copy file to temporary location: " << tempFilePath.toString());
+                    return;
+                }
+
+                _document._fileURL = Poco::URI(tempFilePath);
+            }
+            catch (const std::exception& e)
+            {
+                LOG_ERR("Exception while copying file to temp: " << e.what());
+                return;
+            }
+        }
+        else
+        {
+            // For welcome-slideshow use original URL directly
+            _document._saveLocationURI = fileURL;
+            _document._fileURL = fileURL;
+        }
     }
 
     // setup js c++ communication
@@ -460,33 +472,60 @@ void WebView::load(const Poco::URI& fileURL, bool newFile)
     coolHtmlPath.append("/browser/dist/cool.html");
     Poco::URI urlAndQuery(coolHtmlPath);
     urlAndQuery.setScheme("file");
-    urlAndQuery.addQueryParameter("file_path", _document._fileURL.toString());
-    urlAndQuery.addQueryParameter("permission", "edit");
-    urlAndQuery.addQueryParameter("lang", getUILanguage());
-    urlAndQuery.addQueryParameter("appdocid", std::to_string(_document._appDocId));
-    urlAndQuery.addQueryParameter("userinterfacemode", "notebookbar");
+
+    if (isStarterMode)
+    {
+        urlAndQuery.addQueryParameter("starterMode", "true");
+    }
+    else
+    {
+        urlAndQuery.addQueryParameter("file_path", _document._fileURL.toString());
+        urlAndQuery.addQueryParameter("permission", "edit");
+        urlAndQuery.addQueryParameter("lang", getUILanguage());
+        urlAndQuery.addQueryParameter("appdocid", std::to_string(_document._appDocId));
+        urlAndQuery.addQueryParameter("userinterfacemode", "notebookbar");
+    }
 
     if (portalPrefersDark())
         urlAndQuery.addQueryParameter("darkTheme", "true");
-    if (newFile)
-        urlAndQuery.addQueryParameter("isnewdocument", "true");
-    if (_isWelcome)
-        urlAndQuery.addQueryParameter("welcome", "true");
+
+    if (!isStarterMode)
+    {
+        if (newFile)
+            urlAndQuery.addQueryParameter("isnewdocument", "true");
+        if (_isWelcome)
+            urlAndQuery.addQueryParameter("welcome", "true");
+    }
 
     const std::string urlAndQueryStr = urlAndQuery.toString();
     LOG_TRC("Open URL: " << urlAndQueryStr);
 
-    Poco::Path uriPath(_document._fileURL.getPath());
-    QString fileName = QString::fromStdString(uriPath.getFileName());
-    QString applicationTitle = fileName + " - " APP_NAME;
+    // Set window title
+    QString applicationTitle;
+    if (isStarterMode)
+    {
+        applicationTitle = QString(APP_NAME) + " - Start";
+    }
+    else
+    {
+        Poco::Path uriPath(_document._fileURL.getPath());
+        QString fileName = QString::fromStdString(uriPath.getFileName());
+        applicationTitle = fileName + " - " APP_NAME;
+    }
     QApplication::setApplicationName(applicationTitle);
-    // set file name in window title
     if (_webView->window())
         _webView->window()->setWindowTitle(applicationTitle);
 
     _webView->load(QUrl(QString::fromStdString(urlAndQueryStr)));
 
-    auto size = getWindowSize(_isWelcome);
+    auto size = getWindowSize(_isWelcome || isStarterMode);
+
+    // TODO: Starter screen uses 1.5x welcome dimensions (width and height) as a temporary
+    // solution. This should be refined with proper sizing logic based on user feedback.
+    if (isStarterMode) {
+        size.first = 1.5 * size.first;
+        size.second = 1.5 * size.second;
+    }
     _mainWindow->resize(size.first, size.second);
     _mainWindow->show();
 }
@@ -523,39 +562,6 @@ WebView* WebView::createNewDocument(QWebEngineProfile* profile, const std::strin
     webViewInstance->load(templateURI, true);
 
     return webViewInstance;
-}
-
-void WebView::loadStarterScreen()
-{
-    // for startup screen - we don't have to have a COOLWSD connection
-    _document._fakeClientFd = -1;
-    _document._appDocId = 0;
-
-    QWebChannel* channel = new QWebChannel(_webView->page());
-
-    assert(_bridge == nullptr);
-    _bridge = new Bridge(channel, _document, _mainWindow, _webView.get());
-    channel->registerObject("bridge", _bridge);
-    _webView->page()->setWebChannel(channel);
-    queryGnomeFontScalingUpdateZoom();
-
-    Poco::Path coolHtmlPath(getTopSrcDir(TOPSRCDIR));
-    coolHtmlPath.append("/browser/dist/cool.html");
-    Poco::URI urlAndQuery(coolHtmlPath);
-    urlAndQuery.setScheme("file");
-    urlAndQuery.addQueryParameter("starterMode", "true");
-
-    const std::string urlAndQueryStr = urlAndQuery.toString();
-    LOG_TRC("Open CODA Starter Screen URL (cool.html with starterMode): " << urlAndQueryStr);
-
-    QApplication::setApplicationName(APP_NAME);
-    if (_webView->window())
-        _webView->window()->setWindowTitle(QString(APP_NAME) + " - Start");
-
-    _webView->load(QUrl(QString::fromStdString(urlAndQueryStr)));
-
-    _mainWindow->resize(1000, 700);
-    _mainWindow->show();
 }
 
 WebView* WebView::findOpenDocument(const Poco::URI& documentURI)
