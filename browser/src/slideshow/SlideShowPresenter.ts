@@ -746,6 +746,21 @@ class SlideShowPresenter {
 			}.bind(this),
 		);
 
+		if (window.mode.isCODesktop()) {
+			const ExchangeImg = window.L.DomUtil.create('img', 'right-img', container);
+			ExchangeImg.id = 'exchange';
+			const followText = _('Exchange');
+			window.L.control.attachTooltipEventListener(ExchangeImg, this._map);
+			ExchangeImg.setAttribute('aria-label', followText);
+			ExchangeImg.setAttribute('data-cooltip', followText);
+			app.LOUtil.setImage(ExchangeImg, 'slideshow-switchMonitor.svg', this._map);
+			ExchangeImg.addEventListener('click', (e: Event) => {
+				e.stopPropagation();
+				this._onA11yString(e.target);
+				window.postMobileMessage('EXCHANGEMONITORS');
+			});
+		}
+
 		if (this.isFollower()) {
 			const FollowImg = window.L.DomUtil.create('img', 'right-img', container);
 			FollowImg.id = 'follow';
