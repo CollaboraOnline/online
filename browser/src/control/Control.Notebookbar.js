@@ -54,7 +54,7 @@ window.L.Control.Notebookbar = window.L.Control.extend({
 
 	// on show
 	create: function(container) {
-		var docType = this._map.getDocType();
+		const docType = this._map.getDocType();
 
 		if (document.documentElement.dir === 'rtl')
 			this._RTL = true;
@@ -82,11 +82,11 @@ window.L.Control.Notebookbar = window.L.Control.extend({
 		document.getElementById('document-container').classList.add('notebookbar-active');
 
 		if (!window.logoURL || window.logoURL != "none") {
-			var docLogoHeader = window.L.DomUtil.create('div', '');
+			const docLogoHeader = window.L.DomUtil.create('div', '');
 			docLogoHeader.id = 'document-header';
 
-			var iconClass = 'document-logo';
-			var iconTooltip;
+			let iconClass = 'document-logo';
+			let iconTooltip;
 			if (!window.logoURL) {
 				if (docType === 'text') {
 					iconClass += ' writer-icon-img';
@@ -102,12 +102,12 @@ window.L.Control.Notebookbar = window.L.Control.extend({
 					iconTooltip = 'Draw';
 				}
 			}
-			var docLogo = window.L.DomUtil.create('a', iconClass, docLogoHeader);
+			const docLogo = window.L.DomUtil.create('a', iconClass, docLogoHeader);
 
-			$(docLogo).data('id', 'document-logo');
-			$(docLogo).data('type', 'action');
-			docLogo.target = '_blank';
-			docLogo.tabIndex = 0;
+			docLogo.setAttribute('id', 'document-logo');
+			docLogo.setAttribute('type', 'action');
+			docLogo.setAttribute('target', '_blank');
+			docLogo.setAttribute('tabIndex', 0);
 
 			if (iconTooltip) {
 				docLogo.setAttribute('data-cooltip', iconTooltip);
@@ -120,7 +120,7 @@ window.L.Control.Notebookbar = window.L.Control.extend({
 			}
 		}
 
-		var isDarkMode = window.prefs.getBoolean('darkTheme');
+		const isDarkMode = window.prefs.getBoolean('darkTheme');
 		if (!isDarkMode)
 			$('#invertbackground').hide();
 
