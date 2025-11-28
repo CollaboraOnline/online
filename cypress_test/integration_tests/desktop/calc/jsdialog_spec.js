@@ -67,6 +67,8 @@ describe(['tagdesktop'], 'JSDialog unit test', function() {
 								children: [{
 									id: 'colorset',
 									type: 'drawingarea',
+									canFocus: true,
+									enabled: true,
 									imagewidth: 216,
 									imageheight: 180,
 									image: smile }]}, {
