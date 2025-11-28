@@ -502,9 +502,9 @@ html[data-theme='dark'] .savemodified.unotoolbutton .unobutton img {
 }
 
 .jsdialog.ui-iconview:not(.sidebar),
-#stylesview-iconview,
-#masterpageall_icons-iconview,
-#transitions_icons-iconview,
+.notebookbar #stylesview-iconview,
+.notebookbar #masterpageall_icons-iconview,
+.notebookbar #transitions_icons-iconview,
 #custom_animation_list,
 #effect_list {
 	height: var(--notebookbar-element-height);
@@ -531,7 +531,7 @@ html[data-theme='dark'] .savemodified.unotoolbutton .unobutton img {
  * see `JSDialog.notebookbarIconView` for details.
  */
 .jsdialog #stylesview,
-#stylesview-iconview {
+.notebookbar #stylesview-iconview {
 	width: 35vw;
 	/* Preview base64's width = 100px + container border's etc */
 	grid-template-columns: repeat(auto-fit, minmax(122px, 1fr));
@@ -563,7 +563,7 @@ html[data-theme='dark'] .savemodified.unotoolbutton .unobutton img {
 }
 
 .jsdialog #stylesview .ui-iconview-entry,
-#stylesview-iconview .ui-iconview-entry {
+.notebookbar #stylesview-iconview .ui-iconview-entry {
 	box-sizing: border-box;
 	padding-top: 0px;
 	align-self: start;
@@ -575,29 +575,26 @@ html[data-theme='dark'] .savemodified.unotoolbutton .unobutton img {
 }
 
 .jsdialog #stylesview .icon-view-item-container,
-#stylesview-iconview .icon-view-item-container {
+.notebookbar #stylesview-iconview .icon-view-item-container {
 	margin: unset;
 }
 
 .jsdialog #stylesview .ui-iconview-entry-title,
-#stylesview-iconview .ui-iconview-entry-title {
+.notebookbar #stylesview-iconview .ui-iconview-entry-title {
 	display: none;
 }
 
-.jsdialog #stylesview .ui-iconview-entry.selected,
-#stylesview-iconview .ui-iconview-entry.selected {
+[id^='stylesview'] .ui-iconview-entry.selected {
 	border: 1px solid var(--color-border-darker);
 	border-collapse: separate; /*To use box-shadow in Internet Explorer 9 or later*/
 	background-color: transparent;
 }
 
-.jsdialog #stylesview .ui-iconview-entry:not(.selected),
-#stylesview-iconview .ui-iconview-entry:not(.selected) {
+[id^='stylesview'] .ui-iconview-entry:not(.selected) {
 	border: 1px solid transparent;
 }
 
-.jsdialog #stylesview .ui-iconview-entry:not(.selected):hover,
-#stylesview-iconview .ui-iconview-entry:not(.selected):hover {
+[id^='stylesview'] .ui-iconview-entry:not(.selected):hover {
 	border: 1px solid var(--color-border-dark);
 	-webkit-box-shadow: 0 0 2px 0 var(--color-background-darker);
 	box-shadow: 0 0 2px 0 var(--color-background-darker);
@@ -707,8 +704,8 @@ html[data-theme='dark'] .savemodified.unotoolbutton .unobutton img {
 	width: 100%;
 }
 
-#transitions_icons,
-#transitions_icons-iconview {
+.jsdialog #transitions_icons,
+.notebookbar #transitions_icons-iconview {
 	margin-left: 10px;
 }
 
@@ -720,7 +717,7 @@ html[data-theme='dark'] .savemodified.unotoolbutton .unobutton img {
 	justify-items: stretch;
 }
 
-#transitions_icons.ui-iconview.notebookbar {
+.notebookbar #transitions_icons.ui-iconview {
 	max-height: 75px;
 	grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
 	flex-grow: 1;
@@ -728,7 +725,7 @@ html[data-theme='dark'] .savemodified.unotoolbutton .unobutton img {
 	scroll-behavior: smooth;
 }
 
-#transitions_icons.ui-iconview.notebookbar > * {
+.notebookbar #transitions_icons.ui-iconview > * {
 	scroll-snap-align: start;
 }
 
