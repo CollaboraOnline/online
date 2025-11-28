@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-11-17 08:08+0100\n"
-"PO-Revision-Date: 2025-11-25 18:51+0000\n"
-"Last-Translator: Thibaut <thibaut.polge@gmail.com>\n"
+"PO-Revision-Date: 2025-11-29 11:00+0000\n"
+"Last-Translator: Méven Car <meven.car@collabora.com>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/collabora-online/"
 "ui/fr/>\n"
 "Language: fr\n"
@@ -2419,39 +2419,41 @@ msgstr "Diapositives"
 
 #: src/control/Control.NavigatorPanel.ts:222
 msgid "Results"
-msgstr ""
+msgstr "Résultats"
 
 #: src/control/Control.NavigatorPanel.ts:470
 msgid "Search..."
-msgstr ""
+msgstr "Rechercher..."
 
 #: src/control/Control.QuickFindPanel.ts:97
 msgid "Type in the search box to find anything in your document"
 msgstr ""
+"Taper dans le champs de recherche pour trouver n'importe quoi dans votre "
+"document"
 
 #: src/control/Notebookbar.ImpressAnimationTab.ts:24
 msgid "Animation"
-msgstr ""
+msgstr "Animation"
 
 #: src/control/Notebookbar.ImpressAnimationTab.ts:41
 msgid "Applied animations"
-msgstr ""
+msgstr "Animations appliquées"
 
 #: src/control/Notebookbar.ImpressAnimationTab.ts:59
 msgid "Move Up"
-msgstr ""
+msgstr "Déplacer vers le haut"
 
 #: src/control/Notebookbar.ImpressAnimationTab.ts:75
 msgid "Move Down"
-msgstr ""
+msgstr "Déplacer vers le bas"
 
 #: src/control/Notebookbar.ImpressAnimationTab.ts:105
 msgid "Category"
-msgstr ""
+msgstr "Catégorie"
 
 #: src/control/Notebookbar.ImpressAnimationTab.ts:120
 msgid "Start"
-msgstr ""
+msgstr "Démarrer"
 
 #: src/control/Notebookbar.ImpressAnimationTab.ts:140
 #, fuzzy
@@ -2460,36 +2462,36 @@ msgstr "Effets"
 
 #: src/control/Notebookbar.ImpressTransitionTab.ts:24
 msgid "Transition"
-msgstr ""
+msgstr "Transition"
 
 #: src/control/Notebookbar.ImpressTransitionTab.ts:41
 #: src/control/Sidebar.FromNotebookbarPanel.ts:108
 msgid "Transitions"
-msgstr ""
+msgstr "Transitions"
 
 #: src/control/Notebookbar.ImpressTransitionTab.ts:66
 msgid "Variant"
-msgstr ""
+msgstr "Variant"
 
 #: src/control/Notebookbar.ImpressTransitionTab.ts:81
 msgid "Duration"
-msgstr ""
+msgstr "Durée"
 
 #: src/control/Notebookbar.ImpressTransitionTab.ts:108
 msgid "On mouse click"
-msgstr ""
+msgstr "Sur un clic"
 
 #: src/control/Notebookbar.ImpressTransitionTab.ts:116
 msgid "After"
-msgstr ""
+msgstr "Après"
 
 #: src/control/Notebookbar.WriterReferencesTab.ts:41
 msgid "Table of content"
-msgstr ""
+msgstr "Table des matières"
 
 #: src/control/Notebookbar.WriterReferencesTab.ts:95
 msgid "Footnote/Endnote"
-msgstr ""
+msgstr "Note de bas ou fin de page"
 
 #: src/control/Notebookbar.WriterReferencesTab.ts:312
 #: src/control/Control.NotebookbarDraw.js:1578
@@ -2500,7 +2502,7 @@ msgstr "Champs"
 
 #: src/control/Sidebar.FromNotebookbarPanel.ts:121
 msgid "Animations"
-msgstr ""
+msgstr "Animations"
 
 #: src/control/Control.Notebookbar.js:628
 #: src/control/Control.NotebookbarCalc.js:194
@@ -2766,7 +2768,7 @@ msgstr "Mauvais"
 
 #: src/control/Control.NotebookbarCalc.js:1012
 msgid "Editing"
-msgstr "Editer"
+msgstr "Éditer"
 
 #: src/control/Control.NotebookbarCalc.js:1036
 #: src/control/Control.NotebookbarDraw.js:1197
@@ -3197,7 +3199,7 @@ msgstr "Menu déroulant"
 
 #: src/control/Control.NotebookbarWriter.js:2313
 msgid "Tracking"
-msgstr ""
+msgstr "Enregistrer"
 
 #: src/control/Control.NotebookbarWriter.js:2495
 msgid "Split"
