@@ -1044,8 +1044,8 @@ inline std::string getAllText(const std::shared_ptr<http::WebSocketSession>& soc
             else if ((prefix + expected) == text)
                 return text;
             else
-                LOG_DBG("text selection mismatch text received: '" + text +
-                        "' is not what is expected: '" + prefix + expected + "'");
+                LOG_DBG("text selection mismatch text received: '" << text <<
+                        "' is not what is expected: '" << prefix << expected << "'");
         }
     }
 
