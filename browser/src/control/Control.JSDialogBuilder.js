@@ -423,6 +423,18 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 	},
 
 	listenNumericChanges: function (data, builder, controls, customCallback) {
+		controls.spinfield.addEventListener('keyup', function(e) {
+			if (e.target._oldValue === e.target.value) {
+				return;
+			}
+
+			if (this.checkValidity()) {
+				builder.callback('spinfield', 'value', controls.container,
+						 e.target.value, builder);
+				e.target._oldValue = e.target.value;
+			}
+		});
+
 		controls.spinfield.addEventListener('change', function() {
 			if (!this.checkValidity())
 				return;
@@ -1242,7 +1254,7 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 
 		builder.listenNumericChanges(data, builder, controls, customCallback);
 
-		value = parseFloat(data.value);
+		controls.spinfield._oldValue = value = parseFloat(data.value);
 
 		$(controls.spinfield).val(value);
 
