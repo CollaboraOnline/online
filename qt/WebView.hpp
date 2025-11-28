@@ -38,6 +38,9 @@ public:
     void arrangePresentationWindows();
     void exchangeMonitors();
 
+    void createPresentationFS();
+    void destroyPresentationFS();
+
 private:
     QMainWindow* _mainWindow;
     // Given the general inability of wayland based environments

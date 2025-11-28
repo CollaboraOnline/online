@@ -661,6 +661,7 @@ QVariant Bridge::cool(const QString& messageStr)
     constexpr std::string_view COMMANDSTATECHANGED = "COMMANDSTATECHANGED ";
     constexpr std::string_view COMMANDRESULT = "COMMANDRESULT ";
     constexpr std::string_view NEWDOCTYPE = "newdoc type=";
+    constexpr std::string_view FULLSCREENPRESENTATION = "FULLSCREENPRESENTATION ";
 
     const std::string message = messageStr.toStdString();
     LOG_TRC_NOFILE("From JS: cool: " << message);
@@ -883,6 +884,17 @@ QVariant Bridge::cool(const QString& messageStr)
     {
         std::string content = message.substr(CLIPBOARDSET.size());
         setClipboardFromContent(_document._appDocId, content);
+    }
+    else if (message.starts_with(FULLSCREENPRESENTATION))
+    {
+        if (_webView)
+        {
+            std::string content = message.substr(FULLSCREENPRESENTATION.size());
+            if (content == "true")
+                _webView->createPresentationFS();
+            else
+                _webView->destroyPresentationFS();
+        }
     }
     else if (message == "uno .uno:Open")
     {

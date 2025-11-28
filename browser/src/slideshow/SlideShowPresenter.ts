@@ -440,6 +440,9 @@ class SlideShowPresenter {
 		if (this._presenterContainer) {
 			window.L.DomUtil.remove(this._presenterContainer);
 			this._presenterContainer = null;
+			if (window.mode.isCODesktop()) {
+				app.socket.sendMessage('FULLSCREENPRESENTATION false');
+			}
 		}
 		// #7102 on exit from fullscreen we don't get a 'focus' event
 		// in Chrome so a later second attempt at launching a presentation
@@ -487,7 +490,7 @@ class SlideShowPresenter {
 		parent: Element,
 		width: number,
 		height: number,
-		inWindow: boolean,
+		showSwitchMonitors: boolean,
 	) {
 		const presenterContainer = window.L.DomUtil.create(
 			'div',
@@ -506,7 +509,7 @@ class SlideShowPresenter {
 			slideshowContainer,
 			width,
 			height,
-			inWindow,
+			showSwitchMonitors,
 		);
 		return presenterContainer;
 	}
@@ -515,7 +518,7 @@ class SlideShowPresenter {
 		parent: Element,
 		width: number,
 		height: number,
-		inWindow: boolean
+		showSwitchMonitors: boolean
 	) {
 		const canvas = window.L.DomUtil.create(
 			'canvas',
@@ -534,7 +537,7 @@ class SlideShowPresenter {
 
 		this._progressBarContainer = this._createProgressBar(parent);
 		if (!this._isWelcomePresentation)
-			this._slideNavContainer = this._createSlideNav(parent, inWindow);
+			this._slideNavContainer = this._createSlideNav(parent, showSwitchMonitors);
 
 		canvas.addEventListener(
 			'click',
@@ -619,7 +622,7 @@ class SlideShowPresenter {
 		JSDialog.progressbar(container, progressData, builderOptions);
 	}
 
-	private _createSlideNav(parent: Element, inWindow: boolean): HTMLDivElement {
+	private _createSlideNav(parent: Element, showSwitchMonitors: boolean): HTMLDivElement {
 		const slideNavContainer = window.L.DomUtil.create(
 			'div',
 			'slideshow-nav-container',
@@ -627,7 +630,7 @@ class SlideShowPresenter {
 		);
 		slideNavContainer.tabIndex = -1;
 		this._configureSlideNavStyles(slideNavContainer);
-		this._initializeSlideNavWidget(slideNavContainer, inWindow);
+		this._initializeSlideNavWidget(slideNavContainer, showSwitchMonitors);
 		return slideNavContainer;
 	}
 
@@ -694,7 +697,7 @@ class SlideShowPresenter {
 
 	private _initializeSlideNavWidget(
 		container: HTMLDivElement,
-		inWindow: boolean
+		showSwitchMonitors: boolean
 	): void {
 		const closeImg = window.L.DomUtil.create('img', 'left-img', container);
 		closeImg.id = 'endshow';
@@ -750,7 +753,7 @@ class SlideShowPresenter {
 			}.bind(this),
 		);
 
-		if (!inWindow && window.mode.isCODesktop()) {
+		if (showSwitchMonitors && window.mode.isCODesktop()) {
 			const ExchangeImg = window.L.DomUtil.create('img', 'right-img', container);
 			ExchangeImg.id = 'exchange';
 			const followText = _('Exchange');
@@ -914,14 +917,14 @@ class SlideShowPresenter {
 
 	_doFallbackPresentation() {
 		this._stopFullScreen();
-		this._doInWindowPresentation();
+		this._doInWindowPresentation(false);
 	}
 
 	_getProxyDocumentNode() {
 		return this._slideShowWindowProxy.contentWindow.document;
 	}
 
-	_doInWindowPresentation() {
+	_doInWindowPresentation(showSwitchMonitors: boolean) {
 		const popupTitle =
 			_('Windowed Presentation: ') + this._map['wopi'].BaseFileName;
 		const htmlContent = this._generateSlideWindowHtml(popupTitle);
@@ -952,7 +955,7 @@ class SlideShowPresenter {
 			body,
 			window.screen.width,
 			window.screen.height,
-			true
+			showSwitchMonitors
 		);
 
 		window.addEventListener('resize', this.onSlideWindowResize);
@@ -993,7 +996,12 @@ class SlideShowPresenter {
 		this._slideShowNavigator.quit();
 		this._map.uiManager.closeSnackbar();
 		this._slideShowCanvas = null;
-		this._presenterContainer = null;
+		if (this._presenterContainer) {
+			this._presenterContainer = null;
+			if (window.mode.isCODesktop()) {
+				app.socket.sendMessage('FULLSCREENPRESENTATION false');
+			}
+		}
 		this._slideShowWindowProxy = null;
 		window.removeEventListener('resize', this.onSlideWindowResize);
 		window.removeEventListener('beforeunload', this.slideshowWindowCleanUp);
@@ -1055,7 +1063,20 @@ class SlideShowPresenter {
 
 		if (!this._map['wopi'].DownloadAsPostMessage) {
 			if (inWindow) {
-				this._doInWindowPresentation();
+				this._doInWindowPresentation(false);
+				return true;
+			}
+
+			if (window.mode.isCODesktop()) {
+				// a) For qt (under wayland), we would like to be able to distinguish
+				// between a presentation going full screen, in which case we create a
+				// new window for it, vs otherwise going full screen.
+				// b) It turns out that macOS appears to also do such a substitution
+				// automatically on going full-screen, so the window handle we have isn't
+				// that of the full screen window, and it seems impractiable to get access
+				// to it, which we need to be able to swap it from one monitor to another
+				app.socket.sendMessage('FULLSCREENPRESENTATION true');
+				this._doInWindowPresentation(true);
 				return true;
 			}
 
@@ -1066,7 +1087,7 @@ class SlideShowPresenter {
 				this._map._container,
 				width,
 				height,
-				inWindow
+				true
 			);
 
 			if (this._presenterContainer.requestFullscreen) {
