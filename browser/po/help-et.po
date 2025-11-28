@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-11-17 08:08+0200\n"
-"PO-Revision-Date: 2025-11-18 07:51+0000\n"
+"PO-Revision-Date: 2025-11-27 18:04+0000\n"
 "Last-Translator: Priit Jõerüüt <jrthwlate@users.noreply.hosted.weblate.org>\n"
 "Language-Team: Estonian <https://hosted.weblate.org/projects/"
 "collabora-online/help/et/>\n"
@@ -24,7 +24,7 @@ msgstr "Üldised kiirklahvid"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:10-38
 msgid "Undo"
-msgstr ""
+msgstr "Võta tegevus tagasi"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:10-69
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Z</kbd>"
@@ -32,7 +32,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:11-38
 msgid "Redo"
-msgstr ""
+msgstr "Korda tegevust"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:11-69
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Y</kbd>"

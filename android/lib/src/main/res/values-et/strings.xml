@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="temp_file_saving_disabled">Failil on vaid lugemisõigused ja salvestamine pole võimalik.</string>
+    <string name="loading">Laadin...</string>
+    <string name="exiting">Väljun...</string>
+    <string name="restarting">Käivitan uuesti...</string>
+    <string name="cant_open_the_document">Dokumendi avamine polnud võimalik</string>
+    <string name="view_only">Ainult vaatamiseks</string>
+    <string name="edit_copy">Muuda koopiat</string>
+    <string name="ask_for_copy">Sellel dokumendil on vaid lugemisõigused. Kas tahad teha koopia, mida saad muuta?</string>
+    <string name="use_text">Kasuta tekstivormingut</string>
+    <string name="use_odf">Kasuta ODF-vormingut</string>
+    <string name="ask_for_convert_odf">Kinnita failivorming</string>
+</resources>

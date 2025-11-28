@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-11-17 08:08+0100\n"
-"PO-Revision-Date: 2025-11-18 07:51+0000\n"
+"PO-Revision-Date: 2025-11-28 06:43+0000\n"
 "Last-Translator: Priit Jõerüüt <jrthwlate@users.noreply.hosted.weblate.org>\n"
 "Language-Team: Estonian <https://hosted.weblate.org/projects/"
 "collabora-online/ui/et/>\n"
@@ -126,7 +126,7 @@ msgstr "Lõpeta protsess"
 
 #: admin/admin.strings.js:41
 msgid "Graphs"
-msgstr ""
+msgstr "Diagrammid"
 
 #: admin/admin.strings.js:42
 msgid "Memory Graph"
@@ -258,7 +258,7 @@ msgstr ""
 #: src/control/Control.Menubar.ts:1296
 #: src/control/Control.NotebookbarWriter.js:551
 msgid "About"
-msgstr ""
+msgstr "Teave"
 
 #: admin/src/AdminClusterOverview.js:105
 msgid "CPU History"
@@ -524,12 +524,12 @@ msgstr ""
 #: src/control/Control.NotebookbarWriter.js:1624
 #: src/control/Control.Zotero.js:1152 src/control/Control.Zotero.js:1604
 msgid "Date"
-msgstr ""
+msgstr "Kuupäev"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:195
 #: src/control/Control.NotebookbarCalc.js:772
 msgid "Time"
-msgstr ""
+msgstr "Kellaaeg"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:196
 msgid "Hidden pages"
@@ -971,7 +971,7 @@ msgstr ""
 #: src/layer/tile/CanvasTileLayer.js:3476
 #: src/layer/tile/CanvasTileLayer.js:3487
 msgid "Comment"
-msgstr ""
+msgstr "Komentaar"
 
 #: src/canvas/sections/CommentListSection.ts:1504
 #: src/canvas/sections/CommentListSection.ts:1517
@@ -1173,15 +1173,15 @@ msgstr ""
 
 #: src/control/Control.DocumentRepair.js:169
 msgid "Redo"
-msgstr ""
+msgstr "Korda tegevust"
 
 #: src/control/Control.DocumentRepair.js:170
 msgid "Undo"
-msgstr ""
+msgstr "Võta tegevus tagasi"
 
 #: src/control/Control.DownloadProgress.js:43
 msgid "Download Selection"
-msgstr ""
+msgstr "Laadi valik alla"
 
 #: src/control/Control.DownloadProgress.js:48
 msgid ""
@@ -1506,35 +1506,35 @@ msgstr ""
 
 #: src/control/Control.ESignature.ts:197
 msgid "Ukraine"
-msgstr ""
+msgstr "Ukraina"
 
 #: src/control/Control.ESignature.ts:198
 msgid "United States of America"
-msgstr ""
+msgstr "Ameerika Ühendriigid"
 
 #: src/control/Control.ESignature.ts:199
 msgid "Holy See (Vatican City State)"
-msgstr ""
+msgstr "Püha Tool (Vatikani Linnriik)"
 
 #: src/control/Control.ESignature.ts:200
 msgid "Kosovo"
-msgstr ""
+msgstr "Kosovo"
 
 #: src/control/Control.ESignature.ts:201
 msgid "South Africa"
-msgstr ""
+msgstr "Lõuna -Aafrika Vabariik"
 
 #: src/control/Control.ESignature.ts:335
 msgid "The document is being signed and will be availably shortly"
-msgstr ""
+msgstr "Dokument on allkirjastamisel ja üsna pea ka saadaval"
 
 #: src/control/Control.ESignatureDialog.ts:91
 msgid "Country:"
-msgstr ""
+msgstr "Riik:"
 
 #: src/control/Control.ESignatureDialog.ts:120
 msgid "Provider:"
-msgstr ""
+msgstr "Teenusepakkuja:"
 
 #: src/control/Control.ESignatureDialog.ts:175
 #: src/control/Control.ESignatureDialog.ts:176
@@ -1552,13 +1552,13 @@ msgstr "Funktsioon"
 
 #: src/control/Control.FormulaBarJSDialog.js:75
 msgid "Select Function"
-msgstr ""
+msgstr "Vali funktsioon"
 
 #: src/control/Control.FormulaBarJSDialog.js:81
 #: src/control/Control.NotebookbarWriter.js:114
 #: src/control/Control.NotebookbarWriter.js:1564
 msgid "Formula"
-msgstr ""
+msgstr "Valem"
 
 #: src/control/Control.FormulaBarJSDialog.js:87
 #: src/control/Control.MobileTopBar.ts:42
@@ -1615,11 +1615,11 @@ msgstr ""
 
 #: src/control/Control.JSDialogBuilder.js:1191
 msgid "From"
-msgstr ""
+msgstr "Alates"
 
 #: src/control/Control.JSDialogBuilder.js:1194
 msgid "To"
-msgstr ""
+msgstr "Kuni"
 
 #: src/control/Control.JSDialogBuilder.js:1197
 msgid "Color"
@@ -1627,18 +1627,16 @@ msgstr "Värv"
 
 #: src/control/Control.JSDialogBuilder.js:1273
 msgid "Select range"
-msgstr ""
+msgstr "Vali vahemik"
 
 #: src/control/Control.JSDialogBuilder.js:1402
 #: src/control/Control.NotebookbarBuilder.js:150
-#, fuzzy
 msgid "Font Name"
-msgstr "Font"
+msgstr "Kirjatüübi nimi"
 
 #: src/control/Control.JSDialogBuilder.js:1404 src/control/Toolbar.js:135
-#, fuzzy
 msgid "Font Size"
-msgstr "Font"
+msgstr "Kirjatüübi suurus"
 
 #: src/control/Control.JSDialogBuilder.js:1406
 #: src/control/Control.NotebookbarCalc.js:935
@@ -1652,11 +1650,11 @@ msgstr "Stiil"
 
 #: src/control/Control.JSDialogBuilder.js:1694
 msgid "reply"
-msgstr ""
+msgstr "vastus"
 
 #: src/control/Control.JSDialogBuilder.js:1697
 msgid "replies"
-msgstr ""
+msgstr "vastused"
 
 #: src/control/Control.JSDialogBuilder.js:1772
 msgid "Insert Comment"
@@ -1669,17 +1667,16 @@ msgstr ""
 #: src/control/Control.JSDialogBuilder.js:2378
 #: src/control/Control.Menubar.ts:932
 msgid "Rows"
-msgstr ""
+msgstr "Ridu"
 
 #: src/control/Control.JSDialogBuilder.js:2379
 #: src/control/Control.Menubar.ts:935
 msgid "Columns"
-msgstr ""
+msgstr "Veerge"
 
 #: src/control/Control.JSDialogBuilder.js:2399
-#, fuzzy
 msgid "Insert Table"
-msgstr "Lisa lehekülg"
+msgstr "Lisa tabel"
 
 #: src/control/Control.LanguageDialog.js:64 src/control/Control.Menubar.ts:393
 #: src/control/Control.Menubar.ts:395 src/control/Control.Menubar.ts:397
@@ -1774,7 +1771,7 @@ msgstr ""
 #: src/control/Control.Menubar.ts:1047 src/control/Control.Menubar.ts:1112
 #: src/control/Control.Menubar.ts:1177 src/control/Control.Menubar.ts:1232
 msgid "Share..."
-msgstr ""
+msgstr "Jaga..."
 
 #: src/control/Control.Menubar.ts:108 src/control/Control.Menubar.ts:439
 #: src/control/Control.Menubar.ts:616 src/control/Control.Menubar.ts:757
@@ -1817,7 +1814,6 @@ msgstr ""
 #: src/control/Control.Menubar.ts:123 src/control/Control.Menubar.ts:462
 #: src/control/Control.Menubar.ts:626 src/control/Control.Menubar.ts:774
 #: src/control/Control.Toolbar.js:1108
-#, fuzzy
 msgid "Close document"
 msgstr "Sulge dokument"
 
@@ -1830,7 +1826,7 @@ msgstr "Sulge dokument"
 #: src/control/Control.NotebookbarImpress.js:376
 #: src/control/Control.NotebookbarWriter.js:335
 msgid "Repair"
-msgstr ""
+msgstr "Paranda"
 
 #: src/control/Control.Menubar.ts:158 src/control/Control.Menubar.ts:164
 #: src/control/Control.Menubar.ts:479 src/control/Control.Menubar.ts:485
@@ -1887,7 +1883,7 @@ msgstr ""
 #: src/control/Control.Menubar.ts:206 src/control/Control.Menubar.ts:208
 #: src/control/Control.Menubar.ts:1319 src/control/Control.Menubar.ts:1321
 msgid "All"
-msgstr ""
+msgstr "Kõik"
 
 #: src/control/Control.Menubar.ts:218 src/control/Control.Menubar.ts:520
 #: src/control/Control.Menubar.ts:671 src/control/Control.Menubar.ts:830
@@ -2268,7 +2264,7 @@ msgstr ""
 #: src/control/Control.Zotero.js:220 src/control/Toolbar.js:582
 #: src/control/Toolbar.js:583
 msgid "Search"
-msgstr ""
+msgstr "Otsi"
 
 #: src/control/Control.Menubar.ts:1092
 #: src/control/Control.NotebookbarCalc.js:1090
@@ -2303,9 +2299,8 @@ msgid "Use Tabbed view"
 msgstr ""
 
 #: src/control/Control.Menubar.ts:2124
-#, fuzzy
 msgid "Insert Shape"
-msgstr "Lisa lehekülg"
+msgstr "Lisa kujund"
 
 #: src/control/Control.Menubar.ts:2208
 msgid "The signature line can now be moved or resized as needed."
@@ -2322,9 +2317,8 @@ msgstr ""
 #: src/control/Control.MobileBottomBar.js:28
 #: src/control/Control.MobileBottomBar.js:130
 #: src/control/Control.MobileBottomBar.js:198
-#, fuzzy
 msgid "Show the search bar"
-msgstr "Tühista otsing"
+msgstr "Näita otsinguriba"
 
 #: src/control/Control.MobileBottomBar.js:37
 #: src/control/Control.TopToolbar.js:145
@@ -2332,14 +2326,12 @@ msgid "Borders"
 msgstr ""
 
 #: src/control/Control.MobileSearchBar.ts:28
-#, fuzzy
 msgid "Hide the search bar"
-msgstr "Tühista otsing"
+msgstr "Peida otsinguriba"
 
 #: src/control/Control.MobileSearchBar.ts:34
-#, fuzzy
 msgid "Clear the search field"
-msgstr "Tühista otsing"
+msgstr "Tühjenda otsinguväli"
 
 #: src/control/Control.MobileWizardBuilder.js:568
 msgid "Background Color"
@@ -2461,7 +2453,7 @@ msgstr ""
 #: src/control/Control.NotebookbarWriter.js:218
 #: src/control/Control.NotebookbarWriter.js:251
 msgid "Share"
-msgstr ""
+msgstr "Jaga"
 
 #: src/control/Control.NotebookbarBuilder.js:224
 msgid "Click to expand"
@@ -2647,27 +2639,27 @@ msgstr ""
 #: src/control/Control.NotebookbarCalc.js:752
 #: src/control/Control.NotebookbarCalc.js:768
 msgid "Number"
-msgstr ""
+msgstr "Number"
 
 #: src/control/Control.NotebookbarCalc.js:767
 msgid "General"
-msgstr ""
+msgstr "Üldine"
 
 #: src/control/Control.NotebookbarCalc.js:769
 msgid "Percent"
-msgstr ""
+msgstr "Protsent"
 
 #: src/control/Control.NotebookbarCalc.js:770
 msgid "Currency"
-msgstr ""
+msgstr "Valuuta"
 
 #: src/control/Control.NotebookbarCalc.js:773
 msgid "Scientific"
-msgstr ""
+msgstr "Teaduslik"
 
 #: src/control/Control.NotebookbarCalc.js:774
 msgid "Fraction"
-msgstr ""
+msgstr "Murdarv"
 
 #: src/control/Control.NotebookbarCalc.js:775
 msgid "Boolean Value"
@@ -2680,7 +2672,7 @@ msgstr ""
 #: src/control/Control.NotebookbarImpress.js:1710
 #: src/control/Control.NotebookbarWriter.js:1493
 msgid "Text"
-msgstr ""
+msgstr "Tekst"
 
 #: src/control/Control.NotebookbarCalc.js:854
 msgid "Cells"
@@ -2689,7 +2681,7 @@ msgstr ""
 #: src/control/Control.NotebookbarCalc.js:956
 #: src/control/jsdialog/Definitions.Menu.ts:2298
 msgid "Default"
-msgstr ""
+msgstr "Vaikimisi"
 
 #: src/control/Control.NotebookbarCalc.js:963
 msgid "Heading 1"
@@ -2701,15 +2693,15 @@ msgstr ""
 
 #: src/control/Control.NotebookbarCalc.js:983
 msgid "Good"
-msgstr ""
+msgstr "Hea"
 
 #: src/control/Control.NotebookbarCalc.js:990
 msgid "Neutral"
-msgstr ""
+msgstr "Tavaline"
 
 #: src/control/Control.NotebookbarCalc.js:997
 msgid "Bad"
-msgstr ""
+msgstr "Halb"
 
 #: src/control/Control.NotebookbarCalc.js:1012
 msgid "Editing"
@@ -2741,18 +2733,16 @@ msgid "Column Width"
 msgstr ""
 
 #: src/control/Control.NotebookbarCalc.js:1196
-#, fuzzy
 msgid "Insert Rows Above"
-msgstr "Lisa lehekülg"
+msgstr "Lisa read ülespoole"
 
 #: src/control/Control.NotebookbarCalc.js:1203
 msgid "Insert Columns Before"
 msgstr ""
 
 #: src/control/Control.NotebookbarCalc.js:1210
-#, fuzzy
 msgid "Delete Rows"
-msgstr "Lisa lehekülg"
+msgstr "Kustuta read"
 
 #: src/control/Control.NotebookbarCalc.js:1222
 msgid "Insert Rows Below"
@@ -2897,9 +2887,8 @@ msgid "Insert Function"
 msgstr ""
 
 #: src/control/Control.NotebookbarCalc.js:2022
-#, fuzzy
 msgid "Function Library"
-msgstr "Funktsioon"
+msgstr "Funktsioonide kogumik"
 
 #: src/control/Control.NotebookbarCalc.js:2036
 msgid "AutoSum"
@@ -3307,9 +3296,8 @@ msgid "Scroll to the last sheet"
 msgstr ""
 
 #: src/control/Control.SheetsBar.js:81
-#, fuzzy
 msgid "Insert sheet"
-msgstr "Lisa lehekülg"
+msgstr "Lisa leht"
 
 #: src/control/Control.SheetsBar.js:88
 msgid "Show sheet list"
@@ -3327,7 +3315,7 @@ msgstr ""
 #: src/control/Control.StatusBar.js:191
 #: src/control/jsdialog/Definitions.Menu.ts:163
 msgid "Average"
-msgstr ""
+msgstr "Keskmine"
 
 #: src/control/Control.StatusBar.js:192
 msgid "CountA"
@@ -3428,14 +3416,12 @@ msgid "Default Style"
 msgstr ""
 
 #: src/control/Control.TopToolbar.js:189
-#, fuzzy
 msgid "Insert table"
-msgstr "Lisa lehekülg"
+msgstr "Lisa tabel"
 
 #: src/control/Control.TopToolbar.js:192
-#, fuzzy
 msgid "Insert shapes"
-msgstr "Lisa lehekülg"
+msgstr "Lisa kujundeid"
 
 #: src/control/Control.TopToolbar.js:194
 msgid "Insert connectors"
@@ -3660,14 +3646,12 @@ msgid "Right Margin"
 msgstr ""
 
 #: src/control/HRuler.ts:1093
-#, fuzzy
 msgid "Insert tabstop"
-msgstr "Lisa lehekülg"
+msgstr "Lisa tabulaatorisamm"
 
 #: src/control/HRuler.ts:1100
-#, fuzzy
 msgid "Delete tabstop"
-msgstr "Lisa lehekülg"
+msgstr "Kustuta tabulaatorisamm"
 
 #: src/control/Parts.js:490
 msgid "Show sheets"
@@ -4710,9 +4694,8 @@ msgid "the View menu"
 msgstr ""
 
 #: src/layer/tile/CanvasTileLayer.js:1571
-#, fuzzy
 msgid "Functions"
-msgstr "Funktsioon"
+msgstr "Funktsioonid"
 
 #: src/layer/tile/CanvasTileLayer.js:1831
 msgid "Named Range"
@@ -4904,7 +4887,6 @@ msgid "Current Slide"
 msgstr ""
 
 #: src/slideshow/PresenterConsole.js:30
-#, fuzzy
 msgid "Next Slide"
 msgstr "Järgmine slaid"
 
