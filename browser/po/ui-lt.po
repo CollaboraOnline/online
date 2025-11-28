@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-11-17 08:08+0100\n"
-"PO-Revision-Date: 2025-11-27 12:40+0000\n"
+"PO-Revision-Date: 2025-11-28 06:42+0000\n"
 "Last-Translator: dukezas <dukezas@gmail.com>\n"
 "Language-Team: Lithuanian <https://hosted.weblate.org/projects/"
 "collabora-online/ui/lt/>\n"
@@ -1088,23 +1088,23 @@ msgstr "Nukopijuokite visą versijos informaciją anglų kalba"
 
 #: src/control/Control.AddressInputField.ts:67
 msgid "cell address"
-msgstr ""
+msgstr "celės adresas"
 
 #: src/control/Control.AlertDialog.js:53
 msgid "External link"
-msgstr ""
+msgstr "Išorinė nuoroda"
 
 #: src/control/Control.AlertDialog.js:54
 msgid "Open link"
-msgstr ""
+msgstr "Atidaryti nuorodą"
 
 #: src/control/Control.AlertDialog.js:66
 msgid "Copied external sources are not allowed"
-msgstr ""
+msgstr "Kopijuoti išoriniai šaltiniai neleidžiami"
 
 #: src/control/Control.AlertDialog.js:67
 msgid "It seems you have copied a selection that includes external images."
-msgstr ""
+msgstr "Panašu, kad nukopijavote pasirinkimą, kuriame yra išorinių vaizdų."
 
 #: src/control/Control.AlertDialog.js:68
 msgid ""
@@ -1112,96 +1112,103 @@ msgid ""
 "possible. Please right click in the image, choose \"Copy Image\" and paste "
 "it into the document instead."
 msgstr ""
+"Atsisiųsti išorinius išteklius draudžiama, bet įklijuoti vaizdus vis dar "
+"galima. Prašome dešiniuoju pelės mygtuku spustelėti vaizdą, pasirinkti „"
+"Kopijuoti vaizdą“ ir įklijuoti jį į dokumentą."
 
 #: src/control/Control.AlertDialog.js:72
 msgid "External data source not allowed"
-msgstr ""
+msgstr "Išorinis duomenų šaltinis yra neleidžiamas"
 
 #: src/control/Control.AlertDialog.js:73
 msgid "It seems you have tried to insert external data."
-msgstr ""
+msgstr "Panašu, kad bandėte įterpti išorinius duomenis."
 
 #: src/control/Control.AlertDialog.js:74
 msgid ""
 "Selected external data source is forbidden. Please contact the system "
 "administrator."
 msgstr ""
+"Pasirinktas išorinis duomenų šaltinis yra draudžiamas. Prašom susisiekti su "
+"sistemos administratoriumi."
 
 #: src/control/Control.AlertDialog.js:86 src/map/Clipboard.js:1312
 msgid "Don’t show this again"
-msgstr ""
+msgstr "Daugiau to nerodyti"
 
 #: src/control/Control.AlertDialog.js:105
 msgid "The server encountered a {0} error while parsing the {1} command."
-msgstr ""
+msgstr "Serveris aptiko {0} klaidą analizuodamas {1} komandą."
 
 #: src/control/Control.Command.js:90
 msgid "Unlock"
-msgstr ""
+msgstr "Atrakinti"
 
 #: src/control/Control.ContextMenu.js:278
 msgid "Paste Special"
-msgstr "Įdėti kitaip"
+msgstr "Specialus įklijavimas"
 
 #: src/control/Control.ContextMenu.js:285
 msgid "Copy Cells"
-msgstr ""
+msgstr "Kopijuoti celes"
 
 #: src/control/Control.ContextMenu.js:290
 msgid "Fill Series"
-msgstr ""
+msgstr "Užpildymo serija"
 
 #: src/control/Control.DocumentNameInput.js:113
 msgid "Path"
-msgstr ""
+msgstr "Kelias"
 
 #: src/control/Control.DocumentRepair.js:27
 #: src/control/Control.DocumentRepair.js:28
 msgid "Repair Document"
-msgstr ""
+msgstr "Taisyti dokumentą"
 
 #: src/control/Control.DocumentRepair.js:124
 #: src/control/Control.UserList.ts:387
 msgid "You"
-msgstr ""
+msgstr "Jūs"
 
 #: src/control/Control.DocumentRepair.js:140
 msgid "Type"
-msgstr ""
+msgstr "Tipas"
 
 #: src/control/Control.DocumentRepair.js:140
 msgid "What?"
-msgstr ""
+msgstr "Ką?"
 
 #: src/control/Control.DocumentRepair.js:140
 msgid "Who?"
-msgstr ""
+msgstr "Kas?"
 
 #: src/control/Control.DocumentRepair.js:140
 msgid "When?"
-msgstr ""
+msgstr "Kada?"
 
 #: src/control/Control.DocumentRepair.js:159
 msgid "You have not done anything to rollback yet..."
-msgstr ""
+msgstr "Dar nieko nepadarėte, kad atkurtumėte grįžimą..."
 
 #: src/control/Control.DocumentRepair.js:169
 msgid "Redo"
-msgstr ""
+msgstr "Perdaryti"
 
 #: src/control/Control.DocumentRepair.js:170
 msgid "Undo"
-msgstr ""
+msgstr "Anuliuoti"
 
 #: src/control/Control.DownloadProgress.js:43
 msgid "Download Selection"
-msgstr ""
+msgstr "Atsisiųsti pasirinkimą"
 
 #: src/control/Control.DownloadProgress.js:48
 msgid ""
 "If you want to share large elements outside of {productname} it's necessary "
 "to first download them."
 msgstr ""
+"Jei norite bendrinti didelius elementus už „{productname}“ ribų, pirmiausia "
+"turite juos atsisiųsti."
 
 #: src/control/Control.DownloadProgress.js:61
 #: src/control/Control.NotebookbarCalc.js:296
@@ -1209,370 +1216,369 @@ msgstr ""
 #: src/control/Control.NotebookbarImpress.js:361
 #: src/control/Control.NotebookbarWriter.js:320
 msgid "Download"
-msgstr ""
+msgstr "Atsisiųsti"
 
 #: src/control/Control.DownloadProgress.js:80
 msgid "Downloading clipboard content"
-msgstr ""
+msgstr "Atsisiunčiamas iškarpinės turinys"
 
 #: src/control/Control.DownloadProgress.js:87
 #: src/control/Control.DownloadProgress.js:112
 #: src/control/Control.PartsPreview.js:300
 msgid "Copy"
-msgstr ""
+msgstr "Kopijuoti"
 
 #: src/control/Control.DownloadProgress.js:110
 msgid "Download completed and ready to be copied to clipboard."
-msgstr ""
+msgstr "Atsisiuntimas baigtas ir paruoštas nukopijuoti į iškarpinę."
 
 #: src/control/Control.DownloadProgress.js:111
 msgid ""
 "From now on clipboard notifications will discreetly appear at the bottom."
-msgstr ""
+msgstr "Nuo šiol iškarpinės pranešimai bus diskretiškai rodomi apačioje."
 
 #: src/control/Control.DownloadProgress.js:272
 msgid "Content copied to clipboard"
-msgstr ""
+msgstr "Turinys nukopijuotas į iškarpinę"
 
 #: src/control/Control.DownloadProgress.js:302
 msgid "Download failed"
-msgstr ""
+msgstr "Atsisiuntimas nepavyko"
 
 #: src/control/Control.ESignature.ts:127
 msgid "Andorra"
-msgstr ""
+msgstr "Andora"
 
 #: src/control/Control.ESignature.ts:128
 msgid "United Arab Emirates"
-msgstr ""
+msgstr "Jungtiniai Arabų Emiratai"
 
 #: src/control/Control.ESignature.ts:129
 msgid "Albania"
-msgstr ""
+msgstr "Albanija"
 
 #: src/control/Control.ESignature.ts:130
 msgid "Armenia"
-msgstr ""
+msgstr "Armenija"
 
 #: src/control/Control.ESignature.ts:131
 msgid "Argentina"
-msgstr ""
+msgstr "Argentina"
 
 #: src/control/Control.ESignature.ts:132
 msgid "Austria"
-msgstr ""
+msgstr "Austrija"
 
 #: src/control/Control.ESignature.ts:133
 msgid "Australia"
-msgstr ""
+msgstr "Australija"
 
 #: src/control/Control.ESignature.ts:134
 msgid "Åland Islands"
-msgstr ""
+msgstr "Alandų salos"
 
 #: src/control/Control.ESignature.ts:135
 msgid "Azerbaijan"
-msgstr ""
+msgstr "Azerbaidžanas"
 
 #: src/control/Control.ESignature.ts:136
 msgid "Bosnia and Herzegovina"
-msgstr ""
+msgstr "Bosnija ir Hercogovina"
 
 #: src/control/Control.ESignature.ts:137
 msgid "Belgium"
-msgstr ""
+msgstr "Belgija"
 
 #: src/control/Control.ESignature.ts:138
 msgid "Bulgaria"
-msgstr ""
+msgstr "Bulgarija"
 
 #: src/control/Control.ESignature.ts:139
 msgid "Brazil"
-msgstr ""
+msgstr "Brazilija"
 
 #: src/control/Control.ESignature.ts:140
 msgid "Belarus"
-msgstr ""
+msgstr "Bulbašija"
 
 #: src/control/Control.ESignature.ts:141
 msgid "Canada"
-msgstr ""
+msgstr "Kanada"
 
 #: src/control/Control.ESignature.ts:142
 msgid "Switzerland"
-msgstr ""
+msgstr "Šveicarija"
 
 #: src/control/Control.ESignature.ts:143
 msgid "Chile"
-msgstr ""
+msgstr "Čilė"
 
 #: src/control/Control.ESignature.ts:144
 msgid "China"
-msgstr ""
+msgstr "Kinija"
 
 #: src/control/Control.ESignature.ts:145
 msgid "Cyprus"
-msgstr ""
+msgstr "Kipras"
 
 #: src/control/Control.ESignature.ts:146
 msgid "Czech Republic"
-msgstr ""
+msgstr "Čekijos Respublika"
 
 #: src/control/Control.ESignature.ts:147
 msgid "Germany"
-msgstr ""
+msgstr "Vokietija"
 
 #: src/control/Control.ESignature.ts:148
 msgid "Denmark"
-msgstr ""
+msgstr "Danija"
 
 #: src/control/Control.ESignature.ts:149
 msgid "Estonia"
-msgstr ""
+msgstr "Estija"
 
 #: src/control/Control.ESignature.ts:150
 msgid "Spain"
-msgstr ""
+msgstr "Ispanija"
 
 #: src/control/Control.ESignature.ts:151
 msgid "Finland"
-msgstr ""
+msgstr "Suomija"
 
 #: src/control/Control.ESignature.ts:152
 msgid "France"
-msgstr ""
+msgstr "Prancūzija"
 
 #: src/control/Control.ESignature.ts:153
 msgid "United Kingdom"
-msgstr ""
+msgstr "Jungtinė Karalystė"
 
 #: src/control/Control.ESignature.ts:154
 msgid "Georgia"
-msgstr ""
+msgstr "Gruzija"
 
 #: src/control/Control.ESignature.ts:155
 msgid "Guernsey"
-msgstr ""
+msgstr "Gernsis"
 
 #: src/control/Control.ESignature.ts:156
 msgid "Greece"
-msgstr ""
+msgstr "Graikija"
 
 #: src/control/Control.ESignature.ts:157
 msgid "Croatia"
-msgstr ""
+msgstr "Kroatija"
 
 #: src/control/Control.ESignature.ts:158
 msgid "Hungary"
-msgstr ""
+msgstr "Vengrija"
 
 #: src/control/Control.ESignature.ts:159
 msgid "Indonesia"
-msgstr ""
+msgstr "Indonezija"
 
 #: src/control/Control.ESignature.ts:160
 msgid "Ireland"
-msgstr ""
+msgstr "Airija"
 
 #: src/control/Control.ESignature.ts:161
 msgid "Israel"
-msgstr ""
+msgstr "Izraelis"
 
 #: src/control/Control.ESignature.ts:162
 msgid "India"
-msgstr ""
+msgstr "Indija"
 
 #: src/control/Control.ESignature.ts:163
 msgid "Iceland"
-msgstr ""
+msgstr "Islandija"
 
 #: src/control/Control.ESignature.ts:164
 msgid "Italy"
-msgstr ""
+msgstr "Italija"
 
 #: src/control/Control.ESignature.ts:165
 msgid "Japan"
-msgstr ""
+msgstr "Japonija"
 
 #: src/control/Control.ESignature.ts:166
 msgid "Kenya"
-msgstr ""
+msgstr "Kenija"
 
 #: src/control/Control.ESignature.ts:167
 msgid "South Korea"
-msgstr ""
+msgstr "Pietų Korėja"
 
 #: src/control/Control.ESignature.ts:168
 msgid "Kazakhstan"
-msgstr ""
+msgstr "Kazachstanas"
 
 #: src/control/Control.ESignature.ts:169
 msgid "Liechtenstein"
-msgstr ""
+msgstr "Lichtenšteinas"
 
 #: src/control/Control.ESignature.ts:170
 msgid "Lithuania"
-msgstr ""
+msgstr "Lietuva"
 
 #: src/control/Control.ESignature.ts:171
 msgid "Luxembourg"
-msgstr ""
+msgstr "Liuksemburgas"
 
 #: src/control/Control.ESignature.ts:172
 msgid "Latvia"
-msgstr ""
+msgstr "Latvia"
 
 #: src/control/Control.ESignature.ts:173
 msgid "Monaco"
-msgstr ""
+msgstr "Monakas"
 
 #: src/control/Control.ESignature.ts:174
 msgid "Moldova, Republic of"
-msgstr ""
+msgstr "Moldovos Respublika"
 
 #: src/control/Control.ESignature.ts:175
 msgid "Montenegro"
-msgstr ""
+msgstr "Juodkalnija"
 
 #: src/control/Control.ESignature.ts:176
 msgid "North Macedonia, Republic of"
-msgstr ""
+msgstr "Šiaurės Makedonija"
 
 #: src/control/Control.ESignature.ts:177
 msgid "Malta"
-msgstr ""
+msgstr "Malta"
 
 #: src/control/Control.ESignature.ts:178
 msgid "Mexico"
-msgstr ""
+msgstr "Meksika"
 
 #: src/control/Control.ESignature.ts:179
 msgid "Netherlands"
-msgstr ""
+msgstr "Nyderlandai"
 
 #: src/control/Control.ESignature.ts:180
 msgid "Norway"
-msgstr ""
+msgstr "Norvegija"
 
 #: src/control/Control.ESignature.ts:181
 msgid "New Zealand"
-msgstr ""
+msgstr "Naujoji Zelandija"
 
 #: src/control/Control.ESignature.ts:182
 msgid "Philippines"
-msgstr ""
+msgstr "Filipinai"
 
 #: src/control/Control.ESignature.ts:183
 msgid "Poland"
-msgstr ""
+msgstr "Lenkija"
 
 #: src/control/Control.ESignature.ts:184
 msgid "Portugal"
-msgstr ""
+msgstr "Portugalija"
 
 #: src/control/Control.ESignature.ts:185
 msgid "Qatar"
-msgstr ""
+msgstr "Kataras"
 
 #: src/control/Control.ESignature.ts:186
 msgid "Romania"
-msgstr ""
+msgstr "Rumunija"
 
 #: src/control/Control.ESignature.ts:187
 msgid "Serbia"
-msgstr ""
+msgstr "Serbija"
 
 #: src/control/Control.ESignature.ts:188
 msgid "Russian Federation"
-msgstr ""
+msgstr "Rašistų žemė (Putin Xuilo)"
 
 #: src/control/Control.ESignature.ts:189
 msgid "Saudi Arabia"
-msgstr ""
+msgstr "Saudo Arabija"
 
 #: src/control/Control.ESignature.ts:190
 msgid "Sweden"
-msgstr ""
+msgstr "Švedija"
 
 #: src/control/Control.ESignature.ts:191
 msgid "Singapore"
-msgstr ""
+msgstr "Singapūras"
 
 #: src/control/Control.ESignature.ts:192
 msgid "Slovenia"
-msgstr ""
+msgstr "Slovėnija"
 
 #: src/control/Control.ESignature.ts:193
 msgid "Slovakia"
-msgstr ""
+msgstr "Slovakija"
 
 #: src/control/Control.ESignature.ts:194
 msgid "San Marino"
-msgstr ""
+msgstr "San Marinas"
 
 #: src/control/Control.ESignature.ts:195
 msgid "Turkey"
-msgstr ""
+msgstr "Turkija"
 
 #: src/control/Control.ESignature.ts:196
 msgid "Taiwan, Province of China"
-msgstr ""
+msgstr "Taivanas"
 
 #: src/control/Control.ESignature.ts:197
 msgid "Ukraine"
-msgstr ""
+msgstr "Ukraina"
 
 #: src/control/Control.ESignature.ts:198
 msgid "United States of America"
-msgstr ""
+msgstr "Jungtinės Amerikos Valstijos"
 
 #: src/control/Control.ESignature.ts:199
 msgid "Holy See (Vatican City State)"
-msgstr ""
+msgstr "Vatikanas"
 
 #: src/control/Control.ESignature.ts:200
 msgid "Kosovo"
-msgstr ""
+msgstr "Kosovas"
 
 #: src/control/Control.ESignature.ts:201
 msgid "South Africa"
-msgstr ""
+msgstr "Pietų Afrikos Respublika"
 
 #: src/control/Control.ESignature.ts:335
 msgid "The document is being signed and will be availably shortly"
-msgstr ""
+msgstr "Dokumentas pasirašomas ir netrukus bus prieinamas"
 
 #: src/control/Control.ESignatureDialog.ts:91
 msgid "Country:"
-msgstr ""
+msgstr "Šalis:"
 
 #: src/control/Control.ESignatureDialog.ts:120
 msgid "Provider:"
-msgstr ""
+msgstr "Teikėjas:"
 
 #: src/control/Control.ESignatureDialog.ts:175
 #: src/control/Control.ESignatureDialog.ts:176
 msgid "Insert Electronic Signature"
-msgstr ""
+msgstr "Įterpkite elektroninį parašą"
 
 #: src/control/Control.FormulaBarJSDialog.js:18
 msgid "Expand Formula Bar"
-msgstr ""
+msgstr "Išskleisti formulių juostą"
 
 #: src/control/Control.FormulaBarJSDialog.js:19
-#, fuzzy
 msgid "Function Wizard"
-msgstr "Funkcija"
+msgstr "Funkcijų vedlys"
 
 #: src/control/Control.FormulaBarJSDialog.js:75
 msgid "Select Function"
-msgstr ""
+msgstr "Pasirinkti funkciją"
 
 #: src/control/Control.FormulaBarJSDialog.js:81
 #: src/control/Control.NotebookbarWriter.js:114
 #: src/control/Control.NotebookbarWriter.js:1564
 msgid "Formula"
-msgstr ""
+msgstr "Formulė"
 
 #: src/control/Control.FormulaBarJSDialog.js:87
 #: src/control/Control.MobileTopBar.ts:42
@@ -1581,79 +1587,80 @@ msgstr "Priimti"
 
 #: src/control/Control.FormulaBarJSDialog.js:171
 msgid "Collapse Formula Bar"
-msgstr ""
+msgstr "Sutraukti formulių juostą"
 
 #: src/control/Control.IdleHandler.ts:43
 msgid "Idle document - please click to reload and resume editing"
 msgstr ""
+"Neaktyvus dokumentas – spustelėkite, kad įkeltumėte iš naujo ir tęstumėte "
+"redagavimą"
 
 #: src/control/Control.IdleHandler.ts:45
 msgid "Idle document - please tap to reload and resume editing"
 msgstr ""
+"Neaktyvus dokumentas – palieskite, kad įkeltumėte iš naujo ir tęstumėte "
+"redagavimą"
 
 #: src/control/Control.JSDialog.js:337
 msgid "Close dialog"
-msgstr ""
+msgstr "Uždaryti dialogo langą"
 
 #: src/control/Control.JSDialogBuilder.js:518
 msgid "Solid"
-msgstr ""
+msgstr "Kietas"
 
 #: src/control/Control.JSDialogBuilder.js:521
 msgid "Linear"
-msgstr ""
+msgstr "Linijinis"
 
 #: src/control/Control.JSDialogBuilder.js:524
 msgid "Axial"
-msgstr ""
+msgstr "Ašinis"
 
 #: src/control/Control.JSDialogBuilder.js:527
 msgid "Radial"
-msgstr ""
+msgstr "Radialinis"
 
 #: src/control/Control.JSDialogBuilder.js:530
 msgid "Ellipsoid"
-msgstr ""
+msgstr "Elipsoidinis"
 
 #: src/control/Control.JSDialogBuilder.js:534
 msgid "Quadratic"
-msgstr ""
+msgstr "Kvadratinė"
 
 #: src/control/Control.JSDialogBuilder.js:537
 msgid "Square"
-msgstr ""
+msgstr "Kvadratas"
 
 #: src/control/Control.JSDialogBuilder.js:540
 msgid "Fixed size"
-msgstr ""
+msgstr "Fiksuotas dydis"
 
 #: src/control/Control.JSDialogBuilder.js:1191
 msgid "From"
-msgstr ""
+msgstr "Nuo"
 
 #: src/control/Control.JSDialogBuilder.js:1194
 msgid "To"
-msgstr ""
+msgstr "Iki"
 
 #: src/control/Control.JSDialogBuilder.js:1197
 msgid "Color"
-msgstr ""
+msgstr "Spalva"
 
 #: src/control/Control.JSDialogBuilder.js:1273
-#, fuzzy
 msgid "Select range"
-msgstr "Pažymėta langelių sritis"
+msgstr "Pasirinkite diapazoną"
 
 #: src/control/Control.JSDialogBuilder.js:1402
 #: src/control/Control.NotebookbarBuilder.js:150
-#, fuzzy
 msgid "Font Name"
 msgstr "Šriftas"
 
 #: src/control/Control.JSDialogBuilder.js:1404 src/control/Toolbar.js:135
-#, fuzzy
 msgid "Font Size"
-msgstr "Šriftas"
+msgstr "Šrifto dydis"
 
 #: src/control/Control.JSDialogBuilder.js:1406
 #: src/control/Control.NotebookbarCalc.js:935
@@ -1667,32 +1674,31 @@ msgstr "Stilius"
 
 #: src/control/Control.JSDialogBuilder.js:1694
 msgid "reply"
-msgstr ""
+msgstr "atsakyti"
 
 #: src/control/Control.JSDialogBuilder.js:1697
 msgid "replies"
-msgstr ""
+msgstr "atsakymai"
 
 #: src/control/Control.JSDialogBuilder.js:1772
 msgid "Insert Comment"
-msgstr ""
+msgstr "Įterpti komentarą"
 
 #: src/control/Control.JSDialogBuilder.js:2056
 msgid "Open {name}"
-msgstr ""
+msgstr "Atidaryti {name}"
 
 #: src/control/Control.JSDialogBuilder.js:2378
 #: src/control/Control.Menubar.ts:932
 msgid "Rows"
-msgstr ""
+msgstr "Eilutės"
 
 #: src/control/Control.JSDialogBuilder.js:2379
 #: src/control/Control.Menubar.ts:935
 msgid "Columns"
-msgstr ""
+msgstr "Stulpeliai"
 
 #: src/control/Control.JSDialogBuilder.js:2399
-#, fuzzy
 msgid "Insert Table"
 msgstr "Įterpti lentelę"
 
@@ -1701,19 +1707,19 @@ msgstr "Įterpti lentelę"
 #: src/control/Control.Menubar.ts:589 src/control/Control.Menubar.ts:731
 #: src/control/Control.Menubar.ts:1020 src/control/Control.StatusBar.js:530
 msgid "None (Do not check spelling)"
-msgstr ""
+msgstr "Nieko (netikrinti rašybos)"
 
 #: src/control/Control.LanguageDialog.js:82
 msgid "Select language"
-msgstr ""
+msgstr "Pasirinkite kalbą"
 
 #: src/control/Control.LanguageDialog.js:103
 msgid "Language"
-msgstr ""
+msgstr "Kalba"
 
 #: src/control/Control.Mention.ts:181
 msgid "No search results found!"
-msgstr ""
+msgstr "Paieška be rezultatų!"
 
 #: src/control/Control.Menubar.ts:97 src/control/Control.Menubar.ts:112
 #: src/control/Control.Menubar.ts:1055
@@ -1727,21 +1733,21 @@ msgstr "ODF teksto dokumentas (.odt)"
 #: src/control/Control.NotebookbarBuilder.js:358
 #: src/control/Control.NotebookbarBuilder.js:571
 msgid "Word 2003 Document (.doc)"
-msgstr ""
+msgstr "Word 2003 dokumentas (.doc)"
 
 #: src/control/Control.Menubar.ts:99 src/control/Control.Menubar.ts:114
 #: src/control/Control.Menubar.ts:1057
 #: src/control/Control.NotebookbarBuilder.js:354
 #: src/control/Control.NotebookbarBuilder.js:567
 msgid "Word Document (.docx)"
-msgstr ""
+msgstr "Word dokumentas (.docx)"
 
 #: src/control/Control.Menubar.ts:100 src/control/Control.Menubar.ts:115
 #: src/control/Control.Menubar.ts:1058
 #: src/control/Control.NotebookbarBuilder.js:350
 #: src/control/Control.NotebookbarBuilder.js:563
 msgid "Rich Text (.rtf)"
-msgstr ""
+msgstr "Raiškusis tekstas (.rtf)"
 
 #: src/control/Control.Menubar.ts:102 src/control/Control.Menubar.ts:109
 #: src/control/Control.Menubar.ts:434 src/control/Control.Menubar.ts:440
@@ -1752,7 +1758,7 @@ msgstr ""
 #: src/control/Control.Menubar.ts:1174 src/control/Control.Menubar.ts:1181
 #: src/control/Control.Menubar.ts:1229 src/control/Control.Menubar.ts:1239
 msgid "Export as"
-msgstr ""
+msgstr "Eksortuoti kaip"
 
 #: src/control/Control.Menubar.ts:103 src/control/Control.Menubar.ts:110
 #: src/control/Control.Menubar.ts:435 src/control/Control.Menubar.ts:441
@@ -1778,25 +1784,25 @@ msgstr "PDF dokumentas (.pdf)"
 #: src/control/Control.NotebookbarBuilder.js:362
 #: src/control/Control.NotebookbarBuilder.js:624
 msgid "EPUB (.epub)"
-msgstr ""
+msgstr "EPUB (.epub)"
 
 #: src/control/Control.Menubar.ts:106 src/control/Control.UIManager.ts:325
 msgid "Rename Document"
-msgstr ""
+msgstr "Pervadinti dokumentą"
 
 #: src/control/Control.Menubar.ts:107 src/control/Control.Menubar.ts:438
 #: src/control/Control.Menubar.ts:614 src/control/Control.Menubar.ts:756
 #: src/control/Control.Menubar.ts:1047 src/control/Control.Menubar.ts:1112
 #: src/control/Control.Menubar.ts:1177 src/control/Control.Menubar.ts:1232
 msgid "Share..."
-msgstr ""
+msgstr "Dalintis..."
 
 #: src/control/Control.Menubar.ts:108 src/control/Control.Menubar.ts:439
 #: src/control/Control.Menubar.ts:616 src/control/Control.Menubar.ts:757
 #: src/control/Control.Menubar.ts:1048 src/control/Control.Menubar.ts:1113
 #: src/control/Control.Menubar.ts:1179 src/control/Control.Menubar.ts:1233
 msgid "See revision history"
-msgstr ""
+msgstr "Žr. pataisymų istoriją"
 
 #: src/control/Control.Menubar.ts:109 src/control/Control.Menubar.ts:440
 #: src/control/Control.Menubar.ts:617 src/control/Control.Menubar.ts:758
@@ -1812,13 +1818,12 @@ msgstr "Atsisiųsti šiuo formatu"
 #: src/control/Control.NotebookbarBuilder.js:377
 #: src/control/Control.NotebookbarBuilder.js:411
 #: src/control/Control.NotebookbarBuilder.js:453
-#, fuzzy
 msgid "PDF Document (.pdf) as..."
-msgstr "PDF dokumentas (.pdf)"
+msgstr "PDF dokumentas (.pdf) kaip..."
 
 #: src/control/Control.Menubar.ts:117 src/control/Control.Menubar.ts:765
 msgid "HTML file (.html)"
-msgstr ""
+msgstr "HTML failas (.html)"
 
 #: src/control/Control.Menubar.ts:120 src/control/Control.Menubar.ts:456
 #: src/control/Control.Menubar.ts:624 src/control/Control.Menubar.ts:768
@@ -1828,7 +1833,7 @@ msgstr ""
 #: src/control/Control.NotebookbarWriter.js:412
 #: src/map/handler/Map.Settings.ts:73
 msgid "Options"
-msgstr ""
+msgstr "Parinktys"
 
 #: src/control/Control.Menubar.ts:123 src/control/Control.Menubar.ts:462
 #: src/control/Control.Menubar.ts:626 src/control/Control.Menubar.ts:774
@@ -1845,7 +1850,7 @@ msgstr "Užverti dokumentą"
 #: src/control/Control.NotebookbarImpress.js:376
 #: src/control/Control.NotebookbarWriter.js:335
 msgid "Repair"
-msgstr ""
+msgstr "Taisyti"
 
 #: src/control/Control.Menubar.ts:158 src/control/Control.Menubar.ts:164
 #: src/control/Control.Menubar.ts:479 src/control/Control.Menubar.ts:485
@@ -1862,17 +1867,17 @@ msgstr "Atstatyti mastelį"
 #: src/control/Control.Menubar.ts:167 src/control/Control.Menubar.ts:491
 #: src/control/Control.Menubar.ts:655 src/control/Control.Menubar.ts:800
 msgid "Toggle UI Mode"
-msgstr ""
+msgstr "Perjungti UI režimą"
 
 #: src/control/Control.Menubar.ts:169 src/control/Control.Menubar.ts:493
 #: src/control/Control.Menubar.ts:660 src/control/Control.Menubar.ts:801
 msgid "Show Status Bar"
-msgstr ""
+msgstr "Rodyti būsenos juostą"
 
 #: src/control/Control.Menubar.ts:170 src/control/Control.Menubar.ts:495
 #: src/control/Control.Menubar.ts:661 src/control/Control.Menubar.ts:802
 msgid "Hide Menu Bar"
-msgstr ""
+msgstr "Slėpti meniu juostą"
 
 #: src/control/Control.Menubar.ts:172 src/control/Control.Menubar.ts:497
 #: src/control/Control.Menubar.ts:657 src/control/Control.Menubar.ts:804
@@ -1883,14 +1888,14 @@ msgstr ""
 #: src/control/Control.NotebookbarImpress.js:698
 #: src/control/Control.NotebookbarWriter.js:1770
 msgid "Invert Background"
-msgstr ""
+msgstr "Apversti foną"
 
 #: src/control/Control.Menubar.ts:174 src/control/Control.Menubar.ts:807
 #: src/control/Control.NotebookbarCalc.js:2657
 #: src/control/Control.NotebookbarWriter.js:954
 #: src/control/Control.NotebookbarWriter.js:1088
 msgid "Style list"
-msgstr ""
+msgstr "Stilių sąrašas"
 
 #: src/control/Control.Menubar.ts:182 src/control/Control.Menubar.ts:509
 #: src/control/Control.Menubar.ts:664 src/control/Control.Menubar.ts:818
