@@ -3215,7 +3215,7 @@ bool anyInputCallback(void* data, int mostUrgentPriority)
 
 bool KitSocketPoll::kitHasAnyInput(int mostUrgentPriority) {
 #if !MOBILEAPP
-    const std::shared_ptr<Document>& document = kitSocketPoll->getDocument();
+    const std::shared_ptr<Document>& document = getDocument();
 
     if (document)
     {
@@ -3237,7 +3237,7 @@ bool KitSocketPoll::kitHasAnyInput(int mostUrgentPriority) {
         }
 
         // Poll our incoming socket from wsd.
-        int ret = kitSocketPoll->poll(std::chrono::microseconds(0), /*justPoll=*/true);
+        int ret = poll(std::chrono::microseconds(0), /*justPoll=*/true);
         if (ret)
         {
             return true;
@@ -3291,7 +3291,7 @@ void KitSocketPoll::kitWakeup() {
  *
  * The LOKit main loop will use/call these callbacks inside VCL's Yield(), see SvpSalInstance::ImplYield().
  */
-void startMainLoop(const LibreOfficeKit* kit, const std::shared_ptr<lok::Office>& loKit) {
+void startMainLoop(const LibreOfficeKit* kit, const std::shared_ptr<lok::Office>& loKit, KitSocketPoll* mainKit) {
     if (!LIBREOFFICEKIT_HAS(kit, runLoop))
     {
         LOG_FTL("Kit is missing Unipoll API");
@@ -3299,11 +3299,11 @@ void startMainLoop(const LibreOfficeKit* kit, const std::shared_ptr<lok::Office>
         Util::forcedExit(EX_SOFTWARE);
     }
 
-    loKit->registerAnyInputCallback(anyInputCallback, loKit.get());
+    loKit->registerAnyInputCallback(anyInputCallback, mainKit);
 
     LOG_INF("Kit unipoll loop run");
 
-    loKit->runLoop(pollCallback, wakeCallback, loKit.get());
+    loKit->runLoop(pollCallback, wakeCallback, mainKit);
 
     LOG_INF("Kit unipoll loop run terminated.");
 }
@@ -3994,9 +3994,6 @@ void lokit_main(
         setupKitEnvironment(userInterface);
 #endif
 
-        auto mainKit = KitSocketPoll::create();
-        mainKit->runOnClientThread(); // We will do the polling on this thread.
-
 #if (defined(__linux__) && !defined(__ANDROID__) && !defined(QTAPP)) || defined(__FreeBSD__)
         Poco::URI userInstallationURI("file", LO_PATH);
         LibreOfficeKit *kit = lok_init_2(LO_PATH "/program", userInstallationURI.toString().c_str());
@@ -4021,6 +4018,9 @@ void lokit_main(
         const std::string jailId = "jailid";
 
 #endif // MOBILEAPP
+
+        auto mainKit = KitSocketPoll::create();
+        mainKit->runOnClientThread(); // We will do the polling on this thread.
 
         std::shared_ptr<KitWebSocketHandler> websocketHandler =
             std::make_shared<KitWebSocketHandler>("child_ws", loKit, jailId, mainKit, numericIdentifier);
@@ -4076,7 +4076,7 @@ void lokit_main(
 #endif
 
 #if !MOBILEAPP
-        startMainLoop(kit, mainKit.get());
+        startMainLoop(kit, loKit, mainKit.get());
 
         // Trap the signal handler, if invoked,
         // to prevent exiting.
@@ -4151,7 +4151,7 @@ std::future<LibreOfficeKit*> initKitRunLoopThread()
 
                 std::shared_ptr<lok::Office> loKit = std::make_shared<lok::Office>(kit);
 
-                startMainLoop(kit, loKit);
+                startMainLoop(kit, loKit, null);
 
                 // Should never return
                 std::abort();
