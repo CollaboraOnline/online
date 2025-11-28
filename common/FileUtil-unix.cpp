@@ -120,7 +120,7 @@ namespace FileUtil
             std::filesystem::remove_all(path, err);
         }
 
-        if (err) {
+        if (err && err.value() != static_cast<int>(std::errc::no_such_file_or_directory)) {
                 LOG_ERR("Failed to remove ["
                         << Anonymizer::anonymizeUrl(path) << "] " << (recursive ? "recursively: " : "only: ") << err.message());
         }
