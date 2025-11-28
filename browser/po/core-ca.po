@@ -2,8 +2,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: core-ca\n"
-"PO-Revision-Date: 2025-11-12 17:32+0000\n"
-"Last-Translator: Ecron <ecron_89@hotmail.com>\n"
+"PO-Revision-Date: 2025-11-28 09:31+0000\n"
+"Last-Translator: Adolfo Jayme Barrientos <fitojb@ubuntu.com>\n"
 "Language-Team: Catalan <https://hosted.weblate.org/projects/collabora-online/"
 "lokit/ca/>\n"
 "Language: ca\n"
@@ -1207,7 +1207,7 @@ msgstr ""
 #: sc/inc/globstr.hrc:211
 msgctxt "STR_TABLE_TOTAL"
 msgid "Summary"
-msgstr ""
+msgstr "Resum"
 
 #. cG7BY
 #: sc/inc/globstr.hrc:594
@@ -1371,7 +1371,7 @@ msgstr ""
 #: sc/inc/scfuncs.hrc:4294
 msgctxt "SC_OPCODE_EXPAND"
 msgid "Columns"
-msgstr ""
+msgstr "Columnes"
 
 #. EVAXE
 #: sc/inc/scfuncs.hrc:4295
@@ -1482,7 +1482,7 @@ msgstr ""
 #: sc/inc/scfuncs.hrc:4328
 msgctxt "SC_OPCODE_TAKE"
 msgid "Columns"
-msgstr ""
+msgstr "Columnes"
 
 #. ZexcG
 #: sc/inc/scfuncs.hrc:4329
@@ -1940,7 +1940,7 @@ msgstr ""
 #: sc/uiconfig/scalc/ui/selectsheetviewdialog.ui:44
 msgctxt "selectsheetviewdialog|extended_tip|ok"
 msgid "Saves all changes and closes dialog."
-msgstr ""
+msgstr "Desa tots els canvis i tanca el diàleg."
 
 #. kGFYu
 #: sc/uiconfig/scalc/ui/selectsheetviewdialog.ui:63
@@ -2022,7 +2022,7 @@ msgstr "Actualitza l'estil"
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:187
 msgctxt "sidebardatabase|none"
 msgid "None"
-msgstr ""
+msgstr "Cap"
 
 #. XXBL8
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:188
@@ -2388,7 +2388,7 @@ msgstr ""
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:251
 msgctxt "sidebardatabase|tablestylenames"
 msgid "Table Style Names"
-msgstr ""
+msgstr "Noms dels estils de taula"
 
 #. 3FfJ4
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:252
