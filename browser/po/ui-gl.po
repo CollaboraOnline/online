@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-11-17 08:08+0100\n"
-"PO-Revision-Date: 2025-11-25 18:51+0000\n"
+"PO-Revision-Date: 2025-11-28 10:04+0000\n"
 "Last-Translator: \"Miguel A. Bouzada\" <mbouzada@gmail.com>\n"
 "Language-Team: Galician <https://hosted.weblate.org/projects/"
 "collabora-online/ui/gl/>\n"
@@ -4697,12 +4697,17 @@ msgstr "Non é posíbel renomear o documento."
 msgid ""
 "Failed to read document from storage, please try to load the document again."
 msgstr ""
+"Produciuse un fallo ao ler o documento do almacenamento, tente cargar o "
+"documento de novo."
 
 #: src/errormessages.js:54
 msgid ""
 "Save failed due to no storage space left. Document will now be read-only. "
 "Please make sure enough disk space is available and try to save again."
 msgstr ""
+"Produciuse un fallo no gardado por non quedar espazo de almacenamento. O "
+"documento agora vai ser de só lectura. Asegúrese de que hai espazo abondo no "
+"disco e tente gardalo de novo."
 
 #: src/errormessages.js:55
 msgid ""
@@ -4710,24 +4715,29 @@ msgid ""
 "storage space. The document will now be read-only but you may still "
 "download it now to preserve a copy locally."
 msgstr ""
+"Produciuse un fallo no gardado porque o documento é demasiado grande ou "
+"supera o espazo de almacenamento restante. O documento agora vai ser de só "
+"de lectura, mais aínda pode descargalo para conservar unha copia localmente."
 
 #: src/errormessages.js:56
 msgid ""
 "Document cannot be saved due to expired session, please reload the page to "
 "continue."
 msgstr ""
+"Non é posíbel gardar o documento por mor de que a sesión caducou. Volva "
+"cargar a páxina para continuar."
 
 #: src/errormessages.js:57
 msgid "Document cannot be saved, please check your permissions."
-msgstr ""
+msgstr "Non é posíbel gardar o documento, comprobe os seus permisos."
 
 #: src/errormessages.js:58
 msgid "Document cannot be renamed, please check your permissions."
-msgstr ""
+msgstr "Non é posíbel cambiar o nome do documento, comprobe os seus permisos."
 
 #: src/errormessages.js:59
 msgid "Document cannot be exported. Please try again."
-msgstr ""
+msgstr "Non é posíbel exportar o documento. Ténteo de novo."
 
 #: src/errormessages.js:64
 msgid "Uploading file to server failed, file not found."
@@ -4741,71 +4751,74 @@ msgstr ""
 
 #: src/layer/marker/A11yTextInput.js:235
 msgid "Out of table"
-msgstr ""
+msgstr "Fóra da táboa"
 
 #: src/layer/marker/A11yTextInput.js:238
 msgid "Table with {0} rows and {1} columns"
-msgstr ""
+msgstr "Táboa con {0} filas e {1} columnas"
 
 #: src/layer/marker/A11yTextInput.js:243
 msgid "Row {0} through {1}"
-msgstr ""
+msgstr "Fila {0} a {1}"
 
 #: src/layer/marker/A11yTextInput.js:246
 msgid "Row {0}"
-msgstr ""
+msgstr "Fila {0}"
 
 #: src/layer/marker/A11yTextInput.js:254
 msgid "Column {0} through {1}"
-msgstr ""
+msgstr "Desde a columna {0} ata a {1}"
 
 #: src/layer/marker/A11yTextInput.js:257
 msgid "Column {0}"
-msgstr ""
+msgstr "Columna {0}"
 
 #: src/layer/marker/A11yTextInput.js:285
 msgid "Editing activated. "
-msgstr ""
+msgstr "Edición activada. "
 
 #: src/layer/marker/A11yTextInput.js:304
 msgid "{0} selected"
-msgstr ""
+msgstr "{0} seleccionado"
 
 #: src/layer/marker/A11yTextInput.js:306
 msgid "Has text: "
-msgstr ""
+msgstr "Contén texto: "
 
 #: src/layer/marker/A11yTextInput.js:311
 msgid "{0} unselected"
-msgstr ""
+msgstr "{0} sen seleccionar"
 
 #: src/layer/marker/A11yTextInput.js:315
 msgid "{0} deleted"
-msgstr ""
+msgstr "{0} eliminado"
 
 #: src/layer/marker/TextInput.js:458
 msgid "Screen reader support for text content is disabled. "
 msgstr ""
+"A compatibilidade con lectores de pantalla para contido de texto está "
+"desactivada. "
 
 #: src/layer/marker/TextInput.js:459
 msgid "You need to enable it both at server level and in the UI. "
-msgstr ""
+msgstr "Debe activalo tanto a nivel de servidor como na interface. "
 
 #: src/layer/marker/TextInput.js:460
 msgid "Look for the accessibility section in coolwsd.xml for server setting. "
 msgstr ""
+"Busque a sección de accesibilidade en coolwsd.xml para o axuste do servidor. "
 
 #: src/layer/marker/TextInput.js:461
 msgid "Also check the voice over toggle under {parentControl}."
-msgstr ""
+msgstr "Comprobe tamén o conmutador de voz en {parentControl}."
 
 #: src/layer/marker/TextInput.js:463
 msgid "the Help tab"
-msgstr ""
+msgstr "a lapela de axuda"
 
 #: src/layer/marker/TextInput.js:463
 msgid "the View menu"
-msgstr ""
+msgstr "o menú Ver"
 
 #: src/layer/tile/CanvasTileLayer.js:1571
 msgid "Functions"
@@ -4813,7 +4826,7 @@ msgstr "Funcións"
 
 #: src/layer/tile/CanvasTileLayer.js:1831
 msgid "Named Range"
-msgstr ""
+msgstr "Intervalo con nome"
 
 #: src/layer/tile/CanvasTileLayer.js:3504
 msgid "No Comments"
@@ -4821,20 +4834,20 @@ msgstr "Sen comentarios"
 
 #: src/main.js:131
 msgid "Warning! The browser you are using is not supported."
-msgstr ""
+msgstr "Advertencia! O navegador que estás a usar non é compatríbel."
 
 #: src/map/Clipboard.js:176
 msgid ""
 "To paste outside {productname}, please first click the 'download' button"
-msgstr "Para pegar fóra do {productname}, prema primeiro no botón «descargar»"
+msgstr "Para pegar fóra de {productname}, prema primeiro no botón «Descargar»"
 
 #: src/map/Clipboard.js:184
 msgid "Copying from the document disabled"
-msgstr ""
+msgstr "Foi desactivada a copia desde o documento"
 
 #: src/map/Clipboard.js:285
 msgid "warning: copy/paste request timed out"
-msgstr ""
+msgstr "advertencia: esgotouse o tempo de espera da solicitude de copiar/pegar"
 
 #: src/map/Clipboard.js:316
 msgid "Failed to download clipboard, please re-copy"
@@ -4845,23 +4858,25 @@ msgid ""
 "Your browser has very limited access to the clipboard, so please use the "
 "paste buttons on your on-screen keyboard instead."
 msgstr ""
+"O seu navegador ten un acceso moi limitado ao portapapeis, ten que empregar "
+"os botóns de pegar no teclado da pantalla."
 
 #: src/map/Clipboard.js:1389
 msgid ""
 "A download due to a large copy/paste operation has already started. Please, "
 "wait for the current download or cancel it before starting a new one"
 msgstr ""
-"Xa se iniciou unha descarga por mor dunha grande operación de copiado/pegado "
+"Xa se iniciou unha descarga por mor dunha operación de copiado/pegado "
 "grande. Agarde que remate a descarga actual ou cancélea antes de iniciar "
 "unha nova"
 
 #: src/map/Clipboard.js:1411
 msgid "Paste from this document"
-msgstr ""
+msgstr "Pegue desde este documento"
 
 #: src/map/Clipboard.js:1411
 msgid "Cancel paste special"
-msgstr ""
+msgstr "Cancelar o pegado especial"
 
 #: src/map/Clipboard.js:1433
 msgid "Your browser has very limited access to the clipboard"
@@ -4869,11 +4884,11 @@ msgstr "O seu navegador ten un acceso moi limitado ao portapapeis"
 
 #: src/map/Clipboard.js:1438
 msgid "Please use following combination to see more options:"
-msgstr ""
+msgstr "Empregue a seguinte combinación para ver máis opcións:"
 
 #: src/map/Clipboard.js:1456
 msgid "Close popup to ignore paste special"
-msgstr ""
+msgstr "Peche a xanela emerxente para ignorar o pegado especial"
 
 #: src/map/Map.js:204
 msgid "Initializing..."
@@ -4881,15 +4896,15 @@ msgstr "Inicializando..."
 
 #: src/map/Map.js:487 src/map/Map.js:490 src/map/Map.js:493 src/map/Map.js:496
 msgid "Last saved:"
-msgstr ""
+msgstr "Gardado por última vez:"
 
 #: src/map/Map.js:1493
 msgid "Please wait!"
-msgstr ""
+msgstr "Agarde!"
 
 #: src/map/handler/Map.Feedback.js:95
 msgid "Please send us your feedback"
-msgstr ""
+msgstr "Envíenos comentarios"
 
 #: src/map/handler/Map.FileInserter.js:174
 #, javascript-format
@@ -4897,7 +4912,7 @@ msgid ""
 "The file of type: {0} cannot be uploaded to server since the file has no "
 "name"
 msgstr ""
-"Non é posíbel enviar ao servidor o ficheiro de tipo: {0} porque o ficheiro "
+"Non é posíbel enviar ao servidor o ficheiro do tipo: {0} porque o ficheiro "
 "non ten nome"
 
 #: src/map/handler/Map.FileInserter.js:176
@@ -4905,7 +4920,7 @@ msgstr ""
 msgid ""
 "The file of type: {0} cannot be uploaded to server since the file is empty"
 msgstr ""
-"Non é posíbel enviar ao servidor o ficheiro de tipo: {0} porque o ficheiro "
+"Non é posíbel enviar ao servidor o ficheiro do tipo: {0} porque o ficheiro "
 "está baleiro"
 
 #: src/map/handler/Map.FileInserter.js:212
@@ -4918,17 +4933,17 @@ msgstr "O envío do ficheiro ao servidor fallou co estado: {0}"
 
 #: src/map/handler/Map.Print.js:44
 msgid "Print dialog"
-msgstr ""
+msgstr "Diálogo de impresión"
 
 #: src/map/handler/Map.SlideShow.js:59
 #: src/slideshow/SlideShowPresenter.ts:1040
 msgid "Empty Slide Show"
-msgstr ""
+msgstr "Presentación de diapositivas baleira"
 
 #: src/map/handler/Map.SlideShow.js:167
 #: src/slideshow/SlideShowPresenter.ts:1068
 msgid "Windowed Presentation Blocked"
-msgstr ""
+msgstr "Presentación en xanelas bloqueada"
 
 #: src/map/handler/Map.SlideShow.js:168
 #: src/slideshow/SlideShowPresenter.ts:1070
@@ -4937,25 +4952,28 @@ msgid ""
 "slide shows to be displayed in separated windows, allowing for easy screen "
 "sharing."
 msgstr ""
+"A presentación foi bloqueada. Permita xanelas emerxentes no seu navegador. "
+"Isto permite que as presentacións de diapositivas se amosen en xanelas "
+"separadas, o que permite compartir a pantalla de xeito doado."
 
 #: src/map/handler/Map.SlideShow.js:172
 #: src/slideshow/SlideShowPresenter.ts:870
 msgid "Windowed Presentation: "
-msgstr ""
+msgstr "Presentación en xanela: "
 
 #: src/map/handler/Map.SlideShow.js:202
 #: src/slideshow/SlideShowPresenter.ts:912
 msgid "Presenting in window"
-msgstr ""
+msgstr "Presentando en xanela"
 
 #: src/map/handler/Map.SlideShow.js:203
 #: src/slideshow/SlideShowPresenter.ts:913
 msgid "Close Presentation"
-msgstr ""
+msgstr "Pechar a presentación"
 
 #: src/map/handler/Map.SlideShow.js:230
 msgid "Presenting in fullscreen"
-msgstr ""
+msgstr "Presentando en pantalla completa"
 
 #: src/map/handler/Map.SlideShow.js:231
 msgid "End Presentation"
@@ -4964,50 +4982,52 @@ msgstr "Fin da presentación"
 #: src/map/handler/Map.SlideShow.js:295
 #: src/slideshow/SlideShowPresenter.ts:1055
 msgid "Already presenting"
-msgstr ""
+msgstr "Xa está presentando"
 
 #: src/map/handler/Map.SlideShow.js:296
 #: src/slideshow/SlideShowPresenter.ts:1056
 msgid "You are already presenting this document"
-msgstr ""
+msgstr "Xa está presentando este documento"
 
 #: src/map/handler/Map.SlideShow.js:306
 #: src/slideshow/SlideShowPresenter.ts:1093
 msgid "Presentation disabled"
-msgstr ""
+msgstr "Presentación desactivada"
 
 #: src/map/handler/Map.SlideShow.js:307
 #: src/slideshow/SlideShowPresenter.ts:1094
 msgid "Presentation mode has been disabled for this document"
-msgstr ""
+msgstr "O modo de presentación foi desactivado neste documento"
 
 #: src/map/handler/Map.VersionBar.js:50
 msgid "Your Collabora Online server needs updating. Version {0} is available."
 msgstr ""
+"O seu servidor Collabora Online precisa de ser actualizado. Está dispoñíbel "
+"a versión {0}."
 
 #: src/map/handler/Map.WOPI.js:170
 msgid "Creating new file from template..."
-msgstr "A crear un ficheiro novo a partir do modelo..."
+msgstr "Creando un ficheiro novo a partir do modelo…"
 
 #: src/map/handler/Map.WOPI.js:714
 msgid "File name should contain an extension."
-msgstr ""
+msgstr "O nome do ficheiro debe ter unha extensión."
 
 #: src/map/handler/Map.WOPI.js:722
 msgid "Creating copy..."
-msgstr "A crear unha copia..."
+msgstr "Creando unha copia..."
 
 #: src/map/handler/Map.Welcome.js:92
 msgid "Welcome Dialog"
-msgstr ""
+msgstr "Diálogo de benvida"
 
 #: src/slideshow/PauseTimer.ts:141
 msgid "Pause... ( %SECONDS% )"
-msgstr ""
+msgstr "Pausa… ( %SECONDS% )"
 
 #: src/slideshow/PresenterConsole.js:29
 msgid "Current Slide"
-msgstr ""
+msgstr "Diapositiva actual"
 
 #: src/slideshow/PresenterConsole.js:30
 msgid "Next Slide"
@@ -5015,74 +5035,74 @@ msgstr "Seguinte diapositiva"
 
 #: src/slideshow/PresenterConsole.js:35
 msgid "Pause"
-msgstr ""
+msgstr "Pausa"
 
 #: src/slideshow/PresenterConsole.js:36
 msgid "Restart"
-msgstr ""
+msgstr "Reiniciar"
 
 #: src/slideshow/PresenterConsole.js:37
 msgid "Resume"
-msgstr ""
+msgstr "Continuar"
 
 #: src/slideshow/PresenterConsole.js:38
 msgid "Go Back"
-msgstr ""
+msgstr "Volver"
 
 #: src/slideshow/PresenterConsole.js:39
 msgid "Zoom In"
-msgstr ""
+msgstr "Achegar"
 
 #: src/slideshow/PresenterConsole.js:40
 msgid "Zoom Out"
-msgstr ""
+msgstr "Afastar"
 
 #: src/slideshow/PresenterConsole.js:178
 msgid "Preview Slide {1}"
-msgstr ""
+msgstr "Vista previa da diapositiva {1}"
 
 #: src/slideshow/PresenterConsole.js:1243
 msgid "Slide {0} of {1}"
-msgstr ""
+msgstr "Diapositiva {0} de {1}"
 
 #: src/slideshow/PresenterConsole.js:1267
 msgid "No Notes"
-msgstr ""
+msgstr "Sen notas"
 
 #: src/slideshow/PresenterConsole.js:1355
 msgid "Repeat in {0} seconds"
-msgstr ""
+msgstr "Repetir en {0} segundos"
 
 #: src/slideshow/PresenterConsole.js:1360
 #: src/slideshow/SlideShowPresenter.ts:564
 msgid "Click to exit presentation..."
-msgstr ""
+msgstr "Prema para saír da presentación…"
 
 #: src/slideshow/SlideShowPresenter.ts:677
 msgid "End Show"
-msgstr ""
+msgstr "Rematar a presentación"
 
 #: src/slideshow/SlideShowPresenter.ts:708
 #: src/slideshow/SlideShowPresenter.ts:720
 msgid "Disable Animations"
-msgstr ""
+msgstr "Desactivar as animacións"
 
 #: src/slideshow/SlideShowPresenter.ts:719
 msgid "Enable Animations"
-msgstr ""
+msgstr "Activar as animacións"
 
 #: welcome/welcome.html%2Bhtml.head.title:9-3
 msgid "Collabora Online Welcome"
-msgstr ""
+msgstr "Dámoslle a benvida a Collabora Online"
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h1:26-7
 msgid "Explore The New {coolversion}"
-msgstr ""
+msgstr "Bótelle un ollo á nova {coolversion}"
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h2:27-7
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h2:38-7
 msgid "Collabora Online Development Edition"
-msgstr ""
+msgstr "Collabora Online, edición de desenvolvemento"
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.p:28-7
 msgid ""
@@ -5092,10 +5112,16 @@ msgid ""
 "solutions/collabora-office-android-ios/\">apps</a> are also available for "
 "mobile."
 msgstr ""
+"Goce das últimas novidades en produtividade en liña, pode empregalas de "
+"xeito libre e de balde, examinar e compartir con outras persoas no "
+"navegador. Tamén están dispoñíbeis varias <a target=\"_blank\" rel="
+"\"noopener\" href="
+"\"https://www.collaboraonline.com/solutions/collabora-office-android-ios/\""
+">aplicacións</a> para dispositivos móbiles."
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h1:37-7
 msgid "Discover All The Changes"
-msgstr ""
+msgstr "Descubra todos os cambios"
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.p:39-7
 msgid ""
@@ -5104,14 +5130,18 @@ msgid ""
 "all about: The latest Collabora Online Development Edition, aimed at home "
 "users and small teams."
 msgstr ""
+"Consulte as <a target=\"_blank\" rel=\"noopener\" href="
+"\"https://www.collaboraonline.com/code-25-04-release-notes/\">notas de "
+"publicación</a> e saiba todo sobre a última edición de desenvolvemento de "
+"Collabora Online, dirixida a usuarios domésticos e equipos pequenos."
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h1:48-7
 msgid "Get Involved"
-msgstr ""
+msgstr "Implíquese"
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h2:49-7
 msgid "https://collaboraonline.github.io/"
-msgstr ""
+msgstr "https://collaboraonline.github.io/ (en inglés)"
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.p:50-7
 msgid ""
@@ -5124,6 +5154,15 @@ msgid ""
 "href=\"https://collaboraonline.github.io/post/filebugs/\">filing a bug "
 "report</a> with all the essential steps on how to reproduce it."
 msgstr ""
+"Está interesado en colaborar mais non sabe por onde comezar? Diríxase as <a "
+"target=\"_blank\" rel=\"noopener\" href="
+"\"https://collaboraonline.github.io/post/build-code/\">instruccións paso a "
+"paso</a> e cree CÓDIGO desde cero. Tamén pode axudar coas <a target="
+"\"_blank\" rel=\"noopener\" href="
+"\"https://collaboraonline.github.io/post/translate/\">traducións</a> ou <a "
+"target=\"_blank\" rel=\"noopener\" href="
+"\"https://collaboraonline.github.io/post/filebugs/\">presentando un informe "
+"de erro</a> con todos os pasos necesarios para poder reproducilo."
 
 #: welcome/welcome.html%2Bhtml.body.div.div:55-5
 msgid ""
@@ -5132,6 +5171,10 @@ msgid ""
 "translate=\"true\">2</a> <a id=\"slide-3-indicator\" href=\"#slide-3\" data-"
 "translate=\"true\">3</a>"
 msgstr ""
+"<a id=\"slide-1-indicator\" class=\"active\" href=\"#slide-1\" data-"
+"translate=\"true\">1</a> <a id=\"slide-2-indicator\" href=\"#slide-2\" data-"
+"translate=\"true\">2</a> <a id=\"slide-3-indicator\" href=\"#slide-3\" data-"
+"translate=\"true\">3</a>"
 
 #, fuzzy
 #~ msgid "Show ruler"
