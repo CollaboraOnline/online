@@ -481,6 +481,9 @@ class UIManager extends window.L.Control {
 		}
 
 		console.log('UIManager: Showing BackstageView for starter mode');
+
+		this.initDarkModeFromSettings();
+
 		// Use requestAnimationFrame to ensure DOM is ready
 		window.requestAnimationFrame(() => {
 			if (this.map.backstageView) {

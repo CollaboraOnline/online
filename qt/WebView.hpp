@@ -61,8 +61,7 @@ public:
     CODAWebEngineView* webEngineView() { return _webView.get(); }
     QMainWindow* mainWindow() { return _mainWindow; }
 
-    void load(const Poco::URI& fileURL, bool newFile = false);
-    void loadStarterScreen();
+    void load(const Poco::URI& fileURL = Poco::URI(), bool newFile = false, bool isStarterMode = false);
     static WebView* createNewDocument(QWebEngineProfile* profile, const std::string& templateType, const std::string& templatePath = "");
 
     static WebView* findOpenDocument(const Poco::URI& documentURI);
