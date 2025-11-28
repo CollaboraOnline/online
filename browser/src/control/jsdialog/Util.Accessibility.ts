@@ -15,6 +15,57 @@
 
 declare var JSDialog: any;
 
+function findLabelElementById(
+	container: HTMLElement | Document,
+	labelledById: string,
+	suffix: string,
+): HTMLElement | null {
+	return (
+		container.querySelector(`[id^="${labelledById}-label-${suffix}"]`) ||
+		container.querySelector(`[id^="${labelledById}-label"]`) ||
+		container.querySelector(`[id^="${labelledById}"]`)
+	);
+}
+
+function setupA11yLabelForLabelableElement(
+	parentContainer: HTMLElement,
+	content: HTMLElement,
+	data: WidgetJSON,
+	builder: JSBuilder,
+) {
+	app.layoutingService.appendLayoutingTask(function () {
+		app.layoutingService.appendLayoutingTask(function () {
+			if (!data.labelledBy) {
+				JSDialog.AddAriaLabel(content, data, builder);
+				return;
+			}
+
+			const element =
+				findLabelElementById(
+					parentContainer,
+					data.labelledBy,
+					builder.options.suffix,
+				) ||
+				findLabelElementById(document, data.labelledBy, builder.options.suffix);
+
+			if (!element) {
+				JSDialog.AddAriaLabel(content, data, builder);
+				return;
+			}
+
+			const labelHasHtmlFor =
+				element.tagName === 'LABEL' && (element as HTMLLabelElement).htmlFor;
+
+			const htmlForPointsToThisElement =
+				labelHasHtmlFor && (element as HTMLLabelElement).htmlFor === content.id;
+
+			if (!htmlForPointsToThisElement) {
+				content.setAttribute('aria-labelledby', element.id);
+			}
+		});
+	});
+}
+
 function setupA11yLabelForNonLabelableElement(
 	container: HTMLElement,
 	data: WidgetJSON,
@@ -25,12 +76,30 @@ function setupA11yLabelForNonLabelableElement(
 	else JSDialog.AddAriaLabel(container, data, builder);
 }
 
-function addAriaLabel(element: HTMLElement, data: WidgetJSON, builder: JSBuilder) {
+function addAriaLabel(
+	element: HTMLElement,
+	data: WidgetJSON,
+	builder: JSBuilder,
+) {
 	if (data.aria?.label && data.aria.label.trim())
 		element.setAttribute('aria-label', data.aria.label);
 	else if (data.text)
 		element.setAttribute('aria-label', builder._cleanText(data.text));
 }
+
+JSDialog.SetupA11yLabelForLabelableElement = function (
+	parentContainer: HTMLElement,
+	content: HTMLElement,
+	data: WidgetJSON,
+	builder: JSBuilder,
+) {
+	return setupA11yLabelForLabelableElement(
+		parentContainer,
+		content,
+		data,
+		builder,
+	);
+};
 
 JSDialog.SetupA11yLabelForNonLabelableElement = function (
 	container: HTMLElement,

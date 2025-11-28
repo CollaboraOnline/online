@@ -112,8 +112,7 @@ window.L.Control.MobileWizardBuilder = window.L.Control.JSDialogBuilder.extend({
 		spinfield.dir = document.documentElement.dir;
 		controls['spinfield'] = spinfield;
 
-		if (data.labelledBy)
-			spinfield.setAttribute('aria-labelledby', data.labelledBy);
+		JSDialog.SetupA11yLabelForLabelableElement(parentContainer, spinfield, data, builder);
 
 		if (data.unit) {
 			var unit = window.L.DomUtil.create('span', 'spinfieldunit', div);
