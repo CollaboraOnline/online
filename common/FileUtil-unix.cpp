@@ -94,63 +94,24 @@ namespace FileUtil
     }
 #endif
 
-    // static int nftw_cb(const char *fpath, const struct stat*, int type, struct FTW*)
-    // {
-    //     if (type == FTW_DP)
-    //     {
-    //         rmdir(fpath);
-    //     }
-    //     else if (type == FTW_F || type == FTW_SL)
-    //     {
-    //         unlink(fpath);
-    //     }
 
-    //     // Always continue even when things go wrong.
-    //     return 0;
-    // }
-
-    void removeFile(const std::string& path, const bool recursive)
+ void removeFile(const std::string& path, const bool recursive)
     {
         LOG_DBG("Removing [" << Anonymizer::anonymizeUrl(path) << "] " << (recursive ? "recursively." : "only."));
+        std::error_code err;
 
-        std:: error_code err;
         if (!recursive) {
             std::filesystem::remove(path, err);
         } else {
             std::filesystem::remove_all(path, err);
         }
 
-        if (err) {
-                LOG_ERR("Failed to remove ["
-                        << Anonymizer::anonymizeUrl(path) << "] " << (recursive ? "recursively: " : "only: ") << err.message());
-        }
+        if (err && err.value() != static_cast<int>(std::errc::no_such_file_or_directory)) {
 
-        // try
-        // {
-        //     struct stat sb;
-        //     errno = 0;
-        //     if (!recursive || stat(path.c_str(), &sb) == -1 || S_ISREG(sb.st_mode))
-        //     {
-        //         // Non-recursive directories and files that exist.
-        //         if (errno != ENOENT)
-        //             Poco::File(path).remove(recursive);
-        //     }
-        //     else
-        //     {
-        //         // Directories only.
-        //         nftw(path.c_str(), nftw_cb, 128, FTW_DEPTH | FTW_PHYS);
-        //     }
-        // }
-        // catch (const std::exception& e)
-        // {
-        //     // Don't complain if already non-existent.
-        //     if (FileUtil::Stat(path).exists())
-        //     {
-        //         // Error only if it still exists.
-        //         LOG_ERR("Failed to remove ["
-        //                 << Anonymizer::anonymizeUrl(path) << "] " << (recursive ? "recursively: " : "only: ") << e.what());
-        //     }
-        // }
+           std::cerr << "FileUtil::removeFile: Failed to remove ["
+                      << Anonymizer::anonymizeUrl(path) << "] " << (recursive ? "recursively: " : "only: ")
+                      << err.message() << std::endl;
+        }
     }
 
     //Remove directories only, which must be empty for this to work.
