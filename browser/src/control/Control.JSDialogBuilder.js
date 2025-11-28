@@ -1515,7 +1515,7 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 	_fixedtextControl: function(parentContainer, data, builder) {
 		// Check if this label should render as static content(i.e. span) instead of interactive label
 		// This property is set by LibreOffice Kit when accessible-role="static" is detected
-		if(data.renderAsStatic)
+		if (data.renderAsStatic)
 			return JSDialog.StaticText(parentContainer, data, builder);
 
 		var fixedtext = window.L.DomUtil.create('label', builder.options.cssClass, parentContainer);
@@ -1777,7 +1777,7 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 	_addAriaLabel(element, data, builder) {
 		if (data.aria)
 			element.setAttribute('aria-label', data.aria.label);
-		else if(data.text)
+		else if (data.text)
 			element.setAttribute('aria-label', builder._cleanText(data.text));
 	},
 
@@ -1821,7 +1821,7 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 		controls['container'] = div;
 		div.tabIndex = data.tabIndex !== undefined ? data.tabIndex : -1;
 
-		if(data.index)
+		if (data.index)
 			div.setAttribute('index', data.index);
 
 		if (data.class)
@@ -1832,18 +1832,11 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 		const isDropdownButton = !!data.dropdown;
 		var shouldHaveArrowbackground = hasDropdownArrow || isDropdownButton;
 
-		/**
-		 * Determines if the dropdown arrow should be interactive (focusable button) vs decorative (div).
-		 * This affects ARIA attribute placement and arrowbackground element type creation.
-		 */
-		const isArrowInteractive = (hasDropdownArrow && isSplitButton) || isDropdownButton;
 		var isRealUnoCommand = true;
-		var hasPopUp = false;
 		var hasImage = true;
 
 		if (data.text && data.text.endsWith('...')) {
 			data.text = data.text.replace('...', '');
-			hasPopUp = true;
 		}
 
 		if (data && data.image === false) {
@@ -1885,7 +1878,7 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 			var buttonId = id + '-button';
 
 			button = window.L.DomUtil.create('button', 'ui-content unobutton', div);
-			if(div.tabIndex == 0)
+			if (div.tabIndex == 0)
 				button.tabIndex = -1; // prevent button from taking focus since container div itself is focusable element
 			button.id = buttonId;
 
@@ -1897,10 +1890,6 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 				builder._setAccessKey(button, builder._getAccessKeyFromText(data.text));
 			else
 				button.accessKey = data.accessKey;
-
-			// if dropdown arrow does not exist or is not interactive then only button can have aria-haspopup
-			if (hasPopUp && !isArrowInteractive)
-				button.setAttribute('aria-haspopup', true);
 
 			if (data.w2icon) {
 				// FIXME: DEPRECATED, this is legacy way to setup icon based on CSS class
@@ -1946,11 +1935,11 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 			}
 
 			// for Accessibility : graphic elements are located within buttons, the img should receive an empty alt
-			if(button.getAttribute('aria-label')){ // if we already set the aria-label then do not go for image alt attr
+			if (button.getAttribute('aria-label')){ // if we already set the aria-label then do not go for image alt attr
 				buttonImage.alt = '';
 			}
 			else if (buttonImage !== false) {
-				if(data.aria) {
+				if (data.aria) {
 					buttonImage.alt = data.aria.label;
 				} else {
 					buttonImage.alt = builder._cleanText(data.text);
@@ -2023,64 +2012,77 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 			controls['label'] = span;
 		}
 
+		const hasPopUp = shouldHaveArrowbackground ||
+			(data.command &&
+			builder.map['stateChangeHandler'] &&
+			builder.map['stateChangeHandler'].getItemValue(data.command) === undefined);
+
 		var arrowbackground;
 		if (shouldHaveArrowbackground) {
 			$(div).addClass('has-dropdown');
 			div.setAttribute('role', 'group');
-			// isArrowInteractive is true for split buttons or dropdown buttons
-			if (isArrowInteractive) {
+
+			// shouldHaveArrowbackground is true when we have dropdown arrow or dropdown button
+			// so, if we have split button it should be button else arrowbackground should be div
+			if (isSplitButton) {
 				// Arrow should be a real button (user can interact with it)
 				arrowbackground = window.L.DomUtil.create('button', 'arrowbackground', div);
+				arrowbackground.tabIndex = '0'; // Make arrow focusable
+
+				if (hasPopUp)
+				{
+					const buttonText = data.aria && data.aria.label ? data.aria.label : builder._cleanText(data.text);
+					const dropdownAriaLabelText = _('Open {name}').replace('{name}', buttonText);
+					arrowbackground.setAttribute('aria-label', dropdownAriaLabelText);
+
+					arrowbackground.setAttribute('aria-haspopup', true);
+					arrowbackground.setAttribute('aria-expanded', false);
+				}
 			} else {
 				// Arrow is just decoration
 				arrowbackground = window.L.DomUtil.create('div', 'arrowbackground', div);
 				arrowbackground.setAttribute('aria-hidden', 'true');
+				arrowbackground.tabIndex = '-1'; // arrow is just decorative
+
+				if (hasPopUp) {
+					button.setAttribute('aria-haspopup', true);
+					button.setAttribute('aria-expanded', false);
+				}
 			}
 			window.L.DomUtil.create('i', 'unoarrow', arrowbackground);
 			controls['arrow'] = arrowbackground;
 
 			if (!hasDropdownArrow && isDropdownButton) {
-				// Attach both 'click' and 'keydown' event listeners for dropdown buttons only
+				// Attach 'click' event listeners for dropdown buttons only
+				// Not keyboard focusable because this is not a split button
 				arrowbackground.addEventListener('click', function (event) {
 					openToolBoxMenu(event);
-				});
-				arrowbackground.addEventListener('keydown', function (event) {
-					switch (event.key) {
-						case 'Enter':
-							openToolBoxMenu(event);
-							break;
+
+					if (hasPopUp) {
+						const target = isSplitButton ? arrowbackground : button;
+						target.setAttribute('aria-expanded', 'true');
 					}
 				});
 
 				div.closeDropdown = function() {
 					builder.callback('toolbox', 'closemenu', parentContainer, data.command, builder);
+
+					if (arrowbackground && hasPopUp) {
+						const target = isSplitButton ? arrowbackground : button;
+						target.setAttribute('aria-expanded', 'false');
+					}
 				};
 			}
 			itemsToSyncWithContainer.push(arrowbackground);
 		}
 
-		if (arrowbackground) {
-			// if main button element in split button works same as arrowbackground then make sure arrowbackground not focusable due to a11y conflicts
-			isSplitButton ? arrowbackground.tabIndex = '0' : arrowbackground.tabIndex = '-1';
-
-			if (isArrowInteractive)  {
-				const buttonText = data.aria && data.aria.label ? data.aria.label : builder._cleanText(data.text);
-				const dropdownAriaLabelText = _('Open {name}').replace('{name}', buttonText);
-				arrowbackground.setAttribute('aria-label', dropdownAriaLabelText);
-				arrowbackground.setAttribute('aria-haspopup', true);
-				arrowbackground.setAttribute('aria-expanded', false);
-			} else {
-				// If the dropdown arrow is not interactive then we want aria-expanded on interactive button
-				button.setAttribute('aria-expanded', false);
-			}
-		}
-
 		JSDialog.SynchronizeDisabledState(div, itemsToSyncWithContainer);
+
+		// _onDropDown only works for splitbutton or dropdown arrow button
+		// for decorative button we need to manage it via click function and closeDropdown
 		div._onDropDown = function(open) {
 			// Only set aria-expanded on the button if the arrow is not interactive
-			if (!isArrowInteractive)
-				button.setAttribute('aria-expanded', open);
-			else
+			if (hasPopUp)
 				arrowbackground.setAttribute('aria-expanded', open);
 		};
 
@@ -2103,6 +2105,7 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 					builder.callback('toolbutton', 'click', button, data.command, builder);
 				else {
 					builder.callback('toolbox', 'click', parentContainer, data.command, builder);
+					button.setAttribute('aria-expanded', 'true');
 				}
 			}
 			e.preventDefault();
