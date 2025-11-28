@@ -133,6 +133,8 @@ function _iconViewEntry(
 				entry.row,
 				builder,
 			);
+			$(entryContainer).addClass('selected');
+			entryContainer.setAttribute('aria-selected', 'true');
 
 			if (singleClick) {
 				(parentContainer as any).builderCallback(
