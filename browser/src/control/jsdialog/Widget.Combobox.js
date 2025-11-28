@@ -200,11 +200,7 @@ JSDialog.combobox = function (parentContainer, data, builder) {
 	content.setAttribute('autocomplete', 'off');
 	content.setAttribute('aria-autocomplete', 'list');
 
-	if (data.aria && data.aria.label) {
-		content.setAttribute('aria-label', data.aria.label);
-	} else if (data.labelledBy) {
-		content.setAttribute('aria-labelledby', data.labelledBy);
-	}
+	JSDialog.SetupA11yLabelForLabelableElement(parentContainer, content, data, builder);
 
 	var dropDownId = JSDialog.CreateDropdownEntriesId(data.id);
 	content.setAttribute('aria-expanded', false);
@@ -214,11 +210,17 @@ JSDialog.combobox = function (parentContainer, data, builder) {
 	button.setAttribute('aria-expanded', false);
 	button.setAttribute('aria-controls', dropDownId);
 
-	if (data.aria && data.aria.label) {
-		button.setAttribute('aria-label', _('Open ') + data.aria.label + _(' list'));
-	} else if (data.labelledBy) {
-		button.setAttribute('aria-labelledby', data.labelledBy);
+	const dataAriaLabel = data.aria && data.aria.label ? data.aria.label : '';
+	const buttonARIALabel = dataAriaLabel
+		? _('Open ') + dataAriaLabel + _(' list')
+		: _('Open list');
+	const updatedAriaLabelData = {
+		labelledBy: data.labelledBy,
+		aria: {
+			label: buttonARIALabel
+		}
 	}
+	JSDialog.SetupA11yLabelForLabelableElement(parentContainer, button, updatedAriaLabelData, builder);
 
 	var arrow = window.L.DomUtil.create('span', builder.options.cssClass + ' ui-listbox-arrow', button);
 	arrow.id = 'listbox-arrow-' + data.id;

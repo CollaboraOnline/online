@@ -326,10 +326,6 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 
 	baseSpinField: function(parentContainer, data, builder, customCallback) {
 		var controls = {};
-		if (data.label) {
-			var fixedTextData = { text: data.label };
-			builder._fixedtextControl(parentContainer, fixedTextData, builder);
-		}
 
 		var div = window.L.DomUtil.create('div', builder.options.cssClass + ' spinfieldcontainer', parentContainer);
 		div.id = data.id;
@@ -342,8 +338,11 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 		spinfield.tabIndex = '0';
 		spinfield.setAttribute('autocomplete', 'off');
 
-		if (!data.labelledBy) {
-			JSDialog.AddAriaLabel(spinfield, data, builder);
+		if (data.label) {
+			var fixedTextData = { text: data.label, labelFor: data.id };
+			builder._fixedtextControl(parentContainer, fixedTextData, builder);
+		} else {
+			JSDialog.SetupA11yLabelForLabelableElement(parentContainer, spinfield, data, builder);
 		}
 
 		controls['spinfield'] = spinfield;
@@ -1331,12 +1330,7 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 		else
 			pushbutton.onclick = builder.callback.bind(builder, 'pushbutton', data.isToggle ? 'toggle' : 'click', wrapper, data.command, builder);
 
-
-		if (data.labelledBy) {
-			pushbutton.setAttribute('aria-labelledby', data.labelledBy);
-		} else {
-			JSDialog.AddAriaLabel(pushbutton, data, builder);
-		}
+		JSDialog.SetupA11yLabelForLabelableElement(parentContainer, pushbutton, data, builder);
 
 		const tooltipText = (data.aria && data.aria.label) || data.text;
 		if (!pushbuttonText && tooltipText) {
@@ -1426,8 +1420,9 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 
 		var listbox = window.L.DomUtil.create('select', builder.options.cssClass + ' ui-listbox ', container);
 		listbox.id = data.id + '-input';
-		if (data.labelledBy)
-			listbox.setAttribute('aria-labelledby', data.labelledBy);
+
+		JSDialog.SetupA11yLabelForLabelableElement(parentContainer, listbox, data, builder);
+
 		var listboxArrow = window.L.DomUtil.create('span', builder.options.cssClass + ' ui-listbox-arrow', container);
 		listboxArrow.id = 'listbox-arrow-' + data.id;
 
