@@ -98,6 +98,7 @@ struct WindowData
     LONG originalStyle;
     POINT previousSize; // After a WM_SIZE
     bool isFullScreen = false;
+    bool isPresFullScreen = false;
     bool isConsole = false;
     int fakeClientFd;
     int closeNotificationPipeForForwardingThread[2];
@@ -1098,29 +1099,39 @@ static void exchangeMonitors(WindowData& data)
     if (monitors.size() < 2)
         return;
 
-    HMONITOR hConsoleMonitor = MonitorFromWindow(data.hConsoleWnd, MONITOR_DEFAULTTONEAREST);
+    HMONITOR hConsoleMonitor = data.hConsoleWnd ? MonitorFromWindow(data.hConsoleWnd, MONITOR_DEFAULTTONEAREST) : 0;
     HMONITOR hPresentationMonitor = MonitorFromWindow(data.hWnd, MONITOR_DEFAULTTONEAREST);
 
     size_t origConsoleMonitor = 0;
     size_t origPresentationMonitor = 0;
     for (size_t i = 0; i < monitors.size(); ++i)
     {
-        if (monitors[i].hMonitor == hConsoleMonitor)
+        if (hConsoleMonitor && monitors[i].hMonitor == hConsoleMonitor)
             origConsoleMonitor = i;
         if (monitors[i].hMonitor == hPresentationMonitor)
             origPresentationMonitor = i;
     }
 
     leave_full_screen(data);
-    leave_full_screen(windowData[data.hConsoleWnd]);
 
-    size_t newConsoleMonitor = (origConsoleMonitor + 1) % monitors.size();
     size_t newPresentationMonitor = origPresentationMonitor;
-    if (newConsoleMonitor == newPresentationMonitor)
+
+    if (data.hConsoleWnd)
+    {
+        leave_full_screen(windowData[data.hConsoleWnd]);
+
+        size_t newConsoleMonitor = (origConsoleMonitor + 1) % monitors.size();
+        if (newConsoleMonitor == newPresentationMonitor)
+            newPresentationMonitor = (newPresentationMonitor + 1) % monitors.size();
+
+        enter_full_screen(windowData[data.hConsoleWnd], monitors[newConsoleMonitor].hMonitor, false);
+    }
+    else
+    {
         newPresentationMonitor = (newPresentationMonitor + 1) % monitors.size();
+    }
 
     enter_full_screen(data, monitors[newPresentationMonitor].hMonitor, false);
-    enter_full_screen(windowData[data.hConsoleWnd], monitors[newConsoleMonitor].hMonitor, false);
 }
 
 static OpenDialogResult fileOpenDialog()
@@ -1497,7 +1508,7 @@ static LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM l
         case WM_DISPLAYCHANGE:
         {
             auto& data = windowData[hWnd];
-            if (data.hConsoleWnd)
+            if (data.hConsoleWnd || data.isPresFullScreen)
             {
                 int numMonitors = getMonitors().size();
                 if (data.numMonitors != numMonitors)
@@ -1960,6 +1971,14 @@ static void processMessage(WindowData& data, wil::unique_cotaskmem_string& messa
         else if (s == L"EXCHANGEMONITORS")
         {
             exchangeMonitors(data);
+        }
+        else if (s.starts_with(L"FULLSCREENPRESENTATION "))
+        {
+            data.isPresFullScreen = s.substr(23) == L"true";
+            if (data.isPresFullScreen)
+                arrangePresentationWindows(data);
+            else
+                leave_full_screen(data);
         }
         else if (s.starts_with(L"downloadas "))
         {

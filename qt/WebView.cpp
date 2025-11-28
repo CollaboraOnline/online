@@ -194,34 +194,8 @@ void CODAWebEngineView::arrangePresentationWindows()
     }
 }
 
-QWebEngineView* CODAWebEngineView::createWindow(QWebEnginePage::WebWindowType type)
+void CODAWebEngineView::createPresentationFS()
 {
-    _presenterConsole = new WebView(Application::getProfile(), false);
-
-    QWebEngineView* consoleView = _presenterConsole->webEngineView();
-    QWebEnginePage* page = consoleView->page();
-    QObject::connect(page, &QWebEnginePage::windowCloseRequested,
-                     [this]() {
-                         if (!_presenterConsole)
-                             return;
-                         QMainWindow* consoleWindow = _presenterConsole->mainWindow();
-                         consoleWindow->close();
-                     });
-
-    Window* consoleWindow = static_cast<Window*>(_presenterConsole->mainWindow());
-    consoleWindow->setCloseCallback(
-                     [this]() {
-                         _presenterConsole = nullptr;
-
-                         _mainWindow->setCentralWidget(this);
-                         _presenterFSWindow->setCentralWidget(nullptr);
-
-                         _presenterFSWindow->close();
-                         _presenterFSWindow.reset();
-
-                         _mainWindow->setEnabled(true);
-                     });
-
     // Move the contents into the presentation window so the original
     // window will remain in position, so we can work around the
     // stubbornness of wayland to allow restoring a window back to its
@@ -244,6 +218,45 @@ QWebEngineView* CODAWebEngineView::createWindow(QWebEnginePage::WebWindowType ty
                      [this]() {
                         arrangePresentationWindows();
                      });
+}
+
+void CODAWebEngineView::destroyPresentationFS()
+{
+    if (_presenterFSWindow)
+    {
+        _mainWindow->setCentralWidget(this);
+        _presenterFSWindow->setCentralWidget(nullptr);
+
+        _presenterFSWindow->close();
+        _presenterFSWindow.reset();
+
+        _mainWindow->setEnabled(true);
+    }
+}
+
+QWebEngineView* CODAWebEngineView::createWindow(QWebEnginePage::WebWindowType type)
+{
+    _presenterConsole = new WebView(Application::getProfile(), false);
+
+    QWebEngineView* consoleView = _presenterConsole->webEngineView();
+    QWebEnginePage* page = consoleView->page();
+    QObject::connect(page, &QWebEnginePage::windowCloseRequested,
+                     [this]() {
+                         if (!_presenterConsole)
+                             return;
+                         QMainWindow* consoleWindow = _presenterConsole->mainWindow();
+                         consoleWindow->close();
+                     });
+
+    Window* consoleWindow = static_cast<Window*>(_presenterConsole->mainWindow());
+    consoleWindow->setCloseCallback(
+                     [this]() {
+                         _presenterConsole = nullptr;
+
+                         destroyPresentationFS();
+                     });
+
+    createPresentationFS();
 
     return consoleView;
 }
