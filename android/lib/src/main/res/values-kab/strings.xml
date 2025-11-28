@@ -15,4 +15,5 @@
     <string name="restarting">Tulsa n usekker…</string>
     <string name="view_only">Askan kan</string>
     <string name="cant_open_the_document">Ur yezmir ara ad yeldi afaylu-nni</string>
+    <string name="file_chromeos_read_only">Afaylu-a ur yezmir ara ad yettwasekles deg wadig-a, ad t-yeldi s tɣuri kan. Seddu-t ɣer yifuyla n wurar i tɣuri/tira n unekcum ummid.</string>
 </resources>
