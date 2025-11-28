@@ -1133,7 +1133,7 @@ static OpenDialogResult fileOpenDialog()
 
     COMDLG_FILTERSPEC filter[] = {
         { _(L"Normal files"),
-          L"*.odt;*.docx;*.doc;*.rtf;*.txt;*.ods;*.xlsx;*.xls;*.odp;*.pptx;*.ppt" },
+          L"*.odt;*.docx;*.doc;*.rtf;*.txt;*.md;*.ods;*.xlsx;*.xls;*.odp;*.pptx;*.ppt" },
         { _(L"All files"), L"*.*" }
     };
 
