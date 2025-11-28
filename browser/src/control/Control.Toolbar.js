@@ -991,7 +991,7 @@ function onUpdatePermission(e) {
 	var toolbar = window.mode.isMobile() ? app.map.mobileBottomBar : app.map.topToolbar;
 	if (toolbar) {
 		// always enabled items
-		var enabledButtons = ['closemobile', 'undo', 'redo', 'hamburger-tablet'];
+		var enabledButtons = ['closemobile', 'undo', 'redo', 'fold'];
 
 		// copy the first array
 		var items = toolbar.getToolItems(app.map.getDocType()).slice();

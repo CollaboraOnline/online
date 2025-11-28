@@ -210,7 +210,7 @@ class Toolbar extends JSDialogComponent {
 					(window.mode.isTablet() && item.tablet === true) ||
 					(window.mode.isDesktop() && item.desktop === true) ||
 					((window as any).ThisIsAMobileApp && item.mobilebrowser === true)) &&
-				item.hidden
+				(item.hidden || item.visible === false)
 			) {
 				toShow.push(item.id);
 			}
