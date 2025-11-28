@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name_settings">Seadistused</string>
+    <string name="list_view">Loend</string>
+    <string name="grid_view">Ruudustik</string>
+    <string name="pref_category_explorer">Failihalduri seadistused</string>
+    <string name="temp_file_saving_disabled">Failil on vaid lugemisõigused ja salvestamine pole võimalik.</string>
+    <string name="loading">Laadin...</string>
+</resources>
