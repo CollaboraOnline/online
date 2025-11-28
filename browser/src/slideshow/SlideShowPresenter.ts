@@ -487,6 +487,7 @@ class SlideShowPresenter {
 		parent: Element,
 		width: number,
 		height: number,
+		inWindow: boolean,
 	) {
 		const presenterContainer = window.L.DomUtil.create(
 			'div',
@@ -505,6 +506,7 @@ class SlideShowPresenter {
 			slideshowContainer,
 			width,
 			height,
+			inWindow,
 		);
 		return presenterContainer;
 	}
@@ -513,6 +515,7 @@ class SlideShowPresenter {
 		parent: Element,
 		width: number,
 		height: number,
+		inWindow: boolean
 	) {
 		const canvas = window.L.DomUtil.create(
 			'canvas',
@@ -531,7 +534,7 @@ class SlideShowPresenter {
 
 		this._progressBarContainer = this._createProgressBar(parent);
 		if (!this._isWelcomePresentation)
-			this._slideNavContainer = this._createSlideNav(parent);
+			this._slideNavContainer = this._createSlideNav(parent, inWindow);
 
 		canvas.addEventListener(
 			'click',
@@ -616,7 +619,7 @@ class SlideShowPresenter {
 		JSDialog.progressbar(container, progressData, builderOptions);
 	}
 
-	private _createSlideNav(parent: Element): HTMLDivElement {
+	private _createSlideNav(parent: Element, inWindow: boolean): HTMLDivElement {
 		const slideNavContainer = window.L.DomUtil.create(
 			'div',
 			'slideshow-nav-container',
@@ -624,7 +627,7 @@ class SlideShowPresenter {
 		);
 		slideNavContainer.tabIndex = -1;
 		this._configureSlideNavStyles(slideNavContainer);
-		this._initializeSlideNavWidget(slideNavContainer);
+		this._initializeSlideNavWidget(slideNavContainer, inWindow);
 		return slideNavContainer;
 	}
 
@@ -690,7 +693,8 @@ class SlideShowPresenter {
 	}
 
 	private _initializeSlideNavWidget(
-		container: HTMLDivElement
+		container: HTMLDivElement,
+		inWindow: boolean
 	): void {
 		const closeImg = window.L.DomUtil.create('img', 'left-img', container);
 		closeImg.id = 'endshow';
@@ -746,7 +750,7 @@ class SlideShowPresenter {
 			}.bind(this),
 		);
 
-		if (window.mode.isCODesktop()) {
+		if (!inWindow && window.mode.isCODesktop()) {
 			const ExchangeImg = window.L.DomUtil.create('img', 'right-img', container);
 			ExchangeImg.id = 'exchange';
 			const followText = _('Exchange');
@@ -948,6 +952,7 @@ class SlideShowPresenter {
 			body,
 			window.screen.width,
 			window.screen.height,
+			true
 		);
 
 		window.addEventListener('resize', this.onSlideWindowResize);
@@ -1061,6 +1066,7 @@ class SlideShowPresenter {
 				this._map._container,
 				width,
 				height,
+				inWindow
 			);
 
 			if (this._presenterContainer.requestFullscreen) {
