@@ -250,47 +250,60 @@ QWebEngineView* CODAWebEngineView::createWindow(QWebEnginePage::WebWindowType ty
 
 void CODAWebEngineView::exchangeMonitors()
 {
-    if (!_presenterConsole)
+    if (!_presenterFSWindow)
         return;
 
     QList<QScreen*> screens = QApplication::screens();
     if (screens.size() < 2)
         return;
 
-    QMainWindow* consoleWindow = _presenterConsole->mainWindow();
+    QMainWindow* consoleWindow = _presenterConsole ? _presenterConsole->mainWindow() : nullptr;
 
     size_t origConsoleScreen = 0;
     size_t origPresentationScreen = 0;
     for (size_t i = 0; i < screens.size(); ++i)
     {
-        if (screens[i] == consoleWindow->screen())
+        if (consoleWindow && screens[i] == consoleWindow->screen())
             origConsoleScreen = i;
         if (screens[i] == _presenterFSWindow->screen())
             origPresentationScreen = i;
     }
 
     _presenterFSWindow->hide();
-    consoleWindow->hide();
 
-    // Rotate the console screen and rotate the presentation screen
-    // every time the console catches up to it for the case there
-    // are more than two screens. Typically there's just two screens
-    // and they just swap.
-    size_t newConsoleScreen = (origConsoleScreen + 1) % screens.size();
     size_t newPresentationScreen = origPresentationScreen;
-    if (newConsoleScreen == newPresentationScreen)
-        newPresentationScreen = (newPresentationScreen + 1) % screens.size();
 
-    consoleWindow->setScreen(screens[newConsoleScreen]);
-    consoleWindow->move(screens[newConsoleScreen]->geometry().topLeft());
+    if (consoleWindow)
+    {
+        consoleWindow->hide();
+
+        // Rotate the console screen and rotate the presentation screen
+        // every time the console catches up to it for the case there
+        // are more than two screens. Typically there's just two screens
+        // and they just swap.
+        size_t newConsoleScreen = (origConsoleScreen + 1) % screens.size();
+        if (newConsoleScreen == newPresentationScreen)
+            newPresentationScreen = (newPresentationScreen + 1) % screens.size();
+
+        consoleWindow->setScreen(screens[newConsoleScreen]);
+        consoleWindow->move(screens[newConsoleScreen]->geometry().topLeft());
+    }
+    else
+    {
+        newPresentationScreen = (newPresentationScreen + 1) % screens.size();
+    }
 
     _presenterFSWindow->setScreen(screens[newPresentationScreen]);
     _presenterFSWindow->move(screens[newPresentationScreen]->geometry().topLeft());
 
     _presenterFSWindow->showFullScreen();
     _presenterFSWindow->show();
-    consoleWindow->showFullScreen();
-    consoleWindow->show();
+
+    if (consoleWindow)
+    {
+        consoleWindow->showFullScreen();
+        consoleWindow->show();
+    }
 }
 
 CODAWebEngineView::~CODAWebEngineView()
