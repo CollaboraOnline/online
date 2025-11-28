@@ -1234,7 +1234,7 @@ int main(int argc, char** argv)
     else
     {
         WebView* starterView = new WebView(Application::getProfile());
-        starterView->loadStarterScreen();
+        starterView->load(Poco::URI(), false, true);
     }
 
     auto const ret = app.exec();
