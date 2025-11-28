@@ -473,8 +473,9 @@ window.L.Control.JSDialog = window.L.Control.extend({
 		this.addFocusHandler(instance); // Loop focus for all dialogues.
 
 		var clickToCloseId = instance.clickToClose ? window.L.Util.sanitizeElementId(instance.clickToClose) : null;
-		if (clickToCloseId && clickToCloseId.indexOf('.uno:') === 0)
-			clickToCloseId = clickToCloseId.substr('.uno:'.length);
+		const sanitizedPrefix = window.L.Util.sanitizeElementId('.uno:');
+		if (clickToCloseId && clickToCloseId.indexOf(sanitizedPrefix) === 0)
+			clickToCloseId = clickToCloseId.substr(sanitizedPrefix.length);
 
 		var clickToCloseElement = null;
 		if (clickToCloseId && popupParent) {
