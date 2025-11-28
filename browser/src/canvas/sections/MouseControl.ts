@@ -57,15 +57,6 @@ class MouseControl extends CanvasSectionObject {
 		return modifier;
 	}
 
-	private readButtons(e: MouseEvent) {
-		let buttons = 0;
-		buttons |= e.buttons === app.JSButtons.left ? app.LOButtons.left : 0;
-		buttons |= e.buttons === app.JSButtons.middle ? app.LOButtons.middle : 0;
-		buttons |= e.buttons === app.JSButtons.right ? app.LOButtons.right : 0;
-
-		return buttons;
-	}
-
 	/*
 		We need to map view coordinates to document coordinates.
 		When user clicks at a position on the screen, we have its document coordinate according to
@@ -277,7 +268,6 @@ class MouseControl extends CanvasSectionObject {
 		clearTimeout(this.mouseMoveTimer);
 
 		const count = 1;
-		const buttons = this.readButtons(e);
 		const modifier = this.readModifier(e);
 
 		if (!this.containerObject.isDraggingSomething()) {
@@ -286,7 +276,7 @@ class MouseControl extends CanvasSectionObject {
 					'move',
 					this.currentPosition,
 					count,
-					buttons,
+					0,
 					modifier,
 				);
 			}, 100);
@@ -313,7 +303,7 @@ class MouseControl extends CanvasSectionObject {
 					'buttondown',
 					this.positionOnMouseDown,
 					count,
-					buttons,
+					app.LOButtons.left,
 					modifier,
 				);
 				this.mouseDownSent = true;
@@ -332,7 +322,7 @@ class MouseControl extends CanvasSectionObject {
 				'move',
 				this.currentPosition,
 				count,
-				buttons,
+				app.LOButtons.left,
 				modifier,
 			);
 		}
@@ -359,7 +349,7 @@ class MouseControl extends CanvasSectionObject {
 				'buttonup',
 				this.currentPosition,
 				1,
-				this.readButtons(e),
+				app.LOButtons.left,
 				this.readModifier(e),
 			);
 
@@ -424,7 +414,7 @@ class MouseControl extends CanvasSectionObject {
 		if (!(<any>window).mode.isDesktop()) app.map.fire('closemobilewizard');
 
 		// Right click is not supported. And click event doesn't have "buttons" property set. Safe to set it here to default.
-		let buttons = app.JSButtons.left;
+		let buttons = app.LOButtons.left;
 
 		let modifier = this.readModifier(e);
 		const sendingPosition = this.currentPosition.clone();
@@ -584,7 +574,6 @@ class MouseControl extends CanvasSectionObject {
 	onDrop(position: cool.SimplePoint, e: DragEvent): void {
 		this.refreshPosition(position);
 
-		const buttons = this.readButtons(e);
 		const modifier = this.readModifier(e);
 
 		// Move the cursor, so that the insert position is as close to the drop coordinates as possible.
@@ -592,14 +581,14 @@ class MouseControl extends CanvasSectionObject {
 			'buttondown',
 			this.currentPosition,
 			1,
-			buttons,
+			app.LOButtons.left,
 			modifier,
 		);
 		this.postCoreMouseEvent(
 			'buttonup',
 			this.currentPosition,
 			1,
-			buttons,
+			app.LOButtons.left,
 			modifier,
 		);
 
