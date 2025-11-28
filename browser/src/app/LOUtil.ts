@@ -434,7 +434,6 @@ class LOUtil {
 			printoptions: 'print',
 			togglesheetgrid: 'show',
 			toggleprintgrid: 'printgrid',
-			'hamburger-tablet': 'fold',
 			exportdirectpdf: 'exportpdf',
 			textcolumnspropertypanel: 'entirecolumn',
 			'sidebardeck.stylelistdeck': 'editstyle',
