@@ -226,19 +226,49 @@ class TopToolbar extends JSDialog.Toolbar {
 			{type: 'customtoolitem',  id: 'hamburger-tablet', desktop: false, mobile: false, tablet: true, iosapptablet: false, visible: false},
 		];
 
-		this.customItems.forEach((customButton) => {
-			var found = items.find((item) => {
-				return item.id.toLowerCase() === customButton.beforeId.toLowerCase();
-			});
-
-			var position = items.indexOf(found);
-
-			customButton.items.forEach((item) => {
-				items.splice(position, 0, item);
-			});
-		});
-
+		this.customizeItems(items[0].children);
 		return items;
+	}
+
+	customizeItems(overflowManagerItem) {
+		const matchesItem = (where, toInsert) => {
+			return where.id.toLowerCase() === toInsert.beforeId.toLowerCase();
+		};
+		const insertItem = (group, toInsert) => {
+			const subNodes = group && group.children ? group.children : [];
+			for (const i in subNodes) {
+				const node = subNodes[i];
+				if (matchesItem(node, toInsert)) {
+					const items = toInsert.items;
+					for (const j in items) {
+						const position = Number(i) + Number(j);
+						subNodes.splice(position, 0, items[j]);
+						app.console.debug('Toolbar: inserted ' + items[j].id + ' item at position: ' + position);
+					}
+
+					return true;
+				}
+			}
+
+			return false;
+		};
+
+		this.customItems.forEach((customButton) => {
+			// main level
+			if (insertItem(overflowManagerItem, customButton))
+				return;
+
+			// groups
+			let inserted = false;
+			overflowManagerItem.forEach((item) => {
+				if (inserted) return;
+				inserted = insertItem(item, customButton);
+			});
+
+			// fallback
+			if (!inserted)
+				overflowManagerItem.push(customButton);
+		});
 	}
 
 	updateControlsState() {
