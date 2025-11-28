@@ -12,6 +12,7 @@
 #pragma once
 
 #include <QWebEngineView>
+#include <QPointer>
 #include <QObject>
 #include <QVariant>
 #include <string>
@@ -27,7 +28,7 @@ class Bridge : public QObject
 
     coda::DocumentData _document;
     QMainWindow* _window;
-    QWebEngineView* _webView;
+    QPointer<QWebEngineView> _webView;
     int _closeNotificationPipeForForwardingThread[2];
     std::thread _app2js;
     // the state of the document modified status as reported by the core
@@ -53,6 +54,12 @@ public:
 
     ~Bridge() override;
 
+    // Clear the stored webview pointer so no further GUI actions are attempted.
+    void clearWebView();
+
+    // Exposed helpers for external callers
+    bool promptSaveAs();
+
     // TODO: move these to webview...
     // Helper: post JavaScript code safely on GUI thread
     void evalJS(const std::string& script);
@@ -62,6 +69,9 @@ public:
 
     bool isModified() const { return _modified; }
     bool isPendingSave() const { return _pendingSave; }
+signals:
+    // Emitted when the modified state changes (true = document has unsaved changes)
+    void modifiedChanged(bool modified);
 
 public slots: // called from JavaScript
     // Called from JS via window.postMobileMessage
