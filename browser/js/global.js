@@ -886,7 +886,7 @@ function showWelcomeSVG() {
 				if (Object.prototype.hasOwnProperty.call(global.prefs._userBrowserSetting, key))
 					val = global.prefs._userBrowserSetting[key];
 
-				if(val !== undefined) {
+				if(val !== undefined && val !== '') {
 					global.prefs._localStorageCache[key] = val;
 					return val;
 				}
