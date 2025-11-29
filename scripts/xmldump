@@ -1,0 +1,134 @@
+#!/usr/bin/env python3
+
+# List streams, elements and attributes from a zipped xml container
+
+import re
+import sys
+import zipfile
+import xml.etree.ElementTree as ET
+from typing import List
+from urllib.parse import urlparse
+from collections import Counter
+from pathlib import Path
+
+def shorten_tag(tag: str) -> str:
+    """
+    Convert a full XML expanded tag like:
+        {http://schemas.openxmlformats.org/drawingml/2006/main}lvl7pPr
+    into:
+        {drawingml/2006/main}lvl7pPr
+    """
+    if not tag.startswith("{"):
+        return tag  # no namespace
+
+    # Extract namespace URL and local name
+    ns, local = tag[1:].split("}", 1)
+
+    # Parse the namespace URL
+    parsed = urlparse(ns)
+
+    # Use the path part without leading slash
+    short_ns = parsed.path.lstrip("/")
+
+    # Fall back to the domain if no path exists
+    if not short_ns:
+        short_ns = parsed.netloc
+
+    short_ns = re.sub(r"/2006/main$", "", short_ns)
+    short_ns = re.sub(r"/main$", "", short_ns)
+
+    return f"{{{short_ns}}}{local}"
+
+def read_and_aggregate(zip_path, file_counts, element_counts, attribute_counts):
+    with zipfile.ZipFile(zip_path, "r") as zf:
+        names = zf.namelist()
+        for name in sorted(names):
+            file_counts[name] += 1
+
+        print(".", file=sys.stderr)
+        for name in names:
+            if not name.lower().endswith(".xml"):
+                continue
+            try:
+                with zf.open(name) as f:
+                    tree = ET.parse(f)
+                root = tree.getroot()
+
+                for elem in root.iter():
+                    # Count element tag
+                    element_counts[elem.tag] += 1
+                    # Count attribute *names*
+                    for attr_name in elem.attrib.keys():
+                        attribute_counts[elem.tag] += 1
+            except Exception as e:
+                print(f"  [!] Failed to parse {name}: {e}", file=sys.stderr)
+
+def main(zip_paths: List[str]):
+    file_counts = Counter()
+    element_counts = Counter()
+    attribute_counts = Counter()
+
+    for zip_path in zip_paths:
+        zip_path = Path(zip_path)
+        if not zip_path.is_file():
+            print(f"Zip file not found: {zip_path}", file=sys.stderr)
+            sys.exit(1)
+        try:
+            read_and_aggregate(zip_path, file_counts, element_counts, attribute_counts)
+        except Exception as e:
+            print(f"  [!] Not a zip file {zip_path}: {e}", file=sys.stderr)
+    print("\n", file=sys.stderr)
+
+    # Helper to print a sorted counter (by count desc, then name)
+    def print_sorted_counter(title, counter: Counter):
+        print(title)
+        for key, count in sorted(counter.items(), key=lambda kv: (-kv[1], kv[0])):
+            short_key = shorten_tag(key);
+            print(f"\t{short_key}\t{count}")
+        print()
+
+    print_sorted_counter("File tag counts:", file_counts)
+    print_sorted_counter("Element tag counts:", element_counts)
+    print_sorted_counter("Attribute name counts:", attribute_counts)
+
+def compare_files(before, after):
+    names = [ Path(before), Path(after) ]
+    file_counts = [ Counter(), Counter() ]
+    element_counts = [ Counter(), Counter() ]
+    attribute_counts = [ Counter(), Counter() ]
+
+    for i in range(0,2):
+        try:
+            read_and_aggregate(names[i], file_counts[i], element_counts[i], attribute_counts[i])
+        except Exception as e:
+            print(f"  [!] Not a zip file {names[i]}: {e}", file=sys.stderr)
+
+    def print_compare_counter(title, before: Counter, after: Counter):
+        print(title)
+        merged = before + after;
+        same_count = 0;
+        for key, count in sorted(merged.items(), key=lambda kv: (-kv[1], kv[0])):
+            if before[key] is after[key]:
+                same_count += 1;
+            else:
+                short_key = shorten_tag(key);
+                print(f"\t{short_key}\t{before[key]}\t{after[key]}")
+        print(f"\t<identical>\t{same_count}")
+        print()
+
+    print_compare_counter("File tags:", file_counts[0], file_counts[1])
+    print_compare_counter("Element tags:", element_counts[0], element_counts[1])
+    print_compare_counter("Attribute names:", attribute_counts[0], attribute_counts[1])
+
+if __name__ == "__main__":
+    if len(sys.argv) < 2 or sys.argv[1] == '--help':
+        print(f"Usage: {Path(sys.argv[0]).name} [<path-to-zipfiles>]\n", file=sys.stderr)
+        print(f"Usage: {Path(sys.argv[0]).name} --compare <before-path> <after-path>\n", file=sys.stderr)
+        sys.exit(1)
+    if sys.argv[1] == '--compare':
+        if len(sys.argv) != 4:
+            print(f"Usage: {Path(sys.argv[0]).name} --compare <before-path> <after-path>\n", file=sys.stderr)
+            sys.exit(1)
+        compare_files(sys.argv[2], sys.argv[3])
+    else:
+        main(sys.argv[1:])
