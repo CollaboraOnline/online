@@ -51,6 +51,27 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Test jumping on large cell
 		cy.cGet(helper.addressInputSelector).should('have.value', 'A1');
 		desktopHelper.assertScrollbarPosition('vertical', 0, 30);
 	});
+
+	it('Scroll and check drawing on frozen part of the view', function() {
+		// Add a new sheet first.
+		cy.cGet('#insertsheet-button').click();
+		cy.wait(300); // Wait a bit.
+
+		// Go to a cell that we know is visible.
+		cy.cGet(helper.addressInputSelector).focus();
+		cy.cGet(helper.addressInputSelector).clear().type('D7{enter}');
+
+		// Find freeze panes button and force a click. Force because it may not be visible, but we don't care about that in this test.
+		cy.cGet('#layout-freeze-panes-button').click({force: true});
+
+		// Scroll down.
+		helper.typeIntoInputField(helper.addressInputSelector, 'Z110');
+
+		// Now click on A1. Use click for this, not the input field. We also need to test the core coordinates.
+		calcHelper.clickOnFirstCell();
+
+		cy.cGet(helper.addressInputSelector).should('have.value', 'A1');
+	});
 });
 
 describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Test Cell Selections', function() {
