@@ -6,109 +6,109 @@
     <message>
         <location filename="../coda-qt.cpp" line="287"/>
         <source>Print Document</source>
-        <translation type="unfinished"></translation>
+        <translation>Natisni dokument</translation>
     </message>
     <message>
         <location filename="../coda-qt.cpp" line="295"/>
         <source>Select Printer:</source>
-        <translation type="unfinished"></translation>
+        <translation>Izberite tiskalnik:</translation>
     </message>
     <message>
         <location filename="../coda-qt.cpp" line="304"/>
         <location filename="../coda-qt.cpp" line="377"/>
         <source>Default Printer</source>
-        <translation type="unfinished"></translation>
+        <translation>Privzeti tiskalnik</translation>
     </message>
     <message>
         <location filename="../coda-qt.cpp" line="309"/>
         <source>Print to File</source>
-        <translation type="unfinished"></translation>
+        <translation>Natisni v datoteko</translation>
     </message>
     <message>
         <location filename="../coda-qt.cpp" line="313"/>
         <source>Enter file path...</source>
-        <translation type="unfinished"></translation>
+        <translation>Vnesite pot datoteke ...</translation>
     </message>
     <message>
         <location filename="../coda-qt.cpp" line="325"/>
         <source>Save Print Output As</source>
-        <translation type="unfinished"></translation>
+        <translation>Shrani izhod tiskanja kot</translation>
     </message>
     <message>
         <location filename="../coda-qt.cpp" line="327"/>
         <source>PDF Files (*.pdf);;All Files (*)</source>
-        <translation type="unfinished"></translation>
+        <translation>Datoeke PDF (*.pdf);;Vse datoteke (*)</translation>
     </message>
     <message>
         <location filename="../coda-qt.cpp" line="343"/>
         <source>Print</source>
-        <translation type="unfinished"></translation>
+        <translation>Natisni</translation>
     </message>
     <message>
         <location filename="../coda-qt.cpp" line="344"/>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Prekliči</translation>
     </message>
     <message>
         <location filename="../coda-qt.cpp" line="368"/>
         <source>Print to File Error</source>
-        <translation type="unfinished"></translation>
+        <translation>Napaka tiskanja v datoteko</translation>
     </message>
     <message>
         <location filename="../coda-qt.cpp" line="369"/>
         <source>Failed to save document to file. Please check the file path and permissions.</source>
-        <translation type="unfinished"></translation>
+        <translation>Shranjevanje dokumenta v datoteko je spodletelo. Preverite pot in pravice.</translation>
     </message>
     <message>
         <location filename="../coda-qt.cpp" line="413"/>
         <source>Print Error</source>
-        <translation type="unfinished"></translation>
+        <translation>Napaka pri tiskanju</translation>
     </message>
     <message>
         <location filename="../coda-qt.cpp" line="414"/>
         <source>Failed to print document. Please check your printer settings.</source>
-        <translation type="unfinished"></translation>
+        <translation>Tiskanje dokumenta je spodletelo. Preverite nastavitve svojega tiskalnika.</translation>
     </message>
     <message>
         <location filename="../coda-qt.cpp" line="573"/>
         <source>Text Documents (*.odt);;All Files (*)</source>
-        <translation type="unfinished"></translation>
+        <translation>Dokumenti z besedilom (*.odt);;Vse datoteke (*)</translation>
     </message>
     <message>
         <location filename="../coda-qt.cpp" line="575"/>
         <source>Spreadsheets (*.ods);;All Files (*)</source>
-        <translation type="unfinished"></translation>
+        <translation>Preglednice (*.ods);;Vse datoteke (*)</translation>
     </message>
     <message>
         <location filename="../coda-qt.cpp" line="577"/>
         <source>Presentations (*.odp);;All Files (*)</source>
-        <translation type="unfinished"></translation>
+        <translation>Predstavitve (*.odp);;Vse datoteke (*)</translation>
     </message>
     <message>
         <location filename="../coda-qt.cpp" line="579"/>
         <location filename="../coda-qt.cpp" line="964"/>
         <source>All Files (*)</source>
-        <translation type="unfinished"></translation>
+        <translation>Vse datoteke (*)</translation>
     </message>
     <message>
         <location filename="../coda-qt.cpp" line="583"/>
         <source>Save Document</source>
-        <translation type="unfinished"></translation>
+        <translation>Shrani dokument</translation>
     </message>
     <message>
         <location filename="../coda-qt.cpp" line="858"/>
         <source>Open File</source>
-        <translation type="unfinished"></translation>
+        <translation>Odpri datoteko</translation>
     </message>
     <message>
         <location filename="../coda-qt.cpp" line="859"/>
         <source>All Files (*);;Text Documents (*.odt *.ott *.doc *.docx *.rtf *.txt);;Spreadsheets (*.ods *.ots *.xls *.xlsx *.csv);;Presentations (*.odp *.otp *.ppt *.pptx)</source>
-        <translation type="unfinished"></translation>
+        <translation>Vse datoteke (*);;Dokumenti z besedilom (*.odt *.ott *.doc *.docx *.rtf *.txt);;Preglednice (*.ods *.ots *.xls *.xlsx *.csv);;Predstavitve (*.odp *.otp *.ppt *.pptx)</translation>
     </message>
     <message>
         <location filename="../coda-qt.cpp" line="962"/>
         <source>Export As</source>
-        <translation type="unfinished"></translation>
+        <translation>Izvozi kot</translation>
     </message>
 </context>
 <context>
@@ -116,12 +116,12 @@
     <message>
         <location filename="../WebView.cpp" line="111"/>
         <source>Unsaved Changes</source>
-        <translation type="unfinished"></translation>
+        <translation>Neshranjene spremembe</translation>
     </message>
     <message>
         <location filename="../WebView.cpp" line="112"/>
         <source>The document has unsaved changes. Do you want to close anyway?</source>
-        <translation type="unfinished"></translation>
+        <translation>Vse spremembe dokumenta niso shranjene. Ali ga vseeno želite zapreti?</translation>
     </message>
 </context>
 </TS>
