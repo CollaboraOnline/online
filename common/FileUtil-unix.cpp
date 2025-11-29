@@ -94,70 +94,82 @@ namespace FileUtil
     }
 #endif
 
-    static int nftw_cb(const char *fpath, const struct stat*, int type, struct FTW*)
-    {
-        if (type == FTW_DP)
-        {
-            rmdir(fpath);
-        }
-        else if (type == FTW_F || type == FTW_SL)
-        {
-            unlink(fpath);
-        }
+    // static int nftw_cb(const char *fpath, const struct stat*, int type, struct FTW*)
+    // {
+    //     if (type == FTW_DP)
+    //     {
+    //         rmdir(fpath);
+    //     }
+    //     else if (type == FTW_F || type == FTW_SL)
+    //     {
+    //         unlink(fpath);
+    //     }
 
-        // Always continue even when things go wrong.
-        return 0;
-    }
+    //     // Always continue even when things go wrong.
+    //     return 0;
+    // }
 
     void removeFile(const std::string& path, const bool recursive)
     {
         LOG_DBG("Removing [" << Anonymizer::anonymizeUrl(path) << "] " << (recursive ? "recursively." : "only."));
 
-        try
-        {
-            struct stat sb;
-            errno = 0;
-            if (!recursive || stat(path.c_str(), &sb) == -1 || S_ISREG(sb.st_mode))
-            {
-                // Non-recursive directories and files that exist.
-                if (errno != ENOENT)
-                    Poco::File(path).remove(recursive);
-            }
-            else
-            {
-                // Directories only.
-                nftw(path.c_str(), nftw_cb, 128, FTW_DEPTH | FTW_PHYS);
-            }
+        std:: error_code err;
+        if (!recursive) {
+            std::filesystem::remove(path, err);
+        } else {
+            std::filesystem::remove_all(path, err);
         }
-        catch (const std::exception& e)
-        {
-            // Don't complain if already non-existent.
-            if (FileUtil::Stat(path).exists())
-            {
-                // Error only if it still exists.
+
+        if (err && err.value() != static_cast<int>(std::errc::no_such_file_or_directory)) {
                 LOG_ERR("Failed to remove ["
-                        << Anonymizer::anonymizeUrl(path) << "] " << (recursive ? "recursively: " : "only: ") << e.what());
-            }
+                        << Anonymizer::anonymizeUrl(path) << "] " << (recursive ? "recursively: " : "only: ") << err.message());
         }
+
+        // try
+        // {
+        //     struct stat sb;
+        //     errno = 0;
+        //     if (!recursive || stat(path.c_str(), &sb) == -1 || S_ISREG(sb.st_mode))
+        //     {
+        //         // Non-recursive directories and files that exist.
+        //         if (errno != ENOENT)
+        //             Poco::File(path).remove(recursive);
+        //     }
+        //     else
+        //     {
+        //         // Directories only.
+        //         nftw(path.c_str(), nftw_cb, 128, FTW_DEPTH | FTW_PHYS);
+        //     }
+        // }
+        // catch (const std::exception& e)
+        // {
+        //     // Don't complain if already non-existent.
+        //     if (FileUtil::Stat(path).exists())
+        //     {
+        //         // Error only if it still exists.
+        //         LOG_ERR("Failed to remove ["
+        //                 << Anonymizer::anonymizeUrl(path) << "] " << (recursive ? "recursively: " : "only: ") << e.what());
+        //     }
+        // }
     }
 
-    /// Remove directories only, which must be empty for this to work.
+    //Remove directories only, which must be empty for this to work.
     static int nftw_rmdir_cb(const char* fpath, const struct stat*, int type, struct FTW*)
-    {
-        if (type == FTW_DP)
-        {
-            rmdir(fpath);
-        }
+     {
+         if (type == FTW_DP)
+         {
+             rmdir(fpath);
+         }
 
-        // Always continue even when things go wrong.
-        return 0;
-    }
+         // Always continue even when things go wrong.
+         return 0;
+     }
 
     void removeEmptyDirTree(const std::string& path)
-    {
-        LOG_DBG("Removing empty directories at [" << path << "] recursively");
+     {
+         LOG_DBG("Removing empty directories at [" << path << "] recursively");
 
-        nftw(path.c_str(), nftw_rmdir_cb, 128, FTW_DEPTH | FTW_PHYS);
+         nftw(path.c_str(), nftw_rmdir_cb, 128, FTW_DEPTH | FTW_PHYS);
     }
 
     bool isEmptyDirectory(const char* path)
