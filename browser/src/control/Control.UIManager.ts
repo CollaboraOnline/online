@@ -1662,11 +1662,11 @@ class UIManager extends window.L.Control {
 	 */
 	showSnackbar(
 		label: string,
-		action: string,
+		action: string | null,
 		callback: any,
-		timeout: number,
-		hasProgress: boolean,
-		withDismiss: boolean,
+		timeout?: number,
+		hasProgress?: boolean,
+		withDismiss?: boolean,
 	): void {
 		JSDialog.SnackbarController.showSnackbar(label, action, callback, timeout, hasProgress, withDismiss);
 	}
