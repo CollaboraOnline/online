@@ -456,6 +456,14 @@ algned to the bottom */
 	justify-content: center;
 }
 
+/* Overflow dropdown highlighting */
+.overflow-dropdown-active {
+	background-color: rgba(var(--doc-type), 0.1) !important;
+	border: 1px solid rgb(var(--doc-type)) !important;
+	color: var(--color-text-dark) !important;
+	border-radius: var(--border-radius) !important;
+}
+
 .ui-toggle button,
 .ui-tab.jsdialog {
 	float: left !important;
