@@ -13,26 +13,25 @@
 
 #include "FileUtil.hpp"
 #include "JailUtil.hpp"
+#include "Log.hpp"
 
+#include <SigUtil.hpp>
+#include <csignal>
+#include <cstdio>
+#include <cstdlib>
+#include <cstring>
 #include <fcntl.h>
+#include <fstream>
+#include <string>
 #include <sys/mount.h>
 #include <sys/stat.h>
 #include <sys/types.h>
 #include <sysexits.h>
 #include <unistd.h>
+
 #ifdef __linux__
 #include <sys/sysmacros.h>
 #endif
-
-#include <csignal>
-#include <cstdio>
-#include <cstdlib>
-#include <cstring>
-#include <fstream>
-#include <string>
-
-#include "Log.hpp"
-#include <SigUtil.hpp>
 
 extern int domount(int argc, const char* const* argv);
 

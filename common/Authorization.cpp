@@ -14,10 +14,11 @@
 #include "Authorization.hpp"
 #include "Log.hpp"
 #include "StringVector.hpp"
-#include <common/Uri.hpp>
 
 #include <Poco/Net/HTTPRequest.h>
 #include <Poco/URI.h>
+
+#include <common/Uri.hpp>
 
 void Authorization::authorizeURI(Poco::URI& uri) const
 {

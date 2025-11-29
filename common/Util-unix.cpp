@@ -11,12 +11,11 @@
 
 #include <config.h>
 
+#include <common/Log.hpp>
+#include <common/Util.hpp>
 #include <fcntl.h>
 #include <time.h>
 #include <unistd.h>
-
-#include <common/Log.hpp>
-#include <common/Util.hpp>
 
 namespace Util
 {

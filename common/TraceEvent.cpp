@@ -9,12 +9,12 @@
 // clang++ -Wall -Wextra -DTEST_TRACEEVENT_EXE TraceEvent.cpp -o TraceEvent -pthread
 
 #include "config.h"
+#include "TraceEvent.hpp"
 
 #include <cassert>
 #include <mutex>
 #include <sstream>
 
-#include "TraceEvent.hpp"
 
 std::atomic<bool> TraceEvent::recordingOn(false);
 
