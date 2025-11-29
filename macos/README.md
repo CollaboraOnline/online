@@ -89,7 +89,7 @@ POCO, libpng and zstd.
 Checkout online-branding, and install the branding like the following (please
 update the paths to the core instdir and online repo):
 
-./brand.sh ~/Projects/lo/core/instdir ../online/browser/dist 1
+./brand.sh ~/Projects/lo/core/instdir ../online/browser/dist CODA
 
 ## Build the JavaScipt bits
 
