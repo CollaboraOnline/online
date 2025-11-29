@@ -345,7 +345,7 @@ export class ScrollSection extends CanvasSectionObject {
 		});
 	}
 
-	public onDraw(frameCount: number, elapsedTime: number): void {
+	public onDraw(frameCount: number | null, elapsedTime: number | null): void {
 		if (app.activeDocument.activeView.scrollProperties.moveBy !== null)
 			this.doMove();
 		else
@@ -366,7 +366,7 @@ export class ScrollSection extends CanvasSectionObject {
 		}
 	}
 
-	public onAnimate(frameCount: number, elapsedTime: number): void {
+	public onAnimate(frameCount: number | null, elapsedTime: number | null): void {
 		const timeDelta = (elapsedTime - this.sectionProperties.lastElapsedTime) / (1000/60);
 		if (this.sectionProperties.animatingScroll) {
 			const lineHeight = this.containerObject.getScrollLineHeight();
@@ -424,7 +424,7 @@ export class ScrollSection extends CanvasSectionObject {
 		if (!animatingScrollbar && !animatingScroll) this.containerObject.stopAnimating();
 	}
 
-	public onAnimationEnded(frameCount: number, elapsedTime: number): void {
+	public onAnimationEnded(frameCount: number | null, elapsedTime: number | null): void {
 		this.sectionProperties.animatingScroll = false;
 		this.sectionProperties.scrollAnimationAcc = [0, 0];
 		this.sectionProperties.scrollAnimationVelocity = [0, 0];
@@ -761,7 +761,8 @@ export class ScrollSection extends CanvasSectionObject {
 		}
 	}
 
-	public onMouseDown (point: cool.SimplePoint, e: MouseEvent): void {
+	public onMouseDown (point: cool.SimplePoint | null, e: MouseEvent): void {
+		Util.ensureValue(point);
 		const scrollProps: ScrollProperties = (app.activeDocument as DocumentBase).activeView.scrollProperties;
 
 		this.clearQuickScrollTimeout();
@@ -811,7 +812,8 @@ export class ScrollSection extends CanvasSectionObject {
 		}
 	}
 
-	public onMouseUp (point: cool.SimplePoint, e: MouseEvent): void {
+	public onMouseUp (point: cool.SimplePoint | null, e: MouseEvent): void {
+		Util.ensureValue(point);
 		window.L.DomUtil.removeClass(document.documentElement, 'prevent-select');
 		this.map.scrollingIsHandled = false;
 		this.clearQuickScrollTimeout();
@@ -833,7 +835,7 @@ export class ScrollSection extends CanvasSectionObject {
 		this.onMouseMove(point, null, e);
 	}
 
-	public onClick(point: cool.SimplePoint, e: MouseEvent): void {
+	public onClick(point: cool.SimplePoint | null, e: MouseEvent): void {
 		if (this.isAnimating && this.sectionProperties.animatingWheelScrollVertical)
 			this.containerObject.stopAnimating();
 	}
@@ -865,7 +867,7 @@ export class ScrollSection extends CanvasSectionObject {
 		}
 	}
 
-	public onMouseWheel (point: cool.SimplePoint, delta: Array<number>, e: WheelEvent): void {
+	public onMouseWheel (point: cool.SimplePoint | null, delta: Array<number>, e: WheelEvent): void {
 		if (e.ctrlKey) {
 			e.preventDefault();
 			e.stopImmediatePropagation();

@@ -34,8 +34,8 @@ class SelectionRectangle extends CanvasSectionObject {
 	}
 
 	public onMouseMove(
-		point: cool.SimplePoint,
-		dragDistance: Array<number>,
+		point: cool.SimplePoint | null,
+		dragDistance: Array<number> | null,
 		e: MouseEvent,
 	) {
 		if (e.type === 'touchmove') return;
@@ -44,6 +44,7 @@ class SelectionRectangle extends CanvasSectionObject {
 			this.containerObject.isDraggingSomething() &&
 			this.containerObject.targetSection === this.name
 		) {
+			Util.ensureValue(point);
 			this.sectionProperties.selectionSize = [
 				point.pX - this.sectionProperties.positionOnMouseDown.pX,
 				point.pY - this.sectionProperties.positionOnMouseDown.pY,
@@ -51,14 +52,14 @@ class SelectionRectangle extends CanvasSectionObject {
 		}
 	}
 
-	public onMouseUp(point: cool.SimplePoint, e: MouseEvent): void {
+	public onMouseUp(point: cool.SimplePoint | null, e: MouseEvent): void {
 		if (e.type === 'touchend') return;
 
 		this.sectionProperties.positionOnMouseDown = null;
 		this.sectionProperties.selectionSize = null;
 	}
 
-	public onMouseDown(point: cool.SimplePoint, e: MouseEvent): void {
+	public onMouseDown(point: cool.SimplePoint | null, e: MouseEvent): void {
 		if (e.type === 'touchstart') return;
 
 		this.sectionProperties.positionOnMouseDown = point;
@@ -71,7 +72,7 @@ class SelectionRectangle extends CanvasSectionObject {
 		);
 	}
 
-	public onDraw(frameCount?: number, elapsedTime?: number): void {
+	public onDraw(frameCount?: number | null, elapsedTime?: number | null): void {
 		if (
 			this.sectionProperties.positionOnMouseDown &&
 			this.sectionProperties.selectionSize &&

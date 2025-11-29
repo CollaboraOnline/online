@@ -25,8 +25,8 @@ class DebugOverlaySection extends CanvasSectionObject {
 	}
 
 	onDraw(
-		frameCount?: number,
-		elapsedTime?: number,
+		frameCount?: number | null,
+		elapsedTime?: number | null,
 		subsetBounds?: Bounds,
 	): void {
 		TileManager.updateOverlayMessages();

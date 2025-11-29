@@ -21,7 +21,7 @@ interface LogMsg {
 
 class Logger {
 	private _logs: LogMsg[];
-	private startTime: number;
+	private startTime: number | null;
 
 	constructor() {
 		this._logs = [];

@@ -38,9 +38,9 @@ class TileCoordData {
 	constructor(
 		left: number,
 		top: number,
-		zoom: number = null,
-		part: number = null,
-		mode: number = null,
+		zoom: number | null = null,
+		part: number | null = null,
+		mode: number | null = null,
 	) {
 		this.x = left;
 		this.y = top;
@@ -158,7 +158,7 @@ class Tile {
 	lastPendingId: number = 0; // the id of the last delta requested to be decompressed
 	decompressedId: number = 0; // the id of the last decompressed delta chunk in imgDataCache
 	lastRendered: number = performance.timeOrigin;
-	private lastRequestTime: Date = undefined; // when did we last do a tilecombine request.
+	private lastRequestTime: Date | undefined = undefined; // when did we last do a tilecombine request.
 
 	constructor(coords: TileCoordData) {
 		this.coords = coords;
@@ -196,12 +196,12 @@ class Tile {
 	/// Avoid continually re-requesting tiles for eg. preloading
 	requestingTooFast(now: Date): boolean {
 		const tooFast: boolean =
-			this.lastRequestTime &&
+			this.lastRequestTime !== undefined &&
 			now.getTime() - this.lastRequestTime.getTime() < 5000; /* ms */
 		return tooFast;
 	}
 
-	updateLastRequest(now: Date) {
+	updateLastRequest(now: Date | undefined) {
 		this.lastRequestTime = now;
 	}
 
@@ -326,9 +326,11 @@ class TileManager {
 
 	private static sortTileKeysByDistance(): string[] {
 		return Array.from(this.tiles.keys()).sort((a: any, b: any) => {
-			return (
-				this.tiles.get(b).distanceFromView - this.tiles.get(a).distanceFromView
-			);
+			const tileA = this.tiles.get(a);
+			const tileB = this.tiles.get(b);
+			Util.ensureValue(tileA);
+			Util.ensureValue(tileB);
+			return tileB.distanceFromView - tileA.distanceFromView;
 		});
 	}
 
@@ -379,7 +381,8 @@ class TileManager {
 
 			for (var i = 0; i < keys.length && totalSize > lowDeltaMemory; ++i) {
 				const key = keys[i];
-				const tile: Tile = this.tiles.get(key);
+				const tile: Tile | undefined = this.tiles.get(key);
+				Util.ensureValue(tile);
 				if (tile.rawDeltas.length && tile.distanceFromView !== 0) {
 					const rawDeltaSize = tile.rawDeltas.reduce((a, c) => a + c.length, 0);
 					totalSize -= rawDeltaSize;
@@ -401,7 +404,8 @@ class TileManager {
 
 			for (var i = 0; i < keys.length - lowTileCount; ++i) {
 				const key = keys[i];
-				const tile: Tile = this.tiles.get(key);
+				const tile: Tile | undefined = this.tiles.get(key);
+				Util.ensureValue(tile);
 				if (tile.distanceFromView !== 0) this.removeTile(keys[i]);
 			}
 		}
@@ -480,6 +484,7 @@ class TileManager {
 		while (deltas.length) {
 			const delta = deltas.shift();
 			const bitmap = bitmaps.shift();
+			Util.ensureValue(bitmap);
 
 			const tile = this.tiles.get(delta.key);
 			if (!tile) continue;
@@ -533,7 +538,7 @@ class TileManager {
 		if (this.workers.length) {
 			// The same tiles need to go to the same workers each time so that the image cache
 			// is valid. Split work up based on the tile coords.
-			const deltaBuckets = [];
+			const deltaBuckets: any[] = [];
 			for (let i = 0; i < this.workers.length; ++i) {
 				deltaBuckets.push([]);
 			}
@@ -826,7 +831,7 @@ class TileManager {
 	) {
 		var key = coords.key();
 
-		const tile: Tile = this.tiles.get(key);
+		const tile: Tile | undefined = this.tiles.get(key);
 		if (!tile) return;
 
 		// Discard old raw deltas
@@ -856,14 +861,15 @@ class TileManager {
 			app.sectionContainer.requestReDraw();
 	}
 
-	private static createTile(coords: TileCoordData) {
+	private static createTile(coords: TileCoordData): Tile {
 		const key = coords.key();
-		if (this.tiles.has(key)) {
+		let tile: Tile | undefined = this.tiles.get(key);
+		if (tile !== undefined) {
 			if (this.debugDeltas)
 				window.app.console.debug('Already created tile ' + key);
-			return this.tiles.get(key);
+			return tile;
 		}
-		const tile = new Tile(coords);
+		tile = new Tile(coords);
 
 		this.tiles.set(key, tile);
 
@@ -964,6 +970,7 @@ class TileManager {
 		window.app.console.warn('Disabling worker threads');
 		while (this.workers.length) {
 			const worker = this.workers.shift();
+			Util.ensureValue(worker);
 			try {
 				worker.terminate();
 			} catch (e) {
@@ -1250,7 +1257,7 @@ class TileManager {
 	}
 
 	private static tileNeedsFetch(key: string) {
-		const tile: Tile = this.tiles.get(key);
+		const tile: Tile | undefined = this.tiles.get(key);
 		return !tile || tile.needsFetch();
 	}
 
@@ -1384,9 +1391,9 @@ class TileManager {
 		// Ensure tiles exist for requested coordinates
 		for (let i = 0; i < coordsQueue.length; i++) {
 			const key = coordsQueue[i].key();
-			let tile: Tile = this.tiles.get(key);
+			let tile: Tile | undefined = this.tiles.get(key);
 
-			if (!tile) {
+			if (tile === undefined) {
 				tile = this.createTile(coordsQueue[i]);
 
 				// Newly created tiles have a distance of zero, which means they're current.
@@ -1472,7 +1479,7 @@ class TileManager {
 		this.debugDeltasDetail = state;
 	}
 
-	public static get(coords: TileCoordData): Tile {
+	public static get(coords: TileCoordData): Tile | undefined {
 		return this.tiles.get(coords.key());
 	}
 
@@ -1869,6 +1876,7 @@ class TileManager {
 		this.receivedFirstTile = true;
 		while (this.afterFirstTileTasks.length > 0) {
 			const task = this.afterFirstTileTasks.shift();
+			Util.ensureValue(task);
 			task();
 		}
 	}
@@ -1922,7 +1930,7 @@ class TileManager {
 		return this;
 	}
 
-	public static update(center: any = null, zoom: number = null) {
+	public static update(center: any = null, zoom: number | null = null) {
 		const map: any = app.map;
 
 		if (
@@ -2181,7 +2189,7 @@ class TileManager {
 		checkOnly: boolean = false,
 		zoomFrameBounds: any = null,
 		forZoom: any = null,
-	): TileCoordData[] {
+	): TileCoordData[] | undefined {
 		if (app.map._docLayer._partHeightTwips === 0)
 			// This is true before status message is handled.
 			return [];
@@ -2309,7 +2317,7 @@ class TileManager {
 	// so we match this to a new incoming tile to unset
 	// the invalid state later.
 	public static invalidateTile(key: string, wireId: number) {
-		const tile: Tile = this.tiles.get(key);
+		const tile: Tile | undefined = this.tiles.get(key);
 		if (!tile) {
 			window.app.console.warn('invalidateTile called with invalid key', key);
 			return;

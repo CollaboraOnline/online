@@ -39,6 +39,7 @@ app.definitions.TableFillMarkerSection = class TableFillMarkerSection extends (
 		dragDistance: Array<number>,
 		e: MouseEvent,
 	) {
+		Util.ensureValue(this.containerObject);
 		if (
 			dragDistance === null ||
 			!this.sectionProperties.docLayer._tableAutoFillAreaPixels

@@ -118,7 +118,7 @@ class Util {
 	public static trim(str: string, prefix?: string, suffix?: string): string {
 		if (!prefix) return str.trim ? str.trim() : str.replace(/^\s+|\s+$/g, '');
 		let result = Util.trimStart(str, prefix);
-		result = Util.trimEnd(result, suffix);
+		result = Util.trimEnd(result, suffix ? suffix : prefix);
 		return result;
 	}
 
@@ -214,6 +214,7 @@ class Util {
 	public static getTextWidth(text: string, font: string): number {
 		const canvas = Util.getTempCanvas();
 		const context = canvas.getContext('2d');
+		this.ensureValue(context);
 		context.font = font;
 		const metrics = context.measureText(text);
 		return Math.floor(metrics.width);
@@ -284,6 +285,11 @@ class Util {
 		if (id) {
 			window.cancelAnimationFrame(id);
 		}
+	}
+
+	public static ensureValue<T>(obj: T | undefined | null): asserts obj is T {
+		if (obj === undefined) throw new Error('Object is undefined!');
+		if (obj === null) throw new Error('Object is null!');
 	}
 
 	public static MAX_SAFE_INTEGER = Math.pow(2, 53) - 1;

@@ -71,7 +71,10 @@ class CellCursorSection extends CanvasSectionObject {
 			let x: number = (tempSizePos[0] - this.position[0]);
 			const y: number = (tempSizePos[1] - this.position[1]);
 			if (app.calc.isRTL()) {
-				const rightMost = this.containerObject.getDocumentAnchor()[0] + this.containerObject.getDocumentAnchorSection().size[0];
+				Util.ensureValue(this.containerObject);
+				const anchorSection = this.containerObject.getDocumentAnchorSection();
+				Util.ensureValue(anchorSection);
+				const rightMost = this.containerObject.getDocumentAnchor()[0] + anchorSection.size[0];
 				x = rightMost - tempSizePos[2] + (tempSizePos[0] - this.position[0]);
 			}
 

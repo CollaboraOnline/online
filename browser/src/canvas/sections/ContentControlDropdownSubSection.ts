@@ -141,7 +141,7 @@ class ContentControlDropdownSubSection extends HTMLObjectSection {
 		return false;
 	}
 
-	onClick(point: cool.SimplePoint, e: MouseEvent): void {
+	onClick(point: cool.SimplePoint | null, e: MouseEvent): void {
 		if (e) {
 			e.preventDefault();
 			e.stopPropagation();

@@ -55,7 +55,7 @@ class ShapeHandleScalingSubSection extends CanvasSectionObject {
 		}
 	}
 
-	onDraw(frameCount?: number, elapsedTime?: number): void {
+	onDraw(frameCount?: number | null, elapsedTime?: number | null): void {
 		this.context.fillStyle = 'white';
 		this.context.strokeStyle = 'black';
 		this.context.beginPath();
@@ -169,7 +169,7 @@ class ShapeHandleScalingSubSection extends CanvasSectionObject {
 			this.sectionProperties.mousePointerType = 'nwse-resize';
 	}
 
-	onMouseEnter(point: cool.SimplePoint, e: MouseEvent) {
+	onMouseEnter(point: cool.SimplePoint | null, e: MouseEvent) {
 		if (this.sectionProperties.cropModeEnabled)
 			this.context.canvas.style.cursor = this.sectionProperties.cropCursor;
 		else
@@ -211,8 +211,10 @@ class ShapeHandleScalingSubSection extends CanvasSectionObject {
 		return keep;
 	}
 
-	onMouseUp(point: cool.SimplePoint, e: MouseEvent): void {
+	onMouseUp(point: cool.SimplePoint | null, e: MouseEvent): void {
+		Util.ensureValue(this.containerObject);
 		if (this.containerObject.isDraggingSomething()) {
+			Util.ensureValue(point);
 			this.stopPropagating();
 			e.stopPropagation();
 
@@ -345,6 +347,7 @@ class ShapeHandleScalingSubSection extends CanvasSectionObject {
 
 	// While dragging a handle, we want to simulate handles to their final positions.
 	moveHandlesOnDrag(point: cool.SimplePoint, e: MouseEvent) {
+		Util.ensureValue(this.containerObject);
 		const shapeRecProps = this.calculateNewShapeRectangleProperties([
 			point.pX + this.myTopLeft[0] + app.activeDocument.activeView.viewedRectangle.pX1 - this.containerObject.getDocumentAnchor()[0],
 			point.pY + this.myTopLeft[1] + app.activeDocument.activeView.viewedRectangle.pY1 - this.containerObject.getDocumentAnchor()[1]
@@ -372,8 +375,10 @@ class ShapeHandleScalingSubSection extends CanvasSectionObject {
 			this.adjustSVGProperties(shapeRecProps);
 	}
 
-	onMouseMove(point: cool.SimplePoint, dragDistance: Array<number>, e: MouseEvent) {
+	onMouseMove(point: cool.SimplePoint | null, dragDistance: Array<number> | null, e: MouseEvent) {
+		Util.ensureValue(this.containerObject);
 		if (this.containerObject.isDraggingSomething()) {
+			Util.ensureValue(point);
 			this.stopPropagating();
 			e.stopPropagation();
 			this.sectionProperties.parentHandlerSection.sectionProperties.svg.style.opacity = 0.5;

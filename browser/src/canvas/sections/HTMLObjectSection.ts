@@ -70,7 +70,7 @@ class HTMLObjectSection extends CanvasSectionObject {
 			this.sectionProperties.objectDiv.style.top = top;
 	}
 
-	onDraw(frameCount?: number, elapsedTime?: number): void {
+	onDraw(frameCount?: number | null, elapsedTime?: number | null): void {
 		this.adjustHTMLObjectPosition();
 	}
 

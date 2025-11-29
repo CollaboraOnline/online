@@ -212,10 +212,12 @@ class AutoFillBaseSection extends CanvasSectionObject {
 	}
 
 	public onMouseMove(
-		point: cool.SimplePoint,
-		dragDistance: Array<number>,
+		point: cool.SimplePoint | null,
+		dragDistance: Array<number> | null,
 		e: MouseEvent,
 	) {
+		Util.ensureValue(this.containerObject);
+		Util.ensureValue(point);
 		if (
 			dragDistance === null ||
 			!this.sectionProperties.docLayer._cellAutoFillAreaPixels
@@ -232,12 +234,13 @@ class AutoFillBaseSection extends CanvasSectionObject {
 			this.autoScroll(this.getDocumentPositionFromLocal(point));
 	}
 
-	public onMouseUp(point: cool.SimplePoint, e: MouseEvent) {
+	public onMouseUp(point: cool.SimplePoint | null, e: MouseEvent) {
+		Util.ensureValue(point);
 		const p2 = this.getDocumentPositionFromLocal(point);
 		app.map._docLayer._postMouseEvent('buttonup', p2.x, p2.y, 1, 1, 0);
 	}
 
-	public onMouseDown(point: cool.SimplePoint, e: MouseEvent) {
+	public onMouseDown(point: cool.SimplePoint | null, e: MouseEvent) {
 		// revert coordinates to global and fire event again with position in the center
 		// inverse of convertPositionToCanvasLocale
 		const p2 = this.getCenterRegardingDocument();
@@ -253,7 +256,7 @@ class AutoFillBaseSection extends CanvasSectionObject {
 		this.setMarkerPosition();
 	}
 
-	public onDoubleClick(point: cool.SimplePoint, e: MouseEvent) {
+	public onDoubleClick(point: cool.SimplePoint | null, e: MouseEvent) {
 		const pos = this.getCenterRegardingDocument();
 		this.sectionProperties.docLayer._postMouseEvent(
 			'buttondown',

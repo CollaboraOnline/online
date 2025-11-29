@@ -142,9 +142,11 @@ class SlideBitmapManager {
 	}
 
 	private static cacheCompressedLayer(json: any, imgRawData: Uint8Array) {
-		if (!this.compressedSlideCache.has(json.slideHash)) {
-			this.compressedSlideCache.set(json.slideHash, []);
+		let cached = this.compressedSlideCache.get(json.slideHash);
+		if (cached == undefined) {
+			cached = [];
+			this.compressedSlideCache.set(json.slideHash, cached);
 		}
-		this.compressedSlideCache.get(json.slideHash).push({ json, imgRawData });
+		cached.push({ json, imgRawData });
 	}
 }

@@ -49,8 +49,8 @@ interface AutomatedTaskSet {
 
 class DebugManager {
 	private _map: MapInterface;
-	private _docLayer: DocLayerInterface;
-	private _painter: PainterInterface;
+	private _docLayer: DocLayerInterface | null;
+	private _painter: PainterInterface | null;
 	private debugOn: boolean;
 	private debugNeverStarted: boolean;
 	private _controls: ControlsInterface;
@@ -86,17 +86,17 @@ class DebugManager {
 	private logTrace: boolean;
 
 	public eventDelayWatchdog: boolean;
-	private _eventDelayTimeout: TimeoutHdl;
-	private _lastEventDelayTime: number;
-	private _lastEventDelay: number;
-	private _eventDelayWatchStart: number;
+	private _eventDelayTimeout: TimeoutHdl | null;
+	private _lastEventDelayTime?: number;
+	private _lastEventDelay?: number;
+	private _eventDelayWatchStart?: number;
 
 	private _typerLorem: string;
 	private _typerLoremPos: number;
 	private _typerTimeoutId: TimeoutHdl;
 
 	private _automatedUserTimeoutId: TimeoutHdl;
-	private _automatedUserTask: string;
+	private _automatedUserTask?: string;
 	private _automatedUserTasks: AutomatedTaskSet;
 	private _automatedUserQueue: string[];
 	private _automatedUserPhase: number;
@@ -110,6 +110,8 @@ class DebugManager {
 	}
 
 	public toggle(): void {
+		Util.ensureValue(this._painter);
+
 		if (!this.debugOn) {
 			this._start();
 		} else {
@@ -218,6 +220,7 @@ class DebugManager {
 	}
 
 	private _addDebugTools(): void {
+		Util.ensureValue(this._docLayer);
 		// eslint-disable-next-line @typescript-eslint/no-this-alias
 		const self = this; // easier than using (function (){}).bind(this) each time
 
@@ -226,11 +229,13 @@ class DebugManager {
 			category: 'Display',
 			startsOn: true,
 			onAdd: function () {
+				Util.ensureValue(self._painter);
 				self.overlayOn = true;
 				self._overlayData = {};
 				self._painter._addDebugOverlaySection();
 			},
 			onRemove: function () {
+				Util.ensureValue(self._painter);
 				self.overlayOn = false;
 				self._overlayData = {};
 				self._painter._removeDebugOverlaySection();
@@ -242,10 +247,12 @@ class DebugManager {
 			category: 'Display',
 			startsOn: false,
 			onAdd: function () {
+				Util.ensureValue(self._painter);
 				self.tileOverlaysOn = true;
 				self._painter.update();
 			},
 			onRemove: function () {
+				Util.ensureValue(self._painter);
 				self.tileOverlaysOn = false;
 				self._painter.update();
 			},
@@ -264,6 +271,7 @@ class DebugManager {
 				self._tileInvalidationTimeout();
 			},
 			onRemove: function () {
+				Util.ensureValue(self._painter);
 				self.tileInvalidationsOn = false;
 				self.clearOverlayMessage('tileInvalidationMessages');
 				self.clearOverlayMessage('tileInvalidationTime');
@@ -323,9 +331,11 @@ class DebugManager {
 			category: 'Display',
 			startsOn: false,
 			onAdd: function () {
+				Util.ensureValue(self._painter);
 				self._painter._addTilePixelGridSection();
 			},
 			onRemove: function () {
+				Util.ensureValue(self._painter);
 				self._painter._removeTilePixelGridSection();
 			},
 		});
@@ -335,9 +345,11 @@ class DebugManager {
 			category: 'Display',
 			startsOn: false,
 			onAdd: function () {
+				Util.ensureValue(self._painter);
 				self._painter._addPreloadMap();
 			},
 			onRemove: function () {
+				Util.ensureValue(self._painter);
 				self._painter._removePreloadMap();
 			},
 		});
@@ -348,9 +360,11 @@ class DebugManager {
 				category: 'Display',
 				startsOn: false,
 				onAdd: function () {
+					Util.ensureValue(self._painter);
 					self._painter._addSplitsSection();
 				},
 				onRemove: function () {
+					Util.ensureValue(self._painter);
 					self._painter._removeSplitsSection();
 				},
 			});
@@ -486,7 +500,7 @@ class DebugManager {
 				self.clearOverlayMessage('eventDelayTime');
 
 				if (self._eventDelayTimeout) clearTimeout(self._eventDelayTimeout);
-				delete self._eventDelayTimeout;
+				self._eventDelayTimeout = null;
 				delete self._eventDelayWatchStart;
 				delete self._lastEventDelayTime;
 				delete self._lastEventDelay;
@@ -619,6 +633,8 @@ class DebugManager {
 	}
 
 	private _randomizeSettings(): void {
+		Util.ensureValue(this._docLayer);
+		Util.ensureValue(this._painter);
 		// Toggle dark mode
 		const isDark = window.prefs.getBoolean('darkTheme');
 		if (Math.random() < 0.5) {
@@ -728,6 +744,7 @@ class DebugManager {
 	}
 
 	private _randomizeSidebar(): void {
+		Util.ensureValue(this._docLayer);
 		let sidebars = ['none', '.uno:SidebarDeck.PropertyDeck', '.uno:Navigator'];
 		if (this._docLayer.isImpress()) {
 			sidebars = sidebars.concat(['.uno:CustomAnimation', '.uno:ModifyPage']);
@@ -840,6 +857,7 @@ class DebugManager {
 	}
 
 	private _automatedUserTypeCellFormula(phase: number): number {
+		Util.ensureValue(this._docLayer);
 		let waitTime = 0;
 		switch (phase) {
 			case 0:
@@ -895,6 +913,7 @@ class DebugManager {
 	}
 
 	private _automatedUserInsertTypeShape(phase: number): number {
+		Util.ensureValue(this._docLayer);
 		let waitTime = 0;
 		switch (phase) {
 			case 0:
@@ -948,9 +967,9 @@ class DebugManager {
 				{
 					window.app.console.log('Automated User: Resize row smaller');
 					// Not necessary here, but nice to highlight the row being changed
-					app.sectionContainer
-						.getSectionWithName('row header')
-						._selectRow(1, 0);
+					const section = app.sectionContainer.getSectionWithName('row header');
+					Util.ensureValue(section);
+					section._selectRow(1, 0);
 					this._map.sendUnoCommand(
 						'.uno:RowHeight {"RowHeight":{"type":"unsigned short","value":200},"Row":{"type":"long","value":2}}',
 					);
@@ -961,9 +980,9 @@ class DebugManager {
 				{
 					window.app.console.log('Automated User: Resize row larger');
 					// Not necessary here, but nice to highlight the row being changed
-					app.sectionContainer
-						.getSectionWithName('row header')
-						._selectRow(1, 0);
+					const section = app.sectionContainer.getSectionWithName('row header');
+					Util.ensureValue(section);
+					section._selectRow(1, 0);
 					this._map.sendUnoCommand(
 						'.uno:RowHeight {"RowHeight":{"type":"unsigned short","value":2000},"Row":{"type":"long","value":2}}',
 					);
@@ -974,9 +993,9 @@ class DebugManager {
 				{
 					window.app.console.log('Automated User: Resize row auto');
 					// Selecting row is necessary here
-					app.sectionContainer
-						.getSectionWithName('row header')
-						._selectRow(1, 0);
+					const section = app.sectionContainer.getSectionWithName('row header');
+					Util.ensureValue(section);
+					section._selectRow(1, 0);
 					this._map.sendUnoCommand(
 						'.uno:SetOptimalRowHeight {"aExtraHeight":{"type":"unsigned short","value":0}}',
 					);
@@ -987,9 +1006,10 @@ class DebugManager {
 				{
 					window.app.console.log('Automated User: Resize column smaller');
 					// Not necessary here, but nice to highlight the column being changed
-					app.sectionContainer
-						.getSectionWithName('column header')
-						._selectColumn(1, 0);
+					const section =
+						app.sectionContainer.getSectionWithName('column header');
+					Util.ensureValue(section);
+					section._selectColumn(1, 0);
 					this._map.sendUnoCommand(
 						'.uno:ColumnWidth {"ColumnWidth":{"type":"unsigned short","value":400},"Column":{"type":"long","value":2}}',
 					);
@@ -1000,9 +1020,10 @@ class DebugManager {
 				{
 					window.app.console.log('Automated User: Resize column larger');
 					// Not necessary here, but nice to highlight the column being changed
-					app.sectionContainer
-						.getSectionWithName('column header')
-						._selectColumn(1, 0);
+					const section =
+						app.sectionContainer.getSectionWithName('column header');
+					Util.ensureValue(section);
+					section._selectColumn(1, 0);
 					this._map.sendUnoCommand(
 						'.uno:ColumnWidth {"ColumnWidth":{"type":"unsigned short","value":8000},"Column":{"type":"long","value":2}}',
 					);
@@ -1013,9 +1034,10 @@ class DebugManager {
 				{
 					window.app.console.log('Automated User: Resize column auto');
 					// Selecting column is necessary here
-					app.sectionContainer
-						.getSectionWithName('column header')
-						._selectColumn(1, 0);
+					const section =
+						app.sectionContainer.getSectionWithName('column header');
+					Util.ensureValue(section);
+					section._selectColumn(1, 0);
 					this._map.sendUnoCommand(
 						'.uno:SetOptimalColumnWidth {"aExtraWidth":{"type":"unsigned short","value":200}}',
 					);
@@ -1033,12 +1055,10 @@ class DebugManager {
 				{
 					window.app.console.log('Automated User: Insert row');
 					// Select just this row first, doesn't work if multiple rows are selected
-					app.sectionContainer
-						.getSectionWithName('row header')
-						._selectRow(1, 0);
-					app.sectionContainer
-						.getSectionWithName('row header')
-						.insertRowAbove(1);
+					const section = app.sectionContainer.getSectionWithName('row header');
+					Util.ensureValue(section);
+					section._selectRow(1, 0);
+					section.insertRowAbove(1);
 					waitTime = 2000;
 				}
 				break;
@@ -1046,12 +1066,11 @@ class DebugManager {
 				{
 					window.app.console.log('Automated User: Delete column');
 					// Select just this column first, doesn't work if multiple columns are selected
-					app.sectionContainer
-						.getSectionWithName('column header')
-						._selectColumn(1, 0);
-					app.sectionContainer
-						.getSectionWithName('column header')
-						.insertColumnBefore(1);
+					const section =
+						app.sectionContainer.getSectionWithName('column header');
+					Util.ensureValue(section);
+					section._selectColumn(1, 0);
+					section.insertColumnBefore(1);
 					waitTime = 2000;
 				}
 				break;
@@ -1066,10 +1085,10 @@ class DebugManager {
 				{
 					window.app.console.log('Automated User: Delete row');
 					// Select just this row first, otherwise multiple rows could get deleted
-					app.sectionContainer
-						.getSectionWithName('row header')
-						._selectRow(1, 0);
-					app.sectionContainer.getSectionWithName('row header').deleteRow(1);
+					const section = app.sectionContainer.getSectionWithName('row header');
+					Util.ensureValue(section);
+					section._selectRow(1, 0);
+					section.deleteRow(1);
 					waitTime = 2000;
 				}
 				break;
@@ -1077,12 +1096,11 @@ class DebugManager {
 				{
 					window.app.console.log('Automated User: Delete column');
 					// Select just this column first, otherwise multiple columns could get deleted
-					app.sectionContainer
-						.getSectionWithName('column header')
-						._selectColumn(1, 0);
-					app.sectionContainer
-						.getSectionWithName('column header')
-						.deleteColumn(1);
+					const section =
+						app.sectionContainer.getSectionWithName('column header');
+					Util.ensureValue(section);
+					section._selectColumn(1, 0);
+					section.deleteColumn(1);
 					waitTime = 2000;
 				}
 				break;
@@ -1113,6 +1131,7 @@ class DebugManager {
 	}
 
 	private _typeChar(charCode: number): void {
+		Util.ensureValue(this._docLayer);
 		if (this.tileInvalidationsOn) {
 			this.addTileInvalidationKeypress();
 		}
@@ -1271,6 +1290,7 @@ class DebugManager {
 		rectangleArray: number[] /* [x, y, width, height] in twips */,
 		command: string,
 	): void {
+		Util.ensureValue(this._docLayer);
 		if (!this.tileInvalidationsOn) {
 			return;
 		}
@@ -1299,7 +1319,7 @@ class DebugManager {
 		// Keypresses at the front of the queue that are older than 1s
 		// are probably stale and should be ignored.
 		const now = +new Date();
-		let oldestKeypress: number;
+		let oldestKeypress: number | undefined;
 		do {
 			oldestKeypress = this._tileInvalidationKeypressQueue.shift();
 		} while (oldestKeypress && now - oldestKeypress > 1000);
@@ -1349,6 +1369,7 @@ class DebugManager {
 
 		this._eventDelayWatchStart = performance.now();
 		this._eventDelayTimeout = setTimeout(() => {
+			Util.ensureValue(this._eventDelayWatchStart);
 			this._eventDelayTimeout = null;
 			this.reportEventDelay(performance.now() - this._eventDelayWatchStart);
 		}, 0);
@@ -1367,6 +1388,8 @@ class DebugManager {
 		const very_slow_time_threshold = 250;
 
 		const currentTime = performance.now();
+		Util.ensureValue(this._lastEventDelay);
+		Util.ensureValue(this._lastEventDelayTime);
 		if (
 			this._lastEventDelay < slow_time_threshold ||
 			delayMs > this._lastEventDelay ||

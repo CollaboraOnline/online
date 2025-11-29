@@ -233,11 +233,11 @@ class FormFieldButton extends HTMLObjectSection {
 		event.stopPropagation();
 	}
 
-	onMouseEnter(point: cool.SimplePoint, e: MouseEvent): void {
+	onMouseEnter(point: cool.SimplePoint | null, e: MouseEvent): void {
 		this.sectionProperties.mouseEntered = true;
 	}
 
-	onMouseLeave(point: cool.SimplePoint, e: MouseEvent): void {
+	onMouseLeave(point: cool.SimplePoint | null, e: MouseEvent): void {
 		this.sectionProperties.mouseEntered = false;
 	}
 

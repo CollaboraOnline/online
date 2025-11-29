@@ -22,8 +22,8 @@ class PreloadMapSection extends CanvasSectionObject {
 	}
 
 	onDraw(
-		frameCount?: number,
-		elapsedTime?: number,
+		frameCount?: number | null,
+		elapsedTime?: number | null,
 		subsetBounds?: Bounds,
 	): void {
 		var docLayer = app.map._docLayer;
@@ -105,7 +105,7 @@ class PreloadMapSection extends CanvasSectionObject {
 							range.part,
 							docLayer._selectedMode,
 						);
-						const tile: Tile = TileManager.get(coords);
+						const tile: Tile | undefined = TileManager.get(coords);
 
 						if (!tile)
 							canvas.fillStyle = 'rgba(128, 128, 128, 0.5)'; // grey

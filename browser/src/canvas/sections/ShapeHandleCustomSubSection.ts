@@ -31,7 +31,7 @@ class ShapeHandleCustomSubSection extends CanvasSectionObject {
 		this.sectionProperties.mousePointerType = 'grab';
 	}
 
-	onDraw(frameCount?: number, elapsedTime?: number): void {
+	onDraw(frameCount?: number | null, elapsedTime?: number | null): void {
 		this.context.fillStyle = 'yellow';
 		this.context.strokeStyle = 'black';
 		this.context.beginPath();
@@ -45,12 +45,14 @@ class ShapeHandleCustomSubSection extends CanvasSectionObject {
 		this.setPosition(this.sectionProperties.position.pX, this.sectionProperties.position.pY);
 	}
 
-	onMouseEnter(point: cool.SimplePoint, e: MouseEvent) {
+	onMouseEnter(point: cool.SimplePoint | null, e: MouseEvent) {
 		this.context.canvas.style.cursor = this.sectionProperties.mousePointerType;
 	}
 
-	onMouseUp(point: cool.SimplePoint, e: MouseEvent): void {
+	onMouseUp(point: cool.SimplePoint | null, e: MouseEvent): void {
+		Util.ensureValue(this.containerObject);
 		if (this.containerObject.isDraggingSomething()) {
+			Util.ensureValue(point);
 			const parameters = {
 				HandleNum: { type: 'long', value: this.sectionProperties.ownInfo.id },
 				NewPosX: { type: 'long', value: Math.round((point.pX + this.position[0]) * app.pixelsToTwips) },
@@ -64,7 +66,8 @@ class ShapeHandleCustomSubSection extends CanvasSectionObject {
 		}
 	}
 
-	onMouseMove(point: cool.SimplePoint, dragDistance: Array<number>, e: MouseEvent) {
+	onMouseMove(point: cool.SimplePoint | null, dragDistance: Array<number> | null, e: MouseEvent) {
+		Util.ensureValue(this.containerObject);
 		if (this.containerObject.isDraggingSomething()) {
 			this.stopPropagating();
 			e.stopPropagation();

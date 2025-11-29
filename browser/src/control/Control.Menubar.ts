@@ -1431,7 +1431,11 @@ class Menubar extends window.L.Control {
 		],
 
 		allowedViewModeActions: [
-			() => app.sectionContainer.getSectionWithName(app.CSections.CommentList.name).hasAnyComments() ? 'savecomments' : undefined,
+			() => {
+				const section = app.sectionContainer.getSectionWithName(app.CSections.CommentList.name);
+				Util.ensureValue(section);
+				return section.hasAnyComments() ? 'savecomments' : undefined;
+			},
 			'shareas', //file menu
 			'print','print-active-sheet', 'print-all-sheets', 'print-notespages', // file menu
 			'downloadas-odt', 'downloadas-doc', 'downloadas-docx', 'downloadas-rtf', // file menu

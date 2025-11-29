@@ -132,10 +132,11 @@ class Evented extends BaseClass {
 		context: any,
 	): void {
 		// Store handlers with 'foreign' contexts and their count in separate maps.
-		if (!this._eventsExt.has(type)) {
-			this._eventsExt.set(type, new Map());
+		let typeIndex = this._eventsExt.get(type);
+		if (typeIndex === undefined) {
+			typeIndex = new Map();
+			this._eventsExt.set(type, typeIndex);
 		}
-		const typeIndex = this._eventsExt.get(type);
 		const id: string =
 			Util.stamp(fn as unknown as IDAble) + '_' + foreignCtxtId;
 
@@ -143,7 +144,8 @@ class Evented extends BaseClass {
 			typeIndex.set(id, { fn: fn, ctx: context });
 
 			// keep track of the number of keys in the index to quickly check if it's empty
-			const count = this._numEvents.has(type) ? this._numEvents.get(type) : 0;
+			const res = this._numEvents.get(type);
+			const count = res === undefined ? 0 : res;
 
 			this._numEvents.set(type, count + 1);
 		}
@@ -168,10 +170,11 @@ class Evented extends BaseClass {
 			// Append just the handler to 'auto' map (context is implicitly known).
 
 			// eslint-disable-next-line no-lonely-if
-			if (!this._eventsAuto.has(type)) {
+			const evtAuto = this._eventsAuto.get(type);
+			if (evtAuto === undefined) {
 				this._eventsAuto.set(type, [{ fn: fn }]);
 			} else {
-				this._eventsAuto.get(type).push({ fn: fn });
+				evtAuto.push({ fn: fn });
 			}
 		}
 	}
@@ -180,8 +183,8 @@ class Evented extends BaseClass {
 		foreignCtxtId: number,
 		type: string,
 		fn: CEventListener,
-	): CallbackWithContext {
-		let listener: CallbackWithContext = null;
+	): CallbackWithContext | undefined {
+		let listener: CallbackWithContext | undefined = undefined;
 		const id: string =
 			Util.stamp(fn as unknown as IDAble) + '_' + foreignCtxtId;
 		const listeners = this._eventsExt.get(type);
@@ -189,7 +192,9 @@ class Evented extends BaseClass {
 		if (listeners && listeners.get(id)) {
 			listener = listeners.get(id);
 			listeners.delete(id);
-			this._numEvents.set(type, this._numEvents.get(type) - 1);
+			const count = this._numEvents.get(type);
+			Util.ensureValue(count);
+			this._numEvents.set(type, count - 1);
 		}
 
 		return listener;
@@ -198,8 +203,8 @@ class Evented extends BaseClass {
 	private _removeHandlerSelfCtxt(
 		type: string,
 		fn: CEventListener,
-	): CallbackWithoutContext {
-		let listener: CallbackWithoutContext = null;
+	): CallbackWithoutContext | undefined {
+		let listener: CallbackWithoutContext | undefined = undefined;
 		const listeners = this._eventsAuto.get(type);
 
 		if (listeners) {
@@ -240,7 +245,7 @@ class Evented extends BaseClass {
 			foreignCtxtId = Util.stamp(context);
 		}
 
-		let listener: CallbackWithContext | CallbackWithoutContext;
+		let listener: CallbackWithContext | CallbackWithoutContext | undefined;
 		if (foreignCtxtId) {
 			listener = this._removeHandlerForeignCtxt(foreignCtxtId, type, fn);
 		} else {
