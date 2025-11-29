@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-11-17 08:08+0100\n"
-"PO-Revision-Date: 2025-11-22 09:56+0000\n"
+"PO-Revision-Date: 2025-11-29 11:00+0000\n"
 "Last-Translator: Adolfo Jayme Barrientos <fitojb@ubuntu.com>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/collabora-online/"
 "ui/es/>\n"
@@ -776,10 +776,11 @@ msgid ""
 "To use Zotero specify your API key here. You can create your API key in "
 "your "
 msgstr ""
+"Para usar Zotero, indique aquí su clave de API. Puede crearla a través de la "
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:1386
 msgid "Zotero account API settings"
-msgstr ""
+msgstr "configuración de API de la cuenta de Zotero"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:1395
 msgid "Document Signing"
