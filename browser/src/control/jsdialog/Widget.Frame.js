@@ -121,6 +121,12 @@ function buildFrame(parentContainer, data, builder, isFormControlGroup) {
 			'ui-frame-label ui-legend ' + builder.options.cssClass,
 			frame,
 		);
+
+		label.innerText = builder._cleanText(_extractLabelText(data.children[0]));
+		label.id = data.children[0].id;
+		if (data.children[0].visible === false)
+			window.L.DomUtil.addClass(label, 'hidden');
+		builder.postProcess(frame, data.children[0]);
 	} else {
 		container = window.L.DomUtil.create(
 			'div',
@@ -135,19 +141,7 @@ function buildFrame(parentContainer, data, builder, isFormControlGroup) {
 			container,
 		);
 		frame.id = data.id + '-frame';
-
-		label = window.L.DomUtil.create(
-			'label',
-			'ui-frame-label ' + builder.options.cssClass,
-			frame,
-		);
-		label.htmlFor = data.id + '-content';
 	}
-	label.innerText = builder._cleanText(_extractLabelText(data.children[0]));
-	label.id = data.children[0].id;
-	if (data.children[0].visible === false)
-		window.L.DomUtil.addClass(label, 'hidden');
-	builder.postProcess(frame, data.children[0]);
 
 	const frameChildren = window.L.DomUtil.create(
 		'div',
@@ -157,7 +151,6 @@ function buildFrame(parentContainer, data, builder, isFormControlGroup) {
 	frameChildren.id = data.id + '-content';
 	$(frameChildren).addClass('expanded');
 
-	// skipping the first child(label/legend)
-	const children = data.children.slice(1);
+	const children = isFormControlGroup ? data.children.slice(1) : data.children;
 	builder.build(frameChildren, children);
 }
