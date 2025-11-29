@@ -26,6 +26,10 @@ img.sidebar.ui-image {
 	height: 44px;
 }
 
+#layoutpanel_icons {
+	width: 100%;
+}
+
 .sidebar.ui-grid {
 	row-gap: 8px;
 }
