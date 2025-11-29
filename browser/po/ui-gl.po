@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-11-17 08:08+0100\n"
-"PO-Revision-Date: 2025-11-28 10:04+0000\n"
+"PO-Revision-Date: 2025-11-29 11:00+0000\n"
 "Last-Translator: \"Miguel A. Bouzada\" <mbouzada@gmail.com>\n"
 "Language-Team: Galician <https://hosted.weblate.org/projects/"
 "collabora-online/ui/gl/>\n"
@@ -3252,10 +3252,11 @@ msgstr "Recursos de hardware abondo para un rendemento óptimo"
 #: src/control/Control.ServerAuditDialog.ts:109
 msgid "Slow Kit jail setup with copying, cannot bind-mount."
 msgstr ""
+"Configuración lenta da gaiola de Kit, con copia e sen montaxe vinculado."
 
 #: src/control/Control.ServerAuditDialog.ts:113
 msgid "Fast kit jail bind mounting enabled"
-msgstr ""
+msgstr "Activada a gaiola de Kit rápida, con montaxe vinculado"
 
 #: src/control/Control.ServerAuditDialog.ts:118
 msgid "Poorly performing proxying of all network requests."
