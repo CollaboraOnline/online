@@ -3,8 +3,12 @@
 # List streams, elements and attributes from a zipped xml container
 
 import re
+import os
 import sys
 import zipfile
+import urllib3
+import requests
+import tempfile
 import xml.etree.ElementTree as ET
 from typing import List
 from urllib.parse import urlparse
@@ -77,7 +81,6 @@ def main(zip_paths: List[str]):
             read_and_aggregate(zip_path, file_counts, element_counts, attribute_counts)
         except Exception as e:
             print(f"  [!] Not a zip file {zip_path}: {e}", file=sys.stderr)
-    print("\n", file=sys.stderr)
 
     # Helper to print a sorted counter (by count desc, then name)
     def print_sorted_counter(title, counter: Counter):
@@ -112,13 +115,39 @@ def compare_files(before, after):
                 same_count += 1;
             else:
                 short_key = shorten_tag(key);
-                print(f"\t{short_key}\t{before[key]}\t{after[key]}")
+                print(f"\t{before[key]}\t{after[key]}\t{short_key}")
         print(f"\t<identical>\t{same_count}")
         print()
 
     print_compare_counter("File tags:", file_counts[0], file_counts[1])
     print_compare_counter("Element tags:", element_counts[0], element_counts[1])
     print_compare_counter("Attribute names:", attribute_counts[0], attribute_counts[1])
+
+def roundtrip_file(name):
+
+    # Disable SSL warnings if using self-signed certs
+    urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
+
+    extn = os.path.splitext(name)[1][1:]
+    cool_url = "https://localhost:9980/cool/convert-to/" + extn
+
+    with open(name, "rb") as f:
+        files = {"data": f}
+        data = {"format": extn}
+        response = requests.post(cool_url, files=files, data=data, verify=False)
+        if not response.ok:
+            print(f"Conversion request failed with error {response.status_code}: {response.text} vs {cool_url}\n", file=sys.stderr)
+            sys.exit(1)
+
+        outname = tempfile.NamedTemporaryFile(delete=False)
+
+        # Save output
+        with open(outname.name, "wb") as out:
+            out.write(response.content)
+
+        compare_files(name, outname.name)
+
+        outname.close()
 
 if __name__ == "__main__":
     if len(sys.argv) < 2 or sys.argv[1] == '--help':
@@ -130,5 +159,11 @@ if __name__ == "__main__":
             print(f"Usage: {Path(sys.argv[0]).name} --compare <before-path> <after-path>\n", file=sys.stderr)
             sys.exit(1)
         compare_files(sys.argv[2], sys.argv[3])
+    if sys.argv[1] == '--roundtrip':
+        if len(sys.argv) != 3:
+            print(f"Usage: {Path(sys.argv[0]).name} --roundtip <file-path>\n", file=sys.stderr)
+            sys.exit(1)
+
+        roundtrip_file(sys.argv[2])
     else:
         main(sys.argv[1:])
