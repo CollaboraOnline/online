@@ -62,10 +62,13 @@ function _iconViewEntry(
 	parentContainer: Element,
 	parentData: IconViewJSON,
 	entry: IconViewEntry,
+	isFirstEntry: boolean,
 	builder: JSBuilder,
 ) {
 	const disabled = parentData.enabled === false;
 	const hasText = entry.text && parentData.textWithIconEnabled;
+	const isMultiSelect = parentData.selectionmode === 'multiple';
+	const ariaStateAttr = isMultiSelect ? 'aria-selected' : 'aria-checked';
 
 	if (entry.separator && entry.separator === true) {
 		window.L.DomUtil.create(
@@ -85,13 +88,13 @@ function _iconViewEntry(
 	//id is needed to find the element to regain focus after widget is updated. see updateWidget in Control.JSDialogBuilder.js
 	entryContainer.id = parentData.id + '_' + entry.row;
 
-	entryContainer.setAttribute('role', 'option');
-	// By default `aria-selected` should be false
-	entryContainer.setAttribute('aria-selected', 'false');
+	entryContainer.setAttribute('role', isMultiSelect ? 'option' : 'radio');
+	// By default aria-selected/aria-checked should be false
+	entryContainer.setAttribute(ariaStateAttr, 'false');
 
 	if (entry.selected && entry.selected === true) {
 		$(entryContainer).addClass('selected');
-		entryContainer.setAttribute('aria-selected', 'true');
+		entryContainer.setAttribute(ariaStateAttr, 'true');
 	}
 
 	if (entry.ondemand) {
@@ -106,7 +109,7 @@ function _iconViewEntry(
 		else placeholder.title = '';
 
 		// Add tabindex attribute for accessibility, enabling keyboard navigation in the icon preview
-		entryContainer.setAttribute('tabindex', '0');
+		entryContainer.setAttribute('tabindex', isFirstEntry ? '0' : '-1');
 		JSDialog.OnDemandRenderer(
 			builder,
 			parentData.id,
@@ -125,15 +128,21 @@ function _iconViewEntry(
 	if (!disabled) {
 		const singleClick = parentData.singleclickactivate === true;
 		$(entryContainer).click(function () {
+			$('#' + parentData.id + ' .ui-iconview-entry[tabindex="0"]').each(
+				function () {
+					this.setAttribute('tabindex', '-1');
+				},
+			);
+
+			$('#' + parentData.id + ' .ui-iconview-entry.selected').each(function () {
+				$(this).removeClass('selected');
+				this.setAttribute(ariaStateAttr, 'false');
+			});
+
 			entryContainer.setAttribute('tabindex', '0');
 			entryContainer.focus();
 			//avoid re-selecting already selected entry
 			if ($(entryContainer).hasClass('selected')) return;
-
-			$('#' + parentData.id + ' .ui-iconview-entry').each(function () {
-				$(this).removeClass('selected');
-				this.setAttribute('aria-selected', 'false');
-			});
 
 			builder.callback('iconview', 'select', parentData, entry.row, builder);
 			if (singleClick) {
@@ -150,12 +159,12 @@ function _iconViewEntry(
 		entryContainer.addEventListener('contextmenu', function (e: Event) {
 			$('#' + parentData.id + ' .ui-iconview-entry').each(function () {
 				$(this).removeClass('selected');
-				this.setAttribute('aria-selected', 'false');
+				this.setAttribute(ariaStateAttr, 'false');
 			});
 
 			builder.callback('iconview', 'select', parentData, entry.row, builder);
 			$(entryContainer).addClass('selected');
-			entryContainer.setAttribute('aria-selected', 'true');
+			entryContainer.setAttribute(ariaStateAttr, 'true');
 
 			builder.callback(
 				'iconview',
@@ -193,15 +202,22 @@ JSDialog.iconView = function (
 		parentContainer,
 	);
 	container.id = data.id;
-	container.setAttribute('role', 'listbox');
+	const isMultiSelect = data.selectionmode === 'multiple';
+
+	if (isMultiSelect) {
+		container.setAttribute('role', 'listbox');
+		container.setAttribute('aria-multiselectable', 'true');
+	} else {
+		container.setAttribute('role', 'radiogroup');
+	}
 
 	JSDialog.SetupA11yLabelForNonLabelableElement(container, data, builder);
 
 	const disabled = data.enabled === false;
 	if (disabled) window.L.DomUtil.addClass(container, 'disabled');
 
-	for (const i in data.entries) {
-		_iconViewEntry(container, data, data.entries[i], builder);
+	for (let i = 0; i < data.entries.length; i++) {
+		_iconViewEntry(container, data, data.entries[i], i === 0, builder);
 	}
 
 	const updateAllIndexes = () => {
@@ -235,12 +251,14 @@ JSDialog.iconView = function (
 		container.scrollTop = offsetTop;
 	}
 
+	const ariaStateAttr = isMultiSelect ? 'aria-selected' : 'aria-checked';
+
 	container.onSelect = (position: number) => {
 		$(container)
 			.children('.selected')
 			.each(function () {
 				$(this).removeClass('selected');
-				this.setAttribute('aria-selected', 'false');
+				this.setAttribute(ariaStateAttr, 'false');
 			});
 
 		const entry =
@@ -250,7 +268,7 @@ JSDialog.iconView = function (
 
 		if (entry) {
 			window.L.DomUtil.addClass(entry, 'selected');
-			entry.setAttribute('aria-selected', 'true');
+			entry.setAttribute(ariaStateAttr, 'true');
 
 			if (builder.options.useScrollAnimation !== false) {
 				const blockOption = JSDialog.ScrollIntoViewBlockOption('nearest');
@@ -293,7 +311,9 @@ JSDialog.iconView = function (
 		}
 	};
 
-	JSDialog.KeyboardGridNavigation(container);
+	if (isMultiSelect) JSDialog.KeyboardListNavigation(container);
+	else JSDialog.KeyboardRadioGroupNavigation(container);
+
 	container.addEventListener('keydown', function (e: KeyboardEvent) {
 		if (e.key !== 'Enter' && e.key !== ' ' && e.code !== 'Space') return;
 
@@ -311,28 +331,6 @@ JSDialog.iconView = function (
 			builder.callback('iconview', 'select', data, selectedIndex, builder);
 		else if (e.key === 'Enter')
 			builder.callback('iconview', 'activate', data, selectedIndex, builder);
-	});
-
-	// ensures that aria-selected is updated on initial focus on iconview entries
-	container.addEventListener('focusin', function (e: FocusEvent) {
-		const target = e.target as HTMLElement;
-
-		if (
-			!target.classList.contains('ui-iconview-entry') ||
-			target.getAttribute('aria-selected') === 'true'
-		)
-			return;
-
-		// remove aria-selected from previously selected entry
-		const previouslySelected = container.querySelector(
-			'.ui-iconview-entry[aria-selected="true"]',
-		);
-		if (previouslySelected) {
-			previouslySelected.setAttribute('aria-selected', 'false');
-		}
-
-		// set aria-selected on focused entry
-		target.setAttribute('aria-selected', 'true');
 	});
 
 	return false;
