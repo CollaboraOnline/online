@@ -280,12 +280,16 @@ class SettingIframe {
 		if (!element) return;
 
 		window.accessToken = element.dataset.accessToken;
+		if (!window.accessToken) {
+			throw new Error('Access token is missing in initial variables.');
+		}
+
 		window.accessTokenTTL = element.dataset.accessTokenTtl;
 		window.enableDebug = element.dataset.enableDebug === 'true';
 		window.enableAccessibility = element.dataset.enableAccessibility === 'true';
-		window.wopiSettingBaseUrl = element.dataset.wopiSettingBaseUrl;
-		window.iframeType = element.dataset.iframeType;
-		window.cssVars = element.dataset.cssVars;
+		window.wopiSettingBaseUrl = element.dataset.wopiSettingBaseUrl ?? '';
+		window.iframeType = element.dataset.iframeType || 'user';
+		window.cssVars = element.dataset.cssVars || '';
 		if (window.cssVars) {
 			window.cssVars = atob(window.cssVars);
 			const sheet = new CSSStyleSheet();
