@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="desktop">
+ <id>com.collabora.Office</id>
+ <metadata_license>CC0-1.0</metadata_license>
+ <project_license>MPL-2.0</project_license>
+ <name>Collabora Office Desktop</name>
+ <summary>The Collabora Office productivity suite</summary>
+ <description>
+  <p>Collabora Office Desktop brings the familiar Collabora Online experience to your computer - so you can create, edit, and present with a beautiful, modern UI. Built on trusted LibreOffice technology and backed by the largest team of LibreOffice developers worldwide, it delivers excellent interoperability with ODF and Microsoft Office formats (DOCX/XLSX/PPTX), and exports to PDF with ease. Your documents stay on your device unless you choose to share them - privacy by design.</p>
+ </description>
+ <launchable type="desktop-id">com.collabora.Office.desktop</launchable>
+ <url type="homepage">https://collaboraoffice.com</url>
+ <screenshots>
+  <screenshot type="default">
+   <image>https://col.la/codelinuxwriter</image>
+   <caption>Sample Writer document</caption>
+  </screenshot>
+  <screenshot>
+   <image>https://col.la/codelinuxcalc</image>
+   <caption>Sample Calc document</caption>
+  </screenshot>
+  <screenshot>
+   <image>https://col.la/codelinuximpress</image>
+   <caption>Sample Impress document</caption>
+  </screenshot>
+  <screenshot>
+   <image>https://col.la/codelinuxdraw</image>
+   <caption>Sample Draw document</caption>
+  </screenshot>
+ </screenshots>
+ <developer id="com.collabora">
+   <name>Collabora Productivity Limited</name>
+ </developer>
+ <kudos>
+  <kudo>HiDpiIcon</kudo>
+  <kudo>HighContrast</kudo>
+  <kudo>ModernToolkit</kudo>
+  <kudo>UserDocs</kudo>
+ </kudos>
+ <content_rating type="oars-1.0"/>
+ <releases>
+  <release version="25.04.8.0" date="2025-11-26"/>
+ </releases>
+</component>
