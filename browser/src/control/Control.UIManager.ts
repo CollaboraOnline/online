@@ -1272,6 +1272,20 @@ class UIManager extends window.L.Control {
 		return $('.cool-ruler').is(':visible');
 	}
 
+	/*
+	 * Shows the StyleListDeck (sidebar).
+	 * If 'visible' already, then does nothing as this
+	 * is called from 'stylesview' dropdown and buttons
+	 * in a dropdown aren't toggle buttons.
+	 */
+	showStyleListDeck(): void {
+		const styleListDeck = document.querySelector('#StyleListDeck');
+		if (styleListDeck && (styleListDeck as any).checkVisibility())
+			return;
+
+		this._map.sendUnoCommand('.uno:SidebarDeck.StyleListDeck');
+	}
+
 	/**
 	 * Returns whether the document is in fullscreen mode.
 	 */
