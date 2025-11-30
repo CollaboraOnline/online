@@ -250,6 +250,10 @@ JSDialog.notebookbarIconView = function (
 			iconview.updateRendersImpl(pos, data.id, dropdownContainer);
 	};
 
+	iconview.updateSelection = (position: number) => {
+		iconview.updateSelectionImpl(position, data);
+	};
+
 	/*
 		we need to override `iconview.requestRenders` because `iconview` is created
 		with an `id = data.id + '-iconview'` which core doesn't recoganize. so
