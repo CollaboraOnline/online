@@ -1823,6 +1823,7 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 		const hasDropdownArrow = !!(options && options.hasDropdownArrow);
 		const isSplitButton = !!data.applyCallback;
 		const isDropdownButton = !!data.dropdown;
+		var shouldHaveArrowbackground = hasDropdownArrow || isDropdownButton;
 
 		/**
 		 * Determines if the dropdown arrow should be interactive (focusable button) vs decorative (div).
@@ -1954,16 +1955,27 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 				tooltip = JSDialog.ShortcutsUtil.getShortcut(tooltip, data.command);
 			div.setAttribute('data-cooltip', tooltip);
 
+			// Set aria-pressed only if:
+			// 1. No dropdown arrow and
+			// 2. A real toggle button
+			const setAriaPressedForToggleBtn = (value) => {
+				if (!shouldHaveArrowbackground &&
+					data.command &&
+					builder.map['stateChangeHandler'] &&
+					builder.map['stateChangeHandler'].getItemValue(data.command) !== undefined) {
+					button.setAttribute('aria-pressed', value);
+				}
+			};
 			const selectFn = () => {
 				window.L.DomUtil.addClass(button, 'selected');
 				window.L.DomUtil.addClass(div, 'selected');
-				button.setAttribute('aria-pressed', true);
+				setAriaPressedForToggleBtn(true);
 			};
 
 			const unSelectFn = () => {
 				window.L.DomUtil.removeClass(button, 'selected');
 				window.L.DomUtil.removeClass(div, 'selected');
-				button.setAttribute('aria-pressed', false);
+				setAriaPressedForToggleBtn(false);
 			};
 
 			if (data.command) {
@@ -2004,10 +2016,10 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 			controls['label'] = span;
 		}
 
-		if (hasDropdownArrow || isDropdownButton) {
+		var arrowbackground;
+		if (shouldHaveArrowbackground) {
 			$(div).addClass('has-dropdown');
 			div.setAttribute('role', 'group');
-			var arrowbackground;
 			// isArrowInteractive is true for split buttons or dropdown buttons
 			if (isArrowInteractive) {
 				// Arrow should be a real button (user can interact with it)
@@ -2061,7 +2073,8 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 			// Only set aria-expanded on the button if the arrow is not interactive
 			if (!isArrowInteractive)
 				button.setAttribute('aria-expanded', open);
-			arrowbackground.setAttribute('aria-expanded', open);
+			else
+				arrowbackground.setAttribute('aria-expanded', open);
 		};
 
 		var openToolBoxMenu = function(event) {
