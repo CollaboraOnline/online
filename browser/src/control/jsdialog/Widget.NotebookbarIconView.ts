@@ -59,9 +59,9 @@ function _getDropdownContent(data: any) {
 				type: 'json',
 				content: {
 					id: 'format-style-list-dialog',
-					type: 'toolitem',
+					type: 'customtoolitem',
 					text: _('Open Styles Sidebar'),
-					command: '.uno:SidebarDeck.StyleListDeck',
+					command: 'showstylelistdeck',
 					icon: 'lc_stylepreviewmore.svg',
 				},
 			},
