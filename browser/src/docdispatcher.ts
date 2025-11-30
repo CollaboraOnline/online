@@ -307,6 +307,10 @@ class Dispatcher {
 			app.map.uiManager.toggleRuler();
 		};
 
+		this.actionsMap['showstylelistdeck'] = () => {
+			app.map.uiManager.showStyleListDeck();
+		};
+
 		this.actionsMap['showstatusbar'] = () => {
 			app.map.uiManager.toggleStatusBar();
 		};
