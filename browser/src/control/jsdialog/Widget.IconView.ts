@@ -211,6 +211,23 @@ JSDialog.iconView = function (
 		iconview.scrollTop = offsetTop;
 	}
 
+	iconview.updateSelectionImpl = (
+		position: number,
+		iconViewData: IconViewJSON,
+	) => {
+		for (const entry of iconViewData.entries) {
+			entry.selected = false;
+		}
+
+		if (iconViewData.entries.length > position) {
+			iconViewData.entries[position].selected = true;
+		}
+	};
+
+	iconview.updateSelection = (position: number) => {
+		iconview.updateSelectionImpl(position, data);
+	};
+
 	iconview.onSelect = (position: number) => {
 		$(iconview)
 			.children('.selected')
@@ -221,6 +238,8 @@ JSDialog.iconView = function (
 
 		const entry =
 			iconview.children.length > position ? iconview.children[position] : null;
+
+		iconview.updateSelection(position);
 
 		if (entry) {
 			window.L.DomUtil.addClass(entry, 'selected');
