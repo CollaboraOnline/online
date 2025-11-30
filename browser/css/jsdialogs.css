@@ -3020,3 +3020,8 @@ div [id^='themeview'].ui-iconview-entry, div [id^='themeview1col'].ui-iconview-e
 #SpecialCharactersDialog #showcharset.jsdialog.ui-iconview {
 	grid-template-columns: repeat(16, 1fr);
 }
+
+/* Writer - Select Table Cell - Sidebar - Table - Miscellaneous - Border */
+#borders.ui-iconview.one-child-popup {
+	grid-template-columns: repeat(4, 1fr);
+}
