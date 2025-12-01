@@ -126,8 +126,14 @@ class Toolbar extends JSDialogComponent {
 		this.create();
 	}
 
+	getItemElement(id: string) {
+		let item = this.parentContainer?.querySelector('[modelId="' + id + '"]');
+		if (!item) item = this.parentContainer?.querySelector('[id="' + id + '"]');
+		return item;
+	}
+
 	isItemHidden(id: string): boolean {
-		const item = this.parentContainer?.querySelector('[id="' + id + '"]');
+		const item = this.getItemElement(id);
 		if (!item) return true;
 		return item.classList.contains('hidden');
 	}
@@ -149,7 +155,7 @@ class Toolbar extends JSDialogComponent {
 	}
 
 	isItemDisabled(id: string): boolean {
-		const item = this.parentContainer.querySelector('[id="' + id + '"]');
+		const item = this.getItemElement(id);
 		if (!item) return true;
 		return (
 			item.hasAttribute('disabled') && item.getAttribute('disabled') !== 'false'

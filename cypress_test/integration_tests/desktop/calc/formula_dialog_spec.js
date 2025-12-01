@@ -6,7 +6,6 @@ var helper = require('../../common/helper');
 describe(['tagdesktop'], 'Formula dialog tests', function() {
 
 	beforeEach(function() {
-		//cy.viewport(1920,1080);
 		helper.setupAndLoadDocument('calc/formula_dialog.ods');
 	});
 
@@ -23,5 +22,14 @@ describe(['tagdesktop'], 'Formula dialog tests', function() {
 		cy.wait(500); /* wait for position changes */
 
 		cy.cGet('.ui-dialog').compareSnapshot('formula_dialog_accrintm', 0.1);
+
+		cy.wait(100);
+
+		// collapse to selection mode
+		cy.cGet('#FormulaDialog #RB_ARG1-button').click();
+
+		cy.wait(500); /* wait for position changes */
+
+		cy.cGet('.ui-dialog').compareSnapshot('formula_dialog_accrintm_collapsed', 0.1);
 	});
 });
