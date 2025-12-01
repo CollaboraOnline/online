@@ -64,6 +64,10 @@ class ViewController: NSViewController, WKScriptMessageHandlerWithReply, WKNavig
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        // Set dark background on the view to prevent white flash
+        self.view.wantsLayer = true
+        self.view.layer?.backgroundColor = NSColor(red: 0x12/255.0, green: 0x12/255.0, blue: 0x12/255.0, alpha: 1.0).cgColor
+
         // Setup jsHandler as the entry point co call back from JavaScript
         let contentController = WKUserContentController()
         contentController.addScriptMessageHandler(self, contentWorld: .page, name: "debug")
@@ -79,6 +83,12 @@ class ViewController: NSViewController, WKScriptMessageHandlerWithReply, WKNavig
         webView = WKWebView(frame: .zero, configuration: config)
         webView.navigationDelegate = self
         webView.uiDelegate = self
+
+        // Set dark background to prevent white flash during load - set to opaque dark
+        if #available(macOS 12.0, *) {
+            webView.underPageBackgroundColor = NSColor(red: 0x12/255.0, green: 0x12/255.0, blue: 0x12/255.0, alpha: 1.0)
+        }
+        webView.setValue(false, forKey: "drawsBackground")
 
 #if DEBUG
         // Enable possibility to debug the webview from Safari
