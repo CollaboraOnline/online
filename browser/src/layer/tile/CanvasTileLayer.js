@@ -2228,7 +2228,6 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 		this._lastSearchResult = null;
 		this._searchResults = null;
 		this._searchTerm = null;
-		this._searchResultsLayer.clearLayers();
 	},
 
 	_onStateChangedMsg: function (textMsg) {
@@ -3852,16 +3851,7 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 		this._references = new CReferences(this._canvasOverlay);
 		this._referencesAll = [];
 
-		// This layergroup contains all the layers corresponding to other's view
-		this._viewLayerGroup = new window.L.LayerGroup();
-		if (!app.isReadOnly()) {
-			map.addLayer(this._viewLayerGroup);
-		}
-
 		this._debug = map._debug;
-
-		this._searchResultsLayer = new window.L.LayerGroup();
-		map.addLayer(this._searchResultsLayer);
 
 		app.socket.sendMessage('commandvalues command=.uno:AcceptTrackedChanges');
 
