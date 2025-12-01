@@ -262,7 +262,7 @@
         del $(OutDir)..\..\Release\program\xsltdlglo.dll
         del $(OutDir)..\..\Release\program\xsltfilterlo.dll
         del $(OutDir)..\..\Release\program\xstor.dll
-        xcopy ..\templates $(OutDir)..\templates\ /s /f /y
+        xcopy ..\..\..\browser\templates $(OutDir)..\templates\ /s /f /y
       </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
