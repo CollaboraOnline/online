@@ -170,6 +170,7 @@
         xcopy ..\..\..\browser\dist\src\layer\tile\CanvasTileUtils.js $(OutDir)..\cool\src\layer\tile\ /f /y
         xcopy ..\..\..\browser\dist\src\layer\tile\TileWorker.js $(OutDir)..\cool\src\layer\tile\ /f /y
         xcopy $(LO_PATH) $(OutDir)..\ /s /f /y /exclude:..\xcopy.excludes
+        del $(OutDir)*.com
         del $(OutDir)..\..\Release\program\avmedialo.dll
         del $(OutDir)..\..\Release\program\basctllo.dll
         del $(OutDir)..\..\Release\program\basprovlo.dll
