@@ -22,7 +22,7 @@
     <message>
         <location filename="../coda-qt.cpp" line="309"/>
         <source>Print to File</source>
-        <translation type="unfinished"></translation>
+        <translation>Presi al dosiero</translation>
     </message>
     <message>
         <location filename="../coda-qt.cpp" line="313"/>
@@ -32,12 +32,12 @@
     <message>
         <location filename="../coda-qt.cpp" line="325"/>
         <source>Save Print Output As</source>
-        <translation type="unfinished"></translation>
+        <translation>Konservi presaĵon kiel</translation>
     </message>
     <message>
         <location filename="../coda-qt.cpp" line="327"/>
         <source>PDF Files (*.pdf);;All Files (*)</source>
-        <translation type="unfinished"></translation>
+        <translation>PDF-dosieroj (*.pdf);;Ĉiuj dosieroj (*)</translation>
     </message>
     <message>
         <location filename="../coda-qt.cpp" line="343"/>
@@ -116,7 +116,7 @@
     <message>
         <location filename="../WebView.cpp" line="111"/>
         <source>Unsaved Changes</source>
-        <translation type="unfinished"></translation>
+        <translation>Nekonservitaj ŝanĝoj</translation>
     </message>
     <message>
         <location filename="../WebView.cpp" line="112"/>
