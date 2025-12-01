@@ -508,7 +508,7 @@ static std::wstring new_document(CODA_OPEN_CONTROL id)
     switch (id)
     {
         case CODA_OPEN_CONTROL::NEW_TEXT:
-            templateBasename = L"Text Document";
+            templateBasename = L"TextDocument";
             templateExtension = L"odt";
             break;
         case CODA_OPEN_CONTROL::NEW_SPREADSHEET:
