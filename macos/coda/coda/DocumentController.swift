@@ -202,7 +202,7 @@ final class DocumentController: NSDocumentController {
 
     private func templateNameAndExt(for kind: NewKind) -> (String, String)? {
         switch kind {
-        case .text:         return ("Text Document", "odt")
+        case .text:         return ("TextDocument", "odt")
         case .spreadsheet:  return ("Spreadsheet", "ods")
         case .presentation: return ("Presentation", "odp")
         }
