@@ -432,4 +432,8 @@ class ViewLayoutBase {
 
 		this.scroll(pX, pY);
 	}
+
+	public setOverviewPageVisArea(point: cool.SimplePoint): void {
+		this.scrollTo(point.pX, point.pY);
+	}
 }
