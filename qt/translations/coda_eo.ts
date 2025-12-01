@@ -6,18 +6,18 @@
     <message>
         <location filename="../coda-qt.cpp" line="287"/>
         <source>Print Document</source>
-        <translation type="unfinished"></translation>
+        <translation>Presi dokumenton</translation>
     </message>
     <message>
         <location filename="../coda-qt.cpp" line="295"/>
         <source>Select Printer:</source>
-        <translation type="unfinished"></translation>
+        <translation>Elektu presilon:</translation>
     </message>
     <message>
         <location filename="../coda-qt.cpp" line="304"/>
         <location filename="../coda-qt.cpp" line="377"/>
         <source>Default Printer</source>
-        <translation type="unfinished"></translation>
+        <translation>Apriora presilo</translation>
     </message>
     <message>
         <location filename="../coda-qt.cpp" line="309"/>
@@ -42,12 +42,12 @@
     <message>
         <location filename="../coda-qt.cpp" line="343"/>
         <source>Print</source>
-        <translation type="unfinished"></translation>
+        <translation>Presi</translation>
     </message>
     <message>
         <location filename="../coda-qt.cpp" line="344"/>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Rezigni</translation>
     </message>
     <message>
         <location filename="../coda-qt.cpp" line="368"/>
@@ -72,43 +72,43 @@
     <message>
         <location filename="../coda-qt.cpp" line="573"/>
         <source>Text Documents (*.odt);;All Files (*)</source>
-        <translation type="unfinished"></translation>
+        <translation>Tekstaj dokumentoj (*.odt);;Ĉiuj dosieroj (*)</translation>
     </message>
     <message>
         <location filename="../coda-qt.cpp" line="575"/>
         <source>Spreadsheets (*.ods);;All Files (*)</source>
-        <translation type="unfinished"></translation>
+        <translation>Kalkultabeloj (*.ods);;Ĉiuj dosieroj (*)</translation>
     </message>
     <message>
         <location filename="../coda-qt.cpp" line="577"/>
         <source>Presentations (*.odp);;All Files (*)</source>
-        <translation type="unfinished"></translation>
+        <translation>Prezentaĵoj (*.odp);;Ĉiuj dosieroj (*)</translation>
     </message>
     <message>
         <location filename="../coda-qt.cpp" line="579"/>
         <location filename="../coda-qt.cpp" line="964"/>
         <source>All Files (*)</source>
-        <translation type="unfinished"></translation>
+        <translation>Ĉiuj dosieroj (*)</translation>
     </message>
     <message>
         <location filename="../coda-qt.cpp" line="583"/>
         <source>Save Document</source>
-        <translation type="unfinished"></translation>
+        <translation>Konservi dokumenton</translation>
     </message>
     <message>
         <location filename="../coda-qt.cpp" line="858"/>
         <source>Open File</source>
-        <translation type="unfinished"></translation>
+        <translation>Malfermi dosieron</translation>
     </message>
     <message>
         <location filename="../coda-qt.cpp" line="859"/>
         <source>All Files (*);;Text Documents (*.odt *.ott *.doc *.docx *.rtf *.txt);;Spreadsheets (*.ods *.ots *.xls *.xlsx *.csv);;Presentations (*.odp *.otp *.ppt *.pptx)</source>
-        <translation type="unfinished"></translation>
+        <translation>Ĉiuj dosieroj (*);;Tekstaj dokumentoj (*.odt *.ott *.doc *.docx *.rtf *.txt);;Kalkultabeloj (*.ods *.ots *.xls *.xlsx *.csv);;Prezentaĵoj (*.odp *.otp *.ppt *.pptx)</translation>
     </message>
     <message>
         <location filename="../coda-qt.cpp" line="962"/>
         <source>Export As</source>
-        <translation type="unfinished"></translation>
+        <translation>Eksporti kiel</translation>
     </message>
 </context>
 <context>
