@@ -57,7 +57,7 @@ class LOUtil {
 		'image/emz',
 		'image/eps',
 		'image/gif',
-		'image/jpg',
+		'image/jpeg',
 		'image/met',
 		'image/pbm',
 		'image/pcd',
