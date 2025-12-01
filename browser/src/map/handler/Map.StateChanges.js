@@ -102,6 +102,14 @@ window.L.Map.StateChangeHandler = window.L.Handler.extend({
 			this._items[commandName] = links;
 		}
 
+		if (commandName == '.uno:CanvasPageVisArea') {
+			const x = parseInt(state.x);
+			const y = parseInt(state.y);
+
+			const point = new cool.SimplePoint(x, y);
+			app.activeDocument.activeView.setOverviewPageVisArea(point);
+		}
+
 		$('#document-container').removeClass('slide-master-mode');
 		$('#document-container').addClass('slide-normal-mode');
 		if (slideMasterPageItem) {
