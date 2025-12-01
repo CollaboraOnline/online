@@ -874,7 +874,10 @@ if APP_HAS_BRANDING
 endif
 
 if ENABLE_MACOS
-	cp -a "$(srcdir)/create-new-document.html" $(DIST_FOLDER)/
+	@cp -a "$(srcdir)/create-new-document.html" $(DIST_FOLDER)/
+if APP_HAS_BRANDING
+	@if test -d "$(APP_BRANDING_DIR)" ; then cp -a "$(APP_BRANDING_DIR)/welcome" "$(DIST_FOLDER)/" ; fi
+endif
 endif
 
 if ENABLE_CYPRESS
