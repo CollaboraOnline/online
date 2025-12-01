@@ -6,33 +6,33 @@
     <message>
         <location filename="../coda-qt.cpp" line="287"/>
         <source>Print Document</source>
-        <translation type="unfinished"></translation>
+        <translation>Agor Dogfen</translation>
     </message>
     <message>
         <location filename="../coda-qt.cpp" line="295"/>
         <source>Select Printer:</source>
-        <translation type="unfinished"></translation>
+        <translation>Dewis Argraffydd:</translation>
     </message>
     <message>
         <location filename="../coda-qt.cpp" line="304"/>
         <location filename="../coda-qt.cpp" line="377"/>
         <source>Default Printer</source>
-        <translation type="unfinished"></translation>
+        <translation>Argraffydd Rhagosodedig</translation>
     </message>
     <message>
         <location filename="../coda-qt.cpp" line="309"/>
         <source>Print to File</source>
-        <translation type="unfinished"></translation>
+        <translation>Argraffu i Ffeil</translation>
     </message>
     <message>
         <location filename="../coda-qt.cpp" line="313"/>
         <source>Enter file path...</source>
-        <translation type="unfinished"></translation>
+        <translation>Rhoi llwybr y ffeil...</translation>
     </message>
     <message>
         <location filename="../coda-qt.cpp" line="325"/>
         <source>Save Print Output As</source>
-        <translation type="unfinished"></translation>
+        <translation>Cadw Allbwn yr Argraffu Fel</translation>
     </message>
     <message>
         <location filename="../coda-qt.cpp" line="327"/>
@@ -42,17 +42,17 @@
     <message>
         <location filename="../coda-qt.cpp" line="343"/>
         <source>Print</source>
-        <translation type="unfinished"></translation>
+        <translation>Argraffu</translation>
     </message>
     <message>
         <location filename="../coda-qt.cpp" line="344"/>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Dileu</translation>
     </message>
     <message>
         <location filename="../coda-qt.cpp" line="368"/>
         <source>Print to File Error</source>
-        <translation type="unfinished"></translation>
+        <translation>Gwall Argraffu i Ffeil</translation>
     </message>
     <message>
         <location filename="../coda-qt.cpp" line="369"/>
