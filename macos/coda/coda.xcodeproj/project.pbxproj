@@ -123,7 +123,7 @@
 		BE5A7A282D2BE28200FE7D60 /* FileUtil.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = FileUtil.hpp; path = ../../../../common/FileUtil.hpp; sourceTree = "<group>"; };
 		BE5FDE352DAD3DCF00C48DB2 /* LogUI.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = LogUI.hpp; path = ../../../../kit/LogUI.hpp; sourceTree = "<group>"; };
 		BE5FDE362DAD3DCF00C48DB2 /* LogUI.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = LogUI.cpp; path = ../../../../kit/LogUI.cpp; sourceTree = "<group>"; };
-		BE862C4C2EB9066E0061664E /* templates */ = {isa = PBXFileReference; lastKnownFileType = folder; name = templates; path = ../../../windows/coda/templates; sourceTree = "<group>"; };
+		BE862C4C2EB9066E0061664E /* templates */ = {isa = PBXFileReference; lastKnownFileType = folder; name = templates; path = ../../../browser/templates; sourceTree = "<group>"; };
 		BE9115AD2CECBD3100C597B2 /* FileUtil-unix.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = "FileUtil-unix.cpp"; path = "../../../../common/FileUtil-unix.cpp"; sourceTree = "<group>"; };
 		BE9115AF2CECBECF00C597B2 /* Util-unix.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = "Util-unix.cpp"; path = "../../../../common/Util-unix.cpp"; sourceTree = "<group>"; };
 		BEA263522CBE38E20007435A /* Authorization.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = Authorization.hpp; path = ../../../../common/Authorization.hpp; sourceTree = "<group>"; };
