@@ -349,6 +349,13 @@ interface IconViewJSON extends WidgetJSON {
 	textWithIconEnabled: boolean; // To identify if we should add text below the icon or not.
 }
 
+interface IconViewEntrySelectionJSON {
+	row: number | string; // unique id of the entry
+	shiftKey: boolean;
+	ctrlKey: boolean;
+	mousePressed: boolean;
+}
+
 interface EditWidgetJSON extends WidgetJSON {
 	placeholder: string; // show when empty
 	text: string; // text value
