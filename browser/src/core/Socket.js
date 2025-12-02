@@ -12,7 +12,7 @@
  * L.Socket contains methods for the communication with the server
  */
 
-/* global app JSDialog _ errorMessages GraphicSelection TileManager SlideBitmapManager SocketBase */
+/* global app JSDialog _ errorMessages GraphicSelection TileManager SocketBase */
 
 app.definitions.Socket = class Socket extends SocketBase {
 
@@ -147,14 +147,7 @@ app.definitions.Socket = class Socket extends SocketBase {
 			this._onSlideLayerMsg(textMsg, e);
 			return;
 		} else if (textMsg.startsWith('sliderenderingcomplete:')) {
-			if (app.isExperimentalMode()) {
-				SlideBitmapManager.handleSlideRenderingComplete(e);
-			} else {
-				const json = JSON.parse(textMsg.substring('sliderenderingcomplete:'.length + 1));
-				this._map.fire('sliderenderingcomplete', {
-					success: json.status === 'success'
-				});
-			}
+			this._onSlideRenderingCompleteMsg(textMsg, e);
 			return;
 		}
 		else if (!textMsg.startsWith('tile:') && !textMsg.startsWith('delta:') &&
