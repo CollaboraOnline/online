@@ -3291,7 +3291,7 @@ void KitSocketPoll::kitWakeup() {
  *
  * The LOKit main loop will use/call these callbacks inside VCL's Yield(), see SvpSalInstance::ImplYield().
  */
-void startMainLoop(const LibreOfficeKit* kit, const std::shared_ptr<lok::Office>& loKit) {
+void startMainLoop(const LibreOfficeKit* kit, const std::shared_ptr<lok::Office>& loKit, const std::shared_ptr<KitSocketPoll>& mainKit) {
     if (!LIBREOFFICEKIT_HAS(kit, runLoop))
     {
         LOG_FTL("Kit is missing Unipoll API");
@@ -3299,11 +3299,11 @@ void startMainLoop(const LibreOfficeKit* kit, const std::shared_ptr<lok::Office>
         Util::forcedExit(EX_SOFTWARE);
     }
 
-    loKit->registerAnyInputCallback(anyInputCallback, loKit.get());
+    loKit->registerAnyInputCallback(anyInputCallback, mainKit.get());
 
     LOG_INF("Kit unipoll loop run");
 
-    loKit->runLoop(pollCallback, wakeCallback, loKit.get());
+    loKit->runLoop(pollCallback, wakeCallback, mainKit.get());
 
     LOG_INF("Kit unipoll loop run terminated.");
 }
@@ -3362,6 +3362,44 @@ void copyCertificateDatabaseToTmp(Poco::Path const& jailPath)
 }
 
 #endif
+
+#if defined(QTAPP) || defined(MACOS) || defined(_WIN32)
+
+// with "unipoll" thread that calls lok_init_2 ends up holding the yield mutex in InitVCL()
+// lok::Office:runLoop then spawned in another thread ends up stuck. To prevent that call lok_init_2
+// and runLoop in the same thread.
+// note: at this point in time, it is unclear (to quwex) if lok_init_2 not being in the "main"
+// thread will distrupt other things :-) if that is the case maybe we could also ReleaseYieldMutex()
+// manually?
+std::future<LibreOfficeKit*> initKitRunLoopThread(const std::shared_ptr<KitSocketPoll>& mainKit)
+{
+        std::promise<LibreOfficeKit*> promise;
+        std::future<LibreOfficeKit*> future = promise.get_future();
+        std::thread(
+            [p = std::move(promise), mainKit]() mutable
+            {
+                Util::setThreadName("lokit_runloop");
+                setupKitEnvironment("notebookbar");
+                LibreOfficeKit* kit =
+#if defined(QTAPP)
+                    lok_init_2(LO_PATH "/program", nullptr);
+#elif defined(MACOS)
+                    lok_init_2((getBundlePath() + "/Contents/Frameworks").c_str(), getAppSupportURL().c_str());
+#elif defined(_WIN32)
+                    lok_init_2(app_installation_path.c_str(), nullptr);
+#endif
+                p.set_value(kit);
+
+                std::shared_ptr<lok::Office> loKit = std::make_shared<lok::Office>(kit);
+
+                startMainLoop(kit, loKit, mainKit);
+
+                // Should never return
+                std::abort();
+            }).detach();
+        return future;
+}
+#endif // QTAPP
 
 } // namespace
 
@@ -3999,7 +4037,7 @@ void lokit_main(
         static LibreOfficeKit *kit = lo_kit;
 #elif defined(QTAPP) || defined(MACOS) || defined(_WIN32)
         // For macOS, this is the MOBILEAPP case
-        static LibreOfficeKit* kit = initKitRunLoopThread().get();
+        static LibreOfficeKit* kit = initKitRunLoopThread(mainKit).get();
 #else
         // FIXME: I wonder for which platform this is supposed to be? Android?
         static LibreOfficeKit *kit = lok_init_2(nullptr, nullptr);
@@ -4071,7 +4109,7 @@ void lokit_main(
 #endif
 
 #if !MOBILEAPP
-        startMainLoop(kit, mainKit.get());
+        startMainLoop(kit, loKit, mainKit);
 
         // Trap the signal handler, if invoked,
         // to prevent exiting.
@@ -4116,44 +4154,6 @@ void lokit_main(
 
 #endif
 }
-
-#if defined(QTAPP) || defined(MACOS) || defined(_WIN32)
-
-// with "unipoll" thread that calls lok_init_2 ends up holding the yield mutex in InitVCL()
-// lok::Office:runLoop then spawned in another thread ends up stuck. To prevent that call lok_init_2
-// and runLoop in the same thread.
-// note: at this point in time, it is unclear (to quwex) if lok_init_2 not being in the "main"
-// thread will distrupt other things :-) if that is the case maybe we could also ReleaseYieldMutex()
-// manually?
-std::future<LibreOfficeKit*> initKitRunLoopThread()
-{
-        std::promise<LibreOfficeKit*> promise;
-        std::future<LibreOfficeKit*> future = promise.get_future();
-        std::thread(
-            [p = std::move(promise)]() mutable
-            {
-                Util::setThreadName("lokit_runloop");
-                setupKitEnvironment("notebookbar");
-                LibreOfficeKit* kit =
-#if defined(QTAPP)
-                    lok_init_2(LO_PATH "/program", nullptr);
-#elif defined(MACOS)
-                    lok_init_2((getBundlePath() + "/Contents/Frameworks").c_str(), getAppSupportURL().c_str());
-#elif defined(_WIN32)
-                    lok_init_2(app_installation_path.c_str(), nullptr);
-#endif
-                p.set_value(kit);
-
-                std::shared_ptr<lok::Office> loKit = std::make_shared<lok::Office>(kit);
-
-                startMainLoop(kit, loKit);
-
-                // Should never return
-                std::abort();
-            }).detach();
-        return future;
-}
-#endif // QTAPP
 
 #ifdef IOS
 
