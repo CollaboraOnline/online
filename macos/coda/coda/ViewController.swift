@@ -376,10 +376,13 @@ class ViewController: NSViewController, WKScriptMessageHandlerWithReply, WKNavig
         if body.hasPrefix("newdoc ") {
             let messageBodyItems = body.components(separatedBy: " ")
             var type: String?
+            var templatePath: String?
             if messageBodyItems.count >= 2 {
                 for item in messageBodyItems[1...] {
                     if item.hasPrefix("type=") {
                         type = String(item.dropFirst("type=".count))
+                    } else if item.hasPrefix("template=") {
+                        templatePath = String(item.dropFirst("template=".count)).removingPercentEncoding
                     }
                 }
 
@@ -390,7 +393,7 @@ class ViewController: NSViewController, WKScriptMessageHandlerWithReply, WKNavig
                     default : kind = .text
                 }
 
-                (NSDocumentController.shared as? DocumentController)?.createDocument(fromTemplateFor: kind)
+                (NSDocumentController.shared as? DocumentController)?.createDocument(fromTemplateFor: kind, templatePath: templatePath)
             }
 
             return true
