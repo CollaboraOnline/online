@@ -53,9 +53,15 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Test jumping on large cell
 	});
 
 	it('Scroll and check drawing on frozen part of the view', function() {
-		// Add a new sheet first.
+		// We will add a new sheet. Go to a cell other than A1. We will check if the new sheet is added by checking the current cell.
+		cy.cGet(helper.addressInputSelector).focus();
+		cy.cGet(helper.addressInputSelector).clear().type('B2{enter}');
+		cy.cGet(helper.addressInputSelector).should('have.value', 'B2');
+
+		// Add a new sheet.
 		cy.cGet('#insertsheet-button').click();
-		cy.wait(300); // Wait a bit.
+		// Cell cursor will go to A1 by default. So we understand that the new sheet is added.
+		cy.cGet(helper.addressInputSelector).should('have.value', 'A1');
 
 		// Go to a cell that we know is visible.
 		cy.cGet(helper.addressInputSelector).focus();
