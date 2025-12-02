@@ -113,17 +113,7 @@ app.definitions.Socket = class Socket extends SocketBase {
 			this._map.fire(mobileEvent);
 		}
 		else if (textMsg.startsWith('blockui:')) {
-			textMsg = textMsg.substring('blockui:'.length).trim();
-			let msg = null;
-
-			if (textMsg === 'rename') {
-				msg = _('The document is being renamed and will reload shortly');
-			}
-			else if (textMsg === 'switchingtooffline') {
-				msg = _('The document is switching to Offline mode and will reload shortly');
-			}
-
-			this._map.fire('blockUI', {message: msg});
+			this._onBlockUIMsg(textMsg);
 			return;
 		}
 		else if (textMsg.startsWith('unblockui:')) {

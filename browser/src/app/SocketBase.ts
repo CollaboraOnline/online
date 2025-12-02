@@ -1619,4 +1619,20 @@ class SocketBase {
 			);
 		}
 	}
+
+	// 'blockui: ' message.
+	protected _onBlockUIMsg(textMsg: string): void {
+		textMsg = textMsg.substring('blockui:'.length).trim();
+		let msg: string | null = null;
+
+		if (textMsg === 'rename') {
+			msg = _('The document is being renamed and will reload shortly');
+		} else if (textMsg === 'switchingtooffline') {
+			msg = _(
+				'The document is switching to Offline mode and will reload shortly',
+			);
+		}
+
+		this._map.fire('blockUI', { message: msg });
+	}
 }
