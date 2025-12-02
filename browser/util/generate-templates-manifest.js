@@ -156,9 +156,22 @@ function writeManifest(outPath, templates) {
 		process.exit(1);
 	}
 
-	const templateRoot = loPath ? path.join(loPath, 'share', 'template', 'common') : null;
+	// On macOS, templates are in Contents/Resources/template/common
+	// On other platforms, they're in share/template/common
+	let templateRoot = null;
+	if (loPath) {
+		const macOSPath = path.join(loPath, 'template', 'common');
+		const standardPath = path.join(loPath, 'share', 'template', 'common');
+
+		if (fs.existsSync(macOSPath)) {
+			templateRoot = macOSPath;
+		} else if (fs.existsSync(standardPath)) {
+			templateRoot = standardPath;
+		}
+	}
+
 	if (!templateRoot || !fs.existsSync(templateRoot)) {
-		console.warn(`Template root not found: ${templateRoot}`);
+		console.warn(`Template root not found: ${templateRoot || 'no LO path specified'}`);
 		writeManifest(outPath, []);
 		return;
 	}
@@ -166,7 +179,7 @@ function writeManifest(outPath, templates) {
 	const manifestDir = path.dirname(outPath);
 	const previewsRoot = path.join(manifestDir, 'previews');
 	const distTemplatesRoot = path.join(manifestDir, 'files');
-	
+
 	try {
 		fs.rmSync(previewsRoot, { recursive: true, force: true });
 		fs.rmSync(distTemplatesRoot, { recursive: true, force: true });

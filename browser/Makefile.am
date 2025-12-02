@@ -887,7 +887,11 @@ endif
 if ENABLE_WINDOWSAPP
 LOPATHFORTEMPLATES=$(LOBUILDDIR)/instdir
 else
+if ENABLE_MACOS
+LOPATHFORTEMPLATES=$(LO_PATH)/Contents/Resources
+else
 LOPATHFORTEMPLATES=$(LO_PATH)
+endif
 endif
 
 $(TEMPLATE_MANIFEST): $(srcdir)/util/generate-templates-manifest.js
