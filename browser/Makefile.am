@@ -878,6 +878,10 @@ $(TEMPLATE_MANIFEST):
 	mkdir -p $(dir $@)
 	cp -r templates $(DIST_FOLDER)
 
+$(DIST_FOLDER)/images/templates/preview/%.png: $(srcdir)/images/templates/preview/%.png
+	@mkdir -p $(dir $@)
+	@cp $< $@
+
 $(DIST_FOLDER)/admin-bundle.js: $(COOL_ADMIN_DST) \
 	$(INTERMEDIATE_DIR)/admin-src.js
 	@NODE_PATH=$(abs_builddir)/node_modules:$(INTERMEDIATE_DIR) $(NODE) node_modules/browserify/bin/cmd.js -g browserify-css $(if $(IS_SEPARATE),--debug,-g uglifyify) -o $@ $(srcdir)/admin/main-admin.js

@@ -148,11 +148,23 @@ final class DocumentController: NSDocumentController {
     /**
      * Copy content of the template (based on "kind") to NSDocument and trigger its editing.
      */
-    func createDocument(fromTemplateFor kind: NewKind) {
+    func createDocument(fromTemplateFor kind: NewKind, templatePath: String? = nil) {
         // Pick the template file in your bundle
-        guard let (resName, ext) = templateNameAndExt(for: kind),
-              let templatesURL = Bundle.main.url(forResource: resName, withExtension: ext, subdirectory: "templates")
-        else {
+        let templatesURL: URL?
+
+        if let templatePath = templatePath {
+            // Use the provided template path from the backstage view
+            templatesURL = Bundle.main.resourceURL?.appendingPathComponent(templatePath)
+        } else {
+            // Use the default blank template
+            guard let (resName, ext) = templateNameAndExt(for: kind) else {
+                NSApp.presentError(NSError(domain: "NewDoc", code: 1, userInfo: [NSLocalizedDescriptionKey: "Template not found."]))
+                return
+            }
+            templatesURL = Bundle.main.url(forResource: resName, withExtension: ext, subdirectory: "templates")
+        }
+
+        guard let templatesURL = templatesURL else {
             NSApp.presentError(NSError(domain: "NewDoc", code: 1, userInfo: [NSLocalizedDescriptionKey: "Template not found."]))
             return
         }
