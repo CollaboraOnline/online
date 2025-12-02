@@ -14,13 +14,13 @@ class SocketBase {
 	private ProtocolVersionNumber: string = '0.1';
 	private ReconnectCount: number = 0;
 	private WasShownLimitDialog: boolean = false;
-	private WSDServer: WSDServerInfo = {
+	public WSDServer: WSDServerInfo = {
 		Id: '',
 		Version: '',
 		Hash: '',
 		Protocol: '',
 		Options: '',
-		Timezone: '',
+		TimeZone: '',
 	};
 	private IndirectSocketReconnectCount: number = 0;
 
@@ -31,7 +31,7 @@ class SocketBase {
 	// Will be set from lokitversion message
 	private TunnelledDialogImageCacheSize: number = 0;
 
-	private _map: MapInterface;
+	public _map: MapInterface;
 	private _msgQueue: MessageInterface[];
 	private _delayedMessages: DelayedMessageInterface[];
 	private _slurpQueue: SlurpMessageEvent[];
@@ -46,7 +46,7 @@ class SocketBase {
 	private _slurpTimerDelay: number | undefined;
 	private _slurpTimerLaunchTime: number | undefined;
 	private timer: ReturnType<typeof setInterval> | undefined;
-	private threadLocalLoggingLevelToggle: boolean;
+	public threadLocalLoggingLevelToggle: boolean;
 
 	private socket?: SockInterface;
 	public traceEvents: TraceEvents;
@@ -683,7 +683,7 @@ class SocketBase {
 		}
 	}
 
-	protected _onMessage(e: SlurpMessageEvent): void {
+	public _onMessage(e: SlurpMessageEvent | MinimalMessageEvent): void {
 		console.assert(false, 'This should not be called!');
 	}
 
@@ -1644,6 +1644,6 @@ class SocketBase {
 				'Restricted command "' + blockedInfo.errorCmd + '" was blocked',
 			);
 		else if (blockedInfo.errorKind === 'locked')
-			this._map.openUnlockPopup(blockedInfo.errorCmd);
+			this._map.openUnlockPopup(blockedInfo.errorCmd as string);
 	}
 }

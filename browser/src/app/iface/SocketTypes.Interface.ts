@@ -5,7 +5,7 @@ interface WSDServerInfo {
 	Hash: string;
 	Protocol: string;
 	Options: string;
-	Timezone: string;
+	TimeZone: string;
 }
 
 type MessageInterface =
@@ -37,4 +37,9 @@ interface SlurpMessageEvent extends MessageEvent {
 	imageIsComplete?: boolean;
 	callback?: DefCallBack;
 	reason?: string;
+}
+
+interface MinimalMessageEvent {
+	textMsg: string;
+	callback?: JSDialogCallback | DefCallBack;
 }
