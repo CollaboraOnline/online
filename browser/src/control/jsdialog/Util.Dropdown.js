@@ -135,8 +135,11 @@ JSDialog.OpenDropdown = function (id, popupParent, entries, innerCallback, popup
 		return function(objectType, eventType, object, data) {
 			var pos = data ? parseInt(data.substr(0, data.indexOf(';'))) : null;
 			var entry = targetEntries && pos !== null ? targetEntries[pos] : null;
+			var subMenuId = object.id + '-' + pos;
 
 			if (eventType === 'selected' || eventType === 'showsubmenu') {
+				if (lastSubMenuOpened === subMenuId)
+					return;
 				if (entry && entry.items) {
 					if (lastSubMenuOpened) {
 						var submenu = JSDialog.GetDropdown(lastSubMenuOpened);
@@ -148,7 +151,6 @@ JSDialog.OpenDropdown = function (id, popupParent, entries, innerCallback, popup
 
 					// open submenu
 					var dropdown = JSDialog.GetDropdown(object.id);
-					var subMenuId = object.id + '-' + pos;
 					var targetEntry = dropdown.querySelectorAll('.ui-grid-cell')[pos + 1];
 					JSDialog.OpenDropdown(subMenuId, targetEntry, entry.items,
 						generateCallback(entry.items), 'top-end', true);
