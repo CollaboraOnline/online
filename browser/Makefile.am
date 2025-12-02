@@ -19,20 +19,12 @@ L10N_IOS_ALL_JS = $(DIST_FOLDER)/l10n-all.js
 L10N_JSON = $(L10N_IOS_ALL_JS)
 
 $(L10N_IOS_ALL_JS) : $(wildcard $(srcdir)/po/ui-*.po) $(wildcard $(srcdir)/po/help-*.po) $(shell find $(srcdir)/l10n -name '*.*') $(srcdir)/util/create-l10n-all-js.pl
-	for F in $(wildcard $(srcdir)/po/ui-*.po); do \
-		$(srcdir)/util/po2json.py $$F -o $$F.json; \
-	done
-	for F in $(wildcard $(srcdir)/po/help-*.po); do \
-		$(srcdir)/util/po2json.py $$F -o $$F.json; \
-	done
+	find $(srcdir)/po -name 'ui-*.po' -exec $(srcdir)/util/po2json.py {} -o {}.json \;
+	find $(srcdir)/po -name 'help-*.po' -exec $(srcdir)/util/po2json.py {} -o {}.json \;
 	@mkdir -p $(dir $@)
 	perl $(srcdir)/util/create-l10n-all-js.pl >$@
-	for F in $(wildcard $(srcdir)/po/ui-*.po); do \
-		rm $$F.json; \
-	done
-	for F in $(wildcard $(srcdir)/po/help-*.po); do \
-		rm $$F.json; \
-	done
+	find $(srcdir)/po -name 'ui-*.po.json' -delete
+	find $(srcdir)/po -name 'help-*.po.json' -delete
 endif
 
 QUIET_TSC = $(QUIET_TSC_$(V))
@@ -683,7 +675,20 @@ SPACE := $(EMPTY) $(EMPTY)
 COOL_VERSION = $(shell cd $(srcdir) && git log -1 --format=%h --abbrev=10)
 INTERMEDIATE_DIR ?= $(if $(IS_SEPARATE),$(abs_builddir)/debug,$(abs_builddir)/release)
 
-EXTRA_DIST = $(shell find . -type f -not -path './.git/*' -not -path './node_modules/*' -not -path './l10n/*' -not -path './images/*' | sed 's/.\///')
+# Don't use EXTRA_DIST with $(shell find) as it causes "Argument list too long" errors
+# Instead, use dist-hook to copy files
+EXTRA_DIST =
+
+dist-hook:
+	cd $(srcdir) && find . -type f \
+		-not -path './.git/*' \
+		-not -path './node_modules/*' \
+		-not -path './l10n/*' \
+		-not -path './images/*' \
+		-not -path './$(DIST_FOLDER)/*' \
+		-not -path './debug/*' \
+		-not -path './release/*' \
+		-exec cp --parents {} $(distdir) \;
 
 SUBDIRS = . l10n images
 
@@ -932,8 +937,10 @@ $(DIST_FOLDER)/global.js: $(srcdir)/js/global.js
 	$(call global_file)
 
 $(INTERMEDIATE_DIR)/COOL_JS.m4.jslist: $(COOL_JS_DST)
-	$(QUIET_ECHO) echo $(COOL_JS_DST) > $(INTERMEDIATE_DIR)/COOL_JS.m4.jslist.tmp
-	$(QUIET_CMP) if cmp -s $(INTERMEDIATE_DIR)/COOL_JS.m4.jslist.tmp $(INTERMEDIATE_DIR)/COOL_JS.m4.jslist; then rm $(INTERMEDIATE_DIR)/COOL_JS.m4.jslist.tmp; else mv $(INTERMEDIATE_DIR)/COOL_JS.m4.jslist.tmp $(INTERMEDIATE_DIR)/COOL_JS.m4.jslist; fi
+	@mkdir -p $(INTERMEDIATE_DIR)
+	@rm -f $@.tmp
+	@for file in $^; do echo "$$file" >> $@.tmp; done
+	$(QUIET_CMP) if cmp -s $@.tmp $@; then rm $@.tmp; else mv $@.tmp $@; fi
 
 $(INTERMEDIATE_DIR)/COOL_JS.m4: $(INTERMEDIATE_DIR)/COOL_JS.m4.jslist
 	$(foreach file,$(NODE_MODULES_JS) $(COOL_LIBS_JS) $(patsubst %.ts,%.js,$(COOL_JS_WEBORDER)), $(shell echo -n $(file), >> $(INTERMEDIATE_DIR)/COOL_JS.m4.tmp))
