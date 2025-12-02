@@ -280,28 +280,18 @@ class ViewLayoutMultiPage extends ViewLayoutBase {
 		);
 	}
 
-	public canvasToDocumentX(point: cool.SimplePoint): number {
+	public canvasToDocumentPoint(point: cool.SimplePoint): cool.SimplePoint {
 		point.pX += this.scrollProperties.viewX;
 		point.pY += this.scrollProperties.viewY;
 
 		const index = this.getClosestRectangleIndex(point, false);
 
-		return (
-			this.documentRectangles[index].pX1 +
-			(point.pX - this.viewRectangles[index].pX1)
-		);
-	}
+		const result = point.clone();
 
-	public canvasToDocumentY(point: cool.SimplePoint): number {
-		point.pX += this.scrollProperties.viewX;
-		point.pY += this.scrollProperties.viewY;
+		result.pX = this.documentRectangles[index].pX1 + (point.pX - this.viewRectangles[index].pX1);
+		result.pY = this.documentRectangles[index].pY1 + (point.pY - this.viewRectangles[index].pY1);
 
-		const index = this.getClosestRectangleIndex(point, false);
-
-		return (
-			this.documentRectangles[index].pY1 +
-			(point.pY - this.viewRectangles[index].pY1)
-		);
+		return result;
 	}
 
 	public refreshScrollProperties(): any {
