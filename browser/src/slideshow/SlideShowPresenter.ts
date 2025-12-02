@@ -518,7 +518,7 @@ class SlideShowPresenter {
 		parent: Element,
 		width: number,
 		height: number,
-		showSwitchMonitors: boolean
+		showSwitchMonitors: boolean,
 	) {
 		const canvas = window.L.DomUtil.create(
 			'canvas',
@@ -537,7 +537,10 @@ class SlideShowPresenter {
 
 		this._progressBarContainer = this._createProgressBar(parent);
 		if (!this._isWelcomePresentation)
-			this._slideNavContainer = this._createSlideNav(parent, showSwitchMonitors);
+			this._slideNavContainer = this._createSlideNav(
+				parent,
+				showSwitchMonitors,
+			);
 
 		canvas.addEventListener(
 			'click',
@@ -622,7 +625,10 @@ class SlideShowPresenter {
 		JSDialog.progressbar(container, progressData, builderOptions);
 	}
 
-	private _createSlideNav(parent: Element, showSwitchMonitors: boolean): HTMLDivElement {
+	private _createSlideNav(
+		parent: Element,
+		showSwitchMonitors: boolean,
+	): HTMLDivElement {
 		const slideNavContainer = window.L.DomUtil.create(
 			'div',
 			'slideshow-nav-container',
@@ -634,9 +640,7 @@ class SlideShowPresenter {
 		return slideNavContainer;
 	}
 
-	private _configureSlideNavStyles(
-		container: HTMLDivElement,
-	): void {
+	private _configureSlideNavStyles(container: HTMLDivElement): void {
 		container.style.backgroundColor = 'rgba(0, 0, 0, 0.25)';
 		container.style.position = 'absolute';
 		container.style.bottom = '8px';
@@ -672,8 +676,7 @@ class SlideShowPresenter {
 	};
 
 	_hideSlideControls() {
-		if (!this._slideNavContainer)
-			return;
+		if (!this._slideNavContainer) return;
 		this._slideNavContainer.style.visibility = 'hidden';
 		this._slideNavContainer.style.opacity = '0';
 		this._slideNavContainer.style.transition =
@@ -681,8 +684,7 @@ class SlideShowPresenter {
 	}
 
 	_showSlideControls() {
-		if (!this._slideNavContainer)
-			return;
+		if (!this._slideNavContainer) return;
 
 		this._slideNavContainer.style.visibility = 'visible';
 		this._slideNavContainer.style.opacity = '1';
@@ -697,7 +699,7 @@ class SlideShowPresenter {
 
 	private _initializeSlideNavWidget(
 		container: HTMLDivElement,
-		showSwitchMonitors: boolean
+		showSwitchMonitors: boolean,
 	): void {
 		const closeImg = window.L.DomUtil.create('img', 'left-img', container);
 		closeImg.id = 'endshow';
@@ -754,13 +756,21 @@ class SlideShowPresenter {
 		);
 
 		if (showSwitchMonitors && window.mode.isCODesktop()) {
-			const ExchangeImg = window.L.DomUtil.create('img', 'right-img', container);
+			const ExchangeImg = window.L.DomUtil.create(
+				'img',
+				'right-img',
+				container,
+			);
 			ExchangeImg.id = 'exchange';
 			const followText = _('Exchange');
 			window.L.control.attachTooltipEventListener(ExchangeImg, this._map);
 			ExchangeImg.setAttribute('aria-label', followText);
 			ExchangeImg.setAttribute('data-cooltip', followText);
-			app.LOUtil.setImage(ExchangeImg, 'slideshow-switchMonitor.svg', this._map);
+			app.LOUtil.setImage(
+				ExchangeImg,
+				'slideshow-switchMonitor.svg',
+				this._map,
+			);
 			ExchangeImg.addEventListener('click', (e: Event) => {
 				e.stopPropagation();
 				this._onA11yString(e.target);
@@ -955,7 +965,7 @@ class SlideShowPresenter {
 			body,
 			window.screen.width,
 			window.screen.height,
-			showSwitchMonitors
+			showSwitchMonitors,
 		);
 
 		window.addEventListener('resize', this.onSlideWindowResize);
@@ -1087,7 +1097,7 @@ class SlideShowPresenter {
 				this._map._container,
 				width,
 				height,
-				true
+				true,
 			);
 
 			if (this._presenterContainer.requestFullscreen) {
