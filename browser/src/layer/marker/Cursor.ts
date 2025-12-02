@@ -136,7 +136,7 @@ class Cursor {
 		this.update();
 	}
 
-	private update() {
+	public update() {
 		if (!this.container || !this.map || !this.map.hasDocBounds())
 			return;
 
