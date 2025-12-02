@@ -250,6 +250,10 @@ class ViewLayoutMultiPage extends ViewLayoutBase {
 		if (!app.file.writer.pageRectangleList.length) return;
 
 		this.refreshVisibleAreaRectangle();
+
+		if (app.map._docLayer?._cursorMarker)
+			app.map._docLayer._cursorMarker.update();
+
 		this.sendClientVisibleArea();
 
 		this.refreshCurrentCoordList();
