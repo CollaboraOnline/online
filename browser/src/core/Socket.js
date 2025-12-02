@@ -133,11 +133,7 @@ app.definitions.Socket = class Socket extends SocketBase {
 			return;
 		}
 		else if (textMsg.startsWith('blockedcommand: ')) {
-			var blockedInfo = app.socket.parseServerCmd(textMsg.substring(16));
-			if (blockedInfo.errorKind === 'restricted')
-				window.app.console.log('Restricted command "' + blockedInfo.errorCmd + '" was blocked');
-			else if (blockedInfo.errorKind === 'locked')
-				this._map.openUnlockPopup(blockedInfo.errorCmd);
+			this._onBlockedCommandMsg(textMsg);
 			return;
 		}
 		else if (textMsg.startsWith('updateroutetoken') && window.indirectSocket) {
