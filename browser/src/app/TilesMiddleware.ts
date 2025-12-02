@@ -1198,7 +1198,7 @@ class TileManager {
 			' ' +
 			'tileheight=' +
 			app.tile.size.y;
-		if (addedSize) app.socket.sendMessage(msg, '');
+		if (addedSize) app.socket.sendMessage(msg);
 		else window.app.console.log('Skipped empty (too fast) tilecombine');
 	}
 
