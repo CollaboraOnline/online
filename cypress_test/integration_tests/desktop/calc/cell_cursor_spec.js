@@ -70,6 +70,9 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Test jumping on large cell
 		// Now click on A1. Use click for this, not the input field. We also need to test the core coordinates.
 		calcHelper.clickOnFirstCell();
 
+		// Before the fix for mouse coordinate calculation, this would not go to A1, but somewhere else.
+		// Core side coordinates were not calculated properly.
+		// Fix is here: https://github.com/CollaboraOnline/online/pull/13631
 		cy.cGet(helper.addressInputSelector).should('have.value', 'A1');
 	});
 });
