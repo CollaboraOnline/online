@@ -70,8 +70,9 @@ class ShapeHandleAnchorSubSection extends HTMLObjectSection {
 		app.map.sendUnoCommand('.uno:MoveShapeHandle', parameters);
 	}
 
-	onMouseUp(point: cool.SimplePoint, e: MouseEvent): void {
+	onMouseUp(point: cool.SimplePoint | null, e: MouseEvent): void {
 		if (this.containerObject.isDraggingSomething()) {
+			Util.ensureValue(point);
 			// Tables don't have parent sections. This is used for separating table anchors from other anchors.
 			if (this.sectionProperties.parentHandlerSection) {
 				this.shapeMouseUp(point, e);
@@ -82,8 +83,9 @@ class ShapeHandleAnchorSubSection extends HTMLObjectSection {
 		}
 	}
 
-	onMouseMove(point: cool.SimplePoint, dragDistance: Array<number>, e: MouseEvent) {
+	onMouseMove(point: cool.SimplePoint | null, dragDistance: Array<number> | null, e: MouseEvent) {
 		if (this.containerObject.isDraggingSomething()) {
+			Util.ensureValue(dragDistance);
 			// Show preview in its final position.
 			let svg;
 			let initialPosition;

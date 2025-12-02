@@ -95,6 +95,8 @@ class CalcGridSection extends CanvasSectionObject {
 				paneOffset = paneTopLeft.clone();
 			}
 
+			Util.ensureValue(area);
+
 			// Vertical line rendering on large areas is ~10x as expensive
 			// as horizontal line rendering: due to cache effects - so to
 			// help our poor CPU renderers - render in horizontal strips.
@@ -148,6 +150,8 @@ class CalcGridSection extends CanvasSectionObject {
 					miny, maxy,
 					function(pos: any, rowIndex: any) {
 
+						Util.ensureValue(area);
+
 						printRangeLine = false;
 						var drawLine = drawHairLine;
 						if (printRange.length === 4
@@ -175,7 +179,8 @@ class CalcGridSection extends CanvasSectionObject {
 		}
 	}
 
-    onDraw(frameCount?: number, elapsedTime?: number): void {
+    onDraw(frameCount?: number | null, elapsedTime?: number | null): void {
+		Util.ensureValue(this.containerObject);
 		if (this.containerObject.isInZoomAnimation() || this.sectionProperties.tsManager.waitForTiles())
 			return;
 

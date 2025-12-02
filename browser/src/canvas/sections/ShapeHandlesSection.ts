@@ -730,7 +730,8 @@ class ShapeHandlesSection extends CanvasSectionObject {
 		this.sectionProperties.lastDragDistance = [0, 0];
 	}
 
-	public onMouseDown(point: cool.SimplePoint, e: MouseEvent): void {
+	public onMouseDown(point: cool.SimplePoint | null, e: MouseEvent): void {
+		Util.ensureValue(point);
 		this.sectionProperties.viewedRectangleOnMouseDown = app.activeDocument.activeView.viewedRectangle.clone();
 		this.sectionProperties.initialPosition = this.position.slice();
 		this.sectionProperties.positionOnMouseDown = point.clone();
@@ -738,7 +739,8 @@ class ShapeHandlesSection extends CanvasSectionObject {
 		this.sectionProperties.positionOnMouseDown.pY += this.position[1];
 	}
 
-	onMouseUp(point: cool.SimplePoint, e: MouseEvent): void {
+	onMouseUp(point: cool.SimplePoint | null, e: MouseEvent): void {
+		Util.ensureValue(point);
 		if (this.sectionProperties.svg)
 			this.sectionProperties.svg.style.opacity = 1;
 
@@ -927,7 +929,7 @@ class ShapeHandlesSection extends CanvasSectionObject {
 		this.containerObject.requestReDraw();
 	}
 
-	onMouseMove(position: cool.SimplePoint, dragDistance: number[]) {
+	onMouseMove(position: cool.SimplePoint | null, dragDistance: number[] | null) {
 		let canDrag = !app.file.textCursor.visible;
 
 		if (canDrag && app.map.getDocType() === 'presentation') {
@@ -947,6 +949,8 @@ class ShapeHandlesSection extends CanvasSectionObject {
 				this.setPosition(this.sectionProperties.initialPosition[0] + diff.pX, this.sectionProperties.initialPosition[1] + diff.pY);
 			}
 
+			Util.ensureValue(dragDistance);
+
 			if (this.sectionProperties.svg) {
 				this.sectionProperties.svg.style.left = String((this.myTopLeft[0] + dragDistance[0]) / app.dpiScale) + 'px';
 				this.sectionProperties.svg.style.top = String((this.myTopLeft[1] + dragDistance[1]) / app.dpiScale) + 'px';
@@ -958,6 +962,7 @@ class ShapeHandlesSection extends CanvasSectionObject {
 			this.showSVG();
 
 			if (!this.containerObject.isMouseInside()) {
+				Util.ensureValue(position);
 				position.pX += this.myTopLeft[0];
 				position.pY += this.myTopLeft[1];
 				app.map.fire('handleautoscroll', { pos: { x: position.cX, y: position.cY }, map: app.map });
@@ -1132,7 +1137,8 @@ class ShapeHandlesSection extends CanvasSectionObject {
 		}
 	}
 
-	onContextMenu(point: cool.SimplePoint, e: MouseEvent): void {
+	onContextMenu(point: cool.SimplePoint | null, e: MouseEvent): void {
+		Util.ensureValue(point);
 		point.pX += this.position[0];
 		point.pY += this.position[1];
 		app.activeDocument.mouseControl.setMousePosition(point);
@@ -1144,7 +1150,8 @@ class ShapeHandlesSection extends CanvasSectionObject {
 			this.sectionProperties.subSections[i].setShowSection(false);
 	}
 
-	onClick(point: cool.SimplePoint, e: MouseEvent): void {
+	onClick(point: cool.SimplePoint | null, e: MouseEvent): void {
+		Util.ensureValue(point);
 		point.pX += this.position[0];
 		point.pY += this.position[1];
 		app.map._docLayer._postMouseEvent('buttondown', point.x, point.y, 1, 1, 0);
@@ -1172,7 +1179,8 @@ class ShapeHandlesSection extends CanvasSectionObject {
 		}
 	}
 
-	onDoubleClick(point: cool.SimplePoint, e: MouseEvent): void {
+	onDoubleClick(point: cool.SimplePoint | null, e: MouseEvent): void {
+		Util.ensureValue(point);
 		point.pX += this.position[0];
 		point.pY += this.position[1];
 		app.map._docLayer._postMouseEvent('buttondown', point.x, point.y, 2, 1, 0);

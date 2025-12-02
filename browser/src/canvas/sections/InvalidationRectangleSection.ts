@@ -40,14 +40,15 @@ class InvalidationRectangleSection extends CanvasSectionObject {
 	}
 
 	onDraw(
-		frameCount?: number,
-		elapsedTime?: number,
+		frameCount?: number | null,
+		elapsedTime?: number | null,
 		subsetBounds?: Bounds,
 	): void {
 		const rectangleList: Array<any> = this.sectionProperties
 			.rectangleList as Array<any>;
 		this.context.strokeStyle = 'red';
 
+		Util.ensureValue(this.containerObject);
 		const anchor: number[] = this.containerObject.getDocumentAnchor();
 		const xDiff = anchor[0] - app.activeDocument.activeView.viewedRectangle.pX1;
 		const yDiff = anchor[1] - app.activeDocument.activeView.viewedRectangle.pY1;

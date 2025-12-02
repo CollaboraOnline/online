@@ -206,6 +206,7 @@ class ViewLayoutMultiPage extends ViewLayoutBase {
 
 	private refreshVisibleAreaRectangle(): void {
 		const documentAnchor = this.getDocumentAnchorSection();
+		if (documentAnchor === null) return;
 		const view = cool.SimpleRectangle.fromCorePixels([
 			this.scrollProperties.viewX,
 			this.scrollProperties.viewY,
@@ -302,6 +303,7 @@ class ViewLayoutMultiPage extends ViewLayoutBase {
 
 	public refreshScrollProperties(): any {
 		const documentAnchor = this.getDocumentAnchorSection();
+		if (documentAnchor === null) return;
 
 		// The length of the railway that the scroll bar moves on up & down or left & right.
 		this.scrollProperties.horizontalScrollLength = documentAnchor.size[0];

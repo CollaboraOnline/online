@@ -30,10 +30,11 @@ class CursorHandler extends HTMLObjectSection {
 	}
 
 	onMouseMove(
-		point: cool.SimplePoint,
-		dragDistance: Array<number>,
+		point: cool.SimplePoint | null,
+		dragDistance: Array<number> | null,
 		e: MouseEvent,
 	): void {
+		Util.ensureValue(this.containerObject);
 		if (
 			this.containerObject.isDraggingSomething() &&
 			this.containerObject.targetSection === this.name
@@ -44,6 +45,7 @@ class CursorHandler extends HTMLObjectSection {
 			if (!this.sectionProperties.lastPosition)
 				this.sectionProperties.lastPosition = this.position.slice();
 			else {
+				Util.ensureValue(dragDistance);
 				this.setPosition(
 					this.sectionProperties.lastPosition[0] + dragDistance[0],
 					this.sectionProperties.lastPosition[1] + dragDistance[1],
@@ -52,7 +54,8 @@ class CursorHandler extends HTMLObjectSection {
 		}
 	}
 
-	onMouseUp(point: cool.SimplePoint, e: MouseEvent): void {
+	onMouseUp(point: cool.SimplePoint | null, e: MouseEvent): void {
+		Util.ensureValue(this.containerObject);
 		if (
 			this.containerObject.isDraggingSomething() &&
 			this.containerObject.targetSection === this.name

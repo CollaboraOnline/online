@@ -31,20 +31,20 @@ class TableSelectMarkerSection extends HTMLObjectSection {
 		this.sectionProperties.contextMenuActivated = false;
 	}
 
-	public onMouseEnter(point: cool.SimplePoint, e: MouseEvent): void {
+	public onMouseEnter(point: cool.SimplePoint | null, e: MouseEvent): void {
 		this.getHTMLObject()?.classList.add('hovered');
 		this.context.canvas.style.cursor = 'pointer';
 	}
 
-	public onMouseLeave(point: cool.SimplePoint, e: MouseEvent): void {
+	public onMouseLeave(point: cool.SimplePoint | null, e: MouseEvent): void {
 		this.getHTMLObject()?.classList.remove('hovered');
 	}
 
-	public onMouseDown(point: cool.SimplePoint, e: MouseEvent): void {
+	public onMouseDown(point: cool.SimplePoint | null, e: MouseEvent): void {
 		this.stopPropagating(e);
 	}
 
-	public onMouseUp(point: cool.SimplePoint, e: MouseEvent): void {
+	public onMouseUp(point: cool.SimplePoint | null, e: MouseEvent): void {
 		this.stopPropagating(e);
 
 		if (this.sectionProperties.contextMenuActivated === true) {
@@ -55,23 +55,25 @@ class TableSelectMarkerSection extends HTMLObjectSection {
 		// Hammer.js doesn't fire onClick event after touchEnd event.
 		// CanvasSectionContainer fires the onClick event. But since Hammer.js is used for map, it disables the onClick for SectionContainer.
 		// We will use this event as click event on touch devices, until we remove Hammer.js (then this code will be removed from here).
+		Util.ensureValue(this.containerObject);
 		if (
 			(!this.containerObject.isDraggingSomething() &&
 				(<any>window).mode.isMobile()) ||
 			(<any>window).mode.isTablet()
 		) {
+			Util.ensureValue(point);
 			this.onClick(point, e);
 		}
 	}
 
-	onContextMenu(point: cool.SimplePoint, e: MouseEvent): void {
+	onContextMenu(point: cool.SimplePoint | null, e: MouseEvent): void {
 		const x = (this.position[0] + this.size[0]) * 0.5 * app.pixelsToTwips;
 		const y = (this.position[1] + this.size[1]) * 0.5 * app.pixelsToTwips;
 		app.map._docLayer._postMouseEvent('buttondown', x, y, 1, 4, 0);
 		this.sectionProperties.contextMenuActivated = true;
 	}
 
-	public onClick(point: cool.SimplePoint, e: MouseEvent): void {
+	public onClick(point: cool.SimplePoint | null, e: MouseEvent): void {
 		this.stopPropagating(e);
 		if (this.sectionProperties.markerType === 'column') {
 			const x1 = Math.round(

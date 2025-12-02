@@ -37,6 +37,7 @@ export class CornerGroup extends GroupBase {
 	}
 
 	update(): void {
+		Util.ensureValue(this.containerObject);
 		// Below 2 sections exist (since this section is added), unless they are being removed.
 
 		const rowGroupSection = this.containerObject.getSectionWithName(app.CSections.RowGroup.name) as RowGroup;
@@ -66,11 +67,13 @@ export class CornerGroup extends GroupBase {
 	}
 
 	onMouseEnter(): void {
+		Util.ensureValue(this.containerObject);
 		this.containerObject.getCanvasStyle().cursor = 'pointer';
 		$.contextMenu('destroy', '#document-canvas');
 	}
 
 	onMouseLeave(): void {
+		Util.ensureValue(this.containerObject);
 		this.containerObject.getCanvasStyle().cursor = 'default';
 	}
 

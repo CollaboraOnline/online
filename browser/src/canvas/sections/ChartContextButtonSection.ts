@@ -26,9 +26,9 @@ class ChartContextButtonSection extends HTMLObjectSection {
 			32,
 			32,
 			new cool.SimplePoint(
-				GraphicSelection.rectangle.x2 +
+				(GraphicSelection.rectangle ? GraphicSelection.rectangle.x2 : 0) +
 					ChartContextButtonSection.sizeSpaceBetweenButtons * app.pixelsToTwips,
-				GraphicSelection.rectangle.y1 +
+				(GraphicSelection.rectangle ? GraphicSelection.rectangle.y1 : 0) +
 					buttonType *
 						app.pixelsToTwips *
 						(ChartContextButtonSection.sizeButtons +
@@ -44,19 +44,19 @@ class ChartContextButtonSection extends HTMLObjectSection {
 		this.sectionProperties.lastInputEvent = null;
 	}
 
-	public onMouseEnter(point: cool.SimplePoint, e: MouseEvent): void {
+	public onMouseEnter(point: cool.SimplePoint | null, e: MouseEvent): void {
 		this.getHTMLObject()?.classList.add('hovered');
 	}
 
-	public onMouseLeave(point: cool.SimplePoint, e: MouseEvent): void {
+	public onMouseLeave(point: cool.SimplePoint | null, e: MouseEvent): void {
 		this.getHTMLObject()?.classList.remove('hovered');
 	}
 
-	public onMouseDown(point: cool.SimplePoint, e: MouseEvent): void {
+	public onMouseDown(point: cool.SimplePoint | null, e: MouseEvent): void {
 		this.stopEvents(e);
 	}
 
-	public onMouseUp(point: cool.SimplePoint, e: MouseEvent): void {
+	public onMouseUp(point: cool.SimplePoint | null, e: MouseEvent): void {
 		this.stopEvents(e);
 	}
 
@@ -68,7 +68,7 @@ class ChartContextButtonSection extends HTMLObjectSection {
 		e.stopImmediatePropagation();
 	}
 
-	public onClick(point: cool.SimplePoint, e: MouseEvent): void {
+	public onClick(point: cool.SimplePoint | null, e: MouseEvent): void {
 		if (this.sectionProperties.buttonType === 0) {
 			app.socket.sendMessage('uno .uno:SelectTheme');
 		} else {
@@ -85,6 +85,7 @@ class ChartContextButtonSection extends HTMLObjectSection {
 		// Position goes wrong when zoom change so update it when zoom changed.
 		if (this.lastZoom != origZoom) {
 			this.lastZoom = origZoom;
+			Util.ensureValue(GraphicSelection.rectangle);
 			var x = Math.round(
 				GraphicSelection.rectangle.x2 * app.twipsToPixels +
 					ChartContextButtonSection.sizeSpaceBetweenButtons,

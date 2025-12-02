@@ -64,8 +64,8 @@ class CommentMarkerSubSection extends HTMLObjectSection {
 	}
 
 	onMouseMove(
-		point: cool.SimplePoint,
-		dragDistance: Array<number>,
+		point: cool.SimplePoint | null,
+		dragDistance: Array<number> | null,
 		e: MouseEvent,
 	): void {
 		if (this.sectionProperties.parentSection === null) return;
@@ -76,6 +76,7 @@ class CommentMarkerSubSection extends HTMLObjectSection {
 			if (this.sectionProperties.dragStartPosition === null)
 				this.sectionProperties.dragStartPosition = this.position.slice();
 
+			Util.ensureValue(dragDistance);
 			this.setPosition(
 				this.sectionProperties.dragStartPosition[0] + dragDistance[0],
 				this.sectionProperties.dragStartPosition[1] + dragDistance[1],
@@ -94,7 +95,7 @@ class CommentMarkerSubSection extends HTMLObjectSection {
 		this.sendAnnotationPositionChange(twips);
 	}
 
-	onClick(point: cool.SimplePoint, e: MouseEvent): void {
+	onClick(point: cool.SimplePoint | null, e: MouseEvent): void {
 		e.stopPropagation();
 		this.stopPropagating();
 		this.sectionProperties.parentSection.sectionProperties.commentListSection.selectById(
@@ -102,12 +103,13 @@ class CommentMarkerSubSection extends HTMLObjectSection {
 		);
 	}
 
-	onMouseDown(point: cool.SimplePoint, e: MouseEvent): void {
+	onMouseDown(point: cool.SimplePoint | null, e: MouseEvent): void {
 		e.stopPropagation();
 		this.stopPropagating();
 	}
 
-	onMouseUp(point: cool.SimplePoint, e: MouseEvent): void {
+	onMouseUp(point: cool.SimplePoint | null, e: MouseEvent): void {
+		Util.ensureValue(this.containerObject);
 		e.stopPropagation();
 		if (this.containerObject.isDraggingSomething()) {
 			this.stopPropagating();
