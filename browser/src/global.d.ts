@@ -178,6 +178,11 @@ interface ErrorMessages {
 	};
 }
 
+// Accessibility validator interface for Cypress tests
+interface A11yValidator {
+	checkWidget(type: string, element: HTMLElement): void;
+}
+
 // Extend the global Window interface
 // Defined in: js/global.js
 interface Window {
@@ -266,6 +271,10 @@ interface Window {
 		serverAudit: any;
 		events: any;
 		showNavigator: boolean;
+
+		// Below are only used for Cypress tests
+		allDialogs?: string[];
+		a11yValidator?: A11yValidator;
 	};
 	// coolParams defined in: js/global.js
 	coolParams: {

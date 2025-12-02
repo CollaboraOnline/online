@@ -1323,7 +1323,7 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 			wrapper.setAttribute('aria-disabled', true);
 			pushbutton.setAttribute('disabled', 'true');
 			pushbutton.setAttribute('aria-disabled', true);
-			
+
 		}
 
 		JSDialog.SynchronizeDisabledState(wrapper, [pushbutton]);
@@ -2693,6 +2693,14 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 			&& data.type !== 'pushbutton'
 			)
 			control.setAttribute('tabIndex', '0');
+
+		if (control && window.L.Browser.cypressTest && window.app.a11yValidator) {
+			app.layoutingService.appendLayoutingTask(() => {
+				app.layoutingService.appendLayoutingTask(() => {
+					window.app.a11yValidator.checkWidget(data.type, control);
+				});
+			});
+		}
 	},
 
 	// some widgets we want to modify / change

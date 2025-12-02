@@ -3418,6 +3418,36 @@ window.L.Control.NotebookbarWriter = window.L.Control.Notebookbar.extend({
 				}
 			]
 		};
+	},
+
+	getListOfUnoCommandsForDialogs: function() {
+		const tabJson = this.getTabsJSON();
+		const commands = new Set();
+
+		function extractCommands(items) {
+			if (!items || !Array.isArray(items)) return;
+
+			items.forEach(item => {
+				// Extract command if it exists and starts with .uno: and include 'Dialog'
+				if (item.command
+					&& item.command.startsWith('.uno:')
+					&& item.command.includes('Dialog')) {
+					commands.add(item.command);
+				}
+
+				if (item.children && Array.isArray(item.children)) {
+					extractCommands(item.children);
+				}
+			});
+		}
+
+		tabJson.forEach(tab => {
+			if (tab.children && Array.isArray(tab.children)) {
+				extractCommands(tab.children);
+			}
+		});
+
+		return Array.from(commands);
 	}
 });
 

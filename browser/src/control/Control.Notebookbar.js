@@ -41,6 +41,10 @@ window.L.Control.Notebookbar = window.L.Control.extend({
 		this.map = map;
 		this.additionalShortcutButtons = [];
 
+		if (window.L.Browser.cypressTest) {
+			window.app.allDialogs = this.getListOfUnoCommandsForDialogs();
+		}
+
 		// initialize the model only once, remember updates from core
 		if (this.model.getSnapshot() === null)
 			this.model.fullUpdate(this.getFullJSON(this.HOME_TAB_ID));
