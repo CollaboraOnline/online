@@ -1563,4 +1563,29 @@ class SocketBase {
 			);
 		}
 	}
+
+	// 'info: ' message.
+	protected _onInfoMsg(textMsg: string, command: ServerCommand): void {
+		if (command.errorKind === 'limitreached' && !this.WasShownLimitDialog) {
+			this.WasShownLimitDialog = true;
+			textMsg = window.errorMessages.limitreached;
+			if (command.params === undefined) {
+				console.error('_onInfoMsg(): command.params is undefined!');
+			} else {
+				textMsg = textMsg.replace('{docs}', command.params[0]);
+				textMsg = textMsg.replace('{connections}', command.params[1]);
+			}
+			textMsg = textMsg.replace(
+				'{productname}',
+				typeof brandProductName !== 'undefined'
+					? brandProductName
+					: 'Collabora Online Development Edition (unbranded)',
+			);
+			this._map.fire('infobar', {
+				msg: textMsg,
+				action: app.util.getProduct(),
+				actionLabel: window.errorMessages.infoandsupport,
+			});
+		}
+	}
 }
