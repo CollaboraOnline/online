@@ -24,7 +24,7 @@ final class DocumentController: NSDocumentController {
     /**
      * Window for the New document workflow.
      */
-    private var backstageWindowController: NSWindowController?
+    private static var backstageWindowController: NSWindowController?
 
     /**
      * One place to decide if we should quit the app on losing focus.
@@ -74,7 +74,7 @@ final class DocumentController: NSDocumentController {
         closeLiveOpenPanel()
 
         // Open the dialog for the new document
-        presentStartupBackstage()
+        DocumentController.presentStartupBackstage()
     }
 
     /**
@@ -117,19 +117,17 @@ final class DocumentController: NSDocumentController {
     /**
      * Create or focus the New document window.
      */
-    func presentStartupBackstage() {
-        if let wc = backstageWindowController { // focus if already open
+    static func presentStartupBackstage() {
+        if let wc = DocumentController.backstageWindowController { // focus if already open
             wc.window?.makeKeyAndOrderFront(nil)
             NSApp.activate(ignoringOtherApps: true)
             return
         }
 
         let vc = BackstageViewController()
-        vc.onSelect = { [weak self] kind in
-            guard let self else { return }
-            self.backstageWindowController?.close()
-            self.backstageWindowController = nil
-            self.createDocument(fromTemplateFor: kind)
+        vc.onClose = {
+            DocumentController.backstageWindowController?.close()
+            DocumentController.backstageWindowController = nil
         }
 
         // Simple titled window for the web view
@@ -140,7 +138,7 @@ final class DocumentController: NSDocumentController {
         w.center()
 
         let wc = NSWindowController(window: w)
-        backstageWindowController = wc
+        DocumentController.backstageWindowController = wc
         wc.showWindow(nil)
         NSApp.activate(ignoringOtherApps: true)
     }
