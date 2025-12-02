@@ -122,7 +122,7 @@ class MouseControl extends CanvasSectionObject {
 		const buttons = app.LOButtons.right;
 		const modifier = this.readModifier(e);
 
-		if (modifier === 0) {
+		if (modifier === 0 && !this.mouseDownSent) {
 			this.postCoreMouseEvent(
 				'buttondown',
 				this.currentPosition,
@@ -130,6 +130,8 @@ class MouseControl extends CanvasSectionObject {
 				buttons,
 				modifier,
 			);
+		} else if (this.mouseDownSent) {
+			this.mouseDownSent = false;
 		}
 	}
 
@@ -343,6 +345,19 @@ class MouseControl extends CanvasSectionObject {
 	onMouseDown(point: cool.SimplePoint, e: MouseEvent): void {
 		this.refreshPosition(point);
 		this.positionOnMouseDown = this.currentPosition.clone();
+
+		if (e.button === 2) {
+			const buttons = app.LOButtons.right;
+			const modifier = this.readModifier(e);
+			this.postCoreMouseEvent(
+				'buttondown',
+				this.currentPosition,
+				1,
+				buttons,
+				modifier,
+			);
+			this.mouseDownSent = true;
+		}
 
 		if (e.type === 'touchstart') {
 			// For swipe action.

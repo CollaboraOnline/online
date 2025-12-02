@@ -1178,7 +1178,7 @@ class CanvasSectionContainer {
 	}
 
 	public onMouseDown (e: MouseEvent) { // Ignore this event, just rely on this.draggingSomething variable.
-		if (e.button === 0 && !this.touchEventInProgress) { // So, we only handle left button.
+		if ((e.button === 0 || e.button === 2) && !this.touchEventInProgress) { // So, we only handle left button.
 			this.clearMousePositions();
 			this.positionOnMouseDown = this.convertPositionToCanvasLocale(e);
 
@@ -1197,7 +1197,7 @@ class CanvasSectionContainer {
 			return;
 		}
 
-		if (e.button === 0 && !this.touchEventInProgress) {
+		if ((e.button === 0 || e.button === 2) && !this.touchEventInProgress) {
 			this.positionOnMouseUp = this.convertPositionToCanvasLocale(e);
 			var section: CanvasSectionObject;
 			if (!this.draggingSomething) {
