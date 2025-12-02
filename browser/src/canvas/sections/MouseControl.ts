@@ -146,17 +146,17 @@ class MouseControl extends CanvasSectionObject {
 	}
 
 	private refreshPosition(point: cool.SimplePoint) {
-		let diffX = app.activeDocument.activeView.viewedRectangle.pX1;
-		let diffY = app.activeDocument.activeView.viewedRectangle.pY1;
+		let topLeftX = app.activeDocument.activeView.viewedRectangle.pX1;
+		let topLeftY = app.activeDocument.activeView.viewedRectangle.pY1;
 
 		if (app.map.getDocType() === 'spreadsheet') {
-			if (app.isXOrdinateInFrozenPane(point.pX)) diffX = 0;
+			if (app.isXOrdinateInFrozenPane(point.pX)) topLeftX = 0;
 
-			if (app.isYOrdinateInFrozenPane(point.pY)) diffY = 0;
+			if (app.isYOrdinateInFrozenPane(point.pY)) topLeftY = 0;
 		}
 
-		this.currentPosition.pX = point.pX + diffX;
-		this.currentPosition.pY = point.pY + diffY;
+		this.currentPosition.pX = point.pX + topLeftX;
+		this.currentPosition.pY = point.pY + topLeftY;
 	}
 
 	private setCursorType() {
