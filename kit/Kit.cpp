@@ -3215,7 +3215,7 @@ bool anyInputCallback(void* data, int mostUrgentPriority)
 
 bool KitSocketPoll::kitHasAnyInput(int mostUrgentPriority) {
 #if !MOBILEAPP
-    const std::shared_ptr<Document>& document = kitSocketPoll->getDocument();
+    const std::shared_ptr<Document>& document = getDocument();
 
     if (document)
     {
@@ -3237,7 +3237,7 @@ bool KitSocketPoll::kitHasAnyInput(int mostUrgentPriority) {
         }
 
         // Poll our incoming socket from wsd.
-        int ret = kitSocketPoll->poll(std::chrono::microseconds(0), /*justPoll=*/true);
+        int ret = poll(std::chrono::microseconds(0), /*justPoll=*/true);
         if (ret)
         {
             return true;
@@ -3986,17 +3986,12 @@ void lokit_main(
         pathAndQuery.append(std::string("&adms_info_namespaces=") +
                             (useMountNamespaces ? "true" : "false"));
 
-#else // MOBILEAPP
-
-#if !MOBILEAPP
-        // Was not done by the preload.
-        // For iOS we call it in -[AppDelegate application: didFinishLaunchingWithOptions:]
-        setupKitEnvironment(userInterface);
-#endif
+#endif // !MOBILEAPP
 
         auto mainKit = KitSocketPoll::create();
         mainKit->runOnClientThread(); // We will do the polling on this thread.
 
+#if MOBILEAPP
 #if (defined(__linux__) && !defined(__ANDROID__) && !defined(QTAPP)) || defined(__FreeBSD__)
         Poco::URI userInstallationURI("file", LO_PATH);
         LibreOfficeKit *kit = lok_init_2(LO_PATH "/program", userInstallationURI.toString().c_str());
