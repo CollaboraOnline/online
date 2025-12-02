@@ -899,6 +899,13 @@ class SocketBase {
 		console.assert(false, 'This should not be called!');
 	}
 
+	protected _renameOrSaveAsCallback(
+		textMsg: string,
+		command: ServerCommand,
+	): void {
+		console.assert(false, 'This should not be called!');
+	}
+
 	/* _onMessage() subtasks */
 
 	// 'coolserver ' message.
@@ -1586,6 +1593,30 @@ class SocketBase {
 				action: app.util.getProduct(),
 				actionLabel: window.errorMessages.infoandsupport,
 			});
+		}
+	}
+
+	// 'warn: ' message.
+	protected _onWarnMsg(textMsg: string, command: ServerCommand): void {
+		const len = 'warn: '.length;
+		textMsg = textMsg.substring(len);
+		if (textMsg.startsWith('saveas:')) {
+			const userName = command.username ? command.username : _('Someone');
+			const message = _(
+				'{username} saved this document as {filename}. Do you want to join?',
+			)
+				.replace('{username}', userName)
+				.replace('{filename}', command.filename as string);
+
+			this._map.uiManager.showConfirmModal(
+				'save-as-warning',
+				'',
+				message,
+				_('OK'),
+				function (this: SocketBase) {
+					this._renameOrSaveAsCallback(textMsg, command);
+				}.bind(this),
+			);
 		}
 	}
 }

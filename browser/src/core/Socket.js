@@ -105,16 +105,7 @@ app.definitions.Socket = class Socket extends SocketBase {
 			this._exportAsCallback(command);
 		}
 		else if (textMsg.startsWith('warn:')) {
-			var len = 'warn: '.length;
-			textMsg = textMsg.substring(len);
-			if (textMsg.startsWith('saveas:')) {
-				var userName = command.username ? command.username : _('Someone');
-				var message = _('{username} saved this document as {filename}. Do you want to join?').replace('{username}', userName).replace('{filename}', command.filename);
-
-				this._map.uiManager.showConfirmModal('save-as-warning', '', message, _('OK'), function() {
-					this._renameOrSaveAsCallback(textMsg, command);
-				}.bind(this));
-			}
+			this._onWarnMsg(textMsg, command);
 		}
 		else if (window.ThisIsAMobileApp && textMsg.startsWith('mobile:')) {
 			// allow passing some events easily from the mobile app
