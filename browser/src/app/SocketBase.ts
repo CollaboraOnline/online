@@ -1635,4 +1635,15 @@ class SocketBase {
 
 		this._map.fire('blockUI', { message: msg });
 	}
+
+	// 'blockedcommand: ' message.
+	protected _onBlockedCommandMsg(textMsg: string): void {
+		const blockedInfo = app.socket.parseServerCmd(textMsg.substring(16));
+		if (blockedInfo.errorKind === 'restricted')
+			window.app.console.log(
+				'Restricted command "' + blockedInfo.errorCmd + '" was blocked',
+			);
+		else if (blockedInfo.errorKind === 'locked')
+			this._map.openUnlockPopup(blockedInfo.errorCmd);
+	}
 }

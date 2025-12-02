@@ -95,7 +95,7 @@ interface MapInterface extends Evented {
 	_setRestrictions(restrictionInfo: ParsedJSONResult): void;
 	hideRestrictedItems(it: any, item: any, button: any): void;
 	disableLockedItem(it: any, item: any, button: any): void;
-	openUnlockPopup(cmd: ParsedJSONResult): void;
+	openUnlockPopup(cmd: ControlCommand): void;
 	isLockedUser(): boolean;
 	isRestrictedUser(): boolean;
 
