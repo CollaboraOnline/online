@@ -447,6 +447,7 @@ namespace Log
         return out;
     }
 
+#if defined(__linux__)
     /// Convert unsigned long num to base-10 ascii in place.
     /// Returns the *end* position.
     char* to_ascii(char* buf, std::size_t num)
@@ -468,6 +469,7 @@ namespace Log
 
         return buf + i;
     }
+#endif
     } // namespace
 
     char* prefix(const std::chrono::time_point<std::chrono::system_clock>& tp,
