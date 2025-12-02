@@ -29,7 +29,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
         // Schedule opening of the Open panel if no document is open in 100ms
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) { [weak self] in
-            self?.documentController.focusOrPresentOpenPanel(calledFromStartup: true)
+            self?.documentController.presentStartupBackstage(calledFromStartup: true)
         }
         // Now remove the Share menu item, as we haven't implemented sharing yet.
         if let mainMenu = NSApp.mainMenu,

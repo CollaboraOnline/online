@@ -74,7 +74,7 @@ final class DocumentController: NSDocumentController {
         closeLiveOpenPanel()
 
         // Open the dialog for the new document
-        DocumentController.presentStartupBackstage()
+        presentStartupBackstage()
     }
 
     /**
@@ -91,7 +91,7 @@ final class DocumentController: NSDocumentController {
     /**
      * Opens the Open panel when no other documents or windows are presented.
      */
-    func focusOrPresentOpenPanel(calledFromStartup: Bool = false) {
+    func focusOrPresentOpenPanel() {
         if let panel = liveOpenPanel {
             // Focus the existing panel (sheet or app-modal).
             if let parent = panel.sheetParent {
@@ -104,12 +104,6 @@ final class DocumentController: NSDocumentController {
             return
         }
 
-        // Don't present the Open panel during startup if there are any open windows
-        // (eg. when the user started the app from Finder with files to open)
-        if calledFromStartup && hasDocsOrWindows() {
-            return
-        }
-
         // No panel up -> trigger standard Open panel flow.
         super.openDocument(nil)
     }
@@ -117,7 +111,13 @@ final class DocumentController: NSDocumentController {
     /**
      * Create or focus the New document window.
      */
-    static func presentStartupBackstage() {
+    func presentStartupBackstage(calledFromStartup: Bool = false) {
+        // Don't present the panel during startup if there are any open windows
+        // (eg. when the user started the app from Finder with files to open)
+        if calledFromStartup && hasDocsOrWindows() {
+            return
+        }
+
         if let wc = DocumentController.backstageWindowController { // focus if already open
             wc.window?.makeKeyAndOrderFront(nil)
             NSApp.activate(ignoringOtherApps: true)
