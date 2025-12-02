@@ -144,15 +144,7 @@ app.definitions.Socket = class Socket extends SocketBase {
 			// Switching modes.
 			window.location.reload(false);
 		} else if (textMsg.startsWith('slidelayer:')) {
-			if (app.isExperimentalMode()) {
-				SlideBitmapManager.handleRenderSlideEvent(e);
-			} else {
-				const content = JSON.parse(textMsg.substring('slidelayer:'.length + 1));
-				this._map.fire('slidelayer', {
-					message: content,
-					image: e.image
-				});
-			}
+			this._onSlideLayerMsg(textMsg, e);
 			return;
 		} else if (textMsg.startsWith('sliderenderingcomplete:')) {
 			if (app.isExperimentalMode()) {
