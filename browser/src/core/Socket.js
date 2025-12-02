@@ -183,36 +183,7 @@ app.definitions.Socket = class Socket extends SocketBase {
 
 		// These can arrive very early during the startup, and never again.
 		if (textMsg.startsWith('progress:')) {
-			var info = JSON.parse(textMsg.substring(textMsg.indexOf('{')));
-			if (!info)
-			{
-				window.app.console.error('Missing info in progress: message');
-				return;
-			}
-			info.statusType = info.id;
-			info.background = info.type == 'bg';
-
-			if (info.id == 'find' || info.id == 'connect' || info.id == 'ready')
-			{
-				this._map.showBusy(window.ThisIsAMobileApp? _('Loading...'): _('Connecting...'), true);
-				if (info.id == "ready") {
-					// We're connected: cancel timer and dialog.
-					this.ReconnectCount = 0;
-					clearTimeout(this.timer);
-				}
-			} else if (info.id == 'start' || info.id == 'setvalue')
-				this._map.fire('statusindicator', info);
-
-			else if (info.id == 'finish') {
-				this._map.fire('statusindicator', info);
-				this._map._fireInitComplete('statusindicatorfinish');
-				// show shutting down popup after saving is finished
-				// if we show the popup just after the shuttingdown message, it will be overwitten by save popup
-				if (app.idleHandler._serverRecycling) {
-					this._map.showBusy(_('Server is shutting down'), false);
-				}
-			} else
-				window.app.console.error('Unknown progress status ' + info.id);
+			this._onProgressMsg(textMsg);
 			return;
 		}
 		else if (textMsg.startsWith('jsdialog:')) {
