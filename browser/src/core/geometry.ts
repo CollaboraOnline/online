@@ -41,6 +41,8 @@
 			* x => to get and set x.
 			* pX => to get and set x using core / canvas units. Internally, it is converted into twips.
 			* cX => to get and set x using CSS units. Internally, it is converted into twips.
+			* vX1, vX.., vY.. => to get the screen coordinates of the points. These properties can not be set, because they depend on the view.
+				-> Though sometimes we need to go from view to document. For that, we use canvasToDocumentX and canvasToDocumentY functions of the current view layout.
 		* Every type has its own sub functions:
 			* toArray (native-twips), cToArray (CSS), pToArray (core / canvas), containsPoint (takes number array as input), pContainsPoint, cContainsPoint and the like.
 		* twips is an integer unit. We also prefer integer types here, since other types are pixels.
