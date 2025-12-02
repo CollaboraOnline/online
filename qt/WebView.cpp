@@ -235,12 +235,12 @@ QWebEngineView* CODAWebEngineView::createWindow(QWebEnginePage::WebWindowType ty
 
     arrangePresentationWindows();
 
-    _screenRemoved = QObject::connect(qApp, &QGuiApplication::screenRemoved,
+    _screenRemoved = QObject::connect(Application::getApp(), &QGuiApplication::screenRemoved,
                      [this]() {
                         arrangePresentationWindows();
                      });
 
-    _screenAdded = QObject::connect(qApp, &QGuiApplication::screenAdded,
+    _screenAdded = QObject::connect(Application::getApp(), &QGuiApplication::screenAdded,
                      [this]() {
                         arrangePresentationWindows();
                      });
