@@ -232,6 +232,14 @@ JSDialog.notebookbarIconView = function (
 		updateAllIndexes();
 		if (bIsExpanded) JSDialog.CloseDropdown(data.id);
 	});
+
+	/*
+	 * NOTE: `resizeObserver` observes the iconview, not the dropdown.
+	 * and since the iconview grid is always max height (with overflow),
+	 * height changes do not trigger the observer as only the container's
+	 * height changes and it looks as if the iconview's dimentions
+	 * changd.
+	 */
 	resizeObserver.observe(iconview);
 
 	// Do not animate on creation - eg. when opening sidebar with icon view it might move the app
