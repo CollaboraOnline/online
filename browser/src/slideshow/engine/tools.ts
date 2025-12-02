@@ -416,7 +416,7 @@ class HSLColor {
 // eslint-disable-next-line no-unused-vars
 function makeScaler(nScale: number) {
 	if (typeof nScale !== typeof 0 || !isFinite(nScale)) {
-		window.app.console.log('makeScaler: not valid param passed: ' + nScale);
+		window.app.console.error('makeScaler: not valid param passed: ' + nScale);
 		return null;
 	}
 
