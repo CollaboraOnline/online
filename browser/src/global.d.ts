@@ -302,7 +302,7 @@ interface Window {
 		canPersist: boolean;
 	};
 	KeyboardShortcuts: KeyboardShortcuts;
-	
+
 	starterScreen: boolean;
 	allowUpdateNotification: boolean;
 	autoShowWelcome: boolean;

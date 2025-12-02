@@ -218,8 +218,15 @@ class PresenterConsole {
 	}
 
 	_openPresenterWindow() {
-		const windowopen = (window.mode.isCODesktop() && window.origOpen) ? window.origOpen : window.open;
-		return windowopen('', '_blank', 'toolbar=0,scrollbars=0,location=0,statusbar=0,menubar=0,resizable=1,popup=true')
+		const windowopen =
+			window.mode.isCODesktop() && window.origOpen
+				? window.origOpen
+				: window.open;
+		return windowopen(
+			'',
+			'_blank',
+			'toolbar=0,scrollbars=0,location=0,statusbar=0,menubar=0,resizable=1,popup=true',
+		);
 	}
 
 	_onPresentInConsole() {
@@ -569,9 +576,9 @@ class PresenterConsole {
 
 		// By default hide the exchange monitors button
 		if (!window.mode.isCODesktop()) {
-				let exchangeMonitorsButton =
-					this._proxyPresenter.document.querySelector('#exchange');
-				exchangeMonitorsButton.style.display = 'none';
+			let exchangeMonitorsButton =
+				this._proxyPresenter.document.querySelector('#exchange');
+			exchangeMonitorsButton.style.display = 'none';
 		}
 
 		elem = this._proxyPresenter.document.querySelector('#today');

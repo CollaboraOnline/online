@@ -130,7 +130,7 @@ class AboutDialog {
 			);
 
 		const links = content.querySelectorAll<HTMLAnchorElement>(
-			'#coolwsd-version a, #lokit-version a, #lokit-extra a'
+			'#coolwsd-version a, #lokit-version a, #lokit-extra a',
 		);
 
 		for (let i = 0; i < links.length; i++) {
@@ -144,7 +144,7 @@ class AboutDialog {
 		const licenseInformationElement = content.querySelector(
 			'#license-information',
 		) as HTMLElement;
-		if(licenseInformationElement) {
+		if (licenseInformationElement) {
 			const a = document.createElement('a');
 			a.href = 'javascript:void(0)';
 			a.textContent = _UNO('.uno:ShowLicense');
