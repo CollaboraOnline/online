@@ -426,6 +426,19 @@ class Document: NSDocument {
     }
 
     /**
+     * Common items like "lang" or "darkTheme" and alike, that are useful for the Backstage invocation too.
+     */
+    static func addCommonCOOLQueryItems(to components: inout URLComponents) {
+        let lang = Locale.preferredLanguages.first ?? "en-US"
+        components.queryItems?.append(URLQueryItem(name: "lang", value: lang))
+
+        // Add darkTheme parameter if user has dark mode enabled
+        if NSApp.effectiveAppearance.bestMatch(from: [.darkAqua, .aqua]) == .darkAqua {
+            components.queryItems?.append(URLQueryItem(name: "darkTheme", value: "true"))
+        }
+    }
+
+    /**
      * Initiate loading of cool.html, which also triggers loading of the document via lokit.
      */
     func loadDocumentInWebView(webView: WKWebView, permission: String, isWelcome: Bool) {
@@ -444,16 +457,13 @@ class Document: NSDocument {
         components.queryItems = [
             URLQueryItem(name: "file_path", value: tempFileURL!.absoluteString),
             URLQueryItem(name: "permission", value: permission),
-            URLQueryItem(name: "lang", value: lang),
             URLQueryItem(name: "appdocid", value: "\(self.appDocId)"),
             URLQueryItem(name: "userinterfacemode", value: "notebookbar"),
             // TODO: add "dir" if needed
         ]
 
-        // Add darkTheme parameter if user has dark mode enabled
-        if NSApp.effectiveAppearance.bestMatch(from: [.darkAqua, .aqua]) == .darkAqua {
-            components.queryItems?.append(URLQueryItem(name: "darkTheme", value: "true"))
-        }
+        // Add lang and (potentially) darkTheme
+        Document.addCommonCOOLQueryItems(to: &components)
 
         if isNewDocument {
             components.queryItems?.append(URLQueryItem(name: "isnewdocument", value: "true"))
@@ -464,17 +474,15 @@ class Document: NSDocument {
         }
 
         let finalURL = components.url!
-        let request = URLRequest(url: finalURL)
         let urlDir = url.deletingLastPathComponent()
 
-        // If you need read access to a local file, use loadFileURL(_:allowingReadAccessTo:):
-        // If `finalURL` is a file URL, do:
-        if finalURL.isFileURL {
-            webView.loadFileURL(finalURL, allowingReadAccessTo: urlDir)
-        } else {
-            // If it's not a file URL, just load the request normally
-            webView.load(request)
+        guard finalURL.isFileURL else {
+            NSLog("cool.html not found in bundle")
+            webView.loadHTMLString("<p>Couldn't access <code>cool.html</code>, this build is seriously broken.</p>", baseURL: nil)
+            return
         }
+
+        webView.loadFileURL(finalURL, allowingReadAccessTo: urlDir)
     }
 
     /**
