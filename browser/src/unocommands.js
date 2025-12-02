@@ -152,6 +152,7 @@ var unoCommandsArray = {
 	'Cut':{global:{menu:_('~Cut'),},},
 	'DataAreaRefresh':{spreadsheet:{menu:_('R~efresh Range'),},},
 	'DataBarFormatDialog':{spreadsheet:{menu:_('Data Bar...'),},},
+	'DatabaseSettings':{spreadsheet:{menu:_('~Table Style Options'),},},
 	'DataDataPilotRun':{spreadsheet:{context:_('~Properties...'),menu:_('Pi~vot Table...'),},},
 	'DataFilterAutoFilter':{spreadsheet:{menu:_('Auto~Filter'),},},
 	'DataFilterHideAutoFilter':{spreadsheet:{menu:_('~Hide AutoFilter'),},},
