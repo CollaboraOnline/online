@@ -1646,4 +1646,20 @@ class SocketBase {
 		else if (blockedInfo.errorKind === 'locked')
 			this._map.openUnlockPopup(blockedInfo.errorCmd as string);
 	}
+
+	// 'slidelayer: ' message.
+	protected _onSlideLayerMsg(
+		textMsg: string,
+		e: SlurpMessageEvent | MinimalMessageEvent,
+	): void {
+		if (app.isExperimentalMode()) {
+			SlideBitmapManager.handleRenderSlideEvent(e);
+		} else {
+			const content = JSON.parse(textMsg.substring('slidelayer:'.length + 1));
+			this._map.fire('slidelayer', {
+				message: content,
+				image: (e as SlurpMessageEvent).image,
+			});
+		}
+	}
 }
