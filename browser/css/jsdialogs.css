@@ -3020,3 +3020,8 @@ div [id^='themeview'].ui-iconview-entry, div [id^='themeview1col'].ui-iconview-e
 #SpecialCharactersDialog #showcharset.jsdialog.ui-iconview {
 	grid-template-columns: repeat(16, 1fr);
 }
+
+#imSetInsMode {
+  content: url('images/queryinsmode.svg');
+}
+
