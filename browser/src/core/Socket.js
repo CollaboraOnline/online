@@ -12,7 +12,7 @@
  * L.Socket contains methods for the communication with the server
  */
 
-/* global app JSDialog _ errorMessages brandProductName GraphicSelection TileManager SlideBitmapManager SocketBase */
+/* global app JSDialog _ errorMessages GraphicSelection TileManager SlideBitmapManager SocketBase */
 
 app.definitions.Socket = class Socket extends SocketBase {
 
@@ -93,20 +93,7 @@ app.definitions.Socket = class Socket extends SocketBase {
 			this._onFontsMissing(textMsg, command);
 		}
 		else if (textMsg.startsWith('info:') && command.errorCmd === 'socket') {
-			if (command.errorKind === 'limitreached' && !this.WasShownLimitDialog) {
-				this.WasShownLimitDialog = true;
-				textMsg = errorMessages.limitreached;
-				textMsg = textMsg.replace('{docs}', command.params[0]);
-				textMsg = textMsg.replace('{connections}', command.params[1]);
-				textMsg = textMsg.replace('{productname}', (typeof brandProductName !== 'undefined' ?
-					brandProductName : 'Collabora Online Development Edition (unbranded)'));
-				this._map.fire('infobar',
-					{
-						msg: textMsg,
-						action: app.util.getProduct(),
-						actionLabel: errorMessages.infoandsupport
-					});
-			}
+			this._onInfoMsg(textMsg, command);
 		}
 		else if (textMsg.startsWith('pong ') && this._map._debug.pingOn) {
 			this._map._debug.reportPong(command.rendercount);
