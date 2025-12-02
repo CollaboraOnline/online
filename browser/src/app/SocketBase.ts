@@ -1662,4 +1662,21 @@ class SocketBase {
 			});
 		}
 	}
+
+	// 'sliderenderingcomplete: ' message.
+	protected _onSlideRenderingCompleteMsg(
+		textMsg: string,
+		e: SlurpMessageEvent | MinimalMessageEvent,
+	): void {
+		if (app.isExperimentalMode()) {
+			SlideBitmapManager.handleSlideRenderingComplete(e);
+		} else {
+			const json = JSON.parse(
+				textMsg.substring('sliderenderingcomplete:'.length + 1),
+			);
+			this._map.fire('sliderenderingcomplete', {
+				success: json.status === 'success',
+			});
+		}
+	}
 }
