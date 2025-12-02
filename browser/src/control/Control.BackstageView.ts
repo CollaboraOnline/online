@@ -111,11 +111,15 @@ class BackstageView extends window.L.Class {
 		this.isStarterMode = (window as any).starterScreen;
 		this.container = this.createContainer();
 		document.body.appendChild(this.container);
-		this.map?.on('commandstatechanged', (e: any) => {
-			if (e.commandName === '.uno:ModifiedStatus') {
-				this.updateSaveButtonState();
-			}
-		}, this);
+		this.map?.on(
+			'commandstatechanged',
+			(e: any) => {
+				if (e.commandName === '.uno:ModifiedStatus') {
+					this.updateSaveButtonState();
+				}
+			},
+			this,
+		);
 	}
 
 	private createContainer(): HTMLElement {
@@ -153,7 +157,10 @@ class BackstageView extends window.L.Class {
 			closeButton.setAttribute('aria-label', _('Close backstage'));
 			closeButton.title = _('Close backstage');
 
-			const closeBtn = this.createElement('span', 'backstage-header-close-icon');
+			const closeBtn = this.createElement(
+				'span',
+				'backstage-header-close-icon',
+			);
 			closeBtn.setAttribute('aria-hidden', 'true');
 			closeBtn.textContent = '×';
 			closeButton.appendChild(closeBtn);
@@ -168,7 +175,7 @@ class BackstageView extends window.L.Class {
 
 	private createSidebar(): HTMLElement {
 		const sidebar = this.createElement('div', 'backstage-sidebar');
-		
+
 		// Only show back button if not in starter screen mode
 		if (!this.isStarterMode) {
 			const backButton = this.createSidebarBackBtn();
@@ -431,7 +438,6 @@ class BackstageView extends window.L.Class {
 		return card;
 	}
 
-
 	private createInfoPropertiesColumn(): HTMLElement {
 		const column = this.createElement('div', 'backstage-info-properties');
 
@@ -442,9 +448,8 @@ class BackstageView extends window.L.Class {
 		const propertiesList = this.createPropertiesList();
 		column.appendChild(propertiesList);
 
-		const button = this.createPrimaryButton(
-			_('More Property Info'),
-			() => this.executeDocumentProperties(),
+		const button = this.createPrimaryButton(_('More Property Info'), () =>
+			this.executeDocumentProperties(),
 		);
 		column.appendChild(button);
 
@@ -460,7 +465,6 @@ class BackstageView extends window.L.Class {
 		if (id) element.id = id;
 		return element;
 	}
-
 
 	private createPrimaryButton(
 		label: string,
@@ -503,7 +507,7 @@ class BackstageView extends window.L.Class {
 
 		return item;
 	}
-	
+
 	private getFileName = (wopi: any): string => {
 		if (wopi?.BreadcrumbDocName) return wopi.BreadcrumbDocName;
 		if (wopi?.BaseFileName) return wopi.BaseFileName;
@@ -517,16 +521,12 @@ class BackstageView extends window.L.Class {
 		return '';
 	};
 
-
 	private getDocumentProperties(): Array<{ label: string; value: string }> {
 		const docType = this.getDocTypeString();
 		const docLayer = this.map?._docLayer;
 		const wopi = this.map?.['wopi'];
 
-		const typeLabels: Record<
-			string,
-			{ type: string; parts: string }
-		> = {
+		const typeLabels: Record<string, { type: string; parts: string }> = {
 			text: { type: _('Text Document'), parts: _('Pages') },
 			spreadsheet: { type: _('Spreadsheet'), parts: _('Sheets') },
 			presentation: { type: _('Presentation'), parts: _('Slides') },
@@ -537,7 +537,6 @@ class BackstageView extends window.L.Class {
 			type: _('Document'),
 			parts: _('Parts'),
 		};
-
 
 		const properties = [
 			{ label: _('Type'), value: config.type },
@@ -601,30 +600,30 @@ class BackstageView extends window.L.Class {
 			const id = entry.id || this.slugify(name + absolutePath);
 			const searchComponents = [name, type, absolutePath];
 
-		templates.push({
-			id,
-			name,
-			type,
-			path: absolutePath,
-			preview: entry.preview || undefined,
-			featured: !!entry.featured,
-			searchText: searchComponents.join(' ').toLowerCase(),
+			templates.push({
+				id,
+				name,
+				type,
+				path: absolutePath,
+				preview: entry.preview || undefined,
+				featured: !!entry.featured,
+				searchText: searchComponents.join(' ').toLowerCase(),
+			});
 		});
-	});
 
-	// Sort by type first (writer, calc, impress), then alphabetically by name
-	const typeOrder: Record<TemplateType, number> = {
-		writer: 1,
-		calc: 2,
-		impress: 3,
-	};
+		// Sort by type first (writer, calc, impress), then alphabetically by name
+		const typeOrder: Record<TemplateType, number> = {
+			writer: 1,
+			calc: 2,
+			impress: 3,
+		};
 
-	return templates.sort((a, b) => {
-		const typeComparison = typeOrder[a.type] - typeOrder[b.type];
-		if (typeComparison !== 0) return typeComparison;
-		return a.name.localeCompare(b.name, undefined, { sensitivity: 'base' });
-	});
-}
+		return templates.sort((a, b) => {
+			const typeComparison = typeOrder[a.type] - typeOrder[b.type];
+			if (typeComparison !== 0) return typeComparison;
+			return a.name.localeCompare(b.name, undefined, { sensitivity: 'base' });
+		});
+	}
 
 	private async loadTemplatesData(): Promise<void> {
 		if (this.templatesPromise) return this.templatesPromise;
@@ -635,7 +634,7 @@ class BackstageView extends window.L.Class {
 				const entries = (window as any).CODA_TEMPLATES || [];
 				this.templates = entries;
 				this.templatesLoadError = false;
-				
+
 				if (!entries || entries.length === 0) {
 					console.warn('Templates manifest loaded but contains no templates!');
 				}
@@ -932,7 +931,6 @@ class BackstageView extends window.L.Class {
 			.replace(/\b\w/g, (char) => char.toUpperCase());
 	}
 
-
 	private getDocTypeString(): string {
 		const docLayer = this.map && this.map._docLayer;
 		const docType = docLayer && docLayer._docType;
@@ -1015,7 +1013,7 @@ class BackstageView extends window.L.Class {
 		}
 
 		window.postMobileMessage('newdoc ' + params.join(' '));
-		
+
 		if (!this.isStarterMode) {
 			this.hide();
 		}
@@ -1135,12 +1133,18 @@ class BackstageView extends window.L.Class {
 	}
 
 	private isDocumentModified(): boolean {
-		return this.map?.stateChangeHandler?.getItemValue('.uno:ModifiedStatus') === 'true';
+		return (
+			this.map?.stateChangeHandler?.getItemValue('.uno:ModifiedStatus') ===
+			'true'
+		);
 	}
 
 	private updateSaveButtonState(): void {
 		if (!this.saveTabElement) return;
-		this.saveTabElement.classList.toggle('disabled', !this.isDocumentModified());
+		this.saveTabElement.classList.toggle(
+			'disabled',
+			!this.isDocumentModified(),
+		);
 	}
 }
 

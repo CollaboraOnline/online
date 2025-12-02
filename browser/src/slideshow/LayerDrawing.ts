@@ -779,9 +779,9 @@ class LayerDrawing {
 	onSlideRenderingComplete(e: any) {
 		if (this.isDisposed()) return;
 		this.map.fire('handleslideshowprogressbar', { isVisible: false });
-		
+
 		const slideHash = this.requestedSlideHash || this.prefetchedSlideHash;
-	  const slideInfo = this.getSlideInfo(slideHash);
+		const slideInfo = this.getSlideInfo(slideHash);
 		const index = slideInfo ? slideInfo.index : undefined;
 
 		if (!e.success) {
