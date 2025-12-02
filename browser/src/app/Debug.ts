@@ -110,13 +110,13 @@ class DebugManager {
 	}
 
 	public toggle(): void {
-		Util.ensureValue(this._painter);
-
 		if (!this.debugOn) {
 			this._start();
 		} else {
 			this._stop();
 		}
+
+		Util.ensureValue(this._painter);
 
 		// redraw canvas with changed debug overlays
 		this._painter.update();
