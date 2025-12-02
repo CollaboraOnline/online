@@ -90,24 +90,7 @@ app.definitions.Socket = class Socket extends SocketBase {
 				return;
 		}
 		else if (textMsg.startsWith('fontsmissing:')) {
-			var fontsMissingObj = JSON.parse(textMsg.substring(textMsg.indexOf('{')));
-			var msg = ' ';
-			for (var i = 0; i < fontsMissingObj.fontsmissing.length; ++i) {
-				if (i > 0)
-					msg += ', ';
-				msg += fontsMissingObj.fontsmissing[i];
-			}
-
-			if (this._map.welcome && !this._map.welcome.isGuest() && this._map.welcome.shouldWelcome() && window.autoShowWelcome)
-			{
-				setTimeout(function() {
-					this._map.uiManager.showInfoModal('fontsmissing', _('Missing Fonts'), msg, null, _('Close'));
-				}.bind(this), 60000);
-			}
-			else
-			{
-				this._map.uiManager.showInfoModal('fontsmissing', _('Missing Fonts'), msg, null, _('Close'));
-			}
+			this._onFontsMissing(textMsg, command);
 		}
 		else if (textMsg.startsWith('info:') && command.errorCmd === 'socket') {
 			if (command.errorKind === 'limitreached' && !this.WasShownLimitDialog) {
@@ -153,7 +136,7 @@ app.definitions.Socket = class Socket extends SocketBase {
 		}
 		else if (textMsg.startsWith('blockui:')) {
 			textMsg = textMsg.substring('blockui:'.length).trim();
-			msg = null;
+			let msg = null;
 
 			if (textMsg === 'rename') {
 				msg = _('The document is being renamed and will reload shortly');
