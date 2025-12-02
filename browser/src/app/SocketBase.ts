@@ -1525,4 +1525,42 @@ class SocketBase {
 
 		return false;
 	}
+
+	// 'fontsmissing: ' message.
+	protected _onFontsMissing(textMsg: string, command: ServerCommand): void {
+		const fontsMissingObj = JSON.parse(textMsg.substring(textMsg.indexOf('{')));
+		let msg = ' ';
+		for (let i = 0; i < fontsMissingObj.fontsmissing.length; ++i) {
+			if (i > 0) msg += ', ';
+			msg += fontsMissingObj.fontsmissing[i];
+		}
+
+		if (
+			this._map.welcome &&
+			!this._map.welcome.isGuest() &&
+			this._map.welcome.shouldWelcome() &&
+			window.autoShowWelcome
+		) {
+			setTimeout(
+				function (this: SocketBase) {
+					this._map.uiManager.showInfoModal(
+						'fontsmissing',
+						_('Missing Fonts'),
+						msg,
+						null,
+						_('Close'),
+					);
+				}.bind(this),
+				60000,
+			);
+		} else {
+			this._map.uiManager.showInfoModal(
+				'fontsmissing',
+				_('Missing Fonts'),
+				msg,
+				null,
+				_('Close'),
+			);
+		}
+	}
 }
