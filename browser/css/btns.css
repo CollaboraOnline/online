@@ -123,6 +123,10 @@ button.jsdialog img {
 	width: max-content;
 }
 
+:not(.main-nav) > div:not(.toolbox) > button:not(.ui-tab):not(.ui-expander):not(.ui-corner-all):not(.button-primary):not(.unobutton):not(.form-field-button):not(.col):not(.arrowbackground):not(.ui-combobox-button).has-img {
+	width: var(--btn-size);
+}
+
 .button-primary {
 	height: 32px;
 	line-height: 0em;
