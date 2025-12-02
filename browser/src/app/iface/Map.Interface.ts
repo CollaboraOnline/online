@@ -20,6 +20,7 @@ interface MapInterface extends Evented {
 	_docLayer: DocLayerInterface;
 	uiManager: UIManager;
 	_textInput: { debug(value: boolean): void };
+	addressInputField: AddressInputField;
 
 	removeLayer(layer: any): void;
 	addLayer(layer: any): void;
