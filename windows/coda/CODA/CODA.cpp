@@ -9,6 +9,7 @@
 #include <cstdint>
 #include <cstdlib>
 #include <cstring>
+#include <deque>
 #include <filesystem>
 #include <map>
 #include <regex>
@@ -57,19 +58,14 @@ enum class ClipboardOp
     READ
 };
 
-// Use enum class to automatically get non-overlapping values. On the other hand, then we need to
-// cast back and forth here and there.
-enum class CODA_OPEN_CONTROL : DWORD
+enum class DocumentType
 {
-    NONE,
-    SEP1,
-    NEW_TEXT,
-    NEW_SPREADSHEET,
-    NEW_PRESENTATION,
-    SEP2
+    TEXT,
+    SPREADSHEET,
+    PRESENTATION,
 };
 
-enum class PERMISSION { EDIT, NEW_DOCUMENT, READONLY, VIEW, WELCOME };
+enum class DocumentMode { EDIT, NEW, WELCOME, STARTER };
 
 struct FilenameAndUri
 {
@@ -78,13 +74,6 @@ struct FilenameAndUri
 
     // Complete file: URI
     std::string uri;
-};
-
-struct OpenDialogResult
-{
-    bool createNew;
-    CODA_OPEN_CONTROL newId;
-    std::vector<FilenameAndUri> filenamesAndUris;
 };
 
 // Various document window speficic data
@@ -103,7 +92,7 @@ struct WindowData
     int fakeClientFd;
     int closeNotificationPipeForForwardingThread[2];
     FilenameAndUri filenameAndUri;
-    PERMISSION permission;
+    DocumentMode mode;
     int appDocId;
     DWORD lastOwnClipboardModification;
     DWORD lastAnyonesClipboardModification;
@@ -150,27 +139,18 @@ static HWND hiddenOwnerWindow;
 static const int CODA_WM_EXECUTESCRIPT = WM_APP + 1;
 static const int CODA_WM_LOADNEXTDOCUMENT = WM_APP + 2;
 
-constexpr int CODA_GROUP_OPEN = 1000;
-
-constexpr int CODA_OPEN_DIALOG_CREATE_NEW_INSTEAD = 123456;
-
 static HMONITOR primaryMonitor;
-
-// Map from IFileDialogCustomize pointer to the corresponding IFileDialog, so that we can close it prematurely
-static std::map<IFileDialogCustomize*, IFileDialog*> customisationToDialog;
 
 static litecask::Datastore persistentWindowSizeStore;
 static bool persistentWindowSizeStoreOK;
 
 static FilenameAndUri fileSaveDialog(const std::string& name, const std::string& folder, const std::string& extension);
 
-static std::wstring new_document(CODA_OPEN_CONTROL id);
-static void openCOOLWindow(const FilenameAndUri& filenameAndUri, PERMISSION permission);
+static void openCOOLWindow(const FilenameAndUri& filenameAndUri, DocumentMode mode);
 
 // Vector of documents to open passed on the command line, or multiple documents to open selected in
 // a file open dialog. We open the next one only as soon as the previous one has finished loading.
-static std::vector<FilenameAndUri> filenamesAndUrisToOpen;
-static int currentFileToOpenIndex;
+static std::deque<FilenameAndUri> filenamesAndUrisToOpen;
 
 // Temporary l10n function for the few UI strings here in this file
 static const wchar_t* _(const wchar_t* english)
@@ -402,10 +382,24 @@ static const wchar_t* _(const wchar_t* english)
 
 void load_next_document()
 {
-    // Open the next document from the command line, if any. Post a message to one randomly selected
-    // document window.
-    if (currentFileToOpenIndex < filenamesAndUrisToOpen.size() - 1)
-        PostMessageW(windowData.begin()->second.hWnd, CODA_WM_LOADNEXTDOCUMENT, 0, 0);
+    if (filenamesAndUrisToOpen.size() > 0)
+    {
+        // Open the next document (from the command line or selected in the file open dialog), if
+        // any.
+        if (windowData.size() > 0)
+        {
+            // Post a message to one randomly selected window that can be a starter backstage window
+            // or a document window, it doesn't matter, they use the same window procedure.
+            PostMessageW(windowData.begin()->second.hWnd, CODA_WM_LOADNEXTDOCUMENT, 0, 0);
+        }
+        else
+        {
+            // We have no window open, so we can just call openCOOLWindow() directly.
+            auto nextDocument = filenamesAndUrisToOpen.front();
+            filenamesAndUrisToOpen.pop_front();
+            openCOOLWindow(nextDocument, DocumentMode::EDIT);
+        }
+    }
 }
 
 // ================ Sample code (MIT licensed). With app-specific modifications in the dialog event handler.
@@ -413,7 +407,7 @@ void load_next_document()
 
 /* File Dialog Event Handler *****************************************************************************************************/
 
-class CDialogEventHandler : public IFileDialogEvents, public IFileDialogControlEvents
+class CDialogEventHandler : public IFileDialogEvents
 {
 public:
     // IUnknown methods
@@ -421,7 +415,6 @@ public:
     {
         static const QITAB qit[] = {
             QITABENT(CDialogEventHandler, IFileDialogEvents),
-            QITABENT(CDialogEventHandler, IFileDialogControlEvents),
             { 0 },
         };
         return QISearch(this, qit, riid, ppv);
@@ -454,18 +447,6 @@ public:
     };
     IFACEMETHODIMP OnTypeChange(IFileDialog* pfd) { return S_OK; };
     IFACEMETHODIMP OnOverwrite(IFileDialog*, IShellItem*, FDE_OVERWRITE_RESPONSE*) { return S_OK; };
-
-    // IFileDialogControlEvents methods
-    IFACEMETHODIMP OnButtonClicked(IFileDialogCustomize* dialogCustomisation, DWORD id)
-    {
-        customisationToDialog[dialogCustomisation]->Close(CODA_OPEN_DIALOG_CREATE_NEW_INSTEAD + id);
-        return S_OK;
-    };
-
-    // Rest are dummies
-    IFACEMETHODIMP OnItemSelected(IFileDialogCustomize*, DWORD, DWORD) { return S_OK; };
-    IFACEMETHODIMP OnCheckButtonToggled(IFileDialogCustomize*, DWORD, BOOL) { return S_OK; };
-    IFACEMETHODIMP OnControlActivating(IFileDialogCustomize*, DWORD) { return S_OK; };
 
     CDialogEventHandler()
         : _cRef(1){};
@@ -500,34 +481,49 @@ static void processMessage(WindowData& data, wil::unique_cotaskmem_string& messa
     std::abort();
 }
 
-static std::wstring new_document(CODA_OPEN_CONTROL id)
+static std::wstring new_document(DocumentType type, const std::string templateRelativePath)
 {
-    // Copy a template to the user's document folder. Where else? Should we let the user decide
-    // where it goes?
-
-    std::wstring templateBasename, templateExtension;
-    switch (id)
+    std::wstring templateBasename, templateExtension, templateSourcePath;
+    if (templateRelativePath == "")
     {
-        case CODA_OPEN_CONTROL::NEW_TEXT:
-            templateBasename = L"TextDocument";
-            templateExtension = L"odt";
-            break;
-        case CODA_OPEN_CONTROL::NEW_SPREADSHEET:
-            templateBasename = L"Spreadsheet";
-            templateExtension = L"ods";
-            break;
-        case CODA_OPEN_CONTROL::NEW_PRESENTATION:
-            templateBasename = L"Presentation";
-            templateExtension = L"odp";
-            break;
-        default:
-            fatal("Unexpected case in new_document()");
+        // Old-style simple blank documents
+        switch (type)
+        {
+            case DocumentType::TEXT:
+                templateBasename = L"TextDocument";
+                templateExtension = L"odt";
+                break;
+            case DocumentType::SPREADSHEET:
+                templateBasename = L"Spreadsheet";
+                templateExtension = L"ods";
+                break;
+            case DocumentType::PRESENTATION:
+                templateBasename = L"Presentation";
+                templateExtension = L"odp";
+                break;
+            default:
+                fatal("Unexpected case in new_document()");
+        }
+        templateSourcePath = Util::string_to_wide_string(app_installation_path) +
+            L"..\\templates\\" + templateBasename + L"." +
+            templateExtension;
+    }
+    else
+    {
+        // A template chosen from the "Backstage"
+        std::string decodedTemplateRelativePath;
+        Poco::URI::decode(templateRelativePath, decodedTemplateRelativePath);
+
+        templateSourcePath =
+            Util::string_to_wide_string(app_installation_path +
+                                        "..\\cool\\" + decodedTemplateRelativePath);
+        templateBasename = Util::string_to_wide_string(decodedTemplateRelativePath);
+        templateBasename = templateBasename.substr(templateBasename.find_last_of(L'/') + 1);
+        templateExtension = templateBasename.substr(templateBasename.find_last_of(L'.') + 1);
+        templateBasename = templateBasename.substr(0, templateBasename.find_last_of(L'.'));
     }
 
-    const auto templateSourcePath = Util::string_to_wide_string(app_installation_path) +
-                                    L"..\\templates\\" + templateBasename + L"." +
-                                    templateExtension;
-
+    // Let the user select where to put the new document, and what name to use for it.
     auto filenameAndUri = fileSaveDialog(Util::wide_string_to_string(templateBasename), "", Util::wide_string_to_string(templateExtension));
 
     // If the user cancelled the dialog, retunr an empty string
@@ -694,7 +690,7 @@ static void do_welcome_handling_things(WindowData& data)
     if (!Poco::File(welcomeSlideshow).exists())
         return;
 
-    openCOOLWindow({ welcomeSlideshow.getFileName(), Poco::URI(welcomeSlideshow).toString() }, PERMISSION::WELCOME);
+    openCOOLWindow({ welcomeSlideshow.getFileName(), Poco::URI(welcomeSlideshow).toString() }, DocumentMode::WELCOME);
 }
 
 static void enter_full_screen(WindowData& data, HMONITOR monitor, bool saveRestoreInfo)
@@ -760,7 +756,7 @@ static void do_bye_handling_things(const WindowData& data)
     fakeSocketClose(data.closeNotificationPipeForForwardingThread[0]);
 
     // For the welcome slideshow we need to close the window ourselves
-    if (data.permission == PERMISSION::WELCOME)
+    if (data.mode == DocumentMode::WELCOME)
         PostMessageW(data.hWnd, WM_CLOSE, 0, 0);
 }
 
@@ -1134,7 +1130,7 @@ static void exchangeMonitors(WindowData& data)
     enter_full_screen(data, monitors[newPresentationMonitor].hMonitor, false);
 }
 
-static OpenDialogResult fileOpenDialog()
+static std::vector<FilenameAndUri> fileOpenDialog()
 {
     IFileOpenDialog* dialog;
 
@@ -1164,37 +1160,6 @@ static OpenDialogResult fileOpenDialog()
     if (!SUCCEEDED(dialog->Advise(dialogEvents, &cookie)))
         fatal("dialog->Advise() failed");
 
-    IFileDialogCustomize* dialogCustomisation = NULL;
-    if (!SUCCEEDED(dialog->QueryInterface(IID_PPV_ARGS(&dialogCustomisation))))
-        fatal("dialog->QueryInterface() failed");
-
-    customisationToDialog[dialogCustomisation] = dialog;
-
-    if (!SUCCEEDED(dialogCustomisation->AddSeparator((DWORD)CODA_OPEN_CONTROL::SEP1)))
-        fatal("dialogCustomisation->AddSeparator() failed");
-
-    if (!SUCCEEDED(dialogCustomisation->StartVisualGroup(CODA_GROUP_OPEN, _(L"Create new"))))
-        fatal("dialogCustomisation->StartVisualGroup() failed");
-
-    if (!SUCCEEDED(dialogCustomisation->AddPushButton((DWORD)CODA_OPEN_CONTROL::NEW_TEXT,
-                                                      _(L"Text document"))))
-        fatal("dialogCustomisation->AddPushButton() failed");
-
-    if (!SUCCEEDED(dialogCustomisation->AddPushButton((DWORD)CODA_OPEN_CONTROL::NEW_SPREADSHEET,
-                                                      _(L"Spreadsheet"))))
-        fatal("dialogCustomisation->AddPushButton() failed");
-
-    if (!SUCCEEDED(dialogCustomisation->AddPushButton((DWORD)CODA_OPEN_CONTROL::NEW_PRESENTATION,
-                                                      _(L"Presentation"))))
-        fatal("dialogCustomisation->AddPushButton() failed");
-
-    dialogCustomisation->EndVisualGroup();
-
-    if (!SUCCEEDED(dialogCustomisation->AddSeparator((DWORD)CODA_OPEN_CONTROL::SEP2)))
-        fatal("dialogCustomisation->AddSeparator() failed");
-
-    dialogCustomisation->Release();
-
     FILEOPENDIALOGOPTIONS options;
     if (SUCCEEDED(dialog->GetOptions(&options)))
     {
@@ -1209,42 +1174,33 @@ static OpenDialogResult fileOpenDialog()
 
     std::vector<FilenameAndUri> result;
 
-    if (dialogResult >= CODA_OPEN_DIALOG_CREATE_NEW_INSTEAD + (int)CODA_OPEN_CONTROL::NEW_TEXT &&
-        dialogResult <= CODA_OPEN_DIALOG_CREATE_NEW_INSTEAD + (int)CODA_OPEN_CONTROL::NEW_PRESENTATION)
-    {
-        return { true, (CODA_OPEN_CONTROL)(dialogResult - CODA_OPEN_DIALOG_CREATE_NEW_INSTEAD), result };
-    }
-    else
-    {
-        IShellItemArray* items;
-        if (!SUCCEEDED(dialog->GetResults(&items)))
-            fatal("dialog->GetResults() failed");
+    IShellItemArray* items;
+    if (!SUCCEEDED(dialog->GetResults(&items)))
+        fatal("dialog->GetResults() failed");
 
-        DWORD numItems;
-        if (!SUCCEEDED(items->GetCount(&numItems)))
-            fatal("items->GetCount() failed");
+    DWORD numItems;
+    if (!SUCCEEDED(items->GetCount(&numItems)))
+        fatal("items->GetCount() failed");
 
-        for (int i = 0; i < numItems; i++)
+    for (int i = 0; i < numItems; i++)
+    {
+        IShellItem* item;
+        PWSTR fileSysPath;
+        if (SUCCEEDED(items->GetItemAt(i, &item)) &&
+            SUCCEEDED(item->GetDisplayName(SIGDN_FILESYSPATH, &fileSysPath)))
         {
-            IShellItem* item;
-            PWSTR fileSysPath;
-            if (SUCCEEDED(items->GetItemAt(i, &item)) &&
-                SUCCEEDED(item->GetDisplayName(SIGDN_FILESYSPATH, &fileSysPath)))
-            {
-                auto path = Poco::Path(Util::wide_string_to_string(std::wstring(fileSysPath)));
-                result.push_back({ path.getFileName(), Poco::URI(path).toString() });
-                CoTaskMemFree(fileSysPath);
-                item->Release();
-            }
+            auto path = Poco::Path(Util::wide_string_to_string(std::wstring(fileSysPath)));
+            result.push_back({ path.getFileName(), Poco::URI(path).toString() });
+            CoTaskMemFree(fileSysPath);
+            item->Release();
         }
-        items->Release();
     }
+    items->Release();
+
     dialog->Unadvise(cookie);
     dialog->Release();
 
-    customisationToDialog.erase(dialogCustomisation);
-
-    return { false, CODA_OPEN_CONTROL::NONE, result };
+    return result;
 }
 
 static FilenameAndUri fileSaveDialog(const std::string& name, const std::string& folder, const std::string& extension)
@@ -1518,22 +1474,21 @@ static LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM l
         break;
 
         case WM_CLOSE:
+            if (windowData[hWnd].mode == DocumentMode::STARTER)
+                ; // Nothing
+            else if (!windowData[hWnd].isConsole)
             {
-                if (!windowData[hWnd].isConsole)
-                {
-                    // FIXME: Should we make sure he document is saved? Or ask the user whether to save it?
-                    do_bye_handling_things(windowData[hWnd]);
+                do_bye_handling_things(windowData[hWnd]);
 
-                    DocumentData::deallocate(windowData[hWnd].appDocId);
-                }
-                else
-                {
-                    auto& parent = windowData[windowData[hWnd].hParentWnd];
-                    leave_full_screen(parent);
-                    parent.hConsoleWnd = 0;
-                }
-                DestroyWindow(hWnd);
+                DocumentData::deallocate(windowData[hWnd].appDocId);
             }
+            else
+            {
+                auto& parent = windowData[windowData[hWnd].hParentWnd];
+                leave_full_screen(parent);
+                parent.hConsoleWnd = 0;
+            }
+            DestroyWindow(hWnd);
             break;
 
         case WM_DESTROY:
@@ -1550,17 +1505,19 @@ static LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM l
 
         case WM_NCDESTROY:
         {
-            // Maybe all windows should do this but just do consoles for now
             auto it = windowData.find(hWnd);
-            if (it != windowData.end() && it->second.isConsole)
+            if (it != windowData.end())
             {
-                auto& data = it->second;
-                if (data.webViewController)
+                if (it->second.isConsole)
                 {
-                    data.webViewController->Close();
-                    data.webViewController = nullptr;
+                    auto& data = it->second;
+                    if (data.webViewController)
+                    {
+                        data.webViewController->Close();
+                        data.webViewController = nullptr;
+                    }
+                    data.webView = nullptr;
                 }
-                data.webView = nullptr;
                 windowData.erase(hWnd);
             }
             break;
@@ -1584,10 +1541,11 @@ static LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM l
             break;
 
         case CODA_WM_LOADNEXTDOCUMENT:
-            if (currentFileToOpenIndex < filenamesAndUrisToOpen.size() - 1)
+            if (filenamesAndUrisToOpen.size() > 0)
             {
-                currentFileToOpenIndex++;
-                openCOOLWindow(filenamesAndUrisToOpen[currentFileToOpenIndex], PERMISSION::EDIT);
+                auto nextDocument = filenamesAndUrisToOpen.front();
+                filenamesAndUrisToOpen.pop_front();
+                openCOOLWindow(nextDocument, DocumentMode::EDIT);
             }
             break;
 
@@ -1620,7 +1578,7 @@ static bool isLightTheme()
     return value == 1;
 }
 
-static void openCOOLWindow(const FilenameAndUri& filenameAndUri, PERMISSION permission)
+static void openCOOLWindow(const FilenameAndUri& filenameAndUri, DocumentMode mode)
 {
     bool havePersistedSize = false;
 
@@ -1628,7 +1586,7 @@ static void openCOOLWindow(const FilenameAndUri& filenameAndUri, PERMISSION perm
     int welcomeX = CW_USEDEFAULT, welcomeY = CW_USEDEFAULT;
     bool maximize = false;
 
-    if (permission != PERMISSION::WELCOME && persistentWindowSizeStoreOK)
+    if (mode != DocumentMode::WELCOME && mode != DocumentMode::STARTER && persistentWindowSizeStoreOK)
     {
         std::vector<uint8_t> value;
         if (persistentWindowSizeStore.get(filenameAndUri.uri.c_str(), value) == litecask::Status::Ok)
@@ -1675,7 +1633,7 @@ static void openCOOLWindow(const FilenameAndUri& filenameAndUri, PERMISSION perm
         monitorInfo.cbSize = sizeof(monitorInfo);
         if (GetMonitorInfoW(primaryMonitor, &monitorInfo))
         {
-            if (permission == PERMISSION::WELCOME)
+            if (mode == DocumentMode::WELCOME)
             {
                 double aspectRatio =
                     (double)(monitorInfo.rcWork.right - monitorInfo.rcWork.left) / (monitorInfo.rcWork.bottom - monitorInfo.rcWork.top);
@@ -1702,7 +1660,7 @@ static void openCOOLWindow(const FilenameAndUri& filenameAndUri, PERMISSION perm
         }
         else
         {
-            if (permission == PERMISSION::WELCOME)
+            if (mode == DocumentMode::WELCOME)
             {
                 width = 1280;
                 height = 720;
@@ -1716,10 +1674,15 @@ static void openCOOLWindow(const FilenameAndUri& filenameAndUri, PERMISSION perm
     }
 
     HWND hWnd;
-    if (permission == PERMISSION::WELCOME)
+    if (mode == DocumentMode::WELCOME)
         hWnd = CreateWindowW(
             windowClass, Util::string_to_wide_string(APP_NAME).c_str(),
             WS_POPUP, welcomeX, welcomeY, width, height, NULL, NULL, appInstance,
+            NULL);
+    else if (mode == DocumentMode::STARTER)
+        hWnd = CreateWindowW(
+            windowClass, Util::string_to_wide_string(APP_NAME).c_str(),
+            WS_OVERLAPPEDWINDOW, CW_USEDEFAULT, CW_USEDEFAULT, width, height, NULL, NULL, appInstance,
             NULL);
     else
         hWnd = CreateWindowW(
@@ -1732,12 +1695,20 @@ static void openCOOLWindow(const FilenameAndUri& filenameAndUri, PERMISSION perm
     data.previousSize.x = width;
     data.previousSize.y = height;
     data.isFullScreen = false;
-    data.fakeClientFd = fakeSocketSocket();
-    data.appDocId = generate_new_app_doc_id();
+    if (mode == DocumentMode::STARTER)
+    {
+        data.fakeClientFd = -1;
+        data.appDocId = 0;
+    }
+    else
+    {
+        data.fakeClientFd = fakeSocketSocket();
+        data.appDocId = generate_new_app_doc_id();
+    }
     data.lastOwnClipboardModification = 0;
     data.lastAnyonesClipboardModification = 1;
     data.filenameAndUri = filenameAndUri;
-    data.permission = permission;
+    data.mode = mode;
 
     if (maximize)
         ShowWindow(hWnd, SW_MAXIMIZE);
@@ -1750,14 +1721,14 @@ static void openCOOLWindow(const FilenameAndUri& filenameAndUri, PERMISSION perm
     CreateCoreWebView2EnvironmentWithOptions(
         nullptr, (Util::string_to_wide_string(localAppData) + L"\\UDF").c_str(), nullptr,
         Microsoft::WRL::Callback<ICoreWebView2CreateCoreWebView2EnvironmentCompletedHandler>(
-            [&data, permission](HRESULT result, ICoreWebView2Environment* env) -> HRESULT
+            [&data](HRESULT result, ICoreWebView2Environment* env) -> HRESULT
             {
                 // Create a CoreWebView2Controller and get the associated CoreWebView2 whose parent is the main window hWnd
                 env->CreateCoreWebView2Controller(
                     data.hWnd,
                     Microsoft::WRL::Callback<
                         ICoreWebView2CreateCoreWebView2ControllerCompletedHandler>(
-                        [&data, env, permission](HRESULT result, ICoreWebView2Controller* controller) -> HRESULT
+                        [&data, env](HRESULT result, ICoreWebView2Controller* controller) -> HRESULT
                         {
                             if (!controller)
                                 return E_FAIL;
@@ -1889,17 +1860,26 @@ static void openCOOLWindow(const FilenameAndUri& filenameAndUri, PERMISSION perm
                                     .Get(),
                                 nullptr);
 
-                            const std::string coolURL =
-                                app_installation_uri +
-                                std::string("../cool/cool.html?file_path=") + data.filenameAndUri.uri +
-                                std::string("&permission=edit") +
-                                std::string("&lang=") + uiLanguage +
-                                std::string("&appdocid=") + std::to_string(data.appDocId) +
-                                std::string("&userinterfacemode=notebookbar"
-                                            "&dir=ltr") +
-                                (isLightTheme() ? "" : "&darkTheme=true") +
-                                (permission == PERMISSION::NEW_DOCUMENT ? "&isnewdocument=true" : "") +
-                                (permission == PERMISSION::WELCOME ? "&welcome=true" : "");
+                            std::string coolURL =
+                                app_installation_uri + "../cool/cool.html?";
+                            if (data.mode == DocumentMode::STARTER)
+                                coolURL += "starterMode=true";
+                            else
+                                coolURL +=
+                                    "file_path=" + data.filenameAndUri.uri +
+                                    std::string("&permission=edit") +
+                                    std::string("&lang=") + uiLanguage +
+                                    std::string("&appdocid=") + std::to_string(data.appDocId) +
+                                    std::string("&userinterfacemode=notebookbar"
+                                                "&dir=ltr");
+                            if (!isLightTheme())
+                                coolURL +=
+                                    "&darkTheme=true";
+
+                            if (data.mode != DocumentMode::STARTER)
+                                coolURL +=
+                                    std::string((data.mode == DocumentMode::NEW ? "&isnewdocument=true" : "")) +
+                                    std::string((data.mode == DocumentMode::WELCOME ? "&welcome=true" : ""));
 
                             webView->Navigate(Util::string_to_wide_string(coolURL).c_str());
                             controller->MoveFocus(COREWEBVIEW2_MOVE_FOCUS_REASON_PROGRAMMATIC);
@@ -1921,6 +1901,10 @@ static void processMessage(WindowData& data, wil::unique_cotaskmem_string& messa
         s = s.substr(4);
         if (s == L"HULLO")
         {
+            // If displaying the starter screen, do nothing
+            if (data.mode == DocumentMode::STARTER)
+                return;
+
             do_hullo_handling_things(data);
         }
         else if (s == L"WELCOME")
@@ -2008,46 +1992,53 @@ static void processMessage(WindowData& data, wil::unique_cotaskmem_string& messa
         else if (s == L"uno .uno:Open")
         {
             auto openResult = fileOpenDialog();
-            if (openResult.createNew)
+            if (openResult.size() > 0)
             {
-                auto newDocument = new_document(openResult.newId);
-                if (newDocument != L"")
-                {
-                    auto path = Poco::Path(Util::wide_string_to_string(newDocument));
-                    openCOOLWindow({ path.getFileName(), Poco::URI(path).toString() }, PERMISSION::NEW_DOCUMENT);
-                }
-            }
-            else if (openResult.filenamesAndUris.size() > 0)
-            {
-                for (const auto& i: openResult.filenamesAndUris)
+                for (const auto& i: openResult)
                     filenamesAndUrisToOpen.push_back(i);
 
                 load_next_document();
             }
+             // Close the starter window
+            if (data.mode == DocumentMode::STARTER)
+                PostMessage(data.hWnd, WM_CLOSE, 0, 0);
         }
         else if (s == L"uno .uno:CloseWin")
         {
             PostMessageW(data.hWnd, WM_CLOSE, 0, 0);
         }
-        else if (s.starts_with(L"newdoc type="))
+        else if (s.starts_with(L"newdoc "))
         {
-            s = s.substr(12);
-            CODA_OPEN_CONTROL id;
-            if (s == L"writer")
-                id = CODA_OPEN_CONTROL::NEW_TEXT;
-            else if (s == L"calc")
-                id = CODA_OPEN_CONTROL::NEW_SPREADSHEET;
-            else if (s == L"impress")
-                id = CODA_OPEN_CONTROL::NEW_PRESENTATION;
+            auto const ns = Util::wide_string_to_string(s);
+            auto const tokens = StringVector::tokenize(ns);
+            std::string typeToken, templateToken;
+            if (!COOLProtocol::getTokenString(tokens, "type", typeToken))
+            {
+                LOG_ERR("No type parameter in message '" << ns << "'");
+                return;
+            }
+            DocumentType type;
+            if (typeToken == "writer")
+                type = DocumentType::TEXT;
+            else if (typeToken == "calc")
+                type = DocumentType::SPREADSHEET;
+            else if (typeToken == "impress")
+                type = DocumentType::PRESENTATION;
             else
                 fatal("Unexpected type in newdoc message");
-            auto newDocument = new_document(id);
+
+            // This might leave templateToken empty if it is an old-style newdoc message with just
+            // the type parameter.
+            COOLProtocol::getTokenString(tokens, "template", templateToken);
+            auto newDocument = new_document(type, templateToken);
             if (newDocument != L"")
             {
-                auto path = Poco::Path(Util::wide_string_to_string(newDocument));
-                openCOOLWindow({ path.getFileName(), Poco::URI(path).toString() }, PERMISSION::NEW_DOCUMENT);
+                Poco::Path path = Poco::Path(Util::wide_string_to_string(newDocument));
+                openCOOLWindow({ path.getFileName(), Poco::URI(path).toString() }, DocumentMode::NEW);
             }
-        }
+            if (data.mode == DocumentMode::STARTER)
+                PostMessage(data.hWnd, WM_CLOSE, 0, 0);
+      }
         else
         {
             do_other_message_handling_things(data, Util::wide_string_to_string(s).c_str());
@@ -2182,29 +2173,11 @@ int APIENTRY wWinMain(HINSTANCE hInstance, HINSTANCE, PWSTR, int showWindowMode)
         ShowWindow(hiddenOwnerWindow, SW_HIDE);
     }
 
-    PERMISSION permission = PERMISSION::EDIT;
+    DocumentMode mode = DocumentMode::EDIT;
     if (__argc == 1 || wcscmp(__wargv[1], L"--disable-background-networking") == 0)
     {
-        auto openResult = fileOpenDialog();
-        if (openResult.createNew)
-        {
-            auto newDocument = new_document(openResult.newId);
-            if (newDocument == L"")
-                std::exit(0);
-            auto path = Poco::Path(Util::wide_string_to_string(newDocument));
-            filenamesAndUrisToOpen.push_back({ path.getFileName(), Poco::URI(path).toString() });
-            permission = PERMISSION::NEW_DOCUMENT;
-        }
-        else if (openResult.filenamesAndUris.size() == 0)
-        {
-            // If initial dialog is cancelled, just quit
-            std::exit(0);
-        }
-        else
-        {
-            for (auto const& i: openResult.filenamesAndUris)
-                filenamesAndUrisToOpen.push_back(i);
-        }
+        // No documents given on the command line, show the "Starter" "Backstage" dialog
+        mode = DocumentMode::STARTER;
     }
     else
     {
@@ -2260,10 +2233,11 @@ int APIENTRY wWinMain(HINSTANCE hInstance, HINSTANCE, PWSTR, int showWindowMode)
         }
    }
 
-    currentFileToOpenIndex = 0;
-
     // Open the first document here, then open the rest one by one once the previous has loaded.
-    openCOOLWindow(filenamesAndUrisToOpen[0], permission);
+    if (mode == DocumentMode::STARTER)
+        openCOOLWindow({ }, mode);
+    else
+        load_next_document();
 
     MSG msg;
     while (GetMessage(&msg, NULL, 0, 0))
