@@ -64,15 +64,22 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
 
     /**
+     * Return the app's name (with some reasonable fallback).
+     */
+    static func getAppName() -> String {
+        let info = Bundle.main.infoDictionary
+        return (info?["CFBundleDisplayName"] as? String)
+            ?? (info?["CFBundleName"] as? String)
+            ?? ProcessInfo.processInfo.processName
+    }
+
+    /**
      * Use the real app name in the menus where it is expected.
      */
     private func updateProductName() {
         guard let mainMenu = NSApp.mainMenu else { return }
 
-        let info = Bundle.main.infoDictionary
-        let name = (info?["CFBundleDisplayName"] as? String)
-            ?? (info?["CFBundleName"] as? String)
-            ?? ProcessInfo.processInfo.processName
+        let name = AppDelegate.getAppName()
 
         renameItem(in: mainMenu, withAction: #selector(NSApplication.orderFrontStandardAboutPanel(_:)), actionName: NSLocalizedString("About %@", comment: "The format string (%%@) is replaced with the app name"), appName: name)
         renameItem(in: mainMenu, withAction: #selector(NSApplication.hide(_:)), actionName: NSLocalizedString("Hide %@", comment: "The format string (%%@) is replaced with the app name"), appName: name)

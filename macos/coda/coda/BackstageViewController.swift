@@ -14,7 +14,7 @@ import WebKit
 /**
  * Presents a WKWebView-based “New…” dialog and forwards the user’s choice back to the controller.
  */
-final class NewDocumentViewController: NSViewController, WKScriptMessageHandler {
+final class BackstageViewController: NSViewController, WKScriptMessageHandler {
 
     /** Callback invoked with the selected template kind when a button is clicked in the web view. */
     var onSelect: ((DocumentController.NewKind) -> Void)?
@@ -34,7 +34,7 @@ final class NewDocumentViewController: NSViewController, WKScriptMessageHandler 
         super.viewDidLoad()
 
         let cfg = WKWebViewConfiguration()
-        cfg.userContentController.add(self, name: "newDoc")
+        cfg.userContentController.add(self, name: "backstage")
         webView = WKWebView(frame: .zero, configuration: cfg)
         webView.translatesAutoresizingMaskIntoConstraints = false
 
@@ -47,14 +47,26 @@ final class NewDocumentViewController: NSViewController, WKScriptMessageHandler 
         ])
 
         // Load create-new-document.html from the bundle, allowing read access to its folder for relative assets.
-        if let url = Bundle.main.url(forResource: "create-new-document", withExtension: "html") {
-            let dir = url.deletingLastPathComponent()
-            webView.loadFileURL(url, allowingReadAccessTo: dir)
+        guard let url = Bundle.main.url(forResource: "cool", withExtension: "html") else {
+            NSLog("BackstageViewController: cool.html not found in bundle")
+            webView.loadHTMLString("<p>Missing <code>cool.html</code> in the bundle.</p>", baseURL: nil)
+            return
         }
-        else {
-            NSLog("NewDocumentViewController: create-new-document.html not found in bundle")
-            webView.loadHTMLString("<p>Missing <code>create-new-document.html</code></p>", baseURL: nil)
-        }
+
+        var components = URLComponents(url: url, resolvingAgainstBaseURL: false)!
+
+        // Make sure cool.html starts as the startup Backstage
+        components.queryItems = [
+            URLQueryItem(name: "starterMode", value: "true")
+        ]
+
+        // And also add common parameters, like "lang" or "darkTheme"
+        Document.addCommonCOOLQueryItems(to: &components)
+
+        // Allow access for additional resources
+        let dir = url.deletingLastPathComponent()
+        let finalURL = components.url!
+        webView.loadFileURL(finalURL, allowingReadAccessTo: dir)
     }
 
     /**

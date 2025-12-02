@@ -24,7 +24,7 @@ final class DocumentController: NSDocumentController {
     /**
      * Window for the New document workflow.
      */
-    private var newDocWindowController: NSWindowController?
+    private var backstageWindowController: NSWindowController?
 
     /**
      * One place to decide if we should quit the app on losing focus.
@@ -74,7 +74,7 @@ final class DocumentController: NSDocumentController {
         closeLiveOpenPanel()
 
         // Open the dialog for the new document
-        presentNewDocumentDialog()
+        presentStartupBackstage()
     }
 
     /**
@@ -117,30 +117,30 @@ final class DocumentController: NSDocumentController {
     /**
      * Create or focus the New document window.
      */
-    func presentNewDocumentDialog() {
-        if let wc = newDocWindowController { // focus if already open
+    func presentStartupBackstage() {
+        if let wc = backstageWindowController { // focus if already open
             wc.window?.makeKeyAndOrderFront(nil)
             NSApp.activate(ignoringOtherApps: true)
             return
         }
 
-        let vc = NewDocumentViewController()
+        let vc = BackstageViewController()
         vc.onSelect = { [weak self] kind in
             guard let self else { return }
-            self.newDocWindowController?.close()
-            self.newDocWindowController = nil
+            self.backstageWindowController?.close()
+            self.backstageWindowController = nil
             self.createDocument(fromTemplateFor: kind)
         }
 
         // Simple titled window for the web view
         let w = NSWindow(contentViewController: vc)
-        w.title = "New Document"
+        w.title = AppDelegate.getAppName() // FIXME anything more?
         w.styleMask = [.titled, .closable, .miniaturizable]
         w.setContentSize(NSSize(width: 1000, height: 640))
         w.center()
 
         let wc = NSWindowController(window: w)
-        newDocWindowController = wc
+        backstageWindowController = wc
         wc.showWindow(nil)
         NSApp.activate(ignoringOtherApps: true)
     }

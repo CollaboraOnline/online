@@ -869,15 +869,11 @@ if APP_HAS_BRANDING
 	@if test -d "$(APP_BRANDING_DIR)" ; then cp -a "$(APP_BRANDING_DIR)"/branding* $(DIST_FOLDER)/ ; fi
 	@if test -d "$(APP_BRANDING_DIR)" ; then cp -a "$(APP_BRANDING_DIR)"/images/*.svg $(DIST_FOLDER)/images/ ; fi
 	@if test -d "$(APP_BRANDING_DIR)" ; then cp -a "$(APP_BRANDING_DIR)/images/toolbar-bg-logo.svg" $(DIST_FOLDER)/images/toolbar-bg.svg ; fi
-	@echo
-	@echo "JS, HTML and CSS has been updated ($(DIST_FOLDER))."
-endif
-
 if ENABLE_MACOS
-	@cp -a "$(srcdir)/create-new-document.html" $(DIST_FOLDER)/
-if APP_HAS_BRANDING
 	@if test -d "$(APP_BRANDING_DIR)" ; then cp -a "$(APP_BRANDING_DIR)/welcome" "$(DIST_FOLDER)/" ; fi
 endif
+	@echo
+	@echo "JS, HTML and CSS has been updated ($(DIST_FOLDER))."
 endif
 
 if ENABLE_CYPRESS
