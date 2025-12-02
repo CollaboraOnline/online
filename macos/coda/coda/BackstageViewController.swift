@@ -16,8 +16,8 @@ import WebKit
  */
 final class BackstageViewController: NSViewController, WKScriptMessageHandler {
 
-    /** Callback invoked with the selected template kind when a button is clicked in the web view. */
-    var onSelect: ((DocumentController.NewKind) -> Void)?
+    /** Callback to be invoked when the Backstage window should be closed. */
+    var onClose: (() -> Void)?
 
     /** Embedded web view hosting the HTML UI for the 3-button chooser. */
     private var webView: WKWebView!
@@ -34,7 +34,8 @@ final class BackstageViewController: NSViewController, WKScriptMessageHandler {
         super.viewDidLoad()
 
         let cfg = WKWebViewConfiguration()
-        cfg.userContentController.add(self, name: "backstage")
+        cfg.userContentController.add(self, name: "lok")
+
         webView = WKWebView(frame: .zero, configuration: cfg)
         webView.translatesAutoresizingMaskIntoConstraints = false
 
@@ -70,15 +71,14 @@ final class BackstageViewController: NSViewController, WKScriptMessageHandler {
     }
 
     /**
-     * Receives “newDoc” messages from HTML buttons and forwards the selection via `onSelect`
+     * Receives “lok” messages from cool.html buttons and handles them.
      */
     func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
-        guard message.name == "newDoc", let s = message.body as? String else { return }
-        switch s {
-        case "text":         onSelect?(.text)
-        case "spreadsheet":  onSelect?(.spreadsheet)
-        case "presentation": onSelect?(.presentation)
-        default: break
+        guard message.name == "lok", let body = message.body as? String else { return }
+
+        // Handle, and potentially close
+        if ViewController.handleBackstageMessage(body) {
+            onClose?()
         }
     }
 
@@ -86,6 +86,6 @@ final class BackstageViewController: NSViewController, WKScriptMessageHandler {
      * Removes the message handler to avoid leaks or lingering callbacks after deallocation.
      */
     deinit {
-        webView?.configuration.userContentController.removeScriptMessageHandler(forName: "newDoc")
+        webView?.configuration.userContentController.removeScriptMessageHandler(forName: "lok")
     }
 }

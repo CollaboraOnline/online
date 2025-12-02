@@ -332,29 +332,8 @@ class ViewController: NSViewController, WKScriptMessageHandlerWithReply, WKNavig
                     }
                     return (nil, nil)
                 }
-                else if body.hasPrefix("newdoc ") {
-                    let messageBodyItems = body.components(separatedBy: " ")
-                    var type: String?
-                    if messageBodyItems.count >= 2 {
-                        for item in messageBodyItems[1...] {
-                            if item.hasPrefix("type=") {
-                                type = String(item.dropFirst("type=".count))
-                            }
-                        }
-
-                        let kind: DocumentController.NewKind
-                        switch type {
-                            case "calc": kind = .spreadsheet
-                            case "impress": kind = .presentation
-                            default : kind = .text
-                        }
-
-                        (NSDocumentController.shared as? DocumentController)?.createDocument(fromTemplateFor: kind)
-                    }
-                }
-                else if body == "uno .uno:Open" {
-                    // FIXME A real message would be preferred over intercepting a uno command; but this is what the backstage currently uses
-                    (NSDocumentController.shared as? DocumentController)?.focusOrPresentOpenPanel()
+                else if ViewController.handleBackstageMessage(body) {
+                    return (nil, nil)
                 }
                 else {
                     // Just send the message
@@ -372,6 +351,41 @@ class ViewController: NSViewController, WKScriptMessageHandlerWithReply, WKNavig
         }
 
         return (nil, nil)
+    }
+
+    /**
+     * Functionality shared by the "normal" backstage (that opens when the user chooses "File" in the notebookbar) and the "startup" backstage (that has the templates etc.).
+     */
+    static func handleBackstageMessage(_ body: String) -> Bool {
+        if body.hasPrefix("newdoc ") {
+            let messageBodyItems = body.components(separatedBy: " ")
+            var type: String?
+            if messageBodyItems.count >= 2 {
+                for item in messageBodyItems[1...] {
+                    if item.hasPrefix("type=") {
+                        type = String(item.dropFirst("type=".count))
+                    }
+                }
+
+                let kind: DocumentController.NewKind
+                switch type {
+                    case "calc": kind = .spreadsheet
+                    case "impress": kind = .presentation
+                    default : kind = .text
+                }
+
+                (NSDocumentController.shared as? DocumentController)?.createDocument(fromTemplateFor: kind)
+            }
+
+            return true
+        }
+        else if body == "uno .uno:Open" {
+            // FIXME A real message would be preferred over intercepting a uno command; but this is what the backstage currently uses
+            (NSDocumentController.shared as? DocumentController)?.focusOrPresentOpenPanel()
+            return true
+        }
+
+        return false
     }
 
     func exchangeMonitors() {
