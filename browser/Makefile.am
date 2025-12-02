@@ -279,6 +279,7 @@ COOL_JS_LST =\
 	src/app/iface/Control.Interface.ts \
 	src/app/Log.ts \
 	src/app/Debug.ts \
+	src/app/A11yValidator.ts \
 	src/app/SocketBase.ts \
 	src/app/TracingEvents.ts \
 	src/app/ServerCommand.ts \
