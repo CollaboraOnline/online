@@ -65,10 +65,9 @@ class URLPopUpSection extends HTMLObjectSection {
         const link = window.L.DomUtil.createWithId('a', this.linkId, parent);
 		link.innerText = url;
 		const copyLinkText = _('Copy link location');
-		const copyBtn = window.L.DomUtil.createWithId('div', this.copyButtonId, parent);
+		const copyBtn = window.L.DomUtil.createWithId('button', this.copyButtonId, parent);
 		window.L.DomUtil.addClass(copyBtn, 'hyperlink-popup-btn');
 		copyBtn.setAttribute('title', copyLinkText);
-		copyBtn.setAttribute('role', 'button');
 		copyBtn.setAttribute('aria-label', copyLinkText);
 
         const imgCopyBtn = window.L.DomUtil.create('img', 'hyperlink-pop-up-copyimg', copyBtn);
@@ -79,11 +78,10 @@ class URLPopUpSection extends HTMLObjectSection {
 		imgCopyBtn.style.padding = '4px';
 
 		const editLinkText = _('Edit link');
-		const editBtn = window.L.DomUtil.createWithId('div', this.editButtonId, parent);
+		const editBtn = window.L.DomUtil.createWithId('button', this.editButtonId, parent);
 		window.L.DomUtil.addClass(editBtn, 'hyperlink-popup-btn');
 		editBtn.setAttribute('title', editLinkText);
-		editBtn.setAttribute('role', 'button');
-		editBtn.setAttribute('aria-label', copyLinkText);
+		editBtn.setAttribute('aria-label', editLinkText);
 
 
 		const imgEditBtn = window.L.DomUtil.create('img', 'hyperlink-pop-up-editimg', editBtn);
@@ -94,10 +92,9 @@ class URLPopUpSection extends HTMLObjectSection {
 		imgEditBtn.style.padding = '4px';
 
 		const removeLinkText = _('Remove link');
-		const removeBtn = window.L.DomUtil.createWithId('div', this.removeButtonId, parent);
+		const removeBtn = window.L.DomUtil.createWithId('button', this.removeButtonId, parent);
 		window.L.DomUtil.addClass(removeBtn, 'hyperlink-popup-btn');
 		removeBtn.setAttribute('title', removeLinkText);
-		removeBtn.setAttribute('role', 'button');
 		removeBtn.setAttribute('aria-label', removeLinkText);
 
 		const imgRemoveBtn = window.L.DomUtil.create('img', 'hyperlink-pop-up-removeimg', removeBtn);
