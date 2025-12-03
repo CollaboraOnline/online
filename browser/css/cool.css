@@ -1459,7 +1459,7 @@ body {
 }
 
 .table-add-col-row-marker {
-	border-radius: 4px;
+	border-radius: var(--border-radius);
 	background-color: var(--color-insert-marker-background) !important;
 	box-shadow: 1px var(--color-box-shadow);
 	background: url('images/insert-plus-marker.svg') no-repeat center center /20px;
@@ -1471,7 +1471,7 @@ body {
 }
 
 .general-select-theme {
-	border-radius: 4px;
+	border-radius: var(--border-radius);
 	background-color: var(--color-insert-marker-background) !important;
 	box-shadow: 1px var(--color-box-shadow);
 	background: url('images/lc_selecttheme.svg') no-repeat center center /20px;
@@ -1484,7 +1484,7 @@ body {
 }
 
 .chart-save-to-new-theme {
-	border-radius: 4px;
+	border-radius: var(--border-radius);
 	background-color: var(--color-insert-marker-background) !important;
 	box-shadow: 1px var(--color-box-shadow);
 	background: url('images/lc_chartsavetonewtheme.svg') no-repeat center center /20px;
