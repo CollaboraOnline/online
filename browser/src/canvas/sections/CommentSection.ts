@@ -1692,7 +1692,10 @@ export class Comment extends CanvasSectionObject {
 		|| this.sectionProperties.data.resolved === 'false'
 		|| this.sectionProperties.commentListSection.sectionProperties.showResolved) {
 			this.sectionProperties.container.style.display = '';
-			this.sectionProperties.container.style.visibility = '';
+			// For presentations, only expand if the comment is on the active slide.
+			if ((app.map.getDocType() !== 'presentation' && app.map.getDocType() !== 'drawing') || this.isInsideActivePart()) {
+				this.sectionProperties.container.style.visibility = '';
+			}
 		}
 		if (app.map._docLayer._docType === 'text')
 			this.sectionProperties.collapsedInfoNode.style.display = 'none';
