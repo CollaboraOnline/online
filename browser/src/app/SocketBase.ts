@@ -683,8 +683,16 @@ class SocketBase {
 		}
 	}
 
-	protected _exportAsCallback(command: ServerCommand): void {
-		console.assert(false, 'This should not be called!');
+	private _exportAsCallback(command: ServerCommand): void {
+		this._map.hideBusy();
+		Util.ensureValue(command.filename);
+		this._map.uiManager.showInfoModal(
+			'exported-success',
+			_('Exported to storage'),
+			_('Successfully exported: ') + decodeURIComponent(command.filename),
+			'',
+			_('OK'),
+		);
 	}
 
 	protected _onStatusMsg(textMsg: string, command: ServerCommand): void {
@@ -1101,8 +1109,30 @@ class SocketBase {
 		console.assert(false, 'This should not be called!');
 	}
 
-	protected _askForDocumentPassword(passwordType: string, msg: string): void {
-		console.assert(false, 'This should not be called!');
+	private _askForDocumentPassword(passwordType: string, msg: string): void {
+		this._map.uiManager.showInputModal(
+			'password-popup',
+			'',
+			msg,
+			'',
+			_('OK'),
+			function (this: SocketBase, data: string): void {
+				if (data) {
+					this._map._docPassword = data;
+					if (window.ThisIsAMobileApp) {
+						window.postMobileMessage('loadwithpassword password=' + data);
+					}
+					this._map.loadDocument();
+				} else if (passwordType === 'to-modify') {
+					this._map._docPassword = '';
+					this._map.loadDocument();
+				} else {
+					this._map.fire('postMessage', { msgId: 'UI_Cancel_Password' });
+					this._map.hideBusy();
+				}
+			}.bind(this),
+			true /* password input */,
+		);
 	}
 
 	protected _renameOrSaveAsCallback(
