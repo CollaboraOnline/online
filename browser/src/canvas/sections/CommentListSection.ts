@@ -120,6 +120,7 @@ export class CommentSection extends CanvasSectionObject {
 
 	private annotationMinSize: number;
 	private annotationMaxSize: number;
+	escapeListener: (e: KeyboardEvent) => void;
 
 	constructor () {
 		super(app.CSections.CommentList.name);
@@ -183,6 +184,8 @@ export class CommentSection extends CanvasSectionObject {
 			this.setShowSection(false);
 			this.size[0] = 0;
 		}
+
+		this.escapeSelectedComment();
 	}
 
 	public navigateAndFocusComment(annotation: any): void {
@@ -998,8 +1001,10 @@ export class CommentSection extends CanvasSectionObject {
 
 	public unselect (): void {
 		if (this.sectionProperties.selectedComment && this.sectionProperties.selectedComment.sectionProperties.data.id != 'new') {
-			if (this.sectionProperties.selectedComment && $(this.sectionProperties.selectedComment.sectionProperties.container).hasClass('annotation-active'))
-				$(this.sectionProperties.selectedComment.sectionProperties.container).removeClass('annotation-active');
+			for (const comment of this.sectionProperties.commentList) {
+				if ($(comment.sectionProperties.container).hasClass('annotation-active'))
+					$(comment.sectionProperties.container).removeClass('annotation-active');
+			}
 
 			if (app.map._docLayer._docType === 'spreadsheet')
 				this.sectionProperties.selectedComment.hide();
@@ -1016,6 +1021,18 @@ export class CommentSection extends CanvasSectionObject {
 
 			this.update();
 		}
+	}
+
+
+	// Escape selected comment and also comment in full view mode.
+	private escapeSelectedComment() {
+		this.escapeListener = (e: KeyboardEvent) => {
+			if (e.key !== 'Escape') return;
+			this.unselect();
+			this.map.focus();
+		};
+
+		document.addEventListener('keydown', this.escapeListener);
 	}
 
 	private setThreadPopup (comment: Comment, popup: boolean) {

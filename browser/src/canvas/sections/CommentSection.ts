@@ -1019,8 +1019,14 @@ export class Comment extends CanvasSectionObject {
 	// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 	private onEscKey (e: any): void {
 		if ((<any>window).mode.isDesktop()) {
+			// When a comment is being edited and focus is in comment textbox, 
+			// Esc should not close the comment being edited, but should just mark it with an attention.
 			if (e.keyCode === 27) {
-				this.onCancelClick(e);
+				const editingComment = Comment.isAnyEdit();
+				if (editingComment) {
+					this.sectionProperties.commentListSection.addCommentAttention(editingComment);
+					return;
+				}
 			} else if (e.keyCode === 33 /*PageUp*/ || e.keyCode === 34 /*PageDown*/) {
 				// work around for a chrome issue https://issues.chromium.org/issues/41417806
 				window.L.DomEvent.preventDefault(e);
