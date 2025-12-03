@@ -1105,8 +1105,57 @@ class SocketBase {
 		console.assert(false, 'This should not be called!');
 	}
 
-	protected _showDocumentConflictPopUp(): void {
-		console.assert(false, 'This should not be called!');
+	private _showDocumentConflictPopUp(): void {
+		const buttonList: { id: string; text: string }[] = [];
+		const callbackList: { id: string; func_: (() => void) | null }[] = [];
+
+		buttonList.push({ id: 'cancel-conflict-popup', text: _('Cancel') });
+		callbackList.push({ id: 'cancel-conflict-popup', func_: null });
+
+		buttonList.push({ id: 'discard-button', text: _('Discard') });
+		buttonList.push({ id: 'overwrite-button', text: _('Overwrite') });
+
+		callbackList.push({
+			id: 'discard-button',
+			func_: function (this: SocketBase) {
+				this.sendMessage('closedocument');
+			}.bind(this),
+		});
+
+		callbackList.push({
+			id: 'overwrite-button',
+			func_: function (this: SocketBase) {
+				this.sendMessage('savetostorage force=1');
+			}.bind(this),
+		});
+
+		if (!this._map['wopi'].UserCanNotWriteRelative) {
+			buttonList.push({ id: 'save-to-new-file', text: _('Save to new file') });
+			callbackList.push({
+				id: 'save-to-new-file',
+				func_: function (this: SocketBase) {
+					let filename = this._map['wopi'].BaseFileName;
+					if (filename) {
+						filename = app.LOUtil.generateNewFileName(filename, '_new');
+						this._map.saveAs(filename);
+					}
+				}.bind(this),
+			});
+		}
+
+		const title = _('Document has been changed');
+		const message = _(
+			'Document has been changed in storage. What would you like to do with your unsaved changes?',
+		);
+
+		this._map.uiManager.showModalWithCustomButtons(
+			'document-conflict-popup',
+			title,
+			message,
+			false,
+			buttonList,
+			callbackList,
+		);
 	}
 
 	private _askForDocumentPassword(passwordType: string, msg: string): void {

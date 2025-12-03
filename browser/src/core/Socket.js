@@ -20,41 +20,6 @@ app.definitions.Socket = class Socket extends SocketBase {
 		super(map);
 	}
 
-	_showDocumentConflictPopUp() {
-		var buttonList = [];
-		var callbackList = [];
-
-		buttonList.push({ id: 'cancel-conflict-popup', text: _('Cancel') });
-		callbackList.push({ id: 'cancel-conflict-popup', func_: null });
-
-		buttonList.push({ id: 'discard-button', text: _('Discard') });
-		buttonList.push({ id: 'overwrite-button', text: _('Overwrite') });
-
-		callbackList.push({id: 'discard-button', func_: function() {
-			this.sendMessage('closedocument');
-		}.bind(this) });
-
-		callbackList.push({id: 'overwrite-button', func_: function() {
-			this.sendMessage('savetostorage force=1'); }.bind(this)
-		});
-
-		if (!this._map['wopi'].UserCanNotWriteRelative) {
-			buttonList.push({ id: 'save-to-new-file', text: _('Save to new file') });
-			callbackList.push({ id: 'save-to-new-file', func_: function() {
-				var filename = this._map['wopi'].BaseFileName;
-				if (filename) {
-					filename = app.LOUtil.generateNewFileName(filename, '_new');
-					this._map.saveAs(filename);
-				}
-			}.bind(this)});
-		}
-
-		var title = _('Document has been changed');
-		var message = _('Document has been changed in storage. What would you like to do with your unsaved changes?');
-
-		this._map.uiManager.showModalWithCustomButtons('document-conflict-popup', title, message, false, buttonList, callbackList);
-	}
-
 	_renameOrSaveAsCallback(textMsg, command) {
 		this._map.hideBusy();
 		if (command !== undefined && command.url !== undefined && command.url !== '') {
