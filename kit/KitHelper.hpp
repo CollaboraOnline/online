@@ -103,13 +103,17 @@ namespace LOKitHelper
         resultInfo["parts"] = std::move(resultingPartsArray);
     }
 
-    inline void fetchWriterSpecificData(LibreOfficeKitDocument *loKitDocument, std::unordered_map<std::string, std::string> &resultInfo)
+    inline void fetchWriterSpecificData(LibreOfficeKitDocument *loKitDocument, std::unordered_map<std::string, std::string> &resultInfo, int& mode)
     {
         std::string rectangles = loKitDocument->pClass->getPartPageRectangles(loKitDocument);
 
         rectangles = Util::replace(rectangles, ";", "], [");
 
         resultInfo["pagerectangles"] = "[ [" + rectangles + "] ]";
+
+        // Fetch mode for a potentially non-standard redline render mode.
+        std::string partData = getPartData(loKitDocument, 0);
+        mode = getMode(partData);
     }
 
     inline void fetchCalcSpecificData(LibreOfficeKitDocument *loKitDocument, std::unordered_map<std::string, std::string> &resultInfo, int part)
@@ -189,7 +193,7 @@ namespace LOKitHelper
         if (type == LOK_DOCTYPE_SPREADSHEET)
             fetchCalcSpecificData(loKitDocument, resultInfo, selectedPart);
         else if (type == LOK_DOCTYPE_TEXT)
-            fetchWriterSpecificData(loKitDocument, resultInfo);
+            fetchWriterSpecificData(loKitDocument, resultInfo, mode);
 
         if (type == LOK_DOCTYPE_SPREADSHEET || type == LOK_DOCTYPE_PRESENTATION || type == LOK_DOCTYPE_DRAWING)
             fetchPartsData(loKitDocument, resultInfo, partsCount, mode);
