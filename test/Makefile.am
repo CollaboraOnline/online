@@ -106,6 +106,7 @@ all_la_unit_tests = \
 	unit-timeout_none.la \
 	unit-serversock_accept1.la \
 	unit-streamsock_ctor1.la \
+	unit-kit-child-session.la \
 	unit-base.la
 #	unit-admin.la
 #	unit-tilecache.la # Empty test.
@@ -315,6 +316,8 @@ unit_save_la_SOURCES = UnitSave.cpp
 unit_save_la_LIBADD = $(CPPUNIT_LIBS)
 unit_any_input_la_SOURCES = UnitAnyInput.cpp
 unit_any_input_la_LIBADD = $(CPPUNIT_LIBS)
+unit_kit_child_session_la_SOURCES = UnitKitChildSession.cpp
+unit_kit_child_session_la_LIBADD = $(CPPUNIT_LIBS)
 unit_large_paste_la_SOURCES = UnitLargePaste.cpp
 unit_large_paste_la_LIBADD = $(CPPUNIT_LIBS)
 unit_paste_la_SOURCES = UnitPaste.cpp
