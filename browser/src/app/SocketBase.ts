@@ -1184,11 +1184,76 @@ class SocketBase {
 		);
 	}
 
-	protected _renameOrSaveAsCallback(
+	private _renameOrSaveAsCallback(
 		textMsg: string,
 		command: ServerCommand,
 	): void {
-		console.assert(false, 'This should not be called!');
+		this._map.hideBusy();
+		if (
+			command !== undefined &&
+			command.url !== undefined &&
+			command.url !== ''
+		) {
+			const url = command.url;
+
+			// setup for loading the new document, and trigger the load
+			const docUrl = url.split('?')[0];
+			this._map.options.doc = docUrl;
+			// After save-as op, we may connect to another server, then
+			// code will think that server has restarted. In this case,
+			// we don't want to reload the page (detect the file name is
+			// different).
+			this._map.options.previousWopiSrc = this._map.options.wopiSrc;
+			this._map.options.wopiSrc = docUrl;
+			window.wopiSrc = this._map.options.wopiSrc;
+
+			if (textMsg.startsWith('renamefile:')) {
+				this._map.uiManager.documentNameInput.showLoadingAnimation();
+				this._map.fire('postMessage', {
+					msgId: 'File_Rename',
+					args: {
+						NewName: command.filename,
+					},
+				});
+			} else if (textMsg.startsWith('saveas:')) {
+				const accessToken = this._getParameterByName(url, 'access_token');
+				let accessTokenTtl = this._getParameterByName(url, 'access_token_ttl');
+				const noAuthHeader = this._getParameterByName(url, 'no_auth_header');
+
+				if (accessToken !== undefined) {
+					if (accessTokenTtl === '') {
+						accessTokenTtl = '0';
+					}
+					this._map.options.docParams = {
+						access_token: accessToken,
+						access_token_ttl: accessTokenTtl,
+					};
+					if (noAuthHeader == '1' || noAuthHeader == 'true') {
+						this._map.options.docParams.no_auth_header = noAuthHeader;
+					}
+				} else {
+					this._map.options.docParams = {};
+				}
+
+				// if this is save-as, we need to load the document with
+				// edit permission otherwise the user has to close the
+				// doc then re-open it again in order to be able to
+				// edit.
+				app.setPermission('edit');
+				this.close();
+				this._map.loadDocument();
+				this._map.sendInitUNOCommands();
+				Util.ensureValue(command.filename);
+				this._map.fire('postMessage', {
+					msgId: 'Action_Save_Resp',
+					args: {
+						success: true,
+						fileName: decodeURIComponent(command.filename),
+					},
+				});
+			}
+		}
+		// let name = command.name; - ignored, we get the new name via the wopi's BaseFileName
 	}
 
 	/* _onMessage() subtasks */
