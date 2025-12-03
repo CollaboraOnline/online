@@ -112,6 +112,7 @@ declare const app: {
 	sectionContainer: CanvasSectionContainer;
 	LOUtil: typeof LOUtil;
 	socket: SocketBase;
+	setPermission: (permission: string) => void;
 	[key: string]: any; // other properties as needed
 };
 
