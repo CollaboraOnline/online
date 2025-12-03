@@ -144,7 +144,7 @@ void HostUtil::parseAliases(Poco::Util::LayeredConfiguration& conf)
             }
 
             auto aliasString = conf.getString(aliasPath, "");
-            if (aliasUri.empty())
+            if (aliasString.empty())
             {
                 continue;
             }
