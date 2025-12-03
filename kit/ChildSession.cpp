@@ -3586,7 +3586,7 @@ void ChildSession::loKitCallback(const int type, const std::string& payload)
             {
                 // with mode:    "EMPTY, <part>, <mode>"
                 const std::string part = (_docType != "text" ? tokens[1].c_str() : "0"); // Writer renders everything as part 0.
-                const std::string mode = (_docType != "text" ? tokens[2].c_str() : "0"); // Writer is not using mode.
+                const std::string mode = tokens[2];
                 sendTextFrame("invalidatetiles: EMPTY, " + part + ", " + mode +
                               " wid=" + std::to_string(getCurrentWireId()));
             }
