@@ -115,6 +115,20 @@ std::string getValue(const std::set<std::string>& set, const std::string& subjec
     return std::string();
 }
 
+bool isRegexValid(const std::string& regex)
+{
+    try
+    {
+        // Not performance critical to warrant caching.
+        Poco::RegularExpression re(regex, Poco::RegularExpression::RE_CASELESS);
+        return true;
+    }
+    catch (const std::exception& exc)
+    {
+        return false;
+    }
+}
+
 } // namespace RegexUtil
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

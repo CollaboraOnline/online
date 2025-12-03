@@ -143,19 +143,26 @@ void HostUtil::parseAliases(Poco::Util::LayeredConfiguration& conf)
                 break;
             }
 
+            auto aliasString = conf.getString(aliasPath, "");
+            if (aliasUri.empty())
+            {
+                continue;
+            }
+
             try
             {
-                const Poco::URI aliasUri(conf.getString(aliasPath, ""));
-                if (aliasUri.empty())
-                {
-                    continue;
-                }
+                const Poco::URI aliasUri(aliasString);
 
-                for (const std::string& x : Util::splitStringToVector(aliasUri.getHost(), '|'))
+                for (const std::string& aliasPattern : Util::splitStringToVector(aliasUri.getHost(), '|'))
                 {
-                    const Poco::URI aUri(aliasUri.getScheme() + "://" + x + ':' +
+                    if (!RegexUtil::isRegexValid(aliasPattern)) {
+                        LOG_WRN ("parseAliases: Invalid regex alias [" << aliasPattern << "] for host" << uri);
+                        continue;
+                    }
+
+                    const Poco::URI aUri(aliasUri.getScheme() + "://" + aliasPattern + ':' +
                                          std::to_string(aliasUri.getPort()));
-                    LOG_DBG("Mapped URI alias [" << aUri.getAuthority() << "] to canonical URI ["
+                    LOG_DBG("parseAliases: Mapped URI alias [" << aUri.getAuthority() << "] to canonical URI ["
                                                  << realUri.getAuthority() << ']');
                     AliasHosts.emplace(aUri.getAuthority(), realUri.getAuthority());
 #if ENABLE_FEATURE_LOCK
@@ -166,7 +173,7 @@ void HostUtil::parseAliases(Poco::Util::LayeredConfiguration& conf)
             }
             catch (const Poco::Exception& exc)
             {
-                LOG_WRN("parseAliases: " << exc.displayText());
+                LOG_WRN("parseAliases: [" << aliasString << ']' << exc.displayText() << "for host" << uri);
             }
         }
     }
