@@ -110,6 +110,7 @@ declare namespace L {
 // Add the app declaration
 declare const app: {
 	sectionContainer: CanvasSectionContainer;
+	LOUtil: typeof LOUtil;
 	[key: string]: any; // other properties as needed
 };
 

@@ -2233,7 +2233,7 @@ class Menubar extends window.L.Control {
 		} else if (id === 'remotemultimedia') {
 			this._map.fire('postMessage', {
 				msgId: 'UI_InsertFile', args: {
-					callback: 'Action_InsertMultimedia', mimeTypeFilter: app.LOUtil.MediaMimeFilter
+					callback: 'Action_InsertMultimedia', mimeTypeFilter: app.LOUtil.mediaMimeFilter
 				}
 			});
 		} else if (id === 'selectbackground') {
