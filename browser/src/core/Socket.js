@@ -20,63 +20,6 @@ app.definitions.Socket = class Socket extends SocketBase {
 		super(map);
 	}
 
-	_renameOrSaveAsCallback(textMsg, command) {
-		this._map.hideBusy();
-		if (command !== undefined && command.url !== undefined && command.url !== '') {
-			var url = command.url;
-
-			// setup for loading the new document, and trigger the load
-			var docUrl = url.split('?')[0];
-			this._map.options.doc = docUrl;
-			this._map.options.previousWopiSrc = this._map.options.wopiSrc; // After save-as op, we may connect to another server, then code will think that server has restarted. In this case, we don't want to reload the page (detect the file name is different).
-			this._map.options.wopiSrc = docUrl;
-			window.wopiSrc = this._map.options.wopiSrc;
-
-			if (textMsg.startsWith('renamefile:')) {
-				this._map.uiManager.documentNameInput.showLoadingAnimation();
-				this._map.fire('postMessage', {
-					msgId: 'File_Rename',
-					args: {
-						NewName: command.filename
-					}
-				});
-			} else if (textMsg.startsWith('saveas:')) {
-				var accessToken = this._getParameterByName(url, 'access_token');
-				var accessTokenTtl = this._getParameterByName(url, 'access_token_ttl');
-				let noAuthHeader = this._getParameterByName(url, 'no_auth_header');
-
-				if (accessToken !== undefined) {
-					if (accessTokenTtl === undefined) {
-						accessTokenTtl = 0;
-					}
-					this._map.options.docParams = { 'access_token': accessToken, 'access_token_ttl': accessTokenTtl };
-					if (noAuthHeader == "1" || noAuthHeader == "true") {
-						this._map.options.docParams.no_auth_header = noAuthHeader;
-					}
-				}
-				else {
-					this._map.options.docParams = {};
-				}
-
-				// if this is save-as, we need to load the document with edit permission
-				// otherwise the user has to close the doc then re-open it again
-				// in order to be able to edit.
-				app.setPermission('edit');
-				this.close();
-				this._map.loadDocument();
-				this._map.sendInitUNOCommands();
-				this._map.fire('postMessage', {
-					msgId: 'Action_Save_Resp',
-					args: {
-						success: true,
-						fileName: decodeURIComponent(command.filename)
-					}
-				});
-			}
-		}
-		// var name = command.name; - ignored, we get the new name via the wopi's BaseFileName
-	}
-
 	_delayMessage(textMsg) {
 		var message = {msg: textMsg};
 		this._delayedMessages.push(message);
