@@ -127,7 +127,7 @@ class Dispatcher {
 				msgId: 'UI_InsertFile',
 				args: {
 					callback: 'Action_InsertMultimedia',
-					mimeTypeFilter: app.LOUtil.MediaMimeFilter,
+					mimeTypeFilter: app.LOUtil.mediaMimeFilter,
 				},
 			});
 		};
