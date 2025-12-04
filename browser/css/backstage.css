@@ -283,6 +283,7 @@
 	color: var(--color-text-lighter);
 	margin-bottom: 24px;
 	line-height: 1.5;
+	margin-top: 0px;
 }
 
 /* Home view specific styles */
@@ -292,16 +293,14 @@
 	gap: 1.5rem;
 	margin-bottom: 1.5rem;
 	overflow: hidden;
-	padding-bottom: 0.5rem;
+	padding: 0 12px 0.5rem;
 	justify-content: flex-start;
 	max-width: 100%;
 }
 
 .backstage-home-templates-row .backstage-template-card {
 	flex: 0 0 auto;
-	min-width: 124px;
-	max-width: 124px;
-	width: 124px;
+	max-width: 148px;
 }
 
 .backstage-home-more-templates {
