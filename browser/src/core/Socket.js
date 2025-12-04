@@ -12,106 +12,12 @@
  * L.Socket contains methods for the communication with the server
  */
 
-/* global app _ errorMessages GraphicSelection TileManager SocketBase */
+/* global app _ errorMessages GraphicSelection SocketBase */
 
 app.definitions.Socket = class Socket extends SocketBase {
 
 	constructor(map) {
 		super(map);
-	}
-
-	_onStatusMsg(textMsg, command) {
-		var that = this;
-
-		if (!this._isReady()) {
-			// Retry in a bit.
-			setTimeout(function() {
-				that._onStatusMsg(textMsg, command);
-			}, 10);
-			return;
-		}
-
-		if (!this._map._docLayer) {
-			// initialize and append text input before doc layer
-			this._map.initTextInput(command.type);
-
-			// Reinitialize the menubar and top toolbar if browser settings are enabled.
-			// During the initial `initializeBasicUI` call, we don't know if compact mode is enabled.
-			// Before `doclayerinit`, we recheck the compact mode setting and if conditions are met,
-			// add the top toolbar and menubar controls to the map.
-			if (window.prefs.useBrowserSetting) {
-				if (!window.mode.isMobile() && this._map.uiManager.getCurrentMode() === 'notebookbar')
-					this._map.uiManager.removeClassicUI();
-				else if (!this._map.menubar)
-					this._map.uiManager.initializeMenubarAndTopToolbar();
-			}
-
-			// first status message, we need to create the document layer
-			var tileWidthTwips = this._map.options.tileWidthTwips;
-			var tileHeightTwips = this._map.options.tileHeightTwips;
-			if (this._map.options.zoom !== this._map.options.defaultZoom) {
-				var scale = this._map.options.crs.scale(this._map.options.defaultZoom - this._map.options.zoom);
-				tileWidthTwips = Math.round(tileWidthTwips * scale);
-				tileHeightTwips = Math.round(tileHeightTwips * scale);
-			}
-
-			var docLayer = null;
-			var options = {
-				tileWidthTwips: tileWidthTwips / app.dpiScale,
-				tileHeightTwips: tileHeightTwips / app.dpiScale,
-				docType: command.type,
-				viewId: command.viewid
-			};
-			if (command.type === 'text')
-				docLayer = new window.L.WriterTileLayer(options);
-			else if (command.type === 'spreadsheet')
-				docLayer = new window.L.CalcTileLayer(options);
-			else if (command.type === 'presentation' || command.type === 'drawing')
-				docLayer = new window.L.ImpressTileLayer(options);
-
-			this._map._docLayer = docLayer;
-			this._map.addLayer(docLayer);
-			this._map.fire('doclayerinit');
-		}
-		else if (this._reconnecting) {
-			// we are reconnecting ...
-			this._map._docLayer._resetClientVisArea();
-			TileManager.refreshTilesInBackground();
-			this._map.fire('statusindicator', { statusType: 'reconnected' });
-
-			var darkTheme = window.prefs.getBoolean('darkTheme');
-			this._map.uiManager.activateDarkModeInCore(darkTheme);
-			this._map.uiManager.applyInvert();
-			this._map.uiManager.setCanvasColorAfterModeChange();
-
-			if (!window.mode.isMobile())
-				this._map.uiManager.initializeNotebookbarInCore();
-
-			// close all the popups otherwise document textArea will not get focus
-			this._map.uiManager.closeAll();
-			this._map.setPermission(app.file.permission);
-			window.migrating = false;
-			this._map.uiManager.initializeSidebar();
-			this._map.uiManager.refreshTheme();
-		}
-
-		this._map.fire('docloaded', {status: true});
-		if (this._map._docLayer) {
-			this._map._docLayer._onMessage(textMsg);
-
-			// call update view list viewId if it is not defined yet
-			if (!this._map._docLayer._getViewId())
-				this._map.fire('updateviewslist');
-
-			this._reconnecting = false;
-
-			// Applying delayed messages
-			// note: delayed messages cannot be done before:
-			// a) docLayer.map is set by map.addLayer(docLayer)
-			// b) docLayer._onStatusMsg (via _docLayer._onMessage)
-			// has set the viewid
-			this._handleDelayedMessages(docLayer);
-		}
 	}
 
 	_onSocketClose(event) {
