@@ -114,12 +114,6 @@ app.definitions.Socket = class Socket extends SocketBase {
 		}
 	}
 
-	_onSocketError(event) {
-		window.app.console.warn('_onSocketError:', event);
-		this._map.hideBusy();
-		// Let onclose (_onSocketClose) report errors.
-	}
-
 	_onSocketClose(event) {
 		window.app.console.debug('_onSocketClose:');
 		if (!this._map._docLoadedOnce && this.ReconnectCount === 0) {
@@ -202,21 +196,5 @@ app.definitions.Socket = class Socket extends SocketBase {
 
 		if (!this._map['wopi'].DisableInactiveMessages && app.sectionContainer && !app.sectionContainer.testing)
 			this._map.uiManager.showSnackbar(_('The server has been disconnected.'));
-	}
-
-	manualReconnect(timeout) {
-		if (this._map._docLayer) {
-			this._map._docLayer.removeAllViews();
-		}
-		app.idleHandler._active = false;
-		this.close();
-		clearTimeout(this.timer);
-		setTimeout(function () {
-			try {
-				app.idleHandler._activate();
-			} catch (error) {
-				window.app.console.warn('Cannot activate map');
-			}
-		}, timeout);
 	}
 }
