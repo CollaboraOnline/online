@@ -82,6 +82,9 @@
 	--color-treeview-highlight: #FFEE80;
 	--color-treeview-highlight-text: #222;
 	--color-quickfind-border: #e1dfdd;
+
+	--color-backstage-background : #f5f5f5;
+	--color-backstage-background-dark : #f0f0f0;
 }
 
 [data-bg-theme='light'] {
