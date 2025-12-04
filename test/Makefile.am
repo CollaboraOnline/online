@@ -158,6 +158,7 @@ test_base_sources = \
 	WopiProofTests.cpp \
 	UriTests.cpp \
 	TestGlobals.cpp \
+	HostUtilTests.cpp \
 	$(wsd_sources)
 
 common_sources = \
@@ -187,7 +188,8 @@ common_sources = \
 	../net/HttpRequest.cpp \
 	../net/Socket.cpp \
 	../net/NetUtil.cpp \
-	../wsd/Auth.cpp
+	../wsd/Auth.cpp \
+	../wsd/HostUtil.cpp
 
 globals_sources = ../common/Globals.cpp
 
