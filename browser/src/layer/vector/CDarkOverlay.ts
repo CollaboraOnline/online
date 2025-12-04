@@ -18,7 +18,7 @@ class CDarkOverlay extends CPathGroup {
 		this.setPointSet(pointSet);
 	}
 
-	private setPointSet(pointSet: CPointSet) {
+	public setPointSet(pointSet: CPointSet) {
 		var points = pointSet.getPointArray();
 		if (!points) {
 			for (var i = 0; i < this.rectangles.length; i++) {
