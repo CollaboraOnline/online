@@ -345,8 +345,10 @@ class SocketBase {
 		console.assert(false, 'This should not be called!');
 	}
 
-	protected _onSocketError(evt: Event): void {
-		console.assert(false, 'This should not be called!');
+	private _onSocketError(evt: Event): void {
+		window.app.console.warn('_onSocketError:', evt);
+		this._map.hideBusy();
+		// Let onclose (_onSocketClose) report errors.
 	}
 
 	// The problem: if we process one websocket message at a time, the
@@ -1144,7 +1146,19 @@ class SocketBase {
 	}
 
 	public manualReconnect(timeout: number): void {
-		console.assert(false, 'This should not be called!');
+		if (this._map._docLayer) {
+			this._map._docLayer.removeAllViews();
+		}
+		app.idleHandler._active = false;
+		this.close();
+		clearTimeout(this.timer);
+		setTimeout(function () {
+			try {
+				app.idleHandler._activate();
+			} catch (error) {
+				window.app.console.warn('Cannot activate map');
+			}
+		}, timeout);
 	}
 
 	private _showDocumentConflictPopUp(): void {
