@@ -1,10 +1,8 @@
 /* Backstage View Styles */
 
 .backstage-view {
-	/* Overriding color variables for moment - future plan would be show based on app open */
-	--color-primary: #5c2983;
-	--color-primary-lighter: #5c2983;
-	--color-primary-dark: #5c2983;
+	/* Using doc-type color based on document type */
+	--color-primary: rgb(var(--doc-type, 92, 41, 131));
 	--color-on-primary: #ffffff;
 	--color-primary-text: #ffffff;
 
@@ -13,7 +11,7 @@
 	left: 0;
 	right: 0;
 	bottom: 0;
-	background-color: var(--color-main-background);
+	background-color: var(--color-backstage-background);
 	z-index: 1100;
 	display: flex;
 	flex-direction: column;
@@ -94,7 +92,7 @@
 
 .backstage-sidebar {
 	width: 10rem;
-	background-color: var(--color-background-lighter);
+	background-color: var(--color-backstage-background-dark);
 	border-right: 1px solid var(--color-toolbar-border);
 	padding: 16px 0;
 	overflow-y: auto;
@@ -269,7 +267,7 @@
 	flex: 1;
 	padding: 20px;
 	overflow-y: auto;
-	background-color: var(--color-background-lighter);
+	background-color: var(--color-backstage-background);
 }
 
 .backstage-content-title {
@@ -352,7 +350,6 @@
 	padding: 24px;
 	border: 1px dashed var(--color-border);
 	border-radius: var(--border-radius-large);
-	background-color: var(--color-background);
 	max-width: 420px;
 }
 
@@ -363,7 +360,6 @@
 }
 
 .backstage-template-card {
-	background: var(--color-background-lighter);
 	padding: 12px;
 	cursor: pointer;
 	text-align: center;
@@ -547,9 +543,10 @@
 }
 
 .backstage-action-button:hover {
-	background-color: var(--color-primary-dark);
+	background-color: var(--color-primary);
 	box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
 	transform: translateY(-1px);
+	opacity: 0.9;
 }
 
 .backstage-action-button:active {

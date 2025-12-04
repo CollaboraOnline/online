@@ -85,6 +85,9 @@
 	--color-quickfind-border: #e1dfdd;
 	--scrollbar-color: #c0bfbc transparent;
 	--color-background-hover: #F5F5F5;
+
+	--color-backstage-background : #f5f5f5;
+	--color-backstage-background-dark : #f0f0f0;
 }
 
 [data-bg-theme='light'] {
