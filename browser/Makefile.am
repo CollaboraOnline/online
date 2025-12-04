@@ -279,7 +279,7 @@ COOL_JS_LST =\
 	src/app/Log.ts \
 	src/app/Debug.ts \
 	src/app/A11yValidator.ts \
-	src/app/SocketBase.ts \
+	src/app/Socket.ts \
 	src/app/TracingEvents.ts \
 	src/app/ServerCommand.ts \
 	src/Leaflet.js \
@@ -1170,7 +1170,7 @@ pot:
 		src/control/jsdialog/Widget.RadioButton.ts \
 		src/control/jsdialog/Widget.SidebarContainers.ts \
 		src/control/jsdialog/Widget.TreeView.ts \
-		src/app/SocketBase.ts \
+		src/app/Socket.ts \
 		src/app/TracingEvents.ts \
 		src/app/ServerCommand.ts \
 		src/docdispatcher.ts \
