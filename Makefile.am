@@ -17,11 +17,14 @@ if ENABLE_MOBILEAPP
 
 if ENABLE_QTAPP
 SUBDIRS = qt browser
+DIST_SUBDIRS = qt browser
 else
 if ENABLE_WASM
 SUBDIRS = wasm browser
+DIST_SUBDIRS = wasm browser
 else !ENABLE_WASM
 SUBDIRS = browser
+DIST_SUBDIRS = browser
 endif !ENABLE_WASM
 endif
 
@@ -36,6 +39,9 @@ endif
 if ENABLE_CYPRESS
 SUBDIRS += cypress_test
 endif
+
+# For non-mobile builds, DIST_SUBDIRS should include conditional directories
+DIST_SUBDIRS = . browser test cypress_test
 
 export ENABLE_DEBUG
 
