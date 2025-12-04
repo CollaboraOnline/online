@@ -1,0 +1,112 @@
+/* -*- js-indent-level: 8 -*- */
+
+/*
+ * Copyright the Collabora Online contributors.
+ *
+ * SPDX-License-Identifier: MPL-2.0
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
+/*
+	This is for user views.
+	Supposed to hold view data like selected text, viewID, view color, username etc.
+
+	FOR NOW: This only holds the selected text data.
+*/
+class DocumentViewBase {
+	public readonly viewID: number;
+	color: string;
+	selectionSection: TextSelectionSection;
+
+	constructor(viewID: number) {
+		this.viewID = viewID;
+		this.color = app.LOUtil.rgbToHex(app.LOUtil.getViewIdColor(this.viewID));
+		this.selectionSection = new TextSelectionSection(String(this.viewID) + '-text-selections', 0, 0, this.color);
+        app.sectionContainer.addSection(this.selectionSection);
+		this.selectionSection.setShowSection(false);
+	}
+
+    private getSeparatePolygonsFromGroupOfRectangles(rectangles: Array<number[]>) {
+        const groups: any = [];
+        groups.length = 0;
+
+        // Sort the rectangles.
+        for (let i = 0; i < rectangles.length - 1; i++) {
+            if (rectangles[i][1] > rectangles[i + 1][1]) {
+                const temp = rectangles[i];
+                rectangles[i] = rectangles[i + 1];
+                rectangles[i + 1] = temp;
+            }
+        }
+
+        while(rectangles.length > 0) {
+            if (groups.length === 0) {
+                const rectangle = rectangles.splice(0, 1)[0];
+                groups.push([rectangle]);
+            }
+            else {
+                const group = groups[groups.length - 1];
+                const rectangle = group[group.length - 1];
+
+                // Max y of current group. We will check if next rectangle can join this group.
+                // If it can not, then it will start a new, seperate polygon.
+                const yMaxOfGroup = rectangle[1] + rectangle[3];
+
+                if (Math.abs(yMaxOfGroup - rectangles[0][1]) < 5) // 5 is the twips tolerance we pick.
+                    group.push(rectangles.splice(0, 1)[0]);
+                else
+                    groups.push([rectangles.splice(0, 1)[0]]);
+            }
+        }
+
+        return groups;
+    }
+
+    public updateSelectionRawData(mode: number, part: number, rectangles: Array<Array<number>>) {
+        if (rectangles.length > 0) {
+            const rawPolygons = this.getSeparatePolygonsFromGroupOfRectangles(rectangles);
+            let minX = Number.POSITIVE_INFINITY;
+            let maxX = Number.NEGATIVE_INFINITY;
+            let minY = Number.POSITIVE_INFINITY;
+            let maxY = Number.NEGATIVE_INFINITY;
+
+            const polygons: Array<Array<cool.SimplePoint>> = [];
+
+            for (let i = 0; i < rawPolygons.length; i++) {
+                const points: number[] = cool.rectanglesToPolygon(rawPolygons[i]);
+
+                const simplePoints: cool.SimplePoint[] = [];
+
+                for (let j = 0; j < points.length - 1; j += 2) {
+                    simplePoints.push(new cool.SimplePoint(points[j], points[j + 1], part));
+                    if (points[j] < minX) minX = points[j];
+                    if (points[j] > maxX) maxX = points[j];
+                    if (points[j + 1] < minY) minY = points[j + 1];
+                    if (points[j + 1] > maxY) maxY = points[j + 1];
+                }
+
+                polygons.push(simplePoints);
+            }
+
+            const position = [Math.round(minX * app.twipsToPixels), Math.round(minY * app.twipsToPixels)];
+            const size = [Math.round((maxX - minX) * app.twipsToPixels), Math.round((maxY - minY) * app.twipsToPixels)];
+
+            this.selectionSection.setSelectionInfo(mode, part, polygons);
+            this.selectionSection.size = size;
+
+            this.selectionSection.setPosition(position[0], position[1]);
+
+            if (mode === app.map._docLayer._selectedMode && part === app.map._docLayer._selectedPart)
+                this.selectionSection.setShowSection(true);
+            else
+                this.selectionSection.setShowSection(false);
+        }
+        else if (rectangles.length === 0) {
+            this.selectionSection.setSelectionInfo(mode, part, []);
+            this.selectionSection.setShowSection(false);
+        }
+	}
+}

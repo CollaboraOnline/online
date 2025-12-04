@@ -265,6 +265,7 @@ COOL_JS_LST =\
 	src/app/ViewLayoutWriter.ts \
 	src/app/ViewLayoutMultiPage.ts \
 	src/app/DocumentBase.ts \
+	src/app/DocumentView.ts \
 	src/app/TilesMiddleware.ts \
 	src/app/SlideshowMiddleware.ts \
 	src/app/SearchService.ts \
@@ -342,6 +343,7 @@ COOL_JS_LST =\
 	src/canvas/sections/CellSelectionHandleSection.ts \
 	src/canvas/sections/CalcValidityDropDownSection.ts \
 	src/canvas/sections/TextSelectionHandleSection.ts \
+	src/canvas/sections/TextSelectionSection.ts \
 	src/canvas/sections/OtherViewGraphicSelectionSection.ts \
 	src/canvas/sections/OtherViewCellCursorSection.ts \
 	src/canvas/sections/FormFieldButton.ts \
