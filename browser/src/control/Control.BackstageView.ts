@@ -129,6 +129,10 @@ class BackstageView extends window.L.Class {
 			'backstage-view',
 		);
 
+		if (this.isStarterMode) {
+			container.classList.add('is-starter-mode');
+		}
+
 		const header = this.createHeader();
 		container.appendChild(header);
 
@@ -162,7 +166,6 @@ class BackstageView extends window.L.Class {
 				'backstage-header-close-icon',
 			);
 			closeBtn.setAttribute('aria-hidden', 'true');
-			closeBtn.textContent = '×';
 			closeButton.appendChild(closeBtn);
 
 			window.L.DomEvent.on(closeButton, 'click', () => this.hide(), this);
@@ -204,7 +207,6 @@ class BackstageView extends window.L.Class {
 
 		const icon = this.createElement('span', 'backstage-sidebar-back-icon');
 		icon.setAttribute('aria-hidden', 'true');
-		icon.textContent = '←';
 		backButton.appendChild(icon);
 
 		window.L.DomEvent.on(backButton, 'click', () => this.hide(), this);
@@ -238,7 +240,7 @@ class BackstageView extends window.L.Class {
 				label: _('Home'),
 				type: 'view',
 				viewType: 'home',
-				visible: false,
+				visible: true,
 			},
 			{
 				id: 'new',
@@ -350,8 +352,7 @@ class BackstageView extends window.L.Class {
 		this.templateSearchContainer = null;
 
 		this.addSectionHeader(
-			_('New Document'),
-			_('Start from a template or a blank file'),
+			_('New Document')
 		);
 
 		if (!this.templates) {
@@ -561,17 +562,19 @@ class BackstageView extends window.L.Class {
 		return properties;
 	}
 
-	private addSectionHeader(title: string, description: string): void {
+	private addSectionHeader(title: string, description: string = ""): void {
 		const titleElement = this.createElement('h2', 'backstage-content-title');
 		titleElement.textContent = title;
 		this.contentArea.appendChild(titleElement);
 
+		if (description !== "") {
 		const descElement = this.createElement(
 			'p',
 			'backstage-content-description',
 		);
 		descElement.textContent = description;
 		this.contentArea.appendChild(descElement);
+	}
 	}
 
 	private clearContent(): void {
