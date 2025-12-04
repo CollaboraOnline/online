@@ -111,7 +111,7 @@ declare namespace L {
 declare const app: {
 	sectionContainer: CanvasSectionContainer;
 	LOUtil: typeof LOUtil;
-	socket: SocketBase;
+	socket: Socket;
 	setPermission: (permission: string) => void;
 	util: typeof Util;
 	[key: string]: any; // other properties as needed

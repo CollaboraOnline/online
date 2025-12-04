@@ -10,7 +10,7 @@
  */
 /* eslint-disable @typescript-eslint/no-empty-function */
 
-class SocketBase {
+class Socket {
 	private ProtocolVersionNumber: string = '0.1';
 	private ReconnectCount: number = 0;
 	private WasShownLimitDialog: boolean = false;
@@ -160,7 +160,7 @@ class SocketBase {
 		return new ServerCommand(msg, this._map);
 	}
 
-	protected getWebSocketBaseURI(map: MapInterface): string {
+	private getWebSocketBaseURI(map: MapInterface): string {
 		return window.makeWsUrlWopiSrc(
 			'/cool/',
 			map.options.doc + '?' + $.param(map.options.docParams),
@@ -244,7 +244,7 @@ class SocketBase {
 		clearTimeout(this._accessTokenExpireTimeout);
 	}
 
-	protected _doSend(msg: MessageInterface): void {
+	private _doSend(msg: MessageInterface): void {
 		if (!this.socket) {
 			console.error('_doSend() called when socket is non-existent!');
 			return;
@@ -255,7 +255,7 @@ class SocketBase {
 		this.socket.send(msg);
 	}
 
-	protected _onSocketOpen(evt: Event): void {
+	private _onSocketOpen(evt: Event): void {
 		window.app.console.debug('_onSocketOpen:');
 		app.idleHandler._serverRecycling = false;
 		app.idleHandler._documentIdle = false;
@@ -341,7 +341,7 @@ class SocketBase {
 		app.idleHandler._activate();
 	}
 
-	protected _onSocketClose(event: CloseEvent): void {
+	private _onSocketClose(event: CloseEvent): void {
 		window.app.console.debug('_onSocketClose:');
 		if (!this._map._docLoadedOnce && this.ReconnectCount === 0) {
 			let errorType: string = '';
@@ -461,7 +461,7 @@ class SocketBase {
 	// producer/consumer issues that can fill a multi-second long
 	// buffer of web-socket messages in the client that we can't
 	// process so - slurp and then emit at idle - its faster to delay!
-	protected _slurpMessage(evt: MessageEvent): void {
+	private _slurpMessage(evt: MessageEvent): void {
 		const e = evt as SlurpMessageEvent;
 		this._extractTextImg(e);
 
@@ -479,7 +479,7 @@ class SocketBase {
 		this._queueSlurpEventEmission(delayMS);
 	}
 
-	protected _emptyQueue(): void {
+	private _emptyQueue(): void {
 		if (window.queueMsg && window.queueMsg.length > 0) {
 			for (let it = 0; it < window.queueMsg.length; it++) {
 				const msg: MessageInterface = window.queueMsg[it];
@@ -490,7 +490,7 @@ class SocketBase {
 		}
 	}
 
-	protected _sessionExpiredWarning(): void {
+	private _sessionExpiredWarning(): void {
 		clearTimeout(this._accessTokenExpireTimeout);
 		let expirymsg = window.errorMessages.sessionexpiry;
 		if (
@@ -528,7 +528,7 @@ class SocketBase {
 		return this.socket !== undefined && this.socket.readyState === 1;
 	}
 
-	protected _logSocket(type: string, msg: string): void {
+	private _logSocket(type: string, msg: string): void {
 		const logMessage =
 			this._map._debug.debugNeverStarted ||
 			this._map._debug.logIncomingMessages;
@@ -569,7 +569,7 @@ class SocketBase {
 		);
 	}
 
-	protected _getParameterByName(url: string, name: string): string {
+	private _getParameterByName(url: string, name: string): string {
 		// Escape all regex characters.
 		const escape = (str: string): string => {
 			return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
@@ -579,7 +579,7 @@ class SocketBase {
 		return results === null ? '' : results[1].replace(/\+/g, ' ');
 	}
 
-	protected _utf8ToString(data: Uint8Array): string {
+	private _utf8ToString(data: Uint8Array): string {
 		let strBytes = '';
 		for (let it = 0; it < data.length; it++) {
 			strBytes += String.fromCharCode(data[it]);
@@ -589,7 +589,7 @@ class SocketBase {
 
 	// Returns true if, and only if, we are ready to start loading
 	// the tiles and rendering the document.
-	protected _isReady(): boolean {
+	private _isReady(): boolean {
 		if (window.bundlejsLoaded == false || window.fullyLoadedAndReady == false) {
 			return false;
 		}
@@ -610,7 +610,7 @@ class SocketBase {
 		return true;
 	}
 
-	protected _queueSlurpEventEmission(delayMS: number): void {
+	private _queueSlurpEventEmission(delayMS: number): void {
 		let now = Date.now();
 		if (this._slurpTimer && this._slurpTimerDelay != delayMS) {
 			// The timer already exists, but now want to change timeout _slurpTimerDelay to delayMS.
@@ -641,7 +641,7 @@ class SocketBase {
 				this._slurpTimerDelay = delayMS;
 			}
 			this._slurpTimer = setTimeout(
-				function (this: SocketBase) {
+				function (this: Socket) {
 					this._slurpTimer = undefined;
 					this._slurpTimerLaunchTime = undefined;
 					this._slurpTimerDelay = undefined;
@@ -656,7 +656,7 @@ class SocketBase {
 		}
 	}
 
-	protected _emitSlurpedEvents(): void {
+	private _emitSlurpedEvents(): void {
 		if (this._map._debug.eventDelayWatchdog) this._map._debug.timeEventDelay();
 
 		const queueLength = this._slurpQueue.length;
@@ -672,7 +672,7 @@ class SocketBase {
 			// re-rendering delay before we get back to the main-loop.
 			if (this.traceEventRecordingToggle) {
 				if (!this._renderEventTimer)
-					this._renderEventTimer = setTimeout(function (this: SocketBase) {
+					this._renderEventTimer = setTimeout(function (this: Socket) {
 						if (this._renderEventTimerStart === undefined) {
 							console.assert(
 								false,
@@ -801,7 +801,7 @@ class SocketBase {
 		);
 	}
 
-	protected _onStatusMsg(textMsg: string, command: ServerCommand): void {
+	private _onStatusMsg(textMsg: string, command: ServerCommand): void {
 		if (!this._isReady()) {
 			// Retry in a bit.
 			setTimeout(() => {
@@ -898,7 +898,7 @@ class SocketBase {
 		}
 	}
 
-	protected _onJSDialog(
+	private _onJSDialog(
 		textMsg: string,
 		callback?: JSDialogCallback | DefCallBack,
 	): void {
@@ -1142,7 +1142,7 @@ class SocketBase {
 		}
 	}
 
-	protected _extractTextImg(e: SlurpMessageEvent): void {
+	private _extractTextImg(e: SlurpMessageEvent): void {
 		if (
 			(window.ThisIsTheiOSApp || window.ThisIsTheEmscriptenApp) &&
 			typeof e.data === 'string'
@@ -1236,7 +1236,7 @@ class SocketBase {
 		// PNG dialog bits
 		const imageElement: CoolHTMLImageElement = new Image();
 		e.image = imageElement;
-		imageElement.onload = function (this: SocketBase) {
+		imageElement.onload = function (this: Socket) {
 			e.imageIsComplete = true;
 			this._queueSlurpEventEmission(1);
 			if (imageElement.completeTraceEvent)
@@ -1248,7 +1248,7 @@ class SocketBase {
 		imageElement.onerror;
 		imageElement.addEventListener(
 			'error',
-			function (this: SocketBase, err: ErrorEvent) {
+			function (this: Socket, err: ErrorEvent) {
 				window.app.console.log('Failed to load image ' + img + ' fun ' + err);
 				e.imageIsComplete = true;
 				this._queueSlurpEventEmission(1);
@@ -1264,7 +1264,7 @@ class SocketBase {
 	}
 
 	// make profiling easier
-	protected _extractCopyObject(e: SlurpMessageEvent): void {
+	private _extractCopyObject(e: SlurpMessageEvent): void {
 		let index: number;
 
 		e.imgBytes = new Uint8Array(e.data as ArrayBufferLike);
@@ -1282,7 +1282,7 @@ class SocketBase {
 	}
 
 	// convert to string of bytes without blowing the stack if data is large.
-	protected _strFromUint8(prefix: string, data: Uint8Array): string {
+	private _strFromUint8(prefix: string, data: Uint8Array): string {
 		let i: number;
 		const chunk = 4096;
 		let strBytes = prefix;
@@ -1298,7 +1298,7 @@ class SocketBase {
 		return strBytes;
 	}
 
-	protected _extractImage(e: SlurpMessageEvent): string {
+	private _extractImage(e: SlurpMessageEvent): string {
 		if (!e.imgBytes) {
 			console.assert(
 				false,
@@ -1328,7 +1328,7 @@ class SocketBase {
 		return img;
 	}
 
-	protected _buildUnauthorizedMessage(command: ServerCommand): string {
+	private _buildUnauthorizedMessage(command: ServerCommand): string {
 		let unauthorizedMsg = window.errorMessages.unauthorized;
 		if (command.errorCode) {
 			// X509_verify_cert_error_string output
@@ -1370,14 +1370,14 @@ class SocketBase {
 
 		callbackList.push({
 			id: 'discard-button',
-			func_: function (this: SocketBase) {
+			func_: function (this: Socket) {
 				this.sendMessage('closedocument');
 			}.bind(this),
 		});
 
 		callbackList.push({
 			id: 'overwrite-button',
-			func_: function (this: SocketBase) {
+			func_: function (this: Socket) {
 				this.sendMessage('savetostorage force=1');
 			}.bind(this),
 		});
@@ -1386,7 +1386,7 @@ class SocketBase {
 			buttonList.push({ id: 'save-to-new-file', text: _('Save to new file') });
 			callbackList.push({
 				id: 'save-to-new-file',
-				func_: function (this: SocketBase) {
+				func_: function (this: Socket) {
 					let filename = this._map['wopi'].BaseFileName;
 					if (filename) {
 						filename = app.LOUtil.generateNewFileName(filename, '_new');
@@ -1418,7 +1418,7 @@ class SocketBase {
 			msg,
 			'',
 			_('OK'),
-			function (this: SocketBase, data: string): void {
+			function (this: Socket, data: string): void {
 				if (data) {
 					this._map._docPassword = data;
 					if (window.ThisIsAMobileApp) {
@@ -1513,7 +1513,7 @@ class SocketBase {
 
 	// 'coolserver ' message.
 	// returns boolean whether or not to return immediately from _onMessage().
-	protected _onCoolServerMsg(textMsg: string): boolean {
+	private _onCoolServerMsg(textMsg: string): boolean {
 		// This must be the first message, unless we reconnect.
 		let oldVersion = '';
 		let sameFile = true;
@@ -1661,7 +1661,7 @@ class SocketBase {
 	}
 
 	// 'lokitversion ' message.
-	protected _onLokitVersionMsg(textMsg: string): void {
+	private _onLokitVersionMsg(textMsg: string): void {
 		const versionLabelElement = document.getElementById('lokit-version-label');
 		const versionContainer = document.getElementById('lokit-version');
 
@@ -1714,20 +1714,20 @@ class SocketBase {
 	}
 
 	// 'osinfo ' message.
-	protected _onOsInfoMsg(textMsg: string) {
+	private _onOsInfoMsg(textMsg: string) {
 		const osInfo = textMsg.replace('osinfo ', '');
 		const osInfoElement = document.getElementById('os-info');
 		if (osInfoElement) osInfoElement.innerText = osInfo;
 	}
 
 	// 'clipboardkey:' message.
-	protected _onClipboardKeyMsg(textMsg: string): void {
+	private _onClipboardKeyMsg(textMsg: string): void {
 		const key = textMsg.substring('clipboardkey: '.length);
 		if (this._map._clip) this._map._clip.setKey(key);
 	}
 
 	// 'perm:' message.
-	protected _onPermMsg(textMsg: string): void {
+	private _onPermMsg(textMsg: string): void {
 		const perm = textMsg.substring('perm:'.length).trim();
 
 		// Never make the permission more permissive than it originally was.
@@ -1739,7 +1739,7 @@ class SocketBase {
 	}
 
 	// 'filemode:' message.
-	protected _onFileModeMsg(textMsg: string): void {
+	private _onFileModeMsg(textMsg: string): void {
 		const json = JSON.parse(textMsg.substring('filemode:'.length).trim());
 
 		// Never make the permission more permissive than it originally was.
@@ -1756,14 +1756,14 @@ class SocketBase {
 	}
 
 	// 'wopi:' message.
-	protected _onWopiMsg(textMsg: string): void {
+	private _onWopiMsg(textMsg: string): void {
 		// Handle WOPI related messages
 		const wopiInfo = JSON.parse(textMsg.substring(textMsg.indexOf('{')));
 		this._map.fire('wopiprops', wopiInfo);
 	}
 
 	// 'loadstorage: ' message.
-	protected _onLoadStorageMsg(textMsg: string): void {
+	private _onLoadStorageMsg(textMsg: string): void {
 		if (textMsg.substring(textMsg.indexOf(':') + 2) === 'failed') {
 			window.app.console.debug('Loading document from a storage failed');
 			this._map.fire('postMessage', {
@@ -1776,13 +1776,13 @@ class SocketBase {
 	}
 
 	// 'lastmodtime: ' message.
-	protected _onLastModTimeMsg(textMsg: string): void {
+	private _onLastModTimeMsg(textMsg: string): void {
 		const time = textMsg.substring(textMsg.indexOf(' ') + 1);
 		this._map.updateModificationIndicator(time);
 	}
 
 	// 'commandresult: ' message.
-	protected _onCommandResultMsg(textMsg: string): void {
+	private _onCommandResultMsg(textMsg: string): void {
 		const commandresult = JSON.parse(textMsg.substring(textMsg.indexOf('{')));
 		if (
 			commandresult['command'] === 'savetostorage' ||
@@ -1812,7 +1812,7 @@ class SocketBase {
 	}
 
 	// 'migrate: ' message.
-	protected _onMigrateMsg(textMsg: string): void {
+	private _onMigrateMsg(textMsg: string): void {
 		const migrate = JSON.parse(textMsg.substring(textMsg.indexOf('{')));
 		const afterSave = migrate.afterSave as boolean;
 		app.idleHandler._serverRecycling = false;
@@ -1847,7 +1847,7 @@ class SocketBase {
 	}
 
 	// 'close: ' message.
-	protected _onCloseMsg(textMsg: string): void {
+	private _onCloseMsg(textMsg: string): void {
 		textMsg = textMsg.substring('close: '.length);
 		const postMsgData: any = {};
 		let showMsgAndReload = false;
@@ -1948,7 +1948,7 @@ class SocketBase {
 
 	// 'error: ' message.
 	// returns true if the caller need to exit immediately.
-	protected _onErrorMsg(textMsg: string, command: ServerCommand): boolean {
+	private _onErrorMsg(textMsg: string, command: ServerCommand): boolean {
 		const errorMessages = window.errorMessages;
 		let msg = '';
 		let passwordType: string = '';
@@ -2137,7 +2137,7 @@ class SocketBase {
 	}
 
 	// 'fontsmissing: ' message.
-	protected _onFontsMissing(textMsg: string, command: ServerCommand): void {
+	private _onFontsMissing(textMsg: string, command: ServerCommand): void {
 		const fontsMissingObj = JSON.parse(textMsg.substring(textMsg.indexOf('{')));
 		let msg = ' ';
 		for (let i = 0; i < fontsMissingObj.fontsmissing.length; ++i) {
@@ -2152,7 +2152,7 @@ class SocketBase {
 			window.autoShowWelcome
 		) {
 			setTimeout(
-				function (this: SocketBase) {
+				function (this: Socket) {
 					this._map.uiManager.showInfoModal(
 						'fontsmissing',
 						_('Missing Fonts'),
@@ -2175,7 +2175,7 @@ class SocketBase {
 	}
 
 	// 'info: ' message.
-	protected _onInfoMsg(textMsg: string, command: ServerCommand): void {
+	private _onInfoMsg(textMsg: string, command: ServerCommand): void {
 		if (command.errorKind === 'limitreached' && !this.WasShownLimitDialog) {
 			this.WasShownLimitDialog = true;
 			textMsg = window.errorMessages.limitreached;
@@ -2200,7 +2200,7 @@ class SocketBase {
 	}
 
 	// 'warn: ' message.
-	protected _onWarnMsg(textMsg: string, command: ServerCommand): void {
+	private _onWarnMsg(textMsg: string, command: ServerCommand): void {
 		const len = 'warn: '.length;
 		textMsg = textMsg.substring(len);
 		if (textMsg.startsWith('saveas:')) {
@@ -2216,7 +2216,7 @@ class SocketBase {
 				'',
 				message,
 				_('OK'),
-				function (this: SocketBase) {
+				function (this: Socket) {
 					this._renameOrSaveAsCallback(textMsg, command);
 				}.bind(this),
 			);
@@ -2224,7 +2224,7 @@ class SocketBase {
 	}
 
 	// 'blockui: ' message.
-	protected _onBlockUIMsg(textMsg: string): void {
+	private _onBlockUIMsg(textMsg: string): void {
 		textMsg = textMsg.substring('blockui:'.length).trim();
 		let msg: string | null = null;
 
@@ -2240,7 +2240,7 @@ class SocketBase {
 	}
 
 	// 'blockedcommand: ' message.
-	protected _onBlockedCommandMsg(textMsg: string): void {
+	private _onBlockedCommandMsg(textMsg: string): void {
 		const blockedInfo = app.socket.parseServerCmd(textMsg.substring(16));
 		if (blockedInfo.errorKind === 'restricted')
 			window.app.console.log(
@@ -2251,7 +2251,7 @@ class SocketBase {
 	}
 
 	// 'slidelayer: ' message.
-	protected _onSlideLayerMsg(
+	private _onSlideLayerMsg(
 		textMsg: string,
 		e: SlurpMessageEvent | MinimalMessageEvent,
 	): void {
@@ -2267,7 +2267,7 @@ class SocketBase {
 	}
 
 	// 'sliderenderingcomplete: ' message.
-	protected _onSlideRenderingCompleteMsg(
+	private _onSlideRenderingCompleteMsg(
 		textMsg: string,
 		e: SlurpMessageEvent | MinimalMessageEvent,
 	): void {
@@ -2284,7 +2284,7 @@ class SocketBase {
 	}
 
 	// 'progress: ' message.
-	protected _onProgressMsg(textMsg: string): void {
+	private _onProgressMsg(textMsg: string): void {
 		const info = JSON.parse(textMsg.substring(textMsg.indexOf('{')));
 		if (!info) {
 			window.app.console.error('Missing info in progress: message');
@@ -2318,3 +2318,5 @@ class SocketBase {
 		}
 	}
 }
+
+app.definitions.Socket = Socket;
