@@ -341,8 +341,112 @@ class SocketBase {
 		app.idleHandler._activate();
 	}
 
-	protected _onSocketClose(evt: CloseEvent): void {
-		console.assert(false, 'This should not be called!');
+	protected _onSocketClose(event: CloseEvent): void {
+		window.app.console.debug('_onSocketClose:');
+		if (!this._map._docLoadedOnce && this.ReconnectCount === 0) {
+			let errorType: string = '';
+			let errorMsg: string;
+			const reason = event.reason;
+			if (reason && reason.startsWith('error:')) {
+				var command = this.parseServerCmd(reason);
+				if (
+					command.errorCmd === 'internal' &&
+					command.errorKind === 'unauthorized'
+				) {
+					errorType = 'websocketunauthorized';
+					errorMsg = this._buildUnauthorizedMessage(command);
+				} else if (
+					command.errorCmd === 'storage' &&
+					command.errorKind === 'loadfailed'
+				) {
+					errorType = 'websocketloadfailed';
+					errorMsg = window.errorMessages.storage.loadfailed;
+				} else {
+					errorType = 'websocketgenericfailure';
+					errorMsg = window.errorMessages.websocketgenericfailure;
+				}
+			} else {
+				errorType = 'websocketproxyfailure';
+				errorMsg = window.errorMessages.websocketproxyfailure;
+			}
+			this._map.fire('error', {
+				msg: errorMsg,
+				cmd: 'socket',
+				kind: 'closed',
+				id: 4,
+			});
+			const postMessageObj = {
+				errorType: errorType,
+				success: false,
+				errorMsg: errorMsg,
+				result: '',
+			};
+			this._map.fire('postMessage', {
+				msgId: 'Action_Load_Resp',
+				args: postMessageObj,
+			});
+			return;
+		}
+		if (this.ReconnectCount > 0) return;
+
+		const isActive = app.idleHandler._active;
+		this._map.hideBusy();
+		app.idleHandler._active = false;
+		app.idleHandler._serverRecycling = false;
+
+		if (this._map._docLayer) {
+			this._map._docLayer.removeAllViews();
+			this._map._docLayer._resetClientVisArea();
+			if (GraphicSelection.hasActiveSelection())
+				GraphicSelection.rectangle = null;
+			if (this._map._docLayer._docType === 'presentation')
+				app.setCursorVisibility(false);
+
+			this._map._docLayer._resetCanonicalIdStatus();
+			this._map._docLayer._resetViewId();
+			this._map._docLayer._resetDocumentInfo();
+		}
+
+		if (isActive && this._reconnecting) {
+			// Don't show this before first transparently trying to reconnect.
+			this._map.fire('error', {
+				msg: _(
+					'Well, this is embarrassing, we cannot connect to your document. Please try again.',
+				),
+				cmd: 'socket',
+				kind: 'closed',
+				id: 4,
+			});
+		}
+
+		// Reset wopi's app loaded so that reconnecting again informs outerframe about initialization
+		this._map['wopi'].resetAppLoaded();
+		this._map.fire('docloaded', { status: false });
+
+		// We need to make sure that the message slurping processes the
+		// events first, because there could have been a message like
+		// "close: idle" from the server.
+		// Without the timeout, we'd immediately reconnect (because the
+		// "close: idle" was not processed yet).
+		setTimeout(() => {
+			if (!this._reconnecting) {
+				this._reconnecting = true;
+				if (!app.idleHandler._documentIdle)
+					this._map.showBusy(_('Reconnecting...'), false);
+				app.idleHandler._activate();
+			}
+		}, 1 /* ms */);
+
+		if (this._map.isEditMode()) {
+			this._map.setPermission('view');
+		}
+
+		if (
+			!this._map['wopi'].DisableInactiveMessages &&
+			app.sectionContainer &&
+			!app.sectionContainer.testing
+		)
+			this._map.uiManager.showSnackbar(_('The server has been disconnected.'));
 	}
 
 	private _onSocketError(evt: Event): void {
