@@ -703,15 +703,57 @@ class SocketBase {
 		textMsg: string,
 		callback?: JSDialogCallback | DefCallBack,
 	): void {
-		console.assert(false, 'This should not be called!');
+		const msgData = JSON.parse(textMsg.substring('jsdialog:'.length + 1));
+
+		if (msgData.children && !app.util.isArray(msgData.children)) {
+			window.app.console.warn(
+				"_onJSDialogMsg: The children's data should be created of array type",
+			);
+			return;
+		}
+
+		JSDialog.MessageRouter.processMessage(msgData, callback);
 	}
 
-	protected _onHyperlinkClickedMsg(textMsg: string): void {
-		console.assert(false, 'This should not be called!');
+	private _onHyperlinkClickedMsg(textMsg: string): void {
+		let link: string | null = null;
+		let coords: string | null = null;
+		const hyperlinkMsgStart = 'hyperlinkclicked: ';
+		const coordinatesMsgStart = ' coordinates: ';
+
+		if (textMsg.indexOf(coordinatesMsgStart) !== -1) {
+			const coordpos = textMsg.indexOf(coordinatesMsgStart);
+			link = textMsg.substring(hyperlinkMsgStart.length, coordpos);
+			coords = textMsg.substring(coordpos + coordinatesMsgStart.length);
+		} else link = textMsg.substring(hyperlinkMsgStart.length);
+
+		this._map.fire('hyperlinkclicked', { url: link, coordinates: coords });
 	}
 
-	protected _delayMessage(textMsg: string): void {
-		console.assert(false, 'This should not be called!');
+	private _delayMessage(textMsg: string): void {
+		const message = { msg: textMsg };
+		this._delayedMessages.push(message);
+	}
+
+	private _handleDelayedMessages(docLayer: DocLayerInterface): void {
+		this._handlingDelayedMessages = true;
+
+		while (this._delayedMessages.length) {
+			const message = this._delayedMessages.shift();
+			Util.ensureValue(message);
+			try {
+				docLayer._onMessage(message.msg);
+			} catch (e) {
+				// unpleasant - but stops this one problem
+				// event stopping an unknown number of others.
+				window.app.console.error(
+					'Exception ' + e + ' emitting event ' + message,
+					(e as Error).stack,
+				);
+			}
+		}
+
+		this._handlingDelayedMessages = false;
 	}
 
 	public _onMessage(e: SlurpMessageEvent | MinimalMessageEvent): void {
