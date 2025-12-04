@@ -376,6 +376,7 @@ interface TreeWidgetJSON extends WidgetJSON {
 	highlightTerm?: string; // what, if any, entries are we highlighting?
 	ignoreFocus?: boolean; // When true, does't focus to selected item automatically.
 	customEntryRenderer?: boolean;
+	noSearchField?: boolean; // When true, the widget shouldn't have a search field added
 }
 
 interface IconViewEntry {

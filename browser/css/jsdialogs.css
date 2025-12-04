@@ -640,6 +640,32 @@ algned to the bottom */
 	scrollbar-color: var(--scrollbar-color);
 }
 
+.ui-treeview:has(> .ui-treeview-search-container) {
+	padding-top: 0;
+	/* otherwise position: sticky will leave a gap. We can't top: -1 on the search container or it'll scroll... */
+}
+
+.ui-treeview-search-container {
+	/* we're using position: sticky at all since as we don't want to nest this in
+		 another div and we don't want to scroll offscreen... it's a little ugly, but I
+		 didn't think position: fixed and margin hacks would go down any more nicely...
+	*/
+	position: sticky;
+	top: 0;
+	background-color: var(--color-background-lighter);
+
+	/* margin-left and margin-right can counterbalance the .ui-treeview padding here */
+	margin-left: -1px;
+	margin-right: -1px;
+	padding-left: 1px;
+	padding-right: 1px;
+}
+
+[id^='ui-treeview-search-input'] {
+	width: 100%;
+	box-sizing: border-box;
+}
+
 #__MENU__.ui-treeview {
 	min-height: min-content;
 }
