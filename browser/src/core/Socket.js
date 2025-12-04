@@ -12,34 +12,12 @@
  * L.Socket contains methods for the communication with the server
  */
 
-/* global app JSDialog _ errorMessages GraphicSelection TileManager SocketBase */
+/* global app _ errorMessages GraphicSelection TileManager SocketBase */
 
 app.definitions.Socket = class Socket extends SocketBase {
 
 	constructor(map) {
 		super(map);
-	}
-
-	_delayMessage(textMsg) {
-		var message = {msg: textMsg};
-		this._delayedMessages.push(message);
-	}
-
-	_handleDelayedMessages(docLayer) {
-		this._handlingDelayedMessages = true;
-
-		while (this._delayedMessages.length) {
-			var message = this._delayedMessages.shift();
-			try {
-				docLayer._onMessage(message.msg);
-			} catch (e) {
-				// unpleasant - but stops this one problem
-				// event stopping an unknown number of others.
-				window.app.console.error('Exception ' + e + ' emitting event ' + message, e.stack);
-			}
-		}
-
-		this._handlingDelayedMessages = false;
 	}
 
 	_onStatusMsg(textMsg, command) {
@@ -134,33 +112,6 @@ app.definitions.Socket = class Socket extends SocketBase {
 			// has set the viewid
 			this._handleDelayedMessages(docLayer);
 		}
-	}
-
-	_onJSDialog(textMsg, callback) {
-		var msgData = JSON.parse(textMsg.substring('jsdialog:'.length + 1));
-
-		if (msgData.children && !app.util.isArray(msgData.children)) {
-			window.app.console.warn('_onJSDialogMsg: The children\'s data should be created of array type');
-			return;
-		}
-
-		JSDialog.MessageRouter.processMessage(msgData, callback);
-	}
-
-	_onHyperlinkClickedMsg(textMsg) {
-		var link = null;
-		var coords = null;
-		var hyperlinkMsgStart = 'hyperlinkclicked: ';
-		var coordinatesMsgStart = ' coordinates: ';
-
-		if (textMsg.indexOf(coordinatesMsgStart) !== -1) {
-			var coordpos = textMsg.indexOf(coordinatesMsgStart);
-			link = textMsg.substring(hyperlinkMsgStart.length, coordpos);
-			coords = textMsg.substring(coordpos+coordinatesMsgStart.length);
-		} else
-			link = textMsg.substring(hyperlinkMsgStart.length);
-
-		this._map.fire('hyperlinkclicked', {url: link, coordinates: coords});
 	}
 
 	_onSocketError(event) {
