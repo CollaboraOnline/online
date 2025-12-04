@@ -1620,6 +1620,21 @@ class TreeViewControl {
 		if (level === 1 && !hasSelectedEntry) this.makeTreeViewFocusable(true);
 	}
 
+	showSearchBar(parent: HTMLElement) {
+		const searchBox = document.createElement('input');
+		searchBox.id = 'ui-treeview-search-input'; // Form fields should have either a name or an ID - using this instead of a class
+		searchBox.placeholder = 'Search...';
+		searchBox.addEventListener('input', () =>
+			this.filterEntries(searchBox.value),
+		);
+
+		const searchContainer = document.createElement('div');
+		searchContainer.className = 'ui-treeview-search-container';
+		searchContainer.appendChild(searchBox);
+
+		parent.appendChild(searchContainer);
+	}
+
 	fillEntry(
 		data: TreeWidgetJSON,
 		entry: TreeEntryJSON,
@@ -1771,6 +1786,14 @@ class TreeViewControl {
 				window.L.DomUtil.addClass(this._container, 'ui-treeview-tree');
 		} else if (this._isListbox) this._container.setAttribute('role', 'listbox');
 		else this._container.setAttribute('role', 'grid');
+
+		if (
+			this._isListbox &&
+			this._container.id !== 'searchfinds' &&
+			this._container.id !== 'mentionPopupList'
+		) {
+			this.showSearchBar(this._container);
+		}
 
 		this.preprocessColumnData(data.entries);
 		this.fillHeaders(data.headers, builder);

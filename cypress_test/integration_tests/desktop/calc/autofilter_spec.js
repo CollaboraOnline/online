@@ -102,7 +102,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'AutoFilter', function() {
 	it('Filter empty/non-empty cells', function() {
 		//empty
 		calcHelper.openAutoFilterMenu(true);
-		cy.cGet('#check_list_box .ui-treeview-entry:nth-child(1) > div > input').click();
+		cy.cGet('#check_list_box :nth-child(1 of .ui-treeview-entry) > div > input').click();
 		cy.cGet('#ok').click();
 		// Wait for autofilter dialog to close
 		cy.cGet('div.autofilter').should('not.exist');
@@ -165,7 +165,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'AutoFilter', function() {
 	it('Disable already filtered', function () {
 		// Filter row with ['Test 4', ''] on the first column
 		calcHelper.openAutoFilterMenu();
-		cy.cGet('#check_list_box .ui-treeview-entry:nth-child(4) > div > input').click();
+		cy.cGet('#check_list_box :nth-child(4 of .ui-treeview-entry) > div > input').click();
 		cy.cGet('#ok').click();
 		// Wait for autofilter dialog to close
 		cy.cGet('div.autofilter').should('not.exist');
@@ -173,8 +173,8 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'AutoFilter', function() {
 		// Open autofilter menu on the second column
 		calcHelper.openAutoFilterMenu(true);
 		// Check that '(empty)' option is disabled
-		cy.cGet('#check_list_box .ui-treeview-entry:nth-child(3) > div').should('contain.text', '(empty)');
-		cy.cGet('#check_list_box .ui-treeview-entry:nth-child(3) > div > input').should('be.disabled');
+		cy.cGet('#check_list_box :nth-child(3 of .ui-treeview-entry) > div').should('contain.text', '(empty)');
+		cy.cGet('#check_list_box :nth-child(3 of .ui-treeview-entry) > div > input').should('be.disabled');
 
 	});
 });
