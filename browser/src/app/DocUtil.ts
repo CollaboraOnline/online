@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 /* -*- js-indent-level: 8 -*- */
 /*
  * Copyright the Collabora Online contributors.
@@ -53,9 +52,14 @@ class DocUtil {
 		return html;
 	}
 
-	public static stripHTML(html: string) {
+	public static stripHTML(
+		html: string,
+		domParser: DOMParser = new DOMParser(),
+	) {
 		html = this.stripStyle(html);
-		var tmp = new DOMParser().parseFromString(html, 'text/html').body;
-		return tmp.textContent.trim() || tmp.innerText.trim() || '';
+		var tmp = domParser.parseFromString(html, 'text/html').body;
+		if (tmp.textContent) return tmp.textContent.trim();
+		if (tmp.innerText) return tmp.innerText.trim();
+		return '';
 	}
 }
