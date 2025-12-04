@@ -287,6 +287,62 @@
 	line-height: 1.5;
 }
 
+/* Home view specific styles */
+.backstage-home-templates-row {
+	display: flex;
+	flex-wrap: nowrap;
+	gap: 1.5rem;
+	margin-bottom: 1.5rem;
+	overflow: hidden;
+	padding-bottom: 0.5rem;
+	justify-content: flex-start;
+	max-width: 100%;
+}
+
+.backstage-home-templates-row .backstage-template-card {
+	flex: 0 0 auto;
+	min-width: 124px;
+	max-width: 124px;
+	width: 124px;
+}
+
+.backstage-home-more-templates {
+	display: flex;
+	align-items: center;
+	gap: 0.5rem;
+	margin-bottom: 48px;
+	margin-left: 12px;
+	margin-right: 12px;
+}
+
+.backstage-home-divider {
+	flex: 1;
+	height: 2px;
+	background-color: var(--color-toolbar-border);
+}
+
+.backstage-home-more-button {
+	background: var(--color-background-lighter);
+	border: 1px solid var(--color-border);
+	border-radius: 4px;
+	padding: 0 8px;
+	height: 24px;
+	font-size: 12px;
+	font-weight: 600;
+	color: var(--color-primary);
+	cursor: pointer;
+	transition: all 0.2s ease;
+	white-space: nowrap;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.backstage-home-more-button:hover {
+	background-color: var(--color-background-dark);
+	border-color: var(--color-primary);
+}
+
 .backstage-templates-empty {
 	display: flex;
 	flex-direction: column;
@@ -308,13 +364,10 @@
 
 .backstage-template-card {
 	background: var(--color-background-lighter);
-	/* border: 1px solid var(--color-border); */
 	padding: 12px;
 	cursor: pointer;
-	/* border-radius: var(--border-radius-large); */
 	text-align: center;
 	transition: all 0.2s ease;
-	/* box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05); */
 	display: flex;
 	flex-direction: column;
 	align-items: center;
@@ -322,9 +375,6 @@
 	max-width: 10rem;
 }
 
-/* .backstage-template-card.is-featured {
-	min-width: 180px;
-} */
 
 .backstage-template-card:hover {
 	background-color: var(--color-background-dark);
@@ -401,10 +451,10 @@
 
 .template-search-input {
 	flex: 1;
-	padding: 10px 14px;
+	padding: 6px 12px;
 	border: 1px solid var(--color-border);
 	border-radius: var(--border-radius-large);
-	font-size: 14px;
+	font-size: 12px;
 	background: var(--color-background);
 	color: var(--color-main-text);
 }
