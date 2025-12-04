@@ -31,8 +31,8 @@ function _extractLabelText(data) {
 		return data.text;
 	}
 
-	for (var i = 0; i < data.children.length; i++) {
-		var label = _extractLabelText(data.children[i]);
+	for (let i = 0; i < data.children.length; i++) {
+		const label = _extractLabelText(data.children[i]);
 		if (label) return label;
 	}
 
