@@ -75,6 +75,48 @@ bool HostUtil::allowedWopiHost(const std::string& host)
     return WopiEnabled && WopiHosts.match(host);
 }
 
+std::string HostUtil::parseAlias(const std::string& aliasPattern)
+{
+    if (!RegexUtil::isRegexValid(aliasPattern))
+    {
+        return {};
+    }
+
+    // check if it is plain uri, then convert to a strict regex for this uri if needed
+    // Must be a full match.
+    Poco::RegularExpression re(
+        "^(https?://)?(?<hostname>([a-z0-9\\-]+)(\\.[a-z0-9\\-]+)+)(:[0-9]{1,5})?(/[a-z0-9\\-&?_]*)*$",
+        Poco::RegularExpression::RE_CASELESS);
+
+    std::vector<Poco::RegularExpression::Match> matches;
+    if (re.match(aliasPattern, 0, matches) && matches.size() > 1)
+    {
+        std::string hostname;
+        for (const auto& match : matches)
+        {
+            if (match.name == "hostname")
+            {
+                hostname = aliasPattern.substr(match.offset, match.length);
+                break;
+            }
+        }
+
+        if (hostname.empty())
+        {
+            LOG_DBG("parseAlias: error could not find hostname in: " << aliasPattern);
+            return {};
+        }
+
+        // make the hostname a regex matching itself
+        Util::replaceAllSubStr(hostname, ".", "\\.");
+
+        return hostname;
+    }
+
+    // this is a regex
+    return aliasPattern;
+}
+
 void HostUtil::parseAliases(Poco::Util::LayeredConfiguration& conf)
 {
     WopiEnabled = conf.getBool("storage.wopi[@allow]", false);
@@ -135,6 +177,8 @@ void HostUtil::parseAliases(Poco::Util::LayeredConfiguration& conf)
             LOG_WRN("parseAliases: " << exc.displayText());
         }
 
+        static bool warnedInvalidRegex = false;
+        static bool warnedAboutPipe = false;
         for (size_t j = 0;; j++)
         {
             const std::string aliasPath = path + ".alias[" + std::to_string(j) + ']';
@@ -149,33 +193,34 @@ void HostUtil::parseAliases(Poco::Util::LayeredConfiguration& conf)
                 continue;
             }
 
-            try
+            if (!warnedAboutPipe && aliasString.find('|') != std::string::npos)
             {
-                const Poco::URI aliasUri(aliasString);
-
-                for (const std::string& aliasPattern : Util::splitStringToVector(aliasUri.getHost(), '|'))
-                {
-                    if (!RegexUtil::isRegexValid(aliasPattern)) {
-                        LOG_WRN ("parseAliases: Invalid regex alias [" << aliasPattern << "] for host" << uri);
-                        continue;
-                    }
-
-                    const Poco::URI aUri(aliasUri.getScheme() + "://" + aliasPattern + ':' +
-                                         std::to_string(aliasUri.getPort()));
-                    LOG_DBG("parseAliases: Mapped URI alias [" << aUri.getAuthority() << "] to canonical URI ["
-                                                 << realUri.getAuthority() << ']');
-                    AliasHosts.emplace(aUri.getAuthority(), realUri.getAuthority());
-#if ENABLE_FEATURE_LOCK
-                    CommandControl::LockManager::mapUnlockLink(aUri.getHost(), path);
-#endif
-                    HostUtil::addWopiHost(aUri.getHost(), allow);
-                }
+                LOG_WRN(
+                    "Using | to define multiple alias is deprecated, it is recommended to use an "
+                    "<alias> element for each alias. If the | is part of a regex disregard.");
             }
-            catch (const Poco::Exception& exc)
+
+            for (std::string& aliasPattern : Util::splitStringToVector(aliasString, '|'))
             {
-                LOG_WRN("parseAliases: [" << aliasString << ']' << exc.displayText() << "for host" << uri);
+                aliasPattern = parseAlias(aliasPattern);
+                if (aliasPattern.empty())
+                {
+                    if (!warnedInvalidRegex)
+                        LOG_WRN("parseAliases: found invalid alias pattern: [" << aliasPattern << "] for uri" << uri);
+                    continue;
+                }
+                LOG_DBG("parseAliases: Mapped URI alias ["
+                        << aliasPattern << "] to canonical URI [" << realUri.getAuthority()
+                        << ']');
+                AliasHosts.emplace(aliasPattern, realUri.getAuthority());
+#if ENABLE_FEATURE_LOCK
+                CommandControl::LockManager::mapUnlockLink(aliasPattern, path);
+#endif
+                HostUtil::addWopiHost(aliasPattern, allow);
             }
         }
+        warnedInvalidRegex = true;
+        warnedAboutPipe = true;
     }
 }
 
@@ -199,7 +244,7 @@ std::string HostUtil::getNewUri(const Poco::URI& uri)
         const std::string val = RegexUtil::getValue(hostList, newUri.getHost());
         // compare incoming request's host with existing hostList , if they are not equal it is regex and we store
         // the pair in AliasHosts
-        if (val.compare(newUri.getHost()) != 0)
+        if (!val.empty() && val.compare(newUri.getHost()) != 0)
         {
             LOG_DBG("Mapped URI alias [" << val << "] to canonical URI [" << newUri.getHost()
                                          << ']');
