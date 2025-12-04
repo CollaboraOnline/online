@@ -27,7 +27,7 @@ class A11yValidator {
 			try {
 				check(type, element);
 			} catch (error) {
-				console.error(`A11y check failed for ${type}:`, error);
+				console.error(`A11yValidator exception: ${type}:`, error);
 				throw error;
 			}
 		}
