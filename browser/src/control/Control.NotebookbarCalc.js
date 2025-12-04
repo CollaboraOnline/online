@@ -96,7 +96,7 @@ window.L.Control.NotebookbarCalc = window.L.Control.NotebookbarWriter.extend({
 			},
 			{
 				'id': 'Table-tab-label',
-				'text': _('Table'),
+				'text': _('Table Design'),
 				'name': 'Table',
 				'context': 'Table',
 				'accessibility': { focusBack: true,	combination: 'T', de: null }
