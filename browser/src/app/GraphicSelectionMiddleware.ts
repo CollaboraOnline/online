@@ -14,7 +14,7 @@
 declare var JSDialog: any;
 
 class GraphicSelection {
-	public static rectangle: cool.SimpleRectangle = null;
+	public static rectangle: cool.SimpleRectangle | null = null;
 	public static extraInfo: any = null;
 	public static selectionAngle: number = 0;
 	public static handlesSection: ShapeHandlesSection = null;
