@@ -28,15 +28,6 @@ function KeyboardListNavigation(
 			moveToFocusableEntry(currentElement, 'previous');
 			event.preventDefault();
 			break;
-		case 'Tab':
-			if (event.shiftKey) {
-				moveToFocusableEntry(currentElement, 'previous');
-				event.preventDefault();
-			} else {
-				moveToFocusableEntry(currentElement, 'next');
-				event.preventDefault();
-			}
-			break;
 		default:
 			break;
 	}
@@ -52,6 +43,13 @@ function moveToFocusableEntry(
 		}
 	};
 
+	const updateAriaActiveDescendant = (elem: HTMLElement) => {
+		const listbox = elem.closest('[role="listbox"]');
+		if (listbox && elem.id) {
+			listbox.setAttribute('aria-activedescendant', elem.id);
+		}
+	};
+
 	// If the current element is focused but not selected, add 'selected' class and return
 	if (
 		document.activeElement === currentElement &&
@@ -60,6 +58,7 @@ function moveToFocusableEntry(
 	) {
 		currentElement.classList.add('selected');
 		updateAriaSelected(currentElement, 'true');
+		updateAriaActiveDescendant(currentElement);
 		return;
 	}
 
@@ -72,6 +71,7 @@ function moveToFocusableEntry(
 		(siblingElement as HTMLElement).focus();
 		siblingElement.classList.add('selected');
 		updateAriaSelected(siblingElement, 'true');
+		updateAriaActiveDescendant(siblingElement);
 
 		currentElement.classList.remove('selected');
 		updateAriaSelected(currentElement, 'false');
@@ -80,6 +80,11 @@ function moveToFocusableEntry(
 
 JSDialog.KeyboardListNavigation = function (container: HTMLElement) {
 	container.addEventListener('keydown', (event: KeyboardEvent) => {
+		const allowedKeys = ['ArrowDown', 'ArrowUp'];
+		if (!allowedKeys.includes(event.key)) {
+			return;
+		}
+
 		const activeElement = document.activeElement as HTMLElement;
 		if (!JSDialog.IsTextInputField(activeElement)) {
 			KeyboardListNavigation(event, activeElement);
