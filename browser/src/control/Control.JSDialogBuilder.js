@@ -1635,7 +1635,7 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 		if (!data.id)
 			return false;
 
-		var image = window.L.DomUtil.create('img', builder.options.cssClass + ' ui-image', parentContainer);
+		var image = window.L.DomUtil.create('img', builder.options.cssClass + ' ui-image ui-decorative-image', parentContainer);
 		image.id = data.id;
 		image.src = data.image ? data.image.replace(/\\/g, '') : '';
 		image.alt = data.text;
