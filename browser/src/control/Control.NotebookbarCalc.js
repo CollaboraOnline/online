@@ -96,7 +96,7 @@ window.L.Control.NotebookbarCalc = window.L.Control.NotebookbarWriter.extend({
 			},
 			{
 				'id': 'Table-tab-label',
-				'text': _('Table'),
+				'text': _('Table Design'),
 				'name': 'Table',
 				'context': 'Table',
 				'accessibility': { focusBack: true,	combination: 'T', de: null }
@@ -1675,7 +1675,7 @@ window.L.Control.NotebookbarCalc = window.L.Control.NotebookbarWriter.extend({
 										'id': 'chk_header_row2',
 										'type': 'checkbox',
 										'command': '.uno:DatabaseSettings',
-										'text': _('Show Header Row'),
+										'text': _('Header Row'),
 										'accessibility': { focusBack: true,	combination: 'SH', de: null }
 									}
 								]
@@ -1687,7 +1687,7 @@ window.L.Control.NotebookbarCalc = window.L.Control.NotebookbarWriter.extend({
 										'id': 'chk_total_row2',
 										'type': 'checkbox',
 										'command': '.uno:DatabaseSettings',
-										'text': _('Show Total Row'),
+										'text': _('Total Row'),
 										'accessibility': { focusBack: true,	combination: 'ST', de: null }
 									}
 								]
@@ -1762,7 +1762,7 @@ window.L.Control.NotebookbarCalc = window.L.Control.NotebookbarWriter.extend({
 								'id': 'chk_filter_buttons2',
 								'type': 'checkbox',
 								'command': '.uno:DatabaseSettings',
-								'text': _('Show Filter Buttons'),
+								'text': _('Filter Buttons'),
 								'accessibility': { focusBack: true,	combination: 'SF', de: null }
 							},
 							{
