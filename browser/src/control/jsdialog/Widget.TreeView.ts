@@ -73,6 +73,7 @@ class TreeViewControl {
 	_tbody: HTMLElement;
 	_thead: HTMLElement = null;
 	_columns: number;
+	_maxColumnsIncludingState: number = 0;
 	_hasState: boolean;
 	_hasIcon: boolean;
 	_isNavigator: boolean;
@@ -369,6 +370,9 @@ class TreeViewControl {
 		let dummyColumns = 0;
 		if (this._hasState) dummyColumns++;
 		tr.style.gridColumn = '1 / ' + (this._columns + dummyColumns + 1);
+		if (this._columns + dummyColumns + 1 > this._maxColumnsIncludingState) {
+			this._maxColumnsIncludingState = this._columns + dummyColumns + 1;
+		}
 		if (
 			this.isPageDivider(entry, this.PAGE_ENTRY_PREFIX, this.PAGE_ENTRY_SUFFIX)
 		) {
@@ -1620,6 +1624,22 @@ class TreeViewControl {
 		if (level === 1 && !hasSelectedEntry) this.makeTreeViewFocusable(true);
 	}
 
+	showSearchBar(parent: HTMLElement) {
+		const searchBox = document.createElement('input');
+		searchBox.id = JSDialog.MakeIdUnique('ui-treeview-search-input'); // Form fields should have either a name or an ID - using this instead of a class
+		searchBox.placeholder = 'Search...';
+		searchBox.addEventListener('input', () =>
+			this.filterEntries(searchBox.value),
+		);
+
+		const searchContainer = document.createElement('div');
+		searchContainer.className = 'ui-treeview-search-container';
+		searchContainer.style.gridColumn = '1 / ' + this._maxColumnsIncludingState;
+		searchContainer.appendChild(searchBox);
+
+		parent.insertAdjacentElement('afterbegin', searchContainer);
+	}
+
 	fillEntry(
 		data: TreeWidgetJSON,
 		entry: TreeEntryJSON,
@@ -1643,6 +1663,9 @@ class TreeViewControl {
 			let dummyColumns = 0;
 			if (this._hasState) dummyColumns++;
 			subGrid.style.gridColumn = '1 / ' + (this._columns + dummyColumns + 1);
+			if (this._columns + dummyColumns + 1 > this._maxColumnsIncludingState) {
+				this._maxColumnsIncludingState = this._columns + dummyColumns + 1;
+			}
 
 			this.fillEntries(data, entry.children, builder, level + 1, subGrid);
 		}
@@ -1775,6 +1798,10 @@ class TreeViewControl {
 		this.preprocessColumnData(data.entries);
 		this.fillHeaders(data.headers, builder);
 		this.fillEntries(data, data.entries, builder, 1, this._tbody);
+
+		if (this._isListbox && !data.noSearchField) {
+			this.showSearchBar(this._container);
+		}
 
 		return true;
 	}

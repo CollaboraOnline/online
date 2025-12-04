@@ -36,8 +36,10 @@ class QuickFindPanel extends SidebarBase {
 		if (
 			data.control.id === 'searchfinds' &&
 			data.control.type === 'treelistbox'
-		)
+		) {
 			e.data.control.ignoreFocus = true;
+			e.data.control.noSearchField = true;
+		}
 
 		if (!super.onJSUpdate(e)) return false;
 
@@ -73,6 +75,30 @@ class QuickFindPanel extends SidebarBase {
 		if (placeholder) placeholder.classList.toggle('hidden', !isEmpty);
 		if (quickFindControls)
 			quickFindControls.classList.toggle('hidden', isEmpty);
+	}
+
+	removeSearchFields(quickFindData: any): any {
+		if (quickFindData.children) {
+			const modifiedData = JSON.parse(JSON.stringify(quickFindData));
+
+			const _removeSearchFields = (data: any) => {
+				for (const child of data.children) {
+					if (child.type === 'treelistbox') {
+						child.noSearchField = true;
+					}
+
+					if (child.children) {
+						_removeSearchFields(child);
+					}
+				}
+			};
+
+			_removeSearchFields(modifiedData);
+
+			return modifiedData;
+		}
+
+		return quickFindData;
 	}
 
 	addPlaceholderIfEmpty(quickFindData: any): any {
@@ -114,7 +140,8 @@ class QuickFindPanel extends SidebarBase {
 
 		this.container.innerHTML = '';
 
-		const modifiedData = this.addPlaceholderIfEmpty(quickFindData);
+		let modifiedData = this.removeSearchFields(quickFindData);
+		modifiedData = this.addPlaceholderIfEmpty(modifiedData);
 
 		this.builder?.build(this.container, [modifiedData], false);
 

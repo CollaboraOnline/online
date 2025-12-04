@@ -99,6 +99,7 @@ abstract class AutoCompletePopup {
 			singleclickactivate: false,
 			fireKeyEvents: true,
 			entries: [] as Array<TreeEntryJSON>,
+			noSearchField: true,
 		} as TreeWidgetJSON;
 	}
 

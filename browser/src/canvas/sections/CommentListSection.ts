@@ -560,6 +560,7 @@ export class CommentSection extends CanvasSectionObject {
 				fireKeyEvents: true,
 				hideIfEmpty: true,
 				entries: [] as Array<TreeEntryJSON>,
+				noSearchField: true,
 			},
 			{
 				id: '',
