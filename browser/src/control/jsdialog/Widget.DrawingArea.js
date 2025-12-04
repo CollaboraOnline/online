@@ -51,7 +51,8 @@ function _drawingAreaControl (parentContainer, data, builder) {
 			window.L.control.attachTooltipEventListener(image, builder.map);
 		}
 	} else if (data.aria && data.aria.label) {
-		image.setAttribute('aria-label', data.aria.label);
+		container.setAttribute('aria-label', data.aria.label);
+		image.alt = '';
 	}
 
 	// Line width dialog is affected from delay on image render.

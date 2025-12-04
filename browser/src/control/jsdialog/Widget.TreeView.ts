@@ -477,7 +477,11 @@ class TreeViewControl {
 		index: any,
 		builder: JSBuilder,
 	) {
-		const icon = window.L.DomUtil.create('img', 'ui-treeview-icon', parent);
+		const icon = window.L.DomUtil.create(
+			'img',
+			'ui-treeview-icon ui-decorative-image',
+			parent,
+		);
 
 		if (this._isNavigator) icon.draggable = false;
 
