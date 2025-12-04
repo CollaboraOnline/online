@@ -81,6 +81,7 @@ class ShapeHandleRotationSubSection extends CanvasSectionObject {
 		draggedToPoint.pX += this.position[0];
 		draggedToPoint.pY += this.position[1];
 
+		Util.ensureValue(GraphicSelection.rectangle);
 		const selectionCenter = new cool.SimplePoint(GraphicSelection.rectangle.center[0], GraphicSelection.rectangle.center[1]);
 
 		const initialPoint = this.sectionProperties.ownInfo.initialPosition;
@@ -93,6 +94,7 @@ class ShapeHandleRotationSubSection extends CanvasSectionObject {
 	onMouseUp(point: cool.SimplePoint, e: MouseEvent): void {
 		if (this.containerObject.isDraggingSomething()) {
 			if (this.sectionProperties.lastDraggingDistance) {
+				Util.ensureValue(GraphicSelection.rectangle);
 				const center = GraphicSelection.rectangle.center;
 
 				const commandParameters = {

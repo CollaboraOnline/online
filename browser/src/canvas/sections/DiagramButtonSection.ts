@@ -35,6 +35,7 @@ class DiagramButtonSection extends GenericButtonSection {
 	}
 
 	calculatePositionPixel(): Array<number> {
+		Util.ensureValue(GraphicSelection.rectangle);
 		// calculate & return top-left position
 		return [
 			Math.round(
