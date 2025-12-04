@@ -113,6 +113,7 @@ declare const app: {
 	LOUtil: typeof LOUtil;
 	socket: SocketBase;
 	setPermission: (permission: string) => void;
+	util: typeof Util;
 	[key: string]: any; // other properties as needed
 };
 
