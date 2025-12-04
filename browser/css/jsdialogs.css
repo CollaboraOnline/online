@@ -3022,6 +3022,5 @@ div [id^='themeview'].ui-iconview-entry, div [id^='themeview1col'].ui-iconview-e
 }
 
 #imSetInsMode {
-  content: url('images/queryinsmode.svg');
+	content: url('images/queryinsmode.svg');
 }
-
