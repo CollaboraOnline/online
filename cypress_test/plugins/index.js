@@ -19,17 +19,21 @@ function plugin(on, config) {
 		config.video = true;
 	}
 
-	if (process.env.ENABLE_CONSOLE_LOG) {
-		require('cypress-log-to-output').install(on, function(type, event) {
-			if (event.level === 'error' || event.type === 'error') {
-				return true;
-			}
-
-			return false;
-		});
-	}
-
 	on('before:browser:launch', function(browser, launchOptions) {
+
+		if (process.env.ENABLE_CONSOLE_LOG) {
+			const logToOutput = require('cypress-log-to-output')
+
+			logToOutput.install(on, function(type, event) {
+				if (event.level === 'error' || event.type === 'error') {
+					return true;
+				}
+				return false;
+			});
+
+			launchOptions = logToOutput.browserLaunchHandler(browser, launchOptions);
+		}
+
 		if (browser.family === 'chromium') {
 			if (process.env.ENABLE_LOGGING) {
 				launchOptions.args.push('--enable-logging=stderr');
