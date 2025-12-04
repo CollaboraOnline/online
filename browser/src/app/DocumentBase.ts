@@ -16,6 +16,7 @@ class DocumentBase {
 	public tableMiddleware: TableMiddleware;
 	public selectionMiddleware: ImpressSelectionMiddleware | null;
 	public mouseControl: MouseControl | null = null;
+	protected views: Map<number, DocumentViewBase> = new Map<number, DocumentViewBase>();
 
 	protected _fileSize: cool.SimplePoint;
 
@@ -48,5 +49,21 @@ class DocumentBase {
 
 	public set fileSize(value: cool.SimplePoint) {
 		this._fileSize = value;
+	}
+
+	public removeView(viewID: number) {
+		if (this.views.has(viewID)) {
+			app.sectionContainer.removeSection((this.views.get(viewID) as DocumentViewBase).selectionSection.name);
+			this.views.delete(viewID);
+		}
+	}
+
+	// This shouldn't create views if not found. But it will happen when we use only this class for views.
+	public getView(viewID: number): DocumentViewBase {
+		if (this.views.has(viewID)) return this.views.get(viewID) as DocumentViewBase;
+		else {
+			this.views.set(viewID, new DocumentViewBase(viewID));
+			return this.views.get(viewID) as DocumentViewBase;
+		}
 	}
 }

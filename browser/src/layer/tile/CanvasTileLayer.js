@@ -583,9 +583,6 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 
 		// Position and size of the selection start (as if there would be a cursor caret there).
 
-		// View selection of other views
-		this._viewSelections = {};
-
 		this._lastValidPart = -1;
 		// Cursor marker
 		this._cursorMarker = null;
@@ -1041,7 +1038,6 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 			TileManager.update();
 			app.definitions.otherViewGraphicSelectionSection.updateVisibilities();
 			TextCursorSection.updateVisibilities();
-			this.updateAllTextViewSelection();
 		}
 		else if (textMsg.startsWith('partstatus:')) {
 			this._onStatusMsg(textMsg);
@@ -2086,13 +2082,7 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 
 	_removeView: function(viewId) {
 		// Remove selection, if any.
-		if (this._viewSelections[viewId]) {
-			if (this._viewSelections[viewId].selection) {
-				this._viewSelections[viewId].selection.remove();
-				this._viewSelections[viewId].selection = undefined;
-			}
-			delete this._viewSelections[viewId];
-		}
+		app.activeDocument.removeView(viewId);
 
 		TextCursorSection.removeView(viewId);
 
@@ -2376,39 +2366,26 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 	},
 
 	_onTextViewSelectionMsg: function (textMsg) {
-		var obj = JSON.parse(textMsg.substring('textviewselection:'.length + 1));
-		var viewId = parseInt(obj.viewId);
-		var viewPart = parseInt(obj.part);
-		var viewMode = (obj.mode !== undefined) ? parseInt(obj.mode) : 0;
+		const obj = JSON.parse(textMsg.substring('textviewselection:'.length + 1));
+		const viewId = parseInt(obj.viewId);
+		const viewMode = (obj.mode !== undefined) ? parseInt(obj.mode) : 0;
 
 		// Ignore if viewid is same as ours or not in our db
-		if (viewId === this._viewId || !this._map._viewInfo[viewId]) {
+		if (viewId === this._viewId || !this._map._viewInfo[viewId])
 			return;
-		}
 
-		var rectArray = this._getTextSelectionRectangles(obj.selection);
-		this._viewSelections[viewId] = this._viewSelections[viewId] || {};
+		// Get raw rectangles.
+		let twipsRectangles = obj.selection.trim() !== '' ? obj.selection.split(';') : [];
 
-		if (rectArray.length) {
-
-			var rectangles = rectArray.map(function (rect) {
-				return rect.getPointArray();
+		if (twipsRectangles.length > 0) {
+			// Turn the rectangles' comma seperated string values into integer arrays.
+			twipsRectangles = twipsRectangles.map((element) => {
+				const temp = element.split(',');
+				return [parseInt(temp[0]), parseInt(temp[1]), parseInt(temp[2]), parseInt(temp[3])];
 			});
-
-			this._viewSelections[viewId].part = viewPart;
-			this._viewSelections[viewId].mode = viewMode;
-			var docLayer = this;
-			this._viewSelections[viewId].pointSet = CPolyUtil.rectanglesToPointSet(rectangles,
-				function (twipsPoint) {
-					var corePxPt = docLayer._twipsToCorePixels(twipsPoint);
-					corePxPt.round();
-					return corePxPt;
-				});
-		} else {
-			this._viewSelections[viewId].pointSet = new CPointSet();
 		}
 
-		this._onUpdateTextViewSelection(viewId);
+		app.activeDocument.getView(viewId).updateSelectionRawData(viewMode, parseInt(obj.part), twipsRectangles);
 
 		this._saveMessageForReplay(textMsg, viewId);
 	},
@@ -3148,10 +3125,6 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 		}
 	},
 
-	updateAllTextViewSelection: function() {
-		this.eachView(this._viewSelections, this._onUpdateTextViewSelection, this, false);
-	},
-
 	goToViewCursor: function(viewId) {
 		if (viewId === this._viewId) {
 			this._onUpdateCursor();
@@ -3166,34 +3139,6 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 			if (!isNewCursorVisible)
 				this.scrollToPos(point);
 			app.definitions.cursorHeaderSection.showCursorHeader(viewId);
-		}
-	},
-
-	_onUpdateTextViewSelection: function (viewId) {
-		viewId = parseInt(viewId);
-		var viewPointSet = this._viewSelections[viewId].pointSet;
-		var viewSelection = this._viewSelections[viewId].selection;
-		var viewPart = this._viewSelections[viewId].part;
-		var viewMode = this._viewSelections[viewId].mode ? this._viewSelections[viewId].mode : 0;
-
-		if (viewPointSet &&
-		    (this.isWriter() || (this._selectedPart === viewPart && this._selectedMode === viewMode))) {
-
-			if (viewSelection) {
-				if (!this._map.hasInfoForView(viewId)) {
-					viewSelection.clear();
-					return;
-				}
-				// change previous selections
-				viewSelection.setPointSet(viewPointSet);
-			} else {
-				viewSelection = new CSelections(viewPointSet, this._canvasOverlay,
-					this._selectionsDataDiv, this._map, true /* isView */, viewId, true /* isText */);
-				this._viewSelections[viewId].selection = viewSelection;
-			}
-		}
-		else if (viewSelection) {
-			viewSelection.clear();
 		}
 	},
 
