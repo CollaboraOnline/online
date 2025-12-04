@@ -13,9 +13,9 @@ class TraceEvents {
 	private recordingToggle: boolean;
 	private asyncCounter: number;
 	private asyncPseudoThread: number;
-	private socket: SocketBase;
+	private socket: Socket;
 
-	constructor(socket: SocketBase) {
+	constructor(socket: Socket) {
 		this.socket = socket;
 		this.recordingToggle = false;
 		this.asyncCounter = 0;

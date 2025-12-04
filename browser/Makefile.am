@@ -289,7 +289,6 @@ COOL_JS_LST =\
 	src/core/Util.js \
 	src/core/Class.js \
 	src/core/Events.js \
-	src/core/Socket.js \
 	src/geometry/Point.ts \
 	src/geometry/Bounds.ts \
 	src/geometry/Transformation.ts \
@@ -1172,7 +1171,6 @@ pot:
 		src/app/SocketBase.ts \
 		src/app/TracingEvents.ts \
 		src/app/ServerCommand.ts \
-		src/core/Socket.js \
 		src/docdispatcher.ts \
 		src/docstate.ts \
 		src/docstatefunctions.js \
