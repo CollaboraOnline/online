@@ -291,7 +291,8 @@ function findFirstToolitem(
 		if (
 			item.type.indexOf('toolitem') >= 0 ||
 			item.type.indexOf('colorlistbox') >= 0 ||
-			item.type.indexOf('menubutton') >= 0
+			item.type.indexOf('menubutton') >= 0 ||
+			item.type.indexOf('checkbox') >= 0
 		)
 			return item;
 		else if (item.children && item.children.length) {
