@@ -94,7 +94,7 @@ std::string formatUnoCommandInfo(const std::string_view unoCommand)
     unoCommandInfo.append(" : ");
     unoCommandInfo.append(Util::eliminatePrefix(unoCommand,".uno:"));
     unoCommandInfo.append(" - ");
-    unoCommandInfo.append(std::move(recorded_time));
+    unoCommandInfo.append(recorded_time);
 
     return unoCommandInfo;
 }

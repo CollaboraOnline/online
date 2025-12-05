@@ -91,14 +91,15 @@ void UnitPerf::invokeWSDTest()
 {
     TST_LOG("startup: " << _timer->elapsedTime().count() << "us\n");
     _timer->restart();
-
-    testPerf("writer", "odt", "/../traces/perf-writer.txt");
-
-    testPerf("calc", "ods", "/../traces/perf-calc.txt");
-
-    testPerf("impress", "odp", "/../traces/perf-impress.txt");
-
-    testPerf("draw", "odg", "/../traces/perf-draw.txt");
+    std::string opt;
+    opt  = "writer";
+    testPerf( opt, "odt", "/../traces/perf-writer.txt");
+    opt = "calc";
+    testPerf( opt, "ods", "/../traces/perf-calc.txt");
+    opt = "impress";
+    testPerf(opt, "odp", "/../traces/perf-impress.txt");
+    opt = "draw";
+    testPerf( opt, "odg", "/../traces/perf-draw.txt");
 
     long cpuTime = _timer->elapsedTime().count();
 
