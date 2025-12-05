@@ -11,4 +11,13 @@
     <string name="use_text">Kasuta tekstivormingut</string>
     <string name="use_odf">Kasuta ODF-vormingut</string>
     <string name="ask_for_convert_odf">Kinnita failivorming</string>
+    <string name="failed_to_load_file">Ei õnnestunud tuvastada faili, mida peaks laadima</string>
+    <string name="failed_to_insert_image">Pildi lisamine ei õnnestunud</string>
+    <string name="cannot_open_file_chooser">Failivalija avamine ei õnnestunud</string>
+    <string name="rate_now">Arvusta kohe</string>
+    <string name="preparing_for_the_first_start_after_an_update">Valmistan ette esimest uuendusejärgset käivitust.</string>
+    <string name="later">Hiljem</string>
+    <string name="rate_our_app_title">Tänud, et kasutad rakendust %1$s!</string>
+    <string name="rate_our_app_text">Kui ta sulle meeldib, siis hinda meid Google Play teenuses 5 tärniga. Sinu hea arvustus on meile parimaks motivaatoriks.</string>
+    <string name="storage_permission_required">Vajalik on andmeruumi kasutamise õigus</string>
 </resources>
