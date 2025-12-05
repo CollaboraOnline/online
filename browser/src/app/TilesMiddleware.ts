@@ -1264,6 +1264,18 @@ class TileManager {
 				tileWids,
 				added.size,
 			);
+
+			// When Writer requests mode=2, also request mode=1.
+			if (app.map._docLayer.isWriter() && mode === 2) {
+				this.sendTileCombineMessage(
+					part,
+					/*mode=*/ 1,
+					tilePositionsX,
+					tilePositionsY,
+					tileWids,
+					added.size,
+				);
+			}
 		}
 	}
 
