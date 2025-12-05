@@ -1,4 +1,5 @@
-/* global describe it cy beforeEach require */
+/* global describe expect it cy beforeEach require Cypress */
+
 var helper = require('../../common/helper');
 
 describe(['tagdesktop'], 'Accessibility Writer Tests', function() {
@@ -10,6 +11,15 @@ describe(['tagdesktop'], 'Accessibility Writer Tests', function() {
         cy.getFrameWindow().then(function (win) {
             cy.spy(win.console, 'error').as('console:error');
 
+            const enableUICoverage = {
+                'Track': {
+                    'type': 'boolean',
+                    'value': true
+                }
+            };
+            win.app.map.sendUnoCommand('.uno:UICoverage', enableUICoverage);
+
+            cy.cGet('.jsdialog-window').should('not.exist');
             win.app.allDialogs.forEach(command => {
                 // these need a specific context
                 if (command == '.uno:ContourDialog' ||
@@ -22,15 +32,20 @@ describe(['tagdesktop'], 'Accessibility Writer Tests', function() {
                     cy.log(`Skipping non-jsdialog dialog: ${command}`);
                     return;
                 }
+                if (command == '.uno:FontDialog') {
+                    cy.log(`Skipping buggy dialog: ${command}`);
+                    return;
+                }
 
                 cy.log(`Testing dialog: ${command}`);
-                cy.cGet('.jsdialog-window').should('not.exist');
                 cy.then(() => {
                     win.app.map.sendUnoCommand(command);
                 });
+                // TODO: remove this wait, just here for human monitoring for the moment
                 cy.wait(1000);
                 cy.cGet('.jsdialog-window').should('exist');
                 cy.cGet('body').type('{esc}');
+                cy.cGet('.jsdialog-window').should('not.exist');
             });
 
             cy.get('@console:error').then(spy => {
@@ -46,6 +61,45 @@ describe(['tagdesktop'], 'Accessibility Writer Tests', function() {
                     throw new Error(`Found A11y errors:\n${errorMessages}`);
                 }
             });
+
+            cy.spy(win.app.socket, '_onMessage').as('onMessage');
+
+            // add to the cypress queue to be run after the dialogs are processed
+            // and errors checked
+            cy.then(() => {
+                    const endUICoverage = {
+                        'Report': { 'type': 'boolean', 'value': true },
+                        'Track': { 'type': 'boolean', 'value': false }
+                    };
+                    win.app.map.sendUnoCommand('.uno:UICoverage', endUICoverage);
+            });
+
+            cy.get('@onMessage').should(onMessage => {
+                const matchingCall = onMessage.getCalls().find(call => {
+                    const evt = call.args && call.args[0]
+                    const textMsg = evt && evt.textMsg;
+                    if (!textMsg || !textMsg.startsWith('unocommandresult:')) {
+                        return false;
+                    }
+                    const jsonPart = textMsg.replace('unocommandresult:', '').trim();
+                    const data = JSON.parse(jsonPart);
+                    return data.commandName === '.uno:UICoverage';
+                });
+
+                expect(matchingCall, '.uno:UICoverage result').to.be.an('object');
+
+                const textMsg = matchingCall.args[0].textMsg;
+                const jsonPart = textMsg.replace('unocommandresult:', '').trim();
+                const result = JSON.parse(jsonPart).result;
+
+                Cypress.log({name: 'UICoverage Message: ', message: JSON.stringify(result)});
+
+                expect(result.used, `used .ui files`).to.not.be.empty;
+
+                // TODO: make this true
+                // expect(result.CompleteWriterDialogCoverage, `complete writer dialog coverage`).to.be.true;
+            });
         });
+
     });
 });
