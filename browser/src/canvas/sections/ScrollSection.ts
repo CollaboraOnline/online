@@ -128,12 +128,12 @@ export class ScrollSection extends CanvasSectionObject {
 			return;
 		}
 		// Triggered by the document (e.g. search result out of the viewing area).
-		app.activeDocument.activeView.scrollTo(e.x, e.y);
+		app.activeDocument.activeLayout.scrollTo(e.x, e.y);
 	}
 
 	// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 	public onScrollBy (e: any): void {
-		app.activeDocument.activeView.scroll(e.x, e.y);
+		app.activeDocument.activeLayout.scroll(e.x, e.y);
 	}
 
 	public cancelAutoScroll(): void {
@@ -185,7 +185,7 @@ export class ScrollSection extends CanvasSectionObject {
 	}
 
 	private DrawVerticalScrollBarMobile(): void {
-		const scrollProps: ScrollProperties = (app.activeDocument as DocumentBase).activeView.scrollProperties;
+		const scrollProps: ScrollProperties = (app.activeDocument as DocumentBase).activeLayout.scrollProperties;
 
 		this.context.globalAlpha = this.sectionProperties.clickScrollVertical ? this.sectionProperties.alphaWhenBeingUsed: this.sectionProperties.alphaWhenVisible;
 
@@ -234,7 +234,7 @@ export class ScrollSection extends CanvasSectionObject {
 	}
 
 	private drawVerticalScrollBar(): void {
-		const scrollProps: ScrollProperties = (app.activeDocument as DocumentBase).activeView.scrollProperties;
+		const scrollProps: ScrollProperties = (app.activeDocument as DocumentBase).activeLayout.scrollProperties;
 		const isDarkBackground = this.map.uiManager.isBackgroundDark();
 		const docType = app.map._docLayer._docType;
 
@@ -279,7 +279,7 @@ export class ScrollSection extends CanvasSectionObject {
 	}
 
 	private drawHorizontalScrollBar(): void {
-		const scrollProps: ScrollProperties = (app.activeDocument as DocumentBase).activeView.scrollProperties;
+		const scrollProps: ScrollProperties = (app.activeDocument as DocumentBase).activeLayout.scrollProperties;
 
 		var startY = this.size[1] - this.sectionProperties.scrollBarThickness - scrollProps.edgeOffset;
 
@@ -331,7 +331,7 @@ export class ScrollSection extends CanvasSectionObject {
 	}
 
 	private doMove() {
-		const scrollProps: ScrollProperties = (app.activeDocument as DocumentBase).activeView.scrollProperties;
+		const scrollProps: ScrollProperties = (app.activeDocument as DocumentBase).activeLayout.scrollProperties;
 
 		app.layoutingService.appendLayoutingTask(() => {
 			this.map.panBy(new cool.Point(scrollProps.moveBy[0] / app.dpiScale, scrollProps.moveBy[1] / app.dpiScale));
@@ -341,15 +341,15 @@ export class ScrollSection extends CanvasSectionObject {
 			if (app && app.file.fileBasedView === true)
 				app.map._docLayer._checkSelectedPart();
 
-			app.activeDocument.activeView.refreshScrollProperties();
+			app.activeDocument.activeLayout.refreshScrollProperties();
 		});
 	}
 
 	public onDraw(frameCount: number, elapsedTime: number): void {
-		if (app.activeDocument.activeView.scrollProperties.moveBy !== null)
+		if (app.activeDocument.activeLayout.scrollProperties.moveBy !== null)
 			this.doMove();
 		else
-			app.activeDocument.activeView.refreshScrollProperties();
+			app.activeDocument.activeLayout.refreshScrollProperties();
 
 		if (this.isAnimating && frameCount >= 0)
 			this.calculateCurrentAlpha(elapsedTime);
@@ -498,7 +498,7 @@ export class ScrollSection extends CanvasSectionObject {
 	}
 
 	private isMouseOnScrollBar (point: cool.SimplePoint): void {
-		const scrollProps: ScrollProperties = (app.activeDocument as DocumentBase).activeView.scrollProperties;
+		const scrollProps: ScrollProperties = (app.activeDocument as DocumentBase).activeLayout.scrollProperties;
 		const documentAnchor: CanvasSectionObject = app.sectionContainer.getSectionWithName(app.CSections.Tiles.name);
 
 		const mirrorX = this.isRTL();
@@ -509,7 +509,7 @@ export class ScrollSection extends CanvasSectionObject {
 
 		this.sectionProperties.mouseIsOnHorizontalScrollBar = temp;
 
-		if (app.activeDocument.activeView.canScrollHorizontal(documentAnchor)) {
+		if (app.activeDocument.activeLayout.canScrollHorizontal(documentAnchor)) {
 			if ((<any>window).mode.isDesktop() || this.sectionProperties.mouseIsOnHorizontalScrollBar)
 				this.showHorizontalScrollBar();
 			else
@@ -521,7 +521,7 @@ export class ScrollSection extends CanvasSectionObject {
 		temp = temp && (!mirrorX && point.pX >= this.size[0] - scrollProps.usableThickness) || (mirrorX && point.pX <= scrollProps.usableThickness);
 		this.sectionProperties.mouseIsOnVerticalScrollBar = temp;
 
-		if (app.activeDocument.activeView.canScrollVertical(documentAnchor)) {
+		if (app.activeDocument.activeLayout.canScrollVertical(documentAnchor)) {
 			if ((<any>window).mode.isDesktop() || this.sectionProperties.mouseIsOnVerticalScrollBar)
 				this.showVerticalScrollBar();
 			else
@@ -540,10 +540,10 @@ export class ScrollSection extends CanvasSectionObject {
 	}
 
 	public scrollVerticalWithOffset (offset: number): boolean {
-		if (!app.activeDocument.activeView.canScrollVertical(app.sectionContainer.getSectionWithName(app.CSections.Tiles.name)))
+		if (!app.activeDocument.activeLayout.canScrollVertical(app.sectionContainer.getSectionWithName(app.CSections.Tiles.name)))
 			return;
 
-		app.activeDocument.activeView.scroll(0, offset);
+		app.activeDocument.activeLayout.scroll(0, offset);
 
 		if (app.file.fileBasedView) this.map._docLayer._checkSelectedPart();
 
@@ -551,10 +551,10 @@ export class ScrollSection extends CanvasSectionObject {
 	}
 
 	public scrollHorizontalWithOffset (offset: number): boolean {
-		if (!app.activeDocument.activeView.canScrollHorizontal(app.sectionContainer.getSectionWithName(app.CSections.Tiles.name)))
+		if (!app.activeDocument.activeLayout.canScrollHorizontal(app.sectionContainer.getSectionWithName(app.CSections.Tiles.name)))
 			return;
 
-		app.activeDocument.activeView.scroll(offset,0 );
+		app.activeDocument.activeLayout.scroll(offset,0 );
 
 		return true;
 	}
@@ -632,7 +632,7 @@ export class ScrollSection extends CanvasSectionObject {
 	}
 
 	public onMouseMove (position: cool.SimplePoint, dragDistance: Array<number>, e: MouseEvent): void {
-		const scrollProps: ScrollProperties = (app.activeDocument as DocumentBase).activeView.scrollProperties;
+		const scrollProps: ScrollProperties = (app.activeDocument as DocumentBase).activeLayout.scrollProperties;
 
 		this.clearQuickScrollTimeout();
 
@@ -685,7 +685,7 @@ export class ScrollSection extends CanvasSectionObject {
 			return;
 
 		window.L.DomUtil.addClass(document.documentElement, 'prevent-select');
-		const scrollProps: ScrollProperties = app.activeDocument.activeView.scrollProperties;
+		const scrollProps: ScrollProperties = app.activeDocument.activeLayout.scrollProperties;
 
 		if (this.stepByStepScrolling) {
 			var sign = (point.pY - (scrollProps.startY + scrollProps.verticalScrollSize)) > 0
@@ -717,7 +717,7 @@ export class ScrollSection extends CanvasSectionObject {
 			return;
 
 		window.L.DomUtil.addClass(document.documentElement, 'prevent-select');
-		const scrollProps: ScrollProperties = app.activeDocument.activeView.scrollProperties;
+		const scrollProps: ScrollProperties = app.activeDocument.activeLayout.scrollProperties;
 		const sizeX = scrollProps.horizontalScrollSize - this.sectionProperties.scrollBarThickness;
 		const docWidth: number = this.map.getPixelBoundsCore().getSize().x;
 		const startX = this.isRTL() ? docWidth - scrollProps.startX - sizeX : scrollProps.startX;
@@ -743,11 +743,11 @@ export class ScrollSection extends CanvasSectionObject {
 	}
 
 	private getLocalYOnVerticalScrollBar (point: cool.SimplePoint): number {
-		return point.pY - app.activeDocument.activeView.scrollProperties.startY;
+		return point.pY - app.activeDocument.activeLayout.scrollProperties.startY;
 	}
 
 	private getLocalXOnHorizontalScrollBar (point: cool.SimplePoint): number {
-		return point.pX - app.activeDocument.activeView.scrollProperties.startX;
+		return point.pX - app.activeDocument.activeLayout.scrollProperties.startX;
 	}
 
 	private clearQuickScrollTimeout() {
@@ -762,7 +762,7 @@ export class ScrollSection extends CanvasSectionObject {
 	}
 
 	public onMouseDown (point: cool.SimplePoint, e: MouseEvent): void {
-		const scrollProps: ScrollProperties = (app.activeDocument as DocumentBase).activeView.scrollProperties;
+		const scrollProps: ScrollProperties = (app.activeDocument as DocumentBase).activeLayout.scrollProperties;
 
 		this.clearQuickScrollTimeout();
 		this.onMouseMove(point, null, e);
@@ -770,7 +770,7 @@ export class ScrollSection extends CanvasSectionObject {
 
 		const mirrorX = this.isRTL();
 
-		if (app.activeDocument.activeView.viewedRectangle.pY1 >= 0) {
+		if (app.activeDocument.activeLayout.viewedRectangle.pY1 >= 0) {
 			if ((!mirrorX && point.pX >= this.size[0] - scrollProps.usableThickness)
 				|| (mirrorX && point.pY <= scrollProps.usableThickness)) {
 				if (point.pY > scrollProps.yOffset) {
@@ -790,7 +790,7 @@ export class ScrollSection extends CanvasSectionObject {
 			}
 		}
 
-		if (app.activeDocument.activeView.viewedRectangle.pX1 >= 0) {
+		if (app.activeDocument.activeLayout.viewedRectangle.pX1 >= 0) {
 			if (point.pY >= this.size[1] - scrollProps.usableThickness) {
 				if ((!mirrorX && point.pX >= scrollProps.xOffset && point.pX <= this.size[0] - scrollProps.horizontalScrollRightOffset)
 					|| (mirrorX && point.pX >= scrollProps.xOffset && point.pX >= scrollProps.horizontalScrollRightOffset)) {

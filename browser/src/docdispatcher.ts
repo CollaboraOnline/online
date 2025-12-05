@@ -689,12 +689,12 @@ class Dispatcher {
 		};
 
 		this.actionsMap['multipageview'] = function () {
-			if (app.activeDocument && app.activeDocument.activeView) {
+			if (app.activeDocument && app.activeDocument.activeLayout) {
 				let commandState = false;
-				if (app.activeDocument.activeView.type === 'ViewLayoutMultiPage') {
-					app.activeDocument.activeView = new ViewLayoutWriter();
+				if (app.activeDocument.activeLayout.type === 'ViewLayoutMultiPage') {
+					app.activeDocument.activeLayout = new ViewLayoutWriter();
 				} else {
-					app.activeDocument.activeView = new ViewLayoutMultiPage();
+					app.activeDocument.activeLayout = new ViewLayoutMultiPage();
 					commandState = true;
 				}
 
@@ -702,7 +702,7 @@ class Dispatcher {
 					commandName: 'multipageview',
 					state: commandState ? 'true' : 'false',
 				});
-				app.activeDocument.activeView.sendClientVisibleArea();
+				app.activeDocument.activeLayout.sendClientVisibleArea();
 				app.sectionContainer.requestReDraw();
 			}
 		};

@@ -180,7 +180,7 @@ export class SplitPanesContext {
 	// This function returns the viewed parts' coordinates as simple rectangles.
 	public getViewRectangles(): cool.SimpleRectangle[] {
 		const viewRectangles: cool.SimpleRectangle[] = new Array<cool.SimpleRectangle>();
-		viewRectangles.push(app.activeDocument.activeView.viewedRectangle.clone()); // If view is not splitted, this will be the only view rectangle.
+		viewRectangles.push(app.activeDocument.activeLayout.viewedRectangle.clone()); // If view is not splitted, this will be the only view rectangle.
 
 		/*
 			|----------------------------|
@@ -198,9 +198,9 @@ export class SplitPanesContext {
 			viewRectangles[0].pX1 = 0;
 			viewRectangles[0].pX2 = this._splitPos.x;
 
-			const topRightPane: cool.SimpleRectangle = app.activeDocument.activeView.viewedRectangle.clone();
-			const width = app.activeDocument.activeView.viewedRectangle.pWidth - viewRectangles[0].pWidth;
-			topRightPane.pX1 = app.activeDocument.activeView.viewedRectangle.pX2 - width;
+			const topRightPane: cool.SimpleRectangle = app.activeDocument.activeLayout.viewedRectangle.clone();
+			const width = app.activeDocument.activeLayout.viewedRectangle.pWidth - viewRectangles[0].pWidth;
+			topRightPane.pX1 = app.activeDocument.activeLayout.viewedRectangle.pX2 - width;
 			topRightPane.pWidth = width;
 			viewRectangles.push(topRightPane);
 		}
@@ -210,9 +210,9 @@ export class SplitPanesContext {
 			viewRectangles[0].pY1 = 0;
 			viewRectangles[0].pY2 = this._splitPos.y;
 
-			const bottomLeftPane = app.activeDocument.activeView.viewedRectangle.clone();
-			const height = app.activeDocument.activeView.viewedRectangle.pHeight - viewRectangles[0].pHeight;
-			bottomLeftPane.pY1 = app.activeDocument.activeView.viewedRectangle.pY2 - height;
+			const bottomLeftPane = app.activeDocument.activeLayout.viewedRectangle.clone();
+			const height = app.activeDocument.activeLayout.viewedRectangle.pHeight - viewRectangles[0].pHeight;
+			bottomLeftPane.pY1 = app.activeDocument.activeLayout.viewedRectangle.pY2 - height;
 			bottomLeftPane.pHeight = height;
 			viewRectangles.push(bottomLeftPane);
 		}
@@ -225,12 +225,12 @@ export class SplitPanesContext {
 			viewRectangles[2].pX1 = 0;
 			viewRectangles[2].pX2 = this._splitPos.x;
 
-			const bottomRightPane = app.activeDocument.activeView.viewedRectangle.clone();
-			const width = app.activeDocument.activeView.viewedRectangle.pWidth - viewRectangles[0].pWidth;
-			const height = app.activeDocument.activeView.viewedRectangle.pHeight - viewRectangles[0].pHeight;
-			bottomRightPane.pX1 = app.activeDocument.activeView.viewedRectangle.pX2 - width;
+			const bottomRightPane = app.activeDocument.activeLayout.viewedRectangle.clone();
+			const width = app.activeDocument.activeLayout.viewedRectangle.pWidth - viewRectangles[0].pWidth;
+			const height = app.activeDocument.activeLayout.viewedRectangle.pHeight - viewRectangles[0].pHeight;
+			bottomRightPane.pX1 = app.activeDocument.activeLayout.viewedRectangle.pX2 - width;
 			bottomRightPane.pWidth = width;
-			bottomRightPane.pY1 = app.activeDocument.activeView.viewedRectangle.pY2 - height;
+			bottomRightPane.pY1 = app.activeDocument.activeLayout.viewedRectangle.pY2 - height;
 			bottomRightPane.pHeight = height;
 
 			viewRectangles.push(bottomRightPane);

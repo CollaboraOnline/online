@@ -113,7 +113,7 @@ window.L.WriterTileLayer = window.L.CanvasTileLayer.extend({
 
 		if (sizeChanged) {
 			app.activeDocument.fileSize = new cool.SimplePoint(statusJSON.width, statusJSON.height);
-			app.activeDocument.activeView.viewSize = app.activeDocument.fileSize.clone();
+			app.activeDocument.activeLayout.viewSize = app.activeDocument.fileSize.clone();
 
 			this._docType = statusJSON.type;
 			this._updateMaxBounds(true);

@@ -104,11 +104,11 @@ class TextSelections {
 		if (app.map._docLayer.isCalcRTL()) {
 			// Mirror position from right to left.
 			startPos.x =
-				app.activeDocument.activeView.viewedRectangle.pX2 -
-				(startPos.x - app.activeDocument.activeView.viewedRectangle.pX1);
+				app.activeDocument.activeLayout.viewedRectangle.pX2 -
+				(startPos.x - app.activeDocument.activeLayout.viewedRectangle.pX1);
 			endPos.x =
-				app.activeDocument.activeView.viewedRectangle.pX2 -
-				(endPos.x - app.activeDocument.activeView.viewedRectangle.pX1);
+				app.activeDocument.activeLayout.viewedRectangle.pX2 -
+				(endPos.x - app.activeDocument.activeLayout.viewedRectangle.pX1);
 		}
 
 		const oldStart = this.start.getPosition();

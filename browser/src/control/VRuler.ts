@@ -421,7 +421,7 @@ class VRuler extends Ruler {
 				(this._map._docLayer._docPixelSize.y / this._map._docLayer._pages);
 
 		const rulerOffset: number =
-			-app.activeDocument.activeView.viewedRectangle.cY1 +
+			-app.activeDocument.activeLayout.viewedRectangle.cY1 +
 			this.options.tileMargin * app.getScale() +
 			pageoffset;
 

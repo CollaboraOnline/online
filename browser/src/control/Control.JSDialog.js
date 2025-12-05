@@ -677,12 +677,12 @@ window.L.Control.JSDialog = window.L.Control.extend({
 		const documentAnchor = app.sectionContainer.getDocumentAnchor();
 
 		if (!app.isXOrdinateInFrozenPane(cellRectangle.pX1))
-			cellRectangle.pX1 += documentAnchor[0] - app.activeDocument.activeView.viewedRectangle.pX1;
+			cellRectangle.pX1 += documentAnchor[0] - app.activeDocument.activeLayout.viewedRectangle.pX1;
 		else
 			cellRectangle.pX1 += documentAnchor[0];
 
 		if (!app.isYOrdinateInFrozenPane(cellRectangle.pY1))
-			cellRectangle.pY1 += documentAnchor[1] - app.activeDocument.activeView.viewedRectangle.pY1;
+			cellRectangle.pY1 += documentAnchor[1] - app.activeDocument.activeLayout.viewedRectangle.pY1;
 		else
 			cellRectangle.pY1 += documentAnchor[1];
 
