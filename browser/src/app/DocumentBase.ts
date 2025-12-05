@@ -17,10 +17,15 @@ class DocumentBase {
 	public selectionMiddleware: ImpressSelectionMiddleware | null;
 	public mouseControl: MouseControl | null = null;
 	protected views: Map<number, DocumentViewBase> = new Map<number, DocumentViewBase>();
+	protected activeViewID: number;
+	public activeView: DocumentViewBase;
+	private activeViewSelectionColor = 'lightblue'; // Overwritten in constructor.
 
 	protected _fileSize: cool.SimplePoint;
 
 	constructor() {
+		if (!app.activeDocument) app.activeDocument = this;
+
 		if (app.map._docLayer._docType === 'text') {
 			this.activeLayout = new ViewLayoutWriter();
 		} else {
@@ -36,6 +41,24 @@ class DocumentBase {
 		else this.selectionMiddleware = null;
 
 		this.addSections();
+		this.activeViewID = 0;
+		this.activeView = new DocumentViewBase(this.activeViewID);
+
+		const dummyDiv = document.createElement('div');
+		dummyDiv.className = 'selections-data';
+		document.body.appendChild(dummyDiv);
+		this.activeViewSelectionColor = getComputedStyle(dummyDiv).getPropertyValue('background-color');
+		this.activeView.setColor(this.activeViewSelectionColor);
+		dummyDiv.remove();
+	}
+
+	public setActiveViewID(activeViewID: number) {
+		if (this.activeViewID !== activeViewID) {
+			this.activeViewID = activeViewID;
+			this.activeView.clearTextSelection();
+			this.activeView = new DocumentViewBase(this.activeViewID);
+			this.activeView.setColor(this.activeViewSelectionColor);
+		}
 	}
 
 	private addSections() {
