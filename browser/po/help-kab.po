@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-11-17 08:08+0200\n"
-"PO-Revision-Date: 2025-11-06 15:51+0000\n"
-"Last-Translator: ButterflyOfFire <boffire@users.noreply.hosted.weblate.org>\n"
+"PO-Revision-Date: 2025-12-05 17:46+0000\n"
+"Last-Translator: Amadɣas <massiin@proton.me>\n"
 "Language-Team: Kabyle <https://hosted.weblate.org/projects/collabora-online/"
 "help/kab/>\n"
 "Language: kab\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Translate Toolkit 3.6.0\n"
+"X-Generator: Weblate 5.15-dev\n"
 "X-POOTLE-MTIME: 1475585999.000000\n"
 
 #: html/cool-help.html%2Bdiv.h1:6-5
@@ -107,7 +107,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:18-38
 msgid "Focus to notebookbar menu"
-msgstr ""
+msgstr "Slummes ɣer wumuɣ n tfeggagt n imedlis n tezmilin"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:18-90
 msgid ""
@@ -119,15 +119,15 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:19-38
 msgid "Focus to document from menu"
-msgstr ""
+msgstr "Slummes ɣef isemli seg wumuɣ"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:19-92
 msgid "ESC"
-msgstr ""
+msgstr "ESC"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:20-38
 msgid "Focus to selected comment's menu"
-msgstr ""
+msgstr "Slummes ɣef wumuɣ n uwennit yettwafernen"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:20-97
 msgid "<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>C</kbd>"
@@ -363,7 +363,7 @@ msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>5</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.h2:53-9
 msgid "Text selection and navigation in document"
-msgstr ""
+msgstr "Tafrayt n uḍris akked tunigin deg isemli"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:55-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:170-38
@@ -390,7 +390,7 @@ msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>A</kbd>"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:219-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:284-38
 msgid "Move cursor to the left"
-msgstr ""
+msgstr "Smutti taḥnaccaḍt ɣer uzelmaḍ"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:56-88
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:219-88
@@ -402,7 +402,7 @@ msgstr "Aneccab s azelmaḍ"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:220-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:285-38
 msgid "Move cursor with selection to the left"
-msgstr ""
+msgstr "Smutti taḥnaccaḍt s tefrayt ɣer zelmaḍ"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:57-103
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:220-103
@@ -415,7 +415,7 @@ msgstr ""
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:221-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:286-38
 msgid "Go to beginning of a word"
-msgstr ""
+msgstr "Ddu ɣer tazwara n wawal"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:58-90
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:221-90
@@ -444,7 +444,7 @@ msgstr ""
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:223-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:288-38
 msgid "Move cursor to the right"
-msgstr ""
+msgstr "Smutti taḥnacaḍt ɣer uyeffus"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:60-89
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:223-89
@@ -456,7 +456,7 @@ msgstr "Aneccab s ayeffus"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:224-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:289-38
 msgid "Move cursor with selection to the right"
-msgstr ""
+msgstr "Smutti taḥnacaḍt s tefrayt ɣer yefus"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:61-104
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:224-104
