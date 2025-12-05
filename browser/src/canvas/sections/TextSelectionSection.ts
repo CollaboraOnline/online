@@ -45,24 +45,35 @@ class TextSelectionSection extends CanvasSectionObject {
 
 	onDraw(frameCount?: number, elapsedTime?: number): void {
         // Remove when visibility checks are done in layout views (on simple point instances).
-        if (this.mode !== app.map._docLayer._selectedMode || this.part !== app.map._docLayer._selectedPart)
+        if (this.mode !== app.map._docLayer._selectedMode || this.part !== app.map._docLayer._selectedPart || this.polygons.length === 0)
             return;
 
-        // We will use vX and vY. Thus, we need to set the pen position canvas's origin.
+        // We will use vX and vY. Thus, we need to set the pen position to canvas's origin.
         this.context.translate(-this.myTopLeft[0], -this.myTopLeft[1]);
 
         this.context.globalAlpha = 0.25;
 		this.context.strokeStyle = this.color;
         this.context.fillStyle = this.color;
 
+		let deflectionX = 0;
+		let deflectionY = 0;
+
+		if (app.map._docLayer._docType === 'spreadsheet') {
+			if (app.isXOrdinateInFrozenPane(this.polygons[0][0].pX))
+				deflectionX = app.activeDocument.activeLayout.viewedRectangle.pX1;
+
+			if (app.isYOrdinateInFrozenPane(this.polygons[0][0].pY))
+				deflectionY = app.activeDocument.activeLayout.viewedRectangle.pY1;
+		}
+
 		for (let i = 0; i < this.polygons.length; i++) {
 			const polygon = this.polygons[i];
 
 			this.context.beginPath();
-			this.context.moveTo(polygon[0].vX, polygon[0].vY);
+			this.context.moveTo(polygon[0].vX + deflectionX, polygon[0].vY + deflectionY);
 
 			for (let i = 1; i < polygon.length; i++) {
-				this.context.lineTo(polygon[i].vX, polygon[i].vY);
+				this.context.lineTo(polygon[i].vX + deflectionX, polygon[i].vY + deflectionY);
 			}
 
 			this.context.closePath();

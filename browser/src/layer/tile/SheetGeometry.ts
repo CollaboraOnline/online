@@ -322,6 +322,14 @@ export class SheetGeometry {
 		simpleRectangle.y1 = this._rows.getTileTwipsPosFromPrint(simpleRectangle.y1);
 	}
 
+	public convertRawRectangleToTileTwips(rectangle: number[]): void {
+		rectangle[0] = this._columns.getTileTwipsPosFromPrint(rectangle[0]);
+		rectangle[1] = this._rows.getTileTwipsPosFromPrint(rectangle[1]);
+
+		rectangle[2] = this._columns.getTileTwipsPosFromPrint(rectangle[2]);
+		rectangle[3] = this._rows.getTileTwipsPosFromPrint(rectangle[3]);
+	}
+
 	// accepts a point in tile-twips coordinates and returns the equivalent point
 	// in print-twips.
 	public getPrintTwipsPointFromTile(point: Point): Point {
