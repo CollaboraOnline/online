@@ -19,7 +19,7 @@
 Version=1.5
 Terminal=false
 NoDisplay=false
-Icon=com.collabora.Office.startcenter
+Icon=com.collaboraoffice.Office.startcenter
 Type=Application
 Categories=Office;X-Red-Hat-Base;X-SuSE-Core-Office;
 Exec=coda-qt %F
