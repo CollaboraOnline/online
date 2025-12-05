@@ -1148,7 +1148,7 @@ int main(int argc, char** argv)
 
     // default application name
     QApplication::setApplicationName(APP_NAME);
-    QApplication::setWindowIcon(QIcon::fromTheme("com.collabora.Office.startcenter"));
+    QApplication::setWindowIcon(QIcon::fromTheme("com.collaboraoffice.Office.startcenter"));
 
     QCommandLineParser argParser;
     argParser.setApplicationDescription("Collabora Office - Desktop Office Suite");
