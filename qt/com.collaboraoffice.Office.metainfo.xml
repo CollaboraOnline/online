@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <component type="desktop">
- <id>com.collabora.Office</id>
+ <id>com.collaboraoffice.Office</id>
  <metadata_license>CC0-1.0</metadata_license>
  <project_license>MPL-2.0</project_license>
  <name>Collabora Office Desktop</name>
@@ -8,7 +8,7 @@
  <description>
   <p>Collabora Office Desktop brings the familiar Collabora Online experience to your computer - so you can create, edit, and present with a beautiful, modern UI. Built on trusted LibreOffice technology and backed by the largest team of LibreOffice developers worldwide, it delivers excellent interoperability with ODF and Microsoft Office formats (DOCX/XLSX/PPTX), and exports to PDF with ease. Your documents stay on your device unless you choose to share them - privacy by design.</p>
  </description>
- <launchable type="desktop-id">com.collabora.Office.desktop</launchable>
+ <launchable type="desktop-id">com.collaboraoffice.Office.desktop</launchable>
  <url type="homepage">https://collaboraoffice.com</url>
  <screenshots>
   <screenshot type="default">
@@ -28,7 +28,7 @@
    <caption>Sample Draw document</caption>
   </screenshot>
  </screenshots>
- <developer id="com.collabora">
+ <developer id="com.collaboraoffice">
    <name>Collabora Productivity Limited</name>
  </developer>
  <kudos>

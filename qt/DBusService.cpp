@@ -21,8 +21,8 @@
 #include <QDBusReply>
 #include <QDBusConnectionInterface>
 
-constexpr const char* SERVICE_NAME = "com.collabora.Office";
-constexpr const char* OBJECT_PATH = "/com/collabora/Office";
+constexpr const char* SERVICE_NAME = "com.collaboraoffice.Office";
+constexpr const char* OBJECT_PATH = "/com/collaboraoffice/Office";
 
 namespace coda
 {

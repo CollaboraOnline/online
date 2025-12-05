@@ -24,7 +24,7 @@ namespace coda
 class DBusService : public QObject
 {
     Q_OBJECT
-    Q_CLASSINFO("D-Bus Interface", "com.collabora.Office")
+    Q_CLASSINFO("D-Bus Interface", "com.collaboraoffice.Office")
 
 public:
     explicit DBusService(QObject* parent = nullptr);
