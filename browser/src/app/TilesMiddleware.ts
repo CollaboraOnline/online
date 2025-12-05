@@ -1163,6 +1163,45 @@ class TileManager {
 		);
 	}
 
+	private static sendTileCombineMessage(
+		part: number,
+		mode: number,
+		tilePositionsX: number[],
+		tilePositionsY: number[],
+		tileWids: number[],
+		addedSize: number,
+	) {
+		var msg =
+			'tilecombine ' +
+			'nviewid=0 ' +
+			'part=' +
+			part +
+			' ' +
+			(mode !== 0 ? 'mode=' + mode + ' ' : '') +
+			'width=' +
+			this.tileSize +
+			' ' +
+			'height=' +
+			this.tileSize +
+			' ' +
+			'tileposx=' +
+			tilePositionsX.join(',') +
+			' ' +
+			'tileposy=' +
+			tilePositionsY.join(',') +
+			' ' +
+			'oldwid=' +
+			tileWids.join(',') +
+			' ' +
+			'tilewidth=' +
+			app.tile.size.x +
+			' ' +
+			'tileheight=' +
+			app.tile.size.y;
+		if (addedSize) app.socket.sendMessage(msg, '');
+		else window.app.console.log('Skipped empty (too fast) tilecombine');
+	}
+
 	private static sendTileCombineRequest(
 		tileCombineQueue: Array<TileCoordData>,
 	) {
@@ -1217,35 +1256,14 @@ class TileManager {
 				if (tile) tile.updateLastRequest(now);
 			}
 
-			var msg =
-				'tilecombine ' +
-				'nviewid=0 ' +
-				'part=' +
-				part +
-				' ' +
-				(mode !== 0 ? 'mode=' + mode + ' ' : '') +
-				'width=' +
-				this.tileSize +
-				' ' +
-				'height=' +
-				this.tileSize +
-				' ' +
-				'tileposx=' +
-				tilePositionsX.join(',') +
-				' ' +
-				'tileposy=' +
-				tilePositionsY.join(',') +
-				' ' +
-				'oldwid=' +
-				tileWids.join(',') +
-				' ' +
-				'tilewidth=' +
-				app.tile.size.x +
-				' ' +
-				'tileheight=' +
-				app.tile.size.y;
-			if (added.size) app.socket.sendMessage(msg, '');
-			else window.app.console.log('Skipped empty (too fast) tilecombine');
+			this.sendTileCombineMessage(
+				part,
+				mode,
+				tilePositionsX,
+				tilePositionsY,
+				tileWids,
+				added.size,
+			);
 		}
 	}
 
