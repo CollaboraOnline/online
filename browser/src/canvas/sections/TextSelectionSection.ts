@@ -8,14 +8,14 @@
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
-*/
+ */
 
 class TextSelectionSection extends CanvasSectionObject {
 	interactable = false;
 	processingOrder = app.CSections.TextSelection.processingOrder;
 	drawingOrder = app.CSections.TextSelection.drawingOrder;
 	zIndex = app.CSections.TextSelection.zIndex;
-    documentObject: boolean = true;
+	documentObject: boolean = true;
 
 	/*
 		There are questions like: Can a view have a selection in a part other than its currently selected part?
@@ -27,33 +27,41 @@ class TextSelectionSection extends CanvasSectionObject {
 	*/
 	private mode: number;
 	private part: number;
-    public color: string;
+	public color: string;
 	private polygons: Array<Array<cool.SimplePoint>> = [[]];
 
-	constructor (name: string, mode: number, part: number, color: string) {
+	constructor(name: string, mode: number, part: number, color: string) {
 		super(name);
 		this.part = part;
 		this.mode = mode;
-        this.color = color;
+		this.color = color;
 	}
 
-    public setSelectionInfo(mode: number, part: number, polygons: Array<Array<cool.SimplePoint>>) {
+	public setSelectionInfo(
+		mode: number,
+		part: number,
+		polygons: Array<Array<cool.SimplePoint>>,
+	) {
 		this.mode = mode;
 		this.part = part;
 		this.polygons = polygons;
 	}
 
 	onDraw(frameCount?: number, elapsedTime?: number): void {
-        // Remove when visibility checks are done in layout views (on simple point instances).
-        if (this.mode !== app.map._docLayer._selectedMode || this.part !== app.map._docLayer._selectedPart || this.polygons.length === 0)
-            return;
+		// Remove when visibility checks are done in layout views (on simple point instances).
+		if (
+			this.mode !== app.map._docLayer._selectedMode ||
+			this.part !== app.map._docLayer._selectedPart ||
+			this.polygons.length === 0
+		)
+			return;
 
-        // We will use vX and vY. Thus, we need to set the pen position to canvas's origin.
-        this.context.translate(-this.myTopLeft[0], -this.myTopLeft[1]);
+		// We will use vX and vY. Thus, we need to set the pen position to canvas's origin.
+		this.context.translate(-this.myTopLeft[0], -this.myTopLeft[1]);
 
-        this.context.globalAlpha = 0.25;
+		this.context.globalAlpha = 0.25;
 		this.context.strokeStyle = this.color;
-        this.context.fillStyle = this.color;
+		this.context.fillStyle = this.color;
 
 		let deflectionX = 0;
 		let deflectionY = 0;
@@ -70,10 +78,16 @@ class TextSelectionSection extends CanvasSectionObject {
 			const polygon = this.polygons[i];
 
 			this.context.beginPath();
-			this.context.moveTo(polygon[0].vX + deflectionX, polygon[0].vY + deflectionY);
+			this.context.moveTo(
+				polygon[0].vX + deflectionX,
+				polygon[0].vY + deflectionY,
+			);
 
 			for (let i = 1; i < polygon.length; i++) {
-				this.context.lineTo(polygon[i].vX + deflectionX, polygon[i].vY + deflectionY);
+				this.context.lineTo(
+					polygon[i].vX + deflectionX,
+					polygon[i].vY + deflectionY,
+				);
 			}
 
 			this.context.closePath();
@@ -81,9 +95,9 @@ class TextSelectionSection extends CanvasSectionObject {
 			this.context.fill();
 		}
 
-        this.context.globalAlpha = 1.0;
+		this.context.globalAlpha = 1.0;
 
-        // We are done. Set the pen back to its initial position. This is needed or all other sections can draw at unexpected coordinates.
-        this.context.translate(this.myTopLeft[0], this.myTopLeft[1]);
+		// We are done. Set the pen back to its initial position. This is needed or all other sections can draw at unexpected coordinates.
+		this.context.translate(this.myTopLeft[0], this.myTopLeft[1]);
 	}
 }
