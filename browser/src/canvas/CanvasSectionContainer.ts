@@ -1021,6 +1021,8 @@ class CanvasSectionContainer {
 	}
 
 	private getMyTopLeftForDocumentObject(section: CanvasSectionObject): number[] {
+		if (this.documentAnchor === null) return;
+
 		if (app.map._docLayer._docType === 'spreadsheet') {
 			return [
 				this.documentAnchor[0] +

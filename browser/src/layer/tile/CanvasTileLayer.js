@@ -2308,6 +2308,34 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 		return result;
 	},
 
+	adjustTextSelectionRectanglesForCalc: function(rawRectangles, viewId) {
+		for (let i = 0; i < rawRectangles.length; i++) {
+			app.map._docLayer.sheetGeometry.convertRawRectangleToTileTwips(rawRectangles[i]);
+		}
+
+		// For Calc, text selection rectangle is sent taking the cursor rectangle as origin.
+		if (viewId !== undefined) {
+			let section = TextCursorSection.getViewCursorSection(viewId);
+
+			if (section && section.sectionProperties.showCursor === true) {
+				section = OtherViewCellCursorSection.getViewCursorSection(viewId);
+
+				if (section) {
+					for (let i = 0; i < rawRectangles.length; i++) {
+						rawRectangles[i][0] += Math.round(section.position[0] * app.pixelsToTwips);
+						rawRectangles[i][1] += Math.round(section.position[1] * app.pixelsToTwips);
+					}
+				}
+			}
+		}
+		else if (app.file.textCursor.visible) {
+			for (let i = 0; i < rawRectangles.length; i++) {
+				rawRectangles[i][0] += app.calc.cellCursorRectangle.x1;
+				rawRectangles[i][1] += app.calc.cellCursorRectangle.y1;
+			}
+		}
+	},
+
 	_onTextSelectionMsg: function (textMsg) {
 		textMsg = textMsg.replace('textselection:', '').trim();
 		let rawRectangles = textMsg.split(';');
@@ -2335,6 +2363,8 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 				TileManager.updateFileBasedView();
 				setTimeout(function () {app.sectionContainer.requestReDraw();}, 100);
 			}
+			else if (this._docType === 'spreadsheet')
+				this.adjustTextSelectionRectanglesForCalc(rawRectangles);
 
 			app.activeDocument.activeView.updateSelectionRawData(this._selectedMode, this._selectedPart, rawRectangles);
 
@@ -2387,6 +2417,9 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 				return [parseInt(temp[0]), parseInt(temp[1]), parseInt(temp[2]), parseInt(temp[3])];
 			});
 		}
+
+		if (this._docType === 'spreadsheet')
+			this.adjustTextSelectionRectanglesForCalc(twipsRectangles, viewId);
 
 		app.activeDocument.getView(viewId).updateSelectionRawData(viewMode, parseInt(obj.part), twipsRectangles);
 
