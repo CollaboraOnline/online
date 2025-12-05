@@ -31,7 +31,7 @@ window.addEventListener('load', function () {
 app.getViewRectangles = function () {
 	if (app.map._docLayer._splitPanesContext)
 		return app.map._docLayer._splitPanesContext.getViewRectangles();
-	else return [app.activeDocument.activeView.viewedRectangle.clone()];
+	else return [app.activeDocument.activeLayout.viewedRectangle.clone()];
 };
 
 // ToDo: _splitPanesContext should be an app variable.
@@ -43,7 +43,7 @@ app.isPointVisibleInTheDisplayedArea = function (twipsArray /* x, y */) {
 		}
 		return false;
 	} else {
-		return app.activeDocument.activeView.viewedRectangle.containsPoint(
+		return app.activeDocument.activeLayout.viewedRectangle.containsPoint(
 			twipsArray,
 		);
 	}
@@ -57,7 +57,7 @@ app.isXVisibleInTheDisplayedArea = function (twipsX) {
 		}
 		return false;
 	} else {
-		return app.activeDocument.activeView.viewedRectangle.containsX(twipsX);
+		return app.activeDocument.activeLayout.viewedRectangle.containsX(twipsX);
 	}
 };
 
@@ -69,7 +69,7 @@ app.isYVisibleInTheDisplayedArea = function (twipsY) {
 		}
 		return false;
 	} else {
-		return app.activeDocument.activeView.viewedRectangle.containsY(twipsY);
+		return app.activeDocument.activeLayout.viewedRectangle.containsY(twipsY);
 	}
 };
 
@@ -83,7 +83,7 @@ app.isRectangleVisibleInTheDisplayedArea = function (
 		}
 		return false;
 	} else {
-		return app.activeDocument.activeView.viewedRectangle.intersectsRectangle(
+		return app.activeDocument.activeLayout.viewedRectangle.intersectsRectangle(
 			twipsArray,
 		);
 	}

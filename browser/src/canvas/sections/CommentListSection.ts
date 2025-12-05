@@ -190,18 +190,18 @@ export class CommentSection extends CanvasSectionObject {
 
 		this.scrollCommentIntoView(annotation);
 		this.highlightComment(annotation);
-		
+
 		if (this.sectionProperties.selectedComment !== annotation) {
 			this.select(annotation, true);
 		}
-		
+
 		annotation.focus();
 		this.addCommentAttention(annotation);
 	}
 
 	private addCommentAttention(annotation: any): void {
 		if (!annotation) return;
-		
+
 		const wrapper = annotation.sectionProperties.wrapper;
 		if (wrapper) {
 			wrapper.classList.add('cool-annotation-inedit');
@@ -350,7 +350,7 @@ export class CommentSection extends CanvasSectionObject {
 			when that happens, `ViewLayoutWriter` moves the document to
 			the left in function `adjustDocumentMarginsForComments`.
 		*/
-		if (app.activeDocument.activeView.viewHasEnoughSpaceToShowFullWidthComments())
+		if (app.activeDocument.activeLayout.viewHasEnoughSpaceToShowFullWidthComments())
 			return false;
 		return availableSpace < this.sectionProperties.commentWidth && availableSpace > this.sectionProperties.collapsedCommentWidth;
 	}
@@ -978,7 +978,7 @@ export class CommentSection extends CanvasSectionObject {
 
 	/// returns canvas top and bottom position in core pixels
 	public getScreenTopBottom(): Array<number> {
-		const screenTop = app.activeDocument.activeView.viewedRectangle.pY1;
+		const screenTop = app.activeDocument.activeLayout.viewedRectangle.pY1;
 		const screenBottom = screenTop + this.cssToCorePixels($('#map').height());
 
 		return [screenTop, screenBottom];
@@ -1951,7 +1951,7 @@ export class CommentSection extends CanvasSectionObject {
 			tmpIdx = i;
 			do {
 				this.sectionProperties.commentList[tmpIdx].sectionProperties.data.anchorPix = this.numberArrayToCorePixFromTwips(this.sectionProperties.commentList[tmpIdx].sectionProperties.data.anchorPos, 0, 2);
-				this.sectionProperties.commentList[tmpIdx].sectionProperties.data.anchorPix[1] -= app.activeDocument.activeView.viewedRectangle.pY1;
+				this.sectionProperties.commentList[tmpIdx].sectionProperties.data.anchorPix[1] -= app.activeDocument.activeLayout.viewedRectangle.pY1;
 				// Add this item to the list of comments.
 				if (this.sectionProperties.commentList[tmpIdx].sectionProperties.data.resolved !== 'true' || this.sectionProperties.showResolved) {
 					if (!checkSelectedPart || app.map._docLayer._selectedPart === this.sectionProperties.commentList[tmpIdx].sectionProperties.partIndex)
@@ -2017,7 +2017,7 @@ export class CommentSection extends CanvasSectionObject {
 			tmpIdx = i;
 			do {
 				this.sectionProperties.commentList[tmpIdx].sectionProperties.data.anchorPix = this.numberArrayToCorePixFromTwips(this.sectionProperties.commentList[tmpIdx].sectionProperties.data.anchorPos, 0, 2);
-				this.sectionProperties.commentList[tmpIdx].sectionProperties.data.anchorPix[1] -= app.activeDocument.activeView.viewedRectangle.pY1;
+				this.sectionProperties.commentList[tmpIdx].sectionProperties.data.anchorPix[1] -= app.activeDocument.activeLayout.viewedRectangle.pY1;
 				// Add this item to the list of comments.
 				if (this.sectionProperties.commentList[tmpIdx].sectionProperties.data.resolved !== 'true' || this.sectionProperties.showResolved) {
 					if (!checkSelectedPart || app.map._docLayer._selectedPart === this.sectionProperties.commentList[tmpIdx].sectionProperties.partIndex)
@@ -2048,9 +2048,9 @@ export class CommentSection extends CanvasSectionObject {
 
 	private showArrow (startPoint: Array<number>, endPoint: Array<number>): void {
 		var anchorSection = this.containerObject.getDocumentAnchorSection();
-		startPoint[0] -= anchorSection.myTopLeft[0] + app.activeDocument.activeView.viewedRectangle.pX1;
-		startPoint[1] -= anchorSection.myTopLeft[1] + app.activeDocument.activeView.viewedRectangle.pY1;
-		endPoint[1] -= anchorSection.myTopLeft[1] + app.activeDocument.activeView.viewedRectangle.pY1;
+		startPoint[0] -= anchorSection.myTopLeft[0] + app.activeDocument.activeLayout.viewedRectangle.pX1;
+		startPoint[1] -= anchorSection.myTopLeft[1] + app.activeDocument.activeLayout.viewedRectangle.pY1;
+		endPoint[1] -= anchorSection.myTopLeft[1] + app.activeDocument.activeLayout.viewedRectangle.pY1;
 
 		startPoint[0] = Math.floor(startPoint[0] / app.dpiScale);
 		startPoint[1] = Math.floor(startPoint[1] / app.dpiScale);
@@ -2106,7 +2106,7 @@ export class CommentSection extends CanvasSectionObject {
 
 			var isRTL = document.documentElement.dir === 'rtl';
 
-			var topRight: Array<number> = [this.myTopLeft[0], this.myTopLeft[1] + this.sectionProperties.marginY - app.activeDocument.activeView.viewedRectangle.pY1];
+			var topRight: Array<number> = [this.myTopLeft[0], this.myTopLeft[1] + this.sectionProperties.marginY - app.activeDocument.activeLayout.viewedRectangle.pY1];
 			var yOrigin = null;
 			var selectedIndex = null;
 			var x = isRTL ? 0 : topRight[0];
@@ -2114,14 +2114,14 @@ export class CommentSection extends CanvasSectionObject {
 			if (isRTL)
 				x = availableSpace - this.sectionProperties.commentWidth;
 			else {
-				x = (app.activeDocument.fileSize.cX - app.activeDocument.activeView.viewedRectangle.cX1 - app.sectionContainer.getCanvasBoundingClientRect().x) * app.dpiScale;
+				x = (app.activeDocument.fileSize.cX - app.activeDocument.activeLayout.viewedRectangle.cX1 - app.sectionContainer.getCanvasBoundingClientRect().x) * app.dpiScale;
 				x += app.map.navigator ? app.map.navigator.navigationPanel.offsetWidth * app.dpiScale : 0;
 			}
 
 			if (this.sectionProperties.selectedComment) {
 				selectedIndex = this.getRootIndexOf(this.sectionProperties.selectedComment.sectionProperties.data.id);
 				this.sectionProperties.commentList[selectedIndex].sectionProperties.data.anchorPix = this.numberArrayToCorePixFromTwips(this.sectionProperties.commentList[selectedIndex].sectionProperties.data.anchorPos, 0, 2);
-				yOrigin = this.sectionProperties.commentList[selectedIndex].sectionProperties.data.anchorPix[1] - app.activeDocument.activeView.viewedRectangle.pY1;
+				yOrigin = this.sectionProperties.commentList[selectedIndex].sectionProperties.data.anchorPix[1] - app.activeDocument.activeLayout.viewedRectangle.pY1;
 				var tempCrd: Array<number> = this.sectionProperties.commentList[selectedIndex].sectionProperties.data.anchorPix;
 				var resolved:string = this.sectionProperties.commentList[selectedIndex].sectionProperties.data.resolved;
 				if (!resolved || resolved === 'false' || this.sectionProperties.showResolved) {
@@ -2146,18 +2146,18 @@ export class CommentSection extends CanvasSectionObject {
 		if (relayout)
 			this.resizeComments();
 
-		lastY += app.activeDocument.activeView.viewedRectangle.pY1;
+		lastY += app.activeDocument.activeLayout.viewedRectangle.pY1;
 
 		let horizontalScroll = app.activeDocument.fileSize.x;
 		if (availableSpace < this.sectionProperties.commentWidth && !this.isCollapsed)
 			horizontalScroll = (app.activeDocument.fileSize.cX + this.sectionProperties.commentWidth) * app.pixelsToTwips * app.dpiScale;
 
 		if (lastY > app.activeDocument.fileSize.pY) {
-			app.activeDocument.activeView.viewSize = new cool.SimplePoint(horizontalScroll, lastY * app.pixelsToTwips);
+			app.activeDocument.activeLayout.viewSize = new cool.SimplePoint(horizontalScroll, lastY * app.pixelsToTwips);
 			this.containerObject.requestReDraw();
 		}
 		else
-			app.activeDocument.activeView.viewSize = new cool.SimplePoint(horizontalScroll, app.activeDocument.fileSize.y);
+			app.activeDocument.activeLayout.viewSize = new cool.SimplePoint(horizontalScroll, app.activeDocument.fileSize.y);
 
 		this.disableLayoutAnimation = false;
 	}
@@ -2356,7 +2356,7 @@ export class CommentSection extends CanvasSectionObject {
 									+ this.sectionProperties.commentList[i - 1].getCommentHeight()
 									+ this.sectionProperties.marginY;
 							} else {
-								spaceBefore += app.activeDocument.activeView.viewedRectangle.pY1;
+								spaceBefore += app.activeDocument.activeLayout.viewedRectangle.pY1;
 							}
 							// if there is more space
 							if (spaceBefore > 0) {

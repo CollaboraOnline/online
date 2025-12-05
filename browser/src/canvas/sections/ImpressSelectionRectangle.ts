@@ -66,8 +66,8 @@ class SelectionRectangle extends CanvasSectionObject {
 
 	public onNewDocumentTopLeft(): void {
 		this.setPosition(
-			app.activeDocument.activeView.viewedRectangle.pX1,
-			app.activeDocument.activeView.viewedRectangle.pY1,
+			app.activeDocument.activeLayout.viewedRectangle.pX1,
+			app.activeDocument.activeLayout.viewedRectangle.pY1,
 		);
 	}
 

@@ -112,7 +112,6 @@ window.L.Map.include({
 		OtherViewCellCursorSection.updateVisibilities();
 		TextCursorSection.updateVisibilities();
 		app.definitions.otherViewGraphicSelectionSection.updateVisibilities();
-		docLayer.eachView(docLayer._viewSelections, docLayer._onUpdateTextViewSelection, docLayer);
 		docLayer._clearSelections(calledFromSetPartHandler);
 		TileManager.updateOnChangePart();
 		TileManager.pruneTiles();

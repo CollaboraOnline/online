@@ -503,7 +503,7 @@ window.L.TextInput = window.L.Layer.extend({
 	// Displays the caret and the under-caret marker.
 	// Fetches the coordinates of the caret from the map's doclayer.
 	showCursor: function() {
-		if (!this._map._docLayer._cursorMarker || app.tile.size.x === 0 || !this._map._docLayer._textCSelections) {
+		if (!this._map._docLayer._cursorMarker || app.tile.size.x === 0 || !app.activeDocument) {
 			return;
 		}
 
@@ -515,7 +515,7 @@ window.L.TextInput = window.L.Layer.extend({
 
 		// Move and display under-caret marker
 
-		if (window.touch.currentlyUsingTouchscreen() && this._map._docLayer._textCSelections.empty() && this._cursorHandler) {
+		if (window.touch.currentlyUsingTouchscreen() && !app.activeDocument.activeView.hasTextSelection && this._cursorHandler) {
 			this._cursorHandler.setPosition(app.file.textCursor.rectangle.pX1, app.file.textCursor.rectangle.pY2 + (0 * app.dpiScale));
 			this._cursorHandler.setShowSection(true);
 		} else if (this._cursorHandler) {

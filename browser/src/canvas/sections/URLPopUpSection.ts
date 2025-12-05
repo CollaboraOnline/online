@@ -168,7 +168,7 @@ class URLPopUpSection extends HTMLObjectSection {
 			If the arrow position falls outside of the popup, we will put it on the edge.
 		*/
 		const clientRect = this.getPopUpBoundingRectangle();
-		let arrowCSSLeft = this.sectionProperties.documentPosition.pX - app.activeDocument.activeView.viewedRectangle.pX1 + this.containerObject.getDocumentAnchor()[0] - URLPopUpSection.arrowHalfWidth;
+		let arrowCSSLeft = this.sectionProperties.documentPosition.pX - app.activeDocument.activeLayout.viewedRectangle.pX1 + this.containerObject.getDocumentAnchor()[0] - URLPopUpSection.arrowHalfWidth;
 		arrowCSSLeft /= app.dpiScale;
 		arrowCSSLeft += document.getElementById('canvas-container').getBoundingClientRect().left; // Add this in case there is something on its left.
 		arrowCSSLeft -= clientRect.left;
@@ -182,8 +182,8 @@ class URLPopUpSection extends HTMLObjectSection {
 		let originalLeft = section.sectionProperties.documentPosition.pX - section.getPopUpWidth() * 0.5 * app.dpiScale;
 		let originalTop = section.sectionProperties.documentPosition.pY - (section.getPopUpHeight() + URLPopUpSection.popupVerticalMargin) * app.dpiScale;
 
-		const checkLeft = originalLeft - app.activeDocument.activeView.viewedRectangle.pX1;
-		const checkTop = originalTop - app.activeDocument.activeView.viewedRectangle.pY1;
+		const checkLeft = originalLeft - app.activeDocument.activeLayout.viewedRectangle.pX1;
+		const checkTop = originalTop - app.activeDocument.activeLayout.viewedRectangle.pY1;
 
 		let arrowAtTop = false;
 		if (checkTop < 0) {
@@ -191,7 +191,7 @@ class URLPopUpSection extends HTMLObjectSection {
 			arrowAtTop = true;
 		}
 
-		if (checkLeft < 0) originalLeft = app.activeDocument.activeView.viewedRectangle.pX1;
+		if (checkLeft < 0) originalLeft = app.activeDocument.activeLayout.viewedRectangle.pX1;
 
 		section.setPosition(originalLeft, originalTop);
 		section.adjustHTMLObjectPosition();

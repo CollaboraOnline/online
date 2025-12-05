@@ -73,8 +73,8 @@ class SearchService {
 
 		window.L.Map.THIS.fire('clearselection');
 
-		var searchStartPointX = app.activeDocument.activeView.viewedRectangle.x1;
-		var searchStartPointY = app.activeDocument.activeView.viewedRectangle.y1;
+		var searchStartPointX = app.activeDocument.activeLayout.viewedRectangle.x1;
+		var searchStartPointY = app.activeDocument.activeLayout.viewedRectangle.y1;
 		if (
 			window.L.Map.THIS._docLayer &&
 			window.L.Map.THIS._docLayer._lastSearchResult &&

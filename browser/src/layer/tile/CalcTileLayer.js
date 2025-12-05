@@ -250,7 +250,7 @@ window.L.CalcTileLayer = window.L.CanvasTileLayer.extend({
 
 		this._docPixelSize = newSizePx.clone();
 		app.activeDocument.fileSize = new cool.SimplePoint(newDocWidth, newDocHeight);
-		app.activeDocument.activeView.viewSize = app.activeDocument.fileSize.clone();
+		app.activeDocument.activeLayout.viewSize = app.activeDocument.fileSize.clone();
 
 		this._map.setMaxBounds(new window.L.LatLngBounds(topLeft, bottomRight));
 
@@ -431,7 +431,7 @@ window.L.CalcTileLayer = window.L.CanvasTileLayer.extend({
 			if (statusJSON.readonly) this._map.setPermission('readonly');
 
 			app.activeDocument.fileSize = new cool.SimplePoint(statusJSON.width, statusJSON.height);
-			app.activeDocument.activeView.viewSize = app.activeDocument.fileSize.clone();
+			app.activeDocument.activeLayout.viewSize = app.activeDocument.fileSize.clone();
 
 			if (app.map._docLoaded)
 				this._syncTileContainerSize();
@@ -457,6 +457,7 @@ window.L.CalcTileLayer = window.L.CanvasTileLayer.extend({
 			}
 
 			this._viewId = statusJSON.viewid;
+			app.activeDocument.setActiveViewID(this._viewId);
 
 			console.assert(this._viewId >= 0, 'Incorrect viewId received: ' + this._viewId);
 
