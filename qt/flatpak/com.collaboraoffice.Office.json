@@ -827,6 +827,9 @@
       "ensure-writable": [
         "/collaboraoffice/LICENSE.html"
       ],
+      "make-args": [
+        "clean"
+      ],
       "post-install": [
         "python3 scripts/insert-coda-license.py /app/collaboraoffice/LICENSE.html CODA-THIRDPARTYLICENSES.html"
       ],
