@@ -209,12 +209,12 @@ void CODAWebEngineView::createPresentationFS()
 
     arrangePresentationWindows();
 
-    _screenRemoved = QObject::connect(Application::getApp(), &QGuiApplication::screenRemoved,
+    _screenRemoved = QObject::connect(qApp, &QGuiApplication::screenRemoved,
                      [this]() {
                         arrangePresentationWindows();
                      });
 
-    _screenAdded = QObject::connect(Application::getApp(), &QGuiApplication::screenAdded,
+    _screenAdded = QObject::connect(qApp, &QGuiApplication::screenAdded,
                      [this]() {
                         arrangePresentationWindows();
                      });
