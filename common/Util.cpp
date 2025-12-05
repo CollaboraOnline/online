@@ -180,17 +180,17 @@ namespace Util
     void setKitInProcess(bool value) { kitInProcess = value; }
     bool isKitInProcess() { return isFuzzing() || isMobileApp() || kitInProcess; }
 
-    std::string replace(std::string result, const std::string& a, const std::string& b)
+    std::string replace(std::string result, const std::string& from, const std::string& to)
     {
-        const std::size_t sizeA = a.size();
-        if (sizeA > 0)
+        const std::size_t fromSize = from.size();
+        if (fromSize > 0)
         {
-            const std::size_t sizeB = b.size();
+            const std::size_t toSize = to.size();
             std::string::size_type pos = 0;
-            while ((pos = result.find(a, pos)) != std::string::npos)
+            while ((pos = result.find(from, pos)) != std::string::npos)
             {
-                result.replace(pos, sizeA, b);
-                pos += sizeB; // Skip the replacee to avoid endless recursion.
+                result.replace(pos, fromSize, to);
+                pos += toSize; // Skip the replace to avoid endless recursion.
             }
         }
 
