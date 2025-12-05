@@ -288,8 +288,12 @@ class ViewLayoutMultiPage extends ViewLayoutBase {
 
 		const result = point.clone();
 
-		result.pX = this.documentRectangles[index].pX1 + (point.pX - this.viewRectangles[index].pX1);
-		result.pY = this.documentRectangles[index].pY1 + (point.pY - this.viewRectangles[index].pY1);
+		result.pX =
+			this.documentRectangles[index].pX1 +
+			(point.pX - this.viewRectangles[index].pX1);
+		result.pY =
+			this.documentRectangles[index].pY1 +
+			(point.pY - this.viewRectangles[index].pY1);
 
 		return result;
 	}

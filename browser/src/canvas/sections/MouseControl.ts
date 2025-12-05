@@ -84,7 +84,8 @@ class MouseControl extends CanvasSectionObject {
 			-app.activeDocument.activeLayout.viewedRectangle.pY1 +
 			app.sectionContainer.getDocumentAnchor()[1];
 
-		viewToDocumentPos = app.activeDocument.activeLayout.canvasToDocumentPoint(viewToDocumentPos);
+		viewToDocumentPos =
+			app.activeDocument.activeLayout.canvasToDocumentPoint(viewToDocumentPos);
 
 		app.map._docLayer._postMouseEvent(
 			eventType,
