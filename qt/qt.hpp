@@ -12,18 +12,15 @@
 extern int coolwsd_server_socket_fd;
 extern const char* user_name;
 extern LibreOfficeKit* lo_kit;
-class QApplication;
 
 class Application
 {
 private:
     static QWebEngineProfile* globalProfile;
-    static QApplication* globalApp;
 
 public:
-    static void initialize(QApplication* app);
+    static void initialize();
     static QWebEngineProfile* getProfile();
-    static QApplication* getApp();
 };
 
 namespace

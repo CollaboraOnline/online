@@ -94,7 +94,6 @@ int coolwsd_server_socket_fd = -1;
 static COOLWSD* coolwsd = nullptr;
 static std::thread coolwsdThread;
 QWebEngineProfile* Application::globalProfile = nullptr;
-QApplication* Application::globalApp = nullptr;
 
 static const char* getUserName()
 {
@@ -1133,6 +1132,8 @@ QVariant Bridge::cool(const QString& messageStr)
     return {};
 }
 
+Bridge* bridge = nullptr;
+
 // Disable accessibility
 void disableA11y() { qputenv("QT_LINUX_ACCESSIBILITY_ALWAYS_ON", "0"); }
 
@@ -1149,7 +1150,7 @@ static void stopServer() {
     }
 }
 
-void Application::initialize(QApplication* app)
+void Application::initialize()
 {
     if (!globalProfile)
     {
@@ -1162,12 +1163,9 @@ void Application::initialize(QApplication* app)
         globalProfile->setCachePath(cacheData);
         globalProfile->setHttpCacheType(QWebEngineProfile::DiskHttpCache);
     }
-    globalApp = app;
 }
 
 QWebEngineProfile* Application::getProfile() { return globalProfile; }
-
-QApplication* Application::getApp() { return globalApp; }
 
 int main(int argc, char** argv)
 {
@@ -1276,7 +1274,7 @@ int main(int argc, char** argv)
             LOG_TRC("One run of COOLWSD completed");
         });
 
-    Application::initialize(&app);
+    Application::initialize();
 
     // register DBus service and object
     DBusService* dbusService = new DBusService(&app);
