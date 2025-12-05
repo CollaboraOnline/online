@@ -18,8 +18,9 @@
 */
 class DocumentViewBase {
 	public readonly viewID: number;
-	color: string;
-	selectionSection: TextSelectionSection;
+	private color: string;
+	public selectionSection: TextSelectionSection;
+    public hasTextSelection: boolean = false;
 
 	constructor(viewID: number) {
 		this.viewID = viewID;
@@ -65,8 +66,19 @@ class DocumentViewBase {
         return groups;
     }
 
+    public setColor(color: string) {
+        this.color = color;
+        this.selectionSection.color = this.color;
+    }
+
+    public clearTextSelection() {
+        this.updateSelectionRawData(-1, -1, []);
+    }
+
     public updateSelectionRawData(mode: number, part: number, rectangles: Array<Array<number>>) {
         if (rectangles.length > 0) {
+            this.hasTextSelection = true;
+
             const rawPolygons = this.getSeparatePolygonsFromGroupOfRectangles(rectangles);
             let minX = Number.POSITIVE_INFINITY;
             let maxX = Number.NEGATIVE_INFINITY;
@@ -105,6 +117,7 @@ class DocumentViewBase {
                 this.selectionSection.setShowSection(false);
         }
         else if (rectangles.length === 0) {
+            this.hasTextSelection = false;
             this.selectionSection.setSelectionInfo(mode, part, []);
             this.selectionSection.setShowSection(false);
         }

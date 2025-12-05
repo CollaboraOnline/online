@@ -2212,9 +2212,9 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 	},
 
 	_clearSearchResults: function() {
-		if (this._searchTerm) {
-			this._textCSelections.clear();
-		}
+		if (this._searchTerm)
+			app.activeDocument.activeView.clearTextSelection();
+
 		this._lastSearchResult = null;
 		this._searchResults = null;
 		this._searchTerm = null;
@@ -2309,31 +2309,34 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 	},
 
 	_onTextSelectionMsg: function (textMsg) {
-		var rectArray = this._getTextSelectionRectangles(textMsg);
+		textMsg = textMsg.replace('textselection:', '').trim();
+		let rawRectangles = textMsg.split(';');
 
-		if (rectArray.length) {
-			TextSelections.activate();
-
-			var rectangles = rectArray.map(function (rect) {
-				return rect.getPointArray();
+		if (textMsg.trim() !== '') {
+			rawRectangles = rawRectangles.map((rectangle) => {
+				const temp = rectangle.split(',');
+				return [parseInt(temp[0]), parseInt(temp[1]), parseInt(temp[2]), parseInt(temp[3])];
 			});
+		}
+		else rawRectangles = [];
+
+		if (rawRectangles.length > 0) {
+			TextSelections.activate();
 
 			if (app.file.fileBasedView && this._lastSearchResult) {
 				// We rely on that _lastSearchResult has been updated before this function is called.
-				var additionPerPart = this._partHeightTwips + this._spaceBetweenParts;
-				for (var i = 0; i < rectangles.length; i++) {
-					for (var j = 0; j < rectangles[i].length; j++) {
-						rectangles[i][j].y += additionPerPart * this._lastSearchResult.part;
-					}
+				const additionPerPart = this._partHeightTwips + this._spaceBetweenParts;
+
+				for (let i = 0; i < rawRectangles.length; i++) {
+					rawRectangles[i][1] += additionPerPart * this._lastSearchResult.part;
 				}
+
 				this._map._docLayer._preview._scrollViewToPartPosition(this._lastSearchResult.part);
 				TileManager.updateFileBasedView();
 				setTimeout(function () {app.sectionContainer.requestReDraw();}, 100);
 			}
 
-			var pointSet = this._convertToPointSet(rectangles);
-
-			this._textCSelections.setPointSet(pointSet);
+			app.activeDocument.activeView.updateSelectionRawData(this._selectedMode, this._selectedPart, rawRectangles);
 
 			if (this._map._textInput._cursorHandler)
 				this._map._textInput._cursorHandler.setShowSection(false); // User selected text, we remove the carret marker.
@@ -2356,7 +2359,7 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 		}
 		else {
 			TextSelections.deactivate();
-			this._textCSelections.clear();
+			app.activeDocument.activeView.clearTextSelection();
 			this._selectedTextContent = '';
 			if (this._map.contextToolbar)
 				this._map.contextToolbar.hideContextToolbar();
@@ -2725,7 +2728,7 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 		// hide the cursor if not editable
 		this._onUpdateCursor(calledFromSetPartHandler);
 		// hide the text selection
-		this._textCSelections.clear();
+		app.activeDocument.activeView.clearTextSelection();
 		// hide the ole selection
 		this._oleCSelections.clear();
 
@@ -2734,11 +2737,6 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 			this._map._clip.clearSelection();
 		else
 			this._selectedTextContent = '';
-	},
-
-	containsSelection: function (latlng) {
-		var corepxPoint = this._map.project(latlng);
-		return this._textCSelections.contains(corepxPoint);
 	},
 
 	_clearReferences: function () {
@@ -3233,7 +3231,7 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 
 	_removeSelection: function() {
 		this._selectedTextContent = '';
-		this._textCSelections.clear();
+		app.activeDocument.activeView.clearTextSelection();
 	},
 
 	_onDragOver: function (e) {
@@ -3789,8 +3787,6 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 		}
 
 		this._getToolbarCommandsValues();
-		this._textCSelections = new CSelections(undefined, this._canvasOverlay,
-			this._selectionsDataDiv, this._map, false /* isView */, undefined, 'text');
 		this._oleCSelections = new CSelections(undefined, this._canvasOverlay,
 			this._selectionsDataDiv, this._map, false /* isView */, undefined, 'ole');
 		this._references = new CReferences(this._canvasOverlay);
@@ -3863,9 +3859,7 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 		TileManager.clearPreFetch();
 		clearTimeout(this._previewInvalidator);
 
-		if (!this._textCSelections.empty()) {
-			this._textCSelections.clear();
-		}
+		app.activeDocument.activeView.clearTextSelection();
 
 		if (!this._oleCSelections.empty()) {
 			this._oleCSelections.clear();

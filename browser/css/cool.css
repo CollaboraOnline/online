@@ -1217,7 +1217,7 @@ body {
 	border-top-width: 2px; /* weight */
 }
 
-.leaflet-canvas-container .selections-data {
+.selections-data {
 	border-style: solid; /* required for ie11 */
 	display: none; /* prevent cypress failure */
 
