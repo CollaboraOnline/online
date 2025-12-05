@@ -84,8 +84,10 @@ class ViewLayoutBase {
 	public canvasToDocumentPoint(point: cool.SimplePoint): cool.SimplePoint {
 		const result = point.clone();
 
-		result.pX = point.pX + this._viewedRectangle.pX1 - this._documentAnchorPosition[0];
-		result.pY = point.pY + this._viewedRectangle.pY1 - this._documentAnchorPosition[1];
+		result.pX =
+			point.pX + this._viewedRectangle.pX1 - this._documentAnchorPosition[0];
+		result.pY =
+			point.pY + this._viewedRectangle.pY1 - this._documentAnchorPosition[1];
 
 		return result;
 	}
