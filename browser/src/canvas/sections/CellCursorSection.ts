@@ -37,22 +37,22 @@ class CellCursorSection extends CanvasSectionObject {
 	public static adjustSizePos(defaultSizePos: number[]): number[] {
 		const splitPos = app.map._docLayer._splitPanesContext ? app.map._docLayer._splitPanesContext.getSplitPos() : null;
 
-		if (!splitPos || (splitPos.x === 0 && splitPos.y === 0) || !app.activeDocument || (app.activeDocument.activeView.viewedRectangle.pX1 === 0 && app.activeDocument.activeView.viewedRectangle.pY1 === 0)) return defaultSizePos;
+		if (!splitPos || (splitPos.x === 0 && splitPos.y === 0) || !app.activeDocument || (app.activeDocument.activeLayout.viewedRectangle.pX1 === 0 && app.activeDocument.activeLayout.viewedRectangle.pY1 === 0)) return defaultSizePos;
 
 		if (defaultSizePos[0] < splitPos.x && defaultSizePos[0] + defaultSizePos[2] > splitPos.x)
-			defaultSizePos[2] = Math.max(splitPos.x - defaultSizePos[0], defaultSizePos[2] - app.activeDocument.activeView.viewedRectangle.pX1);
+			defaultSizePos[2] = Math.max(splitPos.x - defaultSizePos[0], defaultSizePos[2] - app.activeDocument.activeLayout.viewedRectangle.pX1);
 
-		if (defaultSizePos[0] >= splitPos.x && app.activeDocument.activeView.viewedRectangle.pX1 + splitPos.x > defaultSizePos[0]) {
-			defaultSizePos[2] = (defaultSizePos[0] + defaultSizePos[2]) - (app.activeDocument.activeView.viewedRectangle.pX1 + splitPos.x);
-			defaultSizePos[0] = splitPos.x + app.activeDocument.activeView.viewedRectangle.pX1;
+		if (defaultSizePos[0] >= splitPos.x && app.activeDocument.activeLayout.viewedRectangle.pX1 + splitPos.x > defaultSizePos[0]) {
+			defaultSizePos[2] = (defaultSizePos[0] + defaultSizePos[2]) - (app.activeDocument.activeLayout.viewedRectangle.pX1 + splitPos.x);
+			defaultSizePos[0] = splitPos.x + app.activeDocument.activeLayout.viewedRectangle.pX1;
 		}
 
 		if (defaultSizePos[1] < splitPos.y && defaultSizePos[1] + defaultSizePos[3] > splitPos.y)
-			defaultSizePos[3] = Math.max(splitPos.y - defaultSizePos[1], defaultSizePos[3] - app.activeDocument.activeView.viewedRectangle.pY1);
+			defaultSizePos[3] = Math.max(splitPos.y - defaultSizePos[1], defaultSizePos[3] - app.activeDocument.activeLayout.viewedRectangle.pY1);
 
-		if (defaultSizePos[1] >= splitPos.y && app.activeDocument.activeView.viewedRectangle.pY1 + splitPos.y > defaultSizePos[1]) {
-			defaultSizePos[3] = (defaultSizePos[1] + defaultSizePos[3]) - (app.activeDocument.activeView.viewedRectangle.pY1 + splitPos.y);
-			defaultSizePos[1] = splitPos.y + app.activeDocument.activeView.viewedRectangle.pY1;
+		if (defaultSizePos[1] >= splitPos.y && app.activeDocument.activeLayout.viewedRectangle.pY1 + splitPos.y > defaultSizePos[1]) {
+			defaultSizePos[3] = (defaultSizePos[1] + defaultSizePos[3]) - (app.activeDocument.activeLayout.viewedRectangle.pY1 + splitPos.y);
+			defaultSizePos[1] = splitPos.y + app.activeDocument.activeLayout.viewedRectangle.pY1;
 		}
 
 		return defaultSizePos;

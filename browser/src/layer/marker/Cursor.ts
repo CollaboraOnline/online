@@ -229,8 +229,8 @@ class Cursor {
 		let y;
 
 		if (app.map.getDocType() === 'spreadsheet') {
-			let diffX = -app.activeDocument.activeView.viewedRectangle.pX1;
-			let diffY = -app.activeDocument.activeView.viewedRectangle.pY1;
+			let diffX = -app.activeDocument.activeLayout.viewedRectangle.pX1;
+			let diffY = -app.activeDocument.activeLayout.viewedRectangle.pY1;
 
 			if (app.isXOrdinateInFrozenPane(this.rectangle.pX1))
 				diffX = 0;

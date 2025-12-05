@@ -792,8 +792,8 @@ export class HeaderInfo {
 				: zoomPos.topLeft.y;
 		} else {
 			startPx = this._isColumn ?
-				app.activeDocument.activeView.viewedRectangle.pX1 + splitPos
-				: app.activeDocument.activeView.viewedRectangle.pY1 + splitPos;
+				app.activeDocument.activeLayout.viewedRectangle.pX1 + splitPos
+				: app.activeDocument.activeLayout.viewedRectangle.pY1 + splitPos;
 			scale = 1;
 		}
 

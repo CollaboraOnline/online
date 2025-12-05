@@ -12,7 +12,7 @@
 
 class DocumentBase {
 	public readonly type: string = 'DocumentBase';
-	public activeView: ViewLayoutBase;
+	public activeLayout: ViewLayoutBase;
 	public tableMiddleware: TableMiddleware;
 	public selectionMiddleware: ImpressSelectionMiddleware | null;
 	public mouseControl: MouseControl | null = null;
@@ -22,9 +22,9 @@ class DocumentBase {
 
 	constructor() {
 		if (app.map._docLayer._docType === 'text') {
-			this.activeView = new ViewLayoutWriter();
+			this.activeLayout = new ViewLayoutWriter();
 		} else {
-			this.activeView = new ViewLayoutBase();
+			this.activeLayout = new ViewLayoutBase();
 		}
 		this._fileSize = new cool.SimplePoint(0, 0);
 		this.tableMiddleware = new TableMiddleware();

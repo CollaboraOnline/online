@@ -752,7 +752,7 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 	// because the server needs new data even if the client is unmodified.
 	_resetClientVisArea: function ()  {
 		this._clientZoom = '';
-		app.activeDocument.activeView.resetClientVisibleArea();
+		app.activeDocument.activeLayout.resetClientVisibleArea();
 	},
 
 	_resetCanonicalIdStatus: function() {
@@ -2521,7 +2521,7 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 		if (newSelection.equals(oldSelection.toArray()))
 			return;
 
-		const viewedRectangle = app.activeDocument.activeView.viewedRectangle;
+		const viewedRectangle = app.activeDocument.activeLayout.viewedRectangle;
 		const directionDownOrRight = (newSelection.pX2 !== oldSelection.pX2) || (newSelection.pY2 !== oldSelection.pY2);
 
 		let needsScroll = false;
@@ -2562,7 +2562,7 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 			if (!this._map.wholeColumnSelected && !this._map.wholeRowSelected) {
 				const address = document.querySelector('#addressInput input').value;
 				if (!this._isWholeColumnSelected(address) && !this._isWholeRowSelected(address)) {
-					app.activeDocument.activeView.scroll(scrollX, scrollY);
+					app.activeDocument.activeLayout.scroll(scrollX, scrollY);
 				}
 			}
 		}
@@ -2969,7 +2969,7 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 
 		// If x coordinate is already within visible area, we won't scroll to that direction.
 		if (app.isXVisibleInTheDisplayedArea(Math.round(center.x * CSSPixelsToTwips)))
-			center.x = app.activeDocument.activeView.viewedRectangle.cX1;
+			center.x = app.activeDocument.activeLayout.viewedRectangle.cX1;
 		else {
 			center.x -= this._map.getSize().divideBy(2).x;
 			center.x = Math.round(center.x < 0 ? 0 : center.x);
@@ -2984,7 +2984,7 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 			(app.calc.cellCursorVisible ? app.calc.cellCursorRectangle.cHeight : 0));
 
 		if (app.isYVisibleInTheDisplayedArea(Math.round(controlYDown * CSSPixelsToTwips)) && app.isYVisibleInTheDisplayedArea(Math.round(controlYUp * CSSPixelsToTwips)))
-			center.y = app.activeDocument.activeView.viewedRectangle.cY1;
+			center.y = app.activeDocument.activeLayout.viewedRectangle.cY1;
 		else {
 			center.y -= this._map.getSize().divideBy(2).y;
 			center.y = Math.round(center.y < 0 ? 0 : center.y);
@@ -3033,8 +3033,8 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 			if (this._docType === 'text') {
 				// For Writer documents, disallow scrolling to cursor outside of the page (horizontally)
 				// Use document dimensions to approximate page width
-				correctedCursor.x1 = clamp(correctedCursor.x1, 0, app.activeDocument.activeView.viewSize.x);
-				correctedCursor.x2 = clamp(correctedCursor.x2, 0, app.activeDocument.activeView.viewSize.x);
+				correctedCursor.x1 = clamp(correctedCursor.x1, 0, app.activeDocument.activeLayout.viewSize.x);
+				correctedCursor.x2 = clamp(correctedCursor.x2, 0, app.activeDocument.activeLayout.viewSize.x);
 			}
 
 			if (!app.isPointVisibleInTheDisplayedArea(new cool.SimplePoint(correctedCursor.x1, correctedCursor.y1).toArray()) ||
@@ -3157,9 +3157,9 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 			    !this._map.calcInputBarHasFocus()) {
 				const scroll = this._calculateScrollForNewCellCursor();
 				if (scroll.x !== 0 || scroll.y !== 0) {
-					scroll.x += app.activeDocument.activeView.viewedRectangle.x1;
-					scroll.y += app.activeDocument.activeView.viewedRectangle.y1;
-					app.activeDocument.activeView.scrollTo(scroll.pX, scroll.pY);
+					scroll.x += app.activeDocument.activeLayout.viewedRectangle.x1;
+					scroll.y += app.activeDocument.activeLayout.viewedRectangle.y1;
+					app.activeDocument.activeLayout.scrollTo(scroll.pX, scroll.pY);
 				}
 
 				this._prevCellCursorAddress = app.calc.cellAddress.clone();
@@ -3586,7 +3586,7 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 
 		const size = [documentEndPos.x - documentPos.x, documentEndPos.y - documentPos.y];
 
-		app.activeDocument.activeView.viewedRectangle = new cool.SimpleRectangle(
+		app.activeDocument.activeLayout.viewedRectangle = new cool.SimpleRectangle(
 			documentPos.x * app.pixelsToTwips, documentPos.y * app.pixelsToTwips, size[0] * app.pixelsToTwips, size[1] * app.pixelsToTwips
 		);
 	},
@@ -4041,7 +4041,7 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 		}
 
 		var docPixelLimits = new cool.Point(app.activeDocument.fileSize.pX / app.dpiScale, app.activeDocument.fileSize.pY / app.dpiScale);
-		var scrollPixelLimits = new cool.Point(app.activeDocument.activeView.viewSize.pX / app.dpiScale, app.activeDocument.activeView.viewSize.pY / app.dpiScale);
+		var scrollPixelLimits = new cool.Point(app.activeDocument.activeLayout.viewSize.pX / app.dpiScale, app.activeDocument.activeLayout.viewSize.pY / app.dpiScale);
 		var topLeft = this._map.unproject(new cool.Point(0, 0));
 
 		if (this._documentInfo === '' || sizeChanged) {
@@ -4077,7 +4077,7 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 
 		var rectangle;
 		var maxArea = -1;
-		const viewedRectangle = app.activeDocument.activeView.viewedRectangle.pToArray();
+		const viewedRectangle = app.activeDocument.activeLayout.viewedRectangle.pToArray();
 		const candidates = [];
 		for (i = 0; i < parts.length; i++) {
 			rectangle = [0, partHeightPixels * parts[i].part, partWidthPixels, Math.round(this._partHeightTwips * app.twipsToPixels)];

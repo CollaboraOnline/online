@@ -78,13 +78,13 @@ class MouseControl extends CanvasSectionObject {
 
 		// Convert to pure canvas html element coordinate.
 		viewToDocumentPos.pX +=
-			-app.activeDocument.activeView.viewedRectangle.pX1 +
+			-app.activeDocument.activeLayout.viewedRectangle.pX1 +
 			app.sectionContainer.getDocumentAnchor()[0];
 		viewToDocumentPos.pY +=
-			-app.activeDocument.activeView.viewedRectangle.pY1 +
+			-app.activeDocument.activeLayout.viewedRectangle.pY1 +
 			app.sectionContainer.getDocumentAnchor()[1];
 
-		viewToDocumentPos = app.activeDocument.activeView.canvasToDocumentPoint(viewToDocumentPos);
+		viewToDocumentPos = app.activeDocument.activeLayout.canvasToDocumentPoint(viewToDocumentPos);
 
 		app.map._docLayer._postMouseEvent(
 			eventType,
@@ -123,10 +123,10 @@ class MouseControl extends CanvasSectionObject {
 		const boundingClientRectangle = this.context.canvas.getBoundingClientRect();
 		const pagePosition = this.currentPosition.clone();
 		pagePosition.pX -=
-			app.activeDocument.activeView.viewedRectangle.pX1 -
+			app.activeDocument.activeLayout.viewedRectangle.pX1 -
 			this.containerObject.getDocumentAnchor()[0];
 		pagePosition.pY -=
-			app.activeDocument.activeView.viewedRectangle.pY1 -
+			app.activeDocument.activeLayout.viewedRectangle.pY1 -
 			this.containerObject.getDocumentAnchor()[1];
 		return {
 			x: pagePosition.cX + boundingClientRectangle.left,
@@ -140,8 +140,8 @@ class MouseControl extends CanvasSectionObject {
 	}
 
 	private refreshPosition(point: cool.SimplePoint) {
-		let topLeftX = app.activeDocument.activeView.viewedRectangle.pX1;
-		let topLeftY = app.activeDocument.activeView.viewedRectangle.pY1;
+		let topLeftX = app.activeDocument.activeLayout.viewedRectangle.pX1;
+		let topLeftY = app.activeDocument.activeLayout.viewedRectangle.pY1;
 
 		if (app.map.getDocType() === 'spreadsheet') {
 			if (app.isXOrdinateInFrozenPane(point.pX)) topLeftX = 0;
@@ -202,15 +202,15 @@ class MouseControl extends CanvasSectionObject {
 			];
 
 			if (Math.abs(delta[0]) > 0.2 || Math.abs(delta[1]) > 0.2) {
-				app.activeDocument.activeView.scrollTo(
-					app.activeDocument.activeView.viewedRectangle.pX1 + delta[0],
-					app.activeDocument.activeView.viewedRectangle.pY1 + delta[1],
+				app.activeDocument.activeLayout.scrollTo(
+					app.activeDocument.activeLayout.viewedRectangle.pX1 + delta[0],
+					app.activeDocument.activeLayout.viewedRectangle.pY1 + delta[1],
 				);
 				app.sectionContainer.requestReDraw();
 
 				if (this.previousViewedRectangle) {
 					if (
-						app.activeDocument.activeView.viewedRectangle.equals(
+						app.activeDocument.activeLayout.viewedRectangle.equals(
 							this.previousViewedRectangle.toArray(),
 						)
 					)
@@ -218,7 +218,7 @@ class MouseControl extends CanvasSectionObject {
 				}
 
 				this.previousViewedRectangle =
-					app.activeDocument.activeView.viewedRectangle.clone();
+					app.activeDocument.activeLayout.viewedRectangle.clone();
 			} else this.cancelSwipe();
 		}
 	}
@@ -291,10 +291,10 @@ class MouseControl extends CanvasSectionObject {
 			diff.y -= this.positionOnMouseDown.y;
 
 			const viewedRectangle =
-				app.activeDocument.activeView.viewedRectangle.clone();
+				app.activeDocument.activeLayout.viewedRectangle.clone();
 
 			// Use scrollTo, or repeating events break the scrolling.
-			app.activeDocument.activeView.scrollTo(
+			app.activeDocument.activeLayout.scrollTo(
 				viewedRectangle.pX1 - diff.pX,
 				viewedRectangle.pY1 - diff.pY,
 			);
