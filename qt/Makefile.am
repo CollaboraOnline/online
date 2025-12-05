@@ -74,6 +74,11 @@ DBusService.moc.cpp: DBusService.hpp
 
 CLEANFILES = $(BUILT_SOURCES)
 
+coda_qt_CXXFLAGS = $(AM_CXXFLAGS)
+if X86
+coda_qt_CXXFLAGS += -mno-direct-extern-access
+endif
+
 coda_qt_SOURCES = coda-qt.cpp WebView.cpp DBusService.cpp RecentDocuments.cpp $(BUILT_SOURCES) $(cmake_list)
 
 metainfodir = $(datadir)/metainfo
