@@ -37,7 +37,7 @@ Then run `coda-qt` and open http://localhost:3311
 
 ### Building flatpak
 
-There is a flatpak manifest under `flatpak/com.collabora.Office.json`.
+There is a flatpak manifest under `flatpak/com.collaboraoffice.Office.json`.
 
 Install following dependencies for building the flatpak.
 
@@ -51,7 +51,7 @@ flatpak install org.kde.Sdk//6.10 \
 Use flatpak-builder to create a flatpak.
 
 - Build and install user level:
-`flatpak-builder build-dir com.collabora.Office.json --install --user --force-clean --ccache`
+`flatpak-builder build-dir com.collaboraoffice.Office.json --install --user --force-clean --ccache`
 
 - Create a bundle from the build-dir:
-`flatpak build-bundle .flatpak-builder/cache CODA-Q.bundle com.collabora.Office`
+`flatpak build-bundle .flatpak-builder/cache CODA-Q.bundle com.collaboraoffice.Office`

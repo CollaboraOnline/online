@@ -77,22 +77,22 @@ CLEANFILES = $(BUILT_SOURCES)
 coda_qt_SOURCES = coda-qt.cpp WebView.cpp DBusService.cpp $(BUILT_SOURCES) $(cmake_list)
 
 metainfodir = $(datadir)/metainfo
-metainfo_DATA = com.collabora.Office.metainfo.xml
+metainfo_DATA = com.collaboraoffice.Office.metainfo.xml
 
 desktopdir = $(datadir)/applications
-desktop_DATA = com.collabora.Office.desktop
+desktop_DATA = com.collaboraoffice.Office.desktop
 
 iconsdir = $(datadir)/icons
 nobase_dist_icons_DATA = \
-	hicolor/16x16/apps/com.collabora.Office.startcenter.png \
-	hicolor/24x24/apps/com.collabora.Office.startcenter.png \
-	hicolor/32x32/apps/com.collabora.Office.startcenter.png \
-	hicolor/48x48/apps/com.collabora.Office.startcenter.png \
-	hicolor/64x64/apps/com.collabora.Office.startcenter.png \
-	hicolor/128x128/apps/com.collabora.Office.startcenter.png \
-	hicolor/256x256/apps/com.collabora.Office.startcenter.png \
-	hicolor/512x512/apps/com.collabora.Office.startcenter.png \
-	hicolor/scalable/apps/com.collabora.Office.startcenter.svg
+	hicolor/16x16/apps/com.collaboraoffice.Office.startcenter.png \
+	hicolor/24x24/apps/com.collaboraoffice.Office.startcenter.png \
+	hicolor/32x32/apps/com.collaboraoffice.Office.startcenter.png \
+	hicolor/48x48/apps/com.collaboraoffice.Office.startcenter.png \
+	hicolor/64x64/apps/com.collaboraoffice.Office.startcenter.png \
+	hicolor/128x128/apps/com.collaboraoffice.Office.startcenter.png \
+	hicolor/256x256/apps/com.collaboraoffice.Office.startcenter.png \
+	hicolor/512x512/apps/com.collaboraoffice.Office.startcenter.png \
+	hicolor/scalable/apps/com.collaboraoffice.Office.startcenter.svg
 
 ### --- Qt translations integration begin ---
 
