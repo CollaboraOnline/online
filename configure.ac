@@ -66,6 +66,8 @@ AC_DEFINE_UNQUOTED([COOLWSD_BUILDCONFIG],[["$ac_configure_args"]],[Options passe
 # don't include config_unused.h anywhere!
 AC_CONFIG_HEADERS([config_unused.h])
 
+AM_CONDITIONAL([X86], [test "$host_cpu" = x86 || test "$host_cpu" = x86_64])
+
 # Checks for programs.
 AC_PROG_CXX
 AC_PROG_CC
