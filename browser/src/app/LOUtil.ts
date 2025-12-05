@@ -420,6 +420,7 @@ class LOUtil {
 			tabledeletemenu: 'deletetable',
 			insertcalctable: 'inserttable',
 			removecalctable: 'deletetable',
+			databasesettings: 'tabledesign',
 			tracechangemode: 'trackchanges',
 			deleteallannotation: 'deleteallnotes',
 			sdtabledesignpanel: 'tabledesign',
