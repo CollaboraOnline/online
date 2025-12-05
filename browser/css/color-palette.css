@@ -1,6 +1,6 @@
 :root {
 	/*LibreOffice Colors: https://wiki.documentfoundation.org/Marketing/Branding#Colors
-	 * this is the color prefab for light mode
+	 * Default to dark mode colors to prevent white flash on load
 	----------------------------------[to do]*/
 	--blue1-txt-primary-color: 3, 105, 163;
 	--green0-txt-primary-color: 16, 104, 2; /*green1 lacks contrast against white*/
@@ -15,7 +15,7 @@
 	--color-status-badge: #616161;
 	--color-slideshow: #A8A8A8;
 
-	--color-main-background: #F8F9FA;
+	--color-main-background: #121212;  /* Default to dark to prevent white flash */
 	--color-background-dark: #e8e8e8;  /* select */
 	--color-background-darker: #c0bfbc;  /* todo: apply to pressed (active), li:hover(top menu on classic mode)*/
 	--color-background-slideshow: #1a1a1a;
@@ -82,6 +82,10 @@
 	--color-treeview-highlight: #FFEE80;
 	--color-treeview-highlight-text: #222;
 	--color-quickfind-border: #e1dfdd;
+}
+
+[data-theme='light'] {
+	--color-main-background: #F8F9FA;
 }
 
 [data-bg-theme='light'] {
