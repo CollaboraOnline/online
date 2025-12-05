@@ -62,10 +62,8 @@
 
 #include <climits>
 #include <fstream>
-#include <memory>
 #include <sstream>
 #include <string>
-#include <string_view>
 #include <utility>
 #include <zlib.h>
 #include <zstd.h>
