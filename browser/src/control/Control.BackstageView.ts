@@ -125,6 +125,10 @@ class BackstageView extends window.L.Class {
 			'backstage-view',
 		);
 
+		if (this.isStarterMode) {
+			container.classList.add('is-starter-mode');
+		}
+
 		const header = this.createHeader();
 		container.appendChild(header);
 
@@ -155,7 +159,6 @@ class BackstageView extends window.L.Class {
 
 			const closeBtn = this.createElement('span', 'backstage-header-close-icon');
 			closeBtn.setAttribute('aria-hidden', 'true');
-			closeBtn.textContent = '×';
 			closeButton.appendChild(closeBtn);
 
 			window.L.DomEvent.on(closeButton, 'click', () => this.hide(), this);
@@ -197,7 +200,6 @@ class BackstageView extends window.L.Class {
 
 		const icon = this.createElement('span', 'backstage-sidebar-back-icon');
 		icon.setAttribute('aria-hidden', 'true');
-		icon.textContent = '←';
 		backButton.appendChild(icon);
 
 		window.L.DomEvent.on(backButton, 'click', () => this.hide(), this);
@@ -231,7 +233,7 @@ class BackstageView extends window.L.Class {
 				label: _('Home'),
 				type: 'view',
 				viewType: 'home',
-				visible: false,
+				visible: !this.isStarterMode,
 			},
 			{
 				id: 'new',
@@ -330,6 +332,69 @@ class BackstageView extends window.L.Class {
 		this.clearContent();
 
 		this.addSectionHeader(
+			_('Home'),
+			_('Start a new document from one of the following templates.'),
+		);
+
+		if (!this.templates) {
+			this.renderTemplatesLoadingState();
+			this.loadTemplatesData().then(() => {
+				if (this.isVisible) this.renderHomeView();
+			});
+			return;
+		}
+
+		const templateType = this.isStarterMode 
+			? 'writer' 
+			: this.detectTemplateTypeFromDoc();
+
+		const allTemplates = this.getTemplatesData();
+		const appSpecificTemplates = allTemplates.filter(
+			(template) => template.type === templateType
+		);
+
+		const blankTemplate = this.getBlankTemplate(templateType);
+		const templatesForHome: TemplateData[] = [];
+
+		if (blankTemplate) {
+			templatesForHome.push(blankTemplate);
+		}
+
+		templatesForHome.push(...appSpecificTemplates);
+
+		const templatesRow = this.createTemplateRow(
+			templatesForHome,
+			'backstage-home-templates-row',
+		);
+
+		const moreTemplatesContainer = this.createElement('div', 'backstage-home-more-templates');
+		const divider = this.createElement('div', 'backstage-home-divider');
+		const moreTemplatesButton = this.createElement('div', 'backstage-home-more-button');
+		moreTemplatesButton.textContent = _('More Templates');
+		moreTemplatesButton.setAttribute('role', 'button');
+		moreTemplatesButton.setAttribute('tabindex', '0');
+		moreTemplatesButton.setAttribute('aria-label', _('More Templates'));
+		
+		const handleMoreTemplatesClick = () => {
+			const newTabElement = document.getElementById('backstage-new');
+			if (newTabElement) {
+				newTabElement.click();
+			} else {
+				this.renderNewView();
+			}
+		};
+		
+		window.L.DomEvent.on(moreTemplatesButton, 'click', handleMoreTemplatesClick, this);
+
+		moreTemplatesContainer.appendChild(divider);
+		moreTemplatesContainer.appendChild(moreTemplatesButton);
+
+		if (templatesRow) {
+			this.contentArea.appendChild(templatesRow);
+		}
+		this.contentArea.appendChild(moreTemplatesContainer);
+
+		this.addSectionHeader(
 			_('Recent'),
 			_('Recently opened documents will appear here'),
 		);
@@ -343,8 +408,7 @@ class BackstageView extends window.L.Class {
 		this.templateSearchContainer = null;
 
 		this.addSectionHeader(
-			_('New Document'),
-			_('Start from a template or a blank file'),
+			_('New')
 		);
 
 		if (!this.templates) {
@@ -562,17 +626,19 @@ class BackstageView extends window.L.Class {
 		return properties;
 	}
 
-	private addSectionHeader(title: string, description: string): void {
+	private addSectionHeader(title: string, description: string = ""): void {
 		const titleElement = this.createElement('h2', 'backstage-content-title');
 		titleElement.textContent = title;
 		this.contentArea.appendChild(titleElement);
 
+		if (description !== "") {
 		const descElement = this.createElement(
 			'p',
 			'backstage-content-description',
 		);
 		descElement.textContent = description;
 		this.contentArea.appendChild(descElement);
+	}
 	}
 
 	private clearContent(): void {
@@ -727,6 +793,20 @@ class BackstageView extends window.L.Class {
 		});
 	}
 
+	private createTemplateRow(
+		templates: TemplateData[],
+		className: string = 'template-featured-row',
+		cardOptions: { variant?: 'featured'; isBlank?: boolean } = {},
+	): HTMLElement | null {
+		if (templates.length === 0) return null;
+
+		const row = this.createElement('div', className);
+		templates.forEach((template) => {
+			row.appendChild(this.createTemplateCard(template, cardOptions));
+		});
+		return row;
+	}
+
 	private renderFeaturedRow(): HTMLElement | null {
 		const blankTemplates = [
 			this.getBlankTemplate('writer'),
@@ -739,18 +819,10 @@ class BackstageView extends window.L.Class {
 			? blankTemplates.filter((t) => t.searchText.includes(query))
 			: blankTemplates;
 
-		if (filteredBlankTemplates.length === 0) return null;
-
-		const row = this.createElement('div', 'template-featured-row');
-		filteredBlankTemplates.forEach((blankTemplate) => {
-			row.appendChild(
-				this.createTemplateCard(blankTemplate, {
-					variant: 'featured',
-					isBlank: true,
-				}),
-			);
+		return this.createTemplateRow(filteredBlankTemplates, 'template-featured-row', {
+			variant: 'featured',
+			isBlank: true,
 		});
-		return row;
 	}
 
 	private renderTemplateGrid(templates: TemplateData[]): HTMLElement {
@@ -1078,7 +1150,12 @@ class BackstageView extends window.L.Class {
 		this.isVisible = true;
 		$(this.container).removeClass('hidden');
 		this.hideDocumentContainer();
-		this.renderNewView();
+		// Default to home tab for non-starter mode, new tab for starter mode
+		if (this.isStarterMode) {
+			this.renderNewView();
+		} else {
+			this.renderHomeView();
+		}
 		this.updateSaveButtonState();
 		this.container.focus();
 		this.fireMapEvent('backstageshow');
