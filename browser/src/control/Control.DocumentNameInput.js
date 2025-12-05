@@ -55,12 +55,14 @@ window.L.Control.DocumentNameInput = window.L.Control.extend({
 		this.map._onGotFocus();
 	},
 
-	documentNameCancel: function() {
+	documentNameCancel: function(blur) {
 		if (this._renaming)
 			return;
 
 		$('#document-name-input').val(this.map['wopi'].BreadcrumbDocName);
-		this.map._onGotFocus();
+		if (blur !== true) {
+			this.map._onGotFocus();
+		}
 	},
 
 	disableDocumentNameInput : function() {
@@ -74,7 +76,7 @@ window.L.Control.DocumentNameInput = window.L.Control.extend({
 		$('#document-name-input').addClass('editable');
 		$('#document-name-input').off('keypress', this.onDocumentNameKeyPress).on('keypress', this.onDocumentNameKeyPress.bind(this));
 		$('#document-name-input').off('focus', this.onDocumentNameFocus).on('focus', this.onDocumentNameFocus.bind(this));
-		$('#document-name-input').off('blur', this.documentNameCancel).on('blur', this.documentNameCancel.bind(this));
+		$('#document-name-input').off('blur', this.documentNameCancel).on('blur', this.documentNameCancel.bind(this, true));
 	},
 
 	onDocumentNameKeyPress: function(e) {
