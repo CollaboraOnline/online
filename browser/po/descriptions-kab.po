@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-11-17 08:08+0200\n"
-"PO-Revision-Date: 2025-11-29 11:00+0000\n"
+"PO-Revision-Date: 2025-12-04 17:00+0000\n"
 "Last-Translator: Amadɣas <massiin@proton.me>\n"
 "Language-Team: Kabyle <https://hosted.weblate.org/projects/collabora-online/"
 "app-store-descriptions/kab/>\n"
@@ -111,14 +111,14 @@ msgstr ""
 #. Long description
 #: descriptions/google-play.html%2Bhtml.body.p:52-1
 msgid "License:"
-msgstr ""
+msgstr "Turagt:"
 
 #. Long description
 #: descriptions/google-play.html%2Bhtml.body.p:56-1
 msgid "Open Source - Mozilla Public License v2 and other"
-msgstr ""
+msgstr "Aɣbalu yeldin - Turagt tazayezt n Mozilla v2 akked tayeḍ"
 
 #. Long description
 #: descriptions/google-play.html%2Bhtml.body.p:60-1
 msgid "Credits:"
-msgstr ""
+msgstr "Ismaden:"
