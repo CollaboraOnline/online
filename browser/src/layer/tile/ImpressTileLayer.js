@@ -272,6 +272,7 @@ window.L.ImpressTileLayer = window.L.CanvasTileLayer.extend({
 			this._updateMaxBounds(true, allPagesResized);
 
 			this._viewId = statusJSON.viewid;
+			app.activeDocument.setActiveViewID(this._viewId);
 			console.assert(this._viewId >= 0, 'Incorrect viewId received: ' + this._viewId);
 			if (app.socket._reconnecting) {
 				app.socket.sendMessage('setclientpart part=' + this._selectedPart);

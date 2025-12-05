@@ -1,5 +1,5 @@
 // @ts-strict-ignore
-/* global Proxy _ */
+
 /*
  * Copyright the Collabora Online contributors.
  *
@@ -25,9 +25,9 @@ class TextSelectionSection extends CanvasSectionObject {
 			* Behaviour should be decided based on what the app is capable (remove one selection when other is initiated or keep them all etc).
 			* Selections data (not the socket message, its data) should be handled in the DocumentViewBase class.
 	*/
-	public readonly mode: number;
-	public readonly part: number;
-    public readonly color: string;
+	private mode: number;
+	private part: number;
+    public color: string;
 	private polygons: Array<Array<cool.SimplePoint>> = [[]];
 
 	constructor (name: string, mode: number, part: number, color: string) {
@@ -38,6 +38,8 @@ class TextSelectionSection extends CanvasSectionObject {
 	}
 
     public setSelectionInfo(mode: number, part: number, polygons: Array<Array<cool.SimplePoint>>) {
+		this.mode = mode;
+		this.part = part;
 		this.polygons = polygons;
 	}
 

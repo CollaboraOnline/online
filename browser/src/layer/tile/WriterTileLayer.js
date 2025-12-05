@@ -107,7 +107,10 @@ window.L.WriterTileLayer = window.L.CanvasTileLayer.extend({
 
 		var sizeChanged = statusJSON.width !== app.activeDocument.fileSize.x || statusJSON.height !== app.activeDocument.fileSize.y;
 
-		if (statusJSON.viewid !== undefined) this._viewId = statusJSON.viewid;
+		if (statusJSON.viewid !== undefined) {
+			this._viewId = statusJSON.viewid;
+			app.activeDocument.setActiveViewID(this._viewId);
+		}
 
 		console.assert(this._viewId >= 0, 'Incorrect viewId received: ' + this._viewId);
 

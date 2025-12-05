@@ -457,6 +457,7 @@ window.L.CalcTileLayer = window.L.CanvasTileLayer.extend({
 			}
 
 			this._viewId = statusJSON.viewid;
+			app.activeDocument.setActiveViewID(this._viewId);
 
 			console.assert(this._viewId >= 0, 'Incorrect viewId received: ' + this._viewId);
 
