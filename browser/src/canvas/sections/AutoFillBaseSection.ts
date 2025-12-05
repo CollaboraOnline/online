@@ -198,7 +198,7 @@ class AutoFillBaseSection extends CanvasSectionObject {
 	}
 
 	protected autoScroll(point: cool.SimplePoint) {
-		const viewedRectangle = app.activeDocument.activeView.viewedRectangle;
+		const viewedRectangle = app.activeDocument.activeLayout.viewedRectangle;
 		const viewCenter = viewedRectangle.pCenter;
 		const refX =
 			point.pX > viewCenter[0] ? viewedRectangle.pX2 : viewedRectangle.pX1;
@@ -206,9 +206,9 @@ class AutoFillBaseSection extends CanvasSectionObject {
 			point.pY > viewCenter[1] ? viewedRectangle.pY2 : viewedRectangle.pY1;
 
 		if (!app.isXVisibleInTheDisplayedArea(point.x))
-			app.activeDocument.activeView.scroll(point.pX - refX, 0);
+			app.activeDocument.activeLayout.scroll(point.pX - refX, 0);
 		else if (!app.isYVisibleInTheDisplayedArea(point.y))
-			app.activeDocument.activeView.scroll(0, point.pY - refY);
+			app.activeDocument.activeLayout.scroll(0, point.pY - refY);
 	}
 
 	public onMouseMove(

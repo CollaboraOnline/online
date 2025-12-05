@@ -801,7 +801,7 @@ class ShapeHandlesSection extends CanvasSectionObject {
 	}
 
 	public onMouseDown(point: cool.SimplePoint, e: MouseEvent): void {
-		this.sectionProperties.viewedRectangleOnMouseDown = app.activeDocument.activeView.viewedRectangle.clone();
+		this.sectionProperties.viewedRectangleOnMouseDown = app.activeDocument.activeLayout.viewedRectangle.clone();
 		this.sectionProperties.initialPosition = this.position.slice();
 		this.sectionProperties.positionOnMouseDown = point.clone();
 		this.sectionProperties.positionOnMouseDown.pX += this.position[0];
@@ -818,8 +818,8 @@ class ShapeHandlesSection extends CanvasSectionObject {
 			app.map.fire('scrollvelocity', { vx: 0, vy: 0 });
 
 			if (app.map._docLayer._docType !== 'spreadsheet') {
-				point.x += app.activeDocument.activeView.viewedRectangle.x1 - this.sectionProperties.viewedRectangleOnMouseDown.x1;
-				point.y += app.activeDocument.activeView.viewedRectangle.y1 - this.sectionProperties.viewedRectangleOnMouseDown.y1;
+				point.x += app.activeDocument.activeLayout.viewedRectangle.x1 - this.sectionProperties.viewedRectangleOnMouseDown.x1;
+				point.y += app.activeDocument.activeLayout.viewedRectangle.y1 - this.sectionProperties.viewedRectangleOnMouseDown.y1;
 				this.sendTransformCommand(point);
 			}
 			else {
@@ -1008,10 +1008,10 @@ class ShapeHandlesSection extends CanvasSectionObject {
 		}
 
 		if (this.containerObject.isDraggingSomething() && canDrag) {
-			if (!app.activeDocument.activeView.viewedRectangle.equals(this.sectionProperties.viewedRectangleOnMouseDown.toArray())) {
+			if (!app.activeDocument.activeLayout.viewedRectangle.equals(this.sectionProperties.viewedRectangleOnMouseDown.toArray())) {
 				const diff = new cool.SimplePoint(
-					app.activeDocument.activeView.viewedRectangle.x1 - this.sectionProperties.viewedRectangleOnMouseDown.x1,
-					app.activeDocument.activeView.viewedRectangle.y1 - this.sectionProperties.viewedRectangleOnMouseDown.y1
+					app.activeDocument.activeLayout.viewedRectangle.x1 - this.sectionProperties.viewedRectangleOnMouseDown.x1,
+					app.activeDocument.activeLayout.viewedRectangle.y1 - this.sectionProperties.viewedRectangleOnMouseDown.y1
 				);
 
 				this.setPosition(this.sectionProperties.initialPosition[0] + diff.pX, this.sectionProperties.initialPosition[1] + diff.pY);
@@ -1076,8 +1076,8 @@ class ShapeHandlesSection extends CanvasSectionObject {
 			const left = GraphicSelection.rectangle.pX1;
 			const top = GraphicSelection.rectangle.pY1;
 
-			this.sectionProperties.svg.style.left = Math.round((left - app.activeDocument.activeView.viewedRectangle.pX1 + this.containerObject.getDocumentAnchor()[0]) / app.dpiScale) + 'px';
-			this.sectionProperties.svg.style.top = Math.round((top - app.activeDocument.activeView.viewedRectangle.pY1 + this.containerObject.getDocumentAnchor()[1]) / app.dpiScale) + 'px';
+			this.sectionProperties.svg.style.left = Math.round((left - app.activeDocument.activeLayout.viewedRectangle.pX1 + this.containerObject.getDocumentAnchor()[0]) / app.dpiScale) + 'px';
+			this.sectionProperties.svg.style.top = Math.round((top - app.activeDocument.activeLayout.viewedRectangle.pY1 + this.containerObject.getDocumentAnchor()[1]) / app.dpiScale) + 'px';
 			this.sectionProperties.svgPosition = [left, top];
 		}
 		this.hideSVG();
@@ -1085,8 +1085,8 @@ class ShapeHandlesSection extends CanvasSectionObject {
 
 	onNewDocumentTopLeft(): void {
 		if (this.sectionProperties.svgPosition) {
-			this.sectionProperties.svg.style.left = (this.sectionProperties.svgPosition[0] - (app.activeDocument.activeView.viewedRectangle.pX1 + this.containerObject.getDocumentAnchor()[0]) / app.dpiScale) + 'px';
-			this.sectionProperties.svg.style.top = (this.sectionProperties.svgPosition[1] - (app.activeDocument.activeView.viewedRectangle.pY1 + this.containerObject.getDocumentAnchor()[1]) / app.dpiScale) + 'px';
+			this.sectionProperties.svg.style.left = (this.sectionProperties.svgPosition[0] - (app.activeDocument.activeLayout.viewedRectangle.pX1 + this.containerObject.getDocumentAnchor()[0]) / app.dpiScale) + 'px';
+			this.sectionProperties.svg.style.top = (this.sectionProperties.svgPosition[1] - (app.activeDocument.activeLayout.viewedRectangle.pY1 + this.containerObject.getDocumentAnchor()[1]) / app.dpiScale) + 'px';
 		}
 	}
 
@@ -1112,10 +1112,10 @@ class ShapeHandlesSection extends CanvasSectionObject {
 		this.context.beginPath();
 
 		if (this.sectionProperties.closestX !== null)
-			this.drawXAxis(this.containerObject.getDocumentAnchor()[0] + this.sectionProperties.closestX - app.activeDocument.activeView.viewedRectangle.pX1);
+			this.drawXAxis(this.containerObject.getDocumentAnchor()[0] + this.sectionProperties.closestX - app.activeDocument.activeLayout.viewedRectangle.pX1);
 
 		if (this.sectionProperties.closestY !== null)
-			this.drawYAxis(this.containerObject.getDocumentAnchor()[1] + this.sectionProperties.closestY - app.activeDocument.activeView.viewedRectangle.pY1);
+			this.drawYAxis(this.containerObject.getDocumentAnchor()[1] + this.sectionProperties.closestY - app.activeDocument.activeLayout.viewedRectangle.pY1);
 
 		this.context.closePath();
 
@@ -1133,7 +1133,7 @@ class ShapeHandlesSection extends CanvasSectionObject {
 			this.context.strokeStyle = HelperLineStyles.gridSolidStyle;
 			this.context.setLineDash([]);
 
-			const x = this.containerObject.getDocumentAnchor()[0] + this.sectionProperties.closestX - app.activeDocument.activeView.viewedRectangle.pX1;
+			const x = this.containerObject.getDocumentAnchor()[0] + this.sectionProperties.closestX - app.activeDocument.activeLayout.viewedRectangle.pX1;
 
 			this.drawXAxis(x);
 
@@ -1148,7 +1148,7 @@ class ShapeHandlesSection extends CanvasSectionObject {
 			this.context.strokeStyle = HelperLineStyles.gridSolidStyle;
 			this.context.setLineDash([]);
 
-			const y = this.containerObject.getDocumentAnchor()[1] + this.sectionProperties.closestY - app.activeDocument.activeView.viewedRectangle.pY1;
+			const y = this.containerObject.getDocumentAnchor()[1] + this.sectionProperties.closestY - app.activeDocument.activeLayout.viewedRectangle.pY1;
 
 			this.drawYAxis(y);
 

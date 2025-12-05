@@ -276,8 +276,8 @@ class CanvasSectionContainer {
 			this.documentAnchorSectionName = null;
 			this.documentAnchor = null;
 
-			if (app.activeDocument?.activeView)
-				app.activeDocument.activeView.documentAnchorPosition = [0, 0];
+			if (app.activeDocument?.activeLayout)
+				app.activeDocument.activeLayout.documentAnchorPosition = [0, 0];
 		}
 	}
 
@@ -604,7 +604,7 @@ class CanvasSectionContainer {
 			if (documentContainer && documentContainer.clientWidth !== 0 || documentContainer.clientHeight !== 0) {
 				if (app.map._docLayer) {
 					app.map._docLayer._syncTileContainerSize(true);
-					app.activeDocument.activeView.sendClientVisibleArea();
+					app.activeDocument.activeLayout.sendClientVisibleArea();
 					this.requestReDraw();
 					return false;
 				}
@@ -1027,12 +1027,12 @@ class CanvasSectionContainer {
 					section.position[0] -
 					(app.isXOrdinateInFrozenPane(section.position[0])
 						? 0
-						: app.activeDocument.activeView.viewedRectangle.pX1),
+						: app.activeDocument.activeLayout.viewedRectangle.pX1),
 				this.documentAnchor[1] +
 					section.position[1] -
 					(app.isYOrdinateInFrozenPane(section.position[1])
 						? 0
-						: app.activeDocument.activeView.viewedRectangle.pY1),
+						: app.activeDocument.activeLayout.viewedRectangle.pY1),
 			];
 		}
 		else
@@ -1564,8 +1564,8 @@ class CanvasSectionContainer {
 			if (section.name === 'tiles') {
 				// For tiles section add document coordinates of top and left too.
 				element.innerText = JSON.stringify({
-					top: Math.round(app.activeDocument.activeView.viewedRectangle.pY1),
-					left: Math.round(app.activeDocument.activeView.viewedRectangle.pX1),
+					top: Math.round(app.activeDocument.activeLayout.viewedRectangle.pY1),
+					left: Math.round(app.activeDocument.activeLayout.viewedRectangle.pX1),
 					width: Math.round(section.size[0]),
 					height: Math.round(section.size[1])
 				});
@@ -1757,8 +1757,8 @@ class CanvasSectionContainer {
 			if (section.name === this.documentAnchorSectionName) {
 				this.documentAnchor = [section.myTopLeft[0], section.myTopLeft[1]];
 
-				if (app.activeDocument?.activeView)
-					app.activeDocument.activeView.documentAnchorPosition = this.documentAnchor.slice();
+				if (app.activeDocument?.activeLayout)
+					app.activeDocument.activeLayout.documentAnchorPosition = this.documentAnchor.slice();
 			}
 		}
 	}

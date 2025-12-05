@@ -183,7 +183,7 @@ class CanvasSectionObject {
 				sectionXcoord = docSize.x - sectionXcoord - this.size[0];
 			}
 
-			const positionAddition = app.activeDocument.activeView.viewedRectangle.clone();
+			const positionAddition = app.activeDocument.activeLayout.viewedRectangle.clone();
 			const documentAnchor = this.containerObject.getDocumentAnchor();
 
 			if (app.isXOrdinateInFrozenPane(sectionXcoord))
