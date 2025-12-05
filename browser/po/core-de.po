@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: core-de\n"
-"PO-Revision-Date: 2025-11-17 06:39+0000\n"
+"PO-Revision-Date: 2025-12-04 17:00+0000\n"
 "Last-Translator: Ettore Atalan <atalanttore@googlemail.com>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/collabora-online/"
 "lokit/de/>\n"
@@ -401,7 +401,7 @@ msgstr "Hervorhebung"
 #: sfx2/uiconfig/ui/templatepanel.ui:272
 msgctxt "templatepanel|filter-atkobject"
 msgid "Filter"
-msgstr ""
+msgstr "Filter"
 
 #. 5xrhC
 #: sw/inc/strings.hrc:232
