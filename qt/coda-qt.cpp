@@ -1132,8 +1132,6 @@ QVariant Bridge::cool(const QString& messageStr)
     return {};
 }
 
-Bridge* bridge = nullptr;
-
 // Disable accessibility
 void disableA11y() { qputenv("QT_LINUX_ACCESSIBILITY_ALWAYS_ON", "0"); }
 
