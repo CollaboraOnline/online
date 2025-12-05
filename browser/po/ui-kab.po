@@ -7,11 +7,11 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-11-17 08:08+0100\n"
-"PO-Revision-Date: 2025-11-06 15:51+0000\n"
-"Last-Translator: ButterflyOfFire <boffire@users.noreply.hosted.weblate.org>\n"
+"PO-Revision-Date: 2025-12-05 17:46+0000\n"
+"Last-Translator: Amadɣas <massiin@proton.me>\n"
 "Language-Team: Kabyle <https://hosted.weblate.org/projects/collabora-online/"
 "ui/kab/>\n"
-"Language: \n"
+"Language: kab\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -78,15 +78,15 @@ msgstr "Amḍan n isemliyen"
 
 #: admin/admin.strings.js:29
 msgid "Memory consumed"
-msgstr ""
+msgstr "takatut tettwačča"
 
 #: admin/admin.strings.js:30
 msgid "Bytes sent"
-msgstr ""
+msgstr "Ibiten ttwaznen"
 
 #: admin/admin.strings.js:31
 msgid "Bytes received"
-msgstr ""
+msgstr "Ibiten ttwarmsen"
 
 #: admin/admin.strings.js:32
 msgid "PID"
@@ -114,15 +114,15 @@ msgstr "Yebeddel"
 
 #: admin/admin.strings.js:38
 msgid "Uploaded"
-msgstr ""
+msgstr "Yuli"
 
 #: admin/admin.strings.js:39
 msgid "WOPI host"
-msgstr ""
+msgstr "Asneftaɣ WOPI"
 
 #: admin/admin.strings.js:40
 msgid "Kill"
-msgstr ""
+msgstr "Enɣ"
 
 #: admin/admin.strings.js:41
 msgid "Graphs"
@@ -245,7 +245,7 @@ msgstr ""
 
 #: admin/admin.strings.js:66
 msgid "Version Information"
-msgstr ""
+msgstr "Talɣut n lqem"
 
 #: admin/admin.strings.js:67
 msgid "License"
@@ -262,11 +262,11 @@ msgstr "Ɣef"
 
 #: admin/src/AdminClusterOverview.js:105
 msgid "CPU History"
-msgstr ""
+msgstr "Amazray CPU"
 
 #: admin/src/AdminClusterOverview.js:116
 msgid "Memory History"
-msgstr ""
+msgstr "Amazray n tkatut"
 
 #: admin/src/AdminClusterOverview.js:356
 msgid "Memory"
@@ -278,11 +278,11 @@ msgstr ""
 
 #: admin/src/AdminClusterOverview.js:550 admin/src/AdminSocketOverview.js:420
 msgid "Failed to set jwt authentication cookie over insecure connection"
-msgstr ""
+msgstr "Ur izmir ara ad isbadu takukit n usesteb jwt ɣef tuqqna war taɣellist"
 
 #: admin/src/AdminClusterOverview.js:553 admin/src/AdminSocketOverview.js:424
 msgid "Failed to authenticate this session over protocol {0}"
-msgstr ""
+msgstr "Asesteb n tɣimit-agi ur yeddi ara deg uneggaf {0}"
 
 #: admin/src/AdminClusterOverview.js:558 admin/src/AdminSocketOverview.js:429
 msgid "Warning"
@@ -349,7 +349,7 @@ msgstr "Tuqqniwin"
 
 #: admin/src/AdminSocketBase.js:62
 msgid "Server has been shut down; please reload the page."
-msgstr ""
+msgstr "Aqeddac yexsi; ttxil-k·m ales asali n usebter."
 
 #: admin/src/AdminSocketBase.js:72 admin/src/AdminSocketBase.js:73
 msgid "Connection error"
@@ -361,19 +361,19 @@ msgstr "Asentem"
 
 #: admin/src/AdminSocketOverview.js:107
 msgid "Are you sure you want to terminate this session?"
-msgstr ""
+msgstr "D tidet tebɣiḍ ad tfakkeḍ tiɣimit-a?"
 
 #: admin/src/AdminSocketSettings.js:46
 msgid "Are you sure you want to shut down the server?"
-msgstr ""
+msgstr "Tebɣiḍ ad tsenseḍ aqeddac?"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:153
 msgid "Accessibility"
-msgstr ""
+msgstr "Tanekcumt"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:155
 msgid "Signature Certificate"
-msgstr ""
+msgstr "Aselkin n uzmul"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:156
 msgid "Signature Key"
@@ -393,7 +393,7 @@ msgstr "Azmul CA"
 #: src/control/Control.NotebookbarImpress.js:691
 #: src/control/Control.NotebookbarWriter.js:1763
 msgid "Dark Mode"
-msgstr ""
+msgstr "Askar ubrik"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:161
 msgid "Compact layout"
