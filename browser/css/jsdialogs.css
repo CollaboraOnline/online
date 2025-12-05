@@ -493,6 +493,16 @@ algned to the bottom */
 	color: var(--color-text-darker) !important;
 }
 
+
+.jsdialog.sidebar #top-button,
+.jsdialog.sidebar #bottom-button,
+.jsdialog.sidebar #standard-button {
+	padding: 0 5px !important;
+	min-width: 0 !important;
+	margin-inline-end: 2px !important;
+	margin-inline-start: -8px !important;
+}
+
 /* Sub Tabs: example Format Cells: Font */
 
 .ui-tabs-content .ui-tabs.jsdialog.ui-widget {
