@@ -1,5 +1,5 @@
 {
-  "id": "com.collabora.Office",
+  "id": "com.collaboraoffice.Office",
   "runtime": "org.kde.Platform",
   "runtime-version": "6.10",
   "sdk": "org.kde.Sdk",
@@ -909,7 +909,7 @@
       "cleanup": [ "*" ]
     },
     {
-      "name": "collabora-online",
+      "name": "collabora-office",
       "buildsystem": "autotools",
       "build-options": {
         "arch": {
@@ -934,7 +934,7 @@
         "--with-lo-path=/app/collaboraoffice",
         "--with-vendor=Collabora Productivity Limited",
         "--with-app-name=Collabora Office",
-        "--with-info-url=https://collaboraonline.com/"
+        "--with-info-url=https://collaboraoffice.com/"
       ],
       "ensure-writable": [
         "/collaboraoffice/LICENSE.html"
@@ -956,7 +956,7 @@
       ]
     },
     {
-      "name": "collabora-online-branding",
+      "name": "collabora-office-branding",
       "buildsystem": "simple",
       "build-commands": [
         "cp -a online-theme /app/collaboraoffice/share/theme_definitions/online/",
