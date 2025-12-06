@@ -21,6 +21,7 @@ window.L.Map.include({
 
 	setPermission: function (perm) {
 		var button = $('#mobile-edit-button');
+		var alwaysEdit = false;
 		button.off('click');
 		button.attr('tabindex', 0);
 		button.attr('role', 'button');
@@ -34,15 +35,26 @@ window.L.Map.include({
 		//
 		// For mobile we need to display the edit button for all the cases except for PDF
 		// we offer save-as to another place where the user can edit the document
+		
+		try {
+			if (window.parent && window.parent.location && 
+				window.parent.location.href.indexOf('AlwaysEdit=true') !== -1) {
+				alwaysEdit = true;
+			} else {
+				console.error('The AlwaysEdit option was not found in parent URL: ' + window.parent.location.href);
+			}
+		} catch (e) {
+			console.error(' ' + e);
+		}
 		var isPDF = app.file.fileBasedView && app.file.editComment;
-		if (!isPDF && (this._shouldStartReadOnly() || window.mode.isMobile() || window.mode.isTablet())) {
+		if (!isPDF && (this._shouldStartReadOnly() || window.mode.isMobile() || window.mode.isTablet()) && !alwaysEdit) {
 			button.css('display', 'flex');
 		} else {
 			button.hide();
 		}
 		var that = this;
 		if (perm === 'edit') {
-			if (this._shouldStartReadOnly() || window.mode.isMobile() || window.mode.isTablet()) {
+			if ((this._shouldStartReadOnly() || window.mode.isMobile() || window.mode.isTablet()) && !alwaysEdit) {
 				button.on('click', function () {
 					that._switchToEditMode();
 				});
