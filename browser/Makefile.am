@@ -280,7 +280,7 @@ COOL_JS_LST =\
 	src/app/Log.ts \
 	src/app/Debug.ts \
 	src/app/A11yValidator.ts \
-	src/app/SocketBase.ts \
+	src/app/Socket.ts \
 	src/app/TracingEvents.ts \
 	src/app/ServerCommand.ts \
 	src/Leaflet.js \
@@ -290,7 +290,6 @@ COOL_JS_LST =\
 	src/core/Util.js \
 	src/core/Class.js \
 	src/core/Events.js \
-	src/core/Socket.js \
 	src/geometry/Point.ts \
 	src/geometry/Bounds.ts \
 	src/geometry/Transformation.ts \
@@ -358,6 +357,7 @@ COOL_JS_LST =\
 	src/layer/vector/CanvasOverlay.ts \
 	src/canvas/sections/ScrollSection.ts \
 	src/canvas/sections/MouseControl.ts \
+	src/app/LayerUtil.ts \
 	src/layer/tile/CanvasTileLayer.js \
 	src/layer/vector/CDarkOverlay.ts \
 	src/layer/SplitPanesContext.ts \
@@ -1138,10 +1138,9 @@ pot:
 		src/control/jsdialog/Widget.RadioButton.ts \
 		src/control/jsdialog/Widget.SidebarContainers.ts \
 		src/control/jsdialog/Widget.TreeView.ts \
-		src/app/SocketBase.ts \
+		src/app/Socket.ts \
 		src/app/TracingEvents.ts \
 		src/app/ServerCommand.ts \
-		src/core/Socket.js \
 		src/docdispatcher.ts \
 		src/docstate.ts \
 		src/docstatefunctions.js \

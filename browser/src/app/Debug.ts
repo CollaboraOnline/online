@@ -75,7 +75,7 @@ class DebugManager {
 	private _tileDataTotalDeltas: number;
 	private _tileDataTotalInvalidates: number;
 
-	private pingOn: boolean;
+	public pingOn: boolean;
 	private _pingQueue: number[];
 	private _pingTimes: DebugTimeArray;
 	private _pingTimeoutId: TimeoutHdl;
