@@ -10,6 +10,9 @@
  */
 
 #include <config.h>
+#include <frozen/map.h>
+#include <frozen/set.h>
+#include <frozen/string.h>
 
 #include "DocumentBroker.hpp"
 
@@ -1630,6 +1633,13 @@ void PresetsInstallTask::addGroup(const Poco::JSON::Object::Ptr& settings, const
         return;
 
     auto group = settings->get(groupName).extract<Poco::JSON::Array::Ptr>();
+
+    static constexpr frozen::map<std::string_view, std::string_view, 3> specificFiles = {
+        { "xcu", "config.xcu" },
+        { "browsersetting", "browsersetting.json" },
+        { "viewsetting", "viewsetting.json" }
+    };
+
     for (std::size_t i = 0, count = group->size(); i < count; ++i)
     {
         auto elem = group->get(i).extract<Poco::JSON::Object::Ptr>();
@@ -1642,14 +1652,14 @@ void PresetsInstallTask::addGroup(const Poco::JSON::Object::Ptr& settings, const
         Poco::Path destDir(_presetsPath, groupName);
         Poco::File(destDir).createDirectories();
         std::string fileName;
-        if (groupName == "xcu")
-            fileName = Poco::Path(destDir.toString(), "config.xcu").toString();
-        else if (groupName == "browsersetting")
-            fileName = Poco::Path(destDir.toString(), "browsersetting.json").toString();
-        else if (groupName == "viewsetting")
-            fileName = Poco::Path(destDir.toString(), "viewsetting.json").toString();
-        else
+
+        const auto it = specificFiles.find(groupName);
+
+        if (it != specificFiles.end()) {
+            fileName = Poco::Path(destDir.toString(), std::string(it->second)).toString();
+        } else {
             fileName = Poco::Path(destDir.toString(), Uri::getFilenameWithExtFromURL(uri)).toString();
+        }
 
         queries.emplace_back(uri, stamp, fileName);
     }
@@ -4423,99 +4433,131 @@ bool DocumentBroker::handleInput(const std::shared_ptr<Message>& message)
         else
             forwardToClient(message);
     }
-    else
+    else // Incoming message from the Kit process (not client-forwarded)
     {
-        if (message->firstTokenMatches("tile:"))
-        {
-            handleTileResponse(message);
-        }
-        else if (message->firstTokenMatches("tilecombine:"))
-        {
-            handleTileCombinedResponse(message);
-        }
-        else if (message->firstTokenMatches("errortoall:"))
-        {
-            LOG_CHECK_RET(message->tokens().size() == 3, false);
-            std::string cmd, kind;
-            COOLProtocol::getTokenString((*message)[1], "cmd", cmd);
-            LOG_CHECK_RET(cmd != "", false);
-            COOLProtocol::getTokenString((*message)[2], "kind", kind);
-            LOG_CHECK_RET(kind != "", false);
-            Util::alertAllUsers(cmd, kind);
-        }
-        else if (message->firstTokenMatches("registerdownload:"))
-        {
-            LOG_CHECK_RET(message->tokens().size() == 4, false);
-            std::string downloadid, url, clientId;
-            COOLProtocol::getTokenString((*message)[1], "downloadid", downloadid);
-            LOG_CHECK_RET(downloadid != "", false);
-            COOLProtocol::getTokenString((*message)[2], "url", url);
-            LOG_CHECK_RET(url != "", false);
-            COOLProtocol::getTokenString((*message)[3], "clientid", clientId);
-            LOG_CHECK_RET(!clientId.empty(), false);
+        // Define Message Enum
+        enum class KitMessage {
+            MsgTile,
+            TileCombine,
+            ErrorToAll,
+            RegisterDownload,
+            TraceEvent,
+            ForcedTraceEvent,
+            MemoryTrimmed,
+            UnitResult,
+            Unknown
+        };
 
-            const std::string decoded = Uri::decode(url);
-            const std::string filePath(FileUtil::buildLocalPathToJail(COOLWSD::EnableMountNamespaces,
-                                                                      COOLWSD::ChildRoot + getJailId(),
-                                                                      JAILED_DOCUMENT_ROOT + decoded));
-
-            std::ifstream ifs(filePath);
-            const std::string svg((std::istreambuf_iterator<char>(ifs)),
-                                (std::istreambuf_iterator<char>()));
-            ifs.close();
-
-            if (svg.empty())
-                LOG_WRN("Empty download: [id: " << downloadid << ", url: " << url << ']');
-
-            const auto it = _sessions.find(clientId);
-            if (it != _sessions.end())
+        // Define Dispatch Map (The hash table for O(1) lookup)
+        static constexpr frozen::map<std::string_view, KitMessage, 8> messageDispatchMap = {
+            { "tile:", KitMessage::MsgTile },
+            { "tilecombine:", KitMessage::TileCombine },
+            { "errortoall:", KitMessage::ErrorToAll },
+            { "registerdownload:", KitMessage::RegisterDownload },
+            { "traceevent:", KitMessage::TraceEvent },
+            { "forcedtraceevent:", KitMessage::ForcedTraceEvent },
+            { "memorytrimmed:", KitMessage::MemoryTrimmed },
+            { "unitresult:", KitMessage::UnitResult }
+        };
+        // Extract and Look up the command (O(1) operation)
+        const std::string_view firstToken = message->firstToken();
+        auto it = messageDispatchMap.find(firstToken);
+        // Dispatch Logic (Replaces the long if/else if chain)
+        switch (it != messageDispatchMap.end() ? it->second : KitMessage::Unknown)
+        {
+            case KitMessage::MsgTile:
+                handleTileResponse(message);
+                break;
+            case KitMessage::TileCombine:
+                handleTileCombinedResponse(message);
+                break;
+            case KitMessage::ErrorToAll:
             {
-                std::ofstream ofs(filePath);
-                ofs << it->second->processSVGContent(svg);
+                LOG_CHECK_RET(message->tokens().size() == 3, false);
+                std::string cmd, kind;
+                COOLProtocol::getTokenString((*message)[1], "cmd", cmd);
+                LOG_CHECK_RET(cmd != "", false);
+                COOLProtocol::getTokenString((*message)[2], "kind", kind);
+                LOG_CHECK_RET(kind != "", false);
+                Util::alertAllUsers(cmd, kind);
+                break;
             }
+            case KitMessage::RegisterDownload:
+            {
+                LOG_CHECK_RET(message->tokens().size() == 4, false);
+                std::string downloadid, url, clientId;
+                COOLProtocol::getTokenString((*message)[1], "downloadid", downloadid);
+                LOG_CHECK_RET(downloadid != "", false);
+                COOLProtocol::getTokenString((*message)[2], "url", url);
+                LOG_CHECK_RET(url != "", false);
+                COOLProtocol::getTokenString((*message)[3], "clientid", clientId);
+                LOG_CHECK_RET(!clientId.empty(), false);
 
-            _registeredDownloadLinks[downloadid] = std::move(url);
-        }
-        else if (message->firstTokenMatches("traceevent:"))
-        {
-            LOG_CHECK_RET(message->tokens().size() == 1, false);
-            if (COOLWSD::TraceEventFile != NULL && TraceEvent::isRecordingOn())
-            {
-                const auto& firstLine = message->firstLine();
-                if (firstLine.size() < message->size())
-                    COOLWSD::writeTraceEventRecording(message->data().data() + firstLine.size() + 1,
-                                                      message->size() - firstLine.size() - 1);
+                const std::string decoded = Uri::decode(url);
+                const std::string filePath(FileUtil::buildLocalPathToJail(COOLWSD::EnableMountNamespaces,
+                                                                          COOLWSD::ChildRoot + getJailId(),
+                                                                          JAILED_DOCUMENT_ROOT + decoded));
+
+                std::ifstream ifs(filePath);
+                const std::string svg((std::istreambuf_iterator<char>(ifs)),
+                                    (std::istreambuf_iterator<char>()));
+                ifs.close();
+
+                if (svg.empty())
+                    LOG_WRN("Empty download: [id: " << downloadid << ", url: " << url << ']');
+
+                const auto clientIt = _sessions.find(clientId);
+                if (clientIt != _sessions.end())
+                {
+                    std::ofstream ofs(filePath);
+                    ofs << clientIt->second->processSVGContent(svg);
+                }
+
+                _registeredDownloadLinks[downloadid] = std::move(url);
+                break;
             }
-        }
-        else if (message->firstTokenMatches("forcedtraceevent:"))
-        {
-            LOG_CHECK_RET(message->tokens().size() == 1, false);
-            if (COOLWSD::TraceEventFile != NULL)
+            case KitMessage::TraceEvent:
             {
-                const auto& firstLine = message->firstLine();
-                if (firstLine.size() < message->size())
-                    COOLWSD::writeTraceEventRecording(message->data().data() + firstLine.size() + 1,
-                                                      message->size() - firstLine.size() - 1);
+                LOG_CHECK_RET(message->tokens().size() == 1, false);
+                if (COOLWSD::TraceEventFile != NULL && TraceEvent::isRecordingOn())
+                {
+                    const auto& firstLine = message->firstLine();
+                    if (firstLine.size() < message->size())
+                        COOLWSD::writeTraceEventRecording(message->data().data() + firstLine.size() + 1,
+                                                          message->size() - firstLine.size() - 1);
+                }
+                break;
             }
-        }
-        else if (message->firstTokenMatches("memorytrimmed:"))
-        {
-            clearCaches();
-        }
-#if ENABLE_DEBUG
-        else if (message->firstTokenMatches("unitresult:"))
-        {
-            UnitWSD::get().processUnitResult(message->tokens());
-        }
-#endif
-        else
-        {
-            LOG_ERR("Unexpected message: [" << message->abbr() << ']');
-            return false;
+            case KitMessage::ForcedTraceEvent:
+            {
+                LOG_CHECK_RET(message->tokens().size() == 1, false);
+                if (COOLWSD::TraceEventFile != NULL)
+                {
+                    const auto& firstLine = message->firstLine();
+                    if (firstLine.size() < message->size())
+                        COOLWSD::writeTraceEventRecording(message->data().data() + firstLine.size() + 1,
+                                                          message->size() - firstLine.size() - 1);
+                }
+                break;
+            }
+            case KitMessage::MemoryTrimmed:
+                clearCaches();
+                break;
+            case KitMessage::UnitResult:
+                #if ENABLE_DEBUG
+                UnitWSD::get().processUnitResult(message->tokens());
+                #endif
+                break;
+
+            case KitMessage::Unknown:
+            default:
+            {
+                LOG_ERR("Unexpected message: [" << message->abbr() << ']');
+                return false;
+            }
         }
     }
-
-    return true;
+    return true; // Final return statement for DocumentBroker::handleInput
 }
 
 std::size_t DocumentBroker::getMemorySize() const
@@ -5210,16 +5252,34 @@ bool DocumentBroker::forwardToChild(const std::shared_ptr<ClientSession>& sessio
     }
 
     // Ignore userinactive, useractive message until document is loaded
-    if (!isLoaded() && (message == "userinactive" || message == "useractive"))
+    static constexpr frozen::set<std::string_view, 2> ignoredMessages = {
+        "userinactive", "useractive"
+    };
+
+    if (!isLoaded() && ignoredMessages.count(message))
     {
         return true;
     }
 
     // Ignore textinput, mouse and key message when document is unloading
-    if (isUnloading() && (message.starts_with("textinput ") || message.starts_with("mouse ") ||
-                          message.starts_with("key ")))
+    if (isUnloading())
     {
-        return true;
+        // Extract the command (first word) efficiently using string_view
+        std::string_view msgView(message);
+        const auto spacePos = msgView.find(' ');
+        // Only check if we found a space (valid command format)
+        if (spacePos != std::string_view::npos)
+        {
+            const std::string_view cmd = msgView.substr(0, spacePos);
+            static constexpr frozen::set<std::string_view, 3> inputCommands = {
+                "textinput", "mouse", "key"
+            };
+
+            if (inputCommands.count(cmd))
+            {
+                return true;
+            }
+        }
     }
 
     std::string viewId = session->getId();
@@ -5860,24 +5920,42 @@ void DocumentBroker::onUrpMessage(const char* data, size_t len)
 void DocumentBroker::switchMode(const std::shared_ptr<ClientSession>& session,
                                 const std::string& mode)
 {
-    if (mode == "online")
-    {
-        //TODO: Sanity check that we aren't running in WASM, otherwise we can't do anything.
-        startSwitchingToOnline();
-    }
-    else if (mode == "offline")
-    {
-        // We must be in Collaborative mode.
+    // Map mode strings to internal identifiers.
+    enum class SwitchMode { Online, Offline, Unknown };
+    static constexpr frozen::map<std::string_view, SwitchMode, 2> modeMap = {
+        {"online", SwitchMode::Online},
+        {"offline", SwitchMode::Offline}
+    };
 
-        if (_sessions.size() > 1)
+    auto it = modeMap.find(mode);
+
+    if (it == modeMap.end())
+        return; // Mode is unknown, simply exit.
+
+    switch (it->second)
+    {
+        case SwitchMode::Online:
         {
-            session->sendTextFrame("error: cmd=switch kind=multiviews");
-            return;
+            startSwitchingToOnline();
+            break;
         }
+        case SwitchMode::Offline:
+        {
 
-        startSwitchingToOffline(session);
+            if (_sessions.size() > 1)
+            {
+                session->sendTextFrame("error: cmd=switch kind=multiviews");
+                return;
+            }
+
+            startSwitchingToOffline(session);
+            break;
+        }
+        default:
+            break;
     }
 }
+
 
 void DocumentBroker::startSwitchingToOffline(const std::shared_ptr<ClientSession>& session)
 {
