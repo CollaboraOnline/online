@@ -85,7 +85,7 @@ interface MapInterface extends Evented {
 
 	_clip: ClipboardInterface;
 
-	setPermission(permission: 'edit' | 'readonly' | 'view'): void;
+	setPermission(permission: string): void;
 	onLockFailed(reason: string): void;
 	updateModificationIndicator(newModificationTime: string): void;
 	isEditMode(): boolean;

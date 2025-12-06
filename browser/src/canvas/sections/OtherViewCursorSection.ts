@@ -60,6 +60,7 @@ class TextCursorSection extends HTMLObjectSection {
 		}
 
 		if (result && app.file.textCursor.visible) {
+			Util.ensureValue(app.file.textCursor.rectangle);
 			const pos = [
 				app.file.textCursor.rectangle.pX1,
 				app.file.textCursor.rectangle.pY1,
