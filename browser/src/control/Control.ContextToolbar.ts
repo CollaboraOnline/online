@@ -100,6 +100,7 @@ class ContextToolbar extends JSDialogComponent {
 			if (!TextSelections || !(statRect = TextSelections.getStartRectangle()))
 				return;
 			const pos = { x: statRect.cX1, y: statRect.cY1 };
+			Util.ensureValue(app.activeDocument);
 			pos.x -=
 				(app.activeDocument.activeLayout.viewedRectangle.pX1 -
 					app.sectionContainer.getDocumentAnchor()[0]) /
