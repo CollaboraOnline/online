@@ -75,6 +75,7 @@ class MouseControl extends CanvasSectionObject {
 		modifier: number,
 	) {
 		let viewToDocumentPos = point.clone();
+		Util.ensureValue(app.activeDocument);
 
 		// Convert to pure canvas html element coordinate.
 		viewToDocumentPos.pX +=
@@ -121,6 +122,7 @@ class MouseControl extends CanvasSectionObject {
 
 	// Gets the mouse position on browser page in CSS pixels.
 	public getMousePagePosition() {
+		Util.ensureValue(app.activeDocument);
 		const boundingClientRectangle = this.context.canvas.getBoundingClientRect();
 		const pagePosition = this.currentPosition.clone();
 		pagePosition.pX -=
@@ -141,6 +143,7 @@ class MouseControl extends CanvasSectionObject {
 	}
 
 	private refreshPosition(point: cool.SimplePoint) {
+		Util.ensureValue(app.activeDocument);
 		let topLeftX = app.activeDocument.activeLayout.viewedRectangle.pX1;
 		let topLeftY = app.activeDocument.activeLayout.viewedRectangle.pY1;
 
@@ -161,6 +164,7 @@ class MouseControl extends CanvasSectionObject {
 		else if (app.map._docLayer._docType === 'spreadsheet') {
 			const textCursor =
 				app.file.textCursor.visible &&
+				app.calc.cellCursorRectangle &&
 				app.calc.cellCursorRectangle.pContainsPoint(
 					this.currentPosition.pToArray(),
 				);
@@ -201,6 +205,8 @@ class MouseControl extends CanvasSectionObject {
 				this.amplitude[0] * Math.exp(-elapsed / 650),
 				this.amplitude[1] * Math.exp(-elapsed / 650),
 			];
+
+			Util.ensureValue(app.activeDocument);
 
 			if (Math.abs(delta[0]) > 0.2 || Math.abs(delta[1]) > 0.2) {
 				app.activeDocument.activeLayout.scrollTo(
@@ -291,6 +297,7 @@ class MouseControl extends CanvasSectionObject {
 			diff.x -= this.positionOnMouseDown.x;
 			diff.y -= this.positionOnMouseDown.y;
 
+			Util.ensureValue(app.activeDocument);
 			const viewedRectangle =
 				app.activeDocument.activeLayout.viewedRectangle.clone();
 
@@ -399,10 +406,11 @@ class MouseControl extends CanvasSectionObject {
 		else if (app.map._docLayer._docType === 'spreadsheet') {
 			const acceptInput =
 				app.calc.cellCursorVisible &&
+				app.calc.cellCursorRectangle &&
 				app.calc.cellCursorRectangle.containsPoint(
 					this.currentPosition.toArray(),
 				);
-			return acceptInput;
+			return acceptInput as boolean;
 		} else return false;
 	}
 
