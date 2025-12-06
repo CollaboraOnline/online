@@ -15,6 +15,9 @@ build-samples:
 
 if ENABLE_MOBILEAPP
 
+if ENABLE_MACOS
+SUBDIRS = macos browser
+else
 if ENABLE_QTAPP
 SUBDIRS = qt browser
 else
@@ -23,6 +26,7 @@ SUBDIRS = wasm browser
 else !ENABLE_WASM
 SUBDIRS = browser
 endif !ENABLE_WASM
+endif
 endif
 
 else
