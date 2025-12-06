@@ -46,7 +46,6 @@
 		BEA263782CBE38E20007435A /* StringVector.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BEA263642CBE38E20007435A /* StringVector.cpp */; };
 		BEA263792CBE38E20007435A /* Protocol.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BEA2635B2CBE38E20007435A /* Protocol.cpp */; };
 		BEA2637A2CBE38E20007435A /* Authorization.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BEA263532CBE38E20007435A /* Authorization.cpp */; };
-		BEA264162CBE7A770007435A /* Config.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = BEA264152CBE7A770007435A /* Config.xcconfig */; };
 		BEA264922CBE986C0007435A /* KitQueue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BEA264902CBE986C0007435A /* KitQueue.cpp */; };
 		BEA264932CBE986C0007435A /* KitWebSocket.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BEA264912CBE986C0007435A /* KitWebSocket.cpp */; };
 		BEA264942CBE986C0007435A /* ChildSession.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BEA2648D2CBE986C0007435A /* ChildSession.cpp */; };
@@ -187,7 +186,47 @@
 		BE862C8E2EBD05810061664E /* Exceptions for "coda" folder in "coda" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
+				.gitignore,
 				Info.plist,
+				po/ar.po,
+				po/ca.po,
+				po/cy.po,
+				po/cs.po,
+				po/da.po,
+				po/de.po,
+				po/el.po,
+				"po/en-GB.po",
+				po/es.po,
+				po/eu.po,
+				po/fi.po,
+				po/fr.po,
+				po/ga.po,
+				po/gl.po,
+				po/he.po,
+				po/hr.po,
+				po/hu.po,
+				po/hy.po,
+				po/id.po,
+				po/is.po,
+				po/it.po,
+				po/ja.po,
+				po/kk.po,
+				po/ko.po,
+				po/Main.pot,
+				po/nl.po,
+				po/pl.po,
+				"po/pt-BR.po",
+				po/pt.po,
+				po/ro.po,
+				po/ru.po,
+				po/sk.po,
+				po/sl.po,
+				po/sq.po,
+				po/sv.po,
+				po/tr.po,
+				po/uk.po,
+				"po/zh-Hans.po",
+				"po/zh-Hant.po",
 			);
 			target = BECC4BAA2CBD3FA300A120B3 /* coda */;
 		};
@@ -504,6 +543,44 @@
 			knownRegions = (
 				en,
 				Base,
+				sq,
+				tr,
+				ga,
+				pl,
+				eu,
+				"pt-BR",
+				uk,
+				ru,
+				"en-GB",
+				cy,
+				es,
+				fr,
+				is,
+				sl,
+				fi,
+				id,
+				da,
+				nl,
+				gl,
+				pt,
+				it,
+				ro,
+				sk,
+				hr,
+				kk,
+				ca,
+				sv,
+				cs,
+				ko,
+				de,
+				hy,
+				he,
+				"zh-Hans",
+				"zh-Hant",
+				ar,
+				hu,
+				el,
+				ja,
 			);
 			mainGroup = BECC4BA22CBD3FA300A120B3;
 			minimizedProjectReferenceProxies = 1;
@@ -537,7 +614,6 @@
 				BE2257AD2CC79BAE00385A9C /* bundle.css in Resources */,
 				BE22492C2CC79AD700385A9C /* cool.html in Resources */,
 				BEEF3F862CE2139E00ABE785 /* coolkitconfig.xcu in Resources */,
-				BEA264162CBE7A770007435A /* Config.xcconfig in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -592,7 +668,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Copy lokit to the bundle\nif [ -z \"$LO_PATH\" ]; then\n  echo \"Error: LO_PATH is not set. Please configure it in Config.xcconfig.\"\n  exit 1\nfi\n\necho \"Copying $LO_PATH/Contents/ to ${CONFIGURATION_BUILD_DIR}/${PRODUCT_NAME}.app/Contents/\"\nrsync -av \\\n    --exclude 'gengal' --exclude 'opencltest' --exclude 'soffice' --exclude 'uno' \\\n    --exclude 'unopkg' --exclude 'uri-encode' --exclude 'QuickLookPreview.*' \\\n    --exclude 'Info.plist' --exclude 'PlugIns' --exclude 'Spotlight' \\\n    \"$LO_PATH/Contents/\" \"${CONFIGURATION_BUILD_DIR}/${PRODUCT_NAME}.app/Contents/\"\n\n# Re-sign the dylibs for Release (not needed for development)\nif [ \"$CONFIGURATION\" = \"Release\" ]; then\n  SIGN_ID=\"$EXPANDED_CODE_SIGN_IDENTITY\"\n  for f in \"${CONFIGURATION_BUILD_DIR}/${PRODUCT_NAME}.app/Contents/Frameworks/\"*.dylib; do\n    [ -f \"$f\" ] || continue\n    codesign --force --sign \"$SIGN_ID\" --timestamp \"$f\"\n  done\nfi\n\n# Copy branding if it exists\nRESOURCES=\"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}\"\nfor I in branding-desktop.css branding-mobile.css branding-tablet.css branding-unsupported.css branding-unsupported.js branding.css branding.js welcome ; do\n  SRC=\"$SRCROOT/../../browser/dist/$I\"\n  rm -rf \"$RESOURCES/$I\"\n  cp -a \"$SRC\" \"$RESOURCES/\" 2>/dev/null || echo \"Skipping non-existing $SRC\"\ndone\n";
+			shellScript = "# Copy lokit to the bundle\nif [ -z \"$LO_PATH\" ]; then\n  echo \"Error: LO_PATH is not set. Please configure it in Config.xcconfig.\"\n  exit 1\nfi\n\n# I don't know why, but Xcode did not automatically compile \n# the storyboard after I added the localizations. I spent hours \n# to find out, giving up!\nSTORYBOARD=\"$SRCROOT/coda/Base.lproj/Main.storyboard\"\nOUTDIR=\"$TARGET_BUILD_DIR/$UNLOCALIZED_RESOURCES_FOLDER_PATH/Base.lproj\"\necho \"Compiling storyboard: $STORYBOARD\"\nxcrun ibtool \\\n  --compile \"$OUTDIR/Main.storyboardc\" \\\n  \"$STORYBOARD\"\n\necho \"Copying $LO_PATH/Contents/ to ${CONFIGURATION_BUILD_DIR}/${PRODUCT_NAME}.app/Contents/\"\nrsync -av \\\n    --exclude 'gengal' --exclude 'opencltest' --exclude 'soffice' --exclude 'uno' \\\n    --exclude 'unopkg' --exclude 'uri-encode' --exclude 'QuickLookPreview.*' \\\n    --exclude 'Info.plist' --exclude 'PlugIns' --exclude 'Spotlight' \\\n    \"$LO_PATH/Contents/\" \"${CONFIGURATION_BUILD_DIR}/${PRODUCT_NAME}.app/Contents/\"\n\n# Re-sign the dylibs for Release (not needed for development)\nif [ \"$CONFIGURATION\" = \"Release\" ]; then\n  SIGN_ID=\"$EXPANDED_CODE_SIGN_IDENTITY\"\n  for f in \"${CONFIGURATION_BUILD_DIR}/${PRODUCT_NAME}.app/Contents/Frameworks/\"*.dylib; do\n    [ -f \"$f\" ] || continue\n    codesign --force --sign \"$SIGN_ID\" --timestamp \"$f\"\n  done\nfi\n\n# Copy branding if it exists\nRESOURCES=\"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}\"\nfor I in branding-desktop.css branding-mobile.css branding-tablet.css branding-unsupported.css branding-unsupported.js branding.css branding.js welcome ; do\n  SRC=\"$SRCROOT/../../browser/dist/$I\"\n  rm -rf \"$RESOURCES/$I\"\n  cp -a \"$SRC\" \"$RESOURCES/\" 2>/dev/null || echo \"Skipping non-existing $SRC\"\ndone\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
