@@ -184,8 +184,33 @@ function createPropertyAnimation(
 	}
 
 	// nWidth, nHeight are used here
-	const aGetModifier = eval(aFunctorSet.getmod);
-	const aSetModifier = eval(aFunctorSet.setmod);
+	// getmod and setmod are optional - only some properties use them
+	let aGetModifier: SetterType | undefined;
+	let aSetModifier: SetterType | undefined;
+
+	if (aFunctorSet.getmod) {
+		aGetModifier = eval(aFunctorSet.getmod);
+		// Validate modifier - makeScaler can return null for invalid parameters
+		if (!aGetModifier) {
+			window.app.console.error(
+				'createPropertyAnimation: failed to create get modifier for attribute: ' +
+					sAttrName,
+			);
+			return null;
+		}
+	}
+
+	if (aFunctorSet.setmod) {
+		aSetModifier = eval(aFunctorSet.setmod);
+		// Validate modifier - makeScaler can return null for invalid parameters
+		if (!aSetModifier) {
+			window.app.console.error(
+				'createPropertyAnimation: failed to create set modifier for attribute: ' +
+					sAttrName,
+			);
+			return null;
+		}
+	}
 
 	const aGetValueMethod =
 		aAnimatedElement[sGetValueMethod as keyof typeof aAnimatedElement];
