@@ -3,545 +3,547 @@ msgstr ""
 "Project-Id-Version: coolwsd 25.04.7.3\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-12-06 18:17+0000\n"
-"PO-Revision-Date: 2025-12-06 18:30+0000\n"
-"Last-Translator: releng <releng@fox.cbg.collabora.co.uk>\n"
-"Language-Team: Hungarian <translation-team-hu@lists.sourceforge.net>\n"
+"PO-Revision-Date: 2025-12-06 19:52+0000\n"
+"Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
+"Language-Team: Hungarian <https://hosted.weblate.org/projects/collabora-"
+"online/collabora-office-macos-app/hu/>\n"
+"Language: hu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: hu\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.15-dev\n"
 
 msgctxt "1UK-8n-QPP.title"
 msgid "Customize Toolbar…"
-msgstr ""
+msgstr "Eszköztár testreszabása…"
 
 #. Do not change the placeholder ProductName!
 msgctxt "1Xt-HY-uBw.title"
 msgid "ProductName"
-msgstr ""
+msgstr "ProductName"
 
 msgctxt "1b7-l0-nxx.title"
 msgid "Find"
-msgstr ""
+msgstr "Keresés"
 
 msgctxt "1tx-W0-xDw.title"
 msgid "Lower"
-msgstr ""
+msgstr "Lejjebb"
 
 msgctxt "2h7-ER-AoG.title"
 msgid "Raise"
-msgstr ""
+msgstr "Feljebb"
 
 msgctxt "2oI-Rn-ZJC.title"
 msgid "Transformations"
-msgstr ""
+msgstr "Átalakítások"
 
 msgctxt "3IN-sU-3Bg.title"
 msgid "Spelling"
-msgstr ""
+msgstr "Helyesírás"
 
 msgctxt "3Om-Ey-2VK.title"
 msgid "Use Default"
-msgstr ""
+msgstr "Alapértelmezett"
 
 msgctxt "3rS-ZA-NoH.title"
 msgid "Speech"
-msgstr ""
+msgstr "Beszéd"
 
 msgctxt "46P-cB-AYj.title"
 msgid "Tighten"
-msgstr ""
+msgstr "Szorosabb"
 
 msgctxt "4EN-yA-p0u.title"
 msgid "Find"
-msgstr ""
+msgstr "Keresés"
 
 msgctxt "4J7-dP-txa.title"
 msgid "Enter Full Screen"
-msgstr ""
+msgstr "Teljes képernyő"
 
 #. Do not change the placeholder ProductName!
 msgctxt "4sb-4s-VLi.title"
 msgid "Quit ProductName"
-msgstr ""
+msgstr "Kilépés a ProductName-ból"
 
 msgctxt "5QF-Oa-p0T.title"
 msgid "Edit"
-msgstr ""
+msgstr "Szerkesztés"
 
 msgctxt "5Vv-lz-BsD.title"
 msgid "Copy Style"
-msgstr ""
+msgstr "Stílus másolása"
 
 #. Do not change the placeholder ProductName!
 msgctxt "5kV-Vb-QxS.title"
 msgid "About ProductName"
-msgstr ""
+msgstr "A ProductName névjegye"
 
 msgctxt "6dh-zS-Vam.title"
 msgid "Redo"
-msgstr ""
+msgstr "Újra"
 
 msgctxt "78Y-hA-62v.title"
 msgid "Correct Spelling Automatically"
-msgstr ""
+msgstr "Automatikus helyesírás-ellenőrzés"
 
 msgctxt "8mr-sm-Yjd.title"
 msgid "Writing Direction"
-msgstr ""
+msgstr "Írás iránya"
 
 msgctxt "9ic-FL-obx.title"
 msgid "Substitutions"
-msgstr ""
+msgstr "Behelyettesítések"
 
 msgctxt "9yt-4B-nSM.title"
 msgid "Smart Copy/Paste"
-msgstr ""
+msgstr "Okos másolás/beillesztés"
 
 msgctxt "AYu-sK-qS6.title"
 msgid "Main Menu"
-msgstr ""
+msgstr "Főmenü"
 
 msgctxt "BOF-NM-1cW.title"
 msgid "Preferences…"
-msgstr ""
+msgstr "Beállítások…"
 
 msgctxt "BgM-ve-c93.title"
 msgid "\tLeft to Right"
-msgstr ""
+msgstr "\tBalról jobbra"
 
 msgctxt "Bw7-FT-i3A.title"
 msgid "Save As…"
-msgstr ""
+msgstr "Mentés másként…"
 
 msgctxt "DVo-aG-piG.title"
 msgid "Close"
-msgstr ""
+msgstr "Bezárás"
 
 msgctxt "Dv1-io-Yv7.title"
 msgid "Spelling and Grammar"
-msgstr ""
+msgstr "Helyesírás- és nyelvhelyesség-ellenőrzés"
 
 msgctxt "F2S-fz-NVQ.title"
 msgid "Help"
-msgstr ""
+msgstr "Súgó"
 
 #. Do not change the placeholder ProductName!
 msgctxt "FKE-Sm-Kum.title"
 msgid "ProductName Help"
-msgstr ""
+msgstr "A ProductName súgója"
 
 msgctxt "Fal-I4-PZk.title"
 msgid "Text"
-msgstr ""
+msgstr "Szöveg"
 
 msgctxt "FeM-D8-WVr.title"
 msgid "Substitutions"
-msgstr ""
+msgstr "Behelyettesítések"
 
 msgctxt "GB9-OM-e27.title"
 msgid "Bold"
-msgstr ""
+msgstr "Félkövér"
 
 msgctxt "GEO-Iw-cKr.title"
 msgid "Format"
-msgstr ""
+msgstr "Formátum"
 
 msgctxt "GUa-eO-cwY.title"
 msgid "Use Default"
-msgstr ""
+msgstr "Alapértelmezett"
 
 msgctxt "Gi5-1S-RQB.title"
 msgid "Font"
-msgstr ""
+msgstr "Betűkészlet"
 
 msgctxt "H1b-Si-o9J.title"
 msgid "Writing Direction"
-msgstr ""
+msgstr "Írás iránya"
 
 msgctxt "H8h-7b-M4v.title"
 msgid "View"
-msgstr ""
+msgstr "Nézet"
 
 msgctxt "HFQ-gK-NFA.title"
 msgid "Text Replacement"
-msgstr ""
+msgstr "Csereszöveg"
 
 msgctxt "HFo-cy-zxI.title"
 msgid "Show Spelling and Grammar"
-msgstr ""
+msgstr "Helyesírás- és nyelvhelyesség-ellenőrzés megjelenítése"
 
 msgctxt "HyV-fh-RgO.title"
 msgid "View"
-msgstr ""
+msgstr "Nézet"
 
 msgctxt "I0S-gh-46l.title"
 msgid "Subscript"
-msgstr ""
+msgstr "Alsó index"
 
 msgctxt "IAo-SY-fd9.title"
 msgid "Open…"
-msgstr ""
+msgstr "Megnyitás…"
 
 msgctxt "J5U-5w-g23.title"
 msgid "Justify"
-msgstr ""
+msgstr "Sorkizárás"
 
 msgctxt "J7y-lM-qPV.title"
 msgid "Use None"
-msgstr ""
+msgstr "Egyik sem"
 
 msgctxt "KaW-ft-85H.title"
 msgid "Revert to Saved"
-msgstr ""
+msgstr "Mentett verzió visszaállítása"
 
 msgctxt "Kd2-mp-pUS.title"
 msgid "Show All"
-msgstr ""
+msgstr "Minden megjelenítése"
 
 msgctxt "LE2-aR-0XJ.title"
 msgid "Bring All to Front"
-msgstr ""
+msgstr "Mindent az előtérbe"
 
 msgctxt "LVM-kO-fVI.title"
 msgid "Paste Ruler"
-msgstr ""
+msgstr "Vonalzó beillesztése"
 
 msgctxt "Lbh-J2-qVU.title"
 msgid "\tLeft to Right"
-msgstr ""
+msgstr "\tBalról jobbra"
 
 msgctxt "MkV-Pr-PK5.title"
 msgid "Copy Ruler"
-msgstr ""
+msgstr "Vonalzó másolása"
 
 msgctxt "NMo-om-nkz.title"
 msgid "Services"
-msgstr ""
+msgstr "Szolgáltatások"
 
 msgctxt "Nop-cj-93Q.title"
 msgid "\tDefault"
-msgstr ""
+msgstr "\tAlapértelmezett"
 
 msgctxt "OY7-WF-poV.title"
 msgid "Minimize"
-msgstr ""
+msgstr "Minimalizálás"
 
 msgctxt "OaQ-X3-Vso.title"
 msgid "Baseline"
-msgstr ""
+msgstr "Alap"
 
 #. Do not change the placeholder ProductName!
 msgctxt "Olw-nP-bQN.title"
 msgid "Hide ProductName"
-msgstr ""
+msgstr "A ProductName elrejtése"
 
 msgctxt "OwM-mh-QMV.title"
 msgid "Find Previous"
-msgstr ""
+msgstr "Előző találat"
 
 msgctxt "Oyz-dy-DGm.title"
 msgid "Stop Speaking"
-msgstr ""
+msgstr "Beszéd abbahagyása"
 
 msgctxt "Ptp-SP-VEL.title"
 msgid "Bigger"
-msgstr ""
+msgstr "Nagyobb"
 
 msgctxt "Q5e-8K-NDq.title"
 msgid "Show Fonts"
-msgstr ""
+msgstr "Betűkészletek megjelenítése"
 
 msgctxt "R4o-n2-Eq4.title"
 msgid "Zoom"
-msgstr ""
+msgstr "Nagyítás"
 
 msgctxt "RB4-Sm-HuC.title"
 msgid "\tRight to Left"
-msgstr ""
+msgstr "\tJobbról balra"
 
 msgctxt "Rqc-34-cIF.title"
 msgid "Superscript"
-msgstr ""
+msgstr "Felső index"
 
 msgctxt "Ruw-6m-B2m.title"
 msgid "Select All"
-msgstr ""
+msgstr "Minden kijelölése"
 
 msgctxt "S0p-oC-mLd.title"
 msgid "Jump to Selection"
-msgstr ""
+msgstr "Ugrás a kijelölésre"
 
 msgctxt "Td7-aD-5lo.title"
 msgid "Window"
-msgstr ""
+msgstr "Ablak"
 
 msgctxt "UEZ-Bs-lqG.title"
 msgid "Capitalize"
-msgstr ""
+msgstr "Nagybetűsítés"
 
 msgctxt "VIY-Ag-zcb.title"
 msgid "Center"
-msgstr ""
+msgstr "Középre"
 
 msgctxt "Vdr-fp-XzO.title"
 msgid "Hide Others"
-msgstr ""
+msgstr "Többiek elrejtése"
 
 msgctxt "Vjx-xi-njq.title"
 msgid "Italic"
-msgstr ""
+msgstr "Dőlt"
 
 msgctxt "W48-6f-4Dl.title"
 msgid "Edit"
-msgstr ""
+msgstr "Szerkesztés"
 
 msgctxt "WRG-CD-K1S.title"
 msgid "Underline"
-msgstr ""
+msgstr "Aláhúzott"
 
 msgctxt "Was-JA-tGl.title"
 msgid "New"
-msgstr ""
+msgstr "Új"
 
 msgctxt "WeT-3V-zwk.title"
 msgid "Paste and Match Style"
-msgstr ""
+msgstr "Beillesztés a stílus egyeztetésével"
 
 msgctxt "Xz5-n4-O0W.title"
 msgid "Find…"
-msgstr ""
+msgstr "Keresés…"
 
 msgctxt "YEy-JH-Tfz.title"
 msgid "Find and Replace…"
-msgstr ""
+msgstr "Keresés és csere…"
 
 msgctxt "YGs-j5-SAR.title"
 msgid "\tDefault"
-msgstr ""
+msgstr "\tAlapértelmezett"
 
 msgctxt "Ynk-f8-cLZ.title"
 msgid "Start Speaking"
-msgstr ""
+msgstr "Beszéd kezdése"
 
 msgctxt "ZM1-6Q-yy1.title"
 msgid "Align Left"
-msgstr ""
+msgstr "Balra igazítás"
 
 msgctxt "ZvO-Gk-QUH.title"
 msgid "Paragraph"
-msgstr ""
+msgstr "Bekezdés"
 
 msgctxt "aTl-1u-JFS.title"
 msgid "Print…"
-msgstr ""
+msgstr "Nyomtatás…"
 
 msgctxt "aUF-d1-5bR.title"
 msgid "Window"
-msgstr ""
+msgstr "Ablak"
 
 msgctxt "aXa-aM-Jaq.title"
 msgid "Font"
-msgstr ""
+msgstr "Betűkészlet"
 
 msgctxt "agt-UL-0e3.title"
 msgid "Use Default"
-msgstr ""
+msgstr "Alapértelmezett"
 
 msgctxt "bgn-CT-cEk.title"
 msgid "Show Colors"
-msgstr ""
+msgstr "Színek megjelenítése"
 
 msgctxt "bib-Uj-vzu.title"
 msgid "File"
-msgstr ""
+msgstr "Fájl"
 
 msgctxt "buJ-ug-pKt.title"
 msgid "Use Selection for Find"
-msgstr ""
+msgstr "Kijelölés használata a kereséshez"
 
 msgctxt "c8a-y6-VQd.title"
 msgid "Transformations"
-msgstr ""
+msgstr "Átalakítások"
 
 msgctxt "cDB-IK-hbR.title"
 msgid "Use None"
-msgstr ""
+msgstr "Egyik sem"
 
 msgctxt "cqv-fj-IhA.title"
 msgid "Selection"
-msgstr ""
+msgstr "Kijelölés"
 
 msgctxt "cwL-P1-jid.title"
 msgid "Smart Links"
-msgstr ""
+msgstr "Okos hivatkozások"
 
 msgctxt "d9M-CD-aMd.title"
 msgid "Make Lower Case"
-msgstr ""
+msgstr "Kisbetűsítés"
 
 msgctxt "d9c-me-L2H.title"
 msgid "Text"
-msgstr ""
+msgstr "Szöveg"
 
 msgctxt "dMs-cI-mzQ.title"
 msgid "File"
-msgstr ""
+msgstr "Fájl"
 
 msgctxt "dRJ-4n-Yzg.title"
 msgid "Undo"
-msgstr ""
+msgstr "Visszavonás"
 
 msgctxt "gVA-U4-sdL.title"
 msgid "Paste"
-msgstr ""
+msgstr "Beillesztés"
 
 msgctxt "hQb-2v-fYv.title"
 msgid "Smart Quotes"
-msgstr ""
+msgstr "Nyomdai idézőjelek"
 
 msgctxt "hz2-CU-CR7.title"
 msgid "Check Document Now"
-msgstr ""
+msgstr "Dokumentum ellenőrzése"
 
 msgctxt "hz9-B4-Xy5.title"
 msgid "Services"
-msgstr ""
+msgstr "Szolgáltatások"
 
 msgctxt "i1d-Er-qST.title"
 msgid "Smaller"
-msgstr ""
+msgstr "Kisebb"
 
 msgctxt "ijk-EB-dga.title"
 msgid "Baseline"
-msgstr ""
+msgstr "Alap"
 
 msgctxt "jBQ-r6-VK2.title"
 msgid "Kern"
-msgstr ""
+msgstr "Betűközkiegyenlítés"
 
 msgctxt "jFq-tB-4Kx.title"
 msgid "\tRight to Left"
-msgstr ""
+msgstr "\tJobbról balra"
 
 msgctxt "jxT-CU-nIS.title"
 msgid "Format"
-msgstr ""
+msgstr "Formátum"
 
 msgctxt "kIP-vf-haE.title"
 msgid "Show Sidebar"
-msgstr ""
+msgstr "Oldalsáv megjelenítése"
 
 msgctxt "mK6-2p-4JG.title"
 msgid "Check Grammar With Spelling"
-msgstr ""
+msgstr "Nyelvhelyesség-ellenőrzés is"
 
 msgctxt "o6e-r0-MWq.title"
 msgid "Ligatures"
-msgstr ""
+msgstr "Ligatúrák"
 
 msgctxt "oas-Oc-fiZ.title"
 msgid "Open Recent"
-msgstr ""
+msgstr "Legutóbbi megnyitása"
 
 msgctxt "ogc-rX-tC1.title"
 msgid "Loosen"
-msgstr ""
+msgstr "Lazább"
 
 msgctxt "pa3-QI-u2k.title"
 msgid "Delete"
-msgstr ""
+msgstr "Törlés"
 
 msgctxt "pxx-59-PXV.title"
 msgid "Save…"
-msgstr ""
+msgstr "Mentés…"
 
 msgctxt "q09-fT-Sye.title"
 msgid "Find Next"
-msgstr ""
+msgstr "Következő találat"
 
 msgctxt "qIS-W8-SiK.title"
 msgid "Page Setup…"
-msgstr ""
+msgstr "Oldalbeállítások…"
 
 msgctxt "rbD-Rh-wIN.title"
 msgid "Check Spelling While Typing"
-msgstr ""
+msgstr "Helyesírás-ellenőrzés gépelés közben"
 
 msgctxt "rgM-f4-ycn.title"
 msgid "Smart Dashes"
-msgstr ""
+msgstr "Nyomdai kötőjelek"
 
 msgctxt "snW-S8-Cw5.title"
 msgid "Show Toolbar"
-msgstr ""
+msgstr "Eszköztár megjelenítése"
 
 msgctxt "tRr-pd-1PS.title"
 msgid "Data Detectors"
-msgstr ""
+msgstr "Adatdetektorok"
 
 msgctxt "tXI-mr-wws.title"
 msgid "Open Recent"
-msgstr ""
+msgstr "Legutóbbi megnyitása"
 
 msgctxt "tlD-Oa-oAM.title"
 msgid "Kern"
-msgstr ""
+msgstr "Betűközkiegyenlítés"
 
 #. Do not change the placeholder ProductName!
 msgctxt "uQy-DD-JDr.title"
 msgid "ProductName"
-msgstr ""
+msgstr "ProductName"
 
 msgctxt "uRl-iY-unG.title"
 msgid "Cut"
-msgstr ""
+msgstr "Kivágás"
 
 msgctxt "vFu-3Y-2xa.title"
 msgid "Window"
-msgstr ""
+msgstr "Ablak"
 
 msgctxt "vKC-jM-MkH.title"
 msgid "Paste Style"
-msgstr ""
+msgstr "Stílus beillesztése"
 
 msgctxt "vLm-3I-IUL.title"
 msgid "Show Ruler"
-msgstr ""
+msgstr "Vonalzó megjelenítése"
 
 msgctxt "vNY-rz-j42.title"
 msgid "Clear Menu"
-msgstr ""
+msgstr "Menü törlése"
 
 msgctxt "vmV-6d-7jI.title"
 msgid "Make Upper Case"
-msgstr ""
+msgstr "Nagybetűsítés"
 
 msgctxt "w0m-vy-SC9.title"
 msgid "Ligatures"
-msgstr ""
+msgstr "Ligatúrák"
 
 msgctxt "wb2-vD-lq4.title"
 msgid "Align Right"
-msgstr ""
+msgstr "Jobbra igazítás"
 
 msgctxt "wpr-3q-Mcd.title"
 msgid "Help"
-msgstr ""
+msgstr "Súgó"
 
 msgctxt "x3v-GG-iWU.title"
 msgid "Copy"
-msgstr ""
+msgstr "Másolás"
 
 msgctxt "xQD-1f-W4t.title"
 msgid "Use All"
-msgstr ""
+msgstr "Minden használata"
 
 msgctxt "xrE-MZ-jX0.title"
 msgid "Speech"
-msgstr ""
+msgstr "Beszéd"
 
 msgctxt "z6F-FW-3nz.title"
 msgid "Show Substitutions"
-msgstr ""
+msgstr "Behelyettesítések megjelenítése"
