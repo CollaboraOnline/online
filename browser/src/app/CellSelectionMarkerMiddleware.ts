@@ -39,6 +39,7 @@ class CellSelectionMarkers {
 			this.start.setShowSection(true);
 			this.end.setShowSection(true);
 
+			Util.ensureValue(app.calc.cellCursorRectangle);
 			var cellRectangle = app.map._docLayer._cellSelectionArea
 				? app.map._docLayer._cellSelectionArea.clone()
 				: app.calc.cellCursorRectangle.clone();

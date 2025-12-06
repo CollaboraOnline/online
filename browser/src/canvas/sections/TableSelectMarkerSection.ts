@@ -73,6 +73,7 @@ class TableSelectMarkerSection extends HTMLObjectSection {
 
 	public onClick(point: cool.SimplePoint, e: MouseEvent): void {
 		this.stopPropagating(e);
+		Util.ensureValue(app.activeDocument);
 		if (this.sectionProperties.markerType === 'column') {
 			const x1 = Math.round(
 				(this.position[0] + this.size[0] * 0.5) * app.pixelsToTwips,

@@ -347,6 +347,7 @@ class ShapeHandleScalingSubSection extends CanvasSectionObject {
 
 	// While dragging a handle, we want to simulate handles to their final positions.
 	moveHandlesOnDrag(point: cool.SimplePoint, e: MouseEvent) {
+		Util.ensureValue(app.activeDocument);
 		const shapeRecProps = this.calculateNewShapeRectangleProperties([
 			point.pX + this.myTopLeft[0] + app.activeDocument.activeLayout.viewedRectangle.pX1 - this.containerObject.getDocumentAnchor()[0],
 			point.pY + this.myTopLeft[1] + app.activeDocument.activeLayout.viewedRectangle.pY1 - this.containerObject.getDocumentAnchor()[1]
