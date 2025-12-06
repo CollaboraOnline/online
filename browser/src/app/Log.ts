@@ -12,10 +12,9 @@
  * Logger contains methods for logging the activity
  */
 
-type Direction = 'INCOMING' | 'OUTGOING';
 interface LogMsg {
 	msg: string;
-	direction: Direction;
+	direction: string;
 	time: number;
 }
 
@@ -28,7 +27,7 @@ class Logger {
 		this.startTime = null;
 	}
 
-	public log(msg: string, direction: Direction): void {
+	public log(msg: string, direction: string): void {
 		const time = Date.now();
 		if (!this.startTime) this.startTime = time;
 
