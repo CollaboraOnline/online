@@ -69,6 +69,7 @@ class AutoFillBaseSection extends CanvasSectionObject {
 	protected setMarkerPosition() {
 		var center: number = 0;
 		if (!(<any>window).mode.isDesktop()) {
+			Util.ensureValue(app.calc.cellCursorRectangle);
 			center = app.calc.cellCursorRectangle.pWidth * 0.5;
 		}
 
@@ -198,6 +199,7 @@ class AutoFillBaseSection extends CanvasSectionObject {
 	}
 
 	protected autoScroll(point: cool.SimplePoint) {
+		Util.ensureValue(app.activeDocument);
 		const viewedRectangle = app.activeDocument.activeLayout.viewedRectangle;
 		const viewCenter = viewedRectangle.pCenter;
 		const refX =
