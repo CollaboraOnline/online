@@ -198,16 +198,12 @@ div#autoFillPreviewTooltip .lokdialog.ui-dialog-content.ui-widget-content {
 }
 
 .jsdialog.vertical label, .ui-frame-label, #ui-color-picker-recent-label {
-	/* margin: auto; */
+
 	color: var(--color-main-text);
 	font-size: var(--default-font-size);
 	line-height: var(--default-height);
 	padding-left: inherit;
 }
-
-/* .jsdialog.spinfieldcontainer {
-	margin: auto;
-} */
 
 #glowframe > div.ui-frame.jsdialog.sidebar > label,
 #softedgeframe > div.ui-frame.jsdialog.sidebar > label {
@@ -3033,6 +3029,5 @@ div [id^='themeview'].ui-iconview-entry, div [id^='themeview1col'].ui-iconview-e
 }
 
 .jsdialog.ui-grid.ui-grid-cell {
-	/* Add your desired styles here */
 	grid-row: span 2;
 }
