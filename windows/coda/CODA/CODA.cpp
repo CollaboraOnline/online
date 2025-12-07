@@ -152,91 +152,6 @@ static void openCOOLWindow(const FilenameAndUri& filenameAndUri, DocumentMode mo
 // a file open dialog. We open the next one only as soon as the previous one has finished loading.
 static std::deque<FilenameAndUri> filenamesAndUrisToOpen;
 
-// Temporary l10n function for the few UI strings here in this file
-static const wchar_t* _(const wchar_t* english)
-{
-    static std::map<std::wstring, std::map<std::string, const wchar_t*>> translations
-        {
-            {
-                // Some translations missing here
-                L"Normal files",
-                {
-                    { "cs", L"Normální soubory" },
-                    { "da", L"Almindelige filer" },
-                    { "de", L"Normale Dateien" },
-                    { "el", L"Κανονικά αρχεία" },
-                    { "es", L"Archivos normales" },
-                    { "fr", L"Fichiers normaux" },
-                    { "hu", L"Normál fájlok" },
-                    { "it", L"File normali" },
-                    { "nb", L"Normale filer" },
-                    { "nl", L"Normale bestanden" },
-                    { "nn", L"Normale filer" },
-                    { "pl", L"Pliki normalne" },
-                    { "pt", L"Ficheiros normais" },
-                    { "ru", L"Обычные файлы" },
-                    { "sl", L"Navadne datoteke" },
-                    { "sv", L"Vanliga filer" },
-                    { "tr", L"Normal dosyalar" },
-                    { "uk", L"Звичайні файли" },
-                    { "zh", L"普通文件" },
-                },
-            },
-            {
-                L"All files",
-                {
-                    { "ar", L"كلّ الملفّات" },
-                    { "cs", L"Všechny soubory" },
-                    { "da", L"Alle filer" },
-                    { "de", L"Alle Dateien" },
-                    { "el", L"Όλα τα αρχεία" },
-                    { "es", L"Todos los archivos" },
-                    { "fr", L"Tous les fichiers" },
-                    { "he", L"כל הקבצים" },
-                    { "hu", L"Minden fájl" },
-                    { "is", L"Allar skrár" },
-                    { "it", L"Tutti i file" },
-                    { "ja", L"すべてのファイル" },
-                    { "ko", L"모든 파일" },
-                    { "nb", L"Alle filer" },
-                    { "nl", L"Alle bestanden" },
-                    { "nn", L"Alle filer" },
-                    { "pl", L"Wszystkie pliki" },
-                    { "pt", L"Todos os ficheiros" },
-                    { "ru", L"Все файлы" },
-                    { "sk", L"Všetky súbory" },
-                    { "sl", L"Vse datoteke" },
-                    { "sv", L"Alla filer" },
-                    { "tr", L"Tüm dosyalar" },
-                    { "uk", L"Усі файли" },
-                    { "zh-CN", L"所有文件" },
-                    { "zh-TW", L"所有檔案" },
-                },
-            },
-        };
-
-    std::wstring e = english;
-    if (translations.count(e) == 1)
-    {
-        if (translations[e].count(uiLanguage) == 1)
-        {
-            return translations[e][uiLanguage];
-        }
-        else
-        {
-            auto dash = uiLanguage.find('-');
-            if (dash != std::string::npos)
-            {
-                auto justLanguage = uiLanguage.substr(0, dash);
-                if (translations[e].count(justLanguage) == 1)
-                    return translations[e][justLanguage];
-            }
-        }
-    }
-
-    return english;
-}
-
 void load_next_document()
 {
     if (filenamesAndUrisToOpen.size() > 0)
@@ -925,9 +840,9 @@ static std::vector<FilenameAndUri> fileOpenDialog()
         fatal("CoCreateInstance(CLSID_FileOpenDialog) failed");
 
     COMDLG_FILTERSPEC filter[] = {
-        { _(L"Normal files"),
+        { L"",
           L"*.odt;*.docx;*.doc;*.rtf;*.txt;*.md;*.ods;*.xlsx;*.xls;*.odp;*.pptx;*.ppt" },
-        { _(L"All files"), L"*.*" }
+        { L"", L"*.*" }
     };
 
     if (!SUCCEEDED(dialog->SetFileTypes(sizeof(filter) / sizeof(filter[0]), &filter[0])))
