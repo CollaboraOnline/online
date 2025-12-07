@@ -830,6 +830,9 @@ build-cool: \
 	$(DIST_FOLDER)/device-tablet.css \
 	$(DIST_FOLDER)/device-desktop.css \
 	$(DIST_FOLDER)/progressbar.css \
+	$(DIST_FOLDER)/settings.css \
+	$(DIST_FOLDER)/color-palette.css \
+	$(DIST_FOLDER)/color-palette-dark.css \
 	$(DIST_FOLDER)/bundle.js \
 	$(DIST_FOLDER)/cool.html \
 	$(WASM_FILES) \
