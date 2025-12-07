@@ -3,545 +3,547 @@ msgstr ""
 "Project-Id-Version: coolwsd 25.04.7.3\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-12-06 18:17+0000\n"
-"PO-Revision-Date: 2025-12-06 18:30+0000\n"
-"Last-Translator: releng <releng@fox.cbg.collabora.co.uk>\n"
-"Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
+"PO-Revision-Date: 2025-12-07 22:00+0000\n"
+"Last-Translator: bittin1ddc447d824349b2 <bittin@reimu.nl>\n"
+"Language-Team: Swedish <https://hosted.weblate.org/projects/collabora-online/"
+"collabora-office-macos-app/sv/>\n"
+"Language: sv\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: sv\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.15-dev\n"
 
 msgctxt "1UK-8n-QPP.title"
 msgid "Customize Toolbar…"
-msgstr ""
+msgstr "Anpassa verktygsfält…"
 
 #. Do not change the placeholder ProductName!
 msgctxt "1Xt-HY-uBw.title"
 msgid "ProductName"
-msgstr ""
+msgstr "ProductName"
 
 msgctxt "1b7-l0-nxx.title"
 msgid "Find"
-msgstr ""
+msgstr "Hitta"
 
 msgctxt "1tx-W0-xDw.title"
 msgid "Lower"
-msgstr ""
+msgstr "Sänka"
 
 msgctxt "2h7-ER-AoG.title"
 msgid "Raise"
-msgstr ""
+msgstr "Höja"
 
 msgctxt "2oI-Rn-ZJC.title"
 msgid "Transformations"
-msgstr ""
+msgstr "Transformationer"
 
 msgctxt "3IN-sU-3Bg.title"
 msgid "Spelling"
-msgstr ""
+msgstr "Stavning"
 
 msgctxt "3Om-Ey-2VK.title"
 msgid "Use Default"
-msgstr ""
+msgstr "Använd standard"
 
 msgctxt "3rS-ZA-NoH.title"
 msgid "Speech"
-msgstr ""
+msgstr "Tal"
 
 msgctxt "46P-cB-AYj.title"
 msgid "Tighten"
-msgstr ""
+msgstr "Spänna"
 
 msgctxt "4EN-yA-p0u.title"
 msgid "Find"
-msgstr ""
+msgstr "Hitta"
 
 msgctxt "4J7-dP-txa.title"
 msgid "Enter Full Screen"
-msgstr ""
+msgstr "Öppna helskärm"
 
 #. Do not change the placeholder ProductName!
 msgctxt "4sb-4s-VLi.title"
 msgid "Quit ProductName"
-msgstr ""
+msgstr "Avsluta ProductName"
 
 msgctxt "5QF-Oa-p0T.title"
 msgid "Edit"
-msgstr ""
+msgstr "Redigera"
 
 msgctxt "5Vv-lz-BsD.title"
 msgid "Copy Style"
-msgstr ""
+msgstr "Kopiera stil"
 
 #. Do not change the placeholder ProductName!
 msgctxt "5kV-Vb-QxS.title"
 msgid "About ProductName"
-msgstr ""
+msgstr "Om ProductName"
 
 msgctxt "6dh-zS-Vam.title"
 msgid "Redo"
-msgstr ""
+msgstr "Göra om"
 
 msgctxt "78Y-hA-62v.title"
 msgid "Correct Spelling Automatically"
-msgstr ""
+msgstr "Rätt stavning automatiskt"
 
 msgctxt "8mr-sm-Yjd.title"
 msgid "Writing Direction"
-msgstr ""
+msgstr "Skrivriktning"
 
 msgctxt "9ic-FL-obx.title"
 msgid "Substitutions"
-msgstr ""
+msgstr "Substitutioner"
 
 msgctxt "9yt-4B-nSM.title"
 msgid "Smart Copy/Paste"
-msgstr ""
+msgstr "Smart kopiera/klistra in"
 
 msgctxt "AYu-sK-qS6.title"
 msgid "Main Menu"
-msgstr ""
+msgstr "Huvudmeny"
 
 msgctxt "BOF-NM-1cW.title"
 msgid "Preferences…"
-msgstr ""
+msgstr "Inställningar…"
 
 msgctxt "BgM-ve-c93.title"
 msgid "\tLeft to Right"
-msgstr ""
+msgstr "\tVänster till höger"
 
 msgctxt "Bw7-FT-i3A.title"
 msgid "Save As…"
-msgstr ""
+msgstr "Spara som…"
 
 msgctxt "DVo-aG-piG.title"
 msgid "Close"
-msgstr ""
+msgstr "Stäng"
 
 msgctxt "Dv1-io-Yv7.title"
 msgid "Spelling and Grammar"
-msgstr ""
+msgstr "Stavning och grammatik"
 
 msgctxt "F2S-fz-NVQ.title"
 msgid "Help"
-msgstr ""
+msgstr "Hjälp"
 
 #. Do not change the placeholder ProductName!
 msgctxt "FKE-Sm-Kum.title"
 msgid "ProductName Help"
-msgstr ""
+msgstr "ProductName hjälp"
 
 msgctxt "Fal-I4-PZk.title"
 msgid "Text"
-msgstr ""
+msgstr "Text"
 
 msgctxt "FeM-D8-WVr.title"
 msgid "Substitutions"
-msgstr ""
+msgstr "Substitutioner"
 
 msgctxt "GB9-OM-e27.title"
 msgid "Bold"
-msgstr ""
+msgstr "Fet"
 
 msgctxt "GEO-Iw-cKr.title"
 msgid "Format"
-msgstr ""
+msgstr "Formatera"
 
 msgctxt "GUa-eO-cwY.title"
 msgid "Use Default"
-msgstr ""
+msgstr "Använd standard"
 
 msgctxt "Gi5-1S-RQB.title"
 msgid "Font"
-msgstr ""
+msgstr "Teckensnitt"
 
 msgctxt "H1b-Si-o9J.title"
 msgid "Writing Direction"
-msgstr ""
+msgstr "Skrivriktning"
 
 msgctxt "H8h-7b-M4v.title"
 msgid "View"
-msgstr ""
+msgstr "Vy"
 
 msgctxt "HFQ-gK-NFA.title"
 msgid "Text Replacement"
-msgstr ""
+msgstr "Textbyte"
 
 msgctxt "HFo-cy-zxI.title"
 msgid "Show Spelling and Grammar"
-msgstr ""
+msgstr "Visa stavning och grammatik"
 
 msgctxt "HyV-fh-RgO.title"
 msgid "View"
-msgstr ""
+msgstr "Vy"
 
 msgctxt "I0S-gh-46l.title"
 msgid "Subscript"
-msgstr ""
+msgstr "Index"
 
 msgctxt "IAo-SY-fd9.title"
 msgid "Open…"
-msgstr ""
+msgstr "Öppna…"
 
 msgctxt "J5U-5w-g23.title"
 msgid "Justify"
-msgstr ""
+msgstr "Rättfärdiga"
 
 msgctxt "J7y-lM-qPV.title"
 msgid "Use None"
-msgstr ""
+msgstr "Använd ingen"
 
 msgctxt "KaW-ft-85H.title"
 msgid "Revert to Saved"
-msgstr ""
+msgstr "Återgå till sparad"
 
 msgctxt "Kd2-mp-pUS.title"
 msgid "Show All"
-msgstr ""
+msgstr "Visa alla"
 
 msgctxt "LE2-aR-0XJ.title"
 msgid "Bring All to Front"
-msgstr ""
+msgstr "Ta fram alla"
 
 msgctxt "LVM-kO-fVI.title"
 msgid "Paste Ruler"
-msgstr ""
+msgstr "Klistra in linjal"
 
 msgctxt "Lbh-J2-qVU.title"
 msgid "\tLeft to Right"
-msgstr ""
+msgstr "\tVänster till höger"
 
 msgctxt "MkV-Pr-PK5.title"
 msgid "Copy Ruler"
-msgstr ""
+msgstr "Kopiera linjal"
 
 msgctxt "NMo-om-nkz.title"
 msgid "Services"
-msgstr ""
+msgstr "Tjänster"
 
 msgctxt "Nop-cj-93Q.title"
 msgid "\tDefault"
-msgstr ""
+msgstr "\tStandard"
 
 msgctxt "OY7-WF-poV.title"
 msgid "Minimize"
-msgstr ""
+msgstr "Minimera"
 
 msgctxt "OaQ-X3-Vso.title"
 msgid "Baseline"
-msgstr ""
+msgstr "Baslinje"
 
 #. Do not change the placeholder ProductName!
 msgctxt "Olw-nP-bQN.title"
 msgid "Hide ProductName"
-msgstr ""
+msgstr "Dölj ProductName"
 
 msgctxt "OwM-mh-QMV.title"
 msgid "Find Previous"
-msgstr ""
+msgstr "Hitta föregående"
 
 msgctxt "Oyz-dy-DGm.title"
 msgid "Stop Speaking"
-msgstr ""
+msgstr "Sluta prata"
 
 msgctxt "Ptp-SP-VEL.title"
 msgid "Bigger"
-msgstr ""
+msgstr "Större"
 
 msgctxt "Q5e-8K-NDq.title"
 msgid "Show Fonts"
-msgstr ""
+msgstr "Visa teckensnitt"
 
 msgctxt "R4o-n2-Eq4.title"
 msgid "Zoom"
-msgstr ""
+msgstr "Zoom"
 
 msgctxt "RB4-Sm-HuC.title"
 msgid "\tRight to Left"
-msgstr ""
+msgstr "\tHöger till vänster"
 
 msgctxt "Rqc-34-cIF.title"
 msgid "Superscript"
-msgstr ""
+msgstr "Exponent"
 
 msgctxt "Ruw-6m-B2m.title"
 msgid "Select All"
-msgstr ""
+msgstr "Välj alla"
 
 msgctxt "S0p-oC-mLd.title"
 msgid "Jump to Selection"
-msgstr ""
+msgstr "Hoppa till val"
 
 msgctxt "Td7-aD-5lo.title"
 msgid "Window"
-msgstr ""
+msgstr "Fönster"
 
 msgctxt "UEZ-Bs-lqG.title"
 msgid "Capitalize"
-msgstr ""
+msgstr "Kapitalisera"
 
 msgctxt "VIY-Ag-zcb.title"
 msgid "Center"
-msgstr ""
+msgstr "Centrera"
 
 msgctxt "Vdr-fp-XzO.title"
 msgid "Hide Others"
-msgstr ""
+msgstr "Dölj andra"
 
 msgctxt "Vjx-xi-njq.title"
 msgid "Italic"
-msgstr ""
+msgstr "Kursiv"
 
 msgctxt "W48-6f-4Dl.title"
 msgid "Edit"
-msgstr ""
+msgstr "Redigera"
 
 msgctxt "WRG-CD-K1S.title"
 msgid "Underline"
-msgstr ""
+msgstr "Understryck"
 
 msgctxt "Was-JA-tGl.title"
 msgid "New"
-msgstr ""
+msgstr "Ny"
 
 msgctxt "WeT-3V-zwk.title"
 msgid "Paste and Match Style"
-msgstr ""
+msgstr "Klistra in och matcha stil"
 
 msgctxt "Xz5-n4-O0W.title"
 msgid "Find…"
-msgstr ""
+msgstr "Hitta…"
 
 msgctxt "YEy-JH-Tfz.title"
 msgid "Find and Replace…"
-msgstr ""
+msgstr "Hitta och ersätt…"
 
 msgctxt "YGs-j5-SAR.title"
 msgid "\tDefault"
-msgstr ""
+msgstr "\tStandard"
 
 msgctxt "Ynk-f8-cLZ.title"
 msgid "Start Speaking"
-msgstr ""
+msgstr "Börja tala"
 
 msgctxt "ZM1-6Q-yy1.title"
 msgid "Align Left"
-msgstr ""
+msgstr "Vänsterjustera"
 
 msgctxt "ZvO-Gk-QUH.title"
 msgid "Paragraph"
-msgstr ""
+msgstr "Paragraf"
 
 msgctxt "aTl-1u-JFS.title"
 msgid "Print…"
-msgstr ""
+msgstr "Skriv ut…"
 
 msgctxt "aUF-d1-5bR.title"
 msgid "Window"
-msgstr ""
+msgstr "Fönster"
 
 msgctxt "aXa-aM-Jaq.title"
 msgid "Font"
-msgstr ""
+msgstr "Teckensnitt"
 
 msgctxt "agt-UL-0e3.title"
 msgid "Use Default"
-msgstr ""
+msgstr "Använd standard"
 
 msgctxt "bgn-CT-cEk.title"
 msgid "Show Colors"
-msgstr ""
+msgstr "Visa färger"
 
 msgctxt "bib-Uj-vzu.title"
 msgid "File"
-msgstr ""
+msgstr "Fil"
 
 msgctxt "buJ-ug-pKt.title"
 msgid "Use Selection for Find"
-msgstr ""
+msgstr "Använd val för Sök"
 
 msgctxt "c8a-y6-VQd.title"
 msgid "Transformations"
-msgstr ""
+msgstr "Transformationer"
 
 msgctxt "cDB-IK-hbR.title"
 msgid "Use None"
-msgstr ""
+msgstr "Använd ingen"
 
 msgctxt "cqv-fj-IhA.title"
 msgid "Selection"
-msgstr ""
+msgstr "Val"
 
 msgctxt "cwL-P1-jid.title"
 msgid "Smart Links"
-msgstr ""
+msgstr "Smarta länkar"
 
 msgctxt "d9M-CD-aMd.title"
 msgid "Make Lower Case"
-msgstr ""
+msgstr "Gör gemener"
 
 msgctxt "d9c-me-L2H.title"
 msgid "Text"
-msgstr ""
+msgstr "Text"
 
 msgctxt "dMs-cI-mzQ.title"
 msgid "File"
-msgstr ""
+msgstr "Fil"
 
 msgctxt "dRJ-4n-Yzg.title"
 msgid "Undo"
-msgstr ""
+msgstr "Ångra"
 
 msgctxt "gVA-U4-sdL.title"
 msgid "Paste"
-msgstr ""
+msgstr "Klistra in"
 
 msgctxt "hQb-2v-fYv.title"
 msgid "Smart Quotes"
-msgstr ""
+msgstr "Smarta citat"
 
 msgctxt "hz2-CU-CR7.title"
 msgid "Check Document Now"
-msgstr ""
+msgstr "Kontrollera dokument nu"
 
 msgctxt "hz9-B4-Xy5.title"
 msgid "Services"
-msgstr ""
+msgstr "Tjänster"
 
 msgctxt "i1d-Er-qST.title"
 msgid "Smaller"
-msgstr ""
+msgstr "Mindre"
 
 msgctxt "ijk-EB-dga.title"
 msgid "Baseline"
-msgstr ""
+msgstr "Baslinje"
 
 msgctxt "jBQ-r6-VK2.title"
 msgid "Kern"
-msgstr ""
+msgstr "Kerning"
 
 msgctxt "jFq-tB-4Kx.title"
 msgid "\tRight to Left"
-msgstr ""
+msgstr "\tHöger till vänster"
 
 msgctxt "jxT-CU-nIS.title"
 msgid "Format"
-msgstr ""
+msgstr "Formatera"
 
 msgctxt "kIP-vf-haE.title"
 msgid "Show Sidebar"
-msgstr ""
+msgstr "Visa sidofält"
 
 msgctxt "mK6-2p-4JG.title"
 msgid "Check Grammar With Spelling"
-msgstr ""
+msgstr "Kontrollera grammatik med stavning"
 
 msgctxt "o6e-r0-MWq.title"
 msgid "Ligatures"
-msgstr ""
+msgstr "Ligaturer"
 
 msgctxt "oas-Oc-fiZ.title"
 msgid "Open Recent"
-msgstr ""
+msgstr "Öppna senaste"
 
 msgctxt "ogc-rX-tC1.title"
 msgid "Loosen"
-msgstr ""
+msgstr "Lossa"
 
 msgctxt "pa3-QI-u2k.title"
 msgid "Delete"
-msgstr ""
+msgstr "Radera"
 
 msgctxt "pxx-59-PXV.title"
 msgid "Save…"
-msgstr ""
+msgstr "Spara…"
 
 msgctxt "q09-fT-Sye.title"
 msgid "Find Next"
-msgstr ""
+msgstr "Hitta nästa"
 
 msgctxt "qIS-W8-SiK.title"
 msgid "Page Setup…"
-msgstr ""
+msgstr "Sidinställningar…"
 
 msgctxt "rbD-Rh-wIN.title"
 msgid "Check Spelling While Typing"
-msgstr ""
+msgstr "Kontrollera stavningen medan du skriver"
 
 msgctxt "rgM-f4-ycn.title"
 msgid "Smart Dashes"
-msgstr ""
+msgstr "Smarta streck"
 
 msgctxt "snW-S8-Cw5.title"
 msgid "Show Toolbar"
-msgstr ""
+msgstr "Visa verktygsfält"
 
 msgctxt "tRr-pd-1PS.title"
 msgid "Data Detectors"
-msgstr ""
+msgstr "Datadetektorer"
 
 msgctxt "tXI-mr-wws.title"
 msgid "Open Recent"
-msgstr ""
+msgstr "Öppna senaste"
 
 msgctxt "tlD-Oa-oAM.title"
 msgid "Kern"
-msgstr ""
+msgstr "Kerning"
 
 #. Do not change the placeholder ProductName!
 msgctxt "uQy-DD-JDr.title"
 msgid "ProductName"
-msgstr ""
+msgstr "ProductName"
 
 msgctxt "uRl-iY-unG.title"
 msgid "Cut"
-msgstr ""
+msgstr "Klipp ut"
 
 msgctxt "vFu-3Y-2xa.title"
 msgid "Window"
-msgstr ""
+msgstr "Fönster"
 
 msgctxt "vKC-jM-MkH.title"
 msgid "Paste Style"
-msgstr ""
+msgstr "Klistra in stil"
 
 msgctxt "vLm-3I-IUL.title"
 msgid "Show Ruler"
-msgstr ""
+msgstr "Visa linjal"
 
 msgctxt "vNY-rz-j42.title"
 msgid "Clear Menu"
-msgstr ""
+msgstr "Rensa meny"
 
 msgctxt "vmV-6d-7jI.title"
 msgid "Make Upper Case"
-msgstr ""
+msgstr "Gör versaler"
 
 msgctxt "w0m-vy-SC9.title"
 msgid "Ligatures"
-msgstr ""
+msgstr "Ligaturer"
 
 msgctxt "wb2-vD-lq4.title"
 msgid "Align Right"
-msgstr ""
+msgstr "Högerjustera"
 
 msgctxt "wpr-3q-Mcd.title"
 msgid "Help"
-msgstr ""
+msgstr "Hjälp"
 
 msgctxt "x3v-GG-iWU.title"
 msgid "Copy"
-msgstr ""
+msgstr "Kopiera"
 
 msgctxt "xQD-1f-W4t.title"
 msgid "Use All"
-msgstr ""
+msgstr "Använd alla"
 
 msgctxt "xrE-MZ-jX0.title"
 msgid "Speech"
-msgstr ""
+msgstr "Tal"
 
 msgctxt "z6F-FW-3nz.title"
 msgid "Show Substitutions"
-msgstr ""
+msgstr "Visa substitutioner"
