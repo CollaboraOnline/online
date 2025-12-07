@@ -41,6 +41,10 @@ class ForKitProcess;
 class SocketPoll;
 class TraceFileWriter;
 
+class StreamSocket;
+namespace http { class RequestParser; }
+namespace Poco { class URI; }
+
 std::shared_ptr<ChildProcess> getNewChild_Blocks(const std::shared_ptr<SocketPoll>& destPoll,
                                                  const std::string& configId,
                                                  unsigned mobileAppDocId);
@@ -254,6 +258,13 @@ public:
     /// get correct server URL with protocol + port number for this running server
     static std::string getServerURL();
 #endif
+ static size_t addNewChild(std::shared_ptr<ChildProcess> child);
+
+    static void removeUnusedChild(const std::shared_ptr<ChildProcess>& child);
+
+    static void handleForkitConnection(std::shared_ptr<StreamSocket> socket,
+                                       const http::RequestParser& request,
+                                       const Poco::URI& requestURI);
 
 protected:
     void initialize(Poco::Util::Application& self) override
