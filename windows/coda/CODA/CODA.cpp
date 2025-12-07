@@ -158,25 +158,6 @@ static const wchar_t* _(const wchar_t* english)
     static std::map<std::wstring, std::map<std::string, const wchar_t*>> translations
         {
             {
-                // Most translations missing here
-                L"Select document to edit in %s",
-                {
-                    { "cs", L"Vyberte dokument k úpravám v %s" },
-                    { "de", L"Dokument zur Bearbeitung in %s auswählen" },
-                    { "es", L"Seleccione el documento para editar en %s" },
-                    { "hu", L"Válassza ki a %s-ban szerkesztendő dokumentumot" },
-                    { "ja", L"%sで編集する文書を選択" },
-                    { "pl", L"Wybierz dokument do edycji w %s" },
-                    { "pt", L"Selecione o documento a editar no %s" },
-                    { "pt-BR", L"Selecione o documento para editar no %s" },
-                    { "ru", L"Выберите документ для редактирования в %s" },
-                    { "sv", L"Välj dolkument att redigera i %s" },
-                    { "tr", L"%s ile düzenlemek için belgeyi seçiniz" },
-                    { "zh-CN", L"选择要在 %s 中编辑的文档" },
-                    { "zh-TW", L"選擇要在 %s 中編輯的文檔" },
-                },
-            },
-            {
                 // Some translations missing here
                 L"Normal files",
                 {
@@ -1022,11 +1003,6 @@ static std::vector<FilenameAndUri> fileOpenDialog()
 
     if (!SUCCEEDED(dialog->SetFileTypes(sizeof(filter) / sizeof(filter[0]), &filter[0])))
         fatal("dialog->SetFileTypes() failed");
-
-    wchar_t title[100];
-    StringCbPrintfW(title, sizeof(title), _(L"Select document to edit in %s"), appName.c_str());
-    if (!SUCCEEDED(dialog->SetTitle(title)))
-        fatal("StringCbPrintfW() failed");
 
     IFileDialogEvents* dialogEvents = NULL;
     if (!SUCCEEDED(CDialogEventHandler_CreateInstance(IID_PPV_ARGS(&dialogEvents))))
