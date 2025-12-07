@@ -189,6 +189,12 @@ window.L.Map.include({
 
 		this.off('commandstatechanged', onCommandStateChanged);
 		this.on('commandstatechanged', onCommandStateChanged);
+
+		// Initialize with current state value if available
+		var currentState = this['stateChangeHandler'].getItemValue('.uno:FontHeight');
+		if (currentState) {
+			onCommandStateChanged.call(this, {commandName: '.uno:FontHeight', state: currentState});
+		}
 	},
 
 	applyFont: function (fontName) {
