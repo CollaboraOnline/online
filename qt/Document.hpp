@@ -17,10 +17,9 @@ namespace coda
 {
 struct DocumentData
 {
-    Poco::URI _fileURL; // Temp file path that COOL actually operates on
+    Poco::URI _fileURL;
     int _fakeClientFd = -1;
     unsigned _appDocId = 0;
-    Poco::URI _saveLocationURI; // Save location URI, that is only changed on save or auto-save.
 };
 } // namespace coda
 

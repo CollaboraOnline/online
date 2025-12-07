@@ -540,10 +540,7 @@ namespace
 void Bridge::promptSaveLocation(std::function<void(const std::string&)> callback)
 {
     // Prompt user to pick a save location
-    const QUrl docUrl(QString::fromStdString(
-        !_document._saveLocationURI.empty()
-            ? _document._saveLocationURI.toString()
-            : _document._fileURL.toString()));
+    const QUrl docUrl(QString::fromStdString(_document._fileURL.toString()));
     const QString docPath = docUrl.isLocalFile() ? docUrl.toLocalFile() : docUrl.toString();
     const QFileInfo docInfo(docPath);
     QString baseName = docInfo.completeBaseName().isEmpty()
@@ -603,24 +600,6 @@ void Bridge::promptSaveLocation(std::function<void(const std::string&)> callback
     dialog->open();
 }
 
-bool Bridge::saveDocument(const std::string& savePath)
-{
-    const std::string tempPath = Poco::Path(_document._fileURL.getPath()).toString();
-
-    if (FileUtil::copyAtomic(tempPath, savePath, false))
-    {
-        LOG_INF("Successfully saved file to location: " << savePath);
-        Application::getRecentFiles().add(Poco::URI(Poco::Path(savePath)).toString());
-        _pendingSave = false;
-        return true;
-    }
-    else
-    {
-        LOG_ERR("Failed to copy temp file to location: " << savePath);
-        return false;
-    }
-}
-
 void Bridge::saveDocumentAs()
 {
     promptSaveLocation([this](const std::string& savePath) {
@@ -628,7 +607,7 @@ void Bridge::saveDocumentAs()
             return;
 
         // Update saveLocationURI for future saves
-        _document._saveLocationURI = Poco::URI(Poco::Path(savePath));
+        // _document._saveLocationURI = Poco::URI(Poco::Path(savePath));
 
         // Update document name in the WebView UI
         QString fileName = QString::fromStdString(Poco::Path(savePath).getFileName());
@@ -796,16 +775,11 @@ QVariant Bridge::cool(const QString& messageStr)
         bool previousModified = _modified;
         _modified = (object->get("state").toString() == "true");
 
-        // when modified changes from true to false, we have a save pending to the _saveLocationURI
-        if (previousModified && !_modified)
-        {
-            _pendingSave = true;
-        }
-
         LOG_TRC_NOFILE("Document modified status changed: " << (_modified ? "modified" : "unmodified"));
     }
     else if (message.starts_with(COMMANDRESULT))
     {
+        return {};
         const auto object = parseJsonFromMessage(message, COMMANDRESULT.size());
         if (!object)
             return {};
@@ -828,34 +802,6 @@ QVariant Bridge::cool(const QString& messageStr)
         // let manually triggered saves through even if the document is not modified.
         if (commandName != ".uno:Save" || !success || (!wasModified && isAutosave))
             return {};
-
-        // Early return if the file is opened in-place (e.g. welcome slideshow)
-        if (_document._fileURL == _document._saveLocationURI)
-            return {};
-
-
-        if (isAutosave)
-        {
-            // for autosaves, only save if we have a save location already.
-            if (!_document._saveLocationURI.empty())
-            {
-                const std::string savePath = Poco::Path(_document._saveLocationURI.getPath()).toString();
-                saveDocument(savePath);
-            }
-        }
-        else
-        {
-            // manual save - prompt for save location if needed
-            if (_document._saveLocationURI.empty())
-            {
-                saveDocumentAs();
-            }
-            else
-            {
-                const std::string savePath = Poco::Path(_document._saveLocationURI.getPath()).toString();
-                saveDocument(savePath);
-            }
-        }
     }
     else if (message.starts_with(UPLOADSETTINGS))
     {
@@ -898,14 +844,6 @@ QVariant Bridge::cool(const QString& messageStr)
     {
         LOG_TRC_NOFILE("Document window terminating on JavaScript side → closing fake socket");
         fakeSocketClose(_closeNotificationPipeForForwardingThread[0]);
-
-        // Clean up temporary directory if there was one
-        if (_document._fileURL != _document._saveLocationURI)
-        {
-            const std::string tempDirectoryPath = Poco::Path(_document._fileURL.getPath()).parent().toString();
-            FileUtil::removeFile(tempDirectoryPath, true);
-            LOG_INF("Cleaned up temporary directory: " << tempDirectoryPath);
-        }
 
         QTimer::singleShot(0, [this]() {
             if (_webView)
@@ -1055,7 +993,7 @@ QVariant Bridge::cool(const QString& messageStr)
             format.erase(0, strlen("direct-"));
 
         // Build a suggested filename from the current document
-        const QUrl docUrl(QString::fromStdString(_document._saveLocationURI.toString()));
+        const QUrl docUrl(QString::fromStdString(_document._fileURL.toString()));
         const QString docPath = docUrl.isLocalFile() ? docUrl.toLocalFile() : docUrl.toString();
         const QFileInfo docInfo(docPath);
         const QString baseName = docInfo.completeBaseName().isEmpty()
