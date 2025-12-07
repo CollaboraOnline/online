@@ -3,52 +3,54 @@ msgstr ""
 "Project-Id-Version: coolwsd 25.04.7.3\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-12-06 18:17+0000\n"
-"PO-Revision-Date: 2025-12-06 18:30+0000\n"
-"Last-Translator: releng <releng@fox.cbg.collabora.co.uk>\n"
-"Language-Team: Slovenian <translation-team-sl@lists.sourceforge.net>\n"
+"PO-Revision-Date: 2025-12-07 22:00+0000\n"
+"Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
+"Language-Team: Slovenian <https://hosted.weblate.org/projects/collabora-"
+"online/collabora-office-macos-app/sl/>\n"
+"Language: sl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: sl\n"
-"Plural-Forms: nplurals=4; plural=(n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || "
-"n%100==4 ? 2 : 3);\n"
+"Plural-Forms: nplurals=4; plural=n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || "
+"n%100==4 ? 2 : 3;\n"
+"X-Generator: Weblate 5.15-dev\n"
 
 msgctxt "1UK-8n-QPP.title"
 msgid "Customize Toolbar…"
-msgstr ""
+msgstr "Prilagodi orodno vrstico …"
 
 #. Do not change the placeholder ProductName!
 msgctxt "1Xt-HY-uBw.title"
 msgid "ProductName"
-msgstr ""
+msgstr "ProductName"
 
 msgctxt "1b7-l0-nxx.title"
 msgid "Find"
-msgstr ""
+msgstr "Najdi"
 
 msgctxt "1tx-W0-xDw.title"
 msgid "Lower"
-msgstr ""
+msgstr "Spusti"
 
 msgctxt "2h7-ER-AoG.title"
 msgid "Raise"
-msgstr ""
+msgstr "Dvigni"
 
 msgctxt "2oI-Rn-ZJC.title"
 msgid "Transformations"
-msgstr ""
+msgstr "Preoblikovanja"
 
 msgctxt "3IN-sU-3Bg.title"
 msgid "Spelling"
-msgstr ""
+msgstr "Črkovanje"
 
 msgctxt "3Om-Ey-2VK.title"
 msgid "Use Default"
-msgstr ""
+msgstr "Uporabi privzeto"
 
 msgctxt "3rS-ZA-NoH.title"
 msgid "Speech"
-msgstr ""
+msgstr "Govor"
 
 msgctxt "46P-cB-AYj.title"
 msgid "Tighten"
@@ -56,7 +58,7 @@ msgstr ""
 
 msgctxt "4EN-yA-p0u.title"
 msgid "Find"
-msgstr ""
+msgstr "Najdi"
 
 msgctxt "4J7-dP-txa.title"
 msgid "Enter Full Screen"
@@ -65,24 +67,24 @@ msgstr ""
 #. Do not change the placeholder ProductName!
 msgctxt "4sb-4s-VLi.title"
 msgid "Quit ProductName"
-msgstr ""
+msgstr "Izhod iz ProductName"
 
 msgctxt "5QF-Oa-p0T.title"
 msgid "Edit"
-msgstr ""
+msgstr "Uredi"
 
 msgctxt "5Vv-lz-BsD.title"
 msgid "Copy Style"
-msgstr ""
+msgstr "Kopiraj slog"
 
 #. Do not change the placeholder ProductName!
 msgctxt "5kV-Vb-QxS.title"
 msgid "About ProductName"
-msgstr ""
+msgstr "O programu ProductName"
 
 msgctxt "6dh-zS-Vam.title"
 msgid "Redo"
-msgstr ""
+msgstr "Ponovi"
 
 msgctxt "78Y-hA-62v.title"
 msgid "Correct Spelling Automatically"
@@ -90,7 +92,7 @@ msgstr ""
 
 msgctxt "8mr-sm-Yjd.title"
 msgid "Writing Direction"
-msgstr ""
+msgstr "Smer pisanja"
 
 msgctxt "9ic-FL-obx.title"
 msgid "Substitutions"
@@ -102,11 +104,11 @@ msgstr ""
 
 msgctxt "AYu-sK-qS6.title"
 msgid "Main Menu"
-msgstr ""
+msgstr "Glavni meni"
 
 msgctxt "BOF-NM-1cW.title"
 msgid "Preferences…"
-msgstr ""
+msgstr "Nastavitve …"
 
 msgctxt "BgM-ve-c93.title"
 msgid "\tLeft to Right"
@@ -114,28 +116,28 @@ msgstr ""
 
 msgctxt "Bw7-FT-i3A.title"
 msgid "Save As…"
-msgstr ""
+msgstr "Shrani kot …"
 
 msgctxt "DVo-aG-piG.title"
 msgid "Close"
-msgstr ""
+msgstr "Zapri"
 
 msgctxt "Dv1-io-Yv7.title"
 msgid "Spelling and Grammar"
-msgstr ""
+msgstr "Črkovanje in slovnica"
 
 msgctxt "F2S-fz-NVQ.title"
 msgid "Help"
-msgstr ""
+msgstr "Pomoč"
 
 #. Do not change the placeholder ProductName!
 msgctxt "FKE-Sm-Kum.title"
 msgid "ProductName Help"
-msgstr ""
+msgstr "Pomoč ProductName"
 
 msgctxt "Fal-I4-PZk.title"
 msgid "Text"
-msgstr ""
+msgstr "Besedilo"
 
 msgctxt "FeM-D8-WVr.title"
 msgid "Substitutions"
@@ -143,27 +145,27 @@ msgstr ""
 
 msgctxt "GB9-OM-e27.title"
 msgid "Bold"
-msgstr ""
+msgstr "Krepko"
 
 msgctxt "GEO-Iw-cKr.title"
 msgid "Format"
-msgstr ""
+msgstr "Oblika"
 
 msgctxt "GUa-eO-cwY.title"
 msgid "Use Default"
-msgstr ""
+msgstr "Uporabi privzeto"
 
 msgctxt "Gi5-1S-RQB.title"
 msgid "Font"
-msgstr ""
+msgstr "Pisava"
 
 msgctxt "H1b-Si-o9J.title"
 msgid "Writing Direction"
-msgstr ""
+msgstr "Smer pisanja"
 
 msgctxt "H8h-7b-M4v.title"
 msgid "View"
-msgstr ""
+msgstr "Pogled"
 
 msgctxt "HFQ-gK-NFA.title"
 msgid "Text Replacement"
@@ -175,15 +177,15 @@ msgstr ""
 
 msgctxt "HyV-fh-RgO.title"
 msgid "View"
-msgstr ""
+msgstr "Pogled"
 
 msgctxt "I0S-gh-46l.title"
 msgid "Subscript"
-msgstr ""
+msgstr "Podpisano"
 
 msgctxt "IAo-SY-fd9.title"
 msgid "Open…"
-msgstr ""
+msgstr "Odpri …"
 
 msgctxt "J5U-5w-g23.title"
 msgid "Justify"
@@ -199,7 +201,7 @@ msgstr ""
 
 msgctxt "Kd2-mp-pUS.title"
 msgid "Show All"
-msgstr ""
+msgstr "Pokaži vse"
 
 msgctxt "LE2-aR-0XJ.title"
 msgid "Bring All to Front"
@@ -207,7 +209,7 @@ msgstr ""
 
 msgctxt "LVM-kO-fVI.title"
 msgid "Paste Ruler"
-msgstr ""
+msgstr "Prilepi ravnilo"
 
 msgctxt "Lbh-J2-qVU.title"
 msgid "\tLeft to Right"
@@ -215,11 +217,11 @@ msgstr ""
 
 msgctxt "MkV-Pr-PK5.title"
 msgid "Copy Ruler"
-msgstr ""
+msgstr "Kopiraj ravnilo"
 
 msgctxt "NMo-om-nkz.title"
 msgid "Services"
-msgstr ""
+msgstr "Storitve"
 
 msgctxt "Nop-cj-93Q.title"
 msgid "\tDefault"
@@ -231,12 +233,12 @@ msgstr ""
 
 msgctxt "OaQ-X3-Vso.title"
 msgid "Baseline"
-msgstr ""
+msgstr "Osnovnica"
 
 #. Do not change the placeholder ProductName!
 msgctxt "Olw-nP-bQN.title"
 msgid "Hide ProductName"
-msgstr ""
+msgstr "Skrij ProductName"
 
 msgctxt "OwM-mh-QMV.title"
 msgid "Find Previous"
@@ -252,7 +254,7 @@ msgstr ""
 
 msgctxt "Q5e-8K-NDq.title"
 msgid "Show Fonts"
-msgstr ""
+msgstr "Pokaži pisave"
 
 msgctxt "R4o-n2-Eq4.title"
 msgid "Zoom"
@@ -264,19 +266,19 @@ msgstr ""
 
 msgctxt "Rqc-34-cIF.title"
 msgid "Superscript"
-msgstr ""
+msgstr "Nadpisano"
 
 msgctxt "Ruw-6m-B2m.title"
 msgid "Select All"
-msgstr ""
+msgstr "Izberi vse"
 
 msgctxt "S0p-oC-mLd.title"
 msgid "Jump to Selection"
-msgstr ""
+msgstr "Skoči na izbor"
 
 msgctxt "Td7-aD-5lo.title"
 msgid "Window"
-msgstr ""
+msgstr "Okno"
 
 msgctxt "UEZ-Bs-lqG.title"
 msgid "Capitalize"
@@ -292,19 +294,19 @@ msgstr ""
 
 msgctxt "Vjx-xi-njq.title"
 msgid "Italic"
-msgstr ""
+msgstr "Ležeče"
 
 msgctxt "W48-6f-4Dl.title"
 msgid "Edit"
-msgstr ""
+msgstr "Uredi"
 
 msgctxt "WRG-CD-K1S.title"
 msgid "Underline"
-msgstr ""
+msgstr "Podčrtano"
 
 msgctxt "Was-JA-tGl.title"
 msgid "New"
-msgstr ""
+msgstr "Nov"
 
 msgctxt "WeT-3V-zwk.title"
 msgid "Paste and Match Style"
@@ -312,11 +314,11 @@ msgstr ""
 
 msgctxt "Xz5-n4-O0W.title"
 msgid "Find…"
-msgstr ""
+msgstr "Najdi …"
 
 msgctxt "YEy-JH-Tfz.title"
 msgid "Find and Replace…"
-msgstr ""
+msgstr "Najdi in zamenjaj …"
 
 msgctxt "YGs-j5-SAR.title"
 msgid "\tDefault"
@@ -332,19 +334,19 @@ msgstr ""
 
 msgctxt "ZvO-Gk-QUH.title"
 msgid "Paragraph"
-msgstr ""
+msgstr "Odstavek"
 
 msgctxt "aTl-1u-JFS.title"
 msgid "Print…"
-msgstr ""
+msgstr "Natisni …"
 
 msgctxt "aUF-d1-5bR.title"
 msgid "Window"
-msgstr ""
+msgstr "Okno"
 
 msgctxt "aXa-aM-Jaq.title"
 msgid "Font"
-msgstr ""
+msgstr "Pisava"
 
 msgctxt "agt-UL-0e3.title"
 msgid "Use Default"
@@ -352,11 +354,11 @@ msgstr ""
 
 msgctxt "bgn-CT-cEk.title"
 msgid "Show Colors"
-msgstr ""
+msgstr "Pokaži barve"
 
 msgctxt "bib-Uj-vzu.title"
 msgid "File"
-msgstr ""
+msgstr "Datoteka"
 
 msgctxt "buJ-ug-pKt.title"
 msgid "Use Selection for Find"
@@ -364,7 +366,7 @@ msgstr ""
 
 msgctxt "c8a-y6-VQd.title"
 msgid "Transformations"
-msgstr ""
+msgstr "Preoblikovanja"
 
 msgctxt "cDB-IK-hbR.title"
 msgid "Use None"
@@ -372,11 +374,11 @@ msgstr ""
 
 msgctxt "cqv-fj-IhA.title"
 msgid "Selection"
-msgstr ""
+msgstr "Izbor"
 
 msgctxt "cwL-P1-jid.title"
 msgid "Smart Links"
-msgstr ""
+msgstr "Pametne povezave"
 
 msgctxt "d9M-CD-aMd.title"
 msgid "Make Lower Case"
@@ -384,19 +386,19 @@ msgstr ""
 
 msgctxt "d9c-me-L2H.title"
 msgid "Text"
-msgstr ""
+msgstr "Besedilo"
 
 msgctxt "dMs-cI-mzQ.title"
 msgid "File"
-msgstr ""
+msgstr "Datoteka"
 
 msgctxt "dRJ-4n-Yzg.title"
 msgid "Undo"
-msgstr ""
+msgstr "Razveljavi"
 
 msgctxt "gVA-U4-sdL.title"
 msgid "Paste"
-msgstr ""
+msgstr "Prilepi"
 
 msgctxt "hQb-2v-fYv.title"
 msgid "Smart Quotes"
@@ -408,7 +410,7 @@ msgstr ""
 
 msgctxt "hz9-B4-Xy5.title"
 msgid "Services"
-msgstr ""
+msgstr "Storitve"
 
 msgctxt "i1d-Er-qST.title"
 msgid "Smaller"
@@ -416,7 +418,7 @@ msgstr ""
 
 msgctxt "ijk-EB-dga.title"
 msgid "Baseline"
-msgstr ""
+msgstr "Osnovnica"
 
 msgctxt "jBQ-r6-VK2.title"
 msgid "Kern"
@@ -432,7 +434,7 @@ msgstr ""
 
 msgctxt "kIP-vf-haE.title"
 msgid "Show Sidebar"
-msgstr ""
+msgstr "Pokaži stransko vrstico"
 
 msgctxt "mK6-2p-4JG.title"
 msgid "Check Grammar With Spelling"
@@ -452,11 +454,11 @@ msgstr ""
 
 msgctxt "pa3-QI-u2k.title"
 msgid "Delete"
-msgstr ""
+msgstr "Izbriši"
 
 msgctxt "pxx-59-PXV.title"
 msgid "Save…"
-msgstr ""
+msgstr "Shrani …"
 
 msgctxt "q09-fT-Sye.title"
 msgid "Find Next"
@@ -476,7 +478,7 @@ msgstr ""
 
 msgctxt "snW-S8-Cw5.title"
 msgid "Show Toolbar"
-msgstr ""
+msgstr "Pokaži orodno vrstico"
 
 msgctxt "tRr-pd-1PS.title"
 msgid "Data Detectors"
@@ -493,27 +495,27 @@ msgstr ""
 #. Do not change the placeholder ProductName!
 msgctxt "uQy-DD-JDr.title"
 msgid "ProductName"
-msgstr ""
+msgstr "ProductName"
 
 msgctxt "uRl-iY-unG.title"
 msgid "Cut"
-msgstr ""
+msgstr "Izreži"
 
 msgctxt "vFu-3Y-2xa.title"
 msgid "Window"
-msgstr ""
+msgstr "Okno"
 
 msgctxt "vKC-jM-MkH.title"
 msgid "Paste Style"
-msgstr ""
+msgstr "Prilepi slog"
 
 msgctxt "vLm-3I-IUL.title"
 msgid "Show Ruler"
-msgstr ""
+msgstr "Pokaži ravnilo"
 
 msgctxt "vNY-rz-j42.title"
 msgid "Clear Menu"
-msgstr ""
+msgstr "Počisti meni"
 
 msgctxt "vmV-6d-7jI.title"
 msgid "Make Upper Case"
@@ -525,19 +527,19 @@ msgstr ""
 
 msgctxt "wb2-vD-lq4.title"
 msgid "Align Right"
-msgstr ""
+msgstr "Poravnaj desno"
 
 msgctxt "wpr-3q-Mcd.title"
 msgid "Help"
-msgstr ""
+msgstr "Pomoč"
 
 msgctxt "x3v-GG-iWU.title"
 msgid "Copy"
-msgstr ""
+msgstr "Kopiraj"
 
 msgctxt "xQD-1f-W4t.title"
 msgid "Use All"
-msgstr ""
+msgstr "Uporabi vse"
 
 msgctxt "xrE-MZ-jX0.title"
 msgid "Speech"
