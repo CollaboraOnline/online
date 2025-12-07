@@ -259,77 +259,6 @@ void load_next_document()
     }
 }
 
-// ================ Sample code (MIT licensed). With app-specific modifications in the dialog event handler.
-// https://github.com/microsoft/Windows-classic-samples/blob/2b94df5730177ec27e726b60017c01c97ef1a8fb/Samples/Win7Samples/winui/shell/appplatform/commonfiledialog/CommonFileDialogApp.cpp
-
-/* File Dialog Event Handler *****************************************************************************************************/
-
-class CDialogEventHandler : public IFileDialogEvents
-{
-public:
-    // IUnknown methods
-    IFACEMETHODIMP QueryInterface(REFIID riid, void** ppv)
-    {
-        static const QITAB qit[] = {
-            QITABENT(CDialogEventHandler, IFileDialogEvents),
-            { 0 },
-        };
-        return QISearch(this, qit, riid, ppv);
-    }
-
-    IFACEMETHODIMP_(ULONG) AddRef() { return InterlockedIncrement(&_cRef); }
-
-    IFACEMETHODIMP_(ULONG) Release()
-    {
-        long cRef = InterlockedDecrement(&_cRef);
-        if (!cRef)
-            delete this;
-        return cRef;
-    }
-
-    // IFileDialogEvents methods
-    IFACEMETHODIMP OnFileOk(IFileDialog* pFD)
-    {
-        return S_OK;
-    };
-
-    // The rest are dummies
-    IFACEMETHODIMP OnFolderChange(IFileDialog*) { return S_OK; };
-    IFACEMETHODIMP OnFolderChanging(IFileDialog*, IShellItem*) { return S_OK; };
-    IFACEMETHODIMP OnHelp(IFileDialog*) { return S_OK; };
-    IFACEMETHODIMP OnSelectionChange(IFileDialog*) { return S_OK; };
-    IFACEMETHODIMP OnShareViolation(IFileDialog*, IShellItem*, FDE_SHAREVIOLATION_RESPONSE*)
-    {
-        return S_OK;
-    };
-    IFACEMETHODIMP OnTypeChange(IFileDialog* pfd) { return S_OK; };
-    IFACEMETHODIMP OnOverwrite(IFileDialog*, IShellItem*, FDE_OVERWRITE_RESPONSE*) { return S_OK; };
-
-    CDialogEventHandler()
-        : _cRef(1){};
-
-private:
-    virtual ~CDialogEventHandler(){};
-
-    long _cRef;
-};
-
-// Instance creation helper
-static HRESULT CDialogEventHandler_CreateInstance(REFIID riid, void** ppv)
-{
-    *ppv = NULL;
-    CDialogEventHandler* pDialogEventHandler = new (std::nothrow) CDialogEventHandler();
-    HRESULT hr = pDialogEventHandler ? S_OK : E_OUTOFMEMORY;
-    if (SUCCEEDED(hr))
-    {
-        hr = pDialogEventHandler->QueryInterface(riid, ppv);
-        pDialogEventHandler->Release();
-    }
-    return hr;
-}
-
-// ================ End of sample code
-
 static void processMessage(WindowData& data, wil::unique_cotaskmem_string& message);
 
 [[noreturn]] static void fatal(const std::string& message)
@@ -1004,14 +933,6 @@ static std::vector<FilenameAndUri> fileOpenDialog()
     if (!SUCCEEDED(dialog->SetFileTypes(sizeof(filter) / sizeof(filter[0]), &filter[0])))
         fatal("dialog->SetFileTypes() failed");
 
-    IFileDialogEvents* dialogEvents = NULL;
-    if (!SUCCEEDED(CDialogEventHandler_CreateInstance(IID_PPV_ARGS(&dialogEvents))))
-        fatal("CDialogEventHandler_CreateInstance() failed");
-
-    DWORD cookie = 0;
-    if (!SUCCEEDED(dialog->Advise(dialogEvents, &cookie)))
-        fatal("dialog->Advise() failed");
-
     FILEOPENDIALOGOPTIONS options;
     if (SUCCEEDED(dialog->GetOptions(&options)))
     {
@@ -1048,8 +969,6 @@ static std::vector<FilenameAndUri> fileOpenDialog()
         }
     }
     items->Release();
-
-    dialog->Unadvise(cookie);
     dialog->Release();
 
     return result;
