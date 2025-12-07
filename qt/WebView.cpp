@@ -25,6 +25,7 @@
 #include <cstdlib>
 #include <cstring>
 #include <memory>
+#include <utility>
 
 #include <QMenuBar>
 #include <QMenu>
@@ -41,6 +42,7 @@
 #include <QDir>
 #include <QLabel>
 #include <QApplication>
+#include <QObject>
 #include <QUrl>
 #include <QCloseEvent>
 #include <QMessageBox>
@@ -53,6 +55,7 @@
 #include <QDBusPendingReply>
 #include <QVariant>
 #include <QtDBus/QtDBus>
+#include <QStandardPaths>
 
 std::vector<WebView*> WebView::s_instances;
 
@@ -101,6 +104,123 @@ std::string getUILanguage()
     return lang;
 }
 
+QString getDocumentsDirectory()
+{
+    QString documentsDir = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
+    if (documentsDir.isEmpty())
+    {
+        // Fallback to home directory if Documents doesn't exist
+        documentsDir = QDir::homePath();
+    }
+    return documentsDir;
+}
+
+Poco::Path getTemplatePath(const std::string& templateType, const std::string& templatePath)
+{
+    Poco::Path resolvedPath;
+
+    if (!templatePath.empty())
+    {
+        if (templatePath.starts_with("/"))
+        {
+            // Absolute path - use directly
+            resolvedPath = Poco::Path(templatePath);
+        }
+        else
+        {
+            // Relative path - resolve against browser/dist
+            resolvedPath = Poco::Path(getDataDir());
+            resolvedPath.append("browser/dist");
+            resolvedPath.append(templatePath);
+        }
+    }
+
+    // Check if resolved path exists, otherwise fall back to default
+    if (templatePath.empty() || !QFileInfo(QString::fromStdString(resolvedPath.toString())).exists())
+    {
+        // Map template type to template filename
+        std::string templateFileName = "TextDocument.odt"; // default fallback
+        if (templateType == "impress")
+            templateFileName = "Presentation.odp";
+        else if (templateType == "writer")
+            templateFileName = "TextDocument.odt";
+        else if (templateType == "calc")
+            templateFileName = "Spreadsheet.ods";
+        else if (templateType == "draw")
+            templateFileName = "Drawing.odg";
+
+        Poco::Path defaultPath(getDataDir());
+        defaultPath.append("browser/dist/templates");
+        defaultPath.append(templateFileName);
+        return defaultPath;
+    }
+
+    return resolvedPath;
+}
+
+std::pair<QString, QString> getDocumentNameInfo(const std::string& templateType)
+{
+    QString docNamePrefix;
+    QString extension;
+
+    if (templateType == "impress")
+    {
+        docNamePrefix = QObject::tr("Presentation");
+        extension = "odp";
+    }
+    else if (templateType == "writer")
+    {
+        docNamePrefix = QObject::tr("Text Document");
+        extension = "odt";
+    }
+    else if (templateType == "calc")
+    {
+        docNamePrefix = QObject::tr("Spreadsheet");
+        extension = "ods";
+    }
+    else if (templateType == "draw")
+    {
+        docNamePrefix = QObject::tr("Drawing");
+        extension = "odg";
+    }
+    else
+    {
+        // Default fallback
+        docNamePrefix = QObject::tr("Text Document");
+        extension = "odt";
+    }
+
+    return {docNamePrefix, extension};
+}
+
+QString findNextAvailableDocumentName(const QString& documentsDir, const QString& docNamePrefix, const QString& extension)
+{
+    // First try without number: "Text Document.odt"
+    // Then try with numbers: "Text Document (1).odt", "Text Document (2).odt", etc.
+    QString baseFileName = QString("%1.%2").arg(docNamePrefix).arg(extension);
+    QString baseFilePath = QDir(documentsDir).filePath(baseFileName);
+
+    if (!QFileInfo::exists(baseFilePath))
+    {
+        // Use base name without number
+        return baseFilePath;
+    }
+
+    // Base name exists, find next available number
+    int docNumber = 1;
+    QString newFilePath;
+    while (true)
+    {
+        QString fileName = QString("%1 (%2).%3").arg(docNamePrefix).arg(docNumber).arg(extension);
+        newFilePath = QDir(documentsDir).filePath(fileName);
+        if (!QFileInfo::exists(newFilePath))
+            break;
+        docNumber++;
+    }
+
+    return newFilePath;
+}
+
 class Window: public QMainWindow {
 public:
     Window(QWidget * parent, WebView * owner): QMainWindow(parent), owner_(owner) {}
@@ -115,7 +235,7 @@ private:
             closeCallback_();
 
         // prompt user if document has unsaved changes
-        if (owner_->isDocumentModified() || owner_->isPendingSave())
+        if (owner_->isDocumentModified())
         {
             QMessageBox msgBox(this);
             msgBox.setWindowTitle(QApplication::translate("WebView", "Unsaved Changes"));
@@ -442,46 +562,10 @@ void WebView::load(const Poco::URI& fileURL, bool newFile, bool isStarterMode)
     {
         // Normal document mode
         _document = {
+            ._fileURL = fileURL,
             ._fakeClientFd = fakeSocketSocket(),
             ._appDocId = generateNewAppDocId(),
         };
-
-        // operate on a temp copy of the file
-        if (!_isWelcome && fileURL.getScheme() == "file")
-        {
-            try
-            {
-                Poco::Path originalPath(fileURL.getPath());
-                if (!newFile)
-                {
-                    _document._saveLocationURI = fileURL;
-                }
-
-                const std::string tempDirectoryPath = FileUtil::createRandomTmpDir();
-                const std::string& fileName = originalPath.getFileName();
-
-                Poco::Path tempFilePath(tempDirectoryPath, fileName);
-                const std::string tempFilePathStr = tempFilePath.toString();
-                if (!FileUtil::copyAtomic(originalPath.toString(), tempFilePath.toString(), false))
-                {
-                    LOG_ERR("Failed to copy file to temporary location: " << tempFilePath.toString());
-                    return;
-                }
-
-                _document._fileURL = Poco::URI(tempFilePath);
-            }
-            catch (const std::exception& e)
-            {
-                LOG_ERR("Exception while copying file to temp: " << e.what());
-                return;
-            }
-        }
-        else
-        {
-            // For welcome-slideshow use original URL directly
-            _document._saveLocationURI = fileURL;
-            _document._fileURL = fileURL;
-        }
     }
 
     // setup js c++ communication
@@ -558,57 +642,43 @@ void WebView::load(const Poco::URI& fileURL, bool newFile, bool isStarterMode)
 
 WebView* WebView::createNewDocument(QWebEngineProfile* profile, const std::string& templateType, const std::string& templatePath)
 {
-    Poco::URI templateURI;
-    // if templatePath is empty or the file doesn't exist fileToLoad is mapped to default templateType template
-    if (!templatePath.empty())
+    // Get template file path
+    Poco::Path templatePathObj = getTemplatePath(templateType, templatePath);
+
+    // Get user's Documents directory
+    QString documentsDir = getDocumentsDirectory();
+
+    // Get document name prefix and extension based on template type
+    auto [docNamePrefix, extension] = getDocumentNameInfo(templateType);
+
+    // Find the next available document name
+    QString newFilePath = findNextAvailableDocumentName(documentsDir, docNamePrefix, extension);
+
+    // Copy template to the new location
+    QString templateFilePath = QString::fromStdString(templatePathObj.toString());
+    if (!QFile::copy(templateFilePath, newFilePath))
     {
-        if (templatePath.starts_with("/"))
-        {
-            // take the path as is if it's an absolute path
-            templateURI = Poco::URI(Poco::Path(templatePath));
-        }
-        else
-        {
-            // otherwise assume it's a template path relative to browser/dist
-            Poco::Path templatePathObj(getDataDir());
-            templatePathObj.append("browser/dist");
-            templatePathObj.append(templatePath);
-            templateURI = Poco::URI(templatePathObj);
-        }
+        LOG_ERR("Failed to copy template from " << templateFilePath.toStdString()
+                << " to " << newFilePath.toStdString());
+        return nullptr;
     }
 
-    if (templatePath.empty() || !FileUtil::Stat(templateURI.getPath()).exists())
-    {
-        // Map template type to template filename
-        std::string templateFileName = "TextDocument.odt"; // default fallback
-        if (templateType == "impress")
-            templateFileName = "Presentation.odp";
-        else if (templateType == "writer")
-            templateFileName = "TextDocument.odt";
-        else if (templateType == "calc")
-            templateFileName = "Spreadsheet.ods";
-        else if (templateType == "draw")
-            templateFileName = "Drawing.odg";
-
-        Poco::Path templatePathObj(getDataDir());
-        templatePathObj.append("browser/dist/templates");
-        templatePathObj.append(templateFileName);
-        templateURI = Poco::URI(templatePathObj);
-    }
-
-    // Create WebView and load template without a set save location
+    // Open the new document
+    Poco::URI newDocumentURI(Poco::Path(newFilePath.toStdString()));
     WebView* webViewInstance = new WebView(profile, false);
-    webViewInstance->load(templateURI, true);
+    webViewInstance->load(newDocumentURI, true);
 
     return webViewInstance;
 }
 
 WebView* WebView::findOpenDocument(const Poco::URI& documentURI)
 {
+    if (documentURI.empty())
+        return nullptr;
+
     for (WebView* instance : s_instances)
     {
-        if (!instance->_document._saveLocationURI.empty() &&
-            instance->_document._saveLocationURI.getPath() == documentURI.getPath())
+        if (instance->_document._fileURL.getPath() == documentURI.getPath())
         {
             return instance;
         }
@@ -640,11 +710,6 @@ void WebView::activateWindow()
 bool WebView::isDocumentModified() const
 {
     return _bridge && _bridge->isModified();
-}
-
-bool WebView::isPendingSave() const
-{
-    return _bridge && _bridge->isPendingSave();
 }
 
 void WebView::queryGnomeFontScalingUpdateZoom()
