@@ -2,15 +2,15 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: core-hr\n"
-"PO-Revision-Date: 2025-11-19 08:51+0000\n"
+"PO-Revision-Date: 2025-12-07 11:24+0000\n"
 "Last-Translator: Milo Ivir <mail@milotype.de>\n"
 "Language-Team: Croatian <https://hosted.weblate.org/projects/collabora-"
 "online/lokit/hr/>\n"
 "Language: hr\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
-"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 "X-Generator: Weblate 5.15-dev\n"
 
 #. ygDfy
@@ -1019,14 +1019,13 @@ msgstr "Razvrstavanje master slajda / ploče (platno)"
 
 #. kB8Ri
 #: Sidebar.xcu
-#, fuzzy
 msgctxt ""
 "Sidebar.xcu\n"
 "..Sidebar.Content.PanelList.ScDatabasePropertyPanel\n"
 "Title\n"
 "value.text"
 msgid "Table Style Options"
-msgstr "Radnje stilova"
+msgstr "Opcije stilova tablica"
 
 #. SYFXq
 #: Sidebar.xcu
@@ -1192,13 +1191,13 @@ msgstr "~Promjene u svim prikazima"
 #: sc/inc/globstr.hrc:70
 msgctxt "STR_UNDO_TABLETOTALS"
 msgid "Tabletotals"
-msgstr ""
+msgstr "Zbrojevi tablice"
 
 #. Gip2L
 #: sc/inc/globstr.hrc:211
 msgctxt "STR_TABLE_TOTAL"
 msgid "Summary"
-msgstr ""
+msgstr "Sažetak"
 
 #. cG7BY
 #: sc/inc/globstr.hrc:594
@@ -1923,7 +1922,7 @@ msgstr ""
 #: sc/uiconfig/scalc/ui/selectsheetviewdialog.ui:18
 msgctxt "selectsheetviewdialog|SelectSheetView"
 msgid "Select Sheet View"
-msgstr ""
+msgstr "Odaberi prikaz lista"
 
 #. GTQJA
 #: sc/uiconfig/scalc/ui/selectsheetviewdialog.ui:44
@@ -1947,7 +1946,7 @@ msgstr ""
 #: sc/uiconfig/scalc/ui/sheetviewbox.ui:17
 msgctxt "sheetviewbox|sheetview_combobox|accessible_name"
 msgid "Sheet View"
-msgstr ""
+msgstr "Prikaz lista"
 
 #. FXK8B
 #: sc/uiconfig/scalc/ui/sidebarcellappearance.ui:87
@@ -1959,53 +1958,49 @@ msgstr "Stil ruba"
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:22
 msgctxt "sidebardatabase|chk_header_row"
 msgid "Show Header Row"
-msgstr ""
+msgstr "Prikaži redak zaglavlja"
 
 #. ECtUM
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:36
 msgctxt "sidebardatabase|chk_total_row"
 msgid "Show Total Row"
-msgstr ""
+msgstr "Prikaži redak zbroja"
 
 #. htZbK
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:50
 msgctxt "sidebardatabase|chk_filter_buttons"
 msgid "Show Filter Buttons"
-msgstr ""
+msgstr "Prikaži gumbove za filtriranje"
 
 #. MjALC
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:86
 msgctxt "sidebardatabase|chk_banded_rows"
 msgid "Banded Rows"
-msgstr ""
+msgstr "Naizmjenično obojani retci"
 
 #. GVkZ2
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:100
-#, fuzzy
 msgctxt "sidebardatabase|chk_banded_cols"
 msgid "Banded Columns"
-msgstr "Stupci"
+msgstr "Naizmjenično obojani stupci"
 
 #. S4bop
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:114
-#, fuzzy
 msgctxt "sidebardatabase|chk_first_column"
 msgid "First Column"
-msgstr "Stupac"
+msgstr "Prvi stupac"
 
 #. QR56s
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:128
-#, fuzzy
 msgctxt "sidebardatabase|chk_last_column"
 msgid "Last Column"
-msgstr "Stupac"
+msgstr "Zadnji stupac"
 
 #. BJHqA
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:170
-#, fuzzy
 msgctxt "sidebardatabase|lbl_styles"
 msgid "Table Styles"
-msgstr "Aktualiziraj stil"
+msgstr "Stilovi tablica"
 
 #. er8nh
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:187
