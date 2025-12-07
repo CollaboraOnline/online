@@ -8,17 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-11-17 08:08+0100\n"
-"PO-Revision-Date: 2025-11-19 08:51+0000\n"
+"PO-Revision-Date: 2025-12-07 11:24+0000\n"
 "Last-Translator: Milo Ivir <mail@milotype.de>\n"
-"Language-Team: Croatian <https://hosted.weblate.org/projects/"
-"collabora-online/ui/hr/>\n"
+"Language-Team: Croatian <https://hosted.weblate.org/projects/collabora-"
+"online/ui/hr/>\n"
 "Language: hr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural="
-"(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? "
-"1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 "X-Generator: Weblate 5.15-dev\n"
 
 #: admin/admin.strings.js:15
@@ -775,10 +774,12 @@ msgid ""
 "To use Zotero specify your API key here. You can create your API key in "
 "your "
 msgstr ""
+"Za korištenje Zotera ovdje upiši svoj API ključ. Svoj API ključ možeš "
+"stvoriti u svojim "
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:1386
 msgid "Zotero account API settings"
-msgstr ""
+msgstr "API postavkama Zotero računa"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:1395
 msgid "Document Signing"
@@ -2820,7 +2821,7 @@ msgstr "Rasporedi"
 
 #: src/control/Control.NotebookbarCalc.js:1392
 msgid "Sheet View"
-msgstr ""
+msgstr "Prikaz lista"
 
 #: src/control/Control.NotebookbarCalc.js:1406
 msgid "Default View"
@@ -2828,7 +2829,7 @@ msgstr "Standardni prikaz"
 
 #: src/control/Control.NotebookbarCalc.js:1423
 msgid "Select Sheet View"
-msgstr ""
+msgstr "Odaberi prikaz lista"
 
 #: src/control/Control.NotebookbarCalc.js:1430
 msgid "New Sheet View"
@@ -2840,7 +2841,7 @@ msgstr "Ukloni prikaz lista"
 
 #: src/control/Control.NotebookbarCalc.js:1444
 msgid "Exit Sheet View"
-msgstr ""
+msgstr "Zatvori prikaz lista"
 
 #: src/control/Control.NotebookbarCalc.js:1459
 msgid "Freeze"
@@ -3048,12 +3049,12 @@ msgstr "Prikaži u prozoru"
 
 #: src/control/Control.NotebookbarImpress.js:501
 msgid "Start Follow-me Presentation"
-msgstr ""
+msgstr "Pokreni prezentaciju „Prati me”"
 
 #: src/control/Control.NotebookbarImpress.js:510
 #: src/slideshow/SlideShowPresenter.ts:732
 msgid "Follow Presentation"
-msgstr ""
+msgstr "Prezentacija praćenja"
 
 #: src/control/Control.NotebookbarImpress.js:639
 msgid "Slide Views"
@@ -3066,7 +3067,7 @@ msgstr "Privlači na mrežu"
 #: src/control/Control.NotebookbarImpress.js:802
 #: src/control/Control.NotebookbarImpress.js:1818
 msgid "Slide Layout"
-msgstr "Raspored slajda"
+msgstr "Raspored slajdova"
 
 #: src/control/Control.NotebookbarImpress.js:813
 msgid "New"
@@ -3220,20 +3221,24 @@ msgstr "Nisu otkriveni problemi sa SSL provjerom"
 msgid ""
 "Documents are not effectively contained: missing capabilities or namespaces."
 msgstr ""
+"Dokumenti nisu učinkovito obuhvaćeni: nedostaju mogućnosti ili imenski "
+"prostori."
 
 #: src/control/Control.ServerAuditDialog.ts:77
 msgid "Each document is securely contained"
-msgstr ""
+msgstr "Svaki je dokument sigurno obuhvaćen"
 
 #: src/control/Control.ServerAuditDialog.ts:83
 msgid ""
 "BPF filtering of potentially risky system calls (seccomp) is not enabled; a "
 "security hazard."
 msgstr ""
+"BPF filtriranje potencijalno rizičnih sustavskih poziva (seccomp) nije "
+"uključeno; to predstavlja sigurnosni rizik."
 
 #: src/control/Control.ServerAuditDialog.ts:88
 msgid "System call security filtering enabled"
-msgstr ""
+msgstr "Sigurnosno filtriranje sustavskih poziva je uključeno"
 
 #: src/control/Control.ServerAuditDialog.ts:95
 msgid ""
@@ -3250,18 +3255,20 @@ msgstr "Hardverski resursi su dovoljni za optimalnu performansu"
 #: src/control/Control.ServerAuditDialog.ts:109
 msgid "Slow Kit jail setup with copying, cannot bind-mount."
 msgstr ""
+"Sporo postavljanje Kit jail okruženja s kopiranjem, nije moguće koristiti „"
+"bind-mount”."
 
 #: src/control/Control.ServerAuditDialog.ts:113
 msgid "Fast kit jail bind mounting enabled"
-msgstr ""
+msgstr "Brzo pokretanje Kit jail okruženja je uljučeno"
 
 #: src/control/Control.ServerAuditDialog.ts:118
 msgid "Poorly performing proxying of all network requests."
-msgstr ""
+msgstr "Sporo izvođenje svih mrežnih zahtjeva na proxyu."
 
 #: src/control/Control.ServerAuditDialog.ts:122
 msgid "Direct network connection"
-msgstr ""
+msgstr "Izravna mrežna veza"
 
 #: src/control/Control.ServerAuditDialog.ts:128
 msgid "The IsAdminUser property is not set by integration"
@@ -3289,15 +3296,15 @@ msgstr "Integrator nije spreman za PostMessage pozive"
 
 #: src/control/Control.ServerAuditDialog.ts:161
 msgid "Using namespaces"
-msgstr ""
+msgstr "Koriste se imenski prostori"
 
 #: src/control/Control.ServerAuditDialog.ts:162
 msgid "Not using namespaces"
-msgstr ""
+msgstr "Ne koriste se imenski prostori"
 
 #: src/control/Control.ServerAuditDialog.ts:236
 msgid "Document container started in {1} ms"
-msgstr ""
+msgstr "Kontejner dokumenata je pokrenut za {1} ms"
 
 #: src/control/Control.ServerAuditDialog.ts:306
 msgid "Status"
@@ -3341,7 +3348,7 @@ msgstr "Umetni list"
 
 #: src/control/Control.SheetsBar.js:88
 msgid "Show sheet list"
-msgstr ""
+msgstr "Prikaži popis listova"
 
 #: src/control/Control.StatusBar.js:156
 msgid "On"
@@ -4205,7 +4212,7 @@ msgstr "Nedavni"
 
 #: src/control/jsdialog/Widget.PageMarginEntry.ts:40
 msgid "Page margin options"
-msgstr ""
+msgstr "Opcije margina stranice"
 
 #: src/control/jsdialog/Widget.PageMarginEntry.ts:121
 msgid "Top: {top}"
