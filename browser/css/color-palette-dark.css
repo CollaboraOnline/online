@@ -73,6 +73,9 @@
 	--color-smart-guides-helper-line: #f36d4f;
 
 	--color-quickfind-border: #444;
+
+	--color-backstage-background: #1E1E1E;
+	--color-backstage-background-dark: #121212;
 }
 
 [data-bg-theme='dark'] {
