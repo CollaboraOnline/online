@@ -282,6 +282,7 @@ COOL_JS_LST =\
 	src/app/Socket.ts \
 	src/app/TracingEvents.ts \
 	src/app/ServerCommand.ts \
+	src/app/ClipboardBase.ts \
 	src/Leaflet.js \
 	src/errormessages.js \
 	src/unocommands.js \
@@ -1173,6 +1174,7 @@ pot:
 		src/app/Socket.ts \
 		src/app/TracingEvents.ts \
 		src/app/ServerCommand.ts \
+		src/app/ClipboardBase.ts \
 		src/docdispatcher.ts \
 		src/docstate.ts \
 		src/docstatefunctions.js \
