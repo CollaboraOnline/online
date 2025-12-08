@@ -138,7 +138,7 @@
 	display: flex;
 	align-items: center;
 	gap: 6px;
-	padding: 0px 16px;
+	padding: 2px 16px;
 	cursor: pointer;
 	color: var(--color-main-text);
 	font-size: var(--medium-font-size);
@@ -146,24 +146,8 @@
 	position: relative;
 	margin: 2px 8px;
 	border-radius: var(--border-radius);
-}
-
-.backstage-sidebar-item::before {
-	content: '';
-	display: inline-block;
-	width: 24px;
-	height: 32px;
-	flex-shrink: 0;
-	background-repeat: no-repeat;
-	background-position: center;
-	background-size: 24px 24px;
-	opacity: 0.75;
-	transition: opacity 0.2s ease;
-}
-
-.backstage-sidebar-item:hover::before,
-.backstage-sidebar-item.active::before {
-	opacity: 1;
+	--icon-primary-color: rgb(58, 58, 56);
+	--icon-secondary-color: var(--color-primary);
 }
 
 .backstage-sidebar-item:hover {
@@ -173,12 +157,7 @@
 .backstage-sidebar-item.active {
 	background-color: transparent;
 	color: var(--color-primary);
-}
-
-.backstage-sidebar-item.active::before {
-	opacity: 1;
-	color: var(--color-primary);
-	background-image: none;
+	--icon-primary-color: var(--color-primary);
 }
 
 .backstage-sidebar-item.disabled {
@@ -211,11 +190,6 @@
 	gap: 8px;
 }
 
-.is-starter-mode .backstage-sidebar-item::before {
-	width: 38px;
-	height: 38px;
-	background-size: 34px;
-}
 
 .is-starter-mode .backstage-sidebar-item span {
 	font-size: 16px;
@@ -226,41 +200,29 @@
 	box-shadow: none;
 }
 
-#backstage-home::before {
-	background-image: url('images/lc_home.svg');
+/* Inline SVG icons */
+.backstage-sidebar-icon {
+	display: inline-block;
+	width: 24px;
+	height: 24px;
+	flex-shrink: 0;
 }
 
-#backstage-new::before {
-	background-image: url('images/lc_newdoc.svg');
+.backstage-sidebar-icon svg {
+	width: 24px;
+	height: 24px;
+	display: block;
 }
 
-#backstage-open::before {
-	background-image: url('images/lc_open.svg');
+/* Starter mode: larger icons */
+.is-starter-mode .backstage-sidebar-icon {
+	width: 38px;
+	height: 38px;
 }
 
-#backstage-share::before {
-	background-image: url('images/lc_shareas.svg');
-}
-
-#backstage-info::before {
-	background-image: url('images/lc_printpreview.svg');
-}
-
-#backstage-save::before {
-	background-image: url('images/lc_save.svg');
-}
-
-#backstage-saveas::before {
-	
-	background-image: url('images/lc_saveacopy.svg');
-}
-
-#backstage-print::before {
-	background-image: url('images/lc_printlayout.svg');
-}
-
-#backstage-export::before {
-	background-image: url('images/lc_exportto.svg');
+.is-starter-mode .backstage-sidebar-icon svg {
+	width: 38px;
+	height: 38px;
 }
 
 .backstage-content {
