@@ -15,6 +15,7 @@ interface BackstageTabConfig {
 	id: string;
 	label: string;
 	type: 'view' | 'action';
+	icon?: string;
 	visible?: boolean;
 	viewType?: 'home' | 'templates' | 'info' | 'export';
 	actionType?:
@@ -214,11 +215,40 @@ class BackstageView extends window.L.Class {
 		return backButton;
 	}
 
+	private loadSVGIcon(container: HTMLElement, iconUrl: string): void {
+		const xhr = new XMLHttpRequest();
+		xhr.open('GET', iconUrl, true);
+		xhr.onload = () => {
+			if (xhr.status === 200 || xhr.status === 0) {
+				const parser = new DOMParser();
+				const svgDoc = parser.parseFromString(xhr.responseText, 'image/svg+xml');
+				const svg = svgDoc.documentElement;
+				container.appendChild(svg);
+			}
+		};
+		xhr.onerror = () => {
+			console.error("Not able to load svg icon ", iconUrl)
+		};
+		xhr.send();
+	}
+
 	private createTabElement(config: BackstageTabConfig): HTMLElement {
 		const element = this.createElement('div', 'backstage-sidebar-item');
 		element.id = `backstage-${config.id}`;
 
 		if (config.id === 'save') this.saveTabElement = element;
+
+		if (config.icon) {
+			const iconContainer = this.createElement('span', 'backstage-sidebar-icon');
+			iconContainer.setAttribute('aria-hidden', 'true');
+			
+			const iconUrl = window.app && window.app.LOUtil
+				? window.app.LOUtil.getImageURL(config.icon)
+				: `images/${config.icon}`;
+			
+			this.loadSVGIcon(iconContainer, iconUrl);
+			element.insertBefore(iconContainer, element.firstChild);
+		}
 
 		const label = this.createElement('span');
 		label.textContent = config.label;
@@ -240,6 +270,7 @@ class BackstageView extends window.L.Class {
 				label: _('Home'),
 				type: 'view',
 				viewType: 'home',
+				icon: 'lc_home.svg',
 				visible: !this.isStarterMode,
 			},
 			{
@@ -247,6 +278,7 @@ class BackstageView extends window.L.Class {
 				label: _('New'),
 				type: 'view',
 				viewType: 'templates',
+				icon: 'lc_newdoc.svg',
 				visible: true,
 			},
 			{
@@ -254,6 +286,7 @@ class BackstageView extends window.L.Class {
 				label: _UNO('.uno:Open'),
 				type: 'action',
 				actionType: 'open',
+				icon: 'lc_open.svg',
 				visible: true,
 			},
 			{
@@ -261,6 +294,7 @@ class BackstageView extends window.L.Class {
 				label: _('Share'),
 				type: 'action',
 				actionType: 'share',
+				icon: 'lc_shareas.svg',
 				visible: !this.isStarterMode && this.isFeatureEnabled('share'),
 			},
 			{
@@ -268,6 +302,7 @@ class BackstageView extends window.L.Class {
 				label: _('Info'),
 				type: 'view',
 				viewType: 'info',
+				icon: 'lc_printpreview.svg',
 				visible: !this.isStarterMode,
 			},
 			{
@@ -275,6 +310,7 @@ class BackstageView extends window.L.Class {
 				label: _('Save'),
 				type: 'action',
 				actionType: 'save',
+				icon: 'lc_save.svg',
 				visible: !this.isStarterMode && this.isFeatureEnabled('save'),
 			},
 			{
@@ -282,6 +318,7 @@ class BackstageView extends window.L.Class {
 				label: _('Save As'),
 				type: 'action',
 				actionType: 'saveas',
+				icon: 'lc_saveacopy.svg',
 				visible: !this.isStarterMode && this.isFeatureEnabled('saveAs'),
 			},
 			{
@@ -289,6 +326,7 @@ class BackstageView extends window.L.Class {
 				label: _('Print'),
 				type: 'action',
 				actionType: 'print',
+				icon: 'lc_printlayout.svg',
 				visible: !this.isStarterMode && this.isFeatureEnabled('print'),
 			},
 			{
@@ -296,6 +334,7 @@ class BackstageView extends window.L.Class {
 				label: _('Export'),
 				type: 'view',
 				viewType: 'export',
+				icon: 'lc_exportto.svg',
 				visible: !this.isStarterMode,
 			},
 		];
