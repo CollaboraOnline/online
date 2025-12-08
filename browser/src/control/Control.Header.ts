@@ -539,18 +539,24 @@ export class Header extends CanvasSectionObject {
 	}
 
 	_bindContextMenu(): void {
-		if ((window as any).mode.isMobile() || this._map.isReadOnlyMode()) {
+		if ((window as any).mode.isMobile()) {
 			// On mobile, we use the mobile wizard rather than the context menu
 			return;
 		}
 
 		this._unBindContextMenu();
+		const map = this._map;
 		$.contextMenu({
 			selector: '#canvas-container',
 			className: 'cool-font',
 			zIndex: 1500,
-			items: this._menuItem,
-			callback: function() { return; }
+                        items: this._menuItem,
+			callback: function() { return; },
+			build: function() {
+                                if (map.isReadOnlyMode())
+                                        return false;
+                                return { }
+			}
 		});
 		$('#canvas-container').contextMenu('update');
 		this._map._contextMenu.stopRightMouseUpEvent();
