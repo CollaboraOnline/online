@@ -1493,6 +1493,10 @@ class Menubar extends window.L.Control {
 		if (this._menubarCont != null)
 			$('#main-menu-state').after(this._menubarCont);
 
+		if (window.mode.isDesktop()) {
+			$('#main-menu-state').attr('type', 'hidden');
+		}
+
 		if (!this._map['wopi'].DisablePresentation)
 			this.options.allowedViewModeActions = this.options.allowedViewModeActions.concat(['fullscreen-presentation', 'presentation-currentslide', 'present-in-window','presentation-in-console']);
 

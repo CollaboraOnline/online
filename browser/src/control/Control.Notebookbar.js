@@ -279,6 +279,10 @@ window.L.Control.Notebookbar = window.L.Control.extend({
 		var shortcutsBar = window.L.DomUtil.create('div', 'notebookbar-shortcuts-bar');
 		$('#main-menu-state').after(shortcutsBar);
 
+		if (window.mode.isDesktop()) {
+			$('#main-menu-state').attr('type', 'hidden');
+		}
+
 		var shortcutsBarData = this.getShortcutsBarData();
 		var toolitems = shortcutsBarData[0].children;
 
