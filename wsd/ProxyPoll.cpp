@@ -13,10 +13,12 @@
 #include <Socket.hpp>
 #include <memory>
 
-class ProxyHandler : public ProtocolHandlerInterface
+class ProxyHandler : public SimpleSocketHandler
 {
     // The other end of the proxy pair
     std::weak_ptr<StreamSocket> _peerSocket;
+
+    std::weak_ptr<StreamSocket> _socket;
 
     // 256KB flow control
     static constexpr size_t MAX_BUFFER = 256 * 1024;
@@ -27,15 +29,17 @@ public:
     {
     }
 
-    void onConnect(const std::shared_ptr<StreamSocket>& /* socket */) override
+    void onConnect(const std::shared_ptr<StreamSocket>& socket) override
     {
+        _socket = socket;
+        setLogContext(socket->getFD());
         LOG_TRC("Proxy connection established to target pod");
     }
 
     void handleIncomingMessage(SocketDisposition& disposition) override
     {
         auto peer = _peerSocket.lock();
-        auto self = std::static_pointer_cast<StreamSocket>(disposition.getSocket());
+        auto self = _socket.lock();
 
         if (!peer || !self)
         {
@@ -58,6 +62,14 @@ public:
             inBuffer.clear();
         }
     }
+
+    int getPollEvents(std::chrono::steady_clock::time_point /*now*/,
+                      int64_t& /*timeoutMaxMicroS*/) override
+    {
+        return POLLIN; // We're always interested in reading
+    }
+
+    void performWrites(std::size_t /*capacity*/) override {}
 
     void onDisconnect() override
     {
