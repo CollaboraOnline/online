@@ -9,6 +9,9 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+#pragma once
+
+#include <config.h>
 #include <Socket.hpp>
 
 // Singleton proxy poll - one thread handles all proxy connections
