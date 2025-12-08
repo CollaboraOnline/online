@@ -2309,6 +2309,8 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 	},
 
 	adjustTextSelectionRectanglesForCalc: function(rawRectangles, viewId) {
+		if (!app.map._docLayer.sheetGeometry) return;
+
 		for (let i = 0; i < rawRectangles.length; i++) {
 			app.map._docLayer.sheetGeometry.convertRawRectangleToTileTwips(rawRectangles[i]);
 		}
