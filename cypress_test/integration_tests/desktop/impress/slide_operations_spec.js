@@ -53,6 +53,13 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Slide operations', functio
 			const app = win['0'].app;
 			cy.expect(app.map._docLayer._preview.partsFocused).to.be.equal(true);
 		});
+
+		cy.cGet('#toolbar-up').click();
+		// Slide sorter should have lost the focus after user clicked somewhere.
+		cy.window().then(win => {
+			const app = win['0'].app;
+			cy.expect(app.map._docLayer._preview.partsFocused).to.be.equal(false);
+		});
 	});
 
 	it('Duplicate slide', function() {
