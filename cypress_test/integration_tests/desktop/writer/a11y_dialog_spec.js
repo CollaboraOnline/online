@@ -13,10 +13,7 @@ describe(['tagdesktop'], 'Accessibility Writer Tests', function() {
             win.app.allDialogs.forEach(command => {
                 // these need a specific context
                 if (command == '.uno:ContourDialog' ||
-                    command == '.uno:TransformDialog' ||
-                    command == '.uno:TableDialog' ||
-                    command == '.uno:TableNumberFormatDialog' ||
-                    command == '.uno:InsertCaptionDialog') {
+                    command == '.uno:TransformDialog') {
                     cy.log(`Skipping missing-context dialog: ${command}`);
                     return;
                 }
