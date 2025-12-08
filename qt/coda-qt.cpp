@@ -21,13 +21,16 @@
 #include "FileUtil.hpp"
 #include "qt.hpp"
 #include "DBusService.hpp"
+#include "RecentDocuments.hpp"
 
 #include <Poco/MemoryStream.h>
 #include <Poco/JSON/Parser.h>
 #include <Poco/JSON/Object.h>
+#include <Poco/JSON/Array.h>
 #include <Poco/Dynamic/Var.h>
 #include <Poco/Path.h>
 #include <Poco/URI.h>
+#include <sstream>
 
 #include <QApplication>
 #include <QByteArray>
@@ -56,6 +59,7 @@
 #include <QProcess>
 #include <QPushButton>
 #include <QScreen>
+#include <QSet>
 #include <QStandardPaths>
 #include <QString>
 #include <QThread>
@@ -67,6 +71,7 @@
 #include <QWebChannel>
 #include <QWebEngineProfile>
 #include <QWebEngineView>
+#include <QFileInfo>
 
 #include <algorithm>
 #include <cassert>
@@ -527,7 +532,6 @@ namespace
             return nullptr;
         }
     }
-
 } // namespace
 
 void Bridge::promptSaveLocation(std::function<void(const std::string&)> callback)
@@ -603,6 +607,7 @@ bool Bridge::saveDocument(const std::string& savePath)
     if (FileUtil::copyAtomic(tempPath, savePath, false))
     {
         LOG_INF("Successfully saved file to location: " << savePath);
+        RecentDocuments::add(QString::fromStdString(savePath));
         _pendingSave = false;
         return true;
     }
@@ -880,6 +885,22 @@ QVariant Bridge::cool(const QString& messageStr)
         setClipboard(_document._appDocId);
         return "(internal)";
     }
+    else if (message == "GETRECENTDOCS")
+    {
+        int docType = -1;
+        lok::Document* loKitDoc = DocumentData::get(_document._appDocId).loKitDocument;
+        if (loKitDoc) {
+            docType = loKitDoc->getDocumentType();
+        }
+
+        Poco::JSON::Array::Ptr recentDocs = RecentDocuments::getForAppType(docType);
+        std::ostringstream jsonStream;
+        recentDocs->stringify(jsonStream);
+        QString result = QString::fromStdString(jsonStream.str());
+
+        LOG_TRC_NOFILE("GETRECENTDOCS: returning " << recentDocs->size() << " documents for app type");
+        return result;
+    }
     else if (message.starts_with(CLIPBOARDSET))
     {
         std::string content = message.substr(CLIPBOARDSET.size());
@@ -911,12 +932,13 @@ QVariant Bridge::cool(const QString& messageStr)
         QObject::connect(dialog, &QFileDialog::filesSelected,
                          [](const QStringList& filePaths)
                          {
-                             // Open all selected files in new windows
-                             for (const QString& filePath : filePaths)
-                             {
-                                 WebView* webViewInstance = new WebView(Application::getProfile());
-                                 webViewInstance->load(Poco::URI(filePath.toStdString()));
-                             }
+                            // Open all selected files in new windows
+                            for (const QString& filePath : filePaths)
+                            {
+                                WebView* webViewInstance = new WebView(Application::getProfile());
+                                webViewInstance->load(Poco::URI(filePath.toStdString()));
+                                RecentDocuments::add(filePath);
+                            }
                              // Close starter screen if it exists
                              closeStarterScreen();
                          });
@@ -1060,18 +1082,53 @@ QVariant Bridge::cool(const QString& messageStr)
     else if (message.starts_with(NEWDOCTYPE))
     {
         // e.g."newdoc type=writer template=%2Fhome%2F...something.ott"
-        // template is optional and not always there
+        // e.g."newdoc type=writer file=%2Fhome%2F...something.odt"
+        // template and file are optional and not always there
         std::string args = message.substr(NEWDOCTYPE.size());
 
         // templateType is one of "writer", "calc", "draw", or "impress"
         auto [templateType, templateArgs] = Util::split(args, ' ');
 
         std::string templatePath;
+        std::string filePath;
         constexpr std::string_view TEMPLATE_PREFIX = "template=";
+        constexpr std::string_view FILE_PREFIX = "file=";
+
         if(templateArgs.starts_with(TEMPLATE_PREFIX))
         {
             std::string_view templateVal = templateArgs.substr(TEMPLATE_PREFIX.size());
             templatePath = QUrl::fromPercentEncoding(QByteArray(templateVal.data(), templateVal.size())).toStdString();
+        }
+        else if(templateArgs.starts_with(FILE_PREFIX))
+        {
+            std::string_view fileVal = templateArgs.substr(FILE_PREFIX.size());
+            QString decodedUri = QUrl::fromPercentEncoding(QByteArray(fileVal.data(), fileVal.size()));
+
+            QUrl url(decodedUri);
+            QString localPath;
+            if (url.isLocalFile())
+            {
+                localPath = url.toLocalFile();
+            }
+            else
+            {
+                localPath = decodedUri;
+            }
+
+            QFileInfo fileInfo(localPath);
+            if (!fileInfo.exists() || !fileInfo.isFile())
+            {
+                LOG_ERR("newdoc file=: file does not exist: " << localPath.toStdString());
+                return {};
+            }
+            QString absolutePath = fileInfo.absoluteFilePath();
+
+            WebView* webViewInstance = new WebView(Application::getProfile());
+            webViewInstance->load(Poco::URI(absolutePath.toStdString()));
+            RecentDocuments::add(absolutePath);
+
+            LOG_INF("newdoc file=: opened file in new window: " << absolutePath.toStdString());
+            return {};
         }
 
         // Always create new window

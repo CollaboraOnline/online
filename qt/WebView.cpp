@@ -20,6 +20,7 @@
 #include "qt.hpp"
 #include <Poco/URI.h>
 #include <Poco/Path.h>
+#include "RecentDocuments.hpp"
 
 #include <cassert>
 #include <cstdlib>
@@ -543,6 +544,13 @@ void WebView::load(const Poco::URI& fileURL, bool newFile, bool isStarterMode)
         _webView->window()->setWindowTitle(applicationTitle);
 
     _webView->load(QUrl(QString::fromStdString(urlAndQueryStr)));
+
+    if (!isStarterMode && !_isWelcome && !_document._saveLocationURI.empty() &&
+        _document._saveLocationURI.getScheme() == "file")
+    {
+        QString filePath = QString::fromStdString(_document._saveLocationURI.getPath());
+        RecentDocuments::add(filePath);
+    }
 
     auto size = getWindowSize(_isWelcome || isStarterMode);
 
