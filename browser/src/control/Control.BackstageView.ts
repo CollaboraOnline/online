@@ -452,8 +452,186 @@ class BackstageView extends window.L.Class {
 
 		this.addSectionHeader(
 			_('Recent'),
-			_('Recently opened documents will appear here'),
+			'',
 		);
+
+		this.renderRecentDocuments();
+	}
+
+	private async renderRecentDocuments(): Promise<void> {
+		try {
+			const result = await window.postMobileMessage('GETRECENTDOCS');
+			if (!result || typeof result !== 'string') {
+				this.showEmptyMessage();
+				return;
+			}
+
+			const docs = JSON.parse(result);
+			if (!Array.isArray(docs) || docs.length === 0) {
+				this.showEmptyMessage();
+				return;
+			}
+
+			const table = this.createRecentDocumentsTable(docs);
+			this.contentArea.appendChild(table);
+		} catch (e) {
+			console.error('Failed to get recent documents:', e);
+			this.showEmptyMessage();
+		}
+	}
+
+	private showEmptyMessage(): void {
+		const description = this.createElement('p', 'backstage-content-description');
+		description.textContent = _('Recently opened documents will appear here');
+		this.contentArea.appendChild(description);
+	}
+
+	private createRecentDocumentsTable(docs: any[]): HTMLElement {
+		const table = this.createElement('table', 'backstage-recent-documents-table');
+		const thead = this.createRecentDocumentsTableHeader();
+		const tbody = this.createElement('tbody', 'backstage-recent-documents-body');
+
+		docs.forEach((doc) => {
+			const rows = this.createRecentDocumentRows(doc);
+			rows.forEach((row) => tbody.appendChild(row));
+		});
+
+		table.appendChild(thead);
+		table.appendChild(tbody);
+		return table;
+	}
+
+	private createRecentDocumentsTableHeader(): HTMLElement {
+		const thead = this.createElement('thead', 'backstage-recent-documents-header');
+		const row = this.createElement('tr', 'backstage-recent-documents-header-row');
+
+		const nameHeader = this.createElement('th', 'backstage-recent-documents-header-cell');
+		nameHeader.textContent = _('Name');
+
+		const dateHeader = this.createElement('th', 'backstage-recent-documents-header-cell');
+		dateHeader.textContent = _('Modified Date');
+
+		row.appendChild(nameHeader);
+		row.appendChild(dateHeader);
+		thead.appendChild(row);
+		return thead;
+	}
+
+	private createRecentDocumentRows(doc: any): HTMLElement[] {
+		const { fileName, filePath, timestamp, uri } = this.parseDocumentData(doc);
+		const docType = doc.doctype || 'writer';
+		const formattedTime = this.formatTimestamp(timestamp);
+		
+		const row = this.createRecentDocumentRow(fileName, filePath, formattedTime, uri, docType);
+		return [row];
+	}
+
+	private createRecentDocumentRow(
+		fileName: string,
+		filePath: string,
+		formattedTime: string,
+		uri: string,
+		docType: string
+	): HTMLElement {
+		const row = this.createElement('tr', 'backstage-recent-document-row');
+		
+		const nameCell = this.createElement('td', 'backstage-recent-document-name-cell');
+		const nameText = this.createElement('div', 'backstage-recent-document-name-text');
+		nameText.textContent = fileName;
+		
+		const pathText = this.createElement('div', 'backstage-recent-document-path-text');
+		pathText.textContent = filePath;
+		
+		const textWrapper = this.createElement('div', 'backstage-recent-document-text-wrapper');
+		textWrapper.appendChild(nameText);
+		textWrapper.appendChild(pathText);
+		
+		const iconClass = this.getDocumentIconClass(docType);
+		const icon = this.createElement('span', `backstage-recent-document-icon ${iconClass}`);
+		
+		const contentWrapper = this.createElement('div', 'backstage-recent-document-content-wrapper');
+		contentWrapper.appendChild(icon);
+		contentWrapper.appendChild(textWrapper);
+		
+		nameCell.appendChild(contentWrapper);
+		
+		const timeCell = this.createElement('td', 'backstage-recent-document-time-cell');
+		timeCell.textContent = formattedTime;
+		
+		row.appendChild(nameCell);
+		row.appendChild(timeCell);
+		
+		window.L.DomEvent.on(row, 'click', () => this.openRecentDocument(uri, docType), this);
+		
+		return row;
+	}
+
+	private parseDocumentData(doc: any): {
+		fileName: string;
+		filePath: string;
+		timestamp: string | null;
+		uri: string;
+	} {
+		const uri = doc.uri || '';
+		const url = new URL(uri);
+		const fullPath = url.pathname;
+		
+		const lastSlashIndex = Math.max(fullPath.lastIndexOf('/'), fullPath.lastIndexOf('\\'));
+		
+		const fileName = doc.name || (lastSlashIndex >= 0 ? fullPath.slice(lastSlashIndex + 1) : fullPath);
+		const filePath = lastSlashIndex >= 0 ? fullPath.slice(0, lastSlashIndex + 1) : '/';
+	
+		return {
+			fileName,
+			filePath,
+			timestamp: doc.timestamp || "",
+			uri,
+		};
+	}
+
+	private formatTimestamp(timestamp: string): string {
+		if (!timestamp) return '';
+		
+		try {
+			const date = new Date(timestamp);
+			if (isNaN(date.getTime())) return timestamp;
+			
+			const year = date.getFullYear();
+			const month = String(date.getMonth() + 1).padStart(2, '0');
+			const day = String(date.getDate()).padStart(2, '0');
+			const hours = String(date.getHours()).padStart(2, '0');
+			const minutes = String(date.getMinutes()).padStart(2, '0');
+			const seconds = String(date.getSeconds()).padStart(2, '0');
+			
+			// TODO: Need Local formatting here?
+			return `${year}/${month}/${day} at ${hours}:${minutes}:${seconds}`;
+		} catch {
+			return timestamp;
+		}
+	}
+
+	private openRecentDocument(uri: string, docType?: string): void {
+		if (!uri) {
+			console.warn('openRecentDocument: URI is missing');
+			return;
+		}
+		if (!docType) {
+			console.warn('openRecentDocument: Document type is missing for URI:', uri);
+			return;
+		}
+		window.postMobileMessage(`newdoc type=${docType} file=${encodeURIComponent(uri)}`);
+	}
+
+	private getDocumentIconClass(docType: string): string {
+		switch (docType) {
+			case 'calc':
+				return 'backstage-doc-icon-calc';
+			case 'impress':
+				return 'backstage-doc-icon-impress';
+			case 'writer':
+			default:
+				return 'backstage-doc-icon-writer';
+		}
 	}
 
 	private renderNewView(): void {
