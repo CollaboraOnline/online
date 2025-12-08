@@ -11,11 +11,28 @@ describe(['tagdesktop'], 'Accessibility Writer Tests', function() {
             cy.spy(win.console, 'error').as('console:error');
 
             win.app.allDialogs.forEach(command => {
+                // these need a specific context
+                if (command == '.uno:ContourDialog' ||
+                    command == '.uno:TransformDialog' ||
+                    command == '.uno:TableDialog' ||
+                    command == '.uno:TableNumberFormatDialog' ||
+                    command == '.uno:InsertCaptionDialog') {
+                    cy.log(`Skipping missing-context dialog: ${command}`);
+                    return;
+                }
+                // not jsdialog enabled
+                if (command == '.uno:ChapterNumberingDialog') {
+                    cy.log(`Skipping non-jsdialog dialog: ${command}`);
+                    return;
+                }
+
                 cy.log(`Testing dialog: ${command}`);
+                cy.cGet('.jsdialog-window').should('not.exist');
                 cy.then(() => {
                     win.app.map.sendUnoCommand(command);
                 });
                 cy.wait(1000);
+                cy.cGet('.jsdialog-window').should('exist');
                 cy.cGet('body').type('{esc}');
             });
 
