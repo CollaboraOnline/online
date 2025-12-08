@@ -120,12 +120,18 @@ window.L.Control.Tabs = window.L.Control.extend({
 			},
 		};
 
-		if ((!window.mode.isMobile() && !this._map.isReadOnlyMode()) || window.mode.isTablet()) {
+		if (!window.mode.isMobile() || window.mode.isTablet()) {
+			var that = this;
 			window.L.installContextMenu({
 				selector: '.spreadsheet-tab',
 				className: 'cool-font',
-				items: this._menuItem,
-				zIndex: 1000
+				items: this._menuItem, // rewrite mutates
+				zIndex: 1000,
+				build: function() {
+					if (that._map.isReadOnlyMode())
+						return false;
+					return { }
+				}
 			});
 		}
 
