@@ -12,7 +12,9 @@ describe(['tagdesktop'], 'Accessibility Writer Tests', function() {
 
             win.app.allDialogs.forEach(command => {
                 cy.log(`Testing dialog: ${command}`);
-                win.app.map.sendUnoCommand(command);
+                cy.then(() => {
+                    win.app.map.sendUnoCommand(command);
+                });
                 cy.wait(1000);
                 cy.cGet('body').type('{esc}');
             });
