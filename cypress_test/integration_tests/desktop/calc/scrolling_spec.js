@@ -96,4 +96,45 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Scroll through document', 
 		// It's better not to check the exact range because it can easily change in different executions
 		cy.cGet(helper.addressInputSelector).invoke('val').should('contain', 'D');
 	});
+
+	it('Scroll while selecting with mouse - outside the canvas', function () {
+		cy.cGet(helper.addressInputSelector).should('have.value', 'A2');
+
+		// Click on the bottom left cell and hold
+		cy.cGet('#document-container')
+			.then(function (items) {
+				expect(items).to.have.lengthOf(1);
+				const right = items[0].getBoundingClientRect().right;
+				const bottom = items[0].getBoundingClientRect().bottom;
+				const horizontalCenter = Math.round(right * 0.5);
+
+				cy.wait(1000);
+				cy.cGet('body').realMouseDown(horizontalCenter, Math.round(bottom * 0.5));
+
+				cy.cGet('body').realMouseMove(horizontalCenter, bottom - 50);
+
+				// We should have initiated a selection by now. Move the mouse to where the horizontal scroll bar must be (this tests a fix).
+				cy.cGet('body').realMouseMove(horizontalCenter, bottom - 5);
+
+				// Move the mouse pointer outside the document. It should be widening the selection (mouse button is pressed and being held).
+				for (let i = 0; i < 10; i++) {
+					cy.cGet('body').realMouseMove(horizontalCenter, bottom + 20);
+					cy.wait(100);
+					cy.cGet('body').realMouseMove(horizontalCenter, bottom + 30);
+				}
+
+				// Release the mouse button.
+				cy.wait(100);
+				cy.cGet('body').realMouseUp();
+
+				// Click on the ~center of the window.
+				cy.cGet('body').click(horizontalCenter, Math.round(right * 0.5));
+				cy.cGet(helper.addressInputSelector).then((item) => {
+					const addressInput = item[0];
+					const rowNumber = parseInt(addressInput.value.substring(1, addressInput.value.length));
+					cy.expect(rowNumber).to.be.greaterThan(22);
+				});
+			}
+		);
+	});
 });

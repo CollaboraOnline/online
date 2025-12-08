@@ -669,8 +669,13 @@ export class ScrollSection extends CanvasSectionObject {
 			this.stopPropagating(); // Don't propagate to other sections.
 		}
 		else {
+			const draggingOnDocument = this.containerObject.isDraggingSomething();
+
 			this.isMouseOnScrollBar(position);
-			if (this.sectionProperties.mouseIsOnVerticalScrollBar || this.sectionProperties.mouseIsOnHorizontalScrollBar)
+			const onScrollBar = this.sectionProperties.mouseIsOnVerticalScrollBar || this.sectionProperties.mouseIsOnHorizontalScrollBar;
+
+			// To stop propagation, user shouldn't be dragging something and mouse should be on a scroll bar.
+			if (!draggingOnDocument && onScrollBar)
 				this.stopPropagating(); // Don't propagate to other sections.
 		}
 	}
