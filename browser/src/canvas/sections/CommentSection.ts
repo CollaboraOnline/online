@@ -1019,7 +1019,7 @@ export class Comment extends CanvasSectionObject {
 	// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 	private onEscKey (e: any): void {
 		if ((<any>window).mode.isDesktop()) {
-			// When a comment is being edited and focus is in comment textbox, 
+			// When a comment is being edited and focus is in comment textbox,
 			// Esc should not close the comment being edited, but should just mark it with an attention.
 			if (e.keyCode === 27) {
 				const editingComment = Comment.isAnyEdit();
@@ -1427,15 +1427,41 @@ export class Comment extends CanvasSectionObject {
 		}
 	}
 
+	private sendClickToCore(point: cool.SimplePoint, count: number) {
+		/*
+			On Calc, comments are shown when user focuses to the cell or moves the mouse pointer over the cell.
+			Comment class (this class) covers the cell area. So the document is blocked now.
+			We need to pass the click and double click events to the document.
+		*/
+		app.map._docLayer._postMouseEvent('buttondown', point.x, point.y, count, 1, 0);
+		app.map._docLayer._postMouseEvent('buttonup', point.x, point.y, count, 1, 0);
+		app.map.focus();
+	}
+
 	public onClick (point: cool.SimplePoint, e: MouseEvent): void {
-		if (app.map._docLayer._docType === 'presentation' || app.map._docLayer._docType === 'drawing') {
+		const docType = app.map._docLayer._docType;
+
+		if (['presentation', 'drawing'].includes(docType)) {
 			this.sectionProperties.commentListSection.selectById(this.sectionProperties.data.id);
 		}
-		else if (app.map._docLayer._docType === 'text') {
+		else if (docType === 'text') {
 			const mousePoint = point.clone();
 			mousePoint.pX += this.myTopLeft[0];
 			mousePoint.pY += this.myTopLeft[1];
 			app.activeDocument.mouseControl.onClick(mousePoint, e);
+		}
+		else if (docType === 'spreadsheet') {
+			point.pX += this.position[0];
+			point.pY += this.position[1];
+			this.sendClickToCore(point, 1);
+		}
+	}
+
+	public onDoubleClick(point: cool.SimplePoint, e: MouseEvent): void {
+		if ('spreadsheet' === app.map._docLayer._docType) {
+			point.pX += this.position[0];
+			point.pY += this.position[1];
+			this.sendClickToCore(point, 2);
 		}
 	}
 

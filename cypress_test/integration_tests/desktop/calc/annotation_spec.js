@@ -12,6 +12,9 @@ describe(['tagdesktop'], 'Annotation Tests', function() {
 	});
 
 	it('Insert',function() {
+		// Make sure we know the cell adress.
+		helper.typeIntoInputField(helper.addressInputSelector, 'B2');
+
 		desktopHelper.insertComment();
 
 		cy.cGet('.cool-annotation').should('exist');
@@ -19,8 +22,36 @@ describe(['tagdesktop'], 'Annotation Tests', function() {
 			element[0].style.visibility = '';
 			element[0].style.display = '';
 		});
-		cy.cGet('#comment-container-1').trigger('mouseover', {force: true});
-		cy.cGet('#annotation-content-area-1').should('contain','some text');
+
+		// Move the mouse over commented cell without using trigger. "realMouseMove" function seems safer.
+		cy.cGet('#test-div-OwnCellCursor').should('exist');
+		cy.cGet('#test-div-OwnCellCursor').then((items) => {
+			const cursor = items[0];
+			const clientRectangle = cursor.getBoundingClientRect();
+			const x = Math.round(clientRectangle.left + clientRectangle.width * 0.5);
+			const y = Math.round(clientRectangle.top + clientRectangle.height * 0.5);
+			const width = clientRectangle.width;
+			const height = clientRectangle.height;
+
+			cy.cGet('body').realMouseMove(x, y);
+
+			// Comment should be visible now.
+			cy.cGet('#annotation-content-area-1').should('be.visible');
+			cy.cGet('#annotation-content-area-1').should('contain','some text');
+
+			// Move the mouse to A1.
+			cy.cGet('body').realMouseMove(x - width, y - height, { position: "topLeft" });
+			// Comment shouldn't be visible now.
+			cy.cGet('#annotation-content-area-1').should('not.be.visible');
+
+			// Click on A1 while we are here.
+			cy.cGet('body').realClick({ x: x - width, y: y - height });
+			cy.cGet(helper.addressInputSelector).should('have.value', 'A1');
+
+			// Now click again to cell B2. There was an issue with commented cells. We should be able to click on the commented cell.
+			cy.cGet('body').realClick({ x: x, y: y });
+			cy.cGet(helper.addressInputSelector).should('have.value', 'B2');
+		});
 	});
 
 	it('Modify',function() {
@@ -126,7 +157,7 @@ describe(['tagdesktop'], 'Annotation Tests', function() {
 		helper.typeIntoInputField(helper.addressInputSelector, 'A150');
 		helper.typeIntoInputField(helper.addressInputSelector, 'A135');
 
-		/* 
+		/*
 			NOTE: this scrollbar position might change in future. one can
 			get the new scrollbar position by printing `x` to the console
 			in `assertScrollbarPosition` function.
