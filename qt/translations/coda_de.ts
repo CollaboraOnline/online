@@ -77,7 +77,7 @@
     <message>
         <location filename="../coda-qt.cpp" line="575"/>
         <source>Spreadsheets (*.ods);;All Files (*)</source>
-        <translation type="unfinished"></translation>
+        <translation>Tabellendokumente (*.ods);;Alle Dateien (*)</translation>
     </message>
     <message>
         <location filename="../coda-qt.cpp" line="577"/>
@@ -103,7 +103,7 @@
     <message>
         <location filename="../coda-qt.cpp" line="859"/>
         <source>All Files (*);;Text Documents (*.odt *.ott *.doc *.docx *.rtf *.txt);;Spreadsheets (*.ods *.ots *.xls *.xlsx *.csv);;Presentations (*.odp *.otp *.ppt *.pptx)</source>
-        <translation type="unfinished"></translation>
+        <translation>Alle Dateien (*);;Textdokumente (*.odt *.ott *.doc *.docx *.rtf *.txt);;Tabellendokumente (*.ods *.ots *.xls *.xlsx *.csv);;Präsentationen (*.odp *.otp *.ppt *.pptx)</translation>
     </message>
     <message>
         <location filename="../coda-qt.cpp" line="962"/>
