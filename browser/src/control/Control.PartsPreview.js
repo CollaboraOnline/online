@@ -44,6 +44,11 @@ window.L.Control.PartsPreview = window.L.Control.extend({
 		this._width = 0;
 		this._height = 0;
 		this.scrollTimer = null;
+
+		document.body.addEventListener('click', (e) => {
+			if (!e.partsFocusedApplied && this.partsFocused)
+				this.partsFocused = false;
+		});
 	},
 
 	onAdd: function (map) {
@@ -230,10 +235,11 @@ window.L.Control.PartsPreview = window.L.Control.extend({
 		}, this);
 
 		var that = this;
-		img.onfocus = function () {
+		img.onfocus = function (e) {
 			that._map._clip.clearSelection();
 			that._map._clip.setTextSelectionType('slide');
 			that.partsFocused = true;
+			e.partsFocusedApplied = true;
 		};
 
 		var that = this;
