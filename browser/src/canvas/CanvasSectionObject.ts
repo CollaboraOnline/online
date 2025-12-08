@@ -65,10 +65,9 @@ class CanvasSectionObject {
 		if (this.containerObject) { // Is section added to container.
 			this.isVisible = this.containerObject.isDocumentObjectVisible(this);
 			this.onDocumentObjectVisibilityChange();
-		}
 
-		if (this.containerObject.testing) {
-			this.containerObject.createUpdateSingleDivElement(this);
+			if (this.containerObject.testing)
+				this.containerObject.createUpdateSingleDivElement(this);
 		}
 	}
 
