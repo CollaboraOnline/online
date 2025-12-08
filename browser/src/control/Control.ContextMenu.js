@@ -19,11 +19,11 @@ window.L.Control.ContextMenu = window.L.Control.extend({
 		/*
 		 * Enter UNO commands that should appear in the context menu.
 		 * Entering a UNO command under `general' would enable it for all types
-		 * of documents. If you do not want that, whitelist it in document specific filter.
+		 * of documents. If you do not want that, allowlist it in document specific filter.
 		 *
 		 * UNOCOMMANDS_EXTRACT_START <- don't remove this line, it's used by unocommands.py
 		 */
-		whitelist: {
+		allowlist: {
 			/*
 			 * UNO commands for menus are not available sometimes. Presence of Menu commands
 			 * in following list is just for reference and ease of locating uno command
@@ -80,15 +80,15 @@ window.L.Control.ContextMenu = window.L.Control.extend({
 		},
 		// UNOCOMMANDS_EXTRACT_END <- don't remove this line, it's used by unocommands.py
 
-		// This blacklist contains those menu items which should be disabled on mobile
+		// This denylist contains those menu items which should be disabled on mobile
 		// phones even if they are allowed in general. We need to have only those items here
-		// which are also part of the whitelist, otherwise the menu items are not visible
+		// which are also part of the allowlist, otherwise the menu items are not visible
 		// anyway.
 
 		// For clarity, please keep this list in sections that are sorted in the same order
-		// as the items appear in the whitelist arrays above. Also keep items on separate
+		// as the items appear in the allowlist arrays above. Also keep items on separate
 		// lines as in the arrays above.
-		mobileBlackList: [
+		mobileDenylist: [
 			// general
 			'PasteSpecial',
 			'TransformDialog', 'FormatLine', 'FormatArea',
@@ -298,7 +298,7 @@ window.L.Control.ContextMenu = window.L.Control.extend({
 				isLastItemText = false;
 			}
 			else if (item.type === 'command') {
-				// Only show whitelisted items
+				// Only show allowlisted items
 				// Command name (excluding '.uno:') starts from index = 5
 				var commandName = item.command.substring(5);
 
@@ -314,16 +314,16 @@ window.L.Control.ContextMenu = window.L.Control.extend({
 					continue;
 
 				if (commandName !== 'None' &&
-					this.options.whitelist.general.indexOf(commandName) === -1 &&
-					(this._map['wopi'].HideChangeTrackingControls || this.options.whitelist.tracking.indexOf(commandName) === -1) &&
-					!(docType === 'text' && this.options.whitelist.text.indexOf(commandName) !== -1) &&
-					!(docType === 'spreadsheet' && this.options.whitelist.spreadsheet.indexOf(commandName) !== -1) &&
-					!(docType === 'presentation' && this.options.whitelist.presentation.indexOf(commandName) !== -1) &&
-					!(docType === 'drawing' && this.options.whitelist.drawing.indexOf(commandName) !== -1)) {
+					this.options.allowlist.general.indexOf(commandName) === -1 &&
+					(this._map['wopi'].HideChangeTrackingControls || this.options.allowlist.tracking.indexOf(commandName) === -1) &&
+					!(docType === 'text' && this.options.allowlist.text.indexOf(commandName) !== -1) &&
+					!(docType === 'spreadsheet' && this.options.allowlist.spreadsheet.indexOf(commandName) !== -1) &&
+					!(docType === 'presentation' && this.options.allowlist.presentation.indexOf(commandName) !== -1) &&
+					!(docType === 'drawing' && this.options.allowlist.drawing.indexOf(commandName) !== -1)) {
 					continue;
 				}
 
-				if (window.mode.isMobile() && this.options.mobileBlackList.indexOf(commandName) !== -1)
+				if (window.mode.isMobile() && this.options.mobileDenylist.indexOf(commandName) !== -1)
 					continue;
 
 				if (commandName == 'None' && !item.text)
