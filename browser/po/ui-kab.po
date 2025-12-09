@@ -7,11 +7,11 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-12-08 11:25+0100\n"
-"PO-Revision-Date: 2025-12-05 17:46+0000\n"
+"PO-Revision-Date: 2025-12-09 11:58+0000\n"
 "Last-Translator: Amadɣas <massiin@proton.me>\n"
 "Language-Team: Kabyle <https://hosted.weblate.org/projects/collabora-online/"
 "ui/kab/>\n"
-"Language: \n"
+"Language: kab\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -547,7 +547,7 @@ msgstr ""
 #: admin/src/integrator/AdminIntegratorSettings.ts:198
 #: src/control/Control.BackstageView.ts:532
 msgid "Presentation"
-msgstr ""
+msgstr "Tanekda"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:199
 #: src/control/Control.Zotero.js:1340 src/slideshow/PresenterConsole.js:33
@@ -569,7 +569,7 @@ msgstr ""
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:203
 msgid "Images"
-msgstr ""
+msgstr "Tugniwin"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:204
 msgid "Tables"
@@ -577,19 +577,19 @@ msgstr "Tifelwa"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:205
 msgid "Controls"
-msgstr ""
+msgstr "Isenqaden"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:206
 msgid "Background"
-msgstr ""
+msgstr "Agilal"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:207
 msgid "Print Black"
-msgstr ""
+msgstr "Siggez Aberkan"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:208
 msgid "Hidden text"
-msgstr ""
+msgstr "Aḍris uffir"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:209
 msgid "Placeholders"
@@ -597,7 +597,7 @@ msgstr ""
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:210
 msgid "Left pages"
-msgstr ""
+msgstr "Isebtaren izelmaḍen"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:211
 msgid "Right pages"
@@ -613,15 +613,15 @@ msgstr ""
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:214
 msgid "Images and Objects"
-msgstr ""
+msgstr "Tugniwin akked tɣawsiwin"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:310
 msgid "Invalid JSON file"
-msgstr ""
+msgstr "Afaylu JSON d arameɣtu"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:314
 msgid "Error reading file"
-msgstr ""
+msgstr "Tuccḍa deg tɣuri n ufaylu"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:326
 msgid "Autotext"
@@ -635,11 +635,11 @@ msgstr ""
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:334
 msgid "Upload Autotext"
-msgstr ""
+msgstr "Asali n uḍris awurman"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:338
 msgid "Custom dictionaries"
-msgstr ""
+msgstr "Imawalen udmawanen"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:340
 msgid ""
@@ -649,7 +649,7 @@ msgstr ""
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:346
 msgid "Upload Wordbook"
-msgstr ""
+msgstr "Sali-d adlis n wawal"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:350
 msgid "Document settings"
@@ -658,19 +658,19 @@ msgstr "Iɣewwaren n isemli"
 #: admin/src/integrator/AdminIntegratorSettings.ts:351
 #: admin/src/integrator/Xcu.ts:316
 msgid "Adjust how office documents behave."
-msgstr ""
+msgstr "Seggem amek ara yeddu yisemliyen n tnarit."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:357
 msgid "Upload Xcu"
-msgstr ""
+msgstr "Sali Xcu"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:408
 msgid "Shared Config URL is missing in initial variables."
-msgstr ""
+msgstr "URL n twila yettwabḍan ulac-it deg imuttiyen."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:414
 msgid "Access token is missing in initial variables."
-msgstr ""
+msgstr "Ajiṭun n unekcum ulac-it deg yimuttiyen imezwura."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:450
 msgid "Something went wrong. Please try to refresh the page."
