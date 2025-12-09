@@ -2,10 +2,10 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: core-sl\n"
-"PO-Revision-Date: 2025-11-27 12:40+0000\n"
+"PO-Revision-Date: 2025-12-08 10:29+0000\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
-"Language-Team: Slovenian <https://hosted.weblate.org/projects/"
-"collabora-online/lokit/sl/>\n"
+"Language-Team: Slovenian <https://hosted.weblate.org/projects/collabora-"
+"online/lokit/sl/>\n"
 "Language: sl\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -33,7 +33,6 @@ msgstr "Izvozni filter Macromedia Flash (SWF)"
 
 #. vcMGk
 #: folderitem_ooo.ulf
-#, fuzzy
 msgctxt ""
 "folderitem_ooo.ulf\n"
 "STR_FI_TOOLTIP_COFFICE\n"
@@ -44,8 +43,8 @@ msgid ""
 "com"
 msgstr ""
 "Collabora Office, pisarniški paket na temelju tehnologije LibreOffice "
-"Technology, zagotavlja Collabora Productivity. Glejte "
-"https://collaboraoffice.com"
+"Technology, zagotavlja Collabora Productivity. Glejte https://"
+"collaboraoffice.com"
 
 #. 4rBwc
 #: include/svx/strings.hrc:1040
@@ -136,14 +135,12 @@ msgstr "Monokromatsko"
 
 #. DrjDt
 #: chart2/uiconfig/ui/chartgradientpalettepopup.ui:46
-#, fuzzy
 msgctxt "chartgradientpalettepopup|lightwin"
 msgid "Light Variations"
 msgstr "Svetle inačice"
 
 #. Y3PP5
 #: chart2/uiconfig/ui/chartgradientpalettepopup.ui:97
-#, fuzzy
 msgctxt "chartgradientpalettepopup|darkwin"
 msgid "Dark Variations"
 msgstr "Temne inačice"
@@ -251,10 +248,9 @@ msgstr "_Shrani v novo temo"
 
 #. 4C556
 #: chart2/uiconfig/ui/sidebartype.ui:102
-#, fuzzy
 msgctxt "sidebartype|3dschemeft"
 msgid "3D _Scheme:"
-msgstr "3D-_shema:"
+msgstr "_Shema 3D:"
 
 #. x3adg
 #: chart2/uiconfig/ui/tp_ChartColorPalette.ui:68
@@ -270,35 +266,30 @@ msgstr "Monokromatsko"
 
 #. 6JxiC
 #: chart2/uiconfig/ui/tp_ChartGradients.ui:69
-#, fuzzy
 msgctxt "tp_ChartGradients|lightwin"
 msgid "Light Variations"
 msgstr "Svetle inačice"
 
 #. DmWVa
 #: chart2/uiconfig/ui/tp_ChartGradients.ui:128
-#, fuzzy
 msgctxt "tp_ChartGradients|darkwin"
 msgid "Dark Variations"
 msgstr "Temne inačice"
 
 #. FG2rh
 #: chart2/uiconfig/ui/tp_ChartType.ui:114
-#, fuzzy
 msgctxt "tp_ChartType|extended_tip|subtype_iconview"
 msgid "Select a sub type of the basic chart type."
 msgstr "Izberite podvrsto osnovne vrste grafikona."
 
 #. Wh4j6
 #: chart2/uiconfig/ui/tp_ChartType.ui:167
-#, fuzzy
 msgctxt "tp_ChartType|3dschemeft"
 msgid "3D _Scheme:"
-msgstr "3D-_shema:"
+msgstr "_Shema 3D:"
 
 #. ChTwx
 #: cui/inc/strings.hrc:481
-#, fuzzy
 msgctxt "REG_CALCDBFOCUS"
 msgid "Table Style focus"
 msgstr "Pozornost sloga tabele"
@@ -317,14 +308,12 @@ msgstr "Spremeni velikost vseh strani"
 
 #. NBdEp
 #: cui/uiconfig/ui/pickbulletpage.ui:45
-#, fuzzy
 msgctxt "pickbulletpage|extended_tip|pick_bullet_iconview"
 msgid "Click the bullet style that you want to use."
-msgstr "Izbere slog, ki ga želite uporabiti za oznake."
+msgstr "Kliknite slog, ki ga želite uporabiti za oznake."
 
 #. rkoDB
 #: cui/uiconfig/ui/pickgraphicpage.ui:45
-#, fuzzy
 msgctxt "pickgraphicpage|extended_tip|pick_graphic_iconview"
 msgid "Click the graphics that you want to use as bullets."
 msgstr "Izbere grafični znak, ki ga želite uporabiti za oznake."
@@ -362,21 +351,19 @@ msgstr "Najdi hitro"
 
 #. 2VmCo
 #: sfx2/uiconfig/ui/licensedialog.ui:41
-#, fuzzy
 msgctxt "licensedialog|eula"
 msgid "_EULA"
 msgstr "_EULA"
 
 #. jjkw7
 #: sfx2/uiconfig/ui/licensedialog.ui:85
-#, fuzzy
 msgctxt "licensedialog|label2"
 msgid ""
 "%PRODUCTNAME binary package is made available subject to the terms of the "
 "End User License and Subscription Agreement; choose EULA to see exact "
 "details in English."
 msgstr ""
-"Binarni paket %PRODUCTNAME je dan na voljo pod pogoji Licence za končne "
+"Binarni paket %PRODUCTNAME je na voljo pod pogoji Dovoljenja za končne "
 "uporabnike in Pogodbe o naročnini; izberite EULA, da si ogledate podrobnosti "
 "v angleškem jeziku."
 
@@ -406,14 +393,12 @@ msgstr "Posodobi slog"
 
 #. BGAhD
 #: sfx2/uiconfig/ui/templatepanel.ui:242
-#, fuzzy
 msgctxt "commontemplate|STR_HIGHLIGHT_CHECKBOX"
 msgid "Highlight styles"
 msgstr "Izpostavi sloge"
 
 #. fCWMe
 #: sfx2/uiconfig/ui/templatepanel.ui:272
-#, fuzzy
 msgctxt "templatepanel|filter-atkobject"
 msgid "Filter"
 msgstr "Filter"
@@ -614,7 +599,6 @@ msgstr ""
 
 #. oDK6o
 #: filter/uiconfig/ui/impswfdialog.ui:136
-#, fuzzy
 msgctxt "impswfdialog|exportall"
 msgid "Export _all slides (uncheck to export current slide)"
 msgstr "Izvozi _vse prosojnice (sicer izvozi samo trenutno)"
@@ -673,7 +657,6 @@ msgstr ""
 
 #. NCgBM
 #: filter/uiconfig/ui/pdfgeneralpage.ui:583
-#, fuzzy
 msgctxt "pdfgeneralpage|pdf_version|tooltip_text"
 msgid ""
 "Select the PDF version. PDF/A version variants creates an ISO 19005 "
@@ -795,7 +778,6 @@ msgstr "Vstavi funkcijo"
 
 #. rxGTc
 #: CalcCommands.xcu
-#, fuzzy
 msgctxt ""
 "CalcCommands.xcu\n"
 "..CalcCommands.UserInterface.Commands..uno:TogglePrintGrid\n"
@@ -866,7 +848,6 @@ msgstr "Izhod iz pogleda delovnega lista"
 
 #. uuvrm
 #: ChartCommands.xcu
-#, fuzzy
 msgctxt ""
 "ChartCommands.xcu\n"
 "..ChartCommands.UserInterface.Commands..uno:ManageThemes\n"
@@ -928,7 +909,6 @@ msgstr "Iz~beri tabelo"
 
 #. zz8gB
 #: DrawImpressCommands.xcu
-#, fuzzy
 msgctxt ""
 "DrawImpressCommands.xcu\n"
 "..DrawImpressCommands.UserInterface.Popups..uno:ReshufflePages\n"
@@ -1052,7 +1032,6 @@ msgstr "Pregledovalnik/podokno matric prosojnic (platno)"
 
 #. kB8Ri
 #: Sidebar.xcu
-#, fuzzy
 msgctxt ""
 "Sidebar.xcu\n"
 "..Sidebar.Content.PanelList.ScDatabasePropertyPanel\n"
@@ -1990,7 +1969,6 @@ msgstr "Vrednost, s katero želite blaziniti. Privzeto je #N/A."
 
 #. 4af9a
 #: sc/uiconfig/scalc/ui/cellprotectionpage.ui:99
-#, fuzzy
 msgctxt "cellprotectionpage|label1"
 msgid ""
 "Cell protection is only effective after the current sheet has been "
@@ -2047,21 +2025,18 @@ msgstr "Slog obrobe"
 
 #. sBXLD
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:22
-#, fuzzy
 msgctxt "sidebardatabase|chk_header_row"
 msgid "Show Header Row"
 msgstr "Pokaži glavo stolpcev"
 
 #. ECtUM
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:36
-#, fuzzy
 msgctxt "sidebardatabase|chk_total_row"
 msgid "Show Total Row"
 msgstr "Pokaži vrstico vsote"
 
 #. htZbK
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:50
-#, fuzzy
 msgctxt "sidebardatabase|chk_filter_buttons"
 msgid "Show Filter Buttons"
 msgstr "Pokaži gumbe filtra"
