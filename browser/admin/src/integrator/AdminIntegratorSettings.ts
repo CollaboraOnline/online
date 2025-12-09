@@ -53,6 +53,7 @@ interface ViewSettings {
 }
 
 interface SectionConfig {
+	id: string;
 	sectionTitle: string;
 	sectionDesc: string;
 	listId: string;
@@ -224,6 +225,7 @@ class SettingIframe {
 		checkboxMarked: `<svg fill="currentColor" width="24" height="24" viewBox="0 0 24 24"><path d="M10,17L5,12L6.41,10.58L10,14.17L17.59,6.58L19,8M19,3H5C3.89,3 3,3.89 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5C21,3.89 20.1,3 19,3Z"></path></svg>`,
 		checkboxBlankOutline: `<svg fill="currentColor" width="24" height="24" viewBox="0 0 24 24"><path d="M19,3H5C3.89,3 3,3.89 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5C21,3.89 20.1,3 19,3M19,5V19H5V5H19Z"></path></svg>`,
 	};
+	private _allConfigSection: HTMLElement | null;
 
 	private getAPIEndpoints() {
 		return {
@@ -251,8 +253,10 @@ class SettingIframe {
 	private browserSettingOptions: Record<string, any> = {};
 
 	init(): void {
+		this._allConfigSection = document.getElementById('allConfigSection');
 		this.initWindowVariables();
 		this.insertConfigSections();
+		this.setupLeftNavbar();
 		this.fetchAndPopulateSharedConfigs();
 		this.wordbook = (window as any).WordBook;
 	}
@@ -318,11 +322,11 @@ class SettingIframe {
 	}
 
 	private insertConfigSections(): void {
-		const sharedConfigsContainer = document.getElementById('allConfigSection');
-		if (!sharedConfigsContainer) return;
+		if (!this._allConfigSection) return;
 
 		const configSections: SectionConfig[] = [
 			{
+				id: 'autotext',
 				sectionTitle: _('Autotext'),
 				sectionDesc: _(
 					'Upload reusable text snippets (.bau). To insert the text in your document, type the shortcut for an AutoText entry and press F3.',
@@ -335,6 +339,7 @@ class SettingIframe {
 				uploadPath: this.PATH.autoTextUpload(),
 			},
 			{
+				id: 'wordbook',
 				sectionTitle: _('Custom dictionaries'),
 				sectionDesc: _(
 					'Add or edit words in a spell check dictionary. Words in your wordbook (.dic) will be available for spelling checks.',
@@ -347,6 +352,7 @@ class SettingIframe {
 				uploadPath: this.PATH.wordBookUpload(),
 			},
 			{
+				id: 'xcu',
 				sectionTitle: _('Document settings'),
 				sectionDesc: _('Adjust how office documents behave.'),
 				listId: 'XcuList',
@@ -399,7 +405,7 @@ class SettingIframe {
 				});
 			}
 
-			sharedConfigsContainer.appendChild(sectionEl);
+			this._allConfigSection!.appendChild(sectionEl);
 		});
 	}
 
@@ -456,6 +462,7 @@ class SettingIframe {
 	private createConfigSection(config: SectionConfig): HTMLDivElement {
 		const sectionEl = document.createElement('div');
 		sectionEl.classList.add('section');
+		sectionEl.id = config.id;
 
 		sectionEl.appendChild(this.createHeading(config.sectionTitle, 'h3'));
 		sectionEl.appendChild(this.createParagraph(config.sectionDesc));
@@ -1324,7 +1331,7 @@ class SettingIframe {
 
 	private generateViewSettingUI(data: ViewSettings) {
 		this._viewSetting = data;
-		const settingsContainer = document.getElementById('allConfigSection');
+		const settingsContainer = this._allConfigSection;
 		if (!settingsContainer) {
 			return;
 		}
@@ -1550,12 +1557,10 @@ class SettingIframe {
 			} else {
 				this.browserSettingOptions = defaultBrowserSetting;
 			}
-			this.createBrowserSettingForm(
-				document.getElementById('allConfigSection')!,
-			);
+			this.createBrowserSettingForm(this._allConfigSection!);
 		}
 
-		const settingsContainer = document.getElementById('allConfigSection');
+		const settingsContainer = this._allConfigSection;
 		if (!settingsContainer) return;
 		if (data.xcu && data.xcu.length > 0) {
 			const fileId = data.xcu[0].uri;
@@ -1597,11 +1602,45 @@ class SettingIframe {
 			}
 		}
 
+		this.setupLeftNavbar();
+
 		if (data.autotext)
 			this.populateList('autotextList', data.autotext, '/autotext');
 		if (data.wordbook)
 			this.populateList('wordbookList', data.wordbook, '/wordbook');
 		if (data.xcu) this.populateList('XcuList', data.xcu, '/xcu');
+	}
+
+	private setupLeftNavbar(): void {
+		if (this.isAdmin()) return;
+
+		// Prevent double scrollbars
+		document.body.style.margin = '0';
+
+		const content = this._allConfigSection;
+		if (!content) return;
+
+		const newNav = document.createElement('nav');
+		newNav.id = 'settings-nav';
+
+		content.querySelectorAll('.section').forEach((section) => {
+			const header = section.querySelector('h3');
+			if (header) {
+				const link = document.createElement('a');
+				link.textContent = header.textContent;
+				link.classList.add('settings-nav-item');
+				link.href = '#' + section.id;
+				newNav.appendChild(link);
+			}
+		});
+
+		const oldNav = document.getElementById('settings-nav');
+		if (oldNav) {
+			oldNav.replaceWith(newNav);
+		} else {
+			let wrapper = document.getElementById('settingIframe');
+			wrapper!.insertBefore(newNav, content);
+		}
 	}
 
 	private mergeWithDefault(defaults: any, overrides: any): any {
