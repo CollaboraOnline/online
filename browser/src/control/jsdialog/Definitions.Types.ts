@@ -330,6 +330,7 @@ interface TreeWidgetJSON extends WidgetJSON {
 	headers: Array<TreeHeaderJSON>; // header columns
 	highlightTerm?: string; // what, if any, entries are we highlighting?
 	ignoreFocus?: boolean; // When true, does't focus to selected item automatically.
+	customEntryRenderer?: boolean;
 }
 
 interface IconViewEntry {
