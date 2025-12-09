@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-12-08 11:25+0100\n"
-"PO-Revision-Date: 2025-11-19 09:46+0000\n"
+"PO-Revision-Date: 2025-12-09 11:58+0000\n"
 "Last-Translator: Aindriú Mac Giolla Eoin <aindriu80@gmail.com>\n"
 "Language-Team: Irish <https://hosted.weblate.org/projects/collabora-online/"
 "ui/ga/>\n"
-"Language: \n"
+"Language: ga\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=5; plural=n==1 ? 0 : n==2 ? 1 : (n>2 && n<7) ? 2 :("
-"n>6 && n<11) ? 3 : 4;\n"
+"Plural-Forms: nplurals=5; plural=n==1 ? 0 : n==2 ? 1 : (n>2 && n<7) ? 2 :(n>"
+"6 && n<11) ? 3 : 4;\n"
 "X-Generator: Weblate 5.15-dev\n"
 
 #: admin/admin.strings.js:15
@@ -1156,12 +1156,12 @@ msgstr "Tháinig earráid {0} ar an bhfreastalaí agus an t-ordú {1} á pharsá
 #: src/control/Control.BackstageView.ts:157
 #: src/control/Control.BackstageView.ts:158
 msgid "Close backstage"
-msgstr ""
+msgstr "Dún taobh thiar den stáitse"
 
 #: src/control/Control.BackstageView.ts:202
 #: src/control/Control.BackstageView.ts:203
 msgid "Back to document"
-msgstr ""
+msgstr "Ar ais chuig an doiciméad"
 
 #: src/control/Control.BackstageView.ts:238
 #: src/control/Control.NotebookbarCalc.js:29
@@ -1193,7 +1193,7 @@ msgstr "Roinn"
 
 #: src/control/Control.BackstageView.ts:266
 msgid "Info"
-msgstr ""
+msgstr "Eolas"
 
 #: src/control/Control.BackstageView.ts:280
 #: src/control/Control.NotebookbarCalc.js:165
@@ -1205,7 +1205,7 @@ msgstr "Sábháil Mar"
 
 #: src/control/Control.BackstageView.ts:294
 msgid "Export"
-msgstr ""
+msgstr "Easpórtáil"
 
 #: src/control/Control.BackstageView.ts:340
 #: src/control/jsdialog/Widget.ColorPicker.ts:421
@@ -1214,31 +1214,31 @@ msgstr "Le déanaí"
 
 #: src/control/Control.BackstageView.ts:341
 msgid "Recently opened documents will appear here"
-msgstr ""
+msgstr "Beidh doiciméid a osclaíodh le déanaí le feiceáil anseo"
 
 #: src/control/Control.BackstageView.ts:353
 msgid "New Document"
-msgstr ""
+msgstr "Doiciméad Nua"
 
 #: src/control/Control.BackstageView.ts:354
 msgid "Start from a template or a blank file"
-msgstr ""
+msgstr "Tosaigh ó theimpléad nó ó chomhad bán"
 
 #: src/control/Control.BackstageView.ts:375
 msgid "Document Info"
-msgstr ""
+msgstr "Eolas faoin Doiciméad"
 
 #: src/control/Control.BackstageView.ts:376
 msgid "View document properties and information"
-msgstr ""
+msgstr "Féach ar airíonna agus ar fhaisnéis an doiciméid"
 
 #: src/control/Control.BackstageView.ts:392
 msgid "Export Document"
-msgstr ""
+msgstr "Doiciméad Easpórtála"
 
 #: src/control/Control.BackstageView.ts:393
 msgid "export your documents in different formats"
-msgstr ""
+msgstr "easpórtáil do dhoiciméid i bhformáidí éagsúla"
 
 #: src/control/Control.BackstageView.ts:445 src/control/Control.Menubar.ts:381
 #: src/control/Control.Menubar.ts:1354
@@ -1252,25 +1252,24 @@ msgstr "Airíonna"
 
 #: src/control/Control.BackstageView.ts:451
 msgid "More Property Info"
-msgstr ""
+msgstr "Tuilleadh Eolais Maoine"
 
 #: src/control/Control.BackstageView.ts:530
 msgid "Text Document"
-msgstr ""
+msgstr "Doiciméad Téacs"
 
 #: src/control/Control.BackstageView.ts:530
 #: src/control/Control.BackstageView.ts:533
-#, fuzzy
 msgid "Pages"
-msgstr "Leathanach"
+msgstr "Leathanaigh"
 
 #: src/control/Control.BackstageView.ts:531
 msgid "Spreadsheet"
-msgstr ""
+msgstr "Scarbhileog"
 
 #: src/control/Control.BackstageView.ts:531
 msgid "Sheets"
-msgstr ""
+msgstr "Bileoga"
 
 #: src/control/Control.BackstageView.ts:532
 #: src/control/Control.NavigatorPanel.ts:189
@@ -1281,7 +1280,7 @@ msgstr "Sleamhnáin"
 
 #: src/control/Control.BackstageView.ts:538
 msgid "Parts"
-msgstr ""
+msgstr "Páirteanna"
 
 #: src/control/Control.BackstageView.ts:542
 #: src/control/Control.DocumentRepair.js:140
@@ -1290,40 +1289,39 @@ msgstr "Cineál"
 
 #: src/control/Control.BackstageView.ts:548
 msgid "Mode"
-msgstr ""
+msgstr "Mód"
 
 #: src/control/Control.BackstageView.ts:549
 msgid "View Only"
-msgstr ""
+msgstr "Amharc Amháin"
 
 #: src/control/Control.BackstageView.ts:556
 msgid "File Name"
-msgstr ""
+msgstr "Ainm Comhaid"
 
 #: src/control/Control.BackstageView.ts:658
 msgid "Loading templates…"
-msgstr ""
+msgstr "Ag lódáil teimpléid…"
 
 #: src/control/Control.BackstageView.ts:704
 msgid "Search templates"
-msgstr ""
+msgstr "Cuardaigh teimpléid"
 
 #: src/control/Control.BackstageView.ts:762
 msgid "No templates match your search."
-msgstr ""
+msgstr "Níl aon teimpléid a oireann do do chuardach."
 
 #: src/control/Control.BackstageView.ts:868
 msgid "Blank Spreadsheet"
-msgstr ""
+msgstr "Scarbhileog Bhán"
 
 #: src/control/Control.BackstageView.ts:872
-#, fuzzy
 msgid "Blank Presentation"
-msgstr "Críoch Léiriú"
+msgstr "Cur i Láthair Folamh"
 
 #: src/control/Control.BackstageView.ts:877
 msgid "Blank Document"
-msgstr ""
+msgstr "Doiciméad Bán"
 
 #: src/control/Control.Command.js:90
 msgid "Unlock"
@@ -2617,7 +2615,7 @@ msgstr "I ndiaidh"
 
 #: src/control/Notebookbar.ImpressTransitionTab.ts:137
 msgid "Apply to All Slides"
-msgstr ""
+msgstr "Cuir i bhFeidhm ar Gach Sleamhnán"
 
 #: src/control/Notebookbar.WriterReferencesTab.ts:41
 msgid "Table of content"
@@ -3019,35 +3017,35 @@ msgstr "Barra Stádais"
 
 #: src/control/Control.NotebookbarCalc.js:1665
 msgid "Table Style Options"
-msgstr ""
+msgstr "Roghanna Stíl Tábla"
 
 #: src/control/Control.NotebookbarCalc.js:1678
 msgid "Show Header Row"
-msgstr ""
+msgstr "Taispeáin an Ró Ceanntásc"
 
 #: src/control/Control.NotebookbarCalc.js:1690
 msgid "Show Total Row"
-msgstr ""
+msgstr "Taispeáin an Ró Iomlán"
 
 #: src/control/Control.NotebookbarCalc.js:1708
 msgid "Banded Rows"
-msgstr ""
+msgstr "Sraitheanna Bandáilte"
 
 #: src/control/Control.NotebookbarCalc.js:1720
 msgid "Banded Columns"
-msgstr ""
+msgstr "Colúin Bhandaithe"
 
 #: src/control/Control.NotebookbarCalc.js:1738
 msgid "First Column"
-msgstr ""
+msgstr "An Chéad Cholún"
 
 #: src/control/Control.NotebookbarCalc.js:1750
 msgid "Last Column"
-msgstr ""
+msgstr "Colún Deireanach"
 
 #: src/control/Control.NotebookbarCalc.js:1765
 msgid "Show Filter Buttons"
-msgstr ""
+msgstr "Taispeáin Cnaipí Scagaire"
 
 #: src/control/Control.NotebookbarCalc.js:1801
 #: src/control/Control.NotebookbarCalc.js:2549
@@ -3546,7 +3544,7 @@ msgstr "Líon na roghanna"
 
 #: src/control/Control.StatusBar.js:250
 msgid "Multi Page View"
-msgstr ""
+msgstr "Amharc Il-Leathanaigh"
 
 #: src/control/Control.StatusBar.js:405
 msgid ""
@@ -4380,11 +4378,11 @@ msgstr "Uathoibríoch"
 
 #: src/control/jsdialog/Widget.ColorPicker.ts:262
 msgid "Color palette"
-msgstr ""
+msgstr "Pailéad dathanna"
 
 #: src/control/jsdialog/Widget.ColorPicker.ts:328
 msgid "Enter custom color in hex format"
-msgstr ""
+msgstr "Cuir isteach dath saincheaptha i bhformáid heicsidheachúlach"
 
 #: src/control/jsdialog/Widget.PageMarginEntry.ts:40
 msgid "Page margin options"
@@ -4976,7 +4974,7 @@ msgstr "{0} scriosta"
 
 #: src/layer/marker/TextInput.js:411
 msgid "Clipboard area"
-msgstr ""
+msgstr "Limistéar an ghearrthaisce"
 
 #: src/layer/marker/TextInput.js:461
 msgid "Screen reader support for text content is disabled. "
