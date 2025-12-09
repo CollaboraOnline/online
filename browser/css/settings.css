@@ -31,6 +31,7 @@
 
 #allConfigSection {
 	padding-left: 5px;
+	overflow-y: auto;
 }
 
 .jsdialog.ui-button-box-right {
@@ -47,4 +48,29 @@
 
 #settingIframe {
 	padding: 0 1rem;
+	display: flex;
+	height: 100vh;
+	gap: 1rem;
 }
+
+#settings-nav {
+	flex: 0 0 30%;
+	box-sizing: border-box;
+	padding: 0.5rem 0;
+	padding-right: 1rem;
+	border-right: 1px solid var(--settings-border);
+	overflow-y: auto;
+}
+
+.settings-nav-item {
+	display: block;
+	color: inherit;
+	padding: 0.5rem;
+	border-radius: var(--border-radius-element);
+	margin-bottom: 0.25rem;
+}
+
+.settings-nav-item:hover {
+	background-color: var(--settings-background-hover);
+}
+
