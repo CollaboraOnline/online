@@ -9,20 +9,20 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-#pragma once
+#include <common/MobileApp.hpp>
+#include "Document.hpp"
 
-#include <Poco/URI.h>
+#include <atomic>
 
 namespace coda
 {
-struct DocumentData
-{
-    Poco::URI _fileURL;
-    int _fakeClientFd = -1;
-    unsigned _appDocId = 0;
-};
 
-unsigned generateNewAppDocId();
+unsigned generateNewAppDocId()
+{
+    static std::atomic<unsigned> appDocIdCounter(1);
+    ::DocumentData::allocate(appDocIdCounter);
+    return appDocIdCounter++;
+}
 
 } // namespace coda
 

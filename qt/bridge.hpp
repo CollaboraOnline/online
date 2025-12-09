@@ -26,7 +26,7 @@ class Bridge : public QObject
 {
     Q_OBJECT
 
-    coda::DocumentData _document;
+    coda::DocumentData& _document;
     QMainWindow* _window;
     CODAWebEngineView* _webView;
     int _closeNotificationPipeForForwardingThread[2];
@@ -34,8 +34,9 @@ class Bridge : public QObject
     // the state of the document modified status as reported by the core
     bool _modified;
 
-    void promptSaveLocation(std::function<void(const std::string&)> callback);
+    void promptSaveLocation(std::function<void(const std::string&, const std::string&)> callback);
     void saveDocumentAs();
+    void createAndStartMessagePumpThread();
 
 public:
     explicit Bridge(QObject* parent, coda::DocumentData& document, QMainWindow* window, CODAWebEngineView* webView)
