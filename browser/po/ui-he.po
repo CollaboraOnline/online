@@ -8,11 +8,11 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-12-08 11:25+0100\n"
-"PO-Revision-Date: 2025-11-12 12:51+0000\n"
+"PO-Revision-Date: 2025-12-09 11:58+0000\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: Hebrew <https://hosted.weblate.org/projects/collabora-online/"
 "ui/he/>\n"
-"Language: \n"
+"Language: he\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -557,7 +557,7 @@ msgstr "הערות"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:200
 msgid "Handouts"
-msgstr ""
+msgstr "דפי מידע"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:201
 #: src/control/Control.NavigatorPanel.ts:210
@@ -566,7 +566,7 @@ msgstr "מתאר"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:202
 msgid "Handout horizontal"
-msgstr ""
+msgstr "דפי מידע אופקיים"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:203
 msgid "Images"
@@ -771,10 +771,12 @@ msgid ""
 "To use Zotero specify your API key here. You can create your API key in "
 "your "
 msgstr ""
+"כדי להשתמש ב־Zotero נא לציין את מפתח ה־API שלך כאן. אפשר ליצור את מפתח ה־API "
+"שלך דרך "
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:1386
 msgid "Zotero account API settings"
-msgstr ""
+msgstr "הגדרות ה־API של חשבון ה־Zotero"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:1395
 msgid "Document Signing"
@@ -785,10 +787,12 @@ msgid ""
 "To use document signing, specify your signing certificate, key and CA chain "
 "here."
 msgstr ""
+"כדי להשתמש בחתימה על מסמכים, יש לציין את אישור החתימה, המפתח ושרשרת רשות "
+"האישורים כאן."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:1457
 msgid "(Warning: Server accessibility must be enabled to toggle)"
-msgstr ""
+msgstr "(אזהרה: נגישות שרת חייבת להיות פעילה כדי שהמתג ישפיע)"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:1766
 #: src/map/handler/Map.WOPI.js:723
@@ -897,10 +901,11 @@ msgid ""
 "The system is currently adjusting resources. Please wait a moment while we "
 "retry your request..."
 msgstr ""
+"המערכת מתאימה משאבים. נא להמתין רגע קט בזמן שאנחנו מנסים לטפל בבקשה שלך מחדש…"
 
 #: js/global.js:1612
 msgid "The document is being migrated to a new server. Retrying shortly..."
-msgstr ""
+msgstr "המסמך עובר הסבה לשרת חדש. יתבצע ניסיון חוזר תוך זמן קצר…"
 
 #: js/global.js:1614
 msgid "Failed to get RouteToken from controller"
@@ -968,7 +973,7 @@ msgstr "פתיחה בתצוגה מלאה"
 
 #: src/canvas/sections/CommentListSection.ts:1288
 msgid "Show in navigator"
-msgstr ""
+msgstr "הצגה בנווטן"
 
 #: src/canvas/sections/CommentListSection.ts:1316
 #: src/control/Control.JSDialogBuilder.js:1718
@@ -1001,13 +1006,12 @@ msgid "Update"
 msgstr "עדכון"
 
 #: src/canvas/sections/CommentSection.ts:45
-#, fuzzy
 msgid "Edit comment"
-msgstr "עריכת מסמך"
+msgstr "עריכת הערה"
 
 #: src/canvas/sections/CommentSection.ts:46
 msgid "Reply comment"
-msgstr ""
+msgstr "תגובה על הערה"
 
 #: src/canvas/sections/CommentSection.ts:47
 msgid "Open menu"
@@ -1015,7 +1019,7 @@ msgstr "פתיחת תפריט"
 
 #: src/canvas/sections/CommentSection.ts:347
 msgid "Press Ctrl + Enter to post"
-msgstr ""
+msgstr "יש ללחוץ על Ctrl + Enter כדי לפרסם"
 
 #: src/canvas/sections/CommentSection.ts:411
 #: src/canvas/sections/CommentSection.ts:412
@@ -1071,7 +1075,7 @@ msgstr "„מתווך אטי”"
 
 #: src/control/Control.AboutDialog.ts:147
 msgid "Time zone:"
-msgstr ""
+msgstr "אזור זמן:"
 
 #: src/control/Control.AboutDialog.ts:185
 msgid "Copy all version information in English"
@@ -1131,12 +1135,12 @@ msgstr "השרת נתקל בשגיאת {0} בעת פענוח הפקודה {1}."
 #: src/control/Control.BackstageView.ts:157
 #: src/control/Control.BackstageView.ts:158
 msgid "Close backstage"
-msgstr ""
+msgstr "סגירת מאחורי הקלעים"
 
 #: src/control/Control.BackstageView.ts:202
 #: src/control/Control.BackstageView.ts:203
 msgid "Back to document"
-msgstr ""
+msgstr "חזרה למסמך"
 
 #: src/control/Control.BackstageView.ts:238
 #: src/control/Control.NotebookbarCalc.js:29
@@ -1150,7 +1154,7 @@ msgstr "בית"
 #: src/control/Control.NotebookbarImpress.js:811
 #: src/control/Control.NotebookbarImpress.js:1425
 msgid "New"
-msgstr ""
+msgstr "חדש"
 
 #: src/control/Control.BackstageView.ts:259
 #: src/control/Control.Notebookbar.js:632
@@ -1168,7 +1172,7 @@ msgstr "שיתוף"
 
 #: src/control/Control.BackstageView.ts:266
 msgid "Info"
-msgstr ""
+msgstr "פרטים"
 
 #: src/control/Control.BackstageView.ts:280
 #: src/control/Control.NotebookbarCalc.js:165
@@ -1180,7 +1184,7 @@ msgstr "שמירה בשם"
 
 #: src/control/Control.BackstageView.ts:294
 msgid "Export"
-msgstr ""
+msgstr "ייצוא"
 
 #: src/control/Control.BackstageView.ts:340
 #: src/control/jsdialog/Widget.ColorPicker.ts:421
@@ -1189,31 +1193,31 @@ msgstr "אחרונים"
 
 #: src/control/Control.BackstageView.ts:341
 msgid "Recently opened documents will appear here"
-msgstr ""
+msgstr "מסמכים שנפתחו לאחרונה יופיעו כאן"
 
 #: src/control/Control.BackstageView.ts:353
 msgid "New Document"
-msgstr ""
+msgstr "מסמך חדש"
 
 #: src/control/Control.BackstageView.ts:354
 msgid "Start from a template or a blank file"
-msgstr ""
+msgstr "התחלה מתבנית או קובץ ריק"
 
 #: src/control/Control.BackstageView.ts:375
 msgid "Document Info"
-msgstr ""
+msgstr "פרטי מסמך"
 
 #: src/control/Control.BackstageView.ts:376
 msgid "View document properties and information"
-msgstr ""
+msgstr "הצגת פרטים ומידע על מסמך"
 
 #: src/control/Control.BackstageView.ts:392
 msgid "Export Document"
-msgstr ""
+msgstr "ייצוא מסמך"
 
 #: src/control/Control.BackstageView.ts:393
 msgid "export your documents in different formats"
-msgstr ""
+msgstr "ייצוא המסמכים שלך לסוגי קבצים שונים"
 
 #: src/control/Control.BackstageView.ts:445 src/control/Control.Menubar.ts:381
 #: src/control/Control.Menubar.ts:1354
@@ -1227,25 +1231,24 @@ msgstr "מאפיינים"
 
 #: src/control/Control.BackstageView.ts:451
 msgid "More Property Info"
-msgstr ""
+msgstr "פרטים נוספים על מאפיינים"
 
 #: src/control/Control.BackstageView.ts:530
 msgid "Text Document"
-msgstr ""
+msgstr "מסמך טקסט"
 
 #: src/control/Control.BackstageView.ts:530
 #: src/control/Control.BackstageView.ts:533
-#, fuzzy
 msgid "Pages"
-msgstr "עמוד"
+msgstr "עמודים"
 
 #: src/control/Control.BackstageView.ts:531
 msgid "Spreadsheet"
-msgstr ""
+msgstr "גיליון נתונים"
 
 #: src/control/Control.BackstageView.ts:531
 msgid "Sheets"
-msgstr ""
+msgstr "גיליונות"
 
 #: src/control/Control.BackstageView.ts:532
 #: src/control/Control.NavigatorPanel.ts:189
@@ -1256,7 +1259,7 @@ msgstr "שקופיות"
 
 #: src/control/Control.BackstageView.ts:538
 msgid "Parts"
-msgstr ""
+msgstr "חלקים"
 
 #: src/control/Control.BackstageView.ts:542
 #: src/control/Control.DocumentRepair.js:140
@@ -1265,40 +1268,39 @@ msgstr "סוג"
 
 #: src/control/Control.BackstageView.ts:548
 msgid "Mode"
-msgstr ""
+msgstr "מצב"
 
 #: src/control/Control.BackstageView.ts:549
 msgid "View Only"
-msgstr ""
+msgstr "צפייה בלבד"
 
 #: src/control/Control.BackstageView.ts:556
 msgid "File Name"
-msgstr ""
+msgstr "שם קובץ"
 
 #: src/control/Control.BackstageView.ts:658
 msgid "Loading templates…"
-msgstr ""
+msgstr "התבניות נטענות…"
 
 #: src/control/Control.BackstageView.ts:704
 msgid "Search templates"
-msgstr ""
+msgstr "חיפוש בתבניות"
 
 #: src/control/Control.BackstageView.ts:762
 msgid "No templates match your search."
-msgstr ""
+msgstr "אין תבניות שתואמות לחיפוש שלך."
 
 #: src/control/Control.BackstageView.ts:868
 msgid "Blank Spreadsheet"
-msgstr ""
+msgstr "גיליון נתונים ריק"
 
 #: src/control/Control.BackstageView.ts:872
-#, fuzzy
 msgid "Blank Presentation"
-msgstr "סיום המצגת"
+msgstr "מצגת ריקה"
 
 #: src/control/Control.BackstageView.ts:877
 msgid "Blank Document"
-msgstr ""
+msgstr "מסמך ריק"
 
 #: src/control/Control.Command.js:90
 msgid "Unlock"
@@ -1836,7 +1838,7 @@ msgstr "הוספת תגובה"
 
 #: src/control/Control.JSDialogBuilder.js:2059
 msgid "Open {name}"
-msgstr ""
+msgstr "פתיחת {name}"
 
 #: src/control/Control.JSDialogBuilder.js:2381
 #: src/control/Control.Menubar.ts:936
@@ -2446,7 +2448,7 @@ msgstr "הסרת אזור להדפסה"
 
 #: src/control/Control.Menubar.ts:1601 src/control/Control.StatusBar.js:533
 msgid "Reset to Default Language"
-msgstr "איפוס לשפת בררת מחדל"
+msgstr "איפוס לשפת ברירת מחדל"
 
 #: src/control/Control.Menubar.ts:1632 src/control/Control.Menubar.ts:1633
 #: src/control/Control.Menubar.ts:1634 src/control/Control.Toolbar.js:247
@@ -2519,15 +2521,15 @@ msgstr "סגירת הניווט"
 
 #: src/control/Control.NavigatorPanel.ts:227
 msgid "Results"
-msgstr ""
+msgstr "תוצאות"
 
 #: src/control/Control.NavigatorPanel.ts:474
 msgid "Search..."
-msgstr ""
+msgstr "חיפוש…"
 
 #: src/control/Control.QuickFindPanel.ts:97
 msgid "Type in the search box to find anything in your document"
-msgstr ""
+msgstr "נא להקליד בתיבת החיפוש כדי לאתר כל מיני דברים במסמך שלך"
 
 #: src/control/Notebookbar.ImpressAnimationTab.ts:24
 msgid "Animation"
@@ -2584,7 +2586,7 @@ msgstr "אחרי"
 
 #: src/control/Notebookbar.ImpressTransitionTab.ts:137
 msgid "Apply to All Slides"
-msgstr ""
+msgstr "החלה על כל השקופיות"
 
 #: src/control/Notebookbar.WriterReferencesTab.ts:41
 msgid "Table of content"
@@ -2606,7 +2608,7 @@ msgstr "הנפשות"
 
 #: src/control/Control.NotebookbarBuilder.js:225
 msgid "Click to expand"
-msgstr ""
+msgstr "לחיצה להרחבה"
 
 #: src/control/Control.NotebookbarBuilder.js:225
 msgid "Tap to expand"
@@ -2614,7 +2616,7 @@ msgstr "יורחב בנגיעה"
 
 #: src/control/Control.NotebookbarBuilder.js:226
 msgid "Click to collapse"
-msgstr ""
+msgstr "לחיצה לצמצום"
 
 #: src/control/Control.NotebookbarBuilder.js:226
 #: src/control/Control.NotebookbarBuilder.js:281
@@ -2659,9 +2661,8 @@ msgid "Page Layout"
 msgstr "פריסת עמוד"
 
 #: src/control/Control.NotebookbarCalc.js:48
-#, fuzzy
 msgid "Formulas"
-msgstr "נוסחה"
+msgstr "נוסחאות"
 
 #: src/control/Control.NotebookbarCalc.js:54
 msgid "Data"
@@ -2685,9 +2686,8 @@ msgstr "עיצוב"
 #: src/control/Control.NotebookbarDraw.js:101
 #: src/control/Control.NotebookbarImpress.js:129
 #: src/control/Control.NotebookbarWriter.js:88
-#, fuzzy
 msgid "Shape"
-msgstr "צורות"
+msgstr "צורה"
 
 #: src/control/Control.NotebookbarCalc.js:79
 #: src/control/Control.NotebookbarDraw.js:108
@@ -2767,7 +2767,7 @@ msgstr "שינוי שם"
 #: src/control/Control.NotebookbarImpress.js:739
 #: src/control/Control.NotebookbarWriter.js:589
 msgid "Clipboard"
-msgstr ""
+msgstr "לוח גזירים"
 
 #: src/control/Control.NotebookbarCalc.js:478
 #: src/control/Control.NotebookbarDraw.js:673
@@ -2778,11 +2778,11 @@ msgstr "גופן"
 #: src/control/Control.NotebookbarCalc.js:623
 #: src/control/Control.NotebookbarDraw.js:814
 msgid "Alignment"
-msgstr ""
+msgstr "יישור"
 
 #: src/control/Control.NotebookbarCalc.js:750
 msgid "Merge & Center"
-msgstr ""
+msgstr "מיזוג ומרכוז"
 
 #: src/control/Control.NotebookbarCalc.js:760
 #: src/control/Control.NotebookbarCalc.js:776
@@ -2824,12 +2824,12 @@ msgstr "טקסט"
 
 #: src/control/Control.NotebookbarCalc.js:862
 msgid "Cells"
-msgstr ""
+msgstr "תאים"
 
 #: src/control/Control.NotebookbarCalc.js:964
 #: src/control/jsdialog/Definitions.Menu.ts:2304
 msgid "Default"
-msgstr "בררת מחדל"
+msgstr "ברירת מחדל"
 
 #: src/control/Control.NotebookbarCalc.js:971
 msgid "Heading 1"
@@ -2853,7 +2853,7 @@ msgstr "רע"
 
 #: src/control/Control.NotebookbarCalc.js:1020
 msgid "Editing"
-msgstr ""
+msgstr "עריכה"
 
 #: src/control/Control.NotebookbarCalc.js:1044
 #: src/control/Control.NotebookbarDraw.js:1197
@@ -3044,7 +3044,7 @@ msgstr ""
 #: src/control/Control.NotebookbarImpress.js:1465
 #: src/control/Control.NotebookbarWriter.js:1223
 msgid "Illustrations"
-msgstr ""
+msgstr "איורים"
 
 #: src/control/Control.NotebookbarCalc.js:1958
 #: src/control/Control.NotebookbarDraw.js:1029
@@ -3064,63 +3064,61 @@ msgstr "מסייע"
 
 #: src/control/Control.NotebookbarCalc.js:2174
 msgid "Insert Function"
-msgstr ""
+msgstr "הוספת פונקציה"
 
 #: src/control/Control.NotebookbarCalc.js:2182
-#, fuzzy
 msgid "Function Library"
-msgstr "אשף הפונקציות"
+msgstr "ספריית פונקציות"
 
 #: src/control/Control.NotebookbarCalc.js:2196
 msgid "AutoSum"
-msgstr ""
+msgstr "סכימה אוטומטית"
 
 #: src/control/Control.NotebookbarCalc.js:2209
 msgid "Financial"
-msgstr ""
+msgstr "כלכלי"
 
 #: src/control/Control.NotebookbarCalc.js:2227
 msgid "Logical"
-msgstr ""
+msgstr "לוגי"
 
 #: src/control/Control.NotebookbarCalc.js:2257
 msgid "Date & Time"
-msgstr ""
+msgstr "תאריך ושעה"
 
 #: src/control/Control.NotebookbarCalc.js:2269
 msgid "Lookup & Reference"
-msgstr ""
+msgstr "איתור וסימוכין"
 
 #: src/control/Control.NotebookbarCalc.js:2287
 msgid "Math & Trig"
-msgstr ""
+msgstr "מתמטיקה וטריגונומטריה"
 
 #: src/control/Control.NotebookbarCalc.js:2299
 msgid "More Functions"
-msgstr ""
+msgstr "פונקציות נוספות"
 
 #: src/control/Control.NotebookbarCalc.js:2344
 msgid "Range"
-msgstr ""
+msgstr "טווח"
 
 #: src/control/Control.NotebookbarCalc.js:2427
 msgid "Sort"
-msgstr ""
+msgstr "מיון"
 
 #: src/control/Control.NotebookbarCalc.js:2473
 msgid "Filter"
-msgstr ""
+msgstr "סינון"
 
 #: src/control/Control.NotebookbarCalc.js:2721
 #: src/control/Control.NotebookbarImpress.js:1977
 #: src/control/Control.NotebookbarWriter.js:2209
-#, fuzzy
 msgid "Comments"
-msgstr "הערה"
+msgstr "הערות"
 
 #: src/control/Control.NotebookbarCalc.js:2827
 msgid "Format Cells"
-msgstr ""
+msgstr "עיצוב תאים"
 
 #: src/control/Control.NotebookbarCalc.js:2973
 #: src/control/Control.NotebookbarCalc.js:3330
@@ -3128,13 +3126,13 @@ msgstr ""
 #: src/control/Control.NotebookbarWriter.js:2812
 #: src/control/Control.NotebookbarWriter.js:3135
 msgid "Wrap"
-msgstr ""
+msgstr "גלישה"
 
 #: src/control/Control.NotebookbarCalc.js:3212
 #: src/control/Control.NotebookbarImpress.js:2696
 #: src/control/Control.NotebookbarWriter.js:3021
 msgid "Image Controls"
-msgstr ""
+msgstr "בקרי תמונה"
 
 #: src/control/Control.NotebookbarDraw.js:76
 #: src/control/Control.NotebookbarWriter.js:56
@@ -3157,15 +3155,15 @@ msgstr "סרגל"
 #: src/control/Control.NotebookbarWriter.js:793
 #: src/control/Control.NotebookbarWriter.js:2578
 msgid "Paragraph"
-msgstr ""
+msgstr "פסקה"
 
 #: src/control/Control.NotebookbarImpress.js:96
 msgid "Design"
-msgstr ""
+msgstr "עיצוב"
 
 #: src/control/Control.NotebookbarImpress.js:104
 msgid "Slide Show"
-msgstr ""
+msgstr "מצגת"
 
 #: src/control/Control.NotebookbarImpress.js:143
 msgid "Master"
@@ -3585,7 +3583,7 @@ msgstr "גיליון פעיל"
 
 #: src/control/Control.TopToolbar.js:123
 msgid "Default Style"
-msgstr "סגנון בררת מחדל"
+msgstr "סגנון ברירת מחדל"
 
 #: src/control/Control.TopToolbar.js:189
 msgid "Insert table"
@@ -4883,7 +4881,7 @@ msgstr "{0} נמחקו"
 
 #: src/layer/marker/TextInput.js:411
 msgid "Clipboard area"
-msgstr ""
+msgstr "אזור לוח הגזירים"
 
 #: src/layer/marker/TextInput.js:461
 msgid "Screen reader support for text content is disabled. "
