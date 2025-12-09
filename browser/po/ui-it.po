@@ -12,16 +12,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-12-08 11:25+0100\n"
-"PO-Revision-Date: 2025-01-28 15:02+0000\n"
-"Last-Translator: Giovanni Montini <service@giovannimontini.com>\n"
+"PO-Revision-Date: 2025-12-08 12:47+0000\n"
+"Last-Translator: Marco Cecchetti <mrcekets@gmail.com>\n"
 "Language-Team: Italian <https://hosted.weblate.org/projects/collabora-online/"
 "ui/it/>\n"
-"Language: \n"
+"Language: it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.10-dev\n"
+"X-Generator: Weblate 5.15-dev\n"
 
 #: admin/admin.strings.js:15
 msgid "Admin console"
@@ -428,20 +428,22 @@ msgstr "Mostra righello"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:164
 msgid "Accessibility Checker"
-msgstr ""
+msgstr "Verifica accessibilità"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:165
 #: src/control/Control.NavigatorPanel.ts:287
+#, fuzzy
 msgid "Navigator"
-msgstr ""
+msgstr "Navigatore"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:166
+#, fuzzy
 msgid "Show Sidebar"
-msgstr ""
+msgstr "Mostra barra laterale"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:167
 msgid "Custom Animation"
-msgstr ""
+msgstr "Animazione personalizzata"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:170
 #, fuzzy
@@ -701,6 +703,8 @@ msgid ""
 "Something went wrong while fetching setting file. Please try to refresh the "
 "page."
 msgstr ""
+"Si è verificato un problema nel caricamento del file di configurazione. "
+"Prova a ricaricare la pagina."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:611
 msgid ""
@@ -718,12 +722,12 @@ msgstr ""
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:731
 msgid "Select a tab to browser settings."
-msgstr ""
+msgstr "Seleziona una scheda per navigare nelle impostazioni."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:744
 #: admin/src/integrator/Xcu.ts:376
 msgid "Reset to default Document settings"
-msgstr ""
+msgstr "Ripristina le impostazioni predefinite del documento"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:748
 #: admin/src/integrator/Xcu.ts:390
@@ -2590,27 +2594,27 @@ msgstr ""
 #: src/control/Notebookbar.ImpressTransitionTab.ts:41
 #: src/control/Sidebar.FromNotebookbarPanel.ts:108
 msgid "Transitions"
-msgstr ""
+msgstr "Transizioni"
 
 #: src/control/Notebookbar.ImpressTransitionTab.ts:66
 msgid "Variant"
-msgstr ""
+msgstr "Variante"
 
 #: src/control/Notebookbar.ImpressTransitionTab.ts:81
 msgid "Duration"
-msgstr ""
+msgstr "Durata"
 
 #: src/control/Notebookbar.ImpressTransitionTab.ts:108
 msgid "On mouse click"
-msgstr ""
+msgstr "Al clic del mouse"
 
 #: src/control/Notebookbar.ImpressTransitionTab.ts:116
 msgid "After"
-msgstr ""
+msgstr "Dopo"
 
 #: src/control/Notebookbar.ImpressTransitionTab.ts:137
 msgid "Apply to All Slides"
-msgstr ""
+msgstr "Applica a tutte le diapositive"
 
 #: src/control/Notebookbar.WriterReferencesTab.ts:41
 msgid "Table of content"
