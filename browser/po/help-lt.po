@@ -3,17 +3,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-11-17 08:08+0200\n"
-"PO-Revision-Date: 2025-11-26 21:54+0000\n"
+"PO-Revision-Date: 2025-12-09 11:58+0000\n"
 "Last-Translator: dukezas <dukezas@gmail.com>\n"
-"Language-Team: Lithuanian <https://hosted.weblate.org/projects/"
-"collabora-online/help/lt/>\n"
+"Language-Team: Lithuanian <https://hosted.weblate.org/projects/collabora-"
+"online/help/lt/>\n"
 "Language: lt\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural="
-"(n % 10 == 1 && (n % 100 < 11 || n % 100 > 19)) ? 0 : "
-"((n % 10 >= 2 && n % 10 <= 9 && (n % 100 < 11 || n % 100 > 19)) ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"(n%100<10 || n%100>=20) ? 1 : 2);\n"
 "X-Generator: Weblate 5.15-dev\n"
 
 #: html/cool-help.html%2Bdiv.h1:6-5
@@ -759,7 +758,7 @@ msgstr "Psl↑"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:81-38
 msgid "Switch cursor between text and header"
-msgstr ""
+msgstr "Perjungti žymeklį tarp teksto ir antraštės"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:81-102
 #, fuzzy
@@ -768,7 +767,7 @@ msgstr "Vald</kbd><span class=\"kbd--plus\">+</span><kbd>Psl↑"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:82-38
 msgid "Extend the selection up one page"
-msgstr ""
+msgstr "Išplėsti pasirinkimą vienu puslapiu aukštyn"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:82-97
 #, fuzzy
@@ -786,7 +785,7 @@ msgstr "Psl↓"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:84-38
 msgid "Switch cursor between text and footer"
-msgstr ""
+msgstr "Perjungti žymeklį tarp teksto ir poraštės"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:84-102
 #, fuzzy
@@ -795,7 +794,7 @@ msgstr "Vald</kbd><span class=\"kbd--plus\">+</span><kbd>Psl↑"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:85-38
 msgid "Extend the selection down one page"
-msgstr ""
+msgstr "Išplėsti pasirinkimą vienu puslapiu žemyn"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:85-99
 #, fuzzy
@@ -804,7 +803,7 @@ msgstr "Lyg2</kbd><span class=\"kbd--plus\">+</span><kbd>Psl↑"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:86-38
 msgid "Delete to beginning of word"
-msgstr ""
+msgstr "Ištrinti iki žodžio pradžios"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:86-92
 #, fuzzy
@@ -813,7 +812,7 @@ msgstr "Vald</kbd><span class=\"kbd--plus\">+</span><kbd>Psl↑"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:87-38
 msgid "Delete to end of word"
-msgstr ""
+msgstr "Ištrinti iki žodžio pabaigos"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:87-86
 #, fuzzy
@@ -822,7 +821,7 @@ msgstr "Vald</kbd><span class=\"kbd--plus\">+</span><kbd>D"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:88-38
 msgid "Delete to beginning of sentence"
-msgstr ""
+msgstr "Ištrinti iki sakinio pradžios"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:88-96
 #, fuzzy
@@ -835,7 +834,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:89-38
 msgid "Delete to end of sentence"
-msgstr ""
+msgstr "Ištrinti iki sakinio pabaigos"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:89-90
 #, fuzzy
@@ -848,13 +847,16 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.h2:93-9
 msgid "Shortcut Keys for Tables"
-msgstr ""
+msgstr "Lentelių spartieji klavišai"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:95-125
 msgid ""
 "If the active cell is empty: selects the whole table. Otherwise: selects the "
 "contents of the active cell. Pressing again selects the entire table."
 msgstr ""
+"Jei aktyvus langelis tuščias: pasirenkama visa lentelė. Priešingu atveju: "
+"pasirenkamas aktyvaus langelio turinys. Paspaudus dar kartą, pasirenkama "
+"visa lentelė."
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:96-128
 msgid ""
@@ -862,6 +864,10 @@ msgid ""
 "first press goes to beginning of the active cell, second press goes to "
 "beginning of the current table, third press goes to beginning of document."
 msgstr ""
+"Jei aktyvus langelis tuščias: pereinama į lentelės pradžią. Priešingu "
+"atveju: pirmas paspaudimas pereina į aktyvaus langelio pradžią, antras "
+"paspaudimas – į dabartinės lentelės pradžią, trečias paspaudimas – į "
+"dokumento pradžią."
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:97-127
 msgid ""
@@ -869,6 +875,10 @@ msgid ""
 "press goes to the end of the active cell, second press goes to the end of "
 "the current table, third press goes to the end of the document."
 msgstr ""
+"Jei aktyvus langelis tuščias: pereinama į lentelės pabaigą. Priešingu "
+"atveju: pirmas paspaudimas pereina į aktyvaus langelio pabaigą, antras "
+"paspaudimas – į dabartinės lentelės pabaigą, trečias paspaudimas – į "
+"dokumento pabaigą."
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:98-38
 #, fuzzy
@@ -881,6 +891,9 @@ msgid ""
 "<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Tab</kbd> may be used "
 "instead."
 msgstr ""
+"Įterpia tabuliacijos žymę (tik lentelėse). Priklausomai nuo naudojamos langų "
+"tvarkyklės galima naudoti kombinaciją <kbd>Alt</kbd><span class=\"kbd--"
+"plus\">+</span><kbd>Tab</kbd>."
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:99-38
 #, fuzzy
@@ -891,6 +904,7 @@ msgstr "Lyg2</kbd><span class=\"kbd--plus\">+</span><kbd>Rodyklė kairėn"
 msgid ""
 "Increases/decreases the size of the column/row on the right/bottom cell edge"
 msgstr ""
+"Stulpelio/eilutės didinimui/mažinimui naudoti dešinį apatinį langelio kampą"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:100-38
 #, fuzzy
@@ -904,6 +918,7 @@ msgstr ""
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:100-181
 msgid "Increase/decrease the size of the column/row on the left/top cell edge"
 msgstr ""
+"Stulpelio/eilutės didinimui/mažinimui naudoti kairį viršutinį langelio kampą"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:101-38
 #, fuzzy
@@ -917,7 +932,7 @@ msgstr ""
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:101-180
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:102-228
 msgid "Like Alt, but only the active cell is modified"
-msgstr ""
+msgstr "Kaip \"Alt\", bet modifikuojamas tik aktyvus langelis"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:102-38
 #, fuzzy
@@ -939,6 +954,8 @@ msgid ""
 "3 seconds in Insert mode, Arrow Key inserts row/column, <kbd>Ctrl</kbd><span "
 "class=\"kbd--plus\">+</span><kbd>Arrow Key</kbd> inserts cell"
 msgstr ""
+"3 sekundės įterpimo režime - rodyklės įterpia eilutę/stulpelį, <kbd>Ctrl</"
+"kbd><span class=\"kbd--plus\">+</span><kbd>Rodyklė</kbd> įterpia langelį"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:104-38
 #, fuzzy
@@ -951,6 +968,9 @@ msgid ""
 "class=\"kbd--plus\">+</span><kbd>Arrow key</kbd> merges cell with "
 "neighboring cell"
 msgstr ""
+"3 sekundės ištrynimo režime - rodyklės panaikina eilutę/stulpelį, <kbd>Ctrl</"
+"kbd><span class=\"kbd--plus\">+</span><kbd>Rodyklė</kbd> sujungia langelį su "
+"šalia esančiu"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:105-38
 #, fuzzy
@@ -967,6 +987,9 @@ msgid ""
 "current sentence is deleted. If the cursor is at the end of a cell, and no "
 "whole cell is selected, the contents of the next cell are deleted."
 msgstr ""
+"Jei nepasirinktas visas langelis, ištrinamas tekstas nuo žymeklio iki "
+"dabartinio sakinio pabaigos. Jei žymeklis yra langelio gale ir nepasirinktas "
+"visas langelis, ištrinamas kito langelio turinys."
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td.p:106-1
 msgid ""
@@ -974,6 +997,8 @@ msgid ""
 "paragraph following the table will be deleted, unless it is the last "
 "paragraph in the document."
 msgstr ""
+"Jei nepasirinktas visas langelis ir žymeklis yra lentelės gale, po lentele "
+"esanti pastraipa bus ištrinta, nebent tai būtų paskutinė dokumento pastraipa."
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td.p:107-1
 msgid ""
@@ -981,14 +1006,17 @@ msgid ""
 "will be deleted. If all rows are selected completely or partially, the "
 "entire table will be deleted."
 msgstr ""
+"Jei pasirinktas vienas ar keli langeliai, bus ištrintos visos eilutės, "
+"kuriose yra pasirinkimas. Jei visos eilutės bus visiškai arba iš dalies "
+"pasirinktos, bus ištrinta visa lentelė."
 
 #: html/cool-help.html%2Bdiv.div.div.h2:112-9
 msgid "Word processor functions"
-msgstr ""
+msgstr "Teksto redaktoriaus funkcijos"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:114-38
 msgid "Insert footnote"
-msgstr ""
+msgstr "Įterpti išnašą"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:114-80
 #, fuzzy
@@ -1001,7 +1029,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:115-38
 msgid "Insert endnote"
-msgstr ""
+msgstr "Įterpti galinę išnašą"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:115-79
 #, fuzzy
@@ -1015,7 +1043,7 @@ msgstr ""
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:116-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:167-38
 msgid "Insert comment"
-msgstr ""
+msgstr "Įterpti komentarą"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:116-79
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:167-79
@@ -1029,7 +1057,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:118-38
 msgid "Insert soft hyphen"
-msgstr ""
+msgstr "Taisyklingas žodžių kėlimas"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:118-83
 #, fuzzy
@@ -1038,7 +1066,7 @@ msgstr "Vald</kbd><span class=\"kbd--plus\">+</span><kbd>Z"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:119-38
 msgid "Insert non-breaking hyphen"
-msgstr ""
+msgstr "Įterpti nekeliamą brūkšnelį"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:119-91
 #, fuzzy
@@ -1051,7 +1079,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:121-38
 msgid "Insert non-breaking space"
-msgstr ""
+msgstr "Įterpti nekeliamą tarpą"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:121-90
 #, fuzzy
@@ -1064,7 +1092,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:122-38
 msgid "Insert line break"
-msgstr ""
+msgstr "Įterpti eilutės pabaigą"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:122-82
 #, fuzzy
@@ -1073,7 +1101,7 @@ msgstr "Lyg2</kbd><span class=\"kbd--plus\">+</span><kbd>Pab"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:123-38
 msgid "Manual page break"
-msgstr ""
+msgstr "Puslapio pabaiga"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:123-82
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:251-98
@@ -1084,7 +1112,7 @@ msgstr "Vald</kbd><span class=\"kbd--plus\">+</span><kbd>Pab"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:124-38
 msgid "Column break (in multicolumnar text)"
-msgstr ""
+msgstr "Stulpelio nutraukimas (daugiaskilčiame tekste)"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:124-101
 #, fuzzy
@@ -1098,7 +1126,7 @@ msgstr ""
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:125-38
 msgid ""
 "Insert new paragraph directly before or after a section, or before a table"
-msgstr ""
+msgstr "Įterpti naują pastraipą prieš skyrių, po jo arba prieš lentelę"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:125-139
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:126-175
@@ -1111,42 +1139,51 @@ msgid ""
 "Insert new paragraph without numbering inside a list. Does not work when the "
 "cursor is at the end of the list."
 msgstr ""
+"Įterpti naują pastraipą be numeracijos sąrašo viduje. Neveikia, kai žymeklis "
+"yra sąrašo gale."
 
 #: html/cool-help.html%2Bdiv.div.div.h2:132-9
 msgid "Navigating in Spreadsheets"
-msgstr ""
+msgstr "Navigacija skaičiuoklėse"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:134-38
 msgid "Moves the cursor to the first cell in the sheet (A1)."
-msgstr ""
+msgstr "Pekelia kursorių į pirmą lapo langelį (A1)."
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:135-38
 msgid "Moves the cursor to the last cell on the sheet that contains data."
-msgstr ""
+msgstr "Perkelia kursorių į paskutinį lapo langelį su duomenimis."
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:136-38
 msgid "Moves the cursor to the first cell of the current row."
-msgstr ""
+msgstr "Perkelia kursorių į esamos eilutės pirmą langelį."
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:137-38
 msgid "Moves the cursor to the last cell of the current row."
-msgstr ""
+msgstr "Perkelia kursorių į esamos eilutės paskutinį langelį."
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:138-38
 msgid ""
 "Selects cells from the current cell to the first cell of the current row."
 msgstr ""
+"Pasirenka langelius nuo dabartinio langelio iki pirmojo dabartinės eilutės "
+"langelio."
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:139-38
 msgid ""
 "Selects cells from the current cell to the last cell of the current row."
 msgstr ""
+"Pasirenka langelius nuo dabartinio langelio iki paskutinio dabartinės "
+"eilutės langelio."
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:140-38
 msgid ""
 "Selects cells from the current cell up to one page in the current column or "
 "extends the existing selection one page up."
 msgstr ""
+"Pažymi langelius nuo dabartinio langelio iki vieno puslapio aukštyn "
+"dabartiniame stulpelyje arba išplečia esamą pasirinkimą vienu puslapiu "
+"aukštyn."
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:140-184
 #, fuzzy
@@ -1158,6 +1195,8 @@ msgid ""
 "Selects cells from the current cell down to one page in the current column "
 "or extends the existing selection one page down."
 msgstr ""
+"Pažymi langelius nuo dabartinio langelio iki vieno puslapio žemyn "
+"dabartiniame stulpelyje arba išplečia esamą pasirinkimą vienu puslapiu žemyn."
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:141-188
 #, fuzzy
@@ -1170,6 +1209,9 @@ msgid ""
 "to the left of the cell that contains the cursor is empty, the cursor moves "
 "to the next column to the left that contains data"
 msgstr ""
+"Perkelia žymeklį į dabartinio duomenų diapazono kairįjį kraštą. Jei "
+"stulpelis kairėje nuo langelio, kuriame yra žymeklis, yra tuščias, žymeklis "
+"perkeliamas į kitą stulpelį kairėje, kuriame yra duomenų"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:142-265
 #, fuzzy
@@ -1182,6 +1224,9 @@ msgid ""
 "to the right of the cell that contains the cursor is empty, the cursor moves "
 "to the next column to the right that contains data."
 msgstr ""
+"Perkelia žymeklį į dabartinio duomenų diapazono dešinįjį kraštą. Jei "
+"stulpelis dešinėje nuo langelio, kuriame yra žymeklis, yra tuščias, žymeklis "
+"perkeliamas į kitą stulpelį dešinėje, kuriame yra duomenų."
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:143-269
 #, fuzzy
@@ -1194,6 +1239,9 @@ msgid ""
 "the cell that contains the cursor is empty, the cursor moves up to the next "
 "row that contains data."
 msgstr ""
+"Perkelia žymeklį į dabartinio duomenų diapazono viršutinį kraštą. Jei eilutė "
+"virš langelio, kuriame yra žymeklis, yra tuščia, žymeklis perkeliamas į kitą "
+"eilutę, kurioje yra duomenys."
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:144-241
 #, fuzzy
@@ -1206,6 +1254,9 @@ msgid ""
 "below the cell that contains the cursor is empty, the cursor moves down to "
 "the next row that contains data."
 msgstr ""
+"Perkelia žymeklį į dabartinio duomenų diapazono apatinį kraštą. Jei eilutė "
+"po langeliu, kuriame yra žymeklis, yra tuščia, žymeklis perkeliamas žemyn į "
+"kitą eilutę, kurioje yra duomenų."
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:145-246
 #, fuzzy
@@ -1214,7 +1265,7 @@ msgstr "Vald</kbd><span class=\"kbd--plus\">+</span><kbd>Pab"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:146-38
 msgid "Go to next sheet."
-msgstr ""
+msgstr "Eiti į kitą lapą."
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:146-82
 #, fuzzy
@@ -1227,7 +1278,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:147-38
 msgid "Go to previous sheet."
-msgstr ""
+msgstr "Eiti į ankstesnį lapą."
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:147-86
 #, fuzzy
@@ -1245,6 +1296,10 @@ msgid ""
 "used to select rows and columns together, a rectangular cell range is "
 "selected."
 msgstr ""
+"Pažymi visus langelius, kuriuose yra duomenų, nuo dabartinio langelio iki "
+"nepertraukiamo duomenų langelių diapazono pabaigos, rodyklės kryptimi. Jei "
+"naudojama eilutėms ir stulpeliams pažymėti kartu, pasirenkamas stačiakampis "
+"langelių diapazonas."
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:148-292
 #, fuzzy
@@ -1257,7 +1312,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:149-38
 msgid "Moves one sheet to the left."
-msgstr ""
+msgstr "Perkelia lapu į kairę."
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:149-93
 #, fuzzy
@@ -1266,7 +1321,7 @@ msgstr "Lyg2</kbd><span class=\"kbd--plus\">+</span><kbd>Psl↑"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:150-38
 msgid "Moves one screen page to the right."
-msgstr ""
+msgstr "Perkelia vienu ekrano lapu į dešinę."
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:150-100
 #, fuzzy
@@ -1279,6 +1334,9 @@ msgid ""
 "sheets in a spreadsheet are selected, this shortcut key combination only "
 "selects the previous sheet. Makes the previous sheet the current sheet."
 msgstr ""
+"Prideda ankstesnį lapą prie dabartinio lapų pasirinkimo. Jei visi "
+"skaičiuoklės lapai yra pasirinkti, šis sparčiųjų klavišų derinys pasirenka "
+"tik ankstesnį lapą ir paverčia jį dabartiniu lapu."
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:151-280
 #, fuzzy
@@ -1295,6 +1353,9 @@ msgid ""
 "a spreadsheet are selected, this shortcut key combination only selects the "
 "next sheet. Makes the next sheet the current sheet."
 msgstr ""
+"Prideda sekantį lapą prie dabartinio lapų pasirinkimo. Jei visi skaičiuoklės "
+"lapai yra pasirinkti, šis sparčiųjų klavišų derinys pasirenka tik sekantį "
+"lapą ir paverčia jį dabartiniu lapu."
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:152-268
 #, fuzzy
@@ -1311,6 +1372,9 @@ msgid ""
 "data range that contains the cursor. A range is a contiguous cell range that "
 "contains data and is bounded by empty row and columns."
 msgstr ""
+"kur (*) yra daugybos ženklas skaitmeninėje klaviatūroje. Pasirenka duomenų "
+"diapazoną, kuriame yra žymeklis. Diapazonas yra vientisas langelių "
+"diapazonas, kuriame yra duomenų ir kurį riboja tuščios eilutės ir stulpeliai."
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:153-269
 #, fuzzy
@@ -1322,6 +1386,8 @@ msgid ""
 "where (/) is the division sign on the numeric key pad. Selects the matrix "
 "formula range that contains the cursor."
 msgstr ""
+"kur (/) yra dalybos ženklas skaitmeninėje klaviatūroje. Pasirenka matricos "
+"formulės diapazoną, kuriame yra žymeklis."
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:154-178
 #, fuzzy
