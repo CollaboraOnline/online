@@ -560,7 +560,24 @@ WebView* WebView::createNewDocument(QWebEngineProfile* profile, const std::strin
 {
     Poco::URI templateURI;
     // if templatePath is empty or the file doesn't exist fileToLoad is mapped to default templateType template
-    if (templatePath.empty() || !QFileInfo(QString::fromStdString(templatePath)).exists())
+    if (!templatePath.empty())
+    {
+        if (templatePath.starts_with("/"))
+        {
+            // take the path as is if it's an absolute path
+            templateURI = Poco::URI(Poco::Path(templatePath));
+        }
+        else
+        {
+            // otherwise assume it's a template path relative to browser/dist
+            Poco::Path templatePathObj(getTopSrcDir(TOPSRCDIR));
+            templatePathObj.append("browser/dist");
+            templatePathObj.append(templatePath);
+            templateURI = Poco::URI(templatePathObj);
+        }
+    }
+
+    if (templatePath.empty() || !FileUtil::Stat(templateURI.getPath()).exists())
     {
         // Map template type to template filename
         std::string templateFileName = "TextDocument.odt"; // default fallback
@@ -577,10 +594,6 @@ WebView* WebView::createNewDocument(QWebEngineProfile* profile, const std::strin
         templatePathObj.append("browser/dist/templates");
         templatePathObj.append(templateFileName);
         templateURI = Poco::URI(templatePathObj);
-    }
-    else
-    {
-        templateURI = Poco::URI(Poco::Path(templatePath));
     }
 
     // Create WebView and load template without a set save location
