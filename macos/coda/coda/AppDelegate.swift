@@ -21,7 +21,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         setUserName();
 
-        setenv("FONTCONFIG_FILE", Bundle.main.resourcePath! + "/fontconfig/fonts.conf", 1)
+        setenv("FONTCONFIG_PATH", Bundle.main.resourcePath! + "/fontconfig", 1)
 
         // Initialize the COOLWSD
         COWrapper.startServer()
