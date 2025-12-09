@@ -108,11 +108,6 @@ COOL_ADMIN_SRC = $(shell find $(srcdir)/admin -name '*.html' -or -name '*.css' -
 COOL_ADMIN_ALL = $(shell find $(srcdir)/admin -name '*')
 COOL_ADMIN_DST = $(patsubst $(srcdir)/admin/%,$(DIST_FOLDER)/admin/%,$(COOL_ADMIN_SRC))
 
-if ENABLE_QTAPP
-COOL_TEMPLATES_SRC = $(shell find $(srcdir)/templates -name '*')
-COOL_TEMPLATES_DST = $(patsubst $(srcdir)/templates/%,$(DIST_FOLDER)/templates/%,$(COOL_TEMPLATES_SRC))
-endif
-
 define file_target
 $(1): $(2)
 	@mkdir -p $$(dir $$@)
@@ -836,10 +831,6 @@ WASM_FALLBACK_FILES += $(DIST_FOLDER)/wasm
 endif
 
 TEMPLATE_MANIFEST = $(DIST_FOLDER)/templates/templates.js
-TEMPLATE_PREVIEW_IMAGES = \
-	$(DIST_FOLDER)/images/templates/preview/blank_writer.png \
-	$(DIST_FOLDER)/images/templates/preview/blank_spreadsheet.png \
-	$(DIST_FOLDER)/images/templates/preview/blank_presentation.png
 
 $(TYPESCRIPT_JS_DIR)/%.js: $(srcdir)/%.ts
 	@mkdir -p $(dir $@)
@@ -863,8 +854,7 @@ build-cool: \
 	$(DIST_FOLDER)/cool.html \
 	$(WASM_FILES) \
 	$(WASM_FALLBACK_FILES) \
-	$(TEMPLATE_MANIFEST) \
-	$(TEMPLATE_PREVIEW_IMAGES)
+	$(TEMPLATE_MANIFEST)
 	@echo "build cool completed"
 if APP_HAS_BRANDING
 	@if test -d "$(APP_BRANDING_DIR)" ; then cp -a "$(APP_BRANDING_DIR)"/branding* $(DIST_FOLDER)/ ; fi
@@ -882,15 +872,11 @@ if ENABLE_CYPRESS
 	@echo "Added HTML file for multiuser tests"
 endif
 
+# Stands in for the whole templates subdirectory.
+# Just copy all of it to dist/templates.
 $(TEMPLATE_MANIFEST):
 	mkdir -p $(dir $@)
-	cp templates/templates.js "$@"
-	cp -r templates/files $(dir $@)
-	cp -r templates/previews $(dir $@)
-
-$(DIST_FOLDER)/images/templates/preview/%.png: $(srcdir)/images/templates/preview/%.png
-	@mkdir -p $(dir $@)
-	@cp $< $@
+	cp -r templates $(DIST_FOLDER)
 
 $(DIST_FOLDER)/admin-bundle.js: $(COOL_ADMIN_DST) \
 	$(INTERMEDIATE_DIR)/admin-src.js
@@ -1066,16 +1052,6 @@ $(DIST_FOLDER)/l10n/ui-%.json: $(srcdir)/po/ui-%.po
 $(DIST_FOLDER)/admin/%: $(srcdir)/admin/%
 	@mkdir -p $(dir $@)
 	@cp $< $@
-
-if ENABLE_QTAPP
-$(DIST_FOLDER)/templates/%: $(srcdir)/templates/%
-	@mkdir -p $(dir $@)
-	@if test -z '$(ENABLE_BROWSERSYNC)'; then \
-		`cp $< $@`; \
-	else \
-		`ln -sf $(abs_srcdir)/$< $@`; \
-	fi
-endif
 
 $(DIST_FOLDER)/wasm:
 	@mkdir -p $(dir $@)
