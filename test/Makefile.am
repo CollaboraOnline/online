@@ -107,6 +107,7 @@ all_la_unit_tests = \
 	unit-serversock_accept1.la \
 	unit-streamsock_ctor1.la \
 	unit-kit-child-session.la \
+	unit-internal-proxy.la \
 	unit-base.la
 #	unit-admin.la
 #	unit-tilecache.la # Empty test.
@@ -370,6 +371,8 @@ unit_proxy_la_SOURCES = UnitProxy.cpp
 unit_proxy_la_LIBADD = $(CPPUNIT_LIBS) $(LIBPFM_LIBS)
 unit_proxy_protocol_la_SOURCES = UnitProxyProtocol.cpp
 unit_proxy_protocol_la_LIBADD = $(CPPUNIT_LIBS) $(LIBPFM_LIBS)
+unit_internal_proxy_la_SOURCES = UnitInternalProxy.cpp
+unit_internal_proxy_la_LIBADD = $(CPPUNIT_LIBS)
 
 if HAVE_LO_PATH
 SYSTEM_STAMP = @SYSTEMPLATE_PATH@/system_stamp
