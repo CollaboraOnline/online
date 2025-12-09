@@ -3,47 +3,52 @@ msgstr ""
 "Project-Id-Version: coolwsd 25.04.7.3\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-12-06 18:17+0000\n"
-"PO-Revision-Date: 2025-12-06 18:30+0000\n"
-"Last-Translator: releng <releng@fox.cbg.collabora.co.uk>\n"
-"Language-Team: Italian <tp@lists.linux.it>\n"
+"PO-Revision-Date: 2025-12-09 11:27+0000\n"
+"Last-Translator: Marco Cecchetti <mrcekets@gmail.com>\n"
+"Language-Team: Italian <https://hosted.weblate.org/projects/collabora-online/"
+"collabora-office-macos-app/it/>\n"
+"Language: it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: it\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.15-dev\n"
 
 msgctxt "1UK-8n-QPP.title"
 msgid "Customize Toolbar…"
-msgstr ""
+msgstr "Personalizza barra degli strumenti.…"
 
 #. Do not change the placeholder ProductName!
 msgctxt "1Xt-HY-uBw.title"
 msgid "ProductName"
-msgstr ""
+msgstr "ProductName"
 
 msgctxt "1b7-l0-nxx.title"
 msgid "Find"
-msgstr ""
+msgstr "Cerca"
 
+#, fuzzy
 msgctxt "1tx-W0-xDw.title"
 msgid "Lower"
-msgstr ""
+msgstr "Sposta in basso"
 
+#, fuzzy
 msgctxt "2h7-ER-AoG.title"
 msgid "Raise"
-msgstr ""
+msgstr "Sposta in alto"
 
 msgctxt "2oI-Rn-ZJC.title"
 msgid "Transformations"
-msgstr ""
+msgstr "Transformazioni"
 
+#, fuzzy
 msgctxt "3IN-sU-3Bg.title"
 msgid "Spelling"
-msgstr ""
+msgstr "Controllo ortografico"
 
 msgctxt "3Om-Ey-2VK.title"
 msgid "Use Default"
-msgstr ""
+msgstr "Usa predefinito"
 
 msgctxt "3rS-ZA-NoH.title"
 msgid "Speech"
@@ -55,49 +60,49 @@ msgstr ""
 
 msgctxt "4EN-yA-p0u.title"
 msgid "Find"
-msgstr ""
+msgstr "Cerca"
 
 msgctxt "4J7-dP-txa.title"
 msgid "Enter Full Screen"
-msgstr ""
+msgstr "Visualizza a schermo intero"
 
 #. Do not change the placeholder ProductName!
 msgctxt "4sb-4s-VLi.title"
 msgid "Quit ProductName"
-msgstr ""
+msgstr "Esci da ProductName"
 
 msgctxt "5QF-Oa-p0T.title"
 msgid "Edit"
-msgstr ""
+msgstr "Modifica"
 
 msgctxt "5Vv-lz-BsD.title"
 msgid "Copy Style"
-msgstr ""
+msgstr "Copia stile"
 
 #. Do not change the placeholder ProductName!
 msgctxt "5kV-Vb-QxS.title"
 msgid "About ProductName"
-msgstr ""
+msgstr "Informazioni su ProductName"
 
 msgctxt "6dh-zS-Vam.title"
 msgid "Redo"
-msgstr ""
+msgstr "Ripeti"
 
 msgctxt "78Y-hA-62v.title"
 msgid "Correct Spelling Automatically"
-msgstr ""
+msgstr "Correzione ortografia automatica"
 
 msgctxt "8mr-sm-Yjd.title"
 msgid "Writing Direction"
-msgstr ""
+msgstr "Direzione del testo"
 
 msgctxt "9ic-FL-obx.title"
 msgid "Substitutions"
-msgstr ""
+msgstr "Sostituzioni"
 
 msgctxt "9yt-4B-nSM.title"
 msgid "Smart Copy/Paste"
-msgstr ""
+msgstr "Copia/Incolla intelligente"
 
 msgctxt "AYu-sK-qS6.title"
 msgid "Main Menu"
