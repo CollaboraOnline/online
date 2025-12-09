@@ -4,7 +4,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-12-06 18:17+0000\n"
 "PO-Revision-Date: 2025-12-09 21:27+0000\n"
-"Last-Translator: Adolfo Jayme Barrientos <fitojb@ubuntu.com>\n"
+"Last-Translator: \"Miguel A. Bouzada\" <mbouzada@gmail.com>\n"
 "Language-Team: Galician <https://hosted.weblate.org/projects/collabora-"
 "online/collabora-office-macos-app/gl/>\n"
 "Language: gl\n"
@@ -16,7 +16,7 @@ msgstr ""
 
 msgctxt "1UK-8n-QPP.title"
 msgid "Customize Toolbar…"
-msgstr ""
+msgstr "Personalizar a barra de ferramentas…"
 
 #. Do not change the placeholder ProductName!
 msgctxt "1Xt-HY-uBw.title"
@@ -29,7 +29,7 @@ msgstr "Buscar"
 
 msgctxt "1tx-W0-xDw.title"
 msgid "Lower"
-msgstr ""
+msgstr "Baixar"
 
 msgctxt "2h7-ER-AoG.title"
 msgid "Raise"
