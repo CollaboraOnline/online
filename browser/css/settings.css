@@ -44,3 +44,7 @@
 .section {
 	padding-top: 0px;
 }
+
+#settingIframe {
+	padding: 0 1rem;
+}
