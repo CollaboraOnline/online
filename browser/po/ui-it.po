@@ -12,8 +12,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-12-08 11:25+0100\n"
-"PO-Revision-Date: 2025-12-08 12:47+0000\n"
-"Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
+"PO-Revision-Date: 2025-12-09 11:58+0000\n"
+"Last-Translator: Marco Cecchetti <mrcekets@gmail.com>\n"
 "Language-Team: Italian <https://hosted.weblate.org/projects/collabora-online/"
 "ui/it/>\n"
 "Language: it\n"
@@ -1174,12 +1174,12 @@ msgstr ""
 #: src/control/Control.BackstageView.ts:157
 #: src/control/Control.BackstageView.ts:158
 msgid "Close backstage"
-msgstr ""
+msgstr "Chiudi backstage"
 
 #: src/control/Control.BackstageView.ts:202
 #: src/control/Control.BackstageView.ts:203
 msgid "Back to document"
-msgstr ""
+msgstr "Torna al documento"
 
 #: src/control/Control.BackstageView.ts:238
 #: src/control/Control.NotebookbarCalc.js:29
@@ -1192,8 +1192,9 @@ msgstr "Inizio"
 #: src/control/Control.BackstageView.ts:245
 #: src/control/Control.NotebookbarImpress.js:811
 #: src/control/Control.NotebookbarImpress.js:1425
+#, fuzzy
 msgid "New"
-msgstr ""
+msgstr "Nuovo"
 
 #: src/control/Control.BackstageView.ts:259
 #: src/control/Control.Notebookbar.js:632
@@ -1210,8 +1211,9 @@ msgid "Share"
 msgstr "Condividi"
 
 #: src/control/Control.BackstageView.ts:266
+#, fuzzy
 msgid "Info"
-msgstr ""
+msgstr "Informazioni"
 
 #: src/control/Control.BackstageView.ts:280
 #: src/control/Control.NotebookbarCalc.js:165
@@ -1223,7 +1225,7 @@ msgstr "Salva Come"
 
 #: src/control/Control.BackstageView.ts:294
 msgid "Export"
-msgstr ""
+msgstr "Esporta"
 
 #: src/control/Control.BackstageView.ts:340
 #: src/control/jsdialog/Widget.ColorPicker.ts:421
@@ -1232,31 +1234,31 @@ msgstr "Recente"
 
 #: src/control/Control.BackstageView.ts:341
 msgid "Recently opened documents will appear here"
-msgstr ""
+msgstr "I documenti recenti verranno visualizzati qui"
 
 #: src/control/Control.BackstageView.ts:353
 msgid "New Document"
-msgstr ""
+msgstr "Nuovo documento"
 
 #: src/control/Control.BackstageView.ts:354
 msgid "Start from a template or a blank file"
-msgstr ""
+msgstr "Inizia da un modello o da un file vuoto"
 
 #: src/control/Control.BackstageView.ts:375
 msgid "Document Info"
-msgstr ""
+msgstr "Informazioni documento"
 
 #: src/control/Control.BackstageView.ts:376
 msgid "View document properties and information"
-msgstr ""
+msgstr "Visualizza proprietà e informazioni documento"
 
 #: src/control/Control.BackstageView.ts:392
 msgid "Export Document"
-msgstr ""
+msgstr "Esporta documento"
 
 #: src/control/Control.BackstageView.ts:393
 msgid "export your documents in different formats"
-msgstr ""
+msgstr "Esporta i tuoi documenti in diversi formati"
 
 #: src/control/Control.BackstageView.ts:445 src/control/Control.Menubar.ts:381
 #: src/control/Control.Menubar.ts:1354
@@ -1270,24 +1272,24 @@ msgstr "Proprietà"
 
 #: src/control/Control.BackstageView.ts:451
 msgid "More Property Info"
-msgstr ""
+msgstr "Ulteriori informazioni sulle proprietà"
 
 #: src/control/Control.BackstageView.ts:530
 msgid "Text Document"
-msgstr ""
+msgstr "Documento di testo"
 
 #: src/control/Control.BackstageView.ts:530
 #: src/control/Control.BackstageView.ts:533
 msgid "Pages"
-msgstr ""
+msgstr "Pagine"
 
 #: src/control/Control.BackstageView.ts:531
 msgid "Spreadsheet"
-msgstr ""
+msgstr "Foglio di calcolo"
 
 #: src/control/Control.BackstageView.ts:531
 msgid "Sheets"
-msgstr ""
+msgstr "Fogli"
 
 #: src/control/Control.BackstageView.ts:532
 #: src/control/Control.NavigatorPanel.ts:189
@@ -1298,7 +1300,7 @@ msgstr "Diapositive"
 
 #: src/control/Control.BackstageView.ts:538
 msgid "Parts"
-msgstr ""
+msgstr "Parti"
 
 #: src/control/Control.BackstageView.ts:542
 #: src/control/Control.DocumentRepair.js:140
@@ -1307,40 +1309,39 @@ msgstr "Tipo"
 
 #: src/control/Control.BackstageView.ts:548
 msgid "Mode"
-msgstr ""
+msgstr "Modalità"
 
 #: src/control/Control.BackstageView.ts:549
 msgid "View Only"
-msgstr ""
+msgstr "Sola visualizzazione"
 
 #: src/control/Control.BackstageView.ts:556
 msgid "File Name"
-msgstr ""
+msgstr "Nome file"
 
 #: src/control/Control.BackstageView.ts:658
 msgid "Loading templates…"
-msgstr ""
+msgstr "Caricamento dei modelli in corso…"
 
 #: src/control/Control.BackstageView.ts:704
 msgid "Search templates"
-msgstr ""
+msgstr "Cerca modelli"
 
 #: src/control/Control.BackstageView.ts:762
 msgid "No templates match your search."
-msgstr ""
+msgstr "Nessun modello corrisponde alla tua ricerca."
 
 #: src/control/Control.BackstageView.ts:868
 msgid "Blank Spreadsheet"
-msgstr ""
+msgstr "Foglio di calcolo vuoto"
 
 #: src/control/Control.BackstageView.ts:872
-#, fuzzy
 msgid "Blank Presentation"
-msgstr "Presentazione"
+msgstr "Presentazione vuota"
 
 #: src/control/Control.BackstageView.ts:877
 msgid "Blank Document"
-msgstr ""
+msgstr "Documento vuoto"
 
 #: src/control/Control.Command.js:90
 msgid "Unlock"
@@ -2633,8 +2634,9 @@ msgid "Apply to All Slides"
 msgstr "Applica a tutte le diapositive"
 
 #: src/control/Notebookbar.WriterReferencesTab.ts:41
+#, fuzzy
 msgid "Table of content"
-msgstr ""
+msgstr "Indice"
 
 #: src/control/Notebookbar.WriterReferencesTab.ts:95
 msgid "Footnote/Endnote"
@@ -2645,7 +2647,7 @@ msgstr "Nota a piè di pagina/Nota di chiusura"
 #: src/control/Control.NotebookbarImpress.js:1645
 #, fuzzy
 msgid "Field"
-msgstr "Campi"
+msgstr "Campo"
 
 #: src/control/Sidebar.FromNotebookbarPanel.ts:121
 msgid "Animations"
@@ -2702,14 +2704,13 @@ msgstr "Inserisci"
 
 #: src/control/Control.NotebookbarCalc.js:42
 #: src/control/Control.NotebookbarDraw.js:1284
-#, fuzzy
 msgid "Page Layout"
-msgstr "Disposizione pagina"
+msgstr "Layout pagina"
 
 #: src/control/Control.NotebookbarCalc.js:48
 #, fuzzy
 msgid "Formulas"
-msgstr "Formula"
+msgstr "Formule"
 
 #: src/control/Control.NotebookbarCalc.js:54
 msgid "Data"
@@ -2976,7 +2977,7 @@ msgstr "Allinea"
 #: src/control/Control.NotebookbarWriter.js:2926
 #: src/control/Control.NotebookbarWriter.js:3249
 msgid "Arrange"
-msgstr ""
+msgstr "Organizza"
 
 #: src/control/Control.NotebookbarCalc.js:1400
 msgid "Sheet View"
@@ -3036,35 +3037,37 @@ msgstr "Barra di stato"
 
 #: src/control/Control.NotebookbarCalc.js:1665
 msgid "Table Style Options"
-msgstr ""
+msgstr "Opzioni stile tabella"
 
 #: src/control/Control.NotebookbarCalc.js:1678
+#, fuzzy
 msgid "Show Header Row"
-msgstr ""
+msgstr "Mostra riga di intestazione"
 
 #: src/control/Control.NotebookbarCalc.js:1690
 msgid "Show Total Row"
-msgstr ""
+msgstr "Mostra riga totale"
 
 #: src/control/Control.NotebookbarCalc.js:1708
 msgid "Banded Rows"
-msgstr ""
+msgstr "Righe a bande"
 
 #: src/control/Control.NotebookbarCalc.js:1720
+#, fuzzy
 msgid "Banded Columns"
-msgstr ""
+msgstr "Righe a bande"
 
 #: src/control/Control.NotebookbarCalc.js:1738
 msgid "First Column"
-msgstr ""
+msgstr "Prima colonna"
 
 #: src/control/Control.NotebookbarCalc.js:1750
 msgid "Last Column"
-msgstr ""
+msgstr "Ultima colonna"
 
 #: src/control/Control.NotebookbarCalc.js:1765
 msgid "Show Filter Buttons"
-msgstr ""
+msgstr "Mostra pulsanti filtro"
 
 #: src/control/Control.NotebookbarCalc.js:1801
 #: src/control/Control.NotebookbarCalc.js:2549
@@ -3156,8 +3159,9 @@ msgid "Sort"
 msgstr "Ordinamento"
 
 #: src/control/Control.NotebookbarCalc.js:2473
+#, fuzzy
 msgid "Filter"
-msgstr ""
+msgstr "Filtra"
 
 #: src/control/Control.NotebookbarCalc.js:2721
 #: src/control/Control.NotebookbarImpress.js:1977
@@ -3167,21 +3171,22 @@ msgstr "Commenti"
 
 #: src/control/Control.NotebookbarCalc.js:2827
 msgid "Format Cells"
-msgstr ""
+msgstr "Formatta celle"
 
 #: src/control/Control.NotebookbarCalc.js:2973
 #: src/control/Control.NotebookbarCalc.js:3330
 #: src/control/Control.NotebookbarWriter.js:1912
 #: src/control/Control.NotebookbarWriter.js:2812
 #: src/control/Control.NotebookbarWriter.js:3135
+#, fuzzy
 msgid "Wrap"
-msgstr ""
+msgstr "A capo"
 
 #: src/control/Control.NotebookbarCalc.js:3212
 #: src/control/Control.NotebookbarImpress.js:2696
 #: src/control/Control.NotebookbarWriter.js:3021
 msgid "Image Controls"
-msgstr ""
+msgstr "Controlli immagine"
 
 #: src/control/Control.NotebookbarDraw.js:76
 #: src/control/Control.NotebookbarWriter.js:56
@@ -3208,7 +3213,7 @@ msgstr "Paragrafo"
 
 #: src/control/Control.NotebookbarImpress.js:96
 msgid "Design"
-msgstr ""
+msgstr "Progettazione"
 
 #: src/control/Control.NotebookbarImpress.js:104
 msgid "Slide Show"
@@ -3231,8 +3236,9 @@ msgid "Present in Window"
 msgstr "Presenta nella Finestra"
 
 #: src/control/Control.NotebookbarImpress.js:501
+#, fuzzy
 msgid "Start Follow-me Presentation"
-msgstr ""
+msgstr "Avvia presentazione Follow-me"
 
 #: src/control/Control.NotebookbarImpress.js:509
 #: src/slideshow/SlideShowPresenter.ts:745
@@ -3346,7 +3352,7 @@ msgstr "Tracciamento"
 
 #: src/control/Control.NotebookbarWriter.js:2466
 msgid "Split"
-msgstr ""
+msgstr "Dividi"
 
 #: src/control/Control.NotebookbarWriter.js:2650
 msgid "Number Format"
@@ -3392,10 +3398,12 @@ msgstr "Non sono riscontrati problemi nella verifica SSL"
 msgid ""
 "Documents are not effectively contained: missing capabilities or namespaces."
 msgstr ""
+"I documenti non sono correttamente isolati: mancano funzionalità o spazi dei "
+"nomi."
 
 #: src/control/Control.ServerAuditDialog.ts:77
 msgid "Each document is securely contained"
-msgstr ""
+msgstr "Ogni documento è isolato in modo sicuro"
 
 #: src/control/Control.ServerAuditDialog.ts:83
 msgid ""
@@ -3489,7 +3497,6 @@ msgid "Alerts:"
 msgstr "Avvisi:"
 
 #: src/control/Control.ServerAuditDialog.ts:373
-#, fuzzy
 msgid "Check warnings of your server"
 msgstr "Verifica gli avvisi di sicurezza del tuo server"
 
@@ -3565,7 +3572,7 @@ msgstr "Conteggio selezione"
 
 #: src/control/Control.StatusBar.js:250
 msgid "Multi Page View"
-msgstr ""
+msgstr "Vista multi-pagina"
 
 #: src/control/Control.StatusBar.js:405
 msgid ""
@@ -3688,11 +3695,11 @@ msgstr "{user} si è scollegato"
 
 #: src/control/Control.UserList.ts:58
 msgid "Following {user}"
-msgstr ""
+msgstr "Stai seguendo {user}"
 
 #: src/control/Control.UserList.ts:59
 msgid "Following the editor"
-msgstr ""
+msgstr "Segui l'editor"
 
 #: src/control/Control.UserList.ts:60
 msgid "Stop following"
@@ -4397,11 +4404,11 @@ msgstr "Automatico"
 
 #: src/control/jsdialog/Widget.ColorPicker.ts:262
 msgid "Color palette"
-msgstr ""
+msgstr "Tavolozza colori"
 
 #: src/control/jsdialog/Widget.ColorPicker.ts:328
 msgid "Enter custom color in hex format"
-msgstr ""
+msgstr "Inserisci un colore personalizzato in formato esadecimale"
 
 #: src/control/jsdialog/Widget.PageMarginEntry.ts:40
 msgid "Page margin options"
@@ -4939,7 +4946,7 @@ msgstr "Caricamento sul server non riuscito, il file è troppo grande."
 
 #: src/layer/marker/A11yTextInput.js:235
 msgid "Out of table"
-msgstr ""
+msgstr "Fuori tabella"
 
 #: src/layer/marker/A11yTextInput.js:238
 msgid "Table with {0} rows and {1} columns"
@@ -4983,7 +4990,7 @@ msgstr "{0} eliminati"
 
 #: src/layer/marker/TextInput.js:411
 msgid "Clipboard area"
-msgstr ""
+msgstr "Area appunti"
 
 #: src/layer/marker/TextInput.js:461
 msgid "Screen reader support for text content is disabled. "
@@ -5002,16 +5009,18 @@ msgstr ""
 "all'accessibilità (accessibility) nel file coolwsd.xml. "
 
 #: src/layer/marker/TextInput.js:464
+#, fuzzy
 msgid "Also check the voice over toggle under {parentControl}."
-msgstr ""
+msgstr "Verifica anche l'opzione Voice Over in {parentControl}"
 
 #: src/layer/marker/TextInput.js:466
 msgid "the Help tab"
-msgstr ""
+msgstr "la scheda Aiuto"
 
 #: src/layer/marker/TextInput.js:466
+#, fuzzy
 msgid "the View menu"
-msgstr ""
+msgstr "Il menu Vista"
 
 #: src/layer/tile/CanvasTileLayer.js:1594
 msgid "Functions"
@@ -5019,7 +5028,7 @@ msgstr "Funzioni"
 
 #: src/layer/tile/CanvasTileLayer.js:1854
 msgid "Named Range"
-msgstr ""
+msgstr "Intervallo con nome"
 
 #: src/layer/tile/CanvasTileLayer.js:3533
 msgid "No Comments"
@@ -5041,7 +5050,7 @@ msgstr "Copia dal documento disabilitato"
 
 #: src/map/Clipboard.js:287
 msgid "warning: copy/paste request timed out"
-msgstr ""
+msgstr "attenzione: la richiesta di copia/incolla è scaduta"
 
 #: src/map/Clipboard.js:318
 msgid "Failed to download clipboard, please re-copy"
@@ -5052,36 +5061,37 @@ msgid ""
 "Your browser has very limited access to the clipboard, so please use the "
 "paste buttons on your on-screen keyboard instead."
 msgstr ""
+"L'accesso agli appunti da parte del browser è limitato; utilizza i pulsanti "
+"Incolla della tastiera virtuale."
 
 #: src/map/Clipboard.js:1399
-#, fuzzy
 msgid ""
 "A download due to a large copy/paste operation has already started. Please, "
 "wait for the current download or cancel it before starting a new one"
 msgstr ""
-"<p>A causa di un'operazione di copia/incolla di grosse dimensioni è stato "
-"già avviato uno scaricamento. Attendi che lo scaricamento in corso termini "
-"oppure annullalo prima di iniziarne un altro</p>"
+"È già iniziato un download a causa di un'operazione di copia/incolla di "
+"grandi dimensioni. Attendi il completamento del download corrente o "
+"annullalo prima di iniziarne uno nuovo."
 
 #: src/map/Clipboard.js:1421
 msgid "Paste from this document"
-msgstr ""
+msgstr "Incolla da questo documento"
 
 #: src/map/Clipboard.js:1421
 msgid "Cancel paste special"
-msgstr ""
+msgstr "Annulla incolla speciale"
 
 #: src/map/Clipboard.js:1443
 msgid "Your browser has very limited access to the clipboard"
-msgstr ""
+msgstr "Il tuo browser ha un accesso molto limitato agli appunti"
 
 #: src/map/Clipboard.js:1448
 msgid "Please use following combination to see more options:"
-msgstr ""
+msgstr "Utilizza la seguente combinazione per visualizzare altre opzioni:"
 
 #: src/map/Clipboard.js:1466
 msgid "Close popup to ignore paste special"
-msgstr ""
+msgstr "Chiudi il popup per ignorare Incolla speciale"
 
 #: src/map/Map.js:204
 msgid "Initializing..."
@@ -5093,7 +5103,7 @@ msgstr "Ultimo salvataggio:"
 
 #: src/map/Map.js:1520
 msgid "Please wait!"
-msgstr ""
+msgstr "Attendere, prego!"
 
 #: src/map/handler/Map.Feedback.js:95
 msgid "Please send us your feedback"
@@ -5123,18 +5133,19 @@ msgid "Uploading file to server failed with status: {0}"
 msgstr "Caricamento del file sul server non riuscito con stato: {0}"
 
 #: src/map/handler/Map.Print.js:44
+#, fuzzy
 msgid "Print dialog"
-msgstr ""
+msgstr "Finestra di dialogo Stampa"
 
 #: src/map/handler/Map.SlideShow.js:59
 #: src/slideshow/SlideShowPresenter.ts:1066
 msgid "Empty Slide Show"
-msgstr ""
+msgstr "Presentazione vuota"
 
 #: src/map/handler/Map.SlideShow.js:167
 #: src/slideshow/SlideShowPresenter.ts:1094
 msgid "Windowed Presentation Blocked"
-msgstr ""
+msgstr "Presentazione in finestra bloccata"
 
 #: src/map/handler/Map.SlideShow.js:168
 #: src/slideshow/SlideShowPresenter.ts:1096
@@ -5143,11 +5154,14 @@ msgid ""
 "slide shows to be displayed in separated windows, allowing for easy screen "
 "sharing."
 msgstr ""
+"La presentazione è stata bloccata. Consenti i popup nel tuo browser. Ciò "
+"permette di visualizzare le presentazioni in finestre separate, facilitando "
+"la condivisione dello schermo."
 
 #: src/map/handler/Map.SlideShow.js:172
 #: src/slideshow/SlideShowPresenter.ts:896
 msgid "Windowed Presentation: "
-msgstr ""
+msgstr "Presentazione in finestra "
 
 #: src/map/handler/Map.SlideShow.js:202
 #: src/slideshow/SlideShowPresenter.ts:938
@@ -5157,40 +5171,43 @@ msgstr "Presenta nella Finestra"
 #: src/map/handler/Map.SlideShow.js:203
 #: src/slideshow/SlideShowPresenter.ts:939
 msgid "Close Presentation"
-msgstr ""
+msgstr "Chiudi presentazione"
 
 #: src/map/handler/Map.SlideShow.js:230
 msgid "Presenting in fullscreen"
-msgstr ""
+msgstr "Presentazione a schermo intero"
 
 #: src/map/handler/Map.SlideShow.js:231
-#, fuzzy
 msgid "End Presentation"
-msgstr "Presentazione"
+msgstr "Termina presentazione"
 
 #: src/map/handler/Map.SlideShow.js:295
 #: src/slideshow/SlideShowPresenter.ts:1081
 msgid "Already presenting"
-msgstr ""
+msgstr "Presentazione già avviata"
 
 #: src/map/handler/Map.SlideShow.js:296
 #: src/slideshow/SlideShowPresenter.ts:1082
+#, fuzzy
 msgid "You are already presenting this document"
-msgstr ""
+msgstr "Stai già presentando questo documento"
 
 #: src/map/handler/Map.SlideShow.js:306
 #: src/slideshow/SlideShowPresenter.ts:1119
+#, fuzzy
 msgid "Presentation disabled"
-msgstr ""
+msgstr "Presentazione disabilitata"
 
 #: src/map/handler/Map.SlideShow.js:307
 #: src/slideshow/SlideShowPresenter.ts:1120
 msgid "Presentation mode has been disabled for this document"
-msgstr ""
+msgstr "La modalità presentazione è stata disabilitata per questo documento"
 
 #: src/map/handler/Map.VersionBar.js:50
 msgid "Your Collabora Online server needs updating. Version {0} is available."
 msgstr ""
+"Il server Collabora Online deve essere aggiornato. La versione {0} è "
+"disponibile."
 
 #: src/map/handler/Map.WOPI.js:172
 msgid "Creating new file from template..."
@@ -5206,78 +5223,78 @@ msgstr "Creazione della copia..."
 
 #: src/map/handler/Map.Welcome.js:92
 msgid "Welcome Dialog"
-msgstr ""
+msgstr "Finestra di benvenuto"
 
 #: src/slideshow/PauseTimer.ts:141
+#, fuzzy
 msgid "Pause... ( %SECONDS% )"
-msgstr ""
+msgstr "Pausa... ( %SECONDS% )"
 
 #: src/slideshow/PresenterConsole.js:29
 msgid "Current Slide"
-msgstr ""
+msgstr "Diapositiva corrente"
 
 #: src/slideshow/PresenterConsole.js:30
-#, fuzzy
 msgid "Next Slide"
 msgstr "Diapositiva successiva"
 
 #: src/slideshow/PresenterConsole.js:35
 msgid "Pause"
-msgstr ""
+msgstr "Pausa"
 
 #: src/slideshow/PresenterConsole.js:36
 msgid "Restart"
-msgstr ""
+msgstr "Riavvia"
 
 #: src/slideshow/PresenterConsole.js:37
 msgid "Resume"
-msgstr ""
+msgstr "Riprendi"
 
 #: src/slideshow/PresenterConsole.js:38
 msgid "Go Back"
-msgstr ""
+msgstr "Indietro"
 
 #: src/slideshow/PresenterConsole.js:39
 msgid "Zoom In"
-msgstr ""
+msgstr "Ingrandisci"
 
 #: src/slideshow/PresenterConsole.js:40
 msgid "Zoom Out"
-msgstr ""
+msgstr "Riduci"
 
 #: src/slideshow/PresenterConsole.js:178
 msgid "Preview Slide {1}"
-msgstr ""
+msgstr "Anteprima diapositiva {1}"
 
 #: src/slideshow/PresenterConsole.js:1241
 msgid "Slide {0} of {1}"
-msgstr ""
+msgstr "Diapositiva {0} di {1}"
 
 #: src/slideshow/PresenterConsole.js:1265
 msgid "No Notes"
-msgstr ""
+msgstr "Nessuna nota"
 
 #: src/slideshow/PresenterConsole.js:1353
 msgid "Repeat in {0} seconds"
-msgstr ""
+msgstr "Ripeti tra {0} secondi"
 
 #: src/slideshow/PresenterConsole.js:1358
 #: src/slideshow/SlideShowPresenter.ts:562
 msgid "Click to exit presentation..."
-msgstr ""
+msgstr "Cliccare per terminare la presentazione..."
 
 #: src/slideshow/SlideShowPresenter.ts:685
 msgid "End Show"
-msgstr ""
+msgstr "Termina presentazione"
 
 #: src/slideshow/SlideShowPresenter.ts:720
 #: src/slideshow/SlideShowPresenter.ts:733
 msgid "Disable Animations"
-msgstr ""
+msgstr "Disabilità animazioni"
 
 #: src/slideshow/SlideShowPresenter.ts:732
 msgid "Enable Animations"
-msgstr ""
+msgstr "Abilita animazioni"
 
 #: welcome/welcome.html%2Bhtml.head.title:9-3
 msgid "Collabora Online Welcome"
