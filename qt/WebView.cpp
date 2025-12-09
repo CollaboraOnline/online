@@ -61,13 +61,6 @@ std::vector<WebView*> WebView::s_instances;
 
 namespace
 {
-unsigned generateNewAppDocId()
-{
-    static unsigned appIdCounter = 60407;
-    DocumentData::allocate(appIdCounter);
-    return appIdCounter++;
-}
-
 std::string getUILanguage()
 {
     const char* envVars[] = {"LC_ALL", "LC_MESSAGES", "LANG", "LANGUAGE"};
@@ -564,7 +557,7 @@ void WebView::load(const Poco::URI& fileURL, bool newFile, bool isStarterMode)
         _document = {
             ._fileURL = fileURL,
             ._fakeClientFd = fakeSocketSocket(),
-            ._appDocId = generateNewAppDocId(),
+            ._appDocId = coda::generateNewAppDocId(),
         };
     }
 
@@ -667,6 +660,9 @@ WebView* WebView::createNewDocument(QWebEngineProfile* profile, const std::strin
     Poco::URI newDocumentURI(Poco::Path(newFilePath.toStdString()));
     WebView* webViewInstance = new WebView(profile, false);
     webViewInstance->load(newDocumentURI, true);
+
+    // Add to recent files
+    Application::getRecentFiles().add(newDocumentURI.toString());
 
     return webViewInstance;
 }

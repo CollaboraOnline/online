@@ -2448,6 +2448,14 @@ bool ClientSession::handleKitToClientMessage(const std::shared_ptr<Message>& pay
         return handleSaveAs(payload, docBroker, saveAsSocket);
     }
 
+#elif defined(QTAPP)
+    else if (tokens.size() == 3 && tokens.equals(0, "saveas:"))
+    {
+        // For mobile/desktop apps, the file has been saved directly by LOKit
+        // Forward the saveas message to the client - Socket.js _renameOrSaveAsCallback()
+        // will handle it and trigger load of the new document with a new FakeSocket.
+        return forwardToClient(payload);
+    }
 #endif
     else if (tokens.size() == 2 && tokens.equals(0, "statechanged:"))
     {

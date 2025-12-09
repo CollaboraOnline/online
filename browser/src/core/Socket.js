@@ -1492,6 +1492,10 @@ app.definitions.Socket = class Socket extends SocketBase {
 				// in order to be able to edit.
 				app.setPermission('edit');
 				this.close();
+				if (window.ThisIsTheQtApp) {
+					window.postMobileMessage("loaddocument url=" + this._map.options.doc);
+					this.socket.onopen();
+				}
 				this._map.loadDocument();
 				this._map.sendInitUNOCommands();
 				this._map.fire('postMessage', {

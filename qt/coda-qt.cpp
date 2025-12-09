@@ -269,6 +269,53 @@ static void setClipboardFromContent(unsigned appDocId, const std::string& conten
     }
 }
 
+// Helper structure for save-as format options
+struct SaveAsFormat
+{
+    QString action;      // e.g., "saveas-odt"
+    QString extension;   // e.g., "odt"
+    QString displayName; // e.g., "ODF text document (.odt)"
+};
+
+static std::vector<SaveAsFormat> getSaveAsFormats(int docType)
+{
+    std::vector<SaveAsFormat> formats;
+
+    if (docType == LOK_DOCTYPE_TEXT)
+    {
+        formats = {
+            {QStringLiteral("saveas-odt"), QStringLiteral("odt"), QObject::tr("ODF text document (.odt)")},
+            {QStringLiteral("saveas-rtf"), QStringLiteral("rtf"), QObject::tr("Rich Text (.rtf)")},
+            {QStringLiteral("saveas-docx"), QStringLiteral("docx"), QObject::tr("Word Document (.docx)")},
+            {QStringLiteral("saveas-doc"), QStringLiteral("doc"), QObject::tr("Word 2003 Document (.doc)")}
+        };
+    }
+    else if (docType == LOK_DOCTYPE_SPREADSHEET)
+    {
+        formats = {
+            {QStringLiteral("saveas-ods"), QStringLiteral("ods"), QObject::tr("ODF spreadsheet (.ods)")},
+            {QStringLiteral("saveas-xlsx"), QStringLiteral("xlsx"), QObject::tr("Excel Spreadsheet (.xlsx)")},
+            {QStringLiteral("saveas-xls"), QStringLiteral("xls"), QObject::tr("Excel 2003 Spreadsheet (.xls)")}
+        };
+    }
+    else if (docType == LOK_DOCTYPE_PRESENTATION)
+    {
+        formats = {
+            {QStringLiteral("saveas-odp"), QStringLiteral("odp"), QObject::tr("ODF presentation (.odp)")},
+            {QStringLiteral("saveas-pptx"), QStringLiteral("pptx"), QObject::tr("PowerPoint Presentation (.pptx)")},
+            {QStringLiteral("saveas-ppt"), QStringLiteral("ppt"), QObject::tr("PowerPoint 2003 Presentation (.ppt)")}
+        };
+    }
+    else if (docType == LOK_DOCTYPE_DRAWING)
+    {
+        formats = {
+            {QStringLiteral("saveas-odg"), QStringLiteral("odg"), QObject::tr("ODF drawing (.odg)")}
+        };
+    }
+
+    return formats;
+}
+
 static void printDocument(unsigned appDocId, QWidget* parent = nullptr)
 {
     // Create a temporary PDF file for printing
@@ -462,6 +509,62 @@ Bridge::~Bridge() {
     }
 }
 
+void Bridge::createAndStartMessagePumpThread()
+{
+    // Create pipe for close notifications
+    fakeSocketPipe2(_closeNotificationPipeForForwardingThread);
+
+    // Thread pumping Online → JS
+    assert(!_app2js.joinable());
+    _app2js = std::thread(
+        [this]
+        {
+            Util::setThreadName("app2js");
+            bool unexpectedClose = false;
+            while (true)
+            {
+                struct pollfd pfd[2];
+                pfd[0].fd = _document._fakeClientFd;
+                pfd[0].events = POLLIN;
+                pfd[1].fd = _closeNotificationPipeForForwardingThread[1];
+                pfd[1].events = POLLIN;
+                if (fakeSocketPoll(pfd, 2, -1) > 0)
+                {
+                    if (pfd[1].revents & POLLIN)
+                    {
+                        break; // document closed
+                    }
+                    if (pfd[0].revents & POLLIN)
+                    {
+                        int n = fakeSocketAvailableDataLength(_document._fakeClientFd);
+                        if (n == 0)
+                        {
+                            LOG_TRC("Socket closed #" << _document._fakeClientFd);
+                            unexpectedClose = true;
+                            break;
+                        }
+                        std::vector<char> buf(n);
+                        fakeSocketRead(_document._fakeClientFd, buf.data(), n);
+                        send2JS(buf);
+                    }
+                    if (pfd[0].revents & POLLERR)
+                    {
+                        LOG_TRC("Socket error #" << _document._fakeClientFd);
+                        unexpectedClose = true;
+                        break;
+                    }
+                }
+            }
+            LOG_TRC("Closing message pump thread");
+            fakeSocketClose(_closeNotificationPipeForForwardingThread[1]);
+            fakeSocketClose(_document._fakeClientFd);
+            if (unexpectedClose) {
+                LOG_WRN("Unexpected closing of message pump thread; closing window now");
+                QMetaObject::invokeMethod(_window, "close", Qt::QueuedConnection);
+            }
+        });
+}
+
 void Bridge::evalJS(const std::string& script)
 {
     // Ensure execution on GUI thread – queued if needed
@@ -537,91 +640,114 @@ namespace
     }
 } // namespace
 
-void Bridge::promptSaveLocation(std::function<void(const std::string&)> callback)
+void Bridge::promptSaveLocation(std::function<void(const std::string&, const std::string&)> callback)
 {
-    // Prompt user to pick a save location
+    // Prompt user to pick a save location and format
+    lok::Document* loKitDoc = DocumentData::get(_document._appDocId).loKitDocument;
+    if (!loKitDoc)
+    {
+        LOG_ERR("promptSaveLocation: no loKitDocument");
+        return;
+    }
+
+    const int docType = loKitDoc->getDocumentType();
+    const auto formats = getSaveAsFormats(docType);
+
+    if (formats.empty())
+    {
+        LOG_ERR("promptSaveLocation: no formats available for document type");
+        return;
+    }
+
+    // Get document info for suggested filename
     const QUrl docUrl(QString::fromStdString(_document._fileURL.toString()));
     const QString docPath = docUrl.isLocalFile() ? docUrl.toLocalFile() : docUrl.toString();
     const QFileInfo docInfo(docPath);
-    QString baseName = docInfo.completeBaseName().isEmpty()
-                         ? QStringLiteral("document")
-                         : docInfo.completeBaseName();
+    const QString baseName = docInfo.completeBaseName().isEmpty()
+                               ? QStringLiteral("document")
+                               : docInfo.completeBaseName();
 
-    // Determine file extension from document type
-    QString extension;
-    lok::Document* loKitDoc = DocumentData::get(_document._appDocId).loKitDocument;
-    if (loKitDoc)
-    {
-        const int docType = loKitDoc->getDocumentType();
-        switch (docType)
-        {
-            case LOK_DOCTYPE_TEXT:
-                extension = "odt";
-                break;
-            case LOK_DOCTYPE_SPREADSHEET:
-                extension = "ods";
-                break;
-            case LOK_DOCTYPE_PRESENTATION:
-                extension = "odp";
-                break;
-            case LOK_DOCTYPE_DRAWING:
-                extension = "odg";
-                break;
-            default:
-                break;
-        }
-    }
-
-    QString suggestedName = baseName + (extension.isEmpty() ? "" : "." + extension);
-
+    // Build file filter string with all available formats
     QString fileFilter;
-    if (extension == "odt")
-        fileFilter = QObject::tr("Text Documents (*.odt);;All Files (*)");
-    else if (extension == "ods")
-        fileFilter = QObject::tr("Spreadsheets (*.ods);;All Files (*)");
-    else if (extension == "odp")
-        fileFilter = QObject::tr("Presentations (*.odp);;All Files (*)");
-    else
-        fileFilter = QObject::tr("All Files (*)");
+    for (size_t i = 0; i < formats.size(); ++i)
+    {
+        if (i > 0)
+            fileFilter += QStringLiteral(";;");
+        fileFilter += formats[i].displayName + QStringLiteral(" (*.") + formats[i].extension + QStringLiteral(")");
+    }
 
     QFileDialog* dialog = new QFileDialog(
         _webView,
         QObject::tr("Save Document"),
-        QDir::home().filePath(suggestedName),
+        QDir::home().filePath(baseName),
         fileFilter);
 
     dialog->setAcceptMode(QFileDialog::AcceptSave);
     dialog->setAttribute(Qt::WA_DeleteOnClose);
 
-    QObject::connect(dialog, &QFileDialog::fileSelected, [callback](const QString& destPath) {
-        callback(destPath.toStdString());
-    });
+    // Set default suffix to enforce extension in GUI
+    if (!formats.empty())
+        dialog->setDefaultSuffix(formats[0].extension);
+
+    // Update default suffix when user changes the selected filter
+    QObject::connect(dialog, QOverload<const QString&>::of(&QFileDialog::filterSelected),
+                     [dialog, formats](const QString& selectedFilter)
+                     {
+                         for (const auto& fmt : formats)
+                         {
+                             if (selectedFilter.startsWith(fmt.displayName))
+                             {
+                                 dialog->setDefaultSuffix(fmt.extension);
+                                 break;
+                             }
+                         }
+                     });
+
+    QObject::connect(dialog, &QFileDialog::fileSelected,
+                     [callback, dialog, formats](const QString& destPath)
+                     {
+                         // Get the selected filter to determine the format
+                         QString selectedFilter = dialog->selectedNameFilter();
+                         QString format;
+
+                         // Extract format from the selected filter (e.g., "ODF text document (*.odt)" -> "odt")
+                         for (const auto& fmt : formats)
+                         {
+                             if (selectedFilter.startsWith(fmt.displayName))
+                             {
+                                 format = fmt.extension;
+                                 break;
+                             }
+                         }
+
+                         if (format.isEmpty() && !formats.empty())
+                             format = formats[0].extension;
+
+                         // Ensure file ends with the selected format's extension - save-as fails otherwise!
+                         QString finalPath = destPath;
+                         if (!finalPath.endsWith("." + format, Qt::CaseInsensitive))
+                         {
+                             finalPath += "." + format;
+                         }
+
+                         callback(finalPath.toStdString(), format.toStdString());
+                     });
 
     dialog->open();
 }
 
 void Bridge::saveDocumentAs()
 {
-    promptSaveLocation([this](const std::string& savePath) {
-        if (savePath.empty())
-            return;
+    promptSaveLocation([fakeClientFd = _document._fakeClientFd](const std::string& destPath, const std::string& format) {
+            const QFileInfo destInfo(QString::fromStdString(destPath));
 
-        // Update saveLocationURI for future saves
-        // _document._saveLocationURI = Poco::URI(Poco::Path(savePath));
+            Poco::URI destUri("file", destInfo.absoluteFilePath().toStdString());
 
-        // Update document name in the WebView UI
-        QString fileName = QString::fromStdString(Poco::Path(savePath).getFileName());
-        if (!fileName.isEmpty())
-        {
-            QString applicationTitle = fileName + " - " APP_NAME;
-            QApplication::setApplicationName(applicationTitle);
-
-        // Update file name in window title
-            if (_webView && _webView->window())
-                _webView->window()->setWindowTitle(applicationTitle);
-        }
-
-        saveDocument(savePath);
+            // Send saveas command to COOLWSD with the selected format
+            std::string saveasCmd = "saveas url=" + destUri.toString() +
+                                     " format=" + format +
+                                     " options=";
+            fakeSocketWriteQueue(fakeClientFd, saveasCmd.c_str(), saveasCmd.size());
     });
 }
 
@@ -655,6 +781,7 @@ QVariant Bridge::cool(const QString& messageStr)
     constexpr std::string_view FETCHSETTINGSCONFIG = "FETCHSETTINGSCONFIG";
     constexpr std::string_view SYNCSETTINGS = "SYNCSETTINGS";
     constexpr std::string_view PROCESSINTEGRATORADMINFILE = "PROCESSINTEGRATORADMINFILE ";
+    constexpr std::string_view LOADDOCUMENT = "loaddocument ";
 
     const std::string message = messageStr.toStdString();
     LOG_TRC_NOFILE("From JS: cool: " << message);
@@ -672,62 +799,82 @@ QVariant Bridge::cool(const QString& messageStr)
         int rc = fakeSocketConnect(_document._fakeClientFd, coolwsd_server_socket_fd);
         assert(rc != -1);
 
-        fakeSocketPipe2(_closeNotificationPipeForForwardingThread);
-
-        // Thread pumping Online → JS
-        assert(!_app2js.joinable());
-        _app2js = std::thread(
-            [this]
-            {
-                Util::setThreadName("app2js");
-                bool unexpectedClose = false;
-                while (true)
-                {
-                    struct pollfd pfd[2];
-                    pfd[0].fd = _document._fakeClientFd;
-                    pfd[0].events = POLLIN;
-                    pfd[1].fd = _closeNotificationPipeForForwardingThread[1];
-                    pfd[1].events = POLLIN;
-                    if (fakeSocketPoll(pfd, 2, -1) > 0)
-                    {
-                        if (pfd[1].revents & POLLIN)
-                        {
-                            break; // document closed
-                        }
-                        if (pfd[0].revents & POLLIN)
-                        {
-                            int n = fakeSocketAvailableDataLength(_document._fakeClientFd);
-                            if (n == 0)
-                            {
-                                LOG_TRC("Socket closed #" << _document._fakeClientFd);
-                                unexpectedClose = true;
-                                break;
-                            }
-                            std::vector<char> buf(n);
-                            fakeSocketRead(_document._fakeClientFd, buf.data(), n);
-                            send2JS(buf);
-                        }
-                        if (pfd[0].revents & POLLERR)
-                        {
-                            LOG_TRC("Socket error #" << _document._fakeClientFd);
-                            unexpectedClose = true;
-                            break;
-                        }
-                    }
-                }
-                LOG_TRC("Closing message pump thread");
-                fakeSocketClose(_closeNotificationPipeForForwardingThread[1]);
-                fakeSocketClose(_document._fakeClientFd);
-                if (unexpectedClose) {
-                    LOG_WRN("Unexpected closing of message pump thread; closing window now");
-                    QMetaObject::invokeMethod(_window, "close", Qt::QueuedConnection);
-                }
-            });
+        createAndStartMessagePumpThread();
 
         // 1st request: the initial GET /?file_path=...  (mimic WebSocket upgrade)
         std::string message(_document._fileURL.toString() +
                             (" " + std::to_string(_document._appDocId)));
         fakeSocketWriteQueue(_document._fakeClientFd, message.c_str(), message.size());
+    }
+    else if (message.starts_with(LOADDOCUMENT))
+    {
+        // loaddocument url=file:///path/to/file.odt
+        // Parse the URL from the message
+        std::string args = message.substr(LOADDOCUMENT.size());
+        std::string newFileUrl;
+
+        size_t urlPos = args.find("url=");
+        if (urlPos != std::string::npos) {
+            size_t urlStart = urlPos + 4;
+            size_t urlEnd = args.find(' ', urlStart);
+            if (urlEnd == std::string::npos)
+                urlEnd = args.size();
+            newFileUrl = args.substr(urlStart, urlEnd - urlStart);
+        }
+
+        if (newFileUrl.empty()) {
+            LOG_ERR("loaddocument: no url= specified");
+            return {};
+        }
+
+        LOG_TRC_NOFILE("loaddocument: switching to URL: " << newFileUrl);
+
+        // Close the existing fakesocket
+        if (_document._fakeClientFd != -1) {
+            fakeSocketClose(_document._fakeClientFd);
+            _document._fakeClientFd = -1;
+        }
+        // Close the existing forwarding thread
+        if (_app2js.joinable()) {
+            fakeSocketClose(_closeNotificationPipeForForwardingThread[0]);
+            _app2js.join();
+        }
+
+        // Create a new fakesocket
+        _document._fakeClientFd = fakeSocketSocket();
+        // Generate a new appDocId
+        _document._appDocId = coda::generateNewAppDocId();
+        // Update the file URL
+        _document._fileURL = Poco::URI(newFileUrl);
+
+        LOG_TRC_NOFILE("loaddocument: created new appDocId=" << _document._appDocId);
+
+        // Connect to COOLWSD
+        int rc = fakeSocketConnect(_document._fakeClientFd, coolwsd_server_socket_fd);
+        if (rc == -1) {
+            LOG_ERR("loaddocument: failed to connect fakesocket");
+            return {};
+        }
+
+        createAndStartMessagePumpThread();
+
+        // Send the initial message with the new file URL and appDocId
+        std::string initialMessage(_document._fileURL.toString() +
+                                   (" " + std::to_string(_document._appDocId)));
+        fakeSocketWriteQueue(_document._fakeClientFd, initialMessage.c_str(), initialMessage.size());
+
+        // Update window title with new filename
+        Poco::Path uriPath(_document._fileURL.getPath());
+        QString fileName = QString::fromStdString(uriPath.getFileName());
+        QString windowTitle = fileName + " - " APP_NAME;
+        if (_window)
+            _window->setWindowTitle(windowTitle);
+
+        // Add the new document location to recent files
+        Application::getRecentFiles().add(_document._fileURL.toString());
+
+        LOG_TRC_NOFILE("loaddocument: sent initial message with new appDocId");
+        return {};
     }
     else if (message == "WELCOME")
     {
@@ -947,6 +1094,8 @@ QVariant Bridge::cool(const QString& messageStr)
     }
     else if (message == "uno .uno:SaveAs")
     {
+        assert(_document._fakeClientFd != -1);
+
         saveDocumentAs();
     }
     else if (message == "uno .uno:CloseWin")
