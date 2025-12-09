@@ -224,11 +224,11 @@ window.L.Control.NotebookbarBuilder = window.L.Control.JSDialogBuilder.extend({
 		const isDesktop = window.mode.isDesktop();
 		const tooltipCollapsed = isDesktop ? _('Click to expand') : _('Tap to expand');
 		const tooltipExpanded = isDesktop ? _('Click to collapse') : _('Tap to collapse');
-		if ($(tabs[t]).hasClass('selected'))
 		var isFileTab = tabIds[t] === 'File-tab-label' || tabIds[t] === 'File';
 		var isFileTabForCoda = isFileTab && window.mode.isCODesktop();
 		if (!isFileTabForCoda) {
-			tabs[t].setAttribute('data-cooltip', tooltipExpanded);
+			if ($(tabs[t]).hasClass('selected'))
+				tabs[t].setAttribute('data-cooltip', tooltipExpanded);
 			window.L.control.attachTooltipEventListener(tabs[t], builder.map);
 		} else {
 			tabs[t].removeAttribute('data-cooltip');
