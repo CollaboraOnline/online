@@ -498,6 +498,7 @@ void WebView::load(const Poco::URI& fileURL, bool newFile, bool isStarterMode)
     coolHtmlPath.append("/browser/dist/cool.html");
     Poco::URI urlAndQuery(coolHtmlPath);
     urlAndQuery.setScheme("file");
+    urlAndQuery.addQueryParameter("lang", getUILanguage());
 
     if (isStarterMode)
     {
@@ -507,7 +508,6 @@ void WebView::load(const Poco::URI& fileURL, bool newFile, bool isStarterMode)
     {
         urlAndQuery.addQueryParameter("file_path", _document._fileURL.toString());
         urlAndQuery.addQueryParameter("permission", "edit");
-        urlAndQuery.addQueryParameter("lang", getUILanguage());
         urlAndQuery.addQueryParameter("appdocid", std::to_string(_document._appDocId));
         urlAndQuery.addQueryParameter("userinterfacemode", "notebookbar");
     }
@@ -530,7 +530,7 @@ void WebView::load(const Poco::URI& fileURL, bool newFile, bool isStarterMode)
     QString applicationTitle;
     if (isStarterMode)
     {
-        applicationTitle = QString(APP_NAME) + " - Start";
+        applicationTitle = QString(APP_NAME) + " - " + QApplication::translate("WebView", "Start");
     }
     else
     {
