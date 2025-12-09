@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: coolwsd 25.04.7.3\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-12-06 18:17+0000\n"
-"PO-Revision-Date: 2025-12-07 22:00+0000\n"
+"PO-Revision-Date: 2025-12-10 22:00+0000\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Slovenian <https://hosted.weblate.org/projects/collabora-"
 "online/collabora-office-macos-app/sl/>\n"
@@ -96,11 +96,11 @@ msgstr "Smer pisanja"
 
 msgctxt "9ic-FL-obx.title"
 msgid "Substitutions"
-msgstr ""
+msgstr "Zamenjave"
 
 msgctxt "9yt-4B-nSM.title"
 msgid "Smart Copy/Paste"
-msgstr ""
+msgstr "Pametno kopiranje/lepljenje"
 
 msgctxt "AYu-sK-qS6.title"
 msgid "Main Menu"
@@ -112,7 +112,7 @@ msgstr "Nastavitve …"
 
 msgctxt "BgM-ve-c93.title"
 msgid "\tLeft to Right"
-msgstr ""
+msgstr "\tOd leve proti desni"
 
 msgctxt "Bw7-FT-i3A.title"
 msgid "Save As…"
@@ -141,7 +141,7 @@ msgstr "Besedilo"
 
 msgctxt "FeM-D8-WVr.title"
 msgid "Substitutions"
-msgstr ""
+msgstr "Zamenjave"
 
 msgctxt "GB9-OM-e27.title"
 msgid "Bold"
@@ -169,11 +169,11 @@ msgstr "Pogled"
 
 msgctxt "HFQ-gK-NFA.title"
 msgid "Text Replacement"
-msgstr ""
+msgstr "Zamenjava besedila"
 
 msgctxt "HFo-cy-zxI.title"
 msgid "Show Spelling and Grammar"
-msgstr ""
+msgstr "Pokaži črkovanje in slovnico"
 
 msgctxt "HyV-fh-RgO.title"
 msgid "View"
@@ -197,7 +197,7 @@ msgstr ""
 
 msgctxt "KaW-ft-85H.title"
 msgid "Revert to Saved"
-msgstr ""
+msgstr "Povrni na shranjeno"
 
 msgctxt "Kd2-mp-pUS.title"
 msgid "Show All"
@@ -205,7 +205,7 @@ msgstr "Pokaži vse"
 
 msgctxt "LE2-aR-0XJ.title"
 msgid "Bring All to Front"
-msgstr ""
+msgstr "Postavi vse v ospredje"
 
 msgctxt "LVM-kO-fVI.title"
 msgid "Paste Ruler"
@@ -213,7 +213,7 @@ msgstr "Prilepi ravnilo"
 
 msgctxt "Lbh-J2-qVU.title"
 msgid "\tLeft to Right"
-msgstr ""
+msgstr "\tOd leve proti desni"
 
 msgctxt "MkV-Pr-PK5.title"
 msgid "Copy Ruler"
@@ -225,7 +225,7 @@ msgstr "Storitve"
 
 msgctxt "Nop-cj-93Q.title"
 msgid "\tDefault"
-msgstr ""
+msgstr "\tPrivzeto"
 
 msgctxt "OY7-WF-poV.title"
 msgid "Minimize"
@@ -258,7 +258,7 @@ msgstr "Pokaži pisave"
 
 msgctxt "R4o-n2-Eq4.title"
 msgid "Zoom"
-msgstr ""
+msgstr "Povečava"
 
 msgctxt "RB4-Sm-HuC.title"
 msgid "\tRight to Left"
@@ -290,7 +290,7 @@ msgstr ""
 
 msgctxt "Vdr-fp-XzO.title"
 msgid "Hide Others"
-msgstr ""
+msgstr "Skrij druge"
 
 msgctxt "Vjx-xi-njq.title"
 msgid "Italic"
@@ -322,7 +322,7 @@ msgstr "Najdi in zamenjaj …"
 
 msgctxt "YGs-j5-SAR.title"
 msgid "\tDefault"
-msgstr ""
+msgstr "\tPrivzeto"
 
 msgctxt "Ynk-f8-cLZ.title"
 msgid "Start Speaking"
@@ -330,7 +330,7 @@ msgstr ""
 
 msgctxt "ZM1-6Q-yy1.title"
 msgid "Align Left"
-msgstr ""
+msgstr "Poravnaj levo"
 
 msgctxt "ZvO-Gk-QUH.title"
 msgid "Paragraph"
@@ -350,7 +350,7 @@ msgstr "Pisava"
 
 msgctxt "agt-UL-0e3.title"
 msgid "Use Default"
-msgstr ""
+msgstr "Uporabi privzeto"
 
 msgctxt "bgn-CT-cEk.title"
 msgid "Show Colors"
@@ -406,7 +406,7 @@ msgstr ""
 
 msgctxt "hz2-CU-CR7.title"
 msgid "Check Document Now"
-msgstr ""
+msgstr "Preveri dokument zdaj"
 
 msgctxt "hz9-B4-Xy5.title"
 msgid "Services"
@@ -430,7 +430,7 @@ msgstr ""
 
 msgctxt "jxT-CU-nIS.title"
 msgid "Format"
-msgstr ""
+msgstr "Oblika"
 
 msgctxt "kIP-vf-haE.title"
 msgid "Show Sidebar"
@@ -438,7 +438,7 @@ msgstr "Pokaži stransko vrstico"
 
 msgctxt "mK6-2p-4JG.title"
 msgid "Check Grammar With Spelling"
-msgstr ""
+msgstr "Preveri slovnico s črkovanjem"
 
 msgctxt "o6e-r0-MWq.title"
 msgid "Ligatures"
@@ -446,7 +446,7 @@ msgstr ""
 
 msgctxt "oas-Oc-fiZ.title"
 msgid "Open Recent"
-msgstr ""
+msgstr "Odpri nedavne"
 
 msgctxt "ogc-rX-tC1.title"
 msgid "Loosen"
@@ -486,7 +486,7 @@ msgstr ""
 
 msgctxt "tXI-mr-wws.title"
 msgid "Open Recent"
-msgstr ""
+msgstr "Odpri nedavne"
 
 msgctxt "tlD-Oa-oAM.title"
 msgid "Kern"
@@ -543,8 +543,8 @@ msgstr "Uporabi vse"
 
 msgctxt "xrE-MZ-jX0.title"
 msgid "Speech"
-msgstr ""
+msgstr "Govor"
 
 msgctxt "z6F-FW-3nz.title"
 msgid "Show Substitutions"
-msgstr ""
+msgstr "Pokaži zamenjave"
