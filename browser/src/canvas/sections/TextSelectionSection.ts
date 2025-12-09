@@ -10,6 +10,9 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+	This class is only for rendering the selected text from all views.
+*/
 class TextSelectionSection extends CanvasSectionObject {
 	interactable = false;
 	processingOrder = app.CSections.TextSelection.processingOrder;
