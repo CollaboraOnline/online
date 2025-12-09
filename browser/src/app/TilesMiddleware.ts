@@ -803,7 +803,7 @@ class TileManager {
 		else return false;
 	}
 
-	private static beginTransaction() {
+	public static beginTransaction() {
 		++this.inTransaction;
 	}
 
@@ -926,7 +926,7 @@ class TileManager {
 		}
 	}
 
-	private static endTransaction(callback: any = null) {
+	public static endTransaction(callback: any = null) {
 		if (this.inTransaction === 0) {
 			window.app.console.error('Mismatched endTransaction');
 			return;
@@ -1198,7 +1198,7 @@ class TileManager {
 			' ' +
 			'tileheight=' +
 			app.tile.size.y;
-		if (addedSize) app.socket.sendMessage(msg, '');
+		if (addedSize) app.socket.sendMessage(msg);
 		else window.app.console.log('Skipped empty (too fast) tilecombine');
 	}
 
