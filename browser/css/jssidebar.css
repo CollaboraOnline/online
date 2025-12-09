@@ -796,6 +796,8 @@ span.jsdialog.sidebar.ui-treeview-notexpandable {
 	height: 100%;
 }
 
+#sidebar-container,
+#sidebar-container > div,
 #StyleListDeck,
 #StyleListDeck .root-container.jsdialog.sidebar,
 #StyleListDeck .vertical.jsdialog.sidebar,
@@ -805,6 +807,10 @@ span.jsdialog.sidebar.ui-treeview-notexpandable {
 	height: 100%;
 	display: flex;
 	flex-direction: column;
+}
+
+#sidebar-container > div {
+	display: flex !important;
 }
 
 .StyleListPanel .ui-expander-content.jsdialog.sidebar.expanded {
