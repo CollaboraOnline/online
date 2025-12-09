@@ -112,33 +112,60 @@ describe(['tagdesktop'], 'Accessibility Writer Tests', function () {
     }
 
     function handleTabsInDialog() {
-        const tabListSelector = '.ui-tabs[role="tablist"]';
-        const tabSelector = `${tabListSelector} .ui-tab`;
+        traverseTabs(() => getActiveDialog());
+    }
 
-        getActiveDialog().then($dialog => {
-            const hasTabs = $dialog.find(tabListSelector).length > 0;
+    function traverseTabs(getContainer) {
+        const TABLIST = '[role="tablist"]';
+        const TAB = '[role="tab"]';
 
-            if (!hasTabs) {
-                return;
-            }
+        getContainer().then($container => {
+            const $tabLists = $container.find(TABLIST);
 
-            const tabCount = $dialog.find(tabSelector).length;
-            if (!tabCount) return;
+            if (!$tabLists.length) return;
 
-            const clickTab = index => {
-                if (index >= tabCount) return;
+            Cypress._.each($tabLists, (tabListEl, tabListIndex) => {
+                const $tabs = Cypress.$(tabListEl).find(TAB);
 
-                getActiveDialog()
-                    .find(tabSelector)
-                    .eq(index)
-                    .click({ force: true });
+                const clickTabByIndex = index => {
+                    if (index >= $tabs.length) return;
 
-                cy.wait(150);
-                clickTab(index + 1);
-            };
+                    getContainer()
+                        .find(TABLIST).eq(tabListIndex)
+                        .find(TAB).eq(index)
+                        .click({ force: true });
 
-            clickTab(0);
+                    getContainer().then($ctx => {
+                        const $panel = getActiveTabPanel($ctx);
+
+                        if ($panel && $panel.length) {
+                            const $nestedTablists = $panel.find(TABLIST);
+
+                            if ($nestedTablists.length > 0) {
+                                traverseTabs(() => cy.wrap($panel));
+                            }
+                        }
+                    });
+
+                    clickTabByIndex(index + 1);
+                };
+
+                clickTabByIndex(0);
+            });
         });
+    }
+
+    function getActiveTabPanel($container) {
+        const $activeTab = $container
+            .find('[role="tab"][aria-selected="true"]')
+            .first();
+
+        if (!$activeTab.length) return null;
+
+        const panelId = $activeTab.attr('aria-controls');
+        if (!panelId) return null;
+
+        return $container.find(`#${panelId}[role="tabpanel"]`);
     }
 
     function closeActiveDialog() {
