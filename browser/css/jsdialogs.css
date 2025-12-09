@@ -494,9 +494,7 @@ algned to the bottom */
 }
 
 
-.jsdialog.sidebar #top-button,
-.jsdialog.sidebar #bottom-button,
-.jsdialog.sidebar #standard-button {
+.jsdialog.sidebar #textorientbox button {
 	padding: 0 5px !important;
 	min-width: 0 !important;
 	margin-inline-end: 2px !important;
