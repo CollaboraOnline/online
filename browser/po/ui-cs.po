@@ -12,8 +12,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-12-08 11:25+0100\n"
-"PO-Revision-Date: 2025-12-08 12:47+0000\n"
-"Last-Translator: Jiří Podhorecký <j.podhorecky@volny.cz>\n"
+"PO-Revision-Date: 2025-12-09 11:58+0000\n"
+"Last-Translator: Stanislav Horáček <stanislav.horacek@gmail.com>\n"
 "Language-Team: Czech <https://hosted.weblate.org/projects/collabora-online/"
 "ui/cs/>\n"
 "Language: cs\n"
@@ -2539,7 +2539,7 @@ msgstr "Navigace"
 
 #: src/control/Control.NavigatorPanel.ts:133
 msgid "Close Navigation"
-msgstr "Zavřít Navigaci"
+msgstr "Zavřít navigaci"
 
 #: src/control/Control.NavigatorPanel.ts:227
 msgid "Results"
@@ -2547,11 +2547,11 @@ msgstr "Výsledky"
 
 #: src/control/Control.NavigatorPanel.ts:474
 msgid "Search..."
-msgstr "Vyhledat..."
+msgstr "Hledat..."
 
 #: src/control/Control.QuickFindPanel.ts:97
 msgid "Type in the search box to find anything in your document"
-msgstr "Zadejte do vyhledávacího pole, abyste našli cokoli ve svém dokumentu"
+msgstr "Chcete-li v dokumentu něco najít, zadejte výraz do vyhledávacího pole"
 
 #: src/control/Notebookbar.ImpressAnimationTab.ts:24
 msgid "Animation"
@@ -2559,15 +2559,15 @@ msgstr "Animace"
 
 #: src/control/Notebookbar.ImpressAnimationTab.ts:41
 msgid "Applied animations"
-msgstr "Aplikované animace"
+msgstr "Použité animace"
 
 #: src/control/Notebookbar.ImpressAnimationTab.ts:59
 msgid "Move Up"
-msgstr "Přesun nahoru"
+msgstr "Přesunout nahoru"
 
 #: src/control/Notebookbar.ImpressAnimationTab.ts:75
 msgid "Move Down"
-msgstr "Přesun dolu"
+msgstr "Přesunout dolů"
 
 #: src/control/Notebookbar.ImpressAnimationTab.ts:105
 msgid "Category"
@@ -2575,7 +2575,7 @@ msgstr "Kategorie"
 
 #: src/control/Notebookbar.ImpressAnimationTab.ts:120
 msgid "Start"
-msgstr "Start"
+msgstr "Spustit"
 
 #: src/control/Notebookbar.ImpressAnimationTab.ts:140
 msgid "Effect"
@@ -2630,7 +2630,7 @@ msgstr "Animace"
 
 #: src/control/Control.NotebookbarBuilder.js:225
 msgid "Click to expand"
-msgstr "Klikněte pro rozbalení"
+msgstr "Kliknutím rozbalíte"
 
 #: src/control/Control.NotebookbarBuilder.js:225
 msgid "Tap to expand"
@@ -2638,12 +2638,12 @@ msgstr "Klepnutím rozbalíte"
 
 #: src/control/Control.NotebookbarBuilder.js:226
 msgid "Click to collapse"
-msgstr "Klikněte pro sbalení"
+msgstr "Kliknutím sbalíte"
 
 #: src/control/Control.NotebookbarBuilder.js:226
 #: src/control/Control.NotebookbarBuilder.js:281
 msgid "Tap to collapse"
-msgstr "Klepnutím zabalíte"
+msgstr "Klepnutím sbalíte"
 
 #: src/control/Control.NotebookbarBuilder.js:373
 #: src/control/Control.NotebookbarBuilder.js:402
@@ -3053,7 +3053,7 @@ msgstr "Seskupit"
 
 #: src/control/Control.NotebookbarCalc.js:1808
 msgid "Ungroup"
-msgstr "Rozdělit skupinu"
+msgstr "Zrušit skupinu"
 
 #: src/control/Control.NotebookbarCalc.js:1830
 msgid "Pivot Table"
@@ -3205,7 +3205,7 @@ msgstr "Prezentovat v okně"
 
 #: src/control/Control.NotebookbarImpress.js:501
 msgid "Start Follow-me Presentation"
-msgstr "Spustit prezentaci Follow-me"
+msgstr "Spustit sledovanou prezentaci"
 
 #: src/control/Control.NotebookbarImpress.js:509
 #: src/slideshow/SlideShowPresenter.ts:745
@@ -3245,7 +3245,7 @@ msgstr "Rozestupy a barva"
 
 #: src/control/Control.NotebookbarImpress.js:1805
 msgid "Master Slide Templates"
-msgstr "Šablony hlavních slidů"
+msgstr "Šablony předloh snímku"
 
 #: src/control/Control.NotebookbarImpress.js:1856
 msgid "Slide Size"
@@ -3331,7 +3331,7 @@ msgstr "náhled stránky %1"
 
 #: src/control/Control.PartsPreview.js:190
 msgid "Slide %1"
-msgstr "Slide %1"
+msgstr "Snímek %1"
 
 #: src/control/Control.PartsPreview.js:263
 msgid "Paste Slide"
