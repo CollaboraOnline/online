@@ -19,20 +19,24 @@
 class DocumentViewBase {
 	public readonly viewID: number;
 	private color: string;
-	public selectionSection: TextSelectionSection;
+	private _selectionSection: TextSelectionSection;
 	public hasTextSelection: boolean = false;
 
 	constructor(viewID: number) {
 		this.viewID = viewID;
 		this.color = app.LOUtil.rgbToHex(app.LOUtil.getViewIdColor(this.viewID));
-		this.selectionSection = new TextSelectionSection(
+		this._selectionSection = new TextSelectionSection(
 			String(this.viewID) + '-text-selections',
 			0,
 			0,
 			this.color,
 		);
-		app.sectionContainer.addSection(this.selectionSection);
-		this.selectionSection.setShowSection(false);
+		app.sectionContainer.addSection(this._selectionSection);
+		this._selectionSection.setShowSection(false);
+	}
+
+	public get selectionSection() {
+		return this._selectionSection;
 	}
 
 	private getSeparatePolygonsFromGroupOfRectangles(
