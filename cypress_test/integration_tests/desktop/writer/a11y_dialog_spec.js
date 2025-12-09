@@ -2,12 +2,12 @@
 
 var helper = require('../../common/helper');
 
-describe(['tagdesktop'], 'Accessibility Writer Tests', function() {
-     beforeEach(function() {
+describe(['tagdesktop'], 'Accessibility Writer Tests', function () {
+    beforeEach(function () {
         helper.setupAndLoadDocument('writer/help_dialog.odt');
     });
 
-    it('Check accessibility for writer', function() {
+    it('Check accessibility for writer', function () {
         cy.getFrameWindow().then(function (win) {
             cy.spy(win.console, 'error').as('console:error');
 
@@ -20,7 +20,8 @@ describe(['tagdesktop'], 'Accessibility Writer Tests', function() {
             win.app.map.sendUnoCommand('.uno:UICoverage', enableUICoverage);
 
             cy.cGet('.jsdialog-window').should('not.exist');
-            win.app.allDialogs.forEach(command => {
+
+            cy.wrap(win.app.allDialogs).each((command) => {
                 // these need a specific context
                 if (command == '.uno:ContourDialog' ||
                     command == '.uno:TransformDialog') {
@@ -41,11 +42,13 @@ describe(['tagdesktop'], 'Accessibility Writer Tests', function() {
                 cy.then(() => {
                     win.app.map.sendUnoCommand(command);
                 });
-                // TODO: remove this wait, just here for human monitoring for the moment
-                cy.wait(1000);
-                cy.cGet('.jsdialog-window').should('exist');
-                cy.cGet('body').type('{esc}');
-                cy.cGet('.jsdialog-window').should('not.exist');
+
+                getActiveDialog()
+                    .should('exist')
+                    .then(() => {
+                        handleTabsInDialog();
+                        closeActiveDialog();
+                    });
             });
 
             cy.get('@console:error').then(spy => {
@@ -100,6 +103,49 @@ describe(['tagdesktop'], 'Accessibility Writer Tests', function() {
                 // expect(result.CompleteWriterDialogCoverage, `complete writer dialog coverage`).to.be.true;
             });
         });
-
     });
+
+    function getActiveDialog() {
+        return cy.cGet('.ui-dialog[role="dialog"]')
+            .should('have.length.at.least', 1)
+            .last();
+    }
+
+    function handleTabsInDialog() {
+        const tabListSelector = '.ui-tabs[role="tablist"]';
+        const tabSelector = `${tabListSelector} .ui-tab`;
+
+        getActiveDialog().then($dialog => {
+            const hasTabs = $dialog.find(tabListSelector).length > 0;
+
+            if (!hasTabs) {
+                return;
+            }
+
+            const tabCount = $dialog.find(tabSelector).length;
+            if (!tabCount) return;
+
+            const clickTab = index => {
+                if (index >= tabCount) return;
+
+                getActiveDialog()
+                    .find(tabSelector)
+                    .eq(index)
+                    .click({ force: true });
+
+                cy.wait(150);
+                clickTab(index + 1);
+            };
+
+            clickTab(0);
+        });
+    }
+
+    function closeActiveDialog() {
+        getActiveDialog().within(() => {
+            cy.get('.ui-dialog-titlebar-close').click({ force: true });
+        });
+
+        cy.cGet('.ui-dialog[role="dialog"]').should('have.length', 0);
+    }
 });
