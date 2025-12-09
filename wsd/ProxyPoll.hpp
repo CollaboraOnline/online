@@ -24,6 +24,10 @@ public:
         return poll;
     }
 
+    static void startPump(const std::shared_ptr<StreamSocket>& clientSocket,
+                          const std::string& targetIp, int targetPort,
+                          const Poco::Net::HTTPRequest& originalRequest);
+
 private:
     ProxyPoll()
         : TerminatingPoll("proxy-poll")
