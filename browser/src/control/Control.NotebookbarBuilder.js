@@ -26,7 +26,6 @@ window.L.Control.NotebookbarBuilder = window.L.Control.JSDialogBuilder.extend({
 	_overrideHandlers: function() {
 		this._controlHandlers['bigtoolitem'] = this._bigtoolitemHandler;
 		this._controlHandlers['combobox'] = this._comboboxControl;
-		this._controlHandlers['newmenubutton'] = this._newMenuButton;
 		this._controlHandlers['exportmenubutton'] = this._exportMenuButton;
 		this._controlHandlers['tabcontrol'] = this._overriddenTabsControlHandler;
 		this._controlHandlers['tabpage'] = this._overriddenTabPageHandler;
@@ -307,17 +306,6 @@ window.L.Control.NotebookbarBuilder = window.L.Control.JSDialogBuilder.extend({
 		return result;
 	},
 
-	_newMenuButton: function(parentContainer, data, builder) {
-		var separatorPos = data.id.indexOf(':');
-		var menuId = data.id.substr(separatorPos + 1);
-		var submenu = builder._getSubmenuOpts(builder.options.map._docLayer._docType, menuId, builder);
-
-		JSDialog.MenuDefinitions.set(menuId, submenu);
-		JSDialog.menubuttonControl(parentContainer, data, builder);
-
-		return false;
-	},
-
 	_exportMenuButton: function(parentContainer, data, builder) {
 		if (data.id && data.id.startsWith('downloadas-')) {
 			var format = data.id.substring('downloadas-'.length);
@@ -353,8 +341,6 @@ window.L.Control.NotebookbarBuilder = window.L.Control.JSDialogBuilder.extend({
 
 	_getSubmenuOpts: function(docType, id, builder) {
 		switch (id) {
-		case 'NewMenu':
-			return builder._getNewSubmenuOpts(docType);
 		case 'DownloadAsMenu':
 			return builder._getDownloadAsSubmenuOpts(docType);
 		case 'SaveAsMenu':
@@ -365,32 +351,6 @@ window.L.Control.NotebookbarBuilder = window.L.Control.JSDialogBuilder.extend({
 			return builder._getPrintSubmenuOpts(docType);
 		}
 		return [];
-	},
-
-	_getNewSubmenuOpts: function(docType) {
-		// Use same icons as for the ODF types in Save As
-		var submenuOpts = [
-			{
-				'action': 'new-text',
-				'text': _('Text document'),
-				'icon': 'downloadas-odt-submenu-icon',
-				'command': 'new-text'
-			},
-			{
-				'action': 'new-spreadsheet',
-				'text': _('Spreadsheet'),
-				'icon': 'downloadas-ods-submenu-icon',
-				'command': 'new-spreadsheet'
-			},
-			{
-				'action': 'new-presentation',
-				'text': _('Presentation'),
-				'icon': 'downloadas-odp-submenu-icon',
-				'command': 'new-presentation'
-			}
-		];
-
-		return submenuOpts;
 	},
 
 	_getDownloadAsSubmenuOpts: function(docType) {
