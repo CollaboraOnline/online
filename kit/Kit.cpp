@@ -3303,6 +3303,9 @@ void startMainLoop(const LibreOfficeKit* kit, const std::shared_ptr<lok::Office>
     }
 
     loKit->registerAnyInputCallback(anyInputCallback, mainKit.get());
+#if defined(_WIN32)
+    loKit->registerFileSaveDialogCallback(output_file_dialog_from_core);
+#endif
 
     LOG_INF("Kit unipoll loop run");
 

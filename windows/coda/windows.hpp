@@ -16,5 +16,6 @@ extern std::string app_installation_path;
 extern std::string app_installation_uri;
 
 extern void load_next_document();
+void output_file_dialog_from_core(const char* suggestedURI, char* result, size_t resultLen);
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
