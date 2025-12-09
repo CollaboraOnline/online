@@ -2,8 +2,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: core-hr\n"
-"PO-Revision-Date: 2025-12-07 11:24+0000\n"
-"Last-Translator: Milo Ivir <mail@milotype.de>\n"
+"PO-Revision-Date: 2025-12-09 11:58+0000\n"
+"Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
 "Language-Team: Croatian <https://hosted.weblate.org/projects/collabora-"
 "online/lokit/hr/>\n"
 "Language: hr\n"
@@ -292,7 +292,7 @@ msgstr "3D _shema:"
 #: cui/inc/strings.hrc:481
 msgctxt "REG_CALCDBFOCUS"
 msgid "Table Style focus"
-msgstr ""
+msgstr "Fokus na stil tablice"
 
 #. EPGtZ
 #: cui/uiconfig/ui/hyperlinkinternetpage.ui:64
@@ -400,7 +400,7 @@ msgstr "Stilovi isticanja"
 #: sfx2/uiconfig/ui/templatepanel.ui:272
 msgctxt "templatepanel|filter-atkobject"
 msgid "Filter"
-msgstr ""
+msgstr "Filtar"
 
 #. 5xrhC
 #: sw/inc/strings.hrc:232
@@ -475,85 +475,85 @@ msgstr "Komentari"
 #: formula/inc/core_resource.hrc:2628
 msgctxt "RID_STRLIST_FUNCTION_NAMES"
 msgid "CHOOSECOLS"
-msgstr ""
+msgstr "CHOOSECOLS"
 
 #. zE6Vt
 #: formula/inc/core_resource.hrc:2629
 msgctxt "RID_STRLIST_FUNCTION_NAMES"
 msgid "CHOOSEROWS"
-msgstr ""
+msgstr "CHOOSEROWS"
 
 #. TxBq7
 #: formula/inc/core_resource.hrc:2630
 msgctxt "RID_STRLIST_FUNCTION_NAMES"
 msgid "DROP"
-msgstr ""
+msgstr "DROP"
 
 #. eTG8r
 #: formula/inc/core_resource.hrc:2631
 msgctxt "RID_STRLIST_FUNCTION_NAMES"
 msgid "EXPAND"
-msgstr ""
+msgstr "EXPAND"
 
 #. aJk9K
 #: formula/inc/core_resource.hrc:2632
 msgctxt "RID_STRLIST_FUNCTION_NAMES"
 msgid "HSTACK"
-msgstr ""
+msgstr "HSTACK"
 
 #. 4HnRz
 #: formula/inc/core_resource.hrc:2633
 msgctxt "RID_STRLIST_FUNCTION_NAMES"
 msgid "VSTACK"
-msgstr ""
+msgstr "VSTACK"
 
 #. JDHX2
 #: formula/inc/core_resource.hrc:2634
 msgctxt "RID_STRLIST_FUNCTION_NAMES"
 msgid "TAKE"
-msgstr ""
+msgstr "TAKE"
 
 #. CiTMM
 #: formula/inc/core_resource.hrc:2635
 msgctxt "RID_STRLIST_FUNCTION_NAMES"
 msgid "TEXTAFTER"
-msgstr ""
+msgstr "TEXTAFTER"
 
 #. Uz9jV
 #: formula/inc/core_resource.hrc:2636
 msgctxt "RID_STRLIST_FUNCTION_NAMES"
 msgid "TEXTBEFORE"
-msgstr ""
+msgstr "TEXTBEFORE"
 
 #. u2Nq4
 #: formula/inc/core_resource.hrc:2637
 msgctxt "RID_STRLIST_FUNCTION_NAMES"
 msgid "TEXTSPLIT"
-msgstr ""
+msgstr "TEXTSPLIT"
 
 #. FMVjv
 #: formula/inc/core_resource.hrc:2638
 msgctxt "RID_STRLIST_FUNCTION_NAMES"
 msgid "TOCOL"
-msgstr ""
+msgstr "TOCOL"
 
 #. xKDBC
 #: formula/inc/core_resource.hrc:2639
 msgctxt "RID_STRLIST_FUNCTION_NAMES"
 msgid "TOROW"
-msgstr ""
+msgstr "TOROW"
 
 #. UDke3
 #: formula/inc/core_resource.hrc:2642
 msgctxt "RID_STRLIST_FUNCTION_NAMES"
 msgid "WRAPCOLS"
-msgstr ""
+msgstr "WRAPCOLS"
 
 #. 3Tf94
 #: formula/inc/core_resource.hrc:2643
 msgctxt "RID_STRLIST_FUNCTION_NAMES"
 msgid "WRAPROWS"
-msgstr ""
+msgstr "WRAPROWS"
 
 #. Lrn3j
 #: formula/uiconfig/ui/functionpage.ui:80
@@ -641,7 +641,7 @@ msgstr "Izvezi OLE objekte kao _JPEG slike"
 #: filter/uiconfig/ui/pdfgeneralpage.ui:550
 msgctxt "pdfgeneralpage|embed|tooltip_text"
 msgid "Creates a PDF that embeds the original ODF file as an attachment."
-msgstr ""
+msgstr "Stvara PDF koji ugrađuje izvornu ODF datoteku kao privitak."
 
 #. JS7DG
 #: filter/uiconfig/ui/pdfgeneralpage.ui:556
@@ -650,6 +650,8 @@ msgid ""
 "This setting enables you to export the document as a .pdf file containing "
 "two file formats: PDF and ODF as an attachment. "
 msgstr ""
+"Ova postavka omogućuje izvoz dokumenta kao .pdf datoteke koja sadrži dva "
+"formata: PDF i ODF kao privitak. "
 
 #. NCgBM
 #: filter/uiconfig/ui/pdfgeneralpage.ui:583
@@ -665,19 +667,19 @@ msgstr ""
 #: filter/uiconfig/ui/pdfgeneralpage.ui:587
 msgctxt "pdfgeneralpage|pdf_version"
 msgid "PDF 1.7"
-msgstr ""
+msgstr "PDF 1.7"
 
 #. D6SQE
 #: filter/uiconfig/ui/pdfgeneralpage.ui:588
 msgctxt "pdfgeneralpage|pdf_version"
 msgid "PDF 2.0"
-msgstr ""
+msgstr "PDF 2.0"
 
 #. Pk2QP
 #: filter/uiconfig/ui/pdfgeneralpage.ui:592
 msgctxt "pdfgeneralpage|pdf_version"
 msgid "PDF/A-4 (PDF 2.0 base)"
-msgstr ""
+msgstr "PDF/A-4 (PDF 2.0 osnova)"
 
 #. S7DSM
 #: filter/uiconfig/ui/pdfgeneralpage.ui:599
@@ -690,6 +692,12 @@ msgid ""
 "used in the source document will be embedded into the generated PDF file. "
 "PDF tags will be written."
 msgstr ""
+"Verzije mogu biti „klasični“ PDF (npr. PDF 1.7, PDF 2.0) ili PDF/A. PDF/A se "
+"definira kao elektronički format dokumenta za dugoročno čuvanje i "
+"arhiviranje. Omogućuje samo podskup PDF funkcija koje su kompatibilne s tim "
+"slučajem upotrebe. Na primjer: Svi fontovi koji su korišteni u izvornom "
+"dokumentu će se ugraditi u generiranu PDF datoteku. PDF oznake će se "
+"zapisati."
 
 #. te76B
 #: filter/uiconfig/ui/pdfgeneralpage.ui:620
@@ -1085,7 +1093,7 @@ msgctxt ""
 "TooltipLabel\n"
 "value.text"
 msgid "Reinstate Track Change and select the next one"
-msgstr ""
+msgstr "Obnovi praćenu promjenu i odaberi sljedeću"
 
 #. KVYrC
 #: WriterCommands.xcu
@@ -1105,7 +1113,7 @@ msgctxt ""
 "TooltipLabel\n"
 "value.text"
 msgid "Reinstate All Tracked Changes"
-msgstr ""
+msgstr "Obnovi sve praćene promjene"
 
 #. SRvKK
 #: WriterCommands.xcu
@@ -1135,7 +1143,7 @@ msgctxt ""
 "TooltipLabel\n"
 "value.text"
 msgid "Reinstate Track Change"
-msgstr ""
+msgstr "Obnovi praćenu promjenu"
 
 #. rTFtt
 #: WriterCommands.xcu
@@ -1373,31 +1381,31 @@ msgstr ""
 #: sc/inc/scfuncs.hrc:4296
 msgctxt "SC_OPCODE_EXPAND"
 msgid "Pad with"
-msgstr ""
+msgstr "Popuni prazna polja sa"
 
 #. kHatA
 #: sc/inc/scfuncs.hrc:4297
 msgctxt "SC_OPCODE_EXPAND"
 msgid "The value with which to pad. The default is #N/A."
-msgstr ""
+msgstr "Vrijednost za popunjavanje praznih polja. Standardno je #N/A."
 
 #. m7qUf
 #: sc/inc/scfuncs.hrc:4303
 msgctxt "SC_OPCODE_HSTACK"
 msgid "Appends arrays horizontally to create a larger array."
-msgstr ""
+msgstr "Dodaje nizove vodoravno kako bi stvorio veći niz."
 
 #. LnAFg
 #: sc/inc/scfuncs.hrc:4304 sc/inc/scfuncs.hrc:4306
 msgctxt "SC_OPCODE_HSTACK"
 msgid "Array"
-msgstr ""
+msgstr "Niz"
 
 #. uHbHC
 #: sc/inc/scfuncs.hrc:4305
 msgctxt "SC_OPCODE_HSTACK"
 msgid "The first array to append."
-msgstr ""
+msgstr "Prvi niz za dodavanje."
 
 #. QRA57
 #: sc/inc/scfuncs.hrc:4307
@@ -1406,24 +1414,26 @@ msgid ""
 "Array 1, Array 2,... The following arrays to append. If an array has fewer "
 "rows, #N/A error will be returned in the additional rows."
 msgstr ""
+"Niz 1, niz 2, … Sljedeći nizovi za dodavanje. Ako niz ima manje redaka, u "
+"dodatnim redcima će se vratiti #N/A greška."
 
 #. 7zS24
 #: sc/inc/scfuncs.hrc:4313
 msgctxt "SC_OPCODE_VSTACK"
 msgid "Appends arrays vertically to create a larger array."
-msgstr ""
+msgstr "Dodaje nizove okomito kako bi stvorio veći niz."
 
 #. rhVRC
 #: sc/inc/scfuncs.hrc:4314 sc/inc/scfuncs.hrc:4316
 msgctxt "SC_OPCODE_VSTACK"
 msgid "Array"
-msgstr ""
+msgstr "Niz"
 
 #. tGHH9
 #: sc/inc/scfuncs.hrc:4315
 msgctxt "SC_OPCODE_VSTACK"
 msgid "The first array to append."
-msgstr ""
+msgstr "Prvi niz za dodavanje."
 
 #. Kb6Xc
 #: sc/inc/scfuncs.hrc:4317
@@ -1432,6 +1442,8 @@ msgid ""
 "Array 1, Array 2,... The following arrays to append. If an array has fewer "
 "columns, #N/A error will be returned in the additional columns."
 msgstr ""
+"Niz 1, niz 2, … Sljedeći nizovi za dodavanje. Ako niz ima manje stupaca, u "
+"dodatnim stupcima će se vratiti #N/A greška."
 
 #. JnsYT
 #: sc/inc/scfuncs.hrc:4323
@@ -1440,37 +1452,38 @@ msgid ""
 "Returns a specified number of contiguous rows or columns from the start or "
 "end of an array."
 msgstr ""
+"Vraća određeni broj uzastopnih redaka ili stupaca s početka ili kraja niza."
 
 #. dFLFb
 #: sc/inc/scfuncs.hrc:4324
 msgctxt "SC_OPCODE_TAKE"
 msgid "Array"
-msgstr ""
+msgstr "Niz"
 
 #. ycFef
 #: sc/inc/scfuncs.hrc:4325
 msgctxt "SC_OPCODE_TAKE"
 msgid "The array from which to take rows or columns."
-msgstr ""
+msgstr "Niz iz kojeg se uzimaju redovi ili stupci."
 
 #. DzBCL
 #: sc/inc/scfuncs.hrc:4326
 msgctxt "SC_OPCODE_TAKE"
 msgid "Rows"
-msgstr ""
+msgstr "Redci"
 
 #. KBPBn
 #: sc/inc/scfuncs.hrc:4327
 msgctxt "SC_OPCODE_TAKE"
 msgid ""
 "The number of rows to take. A negative value takes from the end of the array."
-msgstr ""
+msgstr "Broj redaka koje treba uzeti. Negativna vrijednost uzima s kraja niza."
 
 #. HJQKW
 #: sc/inc/scfuncs.hrc:4328
 msgctxt "SC_OPCODE_TAKE"
 msgid "Columns"
-msgstr ""
+msgstr "Stupci"
 
 #. ZexcG
 #: sc/inc/scfuncs.hrc:4329
@@ -1478,43 +1491,43 @@ msgctxt "SC_OPCODE_TAKE"
 msgid ""
 "The number of columns to take. A negative value takes from the end of the "
 "array."
-msgstr ""
+msgstr "Broj stupaca koje treba uzeti. Negativna vrijednost uzima s kraja niza."
 
 #. GwyMB
 #: sc/inc/scfuncs.hrc:4335
 msgctxt "SC_OPCODE_TEXTAFTER"
 msgid "Returns the text that occurs after a given substring or delimiter."
-msgstr ""
+msgstr "Vraća tekst koji se pojavljuje nakon zadanog podniza ili razdjeljivača."
 
 #. cicY2
 #: sc/inc/scfuncs.hrc:4336
 msgctxt "SC_OPCODE_TEXTAFTER"
 msgid "Text"
-msgstr ""
+msgstr "Tekst"
 
 #. 3WLYF
 #: sc/inc/scfuncs.hrc:4337
 msgctxt "SC_OPCODE_TEXTAFTER"
 msgid "The original text."
-msgstr ""
+msgstr "Izvorni tekst."
 
 #. z4pDr
 #: sc/inc/scfuncs.hrc:4338
 msgctxt "SC_OPCODE_TEXTAFTER"
 msgid "Delimiter"
-msgstr ""
+msgstr "Razdjeljivač"
 
 #. YEbwu
 #: sc/inc/scfuncs.hrc:4339
 msgctxt "SC_OPCODE_TEXTAFTER"
 msgid "The delimiter. Multiple delimiters can be supplied."
-msgstr ""
+msgstr "Razdjeljivač. Moguće je koristiti više razdjeljivača."
 
 #. HPDvF
 #: sc/inc/scfuncs.hrc:4340
 msgctxt "SC_OPCODE_TEXTAFTER"
 msgid "Instance Number"
-msgstr ""
+msgstr "Broj instance"
 
 #. DmVZL
 #: sc/inc/scfuncs.hrc:4341
@@ -1523,6 +1536,8 @@ msgid ""
 "The instance of the delimiter after which to extract text. The default is 1. "
 "A negative number starts searching from the end."
 msgstr ""
+"Instanca razdjeljivača nakon kojeg se izdvaja tekst. Standardno je 1. "
+"Negativan broj počinje tražiti s kraja."
 
 #. fpoGj
 #: sc/inc/scfuncs.hrc:4342
@@ -1535,66 +1550,72 @@ msgstr "Modus poklapanja"
 msgctxt "SC_OPCODE_TEXTAFTER"
 msgid "Set to 1 to perform a case-insensitive match. The default is 0."
 msgstr ""
+"Postavi na 1 za podudaranje bez obzira na velika i velika slova. Standardno "
+"je 0."
 
 #. nAF2s
 #: sc/inc/scfuncs.hrc:4344
 msgctxt "SC_OPCODE_TEXTAFTER"
 msgid "Match End"
-msgstr ""
+msgstr "Kraj poklapanja"
 
 #. W2DGj
 #: sc/inc/scfuncs.hrc:4345
 msgctxt "SC_OPCODE_TEXTAFTER"
 msgid "Set to 1 to treat the end of text as a delimiter. The default is 0."
 msgstr ""
+"Postavi na 1 kako bi se kraj teksta tretirao kao razdjeljivač. Standardno je "
+"0."
 
 #. PG6qj
 #: sc/inc/scfuncs.hrc:4346
 msgctxt "SC_OPCODE_TEXTAFTER"
 msgid "If Not Found"
-msgstr ""
+msgstr "Ako se ne pronađe"
 
 #. vfgZc
 #: sc/inc/scfuncs.hrc:4347
 msgctxt "SC_OPCODE_TEXTAFTER"
 msgid "The value returned if no match is found. The default is #N/A."
 msgstr ""
+"Vrijednost koja se vraća ako se ne pronađe podudaranje. Standardno je "
+"postavljeno na #N/A."
 
 #. f88EE
 #: sc/inc/scfuncs.hrc:4353
 msgctxt "SC_OPCODE_TEXTBEFORE"
 msgid "Returns the text that occurs before a given substring or delimiter."
-msgstr ""
+msgstr "Vraća tekst koji se pojavljuje prije zadanog podniza ili razdjeljivača."
 
 #. NNriC
 #: sc/inc/scfuncs.hrc:4354
 msgctxt "SC_OPCODE_TEXTBEFORE"
 msgid "Text"
-msgstr ""
+msgstr "Tekst"
 
 #. HsEG8
 #: sc/inc/scfuncs.hrc:4355
 msgctxt "SC_OPCODE_TEXTBEFORE"
 msgid "The original text."
-msgstr ""
+msgstr "Izvorni tekst."
 
 #. E4a5z
 #: sc/inc/scfuncs.hrc:4356
 msgctxt "SC_OPCODE_TEXTBEFORE"
 msgid "Delimiter"
-msgstr ""
+msgstr "Razdjeljivač"
 
 #. qDFZy
 #: sc/inc/scfuncs.hrc:4357
 msgctxt "SC_OPCODE_TEXTBEFORE"
 msgid "The delimiter. Multiple delimiters can be supplied."
-msgstr ""
+msgstr "Razdjeljivač. Moguće je koristiti više razdjeljivača."
 
 #. gNHAi
 #: sc/inc/scfuncs.hrc:4358
 msgctxt "SC_OPCODE_TEXTBEFORE"
 msgid "Instance Number"
-msgstr ""
+msgstr "Broj instance"
 
 #. sD4zC
 #: sc/inc/scfuncs.hrc:4359
@@ -1603,6 +1624,8 @@ msgid ""
 "The instance of the delimiter before which to extract text. The default is "
 "1. A negative number starts searching from the end."
 msgstr ""
+"Instanca razdjeljivača prije kojeg se izdvaja tekst. Standardno je 1. "
+"Negativan broj počinje tražiti s kraja."
 
 #. Adzeh
 #: sc/inc/scfuncs.hrc:4360
@@ -1615,54 +1638,60 @@ msgstr "Modus poklapanja"
 msgctxt "SC_OPCODE_TEXTBEFORE"
 msgid "Set to 1 to perform a case-insensitive match. The default is 0."
 msgstr ""
+"Postavi na 1 za podudaranje bez obzira na velika i velika slova. Standardno "
+"je 0."
 
 #. sACA2
 #: sc/inc/scfuncs.hrc:4362
 msgctxt "SC_OPCODE_TEXTBEFORE"
 msgid "Match End"
-msgstr ""
+msgstr "Kraj podudaranja"
 
 #. UxpD6
 #: sc/inc/scfuncs.hrc:4363
 msgctxt "SC_OPCODE_TEXTBEFORE"
 msgid "Set to 1 to treat the end of text as a delimiter. The default is 0."
 msgstr ""
+"Postavi na 1 kako bi se kraj teksta tretirao kao razdjeljivač. Standardno je "
+"0."
 
 #. aCnZX
 #: sc/inc/scfuncs.hrc:4364
 msgctxt "SC_OPCODE_TEXTBEFORE"
 msgid "If Not Found"
-msgstr ""
+msgstr "Ako se ne pronađe"
 
 #. xCZYH
 #: sc/inc/scfuncs.hrc:4365
 msgctxt "SC_OPCODE_TEXTBEFORE"
 msgid "The value returned if no match is found. The default is #N/A."
 msgstr ""
+"Vrijednost koja se vraća ako se ne pronađe podudaranje. Standardno je "
+"postavljeno na #N/A."
 
 #. wdZTd
 #: sc/inc/scfuncs.hrc:4371
 msgctxt "SC_OPCODE_TEXTSPLIT"
 msgid "Splits text by a given delimiter to an array of multiple cells."
-msgstr ""
+msgstr "Rastavlja tekst prema zadanom razdjeljivaču u niz od više polja."
 
 #. DH7h4
 #: sc/inc/scfuncs.hrc:4372
 msgctxt "SC_OPCODE_TEXTSPLIT"
 msgid "Text"
-msgstr ""
+msgstr "Tekst"
 
 #. dqSdF
 #: sc/inc/scfuncs.hrc:4373
 msgctxt "SC_OPCODE_TEXTSPLIT"
 msgid "The text to split."
-msgstr ""
+msgstr "Tekst za rastavljanje."
 
 #. pdpxt
 #: sc/inc/scfuncs.hrc:4374
 msgctxt "SC_OPCODE_TEXTSPLIT"
 msgid "Column Delimiter"
-msgstr ""
+msgstr "Razdjeljivač stupaca"
 
 #. nfMAr
 #: sc/inc/scfuncs.hrc:4375
