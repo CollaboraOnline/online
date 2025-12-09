@@ -13,6 +13,7 @@
 #include <HttpHelper.hpp>
 #include <Poco/Net/HTTPRequest.h>
 #include <ProxyPoll.hpp>
+#include <Unit.hpp>
 #include <memory>
 
 class ProxyHandler : public SimpleSocketHandler
@@ -25,9 +26,13 @@ class ProxyHandler : public SimpleSocketHandler
     // 256KB flow control
     static constexpr size_t MAX_BUFFER = 256 * 1024;
 
+    // Direction flag: true = client->target, false = target->client
+    bool _isClientToTarget;
+
 public:
-    ProxyHandler(const std::shared_ptr<StreamSocket>& peer)
+    ProxyHandler(const std::shared_ptr<StreamSocket>& peer, bool isClientToTarget = false)
         : _peerSocket(peer)
+        , _isClientToTarget(isClientToTarget)
     {
     }
 
@@ -60,6 +65,12 @@ public:
         auto& inBuffer = self->getInBuffer();
         if (!inBuffer.empty())
         {
+            if (UnitBase::isUnitTesting())
+            {
+                if (UnitWSD* unit = UnitWSD::getMaybeNull())
+                    unit->onProxyData(inBuffer.data(), inBuffer.size(), _isClientToTarget);
+            }
+
             peer->send(inBuffer.data(), inBuffer.size());
             inBuffer.clear();
         }
@@ -80,21 +91,28 @@ public:
     }
 };
 
-namespace
+void ProxyPoll::startPump(const std::shared_ptr<StreamSocket>& clientSocket,
+                          const std::string& targetIp, int targetPort,
+                          const Poco::Net::HTTPRequest& originalRequest)
 {
-[[maybe_unused]] static void startProxyPump(const std::shared_ptr<StreamSocket>& clientSocket,
-                                            const std::string& targetIp, int targetPort,
-                                            const Poco::Net::HTTPRequest& originalRequest)
-{
-    // pumps target -> client
-    auto targetHandler = std::make_shared<ProxyHandler>(clientSocket);
+    std::ostringstream oss;
+    originalRequest.write(oss);
+    std::string reqStr = oss.str();
+
+    // Inject X-COOL-Internal-Proxy header
+    size_t headerEnd = reqStr.find("\r\n\r\n");
+    std::string proxiedRequest =
+        reqStr.substr(0, headerEnd) + "\r\nX-COOL-Internal-Proxy: true" + reqStr.substr(headerEnd);
+
+    // pumps target -> client (direction = false)
+    auto targetHandler = std::make_shared<ProxyHandler>(clientSocket, false);
 
     // Async connect to target pod (avoids blocking DNS)
     net::asyncConnect(
         targetIp, std::to_string(targetPort),
         false, // isSSL - internal traffic typically unencrypted
         targetHandler,
-        [clientSocket, &originalRequest, targetHandler](
+        [clientSocket, proxiedRequest = std::move(proxiedRequest), targetHandler](
             const std::shared_ptr<StreamSocket>& targetSocket, net::AsyncConnectResult result)
         {
             if (result != net::AsyncConnectResult::Ok || !targetSocket)
@@ -104,27 +122,22 @@ namespace
                 return;
             }
 
-            // pumps client -> target
-            auto clientHandler = std::make_shared<ProxyHandler>(targetSocket);
-            clientSocket->setHandler(clientHandler);
-
-            std::ostringstream oss;
-            originalRequest.write(oss);
-            std::string reqStr = oss.str();
-
-            // Inject X-COOL-Internal-Proxy header
-            size_t headerEnd = reqStr.find("\r\n\r\n");
-            std::string proxiedRequest = reqStr.substr(0, headerEnd) +
-                                         "\r\nX-COOL-Internal-Proxy: true" +
-                                         reqStr.substr(headerEnd);
-
-            targetSocket->send(proxiedRequest);
-
             ProxyPoll::instance().insertNewSocket(clientSocket);
             ProxyPoll::instance().insertNewSocket(targetSocket);
+
+            // pumps client -> target (direction = true)
+            ProxyPoll::instance().addCallback(
+                [targetSocket, clientSocket, proxiedRequest]()
+                {
+                    auto clientHandler = std::make_shared<ProxyHandler>(targetSocket, true);
+                    clientSocket->setHandler(clientHandler);
+
+                    // Send request on the correct thread
+                    targetSocket->send(proxiedRequest);
+                });
 
             LOG_INF("Proxy established: client <-> target");
         });
 }
-} // namespace
+
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
