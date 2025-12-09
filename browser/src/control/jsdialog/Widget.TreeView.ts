@@ -504,7 +504,9 @@ class TreeViewControl {
 			builder._cleanText(entry.columns[index].text) ||
 			builder._cleanText(entry.text);
 
-		const hasRenderer = entry.columns[index].customEntryRenderer;
+		const hasRenderer =
+			entry.columns[index].customEntryRenderer ||
+			treeViewData.customEntryRenderer;
 		const hasCache = hasRenderer && builder.rendersCache[treeViewData.id];
 		const hasCachedImage =
 			hasCache && builder.rendersCache[treeViewData.id].images[entry.row];
