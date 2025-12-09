@@ -283,12 +283,10 @@ static void send2JS(const HWND hWnd, const char* buffer, int length)
     PostMessageW(hWnd, CODA_WM_EXECUTESCRIPT, (WPARAM)wparam, 0);
 }
 
-// FIXME: This function is *exported* on purpose and called by SfxStoringHelper::FinishGUIStoreModel() in
-// sfx2/source/doc/guisaveas.cxx in core. Yes, this is an awful hack.
-
-__declspec(dllexport) void output_file_dialog_from_core(const std::wstring& suggestedURI, std::string& result)
+// LOK file save dialog callback.
+void output_file_dialog_from_core(const char* suggestedURI, char* result, size_t resultLen)
 {
-    auto URI = Poco::URI(Util::wide_string_to_string(suggestedURI));
+    auto URI = Poco::URI(suggestedURI);
     auto path = URI.getPath();
     if (path.size() > 4 && path[0] == '/' && path[2] == ':' && path[3] == '/')
         path = path.substr(1);
@@ -298,7 +296,10 @@ __declspec(dllexport) void output_file_dialog_from_core(const std::wstring& sugg
     auto lastPeriod = filename.find_last_of('.');
     auto extension = filename.substr(lastPeriod + 1);
     auto filenameAndUri = fileSaveDialog(filename, folder, extension);
-    result = filenameAndUri.uri;
+    if (filenameAndUri.uri.size() < resultLen)
+    {
+        strcpy(result, filenameAndUri.uri.c_str());
+    }
 }
 
 static void stopServer()
