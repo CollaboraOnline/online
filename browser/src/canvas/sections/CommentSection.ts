@@ -92,7 +92,7 @@ export class Comment extends CanvasSectionObject {
 		if (data.parent === undefined)
 			data.parent = '0';
 
-		this.sectionProperties.data = data;
+		this.setData(data);
 
 		/*
 			possibleParentCommentId:
@@ -151,8 +151,6 @@ export class Comment extends CanvasSectionObject {
 		this.sectionProperties.childLines = [];
 		this.sectionProperties.childCommentOffset = 8;
 		this.sectionProperties.commentMarkerSubSection = null; // For Impress and Draw documents.
-
-		this.convertRectanglesToCoreCoordinates(); // Convert rectangle coordiantes into core pixels on initialization.
 
 		app.map.on('sheetgeometrychanged', this.setPositionAndSize.bind(this));
 	}
@@ -399,6 +397,14 @@ export class Comment extends CanvasSectionObject {
 	// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 	public setData (data: any): void {
 		this.sectionProperties.data = data;
+		const rectangles = this.sectionProperties.data.rectangles;
+
+		if (rectangles) {
+			// Convert the rectangles into simple rectangles as soon as possible.
+			for (let i = 0; i < rectangles.length; i++) {
+				rectangles[i] = new cool.SimpleRectangle(rectangles[i][0], rectangles[i][1], rectangles[i][2], rectangles[i][3]);
+			}
+		}
 	}
 
 	private createTrackChangeButtons (): void {
@@ -645,73 +651,25 @@ export class Comment extends CanvasSectionObject {
 		return false;
 	}
 
-	/*
-		This function doesn't take topleft positions of sections into account.
-		This just returns bare pixel coordinates of the rectangles.
-	*/
-	private convertRectanglesToCoreCoordinates() {
-		var pixelBasedOrgRectangles = new Array<Array<number>>();
-
-		var originals = this.sectionProperties.data.rectanglesOriginal;
-		var pos: number[], size: number[];
-
-		if (originals) {
-			for (var i = 0; i < originals.length; i++) {
-				pos = [
-					Math.round(originals[i][0] * app.twipsToPixels),
-					Math.round(originals[i][1] * app.twipsToPixels)
-				];
-				size = [
-					Math.round(originals[i][2] * app.twipsToPixels),
-					Math.round(originals[i][3] * app.twipsToPixels)
-				];
-
-				pixelBasedOrgRectangles.push([pos[0], pos[1], size[0], size[1]]);
-			}
-
-			this.sectionProperties.pixelBasedOrgRectangles = pixelBasedOrgRectangles;
-		}
-	}
-
 	// This is for svg elements that will be bound to document-container.
 	// This also returns whether any rectangle has an intersection with the visible area/panes.
 	// This function calculates the core pixel coordinates then converts them into view coordinates.
 	private convertRectanglesToViewCoordinates () : boolean {
 		var rectangles = this.sectionProperties.data.rectangles;
-		var originals = this.sectionProperties.data.rectanglesOriginal;
 		var viewContext = this.map.getTileSectionMgr()._paintContext();
 		var intersectsVisibleArea = false;
-		var pos: number[], size: number[];
 
 		if (rectangles) {
-			var documentAnchorSection = this.containerObject.getDocumentAnchorSection();
-			var diff = [documentAnchorSection.myTopLeft[0] - app.activeDocument.activeLayout.viewedRectangle.pX1, documentAnchorSection.myTopLeft[1] - app.activeDocument.activeLayout.viewedRectangle.pY1];
-
-			for (var i = 0; i < rectangles.length; i++) {
-				pos = [
-					Math.round(originals[i][0] * app.twipsToPixels),
-					Math.round(originals[i][1] * app.twipsToPixels)
-				];
-				size = [
-					Math.round(originals[i][2] * app.twipsToPixels),
-					Math.round(originals[i][3] * app.twipsToPixels)
-				];
-
-				if (!intersectsVisibleArea && Comment.doesRectIntersectView(pos, size, viewContext))
+			for (let i = 0; i < rectangles.length; i++) {
+				if (app.activeDocument.activeLayout.viewedRectangle.intersectsRectangle(rectangles[i].toArray())) {
 					intersectsVisibleArea = true;
-
-				rectangles[i][0] = pos[0] + diff[0];
-				rectangles[i][1] = pos[1] + diff[1];
-				rectangles[i][2] = size[0];
-				rectangles[i][3] = size[1];
+					break;
+				}
 			}
 		} else if (this.sectionProperties.data.trackchange && this.sectionProperties.data.anchorPos) {
 			// For redline comments there are no 'rectangles' or 'rectangleOriginal' properties in sectionProperties.data
 			// So use the comment rectangle stored in anchorPos (in display? twips).
-			pos = this.getPosition();
-			size = this.getSize();
-
-			intersectsVisibleArea = Comment.doesRectIntersectView(pos, size, viewContext);
+			intersectsVisibleArea = Comment.doesRectIntersectView(this.getPosition(), this.getSize(), viewContext);
 		}
 
 		return intersectsVisibleArea;
@@ -746,8 +704,6 @@ export class Comment extends CanvasSectionObject {
 	}
 
 	private updatePosition (): void {
-		this.convertRectanglesToViewCoordinates();
-		this.convertRectanglesToCoreCoordinates();
 		this.setPositionAndSize();
 		if (app.map._docLayer._docType === 'spreadsheet')
 			this.positionCalcComment();
@@ -1376,15 +1332,17 @@ export class Comment extends CanvasSectionObject {
 		For adjusting, we need to take document top left and documentAnchor top left into account.
 		No need to do that for now.
 	*/
-	private checkIfCursorIsOnThisCommentWriter(rectangles: any, point: Array<number>) {
+	private checkIfCursorIsOnThisCommentWriter(newPosition: cool.SimpleRectangle) {
 		if (this.sectionProperties.commentListSection.sectionProperties.show == false)
 			return;
 
+		const rectangles: cool.SimpleRectangle[] = this.sectionProperties.data.rectangles;
+
 		for (var i: number = 0; i < rectangles.length; i++) {
-			if (this.doesRectangleContainPoint(rectangles[i], point)) {
-				if (!this.isSelected()) {
+			if (rectangles[i].containsPoint([newPosition.x1, newPosition.y1])) {
+				if (!this.isSelected())
 					this.sectionProperties.commentListSection.selectById(this.sectionProperties.data.id);
-				}
+
 				this.stopPropagating();
 				return;
 			}
@@ -1400,10 +1358,8 @@ export class Comment extends CanvasSectionObject {
 
 	/// This event is Writer-only. Fired by CanvasSectionContainer.
 	public onCursorPositionChanged(newPosition: cool.SimpleRectangle): void {
-		var x = newPosition.pX1;
-		var y = Math.round(newPosition.pCenter[1]);
-		if (this.sectionProperties.pixelBasedOrgRectangles) {
-			this.checkIfCursorIsOnThisCommentWriter(this.sectionProperties.pixelBasedOrgRectangles, [x, y]);
+		if (this.sectionProperties.data.rectangles) {
+			this.checkIfCursorIsOnThisCommentWriter(newPosition);
 		}
 	}
 
@@ -1411,13 +1367,8 @@ export class Comment extends CanvasSectionObject {
 	// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 	public onCellAddressChanged(): void {
 		if (this.sectionProperties.data.rectangles) {
-			var midX = this.containerObject.getDocumentAnchor()[0] + Math.round(app.calc.cellCursorRectangle.pCenter[0]);
-			var midY = this.containerObject.getDocumentAnchor()[1] + Math.round(app.calc.cellCursorRectangle.pCenter[1]);
-
-			if (midX > this.sectionProperties.data.rectangles[0][0] && midX < this.sectionProperties.data.rectangles[0][0] + this.sectionProperties.data.rectangles[0][2]
-				&& midY > this.sectionProperties.data.rectangles[0][1] && midY < this.sectionProperties.data.rectangles[0][1] + this.sectionProperties.data.rectangles[0][3]) {
+			if (this.sectionProperties.data.rectangles[0].containsPoint(app.calc.cellCursorRectangle.center))
 				this.sectionProperties.commentListSection.sectionProperties.calcCurrentComment = this;
-			}
 			else if (this.isSelected()) {
 				this.hide();
 				this.sectionProperties.commentListSection.sectionProperties.calcCurrentComment = null;
@@ -1468,21 +1419,23 @@ export class Comment extends CanvasSectionObject {
 	public onDraw (): void {
 		if (this.sectionProperties.showSelectedCoordinate) {
 			if (app.map._docLayer._docType === 'text') {
-				var rectangles: Array<any> = this.sectionProperties.data.rectangles;
+				var rectangles: Array<cool.SimpleRectangle> = this.sectionProperties.data.rectangles;
 				if (rectangles) {
+					// We are using view coordinates and it ignores myTopLeft values.
+					// We set the pen position to canvas origin here. Then we set it back at the end of this block, after drawing.
+					this.context.translate(-this.myTopLeft[0], -this.myTopLeft[1]);
+
 					this.context.fillStyle = this.sectionProperties.usedTextColor;
 					this.context.globalAlpha = 0.25;
 
-					for (var i: number = 0; i < this.sectionProperties.data.rectangles.length;i ++) {
-						var x = rectangles[i][0] - this.myTopLeft[0];
-						var y = rectangles[i][1] - this.myTopLeft[1];
-						var w = rectangles[i][2] > 3 ? rectangles[i][2]: 3;
-						var h = rectangles[i][3];
-
-						this.context.fillRect(x, y, w , h);
+					for (let i = 0; i < rectangles.length;i ++) {
+						const height = Math.max(rectangles[i].v4Y - rectangles[i].v1Y, 3);
+						const width = Math.max(rectangles[i].v4X - rectangles[i].v1X, 3);
+						this.context.fillRect(rectangles[i].v1X, rectangles[i].v1Y, width, height);
 					}
 
 					this.context.globalAlpha = 1;
+					this.context.translate(this.myTopLeft[0], this.myTopLeft[1]);
 				}
 			}
 			else if (app.map._docLayer._docType === 'spreadsheet' &&
