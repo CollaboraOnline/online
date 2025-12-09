@@ -882,18 +882,11 @@ if ENABLE_CYPRESS
 	@echo "Added HTML file for multiuser tests"
 endif
 
-# When building CODA-W, LO_APP is a Windows path (C:\Users\you\...),
-# but we run this in WSL, thus we need LOBUILDDIR instead which is a
-# Unix path.
-if ENABLE_WINDOWSAPP
-LOPATHFORTEMPLATES=$(LOBUILDDIR)/instdir
-else
-LOPATHFORTEMPLATES=$(LO_PATH)
-endif
-
-$(TEMPLATE_MANIFEST): $(srcdir)/util/generate-templates-manifest.js
-	@mkdir -p $(dir $@)
-	@$(NODE) $(srcdir)/util/generate-templates-manifest.js --lo-path "$(LOPATHFORTEMPLATES)" --out "$@"
+$(TEMPLATE_MANIFEST):
+	mkdir -p $(dir $@)
+	cp templates/templates.js "$@"
+	cp -r templates/files $(dir $@)
+	cp -r templates/previews $(dir $@)
 
 $(DIST_FOLDER)/images/templates/preview/%.png: $(srcdir)/images/templates/preview/%.png
 	@mkdir -p $(dir $@)
