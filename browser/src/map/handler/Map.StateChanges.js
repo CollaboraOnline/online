@@ -107,7 +107,7 @@ window.L.Map.StateChangeHandler = window.L.Handler.extend({
 			const y = parseInt(state.y);
 
 			const point = new cool.SimplePoint(x, y);
-			app.activeDocument.activeView.setOverviewPageVisArea(point);
+			app.activeDocument.activeLayout.setOverviewPageVisArea(point);
 		}
 
 		$('#document-container').removeClass('slide-master-mode');
