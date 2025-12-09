@@ -290,10 +290,12 @@ button#button2.ui-pushbutton.jsdialog.sidebar {
 	grid-gap: inherit;
 }
 #textorientbox button {
-	min-width: auto;
+	padding: 0 5px !important;
+	min-width: 0 !important;
+	margin-inline-end: 2px !important;
+	margin-inline-start: -8px !important;
 	width: auto;
 }
-
 
 /* Charts */
 
