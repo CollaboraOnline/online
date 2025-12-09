@@ -42,13 +42,9 @@ class DocumentViewBase {
 		groups.length = 0;
 
 		// Sort the rectangles.
-		for (let i = 0; i < rectangles.length - 1; i++) {
-			if (rectangles[i][1] > rectangles[i + 1][1]) {
-				const temp = rectangles[i];
-				rectangles[i] = rectangles[i + 1];
-				rectangles[i + 1] = temp;
-			}
-		}
+		rectangles.sort((a, b) => {
+			return a[1] > b[1] ? 1 : a[1] === b[1] ? 0 : -1;
+		});
 
 		while (rectangles.length > 0) {
 			if (groups.length === 0) {
