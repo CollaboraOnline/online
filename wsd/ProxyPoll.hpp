@@ -30,7 +30,7 @@ public:
 
 private:
     ProxyPoll()
-        : TerminatingPoll("proxy-poll")
+        : TerminatingPoll("proxy_poll")
     {
         startThread(); // Spawns new thread running pollingThread()
     }

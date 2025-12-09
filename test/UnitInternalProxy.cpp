@@ -36,8 +36,7 @@ class EchoServerFactory final : public SocketFactory
     }
 };
 
-/// Test the internal ProxyPoll functionality using production ProxyHandler.
-/// Uses the onProxyData hook in UnitWSD to verify data flow.
+/// Test the internal ProxyPoll functionality.
 class UnitInternalProxy : public UnitWSD
 {
     bool _tested;
@@ -57,8 +56,8 @@ public:
     UnitInternalProxy()
         : UnitWSD("UnitInternalProxy")
         , _tested(false)
-        , _serverPoll(std::make_shared<SocketPoll>("echo-server-poll"))
-        , _clientPoll(std::make_shared<SocketPoll>("client-poll"))
+        , _serverPoll(std::make_shared<SocketPoll>("echoserver_poll"))
+        , _clientPoll(std::make_shared<SocketPoll>("client_poll"))
         , _echoPort(0)
         , _testPassed(false)
     {
@@ -93,7 +92,7 @@ public:
         TST_LOG("Test 1: ProxyPoll singleton...");
         ProxyPoll& poll = ProxyPoll::instance();
         LOK_ASSERT_MESSAGE("ProxyPoll should be alive", poll.isAlive());
-        LOK_ASSERT_EQUAL(std::string("proxy-poll"), poll.name());
+        LOK_ASSERT_EQUAL(std::string("proxy_poll"), poll.name());
 
         TST_LOG("Test 2: Starting echo server...");
         if (!startEchoServer())
@@ -204,7 +203,6 @@ private:
         auto proxySocket = StreamSocket::create<StreamSocket>(
             std::string(), fds[1], Socket::Type::Unix, false, HostType::Other, proxyHandler);
 
-        // Add client socket to poll so it can receive proxied data
         _clientPoll->insertNewSocket(clientSocket);
 
         Poco::Net::HTTPRequest request("GET", "/echo/hello-from-ProxyHandler-test", "HTTP/1.1");
@@ -219,7 +217,6 @@ private:
             _targetToClientData.clear();
         }
 
-        // Start the proxy pump
         ProxyPoll::startPump(proxySocket, "127.0.0.1", _echoPort, request);
 
         TST_LOG("startPump called successfully");
