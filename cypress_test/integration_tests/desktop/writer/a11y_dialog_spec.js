@@ -34,8 +34,7 @@ describe(['tagdesktop'], 'Accessibility Writer Tests', function () {
                     return;
                 }
                 // don't pass yet
-                if (command == '.uno:FontDialog' ||
-                    command == '.uno:InsertCaptionDialog' ||
+                if (command == '.uno:InsertCaptionDialog' ||
                     command == '.uno:PageDialog' ||
                     command == '.uno:ParagraphDialog' ||
                     command == '.uno:TableDialog' ||
