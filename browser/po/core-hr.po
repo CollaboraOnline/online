@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: core-hr\n"
 "PO-Revision-Date: 2025-12-09 11:58+0000\n"
-"Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
+"Last-Translator: Milo Ivir <mail@milotype.de>\n"
 "Language-Team: Croatian <https://hosted.weblate.org/projects/collabora-"
 "online/lokit/hr/>\n"
 "Language: hr\n"
@@ -1631,7 +1631,7 @@ msgstr ""
 #: sc/inc/scfuncs.hrc:4360
 msgctxt "SC_OPCODE_TEXTBEFORE"
 msgid "Match Mode"
-msgstr "Modus poklapanja"
+msgstr "Modus podudaranja"
 
 #. Pi2Ti
 #: sc/inc/scfuncs.hrc:4361
@@ -1698,24 +1698,25 @@ msgstr "Razdjeljivač stupaca"
 msgctxt "SC_OPCODE_TEXTSPLIT"
 msgid "The text to delimit the columns. Multiple delimiters can be supplied."
 msgstr ""
+"Tekst za razdjeljivanje stupaca. Moguće je koristiti više razdjeljivača."
 
 #. qZGq2
 #: sc/inc/scfuncs.hrc:4376
 msgctxt "SC_OPCODE_TEXTSPLIT"
 msgid "Row Delimiter"
-msgstr ""
+msgstr "Razdjeljivač redaka"
 
 #. dPnbc
 #: sc/inc/scfuncs.hrc:4377
 msgctxt "SC_OPCODE_TEXTSPLIT"
 msgid "The text to delimit the rows. Multiple delimiters can be supplied."
-msgstr ""
+msgstr "Tekst za razdjeljivanje redaka. Moguće je koristiti više razdjeljivača."
 
 #. jD3sa
 #: sc/inc/scfuncs.hrc:4378
 msgctxt "SC_OPCODE_TEXTSPLIT"
 msgid "Ignore Empty"
-msgstr ""
+msgstr "Zanemari prazno"
 
 #. 6LwdP
 #: sc/inc/scfuncs.hrc:4379
@@ -1724,6 +1725,8 @@ msgid ""
 "Set to TRUE to ignore consecutive delimiters otherwise it creates an empty "
 "cell. The default is FALSE."
 msgstr ""
+"Postavi na TRUE za zanemarivanje uzastopnih razdjeljivača, inače se stvara "
+"prazno polje. Standardno je FALSE."
 
 #. kkAYp
 #: sc/inc/scfuncs.hrc:4380
@@ -1736,42 +1739,44 @@ msgstr "Modus poklapanja"
 msgctxt "SC_OPCODE_TEXTSPLIT"
 msgid "Set to 1 to perform a case-insensitive match. The default is 0."
 msgstr ""
+"Postavi na 1 za podudaranje bez obzira na velika i velika slova. Standardno "
+"je 0."
 
 #. vXECz
 #: sc/inc/scfuncs.hrc:4382
 msgctxt "SC_OPCODE_TEXTSPLIT"
 msgid "Pad with"
-msgstr ""
+msgstr "Popuni prazna polja sa"
 
 #. h4db2
 #: sc/inc/scfuncs.hrc:4383
 msgctxt "SC_OPCODE_TEXTSPLIT"
 msgid "The value with which to pad. The default is #N/A."
-msgstr ""
+msgstr "Vrijednost za popunjavanje praznih polja. Standardno je #N/A."
 
 #. DdFFE
 #: sc/inc/scfuncs.hrc:4389
 msgctxt "SC_OPCODE_TOCOL"
 msgid "Transforms an array into a single column."
-msgstr ""
+msgstr "Pretvara niz u jedan stupac."
 
 #. UAzNC
 #: sc/inc/scfuncs.hrc:4390
 msgctxt "SC_OPCODE_TOCOL"
 msgid "Array"
-msgstr ""
+msgstr "Niz"
 
 #. CHojs
 #: sc/inc/scfuncs.hrc:4391
 msgctxt "SC_OPCODE_TOCOL"
 msgid "The range or array to return as a single column."
-msgstr ""
+msgstr "Raspon ili niz koji se vraćaju kao jedan stupac."
 
 #. uACXu
 #: sc/inc/scfuncs.hrc:4392
 msgctxt "SC_OPCODE_TOCOL"
 msgid "Ignore"
-msgstr ""
+msgstr "Zanemari"
 
 #. b7EQW
 #: sc/inc/scfuncs.hrc:4393
@@ -1781,12 +1786,15 @@ msgid ""
 "(default). 1 - ignore blank cells. 2 - ignore cells with error. 3 - ignore "
 "blanks cells and cells with error."
 msgstr ""
+"Da li zanemariti određene vrste vrijednosti. 0 ili izostavljeno – zadrži sve "
+"vrijednosti (standardno). 1 – zanemari prazna polja. 2 – zanemari polja s "
+"greškom. 3 – zanemari prazna polja i polja s greškom."
 
 #. qNLAi
 #: sc/inc/scfuncs.hrc:4394
 msgctxt "SC_OPCODE_TOCOL"
 msgid "Scan by column"
-msgstr ""
+msgstr "Pretraži po stupcima"
 
 #. bcArN
 #: sc/inc/scfuncs.hrc:4395
@@ -1795,30 +1803,32 @@ msgid ""
 "Scan the array by column. FALSE or omitted (default) - the array is scanned "
 "by row. TRUE - the array is scanned by column."
 msgstr ""
+"Pretraži niz po stupcima. FALSE ili izostavljeno (standardno) – niz se "
+"pretražuje po redcima. TRUE – niz se pretražuje po stupcima."
 
 #. PGyxj
 #: sc/inc/scfuncs.hrc:4401
 msgctxt "SC_OPCODE_TOROW"
 msgid "transforms an array into a single row."
-msgstr ""
+msgstr "pretvara niz u jedan redak."
 
 #. W9bWe
 #: sc/inc/scfuncs.hrc:4402
 msgctxt "SC_OPCODE_TOROW"
 msgid "Array"
-msgstr ""
+msgstr "Niz"
 
 #. 5MEvT
 #: sc/inc/scfuncs.hrc:4403
 msgctxt "SC_OPCODE_TOROW"
 msgid "The range or array to return as a single row."
-msgstr ""
+msgstr "Raspon ili niz koji se vraćaju kao jedan redak."
 
 #. AqqBC
 #: sc/inc/scfuncs.hrc:4404
 msgctxt "SC_OPCODE_TOROW"
 msgid "Ignore"
-msgstr ""
+msgstr "Zanemari"
 
 #. wcpQF
 #: sc/inc/scfuncs.hrc:4405
@@ -1828,12 +1838,15 @@ msgid ""
 "(default). 1 - ignore blank cells. 2 - ignore cells with error. 3 - ignore "
 "blanks cells and cells with error."
 msgstr ""
+"Da li zanemariti određene vrste vrijednosti. 0 ili izostavljeno – zadrži sve "
+"vrijednosti (standardno). 1 – zanemari prazna polja. 2 – zanemari polja s "
+"greškom. 3 – zanemari prazna polja i polja s greškom."
 
 #. E4XDf
 #: sc/inc/scfuncs.hrc:4406
 msgctxt "SC_OPCODE_TOROW"
 msgid "Scan by column"
-msgstr ""
+msgstr "Pretraži po stupcima"
 
 #. 5bZRy
 #: sc/inc/scfuncs.hrc:4407
@@ -1842,6 +1855,8 @@ msgid ""
 "Scan the array by column. FALSE or omitted (default) - the array is scanned "
 "by row. TRUE - the array is scanned by column."
 msgstr ""
+"Pretraži niz po stupcima. FALSE ili izostavljeno (standardno) – niz se "
+"pretražuje po redcima. TRUE – niz se pretražuje po stupcima."
 
 #. oBDEA
 #: sc/inc/scfuncs.hrc:4437
@@ -1850,42 +1865,44 @@ msgid ""
 "Wraps the provided row or column of values by columns after a specified "
 "number of elements to form a new array."
 msgstr ""
+"Prelama zadani redak ili stupac s vrijednostima po stupcima nakon određenog "
+"broja elemenata kako bi stvorio novi niz."
 
 #. fC6RK
 #: sc/inc/scfuncs.hrc:4438
 msgctxt "SC_OPCODE_WRAPCOLS"
 msgid "Range"
-msgstr ""
+msgstr "Raspon"
 
 #. nfZyj
 #: sc/inc/scfuncs.hrc:4439
 msgctxt "SC_OPCODE_WRAPCOLS"
 msgid "the range to wrap."
-msgstr ""
+msgstr "raspon za prelamanje."
 
 #. GE3HQ
 #: sc/inc/scfuncs.hrc:4440
 msgctxt "SC_OPCODE_WRAPCOLS"
 msgid "Wrap count"
-msgstr ""
+msgstr "Broj za prelamanje stupca"
 
 #. FWsCt
 #: sc/inc/scfuncs.hrc:4441
 msgctxt "SC_OPCODE_WRAPCOLS"
 msgid "The maximum number of values for each column."
-msgstr ""
+msgstr "Maksimalan broj vrijednosti za svaki stupac."
 
 #. zkjFB
 #: sc/inc/scfuncs.hrc:4442
 msgctxt "SC_OPCODE_WRAPCOLS"
 msgid "Pad with"
-msgstr ""
+msgstr "Popuni prazna polja sa"
 
 #. knbjc
 #: sc/inc/scfuncs.hrc:4443
 msgctxt "SC_OPCODE_WRAPCOLS"
 msgid "The value with which to pad. The default is #N/A."
-msgstr ""
+msgstr "Vrijednost za popunjavanje praznih polja. Standardno je #N/A."
 
 #. BDA7q
 #: sc/inc/scfuncs.hrc:4449
@@ -1894,42 +1911,44 @@ msgid ""
 "Wraps the provided row or column of values by rows after a specified number "
 "of elements to form a new array."
 msgstr ""
+"Prelama zadani redak ili stupac s vrijednostima po redcima nakon određenog "
+"broja elemenata kako bi stvorio novi niz."
 
 #. 7esii
 #: sc/inc/scfuncs.hrc:4450
 msgctxt "SC_OPCODE_WRAPROWS"
 msgid "Range"
-msgstr ""
+msgstr "Raspon"
 
 #. FLJwx
 #: sc/inc/scfuncs.hrc:4451
 msgctxt "SC_OPCODE_WRAPROWS"
 msgid "the range to wrap."
-msgstr ""
+msgstr "aspon za prelamanje."
 
 #. aLHUi
 #: sc/inc/scfuncs.hrc:4452
 msgctxt "SC_OPCODE_WRAPROWS"
 msgid "Wrap count"
-msgstr ""
+msgstr "Broj za prelamanje retka"
 
 #. 3CEsK
 #: sc/inc/scfuncs.hrc:4453
 msgctxt "SC_OPCODE_WRAPROWS"
 msgid "The maximum number of values for each row."
-msgstr ""
+msgstr "Maksimalan broj vrijednosti za svaki redak."
 
 #. iTCWg
 #: sc/inc/scfuncs.hrc:4454
 msgctxt "SC_OPCODE_WRAPROWS"
 msgid "Pad with"
-msgstr ""
+msgstr "Popuni prazna polja sa"
 
 #. e3K5s
 #: sc/inc/scfuncs.hrc:4455
 msgctxt "SC_OPCODE_WRAPROWS"
 msgid "The value with which to pad. The default is #N/A."
-msgstr ""
+msgstr "Vrijednost za popunjavanje praznih polja. Standardno je #N/A."
 
 #. 4af9a
 #: sc/uiconfig/scalc/ui/cellprotectionpage.ui:99
@@ -1940,12 +1959,16 @@ msgid ""
 "individual cells first select all cells and toggle off the \"Protected\" "
 "option in the Format Cells dialog."
 msgstr ""
+"Zaštita ćelija djeluje tek nakon što se trenutačni list zaštiti. Standardno "
+"su ćelije na listu zaštićene – za štićenje pojedinačnih ćelija, najprije "
+"odaberi sve ćelije i isključi opciju „Zaštićeno“ u dijaloškom okviru "
+"formatiranje ćelija."
 
 #. FVsyY
 #: sc/uiconfig/scalc/ui/conditionaleasydialog.ui:8
 msgctxt "conditionaleasydialog|title"
 msgid "Highlight cells..."
-msgstr ""
+msgstr "Istakni polja …"
 
 #. Q4fA3
 #: sc/uiconfig/scalc/ui/selectsheetviewdialog.ui:18
@@ -1957,19 +1980,19 @@ msgstr "Odaberi prikaz lista"
 #: sc/uiconfig/scalc/ui/selectsheetviewdialog.ui:44
 msgctxt "selectsheetviewdialog|extended_tip|ok"
 msgid "Saves all changes and closes dialog."
-msgstr ""
+msgstr "Sprema sve promjene i zatvara dijalog."
 
 #. kGFYu
 #: sc/uiconfig/scalc/ui/selectsheetviewdialog.ui:63
 msgctxt "selectsheetviewdialog|extended_tip|cancel"
 msgid "Closes dialog and discards all changes."
-msgstr ""
+msgstr "Zatvara dijalog i odbacuje sve promjene."
 
 #. sQPFE
 #: sc/uiconfig/scalc/ui/selectsheetviewdialog.ui:134
 msgctxt "selectsheetviewdialog|extended_tip|entry-list"
 msgid "Available sheet views."
-msgstr ""
+msgstr "Dostupni prikazi listova."
 
 #. csyNB
 #: sc/uiconfig/scalc/ui/sheetviewbox.ui:17
@@ -2035,376 +2058,376 @@ msgstr "Stilovi tablica"
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:187
 msgctxt "sidebardatabase|none"
 msgid "None"
-msgstr ""
+msgstr "Ništa"
 
 #. XXBL8
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:188
 msgctxt "sidebardatabase|tablestylelight1"
 msgid "Table Style Light 1"
-msgstr ""
+msgstr "Stil tablice – svijetlo 1"
 
 #. NaDRX
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:189
 msgctxt "sidebardatabase|tablestylelight2"
 msgid "Table Style Light 2"
-msgstr ""
+msgstr "Stil tablice – svijetlo 2"
 
 #. EWq9E
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:190
 msgctxt "sidebardatabase|tablestylelight3"
 msgid "Table Style Light 3"
-msgstr ""
+msgstr "Stil tablice – svijetlo 3"
 
 #. GdYaL
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:191
 msgctxt "sidebardatabase|tablestylelight4"
 msgid "Table Style Light 4"
-msgstr ""
+msgstr "Stil tablice – svijetlo 4"
 
 #. 8ZPyk
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:192
 msgctxt "sidebardatabase|tablestylelight5"
 msgid "Table Style Light 5"
-msgstr ""
+msgstr "Stil tablice – svijetlo 5"
 
 #. xcztA
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:193
 msgctxt "sidebardatabase|tablestylelight6"
 msgid "Table Style Light 6"
-msgstr ""
+msgstr "Stil tablice – svijetlo 6"
 
 #. pYufr
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:194
 msgctxt "sidebardatabase|tablestylelight7"
 msgid "Table Style Light 7"
-msgstr ""
+msgstr "Stil tablice – svijetlo 7"
 
 #. beC85
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:195
 msgctxt "sidebardatabase|tablestylelight8"
 msgid "Table Style Light 8"
-msgstr ""
+msgstr "Stil tablice – svijetlo 8"
 
 #. TSbAe
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:196
 msgctxt "sidebardatabase|tablestylelight9"
 msgid "Table Style Light 9"
-msgstr ""
+msgstr "Stil tablice – svijetlo 9"
 
 #. GPxe2
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:197
 msgctxt "sidebardatabase|tablestylelight10"
 msgid "Table Style Light 10"
-msgstr ""
+msgstr "Stil tablice – svijetlo 10"
 
 #. sedZT
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:198
 msgctxt "sidebardatabase|tablestylelight11"
 msgid "Table Style Light 11"
-msgstr ""
+msgstr "Stil tablice – svijetlo 11"
 
 #. VyEM2
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:199
 msgctxt "sidebardatabase|tablestylelight12"
 msgid "Table Style Light 12"
-msgstr ""
+msgstr "Stil tablice – svijetlo 12"
 
 #. FF2AT
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:200
 msgctxt "sidebardatabase|tablestylelight13"
 msgid "Table Style Light 13"
-msgstr ""
+msgstr "Stil tablice – svijetlo 13"
 
 #. pTuyt
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:201
 msgctxt "sidebardatabase|tablestylelight14"
 msgid "Table Style Light 14"
-msgstr ""
+msgstr "Stil tablice – svijetlo 14"
 
 #. zAgnL
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:202
 msgctxt "sidebardatabase|tablestylelight15"
 msgid "Table Style Light 15"
-msgstr ""
+msgstr "Stil tablice – svijetlo 15"
 
 #. L4B9t
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:203
 msgctxt "sidebardatabase|tablestylelight16"
 msgid "Table Style Light 16"
-msgstr ""
+msgstr "Stil tablice – svijetlo 16"
 
 #. ek54L
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:204
 msgctxt "sidebardatabase|tablestylelight17"
 msgid "Table Style Light 17"
-msgstr ""
+msgstr "Stil tablice – svijetlo 17"
 
 #. P6nBG
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:205
 msgctxt "sidebardatabase|tablestylelight18"
 msgid "Table Style Light 18"
-msgstr ""
+msgstr "Stil tablice – svijetlo 18"
 
 #. dnT2p
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:206
 msgctxt "sidebardatabase|tablestylelight19"
 msgid "Table Style Light 19"
-msgstr ""
+msgstr "Stil tablice – svijetlo 19"
 
 #. Bprxv
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:207
 msgctxt "sidebardatabase|tablestylelight20"
 msgid "Table Style Light 20"
-msgstr ""
+msgstr "Stil tablice – svijetlo 20"
 
 #. Z8foN
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:208
 msgctxt "sidebardatabase|tablestylelight21"
 msgid "Table Style Light 21"
-msgstr ""
+msgstr "Stil tablice – svijetlo 21"
 
 #. 2qyXC
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:209
 msgctxt "sidebardatabase|tablestylemedium1"
 msgid "Table Style Medium 1"
-msgstr ""
+msgstr "Stil tablice – srednje 1"
 
 #. MWzKk
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:210
 msgctxt "sidebardatabase|tablestylemedium2"
 msgid "Table Style Medium 2"
-msgstr ""
+msgstr "Stil tablice – srednje 2"
 
 #. fFFCC
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:211
 msgctxt "sidebardatabase|tablestylemedium3"
 msgid "Table Style Medium 3"
-msgstr ""
+msgstr "Stil tablice – srednje 3"
 
 #. FthwA
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:212
 msgctxt "sidebardatabase|tablestylemedium4"
 msgid "Table Style Medium 4"
-msgstr ""
+msgstr "Stil tablice – srednje 4"
 
 #. rCtpb
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:213
 msgctxt "sidebardatabase|tablestylemedium5"
 msgid "Table Style Medium 5"
-msgstr ""
+msgstr "Stil tablice – srednje 5"
 
 #. UJ6BA
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:214
 msgctxt "sidebardatabase|tablestylemedium6"
 msgid "Table Style Medium 6"
-msgstr ""
+msgstr "Stil tablice – srednje 6"
 
 #. EbA2b
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:215
 msgctxt "sidebardatabase|tablestylemedium7"
 msgid "Table Style Medium 7"
-msgstr ""
+msgstr "Stil tablice – srednje 7"
 
 #. XQS9X
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:216
 msgctxt "sidebardatabase|tablestylemedium8"
 msgid "Table Style Medium 8"
-msgstr ""
+msgstr "Stil tablice – srednje 8"
 
 #. Dho46
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:217
 msgctxt "sidebardatabase|tablestylemedium9"
 msgid "Table Style Medium 9"
-msgstr ""
+msgstr "Stil tablice – srednje 9"
 
 #. P7SBG
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:218
 msgctxt "sidebardatabase|tablestylemedium10"
 msgid "Table Style Medium 10"
-msgstr ""
+msgstr "Stil tablice – srednje 10"
 
 #. Rhfet
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:219
 msgctxt "sidebardatabase|tablestylemedium11"
 msgid "Table Style Medium 11"
-msgstr ""
+msgstr "Stil tablice – srednje 11"
 
 #. JEdqF
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:220
 msgctxt "sidebardatabase|tablestylemedium12"
 msgid "Table Style Medium 12"
-msgstr ""
+msgstr "Stil tablice – srednje 12"
 
 #. LWYBs
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:221
 msgctxt "sidebardatabase|tablestylemedium13"
 msgid "Table Style Medium 13"
-msgstr ""
+msgstr "Stil tablice – srednje 13"
 
 #. HiGPB
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:222
 msgctxt "sidebardatabase|tablestylemedium14"
 msgid "Table Style Medium 14"
-msgstr ""
+msgstr "Stil tablice – srednje 14"
 
 #. FKMSw
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:223
 msgctxt "sidebardatabase|tablestylemedium15"
 msgid "Table Style Medium 15"
-msgstr ""
+msgstr "Stil tablice – srednje 15"
 
 #. CuPuC
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:224
 msgctxt "sidebardatabase|tablestylemedium16"
 msgid "Table Style Medium 16"
-msgstr ""
+msgstr "Stil tablice – srednje 16"
 
 #. ACA7x
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:225
 msgctxt "sidebardatabase|tablestylemedium17"
 msgid "Table Style Medium 17"
-msgstr ""
+msgstr "Stil tablice – srednje 17"
 
 #. bcDbJ
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:226
 msgctxt "sidebardatabase|tablestylemedium18"
 msgid "Table Style Medium 18"
-msgstr ""
+msgstr "Stil tablice – srednje 18"
 
 #. d42En
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:227
 msgctxt "sidebardatabase|tablestylemedium19"
 msgid "Table Style Medium 19"
-msgstr ""
+msgstr "Stil tablice – srednje 19"
 
 #. pfyP6
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:228
 msgctxt "sidebardatabase|tablestylemedium20"
 msgid "Table Style Medium 20"
-msgstr ""
+msgstr "Stil tablice – srednje 20"
 
 #. n5kSb
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:229
 msgctxt "sidebardatabase|tablestylemedium21"
 msgid "Table Style Medium 21"
-msgstr ""
+msgstr "Stil tablice – srednje 21"
 
 #. mYnu7
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:230
 msgctxt "sidebardatabase|tablestylemedium22"
 msgid "Table Style Medium 22"
-msgstr ""
+msgstr "Stil tablice – srednje 22"
 
 #. jGs7c
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:231
 msgctxt "sidebardatabase|tablestylemedium23"
 msgid "Table Style Medium 23"
-msgstr ""
+msgstr "Stil tablice – srednje 23"
 
 #. vMAB3
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:232
 msgctxt "sidebardatabase|tablestylemedium24"
 msgid "Table Style Medium 24"
-msgstr ""
+msgstr "Stil tablice – srednje 24"
 
 #. xk5eg
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:233
 msgctxt "sidebardatabase|tablestylemedium25"
 msgid "Table Style Medium 25"
-msgstr ""
+msgstr "Stil tablice – srednje 25"
 
 #. sA3q2
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:234
 msgctxt "sidebardatabase|tablestylemedium26"
 msgid "Table Style Medium 26"
-msgstr ""
+msgstr "Stil tablice – srednje 26"
 
 #. usGBf
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:235
 msgctxt "sidebardatabase|tablestylemedium27"
 msgid "Table Style Medium 27"
-msgstr ""
+msgstr "Stil tablice – srednje 27"
 
 #. 32DXC
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:236
 msgctxt "sidebardatabase|tablestylemedium28"
 msgid "Table Style Medium 28"
-msgstr ""
+msgstr "Stil tablice – srednje 28"
 
 #. TiDzP
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:237
 msgctxt "sidebardatabase|tablestyledark1"
 msgid "Table Style Dark 1"
-msgstr ""
+msgstr "Stil tablice – tamno 1"
 
 #. jTCaC
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:238
 msgctxt "sidebardatabase|tablestyledark2"
 msgid "Table Style Dark 2"
-msgstr ""
+msgstr "Stil tablice – tamno 2"
 
 #. 2FCAs
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:239
 msgctxt "sidebardatabase|tablestyledark3"
 msgid "Table Style Dark 3"
-msgstr ""
+msgstr "Stil tablice – tamno 3"
 
 #. B3BJY
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:240
 msgctxt "sidebardatabase|tablestyledark4"
 msgid "Table Style Dark 4"
-msgstr ""
+msgstr "Stil tablice – tamno 4"
 
 #. TfBSE
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:241
 msgctxt "sidebardatabase|tablestyledark5"
 msgid "Table Style Dark 5"
-msgstr ""
+msgstr "Stil tablice – tamno 5"
 
 #. jvA93
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:242
 msgctxt "sidebardatabase|tablestyledark6"
 msgid "Table Style Dark 6"
-msgstr ""
+msgstr "Stil tablice – tamno 6"
 
 #. 2DAii
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:243
 msgctxt "sidebardatabase|tablestyledark7"
 msgid "Table Style Dark 7"
-msgstr ""
+msgstr "Stil tablice – tamno 7"
 
 #. B6GrN
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:244
 msgctxt "sidebardatabase|tablestyledark8"
 msgid "Table Style Dark 8"
-msgstr ""
+msgstr "Stil tablice – tamno 8"
 
 #. TcGzg
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:245
 msgctxt "sidebardatabase|tablestyledark9"
 msgid "Table Style Dark 9"
-msgstr ""
+msgstr "Stil tablice – tamno 9"
 
 #. DEL7d
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:246
 msgctxt "sidebardatabase|tablestyledark10"
 msgid "Table Style Dark 10"
-msgstr ""
+msgstr "Stil tablice – tamno 10"
 
 #. M2TB4
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:247
 msgctxt "sidebardatabase|tablestyledark11"
 msgid "Table Style Dark 11"
-msgstr ""
+msgstr "Stil tablice – tamno 11"
 
 #. CJUkb
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:251
 msgctxt "sidebardatabase|tablestylenames"
 msgid "Table Style Names"
-msgstr ""
+msgstr "Imena stilova tablica"
 
 #. 3FfJ4
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:252
 msgctxt "sidebardatabase|defaulttablestylenames"
 msgid "Default Table Style Names"
-msgstr ""
+msgstr "Imena standardnih stilova tablica"
