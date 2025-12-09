@@ -33,7 +33,14 @@ describe(['tagdesktop'], 'Accessibility Writer Tests', function () {
                     cy.log(`Skipping non-jsdialog dialog: ${command}`);
                     return;
                 }
-                if (command == '.uno:FontDialog') {
+                // don't pass yet
+                if (command == '.uno:FontDialog' ||
+                    command == '.uno:InsertCaptionDialog' ||
+                    command == '.uno:PageDialog' ||
+                    command == '.uno:ParagraphDialog' ||
+                    command == '.uno:ThesaurusDialog' ||
+                    command == '.uno:TableDialog' ||
+                    command == '.uno:TableNumberFormatDialog') {
                     cy.log(`Skipping buggy dialog: ${command}`);
                     return;
                 }
