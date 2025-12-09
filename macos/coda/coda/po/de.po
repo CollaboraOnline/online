@@ -3,35 +3,37 @@ msgstr ""
 "Project-Id-Version: coolwsd 25.04.7.3\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-12-06 18:17+0000\n"
-"PO-Revision-Date: 2025-12-06 18:30+0000\n"
-"Last-Translator: releng <releng@fox.cbg.collabora.co.uk>\n"
-"Language-Team: German <translation-team-de@lists.sourceforge.net>\n"
+"PO-Revision-Date: 2025-12-09 21:27+0000\n"
+"Last-Translator: Ettore Atalan <atalanttore@googlemail.com>\n"
+"Language-Team: German <https://hosted.weblate.org/projects/collabora-online/"
+"collabora-office-macos-app/de/>\n"
+"Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: de\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.15-dev\n"
 
 msgctxt "1UK-8n-QPP.title"
 msgid "Customize Toolbar…"
-msgstr ""
+msgstr "Symbolleiste anpassen…"
 
 #. Do not change the placeholder ProductName!
 msgctxt "1Xt-HY-uBw.title"
 msgid "ProductName"
-msgstr ""
+msgstr "ProductName"
 
 msgctxt "1b7-l0-nxx.title"
 msgid "Find"
-msgstr ""
+msgstr "Suchen"
 
 msgctxt "1tx-W0-xDw.title"
 msgid "Lower"
-msgstr ""
+msgstr "Niedriger"
 
 msgctxt "2h7-ER-AoG.title"
 msgid "Raise"
-msgstr ""
+msgstr "Erhöhen"
 
 msgctxt "2oI-Rn-ZJC.title"
 msgid "Transformations"
@@ -39,7 +41,7 @@ msgstr ""
 
 msgctxt "3IN-sU-3Bg.title"
 msgid "Spelling"
-msgstr ""
+msgstr "Rechtschreibung"
 
 msgctxt "3Om-Ey-2VK.title"
 msgid "Use Default"
@@ -55,94 +57,94 @@ msgstr ""
 
 msgctxt "4EN-yA-p0u.title"
 msgid "Find"
-msgstr ""
+msgstr "Suchen"
 
 msgctxt "4J7-dP-txa.title"
 msgid "Enter Full Screen"
-msgstr ""
+msgstr "Vollbildmodus aktivieren"
 
 #. Do not change the placeholder ProductName!
 msgctxt "4sb-4s-VLi.title"
 msgid "Quit ProductName"
-msgstr ""
+msgstr "ProductName beenden"
 
 msgctxt "5QF-Oa-p0T.title"
 msgid "Edit"
-msgstr ""
+msgstr "Bearbeiten"
 
 msgctxt "5Vv-lz-BsD.title"
 msgid "Copy Style"
-msgstr ""
+msgstr "Stil kopieren"
 
 #. Do not change the placeholder ProductName!
 msgctxt "5kV-Vb-QxS.title"
 msgid "About ProductName"
-msgstr ""
+msgstr "Über ProductName"
 
 msgctxt "6dh-zS-Vam.title"
 msgid "Redo"
-msgstr ""
+msgstr "Wiederherstellen"
 
 msgctxt "78Y-hA-62v.title"
 msgid "Correct Spelling Automatically"
-msgstr ""
+msgstr "Rechtschreibung automatisch korrigieren"
 
 msgctxt "8mr-sm-Yjd.title"
 msgid "Writing Direction"
-msgstr ""
+msgstr "Schreibrichtung"
 
 msgctxt "9ic-FL-obx.title"
 msgid "Substitutions"
-msgstr ""
+msgstr "Ersetzungen"
 
 msgctxt "9yt-4B-nSM.title"
 msgid "Smart Copy/Paste"
-msgstr ""
+msgstr "Intelligentes Kopieren/Einfügen"
 
 msgctxt "AYu-sK-qS6.title"
 msgid "Main Menu"
-msgstr ""
+msgstr "Hauptmenü"
 
 msgctxt "BOF-NM-1cW.title"
 msgid "Preferences…"
-msgstr ""
+msgstr "Einstellungen…"
 
 msgctxt "BgM-ve-c93.title"
 msgid "\tLeft to Right"
-msgstr ""
+msgstr "\tLinks nach rechts"
 
 msgctxt "Bw7-FT-i3A.title"
 msgid "Save As…"
-msgstr ""
+msgstr "Sichern unter…"
 
 msgctxt "DVo-aG-piG.title"
 msgid "Close"
-msgstr ""
+msgstr "Schließen"
 
 msgctxt "Dv1-io-Yv7.title"
 msgid "Spelling and Grammar"
-msgstr ""
+msgstr "Rechtschreibung und Grammatik"
 
 msgctxt "F2S-fz-NVQ.title"
 msgid "Help"
-msgstr ""
+msgstr "Hilfe"
 
 #. Do not change the placeholder ProductName!
 msgctxt "FKE-Sm-Kum.title"
 msgid "ProductName Help"
-msgstr ""
+msgstr "ProductName-Hilfe"
 
 msgctxt "Fal-I4-PZk.title"
 msgid "Text"
-msgstr ""
+msgstr "Text"
 
 msgctxt "FeM-D8-WVr.title"
 msgid "Substitutions"
-msgstr ""
+msgstr "Ersetzungen"
 
 msgctxt "GB9-OM-e27.title"
 msgid "Bold"
-msgstr ""
+msgstr "Fett"
 
 msgctxt "GEO-Iw-cKr.title"
 msgid "Format"
@@ -154,27 +156,27 @@ msgstr ""
 
 msgctxt "Gi5-1S-RQB.title"
 msgid "Font"
-msgstr ""
+msgstr "Schriftart"
 
 msgctxt "H1b-Si-o9J.title"
 msgid "Writing Direction"
-msgstr ""
+msgstr "Schreibrichtung"
 
 msgctxt "H8h-7b-M4v.title"
 msgid "View"
-msgstr ""
+msgstr "Darstellung"
 
 msgctxt "HFQ-gK-NFA.title"
 msgid "Text Replacement"
-msgstr ""
+msgstr "Textersetzung"
 
 msgctxt "HFo-cy-zxI.title"
 msgid "Show Spelling and Grammar"
-msgstr ""
+msgstr "Rechtschreibung und Grammatik anzeigen"
 
 msgctxt "HyV-fh-RgO.title"
 msgid "View"
-msgstr ""
+msgstr "Darstellung"
 
 msgctxt "I0S-gh-46l.title"
 msgid "Subscript"
@@ -182,11 +184,11 @@ msgstr ""
 
 msgctxt "IAo-SY-fd9.title"
 msgid "Open…"
-msgstr ""
+msgstr "Öffnen…"
 
 msgctxt "J5U-5w-g23.title"
 msgid "Justify"
-msgstr ""
+msgstr "Ausrichten"
 
 msgctxt "J7y-lM-qPV.title"
 msgid "Use None"
@@ -198,7 +200,7 @@ msgstr ""
 
 msgctxt "Kd2-mp-pUS.title"
 msgid "Show All"
-msgstr ""
+msgstr "Alles anzeigen"
 
 msgctxt "LE2-aR-0XJ.title"
 msgid "Bring All to Front"
@@ -210,7 +212,7 @@ msgstr ""
 
 msgctxt "Lbh-J2-qVU.title"
 msgid "\tLeft to Right"
-msgstr ""
+msgstr "\tLinks nach rechts"
 
 msgctxt "MkV-Pr-PK5.title"
 msgid "Copy Ruler"
@@ -218,7 +220,7 @@ msgstr ""
 
 msgctxt "NMo-om-nkz.title"
 msgid "Services"
-msgstr ""
+msgstr "Dienste"
 
 msgctxt "Nop-cj-93Q.title"
 msgid "\tDefault"
@@ -226,7 +228,7 @@ msgstr ""
 
 msgctxt "OY7-WF-poV.title"
 msgid "Minimize"
-msgstr ""
+msgstr "Minimieren"
 
 msgctxt "OaQ-X3-Vso.title"
 msgid "Baseline"
@@ -235,7 +237,7 @@ msgstr ""
 #. Do not change the placeholder ProductName!
 msgctxt "Olw-nP-bQN.title"
 msgid "Hide ProductName"
-msgstr ""
+msgstr "ProductName ausblenden"
 
 msgctxt "OwM-mh-QMV.title"
 msgid "Find Previous"
@@ -247,11 +249,11 @@ msgstr ""
 
 msgctxt "Ptp-SP-VEL.title"
 msgid "Bigger"
-msgstr ""
+msgstr "Größer"
 
 msgctxt "Q5e-8K-NDq.title"
 msgid "Show Fonts"
-msgstr ""
+msgstr "Schriftarten anzeigen"
 
 msgctxt "R4o-n2-Eq4.title"
 msgid "Zoom"
@@ -259,7 +261,7 @@ msgstr ""
 
 msgctxt "RB4-Sm-HuC.title"
 msgid "\tRight to Left"
-msgstr ""
+msgstr "\tRechts nach links"
 
 msgctxt "Rqc-34-cIF.title"
 msgid "Superscript"
@@ -267,15 +269,15 @@ msgstr ""
 
 msgctxt "Ruw-6m-B2m.title"
 msgid "Select All"
-msgstr ""
+msgstr "Alle auswählen"
 
 msgctxt "S0p-oC-mLd.title"
 msgid "Jump to Selection"
-msgstr ""
+msgstr "Zur Auswahl springen"
 
 msgctxt "Td7-aD-5lo.title"
 msgid "Window"
-msgstr ""
+msgstr "Fenster"
 
 msgctxt "UEZ-Bs-lqG.title"
 msgid "Capitalize"
@@ -283,39 +285,39 @@ msgstr ""
 
 msgctxt "VIY-Ag-zcb.title"
 msgid "Center"
-msgstr ""
+msgstr "Zentriert"
 
 msgctxt "Vdr-fp-XzO.title"
 msgid "Hide Others"
-msgstr ""
+msgstr "Andere ausblenden"
 
 msgctxt "Vjx-xi-njq.title"
 msgid "Italic"
-msgstr ""
+msgstr "Kursiv"
 
 msgctxt "W48-6f-4Dl.title"
 msgid "Edit"
-msgstr ""
+msgstr "Bearbeiten"
 
 msgctxt "WRG-CD-K1S.title"
 msgid "Underline"
-msgstr ""
+msgstr "Unterstreichen"
 
 msgctxt "Was-JA-tGl.title"
 msgid "New"
-msgstr ""
+msgstr "Neu"
 
 msgctxt "WeT-3V-zwk.title"
 msgid "Paste and Match Style"
-msgstr ""
+msgstr "Einfügen und Stil anpassen"
 
 msgctxt "Xz5-n4-O0W.title"
 msgid "Find…"
-msgstr ""
+msgstr "Suchen…"
 
 msgctxt "YEy-JH-Tfz.title"
 msgid "Find and Replace…"
-msgstr ""
+msgstr "Suchen und ersetzen…"
 
 msgctxt "YGs-j5-SAR.title"
 msgid "\tDefault"
@@ -327,23 +329,23 @@ msgstr ""
 
 msgctxt "ZM1-6Q-yy1.title"
 msgid "Align Left"
-msgstr ""
+msgstr "Linksbündig"
 
 msgctxt "ZvO-Gk-QUH.title"
 msgid "Paragraph"
-msgstr ""
+msgstr "Absatz"
 
 msgctxt "aTl-1u-JFS.title"
 msgid "Print…"
-msgstr ""
+msgstr "Drucken…"
 
 msgctxt "aUF-d1-5bR.title"
 msgid "Window"
-msgstr ""
+msgstr "Fenster"
 
 msgctxt "aXa-aM-Jaq.title"
 msgid "Font"
-msgstr ""
+msgstr "Schriftart"
 
 msgctxt "agt-UL-0e3.title"
 msgid "Use Default"
@@ -351,15 +353,15 @@ msgstr ""
 
 msgctxt "bgn-CT-cEk.title"
 msgid "Show Colors"
-msgstr ""
+msgstr "Farben anzeigen"
 
 msgctxt "bib-Uj-vzu.title"
 msgid "File"
-msgstr ""
+msgstr "Datei"
 
 msgctxt "buJ-ug-pKt.title"
 msgid "Use Selection for Find"
-msgstr ""
+msgstr "Auswahl für Suche verwenden"
 
 msgctxt "c8a-y6-VQd.title"
 msgid "Transformations"
@@ -371,47 +373,47 @@ msgstr ""
 
 msgctxt "cqv-fj-IhA.title"
 msgid "Selection"
-msgstr ""
+msgstr "Auswahl"
 
 msgctxt "cwL-P1-jid.title"
 msgid "Smart Links"
-msgstr ""
+msgstr "Intelligente Links"
 
 msgctxt "d9M-CD-aMd.title"
 msgid "Make Lower Case"
-msgstr ""
+msgstr "In Kleinbuchstaben umwandeln"
 
 msgctxt "d9c-me-L2H.title"
 msgid "Text"
-msgstr ""
+msgstr "Text"
 
 msgctxt "dMs-cI-mzQ.title"
 msgid "File"
-msgstr ""
+msgstr "Datei"
 
 msgctxt "dRJ-4n-Yzg.title"
 msgid "Undo"
-msgstr ""
+msgstr "Rückgängig"
 
 msgctxt "gVA-U4-sdL.title"
 msgid "Paste"
-msgstr ""
+msgstr "Einfügen"
 
 msgctxt "hQb-2v-fYv.title"
 msgid "Smart Quotes"
-msgstr ""
+msgstr "Intelligente Anführungszeichen"
 
 msgctxt "hz2-CU-CR7.title"
 msgid "Check Document Now"
-msgstr ""
+msgstr "Dokument jetzt überprüfen"
 
 msgctxt "hz9-B4-Xy5.title"
 msgid "Services"
-msgstr ""
+msgstr "Dienste"
 
 msgctxt "i1d-Er-qST.title"
 msgid "Smaller"
-msgstr ""
+msgstr "Kleiner"
 
 msgctxt "ijk-EB-dga.title"
 msgid "Baseline"
@@ -423,7 +425,7 @@ msgstr ""
 
 msgctxt "jFq-tB-4Kx.title"
 msgid "\tRight to Left"
-msgstr ""
+msgstr "\tRechts nach links"
 
 msgctxt "jxT-CU-nIS.title"
 msgid "Format"
@@ -431,15 +433,15 @@ msgstr ""
 
 msgctxt "kIP-vf-haE.title"
 msgid "Show Sidebar"
-msgstr ""
+msgstr "Seitenleiste anzeigen"
 
 msgctxt "mK6-2p-4JG.title"
 msgid "Check Grammar With Spelling"
-msgstr ""
+msgstr "Grammatik mit Rechtschreibung prüfen"
 
 msgctxt "o6e-r0-MWq.title"
 msgid "Ligatures"
-msgstr ""
+msgstr "Ligaturen"
 
 msgctxt "oas-Oc-fiZ.title"
 msgid "Open Recent"
@@ -447,39 +449,39 @@ msgstr ""
 
 msgctxt "ogc-rX-tC1.title"
 msgid "Loosen"
-msgstr ""
+msgstr "Lösen"
 
 msgctxt "pa3-QI-u2k.title"
 msgid "Delete"
-msgstr ""
+msgstr "Löschen"
 
 msgctxt "pxx-59-PXV.title"
 msgid "Save…"
-msgstr ""
+msgstr "Sichern…"
 
 msgctxt "q09-fT-Sye.title"
 msgid "Find Next"
-msgstr ""
+msgstr "Weitersuchen"
 
 msgctxt "qIS-W8-SiK.title"
 msgid "Page Setup…"
-msgstr ""
+msgstr "Seite einrichten…"
 
 msgctxt "rbD-Rh-wIN.title"
 msgid "Check Spelling While Typing"
-msgstr ""
+msgstr "Rechtschreibung während der Eingabe überprüfen"
 
 msgctxt "rgM-f4-ycn.title"
 msgid "Smart Dashes"
-msgstr ""
+msgstr "Intelligente Querstriche"
 
 msgctxt "snW-S8-Cw5.title"
 msgid "Show Toolbar"
-msgstr ""
+msgstr "Symbolleiste anzeigen"
 
 msgctxt "tRr-pd-1PS.title"
 msgid "Data Detectors"
-msgstr ""
+msgstr "Daten-Detektoren"
 
 msgctxt "tXI-mr-wws.title"
 msgid "Open Recent"
@@ -492,23 +494,23 @@ msgstr ""
 #. Do not change the placeholder ProductName!
 msgctxt "uQy-DD-JDr.title"
 msgid "ProductName"
-msgstr ""
+msgstr "ProductName"
 
 msgctxt "uRl-iY-unG.title"
 msgid "Cut"
-msgstr ""
+msgstr "Ausschneiden"
 
 msgctxt "vFu-3Y-2xa.title"
 msgid "Window"
-msgstr ""
+msgstr "Fenster"
 
 msgctxt "vKC-jM-MkH.title"
 msgid "Paste Style"
-msgstr ""
+msgstr "Stil einfügen"
 
 msgctxt "vLm-3I-IUL.title"
 msgid "Show Ruler"
-msgstr ""
+msgstr "Lineal anzeigen"
 
 msgctxt "vNY-rz-j42.title"
 msgid "Clear Menu"
@@ -516,23 +518,23 @@ msgstr ""
 
 msgctxt "vmV-6d-7jI.title"
 msgid "Make Upper Case"
-msgstr ""
+msgstr "In Großbuchstaben umwandeln"
 
 msgctxt "w0m-vy-SC9.title"
 msgid "Ligatures"
-msgstr ""
+msgstr "Ligaturen"
 
 msgctxt "wb2-vD-lq4.title"
 msgid "Align Right"
-msgstr ""
+msgstr "Rechtsbündig"
 
 msgctxt "wpr-3q-Mcd.title"
 msgid "Help"
-msgstr ""
+msgstr "Hilfe"
 
 msgctxt "x3v-GG-iWU.title"
 msgid "Copy"
-msgstr ""
+msgstr "Kopieren"
 
 msgctxt "xQD-1f-W4t.title"
 msgid "Use All"
@@ -544,4 +546,4 @@ msgstr ""
 
 msgctxt "z6F-FW-3nz.title"
 msgid "Show Substitutions"
-msgstr ""
+msgstr "Ersetzungen anzeigen"
