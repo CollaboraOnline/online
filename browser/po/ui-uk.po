@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-12-08 11:25+0100\n"
-"PO-Revision-Date: 2025-11-19 09:19+0000\n"
+"PO-Revision-Date: 2025-12-09 11:58+0000\n"
 "Last-Translator: Максим Горпиніч <gorpinicmaksim0@gmail.com>\n"
-"Language-Team: Ukrainian <https://hosted.weblate.org/projects/"
-"collabora-online/ui/uk/>\n"
-"Language: \n"
+"Language-Team: Ukrainian <https://hosted.weblate.org/projects/collabora-"
+"online/ui/uk/>\n"
+"Language: uk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
-"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 "X-Generator: Weblate 5.15-dev\n"
 
 #: admin/admin.strings.js:15
@@ -1145,12 +1145,12 @@ msgstr "Сервер зіткнувся з {0} помилок під час оп
 #: src/control/Control.BackstageView.ts:157
 #: src/control/Control.BackstageView.ts:158
 msgid "Close backstage"
-msgstr ""
+msgstr "Закрити за лаштунки"
 
 #: src/control/Control.BackstageView.ts:202
 #: src/control/Control.BackstageView.ts:203
 msgid "Back to document"
-msgstr ""
+msgstr "Назад до документа"
 
 #: src/control/Control.BackstageView.ts:238
 #: src/control/Control.NotebookbarCalc.js:29
@@ -1182,7 +1182,7 @@ msgstr "Поділитися"
 
 #: src/control/Control.BackstageView.ts:266
 msgid "Info"
-msgstr ""
+msgstr "Інфо"
 
 #: src/control/Control.BackstageView.ts:280
 #: src/control/Control.NotebookbarCalc.js:165
@@ -1194,7 +1194,7 @@ msgstr "Зберегти як"
 
 #: src/control/Control.BackstageView.ts:294
 msgid "Export"
-msgstr ""
+msgstr "Експорт"
 
 #: src/control/Control.BackstageView.ts:340
 #: src/control/jsdialog/Widget.ColorPicker.ts:421
@@ -1203,31 +1203,31 @@ msgstr "Недавні"
 
 #: src/control/Control.BackstageView.ts:341
 msgid "Recently opened documents will appear here"
-msgstr ""
+msgstr "Нещодавно відкриті документи з’являться тут"
 
 #: src/control/Control.BackstageView.ts:353
 msgid "New Document"
-msgstr ""
+msgstr "Новий документ"
 
 #: src/control/Control.BackstageView.ts:354
 msgid "Start from a template or a blank file"
-msgstr ""
+msgstr "Почніть із шаблону або пустого файлу"
 
 #: src/control/Control.BackstageView.ts:375
 msgid "Document Info"
-msgstr ""
+msgstr "Інформація про документ"
 
 #: src/control/Control.BackstageView.ts:376
 msgid "View document properties and information"
-msgstr ""
+msgstr "Перегляд властивостей та інформації про документ"
 
 #: src/control/Control.BackstageView.ts:392
 msgid "Export Document"
-msgstr ""
+msgstr "Експортний документ"
 
 #: src/control/Control.BackstageView.ts:393
 msgid "export your documents in different formats"
-msgstr ""
+msgstr "експортуйте свої документи в різні формати"
 
 #: src/control/Control.BackstageView.ts:445 src/control/Control.Menubar.ts:381
 #: src/control/Control.Menubar.ts:1354
@@ -1241,25 +1241,24 @@ msgstr "Властивості"
 
 #: src/control/Control.BackstageView.ts:451
 msgid "More Property Info"
-msgstr ""
+msgstr "Більше інформації про нерухомість"
 
 #: src/control/Control.BackstageView.ts:530
 msgid "Text Document"
-msgstr ""
+msgstr "Текстовий документ"
 
 #: src/control/Control.BackstageView.ts:530
 #: src/control/Control.BackstageView.ts:533
-#, fuzzy
 msgid "Pages"
-msgstr "Сторінка"
+msgstr "Сторінки"
 
 #: src/control/Control.BackstageView.ts:531
 msgid "Spreadsheet"
-msgstr ""
+msgstr "Електронна таблиця"
 
 #: src/control/Control.BackstageView.ts:531
 msgid "Sheets"
-msgstr ""
+msgstr "Аркуші"
 
 #: src/control/Control.BackstageView.ts:532
 #: src/control/Control.NavigatorPanel.ts:189
@@ -1270,7 +1269,7 @@ msgstr "Слайди"
 
 #: src/control/Control.BackstageView.ts:538
 msgid "Parts"
-msgstr ""
+msgstr "Запчастини"
 
 #: src/control/Control.BackstageView.ts:542
 #: src/control/Control.DocumentRepair.js:140
@@ -1279,40 +1278,39 @@ msgstr "Тип"
 
 #: src/control/Control.BackstageView.ts:548
 msgid "Mode"
-msgstr ""
+msgstr "Режим"
 
 #: src/control/Control.BackstageView.ts:549
 msgid "View Only"
-msgstr ""
+msgstr "Тільки перегляд"
 
 #: src/control/Control.BackstageView.ts:556
 msgid "File Name"
-msgstr ""
+msgstr "Ім'я файлу"
 
 #: src/control/Control.BackstageView.ts:658
 msgid "Loading templates…"
-msgstr ""
+msgstr "Завантаження шаблонів…"
 
 #: src/control/Control.BackstageView.ts:704
 msgid "Search templates"
-msgstr ""
+msgstr "Пошук шаблонів"
 
 #: src/control/Control.BackstageView.ts:762
 msgid "No templates match your search."
-msgstr ""
+msgstr "Немає шаблонів, що відповідають вашому пошуку."
 
 #: src/control/Control.BackstageView.ts:868
 msgid "Blank Spreadsheet"
-msgstr ""
+msgstr "Пуста електронна таблиця"
 
 #: src/control/Control.BackstageView.ts:872
-#, fuzzy
 msgid "Blank Presentation"
-msgstr "Завершення презентації"
+msgstr "Пуста презентація"
 
 #: src/control/Control.BackstageView.ts:877
 msgid "Blank Document"
-msgstr ""
+msgstr "Пустий документ"
 
 #: src/control/Control.Command.js:90
 msgid "Unlock"
@@ -2602,7 +2600,7 @@ msgstr "Після"
 
 #: src/control/Notebookbar.ImpressTransitionTab.ts:137
 msgid "Apply to All Slides"
-msgstr ""
+msgstr "Застосувати до всіх слайдів"
 
 #: src/control/Notebookbar.WriterReferencesTab.ts:41
 msgid "Table of content"
@@ -2783,7 +2781,7 @@ msgstr "Перейменувати"
 #: src/control/Control.NotebookbarImpress.js:739
 #: src/control/Control.NotebookbarWriter.js:589
 msgid "Clipboard"
-msgstr "Буфер обміну"
+msgstr "Буфер Обміну"
 
 #: src/control/Control.NotebookbarCalc.js:478
 #: src/control/Control.NotebookbarDraw.js:673
@@ -3004,35 +3002,35 @@ msgstr "Панель стану"
 
 #: src/control/Control.NotebookbarCalc.js:1665
 msgid "Table Style Options"
-msgstr ""
+msgstr "Параметри стилю таблиці"
 
 #: src/control/Control.NotebookbarCalc.js:1678
 msgid "Show Header Row"
-msgstr ""
+msgstr "Показати рядок заголовка"
 
 #: src/control/Control.NotebookbarCalc.js:1690
 msgid "Show Total Row"
-msgstr ""
+msgstr "Показати рядок підсумків"
 
 #: src/control/Control.NotebookbarCalc.js:1708
 msgid "Banded Rows"
-msgstr ""
+msgstr "Смугасті ряди"
 
 #: src/control/Control.NotebookbarCalc.js:1720
 msgid "Banded Columns"
-msgstr ""
+msgstr "Смугоподібні колони"
 
 #: src/control/Control.NotebookbarCalc.js:1738
 msgid "First Column"
-msgstr ""
+msgstr "Перша колонка"
 
 #: src/control/Control.NotebookbarCalc.js:1750
 msgid "Last Column"
-msgstr ""
+msgstr "Остання колонка"
 
 #: src/control/Control.NotebookbarCalc.js:1765
 msgid "Show Filter Buttons"
-msgstr ""
+msgstr "Показати кнопки фільтрів"
 
 #: src/control/Control.NotebookbarCalc.js:1801
 #: src/control/Control.NotebookbarCalc.js:2549
@@ -3529,7 +3527,7 @@ msgstr "Кількість виділень"
 
 #: src/control/Control.StatusBar.js:250
 msgid "Multi Page View"
-msgstr ""
+msgstr "Перегляд кількох сторінок"
 
 #: src/control/Control.StatusBar.js:405
 msgid ""
@@ -4358,11 +4356,11 @@ msgstr "Автоматично"
 
 #: src/control/jsdialog/Widget.ColorPicker.ts:262
 msgid "Color palette"
-msgstr ""
+msgstr "Колірна палітра"
 
 #: src/control/jsdialog/Widget.ColorPicker.ts:328
 msgid "Enter custom color in hex format"
-msgstr ""
+msgstr "Введіть власний колір у шістнадцятковому форматі"
 
 #: src/control/jsdialog/Widget.PageMarginEntry.ts:40
 msgid "Page margin options"
@@ -4940,7 +4938,7 @@ msgstr "{0} видалено"
 
 #: src/layer/marker/TextInput.js:411
 msgid "Clipboard area"
-msgstr ""
+msgstr "Буфер обміну"
 
 #: src/layer/marker/TextInput.js:461
 msgid "Screen reader support for text content is disabled. "
