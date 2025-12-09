@@ -531,18 +531,20 @@ static void do_cut_or_copy(ClipboardOp op, WindowData& data)
         else if (std::string(mimeTypes[i]).starts_with("application/x-openoffice-objectdescriptor-xml;"))
             format = RegisterClipboardFormatW(L"Star Object Descriptor (XML)");
 
-        if (wformat)
+        if (wformat == CF_UNICODETEXT)
         {
             std::wstring wtext =
-                sizes[i] ? Util::string_to_wide_string(std::string(streams[i])) : L"";
-            const int byteSize = wtext.size() * 2;
+                sizes[i] ? Util::string_to_wide_string(std::string(streams[i], sizes[i])) : L"";
+            // CF_UNICODETEXT *must* have a terminating zero wchar_t
+            const int byteSize = wtext.size() * 2 + 2;
             HANDLE hglData = GlobalAlloc(GMEM_MOVEABLE, byteSize);
             if (hglData)
             {
                 wchar_t* wcopy = (wchar_t*)GlobalLock(hglData);
-                memcpy(wcopy, wtext.c_str(), byteSize);
+                memcpy(wcopy, wtext.c_str(), byteSize - 2);
+                wcopy[sizes[i]] = 0;
                 GlobalUnlock(hglData);
-                SetClipboardData(wformat, hglData);
+                SetClipboardData(CF_UNICODETEXT, hglData);
             }
         }
         else if (format)
