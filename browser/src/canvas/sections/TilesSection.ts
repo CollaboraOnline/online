@@ -108,45 +108,6 @@ export class TilesSection extends CanvasSectionObject {
 		}
 	}
 
-	// the bounding box of this set of tiles
-	public getSubsetBounds(canvasCtx: CanvasRenderingContext2D, tileSubset: Set<any>): cool.Bounds {
-
-		// don't do anything for this atypical variant
-		if (app.file.fileBasedView)
-			return null;
-
-		var ctx = this.sectionProperties.tsManager._paintContext();
-
-		var bounds: cool.Bounds;
-		for (const coords of Array.from(tileSubset)) {
-			var topLeft = new cool.Point(coords.getPos().x, coords.getPos().y);
-			var rightBottom = new cool.Point(topLeft.x + TileManager.tileSize, topLeft.y + TileManager.tileSize);
-
-			if (bounds === undefined)
-				bounds = new cool.Bounds(topLeft, rightBottom);
-			else {
-				bounds.extend(topLeft).extend(rightBottom);
-			}
-		}
-
-		return bounds;
-	}
-
-	public clipSubsetBounds(canvasCtx: CanvasRenderingContext2D, subsetBounds: cool.Bounds): void {
-
-		var ctx = this.sectionProperties.tsManager._paintContext();
-		ctx.viewBounds.round();
-
-		canvasCtx.beginPath();
-		var rect = subsetBounds.toRectangle();
-
-		this.beforeDraw(canvasCtx);
-		canvasCtx.rect(rect[0] - ctx.viewBounds.min.x, rect[1] - ctx.viewBounds.min.y, rect[2], rect[3]);
-		this.afterDraw(canvasCtx);
-
-		canvasCtx.clip();
-	}
-
 	// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 	private drawTileInPane (tile: any, tileBounds: any, paneBounds: any, paneOffset: any, canvasCtx: CanvasRenderingContext2D, clearBackground: boolean): void {
 		// intersect - to avoid state thrash through clipping

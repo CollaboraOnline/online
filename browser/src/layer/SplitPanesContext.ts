@@ -289,17 +289,6 @@ export class SplitPanesContext {
 		return boundList;
 	}
 
-	public getTwipsBoundList(pxBounds: Bounds): Bounds[] {
-		var bounds = this.getPxBoundList(pxBounds);
-		var docLayer = this._docLayer;
-		return bounds.map(function (bound) {
-			return new Bounds(
-				docLayer._corePixelsToTwips(bound.min) as Point,
-				docLayer._corePixelsToTwips(bound.max) as Point
-			);
-		});
-	}
-
 	public intersectsVisible(areaPx: Bounds): boolean {
 		var pixBounds = this._map.getPixelBoundsCore() as Bounds;
 		var boundList = this.getPxBoundList(pixBounds);
