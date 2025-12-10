@@ -990,9 +990,6 @@ window.L.TextInput = window.L.Layer.extend({
 		if (this._map.uiManager.isUIBlocked())
 			return;
 
-		if (app.UI.notebookbarAccessibility)
-			app.UI.notebookbarAccessibility.onDocumentKeyDown(ev);
-
 		if (ev.keyCode === 8)
 			this._deleteHint = 'backspace';
 		else if (ev.keyCode === 46)
@@ -1173,9 +1170,6 @@ window.L.TextInput = window.L.Layer.extend({
 				}
 			}
 		}
-
-		if (app.UI.notebookbarAccessibility)
-			app.UI.notebookbarAccessibility.onDocumentKeyUp(ev);
 	},
 
 	// Used in the deleteContentBackward for deleting multiple characters with a single

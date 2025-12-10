@@ -313,11 +313,13 @@ window.L.Map.Keyboard = window.L.Handler.extend({
 
 		window.L.DomEvent.on(this._map.getContainer(), 'keydown keyup keypress', this._onKeyDown, this);
 		window.L.DomEvent.on(window.document, 'keydown', this._globalKeyEvent, this);
+		window.document.addEventListener('keyup', this._globalKeyUp.bind(this), true);
 	},
 
 	removeHooks: function () {
 		window.L.DomEvent.off(this._map.getContainer(), 'keydown keyup keypress', this._onKeyDown, this);
 		window.L.DomEvent.off(window.document, 'keydown', this._globalKeyEvent, this);
+		window.document.removeEventListener('keyup', this._globalKeyUp.bind(this));
 	},
 
 	_ignoreKeyEvent: function(ev) {
@@ -400,6 +402,10 @@ window.L.Map.Keyboard = window.L.Handler.extend({
 		if (this._map.uiManager.isUIBlocked())
 			return;
 
+		if (app.UI.notebookbarAccessibility) {
+			app.UI.notebookbarAccessibility.onDocumentKeyDown(ev);
+		}
+
 		if (ev.shortCutActivated === true) {
 			window.app.console.log('Shortcut for: ' + ev.code + ' already handled');
 			return;
@@ -453,6 +459,17 @@ window.L.Map.Keyboard = window.L.Handler.extend({
 				app.map._clip.clearSelection();
 				app.map.focus();
 			}
+		}
+	},
+
+	_globalKeyUp: function (ev) {
+		if (this._map.uiManager.isUIBlocked()) {
+			return;
+		}
+
+		if (app.UI.notebookbarAccessibility &&
+		    app.UI.notebookbarAccessibility.accessibilityInputElement !== document.activeElement) {
+			app.UI.notebookbarAccessibility.onDocumentKeyUp(ev);
 		}
 	},
 
