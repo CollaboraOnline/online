@@ -4106,7 +4106,6 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 
 		if (this._documentInfo === '' || sizeChanged) {
 			// we just got the first status so we need to center the document
-			this._map.setDocBounds(new window.L.LatLngBounds(topLeft, this._map.unproject(docPixelLimits)));
 			this._map.setMaxBounds(new window.L.LatLngBounds(topLeft, this._map.unproject(scrollPixelLimits)));
 		}
 
