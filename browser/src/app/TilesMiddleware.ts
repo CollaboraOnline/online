@@ -666,11 +666,11 @@ class TileManager {
 
 	private static getMaxTileCountToPrefetch(tileSize: number): number {
 		const viewTileWidth = Math.floor(
-			(this._pixelBounds.getSize().x + tileSize - 1) / tileSize,
+			(app.sectionContainer.getWidth() + tileSize - 1) / tileSize,
 		);
 
 		const viewTileHeight = Math.floor(
-			(this._pixelBounds.getSize().y + tileSize - 1) / tileSize,
+			(app.sectionContainer.getHeight() + tileSize - 1) / tileSize,
 		);
 
 		// Read-only views can much more agressively pre-load
@@ -1327,26 +1327,24 @@ class TileManager {
 
 	private static updateTileDistance(
 		tile: Tile,
-		zoom: number,
-		visibleRanges: any | null = null,
+		zoom: number
 	) {
 		if (
 			tile.coords.z !== zoom ||
 			tile.coords.part !== app.map._docLayer._selectedPart ||
 			tile.coords.mode !== app.map._docLayer._selectedMode
-		) {
+		)
 			tile.distanceFromView = Number.MAX_SAFE_INTEGER;
-			return;
-		}
-		if (!visibleRanges) visibleRanges = this.getVisibleRanges();
-		const tileBounds = new cool.Bounds(
-			[tile.coords.x, tile.coords.y],
-			[tile.coords.x + this.tileSize, tile.coords.y + this.tileSize],
-		);
-		tile.distanceFromView = tileBounds.distanceTo(visibleRanges[0]);
-		for (let i = 1; i < visibleRanges.length; ++i) {
-			const distance = tileBounds.distanceTo(visibleRanges[i]);
-			if (distance < tile.distanceFromView) tile.distanceFromView = distance;
+		else {
+			const tileSizeTwips = Math.round(this.tileSize * app.pixelsToTwips);
+
+			if (app.isRectangleVisibleInTheDisplayedArea([tile.coords.x, tile.coords.y, tileSizeTwips, tileSizeTwips]))
+				tile.distanceFromView = 0;
+			else {
+				const tileCenter = [tile.coords.x + tileSizeTwips * 0.5, tile.coords.y + tileSizeTwips * 0.5];
+				const viewCenter = app.activeDocument.activeLayout.viewedRectangle.center;
+				tile.distanceFromView = Math.sqrt(Math.pow(tileCenter[0] - viewCenter[0], 2) + Math.pow(tileCenter[1] - viewCenter[1], 2));
+			}
 		}
 	}
 
@@ -1373,11 +1371,8 @@ class TileManager {
 
 		// If we're looking for tiles for the current (visible) area, update tile distance.
 		if (isCurrent) {
-			const currentBounds = app.map._docLayer._splitPanesContext
-				? app.map._docLayer._splitPanesContext.getPxBoundList(pixelBounds)
-				: [pixelBounds];
 			for (const tile of this.tiles.values()) {
-				this.updateTileDistance(tile, zoom, currentBounds);
+				this.updateTileDistance(tile, zoom);
 			}
 			this.sortTileBitmapList();
 		}
@@ -1450,8 +1445,6 @@ class TileManager {
 		// Remove irrelevant tiles from the queue earlier.
 		this.removeIrrelevantsFromCoordsQueue(coordsQueue);
 
-		// If these aren't current tiles, calculate the visible ranges to update tile distance.
-		const visibleRanges = isCurrent ? null : this.getVisibleRanges();
 		const zoom = Math.round(app.map.getZoom());
 
 		// Ensure tiles exist for requested coordinates
@@ -1463,7 +1456,7 @@ class TileManager {
 				tile = this.createTile(coordsQueue[i]);
 
 				// Newly created tiles have a distance of zero, which means they're current.
-				if (!isCurrent) this.updateTileDistance(tile, zoom, visibleRanges);
+				if (!isCurrent) this.updateTileDistance(tile, zoom);
 			}
 		}
 
