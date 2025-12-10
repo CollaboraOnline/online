@@ -156,6 +156,11 @@ private:
                                const std::shared_ptr<StreamSocket>& socket,
                                unsigned mobileAppDocId = 0);
 
+    /// forwards request to different coolwsd server using ProxyPoll
+    void handleInternalProxy(const std::string& wopiSrc, const std::string& controllerURL,
+                             const std::shared_ptr<StreamSocket>& socket,
+                             const Poco::Net::HTTPRequest& request);
+
     /// Lookup cached file content.
     static const std::string& getFileContent(const std::string& filename);
 

@@ -34,8 +34,10 @@
 #include <net/HttpHelper.hpp>
 #include <net/NetUtil.hpp>
 #include <net/Uri.hpp>
+#include <wopi/StorageConnectionManager.hpp>
 #include <wsd/ClientRequestDispatcher.hpp>
 #include <wsd/DocumentBroker.hpp>
+#include <wsd/ProxyPoll.hpp>
 #include <wsd/RequestVettingStation.hpp>
 
 #if !MOBILEAPP
@@ -59,6 +61,7 @@
 #include <Poco/Net/PartHandler.h>
 #include <Poco/SAX/InputSource.h>
 #include <Poco/StreamCopier.h>
+#include <Poco/JSON/Object.h>
 
 #include <algorithm>
 #include <map>
@@ -2535,6 +2538,65 @@ bool ClientRequestDispatcher::handleClientProxyRequest(const Poco::Net::HTTPRequ
 }
 #endif
 
+void ClientRequestDispatcher::handleInternalProxy(const std::string& wopiSrc,
+                                                  const std::string& controllerURL,
+                                                  const std::shared_ptr<StreamSocket>& socket,
+                                                  const Poco::Net::HTTPRequest& request)
+{
+    // Check if we know where this document is
+    const Poco::URI controllerURI{ controllerURL };
+    std::shared_ptr<http::Session> httpSession(
+        StorageConnectionManager::getHttpSession(controllerURI));
+    http::Request controllerRequest(controllerURI.getPathAndQuery());
+    LOG_DBG("Getting podIP from [" << controllerURI.toString() << ']');
+
+    http::Session::FinishedCallback finishedCallback =
+        [this, controllerURL, wopiSrc, socket,
+         request](const std::shared_ptr<http::Session>& session)
+    {
+        if (SigUtil::getShutdownRequestFlag())
+        {
+            LOG_DBG("Shutdown flagged, giving up on in-flight requests");
+            return;
+        }
+
+        const std::shared_ptr<const http::Response> httpResponse = session->response();
+        const http::StatusLine statusLine = httpResponse->statusLine();
+
+        LOG_TRC("Request to URL[" << controllerURL << " returned " << statusLine.statusCode());
+        const bool failed = (statusLine.statusCode() != http::StatusCode::OK);
+        if (failed)
+        {
+            LOG_ERR("Failed to fetch targetPodIP from URL[" << controllerURL << "] with statusCode["
+                                                            << statusLine.statusCode());
+            return;
+        }
+
+        const std::string& body = httpResponse->getBody();
+        LOG_DBG("TargetPod details JSON for [" << controllerURL << "] is: " << body);
+
+        Poco::JSON::Object::Ptr targetPodJSON;
+        if (!JsonUtil::parseJSON(body, targetPodJSON))
+        {
+            LOG_ERR("Failed to parse JSON[" << body << "] from URL[" << controllerURL
+                                            << "] failed");
+            return;
+        }
+
+        const std::string targetPodIP =
+            JsonUtil::getJSONValue<std::string>(targetPodJSON, "pod_ip");
+        int targetPort = JsonUtil::getJSONValue<int>(targetPodJSON, "port");
+        if (targetPodIP.empty())
+            return;
+
+        LOG_INF("Document [" << wopiSrc << "] is on podIP[" << targetPodIP << "]. Proxying...");
+        ProxyPoll::startPump(socket, targetPodIP, targetPort, request);
+    };
+
+    httpSession->setFinishedHandler(std::move(finishedCallback));
+    httpSession->asyncRequest(controllerRequest, COOLWSD::getWebServerPoll());
+}
+
 bool ClientRequestDispatcher::handleClientWsUpgrade(const Poco::Net::HTTPRequest& request,
                                                     const RequestDetails& requestDetails,
                                                     SocketDisposition& disposition,
@@ -2547,6 +2609,23 @@ bool ClientRequestDispatcher::handleClientWsUpgrade(const Poco::Net::HTTPRequest
     // must be trace for anonymization
     LOG_TRC("Client WS request: " << requestDetails.getURI() << ", url: " << url << ", socket #"
                                   << socket->getFD());
+
+#if !MOBILEAPP
+    // Check if we need to proxy this request to another pod/server
+    const std::string controllerURL = ConfigUtil::getString("indirection_endpoint.url", "");
+    if (!controllerURL.empty())
+    {
+        const std::string docKey = requestDetails.getDocKey();
+        std::unique_lock<std::mutex> docBrokersLock(DocBrokersMutex);
+        auto docBrokerIt = DocBrokers.find(docKey);
+        const std::string wopiSrc = requestDetails.getField(RequestDetails::Field::WOPISrc);
+        if (docBrokerIt == DocBrokers.end())
+        {
+            handleInternalProxy(wopiSrc, controllerURL, socket, request);
+            return true;
+        }
+    }
+#endif
 
     // First Upgrade.
     const bool allowed = allowedOrigin(request, requestDetails);
