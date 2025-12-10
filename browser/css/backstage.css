@@ -161,13 +161,6 @@
 	display: none;
 }
 
-.backstage-sidebar-item span {
-	font-size: var(--medium-font-size);
-	display: flex;
-	align-items: center;
-	line-height: 1.1;
-}
-
 /* Starter mode: vertical layout with big centered icons */
 .is-starter-mode .backstage-sidebar-item {
 	flex-direction: column;
