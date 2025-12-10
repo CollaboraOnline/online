@@ -137,7 +137,7 @@ class Cursor {
 	}
 
 	public update() {
-		if (!this.container || !this.map || !this.map.hasDocBounds())
+		if (!this.container || !this.map || !app.activeDocument || app.activeDocument.fileSize.x === 0)
 			return;
 
 		if (!app.isRectangleVisibleInTheDisplayedArea(app.file.textCursor.rectangle.toArray())) {
