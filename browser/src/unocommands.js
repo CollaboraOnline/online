@@ -486,7 +486,7 @@ var unoCommandsArray = {
 	'ObjectForwardOne':{global:{menu:_('Forward One'),},},
 	'ObjectTitleDescription':{global:{context:_('Add descriptions of non-text content (for accessibility)'),menu:_('Description...'),},},
 	'OnlineAutoFormat':{text:{menu:_('~While Typing'),},},
-	'Open':{global:{menu:_('~Open...'),},},
+	'Open':{global:{menu:_('~Open'),},},
 	'OpenHyperlinkOnCursor':{global:{menu:_('Open Hyperlink'),},},
 	'Orientation':{text:{menu:_('Orientation'),},},
 	'OutlineBullet':{global:{menu:_('~Bullets and Numbering...'),},},
