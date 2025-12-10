@@ -2970,14 +2970,6 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 				' x=' + x + ' y=' + y);
 	},
 
-	// Is rRectangle empty?
-	_isEmptyRectangle: function (bounds) {
-		if (!bounds) {
-			return true;
-		}
-		return bounds.getSouthWest().equals(new window.L.LatLng(0, 0)) && bounds.getNorthEast().equals(new window.L.LatLng(0, 0));
-	},
-
 	_onZoomStart: function () {
 		this._isZooming = true;
 	},
