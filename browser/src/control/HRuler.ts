@@ -811,7 +811,7 @@ class HRuler extends Ruler {
 	}
 
 	_fixOffset() {
-		if (!this._map.options.docBounds) return;
+		if (!app.activeDocument || app.activeDocument.fileSize.x === 0) return;
 
 		const rulerOffset =
 			-app.activeDocument.activeLayout.viewedRectangle.cX1 +
