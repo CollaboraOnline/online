@@ -100,37 +100,28 @@ namespace FileUtil
         LOG_DBG("Removing [" << Anonymizer::anonymizeUrl(path) << "] " << (recursive ? "recursively." : "only."));
         std::error_code err;
 
-        if (!recursive) {
+        if (!recursive)
+        {
             std::filesystem::remove(path, err);
-        } else {
+        }
+        else
+        {
             std::filesystem::remove_all(path, err);
         }
 
-        if (err && err.value() != static_cast<int>(std::errc::no_such_file_or_directory)) {
-
-           std::cerr << "FileUtil::removeFile: Failed to remove ["
-                      << Anonymizer::anonymizeUrl(path) << "] " << (recursive ? "recursively: " : "only: ")
-                      << err.message() << std::endl;
+        if (err != std::errc::no_such_file_or_directory)
+        {
+        LOG_ERR("Failed to remove ["
+                << Anonymizer::anonymizeUrl(path) << "] " << (recursive ? "recursively: " : "only: ") << err.message());
         }
     }
 
-    //Remove directories only, which must be empty for this to work.
-    static int nftw_rmdir_cb(const char* fpath, const struct stat*, int type, struct FTW*)
-     {
-         if (type == FTW_DP)
-         {
-             rmdir(fpath);
-         }
-
-         // Always continue even when things go wrong.
-         return 0;
-     }
 
     void removeEmptyDirTree(const std::string& path)
      {
-         LOG_DBG("Removing empty directories at [" << path << "] recursively");
+        LOG_DBG("Removing empty directories at [" << path << "] recursively");
 
-         nftw(path.c_str(), nftw_rmdir_cb, 128, FTW_DEPTH | FTW_PHYS);
+        std::filesystem::remove_all(path);
     }
 
     bool isEmptyDirectory(const char* path)
