@@ -388,6 +388,21 @@ class DebugManager {
 			},
 		});
 
+		if (this._docLayer.isCalc()) {
+			this._addDebugTool({
+				name: 'Disable workers',
+				category: 'Display',
+				startsOn: false,
+				onAdd: function () {
+					Util.ensureValue(self._painter);
+					this.disableWorker();
+				},
+				onRemove: function () {
+					Util.ensureValue(self._painter);
+				},
+			});
+		}
+
 		this._addDebugTool({
 			name: 'Performance Tracing',
 			category: 'Logging',
