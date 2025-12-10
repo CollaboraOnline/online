@@ -275,6 +275,7 @@ m4_ifelse(MOBILEAPP, [true],
       data-document-signing-enabled = "%DOCUMENT_SIGNING_ENABLED%"
       data-enable-accessibility = "%ENABLE_ACCESSIBILITY%"
       data-enable-debug = "%ENABLE_DEBUG%"
+      data-enable-experimental-features = "%EXPERIMENTAL_FEATURES%"
       data-enable-macros-execution = "%ENABLE_MACROS_EXECUTION%"
       data-enable-welcome-message = "%ENABLE_WELCOME_MSG%"
       data-extra-export-formats = "%EXTRA_EXPORT_FORMATS%"

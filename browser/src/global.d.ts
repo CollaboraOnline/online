@@ -307,6 +307,7 @@ interface Window {
 	documentSigningEnabled: boolean;
 	deviceFormFactor?: string;
 	enableAccessibility: boolean;
+	enableExperimentalFeatures: boolean;
 	enableDebug: boolean;
 	enableMacrosExecution: boolean;
 	enableWelcomeMessage: boolean;
