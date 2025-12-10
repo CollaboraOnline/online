@@ -2695,9 +2695,13 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 			control.setAttribute('tabIndex', '0');
 
 		if (control && window.L.Browser.cypressTest && window.app.a11yValidator) {
+			// setupA11yLabelForLabelableElement uses two layouting task depth,
+			// so use three here to do this test after those have added the labels
 			app.layoutingService.appendLayoutingTask(() => {
 				app.layoutingService.appendLayoutingTask(() => {
-					window.app.a11yValidator.checkWidget(data.type, control);
+					app.layoutingService.appendLayoutingTask(() => {
+						window.app.a11yValidator.checkWidget(data.type, control);
+					});
 				});
 			});
 		}
