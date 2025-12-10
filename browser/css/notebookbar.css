@@ -466,10 +466,11 @@ label.notebookbar.ui-checkbox-label {
 }
 
 /* Styles preview */
-.jsdialog.ui-iconview:not(.sidebar) {
+.jsdialog #stylesview:not(.sidebar),
+.jsdialog #masterpageall_icons:not(.sidebar),
+.jsdialog #transitions_icons:not(.sidebar) {
 	height: auto !important;
 	min-height: 64px !important;
-	width: 36.8vw !important;
 	border: none !important;
 	margin: 0 auto !important;
 
@@ -515,7 +516,9 @@ label.notebookbar.ui-checkbox-label {
 	box-sizing: border-box;
 }
 
-.jsdialog.ui-iconview:not(.sidebar),
+.jsdialog #stylesview:not(.sidebar),
+.jsdialog #masterpageall_icons:not(.sidebar),
+.jsdialog #transitions_icons:not(.sidebar),
 .notebookbar #stylesview-iconview,
 .notebookbar #masterpageall_icons-iconview,
 .notebookbar #transitions_icons-iconview,
@@ -546,7 +549,7 @@ label.notebookbar.ui-checkbox-label {
  */
 .jsdialog #stylesview,
 .notebookbar #stylesview-iconview {
-	width: 35vw;
+	width: 36.8vw !important;
 	/* Preview base64's width = 100px + container border's etc */
 	grid-template-columns: repeat(auto-fit, minmax(122px, 1fr));
 	/* Preview base64's height = 30px  + container border's etc */
