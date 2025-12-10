@@ -1556,10 +1556,12 @@ static void openCOOLWindow(const FilenameAndUri& filenameAndUri, DocumentMode mo
                                 coolURL +=
                                     "file_path=" + data.filenameAndUri.uri +
                                     std::string("&permission=edit") +
-                                    std::string("&lang=") + uiLanguage +
                                     std::string("&appdocid=") + std::to_string(data.appDocId) +
                                     std::string("&userinterfacemode=notebookbar"
                                                 "&dir=ltr");
+
+                            coolURL += "&lang=" + uiLanguage;
+
                             if (!isLightTheme())
                                 coolURL +=
                                     "&darkTheme=true";
