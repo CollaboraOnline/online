@@ -12,7 +12,7 @@
  * window.L.IFrameDialog
  */
 
-/* global _ */
+/* global _ cool */
 
 window.L.IFrameDialog = window.L.Class.extend({
 
@@ -36,6 +36,8 @@ window.L.IFrameDialog = window.L.Class.extend({
 			const closeButton = window.L.DomUtil.create('button', 'ui-button ui-corner-all ui-widget ui-button-icon-only ui-dialog-titlebar-close', titlebar);
 			window.L.DomUtil.create('span', 'ui-button-icon ui-icon ui-icon-closethick', closeButton);
 			window.L.DomEvent.on(closeButton, 'click', () => this.remove(this._container));
+			this._draggable = new window.L.Draggable(this._container, titlebar);
+			this._draggable.enable();
 		}
 		content = window.L.DomUtil.create('div', this.options.prefix + '-content', this._container);
 
@@ -156,6 +158,10 @@ window.L.IFrameDialog = window.L.Class.extend({
 	},
 
 	remove: function () {
+		if (this._draggable) {
+			this._draggable.disable();
+			this._draggable = null;
+		}
 		window.L.DomEvent.off(this._iframe, 'load', this.onLoad, this);
 		window.L.DomUtil.remove(this._container);
 		this._container = this._iframe = null;
@@ -180,6 +186,13 @@ window.L.IFrameDialog = window.L.Class.extend({
 
 	show: function () {
 		this._container.style.display = '';
+		if (this.options.titlebar && !this._container._leaflet_pos) {
+			var rect = this._container.getBoundingClientRect();
+			this._container.style.left = '0px';
+			this._container.style.top = '0px';
+			var pos = new cool.Point(rect.left, rect.top);
+			window.L.DomUtil.setPosition(this._container, pos);
+		}
 		this.focus();
 	}
 });
