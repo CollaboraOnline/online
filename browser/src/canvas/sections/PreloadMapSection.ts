@@ -45,11 +45,11 @@ class PreloadMapSection extends CanvasSectionObject {
 
 		// stop annoying jitter as the view fits different numbers of tiles.
 		var viewWidth = Math.floor(
-			(app.map.getPixelBoundsCore().getSize().x + TileManager.tileSize - 1) /
+			(app.sectionContainer.getWidth() + TileManager.tileSize - 1) /
 				TileManager.tileSize,
 		);
 		var viewHeight = Math.floor(
-			(app.map.getPixelBoundsCore().getSize().y + TileManager.tileSize - 1) /
+			(app.sectionContainer.getHeight() + TileManager.tileSize - 1) /
 				TileManager.tileSize,
 		);
 
