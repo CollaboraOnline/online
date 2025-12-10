@@ -262,6 +262,7 @@ class InitializerBase {
 		window.geolocationSetup = false;
 		window.canvasSlideshowEnabled = false;
 		window.wopiSettingBaseUrl = element.dataset.wopiSettingBaseUrl;
+		window.enableExperimentalFeatures = element.dataset.enableExperimentalFeatures;
 
 		window.tileSize = 256;
 
