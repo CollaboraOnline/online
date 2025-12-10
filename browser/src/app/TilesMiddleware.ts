@@ -476,7 +476,6 @@ class TileManager {
 		deltas: any[],
 		bitmaps: ImageBitmap[],
 	) {
-		const visibleRanges = this.getVisibleRanges();
 		while (deltas.length) {
 			const delta = deltas.shift();
 			const bitmap = bitmaps.shift();
@@ -486,7 +485,7 @@ class TileManager {
 
 			this.setBitmapOnTile(tile, bitmap);
 
-			if (tile.isReady()) this.tileReady(tile.coords, visibleRanges);
+			if (tile.isReady()) this.tileReady(tile.coords);
 		}
 
 		// Check if all current visible tiles are accounted for and resume drawing if so.
@@ -807,22 +806,13 @@ class TileManager {
 		++this.inTransaction;
 	}
 
-	private static getVisibleRanges(): Array<cool.Bounds> {
-		var zoom = Math.round(app.map.getZoom());
-		var pixelBounds = app.map.getPixelBoundsCore(app.map.getCenter(), zoom);
-		return app.map._docLayer._splitPanesContext
-			? app.map._docLayer._splitPanesContext.getPxBoundList(pixelBounds)
-			: [pixelBounds];
-	}
-
 	private static tileZoomIsCurrent(coords: TileCoordData) {
 		const scale = Math.pow(1.2, app.map.getZoom() - 10);
 		return Math.round(coords.scale * 1000) === Math.round(scale * 1000);
 	}
 
 	private static tileReady(
-		coords: TileCoordData,
-		visibleRanges: Array<cool.Bounds>,
+		coords: TileCoordData
 	) {
 		var key = coords.key();
 
@@ -848,11 +838,8 @@ class TileManager {
 		}
 
 		// Request a redraw if the tile is visible
-		const tileBounds = new cool.Bounds(
-			[tile.coords.x, tile.coords.y],
-			[tile.coords.x + this.tileSize, tile.coords.y + this.tileSize],
-		);
-		if (tileBounds.intersectsAny(visibleRanges))
+		const tileSizeTwips = Math.round(this.tileSize * app.pixelsToTwips);
+		if (app.isRectangleVisibleInTheDisplayedArea([tile.coords.x, tile.coords.y, tileSizeTwips, tileSizeTwips]))
 			app.sectionContainer.requestReDraw();
 	}
 
