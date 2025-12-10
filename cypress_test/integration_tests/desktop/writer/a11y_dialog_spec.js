@@ -38,7 +38,6 @@ describe(['tagdesktop'], 'Accessibility Writer Tests', function () {
                     command == '.uno:InsertCaptionDialog' ||
                     command == '.uno:PageDialog' ||
                     command == '.uno:ParagraphDialog' ||
-                    command == '.uno:ThesaurusDialog' ||
                     command == '.uno:TableDialog' ||
                     command == '.uno:TableNumberFormatDialog') {
                     cy.log(`Skipping buggy dialog: ${command}`);
