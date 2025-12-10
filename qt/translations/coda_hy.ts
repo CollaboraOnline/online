@@ -113,7 +113,7 @@
     <message>
         <location filename="../WebView.cpp" line="205"/>
         <source>Presenting</source>
-        <translation type="unfinished"></translation>
+        <translation>Ներկայացնում է</translation>
     </message>
 </context>
 <context>
@@ -131,7 +131,7 @@
     <message>
         <location filename="../WebView.cpp" line="533"/>
         <source>Start</source>
-        <translation type="unfinished"></translation>
+        <translation>Սկսել</translation>
     </message>
 </context>
 </TS>
