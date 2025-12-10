@@ -1280,9 +1280,9 @@ class UIManager extends window.L.Control {
 	 */
 	showStyleListDeck(): void {
 		const styleListDeck = document.querySelector('#StyleListDeck');
+		JSDialog.CloseAllDropdowns();
 		if (styleListDeck && (styleListDeck as any).checkVisibility())
 			return;
-
 		this._map.sendUnoCommand('.uno:SidebarDeck.StyleListDeck');
 	}
 
