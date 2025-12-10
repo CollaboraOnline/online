@@ -41,7 +41,7 @@
 	--color-btn-border: #b6b6b6;
 	--color-btn-border-dis: #c0bfbc;
 
-	--color-stylesview-border: transparent;
+	--color-stylesview-border: var(--color-toolbar-border);
 	--color-toolbar-border: #323130;
 
 
