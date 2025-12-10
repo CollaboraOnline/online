@@ -155,6 +155,8 @@ JSDialog.toolbox = function (
 		}
 	}
 
+	JSDialog.SetupA11yLabelForNonLabelableElement(toolbox, data, builder);
+
 	const enabledCallback = function (enable: boolean) {
 		for (const j in data.children) {
 			const childId = data.children[j].id;
