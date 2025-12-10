@@ -178,8 +178,7 @@ class CanvasSectionObject {
 
 			if (this.isCalcRTL()) {
 				// the document coordinates are not always in sync(fixing that is non-trivial!), so use the latest from map.
-				const docSize = app.map.getPixelBoundsCore().getSize();
-				sectionXcoord = docSize.x - sectionXcoord - this.size[0];
+				sectionXcoord = app.sectionContainer.getWidth() - sectionXcoord - this.size[0];
 			}
 
 			const positionAddition = app.activeDocument.activeLayout.viewedRectangle.clone();
