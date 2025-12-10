@@ -191,7 +191,7 @@ window.L.TileSectionManager = window.L.Class.extend({
 		this._layer = layer;
 		this._canvas = this._layer._canvas;
 		this._map = this._layer._map;
-		var mapSize = this._map.getPixelBoundsCore().getSize();
+		var mapSize = { x:  app.sectionContainer.getWidth(), y:  app.sectionContainer.getHeight() };
 		this._tilesSection = null; // Shortcut.
 
 		if (window.L.Browser.cypressTest) // If cypress is active, create test divs.
