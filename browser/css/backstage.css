@@ -97,6 +97,9 @@
 	padding: 16px 0;
 	overflow-y: auto;
 	box-shadow: 1px 0 3px rgba(0, 0, 0, 0.05);
+	display: flex;
+	flex-direction: column;
+	height: 100%;
 }
 
 .backstage-sidebar-back {
@@ -118,7 +121,10 @@
 .backstage-sidebar-tabs {
 	display: flex;
 	flex-direction: column;
+	flex: 1;
 	gap: 4px;
+	min-height: 0;
+	margin-bottom: 30px;
 }
 
 .backstage-sidebar-item {
@@ -159,6 +165,23 @@
 
 .backstage-sidebar-item img {
 	display: none;
+}
+
+#backstage-sidebar-horizonatal-break.backstage-sidebar-item {
+	height: 2px;
+	background-color: var(--color-toolbar-border);
+	padding: 0;
+	margin-bottom: 8px;
+	margin-top: auto;
+	margin-inline-start: 20px;
+	margin-inline-end: 20px;
+}
+
+#backstage-about.backstage-sidebar-item {
+	justify-content: center;
+	margin-top: 0 !important;
+	margin-bottom: 0 !important;
+	padding: 4px 16px;
 }
 
 /* Starter mode: vertical layout with big centered icons */
