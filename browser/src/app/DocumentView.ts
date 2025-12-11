@@ -45,6 +45,11 @@ class DocumentViewBase {
 		const groups: any = [];
 		groups.length = 0;
 
+		for (let i = rectangles.length - 1; i > -1; i--) {
+			if (rectangles[i][3] === 0 || rectangles[i][2] === 0)
+				rectangles.splice(i, 1); // Remove the 0-width or 0-height rectangle from the list.
+		}
+
 		// Sort the rectangles.
 		rectangles.sort((a, b) => {
 			return a[1] > b[1] ? 1 : a[1] === b[1] ? 0 : -1;
