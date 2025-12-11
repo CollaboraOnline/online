@@ -73,3 +73,7 @@
 	background-color: var(--settings-background-hover);
 }
 
+.settings-nav-item.active {
+	background-color: var(--settings-background-hover);
+}
+
