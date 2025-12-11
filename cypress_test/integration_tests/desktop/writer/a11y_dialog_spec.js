@@ -3,12 +3,16 @@
 var helper = require('../../common/helper');
 
 const allWriterDialogs = [
+    '.uno:EditRegion',
     '.uno:FontDialog',
     '.uno:FootnoteDialog',
+    '.uno:FormatColumns',
     '.uno:InsertBreak',
     '.uno:InsertBookmark',
     '.uno:InsertCaptionDialog',
     '.uno:InsertFrame',
+    '.uno:InsertIndexesEntry',
+    '.uno:InsertMultiIndex',
     '.uno:InsertSection',
     '.uno:LineNumberingDialog',
     '.uno:OutlineBullet',
@@ -20,6 +24,7 @@ const allWriterDialogs = [
     '.uno:SplitTable',
     '.uno:TableDialog',
     '.uno:TableNumberFormatDialog',
+    '.uno:TableSort',
     '.uno:ThemeDialog',
     '.uno:ThesaurusDialog',
     '.uno:TitlePageDialog',
@@ -60,8 +65,10 @@ describe(['tagdesktop'], 'Accessibility Writer Tests', function () {
                     return;
                 }
                 // don't pass yet
-                if (command == '.uno:InsertBreak' ||
+                if (command == '.uno:FormatColumns' ||
+                    command == '.uno:InsertBreak' ||
                     command == '.uno:InsertFrame' ||
+                    command == '.uno:InsertMultiIndex' ||
                     command == '.uno:PageDialog' ||
                     command == '.uno:ParagraphDialog' ||
                     command == '.uno:SpellingAndGrammarDialog' ||
