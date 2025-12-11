@@ -211,7 +211,6 @@ ul {
 .list-item__wrapper {
   display: flex;
   position: relative;
-  width: 100%;
   padding: 2px 4px;
 }
 
@@ -634,6 +633,8 @@ ul {
 	height: auto;
 	border: 2px solid transparent;
 	border-radius: 6px;
+	max-width: 100%;
+	box-sizing: border-box;
 }
 
 .toggle-image.selected {
