@@ -299,6 +299,37 @@ class ViewLayoutBase {
 		return true;
 	}
 
+	protected refreshCurrentCoordList() {
+		this.currentCoordList.length = 0;
+		const zoom = app.map.getZoom();
+
+		const columnCount = Math.ceil(
+			this._viewedRectangle.pWidth / TileManager.tileSize,
+		);
+		const rowCount = Math.ceil(
+			this._viewedRectangle.pHeight / TileManager.tileSize,
+		);
+		const startX =
+			Math.floor(this._viewedRectangle.pX1 / TileManager.tileSize) *
+			TileManager.tileSize;
+		const startY =
+			Math.floor(this._viewedRectangle.pY1 / TileManager.tileSize) *
+			TileManager.tileSize;
+
+		for (let i = 0; i < columnCount; i++) {
+			for (let j = 0; j < rowCount; j++) {
+				const coords = new TileCoordData(
+					startX + i * TileManager.tileSize,
+					startY + j * TileManager.tileSize,
+					zoom,
+					0,
+				);
+
+				if (coords.x >= 0 && coords.y >= 0) this.currentCoordList.push(coords);
+			}
+		}
+	}
+
 	public getCurrentCoordList(): Array<TileCoordData> {
 		return this.currentCoordList;
 	}
@@ -317,8 +348,7 @@ class ViewLayoutBase {
 			if (pY !== 0) {
 				this.scrollProperties.moveBy[1] += pY;
 			}
-		}
-		else {
+		} else {
 			// Create a new pending move event.
 			this.scrollProperties.moveBy = [pX, pY];
 		}
@@ -429,6 +459,7 @@ class ViewLayoutBase {
 		if (pY !== 0 && this.canScrollVertical(documentAnchor))
 			this.scrollVertical(pY);
 
+		this.refreshCurrentCoordList();
 		app.sectionContainer.requestReDraw();
 	}
 
