@@ -38,33 +38,33 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Toolbar tests', function() 
 
 	it('State of undo toolbar item.', function() {
 		// Insertion mobile wizard toolbar button is disabled by default
-		cy.cGet('#toolbar-up #undo').should('have.attr', 'disabled');
+		cy.cGet('#toolbar-up .unoUndo').should('have.attr', 'disabled');
 		// Click on edit button
 		mobileHelper.enableEditingMobile();
 		// Button should be still disabled
-		cy.cGet('#toolbar-up #undo').should('have.attr', 'disabled');
+		cy.cGet('#toolbar-up .unoUndo').should('have.attr', 'disabled');
 		// Type something in the document
 		helper.typeIntoDocument('x');
 		// Button should become enabled
-		cy.cGet('#toolbar-up #undo').should('not.have.attr', 'disabled');
+		cy.cGet('#toolbar-up .unoUndo').should('not.have.attr', 'disabled');
 	});
 
 	it('State of redo toolbar item.', function() {
 		// Insertion mobile wizard toolbar button is disabled by default
-		cy.cGet('#toolbar-up #redo').should('have.attr', 'disabled');
+		cy.cGet('#toolbar-up .unoRedo').should('have.attr', 'disabled');
 		// Click on edit button
 		mobileHelper.enableEditingMobile();
 		// Button should be still disabled
-		cy.cGet('#toolbar-up #redo').should('have.attr', 'disabled');
+		cy.cGet('#toolbar-up .unoRedo').should('have.attr', 'disabled');
 		// Type something in the document
 		helper.typeIntoDocument('x');
 		// Button should be still disabled
-		cy.cGet('#toolbar-up #redo').should('have.attr', 'disabled');
+		cy.cGet('#toolbar-up .unoRedo').should('have.attr', 'disabled');
 		// Do an undo
-		cy.cGet('#toolbar-up #undo').should('not.have.attr', 'disabled');
-		cy.cGet('#toolbar-up #undo').click();
+		cy.cGet('#toolbar-up .unoUndo').should('not.have.attr', 'disabled');
+		cy.cGet('#toolbar-up .unoUndo').click();
 		// Button should become enabled
-		cy.cGet('#toolbar-up #redo').should('not.have.attr', 'disabled');
+		cy.cGet('#toolbar-up .unoRedo').should('not.have.attr', 'disabled');
 	});
 
 	it('Open and close mobile wizard by toolbar item.', function() {
