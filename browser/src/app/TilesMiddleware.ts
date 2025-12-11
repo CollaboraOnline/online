@@ -830,9 +830,7 @@ class TileManager {
 		return Math.round(coords.scale * 1000) === Math.round(scale * 1000);
 	}
 
-	private static tileReady(
-		coords: TileCoordData
-	) {
+	private static tileReady(coords: TileCoordData) {
 		var key = coords.key();
 
 		const tile: Tile = this.tiles.get(key);
@@ -858,7 +856,14 @@ class TileManager {
 
 		// Request a redraw if the tile is visible
 		const tileSizeTwips = Math.round(this.tileSize * app.pixelsToTwips);
-		if (app.isRectangleVisibleInTheDisplayedArea([tile.coords.x, tile.coords.y, tileSizeTwips, tileSizeTwips]))
+		if (
+			app.isRectangleVisibleInTheDisplayedArea([
+				tile.coords.x,
+				tile.coords.y,
+				tileSizeTwips,
+				tileSizeTwips,
+			])
+		)
 			app.sectionContainer.requestReDraw();
 	}
 
@@ -1312,10 +1317,7 @@ class TileManager {
 		return boundList.map((x: any) => this.pxBoundsToTileRange(x));
 	}
 
-	private static updateTileDistance(
-		tile: Tile,
-		zoom: number
-	) {
+	private static updateTileDistance(tile: Tile, zoom: number) {
 		if (
 			tile.coords.z !== zoom ||
 			tile.coords.part !== app.map._docLayer._selectedPart ||
@@ -1325,12 +1327,26 @@ class TileManager {
 		else {
 			const tileSizeTwips = Math.round(this.tileSize * app.pixelsToTwips);
 
-			if (app.isRectangleVisibleInTheDisplayedArea([tile.coords.x, tile.coords.y, tileSizeTwips, tileSizeTwips]))
+			if (
+				app.isRectangleVisibleInTheDisplayedArea([
+					tile.coords.x,
+					tile.coords.y,
+					tileSizeTwips,
+					tileSizeTwips,
+				])
+			)
 				tile.distanceFromView = 0;
 			else {
-				const tileCenter = [tile.coords.x + tileSizeTwips * 0.5, tile.coords.y + tileSizeTwips * 0.5];
-				const viewCenter = app.activeDocument.activeLayout.viewedRectangle.center;
-				tile.distanceFromView = Math.sqrt(Math.pow(tileCenter[0] - viewCenter[0], 2) + Math.pow(tileCenter[1] - viewCenter[1], 2));
+				const tileCenter = [
+					tile.coords.x + tileSizeTwips * 0.5,
+					tile.coords.y + tileSizeTwips * 0.5,
+				];
+				const viewCenter =
+					app.activeDocument.activeLayout.viewedRectangle.center;
+				tile.distanceFromView = Math.sqrt(
+					Math.pow(tileCenter[0] - viewCenter[0], 2) +
+						Math.pow(tileCenter[1] - viewCenter[1], 2),
+				);
 			}
 		}
 	}
