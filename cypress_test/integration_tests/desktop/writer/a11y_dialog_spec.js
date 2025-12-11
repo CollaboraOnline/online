@@ -2,6 +2,23 @@
 
 var helper = require('../../common/helper');
 
+const allWriterDialogs = [
+    '.uno:FontDialog',
+    '.uno:FootnoteDialog',
+    '.uno:InsertCaptionDialog',
+    '.uno:LineNumberingDialog',
+    '.uno:PageDialog',
+    '.uno:ParagraphDialog',
+    '.uno:SearchDialog?InitialFocusReplace:bool=true',
+    '.uno:SpellingAndGrammarDialog',
+    '.uno:TableDialog',
+    '.uno:TableNumberFormatDialog',
+    '.uno:ThemeDialog',
+    '.uno:ThesaurusDialog',
+    '.uno:TitlePageDialog',
+    '.uno:WordCountDialog'
+];
+
 describe(['tagdesktop'], 'Accessibility Writer Tests', function () {
     beforeEach(function () {
         helper.setupAndLoadDocument('writer/help_dialog.odt');
@@ -21,7 +38,7 @@ describe(['tagdesktop'], 'Accessibility Writer Tests', function () {
 
             cy.cGet('.jsdialog-window').should('not.exist');
 
-            cy.wrap(win.app.allDialogs).each((command) => {
+            cy.wrap(allWriterDialogs).each((command) => {
                 // these need a specific context
                 if (command == '.uno:ContourDialog' ||
                     command == '.uno:TransformDialog') {
