@@ -404,7 +404,12 @@ class VRuler extends Ruler {
 
 	_fixOffset() {
 		// in case of disabled ruler at docload or event like 'moveend' calculation of offset can be ignored
-		if (!app.activeDocument || app.activeDocument.fileSize.x === 0 || !this.options.showruler) return;
+		if (
+			!app.activeDocument ||
+			app.activeDocument.fileSize.x === 0 ||
+			!this.options.showruler
+		)
+			return;
 
 		// we need to also consider  if there is more then 1 page then pageoffset is crucial to consider
 		// i have calculated current page using pageoffset and pageWidth coming from CORE

@@ -348,8 +348,7 @@ class ViewLayoutBase {
 			if (pY !== 0) {
 				this.scrollProperties.moveBy[1] += pY;
 			}
-		}
-		else {
+		} else {
 			// Create a new pending move event.
 			this.scrollProperties.moveBy = [pX, pY];
 		}
