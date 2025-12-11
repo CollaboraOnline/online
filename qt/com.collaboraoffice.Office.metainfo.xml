@@ -10,6 +10,8 @@
  </description>
  <launchable type="desktop-id">com.collaboraoffice.Office.desktop</launchable>
  <url type="homepage">https://collaboraoffice.com</url>
+ <url type="bugtracker">https://github.com/CollaboraOnline/online/issues</url>
+ <url type="vcs-browser">https://github.com/CollaboraOnline/online</url>
  <screenshots>
   <screenshot type="default">
    <image>https://col.la/codelinuxwriter</image>
@@ -37,8 +39,18 @@
   <kudo>ModernToolkit</kudo>
   <kudo>UserDocs</kudo>
  </kudos>
- <content_rating type="oars-1.0"/>
+ <content_rating type="oars-1.1"/>
  <releases>
-  <release version="25.04.7.3-2" date="2025-12-09"/>
+   <release version="25.04.7.3-2" date="2025-12-09">
+     <description>
+       <p>New features and fixes in this release:</p>
+       <ul>
+         <li>Built for aarch64 and x86_64 architectures</li>
+         <li>Support of presenter console and multi monitor setups</li>
+         <li>Use the new "backstage view" to create new files from templates</li>
+         <li>Updated localizations</li>
+       </ul>
+     </description>
+   </release>
  </releases>
 </component>
