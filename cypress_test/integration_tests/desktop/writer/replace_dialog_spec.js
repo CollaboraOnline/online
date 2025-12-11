@@ -38,7 +38,8 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Replace Dialog Tests', fun
         helper.typeIntoDocument('{ctrl}h');
         cy.cGet('#FindReplaceDialog').should('be.visible');
 
-        cy.cGet('#searchterm-input-dialog').type('test{enter}');
+        cy.cGet('#searchterm-input-dialog').type('test').realPress('Enter');
+
         // Verify text was found and selected
         helper.textSelectionShouldExist();
         helper.copy();
