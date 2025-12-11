@@ -53,6 +53,8 @@ function clickOnFirstCell(firstClick = true, dblClick = false, isA1 = true) {
 
 	// Use the tile's edge to find the first cell's position
 	cy.cGet('#canvas-container').should('exist');
+	cy.wait(100);
+
 	cy.cGet('#canvas-container')
 		.then(function(items) {
 			expect(items).to.have.lengthOf(1);
@@ -71,11 +73,6 @@ function clickOnFirstCell(firstClick = true, dblClick = false, isA1 = true) {
 	}
 
 	if (isA1) {
-		cy.waitUntil(() => {
-			return cy.cGet(helper.addressInputSelector)
-				.should('have.prop', 'value', 'A1');
-		});
-
 		cy.cGet(helper.addressInputSelector)
 			.should('have.prop', 'value', 'A1');
 	}
