@@ -50,7 +50,7 @@
         {
 	  "type": "git",
 	  "url" : "https://gerrit.libreoffice.org/core",
-	  "branch": "distro/collabora/co-25.04"
+	  "tag": "coda-25.04.7.3-2"
         },
         {
           "url": "https://dev-www.libreoffice.org/src/cairo-1.17.6.tar.xz",
