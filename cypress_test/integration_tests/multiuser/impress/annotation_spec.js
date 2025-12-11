@@ -12,19 +12,13 @@ describe(['tagmultiuser'], 'Multiuser Annotation Tests', function() {
 		desktopHelper.switchUIToNotebookbar();
 
 		cy.cSetActiveFrame('#iframe1');
-		if (Cypress.env('INTEGRATION') === 'nextcloud') {
-			desktopHelper.hideSidebar();
-		}
 		desktopHelper.closeNavigatorSidebar();
-		cy.cGet('#options-modify-page').click();
+		desktopHelper.hideSidebarImpress();
 		desktopHelper.selectZoomLevel('50', false);
 
 		cy.cSetActiveFrame('#iframe2');
-		if (Cypress.env('INTEGRATION') === 'nextcloud') {
-			desktopHelper.hideSidebar();
-		}
 		desktopHelper.closeNavigatorSidebar();
-		cy.cGet('#options-modify-page').click();
+		desktopHelper.hideSidebarImpress();
 		desktopHelper.selectZoomLevel('50', false);
 	});
 
@@ -95,19 +89,13 @@ describe(['tagmultiuser'], 'Multiuser Collapsed Annotation Tests', function() {
 		desktopHelper.switchUIToNotebookbar();
 
 		cy.cSetActiveFrame('#iframe1');
-		if (Cypress.env('INTEGRATION') === 'nextcloud') {
-			desktopHelper.hideSidebar();
-		}
 		desktopHelper.closeNavigatorSidebar();
-		cy.cGet('#options-modify-page').click();
+		desktopHelper.hideSidebarImpress();
 		desktopHelper.selectZoomLevel('50', false);
 
 		cy.cSetActiveFrame('#iframe2');
-		if (Cypress.env('INTEGRATION') === 'nextcloud') {
-			desktopHelper.hideSidebar();
-		}
 		desktopHelper.closeNavigatorSidebar();
-		cy.cGet('#options-modify-page').click();
+		desktopHelper.hideSidebarImpress();
 		desktopHelper.selectZoomLevel('50', false);
 	});
 
@@ -181,19 +169,13 @@ describe(['tagmultiuser'], 'Multiuser Annotation Autosave Tests', function() {
 		desktopHelper.switchUIToNotebookbar();
 
 		cy.cSetActiveFrame('#iframe1');
-		if (Cypress.env('INTEGRATION') === 'nextcloud') {
-			desktopHelper.hideSidebar();
-		}
 		desktopHelper.closeNavigatorSidebar();
-		cy.cGet('#options-modify-page').click();
+		desktopHelper.hideSidebarImpress();
 		desktopHelper.selectZoomLevel('50', false);
 
 		cy.cSetActiveFrame('#iframe2');
-		if (Cypress.env('INTEGRATION') === 'nextcloud') {
-			desktopHelper.hideSidebar();
-		}
 		desktopHelper.closeNavigatorSidebar();
-		cy.cGet('#options-modify-page').click();
+		desktopHelper.hideSidebarImpress();
 		desktopHelper.selectZoomLevel('50', false);
 	});
 
