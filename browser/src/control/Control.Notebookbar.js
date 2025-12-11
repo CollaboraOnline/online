@@ -102,10 +102,12 @@ window.L.Control.Notebookbar = window.L.Control.extend({
 					iconTooltip = 'Draw';
 				}
 			}
-			var docLogo = window.L.DomUtil.create('div', iconClass, docLogoHeader);
+			var docLogo = window.L.DomUtil.create('a', iconClass, docLogoHeader);
+
 			$(docLogo).data('id', 'document-logo');
 			$(docLogo).data('type', 'action');
-			docLogo.tabIndex = 0;
+			docLogo.href = '#';
+			docLogo.target = '_blank';
 
 			if (iconTooltip) {
 				docLogo.setAttribute('data-cooltip', iconTooltip);

@@ -2392,11 +2392,13 @@ class Menubar extends window.L.Control {
 			var liItem = window.L.DomUtil.create('li', '');
 			liItem.id = 'document-header';
 			liItem.setAttribute('role', 'menuitem');
-			var aItem = window.L.DomUtil.create('div', 'document-logo', liItem);
+			var aItem = window.L.DomUtil.create('a', 'document-logo', liItem);
 			$(aItem).data('id', 'document-logo');
 			$(aItem).data('type', 'action');
 			aItem.setAttribute('role', 'img');
 			aItem.setAttribute('aria-label', _('file type icon'));
+			aItem.href = '#';
+			aItem.target = '_blank';
 
 			if (window.logoURL) {
 				aItem.style.backgroundImage = "url(" + window.logoURL + ")";
