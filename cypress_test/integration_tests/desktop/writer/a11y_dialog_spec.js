@@ -5,17 +5,26 @@ var helper = require('../../common/helper');
 const allWriterDialogs = [
     '.uno:FontDialog',
     '.uno:FootnoteDialog',
+    '.uno:InsertBreak',
+    '.uno:InsertBookmark',
     '.uno:InsertCaptionDialog',
+    '.uno:InsertFrame',
+    '.uno:InsertSection',
     '.uno:LineNumberingDialog',
+    '.uno:OutlineBullet',
     '.uno:PageDialog',
+    '.uno:PageNumberWizard',
     '.uno:ParagraphDialog',
     '.uno:SearchDialog?InitialFocusReplace:bool=true',
     '.uno:SpellingAndGrammarDialog',
+    '.uno:SplitTable',
     '.uno:TableDialog',
     '.uno:TableNumberFormatDialog',
     '.uno:ThemeDialog',
     '.uno:ThesaurusDialog',
     '.uno:TitlePageDialog',
+    '.uno:Translate',
+    '.uno:Watermark',
     '.uno:WordCountDialog'
 ];
 
@@ -51,10 +60,13 @@ describe(['tagdesktop'], 'Accessibility Writer Tests', function () {
                     return;
                 }
                 // don't pass yet
-                if (command == '.uno:PageDialog' ||
+                if (command == '.uno:InsertBreak' ||
+                    command == '.uno:InsertFrame' ||
+                    command == '.uno:PageDialog' ||
                     command == '.uno:ParagraphDialog' ||
                     command == '.uno:SpellingAndGrammarDialog' ||
-                    command == '.uno:TableNumberFormatDialog') {
+                    command == '.uno:TableNumberFormatDialog' ||
+                    command == '.uno:Watermark') {
                     cy.log(`Skipping buggy dialog: ${command}`);
                     return;
                 }
