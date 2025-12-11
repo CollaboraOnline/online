@@ -14,7 +14,7 @@
 interface BackstageTabConfig {
 	id: string;
 	label: string;
-	type: 'view' | 'action';
+	type: 'view' | 'action' | 'separator';
 	icon?: string;
 	visible?: boolean;
 	viewType?: 'home' | 'templates' | 'info' | 'export';
@@ -26,7 +26,8 @@ interface BackstageTabConfig {
 		| 'share'
 		| 'repair'
 		| 'properties'
-		| 'history';
+		| 'history'
+		| 'about';
 }
 
 interface TemplateTypeMap {
@@ -104,6 +105,7 @@ class BackstageView extends window.L.Class {
 		repair: () => this.executeRepair(),
 		properties: () => this.executeDocumentProperties(),
 		history: () => this.executeRevisionHistory(),
+		about: () => this.executeAbout(),
 	};
 
 	constructor(map: any) {
@@ -336,6 +338,14 @@ class BackstageView extends window.L.Class {
 				viewType: 'export',
 				icon: 'lc_exportto.svg',
 				visible: !this.isStarterMode,
+			},
+			{ type: 'separator', id: 'sidebar-horizonatal-break', label: '' },
+			{
+				id: 'about',
+				label: _UNO('.uno:About'),
+				type: 'action',
+				actionType: 'about',
+				visible: true,
 			},
 		];
 	}
@@ -1073,6 +1083,10 @@ class BackstageView extends window.L.Class {
 		} else {
 			this.sendUnoCommand('.uno:Open');
 		}
+	}
+
+	private executeAbout(): void {
+		this.map.showLOAboutDialog();
 	}
 
 	private executeSave(): void {
