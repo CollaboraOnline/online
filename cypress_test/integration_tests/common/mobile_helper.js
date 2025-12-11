@@ -230,7 +230,7 @@ function openTextPropertiesPanel() {
 
 	cy.cGet('#TextPropertyPanel, .TextPropertyPanel').click();
 
-	cy.cGet('#Bold').should('be.visible');
+	cy.cGet('.unoBold').should('be.visible');
 
 	cy.log('<< openTextPropertiesPanel - end');
 }

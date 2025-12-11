@@ -20,7 +20,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Apply font changes.', funct
 
 	it('Apply bold.', function() {
 		helper.setDummyClipboardForCopy();
-		cy.cGet('#Bold').click();
+		cy.cGet('.unoBold:visible').click();
 		calcHelper.selectEntireSheet();
 		helper.copy();
 		cy.cGet('#copy-paste-container table td b').should('exist');
@@ -28,7 +28,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Apply font changes.', funct
 
 	it('Apply italic.', function() {
 		helper.setDummyClipboardForCopy();
-		cy.cGet('#Italic').click();
+		cy.cGet('.unoItalic:visible').click();
 		calcHelper.selectEntireSheet();
 		helper.copy();
 		cy.cGet('#copy-paste-container table td i').should('exist');
@@ -36,7 +36,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Apply font changes.', funct
 
 	it('Apply underline.', function() {
 		helper.setDummyClipboardForCopy();
-		cy.cGet('#Underline').click();
+		cy.cGet('.unoUnderline:visible').click();
 
 		calcHelper.selectEntireSheet();
 		helper.copy();
@@ -47,7 +47,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Apply font changes.', funct
 
 	it('Apply strikeout.', function() {
 		helper.setDummyClipboardForCopy();
-		cy.cGet('#Strikeout').click();
+		cy.cGet('.unoStrikeout:visible').click();
 
 		calcHelper.selectEntireSheet();
 		helper.copy();
@@ -57,7 +57,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Apply font changes.', funct
 	});
 
 	it('Apply shadowed.', function() {
-		cy.cGet('#Shadowed').click();
+		cy.cGet('.unoShadowed:visible').click();
 
 		calcHelper.selectEntireSheet();
 
