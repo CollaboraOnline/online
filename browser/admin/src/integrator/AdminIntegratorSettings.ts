@@ -226,6 +226,8 @@ class SettingIframe {
 		checkboxBlankOutline: `<svg fill="currentColor" width="24" height="24" viewBox="0 0 24 24"><path d="M19,3H5C3.89,3 3,3.89 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5C21,3.89 20.1,3 19,3M19,5V19H5V5H19Z"></path></svg>`,
 	};
 	private _allConfigSection: HTMLElement | null;
+	private _sectionObserver: IntersectionObserver | null = null;
+	private _visibleSections: Set<Element> = new Set();
 
 	private getAPIEndpoints() {
 		return {
@@ -1612,7 +1614,51 @@ class SettingIframe {
 		const newNav = document.createElement('nav');
 		newNav.id = 'settings-nav';
 
+		if (this._sectionObserver) {
+			this._sectionObserver.disconnect();
+		}
+
+		this._visibleSections.clear();
+
+		const observerOptions = {
+			root: content,
+			rootMargin: '-30px 0px 0px 0px',
+		};
+
+		this._sectionObserver = new IntersectionObserver((entries) => {
+			entries.forEach((entry) => {
+				if (entry.isIntersecting) {
+					this._visibleSections.add(entry.target);
+				} else {
+					this._visibleSections.delete(entry.target);
+				}
+			});
+
+			let activeSection: Element | null = null;
+			let minTop = Infinity;
+
+			for (const section of Array.from(this._visibleSections)) {
+				const rect = section.getBoundingClientRect();
+				if (rect.top < minTop) {
+					minTop = rect.top;
+					activeSection = section;
+				}
+			}
+
+			if (activeSection) {
+				const id = activeSection.id;
+				newNav.querySelectorAll('.settings-nav-item').forEach((link) => {
+					if (link.getAttribute('href') === '#' + id) {
+						link.classList.add('active');
+					} else {
+						link.classList.remove('active');
+					}
+				});
+			}
+		}, observerOptions);
+
 		content.querySelectorAll('.section').forEach((section) => {
+			this._sectionObserver?.observe(section);
 			const header = section.querySelector('h3');
 			if (header) {
 				const link = document.createElement('a');
