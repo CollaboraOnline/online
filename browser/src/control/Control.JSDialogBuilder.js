@@ -2532,20 +2532,27 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 
 		case 'rendered_entry':
 		case 'rendered_combobox_entry':
+		{
 			if (!this.rendersCache[control.id])
 				this.rendersCache[control.id] = { persistent: false, images: [] };
+
+			const oldImage = this.rendersCache[control.id].images[data.pos];
+			if (oldImage === data.image) {
+					app.console.debug('rendered_entry: no change');
+					break;
+			}
 
 			this.rendersCache[control.id].images[data.pos] = data.image;
 
 			if (typeof control.updateRenders == 'function')
 				control.updateRenders(data.pos);
 			else
-				console.error('widget doesn\'t support custom entries');
-
-			break;
+				app.console.error('widget doesn\'t support custom entries');
+		}
+		break;
 
 		default:
-			console.error('unknown action: "' + data.action_type + '"');
+			app.console.error('unknown action: "' + data.action_type + '"');
 			break;
 		}
 	},
