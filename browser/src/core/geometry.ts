@@ -120,6 +120,11 @@ export class SimplePoint {
 		Util.ensureValue(app.activeDocument);
 		return app.activeDocument.activeLayout ? app.activeDocument.activeLayout.documentToViewY(this) : this.pY;
 	}
+
+	public vToArray(): number[] {
+		Util.ensureValue(app.activeDocument);
+		return app.activeDocument.activeLayout ? [this.vX, this.vY] : [this.pX, this.pY];
+	}
 }
 
 /**
