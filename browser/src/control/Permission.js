@@ -27,6 +27,8 @@ window.L.Map.include({
 		button.attr('role', 'button');
 		button.attr('title', _('Edit document'));
 		button.attr('aria-label', _('Edit document'));
+		let startInEditMode = window.prefs.getBoolean("StartInEditMode",false);
+
 		// app.file.fileBasedView is new view that has continuous scrolling
 		// used for PDF and we don't permit editing for PDFs
 		// this._shouldStartReadOnly() is a check for files that should start in readonly mode and even on desktop browser
@@ -35,26 +37,25 @@ window.L.Map.include({
 		//
 		// For mobile we need to display the edit button for all the cases except for PDF
 		// we offer save-as to another place where the user can edit the document
-		
-		try {
-			if (window.parent && window.parent.location && 
-				window.parent.location.href.indexOf('AlwaysEdit=true') !== -1) {
-				alwaysEdit = true;
-			} else {
-				console.error('The AlwaysEdit option was not found in parent URL: ' + window.parent.location.href);
-			}
-		} catch (e) {
-			console.error(' ' + e);
+
+		if (typeof this._startInEditModeConsumed === 'undefined') {
+			this._startInEditModeConsumed = false;
 		}
+		if (this._startInEditModeConsumed) {
+			startInEditMode = false;
+		} else if (startInEditMode) {
+			this._startInEditModeConsumed = true;
+		}
+
 		var isPDF = app.file.fileBasedView && app.file.editComment;
-		if (!isPDF && (this._shouldStartReadOnly() || window.mode.isMobile() || window.mode.isTablet()) && !alwaysEdit) {
+		if (!isPDF && (this._shouldStartReadOnly() || ((window.mode.isMobile() || window.mode.isTablet()) && !startInEditMode))) {
 			button.css('display', 'flex');
 		} else {
 			button.hide();
 		}
 		var that = this;
 		if (perm === 'edit') {
-			if ((this._shouldStartReadOnly() || window.mode.isMobile() || window.mode.isTablet()) && !alwaysEdit) {
+			if (this._shouldStartReadOnly() || ((window.mode.isMobile() || window.mode.isTablet()) && !startInEditMode)) {
 				button.on('click', function () {
 					that._switchToEditMode();
 				});
