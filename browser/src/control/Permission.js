@@ -21,6 +21,7 @@ window.L.Map.include({
 
 	setPermission: function (perm) {
 		var button = $('#mobile-edit-button');
+		var alwaysEdit = false;
 		button.off('click');
 		button.attr('tabindex', 0);
 		button.attr('role', 'button');
