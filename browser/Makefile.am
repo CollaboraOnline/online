@@ -681,7 +681,7 @@ dist-hook:
 		-not -path './node_modules/*' \
 		-not -path './l10n/*' \
 		-not -path './images/*' \
-		-not -path './$(DIST_FOLDER)/*' \
+		-not -path './dist/*' \
 		-not -path './debug/*' \
 		-not -path './release/*' \
 		-exec cp --parents {} $(distdir) \;
