@@ -1013,6 +1013,9 @@ function onUpdatePermission(e) {
 			}
 		}
 
+		if (window.mode.isDesktop())
+			return;
+
 		if (e.detail.perm === 'edit') {
 			$('#toolbar-mobile-back').removeClass('editmode-off');
 			$('#toolbar-mobile-back').addClass('editmode-on');
