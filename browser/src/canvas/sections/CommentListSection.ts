@@ -334,9 +334,15 @@ export class CommentSection extends CanvasSectionObject {
 	}
 
 	public calculateAvailableSpace() {
-		var availableSpace = (this.containerObject.getDocumentAnchorSection().size[0] - app.activeDocument.fileSize.pX) * 0.5;
-		availableSpace = Math.round(availableSpace / app.dpiScale);
-		return availableSpace;
+		if (app.activeDocument.activeLayout.type === 'ViewLayoutMultiPage') {
+			const availableSpace = (app.activeDocument.activeLayout as ViewLayoutMultiPage).getTotalSideSpace();
+			return Math.round(availableSpace * 0.5 / app.dpiScale);
+		}
+		else {
+			let availableSpace = (this.containerObject.getDocumentAnchorSection().size[0] - app.activeDocument.fileSize.pX) * 0.5;
+			availableSpace = Math.round(availableSpace / app.dpiScale);
+			return availableSpace;
+		}
 	}
 
 	public shouldCollapse (): boolean {
@@ -1376,17 +1382,33 @@ export class CommentSection extends CanvasSectionObject {
 	public showHideComment (annotation: any): void {
 		// This manually shows/hides comments
 		if (!this.sectionProperties.showResolved && app.map._docLayer._docType === 'text') {
-			if (annotation.isContainerVisible() && annotation.sectionProperties.data.resolved === 'true') {
+			let hide = annotation.isContainerVisible() && annotation.sectionProperties.data.resolved === 'true';
+			hide = hide || (app.activeDocument.activeLayout.type === 'ViewLayoutMultiPage' && this.calculateAvailableSpace() < this.sectionProperties.collapsedCommentWidth);
+
+			if (hide && annotation.isContainerVisible()) {
 				if (this.sectionProperties.selectedComment == annotation) {
 					this.unselect();
 				}
 				annotation.hide();
 				annotation.update();
-			} else if (!annotation.isContainerVisible() && annotation.sectionProperties.data.resolved === 'false') {
+			}
+			else if (!hide && !annotation.isContainerVisible() && annotation.sectionProperties.data.resolved === 'false') {
 				annotation.show();
 				annotation.update();
 			}
 			this.update();
+		}
+		else if (app.activeDocument.activeLayout.type === 'ViewLayoutMultiPage') {
+			const hide = this.calculateAvailableSpace() < this.sectionProperties.collapsedCommentWidth;
+
+			if (hide && annotation.isContainerVisible()) {
+				annotation.show();
+				annotation.update();
+			}
+			else if (!hide && !annotation.isContainerVisible()) {
+				annotation.show();
+				annotation.update();
+			}
 		}
 		else if (app.map._docLayer._docType === 'presentation' || app.map._docLayer._docType === 'drawing') {
 			if (annotation.sectionProperties.partIndex === app.map._docLayer._selectedPart || app.file.fileBasedView) {
@@ -2129,7 +2151,10 @@ export class CommentSection extends CanvasSectionObject {
 			var selectedIndex = null;
 			var x = isRTL ? 0 : topRight[0];
 
-			if (isRTL)
+			if (app.activeDocument.activeLayout.type === 'ViewLayoutMultiPage') {
+				x = topRight[0] - availableSpace;
+			}
+			else if (isRTL)
 				x = availableSpace - this.sectionProperties.commentWidth;
 			else {
 				x = (app.activeDocument.fileSize.cX - app.activeDocument.activeLayout.viewedRectangle.cX1 - app.sectionContainer.getCanvasBoundingClientRect().x) * app.dpiScale;

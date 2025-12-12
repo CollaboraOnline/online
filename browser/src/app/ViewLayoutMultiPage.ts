@@ -12,7 +12,6 @@
 class ViewLayoutMultiPage extends ViewLayoutBase {
 	public readonly type: string = 'ViewLayoutMultiPage';
 	public gapBetweenPages = 20; // Core pixels.
-	public availableWidth = 0;
 	private maxRowsSize = 2;
 	public documentRectangles = Array<cool.SimpleRectangle>();
 	private viewRectangles = Array<cool.SimpleRectangle>();
@@ -213,6 +212,9 @@ class ViewLayoutMultiPage extends ViewLayoutBase {
 		resultingRectangle.pHeight += TileManager.tileSize * 2;
 
 		this._viewedRectangle = resultingRectangle;
+
+		app.sectionContainer.onNewDocumentTopLeft();
+		app.sectionContainer.requestReDraw();
 	}
 
 	private updateViewData() {
@@ -395,5 +397,21 @@ class ViewLayoutMultiPage extends ViewLayoutBase {
 
 	public set viewedRectangle(rectangle: cool.SimpleRectangle) {
 		return; // Disable setting the viewed rectangle externally.
+	}
+
+	public getTotalSideSpace() {
+		const maxX: number = this.viewRectangles.reduce((result, currentItem) => {
+			return Math.max(currentItem.pX2, result);
+		}, 0);
+		const minX: number = this.viewRectangles.reduce((result, currentItem) => {
+			return Math.min(currentItem.pX1, result);
+		}, 100000);
+		const width = maxX - minX;
+
+		const sideSpace = this.viewSize.pX - width;
+
+		if (sideSpace < 0) console.log('smaller than');
+
+		return sideSpace;
 	}
 }
