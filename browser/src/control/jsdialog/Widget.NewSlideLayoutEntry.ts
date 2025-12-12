@@ -25,24 +25,22 @@ function createSlideLayoutEntryWidget(data: any, builder: any): HTMLElement {
 	const gridContainer = document.createElement('div');
 	builder.build(gridContainer, [gridData], false);
 	container.appendChild(gridContainer);
-	if (app.isExperimentalMode()) {
-		const hr = document.createElement('hr');
-		hr.className = 'jsdialog ui-separator horizontal';
-		container.appendChild(hr);
 
-		const button = document.createElement('div');
-		button.className = 'slidelayout-button';
-		button.id = 'newcanvasslide';
-		button.textContent = _('Overview');
-		button.setAttribute('role', 'button');
-		button.setAttribute('tabindex', '0');
-		button.addEventListener('click', () => {
-			builder.map.sendUnoCommand('.uno:InsertCanvasSlide'); // or your command
-			builder.callback('dialog', 'close', { id: data.id }, null);
-		});
+	const hr = document.createElement('hr');
+	hr.className = 'jsdialog ui-separator horizontal';
+	container.appendChild(hr);
 
-		container.appendChild(button);
-	}
+	const button = document.createElement('div');
+	button.className = 'slidelayout-button';
+	button.id = 'newcanvasslide';
+	button.textContent = _('Overview');
+	button.setAttribute('role', 'button');
+	button.setAttribute('tabindex', '0');
+	button.addEventListener('click', () => {
+		builder.map.sendUnoCommand('.uno:InsertCanvasSlide'); // or your command
+		builder.callback('dialog', 'close', { id: data.id }, null);
+	});
+	container.appendChild(button);
 	return container;
 }
 
