@@ -128,6 +128,17 @@ std::mutex COOLWSD::RemoteConfigMutex;
 std::map<std::string, std::shared_ptr<DocumentBroker>> DocBrokers;
 std::mutex DocBrokersMutex; ///< Protects DocBrokers.
 
+std::mutex NewChildrenMutex;
+std::condition_variable NewChildrenCV;
+std::vector<std::shared_ptr<ChildProcess>> NewChildren;
+
+using SubForKitMap = std::map<std::string, std::shared_ptr<ForKitProcess>>;
+SubForKitMap SubForKitProcs;
+std::map<std::string, std::chrono::steady_clock::time_point> LastSubForKitBrokerExitTimes;
+
+std::atomic<int> TotalOutstandingForks(0);
+std::map<std::string, int> OutstandingForks;
+
 namespace
 {
 
@@ -138,16 +149,16 @@ Socket::Type ClientPortProto = Socket::Type::All;
 ServerSocket::Type ClientListenAddr = ServerSocket::Type::Public;
 
 // Tracks the set of prisoners / children waiting to be used.
-std::mutex NewChildrenMutex;
-std::condition_variable NewChildrenCV;
-std::vector<std::shared_ptr<ChildProcess>> NewChildren;
+// std::mutex NewChildrenMutex;
+// std::condition_variable NewChildrenCV;
+// std::vector<std::shared_ptr<ChildProcess>> NewChildren;
 
-std::atomic<int> TotalOutstandingForks(0);
-std::map<std::string, int> OutstandingForks;
+// std::atomic<int> TotalOutstandingForks(0);
+// std::map<std::string, int> OutstandingForks;
 std::map<std::string, std::chrono::steady_clock::time_point> LastForkRequestTimes;
-using SubForKitMap = std::map<std::string, std::shared_ptr<ForKitProcess>>;
-SubForKitMap SubForKitProcs;
-std::map<std::string, std::chrono::steady_clock::time_point> LastSubForKitBrokerExitTimes;
+// using SubForKitMap = std::map<std::string, std::shared_ptr<ForKitProcess>>;
+// SubForKitMap SubForKitProcs;
+// std::map<std::string, std::chrono::steady_clock::time_point> LastSubForKitBrokerExitTimes;
 Poco::AutoPtr<Poco::Util::XMLConfiguration> KitXmlConfig;
 std::string LoggableConfigEntries;
 
@@ -522,7 +533,7 @@ void COOLWSD::cleanupDocBrokers()
 #if !MOBILEAPP
 
 /// Forks as many children as requested.
-static void forkChildren(const std::string& configId, const int number)
+ void forkChildren(const std::string& configId, const int number)
 {
     if (Util::isKitInProcess())
         return;
@@ -571,7 +582,7 @@ bool COOLWSD::ensureSubForKit(const std::string& configId)
 
 /// Cleans up dead children.
 /// Returns true if removed at least one.
-static bool cleanupChildren()
+bool cleanupChildren()
 {
     if (Util::isKitInProcess())
         return 0;
@@ -596,7 +607,7 @@ static bool cleanupChildren()
 }
 
 /// Decides how many children need spawning and spawns.
-static void rebalanceChildren(const std::string& configId, int64_t balance)
+void rebalanceChildren(const std::string& configId, int64_t balance)
 {
     Util::assertIsLocked(NewChildrenMutex);
 
@@ -654,7 +665,7 @@ static void prespawnChildren()
 void prespawnChildren();
 #endif // MOBILEAPP
 
-static size_t addNewChild(std::shared_ptr<ChildProcess> child)
+size_t addNewChild(std::shared_ptr<ChildProcess> child)
 {
     assert(child && "Adding null child");
     const auto pid = child->getPid();
