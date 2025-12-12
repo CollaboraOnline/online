@@ -334,7 +334,7 @@ bool ChildSession::_handleInput(const char *buffer, int length)
         assert(!getDocURL().empty());
         assert(!getJailedFilePath().empty());
 
-        char* data = _docManager->getLOKit()->extractRequest(getJailedFilePath().c_str());
+        LOKitHelper::ScopedString data(_docManager->getLOKit()->extractRequest(getJailedFilePath().c_str()));
         if (!data)
         {
             LOG_TRC("extractRequest returned no data.");
@@ -343,8 +343,7 @@ bool ChildSession::_handleInput(const char *buffer, int length)
         }
 
         LOG_TRC("Extracted link targets: " << data);
-        bool success = sendTextFrame("extractedlinktargets: " + std::string(data));
-        free(data);
+        bool success = sendTextFrame("extractedlinktargets: " + std::string(data.get()));
 
         return success;
     }
@@ -371,8 +370,8 @@ bool ChildSession::_handleInput(const char *buffer, int length)
             getTokenString(tokens[2], "filter", filter);
         }
 
-        char* data = _docManager->getLOKit()->extractDocumentStructureRequest(getJailedFilePath().c_str(),
-                                                                              filter.c_str());
+        LOKitHelper::ScopedString data(_docManager->getLOKit()->extractDocumentStructureRequest(getJailedFilePath().c_str(),
+                                                                              filter.c_str()));
         if (!data)
         {
             LOG_TRC("extractDocumentStructureRequest returned no data.");
@@ -381,8 +380,7 @@ bool ChildSession::_handleInput(const char *buffer, int length)
         }
 
         LOG_TRC("Extracted document structure: " << data);
-        bool success = sendTextFrame("extracteddocumentstructure: " + std::string(data));
-        free(data);
+        bool success = sendTextFrame("extracteddocumentstructure: " + std::string(data.get()));
 
         return success;
     }
@@ -1458,14 +1456,11 @@ bool ChildSession::getChildId()
 
 std::string ChildSession::getTextSelectionInternal(const std::string& mimeType)
 {
-    char* textSelection = nullptr;
-
     getLOKitDocument()->setView(_viewId);
 
-    textSelection = getLOKitDocument()->getTextSelection(mimeType.c_str(), nullptr);
+    LOKitHelper::ScopedString textSelection(getLOKitDocument()->getTextSelection(mimeType.c_str(), nullptr));
 
-    std::string str(textSelection ? textSelection : "");
-    free(textSelection);
+    std::string str(textSelection ? textSelection.get() : "");
     return str;
 }
 
@@ -3326,10 +3321,8 @@ bool ChildSession::getA11yFocusedParagraph()
 {
     getLOKitDocument()->setView(_viewId);
 
-    char* paragraphContent = nullptr;
-    paragraphContent = getLOKitDocument()->getA11yFocusedParagraph();
-    std::string paragraph(paragraphContent);
-    free(paragraphContent);
+    LOKitHelper::ScopedString paragraphContent(getLOKitDocument()->getA11yFocusedParagraph());
+    std::string paragraph(paragraphContent.get());
     sendTextFrame("a11yfocusedparagraph: " + paragraph);
     return true;
 }
