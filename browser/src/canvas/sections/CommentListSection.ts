@@ -1965,6 +1965,9 @@ export class CommentSection extends CanvasSectionObject {
 			} while (tmpIdx > -1 && this.sectionProperties.commentList[tmpIdx].sectionProperties.data.parent === this.sectionProperties.commentList[tmpIdx + 1].sectionProperties.data.id);
 
 			if (subList.length > 0) {
+				if (!subList[0].sectionProperties.data.anchorSPoint)
+					subList[0].sectionProperties.data.anchorSPoint = new cool.SimplePoint(subList[0].sectionProperties.data.anchorPos[0], subList[0].sectionProperties.data.anchorPos[1]);
+
 				startY = this.layoutUp(subList, [x, subList[0].sectionProperties.data.anchorSPoint.vY], startY, relayout);
 				i = i - subList.length;
 			} else {
@@ -2029,6 +2032,9 @@ export class CommentSection extends CanvasSectionObject {
 			} while (tmpIdx < this.sectionProperties.commentList.length && this.sectionProperties.commentList[tmpIdx].sectionProperties.data.parent !== '0');
 
 			if (subList.length > 0) {
+				if (!subList[0].sectionProperties.data.anchorSPoint)
+					subList[0].sectionProperties.data.anchorSPoint = new cool.SimplePoint(subList[0].sectionProperties.data.anchorPos[0], subList[0].sectionProperties.data.anchorPos[1]);
+
 				startY = this.layoutDown(subList, [x, subList[0].sectionProperties.data.anchorSPoint.vY], startY, relayout);
 				i = i + subList.length;
 			} else {
@@ -2145,14 +2151,16 @@ export class CommentSection extends CanvasSectionObject {
 		if (relayout)
 			this.resizeComments();
 
-		//lastY += app.activeDocument.activeLayout.viewedRectangle.pY1;
+		///lastY += app.activeDocument.activeLayout.viewedRectangle.pY1;
 
 		let horizontalScroll = app.activeDocument.fileSize.x;
 		if (availableSpace < this.sectionProperties.commentWidth && !this.isCollapsed)
 			horizontalScroll = (app.activeDocument.fileSize.cX + this.sectionProperties.commentWidth) * app.pixelsToTwips * app.dpiScale;
 
-		if (lastY > app.activeDocument.fileSize.pY) {
-			app.activeDocument.activeLayout.viewSize = new cool.SimplePoint(horizontalScroll, lastY * app.pixelsToTwips);
+		const checkY = lastY + app.activeDocument.activeLayout.viewedRectangle.pY1;
+
+		if (checkY > app.activeDocument.fileSize.pY) {
+			app.activeDocument.activeLayout.viewSize = new cool.SimplePoint(horizontalScroll, checkY * app.pixelsToTwips);
 			this.containerObject.requestReDraw();
 		}
 		else
