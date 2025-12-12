@@ -935,53 +935,30 @@ export class CommentSection extends CanvasSectionObject {
 		if (CommentSection.importingComments)
 			return;
 
-		const docType = app.map._docLayer._docType;
-		let anchorPosition: Array<number> = null;
 		const rootComment = this.sectionProperties.commentList[this.getRootIndexOf(comment.sectionProperties.data.id)];
 
-		switch (docType) {
-			case 'text':
-			{
-				anchorPosition = this.numberArrayToCorePixFromTwips(
-					rootComment.sectionProperties.data.anchorPos, 0, 2);
-				break;
-			}
-
-			case 'spreadsheet':
-			{
-				// in calc comments are not visible on canvas, anchor vertical position is always 1
-				// position is already in core pixels
-				anchorPosition = rootComment.getPosition();
-				break;
-			}
-
-			default:
-				break;
+		if (!rootComment.sectionProperties.data.anchorSPoint) {
+			const anchorPos = rootComment.sectionProperties.data.anchorPos;
+			rootComment.sectionProperties.data.anchorSPoint = new cool.SimplePoint(anchorPos[0], anchorPos[1]);
 		}
 
-		if (anchorPosition && anchorPosition[1] > 0) {
-			let annotationTop = anchorPosition[1];
-			const firstIdx = this.getIndexOf(rootComment.sectionProperties.data.id);
-			const lastIdx = this.getIndexOf(comment.sectionProperties.data.id);
-			for (let i = firstIdx; i < lastIdx; i++) {
-				annotationTop += this.cssToCorePixels(this.sectionProperties.commentList[i].getCommentHeight());
-			}
-			const annotationBottom = annotationTop + this.cssToCorePixels(comment.getCommentHeight());
+		const anchorPos = rootComment.sectionProperties.data.anchorSPoint;
 
-			if (!this.isInViewPort([annotationTop, annotationBottom])) {
-				const scrollSection = app.sectionContainer.getSectionWithName(app.CSections.Scroll.name);
-				const screenTopBottom = this.getScreenTopBottom();
+		const topLeftArray = anchorPos.toArray();
+		const topLeftVisible = app.isPointVisibleInTheDisplayedArea(topLeftArray);
+		const bottomRightVisible = app.isPointVisibleInTheDisplayedArea([topLeftArray[0] + (this.sectionProperties.commentWidth * app.pixelsToTwips), topLeftArray[1] + rootComment.getCommentHeight()]);
 
-				if (annotationTop < screenTopBottom[0]) {
-					scrollSection.scrollVerticalWithOffset(annotationTop - screenTopBottom[0]);
-				}
-				else
-					scrollSection.scrollVerticalWithOffset(annotationBottom - screenTopBottom[1]);
+		const topBottom = this.getScreenTopBottom();
 
-				if (docType === 'spreadsheet' && rootComment) {
-					rootComment.positionCalcComment();
-					rootComment.focus();
-				}
+		if (!topLeftVisible || !bottomRightVisible) {
+			if (!topLeftVisible)
+				app.activeDocument.activeLayout.scroll(0, topBottom[0] - anchorPos.pY);
+			else if (!bottomRightVisible)
+				app.activeDocument.activeLayout.scroll(0, (anchorPos.pY + rootComment.getCommentHeight() - topBottom[1]));
+
+			if (app.map._docLayer._docType === 'spreadsheet' && rootComment) {
+				rootComment.positionCalcComment();
+				rootComment.focus();
 			}
 		}
 	}
@@ -992,18 +969,6 @@ export class CommentSection extends CanvasSectionObject {
 		const screenBottom = screenTop + this.cssToCorePixels($('#map').height());
 
 		return [screenTop, screenBottom];
-	}
-
-	/// checks if vertical top and bottom point (in core pixels) is shown on the screen currently
-	private isInViewPort(positionTopBotton: Array<number>): boolean {
-		const screenTopBottom = this.getScreenTopBottom();
-		const top = positionTopBotton[0];
-		const bottom = positionTopBotton[1];
-
-		return (
-			screenTopBottom[0] <= top &&
-			screenTopBottom[1] >= bottom
-		);
 	}
 
 	public unselect (): void {
