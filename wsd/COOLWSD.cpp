@@ -128,6 +128,7 @@ std::mutex COOLWSD::RemoteConfigMutex;
 std::map<std::string, std::shared_ptr<DocumentBroker>> DocBrokers;
 std::mutex DocBrokersMutex; ///< Protects DocBrokers.
 
+// Tracks the set of prisoners/children waiting to be used.
 std::mutex NewChildrenMutex;
 std::condition_variable NewChildrenCV;
 std::vector<std::shared_ptr<ChildProcess>> NewChildren;
@@ -148,17 +149,9 @@ Socket::Type ClientPortProto = Socket::Type::All;
 /// INET address to listen on
 ServerSocket::Type ClientListenAddr = ServerSocket::Type::Public;
 
-// Tracks the set of prisoners / children waiting to be used.
-// std::mutex NewChildrenMutex;
-// std::condition_variable NewChildrenCV;
-// std::vector<std::shared_ptr<ChildProcess>> NewChildren;
 
-// std::atomic<int> TotalOutstandingForks(0);
-// std::map<std::string, int> OutstandingForks;
 std::map<std::string, std::chrono::steady_clock::time_point> LastForkRequestTimes;
-// using SubForKitMap = std::map<std::string, std::shared_ptr<ForKitProcess>>;
-// SubForKitMap SubForKitProcs;
-// std::map<std::string, std::chrono::steady_clock::time_point> LastSubForKitBrokerExitTimes;
+
 Poco::AutoPtr<Poco::Util::XMLConfiguration> KitXmlConfig;
 std::string LoggableConfigEntries;
 
