@@ -114,6 +114,7 @@ export class SimplePoint {
 	// View pixel.
 	public get vX(): number { return app.activeDocument.activeLayout ? app.activeDocument.activeLayout.documentToViewX(this) : this.pX; }
 	public get vY(): number { return app.activeDocument.activeLayout ? app.activeDocument.activeLayout.documentToViewY(this) : this.pY; }
+	public vToArray(): number[] { return app.activeDocument.activeLayout ? [this.vX, this.vY] : [this.pX, this.pY]; }
 }
 
 /**

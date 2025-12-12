@@ -1970,7 +1970,7 @@ export class CommentSection extends CanvasSectionObject {
 		var height: number;
 		for (var i = 0; i < subList.length; i++) {
 			height = subList[i].getCommentHeight(relayout);
-			lastY = subList[i].sectionProperties.data.anchorSPoint.pY + height < lastY ? subList[i].sectionProperties.data.anchorSPoint.pY: lastY - (height * app.dpiScale);
+			lastY = subList[i].sectionProperties.data.anchorSPoint.vY + height < lastY ? subList[i].sectionProperties.data.anchorSPoint.vY: lastY - (height * app.dpiScale);
 
 			subList[i].sectionProperties.container.style.left = String(Math.round(actualPosition[0] / app.dpiScale) + this.sectionProperties.canvasContainerLeft) + 'px';
 			subList[i].sectionProperties.container.style.top = String(Math.round(lastY / app.dpiScale) + this.sectionProperties.canvasContainerTop) + 'px';
@@ -1990,9 +1990,6 @@ export class CommentSection extends CanvasSectionObject {
 			var subList = [];
 			tmpIdx = i;
 			do {
-				const anchorPos = this.sectionProperties.commentList[tmpIdx].sectionProperties.data.anchorPos;
-				this.sectionProperties.commentList[tmpIdx].sectionProperties.data.anchorSPoint = new cool.SimplePoint(anchorPos[0], anchorPos[1]);
-				this.sectionProperties.commentList[tmpIdx].sectionProperties.data.anchorSPoint.pY -= app.activeDocument.activeLayout.viewedRectangle.pY1;
 				// Add this item to the list of comments.
 				if (this.sectionProperties.commentList[tmpIdx].sectionProperties.data.resolved !== 'true' || this.sectionProperties.showResolved) {
 					if (!checkSelectedPart || app.map._docLayer._selectedPart === this.sectionProperties.commentList[tmpIdx].sectionProperties.partIndex)
@@ -2003,7 +2000,7 @@ export class CommentSection extends CanvasSectionObject {
 			} while (tmpIdx > -1 && this.sectionProperties.commentList[tmpIdx].sectionProperties.data.parent === this.sectionProperties.commentList[tmpIdx + 1].sectionProperties.data.id);
 
 			if (subList.length > 0) {
-				startY = this.layoutUp(subList, [x, subList[0].sectionProperties.data.anchorSPoint.pY], startY, relayout);
+				startY = this.layoutUp(subList, [x, subList[0].sectionProperties.data.anchorSPoint.vY], startY, relayout);
 				i = i - subList.length;
 			} else {
 				i = tmpIdx;
@@ -2016,7 +2013,7 @@ export class CommentSection extends CanvasSectionObject {
 	private layoutDown (subList: any, actualPosition: Array<number>, lastY: number, relayout: boolean = true): number {
 		var selectedComment = subList[0] === this.sectionProperties.selectedComment;
 		for (var i = 0; i < subList.length; i++) {
-			lastY = subList[i].sectionProperties.data.anchorSPoint.pY > lastY ? subList[i].sectionProperties.data.anchorSPoint.pY: lastY;
+			lastY = subList[i].sectionProperties.data.anchorSPoint.vY > lastY ? subList[i].sectionProperties.data.anchorSPoint.vY: lastY;
 
 			var isRTL = document.documentElement.dir === 'rtl';
 
@@ -2057,9 +2054,6 @@ export class CommentSection extends CanvasSectionObject {
 			var subList = [];
 			tmpIdx = i;
 			do {
-				const anchorPos = this.sectionProperties.commentList[tmpIdx].sectionProperties.data.anchorPos;
-				this.sectionProperties.commentList[tmpIdx].sectionProperties.data.anchorSPoint = new cool.SimplePoint(anchorPos[0], anchorPos[1]);
-				this.sectionProperties.commentList[tmpIdx].sectionProperties.data.anchorSPoint.pY -= app.activeDocument.activeLayout.viewedRectangle.pY1;
 				// Add this item to the list of comments.
 				if (this.sectionProperties.commentList[tmpIdx].sectionProperties.data.resolved !== 'true' || this.sectionProperties.showResolved) {
 					if (!checkSelectedPart || app.map._docLayer._selectedPart === this.sectionProperties.commentList[tmpIdx].sectionProperties.partIndex)
@@ -2070,7 +2064,7 @@ export class CommentSection extends CanvasSectionObject {
 			} while (tmpIdx < this.sectionProperties.commentList.length && this.sectionProperties.commentList[tmpIdx].sectionProperties.data.parent !== '0');
 
 			if (subList.length > 0) {
-				startY = this.layoutDown(subList, [x, subList[0].sectionProperties.data.anchorSPoint.pY], startY, relayout);
+				startY = this.layoutDown(subList, [x, subList[0].sectionProperties.data.anchorSPoint.vY], startY, relayout);
 				i = i + subList.length;
 			} else {
 				i = tmpIdx;
@@ -2089,11 +2083,6 @@ export class CommentSection extends CanvasSectionObject {
 	}
 
 	private showArrow (startPoint: Array<number>, endPoint: Array<number>): void {
-		var anchorSection = this.containerObject.getDocumentAnchorSection();
-		startPoint[0] -= anchorSection.myTopLeft[0] + app.activeDocument.activeLayout.viewedRectangle.pX1;
-		startPoint[1] -= anchorSection.myTopLeft[1] + app.activeDocument.activeLayout.viewedRectangle.pY1;
-		endPoint[1] -= anchorSection.myTopLeft[1] + app.activeDocument.activeLayout.viewedRectangle.pY1;
-
 		startPoint[0] = Math.floor(startPoint[0] / app.dpiScale);
 		startPoint[1] = Math.floor(startPoint[1] / app.dpiScale);
 		endPoint[0] = Math.floor(endPoint[0] / app.dpiScale);
@@ -2148,8 +2137,8 @@ export class CommentSection extends CanvasSectionObject {
 
 			var isRTL = document.documentElement.dir === 'rtl';
 
-			var topRight: Array<number> = [this.myTopLeft[0], this.myTopLeft[1] + this.sectionProperties.marginY - app.activeDocument.activeLayout.viewedRectangle.pY1];
-			var yOrigin = null;
+			var topRight: Array<number> = [this.myTopLeft[0], this.myTopLeft[1] + this.sectionProperties.marginY + (new cool.SimplePoint(0, 0)).vY];
+			var yOrigin = 0;
 			var selectedIndex = null;
 			var x = isRTL ? 0 : topRight[0];
 
@@ -2165,10 +2154,9 @@ export class CommentSection extends CanvasSectionObject {
 
 			if (this.sectionProperties.selectedComment) {
 				selectedIndex = this.getRootIndexOf(this.sectionProperties.selectedComment.sectionProperties.data.id);
-				const anchorPos = this.sectionProperties.commentList[selectedIndex].sectionProperties.data.anchorPos;
-				this.sectionProperties.commentList[selectedIndex].sectionProperties.data.anchorSPoint = new cool.SimplePoint(anchorPos[0], anchorPos[1]);
-				yOrigin = this.sectionProperties.commentList[selectedIndex].sectionProperties.data.anchorSPoint.pY - app.activeDocument.activeLayout.viewedRectangle.pY1;
-				var tempCrd: Array<number> = this.sectionProperties.commentList[selectedIndex].sectionProperties.data.anchorSPoint.pToArray();
+
+				yOrigin = this.sectionProperties.commentList[selectedIndex].sectionProperties.data.anchorSPoint.vY;
+				var tempCrd: Array<number> = this.sectionProperties.commentList[selectedIndex].sectionProperties.data.anchorSPoint.vToArray();
 				var resolved:string = this.sectionProperties.commentList[selectedIndex].sectionProperties.data.resolved;
 				if (!resolved || resolved === 'false' || this.sectionProperties.showResolved) {
 					var posX = isRTL ? (this.containerObject.getDocumentAnchorSection().size[0] + x + 15) : x;
@@ -2192,7 +2180,7 @@ export class CommentSection extends CanvasSectionObject {
 		if (relayout)
 			this.resizeComments();
 
-		lastY += app.activeDocument.activeLayout.viewedRectangle.pY1;
+		//lastY += app.activeDocument.activeLayout.viewedRectangle.pY1;
 
 		let horizontalScroll = app.activeDocument.fileSize.x;
 		if (availableSpace < this.sectionProperties.commentWidth && !this.isCollapsed)
