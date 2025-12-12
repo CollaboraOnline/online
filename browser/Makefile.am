@@ -1033,22 +1033,33 @@ install-data-hook:
 	mkdir -p $(DESTDIR)$(pkgdatadir)/browser; \
 	cp -a dist/ $(DESTDIR)$(pkgdatadir)/browser/;
 else
-install-data-hook:
-	mkdir -p $(DESTDIR)$(pkgdatadir)/browser; \
-	rsync -a --exclude='src' \
-		--exclude='debug.html' \
-		--exclude='framed.doc.html' \
-		--exclude='framed.html' \
-		--exclude='load.doc.html' \
-		--exclude='multidocs.html' \
-		--exclude='tsconfig.tsbuildinfo' \
-		dist $(DESTDIR)$(pkgdatadir)/browser/;
-	mkdir -p $(DESTDIR)$(pkgdatadir)/browser/dist/src/layer/tile;
-	cp -a dist/src/layer/tile/CanvasTileUtils.js $(DESTDIR)$(pkgdatadir)/browser/dist/src/layer/tile/CanvasTileUtils.js;
-	cp -a dist/src/layer/tile/TileWorker.js $(DESTDIR)$(pkgdatadir)/browser/dist/src/layer/tile/TileWorker.js;
-if ENABLE_WASM
-	find $(DESTDIR)$(pkgdatadir)/browser/dist -type f ! -iname "*.png" -exec brotli --force {} \;
+EXCLUDES = \
+        --exclude='src' \
+        --exclude='debug.html' \
+        --exclude='framed.doc.html' \
+        --exclude='framed.html' \
+        --exclude='load.doc.html' \
+        --exclude='multidocs.html' \
+        --exclude='tsconfig.tsbuildinfo'
+
+if ENABLE_MOBILEAPP
+EXCLUDES += --exclude='l10n-all.js'
 endif
+
+if !ENABLE_WASM
+EXCLUDES += --exclude='wasm.html'
+WASM_BROTLI_CMD =
+else
+WASM_BROTLI_CMD = find $(DESTDIR)$(pkgdatadir)/browser/dist -type f ! -iname "*.png" -exec brotli --force {} \;
+endif
+
+install-data-hook:
+	mkdir -p $(DESTDIR)$(pkgdatadir)/browser
+	rsync -a $(EXCLUDES) dist/ $(DESTDIR)$(pkgdatadir)/browser
+	mkdir -p $(DESTDIR)$(pkgdatadir)/browser/dist/src/layer/tile
+	cp -a dist/src/layer/tile/CanvasTileUtils.js $(DESTDIR)$(pkgdatadir)/browser/dist/src/layer/tile/CanvasTileUtils.js
+	cp -a dist/src/layer/tile/TileWorker.js $(DESTDIR)$(pkgdatadir)/browser/dist/src/layer/tile/TileWorker.js
+	$(WASM_BROTLI_CMD)
 endif
 
 libs:
