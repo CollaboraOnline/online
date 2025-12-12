@@ -521,7 +521,7 @@ class BackstageView extends window.L.Class {
 		const { fileName, filePath, timestamp, uri } = this.parseDocumentData(doc);
 		const docType = doc.doctype || 'writer';
 		const formattedTime = this.formatTimestamp(timestamp);
-		
+
 		const row = this.createRecentDocumentRow(fileName, filePath, formattedTime, uri, docType);
 		return [row];
 	}
@@ -534,35 +534,35 @@ class BackstageView extends window.L.Class {
 		docType: string
 	): HTMLElement {
 		const row = this.createElement('tr', 'backstage-recent-document-row');
-		
+
 		const nameCell = this.createElement('td', 'backstage-recent-document-name-cell');
 		const nameText = this.createElement('div', 'backstage-recent-document-name-text');
 		nameText.textContent = fileName;
-		
+
 		const pathText = this.createElement('div', 'backstage-recent-document-path-text');
 		pathText.textContent = filePath;
-		
+
 		const textWrapper = this.createElement('div', 'backstage-recent-document-text-wrapper');
 		textWrapper.appendChild(nameText);
 		textWrapper.appendChild(pathText);
-		
+
 		const iconClass = this.getDocumentIconClass(docType);
 		const icon = this.createElement('span', `backstage-recent-document-icon ${iconClass}`);
-		
+
 		const contentWrapper = this.createElement('div', 'backstage-recent-document-content-wrapper');
 		contentWrapper.appendChild(icon);
 		contentWrapper.appendChild(textWrapper);
-		
+
 		nameCell.appendChild(contentWrapper);
-		
+
 		const timeCell = this.createElement('td', 'backstage-recent-document-time-cell');
 		timeCell.textContent = formattedTime;
-		
+
 		row.appendChild(nameCell);
 		row.appendChild(timeCell);
-		
-		window.L.DomEvent.on(row, 'click', () => this.openRecentDocument(uri, docType), this);
-		
+
+		window.L.DomEvent.on(row, 'click', () => this.openRecentDocument(uri), this);
+
 		return row;
 	}
 
@@ -610,16 +610,12 @@ class BackstageView extends window.L.Class {
 		}
 	}
 
-	private openRecentDocument(uri: string, docType?: string): void {
+	private openRecentDocument(uri: string): void {
 		if (!uri) {
 			console.warn('openRecentDocument: URI is missing');
 			return;
 		}
-		if (!docType) {
-			console.warn('openRecentDocument: Document type is missing for URI:', uri);
-			return;
-		}
-		window.postMobileMessage(`newdoc type=${docType} file=${encodeURIComponent(uri)}`);
+		window.postMobileMessage(`opendoc file=${encodeURIComponent(uri)}`);
 	}
 
 	private getDocumentIconClass(docType: string): string {
