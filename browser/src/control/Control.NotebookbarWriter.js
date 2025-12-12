@@ -154,21 +154,6 @@ window.L.Control.NotebookbarWriter = window.L.Control.Notebookbar.extend({
 		var hasSave = !this.map['wopi'].HideSaveOption;
 		var content = [];
 
-		if (window.ThisIsTheWindowsApp || window.ThisIsTheQtApp) {
-			content.push({
-				'type': 'toolbox',
-				'children': [
-					{
-						'id': 'file-open',
-						'type': 'bigtoolitem',
-						'text': _UNO('.uno:Open'),
-						'command': '.uno:Open',
-						'accessibility': { focusBack: true,	combination: 'OP', de: null }
-					}
-				]
-			});
-		}
-
 		if (hasSave) {
 			content.push({
 				'type': 'container',

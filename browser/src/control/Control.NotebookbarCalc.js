@@ -140,21 +140,6 @@ window.L.Control.NotebookbarCalc = window.L.Control.NotebookbarWriter.extend({
 		var hasShare = this.map['wopi'].EnableShare;
 		var hasRevisionHistory = window.L.Params.revHistoryEnabled;
 
-		if (window.ThisIsTheWindowsApp || window.ThisIsTheQtApp) {
-			content.push({
-				'type': 'toolbox',
-				'children': [
-					{
-						'id': 'file-open',
-						'type': 'bigtoolitem',
-						'text': _UNO('.uno:Open'),
-						'command': '.uno:Open',
-						'accessibility': { focusBack: true,	combination: 'OP', de: null }
-					}
-				]
-			});
-		}
-
 		if (hasSave) {
 			content.push({
 				'type': 'container',
