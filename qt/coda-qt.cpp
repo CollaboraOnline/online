@@ -666,6 +666,7 @@ QVariant Bridge::cool(const QString& messageStr)
     constexpr std::string_view COMMANDSTATECHANGED = "COMMANDSTATECHANGED ";
     constexpr std::string_view COMMANDRESULT = "COMMANDRESULT ";
     constexpr std::string_view NEWDOCTYPE = "newdoc type=";
+    constexpr std::string_view OPENDOC = "opendoc file=";
     constexpr std::string_view FULLSCREENPRESENTATION = "FULLSCREENPRESENTATION ";
 
     const std::string message = messageStr.toStdString();
@@ -932,13 +933,7 @@ QVariant Bridge::cool(const QString& messageStr)
         QObject::connect(dialog, &QFileDialog::filesSelected,
                          [](const QStringList& filePaths)
                          {
-                            // Open all selected files in new windows
-                            for (const QString& filePath : filePaths)
-                            {
-                                WebView* webViewInstance = new WebView(Application::getProfile());
-                                webViewInstance->load(Poco::URI(filePath.toStdString()));
-                                RecentDocuments::add(filePath);
-                            }
+                            coda::openFiles(filePaths);
                              // Close starter screen if it exists
                              closeStarterScreen();
                          });
@@ -1079,56 +1074,44 @@ QVariant Bridge::cool(const QString& messageStr)
         QString qurl = QString::fromStdString(message.substr(HYPERLINK.size()));
         QDesktopServices::openUrl(QUrl::fromUserInput(qurl));
     }
+    else if (message.starts_with(OPENDOC))
+    {
+        // e.g. "opendoc file=%2Fhome%2F...something.odt"
+        std::string fileArg = message.substr(OPENDOC.size());
+        QString decodedUri = QUrl::fromPercentEncoding(QByteArray(fileArg.data(), fileArg.size()));
+
+        QUrl url(decodedUri);
+        QString localPath = url.isLocalFile() ? url.toLocalFile() : decodedUri;
+
+        QFileInfo fileInfo(localPath);
+        if (!fileInfo.exists() || !fileInfo.isFile())
+        {
+            LOG_ERR("opendoc: file does not exist: " << localPath.toStdString());
+            return {};
+        }
+
+        QString absolutePath = fileInfo.absoluteFilePath();
+        coda::openFiles(QStringList() << absolutePath);
+
+        LOG_INF("opendoc: opened file: " << absolutePath.toStdString());
+        return {};
+    }
     else if (message.starts_with(NEWDOCTYPE))
     {
         // e.g."newdoc type=writer template=%2Fhome%2F...something.ott"
-        // e.g."newdoc type=writer file=%2Fhome%2F...something.odt"
-        // template and file are optional and not always there
+        // template is optional and not always there
         std::string args = message.substr(NEWDOCTYPE.size());
 
         // templateType is one of "writer", "calc", "draw", or "impress"
         auto [templateType, templateArgs] = Util::split(args, ' ');
 
         std::string templatePath;
-        std::string filePath;
         constexpr std::string_view TEMPLATE_PREFIX = "template=";
-        constexpr std::string_view FILE_PREFIX = "file=";
 
         if(templateArgs.starts_with(TEMPLATE_PREFIX))
         {
             std::string_view templateVal = templateArgs.substr(TEMPLATE_PREFIX.size());
             templatePath = QUrl::fromPercentEncoding(QByteArray(templateVal.data(), templateVal.size())).toStdString();
-        }
-        else if(templateArgs.starts_with(FILE_PREFIX))
-        {
-            std::string_view fileVal = templateArgs.substr(FILE_PREFIX.size());
-            QString decodedUri = QUrl::fromPercentEncoding(QByteArray(fileVal.data(), fileVal.size()));
-
-            QUrl url(decodedUri);
-            QString localPath;
-            if (url.isLocalFile())
-            {
-                localPath = url.toLocalFile();
-            }
-            else
-            {
-                localPath = decodedUri;
-            }
-
-            QFileInfo fileInfo(localPath);
-            if (!fileInfo.exists() || !fileInfo.isFile())
-            {
-                LOG_ERR("newdoc file=: file does not exist: " << localPath.toStdString());
-                return {};
-            }
-            QString absolutePath = fileInfo.absoluteFilePath();
-
-            WebView* webViewInstance = new WebView(Application::getProfile());
-            webViewInstance->load(Poco::URI(absolutePath.toStdString()));
-            RecentDocuments::add(absolutePath);
-
-            LOG_INF("newdoc file=: opened file in new window: " << absolutePath.toStdString());
-            return {};
         }
 
         // Always create new window
