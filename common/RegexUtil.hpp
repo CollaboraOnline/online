@@ -30,6 +30,8 @@ std::string getValue(const std::map<std::string, std::string>& map, const std::s
 
 std::string getValue(const std::set<std::string>& set, const std::string& subject);
 
+bool isRegexValid(const std::string& regex);
+
 /// Given one or more patterns to allow, and one or more to deny,
 /// the match member will return true if, and only if, the subject
 /// matches the allowed list, but not the deny.

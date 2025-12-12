@@ -279,16 +279,18 @@
                 <refresh desc="How frequently we should re-acquire a lock with the storage server, in seconds (default 15 mins) or 0 for no refresh" type="int" default="900">900</refresh>
             </locking>
 
-            <alias_groups desc="default mode is 'first' it allows only the first host when groups are not defined. set mode to 'groups' and define group to allow multiple host and its aliases" mode="first">
-            <!-- If you need to use multiple wopi hosts, please change the mode to "groups" and
-                    add the hosts below.  If one host is accessible under multiple ip addresses
+            <alias_groups desc="default mode is 'first' it allows only the first host connecting to coolwsd when groups are not defined. set mode to 'groups' and define group to allow multiple host and its aliases" mode="first">
+            <!-- If you need to use multiple wopi hosts, change the mode to "groups" and
+                    add the hosts below. If one host is accessible under multiple ip addresses
                     or names, add them as aliases. -->
-            <!--<group>
+            <!--
+            <group>
                     <host desc="hostname to allow or deny." allow="true">scheme://hostname:port</host>
                     <alias desc="regex pattern of aliasname">scheme://aliasname1:port</alias>
                     <alias desc="regex pattern of aliasname">scheme://aliasname2:port</alias>
                     @UNLOCK_LINK_PER_HOST@
-            </group>-->
+            </group>
+            -->
             <!-- More "group"s possible here -->
             </alias_groups>
 
