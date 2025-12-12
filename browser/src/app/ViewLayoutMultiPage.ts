@@ -206,10 +206,15 @@ class ViewLayoutMultiPage extends ViewLayoutBase {
 			}
 		}
 
-		resultingRectangle.pX1 -= TileManager.tileSize;
-		resultingRectangle.pY1 -= TileManager.tileSize;
-		resultingRectangle.pWidth += TileManager.tileSize * 2;
-		resultingRectangle.pHeight += TileManager.tileSize * 2;
+		if (
+			resultingRectangle.pX1 === Number.POSITIVE_INFINITY ||
+			resultingRectangle.pY1 === Number.POSITIVE_INFINITY
+		) {
+			setTimeout(() => {
+				this.scrollProperties.viewX = 0;
+				this.refreshVisibleAreaRectangle();
+			}, 100);
+		}
 
 		this._viewedRectangle = resultingRectangle;
 
