@@ -243,11 +243,11 @@ class BackstageView extends window.L.Class {
 		if (config.icon) {
 			const iconContainer = this.createElement('span', 'backstage-sidebar-icon');
 			iconContainer.setAttribute('aria-hidden', 'true');
-			
+
 			const iconUrl = window.app && window.app.LOUtil
 				? window.app.LOUtil.getImageURL(config.icon)
 				: `images/${config.icon}`;
-			
+
 			this.loadSVGIcon(iconContainer, iconUrl);
 			element.insertBefore(iconContainer, element.firstChild);
 		}
@@ -285,7 +285,7 @@ class BackstageView extends window.L.Class {
 			},
 			{
 				id: 'open',
-				label: _UNO('.uno:Open'),
+				label: _('Open'),
 				type: 'action',
 				actionType: 'open',
 				icon: 'lc_open.svg',
@@ -400,8 +400,8 @@ class BackstageView extends window.L.Class {
 			return;
 		}
 
-		const templateType = this.isStarterMode 
-			? 'writer' 
+		const templateType = this.isStarterMode
+			? 'writer'
 			: this.detectTemplateTypeFromDoc();
 
 		const allTemplates = this.getTemplatesData();
@@ -430,7 +430,7 @@ class BackstageView extends window.L.Class {
 		moreTemplatesButton.setAttribute('role', 'button');
 		moreTemplatesButton.setAttribute('tabindex', '0');
 		moreTemplatesButton.setAttribute('aria-label', _('More Templates'));
-		
+
 		const handleMoreTemplatesClick = () => {
 			const newTabElement = document.getElementById('backstage-new');
 			if (newTabElement) {
@@ -439,7 +439,7 @@ class BackstageView extends window.L.Class {
 				this.renderNewView();
 			}
 		};
-		
+
 		window.L.DomEvent.on(moreTemplatesButton, 'click', handleMoreTemplatesClick, this);
 
 		moreTemplatesContainer.appendChild(divider);
