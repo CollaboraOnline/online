@@ -1481,7 +1481,7 @@ export class CommentSection extends CanvasSectionObject {
 		redline.id = 'change-' + redline.index;
 		redline.parent = '0'; // Redlines don't have parents, we need to specify this for consistency.
 		redline.anchorPos = this.stringToRectangles(redline.textRange)[0];
-		redline.anchorPix = this.numberArrayToCorePixFromTwips(redline.anchorPos, 0, 2);
+		redline.anchorSPoint = new cool.SimplePoint(redline.anchorPos[0], redline.anchorPos[1]);
 		redline.trackchange = true;
 		redline.text = redline.comment;
 		redline.rectanglesOriginal = this.stringToRectangles(redline.textRange || redline.anchorPos || redline.rectangle); // This unmodified version will be kept for re-calculations.
@@ -1896,7 +1896,7 @@ export class CommentSection extends CanvasSectionObject {
 			comment.rectangle[1] += yAddition;
 		}
 
-		comment.anchorPix = this.numberArrayToCorePixFromTwips(comment.anchorPos, 0, 2);
+		comment.anchorSPoint = new cool.SimplePoint(comment.anchorPos[0], comment.anchorPos[1]);
 
 		comment.parthash = comment.parthash ? comment.parthash: null;
 
@@ -1919,7 +1919,7 @@ export class CommentSection extends CanvasSectionObject {
 		comment.rectangles = this.stringToRectangles(comment.textRange || comment.anchorPos || comment.rectangle || cellPos); // Simple array of point arrays [x1, y1, x2, y2].
 		comment.rectanglesOriginal = this.stringToRectangles(comment.textRange || comment.anchorPos || comment.rectangle || cellPos); // This unmodified version will be kept for re-calculations.
 		comment.anchorPos = this.stringToRectangles(comment.anchorPos || comment.rectangle || cellPos)[0];
-		comment.anchorPix = this.numberArrayToCorePixFromTwips(comment.anchorPos, 0, 2);
+		comment.anchorSPoint = new cool.SimplePoint(comment.anchorPos[0], comment.anchorPos[1]);
 		comment.parthash = comment.parthash ? comment.parthash: null;
 		comment.tab = (comment.tab || comment.tab === 0) ? comment.tab: null;
 		comment.layoutStatus = comment.layoutStatus !== undefined ? parseInt(comment.layoutStatus): null;
@@ -1970,7 +1970,7 @@ export class CommentSection extends CanvasSectionObject {
 		var height: number;
 		for (var i = 0; i < subList.length; i++) {
 			height = subList[i].getCommentHeight(relayout);
-			lastY = subList[i].sectionProperties.data.anchorPix[1] + height < lastY ? subList[i].sectionProperties.data.anchorPix[1]: lastY - (height * app.dpiScale);
+			lastY = subList[i].sectionProperties.data.anchorSPoint.pY + height < lastY ? subList[i].sectionProperties.data.anchorSPoint.pY: lastY - (height * app.dpiScale);
 
 			subList[i].sectionProperties.container.style.left = String(Math.round(actualPosition[0] / app.dpiScale) + this.sectionProperties.canvasContainerLeft) + 'px';
 			subList[i].sectionProperties.container.style.top = String(Math.round(lastY / app.dpiScale) + this.sectionProperties.canvasContainerTop) + 'px';
@@ -1990,8 +1990,9 @@ export class CommentSection extends CanvasSectionObject {
 			var subList = [];
 			tmpIdx = i;
 			do {
-				this.sectionProperties.commentList[tmpIdx].sectionProperties.data.anchorPix = this.numberArrayToCorePixFromTwips(this.sectionProperties.commentList[tmpIdx].sectionProperties.data.anchorPos, 0, 2);
-				this.sectionProperties.commentList[tmpIdx].sectionProperties.data.anchorPix[1] -= app.activeDocument.activeLayout.viewedRectangle.pY1;
+				const anchorPos = this.sectionProperties.commentList[tmpIdx].sectionProperties.data.anchorPos;
+				this.sectionProperties.commentList[tmpIdx].sectionProperties.data.anchorSPoint = new cool.SimplePoint(anchorPos[0], anchorPos[1]);
+				this.sectionProperties.commentList[tmpIdx].sectionProperties.data.anchorSPoint.pY -= app.activeDocument.activeLayout.viewedRectangle.pY1;
 				// Add this item to the list of comments.
 				if (this.sectionProperties.commentList[tmpIdx].sectionProperties.data.resolved !== 'true' || this.sectionProperties.showResolved) {
 					if (!checkSelectedPart || app.map._docLayer._selectedPart === this.sectionProperties.commentList[tmpIdx].sectionProperties.partIndex)
@@ -2002,7 +2003,7 @@ export class CommentSection extends CanvasSectionObject {
 			} while (tmpIdx > -1 && this.sectionProperties.commentList[tmpIdx].sectionProperties.data.parent === this.sectionProperties.commentList[tmpIdx + 1].sectionProperties.data.id);
 
 			if (subList.length > 0) {
-				startY = this.layoutUp(subList, [x, subList[0].sectionProperties.data.anchorPix[1]], startY, relayout);
+				startY = this.layoutUp(subList, [x, subList[0].sectionProperties.data.anchorSPoint.pY], startY, relayout);
 				i = i - subList.length;
 			} else {
 				i = tmpIdx;
@@ -2015,7 +2016,7 @@ export class CommentSection extends CanvasSectionObject {
 	private layoutDown (subList: any, actualPosition: Array<number>, lastY: number, relayout: boolean = true): number {
 		var selectedComment = subList[0] === this.sectionProperties.selectedComment;
 		for (var i = 0; i < subList.length; i++) {
-			lastY = subList[i].sectionProperties.data.anchorPix[1] > lastY ? subList[i].sectionProperties.data.anchorPix[1]: lastY;
+			lastY = subList[i].sectionProperties.data.anchorSPoint.pY > lastY ? subList[i].sectionProperties.data.anchorSPoint.pY: lastY;
 
 			var isRTL = document.documentElement.dir === 'rtl';
 
@@ -2056,8 +2057,9 @@ export class CommentSection extends CanvasSectionObject {
 			var subList = [];
 			tmpIdx = i;
 			do {
-				this.sectionProperties.commentList[tmpIdx].sectionProperties.data.anchorPix = this.numberArrayToCorePixFromTwips(this.sectionProperties.commentList[tmpIdx].sectionProperties.data.anchorPos, 0, 2);
-				this.sectionProperties.commentList[tmpIdx].sectionProperties.data.anchorPix[1] -= app.activeDocument.activeLayout.viewedRectangle.pY1;
+				const anchorPos = this.sectionProperties.commentList[tmpIdx].sectionProperties.data.anchorPos;
+				this.sectionProperties.commentList[tmpIdx].sectionProperties.data.anchorSPoint = new cool.SimplePoint(anchorPos[0], anchorPos[1]);
+				this.sectionProperties.commentList[tmpIdx].sectionProperties.data.anchorSPoint.pY -= app.activeDocument.activeLayout.viewedRectangle.pY1;
 				// Add this item to the list of comments.
 				if (this.sectionProperties.commentList[tmpIdx].sectionProperties.data.resolved !== 'true' || this.sectionProperties.showResolved) {
 					if (!checkSelectedPart || app.map._docLayer._selectedPart === this.sectionProperties.commentList[tmpIdx].sectionProperties.partIndex)
@@ -2068,7 +2070,7 @@ export class CommentSection extends CanvasSectionObject {
 			} while (tmpIdx < this.sectionProperties.commentList.length && this.sectionProperties.commentList[tmpIdx].sectionProperties.data.parent !== '0');
 
 			if (subList.length > 0) {
-				startY = this.layoutDown(subList, [x, subList[0].sectionProperties.data.anchorPix[1]], startY, relayout);
+				startY = this.layoutDown(subList, [x, subList[0].sectionProperties.data.anchorSPoint.pY], startY, relayout);
 				i = i + subList.length;
 			} else {
 				i = tmpIdx;
@@ -2163,9 +2165,10 @@ export class CommentSection extends CanvasSectionObject {
 
 			if (this.sectionProperties.selectedComment) {
 				selectedIndex = this.getRootIndexOf(this.sectionProperties.selectedComment.sectionProperties.data.id);
-				this.sectionProperties.commentList[selectedIndex].sectionProperties.data.anchorPix = this.numberArrayToCorePixFromTwips(this.sectionProperties.commentList[selectedIndex].sectionProperties.data.anchorPos, 0, 2);
-				yOrigin = this.sectionProperties.commentList[selectedIndex].sectionProperties.data.anchorPix[1] - app.activeDocument.activeLayout.viewedRectangle.pY1;
-				var tempCrd: Array<number> = this.sectionProperties.commentList[selectedIndex].sectionProperties.data.anchorPix;
+				const anchorPos = this.sectionProperties.commentList[selectedIndex].sectionProperties.data.anchorPos;
+				this.sectionProperties.commentList[selectedIndex].sectionProperties.data.anchorSPoint = new cool.SimplePoint(anchorPos[0], anchorPos[1]);
+				yOrigin = this.sectionProperties.commentList[selectedIndex].sectionProperties.data.anchorSPoint.pY - app.activeDocument.activeLayout.viewedRectangle.pY1;
+				var tempCrd: Array<number> = this.sectionProperties.commentList[selectedIndex].sectionProperties.data.anchorSPoint.pToArray();
 				var resolved:string = this.sectionProperties.commentList[selectedIndex].sectionProperties.data.resolved;
 				if (!resolved || resolved === 'false' || this.sectionProperties.showResolved) {
 					var posX = isRTL ? (this.containerObject.getDocumentAnchorSection().size[0] + x + 15) : x;
