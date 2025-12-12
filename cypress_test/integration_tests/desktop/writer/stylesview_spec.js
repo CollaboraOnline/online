@@ -8,7 +8,7 @@ describe(['tagdesktop'], 'Stylesview Iconview Tests', function() {
 	const openExpander = () => {
 		cy.cGet('#stylesview-expand-button').should('exist').should('be.visible');
 		cy.cGet('#stylesview-expand-button').click();
-		cy.cGet('#stylesview-dropdown').should('exist').should('be.visible');
+		desktopHelper.getDropdown('stylesview').should('exist');
 		cy.cGet('.jsdialog #stylesview').should('exist').should('be.visible');
 	}
 
@@ -40,8 +40,13 @@ describe(['tagdesktop'], 'Stylesview Iconview Tests', function() {
 	it('Open Styles Sidebar Button', function() {
 		openExpander();
 
+		// open sidebar
 		cy.cGet('#format-style-list-dialog-button').should('exist').should('be.visible');
 		cy.cGet('#format-style-list-dialog-button').click();
+
+		// close dropdown on button click
+		desktopHelper.getDropdown('stylesview').should('not.exist');
+
 		cy.cGet('#StyleListDeck').should('exist').should('be.visible');
 	});
 
