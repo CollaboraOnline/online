@@ -596,6 +596,10 @@ public:
     /// Called when document presets install is finished
     virtual void onDocBrokerPresetsInstallEnd(bool /*success*/) {}
 
+    /// Called when the proxy pumps data between client and target.
+    /// direction: true = client->target, false = target->client
+    virtual void onProxyData(const char* /*data*/, std::size_t /*len*/, bool /*direction*/) {}
+
 protected:
     /// Called when a DocumentBroker is destroyed (from the destructor).
     /// Useful to detect when unloading was clean and to (re)load again.
