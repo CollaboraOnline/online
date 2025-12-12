@@ -13,6 +13,7 @@
 #include <config_version.h>
 
 #include "COOLWSD.hpp"
+#include "SslSocketFactory.hpp"
 
 /* Default host used in the start test URI */
 #define COOLWSD_TEST_HOST "localhost"
@@ -3181,30 +3182,6 @@ class PlainSocketFactory final : public SocketFactory
             std::make_shared<ClientRequestDispatcher>());
     }
 };
-
-#if ENABLE_SSL
-class SslSocketFactory final : public SocketFactory
-{
-    std::shared_ptr<Socket> create(const int physicalFd, Socket::Type type) override
-    {
-        int fd = physicalFd;
-
-#if !MOBILEAPP
-        if (SimulatedLatencyMs > 0)
-        {
-            int delayFd = Delay::create(SimulatedLatencyMs, physicalFd);
-            if (delayFd == -1)
-                LOG_ERR("Delay creation failed, fallback to original fd");
-            else
-                fd = delayFd;
-        }
-#endif
-
-        return StreamSocket::create<SslStreamSocket>(std::string(), fd, type, false, HostType::Other,
-                                                     std::make_shared<ClientRequestDispatcher>());
-    }
-};
-#endif
 
 class PrisonerSocketFactory final : public SocketFactory
 {
