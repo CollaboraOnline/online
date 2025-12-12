@@ -45,7 +45,6 @@ interface ConfigData {
 }
 
 interface ViewSettings {
-	accessibilityState: boolean;
 	zoteroAPIKey: string;
 	signatureCert: string;
 	signatureKey: string;
@@ -112,6 +111,7 @@ const defaultBrowserSetting: Record<string, any> = {
 		customType: 'compactToggle',
 	},
 	darkTheme: false,
+	accessibilityState: false,
 	spreadsheet: {
 		ShowStatusbar: false,
 		A11yCheckDeck: false,
@@ -151,13 +151,13 @@ class SettingIframe {
 	private _viewSetting;
 	private xcuInitializationAttempted = false;
 	private _viewSettingLabels = {
-		accessibilityState: _('Accessibility'),
 		zoteroAPIKey: 'Zotero',
 		signatureCert: _('Signature Certificate'),
 		signatureKey: _('Signature Key'),
 		signatureCa: _('Signature CA'),
 	};
 	private readonly settingLabels: Record<string, string> = {
+		accessibilityState: _('In-document Screen Reader'),
 		darkTheme: _('Dark Mode'),
 		compactMode: _('Compact layout'),
 		ShowStatusbar: _('Show status bar'),
@@ -990,10 +990,15 @@ class SettingIframe {
 		checkboxContent.appendChild(checkboxLabel);
 
 		if (warningText) {
-			const warningEl = document.createElement('span');
+			const container = document.createElement('div');
+			container.className = 'checkbox-content__inner';
+			container.appendChild(checkboxLabel);
+			const warningEl = document.createElement('label');
 			warningEl.className = 'ui-state-error-text';
 			warningEl.textContent = warningText;
-			checkboxContent.appendChild(warningEl);
+			container.appendChild(warningEl);
+			checkboxContent.appendChild(container);
+			checkboxContent.classList.add('checkbox-content--with-warning');
 		}
 
 		if (!isDisabled) {
@@ -1030,10 +1035,21 @@ class SettingIframe {
 		data: any,
 	): HTMLSpanElement {
 		const labelText = this.settingLabels[key] || key;
+		let isDisabled = false;
+		let warningText: string | null = null;
+
+		if (key === 'accessibilityState') {
+			isDisabled = !window.enableAccessibility;
+			if (isDisabled) {
+				warningText = _(
+					'(Warning: Server accessibility must be enabled to toggle)',
+				);
+			}
+		}
 
 		return this.createCheckbox(
 			uniqueId,
-			value,
+			value && !isDisabled,
 			labelText,
 			(inputCheckbox, checkboxWrapper) => {
 				checkboxWrapper.classList.toggle(
@@ -1042,6 +1058,8 @@ class SettingIframe {
 				);
 				data[key] = inputCheckbox.checked;
 			},
+			isDisabled,
+			warningText,
 		);
 	}
 
@@ -1355,7 +1373,6 @@ class SettingIframe {
 		fieldset.appendChild(this.createLegend(_('Option')));
 
 		const allViewSettingsKeys: (keyof ViewSettings)[] = [
-			'accessibilityState',
 			'zoteroAPIKey',
 			'signatureCert',
 			'signatureKey',
@@ -1368,50 +1385,44 @@ class SettingIframe {
 				continue;
 			}
 
-			const value = data[key] ?? (typeof data[key] === 'boolean' ? false : '');
+			// Add Zotero section with description
+			if (key === 'zoteroAPIKey') {
+				fieldset.appendChild(this.createHeading('Zotero'));
+				const zoteroDescription = this.createParagraph(
+					_(
+						'To use Zotero specify your API key here. You can create your API key in your ',
+					),
+				);
+				zoteroDescription.className = 'view-setting-description';
 
-			if (typeof value === 'boolean') {
-				fieldset.appendChild(this.createViewSettingCheckbox(key, data, label));
-			} else if (typeof value === 'string') {
-				// Add Zotero section with description
-				if (key === 'zoteroAPIKey') {
-					fieldset.appendChild(this.createHeading('Zotero'));
-					const zoteroDescription = this.createParagraph(
-						_(
-							'To use Zotero specify your API key here. You can create your API key in your ',
-						),
-					);
-					zoteroDescription.className = 'view-setting-description';
+				const zoteroAccountLink = document.createElement('a');
+				zoteroAccountLink.href = 'https://www.zotero.org/settings/keys';
+				zoteroAccountLink.target = '_blank';
+				zoteroAccountLink.textContent = _('Zotero account API settings');
 
-					const zoteroAccountLink = document.createElement('a');
-					zoteroAccountLink.href = 'https://www.zotero.org/settings/keys';
-					zoteroAccountLink.target = '_blank';
-					zoteroAccountLink.textContent = _('Zotero account API settings');
+				zoteroDescription.appendChild(zoteroAccountLink);
 
-					zoteroDescription.appendChild(zoteroAccountLink);
-
-					fieldset.appendChild(zoteroDescription);
-					fieldset.appendChild(this.createViewSettingsTextBox(key, data, true));
-				}
-				// Add Document Signing section with description (only once for first field)
-				else if (key === 'signatureCert') {
-					fieldset.appendChild(this.createHeading(_('Document Signing')));
-					const signingDesc = document.createElement('p');
-					signingDesc.className = 'view-setting-description';
-					signingDesc.textContent = _(
-						'To use document signing, specify your signing certificate, key and CA chain here.',
-					);
-					fieldset.appendChild(signingDesc);
-					fieldset.appendChild(
-						this.createViewSettingsTextBox(key, data, false, true),
-					);
-				}
-				// Add remaining signature fields with smaller labels
-				else if (key === 'signatureKey' || key === 'signatureCa') {
-					fieldset.appendChild(
-						this.createViewSettingsTextBox(key, data, false, true),
-					);
-				}
+				fieldset.appendChild(zoteroDescription);
+				fieldset.appendChild(this.createViewSettingsTextBox(key, data, true));
+			}
+			// Add Document Signing section with description (only once for first field)
+			else if (key === 'signatureCert') {
+				fieldset.appendChild(this.createHeading(_('Document Signing')));
+				const signingDesc = document.createElement('p');
+				signingDesc.className = 'view-setting-description';
+				signingDesc.textContent = _(
+					'To use document signing, specify your signing certificate, key and CA chain here.',
+				);
+				fieldset.appendChild(signingDesc);
+				fieldset.appendChild(
+					this.createViewSettingsTextBox(key, data, false, true),
+				);
+			}
+			// Add remaining signature fields with smaller labels
+			else if (key === 'signatureKey' || key === 'signatureCa') {
+				fieldset.appendChild(
+					this.createViewSettingsTextBox(key, data, false, true),
+				);
 			}
 		}
 
@@ -1441,41 +1452,6 @@ class SettingIframe {
 			data,
 			skipHeading,
 			isSmallHeading,
-		);
-	}
-
-	private createViewSettingCheckbox(
-		key: keyof ViewSettings,
-		data: ViewSettings,
-		label: string,
-	): HTMLSpanElement {
-		const isChecked = data[key] as boolean;
-		let isDisabled = false;
-		let warningText: string | null = null;
-
-		if (key === 'accessibilityState') {
-			isDisabled = !window.enableAccessibility;
-			if (isDisabled) {
-				warningText = _(
-					'(Warning: Server accessibility must be enabled to toggle)',
-				);
-			}
-		}
-
-		// Replaced direct checkbox input creation with the new helper
-		return this.createCheckbox(
-			key as string,
-			isChecked && !isDisabled,
-			label,
-			(inputCheckbox, checkboxWrapper) => {
-				checkboxWrapper.classList.toggle(
-					'checkbox-radio-switch--checked',
-					!inputCheckbox.checked,
-				);
-				(data as any)[key] = inputCheckbox.checked;
-			},
-			isDisabled,
-			warningText,
 		);
 	}
 
@@ -1527,7 +1503,10 @@ class SettingIframe {
 					const loadedSettings = JSON.parse(fetchContent);
 					// Merge with default values to ensure all fields are present
 					const defaultViewSetting = this.getDefaultViewSettings();
-					const mergedSettings = { ...defaultViewSetting, ...loadedSettings };
+					const mergedSettings = this.mergeWithDefault(
+						defaultViewSetting,
+						loadedSettings,
+					);
 					this.generateViewSettingUI(mergedSettings);
 				}
 			} else {
@@ -1683,8 +1662,9 @@ class SettingIframe {
 
 		for (const key in defaults) {
 			const value = defaults[key];
-			const override = overrides?.[key];
-
+			let override = overrides?.[key];
+			if (override === 'true') override = true;
+			else if (override === 'false') override = false;
 			if (
 				typeof value === 'boolean' ||
 				(typeof value === 'object' && value !== null && 'customType' in value)
@@ -1813,7 +1793,6 @@ class SettingIframe {
 
 	private getDefaultViewSettings(): ViewSettings {
 		return {
-			accessibilityState: false,
 			zoteroAPIKey: '',
 			signatureCert: '',
 			signatureKey: '',

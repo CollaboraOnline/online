@@ -1731,10 +1731,7 @@ private:
     /// Called when document conflict is detected (i.e. it changed in storage).
     void handleDocumentConflict();
 
-    /// if _isViewSettingsAccessibilityEnabled is set then set
-    /// accessibilityState=true in @message and force-enable
-    /// accessibility on for viewId
-    std::string applyViewAccessibility(const std::string& message,
+    std::string applyBrowserAccessibility(const std::string& message,
                                        const std::string& viewId);
 
     /// Apply signature view settings to the message
@@ -1878,8 +1875,6 @@ private:
     /// True for file that COOLWSD::IsViewFileExtension return true.
     /// These files, such as PDF, don't have a reliable ModifiedStatus.
     bool _isViewFileExtension;
-
-    bool _isViewSettingsAccessibilityEnabled;
 
     bool _isViewSettingsUpdated;
 
