@@ -8,11 +8,11 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-12-08 11:25+0100\n"
-"PO-Revision-Date: 2025-11-29 11:00+0000\n"
+"PO-Revision-Date: 2025-12-12 17:32+0000\n"
 "Last-Translator: Méven Car <meven.car@collabora.com>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/collabora-online/"
 "ui/fr/>\n"
-"Language: \n"
+"Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -3042,15 +3042,15 @@ msgstr "Barre d'état"
 
 #: src/control/Control.NotebookbarCalc.js:1665
 msgid "Table Style Options"
-msgstr ""
+msgstr "Options de Style de Tableau"
 
 #: src/control/Control.NotebookbarCalc.js:1678
 msgid "Show Header Row"
-msgstr ""
+msgstr "Afficher la ligne d'en-tête"
 
 #: src/control/Control.NotebookbarCalc.js:1690
 msgid "Show Total Row"
-msgstr ""
+msgstr "Afficher la ligne des totaux"
 
 #: src/control/Control.NotebookbarCalc.js:1708
 msgid "Banded Rows"
@@ -3062,15 +3062,15 @@ msgstr ""
 
 #: src/control/Control.NotebookbarCalc.js:1738
 msgid "First Column"
-msgstr ""
+msgstr "Première Colonne"
 
 #: src/control/Control.NotebookbarCalc.js:1750
 msgid "Last Column"
-msgstr ""
+msgstr "Dernière Colonne"
 
 #: src/control/Control.NotebookbarCalc.js:1765
 msgid "Show Filter Buttons"
-msgstr ""
+msgstr "Afficher les Boutons de Filtre"
 
 #: src/control/Control.NotebookbarCalc.js:1801
 #: src/control/Control.NotebookbarCalc.js:2549
@@ -3098,7 +3098,7 @@ msgstr "Table Pivot"
 #: src/control/Control.NotebookbarImpress.js:1465
 #: src/control/Control.NotebookbarWriter.js:1223
 msgid "Illustrations"
-msgstr ""
+msgstr "Illustrations"
 
 #: src/control/Control.NotebookbarCalc.js:1958
 #: src/control/Control.NotebookbarDraw.js:1029
@@ -3121,9 +3121,8 @@ msgid "Insert Function"
 msgstr "Insérer Fonction"
 
 #: src/control/Control.NotebookbarCalc.js:2182
-#, fuzzy
 msgid "Function Library"
-msgstr "Assistant de fonctions"
+msgstr "Bibliothèque de fonctions"
 
 #: src/control/Control.NotebookbarCalc.js:2196
 msgid "AutoSum"
@@ -3147,7 +3146,7 @@ msgstr "Recherche & Référence"
 
 #: src/control/Control.NotebookbarCalc.js:2287
 msgid "Math & Trig"
-msgstr ""
+msgstr "Math & Trig"
 
 #: src/control/Control.NotebookbarCalc.js:2299
 msgid "More Functions"
@@ -3181,7 +3180,7 @@ msgstr "Formater les Cellules"
 #: src/control/Control.NotebookbarWriter.js:2812
 #: src/control/Control.NotebookbarWriter.js:3135
 msgid "Wrap"
-msgstr ""
+msgstr "Habillage"
 
 #: src/control/Control.NotebookbarCalc.js:3212
 #: src/control/Control.NotebookbarImpress.js:2696
@@ -3324,15 +3323,15 @@ msgstr "Listes/Puces"
 
 #: src/control/Control.NotebookbarWriter.js:1356
 msgid "Header & Footer"
-msgstr ""
+msgstr "En-tête & pied de page"
 
 #: src/control/Control.NotebookbarWriter.js:1425
 msgid "Section"
-msgstr ""
+msgstr "Section"
 
 #: src/control/Control.NotebookbarWriter.js:1510
 msgid "Symbols"
-msgstr ""
+msgstr "Symboles"
 
 #: src/control/Control.NotebookbarWriter.js:1563
 msgid "Rich Text"
@@ -3352,7 +3351,7 @@ msgstr "Enregistrer"
 
 #: src/control/Control.NotebookbarWriter.js:2466
 msgid "Split"
-msgstr ""
+msgstr "Scinder"
 
 #: src/control/Control.NotebookbarWriter.js:2650
 msgid "Number Format"
