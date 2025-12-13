@@ -74,7 +74,7 @@ class URLPopUpSection extends HTMLObjectSection {
 		app.LOUtil.setImage(imgCopyBtn, 'lc_copyhyperlinklocation.svg', app.map);
 		imgCopyBtn.setAttribute('width', 18);
 		imgCopyBtn.setAttribute('height', 18);
-		imgCopyBtn.setAttribute('alt', copyLinkText);
+		imgCopyBtn.setAttribute('alt','');
 		imgCopyBtn.style.padding = '4px';
 
 		const editLinkText = _('Edit link');
@@ -88,7 +88,7 @@ class URLPopUpSection extends HTMLObjectSection {
 		app.LOUtil.setImage(imgEditBtn, 'lc_edithyperlink.svg', app.map);
 		imgEditBtn.setAttribute('width', 18);
 		imgEditBtn.setAttribute('height', 18);
-		imgEditBtn.setAttribute('alt', editLinkText);
+		imgEditBtn.setAttribute('alt','');
 		imgEditBtn.style.padding = '4px';
 
 		const removeLinkText = _('Remove link');
@@ -101,7 +101,7 @@ class URLPopUpSection extends HTMLObjectSection {
 		app.LOUtil.setImage(imgRemoveBtn, 'lc_removehyperlink.svg', app.map);
 		imgRemoveBtn.setAttribute('width', 18);
 		imgRemoveBtn.setAttribute('height', 18);
-		imgRemoveBtn.setAttribute('alt', removeLinkText);
+		imgRemoveBtn.setAttribute('alt','');
 		imgRemoveBtn.style.padding = '4px';
 
 		this.arrowDiv = document.createElement('div');
