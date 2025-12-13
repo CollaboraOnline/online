@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-12-08 11:25+0100\n"
-"PO-Revision-Date: 2025-12-09 11:58+0000\n"
+"PO-Revision-Date: 2025-12-10 20:00+0000\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: Hebrew <https://hosted.weblate.org/projects/collabora-online/"
 "ui/he/>\n"
@@ -2865,12 +2865,12 @@ msgstr "החלפה"
 #: src/control/Control.NotebookbarCalc.js:1108
 #: src/control/Control.NotebookbarWriter.js:1779
 msgid "Margin"
-msgstr ""
+msgstr "שול"
 
 #: src/control/Control.NotebookbarCalc.js:1115
 #: src/control/Control.NotebookbarWriter.js:1786
 msgid "Size"
-msgstr ""
+msgstr "גודל"
 
 #: src/control/Control.NotebookbarCalc.js:1176
 msgid "Row Height"
@@ -2915,7 +2915,7 @@ msgstr "מחיקת עמודות"
 #: src/control/Control.NotebookbarWriter.js:2867
 #: src/control/Control.NotebookbarWriter.js:3190
 msgid "Align"
-msgstr ""
+msgstr "יישור"
 
 #: src/control/Control.NotebookbarCalc.js:1337
 #: src/control/Control.NotebookbarCalc.js:3107
@@ -2928,42 +2928,42 @@ msgstr ""
 #: src/control/Control.NotebookbarWriter.js:2926
 #: src/control/Control.NotebookbarWriter.js:3249
 msgid "Arrange"
-msgstr ""
+msgstr "סידור"
 
 #: src/control/Control.NotebookbarCalc.js:1400
 msgid "Sheet View"
-msgstr ""
+msgstr "תצוגת גיליון"
 
 #: src/control/Control.NotebookbarCalc.js:1414
 msgid "Default View"
-msgstr ""
+msgstr "תצוגת ברירת מחדל"
 
 #: src/control/Control.NotebookbarCalc.js:1431
 msgid "Select Sheet View"
-msgstr ""
+msgstr "בחירת תצוגת גיליון"
 
 #: src/control/Control.NotebookbarCalc.js:1438
 msgid "New Sheet View"
-msgstr ""
+msgstr "תצוגת גיליון חדשה"
 
 #: src/control/Control.NotebookbarCalc.js:1445
 msgid "Remove Sheet View"
-msgstr ""
+msgstr "הסרת תצוגת גיליון"
 
 #: src/control/Control.NotebookbarCalc.js:1452
 msgid "Exit Sheet View"
-msgstr ""
+msgstr "יציאה מתצוגת גיליון"
 
 #: src/control/Control.NotebookbarCalc.js:1467
 msgid "Freeze"
-msgstr ""
+msgstr "הקפאה"
 
 #: src/control/Control.NotebookbarCalc.js:1521
 #: src/control/Control.NotebookbarDraw.js:420
 #: src/control/Control.NotebookbarImpress.js:537
 #: src/control/Control.NotebookbarWriter.js:1633
 msgid "Zoom"
-msgstr ""
+msgstr "תקריב"
 
 #: src/control/Control.NotebookbarCalc.js:1528
 #: src/control/Control.NotebookbarDraw.js:427
@@ -2988,35 +2988,35 @@ msgstr "שורת מצב"
 
 #: src/control/Control.NotebookbarCalc.js:1665
 msgid "Table Style Options"
-msgstr ""
+msgstr "אפשרויות סגנון טבלה"
 
 #: src/control/Control.NotebookbarCalc.js:1678
 msgid "Show Header Row"
-msgstr ""
+msgstr "הצגת שורת כותרת"
 
 #: src/control/Control.NotebookbarCalc.js:1690
 msgid "Show Total Row"
-msgstr ""
+msgstr "הצגת שורת סך הכול"
 
 #: src/control/Control.NotebookbarCalc.js:1708
 msgid "Banded Rows"
-msgstr ""
+msgstr "שורות מתחלפות"
 
 #: src/control/Control.NotebookbarCalc.js:1720
 msgid "Banded Columns"
-msgstr ""
+msgstr "עמודות מתחלפות"
 
 #: src/control/Control.NotebookbarCalc.js:1738
 msgid "First Column"
-msgstr ""
+msgstr "עמודה ראשונה"
 
 #: src/control/Control.NotebookbarCalc.js:1750
 msgid "Last Column"
-msgstr ""
+msgstr "עמודה אחרונה"
 
 #: src/control/Control.NotebookbarCalc.js:1765
 msgid "Show Filter Buttons"
-msgstr ""
+msgstr "הצגת כפתורי סינון"
 
 #: src/control/Control.NotebookbarCalc.js:1801
 #: src/control/Control.NotebookbarCalc.js:2549
@@ -3027,15 +3027,15 @@ msgstr ""
 #: src/control/Control.NotebookbarWriter.js:2975
 #: src/control/Control.NotebookbarWriter.js:3298
 msgid "Group"
-msgstr ""
+msgstr "קיבוץ"
 
 #: src/control/Control.NotebookbarCalc.js:1808
 msgid "Ungroup"
-msgstr ""
+msgstr "פירוק"
 
 #: src/control/Control.NotebookbarCalc.js:1830
 msgid "Pivot Table"
-msgstr ""
+msgstr "טבלת ציר"
 
 #: src/control/Control.NotebookbarCalc.js:1895
 #: src/control/Control.NotebookbarDraw.js:1015
@@ -3205,9 +3205,8 @@ msgstr ""
 
 #: src/control/Control.NotebookbarImpress.js:822
 #: src/control/Control.NotebookbarImpress.js:1837
-#, fuzzy
 msgid "Change Layout"
-msgstr "פריסת עמוד"
+msgstr "החלפת פריסה"
 
 #: src/control/Control.NotebookbarImpress.js:830
 #: src/control/Control.NotebookbarImpress.js:1844
@@ -3216,32 +3215,32 @@ msgstr ""
 
 #: src/control/Control.NotebookbarImpress.js:844
 msgid "Character"
-msgstr ""
+msgstr "תו"
 
 #: src/control/Control.NotebookbarImpress.js:1105
 msgid "Spacing & Color"
-msgstr ""
+msgstr "ריווח וצבע"
 
 #: src/control/Control.NotebookbarImpress.js:1805
 msgid "Master Slide Templates"
-msgstr ""
+msgstr "תבניות שקופית על"
 
 #: src/control/Control.NotebookbarImpress.js:1856
 msgid "Slide Size"
-msgstr ""
+msgstr "גודל שקופית"
 
 #: src/control/Control.NotebookbarImpress.js:1879
 msgid "Background Image"
-msgstr ""
+msgstr "תמונת רקע"
 
 #: src/control/Control.NotebookbarImpress.js:2081
 msgid "Merge & Split"
-msgstr ""
+msgstr "מיזוג ופיצול"
 
 #: src/control/Control.NotebookbarImpress.js:2120
 #: src/control/Control.NotebookbarWriter.js:2528
 msgid "Select"
-msgstr ""
+msgstr "בחירה"
 
 #: src/control/Control.NotebookbarImpress.js:2729
 msgid "Effects"
@@ -3266,19 +3265,19 @@ msgstr "סגנונות"
 
 #: src/control/Control.NotebookbarWriter.js:1069
 msgid "Lists/Bullets"
-msgstr ""
+msgstr "רשימות/תבליטים"
 
 #: src/control/Control.NotebookbarWriter.js:1356
 msgid "Header & Footer"
-msgstr ""
+msgstr "כותרת עליונה ותחתונה"
 
 #: src/control/Control.NotebookbarWriter.js:1425
 msgid "Section"
-msgstr ""
+msgstr "סעיף"
 
 #: src/control/Control.NotebookbarWriter.js:1510
 msgid "Symbols"
-msgstr ""
+msgstr "סמלים"
 
 #: src/control/Control.NotebookbarWriter.js:1563
 msgid "Rich Text"
@@ -3294,15 +3293,15 @@ msgstr "רשימה נגללת"
 
 #: src/control/Control.NotebookbarWriter.js:2284
 msgid "Tracking"
-msgstr ""
+msgstr "מעקב"
 
 #: src/control/Control.NotebookbarWriter.js:2466
 msgid "Split"
-msgstr ""
+msgstr "פיצול"
 
 #: src/control/Control.NotebookbarWriter.js:2650
 msgid "Number Format"
-msgstr ""
+msgstr "תבנית מספר"
 
 #: src/control/Control.PartsPreview.js:188
 msgid "preview of page %1"
@@ -3418,9 +3417,8 @@ msgid "Not using namespaces"
 msgstr "אין שימוש במרחבי שם"
 
 #: src/control/Control.ServerAuditDialog.ts:236
-#, fuzzy
 msgid "Document container started in {1} ms"
-msgstr "המסמך שבו התחילה המכולה"
+msgstr "מכולת המסמך נטענה תוך {1} מילישניות"
 
 #: src/control/Control.ServerAuditDialog.ts:306
 msgid "Status"
@@ -3435,9 +3433,8 @@ msgid "Alerts:"
 msgstr "התראות:"
 
 #: src/control/Control.ServerAuditDialog.ts:373
-#, fuzzy
 msgid "Check warnings of your server"
-msgstr "נא לבדוק אזהרות אבטחת מידע בשרת שלך"
+msgstr "נא לבדוק אזהרות בשרת שלך"
 
 #: src/control/Control.ServerAuditDialog.ts:374
 msgid "OPEN"
@@ -4169,7 +4166,7 @@ msgstr ""
 
 #: src/control/jsdialog/Definitions.Menu.ts:1982
 msgid "Line color"
-msgstr ""
+msgstr "צבע קו"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1993
 msgid "Line style"
@@ -4330,7 +4327,7 @@ msgstr "אוטומטי"
 
 #: src/control/jsdialog/Widget.ColorPicker.ts:262
 msgid "Color palette"
-msgstr ""
+msgstr "ערכת צבעים"
 
 #: src/control/jsdialog/Widget.ColorPicker.ts:328
 msgid "Enter custom color in hex format"
