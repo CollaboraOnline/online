@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-12-08 11:25+0100\n"
-"PO-Revision-Date: 2025-12-09 11:58+0000\n"
+"PO-Revision-Date: 2025-12-11 21:00+0000\n"
 "Last-Translator: Amadɣas <massiin@proton.me>\n"
 "Language-Team: Kabyle <https://hosted.weblate.org/projects/collabora-online/"
 "ui/kab/>\n"
@@ -725,11 +725,12 @@ msgstr ""
 #: src/control/Control.NotebookbarImpress.js:591
 #: src/control/Control.NotebookbarWriter.js:1687
 msgid "Compact view"
-msgstr ""
+msgstr "Taskant takussimt"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:1186
 msgid "Something went wrong while uploading the file. Please try again."
 msgstr ""
+"Yella wayen ur neddi ara deg usali n ufaylu. Ttxil-k·m, ɛreḍ tikkelt nniḍen."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:1262
 #: src/canvas/sections/CommentSection.ts:1172
@@ -743,6 +744,8 @@ msgid ""
 "Something went wrong while deleting the file. Please try refreshing the "
 "page."
 msgstr ""
+"Yella wacu ur neddi ara deg tukksa n ufaylu. Ttxil-k·m eɛreḍ ad tesmiren "
+"asebter."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:1315
 #: src/control/Control.BackstageView.ts:549
