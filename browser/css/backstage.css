@@ -539,3 +539,120 @@
 	word-break: break-word;
 	flex: 1;
 }
+
+.backstage-recent-documents-table {
+	width: 100%;
+	border-collapse: collapse;
+	margin-top: 16px;
+}
+
+.backstage-recent-documents-header {
+	border-bottom: 2px solid var(--color-border);
+}
+
+.backstage-recent-documents-header-row {
+	height: 40px;
+}
+
+.backstage-recent-documents-header-cell {
+	font-size: var(--medium-font-size);
+	color: var(--color-primary);
+	font-weight: 500;
+	text-align: left;
+	padding: 8px 16px;
+}
+
+.backstage-recent-documents-header-cell:first-child {
+	padding-left: 16px;
+	width: 60%;
+}
+
+.backstage-recent-documents-header-cell:last-child {
+	width: 40%;
+	padding-left: 32px;
+}
+
+.backstage-recent-document-row {
+	cursor: pointer;
+	transition: background-color 0.2s ease;
+}
+
+.backstage-recent-document-row:hover {
+	background-color: var(--color-background-dark);
+}
+
+.backstage-recent-document-name-cell,
+.backstage-recent-document-time-cell {
+	padding: 12px 16px;
+	vertical-align: top;
+}
+
+.backstage-recent-document-name-cell {
+	padding-left: 16px;
+}
+
+.backstage-recent-document-time-cell {
+	padding-left: 32px;
+	color: var(--color-text-lighter);
+	font-size: var(--default-font-size);
+	font-weight: 400;
+}
+
+.backstage-recent-document-content-wrapper {
+	display: flex;
+	align-items: flex-start;
+	gap: 10px;
+}
+
+.backstage-recent-document-text-wrapper {
+	display: flex;
+	flex-direction: column;
+	gap: 4px;
+	flex: 1;
+	min-width: 0;
+}
+
+.backstage-recent-document-name-text {
+	font-size: var(--medium-font-size);
+	color: var(--color-text-dark);
+	font-weight: 500;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.backstage-recent-document-path-text {
+	font-size: calc(var(--default-font-size) - 1px);
+	color: var(--color-text-lighter);
+	font-weight: 400;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.backstage-recent-document-icon {
+	display: inline-block;
+	width: 20px;
+	height: 20px;
+	background-size: contain;
+	background-repeat: no-repeat;
+	background-position: center;
+	flex-shrink: 0;
+}
+
+.backstage-doc-icon-writer {
+	background-image: url('images/x-office-document.svg');
+}
+
+.backstage-doc-icon-calc {
+	background-image: url('images/x-office-spreadsheet.svg');
+}
+
+.backstage-doc-icon-impress {
+	background-image: url('images/x-office-presentation.svg');
+}
+
+.backstage-doc-icon-draw {
+	background-image: url('images/x-office-drawing.svg');
+}
+

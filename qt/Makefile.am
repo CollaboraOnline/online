@@ -74,7 +74,7 @@ DBusService.moc.cpp: DBusService.hpp
 
 CLEANFILES = $(BUILT_SOURCES)
 
-coda_qt_SOURCES = coda-qt.cpp WebView.cpp DBusService.cpp $(BUILT_SOURCES) $(cmake_list)
+coda_qt_SOURCES = coda-qt.cpp WebView.cpp DBusService.cpp RecentDocuments.cpp $(BUILT_SOURCES) $(cmake_list)
 
 metainfodir = $(datadir)/metainfo
 metainfo_DATA = com.collaboraoffice.Office.metainfo.xml

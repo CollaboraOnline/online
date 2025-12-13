@@ -14,6 +14,7 @@
 #include "Log.hpp"
 #include "LibreOfficeKit/LibreOfficeKit.h"
 #include "qt.hpp"
+#include "RecentDocuments.hpp"
 #include <Poco/URI.h>
 #include <Poco/Path.h>
 #include <QDBusConnection>
@@ -42,6 +43,8 @@ namespace coda
 
             WebView* webViewInstance = new WebView(Application::getProfile());
             webViewInstance->load(fileURL);
+
+            RecentDocuments::add(file);
         }
     }
 
