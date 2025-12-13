@@ -3,27 +3,29 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-12-06 18:17+0000\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"PO-Revision-Date: 2025-12-13 18:47+0000\n"
+"Last-Translator: Priit Jõerüüt <jrthwlate@users.noreply.hosted.weblate.org>\n"
+"Language-Team: Estonian <https://hosted.weblate.org/projects/collabora-"
+"online/collabora-office-macos-app/et/>\n"
 "Language: et\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.15-dev\n"
 
 msgctxt "1UK-8n-QPP.title"
 msgid "Customize Toolbar…"
-msgstr ""
+msgstr "Kohenda tööriistariba…"
 
 #. Do not change the placeholder ProductName!
 msgctxt "1Xt-HY-uBw.title"
 msgid "ProductName"
-msgstr ""
+msgstr "ProductName"
 
 msgctxt "1b7-l0-nxx.title"
 msgid "Find"
-msgstr ""
+msgstr "Otsi"
 
 msgctxt "1tx-W0-xDw.title"
 msgid "Lower"
@@ -55,138 +57,138 @@ msgstr ""
 
 msgctxt "4EN-yA-p0u.title"
 msgid "Find"
-msgstr ""
+msgstr "Otsi"
 
 msgctxt "4J7-dP-txa.title"
 msgid "Enter Full Screen"
-msgstr ""
+msgstr "Täisekraanivaade"
 
 #. Do not change the placeholder ProductName!
 msgctxt "4sb-4s-VLi.title"
 msgid "Quit ProductName"
-msgstr ""
+msgstr "Sulge ProductName"
 
 msgctxt "5QF-Oa-p0T.title"
 msgid "Edit"
-msgstr ""
+msgstr "Muuda"
 
 msgctxt "5Vv-lz-BsD.title"
 msgid "Copy Style"
-msgstr ""
+msgstr "Kopeeri stiil"
 
 #. Do not change the placeholder ProductName!
 msgctxt "5kV-Vb-QxS.title"
 msgid "About ProductName"
-msgstr ""
+msgstr "Rakenduse teave: ProductName"
 
 msgctxt "6dh-zS-Vam.title"
 msgid "Redo"
-msgstr ""
+msgstr "Korda tegevust"
 
 msgctxt "78Y-hA-62v.title"
 msgid "Correct Spelling Automatically"
-msgstr ""
+msgstr "Kohenda automaatselt õigekirja"
 
 msgctxt "8mr-sm-Yjd.title"
 msgid "Writing Direction"
-msgstr ""
+msgstr "Kirjutamise suund"
 
 msgctxt "9ic-FL-obx.title"
 msgid "Substitutions"
-msgstr ""
+msgstr "Asendused"
 
 msgctxt "9yt-4B-nSM.title"
 msgid "Smart Copy/Paste"
-msgstr ""
+msgstr "Nutikas kopeerimine/asetamine"
 
 msgctxt "AYu-sK-qS6.title"
 msgid "Main Menu"
-msgstr ""
+msgstr "Põhimenüü"
 
 msgctxt "BOF-NM-1cW.title"
 msgid "Preferences…"
-msgstr ""
+msgstr "Eelistused…"
 
 msgctxt "BgM-ve-c93.title"
 msgid "	Left to Right"
-msgstr ""
+msgstr "\tVasakult paremale"
 
 msgctxt "Bw7-FT-i3A.title"
 msgid "Save As…"
-msgstr ""
+msgstr "Salvesta kui…"
 
 msgctxt "DVo-aG-piG.title"
 msgid "Close"
-msgstr ""
+msgstr "Sulge"
 
 msgctxt "Dv1-io-Yv7.title"
 msgid "Spelling and Grammar"
-msgstr ""
+msgstr "Õigekirjakontroll ja grammatika"
 
 msgctxt "F2S-fz-NVQ.title"
 msgid "Help"
-msgstr ""
+msgstr "Abiteave"
 
 #. Do not change the placeholder ProductName!
 msgctxt "FKE-Sm-Kum.title"
 msgid "ProductName Help"
-msgstr ""
+msgstr "Abiteave: ProductName"
 
 msgctxt "Fal-I4-PZk.title"
 msgid "Text"
-msgstr ""
+msgstr "Tekst"
 
 msgctxt "FeM-D8-WVr.title"
 msgid "Substitutions"
-msgstr ""
+msgstr "Asendused"
 
 msgctxt "GB9-OM-e27.title"
 msgid "Bold"
-msgstr ""
+msgstr "Paks kiri"
 
 msgctxt "GEO-Iw-cKr.title"
 msgid "Format"
-msgstr ""
+msgstr "Vorming"
 
 msgctxt "GUa-eO-cwY.title"
 msgid "Use Default"
-msgstr ""
+msgstr "Kasuta vaikimisi väärtust"
 
 msgctxt "Gi5-1S-RQB.title"
 msgid "Font"
-msgstr ""
+msgstr "Kirjatüüp"
 
 msgctxt "H1b-Si-o9J.title"
 msgid "Writing Direction"
-msgstr ""
+msgstr "Kirjutamise suund"
 
 msgctxt "H8h-7b-M4v.title"
 msgid "View"
-msgstr ""
+msgstr "Vaata"
 
 msgctxt "HFQ-gK-NFA.title"
 msgid "Text Replacement"
-msgstr ""
+msgstr "Teksti asendus"
 
 msgctxt "HFo-cy-zxI.title"
 msgid "Show Spelling and Grammar"
-msgstr ""
+msgstr "Näita õigekirjakontrolli ja grammatikat"
 
 msgctxt "HyV-fh-RgO.title"
 msgid "View"
-msgstr ""
+msgstr "Vaata"
 
 msgctxt "I0S-gh-46l.title"
 msgid "Subscript"
-msgstr ""
+msgstr "Alaindeks"
 
 msgctxt "IAo-SY-fd9.title"
 msgid "Open…"
-msgstr ""
+msgstr "Ava…"
 
 msgctxt "J5U-5w-g23.title"
 msgid "Justify"
-msgstr ""
+msgstr "Joonda rööpselt"
 
 msgctxt "J7y-lM-qPV.title"
 msgid "Use None"
