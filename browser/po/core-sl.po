@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: core-sl\n"
-"PO-Revision-Date: 2025-12-08 10:29+0000\n"
+"PO-Revision-Date: 2025-12-13 18:47+0000\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Slovenian <https://hosted.weblate.org/projects/collabora-"
 "online/lokit/sl/>\n"
@@ -332,7 +332,6 @@ msgstr "Kliknite slog orisa, ki ga želite uporabiti."
 
 #. qpArp
 #: cui/uiconfig/ui/toolbarmodedialog.ui:124
-#, fuzzy
 msgctxt "ToolbarmodeDialog|radiobutton1"
 msgid "Compact"
 msgstr "Strnjeno"
@@ -435,7 +434,6 @@ msgstr "2 stolpca z različno velikostjo (levi < desni)"
 
 #. xPgHS
 #: sw/inc/strings.hrc:498
-#, fuzzy
 msgctxt "STR_REINSTATE_REDLINE"
 msgid "Reinstate change: $1"
 msgstr "Ponovno vzpostavi spremembo: $1"
@@ -888,7 +886,6 @@ msgstr "Počisti neposredno oblikovanje"
 
 #. vsnyF
 #: DrawImpressCommands.xcu
-#, fuzzy
 msgctxt ""
 "DrawImpressCommands.xcu\n"
 "..DrawImpressCommands.UserInterface.Commands..uno:InsertCanvasSlide\n"
@@ -929,14 +926,13 @@ msgstr "Prehodi med prosojnicami"
 
 #. 5pSJ6
 #: GenericCommands.xcu
-#, fuzzy
 msgctxt ""
 "GenericCommands.xcu\n"
 "..GenericCommands.UserInterface.Commands..uno:SlideMasterPagesAll\n"
 "Label\n"
 "value.text"
 msgid "Master Pages"
-msgstr "Glavne strani/Matrice strani"
+msgstr "Matrice strani"
 
 #. DCEaK
 #: GenericCommands.xcu
@@ -1082,7 +1078,6 @@ msgstr "Prelivi"
 
 #. ezFez
 #: WriterCommands.xcu
-#, fuzzy
 msgctxt ""
 "WriterCommands.xcu\n"
 "..WriterCommands.UserInterface.Commands..uno:ReinstateTrackedChangeToNext\n"
@@ -1093,18 +1088,16 @@ msgstr "Ponovno vzpostavi in pojdi na naslednjo"
 
 #. NmvTm
 #: WriterCommands.xcu
-#, fuzzy
 msgctxt ""
 "WriterCommands.xcu\n"
 "..WriterCommands.UserInterface.Commands..uno:ReinstateTrackedChangeToNext\n"
 "TooltipLabel\n"
 "value.text"
 msgid "Reinstate Track Change and select the next one"
-msgstr "Ponovno vzpostavi sledenje spremembam in izberi naslednjo"
+msgstr "Ponovno vzpostavi spremembo in izberi naslednjo"
 
 #. KVYrC
 #: WriterCommands.xcu
-#, fuzzy
 msgctxt ""
 "WriterCommands.xcu\n"
 "..WriterCommands.UserInterface.Commands..uno:ReinstateAllTrackedChanges\n"
@@ -1115,7 +1108,6 @@ msgstr "Ponovno vzpostavi vse"
 
 #. QkP7E
 #: WriterCommands.xcu
-#, fuzzy
 msgctxt ""
 "WriterCommands.xcu\n"
 "..WriterCommands.UserInterface.Commands..uno:ReinstateAllTrackedChanges\n"
@@ -1126,7 +1118,6 @@ msgstr "Ponovno vzpostavi vse zabeležene spremembe"
 
 #. SRvKK
 #: WriterCommands.xcu
-#, fuzzy
 msgctxt ""
 "WriterCommands.xcu\n"
 "..WriterCommands.UserInterface.Commands..uno:ReinstateAllTrackedChanges\n"
@@ -1137,7 +1128,6 @@ msgstr "Ponovno vzpostavi vse spremembe"
 
 #. 6w9UB
 #: WriterCommands.xcu
-#, fuzzy
 msgctxt ""
 "WriterCommands.xcu\n"
 "..WriterCommands.UserInterface.Commands..uno:ReinstateTrackedChange\n"
@@ -1148,18 +1138,16 @@ msgstr "Ponovno vzpostavi"
 
 #. RgBxU
 #: WriterCommands.xcu
-#, fuzzy
 msgctxt ""
 "WriterCommands.xcu\n"
 "..WriterCommands.UserInterface.Commands..uno:ReinstateTrackedChange\n"
 "TooltipLabel\n"
 "value.text"
 msgid "Reinstate Track Change"
-msgstr "Ponovno vzpostavi beleženo spremembo"
+msgstr "Ponovno vzpostavi zabeleženo spremembo"
 
 #. rTFtt
 #: WriterCommands.xcu
-#, fuzzy
 msgctxt ""
 "WriterCommands.xcu\n"
 "..WriterCommands.UserInterface.Commands..uno:ReinstateTrackedChange\n"
@@ -1210,10 +1198,9 @@ msgstr "Spre~membe v vseh pogledih"
 
 #. YwxEM
 #: sc/inc/globstr.hrc:70
-#, fuzzy
 msgctxt "STR_UNDO_TABLETOTALS"
 msgid "Tabletotals"
-msgstr "Vrstice vsot tabele"
+msgstr "Vsote tabele"
 
 #. Gip2L
 #: sc/inc/globstr.hrc:211
