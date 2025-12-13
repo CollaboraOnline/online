@@ -1912,7 +1912,10 @@ int APIENTRY wWinMain(HINSTANCE hInstance, HINSTANCE, PWSTR, int showWindowMode)
         wcex.hInstance = hInstance;
         wcex.hIcon = LoadIcon(hInstance, MAKEINTRESOURCE(IDI_CODA));
         wcex.hCursor = LoadCursor(NULL, IDC_ARROW);
-        wcex.hbrBackground = (HBRUSH)(COLOR_WINDOW + 1);
+        if (isLightTheme())
+            wcex.hbrBackground = (HBRUSH)(COLOR_WINDOW + 1);
+        else
+            wcex.hbrBackground = CreateSolidBrush(RGB(0x12, 0x12, 0x12));
         wcex.lpszMenuName = NULL;
         wcex.lpszClassName = windowClass;
         wcex.hIconSm = NULL;
