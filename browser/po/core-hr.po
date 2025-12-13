@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: core-hr\n"
-"PO-Revision-Date: 2025-12-09 11:58+0000\n"
+"PO-Revision-Date: 2025-12-10 20:00+0000\n"
 "Last-Translator: Milo Ivir <mail@milotype.de>\n"
 "Language-Team: Croatian <https://hosted.weblate.org/projects/collabora-"
 "online/lokit/hr/>\n"
@@ -2016,7 +2016,7 @@ msgstr "Prikaži redak zaglavlja"
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:36
 msgctxt "sidebardatabase|chk_total_row"
 msgid "Show Total Row"
-msgstr "Prikaži redak zbroja"
+msgstr "Prikaži redak s ukupnim brojem"
 
 #. htZbK
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:50
@@ -2028,7 +2028,7 @@ msgstr "Prikaži gumbove za filtriranje"
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:86
 msgctxt "sidebardatabase|chk_banded_rows"
 msgid "Banded Rows"
-msgstr "Naizmjenično obojani retci"
+msgstr "Naizmjenično obojani redci"
 
 #. GVkZ2
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:100
