@@ -11,29 +11,28 @@
 
 #include <config.h>
 
-#include "FileUtil.hpp"
-
 #include <common/Anonymizer.hpp>
 #include <common/Log.hpp>
 #include <common/Unit.hpp>
 #include <common/Util.hpp>
 
-#include <exception>
-#include <stdexcept>
+#include "FileUtil.hpp"
 
-#include <fcntl.h>
+#include <Poco/File.h>
+#include <Poco/Path.h>
+
 #include <chrono>
 #include <cstdio>
 #include <cstdlib>
 #include <cstring>
+#include <exception>
+#include <fcntl.h>
 #include <filesystem>
 #include <fstream>
 #include <mutex>
 #include <set>
+#include <stdexcept>
 #include <string>
-
-#include <Poco/File.h>
-#include <Poco/Path.h>
 
 namespace FileUtil
 {

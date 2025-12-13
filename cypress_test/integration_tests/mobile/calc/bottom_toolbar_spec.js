@@ -1,4 +1,4 @@
-/* global describe it cy Cypress require beforeEach */
+/* global describe it cy require beforeEach */
 
 var helper = require('../../common/helper');
 var calcHelper = require('../../common/calc_helper');
@@ -20,21 +20,16 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Interact with bottom toolba
 	function getTextEndPosForFirstCell() {
 		calcHelper.dblClickOnFirstCell();
 
-		helper.getCursorPos('left', 'currentTextEndPos');
+		helper.getCursorPos('left', 'currentTextEndPos')
 
-		cy.cGet('#toolbar-up #acceptformula').should('be.visible')
-			.then($ele =>{
-				if (Cypress.dom.isVisible($ele)) {
-					cy.wrap($ele).click();
-				}
-			});
+		mobileHelper.getCompactIcon('AcceptFormula').click();
 
 		cy.cGet('.cursor-overlay .blinking-cursor').should('not.exist');
 	}
 
 	it('Apply bold.', function() {
 		helper.setDummyClipboardForCopy();
-		cy.cGet('#toolbar-down #bold').click();
+		mobileHelper.getCompactIcon('Bold').click();
 		calcHelper.selectEntireSheet();
 		helper.copy();
 		cy.cGet('#copy-paste-container table td b').should('exist');
@@ -42,8 +37,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Interact with bottom toolba
 
 	it('Apply italic.', function() {
 		helper.setDummyClipboardForCopy();
-
-		cy.cGet('#toolbar-down #italic').click();
+		mobileHelper.getCompactIcon('Italic').click();
 		calcHelper.selectEntireSheet();
 		helper.copy();
 		cy.cGet('#copy-paste-container table td i').should('exist');
@@ -51,14 +45,14 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Interact with bottom toolba
 
 	it('Apply underline.', function() {
 		helper.setDummyClipboardForCopy();
-		cy.cGet('#toolbar-down #underline').click();
+		mobileHelper.getCompactIcon('Underline').click();
 		calcHelper.selectEntireSheet();
 		helper.copy();
 		cy.cGet('#copy-paste-container table td u').should('exist');
 	});
 
 	it.skip('Apply strikeout.', function() {
-		cy.cGet('#toolbar-down #strikeout').click();
+		mobileHelper.getCompactIcon('Strikeout').click();
 		calcHelper.selectEntireSheet();
 		cy.cGet('#copy-paste-container table td s').should('exist');
 	});

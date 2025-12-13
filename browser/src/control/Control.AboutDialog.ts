@@ -297,7 +297,7 @@ class AboutDialog {
 		);
 		const copybutton = document.querySelector(
 			'#modal-dialog-about-dialog-box-copybutton > img',
-		);
+		) as HTMLImageElement;
 		app.LOUtil.setImage(copybutton, 'lc_clipboard-check.svg', this.map);
 		setTimeout(() => {
 			app.LOUtil.setImage(copybutton, 'lc_copy.svg', this.map);

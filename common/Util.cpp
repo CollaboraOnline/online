@@ -12,12 +12,48 @@
 #include <config.h>
 #include <config_version.h>
 
+#include "Log.hpp"
+#include "Protocol.hpp"
+#include "Rectangle.hpp"
+#include "TraceEvent.hpp"
+#include "Util.hpp"
+#include "common/Common.hpp"
+
+#include <Poco/Base64Encoder.h>
+#include <Poco/ConsoleChannel.h>
+#include <Poco/Exception.h>
+#include <Poco/Format.h>
+#include <Poco/HexBinaryEncoder.h>
+#include <Poco/TemporaryFile.h>
+#include <Poco/URI.h>
+#include <Poco/Util/Application.h>
+
+#include <atomic>
+#include <cassert>
+#include <chrono>
+#include <cstdio>
+#include <cstdlib>
+#include <cstring>
+#include <ctime>
+#include <dirent.h>
+#include <fcntl.h>
+#include <iomanip>
+#include <iostream>
+#include <limits>
+#include <mutex>
+#include <random>
+#include <spawn.h>
+#include <sstream>
+#include <string>
+#include <sys/stat.h>
+#include <sys/types.h>
+#include <sys/uio.h>
+#include <thread>
+#include <unistd.h>
+
 #ifndef COOLWSD_BUILDCONFIG
 #define COOLWSD_BUILDCONFIG
 #endif
-
-#include "Util.hpp"
-#include "Rectangle.hpp"
 
 #if !MOBILEAPP
 #include "SigHandlerTrap.hpp"
@@ -38,14 +74,6 @@
 #elif defined IOS
 #import <Foundation/Foundation.h>
 #endif
-#include <sys/stat.h>
-#include <sys/types.h>
-
-#include <sys/uio.h>
-#include <unistd.h>
-#include <dirent.h>
-#include <fcntl.h>
-#include <spawn.h>
 
 #if defined __GLIBC__
 #include <malloc.h>
@@ -58,32 +86,6 @@
 #include <emscripten/console.h>
 #endif
 
-#include <atomic>
-#include <cassert>
-#include <chrono>
-#include <cstdio>
-#include <cstdlib>
-#include <cstring>
-#include <ctime>
-#include <iomanip>
-#include <iostream>
-#include <mutex>
-#include <random>
-#include <sstream>
-#include <string>
-#include <thread>
-#include <limits>
-
-#include <Poco/Base64Encoder.h>
-#include <Poco/HexBinaryEncoder.h>
-#include <Poco/ConsoleChannel.h>
-#include <Poco/Exception.h>
-#include <Poco/Format.h>
-
-#include <Poco/TemporaryFile.h>
-#include <Poco/Util/Application.h>
-#include <Poco/URI.h>
-
 // for version info
 #include <Poco/Version.h>
 #if ENABLE_SSL
@@ -94,10 +96,6 @@
 #include <png.h>
 #undef PNG_VERSION_INFO_ONLY
 
-#include "Log.hpp"
-#include "Protocol.hpp"
-#include "TraceEvent.hpp"
-#include "common/Common.hpp"
 
 namespace Util
 {
@@ -182,17 +180,17 @@ namespace Util
     void setKitInProcess(bool value) { kitInProcess = value; }
     bool isKitInProcess() { return isFuzzing() || isMobileApp() || kitInProcess; }
 
-    std::string replace(std::string result, const std::string& a, const std::string& b)
+    std::string replace(std::string result, const std::string& from, const std::string& to)
     {
-        const std::size_t sizeA = a.size();
-        if (sizeA > 0)
+        const std::size_t fromSize = from.size();
+        if (fromSize > 0)
         {
-            const std::size_t sizeB = b.size();
+            const std::size_t toSize = to.size();
             std::string::size_type pos = 0;
-            while ((pos = result.find(a, pos)) != std::string::npos)
+            while ((pos = result.find(from, pos)) != std::string::npos)
             {
-                result.replace(pos, sizeA, b);
-                pos += sizeB; // Skip the replacee to avoid endless recursion.
+                result.replace(pos, fromSize, to);
+                pos += toSize; // Skip the replace to avoid endless recursion.
             }
         }
 

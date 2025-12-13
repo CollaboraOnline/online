@@ -127,7 +127,7 @@ class Dispatcher {
 				msgId: 'UI_InsertFile',
 				args: {
 					callback: 'Action_InsertMultimedia',
-					mimeTypeFilter: app.LOUtil.MediaMimeFilter,
+					mimeTypeFilter: app.LOUtil.mediaMimeFilter,
 				},
 			});
 		};
@@ -307,28 +307,16 @@ class Dispatcher {
 			app.map.uiManager.toggleRuler();
 		};
 
+		this.actionsMap['showstylelistdeck'] = () => {
+			app.map.uiManager.showStyleListDeck();
+		};
+
 		this.actionsMap['showstatusbar'] = () => {
 			app.map.uiManager.toggleStatusBar();
 		};
 
 		this.actionsMap['collapsenotebookbar'] = () => {
 			app.map.uiManager.collapseNotebookbar();
-		};
-
-		this.actionsMap['scrollpreviewup'] = () => {
-			const stylePreview = document.getElementById('stylesview');
-			stylePreview.scrollBy({
-				top: -stylePreview.offsetHeight,
-				behavior: 'smooth',
-			}); // Scroll up based on stylepreview height
-		};
-
-		this.actionsMap['scrollpreviewdown'] = () => {
-			const stylePreview = document.getElementById('stylesview');
-			stylePreview.scrollBy({
-				top: stylePreview.offsetHeight,
-				behavior: 'smooth',
-			}); // Scroll up based on stylepreview height
 		};
 	}
 
@@ -701,12 +689,12 @@ class Dispatcher {
 		};
 
 		this.actionsMap['multipageview'] = function () {
-			if (app.activeDocument && app.activeDocument.activeView) {
+			if (app.activeDocument && app.activeDocument.activeLayout) {
 				let commandState = false;
-				if (app.activeDocument.activeView.type === 'ViewLayoutMultiPage') {
-					app.activeDocument.activeView = new ViewLayoutWriter();
+				if (app.activeDocument.activeLayout.type === 'ViewLayoutMultiPage') {
+					app.activeDocument.activeLayout = new ViewLayoutWriter();
 				} else {
-					app.activeDocument.activeView = new ViewLayoutMultiPage();
+					app.activeDocument.activeLayout = new ViewLayoutMultiPage();
 					commandState = true;
 				}
 
@@ -714,7 +702,7 @@ class Dispatcher {
 					commandName: 'multipageview',
 					state: commandState ? 'true' : 'false',
 				});
-				app.activeDocument.activeView.sendClientVisibleArea();
+				app.activeDocument.activeLayout.sendClientVisibleArea();
 				app.sectionContainer.requestReDraw();
 			}
 		};

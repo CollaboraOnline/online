@@ -1493,6 +1493,10 @@ class Menubar extends window.L.Control {
 		if (this._menubarCont != null)
 			$('#main-menu-state').after(this._menubarCont);
 
+		if (window.mode.isDesktop()) {
+			$('#main-menu-state').attr('type', 'hidden');
+		}
+
 		if (!this._map['wopi'].DisablePresentation)
 			this.options.allowedViewModeActions = this.options.allowedViewModeActions.concat(['fullscreen-presentation', 'presentation-currentslide', 'present-in-window','presentation-in-console']);
 
@@ -2233,7 +2237,7 @@ class Menubar extends window.L.Control {
 		} else if (id === 'remotemultimedia') {
 			this._map.fire('postMessage', {
 				msgId: 'UI_InsertFile', args: {
-					callback: 'Action_InsertMultimedia', mimeTypeFilter: app.LOUtil.MediaMimeFilter
+					callback: 'Action_InsertMultimedia', mimeTypeFilter: app.LOUtil.mediaMimeFilter
 				}
 			});
 		} else if (id === 'selectbackground') {
@@ -2388,11 +2392,13 @@ class Menubar extends window.L.Control {
 			var liItem = window.L.DomUtil.create('li', '');
 			liItem.id = 'document-header';
 			liItem.setAttribute('role', 'menuitem');
-			var aItem = window.L.DomUtil.create('div', 'document-logo', liItem);
+			var aItem = window.L.DomUtil.create('a', 'document-logo', liItem);
 			$(aItem).data('id', 'document-logo');
 			$(aItem).data('type', 'action');
 			aItem.setAttribute('role', 'img');
 			aItem.setAttribute('aria-label', _('file type icon'));
+			aItem.href = '#';
+			aItem.target = '_blank';
 
 			if (window.logoURL) {
 				aItem.style.backgroundImage = "url(" + window.logoURL + ")";

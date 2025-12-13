@@ -124,8 +124,8 @@ window.L.ImpressTileLayer = window.L.CanvasTileLayer.extend({
 	},
 
 	newAnnotation: function (commentData) {
-		commentData.anchorPos = [app.activeDocument.activeView.viewedRectangle.x1, app.activeDocument.activeView.viewedRectangle.y1];
-		commentData.rectangle = [app.activeDocument.activeView.viewedRectangle.x1, app.activeDocument.activeView.viewedRectangle.y1, 566, 566];
+		commentData.anchorPos = [app.activeDocument.activeLayout.viewedRectangle.x1, app.activeDocument.activeLayout.viewedRectangle.y1];
+		commentData.rectangle = [app.activeDocument.activeLayout.viewedRectangle.x1, app.activeDocument.activeLayout.viewedRectangle.y1, 566, 566];
 
 		commentData.parthash = app.impress.partList[this._selectedPart].hash;
 
@@ -266,12 +266,13 @@ window.L.ImpressTileLayer = window.L.CanvasTileLayer.extend({
 				app.activeDocument.fileSize.y = totalHeight;
 			}
 
-			app.activeDocument.activeView.viewSize = app.activeDocument.fileSize.clone();
+			app.activeDocument.activeLayout.viewSize = app.activeDocument.fileSize.clone();
 
 			let allPagesResized = !statusJSON.currentpageresized;
 			this._updateMaxBounds(true, allPagesResized);
 
 			this._viewId = statusJSON.viewid;
+			app.activeDocument.setActiveViewID(this._viewId);
 			console.assert(this._viewId >= 0, 'Incorrect viewId received: ' + this._viewId);
 			if (app.socket._reconnecting) {
 				app.socket.sendMessage('setclientpart part=' + this._selectedPart);

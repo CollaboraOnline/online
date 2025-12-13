@@ -113,8 +113,10 @@ public:
     {
         if (_docManager == nullptr)
         {
+
             LOG_TRC("No DocManager; dropping message to client-"
                     << getId() << ": " << std::string_view(buffer, length));
+
             return false;
         }
         const auto msg = "client-" + getId() + ' ' + std::string(buffer, length);
@@ -126,6 +128,7 @@ public:
         if (_docManager == nullptr)
         {
             LOG_TRC("No DocManager; dropping binary to client-" << getId());
+
             return false;
         }
         const auto msg = "client-" + getId() + ' ' + std::string(buffer, length);
@@ -257,6 +260,7 @@ private:
     void updateCursorPosition(const std::string &rect);
     void updateCursorPositionJSON(const std::string &payload);
     std::string getJailDocRoot() const;
+    std::string getZoomPercent(const std::string &payload);
 
 public:
     // simple one line for priming

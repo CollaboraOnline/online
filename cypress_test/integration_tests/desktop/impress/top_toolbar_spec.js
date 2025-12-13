@@ -54,7 +54,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Top toolbar tests.', funct
 	});
 
 	it('Apply font color on text shape.', function() {
-		cy.cGet('#fontcolor .arrowbackground').click();
+		desktopHelper.getCompactIconArrow('Color').click();
 		desktopHelper.selectColorFromPalette('FFFF00');
 
 		impressHelper.triggerNewSVGForShapeInTheCenter();
@@ -63,7 +63,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Top toolbar tests.', funct
 	});
 
 	it('Apply highlight color on text shape.', function() {
-		cy.cGet('#backcolor .arrowbackground').click();
+		desktopHelper.getCompactIconArrow('CharBackColor').click();
 		desktopHelper.selectColorFromPalette('FFBF00');
 
 		impressHelper.triggerNewSVGForShapeInTheCenter();
@@ -142,8 +142,8 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Top toolbar tests.', funct
 
 	it('Click shape hyperlink.', function() {
 		// Insert shape
-		cy.cGet('#toolbar-up #overflow-button-other-toptoolbar .arrowbackground').click();
-		cy.cGet('.ui-toolbar #insertshapes').click();
+		desktopHelper.getCompactIconArrow('DefaultNumbering').click();
+		desktopHelper.getCompactIconArrow('BasicShapes').click();
 		cy.cGet('.col.w2ui-icon.basicshapes_round-quadrat').click();
 		cy.cGet('#test-div-shapeHandlesSection').should('exist');
 
@@ -162,8 +162,9 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Top toolbar tests.', funct
 
 		// Ctrl-click to open hyperlink pop-up
 		impressHelper.clickCenterOfSlide( {ctrlKey: true} );
+		cy.wait(500);
 
-		cy.cGet('#info-modal-label2').should('have.text', 'http://www.something.com/');
+		cy.cGet('[id^="info-modal-label2"]').should('have.text', 'http://www.something.com/');
 		cy.cGet('#openlink-response').should('exist');
 	});
 });

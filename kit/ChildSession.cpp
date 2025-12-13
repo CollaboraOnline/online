@@ -62,10 +62,8 @@
 
 #include <climits>
 #include <fstream>
-#include <memory>
 #include <sstream>
 #include <string>
-#include <string_view>
 #include <utility>
 #include <zlib.h>
 #include <zstd.h>
@@ -336,7 +334,7 @@ bool ChildSession::_handleInput(const char *buffer, int length)
         assert(!getDocURL().empty());
         assert(!getJailedFilePath().empty());
 
-        char* data = _docManager->getLOKit()->extractRequest(getJailedFilePath().c_str());
+        LOKitHelper::ScopedString data(_docManager->getLOKit()->extractRequest(getJailedFilePath().c_str()));
         if (!data)
         {
             LOG_TRC("extractRequest returned no data.");
@@ -345,8 +343,7 @@ bool ChildSession::_handleInput(const char *buffer, int length)
         }
 
         LOG_TRC("Extracted link targets: " << data);
-        bool success = sendTextFrame("extractedlinktargets: " + std::string(data));
-        free(data);
+        bool success = sendTextFrame("extractedlinktargets: " + std::string(data.get()));
 
         return success;
     }
@@ -373,8 +370,8 @@ bool ChildSession::_handleInput(const char *buffer, int length)
             getTokenString(tokens[2], "filter", filter);
         }
 
-        char* data = _docManager->getLOKit()->extractDocumentStructureRequest(getJailedFilePath().c_str(),
-                                                                              filter.c_str());
+        LOKitHelper::ScopedString data(_docManager->getLOKit()->extractDocumentStructureRequest(getJailedFilePath().c_str(),
+                                                                              filter.c_str()));
         if (!data)
         {
             LOG_TRC("extractDocumentStructureRequest returned no data.");
@@ -383,8 +380,7 @@ bool ChildSession::_handleInput(const char *buffer, int length)
         }
 
         LOG_TRC("Extracted document structure: " << data);
-        bool success = sendTextFrame("extracteddocumentstructure: " + std::string(data));
-        free(data);
+        bool success = sendTextFrame("extracteddocumentstructure: " + std::string(data.get()));
 
         return success;
     }
@@ -1460,14 +1456,11 @@ bool ChildSession::getChildId()
 
 std::string ChildSession::getTextSelectionInternal(const std::string& mimeType)
 {
-    char* textSelection = nullptr;
-
     getLOKitDocument()->setView(_viewId);
 
-    textSelection = getLOKitDocument()->getTextSelection(mimeType.c_str(), nullptr);
+    LOKitHelper::ScopedString textSelection(getLOKitDocument()->getTextSelection(mimeType.c_str(), nullptr));
 
-    std::string str(textSelection ? textSelection : "");
-    free(textSelection);
+    std::string str(textSelection ? textSelection.get() : "");
     return str;
 }
 
@@ -3328,10 +3321,8 @@ bool ChildSession::getA11yFocusedParagraph()
 {
     getLOKitDocument()->setView(_viewId);
 
-    char* paragraphContent = nullptr;
-    paragraphContent = getLOKitDocument()->getA11yFocusedParagraph();
-    std::string paragraph(paragraphContent);
-    free(paragraphContent);
+    LOKitHelper::ScopedString paragraphContent(getLOKitDocument()->getA11yFocusedParagraph());
+    std::string paragraph(paragraphContent.get());
     sendTextFrame("a11yfocusedparagraph: " + paragraph);
     return true;
 }
@@ -3654,6 +3645,11 @@ void ChildSession::loKitCallback(const int type, const std::string& payload)
         else if (payload.find(".uno:CurrentPageResize") != std::string::npos)
         {
             getPartStatus();
+        }
+        else if (payload.find(".uno:PageZoomChange") != std::string::npos)
+        {
+            std::string zoomPercent = getZoomPercent(payload);
+            sendTextFrame("changepagezoom:" + zoomPercent);
         }
         else
             sendTextFrame("statechanged: " + payload);
@@ -4311,6 +4307,19 @@ void ChildSession::updateCursorPositionJSON(const std::string &rect)
     const Poco::Dynamic::Var result = parser.parse(rect);
     const auto& command = result.extract<Poco::JSON::Object::Ptr>();
     updateCursorPosition(command->get("rectangle").toString());
+}
+
+std::string ChildSession::getZoomPercent(const std::string &payload)
+{
+    const auto eq = payload.find('=');
+    if (eq == std::string::npos || eq + 1 >= payload.size())
+        return std::string();
+
+    size_t i = eq + 1;
+    while (i < payload.size() && std::isdigit(payload[i]))
+        ++i;
+
+    return payload.substr(eq + 1, i - (eq + 1));
 }
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

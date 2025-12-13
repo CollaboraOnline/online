@@ -8,7 +8,7 @@ function showSearchBar() {
 
 	cy.cGet('#showsearchbar').click();
 	cy.cGet('input#search-input').should('be.visible');
-	cy.cGet('#bold').should('not.be.visible');
+	cy.cGet('.unoBold').should('not.be.visible');
 	cy.cGet('#searchprev').should('have.attr', 'disabled');
 	cy.cGet('#searchnext').should('have.attr', 'disabled');
 	cy.cGet('#cancelsearch').should('have.attr', 'disabled');
@@ -77,7 +77,7 @@ function closeSearchBar() {
 
 	cy.cGet('#hidesearchbar').click();
 	cy.cGet('input#search-input').should('not.be.visible');
-	cy.cGet('#bold').should('be.visible');
+	cy.cGet('.unoBold').should('be.visible');
 
 	cy.log('<< closeSearchBar - end');
 }

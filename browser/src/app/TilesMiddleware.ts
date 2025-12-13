@@ -1123,7 +1123,7 @@ class TileManager {
 				// request separately from the current viewPort to get
 				// those tiles first.
 
-				const direction = app.activeDocument.activeView.getLastPanDirection();
+				const direction = app.activeDocument.activeLayout.getLastPanDirection();
 
 				// Conservatively enlarge the area to round to more tiles:
 				const pixelTopLeft = this._pixelBounds.getTopLeft();
@@ -1161,6 +1161,45 @@ class TileManager {
 			}.bind(this),
 			50 /*ms*/,
 		);
+	}
+
+	private static sendTileCombineMessage(
+		part: number,
+		mode: number,
+		tilePositionsX: number[],
+		tilePositionsY: number[],
+		tileWids: number[],
+		addedSize: number,
+	) {
+		var msg =
+			'tilecombine ' +
+			'nviewid=0 ' +
+			'part=' +
+			part +
+			' ' +
+			(mode !== 0 ? 'mode=' + mode + ' ' : '') +
+			'width=' +
+			this.tileSize +
+			' ' +
+			'height=' +
+			this.tileSize +
+			' ' +
+			'tileposx=' +
+			tilePositionsX.join(',') +
+			' ' +
+			'tileposy=' +
+			tilePositionsY.join(',') +
+			' ' +
+			'oldwid=' +
+			tileWids.join(',') +
+			' ' +
+			'tilewidth=' +
+			app.tile.size.x +
+			' ' +
+			'tileheight=' +
+			app.tile.size.y;
+		if (addedSize) app.socket.sendMessage(msg, '');
+		else window.app.console.log('Skipped empty (too fast) tilecombine');
 	}
 
 	private static sendTileCombineRequest(
@@ -1217,35 +1256,26 @@ class TileManager {
 				if (tile) tile.updateLastRequest(now);
 			}
 
-			var msg =
-				'tilecombine ' +
-				'nviewid=0 ' +
-				'part=' +
-				part +
-				' ' +
-				(mode !== 0 ? 'mode=' + mode + ' ' : '') +
-				'width=' +
-				this.tileSize +
-				' ' +
-				'height=' +
-				this.tileSize +
-				' ' +
-				'tileposx=' +
-				tilePositionsX.join(',') +
-				' ' +
-				'tileposy=' +
-				tilePositionsY.join(',') +
-				' ' +
-				'oldwid=' +
-				tileWids.join(',') +
-				' ' +
-				'tilewidth=' +
-				app.tile.size.x +
-				' ' +
-				'tileheight=' +
-				app.tile.size.y;
-			if (added.size) app.socket.sendMessage(msg, '');
-			else window.app.console.log('Skipped empty (too fast) tilecombine');
+			this.sendTileCombineMessage(
+				part,
+				mode,
+				tilePositionsX,
+				tilePositionsY,
+				tileWids,
+				added.size,
+			);
+
+			// When Writer requests mode=2, also request mode=1.
+			if (app.map._docLayer.isWriter() && mode === 2) {
+				this.sendTileCombineMessage(
+					part,
+					/*mode=*/ 1,
+					tilePositionsX,
+					tilePositionsY,
+					tileWids,
+					added.size,
+				);
+			}
 		}
 	}
 
@@ -1962,7 +1992,7 @@ class TileManager {
 		if (app.file.fileBasedView) {
 			this.updateFileBasedView();
 			return;
-		} else if (app.activeDocument.activeView.type === 'ViewLayoutMultiPage')
+		} else if (app.activeDocument.activeLayout.type === 'ViewLayoutMultiPage')
 			return;
 
 		if (!center) {
@@ -1976,7 +2006,7 @@ class TileManager {
 		var queue = this.getMissingTiles(pixelBounds, zoom, true);
 
 		app.map._docLayer._sendClientZoom();
-		app.activeDocument.activeView.sendClientVisibleArea();
+		app.activeDocument.activeLayout.sendClientVisibleArea();
 
 		if (queue.length !== 0) this.addTiles(queue, true);
 
@@ -2141,7 +2171,7 @@ class TileManager {
 
 	public static expandTileRange(range: cool.Bounds): cool.Bounds {
 		const grow = this.visibleTileExpansion;
-		const direction = app.activeDocument.activeView.getLastPanDirection();
+		const direction = app.activeDocument.activeLayout.getLastPanDirection();
 		const minOffset = new cool.Point(
 			grow - grow * this.directionalTileExpansion * Math.min(0, direction[0]),
 			grow - grow * this.directionalTileExpansion * Math.min(0, direction[1]),
@@ -2220,7 +2250,7 @@ class TileManager {
 		var mode = 0; // mode is different only in Impress MasterPage mode so far
 
 		var intersectionAreaRectangle = app.LOUtil._getIntersectionRectangle(
-			app.activeDocument.activeView.viewedRectangle.pToArray(),
+			app.activeDocument.activeLayout.viewedRectangle.pToArray(),
 			[0, 0, partWidthPixels, partHeightPixels * app.map._docLayer._parts],
 		);
 
@@ -2240,7 +2270,7 @@ class TileManager {
 				intersectionAreaRectangle[1] / partHeightPixels,
 			);
 			var startY =
-				app.activeDocument.activeView.viewedRectangle.pY1 -
+				app.activeDocument.activeLayout.viewedRectangle.pY1 -
 				startPart * partHeightPixels;
 			startY = Math.floor(startY / app.tile.size.pY) * app.tile.size.pY;
 
@@ -2249,8 +2279,8 @@ class TileManager {
 					partHeightPixels,
 			);
 			var endY =
-				app.activeDocument.activeView.viewedRectangle.pY1 +
-				app.activeDocument.activeView.viewedRectangle.pY2 -
+				app.activeDocument.activeLayout.viewedRectangle.pY1 +
+				app.activeDocument.activeLayout.viewedRectangle.pY2 -
 				endPart * partHeightPixels;
 			endY = Math.floor(endY / app.tile.size.pY) * app.tile.size.pY;
 
@@ -2290,7 +2320,7 @@ class TileManager {
 		if (checkOnly) {
 			return queue;
 		} else {
-			app.activeDocument.activeView.sendClientVisibleArea();
+			app.activeDocument.activeLayout.sendClientVisibleArea();
 			app.map._docLayer._sendClientZoom();
 
 			var tileCombineQueue = [];

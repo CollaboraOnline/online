@@ -685,7 +685,7 @@ export class Comment extends CanvasSectionObject {
 
 		if (rectangles) {
 			var documentAnchorSection = this.containerObject.getDocumentAnchorSection();
-			var diff = [documentAnchorSection.myTopLeft[0] - app.activeDocument.activeView.viewedRectangle.pX1, documentAnchorSection.myTopLeft[1] - app.activeDocument.activeView.viewedRectangle.pY1];
+			var diff = [documentAnchorSection.myTopLeft[0] - app.activeDocument.activeLayout.viewedRectangle.pX1, documentAnchorSection.myTopLeft[1] - app.activeDocument.activeLayout.viewedRectangle.pY1];
 
 			for (var i = 0; i < rectangles.length; i++) {
 				pos = [
@@ -1019,8 +1019,14 @@ export class Comment extends CanvasSectionObject {
 	// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 	private onEscKey (e: any): void {
 		if ((<any>window).mode.isDesktop()) {
+			// When a comment is being edited and focus is in comment textbox,
+			// Esc should not close the comment being edited, but should just mark it with an attention.
 			if (e.keyCode === 27) {
-				this.onCancelClick(e);
+				const editingComment = Comment.isAnyEdit();
+				if (editingComment) {
+					this.sectionProperties.commentListSection.addCommentAttention(editingComment);
+					return;
+				}
 			} else if (e.keyCode === 33 /*PageUp*/ || e.keyCode === 34 /*PageDown*/) {
 				// work around for a chrome issue https://issues.chromium.org/issues/41417806
 				window.L.DomEvent.preventDefault(e);
@@ -1421,15 +1427,41 @@ export class Comment extends CanvasSectionObject {
 		}
 	}
 
+	private sendClickToCore(point: cool.SimplePoint, count: number) {
+		/*
+			On Calc, comments are shown when user focuses to the cell or moves the mouse pointer over the cell.
+			Comment class (this class) covers the cell area. So the document is blocked now.
+			We need to pass the click and double click events to the document.
+		*/
+		app.map._docLayer._postMouseEvent('buttondown', point.x, point.y, count, 1, 0);
+		app.map._docLayer._postMouseEvent('buttonup', point.x, point.y, count, 1, 0);
+		app.map.focus();
+	}
+
 	public onClick (point: cool.SimplePoint, e: MouseEvent): void {
-		if (app.map._docLayer._docType === 'presentation' || app.map._docLayer._docType === 'drawing') {
+		const docType = app.map._docLayer._docType;
+
+		if (['presentation', 'drawing'].includes(docType)) {
 			this.sectionProperties.commentListSection.selectById(this.sectionProperties.data.id);
 		}
-		else if (app.map._docLayer._docType === 'text') {
+		else if (docType === 'text') {
 			const mousePoint = point.clone();
 			mousePoint.pX += this.myTopLeft[0];
 			mousePoint.pY += this.myTopLeft[1];
 			app.activeDocument.mouseControl.onClick(mousePoint, e);
+		}
+		else if (docType === 'spreadsheet') {
+			point.pX += this.position[0];
+			point.pY += this.position[1];
+			this.sendClickToCore(point, 1);
+		}
+	}
+
+	public onDoubleClick(point: cool.SimplePoint, e: MouseEvent): void {
+		if ('spreadsheet' === app.map._docLayer._docType) {
+			point.pX += this.position[0];
+			point.pY += this.position[1];
+			this.sendClickToCore(point, 2);
 		}
 	}
 
@@ -1692,7 +1724,10 @@ export class Comment extends CanvasSectionObject {
 		|| this.sectionProperties.data.resolved === 'false'
 		|| this.sectionProperties.commentListSection.sectionProperties.showResolved) {
 			this.sectionProperties.container.style.display = '';
-			this.sectionProperties.container.style.visibility = '';
+			// For presentations, only expand if the comment is on the active slide.
+			if ((app.map.getDocType() !== 'presentation' && app.map.getDocType() !== 'drawing') || this.isInsideActivePart()) {
+				this.sectionProperties.container.style.visibility = '';
+			}
 		}
 		if (app.map._docLayer._docType === 'text')
 			this.sectionProperties.collapsedInfoNode.style.display = 'none';

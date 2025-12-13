@@ -2,9 +2,15 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: core-it\n"
+"PO-Revision-Date: 2025-12-08 12:47+0000\n"
+"Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
+"Language-Team: Italian <https://hosted.weblate.org/projects/collabora-online/"
+"lokit/it/>\n"
 "Language: it\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.15-dev\n"
 
 #. ygDfy
 #: module_graphicfilter.ulf
@@ -630,7 +636,7 @@ msgid ""
 "two file formats: PDF and ODF as an attachment. "
 msgstr ""
 "Questa impostazione consente di esportare il documento come un file .pdf "
-"contenente due formati di file: PDF e ODF."
+"contenente due formati di file: PDF e ODF. "
 
 #. NCgBM
 #: filter/uiconfig/ui/pdfgeneralpage.ui:583
@@ -640,7 +646,7 @@ msgid ""
 "compliant PDF file, ideal for long-term document preservation."
 msgstr ""
 "Crea un file PDF conforme all'ISO 19005-2, ideale per le archiviazioni a "
-"lungo termine"
+"lungo termine."
 
 #. Ac3Ga
 #: filter/uiconfig/ui/pdfgeneralpage.ui:587
@@ -2038,17 +2044,15 @@ msgstr ""
 
 #. S4bop
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:114
-#, fuzzy
 msgctxt "sidebardatabase|chk_first_column"
 msgid "First Column"
-msgstr "Colonna "
+msgstr "Prima colonna"
 
 #. QR56s
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:128
-#, fuzzy
 msgctxt "sidebardatabase|chk_last_column"
 msgid "Last Column"
-msgstr "Colonna "
+msgstr "Ultima colonna"
 
 #. BJHqA
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:170

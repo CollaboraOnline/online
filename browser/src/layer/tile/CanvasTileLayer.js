@@ -583,9 +583,6 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 
 		// Position and size of the selection start (as if there would be a cursor caret there).
 
-		// View selection of other views
-		this._viewSelections = {};
-
 		this._lastValidPart = -1;
 		// Cursor marker
 		this._cursorMarker = null;
@@ -755,7 +752,7 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 	// because the server needs new data even if the client is unmodified.
 	_resetClientVisArea: function ()  {
 		this._clientZoom = '';
-		app.activeDocument.activeView.resetClientVisibleArea();
+		app.activeDocument.activeLayout.resetClientVisibleArea();
 	},
 
 	_resetCanonicalIdStatus: function() {
@@ -869,7 +866,7 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 		    'dpiscale=' + window.devicePixelRatio + ' ' +
 		    'zoompercent=' + this._map.getZoomPercent()
 
-		if (this._clientZoom !== newClientZoom || forceUpdate) {
+		if (this._clientZoom !== newClientZoom || forceUpdate || this.isImpress()) {
 			// the zoom level has changed
 			app.socket.sendMessage('clientzoom ' + newClientZoom);
 
@@ -1041,7 +1038,6 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 			TileManager.update();
 			app.definitions.otherViewGraphicSelectionSection.updateVisibilities();
 			TextCursorSection.updateVisibilities();
-			this.updateAllTextViewSelection();
 		}
 		else if (textMsg.startsWith('partstatus:')) {
 			this._onStatusMsg(textMsg);
@@ -1384,6 +1380,14 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 				const event = eventInfo.substring(0, parameterStartIndex).trim();
 				const parameter = JSON.parse(eventInfo.substring(parameterStartIndex));
 				this._map.fire(event, parameter);
+			}
+		} else if (textMsg.startsWith('changepagezoom:')) {
+			const payload = textMsg.substring('changepagezoom:'.length).trim();
+			const strZoomPercent = payload.match(/\d+/);
+			const zoomPercent = strZoomPercent ? parseInt(strZoomPercent[0], 10) : NaN;
+			if (zoomPercent) {
+				const zoomIndex = this._map.getZoomIndex(zoomPercent);
+				this._map.setZoom(zoomIndex, null, false);
 			}
 		}
 	},
@@ -2078,13 +2082,7 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 
 	_removeView: function(viewId) {
 		// Remove selection, if any.
-		if (this._viewSelections[viewId]) {
-			if (this._viewSelections[viewId].selection) {
-				this._viewSelections[viewId].selection.remove();
-				this._viewSelections[viewId].selection = undefined;
-			}
-			delete this._viewSelections[viewId];
-		}
+		app.activeDocument.removeView(viewId);
 
 		TextCursorSection.removeView(viewId);
 
@@ -2214,13 +2212,12 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 	},
 
 	_clearSearchResults: function() {
-		if (this._searchTerm) {
-			this._textCSelections.clear();
-		}
+		if (this._searchTerm)
+			app.activeDocument.activeView.clearTextSelection();
+
 		this._lastSearchResult = null;
 		this._searchResults = null;
 		this._searchTerm = null;
-		this._searchResultsLayer.clearLayers();
 	},
 
 	_onStateChangedMsg: function (textMsg) {
@@ -2311,32 +2308,67 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 		return result;
 	},
 
+	adjustTextSelectionRectanglesForCalc: function(rawRectangles, viewId) {
+		if (!app.map._docLayer.sheetGeometry) return;
+
+		for (let i = 0; i < rawRectangles.length; i++) {
+			app.map._docLayer.sheetGeometry.convertRawRectangleToTileTwips(rawRectangles[i]);
+		}
+
+		// For Calc, text selection rectangle is sent taking the cursor rectangle as origin.
+		if (viewId !== undefined) {
+			let section = TextCursorSection.getViewCursorSection(viewId);
+
+			if (section && section.sectionProperties.showCursor === true) {
+				section = OtherViewCellCursorSection.getViewCursorSection(viewId);
+
+				if (section) {
+					for (let i = 0; i < rawRectangles.length; i++) {
+						rawRectangles[i][0] += Math.round(section.position[0] * app.pixelsToTwips);
+						rawRectangles[i][1] += Math.round(section.position[1] * app.pixelsToTwips);
+					}
+				}
+			}
+		}
+		else if (app.file.textCursor.visible) {
+			for (let i = 0; i < rawRectangles.length; i++) {
+				rawRectangles[i][0] += app.calc.cellCursorRectangle.x1;
+				rawRectangles[i][1] += app.calc.cellCursorRectangle.y1;
+			}
+		}
+	},
+
 	_onTextSelectionMsg: function (textMsg) {
-		var rectArray = this._getTextSelectionRectangles(textMsg);
+		textMsg = textMsg.replace('textselection:', '').trim();
+		let rawRectangles = textMsg.split(';');
 
-		if (rectArray.length) {
-			TextSelections.activate();
-
-			var rectangles = rectArray.map(function (rect) {
-				return rect.getPointArray();
+		if (textMsg.trim() !== '') {
+			rawRectangles = rawRectangles.map((rectangle) => {
+				const temp = rectangle.split(',');
+				return [parseInt(temp[0]), parseInt(temp[1]), parseInt(temp[2]), parseInt(temp[3])];
 			});
+		}
+		else rawRectangles = [];
+
+		if (rawRectangles.length > 0) {
+			TextSelections.activate();
 
 			if (app.file.fileBasedView && this._lastSearchResult) {
 				// We rely on that _lastSearchResult has been updated before this function is called.
-				var additionPerPart = this._partHeightTwips + this._spaceBetweenParts;
-				for (var i = 0; i < rectangles.length; i++) {
-					for (var j = 0; j < rectangles[i].length; j++) {
-						rectangles[i][j].y += additionPerPart * this._lastSearchResult.part;
-					}
+				const additionPerPart = this._partHeightTwips + this._spaceBetweenParts;
+
+				for (let i = 0; i < rawRectangles.length; i++) {
+					rawRectangles[i][1] += additionPerPart * this._lastSearchResult.part;
 				}
+
 				this._map._docLayer._preview._scrollViewToPartPosition(this._lastSearchResult.part);
 				TileManager.updateFileBasedView();
 				setTimeout(function () {app.sectionContainer.requestReDraw();}, 100);
 			}
+			else if (this._docType === 'spreadsheet')
+				this.adjustTextSelectionRectanglesForCalc(rawRectangles);
 
-			var pointSet = this._convertToPointSet(rectangles);
-
-			this._textCSelections.setPointSet(pointSet);
+			app.activeDocument.activeView.updateSelectionRawData(this._selectedMode, this._selectedPart, rawRectangles);
 
 			if (this._map._textInput._cursorHandler)
 				this._map._textInput._cursorHandler.setShowSection(false); // User selected text, we remove the carret marker.
@@ -2359,7 +2391,7 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 		}
 		else {
 			TextSelections.deactivate();
-			this._textCSelections.clear();
+			app.activeDocument.activeView.clearTextSelection();
 			this._selectedTextContent = '';
 			if (this._map.contextToolbar)
 				this._map.contextToolbar.hideContextToolbar();
@@ -2369,39 +2401,29 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 	},
 
 	_onTextViewSelectionMsg: function (textMsg) {
-		var obj = JSON.parse(textMsg.substring('textviewselection:'.length + 1));
-		var viewId = parseInt(obj.viewId);
-		var viewPart = parseInt(obj.part);
-		var viewMode = (obj.mode !== undefined) ? parseInt(obj.mode) : 0;
+		const obj = JSON.parse(textMsg.substring('textviewselection:'.length + 1));
+		const viewId = parseInt(obj.viewId);
+		const viewMode = (obj.mode !== undefined) ? parseInt(obj.mode) : 0;
 
 		// Ignore if viewid is same as ours or not in our db
-		if (viewId === this._viewId || !this._map._viewInfo[viewId]) {
+		if (viewId === this._viewId || !this._map._viewInfo[viewId])
 			return;
-		}
 
-		var rectArray = this._getTextSelectionRectangles(obj.selection);
-		this._viewSelections[viewId] = this._viewSelections[viewId] || {};
+		// Get raw rectangles.
+		let twipsRectangles = obj.selection.trim() !== '' ? obj.selection.split(';') : [];
 
-		if (rectArray.length) {
-
-			var rectangles = rectArray.map(function (rect) {
-				return rect.getPointArray();
+		if (twipsRectangles.length > 0) {
+			// Turn the rectangles' comma seperated string values into integer arrays.
+			twipsRectangles = twipsRectangles.map((element) => {
+				const temp = element.split(',');
+				return [parseInt(temp[0]), parseInt(temp[1]), parseInt(temp[2]), parseInt(temp[3])];
 			});
-
-			this._viewSelections[viewId].part = viewPart;
-			this._viewSelections[viewId].mode = viewMode;
-			var docLayer = this;
-			this._viewSelections[viewId].pointSet = CPolyUtil.rectanglesToPointSet(rectangles,
-				function (twipsPoint) {
-					var corePxPt = docLayer._twipsToCorePixels(twipsPoint);
-					corePxPt.round();
-					return corePxPt;
-				});
-		} else {
-			this._viewSelections[viewId].pointSet = new CPointSet();
 		}
 
-		this._onUpdateTextViewSelection(viewId);
+		if (this._docType === 'spreadsheet')
+			this.adjustTextSelectionRectanglesForCalc(twipsRectangles, viewId);
+
+		app.activeDocument.getView(viewId).updateSelectionRawData(viewMode, parseInt(obj.part), twipsRectangles);
 
 		this._saveMessageForReplay(textMsg, viewId);
 	},
@@ -2537,7 +2559,7 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 		if (newSelection.equals(oldSelection.toArray()))
 			return;
 
-		const viewedRectangle = app.activeDocument.activeView.viewedRectangle;
+		const viewedRectangle = app.activeDocument.activeLayout.viewedRectangle;
 		const directionDownOrRight = (newSelection.pX2 !== oldSelection.pX2) || (newSelection.pY2 !== oldSelection.pY2);
 
 		let needsScroll = false;
@@ -2578,7 +2600,7 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 			if (!this._map.wholeColumnSelected && !this._map.wholeRowSelected) {
 				const address = document.querySelector('#addressInput input').value;
 				if (!this._isWholeColumnSelected(address) && !this._isWholeRowSelected(address)) {
-					app.activeDocument.activeView.scroll(scrollX, scrollY);
+					app.activeDocument.activeLayout.scroll(scrollX, scrollY);
 				}
 			}
 		}
@@ -2741,7 +2763,7 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 		// hide the cursor if not editable
 		this._onUpdateCursor(calledFromSetPartHandler);
 		// hide the text selection
-		this._textCSelections.clear();
+		app.activeDocument.activeView.clearTextSelection();
 		// hide the ole selection
 		this._oleCSelections.clear();
 
@@ -2750,11 +2772,6 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 			this._map._clip.clearSelection();
 		else
 			this._selectedTextContent = '';
-	},
-
-	containsSelection: function (latlng) {
-		var corepxPoint = this._map.project(latlng);
-		return this._textCSelections.contains(corepxPoint);
 	},
 
 	_clearReferences: function () {
@@ -2985,7 +3002,7 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 
 		// If x coordinate is already within visible area, we won't scroll to that direction.
 		if (app.isXVisibleInTheDisplayedArea(Math.round(center.x * CSSPixelsToTwips)))
-			center.x = app.activeDocument.activeView.viewedRectangle.cX1;
+			center.x = app.activeDocument.activeLayout.viewedRectangle.cX1;
 		else {
 			center.x -= this._map.getSize().divideBy(2).x;
 			center.x = Math.round(center.x < 0 ? 0 : center.x);
@@ -3000,7 +3017,7 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 			(app.calc.cellCursorVisible ? app.calc.cellCursorRectangle.cHeight : 0));
 
 		if (app.isYVisibleInTheDisplayedArea(Math.round(controlYDown * CSSPixelsToTwips)) && app.isYVisibleInTheDisplayedArea(Math.round(controlYUp * CSSPixelsToTwips)))
-			center.y = app.activeDocument.activeView.viewedRectangle.cY1;
+			center.y = app.activeDocument.activeLayout.viewedRectangle.cY1;
 		else {
 			center.y -= this._map.getSize().divideBy(2).y;
 			center.y = Math.round(center.y < 0 ? 0 : center.y);
@@ -3049,8 +3066,8 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 			if (this._docType === 'text') {
 				// For Writer documents, disallow scrolling to cursor outside of the page (horizontally)
 				// Use document dimensions to approximate page width
-				correctedCursor.x1 = clamp(correctedCursor.x1, 0, app.activeDocument.activeView.viewSize.x);
-				correctedCursor.x2 = clamp(correctedCursor.x2, 0, app.activeDocument.activeView.viewSize.x);
+				correctedCursor.x1 = clamp(correctedCursor.x1, 0, app.activeDocument.activeLayout.viewSize.x);
+				correctedCursor.x2 = clamp(correctedCursor.x2, 0, app.activeDocument.activeLayout.viewSize.x);
 			}
 
 			if (!app.isPointVisibleInTheDisplayedArea(new cool.SimplePoint(correctedCursor.x1, correctedCursor.y1).toArray()) ||
@@ -3141,10 +3158,6 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 		}
 	},
 
-	updateAllTextViewSelection: function() {
-		this.eachView(this._viewSelections, this._onUpdateTextViewSelection, this, false);
-	},
-
 	goToViewCursor: function(viewId) {
 		if (viewId === this._viewId) {
 			this._onUpdateCursor();
@@ -3159,34 +3172,6 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 			if (!isNewCursorVisible)
 				this.scrollToPos(point);
 			app.definitions.cursorHeaderSection.showCursorHeader(viewId);
-		}
-	},
-
-	_onUpdateTextViewSelection: function (viewId) {
-		viewId = parseInt(viewId);
-		var viewPointSet = this._viewSelections[viewId].pointSet;
-		var viewSelection = this._viewSelections[viewId].selection;
-		var viewPart = this._viewSelections[viewId].part;
-		var viewMode = this._viewSelections[viewId].mode ? this._viewSelections[viewId].mode : 0;
-
-		if (viewPointSet &&
-		    (this.isWriter() || (this._selectedPart === viewPart && this._selectedMode === viewMode))) {
-
-			if (viewSelection) {
-				if (!this._map.hasInfoForView(viewId)) {
-					viewSelection.clear();
-					return;
-				}
-				// change previous selections
-				viewSelection.setPointSet(viewPointSet);
-			} else {
-				viewSelection = new CSelections(viewPointSet, this._canvasOverlay,
-					this._selectionsDataDiv, this._map, true /* isView */, viewId, true /* isText */);
-				this._viewSelections[viewId].selection = viewSelection;
-			}
-		}
-		else if (viewSelection) {
-			viewSelection.clear();
 		}
 	},
 
@@ -3205,9 +3190,9 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 			    !this._map.calcInputBarHasFocus()) {
 				const scroll = this._calculateScrollForNewCellCursor();
 				if (scroll.x !== 0 || scroll.y !== 0) {
-					scroll.x += app.activeDocument.activeView.viewedRectangle.x1;
-					scroll.y += app.activeDocument.activeView.viewedRectangle.y1;
-					app.activeDocument.activeView.scrollTo(scroll.pX, scroll.pY);
+					scroll.x += app.activeDocument.activeLayout.viewedRectangle.x1;
+					scroll.y += app.activeDocument.activeLayout.viewedRectangle.y1;
+					app.activeDocument.activeLayout.scrollTo(scroll.pX, scroll.pY);
 				}
 
 				this._prevCellCursorAddress = app.calc.cellAddress.clone();
@@ -3281,7 +3266,7 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 
 	_removeSelection: function() {
 		this._selectedTextContent = '';
-		this._textCSelections.clear();
+		app.activeDocument.activeView.clearTextSelection();
 	},
 
 	_onDragOver: function (e) {
@@ -3634,7 +3619,7 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 
 		const size = [documentEndPos.x - documentPos.x, documentEndPos.y - documentPos.y];
 
-		app.activeDocument.activeView.viewedRectangle = new cool.SimpleRectangle(
+		app.activeDocument.activeLayout.viewedRectangle = new cool.SimpleRectangle(
 			documentPos.x * app.pixelsToTwips, documentPos.y * app.pixelsToTwips, size[0] * app.pixelsToTwips, size[1] * app.pixelsToTwips
 		);
 	},
@@ -3837,23 +3822,12 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 		}
 
 		this._getToolbarCommandsValues();
-		this._textCSelections = new CSelections(undefined, this._canvasOverlay,
-			this._selectionsDataDiv, this._map, false /* isView */, undefined, 'text');
 		this._oleCSelections = new CSelections(undefined, this._canvasOverlay,
 			this._selectionsDataDiv, this._map, false /* isView */, undefined, 'ole');
 		this._references = new CReferences(this._canvasOverlay);
 		this._referencesAll = [];
 
-		// This layergroup contains all the layers corresponding to other's view
-		this._viewLayerGroup = new window.L.LayerGroup();
-		if (!app.isReadOnly()) {
-			map.addLayer(this._viewLayerGroup);
-		}
-
 		this._debug = map._debug;
-
-		this._searchResultsLayer = new window.L.LayerGroup();
-		map.addLayer(this._searchResultsLayer);
 
 		app.socket.sendMessage('commandvalues command=.uno:AcceptTrackedChanges');
 
@@ -3920,9 +3894,7 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 		TileManager.clearPreFetch();
 		clearTimeout(this._previewInvalidator);
 
-		if (!this._textCSelections.empty()) {
-			this._textCSelections.clear();
-		}
+		app.activeDocument.activeView.clearTextSelection();
 
 		if (!this._oleCSelections.empty()) {
 			this._oleCSelections.clear();
@@ -4098,7 +4070,7 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 		}
 
 		var docPixelLimits = new cool.Point(app.activeDocument.fileSize.pX / app.dpiScale, app.activeDocument.fileSize.pY / app.dpiScale);
-		var scrollPixelLimits = new cool.Point(app.activeDocument.activeView.viewSize.pX / app.dpiScale, app.activeDocument.activeView.viewSize.pY / app.dpiScale);
+		var scrollPixelLimits = new cool.Point(app.activeDocument.activeLayout.viewSize.pX / app.dpiScale, app.activeDocument.activeLayout.viewSize.pY / app.dpiScale);
 		var topLeft = this._map.unproject(new cool.Point(0, 0));
 
 		if (this._documentInfo === '' || sizeChanged) {
@@ -4134,7 +4106,7 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 
 		var rectangle;
 		var maxArea = -1;
-		const viewedRectangle = app.activeDocument.activeView.viewedRectangle.pToArray();
+		const viewedRectangle = app.activeDocument.activeLayout.viewedRectangle.pToArray();
 		const candidates = [];
 		for (i = 0; i < parts.length; i++) {
 			rectangle = [0, partHeightPixels * parts[i].part, partWidthPixels, Math.round(this._partHeightTwips * app.twipsToPixels)];

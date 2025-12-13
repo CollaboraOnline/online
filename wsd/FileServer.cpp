@@ -1267,7 +1267,7 @@ void FileServerRequestHandler::readDirToHash(const std::string &basePath, const 
                        "Unexpected data in uncompressedFile after failed read");
                 if (size < 0)
                 {
-                    LOG_ERR("Failed to read file [" << basePath + relPath
+                    LOG_ERR("Failed to read file [" << basePath << relPath
                                                     << "] or is too large to cache and serve");
                 }
             }
@@ -1288,7 +1288,7 @@ void FileServerRequestHandler::readDirToHash(const std::string &basePath, const 
                        "Unexpected data in uncompressedFile after failed read");
                 if (size < 0)
                 {
-                    LOG_ERR("Failed to read file [" << basePath + relPath
+                    LOG_ERR("Failed to read file [" << basePath << relPath
                                                     << "] or is too large to cache and serve");
                 }
 
@@ -1305,7 +1305,7 @@ void FileServerRequestHandler::readDirToHash(const std::string &basePath, const 
             const int initResult = deflateInit2(&strm, Z_DEFAULT_COMPRESSION, Z_DEFLATED, 31, 8, Z_DEFAULT_STRATEGY);
             if (initResult != Z_OK)
             {
-                LOG_ERR("Failed to deflateInit2 for file [" << basePath + relPath
+                LOG_ERR("Failed to deflateInit2 for file [" << basePath << relPath
                                                             << "], result: " << initResult);
                 // Add the uncompressed version; it's better to serve uncompressed than nothing at all.
                 FileHash.emplace(prefix + relPath,
@@ -1334,7 +1334,7 @@ void FileServerRequestHandler::readDirToHash(const std::string &basePath, const 
             const int deflateResult = deflate(&strm, Z_FINISH);
             if (deflateResult != Z_OK && deflateResult != Z_STREAM_END)
             {
-                LOG_ERR("Failed to deflate [" << basePath + relPath
+                LOG_ERR("Failed to deflate [" << basePath << relPath
                                               << "], result: " << deflateResult);
                 compressedFile.clear(); // Can't trust the compressed data, if any.
             }

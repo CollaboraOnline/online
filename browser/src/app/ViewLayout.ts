@@ -80,17 +80,16 @@ class ViewLayoutBase {
 		);
 	}
 
-	// Unmodified canvas coordinate, no scroll included.
-	public canvasToDocumentX(point: cool.SimplePoint): number {
-		return (
-			point.pX + this._viewedRectangle.pX1 - this._documentAnchorPosition[0]
-		);
-	}
+	// point: Unmodified canvas coordinate, no scroll included.
+	public canvasToDocumentPoint(point: cool.SimplePoint): cool.SimplePoint {
+		const result = point.clone();
 
-	public canvasToDocumentY(point: cool.SimplePoint): number {
-		return (
-			point.pY + this._viewedRectangle.pY1 - this._documentAnchorPosition[1]
-		);
+		result.pX =
+			point.pX + this._viewedRectangle.pX1 - this._documentAnchorPosition[0];
+		result.pY =
+			point.pY + this._viewedRectangle.pY1 - this._documentAnchorPosition[1];
+
+		return result;
 	}
 
 	public resetClientVisibleArea(): void {
@@ -431,5 +430,9 @@ class ViewLayoutBase {
 		pY -= this.viewedRectangle.pY1;
 
 		this.scroll(pX, pY);
+	}
+
+	public setOverviewPageVisArea(point: cool.SimplePoint): void {
+		this.scrollTo(point.pX, point.pY);
 	}
 }

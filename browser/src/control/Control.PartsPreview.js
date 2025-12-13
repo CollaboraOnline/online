@@ -44,6 +44,11 @@ window.L.Control.PartsPreview = window.L.Control.extend({
 		this._width = 0;
 		this._height = 0;
 		this.scrollTimer = null;
+
+		document.body.addEventListener('click', (e) => {
+			if (!e.partsFocusedApplied && this.partsFocused)
+				this.partsFocused = false;
+		});
 	},
 
 	onAdd: function (map) {
@@ -230,10 +235,11 @@ window.L.Control.PartsPreview = window.L.Control.extend({
 		}, this);
 
 		var that = this;
-		img.onfocus = function () {
+		img.onfocus = function (e) {
 			that._map._clip.clearSelection();
 			that._map._clip.setTextSelectionType('slide');
 			that.partsFocused = true;
+			e.partsFocusedApplied = true;
 		};
 
 		var that = this;
@@ -435,7 +441,7 @@ window.L.Control.PartsPreview = window.L.Control.extend({
 		var partHeightPixels = Math.round((this._map._docLayer._partHeightTwips + this._map._docLayer._spaceBetweenParts) * app.twipsToPixels);
 		var scrollTop = partHeightPixels * partNumber;
 		var viewHeight = app.sectionContainer.getViewSize()[1];
-		var currentScrollX = app.activeDocument.activeView.viewedRectangle.pX1;
+		var currentScrollX = app.activeDocument.activeLayout.viewedRectangle.pX1;
 
 		if (viewHeight > partHeightPixels && partNumber > 0)
 			scrollTop -= Math.round((viewHeight - partHeightPixels) * 0.5);
@@ -444,7 +450,7 @@ window.L.Control.PartsPreview = window.L.Control.extend({
 		if (fromBottom)
 			scrollTop += partHeightPixels - viewHeight;
 
-		app.activeDocument.activeView.scrollTo(currentScrollX, scrollTop);
+		app.activeDocument.activeLayout.scrollTo(currentScrollX, scrollTop);
 	},
 
 	_scrollViewByDirection: function(buttonType) {
@@ -453,7 +459,7 @@ window.L.Control.PartsPreview = window.L.Control.extend({
 		var viewHeight = Math.floor(app.sectionContainer.getViewSize()[1]);
 		var viewHeightScaled = Math.round(Math.floor(viewHeight) / app.dpiScale);
 		var scrollBySize = Math.floor(viewHeightScaled * 0.75);
-		var currentScrollX = app.activeDocument.activeView.viewedRectangle.cX1;
+		var currentScrollX = app.activeDocument.activeLayout.viewedRectangle.cX1;
 
 		app.sectionContainer.getSectionWithName(app.CSections.Scroll.name).onScrollBy({x: currentScrollX, y: buttonType === 'prev' ? -scrollBySize : scrollBySize});
 	},

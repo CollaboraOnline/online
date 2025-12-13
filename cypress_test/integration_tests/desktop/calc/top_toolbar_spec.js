@@ -90,7 +90,7 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 
 		// Turn text wrap on
 		calcHelper.clickOnFirstCell();
-		cy.cGet('.ui-toolbar .unoWrapText').click();
+		desktopHelper.getCompactIcon('WrapText').click();
 
 		// Leave cell
 		helper.typeIntoDocument('{enter}');

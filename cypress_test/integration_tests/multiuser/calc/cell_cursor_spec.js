@@ -23,7 +23,7 @@ describe(['tagmultiuser'], 'Check cell cursor and view behavior', function() {
 		cy.cSetActiveFrame('#iframe1');
 
 		cy.cGet(helper.addressInputSelector).type('{selectAll}A400{enter}');
-		desktopHelper.assertScrollbarPosition('vertical', 400, 500);
+		desktopHelper.assertScrollbarPosition('vertical', 400, 670);
 		cy.cGet('#sc_input_window .ui-custom-textarea-text-layer').click();
 		cy.cGet('#sc_input_window .ui-custom-textarea-text-layer').type('some text{enter}');
 
@@ -32,19 +32,19 @@ describe(['tagmultiuser'], 'Check cell cursor and view behavior', function() {
 		cy.cGet('#followingChip').click();
 
 		// verify that second view is scrolled to the: A400
-		desktopHelper.assertScrollbarPosition('vertical', 400, 500);
+		desktopHelper.assertScrollbarPosition('vertical', 400, 670);
 
 		// second view should still have cursor at the end: A588
 		cy.cGet(helper.addressInputSelector).should('have.prop', 'value', 'A588');
 
 		// now insert row in the first view
 		cy.cSetActiveFrame('#iframe1');
-		cy.cGet('#overflow-button-home-insert-table .arrowbackground').click({force: true});
-		cy.cGet('#home-insert-rows-before img').click({force: true});
+		desktopHelper.getNbIconArrow('InsertRowsBefore').click();
+		desktopHelper.getNbIcon('InsertRowsBefore').last().click();
 
 		// verify that second view is still at the: A400
 		cy.cSetActiveFrame('#iframe2');
-		desktopHelper.assertScrollbarPosition('vertical', 400, 500);
+		desktopHelper.assertScrollbarPosition('vertical', 400, 670);
 
 		// second view should still have cursor at the previous cell: A588+1
 		cy.cGet(helper.addressInputSelector).should('have.prop', 'value', 'A589');

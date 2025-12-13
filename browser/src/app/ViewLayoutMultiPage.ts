@@ -250,6 +250,10 @@ class ViewLayoutMultiPage extends ViewLayoutBase {
 		if (!app.file.writer.pageRectangleList.length) return;
 
 		this.refreshVisibleAreaRectangle();
+
+		if (app.map._docLayer?._cursorMarker)
+			app.map._docLayer._cursorMarker.update();
+
 		this.sendClientVisibleArea();
 
 		this.refreshCurrentCoordList();
@@ -276,28 +280,22 @@ class ViewLayoutMultiPage extends ViewLayoutBase {
 		);
 	}
 
-	public canvasToDocumentX(point: cool.SimplePoint): number {
+	public canvasToDocumentPoint(point: cool.SimplePoint): cool.SimplePoint {
 		point.pX += this.scrollProperties.viewX;
 		point.pY += this.scrollProperties.viewY;
 
 		const index = this.getClosestRectangleIndex(point, false);
 
-		return (
+		const result = point.clone();
+
+		result.pX =
 			this.documentRectangles[index].pX1 +
-			(point.pX - this.viewRectangles[index].pX1)
-		);
-	}
-
-	public canvasToDocumentY(point: cool.SimplePoint): number {
-		point.pX += this.scrollProperties.viewX;
-		point.pY += this.scrollProperties.viewY;
-
-		const index = this.getClosestRectangleIndex(point, false);
-
-		return (
+			(point.pX - this.viewRectangles[index].pX1);
+		result.pY =
 			this.documentRectangles[index].pY1 +
-			(point.pY - this.viewRectangles[index].pY1)
-		);
+			(point.pY - this.viewRectangles[index].pY1);
+
+		return result;
 	}
 
 	public refreshScrollProperties(): any {

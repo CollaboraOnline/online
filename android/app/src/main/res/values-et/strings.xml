@@ -6,4 +6,6 @@
     <string name="pref_category_explorer">Failihalduri seadistused</string>
     <string name="temp_file_saving_disabled">Failil on vaid lugemisõigused ja salvestamine pole võimalik.</string>
     <string name="loading">Laadin...</string>
+    <string name="failed_to_load_file">Ei õnnestunud tuvastada faili, mida peaks laadima</string>
+    <string name="storage_permission_required">Vajalik on andmeruumi kasutamise õigus</string>
 </resources>

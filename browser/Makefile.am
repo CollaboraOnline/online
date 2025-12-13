@@ -265,6 +265,7 @@ COOL_JS_LST =\
 	src/app/ViewLayoutWriter.ts \
 	src/app/ViewLayoutMultiPage.ts \
 	src/app/DocumentBase.ts \
+	src/app/DocumentView.ts \
 	src/app/TilesMiddleware.ts \
 	src/app/SlideshowMiddleware.ts \
 	src/app/SearchService.ts \
@@ -279,6 +280,7 @@ COOL_JS_LST =\
 	src/app/iface/Control.Interface.ts \
 	src/app/Log.ts \
 	src/app/Debug.ts \
+	src/app/A11yValidator.ts \
 	src/app/SocketBase.ts \
 	src/app/TracingEvents.ts \
 	src/app/ServerCommand.ts \
@@ -341,6 +343,7 @@ COOL_JS_LST =\
 	src/canvas/sections/CellSelectionHandleSection.ts \
 	src/canvas/sections/CalcValidityDropDownSection.ts \
 	src/canvas/sections/TextSelectionHandleSection.ts \
+	src/canvas/sections/TextSelectionSection.ts \
 	src/canvas/sections/OtherViewGraphicSelectionSection.ts \
 	src/canvas/sections/OtherViewCellCursorSection.ts \
 	src/canvas/sections/FormFieldButton.ts \
@@ -396,6 +399,7 @@ COOL_JS_LST =\
 	src/map/handler/Map.FileInserter.js \
 	src/map/handler/Map.StateChanges.js \
 	src/map/handler/Map.WOPI.js \
+	src/control/jsdialog/Util.UniqueId.ts \
 	src/control/Control.AboutDialog.ts \
 	src/control/Control.Toolbar.js \
 	src/control/Control.Command.js \
@@ -461,6 +465,7 @@ COOL_JS_LST =\
 	src/control/jsdialog/Widget.Frame.js \
 	src/control/jsdialog/Widget.HTMLContent.ts \
 	src/control/jsdialog/Widget.IconView.ts \
+	src/control/jsdialog/Widget.NotebookbarIconView.ts \
 	src/control/jsdialog/Widget.MenuButton.js \
 	src/control/jsdialog/Widget.MobileBorderSelector.js \
 	src/control/jsdialog/Widget.MobileTabControl.js \
@@ -826,6 +831,9 @@ build-cool: \
 	$(DIST_FOLDER)/device-tablet.css \
 	$(DIST_FOLDER)/device-desktop.css \
 	$(DIST_FOLDER)/progressbar.css \
+	$(DIST_FOLDER)/settings.css \
+	$(DIST_FOLDER)/color-palette.css \
+	$(DIST_FOLDER)/color-palette-dark.css \
 	$(DIST_FOLDER)/bundle.js \
 	$(DIST_FOLDER)/cool.html \
 	$(WASM_FILES) \

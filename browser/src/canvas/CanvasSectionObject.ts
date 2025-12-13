@@ -65,10 +65,9 @@ class CanvasSectionObject {
 		if (this.containerObject) { // Is section added to container.
 			this.isVisible = this.containerObject.isDocumentObjectVisible(this);
 			this.onDocumentObjectVisibilityChange();
-		}
 
-		if (this.containerObject.testing) {
-			this.containerObject.createUpdateSingleDivElement(this);
+			if (this.containerObject.testing)
+				this.containerObject.createUpdateSingleDivElement(this);
 		}
 	}
 
@@ -183,7 +182,7 @@ class CanvasSectionObject {
 				sectionXcoord = docSize.x - sectionXcoord - this.size[0];
 			}
 
-			const positionAddition = app.activeDocument.activeView.viewedRectangle.clone();
+			const positionAddition = app.activeDocument.activeLayout.viewedRectangle.clone();
 			const documentAnchor = this.containerObject.getDocumentAnchor();
 
 			if (app.isXOrdinateInFrozenPane(sectionXcoord))

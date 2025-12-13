@@ -10,6 +10,7 @@
  */
 
 var assert = require('assert');
+var jsdom = require('jsdom');
 
 describe('Util', function () {
 
@@ -219,4 +220,34 @@ describe('Util', function () {
 		});
 	});
 
+});
+
+class XDOMParser {
+
+	parseFromString(str: string, type: DOMParserSupportedType): Document {
+		return new jsdom.JSDOM(str).window.document;
+	}
+}
+
+describe('DocUtil', function () {
+
+	describe('stripHTML()', function () {
+		const domParser = new XDOMParser();
+		const tests: string[][] = [
+			['', '', 'empty'],
+			['<div>ABC</div>', 'ABC', 'single'],
+			['<p>XYZ</p><div>ABC</div>', 'XYZABC', 'two'],
+			['<p>XYZ<div>ABC</div></p>', 'XYZABC', 'nested1'],
+			['<div>XYZ<p>ABC</p></div>', 'XYZABC', 'nested2'],
+		];
+
+		tests.forEach((pair: string[], index: number) => {
+			const input = pair[0];
+			const expected = pair[1];
+			const name = pair[2];
+			it('test ' + name, function() {
+				assert.equal(expected, DocUtil.stripHTML(input, domParser));
+			});
+		});
+	});
 });

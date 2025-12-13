@@ -6,6 +6,7 @@
   "devDependencies": {
     "@babel/core": "^7.22.8",
     "@babel/preset-env": "^7.22.7",
+    "@cypress-audit/lighthouse": "^1.4.2",
     "@cypress/webpack-preprocessor": "^5.17.1",
     "@typescript-eslint/eslint-plugin": "^4.21.0",
     "@typescript-eslint/parser": "^4.21.0",
@@ -20,6 +21,7 @@
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-cypress-rules": "file:eslint_plugin",
     "get-port-cli": "2.0.0",
+    "patch-package": "^8.0.1",
     "semver": "^7.5.4",
     "typescript": "5.0.4",
     "wait-on": "7.0.1",
@@ -32,5 +34,8 @@
   "dependencies": {
     "cypress-tags": "^1.2.2",
     "cypress-visual-regression": "^5.2.2"
+  },
+  "scripts": {
+    "postinstall": "patch-package"
   }
 }

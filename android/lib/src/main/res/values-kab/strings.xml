@@ -16,4 +16,10 @@
     <string name="view_only">Askan kan</string>
     <string name="cant_open_the_document">Ur yezmir ara ad yeldi afaylu-nni</string>
     <string name="file_chromeos_read_only">Afaylu-a ur yezmir ara ad yettwasekles deg wadig-a, ad t-yeldi s tɣuri kan. Seddu-t ɣer yifuyla n wurar i tɣuri/tira n unekcum ummid.</string>
+    <string name="edit_copy">Ẓreg anɣel</string>
+    <string name="ask_for_copy">Isemli-agi i tɣuri kan. Tebɣiḍ ad tgeḍ anɣel i teẓrigt?</string>
+    <string name="use_text">Seqdec amasal n uḍris</string>
+    <string name="use_odf">Seqdec amasal ODF</string>
+    <string name="ask_for_convert_odf">Sentem amasal n ufaylu</string>
+    <string name="convert_odf_message">Isemli-a yezmer ad yegber amasal neɣ agbur ur yezmir ara ad yettwakles deg umasal n ufaylu \"Aḍris\" yettwafernen akka tura.</string>
 </resources>

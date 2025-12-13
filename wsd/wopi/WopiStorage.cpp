@@ -541,7 +541,7 @@ std::string WopiStorage::downloadStorageFileToLocal(const Authorization& auth,
         }
         catch (const std::exception& ex)
         {
-            LOG_ERR("Could not download template from [" + templateUriAnonym + "]. Error: "
+            LOG_ERR("Could not download template from [" << templateUriAnonym << "]. Error: "
                     << ex.what());
             throw; // Bubble-up the exception.
         }
@@ -563,7 +563,7 @@ std::string WopiStorage::downloadStorageFileToLocal(const Authorization& auth,
         }
         catch (const std::exception& ex)
         {
-            LOG_ERR("Could not download document from WOPI FileUrl [" + fileUrlAnonym +
+            LOG_ERR("Could not download document from WOPI FileUrl [" << fileUrlAnonym <<
                         "]. Will use default URL. Error: "
                     << ex.what());
         }
@@ -587,7 +587,7 @@ std::string WopiStorage::downloadStorageFileToLocal(const Authorization& auth,
     }
     catch (const std::exception& ex)
     {
-        LOG_ERR("Cannot download document from WOPI storage uri [" + uriAnonym + "]. Error: "
+        LOG_ERR("Cannot download document from WOPI storage uri [" << uriAnonym << "]. Error: "
                 << ex.what());
         throw; // Bubble-up the exception.
     }
@@ -906,7 +906,7 @@ std::size_t WopiStorage::uploadLocalFileToStorageAsync(
     }
     catch (const std::exception& ex)
     {
-        LOG_ERR(wopiLog << " cannot upload file to WOPI storage uri [" + uriAnonym + "]. Error: "
+        LOG_ERR(wopiLog << " cannot upload file to WOPI storage uri [" << uriAnonym << "]. Error: "
                         << ex.what());
         _uploadHttpSession.reset();
     }
@@ -1074,7 +1074,7 @@ WopiStorage::handleUploadToStorageResponse(const WopiUploadDetails& details,
     }
     catch (const BadRequestException& exc)
     {
-        LOG_ERR("Cannot upload file to WOPI storage uri [" + details.uriAnonym + "]. Error: "
+        LOG_ERR("Cannot upload file to WOPI storage uri [" << details.uriAnonym << "]. Error: "
                 << exc.what());
         result.setResult(StorageBase::UploadResult::Result::FAILED);
     }

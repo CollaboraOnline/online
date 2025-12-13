@@ -53,6 +53,7 @@ interface ViewSettings {
 }
 
 interface SectionConfig {
+	id: string;
 	sectionTitle: string;
 	sectionDesc: string;
 	listId: string;
@@ -224,6 +225,9 @@ class SettingIframe {
 		checkboxMarked: `<svg fill="currentColor" width="24" height="24" viewBox="0 0 24 24"><path d="M10,17L5,12L6.41,10.58L10,14.17L17.59,6.58L19,8M19,3H5C3.89,3 3,3.89 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5C21,3.89 20.1,3 19,3Z"></path></svg>`,
 		checkboxBlankOutline: `<svg fill="currentColor" width="24" height="24" viewBox="0 0 24 24"><path d="M19,3H5C3.89,3 3,3.89 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5C21,3.89 20.1,3 19,3M19,5V19H5V5H19Z"></path></svg>`,
 	};
+	private _allConfigSection: HTMLElement | null;
+	private _sectionObserver: IntersectionObserver | null = null;
+	private _visibleSections: Set<Element> = new Set();
 
 	private getAPIEndpoints() {
 		return {
@@ -251,8 +255,10 @@ class SettingIframe {
 	private browserSettingOptions: Record<string, any> = {};
 
 	init(): void {
+		this._allConfigSection = document.getElementById('allConfigSection');
 		this.initWindowVariables();
 		this.insertConfigSections();
+		this.setupLeftNavbar();
 		this.fetchAndPopulateSharedConfigs();
 		this.wordbook = (window as any).WordBook;
 	}
@@ -318,11 +324,11 @@ class SettingIframe {
 	}
 
 	private insertConfigSections(): void {
-		const sharedConfigsContainer = document.getElementById('allConfigSection');
-		if (!sharedConfigsContainer) return;
+		if (!this._allConfigSection) return;
 
 		const configSections: SectionConfig[] = [
 			{
+				id: 'autotext',
 				sectionTitle: _('Autotext'),
 				sectionDesc: _(
 					'Upload reusable text snippets (.bau). To insert the text in your document, type the shortcut for an AutoText entry and press F3.',
@@ -335,6 +341,7 @@ class SettingIframe {
 				uploadPath: this.PATH.autoTextUpload(),
 			},
 			{
+				id: 'wordbook',
 				sectionTitle: _('Custom dictionaries'),
 				sectionDesc: _(
 					'Add or edit words in a spell check dictionary. Words in your wordbook (.dic) will be available for spelling checks.',
@@ -347,6 +354,7 @@ class SettingIframe {
 				uploadPath: this.PATH.wordBookUpload(),
 			},
 			{
+				id: 'xcu',
 				sectionTitle: _('Document settings'),
 				sectionDesc: _('Adjust how office documents behave.'),
 				listId: 'XcuList',
@@ -399,7 +407,7 @@ class SettingIframe {
 				});
 			}
 
-			sharedConfigsContainer.appendChild(sectionEl);
+			this._allConfigSection!.appendChild(sectionEl);
 		});
 	}
 
@@ -456,6 +464,7 @@ class SettingIframe {
 	private createConfigSection(config: SectionConfig): HTMLDivElement {
 		const sectionEl = document.createElement('div');
 		sectionEl.classList.add('section');
+		sectionEl.id = config.id;
 
 		sectionEl.appendChild(this.createHeading(config.sectionTitle, 'h3'));
 		sectionEl.appendChild(this.createParagraph(config.sectionDesc));
@@ -952,7 +961,6 @@ class SettingIframe {
 		onClickHandler: (
 			checkboxInput: HTMLInputElement,
 			checkboxWrapper: HTMLSpanElement,
-			materialIconContainer: HTMLSpanElement, // This is the inner span holding the SVG
 		) => void,
 		isDisabled: boolean = false,
 		warningText: string | null = null,
@@ -972,23 +980,14 @@ class SettingIframe {
 		checkboxContent.id = id + '-content';
 		checkboxWrapper.appendChild(checkboxContent);
 
-		const checkboxContentIcon = document.createElement('span');
-		checkboxContentIcon.className = `${isDisabled ? 'checkbox-content-icon-disabled' : 'checkbox-content-icon'} checkbox-content-icon checkbox-radio-switch__icon ${isChecked ? '' : 'checkbox-content-icon--checked'}`;
-		checkboxContentIcon.ariaHidden = 'true';
-		checkboxContent.appendChild(checkboxContentIcon);
+		checkboxContent.appendChild(inputCheckbox);
 
-		const materialIconContainer = this.createMaterialDesignIconContainer(
-			isChecked
-				? this.SVG_ICONS.checkboxMarked
-				: this.SVG_ICONS.checkboxBlankOutline,
-		);
-		checkboxContentIcon.appendChild(materialIconContainer);
-
-		const textElement = document.createElement('span');
-		textElement.className =
+		const checkboxLabel = document.createElement('label');
+		checkboxLabel.className =
 			'checkbox-content__text checkbox-radio-switch__text';
-		textElement.textContent = labelText;
-		checkboxContent.appendChild(textElement);
+		checkboxLabel.textContent = labelText;
+		checkboxLabel.htmlFor = inputCheckbox.id;
+		checkboxContent.appendChild(checkboxLabel);
 
 		if (warningText) {
 			const warningEl = document.createElement('span');
@@ -998,10 +997,19 @@ class SettingIframe {
 		}
 
 		if (!isDisabled) {
-			checkboxWrapper.addEventListener('click', () => {
-				onClickHandler(inputCheckbox, checkboxWrapper, materialIconContainer);
+			let that = this;
+			const checkboxClickHandler = function () {
+				onClickHandler(inputCheckbox, checkboxWrapper);
 				if (checkboxWrapper.id === 'Grid-ShowGrid-container') {
-					this.toggleGridOptionsVisibility(checkboxWrapper);
+					that.toggleGridOptionsVisibility(checkboxWrapper);
+				}
+			};
+
+			inputCheckbox.addEventListener('click', checkboxClickHandler);
+			inputCheckbox.addEventListener('keydown', (event) => {
+				if (event.key === ' ' || event.key === 'Enter') {
+					event.preventDefault();
+					inputCheckbox.click();
 				}
 			});
 			if (checkboxWrapper.id === 'Grid-ShowGrid-container') {
@@ -1027,17 +1035,12 @@ class SettingIframe {
 			uniqueId,
 			value,
 			labelText,
-			(inputCheckbox, checkboxWrapper, materialIconContainer) => {
-				const currentChecked = !inputCheckbox.checked;
-				inputCheckbox.checked = currentChecked;
+			(inputCheckbox, checkboxWrapper) => {
 				checkboxWrapper.classList.toggle(
 					'checkbox-radio-switch--checked',
-					!currentChecked,
+					!inputCheckbox.checked,
 				);
-				materialIconContainer.innerHTML = currentChecked
-					? this.SVG_ICONS.checkboxMarked
-					: this.SVG_ICONS.checkboxBlankOutline;
-				data[key] = currentChecked;
+				data[key] = inputCheckbox.checked;
 			},
 		);
 	}
@@ -1324,7 +1327,7 @@ class SettingIframe {
 
 	private generateViewSettingUI(data: ViewSettings) {
 		this._viewSetting = data;
-		const settingsContainer = document.getElementById('allConfigSection');
+		const settingsContainer = this._allConfigSection;
 		if (!settingsContainer) {
 			return;
 		}
@@ -1464,17 +1467,12 @@ class SettingIframe {
 			key as string,
 			isChecked && !isDisabled,
 			label,
-			(inputCheckbox, checkboxWrapper, materialIconContainer) => {
-				const currentChecked = !inputCheckbox.checked;
-				inputCheckbox.checked = currentChecked;
+			(inputCheckbox, checkboxWrapper) => {
 				checkboxWrapper.classList.toggle(
 					'checkbox-radio-switch--checked',
-					!currentChecked,
+					!inputCheckbox.checked,
 				);
-				materialIconContainer.innerHTML = currentChecked
-					? this.SVG_ICONS.checkboxMarked
-					: this.SVG_ICONS.checkboxBlankOutline;
-				(data as any)[key] = currentChecked;
+				(data as any)[key] = inputCheckbox.checked;
 			},
 			isDisabled,
 			warningText,
@@ -1550,12 +1548,10 @@ class SettingIframe {
 			} else {
 				this.browserSettingOptions = defaultBrowserSetting;
 			}
-			this.createBrowserSettingForm(
-				document.getElementById('allConfigSection')!,
-			);
+			this.createBrowserSettingForm(this._allConfigSection!);
 		}
 
-		const settingsContainer = document.getElementById('allConfigSection');
+		const settingsContainer = this._allConfigSection;
 		if (!settingsContainer) return;
 		if (data.xcu && data.xcu.length > 0) {
 			const fileId = data.xcu[0].uri;
@@ -1597,11 +1593,89 @@ class SettingIframe {
 			}
 		}
 
+		this.setupLeftNavbar();
+
 		if (data.autotext)
 			this.populateList('autotextList', data.autotext, '/autotext');
 		if (data.wordbook)
 			this.populateList('wordbookList', data.wordbook, '/wordbook');
 		if (data.xcu) this.populateList('XcuList', data.xcu, '/xcu');
+	}
+
+	private setupLeftNavbar(): void {
+		if (this.isAdmin()) return;
+
+		// Prevent double scrollbars
+		document.body.style.margin = '0';
+
+		const content = this._allConfigSection;
+		if (!content) return;
+
+		const newNav = document.createElement('nav');
+		newNav.id = 'settings-nav';
+
+		if (this._sectionObserver) {
+			this._sectionObserver.disconnect();
+		}
+
+		this._visibleSections.clear();
+
+		const observerOptions = {
+			root: content,
+			rootMargin: '-30px 0px 0px 0px',
+		};
+
+		this._sectionObserver = new IntersectionObserver((entries) => {
+			entries.forEach((entry) => {
+				if (entry.isIntersecting) {
+					this._visibleSections.add(entry.target);
+				} else {
+					this._visibleSections.delete(entry.target);
+				}
+			});
+
+			let activeSection: Element | null = null;
+			let minTop = Infinity;
+
+			for (const section of Array.from(this._visibleSections)) {
+				const rect = section.getBoundingClientRect();
+				if (rect.top < minTop) {
+					minTop = rect.top;
+					activeSection = section;
+				}
+			}
+
+			if (activeSection) {
+				const id = activeSection.id;
+				newNav.querySelectorAll('.settings-nav-item').forEach((link) => {
+					if (link.getAttribute('href') === '#' + id) {
+						link.classList.add('active');
+					} else {
+						link.classList.remove('active');
+					}
+				});
+			}
+		}, observerOptions);
+
+		content.querySelectorAll('.section').forEach((section) => {
+			this._sectionObserver?.observe(section);
+			const header = section.querySelector('h3');
+			if (header) {
+				const link = document.createElement('a');
+				link.textContent = header.textContent;
+				link.classList.add('settings-nav-item');
+				link.href = '#' + section.id;
+				newNav.appendChild(link);
+			}
+		});
+
+		const oldNav = document.getElementById('settings-nav');
+		if (oldNav) {
+			oldNav.replaceWith(newNav);
+		} else {
+			let wrapper = document.getElementById('settingIframe');
+			wrapper!.insertBefore(newNav, content);
+		}
 	}
 
 	private mergeWithDefault(defaults: any, overrides: any): any {

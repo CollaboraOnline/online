@@ -41,7 +41,7 @@ function _extractLabelText(data) {
 
 JSDialog.frame = function _frameHandler(parentContainer, data, builder) {
 	if (data.children.length > 1) {
-		buildFrame(parentContainer, data, builder, isFormControlGroup(data));
+		buildFrame(parentContainer, data, builder, shouldUseFieldsetLegend(data));
 	} else {
 		return builder._controlHandlers['container'](
 			parentContainer,
@@ -53,60 +53,19 @@ JSDialog.frame = function _frameHandler(parentContainer, data, builder) {
 	return false;
 };
 
-function isFormControlGroup(data) {
+function shouldUseFieldsetLegend(data) {
 	if (!data.children || data.children.length < 2) return false;
 
-	// First child must be a fixedtext (label) to eligible as a form control group
+	// First child must be a fixedtext (label) to eligible as group
 	if (data.children[0].type !== 'fixedtext') return false;
 
-	const formControlTypes = new Set([
-		'spinfield',
-		'edit',
-		'formattedfield',
-		'metricfield',
-		'combobox',
-		'radiobutton',
-		'checkbox',
-		'time',
-	]);
-	let formControlCount = 0;
-	const minRequiredControls = 2;
-
-	/**
-	 * Recursively counts form controls within a dialog structure tree.
-	 * This function handles the hierarchical nature of JSDialog JSON structures where
-	 * form controls can be nested within various container types.
-	 * Uses early termination to optimize performance once the minimum threshold is reached.
-	 */
-	function countFormControls(node) {
-		if (!node.children) return 0;
-
-		let count = 0;
-		for (const child of node.children) {
-			if (formControlTypes.has(child.type)) {
-				count++;
-			} else {
-				count += countFormControls(child);
-			}
-			if (count >= minRequiredControls) return count;
-		}
-		return count;
-	}
-
-	// Skip the first child (label) and count form controls in remaining children
-	for (let i = 1; i < data.children.length; i++) {
-		formControlCount += countFormControls(data.children[i]);
-
-		if (formControlCount >= minRequiredControls) return true;
-	}
-
-	return false;
+	return true;
 }
 
-function buildFrame(parentContainer, data, builder, isFormControlGroup) {
+function buildFrame(parentContainer, data, builder, shouldUseFieldsetLegend) {
 	let container, frame, label;
 
-	if (isFormControlGroup) {
+	if (shouldUseFieldsetLegend) {
 		container = window.L.DomUtil.create(
 			'fieldset',
 			'ui-frame-container ui-fieldset ' + builder.options.cssClass,

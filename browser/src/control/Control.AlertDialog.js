@@ -36,6 +36,8 @@ window.L.Control.AlertDialog = window.L.Control.extend({
 			}
 			else
 				this._map.uiManager.showConfirmModal('cool_alert', '', e.msg, _('Close'), function() { /* Do nothing. */ }, true);
+
+			window.app.console.error('AlertDialog: ' + e.msg);
 		}
 		else if (e.cmd == 'load' && e.kind == 'docunloading') {
 			// Handled by transparently retrying.
@@ -106,6 +108,8 @@ window.L.Control.AlertDialog = window.L.Control.extend({
 			msg = msg.replace('{0}', e.kind);
 			msg = msg.replace('{1}', e.cmd);
 			this._map.uiManager.showInfoModal('cool_alert', '', msg, '', _('Close'), function() { /* Do nothing. */ }, false);
+
+			window.app.console.error('AlertDialog: ' + msg);
 		}
 	}
 });

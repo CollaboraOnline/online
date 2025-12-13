@@ -19,6 +19,7 @@
 #include <Poco/Net/HTTPRequest.h>
 #include <Poco/URI.h>
 
+
 void Authorization::authorizeURI(Poco::URI& uri) const
 {
     if (_type == Authorization::Type::Token)

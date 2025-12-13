@@ -931,35 +931,6 @@ window.L.Control.NotebookbarWriter = window.L.Control.Notebookbar.extend({
 			   ]
 			},
 			{
-				'id': 'stylesview-btn',
-				'type': 'container',
-				'children': [
-					{
-						'id': 'scroll-up',
-						'type': 'customtoolitem',
-						'text': _('Scroll up'),
-						'command': 'scrollpreviewup',
-						'icon': 'lc_searchprev.svg',
-					},
-					{
-						'id': 'scroll-down',
-						'type': 'customtoolitem',
-						'text': _('Scroll down'),
-						'command': 'scrollpreviewdown',
-						'icon': 'lc_searchnext.svg',
-					},
-					{
-						'id': 'format-style-list-dialog',
-						'type': 'toolitem',
-						'text': _('Style list'),
-						'command': '.uno:SidebarDeck.StyleListDeck',
-						'icon': 'lc_stylepreviewmore.svg',
-						'accessibility': { focusBack: true, combination: 'SD', de: null }
-					},
-				],
-				'vertical': 'true'
-			},
-			{
 				'type': 'overflowgroup',
 				'id': 'home-insert',
 				'name':_('Insert'),
@@ -3447,6 +3418,36 @@ window.L.Control.NotebookbarWriter = window.L.Control.Notebookbar.extend({
 				}
 			]
 		};
+	},
+
+	getListOfUnoCommandsForDialogs: function() {
+		const tabJson = this.getTabsJSON();
+		const commands = new Set();
+
+		function extractCommands(items) {
+			if (!items || !Array.isArray(items)) return;
+
+			items.forEach(item => {
+				// Extract command if it exists and starts with .uno: and include 'Dialog'
+				if (item.command
+					&& item.command.startsWith('.uno:')
+					&& item.command.includes('Dialog')) {
+					commands.add(item.command);
+				}
+
+				if (item.children && Array.isArray(item.children)) {
+					extractCommands(item.children);
+				}
+			});
+		}
+
+		tabJson.forEach(tab => {
+			if (tab.children && Array.isArray(tab.children)) {
+				extractCommands(tab.children);
+			}
+		});
+
+		return Array.from(commands);
 	}
 });
 

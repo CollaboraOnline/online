@@ -30,12 +30,16 @@ function onDemandRenderer(
 		let requestRender = true;
 
 		if (cachedComboboxEntries && cachedComboboxEntries.images[entryId]) {
+			const originalClass = placeholder.classList;
 			window.L.DomUtil.remove(placeholder);
 			placeholder = window.L.DomUtil.create('img', '', parentContainer);
 			const placeholderImg = placeholder as HTMLImageElement;
 			placeholderImg.src = cachedComboboxEntries.images[entryId];
 			placeholderImg.alt = entryText;
 			placeholderImg.title = entryText;
+			originalClass.forEach((className: string) =>
+				placeholderImg.classList.add(className),
+			);
 			requestRender = !cachedComboboxEntries.persistent;
 		}
 

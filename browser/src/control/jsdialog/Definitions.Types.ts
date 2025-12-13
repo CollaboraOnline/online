@@ -61,6 +61,7 @@ interface JSBuilder {
 	updateWidget: (parentContainer: Element, updateJSON: any) => void;
 	executeAction: (parentContainer: Element, actionJSON: any) => void;
 	callback: JSDialogCallback;
+	_defaultCallbackHandlerSendMessage: JSDialogCallback;
 	_defaultCallbackHandler: JSDialogCallback;
 	postProcess: (parentContainer: Element, data: WidgetJSON) => void;
 	setWindowId: (id: WindowId | number) => void;
@@ -72,7 +73,6 @@ interface JSBuilder {
 	_preventDocumentLosingFocusOnClick: (container: Element) => void;
 	_cleanText: (text: string) => string;
 	_expanderHandler: any; // FIXME: use handlers getter instead
-	_makeIdUnique: (id: string) => string;
 }
 
 // widget handler, returns true if child nodes should be still processed by the builder
@@ -331,6 +331,7 @@ interface TreeWidgetJSON extends WidgetJSON {
 	headers: Array<TreeHeaderJSON>; // header columns
 	highlightTerm?: string; // what, if any, entries are we highlighting?
 	ignoreFocus?: boolean; // When true, does't focus to selected item automatically.
+	customEntryRenderer?: boolean;
 }
 
 interface IconViewEntry {

@@ -67,8 +67,11 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Test jumping on large cell
 		cy.cGet(helper.addressInputSelector).focus();
 		cy.cGet(helper.addressInputSelector).clear().type('D7{enter}');
 
-		// Find freeze panes button and force a click. Force because it may not be visible, but we don't care about that in this test.
-		cy.cGet('#layout-freeze-panes-button').click({force: true});
+		// Find freeze panes button and click.
+		cy.cGet('#View-tab-label').click();
+		desktopHelper.getNbIconArrow('FreezePanes').click();
+		desktopHelper.getNbIcon('FreezePanes').last().click();
+		cy.cGet('.jsdialog-overlay').click(); // close popup
 
 		// Scroll down.
 		helper.typeIntoInputField(helper.addressInputSelector, 'Z110');

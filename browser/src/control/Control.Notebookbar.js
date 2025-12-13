@@ -41,6 +41,10 @@ window.L.Control.Notebookbar = window.L.Control.extend({
 		this.map = map;
 		this.additionalShortcutButtons = [];
 
+		if (window.L.Browser.cypressTest) {
+			window.app.allDialogs = this.getListOfUnoCommandsForDialogs();
+		}
+
 		// initialize the model only once, remember updates from core
 		if (this.model.getSnapshot() === null)
 			this.model.fullUpdate(this.getFullJSON(this.HOME_TAB_ID));
@@ -98,9 +102,13 @@ window.L.Control.Notebookbar = window.L.Control.extend({
 					iconTooltip = 'Draw';
 				}
 			}
-			var docLogo = window.L.DomUtil.create('div', iconClass, docLogoHeader);
+			var docLogo = window.L.DomUtil.create('a', iconClass, docLogoHeader);
+
 			$(docLogo).data('id', 'document-logo');
 			$(docLogo).data('type', 'action');
+			docLogo.href = '#';
+			docLogo.target = '_blank';
+
 			if (iconTooltip) {
 				docLogo.setAttribute('data-cooltip', iconTooltip);
 			}
@@ -274,6 +282,10 @@ window.L.Control.Notebookbar = window.L.Control.extend({
 	createShortcutsBar: function() {
 		var shortcutsBar = window.L.DomUtil.create('div', 'notebookbar-shortcuts-bar');
 		$('#main-menu-state').after(shortcutsBar);
+
+		if (window.mode.isDesktop()) {
+			$('#main-menu-state').attr('type', 'hidden');
+		}
 
 		var shortcutsBarData = this.getShortcutsBarData();
 		var toolitems = shortcutsBarData[0].children;
@@ -628,7 +640,8 @@ window.L.Control.Notebookbar = window.L.Control.extend({
 				'text': _('Share'),
 				'command': 'shareas',
 				'inlineLabel': true,
-				'accessibility': { focusBack: false, combination: 'ZS', de: null }
+				'accessibility': { focusBack: false, combination: 'ZS', de: null },
+				'tabIndex': 0,
 			});
 		}
 

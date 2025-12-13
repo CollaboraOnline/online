@@ -26,6 +26,10 @@ img.sidebar.ui-image {
 	height: 44px;
 }
 
+#layoutpanel_icons {
+	width: 100%;
+}
+
 .sidebar.ui-grid {
 	row-gap: 8px;
 }
@@ -286,10 +290,12 @@ button#button2.ui-pushbutton.jsdialog.sidebar {
 	grid-gap: inherit;
 }
 #textorientbox button {
-	min-width: auto;
+	padding: 0 5px !important;
+	min-width: 0 !important;
+	margin-inline-end: 2px !important;
+	margin-inline-start: -8px !important;
 	width: auto;
 }
-
 
 /* Charts */
 
@@ -790,6 +796,8 @@ span.jsdialog.sidebar.ui-treeview-notexpandable {
 	height: 100%;
 }
 
+#sidebar-container,
+#sidebar-container > div,
 #StyleListDeck,
 #StyleListDeck .root-container.jsdialog.sidebar,
 #StyleListDeck .vertical.jsdialog.sidebar,
@@ -799,6 +807,10 @@ span.jsdialog.sidebar.ui-treeview-notexpandable {
 	height: 100%;
 	display: flex;
 	flex-direction: column;
+}
+
+#sidebar-container > div {
+	display: flex !important;
 }
 
 .StyleListPanel .ui-expander-content.jsdialog.sidebar.expanded {

@@ -282,7 +282,7 @@ window.L.Map = window.L.Evented.extend({
 					window.postMobileMessage('hideProgressbar');
 				}
 
-				app.activeDocument.activeView.sendClientVisibleArea(true);
+				app.activeDocument.activeLayout.sendClientVisibleArea(true);
 				app.serverConnectionService.onDocumentLoaded();
 			} else if (this._docLayer && app.sectionContainer) {
 				// remove the comments and changes
@@ -548,7 +548,7 @@ window.L.Map = window.L.Evented.extend({
 
 		if (app.calc.cellCursorRectangle) {
 			const twipsTopLeft = [app.calc.cellCursorRectangle.x1, app.calc.cellCursorRectangle.y1];
-			const cursorInBounds = app.activeDocument.activeView.viewedRectangle.containsPoint(twipsTopLeft);
+			const cursorInBounds = app.activeDocument.activeLayout.viewedRectangle.containsPoint(twipsTopLeft);
 
 			if (cursorInBounds) {
 				return new cool.Point(...twipsTopLeft);
@@ -557,7 +557,7 @@ window.L.Map = window.L.Evented.extend({
 
 		if (docLayer._cellSelectionArea) {
 			const twipsCenter = docLayer._cellSelectionArea.center;
-			const selectionInBounds = app.activeDocument.activeView.viewedRectangle.containsPoint(twipsCenter);
+			const selectionInBounds = app.activeDocument.activeLayout.viewedRectangle.containsPoint(twipsCenter);
 
 			if (selectionInBounds) {
 				return new cool.Point(...twipsCenter);
@@ -663,7 +663,6 @@ window.L.Map = window.L.Evented.extend({
 	},
 
 	setZoom: function (zoom, options, animate) {
-
 		// do not animate zoom when in a cypress test.
 		if (animate && window.L.Browser.cypressTest)
 			animate = false;
@@ -695,7 +694,7 @@ window.L.Map = window.L.Evented.extend({
 		var cssBounds = this.getPixelBounds();
 		var mapUpdater;
 		var runAtFinish;
-		if (this._docLayer && app.file.textCursor.visible && app.activeDocument.activeView.viewedRectangle.containsPoint(app.file.textCursor.rectangle.center)) {
+		if (this._docLayer && app.file.textCursor.visible && app.activeDocument.activeLayout.viewedRectangle.containsPoint(app.file.textCursor.rectangle.center)) {
 			// Calculate new center after zoom. The intent is that the caret
 			// position stays the same.
 			var zoomScale = 1.0 / this.getZoomScale(zoom, this._zoom);
@@ -968,6 +967,34 @@ window.L.Map = window.L.Evented.extend({
 			break;
 		}
 		return zoomPercent;
+	},
+
+	getZoomIndex: function(zoomPercent) {
+		let zoomIndex = 0;
+		switch(zoomPercent) {
+			case 20: zoomIndex = 1; break;
+			case 25: zoomIndex = 2; break;
+			case 30: zoomIndex = 3; break;
+			case 35: zoomIndex = 4; break;
+			case 40: zoomIndex = 5; break;
+			case 50: zoomIndex = 6; break;
+			case 60: zoomIndex = 7; break;
+			case 70: zoomIndex = 8; break;
+			case 85: zoomIndex = 9; break;
+			case 100: zoomIndex = 10; break;
+			case 120: zoomIndex = 11; break;
+			case 150: zoomIndex = 12; break;
+			case 170: zoomIndex = 13; break;
+			case 200: zoomIndex = 14; break;
+			case 235: zoomIndex = 15; break;
+			case 280: zoomIndex = 16; break;
+			case 335: zoomIndex = 17; break;
+			case 400: zoomIndex = 18; break;
+			default:
+			//TODO: calculate the nearest index
+				zoomIndex = 10;
+		}
+		return zoomIndex;
 	},
 
 	getBounds: function () {

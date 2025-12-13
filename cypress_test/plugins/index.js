@@ -5,6 +5,8 @@ var tasks = require('./tasks');
 var tagify = require('cypress-tags');
 var path = require('path');
 var webpackPreprocessor = require('@cypress/webpack-preprocessor');
+const { lighthouse, prepareAudit } = require("@cypress-audit/lighthouse");
+
 
 function plugin(on, config) {
 	if (config.env.COVERAGE_RUN)
@@ -13,23 +15,28 @@ function plugin(on, config) {
 	on('task', {
 		copyFile: tasks.copyFile,
 		getSelectors: tasks.getSelectors,
+		lighthouse: lighthouse(),
 	});
 
 	if (process.env.ENABLE_VIDEO_REC) {
 		config.video = true;
 	}
 
-	if (process.env.ENABLE_CONSOLE_LOG) {
-		require('cypress-log-to-output').install(on, function(type, event) {
-			if (event.level === 'error' || event.type === 'error') {
-				return true;
-			}
-
-			return false;
-		});
-	}
-
 	on('before:browser:launch', function(browser, launchOptions) {
+
+		if (process.env.ENABLE_CONSOLE_LOG) {
+			const logToOutput = require('cypress-log-to-output')
+
+			logToOutput.install(on, function(type, event) {
+				if (event.level === 'error' || event.type === 'error') {
+					return true;
+				}
+				return false;
+			});
+
+			launchOptions = logToOutput.browserLaunchHandler(browser, launchOptions);
+		}
+
 		if (browser.family === 'chromium') {
 			if (process.env.ENABLE_LOGGING) {
 				launchOptions.args.push('--enable-logging=stderr');
@@ -37,6 +44,7 @@ function plugin(on, config) {
 			}
 			launchOptions.args.push('--simulate-outdated-no-au=\'2099-12-31T23:59:59.000000+00:00\'');
 		}
+		prepareAudit(launchOptions);
 
 		return launchOptions;
 	});

@@ -65,13 +65,6 @@ JSDialog.OpenDropdown = function (id, popupParent, entries, innerCallback, popup
 
 		var entry;
 
-		if (entries[i].type === 'json') {
-			// replace old grid with new widget
-			json.children[0] = entries[i].content;
-			if (json.children[0].type === 'grid') json.gridKeyboardNavigation = true;
-			break;
-		}
-
 		switch (entries[i].type) {
 			// DEPRECACTED: legacy plain HTML adapter
 			case 'html':
@@ -94,7 +87,7 @@ JSDialog.OpenDropdown = function (id, popupParent, entries, innerCallback, popup
 			// allows to put regular JSDialog JSON into popup
 			case 'json':
 				entry = entries[i].content;
-				json.gridKeyboardNavigation = true;
+				if (entry.type === 'grid') json.gridKeyboardNavigation = true;
 			break;
 
 			// horizontal separator in menu
@@ -132,8 +125,9 @@ JSDialog.OpenDropdown = function (id, popupParent, entries, innerCallback, popup
 
 	var lastSubMenuOpened = null;
 	var generateCallback = function (targetEntries) {
-		return function(objectType, eventType, object, data) {
-			var pos = data ? parseInt(data.substr(0, data.indexOf(';'))) : null;
+		return function(objectType, eventType, object, data, builder) {
+			if (typeof data == 'number') var pos = data;
+			else var pos = data ? parseInt(data.substr(0, data.indexOf(';'))) : null;
 			var entry = targetEntries && pos !== null ? targetEntries[pos] : null;
 			var subMenuId = object.id + '-' + pos;
 
@@ -181,7 +175,8 @@ JSDialog.OpenDropdown = function (id, popupParent, entries, innerCallback, popup
 			}
 
 			// for multi-level menus last parameter should be used to handle event (it contains selected entry)
-			if (innerCallback && innerCallback(objectType, eventType, object, data, entry))
+			// usually last param is builder see: JSDialogCallback
+			if (innerCallback && innerCallback(objectType, eventType, object, data, entry || builder))
 				return;
 
 			if (eventType === 'selected')
@@ -207,5 +202,7 @@ JSDialog.CloseAllDropdowns = function () {
 };
 
 JSDialog.GetDropdown = function (id) {
-	return document.body.querySelector('#' + _createDropdownId(id));
+	// remember it can get some random numbers due to JSDialog.MakeIdUnique
+	// TODO: use some register for it
+	return document.body.querySelector('[id^="' + id + '"].modalpopup');
 };

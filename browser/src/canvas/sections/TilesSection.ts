@@ -287,7 +287,7 @@ export class TilesSection extends CanvasSectionObject {
 	}
 
 	private drawPageBackgroundWriter (ctx: any) {
-		const viewRectangleTwips = app.activeDocument.activeView.viewedRectangle.toArray();
+		const viewRectangleTwips = app.activeDocument.activeLayout.viewedRectangle.toArray();
 		this.context.fillStyle = this.containerObject.getDocumentBackgroundColor();
 
 		for (let i: number = 0; i < app.file.writer.pageRectangleList.length; i++) {
@@ -312,7 +312,7 @@ export class TilesSection extends CanvasSectionObject {
 	private drawPageBackgroundFileBasedView (ctx: any) {
 		// PDF view supports only same-sized pages for now. So we can use simple math instead of a loop.
 		var partHeightPixels: number = Math.round((this.map._docLayer._partHeightTwips + this.map._docLayer._spaceBetweenParts) * app.twipsToPixels);
-		var visibleBounds: Array<number> = app.activeDocument.activeView.viewedRectangle.pToArray();
+		var visibleBounds: Array<number> = app.activeDocument.activeLayout.viewedRectangle.pToArray();
 		var topVisible: number = Math.floor(visibleBounds[1] / partHeightPixels);
 		var bottomVisible: number = Math.ceil((visibleBounds[1] + visibleBounds[3]) / partHeightPixels);
 
@@ -366,9 +366,9 @@ export class TilesSection extends CanvasSectionObject {
 	}
 
 	private drawForViewLayoutMultiPage() {
-		if (!app.activeDocument.activeView.areViewTilesReady()) return; // Draw after we have all the tiles.
+		if (!app.activeDocument.activeLayout.areViewTilesReady()) return; // Draw after we have all the tiles.
 
-		const view = app.activeDocument.activeView as ViewLayoutMultiPage;
+		const view = app.activeDocument.activeLayout as ViewLayoutMultiPage;
 
 		const visibleCoordList: Array<TileCoordData> = view.getCurrentCoordList();
 
@@ -407,7 +407,7 @@ export class TilesSection extends CanvasSectionObject {
 		// Calculate all this here instead of doing it per tile.
 		var ctx = this.sectionProperties.tsManager._paintContext();
 
-		if (app.activeDocument && app.activeDocument.activeView.type === 'ViewLayoutMultiPage') {
+		if (app.activeDocument && app.activeDocument.activeLayout.type === 'ViewLayoutMultiPage') {
 			this.drawPageBackgrounds(ctx);
 			this.drawForViewLayoutMultiPage();
 			return;

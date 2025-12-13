@@ -288,6 +288,10 @@ window.app = {
 	events: null, // See app/DocEvents.ts for details.
 
 	showNavigator: false, // ShowNavigator class instance is assigned to this.
+
+	// Below are only used for Cypress tests
+	allDialogs: undefined, // List of UNO commands for dialogs
+	a11yValidator: undefined, // Accessibility validator
 };
 
 var activateValidation = false;
