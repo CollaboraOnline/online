@@ -102,11 +102,11 @@
 #include <BgSaveWatchDog.hpp>
 #endif
 
-#if MOBILEAPP
+if(Util::isMobileApp){
 #include "COOLWSD.hpp"
 #ifndef IOS
 #include "SetupKitEnvironment.hpp"
-#endif
+}
 #endif
 
 #ifdef IOS
@@ -128,10 +128,10 @@ using JsonUtil::makePropertyValue;
 
 extern "C" { void dump_kit_state(void); /* easy for gdb */ }
 
-#if MOBILEAPP
-extern std::map<std::string, std::shared_ptr<DocumentBroker>> DocBrokers;
+if(Util::isMobileApp){
+      extern std::map<std::string, std::shared_ptr<DocumentBroker>> DocBrokers;
 extern std::mutex DocBrokersMutex;
-#endif
+}
 
 #if !MOBILEAPP
 
@@ -4023,15 +4023,15 @@ void lokit_main(
 
         LOG_INF("Kit unipoll loop run terminated.");
 
-#if MOBILEAPP
-        SocketPoll::wakeupWorld();
+if(Util::IsMobileApp){
+    SocketPoll::wakeupWorld();
 #else
         // Trap the signal handler, if invoked,
         // to prevent exiting.
         LOG_INF("Kit process for Jail [" << jailId << "] finished.");
 
         // Let forkit handle the jail cleanup.
-#endif
+}
 
 #else // IOS
         std::unique_lock<std::mutex> lock(mainKit->terminationMutex);

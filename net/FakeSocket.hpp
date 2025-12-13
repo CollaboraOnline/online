@@ -13,9 +13,8 @@
 
 #include "Util.hpp"
 
-#if MOBILEAPP
-
-#include <string>
+if(Util::IsMobileApp){
+    #include <string>
 
 #include <poll.h>
 
@@ -127,8 +126,7 @@ inline int fakeSocketClose(int)
     assert(Util::isMobileApp() && "Never used in non-mobile builds");
     return -1;
 }
-
-#endif // !MOBILEAPP
+}
 
 inline ssize_t fakeSocketWriteQueue(int fd, const void *buf, size_t nbytes)
 {

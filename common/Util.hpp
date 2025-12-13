@@ -1181,9 +1181,12 @@ int main(int argc, char**argv)
 
     constexpr bool isMobileApp()
     {
-#ifdef MOBILEAPP
-        return MOBILEAPP;
-#else
+
+#ifdef
+    return MOBILEAPP;
+#endif
+
+#ifdef
         return false;
 #endif
     }

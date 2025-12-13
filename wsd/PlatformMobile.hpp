@@ -9,7 +9,7 @@
  */
 #pragma once
 
-#if MOBILEAPP
+if(Util::IsMobileApp){
 
 #include <Kit.hpp>
 #ifdef IOS
@@ -22,4 +22,4 @@
 #include "wasmapp.hpp"
 #endif
 
-#endif // MOBILEAPP
+}

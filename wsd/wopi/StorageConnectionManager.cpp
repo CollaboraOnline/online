@@ -11,9 +11,9 @@
 
 #include <config.h>
 
-#if MOBILEAPP
+if(Util::IsMobileApp()){
 #error "Mobile doesn't need or support WOPI"
-#endif
+}
 
 #include "StorageConnectionManager.hpp"
 

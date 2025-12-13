@@ -2640,7 +2640,7 @@ const std::string& ClientRequestDispatcher::getFileContent(const std::string& fi
 /// Process the discovery.xml file and return as string.
 std::string ClientRequestDispatcher::getDiscoveryXML()
 {
-#if MOBILEAPP
+if(Util::IsMobileApp){
     // not needed for mobile
     return std::string();
 #else
@@ -2727,7 +2727,7 @@ std::string ClientRequestDispatcher::getDiscoveryXML()
     Poco::XML::DOMWriter writer;
     writer.writeNode(ostrXML, docXML);
     return ostrXML.str();
-#endif
+}
 }
 
 void ClientRequestDispatcher::CleanupRequestVettingStations()
