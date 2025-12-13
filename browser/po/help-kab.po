@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-11-17 08:08+0200\n"
-"PO-Revision-Date: 2025-12-09 11:58+0000\n"
+"PO-Revision-Date: 2025-12-11 21:00+0000\n"
 "Last-Translator: Amadɣas <massiin@proton.me>\n"
 "Language-Team: Kabyle <https://hosted.weblate.org/projects/collabora-online/"
 "help/kab/>\n"
@@ -902,9 +902,8 @@ msgid ""
 msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:104-38
-#, fuzzy
 msgid "<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Del</kbd>"
-msgstr "Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Kkes"
+msgstr "<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Kkes</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:104-126
 msgid ""
@@ -912,15 +911,17 @@ msgid ""
 "class=\"kbd--plus\">+</span><kbd>Arrow key</kbd> merges cell with "
 "neighboring cell"
 msgstr ""
+"3 n tasinin deg uskar n tukksa, Tasarut n uneccab tekkes izirigen/ijga, <kbd>"
+"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Tasarut n Uneccab</kbd> "
+"smezdi tibniqin akked tebniqt n lǧar"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:105-38
-#, fuzzy
 msgid ""
 "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</kbd><span class="
 "\"kbd--plus\">+</span><kbd>Del</kbd>"
 msgstr ""
-"Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</kbd><span class=\"kbd"
-"--plus\">+</span><kbd>Kkes"
+"<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</kbd><span "
+"class=\"kbd--plus\">+</span><kbd>Kkes</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td.p:105-197
 msgid ""
@@ -928,6 +929,9 @@ msgid ""
 "current sentence is deleted. If the cursor is at the end of a cell, and no "
 "whole cell is selected, the contents of the next cell are deleted."
 msgstr ""
+"Ma yella ulac tabniqt yettwafernen, aḍris si teḥnaccaḍt ar tagara n tefyirt "
+"tamirant yettwakkes. Ma yella taḥnaccaṭ di taggara n tebniqt, arnu ulac "
+"tabniqt merra yettwafernen, agbur n tebniqt i d-iteddun ad yettwakkes."
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td.p:106-1
 msgid ""
