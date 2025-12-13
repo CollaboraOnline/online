@@ -161,10 +161,18 @@ class SocketBase {
 	}
 
 	protected getWebSocketBaseURI(map: MapInterface): string {
-		return window.makeWsUrlWopiSrc(
-			'/cool/',
-			map.options.doc + '?' + $.param(map.options.docParams),
-		);
+		if (window.enableExperimentalFeatures) {
+			// Use the new Cool WS URL.
+			return window.makeWopiCoolWsUrl(
+				window.makeWsUrl('/cool/'),
+				$.param(map.options.docParams),
+			);
+		} else {
+			return window.makeWsUrlWopiSrc(
+				'/cool/',
+				map.options.doc + '?' + $.param(map.options.docParams),
+			);
+		}
 	}
 
 	public connect(socket: SockInterface): void {

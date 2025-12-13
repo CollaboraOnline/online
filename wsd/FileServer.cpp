@@ -1499,6 +1499,7 @@ static const std::string WOPI_SETTING_BASE_URL = "%WOPI_SETTING_BASE_URL%";
 static const std::string IFRAME_TYPE = "%IFRAME_TYPE%";
 static const std::string UI_THEME = "%UI_THEME%";
 static const std::string VERSION = "%VERSION%";
+static const std::string EXPERIMENTAL_FEATURES = "%EXPERIMENTAL_FEATURES%";
 
 /// Per user request variables.
 /// Holds access_token, css_variables, postmessage_origin, etc.
@@ -1716,6 +1717,8 @@ FileServerRequestHandler::ResourceAccessDetails FileServerRequestHandler::prepro
                          checkFileInfoToJSON(urv[CHECK_FILE_INFO_OVERRIDE]));
     Poco::replaceInPlace(preprocess, WOPI_SETTING_BASE_URL, urv[WOPI_SETTING_BASE_URL]);
     Poco::replaceInPlace(preprocess, std::string("%WOPI_HOST_ID%"), form.get("host_session_id", ""));
+    Poco::replaceInPlace(preprocess, EXPERIMENTAL_FEATURES,
+                         std::string(EnableExperimental ? "true" : "false"));
 
     const auto& config = Application::instance().config();
 
