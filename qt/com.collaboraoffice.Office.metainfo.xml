@@ -14,20 +14,20 @@
  <url type="vcs-browser">https://github.com/CollaboraOnline/online</url>
  <screenshots>
   <screenshot type="default">
-   <image>https://col.la/codelinuxwriter</image>
-   <caption>Sample Writer document</caption>
+   <image>https://www.collaboraoffice.com/downloads/collabora-office-screenshots/writer-calc-impress-2025-11-26.png</image>
+   <caption>Spreadsheets, documents, and presentations</caption>
   </screenshot>
   <screenshot>
-   <image>https://col.la/codelinuxcalc</image>
-   <caption>Sample Calc document</caption>
+   <image>https://www.collaboraoffice.com/downloads/collabora-office-screenshots/calc-2025-11-26.png</image>
+   <caption>Sample spreadsheet document</caption>
   </screenshot>
   <screenshot>
-   <image>https://col.la/codelinuximpress</image>
-   <caption>Sample Impress document</caption>
+   <image>https://www.collaboraoffice.com/downloads/collabora-office-screenshots/writer-2025-11-26.png</image>
+   <caption>Sample text document</caption>
   </screenshot>
   <screenshot>
-   <image>https://col.la/codelinuxdraw</image>
-   <caption>Sample Draw document</caption>
+   <image>https://www.collaboraoffice.com/downloads/collabora-office-screenshots/backstage-2025-11-26.png</image>
+   <caption>The Backstage View</caption>
   </screenshot>
  </screenshots>
  <developer id="com.collaboraoffice">
