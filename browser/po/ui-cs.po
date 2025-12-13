@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-12-08 11:25+0100\n"
-"PO-Revision-Date: 2025-12-09 11:58+0000\n"
+"PO-Revision-Date: 2025-12-09 18:41+0000\n"
 "Last-Translator: Stanislav Horáček <stanislav.horacek@gmail.com>\n"
 "Language-Team: Czech <https://hosted.weblate.org/projects/collabora-online/"
 "ui/cs/>\n"
@@ -3365,23 +3365,24 @@ msgstr "Nezaznamenány žádné problémy s ověřením SSL"
 msgid ""
 "Documents are not effectively contained: missing capabilities or namespaces."
 msgstr ""
-"Dokumenty nejsou obsaženy efektivně: chybí schopnosti nebo jmenné prostory."
+"U dokumentů se neuplatňuje umístění do kontejneru: chybí capabilities nebo "
+"jmenné prostory."
 
 #: src/control/Control.ServerAuditDialog.ts:77
 msgid "Each document is securely contained"
-msgstr "Každý dokument je bezpečně obsažen"
+msgstr "Každý dokument je bezpečně umístěn v kontejneru"
 
 #: src/control/Control.ServerAuditDialog.ts:83
 msgid ""
 "BPF filtering of potentially risky system calls (seccomp) is not enabled; a "
 "security hazard."
 msgstr ""
-"BFP filtrování potenciálně riskantních systémových volání (seccomp) není "
-"zapnuté – to je hazard se zabezpečením."
+"Není zapnuté BFP filtrování potenciálně rizikových systémových volání "
+"(seccomp), což představuje bezpečnostní hrozbu."
 
 #: src/control/Control.ServerAuditDialog.ts:88
 msgid "System call security filtering enabled"
-msgstr "bezpečnostní filtrování systémových volání zapnuto"
+msgstr "Bezpečnostní filtrování systémových volání je zapnuté"
 
 #: src/control/Control.ServerAuditDialog.ts:95
 msgid ""
@@ -3397,39 +3398,40 @@ msgstr "Hardwarové zdroje nejsou dostatečné pro optimální běh"
 
 #: src/control/Control.ServerAuditDialog.ts:109
 msgid "Slow Kit jail setup with copying, cannot bind-mount."
-msgstr "Slow Kit jail nastavení s kopírováním – není možné provést bind-mount."
+msgstr ""
+"Slow kit jail je nastavený s kopírováním, není možné provést bind-mount."
 
 #: src/control/Control.ServerAuditDialog.ts:113
 msgid "Fast kit jail bind mounting enabled"
-msgstr "Fast kit jail bind připojování (mount) zapnuto"
+msgstr "Fast kit jail bind připojování (mount) je zapnuté"
 
 #: src/control/Control.ServerAuditDialog.ts:118
 msgid "Poorly performing proxying of all network requests."
-msgstr "Bídně prováděné obsluhování všech síťových požadavků přes proxy."
+msgstr "Pomalé obsluhování všech síťových požadavků přes proxy."
 
 #: src/control/Control.ServerAuditDialog.ts:122
 msgid "Direct network connection"
-msgstr "přímé síťové připojení"
+msgstr "Přímé síťové připojení"
 
 #: src/control/Control.ServerAuditDialog.ts:128
 msgid "The IsAdminUser property is not set by integration"
-msgstr "Integrací není nastavena vlastnost IsAdminUser"
+msgstr "Integračním softwarem není nastavena vlastnost IsAdminUser"
 
 #: src/control/Control.ServerAuditDialog.ts:134
 msgid ""
 "Used deprecated is_admin field, integration should use IsAdminUser property "
 "instead"
 msgstr ""
-"Používá se zastaralé pole is_admin, integrace by místo něj měla použít "
-"vlastnost IsAdminUser"
+"Používá se zastaralé pole is_admin, integrační software by místo něj měl "
+"použít vlastnost IsAdminUser"
 
 #: src/control/Control.ServerAuditDialog.ts:140
 msgid "The IsAdminUser user property is set by integration"
-msgstr "Integrací je nastavena uživatelská vlastnost IsAdminUser"
+msgstr "Integračním softwarem je nastavena uživatelská vlastnost IsAdminUser"
 
 #: src/control/Control.ServerAuditDialog.ts:148
 msgid "PostMessage API is initialized"
-msgstr "PostMessage API bylo inicializováno"
+msgstr "PostMessage API je inicializované"
 
 #: src/control/Control.ServerAuditDialog.ts:153
 msgid "Integrator is not ready for PostMessage calls"
@@ -3461,7 +3463,7 @@ msgstr "Upozornění:"
 
 #: src/control/Control.ServerAuditDialog.ts:373
 msgid "Check warnings of your server"
-msgstr "Zkontrolujte varování vašeho serveru"
+msgstr "Zkontrolujte upozornění serveru"
 
 #: src/control/Control.ServerAuditDialog.ts:374
 msgid "OPEN"
@@ -4458,7 +4460,7 @@ msgstr "Na tomto místě se zobrazí nadpisy a objekty přidané do dokumentu"
 
 #: src/app/SocketBase.ts:189
 msgid "Oops, there is a problem connecting to {productname}: "
-msgstr "Došlo k problému při připojování k {productname}: "
+msgstr "Při připojování k {productname} došlo k problému: "
 
 #: src/core/Socket.js:499
 msgid "Server is now reachable. We have to refresh the page now."
@@ -5002,16 +5004,15 @@ msgstr ""
 
 #: src/map/Clipboard.js:318
 msgid "Failed to download clipboard, please re-copy"
-msgstr "Nepodařilo se stáhnout si obsah schránky – zkuste zkopírovat znovu"
+msgstr "Nepodařilo se stáhnout obsah schránky, zkuste zkopírovat znovu"
 
 #: src/map/Clipboard.js:1343
 msgid ""
 "Your browser has very limited access to the clipboard, so please use the "
 "paste buttons on your on-screen keyboard instead."
 msgstr ""
-"Vámi využívaný prohlížeč má velmi omezený přístup ke schránce, proto namísto "
-"toho používejte tlačítka pro vkládání, nacházející se na „klávesnici na "
-"obrazovce“."
+"Prohlížeč má velmi omezený přístup ke schránce, proto používejte tlačítka "
+"pro vkládání nacházející se na klávesnici na obrazovce."
 
 #: src/map/Clipboard.js:1399
 msgid ""
@@ -5019,7 +5020,7 @@ msgid ""
 "wait for the current download or cancel it before starting a new one"
 msgstr ""
 "Stahování za účelem rozsáhlého kopírování/vkládání už začalo. Počkejte na "
-"jeho dokončení, nebo ho před zahájením nového ho nejprve zrušte."
+"jeho dokončení, nebo ho před zahájením nového nejprve zrušte."
 
 #: src/map/Clipboard.js:1421
 msgid "Paste from this document"
@@ -5039,7 +5040,7 @@ msgstr "Následující kombinací zobrazíte další možnosti:"
 
 #: src/map/Clipboard.js:1466
 msgid "Close popup to ignore paste special"
-msgstr "Zavřením okna operaci „vložení jinak“ ignorujete"
+msgstr "Zavřením okna operaci „vložit jinak“ ignorujete"
 
 #: src/map/Map.js:204
 msgid "Initializing..."
@@ -5132,12 +5133,12 @@ msgstr "Ukončit prezentaci"
 #: src/map/handler/Map.SlideShow.js:295
 #: src/slideshow/SlideShowPresenter.ts:1081
 msgid "Already presenting"
-msgstr "Už je prezentováno"
+msgstr "Už se prezentuje"
 
 #: src/map/handler/Map.SlideShow.js:296
 #: src/slideshow/SlideShowPresenter.ts:1082
 msgid "You are already presenting this document"
-msgstr "Tento dokument už prezentujete"
+msgstr "Tento dokument se už prezentuje"
 
 #: src/map/handler/Map.SlideShow.js:306
 #: src/slideshow/SlideShowPresenter.ts:1119
@@ -5175,7 +5176,7 @@ msgstr "Pozastaveno… (%SECONDS%)"
 
 #: src/slideshow/PresenterConsole.js:29
 msgid "Current Slide"
-msgstr "Stávající snímek"
+msgstr "Aktuální snímek"
 
 #: src/slideshow/PresenterConsole.js:30
 msgid "Next Slide"
