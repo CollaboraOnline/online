@@ -29,12 +29,11 @@
 #define LOK_USE_UNSTABLE_API
 #include <LibreOfficeKit/LibreOfficeKit.hxx>
 
-#if MOBILEAPP
+if(Util:IsMobileApp){
 
 #include "ClientSession.hpp"
 #include "DocumentBroker.hpp"
-
-#endif
+}
 
 void lokit_main(
 #if !MOBILEAPP

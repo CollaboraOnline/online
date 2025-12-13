@@ -3977,7 +3977,6 @@ std::size_t DocumentBroker::removeSession(const std::shared_ptr<ClientSession>& 
 
         // In theory, we almost could do this here:
 
-        // #if MOBILEAPP
         // There is always just one "session" in a mobile app, and the same one process continues
         // running, so no need to delay the disconnectSessionInternal() call. Doing it like this
         // will also get rid of the docbroker and lokit_main thread for the document quicker.
@@ -5972,8 +5971,8 @@ void DocumentBroker::endSwitchingToOnline()
 #endif // !MOBILEAPP && !WASMAPP
 
 // not beautiful - but neither is editing mobile project files.
-#if MOBILEAPP
+if(Util::IsMobileApp){
 #  include "Exceptions.cpp"
-#endif
+}
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

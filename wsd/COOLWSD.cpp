@@ -150,9 +150,8 @@ std::map<std::string, std::chrono::steady_clock::time_point> LastSubForKitBroker
 Poco::AutoPtr<Poco::Util::XMLConfiguration> KitXmlConfig;
 std::string LoggableConfigEntries;
 
-#if MOBILEAPP
-
-// Or can this be retrieved in some other way?
+if(Util::IsMobileApp){
+    // Or can this be retrieved in some other way?
 int PrisonerServerSocketFD;
 
 #else // MOBILEAPP
@@ -164,8 +163,7 @@ std::shared_ptr<http::Session> FetchHttpSession;
 #if ENABLE_DEBUG
 std::chrono::milliseconds careerSpanMs(std::chrono::milliseconds::zero());
 #endif
-
-#endif // !MOBILEAPP
+}
 
 /// The timeout for a child to spawn, initially high, then reset to the default.
 std::atomic<std::chrono::milliseconds> ChildSpawnTimeoutMs =
@@ -895,11 +893,11 @@ private:
 /// And also cleans up and balances the correct number of children.
 static std::shared_ptr<PrisonPoll> PrisonerPoll;
 
-#if MOBILEAPP
-#ifndef IOS
+if(Util::IsMobileApp){
+    #ifndef IOS
 std::mutex COOLWSD::lokit_main_mutex;
 #endif
-#endif
+}
 
 std::shared_ptr<ChildProcess> getNewChild_Blocks(const std::shared_ptr<SocketPoll>& destPoll,
                                                  const std::string& configId,
@@ -3249,9 +3247,9 @@ void COOLWSDServer::stopPrisoners()
 
 void COOLWSDServer::start(std::shared_ptr<ServerSocket>&& serverSocket)
 {
-#if MOBILEAPP
+if(Util::IsMobileApp){
     coolwsd_server_socket_fd = serverSocket->getFD();
-#endif
+}
 
     _acceptPoll.startThread();
     _acceptPoll.insertNewSocket(std::move(serverSocket));

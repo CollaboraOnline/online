@@ -93,11 +93,11 @@ public:
 
     std::string getSubURLForEndpoint(const std::string &path) const
     {
-#if MOBILEAPP
+if(Util::IsMobileApp){
         return std::string("cool:") + _pathPlus + path;
 #else
         return std::string("http") + (_ssl ? "s" : "") + "://" + _schemeAuthority + _pathPlus + path;
-#endif
+    }
     }
 };
 

@@ -11,9 +11,8 @@
 
 #include "config.h"
 
-#if MOBILEAPP
-
-#include "MobileApp.hpp"
+if (Util::isMobileApp()) {
+    #include "MobileApp.hpp"
 
 #include <cassert>
 #include <map>
@@ -51,7 +50,6 @@ void DocumentData::deallocate(unsigned docId)
     delete p->second;
     idToDocDataMap.erase(docId);
 }
-
-#endif
+}
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

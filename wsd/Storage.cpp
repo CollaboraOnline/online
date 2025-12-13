@@ -294,10 +294,10 @@ std::unique_ptr<LocalStorage::LocalFileInfo> LocalStorage::getLocalFileInfo()
     const std::string userId = std::to_string(LastLocalStorageId++);
     std::string userNameString;
 
-#if MOBILEAPP && !WASMAPP
+if(Util::IsMobileApp()){
     if (user_name != nullptr)
         userNameString = std::string(user_name);
-#endif
+}
     if (userNameString.empty())
         userNameString = "LocalUser#" + userId;
 

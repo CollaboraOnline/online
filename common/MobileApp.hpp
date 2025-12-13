@@ -11,9 +11,8 @@
 
 #pragma once
 
-#if MOBILEAPP
-
-#define LIBO_INTERNAL_ONLY
+if (Util::isMobileApp()) {
+    #define LIBO_INTERNAL_ONLY
 #include <LibreOfficeKit/LibreOfficeKit.hxx>
 
 #include <Storage.hpp>
@@ -91,6 +90,5 @@ public:
     };
 };
 
-#endif
-
+}
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

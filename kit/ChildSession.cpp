@@ -1050,7 +1050,7 @@ bool ChildSession::loadDocument(const StringVector& tokens)
 // attempt to shutdown threads, fork and execute in the background
 bool ChildSession::saveDocumentBackground([[maybe_unused]] const StringVector& tokens)
 {
-#if MOBILEAPP
+if(Util::IsMobileApp){
     return false;
 #else
     LOG_TRC("Attempting background save");
@@ -1076,7 +1076,7 @@ bool ChildSession::saveDocumentBackground([[maybe_unused]] const StringVector& t
 
     LOG_TRC("saveDocumentBackground returns successful start.");
     return true;
-#endif // !MOBILEAPP
+}
 }
 
 bool ChildSession::sendFontRendering(const StringVector& tokens)

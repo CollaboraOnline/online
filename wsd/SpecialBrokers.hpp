@@ -11,9 +11,9 @@
 
 #pragma once
 
-#if MOBILEAPP
+if(Util::IsMobileApp()){
 #error This file should be excluded from Mobile App builds
-#endif // MOBILEAPP
+}
 
 #include <wsd/DocumentBroker.hpp>
 
