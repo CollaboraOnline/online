@@ -8,11 +8,11 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-12-08 11:25+0100\n"
-"PO-Revision-Date: 2025-11-28 06:43+0000\n"
+"PO-Revision-Date: 2025-12-13 18:47+0000\n"
 "Last-Translator: Priit Jõerüüt <jrthwlate@users.noreply.hosted.weblate.org>\n"
-"Language-Team: Estonian <https://hosted.weblate.org/projects/"
-"collabora-online/ui/et/>\n"
-"Language: \n"
+"Language-Team: Estonian <https://hosted.weblate.org/projects/collabora-"
+"online/ui/et/>\n"
+"Language: et\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -252,7 +252,7 @@ msgstr ""
 
 #: admin/admin.strings.js:67
 msgid "License"
-msgstr ""
+msgstr "Litsents"
 
 #: admin/admin.strings.js:68 src/control/Control.Menubar.ts:421
 #: src/control/Control.Menubar.ts:604 src/control/Control.Menubar.ts:743
@@ -265,19 +265,19 @@ msgstr "Teave"
 
 #: admin/src/AdminClusterOverview.js:105
 msgid "CPU History"
-msgstr ""
+msgstr "Protsessori ajalugu"
 
 #: admin/src/AdminClusterOverview.js:116
 msgid "Memory History"
-msgstr ""
+msgstr "Mäluajalugu"
 
 #: admin/src/AdminClusterOverview.js:356
 msgid "Memory"
-msgstr ""
+msgstr "Mälu"
 
 #: admin/src/AdminClusterOverview.js:540
 msgid "Please wait kubernetes cluster is scaling..."
-msgstr ""
+msgstr "Palun oota, kuni kubernetese klaster skaleerub..."
 
 #: admin/src/AdminClusterOverview.js:550 admin/src/AdminSocketOverview.js:420
 msgid "Failed to set jwt authentication cookie over insecure connection"
@@ -289,7 +289,7 @@ msgstr ""
 
 #: admin/src/AdminClusterOverview.js:558 admin/src/AdminSocketOverview.js:429
 msgid "Warning"
-msgstr ""
+msgstr "Hoiatus"
 
 #: admin/src/AdminClusterOverview.js:560 admin/src/AdminSocketBase.js:63
 #: admin/src/AdminSocketBase.js:74 admin/src/AdminSocketOverview.js:108
@@ -348,7 +348,7 @@ msgstr "Saadetud"
 
 #: admin/src/AdminSocketAnalytics.js:255
 msgid "Connections"
-msgstr ""
+msgstr "Ühendused"
 
 #: admin/src/AdminSocketBase.js:62
 msgid "Server has been shut down; please reload the page."
@@ -356,7 +356,7 @@ msgstr ""
 
 #: admin/src/AdminSocketBase.js:72 admin/src/AdminSocketBase.js:73
 msgid "Connection error"
-msgstr ""
+msgstr "Ühenduse viga"
 
 #: admin/src/AdminSocketOverview.js:106 admin/src/AdminSocketSettings.js:45
 msgid "Confirmation"
@@ -832,9 +832,8 @@ msgid "Something went wrong while loading Document settings."
 msgstr ""
 
 #: admin/src/integrator/Xcu.ts:312
-#, fuzzy
 msgid "Document Settings"
-msgstr "Dokumendi allkirjastamine"
+msgstr "Dokumendi seadistused"
 
 #: admin/src/integrator/Xcu.ts:363
 msgid "Select a tab to view settings."
@@ -990,7 +989,7 @@ msgstr ""
 
 #: src/canvas/sections/CommentListSection.ts:1541 src/core/Socket.js:1259
 msgid "Overwrite"
-msgstr ""
+msgstr "Kirjuta üle"
 
 #: src/canvas/sections/CommentListSection.ts:1542
 msgid "Update"
@@ -1284,9 +1283,8 @@ msgid "Blank Spreadsheet"
 msgstr ""
 
 #: src/control/Control.BackstageView.ts:872
-#, fuzzy
 msgid "Blank Presentation"
-msgstr "Täisekraanil esitlus"
+msgstr "Tühi esitlus"
 
 #: src/control/Control.BackstageView.ts:877
 msgid "Blank Document"
@@ -1713,9 +1711,8 @@ msgid "Expand Formula Bar"
 msgstr ""
 
 #: src/control/Control.FormulaBarJSDialog.js:19
-#, fuzzy
 msgid "Function Wizard"
-msgstr "Funktsioon"
+msgstr "Funktsioonide nõustaja"
 
 #: src/control/Control.FormulaBarJSDialog.js:75
 msgid "Select Function"
@@ -1770,11 +1767,11 @@ msgstr ""
 
 #: src/control/Control.JSDialogBuilder.js:543
 msgid "Quadratic"
-msgstr ""
+msgstr "Ruudukujuline"
 
 #: src/control/Control.JSDialogBuilder.js:546
 msgid "Square"
-msgstr ""
+msgstr "Ruut"
 
 #: src/control/Control.JSDialogBuilder.js:549
 msgid "Fixed size"
@@ -1975,9 +1972,8 @@ msgstr ""
 #: src/control/Control.NotebookbarImpress.js:438
 #: src/control/Control.NotebookbarWriter.js:412
 #: src/map/handler/Map.Settings.ts:73
-#, fuzzy
 msgid "Options"
-msgstr "Valik"
+msgstr "Valikud"
 
 #: src/control/Control.Menubar.ts:123 src/control/Control.Menubar.ts:462
 #: src/control/Control.Menubar.ts:629 src/control/Control.Menubar.ts:777
@@ -2446,7 +2442,7 @@ msgstr ""
 #: src/control/Control.Menubar.ts:1634 src/control/Control.Toolbar.js:247
 #: src/control/jsdialog/Definitions.Menu.ts:2100
 msgid "More..."
-msgstr ""
+msgstr "Veel..."
 
 #: src/control/Control.Menubar.ts:1976
 msgid "Use Compact view"
@@ -2481,7 +2477,7 @@ msgstr "Näita otsinguriba"
 #: src/control/Control.MobileBottomBar.js:37
 #: src/control/Control.TopToolbar.js:145
 msgid "Borders"
-msgstr ""
+msgstr "Äärised"
 
 #: src/control/Control.MobileSearchBar.ts:28
 msgid "Hide the search bar"
@@ -2653,14 +2649,12 @@ msgid "Page Layout"
 msgstr ""
 
 #: src/control/Control.NotebookbarCalc.js:48
-#, fuzzy
 msgid "Formulas"
-msgstr "Valem"
+msgstr "Valemid"
 
 #: src/control/Control.NotebookbarCalc.js:54
-#, fuzzy
 msgid "Data"
-msgstr "Kuupäev"
+msgstr "Andmed"
 
 #: src/control/Control.NotebookbarCalc.js:60
 #: src/control/Control.NotebookbarDraw.js:82
@@ -2680,9 +2674,8 @@ msgstr ""
 #: src/control/Control.NotebookbarDraw.js:101
 #: src/control/Control.NotebookbarImpress.js:129
 #: src/control/Control.NotebookbarWriter.js:88
-#, fuzzy
 msgid "Shape"
-msgstr "Jaga"
+msgstr "Kuju"
 
 #: src/control/Control.NotebookbarCalc.js:79
 #: src/control/Control.NotebookbarDraw.js:108
@@ -2696,9 +2689,8 @@ msgstr ""
 #: src/control/Control.NotebookbarDraw.js:115
 #: src/control/Control.NotebookbarImpress.js:150
 #: src/control/Control.NotebookbarWriter.js:102
-#, fuzzy
 msgid "View"
-msgstr "Vaatamisi"
+msgstr "Vaata"
 
 #: src/control/Control.NotebookbarCalc.js:92
 #: src/control/Control.NotebookbarCalc.js:1908
@@ -3109,9 +3101,8 @@ msgstr ""
 #: src/control/Control.NotebookbarCalc.js:2721
 #: src/control/Control.NotebookbarImpress.js:1977
 #: src/control/Control.NotebookbarWriter.js:2209
-#, fuzzy
 msgid "Comments"
-msgstr "Komentaar"
+msgstr "Kommentaarid"
 
 #: src/control/Control.NotebookbarCalc.js:2827
 msgid "Format Cells"
@@ -3475,20 +3466,20 @@ msgstr "Keskmine"
 
 #: src/control/Control.StatusBar.js:192
 msgid "CountA"
-msgstr ""
+msgstr "LoendaA"
 
 #: src/control/Control.StatusBar.js:193
 #: src/control/jsdialog/Definitions.Menu.ts:166
 msgid "Count"
-msgstr ""
+msgstr "Loenda"
 
 #: src/control/Control.StatusBar.js:194
 msgid "Maximum"
-msgstr ""
+msgstr "Maksimum"
 
 #: src/control/Control.StatusBar.js:195
 msgid "Minimum"
-msgstr ""
+msgstr "Miinimum"
 
 #: src/control/Control.StatusBar.js:196
 #: src/control/jsdialog/Definitions.Menu.ts:162
@@ -3594,7 +3585,7 @@ msgstr ""
 #: src/control/Control.UIManager.ts:367
 #: src/control/jsdialog/Widget.HTMLContent.ts:46
 msgid "Read-only"
-msgstr ""
+msgstr "Ainult loetav"
 
 #: src/control/Control.UIManager.ts:368
 #: src/control/jsdialog/Widget.HTMLContent.ts:47
@@ -3678,7 +3669,7 @@ msgstr ""
 
 #: src/control/Control.Zotero.js:246 src/core/Socket.js:1175
 msgid "Loading..."
-msgstr ""
+msgstr "Laadin..."
 
 #: src/control/Control.Zotero.js:257 src/control/Control.Zotero.js:454
 #: src/slideshow/PresenterConsole.js:31
@@ -3689,9 +3680,8 @@ msgstr ""
 #: src/control/Control.Zotero.js:270 src/control/Control.Zotero.js:469
 #: src/slideshow/PresenterConsole.js:32
 #: src/slideshow/SlideShowPresenter.ts:706
-#, fuzzy
 msgid "Next"
-msgstr "Tekst"
+msgstr "Järgmine"
 
 #: src/control/Control.Zotero.js:292
 msgid "Language:"
@@ -3899,15 +3889,15 @@ msgstr ""
 
 #: src/control/Toolbar.js:253 src/control/Toolbar.js:266
 msgid "Downloading..."
-msgstr ""
+msgstr "Allalaadimisel..."
 
 #: src/control/Toolbar.js:282 src/control/jsdialog/Widget.HTMLContent.ts:181
 msgid "Saving..."
-msgstr ""
+msgstr "Salvestan..."
 
 #: src/control/Toolbar.js:301
 msgid "Renaming..."
-msgstr ""
+msgstr "Muudan nime..."
 
 #: src/control/VRuler.ts:374
 msgid "Top Margin"
@@ -4426,7 +4416,7 @@ msgstr ""
 
 #: src/core/Socket.js:505
 msgid "RELOAD"
-msgstr ""
+msgstr "LAADI UUESTI"
 
 #: src/core/Socket.js:518
 msgid "Cluster configuration warning"
@@ -4514,7 +4504,7 @@ msgstr ""
 
 #: src/core/Socket.js:1051
 msgid "Someone"
-msgstr ""
+msgstr "Keegi"
 
 #: src/core/Socket.js:1052
 msgid "{username} saved this document as {filename}. Do you want to join?"
@@ -4530,7 +4520,7 @@ msgstr ""
 
 #: src/core/Socket.js:1175
 msgid "Connecting..."
-msgstr ""
+msgstr "Ühendamisel..."
 
 #: src/core/Socket.js:1190
 msgid "Server is shutting down"
@@ -4546,7 +4536,7 @@ msgstr ""
 
 #: src/core/Socket.js:1258
 msgid "Discard"
-msgstr ""
+msgstr "Loobu"
 
 #: src/core/Socket.js:1270
 msgid "Save to new file"
@@ -4570,7 +4560,7 @@ msgstr ""
 
 #: src/core/Socket.js:1563
 msgid "Reconnecting..."
-msgstr ""
+msgstr "Uuesti ühendamisel..."
 
 #: src/core/Socket.js:1573
 msgid "The server has been disconnected."
