@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-12-08 11:25+0100\n"
-"PO-Revision-Date: 2025-12-09 11:58+0000\n"
+"PO-Revision-Date: 2025-12-11 21:00+0000\n"
 "Last-Translator: dukezas <dukezas@gmail.com>\n"
 "Language-Team: Lithuanian <https://hosted.weblate.org/projects/collabora-"
 "online/ui/lt/>\n"
@@ -1267,7 +1267,7 @@ msgstr ""
 
 #: src/control/Control.BackstageView.ts:538
 msgid "Parts"
-msgstr ""
+msgstr "Dalys"
 
 #: src/control/Control.BackstageView.ts:542
 #: src/control/Control.DocumentRepair.js:140
@@ -1276,31 +1276,31 @@ msgstr "Tipas"
 
 #: src/control/Control.BackstageView.ts:548
 msgid "Mode"
-msgstr ""
+msgstr "Režimas"
 
 #: src/control/Control.BackstageView.ts:549
 msgid "View Only"
-msgstr ""
+msgstr "Tik peržiūra"
 
 #: src/control/Control.BackstageView.ts:556
 msgid "File Name"
-msgstr ""
+msgstr "Bylos pavadinimas"
 
 #: src/control/Control.BackstageView.ts:658
 msgid "Loading templates…"
-msgstr ""
+msgstr "Įkeliami šablonai…"
 
 #: src/control/Control.BackstageView.ts:704
 msgid "Search templates"
-msgstr ""
+msgstr "Šablonų paieška"
 
 #: src/control/Control.BackstageView.ts:762
 msgid "No templates match your search."
-msgstr ""
+msgstr "Šablonų, atitinkančių jūsų paiešką, nėra."
 
 #: src/control/Control.BackstageView.ts:868
 msgid "Blank Spreadsheet"
-msgstr ""
+msgstr "Tuščia skaičiuoklė"
 
 #: src/control/Control.BackstageView.ts:872
 #, fuzzy
@@ -1309,7 +1309,7 @@ msgstr "Visaekranė pateiktis"
 
 #: src/control/Control.BackstageView.ts:877
 msgid "Blank Document"
-msgstr ""
+msgstr "Tuščias dokumentas"
 
 #: src/control/Control.Command.js:90
 msgid "Unlock"
@@ -2688,9 +2688,8 @@ msgid "Page Layout"
 msgstr ""
 
 #: src/control/Control.NotebookbarCalc.js:48
-#, fuzzy
 msgid "Formulas"
-msgstr "Formulė"
+msgstr "Formulės"
 
 #: src/control/Control.NotebookbarCalc.js:54
 #, fuzzy
