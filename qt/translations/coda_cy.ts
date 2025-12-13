@@ -37,7 +37,7 @@
     <message>
         <location filename="../coda-qt.cpp" line="329"/>
         <source>PDF Files (*.pdf);;All Files (*)</source>
-        <translation type="unfinished"></translation>
+        <translation>Ffeiliau PDF (*.pdf);;Pob Ffeil (*)</translation>
     </message>
     <message>
         <location filename="../coda-qt.cpp" line="345"/>
@@ -57,63 +57,63 @@
     <message>
         <location filename="../coda-qt.cpp" line="371"/>
         <source>Failed to save document to file. Please check the file path and permissions.</source>
-        <translation type="unfinished"></translation>
+        <translation>Wedi methu cadw&apos;r ddogfen i ffeil. Gwiriwch lwybr a chaniatâd y ffeil.</translation>
     </message>
     <message>
         <location filename="../coda-qt.cpp" line="415"/>
         <source>Print Error</source>
-        <translation type="unfinished"></translation>
+        <translation>Gwall argraffu</translation>
     </message>
     <message>
         <location filename="../coda-qt.cpp" line="416"/>
         <source>Failed to print document. Please check your printer settings.</source>
-        <translation type="unfinished"></translation>
+        <translation>Wedi methu argraffu dogfen. Gwiriwch osodiadau&apos;r argraffydd.</translation>
     </message>
     <message>
         <location filename="../coda-qt.cpp" line="575"/>
         <source>Text Documents (*.odt);;All Files (*)</source>
-        <translation type="unfinished"></translation>
+        <translation>Dogfennau Testun (*.odt);;Pob Ffeil(*)</translation>
     </message>
     <message>
         <location filename="../coda-qt.cpp" line="577"/>
         <source>Spreadsheets (*.ods);;All Files (*)</source>
-        <translation type="unfinished"></translation>
+        <translation>Taenlenni (*.ods);;Pob Ffeil (*)</translation>
     </message>
     <message>
         <location filename="../coda-qt.cpp" line="579"/>
         <source>Presentations (*.odp);;All Files (*)</source>
-        <translation type="unfinished"></translation>
+        <translation>Cyflwyniadau (*.odp);;Pob Ffeil (*)</translation>
     </message>
     <message>
         <location filename="../coda-qt.cpp" line="581"/>
         <location filename="../coda-qt.cpp" line="1019"/>
         <source>All Files (*)</source>
-        <translation type="unfinished"></translation>
+        <translation>Pob Ffeil (*)</translation>
     </message>
     <message>
         <location filename="../coda-qt.cpp" line="585"/>
         <source>Save Document</source>
-        <translation type="unfinished"></translation>
+        <translation>Cadw Dogfen</translation>
     </message>
     <message>
         <location filename="../coda-qt.cpp" line="902"/>
         <source>Open File</source>
-        <translation type="unfinished"></translation>
+        <translation>Agor Ffeil</translation>
     </message>
     <message>
         <location filename="../coda-qt.cpp" line="903"/>
         <source>All Files (*);;Text Documents (*.odt *.ott *.doc *.docx *.rtf *.txt);;Spreadsheets (*.ods *.ots *.xls *.xlsx *.csv);;Presentations (*.odp *.otp *.ppt *.pptx)</source>
-        <translation type="unfinished"></translation>
+        <translation>Pob Ffeil (*);;Dogfennau Testun (*.odt *.ott *.doc *.docx *.rtf *.txt);;Taenlenni (*.ods *.ots *.xls *.xlsx *.csv);;Cyflwyniadau (*.odp *.otp *.ppt *.pptx)</translation>
     </message>
     <message>
         <location filename="../coda-qt.cpp" line="1017"/>
         <source>Export As</source>
-        <translation type="unfinished"></translation>
+        <translation>Allforio Fel</translation>
     </message>
     <message>
         <location filename="../WebView.cpp" line="205"/>
         <source>Presenting</source>
-        <translation type="unfinished"></translation>
+        <translation>Yn Cyflwyno</translation>
     </message>
 </context>
 <context>
@@ -121,17 +121,17 @@
     <message>
         <location filename="../WebView.cpp" line="121"/>
         <source>Unsaved Changes</source>
-        <translation type="unfinished"></translation>
+        <translation>Newidiadau heb eu Cadw</translation>
     </message>
     <message>
         <location filename="../WebView.cpp" line="122"/>
         <source>The document has unsaved changes. Do you want to close anyway?</source>
-        <translation type="unfinished"></translation>
+        <translation>Mae gan y ddogfen newidiadau heb eu cadw. Ydych chi eisiau cau beth bynnag?</translation>
     </message>
     <message>
         <location filename="../WebView.cpp" line="533"/>
         <source>Start</source>
-        <translation type="unfinished"></translation>
+        <translation>Cychwyn</translation>
     </message>
 </context>
 </TS>
