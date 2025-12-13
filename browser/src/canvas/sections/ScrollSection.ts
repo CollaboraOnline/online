@@ -284,7 +284,7 @@ export class ScrollSection extends CanvasSectionObject {
 		var startY = this.size[1] - this.sectionProperties.scrollBarThickness - scrollProps.edgeOffset;
 
 		const sizeX = scrollProps.horizontalScrollSize - this.sectionProperties.scrollBarThickness;
-		const docWidth: number = this.map.getPixelBoundsCore().getSize().x;
+		const docWidth: number = app.sectionContainer.getWidth();
 		const startX = this.isRTL() ? docWidth - scrollProps.startX - sizeX : scrollProps.startX;
 
 		if (this.sectionProperties.drawScrollBarRailway) {
@@ -607,7 +607,7 @@ export class ScrollSection extends CanvasSectionObject {
 		}
 
 		const sizeX = scrollProps.scrollSize - this.sectionProperties.scrollBarThickness;
-		const docWidth: number = this.map.getPixelBoundsCore().getSize().x;
+		const docWidth: number =  app.sectionContainer.getWidth();
 		const startX = this.isRTL() ? docWidth - scrollProps.startX - sizeX : scrollProps.startX;
 		const endX = startX + sizeX;
 
@@ -724,7 +724,7 @@ export class ScrollSection extends CanvasSectionObject {
 		window.L.DomUtil.addClass(document.documentElement, 'prevent-select');
 		const scrollProps: ScrollProperties = app.activeDocument.activeLayout.scrollProperties;
 		const sizeX = scrollProps.horizontalScrollSize - this.sectionProperties.scrollBarThickness;
-		const docWidth: number = this.map.getPixelBoundsCore().getSize().x;
+		const docWidth: number = app.sectionContainer.getWidth();
 		const startX = this.isRTL() ? docWidth - scrollProps.startX - sizeX : scrollProps.startX;
 
 		if (this.stepByStepScrolling) {

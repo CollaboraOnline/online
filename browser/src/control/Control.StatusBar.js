@@ -320,8 +320,7 @@ class StatusBar extends JSDialog.Toolbar {
 				this.showItem('showcomments-container', true);
 				this.showItem('documentstatus-container', true);
 
-				// Disable for now.
-				//this.showItem('multi-page-view', true);
+				this.showItem('multi-page-view', true);
 			}
 			break;
 
