@@ -127,6 +127,23 @@ describe(['tagdesktop'], 'Accessibility Writer Tests', function () {
             handleDialog(1, '.uno:GraphicDialog');
             helper.clearAllText();
 
+            // Rename bookmark
+            helper.typeIntoDocument('bookmark');
+            helper.selectAllText();
+            cy.then(() => {
+                // insert a bookmark first
+                win.app.map.sendUnoCommand('.uno:InsertBookmark?Bookmark:string=bookmark');
+                // edit bookmark
+                win.app.map.sendUnoCommand('.uno:InsertBookmark');
+            });
+            getActiveDialog(1).should('exist')
+                .then(() => {
+                cy.cGet('#bookmarks .ui-treeview-entry > div:first-child').click();
+                cy.cGet('#rename-button').should('be.enabled').click();
+                handleDialog(2);
+                closeActiveDialog(1);
+            });
+
             // Text ReadOnly info dialog
             helper.typeIntoDocument('READONLY');
             helper.selectAllText();
