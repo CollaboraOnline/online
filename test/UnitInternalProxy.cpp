@@ -39,27 +39,30 @@ class EchoServerFactory final : public SocketFactory
 /// Test the internal ProxyPoll functionality.
 class UnitInternalProxy : public UnitWSD
 {
-    bool _tested;
+    STATE_ENUM(Phase,
+               Init, // Start echo server
+               ServerStarted, // Server ready, call startPump
+               WaitProxyData, // Wait for data via onProxyData callback
+               VerifyData, // Verify proxied data
+               Done)
+    _phase;
+
     std::shared_ptr<SocketPoll> _serverPoll;
     std::shared_ptr<ServerSocket> _serverSocket;
     std::shared_ptr<SocketPoll> _clientPoll;
     int _echoPort;
 
     // Track proxy data for assertions
-    std::mutex _dataMutex;
     std::string _clientToTargetData;
     std::string _targetToClientData;
-    std::condition_variable _dataCV;
-    bool _testPassed;
 
 public:
     UnitInternalProxy()
         : UnitWSD("UnitInternalProxy")
-        , _tested(false)
+        , _phase(Phase::Init)
         , _serverPoll(std::make_shared<SocketPoll>("echoserver_poll"))
         , _clientPoll(std::make_shared<SocketPoll>("client_poll"))
         , _echoPort(0)
-        , _testPassed(false)
     {
         setTimeout(15s);
     }
@@ -67,7 +70,6 @@ public:
     /// direction: true = client->target, false = target->client
     void onProxyData(const char* data, std::size_t len, bool direction) override
     {
-        std::lock_guard<std::mutex> lock(_dataMutex);
         if (direction)
         {
             _clientToTargetData.append(data, len);
@@ -78,75 +80,52 @@ public:
             _targetToClientData.append(data, len);
             TST_LOG("onProxyData: target->client " << len << " bytes");
         }
-        _dataCV.notify_all();
+
+        if (_phase == Phase::WaitProxyData && !_targetToClientData.empty())
+            TRANSITION_STATE(_phase, Phase::VerifyData);
     }
 
     void invokeWSDTest() override
     {
-        if (_tested)
-            return;
-        _tested = true;
-
-        TST_LOG("=== Starting UnitInternalProxy tests ===");
-
-        TST_LOG("Test 1: ProxyPoll singleton...");
-        ProxyPoll& poll = ProxyPoll::instance();
-        LOK_ASSERT_MESSAGE("ProxyPoll should be alive", poll.isAlive());
-        LOK_ASSERT_EQUAL(std::string("proxy_poll"), poll.name());
-
-        TST_LOG("Test 2: Starting echo server...");
-        if (!startEchoServer())
+        switch (_phase)
         {
-            LOK_ASSERT_FAIL("Failed to start echo server");
-            return;
-        }
-        TST_LOG("Echo server started on port " << _echoPort);
-
-        // Start client poll thread
-        _clientPoll->startThread();
-
-        TST_LOG("Test 3: Testing ProxyPoll::startPump with ProxyHandler...");
-        testStartPump();
-
-        // Wait for data via hook
-        {
-            std::unique_lock<std::mutex> lock(_dataMutex);
-            bool gotData = _dataCV.wait_for(
-                lock, 5s,
-                [this] { return !_targetToClientData.empty() || !_clientToTargetData.empty(); });
-
-            if (gotData)
-            {
+            case Phase::Init:
+                TRANSITION_STATE(_phase, Phase::ServerStarted);
+                _clientPoll->startThread();
+                if (!startEchoServer())
+                {
+                    LOK_ASSERT_FAIL("Failed to start echo server");
+                    return;
+                }
+                break;
+            case Phase::ServerStarted:
+                TRANSITION_STATE(_phase, Phase::WaitProxyData);
+                _clientToTargetData.clear();
+                _targetToClientData.clear();
+                testStartPump();
+                break;
+            case Phase::WaitProxyData:
+                // Wait - onProxyData callback will transition
+                break;
+            case Phase::VerifyData:
+                TRANSITION_STATE(_phase, Phase::Done);
                 TST_LOG("Proxy data received via hooks:");
                 TST_LOG("client->target: " << _clientToTargetData.size() << " bytes");
                 TST_LOG("target->client: " << _targetToClientData.size() << " bytes");
 
-                // Verify proxied response
-                if (_targetToClientData.find("hello-from-ProxyHandler-test") != std::string::npos ||
-                    _targetToClientData.find("HTTP/1.1 200") != std::string::npos)
-                {
-                    TST_LOG("PASSED: Response correctly proxied via ProxyHandler");
-                    _testPassed = true;
-                }
-                else
-                {
-                    TST_LOG("Response content: " << _targetToClientData.substr(0, 200));
-                    _testPassed = true; // Got data, that's a pass
-                }
-            }
-        }
-
-        _clientPoll->stop();
-        _serverPoll->stop();
-
-        if (_testPassed)
-        {
-            TST_LOG("=== All UnitInternalProxy tests passed ===");
-            exitTest(TestResult::Ok);
-        }
-        else
-        {
-            exitTest(TestResult::Failed);
+                LOK_ASSERT_MESSAGE("Response should contain HTTP 200",
+                                   _targetToClientData.find("HTTP/1.1 200") != std::string::npos);
+                LOK_ASSERT_MESSAGE("Response should echo our test data",
+                                   _targetToClientData.find("hello-from-ProxyHandler-test") !=
+                                       std::string::npos);
+                if (_clientPoll)
+                    _clientPoll->stop();
+                if (_serverPoll)
+                    _serverPoll->stop();
+                exitTest(TestResult::Ok);
+                break;
+            case Phase::Done:
+                break;
         }
     }
 
@@ -183,7 +162,7 @@ private:
         int fds[2];
         if (socketpair(AF_UNIX, SOCK_STREAM | SOCK_NONBLOCK, 0, fds) < 0)
         {
-            TST_LOG("Failed to create socket pair: " << strerror(errno));
+            LOK_ASSERT_FAIL("Failed to create socket pair: " << strerror(errno));
             return;
         }
 
@@ -204,15 +183,7 @@ private:
 
         TST_LOG("Calling ProxyPoll::startPump to 127.0.0.1:" << _echoPort);
 
-        // Clear previous data
-        {
-            std::lock_guard<std::mutex> lock(_dataMutex);
-            _clientToTargetData.clear();
-            _targetToClientData.clear();
-        }
-
         ProxyPoll::startPump(proxySocket, "127.0.0.1", _echoPort, request);
-
         TST_LOG("startPump called successfully");
     }
 };
