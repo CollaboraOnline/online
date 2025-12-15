@@ -688,6 +688,9 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 		// Add it regardless of the file type.
 		app.sectionContainer.addSection(new app.definitions.CommentSection());
 
+		document.addEventListener('blur', this._onDocumentBlur.bind(this));
+		document.addEventListener('focus', this._onDocumentFocus.bind(this));
+
 		this._syncTileContainerSize();
 	},
 
@@ -714,6 +717,34 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 		if (this._container && this.options.zIndex !== undefined && this.options.zIndex !== null) {
 			this._container.style.zIndex = this.options.zIndex;
 		}
+	},
+
+	_onDocumentBlur: function() {
+		// Reclaim the graphics memory of non-visible tiles when the document loses focus
+		// (which happens when the browser is minimised, switched away from or when switching
+		// tabs).
+		// We do this as systems with poor video memory management can show bad side-effects
+		// in other applications while we hold onto lots of video memory.
+		this.onDocumentBlurTimeout = setTimeout(() => {
+			this.onDocumentBlurTimeout = null;
+			TileManager.clearPreFetch();
+			TileManager.pruneTiles();
+			TileManager.reclaimGraphicsMemory();
+		}, 500);
+	},
+
+	_onDocumentFocus: function() {
+		if (this.onDocumentBlurTimeout) {
+			clearTimeout(this.onDocumentBlurTimeout);
+			this.onDocumentBlurTimeout = null;
+			return;
+		}
+
+		TileManager.resetPreFetching();
+
+		// We may want to consider touching tiles in an area surrounding the visible area
+		// for enhanced interactivity on the first scroll after refocusing.
+		// Anecdotally, I don't notice any negative impact right now though.
 	},
 
 	_reset: function (hard) {

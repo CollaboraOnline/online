@@ -1335,6 +1335,19 @@ class TileManager {
 		}
 	}
 
+	private static updateAllTileDistances() {
+		// FIXME: updateFileBasedView seems to be doing a lot. Does it need to be special-cased?
+		if (app.file.fileBasedView) this.updateFileBasedView(true);
+		else {
+			const visibleRanges = this.getVisibleRanges();
+			const zoom = Math.round(app.map.getZoom());
+			for (const tile of this.tiles.values()) {
+				this.updateTileDistance(tile, zoom, visibleRanges);
+			}
+			this.sortTileBitmapList();
+		}
+	}
+
 	private static getMissingTiles(
 		pixelBounds: any,
 		zoom: number,
@@ -1935,16 +1948,22 @@ class TileManager {
 	}
 
 	public static pruneTiles() {
-		// update tile.distanceFromView for the view
-		if (app.file.fileBasedView) this.updateFileBasedView(true);
-
+		this.updateAllTileDistances();
 		this.garbageCollect();
 	}
 
-	public static discardAllCache() {
-		// update tile.distanceFromView for the view
-		if (app.file.fileBasedView) this.updateFileBasedView(true);
+	public static reclaimGraphicsMemory() {
+		// Currently only reclaims graphics memory for non-visible tiles - we may want to
+		// consider doing this for visible tiles and making sure our drawing pausing/resuming
+		// is robust enough to handle it.
+		for (const tile of this.tiles.values()) {
+			if (tile.distanceFromView !== 0)
+				this.reclaimTileBitmapMemory(tile);
+		}
+	}
 
+	public static discardAllCache() {
+		this.updateAllTileDistances();
 		this.garbageCollect(true);
 	}
 
@@ -2330,6 +2349,7 @@ class TileManager {
 				if (tempTile) this.makeTileCurrent(tempTile);
 			}
 			this.endTransaction(null);
+			this.sortTileBitmapList();
 		}
 
 		if (checkOnly) {
