@@ -150,7 +150,11 @@ describe(['tagdesktop'], 'Accessibility Writer Tests', function () {
 		    command == '.uno:InsertCaptionDialog') {
 		    cy.cGet('#options-button').click();
 		    handleDialog(level + 1);
+		} else if (command == '.uno:InsertIndexesEntry') {
+		    cy.cGet('#new-button').click();
+		    handleDialog(level + 1);
 		}
+
                 handleTabsInDialog(level);
                 closeActiveDialog(level);
             });
