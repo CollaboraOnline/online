@@ -2,6 +2,7 @@
 
 var helper = require('../../common/helper');
 var ceHelper = require('../../common/contenteditable_helper');
+var desktopHelper = require('../../common/desktop_helper');
 
 const allWriterDialogs = [
     '.uno:EditRegion',
@@ -95,9 +96,20 @@ describe(['tagdesktop'], 'Accessibility Writer Tests', function () {
                 win.app.map.sendUnoCommand('.uno:ContentControlProperties');
             });
             handleDialog(1, '.uno:ContentControlProperties');
+            helper.clearAllText();
+
+            // Object dialog
+            cy.then(() => {
+                win.app.map.sendUnoCommand('.uno:InsertObjectChart');
+            });
+            cy.cGet('#test-div-shapeHandlesSection').should('exist');
+            cy.then(() => {
+                win.app.map.sendUnoCommand('.uno:FrameDialog');
+            });
+            handleDialog(1, '.uno:FrameDialog');
+            helper.clearAllText();
 
             // Text ReadOnly info dialog
-            helper.clearAllText();
             helper.typeIntoDocument('READONLY');
             helper.selectAllText();
             cy.then(() => {
