@@ -79,17 +79,40 @@ abstract class SidebarBase extends JSDialogComponent {
 		return node.hasClass('visible') && node.hasClass('coreBased');
 	}
 
-	closeSidebar() {
-		$(`#${this.type}-dock-wrapper`).removeClass('visible');
-		$(`#${this.type}-dock-wrapper`).removeClass('coreBased');
+	/// checks if this sidebar is core-based (uses WindowId.Sidebar)
+	protected isCoreBased(): boolean {
+		return this.builder && this.builder.windowId === WindowId.Sidebar;
+	}
 
-		if (!this.map.editorHasFocus()) {
-			this.map.fire('editorgotfocus');
-			this.map.focus();
+	/// shared implementation for showing/hiding sidebar
+	protected showSidebarImpl(show: boolean) {
+		const wrapper = $(`#${this.type}-dock-wrapper`);
+
+		if (show) {
+			wrapper.addClass('visible');
+			if (this.isCoreBased()) {
+				wrapper.addClass('coreBased');
+			}
+		} else {
+			wrapper.removeClass('visible');
+			wrapper.removeClass('coreBased');
+
+			if (!this.map.editorHasFocus()) {
+				this.map.fire('editorgotfocus');
+				this.map.focus();
+			}
 		}
 
 		const upperCaseType = this.type[0].toUpperCase() + this.type.slice(1);
-		this.map.uiManager.setDocTypePref('Show' + upperCaseType, false);
+		this.map.uiManager.setDocTypePref('Show' + upperCaseType, show);
+	}
+
+	closeSidebar() {
+		this.showSidebarImpl(false);
+	}
+
+	showSidebar() {
+		this.showSidebarImpl(true);
 	}
 
 	protected onJSUpdate(e: FireEvent) {
