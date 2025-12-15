@@ -143,9 +143,7 @@ class Sidebar extends SidebarBase {
 				this.builder.build(this.container, [this.model.getSnapshot()], false);
 
 				if (!this.isVisible()) {
-					if ((this.builder as any).windowId === WindowId.Sidebar)
-						$('#sidebar-dock-wrapper').addClass('coreBased');
-					$('#sidebar-dock-wrapper').addClass('visible');
+					this.showSidebar();
 
 					// schedule focus after animation so it will not shift the browser page
 					if (this.isUserRequest) {
