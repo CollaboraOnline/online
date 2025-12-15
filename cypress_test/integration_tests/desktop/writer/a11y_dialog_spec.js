@@ -86,6 +86,24 @@ describe(['tagdesktop'], 'Accessibility Writer Tests', function () {
                 handleDialog(1, command);
             });
 
+            // triple select to include table, then delete all
+            helper.typeIntoDocument('{ctrl}a');
+            helper.typeIntoDocument('{ctrl}a');
+            helper.typeIntoDocument('{ctrl}a');
+            helper.textSelectionShouldExist();
+            helper.typeIntoDocument('{del}');
+            helper.textSelectionShouldNotExist();
+
+            // ContentControlProperties dialog
+            cy.then(() => {
+                win.app.map.sendUnoCommand('.uno:InsertCheckboxContentControl');
+            });
+            helper.typeIntoDocument('{rightarrow}');
+            cy.then(() => {
+                win.app.map.sendUnoCommand('.uno:ContentControlProperties');
+            });
+            handleDialog(1);
+
             // Text ReadOnly info dialog
             helper.clearAllText();
             helper.typeIntoDocument('READONLY');
