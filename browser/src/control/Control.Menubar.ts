@@ -1886,7 +1886,7 @@ class Menubar extends window.L.Control {
        * @param menu - The submenu element.
        */
 	private _beforeShow(e: any, menu: any): void {
-		const items = $(menu).children().children('a').not('.has-submenu');
+		const items = this._getMenuItems(menu);
 		$(items).each((index, aItem) => {
 			const type = $(aItem).data('type');
 			const id = $(aItem).data('id');
@@ -2121,6 +2121,38 @@ class Menubar extends window.L.Control {
 					$(aItem).show();
 				else
 					$(aItem).hide();
+			}
+		});
+		// We hide adjacent, leading, and trailing separators that might occur due to hidden items above.
+		var visibleItems = this._getMenuItems(menu).filter(function(this: HTMLElement) {
+			return $(this).css('display') !== 'none';
+		});
+
+		visibleItems.each((index: number, aItem: HTMLElement) => {
+			// Always show first, might be hidden by previous pass
+			if ($(aItem).hasClass('separator')) {
+				$(aItem).show();
+			}
+
+			// Hide leading separator
+			if (index === 0 && $(aItem).hasClass('separator')) {
+				$(aItem).hide();
+				return;
+			}
+
+			// Hide trailing separator
+			if (index === visibleItems.length - 1 && $(aItem).hasClass('separator')) {
+				$(aItem).hide();
+				return;
+			}
+
+			// Hide double/adjacent separators
+			// If this is a separator, and the previous visible item was also a separator, hide this one.
+			if (index > 0) {
+				var prevItem = visibleItems[index - 1];
+				if ($(aItem).hasClass('separator') && $(prevItem).hasClass('separator')) {
+					$(aItem).hide();
+				}
 			}
 		});
 	}
@@ -2931,6 +2963,10 @@ class Menubar extends window.L.Control {
 	 * @param nameString - The name to search for.
 	 * @returns The found submenu or null.
 	 */
+	private _getMenuItems(menu: any): any {
+		return $(menu).children().children('a').not('.has-submenu');
+	}
+
 	private _findSubMenuByName(menuTarget: any, nameString: string): any {
 		if (menuTarget.name === nameString)
 			return menuTarget;
