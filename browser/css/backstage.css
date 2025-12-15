@@ -332,7 +332,7 @@
 	padding: 0;
 	display: flex;
 	justify-content: center;
-	align-items: center;
+	align-items: end;
 	background: transparent;
 	flex: 1;
 	min-height: 120px;
