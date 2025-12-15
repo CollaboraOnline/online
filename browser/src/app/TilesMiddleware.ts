@@ -1042,7 +1042,7 @@ class TileManager {
 		this.tiles.delete(key);
 	}
 
-	private static removeAllTiles() {
+	public static removeAllTiles() {
 		this.tileBitmapList = [];
 		for (const key of Array.from(this.tiles.keys())) {
 			this.removeTile(key);

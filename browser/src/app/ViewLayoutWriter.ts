@@ -35,6 +35,7 @@ class ViewLayoutWriter extends ViewLayoutBase {
 		if (compareButton) {
 			compareButton.onclick = function() {
 				app.socket.sendMessage('uno .uno:RedlineRenderMode');
+				app.activeDocument.activeLayout = new ViewLayoutDocumentCompare();
 			};
 		}
 	}

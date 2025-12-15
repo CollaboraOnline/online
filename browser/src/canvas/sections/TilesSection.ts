@@ -396,6 +396,21 @@ export class TilesSection extends CanvasSectionObject {
 		}
 	}
 
+	private drawForViewLayoutDocumentCompare() {
+		if (!app.activeDocument.activeLayout.areViewTilesReady()) return; // Draw after we have all the tiles.
+
+		const view = app.activeDocument.activeLayout as ViewLayoutDocumentCompare;
+
+		const visibleCoordList: Array<TileCoordData> = view.getCurrentCoordList();
+
+		for (let i = 0; i < visibleCoordList.length; i++) {
+			const tile = TileManager.get(visibleCoordList[i]);
+			const tilePos = tile.coords.getPosSimplePoint();
+
+			this.drawTileToCanvas(tile, this.context, tilePos.vX, tilePos.vY, TileManager.tileSize, TileManager.tileSize);
+		}
+	}
+
 	public onDraw (frameCount: number = null, elapsedTime: number = null): void {
 		if (this.containerObject.isInZoomAnimation())
 			return;
@@ -410,6 +425,10 @@ export class TilesSection extends CanvasSectionObject {
 		if (app.activeDocument && app.activeDocument.activeLayout.type === 'ViewLayoutMultiPage') {
 			this.drawPageBackgrounds(ctx);
 			this.drawForViewLayoutMultiPage();
+			return;
+		}
+		else if (app.activeDocument.activeLayout.type === 'ViewLayoutDocumentCompare') {
+			this.drawForViewLayoutDocumentCompare();
 			return;
 		}
 

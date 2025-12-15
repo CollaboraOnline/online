@@ -263,6 +263,7 @@ COOL_JS_LST =\
 	src/app/ImpressSelectionMiddleware.ts \
 	src/app/ViewLayout.ts \
 	src/app/ViewLayoutWriter.ts \
+	src/app/ViewLayoutDocumentCompare.ts \
 	src/app/ViewLayoutMultiPage.ts \
 	src/app/DocumentBase.ts \
 	src/app/DocumentView.ts \
