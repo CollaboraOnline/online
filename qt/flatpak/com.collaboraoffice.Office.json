@@ -798,7 +798,8 @@
         "--without-system-sane",
         "--without-system-xmlsec",
         "--without-system-zxcvbn",
-        "--without-system-zxing"
+        "--without-system-zxing",
+        "--without-templates"
       ],
       "install-rule": "distro-pack-install",
       "post-install": [
