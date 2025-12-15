@@ -1055,7 +1055,7 @@ endif
 
 install-data-hook:
 	mkdir -p $(DESTDIR)$(pkgdatadir)/browser
-	rsync -a $(EXCLUDES) dist/ $(DESTDIR)$(pkgdatadir)/browser
+	rsync -a $(EXCLUDES) dist $(DESTDIR)$(pkgdatadir)/browser/
 	mkdir -p $(DESTDIR)$(pkgdatadir)/browser/dist/src/layer/tile
 	cp -a dist/src/layer/tile/CanvasTileUtils.js $(DESTDIR)$(pkgdatadir)/browser/dist/src/layer/tile/CanvasTileUtils.js
 	cp -a dist/src/layer/tile/TileWorker.js $(DESTDIR)$(pkgdatadir)/browser/dist/src/layer/tile/TileWorker.js
