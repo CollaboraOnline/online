@@ -131,7 +131,9 @@ describe(['tagdesktop'], 'Accessibility Writer Tests', function () {
         getActiveDialog(level)
             .should('exist')
             .then(() => {
-		if (command == '.uno:InsertCaptionDialog') {
+		// Open 'options' subdialogs
+		if (command == '.uno:EditRegion' ||
+		    command == '.uno:InsertCaptionDialog') {
 		    cy.cGet('#options-button').click();
 		    handleDialog(level + 1);
 		}
