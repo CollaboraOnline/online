@@ -89,13 +89,10 @@ describe(['tagdesktop'], 'Accessibility Writer Tests', function () {
 
             // ContentControlProperties dialog
             cy.then(() => {
-                win.app.map.sendUnoCommand('.uno:InsertCheckboxContentControl');
-            });
-            helper.typeIntoDocument('{rightarrow}');
-            cy.then(() => {
+                win.app.map.sendUnoCommand('.uno:InsertDropdownContentControl');
                 win.app.map.sendUnoCommand('.uno:ContentControlProperties');
             });
-            handleDialog(1);
+            handleDialog(1, '.uno:ContentControlProperties');
 
             // Text ReadOnly info dialog
             helper.clearAllText();
@@ -172,6 +169,9 @@ describe(['tagdesktop'], 'Accessibility Writer Tests', function () {
                     handleDialog(level + 1);
                 } else if (command == '.uno:InsertIndexesEntry') {
                     cy.cGet('#new-button').click();
+                    handleDialog(level + 1);
+                } else if (command == '.uno:ContentControlProperties') {
+                    cy.cGet('#add-button').click();
                     handleDialog(level + 1);
                 }
 
