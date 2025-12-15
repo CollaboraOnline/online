@@ -70,8 +70,18 @@ describe(['tagdesktop'], 'Accessibility Writer Tests', function () {
                     win.app.map.sendUnoCommand(command);
                 });
 
-		handleDialog(1, command);
+                handleDialog(1, command);
             });
+
+            // Text ReadOnly info dialog
+            helper.clearAllText();
+            helper.typeIntoDocument('READONLY');
+            helper.selectAllText();
+            cy.then(() => {
+                win.app.map.sendUnoCommand('.uno:InsertSection?RegionProtect:bool=true');
+            });
+            helper.typeIntoDocument('{del}');
+            handleDialog(1);
 
             cy.get('@console:error').then(spy => {
                 const a11yErrors = spy.getCalls().filter(call =>
@@ -131,15 +141,15 @@ describe(['tagdesktop'], 'Accessibility Writer Tests', function () {
         getActiveDialog(level)
             .should('exist')
             .then(() => {
-		// Open 'options' subdialogs
-		if (command == '.uno:EditRegion' ||
-		    command == '.uno:InsertCaptionDialog') {
-		    cy.cGet('#options-button').click();
-		    handleDialog(level + 1);
-		} else if (command == '.uno:InsertIndexesEntry') {
-		    cy.cGet('#new-button').click();
-		    handleDialog(level + 1);
-		}
+                // Open 'options' subdialogs
+                if (command == '.uno:EditRegion' ||
+                    command == '.uno:InsertCaptionDialog') {
+                    cy.cGet('#options-button').click();
+                    handleDialog(level + 1);
+                } else if (command == '.uno:InsertIndexesEntry') {
+                    cy.cGet('#new-button').click();
+                    handleDialog(level + 1);
+                }
 
                 handleTabsInDialog(level);
                 closeActiveDialog(level);
