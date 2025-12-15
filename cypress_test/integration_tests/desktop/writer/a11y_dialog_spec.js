@@ -38,6 +38,8 @@ const allWriterDialogs = [
 describe(['tagdesktop'], 'Accessibility Writer Tests', function () {
     beforeEach(function () {
         helper.setupAndLoadDocument('writer/help_dialog.odt');
+        // to make insertImage use the correct buttons
+        desktopHelper.switchUIToNotebookbar();
         cy.cGet('div.clipboard').as('clipboard');
     });
 
@@ -115,6 +117,14 @@ describe(['tagdesktop'], 'Accessibility Writer Tests', function () {
                 win.app.map.sendUnoCommand('.uno:ObjectTitleDescription');
             });
             handleDialog(1, '.uno:ObjectTitleDescription');
+            helper.clearAllText();
+
+            // Object dialog
+            desktopHelper.insertImage();
+            cy.then(() => {
+                win.app.map.sendUnoCommand('.uno:GraphicDialog');
+            });
+            handleDialog(1, '.uno:GraphicDialog');
             helper.clearAllText();
 
             // Text ReadOnly info dialog
