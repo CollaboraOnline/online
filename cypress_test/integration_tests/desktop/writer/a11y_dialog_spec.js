@@ -1,6 +1,7 @@
 /* global describe expect it cy before after afterEach require Cypress */
 
 var helper = require('../../common/helper');
+var ceHelper = require('../../common/contenteditable_helper');
 
 const allWriterDialogs = [
     '.uno:ChapterNumberingDialog',
@@ -133,6 +134,15 @@ describe(['tagdesktop'], 'Accessibility Writer Tests', { testIsolation: false },
                 testDialog(command);
             });
         }
+    });
+
+    it('DropdownField dialog', function () {
+        cy.cGet('div.clipboard').as('clipboard');
+        // double click on field at initial cursor position
+        ceHelper.moveCaret('home', 'ctrl');
+        helper.getBlinkingCursorPosition('P');
+        helper.clickAt('P');
+        handleDialog(win, 1);
     });
 
     it('ContentControlProperties dialog', function () {
