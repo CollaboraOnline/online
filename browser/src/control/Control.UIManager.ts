@@ -1479,7 +1479,6 @@ class UIManager extends window.L.Control {
 					this.map.removeControl(this.map.menubar);
 					this.map.menubar = null;
 				}
-				this.makeSpaceForNotebookbar();
 			} else if (e.detail.perm === 'readonly') {
 				if (!this.map.menubar) {
 					var menubar = new Menubar();
@@ -1493,6 +1492,7 @@ class UIManager extends window.L.Control {
 			} else {
 				app.socket.sendMessage('uno .uno:SidebarHide');
 			}
+			this.makeSpaceForNotebookbar();
 		}
 		this.updateReadonlyIndicator();
 	}
