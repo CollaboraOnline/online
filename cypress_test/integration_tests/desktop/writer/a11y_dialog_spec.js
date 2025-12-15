@@ -1,6 +1,7 @@
 /* global describe expect it cy beforeEach require Cypress */
 
 var helper = require('../../common/helper');
+var ceHelper = require('../../common/contenteditable_helper');
 
 const allWriterDialogs = [
     '.uno:EditRegion',
@@ -36,6 +37,7 @@ const allWriterDialogs = [
 describe(['tagdesktop'], 'Accessibility Writer Tests', function () {
     beforeEach(function () {
         helper.setupAndLoadDocument('writer/help_dialog.odt');
+        cy.cGet('div.clipboard').as('clipboard');
     });
 
     it('Check accessibility for writer', function () {
@@ -72,6 +74,12 @@ describe(['tagdesktop'], 'Accessibility Writer Tests', function () {
 
                 handleDialog(1, command);
             });
+
+            // double click on field at initial cursor position
+            ceHelper.moveCaret('home', 'ctrl');
+            helper.getBlinkingCursorPosition('P');
+            helper.clickAt('P');
+            handleDialog(1);
 
             // triple select to include table, then delete all
             helper.typeIntoDocument('{ctrl}a');
