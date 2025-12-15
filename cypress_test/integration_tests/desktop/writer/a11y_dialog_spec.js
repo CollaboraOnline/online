@@ -57,6 +57,9 @@ describe(['tagdesktop'], 'Accessibility Writer Tests', { testIsolation: false },
     before(function () {
         helper.setupAndLoadDocument('writer/help_dialog.odt');
 
+        // to make insertImage use the correct buttons
+        desktopHelper.switchUIToNotebookbar();
+
         cy.getFrameWindow().then(function (frameWindow) {
             win = frameWindow;
 
@@ -179,6 +182,15 @@ describe(['tagdesktop'], 'Accessibility Writer Tests', { testIsolation: false },
            win.app.map.sendUnoCommand('.uno:ObjectTitleDescription');
        });
        handleDialog(win, 1, '.uno:ObjectTitleDescription');
+    });
+
+    it.skip('Graphic dialog', function () {
+        clearAllText();
+        desktopHelper.insertImage();
+        cy.then(() => {
+            win.app.map.sendUnoCommand('.uno:GraphicDialog');
+        });
+        handleDialog(win, 1, '.uno:GraphicDialog');
     });
 
     it('ReadOnly info dialog', function () {
