@@ -164,6 +164,18 @@ describe(['tagdesktop'], 'Accessibility Writer Tests', { testIsolation: false },
         handleDialog(win, 1, '.uno:ContentControlProperties');
     });
 
+    it.skip('Object dialog', function () {
+       helper.clearAllText();
+       cy.then(() => {
+           win.app.map.sendUnoCommand('.uno:InsertObjectChart');
+       });
+       cy.cGet('#test-div-shapeHandlesSection').should('exist');
+       cy.then(() => {
+           win.app.map.sendUnoCommand('.uno:FrameDialog');
+       });
+       handleDialog(win, 1, '.uno:FrameDialog');
+    });
+
     it('ReadOnly info dialog', function () {
         // Text ReadOnly info dialog
         helper.clearAllText();
