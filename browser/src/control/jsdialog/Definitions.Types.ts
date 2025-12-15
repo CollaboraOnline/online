@@ -55,6 +55,7 @@ interface JSBuilder {
 	options: JSBuilderOptions; // current state
 	map: MapInterface; // reference to map
 	rendersCache: any; // on demand content cache
+	windowId?: WindowId | number;
 
 	build: (
 		parentContainer: Element,
@@ -302,6 +303,8 @@ interface PushButtonWidget extends WidgetJSON {
 interface MenuButtonWidgetJSON extends WidgetJSON {
 	menu?: Array<MenuDefinition>; // custom menu
 	applyCallback?: () => void; // split button callback for left part
+	class?: string;
+	image?: string | boolean;
 }
 
 // type: 'buttonbox'

@@ -44,6 +44,32 @@
 	border: 1px solid var(--color-btn-border);
 }
 
+/* view mode dropdown (jsdialog menubutton) */
+#viewModeDropdown .unotoolbutton {
+	border: 1px solid var(--color-btn-border);
+	background-color: transparent;
+	color: var(--color-main-text);
+	padding: 0;
+}
+
+#viewModeDropdown .unobutton {
+	border: none;
+	padding: 4px 8px;
+	height: var(--btn-size-s);
+}
+
+#viewModeDropdown .arrowbackground {
+	min-width: 18px;
+	border-left: 1px solid var(--color-btn-border);
+	background-color: transparent;
+}
+
+#viewModeDropdown .unotoolbutton:hover {
+	border: 1px solid var(--color-btn-border);
+	color: var(--color-text-darker);
+	background-color: var(--color-background-tabs-group);
+}
+
 /* toolbuttons non selected hover */
 .hasnotebookbar .ui-content.unotoolbutton.has-label:hover,
 .hasnotebookbar .ui-content.unotoolbutton.inline:hover,

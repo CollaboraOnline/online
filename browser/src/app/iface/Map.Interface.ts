@@ -75,6 +75,7 @@ interface MapInterface extends Evented {
 		UserCanNotWriteRelative: boolean;
 		BaseFileName: string;
 		HideExportOption: boolean;
+		UserCanWrite: boolean;
 	};
 
 	loadDocument(socket?: SockInterface): void;
@@ -111,6 +112,11 @@ interface MapInterface extends Evented {
 	saveAs(filenme: string, format?: string, options?: string): void;
 
 	addControl(control: any): void;
+
+	_shouldStartReadOnly(): boolean;
+	_switchToEditMode(): void;
+
+	_permission: 'edit' | 'readonly' | 'view';
 
 	toolbarUpTemplate: any;
 	menubar: Menubar;

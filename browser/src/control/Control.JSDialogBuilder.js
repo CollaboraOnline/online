@@ -1727,7 +1727,7 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 			div.setAttribute('index', data.index);
 
 		if (data.class)
-			div.classList.add(data.class);
+			window.L.DomUtil.addClass(div, data.class);
 
 		const hasDropdownArrow = !!(options && options.hasDropdownArrow);
 		const isSplitButton = !!data.applyCallback;
