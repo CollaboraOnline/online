@@ -134,12 +134,6 @@ public:
                     _testPassed = true; // Got data, that's a pass
                 }
             }
-            else
-            {
-                TST_LOG("WARNING: No proxy data captured (async timing)");
-                // Still pass if we got to this point without crash
-                _testPassed = true;
-            }
         }
 
         _clientPoll->stop();
