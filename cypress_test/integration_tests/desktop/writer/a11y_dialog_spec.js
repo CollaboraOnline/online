@@ -107,6 +107,14 @@ describe(['tagdesktop'], 'Accessibility Writer Tests', function () {
                 win.app.map.sendUnoCommand('.uno:FrameDialog');
             });
             handleDialog(1, '.uno:FrameDialog');
+            cy.then(() => {
+                win.app.map.sendUnoCommand('.uno:NameGroup');
+            });
+            handleDialog(1, '.uno:NameGroup');
+            cy.then(() => {
+                win.app.map.sendUnoCommand('.uno:ObjectTitleDescription');
+            });
+            handleDialog(1, '.uno:ObjectTitleDescription');
             helper.clearAllText();
 
             // Text ReadOnly info dialog
