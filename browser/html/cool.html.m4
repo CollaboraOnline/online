@@ -113,6 +113,8 @@ m4_ifelse(MOBILEAPP,[true],
         and width, this being inside the smaller "document-container" will
         cause the content to overflow, creating scrollbars -->
 
+    <button id="compare-view-button">Compare View</button>
+
     <dialog id="content-keeper">
       <nav class="main-nav" role="navigation">
         <!-- Mobile menu toggle button (hamburger/x icon) -->
