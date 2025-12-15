@@ -83,12 +83,7 @@ describe(['tagdesktop'], 'Accessibility Writer Tests', function () {
                     win.app.map.sendUnoCommand(command);
                 });
 
-                getActiveDialog()
-                    .should('exist')
-                    .then(() => {
-                        handleTabsInDialog();
-                        closeActiveDialog();
-                    });
+		handleDialog(1, command);
             });
 
             cy.get('@console:error').then(spy => {
@@ -146,14 +141,27 @@ describe(['tagdesktop'], 'Accessibility Writer Tests', function () {
         });
     });
 
-    function getActiveDialog() {
+    function handleDialog(level, command) {
+        getActiveDialog(level)
+            .should('exist')
+            .then(() => {
+		if (command == '.uno:InsertCaptionDialog') {
+		    cy.cGet('#options-button').click();
+		    handleDialog(level + 1);
+		}
+                handleTabsInDialog(level);
+                closeActiveDialog(level);
+            });
+    }
+
+    function getActiveDialog(level) {
         return cy.cGet('.ui-dialog[role="dialog"]')
-            .should('have.length.at.least', 1)
+            .should('have.length.at.least', level)
             .last();
     }
 
-    function handleTabsInDialog() {
-        traverseTabs(() => getActiveDialog());
+    function handleTabsInDialog(level) {
+        traverseTabs(() => getActiveDialog(level));
     }
 
     function traverseTabs(getContainer, isNested = false) {
@@ -236,11 +244,11 @@ describe(['tagdesktop'], 'Accessibility Writer Tests', function () {
         return $container.find(panelSelector);
     }
 
-    function closeActiveDialog() {
-        getActiveDialog().within(() => {
+    function closeActiveDialog(level) {
+        getActiveDialog(level).within(() => {
             cy.get('.ui-dialog-titlebar-close').click({ force: true });
         });
 
-        cy.cGet('.ui-dialog[role="dialog"]').should('have.length', 0);
+        cy.cGet('.ui-dialog[role="dialog"]').should('have.length', level - 1);
     }
 });
