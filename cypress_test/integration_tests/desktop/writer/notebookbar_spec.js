@@ -18,6 +18,24 @@ describe(['tagdesktop'], 'Notebookbar tests.', function() {
 		writerHelper.selectAllTextOfDoc();
 	});
 
+	function checkCollapsedGroups() {
+		// check if dropdown arrows exist for groups
+		desktopHelper.getNbIconArrow('Grow');
+		desktopHelper.getNbIconArrow('DefaultBullet');
+		desktopHelper.getNbIconArrow('InsertTable');
+		cy.cGet('.home-search .arrowbackground');
+	}
+
+	it('Check collapsed state after mode switch', function() {
+		cy.viewport(1280, 600);
+		cy.wait(100); // stabilize
+
+		checkCollapsedGroups();
+		desktopHelper.switchUIToCompact();
+		desktopHelper.switchUIToNotebookbar();
+		checkCollapsedGroups();
+	});
+
 	it('Apply bold font from dropdown in Format tab', function() {
 		helper.setDummyClipboardForCopy();
 		cy.cGet('.notebookbar #Format-tab-label').click();
