@@ -24,30 +24,6 @@ window.L.Clipboard = class Clipboard extends CoolClipboardBase {
 		super(map);
 	}
 
-	_readContentSyncToBlob(dataTransfer) {
-		var content = [];
-		var types = dataTransfer.types;
-		for (var t = 0; t < types.length; ++t) {
-			if (types[t] === 'Files')
-				continue; // images handled elsewhere.
-			var dataStr = dataTransfer.getData(types[t]);
-			// Avoid types that has no content.
-			if (!dataStr.length)
-				continue;
-			var data = new Blob([dataStr]);
-			window.app.console.log('type ' + types[t] + ' length ' + data.size +
-				    ' -> 0x' + data.size.toString(16) + '\n');
-			content.push((types[t] === 'text' ? 'text/plain' : types[t]) + '\n');
-			content.push(data.size.toString(16) + '\n');
-			content.push(data);
-			content.push('\n');
-		}
-		if (content.length > 0)
-			return new Blob(content, {type : 'application/octet-stream', endings: 'transparent'});
-		else
-			return null;
-	}
-
 	// Abstract async post & download for our progress wrappers
 	// type: GET or POST
 	// url:  where to get / send the data
