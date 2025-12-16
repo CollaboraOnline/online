@@ -68,7 +68,7 @@ img.sidebar.ui-image {
 .sidebar.ui-expander-label {
 	color: var(--color-main-text);
 	font-size: var(--header-font-size);
-	line-height: var(--header-height);
+	line-height: var(--sidebar-header-height);
 	padding-inline: 8px;
 	flex: 1;
 	display: flex;
