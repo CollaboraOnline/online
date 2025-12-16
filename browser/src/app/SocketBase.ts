@@ -408,7 +408,7 @@ class SocketBase {
 			this._map._debug.logIncomingMessages;
 		if (!logMessage) return;
 
-		if (window.ThisIsTheGtkApp) window.postMobileDebug(type + ' ' + msg);
+		if (window.ThisIsAMobileApp) window.postMobileDebug(type + ' ' + msg);
 
 		const debugOn = this._map._debug.debugOn;
 
