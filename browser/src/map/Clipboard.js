@@ -24,40 +24,6 @@ window.L.Clipboard = class Clipboard extends CoolClipboardBase {
 		super(map);
 	}
 
-	// wrap some content with our stub magic
-	_originWrapBody(body, isStub) {
-		var lang = 'en_US'; // FIXME: l10n
-		var encodedOrigin = encodeURIComponent(this.getMetaURL());
-		var text =  '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">\n' +
-		            '<html>\n' +
-		            '  <head>\n';
-		if (isStub)
-			text += '    ' + this._getHtmlStubMarker() + '\n';
-		text +=     '    <meta http-equiv="content-type" content="text/html; charset=utf-8"/>\n' +
-			    '  </head>\n' +
-			    '  <body lang="' + lang + '" dir="ltr"><div id="meta-origin" data-coolorigin="' + encodedOrigin + '">\n' +
-			    body +
-			    '  </div></body>\n' +
-			'</html>';
-		return text;
-	}
-
-	// what an empty clipboard has on it
-	_getStubHtml() {
-		return this._substProductName(this._originWrapBody(
-		    '    <p>' + _('To paste outside {productname}, please first click the \'download\' button') + '</p>\n',
-		    true
-		));
-	}
-
-	// used for DisableCopy mode to fill the clipboard
-	_getDisabledCopyStubHtml() {
-		return this._substProductName(this._originWrapBody(
-		    '    <p>' + _('Copying from the document disabled') + '</p>\n',
-		    true
-		));
-	}
-
 	_getMetaOrigin(html, prefix) {
 		var start = html.indexOf(prefix);
 		if (start < 0) {
