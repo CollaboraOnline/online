@@ -1839,6 +1839,9 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 
 		const itemsToSyncWithContainer = [];
 
+		if (data.visible === false)
+			div.classList.add('hidden');
+
 		const setDisabled = (disabled) => {
 			if (disabled) {
 				div.setAttribute('disabled', 'true');
