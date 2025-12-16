@@ -88,6 +88,8 @@ public slots: // called from JavaScript
     * the JavaScript value **undefined**.
     */
     QVariant cool(const QString& msg);
+    void gatherAllWindows();
+    int getWindowCount();
 };
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

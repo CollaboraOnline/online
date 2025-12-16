@@ -106,6 +106,7 @@ class BackstageView extends window.L.Class {
 		properties: () => this.executeDocumentProperties(),
 		history: () => this.executeRevisionHistory(),
 		about: () => this.executeAbout(),
+		gatherwindows: () => this.executeGatherWindows(),
 	};
 
 	constructor(map: any) {
@@ -1276,6 +1277,13 @@ class BackstageView extends window.L.Class {
 
 	private executeAbout(): void {
 		this.map.showLOAboutDialog();
+	}
+
+	private executeGatherWindows(): void {
+		if ((window as any).bridge && (window as any).bridge.gatherAllWindows) {
+			(window as any).bridge.gatherAllWindows();
+		}
+		this.hide();
 	}
 
 	private executeSave(): void {

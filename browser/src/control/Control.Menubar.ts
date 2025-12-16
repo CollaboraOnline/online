@@ -173,10 +173,11 @@ class Menubar extends window.L.Control {
 					{uno: '.uno:SidebarDeck.PropertyDeck', id: 'view-sidebar-property-deck', name: _UNO('.uno:Sidebar')},
 					{uno: '.uno:SidebarDeck.StyleListDeck', name: _('Style list')},
 					{uno: '.uno:Navigator', id: 'navigator'},
-					{type: 'separator'},
 					{name: _UNO('.uno:ShowAnnotations', 'text'), id: 'showannotations', type: 'action'},
 					{name: _UNO('.uno:ShowResolvedAnnotations', 'text'), id: 'showresolved', type: 'action'},
 					{uno: '.uno:ControlCodes'},
+					{type: 'separator'},
+					{name: _('Gather windows'), id: 'gatherwindows', type: 'action'},
 				])},
 			{name: _UNO('.uno:InsertMenu', 'text'), id: 'insert', type: 'menu', menu: [
 				{name: _('Local Image...'), id: 'insertgraphic', type: 'action'},
@@ -504,6 +505,8 @@ class Menubar extends window.L.Control {
 					 {uno: '.uno:MasterSlidesPanel'},
 					 {uno: '.uno:CustomAnimation'}, // core version
 				   //{name: _UNO('.uno:CustomAnimation', 'presentation', true), id: 'animationdeck', type: 'action'}, // online version
+				   {type: 'separator'},
+				   {name: _('Gather windows'), id: 'gatherwindows', type: 'action'},
 				])},
 			{name: _UNO('.uno:InsertMenu', 'presentation'), id: 'insert', type: 'menu', menu: [
 				{name: _('Local Image...'), id: 'insertgraphic', type: 'action'},
@@ -662,6 +665,8 @@ class Menubar extends window.L.Control {
 					{uno: '.uno:Navigator', id: 'navigator'},
 					{name: _('Show Status Bar'), id: 'showstatusbar', type: 'action'},
 					{name: _('Hide Menu Bar'), id: 'togglemenubar', type: 'action'},
+					{type: 'separator'},
+					{name: _('Gather windows'), id: 'gatherwindows', type: 'action'},
 				])},
 			{name: _UNO('.uno:InsertMenu', 'presentation'), id: 'insert', type: 'menu', menu: [
 				{name: _('Local Image...'), id: 'insertgraphic', type: 'action'},
@@ -816,6 +821,7 @@ class Menubar extends window.L.Control {
 					   {name: _UNO('.uno:FreezePanesColumn', 'spreadsheet', true), id: 'FreezePanesColumn', uno: '.uno:FreezePanesColumn'},
 					   {name: _UNO('.uno:FreezePanesRow', 'spreadsheet', true), id: 'FreezePanesRow', uno: '.uno:FreezePanesRow'}
 				   ]},
+					{name: _('Gather windows'), id: 'gatherwindows', type: 'action'},
 				])},
 			{name: _UNO('.uno:InsertMenu', 'spreadsheet'), id: 'insert', type: 'menu', menu: [
 				{name: _('Local Image...'), id: 'insertgraphic', type: 'action'},
@@ -1087,6 +1093,8 @@ class Menubar extends window.L.Control {
 				{name: _UNO('.uno:ShowResolvedAnnotations', 'text'), id: 'showresolved', uno: '.uno:ShowResolvedAnnotations'},
 				{name: _('Dark Mode'), id: 'toggledarktheme', type: 'action'},
 				{name: _('Invert Background'), id: 'invertbackground', type: 'action'},
+				{type: 'separator'},
+				{name: _('Gather windows'), id: 'gatherwindows', type: 'action'},
 			]
 			},
 			window.enableAccessibility ?
@@ -1140,6 +1148,8 @@ class Menubar extends window.L.Control {
 				{name: _UNO('.uno:FullScreen', 'presentation'), id: 'fullscreen', type: 'action', mobileapp: false},
 				{name: _('Dark Mode'), id: 'toggledarktheme', type: 'action'},
 				{name: _('Invert Background'), id: 'invertbackground', type: 'action'},
+				{type: 'separator'},
+				{name: _('Gather windows'), id: 'gatherwindows', type: 'action'},
 			]
 			},
 			{name: _UNO('.uno:TableMenu', 'text'/*HACK should be 'presentation', but not in xcu*/), id: 'tablemenu', type: 'menu', menu: [
@@ -1201,6 +1211,8 @@ class Menubar extends window.L.Control {
 				{name: _UNO('.uno:FullScreen', 'presentation'), id: 'fullscreen', type: 'action', mobileapp: false},
 				{name: _('Dark Mode'), id: 'toggledarktheme', type: 'action'},
 				{name: _('Invert Background'), id: 'invertbackground', type: 'action'},
+				{type: 'separator'},
+				{name: _('Gather windows'), id: 'gatherwindows', type: 'action'},
 			]
 			},
 			{name: _UNO('.uno:TableMenu', 'text'/*HACK should be 'presentation', but not in xcu*/), id: 'tablemenu', type: 'menu', menu: [
@@ -1261,6 +1273,8 @@ class Menubar extends window.L.Control {
 				{name: _UNO('.uno:FullScreen', 'presentation'), id: 'fullscreen', type: 'action', mobileapp: false},
 				{name: _('Dark Mode'), id: 'toggledarktheme', type: 'action'},
 				{name: _('Invert Background'), id: 'invertbackground', type: 'action'},
+				{type: 'separator'},
+				{name: _('Gather windows'), id: 'gatherwindows', type: 'action'},
 			]
 			},
 			{name: _UNO('.uno:SheetMenu', 'spreadsheet'), id: 'sheetmenu', type: 'menu', menu: [
@@ -1433,7 +1447,7 @@ class Menubar extends window.L.Control {
 			'downloadas-odp', 'downloadas-ppt', 'downloadas-pptx', 'downloadas-odg', 'exportpdf' , // file menu
 			!window.ThisIsAMobileApp ? 'exportdirectpdf' : 'downloadas-pdf', !window.ThisIsAMobileApp ? 'exportepub' : 'downloadas-epub', // file menu
 			'downloadas-ods', 'downloadas-xls', 'downloadas-xlsx', 'downloadas-csv', 'closedocument', // file menu
-			() => !(window.L.Browser.ie || window.L.Browser.edge) ? 'fullscreen' : undefined, 'zoomin', 'zoomout', 'zoomreset', 'showstatusbar', 'showresolved', 'showannotations', 'toggledarktheme', // view menu
+			() => !(window.L.Browser.ie || window.L.Browser.edge) ? 'fullscreen' : undefined, 'zoomin', 'zoomout', 'zoomreset', 'showstatusbar', 'showresolved', 'showannotations', 'toggledarktheme', 'gatherwindows', // view menu
 			'insert-signatureline', // insert menu
 			'about', 'keyboard-shortcuts', 'latestupdates', 'feedback', 'serveraudit', 'online-help', 'report-an-issue', // help menu
 			'insertcomment'
@@ -2041,6 +2055,18 @@ class Menubar extends window.L.Control {
 						itemState = app.map.uiManager.getHighlightMode();
 						if (itemState) $(aItem).addClass(constChecked);
 						else $(aItem).removeClass(constChecked);
+					} else if (id === 'gatherwindows') {
+						// Enable only if there are multiple windows
+						if (window.bridge && window.bridge.getWindowCount) {
+							var windowCount = window.bridge.getWindowCount();
+							if (windowCount > 1) {
+								$(aItem).removeClass('disabled');
+							} else {
+								$(aItem).addClass('disabled');
+							}
+						} else {
+							$(aItem).addClass('disabled');
+						}
 					} else {
 						$(aItem).removeClass('disabled');
 					}
@@ -2314,6 +2340,10 @@ class Menubar extends window.L.Control {
 			window.open('https://github.com/CollaboraOnline/online/issues', '_blank', 'noopener');
 		} else if (id === 'forum') {
 			window.open('https://forum.collaboraonline.com', '_blank', 'noopener');
+		} else if (id === 'gatherwindows') {
+			if (window.bridge && window.bridge.gatherAllWindows) {
+				window.bridge.gatherAllWindows();
+			}
 		} else if (id === 'inserthyperlink') {
 			app.dispatcher.dispatch('hyperlinkdialog');
 		} else if (id === 'keyboard-shortcuts' || id === 'online-help') {
@@ -2439,6 +2469,9 @@ class Menubar extends window.L.Control {
        * @returns True if visible; otherwise false.
        */
 	private _checkItemVisibility(menuItem: any): boolean {
+		if (menuItem.id === 'gatherwindows' && !window.bridge) {
+			return false;
+		}
 		if (window.ThisIsAMobileApp && menuItem.mobileapp === false) {
 			return false;
 		}
