@@ -6,7 +6,7 @@
     <message>
         <location filename="../coda-qt.cpp" line="289"/>
         <source>Print Document</source>
-        <translation type="unfinished"></translation>
+        <translation>Belgeyi Yazdır</translation>
     </message>
     <message>
         <location filename="../coda-qt.cpp" line="297"/>
