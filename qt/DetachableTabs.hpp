@@ -51,6 +51,8 @@ public:
 
     DetachableTabBar *tabBar() const;
     void updateTabBarVisibility();
+    void mergeAllTabs();
+    static int getWindowCount();
 
 signals:
     void plusButtonClicked();

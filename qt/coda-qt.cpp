@@ -22,6 +22,7 @@
 #include "qt.hpp"
 #include "DBusService.hpp"
 #include "common/RecentFiles.hpp"
+#include "DetachableTabs.hpp"
 
 #include <Poco/MemoryStream.h>
 #include <Poco/JSON/Parser.h>
@@ -1197,6 +1198,23 @@ QVariant Bridge::cool(const QString& messageStr)
         fakeSocketWriteQueue(_document._fakeClientFd, message.c_str(), message.size());
     }
     return {};
+}
+
+void Bridge::gatherAllWindows()
+{
+    if (!_window)
+        return;
+
+    DetachableTabWidget* tabWidget = qobject_cast<DetachableTabWidget*>(_window->centralWidget());
+    if (tabWidget)
+    {
+        tabWidget->mergeAllTabs();
+    }
+}
+
+int Bridge::getWindowCount()
+{
+    return DetachableTabWidget::getWindowCount();
 }
 
 // Disable accessibility

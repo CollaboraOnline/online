@@ -380,3 +380,70 @@ void DetachableTabWidget::dropEvent(QDropEvent* ev) {
     }
 }
 
+void DetachableTabWidget::mergeAllTabs() {
+    // Iterate through all tab widgets and move their tabs to this widget
+    for (auto it = s_allTabWidgets.begin(); it != s_allTabWidgets.end(); ) {
+        DetachableTabWidget* sourceWidget = *it;
+
+        // Skip ourselves
+        if (sourceWidget == this) {
+            ++it;
+            continue;
+        }
+
+        // Move all tabs from the source widget to this widget
+        while (sourceWidget->count() > 0) {
+            QWidget* tabWidget = sourceWidget->widget(0);
+            QString label = sourceWidget->tabText(0);
+            QIcon icon = sourceWidget->tabIcon(0);
+
+            // Remove from source
+            sourceWidget->removeTab(0);
+
+            // Reparent and add to this widget
+            tabWidget->setParent(this);
+            tabWidget->setVisible(true);
+            int newIndex = addTab(tabWidget, label);
+            if (!icon.isNull()) {
+                setTabIcon(newIndex, icon);
+            }
+            updateTabBarVisibility();
+        }
+
+        // Close the source window if it has no tabs left
+        if (sourceWidget->count() == 0) {
+            QMainWindow* sourceWindow = qobject_cast<QMainWindow*>(sourceWidget->window());
+            if (sourceWindow) {
+                // Defer closing to avoid issues during iteration
+                QPointer<QMainWindow> safeWin = sourceWindow;
+                QTimer::singleShot(0, [safeWin]() {
+                    if (safeWin) {
+                        safeWin->close();
+                    }
+                });
+            }
+        }
+
+        ++it;
+    }
+
+    // Update tab bar visibility after merging all tabs
+    updateTabBarVisibility();
+
+    // Refresh all tab icons after merging
+    for (int i = 0; i < count(); ++i) {
+        QWidget* w = widget(i);
+        if (w) {
+            quint64 ownerPtr = w->property("webview_owner").toULongLong();
+            WebView* owner = reinterpret_cast<WebView*>((quintptr)ownerPtr);
+            if (owner) {
+                owner->updateTabIcon();
+            }
+        }
+    }
+}
+
+int DetachableTabWidget::getWindowCount() {
+    return static_cast<int>(s_allTabWidgets.size());
+}
+
