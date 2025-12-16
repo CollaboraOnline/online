@@ -269,7 +269,7 @@ app.definitions.Socket = class Socket extends SocketBase {
 		if (!logMessage)
 			return;
 
-		if (window.ThisIsTheGtkApp || window.ThisIsTheQtApp)
+		if (window.ThisIsTheQtApp)
 			window.postMobileDebug(type + ' ' + msg);
 
 		var debugOn = this._map._debug.debugOn;
