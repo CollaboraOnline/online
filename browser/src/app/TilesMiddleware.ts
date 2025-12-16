@@ -957,7 +957,7 @@ class TileManager {
 		}
 	}
 
-	private static disableWorker(e: any = null) {
+	public static disableWorker(e: any = null) {
 		if (e) window.app.console.error('Worker-related error encountered', e);
 		if (!this.workers.length) return;
 
