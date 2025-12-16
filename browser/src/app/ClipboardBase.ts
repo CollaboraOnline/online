@@ -299,8 +299,34 @@ class CoolClipboardBase extends BaseClass {
 	}
 
 	private _readContentSyncToBlob(dataTransfer: DataTransfer): Blob | null {
-		console.assert(false, 'This should not be called!');
-		return new Blob(['']);
+		const content = [];
+		const types: readonly string[] = dataTransfer.types;
+		for (let t = 0; t < types.length; ++t) {
+			if (types[t] === 'Files') continue; // images handled elsewhere.
+			const dataStr = dataTransfer.getData(types[t]);
+			// Avoid types that has no content.
+			if (!dataStr.length) continue;
+			const data = new Blob([dataStr]);
+			window.app.console.log(
+				'type ' +
+					types[t] +
+					' length ' +
+					data.size +
+					' -> 0x' +
+					data.size.toString(16) +
+					'\n',
+			);
+			content.push((types[t] === 'text' ? 'text/plain' : types[t]) + '\n');
+			content.push(data.size.toString(16) + '\n');
+			content.push(data);
+			content.push('\n');
+		}
+		if (content.length > 0)
+			return new Blob(content, {
+				type: 'application/octet-stream',
+				endings: 'transparent',
+			});
+		else return null;
 	}
 
 	private async _doAsyncDownload(
