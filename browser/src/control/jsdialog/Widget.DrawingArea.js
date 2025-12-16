@@ -53,6 +53,8 @@ function _drawingAreaControl (parentContainer, data, builder) {
 	} else if (data.aria && data.aria.label) {
 		container.setAttribute('aria-label', data.aria.label);
 		image.alt = '';
+	} else if (data.aria && data.aria.description) {
+		image.alt = data.aria.description;
 	}
 
 	// Line width dialog is affected from delay on image render.
