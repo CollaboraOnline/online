@@ -13,20 +13,12 @@
 
 #include <QString>
 #include <Poco/JSON/Array.h>
+#define LOK_USE_UNSTABLE_API
+#include "LibreOfficeKit/LibreOfficeKitEnums.h"
 
-class QSettings;
-
-class RecentDocuments
+namespace RecentDocuments
 {
-public:
-    static void add(const QString& filePath);
-    static Poco::JSON::Array::Ptr getForAppType(int docType = -1);
-
-private:
-    static int getAppTypeFromExtension(const QString& suffix);
-    static QString getGroupName(int docType);
-    static QString getDocTypeString(int docType);
-    static QSettings getSettings();
-    static bool isValidFile(const QString& filePath);
-};
+    void add(const QString& filePath);
+    Poco::JSON::Array::Ptr getForAppType(LibreOfficeKitDocumentType docType);
+}
 
