@@ -2342,7 +2342,7 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 		textMsg = textMsg.replace('textselection:', '').trim();
 		let rawRectangles = textMsg.split(';');
 
-		if (textMsg !== '') {
+		if (textMsg !== '' && textMsg !== 'EMPTY') {
 			rawRectangles = rawRectangles.map((rectangle) => {
 				const temp = rectangle.split(',');
 				return [parseInt(temp[0]), parseInt(temp[1]), parseInt(temp[2]), parseInt(temp[3])];
