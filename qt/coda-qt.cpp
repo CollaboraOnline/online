@@ -888,10 +888,10 @@ QVariant Bridge::cool(const QString& messageStr)
     }
     else if (message == "GETRECENTDOCS")
     {
-        int docType = -1;
+        LibreOfficeKitDocumentType docType = LOK_DOCTYPE_TEXT;
         lok::Document* loKitDoc = DocumentData::get(_document._appDocId).loKitDocument;
         if (loKitDoc) {
-            docType = loKitDoc->getDocumentType();
+            docType = static_cast<LibreOfficeKitDocumentType>(loKitDoc->getDocumentType());
         }
 
         Poco::JSON::Array::Ptr recentDocs = RecentDocuments::getForAppType(docType);
@@ -1107,7 +1107,6 @@ QVariant Bridge::cool(const QString& messageStr)
 
         std::string templatePath;
         constexpr std::string_view TEMPLATE_PREFIX = "template=";
-
         if(templateArgs.starts_with(TEMPLATE_PREFIX))
         {
             std::string_view templateVal = templateArgs.substr(TEMPLATE_PREFIX.size());
