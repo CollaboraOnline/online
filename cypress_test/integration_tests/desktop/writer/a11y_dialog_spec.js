@@ -171,7 +171,8 @@ describe(['tagdesktop'], 'Accessibility Writer Tests', function () {
         const panelId = $activeTab.attr('aria-controls');
         if (!panelId) return null;
 
-        return $container.find(`#${panelId}[role="tabpanel"]`);
+        const panelSelector = `#${CSS.escape(panelId)}[role="tabpanel"]`;
+        return $container.find(panelSelector);
     }
 
     function closeActiveDialog() {
