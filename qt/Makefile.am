@@ -103,6 +103,8 @@ nobase_dist_icons_DATA = \
 	hicolor/512x512/apps/com.collaboraoffice.Office.startcenter.png \
 	hicolor/scalable/apps/com.collaboraoffice.Office.startcenter.svg
 
+EXTRA_DIST = tools/add-release.py
+
 ### --- Qt translations integration begin ---
 
 # List of translation languages
@@ -133,7 +135,7 @@ translationsdir = $(datadir)/coda-qt/translations
 translations_DATA = $(QM_FILES)
 
 # Distribute sources and clean up generated files
-EXTRA_DIST = $(TS_FILES) run-from-build.in
+EXTRA_DIST += $(TS_FILES) run-from-build.in
 CLEANFILES += $(QM_FILES) run-from-build
 
 ### --- Qt translations integration end ---
