@@ -46,6 +46,8 @@ interface JSBuilderOptions {
 
 interface JSBuilder {
 	_currentDepth: number; // mobile-wizard only FIXME: encapsulate
+
+	_unoToolButton: UnoToolButtonHandler; // special handler which returns toolitem object
 	_controlHandlers: { [key: string]: JSWidgetHandler }; // handlers for widget types
 	_menus: Map<string, Array<MenuDefinition>>;
 
@@ -82,6 +84,17 @@ type JSWidgetHandler = (
 	builder: JSBuilder,
 	customCallback?: () => void,
 ) => boolean;
+
+type UnoToolButtonHandler = (
+	parentContainer: Element,
+	data: WidgetJSON,
+	builder: JSBuilder,
+) => {
+	container: HTMLElement;
+	button: HTMLElement;
+	label: HTMLElement;
+	arrow?: HTMLElement;
+};
 
 // callback triggered by user actions
 type JSDialogCallback = (
@@ -213,6 +226,7 @@ interface ToolboxWidgetJSON extends WidgetJSON {
 interface ToolItemWidgetJSON extends WidgetJSON {
 	class?: string; // css class
 	noLabel?: boolean;
+	inlineLabel?: boolean;
 	command?: string; // command to trigger options for a panel
 	text?: string; // title to show or for tooltip
 	icon?: string; // url to an svg

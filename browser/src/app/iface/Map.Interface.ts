@@ -73,6 +73,7 @@ interface MapInterface extends Evented {
 		DisableInactiveMessages: boolean;
 		UserCanNotWriteRelative: boolean;
 		BaseFileName: string;
+		HideExportOption: boolean;
 	};
 
 	loadDocument(socket?: SockInterface): void;
@@ -95,6 +96,7 @@ interface MapInterface extends Evented {
 	_setRestrictions(restrictionInfo: ParsedJSONResult): void;
 	hideRestrictedItems(it: any, item: any, button: any): void;
 	disableLockedItem(it: any, item: any, button: any): void;
+	isLockedItem(data: any): boolean;
 	openUnlockPopup(cmd: ParsedJSONResult): void;
 	isLockedUser(): boolean;
 	isRestrictedUser(): boolean;
