@@ -13,80 +13,15 @@
  * local & remote clipboard data.
  */
 
-/* global app DocUtil _ brandProductName $ ClipboardItem Promise GraphicSelection cool JSDialog ClipboardBase */
+/* global app DocUtil _ brandProductName $ ClipboardItem Promise GraphicSelection cool JSDialog CoolClipboardBase */
 
 // Get all interesting clipboard related events here, and handle
 // download logic in one place ...
 // We keep track of the current selection content if it is simple
 // So we can do synchronous copy/paste in the callback if possible.
-window.L.Clipboard = class Clipboard extends ClipboardBase {
+window.L.Clipboard = class Clipboard extends CoolClipboardBase {
 	constructor(map) {
-		super();
-		this._map = map;
-		this._selectionContent = '';
-		this._selectionPlainTextContent = '';
-		this._selectionType = null;
-		this._accessKey = [ '', '' ];
-		this._clipboardSerial = 0; // incremented on each operation
-		this._failedTimer = null;
-		this._dummyDivName = 'copy-paste-container';
-		this._unoCommandForCopyCutPaste = null;
-		// Tracks if we're in paste special mode for the navigator.clipboard case
-		this._navigatorClipboardPasteSpecial = false;
-		// Is handling an 'Action_Copy' in progress?
-		this._isActionCopy = false;
-
-		var div = document.createElement('div');
-		this._dummyDiv = div;
-		this._dummyPlainDiv = null;
-		this._dummyClipboard = {};
-
-		// Tracks waiting for UNO commands to complete
-		this._commandCompletion = [];
-		this._map.on('commandresult', this._onCommandResult, this);
-		this._map.on('clipboardchanged', this._onCommandResult, this);
-
-		div.setAttribute('id', this._dummyDivName);
-		div.style.userSelect = 'text !important';
-		div.style.opacity = '0';
-		div.setAttribute('contenteditable', 'true');
-		div.setAttribute('type', 'text');
-		div.style.position = 'fixed';
-		div.style.left = '0px';
-		div.style.top = '-200px';
-		div.style.width = '15000px';
-		div.style.height = '200px';
-		div.style.overflow = 'hidden';
-		div.style.zIndex = '-1000';
-		div.style['-webkit-user-select'] = 'text !important';
-		div.style.display = 'block';
-		div.style.fontSize = '6pt';
-
-		// so we get events to where we want them.
-		var parent = document.getElementById('map');
-		parent.appendChild(div);
-
-		if (window.L.Browser.cypressTest) {
-			this._dummyPlainDiv = document.createElement('div');
-			this._dummyPlainDiv.id = 'copy-plain-container';
-			this._dummyPlainDiv.style = 'position: fixed; left: 0px; top: -400px; width: 15000px; height: 200px; ' +
-				'overflow: hidden; z-index: -1000; -webkit-user-select: text !important; display: block; ' +
-				'font-size: 6pt';
-			parent.appendChild(this._dummyPlainDiv);
-		}
-
-		// sensible default content.
-		this._resetDiv();
-
-		var that = this;
-		var beforeSelect = function(ev) { return that._beforeSelect(ev); };
-
-		document.oncut = function(ev)   { return that.cut(ev); };
-		document.oncopy = function(ev)  { return that.copy(ev); };
-		document.onpaste = function(ev) { return that.paste(ev); };
-		document.onbeforecut = beforeSelect;
-		document.onbeforecopy = beforeSelect;
-		document.onbeforepaste = beforeSelect;
+		super(map);
 	}
 
 	// Decides if `html` effectively contains just an image.
