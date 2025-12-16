@@ -120,38 +120,71 @@ class CoolClipboardBase extends BaseClass {
 		(document as any).onbeforepaste = beforeSelect;
 	}
 
+	// Decides if `html` effectively contains just an image.
 	public isHtmlImage(html: string): boolean {
-		console.assert(false, 'This should not be called!');
+		const startsWithMeta = html.substring(0, 5) == '<meta';
+		if (startsWithMeta) {
+			// Ignore leading <meta>.
+			const metaEnd = html.indexOf('>');
+			if (metaEnd != -1) {
+				// Start after '>'.
+				html = html.substring(metaEnd + 1);
+			}
+		}
+
+		// Starts with an <img> element.
+		if (html.substring(0, 4) === '<img') {
+			return true;
+		}
+
 		return false;
 	}
 
 	public setKey(key: string): void {
-		console.assert(false, 'This should not be called!');
+		if (this._accessKey[0] === key) return;
+		this._accessKey[1] = this._accessKey[0];
+		this._accessKey[0] = key;
 	}
 
 	public getMetaBase(): string {
-		console.assert(false, 'This should not be called!');
-		return '';
+		if (window.ThisIsAMobileApp) {
+			return 'collabora-online-mobile'; // makeHttpUrl does not work with the file:// protocol used in mobile apps...
+		}
+		return window.makeHttpUrl('');
 	}
 
 	public getMetaPath(idx?: number): string {
-		console.assert(false, 'This should not be called!');
-		return '';
+		if (!idx) idx = 0;
+		if (this._accessKey[idx] === '') return '';
+
+		let metaPath =
+			'/cool/clipboard?WOPISrc=' +
+			encodeURIComponent(this._map.options.doc) +
+			'&ServerId=' +
+			app.socket.WSDServer.Id +
+			'&ViewId=' +
+			this._map._docLayer._viewId +
+			'&Tag=' +
+			this._accessKey[idx];
+
+		if (window.routeToken !== '')
+			metaPath += '&RouteToken=' + window.routeToken;
+
+		return metaPath;
 	}
 
 	public getMetaURL(idx: number): string {
-		console.assert(false, 'This should not be called!');
-		return '';
+		return this.getMetaBase() + this.getMetaPath(idx);
 	}
 
+	// Returns the marker used to identify stub messages.
 	private _getHtmlStubMarker(): string {
-		console.assert(false, 'This should not be called!');
-		return '';
+		return '<title>Stub HTML Message</title>';
 	}
 
+	// Returns true if the argument is a stub html.
 	private _isStubHtml(text: string): boolean {
-		console.assert(false, 'This should not be called!');
-		return false;
+		return text.indexOf(this._getHtmlStubMarker()) > 0;
 	}
 
 	private _originWrapBody(body: string, isStub: boolean): string {
