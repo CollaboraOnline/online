@@ -380,6 +380,7 @@ interface Window {
 	getAccessibilityState(): boolean;
 	makeClientVisibleArea(): string;
 	postMobileDebug(msg: string): void;
+	processCoolUrl?: (data: { url: string; type: string }) => string;
 }
 
 // For localization
