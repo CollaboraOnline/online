@@ -516,6 +516,21 @@ class TileManager {
 				imageData.byteLength,
 			);
 			const image = new ImageData(clampedData, this.tileSize, this.tileSize);
+
+			// uncomment to dump each image as a data url to console to see each
+			// tile snapshot
+			/*
+			const extremedebug = false;
+			if (extremedebug) {
+				const canvas = document.createElement('canvas');
+				canvas.width = image.width;
+				canvas.height = image.height;
+				canvas.getContext('2d').putImageData(image, 0, 0);
+				const pngDataUrl = canvas.toDataURL('image/png');
+				console.log(pngDataUrl);
+			}
+			*/
+
 			bitmaps.push(
 				createImageBitmap(image, {
 					premultiplyAlpha: 'none',
