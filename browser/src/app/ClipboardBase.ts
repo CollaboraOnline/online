@@ -173,7 +173,7 @@ class CoolClipboardBase extends BaseClass {
 		return metaPath;
 	}
 
-	public getMetaURL(idx: number): string {
+	public getMetaURL(idx?: number): string {
 		return this.getMetaBase() + this.getMetaPath(idx);
 	}
 
@@ -187,19 +187,51 @@ class CoolClipboardBase extends BaseClass {
 		return text.indexOf(this._getHtmlStubMarker()) > 0;
 	}
 
+	// wrap some content with our stub magic
 	private _originWrapBody(body: string, isStub: boolean): string {
-		console.assert(false, 'This should not be called!');
-		return '';
+		const lang = 'en_US'; // FIXME: l10n
+		const encodedOrigin = encodeURIComponent(this.getMetaURL());
+		let text =
+			'<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">\n' +
+			'<html>\n' +
+			'  <head>\n';
+		if (isStub) text += '    ' + this._getHtmlStubMarker() + '\n';
+		text +=
+			'    <meta http-equiv="content-type" content="text/html; charset=utf-8"/>\n' +
+			'  </head>\n' +
+			'  <body lang="' +
+			lang +
+			'" dir="ltr"><div id="meta-origin" data-coolorigin="' +
+			encodedOrigin +
+			'">\n' +
+			body +
+			'  </div></body>\n' +
+			'</html>';
+		return text;
 	}
 
+	// what an empty clipboard has on it
 	private _getStubHtml(): string {
-		console.assert(false, 'This should not be called!');
-		return '';
+		return this._substProductName(
+			this._originWrapBody(
+				'    <p>' +
+					_(
+						"To paste outside {productname}, please first click the 'download' button",
+					) +
+					'</p>\n',
+				true,
+			),
+		);
 	}
 
+	// used for DisableCopy mode to fill the clipboard
 	private _getDisabledCopyStubHtml(): string {
-		console.assert(false, 'This should not be called!');
-		return '';
+		return this._substProductName(
+			this._originWrapBody(
+				'    <p>' + _('Copying from the document disabled') + '</p>\n',
+				true,
+			),
+		);
 	}
 
 	private _getMetaOrigin(html: string, prefix: string): string {
