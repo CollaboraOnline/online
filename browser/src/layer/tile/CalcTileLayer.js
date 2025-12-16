@@ -1088,8 +1088,8 @@ window.L.CalcTileLayer = window.L.CanvasTileLayer.extend({
 		// If this is a cellSelection message, user shouldn't be editing a cell. Below check is for ensuring that.
 		if ((this.insertMode === false || app.file.textCursor.visible === false) && app.calc.cellCursorVisible) {
 			// When insertMode is false, this is a cell selection message.
-			textMsg = textMsg.replace('textselection:', '');
-			if (textMsg.trim() !== 'EMPTY' && textMsg.trim() !== '') {
+			textMsg = textMsg.replace('textselection:', '').trim();
+			if (textMsg !== 'EMPTY' && textMsg !== '') {
 				this._cellSelections = textMsg.split(';');
 				var that = this;
 				this._cellSelections = this._cellSelections.map(function(element) {
