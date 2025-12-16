@@ -34,6 +34,7 @@ class CoolClipboardBase extends BaseClass {
 	private _dummyPlainDiv: Element | null;
 	private _dummyClipboard: Clipboard;
 	private _commandCompletion: Promise<void>[];
+	private _downloadProgress?: DownloadProgressInterface;
 
 	constructor(map: MapInterface) {
 		super();
@@ -329,6 +330,13 @@ class CoolClipboardBase extends BaseClass {
 		else return null;
 	}
 
+	// Abstract async post & download for our progress wrappers
+	// type: GET or POST
+	// url:  where to get / send the data
+	// optionalFormData: used for POST for form data
+	// forClipboard: a boolean telling if we need the "Confirm copy to clipboard" link in the end
+	// completeFn: called on completion - with response.
+	// progressFn: allows splitting the progress bar up.
 	private async _doAsyncDownload(
 		type: string,
 		url: string,
@@ -336,8 +344,72 @@ class CoolClipboardBase extends BaseClass {
 		forClipboard: boolean,
 		progressFn: (progress: number) => number,
 	): Promise<string | Blob> {
-		console.assert(false, 'This should not be called!');
-		return '';
+		const request = new XMLHttpRequest();
+
+		// avoid to invoke the following code if the download widget depends on user interaction
+		if (!this._downloadProgress || this._downloadProgress.isClosed()) {
+			this._startProgress(false);
+			Util.ensureValue(this._downloadProgress);
+			this._downloadProgress.startProgressMode();
+		}
+
+		return await new Promise((resolve, reject) => {
+			request.onload = () => {
+				Util.ensureValue(this._downloadProgress);
+				this._downloadProgress._onComplete();
+				if (!forClipboard) {
+					this._downloadProgress._onClose();
+				}
+
+				// For some reason 400 error from the server doesn't
+				// invoke onerror callback, but we do get here with
+				// size==0, which signifies no response from the server.
+				// So we check the status code instead.
+				if (request.status == 200) {
+					resolve(request.response);
+				} else {
+					reject(request.response);
+				}
+			};
+			request.onerror = (error) => {
+				reject(error);
+				Util.ensureValue(this._downloadProgress);
+				this._downloadProgress._onComplete();
+				this._downloadProgress._onClose();
+			};
+
+			request.ontimeout = () => {
+				this._map.uiManager.showSnackbar(
+					_('warning: copy/paste request timed out'),
+				);
+				Util.ensureValue(this._downloadProgress);
+				this._downloadProgress._onClose();
+				reject('request timed out');
+			};
+
+			request.upload.addEventListener(
+				'progress',
+				(e) => {
+					if (e.lengthComputable) {
+						const percent = progressFn((e.loaded / e.total) * 100);
+						const progress = { statusType: 'setvalue', value: percent };
+						Util.ensureValue(this._downloadProgress);
+						this._downloadProgress._onUpdateProgress(progress);
+					}
+				},
+				false,
+			);
+
+			if (window.processCoolUrl) {
+				url = window.processCoolUrl({ url: url, type: 'clipboard' });
+			}
+
+			request.open(type, url, true /* isAsync */);
+			request.timeout = 30 * 1000; // 30 secs ...
+			request.responseType = 'blob';
+			if (optionalFormData !== null) request.send(optionalFormData);
+			else request.send();
+		});
 	}
 
 	private async _dataTransferDownloadAndPasteAsync(
