@@ -234,14 +234,68 @@ class CoolClipboardBase extends BaseClass {
 		);
 	}
 
+	private _isClipboardURLSafe(inURL: string): boolean {
+		let parsedURL: URL;
+		try {
+			parsedURL = new URL(inURL, window.location.href);
+
+			if (
+				(parsedURL.protocol !== 'https:' &&
+					parsedURL.protocol !== 'http:' &&
+					parsedURL.protocol !== 'file:') ||
+				parsedURL.origin !== window.location.origin ||
+				!parsedURL.pathname.startsWith('/cool/clipboard')
+			) {
+				return false;
+			}
+		} catch (ex: any) {
+			return false;
+		}
+
+		return true;
+	}
+
 	private _getMetaOrigin(html: string, prefix: string): string {
-		console.assert(false, 'This should not be called!');
+		const start = html.indexOf(prefix);
+		if (start < 0) {
+			return '';
+		}
+		const end = html.indexOf('"', start + prefix.length);
+		if (end < 0) {
+			return '';
+		}
+		const meta = html.substring(start + prefix.length, end);
+
+		// quick sanity checks that it one of ours.
+		if (
+			meta.indexOf('%2Fclipboard%3FWOPISrc%3D') >= 0 &&
+			meta.indexOf('%26ServerId%3D') > 0 &&
+			meta.indexOf('%26ViewId%3D') > 0 &&
+			meta.indexOf('%26Tag%3D') > 0
+		) {
+			const inURL = decodeURIComponent(meta);
+			if (!this._isClipboardURLSafe(inURL)) {
+				window.app.console.log(
+					'Untrusted URL: "' + inURL + '" as clipboard origin. Rejected!',
+				);
+				return '';
+			}
+
+			return inURL;
+		} else {
+			window.app.console.log('Mis-understood foreign origin: "' + meta + '"');
+		}
 		return '';
 	}
 
 	private _encodeHtmlToBlob(text: string): Blob {
-		console.assert(false, 'This should not be called!');
-		return new Blob(['']);
+		const content: Array<string | Blob> = [];
+		const data = new Blob([text]);
+		content.push('text/html\n');
+		content.push(data.size.toString(16) + '\n');
+		content.push(data);
+		content.push('\n');
+		return new Blob(content);
 	}
 
 	private _readContentSyncToBlob(dataTransfer: DataTransfer): Blob | null {
