@@ -328,7 +328,6 @@ interface Window {
 	userInterfaceMode: string;
 	ThisIsAMobileApp: boolean;
 	ThisIsTheEmscriptenApp: boolean;
-	ThisIsTheGtkApp: boolean;
 	wopiSrc: string;
 	zoteroEnabled: boolean;
 	accessToken: string;
