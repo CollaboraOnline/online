@@ -288,7 +288,6 @@ class InitializerBase {
 
 		window.ThisIsAMobileApp = false;
 		window.ThisIsTheiOSApp = false;
-		window.ThisIsTheGtkApp = false;
 		window.ThisIsTheAndroidApp = false;
 		window.ThisIsTheEmscriptenApp = false;
 		window.ThisIsTheQtApp = false;
@@ -515,17 +514,6 @@ class MacOSAppInitializer extends MobileAppInitializer {
 	}
 }
 
-class GTKAppInitializer extends MobileAppInitializer {
-	constructor() {
-		super();
-
-		window.ThisIsTheGtkApp = true;
-		window.postMobileMessage = function(msg) { window.webkit.messageHandlers.cool.postMessage(msg, '*'); };
-		window.postMobileError   = function(msg) { window.webkit.messageHandlers.error.postMessage(msg, '*'); };
-		window.postMobileDebug   = function(msg) { window.webkit.messageHandlers.debug.postMessage(msg, '*'); };
-	}
-}
-
 class WindowsAppInitializer extends MobileAppInitializer {
 	constructor() {
 		super();
@@ -625,8 +613,6 @@ function getInitializerClass() {
 				return new IOSAppInitializer();
 			else if (osType === "MACOS")
 				return new MacOSAppInitializer();
-			else if (osType === "GTK")
-				return new GTKAppInitializer();
 			else if (osType === "WINDOWS")
 				return new WindowsAppInitializer();
 			else if (osType === "ANDROID")

@@ -57,8 +57,6 @@
 #include "androidapp.hpp"
 #elif defined(_WIN32)
 #include "windows.hpp"
-#elif defined(GTKAPP)
-#include "gtk.hpp"
 #elif defined(QTAPP)
 #include "qt.hpp"
 #elif WASMAPP
