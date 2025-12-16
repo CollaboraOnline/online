@@ -152,8 +152,8 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 		this._controlHandlers['spinnerimg'] = this._spinnerImgControl;
 		this._controlHandlers['image'] = this._imageHandler;
 		this._controlHandlers['scrollwindow'] = JSDialog.scrolledWindow;
-		this._controlHandlers['customtoolitem'] = this._mapDispatchToolItem;
-		this._controlHandlers['bigcustomtoolitem'] = this._mapBigDispatchToolItem;
+		this._controlHandlers['customtoolitem'] = JSDialog.dispatchToolitem;
+		this._controlHandlers['bigcustomtoolitem'] = JSDialog.bigDispatchToolitem;
 		this._controlHandlers['calendar'] = JSDialog.calendar;
 		this._controlHandlers['htmlcontent'] = JSDialog.htmlContent;
 		this._controlHandlers['colorpicker'] = JSDialog.colorPicker;
@@ -1799,6 +1799,7 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 		return str.indexOf('lc_') === 0;
 	},
 
+	// TODO: move to jsdialog/Widget.Toolitem.ts
 	_unoToolButton: function(parentContainer, data, builder, options) {
 		var button = null;
 
@@ -2144,92 +2145,6 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 						builder.map.tooltip.hide(elem);
 				});
 		}
-	},
-
-	_mapDispatchToolItem: function (parentContainer, data, builder) {
-		if (!data.command)
-			data.command = data.id;
-
-		if (data.id && data.id !== 'exportas' && data.id.startsWith('export')) {
-			var format = data.id.substring('export'.length);
-			app.registerExportFormat(data.text, format);
-
-			if (builder.map['wopi'].HideExportOption)
-				return false;
-		}
-
-		if (data.inlineLabel !== undefined) {
-			var backupInlineText = builder.options.useInLineLabelsForUnoButtons;
-			builder.options.useInLineLabelsForUnoButtons = data.inlineLabel;
-		}
-
-		var control = builder._unoToolButton(parentContainer, data, builder);
-
-		if (data.inlineLabel !== undefined)
-			builder.options.useInLineLabelsForUnoButtons = backupInlineText;
-
-		$(control.button).unbind('click');
-		$(control.label).unbind('click');
-
-		if (!builder.map.isLockedItem(data)) {
-			var handlePressAndHold = function(data) {
-				const scrollingInterval = setInterval(function () {
-					app.dispatcher.dispatch(data.command);
-				}, 100);
-
-				$(document).one('mouseup', function () {
-					clearInterval(scrollingInterval);
-				});
-			};
-
-			// Handle "Press+Hold" Event
-			if (data.pressAndHold) {
-				$(control.container).on('mousedown', (e) => {
-					if (e.button !== 0 // Only handle left mouse button
-						|| control.container.getAttribute('disabled') !== null)
-						return;
-
-					const pressAndHoldTimer = setTimeout(() => {
-						handlePressAndHold(data);
-					}, 500);
-
-					$(document).one('mouseup', () => {
-						clearTimeout(pressAndHoldTimer);
-					});
-				});
-			}
-
-			$(control.container).click(function () {
-				if (control.container.getAttribute('disabled') === null)
-					app.dispatcher.dispatch(data.command);
-			});
-		}
-
-		builder._preventDocumentLosingFocusOnClick(control.container);
-	},
-
-	_mapBigDispatchToolItem: function (parentContainer, data, builder) {
-		if (!data.command)
-			data.command = data.id;
-
-		var noLabels = builder.options.noLabelsForUnoButtons;
-		builder.options.noLabelsForUnoButtons = false;
-
-		var control = builder._unoToolButton(parentContainer, data, builder);
-
-		builder.options.noLabelsForUnoButtons = noLabels;
-
-		$(control.button).unbind('click');
-		$(control.label).unbind('click');
-
-		if (!builder.map.isLockedItem(data)) {
-			$(control.container).click(function (e) {
-				e.preventDefault();
-				app.dispatcher.dispatch(data.command);
-			});
-		}
-
-		builder._preventDocumentLosingFocusOnClick(control.container);
 	},
 
 	_divContainerHandler: function (parentContainer, data, builder) {
