@@ -24,38 +24,6 @@ window.L.Clipboard = class Clipboard extends CoolClipboardBase {
 		super(map);
 	}
 
-	_getMetaOrigin(html, prefix) {
-		var start = html.indexOf(prefix);
-		if (start < 0) {
-			return '';
-		}
-		var end = html.indexOf('"', start + prefix.length);
-		if (end < 0) {
-			return '';
-		}
-		var meta = html.substring(start + prefix.length, end);
-
-		// quick sanity checks that it one of ours.
-		if (meta.indexOf('%2Fclipboard%3FWOPISrc%3D') >= 0 &&
-		    meta.indexOf('%26ServerId%3D') > 0 &&
-		    meta.indexOf('%26ViewId%3D') > 0 &&
-		    meta.indexOf('%26Tag%3D') > 0)
-			return decodeURIComponent(meta);
-		else
-			window.app.console.log('Mis-understood foreign origin: "' + meta + '"');
-		return '';
-	}
-
-	_encodeHtmlToBlob(text) {
-		var content = [];
-		var data = new Blob([text]);
-		content.push('text/html\n');
-		content.push(data.size.toString(16) + '\n');
-		content.push(data);
-		content.push('\n');
-		return new Blob(content);
-	}
-
 	_readContentSyncToBlob(dataTransfer) {
 		var content = [];
 		var types = dataTransfer.types;
