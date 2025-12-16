@@ -190,6 +190,10 @@ function _menubuttonControl (parentContainer, data, builder) {
 
 		if (data.enabled === false)
 			button.disabled = true;
+
+		if (data.visible === false)
+			button.classList.add('hidden');
+
 	} else {
 		window.app.console.warn('Not found menu "' + menuId + '"');
 	}
