@@ -1069,6 +1069,11 @@ window.L.Clipboard = window.L.Class.extend({
 	},
 
 	_WindowsReadClipboard: async function() {
+		// FIXME: Unclear whether this function ever is invoked and whether it actually
+		// would do anything sane if invoked. Especially the expectation that
+		// window.postMobileMessage() would return some value is surely wrong. The
+		// CLIPBOARDREAD handling in CODA.cpp certainly does not attempt to return any
+		// value, and I don't see how one would even do that in the WebView2 API.
 		const encodedClipboardData = await window.postMobileMessage('CLIPBOARDREAD');
 		// FIXME: Is the same code as for iOS OK? Will see.
 		return this._MobileAppReadClipboard(encodedClipboardData);
