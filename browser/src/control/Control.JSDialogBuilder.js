@@ -2624,7 +2624,9 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 			app.layoutingService.appendLayoutingTask(() => {
 				app.layoutingService.appendLayoutingTask(() => {
 					app.layoutingService.appendLayoutingTask(() => {
-						window.app.a11yValidator.checkWidget(data.type, control);
+						app.layoutingService.appendLayoutingTask(() => {
+							window.app.a11yValidator.checkWidget(data.type, control);
+						});
 					});
 				});
 			});
