@@ -17,6 +17,7 @@
 #include <vector>
 
 #include <Windows.h>
+#include <appmodel.h>
 #include <shlobj.h>
 #include <shlwapi.h>
 #include <shobjidl.h>
@@ -37,7 +38,9 @@
 #include <common/Protocol.hpp>
 #include <common/Log.hpp>
 #include <common/MobileApp.hpp>
+#include <common/RecentFiles.hpp>
 #include <common/StringVector.hpp>
+#include <common/Uri.hpp>
 #include <net/FakeSocket.hpp>
 #include <wsd/COOLWSD.hpp>
 
@@ -121,6 +124,8 @@ std::string app_installation_uri;
 
 std::string localAppData;
 
+static std::wstring appUserModelId;
+
 static std::string uiLanguage = "en-US";
 static std::wstring appName;
 
@@ -143,6 +148,8 @@ static HMONITOR primaryMonitor;
 
 static litecask::Datastore persistentWindowSizeStore;
 static bool persistentWindowSizeStoreOK;
+
+static RecentFiles recentFiles;
 
 static FilenameAndUri fileSaveDialog(const std::string& name, const std::string& folder, const std::string& extension);
 
@@ -484,6 +491,14 @@ static void do_other_message_handling_things(const WindowData& data, const char*
     LOG_TRC_NOFILE("Handling other message:'" << message << "'");
 
     fakeSocketWriteQueue(data.fakeClientFd, message, strlen(message));
+}
+
+static void do_getrecentdocs(const WindowData& data, int id)
+{
+    PostMessageW(data.hWnd, CODA_WM_EXECUTESCRIPT,
+                 (WPARAM)_strdup(("window.replyFromNativeToCall(" +
+                                  std::to_string(id) +
+                                  ", '" + recentFiles.serialise() + "')").c_str()), 0);
 }
 
 static void do_cut_or_copy(ClipboardOp op, WindowData& data)
@@ -855,6 +870,7 @@ static std::vector<FilenameAndUri> fileOpenDialog()
     if (SUCCEEDED(dialog->GetOptions(&options)))
     {
         options |= FOS_ALLOWMULTISELECT;
+        options &= ~FOS_DONTADDTORECENT;
         dialog->SetOptions(options);
     }
 
@@ -1554,12 +1570,15 @@ static void openCOOLWindow(const FilenameAndUri& filenameAndUri, DocumentMode mo
                             if (data.mode == DocumentMode::STARTER)
                                 coolURL += "starterMode=true";
                             else
+                            {
+                                recentFiles.add(data.filenameAndUri.uri);
                                 coolURL +=
                                     "file_path=" + data.filenameAndUri.uri +
                                     std::string("&permission=edit") +
                                     std::string("&appdocid=") + std::to_string(data.appDocId) +
                                     std::string("&userinterfacemode=notebookbar"
                                                 "&dir=ltr");
+                            }
 
                             coolURL += "&lang=" + uiLanguage;
 
@@ -1690,7 +1709,7 @@ static void processMessage(WindowData& data, wil::unique_cotaskmem_string& messa
 
                 load_next_document();
             }
-             // Close the starter window
+            // Close the starter window
             if (data.mode == DocumentMode::STARTER)
                 PostMessage(data.hWnd, WM_CLOSE, 0, 0);
         }
@@ -1729,10 +1748,55 @@ static void processMessage(WindowData& data, wil::unique_cotaskmem_string& messa
             }
             if (data.mode == DocumentMode::STARTER)
                 PostMessage(data.hWnd, WM_CLOSE, 0, 0);
-      }
+        }
+        else if (s.starts_with(L"opendoc "))
+        {
+            auto const ns = Util::wide_string_to_string(s);
+            auto const tokens = StringVector::tokenize(ns);
+
+            // Despite the name, the "file" parameter in the opendoc message is a file: URI, not a
+            // pathname. Which is good as it reduces the character set confusion possibilities.
+            std::string fileToken;
+            if (!COOLProtocol::getTokenString(tokens, "file", fileToken))
+            {
+                LOG_ERR("No file parameter in message '" << ns << "'");
+                return;
+            }
+
+            // For some reason, the URI has been pointlessly percent-re-encoded.
+            fileToken = Uri::decode(fileToken);
+
+            std::vector<std::string> segments;
+            Poco::URI(fileToken).getPathSegments(segments);
+
+            if (segments.empty())
+            {
+                LOG_ERR("Weird file parameter in message '" << ns << "'");
+                return;
+            }
+
+            filenamesAndUrisToOpen.push_back({ segments.back(), fileToken });
+            load_next_document();
+            // Close the starter window
+            if (data.mode == DocumentMode::STARTER)
+                PostMessage(data.hWnd, WM_CLOSE, 0, 0);
+        }
         else
         {
             do_other_message_handling_things(data, Util::wide_string_to_string(s).c_str());
+        }
+    }
+    else if (s.starts_with(L"CALL "))
+    {
+        s = s.substr(5);
+        std::wstringstream ss(s);
+        int id;
+        ss >> id;
+        s = s.substr(s.find_first_of(L' ') + 1);
+
+        if (s == L"GETRECENTDOCS")
+        {
+            do_getrecentdocs(data, id);
         }
     }
     else if (s.starts_with(L"ERR "))
@@ -1801,6 +1865,19 @@ int APIENTRY wWinMain(HINSTANCE hInstance, HINSTANCE, PWSTR, int showWindowMode)
 
     primaryMonitor = MonitorFromPoint({ 0, 0 }, MONITOR_DEFAULTTOPRIMARY);
 
+    UINT32 length = 0;
+    LONG rc = GetCurrentApplicationUserModelId(&length, NULL);
+    if (rc == ERROR_INSUFFICIENT_BUFFER)
+    {
+        appUserModelId.resize(length);
+        GetCurrentApplicationUserModelId(&length, appUserModelId.data());
+    }
+    else
+    {
+        appUserModelId = Util::string_to_wide_string(APP_VENDOR) + L"." + appName;
+        rc = SetCurrentProcessExplicitAppUserModelID(appUserModelId.c_str());
+    }
+
     PWSTR appDataFolder;
     SHGetKnownFolderPath(FOLDERID_LocalAppData, 0, NULL, &appDataFolder);
     localAppData = Util::wide_string_to_string(std::wstring(appDataFolder) + L"\\" + appName);
@@ -1831,6 +1908,8 @@ int APIENTRY wWinMain(HINSTANCE hInstance, HINSTANCE, PWSTR, int showWindowMode)
         (persistentWindowSizeStore.open
          (Util::string_to_wide_string(localAppData +
                                       "\\persistentWindowSizes")) == litecask::Status::Ok);
+
+    recentFiles.load(localAppData + "\\recentFiles.txt", 10);
 
     // Create a dummy hidden owner window so that the file open dialog can inherit its icon for the
     // task switcher (Alt-Tab) from it.
