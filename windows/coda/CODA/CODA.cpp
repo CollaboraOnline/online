@@ -17,6 +17,7 @@
 #include <vector>
 
 #include <Windows.h>
+#include <appmodel.h>
 #include <shlobj.h>
 #include <shlwapi.h>
 #include <shobjidl.h>
@@ -120,6 +121,8 @@ std::string app_installation_path;
 std::string app_installation_uri;
 
 std::string localAppData;
+
+static std::wstring appUserModelId;
 
 static std::string uiLanguage = "en-US";
 static std::wstring appName;
@@ -484,6 +487,23 @@ static void do_other_message_handling_things(const WindowData& data, const char*
     LOG_TRC_NOFILE("Handling other message:'" << message << "'");
 
     fakeSocketWriteQueue(data.fakeClientFd, message, strlen(message));
+}
+
+static void do_getrecentdocs(const WindowData& data, int id)
+{
+    LibreOfficeKitDocumentType docType = LOK_DOCTYPE_TEXT;
+    lok::Document* loKitDoc = DocumentData::get(data.appDocId).loKitDocument;
+    if (loKitDoc)
+        docType = static_cast<LibreOfficeKitDocumentType>(loKitDoc->getDocumentType());
+
+    // Return an array with a single dummy entry for now.
+    PostMessageW(data.hWnd, CODA_WM_EXECUTESCRIPT,
+                 (WPARAM)_strdup(("window.replyFromNativeToCall(" +
+                                  std::to_string(id) +
+                                  ", '[ { \"uri\": \"file:///C:/Users/tml/stupid.odt\", "
+                                        "\"name\": \"stupid.odt\", "
+                                        "\"timestamp\": \"2025-12-17T20:30:00\" "
+                                       "} ]')").c_str()), 0);
 }
 
 static void do_cut_or_copy(ClipboardOp op, WindowData& data)
@@ -855,6 +875,7 @@ static std::vector<FilenameAndUri> fileOpenDialog()
     if (SUCCEEDED(dialog->GetOptions(&options)))
     {
         options |= FOS_ALLOWMULTISELECT;
+        options &= ~FOS_DONTADDTORECENT;
         dialog->SetOptions(options);
     }
 
@@ -1735,6 +1756,19 @@ static void processMessage(WindowData& data, wil::unique_cotaskmem_string& messa
             do_other_message_handling_things(data, Util::wide_string_to_string(s).c_str());
         }
     }
+    else if (s.starts_with(L"CALL "))
+    {
+        s = s.substr(5);
+        std::wstringstream ss(s);
+        int id;
+        ss >> id;
+        s = s.substr(s.find_first_of(L' ') + 1);
+
+        if (s == L"GETRECENTDOCS")
+        {
+            do_getrecentdocs(data, id);
+        }
+    }
     else if (s.starts_with(L"ERR "))
     {
         LOG_ERR("From JS: " + Util::wide_string_to_string(s));
@@ -1800,6 +1834,19 @@ int APIENTRY wWinMain(HINSTANCE hInstance, HINSTANCE, PWSTR, int showWindowMode)
         fatal("CoInitializeEx() failed");
 
     primaryMonitor = MonitorFromPoint({ 0, 0 }, MONITOR_DEFAULTTOPRIMARY);
+
+    UINT32 length = 0;
+    LONG rc = GetCurrentApplicationUserModelId(&length, NULL);
+    if (rc == ERROR_INSUFFICIENT_BUFFER)
+    {
+        appUserModelId.resize(length);
+        GetCurrentApplicationUserModelId(&length, appUserModelId.data());
+    }
+    else
+    {
+        appUserModelId = Util::string_to_wide_string(APP_VENDOR) + L"." + appName;
+        rc = SetCurrentProcessExplicitAppUserModelID(appUserModelId.c_str());
+    }
 
     PWSTR appDataFolder;
     SHGetKnownFolderPath(FOLDERID_LocalAppData, 0, NULL, &appDataFolder);
