@@ -1026,43 +1026,43 @@ button.leaflet-control-search-next
 	width: 32px !important;
 	height: 32px !important; }
 
-#layout0-button,
-#layout1-button,
-#layout2-button,
-#layout3-button,
-#layout4-button,
-#layout5-button,
-#layout6-button,
-#layout7-button,
-#layout8-button,
-#layout9-button,
-#layout10-button,
-#layout11-button,
-#layout12-button,
-#layout13-button,
-#layout14-button,
-#layout15-button {
+[modelId='layout0'] button,
+[modelId='layout1'] button,
+[modelId='layout2'] button,
+[modelId='layout3'] button,
+[modelId='layout4'] button,
+[modelId='layout5'] button,
+[modelId='layout6'] button,
+[modelId='layout7'] button,
+[modelId='layout8'] button,
+[modelId='layout9'] button,
+[modelId='layout10'] button,
+[modelId='layout11'] button,
+[modelId='layout12'] button,
+[modelId='layout13'] button,
+[modelId='layout14'] button,
+[modelId='layout15'] button {
 	background-size: 64px 64px !important;
 	width: 64px;
 	height: 64px;
 }
 
-#layout0-button img,
-#layout1-button img,
-#layout2-button img,
-#layout3-button img,
-#layout4-button img,
-#layout5-button img,
-#layout6-button img,
-#layout7-button img,
-#layout8-button img,
-#layout9-button img,
-#layout10-button img,
-#layout11-button img,
-#layout12-button img,
-#layout13-button img,
-#layout14-button img,
-#layout15-button img {
+[modelId='layout0'] img,
+[modelId='layout1'] img,
+[modelId='layout2'] img,
+[modelId='layout3'] img,
+[modelId='layout4'] img,
+[modelId='layout5'] img,
+[modelId='layout6'] img,
+[modelId='layout7'] img,
+[modelId='layout8'] img,
+[modelId='layout9'] img,
+[modelId='layout10'] img,
+[modelId='layout11'] img,
+[modelId='layout12'] img,
+[modelId='layout13'] img,
+[modelId='layout14'] img,
+[modelId='layout15'] img {
 	width: 100%;
 	height: 100%;
 }
