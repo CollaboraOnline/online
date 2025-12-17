@@ -789,6 +789,11 @@ span.jsdialog.sidebar.ui-treeview-notexpandable {
 	width: 100%;
 }
 
+/* new button icon */
+#TemplatePanel #right .unotoolbutton.new button img { visibility: hidden; }
+#TemplatePanel #right .unotoolbutton.new button { background: transparent url('images/lc_stylenewbyexample.svg') no-repeat center; }
+[data-theme='dark'] #TemplatePanel #right .unotoolbutton.new button { background: transparent url('images/dark/lc_stylenewbyexample.svg') no-repeat center; }
+
 /* required to dynamically resize treeviews or lists inside sidebar */
 .sidebar-container, .navigator-container
 .sidebar-container > .root-container.jsdialog.sidebar,.navigator-container > .root-container.jsdialog.sidebar > .root-container.jsdialog.sidebar
