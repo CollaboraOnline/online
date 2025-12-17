@@ -78,6 +78,7 @@
 #include <cstdlib>
 #include <cstring>
 #include <fstream>
+#include <optional>
 #include <poll.h>
 #include <pwd.h>
 #include <sstream>
@@ -888,13 +889,19 @@ QVariant Bridge::cool(const QString& messageStr)
     }
     else if (message == "GETRECENTDOCS")
     {
-        LibreOfficeKitDocumentType docType = LOK_DOCTYPE_TEXT;
-        lok::Document* loKitDoc = DocumentData::get(_document._appDocId).loKitDocument;
-        if (loKitDoc) {
-            docType = static_cast<LibreOfficeKitDocumentType>(loKitDoc->getDocumentType());
+        std::optional<LibreOfficeKitDocumentType> docType;
+        if (_document._appDocId != 0)
+        {
+            lok::Document* loKitDoc = DocumentData::get(_document._appDocId).loKitDocument;
+            if (loKitDoc)
+            {
+                docType = static_cast<LibreOfficeKitDocumentType>(loKitDoc->getDocumentType());
+            }
         }
 
-        Poco::JSON::Array::Ptr recentDocs = RecentDocuments::getForAppType(docType);
+        Poco::JSON::Array::Ptr recentDocs = !docType.has_value()
+                                                ? RecentDocuments::getForAllTypes()
+                                                : RecentDocuments::getForAppType(docType.value());
         std::ostringstream jsonStream;
         recentDocs->stringify(jsonStream);
         QString result = QString::fromStdString(jsonStream.str());
