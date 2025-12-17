@@ -98,7 +98,7 @@ function _menubuttonControl (parentContainer, data, builder) {
 			if (control.container.hasAttribute('disabled'))
 				return;
 
-			var callback = function(objectType, eventType, object, data, entry) {
+			var callback = function(objectType, eventType, object, data, entry /* : MenuDefinition | JSBuilder */) {
 				if ((eventType === 'selected' && entry.items) || eventType === 'showsubmenu') {
 					return true;
 				} else if (eventType === 'selected' && entry.uno) {
@@ -110,18 +110,16 @@ function _menubuttonControl (parentContainer, data, builder) {
 					app.dispatcher.dispatch(entry.action);
 					JSDialog.CloseDropdown(dropdownId);
 					return true;
-				} else if (eventType === 'selected') {
+				} else if (eventType === 'selected' && entry.id) {
 					builder.callback('menubutton', 'select', control.container, entry.id, builder);
 					JSDialog.CloseDropdown(dropdownId);
 					return true;
-				} else if (!entry){
+				} else /* note: entry can be a builder instance as in regular JSDialog callback */ {
 					// custom popup - execute generic action
 					builder.callback(objectType, eventType, object, data, builder);
 					JSDialog.CloseDropdown(dropdownId);
 					return true;
 				}
-
-				return false;
 			};
 
 			var freshMenu = builder._menus.get(menuId); // refetch to apply dynamic changes
