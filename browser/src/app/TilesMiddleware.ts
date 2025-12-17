@@ -274,7 +274,7 @@ class TileManager {
 					this.onWorkerMessage(e),
 				);
 				this.workers[i].addEventListener('error', (e: any) =>
-					this.disableWorker(e),
+					this.disableWorkers(e),
 				);
 			}
 		}
@@ -951,13 +951,13 @@ class TileManager {
 		} catch (e) {
 			window.app.console.error('Failed to decompress pending deltas');
 			this.inTransaction = 0;
-			this.disableWorker(e);
+			this.disableWorkers(e);
 			if (callback) callback();
 			return;
 		}
 	}
 
-	public static disableWorker(e: any = null) {
+	public static disableWorkers(e: any = null) {
 		if (e) window.app.console.error('Worker-related error encountered', e);
 		if (!this.workers.length) return;
 
@@ -2137,7 +2137,7 @@ class TileManager {
 
 			default:
 				window.app.console.error('Unrecognised message from worker');
-				this.disableWorker();
+				this.disableWorkers();
 		}
 	}
 

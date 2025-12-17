@@ -395,7 +395,7 @@ class DebugManager {
 				startsOn: false,
 				onAdd: function () {
 					Util.ensureValue(self._painter);
-					TileManager.disableWorker();
+					TileManager.disableWorkers();
 				},
 				onRemove: function () {
 					Util.ensureValue(self._painter);
