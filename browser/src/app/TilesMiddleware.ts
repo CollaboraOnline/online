@@ -253,6 +253,7 @@ class TileManager {
 	// updating during scrolling
 	private static directionalTileExpansion: number = 2;
 	private static pausedForCoherency: boolean = false;
+	private static dehydratedCurrentTiles: string[] = [];
 	private static shrinkCurrentId: any = null;
 
 	//private static _debugTime: any = {}; Reserved for future.
@@ -490,9 +491,12 @@ class TileManager {
 		}
 
 		// Check if all current visible tiles are accounted for and resume drawing if so.
-		if (this.pausedForCoherency && this.visibleTilesReady()) {
-			app.sectionContainer.resumeDrawing();
-			this.pausedForCoherency = false;
+		if (this.visibleTilesReady()) {
+			if (this.pausedForCoherency) {
+				app.sectionContainer.resumeDrawing();
+				this.pausedForCoherency = false;
+			}
+			app.sectionContainer.deferDrawing(null);
 		}
 
 		if (this.nPendingWorkerTasks === 0)
@@ -939,6 +943,17 @@ class TileManager {
 				[tile.rawDeltas[firstDelta].id, lastId],
 			);
 		}
+	}
+
+	private static rehydrateCurrentTiles() {
+		// If the graphics memory of visible tiles was reclaimed, we have tiles that
+		// have a valid delta cache, but no corresponding bitmap.
+		this.beginTransaction();
+		while (this.dehydratedCurrentTiles.length) {
+			const tile = this.tiles.get(this.dehydratedCurrentTiles.pop());
+			if (tile) this.rehydrateTile(tile, false);
+		}
+		this.endTransaction(null);
 	}
 
 	private static endTransaction(callback: any = null) {
@@ -1953,18 +1968,18 @@ class TileManager {
 	}
 
 	public static reclaimGraphicsMemory() {
-		// Currently only reclaims graphics memory for non-visible tiles - we may want to
-		// consider doing this for visible tiles and making sure our drawing pausing/resuming
-		// is robust enough to handle it.
-		for (const tile of this.tiles.values()) {
-			if (tile.distanceFromView !== 0)
-				this.reclaimTileBitmapMemory(tile);
+		for (const [key, tile] of this.tiles.entries()) {
+			if (tile.distanceFromView === 0) this.dehydratedCurrentTiles.push(key);
+			this.reclaimTileBitmapMemory(tile);
 		}
+		if (this.dehydratedCurrentTiles.length)
+			app.sectionContainer.deferDrawing(this.rehydrateCurrentTiles.bind(this));
 	}
 
 	public static discardAllCache() {
 		this.updateAllTileDistances();
 		this.garbageCollect(true);
+		this.reclaimGraphicsMemory();
 	}
 
 	public static isValidTile(coords: TileCoordData) {

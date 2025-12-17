@@ -196,6 +196,7 @@ class CanvasSectionContainer {
 	private drawRequest: number = null;
 	private drawingPaused: number = 0;
 	private drawingEnabled: boolean = true;
+	private deferredDrawCallback: any = null;
 	private sectionsDirty: boolean = false;
 	private framesRendered: number = 0; // Total frame count for debugging
 
@@ -386,6 +387,12 @@ class CanvasSectionContainer {
 		if (this.drawingEnabled && wasNonZero && this.drawingPaused === 0) {
 			this.paintOnResumeOrEnable();
 		}
+	}
+
+	// Drawing requests will call this callback instead of queueing a redraw. Set the
+	// callback to null to resume the standard drawing chain.
+	public deferDrawing (callback: any) {
+		this.deferredDrawCallback = callback;
 	}
 
 	private paintOnResumeOrEnable() {
@@ -646,6 +653,10 @@ class CanvasSectionContainer {
 
 	public requestReDraw() {
 		if (!this.drawingAllowed()) return;
+		if (this.deferredDrawCallback) {
+			this.deferredDrawCallback();
+			return;
+		}
 		if (this.drawRequest === null)
 			this.drawRequest = requestAnimationFrame(this.redrawCallback.bind(this));
 	}
