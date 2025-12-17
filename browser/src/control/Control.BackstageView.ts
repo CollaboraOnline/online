@@ -460,7 +460,7 @@ class BackstageView extends window.L.Class {
 
 	private async renderRecentDocuments(): Promise<void> {
 		try {
-			const result = await window.postMobileMessage('GETRECENTDOCS');
+			const result = await window.postMobileCall('GETRECENTDOCS');
 			if (!result || typeof result !== 'string') {
 				this.showEmptyMessage();
 				return;
