@@ -34,8 +34,7 @@ describe(['tagdesktop'], 'Accessibility Writer Tests', function () {
                     return;
                 }
                 // don't pass yet
-                if (command == '.uno:FontDialog' ||
-                    command == '.uno:InsertCaptionDialog' ||
+                if (command == '.uno:InsertCaptionDialog' ||
                     command == '.uno:PageDialog' ||
                     command == '.uno:ParagraphDialog' ||
                     command == '.uno:SpellingAndGrammarDialog' ||
@@ -122,50 +121,76 @@ describe(['tagdesktop'], 'Accessibility Writer Tests', function () {
         traverseTabs(() => getActiveDialog());
     }
 
-    function traverseTabs(getContainer) {
+    function traverseTabs(getContainer, isNested = false) {
         const TABLIST = '[role="tablist"]';
         const TAB = '[role="tab"]';
 
-        getContainer().then($container => {
-            const $tabLists = $container.find(TABLIST);
+        return getContainer().then($container => {
+            let $tabLists;
+
+            if (!isNested) {
+                // For top-level tabs, select only direct tab lists under #tabcontrol
+                // to avoid picking up tab lists from nested tab-panels
+                $tabLists = $container.find('#tabcontrol > ' + TABLIST);
+            } else {
+                // For nested tabs, the container is already the relevant tab-panel,
+                // so select all tab lists within it
+                $tabLists = $container.find(TABLIST);
+            }
 
             if (!$tabLists.length) return;
 
-            Cypress._.each($tabLists, (tabListEl, tabListIndex) => {
-                const $tabs = Cypress.$(tabListEl).find(TAB);
+            return Cypress._.reduce($tabLists, (chain, tabListEl, tabListIndex) => {
+                return chain.then(() => {
+                    const $tabs = Cypress.$(tabListEl).find(TAB);
 
-                const clickTabByIndex = index => {
-                    if (index >= $tabs.length) return;
+                    const clickTabByIndex = (index) => {
+                        if (index >= $tabs.length) return cy.wrap(null);
 
-                    getContainer()
-                        .find(TABLIST).eq(tabListIndex)
-                        .find(TAB).eq(index)
-                        .click({ force: true });
+                        const $tab = $tabs.eq(index);
+                        const tabId = $tab.attr('id');
 
-                    getContainer().then($ctx => {
-                        const $panel = getActiveTabPanel($ctx);
+                        return getContainer()
+                            .find(TABLIST).eq(tabListIndex)
+                            .find(TAB).eq(index)
+                            .click({ force: true })
+                            .then(() => {
+                                return getContainer();
+                            })
+                            .then($ctx => {
+                                const $panel = getActiveTabPanel($ctx, tabId);
 
-                        if ($panel && $panel.length) {
-                            const $nestedTablists = $panel.find(TABLIST);
+                                if (!$panel || !$panel.length) return;
 
-                            if ($nestedTablists.length > 0) {
-                                traverseTabs(() => cy.wrap($panel));
-                            }
-                        }
-                    });
+                                const panelId = $panel.attr('id');
+                                const panelSelector = `#${CSS.escape(panelId)}`;
 
-                    clickTabByIndex(index + 1);
-                };
+                                return getContainer()
+                                    .then(() => {
+                                        const $nestedTablists = $panel.find(TABLIST);
 
-                clickTabByIndex(0);
-            });
+                                        if (!isNested && $nestedTablists.length > 0) {
+                                            return traverseTabs(
+                                                () => getContainer().find(panelSelector),
+                                                true
+                                            );
+                                        }
+                                    });
+                            })
+                            .then(() => {
+                                return clickTabByIndex(index + 1);
+                            });
+                    };
+
+                    return clickTabByIndex(0);
+                });
+            }, cy.wrap(null));
         });
     }
 
-    function getActiveTabPanel($container) {
-        const $activeTab = $container
-            .find('[role="tab"][aria-selected="true"]')
-            .first();
+    function getActiveTabPanel($container, activeTabId) {
+        const tabSelector = `#${CSS.escape(activeTabId)}`;
+        const $activeTab = $container.find(tabSelector);
 
         if (!$activeTab.length) return null;
 
