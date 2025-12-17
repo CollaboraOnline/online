@@ -1026,45 +1026,11 @@ button.leaflet-control-search-next
 	width: 32px !important;
 	height: 32px !important; }
 
-[modelId='layout0'] button,
-[modelId='layout1'] button,
-[modelId='layout2'] button,
-[modelId='layout3'] button,
-[modelId='layout4'] button,
-[modelId='layout5'] button,
-[modelId='layout6'] button,
-[modelId='layout7'] button,
-[modelId='layout8'] button,
-[modelId='layout9'] button,
-[modelId='layout10'] button,
-[modelId='layout11'] button,
-[modelId='layout12'] button,
-[modelId='layout13'] button,
-[modelId='layout14'] button,
-[modelId='layout15'] button {
+[id^='slidelayoutgrid'] [modelId^='layout'] button,
+[id^='slidelayoutgrid'] [modelId^='layout'] img {
 	background-size: 64px 64px !important;
-	width: 64px;
-	height: 64px;
-}
-
-[modelId='layout0'] img,
-[modelId='layout1'] img,
-[modelId='layout2'] img,
-[modelId='layout3'] img,
-[modelId='layout4'] img,
-[modelId='layout5'] img,
-[modelId='layout6'] img,
-[modelId='layout7'] img,
-[modelId='layout8'] img,
-[modelId='layout9'] img,
-[modelId='layout10'] img,
-[modelId='layout11'] img,
-[modelId='layout12'] img,
-[modelId='layout13'] img,
-[modelId='layout14'] img,
-[modelId='layout15'] img {
-	width: 100%;
-	height: 100%;
+	width: 64px !important;
+	height: 64px !important;
 }
 
 .w2ui-icon.print { background: url('images/lc_print.svg') no-repeat center; }
