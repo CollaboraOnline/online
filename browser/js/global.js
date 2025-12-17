@@ -489,6 +489,7 @@ class IOSAppInitializer extends MobileAppInitializer {
 
 		window.ThisIsTheiOSApp = true;
 		window.postMobileMessage = function(msg) { window.webkit.messageHandlers.lok.postMessage(msg); };
+		window.postMobileCall    = window.postMobileMessage;
 		window.postMobileError   = function(msg) { window.webkit.messageHandlers.error.postMessage(msg); };
 		window.postMobileDebug   = function(msg) { window.webkit.messageHandlers.debug.postMessage(msg); };
 
@@ -507,6 +508,7 @@ class MacOSAppInitializer extends MobileAppInitializer {
 
 		window.ThisIsTheMacOSApp = true;
 		window.postMobileMessage = function(msg) { window.webkit.messageHandlers.lok.postMessage(msg); };
+		window.postMobileCall    = window.postMobileMessage;
 		window.postMobileError   = function(msg) { window.webkit.messageHandlers.error.postMessage(msg); };
 		window.postMobileDebug   = function(msg) { window.webkit.messageHandlers.debug.postMessage(msg); };
 
@@ -520,6 +522,34 @@ class WindowsAppInitializer extends MobileAppInitializer {
 
 		window.ThisIsTheWindowsApp = true;
 		window.postMobileMessage = function(msg) { window.chrome.webview.postMessage('MSG ' + msg); };
+
+		// Here, and elsewhere, things would be nicer if we just used JSON for all our
+		// messages, instead of plain text with a home-grown syntax of mostly "command
+		// parameter1=value..."  but also some cases of "command JSON".
+
+		// The name "postMobileCall" is a bit misleading as this isn't just "posting" a
+		// message like the other postMobileFoo() functions, but to be used when a return
+		// value is expected. In other platforms, the postMobileMessage() can be used for
+		// that, too, but not on Windows. The WebView2 does not have the required
+		// functionality built-in.
+		window.postMobileCall = (() => {
+			let nextId = 1;
+			const pending = new Map();
+
+			window.replyFromNativeToCall = (id, reply) => {
+				const resolveFunc = pending.get(id);
+				pending.delete(id);
+				resolveFunc(reply);
+			};
+
+			return function call(msg) {
+				return new Promise((resolveFunc, rejectFunc) => {
+					const id = nextId++;
+					pending.set(id, resolveFunc);
+					window.chrome.webview.postMessage("CALL " + id + " " + msg); 
+				});
+			};
+		})();
 
 		// FIXME: No registration of separate handlers in Windows WebView2, so just log
 		// errors and debug messages? Maybe instead send a JSON object with separate name
@@ -538,6 +568,7 @@ class AndroidAppInitializer extends MobileAppInitializer {
 
 		window.ThisIsTheAndroidApp = true;
 		window.postMobileMessage = function(msg) { window.COOLMessageHandler.postMobileMessage(msg); };
+		window.postMobileCall    = window.postMobileMessage;
 		window.postMobileError   = function(msg) { window.COOLMessageHandler.postMobileError(msg); };
 		window.postMobileDebug   = function(msg) { window.COOLMessageHandler.postMobileDebug(msg); };
 
@@ -551,6 +582,7 @@ class EMSCRIPTENAppInitializer extends MobileAppInitializer {
 
 		window.ThisIsTheEmscriptenApp = true;
 		window.postMobileMessage = function(msg) { Module._handle_cool_message(Module.stringToNewUTF8(msg)); };
+		window.postMobileCall    = window.postMobileMessage;
 		window.postMobileError   = function(msg) { console.log('COOL Error: ' + msg); };
 		window.postMobileDebug   = function(msg) { console.log('COOL Debug: ' + msg); };
 
@@ -567,6 +599,7 @@ class QtAppInitializer extends MobileAppInitializer {
 
 		// Define safe stub functions that queue messages, as QWebChannel doesn't initialize immediately.
 		window.postMobileMessage = (msg) => messageQueue.push({ type: 'cool', msg });
+		window.postMobileCall    = window.postMobileMessage;
 		window.postMobileError   = (msg) => messageQueue.push({ type: 'error', msg });
 		window.postMobileDebug   = (msg) => messageQueue.push({ type: 'debug', msg });
 		window.userInterfaceMode = window.coolParams.get('userinterfacemode');
@@ -579,6 +612,7 @@ class QtAppInitializer extends MobileAppInitializer {
 
 			// Replace stubs with real implementations
 			window.postMobileMessage = (msg) => window.bridge.cool(msg);
+			window.postMobileCall    = window.postMobileMessage;
 			window.postMobileError   = (msg) => window.bridge.error(msg);
 			window.postMobileDebug   = (msg) => window.bridge.debug(msg);
 
