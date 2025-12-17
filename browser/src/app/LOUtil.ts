@@ -51,41 +51,50 @@ class LOUtil {
 	// This list is based on supported filters defined in core in
 	// filter/Configuration_filter.mk
 	public static graphicMimeFilter = [
+		// bitmaps (well-defined)
 		'image/bmp',
-		'image/dxf',
-		'image/emf',
-		'image/emz',
-		'image/eps',
 		'image/gif',
 		'image/jpeg',
-		'image/met',
-		'image/pbm',
-		'image/pcd',
-		'image/pcd',
-		'image/pcd',
-		'image/pct',
-		'image/pcx',
-		'image/pdf',
-		'image/pgm',
 		'image/png',
-		'image/ppm',
-		'image/psd',
-		'image/ras',
-		'image/svg',
-		'image/svgz',
-		'image/svm',
-		'image/tga',
-		'image/tif',
 		'image/webp',
-		'image/wmf',
-		'image/wmz',
-		'image/xbm',
-		'image/xpm',
-		'image/mov',
+		'image/tiff',
+
+		// vector graphics (canonical MIME)
+		'image/svg+xml',
+		'image/x-emf',
+		'image/x-wmf',
+
+		// PDF as image
+		'application/pdf',
+
+		// extensions for everything else (or as fallback)
+		// file pickers don't recognize them by MIME type
+		// Windows file picker doesn't recognize vector images by MIME type
+		'.svg',
+		'.svgz',
+		'.emf',
+		'.emz',
+		'.wmf',
+		'.wmz',
+		'.eps',
+		'.dxf',
+		'.pct',
+		'.pcx',
+		'.pcd',
+		'.psd',
+		'.tga',
+		'.ras',
+		'.svm',
+		'.met',
+		'.pbm',
+		'.pgm',
+		'.ppm',
+		'.xbm',
+		'.xpm',
 	];
 
 	public static mediaMimeFilter = [
-		'video/MP2T',
+		'video/mp2t',
 		'video/mp4',
 		'video/mpeg',
 		'video/ogg',
@@ -99,7 +108,7 @@ class LOUtil {
 		'audio/mp4',
 		'audio/mpeg',
 		'audio/ogg',
-		'audio/x-wav',
+		'audio/wav',
 	];
 
 	public static onRemoveHTMLElement(
