@@ -2397,7 +2397,6 @@ class Menubar extends window.L.Control {
 			$(aItem).data('type', 'action');
 			aItem.setAttribute('role', 'img');
 			aItem.setAttribute('aria-label', _('file type icon'));
-			aItem.href = '#';
 			aItem.target = '_blank';
 
 			if (window.logoURL) {
