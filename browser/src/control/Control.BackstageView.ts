@@ -147,7 +147,7 @@ class BackstageView extends window.L.Class {
 		mainWrapper.appendChild(this.contentArea);
 		container.appendChild(mainWrapper);
 
-		this.renderNewView();
+		this.renderHomeView();
 		return container;
 	}
 
@@ -273,7 +273,7 @@ class BackstageView extends window.L.Class {
 				type: 'view',
 				viewType: 'home',
 				icon: 'lc_home.svg',
-				visible: !this.isStarterMode,
+				visible: true,
 			},
 			{
 				id: 'new',
@@ -1390,12 +1390,7 @@ class BackstageView extends window.L.Class {
 		this.isVisible = true;
 		$(this.container).removeClass('hidden');
 		this.hideDocumentContainer();
-		// Default to home tab for non-starter mode, new tab for starter mode
-		if (this.isStarterMode) {
-			this.renderNewView();
-		} else {
-			this.renderHomeView();
-		}
+		this.renderHomeView();
 		this.updateSaveButtonState();
 		this.container.focus();
 		this.fireMapEvent('backstageshow');
