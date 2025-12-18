@@ -1438,7 +1438,7 @@ class Menubar extends window.L.Control {
 			'downloadas-odp', 'downloadas-ppt', 'downloadas-pptx', 'downloadas-odg', 'exportpdf' , // file menu
 			!window.ThisIsAMobileApp ? 'exportdirectpdf' : 'downloadas-pdf', !window.ThisIsAMobileApp ? 'exportepub' : 'downloadas-epub', // file menu
 			'downloadas-ods', 'downloadas-xls', 'downloadas-xlsx', 'downloadas-csv', 'closedocument', // file menu
-			() => !(window.L.Browser.ie || window.L.Browser.edge) ? 'fullscreen' : undefined, 'zoomin', 'zoomout', 'zoomreset', 'showstatusbar', 'showresolved', 'showannotations', 'toggledarktheme', // view menu
+			() => !window.L.Browser.edge ? 'fullscreen' : undefined, 'zoomin', 'zoomout', 'zoomreset', 'showstatusbar', 'showresolved', 'showannotations', 'toggledarktheme', // view menu
 			'insert-signatureline', // insert menu
 			'about', 'keyboard-shortcuts', 'latestupdates', 'feedback', 'serveraudit', 'online-help', 'report-an-issue', // help menu
 			'insertcomment'
@@ -1942,8 +1942,8 @@ class Menubar extends window.L.Control {
 						$(aItem).addClass('disabled');
 					}
 				} else if (type === 'action') { // enable all except fullscreen on windows
-					if (id === 'fullscreen') { // Full screen works weirdly on IE 11 and on Edge
-						if (window.L.Browser.ie || window.L.Browser.edge) {
+					if (id === 'fullscreen') { // Full screen works weirdly on Edge
+						if (window.L.Browser.edge) {
 							$(aItem).addClass('disabled');
 						} else if (this._map.uiManager.isFullscreen()) {
 							$(aItem).addClass(constChecked);

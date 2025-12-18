@@ -281,8 +281,7 @@ class Cursor {
 
 		if (Cursor.isCustomCursor(cursorName)) {
 			var cursorHotSpot = Cursor.hotSpot.get(cursorName) || new cool.Point(0, 0);
-			customCursor = window.L.Browser.ie ? // IE10 does not like item with left/top position in the url list
-				'url(' + Cursor.imagePath + '/' + cursorName + '.cur), default' :
+			customCursor =
 				'url(' + Cursor.imagePath + '/' + cursorName + '.png) ' + cursorHotSpot.x + ' ' + cursorHotSpot.y + ', default';
 		}
 		return customCursor;
