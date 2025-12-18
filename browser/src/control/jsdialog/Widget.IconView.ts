@@ -66,6 +66,8 @@ function _iconViewEntry(
 ) {
 	const disabled = parentData.enabled === false;
 	const hasText = entry.text && parentData.textWithIconEnabled;
+	const isMultiSelect = parentData.selectionmode === 'multiple';
+	const ariaStateAttr = isMultiSelect ? 'aria-selected' : 'aria-checked';
 
 	if (entry.separator && entry.separator === true) {
 		window.L.DomUtil.create(
@@ -85,13 +87,16 @@ function _iconViewEntry(
 	//id is needed to find the element to regain focus after widget is updated. see updateWidget in Control.JSDialogBuilder.js
 	entryContainer.id = parentData.id + '_' + entry.row;
 
-	entryContainer.setAttribute('role', 'option');
-	// By default `aria-selected` should be false
-	entryContainer.setAttribute('aria-selected', 'false');
+	entryContainer.setAttribute('role', isMultiSelect ? 'option' : 'radio');
+	// By default aria-selected/aria-checked should be false
+	entryContainer.setAttribute(ariaStateAttr, 'false');
 
 	if (entry.selected && entry.selected === true) {
 		$(entryContainer).addClass('selected');
-		entryContainer.setAttribute('aria-selected', 'true');
+		entryContainer.setAttribute(ariaStateAttr, 'true');
+		entryContainer.setAttribute('tabindex', '0');
+	} else {
+		entryContainer.setAttribute('tabindex', '-1');
 	}
 
 	if (entry.ondemand) {
@@ -105,8 +110,6 @@ function _iconViewEntry(
 		else if (entry.text) placeholder.title = entry.text;
 		else placeholder.title = '';
 
-		// Add tabindex attribute for accessibility, enabling keyboard navigation in the icon preview
-		entryContainer.setAttribute('tabindex', '0');
 		(parentContainer as any).requestRenders(entry, placeholder, entryContainer);
 	} else {
 		_createEntryImage(entryContainer, builder, entry, entry.image);
@@ -117,15 +120,21 @@ function _iconViewEntry(
 	if (!disabled) {
 		const singleClick = parentData.singleclickactivate === true;
 		$(entryContainer).click(function () {
+			$('#' + parentData.id + ' .ui-iconview-entry[tabindex="0"]').each(
+				function () {
+					this.setAttribute('tabindex', '-1');
+				},
+			);
+
+			$('#' + parentData.id + ' .ui-iconview-entry.selected').each(function () {
+				$(this).removeClass('selected');
+				this.setAttribute(ariaStateAttr, 'false');
+			});
+
 			entryContainer.setAttribute('tabindex', '0');
 			entryContainer.focus();
 			//avoid re-selecting already selected entry
 			if ($(entryContainer).hasClass('selected')) return;
-
-			$('#' + parentData.id + ' .ui-iconview-entry').each(function () {
-				$(this).removeClass('selected');
-				this.setAttribute('aria-selected', 'false');
-			});
 
 			(parentContainer as any).builderCallback(
 				'iconview',
@@ -134,7 +143,7 @@ function _iconViewEntry(
 				builder,
 			);
 			$(entryContainer).addClass('selected');
-			entryContainer.setAttribute('aria-selected', 'true');
+			entryContainer.setAttribute(ariaStateAttr, 'true');
 
 			if (singleClick) {
 				(parentContainer as any).builderCallback(
@@ -149,7 +158,7 @@ function _iconViewEntry(
 		entryContainer.addEventListener('contextmenu', function (e: Event) {
 			$('#' + parentData.id + ' .ui-iconview-entry').each(function () {
 				$(this).removeClass('selected');
-				this.setAttribute('aria-selected', 'false');
+				this.setAttribute(ariaStateAttr, 'false');
 			});
 
 			(parentContainer as any).builderCallback(
@@ -159,7 +168,7 @@ function _iconViewEntry(
 				builder,
 			);
 			$(entryContainer).addClass('selected');
-			entryContainer.setAttribute('aria-selected', 'true');
+			entryContainer.setAttribute(ariaStateAttr, 'true');
 
 			(parentContainer as any).builderCallback(
 				'iconview',
@@ -196,7 +205,14 @@ JSDialog.iconView = function (
 	);
 
 	iconview.id = data.id;
-	iconview.setAttribute('role', 'listbox');
+	const isMultiSelect = data.selectionmode === 'multiple';
+
+	if (isMultiSelect) {
+		iconview.setAttribute('role', 'listbox');
+		iconview.setAttribute('aria-multiselectable', 'true');
+	} else {
+		iconview.setAttribute('role', 'radiogroup');
+	}
 
 	if (data.labelledBy)
 		iconview.setAttribute('aria-labelledby', data.labelledBy);
@@ -229,13 +245,15 @@ JSDialog.iconView = function (
 		iconview.updateSelectionImpl(position, data);
 	};
 
+	const ariaStateAttr = isMultiSelect ? 'aria-selected' : 'aria-checked';
+
 	// position can be -1
 	iconview.onSelect = (position: number) => {
 		$(iconview)
 			.children('.selected')
 			.each(function () {
 				$(this).removeClass('selected');
-				this.setAttribute('aria-selected', 'false');
+				this.setAttribute(ariaStateAttr, 'false');
 			});
 
 		const entry =
@@ -247,7 +265,7 @@ JSDialog.iconView = function (
 
 		if (entry) {
 			window.L.DomUtil.addClass(entry, 'selected');
-			entry.setAttribute('aria-selected', 'true');
+			entry.setAttribute(ariaStateAttr, 'true');
 
 			if (builder.options.useScrollAnimation !== false) {
 				const blockOption = JSDialog.ScrollIntoViewBlockOption('nearest');
@@ -334,7 +352,9 @@ JSDialog.iconView = function (
 		iconview.updateRendersImpl(pos, data.id, iconview);
 	};
 
-	JSDialog.KeyboardGridNavigation(iconview);
+	if (isMultiSelect) JSDialog.KeyboardListNavigation(iconview);
+	else JSDialog.KeyboardRadioGroupNavigation(iconview);
+
 	iconview.addEventListener('keydown', function (e: KeyboardEvent) {
 		if (e.key !== 'Enter' && e.key !== ' ' && e.code !== 'Space') return;
 
@@ -354,7 +374,6 @@ JSDialog.iconView = function (
 			iconview.builderCallback('iconview', 'activate', selectedIndex, builder);
 	});
 
-	// ensures that aria-selected is updated on initial focus on iconview entries
 	iconview.addEventListener('focusin', function (e: FocusEvent) {
 		const target = e.target as HTMLElement;
 
@@ -368,23 +387,6 @@ JSDialog.iconView = function (
 			target.setAttribute('tabindex', '-1');
 			return;
 		}
-
-		if (
-			!target.classList.contains('ui-iconview-entry') ||
-			target.getAttribute('aria-selected') === 'true'
-		)
-			return;
-
-		// remove aria-selected from previously selected entry
-		const previouslySelected = iconview.querySelector(
-			'.ui-iconview-entry[aria-selected="true"]',
-		);
-		if (previouslySelected) {
-			previouslySelected.setAttribute('aria-selected', 'false');
-		}
-
-		// set aria-selected on focused entry
-		target.setAttribute('aria-selected', 'true');
 	});
 
 	app.layoutingService.appendLayoutingTask(() => {
