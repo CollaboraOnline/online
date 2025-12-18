@@ -15,7 +15,7 @@ function _createCheckboxContainer(
 	parentContainer: HTMLElement,
 	data: CheckboxWidgetJSON,
 	builder: JSBuilder,
-) {
+): HTMLDivElement {
 	const container = window.L.DomUtil.create(
 		'div',
 		builder.options.cssClass + ' ui-checkbox checkbutton',
@@ -29,7 +29,7 @@ function _createCheckboxControl(
 	parentContainer: HTMLElement,
 	data: CheckboxWidgetJSON,
 	builder: JSBuilder,
-) {
+): HTMLInputElement {
 	const checkbox = window.L.DomUtil.create(
 		'input',
 		builder.options.cssClass + ' ui-checkbox-input',
@@ -45,7 +45,7 @@ function _createCheckboxLabel(
 	parentContainer: HTMLElement,
 	data: CheckboxWidgetJSON,
 	builder: JSBuilder,
-) {
+): HTMLLabelElement {
 	const label = window.L.DomUtil.create(
 		'label',
 		builder.options.cssClass + ' ui-checkbox-label',
@@ -64,7 +64,15 @@ JSDialog.Checkbox = function (
 ) {
 	const container = _createCheckboxContainer(parentContainer, data, builder);
 	const checkbox = _createCheckboxControl(container, data, builder);
-	const label = _createCheckboxLabel(container, data, builder);
+	let label: HTMLElement | null = null;
+	if (data.text) label = _createCheckboxLabel(container, data, builder);
+	else
+		JSDialog.SetupA11yLabelForLabelableElement(
+			parentContainer,
+			checkbox,
+			data,
+			builder,
+		);
 
 	checkbox.addEventListener('change', () => {
 		if (container.getAttribute('disabled') === 'true') return;
@@ -86,22 +94,23 @@ JSDialog.Checkbox = function (
 	const setDisabled = (disable: boolean) => {
 		if (disable) {
 			container.setAttribute('disabled', 'true');
-			container.disabled = true;
-			checkbox.setAttribute('disabled', 'true');
+
 			checkbox.disabled = true;
-			checkbox.setAttribute('aria-disabled', true);
+			checkbox.setAttribute('aria-disabled', 'true');
 		} else {
-			container.setAttribute('disabled', 'false');
-			container.disabled = false;
-			checkbox.setAttribute('disabled', 'false');
+			container.removeAttribute('disabled');
+
 			checkbox.disabled = false;
-			checkbox.setAttribute('aria-disabled', false);
+			checkbox.removeAttribute('aria-disabled');
 		}
 	};
 
 	setDisabled(data.enabled === false);
 
-	JSDialog.SynchronizeDisabledState(container, [checkbox, label]);
+	JSDialog.SynchronizeDisabledState(
+		container,
+		[checkbox, label].filter(Boolean),
+	); // filter(Boolean) removes nulls
 
 	const toggleFunction = () => {
 		if (container.getAttribute('disabled') === 'true') return;
