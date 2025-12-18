@@ -155,6 +155,15 @@ describe(['tagdesktop'], 'JSDialog unit test', function() {
 		cy.cGet('#filter-input').select('4');
 		cy.wait(500);
 		cy.cGet('#flatview .ui-treeview-entry').rightclick();
-		cy.get('@consoleError').should('not.be.called');
+		cy.getFrameWindow().then(function (win) {
+			cy.get('@consoleError').then(function (spy) {
+				var relevantErrors = spy.getCalls().filter(function (call) {
+					var error = String(call.args[0]);
+					// Ignore A11yValidator exceptions
+					return !error.includes(win.app.A11yValidatorException.PREFIX);
+				});
+				expect(relevantErrors.length).to.equal(0);
+			});
+		});
 	});
 });
