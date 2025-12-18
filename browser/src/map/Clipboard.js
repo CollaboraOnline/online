@@ -24,41 +24,6 @@ window.L.Clipboard = class Clipboard extends CoolClipboardBase {
 		super(map);
 	}
 
-	_onImageLoadFunc(file) {
-		var that = this;
-		return function(e) {
-			that._pasteTypedBlob(file.type, e.target.result);
-		};
-	}
-
-	// Sends a paste event with the specified mime type and content
-	_pasteTypedBlob(fileType, fileBlob) {
-		var blob = new Blob(['paste mimetype=' + fileType + '\n', fileBlob]);
-		app.socket.sendMessage(blob);
-	}
-
-	_asyncReadPasteFile(file) {
-		if (file.type.match(/image.*/)) {
-			return this._asyncReadPasteImage(file);
-		}
-		if (file.type.match(/audio.*/) || file.type.match(/video.*/)) {
-			return this._asyncReadPasteAVMedia(file);
-		}
-		return false;
-	}
-
-	_asyncReadPasteImage(file) {
-		var reader = new FileReader();
-		reader.onload = this._onImageLoadFunc(file);
-		reader.readAsArrayBuffer(file);
-		return true;
-	}
-
-	_asyncReadPasteAVMedia(file) {
-		this._map.insertMultimedia(file);
-		return true;
-	}
-
 	// Returns true if it finished synchronously, and false if it has started an async operation
 	// that will likely end at a later time (required to avoid closing progress bar in paste(ev))
 	// FIXME: This comment is a lie if dataTransferToDocumentFallback is called, as it calls _doAsyncDownload

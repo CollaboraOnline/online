@@ -117,4 +117,6 @@ interface MapInterface extends Evented {
 	userList: UserList;
 	sidebar: Sidebar;
 	getViewColor(viewId: number): number;
+
+	insertMultimedia(file: File): void;
 }
