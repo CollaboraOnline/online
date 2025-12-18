@@ -1419,7 +1419,7 @@ export class Comment extends CanvasSectionObject {
 	public onDraw (): void {
 		if (this.sectionProperties.showSelectedCoordinate) {
 			if (app.map._docLayer._docType === 'text') {
-				var rectangles: Array<cool.SimpleRectangle> = this.sectionProperties.data.rectangles;
+				const rectangles: Array<cool.SimpleRectangle> = this.sectionProperties.data.rectangles;
 				if (rectangles) {
 					// We are using view coordinates and it ignores myTopLeft values.
 					// We set the pen position to canvas origin here. Then we set it back at the end of this block, after drawing.
