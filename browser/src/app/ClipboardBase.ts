@@ -511,28 +511,38 @@ class CoolClipboardBase extends BaseClass {
 		}
 	}
 
-	private _onImageLoadFunc(file: FileReader): (e: Event) => void {
-		console.assert(false, 'This should not be called!');
-		return (e: Event) => {};
+	private _onImageLoadFunc(file: File): (e: Event) => void {
+		return (e: Event) => {
+			this._pasteTypedBlob(file.type, (e.target as any).result);
+		};
 	}
 
+	// Sends a paste event with the specified mime type and content
 	private _pasteTypedBlob(fileType: string, fileBlob: Blob): void {
-		console.assert(false, 'This should not be called!');
+		const blob = new Blob(['paste mimetype=' + fileType + '\n', fileBlob]);
+		app.socket.sendMessage(blob);
 	}
 
 	private _asyncReadPasteFile(file: File): boolean {
-		console.assert(false, 'This should not be called!');
+		if (file.type.match(/image.*/)) {
+			return this._asyncReadPasteImage(file);
+		}
+		if (file.type.match(/audio.*/) || file.type.match(/video.*/)) {
+			return this._asyncReadPasteAVMedia(file);
+		}
 		return false;
 	}
 
 	private _asyncReadPasteImage(file: File): boolean {
-		console.assert(false, 'This should not be called!');
-		return false;
+		const reader = new FileReader();
+		reader.onload = this._onImageLoadFunc(file).bind(this);
+		reader.readAsArrayBuffer(file);
+		return true;
 	}
 
 	private _asyncReadPasteAVMedia(file: File): boolean {
-		console.assert(false, 'This should not be called!');
-		return false;
+		this._map.insertMultimedia(file);
+		return true;
 	}
 
 	public dataTransferToDocument(
