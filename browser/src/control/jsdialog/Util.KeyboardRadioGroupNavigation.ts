@@ -24,11 +24,13 @@ function KeyboardRadioGroupNavigation(
 		case 'ArrowRight':
 			moveToNextRadio(currentElement, 'next');
 			event.preventDefault();
+			event.stopPropagation();
 			break;
 		case 'ArrowUp':
 		case 'ArrowLeft':
 			moveToNextRadio(currentElement, 'previous');
 			event.preventDefault();
+			event.stopPropagation();
 			break;
 		default:
 			break;
