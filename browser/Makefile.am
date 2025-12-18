@@ -81,7 +81,7 @@ JQUERY_MINIFIED_IMAGE_PATH = node_modules/jquery-ui/themes/base/images
 JQUERY_MINIFIED_IMAGES = $(wildcard $(JQUERY_MINIFIED_IMAGE_PATH)/*.png)
 JQUERY_MINIFIED_DIST_IMAGES = $(patsubst $(JQUERY_MINIFIED_IMAGE_PATH)/%.png,$(DIST_FOLDER)/images/%.png,$(JQUERY_MINIFIED_IMAGES))
 
-COOL_IMAGES_SRC = $(shell find $(srcdir)/images -name '*.png' -o name '*.svg' -o name '*.gif' -o name '*.cur')
+COOL_IMAGES_SRC = $(shell find $(srcdir)/images -name '*.png' -o name '*.svg' -o name '*.gif')
 COOL_IMAGES_DST = $(patsubst $(srcdir)/%,$(DIST_FOLDER)/%,$(COOL_IMAGES_SRC))
 COOL_IMAGES_CUSTOM_SRC = $(shell if test -n "$(CUSTOM_ICONS_DIRECTORY)"; then find $(CUSTOM_ICONS_DIRECTORY) -name '*.*'; fi)
 COOL_IMAGES_CUSTOM_DST = $(patsubst $(CUSTOM_ICONS_DIRECTORY)/%,$(DIST_FOLDER)/images/%,$(COOL_IMAGES_CUSTOM_SRC))
