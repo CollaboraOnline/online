@@ -210,10 +210,10 @@ class ViewLayoutMultiPage extends ViewLayoutBase {
 			resultingRectangle.pX1 === Number.POSITIVE_INFINITY ||
 			resultingRectangle.pY1 === Number.POSITIVE_INFINITY
 		) {
-			setTimeout(() => {
+			app.layoutingService.appendLayoutingTask(() => {
 				this.scrollProperties.viewX = 0;
 				this.refreshVisibleAreaRectangle();
-			}, 100);
+			});
 		}
 
 		this._viewedRectangle = resultingRectangle;
@@ -414,8 +414,6 @@ class ViewLayoutMultiPage extends ViewLayoutBase {
 		const width = maxX - minX;
 
 		const sideSpace = this.viewSize.pX - width;
-
-		if (sideSpace < 0) console.log('smaller than');
 
 		return sideSpace;
 	}

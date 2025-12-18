@@ -1338,15 +1338,15 @@ class TileManager {
 				tile.distanceFromView = 0;
 			else {
 				const tileCenter = [
-					tile.coords.x + tileSizeTwips * 0.5,
-					tile.coords.y + tileSizeTwips * 0.5,
+					Math.round(tile.coords.x + tileSizeTwips * 0.5),
+					Math.round(tile.coords.y + tileSizeTwips * 0.5),
 				];
 				const viewCenter =
 					app.activeDocument.activeLayout.viewedRectangle.center;
-				tile.distanceFromView = Math.sqrt(
-					Math.pow(tileCenter[0] - viewCenter[0], 2) +
-						Math.pow(tileCenter[1] - viewCenter[1], 2),
-				);
+				tile.distanceFromView = new cool.SimplePoint(
+					tileCenter[0],
+					tileCenter[1],
+				).distanceTo(viewCenter);
 			}
 		}
 	}
@@ -1358,7 +1358,14 @@ class TileManager {
 			const tileSizeTwips = Math.round(this.tileSize * app.pixelsToTwips);
 			const zoom = Math.round(app.map.getZoom());
 			for (const [_index, tile] of this.tiles.entries()) {
-				if (app.isRectangleVisibleInTheDisplayedArea([tile.coords.x, tile.coords.y, tileSizeTwips, tileSizeTwips]))
+				if (
+					app.isRectangleVisibleInTheDisplayedArea([
+						tile.coords.x,
+						tile.coords.y,
+						tileSizeTwips,
+						tileSizeTwips,
+					])
+				)
 					this.updateTileDistance(tile, zoom);
 			}
 			this.sortTileBitmapList();
