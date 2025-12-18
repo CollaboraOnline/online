@@ -150,18 +150,21 @@ def roundtrip_file(name):
         outname.close()
 
 if __name__ == "__main__":
+    app_name = Path(sys.argv[0]).name
     if len(sys.argv) < 2 or sys.argv[1] == '--help':
-        print(f"Usage: {Path(sys.argv[0]).name} [<path-to-zipfiles>]\n", file=sys.stderr)
-        print(f"Usage: {Path(sys.argv[0]).name} --compare <before-path> <after-path>\n", file=sys.stderr)
+        print(f"{app_name} a tool to count streams and xml element & property use in zip containers such as documents.", file=sys.stderr)
+        print(f"Usage: {app_name} [<path-to-zipfiles>]", file=sys.stderr)
+        print(f"Usage: {app_name} --compare <before-path> <after-path>", file=sys.stderr)
+        print(f"Usage: {app_name} --roundtrip <file-path>", file=sys.stderr)
         sys.exit(1)
     if sys.argv[1] == '--compare':
         if len(sys.argv) != 4:
-            print(f"Usage: {Path(sys.argv[0]).name} --compare <before-path> <after-path>\n", file=sys.stderr)
+            print(f"Usage: {app_name} --compare <before-path> <after-path>\n", file=sys.stderr)
             sys.exit(1)
         compare_files(sys.argv[2], sys.argv[3])
     if sys.argv[1] == '--roundtrip':
         if len(sys.argv) != 3:
-            print(f"Usage: {Path(sys.argv[0]).name} --roundtip <file-path>\n", file=sys.stderr)
+            print(f"Usage: {app_name} --roundtrip <file-path>\n", file=sys.stderr)
             sys.exit(1)
 
         roundtrip_file(sys.argv[2])
