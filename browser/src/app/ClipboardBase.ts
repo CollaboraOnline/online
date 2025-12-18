@@ -340,10 +340,10 @@ class CoolClipboardBase extends BaseClass {
 	private async _doAsyncDownload(
 		type: string,
 		url: string,
-		optionalFormData: FormData,
+		optionalFormData: FormData | null,
 		forClipboard: boolean,
 		progressFn: (progress: number) => number,
-	): Promise<string | Blob> {
+	): Promise<Blob> {
 		const request = new XMLHttpRequest();
 
 		// avoid to invoke the following code if the download widget depends on user interaction
@@ -412,11 +412,103 @@ class CoolClipboardBase extends BaseClass {
 		});
 	}
 
+	// Suck the data from one server to another asynchronously ...
 	private async _dataTransferDownloadAndPasteAsync(
 		src: string,
 		fallbackHtml: string,
 	) {
-		console.assert(false, 'This should not be called!');
+		// FIXME: add a timestamp in the links (?) ignore old / un-responsive servers (?)
+		let response;
+		const errorMessage = _('Failed to download clipboard, please re-copy');
+		try {
+			response = await this._doAsyncDownload(
+				'GET',
+				src,
+				null,
+				false,
+				function (progress) {
+					return progress / 2;
+				},
+			);
+		} catch (_error) {
+			window.app.console.log(
+				'failed to download clipboard using fallback html',
+			);
+
+			// If it's the stub, avoid pasting.
+			if (this._isStubHtml(fallbackHtml)) {
+				// Let the user know they haven't really copied document content.
+				window.app.console.error(
+					'Clipboard: failed to download - ' + errorMessage,
+				);
+				this._map.uiManager.showInfoModal(
+					'data-transfer-warning',
+					'',
+					errorMessage,
+					null,
+				);
+				return;
+			}
+
+			const formData = new FormData();
+			let commandName = null;
+			if (this._checkAndDisablePasteSpecial()) {
+				commandName = '.uno:PasteSpecial';
+			} else {
+				commandName = '.uno:Paste';
+			}
+			const data = JSON.stringify({
+				url: src,
+				commandName: commandName,
+			});
+			formData.append('data', new Blob([data]), 'clipboard');
+			try {
+				await this._doAsyncDownload(
+					'POST',
+					this.getMetaURL(),
+					formData,
+					false,
+					function (progress) {
+						return 50 + progress / 2;
+					},
+				);
+			} catch (_error) {
+				await this.dataTransferToDocumentFallback(null, fallbackHtml);
+			}
+			return;
+		}
+
+		window.app.console.log('download done - response ' + response);
+		const formData = new FormData();
+		formData.append('data', response, 'clipboard');
+
+		try {
+			await this._doAsyncDownload(
+				'POST',
+				this.getMetaURL(),
+				formData,
+				false,
+				function (progress) {
+					return 50 + progress / 2;
+				},
+			);
+
+			if (this._checkAndDisablePasteSpecial()) {
+				window.app.console.log('up-load done, now paste special');
+				app.socket.sendMessage('uno .uno:PasteSpecial');
+			} else {
+				window.app.console.log('up-load done, now paste');
+				app.socket.sendMessage('uno .uno:Paste');
+			}
+		} catch (_error) {
+			window.app.console.error('Clipboard: failed to download - error');
+			this._map.uiManager.showInfoModal(
+				'data-transfer-warning',
+				'',
+				errorMessage,
+				null,
+			);
+		}
 	}
 
 	private _onImageLoadFunc(file: FileReader): (e: Event) => void {
@@ -461,9 +553,9 @@ class CoolClipboardBase extends BaseClass {
 	}
 
 	public async dataTransferToDocumentFallback(
-		dataTransfer: DataTransfer,
+		dataTransfer: DataTransfer | null,
 		htmlText: string,
-		usePasteKeyEvent: boolean,
+		usePasteKeyEvent?: boolean,
 	): Promise<void> {
 		console.assert(false, 'This should not be called!');
 	}
