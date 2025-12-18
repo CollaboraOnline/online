@@ -38,6 +38,7 @@ function createPageMarginEntryWidget(data: any, builder: any): HTMLElement {
 	container.className = 'margins-popup-container';
 	container.setAttribute('role', 'listbox');
 	container.setAttribute('aria-label', _('Page margin options'));
+	container.setAttribute('tabindex', '0');
 
 	const lang = window.coolParams.get('lang') || 'en-US';
 	const useImperial = lang === 'en-US' || lang === 'en'; // we need to consider both short form as some user can user lang=en-US using document URL
@@ -88,16 +89,32 @@ function createPageMarginEntryWidget(data: any, builder: any): HTMLElement {
 		builder.callback('dialog', 'close', { id: data.id }, null);
 	};
 
-	Object.keys(options).forEach((key) => {
+	Object.keys(options).forEach((key, index) => {
 		const opt = options[key];
+		const isFirstItem = index === 0;
 
 		const item = document.createElement('div');
 		item.className = 'margin-item';
 		item.id = key;
 		item.setAttribute('role', 'option');
-		item.setAttribute('tabindex', '0');
+		item.setAttribute('tabindex', '-1');
 		item.setAttribute('aria-selected', 'false');
 		item.addEventListener('click', onMarginClick);
+
+		item.addEventListener('keydown', function (event: KeyboardEvent) {
+			if (event.key === 'Tab') {
+				JSDialog.CloseDropdown(data.id);
+				event.preventDefault();
+			}
+		});
+
+		if(isFirstItem) {
+			item.classList.add('selected');
+			item.setAttribute('aria-selected', 'true');
+			container.setAttribute('aria-activedescendant', item.id);
+
+			data.initialSelectedId = item.id;
+		}
 
 		const img = document.createElement('img');
 		img.className = 'margin-icon';
@@ -169,6 +186,12 @@ function createPageMarginEntryWidget(data: any, builder: any): HTMLElement {
 	custom.addEventListener('click', (evt: MouseEvent) => {
 		map.sendUnoCommand(isCalc ? '.uno:PageFormatDialog' : '.uno:PageDialog');
 		builder.callback('dialog', 'close', { id: data.id }, null);
+	});
+	custom.addEventListener('keydown', function (event: KeyboardEvent) {
+		if (event.key === 'Tab') {
+			JSDialog.CloseDropdown(data.id);
+			event.preventDefault();
+		}
 	});
 	container.appendChild(custom);
 

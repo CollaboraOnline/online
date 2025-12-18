@@ -92,6 +92,7 @@ JSDialog.OpenDropdown = function (id, popupParent, entries, innerCallback, popup
 			// allows to put regular JSDialog JSON into popup
 			case 'json':
 				entry = entries[i].content;
+				initialSelectedId = entry.initialSelectedId;
 				if (entry.type === 'grid') json.gridKeyboardNavigation = true;
 			break;
 
