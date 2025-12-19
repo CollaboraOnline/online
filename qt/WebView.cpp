@@ -307,7 +307,8 @@ CODAWebEngineView::~CODAWebEngineView()
 static Window* s_mainWindow = nullptr;
 
 WebView::WebView(QWebEngineProfile* profile, bool isWelcome, Window* targetWindow)
-    :_webView(nullptr)
+    : _mainWindow(nullptr)
+    , _webView(nullptr)
     , _isWelcome(isWelcome)
     , _bridge(nullptr)
 {
@@ -322,11 +323,20 @@ WebView::WebView(QWebEngineProfile* profile, bool isWelcome, Window* targetWindo
     bool forceNewWindow = (profile == nullptr);
     if (targetWindow)
     {
-        _mainWindow = targetWindow;
+        // Don't reuse a window that contains a starter screen
+        if (!windowContainsStarterScreen(targetWindow))
+        {
+            _mainWindow = targetWindow;
+        }
     }
     else if (!forceNewWindow)
     {
-        _mainWindow = qobject_cast<Window*>(QApplication::activeWindow());
+        Window* activeWindow = qobject_cast<Window*>(QApplication::activeWindow());
+        // Don't reuse a window that contains a starter screen
+        if (!windowContainsStarterScreen(activeWindow))
+        {
+            _mainWindow = activeWindow;
+        }
     }
 
     bool createdWindow = false;
@@ -650,7 +660,7 @@ void WebView::load(const Poco::URI& fileURL, bool newFile, bool isStarterMode)
     queryGnomeFontScalingUpdateZoom();
 
     assert(_bridge == nullptr);
-    _bridge = new Bridge(channel, _document, _mainWindow, _webView.get());
+    _bridge = new Bridge(channel, _document, _mainWindow, _webView.get(), this);
     // Set the WebView as parent so the Bridge is deleted when the WebView is deleted
     _bridge->setParent(_webView.get());
     // Update the tab widget when the document modified state changes
@@ -923,6 +933,7 @@ WebView* WebView::createNewDocument(QWebEngineProfile* profile, const std::strin
     }
 
     // Add the new document as a tab in the currently active Window.
+    // The WebView constructor will automatically avoid reusing windows with starter screens.
     Window* activeWindow = qobject_cast<Window*>(QApplication::activeWindow());
     WebView* webViewInstance = new WebView(profile, false, activeWindow);
     webViewInstance->load(templateURI, true);
@@ -955,6 +966,22 @@ WebView* WebView::findStarterScreen()
     return nullptr;
 }
 
+bool WebView::windowContainsStarterScreen(Window* window)
+{
+    if (!window)
+        return false;
+
+    // Check if any WebView instance in this window is a starter screen
+    for (WebView* instance : s_instances)
+    {
+        if (instance->_mainWindow == window && instance->isStarterScreen())
+        {
+            return true;
+        }
+    }
+    return false;
+}
+
 void WebView::activateWindow()
 {
     if (_mainWindow)
@@ -976,7 +1003,25 @@ void WebView::closeTab()
     int index = tabWidget->indexOf(_webView.get());
     if (index >= 0)
     {
+        // Perform cleanup similar to tabCloseRequested handler
+        QWidget* w = tabWidget->widget(index);
+        prepareForClose();
         tabWidget->removeTab(index);
+        if (w)
+            w->deleteLater();
+
+        DetachableTabWidget* detachableTabWidget = qobject_cast<DetachableTabWidget*>(tabWidget);
+        if (detachableTabWidget)
+            detachableTabWidget->updateTabBarVisibility();
+
+        // Close the window if this was the last tab
+        if (tabWidget->count() == 0)
+        {
+            if (s_mainWindow)
+                s_mainWindow->close();
+            else
+                QApplication::quit();
+        }
     }
 }
 

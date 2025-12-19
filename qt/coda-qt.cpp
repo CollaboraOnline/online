@@ -971,12 +971,15 @@ QVariant Bridge::cool(const QString& messageStr)
         dialog->setFileMode(QFileDialog::ExistingFiles);
         dialog->setAttribute(Qt::WA_DeleteOnClose);
 
+        Window* targetWindow = _owningWebView->mainWindow();
         QObject::connect(dialog, &QFileDialog::filesSelected,
-                         [](const QStringList& filePaths)
+                         [targetWindow](const QStringList& filePaths)
                          {
-                             coda::openFiles(filePaths);
-                             // Close starter screen if it exists
-                             closeStarterScreen();
+                             coda::openFiles(filePaths, targetWindow);
+                             // Close starter screen after dialog finishes processing
+                             QTimer::singleShot(0, []() {
+                                 closeStarterScreen();
+                             });
                          });
 
         dialog->open();

@@ -15,9 +15,11 @@
 #include <QStringList>
 #include <QString>
 
+class Window;
+
 namespace coda
 {
-    void openFiles(const QStringList& files);
+    void openFiles(const QStringList& files, Window* targetWindow = nullptr);
     void openNewDocument(const QString& templateType);
 }
 
