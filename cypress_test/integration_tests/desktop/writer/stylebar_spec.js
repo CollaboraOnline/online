@@ -14,6 +14,13 @@ describe(['tagdesktop'], 'Test style sidebar', function() {
 
 		cy.viewport(1000,660);
 
+		// wait for entries
+
+		cy.cGet('#treeview .ui-treeview-cell-text').contains('Complimentary Close')
+			.should('exist');
+
+		cy.wait(2000); // stabilize
+
 		// show and trigger render
 		cy.cGet('#treeview .ui-treeview-cell-text').contains('Complimentary Close')
 			.should('exist').scrollIntoView();
