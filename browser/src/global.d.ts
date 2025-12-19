@@ -275,6 +275,7 @@ interface Window {
 		// Below are only used for Cypress tests
 		allDialogs?: string[];
 		a11yValidator?: A11yValidator;
+		A11yValidatorException?: typeof A11yValidatorException;
 	};
 	// coolParams defined in: js/global.js
 	coolParams: {
