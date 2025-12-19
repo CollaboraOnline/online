@@ -25,7 +25,7 @@ class CoolClipboardBase extends BaseClass {
 	private _selectionType: string | null;
 	private _accessKey: string[];
 	private _clipboardSerial: number;
-	private _failedTimer: TimeoutHdl | null;
+	private _failedTimer: TimeoutHdl | undefined;
 	private _dummyDivName: string;
 	private _unoCommandForCopyCutPaste: string | null;
 	private _navigatorClipboardPasteSpecial: boolean;
@@ -44,7 +44,7 @@ class CoolClipboardBase extends BaseClass {
 		this._selectionType = null;
 		this._accessKey = ['', ''];
 		this._clipboardSerial = 0; // incremented on each operation
-		this._failedTimer = null;
+		this._failedTimer = undefined;
 		this._dummyDivName = 'copy-paste-container';
 		this._unoCommandForCopyCutPaste = null;
 		// Tracks if we're in paste special mode for the navigator.clipboard case
@@ -841,17 +841,95 @@ class CoolClipboardBase extends BaseClass {
 		this._dummyDiv.appendChild(bElement);
 	}
 
+	// Try-harder fallbacks for emitting cut/copy/paste events.
 	private _execOnElement(operation: string): boolean {
-		console.assert(false, 'This should not be called!');
-		return false;
+		const serial = this._clipboardSerial;
+
+		this._resetDiv();
+
+		// selection can change focus.
+		const active = document.activeElement;
+
+		const success =
+			document.execCommand(operation) && serial !== this._clipboardSerial;
+
+		// try to restore focus if we need to.
+		if (active !== null && active !== document.activeElement)
+			(active as HTMLElement).focus();
+
+		window.app.console.log(
+			'fallback ' + operation + ' ' + (success ? 'success' : 'fail'),
+		);
+
+		return success;
 	}
 
+	// Encourage browser(s) to actually execute the command
 	private _execCopyCutPaste(operation: string, cmd: string, params: any): void {
-		console.assert(false, 'This should not be called!');
+		const serial = this._clipboardSerial;
+
+		this._unoCommandForCopyCutPaste = cmd;
+
+		if (
+			operation !== 'paste' &&
+			cmd !== undefined &&
+			this._navigatorClipboardWrite(params)
+		) {
+			// This is the codepath where an UNO command initiates the clipboard
+			// operation.
+			return;
+		}
+
+		if (
+			!window.ThisIsTheiOSApp && // in mobile apps, we want to drop straight to navigatorClipboardRead as execCommand will require user interaction...
+			document.execCommand(operation) &&
+			serial !== this._clipboardSerial
+		) {
+			window.app.console.log('copied successfully');
+			this._unoCommandForCopyCutPaste = null;
+			return;
+		}
+
+		if (operation == 'paste' && this._navigatorClipboardRead(false)) {
+			// execCommand(paste) failed, the new clipboard API is available, tried that
+			// way.
+			return;
+		}
+
+		this._afterCopyCutPaste(operation);
 	}
 
 	private _afterCopyCutPaste(operation: string): void {
-		console.assert(false, 'This should not be called!');
+		const serial = this._clipboardSerial;
+		this._unoCommandForCopyCutPaste = null;
+
+		// try a hidden div
+		if (this._execOnElement(operation)) {
+			window.app.console.log('copied on element successfully');
+			return;
+		}
+
+		// see if we have help for paste
+		if (operation === 'paste') {
+			try {
+				window.app.console.warn('Asked parent for a paste event');
+				this._map.fire('postMessage', { msgId: 'UI_Paste' });
+			} catch (error) {
+				window.app.console.warn('Failed to post-message: ' + error);
+			}
+		}
+
+		// wait and see if we get some help
+		clearTimeout(this._failedTimer);
+		setTimeout(() => {
+			if (this._clipboardSerial !== serial) {
+				window.app.console.log('successful ' + operation);
+				if (operation === 'paste') this._stopHideDownload();
+			} else {
+				window.app.console.log('help did not arrive for ' + operation);
+				this._warnCopyPaste();
+			}
+		}, 150 /* ms */);
 	}
 
 	private async _navigatorClipboardGetTypeCallback(
