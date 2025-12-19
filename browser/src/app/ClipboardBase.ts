@@ -18,6 +18,23 @@
 // We keep track of the current selection content if it is simple
 // So we can do synchronous copy/paste in the callback if possible.
 
+interface CoolClipboardEvent {
+	clipboardData: {
+		getData(type: string): string;
+		types: string[];
+	};
+	preventDefault: () => void;
+}
+
+interface CoolCommandEvent {
+	commandName: string;
+}
+
+interface VoidPromiseArgs {
+	resolve: (value: void | PromiseLike<void>) => void;
+	reject: (reason?: any) => void;
+}
+
 class CoolClipboardBase extends BaseClass {
 	private _map: MapInterface;
 	private _selectionContent: string;
@@ -33,7 +50,7 @@ class CoolClipboardBase extends BaseClass {
 	private _dummyDiv: HTMLElement | null;
 	private _dummyPlainDiv: Element | null;
 	private _dummyClipboard: Clipboard;
-	private _commandCompletion: Promise<void>[];
+	private _commandCompletion: VoidPromiseArgs[];
 	private _downloadProgress?: DownloadProgressInterface;
 
 	constructor(map: MapInterface) {
@@ -932,23 +949,94 @@ class CoolClipboardBase extends BaseClass {
 		}, 150 /* ms */);
 	}
 
+	// ClipboardContent.getType() callback: used with the Paste button
 	private async _navigatorClipboardGetTypeCallback(
 		clipboardContent: ClipboardItem,
 		blob: Blob,
 		type: string,
 	): Promise<void> {
-		console.assert(false, 'This should not be called!');
+		if (type == 'image/png') {
+			this._pasteTypedBlob(type, blob);
+			return;
+		}
+
+		let text;
+		try {
+			text = await blob.text();
+		} catch (error: any) {
+			window.app.console.log('blob.text() failed: ' + error.message);
+			return;
+		}
+
+		if (type !== 'text/html' || !this.isHtmlImage(text)) {
+			this._navigatorClipboardTextCallback(text, type);
+			return;
+		}
+
+		// Got an image, work with that directly.
+		let image;
+		try {
+			image = await clipboardContent.getType('image/png');
+		} catch (error: any) {
+			window.app.console.log(
+				'clipboardContent.getType(image/png) failed: ' + error.message,
+			);
+			return;
+		}
+
+		this._navigatorClipboardGetTypeCallback(
+			clipboardContent,
+			image,
+			'image/png',
+		);
 	}
 
+	// Clipboard blob text() callback for the text/html and text/plain cases
 	private _navigatorClipboardTextCallback(
 		text: string,
 		textType: string,
 	): void {
-		console.assert(false, 'This should not be called!');
+		// paste() wants to work with a paste event, so construct one.
+		const ev = {
+			clipboardData: {
+				// Used early by paste().
+				getData: function (type: string): string {
+					if (type === textType) {
+						return text;
+					}
+
+					return '';
+				},
+				// Used by _readContentSyncToBlob().
+				types: [textType],
+			},
+			preventDefault: function () {},
+		};
+
+		// Invoke paste(), which knows how to recognize our HTML vs external HTML.
+		this.paste(ev as unknown as ClipboardEvent);
 	}
 
-	private _onCommandResult(e: Event): void {
-		console.assert(false, 'This should not be called!');
+	// Gets status of a copy/paste command from the remote Kit
+	private _onCommandResult(e: CoolCommandEvent): void {
+		if (
+			e.commandName === '.uno:Copy' ||
+			e.commandName === '.uno:Cut' ||
+			e.commandName === '.uno:CopyHyperlinkLocation' ||
+			e.commandName === '.uno:CopySlide'
+		) {
+			window.app.console.log(
+				'Resolve clipboard command promise ' +
+					e.commandName +
+					' with queue length: ' +
+					this._commandCompletion.length,
+			);
+			while (this._commandCompletion.length > 0) {
+				const a = this._commandCompletion.shift();
+				Util.ensureValue(a);
+				a.resolve();
+			}
+		}
 	}
 
 	private async _sendCommandAndWaitForCompletion(
