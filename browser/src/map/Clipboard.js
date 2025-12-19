@@ -13,7 +13,7 @@
  * local & remote clipboard data.
  */
 
-/* global app DocUtil _ brandProductName ClipboardItem Promise JSDialog CoolClipboardBase */
+/* global app DocUtil _ brandProductName ClipboardItem JSDialog CoolClipboardBase */
 
 // Get all interesting clipboard related events here, and handle
 // download logic in one place ...
@@ -22,51 +22,6 @@
 window.L.Clipboard = class Clipboard extends CoolClipboardBase {
 	constructor(map) {
 		super(map);
-	}
-
-	_sendCommandAndWaitForCompletion(command, params) {
-		if (command !== '.uno:Copy' && command !== '.uno:Cut' && command !== '.uno:CopyHyperlinkLocation' && command !== '.uno:CopySlide') {
-			console.error(`_sendCommandAndWaitForCompletion was called with '${command}', but anything except Copy or Cut will never complete`);
-			return null;
-		}
-
-		if (this._commandCompletion.length > 0) {
-			console.warn('Already have ' + this._commandCompletion.length + ' pending clipboard command(s)');
-			return null;
-		}
-
-		if (!params) app.socket.sendMessage('uno ' + command);
-		else app.map.sendUnoCommand(command, params);
-
-		return new Promise((resolve, reject) => {
-			window.app.console.log('New ' + command + ' promise');
-			// FIXME: add a timeout cleanup too ...
-			this._commandCompletion.push({
-				resolve: resolve,
-				reject: reject,
-			});
-		});
-	}
-
-	async _parseClipboardFetchResult(text, mimetype, shorttype) {
-		const content = this.parseClipboard(await text)[shorttype];
-		const blob = new Blob([content], { 'type': mimetype });
-		console.log('Generate blob of type ' + mimetype + ' from ' + shorttype + ' text: ' + content);
-		return blob;
-	}
-
-	// Executes the navigator.clipboard.write() call, if it's available.
-	_navigatorClipboardWrite(params) {
-		if (!window.L.Browser.clipboardApiAvailable && !window.ThisIsTheiOSApp) {
-			return false;
-		}
-
-		if (this._selectionType !== 'text' && this._selectionType !== 'slide') {
-			return false;
-		}
-
-		this._asyncAttemptNavigatorClipboardWrite(params);
-		return true;
 	}
 
 	async _asyncAttemptNavigatorClipboardWrite(params) {
