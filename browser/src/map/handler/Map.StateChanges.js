@@ -124,6 +124,12 @@ window.L.Map.StateChangeHandler = window.L.Handler.extend({
 			app.activeDocument.activeLayout.scrollTo(scrollPoint.pX, scrollPoint.pY);
 		}
 
+		if (commandName == '.uno:ReshufflePagePopup') {
+			app.map.uiManager.showSnackbar('Reorder pages?', 'Yes', function () {
+				app.map.sendUnoCommand('.uno:ReshufflePages');
+			});
+		}
+
 		$('#document-container').removeClass('slide-master-mode');
 		$('#document-container').addClass('slide-normal-mode');
 		if (slideMasterPageItem) {
