@@ -1640,17 +1640,39 @@ void PresetsInstallTask::addGroup(const Poco::JSON::Object::Ptr& settings, const
 
         Poco::Path destDir(_presetsPath, groupName);
         Poco::File(destDir).createDirectories();
-        std::string fileName;
+        std::string filePath;
         if (groupName == "xcu")
-            fileName = Poco::Path(destDir.toString(), "config.xcu").toString();
+            filePath = Poco::Path(destDir.toString(), "config.xcu").toString();
         else if (groupName == "browsersetting")
-            fileName = Poco::Path(destDir.toString(), "browsersetting.json").toString();
+            filePath = Poco::Path(destDir.toString(), "browsersetting.json").toString();
         else if (groupName == "viewsetting")
-            fileName = Poco::Path(destDir.toString(), "viewsetting.json").toString();
+            filePath = Poco::Path(destDir.toString(), "viewsetting.json").toString();
         else
-            fileName = Poco::Path(destDir.toString(), Uri::getFilenameWithExtFromURL(uri)).toString();
+        {
+            // Check for a file_name='something' and use that if it exists and
+            // if it is safe to use, otherwise use a file name derived from the
+            // url itself.
+            std::string fileName;
+            for (const auto& param : Poco::URI(uri).getQueryParameters())
+            {
+                if (param.first == "file_name")
+                    fileName = param.second;
+            }
 
-        queries.emplace_back(uri, stamp, fileName);
+            if (fileName.empty())
+                fileName = Uri::getFilenameWithExtFromURL(uri);
+
+            if (fileName.empty() || fileName == "." || fileName == ".." ||
+                fileName.find_first_of('/') != std::string::npos)
+            {
+                LOG_ERR("Invalid settings filename of: " << fileName);
+                continue;
+            }
+
+            filePath = Poco::Path(destDir.toString(), fileName).toString();
+        }
+
+        queries.emplace_back(uri, stamp, filePath);
     }
 }
 
