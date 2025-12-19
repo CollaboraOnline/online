@@ -494,7 +494,7 @@ void WebView::load(const Poco::URI& fileURL, bool newFile, bool isStarterMode)
     channel->registerObject("bridge", _bridge);
     _webView->page()->setWebChannel(channel);
 
-    Poco::Path coolHtmlPath(getTopSrcDir(TOPSRCDIR));
+    Poco::Path coolHtmlPath(getDataDir());
     coolHtmlPath.append("/browser/dist/cool.html");
     Poco::URI urlAndQuery(coolHtmlPath);
     urlAndQuery.setScheme("file");
@@ -570,7 +570,7 @@ WebView* WebView::createNewDocument(QWebEngineProfile* profile, const std::strin
         else
         {
             // otherwise assume it's a template path relative to browser/dist
-            Poco::Path templatePathObj(getTopSrcDir(TOPSRCDIR));
+            Poco::Path templatePathObj(getDataDir());
             templatePathObj.append("browser/dist");
             templatePathObj.append(templatePath);
             templateURI = Poco::URI(templatePathObj);
@@ -590,7 +590,7 @@ WebView* WebView::createNewDocument(QWebEngineProfile* profile, const std::strin
         else if (templateType == "draw")
             templateFileName = "Drawing.odg";
 
-        Poco::Path templatePathObj(getTopSrcDir(TOPSRCDIR));
+        Poco::Path templatePathObj(getDataDir());
         templatePathObj.append("browser/dist/templates");
         templatePathObj.append(templateFileName);
         templateURI = Poco::URI(templatePathObj);

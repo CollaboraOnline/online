@@ -743,7 +743,7 @@ QVariant Bridge::cool(const QString& messageStr)
     }
     else if (message == "WELCOME")
     {
-        const std::string welcomePath = getTopSrcDir(TOPSRCDIR) + "/browser/dist/welcome/welcome-slideshow.odp";
+        const std::string welcomePath = getDataDir() + "/browser/dist/welcome/welcome-slideshow.odp";
         struct stat st;
         if (FileUtil::getStatOfFile(welcomePath, st) == 0)
         {
@@ -761,7 +761,7 @@ QVariant Bridge::cool(const QString& messageStr)
     }
     else if (message == "LICENSE")
     {
-        const std::string licensePath = getTopSrcDir(TOPSRCDIR) + "/../../collaboraoffice/LICENSE.html";
+        const std::string licensePath = LO_PATH "/LICENSE.html";
         struct stat st;
         if (FileUtil::getStatOfFile(licensePath, st) == 0)
         {
