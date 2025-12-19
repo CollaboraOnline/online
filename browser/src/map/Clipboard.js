@@ -24,40 +24,6 @@ window.L.Clipboard = class Clipboard extends CoolClipboardBase {
 		super(map);
 	}
 
-	// Returns true if it finished synchronously, and false if it has started an async operation
-	// that will likely end at a later time (required to avoid closing progress bar in paste(ev))
-	// FIXME: This comment is a lie if dataTransferToDocumentFallback is called, as it calls _doAsyncDownload
-	dataTransferToDocument(dataTransfer, preferInternal, htmlText, usePasteKeyEvent) {
-		// Look for our HTML meta magic.
-		//   cf. ClientSession.cpp /textselectioncontent:/
-
-		var meta = this._getMetaOrigin(htmlText, '<div id="meta-origin" data-coolorigin="');
-		var id = this.getMetaPath(0);
-		var idOld = this.getMetaPath(1);
-
-		// for the paste, we always prefer the internal LOK's copy/paste
-		if (preferInternal === true &&
-			((id !== '' && meta.indexOf(id) >= 0) || (idOld !== '' && meta.indexOf(idOld) >= 0)))
-		{
-			// Home from home: short-circuit internally.
-			window.app.console.log('short-circuit, internal paste');
-			this._doInternalPaste(this._map, usePasteKeyEvent);
-			return true;
-		}
-
-		// Do we have a remote Online we can suck rich data from ?
-		if (meta !== '')
-		{
-			window.app.console.log('Transfer between servers\n\t"' + meta + '" vs. \n\t"' + id + '"');
-			this._dataTransferDownloadAndPasteAsync(meta, htmlText);
-			return false; // just started async operation - did not finish yet
-		}
-
-		// Fallback.
-		this.dataTransferToDocumentFallback(dataTransfer, htmlText, usePasteKeyEvent);
-		return true;
-	}
-
 	async _sendToInternalClipboard(content) {
 		if (window.ThisIsTheiOSApp) {
 			await window.webkit.messageHandlers.clipboard.postMessage(`sendToInternal ${await content.text()}`); // no need to base64 in this direction...
