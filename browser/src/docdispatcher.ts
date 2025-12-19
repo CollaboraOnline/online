@@ -145,6 +145,11 @@ class Dispatcher {
 		this.actionsMap['invertbackground'] = function () {
 			app.map.uiManager.toggleInvert();
 		};
+		this.actionsMap['gatherwindows'] = function () {
+			if (window.bridge && window.bridge.gatherAllWindows) {
+				window.bridge.gatherAllWindows();
+			}
+		};
 		this.actionsMap['home-search'] = function () {
 			app.map.uiManager.focusSearch();
 		};

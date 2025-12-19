@@ -13,12 +13,13 @@
 
 #include <QWebEngineView>
 #include <QObject>
+#include <QPointer>
 #include <QVariant>
 #include <string>
 #include <thread>
 #include "Document.hpp"
+#include "WebView.hpp"
 
-class CODAWebEngineView;
 class QMainWindow;
 
 // Qt ⇄ JavaScript bridge
@@ -28,7 +29,8 @@ class Bridge : public QObject
 
     coda::DocumentData _document;
     QMainWindow* _window;
-    CODAWebEngineView* _webView;
+    QPointer<CODAWebEngineView> _webView;
+    WebView* _owningWebView;
     int _closeNotificationPipeForForwardingThread[2];
     std::thread _app2js;
     // the state of the document modified status as reported by the core
@@ -41,11 +43,12 @@ class Bridge : public QObject
     void saveDocumentAs();
 
 public:
-    explicit Bridge(QObject* parent, coda::DocumentData& document, QMainWindow* window, CODAWebEngineView* webView)
+    explicit Bridge(QObject* parent, coda::DocumentData& document, QMainWindow* window, CODAWebEngineView* webView, WebView* owningWebView)
         : QObject(parent)
         , _document(document)
         , _window(window)
         , _webView(webView)
+        , _owningWebView(owningWebView)
         , _closeNotificationPipeForForwardingThread{ -1, -1 }
         , _modified(false)
         , _pendingSave(false)
@@ -53,6 +56,12 @@ public:
     }
 
     ~Bridge() override;
+
+    // Clear the stored webview pointer so no further GUI actions are attempted.
+    void clearWebView();
+
+    // Exposed helpers for external callers
+    bool promptSaveAs();
 
     // TODO: move these to webview...
     // Helper: post JavaScript code safely on GUI thread
@@ -63,6 +72,9 @@ public:
 
     bool isModified() const { return _modified; }
     bool isPendingSave() const { return _pendingSave; }
+signals:
+    // Emitted when the modified state changes (true = document has unsaved changes)
+    void modifiedChanged(bool modified);
 
 public slots: // called from JavaScript
     // Called from JS via window.postMobileMessage
@@ -78,6 +90,8 @@ public slots: // called from JavaScript
     * the JavaScript value **undefined**.
     */
     QVariant cool(const QString& msg);
+    void gatherAllWindows();
+    int getWindowCount();
 };
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
