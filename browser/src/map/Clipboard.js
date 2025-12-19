@@ -24,65 +24,6 @@ window.L.Clipboard = class Clipboard extends CoolClipboardBase {
 		super(map);
 	}
 
-	async dataTransferToDocumentFallback(dataTransfer, htmlText, usePasteKeyEvent) {
-		var content;
-		if (dataTransfer) {
-			// Suck HTML content out of dataTransfer now while it feels like working.
-			content = this._readContentSyncToBlob(dataTransfer);
-		}
-
-		// Fallback on the html.
-		if (!content && htmlText != '') {
-			content = this._encodeHtmlToBlob(htmlText);
-		}
-
-		// FIXME: do we want this section ?
-
-		// Images get a look in only if we have no content and are async (used in the Ctrl-V
-		// case)
-		if (((content == null && htmlText === '') || this.isHtmlImage(htmlText)) && dataTransfer != null)
-		{
-			var types = dataTransfer.types;
-
-			window.app.console.log('Attempting to paste image(s)');
-
-			// first try to transfer images
-			// TODO if we have both Files and a normal mimetype, should we handle
-			// both, or prefer one or the other?
-			for (var t = 0; t < types.length; ++t) {
-				window.app.console.log('\ttype' + types[t]);
-				if (types[t] === 'Files') {
-					var files = dataTransfer.files;
-					if (files !== null)
-					{
-						for (var f = 0; f < files.length; ++f)
-							this._asyncReadPasteFile(files[f]);
-					} // IE / Edge
-					else this._asyncReadPasteFile(dataTransfer.items[t].getAsFile());
-				}
-			}
-
-			// If any paste special dialog is open, close it here, because we won't call
-			// _doInternalPaste() that would do the closing.
-			this._checkAndDisablePasteSpecial();
-
-			return;
-		}
-
-		if (content == null) {
-			window.app.console.log('Nothing we can paste on the clipboard');
-			return;
-		}
-
-		window.app.console.log('Normal HTML, so smart paste not possible');
-
-		await this._sendToInternalClipboard(content);
-
-		window.app.console.log('clipboard: Sent ' + content.size + ' bytes successfully');
-
-		this._doInternalPaste(this._map, usePasteKeyEvent);
-	}
-
 	_checkSelection() {
 		var checkSelect = document.getSelection();
 		if (checkSelect && checkSelect.isCollapsed)
