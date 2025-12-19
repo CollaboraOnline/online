@@ -687,12 +687,41 @@ class CoolClipboardBase extends BaseClass {
 	}
 
 	private _checkSelection(): void {
-		console.assert(false, 'This should not be called!');
+		const checkSelect = document.getSelection();
+		if (checkSelect && checkSelect.isCollapsed)
+			window.app.console.log('Error: collapsed selection - cannot copy/paste');
 	}
 
 	private _getHtmlForClipboard(): string {
-		console.assert(false, 'This should not be called!');
-		return '';
+		let text;
+
+		if (
+			this._selectionType === 'complex' ||
+			GraphicSelection.hasActiveSelection()
+		) {
+			window.app.console.log('Copy/Cut with complex/graphical selection');
+			if (this._selectionType === 'text' && this._selectionContent !== '') {
+				// back here again having downloaded it ...
+				text = this._selectionContent; // Not sure if we hit these lines. Last else block seems to catch the downloaded content (selection type is not "complex" while copying to clipboard).
+				window.app.console.log('Use downloaded selection.');
+			} else {
+				window.app.console.log('Downloaded that selection.');
+				text = this._getStubHtml();
+				this._onDownloadOnLargeCopyPaste();
+				Util.ensureValue(this._downloadProgress);
+				this._downloadProgress.setURI(
+					// richer, bigger HTML ...
+					this.getMetaURL() + '&MimeType=text/html,text/plain;charset=utf-8',
+				);
+			}
+		} else if (this._selectionType === null) {
+			window.app.console.log('Copy/Cut with no selection!');
+			text = this._getStubHtml();
+		} else {
+			window.app.console.log('Copy/Cut with simple text selection');
+			text = this._selectionContent;
+		}
+		return text;
 	}
 
 	public populateClipboard(ev: Event): void {

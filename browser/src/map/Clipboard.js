@@ -13,7 +13,7 @@
  * local & remote clipboard data.
  */
 
-/* global app DocUtil _ brandProductName $ ClipboardItem Promise GraphicSelection cool JSDialog CoolClipboardBase */
+/* global app DocUtil _ brandProductName $ ClipboardItem Promise cool JSDialog CoolClipboardBase */
 
 // Get all interesting clipboard related events here, and handle
 // download logic in one place ...
@@ -22,40 +22,6 @@
 window.L.Clipboard = class Clipboard extends CoolClipboardBase {
 	constructor(map) {
 		super(map);
-	}
-
-	_checkSelection() {
-		var checkSelect = document.getSelection();
-		if (checkSelect && checkSelect.isCollapsed)
-			window.app.console.log('Error: collapsed selection - cannot copy/paste');
-	}
-
-	_getHtmlForClipboard() {
-		var text;
-
-		if (this._selectionType === 'complex' || GraphicSelection.hasActiveSelection()) {
-			window.app.console.log('Copy/Cut with complex/graphical selection');
-			if (this._selectionType === 'text' && this._selectionContent !== '')
-			{ // back here again having downloaded it ...
-				text = this._selectionContent; // Not sure if we hit these lines. Last else block seems to catch the downloaded content (selection type is not "complex" while copying to clipboard).
-				window.app.console.log('Use downloaded selection.');
-			}
-			else
-			{
-				window.app.console.log('Downloaded that selection.');
-				text = this._getStubHtml();
-				this._onDownloadOnLargeCopyPaste();
-				this._downloadProgress.setURI( // richer, bigger HTML ...
-					this.getMetaURL() + '&MimeType=text/html,text/plain;charset=utf-8');
-			}
-		} else if (this._selectionType === null) {
-			window.app.console.log('Copy/Cut with no selection!');
-			text = this._getStubHtml();
-		} else {
-			window.app.console.log('Copy/Cut with simple text selection');
-			text = this._selectionContent;
-		}
-		return text;
 	}
 
 	// returns whether we should stop processing the event
