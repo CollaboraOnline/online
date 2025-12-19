@@ -219,8 +219,9 @@ JSDialog.iconView = function (
 			entry.selected = false;
 		}
 
-		if (iconViewData.entries.length > position) {
-			iconViewData.entries[position].selected = true;
+		if (position >= 0 && iconViewData.entries.length > position) {
+			const entry = iconViewData.entries[position];
+			if (entry) entry.selected = true;
 		}
 	};
 
@@ -228,6 +229,7 @@ JSDialog.iconView = function (
 		iconview.updateSelectionImpl(position, data);
 	};
 
+	// position can be -1
 	iconview.onSelect = (position: number) => {
 		$(iconview)
 			.children('.selected')
@@ -237,7 +239,9 @@ JSDialog.iconView = function (
 			});
 
 		const entry =
-			iconview.children.length > position ? iconview.children[position] : null;
+			position >= 0 && iconview?.children.length > position
+				? iconview?.children[position]
+				: null;
 
 		iconview.updateSelection(position);
 
