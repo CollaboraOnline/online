@@ -13,7 +13,7 @@
  * local & remote clipboard data.
  */
 
-/* global app DocUtil _ brandProductName $ ClipboardItem Promise cool JSDialog CoolClipboardBase */
+/* global app DocUtil _ brandProductName ClipboardItem Promise JSDialog CoolClipboardBase */
 
 // Get all interesting clipboard related events here, and handle
 // download logic in one place ...
@@ -22,98 +22,6 @@
 window.L.Clipboard = class Clipboard extends CoolClipboardBase {
 	constructor(map) {
 		super(map);
-	}
-
-	_isAnyInputFieldSelected(forCopy = false) {
-		if ($('#search-input').is(':focus'))
-			return true;
-
-		if ($('.ui-edit').is(':focus'))
-			return true;
-
-		if ($('.ui-textarea').is(':focus'))
-			return true;
-
-		if ($('input.ui-combobox-content').is(':focus'))
-			return true;
-
-		if (this._map.uiManager.isAnyDialogOpen()
-			&& !this.isCopyPasteDialogReadyForCopy()
-			&& !this.isPasteSpecialDialogOpen())
-			return true;
-
-		if (cool.Comment.isAnyFocus())
-		    return true;
-
-		if (forCopy) {
-			let selection = window.getSelection();
-			selection = selection && selection.toString();
-			if (selection && selection.length !== 0)
-				return true;
-		}
-
-		return false;
-	}
-
-	_isFormulabarSelected() {
-		if ($('#sc_input_window').is(':focus'))
-			return true;
-		return false;
-	}
-
-	// Does the selection of text before an event comes in
-	_beforeSelect(ev) {
-		window.app.console.log('Got event ' + ev.type + ' setting up selection');
-
-		if (this._isAnyInputFieldSelected(ev.type === 'beforecopy'))
-			return;
-
-		this._beforeSelectImpl();
-	}
-
-	_beforeSelectImpl() {
-		if (this._selectionType === 'slide')
-			return;
-
-		// We need some spaces in there ...
-		this._resetDiv();
-
-		var sel = document.getSelection();
-		if (!sel)
-			return;
-
-		var selected = false;
-		var selectRange;
-
-		if (!selected)
-		{
-			sel.removeAllRanges();
-			selectRange = document.createRange();
-			selectRange.selectNodeContents(this._dummyDiv);
-			sel.addRange(selectRange);
-
-			var checkSelect = document.getSelection();
-			if (checkSelect.isCollapsed)
-				window.app.console.log('Error: failed to select - cannot copy/paste');
-		}
-
-		return false;
-	}
-
-	_resetDiv() {
-		// cleanup the content:
-		this._dummyDiv.replaceChildren();
-
-		let bElement = document.createElement('b');
-		bElement.style.fontWeight = 'normal';
-		bElement.style.backgroundColor = 'transparent';
-		bElement.style.color = 'transparent';
-
-		let span = document.createElement('span');
-		span.textContent = '  ';
-
-		bElement.appendChild(span);
-		this._dummyDiv.appendChild(bElement);
 	}
 
 	// Try-harder fallbacks for emitting cut/copy/paste events.

@@ -30,7 +30,7 @@ class CoolClipboardBase extends BaseClass {
 	private _unoCommandForCopyCutPaste: string | null;
 	private _navigatorClipboardPasteSpecial: boolean;
 	private _isActionCopy: boolean;
-	private _dummyDiv: Element | null;
+	private _dummyDiv: HTMLElement | null;
 	private _dummyPlainDiv: Element | null;
 	private _dummyClipboard: Clipboard;
 	private _commandCompletion: Promise<void>[];
@@ -759,26 +759,86 @@ class CoolClipboardBase extends BaseClass {
 	}
 
 	private _isAnyInputFieldSelected(forCopy: boolean = false): boolean {
-		console.assert(false, 'This should not be called!');
+		if ($('#search-input').is(':focus')) return true;
+
+		if ($('.ui-edit').is(':focus')) return true;
+
+		if ($('.ui-textarea').is(':focus')) return true;
+
+		if ($('input.ui-combobox-content').is(':focus')) return true;
+
+		if (
+			this._map.uiManager.isAnyDialogOpen() &&
+			!this.isCopyPasteDialogReadyForCopy() &&
+			!this.isPasteSpecialDialogOpen()
+		)
+			return true;
+
+		if (cool.Comment.isAnyFocus()) return true;
+
+		if (forCopy) {
+			const selection = window.getSelection();
+			const selectionString = selection && selection.toString();
+			if (selectionString && selectionString.length !== 0) return true;
+		}
+
 		return false;
 	}
 
 	private _isFormulabarSelected(): boolean {
-		console.assert(false, 'This should not be called!');
+		if ($('#sc_input_window').is(':focus')) return true;
 		return false;
 	}
 
+	// Does the selection of text before an event comes in
 	private _beforeSelect(ev: Event): void {
-		console.assert(false, 'This should not be called!');
+		window.app.console.log('Got event ' + ev.type + ' setting up selection');
+
+		if (this._isAnyInputFieldSelected(ev.type === 'beforecopy')) return;
+
+		this._beforeSelectImpl();
 	}
 
-	private _beforeSelectImpl(): boolean {
-		console.assert(false, 'This should not be called!');
-		return false;
+	private _beforeSelectImpl(): void {
+		if (this._selectionType === 'slide') return;
+
+		// We need some spaces in there ...
+		this._resetDiv();
+
+		const sel = document.getSelection();
+		if (!sel) return;
+
+		const selected = false;
+		let selectRange;
+
+		if (!selected) {
+			sel.removeAllRanges();
+			selectRange = document.createRange();
+			Util.ensureValue(this._dummyDiv);
+			selectRange.selectNodeContents(this._dummyDiv);
+			sel.addRange(selectRange);
+
+			const checkSelect = document.getSelection();
+			if (!checkSelect || checkSelect.isCollapsed)
+				window.app.console.log('Error: failed to select - cannot copy/paste');
+		}
 	}
 
 	private _resetDiv(): void {
-		console.assert(false, 'This should not be called!');
+		Util.ensureValue(this._dummyDiv);
+		// cleanup the content:
+		this._dummyDiv.replaceChildren();
+
+		const bElement = document.createElement('b');
+		bElement.style.fontWeight = 'normal';
+		bElement.style.backgroundColor = 'transparent';
+		bElement.style.color = 'transparent';
+
+		const span = document.createElement('span');
+		span.textContent = '  ';
+
+		bElement.appendChild(span);
+		this._dummyDiv.appendChild(bElement);
 	}
 
 	private _execOnElement(operation: string): boolean {
