@@ -262,21 +262,21 @@ class ShapeHandleScalingSubSection extends CanvasSectionObject {
 		const isVerticalHandler = ['2', '7'].includes(this.sectionProperties.ownInfo.kind);
 
 		const primaryDelta = isVerticalHandler
-		    ? point[1] - shapeRecProps.center[1]
-		    : point[0] - shapeRecProps.center[0];
+			? point[1] - shapeRecProps.center[1]
+			: point[0] - shapeRecProps.center[0];
 
 		const aspectRatio = isVerticalHandler
-		    ? shapeRecProps.width / shapeRecProps.height
-		    : shapeRecProps.height / shapeRecProps.width;
+			? shapeRecProps.width / shapeRecProps.height
+			: shapeRecProps.height / shapeRecProps.width;
 
 		const secondaryDelta = primaryDelta * aspectRatio;
 
 		const direction = ['3', '4', '6', '2'].includes(this.sectionProperties.ownInfo.kind) ? -1 : 1;
 
 		if (isVerticalHandler) {
-		    point[0] = shapeRecProps.center[0] + secondaryDelta * direction;
+			point[0] = shapeRecProps.center[0] + secondaryDelta * direction;
 		} else {
-		    point[1] = shapeRecProps.center[1] + secondaryDelta * direction;
+			point[1] = shapeRecProps.center[1] + secondaryDelta * direction;
 		}
 
 		return point;
