@@ -9,6 +9,15 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+class A11yValidatorException extends Error {
+	static readonly PREFIX: string = 'A11yValidatorException';
+
+	constructor(message: string) {
+		super(message);
+		this.name = A11yValidatorException.PREFIX;
+	}
+}
+
 class A11yValidator {
 	private checks: Array<(type: string, element: HTMLElement) => void> = [];
 
@@ -28,7 +37,8 @@ class A11yValidator {
 			try {
 				check(type, element);
 			} catch (error) {
-				console.error(`A11yValidator exception: ${type}:`, error);
+				if (error instanceof A11yValidatorException)
+					console.error(error.message);
 				throw error;
 			}
 		}
@@ -39,7 +49,9 @@ class A11yValidator {
 			element.tagName !== 'BUTTON' &&
 			element.getAttribute('role') === 'button'
 		) {
-			throw `For widget of type '${type}' found ${element.tagName} element with role="button". it should use native <button> element instead.`;
+			throw new A11yValidatorException(
+				`For widget of type '${type}' found ${element.tagName} element with role="button". It should use native <button> element instead.`,
+			);
 		}
 
 		for (let i = 0; i < element.children.length; i++) {
@@ -60,7 +72,9 @@ class A11yValidator {
 			if (!this.isVisible(img)) return; // skip hidden images
 
 			if (!hasAlt)
-				throw `Image element with id: ${img.id} in widget of type '${type}' is missing alt attribute`;
+				throw new A11yValidatorException(
+					`Image element with id: ${img.id} in widget of type '${type}' is missing alt attribute`,
+				);
 
 			const parent = img.parentElement;
 			const span =
@@ -80,11 +94,15 @@ class A11yValidator {
 				const isDecorativeImg = img.classList.contains('ui-decorative-image'); // exclude ui-decorative-image decorative images - they can have empty alt
 
 				if (!parentHasLabel && !isDecorativeImg)
-					throw `Image element with id: ${img.id} inside parent with id: ${parent.id} in widget of type '${type}' has empty alt attribute but parent element lacks label`;
+					throw new A11yValidatorException(
+						`Image element with id: ${img.id} inside parent with id: ${parent.id} in widget of type '${type}' has empty alt attribute but parent element lacks label`,
+					);
 			}
 
 			if (altValue !== '' && parentHasLabel)
-				throw `Image element with id: ${img.id} inside parent with id: ${parent.id} in widget of type '${type}' has non-empty alt attribute but parent element also has label (should not duplicate)`;
+				throw new A11yValidatorException(
+					`Image element with id: ${img.id} inside parent with id: ${parent.id} in widget of type '${type}' has non-empty alt attribute but parent element also has label (should not duplicate)`,
+				);
 		});
 	}
 
@@ -97,3 +115,4 @@ class A11yValidator {
 }
 
 window.app.a11yValidator = new A11yValidator();
+window.app.A11yValidatorException = A11yValidatorException;
