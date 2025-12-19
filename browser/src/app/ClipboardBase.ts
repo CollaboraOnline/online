@@ -724,8 +724,38 @@ class CoolClipboardBase extends BaseClass {
 		return text;
 	}
 
-	public populateClipboard(ev: Event): void {
-		console.assert(false, 'This should not be called!');
+	// returns whether we should stop processing the event
+	public populateClipboard(ev: ClipboardEvent): void {
+		// If the copy paste API is not supported, we download the content as a fallback method.
+		let text = this._getHtmlForClipboard();
+
+		let plainText = DocUtil.stripHTML(text);
+		if (
+			text == this._selectionContent &&
+			this._selectionPlainTextContent != ''
+		) {
+			plainText = this._selectionPlainTextContent;
+		}
+		if (ev.clipboardData) {
+			// Standard
+			if (this._unoCommandForCopyCutPaste === '.uno:CopyHyperlinkLocation') {
+				const ess = 's';
+				const re = new RegExp(
+					'^(.*)(<a href=")([^"]+)(">.*</a>)(</p>\\n</body>\\n</html>)$',
+					ess,
+				);
+				const match = re.exec(text);
+				if (match !== null && match.length === 6) {
+					text = match[1] + match[3] + match[5];
+					plainText = DocUtil.stripHTML(text);
+				}
+			}
+			// if copied content is graphical then plainText is null and it does not work on mobile.
+			ev.clipboardData.setData('text/plain', plainText ? plainText : ' ');
+			ev.clipboardData.setData('text/html', text);
+			window.app.console.log('Put "' + text + '" on the clipboard');
+			this._clipboardSerial++;
+		}
 	}
 
 	private _isAnyInputFieldSelected(forCopy: boolean = false): boolean {
