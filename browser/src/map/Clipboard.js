@@ -13,7 +13,7 @@
  * local & remote clipboard data.
  */
 
-/* global app DocUtil _ brandProductName ClipboardItem JSDialog CoolClipboardBase */
+/* global app DocUtil _ brandProductName JSDialog CoolClipboardBase */
 
 // Get all interesting clipboard related events here, and handle
 // download logic in one place ...
@@ -22,46 +22,6 @@
 window.L.Clipboard = class Clipboard extends CoolClipboardBase {
 	constructor(map) {
 		super(map);
-	}
-
-	// Executes the navigator.clipboard.read() call, if it's available.
-	_navigatorClipboardRead(isSpecial) {
-		if (!window.L.Browser.clipboardApiAvailable && !window.ThisIsTheiOSApp) {
-			return false;
-		}
-
-		this._asyncAttemptNavigatorClipboardRead(isSpecial);
-		return true;
-	}
-
-	async _iOSReadClipboard() {
-		const encodedClipboardData = await window.webkit.messageHandlers.clipboard.postMessage('read');
-
-		if (encodedClipboardData === "(internal)") {
-			return null;
-		}
-
-		const clipboardData = Array.from(
-			encodedClipboardData.split(' '),
-		).map((encoded) =>
-			(encoded === '(null)' ? '' : window.b64d(encoded)),
-		);
-
-		const dataByMimeType = {};
-
-		if (clipboardData[0]) {
-			dataByMimeType['text/plain'] = new Blob([clipboardData[0]]);
-		}
-
-		if (clipboardData[1]) {
-			dataByMimeType['text/html'] = new Blob([clipboardData[1]]);
-		}
-
-		if (Object.keys(dataByMimeType).length === 0) {
-			return [];
-		}
-
-		return [new ClipboardItem(dataByMimeType)];
 	}
 
 	async _asyncAttemptNavigatorClipboardRead(isSpecial) {
