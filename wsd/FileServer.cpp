@@ -609,12 +609,29 @@ bool FileServerRequestHandler::isAdminLoggedIn(const HTTPRequest& request, http:
         UnitWSD* const unitWsd = UnitWSD::isUnitTesting() ? &UnitWSD::get() : nullptr;
         for (const auto& item : items)
         {
+            char queryDelim = '?';
             Poco::JSON::Object::Ptr configEntry = new Poco::JSON::Object();
-            std::string uri = COOLWSD::getServerURL().append(prefix + fwd + item.second);
+            // There are two ways in practice that real integrations provide resources:
+            // Most typical is some url like: settings/path/to/something.dic
+            // Less typically is like: settings/path/to?file_name=something.dic
+            // For testing, use the first for 'shared' and the second for 'user'
+            std::string uri = COOLWSD::getServerURL().append(prefix + fwd);
+            //COOLWSD::getServerURL tediously includes spaces at the start
+            Util::trim(uri);
+            if (kind == "shared")
+                uri += item.second;
+            else
+            {
+                Poco::Path filePath(item.second);
+                uri += filePath.parent().toString();
+                std::string fileName = filePath.getFileName();
+                uri += "?file_name=" + fileName;
+                queryDelim = '&';
+            }
             //COOLWSD::getServerURL tediously includes spaces at the start
             Util::trim(uri);
             if (!unittest.empty())
-                uri += "?testname=" + unittest;
+                uri.append(1, queryDelim).append("testname=").append(unittest);
             if (unitWsd)
                 unitWsd->filterRegisterPresetAsset(uri);
             configEntry->set("uri", uri);
@@ -752,6 +769,19 @@ bool FileServerRequestHandler::isAdminLoggedIn(const HTTPRequest& request, http:
         }
         else if(request.getMethod() == "GET")
         {
+            // See handlePresetRequest, for testing purposes this debug mode settings
+            // code supports the two typical ways settings files tend to be supplied
+            const Poco::URI::QueryParameters params = requestUri.getQueryParameters();
+            std::string fileName;
+            for (const auto& param : params)
+            {
+                if (param.first == "file_name")
+                    fileName = param.second;
+            }
+
+            if (!fileName.empty())
+                configPath += fileName;
+
             if (!FileUtil::Stat(configPath).exists())
             {
                 LOG_ERR("Local file URI [" << configPath << "] invalid or doesn't exist.");
