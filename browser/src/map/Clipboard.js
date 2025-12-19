@@ -24,33 +24,6 @@ window.L.Clipboard = class Clipboard extends CoolClipboardBase {
 		super(map);
 	}
 
-	// returns whether we should stop processing the event
-	populateClipboard(ev) {
-		// If the copy paste API is not supported, we download the content as a fallback method.
-		var text = this._getHtmlForClipboard();
-
-		var plainText = DocUtil.stripHTML(text);
-		if (text == this._selectionContent && this._selectionPlainTextContent != '') {
-			plainText = this._selectionPlainTextContent;
-		}
-		if (ev.clipboardData) { // Standard
-			if (this._unoCommandForCopyCutPaste === '.uno:CopyHyperlinkLocation') {
-				var ess = 's';
-				var re = new RegExp('^(.*)(<a href=")([^"]+)(">.*</a>)(</p>\n</body>\n</html>)$', ess);
-				var match = re.exec(text);
-				if (match !== null && match.length === 6) {
-					text = match[1] + match[3] + match[5];
-					plainText = DocUtil.stripHTML(text);
-				}
-			}
-			// if copied content is graphical then plainText is null and it does not work on mobile.
-			ev.clipboardData.setData('text/plain', plainText ? plainText: ' ');
-			ev.clipboardData.setData('text/html', text);
-			window.app.console.log('Put "' + text + '" on the clipboard');
-			this._clipboardSerial++;
-		}
-	}
-
 	_isAnyInputFieldSelected(forCopy = false) {
 		if ($('#search-input').is(':focus'))
 			return true;
