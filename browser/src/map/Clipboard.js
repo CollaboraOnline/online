@@ -24,33 +24,6 @@ window.L.Clipboard = class Clipboard extends CoolClipboardBase {
 		super(map);
 	}
 
-	// Parses the result from the clipboard endpoint into HTML and plain text.
-	parseClipboard(text) {
-		let textHtml;
-		let textPlain = '';
-		if (text.startsWith('{')) {
-			let textJson = JSON.parse(text);
-			textHtml = textJson['text/html'];
-			textPlain = textJson['text/plain;charset=utf-8'];
-		} else {
-			var idx = text.indexOf('<!DOCTYPE HTML');
-			if (idx === -1) {
-				idx = text.indexOf('<!DOCTYPE html');
-			}
-			if (idx > 0)
-				text = text.substring(idx, text.length);
-			textHtml = text;
-		}
-
-		if (!app.sectionContainer.testing)
-			textHtml = DocUtil.stripStyle(textHtml);
-
-		return {
-			'html': textHtml,
-			'plain': textPlain
-		};
-	}
-
 	// Executes the navigator.clipboard.read() call, if it's available.
 	_navigatorClipboardRead(isSpecial) {
 		if (!window.L.Browser.clipboardApiAvailable && !window.ThisIsTheiOSApp) {
