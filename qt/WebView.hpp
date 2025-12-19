@@ -81,6 +81,7 @@ public:
 
     static WebView* findOpenDocument(const Poco::URI& documentURI);
     static WebView* findStarterScreen();
+    static bool windowContainsStarterScreen(Window* window);
     static const std::vector<WebView*>& getAllInstances() { return s_instances; }
     void activateWindow();
     void closeTab();

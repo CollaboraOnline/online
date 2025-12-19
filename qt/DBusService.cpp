@@ -28,9 +28,9 @@ constexpr const char* OBJECT_PATH = "/com/collaboraoffice/Office";
 
 namespace coda
 {
-    void openFiles(const QStringList& files)
+    void openFiles(const QStringList& files, Window* targetWindow)
     {
-        Window* targetWindow = nullptr;
+        // The WebView constructor will automatically avoid reusing windows with starter screens.
         for (const QString& file : files)
         {
             Poco::URI fileURL(Poco::Path(file.toStdString()));

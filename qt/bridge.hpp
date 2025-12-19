@@ -30,6 +30,7 @@ class Bridge : public QObject
     coda::DocumentData _document;
     QMainWindow* _window;
     QPointer<CODAWebEngineView> _webView;
+    WebView* _owningWebView;
     int _closeNotificationPipeForForwardingThread[2];
     std::thread _app2js;
     // the state of the document modified status as reported by the core
@@ -42,11 +43,12 @@ class Bridge : public QObject
     void saveDocumentAs();
 
 public:
-    explicit Bridge(QObject* parent, coda::DocumentData& document, QMainWindow* window, CODAWebEngineView* webView)
+    explicit Bridge(QObject* parent, coda::DocumentData& document, QMainWindow* window, CODAWebEngineView* webView, WebView* owningWebView)
         : QObject(parent)
         , _document(document)
         , _window(window)
         , _webView(webView)
+        , _owningWebView(owningWebView)
         , _closeNotificationPipeForForwardingThread{ -1, -1 }
         , _modified(false)
         , _pendingSave(false)
