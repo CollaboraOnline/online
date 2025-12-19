@@ -24,19 +24,6 @@ window.L.Clipboard = class Clipboard extends CoolClipboardBase {
 		super(map);
 	}
 
-	async _sendToInternalClipboard(content) {
-		if (window.ThisIsTheiOSApp) {
-			await window.webkit.messageHandlers.clipboard.postMessage(`sendToInternal ${await content.text()}`); // no need to base64 in this direction...
-		} else {
-			var formData = new FormData();
-			formData.append('file', content);
-
-			return await this._doAsyncDownload('POST', this.getMetaURL(), formData, false,
-				function(progress) { return progress; }
-			);
-		}
-	}
-
 	async dataTransferToDocumentFallback(dataTransfer, htmlText, usePasteKeyEvent) {
 		var content;
 		if (dataTransfer) {

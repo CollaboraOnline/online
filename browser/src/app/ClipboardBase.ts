@@ -594,11 +594,25 @@ class CoolClipboardBase extends BaseClass {
 		return true;
 	}
 
-	private async _sendToInternalClipboard(
-		content: Blob,
-	): Promise<Blob | string> {
-		console.assert(false, 'This should not be called!');
-		return '';
+	private async _sendToInternalClipboard(content: Blob): Promise<Blob | void> {
+		if (window.ThisIsTheiOSApp) {
+			await (window as any).webkit.messageHandlers.clipboard.postMessage(
+				`sendToInternal ${await content.text()}`,
+			); // no need to base64 in this direction...
+		} else {
+			const formData = new FormData();
+			formData.append('file', content);
+
+			return await this._doAsyncDownload(
+				'POST',
+				this.getMetaURL(),
+				formData,
+				false,
+				function (progress: number) {
+					return progress;
+				},
+			);
+		}
 	}
 
 	public async dataTransferToDocumentFallback(
