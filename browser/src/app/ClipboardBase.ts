@@ -1221,14 +1221,43 @@ class CoolClipboardBase extends BaseClass {
 		};
 	}
 
+	// Executes the navigator.clipboard.read() call, if it's available.
 	private _navigatorClipboardRead(isSpecial: boolean): boolean {
-		console.assert(false, 'This should not be called!');
-		return false;
+		if (!window.L.Browser.clipboardApiAvailable && !window.ThisIsTheiOSApp) {
+			return false;
+		}
+
+		this._asyncAttemptNavigatorClipboardRead(isSpecial);
+		return true;
 	}
 
-	private async _iOSReadClipboard(): Promise<ClipboardItem[]> {
-		console.assert(false, 'This should not be called!');
-		return [];
+	private async _iOSReadClipboard(): Promise<ClipboardItem[] | null> {
+		const encodedClipboardData =
+			await window.webkit.messageHandlers.clipboard.postMessage('read');
+
+		if (encodedClipboardData === '(internal)') {
+			return null;
+		}
+
+		const clipboardData = Array.from(encodedClipboardData.split(' ')).map(
+			(encoded) => (encoded === '(null)' ? '' : window.b64d(encoded as string)),
+		);
+
+		const dataByMimeType: { [name: string]: any } = {};
+
+		if (clipboardData[0]) {
+			dataByMimeType['text/plain'] = new Blob([clipboardData[0]]);
+		}
+
+		if (clipboardData[1]) {
+			dataByMimeType['text/html'] = new Blob([clipboardData[1]]);
+		}
+
+		if (Object.keys(dataByMimeType).length === 0) {
+			return [];
+		}
+
+		return [new ClipboardItem(dataByMimeType)];
 	}
 
 	private async _asyncAttemptNavigatorClipboardRead(
