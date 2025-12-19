@@ -1196,9 +1196,29 @@ class CoolClipboardBase extends BaseClass {
 		}
 	}
 
+	// Parses the result from the clipboard endpoint into HTML and plain text.
 	public parseClipboard(text: string): any {
-		console.assert(false, 'This should not be called!');
-		return {};
+		let textHtml;
+		let textPlain = '';
+		if (text.startsWith('{')) {
+			const textJson = JSON.parse(text);
+			textHtml = textJson['text/html'];
+			textPlain = textJson['text/plain;charset=utf-8'];
+		} else {
+			let idx = text.indexOf('<!DOCTYPE HTML');
+			if (idx === -1) {
+				idx = text.indexOf('<!DOCTYPE html');
+			}
+			if (idx > 0) text = text.substring(idx, text.length);
+			textHtml = text;
+		}
+
+		if (!app.sectionContainer.testing) textHtml = DocUtil.stripStyle(textHtml);
+
+		return {
+			html: textHtml,
+			plain: textPlain,
+		};
 	}
 
 	private _navigatorClipboardRead(isSpecial: boolean): boolean {
