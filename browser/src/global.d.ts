@@ -381,6 +381,8 @@ interface Window {
 	makeClientVisibleArea(): string;
 	postMobileDebug(msg: string): void;
 	processCoolUrl?: (data: { url: string; type: string }) => string;
+	b64d(encoded: string): string;
+	webkit: any;
 }
 
 // For localization
