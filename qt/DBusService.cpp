@@ -28,9 +28,8 @@ constexpr const char* OBJECT_PATH = "/com/collaboraoffice/Office";
 
 namespace coda
 {
-    void openFiles(const QStringList& files)
+    void openFiles(const QStringList& files, Window* targetWindow)
     {
-        Window* targetWindow = nullptr;
         for (const QString& file : files)
         {
             Poco::URI fileURL(Poco::Path(file.toStdString()));

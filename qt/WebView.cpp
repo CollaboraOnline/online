@@ -640,7 +640,7 @@ void WebView::load(const Poco::URI& fileURL, bool newFile, bool isStarterMode)
     queryGnomeFontScalingUpdateZoom();
 
     assert(_bridge == nullptr);
-    _bridge = new Bridge(channel, _document, _mainWindow, _webView.get());
+    _bridge = new Bridge(channel, _document, _mainWindow, _webView.get(), this);
     // Set the WebView as parent so the Bridge is deleted when the WebView is deleted
     _bridge->setParent(_webView.get());
     // Update the tab widget when the document modified state changes
@@ -966,7 +966,25 @@ void WebView::closeTab()
     int index = tabWidget->indexOf(_webView.get());
     if (index >= 0)
     {
+        // Perform cleanup similar to tabCloseRequested handler
+        QWidget* w = tabWidget->widget(index);
+        prepareForClose();
         tabWidget->removeTab(index);
+        if (w)
+            w->deleteLater();
+
+        DetachableTabWidget* detachableTabWidget = qobject_cast<DetachableTabWidget*>(tabWidget);
+        if (detachableTabWidget)
+            detachableTabWidget->updateTabBarVisibility();
+
+        // Close the window if this was the last tab
+        if (tabWidget->count() == 0)
+        {
+            if (s_mainWindow)
+                s_mainWindow->close();
+            else
+                QApplication::quit();
+        }
     }
 }
 
