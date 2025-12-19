@@ -545,14 +545,53 @@ class CoolClipboardBase extends BaseClass {
 		return true;
 	}
 
+	// Returns true if it finished synchronously, and false if it has started an async operation
+	// that will likely end at a later time (required to avoid closing progress bar in paste(ev))
+	// FIXME: This comment is a lie if dataTransferToDocumentFallback is called, as it calls _doAsyncDownload
 	public dataTransferToDocument(
 		dataTransfer: DataTransfer,
 		preferInternal: boolean,
 		htmlText: string,
 		usePasteKeyEvent: boolean,
 	): boolean {
-		console.assert(false, 'This should not be called!');
-		return false;
+		// Look for our HTML meta magic.
+		//   cf. ClientSession.cpp /textselectioncontent:/
+
+		const meta = this._getMetaOrigin(
+			htmlText,
+			'<div id="meta-origin" data-coolorigin="',
+		);
+		const id = this.getMetaPath(0);
+		const idOld = this.getMetaPath(1);
+
+		// for the paste, we always prefer the internal LOK's copy/paste
+		if (
+			preferInternal === true &&
+			((id !== '' && meta.indexOf(id) >= 0) ||
+				(idOld !== '' && meta.indexOf(idOld) >= 0))
+		) {
+			// Home from home: short-circuit internally.
+			window.app.console.log('short-circuit, internal paste');
+			this._doInternalPaste(this._map, usePasteKeyEvent);
+			return true;
+		}
+
+		// Do we have a remote Online we can suck rich data from ?
+		if (meta !== '') {
+			window.app.console.log(
+				'Transfer between servers\n\t"' + meta + '" vs. \n\t"' + id + '"',
+			);
+			this._dataTransferDownloadAndPasteAsync(meta, htmlText);
+			return false; // just started async operation - did not finish yet
+		}
+
+		// Fallback.
+		this.dataTransferToDocumentFallback(
+			dataTransfer,
+			htmlText,
+			usePasteKeyEvent,
+		);
+		return true;
 	}
 
 	private async _sendToInternalClipboard(
