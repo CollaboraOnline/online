@@ -4,4 +4,5 @@ interface DownloadProgressInterface {
 	_onComplete(): void;
 	_onClose(): void;
 	_onUpdateProgress(e: { statusType: string; value: number }): void;
+	setURI(uri: string): void;
 }
