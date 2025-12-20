@@ -35,7 +35,7 @@ interface VoidPromiseArgs {
 	reject: (reason?: any) => void;
 }
 
-class CoolClipboardBase extends BaseClass {
+class CoolClipboard extends BaseClass {
 	private _map: MapInterface;
 	private _selectionContent: string;
 	private _selectionPlainTextContent: string;
@@ -1811,3 +1811,13 @@ class CoolClipboardBase extends BaseClass {
 		return false;
 	}
 }
+
+window.L.Clipboard = CoolClipboard;
+
+window.L.clipboard = function (map: MapInterface): CoolClipboard {
+	if (window.ThisIsTheAndroidApp)
+		window.app.console.log(
+			'======> Assertion failed!? No window.L.Clipboard object should be needed in the Android app',
+		);
+	return new CoolClipboard(map);
+};

@@ -375,7 +375,11 @@ interface Window {
 		f: number,
 		g: number,
 	) => string;
-	L: any;
+	L: {
+		Clipboard: typeof CoolClipboard;
+		clipboard(map: MapInterface): CoolClipboard;
+		[name: string]: any;
+	};
 	createWebSocket(url: string): SockInterface;
 	getAccessibilityState(): boolean;
 	makeClientVisibleArea(): string;
