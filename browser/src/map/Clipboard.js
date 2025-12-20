@@ -13,7 +13,7 @@
  * local & remote clipboard data.
  */
 
-/* global app _ CoolClipboardBase */
+/* global CoolClipboardBase */
 
 // Get all interesting clipboard related events here, and handle
 // download logic in one place ...
@@ -22,52 +22,6 @@
 window.L.Clipboard = class Clipboard extends CoolClipboardBase {
 	constructor(map) {
 		super(map);
-	}
-
-	_openPasteSpecialPopupImpl(id) {
-		var box = document.getElementById(id + '-box');
-
-		// TODO: do it JSDialog native...
-		if (!box) {
-			setTimeout(() => { this._openPasteSpecialPopupImpl(id) }, 10);
-			return;
-		}
-
-		var innerDiv = window.L.DomUtil.create('div', '', null);
-		box.insertBefore(innerDiv, box.firstChild);
-
-		const ctrlText = app.util.replaceCtrlAltInMac('Ctrl');
-
-		let p = document.createElement('p');
-		p.textContent = _('Your browser has very limited access to the clipboard');
-		innerDiv.appendChild(p);
-		p = document.createElement('p');
-		innerDiv.appendChild(p);
-		const bold = document.createElement('b');
-		bold.textContent = _('Please use following combination to see more options:');
-		p.appendChild(bold);
-
-		p = document.createElement('p');
-		innerDiv.appendChild(p);
-		let kbd = document.createElement('kbd');
-		kbd.textContent = ctrlText;
-		p.appendChild(kbd);
-		const span = document.createElement('span');
-		span.className = 'kbd--plus';
-		span.textContent = '+';
-		p.appendChild(span);
-		kbd = document.createElement('kbd');
-		kbd.textContent = 'V';
-		p.appendChild(kbd);
-
-		p = document.createElement('p');
-		innerDiv.appendChild(p);
-		p.textContent = _('Close popup to ignore paste special');
-
-		// Drop the not wanted whitespace between the dialog body and the button row at the
-		// bottom.
-		var label = document.getElementById('modal-dialog-' + id + '-box-label');
-		label.style.display = 'none';
 	}
 
 	// Check if the paste special mode is enabled, and if so disable it.
