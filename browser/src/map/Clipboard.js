@@ -24,23 +24,6 @@ window.L.Clipboard = class Clipboard extends CoolClipboardBase {
 		super(map);
 	}
 
-	_doInternalPaste(map, usePasteKeyEvent) {
-		if (usePasteKeyEvent) {
-			// paste into dialog
-			var KEY_PASTE = 1299;
-			map._textInput._sendKeyEvent(0, KEY_PASTE);
-		} else if (this._checkAndDisablePasteSpecial()) {
-			app.socket.sendMessage('uno .uno:PasteSpecial');
-		} else {
-			// paste into document
-			app.socket.sendMessage('uno .uno:Paste');
-		}
-	}
-
-	cut(ev) { return this._doCopyCut(ev, 'Cut'); }
-
-	copy(ev) { return this._doCopyCut(ev, 'Copy'); }
-
 	paste(ev) {
 		if (this._map.isReadOnlyMode())
 			return;
