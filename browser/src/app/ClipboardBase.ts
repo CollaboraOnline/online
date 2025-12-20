@@ -52,6 +52,7 @@ class CoolClipboardBase extends BaseClass {
 	private _dummyClipboard: Clipboard;
 	private _commandCompletion: VoidPromiseArgs[];
 	private _downloadProgress?: DownloadProgressInterface;
+	public pasteSpecialDialogId?: string;
 
 	constructor(map: MapInterface) {
 		super();
@@ -1688,26 +1689,60 @@ class CoolClipboardBase extends BaseClass {
 	}
 
 	private _substProductName(msg: string): string {
-		console.assert(false, 'This should not be called!');
-		return '';
+		const productName =
+			typeof brandProductName !== 'undefined'
+				? brandProductName
+				: 'Collabora Online Development Edition (unbranded)';
+		return msg.replace('{productname}', productName);
 	}
 
 	private _warnLargeCopyPasteAlreadyStarted(): void {
-		console.assert(false, 'This should not be called!');
+		this._map.uiManager.showInfoModal('large copy paste started warning');
+		const container = document.getElementById(
+			'large copy paste started warning',
+		);
+		Util.ensureValue(container);
+		container.replaceChildren();
+		const p = document.createElement('p');
+		p.textContent = _(
+			'A download due to a large copy/paste operation has already started. Please, wait for the current download or cancel it before starting a new one',
+		);
+		container.appendChild(p);
 	}
 
 	public isPasteSpecialDialogOpen(): boolean {
-		console.assert(false, 'This should not be called!');
-		return false;
+		if (!this.pasteSpecialDialogId) return false;
+		else {
+			const result = document.getElementById(this.pasteSpecialDialogId);
+			return result !== undefined && result !== null ? true : false;
+		}
 	}
 
 	public isCopyPasteDialogReadyForCopy(): boolean {
-		console.assert(false, 'This should not be called!');
-		return false;
+		return (this._downloadProgress &&
+			this._downloadProgress.isComplete()) as boolean;
 	}
 
 	private _openPasteSpecialPopup(): void {
-		console.assert(false, 'This should not be called!');
+		// We will use this for closing the dialog.
+		this.pasteSpecialDialogId =
+			this._map.uiManager.generateModalId('paste_special_dialog') + '-box';
+
+		const id = 'paste_special_dialog';
+		this._map.uiManager.showYesNoButton(
+			id + '-box',
+			/*title=*/ '',
+			/*message=*/ '',
+			/*yesButtonText=*/ _('Paste from this document'),
+			/*noButtonText=*/ _('Cancel paste special'),
+			/*yesFunction=*/ function () {
+				app.socket.sendMessage('uno .uno:PasteSpecial');
+			},
+			/*noFunction=*/ undefined,
+			/*cancellable=*/ true,
+		);
+
+		this._openPasteSpecialPopupImpl(id);
 	}
 
 	private _openPasteSpecialPopupImpl(id: string): void {
