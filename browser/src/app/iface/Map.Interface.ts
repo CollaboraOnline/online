@@ -124,4 +124,7 @@ interface MapInterface extends Evented {
 	getViewColor(viewId: number): number;
 
 	insertMultimedia(file: File): void;
+
+	isSearching(): boolean;
+	_activeDialog: any;
 }
