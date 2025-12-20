@@ -24,61 +24,6 @@ window.L.Clipboard = class Clipboard extends CoolClipboardBase {
 		super(map);
 	}
 
-	clearSelection() {
-		this._selectionContent = '';
-		this._selectionPlainTextContent = '';
-		this._selectionType = null;
-		this._scheduleHideDownload();
-	}
-
-	// textselectioncontent: message
-	setTextSelectionHTML(html, plainText = '') {
-		this._selectionType = 'text';
-		this._selectionContent = html;
-		this._selectionPlainTextContent = plainText;
-		if (window.L.Browser.cypressTest) {
-			this._dummyDiv.innerHTML = html;
-			this._dummyPlainDiv.innerText = plainText;
-		}
-		this._scheduleHideDownload();
-	}
-
-	// Sets the selection type without having the selection content (async clipboard).
-	setTextSelectionType(selectionType) {
-		this._selectionType = selectionType;
-	}
-
-	// sets the selection to some (cell formula) text)
-	setTextSelectionText(text) {
-		// Usually 'text' is what we see in the formulabar
-		// In case of actual formula we don't wish to put formula into client clipboard
-		// Putting formula in clipboard means user will paste formula outside of online
-		// Pasting inside online is handled by internal paste
-		if (this._map.getDocType() === 'spreadsheet' && text.startsWith('=')) {
-			app.socket.sendMessage('gettextselection mimetype=text/html');
-			return;
-		}
-		this._selectionType = 'text';
-		this._selectionContent = this._originWrapBody(text);
-		this._selectionPlainTextContent = text;
-		this._scheduleHideDownload();
-	}
-
-	setActionCopy(isActionCopy) {
-		this._isActionCopy = isActionCopy;
-	}
-
-	isActionCopy() {
-		return this._isActionCopy;
-	}
-
-	// complexselection: message
-	onComplexSelection(/*text*/) {
-		// Mark this selection as complex.
-		this._selectionType = 'complex';
-		this._scheduleHideDownload();
-	}
-
 	_startProgress(isLargeCopy) {
 		if (!this._downloadProgress) {
 			this._downloadProgress = window.L.control.downloadProgress();
