@@ -1562,28 +1562,65 @@ class CoolClipboardBase extends BaseClass {
 	}
 
 	private _startProgress(isLargeCopy: boolean): void {
-		console.assert(false, 'This should not be called!');
+		if (!this._downloadProgress) {
+			this._downloadProgress = window.L.control.downloadProgress();
+			this._map.addControl(this._downloadProgress);
+		}
+		Util.ensureValue(this._downloadProgress);
+		this._downloadProgress.show(isLargeCopy);
 	}
 
 	private _onDownloadOnLargeCopyPaste(): void {
 		console.assert(false, 'This should not be called!');
+		if (this._downloadProgress && this._downloadProgress.isStarted()) {
+			// Need to show this only when a download is really in progress and we block it.
+			// Otherwise, it's easier to flash the widget or something.
+			this._warnLargeCopyPasteAlreadyStarted();
+		} else {
+			this._startProgress(true);
+		}
 	}
 
 	private _downloadProgressStatus(): string {
-		console.assert(false, 'This should not be called!');
+		if (this._downloadProgress) return this._downloadProgress.currentStatus();
 		return '';
 	}
 
+	// Download button is still shown after selection changed -> user has changed their mind...
 	private _scheduleHideDownload(): void {
-		console.assert(false, 'This should not be called!');
+		if (!this._downloadProgress || this._downloadProgress.isClosed()) return;
+
+		if (
+			['downloadButton', 'confirmPasteButton'].includes(
+				this._downloadProgressStatus(),
+			)
+		)
+			this._stopHideDownload();
 	}
 
+	// useful if we did an internal paste already and don't want that.
 	private _stopHideDownload(): void {
-		console.assert(false, 'This should not be called!');
+		if (!this._downloadProgress || this._downloadProgress.isClosed()) return;
+		this._downloadProgress._onClose();
 	}
 
 	private _warnCopyPaste(): void {
-		console.assert(false, 'This should not be called!');
+		const id = 'copy_paste_warning';
+		if (!JSDialog.shouldShowAgain(id)) return;
+
+		this._map.uiManager.showYesNoButton(
+			id + '-box',
+			/*title=*/ '',
+			/*message=*/ '',
+			/*yesButtonText=*/ _('OK'),
+			/*noButtonText=*/ _('Don’t show this again'),
+			/*yesFunction=*/ undefined,
+			/*noFunction=*/ function () {
+				JSDialog.setShowAgain(id, false);
+			},
+			/*cancellable=*/ true,
+		);
+		this._warnCopyPasteImpl(id);
 	}
 
 	private _warnCopyPasteImpl(id: string): void {

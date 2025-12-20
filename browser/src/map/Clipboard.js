@@ -13,7 +13,7 @@
  * local & remote clipboard data.
  */
 
-/* global app _ brandProductName JSDialog CoolClipboardBase */
+/* global app _ brandProductName CoolClipboardBase */
 
 // Get all interesting clipboard related events here, and handle
 // download logic in one place ...
@@ -22,62 +22,6 @@
 window.L.Clipboard = class Clipboard extends CoolClipboardBase {
 	constructor(map) {
 		super(map);
-	}
-
-	_startProgress(isLargeCopy) {
-		if (!this._downloadProgress) {
-			this._downloadProgress = window.L.control.downloadProgress();
-			this._map.addControl(this._downloadProgress);
-		}
-		this._downloadProgress.show(isLargeCopy);
-	}
-
-	_onDownloadOnLargeCopyPaste() {
-		if (this._downloadProgress && this._downloadProgress.isStarted()) {
-			// Need to show this only when a download is really in progress and we block it.
-			// Otherwise, it's easier to flash the widget or something.
-			this._warnLargeCopyPasteAlreadyStarted();
-		} else {
-			this._startProgress(true);
-		}
-	}
-
-	_downloadProgressStatus() {
-		if (this._downloadProgress)
-			return this._downloadProgress.currentStatus();
-	}
-
-	// Download button is still shown after selection changed -> user has changed their mind...
-	_scheduleHideDownload() {
-		if (!this._downloadProgress || this._downloadProgress.isClosed())
-			return;
-
-		if (['downloadButton', 'confirmPasteButton'].includes(this._downloadProgressStatus()))
-			this._stopHideDownload();
-	}
-
-	// useful if we did an internal paste already and don't want that.
-	_stopHideDownload() {
-		if (!this._downloadProgress || this._downloadProgress.isClosed())
-			return;
-		this._downloadProgress._onClose();
-	}
-
-	_warnCopyPaste() {
-		var id = 'copy_paste_warning';
-		if (!JSDialog.shouldShowAgain(id))
-			return;
-
-		this._map.uiManager.showYesNoButton(
-				id + '-box',
-				/*title=*/'',
-				/*message=*/'',
-				/*yesButtonText=*/_('OK'),
-				/*noButtonText=*/_('Don’t show this again'),
-				/*yesFunction=*/null,
-				/*noFunction=*/function () {JSDialog.setShowAgain(id, false);},
-				/*cancellable=*/true);
-		this._warnCopyPasteImpl(id);
 	}
 
 	_warnCopyPasteImpl(id) {
