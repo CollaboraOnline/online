@@ -75,6 +75,7 @@ interface MapInterface extends Evented {
 		UserCanNotWriteRelative: boolean;
 		BaseFileName: string;
 		HideExportOption: boolean;
+		DisableCopy: boolean;
 	};
 
 	loadDocument(socket?: SockInterface): void;
