@@ -876,7 +876,7 @@ endif
 # Just copy all of it to dist/templates.
 $(TEMPLATE_MANIFEST):
 	mkdir -p $(dir $@)
-	cp -r templates $(DIST_FOLDER)
+	cp -r $(srcdir)/templates $(DIST_FOLDER)
 
 $(DIST_FOLDER)/images/templates/preview/%.png: $(srcdir)/images/templates/preview/%.png
 	@mkdir -p $(dir $@)

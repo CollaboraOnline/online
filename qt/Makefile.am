@@ -110,6 +110,7 @@ QM_FILES = $(TS_FILES:.ts=.qm)
 
 # Rule: generate .qm from .ts
 %.qm: %.ts
+	mkdir -p $(dir $@)
 	@$(LRELEASE) $< -qm $@
 
 # Update .ts files from source code
