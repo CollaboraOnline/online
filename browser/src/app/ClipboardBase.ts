@@ -1100,7 +1100,7 @@ class CoolClipboardBase extends BaseClass {
 	}
 
 	// Executes the navigator.clipboard.write() call, if it's available.
-	private _navigatorClipboardWrite(params: any): boolean {
+	private _navigatorClipboardWrite(params?: any): boolean {
 		if (!window.L.Browser.clipboardApiAvailable && !window.ThisIsTheiOSApp) {
 			return false;
 		}
@@ -1401,8 +1401,50 @@ class CoolClipboardBase extends BaseClass {
 		return true;
 	}
 
-	private _doCopyCut(ev: Event, unoName: string): boolean {
-		console.assert(false, 'This should not be called!');
+	private _doCopyCut(ev: ClipboardEvent, unoName: string): boolean {
+		if (this._selectionType === 'slide') unoName = 'CopySlide';
+		window.app.console.log(unoName);
+
+		if (this._isAnyInputFieldSelected(unoName === 'Copy')) return false;
+
+		if (this._downloadProgressStatus() === 'downloadButton')
+			this._stopHideDownload(); // Terminate pending confirmation
+
+		const preventDefault = true;
+
+		if (this._map['wopi'].DisableCopy === true) {
+			const text = this._getDisabledCopyStubHtml();
+			const plainText = DocUtil.stripHTML(text);
+			if (ev.clipboardData) {
+				window.app.console.log(
+					'Copying disabled: put stub message on the clipboard',
+				);
+				ev.clipboardData.setData('text/plain', plainText ? plainText : ' ');
+				ev.clipboardData.setData('text/html', text);
+				this._clipboardSerial++;
+			}
+		} else {
+			this._unoCommandForCopyCutPaste = `.uno:${unoName}`;
+			this._checkSelection();
+
+			// This is the codepath (_navigatorClipboardWrite) where the browser initiates the clipboard operation, e.g. the keyboard is used.
+			if (!this._navigatorClipboardWrite()) {
+				app.socket.sendMessage('uno .uno:' + unoName);
+				this.populateClipboard(ev);
+			}
+		}
+
+		if (ev.clipboardData && unoName === 'Cut') {
+			// Cut text is not removed from the editable area,
+			// so we need to request the focused paragraph.
+			this._map._textInput._abortComposition(ev);
+		}
+
+		if (preventDefault) {
+			ev.preventDefault();
+			return false;
+		}
+
 		return false;
 	}
 

@@ -19,7 +19,10 @@ interface CRSInterface {
 interface MapInterface extends Evented {
 	_docLayer: DocLayerInterface;
 	uiManager: UIManager;
-	_textInput: { debug(value: boolean): void };
+	_textInput: {
+		debug(value: boolean): void;
+		_abortComposition(ev: Event): void;
+	};
 	addressInputField: AddressInputField;
 
 	removeLayer(layer: any): void;

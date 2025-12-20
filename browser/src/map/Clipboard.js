@@ -13,7 +13,7 @@
  * local & remote clipboard data.
  */
 
-/* global app DocUtil _ brandProductName JSDialog CoolClipboardBase */
+/* global app _ brandProductName JSDialog CoolClipboardBase */
 
 // Get all interesting clipboard related events here, and handle
 // download logic in one place ...
@@ -22,52 +22,6 @@
 window.L.Clipboard = class Clipboard extends CoolClipboardBase {
 	constructor(map) {
 		super(map);
-	}
-
-	_doCopyCut(ev, unoName) {
-		if (this._selectionType === 'slide')
-			unoName = 'CopySlide';
-		window.app.console.log(unoName);
-
-		if (this._isAnyInputFieldSelected(unoName === 'Copy'))
-			return;
-
-		if (this._downloadProgressStatus() === 'downloadButton')
-			this._stopHideDownload(); // Terminate pending confirmation
-
-		var preventDefault = true;
-
-		if (this._map['wopi'].DisableCopy === true)
-		{
-			var text = this._getDisabledCopyStubHtml();
-			var plainText = DocUtil.stripHTML(text);
-			if (ev.clipboardData) {
-				window.app.console.log('Copying disabled: put stub message on the clipboard');
-				ev.clipboardData.setData('text/plain', plainText ? plainText: ' ');
-				ev.clipboardData.setData('text/html', text);
-				this._clipboardSerial++;
-			}
-		} else {
-			this._unoCommandForCopyCutPaste = `.uno:${unoName}`;
-			this._checkSelection();
-
-			// This is the codepath (_navigatorClipboardWrite) where the browser initiates the clipboard operation, e.g. the keyboard is used.
-			if (!this._navigatorClipboardWrite()) {
-				app.socket.sendMessage('uno .uno:' + unoName);
-				this.populateClipboard(ev);
-			}
-		}
-
-		if (ev.clipboardData && unoName === 'Cut') {
-			// Cut text is not removed from the editable area,
-			// so we need to request the focused paragraph.
-			this._map._textInput._abortComposition(ev);
-		}
-
-		if (preventDefault) {
-			ev.preventDefault();
-			return false;
-		}
 	}
 
 	_doInternalPaste(map, usePasteKeyEvent) {
