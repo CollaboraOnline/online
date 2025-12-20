@@ -29,7 +29,7 @@ namespace
 inline std::string getDataDir()
 {
     Poco::Path dir(qApp->applicationDirPath().toStdString());
-    if (Poco::File(Poco::Path(dir, "run-from-source")).exists())
+    if (Poco::File(Poco::Path(dir, "run-from-build")).exists())
     {
         dir.makeParent();
         return dir.toString();
