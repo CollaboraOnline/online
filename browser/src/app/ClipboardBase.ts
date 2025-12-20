@@ -124,13 +124,13 @@ class CoolClipboardBase extends BaseClass {
 			return this._beforeSelect(ev);
 		};
 
-		document.oncut = (ev: Event) => {
+		document.oncut = (ev: ClipboardEvent) => {
 			return this.cut(ev);
 		};
-		document.oncopy = (ev: Event) => {
+		document.oncopy = (ev: ClipboardEvent) => {
 			return this.copy(ev);
 		};
-		document.onpaste = (ev: Event) => {
+		document.onpaste = (ev: ClipboardEvent) => {
 			return this.paste(ev);
 		};
 		(document as any).onbeforecut = beforeSelect;
@@ -1449,20 +1449,27 @@ class CoolClipboardBase extends BaseClass {
 	}
 
 	private _doInternalPaste(map: MapInterface, usePasteKeyEvent: boolean): void {
-		console.assert(false, 'This should not be called!');
+		if (usePasteKeyEvent) {
+			// paste into dialog
+			const KEY_PASTE = 1299;
+			map._textInput._sendKeyEvent(0, KEY_PASTE);
+		} else if (this._checkAndDisablePasteSpecial()) {
+			app.socket.sendMessage('uno .uno:PasteSpecial');
+		} else {
+			// paste into document
+			app.socket.sendMessage('uno .uno:Paste');
+		}
 	}
 
-	public cut(ev: Event): boolean {
-		console.assert(false, 'This should not be called!');
-		return false;
+	public cut(ev: ClipboardEvent): boolean {
+		return this._doCopyCut(ev, 'Cut');
 	}
 
-	public copy(ev: Event): boolean {
-		console.assert(false, 'This should not be called!');
-		return false;
+	public copy(ev: ClipboardEvent): boolean {
+		return this._doCopyCut(ev, 'Copy');
 	}
 
-	public paste(ev: Event): boolean {
+	public paste(ev: ClipboardEvent): boolean {
 		console.assert(false, 'This should not be called!');
 		return false;
 	}
