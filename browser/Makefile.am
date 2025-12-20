@@ -282,7 +282,7 @@ COOL_JS_LST =\
 	src/app/Socket.ts \
 	src/app/TracingEvents.ts \
 	src/app/ServerCommand.ts \
-	src/app/ClipboardBase.ts \
+	src/app/CoolClipboard.ts \
 	src/Leaflet.js \
 	src/errormessages.js \
 	src/unocommands.js \
@@ -300,7 +300,6 @@ COOL_JS_LST =\
 	src/control/IFrameDialog.js \
 	src/map/Map.js \
 	src/control/Control.IdleHandler.ts \
-	src/map/Clipboard.js \
 	src/layer/tile/SheetSwitch.ts \
 	src/layer/Layer.js \
 	src/layer/tile/SheetGeometry.ts \
@@ -1175,7 +1174,7 @@ pot:
 		src/app/Socket.ts \
 		src/app/TracingEvents.ts \
 		src/app/ServerCommand.ts \
-		src/app/ClipboardBase.ts \
+		src/app/CoolClipboard.ts \
 		src/docdispatcher.ts \
 		src/docstate.ts \
 		src/docstatefunctions.js \
@@ -1185,7 +1184,6 @@ pot:
 		src/layer/marker/TextInput.js \
 		src/layer/tile/CanvasTileLayer.js \
 		src/main.js \
-		src/map/Clipboard.js \
 		src/map/Map.js \
 		src/map/handler/Map.Feedback.js \
 		src/map/handler/Map.FileInserter.js \
