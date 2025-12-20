@@ -127,4 +127,5 @@ interface MapInterface extends Evented {
 
 	isSearching(): boolean;
 	_activeDialog: any;
+	jsdialog: any;
 }
