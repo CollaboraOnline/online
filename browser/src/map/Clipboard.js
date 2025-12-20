@@ -13,20 +13,8 @@
  * local & remote clipboard data.
  */
 
-/* global CoolClipboardBase */
-
 // Get all interesting clipboard related events here, and handle
 // download logic in one place ...
 // We keep track of the current selection content if it is simple
 // So we can do synchronous copy/paste in the callback if possible.
-window.L.Clipboard = class Clipboard extends CoolClipboardBase {
-	constructor(map) {
-		super(map);
-	}
-};
 
-window.L.clipboard = function(map) {
-	if (window.ThisIsTheAndroidApp)
-		window.app.console.log('======> Assertion failed!? No window.L.Clipboard object should be needed in the Android app');
-	return new window.L.Clipboard(map);
-};
