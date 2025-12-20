@@ -30,6 +30,14 @@ afterEach(function() {
 					Cypress.log({name: entry.direction, message: entry.msg});
 				}
 			}
+			// Skip remaining tests in this spec once a test has definitively
+			// failed, but only after all retries are exhausted.
+			var retries = this.currentTest._retries || 0;
+			var currentRetry = this.currentTest._currentRetry || 0;
+			if (currentRetry >= retries) {
+				Cypress.stop();
+				return;
+			}
 		});
 	}
 });
