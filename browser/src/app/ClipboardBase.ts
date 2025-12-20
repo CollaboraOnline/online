@@ -1263,8 +1263,96 @@ class CoolClipboardBase extends BaseClass {
 	private async _asyncAttemptNavigatorClipboardRead(
 		isSpecial: boolean,
 	): Promise<void> {
-		console.assert(false, 'This should not be called!');
-		return;
+		let clipboard = navigator.clipboard;
+		if (window.L.Browser.cypressTest) {
+			clipboard = this._dummyClipboard;
+		}
+		let clipboardContents;
+		try {
+			clipboardContents = window.ThisIsTheiOSApp
+				? await this._iOSReadClipboard()
+				: await clipboard.read();
+
+			if (clipboardContents === null) {
+				this._doInternalPaste(this._map, false);
+				return; // Internal paste, skip the rest of the browser paste code
+			}
+		} catch (error: any) {
+			window.app.console.log(
+				'navigator.clipboard.read() failed: ' + error.message,
+			);
+			if (isSpecial) {
+				// Fallback to the old code, as in filterExecCopyPaste().
+				this._openPasteSpecialPopup();
+			} else {
+				// Fallback to the old code, as in _execCopyCutPaste().
+				this._afterCopyCutPaste('paste');
+			}
+			return;
+		}
+
+		if (isSpecial) {
+			this._navigatorClipboardPasteSpecial = true;
+		}
+
+		if (clipboardContents.length < 1) {
+			window.app.console.log('clipboard has no items');
+			return;
+		}
+
+		const clipboardContent = clipboardContents[0];
+
+		if (clipboardContent.types.includes('text/html')) {
+			let blob;
+			try {
+				blob = await clipboardContent.getType('text/html');
+			} catch (error: any) {
+				window.app.console.log(
+					'clipboardContent.getType(text/html) failed: ' + error.message,
+				);
+				return;
+			}
+			this._navigatorClipboardGetTypeCallback(
+				clipboardContent,
+				blob,
+				'text/html',
+			);
+		} else if (clipboardContent.types.includes('text/plain')) {
+			let blob;
+			try {
+				blob = await clipboardContent.getType('text/plain');
+			} catch (error: any) {
+				window.app.console.log(
+					'clipboardContent.getType(text/plain) failed: ' + error.message,
+				);
+				return;
+			}
+			this._navigatorClipboardGetTypeCallback(
+				clipboardContent,
+				blob,
+				'text/plain',
+			);
+		} else if (clipboardContent.types.includes('image/png')) {
+			let blob;
+			try {
+				blob = await clipboardContent.getType('image/png');
+			} catch (error: any) {
+				window.app.console.log(
+					'clipboardContent.getType(image/png) failed: ' + error.message,
+				);
+				return;
+			}
+			this._navigatorClipboardGetTypeCallback(
+				clipboardContent,
+				blob,
+				'image/png',
+			);
+		} else {
+			window.app.console.log(
+				'navigator.clipboard has no text/html or text/plain',
+			);
+			return;
+		}
 	}
 
 	public filterExecCopyPaste(cmd: string, params: any): boolean {
