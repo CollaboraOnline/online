@@ -1470,7 +1470,37 @@ class CoolClipboardBase extends BaseClass {
 	}
 
 	public paste(ev: ClipboardEvent): boolean {
-		console.assert(false, 'This should not be called!');
+		if (this._map.isReadOnlyMode()) return false;
+
+		window.app.console.log('Paste');
+
+		if (this._isAnyInputFieldSelected() && !this._isFormulabarSelected())
+			return false;
+
+		// If the focus is in the search box, paste there.
+		if (this._map.isSearching()) return false;
+
+		if (this._downloadProgressStatus() === 'downloadButton')
+			this._stopHideDownload(); // Terminate pending confirmation
+
+		if (this._map._activeDialog) (ev as any).usePasteKeyEvent = true;
+
+		if (ev.clipboardData) {
+			ev.preventDefault();
+			const usePasteKeyEvent: boolean = (ev as any).usePasteKeyEvent;
+			// Always capture the html content separate as we may lose it when we
+			// pass the clipboard data to a different context (async calls, f.e.).
+			const htmlText = ev.clipboardData.getData('text/html');
+			const hasFinished = this.dataTransferToDocument(
+				ev.clipboardData,
+				/* preferInternal = */ true,
+				htmlText,
+				usePasteKeyEvent,
+			);
+			this._map._textInput._abortComposition(ev);
+			this._clipboardSerial++;
+			if (hasFinished) this._stopHideDownload();
+		}
 		return false;
 	}
 
