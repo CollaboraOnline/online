@@ -22,6 +22,7 @@ interface MapInterface extends Evented {
 	_textInput: {
 		debug(value: boolean): void;
 		_abortComposition(ev: Event): void;
+		_sendKeyEvent(charCode: number, unoKeyCode: number, type?: string): void;
 	};
 	addressInputField: AddressInputField;
 
