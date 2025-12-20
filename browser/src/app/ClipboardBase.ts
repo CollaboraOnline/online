@@ -48,7 +48,7 @@ class CoolClipboardBase extends BaseClass {
 	private _navigatorClipboardPasteSpecial: boolean;
 	private _isActionCopy: boolean;
 	private _dummyDiv: HTMLElement | null;
-	private _dummyPlainDiv: Element | null;
+	private _dummyPlainDiv: HTMLElement | null;
 	private _dummyClipboard: Clipboard;
 	private _commandCompletion: VoidPromiseArgs[];
 	private _downloadProgress?: DownloadProgressInterface;
@@ -206,7 +206,7 @@ class CoolClipboardBase extends BaseClass {
 	}
 
 	// wrap some content with our stub magic
-	private _originWrapBody(body: string, isStub: boolean): string {
+	private _originWrapBody(body: string, isStub?: boolean): string {
 		const lang = 'en_US'; // FIXME: l10n
 		const encodedOrigin = encodeURIComponent(this.getMetaURL());
 		let text =
@@ -1505,32 +1505,60 @@ class CoolClipboardBase extends BaseClass {
 	}
 
 	public clearSelection(): void {
-		console.assert(false, 'This should not be called!');
+		this._selectionContent = '';
+		this._selectionPlainTextContent = '';
+		this._selectionType = null;
+		this._scheduleHideDownload();
 	}
 
+	// textselectioncontent: message
 	public setTextSelectionHTML(html: string, plainText: string = ''): void {
-		console.assert(false, 'This should not be called!');
+		this._selectionType = 'text';
+		this._selectionContent = html;
+		this._selectionPlainTextContent = plainText;
+		if (window.L.Browser.cypressTest) {
+			Util.ensureValue(this._dummyDiv);
+			Util.ensureValue(this._dummyPlainDiv);
+			this._dummyDiv.innerHTML = html;
+			this._dummyPlainDiv.innerText = plainText;
+		}
+		this._scheduleHideDownload();
 	}
 
+	// Sets the selection type without having the selection content (async clipboard).
 	public setTextSelectionType(selectionType: string): void {
-		console.assert(false, 'This should not be called!');
+		this._selectionType = selectionType;
 	}
 
+	// sets the selection to some (cell formula) text)
 	public setTextSelectionText(text: string): void {
-		console.assert(false, 'This should not be called!');
+		// Usually 'text' is what we see in the formulabar
+		// In case of actual formula we don't wish to put formula into client clipboard
+		// Putting formula in clipboard means user will paste formula outside of online
+		// Pasting inside online is handled by internal paste
+		if (this._map.getDocType() === 'spreadsheet' && text.startsWith('=')) {
+			app.socket.sendMessage('gettextselection mimetype=text/html');
+			return;
+		}
+		this._selectionType = 'text';
+		this._selectionContent = this._originWrapBody(text);
+		this._selectionPlainTextContent = text;
+		this._scheduleHideDownload();
 	}
 
 	public setActionCopy(isActionCopy: boolean): void {
-		console.assert(false, 'This should not be called!');
+		this._isActionCopy = isActionCopy;
 	}
 
 	public isActionCopy(): boolean {
-		console.assert(false, 'This should not be called!');
-		return false;
+		return this._isActionCopy;
 	}
 
+	// complexselection: message
 	public onComplexSelection(/*text*/): void {
-		console.assert(false, 'This should not be called!');
+		// Mark this selection as complex.
+		this._selectionType = 'complex';
+		this._scheduleHideDownload();
 	}
 
 	private _startProgress(isLargeCopy: boolean): void {
