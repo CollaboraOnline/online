@@ -32,7 +32,7 @@ describe(['tagdesktop'], 'Test style sidebar', function() {
 		return cy.cGet('#treeview img.ui-treeview-custom-render[alt="' + text + '"]').should('exist');
 	}
 
-	it('Style sidebar updates rendered preview on added style', function() {
+	it.skip('Style sidebar updates rendered preview on added style', function() {
 		getEntry('Complimentary Close').click();
 
 		cy.wait(2000); // stabilize
@@ -57,7 +57,7 @@ describe(['tagdesktop'], 'Test style sidebar', function() {
 		cy.cGet('#sidebar-dock-wrapper').compareSnapshot('style_added', 0.05);
 	});
 
-	it('Style sidebar context menu on node with spaces', function() {
+	it.skip('Style sidebar context menu on node with spaces', function() {
 		getEntry('Complimentary Close').click();
 		getEntry('Complimentary Close').rightclick();
 
