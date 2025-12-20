@@ -1796,8 +1796,18 @@ class CoolClipboardBase extends BaseClass {
 		label.style.display = 'none';
 	}
 
+	// Check if the paste special mode is enabled, and if so disable it.
 	private _checkAndDisablePasteSpecial(): boolean {
-		console.assert(false, 'This should not be called!');
+		if (this._navigatorClipboardPasteSpecial) {
+			this._navigatorClipboardPasteSpecial = false;
+			return true;
+		}
+
+		if (this.isPasteSpecialDialogOpen()) {
+			this._map.jsdialog.closeDialog(this.pasteSpecialDialogId, false);
+			return true;
+		}
+
 		return false;
 	}
 }

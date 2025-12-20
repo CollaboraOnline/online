@@ -23,21 +23,6 @@ window.L.Clipboard = class Clipboard extends CoolClipboardBase {
 	constructor(map) {
 		super(map);
 	}
-
-	// Check if the paste special mode is enabled, and if so disable it.
-	_checkAndDisablePasteSpecial() {
-		if (this._navigatorClipboardPasteSpecial) {
-			this._navigatorClipboardPasteSpecial = false;
-			return true;
-		}
-
-		if (this.isPasteSpecialDialogOpen()) {
-			this._map.jsdialog.closeDialog(this.pasteSpecialDialogId, false);
-			return true;
-		}
-
-		return false;
-	}
 };
 
 window.L.clipboard = function(map) {
