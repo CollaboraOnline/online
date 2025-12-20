@@ -1,6 +1,7 @@
 interface DownloadProgressInterface {
 	isClosed(): boolean;
 	isStarted(): boolean;
+	isComplete(): boolean;
 	currentStatus(): string;
 	startProgressMode(): void;
 	_onComplete(): void;

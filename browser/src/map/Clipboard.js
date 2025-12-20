@@ -13,7 +13,7 @@
  * local & remote clipboard data.
  */
 
-/* global app _ brandProductName CoolClipboardBase */
+/* global app _ CoolClipboardBase */
 
 // Get all interesting clipboard related events here, and handle
 // download logic in one place ...
@@ -22,45 +22,6 @@
 window.L.Clipboard = class Clipboard extends CoolClipboardBase {
 	constructor(map) {
 		super(map);
-	}
-
-	_substProductName(msg) {
-		var productName = (typeof brandProductName !== 'undefined') ? brandProductName : 'Collabora Online Development Edition (unbranded)';
-		return msg.replace('{productname}', productName);
-	}
-
-	_warnLargeCopyPasteAlreadyStarted() {
-		this._map.uiManager.showInfoModal('large copy paste started warning');
-		const container = document.getElementById('large copy paste started warning');
-		container.replaceChildren();
-		const p = document.createElement('p');
-		p.textContent = _('A download due to a large copy/paste operation has already started. Please, wait for the current download or cancel it before starting a new one');
-		container.appendChild(p);
-	}
-
-	isPasteSpecialDialogOpen() {
-		if (!this.pasteSpecialDialogId)
-			return false;
-		else {
-			var result = document.getElementById(this.pasteSpecialDialogId);
-			return result !== undefined && result !== null ? true: false;
-		}
-	}
-
-	isCopyPasteDialogReadyForCopy() {
-		return this._downloadProgress && this._downloadProgress.isComplete();
-	}
-
-	_openPasteSpecialPopup() {
-		// We will use this for closing the dialog.
-		this.pasteSpecialDialogId = this._map.uiManager.generateModalId('paste_special_dialog') + '-box';
-
-		var id = 'paste_special_dialog';
-		this._map.uiManager.showYesNoButton(id + '-box', /*title=*/'', /*message=*/'', /*yesButtonText=*/_('Paste from this document'), /*noButtonText=*/_('Cancel paste special'), /*yesFunction=*/function() {
-			app.socket.sendMessage('uno .uno:PasteSpecial');
-		}, /*noFunction=*/null, /*cancellable=*/true);
-
-		this._openPasteSpecialPopupImpl(id);
 	}
 
 	_openPasteSpecialPopupImpl(id) {

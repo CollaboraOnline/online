@@ -1833,9 +1833,9 @@ class UIManager extends window.L.Control {
 	/// withCancel - specifies if needs cancel button also
 	showInfoModal(
 		id: string,
-		title: string | undefined,
-		message1: string,
-		message2: string | null,
+		title?: string,
+		message1?: string,
+		message2?: string | null,
 		buttonText?: string,
 		callback: any = null,
 		withCancel: boolean = false,
