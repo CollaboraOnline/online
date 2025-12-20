@@ -128,7 +128,7 @@ translationsdir = $(datadir)/coda-qt/translations
 translations_DATA = $(QM_FILES)
 
 # Distribute sources and clean up generated files
-EXTRA_DIST = $(TS_FILES)
-CLEANFILES += $(QM_FILES)
+EXTRA_DIST = $(TS_FILES) run-from-build.in
+CLEANFILES += $(QM_FILES) run-from-build
 
 ### --- Qt translations integration end ---
