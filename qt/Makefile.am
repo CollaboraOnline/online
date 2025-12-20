@@ -110,6 +110,7 @@ QM_FILES = $(TS_FILES:.ts=.qm)
 
 # Rule: generate .qm from .ts
 %.qm: %.ts
+	mkdir -p $(dir $@)
 	@$(LRELEASE) $< -qm $@
 
 # Update .ts files from source code
@@ -128,7 +129,7 @@ translationsdir = $(datadir)/coda-qt/translations
 translations_DATA = $(QM_FILES)
 
 # Distribute sources and clean up generated files
-EXTRA_DIST = $(TS_FILES)
-CLEANFILES += $(QM_FILES)
+EXTRA_DIST = $(TS_FILES) run-from-build.in
+CLEANFILES += $(QM_FILES) run-from-build
 
 ### --- Qt translations integration end ---
