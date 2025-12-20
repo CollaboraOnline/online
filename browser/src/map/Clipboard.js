@@ -24,66 +24,6 @@ window.L.Clipboard = class Clipboard extends CoolClipboardBase {
 		super(map);
 	}
 
-	_warnCopyPasteImpl(id) {
-		var box = document.getElementById(id + '-box');
-
-		// TODO: do it JSDialog native...
-		if (!box) {
-			setTimeout(() => { this._warnCopyPasteImpl(id) }, 10);
-			return;
-		}
-
-		var innerDiv = window.L.DomUtil.create('div', '', null);
-		box.insertBefore(innerDiv, box.firstChild);
-
-		if (window.mode.isMobile() || window.mode.isTablet()) {
-			const p = document.createElement('p');
-			p.textContent = _('Your browser has very limited access to the clipboard, so please use the paste buttons on your on-screen keyboard instead.');
-			innerDiv.appendChild(p);
-		}
-		else {
-			const ctrlText = app.util.replaceCtrlAltInMac('Ctrl');
-			const p = document.createElement('p');
-			p.textContent = 'Your browser has very limited access to the clipboard, so use these keyboard shortcuts:';
-			innerDiv.appendChild(p);
-
-			const table = document.createElement('table');
-			table.className = 'warn-copy-paste';
-			innerDiv.appendChild(table);
-
-			let row = document.createElement('tr');
-			table.appendChild(row);
-
-			// Add three cells for copy & cut & paste.
-			for (let i = 0; i < 3; i++) {
-				const cell = document.createElement('td');
-				row.appendChild(cell);
-
-				let kbd = document.createElement('kbd');
-				kbd.textContent = ctrlText;
-				cell.appendChild(kbd);
-
-				const span = document.createElement('span');
-				span.textContent = '+';
-				span.className = 'kbd--plus';
-				cell.appendChild(span);
-
-				kbd = document.createElement('kbd');
-				kbd.textContent = i === 0 ? 'C': (i === 1 ? 'X': 'V');
-				cell.appendChild(kbd);
-			}
-
-			// Add table headers as second row.
-			row = document.createElement('tr');
-			table.appendChild(row);
-			for (let i = 0; i < 3; i++) {
-				const cell = document.createElement('td');
-				cell.textContent = i === 0 ? 'Copy': (i === 1 ? 'Cut': 'Paste');
-				row.appendChild(cell);
-			}
-		}
-	}
-
 	_substProductName(msg) {
 		var productName = (typeof brandProductName !== 'undefined') ? brandProductName : 'Collabora Online Development Edition (unbranded)';
 		return msg.replace('{productname}', productName);
