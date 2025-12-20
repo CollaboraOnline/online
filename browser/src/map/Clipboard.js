@@ -24,40 +24,6 @@ window.L.Clipboard = class Clipboard extends CoolClipboardBase {
 		super(map);
 	}
 
-	paste(ev) {
-		if (this._map.isReadOnlyMode())
-			return;
-
-		window.app.console.log('Paste');
-
-		if (this._isAnyInputFieldSelected() && !this._isFormulabarSelected())
-			return;
-
-		// If the focus is in the search box, paste there.
-		if (this._map.isSearching())
-			return;
-
-		if (this._downloadProgressStatus() === 'downloadButton')
-			this._stopHideDownload(); // Terminate pending confirmation
-
-		if (this._map._activeDialog)
-			ev.usePasteKeyEvent = true;
-
-		if (ev.clipboardData) {
-			ev.preventDefault();
-			var usePasteKeyEvent = ev.usePasteKeyEvent;
-			// Always capture the html content separate as we may lose it when we
-			// pass the clipboard data to a different context (async calls, f.e.).
-			var htmlText = ev.clipboardData.getData('text/html');
-			var hasFinished = this.dataTransferToDocument(ev.clipboardData, /* preferInternal = */ true, htmlText, usePasteKeyEvent);
-			this._map._textInput._abortComposition(ev);
-			this._clipboardSerial++;
-			if (hasFinished)
-				this._stopHideDownload();
-		}
-		return false;
-	}
-
 	clearSelection() {
 		this._selectionContent = '';
 		this._selectionPlainTextContent = '';
