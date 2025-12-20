@@ -24,39 +24,6 @@ window.L.Clipboard = class Clipboard extends CoolClipboardBase {
 		super(map);
 	}
 
-	// Pull UNO clipboard commands out from menus and normal user input.
-	// We try to massage and re-emit these, to get good security event / credentials.
-	filterExecCopyPaste(cmd, params) {
-		if (this._map['wopi'].DisableCopy && (cmd === '.uno:Copy' || cmd === '.uno:Cut' || cmd === '.uno:CopyHyperlinkLocation')) {
-			// perform internal operations
-			app.socket.sendMessage('uno ' + cmd);
-			return true;
-		}
-
-		if (window.ThisIsTheAndroidApp) {
-			// perform internal operations
-			app.socket.sendMessage('uno ' + cmd);
-			return true;
-		}
-
-		if (cmd === '.uno:Copy' || cmd === '.uno:CopyHyperlinkLocation' || cmd === '.uno:CopySlide') {
-			this._execCopyCutPaste('copy', cmd, params);
-		} else if (cmd === '.uno:Cut') {
-			this._execCopyCutPaste('cut', cmd);
-		} else if (cmd === '.uno:Paste') {
-			this._execCopyCutPaste('paste', cmd);
-		} else if (cmd === '.uno:PasteSpecial') {
-			if (this._navigatorClipboardRead(true)) {
-				return true;
-			}
-			this._openPasteSpecialPopup();
-		} else {
-			return false;
-		}
-		window.app.console.log('filtered uno command ' + cmd);
-		return true;
-	}
-
 	_doCopyCut(ev, unoName) {
 		if (this._selectionType === 'slide')
 			unoName = 'CopySlide';
