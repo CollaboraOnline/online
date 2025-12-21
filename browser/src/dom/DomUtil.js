@@ -1,26 +1,10 @@
 /* -*- js-indent-level: 8 -*- */
-/* global app cool */
+/* global app cool DomUtilBase */
 /*
  * window.L.DomUtil contains various utility functions for working with DOM.
  */
 
-window.L.DomUtil = class DomUtil {
-	static get(id) {
-		return typeof id === 'string' ? document.getElementById(id) : id;
-	}
-
-	static getStyle(el, style) {
-
-		var value = el.style[style] || (el.currentStyle && el.currentStyle[style]);
-
-		if ((!value || value === 'auto') && document.defaultView) {
-			var css = document.defaultView.getComputedStyle(el, null);
-			value = css ? css[style] : null;
-		}
-
-		return value === 'auto' ? null : value;
-	}
-
+window.L.DomUtil = class DomUtil extends DomUtilBase {
 	static setStyle(el, style, value) {
 		if (el !== undefined)
 			el.style[style] = value;
