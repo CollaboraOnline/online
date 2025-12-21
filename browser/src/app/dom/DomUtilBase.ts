@@ -45,6 +45,7 @@ class DomUtilBase {
 		tagName: string,
 		className: string,
 		container?: HTMLElement,
+		data?: any,
 		doc: Document = window.document,
 	) {
 		const el = doc.createElement(tagName);
@@ -61,6 +62,7 @@ class DomUtilBase {
 		tagName: string,
 		id: string,
 		container?: HTMLElement,
+		data?: any,
 		doc: Document = window.document,
 	) {
 		const el = doc.createElement(tagName);
