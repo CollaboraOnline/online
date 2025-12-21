@@ -4,12 +4,12 @@
  * window.L.DomUtil contains various utility functions for working with DOM.
  */
 
-window.L.DomUtil = {
-	get: function (id) {
+window.L.DomUtil = class DomUtil {
+	static get(id) {
 		return typeof id === 'string' ? document.getElementById(id) : id;
-	},
+	}
 
-	getStyle: function (el, style) {
+	static getStyle(el, style) {
 
 		var value = el.style[style] || (el.currentStyle && el.currentStyle[style]);
 
@@ -19,14 +19,14 @@ window.L.DomUtil = {
 		}
 
 		return value === 'auto' ? null : value;
-	},
+	}
 
-	setStyle: function (el, style, value) {
+	static setStyle(el, style, value) {
 		if (el !== undefined)
 			el.style[style] = value;
-	},
+	}
 
-	create: function (tagName, className, container) {
+	static create(tagName, className, container) {
 
 		var el = document.createElement(tagName);
 		el.className = className;
@@ -36,9 +36,9 @@ window.L.DomUtil = {
 		}
 
 		return el;
-	},
+	}
 
-	createWithId: function (tagName, id, container) {
+	static createWithId(tagName, id, container) {
 
 		var el = document.createElement(tagName);
 		el.id = id;
@@ -48,9 +48,9 @@ window.L.DomUtil = {
 		}
 
 		return el;
-	},
+	}
 
-	remove: function (el) {
+	static remove(el) {
 		if (!el) {
 			return;
 		}
@@ -59,32 +59,32 @@ window.L.DomUtil = {
 		if (parent) {
 			parent.removeChild(el);
 		}
-	},
+	}
 
-	empty: function (el) {
+	static empty(el) {
 		while (el.firstChild) {
 			el.removeChild(el.firstChild);
 		}
-	},
+	}
 
-	toFront: function (el) {
+	static toFront(el) {
 		el.parentNode.appendChild(el);
-	},
+	}
 
-	toBack: function (el) {
+	static toBack(el) {
 		var parent = el.parentNode;
 		parent.insertBefore(el, parent.firstChild);
-	},
+	}
 
-	hasClass: function (el, name) {
+	static hasClass(el, name) {
 		if (el.classList !== undefined) {
 			return el.classList.contains(name);
 		}
 		var className = window.L.DomUtil.getClass(el);
 		return className.length > 0 && new RegExp('(^|\\s)' + name + '(\\s|$)').test(className);
-	},
+	}
 
-	addClass: function (el, name) {
+	static addClass(el, name) {
 		if (!el) {
 			return;
 		}
@@ -98,9 +98,9 @@ window.L.DomUtil = {
 			var className = window.L.DomUtil.getClass(el);
 			window.L.DomUtil.setClass(el, (className ? className + ' ' : '') + name);
 		}
-	},
+	}
 
-	removeClass: function (el, name) {
+	static removeClass(el, name) {
 		if (!el) {
 			return;
 		}
@@ -110,28 +110,28 @@ window.L.DomUtil = {
 		} else {
 			window.L.DomUtil.setClass(el, app.util.trim((' ' + window.L.DomUtil.getClass(el) + ' ').replace(' ' + name + ' ', ' ')));
 		}
-	},
+	}
 
-	removeChildNodes: function (el) {
+	static removeChildNodes(el) {
 		while (el.hasChildNodes()) {
 			el.removeChild(el.lastChild);
 		}
-	},
+	}
 
-	setClass: function (el, name) {
+	static setClass(el, name) {
 		if (el.className.baseVal === undefined) {
 			el.className = name;
 		} else {
 			// in case of SVG element
 			el.className.baseVal = name;
 		}
-	},
+	}
 
-	getClass: function (el) {
+	static getClass(el) {
 		return el.className.baseVal === undefined ? el.className : el.className.baseVal;
-	},
+	}
 
-	setOpacity: function (el, value) {
+	static setOpacity(el, value) {
 
 		if ('opacity' in el.style) {
 			el.style.opacity = value;
@@ -139,9 +139,9 @@ window.L.DomUtil = {
 		} else if ('filter' in el.style) {
 			window.L.DomUtil._setOpacityIE(el, value);
 		}
-	},
+	}
 
-	_setOpacityIE: function (el, value) {
+	static _setOpacityIE(el, value) {
 		var filter = false,
 		    filterName = 'DXImageTransform.Microsoft.Alpha';
 
@@ -162,9 +162,9 @@ window.L.DomUtil = {
 		} else {
 			el.style.filter += ' progid:' + filterName + '(opacity=' + value + ')';
 		}
-	},
+	}
 
-	testProp: function (props) {
+	static testProp(props) {
 
 		var style = document.documentElement.style;
 
@@ -174,16 +174,16 @@ window.L.DomUtil = {
 			}
 		}
 		return false;
-	},
+	}
 
-	setTransform: function (el, offset, scale) {
+	static setTransform(el, offset, scale) {
 		var pos = offset || new cool.Point(0, 0);
 
 		el.style[window.L.DomUtil.TRANSFORM] =
 			'translate3d(' + pos.x + 'px,' + pos.y + 'px' + ',0)' + (scale ? ' scale(' + scale + ')' : '');
-	},
+	}
 
-	setPosition: function (el, point, no3d) { // (HTMLElement, Point[, Boolean])
+	static setPosition(el, point, no3d) { // (HTMLElement, Point[, Boolean])
 
 		/*eslint-disable */
 		el._leaflet_pos = point;
@@ -195,21 +195,21 @@ window.L.DomUtil = {
 			el.style.left = point.x + 'px';
 			el.style.top = point.y + 'px';
 		}
-	},
+	}
 
-	getPosition: function (el) {
+	static getPosition(el) {
 		// this method is only used for elements previously positioned using setPosition,
 		// so it's safe to cache the position for performance
 
 		return el._leaflet_pos;
-	},
+	}
 
-	isPortrait: function() {
+	static isPortrait() {
 		return window.matchMedia && window.matchMedia('(orientation: portrait)').matches;
-	},
+	}
 
 	// Add/remove a portrait or landscape class from the list of elements.
-	updateElementsOrientation: function(elements) {
+	static updateElementsOrientation(elements) {
 		var remove = 'portrait';
 		var add = 'landscape';
 		if (window.L.DomUtil.isPortrait()) {
