@@ -40,45 +40,82 @@ describe('DomUtil', function() {
 	</body>
 	</html>
 	`;
-	const dom = new jsdom.JSDOM(docstr);
-	const window = dom.window;
-	const doc = window.document;
+
+	class DOMStore {
+
+		public dom: any;
+
+		constructor(docString: string) {
+			this.dom = new jsdom.JSDOM(docString);
+		}
+
+		get window() {
+			return this.dom.window;
+		}
+
+		get document() {
+			return this.dom.window.document;
+		}
+	}
 
 	describe('get()', function () {
+		const store = new DOMStore(docstr);
 
 		it('element present', function() {
-			assert.ok(DomUtilBase.get('one', doc) instanceof window.HTMLDivElement);
+			assert.ok(DomUtilBase.get('one', store.document) instanceof store.window.HTMLDivElement);
 		});
 
 		it('element absent', function() {
-			assert.strictEqual(null, DomUtilBase.get('ten', doc));
+			assert.strictEqual(null, DomUtilBase.get('ten', store.document));
 		});
 
 		it('null id', function() {
-			assert.strictEqual(null, DomUtilBase.get(null, doc));
+			assert.strictEqual(null, DomUtilBase.get(null, store.document));
 		});
 	});
 
 	describe('getStyle()', function () {
-		const one = DomUtilBase.get('one', doc)
-		const two = DomUtilBase.get('two', doc)
+		const store = new DOMStore(docstr);
+		const one = DomUtilBase.get('one', store.document);
+		const two = DomUtilBase.get('two', store.document);
 
 		it('style auto', function() {
-			assert.strictEqual('', DomUtilBase.getStyle(one, 'color', doc));
+			assert.strictEqual('', DomUtilBase.getStyle(one, 'color', store.document));
 		});
 
 		it('style non-auto', function() {
-			assert.strictEqual('red', DomUtilBase.getStyle(one, 'background-color', doc));
+			assert.strictEqual('red', DomUtilBase.getStyle(one, 'background-color', store.document));
 		});
 
 		it('style non-auto multi word value', function() {
-			assert.strictEqual('"Libre Baskerville", serif', DomUtilBase.getStyle(one, 'font-family', doc));
+			assert.strictEqual('"Libre Baskerville", serif', DomUtilBase.getStyle(one, 'font-family', store.document));
 		});
 
 		// NOTE: jsdom does not implement cascading of styles?
 		it('style inherited', function() {
-			assert.strictEqual(null, DomUtilBase.getStyle(two, 'font-family', doc));
+			assert.strictEqual(null, DomUtilBase.getStyle(two, 'font-family', store.document));
 		});
 
+	});
+
+	describe('setStyle()', function () {
+		const store = new DOMStore(docstr);
+		const one = DomUtilBase.get('one', store.document);
+		const two = DomUtilBase.get('two', store.document);
+
+		it('auto to green', function() {
+			DomUtilBase.setStyle(one, 'color', 'green');
+			assert.strictEqual('green', DomUtilBase.getStyle(one, 'color', store.document));
+		});
+
+		it('non-auto to purple', function() {
+			DomUtilBase.setStyle(one, 'background-color', 'purple');
+			assert.strictEqual('purple', DomUtilBase.getStyle(one, 'background-color', store.document));
+		});
+
+		it('unset to green', function() {
+			DomUtilBase.setStyle(two, 'color', 'green');
+			assert.strictEqual('green', DomUtilBase.getStyle(two, 'color', store.document));
+		});
 	});
 });
