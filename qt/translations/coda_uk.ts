@@ -113,7 +113,7 @@
     <message>
         <location filename="../WebView.cpp" line="205"/>
         <source>Presenting</source>
-        <translation>Презентації</translation>
+        <translation>Презентація</translation>
     </message>
 </context>
 <context>
