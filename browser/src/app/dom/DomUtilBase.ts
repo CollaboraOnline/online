@@ -56,4 +56,20 @@ class DomUtilBase {
 
 		return el;
 	}
+
+	public static createWithId(
+		tagName: string,
+		id: string,
+		container?: HTMLElement,
+		document: Document = window.document,
+	) {
+		const el = document.createElement(tagName);
+		el.id = id;
+
+		if (container) {
+			container.appendChild(el);
+		}
+
+		return el;
+	}
 }
