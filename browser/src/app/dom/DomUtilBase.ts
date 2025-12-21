@@ -40,4 +40,20 @@ class DomUtilBase {
 	public static setStyle(el: HTMLElement, style: string, value: string) {
 		if (el !== undefined) el.style.setProperty(style, value);
 	}
+
+	public static create(
+		tagName: string,
+		className: string,
+		container?: HTMLElement,
+		document: Document = window.document,
+	) {
+		const el = document.createElement(tagName);
+		el.className = className;
+
+		if (container) {
+			container.appendChild(el);
+		}
+
+		return el;
+	}
 }
