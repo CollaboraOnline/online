@@ -36,4 +36,8 @@ class DomUtilBase {
 
 		return value === 'auto' ? null : value;
 	}
+
+	public static setStyle(el: HTMLElement, style: string, value: string) {
+		if (el !== undefined) el.style.setProperty(style, value);
+	}
 }
