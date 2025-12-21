@@ -5,10 +5,6 @@
  */
 
 window.L.DomUtil = class DomUtil extends DomUtilBase {
-	static setStyle(el, style, value) {
-		if (el !== undefined)
-			el.style[style] = value;
-	}
 
 	static create(tagName, className, container) {
 
