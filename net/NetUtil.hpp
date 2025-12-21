@@ -18,6 +18,8 @@
 #include <string_view>
 #include <vector>
 
+#include <common/ConfigUtil.hpp>
+
 // This file hosts network related common functionality
 // and helper/utility functions and classes.
 // HTTP-specific helpers are in HttpHelper.hpp.
@@ -114,10 +116,8 @@ connect(std::string uri, const std::shared_ptr<ProtocolHandlerInterface>& protoc
 
 inline std::string_view getDefaultPortForScheme(const std::string_view scheme)
 {
-    if (scheme == "https://" || scheme == "wss://")
-        return "443";
-    if (scheme == "http://" || scheme == "ws://")
-        return "80";
+    if (scheme == "https://" || scheme == "wss://" || scheme == "http://" || scheme == "ws://")
+        return ConfigUtil::isSslEnabled() ? "443" : "80";
     return std::string_view();
 }
 
