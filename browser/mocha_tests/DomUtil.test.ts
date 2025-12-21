@@ -145,6 +145,8 @@ describe('DomUtil', function() {
 			const el = DomUtilBase.createWithId('p', 'cool-caption', undefined, store.document);
 			assert.strictEqual('cool-caption', el.id);
 			assert.strictEqual(null, el.parentElement);
+			const result = DomUtilBase.get('cool-caption', store.document);
+			assert.strictEqual(null, result);
 		});
 
 		it('with parent', function() {
@@ -154,6 +156,40 @@ describe('DomUtil', function() {
 			assert.strictEqual(1, one.childElementCount);
 			const result = DomUtilBase.get('cool-caption', store.document);
 			assert.strictEqual(el, result);
+		});
+	});
+
+	describe('remove()', function () {
+		const store = new DOMStore(docstr);
+		const one = DomUtilBase.get('one', store.document);
+
+		it('null element', function() {
+			assert.doesNotThrow(() => {
+				DomUtilBase.remove();
+			}, 'remove() should never throw');
+		});
+
+		it('parentless', function() {
+			const el = DomUtilBase.createWithId('p', 'cool-caption', undefined, store.document);
+			assert.doesNotThrow(() => {
+				DomUtilBase.remove(el);
+			}, 'remove() should never throw');
+			assert.strictEqual('cool-caption', el.id);
+			assert.strictEqual(null, el.parentElement);
+			const result = DomUtilBase.get('cool-caption', store.document);
+			assert.strictEqual(null, result);
+		});
+
+		it('with parent', function() {
+			const el = DomUtilBase.createWithId('p', 'cool-caption', one, store.document);
+			assert.doesNotThrow(() => {
+				DomUtilBase.remove(el);
+			}, 'remove() should never throw');
+			assert.strictEqual('cool-caption', el.id);
+			assert.strictEqual(null, el.parentElement);
+			assert.strictEqual(0, one.childElementCount);
+			const result = DomUtilBase.get('cool-caption', store.document);
+			assert.strictEqual(null, result);
 		});
 	});
 });
