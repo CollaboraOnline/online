@@ -136,4 +136,24 @@ describe('DomUtil', function() {
 			assert.strictEqual(1, one.childElementCount);
 		});
 	});
+
+	describe('createWithId()', function () {
+		const store = new DOMStore(docstr);
+		const one = DomUtilBase.get('one', store.document);
+
+		it('parentless', function() {
+			const el = DomUtilBase.createWithId('p', 'cool-caption', undefined, store.document);
+			assert.strictEqual('cool-caption', el.id);
+			assert.strictEqual(null, el.parentElement);
+		});
+
+		it('with parent', function() {
+			const el = DomUtilBase.createWithId('p', 'cool-caption', one, store.document);
+			assert.strictEqual('cool-caption', el.id);
+			assert.strictEqual(one, el.parentElement);
+			assert.strictEqual(1, one.childElementCount);
+			const result = DomUtilBase.get('cool-caption', store.document);
+			assert.strictEqual(el, result);
+		});
+	});
 });
