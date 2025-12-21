@@ -6,16 +6,6 @@
 
 window.L.DomUtil = class DomUtil extends DomUtilBase {
 
-	static remove(el) {
-		if (!el) {
-			return;
-		}
-
-		var parent = el.parentNode;
-		if (parent) {
-			parent.removeChild(el);
-		}
-	}
 
 	static empty(el) {
 		while (el.firstChild) {

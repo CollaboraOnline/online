@@ -72,4 +72,15 @@ class DomUtilBase {
 
 		return el;
 	}
+
+	public static remove(el?: HTMLElement): void {
+		if (!el) {
+			return;
+		}
+
+		const parent = el.parentNode;
+		if (parent) {
+			parent.removeChild(el);
+		}
+	}
 }
