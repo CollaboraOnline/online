@@ -6,18 +6,6 @@
 
 window.L.DomUtil = class DomUtil extends DomUtilBase {
 
-	static create(tagName, className, container) {
-
-		var el = document.createElement(tagName);
-		el.className = className;
-
-		if (container) {
-			container.appendChild(el);
-		}
-
-		return el;
-	}
-
 	static createWithId(tagName, id, container) {
 
 		var el = document.createElement(tagName);
