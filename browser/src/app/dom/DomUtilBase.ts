@@ -15,22 +15,22 @@
 class DomUtilBase {
 	public static get(
 		id: string | null,
-		document: Document = window.document,
+		doc: Document = window.document,
 	): HTMLElement | null {
-		return typeof id === 'string' ? document.getElementById(id) : id;
+		return typeof id === 'string' ? doc.getElementById(id) : id;
 	}
 
 	public static getStyle(
 		el: HTMLElement,
 		style: string,
-		document: Document = window.document,
+		doc: Document = window.document,
 	): string | null {
 		let value: string | null =
 			el.style.getPropertyValue(style) ||
 			((el as any).currentStyle && (el as any).currentStyle[style]);
 
-		if ((!value || value === 'auto') && document.defaultView) {
-			const css = document.defaultView.getComputedStyle(el, null);
+		if ((!value || value === 'auto') && doc.defaultView) {
+			const css = doc.defaultView.getComputedStyle(el, null);
 			value = css ? css.getPropertyValue(style) : null;
 		}
 
@@ -45,9 +45,9 @@ class DomUtilBase {
 		tagName: string,
 		className: string,
 		container?: HTMLElement,
-		document: Document = window.document,
+		doc: Document = window.document,
 	) {
-		const el = document.createElement(tagName);
+		const el = doc.createElement(tagName);
 		el.className = className;
 
 		if (container) {
@@ -61,9 +61,9 @@ class DomUtilBase {
 		tagName: string,
 		id: string,
 		container?: HTMLElement,
-		document: Document = window.document,
+		doc: Document = window.document,
 	) {
-		const el = document.createElement(tagName);
+		const el = doc.createElement(tagName);
 		el.id = id;
 
 		if (container) {
