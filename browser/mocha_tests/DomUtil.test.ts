@@ -124,13 +124,13 @@ describe('DomUtil', function() {
 		const one = DomUtilBase.get('one', store.document);
 
 		it('parentless', function() {
-			const el = DomUtilBase.create('p', 'cool-caption', undefined, store.document);
+			const el = DomUtilBase.create('p', 'cool-caption', undefined, undefined, store.document);
 			assert.strictEqual('cool-caption', el.className);
 			assert.strictEqual(null, el.parentElement);
 		});
 
 		it('with parent', function() {
-			const el = DomUtilBase.create('p', 'cool-caption', one, store.document);
+			const el = DomUtilBase.create('p', 'cool-caption', one, undefined, store.document);
 			assert.strictEqual('cool-caption', el.className);
 			assert.strictEqual(one, el.parentElement);
 			assert.strictEqual(1, one.childElementCount);
@@ -142,7 +142,7 @@ describe('DomUtil', function() {
 		const one = DomUtilBase.get('one', store.document);
 
 		it('parentless', function() {
-			const el = DomUtilBase.createWithId('p', 'cool-caption', undefined, store.document);
+			const el = DomUtilBase.createWithId('p', 'cool-caption', undefined, undefined, store.document);
 			assert.strictEqual('cool-caption', el.id);
 			assert.strictEqual(null, el.parentElement);
 			const result = DomUtilBase.get('cool-caption', store.document);
@@ -150,7 +150,7 @@ describe('DomUtil', function() {
 		});
 
 		it('with parent', function() {
-			const el = DomUtilBase.createWithId('p', 'cool-caption', one, store.document);
+			const el = DomUtilBase.createWithId('p', 'cool-caption', one, undefined, store.document);
 			assert.strictEqual('cool-caption', el.id);
 			assert.strictEqual(one, el.parentElement);
 			assert.strictEqual(1, one.childElementCount);
@@ -170,7 +170,7 @@ describe('DomUtil', function() {
 		});
 
 		it('parentless', function() {
-			const el = DomUtilBase.createWithId('p', 'cool-caption', undefined, store.document);
+			const el = DomUtilBase.createWithId('p', 'cool-caption', undefined, undefined, store.document);
 			assert.doesNotThrow(() => {
 				DomUtilBase.remove(el);
 			}, 'remove() should never throw');
@@ -181,7 +181,7 @@ describe('DomUtil', function() {
 		});
 
 		it('with parent', function() {
-			const el = DomUtilBase.createWithId('p', 'cool-caption', one, store.document);
+			const el = DomUtilBase.createWithId('p', 'cool-caption', one, undefined, store.document);
 			assert.doesNotThrow(() => {
 				DomUtilBase.remove(el);
 			}, 'remove() should never throw');
