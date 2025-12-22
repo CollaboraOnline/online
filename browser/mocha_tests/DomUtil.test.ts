@@ -384,4 +384,39 @@ describe('DomUtil', function() {
 			assert.ok(!DomUtilBase.hasClass(el, 'dark'));
 		});
 	});
+
+	describe('removeChildNodes()', function () {
+		const store = new DOMStore(docstr);
+		const one = DomUtilBase.get('one', store.document);
+
+		it('already empty div', function() {
+			const el = DomUtilBase.create('div', 'cool-caption', one, undefined, store.document);
+			assert.strictEqual('', el.textContent);
+			assert.strictEqual(0, el.childNodes.length);
+			DomUtilBase.removeChildNodes(el);
+			assert.strictEqual('', el.textContent);
+			assert.strictEqual(0, el.childNodes.length);
+		});
+
+		it('div with text', function() {
+			const el = DomUtilBase.create('div', 'cool-caption', one, undefined, store.document);
+			el.textContent = 'Hello world!';
+			assert.strictEqual('Hello world!', el.textContent);
+			assert.strictEqual(1, el.childNodes.length);
+			DomUtilBase.removeChildNodes(el);
+			assert.strictEqual('', el.textContent);
+			assert.strictEqual(0, el.childNodes.length);
+		});
+
+		it('div with text and a paragraph tag', function() {
+			const el = DomUtilBase.create('div', 'cool-caption', one, undefined, store.document);
+			el.textContent = 'Hello world!';
+			DomUtilBase.create('p', 'cool-caption', el, undefined, store.document);
+			assert.strictEqual('Hello world!', el.textContent);
+			assert.strictEqual(2, el.childNodes.length);
+			DomUtilBase.removeChildNodes(el);
+			assert.strictEqual('', el.textContent);
+			assert.strictEqual(0, el.childNodes.length);
+		});
+	});
 });

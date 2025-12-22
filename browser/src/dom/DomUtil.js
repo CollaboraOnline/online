@@ -6,12 +6,6 @@
 
 window.L.DomUtil = class DomUtil extends DomUtilBase {
 
-	static removeChildNodes(el) {
-		while (el.hasChildNodes()) {
-			el.removeChild(el.lastChild);
-		}
-	}
-
 	static setOpacity(el, value) {
 
 		if ('opacity' in el.style) {
