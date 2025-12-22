@@ -221,4 +221,52 @@ describe('DomUtil', function() {
 			assert.strictEqual(null, c2);
 		});
 	});
+
+	describe('getClass()', function () {
+		const store = new DOMStore(docstr);
+		const one = DomUtilBase.get('one', store.document);
+
+		it('no class names', function() {
+			const el = DomUtilBase.createWithId('p', 'cool-caption', one, undefined, store.document);
+			assert.strictEqual('', DomUtilBase.getClass(el));
+		});
+
+		it('one class name', function() {
+			const el = DomUtilBase.create('p', 'cool-caption', one, undefined, store.document);
+			assert.strictEqual('cool-caption', DomUtilBase.getClass(el));
+		});
+
+		it('multiple class names', function() {
+			const el = DomUtilBase.create('p', 'cool-caption embossed blurred', one, undefined, store.document);
+			assert.strictEqual('cool-caption embossed blurred', DomUtilBase.getClass(el));
+		});
+	});
+
+	describe('hasClass()', function () {
+		const store = new DOMStore(docstr);
+		const one = DomUtilBase.get('one', store.document);
+
+		it('no class names', function() {
+			const el = DomUtilBase.createWithId('p', 'cool-caption', one, undefined, store.document);
+			assert.ok(!DomUtilBase.hasClass(el, 'cool-caption'));
+		});
+
+		it('one class name', function() {
+			const el = DomUtilBase.create('p', 'cool-caption', one, undefined, store.document);
+			assert.ok(!DomUtilBase.hasClass(el, 'cool'));
+			assert.ok(!DomUtilBase.hasClass(el, 'caption'));
+			assert.ok(DomUtilBase.hasClass(el, 'cool-caption'));
+		});
+
+		it('multiple class names', function() {
+			const el = DomUtilBase.create('p', 'cool-caption embossed blurred', one, undefined, store.document);
+			assert.ok(!DomUtilBase.hasClass(el, 'cool'));
+			assert.ok(!DomUtilBase.hasClass(el, 'caption'));
+			assert.ok(DomUtilBase.hasClass(el, 'cool-caption'));
+			assert.ok(DomUtilBase.hasClass(el, 'blurred'));
+			assert.ok(DomUtilBase.hasClass(el, 'embossed'));
+			assert.ok(!DomUtilBase.hasClass(el, 'embossed blurred'));
+			assert.ok(!DomUtilBase.hasClass(el, 'cool-caption embossed blurred'));
+		});
+	});
 });
