@@ -640,7 +640,7 @@ algned to the bottom */
 	scrollbar-color: var(--scrollbar-color);
 }
 
-.modalpopup .ui-treeview {
+#__MENU__.ui-treeview {
 	min-height: min-content;
 }
 
