@@ -550,12 +550,12 @@ export class Header extends CanvasSectionObject {
 			selector: '#canvas-container',
 			className: 'cool-font',
 			zIndex: 1500,
-                        items: this._menuItem,
+			items: this._menuItem,
 			callback: function() { return; },
 			build: function() {
-                                if (map.isReadOnlyMode())
-                                        return false;
-                                return { }
+				if (map.isReadOnlyMode())
+					return false;
+				return { };
 			}
 		});
 		$('#canvas-container').contextMenu('update');
