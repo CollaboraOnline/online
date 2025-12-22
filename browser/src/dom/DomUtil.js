@@ -1,22 +1,10 @@
 /* -*- js-indent-level: 8 -*- */
-/* global app cool DomUtilBase */
+/* global cool DomUtilBase */
 /*
  * window.L.DomUtil contains various utility functions for working with DOM.
  */
 
 window.L.DomUtil = class DomUtil extends DomUtilBase {
-
-	static removeClass(el, name) {
-		if (!el) {
-			return;
-		}
-
-		if (el.classList !== undefined) {
-			el.classList.remove(name);
-		} else {
-			window.L.DomUtil.setClass(el, app.util.trim((' ' + window.L.DomUtil.getClass(el) + ' ').replace(' ' + name + ' ', ' ')));
-		}
-	}
 
 	static removeChildNodes(el) {
 		while (el.hasChildNodes()) {
