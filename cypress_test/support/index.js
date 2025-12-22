@@ -18,6 +18,10 @@ beforeEach(function() {
 // not get printed
 afterEach(function() {
 	cy.log('Finishing test: ' + getFullTestName());
+	if (this.currentTest.state === 'failed') {
+		Cypress.stop();
+		return;
+	}
 });
 
 installLogsCollector({
