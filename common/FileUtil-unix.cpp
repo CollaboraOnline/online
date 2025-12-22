@@ -412,6 +412,11 @@ namespace FileUtil
         stream.open(file, mode);
     }
 
+    void openFileToOFStream(const std::string& file, std::ofstream& stream, std::ios_base::openmode mode)
+    {
+        stream.open(file, mode);
+    }
+
     int getStatOfFile(const std::string& file, struct stat& sb)
     {
         return ::stat(file.c_str(), &sb);
