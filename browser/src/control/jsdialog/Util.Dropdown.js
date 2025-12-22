@@ -138,8 +138,6 @@ JSDialog.OpenDropdown = function (id, popupParent, entries, innerCallback, popup
 			var subMenuId = object.id + '-' + pos;
 
 			if (eventType === 'selected' || eventType === 'showsubmenu') {
-				if (lastSubMenuOpened === subMenuId)
-					return;
 				if (entry && entry.items) {
 					closeLastSubMenu();
 
