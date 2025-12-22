@@ -6,22 +6,6 @@
 
 window.L.DomUtil = class DomUtil extends DomUtilBase {
 
-	static addClass(el, name) {
-		if (!el) {
-			return;
-		}
-
-		if (el.classList !== undefined) {
-			var classes = app.util.splitWords(name);
-			for (var i = 0, len = classes.length; i < len; i++) {
-				el.classList.add(classes[i]);
-			}
-		} else if (!window.L.DomUtil.hasClass(el, name)) {
-			var className = window.L.DomUtil.getClass(el);
-			window.L.DomUtil.setClass(el, (className ? className + ' ' : '') + name);
-		}
-	}
-
 	static removeClass(el, name) {
 		if (!el) {
 			return;
@@ -37,15 +21,6 @@ window.L.DomUtil = class DomUtil extends DomUtilBase {
 	static removeChildNodes(el) {
 		while (el.hasChildNodes()) {
 			el.removeChild(el.lastChild);
-		}
-	}
-
-	static setClass(el, name) {
-		if (el.className.baseVal === undefined) {
-			el.className = name;
-		} else {
-			// in case of SVG element
-			el.className.baseVal = name;
 		}
 	}
 
