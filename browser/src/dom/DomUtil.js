@@ -6,15 +6,6 @@
 
 window.L.DomUtil = class DomUtil extends DomUtilBase {
 
-	static toFront(el) {
-		el.parentNode.appendChild(el);
-	}
-
-	static toBack(el) {
-		var parent = el.parentNode;
-		parent.insertBefore(el, parent.firstChild);
-	}
-
 	static hasClass(el, name) {
 		if (el.classList !== undefined) {
 			return el.classList.contains(name);
