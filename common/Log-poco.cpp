@@ -398,9 +398,6 @@ namespace Log
     extern StaticHelper Static;
     extern StaticUIHelper StaticUILog;
 
-    namespace
-    {
-
     bool IsShutdown = false;
 
     void initialize(const std::string& name,
@@ -503,9 +500,6 @@ namespace Log
         }
     }
 
-    namespace
-    {
-
     GenericLogger& logger()
     {
         GenericLogger* logger = Static.getThreadLocalLogger();
@@ -529,8 +523,6 @@ namespace Log
             : *static_cast<GenericLogger *>(
                 &GenericLogger::get(StaticUILog.getInited() ? StaticUILog.getName() : std::string()));
     }
-
-    } // namespace
 
     bool isLogUIEnabled()
     {

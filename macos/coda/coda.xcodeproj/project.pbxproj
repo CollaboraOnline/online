@@ -59,6 +59,7 @@
 		BEA264B12CBE99340007435A /* RequestDetails.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BEA264A92CBE99340007435A /* RequestDetails.cpp */; };
 		BEA264B32CBE99340007435A /* DocumentBroker.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BEA264A72CBE99340007435A /* DocumentBroker.cpp */; };
 		BEA82C9D2EC2116E00CDC5A6 /* font in Resources */ = {isa = PBXBuildFile; fileRef = BEA82C9C2EC2116A00CDC5A6 /* font */; };
+		BEE563B52EF9A385002D3695 /* KitWSDGlobals.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BEE563B42EF9A385002D3695 /* KitWSDGlobals.cpp */; };
 		BEEF3F862CE2139E00ABE785 /* coolkitconfig.xcu in Resources */ = {isa = PBXBuildFile; fileRef = BEEF3F852CE2139E00ABE785 /* coolkitconfig.xcu */; };
 		BEF5CE8F2D633CE60006FD77 /* discovery.xml in Resources */ = {isa = PBXBuildFile; fileRef = BEF5CE8E2D633CE60006FD77 /* discovery.xml */; };
 		BEF6F02D2DD1EC0200EA06BF /* RegexUtil.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BEF6F02C2DD1EC0200EA06BF /* RegexUtil.cpp */; };
@@ -173,6 +174,7 @@
 		BECC4BAB2CBD3FA300A120B3 /* Collabora Office.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Collabora Office.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		BECC4BBC2CBD3FA400A120B3 /* codaTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = codaTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		BECC4BC62CBD3FA400A120B3 /* codaUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = codaUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		BEE563B42EF9A385002D3695 /* KitWSDGlobals.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = KitWSDGlobals.cpp; path = ../../../../wsd/KitWSDGlobals.cpp; sourceTree = "<group>"; };
 		BEEF3F822CE20BDD00ABE785 /* SetupKitEnvironment.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = SetupKitEnvironment.hpp; path = ../../../../kit/SetupKitEnvironment.hpp; sourceTree = "<group>"; };
 		BEEF3F852CE2139E00ABE785 /* coolkitconfig.xcu */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = coolkitconfig.xcu; path = ../../../coolkitconfig.xcu; sourceTree = "<group>"; };
 		BEF5CE8E2D633CE60006FD77 /* discovery.xml */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = discovery.xml; path = ../../../discovery.xml; sourceTree = "<group>"; };
@@ -402,6 +404,7 @@
 				BE4C62272D59EBAC00047DF2 /* DocumentBroker.hpp */,
 				BEA264A72CBE99340007435A /* DocumentBroker.cpp */,
 				BEF881382EA62DBF0080A631 /* dumpWsdState.cpp */,
+				BEE563B42EF9A385002D3695 /* KitWSDGlobals.cpp */,
 				BEA264A82CBE99340007435A /* RequestDetails.hpp */,
 				BEA264A92CBE99340007435A /* RequestDetails.cpp */,
 				BE44ACD82D7F089200BFA3B2 /* RequestVettingStation.hpp */,
@@ -635,24 +638,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		BEA82CDF2EC2201700CDC5A6 /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			alwaysOutOfDate = 1;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-			);
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "# Make sure the JS bits are up-to-date: run make in the login shell (so that Homebrew etc. is set up)\nset -e\n\"${SHELL:-/bin/zsh}\" -lic 'make -C \"$SRCROOT/../..\" all'\n";
-		};
 		BE1234562CDA3024004111EF /* Generate Document Icons */ = {
 			isa = PBXShellScriptBuildPhase;
 			alwaysOutOfDate = 1;
@@ -679,6 +664,24 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"$SRCROOT/generate-document-icons.sh\"\n";
+		};
+		BEA82CDF2EC2201700CDC5A6 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Make sure the JS bits are up-to-date: run make in the login shell (so that Homebrew etc. is set up)\nset -e\n\"${SHELL:-/bin/zsh}\" -lic 'make -C \"$SRCROOT/../..\" all'\n";
 		};
 		BEE076602CDA3024004111EF /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -709,6 +712,7 @@
 				BEA2636D2CBE38E20007435A /* Uri.cpp in Sources */,
 				BEA264922CBE986C0007435A /* KitQueue.cpp in Sources */,
 				BE9115AE2CECBD3100C597B2 /* FileUtil-unix.cpp in Sources */,
+				BEE563B52EF9A385002D3695 /* KitWSDGlobals.cpp in Sources */,
 				BEA264932CBE986C0007435A /* KitWebSocket.cpp in Sources */,
 				BEA264942CBE986C0007435A /* ChildSession.cpp in Sources */,
 				BEA264962CBE986C0007435A /* DeltaSimd.c in Sources */,
