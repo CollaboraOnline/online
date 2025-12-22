@@ -132,4 +132,21 @@ class DomUtilBase {
 			DomUtilBase.setClass(el, (className ? className + ' ' : '') + name);
 		}
 	}
+
+	public static removeClass(el: HTMLElement, name: string): void {
+		if (!el) {
+			return;
+		}
+
+		if (el.classList !== undefined) {
+			el.classList.remove(name);
+		} else {
+			DomUtilBase.setClass(
+				el,
+				app.util.trim(
+					(' ' + DomUtilBase.getClass(el) + ' ').replace(' ' + name + ' ', ' '),
+				),
+			);
+		}
+	}
 }
