@@ -574,8 +574,23 @@ class BackstageView extends window.L.Class {
 	} {
 		const uri = doc.uri || '';
 		const url = new URL(uri);
-		const fullPath = url.pathname;
+		let fullPath = url.pathname;
+
+		// On Windows a file: URI looks like this: file:///C:/Users/tml/foo.odt .
+		// URL::pathname has a leading slash and is thus not valid as a pathname, we need to
+		// strip that slash away.
+		if (window.ThisIsTheWindowsApp && fullPath[0] === '/' && fullPath[2] === ':')
+			fullPath = fullPath.slice(1);
+
+		// We want to show a more native pathname with backslashes instead of the slashes as
+		// used in file URIs.
+		if (window.ThisIsTheWindowsApp)
+			fullPath = (fullPath as any).replaceAll('/', '\\');
 		
+		// We want to show non-ASCII characters in the pathname as such, not
+		// percent-encoded.
+		fullPath = decodeURIComponent(fullPath);
+
 		const lastSlashIndex = Math.max(fullPath.lastIndexOf('/'), fullPath.lastIndexOf('\\'));
 		
 		const fileName = doc.name || (lastSlashIndex >= 0 ? fullPath.slice(lastSlashIndex + 1) : fullPath);
