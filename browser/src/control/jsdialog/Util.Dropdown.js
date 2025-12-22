@@ -125,6 +125,12 @@ JSDialog.OpenDropdown = function (id, popupParent, entries, innerCallback, popup
 
 	var generateCallback = function (targetEntries) {
 		let lastSubMenuOpened = null;
+		const closeLastSubMenu = () => {
+			if (!lastSubMenuOpened) return;
+			JSDialog.CloseDropdown(lastSubMenuOpened);
+			lastSubMenuOpened = null;
+		};
+
 		return function(objectType, eventType, object, data, builder) {
 			if (typeof data == 'number') var pos = data;
 			else var pos = data ? parseInt(data.substr(0, data.indexOf(';'))) : null;
@@ -135,13 +141,7 @@ JSDialog.OpenDropdown = function (id, popupParent, entries, innerCallback, popup
 				if (lastSubMenuOpened === subMenuId)
 					return;
 				if (entry && entry.items) {
-					if (lastSubMenuOpened) {
-						var submenu = JSDialog.GetDropdown(lastSubMenuOpened);
-						if (submenu) {
-							JSDialog.CloseDropdown(lastSubMenuOpened);
-							lastSubMenuOpened = null;
-						}
-					}
+					closeLastSubMenu();
 
 					// open submenu
 					var dropdown = JSDialog.GetDropdown(object.id);
@@ -171,8 +171,7 @@ JSDialog.OpenDropdown = function (id, popupParent, entries, innerCallback, popup
 					return;
 				}
 			} else if (eventType === 'hidedropdown') {
-				if (lastSubMenuOpened)
-					JSDialog.CloseDropdown(lastSubMenuOpened);
+				closeLastSubMenu();
 				JSDialog.CloseDropdown(id);
 				return;
 			}
