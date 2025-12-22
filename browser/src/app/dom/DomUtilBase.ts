@@ -85,4 +85,10 @@ class DomUtilBase {
 			parent.removeChild(el);
 		}
 	}
+
+	public static empty(el: HTMLElement): void {
+		while (el.firstChild) {
+			el.removeChild(el.firstChild);
+		}
+	}
 }
