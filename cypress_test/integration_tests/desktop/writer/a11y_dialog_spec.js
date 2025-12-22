@@ -1,10 +1,46 @@
 /* global describe expect it cy beforeEach require Cypress */
 
 var helper = require('../../common/helper');
+var ceHelper = require('../../common/contenteditable_helper');
+var desktopHelper = require('../../common/desktop_helper');
+
+const allWriterDialogs = [
+    '.uno:EditRegion',
+    '.uno:FontDialog',
+    '.uno:FootnoteDialog',
+    '.uno:FormatColumns',
+    '.uno:InsertBreak',
+    '.uno:InsertBookmark',
+    '.uno:InsertCaptionDialog',
+    '.uno:InsertFrame',
+    '.uno:InsertIndexesEntry',
+    '.uno:InsertMultiIndex',
+    '.uno:InsertSection',
+    '.uno:LineNumberingDialog',
+    '.uno:OutlineBullet',
+    '.uno:PageDialog',
+    '.uno:PageNumberWizard',
+    '.uno:ParagraphDialog',
+    '.uno:SearchDialog?InitialFocusReplace:bool=true',
+    '.uno:SpellingAndGrammarDialog',
+    '.uno:SplitTable',
+    '.uno:TableDialog',
+    '.uno:TableNumberFormatDialog',
+    '.uno:TableSort',
+    '.uno:ThemeDialog',
+    '.uno:ThesaurusDialog',
+    '.uno:TitlePageDialog',
+    '.uno:Translate',
+    '.uno:Watermark',
+    '.uno:WordCountDialog'
+];
 
 describe(['tagdesktop'], 'Accessibility Writer Tests', function () {
     beforeEach(function () {
         helper.setupAndLoadDocument('writer/help_dialog.odt');
+        // to make insertImage use the correct buttons
+        desktopHelper.switchUIToNotebookbar();
+        cy.cGet('div.clipboard').as('clipboard');
     });
 
     it('Check accessibility for writer', function () {
@@ -21,7 +57,7 @@ describe(['tagdesktop'], 'Accessibility Writer Tests', function () {
 
             cy.cGet('.jsdialog-window').should('not.exist');
 
-            cy.wrap(win.app.allDialogs).each((command) => {
+            cy.wrap(allWriterDialogs).each((command) => {
                 // these need a specific context
                 if (command == '.uno:ContourDialog' ||
                     command == '.uno:TransformDialog') {
@@ -33,29 +69,89 @@ describe(['tagdesktop'], 'Accessibility Writer Tests', function () {
                     cy.log(`Skipping non-jsdialog dialog: ${command}`);
                     return;
                 }
-                // don't pass yet
-                if (command == '.uno:InsertCaptionDialog' ||
-                    command == '.uno:PageDialog' ||
-                    command == '.uno:ParagraphDialog' ||
-                    command == '.uno:SpellingAndGrammarDialog' ||
-                    command == '.uno:TableDialog' ||
-                    command == '.uno:TableNumberFormatDialog') {
-                    cy.log(`Skipping buggy dialog: ${command}`);
-                    return;
-                }
 
                 cy.log(`Testing dialog: ${command}`);
                 cy.then(() => {
                     win.app.map.sendUnoCommand(command);
                 });
 
-                getActiveDialog()
-                    .should('exist')
-                    .then(() => {
-                        handleTabsInDialog();
-                        closeActiveDialog();
-                    });
+                handleDialog(1, command);
             });
+
+            // double click on field at initial cursor position
+            ceHelper.moveCaret('home', 'ctrl');
+            helper.getBlinkingCursorPosition('P');
+            helper.clickAt('P');
+            handleDialog(1);
+
+            // triple select to include table, then delete all
+            helper.typeIntoDocument('{ctrl}a');
+            helper.typeIntoDocument('{ctrl}a');
+            helper.typeIntoDocument('{ctrl}a');
+            helper.textSelectionShouldExist();
+            helper.typeIntoDocument('{del}');
+            helper.textSelectionShouldNotExist();
+
+            // ContentControlProperties dialog
+            cy.then(() => {
+                win.app.map.sendUnoCommand('.uno:InsertDropdownContentControl');
+                win.app.map.sendUnoCommand('.uno:ContentControlProperties');
+            });
+            handleDialog(1, '.uno:ContentControlProperties');
+            helper.clearAllText();
+
+            // Object dialog
+            cy.then(() => {
+                win.app.map.sendUnoCommand('.uno:InsertObjectChart');
+            });
+            cy.cGet('#test-div-shapeHandlesSection').should('exist');
+            cy.then(() => {
+                win.app.map.sendUnoCommand('.uno:FrameDialog');
+            });
+            handleDialog(1, '.uno:FrameDialog');
+            cy.then(() => {
+                win.app.map.sendUnoCommand('.uno:NameGroup');
+            });
+            handleDialog(1, '.uno:NameGroup');
+            cy.then(() => {
+                win.app.map.sendUnoCommand('.uno:ObjectTitleDescription');
+            });
+            handleDialog(1, '.uno:ObjectTitleDescription');
+            helper.clearAllText();
+
+            // Object dialog
+            desktopHelper.insertImage();
+            cy.then(() => {
+                win.app.map.sendUnoCommand('.uno:GraphicDialog');
+            });
+            handleDialog(1, '.uno:GraphicDialog');
+            helper.clearAllText();
+
+            // Rename bookmark
+            helper.typeIntoDocument('bookmark');
+            helper.selectAllText();
+            cy.then(() => {
+                // insert a bookmark first
+                win.app.map.sendUnoCommand('.uno:InsertBookmark?Bookmark:string=bookmark');
+                // edit bookmark
+                win.app.map.sendUnoCommand('.uno:InsertBookmark');
+            });
+            getActiveDialog(1).should('exist')
+                .then(() => {
+                cy.cGet('#bookmarks .ui-treeview-entry > div:first-child').click();
+                cy.cGet('#rename-button').should('be.enabled').click();
+                handleDialog(2);
+                closeActiveDialog(1);
+            });
+
+            // Text ReadOnly info dialog
+            helper.typeIntoDocument('READONLY');
+            helper.selectAllText();
+            cy.then(() => {
+                win.app.map.sendUnoCommand('.uno:InsertSection?RegionProtect:bool=true');
+            });
+            helper.typeIntoDocument('{del}');
+            handleDialog(1);
 
             cy.get('@console:error').then(spy => {
                 const a11yErrors = spy.getCalls().filter(call =>
@@ -111,14 +207,36 @@ describe(['tagdesktop'], 'Accessibility Writer Tests', function () {
         });
     });
 
-    function getActiveDialog() {
+    function handleDialog(level, command) {
+        getActiveDialog(level)
+            .should('exist')
+            .then(() => {
+                // Open 'options' subdialogs
+                if (command == '.uno:EditRegion' ||
+                    command == '.uno:InsertCaptionDialog') {
+                    cy.cGet('#options-button').click();
+                    handleDialog(level + 1);
+                } else if (command == '.uno:InsertIndexesEntry') {
+                    cy.cGet('#new-button').click();
+                    handleDialog(level + 1);
+                } else if (command == '.uno:ContentControlProperties') {
+                    cy.cGet('#add-button').click();
+                    handleDialog(level + 1);
+                }
+
+                handleTabsInDialog(level);
+                closeActiveDialog(level);
+            });
+    }
+
+    function getActiveDialog(level) {
         return cy.cGet('.ui-dialog[role="dialog"]')
-            .should('have.length.at.least', 1)
+            .should('have.length.at.least', level)
             .last();
     }
 
-    function handleTabsInDialog() {
-        traverseTabs(() => getActiveDialog());
+    function handleTabsInDialog(level) {
+        traverseTabs(() => getActiveDialog(level));
     }
 
     function traverseTabs(getContainer, isNested = false) {
@@ -201,11 +319,11 @@ describe(['tagdesktop'], 'Accessibility Writer Tests', function () {
         return $container.find(panelSelector);
     }
 
-    function closeActiveDialog() {
-        getActiveDialog().within(() => {
+    function closeActiveDialog(level) {
+        getActiveDialog(level).within(() => {
             cy.get('.ui-dialog-titlebar-close').click({ force: true });
         });
 
-        cy.cGet('.ui-dialog[role="dialog"]').should('have.length', 0);
+        cy.cGet('.ui-dialog[role="dialog"]').should('have.length', level - 1);
     }
 });
