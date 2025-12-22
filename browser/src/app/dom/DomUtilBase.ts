@@ -156,4 +156,37 @@ class DomUtilBase {
 			el.removeChild(el.lastChild);
 		}
 	}
+
+	public static setOpacity(el: HTMLElement, value: number | string): void {
+		if ('opacity' in el.style) {
+			el.style.opacity = String(value);
+		} else if ('filter' in el.style) {
+			DomUtilBase._setOpacityIE(el, +value);
+		}
+	}
+
+	private static _setOpacityIE(el: HTMLElement, value: number): void {
+		let filter = undefined;
+		const filterName = 'DXImageTransform.Microsoft.Alpha';
+
+		// filters collection throws an error if we try to retrieve a filter that doesn't exist
+		try {
+			filter = (el as any).filters.item(filterName);
+		} catch (e: any) {
+			// don't set opacity to 1 if we haven't already set an opacity,
+			// it isn't needed and breaks transparent pngs.
+			if (value === 1) {
+				return;
+			}
+		}
+
+		value = Math.round(value * 100);
+
+		if (filter) {
+			filter.Enabled = value !== 100;
+			filter.Opacity = value;
+		} else {
+			el.style.filter += ' progid:' + filterName + '(opacity=' + value + ')';
+		}
+	}
 }
