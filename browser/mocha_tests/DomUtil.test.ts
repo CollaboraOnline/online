@@ -269,4 +269,66 @@ describe('DomUtil', function() {
 			assert.ok(!DomUtilBase.hasClass(el, 'cool-caption embossed blurred'));
 		});
 	});
+
+	describe('setClass()', function () {
+		const store = new DOMStore(docstr);
+		const one = DomUtilBase.get('one', store.document);
+
+		it('no class names', function() {
+			const el = DomUtilBase.createWithId('p', 'cool-caption', one, undefined, store.document);
+			DomUtilBase.setClass(el, 'blink dark');
+			assert.ok(!DomUtilBase.hasClass(el, 'cool-caption'));
+			assert.ok(DomUtilBase.hasClass(el, 'blink'));
+			assert.ok(DomUtilBase.hasClass(el, 'dark'));
+		});
+
+		it('one class name', function() {
+			const el = DomUtilBase.create('p', 'cool-caption', one, undefined, store.document);
+			DomUtilBase.setClass(el, 'blink dark');
+			assert.ok(!DomUtilBase.hasClass(el, 'cool-caption'));
+			assert.ok(DomUtilBase.hasClass(el, 'blink'));
+			assert.ok(DomUtilBase.hasClass(el, 'dark'));
+		});
+
+		it('multiple class names', function() {
+			const el = DomUtilBase.create('p', 'cool-caption embossed blurred', one, undefined, store.document);
+			DomUtilBase.setClass(el, 'blink dark');
+			assert.ok(!DomUtilBase.hasClass(el, 'cool-caption'));
+			assert.ok(!DomUtilBase.hasClass(el, 'blurred'));
+			assert.ok(!DomUtilBase.hasClass(el, 'embossed'));
+			assert.ok(DomUtilBase.hasClass(el, 'blink'));
+			assert.ok(DomUtilBase.hasClass(el, 'dark'));
+		});
+	});
+
+	describe('addClass()', function () {
+		const store = new DOMStore(docstr);
+		const one = DomUtilBase.get('one', store.document);
+
+		it('no class names', function() {
+			const el = DomUtilBase.createWithId('p', 'cool-caption', one, undefined, store.document);
+			DomUtilBase.addClass(el, 'blink dark');
+			assert.ok(!DomUtilBase.hasClass(el, 'cool-caption'));
+			assert.ok(DomUtilBase.hasClass(el, 'blink'));
+			assert.ok(DomUtilBase.hasClass(el, 'dark'));
+		});
+
+		it('one class name', function() {
+			const el = DomUtilBase.create('p', 'cool-caption', one, undefined, store.document);
+			DomUtilBase.addClass(el, 'blink dark');
+			assert.ok(DomUtilBase.hasClass(el, 'cool-caption'));
+			assert.ok(DomUtilBase.hasClass(el, 'blink'));
+			assert.ok(DomUtilBase.hasClass(el, 'dark'));
+		});
+
+		it('multiple class names', function() {
+			const el = DomUtilBase.create('p', 'cool-caption embossed blurred', one, undefined, store.document);
+			DomUtilBase.addClass(el, 'blink dark');
+			assert.ok(DomUtilBase.hasClass(el, 'cool-caption'));
+			assert.ok(DomUtilBase.hasClass(el, 'blurred'));
+			assert.ok(DomUtilBase.hasClass(el, 'embossed'));
+			assert.ok(DomUtilBase.hasClass(el, 'blink'));
+			assert.ok(DomUtilBase.hasClass(el, 'dark'));
+		});
+	});
 });
