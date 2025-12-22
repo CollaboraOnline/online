@@ -162,6 +162,8 @@ JSDialog.OpenDropdown = function (id, popupParent, entries, innerCallback, popup
 						if (focusables && focusables.length)
 							focusables[0].focus();
 					});
+
+					return;
 				} else if (eventType === 'selected' && entry && entry.uno) {
 					var uno = (entry.uno.indexOf('.uno:') === 0) ? entry.uno : '.uno:' + entry.uno;
 					window.L.Map.THIS.sendUnoCommand(uno);
@@ -172,6 +174,7 @@ JSDialog.OpenDropdown = function (id, popupParent, entries, innerCallback, popup
 				if (lastSubMenuOpened)
 					JSDialog.CloseDropdown(lastSubMenuOpened);
 				JSDialog.CloseDropdown(id);
+				return;
 			}
 
 			// for multi-level menus last parameter should be used to handle event (it contains selected entry)
