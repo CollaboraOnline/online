@@ -6,14 +6,6 @@
 
 window.L.DomUtil = class DomUtil extends DomUtilBase {
 
-	static hasClass(el, name) {
-		if (el.classList !== undefined) {
-			return el.classList.contains(name);
-		}
-		var className = window.L.DomUtil.getClass(el);
-		return className.length > 0 && new RegExp('(^|\\s)' + name + '(\\s|$)').test(className);
-	}
-
 	static addClass(el, name) {
 		if (!el) {
 			return;
@@ -55,10 +47,6 @@ window.L.DomUtil = class DomUtil extends DomUtilBase {
 			// in case of SVG element
 			el.className.baseVal = name;
 		}
-	}
-
-	static getClass(el) {
-		return el.className.baseVal === undefined ? el.className : el.className.baseVal;
 	}
 
 	static setOpacity(el, value) {

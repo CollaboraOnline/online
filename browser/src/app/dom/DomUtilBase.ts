@@ -91,4 +91,20 @@ class DomUtilBase {
 			el.removeChild(el.firstChild);
 		}
 	}
+
+	public static getClass(el: HTMLElement): string {
+		const baseVal = (el.className as any).baseVal;
+		return baseVal === undefined ? el.className : baseVal;
+	}
+
+	public static hasClass(el: HTMLElement, name: string): boolean {
+		if (el.classList !== undefined) {
+			return el.classList.contains(name);
+		}
+		const className = DomUtilBase.getClass(el);
+		return (
+			className.length > 0 &&
+			new RegExp('(^|\\s)' + name + '(\\s|$)').test(className)
+		);
+	}
 }
