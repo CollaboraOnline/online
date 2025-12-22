@@ -3146,10 +3146,10 @@ void documentViewCallback(const int type, const char* payload, void* data)
     Document::ViewCallback(type, payload, data);
 }
 
-#ifndef BUILDING_TESTS
-
 namespace
 {
+
+#ifndef BUILDING_TESTS
 
 /// Called by LOK main-loop the central location for data processing.
 int pollCallback(void* data, int timeoutUs)
@@ -3212,6 +3212,8 @@ bool anyInputCallback(void* data, int mostUrgentPriority)
     return reinterpret_cast<KitSocketPoll*>(data)->kitHasAnyInput(mostUrgentPriority);
 }
 
+} // namespace
+
 bool KitSocketPoll::kitHasAnyInput(int mostUrgentPriority) {
 #if !MOBILEAPP
     const std::shared_ptr<Document>& document = getDocument();
@@ -3255,6 +3257,8 @@ bool KitSocketPoll::kitHasAnyInput(int mostUrgentPriority) {
 #endif
 }
 
+namespace {
+
 /// Called by LOK main-loop
 void wakeCallback(void* data)
 {
@@ -3263,6 +3267,8 @@ void wakeCallback(void* data)
 
     return reinterpret_cast<KitSocketPoll*>(data)->kitWakeup();
 }
+
+} // namespace
 
 void KitSocketPoll::kitWakeup() {
 #if !MOBILEAPP
@@ -3285,8 +3291,6 @@ void KitSocketPoll::kitWakeup() {
 #endif
 }
 
-<<<<<<< HEAD
-=======
 /**
  * Register the "any input", "poll" and "wake up" callbacks in LibreOfficeKit and start the LOKit's main loop.
  *
@@ -3312,11 +3316,9 @@ void startMainLoop(const LibreOfficeKit* kit, const std::shared_ptr<lok::Office>
     LOG_INF("Kit unipoll loop run terminated.");
 }
 
-#ifndef BUILDING_TESTS
-
 namespace
 {
->>>>>>> dbecbbaeac (Consolidate the KitSocketPoll initialization code)
+
 #if !MOBILEAPP
 
 extern "C"
