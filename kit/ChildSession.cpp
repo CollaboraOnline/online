@@ -8,7 +8,9 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
-
+#include <frozen/set.h>
+#include <frozen/string.h>
+#include <frozen/map.h>
 #include <config.h>
 
 #include "ChildSession.hpp"
@@ -658,6 +660,10 @@ bool ChildSession::_handleInput(const char *buffer, int length)
         }
         else if (tokens.equals(0, "uno"))
         {
+            static constexpr auto SignatureCommands = frozen::make_set<frozen::string>({
+                ".uno:Signature",
+                ".uno:InsertSignatureLine"
+            });
             // SpellCheckApplySuggestion might contain non separator spaces
             if (tokens[1].find(".uno:SpellCheckApplySuggestion") != std::string::npos ||
                 tokens[1].find(".uno:LanguageStatus") != std::string::npos)
@@ -691,16 +697,13 @@ bool ChildSession::_handleInput(const char *buffer, int length)
                     }
                 }
             }
-            else if (tokens[1] == ".uno:Signature" || tokens[1] == ".uno:InsertSignatureLine")
+            else if (SignatureCommands.count(frozen::string(tokens[1].data(), tokens[1].size())))
             {
-                // See if the command has parameters: if not, annotate with sign cert/key.
                 if (tokens.size() == 2 && unoSignatureCommand(tokens[1]))
                 {
-                    // The command has been sent with parameters from user private info, done.
                     return true;
                 }
             }
-
             return unoCommand(tokens);
         }
         else if (tokens.equals(0, "save"))
@@ -888,12 +891,17 @@ bool ChildSession::_handleInput(const char *buffer, int length)
 
 std::string getMimeFromFileType(const std::string & fileType)
 {
-    if (fileType == "pdf")
-        return "application/pdf";
-    else if (fileType == "odt")
-        return "application/vnd.oasis.opendocument.text";
-    else if (fileType == "docx")
-        return "application/vnd.openxmlformats-officedocument.wordprocessingml.document";
+    static constexpr auto MimeMap = frozen::make_map<frozen::string, frozen::string>({
+        {"pdf", "application/pdf"},
+        {"odt", "application/vnd.oasis.opendocument.text"},
+        {"docx", "application/vnd.openxmlformats-officedocument.wordprocessingml.document"}
+    });
+
+    const auto it = MimeMap.find(frozen::string(fileType.data(), fileType.size()));
+    if (it != MimeMap.end())
+    {
+        return std::string(it->second.data(), it->second.size());
+    }
 
     return std::string();
 }
@@ -1811,22 +1819,28 @@ bool ChildSession::insertFile(const StringVector& tokens)
 
     LOG_TRC("InsertFile with arguments: " << type << ": " << (data.empty() ? name : std::string("binary data")));
 
-    if (type == "graphic" ||
-        type == "graphicurl" ||
-        type == "selectbackground" ||
-        type == "multimedia" ||
-        type == "multimediaurl" )
+    static constexpr auto LocalInsertTypes = frozen::make_set<frozen::string>({
+        "graphic", "selectbackground", "multimedia"
+    });
+    static constexpr auto UrlInsertTypes = frozen::make_set<frozen::string>({
+        "graphicurl", "multimediaurl"
+    });
+    static constexpr auto MultimediaTypes = frozen::make_set<frozen::string>({
+        "multimedia", "multimediaurl"
+    });
+
+    if (LocalInsertTypes.count(frozen::string(type.data(), type.size())) || UrlInsertTypes.count(frozen::string(type.data(), type.size())))
     {
         std::string url;
 
         if constexpr (!Util::isMobileApp())
         {
-            if (type == "graphic" || type == "selectbackground" || type == "multimedia")
+            if (LocalInsertTypes.count(frozen::string(type.data(), type.size())))
             {
                 std::string jailDoc = getJailDocRoot();
                 url = "file://" + jailDoc + "insertfile/" + name;
             }
-            else if (type == "graphicurl" || type == "multimediaurl")
+            else if (UrlInsertTypes.count(frozen::string(type.data(), type.size())))
             {
                 URI::decode(name, url);
                 if (!Util::toLower(url).starts_with("http"))
@@ -1854,7 +1868,7 @@ bool ChildSession::insertFile(const StringVector& tokens)
 
         std::string command;
         std::string arguments;
-        if (type == "multimedia" || type == "multimediaurl") {
+        if (MultimediaTypes.count(frozen::string(type.data(), type.size()))) {
             command = ".uno:InsertAVMedia";
             arguments = "{"
                 "\"URL\":{"
@@ -2336,15 +2350,19 @@ bool ChildSession::unoCommand(const StringVector& tokens)
 
     SigUtil::addActivity(getId(), formatUnoCommandInfo(tokens[1]));
 
-    // we need to get LOK_CALLBACK_UNO_COMMAND_RESULT callback when saving
-    const bool notify = (tokens.equals(1, ".uno:Save") ||
-                          tokens.equals(1, ".uno:Undo") ||
-                          tokens.equals(1, ".uno:Redo") ||
-                          tokens.equals(1, ".uno:Cut") ||
-                          tokens.equals(1, ".uno:Copy") ||
-                          tokens.equals(1, ".uno:CopySlide") ||
-                          tokens.equals(1, ".uno:OpenHyperlink") ||
-                          tokens.startsWith(1, "vnd.sun.star.script:"));
+    // OPTIMIZARE: Set pentru notificări
+    static constexpr auto NotifyCommands = frozen::make_set<frozen::string>({
+        ".uno:Save",
+        ".uno:Undo",
+        ".uno:Redo",
+        ".uno:Cut",
+        ".uno:Copy",
+        ".uno:CopySlide",
+        ".uno:OpenHyperlink"
+    });
+
+    const bool notify = NotifyCommands.count(frozen::string(tokens[1].data(), tokens[1].size())) ||
+                        tokens.startsWith(1, "vnd.sun.star.script:");
 
     const std::string saveArgs = tokens.substrFromToken(2);
     LOG_TRC("uno command " << tokens[1] << " " << saveArgs << " notify: " << notify);
@@ -3624,8 +3642,13 @@ void ChildSession::loKitCallback(const int type, const std::string& payload)
         break;
     case LOK_CALLBACK_STATE_CHANGED:
     {
-        if (payload == ".uno:NotesMode=true" || payload == ".uno:NotesMode=false" ||
-            payload == ".uno:RedlineRenderMode=true" || payload == ".uno:RedlineRenderMode=false")
+        static constexpr auto StatusUpdatePayloads = frozen::make_set<frozen::string>({
+            ".uno:NotesMode=true",
+            ".uno:NotesMode=false",
+            ".uno:RedlineRenderMode=true",
+            ".uno:RedlineRenderMode=false"
+        });
+        if (StatusUpdatePayloads.count(frozen::string(payload.data(), payload.size())))
         {
             std::string status = LOKitHelper::documentStatus(getLOKitDocument()->get());
             sendTextFrame("statusupdate: " + status);
@@ -4094,9 +4117,13 @@ void LogUiCommands::logSaveLoad(std::string cmd, const std::string & path, std::
         size = st.size();
     }
 
-    std::set<std::string> fileExtensions = { "sxw", "odt", "fodt", "sxc", "ods", "fods", "sxi", "odp", "fodp", "sxd", "odg", "fodg", "doc", "xls", "ppt", "docx", "xlsx", "pptx" };
+    static constexpr auto FileExtensions = frozen::make_set<frozen::string>({
+        "sxw", "odt", "fodt", "sxc", "ods", "fods", "sxi", "odp", "fodp",
+        "sxd", "odg", "fodg", "doc", "xls", "ppt", "docx", "xlsx", "pptx"
+    });
+
     std::string extension = Poco::Path(path).getExtension();
-    if (fileExtensions.find(extension) == fileExtensions.end())
+    if (!FileExtensions.count(frozen::string(extension.data(), extension.size())))
         extension = "unknown";
 
     std::stringstream strToLog;
