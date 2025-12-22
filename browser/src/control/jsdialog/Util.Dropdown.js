@@ -123,8 +123,8 @@ JSDialog.OpenDropdown = function (id, popupParent, entries, innerCallback, popup
 		json.children[0].children.push(entry);
 	}
 
-	var lastSubMenuOpened = null;
 	var generateCallback = function (targetEntries) {
+		let lastSubMenuOpened = null;
 		return function(objectType, eventType, object, data, builder) {
 			if (typeof data == 'number') var pos = data;
 			else var pos = data ? parseInt(data.substr(0, data.indexOf(';'))) : null;
