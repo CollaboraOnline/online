@@ -99,18 +99,18 @@ function _menubuttonControl (parentContainer, data, builder) {
 				return;
 
 			var callback = function(objectType, eventType, object, data, entry /* : MenuDefinition | JSBuilder */) {
-				if ((eventType === 'selected' && entry.items) || eventType === 'showsubmenu') {
+				if ((eventType === 'selected' && entry && entry.items) || eventType === 'showsubmenu') {
 					return true;
-				} else if (eventType === 'selected' && entry.uno) {
+				} else if (eventType === 'selected' && entry && entry.uno) {
 					var uno = (entry.uno.indexOf('.uno:') === 0) ? entry.uno : '.uno:' + entry.uno;
 					builder.map.sendUnoCommand(uno);
 					JSDialog.CloseDropdown(dropdownId);
 					return true;
-				} else if (eventType === 'selected' && entry.action) {
+				} else if (eventType === 'selected' && entry && entry.action) {
 					app.dispatcher.dispatch(entry.action);
 					JSDialog.CloseDropdown(dropdownId);
 					return true;
-				} else if (eventType === 'selected' && entry.id) {
+				} else if (eventType === 'selected' && entry && entry.id) {
 					builder.callback('menubutton', 'select', control.container, entry.id, builder);
 					JSDialog.CloseDropdown(dropdownId);
 					return true;
