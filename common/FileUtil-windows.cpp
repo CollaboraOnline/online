@@ -125,6 +125,11 @@ namespace FileUtil
         stream.open(Util::string_to_wide_string(file), mode | std::ios_base::binary);
     }
 
+    void openFileToOFStream(const std::string& file, std::ofstream& stream, std::ios_base::openmode mode)
+    {
+        stream.open(Util::string_to_wide_string(file), mode | std::ios_base::binary);
+    }
+
     int getStatOfFile(const std::string& file, struct stat& sb)
     {
         return _wstat64i32(Util::string_to_wide_string(file).c_str(), (struct _stat64i32*) &sb);
