@@ -149,4 +149,11 @@ class DomUtilBase {
 			);
 		}
 	}
+
+	public static removeChildNodes(el: HTMLElement): void {
+		while (el.hasChildNodes()) {
+			Util.ensureValue(el.lastChild);
+			el.removeChild(el.lastChild);
+		}
+	}
 }
