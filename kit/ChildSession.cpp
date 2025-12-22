@@ -3339,10 +3339,8 @@ bool ChildSession::getPresentationInfo()
 {
     getLOKitDocument()->setView(_viewId);
 
-    char* info = nullptr;
-    info = getLOKitDocument()->getPresentationInfo();
-    std::string data(info);
-    free(info);
+    LOKitHelper::ScopedString info(getLOKitDocument()->getPresentationInfo());
+    std::string data(info.get());
     sendTextFrame("presentationinfo: " + data);
     return true;
 }

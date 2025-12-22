@@ -3863,8 +3863,8 @@ void lokit_main(
         }
         if (queryVersion)
         {
-            char* versionInfo = loKit->getVersionInfo();
-            std::string versionString(versionInfo);
+            LOKitHelper::ScopedString versionInfo(loKit->getVersionInfo());
+            std::string versionString(versionInfo.get());
             if (displayVersion)
                 std::cout << "office version details: " << versionString << std::endl;
 
@@ -3901,7 +3901,6 @@ void lokit_main(
             Poco::URI::encode(versionString, "?#/", encodedVersion);
             pathAndQuery.append("&version=");
             pathAndQuery.append(encodedVersion);
-            free(versionInfo);
         }
 
         // Admin settings bits:
