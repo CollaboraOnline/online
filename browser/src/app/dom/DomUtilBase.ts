@@ -107,4 +107,29 @@ class DomUtilBase {
 			new RegExp('(^|\\s)' + name + '(\\s|$)').test(className)
 		);
 	}
+
+	public static setClass(el: HTMLElement, name: string): void {
+		if ((el.className as any).baseVal === undefined) {
+			el.className = name;
+		} else {
+			// in case of SVG element
+			(el.className as any).baseVal = name;
+		}
+	}
+
+	public static addClass(el: HTMLElement, name: string): void {
+		if (!el) {
+			return;
+		}
+
+		if (el.classList !== undefined) {
+			const classes = app.util.splitWords(name);
+			for (let i = 0, len = classes.length; i < len; i++) {
+				el.classList.add(classes[i]);
+			}
+		} else if (!DomUtilBase.hasClass(el, name)) {
+			const className = DomUtilBase.getClass(el);
+			DomUtilBase.setClass(el, (className ? className + ' ' : '') + name);
+		}
+	}
 }
