@@ -255,7 +255,9 @@ window.L.Control.JSDialog = window.L.Control.extend({
 	getOrCreateOverlay: function(instance) {
 		// Submenu is created inside the same overlay as parent dropdown
 		if (instance.isDropdown && instance.isSubmenu) {
-			instance.overlay = document.body.querySelector('.jsdialog-overlay');
+			// use the last instance
+			const allOverlays = document.body.querySelectorAll('.jsdialog-overlay');
+			instance.overlay = allOverlays.length ? allOverlays[allOverlays.length - 1] : null;
 			return;
 		}
 
