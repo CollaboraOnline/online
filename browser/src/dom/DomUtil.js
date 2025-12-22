@@ -6,13 +6,6 @@
 
 window.L.DomUtil = class DomUtil extends DomUtilBase {
 
-
-	static empty(el) {
-		while (el.firstChild) {
-			el.removeChild(el.firstChild);
-		}
-	}
-
 	static toFront(el) {
 		el.parentNode.appendChild(el);
 	}

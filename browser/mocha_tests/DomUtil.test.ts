@@ -192,4 +192,33 @@ describe('DomUtil', function() {
 			assert.strictEqual(null, result);
 		});
 	});
+
+	describe('empty()', function () {
+		const store = new DOMStore(docstr);
+		const one = DomUtilBase.get('one', store.document);
+
+		it('already empty', function() {
+			assert.strictEqual(0, one.childElementCount);
+			assert.doesNotThrow(() => {
+				DomUtilBase.empty(one);
+			}, 'empty() should never throw');
+			assert.strictEqual(0, one.childElementCount);
+		});
+
+		it('two children', function() {
+			assert.strictEqual(0, one.childElementCount);
+			DomUtilBase.createWithId('p', 'cool-caption1', one, undefined, store.document);
+			DomUtilBase.createWithId('p', 'cool-caption2', one, undefined, store.document);
+			assert.strictEqual(2, one.childElementCount);
+			assert.doesNotThrow(() => {
+				DomUtilBase.empty(one);
+			}, 'empty() should never throw');
+			assert.strictEqual(0, one.childElementCount);
+
+			const c1 = DomUtilBase.get('cool-caption1', store.document);
+			const c2 = DomUtilBase.get('cool-caption2', store.document);
+			assert.strictEqual(null, c1);
+			assert.strictEqual(null, c2);
+		});
+	});
 });
