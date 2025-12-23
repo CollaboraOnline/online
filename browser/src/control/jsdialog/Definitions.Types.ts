@@ -105,6 +105,14 @@ type JSDialogCallback = (
 	builder: JSBuilder,
 ) => void;
 
+type JSDialogMenuCallback = (
+	objectType: string,
+	eventType: string,
+	object: any,
+	data: any,
+	entry: JSBuilder | MenuDefinition,
+) => boolean;
+
 interface DialogResponse {
 	id: string;
 	response: number;
@@ -172,9 +180,8 @@ interface NotebookbarTab {
 type CustomEntryRenderCallback = (pos: number | string) => void;
 
 // used to define menus
-type MenuDefinition = {
-	id?: string; // unique identifier
-	type: 'action' | 'menu' | 'separator' | 'html' | 'json'; // type of entry
+interface MenuDefinition extends WidgetJSON {
+	type: 'action' | 'colorpicker' | 'menu' | 'separator' | 'html' | 'json' | 'comboboxentry'; // type of entry
 	text?: string; // displayed text
 	hint?: string; // hint text
 	uno?: string; // uno command
@@ -185,7 +192,15 @@ type MenuDefinition = {
 	icon?: string; // icon name FIXME: duplicated property, used in exportMenuButton
 	checked?: boolean; // state of check mark
 	items?: Array<any>; // submenu
-};
+}
+
+interface HtmlContentJson extends WidgetJSON {
+	htmlId: string;
+	closeCallback?: EventListenerOrEventListenerObject;
+	isReadOnlyMode?: boolean;
+	canUserWrite?: boolean;
+	text?: string;
+}
 
 type FunctionNameAlias = {
 	en: string;
@@ -297,9 +312,16 @@ interface RadioButtonWidget extends WidgetJSON {
 	hidden?: boolean;
 }
 
+interface ComboBoxEntry extends MenuDefinition {
+	customRenderer?: boolean; // can render custom preview
+	selected?: boolean; // is selected
+	comboboxId?: string; // used to reference parent
+	pos: string | number; // identifier of an entry
+}
+
 interface ComboBoxWidget extends WidgetJSON {
 	text?: string;
-	entries?: Array<string | number>;
+	entries?: Array<string | number | ComboBoxEntry>;
 	selectedCount?: number;
 	selectedEntries?: Array<number>;
 	command?: string;
@@ -401,5 +423,5 @@ interface AriaLabelAttributes {
 }
 
 interface SeparatorWidgetJSON extends WidgetJSON {
-	orientation: string;
+	orientation: 'horizontal' | 'vertical';
 }
