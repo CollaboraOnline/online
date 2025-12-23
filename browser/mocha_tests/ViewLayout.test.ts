@@ -12,7 +12,7 @@
 describe('ViewLayout', function() {
 
 var jsdom = require('jsdom');
-var assert = require('assert').strict;
+var nodeassert = require('assert').strict;
 var _ = function(text: string) { return text; };
 
 function initializeJSDOM() {
@@ -40,11 +40,11 @@ describe('View Layout Tests', function () {
         viewLayout.viewedRectangle = new cool.SimpleRectangle(100, 100, 100, 100);
         let panDirection = viewLayout.getLastPanDirection();
 
-        assert.ok(panDirection[0] === 1 && panDirection[1] === 1);
+        nodeassert.ok(panDirection[0] === 1 && panDirection[1] === 1);
 
         viewLayout.viewedRectangle = new cool.SimpleRectangle(50, 50, 100, 100);
         panDirection = viewLayout.getLastPanDirection();
-        assert.ok(panDirection[0] === -1 && panDirection[1] === -1);
+        nodeassert.ok(panDirection[0] === -1 && panDirection[1] === -1);
 	});
 });
 
