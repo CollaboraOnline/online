@@ -328,6 +328,7 @@
     <ClCompile Include="..\..\..\wsd\SlideCache.cpp" />
     <ClCompile Include="..\..\..\wsd\Storage.cpp" />
     <ClCompile Include="..\..\..\wsd\TileCache.cpp" />
+    <ClCompile Include="..\..\..\wsd\WSDGlobals.cpp" />
     <ClCompile Include="..\..\..\wsd\coolwsd-fork.cpp" />
     <ClCompile Include="CODA.cpp" />
   </ItemGroup>

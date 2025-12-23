@@ -131,6 +131,9 @@
     <ClCompile Include="..\..\..\wsd\TileCache.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\wsd\WSDGlobals.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\..\wsd\coolwsd-fork.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
