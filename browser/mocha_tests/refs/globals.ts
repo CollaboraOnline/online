@@ -33,3 +33,7 @@ var app: any = {
 		}
 	}
 };
+
+(globalThis.window as any) = {
+	document: {},
+}

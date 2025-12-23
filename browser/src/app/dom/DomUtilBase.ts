@@ -190,7 +190,7 @@ class DomUtilBase {
 		}
 	}
 
-	// needed for initializing some static data members and function.
+	// needed for initializing some static data members and functions.
 	private static testProp(props: string[]): string | undefined {
 		const style = document.documentElement.style;
 
@@ -233,4 +233,62 @@ class DomUtilBase {
 	}
 
 	public static TRANSITION_END: string = DomUtilBase.getTransitionEnd();
+
+	private static userSelectProperty = DomUtilBase.testProp([
+		'userSelect',
+		'WebkitUserSelect',
+		'OUserSelect',
+		'MozUserSelect',
+		'msUserSelect',
+	]);
+
+	private static _userSelect: any = undefined;
+
+	private static getDisbleTextSelection(): () => void {
+		if ('onselectstart' in document) {
+			return () => {
+				window.L.DomEvent.on(
+					window,
+					'selectstart',
+					window.L.DomEvent.preventDefault,
+				);
+			};
+		}
+
+		return () => {
+			if (DomUtilBase.userSelectProperty) {
+				const style = document.documentElement.style;
+				DomUtilBase._userSelect = style.getPropertyValue(
+					DomUtilBase.userSelectProperty,
+				);
+				style.setProperty(DomUtilBase.userSelectProperty, 'none');
+			}
+		};
+	}
+
+	public static disableTextSelection = DomUtilBase.getDisbleTextSelection();
+
+	private static getEnableTextSelection(): () => void {
+		if ('onselectstart' in document) {
+			return () => {
+				window.L.DomEvent.off(
+					window,
+					'selectstart',
+					window.L.DomEvent.preventDefault,
+				);
+			};
+		}
+
+		return () => {
+			if (DomUtilBase.userSelectProperty) {
+				document.documentElement.style.setProperty(
+					DomUtilBase.userSelectProperty,
+					DomUtilBase._userSelect,
+				);
+				this._userSelect = undefined;
+			}
+		};
+	}
+
+	public static enableTextSelection = DomUtilBase.getEnableTextSelection();
 }
