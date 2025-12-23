@@ -171,7 +171,7 @@ function _menubuttonControl (parentContainer, data, builder) {
 			image.src = data.image;
 			image.setAttribute('alt', '');
 		}
-		var label = window.L.DomUtil.create('span', '', button);
+		var label = window.L.DomUtil.create('span', 'unolabel', button);
 		label.innerText = data.text ? data.text : '';
 		window.L.DomUtil.create('i', 'arrow', button);
 
