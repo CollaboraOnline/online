@@ -9,11 +9,6 @@
   "sdk-extensions": [
     "org.freedesktop.Sdk.Extension.node20"
   ],
-  "add-build-extensions": {
-    "org.freedesktop.Sdk.Extension.node20": {
-      "version": "25.08"
-    }
-  },
   "command": "coda-qt",
   "finish-args": [
     "--share=network",
