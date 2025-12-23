@@ -120,13 +120,12 @@ bool isRegexValid(const std::string& regex)
     try
     {
         // Not performance critical to warrant caching.
-        Poco::RegularExpression re(regex, Poco::RegularExpression::RE_CASELESS);
+        Poco::RegularExpression re(regex);
         return true;
     }
-    catch (const std::exception& exc)
-    {
-        return false;
-    }
+    catch (const std::regex_error& exc){}
+
+    return false;
 }
 
 } // namespace RegexUtil
