@@ -181,7 +181,14 @@ type CustomEntryRenderCallback = (pos: number | string) => void;
 
 // used to define menus
 interface MenuDefinition extends WidgetJSON {
-	type: 'action' | 'colorpicker' | 'menu' | 'separator' | 'html' | 'json' | 'comboboxentry'; // type of entry
+	type:
+		| 'action'
+		| 'colorpicker'
+		| 'menu'
+		| 'separator'
+		| 'html'
+		| 'json'
+		| 'comboboxentry'; // type of entry
 	text?: string; // displayed text
 	hint?: string; // hint text
 	uno?: string; // uno command
