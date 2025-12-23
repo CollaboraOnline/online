@@ -19,16 +19,20 @@ function _createDropdownId(id: string) {
 	return id + '-dropdown';
 }
 
-JSDialog.CreateDropdownEntriesId = function(id: string) {
+JSDialog.CreateDropdownEntriesId = function (id: string) {
 	return id + '-entries';
-}
+};
 
-JSDialog.OpenDropdown = function (id: string,
-																	popupParent: string | ( HTMLElement & { _onDropDown: (open: boolean) => void } ),
-																	entries: Array<ComboBoxEntry>,
-																	innerCallback: JSDialogMenuCallback,
-																	popupAnchor: string,
-																	isSubmenu: boolean) {
+JSDialog.OpenDropdown = function (
+	id: string,
+	popupParent:
+		| string
+		| (HTMLElement & { _onDropDown: (open: boolean) => void }),
+	entries: Array<ComboBoxEntry>,
+	innerCallback: JSDialogMenuCallback,
+	popupAnchor: string,
+	isSubmenu: boolean,
+) {
 	const json = {
 		id: _createDropdownId(id),
 		type: 'dropdown',
@@ -45,12 +49,16 @@ JSDialog.OpenDropdown = function (id: string,
 				allyRole: 'listbox',
 				cols: 1,
 				rows: entries.length,
-				children: [] as Array<WidgetJSON>
-			}
-		]
+				children: [] as Array<WidgetJSON>,
+			},
+		],
 	};
 
-	if (popupParent && typeof popupParent !== 'string' && typeof popupParent._onDropDown === 'function') {
+	if (
+		popupParent &&
+		typeof popupParent !== 'string' &&
+		typeof popupParent._onDropDown === 'function'
+	) {
 		popupParent._onDropDown(true);
 	}
 
@@ -58,17 +66,23 @@ JSDialog.OpenDropdown = function (id: string,
 		const items = window.L.Map.THIS['stateChangeHandler'];
 		const val = items.getItemValue(unoCommand);
 
-		if (val && (val === true || val === 'true'))
-			return true;
-		else
-			return false;
+		if (val && (val === true || val === 'true')) return true;
+		else return false;
 	};
 
 	for (const i in entries) {
-		const checkedValue = (entries[i].checked === undefined)
-			? undefined : (entries[i].uno && isChecked('.uno' + entries[i].uno));
+		const checkedValue =
+			entries[i].checked === undefined
+				? undefined
+				: entries[i].uno && isChecked('.uno' + entries[i].uno);
 
-		let entry: WidgetJSON | SeparatorWidgetJSON | HtmlContentJson | MenuDefinition | ComboBoxEntry | null = null;
+		let entry:
+			| WidgetJSON
+			| SeparatorWidgetJSON
+			| HtmlContentJson
+			| MenuDefinition
+			| ComboBoxEntry
+			| null = null;
 
 		switch (entries[i].type) {
 			// DEPRECACTED: legacy plain HTML adapter
@@ -77,32 +91,37 @@ JSDialog.OpenDropdown = function (id: string,
 					id: id + '-entry-' + i,
 					type: 'htmlcontent',
 					htmlId: entries[i].htmlId,
-					closeCallback: function () { JSDialog.CloseDropdown(id); }
+					closeCallback: function () {
+						JSDialog.CloseDropdown(id);
+					},
 				} as HtmlContentJson;
 				json.gridKeyboardNavigation = true;
-			break;
+				break;
 
 			// dropdown is a colorpicker
 			case 'colorpicker':
 				entry = entries[i];
 				// for color picker we have a "KeyboardGridNavigation" function defined separately to handle custom cases
 				json.gridKeyboardNavigation = true;
-			break;
+				break;
 
 			// allows to put regular JSDialog JSON into popup
 			case 'json':
-				entry = typeof entries[i].content !== 'undefined' ? entries[i].content as WidgetJSON : null;
+				entry =
+					typeof entries[i].content !== 'undefined'
+						? (entries[i].content as WidgetJSON)
+						: null;
 				if (entry?.type === 'grid') json.gridKeyboardNavigation = true;
-			break;
+				break;
 
 			// horizontal separator in menu
 			case 'separator':
 				entry = {
 					id: id + '-entry-' + i,
 					type: 'separator',
-					orientation: 'horizontal'
+					orientation: 'horizontal',
 				} as SeparatorWidgetJSON;
-			break;
+				break;
 
 			// menu and submenu entry
 			case 'action':
@@ -120,15 +139,17 @@ JSDialog.OpenDropdown = function (id: string,
 					icon: entries[i].img,
 					checked: entries[i].checked || checkedValue,
 					selected: entries[i].selected,
-					hasSubMenu: !!entries[i].items
+					hasSubMenu: !!entries[i].items,
 				} as ComboBoxEntry;
-			break;
+				break;
 		}
 
 		if (entry) json.children[0].children.push(entry);
 	}
 
-	const generateCallback = function (targetEntries: Array<MenuDefinition>): JSDialogCallback {
+	const generateCallback = function (
+		targetEntries: Array<MenuDefinition>,
+	): JSDialogCallback {
 		let lastSubMenuOpened: string | null = null;
 		const closeLastSubMenu = () => {
 			if (!lastSubMenuOpened) return;
@@ -136,7 +157,13 @@ JSDialog.OpenDropdown = function (id: string,
 			lastSubMenuOpened = null;
 		};
 
-		return function(objectType: string, eventType: string, object: any, data: any, builder: JSBuilder) {
+		return function (
+			objectType: string,
+			eventType: string,
+			object: any,
+			data: any,
+			builder: JSBuilder,
+		) {
 			let pos = -1;
 			if (typeof data === 'number') pos = data;
 			else pos = data ? parseInt(data.substr(0, data.indexOf(';'))) : -1;
@@ -151,9 +178,16 @@ JSDialog.OpenDropdown = function (id: string,
 					const dropdown = JSDialog.GetDropdown(object.id);
 					const allEntries = dropdown.querySelectorAll('.ui-grid-cell');
 					const index = pos + 1;
-					const targetEntry = allEntries && allEntries.length > index ? allEntries[index] : null;
-					JSDialog.OpenDropdown(subMenuId, targetEntry, entry.items,
-						generateCallback(entry.items), 'top-end', true);
+					const targetEntry =
+						allEntries && allEntries.length > index ? allEntries[index] : null;
+					JSDialog.OpenDropdown(
+						subMenuId,
+						targetEntry,
+						entry.items,
+						generateCallback(entry.items),
+						'top-end',
+						true,
+					);
 					lastSubMenuOpened = subMenuId;
 
 					app.layoutingService.appendLayoutingTask(() => {
@@ -165,13 +199,13 @@ JSDialog.OpenDropdown = function (id: string,
 						const container = dropdown.querySelector('.ui-grid');
 						JSDialog.MakeFocusCycle(container);
 						const focusables = JSDialog.GetFocusableElements(container);
-						if (focusables && focusables.length)
-							focusables[0].focus();
+						if (focusables && focusables.length) focusables[0].focus();
 					});
 
 					return;
 				} else if (eventType === 'selected' && entry && entry.uno) {
-					const uno = (entry.uno.indexOf('.uno:') === 0) ? entry.uno : '.uno:' + entry.uno;
+					const uno =
+						entry.uno.indexOf('.uno:') === 0 ? entry.uno : '.uno:' + entry.uno;
 					window.L.Map.THIS.sendUnoCommand(uno);
 					JSDialog.CloseDropdown(id);
 					return;
@@ -184,25 +218,31 @@ JSDialog.OpenDropdown = function (id: string,
 
 			// for multi-level menus last parameter should be used to handle event (it contains selected entry)
 			// usually last param is builder see: JSDialogCallback
-			if (innerCallback && innerCallback(objectType, eventType, object, data, entry || builder))
+			if (
+				innerCallback &&
+				innerCallback(objectType, eventType, object, data, entry || builder)
+			)
 				return;
 
-			if (eventType === 'selected')
-				JSDialog.CloseDropdown(id);
-			else
-				console.debug('Dropdown: unhandled action: "' + eventType + '"');
+			if (eventType === 'selected') JSDialog.CloseDropdown(id);
+			else console.debug('Dropdown: unhandled action: "' + eventType + '"');
 		};
 	};
 	window.L.Map.THIS.fire('closepopups'); // close popups if a dropdown menu is opened
-	window.L.Map.THIS.fire('jsdialog', {data: json, callback: generateCallback(entries)});
+	window.L.Map.THIS.fire('jsdialog', {
+		data: json,
+		callback: generateCallback(entries),
+	});
 };
 
 JSDialog.CloseDropdown = function (id: string) {
-	window.L.Map.THIS.fire('jsdialog', {data: {
-		id: _createDropdownId(id),
-		jsontype: 'dialog',
-		action: 'close'
-	}});
+	window.L.Map.THIS.fire('jsdialog', {
+		data: {
+			id: _createDropdownId(id),
+			jsontype: 'dialog',
+			action: 'close',
+		},
+	});
 };
 
 JSDialog.CloseAllDropdowns = function () {
