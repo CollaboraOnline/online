@@ -1473,6 +1473,7 @@ menuDefinitions.set('MenuPrintRanges', [
 ] as Array<MenuDefinition>);
 menuDefinitions.set('MenuMargins', [
 	{
+		id: 'MarginMenu',
 		type: 'json',
 		content: {
 			id: 'Layout-MarginMenu',
@@ -1480,7 +1481,7 @@ menuDefinitions.set('MenuMargins', [
 			options: pageMarginOptions,
 		},
 	},
-	{ type: 'separator' },
+	{ id: 'MarginMenuSeparator', type: 'separator' },
 ] as Array<MenuDefinition>);
 
 menuDefinitions.set('MenuOrientation', [
@@ -1545,6 +1546,7 @@ const pageSizes = [
 
 menuDefinitions.set('MenuPageSizesCalc', [
 	{
+		id: 'PageSizeMenu',
 		type: 'json',
 		content: {
 			id: 'Layout-PageSizeMenu',
@@ -1556,7 +1558,7 @@ menuDefinitions.set('MenuPageSizesCalc', [
 			})),
 		},
 	},
-	{ type: 'separator' },
+	{ id: 'PageSizeMenuSeparator', type: 'separator' },
 ] as Array<MenuDefinition>);
 
 menuDefinitions.set(
@@ -2264,6 +2266,7 @@ function generatePictureTransparencyMenu(
 
 menuDefinitions.set('NewSlideLayoutMenu', [
 	{
+		id: 'NewSlideLayoutMenu',
 		type: 'json',
 		content: {
 			id: 'Layout-NewSlideLayoutMenu',
@@ -2273,15 +2276,16 @@ menuDefinitions.set('NewSlideLayoutMenu', [
 			gridContent: generateLayoutPopupGrid('InsertPage'),
 		},
 	},
-	{ type: 'separator' }, // required to show dropdown arrow
+	{ id: 'NewSlideLayoutMenuSeparator', type: 'separator' }, // required to show dropdown arrow
 ] as Array<MenuDefinition>);
 
 menuDefinitions.set('ChangeSlideLayoutMenu', [
 	{
+		id: 'ChangeSlideLayoutMenu',
 		type: 'json',
 		content: generateLayoutPopupGrid('AssignLayout'),
 	},
-	{ type: 'separator' }, // required to show dropdown arrow
+	{ id: 'ChangeSlideLayoutMenuSeparator', type: 'separator' }, // required to show dropdown arrow
 ] as Array<MenuDefinition>);
 
 menuDefinitions.set(
