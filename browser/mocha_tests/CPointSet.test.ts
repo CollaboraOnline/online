@@ -9,20 +9,20 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-var assert = require('assert');
+var nodeassert = require('assert');
 
 describe('CPointSet', function () {
 
 	describe('new CPointSet()', function () {
 		it('should be empty', function () {
-			assert.ok((new CPointSet()).empty());
+			nodeassert.ok((new CPointSet()).empty());
 		});
 	});
 
 	describe('CPointSet constructed from Points', function () {
 		it('should be not be empty', function () {
 			var pointArray: Array<cool.Point> = [new cool.Point(10, 40), new cool.Point(50, 100)];
-			assert.ok(!CPointSet.fromPointArray(pointArray).empty());
+			nodeassert.ok(!CPointSet.fromPointArray(pointArray).empty());
 		});
 	});
 
@@ -33,7 +33,7 @@ describe('CPointSet', function () {
 			pointArray = [new cool.Point(100, 400), new cool.Point(500, 1000)];
 			var pSet2 = CPointSet.fromPointArray(pointArray);
 			var pSetArray = [pSet1, pSet2];
-			assert.ok(!CPointSet.fromSetArray(pSetArray).empty());
+			nodeassert.ok(!CPointSet.fromSetArray(pSetArray).empty());
 		});
 	});
 
@@ -42,7 +42,7 @@ describe('CPointSet', function () {
 			var pointArray: Array<cool.Point> = [new cool.Point(10, 40), new cool.Point(50, 100)];
 			var pSet = CPointSet.fromPointArray(pointArray);
 			pSet.setPointArray([]);
-			assert.ok(pSet.empty());
+			nodeassert.ok(pSet.empty());
 		});
 	});
 
