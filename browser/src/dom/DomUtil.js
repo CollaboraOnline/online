@@ -59,33 +59,6 @@ window.L.DomUtil = class DomUtil extends DomUtilBase {
 
 (function () {
 
-	if ('onselectstart' in document) {
-		window.L.DomUtil.disableTextSelection = function () {
-			window.L.DomEvent.on(window, 'selectstart', window.L.DomEvent.preventDefault);
-		};
-		window.L.DomUtil.enableTextSelection = function () {
-			window.L.DomEvent.off(window, 'selectstart', window.L.DomEvent.preventDefault);
-		};
-
-	} else {
-		var userSelectProperty = window.L.DomUtil.testProp(
-			['userSelect', 'WebkitUserSelect', 'OUserSelect', 'MozUserSelect', 'msUserSelect']);
-
-		window.L.DomUtil.disableTextSelection = function () {
-			if (userSelectProperty) {
-				var style = document.documentElement.style;
-				this._userSelect = style[userSelectProperty];
-				style[userSelectProperty] = 'none';
-			}
-		};
-		window.L.DomUtil.enableTextSelection = function () {
-			if (userSelectProperty) {
-				document.documentElement.style[userSelectProperty] = this._userSelect;
-				delete this._userSelect;
-			}
-		};
-	}
-
 	window.L.DomUtil.disableImageDrag = function () {
 		window.L.DomEvent.on(window, 'dragstart', window.L.DomEvent.preventDefault);
 	};
