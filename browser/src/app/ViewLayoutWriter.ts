@@ -30,6 +30,14 @@ class ViewLayoutWriter extends ViewLayoutBase {
 			this.annotationOperationsCallback,
 			this,
 		);
+
+		const compareButton = document.getElementById('compare-view-button');
+		if (compareButton) {
+			compareButton.onclick = function() {
+				app.socket.sendMessage('uno .uno:RedlineRenderMode');
+				app.activeDocument.activeLayout = new ViewLayoutDocumentCompare();
+			};
+		}
 	}
 
 	private getCommentAndDocumentSpacingInfo(): DocumentSpacingInfo {

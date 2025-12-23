@@ -1468,6 +1468,11 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 			this._onInvalidateTilesMsg(textMsg);
 		}
 		else {
+			if (app.activeDocument && app.activeDocument.activeLayout.type === 'ViewLayoutDocumentCompare') {
+				TileManager.removeAllTiles();
+				return;
+			}
+
 			var msg = 'invalidatetiles: ';
 
 			// see invalidatetiles: in wsd/protocol.txt for structure

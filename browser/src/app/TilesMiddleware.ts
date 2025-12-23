@@ -57,7 +57,7 @@ class TileCoordData {
 
 	// Returns SimplePoint. To replace getPos in the short term.
 	getPosSimplePoint() {
-		return cool.SimplePoint.fromCorePixels([this.x, this.y], this.part);
+		return cool.SimplePoint.fromCorePixels([this.x, this.y], this.part, this.mode);
 	}
 
 	key(): string {
@@ -1072,7 +1072,7 @@ class TileManager {
 		this.tiles.delete(key);
 	}
 
-	private static removeAllTiles() {
+	public static removeAllTiles() {
 		this.tileBitmapList = [];
 		for (const key of Array.from(this.tiles.keys())) {
 			this.removeTile(key);
