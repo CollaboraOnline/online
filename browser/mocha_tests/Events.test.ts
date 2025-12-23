@@ -11,7 +11,7 @@
 
 describe('Events', function() {
 
-var assert = require('assert').strict;
+var nodeassert = require('assert').strict;
 
 describe('Evented: Register handler with event names as a string', function () {
 	const contextTypes = ['self', 'foreign'];
@@ -58,7 +58,7 @@ function runTestsForContextType(contextType: string, callType: string) {
 
 		} else {
 
-			assert.fail('Invalid callType "' + callType + '"');
+			nodeassert.fail('Invalid callType "' + callType + '"');
 
 		}
 	}
@@ -77,7 +77,7 @@ function runTestsForContextType(contextType: string, callType: string) {
 
 		} else {
 
-			assert.fail('Invalid callType "' + callType + '"');
+			nodeassert.fail('Invalid callType "' + callType + '"');
 
 		}
 	}
@@ -96,7 +96,7 @@ function runTestsForContextType(contextType: string, callType: string) {
 
 		} else {
 
-			assert.fail('Invalid callType "' + callType + '"');
+			nodeassert.fail('Invalid callType "' + callType + '"');
 
 		}
 	}
@@ -120,11 +120,11 @@ function runTestsForContextType(contextType: string, callType: string) {
 
 			unregisterEvents(obj, regData, context);
 
-			assert.equal(0, context.first.numCalls);
-			assert.equal(null, context.first.event);
+			nodeassert.equal(0, context.first.numCalls);
+			nodeassert.equal(null, context.first.event);
 
-			assert.equal(0, context.second.numCalls);
-			assert.equal(null, context.second.event);
+			nodeassert.equal(0, context.second.numCalls);
+			nodeassert.equal(null, context.second.event);
 		});
 
 		it('fire() called after off() must have no effect', function () {
@@ -141,11 +141,11 @@ function runTestsForContextType(contextType: string, callType: string) {
 			obj.fire('e1');
 			obj.fire('e4');
 
-			assert.equal(0, context.first.numCalls);
-			assert.equal(null, context.first.event);
+			nodeassert.equal(0, context.first.numCalls);
+			nodeassert.equal(null, context.first.event);
 
-			assert.equal(0, context.second.numCalls);
-			assert.equal(null, context.second.event);
+			nodeassert.equal(0, context.second.numCalls);
+			nodeassert.equal(null, context.second.event);
 		});
 
 		it('fire() e1 and e4', function () {
@@ -162,13 +162,13 @@ function runTestsForContextType(contextType: string, callType: string) {
 
 			unregisterEvents(obj, regData, context);
 
-			assert.equal(1, context.first.numCalls);
-			assert.equal('e1', context.first.event.type);
-			assert.equal(obj, context.first.event.target);
+			nodeassert.equal(1, context.first.numCalls);
+			nodeassert.equal('e1', context.first.event.type);
+			nodeassert.equal(obj, context.first.event.target);
 
-			assert.equal(1, context.second.numCalls);
-			assert.equal('e4', context.second.event.type);
-			assert.equal(obj, context.second.event.target);
+			nodeassert.equal(1, context.second.numCalls);
+			nodeassert.equal('e4', context.second.event.type);
+			nodeassert.equal(obj, context.second.event.target);
 		});
 
 		it('fire() all four events', function () {
@@ -187,13 +187,13 @@ function runTestsForContextType(contextType: string, callType: string) {
 
 			unregisterEvents(obj, regData, context);
 
-			assert.equal(2, context.first.numCalls);
-			assert.equal('e2', context.first.event.type);
-			assert.equal(obj, context.first.event.target);
+			nodeassert.equal(2, context.first.numCalls);
+			nodeassert.equal('e2', context.first.event.type);
+			nodeassert.equal(obj, context.first.event.target);
 
-			assert.equal(2, context.second.numCalls);
-			assert.equal('e4', context.second.event.type);
-			assert.equal(obj, context.second.event.target);
+			nodeassert.equal(2, context.second.numCalls);
+			nodeassert.equal('e4', context.second.event.type);
+			nodeassert.equal(obj, context.second.event.target);
 		});
 
 		it('fire() e4 multiple times', function () {
@@ -211,12 +211,12 @@ function runTestsForContextType(contextType: string, callType: string) {
 
 			unregisterEvents(obj, regData, context);
 
-			assert.equal(0, context.first.numCalls);
-			assert.equal(null, context.first.event);
+			nodeassert.equal(0, context.first.numCalls);
+			nodeassert.equal(null, context.first.event);
 
-			assert.equal(3, context.second.numCalls);
-			assert.equal('e4', context.second.event.type);
-			assert.equal(obj, context.second.event.target);
+			nodeassert.equal(3, context.second.numCalls);
+			nodeassert.equal('e4', context.second.event.type);
+			nodeassert.equal(obj, context.second.event.target);
 		});
 
 		it('fire() e2 then e1, ensure order of handler calls', function () {
@@ -233,13 +233,13 @@ function runTestsForContextType(contextType: string, callType: string) {
 
 			unregisterEvents(obj, regData, context);
 
-			assert.equal(2, context.first.numCalls);
+			nodeassert.equal(2, context.first.numCalls);
 			// last called event type is captured.
-			assert.equal('e1', context.first.event.type);
-			assert.equal(obj, context.first.event.target);
+			nodeassert.equal('e1', context.first.event.type);
+			nodeassert.equal(obj, context.first.event.target);
 
-			assert.equal(0, context.second.numCalls);
-			assert.equal(null, context.second.event);
+			nodeassert.equal(0, context.second.numCalls);
+			nodeassert.equal(null, context.second.event);
 		});
 
 		it('fire() with data object', function () {
@@ -253,15 +253,15 @@ function runTestsForContextType(contextType: string, callType: string) {
 			obj.fire('e1', {key1: 42, key2: { inner: 'innerValue'}});
 			unregisterEvents(obj, regData, context);
 
-			assert.equal(1, context.first.numCalls);
-			assert.equal('e1', context.first.event.type);
-			assert.equal(obj, context.first.event.target);
+			nodeassert.equal(1, context.first.numCalls);
+			nodeassert.equal('e1', context.first.event.type);
+			nodeassert.equal(obj, context.first.event.target);
 			const eventData = context.first.event as any;
-			assert.equal(42, eventData.key1);
-			assert.equal('innerValue', eventData.key2.inner);
+			nodeassert.equal(42, eventData.key1);
+			nodeassert.equal('innerValue', eventData.key2.inner);
 
-			assert.equal(0, context.second.numCalls);
-			assert.equal(null, context.second.event);
+			nodeassert.equal(0, context.second.numCalls);
+			nodeassert.equal(null, context.second.event);
 		});
 
 		it('fire() with no propagate but has parent object', function () {
@@ -285,22 +285,22 @@ function runTestsForContextType(contextType: string, callType: string) {
 			unregisterEvents(obj, regDataChild, context);
 			unregisterEvents(parentObj, regDataParent, parentObj);
 
-			assert.equal(1, context.first.numCalls);
-			assert.equal('e1', context.first.event.type);
-			assert.equal(obj, context.first.event.target);
+			nodeassert.equal(1, context.first.numCalls);
+			nodeassert.equal('e1', context.first.event.type);
+			nodeassert.equal(obj, context.first.event.target);
 			const eventData = context.first.event as any;
-			assert.equal(42, eventData.key1);
-			assert.equal('innerValue', eventData.key2.inner);
+			nodeassert.equal(42, eventData.key1);
+			nodeassert.equal('innerValue', eventData.key2.inner);
 
-			assert.equal(0, context.second.numCalls);
-			assert.equal(null, context.second.event);
+			nodeassert.equal(0, context.second.numCalls);
+			nodeassert.equal(null, context.second.event);
 
 			// No calls should have been made to parent object handlers.
-			assert.equal(0, parentObj.first.numCalls);
-			assert.equal(null, parentObj.first.event);
+			nodeassert.equal(0, parentObj.first.numCalls);
+			nodeassert.equal(null, parentObj.first.event);
 
-			assert.equal(0, parentObj.second.numCalls);
-			assert.equal(null, parentObj.second.event);
+			nodeassert.equal(0, parentObj.second.numCalls);
+			nodeassert.equal(null, parentObj.second.event);
 
 			// Deregister parent object.
 			obj.removeEventParent(parentObj);
@@ -327,25 +327,25 @@ function runTestsForContextType(contextType: string, callType: string) {
 			unregisterEvents(obj, regDataChild, context);
 			unregisterEvents(parentObj, regDataParent, parentObj);
 
-			assert.equal(1, context.first.numCalls);
-			assert.equal('e1', context.first.event.type);
+			nodeassert.equal(1, context.first.numCalls);
+			nodeassert.equal('e1', context.first.event.type);
 			const eventData = context.first.event as any;
-			assert.equal(42, eventData.key1);
-			assert.equal('innerValue', eventData.key2.inner);
+			nodeassert.equal(42, eventData.key1);
+			nodeassert.equal('innerValue', eventData.key2.inner);
 
-			assert.equal(0, context.second.numCalls);
-			assert.equal(null, context.second.event);
+			nodeassert.equal(0, context.second.numCalls);
+			nodeassert.equal(null, context.second.event);
 
 			// Parent object must also have received the call.
-			assert.equal(1, parentObj.first.numCalls);
-			assert.equal('e1', parentObj.first.event.type);
+			nodeassert.equal(1, parentObj.first.numCalls);
+			nodeassert.equal('e1', parentObj.first.event.type);
 			const eventData2 = parentObj.first.event as any;
-			assert.equal(42, eventData2.key1);
-			assert.equal('innerValue', eventData2.key2.inner);
-			assert.deepEqual(obj, eventData2.layer);
+			nodeassert.equal(42, eventData2.key1);
+			nodeassert.equal('innerValue', eventData2.key2.inner);
+			nodeassert.deepEqual(obj, eventData2.layer);
 
-			assert.equal(0, parentObj.second.numCalls);
-			assert.equal(null, parentObj.second.event);
+			nodeassert.equal(0, parentObj.second.numCalls);
+			nodeassert.equal(null, parentObj.second.event);
 
 			// Deregister parent object.
 			obj.removeEventParent(parentObj);
@@ -374,22 +374,22 @@ function runTestsForContextType(contextType: string, callType: string) {
 			unregisterEvents(obj, regDataChild, context);
 			unregisterEvents(parentObj, regDataParent, parentObj);
 
-			assert.equal(1, context.first.numCalls);
-			assert.equal('e1', context.first.event.type);
-			assert.equal(obj, context.first.event.target);
+			nodeassert.equal(1, context.first.numCalls);
+			nodeassert.equal('e1', context.first.event.type);
+			nodeassert.equal(obj, context.first.event.target);
 			const eventData = context.first.event as any;
-			assert.equal(42, eventData.key1);
-			assert.equal('innerValue', eventData.key2.inner);
+			nodeassert.equal(42, eventData.key1);
+			nodeassert.equal('innerValue', eventData.key2.inner);
 
-			assert.equal(0, context.second.numCalls);
-			assert.equal(null, context.second.event);
+			nodeassert.equal(0, context.second.numCalls);
+			nodeassert.equal(null, context.second.event);
 
 			// No calls should have been made to parent object handlers.
-			assert.equal(0, parentObj.first.numCalls);
-			assert.equal(null, parentObj.first.event);
+			nodeassert.equal(0, parentObj.first.numCalls);
+			nodeassert.equal(null, parentObj.first.event);
 
-			assert.equal(0, parentObj.second.numCalls);
-			assert.equal(null, parentObj.second.event);
+			nodeassert.equal(0, parentObj.second.numCalls);
+			nodeassert.equal(null, parentObj.second.event);
 		});
 
 		it('listens() when object is not listening', function () {
@@ -400,7 +400,7 @@ function runTestsForContextType(contextType: string, callType: string) {
 
 			registerEvents(obj, regData, context);
 
-			assert.equal(false, obj.listens('e2'));
+			nodeassert.equal(false, obj.listens('e2'));
 
 			unregisterEvents(obj, regData, context);
 		});
@@ -414,7 +414,7 @@ function runTestsForContextType(contextType: string, callType: string) {
 			registerEvents(obj, regData, context);
 			unregisterEvents(obj, regData, context);
 
-			assert.equal(false, obj.listens('e1'));
+			nodeassert.equal(false, obj.listens('e1'));
 		});
 
 		it('listens() when object is listening', function () {
@@ -425,7 +425,7 @@ function runTestsForContextType(contextType: string, callType: string) {
 
 			registerEvents(obj, regData, context);
 
-			assert.equal(true, obj.listens('e1'));
+			nodeassert.equal(true, obj.listens('e1'));
 
 			unregisterEvents(obj, regData, context);
 		});
@@ -440,11 +440,11 @@ function runTestsForContextType(contextType: string, callType: string) {
 
 			unregisterEvents(obj, regData, context);
 
-			assert.equal(0, context.first.numCalls);
-			assert.equal(null, context.first.event);
+			nodeassert.equal(0, context.first.numCalls);
+			nodeassert.equal(null, context.first.event);
 
-			assert.equal(0, context.second.numCalls);
-			assert.equal(null, context.second.event);
+			nodeassert.equal(0, context.second.numCalls);
+			nodeassert.equal(null, context.second.event);
 		});
 
 		it('once() with single fire()', function () {
@@ -457,18 +457,18 @@ function runTestsForContextType(contextType: string, callType: string) {
 
 			obj.fire('e1', {key1: 42, key2: { inner: 'innerValue'}});
 
-			assert.equal(1, context.first.numCalls);
-			assert.equal('e1', context.first.event.type);
-			assert.equal(obj, context.first.event.target);
+			nodeassert.equal(1, context.first.numCalls);
+			nodeassert.equal('e1', context.first.event.type);
+			nodeassert.equal(obj, context.first.event.target);
 			const eventData = context.first.event as any;
-			assert.equal(42, eventData.key1);
-			assert.equal('innerValue', eventData.key2.inner);
+			nodeassert.equal(42, eventData.key1);
+			nodeassert.equal('innerValue', eventData.key2.inner);
 			// off() should have been called automatically
 			// so listens() should return false.
-			assert.equal(false, obj.listens('e1'));
+			nodeassert.equal(false, obj.listens('e1'));
 
-			assert.equal(0, context.second.numCalls);
-			assert.equal(null, context.second.event);
+			nodeassert.equal(0, context.second.numCalls);
+			nodeassert.equal(null, context.second.event);
 		});
 
 		it('once() with multiple fire()', function () {
@@ -485,18 +485,18 @@ function runTestsForContextType(contextType: string, callType: string) {
 
 			// despite the multiple fire() calls, handler must have been
 			// called just once.
-			assert.equal(1, context.first.numCalls);
-			assert.equal('e1', context.first.event.type);
-			assert.equal(obj, context.first.event.target);
+			nodeassert.equal(1, context.first.numCalls);
+			nodeassert.equal('e1', context.first.event.type);
+			nodeassert.equal(obj, context.first.event.target);
 			const eventData = context.first.event as any;
-			assert.equal(42, eventData.key1);
-			assert.equal('innerValue', eventData.key2.inner);
+			nodeassert.equal(42, eventData.key1);
+			nodeassert.equal('innerValue', eventData.key2.inner);
 			// off() should have been called automatically
 			// so listens() should return false.
-			assert.equal(false, obj.listens('e1'));
+			nodeassert.equal(false, obj.listens('e1'));
 
-			assert.equal(0, context.second.numCalls);
-			assert.equal(null, context.second.event);
+			nodeassert.equal(0, context.second.numCalls);
+			nodeassert.equal(null, context.second.event);
 		});
 	});
 }
