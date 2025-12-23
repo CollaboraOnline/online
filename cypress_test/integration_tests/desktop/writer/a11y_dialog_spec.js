@@ -58,8 +58,9 @@ describe(['tagdesktop'], 'Accessibility Writer Tests', function () {
             });
 
             cy.get('@console:error').then(spy => {
+                const a11yValidatorExceptionText = win.app.A11yValidatorException.PREFIX;
                 const a11yErrors = spy.getCalls().filter(call =>
-                    String(call.args[0]).includes('A11yValidator exception')
+                    String(call.args[0]).includes(a11yValidatorExceptionText)
                 );
 
                 if (a11yErrors.length > 0) {
