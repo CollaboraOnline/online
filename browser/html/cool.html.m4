@@ -230,7 +230,7 @@ m4_ifelse(MOBILEAPP,[true],
     </div>
 
     <!-- Remove if you don't want the About dialog -->
-    <dialog>
+    <dialog id="about-dialog-template" style="display: none;">
       <div id="about-dialog" tabIndex="0">
         <div id="about-dialog-header">
           <fig id="integrator-logo"></fig>

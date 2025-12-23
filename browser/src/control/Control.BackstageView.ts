@@ -11,13 +11,16 @@
  */
 /* global $ _ */
 
+declare var brandProductName: any;
+declare var brandProductURL: any;
+
 interface BackstageTabConfig {
 	id: string;
 	label: string;
 	type: 'view' | 'action' | 'separator';
 	icon?: string;
 	visible?: boolean;
-	viewType?: 'home' | 'templates' | 'info' | 'export';
+	viewType?: 'home' | 'templates' | 'info' | 'export' | 'about';
 	actionType?:
 		| 'open'
 		| 'save'
@@ -26,8 +29,7 @@ interface BackstageTabConfig {
 		| 'share'
 		| 'repair'
 		| 'properties'
-		| 'history'
-		| 'about';
+		| 'history';
 }
 
 interface TemplateTypeMap {
@@ -105,7 +107,6 @@ class BackstageView extends window.L.Class {
 		repair: () => this.executeRepair(),
 		properties: () => this.executeDocumentProperties(),
 		history: () => this.executeRevisionHistory(),
-		about: () => this.executeAbout(),
 	};
 
 	constructor(map: any) {
@@ -342,9 +343,9 @@ class BackstageView extends window.L.Class {
 			{ type: 'separator', id: 'sidebar-horizonatal-break', label: '' },
 			{
 				id: 'about',
-				label: _UNO('.uno:About'),
-				type: 'action',
-				actionType: 'about',
+				label: _('About'),
+				type: 'view',
+				viewType: 'about',
 				visible: true,
 			},
 		];
@@ -356,6 +357,7 @@ class BackstageView extends window.L.Class {
 			templates: () => this.renderNewView(),
 			info: () => this.renderInfoView(),
 			export: () => this.renderExportView(),
+			about: () => this.renderAboutView(),
 		};
 
 		const viewType = config.viewType;
@@ -1275,6 +1277,34 @@ class BackstageView extends window.L.Class {
 			'disabled',
 			!this.isDocumentModified(),
 		);
+	}
+
+	private renderAboutView(): void {
+		this.setActiveTab('backstage-about');
+		this.clearContent();
+
+		this.addSectionHeader(_UNO('.uno:About'), _('Version information and credits'));
+
+		const content = AboutDialog.createAboutDialogContent(false);
+		content.style.display = 'block';
+		content.style.maxWidth = '700px';
+		content.style.padding = '20px';
+
+		AboutDialog.populateAboutContent(content, this.map);
+
+		this.contentArea.appendChild(content);
+
+		const copyButton = this.createPrimaryButton(
+			_('Copy all version information in English'),
+			() => {
+				const temp = new AboutDialog(this.map);
+				(temp as any).copyVersionInfoToClipboard.call(temp);
+				this.map.uiManager.showSnackbar(_('Version information has been copied'), null, null, 2000);
+			}
+		);
+		copyButton.style.margin = '40px auto 20px';
+		copyButton.style.display = 'block';
+		this.contentArea.appendChild(copyButton);
 	}
 }
 
