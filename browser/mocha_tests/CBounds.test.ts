@@ -9,31 +9,31 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-var assert = require('assert').strict;
+var nodeassert = require('assert').strict;
 
 describe('CBounds', function () {
 
 	describe('Bounds.parse() call with an empty string argument', function () {
 		it('should return undefined', function () {
-			assert.equal(cool.Bounds.parse(''), undefined);
+			nodeassert.equal(cool.Bounds.parse(''), undefined);
 		});
 	});
 
 	describe('Bounds.parse() call with an string argument with 3 numbers', function () {
 		it('should return undefined', function () {
-			assert.equal(cool.Bounds.parse('10 20 30'), undefined);
+			nodeassert.equal(cool.Bounds.parse('10 20 30'), undefined);
 		});
 	});
 
 	describe('Bounds.parse() call with an string argument with 4 numbers', function () {
 		var bounds = cool.Bounds.parse('10 20 30 40');
 		it('should return a valid Bounds', function () {
-			assert.ok(bounds instanceof cool.Bounds);
-			assert.ok(bounds.isValid());
+			nodeassert.ok(bounds instanceof cool.Bounds);
+			nodeassert.ok(bounds.isValid());
 		});
 
 		it('and the Bounds should be correct in position and size', function () {
-			assert.ok(bounds.equals(new cool.Bounds(new cool.Point(10, 20), new cool.Point(40, 60))));
+			nodeassert.ok(bounds.equals(new cool.Bounds(new cool.Point(10, 20), new cool.Point(40, 60))));
 		});
 	});
 
@@ -47,7 +47,7 @@ describe('CBounds', function () {
 					{ x: -1, y: 7 },
 				]);
 			var expected = new cool.Bounds(new cool.Point(-1, 2), new cool.Point(10, 50));
-			assert.deepEqual(expected, bounds);
+			nodeassert.deepEqual(expected, bounds);
 		});
 	});
 });
