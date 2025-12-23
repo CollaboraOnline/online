@@ -13,6 +13,7 @@
 #include "Log.hpp"
 #include "LibreOfficeKit/LibreOfficeKit.h"
 
+#include <algorithm>
 #include <QFileInfo>
 #include <QSettings>
 #include <QUrl>
@@ -21,10 +22,18 @@
 
 namespace
 {
-    constexpr int MAX_RECENT = 15;
+    constexpr std::size_t MAX_RECENT = 15;
     constexpr const char* KEY_URIS = "uris";
     constexpr const char* KEY_NAMES = "names";
     constexpr const char* KEY_TIMESTAMPS = "timestamps";
+
+    struct DocumentEntry
+    {
+        QString uri;
+        QString name;
+        QDateTime timestamp;
+        LibreOfficeKitDocumentType type;
+    };
 
     LibreOfficeKitDocumentType getAppTypeFromExtension(const QString& suffix)
     {
@@ -146,6 +155,58 @@ namespace RecentDocuments
         }
 
         LOG_DBG("RecentDocuments::getForAppType: returning " << recentDocs->size() << " valid documents");
+        return recentDocs;
+    }
+
+    Poco::JSON::Array::Ptr getForAllTypes()
+    {
+        std::vector<DocumentEntry> allDocs;
+
+        LibreOfficeKitDocumentType types[] = { LOK_DOCTYPE_TEXT, LOK_DOCTYPE_SPREADSHEET,
+                                               LOK_DOCTYPE_PRESENTATION };
+        for (LibreOfficeKitDocumentType type : types)
+        {
+            Poco::JSON::Array::Ptr typeDocs = getForAppType(type);
+
+            for (size_t i = 0; i < typeDocs->size(); ++i)
+            {
+                Poco::JSON::Object::Ptr docObj = typeDocs->getObject(i);
+                QString uri = QString::fromStdString(docObj->getValue<std::string>("uri"));
+                QString name = QString::fromStdString(docObj->getValue<std::string>("name"));
+                QString timestampStr =
+                    QString::fromStdString(docObj->getValue<std::string>("timestamp"));
+                QDateTime timestamp = QDateTime::fromString(timestampStr, Qt::ISODate);
+
+                allDocs.push_back({ uri, name, timestamp, type });
+            }
+        }
+
+        std::sort(allDocs.begin(), allDocs.end(),
+                  [](const DocumentEntry& a, const DocumentEntry& b) {
+                      if (a.timestamp != b.timestamp)
+                          return a.timestamp > b.timestamp;
+                      if (a.uri != b.uri)
+                          return a.uri < b.uri;
+                      if (a.name != b.name)
+                          return a.name < b.name;
+                      return a.type < b.type;
+                  });
+
+        Poco::JSON::Array::Ptr recentDocs = new Poco::JSON::Array();
+        std::size_t limit = std::min(allDocs.size(), MAX_RECENT);
+        for (std::size_t i = 0; i < limit; ++i)
+        {
+            const DocumentEntry& doc = allDocs[i];
+            Poco::JSON::Object::Ptr docObj = new Poco::JSON::Object();
+            docObj->set("uri", doc.uri.toStdString());
+            docObj->set("name", doc.name.toStdString());
+            docObj->set("timestamp", doc.timestamp.toString(Qt::ISODate).toStdString());
+            docObj->set("doctype", getDocTypeString(doc.type).toStdString());
+            recentDocs->add(docObj);
+        }
+
+        LOG_DBG("RecentDocuments::getForAllTypes: returning " << recentDocs->size()
+                                                              << " documents (all types)");
         return recentDocs;
     }
 }

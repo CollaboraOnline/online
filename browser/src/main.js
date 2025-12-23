@@ -87,7 +87,13 @@ app.map = map;
 app.idleHandler.map = map;
 
 if (window.coolParams.get('starterMode')) {
-	map.uiManager.initializeBackstageView();
+	if (!window.qtBridgeReady) {
+		window.addEventListener('qtbridgeready', () => {
+			map.uiManager.initializeBackstageView();
+		}, { once: true });
+	} else {
+		map.uiManager.initializeBackstageView();
+	}
 	return;
 }
 else if (window.coolParams.get('welcome'))

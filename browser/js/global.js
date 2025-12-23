@@ -624,6 +624,8 @@ class QtAppInitializer extends MobileAppInitializer {
 			}
 			messageQueue.length = 0;
 
+			window.qtBridgeReady = true;
+			window.dispatchEvent(new Event('qtbridgeready'));
 			if (bridge.debug) {
 				bridge.debug("Qt bridge initialized");
 			}

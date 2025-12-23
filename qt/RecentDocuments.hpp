@@ -20,5 +20,6 @@ namespace RecentDocuments
 {
     void add(const QString& filePath);
     Poco::JSON::Array::Ptr getForAppType(LibreOfficeKitDocumentType docType);
+    Poco::JSON::Array::Ptr getForAllTypes();
 }
 
