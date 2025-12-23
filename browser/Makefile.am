@@ -433,7 +433,7 @@ COOL_JS_LST =\
 	src/control/jsdialog/Definitions.DialogModification.ts \
 	src/control/jsdialog/Definitions.WindowId.ts \
 	src/control/jsdialog/Util.Accessibility.ts \
-	src/control/jsdialog/Util.Dropdown.js \
+	src/control/jsdialog/Util.Dropdown.ts \
 	src/control/jsdialog/Util.Events.ts \
 	src/control/jsdialog/Util.KeyboardTabNavigation.ts \
 	src/control/jsdialog/Util.KeyboardGridNavigation.ts \

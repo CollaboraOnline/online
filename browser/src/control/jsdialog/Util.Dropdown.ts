@@ -13,18 +13,23 @@
  * Util.Dropdown - helper to create dropdown menus for JSDialogs
  */
 
-/* global JSDialog app */
+var JSDialog;
 
-function _createDropdownId(id) {
+function _createDropdownId(id: string) {
 	return id + '-dropdown';
 }
 
-JSDialog.CreateDropdownEntriesId = function(id) {
+JSDialog.CreateDropdownEntriesId = function(id: string) {
 	return id + '-entries';
 }
 
-JSDialog.OpenDropdown = function (id, popupParent, entries, innerCallback, popupAnchor, isSubmenu) {
-	var json = {
+JSDialog.OpenDropdown = function (id: string,
+																	popupParent: string | ( HTMLElement & { _onDropDown: (open: boolean) => void } ),
+																	entries: Array<ComboBoxEntry>,
+																	innerCallback: JSDialogMenuCallback,
+																	popupAnchor: string,
+																	isSubmenu: boolean) {
+	const json = {
 		id: _createDropdownId(id),
 		type: 'dropdown',
 		isSubmenu: isSubmenu,
@@ -40,18 +45,18 @@ JSDialog.OpenDropdown = function (id, popupParent, entries, innerCallback, popup
 				allyRole: 'listbox',
 				cols: 1,
 				rows: entries.length,
-				children: []
+				children: [] as Array<WidgetJSON>
 			}
 		]
 	};
 
-	if (popupParent && typeof popupParent._onDropDown === 'function') {
+	if (popupParent && typeof popupParent !== 'string' && typeof popupParent._onDropDown === 'function') {
 		popupParent._onDropDown(true);
 	}
 
-	var isChecked = function (unoCommand) {
-		var items = window.L.Map.THIS['stateChangeHandler'];
-		var val = items.getItemValue(unoCommand);
+	const isChecked = function (unoCommand: string) {
+		const items = window.L.Map.THIS['stateChangeHandler'];
+		const val = items.getItemValue(unoCommand);
 
 		if (val && (val === true || val === 'true'))
 			return true;
@@ -59,11 +64,11 @@ JSDialog.OpenDropdown = function (id, popupParent, entries, innerCallback, popup
 			return false;
 	};
 
-	for (var i in entries) {
-		var checkedValue = (entries[i].checked === undefined)
+	for (const i in entries) {
+		const checkedValue = (entries[i].checked === undefined)
 			? undefined : (entries[i].uno && isChecked('.uno' + entries[i].uno));
 
-		var entry;
+		let entry: WidgetJSON | SeparatorWidgetJSON | HtmlContentJson | MenuDefinition | ComboBoxEntry | null = null;
 
 		switch (entries[i].type) {
 			// DEPRECACTED: legacy plain HTML adapter
@@ -73,7 +78,7 @@ JSDialog.OpenDropdown = function (id, popupParent, entries, innerCallback, popup
 					type: 'htmlcontent',
 					htmlId: entries[i].htmlId,
 					closeCallback: function () { JSDialog.CloseDropdown(id); }
-				};
+				} as HtmlContentJson;
 				json.gridKeyboardNavigation = true;
 			break;
 
@@ -86,8 +91,8 @@ JSDialog.OpenDropdown = function (id, popupParent, entries, innerCallback, popup
 
 			// allows to put regular JSDialog JSON into popup
 			case 'json':
-				entry = entries[i].content;
-				if (entry.type === 'grid') json.gridKeyboardNavigation = true;
+				entry = typeof entries[i].content !== 'undefined' ? entries[i].content as WidgetJSON : null;
+				if (entry?.type === 'grid') json.gridKeyboardNavigation = true;
 			break;
 
 			// horizontal separator in menu
@@ -96,7 +101,7 @@ JSDialog.OpenDropdown = function (id, popupParent, entries, innerCallback, popup
 					id: id + '-entry-' + i,
 					type: 'separator',
 					orientation: 'horizontal'
-				};
+				} as SeparatorWidgetJSON;
 			break;
 
 			// menu and submenu entry
@@ -116,54 +121,57 @@ JSDialog.OpenDropdown = function (id, popupParent, entries, innerCallback, popup
 					checked: entries[i].checked || checkedValue,
 					selected: entries[i].selected,
 					hasSubMenu: !!entries[i].items
-				};
+				} as ComboBoxEntry;
 			break;
 		}
 
-		json.children[0].children.push(entry);
+		if (entry) json.children[0].children.push(entry);
 	}
 
-	var generateCallback = function (targetEntries) {
-		let lastSubMenuOpened = null;
+	const generateCallback = function (targetEntries: Array<MenuDefinition>): JSDialogCallback {
+		let lastSubMenuOpened: string | null = null;
 		const closeLastSubMenu = () => {
 			if (!lastSubMenuOpened) return;
 			JSDialog.CloseDropdown(lastSubMenuOpened);
 			lastSubMenuOpened = null;
 		};
 
-		return function(objectType, eventType, object, data, builder) {
-			if (typeof data == 'number') var pos = data;
-			else var pos = data ? parseInt(data.substr(0, data.indexOf(';'))) : null;
-			var entry = targetEntries && pos !== null ? targetEntries[pos] : null;
-			var subMenuId = object.id + '-' + pos;
+		return function(objectType: string, eventType: string, object: any, data: any, builder: JSBuilder) {
+			let pos = -1;
+			if (typeof data === 'number') pos = data;
+			else pos = data ? parseInt(data.substr(0, data.indexOf(';'))) : -1;
+			const entry = targetEntries && pos > 0 ? targetEntries[pos] : null;
+			const subMenuId = object.id + '-' + pos;
 
 			if (eventType === 'selected' || eventType === 'showsubmenu') {
 				if (entry && entry.items) {
 					closeLastSubMenu();
 
 					// open submenu
-					var dropdown = JSDialog.GetDropdown(object.id);
-					var targetEntry = dropdown.querySelectorAll('.ui-grid-cell')[pos + 1];
+					const dropdown = JSDialog.GetDropdown(object.id);
+					const allEntries = dropdown.querySelectorAll('.ui-grid-cell');
+					const index = pos + 1;
+					const targetEntry = allEntries && allEntries.length > index ? allEntries[index] : null;
 					JSDialog.OpenDropdown(subMenuId, targetEntry, entry.items,
 						generateCallback(entry.items), 'top-end', true);
 					lastSubMenuOpened = subMenuId;
 
 					app.layoutingService.appendLayoutingTask(() => {
-						var dropdown = JSDialog.GetDropdown(subMenuId);
+						const dropdown = JSDialog.GetDropdown(subMenuId);
 						if (!dropdown) {
 							console.debug('Dropdown: missing :' + subMenuId);
 							return;
 						}
-						var container = dropdown.querySelector('.ui-grid');
+						const container = dropdown.querySelector('.ui-grid');
 						JSDialog.MakeFocusCycle(container);
-						var focusables = JSDialog.GetFocusableElements(container);
+						const focusables = JSDialog.GetFocusableElements(container);
 						if (focusables && focusables.length)
 							focusables[0].focus();
 					});
 
 					return;
 				} else if (eventType === 'selected' && entry && entry.uno) {
-					var uno = (entry.uno.indexOf('.uno:') === 0) ? entry.uno : '.uno:' + entry.uno;
+					const uno = (entry.uno.indexOf('.uno:') === 0) ? entry.uno : '.uno:' + entry.uno;
 					window.L.Map.THIS.sendUnoCommand(uno);
 					JSDialog.CloseDropdown(id);
 					return;
@@ -189,7 +197,7 @@ JSDialog.OpenDropdown = function (id, popupParent, entries, innerCallback, popup
 	window.L.Map.THIS.fire('jsdialog', {data: json, callback: generateCallback(entries)});
 };
 
-JSDialog.CloseDropdown = function (id) {
+JSDialog.CloseDropdown = function (id: string) {
 	window.L.Map.THIS.fire('jsdialog', {data: {
 		id: _createDropdownId(id),
 		jsontype: 'dialog',
@@ -201,7 +209,7 @@ JSDialog.CloseAllDropdowns = function () {
 	window.L.Map.THIS.jsdialog.closeAllDropdowns();
 };
 
-JSDialog.GetDropdown = function (id) {
+JSDialog.GetDropdown = function (id: string) {
 	// remember it can get some random numbers due to JSDialog.MakeIdUnique
 	// TODO: use some register for it
 	return document.body.querySelector('[id^="' + id + '"].modalpopup');

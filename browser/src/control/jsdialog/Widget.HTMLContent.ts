@@ -16,17 +16,6 @@
 
 declare var JSDialog: any;
 
-interface HtmlContentJson {
-	id: string;
-	type: 'htmlcontent';
-	htmlId: string;
-	closeCallback: EventListenerOrEventListenerObject;
-	isReadOnlyMode: boolean | undefined;
-	canUserWrite: boolean | undefined;
-	text: string | undefined;
-	enabled: boolean;
-}
-
 function sanitizeString(text: string): string {
 	const sanitizer = document.createElement('div');
 	sanitizer.innerText = text;
