@@ -419,4 +419,18 @@ describe('DomUtil', function() {
 			assert.strictEqual(0, el.childNodes.length);
 		});
 	});
+
+	describe('static data member checks', function () {
+		it('TRANSFORM', function () {
+			assert.strictEqual('transform', DomUtilBase.TRANSFORM);
+		});
+
+		it('TRANSFORM_ORIGIN', function () {
+			assert.strictEqual('transformOrigin', DomUtilBase.TRANSFORM_ORIGIN);
+		});
+
+		it('TRANSITION_END', function () {
+			assert.strictEqual('transitionend', DomUtilBase.TRANSITION_END);
+		});
+	});
 });
