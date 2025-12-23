@@ -189,4 +189,48 @@ class DomUtilBase {
 			el.style.filter += ' progid:' + filterName + '(opacity=' + value + ')';
 		}
 	}
+
+	// needed for initializing some static data members and function.
+	private static testProp(props: string[]): string | undefined {
+		const style = document.documentElement.style;
+
+		for (let i = 0; i < props.length; i++) {
+			if (props[i] in style) {
+				return props[i];
+			}
+		}
+		return undefined;
+	}
+
+	// prefix style property names
+	public static TRANSFORM?: string = DomUtilBase.testProp([
+		'transform',
+		'WebkitTransform',
+		'OTransform',
+		'MozTransform',
+		'msTransform',
+	]);
+
+	public static TRANSFORM_ORIGIN?: string = DomUtilBase.testProp([
+		'transformOrigin',
+		'msTransformOrigin',
+		'WebkitTransformOrigin',
+	]);
+
+	private static getTransitionEnd(): string {
+		// webkitTransition comes first because some browser versions that drop vendor prefix don't do
+		// the same for the transitionend event, in particular the Android 4.1 stock browser
+		const transition = DomUtilBase.testProp([
+			'webkitTransition',
+			'transition',
+			'OTransition',
+			'MozTransition',
+			'msTransition',
+		]);
+		return transition === 'webkitTransition' || transition === 'OTransition'
+			? transition + 'End'
+			: 'transitionend';
+	}
+
+	public static TRANSITION_END: string = DomUtilBase.getTransitionEnd();
 }

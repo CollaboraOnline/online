@@ -23,3 +23,13 @@ var app: any = {
     pixelsToTwips: 1 / 15,
     sectionContainer: {}
 };
+
+(globalThis.document as any) = {
+	documentElement: {
+		style: {
+			transform: true,
+			transformOrigin: true,
+			transition: true,
+		}
+	}
+};

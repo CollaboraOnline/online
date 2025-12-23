@@ -6,18 +6,6 @@
 
 window.L.DomUtil = class DomUtil extends DomUtilBase {
 
-	static testProp(props) {
-
-		var style = document.documentElement.style;
-
-		for (var i = 0; i < props.length; i++) {
-			if (props[i] in style) {
-				return props[i];
-			}
-		}
-		return false;
-	}
-
 	static setTransform(el, offset, scale) {
 		var pos = offset || new cool.Point(0, 0);
 
@@ -70,23 +58,6 @@ window.L.DomUtil = class DomUtil extends DomUtilBase {
 
 
 (function () {
-	// prefix style property names
-
-	window.L.DomUtil.TRANSFORM = window.L.DomUtil.testProp(
-		['transform', 'WebkitTransform', 'OTransform', 'MozTransform', 'msTransform']);
-
-	window.L.DomUtil.TRANSFORM_ORIGIN = window.L.DomUtil.testProp(
-		['transformOrigin', 'msTransformOrigin', 'WebkitTransformOrigin']);
-
-	// webkitTransition comes first because some browser versions that drop vendor prefix don't do
-	// the same for the transitionend event, in particular the Android 4.1 stock browser
-
-	var transition = window.L.DomUtil.TRANSITION = window.L.DomUtil.testProp(
-		['webkitTransition', 'transition', 'OTransition', 'MozTransition', 'msTransition']);
-
-	window.L.DomUtil.TRANSITION_END =
-			transition === 'webkitTransition' || transition === 'OTransition' ? transition + 'End' : 'transitionend';
-
 
 	if ('onselectstart' in document) {
 		window.L.DomUtil.disableTextSelection = function () {
