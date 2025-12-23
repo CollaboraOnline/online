@@ -946,7 +946,10 @@ export class CommentSection extends CanvasSectionObject {
 
 		const topLeftArray = anchorPos.toArray();
 		const topLeftVisible = app.isPointVisibleInTheDisplayedArea(topLeftArray);
-		const bottomRightVisible = app.isPointVisibleInTheDisplayedArea([topLeftArray[0] + (this.sectionProperties.commentWidth * app.pixelsToTwips), topLeftArray[1] + rootComment.getCommentHeight()]);
+		const bottomRightVisible = app.isPointVisibleInTheDisplayedArea([
+			topLeftArray[0] + (this.sectionProperties.commentWidth * app.pixelsToTwips),
+			topLeftArray[1] + Math.round(rootComment.getCommentHeight() * app.pixelsToTwips)
+		]);
 
 		const topBottom = this.getScreenTopBottom();
 
