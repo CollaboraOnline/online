@@ -174,6 +174,8 @@ void RemoteConfigPoll::handleJSON(const Poco::JSON::Object::Ptr& remoteJson)
 
     HostUtil::parseAllowedWSOrigins(_conf);
 
+    COOLWSD::setLokitEnvironmentVariables(_conf);
+
     COOLWSD::IndirectionServerEnabled =
         !ConfigUtil::getConfigValue<std::string>(_conf, "indirection_endpoint.url", "").empty();
     COOLWSD::GeolocationSetup =
