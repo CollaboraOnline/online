@@ -164,9 +164,7 @@ function _menubuttonControl (parentContainer, data, builder) {
 		button.title = data.text;
 		button.setAttribute('aria-haspopup', true);
 
-		if (data.aria && data.aria.label) {
-			button.setAttribute('aria-label', data.aria.label);
-		}
+		JSDialog.SetupA11yLabelForNonLabelableElement(button, data, builder);
 
 		if (data.image) {
 			var image = window.L.DomUtil.create('img', '', button);
