@@ -39,7 +39,7 @@ var L: any = {
 
 globalThis.window = (function() {
 	const jsdom = require('jsdom');
-	const dom = new jsdom.JSDOM('<html><body><div id="document-container"></div></body></html>');
+	const dom = new jsdom.JSDOM('<html><body><div id="document-container"></div></body></html>', { pretendToBeVisual: true });
 	return dom.window;
 })();
 
@@ -51,7 +51,7 @@ globalThis.document = globalThis.window.document;
 
 (globalThis.window as any).app = (globalThis as any).app;
 
-(globalThis.window.L as any) = {
+(globalThis as any).L = {
 	Browser: {
 		any3d: true,
 		cypressTest: false,
@@ -75,6 +75,8 @@ globalThis.document = globalThis.window.document;
 	control: {},
 };
 
+(globalThis.window as any).L = (globalThis as any).L;
+
 globalThis._ = (input: string) => input;
 (globalThis.ResizeObserver as any) = class _ResizeObserver {
 	constructor(firer: () => void) {
@@ -93,3 +95,6 @@ globalThis._UNO = function(i1: string, i2: string) {
 };
 globalThis.SlideShow = {};
 (globalThis.window as any).getBorderStyleUNOCommand = () => {};
+
+var nodeassert = require('assert').strict;
+var jsdom = require('jsdom');
