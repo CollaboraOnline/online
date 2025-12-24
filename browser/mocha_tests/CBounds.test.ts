@@ -9,8 +9,6 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-var nodeassert = require('assert').strict;
-
 describe('CBounds', function () {
 
 	describe('Bounds.parse() call with an empty string argument', function () {

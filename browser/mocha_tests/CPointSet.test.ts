@@ -9,8 +9,6 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-var nodeassert = require('assert');
-
 describe('CPointSet', function () {
 
 	describe('new CPointSet()', function () {

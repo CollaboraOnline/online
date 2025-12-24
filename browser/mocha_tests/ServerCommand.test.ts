@@ -12,7 +12,6 @@
 /// all tests based on the possible messages from wsd/protocol.txt
 describe('ServerCommand', function() {
 
-	const nodeassert = require('assert').strict;
 	const mapzoom: MapZoomInterface = {
 		_docLayer: {
 			options: {
