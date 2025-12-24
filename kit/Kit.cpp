@@ -3146,10 +3146,10 @@ void documentViewCallback(const int type, const char* payload, void* data)
     Document::ViewCallback(type, payload, data);
 }
 
+#ifndef BUILDING_TESTS
+
 namespace
 {
-
-#ifndef BUILDING_TESTS
 
 /// Called by LOK main-loop the central location for data processing.
 int pollCallback(void* data, int timeoutUs)
