@@ -176,31 +176,6 @@ class ShapeHandleScalingSubSection extends CanvasSectionObject {
 			this.context.canvas.style.cursor = this.sectionProperties.mousePointerType;
 	}
 
-	private overrideHandle(kind: string): [string, number, number] {
-		const handle = {
-			id: this.sectionProperties.ownInfo.id,
-			x: this.position[0],
-			y: this.position[1],
-		};
-		const subSections = this.sectionProperties.parentHandlerSection.sectionProperties.subSections;
-
-		if (kind === '5') {
-			handle.id = '7';
-			handle.y = subSections['7'].position[1];
-		} else if (kind === '4') {
-			handle.id = '5';
-			handle.y = subSections['5'].position[1];
-		} else if (kind === '2') {
-			handle.id = '2';
-			handle.x = subSections['2'].position[0];
-		} else if (kind === '7') {
-			handle.id = '7';
-			handle.x = subSections['7'].position[0];
-		}
-
-		return [handle.id, handle.x, handle.y];
-	}
-
 	private doWeKeepRatio(e: MouseEvent) {
 		let keep = e.ctrlKey && e.shiftKey;
 
@@ -211,27 +186,55 @@ class ShapeHandleScalingSubSection extends CanvasSectionObject {
 		return keep;
 	}
 
+	private getNewPosition(handleID: string, rectangle: cool.SimpleRectangle): number[] {
+		if (handleID === '0')
+			return [rectangle.x1, rectangle.y1];
+		else if (handleID === '1')
+			return [rectangle.center[0], rectangle.y1];
+		else if (handleID === '2')
+			return [rectangle.x2, rectangle.y1];
+		else if (handleID === '3')
+			return [rectangle.x1, rectangle.center[1]];
+		else if (handleID === '4')
+			return [rectangle.x2, rectangle.center[1]];
+		else if (handleID === '5')
+			return [rectangle.x1, rectangle.y2];
+		else if (handleID === '6')
+			return [rectangle.center[0], rectangle.y2];
+		else // handleID === '7'
+			return [rectangle.x2, rectangle.y2];
+	}
+
 	onMouseUp(point: cool.SimplePoint, e: MouseEvent): void {
 		if (this.containerObject.isDraggingSomething()) {
 			this.stopPropagating();
 			e.stopPropagation();
 
-			const keepRatio = this.doWeKeepRatio(e);
-
-			let handleId = this.sectionProperties.ownInfo.id;
+			const handleId = this.sectionProperties.ownInfo.id;
 			const parentHandlerSection = this.sectionProperties.parentHandlerSection;
 
-			let x = parentHandlerSection.sectionProperties.closestX ?? point.pX + this.position[0];
-			let y = parentHandlerSection.sectionProperties.closestY ?? point.pY + this.position[1];
+			const shapeRecProps = this.calculateNewShapeRectangleProperties([
+				point.pX + this.position[0],
+				point.pY + this.position[1]
+			], e);
 
-			if (keepRatio) {
-				[handleId, x, y] = this.overrideHandle(this.sectionProperties.ownInfo.kind);
+			const tempRectangle = cool.SimpleRectangle.fromCorePixels([
+				shapeRecProps.center[0] - shapeRecProps.width * 0.5,
+				shapeRecProps.center[1] - shapeRecProps.height * 0.5,
+				shapeRecProps.width, shapeRecProps.height
+			]);
+
+			const newPoint = this.getNewPosition(handleId, tempRectangle);
+
+			if (!this.doWeKeepRatio(e) || ["1", "3", "4", "6"].includes(handleId)) {
+				newPoint[0] = Math.round((parentHandlerSection.sectionProperties.closestX ?? point.pX + this.position[0]) * app.pixelsToTwips);
+				newPoint[1] = Math.round((parentHandlerSection.sectionProperties.closestY ?? point.pY + this.position[1]) * app.pixelsToTwips);
 			}
 
 			const parameters = {
 				HandleNum: { type: 'long', value: handleId },
-				NewPosX: { type: 'long', value: Math.round(x * app.pixelsToTwips) },
-				NewPosY: { type: 'long', value: Math.round(y * app.pixelsToTwips) }
+				NewPosX: { type: 'long', value: newPoint[0] },
+				NewPosY: { type: 'long', value: newPoint[1] }
 			};
 
 			app.map.sendUnoCommand('.uno:MoveShapeHandle', parameters);
@@ -286,9 +289,8 @@ class ShapeHandleScalingSubSection extends CanvasSectionObject {
 		const shapeRecProps: any = JSON.parse(JSON.stringify(this.sectionProperties.parentHandlerSection.sectionProperties.shapeRectangleProperties));
 		const keepRatio = this.doWeKeepRatio(e);
 
-		if (keepRatio) {
+		if (keepRatio)
 			point = this.calculateRatioPoint(point, shapeRecProps);
-		}
 
 		const diff = [point[0] - shapeRecProps.center[0], -(point[1] - shapeRecProps.center[1])];
 		const length = Math.pow(Math.pow(diff[0], 2) + Math.pow(diff[1], 2), 0.5);
