@@ -65,21 +65,24 @@ cmake_list= \
             ../wsd/dumpWsdState.cpp
 
 
+if ENABLE_QTAPP
 # Sources that will be created by Qt's MOC
-BUILT_SOURCES = bridge.moc.cpp DBusService.moc.cpp
+nodist_qtapp_SOURCES = bridge.moc.cpp DBusService.moc.cpp
 bridge.moc.cpp: bridge.hpp
 	$(MOC) $(MOCFLAGS) -o $@ $<
 DBusService.moc.cpp: DBusService.hpp
 	$(MOC) $(MOCFLAGS) -o $@ $<
 
-CLEANFILES = $(BUILT_SOURCES)
+endif #ENABLE_QTAPP
+
+CLEANFILES = $(nodist_qtapp_SOURCES)
 
 coda_qt_CXXFLAGS = $(AM_CXXFLAGS)
 if X86
 coda_qt_CXXFLAGS += -mno-direct-extern-access
 endif
 
-coda_qt_SOURCES = coda-qt.cpp WebView.cpp DBusService.cpp RecentDocuments.cpp $(BUILT_SOURCES) $(cmake_list)
+coda_qt_SOURCES = bridge.hpp DBusService.hpp coda-qt.cpp WebView.cpp DBusService.cpp RecentDocuments.cpp $(cmake_list)
 
 metainfodir = $(datadir)/metainfo
 metainfo_DATA = com.collaboraoffice.Office.metainfo.xml
