@@ -9,10 +9,6 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-var nodeassert = require('assert');
-var jsdom = require('jsdom');
-
-
 describe('DomUtil', function() {
 
 	const docstr = `
