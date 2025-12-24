@@ -537,10 +537,10 @@ class WindowsAppInitializer extends MobileAppInitializer {
 			};
 
 			return function call(msg) {
-				return new Promise((resolveFunc, rejectFunc) => {
+				return new Promise((resolveFunc) => {
 					const id = nextId++;
 					pending.set(id, resolveFunc);
-					window.chrome.webview.postMessage("CALL " + id + " " + msg); 
+					window.chrome.webview.postMessage("CALL " + id + " " + msg);
 				});
 			};
 		})();
@@ -2101,12 +2101,12 @@ function showWelcomeSVG() {
 
 				msg += ' timezone=' + Intl.DateTimeFormat().resolvedOptions().timeZone;
 				msg += ' clientvisiblearea=' + window.makeClientVisibleArea();
-		
+
 				if (global.coolParams.get('welcome') === 'true') {
 					msg += ' batch=true';
 					showWelcomeSVG();
 				}
-				
+
 				global.socket.send(msg);
 			}
 		};
