@@ -23,7 +23,7 @@ endif
 
 else
 
-SUBDIRS = . browser
+SUBDIRS = browser
 
 if ENABLE_TESTS
 SUBDIRS += test
