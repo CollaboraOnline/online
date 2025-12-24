@@ -202,6 +202,49 @@ class DomUtilBase {
 		return undefined;
 	}
 
+	public static setTransform(
+		el: HTMLElement,
+		offset?: cool.Point,
+		scale?: number,
+	): void {
+		const pos = offset || new cool.Point(0, 0);
+
+		Util.ensureValue(DomUtilBase.TRANSFORM);
+		el.style.setProperty(
+			DomUtilBase.TRANSFORM,
+			'translate3d(' +
+				pos.x +
+				'px,' +
+				pos.y +
+				'px' +
+				',0)' +
+				(scale ? ' scale(' + scale + ')' : ''),
+		);
+	}
+
+	public static setPosition(
+		el: HTMLElement,
+		point: cool.Point,
+		no3d: boolean = false,
+	): void {
+		(el as any)._leaflet_pos = point;
+
+		Util.ensureValue(window.L);
+		if (window.L.Browser.any3d && !no3d) {
+			DomUtilBase.setTransform(el, point);
+		} else {
+			el.style.left = point.x + 'px';
+			el.style.top = point.y + 'px';
+		}
+	}
+
+	public static getPosition(el: HTMLElement): cool.Point {
+		// this method is only used for elements previously positioned using setPosition,
+		// so it's safe to cache the position for performance
+
+		return (el as any)._leaflet_pos;
+	}
+
 	// prefix style property names
 	public static TRANSFORM?: string = DomUtilBase.testProp([
 		'transform',
