@@ -46,6 +46,9 @@ public:
     /// parse wopi.storage.alias_groups.group
     static void parseAliases(Poco::Util::LayeredConfiguration& conf);
 
+    /// parse a single alias, return an empty string if the pattern was invalid
+    static std::string parseAlias(const std::string& aliasPattern);
+
     /// parse indirection_endpoint.geolocation_setup.allowed_websocket_origins
     static void parseAllowedWSOrigins(Poco::Util::LayeredConfiguration& conf);
 
@@ -71,6 +74,7 @@ public:
 private:
     /// add host to WopiHosts
     static void addWopiHost(const std::string& host, bool allow);
+
 };
 #endif // !MOBILEAPP
 
