@@ -41,6 +41,8 @@ if ENABLE_CYPRESS
 SUBDIRS += cypress_test
 endif
 
+DIST_SUBDIRS = browser cypress_test macos qt test wasm
+
 export ENABLE_DEBUG
 
 QUIET_MKDIRP = $(QUIET_MKDIRP_$(V))
