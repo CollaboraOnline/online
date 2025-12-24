@@ -429,4 +429,47 @@ describe('DomUtil', function() {
 			nodeassert.strictEqual('webkitTransitionEnd', DomUtilBase.TRANSITION_END);
 		});
 	});
+
+	describe('setTransform()', function () {
+		const store = new DOMStore(docstr);
+		const one = DomUtilBase.get('one', store.document);
+
+		it('no offset or scale', function() {
+			const el = DomUtilBase.create('div', 'cool-caption', one, undefined, store.document);
+			DomUtilBase.setTransform(el);
+			const tx = el.style.getPropertyValue(DomUtilBase.TRANSFORM);
+			nodeassert.strictEqual(tx, 'translate3d(0px,0px,0)');
+			DomUtilBase.remove(el);
+		});
+
+		it('only offset', function() {
+			const el = DomUtilBase.create('div', 'cool-caption', one, undefined, store.document);
+			DomUtilBase.setTransform(el, new cool.Point(100, 200));
+			const tx = el.style.getPropertyValue(DomUtilBase.TRANSFORM);
+			nodeassert.strictEqual(tx, 'translate3d(100px,200px,0)');
+			DomUtilBase.remove(el);
+		});
+
+		it('offset and scale', function() {
+			const el = DomUtilBase.create('div', 'cool-caption', one, undefined, store.document);
+			DomUtilBase.setTransform(el, new cool.Point(100, 200), 5);
+			const tx = el.style.getPropertyValue(DomUtilBase.TRANSFORM);
+			nodeassert.strictEqual(tx, 'translate3d(100px,200px,0) scale(5)');
+			DomUtilBase.remove(el);
+		});
+	});
+
+	describe('setPosition()', function () {
+		const store = new DOMStore(docstr);
+		const one = DomUtilBase.get('one', store.document);
+
+		it('set/get', function() {
+			const el = DomUtilBase.create('div', 'cool-caption', one, undefined, store.document);
+			const pos = new cool.Point(128, 512);
+			DomUtilBase.setPosition(el, pos);
+			const posGot = DomUtilBase.getPosition(el);
+			DomUtilBase.remove(el);
+			nodeassert.deepStrictEqual(posGot, pos);
+		});
+	});
 });
