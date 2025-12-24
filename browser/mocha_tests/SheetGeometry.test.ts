@@ -11,8 +11,6 @@
 
 describe('SheetGeometry', function() {
 
-var nodeassert = require('assert').strict;
-
 describe('SheetGeometry public methods tests', function () {
 
     // To debug tests for some/one particular zoom levels, add to this array.

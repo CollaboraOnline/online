@@ -11,8 +11,6 @@
 
 describe('Rectangle', function() {
 
-var nodeassert = require('assert').strict;
-
 interface ExpectedRectangle {
 	x1?: number,
 	x2?: number,

@@ -11,8 +11,6 @@
 
 describe('Events', function() {
 
-var nodeassert = require('assert').strict;
-
 describe('Evented: Register handler with event names as a string', function () {
 	const contextTypes = ['self', 'foreign'];
 	const callTypes = ['eventlist-string', 'event+handler-object'];
