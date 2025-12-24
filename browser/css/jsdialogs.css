@@ -3024,6 +3024,11 @@ div [id^='themeview'].ui-iconview-entry, div [id^='themeview1col'].ui-iconview-e
 	grid-template-columns: repeat(16, 1fr);
 }
 
+/* Writer - Select Table Cell - Sidebar - Table - Miscellaneous - Border */
+#borders.ui-iconview.one-child-popup {
+	grid-template-columns: repeat(4, 1fr);
+}
+
 #imSetInsMode {
 	content: url('images/queryinsmode.svg');
 }

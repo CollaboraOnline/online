@@ -181,6 +181,25 @@ function _iconViewEntry(
 			});
 		}
 		builder._preventDocumentLosingFocusOnClick(entryContainer);
+
+		entryContainer.addEventListener('keydown', function (e: KeyboardEvent) {
+			if (e.key !== 'Enter' && e.key !== ' ' && e.code !== 'Space') return;
+
+			if (e.key === ' ' || e.code === 'Space')
+				(parentContainer as any).builderCallback(
+					'iconview', 
+					'select', 
+					entry.row, 
+					builder,
+				);
+			else if (e.key === 'Enter')
+				(parentContainer as any).builderCallback(
+					'iconview', 
+					'activate', 
+					entry.row, 
+					builder,
+				);
+		});
 	}
 }
 
@@ -335,24 +354,6 @@ JSDialog.iconView = function (
 	};
 
 	JSDialog.KeyboardGridNavigation(iconview);
-	iconview.addEventListener('keydown', function (e: KeyboardEvent) {
-		if (e.key !== 'Enter' && e.key !== ' ' && e.code !== 'Space') return;
-
-		const active = document.activeElement as HTMLElement;
-		if (!active || !active.classList.contains('ui-iconview-entry')) return;
-
-		const iconViewEntries = Array.from(
-			iconview.querySelectorAll('.ui-iconview-entry'),
-		);
-		const selectedIndex = iconViewEntries.indexOf(active);
-
-		if (selectedIndex === -1) return;
-
-		if (e.key === ' ' || e.code === 'Space')
-			iconview.builderCallback('iconview', 'select', selectedIndex, builder);
-		else if (e.key === 'Enter')
-			iconview.builderCallback('iconview', 'activate', selectedIndex, builder);
-	});
 
 	// ensures that aria-selected is updated on initial focus on iconview entries
 	iconview.addEventListener('focusin', function (e: FocusEvent) {
