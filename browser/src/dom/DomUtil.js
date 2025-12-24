@@ -1,38 +1,10 @@
 /* -*- js-indent-level: 8 -*- */
-/* global cool DomUtilBase */
+/* global DomUtilBase */
 /*
  * window.L.DomUtil contains various utility functions for working with DOM.
  */
 
 window.L.DomUtil = class DomUtil extends DomUtilBase {
-
-	static setTransform(el, offset, scale) {
-		var pos = offset || new cool.Point(0, 0);
-
-		el.style[window.L.DomUtil.TRANSFORM] =
-			'translate3d(' + pos.x + 'px,' + pos.y + 'px' + ',0)' + (scale ? ' scale(' + scale + ')' : '');
-	}
-
-	static setPosition(el, point, no3d) { // (HTMLElement, Point[, Boolean])
-
-		/*eslint-disable */
-		el._leaflet_pos = point;
-		/*eslint-enable */
-
-		if (window.L.Browser.any3d && !no3d) {
-			window.L.DomUtil.setTransform(el, point);
-		} else {
-			el.style.left = point.x + 'px';
-			el.style.top = point.y + 'px';
-		}
-	}
-
-	static getPosition(el) {
-		// this method is only used for elements previously positioned using setPosition,
-		// so it's safe to cache the position for performance
-
-		return el._leaflet_pos;
-	}
 
 	static isPortrait() {
 		return window.matchMedia && window.matchMedia('(orientation: portrait)').matches;
