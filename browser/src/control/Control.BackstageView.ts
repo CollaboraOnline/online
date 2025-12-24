@@ -223,13 +223,16 @@ class BackstageView extends window.L.Class {
 		xhr.onload = () => {
 			if (xhr.status === 200 || xhr.status === 0) {
 				const parser = new DOMParser();
-				const svgDoc = parser.parseFromString(xhr.responseText, 'image/svg+xml');
+				const svgDoc = parser.parseFromString(
+					xhr.responseText,
+					'image/svg+xml',
+				);
 				const svg = svgDoc.documentElement;
 				container.appendChild(svg);
 			}
 		};
 		xhr.onerror = () => {
-			console.error("Not able to load svg icon ", iconUrl)
+			console.error('Not able to load svg icon ', iconUrl);
 		};
 		xhr.send();
 	}
@@ -241,12 +244,16 @@ class BackstageView extends window.L.Class {
 		if (config.id === 'save') this.saveTabElement = element;
 
 		if (config.icon) {
-			const iconContainer = this.createElement('span', 'backstage-sidebar-icon');
+			const iconContainer = this.createElement(
+				'span',
+				'backstage-sidebar-icon',
+			);
 			iconContainer.setAttribute('aria-hidden', 'true');
 
-			const iconUrl = window.app && window.app.LOUtil
-				? window.app.LOUtil.getImageURL(config.icon)
-				: `images/${config.icon}`;
+			const iconUrl =
+				window.app && window.app.LOUtil
+					? window.app.LOUtil.getImageURL(config.icon)
+					: `images/${config.icon}`;
 
 			this.loadSVGIcon(iconContainer, iconUrl);
 			element.insertBefore(iconContainer, element.firstChild);
@@ -406,7 +413,7 @@ class BackstageView extends window.L.Class {
 
 		const allTemplates = this.getTemplatesData();
 		const appSpecificTemplates = allTemplates.filter(
-			(template) => template.type === templateType
+			(template) => template.type === templateType,
 		);
 
 		const blankTemplate = this.getBlankTemplate(templateType);
@@ -423,9 +430,15 @@ class BackstageView extends window.L.Class {
 			'backstage-home-templates-row',
 		);
 
-		const moreTemplatesContainer = this.createElement('div', 'backstage-home-more-templates');
+		const moreTemplatesContainer = this.createElement(
+			'div',
+			'backstage-home-more-templates',
+		);
 		const divider = this.createElement('div', 'backstage-home-divider');
-		const moreTemplatesButton = this.createElement('div', 'backstage-home-more-button');
+		const moreTemplatesButton = this.createElement(
+			'div',
+			'backstage-home-more-button',
+		);
 		moreTemplatesButton.textContent = _('More Templates');
 		moreTemplatesButton.setAttribute('role', 'button');
 		moreTemplatesButton.setAttribute('tabindex', '0');
@@ -440,7 +453,12 @@ class BackstageView extends window.L.Class {
 			}
 		};
 
-		window.L.DomEvent.on(moreTemplatesButton, 'click', handleMoreTemplatesClick, this);
+		window.L.DomEvent.on(
+			moreTemplatesButton,
+			'click',
+			handleMoreTemplatesClick,
+			this,
+		);
 
 		moreTemplatesContainer.appendChild(divider);
 		moreTemplatesContainer.appendChild(moreTemplatesButton);
@@ -450,10 +468,7 @@ class BackstageView extends window.L.Class {
 		}
 		this.contentArea.appendChild(moreTemplatesContainer);
 
-		this.addSectionHeader(
-			_('Recent'),
-			'',
-		);
+		this.addSectionHeader(_('Recent'), '');
 
 		this.renderRecentDocuments();
 	}
@@ -481,15 +496,24 @@ class BackstageView extends window.L.Class {
 	}
 
 	private showEmptyMessage(): void {
-		const description = this.createElement('p', 'backstage-content-description');
+		const description = this.createElement(
+			'p',
+			'backstage-content-description',
+		);
 		description.textContent = _('Recently opened documents will appear here');
 		this.contentArea.appendChild(description);
 	}
 
 	private createRecentDocumentsTable(docs: any[]): HTMLElement {
-		const table = this.createElement('table', 'backstage-recent-documents-table');
+		const table = this.createElement(
+			'table',
+			'backstage-recent-documents-table',
+		);
 		const thead = this.createRecentDocumentsTableHeader();
-		const tbody = this.createElement('tbody', 'backstage-recent-documents-body');
+		const tbody = this.createElement(
+			'tbody',
+			'backstage-recent-documents-body',
+		);
 
 		docs.forEach((doc) => {
 			const rows = this.createRecentDocumentRows(doc);
@@ -502,13 +526,25 @@ class BackstageView extends window.L.Class {
 	}
 
 	private createRecentDocumentsTableHeader(): HTMLElement {
-		const thead = this.createElement('thead', 'backstage-recent-documents-header');
-		const row = this.createElement('tr', 'backstage-recent-documents-header-row');
+		const thead = this.createElement(
+			'thead',
+			'backstage-recent-documents-header',
+		);
+		const row = this.createElement(
+			'tr',
+			'backstage-recent-documents-header-row',
+		);
 
-		const nameHeader = this.createElement('th', 'backstage-recent-documents-header-cell');
+		const nameHeader = this.createElement(
+			'th',
+			'backstage-recent-documents-header-cell',
+		);
 		nameHeader.textContent = _('Name');
 
-		const dateHeader = this.createElement('th', 'backstage-recent-documents-header-cell');
+		const dateHeader = this.createElement(
+			'th',
+			'backstage-recent-documents-header-cell',
+		);
 		dateHeader.textContent = _('Modified Date');
 
 		row.appendChild(nameHeader);
@@ -522,7 +558,13 @@ class BackstageView extends window.L.Class {
 		const docType = doc.doctype || 'writer';
 		const formattedTime = this.formatTimestamp(timestamp);
 
-		const row = this.createRecentDocumentRow(fileName, filePath, formattedTime, uri, docType);
+		const row = this.createRecentDocumentRow(
+			fileName,
+			filePath,
+			formattedTime,
+			uri,
+			docType,
+		);
 		return [row];
 	}
 
@@ -531,37 +573,63 @@ class BackstageView extends window.L.Class {
 		filePath: string,
 		formattedTime: string,
 		uri: string,
-		docType: string
+		docType: string,
 	): HTMLElement {
 		const row = this.createElement('tr', 'backstage-recent-document-row');
 
-		const nameCell = this.createElement('td', 'backstage-recent-document-name-cell');
-		const nameText = this.createElement('div', 'backstage-recent-document-name-text');
+		const nameCell = this.createElement(
+			'td',
+			'backstage-recent-document-name-cell',
+		);
+		const nameText = this.createElement(
+			'div',
+			'backstage-recent-document-name-text',
+		);
 		nameText.textContent = fileName;
 
-		const pathText = this.createElement('div', 'backstage-recent-document-path-text');
+		const pathText = this.createElement(
+			'div',
+			'backstage-recent-document-path-text',
+		);
 		pathText.textContent = filePath;
 
-		const textWrapper = this.createElement('div', 'backstage-recent-document-text-wrapper');
+		const textWrapper = this.createElement(
+			'div',
+			'backstage-recent-document-text-wrapper',
+		);
 		textWrapper.appendChild(nameText);
 		textWrapper.appendChild(pathText);
 
 		const iconClass = this.getDocumentIconClass(docType);
-		const icon = this.createElement('span', `backstage-recent-document-icon ${iconClass}`);
+		const icon = this.createElement(
+			'span',
+			`backstage-recent-document-icon ${iconClass}`,
+		);
 
-		const contentWrapper = this.createElement('div', 'backstage-recent-document-content-wrapper');
+		const contentWrapper = this.createElement(
+			'div',
+			'backstage-recent-document-content-wrapper',
+		);
 		contentWrapper.appendChild(icon);
 		contentWrapper.appendChild(textWrapper);
 
 		nameCell.appendChild(contentWrapper);
 
-		const timeCell = this.createElement('td', 'backstage-recent-document-time-cell');
+		const timeCell = this.createElement(
+			'td',
+			'backstage-recent-document-time-cell',
+		);
 		timeCell.textContent = formattedTime;
 
 		row.appendChild(nameCell);
 		row.appendChild(timeCell);
 
-		window.L.DomEvent.on(row, 'click', () => this.openRecentDocument(uri), this);
+		window.L.DomEvent.on(
+			row,
+			'click',
+			() => this.openRecentDocument(uri),
+			this,
+		);
 
 		return row;
 	}
@@ -579,45 +647,55 @@ class BackstageView extends window.L.Class {
 		// On Windows a file: URI looks like this: file:///C:/Users/tml/foo.odt .
 		// URL::pathname has a leading slash and is thus not valid as a pathname, we need to
 		// strip that slash away.
-		if (window.ThisIsTheWindowsApp && fullPath[0] === '/' && fullPath[2] === ':')
+		if (
+			window.ThisIsTheWindowsApp &&
+			fullPath[0] === '/' &&
+			fullPath[2] === ':'
+		)
 			fullPath = fullPath.slice(1);
 
 		// We want to show a more native pathname with backslashes instead of the slashes as
 		// used in file URIs.
 		if (window.ThisIsTheWindowsApp)
 			fullPath = (fullPath as any).replaceAll('/', '\\');
-		
+
 		// We want to show non-ASCII characters in the pathname as such, not
 		// percent-encoded.
 		fullPath = decodeURIComponent(fullPath);
 
-		const lastSlashIndex = Math.max(fullPath.lastIndexOf('/'), fullPath.lastIndexOf('\\'));
-		
-		const fileName = doc.name || (lastSlashIndex >= 0 ? fullPath.slice(lastSlashIndex + 1) : fullPath);
-		const filePath = lastSlashIndex >= 0 ? fullPath.slice(0, lastSlashIndex + 1) : '/';
-	
+		const lastSlashIndex = Math.max(
+			fullPath.lastIndexOf('/'),
+			fullPath.lastIndexOf('\\'),
+		);
+
+		const fileName =
+			doc.name ||
+			(lastSlashIndex >= 0 ? fullPath.slice(lastSlashIndex + 1) : fullPath);
+		const filePath =
+			lastSlashIndex >= 0 ? fullPath.slice(0, lastSlashIndex + 1) : '/';
+
 		return {
 			fileName,
 			filePath,
-			timestamp: doc.timestamp || "",
+			timestamp: doc.timestamp || '',
 			uri,
 		};
 	}
 
 	private formatTimestamp(timestamp: string): string {
 		if (!timestamp) return '';
-		
+
 		try {
 			const date = new Date(timestamp);
 			if (isNaN(date.getTime())) return timestamp;
-			
+
 			const year = date.getFullYear();
 			const month = String(date.getMonth() + 1).padStart(2, '0');
 			const day = String(date.getDate()).padStart(2, '0');
 			const hours = String(date.getHours()).padStart(2, '0');
 			const minutes = String(date.getMinutes()).padStart(2, '0');
 			const seconds = String(date.getSeconds()).padStart(2, '0');
-			
+
 			// TODO: Need Local formatting here?
 			return `${year}/${month}/${day} at ${hours}:${minutes}:${seconds}`;
 		} catch {
@@ -652,9 +730,7 @@ class BackstageView extends window.L.Class {
 		this.templateFeaturedRowContainer = null;
 		this.templateSearchContainer = null;
 
-		this.addSectionHeader(
-			_('New')
-		);
+		this.addSectionHeader(_('New'));
 
 		if (!this.templates) {
 			this.renderTemplatesLoadingState();
@@ -863,19 +939,19 @@ class BackstageView extends window.L.Class {
 		return properties;
 	}
 
-	private addSectionHeader(title: string, description: string = ""): void {
+	private addSectionHeader(title: string, description: string = ''): void {
 		const titleElement = this.createElement('h2', 'backstage-content-title');
 		titleElement.textContent = title;
 		this.contentArea.appendChild(titleElement);
 
-		if (description !== "") {
-		const descElement = this.createElement(
-			'p',
-			'backstage-content-description',
-		);
-		descElement.textContent = description;
-		this.contentArea.appendChild(descElement);
-	}
+		if (description !== '') {
+			const descElement = this.createElement(
+				'p',
+				'backstage-content-description',
+			);
+			descElement.textContent = description;
+			this.contentArea.appendChild(descElement);
+		}
 	}
 
 	private clearContent(): void {
@@ -1056,10 +1132,14 @@ class BackstageView extends window.L.Class {
 			? blankTemplates.filter((t) => t.searchText.includes(query))
 			: blankTemplates;
 
-		return this.createTemplateRow(filteredBlankTemplates, 'template-featured-row', {
-			variant: 'featured',
-			isBlank: true,
-		});
+		return this.createTemplateRow(
+			filteredBlankTemplates,
+			'template-featured-row',
+			{
+				variant: 'featured',
+				isBlank: true,
+			},
+		);
 	}
 
 	private renderTemplateGrid(templates: TemplateData[]): HTMLElement {
