@@ -1,0 +1,356 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|ARM64">
+      <Configuration>Debug</Configuration>
+      <Platform>ARM64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|ARM64">
+      <Configuration>Release</Configuration>
+      <Platform>ARM64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>17.0</VCProjectVersion>
+    <Keyword>Win32Proj</Keyword>
+    <ProjectGuid>{01e897c1-3460-4aa1-a374-98a8dcd58a7c}</ProjectGuid>
+    <RootNamespace>CODA</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>ClangCL</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>ClangCL</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>ClangCL</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>ClangCL</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(SolutionDir)config.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(SolutionDir)config.props" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(SolutionDir)config.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(SolutionDir)config.props" />
+  </ImportGroup>
+  <PropertyGroup>
+    <TargetName>$(APP_NAME)</TargetName>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">
+    <OutDir>$(SolutionDir)$(Platform)\$(Configuration)\program\</OutDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">
+    <OutDir>$(SolutionDir)$(Platform)\$(Configuration)\program\</OutDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <OutDir>$(SolutionDir)$(Platform)\$(Configuration)\program\</OutDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <OutDir>$(SolutionDir)$(Platform)\$(Configuration)\program\</OutDir>
+  </PropertyGroup>
+  <PropertyGroup Label="UserMacros" />
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>_DEBUG;_WINDOWS;POCO_STATIC;NOMINMAX;_CRT_SECURE_NO_WARNINGS;COOLWSD_LOGLEVEL="debug";APP_VENDOR="$(APP_VENDOR)";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>..;..\..\..;..\..\..\common;..\..\..\net;..\..\..\kit;..\..\..\wsd;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <LanguageStandard_C>stdc11</LanguageStandard_C>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>libpng.lib;zlib.lib;libzstd_static.lib;ws2_32.lib;iphlpapi.lib;crypt32.lib;shlwapi.lib;secur32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>_DEBUG;_WINDOWS;POCO_STATIC;NOMINMAX;_CRT_SECURE_NO_WARNINGS;COOLWSD_LOGLEVEL="debug";APP_VENDOR="$(APP_VENDOR)";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>..;..\..\..;..\..\..\common;..\..\..\net;..\..\..\kit;..\..\..\wsd;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <LanguageStandard_C>stdc11</LanguageStandard_C>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>libpng.lib;zlib.lib;libzstd_static.lib;ws2_32.lib;iphlpapi.lib;crypt32.lib;shlwapi.lib;secur32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>NDEBUG;_WINDOWS;POCO_STATIC;NOMINMAX;_CRT_SECURE_NO_WARNINGS;COOLWSD_LOGLEVEL="warning";APP_VENDOR="$(APP_VENDOR)";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>..;..\..\..;..\..\..\common;..\..\..\net;..\..\..\kit;..\..\..\wsd;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <LanguageStandard_C>stdc11</LanguageStandard_C>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>libpng.lib;zlib.lib;libzstd_static.lib;ws2_32.lib;iphlpapi.lib;crypt32.lib;shlwapi.lib;secur32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>NDEBUG;_WINDOWS;POCO_STATIC;NOMINMAX;_CRT_SECURE_NO_WARNINGS;COOLWSD_LOGLEVEL="warning";APP_VENDOR="$(APP_VENDOR)";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>..;..\..\..;..\..\..\common;..\..\..\net;..\..\..\kit;..\..\..\wsd;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <LanguageStandard_C>stdc11</LanguageStandard_C>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>libpng.lib;zlib.lib;libzstd_static.lib;ws2_32.lib;iphlpapi.lib;crypt32.lib;shlwapi.lib;secur32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup>
+    <PostBuildEvent>
+      <Command>
+        robocopy ..\..\..\browser\dist $(OutDir)..\cool *.* /E /XF debug.html framed.doc.html framed.html load.doc.html multidocs.html tsconfig.tsbuildinfo l10n-all.js wasm.html /XD src
+        xcopy ..\..\..\browser\dist\src\layer\tile\CanvasTileUtils.js $(OutDir)..\cool\src\layer\tile\ /f /y
+        xcopy ..\..\..\browser\dist\src\layer\tile\TileWorker.js $(OutDir)..\cool\src\layer\tile\ /f /y
+        xcopy $(LO_PATH) $(OutDir)..\ /s /f /y /exclude:..\xcopy.excludes
+        del $(OutDir)*.com
+        del $(OutDir)..\..\Release\program\gengal.exe
+        del $(OutDir)..\..\Release\program\odbcconfig.exe
+        del $(OutDir)..\..\Release\program\quickstart.exe
+        del $(OutDir)..\..\Release\program\regview.exe
+        del $(OutDir)..\..\Release\program\sbase.exe
+        del $(OutDir)..\..\Release\program\scalc.exe
+        del $(OutDir)..\..\Release\program\sdraw.exe
+        del $(OutDir)..\..\Release\program\senddoc.exe
+        del $(OutDir)..\..\Release\program\simpress.exe
+        del $(OutDir)..\..\Release\program\smath.exe
+        del $(OutDir)..\..\Release\program\soffice.exe
+        del $(OutDir)..\..\Release\program\soffice_safe.exe
+        del $(OutDir)..\..\Release\program\spsupp_helper.exe
+        del $(OutDir)..\..\Release\program\sweb.exe
+        del $(OutDir)..\..\Release\program\swriter.exe
+        del $(OutDir)..\..\Release\program\twain32shim.exe
+        del $(OutDir)..\..\Release\program\uno.exe
+        del $(OutDir)..\..\Release\program\unoinfo.exe
+        del $(OutDir)..\..\Release\program\unopkg.exe
+        del $(OutDir)..\..\Release\program\avmedialo.dll
+        del $(OutDir)..\..\Release\program\basctllo.dll
+        del $(OutDir)..\..\Release\program\basprovlo.dll
+        del $(OutDir)..\..\Release\program\canvasfactorylo.dll
+        del $(OutDir)..\..\Release\program\canvastoolslo.dll
+        del $(OutDir)..\..\Release\program\chartcontrollerlo.dll
+        del $(OutDir)..\..\Release\program\chartcorelo.dll
+        del $(OutDir)..\..\Release\program\configmgrlo.dll
+        del $(OutDir)..\..\Release\program\cppcanvaslo.dll
+        del $(OutDir)..\..\Release\program\ctllo.dll
+        del $(OutDir)..\..\Release\program\dbtoolslo.dll
+        del $(OutDir)..\..\Release\program\deployment.dll
+        del $(OutDir)..\..\Release\program\deploymentmisclo.dll
+        del $(OutDir)..\..\Release\program\directx9canvaslo.dll
+        del $(OutDir)..\..\Release\program\docmodello.dll
+        del $(OutDir)..\..\Release\program\drawinglayercorelo.dll
+        del $(OutDir)..\..\Release\program\drawinglayerlo.dll
+        del $(OutDir)..\..\Release\program\editenglo.dll
+        del $(OutDir)..\..\Release\program\embobj.dll
+        del $(OutDir)..\..\Release\program\emboleobj.dll
+        del $(OutDir)..\..\Release\program\emfiolo.dll
+        del $(OutDir)..\..\Release\program\emserlo.dll
+        del $(OutDir)..\..\Release\program\evtattlo.dll
+        del $(OutDir)..\..\Release\program\filterconfiglo.dll
+        del $(OutDir)..\..\Release\program\forlo.dll
+        del $(OutDir)..\..\Release\program\foruilo.dll
+        del $(OutDir)..\..\Release\program\fps_officelo.dll
+        del $(OutDir)..\..\Release\program\frmlo.dll
+        del $(OutDir)..\..\Release\program\fsstoragelo.dll
+        del $(OutDir)..\..\Release\program\fwklo.dll
+        del $(OutDir)..\..\Release\program\gdipluscanvaslo.dll
+        del $(OutDir)..\..\Release\program\guesslanglo.dll
+        del $(OutDir)..\..\Release\program\helplinkerlo.dll
+        del $(OutDir)..\..\Release\program\hyphenlo.dll
+        del $(OutDir)..\..\Release\program\i18npoollo.dll
+        del $(OutDir)..\..\Release\program\i18nsearchlo.dll
+        del $(OutDir)..\..\Release\program\i18nutil.dll
+        del $(OutDir)..\..\Release\program\icglo.dll
+        del $(OutDir)..\..\Release\program\lnglo.dll
+        del $(OutDir)..\..\Release\program\lnthlo.dll
+        del $(OutDir)..\..\Release\program\localebe1lo.dll
+        del $(OutDir)..\..\Release\program\msfilterlo.dll
+        del $(OutDir)..\..\Release\program\mtfrendererlo.dll
+        del $(OutDir)..\..\Release\program\numbertextlo.dll
+        del $(OutDir)..\..\Release\program\odfflatxmllo.dll
+        del $(OutDir)..\..\Release\program\offacclo.dll
+        del $(OutDir)..\..\Release\program\oglcanvaslo.dll
+        del $(OutDir)..\..\Release\program\ooxlo.dll
+        del $(OutDir)..\..\Release\program\package2.dll
+        del $(OutDir)..\..\Release\program\passwordcontainerlo.dll
+        del $(OutDir)..\..\Release\program\sblo.dll
+        del $(OutDir)..\..\Release\program\sfxlo.dll
+        del $(OutDir)..\..\Release\program\simplecanvaslo.dll
+        del $(OutDir)..\..\Release\program\sofficeapp.dll
+        del $(OutDir)..\..\Release\program\sotlo.dll
+        del $(OutDir)..\..\Release\program\spelllo.dll
+        del $(OutDir)..\..\Release\program\spllo.dll
+        del $(OutDir)..\..\Release\program\srtrs1.dll
+        del $(OutDir)..\..\Release\program\stringresourcelo.dll
+        del $(OutDir)..\..\Release\program\svgiolo.dll
+        del $(OutDir)..\..\Release\program\svllo.dll
+        del $(OutDir)..\..\Release\program\svtlo.dll
+        del $(OutDir)..\..\Release\program\svxcorelo.dll
+        del $(OutDir)..\..\Release\program\svxlo.dll
+        del $(OutDir)..\..\Release\program\sysshlo.dll
+        del $(OutDir)..\..\Release\program\textfdlo.dll
+        del $(OutDir)..\..\Release\program\tklo.dll
+        del $(OutDir)..\..\Release\program\ucb1.dll
+        del $(OutDir)..\..\Release\program\ucpexpand1lo.dll
+        del $(OutDir)..\..\Release\program\ucpextlo.dll
+        del $(OutDir)..\..\Release\program\ucpfile1.dll
+        del $(OutDir)..\..\Release\program\ucphier1.dll
+        del $(OutDir)..\..\Release\program\ucpimagelo.dll
+        del $(OutDir)..\..\Release\program\ucptdoc1lo.dll
+        del $(OutDir)..\..\Release\program\unordflo.dll
+        del $(OutDir)..\..\Release\program\unoxmllo.dll
+        del $(OutDir)..\..\Release\program\updatefeedlo.dll
+        del $(OutDir)..\..\Release\program\utllo.dll
+        del $(OutDir)..\..\Release\program\uuilo.dll
+        del $(OutDir)..\..\Release\program\vbaeventslo.dll
+        del $(OutDir)..\..\Release\program\vbahelperlo.dll
+        del $(OutDir)..\..\Release\program\vclcanvaslo.dll
+        del $(OutDir)..\..\Release\program\vcllo.dll
+        del $(OutDir)..\..\Release\program\xmlfalo.dll
+        del $(OutDir)..\..\Release\program\xmlfdlo.dll
+        del $(OutDir)..\..\Release\program\xmlscriptlo.dll
+        del $(OutDir)..\..\Release\program\xoflo.dll
+        del $(OutDir)..\..\Release\program\xolo.dll
+        del $(OutDir)..\..\Release\program\xsec_xmlsec.dll
+        del $(OutDir)..\..\Release\program\xsltdlglo.dll
+        del $(OutDir)..\..\Release\program\xsltfilterlo.dll
+        del $(OutDir)..\..\Release\program\xstor.dll
+        xcopy ..\..\..\browser\templates $(OutDir)..\templates\ /s /f /y
+      </Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\common\Authorization.cpp" />
+    <ClCompile Include="..\..\..\common\ConfigUtil.cpp" />
+    <ClCompile Include="..\..\..\common\Crypto-stub.cpp" />
+    <ClCompile Include="..\..\..\common\FileUtil-windows.cpp" />
+    <ClCompile Include="..\..\..\common\FileUtil.cpp" />
+    <ClCompile Include="..\..\..\common\Log-common.cpp" />
+    <ClCompile Include="..\..\..\common\Log-windows.cpp" />
+    <ClCompile Include="..\..\..\common\MobileApp.cpp" />
+    <ClCompile Include="..\..\..\common\Protocol.cpp" />
+    <ClCompile Include="..\..\..\common\RecentFiles.cpp" />
+    <ClCompile Include="..\..\..\common\RegexUtil.cpp" />
+    <ClCompile Include="..\..\..\common\Session.cpp" />
+    <ClCompile Include="..\..\..\common\SigUtil-mobile.cpp" />
+    <ClCompile Include="..\..\..\common\Simd.cpp" />
+    <ClCompile Include="..\..\..\common\SpookyV2.cpp" />
+    <ClCompile Include="..\..\..\common\StringVector.cpp" />
+    <ClCompile Include="..\..\..\common\TraceEvent.cpp" />
+    <ClCompile Include="..\..\..\common\Unit-mobile.cpp" />
+    <ClCompile Include="..\..\..\common\Unit.cpp" />
+    <ClCompile Include="..\..\..\common\Uri.cpp" />
+    <ClCompile Include="..\..\..\common\Util-mobile.cpp" />
+    <ClCompile Include="..\..\..\common\Util-windows.cpp" />
+    <ClCompile Include="..\..\..\common\Util.cpp" />
+    <ClCompile Include="..\..\..\kit\ChildSession.cpp" />
+    <ClCompile Include="..\..\..\kit\DeltaSimd.c" />
+    <ClCompile Include="..\..\..\kit\Kit.cpp" />
+    <ClCompile Include="..\..\..\kit\KitQueue.cpp" />
+    <ClCompile Include="..\..\..\kit\KitWebSocket.cpp" />
+    <ClCompile Include="..\..\..\kit\LogUI.cpp" />
+    <ClCompile Include="..\..\..\net\FakeSocket.cpp" />
+    <ClCompile Include="..\..\..\net\Socket.cpp" />
+    <ClCompile Include="..\..\..\wsd\COOLWSD.cpp" />
+    <ClCompile Include="..\..\..\wsd\ClientRequestDispatcher.cpp" />
+    <ClCompile Include="..\..\..\wsd\ClientSession.cpp" />
+    <ClCompile Include="..\..\..\wsd\DocumentBroker.cpp" />
+    <ClCompile Include="..\..\..\wsd\dumpWsdState.cpp" />
+    <ClCompile Include="..\..\..\wsd\RequestDetails.cpp" />
+    <ClCompile Include="..\..\..\wsd\RequestVettingStation.cpp" />
+    <ClCompile Include="..\..\..\wsd\SlideCache.cpp" />
+    <ClCompile Include="..\..\..\wsd\Storage.cpp" />
+    <ClCompile Include="..\..\..\wsd\TileCache.cpp" />
+    <ClCompile Include="..\..\..\wsd\WSDGlobals.cpp" />
+    <ClCompile Include="..\..\..\wsd\coolwsd-fork.cpp" />
+    <ClCompile Include="CODA.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="CODA.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="CODA.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+    <Import Project="..\packages\Microsoft.Windows.ImplementationLibrary.1.0.250325.1\build\native\Microsoft.Windows.ImplementationLibrary.targets" Condition="Exists('..\packages\Microsoft.Windows.ImplementationLibrary.1.0.250325.1\build\native\Microsoft.Windows.ImplementationLibrary.targets')" />
+    <Import Project="..\packages\Microsoft.Web.WebView2.1.0.3595.46\build\native\Microsoft.Web.WebView2.targets" Condition="Exists('..\packages\Microsoft.Web.WebView2.1.0.3595.46\build\native\Microsoft.Web.WebView2.targets')" />
+  </ImportGroup>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\Microsoft.Windows.ImplementationLibrary.1.0.250325.1\build\native\Microsoft.Windows.ImplementationLibrary.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Windows.ImplementationLibrary.1.0.250325.1\build\native\Microsoft.Windows.ImplementationLibrary.targets'))" />
+    <Error Condition="!Exists('..\packages\Microsoft.Web.WebView2.1.0.3595.46\build\native\Microsoft.Web.WebView2.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Web.WebView2.1.0.3595.46\build\native\Microsoft.Web.WebView2.targets'))" />
+  </Target>
+</Project>

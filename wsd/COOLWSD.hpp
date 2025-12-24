@@ -140,12 +140,6 @@ public:
     static std::mutex FetchUpdateMutex;
     static bool IsBindMountingEnabled;
     static std::mutex RemoteConfigMutex;
-#if MOBILEAPP
-#ifndef IOS
-    /// This is used to be able to wait until the lokit main thread has finished (and it is safe to load a new document).
-    static std::mutex lokit_main_mutex;
-#endif
-#endif
 
     /// For testing only [!]
     static int getClientPortNumber();

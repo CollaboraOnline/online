@@ -32,6 +32,38 @@ namespace COOLProtocol
     constexpr unsigned ProtocolMajorVersionNumber = 0;
     constexpr unsigned ProtocolMinorVersionNumber = 1;
 
+    static constexpr const char* binaryMessageTypes[] {
+        "tile:",
+        "tilecombine:",
+        "delta:",
+        "renderfont:",
+        "rendersearchresult:",
+        "slidelayer:",
+        "windowpaint:",
+        "urp:"
+    };
+
+    static inline bool isMessageOfType(const char* message, const std::string& type, size_t length)
+    {
+        if (length < type.length() + 2)
+            return false;
+        for (size_t i = 0; i < type.length(); i++)
+            if (message[i] != type[i])
+                return false;
+        return true;
+    }
+
+    static inline bool isBinaryMessage(const char *buffer, size_t length)
+    {
+        for (auto i : COOLProtocol::binaryMessageTypes)
+        {
+            if (isMessageOfType(buffer, i, length))
+                return true;
+        }
+
+        return false;
+    }
+
     inline std::string GetProtocolVersion()
     {
         return std::to_string(ProtocolMajorVersionNumber) + '.'

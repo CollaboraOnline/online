@@ -405,8 +405,10 @@ class UIManager extends window.L.Control {
 
 		window.setupToolbar(this.map);
 
-		this.documentNameInput = window.L.control.documentNameInput();
-		this.map.addControl(this.documentNameInput);
+		if (!((window as any).mode.isCODesktop())) {
+			this.documentNameInput = window.L.control.documentNameInput();
+			this.map.addControl(this.documentNameInput);
+		}
 		this.map.addControl(window.L.control.alertDialog());
 		if (window.mode.isMobile()) {
 			this.mobileWizard = window.L.control.mobileWizard();
@@ -473,12 +475,88 @@ class UIManager extends window.L.Control {
 		app.serverConnectionService.onBasicUI();
 	}
 
+
+	initializeNonInteractiveUI() {
+		app.console.debug('UIManager: initialize non-interactive basic UI');
+
+		this.map.jsdialog = window.L.control.jsDialog();
+		this.map.addControl(this.map.jsdialog);
+		this.map.dialog = window.L.control.lokDialog();
+		this.map.addControl(this.map.dialog);
+
+		app.serverConnectionService.onBasicUI();
+	}
+
+	initializeBackstageView(): void {
+		if (!(window as any).mode.isCODesktop())
+			return;
+
+		if (!this.map.backstageView) {
+			this.map.backstageView = new window.L.Control.BackstageView(this.map);
+			console.log('UIManager: BackstageView created for starter mode');
+		}
+
+		console.log('UIManager: Showing BackstageView for starter mode');
+
+		this.initDarkModeFromSettings();
+
+		// Use requestAnimationFrame to ensure DOM is ready
+		window.requestAnimationFrame(() => {
+			if (this.map.backstageView) {
+				this.map.backstageView.show();
+			}
+		});
+	}
+
 	/**
 	 * Initializes specialized UI components based on the document type.
 	 * @param docType - Document type (e.g. 'spreadsheet', 'presentation', 'text').
 	 */
 	initializeSpecializedUI(docType: string): void {
 		app.console.debug('UIManager: initialize specialized UI for: ' + docType);
+
+		var startFolloMePresntationGet = this.map.isPresentationOrDrawing() && window.coolParams.get('startFollowMePresentation');
+		var startPresentationGet = this.map.isPresentationOrDrawing() && window.coolParams.get('startPresentation');
+		const startWelcomePresentation = window.coolParams.get('welcome');
+		// check for "presentation" dispatch event only after document gets fully loaded
+		const startPresentation = () => {
+			if (
+				startFolloMePresntationGet === 'true' ||
+				startFolloMePresntationGet === '1'
+			) {
+				const dispatchFollowPresentation = () => {
+					app.dispatcher.dispatch('followpresentation');
+					this.map.off('slideshowfollowon', dispatchFollowPresentation);
+				};
+				// have to wait until we get all the leader slide details
+				// if we start the follow me presentation directly then
+				// it will start from beginning and not where the leader is
+				// This also help with if the follow me presentation is not running
+				this.map.on('slideshowfollowon', dispatchFollowPresentation);
+			} else if (
+				startPresentationGet === 'true' ||
+				startPresentationGet === '1'
+			) {
+				app.dispatcher.dispatch('presentation');
+			} else if (startWelcomePresentation === 'true') {
+				app.dispatcher.dispatch('presentinwindow');
+			}
+
+			// docloaded event is fired multiple times, unfortunately
+      // but presentation should start only once
+			this.map.off('docloaded', startPresentation);
+		};
+
+		this.map.on('docloaded', startPresentation);
+
+		// Return early when we are loading welcome slideshow
+		if (startWelcomePresentation) {
+			this.map.slideShowPresenter = new SlideShow.SlideShowPresenter(
+				this.map,
+				window.enableAccessibility,
+			);
+			return;
+		}
 
 		var isDesktop = window.mode.isDesktop();
 		var currentMode = this.getCurrentMode();
@@ -499,6 +577,17 @@ class UIManager extends window.L.Control {
 		} else {
 			this.createNotebookbarControl(docType, enableNotebookbar);
 			// makeSpaceForNotebookbar call in onUpdatePermission
+		}
+
+		if ((window as any).mode.isCODesktop()) {
+			if (!this.map.backstageView) {
+				this.map.backstageView = new window.L.Control.BackstageView(this.map);
+				console.log('UIManager: BackstageView created and attached to map');
+			} else {
+				console.log('UIManager: BackstageView already exists');
+			}
+		} else {
+			console.log('UIManager: Not a CODA app, skipping backstage view initialization');
 		}
 
 		if (!window.prefs.getBoolean(`${docType}.ShowToolbar`, true)) {
@@ -572,59 +661,19 @@ class UIManager extends window.L.Control {
 		}
 
 		this.map.on('changeuimode', this.onChangeUIMode, this);
+		this.map.on('backstagehide', () => {
+			setTimeout(() => {
+				this.map.invalidateSize(); // triggers Leaflet layout recalculation
+				const docLayer = this.map._docLayer;
+				if (docLayer && docLayer._docType === 'spreadsheet') {
+					docLayer._resetClientVisArea();
+					docLayer._requestNewTiles();
+				}
+			}, 0);
+		});
 
 		this.refreshTheme();
 
-		var startFolloMePresntationGet = this.map.isPresentationOrDrawing() && window.coolParams.get('startFollowMePresentation');
-		var presentationLeaderIdGet = this.map.isPresentationOrDrawing() && window.coolParams.get('presentationLeaderId');
-		var startPresentationGet = this.map.isPresentationOrDrawing() && window.coolParams.get('startPresentation');
-		if (this.map.wopi.PresentationLeader)
-		{
-			presentationLeaderIdGet = this.map.wopi.PresentationLeader;
-		}
-		// check for "presentation" dispatch event only after document gets fully loaded
-		// in case if the leader is defined we have to wait a little longer to get the viewer info
-		const startPresentation = () => {
-			if (startFolloMePresntationGet === 'true' || startFolloMePresntationGet === '1') {
-				const dispatchFollowPresentation = () => {
-					app.dispatcher.dispatch('followpresentation');
-					this.map.off('slideshowfollowon', dispatchFollowPresentation);
-				}
-
-				if (presentationLeaderIdGet !== ''){
-					// we can start presentation and wait for the leader
-					var myViewId = this.map._docLayer._viewId;
-					if (!myViewId)
-						return;
-					var myViewData = this.map._viewInfo[myViewId];
-					if (myViewData.userid === presentationLeaderIdGet) {
-						app.dispatcher.dispatch('followmepresentation');
-					}
-					else {
-						app.dispatcher.dispatch('followpresentation');
-					}
-				}
-				else {
-					// have to wait until we get all the leader slide details
-					// if we start the follow me presentation directly then
-					// it will start from beginning and not where the leader is
-					// This also help with if the follow me presentation is not running
-					this.map.on('slideshowfollowon', dispatchFollowPresentation);
-				}
-			}
-			else if (startPresentationGet === 'true' || startPresentationGet === '1') {
-				app.dispatcher.dispatch('presentation');
-			}
-
-			// docloaded event is fired multiple times, unfortunately
-            // but presentation should start only once
-			this.map.off('updateviewslist', startPresentation);
-			this.map.off('docloaded', startPresentation);
-		};
-		if (presentationLeaderIdGet !== '')
-			this.map.on('updateviewslist', startPresentation);
-		else
-			this.map.on('docloaded', startPresentation);
 		this.map.contextToolbar = new ContextToolbar(this.map);
 
 		app.serverConnectionService.onSpecializedUI(docType);

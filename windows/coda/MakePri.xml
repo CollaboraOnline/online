@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<resources targetOsVersion="10.0.0" majorVersion="1">
+  <packaging>
+    <autoResourcePackage qualifier="Language"/>
+  </packaging>
+  <index root="\" startIndexAt="\">
+    <default>
+      <qualifier name="AlternateForm" value="unplated"/>
+      <qualifier name="Language" value="en-US"/>
+      <qualifier name="TargetSize" value="256"/>
+      <qualifier name="TargetSize" value="48"/>
+      <qualifier name="TargetSize" value="32"/>
+      <qualifier name="TargetSize" value="24"/>
+      <qualifier name="TargetSize" value="16"/>
+    </default>
+    <indexer-config type="folder" foldernameAsQualifier="true" filenameAsQualifier="true" qualifierDelimiter="."/>
+    <indexer-config type="PRI"/>
+  </index>
+</resources>

@@ -128,6 +128,7 @@ class SlideShowPresenter {
 	_progressBarContainer: HTMLDivElement | null = null;
 	_slideNavContainer: HTMLDivElement | null = null;
 	_enableA11y: boolean = false;
+	_isWelcomePresentation: boolean = false;
 	private _pauseTimer: PauseTimerGl | PauseTimer2d;
 	private _slideControlsTimer: ReturnType<typeof setTimeout> | null = null;
 	private _slideShowHandler: SlideShowHandler;
@@ -438,6 +439,9 @@ class SlideShowPresenter {
 		if (this._presenterContainer) {
 			window.L.DomUtil.remove(this._presenterContainer);
 			this._presenterContainer = null;
+			if (window.mode.isCODesktop()) {
+				app.socket.sendMessage('FULLSCREENPRESENTATION false');
+			}
 		}
 		// #7102 on exit from fullscreen we don't get a 'focus' event
 		// in Chrome so a later second attempt at launching a presentation
@@ -447,6 +451,7 @@ class SlideShowPresenter {
 
 	private centerCanvas() {
 		if (!this._slideShowCanvas) return;
+
 		let winWidth = 0;
 		let winHeight = 0;
 		if (this._slideShowWindowProxy) {
@@ -480,7 +485,12 @@ class SlideShowPresenter {
 		}
 	}
 
-	private _createPresenterHTML(parent: Element, width: number, height: number) {
+	private _createPresenterHTML(
+		parent: Element,
+		width: number,
+		height: number,
+		showSwitchMonitors: boolean,
+	) {
 		const presenterContainer = window.L.DomUtil.create(
 			'div',
 			'leaflet-slideshow2',
@@ -493,15 +503,22 @@ class SlideShowPresenter {
 			presenterContainer,
 		);
 		slideshowContainer.id = 'slideshow-container';
+
 		this._slideShowCanvas = this._createCanvas(
 			slideshowContainer,
 			width,
 			height,
+			showSwitchMonitors,
 		);
 		return presenterContainer;
 	}
 
-	_createCanvas(parent: Element, width: number, height: number) {
+	_createCanvas(
+		parent: Element,
+		width: number,
+		height: number,
+		showSwitchMonitors: boolean,
+	) {
 		const canvas = window.L.DomUtil.create(
 			'canvas',
 			'leaflet-slideshow2',
@@ -518,7 +535,11 @@ class SlideShowPresenter {
 		}
 
 		this._progressBarContainer = this._createProgressBar(parent);
-		this._slideNavContainer = this._createSlideNav(parent);
+		if (!this._isWelcomePresentation)
+			this._slideNavContainer = this._createSlideNav(
+				parent,
+				showSwitchMonitors,
+			);
 
 		canvas.addEventListener(
 			'click',
@@ -603,7 +624,10 @@ class SlideShowPresenter {
 		JSDialog.progressbar(container, progressData, builderOptions);
 	}
 
-	private _createSlideNav(parent: Element): HTMLDivElement {
+	private _createSlideNav(
+		parent: Element,
+		showSwitchMonitors: boolean,
+	): HTMLDivElement {
 		const slideNavContainer = window.L.DomUtil.create(
 			'div',
 			'slideshow-nav-container',
@@ -611,7 +635,7 @@ class SlideShowPresenter {
 		);
 		slideNavContainer.tabIndex = -1;
 		this._configureSlideNavStyles(slideNavContainer);
-		this._initializeSlideNavWidget(slideNavContainer);
+		this._initializeSlideNavWidget(slideNavContainer, showSwitchMonitors);
 		return slideNavContainer;
 	}
 
@@ -653,6 +677,7 @@ class SlideShowPresenter {
 	};
 
 	_hideSlideControls() {
+		if (!this._slideNavContainer) return;
 		this._slideNavContainer.style.visibility = 'hidden';
 		this._slideNavContainer.style.opacity = '0';
 		this._slideNavContainer.style.transition =
@@ -660,6 +685,8 @@ class SlideShowPresenter {
 	}
 
 	_showSlideControls() {
+		if (!this._slideNavContainer) return;
+
 		this._slideNavContainer.style.visibility = 'visible';
 		this._slideNavContainer.style.opacity = '1';
 		this._slideNavContainer.style.transition = 'opacity 1s linear';
@@ -671,7 +698,10 @@ class SlideShowPresenter {
 		);
 	}
 
-	private _initializeSlideNavWidget(container: HTMLDivElement): void {
+	private _initializeSlideNavWidget(
+		container: HTMLDivElement,
+		showSwitchMonitors: boolean,
+	): void {
 		const closeImg = window.L.DomUtil.create('img', 'left-img', container);
 		const setImgSize = (img: HTMLImageElement) => {
 			img.style.width = '48px';
@@ -739,6 +769,29 @@ class SlideShowPresenter {
 			}.bind(this),
 		);
 
+		if (showSwitchMonitors && window.mode.isCODesktop()) {
+			const ExchangeImg = window.L.DomUtil.create(
+				'img',
+				'right-img',
+				container,
+			);
+			ExchangeImg.id = 'exchange';
+			const followText = _('Exchange');
+			window.L.control.attachTooltipEventListener(ExchangeImg, this._map);
+			ExchangeImg.setAttribute('aria-label', followText);
+			ExchangeImg.setAttribute('data-cooltip', followText);
+			app.LOUtil.setImage(
+				ExchangeImg,
+				'slideshow-switchMonitor.svg',
+				this._map,
+			);
+			ExchangeImg.addEventListener('click', (e: Event) => {
+				e.stopPropagation();
+				this._onA11yString(e.target);
+				window.postMobileMessage('EXCHANGEMONITORS');
+			});
+		}
+
 		if (this.isFollower()) {
 			const FollowImg = window.L.DomUtil.create('img', 'right-img', container);
 			FollowImg.id = 'follow';
@@ -800,8 +853,13 @@ class SlideShowPresenter {
 			}
 			this._stopFullScreen();
 			this._closeSlideShowWindow();
+			if (window.mode.isCODesktop() && this._isWelcomePresentation) {
+				this._isWelcomePresentation = false;
+				app.dispatcher.dispatch('closeapp');
+			}
 			return;
 		}
+
 		this.startTimer(settings.loopAndRepeatDuration);
 	}
 
@@ -884,14 +942,14 @@ class SlideShowPresenter {
 
 	_doFallbackPresentation() {
 		this._stopFullScreen();
-		this._doInWindowPresentation();
+		this._doInWindowPresentation(false);
 	}
 
 	_getProxyDocumentNode() {
 		return this._slideShowWindowProxy.contentWindow.document;
 	}
 
-	_doInWindowPresentation() {
+	_doInWindowPresentation(showSwitchMonitors: boolean) {
 		const popupTitle =
 			_('Windowed Presentation: ') + this._map['wopi'].BaseFileName;
 		const htmlContent = this._generateSlideWindowHtml(popupTitle);
@@ -922,6 +980,7 @@ class SlideShowPresenter {
 			body,
 			window.screen.width,
 			window.screen.height,
+			showSwitchMonitors,
 		);
 
 		window.addEventListener('resize', this.onSlideWindowResize);
@@ -962,7 +1021,12 @@ class SlideShowPresenter {
 		this._slideShowNavigator.quit();
 		this._map.uiManager.closeSnackbar();
 		this._slideShowCanvas = null;
-		this._presenterContainer = null;
+		if (this._presenterContainer) {
+			this._presenterContainer = null;
+			if (window.mode.isCODesktop()) {
+				app.socket.sendMessage('FULLSCREENPRESENTATION false');
+			}
+		}
 		this._slideShowWindowProxy = null;
 		window.removeEventListener('resize', this.onSlideWindowResize);
 		window.removeEventListener('beforeunload', this.slideshowWindowCleanUp);
@@ -1024,16 +1088,33 @@ class SlideShowPresenter {
 
 		if (!this._map['wopi'].DownloadAsPostMessage) {
 			if (inWindow) {
-				this._doInWindowPresentation();
+				this._doInWindowPresentation(false);
+				return true;
+			}
+
+			if (window.mode.isCODesktop()) {
+				// a) For qt (under wayland), we would like to be able to distinguish
+				// between a presentation going full screen, in which case we create a
+				// new window for it, vs otherwise going full screen.
+				// b) It turns out that macOS appears to also do such a substitution
+				// automatically on going full-screen, so the window handle we have isn't
+				// that of the full screen window, and it seems impractiable to get access
+				// to it, which we need to be able to swap it from one monitor to another
+				app.socket.sendMessage('FULLSCREENPRESENTATION true');
+				this._doInWindowPresentation(true);
 				return true;
 			}
 
 			// fullscreen
+			const width = window.screen.width;
+			const height = window.screen.height;
 			this._presenterContainer = this._createPresenterHTML(
 				this._map._container,
-				window.screen.width,
-				window.screen.height,
+				width,
+				height,
+				true,
 			);
+
 			if (this._presenterContainer.requestFullscreen) {
 				this._presenterContainer
 					.requestFullscreen()
@@ -1156,6 +1237,7 @@ class SlideShowPresenter {
 
 	/// called when user triggers the in-window presentation using UI
 	_onStartInWindow(that: any) {
+		this._isWelcomePresentation = that?.isWelcomePresentation ?? false;
 		this.sendSlideShowFollowMessage('newfollowmepresentation');
 		this._startSlide = that?.startSlideNumber ?? 0;
 		this._startEffect = that?.startEffectNumber;
@@ -1174,6 +1256,7 @@ class SlideShowPresenter {
 	/// called as a response on getpresentationinfo
 	onSlideShowInfo(data: PresentationInfo) {
 		app.console.debug('SlideShow: received information about presentation');
+
 		this._presentationInfo = data;
 
 		const numberOfSlides = this._getSlidesCount();

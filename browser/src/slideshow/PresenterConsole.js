@@ -32,6 +32,7 @@ class PresenterConsole {
 			next: _('Next'),
 			notes: _('Notes'),
 			slides: _('Slides'),
+			exchange: _('Exchange'),
 			pause: _('Pause'),
 			restart: _('Restart'),
 			resume: _('Resume'),
@@ -92,6 +93,9 @@ class PresenterConsole {
 												</button>
 												<button type="button" id="slides" data-cooltip="${this.labels.slides}" aria-label="${this.labels.slides}">
 													<img src="${LOUtil.getImageURL('presenterscreen-ButtonSlideSorterNormal.svg')}">
+												</button>
+												<button type="button" id="exchange" data-cooltip="${this.labels.exchange}" aria-label="${this.labels.exchange}">
+													<img src="${LOUtil.getImageURL('presenterscreen-ButtonSwitchMonitorNormal.svg')}">
 												</button>
 											</div>
 										</div>
@@ -213,6 +217,18 @@ class PresenterConsole {
 		}
 	}
 
+	_openPresenterWindow() {
+		const windowopen =
+			window.mode.isCODesktop() && window.origOpen
+				? window.origOpen
+				: window.open;
+		return windowopen(
+			'',
+			'_blank',
+			'toolbar=0,scrollbars=0,location=0,statusbar=0,menubar=0,resizable=1,popup=true',
+		);
+	}
+
 	_onPresentInConsole() {
 		if (app.impress.notesMode) {
 			app.console.debug(
@@ -234,11 +250,7 @@ class PresenterConsole {
 			return;
 		}
 
-		this._proxyPresenter = window.open(
-			'',
-			'_blank',
-			'toolbar=0,scrollbars=0,location=0,statusbar=0,menubar=0,resizable=1,popup=true',
-		);
+		this._proxyPresenter = this._openPresenterWindow();
 		if (!this._proxyPresenter) {
 			this._presenter._notifyBlockedPresenting();
 			return;
@@ -562,6 +574,13 @@ class PresenterConsole {
 			}.bind(this),
 		);
 
+		// By default hide the exchange monitors button
+		if (!window.mode.isCODesktop()) {
+			let exchangeMonitorsButton =
+				this._proxyPresenter.document.querySelector('#exchange');
+			exchangeMonitorsButton.style.display = 'none';
+		}
+
 		elem = this._proxyPresenter.document.querySelector('#today');
 		elem.style.textAlign = 'right';
 		elem.style.fontSize = '22px';
@@ -861,6 +880,9 @@ class PresenterConsole {
 			case 'slides':
 				this._onShowSlides();
 				break;
+			case 'exchange':
+				this._exchangeMonitors();
+				break;
 			case 'close-slides':
 				this._onHideSlides();
 				break;
@@ -951,6 +973,10 @@ class PresenterConsole {
 		closeSlideButton.style.display = 'none';
 
 		this._onResize();
+	}
+
+	_exchangeMonitors() {
+		window.postMobileMessage('EXCHANGEMONITORS');
 	}
 
 	_selectImg(img) {

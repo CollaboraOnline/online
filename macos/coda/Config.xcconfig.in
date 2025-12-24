@@ -1,0 +1,26 @@
+//
+// Copyright the Collabora Online contributors.
+//
+// SPDX-License-Identifier: MPL-2.0
+//
+// This Source Code Form is subject to the terms of the Mozilla Public
+// License, v. 2.0. If a copy of the MPL was not distributed with this
+// file, You can obtain one at http://mozilla.org/MPL/2.0/.
+
+// Configuration settings file format documentation can be found at:
+// https://help.apple.com/xcode/#/dev745c5c974
+
+LIBPNG_INCLUDES = "@LIBPNG_INCLUDES@"
+LIBPNG_LIBS = "@LIBPNG_LIBS@"
+LIBPNG_STATIC_LIB = "@LIBPNG_STATIC_LIB@"
+POCO_INCLUDES = "@POCOINCLUDE@"
+POCO_LIBS = "@POCOLIB@"
+ZSTD_INCLUDES = "@ZSTDINCLUDE@"
+ZSTD_LIBS = "@ZSTDLIB@"
+HEADER_SEARCH_PATHS = "@LOKIT_PATH@"
+GCC_PREPROCESSOR_DEFINITIONS = "COOLWSD_CONFIGDIR=\"@COOLWSD_CONFIGDIR@\"" "COOLWSD_LOGLEVEL=\"@COOLWSD_LOGLEVEL@\"" "NUM_PRESPAWN_CHILDREN=\"@NUM_PRESPAWN_CHILDREN@\""
+LO_PATH = @LO_PATH@
+
+APP_BUNDLE_NAME = @APP_NAME@
+APP_PACKAGE_NAME = @APP_PACKAGE_NAME@
+PRODUCT_MODULE_NAME = coda

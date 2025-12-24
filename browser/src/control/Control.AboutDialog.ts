@@ -129,6 +129,29 @@ class AboutDialog {
 				productNameWithURL,
 			);
 
+		const links = content.querySelectorAll<HTMLAnchorElement>(
+			'#coolwsd-version a, #lokit-version a, #lokit-extra a',
+		);
+
+		for (let i = 0; i < links.length; i++) {
+			const link = links[i];
+			link.addEventListener('click', (event: MouseEvent) => {
+				event.preventDefault();
+				window.open(link.href, '_blank');
+			});
+		}
+
+		const licenseInformationElement = content.querySelector(
+			'#license-information',
+		) as HTMLElement;
+		if (licenseInformationElement) {
+			const a = document.createElement('a');
+			a.href = 'javascript:void(0)';
+			a.textContent = _UNO('.uno:ShowLicense');
+			a.addEventListener('click', () => window.postMobileMessage('LICENSE'));
+			licenseInformationElement.appendChild(a);
+		}
+
 		const slowProxyElement = content.querySelector(
 			'#slow-proxy',
 		) as HTMLElement;

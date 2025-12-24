@@ -35,21 +35,16 @@
 #include <cstdlib>
 #include <cstring>
 #include <ctime>
-#include <dirent.h>
-#include <fcntl.h>
 #include <iomanip>
 #include <iostream>
 #include <limits>
 #include <mutex>
 #include <random>
-#include <spawn.h>
 #include <sstream>
 #include <string>
 #include <sys/stat.h>
 #include <sys/types.h>
-#include <sys/uio.h>
 #include <thread>
-#include <unistd.h>
 
 #ifndef COOLWSD_BUILDCONFIG
 #define COOLWSD_BUILDCONFIG
@@ -59,7 +54,7 @@
 #include "SigHandlerTrap.hpp"
 #endif
 
-#if !defined(__ANDROID__) && !defined(__EMSCRIPTEN__)
+#if !defined(__ANDROID__) && !defined(__EMSCRIPTEN__) && !defined(_WIN32)
 #  include <execinfo.h>
 #  include <cxxabi.h>
 #endif
@@ -68,11 +63,20 @@
 #  include <sys/syscall.h>
 #  include <sys/vfs.h>
 #  include <sys/resource.h>
+#  include <dlfcn.h>
 #elif defined __FreeBSD__
 #  include <sys/resource.h>
 #  include <sys/thr.h>
 #elif defined IOS
 #import <Foundation/Foundation.h>
+#endif
+
+#ifndef _WIN32
+#include <sys/uio.h>
+#include <unistd.h>
+#include <dirent.h>
+#include <fcntl.h>
+#include <spawn.h>
 #endif
 
 #if defined __GLIBC__
@@ -84,6 +88,10 @@
 
 #if defined __EMSCRIPTEN__
 #include <emscripten/console.h>
+#endif
+
+#ifdef _WIN32
+#include <processthreadsapi.h>
 #endif
 
 // for version info
@@ -262,6 +270,22 @@ namespace Util
         if (!ThreadTid)
             thr_self(&ThreadTid);
         return ThreadTid;
+#elif defined __APPLE__
+        if (!ThreadTid)
+        {
+            uint64_t tid;
+            if (pthread_threadid_np(NULL, &tid) == 0)
+                ThreadTid = tid;
+        }
+        return ThreadTid;
+#elif defined _WIN32
+        if (!ThreadTid)
+        {
+            DWORD tid = GetThreadId(GetCurrentThread());
+            if (tid)
+                ThreadTid = tid;
+        }
+        return ThreadTid;
 #else
         static long threadCounter = 1;
         if (!ThreadTid)
@@ -275,6 +299,7 @@ namespace Util
 #if defined __linux__
         ::syscall(SYS_tgkill, getpid(), tid, signal);
 #else
+        (void) signal;
         LOG_WRN("No tgkill for thread " << tid);
 #endif
     }
@@ -308,9 +333,12 @@ namespace Util
                               << " is now called [" << s << ']');
 #elif defined IOS
         [[NSThread currentThread] setName:[NSString stringWithUTF8String:ThreadName]];
-        LOG_INF("Thread " << getThreadId() << ") is now called [" << s << ']');
+        LOG_INF("Thread " << getThreadId() << " is now called [" << s << ']');
 #elif defined __EMSCRIPTEN__
         emscripten_console_logf("COOL thread name: \"%s\"", s.c_str());
+#elif defined _WIN32
+        SetThreadDescription(GetCurrentThread(), string_to_wide_string(s).c_str());
+        LOG_INF("Thread " << getThreadId() << " is now called [" << s << ']');
 #endif
 
         // Emit a metadata Trace Event identifying this thread. This will invoke a different function
@@ -333,6 +361,11 @@ namespace Util
 #elif defined IOS
             const char *const name = [[[NSThread currentThread] name] UTF8String];
             strncpy(ThreadName, name, sizeof(ThreadName) - 1);
+#elif defined _WIN32
+            PWSTR description;
+            if (SUCCEEDED(GetThreadDescription(GetCurrentThread(), &description)))
+                strncpy(ThreadName, wide_string_to_string(description).c_str(), sizeof(ThreadName) - 1);
+            LocalFree(description);
 #endif
             ThreadName[sizeof(ThreadName) - 1] = '\0';
         }
@@ -943,6 +976,8 @@ namespace Util
                 free(rawSymbols);
             }
         }
+#else
+        (void) maxFrames;
 #endif
         if (0 == _frames.size())
         {

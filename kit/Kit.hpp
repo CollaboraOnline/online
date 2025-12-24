@@ -31,6 +31,8 @@
 
 #if MOBILEAPP
 
+#include <future>
+
 #include "ClientSession.hpp"
 #include "DocumentBroker.hpp"
 
@@ -46,10 +48,6 @@ void lokit_main(
     int docBrokerSocket, const std::string& userInterface,
 #endif
     std::size_t numericIdentifier);
-
-#ifdef IOS
-void runKitLoopInAThread();
-#endif
 
 bool globalPreinit(const std::string& loTemplate);
 /// Wrapper around private Document::ViewCallback().
@@ -169,7 +167,16 @@ public:
         ~ReEntrancyGuard() { _count--; }
     };
 #endif
+
+    /// Handle the poll from the unipoll callback.
     int kitPoll(int timeoutMicroS);
+
+    /// Handle the wake up from the unipoll callback.
+    void kitWakeup();
+
+    /// Handle the 'has any input?' unipoll callback.
+    bool kitHasAnyInput(int mostUrgentPriority);
+
     void setDocument(std::shared_ptr<Document> document) { _document = std::move(document); }
     const std::shared_ptr<Document>& getDocument() const { return _document; }
 
@@ -177,14 +184,18 @@ public:
     static bool pushToMainThread(LibreOfficeKitCallback callback, int type, const char* p,
                                  void* data);
 
-#ifdef IOS
+#if MOBILEAPP
     static std::mutex KSPollsMutex;
     static std::condition_variable KSPollsCV;
     static std::vector<std::weak_ptr<KitSocketPoll>> KSPolls;
 
-    std::mutex terminationMutex;
-    std::condition_variable terminationCV;
-    bool terminationFlag;
+    struct TerminationData
+    {
+        std::mutex mutex;
+        std::condition_variable cv;
+        bool flag;
+    };
+    std::shared_ptr<TerminationData> termination;
 #endif
 };
 

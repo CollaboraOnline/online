@@ -20,7 +20,6 @@
 #include <common/Common.hpp>
 #include <common/ConfigUtil.hpp>
 #include <common/FileUtil.hpp>
-#include <common/JailUtil.hpp>
 #include <common/JsonUtil.hpp>
 #include <common/Log.hpp>
 #include <common/Message.hpp>
@@ -61,7 +60,9 @@
 #include <stdexcept>
 #include <string>
 #include <sys/types.h>
+#ifndef _WIN32
 #include <sysexits.h>
+#endif
 #include <utility>
 
 using namespace std::literals;
@@ -228,8 +229,8 @@ DocumentBroker::DocumentBroker(ChildType type, const std::string& uri, const Poc
 
     if constexpr (!Util::isMobileApp())
         assert(_mobileAppDocId == 0 && "Unexpected to have mobileAppDocId in the non-mobile build");
-#ifdef IOS
-    assert(_mobileAppDocId > 0 && "Unexpected to have no mobileAppDocId in the iOS build");
+#if MOBILEAPP
+    assert(_mobileAppDocId > 0 && "Unexpected to have no mobileAppDocId in a mobile app");
 #endif
 
     LOG_INF("DocumentBroker [" << COOLWSD::anonymizeUrl(_uriPublic.toString())
@@ -1317,14 +1318,14 @@ bool DocumentBroker::doDownloadDocument(const Authorization& auth,
 
     std::string localPathEncoded;
     Poco::URI::encode(localPath, "#?", localPathEncoded);
-    _uriJailed = Poco::URI(Poco::URI("file://"), localPathEncoded).toString();
+    _uriJailed = Poco::URI(Poco::Path(localPath)).toString();
     _uriJailedAnonym =
-        Poco::URI(Poco::URI("file://"), COOLWSD::anonymizeUrl(localPathEncoded)).toString();
+        Poco::URI(Poco::Path(COOLWSD::anonymizeUrl(localPathEncoded))).toString();
     for (const auto& it : additionalFileLocalPaths)
     {
         std::string additionalFileLocalPathEncoded;
         Poco::URI::encode(it.second, "#?", additionalFileLocalPathEncoded);
-        _additionalFileUrisJailed[it.first] = Poco::URI(Poco::URI("file://"), additionalFileLocalPathEncoded).toString();
+        _additionalFileUrisJailed[it.first] = Poco::URI(Poco::Path(additionalFileLocalPathEncoded)).toString();
     }
 
     _filename = filename;
@@ -2526,6 +2527,11 @@ bool DocumentBroker::isStorageOutdated() const
     return currentModifiedTime != lastModifiedTime;
 }
 
+bool DocumentBroker::isNextSaveAutosave() const
+{
+    return _nextStorageAttrs.isAutosave();
+}
+
 void DocumentBroker::handleSaveResponse(const std::shared_ptr<ClientSession>& session,
                                         const Poco::JSON::Object::Ptr& json)
 {
@@ -3672,7 +3678,7 @@ void DocumentBroker::autoSaveAndStop(const std::string& reason)
         // very late, or not at all. We care that there is nothing to upload
         // and the last save succeeded, possibly because there was no
         // modifications, and there has been no activity since.
-        LOG_ASSERT_MSG(_saveManager.lastSaveRequestTime() < _saveManager.lastSaveResponseTime(),
+        LOG_ASSERT_MSG(_saveManager.lastSaveRequestTime() <= _saveManager.lastSaveResponseTime(),
                        "Unexpected active save in flight");
         LOG_ASSERT_MSG(!_saveManager.isSaving(), "Unexpected active save in flight");
         if (!haveModifyActivityAfterSaveRequest() && _saveManager.lastSaveSuccessful())
@@ -3975,8 +3981,6 @@ std::size_t DocumentBroker::removeSession(const std::shared_ptr<ClientSession>& 
         {
             LOG_WRN("Failed to upload presets for session [" << id << "]: " << exc.what());
         }
-#endif
-#ifndef IOS
         if (activeSessionCount <= 1 && !isConvertTo())
         {
             // rescue clipboard before shutdown.

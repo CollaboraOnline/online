@@ -358,7 +358,9 @@ window.L.Control.NotebookbarImpress = window.L.Control.NotebookbarWriter.extend(
 				'command': 'downloadas',
 				'class': 'unodownloadas',
 				'type': 'exportmenubutton',
-				'text': _('Download'),
+				'text': !window.ThisIsAMobileApp ? _('Download') :
+					(window.ThisIsTheWindowsApp ? _('Export as') :
+					 _('Save As')),
 				'accessibility': { focusBack: true, combination: 'DA', de: null }
 			});
 		}
@@ -477,8 +479,13 @@ window.L.Control.NotebookbarImpress = window.L.Control.NotebookbarWriter.extend(
 				'command': 'presentation-currentslide',
 				'accessibility': { focusBack: true, combination: 'FC', de: null }
 			},
-			{ type: 'separator', id: 'slide-show-presentation', orientation: 'vertical' },
-			!window.ThisIsAMobileApp ?
+			!window.ThisIsAMobileApp || window.mode.isCODesktop() ?
+				{
+					type: 'separator',
+					id: 'slide-show-presentation',
+					orientation: 'vertical'
+				} : {},
+			!window.ThisIsAMobileApp || window.mode.isCODesktop() ?
 				{
 					'id': 'slide-presentation-in-window',
 					'type': 'bigcustomtoolitem',
@@ -486,7 +493,7 @@ window.L.Control.NotebookbarImpress = window.L.Control.NotebookbarWriter.extend(
 					'command': 'presentinwindow',
 					'accessibility': { focusBack: true, combination: 'PW', de: null }
 				} : {},
-			!window.ThisIsAMobileApp && window.canvasSlideshowEnabled ?
+			(!window.ThisIsAMobileApp || window.mode.isCODesktop()) && window.canvasSlideshowEnabled ?
 			  {
 					'id': 'slide-presentation-in-console',
 					'type': 'bigcustomtoolitem',

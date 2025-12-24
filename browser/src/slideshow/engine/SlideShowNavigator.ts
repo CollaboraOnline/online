@@ -285,7 +285,7 @@ class SlideShowNavigator {
 			this.currentSlide = nNewSlide;
 			const force = nNewSlide > this.theMetaPres.numberOfSlides;
 			if (force) this.quit();
-			else this.endPresentation(false);
+			else this.endPresentation(this.presenter._isWelcomePresentation);
 			return;
 		}
 
@@ -332,6 +332,26 @@ class SlideShowNavigator {
 					'SlideShowNavigator.displaySlide: slideCompositor.fetchAndRun: this.currentSlide === this.prevSlide',
 				);
 				return;
+			}
+
+			// show welcome slideshow once 1st slide is rendered
+			if (
+				app.map.slideShowPresenter._isWelcomePresentation &&
+				this.currentSlide === 0 &&
+				window.mode.isCODesktop()
+			) {
+				const loader = document.getElementById('welcome-loader');
+				if (loader) {
+					loader.style.opacity = '0';
+					// Wait for transition to complete before removing
+					loader.addEventListener(
+						'transitionend',
+						function () {
+							loader.parentNode.removeChild(loader);
+						},
+						{ once: true },
+					);
+				}
 			}
 
 			this.slideShowHandler.displaySlide(

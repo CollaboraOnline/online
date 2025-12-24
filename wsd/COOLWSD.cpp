@@ -33,10 +33,12 @@
 // parent process that listens on the TCP port and accepts connections from COOL clients, and a
 // number of child processes, each which handles a viewing (editing) session for one document.
 
+#ifndef _WIN32
 #include <unistd.h>
 #include <sysexits.h>
 #include <sys/resource.h>
 #include <sys/wait.h>
+#endif
 
 #include <sys/types.h>
 
@@ -106,6 +108,7 @@
 #include <ServerSocket.hpp>
 
 #include <wsd/PlatformMobile.hpp>
+#include <wsd/PlatformUnix.hpp>
 
 using Poco::Util::LayeredConfiguration;
 using Poco::Util::Option;
@@ -115,7 +118,7 @@ int ClientPortNumber = 0;
 
 #if !MOBILEAPP
 /// UDS address for kits to connect to.
-std::string MasterLocation;
+UnxSocketPath MasterLocation;
 
 std::string COOLWSD::BuyProductUrl;
 std::string COOLWSD::LatestVersion;
@@ -782,7 +785,12 @@ std::string COOLWSD::FileServerRoot;
 std::string COOLWSD::ServiceRoot;
 std::string COOLWSD::TmpFontDir;
 std::string COOLWSD::LOKitVersion;
-std::string COOLWSD::ConfigFile = COOLWSD_CONFIGDIR "/coolwsd.xml";
+std::string COOLWSD::ConfigFile =
+#if defined(MACOS) && MOBILEAPP
+    getResourcePath("coolwsd", "xml");
+#else
+    COOLWSD_CONFIGDIR "/coolwsd.xml";
+#endif
 std::string COOLWSD::ConfigDir = COOLWSD_CONFIGDIR "/conf.d";
 bool COOLWSD::EnableTraceEventLogging = false;
 bool COOLWSD::EnableAccessibility = false;
@@ -895,12 +903,6 @@ private:
 /// And also cleans up and balances the correct number of children.
 static std::shared_ptr<PrisonPoll> PrisonerPoll;
 
-#if MOBILEAPP
-#ifndef IOS
-std::mutex COOLWSD::lokit_main_mutex;
-#endif
-#endif
-
 std::shared_ptr<ChildProcess> getNewChild_Blocks(const std::shared_ptr<SocketPoll>& destPoll,
                                                  const std::string& configId,
                                                  unsigned mobileAppDocId)
@@ -934,18 +936,12 @@ std::shared_ptr<ChildProcess> getNewChild_Blocks(const std::shared_ptr<SocketPol
 #else // MOBILEAPP
     const auto timeout = std::chrono::hours(100);
 
-#ifdef IOS
-    assert(mobileAppDocId > 0 && "Unexpected to have no mobileAppDocId in the iOS build");
-#endif
+    assert(mobileAppDocId > 0 && "Unexpected to have no mobileAppDocId in the mobile build");
 
     std::thread([&]
                 {
-#ifndef IOS
-                    std::lock_guard<std::mutex> lock(COOLWSD::lokit_main_mutex);
-                    Util::setThreadName("lokit_main");
-#else
                     Util::setThreadName("lokit_main_" + Util::encodeId(mobileAppDocId, 3));
-#endif
+
                     // Ugly to have that static global PrisonerServerSocketFD, Otoh we know
                     // there is just one COOLWSD object. (Even in real Online.)
                     lokit_main(PrisonerServerSocketFD, COOLWSD::UserInterface, mobileAppDocId);
@@ -1225,6 +1221,7 @@ void COOLWSD::setupChildRoot(const bool UseMountNamespaces)
     JailUtil::disableBindMounting(); // Default to assume failure
     JailUtil::disableMountNamespaces();
 
+#if ENABLE_CHILDROOTS
     Log::preFork();
 
     pid_t pid = fork();
@@ -1293,6 +1290,9 @@ void COOLWSD::setupChildRoot(const bool UseMountNamespaces)
         JailUtil::enableBindMounting();
     if (EnableMountNamespaces)
         JailUtil::enableMountNamespaces();
+#else
+    (void) UseMountNamespaces;
+#endif
 }
 
 #endif
@@ -1695,6 +1695,14 @@ void COOLWSD::innerInitialize(Poco::Util::Application& self)
 
 #endif // !MOBILEAPP
 
+#if defined(DEBUG)
+    // Enable if you need more logging from core
+    //setenv("SAL_LOG", "+INFO+WARN", 0);
+
+    // Enable if you need to see the top left corner of tile that was rendered
+    //setenv("LOK_DEBUG_TILES", "1", 0);
+#endif
+
     int pdfResolution =
         ConfigUtil::getConfigValue<int>(conf, "per_document.pdf_resolution_dpi", 96);
     if (pdfResolution > 0)
@@ -2067,7 +2075,7 @@ void COOLWSD::innerInitialize(Poco::Util::Application& self)
         COOLWSD::MaxDocuments = COOLWSD::MaxConnections;
     }
 
-#if !WASMAPP
+#if !WASMAPP && !defined(_WIN32)
     struct rlimit rlim;
     ::getrlimit(RLIMIT_NOFILE, &rlim);
     LOG_INF("Maximum file descriptor supported by the system: " << rlim.rlim_cur - 1);
@@ -2736,7 +2744,7 @@ bool COOLWSD::createForKit()
     args.push_back("--lotemplate=" + LoTemplate);
     args.push_back("--childroot=" + ChildRoot);
     args.push_back("--clientport=" + std::to_string(ClientPortNumber));
-    args.push_back("--masterport=" + MasterLocation);
+    args.push_back("--masterport=" + MasterLocation.getName());
 
     const DocProcSettings& docProcSettings = Admin::instance().getDefDocProcSettings();
     std::ostringstream ossRLimits;
@@ -3324,7 +3332,7 @@ void COOLWSDServer::dumpState(std::ostream& os) const
        << "\n  IsProxyPrefixEnabled: " << (COOLWSD::IsProxyPrefixEnabled ? "yes" : "no")
        << "\n  OverrideWatermark: " << COOLWSD::OverrideWatermark
        << "\n  UserInterface: " << COOLWSD::UserInterface
-       << "\n  Total PSS: " << Util::getProcessTreePss(getpid()) << " KB"
+       << "\n  Total PSS: " << Util::getProcessTreePss(Util::getProcessId()) << " KB"
        << "\n  Config: " << LoggableConfigEntries
         ;
     THREAD_UNSAFE_DUMP_END
@@ -3398,8 +3406,8 @@ std::shared_ptr<ServerSocket> COOLWSDServer::findPrisonerServerPort()
     auto socket = std::make_shared<LocalServerSocket>(
                     std::chrono::steady_clock::now(), *PrisonerPoll, factory);
 
-    std::string location = socket->bind();
-    if (!location.length())
+    const UnxSocketPath location = socket->bind();
+    if (!location.isValid())
     {
         LOG_FTL("Failed to create local unix domain socket. Exiting.");
         Util::forcedExit(EX_SOFTWARE);
@@ -3414,8 +3422,8 @@ std::shared_ptr<ServerSocket> COOLWSDServer::findPrisonerServerPort()
 
     LOG_INF("Listening to prisoner connections on " << location);
     MasterLocation = std::move(location);
-#ifndef HAVE_ABSTRACT_UNIX_SOCKETS
-    if(!socket->link(COOLWSD::SysTemplate + "/0" + MasterLocation))
+#if ENABLE_CHILDROOTS
+    if(!socket->linkTo(COOLWSD::SysTemplate))
     {
         LOG_FTL("Failed to hardlink local unix domain socket into a jail. Exiting.");
         Util::forcedExit(EX_SOFTWARE);
@@ -3582,10 +3590,7 @@ void COOLWSD::innerMain()
     remoteConfigThread->start();
 #endif
 
-#ifndef IOS
-    // We can open files with non-ASCII names just fine on iOS without this, and this code is
-    // heavily Linux-specific anyway.
-
+#if !MOBILEAPP
     // Force a uniform UTF-8 locale for ourselves & our children.
     char* locale = std::setlocale(LC_ALL, "C.UTF-8");
     if (!locale)
@@ -3877,7 +3882,7 @@ void COOLWSD::innerMain()
 #endif
     }
 
-#ifndef IOS // SigUtil::getShutdownRequestFlag() always returns false on iOS, thus the above while
+#if !defined(IOS) // SigUtil::getShutdownRequestFlag() always returns false on iOS, thus the above while
             // loop never exits.
 
     COOLWSD::alertAllUsersInternal("close: shuttingdown");
@@ -4269,14 +4274,14 @@ static void forwardSignal(int signum);
 void dump_state()
 {
     std::ostringstream oss(Util::makeDumpStateStream());
-    oss << "Start WSD " << getpid() << " Dump State:\n";
+    oss << "Start WSD " << Util::getProcessId() << " Dump State:\n";
 
     if (COOLWSDServer::Instance)
         COOLWSDServer::Instance->dumpState(oss);
 
-    oss << "\nMalloc info [" << getpid() << "]: \n\t"
+    oss << "\nMalloc info [" << Util::getProcessId() << "]: \n\t"
         << Util::replace(Util::getMallocInfo(), "\n", "\n\t") << '\n';
-    oss << "\nEnd WSD " << getpid() << " Dump State.\n";
+    oss << "\nEnd WSD " << Util::getProcessId() << " Dump State.\n";
 
     const std::string msg = oss.str();
     fprintf(stderr, "%s", msg.c_str()); // Log in the journal.

@@ -149,7 +149,6 @@ window.L.Control.NotebookbarWriter = window.L.Control.Notebookbar.extend({
 		var hasRepair = !this.map['wopi'].HideRepairOption;
 		var hasSaveAs = !this.map['wopi'].UserCanNotWriteRelative;
 		var hasShare = this.map['wopi'].EnableShare;
-		var hideDownload = this.map['wopi'].HideExportOption;
 		var hasGroupedSaveAs = window.prefs.get('saveAsMode') === 'group';
 		var hasRunMacro = window.enableMacrosExecution;
 		var hasSave = !this.map['wopi'].HideSaveOption;
@@ -311,13 +310,16 @@ window.L.Control.NotebookbarWriter = window.L.Control.Notebookbar.extend({
 			});
 		}
 
-		if (!hideDownload) {
+		if (!this.map['wopi'].HideExportOption) {
 			content.push({
 				'id': 'downloadas:DownloadAsMenu',
 				'command': 'downloadas',
 				'class': 'unodownloadas',
 				'type': 'exportmenubutton',
-				'text': !window.ThisIsAMobileApp ? _('Download') : _('Save As'),
+				// In CODA-W, the functionality that we actually have at the moment is "Export as".
+				'text': !window.ThisIsAMobileApp ? _('Download') :
+					(window.ThisIsTheWindowsApp? _('Export as') :
+					 _('Save As')),
 				'accessibility': { focusBack: true,	combination: 'A', de: 'M' }
 			});
 		}
@@ -419,7 +421,7 @@ window.L.Control.NotebookbarWriter = window.L.Control.Notebookbar.extend({
 	},
 
 	getHelpTab: function() {
-		var hasLatestUpdates = window.enableWelcomeMessage;
+		let hasLatestUpdates = window.enableWelcomeMessage || window.mode.isCODesktop();
 		var hasFeedback = this.map.feedback;
 		var hasAccessibilitySupport = window.enableAccessibility;
 		var hasAccessibilityCheck = this.map.getDocType() === 'text';

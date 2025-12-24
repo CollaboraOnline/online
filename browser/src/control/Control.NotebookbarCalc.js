@@ -301,7 +301,9 @@ window.L.Control.NotebookbarCalc = window.L.Control.NotebookbarWriter.extend({
 				'command': 'downloadas',
 				'class': 'unodownloadas',
 				'type': 'exportmenubutton',
-				'text': _('Download'),
+				'text': !window.ThisIsAMobileApp ? _('Download') :
+					(window.ThisIsTheWindowsApp ? _('Export as') :
+					 _('Save As')),
 				'accessibility': { focusBack: true,	combination: 'DA', de: null }
 			});
 		}

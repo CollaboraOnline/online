@@ -19,13 +19,19 @@ else
 L10N_IOS_ALL_JS = $(DIST_FOLDER)/l10n-all.js
 L10N_JSON = $(L10N_IOS_ALL_JS)
 
-$(L10N_IOS_ALL_JS) : $(wildcard $(srcdir)/po/ui-*.po) $(shell find $(srcdir)/l10n -name '*.*') $(srcdir)/util/create-l10n-all-js.pl
+$(L10N_IOS_ALL_JS) : $(wildcard $(srcdir)/po/ui-*.po) $(wildcard $(srcdir)/po/help-*.po) $(shell find $(srcdir)/l10n -name '*.*') $(srcdir)/util/create-l10n-all-js.pl
 	for F in $(wildcard $(srcdir)/po/ui-*.po); do \
+		$(srcdir)/util/po2json.py $$F -o $$F.json; \
+	done
+	for F in $(wildcard $(srcdir)/po/help-*.po); do \
 		$(srcdir)/util/po2json.py $$F -o $$F.json; \
 	done
 	@mkdir -p $(dir $@)
 	perl $(srcdir)/util/create-l10n-all-js.pl >$@
 	for F in $(wildcard $(srcdir)/po/ui-*.po); do \
+		rm $$F.json; \
+	done
+	for F in $(wildcard $(srcdir)/po/help-*.po); do \
 		rm $$F.json; \
 	done
 endif
@@ -186,6 +192,7 @@ COOL_CSS_LST =\
 	$(srcdir)/css/helpdialog.css \
 	$(srcdir)/css/btns.css \
 	$(srcdir)/css/notebookbar.css \
+	$(srcdir)/css/backstage.css \
 	$(srcdir)/css/jssidebar.css \
 	$(srcdir)/css/override-smartmenus.css \
 	$(srcdir)/css/jquery-ui-lightness.css \
@@ -509,6 +516,7 @@ COOL_JS_LST =\
 	src/control/Control.NotebookbarImpress.js \
 	src/control/Control.NotebookbarDraw.js \
 	src/control/Control.NotebookbarBuilder.js \
+	src/control/Control.BackstageView.ts \
 	src/control/Control.ContextToolbar.ts \
 	src/control/Control.Layers.js \
 	src/control/Control.SidebarBase.ts \
@@ -675,7 +683,9 @@ define bundle_cool
 	$(if $(IS_SEPARATE),\
 		@touch $@,
 		$(QUIET_M4) m4 -PE -DIOSAPP=$(ENABLE_IOSAPP) \
-			-DGTKAPP=$(ENABLE_GTKAPP) \
+			-DMACOSAPP=$(ENABLE_MACOSAPP) \
+			-DQTAPP=$(ENABLE_QTAPP) \
+			-DWINDOWSAPP=$(ENABLE_WINDOWSAPP) \
 			-DANDROIDAPP=$(ENABLE_ANDROIDAPP) \
 			-DMOBILEAPPNAME="$(APP_NAME)" \
 			-DVERSION=$(COOL_VERSION) \
@@ -814,6 +824,8 @@ if ENABLE_WASM_FALLBACK
 WASM_FALLBACK_FILES += $(DIST_FOLDER)/wasm
 endif
 
+TEMPLATE_MANIFEST = $(DIST_FOLDER)/templates/templates.js
+
 $(TYPESCRIPT_JS_DIR)/%.js: $(srcdir)/%.ts
 	@mkdir -p $(dir $@)
 	$(QUIET_TSC) $(builddir)/node_modules/typescript/bin/tsc --outFile $@ $<
@@ -821,9 +833,9 @@ $(TYPESCRIPT_JS_DIR)/%.js: $(srcdir)/%.ts
 build-cool: \
 	$(COOL_L10N_DST) \
 	$(L10N_JSON) \
-	$(SRC_TS_JS_DST) \
 	$(COOL_IMAGES_DST) \
 	$(COOL_IMAGES_CUSTOM_DST) \
+	$(COOL_TEMPLATES_DST) \
 	$(JQUERY_LIGHTNESS_DIST_IMAGES) \
 	$(JQUERY_MINIFIED_DIST_IMAGES) \
 	$(ADMIN_BUNDLE) \
@@ -838,12 +850,16 @@ build-cool: \
 	$(DIST_FOLDER)/bundle.js \
 	$(DIST_FOLDER)/cool.html \
 	$(WASM_FILES) \
-	$(WASM_FALLBACK_FILES)
+	$(WASM_FALLBACK_FILES) \
+	$(TEMPLATE_MANIFEST)
 	@echo "build cool completed"
 if APP_HAS_BRANDING
 	@if test -d "$(APP_BRANDING_DIR)" ; then cp -a "$(APP_BRANDING_DIR)"/branding* $(DIST_FOLDER)/ ; fi
 	@if test -d "$(APP_BRANDING_DIR)" ; then cp -a "$(APP_BRANDING_DIR)"/images/*.svg $(DIST_FOLDER)/images/ ; fi
 	@if test -d "$(APP_BRANDING_DIR)" ; then cp -a "$(APP_BRANDING_DIR)/images/toolbar-bg-logo.svg" $(DIST_FOLDER)/images/toolbar-bg.svg ; fi
+if ENABLE_MACOS
+	@if test -d "$(APP_BRANDING_DIR)" ; then cp -a "$(APP_BRANDING_DIR)/welcome" "$(DIST_FOLDER)/" ; fi
+endif
 	@echo
 	@echo "JS, HTML and CSS has been updated ($(DIST_FOLDER))."
 endif
@@ -852,6 +868,16 @@ if ENABLE_CYPRESS
 	cp -a  "$(srcdir)/../cypress_test/data/multiuser/cypress-multiuser.html" "$(DIST_FOLDER)/cypress-multiuser.html"
 	@echo "Added HTML file for multiuser tests"
 endif
+
+# Stands in for the whole templates subdirectory.
+# Just copy all of it to dist/templates.
+$(TEMPLATE_MANIFEST):
+	mkdir -p $(dir $@)
+	cp -r templates $(DIST_FOLDER)
+
+$(DIST_FOLDER)/images/templates/preview/%.png: $(srcdir)/images/templates/preview/%.png
+	@mkdir -p $(dir $@)
+	@cp $< $@
 
 $(DIST_FOLDER)/admin-bundle.js: $(COOL_ADMIN_DST) \
 	$(INTERMEDIATE_DIR)/admin-src.js
@@ -906,14 +932,17 @@ $(DIST_FOLDER)/cool.html: $(srcdir)/html/cool.html.m4 \
 	$(QUIET_M4) m4 -PE -I $(INTERMEDIATE_DIR) \
 	    -DBUNDLE=$(IS_BUNDLE) \
 		-DIOSAPP=$(ENABLE_IOSAPP) \
-		-DGTKAPP=$(ENABLE_GTKAPP) \
+		-DMACOSAPP=$(ENABLE_MACOSAPP) \
+		-DQTAPP=$(ENABLE_QTAPP) \
 		-DDEBUG=$(ENABLE_DEBUG) \
+		-DWINDOWSAPP=$(ENABLE_WINDOWSAPP) \
 		-DANDROIDAPP=$(ENABLE_ANDROIDAPP) \
 		-DEMSCRIPTENAPP=$(ENABLE_EMSCRIPTENAPP) \
 		-DMOBILEAPPNAME="$(APP_NAME)" \
 		-DCOOL_CSS="$(subst $(SPACE),$(COMMA),$(COOL_CSS_M4))" \
 		-DGLOBAL_JS="$(DIST_FOLDER)/global.js" \
 		-DVENDOR="$(VENDOR)" \
+		-DINFO_URL="$(INFO_URL)" \
 		$(srcdir)/html/cool.html.m4 > $@
 
 node_modules: package.json archived-packages
@@ -1095,6 +1124,7 @@ pot:
 		src/control/Control.AboutDialog.ts \
 		src/control/Control.AddressInputField.ts \
 		src/control/Control.AlertDialog.js \
+		src/control/Control.BackstageView.ts \
 		src/control/Control.Command.js \
 		src/control/Control.ContextMenu.js \
 		src/control/Control.DocumentNameInput.js \

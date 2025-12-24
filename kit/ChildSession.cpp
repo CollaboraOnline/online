@@ -60,6 +60,7 @@
 #include "wasmapp.hpp"
 #endif
 
+#include <cassert>
 #include <climits>
 #include <fstream>
 #include <sstream>
@@ -1366,6 +1367,13 @@ std::string ChildSession::getJailDocRoot() const
 
 bool ChildSession::downloadAs(const StringVector& tokens)
 {
+#ifdef IOS
+    NSLog(@"We should never come here, aborting");
+    std::abort();
+#elif defined(_WIN32)
+    // Presumably ditto for CODA-W
+    std::abort();
+#else
     std::string name, id, format, filterOptions;
 
     if (tokens.size() < 5 ||
@@ -1400,10 +1408,6 @@ bool ChildSession::downloadAs(const StringVector& tokens)
         filterOptions += std::string(",Watermark=") + getWatermarkText() + std::string("WATERMARKEND");
     }
 
-#ifdef IOS
-    NSLog(@"We should never come here, aborting");
-    std::abort();
-#else
     // Prevent user inputting anything funny here.
     // A "name" should always be a name, not a path
     const Poco::Path filenameParam(name);
@@ -1734,7 +1738,20 @@ bool ChildSession::paste(const char* buffer, int length, const StringVector& tok
 
     const std::string firstLine = getFirstLine(buffer, length);
     const char* data = buffer + firstLine.size() + 1;
-    const int size = length - firstLine.size() - 1;
+    int size = length - firstLine.size() - 1;
+#if defined QTAPP || defined _WIN32
+    // In CODA-Q, to work around a qtwebchannel "Could not convert argument QJsonValue(object,
+    // QJsonObject()) to target type QString ." bug, _pasteTypedBlob in browser/src/map/Clipboard.js
+    // base64-encoded the payload:
+    //
+    // The same root problem in CODA-W, although there we end up with a "the server encountered a
+    // unknown error while parsing the [object command" error message.
+    std::string dec;
+    [[maybe_unused]] auto const res = macaron::Base64::Decode(std::string_view(data, size), dec);
+    assert(res.empty());
+    data = dec.data();
+    size = dec.size();
+#endif
     bool success = false;
     std::string result = "pasteresult: ";
     if (size > 0)
@@ -1846,10 +1863,10 @@ bool ChildSession::insertFile(const StringVector& tokens)
             macaron::Base64::Decode(data, binaryData);
             const std::string tempFile = FileUtil::createRandomTmpDir() + '/' + name;
             std::ofstream fileStream;
-            fileStream.open(tempFile);
+            fileStream.open(tempFile, std::ios::out | std::ios::binary);
             fileStream.write(binaryData.data(), binaryData.size());
             fileStream.close();
-            url = "file://" + tempFile;
+            url = Poco::URI(Poco::Path(tempFile)).toString();
         }
 
         std::string command;
@@ -1986,11 +2003,12 @@ bool ChildSession::keyEvent(const StringVector& tokens,
     getLOKitDocument()->setView(_viewId);
     if (target == LokEventTargetEnum::Document)
     {
+#if !MOBILEAPP
         // Check if override mode is disabled.
         if (type == LOK_KEYEVENT_KEYINPUT && charcode == 0 && keycode == KEY_INSERT &&
             !ConfigUtil::getBool("overwrite_mode.enable", false))
             return true;
-
+#endif
         getLOKitDocument()->postKeyEvent(type, charcode, keycode);
     }
     else if (winId != 0)
@@ -3963,6 +3981,16 @@ void ChildSession::loKitCallback(const int type, const std::string& payload)
             CODocument *document = DocumentData::get(_docManager->getMobileAppDocId()).coDocument;
             [[document viewController] exportFileURL:payloadURL];
         });
+#elif defined(_WIN32)
+        // We don't need to do any registerdownload thing for CODA-W. When we come here, the PDF has
+        // been exported by core already and the user will continue editing the same document. Some
+        // "registerdownload" with a weird relative URI ../..//foo.pdf is surely a meaningless thing
+        // to do?
+        //
+        // When we eventually turn CODA-W's "Export as" functionality into "Save As" where you
+        // continue editing the saved and differently named copy, the PDF and EPUB cases that
+        // continue to be more like "Export" need to be put into a separate "Export" menu. Or
+        // something.
 #else
         // Register download id -> URL mapping in the DocumentBroker
         auto url = std::string("../../") + payload.substr(payload.find_last_of('/'));
@@ -4030,6 +4058,9 @@ void ChildSession::saveLogUiBackground()
 
 void LogUiCommands::logLine(LogUiCommandsLine &line, bool isUndoChange)
 {
+    if constexpr (Util::isMobileApp())
+        return;
+
     // log command
     double timeDiffStart = std::chrono::duration<double>(line._timeStart - _session._docManager->getLogUiCmd().getKitStartTimeSec()).count();
 
@@ -4081,6 +4112,9 @@ void LogUiCommands::logLine(LogUiCommandsLine &line, bool isUndoChange)
 
 void LogUiCommands::logSaveLoad(std::string cmd, const std::string & path, std::chrono::steady_clock::time_point timeStart)
 {
+    if constexpr (Util::isMobileApp())
+        return;
+
     LogUiCommandsLine uiLogLine;
     uiLogLine._timeStart = timeStart;
     uiLogLine._timeEnd = std::chrono::steady_clock::now();
@@ -4111,12 +4145,18 @@ void LogUiCommands::logSaveLoad(std::string cmd, const std::string & path, std::
 LogUiCommands::LogUiCommands(ChildSession& session, const StringVector* tokens)
     : _session(session), _tokens(tokens)
 {
+    if constexpr (Util::isMobileApp())
+        return;
+
     if (_session._isDocLoaded)
         _document = session.getLOKitDocument();
 }
 
 LogUiCommands::~LogUiCommands()
 {
+    if constexpr (Util::isMobileApp())
+        return;
+
     auto document = _document.lock();
     if (!document)
         return;

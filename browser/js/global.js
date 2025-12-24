@@ -1,4 +1,4 @@
-/* -*- js-indent-level: 8 -*- */
+/* -*- js-indent-level: 8; fill-column: 100 -*- */
 
 /* global Module ArrayBuffer Uint8Array _ */
 
@@ -168,6 +168,9 @@ class BrowserProperties {
 			// Here "mobile" means "mobile phone" (at least for now). Has to match small screen size
 			// requirement.
 			isMobile: function() {
+				if (global.ThisIsTheWindowsApp || global.ThisIsTheQtApp || global.ThisIsTheMacOSApp)
+					return false;
+
 				if (global.mode.isChromebook())
 					return false;
 
@@ -179,12 +182,24 @@ class BrowserProperties {
 			},
 			// Mobile device with big screen size.
 			isTablet: function() {
+				if (global.ThisIsTheWindowsApp || global.ThisIsTheQtApp || global.ThisIsTheMacOSApp)
+					return false;
+
 				if (global.mode.isChromebook())
 					return false;
 
 				return global.L.Browser.mobile && !global.mode.isMobile();
 			},
+			isCODesktop: function() {
+				return global.ThisIsTheMacOSApp || global.ThisIsTheQtApp || global.ThisIsTheWindowsApp;
+			},
+			isNewDocument: function() {
+				return window.coolParams.get('isnewdocument');
+			},
 			isDesktop: function() {
+				if (global.ThisIsTheWindowsApp || global.ThisIsTheQtApp	|| global.ThisIsTheMacOSApp)
+					return true;
+
 				if (global.mode.isChromebook())
 					return true;
 
@@ -267,9 +282,9 @@ class InitializerBase {
 
 		window.ThisIsAMobileApp = false;
 		window.ThisIsTheiOSApp = false;
-		window.ThisIsTheGtkApp = false;
 		window.ThisIsTheAndroidApp = false;
 		window.ThisIsTheEmscriptenApp = false;
+		window.ThisIsTheQtApp = false;
 
 		window.bundlejsLoaded = false;
 		window.fullyLoadedAndReady = false;
@@ -315,6 +330,9 @@ class InitializerBase {
 		}.bind(coolParams);
 
 		window.coolParams = coolParams;
+
+		// Starter Screen: Show BackstageView without document when app launches
+		window.starterScreen = coolParams.get('starterMode') === 'true';
 	}
 
 	loadCSSFiles() {
@@ -354,7 +372,7 @@ class InitializerBase {
 
 	initializeViewMode() {
 		const darkTheme = window.coolParams.get('darkTheme');
-		if (darkTheme) { window.uiDefaults = { 'darkTheme': true }; }
+		if (darkTheme) { window.uiDefaults = { 'darkTheme': 'true' }; }
 	}
 
 	afterInitialization() {
@@ -438,6 +456,9 @@ class MobileAppInitializer extends InitializerBase {
 		window.ThisIsAMobileApp = true;
 		window.HelpFile = document.getElementById("init-help-file").value;
 
+		// stash this so we can use it for presenter console despite
+		// MobileAppInitializer redirection of general 'open' use
+		window.origOpen = window.open;
 		// eslint-disable-next-line
 		window.open = function (url, windowName, windowFeatures) {
 		  window.postMobileMessage('HYPERLINK ' + url); /* don't call the 'normal' window.open on mobile at all */
@@ -462,6 +483,7 @@ class IOSAppInitializer extends MobileAppInitializer {
 
 		window.ThisIsTheiOSApp = true;
 		window.postMobileMessage = function(msg) { window.webkit.messageHandlers.lok.postMessage(msg); };
+		window.postMobileCall    = window.postMobileMessage;
 		window.postMobileError   = function(msg) { window.webkit.messageHandlers.error.postMessage(msg); };
 		window.postMobileDebug   = function(msg) { window.webkit.messageHandlers.debug.postMessage(msg); };
 
@@ -474,14 +496,63 @@ class IOSAppInitializer extends MobileAppInitializer {
 	}
 }
 
-class GTKAppInitializer extends MobileAppInitializer {
+class MacOSAppInitializer extends MobileAppInitializer {
 	constructor() {
 		super();
 
-		window.ThisIsTheGtkApp = true;
-		window.postMobileMessage = function(msg) { window.webkit.messageHandlers.cool.postMessage(msg, '*'); };
-		window.postMobileError   = function(msg) { window.webkit.messageHandlers.error.postMessage(msg, '*'); };
-		window.postMobileDebug   = function(msg) { window.webkit.messageHandlers.debug.postMessage(msg, '*'); };
+		window.ThisIsTheMacOSApp = true;
+		window.postMobileMessage = function(msg) { window.webkit.messageHandlers.lok.postMessage(msg); };
+		window.postMobileCall    = window.postMobileMessage;
+		window.postMobileError   = function(msg) { window.webkit.messageHandlers.error.postMessage(msg); };
+		window.postMobileDebug   = function(msg) { window.webkit.messageHandlers.debug.postMessage(msg); };
+
+		window.userInterfaceMode = window.coolParams.get('userinterfacemode');
+	}
+}
+
+class WindowsAppInitializer extends MobileAppInitializer {
+	constructor() {
+		super();
+
+		window.ThisIsTheWindowsApp = true;
+		window.postMobileMessage = function(msg) { window.chrome.webview.postMessage('MSG ' + msg); };
+
+		// Here, and elsewhere, things would be nicer if we just used JSON for all our
+		// messages, instead of plain text with a home-grown syntax of mostly "command
+		// parameter1=value..."  but also some cases of "command JSON".
+
+		// The name "postMobileCall" is a bit misleading as this isn't just "posting" a
+		// message like the other postMobileFoo() functions, but to be used when a return
+		// value is expected. In other platforms, the postMobileMessage() can be used for
+		// that, too, but not on Windows. The WebView2 does not have the required
+		// functionality built-in.
+		window.postMobileCall = (() => {
+			let nextId = 1;
+			const pending = new Map();
+
+			window.replyFromNativeToCall = (id, reply) => {
+				const resolveFunc = pending.get(id);
+				pending.delete(id);
+				resolveFunc(reply);
+			};
+
+			return function call(msg) {
+				return new Promise((resolveFunc) => {
+					const id = nextId++;
+					pending.set(id, resolveFunc);
+					window.chrome.webview.postMessage("CALL " + id + " " + msg);
+				});
+			};
+		})();
+
+		// FIXME: No registration of separate handlers in Windows WebView2, so just log
+		// errors and debug messages? Maybe instead send a JSON object with separate name
+		// and body? But then we would have to parse that JSON object from the string in C#
+		// anyway.
+		window.postMobileError   = function(msg) { window.chrome.webview.postMessage('ERR ' + msg); };
+		window.postMobileDebug   = function(msg) { window.chrome.webview.postMessage('DBG ' + msg); };
+
+		window.userInterfaceMode = window.coolParams.get('userinterfacemode');
 	}
 }
 
@@ -491,6 +562,7 @@ class AndroidAppInitializer extends MobileAppInitializer {
 
 		window.ThisIsTheAndroidApp = true;
 		window.postMobileMessage = function(msg) { window.COOLMessageHandler.postMobileMessage(msg); };
+		window.postMobileCall    = window.postMobileMessage;
 		window.postMobileError   = function(msg) { window.COOLMessageHandler.postMobileError(msg); };
 		window.postMobileDebug   = function(msg) { window.COOLMessageHandler.postMobileDebug(msg); };
 
@@ -504,10 +576,52 @@ class EMSCRIPTENAppInitializer extends MobileAppInitializer {
 
 		window.ThisIsTheEmscriptenApp = true;
 		window.postMobileMessage = function(msg) { Module._handle_cool_message(Module.stringToNewUTF8(msg)); };
+		window.postMobileCall    = window.postMobileMessage;
 		window.postMobileError   = function(msg) { console.log('COOL Error: ' + msg); };
 		window.postMobileDebug   = function(msg) { console.log('COOL Debug: ' + msg); };
 
 		window.userInterfaceMode = 'notebookbar';
+	}
+}
+
+class QtAppInitializer extends MobileAppInitializer {
+	constructor() {
+		super();
+		window.ThisIsTheQtApp = true;
+
+		const messageQueue = [];
+
+		// Define safe stub functions that queue messages, as QWebChannel doesn't initialize immediately.
+		window.postMobileMessage = (msg) => messageQueue.push({ type: 'cool', msg });
+		window.postMobileCall    = window.postMobileMessage;
+		window.postMobileError   = (msg) => messageQueue.push({ type: 'error', msg });
+		window.postMobileDebug   = (msg) => messageQueue.push({ type: 'debug', msg });
+		window.userInterfaceMode = window.coolParams.get('userinterfacemode');
+
+		// Initialize QWebChannel and replace stubs when bridge is ready
+		// eslint-disable-next-line no-undef
+		new QWebChannel(qt.webChannelTransport, (channel) => {
+			const bridge = channel.objects.bridge;
+			window.bridge = bridge;
+
+			// Replace stubs with real implementations
+			window.postMobileMessage = (msg) => window.bridge.cool(msg);
+			window.postMobileCall    = window.postMobileMessage;
+			window.postMobileError   = (msg) => window.bridge.error(msg);
+			window.postMobileDebug   = (msg) => window.bridge.debug(msg);
+
+			// Flush queued messages
+			for (const { type, msg } of messageQueue) {
+				if (typeof bridge[type] === 'function') {
+					bridge[type](msg);
+				}
+			}
+			messageQueue.length = 0;
+
+			if (bridge.debug) {
+				bridge.debug("Qt bridge initialized");
+			}
+		});
 	}
 }
 
@@ -525,14 +639,46 @@ function getInitializerClass() {
 
 			if (osType === "IOS")
 				return new IOSAppInitializer();
-			else if (osType === "GTK")
-				return new GTKAppInitializer();
+			else if (osType === "MACOS")
+				return new MacOSAppInitializer();
+			else if (osType === "WINDOWS")
+				return new WindowsAppInitializer();
 			else if (osType === "ANDROID")
 				return new AndroidAppInitializer();
 			else if (osType === "EMSCRIPTEN")
 				return new EMSCRIPTENAppInitializer();
+			else if (osType === "QT")
+				return new QtAppInitializer();
 		}
 	}
+}
+
+function showWelcomeSVG() {
+	const loaderDiv = document.createElement('div');
+	loaderDiv.id = 'welcome-loader';
+	loaderDiv.style.cssText = `
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background-color: #faf8fc;
+        z-index: 9999999999;
+        opacity: 1;
+        transition: opacity 0.8s ease-out;
+    `;
+
+	const img = document.createElement('img');
+	img.src = 'welcome/welcome.svg';
+	img.alt = 'Welcome';
+	img.style.cssText = `
+        width: 100%;
+        height: 100%;
+        object-fit: fill;
+    `;
+
+	loaderDiv.appendChild(img);
+	document.body.insertBefore(loaderDiv, document.body.firstChild);
 }
 
 (function (global) {
@@ -916,6 +1062,8 @@ function getInitializerClass() {
 		// recognized without tapping again. This is an impossible problem, because browsers do not give us enough information
 		// Instead, let's just guess
 		guessOnscreenKeyboard: function() {
+			if (global.ThisIsTheWindowsApp || global.ThisIsTheQtApp || global.ThisIsTheMacOSApp)
+				return false;
 			if (global.keyboard.onscreenKeyboardHint != undefined) return global.keyboard.onscreenKeyboardHint;
 			return (global.ThisIsAMobileApp && !global.ThisIsTheEmscriptenApp) || global.mode.isMobile() || global.mode.isTablet();
 			// It's better to guess that more devices will have an onscreen keyboard than reality,
@@ -1695,10 +1843,33 @@ function getInitializerClass() {
 		}
 	};
 
+	// Save the original method to call it when not in "mobile app"  mode
+	const originalStringToLocaleString = String.prototype.toLocaleString;
+
+	String.prototype.toLocaleString = function () {
+		// `this` is the string being localized
+		const string = this.valueOf();
+
+		if (global.ThisIsAMobileApp) {
+			if (global.LOCALIZATIONS && Object.prototype.hasOwnProperty.call(global.LOCALIZATIONS, string)) {
+				let result = global.LOCALIZATIONS[string];
+				if (global.LANG === 'de-CH') {
+					result = result.replace(/ß/g, 'ss');
+				}
+				return result;
+			} else {
+				return string;
+			}
+		} else {
+			// fallback to original
+			return originalStringToLocaleString.call(this);
+		}
+	};
+
 	global._ = function (string) {
 		// In the mobile app case we can't use the stuff from l10n-for-node, as that assumes HTTP.
-		if (global.ThisIsAMobileApp) {
-			// We use another approach just for iOS for now.
+		if (global.ThisIsAMobileApp || global.ThisIsTheWindowsApp) {
+			// We use another approach for iOS and CODA-W.
 			if (global.LOCALIZATIONS && Object.prototype.hasOwnProperty.call(global.LOCALIZATIONS, string)) {
 				// global.postMobileDebug('_(' + string + '): YES: ' + global.LOCALIZATIONS[string]);
 				var result = global.LOCALIZATIONS[string];
@@ -1828,7 +1999,11 @@ function getInitializerClass() {
 		return new TextDecoder().decode(bytes);
 	};
 
-	if (global.ThisIsTheGtkApp || global.ThisIsTheEmscriptenApp) {
+
+	// Create a WebSocket to the server
+	// FIXME The Android and iOS apps use the new approach, other apps should follow
+	if (global.ThisIsAMobileApp && !global.ThisIsTheAndroidApp && !global.ThisIsTheiOSApp) {
+		// FIXME Remove FakeWebSocket when the mobile apps are updated to use the new approach
 		global.socket = new global.FakeWebSocket();
 		global.TheFakeWebSocket = global.socket;
 	} else {
@@ -1927,6 +2102,11 @@ function getInitializerClass() {
 				msg += ' timezone=' + Intl.DateTimeFormat().resolvedOptions().timeZone;
 				msg += ' clientvisiblearea=' + window.makeClientVisibleArea();
 
+				if (global.coolParams.get('welcome') === 'true') {
+					msg += ' batch=true';
+					showWelcomeSVG();
+				}
+
 				global.socket.send(msg);
 			}
 		};
@@ -1957,7 +2137,7 @@ function getInitializerClass() {
 
 		global.socket.binaryType = 'arraybuffer';
 
-		if (global.ThisIsAMobileApp && !global.ThisIsTheEmscriptenApp) {
+		if (global.ThisIsAMobileApp && !global.ThisIsTheEmscriptenApp && !window.starterScreen) {
 			// This corresponds to the initial GET request when creating a WebSocket
 			// connection and tells the app's code that it is OK to start invoking
 			// TheFakeWebSocket's onmessage handler. The app code that handles this

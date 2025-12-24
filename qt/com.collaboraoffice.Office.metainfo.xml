@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="desktop">
+ <id>com.collaboraoffice.Office</id>
+ <metadata_license>CC0-1.0</metadata_license>
+ <project_license>MPL-2.0</project_license>
+ <name>Collabora Office</name>
+ <summary>The Collabora Office productivity suite</summary>
+ <description>
+  <p>Collabora Office brings the familiar Collabora Online experience to your computer - so you can create, edit, and present with a beautiful, modern UI. Built on LibreOffice, it delivers excellent interoperability with ODF and Microsoft Office formats (DOCX/XLSX/PPTX), and exports to PDF with ease. Your documents stay on your device unless you choose to share them - privacy by design.</p>
+ </description>
+ <launchable type="desktop-id">com.collaboraoffice.Office.desktop</launchable>
+ <url type="homepage">https://collaboraoffice.com</url>
+ <url type="bugtracker">https://github.com/CollaboraOnline/online/issues</url>
+ <url type="vcs-browser">https://github.com/CollaboraOnline/online</url>
+ <screenshots>
+  <screenshot type="default">
+   <image>https://www.collaboraoffice.com/downloads/collabora-office-screenshots/writer-calc-impress-2025-11-26.png</image>
+   <caption>Spreadsheets, documents, and presentations</caption>
+  </screenshot>
+  <screenshot>
+   <image>https://www.collaboraoffice.com/downloads/collabora-office-screenshots/calc-2025-11-26.png</image>
+   <caption>Sample spreadsheet document</caption>
+  </screenshot>
+  <screenshot>
+   <image>https://www.collaboraoffice.com/downloads/collabora-office-screenshots/writer-2025-11-26.png</image>
+   <caption>Sample text document</caption>
+  </screenshot>
+  <screenshot>
+   <image>https://www.collaboraoffice.com/downloads/collabora-office-screenshots/backstage-2025-11-26.png</image>
+   <caption>The Backstage View</caption>
+  </screenshot>
+ </screenshots>
+ <developer id="com.collaboraoffice">
+   <name>Collabora Productivity Limited</name>
+ </developer>
+ <kudos>
+  <kudo>HiDpiIcon</kudo>
+  <kudo>HighContrast</kudo>
+  <kudo>ModernToolkit</kudo>
+  <kudo>UserDocs</kudo>
+ </kudos>
+ <content_rating type="oars-1.1"/>
+ <releases>
+   <release version="25.04.7.3-2" date="2025-12-09">
+     <description>
+       <p>New features and fixes in this release:</p>
+       <ul>
+         <li>Built for aarch64 and x86_64 architectures</li>
+         <li>Support of presenter console and multi monitor setups</li>
+         <li>Use the new "backstage view" to create new files from templates</li>
+         <li>Updated localizations</li>
+       </ul>
+     </description>
+   </release>
+ </releases>
+</component>

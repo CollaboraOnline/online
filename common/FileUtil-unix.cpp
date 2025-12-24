@@ -13,6 +13,7 @@
 
 #include <common/Anonymizer.hpp>
 #include <common/FileUtil.hpp>
+#include <common/Log.hpp>
 #include <dirent.h>
 #include <filesystem>
 #include <ftw.h>
@@ -60,7 +61,7 @@ namespace FileUtil
         return path;
     }
 
-#ifndef IOS // iOS-specific implementation in FileUtil-apple.cpp
+#if !defined(__APPLE__) // iOS-specific implementation in FileUtil-apple.cpp
 
     bool platformDependentCheckDiskSpace(const std::string& path, int64_t enoughSpace)
     {
@@ -88,6 +89,13 @@ namespace FileUtil
             return false;
 #endif
 
+        return true;
+    }
+#elif defined(MACOS) && !MOBILEAPP
+
+    bool platformDependentCheckDiskSpace(const std::string&, int64_t)
+    {
+        // FIXME Use the FileUtil-apple.mm instead
         return true;
     }
 #endif
@@ -400,6 +408,11 @@ namespace FileUtil
         stream.open(file, mode);
     }
 
+    void openFileToOFStream(const std::string& file, std::ofstream& stream, std::ios_base::openmode mode)
+    {
+        stream.open(file, mode);
+    }
+
     int getStatOfFile(const std::string& file, struct stat& sb)
     {
         return ::stat(file.c_str(), &sb);
@@ -460,14 +473,14 @@ namespace FileUtil
                           {
                               {
                                   tsAccess.tv_sec,
-#ifdef IOS
+#if defined(IOS) || defined(MACOS)
                                   (__darwin_suseconds_t)
 #endif
                                   (tsAccess.tv_nsec / 1000)
                               },
                               {
                                   tsModified.tv_sec,
-#ifdef IOS
+#if defined(IOS) || defined(MACOS)
                                   (__darwin_suseconds_t)
 #endif
                                   (tsModified.tv_nsec / 1000)

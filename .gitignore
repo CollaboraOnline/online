@@ -21,6 +21,7 @@ coolwsd.spec
 coolwsd.xml
 aclocal.m4
 autom4te.cache
+coda.xcarchive
 config.h
 config_unused.h
 config_unused.h.in
@@ -45,6 +46,8 @@ debian/coolwsd.postinst
 common/support-public-key.hpp
 compile_commands.json
 **/gdb.txt
+macos/coolwsd/gmake-wrapper.sh
+macos/coda/coda/Assets.xcassets
 
 # Test stuff
 systemplate
@@ -97,14 +100,14 @@ browser/compilets
 browser/typescript_js
 browser/src/layer/tile/CanvasTileWorker.js
 
-coolforkit
-coolforkitns
-coolforkit-caps
-coolforkit-nocaps
-coolforkit-ns
+/coolforkit
+/coolforkitns
+/coolforkit-caps
+/coolforkit-nocaps
+/coolforkit-ns
 connect
 lokitclient
-coolwsd
+/coolwsd
 loolwsd
 coolmount
 coolmap
@@ -180,6 +183,13 @@ gtk/mobile
 /wasm/soffice.data
 /wasm/soffice.data.js.metadata
 
+# CODA-Q app
+qt/coda-qt
+qt/flatpak/.flatpak-builder
+# CODA-Q generated files by Qt6's moc
+*.moc.cpp
+.fenv
+
 # backup and temporary editor files: the only convenience rules allowed here.
 *~
 .*sw?
@@ -207,3 +217,22 @@ autogen.input
 
 # SBOM
 collabora-online-sbom.spdx.json
+
+# Visual Studio projects for CODA-W
+windows/coda/.vs
+windows/coda/CODA/bin
+windows/coda/CODA/obj
+windows/coda/CODALib/x64
+windows/coda/CODA/x64/
+windows/coda/PrintPDFAndDelete/obj/
+windows/coda/packages/
+windows/coda/x64/
+
+# CODA-W generated files
+windows/coda/config.props
+
+# CODA-Q
+.flatpak-builder/
+qt/flatpak/build-dir/
+qt/flatpak/repo/
+qt/translations/*.qm
