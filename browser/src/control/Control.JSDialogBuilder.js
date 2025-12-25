@@ -1436,7 +1436,7 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 
 		var listboxArrow = window.L.DomUtil.create('span', builder.options.cssClass + ' ui-listbox-arrow', container);
 		listboxArrow.id = 'listbox-arrow-' + data.id;
-
+		listboxArrow.onclick = function() { listbox.showPicker(); };
 
 		if (data.enabled === false) {
 			container.disabled = true;
