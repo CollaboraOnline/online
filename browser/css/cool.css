@@ -1193,11 +1193,22 @@ body {
 }
 
 .hyperlink-popup-btn {
-	display: inline-block;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	
 	margin-left: 12px;
-	vertical-align: middle;
 	width: 26px;
 	height: 26px;
+
+/* default native button styles */
+	background: none;
+	border: none;
+	padding: 0;
+	box-shadow: none;
+
+	cursor: pointer;
+	   
 }
 
 .hyperlink-popup-btn:hover {
