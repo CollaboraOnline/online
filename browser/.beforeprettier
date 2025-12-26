@@ -61,7 +61,6 @@
 /src/control/Control.UserList.js
 /src/control/Control.Zotero.js
 /src/control/IFrameDialog.js
-/src/control/jsdialog/Util.Dropdown.js
 /src/control/jsdialog/Util.FocusCycle.js
 /src/control/jsdialog/Util.ModalHelper.js
 /src/control/jsdialog/Util.StateChange.ts
