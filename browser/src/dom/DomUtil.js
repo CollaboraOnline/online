@@ -6,26 +6,6 @@
 
 window.L.DomUtil = class DomUtil extends DomUtilBase {
 
-	static isPortrait() {
-		return window.matchMedia && window.matchMedia('(orientation: portrait)').matches;
-	}
-
-	// Add/remove a portrait or landscape class from the list of elements.
-	static updateElementsOrientation(elements) {
-		var remove = 'portrait';
-		var add = 'landscape';
-		if (window.L.DomUtil.isPortrait()) {
-			remove = 'landscape';
-			add = 'portrait';
-		}
-
-		for (var i = 0; i < elements.length; ++i) {
-			var element = elements[i];
-			var domElement = window.L.DomUtil.get(element);
-			window.L.DomUtil.removeClass(domElement, remove);
-			window.L.DomUtil.addClass(domElement, add);
-		}
-	}
 };
 
 
