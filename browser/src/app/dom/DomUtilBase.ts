@@ -12,7 +12,7 @@
 // window.L.DomUtil contains various utility functions for working with
 // DOM.
 
-class DomUtilBase {
+class DomUtil {
 	public static get(
 		id: string | null,
 		doc: Document = window.document,
@@ -101,7 +101,7 @@ class DomUtilBase {
 		if (el.classList !== undefined) {
 			return el.classList.contains(name);
 		}
-		const className = DomUtilBase.getClass(el);
+		const className = DomUtil.getClass(el);
 		return (
 			className.length > 0 &&
 			new RegExp('(^|\\s)' + name + '(\\s|$)').test(className)
@@ -127,9 +127,9 @@ class DomUtilBase {
 			for (let i = 0, len = classes.length; i < len; i++) {
 				el.classList.add(classes[i]);
 			}
-		} else if (!DomUtilBase.hasClass(el, name)) {
-			const className = DomUtilBase.getClass(el);
-			DomUtilBase.setClass(el, (className ? className + ' ' : '') + name);
+		} else if (!DomUtil.hasClass(el, name)) {
+			const className = DomUtil.getClass(el);
+			DomUtil.setClass(el, (className ? className + ' ' : '') + name);
 		}
 	}
 
@@ -141,10 +141,10 @@ class DomUtilBase {
 		if (el.classList !== undefined) {
 			el.classList.remove(name);
 		} else {
-			DomUtilBase.setClass(
+			DomUtil.setClass(
 				el,
 				app.util.trim(
-					(' ' + DomUtilBase.getClass(el) + ' ').replace(' ' + name + ' ', ' '),
+					(' ' + DomUtil.getClass(el) + ' ').replace(' ' + name + ' ', ' '),
 				),
 			);
 		}
@@ -161,7 +161,7 @@ class DomUtilBase {
 		if ('opacity' in el.style) {
 			el.style.opacity = String(value);
 		} else if ('filter' in el.style) {
-			DomUtilBase._setOpacityIE(el, +value);
+			DomUtil._setOpacityIE(el, +value);
 		}
 	}
 
@@ -209,9 +209,9 @@ class DomUtilBase {
 	): void {
 		const pos = offset || new cool.Point(0, 0);
 
-		Util.ensureValue(DomUtilBase.TRANSFORM);
+		Util.ensureValue(DomUtil.TRANSFORM);
 		el.style.setProperty(
-			DomUtilBase.TRANSFORM,
+			DomUtil.TRANSFORM,
 			'translate3d(' +
 				pos.x +
 				'px,' +
@@ -231,7 +231,7 @@ class DomUtilBase {
 
 		Util.ensureValue(window.L);
 		if (window.L.Browser.any3d && !no3d) {
-			DomUtilBase.setTransform(el, point);
+			DomUtil.setTransform(el, point);
 		} else {
 			el.style.left = point.x + 'px';
 			el.style.top = point.y + 'px';
@@ -255,17 +255,17 @@ class DomUtilBase {
 	public static updateElementsOrientation(elements: string[]): void {
 		let remove = 'portrait';
 		let add = 'landscape';
-		if (DomUtilBase.isPortrait()) {
+		if (DomUtil.isPortrait()) {
 			remove = 'landscape';
 			add = 'portrait';
 		}
 
 		for (let i = 0; i < elements.length; ++i) {
 			const element = elements[i];
-			const domElement = DomUtilBase.get(element);
+			const domElement = DomUtil.get(element);
 			if (domElement) {
-				DomUtilBase.removeClass(domElement, remove);
-				DomUtilBase.addClass(domElement, add);
+				DomUtil.removeClass(domElement, remove);
+				DomUtil.addClass(domElement, add);
 			} else {
 				app.console.warn(
 					'updateElementsOrientation(): Cannot find element with id = ' +
@@ -276,7 +276,7 @@ class DomUtilBase {
 	}
 
 	// prefix style property names
-	public static TRANSFORM?: string = DomUtilBase.testProp([
+	public static TRANSFORM?: string = DomUtil.testProp([
 		'transform',
 		'WebkitTransform',
 		'OTransform',
@@ -284,7 +284,7 @@ class DomUtilBase {
 		'msTransform',
 	]);
 
-	public static TRANSFORM_ORIGIN?: string = DomUtilBase.testProp([
+	public static TRANSFORM_ORIGIN?: string = DomUtil.testProp([
 		'transformOrigin',
 		'msTransformOrigin',
 		'WebkitTransformOrigin',
@@ -293,7 +293,7 @@ class DomUtilBase {
 	private static getTransitionEnd(): string {
 		// webkitTransition comes first because some browser versions that drop vendor prefix don't do
 		// the same for the transitionend event, in particular the Android 4.1 stock browser
-		const transition = DomUtilBase.testProp([
+		const transition = DomUtil.testProp([
 			'webkitTransition',
 			'transition',
 			'OTransition',
@@ -305,9 +305,9 @@ class DomUtilBase {
 			: 'transitionend';
 	}
 
-	public static TRANSITION_END: string = DomUtilBase.getTransitionEnd();
+	public static TRANSITION_END: string = DomUtil.getTransitionEnd();
 
-	private static userSelectProperty = DomUtilBase.testProp([
+	private static userSelectProperty = DomUtil.testProp([
 		'userSelect',
 		'WebkitUserSelect',
 		'OUserSelect',
@@ -329,17 +329,17 @@ class DomUtilBase {
 		}
 
 		return () => {
-			if (DomUtilBase.userSelectProperty) {
+			if (DomUtil.userSelectProperty) {
 				const style = document.documentElement.style;
-				DomUtilBase._userSelect = style.getPropertyValue(
-					DomUtilBase.userSelectProperty,
+				DomUtil._userSelect = style.getPropertyValue(
+					DomUtil.userSelectProperty,
 				);
-				style.setProperty(DomUtilBase.userSelectProperty, 'none');
+				style.setProperty(DomUtil.userSelectProperty, 'none');
 			}
 		};
 	}
 
-	public static disableTextSelection = DomUtilBase.getDisbleTextSelection();
+	public static disableTextSelection = DomUtil.getDisbleTextSelection();
 
 	private static getEnableTextSelection(): () => void {
 		if ('onselectstart' in document) {
@@ -353,17 +353,17 @@ class DomUtilBase {
 		}
 
 		return () => {
-			if (DomUtilBase.userSelectProperty) {
+			if (DomUtil.userSelectProperty) {
 				document.documentElement.style.setProperty(
-					DomUtilBase.userSelectProperty,
-					DomUtilBase._userSelect,
+					DomUtil.userSelectProperty,
+					DomUtil._userSelect,
 				);
 				this._userSelect = undefined;
 			}
 		};
 	}
 
-	public static enableTextSelection = DomUtilBase.getEnableTextSelection();
+	public static enableTextSelection = DomUtil.getEnableTextSelection();
 
 	public static disableImageDrag(): void {
 		window.L.DomEvent.on(window, 'dragstart', window.L.DomEvent.preventDefault);
@@ -380,19 +380,21 @@ class DomUtilBase {
 	private static _outlineStyle: string = 'none';
 
 	public static preventOutline(element: HTMLElement): void {
-		DomUtilBase.restoreOutline();
-		DomUtilBase._outlineElement = element;
-		DomUtilBase._outlineStyle = element.style.outline;
+		DomUtil.restoreOutline();
+		DomUtil._outlineElement = element;
+		DomUtil._outlineStyle = element.style.outline;
 		element.style.outline = 'none';
-		window.L.DomEvent.on(window, 'keydown', DomUtilBase.restoreOutline);
+		window.L.DomEvent.on(window, 'keydown', DomUtil.restoreOutline);
 	}
 	public static restoreOutline(): void {
-		if (!DomUtilBase._outlineElement) {
+		if (!DomUtil._outlineElement) {
 			return;
 		}
-		DomUtilBase._outlineElement.style.outline = DomUtilBase._outlineStyle;
-		DomUtilBase._outlineElement = undefined;
-		DomUtilBase._outlineStyle = 'none';
-		window.L.DomEvent.off(window, 'keydown', DomUtilBase.restoreOutline);
+		DomUtil._outlineElement.style.outline = DomUtil._outlineStyle;
+		DomUtil._outlineElement = undefined;
+		DomUtil._outlineStyle = 'none';
+		window.L.DomEvent.off(window, 'keydown', DomUtil.restoreOutline);
 	}
 }
+
+window.L.DomUtil = DomUtil;
