@@ -380,6 +380,7 @@ COOL_JS_LST =\
 	src/layer/LayerGroup.js \
 	src/geometry/LineUtil.js \
 	src/core/Handler.js \
+	src/app/dom/DomEventBase.ts \
 	src/dom/DomEvent.js \
 	src/dom/Draggable.js \
 	src/dom/NotebookbarAccessibilityDefinitions.js \
