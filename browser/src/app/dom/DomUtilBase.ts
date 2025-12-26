@@ -245,6 +245,36 @@ class DomUtilBase {
 		return (el as any)._leaflet_pos;
 	}
 
+	public static isPortrait(): boolean {
+		return (
+			window.matchMedia && window.matchMedia('(orientation: portrait)').matches
+		);
+	}
+
+	// Add/remove a portrait or landscape class from the list of elements.
+	public static updateElementsOrientation(elements: string[]): void {
+		let remove = 'portrait';
+		let add = 'landscape';
+		if (DomUtilBase.isPortrait()) {
+			remove = 'landscape';
+			add = 'portrait';
+		}
+
+		for (let i = 0; i < elements.length; ++i) {
+			const element = elements[i];
+			const domElement = DomUtilBase.get(element);
+			if (domElement) {
+				DomUtilBase.removeClass(domElement, remove);
+				DomUtilBase.addClass(domElement, add);
+			} else {
+				app.console.warn(
+					'updateElementsOrientation(): Cannot find element with id = ' +
+						element,
+				);
+			}
+		}
+	}
+
 	// prefix style property names
 	public static TRANSFORM?: string = DomUtilBase.testProp([
 		'transform',
