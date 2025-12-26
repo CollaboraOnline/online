@@ -364,4 +364,35 @@ class DomUtilBase {
 	}
 
 	public static enableTextSelection = DomUtilBase.getEnableTextSelection();
+
+	public static disableImageDrag(): void {
+		window.L.DomEvent.on(window, 'dragstart', window.L.DomEvent.preventDefault);
+	}
+	public static enableImageDrag(): void {
+		window.L.DomEvent.off(
+			window,
+			'dragstart',
+			window.L.DomEvent.preventDefault,
+		);
+	}
+
+	private static _outlineElement?: HTMLElement;
+	private static _outlineStyle: string = 'none';
+
+	public static preventOutline(element: HTMLElement): void {
+		DomUtilBase.restoreOutline();
+		DomUtilBase._outlineElement = element;
+		DomUtilBase._outlineStyle = element.style.outline;
+		element.style.outline = 'none';
+		window.L.DomEvent.on(window, 'keydown', DomUtilBase.restoreOutline);
+	}
+	public static restoreOutline(): void {
+		if (!DomUtilBase._outlineElement) {
+			return;
+		}
+		DomUtilBase._outlineElement.style.outline = DomUtilBase._outlineStyle;
+		DomUtilBase._outlineElement = undefined;
+		DomUtilBase._outlineStyle = 'none';
+		window.L.DomEvent.off(window, 'keydown', DomUtilBase.restoreOutline);
+	}
 }
