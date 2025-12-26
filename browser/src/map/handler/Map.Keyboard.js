@@ -711,13 +711,6 @@ window.L.Map.Keyboard = window.L.Handler.extend({
 			return true;
 		}
 
-		// Handles paste special. The "Your browser" thing seems to indicate that this code
-		// snippet is relevant in a browser only.
-		if (!window.ThisIsAMobileApp && e.ctrlKey && e.shiftKey && e.altKey && this.keyCodes.V.includes(e.keyCode)) {
-			this._map._clip._openPasteSpecialPopup();
-			return true;
-		}
-
 		// Handles unformatted paste
 		if (this._isCtrlKey(e) && e.shiftKey && this.keyCodes.V.includes(e.keyCode)) {
 			return true;
