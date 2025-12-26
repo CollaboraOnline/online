@@ -13,8 +13,8 @@ function addCanvasToDom() {
 	const canvas = document.getElementById('document-canvas');
 	if (canvas) return;
 	const docCont = document.getElementById('document-container');
-	const canvCont = DomUtilBase.createWithId('div', 'canvas-container', docCont);
-	DomUtilBase.createWithId('canvas', 'document-canvas', canvCont);
+	const canvCont = DomUtil.createWithId('div', 'canvas-container', docCont);
+	DomUtil.createWithId('canvas', 'document-canvas', canvCont);
 }
 
 function setupCanvasContainer(width: number, height: number) {
