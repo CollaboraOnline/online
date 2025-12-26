@@ -26,7 +26,6 @@
     "--filesystem=xdg-config/fontconfig:ro",
     "--filesystem=xdg-run/gvfsd",
     "--filesystem=host",
-    "--env=COOL_TOPSRCDIR=/app/share/coolwsd",
     "--env=LIBO_FLATPAK=1",
     "--talk-name=org.gtk.vfs.*",
     "--device=dri"

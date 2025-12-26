@@ -7,6 +7,7 @@
 
 #pragma once
 
+#include <QApplication>
 #include <QWebEngineProfile>
 
 extern int coolwsd_server_socket_fd;
@@ -25,14 +26,15 @@ public:
 
 namespace
 {
-inline std::string getTopSrcDir(const std::string& defaultPath)
+inline std::string getDataDir()
 {
-    const char* envPath = std::getenv("COOL_TOPSRCDIR");
-    if (envPath && std::strlen(envPath) > 0)
+    Poco::Path dir(qApp->applicationDirPath().toStdString());
+    if (Poco::File(Poco::Path(dir, "run-from-source")).exists())
     {
-        return std::string(envPath);
+        dir.makeParent();
+        return dir.toString();
     }
-    return defaultPath;
+    return COOLWSD_DATADIR;
 }
 } // namespace
 

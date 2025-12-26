@@ -6,7 +6,7 @@ warning_flags = -Wall -Werror -Wno-parentheses -Wno-sign-compare -Wno-unused-var
 define_flags = -DMOBILEAPP=1
 
 AM_CPPFLAGS = -pthread \
-              -DTOPSRCDIR='"'$(realpath ${top_srcdir})'"' \
+              -DCOOLWSD_DATADIR='"'@COOLWSD_DATADIR@'"' \
               -DQTAPP \
               ${define_flags} \
               ${warning_flags} \
