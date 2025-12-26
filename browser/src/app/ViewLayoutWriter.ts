@@ -30,6 +30,67 @@ class ViewLayoutWriter extends ViewLayoutBase {
 			this.annotationOperationsCallback,
 			this,
 		);
+
+	}
+
+	/* everything includes: comments (if toggled on), document */
+	private isEverythingStillVisible(zoom: number) {
+		const center = app.map.getCenter();
+		/* get the dimentions of the new document */
+		const pixelBounds = app.map.getPixelBoundsCore(center, zoom);
+		const canvasWidth = pixelBounds.max.x + Math.abs(pixelBounds.min.x);
+
+		/*
+		 * the `max.X` coordinate is in canvas coordinate terms,
+		 * starting from the left, and the `min.X` coordinate is
+		 * negative also starting from the left edge. adding these two
+		 * gives us the width of the document
+		 */
+		const docWidth = pixelBounds.max.x + pixelBounds.min.x;
+
+		/* left bound is negative when the point has gone past the left edge */
+		if (pixelBounds.min.x > 0)
+			return false;
+
+		let commentWidth = this.getCommentAndDocumentSpacingInfo().commentSectionWidth;
+		if (this.commentsHiddenOrNotPresent())
+			commentWidth = 0;
+
+		return docWidth + commentWidth <= canvasWidth;
+	}
+
+	/*
+	 * NOTE: this shouldn't be called at startup, atleast not before other
+	 * 		 elements are loaded and visible, otherwise this covers the 
+	 * 		 canvas and that shows some query errors.
+	 */
+	private setMaxZoomForAvailableSpace() {
+		/*
+		 * we start the zoom from 10 (100%) and go up or down
+		 * to find the max possible zoom.
+		 */
+		const MAX_ZOOM_LEVEL = 20;
+		const MIN_ZOOM_LEVEL = 1;
+		let zoom = 10;
+
+		if (this.isEverythingStillVisible(zoom + 1)) {
+			for (let i = zoom + 1; i < MAX_ZOOM_LEVEL; ++i) {
+				if (this.isEverythingStillVisible(i))
+					zoom = i;
+				else
+					break;
+			}
+		} else {
+			for (let i = zoom - 1; i > MIN_ZOOM_LEVEL; --i) {
+				if (this.isEverythingStillVisible(i))
+					zoom = i;
+				else
+					break;
+			}
+		}
+
+		app.map.setZoom(zoom, null, true);
+		console.error("zoom: " + zoom);
 	}
 
 	private getCommentAndDocumentSpacingInfo(): DocumentSpacingInfo {
@@ -132,5 +193,6 @@ class ViewLayoutWriter extends ViewLayoutBase {
 
 	private annotationOperationsCallback() {
 		this.adjustDocumentMarginsForComments(false);
+		this.setMaxZoomForAvailableSpace();
 	}
 }
