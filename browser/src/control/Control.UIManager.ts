@@ -45,6 +45,9 @@ class UIManager extends window.L.Control {
 	hiddenCommands: { [key: string]: boolean } = {};
 	// Hidden Notebookbar tabs.
 	hiddenTabs: { [key: string]: boolean } = {};
+	permissionViewMode: any = null;
+	// Add a flag to track initialization
+	private isUIInitialized: boolean = false;
 
 	/**
 	 * Called when the UIManager control is added to the map.
@@ -357,21 +360,8 @@ class UIManager extends window.L.Control {
 		if (!isMobile && !enableNotebookbar)
 			this.map.topToolbar = JSDialog.TopToolbar(this.map);
 
-		// this will execute only when UI get initialized
-		if (!isMobile) {
-			this.topReadonlyBtn = document.getElementById('readonlyMode');
-			const label = this.topReadonlyBtn?.querySelector(
-				'.unolabel',
-			) as HTMLElement | null;
-			if (label) {
-				label.textContent = _('Read-only');
-				this.topReadonlyBtn.setAttribute('data-cooltip', _('Permission Mode'));
-				window.L.control.attachTooltipEventListener(
-					this.topReadonlyBtn,
-					this.map,
-				);
-			}
-		}
+		this.permissionViewMode = new PermissionViewMode(this.map);
+		this.permissionViewMode.init();
 	}
 
 	/**
@@ -1475,43 +1465,28 @@ class UIManager extends window.L.Control {
 		var enableNotebookbar = this.shouldUseNotebookbarMode();
 		if (enableNotebookbar && !window.mode.isMobile()) {
 			if (e.detail.perm === 'edit') {
-				if (this.map.menubar) {
-					this.map.removeControl(this.map.menubar);
-					this.map.menubar = null;
-				}
-				this.makeSpaceForNotebookbar();
-			} else if (e.detail.perm === 'readonly') {
-				if (!this.map.menubar) {
-					var menubar = new Menubar();
-					this.map.menubar = menubar;
-					this.map.addControl(menubar);
-				}
+				this.removeClassicUI();
 
-				if (this.notebookbar && $('#mobile-edit-button').is(':hidden')) {
-					this.notebookbar.onRemove();
+				if (!this.isUIInitialized) {
+					this.isUIInitialized = true;
 				}
+				else {
+					this.makeSpaceForNotebookbar();
+					this.addNotebookbarUI();
+				}
+			} else if (e.detail.perm === 'readonly') {
+				if (this.map.sidebar && this.map.sidebar.isVisible()) {
+					this.map.sidebar.closeSidebar();
+					app.socket.sendMessage('uno .uno:SidebarHide');
+				}
+				this.removeNotebookbarUI();
+				this.addClassicUI();
 			} else {
 				app.socket.sendMessage('uno .uno:SidebarHide');
 			}
 		}
-		this.updateReadonlyIndicator();
 	}
 
-	/**
-	 * Updates visibility of the Read-only badge/button in the top toolbar.
-	*/
-	updateReadonlyIndicator(): void {
-		app.layoutingService.appendLayoutingTask(() =>{
-			if (!this.topReadonlyBtn)
-				return;
-
-			if (app.isReadOnly()) {
-				this.topReadonlyBtn.classList.remove('hidden');
-			} else {
-				this.topReadonlyBtn.classList.add('hidden');
-			}
-		})
-	}
 
 	refreshTheme(): void {
 		if (typeof window.initializedUI === 'function') {

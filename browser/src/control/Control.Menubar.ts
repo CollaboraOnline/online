@@ -2123,6 +2123,38 @@ class Menubar extends window.L.Control {
 					$(aItem).hide();
 			}
 		});
+		// We hide adjacent, leading, and trailing separators that might occur due to hidden items above.
+		var visibleItems = $(menu).children().children('a').not('.has-submenu').filter(function() {
+			return $(this).css('display') !== 'none';
+		});
+
+		visibleItems.each((index, aItem) => {
+			// Always show first, might be hidden by previous pass
+			if ($(aItem).hasClass('separator')) {
+				$(aItem).show();
+			}
+
+			// Hide leading separator
+			if (index === 0 && $(aItem).hasClass('separator')) {
+				$(aItem).hide();
+				return;
+			}
+
+			// Hide trailing separator
+			if (index === visibleItems.length - 1 && $(aItem).hasClass('separator')) {
+				$(aItem).hide();
+				return;
+			}
+
+			// Hide double/adjacent separators
+			// If this is a separator, and the previous visible item was also a separator, hide this one.
+			if (index > 0) {
+				var prevItem = visibleItems[index - 1];
+				if ($(aItem).hasClass('separator') && $(prevItem).hasClass('separator')) {
+					$(aItem).hide();
+				}
+			}
+		});
 	}
 
 	/**
