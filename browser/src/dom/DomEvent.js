@@ -1,58 +1,58 @@
 /* -*- js-indent-level: 8 -*- */
-/* global app cool */
+/* global app cool DomEvent */
 /*
  * window.L.DomEvent contains functions for working with DOM events.
  * Inspired by John Resig, Dean Edwards and YUI addEvent implementations.
  */
 
-var eventsKey = '_leaflet_events';
+const eventsKey = '_browser_events';
 
-window.L.DomEvent = {
+class DomEventDerived extends DomEvent {
 
-	on: function (obj, types, fn, context) {
+	static on(obj, types, fn, context) {
 
 		if (typeof types === 'object') {
-			for (var type in types) {
+			for (let type in types) {
 				this._on(obj, type, types[type], fn);
 			}
 		} else {
 			types = app.util.splitWords(types);
 
-			for (var i = 0, len = types.length; i < len; i++) {
+			for (let i = 0, len = types.length; i < len; i++) {
 				this._on(obj, types[i], fn, context);
 			}
 		}
 
-		return this;
-	},
+		return DomEventDerived;
+	}
 
-	off: function (obj, types, fn, context) {
+	static off(obj, types, fn, context) {
 
 		if (typeof types === 'object') {
-			for (var type in types) {
+			for (let type in types) {
 				this._off(obj, type, types[type], fn);
 			}
 		} else {
 			types = app.util.splitWords(types);
 
-			for (var i = 0, len = types.length; i < len; i++) {
+			for (let i = 0, len = types.length; i < len; i++) {
 				this._off(obj, types[i], fn, context);
 			}
 		}
 
-		return this;
-	},
+		return DomEventDerived;
+	}
 
-	_on: function (obj, type, fn, context) {
-		var id = type + app.util.stamp(fn) + (context ? '_' + app.util.stamp(context) : '');
+	static _on(obj, type, fn, context) {
+		const id = type + app.util.stamp(fn) + (context ? '_' + app.util.stamp(context) : '');
 
-		if (obj[eventsKey] && obj[eventsKey][id]) { return this; }
+		if (obj[eventsKey] && obj[eventsKey][id]) { return DomEventDerived; }
 
-		var handler = function (e) {
+		let handler = function (e) {
 			return fn.call(context || obj, e || window.event);
 		};
 
-		var originalHandler = handler;
+		const originalHandler = handler;
 
 		if (window.L.Browser.pointer && type.indexOf('touch') === 0) {
 			this.addPointerListener(obj, type, handler, id);
@@ -94,15 +94,15 @@ window.L.DomEvent = {
 		obj[eventsKey] = obj[eventsKey] || {};
 		obj[eventsKey][id] = handler;
 
-		return this;
-	},
+		return DomEventDerived;
+	}
 
-	_off: function (obj, type, fn, context) {
+	static _off(obj, type, fn, context) {
 
-		var id = type + app.util.stamp(fn) + (context ? '_' + app.util.stamp(context) : ''),
+		const id = type + app.util.stamp(fn) + (context ? '_' + app.util.stamp(context) : ''),
 		    handler = obj[eventsKey] && obj[eventsKey][id];
 
-		if (!handler) { return this; }
+		if (!handler) { return DomEventDerived; }
 
 		if (window.L.Browser.pointer && type.indexOf('touch') === 0) {
 			this.removePointerListener(obj, type, id);
@@ -131,10 +131,10 @@ window.L.DomEvent = {
 
 		obj[eventsKey][id] = null;
 
-		return this;
-	},
+		return DomEventDerived;
+	}
 
-	stopPropagation: function (e) {
+	static stopPropagation(e) {
 
 		if (e.stopPropagation) {
 			e.stopPropagation();
@@ -143,11 +143,11 @@ window.L.DomEvent = {
 		}
 		window.L.DomEvent._skipped(e);
 
-		return this;
-	},
+		return DomEventDerived;
+	}
 
-	disableMouseClickPropagation: function (el) {
-		var stop = window.touch.mouseOnly(window.L.DomEvent.stopPropagation);
+	static disableMouseClickPropagation(el) {
+		const stop = window.touch.mouseOnly(window.L.DomEvent.stopPropagation);
 
 		window.L.DomEvent.on(el, window.L.Draggable.START.join(' '), stop);
 
@@ -155,14 +155,14 @@ window.L.DomEvent = {
 			click: window.touch.mouseOnly(window.L.DomEvent._fakeStop),
 			dblclick: stop
 		});
-	},
+	}
 
-	disableScrollPropagation: function (el) {
+	static disableScrollPropagation(el) {
 		return window.L.DomEvent.on(el, 'mousewheel MozMousePixelScroll', window.L.DomEvent.stopPropagation);
-	},
+	}
 
-	disableClickPropagation: function (el) {
-		var stop = window.L.DomEvent.stopPropagation;
+	static disableClickPropagation(el) {
+		const stop = window.L.DomEvent.stopPropagation;
 
 		window.L.DomEvent.on(el, window.L.Draggable.START.join(' '), stop);
 
@@ -170,25 +170,25 @@ window.L.DomEvent = {
 			click: window.L.DomEvent._fakeStop,
 			dblclick: stop
 		});
-	},
+	}
 
-	preventDefault: function (e) {
+	static preventDefault(e) {
 
 		if (e.preventDefault) {
 			e.preventDefault();
 		} else {
 			e.returnValue = false;
 		}
-		return this;
-	},
+		return DomEventDerived;
+	}
 
-	stop: function (e) {
+	static stop(e) {
 		return window.L.DomEvent
 			.preventDefault(e)
 			.stopPropagation(e);
-	},
+	}
 
-	getMousePosition: function (e, container) {
+	static getMousePosition(e, container) {
 		if (!container) {
 			if (e.clientX === undefined && e.touches !== undefined)
 				return new cool.Point(e.touches[0].clientX, e.touches[0].clientY);
@@ -196,9 +196,9 @@ window.L.DomEvent = {
 			return new cool.Point(e.clientX, e.clientY);
 		}
 
-		var rect = container.getBoundingClientRect(), // constant object
-		    left = rect.left,
-		    top = rect.top;
+		const rect = container.getBoundingClientRect(); // constant object
+		let left = rect.left;
+		let top = rect.top;
 
 		// iframe mouse coordinates are relative to the frame area
 		// `target`: body element of the iframe; `currentTarget`: content window of the iframe
@@ -224,11 +224,11 @@ window.L.DomEvent = {
 		return new cool.Point(
 			e.clientX - left - container.clientLeft,
 			e.clientY - top - container.clientTop);
-	},
+	}
 
-	getWheelDelta: function (e) {
+	static getWheelDelta(e) {
 
-		var delta = 0;
+		let delta = 0;
 
 		if (e.wheelDelta) {
 			delta = e.wheelDelta / 120;
@@ -237,26 +237,24 @@ window.L.DomEvent = {
 			delta = -e.detail / 3;
 		}
 		return delta;
-	},
+	}
 
-	_skipEvents: {},
-
-	_fakeStop: function (e) {
+	static _fakeStop(e) {
 		// fakes stopPropagation by setting a special event flag, checked/reset with window.L.DomEvent._skipped(e)
 		window.L.DomEvent._skipEvents[e.type] = true;
-	},
+	}
 
-	_skipped: function (e) {
-		var skipped = this._skipEvents[e.type];
+	static _skipped(e) {
+		const skipped = this._skipEvents[e.type];
 		// reset when checking, as it's only used in map container and propagates outside of the map
 		this._skipEvents[e.type] = false;
 		return skipped;
-	},
+	}
 
 	// check if element really left/entered the event target (for mouseenter/mouseleave)
-	_checkMouse: function (el, e) {
+	static _checkMouse(el, e) {
 
-		var related = e.relatedTarget;
+		let related = e.relatedTarget;
 
 		if (!related) { return true; }
 
@@ -268,12 +266,12 @@ window.L.DomEvent = {
 			return false;
 		}
 		return (related !== el);
-	},
+	}
 
 	// this is a horrible workaround for a bug in Android where a single touch triggers two click events
-	_filterClick: function (e, handler) {
-		var timeStamp = (e.timeStamp || e.originalEvent.timeStamp),
-		    elapsed = window.L.DomEvent._lastClick && (timeStamp - window.L.DomEvent._lastClick);
+	static _filterClick(e, handler) {
+		const timeStamp = (e.timeStamp || e.originalEvent.timeStamp);
+		const elapsed = window.L.DomEvent._lastClick && (timeStamp - window.L.DomEvent._lastClick);
 
 		// are they closer together than 500ms yet more than 100ms?
 		// Android typically triggers them ~300ms apart while multiple listeners
@@ -288,7 +286,10 @@ window.L.DomEvent = {
 
 		handler(e);
 	}
-};
+}
 
-window.L.DomEvent.addListener = window.L.DomEvent.on;
-window.L.DomEvent.removeListener = window.L.DomEvent.off;
+DomEventDerived._skipEvents = {};
+DomEventDerived.addListener = DomEventDerived.on;
+DomEventDerived.removeListener = DomEventDerived.off;
+
+window.L.DomEvent = DomEventDerived;
