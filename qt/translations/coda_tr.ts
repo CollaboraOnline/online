@@ -11,23 +11,23 @@
     <message>
         <location filename="../coda-qt.cpp" line="297"/>
         <source>Select Printer:</source>
-        <translation type="unfinished"></translation>
+        <translation>Yazıcıyı Seç:</translation>
     </message>
     <message>
         <location filename="../coda-qt.cpp" line="306"/>
         <location filename="../coda-qt.cpp" line="379"/>
         <source>Default Printer</source>
-        <translation type="unfinished"></translation>
+        <translation>Varsayılan Yazıcı</translation>
     </message>
     <message>
         <location filename="../coda-qt.cpp" line="311"/>
         <source>Print to File</source>
-        <translation type="unfinished"></translation>
+        <translation>Dosyaya Yazdır</translation>
     </message>
     <message>
         <location filename="../coda-qt.cpp" line="315"/>
         <source>Enter file path...</source>
-        <translation type="unfinished"></translation>
+        <translation>Dosya yolu girin...</translation>
     </message>
     <message>
         <location filename="../coda-qt.cpp" line="327"/>
@@ -42,7 +42,7 @@
     <message>
         <location filename="../coda-qt.cpp" line="345"/>
         <source>Print</source>
-        <translation type="unfinished"></translation>
+        <translation>Yazdır</translation>
     </message>
     <message>
         <location filename="../coda-qt.cpp" line="346"/>
