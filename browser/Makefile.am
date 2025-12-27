@@ -762,9 +762,7 @@ endef
 
 all-local: build-cool
 
-if !ENABLE_MOBILEAPP
 ADMIN_BUNDLE = $(DIST_FOLDER)/admin-bundle.js
-endif
 
 if ENABLE_WASM
 $(DIST_FOLDER)/emscripten-module.js: ../wasm/emscripten-module.js
@@ -857,7 +855,8 @@ build-cool: \
 	$(DIST_FOLDER)/cool.html \
 	$(WASM_FILES) \
 	$(WASM_FALLBACK_FILES) \
-	$(TEMPLATE_MANIFEST)
+	$(TEMPLATE_MANIFEST) \
+	adminIntegratorSettings
 	@echo "build cool completed"
 if APP_HAS_BRANDING
 	@if test -d "$(APP_BRANDING_DIR)" ; then cp -a "$(APP_BRANDING_DIR)"/branding* $(DIST_FOLDER)/ ; fi
@@ -950,6 +949,21 @@ $(DIST_FOLDER)/cool.html: $(srcdir)/html/cool.html.m4 \
 		-DVENDOR="$(VENDOR)" \
 		-DINFO_URL="$(INFO_URL)" \
 		$(srcdir)/html/cool.html.m4 > $@
+
+.PHONY: adminIntegratorSettings
+adminIntegratorSettings:
+	@mkdir -p $(DIST_FOLDER)
+	$(QUIET_M4) m4 -PE -I $(INTERMEDIATE_DIR) \
+		-DIOSAPP=$(ENABLE_IOSAPP) \
+		-DMACOSAPP=$(ENABLE_MACOSAPP) \
+		-DQTAPP=$(ENABLE_QTAPP) \
+		-DDEBUG=$(ENABLE_DEBUG) \
+		-DWINDOWSAPP=$(ENABLE_WINDOWSAPP) \
+		-DANDROIDAPP=$(ENABLE_ANDROIDAPP) \
+		-DEMSCRIPTENAPP=$(ENABLE_EMSCRIPTENAPP) \
+		-DMOBILEAPPNAME="$(APP_NAME)" \
+		$(srcdir)/admin/adminIntegratorSettings.html.m4 \
+		> $(DIST_FOLDER)/adminIntegratorSettings.html
 
 node_modules: package.json archived-packages
 	@npm install
@@ -1235,7 +1249,7 @@ clean-local:
 	@rm -f $(abs_srcdir)/jsconfig.json
 	@rm -f $(abs_srcdir)/admin/jsconfig.json
 
-CLEANFILES = tscompile.done $(INTERMEDIATE_DIR)/cool-src.js $(DIST_FOLDER)/bundle.css $(DIST_FOLDER)/bundle.js $(INTERMEDIATE_DIR)/cool-src.js
+CLEANFILES = tscompile.done $(INTERMEDIATE_DIR)/cool-src.js $(DIST_FOLDER)/bundle.css $(DIST_FOLDER)/bundle.js $(INTERMEDIATE_DIR)/cool-src.js admin/adminIntegratorSettings.html
 
 $(abs_srcdir)/jsconfig.json:
 	@printf "{\n \

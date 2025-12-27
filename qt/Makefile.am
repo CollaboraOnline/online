@@ -23,6 +23,7 @@ AM_LDFLAGS = -pthread ${QT6_LIBS} -ldl $(ZSTD_LIBS) ${PNG_LIBS} -lPocoZip
 cmake_list= \
             ../common/Authorization.cpp \
             ../common/ConfigUtil.cpp \
+            ../common/SettingsStorage.cpp \
             ../common/CommandControl.cpp \
             ../common/Crypto-stub.cpp \
             ../common/FileUtil.cpp \

@@ -19,9 +19,11 @@
 #include "Protocol.hpp"
 #include "Util.hpp"
 #include "FileUtil.hpp"
+#include "qstandardpaths.h"
 #include "qt.hpp"
 #include "DBusService.hpp"
 #include "common/RecentFiles.hpp"
+#include "common/SettingsStorage.hpp"
 
 #include <Poco/MemoryStream.h>
 #include <Poco/JSON/Parser.h>
@@ -31,6 +33,7 @@
 #include <Poco/Path.h>
 #include <Poco/URI.h>
 #include <sstream>
+#include <SettingsStorage.hpp>
 
 #include <QApplication>
 #include <QByteArray>
@@ -668,6 +671,11 @@ QVariant Bridge::cool(const QString& messageStr)
     constexpr std::string_view NEWDOCTYPE = "newdoc type=";
     constexpr std::string_view OPENDOC = "opendoc file=";
     constexpr std::string_view FULLSCREENPRESENTATION = "FULLSCREENPRESENTATION ";
+    constexpr std::string_view UPLOADSETTINGS = "UPLOADSETTINGS ";
+    constexpr std::string_view FETCHSETTINGSFILE = "FETCHSETTINGSFILE ";
+    constexpr std::string_view FETCHSETTINGSCONFIG = "FETCHSETTINGSCONFIG";
+    constexpr std::string_view SYNCSETTINGS = "SYNCSETTINGS";
+    constexpr std::string_view PROCESSINTEGRATORADMINFILE = "PROCESSINTEGRATORADMINFILE ";
 
     const std::string message = messageStr.toStdString();
     LOG_TRC_NOFILE("From JS: cool: " << message);
@@ -848,6 +856,43 @@ QVariant Bridge::cool(const QString& messageStr)
                 saveDocument(savePath);
             }
         }
+    }
+    else if (message.starts_with(UPLOADSETTINGS))
+    {
+        const std::string payload = message.substr(UPLOADSETTINGS.size());
+        Desktop::uploadSettings(payload);
+        return {};
+    }
+    else if (message.starts_with(FETCHSETTINGSFILE))
+    {
+        const std::string relPath = message.substr(FETCHSETTINGSFILE.size());
+        auto result = Desktop::fetchSettingsFile(relPath);
+        if (result.content.empty())
+            return {};
+
+        QVariantMap resultMap;
+        resultMap["fileName"] = QString::fromStdString(result.fileName);
+        resultMap["mimeType"] = QString::fromStdString(result.mimeType);
+        resultMap["content"] = QString::fromStdString(result.content);
+
+        return resultMap;
+    }
+    else if (message == FETCHSETTINGSCONFIG)
+    {
+        return QString::fromStdString(Desktop::fetchSettingsConfig());
+    }
+    else if (message.starts_with(SYNCSETTINGS))
+    {
+        Desktop::syncSettings([this](const std::vector<char>& data) {
+            send2JS(data);
+        });
+        return {};
+    }
+    else if (message.starts_with(PROCESSINTEGRATORADMINFILE))
+    {
+        std::string payload = message.substr(PROCESSINTEGRATORADMINFILE.size());
+        Desktop::processIntegratorAdminFile(payload);
+        return {};
     }
     else if (message == "BYE")
     {
@@ -1158,6 +1203,20 @@ void Application::initialize()
     QDir().mkpath(configDir + "/Collabora");
     QString recentFilesPath = configDir + "/Collabora/RecentDocuments.conf";
     recentFiles.load(recentFilesPath.toStdString(), 15);
+}
+
+Poco::Path Desktop::getConfigPath()
+{
+    QString pathStr = QStandardPaths::writableLocation(QStandardPaths::ConfigLocation) + "/Collabora";
+    Poco::Path configPath(pathStr.toStdString());
+    Poco::File configDir(configPath);
+    assert(configDir.exists() && configDir.isDirectory());
+    return configPath;
+}
+
+std::string Desktop::getDataDir()
+{
+    return ::getDataDir();
 }
 
 QWebEngineProfile* Application::getProfile() { return globalProfile; }
