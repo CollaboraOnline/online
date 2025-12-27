@@ -29,7 +29,7 @@ window.L.Map.Settings = window.L.Handler.extend({
 
 	_getLocalSettingsUrl: function (): string {
 		const settingsLocation: string = app.LOUtil.getURL(
-			'/admin/adminIntegratorSettings.html',
+			'adminIntegratorSettings.html',
 		);
 		return settingsLocation;
 	},
@@ -66,6 +66,15 @@ window.L.Map.Settings = window.L.Handler.extend({
 			{ access_token_ttl: window.accessTokenTTL },
 			{ wopi_setting_base_url: window.wopiSettingBaseUrl },
 		];
+
+		if (window.mode.isCODesktop())
+			window.postMobileMessage(
+				"PROCESSINTEGRATORADMINFILE " + JSON.stringify({
+					ui_theme: theme,
+					lang: window.langParam,
+					mobile: window.mode.isMobile(),
+				})
+			);
 
 		const options = {
 			prefix: 'iframe-settings',

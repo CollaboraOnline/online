@@ -163,6 +163,7 @@ shared_sources = common/FileUtil.cpp \
                  $(util_platform_cpp) \
                  common/Util-unix.cpp \
                  common/ConfigUtil.cpp \
+                 common/SettingsStorage.cpp \
                  common/Authorization.cpp \
                  common/CommandControl.cpp \
                  common/Simd.cpp \
@@ -453,6 +454,7 @@ shared_headers = common/Anonymizer.hpp \
                  common/Uri.hpp \
                  common/Util.hpp \
                  common/ConfigUtil.hpp \
+                 common/SettingsStorage.hpp \
                  common/Authorization.hpp \
                  common/Message.hpp \
                  common/MobileApp.hpp \

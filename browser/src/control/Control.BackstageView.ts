@@ -27,6 +27,7 @@ interface BackstageTabConfig {
 		| 'repair'
 		| 'properties'
 		| 'history'
+		| 'options'
 		| 'about';
 }
 
@@ -105,6 +106,7 @@ class BackstageView extends window.L.Class {
 		repair: () => this.executeRepair(),
 		properties: () => this.executeDocumentProperties(),
 		history: () => this.executeRevisionHistory(),
+		options: () => this.executeOptions(),
 		about: () => this.executeAbout(),
 	};
 
@@ -340,6 +342,13 @@ class BackstageView extends window.L.Class {
 				visible: !this.isStarterMode,
 			},
 			{ type: 'separator', id: 'sidebar-horizonatal-break', label: '' },
+			{
+				id: 'options',
+				label: _('Options'),
+				type: 'action',
+				actionType: 'options',
+				visible: !this.isStarterMode,
+			},
 			{
 				id: 'about',
 				label: _UNO('.uno:About'),
@@ -1283,6 +1292,10 @@ class BackstageView extends window.L.Class {
 		} else {
 			this.sendUnoCommand('.uno:Open');
 		}
+	}
+
+	private executeOptions(): void {
+		this.map.settings.showSettingsDialog();
 	}
 
 	private executeAbout(): void {

@@ -847,6 +847,10 @@ function showWelcomeSVG() {
 
 			// make sure set accessibilityState for cypress
 			global.getAccessibilityState();
+			if (this._initialized) {
+				window.dispatchEvent(new Event("browsersettingchanged"));
+			}
+			this._initialized = true;
 		},
 
 		_renameLocalStoragePref: function(oldName, newName) {
