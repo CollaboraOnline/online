@@ -1,4 +1,4 @@
-/* -*- js-indent-level: 8 -*- */
+/* -*- js-indent-level: 8; fill-column: 100 -*- */
 /*
  * Copyright the Collabora Online contributors.
  *
@@ -9,7 +9,8 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-function assertFloat(actual: number, expected: number, eps: number, msg: string) {
-	nodeassert.ok(Math.abs(actual - expected) < eps,
-		msg + ` | actual : ${actual}, expected: ${expected}, eps: ${eps}`);
-}
+/*
+ * window.L.DomEvent contains functions for working with DOM events.
+ */
+
+class DomEvent {}

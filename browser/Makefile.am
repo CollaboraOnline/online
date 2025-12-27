@@ -279,9 +279,10 @@ COOL_JS_LST =\
 	src/app/Log.ts \
 	src/app/Debug.ts \
 	src/app/A11yValidator.ts \
-	src/app/SocketBase.ts \
+	src/app/Socket.ts \
 	src/app/TracingEvents.ts \
 	src/app/ServerCommand.ts \
+	src/app/CoolClipboard.ts \
 	src/Leaflet.js \
 	src/errormessages.js \
 	src/unocommands.js \
@@ -289,18 +290,17 @@ COOL_JS_LST =\
 	src/core/Util.js \
 	src/core/Class.js \
 	src/core/Events.js \
-	src/core/Socket.js \
 	src/geometry/Point.ts \
 	src/geometry/Bounds.ts \
 	src/geometry/Transformation.ts \
-	src/dom/DomUtil.js src/geo/LatLng.js \
+	src/app/dom/DomUtil.ts \
+	src/geo/LatLng.js \
 	src/geo/LatLngBounds.js \
 	src/geo/projection/Projection.LonLat.js \
 	src/geo/crs/CRS.js \
 	src/control/IFrameDialog.js \
 	src/map/Map.js \
 	src/control/Control.IdleHandler.ts \
-	src/map/Clipboard.js \
 	src/layer/tile/SheetSwitch.ts \
 	src/layer/Layer.js \
 	src/layer/tile/SheetGeometry.ts \
@@ -358,6 +358,7 @@ COOL_JS_LST =\
 	src/layer/vector/CanvasOverlay.ts \
 	src/canvas/sections/ScrollSection.ts \
 	src/canvas/sections/MouseControl.ts \
+	src/app/LayerUtil.ts \
 	src/layer/tile/CanvasTileLayer.js \
 	src/layer/vector/CDarkOverlay.ts \
 	src/layer/SplitPanesContext.ts \
@@ -379,6 +380,7 @@ COOL_JS_LST =\
 	src/layer/LayerGroup.js \
 	src/geometry/LineUtil.js \
 	src/core/Handler.js \
+	src/app/dom/DomEventBase.ts \
 	src/dom/DomEvent.js \
 	src/dom/Draggable.js \
 	src/dom/NotebookbarAccessibilityDefinitions.js \
@@ -1169,10 +1171,10 @@ pot:
 		src/control/jsdialog/Widget.RadioButton.ts \
 		src/control/jsdialog/Widget.SidebarContainers.ts \
 		src/control/jsdialog/Widget.TreeView.ts \
-		src/app/SocketBase.ts \
+		src/app/Socket.ts \
 		src/app/TracingEvents.ts \
 		src/app/ServerCommand.ts \
-		src/core/Socket.js \
+		src/app/CoolClipboard.ts \
 		src/docdispatcher.ts \
 		src/docstate.ts \
 		src/docstatefunctions.js \
@@ -1182,7 +1184,6 @@ pot:
 		src/layer/marker/TextInput.js \
 		src/layer/tile/CanvasTileLayer.js \
 		src/main.js \
-		src/map/Clipboard.js \
 		src/map/Map.js \
 		src/map/handler/Map.Feedback.js \
 		src/map/handler/Map.FileInserter.js \

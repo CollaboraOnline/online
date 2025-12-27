@@ -112,8 +112,14 @@ export class SimplePoint {
 	}
 
 	// View pixel.
-	public get vX(): number { return app.activeDocument.activeLayout ? app.activeDocument.activeLayout.documentToViewX(this) : this.pX; }
-	public get vY(): number { return app.activeDocument.activeLayout ? app.activeDocument.activeLayout.documentToViewY(this) : this.pY; }
+	public get vX(): number {
+		Util.ensureValue(app.activeDocument);
+		return app.activeDocument.activeLayout ? app.activeDocument.activeLayout.documentToViewX(this) : this.pX;
+	}
+	public get vY(): number {
+		Util.ensureValue(app.activeDocument);
+		return app.activeDocument.activeLayout ? app.activeDocument.activeLayout.documentToViewY(this) : this.pY;
+	}
 }
 
 /**
@@ -255,14 +261,38 @@ export class SimpleRectangle {
 	}
 
 	// View pixel. 1..4 represents the 4 corners of the rectangle: TopLeft, TopRight, BottomLeft, BottomRight respectively.
-	public get v1X(): number { return app.activeDocument.activeLayout ? app.activeDocument.activeLayout.documentToViewX(new cool.SimplePoint(this.x1, this.y1)) : this.pX1; }
-	public get v1Y(): number { return app.activeDocument.activeLayout ? app.activeDocument.activeLayout.documentToViewY(new cool.SimplePoint(this.x1, this.y1)) : this.pY1; }
-	public get v2X(): number { return app.activeDocument.activeLayout ? app.activeDocument.activeLayout.documentToViewX(new cool.SimplePoint(this.x2, this.y1)) : this.pX2; }
-	public get v2Y(): number { return app.activeDocument.activeLayout ? app.activeDocument.activeLayout.documentToViewY(new cool.SimplePoint(this.x2, this.y1)) : this.pY1; }
-	public get v3X(): number { return app.activeDocument.activeLayout ? app.activeDocument.activeLayout.documentToViewX(new cool.SimplePoint(this.x1, this.y2)) : this.pX1; }
-	public get v3Y(): number { return app.activeDocument.activeLayout ? app.activeDocument.activeLayout.documentToViewY(new cool.SimplePoint(this.x1, this.y2)) : this.pY2; }
-	public get v4X(): number { return app.activeDocument.activeLayout ? app.activeDocument.activeLayout.documentToViewX(new cool.SimplePoint(this.x2, this.y2)) : this.pX2; }
-	public get v4Y(): number { return app.activeDocument.activeLayout ? app.activeDocument.activeLayout.documentToViewY(new cool.SimplePoint(this.x2, this.y2)) : this.pY2; }
+	public get v1X(): number {
+		Util.ensureValue(app.activeDocument);
+		return app.activeDocument.activeLayout ? app.activeDocument.activeLayout.documentToViewX(new cool.SimplePoint(this.x1, this.y1)) : this.pX1;
+	}
+	public get v1Y(): number {
+		Util.ensureValue(app.activeDocument);
+		return app.activeDocument.activeLayout ? app.activeDocument.activeLayout.documentToViewY(new cool.SimplePoint(this.x1, this.y1)) : this.pY1;
+	}
+	public get v2X(): number {
+		Util.ensureValue(app.activeDocument);
+		return app.activeDocument.activeLayout ? app.activeDocument.activeLayout.documentToViewX(new cool.SimplePoint(this.x2, this.y1)) : this.pX2;
+	}
+	public get v2Y(): number {
+		Util.ensureValue(app.activeDocument);
+		return app.activeDocument.activeLayout ? app.activeDocument.activeLayout.documentToViewY(new cool.SimplePoint(this.x2, this.y1)) : this.pY1;
+	}
+	public get v3X(): number {
+		Util.ensureValue(app.activeDocument);
+		return app.activeDocument.activeLayout ? app.activeDocument.activeLayout.documentToViewX(new cool.SimplePoint(this.x1, this.y2)) : this.pX1;
+	}
+	public get v3Y(): number {
+		Util.ensureValue(app.activeDocument);
+		return app.activeDocument.activeLayout ? app.activeDocument.activeLayout.documentToViewY(new cool.SimplePoint(this.x1, this.y2)) : this.pY2;
+	}
+	public get v4X(): number {
+		Util.ensureValue(app.activeDocument);
+		return app.activeDocument.activeLayout ? app.activeDocument.activeLayout.documentToViewX(new cool.SimplePoint(this.x2, this.y2)) : this.pX2;
+	}
+	public get v4Y(): number {
+		Util.ensureValue(app.activeDocument);
+		return app.activeDocument.activeLayout ? app.activeDocument.activeLayout.documentToViewY(new cool.SimplePoint(this.x2, this.y2)) : this.pY2;
+	}
 }
 
 /*

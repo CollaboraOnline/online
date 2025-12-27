@@ -49,6 +49,7 @@ class InvalidationRectangleSection extends CanvasSectionObject {
 		this.context.strokeStyle = 'red';
 
 		const anchor: number[] = this.containerObject.getDocumentAnchor();
+		Util.ensureValue(app.activeDocument);
 		const xDiff =
 			anchor[0] - app.activeDocument.activeLayout.viewedRectangle.pX1;
 		const yDiff =
