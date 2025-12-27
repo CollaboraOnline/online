@@ -9,6 +9,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+#include <Poco/Exception.h>
 #include <config.h>
 #include "bridge.hpp"
 #include "COOLWSD.hpp"
@@ -667,6 +668,9 @@ QVariant Bridge::cool(const QString& messageStr)
     constexpr std::string_view NEWDOCTYPE = "newdoc type=";
     constexpr std::string_view OPENDOC = "opendoc file=";
     constexpr std::string_view FULLSCREENPRESENTATION = "FULLSCREENPRESENTATION ";
+    constexpr std::string_view UPLOADFILE = "UPLOADFILE ";
+    constexpr std::string_view GETFILE = "GETFILE ";
+    constexpr std::string_view SYNCSETTINGS = "SYNCSETTINGS";
 
     const std::string message = messageStr.toStdString();
     LOG_TRC_NOFILE("From JS: cool: " << message);
@@ -847,6 +851,108 @@ QVariant Bridge::cool(const QString& messageStr)
                 saveDocument(savePath);
             }
         }
+    }
+    else if (message.starts_with(UPLOADFILE))
+    {
+        const std::string payload = message.substr(UPLOADFILE.size());
+
+        try
+        {
+            Poco::JSON::Parser parser;
+            auto obj = parser.parse(payload).extract<Poco::JSON::Object::Ptr>();
+
+            const std::string fileName = obj->getValue<std::string>("fileName");
+            const std::string filePath = obj->getValue<std::string>("filePath");
+            const std::string content = obj->getValue<std::string>("content");
+
+            Poco::Path base =
+                Poco::Path(Poco::Environment::get("XDG_CONFIG_HOME",
+                                                  Poco::Environment::get("HOME") + "/.config"))
+                    .append("collaboraoffice");
+
+            Poco::Path target = base;
+            target.append(filePath).append(fileName);
+
+            Poco::File(target.parent()).createDirectories();
+
+            std::ofstream out(target.toString(), std::ios::trunc);
+            out << content;
+        }
+        catch (const Poco::Exception& ex)
+        {
+            LOG_ERR("UPLOADFILE failed: " << ex.displayText());
+        }
+
+        return {};
+    }
+    else if (message.starts_with(GETFILE))
+    {
+        const std::string relPath = message.substr(GETFILE.size());
+
+        try
+        {
+            Poco::Path base =
+                Poco::Path(Poco::Environment::get("XDG_CONFIG_HOME",
+                                                  Poco::Environment::get("HOME") + "/.config"))
+                    .append("collaboraoffice");
+
+            Poco::Path target = base;
+            target.append(relPath);
+
+            std::ifstream in(target.toString(), std::ios::binary);
+            std::ostringstream ss;
+            ss << in.rdbuf();
+
+            QVariantMap result;
+            result["fileName"] = QString::fromStdString(target.getFileName());
+            result["mimeType"] = "text/plain";
+            result["content"] = QString::fromStdString(ss.str());
+
+            return result;
+        }
+        catch (const Poco::Exception& ex)
+        {
+            LOG_ERR("GETFILE failed: " << ex.displayText());
+            return {};
+        }
+    }
+    else if (message.starts_with(SYNCSETTINGS))
+    {
+        try
+        {
+            Poco::Path base =
+                Poco::Path(Poco::Environment::get("XDG_CONFIG_HOME",
+                                                  Poco::Environment::get("HOME") + "/.config"))
+                    .append("collaboraoffice");
+
+            const Poco::Path browserSettingPath =
+                Poco::Path(base).append("settings/userconfig/browsersetting/browsersetting.json");
+
+            const Poco::Path viewSettingPath =
+                Poco::Path(base).append("settings/userconfig/viewsetting/viewsetting.json");
+
+            auto sendFile = [&](const Poco::Path& path, const std::string& prefix) {
+                if (!Poco::File(path).exists())
+                    return;
+
+                std::ifstream in(path.toString(), std::ios::binary);
+                std::ostringstream ss;
+                ss << in.rdbuf();
+
+                const std::string payload = prefix + ": " + ss.str();
+
+                send2JS(std::vector<char>(payload.begin(), payload.end()));
+            };
+
+            sendFile(viewSettingPath, "viewsetting");
+            sendFile(browserSettingPath, "browsersetting");
+        }
+        catch (const Poco::Exception& ex)
+        {
+            LOG_ERR("SYNCSETTINGS failed: " << ex.displayText());
+        }
+
+        return {};
     }
     else if (message == "BYE")
     {

@@ -29,7 +29,7 @@ window.L.Map.Settings = window.L.Handler.extend({
 
 	_getLocalSettingsUrl: function (): string {
 		const settingsLocation: string = app.LOUtil.getURL(
-			'/admin/adminIntegratorSettings.html',
+			'adminIntegratorSettings.html',
 		);
 		return settingsLocation;
 	},

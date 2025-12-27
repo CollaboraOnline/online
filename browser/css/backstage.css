@@ -177,6 +177,7 @@
 	margin-inline-end: 20px;
 }
 
+#backstage-options.backstage-sidebar-item,
 #backstage-about.backstage-sidebar-item {
 	justify-content: center;
 	margin-top: 0 !important;

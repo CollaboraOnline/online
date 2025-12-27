@@ -291,7 +291,7 @@ class SettingIframe {
 		window.enableAccessibility = element.dataset.enableAccessibility === 'true';
 		window.wopiSettingBaseUrl = element.dataset.wopiSettingBaseUrl;
 		window.iframeType = element.dataset.iframeType;
-		window.cssVars = element.dataset.cssVars;
+		// window.cssVars = element.dataset.cssVars;
 		if (window.cssVars) {
 			window.cssVars = atob(window.cssVars);
 			const sheet = new CSSStyleSheet();
@@ -429,6 +429,18 @@ class SettingIframe {
 		formData.append('type', this.getConfigType());
 
 		try {
+			let data: ConfigData = {
+				kind: 'user',
+				autotext: null,
+				wordbook: null,
+				browsersetting: null,
+				viewsetting: null,
+				xcu: null,
+			};
+			if ((window.parent as any).ThisIsAMobileApp) {
+				this.populateSharedConfigUI(data);
+				return;
+			}
 			const response: Response = await fetch(
 				this.getAPIEndpoints().fetchSharedConfig,
 				{
@@ -450,7 +462,7 @@ class SettingIframe {
 				);
 			}
 
-			const data: ConfigData = await response.json();
+			data = await response.json();
 			await this.populateSharedConfigUI(data);
 			console.debug('Shared config data: ', data);
 		} catch (error: unknown) {
@@ -1161,7 +1173,10 @@ class SettingIframe {
 		optionDiv.className = 'toggle-option';
 
 		const image = document.createElement('img');
-		image.src = `${window.serviceRoot}/browser/${window.versionHash}/admin/images/${imageSrc}`;
+		let src = `${window.serviceRoot}/browser/${window.versionHash}/admin/images/${imageSrc}`;
+		if ((window.parent as any).ThisIsAMobileApp)
+			src = `admin/images/${imageSrc}`;
+		image.src = src;
 		image.alt = imageAlt;
 		image.className = `toggle-image ${isSelected ? 'selected' : ''}`;
 		optionDiv.appendChild(image);
@@ -1177,6 +1192,19 @@ class SettingIframe {
 	}
 
 	private async uploadFile(filePath: string, file: File): Promise<void> {
+		if ((window.parent as any).ThisIsAMobileApp) {
+			const text = await file.text();
+			(window.parent as any).postMobileMessage(
+				'UPLOADFILE ' +
+					JSON.stringify({
+						filePath,
+						fileName: file.name,
+						mimeType: file.type,
+						content: text,
+					}),
+			);
+			return;
+		}
 		const formData = new FormData();
 		formData.append('file', file);
 		formData.append('filePath', filePath);
@@ -1496,9 +1524,19 @@ class SettingIframe {
 		}
 
 		if (data.kind === 'user') {
-			if (data.viewsetting && data.viewsetting.length > 0) {
-				const fileId = data.viewsetting[0].uri;
-				const fetchContent = await this.fetchSettingFile(fileId);
+			if (
+				(window.parent as any).ThisIsAMobileApp ||
+				(data.viewsetting && data.viewsetting.length > 0)
+			) {
+				const fetchContent = (window.parent as any).ThisIsAMobileApp
+					? (
+							await (window.parent as any).postMobileMessage(
+								'GETFILE ' +
+									this.PATH.viewSettingsUpload() +
+									'viewsetting.json',
+							)
+						).content
+					: await this.fetchSettingFile(data.viewsetting![0].uri);
 				if (fetchContent) {
 					const loadedSettings = JSON.parse(fetchContent);
 					// Merge with default values to ensure all fields are present
@@ -1508,6 +1546,9 @@ class SettingIframe {
 						loadedSettings,
 					);
 					this.generateViewSettingUI(mergedSettings);
+				} else {
+					const defaultViewSetting = this.getDefaultViewSettings();
+					this.generateViewSettingUI(defaultViewSetting);
 				}
 			} else {
 				const defaultViewSetting = this.getDefaultViewSettings();
@@ -1515,9 +1556,19 @@ class SettingIframe {
 			}
 
 			// browser settings
-			if (data.browsersetting && data.browsersetting.length > 0) {
-				const fileId = data.browsersetting[0].uri;
-				const browserSettingContent = await this.fetchSettingFile(fileId);
+			if (
+				(window.parent as any).ThisIsAMobileApp ||
+				(data.browsersetting && data.browsersetting.length > 0)
+			) {
+				const browserSettingContent = (window.parent as any).ThisIsAMobileApp
+					? (
+							await (window.parent as any).postMobileMessage(
+								'GETFILE ' +
+									this.PATH.browserSettingsUpload() +
+									'browsersetting.json',
+							)
+						).content
+					: await this.fetchSettingFile(data.browsersetting![0].uri);
 				this.browserSettingOptions = browserSettingContent
 					? this.mergeWithDefault(
 							defaultBrowserSetting,
@@ -1532,11 +1583,19 @@ class SettingIframe {
 
 		const settingsContainer = this._allConfigSection;
 		if (!settingsContainer) return;
-		if (data.xcu && data.xcu.length > 0) {
-			const fileId = data.xcu[0].uri;
-			const xcuFileContent = await this.fetchSettingFile(fileId);
+		if (
+			(window.parent as any).ThisIsAMobileApp ||
+			(data.xcu && data.xcu.length > 0)
+		) {
+			const xcuFileContent = (window.parent as any).ThisIsAMobileApp
+				? (
+						await (window.parent as any).postMobileMessage(
+							'GETFILE ' + this.PATH.XcuUpload() + 'documentView.xcu',
+						)
+					).content
+				: await this.fetchSettingFile(data.xcu![0].uri);
 			this.xcuEditor = new (window as any).Xcu(
-				this.getFilename(fileId, false),
+				this.getFilename(this.PATH.XcuUpload(), false),
 				xcuFileContent,
 			);
 
