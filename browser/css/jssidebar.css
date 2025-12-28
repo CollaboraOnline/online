@@ -828,6 +828,7 @@ span.jsdialog.sidebar.ui-treeview-notexpandable {
 	border-bottom-width: 2px !important;
 	background-color: transparent !important;
 	border-radius: 0 !important;
+	margin: 0 5px;
 }
 
 #TemplatePanel .sidebar .unotoolbutton:hover,
@@ -858,11 +859,6 @@ span.jsdialog.sidebar.ui-treeview-notexpandable {
 #ElementsDeck #elements {
 	display: inline-flex;
 	flex-wrap: wrap;
-}
-
-/* Sidebar - Style List */
-#StyleListDeck #left .sidebar.unotoolbutton {
-	margin: 0 5px;
 }
 
 /* Writer - Table - Sort */
