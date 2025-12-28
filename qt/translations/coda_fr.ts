@@ -6,23 +6,23 @@
     <message>
         <location filename="../coda-qt.cpp" line="289"/>
         <source>Print Document</source>
-        <translation type="unfinished"></translation>
+        <translation>Imprimer le document</translation>
     </message>
     <message>
         <location filename="../coda-qt.cpp" line="297"/>
         <source>Select Printer:</source>
-        <translation type="unfinished"></translation>
+        <translation>Choisir une imprimante&#xa0;:</translation>
     </message>
     <message>
         <location filename="../coda-qt.cpp" line="306"/>
         <location filename="../coda-qt.cpp" line="379"/>
         <source>Default Printer</source>
-        <translation type="unfinished"></translation>
+        <translation>Imprimante par défaut</translation>
     </message>
     <message>
         <location filename="../coda-qt.cpp" line="311"/>
         <source>Print to File</source>
-        <translation type="unfinished"></translation>
+        <translation>Imprimer dans un fichier</translation>
     </message>
     <message>
         <location filename="../coda-qt.cpp" line="315"/>
@@ -37,17 +37,17 @@
     <message>
         <location filename="../coda-qt.cpp" line="329"/>
         <source>PDF Files (*.pdf);;All Files (*)</source>
-        <translation type="unfinished"></translation>
+        <translation>Fichiers PDF (*.pdf);;Tous les fichiers (*)</translation>
     </message>
     <message>
         <location filename="../coda-qt.cpp" line="345"/>
         <source>Print</source>
-        <translation type="unfinished"></translation>
+        <translation>Imprimer</translation>
     </message>
     <message>
         <location filename="../coda-qt.cpp" line="346"/>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Annuler</translation>
     </message>
     <message>
         <location filename="../coda-qt.cpp" line="370"/>
@@ -62,17 +62,17 @@
     <message>
         <location filename="../coda-qt.cpp" line="415"/>
         <source>Print Error</source>
-        <translation type="unfinished"></translation>
+        <translation>Erreur d&apos;impression</translation>
     </message>
     <message>
         <location filename="../coda-qt.cpp" line="416"/>
         <source>Failed to print document. Please check your printer settings.</source>
-        <translation type="unfinished"></translation>
+        <translation>Impression du document échouée. Veuillez vérifier les paramètres de votre imprimante.</translation>
     </message>
     <message>
         <location filename="../coda-qt.cpp" line="575"/>
         <source>Text Documents (*.odt);;All Files (*)</source>
-        <translation type="unfinished"></translation>
+        <translation>Documents texte (*.odt);;Tous les fichiers (*)</translation>
     </message>
     <message>
         <location filename="../coda-qt.cpp" line="577"/>
@@ -82,13 +82,13 @@
     <message>
         <location filename="../coda-qt.cpp" line="579"/>
         <source>Presentations (*.odp);;All Files (*)</source>
-        <translation type="unfinished"></translation>
+        <translation>Présentations (*.odp);;Tous les fichiers (*)</translation>
     </message>
     <message>
         <location filename="../coda-qt.cpp" line="581"/>
         <location filename="../coda-qt.cpp" line="1019"/>
         <source>All Files (*)</source>
-        <translation type="unfinished"></translation>
+        <translation>Tous les fichiers (*)</translation>
     </message>
     <message>
         <location filename="../coda-qt.cpp" line="585"/>
