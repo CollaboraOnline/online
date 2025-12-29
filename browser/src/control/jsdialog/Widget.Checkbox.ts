@@ -52,7 +52,7 @@ function _createCheckboxLabel(
 		parentContainer,
 	);
 	label.id = data.id + '-label';
-	label.textContent = builder._cleanText(data.text);
+	label.textContent = builder._cleanText(data.aria && data.aria.label ? data.aria.label : data.text);
 	label.htmlFor = data.id + '-input';
 	return label;
 }
