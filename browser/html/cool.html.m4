@@ -300,6 +300,9 @@ m4_ifelse(MOBILEAPP, [true],
       data-geolocation-setup = "%GEOLOCATION_SETUP%"
       data-canvas-slideshow-enabled = "%CANVAS_SLIDESHOW_ENABLED%"
       data-wopi-setting-base-url = "%WOPI_SETTING_BASE_URL%"
+      data-wopi-host-id = "%WOPI_HOST_ID%"
+      data-vendor = VENDOR
+      data-copyright-year = _YEAR_
       />
     ])
 
