@@ -20,6 +20,21 @@ declare var brandProductName: any;
 declare var brandProductURL: any;
 declare var sanitizeUrl: any;
 
+interface AboutDialogElements {
+	container: HTMLElement;
+	productName: HTMLElement;
+	productString: HTMLElement;
+	coolwsdVersion: HTMLElement;
+	lokitVersion: HTMLElement;
+	servedBy: HTMLElement;
+	slowProxy: HTMLElement;
+	jsDialog: HTMLElement;
+	routeToken: HTMLElement;
+	timeZone: HTMLElement;
+	wopiHostId: HTMLElement;
+	copyright: HTMLElement;
+}
+
 class AboutDialog {
 	map: any;
 
@@ -53,55 +68,61 @@ class AboutDialog {
 		if (wopiHostId) wopiHostId.style.display = 'none';
 	}
 
-	public show() {
-		const windowAny = window as any;
-		// Just as a test to exercise the Async Trace Event functionality, uncomment this
-		// line and the asyncTraceEvent.finish() below.
-		// var asyncTraceEvent = app.socket.createAsyncTraceEvent('cool-showLOAboutDialog');
+	private static appendSpanAndLink(
+		target: HTMLElement,
+		labelText: string,
+		linkHref: string,
+		linkText: string,
+		extraText?: string,
+		spanId?: string,
+	): void {
+		const span = document.createElement('span');
+		if (spanId) {
+			span.id = spanId;
+		}
 
-		const aboutDialogId = 'about-dialog';
-		// Move the div sitting in 'body' as content and make it visible
-		const content: HTMLElement = document
-			.getElementById(aboutDialogId)
-			.cloneNode(true) as HTMLElement;
-		content.style.display = 'block';
+		span.appendChild(document.createTextNode(labelText));
 
-		/*
-			Now we copied the about dialog content which was already in the document, hidden.
-			This copied content also includes the IDs. So we have now duplicate IDs for elements, which is contrary to HTML rules.
-			Let's modify the IDs of such elements and add "-cloned" at the end.
-		*/
-		this.adjustIDs(content);
-		this.hideElementsHiddenByDefault(content); // Now we can safely hide the elements that we want hidden by default.
+		const a = document.createElement('a');
+		a.href = linkHref;
+		a.target = '_blank';
+		a.textContent = linkText;
 
-		if (content.querySelector('#js-dialog')) {
-			(content.querySelector('#js-dialog') as HTMLAnchorElement).onclick =
-				function () {
-					app.socket.sendMessage('uno .uno:WidgetTestDialog');
-					app.map.uiManager.closeModal('modal-dialog-about-dialog-box', false);
-				};
+		span.appendChild(a);
+		if (extraText) {
+			span.appendChild(document.createTextNode(`\xA0${extraText}`));
+		}
+
+		target.appendChild(span);
+	}
+
+	// This method can be used in the future to populate the about dialog content
+	private static populateAboutDialog(elements: AboutDialogElements): void {
+		const info = window.app.serverInfo;
+
+		if (!info) {
+			app.console.error('AboutDialog: serverInfo is not available');
+			return;
 		}
 
 		// fill product-name and product-string
 		let productName;
-		if (windowAny.ThisIsAMobileApp) {
-			productName = windowAny.MobileAppName;
+		if (window.ThisIsAMobileApp) {
+			productName = window.MobileAppName;
 		} else {
 			productName =
 				typeof brandProductName === 'string' && brandProductName.length > 0
 					? brandProductName
 					: 'Collabora Online Development Edition (unbranded)';
 		}
-		var productURL =
+
+		const productURL =
 			typeof brandProductURL === 'string' && brandProductURL.length > 0
 				? brandProductURL
 				: 'https://collaboraonline.github.io/';
 
-		const productNameElement = content.querySelector(
-			'#product-name',
-		) as HTMLElement;
-		productNameElement.innerText = productName;
-		content.classList.add(
+		elements.productName.innerText = productName;
+		elements.container.classList.add(
 			'product-' +
 				productName
 					.split(/[ ()]+/)
@@ -109,9 +130,9 @@ class AboutDialog {
 					.toLowerCase(),
 		);
 
-		var productString = _('This version of {productname} is powered by');
-		var productNameWithURL;
-		if (!windowAny.ThisIsAMobileApp)
+		const productStringText = _('This version of {productname} is powered by');
+		let productNameWithURL;
+		if (!window.ThisIsAMobileApp)
 			productNameWithURL =
 				'<a href="' +
 				sanitizeUrl(productURL) +
@@ -120,57 +141,105 @@ class AboutDialog {
 				'</a>';
 		else productNameWithURL = productName;
 
-		const productStringElement = content.querySelector(
-			'#product-string',
-		) as HTMLElement;
-		if (productStringElement)
-			productStringElement.innerText = productString.replace(
-				'{productname}',
-				productNameWithURL,
-			);
-
-		const links = content.querySelectorAll<HTMLAnchorElement>(
-			'#coolwsd-version a, #lokit-version a, #lokit-extra a',
+		elements.productString.innerText = productStringText.replace(
+			'{productname}',
+			productNameWithURL,
 		);
 
-		for (let i = 0; i < links.length; i++) {
-			const link = links[i];
-			link.addEventListener('click', (event: MouseEvent) => {
-				event.preventDefault();
-				window.open(link.href, '_blank');
+		// COOLWSD version
+		elements.coolwsdVersion.textContent = info.coolwsdVersion;
+		this.appendSpanAndLink(
+			elements.coolwsdVersion,
+			' git hash:\xA0',
+			`https://github.com/CollaboraOnline/online/commits/${info.coolwsdHash}`,
+			info.coolwsdHash,
+			info.wsdOptions,
+		);
+
+		// LOKit version
+		const lokitVersionText = `${info.lokitVersionName} ${info.lokitVersionNumber}${info.lokitVersionSuffix}`;
+		elements.lokitVersion.textContent = lokitVersionText;
+		this.appendSpanAndLink(
+			elements.lokitVersion,
+			' git hash:\xA0',
+			`https://gerrit.libreoffice.org/core/+log/${info.lokitHash}`,
+			info.lokitHash.substring(0, 10),
+		);
+
+		// Served By and Server ID
+		const label = document.createElement('span');
+		label.id = 'served-by-label';
+		label.textContent = _('Served by:\xA0');
+		elements.servedBy.appendChild(label);
+
+		// OS Info
+		const os = document.createElement('span');
+		os.textContent = info.osInfo;
+		elements.servedBy.appendChild(os);
+		elements.servedBy.appendChild(document.createElement('wbr'));
+		elements.servedBy.appendChild(document.createTextNode('\xA0'));
+		this.appendSpanAndLink(
+			elements.servedBy,
+			'',
+			window.makeHttpUrl('/hosting/discovery'),
+			info.serverId,
+			'',
+			'coolwsd-id',
+		);
+
+		// JSDialogs link for debug mode
+		if (window.enableDebug) {
+			const label = document.createTextNode('JSDialogs:\xA0');
+			const link = document.createElement('a');
+			link.href = '#';
+			link.textContent = _(`View widgets`);
+
+			link.addEventListener('click', (e: MouseEvent) => {
+				e.preventDefault();
+				app.socket.sendMessage('uno .uno:WidgetTestDialog');
+				app.map.uiManager.closeModal('modal-dialog-about-dialog-box', false);
 			});
+
+			elements.jsDialog.appendChild(label);
+			elements.jsDialog.appendChild(link);
 		}
 
-		const licenseInformationElement = content.querySelector(
-			'#license-information',
-		) as HTMLElement;
-		if (licenseInformationElement) {
-			const a = document.createElement('a');
-			a.href = 'javascript:void(0)';
-			a.textContent = _UNO('.uno:ShowLicense');
-			a.addEventListener('click', () => window.postMobileMessage('LICENSE'));
-			licenseInformationElement.appendChild(a);
+		// WOPI Host ID
+		elements.wopiHostId.textContent = window.wopiHostId;
+
+		// Copyright and vendor
+		const span = document.createElement('span');
+		span.setAttribute('dir', 'ltr');
+		span.textContent = _(
+			`Copyright © ${window.copyrightYear}, ${window.vendor}.`,
+		);
+		elements.copyright.appendChild(span);
+
+		if (window.socketProxy) {
+			elements.slowProxy.innerText = _('"Slow Proxy"');
 		}
 
-		const slowProxyElement = content.querySelector(
-			'#slow-proxy',
-		) as HTMLElement;
-		if (windowAny.socketProxy) slowProxyElement.innerText = _('"Slow Proxy"');
-
-		if (windowAny.indirectSocket) {
-			const routeTokenElement = content.querySelector(
-				'#routeToken',
-			) as HTMLElement;
-			routeTokenElement.innerText = 'RouteToken: ' + windowAny.routeToken;
-			if (windowAny.geolocationSetup) {
-				const timezoneElement = content.querySelector(
-					'#timeZone',
-				) as HTMLElement;
-				timezoneElement.innerText =
+		if (window.indirectSocket) {
+			elements.routeToken.innerText = 'RouteToken: ' + window.routeToken;
+			if (window.geolocationSetup) {
+				elements.timeZone.innerText =
 					_('Time zone:') + ' ' + app.socket.WSDServer.TimeZone;
 			}
 		}
+	}
 
+	public show() {
+		const aboutDialogId = 'about-dialog';
+
+		const elements = AboutDialog.createAboutDialogContent();
+		elements.container.style.display = 'block';
+
+		AboutDialog.populateAboutDialog(elements);
+
+		this.adjustIDs(elements.container);
+		this.hideElementsHiddenByDefault(elements.container); // Now we can safely hide the elements that we want hidden by default.
+
+		const productName = elements.productName.textContent || '';
 		this.map.uiManager.showYesNoButton(
 			aboutDialogId + '-box',
 			productName,
@@ -182,7 +251,7 @@ class AboutDialog {
 			true,
 		);
 
-		this.showImpl(aboutDialogId, content);
+		this.showImpl(aboutDialogId, elements.container);
 	}
 
 	showImpl(aboutDialogId: string, content: HTMLElement) {
@@ -260,22 +329,31 @@ class AboutDialog {
 	}
 
 	private copyVersionInfoToClipboard() {
+		const info = window.app.serverInfo;
 		let text = '';
 
-		const addLine = (label: string, value?: string | null): void => {
-			if (value && value.trim() !== '') {
-				text += `${label}: ${value}\n`;
+		if (!info) {
+			app.console.error('ServerInfo is not available');
+			return;
+		}
+
+		const addLine = (label: string, value: string) => {
+			if (value.trim()) {
+				text += `${label}: ${value.trim()}\n`;
 			}
 		};
 
-		addLine(
-			'COOLWSD version',
-			this.getVersionInfoFromClass?.('coolwsd-version'),
-		);
-		addLine('LOKit version', this.getVersionInfoFromClass?.('lokit-version'));
-		addLine('Served by', document.getElementById('os-info')?.innerText);
-		addLine('Server ID', document.getElementById('coolwsd-id')?.innerText);
-		addLine('WOPI host', document.getElementById('wopi-host-id')?.innerText);
+		let coolwsdLine = info.coolwsdVersion;
+		coolwsdLine += ` (git hash: ${info.coolwsdHash} ${info.wsdOptions})`;
+		addLine('COOLWSD version', coolwsdLine);
+
+		const lokitVersionText = `${info.lokitVersionName} ${info.lokitVersionNumber}${info.lokitVersionSuffix}`;
+		let lokitLine = lokitVersionText;
+		lokitLine += ` (git hash: ${info.lokitHash.substring(0, 10)})`;
+		addLine('LOKit version', lokitLine);
+		addLine('Served by', info.osInfo);
+		addLine('Server ID', info.serverId);
+		addLine('WOPI host', window.wopiHostId);
 
 		text = text.replace(/\u00A0/g, ' ');
 
@@ -327,20 +405,150 @@ class AboutDialog {
 		}, timeout);
 	}
 
-	private getVersionInfoFromClass(className: string) {
-		const versionElement = document.getElementById(className);
-		let versionInfo = versionElement.innerText;
+	private static createElement(
+		tag: string,
+		options: {
+			id?: string;
+			className?: string;
+			attrs?: Record<string, string>;
+		} = {},
+	): HTMLElement {
+		const el = document.createElement(tag);
+		if (options.id) el.id = options.id;
+		if (options.className) el.className = options.className;
+		if (options.attrs) {
+			Object.entries(options.attrs).forEach(([k, v]) => el.setAttribute(k, v));
+		}
+		return el;
+	}
 
-		const gitHashIndex = versionInfo.indexOf('git hash');
-		if (gitHashIndex > -1) {
-			versionInfo =
-				versionInfo.slice(0, gitHashIndex) +
-				'(' +
-				versionInfo.slice(gitHashIndex) +
-				')';
+	// Shared static method to create the About dialog structure
+	public static createAboutDialogContent(): AboutDialogElements {
+		const aboutDialog = AboutDialog.createElement('div', {
+			id: 'about-dialog',
+		});
+		aboutDialog.tabIndex = 0;
+
+		const header = AboutDialog.createElement('div', {
+			id: 'about-dialog-header',
+		});
+		header.appendChild(
+			AboutDialog.createElement('fig', { id: 'integrator-logo' }),
+		);
+
+		const productName = AboutDialog.createElement('h1', { id: 'product-name' });
+		header.appendChild(productName);
+		aboutDialog.appendChild(header);
+		aboutDialog.appendChild(document.createElement('hr'));
+
+		const container = AboutDialog.createElement('div', {
+			id: 'about-dialog-container',
+		});
+
+		const logosDiv = AboutDialog.createElement('div', {
+			id: 'about-dialog-logos',
+		});
+		logosDiv.appendChild(
+			AboutDialog.createElement('fig', { id: 'product-logo' }),
+		);
+		logosDiv.appendChild(
+			AboutDialog.createElement('fig', { id: 'lokit-logo' }),
+		);
+		container.appendChild(logosDiv);
+
+		const infoContainer = AboutDialog.createElement('div', {
+			id: 'about-dialog-info-container',
+		});
+		const infoDiv = AboutDialog.createElement('div', {
+			id: 'about-dialog-info',
+		});
+
+		const coolwsdLabel = AboutDialog.createElement('div', {
+			id: 'coolwsd-version-label',
+		});
+		coolwsdLabel.textContent = _('COOLWSD version:');
+		infoDiv.appendChild(coolwsdLabel);
+
+		const coolwsdVersionContainer = AboutDialog.createElement('div', {
+			className: 'about-dialog-info-div',
+		});
+		const coolwsdVersion = AboutDialog.createElement('div', {
+			id: 'coolwsd-version',
+			attrs: { dir: 'ltr' },
+		});
+		coolwsdVersionContainer.appendChild(coolwsdVersion);
+		infoDiv.appendChild(coolwsdVersionContainer);
+
+		infoDiv.appendChild(
+			AboutDialog.createElement('div', { className: 'spacer' }),
+		);
+
+		const lokitLabel = AboutDialog.createElement('div', {
+			id: 'lokit-version-label',
+		});
+		lokitLabel.textContent = _('LOKit version:');
+		infoDiv.appendChild(lokitLabel);
+
+		const lokitVersionContainer = AboutDialog.createElement('div', {
+			className: 'about-dialog-info-div',
+		});
+		const lokitVersion = AboutDialog.createElement('div', {
+			id: 'lokit-version',
+			attrs: { dir: 'ltr' },
+		});
+		lokitVersionContainer.appendChild(lokitVersion);
+		infoDiv.appendChild(lokitVersionContainer);
+
+		const servedBy = AboutDialog.createElement('div', { id: 'served-by' });
+		if (!window.ThisIsAMobileApp) {
+			infoDiv.appendChild(servedBy);
 		}
 
-		return versionInfo;
+		const slowProxy = AboutDialog.createElement('div', { id: 'slow-proxy' });
+		infoDiv.appendChild(slowProxy);
+
+		const jsDialog = AboutDialog.createElement('div', { id: 'js-dialog' });
+		infoDiv.appendChild(jsDialog);
+
+		const routeToken = AboutDialog.createElement('div', { id: 'routeToken' });
+		infoDiv.appendChild(routeToken);
+
+		const timeZone = AboutDialog.createElement('div', { id: 'timeZone' });
+		infoDiv.appendChild(timeZone);
+
+		const wopiHostId = AboutDialog.createElement('div', { id: 'wopi-host-id' });
+		if (!window.ThisIsAMobileApp) {
+			infoDiv.appendChild(wopiHostId);
+		}
+
+		// Copyright
+		const copyright = AboutDialog.createElement('p', {
+			className: 'about-dialog-info-div',
+		});
+		infoDiv.appendChild(copyright);
+
+		const productString = AboutDialog.createElement('div', {
+			id: 'product-string',
+		});
+
+		infoContainer.appendChild(infoDiv);
+		container.appendChild(infoContainer);
+		aboutDialog.appendChild(container);
+
+		return {
+			container: aboutDialog,
+			productName,
+			productString,
+			coolwsdVersion,
+			lokitVersion,
+			servedBy,
+			slowProxy,
+			jsDialog,
+			routeToken,
+			timeZone,
+			wopiHostId,
+			copyright,
+		};
 	}
 }
 
