@@ -15,13 +15,13 @@ env:
       p+q8QzCG1Np9D1Kq9K0miYqHgZxgu4D/4Mwy04bh1UfyoUcDfB1tJmEtsKY/
       8Bl46ZfhxbTG39b6Y315GuU+49QdFMEXhSqx/G7on1xC4aYLXLc=
 before_script: >
-  test ${TRAVIS_BRANCH} = master ||
+  test ${TRAVIS_BRANCH} = main ||
   test ${TRAVIS_BRANCH} = stable &&
   test ${TRAVIS_PULL_REQUEST} = false &&
   gem install --no-document --version 0.8.9 faraday &&
   gem install --no-document travis-artifacts || true
 after_success: >
-  test ${TRAVIS_BRANCH} = master ||
+  test ${TRAVIS_BRANCH} = main ||
   test ${TRAVIS_BRANCH} = stable &&
   test ${TRAVIS_PULL_REQUEST} = false &&
   travis-artifacts upload --path dist --target-path build/${TRAVIS_BRANCH} &&
