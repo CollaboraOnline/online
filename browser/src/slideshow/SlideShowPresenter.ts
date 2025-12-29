@@ -1169,6 +1169,8 @@ class SlideShowPresenter {
 		this._enablePresenterConsole(true);
 		this._startingPresentation = true;
 		app.socket.sendMessage('getpresentationinfo');
+		// Attach the keydown event listener for present in window
+		window.addEventListener('keydown', this._onKeyDownHandler);
 	}
 
 	/// called as a response on getpresentationinfo
