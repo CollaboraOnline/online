@@ -1601,56 +1601,12 @@ class Socket {
 			}
 		}
 
-		const versionLabelElement = document.getElementById(
-			'coolwsd-version-label',
-		);
-		if (versionLabelElement) {
-			versionLabelElement.textContent = _('COOLWSD version:');
-		} else {
-			console.assert(false, '#coolwsd-version-label element does not exist!');
-		}
-		const h = this.WSDServer.Hash;
-		const versionContainer = document.getElementById('coolwsd-version');
-		if (!versionContainer) {
-			console.assert(
-				false,
-				'#coolwsd-version container element does not exist!',
-			);
-		}
-		if (
-			versionContainer &&
-			parseInt(h, 16).toString(16) === h.toLowerCase().replace(/^0+/, '')
-		) {
-			const anchor = document.createElement('a');
-			anchor.setAttribute(
-				'href',
-				'https://github.com/CollaboraOnline/online/commits/' + h,
-			);
-			anchor.setAttribute('target', '_blank');
-			anchor.textContent = h;
-
-			versionContainer.replaceChildren();
-
-			versionContainer.appendChild(
-				document.createTextNode(this.WSDServer.Version),
-			);
-
-			const span = document.createElement('span');
-			span.appendChild(document.createTextNode('git hash:\xA0'));
-			span.appendChild(anchor);
-			span.appendChild(document.createTextNode(this.WSDServer.Options));
-			versionContainer.appendChild(span);
-		} else if (versionContainer) {
-			versionContainer.textContent = this.WSDServer.Version;
-		}
-
-		if (!window.ThisIsAMobileApp) {
-			const idUri = window.makeHttpUrl('/hosting/discovery');
-			$('#served-by-label').text(_('Served by:'));
-			$('#coolwsd-id').html(
-				'<a target="_blank" href="' + idUri + '">' + this.WSDServer.Id + '</a>',
-			);
-		}
+		Object.assign(window.app.serverInfo, {
+			coolwsdVersion: this.WSDServer.Version || '',
+			coolwsdHash: this.WSDServer.Hash || '',
+			serverId: this.WSDServer.Id || '',
+			wsdOptions: this.WSDServer.Options || '',
+		});
 
 		// TODO: For now we expect perfect match in protocol versions
 		if (this.WSDServer.Protocol !== this.ProtocolVersionNumber) {
@@ -1662,62 +1618,23 @@ class Socket {
 
 	// 'lokitversion ' message.
 	private _onLokitVersionMsg(textMsg: string): void {
-		const versionLabelElement = document.getElementById('lokit-version-label');
-		const versionContainer = document.getElementById('lokit-version');
-
-		if (!versionLabelElement) {
-			console.assert(false, '#lokit-version-label element missing in DOM!');
-			return;
-		}
-		if (!versionContainer) {
-			console.assert(false, '#lokit-version element missing in DOM!');
-			return;
-		}
-
-		versionLabelElement.textContent = _('LOKit version:');
-
 		const lokitVersionObj = JSON.parse(textMsg.substring(textMsg.indexOf('{')));
-
-		versionContainer.replaceChildren();
-		versionContainer.appendChild(
-			document.createTextNode(
-				lokitVersionObj.ProductName +
-					'\xA0' +
-					lokitVersionObj.ProductVersion +
-					lokitVersionObj.ProductExtension,
-			),
-		);
-
-		const h = lokitVersionObj.BuildId.substring(0, 10);
-		if (parseInt(h, 16).toString(16) === h.toLowerCase().replace(/^0+/, '')) {
-			const anchor = document.createElement('a');
-			anchor.setAttribute('target', '_blank');
-			anchor.setAttribute(
-				'href',
-				'https://git.libreoffice.org/core/+log/' +
-					lokitVersionObj.BuildId +
-					'/',
-			);
-			anchor.textContent = 'git hash: ' + h;
-
-			const span = document.createElement('span');
-			span.appendChild(anchor);
-			versionContainer.appendChild(span);
-		} else {
-			const span = document.createElement('span');
-			span.textContent = 'git hash:\xA0' + h;
-			versionContainer.appendChild(span);
-		}
 
 		this.TunnelledDialogImageCacheSize =
 			lokitVersionObj.tunnelled_dialog_image_cache_size;
+
+		Object.assign(window.app.serverInfo, {
+			lokitVersionName: lokitVersionObj.ProductName,
+			lokitVersionNumber: lokitVersionObj.ProductVersion,
+			lokitVersionSuffix: lokitVersionObj.ProductExtension,
+			lokitHash: lokitVersionObj.BuildId,
+		});
 	}
 
 	// 'osinfo ' message.
 	private _onOsInfoMsg(textMsg: string) {
 		const osInfo = textMsg.replace('osinfo ', '');
-		const osInfoElement = document.getElementById('os-info');
-		if (osInfoElement) osInfoElement.innerText = osInfo;
+		window.app.serverInfo.osInfo = osInfo;
 	}
 
 	// 'clipboardkey:' message.
