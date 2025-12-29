@@ -269,6 +269,17 @@ window.app = {
 	events: null, // See app/DocEvents.ts for details.
 
 	showNavigator: false, // ShowNavigator class instance is assigned to this.
+	serverInfo: {
+		coolwsdVersion: '',
+		coolwsdHash: '',
+		lokitVersionName: '',
+		lokitVersionNumber: '',
+		lokitVersionSuffix: '',
+		lokitHash: '',
+		serverId: '',
+		osInfo: '',
+		wsdOptions: '',
+	},
 };
 
 var activateValidation = false;

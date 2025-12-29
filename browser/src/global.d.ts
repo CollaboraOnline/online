@@ -139,6 +139,18 @@ interface SockInterface {
 	binaryType: 'blob' | 'arraybuffer';
 }
 
+interface ServerInfo {
+	coolwsdVersion: string;
+	coolwsdHash: string;
+	lokitVersionName: string;
+	lokitVersionNumber: string;
+	lokitVersionSuffix: string;
+	lokitHash: string;
+	serverId: string;
+	osInfo: string;
+	wsdOptions: any;
+}
+
 interface ErrorMessages {
 	diskfull: string;
 	emptyhosturl: string;
@@ -263,6 +275,7 @@ interface Window {
 		serverAudit: any;
 		events: any;
 		showNavigator: boolean;
+		serverInfo: ServerInfo;
 	};
 	// coolParams defined in: js/global.js
 	coolParams: {
