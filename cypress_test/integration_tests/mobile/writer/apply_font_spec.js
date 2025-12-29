@@ -127,22 +127,25 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Apply font changes.', funct
 		cy.cGet('.unoSpacing').should('not.exist');
 	});
 
-	it('Apply style.', {retries : 0}, function() {
-		cy.cGet('#applystyle').click();
-		cy.cGet('body').contains('#fontstyletoolbox', 'Title').click();
-		writerHelper.selectAllTextOfDoc();
-		//cy.cGet('#copy-paste-container p font').should('have.attr', 'face', 'Liberation Sans, sans-serif');
-		//cy.cGet('#copy-paste-container p font font').should('have.attr', 'style', 'font-size: 28pt');
+	it('Apply style.', function() {
+		helper.setDummyClipboardForCopy();
 
-		// Close the mobile wizard before opening it again.
-		cy.cGet('#mobile_wizard').click();
+		cy.cGet('#applystyle').click();
+		cy.cGet('body').contains('#fontstyletoolbox .ui-combobox-text', 'Title').click();
+
+		writerHelper.selectAllTextOfDoc();
+		helper.copy();
+		cy.cGet('#copy-paste-container p font').should('have.attr', 'face', 'Liberation Sans, sans-serif');
+		cy.cGet('#copy-paste-container p font font').should('have.attr', 'style', 'font-size: 28pt');
 
 		// Clear formatting
 		mobileHelper.openMobileWizard();
 		cy.cGet('#applystyle').click();
-		cy.cGet('body').contains('#fontstyletoolbox', 'Clear formatting').click();
+		cy.cGet('body').contains('#fontstyletoolbox .ui-combobox-text', 'Clear formatting').click();
+
 		writerHelper.selectAllTextOfDoc();
-		//cy.cGet('#copy-paste-container p').should('have.attr', 'style', 'line-height: 100%; margin-bottom: 0in');
+		helper.copy();
+		cy.cGet('#copy-paste-container p font font').should('not.exist');
 	});
 
 	it.skip('New style and update style items are hidden.', function() {
