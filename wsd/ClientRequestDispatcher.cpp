@@ -1218,9 +1218,13 @@ ClientRequestDispatcher::MessageResult ClientRequestDispatcher::handleMessage(Po
 
         else if (requestDetails.isProxy() && requestDetails.equals(2, "ws"))
             servedSync = handleClientProxyRequest(request, requestDetails, message, disposition);
-        else if (requestDetails.equals(RequestDetails::Field::Type, "cool") &&
-                 requestDetails.equals(2, "ws") && requestDetails.isWebSocket())
+        else if (requestDetails.isWebSocket() &&
+                 requestDetails.equals(RequestDetails::Field::Type, "cool") &&
+                 (requestDetails.equals(1, "ws") || requestDetails.equals(2, "ws")))
+        {
+            // The new WebSocket URL has 'ws' as the second segment; support both old and new.
             servedSync = handleClientWsUpgrade(request, requestDetails, disposition, socket);
+        }
 
         else if (!requestDetails.isWebSocket() &&
                  (requestDetails.equals(RequestDetails::Field::Type, "cool") ||
