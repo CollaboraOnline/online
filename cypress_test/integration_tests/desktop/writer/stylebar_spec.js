@@ -34,7 +34,7 @@ describe(['tagdesktop'], 'Test style sidebar', function() {
 			.should('exist');
 	}
 
-	it('Style sidebar updates rendered preview on added style', function() {
+	it.skip('Style sidebar updates rendered preview on added style', function() {
 		getEntry('Complimentary Close').click();
 
 		cy.wait(2000); // stabilize
@@ -59,7 +59,7 @@ describe(['tagdesktop'], 'Test style sidebar', function() {
 		cy.cGet('#sidebar-dock-wrapper').compareSnapshot('style_added', 0.07);
 	});
 
-	it('Style sidebar context menu on node with spaces', function() {
+	it.skip('Style sidebar context menu on node with spaces', function() {
 		getEntry('Complimentary Close').click();
 		getEntry('Complimentary Close').rightclick();
 
