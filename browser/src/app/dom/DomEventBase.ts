@@ -24,7 +24,7 @@ class DomEvent {
 	public static on(
 		obj: any,
 		types: string | DomEventHandlerObject,
-		fn: DomEventHandler | any,
+		fn?: DomEventHandler | any,
 		context?: any,
 	): typeof DomEvent {
 		if (typeof types === 'object') {
@@ -45,7 +45,7 @@ class DomEvent {
 	public static off(
 		obj: any,
 		types: string | DomEventHandlerObject,
-		fn: DomEventHandler | any,
+		fn?: DomEventHandler | any,
 		context?: any,
 	): typeof DomEvent {
 		if (typeof types === 'object') {
@@ -170,13 +170,27 @@ class DomEvent {
 	}
 
 	public static stopPropagation(e: Event): typeof DomEvent {
-		console.assert(false, 'This function should not be called!');
-		return DomEvent;
+		if (e.stopPropagation) {
+			e.stopPropagation();
+		} else {
+			e.cancelBubble = true;
+		}
+		this._skipped(e);
+
+		return this;
 	}
 
 	public static disableMouseClickPropagation(el: any): typeof DomEvent {
-		console.assert(false, 'This function should not be called!');
-		return DomEvent;
+		const stop = window.touch.mouseOnly((e: Event | HammerInput) => {
+			this.stopPropagation(e as Event);
+		});
+
+		this.on(el, window.L.Draggable.START.join(' '), stop);
+
+		return this.on(el, {
+			click: window.touch.mouseOnly(window.L.DomEvent._fakeStop),
+			dblclick: stop,
+		});
 	}
 
 	public static disableScrollPropagation(el: any): typeof DomEvent {

@@ -8,29 +8,6 @@
 
 class DomEventDerived extends DomEvent {
 
-	static stopPropagation(e) {
-
-		if (e.stopPropagation) {
-			e.stopPropagation();
-		} else {
-			e.cancelBubble = true;
-		}
-		window.L.DomEvent._skipped(e);
-
-		return DomEventDerived;
-	}
-
-	static disableMouseClickPropagation(el) {
-		const stop = window.touch.mouseOnly(window.L.DomEvent.stopPropagation);
-
-		window.L.DomEvent.on(el, window.L.Draggable.START.join(' '), stop);
-
-		return window.L.DomEvent.on(el, {
-			click: window.touch.mouseOnly(window.L.DomEvent._fakeStop),
-			dblclick: stop
-		});
-	}
-
 	static disableScrollPropagation(el) {
 		return window.L.DomEvent.on(el, 'mousewheel MozMousePixelScroll', window.L.DomEvent.stopPropagation);
 	}
