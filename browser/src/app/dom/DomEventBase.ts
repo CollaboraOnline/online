@@ -13,4 +13,110 @@
  * window.L.DomEvent contains functions for working with DOM events.
  */
 
-class DomEvent {}
+type DomEventHandler = (e: Event) => void;
+interface DomEventHandlerObject {
+	[name: string]: DomEventHandler;
+}
+
+class DomEvent {
+	public static on(
+		obj: any,
+		types: string | DomEventHandlerObject,
+		fn: DomEventHandler | any,
+		context?: any,
+	): typeof DomEvent {
+		console.assert(false, 'This function should not be called!');
+		return DomEvent;
+	}
+
+	public static off(
+		obj: any,
+		types: string | DomEventHandlerObject,
+		fn: DomEventHandler | any,
+		context?: any,
+	): typeof DomEvent {
+		console.assert(false, 'This function should not be called!');
+		return DomEvent;
+	}
+
+	private static _on(
+		obj: any,
+		type: string,
+		fn: DomEventHandler,
+		context: any,
+	): typeof DomEvent {
+		console.assert(false, 'This function should not be called!');
+		return DomEvent;
+	}
+
+	private static _off(
+		obj: any,
+		type: string,
+		fn: DomEventHandler,
+		context: any,
+	): typeof DomEvent {
+		console.assert(false, 'This function should not be called!');
+		return DomEvent;
+	}
+
+	public static stopPropagation(e: Event): typeof DomEvent {
+		console.assert(false, 'This function should not be called!');
+		return DomEvent;
+	}
+
+	public static disableMouseClickPropagation(el: any): typeof DomEvent {
+		console.assert(false, 'This function should not be called!');
+		return DomEvent;
+	}
+
+	public static disableScrollPropagation(el: any): typeof DomEvent {
+		console.assert(false, 'This function should not be called!');
+		return DomEvent;
+	}
+
+	public static disableClickPropagation(el: any): typeof DomEvent {
+		console.assert(false, 'This function should not be called!');
+		return DomEvent;
+	}
+
+	public static preventDefault(e: Event): typeof DomEvent {
+		console.assert(false, 'This function should not be called!');
+		return DomEvent;
+	}
+
+	public static stop(e: Event): typeof DomEvent {
+		console.assert(false, 'This function should not be called!');
+		return DomEvent;
+	}
+
+	public static getMousePosition(
+		e: Event,
+		container?: HTMLElement,
+	): cool.Point {
+		console.assert(false, 'This function should not be called!');
+		return new cool.Point(0, 0);
+	}
+
+	public static getWheelDelta(e: Event): number {
+		console.assert(false, 'This function should not be called!');
+		return 0;
+	}
+
+	private static _fakeStop(e: Event): void {
+		console.assert(false, 'This function should not be called!');
+	}
+
+	private static _skipped(e: Event): boolean {
+		console.assert(false, 'This function should not be called!');
+		return false;
+	}
+
+	private static _checkMouse(el: any, e: Event): boolean {
+		console.assert(false, 'This function should not be called!');
+		return false;
+	}
+
+	private static _filterClick(e: Event, handler: DomEventHandler): void {
+		console.assert(false, 'This function should not be called!');
+	}
+}
