@@ -152,8 +152,7 @@ abstract class Ruler {
 			});
 		}
 
-		// Fire the 'rulerchanged' event
-		map.fire('rulerchanged');
+		if (showRuler) map.uiManager.showRuler();
 	}
 }
 
