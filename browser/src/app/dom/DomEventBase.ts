@@ -130,8 +130,43 @@ class DomEvent {
 		fn: DomEventHandler,
 		context: any,
 	): typeof DomEvent {
-		console.assert(false, 'This function should not be called!');
-		return DomEvent;
+		const id =
+				type +
+				app.util.stamp(fn as any) +
+				(context ? '_' + app.util.stamp(context) : ''),
+			handler = obj[eventsKey] && obj[eventsKey][id];
+
+		if (!handler) {
+			return this;
+		}
+
+		if (window.L.Browser.pointer && type.indexOf('touch') === 0) {
+			this.removePointerListener(obj, type, id);
+		} // Double tap listener is no more.
+		else if (type === 'trplclick' || type === 'qdrplclick') {
+			this.removeMultiClickListener(obj, id, type);
+		} else if ('removeEventListener' in obj) {
+			if (type === 'mousewheel') {
+				obj.removeEventListener('DOMMouseScroll', handler, false);
+				obj.removeEventListener(type, handler, false);
+			} else {
+				obj.removeEventListener(
+					type === 'mouseenter'
+						? 'mouseover'
+						: type === 'mouseleave'
+							? 'mouseout'
+							: type,
+					handler,
+					false,
+				);
+			}
+		} else if ('detachEvent' in obj) {
+			obj.detachEvent('on' + type, handler);
+		}
+
+		obj[eventsKey][id] = null;
+
+		return this;
 	}
 
 	public static stopPropagation(e: Event): typeof DomEvent {
@@ -275,6 +310,7 @@ class DomEvent {
 	public static removeMultiClickListener(
 		obj: any,
 		id: string,
+		type?: string,
 	): typeof DomEvent {
 		console.assert(false, 'This function should not be called!');
 		return this;

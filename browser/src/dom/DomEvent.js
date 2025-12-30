@@ -1,5 +1,5 @@
 /* -*- js-indent-level: 8 -*- */
-/* global app cool DomEvent eventsKey */
+/* global cool DomEvent */
 /*
  * window.L.DomEvent contains functions for working with DOM events.
  * Inspired by John Resig, Dean Edwards and YUI addEvent implementations.
@@ -7,43 +7,6 @@
 
 
 class DomEventDerived extends DomEvent {
-
-	static _off(obj, type, fn, context) {
-
-		const id = type + app.util.stamp(fn) + (context ? '_' + app.util.stamp(context) : ''),
-		    handler = obj[eventsKey] && obj[eventsKey][id];
-
-		if (!handler) { return DomEventDerived; }
-
-		if (window.L.Browser.pointer && type.indexOf('touch') === 0) {
-			this.removePointerListener(obj, type, id);
-
-		} else if ((type === 'dblclick') && this.removeDoubleTapListener) {
-			this.removeDoubleTapListener(obj, id);
-
-		} else if (type === 'trplclick' || type === 'qdrplclick') {
-			this.removeMultiClickListener(obj, id, type);
-
-		} else if ('removeEventListener' in obj) {
-
-			if (type === 'mousewheel') {
-				obj.removeEventListener('DOMMouseScroll', handler, false);
-				obj.removeEventListener(type, handler, false);
-
-			} else {
-				obj.removeEventListener(
-					type === 'mouseenter' ? 'mouseover' :
-						type === 'mouseleave' ? 'mouseout' : type, handler, false);
-			}
-
-		} else if ('detachEvent' in obj) {
-			obj.detachEvent('on' + type, handler);
-		}
-
-		obj[eventsKey][id] = null;
-
-		return DomEventDerived;
-	}
 
 	static stopPropagation(e) {
 
