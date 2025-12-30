@@ -1,67 +1,12 @@
 /* -*- js-indent-level: 8 -*- */
-/* global app cool DomEvent */
+/* global app cool DomEvent eventsKey */
 /*
  * window.L.DomEvent contains functions for working with DOM events.
  * Inspired by John Resig, Dean Edwards and YUI addEvent implementations.
  */
 
-const eventsKey = '_browser_events';
 
 class DomEventDerived extends DomEvent {
-
-	static _on(obj, type, fn, context) {
-		const id = type + app.util.stamp(fn) + (context ? '_' + app.util.stamp(context) : '');
-
-		if (obj[eventsKey] && obj[eventsKey][id]) { return DomEventDerived; }
-
-		let handler = function (e) {
-			return fn.call(context || obj, e || window.event);
-		};
-
-		const originalHandler = handler;
-
-		if (window.L.Browser.pointer && type.indexOf('touch') === 0) {
-			this.addPointerListener(obj, type, handler, id);
-
-		} else if ((type === 'dblclick') && this.addDoubleTapListener) {
-			this.addDoubleTapListener(obj, window.touch.touchOnly(handler), id);
-
-		} else if (type === 'trplclick' || type === 'qdrplclick') {
-			this.addMultiClickListener(obj, handler, id, type);
-
-		} else if ('addEventListener' in obj) {
-
-			if (type === 'mousewheel') {
-				obj.addEventListener('DOMMouseScroll', handler, false);
-				obj.addEventListener(type, handler, false);
-
-			} else if ((type === 'mouseenter') || (type === 'mouseleave')) {
-				handler = function (e) {
-					e = e || window.event;
-					if (window.L.DomEvent._checkMouse(obj, e)) {
-						originalHandler(e);
-					}
-				};
-				obj.addEventListener(type === 'mouseenter' ? 'mouseover' : 'mouseout', handler, false);
-
-			} else {
-				if (type === 'click' && window.L.Browser.android) {
-					handler = function (e) {
-						return window.L.DomEvent._filterClick(e, originalHandler);
-					};
-				}
-				obj.addEventListener(type, handler, false);
-			}
-
-		} else if ('attachEvent' in obj) {
-			obj.attachEvent('on' + type, handler);
-		}
-
-		obj[eventsKey] = obj[eventsKey] || {};
-		obj[eventsKey][id] = handler;
-
-		return DomEventDerived;
-	}
 
 	static _off(obj, type, fn, context) {
 
