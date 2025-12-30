@@ -1,5 +1,5 @@
 /* -*- js-indent-level: 8 -*- */
-/* global cool DomEvent */
+/* global DomEvent */
 /*
  * window.L.DomEvent contains functions for working with DOM events.
  * Inspired by John Resig, Dean Edwards and YUI addEvent implementations.
@@ -7,44 +7,6 @@
 
 
 class DomEventDerived extends DomEvent {
-
-	static getMousePosition(e, container) {
-		if (!container) {
-			if (e.clientX === undefined && e.touches !== undefined)
-				return new cool.Point(e.touches[0].clientX, e.touches[0].clientY);
-
-			return new cool.Point(e.clientX, e.clientY);
-		}
-
-		const rect = container.getBoundingClientRect(); // constant object
-		let left = rect.left;
-		let top = rect.top;
-
-		// iframe mouse coordinates are relative to the frame area
-		// `target`: body element of the iframe; `currentTarget`: content window of the iframe
-		if (e.currentTarget && e.currentTarget.frameElement
-			&& window.L.DomUtil.hasClass(e.currentTarget.frameElement, 'resize-detector')) {
-			left = top = 0;
-		}
-
-		// When called for a touchend event, at least in WebKit on iOS and Safari, the
-		// touches array will be of zero length. Probably it is a programming logic error to
-		// even call this function for a touchend event, as by definition no finger is
-		// touching the screen any longer then and thus there is no "mouse position". But
-		// let's just least guard against an unhandled exception for now.
-		if (e.clientX === undefined && e.touches !== undefined && e.touches.length > 0)
-			return new cool.Point(
-				e.touches[0].clientX - left - container.clientLeft,
-				e.touches[0].clientY - top - container.clientTop);
-		else if (e.clientX === undefined && e.changedTouches !== undefined && e.changedTouches.length > 0)
-			return new cool.Point(
-				e.changedTouches[0].clientX - left - container.clientLeft,
-				e.changedTouches[0].clientY - top - container.clientTop);
-
-		return new cool.Point(
-			e.clientX - left - container.clientLeft,
-			e.clientY - top - container.clientTop);
-	}
 
 	static getWheelDelta(e) {
 
