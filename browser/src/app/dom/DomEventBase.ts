@@ -18,6 +18,8 @@ interface DomEventHandlerObject {
 	[name: string]: DomEventHandler;
 }
 
+const eventsKey = '_browser_events';
+
 class DomEvent {
 	public static on(
 		obj: any,
@@ -68,8 +70,58 @@ class DomEvent {
 		fn: DomEventHandler,
 		context: any,
 	): typeof DomEvent {
-		console.assert(false, 'This function should not be called!');
-		return DomEvent;
+		const id =
+			type +
+			app.util.stamp(fn as any) +
+			(context ? '_' + app.util.stamp(context) : '');
+
+		if (obj[eventsKey] && obj[eventsKey][id]) {
+			return this;
+		}
+
+		let handler = function (e: Event) {
+			return fn.call(context || obj, e || window.event);
+		};
+
+		const originalHandler = handler;
+
+		if (window.L.Browser.pointer && type.indexOf('touch') === 0) {
+			this.addPointerListener(obj, type, handler, id);
+		} // double-tap listener is no more.
+		else if (type === 'trplclick' || type === 'qdrplclick') {
+			this.addMultiClickListener(obj, handler, id, type);
+		} else if ('addEventListener' in obj) {
+			if (type === 'mousewheel') {
+				obj.addEventListener('DOMMouseScroll', handler, false);
+				obj.addEventListener(type, handler, false);
+			} else if (type === 'mouseenter' || type === 'mouseleave') {
+				handler = (e: Event): void => {
+					e = e || window.event;
+					if (this._checkMouse(obj, e)) {
+						originalHandler(e);
+					}
+				};
+				obj.addEventListener(
+					type === 'mouseenter' ? 'mouseover' : 'mouseout',
+					handler,
+					false,
+				);
+			} else {
+				if (type === 'click' && window.L.Browser.android) {
+					handler = (e: Event): void => {
+						return this._filterClick(e, originalHandler);
+					};
+				}
+				obj.addEventListener(type, handler, false);
+			}
+		} else if ('attachEvent' in obj) {
+			obj.attachEvent('on' + type, handler);
+		}
+
+		obj[eventsKey] = obj[eventsKey] || {};
+		obj[eventsKey][id] = handler;
+
+		return this;
 	}
 
 	private static _off(
@@ -141,5 +193,90 @@ class DomEvent {
 
 	private static _filterClick(e: Event, handler: DomEventHandler): void {
 		console.assert(false, 'This function should not be called!');
+	}
+
+	// ----------------
+	// Pointer Handlers
+	// ----------------
+
+	public static addPointerListener(
+		obj: any,
+		type: string,
+		handler: DomEventHandler,
+		id: string,
+	): typeof DomEvent {
+		console.assert(false, 'This function should not be called!');
+		return this;
+	}
+
+	public static removePointerListener(
+		obj: any,
+		type: string,
+		id: string,
+	): typeof DomEvent {
+		console.assert(false, 'This function should not be called!');
+		return this;
+	}
+
+	private static _addPointerStart(
+		obj: any,
+		handler: DomEventHandler,
+		id: string,
+	): void {
+		console.assert(false, 'This function should not be called!');
+	}
+
+	private static _globalPointerDown(e: Event): void {
+		console.assert(false, 'This function should not be called!');
+	}
+
+	private static _globalPointerMove(e: Event): void {
+		console.assert(false, 'This function should not be called!');
+	}
+
+	private static _globalPointerUp(e: Event): void {
+		console.assert(false, 'This function should not be called!');
+	}
+
+	private static _handlePointer(e: Event, handler: DomEventHandler): void {
+		console.assert(false, 'This function should not be called!');
+	}
+
+	private static _addPointerMove(
+		obj: any,
+		handler: DomEventHandler,
+		id: string,
+	): void {
+		console.assert(false, 'This function should not be called!');
+	}
+
+	private static _addPointerEnd(
+		obj: any,
+		handler: DomEventHandler,
+		id: string,
+	): void {
+		console.assert(false, 'This function should not be called!');
+	}
+
+	// -------------------
+	// MultiClick Handlers
+	// -------------------
+
+	public static addMultiClickListener(
+		obj: any,
+		handler: DomEventHandler,
+		id: string,
+		type: string,
+	): typeof DomEvent {
+		console.assert(false, 'This function should not be called!');
+		return this;
+	}
+
+	public static removeMultiClickListener(
+		obj: any,
+		id: string,
+	): typeof DomEvent {
+		console.assert(false, 'This function should not be called!');
+		return this;
 	}
 }
