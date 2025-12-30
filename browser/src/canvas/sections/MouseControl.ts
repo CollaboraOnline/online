@@ -415,6 +415,8 @@ class MouseControl extends CanvasSectionObject {
 
 		if (!(<any>window).mode.isDesktop()) app.map.fire('closemobilewizard');
 
+		if (this.clickCount > 4) return;
+
 		// Right click is not supported. And click event doesn't have "buttons" property set. Safe to set it here to default.
 		let buttons = app.LOButtons.left;
 
@@ -431,22 +433,6 @@ class MouseControl extends CanvasSectionObject {
 
 		if (this.clickTimer) clearTimeout(this.clickTimer);
 		else {
-			// Old code always sends the first click, so do we.
-			this.postCoreMouseEvent(
-				'buttondown',
-				sendingPosition,
-				1,
-				buttons,
-				modifier,
-			);
-			this.postCoreMouseEvent(
-				'buttonup',
-				sendingPosition,
-				1,
-				buttons,
-				modifier,
-			);
-
 			// For future: Here, we are checking the window size to determine the view mode, we can also check the event type (touch/click).
 			app.map.focus(
 				(<any>window).mode.isDesktop()
@@ -456,18 +442,18 @@ class MouseControl extends CanvasSectionObject {
 		}
 
 		this.clickTimer = setTimeout(() => {
-			if (this.clickCount > 1) {
+			for (let i = 0; i < this.clickCount; i++) {
 				this.postCoreMouseEvent(
 					'buttondown',
 					sendingPosition,
-					this.clickCount,
+					i + 1,
 					buttons,
 					modifier,
 				);
 				this.postCoreMouseEvent(
 					'buttonup',
 					sendingPosition,
-					this.clickCount,
+					i + 1,
 					buttons,
 					modifier,
 				);
