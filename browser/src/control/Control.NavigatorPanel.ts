@@ -98,13 +98,13 @@ class NavigatorPanel extends SidebarBase {
 		}
 
 		// Create header section
-		var navHeader = window.L.DomUtil.create(
+		const navHeader = window.L.DomUtil.create(
 			'div',
 			'navigation-header',
 			navContainer,
 		);
 
-		var navTitle = window.L.DomUtil.create(
+		const navTitle = window.L.DomUtil.create(
 			'span',
 			'navigation-title',
 			navHeader,
