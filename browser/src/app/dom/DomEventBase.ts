@@ -46,8 +46,20 @@ class DomEvent {
 		fn: DomEventHandler | any,
 		context?: any,
 	): typeof DomEvent {
-		console.assert(false, 'This function should not be called!');
-		return DomEvent;
+		if (typeof types === 'object') {
+			for (const type in types) {
+				this._off(obj, type, types[type], fn);
+			}
+		} else {
+			const typeList = app.util.splitWords(types);
+			const len = typeList.length;
+
+			for (let i = 0; i < len; i++) {
+				this._off(obj, types[i], fn, context);
+			}
+		}
+
+		return this;
 	}
 
 	private static _on(
