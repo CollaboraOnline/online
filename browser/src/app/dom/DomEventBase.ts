@@ -181,36 +181,42 @@ class DomEvent {
 	}
 
 	public static disableMouseClickPropagation(el: any): typeof DomEvent {
-		const stop = window.touch.mouseOnly((e: Event | HammerInput) => {
-			this.stopPropagation(e as Event);
-		});
+		const stop = window.touch.mouseOnly(this.stopPropagation as any);
 
 		this.on(el, window.L.Draggable.START.join(' '), stop);
 
 		return this.on(el, {
-			click: window.touch.mouseOnly(window.L.DomEvent._fakeStop),
+			click: window.touch.mouseOnly(this._fakeStop as any),
 			dblclick: stop,
 		});
 	}
 
 	public static disableScrollPropagation(el: any): typeof DomEvent {
-		console.assert(false, 'This function should not be called!');
-		return DomEvent;
+		return this.on(el, 'mousewheel MozMousePixelScroll', this.stopPropagation);
 	}
 
 	public static disableClickPropagation(el: any): typeof DomEvent {
-		console.assert(false, 'This function should not be called!');
-		return DomEvent;
+		const stop = this.stopPropagation;
+
+		this.on(el, window.L.Draggable.START.join(' '), stop);
+
+		return window.L.DomEvent.on(el, {
+			click: this._fakeStop,
+			dblclick: stop,
+		});
 	}
 
 	public static preventDefault(e: Event): typeof DomEvent {
-		console.assert(false, 'This function should not be called!');
-		return DomEvent;
+		if (e.preventDefault) {
+			e.preventDefault();
+		} else {
+			e.returnValue = false;
+		}
+		return this;
 	}
 
 	public static stop(e: Event): typeof DomEvent {
-		console.assert(false, 'This function should not be called!');
-		return DomEvent;
+		return this.preventDefault(e).stopPropagation(e);
 	}
 
 	public static getMousePosition(
