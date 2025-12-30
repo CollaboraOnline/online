@@ -9,23 +9,6 @@ const eventsKey = '_browser_events';
 
 class DomEventDerived extends DomEvent {
 
-	static on(obj, types, fn, context) {
-
-		if (typeof types === 'object') {
-			for (let type in types) {
-				this._on(obj, type, types[type], fn);
-			}
-		} else {
-			types = app.util.splitWords(types);
-
-			for (let i = 0, len = types.length; i < len; i++) {
-				this._on(obj, types[i], fn, context);
-			}
-		}
-
-		return DomEventDerived;
-	}
-
 	static off(obj, types, fn, context) {
 
 		if (typeof types === 'object') {
