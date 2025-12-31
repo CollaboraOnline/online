@@ -362,13 +362,22 @@ class DomEvent {
 	private static _pointers: { [name: string]: any } = {};
 	private static _pointersCount: 0;
 
+	// Provides a touch events wrapper for (ms)pointer events.
+	// ref http://www.w3.org/TR/pointerevents/ https://www.w3.org/Bugs/Public/show_bug.cgi?id=22890
 	public static addPointerListener(
 		obj: any,
 		type: string,
 		handler: DomEventHandler,
 		id: string,
 	): typeof DomEvent {
-		console.assert(false, 'This function should not be called!');
+		if (type === 'touchstart') {
+			this._addPointerStart(obj, handler, id);
+		} else if (type === 'touchmove') {
+			this._addPointerMove(obj, handler, id);
+		} else if (type === 'touchend') {
+			this._addPointerEnd(obj, handler, id);
+		}
+
 		return this;
 	}
 
@@ -377,7 +386,17 @@ class DomEvent {
 		type: string,
 		id: string,
 	): typeof DomEvent {
-		console.assert(false, 'This function should not be called!');
+		const handler = obj['_leaflet_' + type + id];
+
+		if (type === 'touchstart') {
+			obj.removeEventListener(this.POINTER_DOWN, handler, false);
+		} else if (type === 'touchmove') {
+			obj.removeEventListener(this.POINTER_MOVE, handler, false);
+		} else if (type === 'touchend') {
+			obj.removeEventListener(this.POINTER_UP, handler, false);
+			obj.removeEventListener(this.POINTER_CANCEL, handler, false);
+		}
+
 		return this;
 	}
 
