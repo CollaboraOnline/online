@@ -43,8 +43,10 @@ describe(['tagdesktop'], 'Notebookbar tests.', function() {
 });
 
 describe(['tagdesktop'], 'Notebookbar checkbox widgets', function() {
+	var newFilePath;
+
 	beforeEach(function() {
-		helper.setupAndLoadDocument('writer/notebookbar.odt');
+		newFilePath = helper.setupAndLoadDocument('writer/notebookbar.odt');
 		desktopHelper.switchUIToNotebookbar();
 		cy.cGet('#View-tab-label').click();
 	});
@@ -91,6 +93,26 @@ describe(['tagdesktop'], 'Notebookbar checkbox widgets', function() {
 		cy.cGet('#showruler-input').uncheck();
 		cy.cGet('#showruler-input').should('not.be.checked');
 		cy.cGet('.cool-ruler').should('not.be.visible');
+	});
+
+	it('Ruler visible after reload', function() {
+		cy.cGet('#showruler').should('be.visible');
+
+		// Enable if not checked
+		cy.cGet('#showruler-input').then(($input) => {
+			if (!$input.is(':checked')) {
+				cy.wrap($input).check();
+			}
+		});
+
+		cy.cGet('#showruler-input').should('be.checked');
+		cy.cGet('.cool-ruler').should('be.visible');
+
+		// Reload
+		helper.reloadDocument(newFilePath);
+
+		// Verify ruler is still visible
+		cy.cGet('.cool-ruler').should('be.visible');
 	});
 
 	it('StatusBar Toggle', function() {
