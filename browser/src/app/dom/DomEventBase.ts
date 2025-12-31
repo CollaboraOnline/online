@@ -361,6 +361,7 @@ class DomEvent {
 
 	private static _pointers: { [name: string]: any } = {};
 	private static _pointersCount: 0;
+	private static _pointerDocListener: boolean = false;
 
 	// Provides a touch events wrapper for (ms)pointer events.
 	// ref http://www.w3.org/TR/pointerevents/ https://www.w3.org/Bugs/Public/show_bug.cgi?id=22890
@@ -405,7 +406,42 @@ class DomEvent {
 		handler: DomEventHandler,
 		id: string,
 	): void {
-		console.assert(false, 'This function should not be called!');
+		const onDown = (e: Event): void => {
+			this.preventDefault(e);
+			this._handlePointer(e, handler);
+		};
+
+		obj['_leaflet_touchstart' + id] = onDown;
+		obj.addEventListener(this.POINTER_DOWN, onDown, false);
+
+		// need to keep track of what pointers and how many are active to provide e.touches emulation
+		if (!this._pointerDocListener) {
+			const pointerUp = this._globalPointerUp.bind(this);
+
+			// we listen documentElement as any drags that end by moving the touch off the screen get fired there
+			document.documentElement.addEventListener(
+				this.POINTER_DOWN,
+				this._globalPointerDown.bind(this),
+				true,
+			);
+			document.documentElement.addEventListener(
+				this.POINTER_MOVE,
+				this._globalPointerMove.bind(this),
+				true,
+			);
+			document.documentElement.addEventListener(
+				this.POINTER_UP,
+				pointerUp,
+				true,
+			);
+			document.documentElement.addEventListener(
+				this.POINTER_CANCEL,
+				pointerUp,
+				true,
+			);
+
+			this._pointerDocListener = true;
+		}
 	}
 
 	private static _globalPointerDown(e: Event): void {

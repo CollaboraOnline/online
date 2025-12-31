@@ -5,30 +5,6 @@
 
 window.L.extend(window.L.DomEvent, {
 
-	_addPointerStart: function (obj, handler, id) {
-		var onDown = window.L.bind(function (e) {
-			window.L.DomEvent.preventDefault(e);
-
-			this._handlePointer(e, handler);
-		}, this);
-
-		obj['_leaflet_touchstart' + id] = onDown;
-		obj.addEventListener(this.POINTER_DOWN, onDown, false);
-
-		// need to keep track of what pointers and how many are active to provide e.touches emulation
-		if (!this._pointerDocListener) {
-			var pointerUp = window.L.bind(this._globalPointerUp, this);
-
-			// we listen documentElement as any drags that end by moving the touch off the screen get fired there
-			document.documentElement.addEventListener(this.POINTER_DOWN, window.L.bind(this._globalPointerDown, this), true);
-			document.documentElement.addEventListener(this.POINTER_MOVE, window.L.bind(this._globalPointerMove, this), true);
-			document.documentElement.addEventListener(this.POINTER_UP, pointerUp, true);
-			document.documentElement.addEventListener(this.POINTER_CANCEL, pointerUp, true);
-
-			this._pointerDocListener = true;
-		}
-	},
-
 	_globalPointerDown: function (e) {
 		this._pointers[e.pointerId] = e;
 		this._pointersCount++;
