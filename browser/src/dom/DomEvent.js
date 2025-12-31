@@ -8,48 +8,6 @@
 
 class DomEventDerived extends DomEvent {
 
-	static getWheelDelta(e) {
-
-		let delta = 0;
-
-		if (e.wheelDelta) {
-			delta = e.wheelDelta / 120;
-		}
-		if (e.detail) {
-			delta = -e.detail / 3;
-		}
-		return delta;
-	}
-
-	static _fakeStop(e) {
-		// fakes stopPropagation by setting a special event flag, checked/reset with window.L.DomEvent._skipped(e)
-		window.L.DomEvent._skipEvents[e.type] = true;
-	}
-
-	static _skipped(e) {
-		const skipped = this._skipEvents[e.type];
-		// reset when checking, as it's only used in map container and propagates outside of the map
-		this._skipEvents[e.type] = false;
-		return skipped;
-	}
-
-	// check if element really left/entered the event target (for mouseenter/mouseleave)
-	static _checkMouse(el, e) {
-
-		let related = e.relatedTarget;
-
-		if (!related) { return true; }
-
-		try {
-			while (related && (related !== el)) {
-				related = related.parentNode;
-			}
-		} catch (err) {
-			return false;
-		}
-		return (related !== el);
-	}
-
 	// this is a horrible workaround for a bug in Android where a single touch triggers two click events
 	static _filterClick(e, handler) {
 		const timeStamp = (e.timeStamp || e.originalEvent.timeStamp);
@@ -70,7 +28,6 @@ class DomEventDerived extends DomEvent {
 	}
 }
 
-DomEventDerived._skipEvents = {};
 DomEventDerived.addListener = DomEventDerived.on;
 DomEventDerived.removeListener = DomEventDerived.off;
 

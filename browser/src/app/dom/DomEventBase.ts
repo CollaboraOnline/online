@@ -21,6 +21,8 @@ interface DomEventHandlerObject {
 const eventsKey = '_browser_events';
 
 class DomEvent {
+	private static _skipEvents: { [name: string]: boolean } = {};
+
 	public static on(
 		obj: any,
 		types: string | DomEventHandlerObject,
@@ -97,7 +99,7 @@ class DomEvent {
 			} else if (type === 'mouseenter' || type === 'mouseleave') {
 				handler = (e: Event): void => {
 					e = e || window.event;
-					if (this._checkMouse(obj, e)) {
+					if (this._checkMouse(obj, e as MouseEvent)) {
 						originalHandler(e);
 					}
 				};
@@ -271,23 +273,46 @@ class DomEvent {
 		);
 	}
 
-	public static getWheelDelta(e: Event): number {
-		console.assert(false, 'This function should not be called!');
-		return 0;
+	public static getWheelDelta(e: WheelEvent): number {
+		let delta = 0;
+
+		if ((e as any).wheelDelta) {
+			delta = (e as any).wheelDelta / 120;
+		}
+		if (e.detail) {
+			delta = -e.detail / 3;
+		}
+		return delta;
 	}
 
 	private static _fakeStop(e: Event): void {
-		console.assert(false, 'This function should not be called!');
+		// fakes stopPropagation by setting a special event flag, checked/reset with window.L.DomEvent._skipped(e)
+		this._skipEvents[e.type] = true;
 	}
 
 	private static _skipped(e: Event): boolean {
-		console.assert(false, 'This function should not be called!');
-		return false;
+		const skipped = this._skipEvents[e.type];
+		// reset when checking, as it's only used in map container and propagates outside of the map
+		this._skipEvents[e.type] = false;
+		return skipped;
 	}
 
-	private static _checkMouse(el: any, e: Event): boolean {
-		console.assert(false, 'This function should not be called!');
-		return false;
+	// check if element really left/entered the event target (for mouseenter/mouseleave)
+	private static _checkMouse(el: any, e: MouseEvent): boolean {
+		let related = e.relatedTarget as Node | null;
+
+		if (!related) {
+			return true;
+		}
+
+		try {
+			while (related && related !== el) {
+				related = related.parentNode;
+			}
+		} catch (err) {
+			return false;
+		}
+		return related !== el;
 	}
 
 	private static _filterClick(e: Event, handler: DomEventHandler): void {
