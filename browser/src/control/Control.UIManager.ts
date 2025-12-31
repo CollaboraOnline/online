@@ -1676,11 +1676,11 @@ class UIManager extends window.L.Control {
 	 */
 	showSnackbar(
 		label: string,
-		action: string,
-		callback: any,
-		timeout: number,
-		hasProgress: boolean,
-		withDismiss: boolean,
+		action?: string | null,
+		callback?: any,
+		timeout?: number,
+		hasProgress?: boolean,
+		withDismiss?: boolean,
 	): void {
 		JSDialog.SnackbarController.showSnackbar(label, action, callback, timeout, hasProgress, withDismiss);
 	}
@@ -1833,10 +1833,10 @@ class UIManager extends window.L.Control {
 	/// withCancel - specifies if needs cancel button also
 	showInfoModal(
 		id: string,
-		title: string | undefined,
-		message1: string,
-		message2: string,
-		buttonText: string,
+		title?: string,
+		message1?: string,
+		message2?: string | null,
+		buttonText?: string,
 		callback: any = null,
 		withCancel: boolean = false,
 		focusId?: string,
@@ -2195,9 +2195,9 @@ class UIManager extends window.L.Control {
 		message: string,
 		yesButtonText: string,
 		noButtonText: string,
-		yesFunction: () => void,
-		noFunction: () => void,
-		cancellable: boolean,
+		yesFunction?: () => void,
+		noFunction?: () => void,
+		cancellable: boolean = false,
 	): void {
 		var dialogId = this.generateModalId(id);
 

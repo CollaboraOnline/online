@@ -30,7 +30,7 @@ class DocUtil {
 		return text;
 	}
 
-	private static stripStyle(html: string): string {
+	public static stripStyle(html: string): string {
 		let startIndex = 1;
 
 		while (startIndex !== -1) {

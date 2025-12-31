@@ -19,7 +19,12 @@ interface CRSInterface {
 interface MapInterface extends Evented {
 	_docLayer: DocLayerInterface;
 	uiManager: UIManager;
-	_textInput: { debug(value: boolean): void };
+	_textInput: {
+		debug(value: boolean): void;
+		_abortComposition(ev: Event): void;
+		_sendKeyEvent(charCode: number, unoKeyCode: number, type?: string): void;
+	};
+	addressInputField: AddressInputField;
 
 	removeLayer(layer: any): void;
 	addLayer(layer: any): void;
@@ -74,6 +79,7 @@ interface MapInterface extends Evented {
 		UserCanNotWriteRelative: boolean;
 		BaseFileName: string;
 		HideExportOption: boolean;
+		DisableCopy: boolean;
 	};
 
 	loadDocument(socket?: SockInterface): void;
@@ -84,7 +90,7 @@ interface MapInterface extends Evented {
 
 	_clip: ClipboardInterface;
 
-	setPermission(permission: 'edit' | 'readonly' | 'view'): void;
+	setPermission(permission: string): void;
 	onLockFailed(reason: string): void;
 	updateModificationIndicator(newModificationTime: string): void;
 	isEditMode(): boolean;
@@ -97,7 +103,7 @@ interface MapInterface extends Evented {
 	hideRestrictedItems(it: any, item: any, button: any): void;
 	disableLockedItem(it: any, item: any, button: any): void;
 	isLockedItem(data: any): boolean;
-	openUnlockPopup(cmd: ParsedJSONResult): void;
+	openUnlockPopup(cmd: ControlCommand): void;
 	isLockedUser(): boolean;
 	isRestrictedUser(): boolean;
 
@@ -115,4 +121,11 @@ interface MapInterface extends Evented {
 	menubar: Menubar;
 	userList: UserList;
 	sidebar: Sidebar;
+	getViewColor(viewId: number): number;
+
+	insertMultimedia(file: File): void;
+
+	isSearching(): boolean;
+	_activeDialog: any;
+	jsdialog: any;
 }

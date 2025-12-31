@@ -15,7 +15,7 @@
 		* app.sectionContainer.addSection(new app.definitions.CellFillMarkerSection());
 		* var cellFillSection = new app.definitions.CellFillMarkerSection();
 */
-window.app = {
+(window.app as any) = {
 	/*
 	 * These are from <vcl/keycodes.h>. Correspond to the published
 	 * com::sun::star::awt::KeyModifier constants, left-shifted by 12.
