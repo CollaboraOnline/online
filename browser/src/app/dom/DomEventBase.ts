@@ -22,6 +22,7 @@ const eventsKey = '_browser_events';
 
 class DomEvent {
 	private static _skipEvents: { [name: string]: boolean } = {};
+	private static _lastClick?: DOMHighResTimeStamp;
 
 	public static on(
 		obj: any,
@@ -315,9 +316,31 @@ class DomEvent {
 		return related !== el;
 	}
 
+	// this is a horrible workaround for a bug in Android where a single touch triggers two click events
 	private static _filterClick(e: Event, handler: DomEventHandler): void {
-		console.assert(false, 'This function should not be called!');
+		const timeStamp = e.timeStamp || (e as any).originalEvent.timeStamp;
+		const elapsed = this._lastClick && timeStamp - this._lastClick;
+
+		// are they closer together than 500ms yet more than 100ms?
+		// Android typically triggers them ~300ms apart while multiple listeners
+		// on the same event should be triggered far faster;
+		// or check if click is simulated on the element, and if it is, reject any non-simulated events
+
+		const ee: any = e;
+		if (
+			(elapsed && elapsed > 100 && elapsed < 500) ||
+			(ee.target._simulatedClick && !ee._simulated)
+		) {
+			this.stop(e);
+			return;
+		}
+		this._lastClick = timeStamp;
+
+		handler(e);
 	}
+
+	public static addListener = this.on;
+	public static removeListener = this.off;
 
 	// ----------------
 	// Pointer Handlers
