@@ -526,7 +526,57 @@ class DomEvent {
 		id: string,
 		type: string,
 	): typeof DomEvent {
-		console.assert(false, 'This function should not be called!');
+		const last: number[] = [];
+		const delay = 250;
+
+		function onClick(ee: Event) {
+			const e = ee as MouseEvent;
+			const now = Date.now();
+			let delta = 0;
+			if (last) {
+				delta = now - (last[last.length - 1] || now);
+			}
+
+			const doubleTap = delta > 0 && delta <= delay;
+
+			let tripleTap = false;
+			if (last.length > 1 && doubleTap) {
+				const delta2 = last[last.length - 1] - last[last.length - 2];
+				tripleTap = delta2 > 0 && delta2 <= delay;
+			}
+
+			if (tripleTap) {
+				let quadTap = false;
+				if (last.length > 2 && tripleTap) {
+					const delta3 = last[last.length - 2] - last[last.length - 3];
+					quadTap = delta3 > 0 && delta3 <= delay;
+				}
+
+				// We can't modify e as it's a native DOM object, hence we copy
+				// what we need instead. (I am however unable to actually find any
+				// documentation regarding this anywhere.)
+				const eOut = {
+					type: quadTap ? 'qdrplclick' : 'trplclick',
+					clientX: e.clientX,
+					clientY: e.clientY,
+					button: e.button,
+					target: e.target,
+					pointerType: (e as PointerEvent).pointerType,
+					isMouseEvent: e instanceof MouseEvent,
+				};
+
+				if (type == eOut.type) handler(eOut as any);
+			}
+
+			last.push(now);
+			while (last.length > 3) {
+				last.shift();
+			}
+		}
+
+		obj['_leaflet_click' + id] = onClick;
+
+		obj.addEventListener('click', onClick, false);
 		return this;
 	}
 
@@ -535,7 +585,8 @@ class DomEvent {
 		id: string,
 		type?: string,
 	): typeof DomEvent {
-		console.assert(false, 'This function should not be called!');
+		obj.removeEventListener('click', obj['_leaflet_click' + id], false);
+
 		return this;
 	}
 }
