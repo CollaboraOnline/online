@@ -590,3 +590,5 @@ class DomEvent {
 		return this;
 	}
 }
+
+window.L.DomEvent = DomEvent;
