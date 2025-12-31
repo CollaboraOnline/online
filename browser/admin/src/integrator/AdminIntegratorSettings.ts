@@ -45,7 +45,6 @@ interface ConfigData {
 }
 
 interface ViewSettings {
-	accessibilityState: boolean;
 	zoteroAPIKey: string;
 	signatureCert: string;
 	signatureKey: string;
@@ -53,6 +52,7 @@ interface ViewSettings {
 }
 
 interface SectionConfig {
+	id: string;
 	sectionTitle: string;
 	sectionDesc: string;
 	listId: string;
@@ -111,6 +111,7 @@ const defaultBrowserSetting: Record<string, any> = {
 		customType: 'compactToggle',
 	},
 	darkTheme: false,
+	accessibilityState: false,
 	spreadsheet: {
 		ShowStatusbar: false,
 		A11yCheckDeck: false,
@@ -150,13 +151,13 @@ class SettingIframe {
 	private _viewSetting;
 	private xcuInitializationAttempted = false;
 	private _viewSettingLabels = {
-		accessibilityState: _('Accessibility'),
 		zoteroAPIKey: 'Zotero',
 		signatureCert: _('Signature Certificate'),
 		signatureKey: _('Signature Key'),
 		signatureCa: _('Signature CA'),
 	};
 	private readonly settingLabels: Record<string, string> = {
+		accessibilityState: _('In-document Screen Reader'),
 		darkTheme: _('Dark Mode'),
 		compactMode: _('Compact layout'),
 		ShowStatusbar: _('Show status bar'),
@@ -224,6 +225,9 @@ class SettingIframe {
 		checkboxMarked: `<svg fill="currentColor" width="24" height="24" viewBox="0 0 24 24"><path d="M10,17L5,12L6.41,10.58L10,14.17L17.59,6.58L19,8M19,3H5C3.89,3 3,3.89 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5C21,3.89 20.1,3 19,3Z"></path></svg>`,
 		checkboxBlankOutline: `<svg fill="currentColor" width="24" height="24" viewBox="0 0 24 24"><path d="M19,3H5C3.89,3 3,3.89 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5C21,3.89 20.1,3 19,3M19,5V19H5V5H19Z"></path></svg>`,
 	};
+	private _allConfigSection: HTMLElement | null;
+	private _sectionObserver: IntersectionObserver | null = null;
+	private _visibleSections: Set<Element> = new Set();
 
 	private getAPIEndpoints() {
 		return {
@@ -251,9 +255,11 @@ class SettingIframe {
 	private browserSettingOptions: Record<string, any> = {};
 
 	init(): void {
+		this._allConfigSection = document.getElementById('allConfigSection');
 		this.initWindowVariables();
 		this.insertConfigSections();
-		void this.fetchAndPopulateSharedConfigs();
+		this.setupLeftNavbar();
+		this.fetchAndPopulateSharedConfigs();
 		this.wordbook = (window as any).WordBook;
 	}
 
@@ -285,7 +291,7 @@ class SettingIframe {
 		window.enableAccessibility = element.dataset.enableAccessibility === 'true';
 		window.wopiSettingBaseUrl = element.dataset.wopiSettingBaseUrl;
 		window.iframeType = element.dataset.iframeType;
-		window.cssVars = element.dataset.cssVars;
+		// window.cssVars = element.dataset.cssVars;
 		if (window.cssVars) {
 			window.cssVars = atob(window.cssVars);
 			const sheet = new CSSStyleSheet();
@@ -318,11 +324,11 @@ class SettingIframe {
 	}
 
 	private insertConfigSections(): void {
-		const sharedConfigsContainer = document.getElementById('allConfigSection');
-		if (!sharedConfigsContainer) return;
+		if (!this._allConfigSection) return;
 
 		const configSections: SectionConfig[] = [
 			{
+				id: 'autotext',
 				sectionTitle: _('Autotext'),
 				sectionDesc: _(
 					'Upload reusable text snippets (.bau). To insert the text in your document, type the shortcut for an AutoText entry and press F3.',
@@ -335,6 +341,7 @@ class SettingIframe {
 				uploadPath: this.PATH.autoTextUpload(),
 			},
 			{
+				id: 'wordbook',
 				sectionTitle: _('Custom dictionaries'),
 				sectionDesc: _(
 					'Add or edit words in a spell check dictionary. Words in your wordbook (.dic) will be available for spelling checks.',
@@ -347,6 +354,7 @@ class SettingIframe {
 				uploadPath: this.PATH.wordBookUpload(),
 			},
 			{
+				id: 'xcu',
 				sectionTitle: _('Document settings'),
 				sectionDesc: _('Adjust how office documents behave.'),
 				listId: 'XcuList',
@@ -399,7 +407,7 @@ class SettingIframe {
 				});
 			}
 
-			sharedConfigsContainer.appendChild(sectionEl);
+			this._allConfigSection!.appendChild(sectionEl);
 		});
 	}
 
@@ -421,6 +429,18 @@ class SettingIframe {
 		formData.append('type', this.getConfigType());
 
 		try {
+			let data: ConfigData = {
+				kind: 'user',
+				autotext: null,
+				wordbook: null,
+				browsersetting: null,
+				viewsetting: null,
+				xcu: null,
+			};
+			if ((window.parent as any).ThisIsAMobileApp) {
+				this.populateSharedConfigUI(data);
+				return;
+			}
 			const response: Response = await fetch(
 				this.getAPIEndpoints().fetchSharedConfig,
 				{
@@ -442,7 +462,7 @@ class SettingIframe {
 				);
 			}
 
-			const data: ConfigData = await response.json();
+			data = await response.json();
 			await this.populateSharedConfigUI(data);
 			console.debug('Shared config data: ', data);
 		} catch (error: unknown) {
@@ -456,6 +476,7 @@ class SettingIframe {
 	private createConfigSection(config: SectionConfig): HTMLDivElement {
 		const sectionEl = document.createElement('div');
 		sectionEl.classList.add('section');
+		sectionEl.id = config.id;
 
 		sectionEl.appendChild(this.createHeading(config.sectionTitle, 'h3'));
 		sectionEl.appendChild(this.createParagraph(config.sectionDesc));
@@ -952,7 +973,6 @@ class SettingIframe {
 		onClickHandler: (
 			checkboxInput: HTMLInputElement,
 			checkboxWrapper: HTMLSpanElement,
-			materialIconContainer: HTMLSpanElement, // This is the inner span holding the SVG
 		) => void,
 		isDisabled: boolean = false,
 		warningText: string | null = null,
@@ -972,36 +992,41 @@ class SettingIframe {
 		checkboxContent.id = id + '-content';
 		checkboxWrapper.appendChild(checkboxContent);
 
-		const checkboxContentIcon = document.createElement('span');
-		checkboxContentIcon.className = `${isDisabled ? 'checkbox-content-icon-disabled' : 'checkbox-content-icon'} checkbox-content-icon checkbox-radio-switch__icon ${isChecked ? '' : 'checkbox-content-icon--checked'}`;
-		checkboxContentIcon.ariaHidden = 'true';
-		checkboxContent.appendChild(checkboxContentIcon);
+		checkboxContent.appendChild(inputCheckbox);
 
-		const materialIconContainer = this.createMaterialDesignIconContainer(
-			isChecked
-				? this.SVG_ICONS.checkboxMarked
-				: this.SVG_ICONS.checkboxBlankOutline,
-		);
-		checkboxContentIcon.appendChild(materialIconContainer);
-
-		const textElement = document.createElement('span');
-		textElement.className =
+		const checkboxLabel = document.createElement('label');
+		checkboxLabel.className =
 			'checkbox-content__text checkbox-radio-switch__text';
-		textElement.textContent = labelText;
-		checkboxContent.appendChild(textElement);
+		checkboxLabel.textContent = labelText;
+		checkboxLabel.htmlFor = inputCheckbox.id;
+		checkboxContent.appendChild(checkboxLabel);
 
 		if (warningText) {
-			const warningEl = document.createElement('span');
+			const container = document.createElement('div');
+			container.className = 'checkbox-content__inner';
+			container.appendChild(checkboxLabel);
+			const warningEl = document.createElement('label');
 			warningEl.className = 'ui-state-error-text';
 			warningEl.textContent = warningText;
-			checkboxContent.appendChild(warningEl);
+			container.appendChild(warningEl);
+			checkboxContent.appendChild(container);
+			checkboxContent.classList.add('checkbox-content--with-warning');
 		}
 
 		if (!isDisabled) {
-			checkboxWrapper.addEventListener('click', () => {
-				onClickHandler(inputCheckbox, checkboxWrapper, materialIconContainer);
+			let that = this;
+			const checkboxClickHandler = function () {
+				onClickHandler(inputCheckbox, checkboxWrapper);
 				if (checkboxWrapper.id === 'Grid-ShowGrid-container') {
-					this.toggleGridOptionsVisibility(checkboxWrapper);
+					that.toggleGridOptionsVisibility(checkboxWrapper);
+				}
+			};
+
+			inputCheckbox.addEventListener('click', checkboxClickHandler);
+			inputCheckbox.addEventListener('keydown', (event) => {
+				if (event.key === ' ' || event.key === 'Enter') {
+					event.preventDefault();
+					inputCheckbox.click();
 				}
 			});
 			if (checkboxWrapper.id === 'Grid-ShowGrid-container') {
@@ -1022,23 +1047,31 @@ class SettingIframe {
 		data: any,
 	): HTMLSpanElement {
 		const labelText = this.settingLabels[key] || key;
+		let isDisabled = false;
+		let warningText: string | null = null;
+
+		if (key === 'accessibilityState') {
+			isDisabled = !window.enableAccessibility;
+			if (isDisabled) {
+				warningText = _(
+					'(Warning: Server accessibility must be enabled to toggle)',
+				);
+			}
+		}
 
 		return this.createCheckbox(
 			uniqueId,
-			value,
+			value && !isDisabled,
 			labelText,
-			(inputCheckbox, checkboxWrapper, materialIconContainer) => {
-				const currentChecked = !inputCheckbox.checked;
-				inputCheckbox.checked = currentChecked;
+			(inputCheckbox, checkboxWrapper) => {
 				checkboxWrapper.classList.toggle(
 					'checkbox-radio-switch--checked',
-					!currentChecked,
+					!inputCheckbox.checked,
 				);
-				materialIconContainer.innerHTML = currentChecked
-					? this.SVG_ICONS.checkboxMarked
-					: this.SVG_ICONS.checkboxBlankOutline;
-				data[key] = currentChecked;
+				data[key] = inputCheckbox.checked;
 			},
+			isDisabled,
+			warningText,
 		);
 	}
 
@@ -1140,7 +1173,10 @@ class SettingIframe {
 		optionDiv.className = 'toggle-option';
 
 		const image = document.createElement('img');
-		image.src = `${window.serviceRoot}/browser/${window.versionHash}/admin/images/${imageSrc}`;
+		let src = `${window.serviceRoot}/browser/${window.versionHash}/admin/images/${imageSrc}`;
+		if ((window.parent as any).ThisIsAMobileApp)
+			src = `admin/images/${imageSrc}`;
+		image.src = src;
 		image.alt = imageAlt;
 		image.className = `toggle-image ${isSelected ? 'selected' : ''}`;
 		optionDiv.appendChild(image);
@@ -1156,6 +1192,19 @@ class SettingIframe {
 	}
 
 	private async uploadFile(filePath: string, file: File): Promise<void> {
+		if ((window.parent as any).ThisIsAMobileApp) {
+			const text = await file.text();
+			(window.parent as any).postMobileMessage(
+				'UPLOADFILE ' +
+					JSON.stringify({
+						filePath,
+						fileName: file.name,
+						mimeType: file.type,
+						content: text,
+					}),
+			);
+			return;
+		}
 		const formData = new FormData();
 		formData.append('file', file);
 		formData.append('filePath', filePath);
@@ -1324,7 +1373,7 @@ class SettingIframe {
 
 	private generateViewSettingUI(data: ViewSettings) {
 		this._viewSetting = data;
-		const settingsContainer = document.getElementById('allConfigSection');
+		const settingsContainer = this._allConfigSection;
 		if (!settingsContainer) {
 			return;
 		}
@@ -1352,7 +1401,6 @@ class SettingIframe {
 		fieldset.appendChild(this.createLegend(_('Option')));
 
 		const allViewSettingsKeys: (keyof ViewSettings)[] = [
-			'accessibilityState',
 			'zoteroAPIKey',
 			'signatureCert',
 			'signatureKey',
@@ -1365,50 +1413,44 @@ class SettingIframe {
 				continue;
 			}
 
-			const value = data[key] ?? (typeof data[key] === 'boolean' ? false : '');
+			// Add Zotero section with description
+			if (key === 'zoteroAPIKey') {
+				fieldset.appendChild(this.createHeading('Zotero'));
+				const zoteroDescription = this.createParagraph(
+					_(
+						'To use Zotero specify your API key here. You can create your API key in your ',
+					),
+				);
+				zoteroDescription.className = 'view-setting-description';
 
-			if (typeof value === 'boolean') {
-				fieldset.appendChild(this.createViewSettingCheckbox(key, data, label));
-			} else if (typeof value === 'string') {
-				// Add Zotero section with description
-				if (key === 'zoteroAPIKey') {
-					fieldset.appendChild(this.createHeading('Zotero'));
-					const zoteroDescription = this.createParagraph(
-						_(
-							'To use Zotero specify your API key here. You can create your API key in your ',
-						),
-					);
-					zoteroDescription.className = 'view-setting-description';
+				const zoteroAccountLink = document.createElement('a');
+				zoteroAccountLink.href = 'https://www.zotero.org/settings/keys';
+				zoteroAccountLink.target = '_blank';
+				zoteroAccountLink.textContent = _('Zotero account API settings');
 
-					const zoteroAccountLink = document.createElement('a');
-					zoteroAccountLink.href = 'https://www.zotero.org/settings/keys';
-					zoteroAccountLink.target = '_blank';
-					zoteroAccountLink.textContent = _('Zotero account API settings');
+				zoteroDescription.appendChild(zoteroAccountLink);
 
-					zoteroDescription.appendChild(zoteroAccountLink);
-
-					fieldset.appendChild(zoteroDescription);
-					fieldset.appendChild(this.createViewSettingsTextBox(key, data, true));
-				}
-				// Add Document Signing section with description (only once for first field)
-				else if (key === 'signatureCert') {
-					fieldset.appendChild(this.createHeading(_('Document Signing')));
-					const signingDesc = document.createElement('p');
-					signingDesc.className = 'view-setting-description';
-					signingDesc.textContent = _(
-						'To use document signing, specify your signing certificate, key and CA chain here.',
-					);
-					fieldset.appendChild(signingDesc);
-					fieldset.appendChild(
-						this.createViewSettingsTextBox(key, data, false, true),
-					);
-				}
-				// Add remaining signature fields with smaller labels
-				else if (key === 'signatureKey' || key === 'signatureCa') {
-					fieldset.appendChild(
-						this.createViewSettingsTextBox(key, data, false, true),
-					);
-				}
+				fieldset.appendChild(zoteroDescription);
+				fieldset.appendChild(this.createViewSettingsTextBox(key, data, true));
+			}
+			// Add Document Signing section with description (only once for first field)
+			else if (key === 'signatureCert') {
+				fieldset.appendChild(this.createHeading(_('Document Signing')));
+				const signingDesc = document.createElement('p');
+				signingDesc.className = 'view-setting-description';
+				signingDesc.textContent = _(
+					'To use document signing, specify your signing certificate, key and CA chain here.',
+				);
+				fieldset.appendChild(signingDesc);
+				fieldset.appendChild(
+					this.createViewSettingsTextBox(key, data, false, true),
+				);
+			}
+			// Add remaining signature fields with smaller labels
+			else if (key === 'signatureKey' || key === 'signatureCa') {
+				fieldset.appendChild(
+					this.createViewSettingsTextBox(key, data, false, true),
+				);
 			}
 		}
 
@@ -1438,46 +1480,6 @@ class SettingIframe {
 			data,
 			skipHeading,
 			isSmallHeading,
-		);
-	}
-
-	private createViewSettingCheckbox(
-		key: keyof ViewSettings,
-		data: ViewSettings,
-		label: string,
-	): HTMLSpanElement {
-		const isChecked = data[key] as boolean;
-		let isDisabled = false;
-		let warningText: string | null = null;
-
-		if (key === 'accessibilityState') {
-			isDisabled = !window.enableAccessibility;
-			if (isDisabled) {
-				warningText = _(
-					'(Warning: Server accessibility must be enabled to toggle)',
-				);
-			}
-		}
-
-		// Replaced direct checkbox input creation with the new helper
-		return this.createCheckbox(
-			key as string,
-			isChecked && !isDisabled,
-			label,
-			(inputCheckbox, checkboxWrapper, materialIconContainer) => {
-				const currentChecked = !inputCheckbox.checked;
-				inputCheckbox.checked = currentChecked;
-				checkboxWrapper.classList.toggle(
-					'checkbox-radio-switch--checked',
-					!currentChecked,
-				);
-				materialIconContainer.innerHTML = currentChecked
-					? this.SVG_ICONS.checkboxMarked
-					: this.SVG_ICONS.checkboxBlankOutline;
-				(data as any)[key] = currentChecked;
-			},
-			isDisabled,
-			warningText,
 		);
 	}
 
@@ -1522,15 +1524,31 @@ class SettingIframe {
 		}
 
 		if (data.kind === 'user') {
-			if (data.viewsetting && data.viewsetting.length > 0) {
-				const fileId = data.viewsetting[0].uri;
-				const fetchContent = await this.fetchSettingFile(fileId);
+			if (
+				(window.parent as any).ThisIsAMobileApp ||
+				(data.viewsetting && data.viewsetting.length > 0)
+			) {
+				const fetchContent = (window.parent as any).ThisIsAMobileApp
+					? (
+							await (window.parent as any).postMobileMessage(
+								'GETFILE ' +
+									this.PATH.viewSettingsUpload() +
+									'viewsetting.json',
+							)
+						).content
+					: await this.fetchSettingFile(data.viewsetting![0].uri);
 				if (fetchContent) {
 					const loadedSettings = JSON.parse(fetchContent);
 					// Merge with default values to ensure all fields are present
 					const defaultViewSetting = this.getDefaultViewSettings();
-					const mergedSettings = { ...defaultViewSetting, ...loadedSettings };
+					const mergedSettings = this.mergeWithDefault(
+						defaultViewSetting,
+						loadedSettings,
+					);
 					this.generateViewSettingUI(mergedSettings);
+				} else {
+					const defaultViewSetting = this.getDefaultViewSettings();
+					this.generateViewSettingUI(defaultViewSetting);
 				}
 			} else {
 				const defaultViewSetting = this.getDefaultViewSettings();
@@ -1538,9 +1556,19 @@ class SettingIframe {
 			}
 
 			// browser settings
-			if (data.browsersetting && data.browsersetting.length > 0) {
-				const fileId = data.browsersetting[0].uri;
-				const browserSettingContent = await this.fetchSettingFile(fileId);
+			if (
+				(window.parent as any).ThisIsAMobileApp ||
+				(data.browsersetting && data.browsersetting.length > 0)
+			) {
+				const browserSettingContent = (window.parent as any).ThisIsAMobileApp
+					? (
+							await (window.parent as any).postMobileMessage(
+								'GETFILE ' +
+									this.PATH.browserSettingsUpload() +
+									'browsersetting.json',
+							)
+						).content
+					: await this.fetchSettingFile(data.browsersetting![0].uri);
 				this.browserSettingOptions = browserSettingContent
 					? this.mergeWithDefault(
 							defaultBrowserSetting,
@@ -1550,18 +1578,24 @@ class SettingIframe {
 			} else {
 				this.browserSettingOptions = defaultBrowserSetting;
 			}
-			this.createBrowserSettingForm(
-				document.getElementById('allConfigSection')!,
-			);
+			this.createBrowserSettingForm(this._allConfigSection!);
 		}
 
-		const settingsContainer = document.getElementById('allConfigSection');
+		const settingsContainer = this._allConfigSection;
 		if (!settingsContainer) return;
-		if (data.xcu && data.xcu.length > 0) {
-			const fileId = data.xcu[0].uri;
-			const xcuFileContent = await this.fetchSettingFile(fileId);
+		if (
+			(window.parent as any).ThisIsAMobileApp ||
+			(data.xcu && data.xcu.length > 0)
+		) {
+			const xcuFileContent = (window.parent as any).ThisIsAMobileApp
+				? (
+						await (window.parent as any).postMobileMessage(
+							'GETFILE ' + this.PATH.XcuUpload() + 'documentView.xcu',
+						)
+					).content
+				: await this.fetchSettingFile(data.xcu![0].uri);
 			this.xcuEditor = new (window as any).Xcu(
-				this.getFilename(fileId, false),
+				this.getFilename(this.PATH.XcuUpload(), false),
 				xcuFileContent,
 			);
 
@@ -1597,6 +1631,8 @@ class SettingIframe {
 			}
 		}
 
+		this.setupLeftNavbar();
+
 		if (data.autotext)
 			this.populateList('autotextList', data.autotext, '/autotext');
 		if (data.wordbook)
@@ -1604,13 +1640,90 @@ class SettingIframe {
 		if (data.xcu) this.populateList('XcuList', data.xcu, '/xcu');
 	}
 
+	private setupLeftNavbar(): void {
+		if (this.isAdmin()) return;
+
+		// Prevent double scrollbars
+		document.body.style.margin = '0';
+
+		const content = this._allConfigSection;
+		if (!content) return;
+
+		const newNav = document.createElement('nav');
+		newNav.id = 'settings-nav';
+
+		if (this._sectionObserver) {
+			this._sectionObserver.disconnect();
+		}
+
+		this._visibleSections.clear();
+
+		const observerOptions = {
+			root: content,
+			rootMargin: '-30px 0px 0px 0px',
+		};
+
+		this._sectionObserver = new IntersectionObserver((entries) => {
+			entries.forEach((entry) => {
+				if (entry.isIntersecting) {
+					this._visibleSections.add(entry.target);
+				} else {
+					this._visibleSections.delete(entry.target);
+				}
+			});
+
+			let activeSection: Element | null = null;
+			let minTop = Infinity;
+
+			for (const section of Array.from(this._visibleSections)) {
+				const rect = section.getBoundingClientRect();
+				if (rect.top < minTop) {
+					minTop = rect.top;
+					activeSection = section;
+				}
+			}
+
+			if (activeSection) {
+				const id = activeSection.id;
+				newNav.querySelectorAll('.settings-nav-item').forEach((link) => {
+					if (link.getAttribute('href') === '#' + id) {
+						link.classList.add('active');
+					} else {
+						link.classList.remove('active');
+					}
+				});
+			}
+		}, observerOptions);
+
+		content.querySelectorAll('.section').forEach((section) => {
+			this._sectionObserver?.observe(section);
+			const header = section.querySelector('h3');
+			if (header) {
+				const link = document.createElement('a');
+				link.textContent = header.textContent;
+				link.classList.add('settings-nav-item');
+				link.href = '#' + section.id;
+				newNav.appendChild(link);
+			}
+		});
+
+		const oldNav = document.getElementById('settings-nav');
+		if (oldNav) {
+			oldNav.replaceWith(newNav);
+		} else {
+			let wrapper = document.getElementById('settingIframe');
+			wrapper!.insertBefore(newNav, content);
+		}
+	}
+
 	private mergeWithDefault(defaults: any, overrides: any): any {
 		const result: any = {};
 
 		for (const key in defaults) {
 			const value = defaults[key];
-			const override = overrides?.[key];
-
+			let override = overrides?.[key];
+			if (override === 'true') override = true;
+			else if (override === 'false') override = false;
 			if (
 				typeof value === 'boolean' ||
 				(typeof value === 'object' && value !== null && 'customType' in value)
@@ -1739,7 +1852,6 @@ class SettingIframe {
 
 	private getDefaultViewSettings(): ViewSettings {
 		return {
-			accessibilityState: false,
 			zoteroAPIKey: '',
 			signatureCert: '',
 			signatureKey: '',

@@ -92,9 +92,7 @@ COOL_IMAGES_DST = $(patsubst $(srcdir)/%,$(DIST_FOLDER)/%,$(COOL_IMAGES_SRC))
 COOL_IMAGES_CUSTOM_SRC = $(shell if test -n "$(CUSTOM_ICONS_DIRECTORY)"; then find $(CUSTOM_ICONS_DIRECTORY) -name '*.*'; fi)
 COOL_IMAGES_CUSTOM_DST = $(patsubst $(CUSTOM_ICONS_DIRECTORY)/%,$(DIST_FOLDER)/images/%,$(COOL_IMAGES_CUSTOM_SRC))
 COOL_L10N_SRC = $(shell find $(srcdir)/l10n -name '*.json')
-if !ENABLE_MOBILEAPP
 COOL_L10N_DST =  $(patsubst $(srcdir)/l10n/%,$(DIST_FOLDER)/l10n/%,$(COOL_L10N_SRC))
-endif
 
 COOL_HTML_SRC = $(shell find $(srcdir)/html -name '*.html')
 COOL_HTML_DST = $(patsubst $(srcdir)/html/%.html,$(DIST_FOLDER)/%.html,$(COOL_HTML_SRC))
@@ -239,10 +237,8 @@ COOL_LIBS_JS =\
 	select2.js \
 	sanitize-url.js
 
-if !ENABLE_MOBILEAPP
 COOL_LIBS_JS +=\
 	l10n.js
-endif
 
 NODE_MODULES_JS_SRC = $(patsubst %.js,$(builddir)/%.js,$(NODE_MODULES_JS))
 NODE_MODULES_JS_DST = $(patsubst %.js,$(DIST_FOLDER)/%.js,$(NODE_MODULES_JS))
@@ -762,9 +758,7 @@ endef
 
 all-local: build-cool
 
-if !ENABLE_MOBILEAPP
 ADMIN_BUNDLE = $(DIST_FOLDER)/admin-bundle.js
-endif
 
 if ENABLE_WASM
 $(DIST_FOLDER)/emscripten-module.js: ../wasm/emscripten-module.js
@@ -850,8 +844,12 @@ build-cool: \
 	$(DIST_FOLDER)/device-tablet.css \
 	$(DIST_FOLDER)/device-desktop.css \
 	$(DIST_FOLDER)/progressbar.css \
+	$(DIST_FOLDER)/settings.css \
+	$(DIST_FOLDER)/color-palette.css \
+	$(DIST_FOLDER)/color-palette-dark.css \
 	$(DIST_FOLDER)/bundle.js \
 	$(DIST_FOLDER)/cool.html \
+	$(DIST_FOLDER)/adminIntegratorSettings.html \
 	$(WASM_FILES) \
 	$(WASM_FALLBACK_FILES) \
 	$(TEMPLATE_MANIFEST)
@@ -947,6 +945,19 @@ $(DIST_FOLDER)/cool.html: $(srcdir)/html/cool.html.m4 \
 		-DVENDOR="$(VENDOR)" \
 		-DINFO_URL="$(INFO_URL)" \
 		$(srcdir)/html/cool.html.m4 > $@
+
+$(DIST_FOLDER)/adminIntegratorSettings.html: $(srcdir)/admin/adminIntegratorSettings.html.m4
+	@mkdir -p $(dir $@)
+	$(QUIET_M4) m4 -PE -I $(INTERMEDIATE_DIR) \
+		-DIOSAPP=$(ENABLE_IOSAPP) \
+		-DMACOSAPP=$(ENABLE_MACOSAPP) \
+		-DQTAPP=$(ENABLE_QTAPP) \
+		-DDEBUG=$(ENABLE_DEBUG) \
+		-DWINDOWSAPP=$(ENABLE_WINDOWSAPP) \
+		-DANDROIDAPP=$(ENABLE_ANDROIDAPP) \
+		-DEMSCRIPTENAPP=$(ENABLE_EMSCRIPTENAPP) \
+		-DMOBILEAPPNAME="$(APP_NAME)" \
+		$(srcdir)/admin/adminIntegratorSettings.html.m4 > $@
 
 node_modules: package.json archived-packages
 	@npm install
@@ -1232,7 +1243,7 @@ clean-local:
 	@rm -f $(abs_srcdir)/jsconfig.json
 	@rm -f $(abs_srcdir)/admin/jsconfig.json
 
-CLEANFILES = tscompile.done $(INTERMEDIATE_DIR)/cool-src.js $(DIST_FOLDER)/bundle.css $(DIST_FOLDER)/bundle.js $(INTERMEDIATE_DIR)/cool-src.js
+CLEANFILES = tscompile.done $(INTERMEDIATE_DIR)/cool-src.js $(DIST_FOLDER)/bundle.css $(DIST_FOLDER)/bundle.js $(INTERMEDIATE_DIR)/cool-src.js admin/adminIntegratorSettings.html
 
 $(abs_srcdir)/jsconfig.json:
 	@printf "{\n \
