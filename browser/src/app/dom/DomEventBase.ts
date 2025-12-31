@@ -408,7 +408,7 @@ class DomEvent {
 	): void {
 		const onDown = (e: Event): void => {
 			this.preventDefault(e);
-			this._handlePointer(e, handler);
+			this._handlePointer(e as PointerEvent, handler);
 		};
 
 		obj['_leaflet_touchstart' + id] = onDown;
@@ -416,17 +416,23 @@ class DomEvent {
 
 		// need to keep track of what pointers and how many are active to provide e.touches emulation
 		if (!this._pointerDocListener) {
-			const pointerUp = this._globalPointerUp.bind(this);
+			const pointerUp = (e: Event): void => {
+				this._globalPointerUp(e as PointerEvent);
+			};
 
 			// we listen documentElement as any drags that end by moving the touch off the screen get fired there
 			document.documentElement.addEventListener(
 				this.POINTER_DOWN,
-				this._globalPointerDown.bind(this),
+				(e: Event): void => {
+					this._globalPointerDown(e as PointerEvent);
+				},
 				true,
 			);
 			document.documentElement.addEventListener(
 				this.POINTER_MOVE,
-				this._globalPointerMove.bind(this),
+				(e: Event): void => {
+					this._globalPointerMove(e as PointerEvent);
+				},
 				true,
 			);
 			document.documentElement.addEventListener(
@@ -444,20 +450,34 @@ class DomEvent {
 		}
 	}
 
-	private static _globalPointerDown(e: Event): void {
-		console.assert(false, 'This function should not be called!');
+	private static _globalPointerDown(e: PointerEvent): void {
+		this._pointers[e.pointerId] = e;
+		this._pointersCount++;
 	}
 
-	private static _globalPointerMove(e: Event): void {
-		console.assert(false, 'This function should not be called!');
+	private static _globalPointerMove(e: PointerEvent): void {
+		if (this._pointers[e.pointerId]) {
+			this._pointers[e.pointerId] = e;
+		}
 	}
 
-	private static _globalPointerUp(e: Event): void {
-		console.assert(false, 'This function should not be called!');
+	private static _globalPointerUp(e: PointerEvent): void {
+		delete this._pointers[e.pointerId];
+		this._pointersCount--;
 	}
 
-	private static _handlePointer(e: Event, handler: DomEventHandler): void {
-		console.assert(false, 'This function should not be called!');
+	private static _handlePointer(
+		e: PointerEvent,
+		handler: DomEventHandler,
+	): void {
+		const ee: any = e;
+		ee.touches = [];
+		for (const i in this._pointers) {
+			ee.touches.push(this._pointers[i]);
+		}
+		ee.changedTouches = [e];
+
+		handler(e);
 	}
 
 	private static _addPointerMove(
@@ -465,7 +485,21 @@ class DomEvent {
 		handler: DomEventHandler,
 		id: string,
 	): void {
-		console.assert(false, 'This function should not be called!');
+		const onMove = (e: PointerEvent): void => {
+			// don't fire touch moves when mouse isn't down
+			if (
+				(e.pointerType === (e as any).MSPOINTER_TYPE_MOUSE ||
+					e.pointerType === 'mouse') &&
+				e.buttons === 0
+			) {
+				return;
+			}
+
+			this._handlePointer(e, handler);
+		};
+
+		obj['_leaflet_touchmove' + id] = onMove;
+		obj.addEventListener(this.POINTER_MOVE, onMove, false);
 	}
 
 	private static _addPointerEnd(
@@ -473,7 +507,13 @@ class DomEvent {
 		handler: DomEventHandler,
 		id: string,
 	): void {
-		console.assert(false, 'This function should not be called!');
+		const onUp = (e: PointerEvent): void => {
+			this._handlePointer(e, handler);
+		};
+
+		obj['_leaflet_touchend' + id] = onUp;
+		obj.addEventListener(this.POINTER_UP, onUp, false);
+		obj.addEventListener(this.POINTER_CANCEL, onUp, false);
 	}
 
 	// -------------------
