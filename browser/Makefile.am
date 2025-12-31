@@ -392,7 +392,6 @@ COOL_JS_LST =\
 	src/map/handler/Map.Feedback.js \
 	src/map/handler/Map.Settings.ts \
 	src/map/handler/Map.VersionBar.js \
-	src/dom/DomEvent.MultiClick.js \
 	src/map/handler/Map.Print.js \
 	src/map/handler/Map.SlideShow.js \
 	src/map/handler/Map.FileInserter.js \
