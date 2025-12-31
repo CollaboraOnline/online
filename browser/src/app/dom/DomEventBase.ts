@@ -346,6 +346,22 @@ class DomEvent {
 	// Pointer Handlers
 	// ----------------
 
+	public static POINTER_DOWN: string = window.L.Browser.msPointer
+		? 'MSPointerDown'
+		: 'pointerdown';
+	public static POINTER_MOVE: string = window.L.Browser.msPointer
+		? 'MSPointerMove'
+		: 'pointermove';
+	public static POINTER_UP: string = window.L.Browser.msPointer
+		? 'MSPointerUp'
+		: 'pointerup';
+	public static POINTER_CANCEL: string = window.L.Browser.msPointer
+		? 'MSPointerCancel'
+		: 'pointercancel';
+
+	private static _pointers: { [name: string]: any } = {};
+	private static _pointersCount: 0;
+
 	public static addPointerListener(
 		obj: any,
 		type: string,

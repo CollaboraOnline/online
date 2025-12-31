@@ -5,14 +5,6 @@
 
 window.L.extend(window.L.DomEvent, {
 
-	POINTER_DOWN:   window.L.Browser.msPointer ? 'MSPointerDown'   : 'pointerdown',
-	POINTER_MOVE:   window.L.Browser.msPointer ? 'MSPointerMove'   : 'pointermove',
-	POINTER_UP:     window.L.Browser.msPointer ? 'MSPointerUp'     : 'pointerup',
-	POINTER_CANCEL: window.L.Browser.msPointer ? 'MSPointerCancel' : 'pointercancel',
-
-	_pointers: {},
-	_pointersCount: 0,
-
 	// Provides a touch events wrapper for (ms)pointer events.
 	// ref http://www.w3.org/TR/pointerevents/ https://www.w3.org/Bugs/Public/show_bug.cgi?id=22890
 
