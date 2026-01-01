@@ -30,6 +30,7 @@ JSDialog.comboboxEntry = function (parentContainer, data, builder) {
 	var entry = window.L.DomUtil.create('div', 'ui-combobox-entry ' + builder.options.cssClass, parentContainer);
 	entry.id = data.id;
 	entry.setAttribute('role', 'option');
+	entry.setAttribute('tabindex', '-1');
 
 	if (data.hasSubMenu)
 		window.L.DomUtil.addClass(entry, 'ui-has-menu');
@@ -55,6 +56,8 @@ JSDialog.comboboxEntry = function (parentContainer, data, builder) {
     if (data.selected) {
         entry.setAttribute('aria-selected', 'true');
 		window.L.DomUtil.addClass(entry, 'selected');
+    } else {
+        entry.setAttribute('aria-selected', 'false');
     }
 
 	if (data.checked)
@@ -75,6 +78,13 @@ JSDialog.comboboxEntry = function (parentContainer, data, builder) {
 	entry.addEventListener('keypress', function (event) {
         if (event.key === 'Enter' || event.key === ' ') {
 			clickFunction();
+			event.preventDefault();
+		}
+	});
+
+	entry.addEventListener('keydown', function (event) {
+        if (event.key === 'Tab') {
+			JSDialog.CloseDropdown(data.comboboxId);
 			event.preventDefault();
 		}
 	});

@@ -299,8 +299,9 @@ window.L.Control.JSDialog = window.L.Control.extend({
 
 		instance.form = window.L.DomUtil.create('form', 'jsdialog-container ui-dialog ui-widget-content lokdialog_container', instance.container);
 		instance.form.setAttribute('role', 'dialog');
-		instance.form.setAttribute('aria-labelledby', instance.title);
 		instance.form.setAttribute('autocomplete', 'off');
+		if (instance.title)
+			instance.form.setAttribute('aria-labelledby', instance.title);
 		// Prevent overlay from getting the click, except if we want click to dismiss
 		// Like in the case of the inactivity message.
 		// https://github.com/CollaboraOnline/online/issues/7403
@@ -483,7 +484,7 @@ window.L.Control.JSDialog = window.L.Control.extend({
 		// this will only search in current instance and not in whole document
 		const tabControlWidget = this.findTabControl(instance);
 
-		let focusWidget, firstFocusableElement ;
+		let focusWidget, firstFocusableElement;
 
 		if (tabControlWidget && !instance.init_focus_id) {
 			// get DOM element of tabControl from current instance
@@ -500,7 +501,7 @@ window.L.Control.JSDialog = window.L.Control.extend({
 				if (focusables && focusables.length) firstFocusableElement = focusables[0];
 			}
 
-			if (firstFocusableElement && !JSDialog.IsFocusable(firstFocusableElement)){
+			if (firstFocusableElement && !JSDialog.IsFocusable(firstFocusableElement)) {
 				firstFocusableElement = JSDialog.FindFocusableWithin(firstFocusableElement, 'next');
 			}
 		}
