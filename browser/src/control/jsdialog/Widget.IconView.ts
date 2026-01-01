@@ -92,7 +92,7 @@ function _iconViewEntry(
 	entryContainer.setAttribute(ariaStateAttr, 'false');
 
 	if (entry.selected && entry.selected === true) {
-		$(entryContainer).addClass('selected');
+		entryContainer.classList.add('selected');
 		entryContainer.setAttribute(ariaStateAttr, 'true');
 		entryContainer.setAttribute('tabindex', '0');
 	} else {
@@ -119,22 +119,24 @@ function _iconViewEntry(
 
 	if (!disabled) {
 		const singleClick = parentData.singleclickactivate === true;
-		$(entryContainer).click(function () {
-			$('#' + parentData.id + ' .ui-iconview-entry[tabindex="0"]').each(
-				function () {
-					this.setAttribute('tabindex', '-1');
-				},
-			);
+		entryContainer.addEventListener('click', function () {
+			parentContainer
+				.querySelectorAll('.ui-iconview-entry[tabindex="0"]')
+				.forEach(function (el) {
+					el.setAttribute('tabindex', '-1');
+				});
 
-			$('#' + parentData.id + ' .ui-iconview-entry.selected').each(function () {
-				$(this).removeClass('selected');
-				this.setAttribute(ariaStateAttr, 'false');
-			});
+			parentContainer
+				.querySelectorAll('.ui-iconview-entry.selected')
+				.forEach(function (el) {
+					el.classList.remove('selected');
+					el.setAttribute(ariaStateAttr, 'false');
+				});
 
 			entryContainer.setAttribute('tabindex', '0');
 			entryContainer.focus();
 			//avoid re-selecting already selected entry
-			if ($(entryContainer).hasClass('selected')) return;
+			if (entryContainer.classList.contains('selected')) return;
 
 			(parentContainer as any).builderCallback(
 				'iconview',
@@ -142,7 +144,7 @@ function _iconViewEntry(
 				entry.row,
 				builder,
 			);
-			$(entryContainer).addClass('selected');
+			entryContainer.classList.add('selected');
 			entryContainer.setAttribute(ariaStateAttr, 'true');
 
 			if (singleClick) {
@@ -156,10 +158,12 @@ function _iconViewEntry(
 		});
 
 		entryContainer.addEventListener('contextmenu', function (e: Event) {
-			$('#' + parentData.id + ' .ui-iconview-entry').each(function () {
-				$(this).removeClass('selected');
-				this.setAttribute(ariaStateAttr, 'false');
-			});
+			parentContainer
+				.querySelectorAll('.ui-iconview-entry')
+				.forEach(function (el) {
+					el.classList.remove('selected');
+					el.setAttribute(ariaStateAttr, 'false');
+				});
 
 			(parentContainer as any).builderCallback(
 				'iconview',
@@ -167,7 +171,7 @@ function _iconViewEntry(
 				entry.row,
 				builder,
 			);
-			$(entryContainer).addClass('selected');
+			entryContainer.classList.add('selected');
 			entryContainer.setAttribute(ariaStateAttr, 'true');
 
 			(parentContainer as any).builderCallback(
@@ -180,7 +184,7 @@ function _iconViewEntry(
 		});
 
 		if (!singleClick) {
-			$(entryContainer).dblclick(function () {
+			entryContainer.addEventListener('dblclick', function () {
 				(parentContainer as any).builderCallback(
 					'iconview',
 					'activate',
@@ -390,9 +394,11 @@ JSDialog.iconView = function (
 	});
 
 	app.layoutingService.appendLayoutingTask(() => {
-		const shouldSelectFirstEntry = data.entries.length > 0 ? !data.entries.some(entry => entry.selected === true) : false;
-		if (shouldSelectFirstEntry)
-			data.entries[0].selected = true;
+		const shouldSelectFirstEntry =
+			data.entries.length > 0
+				? !data.entries.some((entry) => entry.selected === true)
+				: false;
+		if (shouldSelectFirstEntry) data.entries[0].selected = true;
 
 		for (const i in data.entries) {
 			_iconViewEntry(iconview, data, data.entries[i], builder);
