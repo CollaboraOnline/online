@@ -471,9 +471,8 @@ namespace Log
 #endif
     } // namespace
 
-    char* prefix(const std::chrono::time_point<std::chrono::system_clock>& tp,
-                 char* buffer,
-                 const char* level)
+    char* prefix(const std::chrono::time_point<std::chrono::system_clock>& tp, char* buffer,
+                 const std::string_view level)
     {
 #if defined(IOS) || defined(__FreeBSD__)
         // Don't bother with the "Source" which would be just "Mobile" always (or whatever the app
@@ -567,7 +566,8 @@ namespace Log
         pos[1] = ']';
         pos[2] = ' ';
         pos += 3;
-        pos = strcopy(level, pos);
+        memcpy(pos, level.data(), level.size());
+        pos += 3;
         pos[0] = ' ';
         pos[1] = ' ';
         pos[2] = '\0';

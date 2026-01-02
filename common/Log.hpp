@@ -91,11 +91,11 @@ namespace Log
     /// Generates log entry prefix. Example follows (without the vertical bars).
     /// |wsd-07272-07298 2020-04-25 17:29:28.928697 -0400 [ websrv_poll ] TRC  |
     /// This is fully signal-safe. Buffer must be at least 128 bytes.
-    char* prefix(const std::chrono::time_point<std::chrono::system_clock>& tp,
-                 char* buffer,
-                 const char* level);
+    char* prefix(const std::chrono::time_point<std::chrono::system_clock>& tp, char* buffer,
+                 const std::string_view level);
 
-    template <int Size> inline char* prefix(std::array<char, Size>& buffer, const char* level)
+    template <int Size>
+    inline char* prefix(std::array<char, Size>& buffer, const std::string_view level)
     {
         static_assert(Size >= 128, "Buffer size must be at least 128 bytes.");
 
