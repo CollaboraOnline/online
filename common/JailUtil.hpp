@@ -13,22 +13,19 @@
 
 #include <string>
 
-#include <Poco/File.h>
-#include <Poco/Path.h>
-
 namespace JailUtil
 {
 
 /// General temporary directory owned by us.
-constexpr const char CHILDROOT_TMP_PATH[] = "/tmp";
+static const std::string CHILDROOT_TMP_PATH = "/tmp";
 
 /// Files uploaded by users are stored in this sub-directory of child-root.
-constexpr const char CHILDROOT_TMP_INCOMING_PATH[] = "/tmp/incoming";
+static const std::string CHILDROOT_TMP_INCOMING_PATH = "/tmp/incoming";
 
-constexpr const char CHILDROOT_TMP_SHARED_PRESETS_PATH[] = "/tmp/sharedpresets";
+static const std::string CHILDROOT_TMP_SHARED_PRESETS_PATH = "/tmp/sharedpresets";
 
 /// The LO installation directory with jail.
-constexpr const char LO_JAIL_SUBPATH[] = "lo";
+static const std::string LO_JAIL_SUBPATH = "lo";
 
 /** Linux user/mount namespaces
 
