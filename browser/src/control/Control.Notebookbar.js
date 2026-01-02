@@ -106,8 +106,8 @@ window.L.Control.Notebookbar = window.L.Control.extend({
 
 			$(docLogo).data('id', 'document-logo');
 			$(docLogo).data('type', 'action');
-			docLogo.href = '#';
 			docLogo.target = '_blank';
+			docLogo.tabIndex = 0;
 
 			if (iconTooltip) {
 				docLogo.setAttribute('data-cooltip', iconTooltip);
