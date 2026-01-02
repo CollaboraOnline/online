@@ -88,6 +88,7 @@
 #include <wsd/Process.hpp>
 #include <common/JsonUtil.hpp>
 #include <common/FileUtil.hpp>
+#include <common/RegexUtil.hpp>
 
 #include <common/Log.hpp>
 #include <MobileApp.hpp>
@@ -182,7 +183,7 @@ extern "C"
     void forwardSigUsr2();
 }
 
-void COOLWSD::appendAllowedHostsFrom(LayeredConfiguration& conf, const std::string& root, std::vector<std::string>& allowed)
+void COOLWSD::appendAllowedHostsFrom(const LayeredConfiguration& conf, const std::string& root, std::vector<std::string>& allowed)
 {
     for (size_t i = 0; ; ++i)
     {
@@ -224,21 +225,9 @@ std::string removeProtocolAndPort(const std::string& host)
 
     return result;
 }
-
-bool isValidRegex(const std::string& expression)
-{
-    try
-    {
-        std::regex regex(expression);
-        return true;
-    }
-    catch (const std::regex_error& e) {}
-
-    return false;
-}
 }
 
-void COOLWSD::appendAllowedAliasGroups(LayeredConfiguration& conf, std::vector<std::string>& allowed)
+void COOLWSD::appendAllowedAliasGroups(const LayeredConfiguration& conf, std::vector<std::string>& allowed)
 {
     for (size_t i = 0;; i++)
     {
@@ -2110,41 +2099,7 @@ void COOLWSD::innerInitialize(Poco::Util::Application& self)
                                                         takeSnapshot, filters);
     }
 
-    // Allowed hosts for being external data source in the documents
-    std::vector<std::string> lokAllowedHosts;
-    appendAllowedHostsFrom(conf, "net.lok_allow", lokAllowedHosts);
-    // For backward compatibility post_allow hosts are also allowed
-    bool postAllowed = conf.getBool("net.post_allow[@allow]", false);
-    if (postAllowed)
-        appendAllowedHostsFrom(conf, "net.post_allow", lokAllowedHosts);
-    // For backward compatibility wopi hosts are also allowed
-    bool wopiAllowed = conf.getBool("storage.wopi[@allow]", false);
-    if (wopiAllowed)
-    {
-        appendAllowedHostsFrom(conf, "storage.wopi", lokAllowedHosts);
-        appendAllowedAliasGroups(conf, lokAllowedHosts);
-    }
-
-    if (lokAllowedHosts.size())
-    {
-        std::string allowedRegex;
-        for (size_t i = 0; i < lokAllowedHosts.size(); i++)
-        {
-            if (isValidRegex(lokAllowedHosts[i]))
-                allowedRegex += (i != 0 ? "|" : "") + lokAllowedHosts[i];
-            else
-                LOG_ERR("Invalid regular expression for allowed host: \"" << lokAllowedHosts[i] << "\"");
-        }
-
-        setenv("LOK_HOST_ALLOWLIST", allowedRegex.c_str(), true);
-
-#if !MOBILEAPP
-        if (!ConfigUtil::getConfigValue<bool>(conf, "ssl.ssl_verification", true)) {
-            // also disable host verification for allowed hosts
-            ::setenv("LOK_HOST_ALLOWLIST_EXEMPT_VERIFY_HOST", "1", true);
-        }
-#endif
-    }
+    setLokitEnvironmentVariables(conf);
 
 #if !MOBILEAPP
     SavedClipboards = std::make_unique<ClipboardCache>();
@@ -2225,6 +2180,45 @@ void COOLWSD::innerInitialize(Poco::Util::Application& self)
 #else
     (void) self;
 #endif
+}
+
+void COOLWSD::setLokitEnvironmentVariables(const Poco::Util::LayeredConfiguration& conf)
+{
+    // Allowed hosts for being external data source in the documents
+    std::vector<std::string> lokAllowedHosts;
+    appendAllowedHostsFrom(conf, "net.lok_allow", lokAllowedHosts);
+    // For backward compatibility post_allow hosts are also allowed
+    bool postAllowed = conf.getBool("net.post_allow[@allow]", false);
+    if (postAllowed)
+        appendAllowedHostsFrom(conf, "net.post_allow", lokAllowedHosts);
+    // For backward compatibility wopi hosts are also allowed
+    bool wopiAllowed = conf.getBool("storage.wopi[@allow]", false);
+    if (wopiAllowed)
+    {
+        appendAllowedHostsFrom(conf, "storage.wopi", lokAllowedHosts);
+        appendAllowedAliasGroups(conf, lokAllowedHosts);
+    }
+
+    if (lokAllowedHosts.size())
+    {
+        std::string allowedRegex;
+        for (size_t i = 0; i < lokAllowedHosts.size(); i++)
+        {
+            if (RegexUtil::isRegexValid(lokAllowedHosts[i]))
+                allowedRegex += (i != 0 ? "|" : "") + lokAllowedHosts[i];
+            else
+                LOG_ERR("Invalid regular expression for allowed host: \"" << lokAllowedHosts[i] << "\"");
+        }
+
+        setenv("LOK_HOST_ALLOWLIST", allowedRegex.c_str(), true);
+
+#if !MOBILEAPP
+        if (!ConfigUtil::getConfigValue<bool>(conf, "ssl.ssl_verification", true)) {
+            // also disable host verification for allowed hosts
+            ::setenv("LOK_HOST_ALLOWLIST_EXEMPT_VERIFY_HOST", "1", true);
+        }
+#endif
+    }
 }
 
 void COOLWSD::initializeSSL()
