@@ -104,11 +104,7 @@ class NavigatorPanel extends SidebarBase {
 			navContainer,
 		);
 
-		var navTitle = window.L.DomUtil.create(
-			'span',
-			'navigation-title',
-			navHeader,
-		);
+		var navTitle = window.L.DomUtil.create('h2', 'navigation-title', navHeader);
 		navTitle.textContent = _('Navigation');
 
 		// Create wrapper for search
@@ -291,16 +287,17 @@ class NavigatorPanel extends SidebarBase {
 		// Create the button wrapper (square container)
 		const buttonWrapper = document.createElement('div');
 		buttonWrapper.className = 'navigator-btn-wrapper'; // Class for styling
-		buttonWrapper.setAttribute('aria-label', navigatorText);
 
 		// Create the button
 		const button = document.createElement('button');
 		button.className = 'ui-content unobutton';
 		button.id = 'floating-navigator';
 		button.accessKey = 'ZN';
+		button.setAttribute('aria-label', navigatorText);
 
 		// Create the image inside the button
 		const img = document.createElement('img');
+		img.alt = ''; // empty alt for accessibility
 		app.LOUtil.setImage(img, 'lc_navigator.svg', this.map);
 
 		// Append elements
@@ -484,6 +481,9 @@ class NavigatorPanel extends SidebarBase {
 							type: 'pushbutton',
 							text: '',
 							image: 'lc_recsearch.svg',
+							aria: {
+								label: _('Search'),
+							},
 						},
 					],
 				},
