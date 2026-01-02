@@ -92,6 +92,15 @@ abstract class SidebarBase extends JSDialogComponent {
 		this.map.uiManager.setDocTypePref('Show' + upperCaseType, false);
 	}
 
+	showSidebar() {
+		$(`#${this.type}-dock-wrapper`).addClass('visible');
+		if (this.builder && (this.builder as any).windowId === WindowId.Sidebar)
+			$(`#${this.type}-dock-wrapper`).addClass('coreBased');
+
+		const upperCaseType = this.type[0].toUpperCase() + this.type.slice(1);
+		this.map.uiManager.setDocTypePref('Show' + upperCaseType, true);
+	}
+
 	protected onJSUpdate(e: FireEvent) {
 		// reduce unwanted warnings in console
 		if (e?.data?.control.id === 'addonimage') {

@@ -532,6 +532,7 @@ COOL_JS_LST =\
 	src/control/Ruler.ts \
 	src/control/VRuler.ts \
 	src/control/HRuler.ts \
+	src/control/PermissionMode.ts \
 	src/slideshow/SlideCache.ts \
 	src/slideshow/SlideCompositor.ts \
 	src/slideshow/LayerRenderer.ts \
@@ -1159,6 +1160,7 @@ pot:
 		src/control/Signing.js \
 		src/control/Toolbar.js \
 		src/control/VRuler.ts \
+		src/control/PermissionMode.ts \
 		src/control/jsdialog/Definitions.Menu.ts \
 		src/control/jsdialog/Util.SnackbarController.ts \
 		src/control/jsdialog/Widget.ColorPicker.ts \
