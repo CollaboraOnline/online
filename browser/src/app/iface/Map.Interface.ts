@@ -20,6 +20,7 @@ interface MapInterface extends Evented {
 	_docLayer: DocLayerInterface;
 	uiManager: UIManager;
 	_textInput: { debug(value: boolean): void };
+	addressInputField: AddressInputField;
 
 	removeLayer(layer: any): void;
 	addLayer(layer: any): void;
@@ -97,7 +98,7 @@ interface MapInterface extends Evented {
 	hideRestrictedItems(it: any, item: any, button: any): void;
 	disableLockedItem(it: any, item: any, button: any): void;
 	isLockedItem(data: any): boolean;
-	openUnlockPopup(cmd: ParsedJSONResult): void;
+	openUnlockPopup(cmd: ControlCommand): void;
 	isLockedUser(): boolean;
 	isRestrictedUser(): boolean;
 
