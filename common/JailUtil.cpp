@@ -38,6 +38,9 @@ extern int domount(int argc, const char* const* argv);
 namespace JailUtil
 {
 
+namespace
+{
+
 static const std::string CoolTestMountpoint = "cool_test_mount";
 
 static void setdeny()
@@ -58,6 +61,7 @@ static void mapuser(uid_t origuid, uid_t newuid, gid_t origgid, gid_t newgid)
         of << newgid << " " << origgid << " 1";
     }
 }
+} // namespace
 
 bool enterMountingNS(uid_t uid, gid_t gid)
 {
@@ -120,6 +124,9 @@ bool enterUserNS(uid_t uid, gid_t gid)
 #endif
 }
 
+namespace
+{
+
 static bool coolmount(const std::string& arg, std::string source, std::string target,
                       bool silent = false)
 {
@@ -147,6 +154,7 @@ static bool coolmount(const std::string& arg, std::string source, std::string ta
     LOG_TRC("Executing coolmount command: " << cmd);
     return !system(cmd.c_str());
 }
+} // namespace
 
 bool bind(const std::string& source, const std::string& target)
 {
@@ -190,6 +198,9 @@ bool remountReadonly(const std::string& source, const std::string& target)
     return false;
 }
 
+namespace
+{
+
 /// Unmount a bind-mounted jail directory.
 static bool unmount(const std::string& target, bool silent = false)
 {
@@ -211,6 +222,7 @@ static bool unmount(const std::string& target, bool silent = false)
 
     return res;
 }
+} // namespace
 
 // This file signifies that we copied instead of mounted.
 // NOTE: jail cleanup helpers are called from forkit and
@@ -238,6 +250,9 @@ bool isJailCopied(const std::string& root)
     FileUtil::Stat delFileStat(root + '/' + COPIED_JAIL_MARKER_FILE);
     return delFileStat.exists();
 }
+
+namespace
+{
 
 static bool safeRemoveDir(const std::string& path)
 {
@@ -293,6 +308,8 @@ void removeAssocTmpOfJail(const std::string &root)
 
     FileUtil::removeFile(jailPath.toString(), true);
 }
+
+} // namespace
 
 bool tryRemoveJail(const std::string& root)
 {
@@ -515,39 +532,10 @@ static const auto DynamicFilePaths
     = { "/etc/passwd",        "/etc/group",       "/etc/host.conf", "/etc/hosts",
         "/etc/nsswitch.conf", "/etc/resolv.conf", "/etc/timezone",  "/etc/localtime" };
 
+namespace
+{
 /// Copy (false) by default for KIT_IN_PROCESS.
 static bool LinkDynamicFiles = false;
-
-static bool updateDynamicFilesImpl(const std::string& sysTemplate);
-
-void setupDynamicFiles(const std::string& sysTemplate)
-{
-    LOG_INF("Setting up systemplate dynamic files in [" << sysTemplate << "].");
-
-    LinkDynamicFiles = true; // Prefer linking, unless it fails.
-
-    const bool uptodate = updateDynamicFilesImpl(sysTemplate);
-    if (!uptodate)
-    {
-        // Can't copy!
-        LOG_WRN("Failed to update the dynamic files in ["
-                << sysTemplate
-                << "]. Will clone dynamic elements of systemplate to the jails.");
-        LinkDynamicFiles = false;
-    }
-
-    FileUtil::Stat copiedFileStat(Poco::Path(sysTemplate, "etc/copied").toString());
-    if (copiedFileStat.exists())
-    {
-        // At least one file is copied, we must check for changes before each jail setup.
-        LinkDynamicFiles = false;
-    }
-
-    LOG_INF("Systemplate dynamic files in ["
-            << sysTemplate << "] "
-            << (LinkDynamicFiles ? "are linked and will remain" : "will be copied to keep them")
-            << " up-to-date.");
-}
 
 bool updateDynamicFilesImpl(const std::string& sysTemplate)
 {
@@ -650,12 +638,44 @@ bool updateDynamicFilesImpl(const std::string& sysTemplate)
 
     return true;
 }
+} // namespace
+
+void setupDynamicFiles(const std::string& sysTemplate)
+{
+    LOG_INF("Setting up systemplate dynamic files in [" << sysTemplate << "].");
+
+    LinkDynamicFiles = true; // Prefer linking, unless it fails.
+
+    const bool uptodate = updateDynamicFilesImpl(sysTemplate);
+    if (!uptodate)
+    {
+        // Can't copy!
+        LOG_WRN("Failed to update the dynamic files in ["
+                << sysTemplate << "]. Will clone dynamic elements of systemplate to the jails.");
+        LinkDynamicFiles = false;
+    }
+
+    FileUtil::Stat copiedFileStat(Poco::Path(sysTemplate, "etc/copied").toString());
+    if (copiedFileStat.exists())
+    {
+        // At least one file is copied, we must check for changes before each jail setup.
+        LinkDynamicFiles = false;
+    }
+
+    LOG_INF("Systemplate dynamic files in ["
+            << sysTemplate << "] "
+            << (LinkDynamicFiles ? "are linked and will remain" : "will be copied to keep them")
+            << " up-to-date.");
+}
 
 bool updateDynamicFiles(const std::string& sysTemplate)
 {
     // If the files are linked, they are always up-to-date.
     return LinkDynamicFiles ? true : updateDynamicFilesImpl(sysTemplate);
 }
+
+namespace
+{
 
 void setupRandomDeviceLink(const std::string& sysTemplate, const std::string& name)
 {
@@ -694,6 +714,7 @@ void setupRandomDeviceLink(const std::string& sysTemplate, const std::string& na
             << "]. Some features, such us password-protection and document-signing might not work");
     }
 }
+} // namespace
 
 // The random devices are setup in two stages.
 // This is the first stage, where we create symbolic links
