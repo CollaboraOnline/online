@@ -1636,6 +1636,16 @@ window.L.Control.NotebookbarCalc = window.L.Control.NotebookbarWriter.extend({
 				'command': '.uno:Navigator',
 				'accessibility': { focusBack: true,	combination: 'N', de: null }
 			},
+			{ type: 'separator', id: 'view-navigator-break', orientation: 'vertical' },
+			{
+				'id': 'gatherwindows',
+				'class': 'unogatherwindows',
+				'type': 'bigcustomtoolitem',
+				'text': _('Gather windows'),
+				'command': 'gatherwindows',
+				'icon': 'lc_combine.svg',
+				'accessibility': { focusBack: true,	combination: 'GW', de: null }
+			},
 
 		];
 
