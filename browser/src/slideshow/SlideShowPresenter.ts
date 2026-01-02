@@ -431,7 +431,7 @@ class SlideShowPresenter {
 		if (this._slideCompositor) this._slideCompositor.deleteResources();
 		this._slideRenderer.deleteResources();
 
-		window.removeEventListener('keydown', this._onKeyDownHandler);
+		window.removeEventListener('keydown', this._onKeyDownHandler, true);
 
 		window.L.DomUtil.remove(this._slideShowCanvas);
 		this._slideShowCanvas = null;
@@ -1169,6 +1169,8 @@ class SlideShowPresenter {
 		this._enablePresenterConsole(true);
 		this._startingPresentation = true;
 		app.socket.sendMessage('getpresentationinfo');
+		// Attach the keydown event listener for present in window
+		window.addEventListener('keydown', this._onKeyDownHandler, true);
 	}
 
 	/// called as a response on getpresentationinfo
