@@ -365,6 +365,20 @@ interface IconViewJSON extends WidgetJSON {
 	selectionmode: string; // single or multiple
 }
 
+interface IconViewElement extends HTMLElement {
+	requestRenders: (
+		entry: IconViewEntry,
+		placeholder: Element,
+		entryContainer: Element,
+	) => void;
+	builderCallback: (
+		objectType: string,
+		eventType: string,
+		entryData: any,
+		builder: JSBuilder,
+	) => void;
+}
+
 interface EditWidgetJSON extends WidgetJSON {
 	placeholder: string; // show when empty
 	text: string; // text value

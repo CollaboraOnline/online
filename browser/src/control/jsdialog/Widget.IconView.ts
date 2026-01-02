@@ -59,7 +59,7 @@ function _createEntryText(parent: HTMLElement, entryData: IconViewEntry) {
 }
 
 function _iconViewEntry(
-	parentContainer: Element,
+	parentContainer: IconViewElement,
 	parentData: IconViewJSON,
 	entry: IconViewEntry,
 	builder: JSBuilder,
@@ -110,7 +110,7 @@ function _iconViewEntry(
 		else if (entry.text) placeholder.title = entry.text;
 		else placeholder.title = '';
 
-		(parentContainer as any).requestRenders(entry, placeholder, entryContainer);
+		parentContainer.requestRenders(entry, placeholder, entryContainer);
 	} else {
 		_createEntryImage(entryContainer, builder, entry, entry.image);
 	}
@@ -138,17 +138,12 @@ function _iconViewEntry(
 			//avoid re-selecting already selected entry
 			if (entryContainer.classList.contains('selected')) return;
 
-			(parentContainer as any).builderCallback(
-				'iconview',
-				'select',
-				entry.row,
-				builder,
-			);
+			parentContainer.builderCallback('iconview', 'select', entry.row, builder);
 			entryContainer.classList.add('selected');
 			entryContainer.setAttribute(ariaStateAttr, 'true');
 
 			if (singleClick) {
-				(parentContainer as any).builderCallback(
+				parentContainer.builderCallback(
 					'iconview',
 					'activate',
 					entry.row,
@@ -165,16 +160,11 @@ function _iconViewEntry(
 					el.setAttribute(ariaStateAttr, 'false');
 				});
 
-			(parentContainer as any).builderCallback(
-				'iconview',
-				'select',
-				entry.row,
-				builder,
-			);
+			parentContainer.builderCallback('iconview', 'select', entry.row, builder);
 			entryContainer.classList.add('selected');
 			entryContainer.setAttribute(ariaStateAttr, 'true');
 
-			(parentContainer as any).builderCallback(
+			parentContainer.builderCallback(
 				'iconview',
 				'contextmenu',
 				entry.row,
@@ -185,7 +175,7 @@ function _iconViewEntry(
 
 		if (!singleClick) {
 			entryContainer.addEventListener('dblclick', function () {
-				(parentContainer as any).builderCallback(
+				parentContainer.builderCallback(
 					'iconview',
 					'activate',
 					entry.row,
