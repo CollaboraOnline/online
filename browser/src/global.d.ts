@@ -140,6 +140,18 @@ interface SockInterface {
 	binaryType: 'blob' | 'arraybuffer';
 }
 
+interface ServerInfo {
+	coolwsdVersion: string;
+	coolwsdHash: string;
+	lokitVersionName: string;
+	lokitVersionNumber: string;
+	lokitVersionSuffix: string;
+	lokitHash: string;
+	serverId: string;
+	osInfo: string;
+	wsdOptions: any;
+}
+
 interface ErrorMessages {
 	diskfull: string;
 	emptyhosturl: string;
@@ -276,6 +288,7 @@ interface Window {
 		allDialogs?: string[];
 		a11yValidator?: A11yValidator;
 		A11yValidatorException?: typeof A11yValidatorException;
+		serverInfo: ServerInfo;
 	};
 	// coolParams defined in: js/global.js
 	coolParams: {
@@ -334,6 +347,11 @@ interface Window {
 	socketProxy: boolean;
 	langParam: string;
 	logoURL?: string;
+	MobileAppName: string;
+	geolocationSetup: boolean;
+	wopiHostId: string;
+	vendor: string;
+	copyrightYear: string;
 
 	socket: SockInterface;
 	errorMessages: ErrorMessages;

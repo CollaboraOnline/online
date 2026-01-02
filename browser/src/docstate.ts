@@ -292,6 +292,17 @@ window.app = {
 	// Below are only used for Cypress tests
 	allDialogs: undefined, // List of UNO commands for dialogs
 	a11yValidator: undefined, // Accessibility validator
+	serverInfo: {
+		coolwsdVersion: '',
+		coolwsdHash: '',
+		lokitVersionName: '',
+		lokitVersionNumber: '',
+		lokitVersionSuffix: '',
+		lokitHash: '',
+		serverId: '',
+		osInfo: '',
+		wsdOptions: '',
+	},
 };
 
 var activateValidation = false;
