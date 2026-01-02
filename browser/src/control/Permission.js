@@ -199,6 +199,17 @@ window.L.Map.include({
 		}
 	},
 
+	/*
+	 * NOTE: this function sets the initial zoom level when the document loads.
+	 * 		 maybe i can call the `setMaxZoomForAvailableSpace` function here
+	 * 		 instead of listening for some events.
+	 *
+	 * 		 other option is to fire an event at the right moment, when the
+	 * 		 document is loaded and when everything is in place. but wouldn't
+	 * 		 that add a flicker to the document as it would request the 
+	 * 		 tiles again for that zoom level?
+	 * 		 
+	 */
 	_enterEditMode: function (perm) {
 		this._permission = perm;
 
