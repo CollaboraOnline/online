@@ -12,7 +12,6 @@
 class ViewLayoutMultiPage extends ViewLayoutBase {
 	public readonly type: string = 'ViewLayoutMultiPage';
 	public gapBetweenPages = 20; // Core pixels.
-	public availableWidth = 0;
 	private maxRowsSize = 2;
 	public documentRectangles = Array<cool.SimpleRectangle>();
 	private viewRectangles = Array<cool.SimpleRectangle>();
@@ -173,37 +172,6 @@ class ViewLayoutMultiPage extends ViewLayoutBase {
 		return part;
 	}
 
-	private refreshCurrentCoordList() {
-		this.currentCoordList.length = 0;
-		const zoom = app.map.getZoom();
-
-		const columnCount = Math.ceil(
-			this._viewedRectangle.pWidth / TileManager.tileSize,
-		);
-		const rowCount = Math.ceil(
-			this._viewedRectangle.pHeight / TileManager.tileSize,
-		);
-		const startX =
-			Math.floor(this._viewedRectangle.pX1 / TileManager.tileSize) *
-			TileManager.tileSize;
-		const startY =
-			Math.floor(this._viewedRectangle.pY1 / TileManager.tileSize) *
-			TileManager.tileSize;
-
-		for (let i = 0; i < columnCount; i++) {
-			for (let j = 0; j < rowCount; j++) {
-				const coords = new TileCoordData(
-					startX + i * TileManager.tileSize,
-					startY + j * TileManager.tileSize,
-					zoom,
-					0,
-				);
-
-				if (coords.x >= 0 && coords.y >= 0) this.currentCoordList.push(coords);
-			}
-		}
-	}
-
 	private refreshVisibleAreaRectangle(): void {
 		const documentAnchor = this.getDocumentAnchorSection();
 		const view = cool.SimpleRectangle.fromCorePixels([
@@ -238,12 +206,20 @@ class ViewLayoutMultiPage extends ViewLayoutBase {
 			}
 		}
 
-		resultingRectangle.pX1 -= TileManager.tileSize;
-		resultingRectangle.pY1 -= TileManager.tileSize;
-		resultingRectangle.pWidth += TileManager.tileSize * 2;
-		resultingRectangle.pHeight += TileManager.tileSize * 2;
+		if (
+			resultingRectangle.pX1 === Number.POSITIVE_INFINITY ||
+			resultingRectangle.pY1 === Number.POSITIVE_INFINITY
+		) {
+			app.layoutingService.appendLayoutingTask(() => {
+				this.scrollProperties.viewX = 0;
+				this.refreshVisibleAreaRectangle();
+			});
+		}
 
 		this._viewedRectangle = resultingRectangle;
+
+		app.sectionContainer.onNewDocumentTopLeft();
+		app.sectionContainer.requestReDraw();
 	}
 
 	private updateViewData() {
@@ -426,5 +402,19 @@ class ViewLayoutMultiPage extends ViewLayoutBase {
 
 	public set viewedRectangle(rectangle: cool.SimpleRectangle) {
 		return; // Disable setting the viewed rectangle externally.
+	}
+
+	public getTotalSideSpace() {
+		const maxX: number = this.viewRectangles.reduce((result, currentItem) => {
+			return Math.max(currentItem.pX2, result);
+		}, 0);
+		const minX: number = this.viewRectangles.reduce((result, currentItem) => {
+			return Math.min(currentItem.pX1, result);
+		}, 100000);
+		const width = maxX - minX;
+
+		const sideSpace = this.viewSize.pX - width;
+
+		return sideSpace;
 	}
 }

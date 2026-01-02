@@ -191,7 +191,7 @@ window.L.TileSectionManager = window.L.Class.extend({
 		this._layer = layer;
 		this._canvas = this._layer._canvas;
 		this._map = this._layer._map;
-		var mapSize = this._map.getPixelBoundsCore().getSize();
+		var mapSize = { x:  app.sectionContainer.getWidth(), y:  app.sectionContainer.getHeight() };
 		this._tilesSection = null; // Shortcut.
 
 		if (window.L.Browser.cypressTest) // If cypress is active, create test divs.
@@ -2970,14 +2970,6 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 				' x=' + x + ' y=' + y);
 	},
 
-	// Is rRectangle empty?
-	_isEmptyRectangle: function (bounds) {
-		if (!bounds) {
-			return true;
-		}
-		return bounds.getSouthWest().equals(new window.L.LatLng(0, 0)) && bounds.getNorthEast().equals(new window.L.LatLng(0, 0));
-	},
-
 	_onZoomStart: function () {
 		this._isZooming = true;
 	},
@@ -4106,7 +4098,6 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 
 		if (this._documentInfo === '' || sizeChanged) {
 			// we just got the first status so we need to center the document
-			this._map.setDocBounds(new window.L.LatLngBounds(topLeft, this._map.unproject(docPixelLimits)));
 			this._map.setMaxBounds(new window.L.LatLngBounds(topLeft, this._map.unproject(scrollPixelLimits)));
 		}
 
