@@ -372,7 +372,7 @@ namespace Util
         zstdVersion += std::to_string(ZSTD_VERSION_MINOR) + ".";
         zstdVersion += std::to_string(ZSTD_VERSION_RELEASE);
 
-        std::string json = "{ \"Version\":     \"" + version +
+        std::string json = R"({ "Version":     ")" + version +
                            "\", "
                            "\"Hash\":        \"" +
                            hash +
@@ -401,9 +401,9 @@ namespace Util
                            Util::getProcessIdentifier() + "\", ";
 
         if (!timezone.empty())
-            json += "\"TimeZone\":     \"" + timezone + "\", ";
+            json += R"("TimeZone":     ")" + timezone + "\", ";
 
-        json += "\"Options\":     \"" + std::string(enableExperimental ? " (E)" : "") + "\" }";
+        json += R"("Options":     ")" + std::string(enableExperimental ? " (E)" : "") + "\" }";
         return json;
     }
 

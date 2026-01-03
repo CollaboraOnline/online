@@ -89,7 +89,8 @@ constexpr auto MaxFileSizeToCacheInBytes = 1024 * 1024 *
 #else
     50;
 #endif
-constexpr std::string_view MetaViewPort = "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1, minimum-scale=1, interactive-widget=resizes-content\">";
+constexpr std::string_view MetaViewPort =
+    R"(<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, interactive-widget=resizes-content">)";
 
 namespace
 {
@@ -580,8 +581,8 @@ bool FileServerRequestHandler::isAdminLoggedIn(const HTTPRequest& request, http:
                         std::ostreambuf_iterator<char>(outfile));
             outfile.close();
 
-            std::string body = "{\"LastModifiedTime\": \"" +
-                localFile->getLastModifiedTime() + "\" }";
+            std::string body =
+                R"({"LastModifiedTime": ")" + localFile->getLastModifiedTime() + "\" }";
             http::Response httpResponse(http::StatusCode::OK);
             FileServerRequestHandler::hstsHeaders(httpResponse);
             httpResponse.setBody(std::move(body), "application/json; charset=utf-8");
@@ -859,7 +860,7 @@ bool FileServerRequestHandler::isAdminLoggedIn(const HTTPRequest& request, http:
 
                 std::string timestamp =
                     Util::getIso8601FracformatTime(std::chrono::system_clock::now());
-                std::string body = "{\"LastModifiedTime\": \"" + timestamp + "\" }";
+                std::string body = R"({"LastModifiedTime": ")" + timestamp + "\" }";
                 http::Response httpResponse(http::StatusCode::OK);
                 FileServerRequestHandler::hstsHeaders(httpResponse);
                 httpResponse.setBody(std::move(body), "application/json; charset=utf-8");
@@ -899,7 +900,7 @@ bool FileServerRequestHandler::isAdminLoggedIn(const HTTPRequest& request, http:
 
             std::string timestamp =
                 Util::getIso8601FracformatTime(std::chrono::system_clock::now());
-            std::string body = "{\"LastModifiedTime\": \"" + timestamp + "\" }";
+            std::string body = R"({"LastModifiedTime": ")" + timestamp + "\" }";
             http::Response httpResponse(http::StatusCode::OK);
             FileServerRequestHandler::hstsHeaders(httpResponse);
             httpResponse.setBody(std::move(body), "application/json; charset=utf-8");
@@ -2667,7 +2668,7 @@ void FileServerRequestHandler::updateThemeResources(std::string& fileContent,
         if (!key.verify() || key.validDaysRemaining() <= 0)
         {
             std::ostringstream ossBrandCSS;
-            ossBrandCSS << "<link rel=\"stylesheet\" href=\"" << responseRoot << "/browser/"
+            ossBrandCSS << R"(<link rel="stylesheet" href=")" << responseRoot << "/browser/"
                         << COOLWSD_VERSION_HASH << "/" << themePrefix
                         << SUPPORT_KEY_BRANDING_UNSUPPORTED << ".css\">";
             brandCSS = ossBrandCSS.str();
@@ -2683,7 +2684,7 @@ void FileServerRequestHandler::updateThemeResources(std::string& fileContent,
     if (brandCSS.empty())
     {
         std::ostringstream ossBrandCSS;
-        ossBrandCSS << "<link rel=\"stylesheet\" href=\"" << responseRoot << "/browser/"
+        ossBrandCSS << R"(<link rel="stylesheet" href=")" << responseRoot << "/browser/"
                     << COOLWSD_VERSION_HASH << "/" << themePrefix << BRANDING << ".css\">";
         brandCSS = ossBrandCSS.str();
     }
