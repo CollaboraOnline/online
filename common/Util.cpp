@@ -24,6 +24,7 @@
 #include <Poco/Exception.h>
 #include <Poco/Format.h>
 #include <Poco/HexBinaryEncoder.h>
+#include <Poco/LineEndingConverter.h>
 #include <Poco/TemporaryFile.h>
 #include <Poco/URI.h>
 #include <Poco/Util/Application.h>
@@ -1012,6 +1013,17 @@ namespace Util
     {
         std::ostringstream oss;
         Poco::Base64Encoder encoder(oss);
+        encoder << input;
+        encoder.close();
+        return oss.str();
+    }
+
+    std::string base64EncodeRemovingNewLines(const std::string_view& input)
+    {
+        std::ostringstream oss;
+        // Use a line ending converter to remove these CRLF.
+        Poco::OutputLineEndingConverter lineEndingConv(oss, "");
+        Poco::Base64Encoder encoder(lineEndingConv);
         encoder << input;
         encoder.close();
         return oss.str();
