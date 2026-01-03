@@ -647,7 +647,8 @@ public:
     bool has(const std::string& key) const { return _header.has(key); }
 
     /// Get a header entry value by key, if found, defaulting to @def, if missing.
-    std::string get(const std::string& key, const std::string& def = std::string()) const
+    [[nodiscard]] std::string get(const std::string_view& key,
+                                  const std::string& def = std::string()) const
     {
         return _header.get(key, def);
     }
