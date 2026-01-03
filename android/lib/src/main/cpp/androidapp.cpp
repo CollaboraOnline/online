@@ -23,8 +23,6 @@
 
 #include <osl/detail/android-bootstrap.h>
 
-#include <Poco/Base64Encoder.h>
-
 const int SHOW_JS_MAXLEN = 70;
 
 int coolwsd_server_socket_fd = -1;

@@ -32,7 +32,6 @@
 #include <wsd/FileServer.hpp>
 #include <wsd/TileDesc.hpp>
 
-#include <Poco/Base64Decoder.h>
 #include <Poco/JSON/Parser.h>
 #include <Poco/MemoryStream.h>
 #include <Poco/Net/HTTPResponse.h>
