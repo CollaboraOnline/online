@@ -37,6 +37,7 @@
 #include <wsd/ClientRequestDispatcher.hpp>
 #include <wsd/DocumentBroker.hpp>
 #include <wsd/RequestVettingStation.hpp>
+#include <net/WebSocketHandler.hpp>
 
 #if !MOBILEAPP
 #include <Admin.hpp>
@@ -108,6 +109,54 @@ inline void shutdownLimitReached(const std::shared_ptr<ProtocolHandlerInterface>
     }
 }
 #endif
+
+/// WebSocket handler for /co/collab endpoint
+/// Accepts WOPISrc from URL, access_token from first message
+class CollabSocketHandler : public WebSocketHandler
+{
+    std::string _wopiSrc;
+    std::string _accessToken;
+    bool _isAuthenticated = false;
+
+public:
+    CollabSocketHandler(const std::shared_ptr<StreamSocket>& socket,
+                        const Poco::Net::HTTPRequest& request,
+                        bool allowedOrigin,
+                        const std::string& wopiSrc)
+        : WebSocketHandler(socket, request, allowedOrigin)
+        , _wopiSrc(wopiSrc)
+    {
+    }
+
+    void handleMessage(const std::vector<char>& payload) override
+    {
+        if (!_isAuthenticated)
+        {
+            const std::string msg(payload.data(), payload.size());
+            static const std::string prefix = "access_token ";
+            if (msg.size() > prefix.size() &&
+                msg.compare(0, prefix.size(), prefix) == 0)
+            {
+                _accessToken = msg.substr(prefix.size());
+                _isAuthenticated = true;
+                LOG_INF("Collab session authenticated for WOPISrc: "
+                        << COOLWSD::anonymizeUrl(_wopiSrc));
+                sendMessage("authenticated");
+                return;
+            }
+            LOG_ERR("First message must be access_token, got: "
+                    << COOLProtocol::getAbbreviatedMessage(payload));
+            sendMessage("error: access_token required");
+            shutdown();
+            return;
+        }
+        // TODO: Handle authenticated messages
+    }
+
+    const std::string& getWopiSrc() const { return _wopiSrc; }
+    const std::string& getAccessToken() const { return _accessToken; }
+    bool isAuthenticated() const { return _isAuthenticated; }
+};
 
 } // end anonymous namespace
 
@@ -1229,6 +1278,37 @@ ClientRequestDispatcher::MessageResult ClientRequestDispatcher::handleMessage(Po
         else if (requestDetails.equals(RequestDetails::Field::Type, "cool") &&
                  requestDetails.equals(2, "ws") && requestDetails.isWebSocket())
             servedSync = handleClientWsUpgrade(request, requestDetails, disposition, socket);
+
+        else if (requestDetails.equals(0, "co") &&
+                 requestDetails.equals(1, "collab") &&
+                 requestDetails.isWebSocket())
+        {
+            // /co/collab WebSocket endpoint
+            LOG_INF("Collab request: " << request.getURI());
+
+            // Extract WOPISrc from query parameters
+            std::string wopiSrc;
+            Poco::URI requestUri(request.getURI());
+            for (const auto& param : requestUri.getQueryParameters())
+            {
+                if (param.first == "WOPISrc")
+                {
+                    wopiSrc = param.second;
+                    break;
+                }
+            }
+
+            if (wopiSrc.empty())
+            {
+                LOG_ERR("Missing WOPISrc parameter in collab request");
+                HttpHelper::sendErrorAndShutdown(http::StatusCode::BadRequest, socket);
+                return MessageResult::Ignore;
+            }
+
+            const bool allowed = allowedOrigin(request, requestDetails);
+            auto handler = std::make_shared<CollabSocketHandler>(socket, request, allowed, wopiSrc);
+            socket->setHandler(handler);
+        }
 
         else if (!requestDetails.isWebSocket() &&
                  (requestDetails.equals(RequestDetails::Field::Type, "cool") ||
