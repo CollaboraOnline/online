@@ -17,7 +17,6 @@
 #include <string>
 
 #include <Poco/Base64Decoder.h>
-#include <Poco/Base64Encoder.h>
 #include <Poco/Crypto/RSADigestEngine.h>
 #include <Poco/Crypto/RSAKey.h>
 #include <Poco/Dynamic/Var.h>
@@ -35,7 +34,6 @@
 #include <common/ConfigUtil.hpp>
 
 using Poco::Base64Decoder;
-using Poco::Base64Encoder;
 using Poco::OutputLineEndingConverter;
 
 std::unique_ptr<Poco::Crypto::RSAKey> JWTAuth::_key(
@@ -76,13 +74,7 @@ const std::string JWTAuth::getAccessToken()
     Poco::Crypto::DigestEngine::Digest digest = _digestEngine.signature();
 
     // The signature generated contains CRLF line endings.
-    // Use a line ending converter to remove these CRLF
-    std::ostringstream ostr;
-    OutputLineEndingConverter lineEndingConv(ostr, "");
-    Base64Encoder encoder(lineEndingConv);
-    encoder << std::string(digest.begin(), digest.end());
-    encoder.close();
-    std::string encodedSig = ostr.str();
+    std::string encodedSig = Util::base64EncodeRemovingNewLines(digest);
 
     // trim '=' from end of encoded signature
     encodedSig.erase(std::find_if(encodedSig.rbegin(), encodedSig.rend(),
@@ -116,13 +108,8 @@ bool JWTAuth::verify(const std::string& accessToken)
         _digestEngine.update(encodedBody.c_str(), static_cast<unsigned>(encodedBody.length()));
         Poco::Crypto::DigestEngine::Digest digest = _digestEngine.signature();
 
-        std::ostringstream ostr;
-        OutputLineEndingConverter lineEndingConv(ostr, "");
-        Base64Encoder encoder(lineEndingConv);
-
-        encoder << std::string(digest.begin(), digest.end());
-        encoder.close();
-        std::string encodedSig = ostr.str();
+        // The signature generated contains CRLF line endings.
+        std::string encodedSig = Util::base64EncodeRemovingNewLines(digest);
 
         // trim '=' from end of encoded signature.
         encodedSig.erase(std::find_if(encodedSig.rbegin(), encodedSig.rend(),
@@ -183,13 +170,7 @@ const std::string JWTAuth::createHeader()
     const std::string header = "{\"alg\":\"" + _alg + "\",\"typ\":\"" + _typ + "\"}";
 
     LOG_INF("JWT Header: " << header);
-    std::ostringstream ostr;
-    OutputLineEndingConverter lineEndingConv(ostr, "");
-    Base64Encoder encoder(lineEndingConv);
-    encoder << header;
-    encoder.close();
-
-    return ostr.str();
+    return Util::base64EncodeRemovingNewLines(header);
 }
 
 const std::string JWTAuth::createPayload()
@@ -205,13 +186,7 @@ const std::string JWTAuth::createPayload()
                               + "\",\"exp\":\"" + exptime + "\"}";
 
     LOG_INF("JWT Payload: " << payload << " expires in " << expirySeconds << "seconds");
-    std::ostringstream ostr;
-    OutputLineEndingConverter lineEndingConv(ostr, "");
-    Base64Encoder encoder(lineEndingConv);
-    encoder << payload;
-    encoder.close();
-
-    return ostr.str();
+    return Util::base64EncodeRemovingNewLines(payload);
 }
 
 //TODO: This MUST be done over TLS to protect the token.
