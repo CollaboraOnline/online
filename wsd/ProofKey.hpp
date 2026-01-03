@@ -13,6 +13,8 @@
 
 #pragma once
 
+#include <common/Util.hpp>
+
 #include <string>
 #include <utility>
 #include <vector>
@@ -47,7 +49,11 @@ public:
 private:
     static std::string ProofKeyPath();
 
-    static std::string BytesToBase64(const std::vector<unsigned char>& bytes);
+    static std::string BytesToBase64(const std::vector<unsigned char>& bytes)
+    {
+        return Util::base64EncodeRemovingNewLines(bytes);
+    }
+
     static std::vector<unsigned char> Base64ToBytes(const std::string &str);
 
     // modulus and exponent are big-endian vectors
