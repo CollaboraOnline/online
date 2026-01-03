@@ -566,7 +566,7 @@ UnitBase::TestResult UnitSession::testGetMetrics()
         // line examples:
         // coolwsd_count 1
         // doc_info{host=\"\",key=\"%2Ftmp%2FtestHandshake6cb43aac_hello.odt\",filename=\"testHandshake6cb43aac_hello.odt\",pid=\"2267723\"} 1
-        const std::regex line_regex("([\\w_]+(\\{([\\w_]+=\"[\\w_%\\.]*\",?)+\\})?) (\\d+(\\.\\d+)?)");
+        const std::regex line_regex(R"(([\w_]+(\{([\w_]+="[\w_%\.]*",?)+\})?) (\d+(\.\d+)?))");
         std::smatch match;
         int line_count = 0;
         while (std::getline(body, line)) {

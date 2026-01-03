@@ -180,7 +180,7 @@ bool JWTAuth::verify(const std::string& accessToken)
 const std::string JWTAuth::createHeader()
 {
     // TODO: Some sane code to represent JSON objects
-    const std::string header = "{\"alg\":\"" + _alg + "\",\"typ\":\"" + _typ + "\"}";
+    const std::string header = R"({"alg":")" + _alg + R"(","typ":")" + _typ + "\"}";
 
     LOG_INF("JWT Header: " << header);
     std::ostringstream ostr;
@@ -200,9 +200,8 @@ const std::string JWTAuth::createPayload()
     const std::string exptime = std::to_string(curtime + expirySeconds);
 
     // TODO: Some sane code to represent JSON objects
-    const std::string payload = "{\"iss\":\"" + _iss + "\",\"sub\":\"" + _sub
-                              + "\",\"aud\":\"" + _aud + "\",\"nme\":\"" + _name
-                              + "\",\"exp\":\"" + exptime + "\"}";
+    const std::string payload = R"({"iss":")" + _iss + R"(","sub":")" + _sub + R"(","aud":")" +
+                                _aud + R"(","nme":")" + _name + R"(","exp":")" + exptime + "\"}";
 
     LOG_INF("JWT Payload: " << payload << " expires in " << expirySeconds << "seconds");
     std::ostringstream ostr;

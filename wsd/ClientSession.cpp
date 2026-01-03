@@ -679,7 +679,7 @@ bool ClientSession::_handleInput(const char *buffer, int length)
                     {
                         COOLWSD::writeTraceEventRecording("{\"name\":"
                                                           + name
-                                                          + ",\"ph\":\"i\""
+                                                          + R"(,"ph":"i")"
                                                           + args
                                                           + ",\"ts\":"
                                                           + std::to_string(ts + _performanceCounterEpoch)
@@ -695,7 +695,7 @@ bool ClientSession::_handleInput(const char *buffer, int length)
                     {
                         COOLWSD::writeTraceEventRecording("{\"name\":"
                                                           + name
-                                                          + ",\"ph\":\""
+                                                          + R"(,"ph":")"
                                                           + ph
                                                           + "\""
                                                           + args
@@ -714,7 +714,7 @@ bool ClientSession::_handleInput(const char *buffer, int length)
                     {
                         COOLWSD::writeTraceEventRecording("{\"name\":"
                                                           + name
-                                                          + ",\"ph\":\"X\""
+                                                          + R"(,"ph":"X")"
                                                           + args
                                                           + ",\"ts\":"
                                                           + std::to_string(ts + _performanceCounterEpoch)
