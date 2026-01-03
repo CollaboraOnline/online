@@ -1457,6 +1457,9 @@ int main(int argc, char**argv)
             std::string_view(reinterpret_cast<const char*>(input.data()), input.size()));
     }
 
+    /// Base-64 decode the given input.
+    std::string base64Decode(const std::string& input);
+
 } // end namespace Util
 
 inline std::ostream& operator<<(std::ostream& os, const std::chrono::system_clock::time_point& ts)
