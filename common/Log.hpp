@@ -14,6 +14,7 @@
 #include <common/StateEnum.hpp>
 #include <common/Util.hpp>
 
+#include <array>
 #include <cerrno>
 #include <chrono>
 #include <cstddef>
@@ -87,6 +88,42 @@ namespace Log
     void postFork();
 
     void setThreadLocalLogLevel(const std::string& logLevel);
+
+    /// Per-thread log prefix that is both safe and efficient.
+    /// Generates log entry prefix. Example follows (without the vertical bars).
+    /// |wsd-07272-07298 2020-04-25 17:29:28.928697 -0400 [ websrv_poll ] TRC  |
+    class Prefix
+    {
+    public:
+        Prefix();
+
+        /// Get the log prefix, without updating it.
+        std::string_view prefix() const { return _prefix; }
+
+        /// Update and return the log prefix.
+        std::string_view update(std::string_view level,
+                                std::chrono::time_point<std::chrono::system_clock> tp =
+                                    std::chrono::system_clock::now());
+
+        static thread_local Prefix Instance;
+
+    private:
+        static constexpr std::size_t BufferSize = 128;
+        std::array<char, BufferSize> _buffer;
+        std::string_view _prefix;
+        std::tm _last_tm; ///< The local timestamp in the prefix.
+        std::time_t _last_time; ///< The system timestamp in the prefix.
+        char* _year_pos;
+        char* _tz_pos;
+        char* _level_pos;
+    };
+
+    /// Per-thread log prefix that is both safe and efficient.
+    /// Generates log entry prefix. Example follows (without the vertical bars).
+    /// |wsd-07272-07298 2020-04-25 17:29:28.928697 -0400 [ websrv_poll ] TRC  |
+    std::string_view prefix(
+        const std::string_view level,
+        std::chrono::time_point<std::chrono::system_clock> tp = std::chrono::system_clock::now());
 
     /// Generates log entry prefix. Example follows (without the vertical bars).
     /// |wsd-07272-07298 2020-04-25 17:29:28.928697 -0400 [ websrv_poll ] TRC  |
