@@ -1078,6 +1078,7 @@ int main(int argc, char**argv)
     template <typename Dst, typename Src, typename Enable = void>
     Dst convertChronoClock(const Src time)
     {
+        [[maybe_unused]] const auto prime = Dst::clock::now();
         const auto before = Src::clock::now();
         const auto now = Dst::clock::now();
         const auto after = Src::clock::now();
