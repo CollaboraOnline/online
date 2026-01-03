@@ -551,6 +551,9 @@ UnitBase::TestResult UnitSession::testGetMetrics()
 
         http::Request request(documentURL);
         request.setBasicAuth("admin", "admin");
+        LOK_ASSERT_EQUAL_STR("admin", request.getBasicAuth().first);
+        LOK_ASSERT_EQUAL_STR("admin", request.getBasicAuth().second);
+
         const std::shared_ptr<const http::Response> response =
             session->syncRequest(request, *socketPoller);
         LOK_ASSERT_EQUAL(http::Response::State::Complete, response->state());

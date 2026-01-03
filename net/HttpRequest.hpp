@@ -353,6 +353,7 @@ public:
     static constexpr std::string_view CONTENT_TYPE = "Content-Type";
     static constexpr std::string_view CONTENT_LENGTH = "Content-Length";
     static constexpr std::string_view TRANSFER_ENCODING = "Transfer-Encoding";
+    static constexpr std::string_view Authorization = "Authorization";
     static constexpr std::string_view COOKIE = "Cookie";
     static constexpr std::string_view HOST = "Host";
 
@@ -799,12 +800,33 @@ public:
     /// Serialize the Request into the buffer.
     bool writeData(Buffer& out, std::size_t capacity);
 
+    /// Sets the username and password in the Authorization header, per RFC-7235.
     void setBasicAuth(std::string_view username, std::string_view password)
     {
         std::string basicAuth{ username };
         basicAuth.append(":");
         basicAuth.append(password);
-        editHeader().add("Authorization", "Basic " + Util::base64Encode(basicAuth));
+        editHeader().add(std::string(Header::Authorization),
+                         "Basic " + Util::base64Encode(basicAuth));
+    }
+
+    /// Returns the username and password from the Authorization header, per RFC-7235.
+    /// Only 'Basic' Authentication is supported. Retuns empty pair if not found.
+    [[nodiscard]] std::pair<std::string, std::string> getBasicAuth() const
+    {
+        const auto& [scheme, param] = getCredentials();
+        if (Util::iequal(scheme, "Basic"))
+        {
+            return Util::split(Util::base64Decode(param), ':');
+        }
+
+        return {};
+    }
+
+    /// Returns the auth-scheme and auth-param from the Authorization header, per RFC-7235.
+    [[nodiscard]] std::pair<std::string, std::string> getCredentials() const
+    {
+        return Util::split(get(Header::Authorization));
     }
 
 private:
