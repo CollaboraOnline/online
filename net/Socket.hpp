@@ -309,7 +309,7 @@ public:
     }
 
     /// Gets the actual send buffer size in bytes, -1 for failure.
-    int getSocketBufferSize() const
+    [[nodiscard]] int getSocketBufferSize() const
     {
 #if !MOBILEAPP
         int size;
@@ -1115,7 +1115,8 @@ private:
         _pollFds[size].revents = 0;
     }
 
-    std::string logInfo() const {
+    [[nodiscard]] std::string logInfo() const
+    {
         std::ostringstream os;
         os << "SocketPoll[this " << std::hex << this << std::dec
            << ", thread[name " << _name

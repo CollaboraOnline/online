@@ -41,7 +41,8 @@ class Proof {
     Proof(Type);
 public:
     Proof();
-    VecOfStringPairs GetProofHeaders(const std::string& access_token, const std::string& uri) const;
+    [[nodiscard]] VecOfStringPairs GetProofHeaders(const std::string& access_token,
+                                                   const std::string& uri) const;
     const VecOfStringPairs& GetProofKeyAttributes() const { return _aAttribs; }
 private:
     static std::string ProofKeyPath();
