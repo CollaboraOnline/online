@@ -35,6 +35,7 @@
 #include <iostream>
 #include <sstream>
 #include <string>
+#include <string_view>
 #include <unistd.h>
 #include <unordered_map>
 
@@ -405,8 +406,6 @@ namespace Log
         std::unordered_map<Poco::Message::Priority, std::string> _colorByPriority;
     };
 
-    static bool IsShutdown = false;
-
     void initialize(const std::string& name,
                     const std::string& logLevel,
                     const bool withColor,
@@ -509,6 +508,7 @@ namespace Log
 
     namespace
     {
+    bool IsShutdown = false;
 
     GenericLogger& logger()
     {
