@@ -1,0 +1,177 @@
+/* -*- Mode: C++; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4; fill-column: 100 -*- */
+/*
+ * Copyright the Collabora Online contributors.
+ *
+ * SPDX-License-Identifier: MPL-2.0
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
+#include <config.h>
+
+#include <helpers.hpp>
+#include <lokassert.hpp>
+#include <net/HttpRequest.hpp>
+#include <Common.hpp>
+
+#include <Poco/JSON/Parser.h>
+#include <Poco/URI.h>
+
+#include <cppunit/extensions/HelperMacros.h>
+
+#include <memory>
+
+/// Tests the /co/collab WebSocket endpoint.
+class CollabEndpointTest : public CPPUNIT_NS::TestFixture
+{
+    const Poco::URI _uri;
+    std::shared_ptr<SocketPoll> _socketPoll;
+
+    CPPUNIT_TEST_SUITE(CollabEndpointTest);
+
+    CPPUNIT_TEST(testCollabWebSocketAuth);
+    CPPUNIT_TEST(testCollabMissingWopiSrc);
+    CPPUNIT_TEST(testCollabMissingAccessToken);
+    CPPUNIT_TEST(testCollabInvalidFirstMessage);
+
+    CPPUNIT_TEST_SUITE_END();
+
+    void testCollabWebSocketAuth();
+    void testCollabMissingWopiSrc();
+    void testCollabMissingAccessToken();
+    void testCollabInvalidFirstMessage();
+
+public:
+    CollabEndpointTest()
+        : _uri(helpers::getTestServerURI())
+        , _socketPoll(std::make_shared<SocketPoll>("CollabTestPoll"))
+    {
+    }
+
+    void setUp()
+    {
+        helpers::resetTestStartTime();
+        _socketPoll->startThread();
+    }
+
+    void tearDown()
+    {
+        _socketPoll->joinThread();
+        helpers::resetTestStartTime();
+    }
+};
+
+void CollabEndpointTest::testCollabWebSocketAuth()
+{
+    constexpr auto testname = __func__;
+
+    TST_LOG("Testing /co/collab WebSocket authentication");
+
+    // Create WebSocket connection to /co/collab with WOPISrc parameter
+    const std::string wopiSrc = "http%3A%2F%2Fexample.com%2Fwopi%2Ffiles%2F123";
+    const std::string path = "/co/collab?WOPISrc=" + wopiSrc;
+
+    auto ws = http::WebSocketSession::create(_uri.toString());
+    http::Request req(path);
+    ws->asyncRequest(req, _socketPoll);
+
+    // Wait for connection
+    std::vector<char> response;
+    constexpr auto timeout = std::chrono::seconds(10);
+
+    // Send access_token as first message
+    const std::string accessToken = "test_token_12345";
+    ws->sendMessage("access_token " + accessToken);
+
+    // Wait for "authenticated" response
+    response = ws->waitForMessage("authenticated", timeout, testname);
+    LOK_ASSERT_MESSAGE("Expected 'authenticated' response",
+                       !response.empty());
+
+    const std::string responseStr(response.data(), response.size());
+    LOK_ASSERT_EQUAL(std::string("authenticated"), responseStr);
+
+    TST_LOG("Successfully authenticated to /co/collab endpoint");
+}
+
+void CollabEndpointTest::testCollabMissingWopiSrc()
+{
+    constexpr auto testname = __func__;
+
+    TST_LOG("Testing /co/collab with missing WOPISrc parameter");
+
+    // Try to connect without WOPISrc - should get HTTP 400 Bad Request
+    const std::string path = "/co/collab";
+
+    const std::shared_ptr<const http::Response> httpResponse =
+        http::get(_uri.toString(), path);
+
+    // Should return 400 Bad Request
+    LOK_ASSERT_EQUAL(http::StatusCode::BadRequest, httpResponse->statusLine().statusCode());
+
+    TST_LOG("Correctly rejected connection without WOPISrc");
+}
+
+void CollabEndpointTest::testCollabMissingAccessToken()
+{
+    constexpr auto testname = __func__;
+
+    TST_LOG("Testing /co/collab with missing access_token");
+
+    // Create WebSocket connection
+    const std::string wopiSrc = "http%3A%2F%2Fexample.com%2Fwopi%2Ffiles%2F456";
+    const std::string path = "/co/collab?WOPISrc=" + wopiSrc;
+
+    auto ws = http::WebSocketSession::create(_uri.toString());
+    http::Request req(path);
+    ws->asyncRequest(req, _socketPoll);
+
+    constexpr auto timeout = std::chrono::seconds(10);
+
+    // Send something other than access_token as first message
+    ws->sendMessage("hello world");
+
+    // Should get error response
+    std::vector<char> response = ws->waitForMessage("error:", timeout, testname);
+    LOK_ASSERT_MESSAGE("Expected error response for missing access_token",
+                       !response.empty());
+
+    const std::string responseStr(response.data(), response.size());
+    LOK_ASSERT_MESSAGE("Error should mention access_token required",
+                       responseStr.find("access_token required") != std::string::npos);
+
+    TST_LOG("Correctly rejected message without access_token prefix");
+}
+
+void CollabEndpointTest::testCollabInvalidFirstMessage()
+{
+    constexpr auto testname = __func__;
+
+    TST_LOG("Testing /co/collab with invalid first message format");
+
+    // Create WebSocket connection
+    const std::string wopiSrc = "http%3A%2F%2Fexample.com%2Fwopi%2Ffiles%2F789";
+    const std::string path = "/co/collab?WOPISrc=" + wopiSrc;
+
+    auto ws = http::WebSocketSession::create(_uri.toString());
+    http::Request req(path);
+    ws->asyncRequest(req, _socketPoll);
+
+    constexpr auto timeout = std::chrono::seconds(10);
+
+    // Send a random command that's not access_token
+    ws->sendMessage("load url=file:///test.odt");
+
+    // Should get error response
+    std::vector<char> response = ws->waitForMessage("error:", timeout, testname);
+    LOK_ASSERT_MESSAGE("Expected error response for invalid first message",
+                       !response.empty());
+
+    TST_LOG("Correctly rejected invalid first message");
+}
+
+CPPUNIT_TEST_SUITE_REGISTRATION(CollabEndpointTest);
+
+/* vim:set shiftwidth=4 softtabstop=4 expandtab: */
