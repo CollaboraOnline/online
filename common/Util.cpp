@@ -19,6 +19,7 @@
 #include "Util.hpp"
 #include "common/Common.hpp"
 
+#include <Poco/Base64Decoder.h>
 #include <Poco/Base64Encoder.h>
 #include <Poco/ConsoleChannel.h>
 #include <Poco/Exception.h>
@@ -1027,6 +1028,15 @@ namespace Util
         encoder << input;
         encoder.close();
         return oss.str();
+    }
+
+    std::string base64Decode(const std::string& input)
+    {
+        std::istringstream istr(input);
+        std::string decoded;
+        Poco::Base64Decoder decoder(istr);
+        decoder >> decoded;
+        return decoded;
     }
 
 } // namespace Util

@@ -16,7 +16,6 @@
 #include <cstdlib>
 #include <string>
 
-#include <Poco/Base64Decoder.h>
 #include <Poco/Crypto/RSADigestEngine.h>
 #include <Poco/Crypto/RSAKey.h>
 #include <Poco/Dynamic/Var.h>
@@ -33,7 +32,6 @@
 #include <Util.hpp>
 #include <common/ConfigUtil.hpp>
 
-using Poco::Base64Decoder;
 using Poco::OutputLineEndingConverter;
 
 std::unique_ptr<Poco::Crypto::RSAKey> JWTAuth::_key(
@@ -128,11 +126,7 @@ bool JWTAuth::verify(const std::string& accessToken)
             }
         }
 
-        std::istringstream istr(tokens[1]);
-        std::string decodedPayload;
-        Base64Decoder decoder(istr);
-        decoder >> decodedPayload;
-
+        const std::string decodedPayload = Util::base64Decode(tokens[1]);
         LOG_INF("JWTAuth:verify: decoded payload: " << decodedPayload);
 
         // Verify if the token is not already expired
