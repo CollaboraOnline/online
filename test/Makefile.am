@@ -149,6 +149,7 @@ test_base_sources = \
 	RequestDetailsTests.cpp \
 	StringVectorTests.cpp \
 	FileServeWhiteBoxTests.cpp \
+	LoggingWhiteBoxTests.cpp \
 	NetUtilWhiteBoxTests.cpp \
 	WhiteBoxTests.cpp \
 	HttpWhiteBoxTests.cpp \
