@@ -139,7 +139,7 @@ namespace Util
         /// Returns the time that has elapsed since starting, in the units required.
         /// Units defaults to milliseconds.
         template <typename T = std::chrono::milliseconds>
-        T
+        [[nodiscard]] T
         elapsed(std::chrono::steady_clock::time_point now = std::chrono::steady_clock::now()) const
         {
             return std::chrono::duration_cast<T>(now - _startTime);
@@ -164,7 +164,7 @@ namespace Util
     public:
         SysStopwatch();
         void restart();
-        std::chrono::microseconds elapsedTime() const;
+        [[nodiscard]] std::chrono::microseconds elapsedTime() const;
 
     private:
         static void readTime(uint64_t &cpu, uint64_t &sys);
@@ -1011,8 +1011,8 @@ int main(int argc, char**argv)
             std::string mangled;
             std::string offset;
             std::string demangled;
-            std::string toString() const;
-            std::string toMangledString() const;
+            [[nodiscard]] std::string toString() const;
+            [[nodiscard]] std::string toMangledString() const;
             bool isDemangled() const { return !demangled.empty(); }
         };
 
@@ -1038,7 +1038,7 @@ int main(int argc, char**argv)
         std::ostream& send(std::ostream& os) const;
 
         /// Produces a string representation, one line per frame
-        std::string toString() const;
+        [[nodiscard]] std::string toString() const;
 
         /* constexpr */ size_t size() const { return _frames.size(); }
         /* constexpr */ const Symbol& operator[](size_t idx) const
