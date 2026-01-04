@@ -25,14 +25,14 @@ JSDialog.listbox = function (parentContainer, data, builder) {
 	}
 	title = builder._cleanText(title);
 
-	var container = window.L.DomUtil.create(
+	const container = window.L.DomUtil.create(
 		'div',
 		builder.options.cssClass + ' ui-listbox-container ',
 		parentContainer,
 	);
 	container.id = data.id;
 
-	var listbox = window.L.DomUtil.create(
+	const listbox = window.L.DomUtil.create(
 		'select',
 		builder.options.cssClass + ' ui-listbox ',
 		container,
@@ -46,7 +46,7 @@ JSDialog.listbox = function (parentContainer, data, builder) {
 		builder,
 	);
 
-	var listboxArrow = window.L.DomUtil.create(
+	const listboxArrow = window.L.DomUtil.create(
 		'span',
 		builder.options.cssClass + ' ui-listbox-arrow',
 		container,
@@ -74,10 +74,10 @@ JSDialog.listbox = function (parentContainer, data, builder) {
 				builder,
 			);
 	});
-	var hasSelectedEntry = false;
+	let hasSelectedEntry = false;
 	if (typeof data.entries === 'object') {
 		for (var index in data.entries) {
-			var isSelected = false;
+			let isSelected = false;
 			const currEntryIsTitle = data.entries[index] == title;
 
 			const isCurrentlySelectedEntry =
@@ -96,7 +96,7 @@ JSDialog.listbox = function (parentContainer, data, builder) {
 				isSelected = true;
 			}
 
-			var option = window.L.DomUtil.create('option', '', listbox);
+			const option = window.L.DomUtil.create('option', '', listbox);
 			option.value = index;
 			option.innerText = data.entries[index];
 			if (isSelected) {
@@ -108,7 +108,7 @@ JSDialog.listbox = function (parentContainer, data, builder) {
 	// no selected entry; set the visible value to empty string unless the font is not included in the entries
 	if (!hasSelectedEntry) {
 		if (title) {
-			var newOption = window.L.DomUtil.create('option', '', listbox);
+			const newOption = window.L.DomUtil.create('option', '', listbox);
 			newOption.value = ++index;
 			newOption.innerText = title;
 			newOption.selected = true;
