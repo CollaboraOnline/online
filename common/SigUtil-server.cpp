@@ -223,12 +223,7 @@ void resetTerminationFlags()
         fsync(SignalLogFD);
     }
 
-    void signalLogPrefix()
-    {
-        std::array<char, 1024> buffer;
-        Log::prefix<buffer.size()>(buffer, "SIG");
-        signalLog(buffer.data());
-    }
+    void signalLogPrefix() { signalLog(Log::prefix("SIG").data()); }
 
     // We need a signal safe means of writing messages
     //   $ man 7 signal
