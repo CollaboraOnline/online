@@ -577,8 +577,20 @@ span.jsdialog.sidebar.ui-treeview-notexpandable {
 #navigation-options .tab.selected:after {
 	border-bottom-color: rgba(var(--doc-type), 1);
 }
+
+/*
+ * NOTE: there are some hidden elements on the navigation sidebar
+ *			and the horizontal overflow on `navigator-dock-wrapper` is
+ *			hidden, so if the width is to be changed, then please do so
+ *			with the overflow-x visible so that it's not set too small.
+ *
+ *			when the width is is less than the largest elements, which
+ *			might be hidden, the x overflow starts building up. and when
+ *			the elements are dynamically loaded, they might get scrolled
+ *			off to the left giving an impression that they are cut off.
+ */
 #navigation-sidebar {
-	width: 250px;
+	width: 266px;
 	display: none;
 	border-inline-end: 1px solid var(--color-border);
 	/* bg set in #sidebar-dock-wrapper, #navigator-dock-wrapper */
