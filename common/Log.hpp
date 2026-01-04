@@ -125,11 +125,11 @@ namespace Log
         const std::string_view level,
         std::chrono::time_point<std::chrono::system_clock> tp = std::chrono::system_clock::now());
 
-    /// Generates log entry prefix. Example follows (without the vertical bars).
-    /// |wsd-07272-07298 2020-04-25 17:29:28.928697 -0400 [ websrv_poll ] TRC  |
-    /// This is fully signal-safe. Buffer must be at least 128 bytes.
-    char* prefix(const std::chrono::time_point<std::chrono::system_clock>& tp, char* buffer,
-                 const std::string_view level);
+#ifdef BUILDING_TESTS
+    /// Generates the reference log entry prefix. Do *not* use, except for tests.
+    char* prefixReference(const std::chrono::time_point<std::chrono::system_clock>& tp,
+                          char* buffer, const std::string_view level);
+#endif
 
     /// is a certain level of logging enabled ?
     bool isEnabled(Level l, Area a = Area::Generic);
