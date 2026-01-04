@@ -752,9 +752,9 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 			container.id = data.id;
 
 			var expanded = data.expanded === true || (data.children[0] && data.children[0].checked === true);
+			var expander = window.L.DomUtil.create('button', 'ui-expander ' + builder.options.cssClass, container);
 			if (data.children[0].text && data.children[0].text !== '') {
 				var prefix = data.children[0].id ? data.children[0].id : data.id;
-				var expander = window.L.DomUtil.create('button', 'ui-expander ' + builder.options.cssClass, container);
 				expander.tabIndex = '0';
 				expander.setAttribute('aria-controls', prefix + '-children');
 				var label = window.L.DomUtil.create('span', 'ui-expander-label ' + builder.options.cssClass, expander);
