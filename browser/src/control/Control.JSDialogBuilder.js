@@ -111,7 +111,7 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 		this._controlHandlers['cancelbutton'] = this._pushbuttonControl;
 		this._controlHandlers['combobox'] = JSDialog.combobox;
 		this._controlHandlers['comboboxentry'] = JSDialog.comboboxEntry;
-		this._controlHandlers['listbox'] = this._listboxControl;
+		this._controlHandlers['listbox'] = JSDialog.listbox;
 		this._controlHandlers['valueset'] = this._valuesetControl;
 		this._controlHandlers['fixedtext'] = this._fixedtextControl;
 		this._controlHandlers['linkbutton'] = this._linkButtonControl;
@@ -1410,77 +1410,6 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 		} else if (data.command == '.uno:StyleApply') {
 			data.text = _('Style');
 		}
-	},
-
-	_listboxControl: function(parentContainer, data, builder) {
-		var title = data.text;
-		var selectedEntryIsString = false;
-		if (data.selectedEntries) {
-			selectedEntryIsString = isNaN(parseInt(data.selectedEntries[0]));
-			if (title && title.length) {
-				// pass
-			} else if (selectedEntryIsString)
-				title = builder._cleanText(data.selectedEntries[0]);
-			else if (data.entries && data.entries.length > data.selectedEntries[0])
-				title = data.entries[data.selectedEntries[0]];
-		}
-		title = builder._cleanText(title);
-
-		var container = window.L.DomUtil.create('div', builder.options.cssClass + ' ui-listbox-container ', parentContainer);
-		container.id = data.id;
-
-		var listbox = window.L.DomUtil.create('select', builder.options.cssClass + ' ui-listbox ', container);
-		listbox.id = data.id + '-input';
-
-		JSDialog.SetupA11yLabelForLabelableElement(parentContainer, listbox, data, builder);
-
-		var listboxArrow = window.L.DomUtil.create('span', builder.options.cssClass + ' ui-listbox-arrow', container);
-		listboxArrow.id = 'listbox-arrow-' + data.id;
-		listboxArrow.onclick = function() { listbox.showPicker(); };
-
-		if (data.enabled === false) {
-			container.disabled = true;
-			listbox.disabled = true;
-			container.setAttribute('disabled', 'true');
-		}
-
-		JSDialog.SynchronizeDisabledState(container, [listbox]);
-
-		$(listbox).change(() => {
-			if ($(listbox).val())
-				builder.callback('combobox', 'selected', data, $(listbox).val()+ ';' + $(listbox).children('option:selected').text(), builder);
-		});
-		var hasSelectedEntry = false;
-		if (typeof(data.entries) === 'object') {
-			for (var index in data.entries) {
-				var isSelected = false;
-				if ((data.selectedEntries && index == data.selectedEntries[0])
-					|| (data.selectedEntries && selectedEntryIsString && data.entries[index] === data.selectedEntries[0])
-					|| data.entries[index] == title) {
-					isSelected = true;
-				}
-
-				var option = window.L.DomUtil.create('option', '', listbox);
-				option.value = index;
-				option.innerText = data.entries[index];
-				if (isSelected) {
-					option.selected = true;
-					hasSelectedEntry = true;
-				}
-			}
-		}
-		// no selected entry; set the visible value to empty string unless the font is not included in the entries
-		if (!hasSelectedEntry) {
-			if (title) {
-				var newOption = window.L.DomUtil.create('option', '', listbox);
-				newOption.value = ++index;
-				newOption.innerText = title;
-				newOption.selected = true;
-			} else
-				$(listbox).val('');
-		}
-
-		return false;
 	},
 
 	_valuesetControl: function (parentContainer, data, builder) {
