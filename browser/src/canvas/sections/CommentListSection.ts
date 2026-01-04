@@ -1999,7 +1999,7 @@ export class CommentSection extends CanvasSectionObject {
 
 			if (selectedComment) {
 				const commentWidth = this.sectionProperties.showSelectedBigger ? this.sectionProperties.commentWidthBigger: this.sectionProperties.commentWidth;
-				const documentCanvasWidth = (document.getElementById('document-canvas') as any).width;
+				const documentCanvasWidth = parseInt((document.getElementById('document-canvas') as any).style.width);
 				let posX = (this.sectionProperties.showSelectedBigger ?
 								Math.round((documentCanvasWidth - commentWidth)/2) :
 								Math.round(actualPosition[0] / app.dpiScale) - this.sectionProperties.deflectionOfSelectedComment * (isRTL ? -1 : 1));
