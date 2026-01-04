@@ -78,12 +78,20 @@ JSDialog.listbox = function (parentContainer, data, builder) {
 	if (typeof data.entries === 'object') {
 		for (var index in data.entries) {
 			var isSelected = false;
+			const currEntryIsTitle = data.entries[index] == title;
+
+			const isCurrentlySelectedEntry =
+				data.selectedEntries && index == data.selectedEntries[0];
+
+			const currStringEntryIsSelectedEntry =
+				data.selectedEntries &&
+				selectedEntryIsString &&
+				data.entries[index] === data.selectedEntries[0];
+
 			if (
-				(data.selectedEntries && index == data.selectedEntries[0]) ||
-				(data.selectedEntries &&
-					selectedEntryIsString &&
-					data.entries[index] === data.selectedEntries[0]) ||
-				data.entries[index] == title
+				isCurrentlySelectedEntry ||
+				currStringEntryIsSelectedEntry ||
+				currEntryIsTitle
 			) {
 				isSelected = true;
 			}
