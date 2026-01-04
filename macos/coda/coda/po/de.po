@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: coolwsd 25.04.7.3\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-12-06 18:17+0000\n"
-"PO-Revision-Date: 2025-12-29 08:00+0000\n"
-"Last-Translator: Medicopter117 <oppro.netzwerk@gmail.com>\n"
+"PO-Revision-Date: 2026-01-05 09:59+0000\n"
+"Last-Translator: Ettore Atalan <atalanttore@googlemail.com>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/collabora-online/"
 "collabora-office-macos-app/de/>\n"
 "Language: de\n"
@@ -180,7 +180,7 @@ msgstr "Darstellung"
 
 msgctxt "I0S-gh-46l.title"
 msgid "Subscript"
-msgstr ""
+msgstr "Tiefstellen"
 
 msgctxt "IAo-SY-fd9.title"
 msgid "Open…"
@@ -204,11 +204,11 @@ msgstr "Alles anzeigen"
 
 msgctxt "LE2-aR-0XJ.title"
 msgid "Bring All to Front"
-msgstr ""
+msgstr "Alle nach vorne bringen"
 
 msgctxt "LVM-kO-fVI.title"
 msgid "Paste Ruler"
-msgstr ""
+msgstr "Lineal einfügen"
 
 msgctxt "Lbh-J2-qVU.title"
 msgid "\tLeft to Right"
@@ -216,7 +216,7 @@ msgstr "\tLinks nach rechts"
 
 msgctxt "MkV-Pr-PK5.title"
 msgid "Copy Ruler"
-msgstr ""
+msgstr "Lineal kopieren"
 
 msgctxt "NMo-om-nkz.title"
 msgid "Services"
@@ -224,7 +224,7 @@ msgstr "Dienste"
 
 msgctxt "Nop-cj-93Q.title"
 msgid "\tDefault"
-msgstr ""
+msgstr "\tStandard"
 
 msgctxt "OY7-WF-poV.title"
 msgid "Minimize"
@@ -245,7 +245,7 @@ msgstr ""
 
 msgctxt "Oyz-dy-DGm.title"
 msgid "Stop Speaking"
-msgstr ""
+msgstr "Hören Sie auf zu sprechen"
 
 msgctxt "Ptp-SP-VEL.title"
 msgid "Bigger"
@@ -265,7 +265,7 @@ msgstr "\tRechts nach links"
 
 msgctxt "Rqc-34-cIF.title"
 msgid "Superscript"
-msgstr ""
+msgstr "Hochstellen"
 
 msgctxt "Ruw-6m-B2m.title"
 msgid "Select All"
@@ -281,7 +281,7 @@ msgstr "Fenster"
 
 msgctxt "UEZ-Bs-lqG.title"
 msgid "Capitalize"
-msgstr ""
+msgstr "Kapitalisieren"
 
 msgctxt "VIY-Ag-zcb.title"
 msgid "Center"
@@ -321,11 +321,11 @@ msgstr "Suchen und ersetzen…"
 
 msgctxt "YGs-j5-SAR.title"
 msgid "\tDefault"
-msgstr ""
+msgstr "\tStandard"
 
 msgctxt "Ynk-f8-cLZ.title"
 msgid "Start Speaking"
-msgstr ""
+msgstr "Beginnen Sie zu sprechen"
 
 msgctxt "ZM1-6Q-yy1.title"
 msgid "Align Left"
@@ -349,7 +349,7 @@ msgstr "Schriftart"
 
 msgctxt "agt-UL-0e3.title"
 msgid "Use Default"
-msgstr ""
+msgstr "Standard verwenden"
 
 msgctxt "bgn-CT-cEk.title"
 msgid "Show Colors"
@@ -365,11 +365,11 @@ msgstr "Auswahl für Suche verwenden"
 
 msgctxt "c8a-y6-VQd.title"
 msgid "Transformations"
-msgstr ""
+msgstr "Übergänge"
 
 msgctxt "cDB-IK-hbR.title"
 msgid "Use None"
-msgstr ""
+msgstr "Keine verwenden"
 
 msgctxt "cqv-fj-IhA.title"
 msgid "Selection"
@@ -429,7 +429,7 @@ msgstr "\tRechts nach links"
 
 msgctxt "jxT-CU-nIS.title"
 msgid "Format"
-msgstr ""
+msgstr "Format"
 
 msgctxt "kIP-vf-haE.title"
 msgid "Show Sidebar"
@@ -514,7 +514,7 @@ msgstr "Lineal anzeigen"
 
 msgctxt "vNY-rz-j42.title"
 msgid "Clear Menu"
-msgstr ""
+msgstr "Menü leeren"
 
 msgctxt "vmV-6d-7jI.title"
 msgid "Make Upper Case"
@@ -538,7 +538,7 @@ msgstr "Kopieren"
 
 msgctxt "xQD-1f-W4t.title"
 msgid "Use All"
-msgstr ""
+msgstr "Alles anwenden"
 
 msgctxt "xrE-MZ-jX0.title"
 msgid "Speech"
