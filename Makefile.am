@@ -192,6 +192,7 @@ coolwsd_sources = \
                   wsd/COOLWSD.cpp \
                   wsd/CacheUtil.cpp \
                   wsd/ClientRequestDispatcher.cpp \
+                  wsd/CollabSocketHandler.cpp \
                   wsd/ClientSession.cpp \
                   wsd/DocumentBroker.cpp \
                   wsd/FileServer.cpp \
@@ -439,6 +440,7 @@ wsd_headers = \
               wsd/COOLWSDServer.hpp \
               wsd/CacheUtil.hpp \
               wsd/ClientRequestDispatcher.hpp \
+              wsd/CollabSocketHandler.hpp \
               wsd/ClientSession.hpp \
               wsd/ContentSecurityPolicy.hpp \
               wsd/DocumentBroker.hpp \
