@@ -467,7 +467,7 @@ COOL_JS_LST =\
 	src/control/jsdialog/Widget.IconView.ts \
 	src/control/jsdialog/Widget.NotebookbarIconView.ts \
 	src/control/jsdialog/Widget.MenuButton.js \
-	src/control/jsdialog/Widget.Listbox.js \
+	src/control/jsdialog/Widget.Listbox.ts \
 	src/control/jsdialog/Widget.MobileBorderSelector.js \
 	src/control/jsdialog/Widget.MobileTabControl.js \
 	src/control/jsdialog/Widget.MultilineEdit.js \
