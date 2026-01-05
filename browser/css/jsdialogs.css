@@ -70,7 +70,7 @@ div.ui-treeview-icon-column {
 	margin: 5px;
 }
 
-#AcceptRejectChangesDialog .ui-treeview-headers { 
+#AcceptRejectChangesDialog .ui-treeview-headers {
 	grid-template-columns: 120px 120px 150px 130px;
 	position: sticky;
 	top: 0;
@@ -78,7 +78,7 @@ div.ui-treeview-icon-column {
 	z-index: 1;
 }
 
-#AcceptRejectChangesDialog .jsdialog.ui-treeview-entry { 
+#AcceptRejectChangesDialog .jsdialog.ui-treeview-entry {
 	padding: 0 !important;
 	height: 26px;
 }
@@ -3027,6 +3027,11 @@ div [id^='themeview'].ui-iconview-entry, div [id^='themeview1col'].ui-iconview-e
 /* Writer - Select Table Cell - Sidebar - Table - Miscellaneous - Border */
 #borders.ui-iconview.one-child-popup {
 	grid-template-columns: repeat(4, 1fr);
+}
+
+/* Calc - Format Cells - Borders - Line - Style */
+#iconview_lines.ui-iconview {
+	grid-template-columns: repeat(1, 1fr);
 }
 
 #imSetInsMode {
