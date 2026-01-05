@@ -75,7 +75,7 @@ if [ "$1" == "review" ]; then
         exit 1
     elif [ -n "$HAS_REMOTE_BRANCH" ] && [ -n "$CUSTOM_BRANCH" ]; then
         # PR is open, same branch is explicitly specified, just update it.
-        git push -f $REMOTE HEAD:$REMOTE_BRANCH
+        git push --force-with-lease $REMOTE HEAD:$REMOTE_BRANCH
     else
         # Open a new PR.
         git push $REMOTE HEAD:$REMOTE_BRANCH
