@@ -111,9 +111,25 @@ void CollabSocketHandler::onCheckFileInfoFinished(CheckFileInfo& cfi)
     {
         case CheckFileInfo::State::Pass:
         {
+            // Store the CheckFileInfo data
+            _docKey = cfi.docKey();
+            _wopiInfo = cfi.wopiInfo();
+
+            // Extract commonly-needed fields from WOPI info
+            if (_wopiInfo)
+            {
+                _userId = _wopiInfo->optValue<std::string>("UserId", std::string());
+                _username = _wopiInfo->optValue<std::string>("UserFriendlyName", std::string());
+                _userCanWrite = _wopiInfo->optValue<bool>("UserCanWrite", false);
+            }
+
             _isAuthenticated = true;
             LOG_INF("Collab session authenticated for WOPISrc: "
-                    << COOLWSD::anonymizeUrl(_wopiSrc));
+                    << COOLWSD::anonymizeUrl(_wopiSrc)
+                    << ", docKey: " << _docKey
+                    << ", userId: " << COOLWSD::anonymizeUsername(_userId)
+                    << ", username: " << COOLWSD::anonymizeUsername(_username)
+                    << ", canWrite: " << _userCanWrite);
             sendMessage("authenticated");
             break;
         }
