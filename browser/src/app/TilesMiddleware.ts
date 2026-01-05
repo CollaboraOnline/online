@@ -856,10 +856,11 @@ class TileManager {
 
 		// Request a redraw if the tile is visible
 		const tileSizeTwips = Math.round(this.tileSize * app.pixelsToTwips);
+		const tilePos = tile.coords.getPosSimplePoint();
 		if (
 			app.isRectangleVisibleInTheDisplayedArea([
-				tile.coords.x,
-				tile.coords.y,
+				tilePos.x,
+				tilePos.y,
 				tileSizeTwips,
 				tileSizeTwips,
 			])
@@ -1329,8 +1330,8 @@ class TileManager {
 
 			if (
 				app.isRectangleVisibleInTheDisplayedArea([
-					tile.coords.x,
-					tile.coords.y,
+					tile.coords.getPosSimplePoint().x,
+					tile.coords.getPosSimplePoint().y,
 					tileSizeTwips,
 					tileSizeTwips,
 				])
@@ -1355,19 +1356,12 @@ class TileManager {
 		// FIXME: updateFileBasedView seems to be doing a lot. Does it need to be special-cased?
 		if (app.file.fileBasedView) this.updateFileBasedView(true);
 		else {
-			const tileSizeTwips = Math.round(this.tileSize * app.pixelsToTwips);
 			const zoom = Math.round(app.map.getZoom());
+
 			for (const [_index, tile] of this.tiles.entries()) {
-				if (
-					app.isRectangleVisibleInTheDisplayedArea([
-						tile.coords.x,
-						tile.coords.y,
-						tileSizeTwips,
-						tileSizeTwips,
-					])
-				)
-					this.updateTileDistance(tile, zoom);
+				this.updateTileDistance(tile, zoom);
 			}
+
 			this.sortTileBitmapList();
 		}
 	}
