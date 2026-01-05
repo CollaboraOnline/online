@@ -49,6 +49,9 @@ class CollabSocketHandler : public WebSocketHandler
     /// The CollabBroker managing this handler (set after authentication)
     std::weak_ptr<CollabBroker> _broker;
 
+    /// Unique handler ID within the broker
+    std::string _handlerId;
+
 public:
     CollabSocketHandler(const std::shared_ptr<StreamSocket>& socket,
                         const Poco::Net::HTTPRequest& request,
@@ -78,6 +81,12 @@ public:
 
     /// Returns the CollabBroker managing this handler
     std::shared_ptr<CollabBroker> getBroker() const { return _broker.lock(); }
+
+    /// Returns the unique handler ID (set after authentication)
+    const std::string& getHandlerId() const { return _handlerId; }
+
+    /// Sets the handler ID (called by CollabBroker::addHandler)
+    void setHandlerId(const std::string& id) { _handlerId = id; }
 
     /// Called when the connection is closed
     void onDisconnect() override;
