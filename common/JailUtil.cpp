@@ -63,26 +63,30 @@ bool enterMountingNS(uid_t uid, gid_t gid)
 {
 #ifdef __linux__
     // Put this process into its own user and mount namespace.
-    if (unshare(CLONE_NEWNS | CLONE_NEWUSER) != 0)
+    // Note: Having multiple threads at unshare time is a known source of failure.
+    if (unshare(CLONE_NEWUSER) != 0)
     {
-        // having multiple threads is a source of failure f.e.
-        LOG_SYS("enterMountingNS, unshare failed");
+        LOG_SYS("enterMountingNS, CLONE_NEWUSER unshare failed");
         return false;
     }
 
     setdeny();
 
+    // Map this user as the root user of the new namespace
+    mapuser(uid, 0, gid, 0);
+
+    if (unshare(CLONE_NEWNS) != 0)
+    {
+        LOG_SYS("enterMountingNS, CLONE_NEWNS unshare failed");
+        return false;
+    }
+
     // Do not propagate any mounts from this new namespace to the system.
     if (mount("none", "/", nullptr, MS_REC | MS_PRIVATE, nullptr) != 0)
     {
         LOG_SYS("enterMountingNS, root mount failed");
-        // set to original uid so coolmount check isn't surprised by 'nobody'
-        mapuser(uid, uid, gid, gid);
         return false;
     }
-
-    // Map this user as the root user of the new namespace
-    mapuser(uid, 0, gid, 0);
 
     return true;
 #else
