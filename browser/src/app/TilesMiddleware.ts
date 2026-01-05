@@ -1343,10 +1343,13 @@ class TileManager {
 				];
 				const viewCenter =
 					app.activeDocument.activeLayout.viewedRectangle.center;
-				tile.distanceFromView = new cool.SimplePoint(
+				const distanceFromView = new cool.SimplePoint(
 					tileCenter[0],
 					tileCenter[1],
 				).distanceTo(viewCenter);
+
+				if (distanceFromView < tile.distanceFromView)
+					tile.distanceFromView = distanceFromView;
 			}
 		}
 	}
@@ -1355,19 +1358,12 @@ class TileManager {
 		// FIXME: updateFileBasedView seems to be doing a lot. Does it need to be special-cased?
 		if (app.file.fileBasedView) this.updateFileBasedView(true);
 		else {
-			const tileSizeTwips = Math.round(this.tileSize * app.pixelsToTwips);
 			const zoom = Math.round(app.map.getZoom());
+
 			for (const [_index, tile] of this.tiles.entries()) {
-				if (
-					app.isRectangleVisibleInTheDisplayedArea([
-						tile.coords.x,
-						tile.coords.y,
-						tileSizeTwips,
-						tileSizeTwips,
-					])
-				)
-					this.updateTileDistance(tile, zoom);
+				this.updateTileDistance(tile, zoom);
 			}
+
 			this.sortTileBitmapList();
 		}
 	}
