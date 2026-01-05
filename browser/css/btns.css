@@ -93,6 +93,11 @@
 	background-color: var(--color-background-tabs-group);
 }
 
+/* if menubutton has text - be sure it is fully visible */
+.menubutton.has-label button {
+	min-width: fit-content;
+}
+
 /*limit icon to button height*/
 button.jsdialog img {
 	max-height: 100%;
