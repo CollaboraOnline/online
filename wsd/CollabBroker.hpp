@@ -13,10 +13,10 @@
 
 #include <Poco/JSON/Object.h>
 
-#include <map>
 #include <memory>
 #include <mutex>
 #include <string>
+#include <vector>
 
 class CollabSocketHandler;
 
@@ -31,8 +31,11 @@ class CollabBroker : public std::enable_shared_from_this<CollabBroker>
     /// Mutex protecting _handlers
     mutable std::mutex _mutex;
 
-    /// Map of handler ID to handler weak pointer
-    std::map<std::string, std::weak_ptr<CollabSocketHandler>> _handlers;
+    /// Connected handlers
+    std::vector<std::weak_ptr<CollabSocketHandler>> _handlers;
+
+    /// Counter for generating handler IDs
+    uint64_t _handlerIdCounter = 0;
 
     /// WOPI info from the first authenticated handler (shared by all)
     Poco::JSON::Object::Ptr _wopiInfo;
