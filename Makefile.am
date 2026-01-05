@@ -187,6 +187,7 @@ coolwsd_sources = common/Crypto.cpp \
                   wsd/COOLWSD.cpp \
                   wsd/dumpWsdState.cpp \
                   wsd/ClientRequestDispatcher.cpp \
+                  wsd/CollabBroker.cpp \
                   wsd/CollabSocketHandler.cpp \
                   wsd/ClientSession.cpp \
                   wsd/DocumentBroker.cpp \
@@ -395,6 +396,7 @@ wsd_headers = wsd/Admin.hpp \
               wsd/CacheUtil.hpp \
               wsd/COOLWSD.hpp \
               wsd/ClientRequestDispatcher.hpp \
+              wsd/CollabBroker.hpp \
               wsd/CollabSocketHandler.hpp \
               wsd/ClientSession.hpp \
               wsd/ContentSecurityPolicy.hpp \
