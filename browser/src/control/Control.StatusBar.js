@@ -248,8 +248,8 @@ class StatusBar extends JSDialog.Toolbar {
 			{type: 'spacer',  id: 'permissionspacer'},
 			this._generateHtmlItem('documentstatus', 2),					// spreadsheet, text, presentation, drawing
 			{type: 'customtoolitem',  id: 'multi-page-view', command: 'multipageview', text: _('Multi Page View'), dataPriority: 10,  visible: false}, // text
-			{type: 'customtoolitem',  id: 'prev', command: 'prev', text: _UNO('.uno:PageUp', 'text'), pressAndHold: true, dataPriority: 9},
-			{type: 'customtoolitem',  id: 'next', command: 'next', text: _UNO('.uno:PageDown', 'text'), pressAndHold: true, dataPriority: 9},
+			{type: 'customtoolitem',  id: 'prevpage', command: 'prev', text: _UNO('.uno:PageUp', 'text'), pressAndHold: true, dataPriority: 9},
+			{type: 'customtoolitem',  id: 'nextpage', command: 'next', text: _UNO('.uno:PageDown', 'text'), pressAndHold: true, dataPriority: 9},
 			{type: 'separator', id: 'prevnextbreak', orientation: 'vertical', dataPriority: 9},
 		].concat(window.mode.isTablet() ? [] : [
 			{type: 'customtoolitem',  id: 'zoomreset', command: 'zoomreset', text: _('Reset zoom'), icon: 'zoomreset.svg', dataPriority: 8},
