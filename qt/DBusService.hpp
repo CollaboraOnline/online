@@ -28,6 +28,7 @@ class DBusService : public QObject
 
 public:
     explicit DBusService(QObject* parent = nullptr);
+    ~DBusService();
 
     static bool tryForwardToExistingInstance(const QStringList& files, const QString& templateType);
     static bool registerService(DBusService* service);
