@@ -68,6 +68,18 @@ public:
     /// Broadcast a message to all handlers
     void broadcastMessage(const std::string& message);
 
+    /// Get JSON array of current users (excluding the specified handler)
+    /// Returns JSON like: {"users": [{"id": "...", "name": "...", "canWrite": true}, ...]}
+    std::string getUserListJson(const std::shared_ptr<CollabSocketHandler>& exclude) const;
+
+    /// Notify all handlers that a user joined
+    /// Sends: {"type": "user_joined", "user": {"id": "...", "name": "...", "canWrite": true}}
+    void notifyUserJoined(const std::shared_ptr<CollabSocketHandler>& handler);
+
+    /// Notify all handlers that a user left
+    /// Sends: {"type": "user_left", "user": {"id": "...", "name": "..."}}
+    void notifyUserLeft(const std::shared_ptr<CollabSocketHandler>& handler);
+
 private:
     /// Generate a unique ID for a handler
     static std::string generateHandlerId();

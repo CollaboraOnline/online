@@ -133,11 +133,20 @@ void CollabSocketHandler::onCheckFileInfoFinished(CheckFileInfo& cfi)
                 // Share WOPI info with the broker (first one wins)
                 broker->setWopiInfo(_wopiInfo);
 
-                // Register this handler with the broker
-                // Need to get shared_ptr to this - use the ProtocolHandlerInterface base
+                // Get shared_ptr to this handler
                 auto self = std::dynamic_pointer_cast<CollabSocketHandler>(shared_from_this());
                 if (self)
+                {
+                    // Send list of existing users to the new user (before adding)
+                    const std::string userList = broker->getUserListJson(self);
+                    sendMessage(userList);
+
+                    // Register this handler with the broker
                     broker->addHandler(self);
+
+                    // Notify other users that this user joined
+                    broker->notifyUserJoined(self);
+                }
             }
 
             _isAuthenticated = true;
@@ -189,12 +198,16 @@ void CollabSocketHandler::onDisconnect()
 {
     LOG_INF("Collab: handler disconnected for WOPISrc: " << COOLWSD::anonymizeUrl(_wopiSrc));
 
-    // Unregister from the broker
+    // Unregister from the broker and notify other users
     if (auto broker = _broker.lock())
     {
         auto self = std::dynamic_pointer_cast<CollabSocketHandler>(shared_from_this());
         if (self)
+        {
+            // Notify other users before removing
+            broker->notifyUserLeft(self);
             broker->removeHandler(self);
+        }
     }
 
     // Call base class
