@@ -1190,7 +1190,7 @@ function getSubFolder(filePath) {
 function assertImageSize(expectedWidth, expectedHeight) {
 	cy.log('>> assertImageSize - start');
 
-	cy.cGet('#canvas-container > svg')
+	cy.cGet('#canvas-container > svg', {timeout: 1000})
 		.then(function (element) {
 			expect(element).to.have.length(1);
 			const actualWidth = parseInt(element[0].style.width.replace('px', ''));
@@ -1199,6 +1199,9 @@ function assertImageSize(expectedWidth, expectedHeight) {
 			expect(actualWidth).to.be.closeTo(expectedWidth, 10);
 			expect(actualHeight).to.be.closeTo(expectedHeight, 10);
 		});
+
+	// wait for above async result
+	cy.wait(3000);
 
 	cy.log('<< assertImageSize - end');
 }
