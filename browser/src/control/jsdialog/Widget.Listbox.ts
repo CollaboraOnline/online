@@ -40,13 +40,14 @@ JSDialog.listbox = function (
 		selectedEntryIsString = isNaN(parseInt(data.selectedEntries[0] as any));
 		if (title && title.length) {
 			// pass
-		} else if (selectedEntryIsString)
+		} else if (selectedEntryIsString) {
 			title = builder._cleanText(data.selectedEntries[0] as string);
-		else if (
+		} else if (
 			data.entries &&
 			data.entries.length > (data.selectedEntries[0] as number)
-		)
+		) {
 			title = data.entries[data.selectedEntries[0] as number];
+		}
 	}
 	title = builder._cleanText(title);
 
@@ -133,14 +134,18 @@ JSDialog.listbox = function (
 			}
 		}
 	}
-	// no selected entry; set the visible value to empty string unless the font is not included in the entries
+
+	// no selected entry; set the visible value to empty string
+	// unless the font is not included in the entries
 	if (!hasSelectedEntry) {
 		if (title) {
 			const newOption = window.L.DomUtil.create('option', '', listbox);
 			newOption.value = ++index;
 			newOption.innerText = title;
 			newOption.selected = true;
-		} else $(listbox).val('');
+		} else {
+			$(listbox).val('');
+		}
 	}
 
 	return false;
