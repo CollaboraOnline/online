@@ -51,11 +51,9 @@ describe(['tagdesktop'], 'Accessibility Writer Tests', function () {
                     return;
                 }
                 // don't pass yet
-                if (command == '.uno:InsertCaptionDialog' ||
-                    command == '.uno:PageDialog' ||
+                if (command == '.uno:PageDialog' ||
                     command == '.uno:ParagraphDialog' ||
                     command == '.uno:SpellingAndGrammarDialog' ||
-                    command == '.uno:TableDialog' ||
                     command == '.uno:TableNumberFormatDialog') {
                     cy.log(`Skipping buggy dialog: ${command}`);
                     return;
