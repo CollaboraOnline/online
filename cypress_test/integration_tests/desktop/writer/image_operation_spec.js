@@ -28,11 +28,12 @@ describe(['tagdesktop'], 'Image Operation Tests', function() {
 		cy.cGet('#test-div-shape-handle-3').should('exist');
 		desktopHelper.getNbIcon('Crop', 'Picture').click();
 
+		const moveX = 20;
+
 		cy.cGet('#test-div-shape-handle-3').then(($handle) => {
 			const rect = $handle[0].getBoundingClientRect();
 			const startX = rect.left + rect.width / 2;
 			const startY = rect.top + rect.height / 2;
-			const moveX = 20;
 
 			cy.cGet('body').realMouseDown({ x: startX, y: startY });
 
@@ -40,11 +41,12 @@ describe(['tagdesktop'], 'Image Operation Tests', function() {
 
 			// for some reason even after moving the crop marker 20 px, on realMouseUp crop marker moves a lot more than expected
 			// but it seems to related to how realMouseUp is implemented
+			cy.cGet('body').realMouseUp({ x: startX + moveX, y: startY });
 			cy.cGet('body').realMouseUp();
 		});
 
 		cy.wait(1000);
-		helper.assertImageSize(37, 63);
+		helper.assertImageSize(248 - moveX, 63);
 	});
 
 	it('Resize image when keep ratio option enabled and disabled', function() {
