@@ -113,7 +113,6 @@ button.jsdialog img {
 	line-height: normal;
 	color: var(--color-main-text);
 	font-size: var(--default-font-size);
-	min-width: 62px;
 	background-color: var(--color-background-dark);
 	border: 1px solid var(--color-btn-border);
 	border: 1px solid var(--color-border-dark);
@@ -121,6 +120,12 @@ button.jsdialog img {
 	margin: 5px;
 	vertical-align: middle;
 	width: max-content;
+}
+
+/* dialog main action buttons should have equal minimal width */
+.ui-button-box .button-secondary,
+.ui-button-box .ui-pushbutton {
+	min-width: 62px !important;
 }
 
 .button-primary {
