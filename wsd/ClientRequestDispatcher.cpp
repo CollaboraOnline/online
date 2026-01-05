@@ -37,6 +37,7 @@
 #include <wsd/ClientRequestDispatcher.hpp>
 #include <wsd/DocumentBroker.hpp>
 #include <wsd/RequestVettingStation.hpp>
+#include <wsd/wopi/CheckFileInfo.hpp>
 #include <net/WebSocketHandler.hpp>
 
 #if !MOBILEAPP
@@ -115,6 +116,9 @@ class CollabSocketHandler : public WebSocketHandler
     std::string _wopiSrc;
     std::string _accessToken;
     bool _isAuthenticated = false;
+    bool _isValidating = false;
+    std::shared_ptr<CheckFileInfo> _checkFileInfo;
+    std::weak_ptr<StreamSocket> _socketWeak;
 
 public:
     CollabSocketHandler(const std::shared_ptr<StreamSocket>& socket,
@@ -123,11 +127,19 @@ public:
                         const std::string& wopiSrc)
         : WebSocketHandler(socket, request, allowedOrigin)
         , _wopiSrc(wopiSrc)
+        , _socketWeak(socket)
     {
     }
 
     void handleMessage(const std::vector<char>& payload) override
     {
+        if (_isValidating)
+        {
+            // Still validating, ignore messages
+            LOG_DBG("Collab: validation in progress, ignoring message");
+            return;
+        }
+
         if (!_isAuthenticated)
         {
             const std::string msg(payload.data(), payload.size());
@@ -136,15 +148,12 @@ public:
                 msg.compare(0, prefix.size(), prefix) == 0)
             {
                 _accessToken = msg.substr(prefix.size());
-                _isAuthenticated = true;
-                LOG_INF("Collab session authenticated for WOPISrc: "
-                        << COOLWSD::anonymizeUrl(_wopiSrc));
-                sendMessage("authenticated");
+                startValidation();
                 return;
             }
             LOG_ERR("First message must be access_token, got: "
                     << COOLProtocol::getAbbreviatedMessage(payload));
-            sendMessage("error: access_token required");
+            sendMessage("error: cmd=collab kind=accesstoken");
             shutdown();
             return;
         }
@@ -154,6 +163,98 @@ public:
     const std::string& getWopiSrc() const { return _wopiSrc; }
     const std::string& getAccessToken() const { return _accessToken; }
     bool isAuthenticated() const { return _isAuthenticated; }
+
+private:
+    void startValidation()
+    {
+        _isValidating = true;
+
+        // Send progress message
+        sendMessage("progress: validating");
+
+        // Build the WOPI URL with access_token
+        std::string wopiUrl = _wopiSrc;
+        if (wopiUrl.find('?') == std::string::npos)
+            wopiUrl += "?access_token=" + _accessToken;
+        else
+            wopiUrl += "&access_token=" + _accessToken;
+
+        const Poco::URI wopiUri = RequestDetails::sanitizeURI(wopiUrl);
+        LOG_INF("Collab: starting CheckFileInfo validation for: "
+                << COOLWSD::anonymizeUrl(wopiUri.toString()));
+
+        // Store weak reference to this handler via ProtocolHandlerInterface base
+        std::weak_ptr<ProtocolHandlerInterface> handlerWeak = shared_from_this();
+
+        // Create callback to handle validation result
+        auto onFinish = [handlerWeak](CheckFileInfo& cfi) {
+            auto handlerBase = handlerWeak.lock();
+            if (!handlerBase)
+                return; // Handler was destroyed during validation
+
+            // Safe downcast since we know the type
+            CollabSocketHandler* handler = static_cast<CollabSocketHandler*>(handlerBase.get());
+            handler->onCheckFileInfoFinished(cfi);
+        };
+
+        // Create and start CheckFileInfo request
+        _checkFileInfo = std::make_shared<CheckFileInfo>(
+            COOLWSD::getWebServerPoll(), wopiUri, std::move(onFinish));
+        _checkFileInfo->checkFileInfo(/* redirectionLimit */ 5);
+    }
+
+    void onCheckFileInfoFinished(CheckFileInfo& cfi)
+    {
+        _isValidating = false;
+
+        const CheckFileInfo::State state = cfi.state();
+        LOG_INF("Collab: CheckFileInfo finished with state: " << CheckFileInfo::name(state)
+                << " for: " << COOLWSD::anonymizeUrl(_wopiSrc));
+
+        switch (state)
+        {
+            case CheckFileInfo::State::Pass:
+            {
+                _isAuthenticated = true;
+                LOG_INF("Collab session authenticated for WOPISrc: "
+                        << COOLWSD::anonymizeUrl(_wopiSrc));
+                sendMessage("authenticated");
+                break;
+            }
+            case CheckFileInfo::State::Unauthorized:
+            {
+                LOG_ERR("Collab: access denied for WOPISrc: "
+                        << COOLWSD::anonymizeUrl(_wopiSrc));
+                std::string error = "error: cmd=internal kind=unauthorized";
+                std::string sslMsg = cfi.getSslVerifyMessage();
+                if (!sslMsg.empty())
+                    error += " code=" + Util::base64Encode(sslMsg);
+                sendMessage(error);
+                shutdown();
+                break;
+            }
+            case CheckFileInfo::State::Timedout:
+            {
+                LOG_ERR("Collab: CheckFileInfo timed out for WOPISrc: "
+                        << COOLWSD::anonymizeUrl(_wopiSrc));
+                sendMessage("error: cmd=internal kind=timeout");
+                shutdown();
+                break;
+            }
+            case CheckFileInfo::State::Fail:
+            default:
+            {
+                LOG_ERR("Collab: CheckFileInfo failed for WOPISrc: "
+                        << COOLWSD::anonymizeUrl(_wopiSrc));
+                sendMessage("error: cmd=storage kind=loadfailed");
+                shutdown();
+                break;
+            }
+        }
+
+        // Clear the CheckFileInfo reference
+        _checkFileInfo.reset();
+    }
 };
 
 } // end anonymous namespace
