@@ -12,6 +12,7 @@
 #include <config.h>
 
 #include "CollabSocketHandler.hpp"
+#include "CollabBroker.hpp"
 
 #include <COOLWSD.hpp>
 #include <Protocol.hpp>
@@ -123,6 +124,22 @@ void CollabSocketHandler::onCheckFileInfoFinished(CheckFileInfo& cfi)
                 _userCanWrite = _wopiInfo->optValue<bool>("UserCanWrite", false);
             }
 
+            // Find or create the CollabBroker for this document
+            auto broker = findOrCreateCollabBroker(_docKey, _wopiSrc);
+            if (broker)
+            {
+                _broker = broker;
+
+                // Share WOPI info with the broker (first one wins)
+                broker->setWopiInfo(_wopiInfo);
+
+                // Register this handler with the broker
+                // Need to get shared_ptr to this - use the ProtocolHandlerInterface base
+                auto self = std::dynamic_pointer_cast<CollabSocketHandler>(shared_from_this());
+                if (self)
+                    broker->addHandler(self);
+            }
+
             _isAuthenticated = true;
             LOG_INF("Collab session authenticated for WOPISrc: "
                     << COOLWSD::anonymizeUrl(_wopiSrc)
@@ -166,6 +183,22 @@ void CollabSocketHandler::onCheckFileInfoFinished(CheckFileInfo& cfi)
 
     // Clear the CheckFileInfo reference
     _checkFileInfo.reset();
+}
+
+void CollabSocketHandler::onDisconnect()
+{
+    LOG_INF("Collab: handler disconnected for WOPISrc: " << COOLWSD::anonymizeUrl(_wopiSrc));
+
+    // Unregister from the broker
+    if (auto broker = _broker.lock())
+    {
+        auto self = std::dynamic_pointer_cast<CollabSocketHandler>(shared_from_this());
+        if (self)
+            broker->removeHandler(self);
+    }
+
+    // Call base class
+    WebSocketHandler::onDisconnect();
 }
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
