@@ -59,11 +59,6 @@ describe(['tagdesktop'], 'Accessibility Writer Tests', function () {
                     cy.log(`Skipping missing-context dialog: ${command}`);
                     return;
                 }
-                // not jsdialog enabled
-                if (command == '.uno:ChapterNumberingDialog') {
-                    cy.log(`Skipping non-jsdialog dialog: ${command}`);
-                    return;
-                }
                 // don't pass yet
                 if (command == '.uno:FormatColumns' ||
                     command == '.uno:InsertBreak' ||
