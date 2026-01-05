@@ -129,7 +129,7 @@ describe(['tagdesktop'], 'Accessibility Writer Tests', function () {
                 }
             });
 
-            cy.spy(win.app.socket, '_onMessage').as('onMessage');
+            cy.spy(win.app.socket, '_onMessage').as('onMessage').log(false);
 
             // add to the cypress queue to be run after the dialogs are processed
             // and errors checked
