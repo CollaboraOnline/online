@@ -67,7 +67,7 @@ void CollabEndpointTest::testCollabWebSocketAuth()
 {
     constexpr auto testname = __func__;
 
-    TST_LOG("Testing /co/collab WebSocket authentication");
+    TST_LOG("Testing /co/collab WebSocket validation flow");
 
     // Create WebSocket connection to /co/collab with WOPISrc parameter
     const std::string wopiSrc = "http%3A%2F%2Fexample.com%2Fwopi%2Ffiles%2F123";
@@ -77,23 +77,33 @@ void CollabEndpointTest::testCollabWebSocketAuth()
     http::Request req(path);
     ws->asyncRequest(req, _socketPoll);
 
-    // Wait for connection
-    std::vector<char> response;
-    constexpr auto timeout = std::chrono::seconds(10);
+    constexpr auto timeout = std::chrono::seconds(30);
 
     // Send access_token as first message
     const std::string accessToken = "test_token_12345";
     ws->sendMessage("access_token " + accessToken);
 
-    // Wait for "authenticated" response
-    response = ws->waitForMessage("authenticated", timeout, testname);
-    LOK_ASSERT_MESSAGE("Expected 'authenticated' response",
+    // First we should receive a progress message indicating validation has started
+    std::vector<char> response = ws->waitForMessage("progress:", timeout, testname);
+    LOK_ASSERT_MESSAGE("Expected 'progress:' message during validation",
                        !response.empty());
 
-    const std::string responseStr(response.data(), response.size());
-    LOK_ASSERT_EQUAL(std::string("authenticated"), responseStr);
+    std::string responseStr(response.data(), response.size());
+    LOK_ASSERT_MESSAGE("Progress message should mention validating",
+                       responseStr.find("validating") != std::string::npos);
 
-    TST_LOG("Successfully authenticated to /co/collab endpoint");
+    TST_LOG("Received progress message: " << responseStr);
+
+    // Since we're using a fake WOPI URL (example.com), validation will fail.
+    // We should receive an error message (timeout or load failed)
+    response = ws->waitForMessage("error:", timeout, testname);
+    LOK_ASSERT_MESSAGE("Expected error response for unreachable WOPI server",
+                       !response.empty());
+
+    responseStr.assign(response.data(), response.size());
+    TST_LOG("Received error after validation: " << responseStr);
+
+    TST_LOG("Successfully tested /co/collab validation flow");
 }
 
 void CollabEndpointTest::testCollabMissingWopiSrc()
@@ -133,14 +143,14 @@ void CollabEndpointTest::testCollabMissingAccessToken()
     // Send something other than access_token as first message
     ws->sendMessage("hello world");
 
-    // Should get error response
+    // Should get error response with accesstoken kind
     std::vector<char> response = ws->waitForMessage("error:", timeout, testname);
     LOK_ASSERT_MESSAGE("Expected error response for missing access_token",
                        !response.empty());
 
     const std::string responseStr(response.data(), response.size());
-    LOK_ASSERT_MESSAGE("Error should mention access_token required",
-                       responseStr.find("access_token required") != std::string::npos);
+    LOK_ASSERT_MESSAGE("Error should indicate accesstoken issue",
+                       responseStr.find("kind=accesstoken") != std::string::npos);
 
     TST_LOG("Correctly rejected message without access_token prefix");
 }
@@ -164,10 +174,14 @@ void CollabEndpointTest::testCollabInvalidFirstMessage()
     // Send a random command that's not access_token
     ws->sendMessage("load url=file:///test.odt");
 
-    // Should get error response
+    // Should get error response with accesstoken kind
     std::vector<char> response = ws->waitForMessage("error:", timeout, testname);
     LOK_ASSERT_MESSAGE("Expected error response for invalid first message",
                        !response.empty());
+
+    const std::string responseStr(response.data(), response.size());
+    LOK_ASSERT_MESSAGE("Error should indicate accesstoken issue",
+                       responseStr.find("kind=accesstoken") != std::string::npos);
 
     TST_LOG("Correctly rejected invalid first message");
 }
