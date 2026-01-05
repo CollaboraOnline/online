@@ -65,6 +65,17 @@ DBusService::DBusService(QObject* parent)
 {
 }
 
+DBusService::~DBusService()
+{
+    QDBusConnection sessionBus = QDBusConnection::sessionBus();
+
+    // Unregister the object first
+    sessionBus.unregisterObject(OBJECT_PATH);
+
+    // Then unregister the service name
+    sessionBus.unregisterService(SERVICE_NAME);
+}
+
 void DBusService::openFiles(const QStringList& files)
 {
     coda::openFiles(files);
