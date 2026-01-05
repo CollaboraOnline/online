@@ -15,6 +15,8 @@
 #include <lokassert.hpp>
 #include <net/HttpRequest.hpp>
 #include <Common.hpp>
+#include <wsd/CollabBroker.hpp>
+#include <wsd/CollabSocketHandler.hpp>
 
 #include <Poco/JSON/Parser.h>
 #include <Poco/URI.h>
@@ -35,6 +37,8 @@ class CollabEndpointTest : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST(testCollabMissingWopiSrc);
     CPPUNIT_TEST(testCollabMissingAccessToken);
     CPPUNIT_TEST(testCollabInvalidFirstMessage);
+    CPPUNIT_TEST(testCollabBrokerUserListJson);
+    CPPUNIT_TEST(testCollabBrokerFindOrCreate);
 
     CPPUNIT_TEST_SUITE_END();
 
@@ -42,6 +46,8 @@ class CollabEndpointTest : public CPPUNIT_NS::TestFixture
     void testCollabMissingWopiSrc();
     void testCollabMissingAccessToken();
     void testCollabInvalidFirstMessage();
+    void testCollabBrokerUserListJson();
+    void testCollabBrokerFindOrCreate();
 
 public:
     CollabEndpointTest()
@@ -184,6 +190,70 @@ void CollabEndpointTest::testCollabInvalidFirstMessage()
                        responseStr.find("kind=accesstoken") != std::string::npos);
 
     TST_LOG("Correctly rejected invalid first message");
+}
+
+void CollabEndpointTest::testCollabBrokerUserListJson()
+{
+    constexpr auto testname = __func__;
+
+    TST_LOG("Testing CollabBroker getUserListJson format");
+
+    // Create a broker directly
+    auto broker = std::make_shared<CollabBroker>("test_doc_key", "http://example.com/wopi/files/1");
+
+    // Get user list with no handlers - should return empty array
+    std::string json = broker->getUserListJson(nullptr);
+
+    Poco::JSON::Parser parser;
+    auto result = parser.parse(json).extract<Poco::JSON::Object::Ptr>();
+
+    LOK_ASSERT_MESSAGE("JSON should have 'type' field",
+                       result->has("type"));
+    LOK_ASSERT_EQUAL(std::string("user_list"),
+                     result->getValue<std::string>("type"));
+
+    LOK_ASSERT_MESSAGE("JSON should have 'users' array",
+                       result->has("users"));
+
+    auto users = result->getArray("users");
+    LOK_ASSERT_MESSAGE("Users array should be empty initially",
+                       users->size() == 0);
+
+    TST_LOG("getUserListJson returns valid JSON with empty user list");
+}
+
+void CollabEndpointTest::testCollabBrokerFindOrCreate()
+{
+    constexpr auto testname = __func__;
+
+    TST_LOG("Testing findOrCreateCollabBroker");
+
+    const std::string docKey = "test_find_or_create_key";
+    const std::string wopiSrc = "http://example.com/wopi/files/findorcreate";
+
+    // First call should create a new broker
+    auto broker1 = findOrCreateCollabBroker(docKey, wopiSrc);
+    LOK_ASSERT_MESSAGE("First findOrCreate should return a broker",
+                       broker1 != nullptr);
+
+    // Second call with same docKey should return the same broker
+    auto broker2 = findOrCreateCollabBroker(docKey, wopiSrc);
+    LOK_ASSERT_MESSAGE("Second findOrCreate should return same broker",
+                       broker1.get() == broker2.get());
+
+    // Different docKey should create a different broker
+    auto broker3 = findOrCreateCollabBroker("different_key", wopiSrc);
+    LOK_ASSERT_MESSAGE("Different docKey should create different broker",
+                       broker1.get() != broker3.get());
+
+    // Clean up - remove from global map
+    {
+        std::lock_guard<std::mutex> lock(CollabBrokersMutex);
+        CollabBrokers.erase(docKey);
+        CollabBrokers.erase("different_key");
+    }
+
+    TST_LOG("findOrCreateCollabBroker correctly manages brokers");
 }
 
 CPPUNIT_TEST_SUITE_REGISTRATION(CollabEndpointTest);
