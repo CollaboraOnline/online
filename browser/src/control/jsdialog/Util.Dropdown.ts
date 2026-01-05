@@ -167,7 +167,7 @@ JSDialog.OpenDropdown = function (
 			let pos = -1;
 			if (typeof data === 'number') pos = data;
 			else pos = data ? parseInt(data.substr(0, data.indexOf(';'))) : -1;
-			const entry = targetEntries && pos > 0 ? targetEntries[pos] : null;
+			const entry = targetEntries && pos >= 0 ? targetEntries[pos] : null;
 			const subMenuId = object.id + '-' + pos;
 
 			if (eventType === 'selected' || eventType === 'showsubmenu') {
@@ -209,6 +209,14 @@ JSDialog.OpenDropdown = function (
 					window.L.Map.THIS.sendUnoCommand(uno);
 					JSDialog.CloseDropdown(id);
 					return;
+				} else {
+					app.console.error(
+						'Dropdown: unhandled action: "' +
+							eventType +
+							'" for entry: "' +
+							JSON.stringify(entry) +
+							'"',
+					);
 				}
 			} else if (eventType === 'hidedropdown') {
 				closeLastSubMenu();
