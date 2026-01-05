@@ -9,19 +9,44 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-/* global JSDialog $ */
+/*
+ * JSDialog.Listbox - listbox widget
+ *
+ * Example JSON:
+ * {
+ *     id: 'id',
+ *     type: 'listbox',
+ *     text: 'Entries: ',
+ *     entries: [
+ *         'First Entry',
+ *         'Second Entry',
+ *         'Third Entry'
+ *     ],
+ *     selectedEntries: [ '0' ]
+ * }
+ */
 
-JSDialog.listbox = function (parentContainer, data, builder) {
-	var title = data.text;
-	var selectedEntryIsString = false;
+declare var JSDialog: any;
+
+JSDialog.listbox = function (
+	parentContainer: Element,
+	data: ListBoxWidget,
+	builder: JSBuilder,
+) {
+	let title: string = data.text ? data.text : '';
+	let selectedEntryIsString = false;
+
 	if (data.selectedEntries) {
-		selectedEntryIsString = isNaN(parseInt(data.selectedEntries[0]));
+		selectedEntryIsString = isNaN(parseInt(data.selectedEntries[0] as any));
 		if (title && title.length) {
 			// pass
 		} else if (selectedEntryIsString)
-			title = builder._cleanText(data.selectedEntries[0]);
-		else if (data.entries && data.entries.length > data.selectedEntries[0])
-			title = data.entries[data.selectedEntries[0]];
+			title = builder._cleanText(data.selectedEntries[0] as string);
+		else if (
+			data.entries &&
+			data.entries.length > (data.selectedEntries[0] as number)
+		)
+			title = data.entries[data.selectedEntries[0] as number];
 	}
 	title = builder._cleanText(title);
 
@@ -74,9 +99,12 @@ JSDialog.listbox = function (parentContainer, data, builder) {
 				builder,
 			);
 	});
+
 	let hasSelectedEntry = false;
+	let index: any;
+
 	if (typeof data.entries === 'object') {
-		for (var index in data.entries) {
+		for (index in data.entries) {
 			let isSelected = false;
 			const currEntryIsTitle = data.entries[index] == title;
 
