@@ -19,6 +19,7 @@
 #include <SigUtil.hpp>
 #include <Util.hpp>
 
+#include <algorithm>
 #include <atomic>
 
 /// Global CollabBrokers map - keyed by docKey
@@ -52,7 +53,8 @@ void CollabBroker::addHandler(const std::shared_ptr<CollabSocketHandler>& handle
     std::lock_guard<std::mutex> lock(_mutex);
 
     const std::string handlerId = generateHandlerId();
-    _handlers[handlerId] = handler;
+    handler->setHandlerId(handlerId);
+    _handlers.push_back(handler);
 
     LOG_INF("CollabBroker [" << _docKey << "]: added handler [" << handlerId
             << "], total handlers: " << _handlers.size());
@@ -62,17 +64,19 @@ void CollabBroker::removeHandler(const std::shared_ptr<CollabSocketHandler>& han
 {
     std::lock_guard<std::mutex> lock(_mutex);
 
-    for (auto it = _handlers.begin(); it != _handlers.end(); ++it)
+    const std::string handlerId = handler->getHandlerId();
+
+    // Use erase-remove idiom to find and remove the specific handler
+    auto it = std::find_if(_handlers.begin(), _handlers.end(),
+                           [&handler](const std::weak_ptr<CollabSocketHandler>& h) {
+                               auto locked = h.lock();
+                               return locked && locked.get() == handler.get();
+                           });
+
+    if (it != _handlers.end())
     {
-        if (auto h = it->second.lock())
-        {
-            if (h.get() == handler.get())
-            {
-                LOG_INF("CollabBroker [" << _docKey << "]: removed handler [" << it->first << ']');
-                _handlers.erase(it);
-                break;
-            }
-        }
+        LOG_INF("CollabBroker [" << _docKey << "]: removed handler [" << handlerId << ']');
+        _handlers.erase(it);
     }
 
     cleanupExpiredHandlers();
@@ -84,9 +88,9 @@ size_t CollabBroker::getHandlerCount() const
     std::lock_guard<std::mutex> lock(_mutex);
 
     size_t count = 0;
-    for (const auto& pair : _handlers)
+    for (const auto& handler : _handlers)
     {
-        if (!pair.second.expired())
+        if (!handler.expired())
             ++count;
     }
     return count;
@@ -120,9 +124,9 @@ void CollabBroker::broadcastMessage(const std::string& message)
     LOG_DBG("CollabBroker [" << _docKey << "]: broadcasting message to "
             << _handlers.size() << " handlers");
 
-    for (auto& pair : _handlers)
+    for (auto& weakHandler : _handlers)
     {
-        if (auto handler = pair.second.lock())
+        if (auto handler = weakHandler.lock())
         {
             handler->sendMessage(message);
         }
@@ -131,19 +135,13 @@ void CollabBroker::broadcastMessage(const std::string& message)
 
 void CollabBroker::cleanupExpiredHandlers()
 {
-    // Called with _mutex held
-    for (auto it = _handlers.begin(); it != _handlers.end(); )
-    {
-        if (it->second.expired())
-        {
-            LOG_DBG("CollabBroker [" << _docKey << "]: cleaning up expired handler [" << it->first << ']');
-            it = _handlers.erase(it);
-        }
-        else
-        {
-            ++it;
-        }
-    }
+    // Called with _mutex held - use erase-remove idiom
+    _handlers.erase(
+        std::remove_if(_handlers.begin(), _handlers.end(),
+                       [](const std::weak_ptr<CollabSocketHandler>& h) {
+                           return h.expired();
+                       }),
+        _handlers.end());
 }
 
 std::shared_ptr<CollabBroker> findOrCreateCollabBroker(const std::string& docKey,
