@@ -1359,17 +1359,19 @@ bool ClientRequestDispatcher::handleWopiDiscoveryRequest(
     LOG_DBG("Wopi discovery request: " << requestDetails.getURI());
 
     std::string xml = getFileContent("discovery.xml");
-    std::string srvUrl =
+    bool isSsl =
 #if ENABLE_SSL
-        ((ConfigUtil::isSslEnabled() || ConfigUtil::isSSLTermination()) ? "https://" : "http://")
+        (ConfigUtil::isSslEnabled() || ConfigUtil::isSSLTermination());
 #else
-        "http://"
+        false;
 #endif
+    std::string srvUrl = (isSsl ? "https://" : "http://")
         + (COOLWSD::ServerName.empty() ? requestDetails.getHostUntrusted() : COOLWSD::ServerName) +
         COOLWSD::ServiceRoot;
     if (requestDetails.isProxy())
         srvUrl = requestDetails.getProxyPrefix();
     Poco::replaceInPlace(xml, std::string("%SRV_URI%"), srvUrl);
+    Poco::replaceInPlace(xml, std::string("%SRV_PROTO%"), std::string(isSsl ? "https" : "http"));
 
     http::Response httpResponse(http::StatusCode::OK);
     FileServerRequestHandler::hstsHeaders(httpResponse);
