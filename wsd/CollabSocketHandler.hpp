@@ -19,6 +19,7 @@
 #include <memory>
 #include <string>
 
+class CollabBroker;
 class StreamSocket;
 
 namespace Poco::Net
@@ -44,6 +45,9 @@ class CollabSocketHandler : public WebSocketHandler
     std::string _username;
     bool _userCanWrite = false;
     Poco::JSON::Object::Ptr _wopiInfo;
+
+    /// The CollabBroker managing this handler (set after authentication)
+    std::weak_ptr<CollabBroker> _broker;
 
 public:
     CollabSocketHandler(const std::shared_ptr<StreamSocket>& socket,
@@ -71,6 +75,12 @@ public:
 
     /// Returns the raw WOPI info JSON (available after successful authentication)
     Poco::JSON::Object::Ptr getWopiInfo() const { return _wopiInfo; }
+
+    /// Returns the CollabBroker managing this handler
+    std::shared_ptr<CollabBroker> getBroker() const { return _broker.lock(); }
+
+    /// Called when the connection is closed
+    void onDisconnect() override;
 
 private:
     void startValidation();
