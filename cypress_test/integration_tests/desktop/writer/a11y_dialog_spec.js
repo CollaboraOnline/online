@@ -60,15 +60,13 @@ describe(['tagdesktop'], 'Accessibility Writer Tests', function () {
                     return;
                 }
                 // don't pass yet
-                if (command == '.uno:FormatColumns' ||
-                    command == '.uno:InsertBreak' ||
-                    command == '.uno:InsertFrame' ||
+                if (command == '.uno:InsertFrame' ||
+                    command == '.uno:InsertIndexesEntry' ||
                     command == '.uno:InsertMultiIndex' ||
+                    command == '.uno:LineNumberingDialog' ||
                     command == '.uno:PageDialog' ||
                     command == '.uno:ParagraphDialog' ||
-                    command == '.uno:SpellingAndGrammarDialog' ||
-                    command == '.uno:TableNumberFormatDialog' ||
-                    command == '.uno:Watermark') {
+                    command == '.uno:SpellingAndGrammarDialog') {
                     cy.log(`Skipping buggy dialog: ${command}`);
                     return;
                 }
