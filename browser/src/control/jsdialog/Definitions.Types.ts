@@ -308,6 +308,7 @@ interface ButtonBoxWidget extends WidgetJSON {
 // type: 'listbox'
 interface ListBoxWidget extends WidgetJSON {
 	entries: Array<string>;
+	selectedEntries?: Array<string> | Array<number>;
 }
 
 // type: 'radiobutton'
