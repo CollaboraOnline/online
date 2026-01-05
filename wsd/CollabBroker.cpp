@@ -15,12 +15,14 @@
 #include "CollabSocketHandler.hpp"
 
 #include <COOLWSD.hpp>
+#include <JsonUtil.hpp>
 #include <Log.hpp>
 #include <SigUtil.hpp>
 #include <Util.hpp>
 
 #include <algorithm>
 #include <atomic>
+#include <sstream>
 
 /// Global CollabBrokers map - keyed by docKey
 std::map<std::string, std::shared_ptr<CollabBroker>> CollabBrokers;
@@ -129,6 +131,83 @@ void CollabBroker::broadcastMessage(const std::string& message)
         if (auto handler = weakHandler.lock())
         {
             handler->sendMessage(message);
+        }
+    }
+}
+
+std::string CollabBroker::getUserListJson(const std::shared_ptr<CollabSocketHandler>& exclude) const
+{
+    std::lock_guard<std::mutex> lock(_mutex);
+
+    std::ostringstream oss;
+    oss << "{\"type\":\"user_list\",\"users\":[";
+
+    bool first = true;
+    for (const auto& weakHandler : _handlers)
+    {
+        auto handler = weakHandler.lock();
+        if (handler && handler.get() != exclude.get())
+        {
+            if (!first)
+                oss << ',';
+            first = false;
+
+            oss << "{\"id\":\"" << JsonUtil::escapeJSONValue(handler->getUserId()) << "\""
+                << ",\"name\":\"" << JsonUtil::escapeJSONValue(handler->getUsername()) << "\""
+                << ",\"canWrite\":" << (handler->getUserCanWrite() ? "true" : "false")
+                << '}';
+        }
+    }
+
+    oss << "]}";
+    return oss.str();
+}
+
+void CollabBroker::notifyUserJoined(const std::shared_ptr<CollabSocketHandler>& handler)
+{
+    std::ostringstream oss;
+    oss << "{\"type\":\"user_joined\",\"user\":{"
+        << "\"id\":\"" << JsonUtil::escapeJSONValue(handler->getUserId()) << "\""
+        << ",\"name\":\"" << JsonUtil::escapeJSONValue(handler->getUsername()) << "\""
+        << ",\"canWrite\":" << (handler->getUserCanWrite() ? "true" : "false")
+        << "}}";
+    const std::string message = oss.str();
+
+    LOG_INF("CollabBroker [" << _docKey << "]: notifying user joined: "
+            << COOLWSD::anonymizeUsername(handler->getUsername()));
+
+    // Send to all handlers except the one that joined
+    std::lock_guard<std::mutex> lock(_mutex);
+    for (auto& weakHandler : _handlers)
+    {
+        auto h = weakHandler.lock();
+        if (h && h.get() != handler.get())
+        {
+            h->sendMessage(message);
+        }
+    }
+}
+
+void CollabBroker::notifyUserLeft(const std::shared_ptr<CollabSocketHandler>& handler)
+{
+    std::ostringstream oss;
+    oss << "{\"type\":\"user_left\",\"user\":{"
+        << "\"id\":\"" << JsonUtil::escapeJSONValue(handler->getUserId()) << "\""
+        << ",\"name\":\"" << JsonUtil::escapeJSONValue(handler->getUsername()) << "\""
+        << "}}";
+    const std::string message = oss.str();
+
+    LOG_INF("CollabBroker [" << _docKey << "]: notifying user left: "
+            << COOLWSD::anonymizeUsername(handler->getUsername()));
+
+    // Send to all remaining handlers
+    std::lock_guard<std::mutex> lock(_mutex);
+    for (auto& weakHandler : _handlers)
+    {
+        auto h = weakHandler.lock();
+        if (h && h.get() != handler.get())
+        {
+            h->sendMessage(message);
         }
     }
 }
