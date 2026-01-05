@@ -27,10 +27,10 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Statubar tests.', function
 		cy.cGet('#menu-insert').click();
 		cy.cGet('body').contains('#menu-insert li a', 'Page Break').click();
 		desktopHelper.assertVisiblePage(1, 2, 2);
-		cy.cGet('#toolbar-down #prev').click();
+		cy.cGet('#toolbar-down #prevpage').click();
 		desktopHelper.assertVisiblePage(1, 1, 2);
 		desktopHelper.assertScrollbarPosition('vertical', 0, 10);
-		cy.cGet('#toolbar-down #next').click();
+		cy.cGet('#toolbar-down #nextpage').click();
 		desktopHelper.assertVisiblePage(1, 2, 2);
 		desktopHelper.assertScrollbarPosition('vertical',190, 205);
 	});
