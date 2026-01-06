@@ -2548,15 +2548,14 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 			control.setAttribute('tabIndex', '0');
 
 		if (control && window.L.Browser.cypressTest && window.app.a11yValidator) {
-			// setupA11yLabelForLabelableElement uses two layouting task depth,
-			// so use three here to do this test after those have added the labels
+			// Various things use multiple layouting task depths, like
+			// setupA11yLabelForLabelableElement which uses a layouting
+			// depth of two, to add a11y properties. We want this task to
+			// happen after those tasks so schedule a layout task and
+			// fun the checkWidget when all layout tasks have completed.
 			app.layoutingService.appendLayoutingTask(() => {
-				app.layoutingService.appendLayoutingTask(() => {
-					app.layoutingService.appendLayoutingTask(() => {
-						app.layoutingService.appendLayoutingTask(() => {
-							window.app.a11yValidator.checkWidget(data.type, control);
-						});
-					});
+				app.layoutingService.onDrain(() => {
+					window.app.a11yValidator.checkWidget(data.type, control);
 				});
 			});
 		}
