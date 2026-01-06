@@ -357,6 +357,9 @@ interface Window {
 	ThisIsAMobileApp: boolean;
 	ThisIsTheEmscriptenApp: boolean;
 	ThisIsTheGtkApp: boolean;
+	ThisIsTheiOSApp: boolean;
+	ThisIsTheMacOSApp: boolean;
+	ThisIsTheWindowsApp: boolean;
 	wopiSrc: string;
 	zoteroEnabled: boolean;
 	accessToken: string;
