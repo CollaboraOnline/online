@@ -14,16 +14,19 @@
 #include "Log.hpp"
 #include "LibreOfficeKit/LibreOfficeKit.h"
 #include "qt.hpp"
-#include "RecentDocuments.hpp"
+#include "common/RecentFiles.hpp"
 #include <Poco/URI.h>
 #include <Poco/Path.h>
 #include <QDBusConnection>
 #include <QDBusInterface>
 #include <QDBusReply>
 #include <QDBusConnectionInterface>
+#include <QFileInfo>
 
 constexpr const char* SERVICE_NAME = "com.collaboraoffice.Office";
 constexpr const char* OBJECT_PATH = "/com/collaboraoffice/Office";
+
+extern RecentFiles recentFiles;
 
 namespace coda
 {
@@ -44,7 +47,9 @@ namespace coda
             WebView* webViewInstance = new WebView(Application::getProfile());
             webViewInstance->load(fileURL);
 
-            RecentDocuments::add(file);
+            QFileInfo fileInfo(file);
+            Poco::URI uri(Poco::Path(fileInfo.absoluteFilePath().toStdString()));
+            recentFiles.add(uri.toString());
         }
     }
 
