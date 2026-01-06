@@ -29,6 +29,13 @@ function _drawingAreaControl (parentContainer, data, builder) {
 	var container = window.L.DomUtil.create('div', builder.options.cssClass + ' ui-drawing-area-container', parentContainer);
 	container.id = data.id;
 
+	container.getCurrent = function () {
+		if (container.id == "") {
+			return document.getElementById(data.id);
+		} else {
+			return container;
+		}
+	};
 	if (!data.image)
 		return;
 
@@ -105,7 +112,7 @@ function _drawingAreaControl (parentContainer, data, builder) {
 		clearTimeout(moveTimer);
 		moveTimer = null;
 		moveFunc = null;
-		builder.callback('drawingarea', 'dblclick', container, coordinates, builder);
+		builder.callback('drawingarea', 'dblclick', container.getCurrent(), coordinates, builder);
 	}, this);
 
 	window.L.DomEvent.on(image, 'click touchend', function(e) {
@@ -116,7 +123,7 @@ function _drawingAreaControl (parentContainer, data, builder) {
 		moveTimer = null;
 		moveFunc = null;
 
-		builder.callback('drawingarea', 'click', container, coordinates, builder);
+		builder.callback('drawingarea', 'click', container.getCurrent(), coordinates, builder);
 	}, this);
 
 	var onMove = function (e) {
@@ -129,7 +136,7 @@ function _drawingAreaControl (parentContainer, data, builder) {
 
 		var pos = getCoordinatesFromEvent(e);
 		var coordinates = pos[0] + ';' + pos[1];
-		builder.callback('drawingarea', 'mousemove', container, coordinates, builder);
+		builder.callback('drawingarea', 'mousemove', container.getCurrent(), coordinates, builder);
 	};
 
 	var endMove = function (e) {
@@ -142,14 +149,14 @@ function _drawingAreaControl (parentContainer, data, builder) {
 
 		var pos = getCoordinatesFromEvent(e);
 		var coordinates = pos[0] + ';' + pos[1];
-		builder.callback('drawingarea', 'mouseup', container, coordinates, builder);
+		builder.callback('drawingarea', 'mouseup', container.getCurrent(), coordinates, builder);
 	};
 
 	image.addEventListener('mousedown', function (e) {
 		moveFunc = function () {
 			var pos = getCoordinatesFromEvent(e);
 			var coordinates = pos[0] + ';' + pos[1];
-			builder.callback('drawingarea', 'mousedown', container, coordinates, builder);
+			builder.callback('drawingarea', 'mousedown', container.getCurrent(), coordinates, builder);
 		};
 
 		moveTimer = setTimeout(function () {
@@ -166,40 +173,40 @@ function _drawingAreaControl (parentContainer, data, builder) {
 
 	image.addEventListener('keydown', function(event) {
 		if (event.key === 'Enter') {
-			builder.callback('drawingarea', 'keypress', container, UNOKey.RETURN | modifier, builder);
+			builder.callback('drawingarea', 'keypress', container.getCurrent(), UNOKey.RETURN | modifier, builder);
 			event.preventDefault();
 		} else if (event.key === 'Escape' || event.key === 'Esc') {
-			builder.callback('drawingarea', 'keypress', container, UNOKey.ESCAPE | modifier, builder);
+			builder.callback('drawingarea', 'keypress', container.getCurrent(), UNOKey.ESCAPE | modifier, builder);
 			event.preventDefault();
 		} else if (event.key === 'Left' || event.key === 'ArrowLeft') {
-			builder.callback('drawingarea', 'keypress', container, UNOKey.LEFT | modifier, builder);
+			builder.callback('drawingarea', 'keypress', container.getCurrent(), UNOKey.LEFT | modifier, builder);
 			event.preventDefault();
 		} else if (event.key === 'Right' || event.key === 'ArrowRight') {
-			builder.callback('drawingarea', 'keypress', container, UNOKey.RIGHT | modifier, builder);
+			builder.callback('drawingarea', 'keypress', container.getCurrent(), UNOKey.RIGHT | modifier, builder);
 			event.preventDefault();
 		} else if (event.key === 'Up' || event.key === 'ArrowUp') {
-			builder.callback('drawingarea', 'keypress', container, UNOKey.UP | modifier, builder);
+			builder.callback('drawingarea', 'keypress', container.getCurrent(), UNOKey.UP | modifier, builder);
 			event.preventDefault();
 		} else if (event.key === 'Down' || event.key === 'ArrowDown') {
-			builder.callback('drawingarea', 'keypress', container, UNOKey.DOWN | modifier, builder);
+			builder.callback('drawingarea', 'keypress', container.getCurrent(), UNOKey.DOWN | modifier, builder);
 			event.preventDefault();
 		} else if (event.key === 'Home') {
-			builder.callback('drawingarea', 'keypress', container, UNOKey.HOME | modifier, builder);
+			builder.callback('drawingarea', 'keypress', container.getCurrent(), UNOKey.HOME | modifier, builder);
 			event.preventDefault();
 		} else if (event.key === 'End') {
-			builder.callback('drawingarea', 'keypress', container, UNOKey.END | modifier, builder);
+			builder.callback('drawingarea', 'keypress', container.getCurrent(), UNOKey.END | modifier, builder);
 			event.preventDefault();
 		} else if (event.key === 'Backspace') {
-			builder.callback('drawingarea', 'keypress', container, UNOKey.BACKSPACE | modifier, builder);
+			builder.callback('drawingarea', 'keypress', container.getCurrent(), UNOKey.BACKSPACE | modifier, builder);
 			event.preventDefault();
 		} else if (event.key === 'Delete') {
-			builder.callback('drawingarea', 'keypress', container, UNOKey.DELETE | modifier, builder);
+			builder.callback('drawingarea', 'keypress', container.getCurrent(), UNOKey.DELETE | modifier, builder);
 			event.preventDefault();
 		} else if (event.key === 'Space') {
-			builder.callback('drawingarea', 'keypress', container, UNOKey.SPACE | modifier, builder);
+			builder.callback('drawingarea', 'keypress', container.getCurrent(), UNOKey.SPACE | modifier, builder);
 			event.preventDefault();
 		} else if (event.key === 'Tab') {
-			builder.callback('drawingarea', 'keypress', container, UNOKey.TAB | modifier, builder);
+			builder.callback('drawingarea', 'keypress', container.getCurrent(), UNOKey.TAB | modifier, builder);
 		} else if (event.key === 'Shift') {
 			modifier = modifier | app.UNOModifier.SHIFT;
 			event.preventDefault();
@@ -207,7 +214,7 @@ function _drawingAreaControl (parentContainer, data, builder) {
 			modifier = modifier | app.UNOModifier.CTRL;
 			event.preventDefault();
 		} else if (event.key === 'a' && event.ctrlKey) {
-			builder.callback('drawingarea', 'keypress', container, UNOKey.A | app.UNOModifier.CTRL, builder);
+			builder.callback('drawingarea', 'keypress', container.getCurrent(), UNOKey.A | app.UNOModifier.CTRL, builder);
 		}
 	});
 
@@ -252,7 +259,7 @@ function _drawingAreaControl (parentContainer, data, builder) {
 				keyCode |= app.UNOModifier.CTRL;
 			}
 
-			builder.callback('drawingarea', 'keypress', container, keyCode, builder);
+			builder.callback('drawingarea', 'keypress', container.getCurrent(), keyCode, builder);
 		}
 
 		event.preventDefault();
