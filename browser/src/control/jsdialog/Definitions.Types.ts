@@ -389,6 +389,8 @@ interface IconViewEntry {
 	separator: boolean; // is separator
 	selected: boolean; // is currently selected
 	image: string; // base64 encoded image
+	width: number; // width in pixels; used for on demand rendering
+	height: number; // height in pixels; used for on demand rendering
 	text: string; // label of an entry
 	tooltip: string; // tooltip of an entry
 	ondemand: boolean; // if true then we ignore image property and request it on demand (when shown)
