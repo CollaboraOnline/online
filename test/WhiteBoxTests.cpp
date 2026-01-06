@@ -366,13 +366,13 @@ void WhiteBoxTests::testPathPrefixTrimming()
 
 #ifdef IOS
 
-    LOK_ASSERT_EQUAL(std::size_t(23), skipPathToFilename("./path/to/a/looooooong/filename.cpp"));
-    LOK_ASSERT_EQUAL(std::size_t(21), skipPathToFilename("path/to/a/looooooong/filename.cpp"));
-    LOK_ASSERT_EQUAL(std::size_t(22), skipPathToFilename("/path/to/a/looooooong/filename.cpp"));
-    LOK_ASSERT_EQUAL(std::size_t(24), skipPathToFilename("../path/to/a/looooooong/filename.cpp"));
-    LOK_ASSERT_EQUAL(std::size_t(0), skipPathToFilename(""));
-    LOK_ASSERT_EQUAL(std::size_t(0), skipPathToFilename("/"));
-    LOK_ASSERT_EQUAL(std::size_t(0), skipPathToFilename("."));
+    LOK_ASSERT_EQUAL(23UL, skipPathToFilename("./path/to/a/looooooong/filename.cpp"));
+    LOK_ASSERT_EQUAL(21UL, skipPathToFilename("path/to/a/looooooong/filename.cpp"));
+    LOK_ASSERT_EQUAL(22UL, skipPathToFilename("/path/to/a/looooooong/filename.cpp"));
+    LOK_ASSERT_EQUAL(24UL, skipPathToFilename("../path/to/a/looooooong/filename.cpp"));
+    LOK_ASSERT_EQUAL(0UL, skipPathToFilename(""));
+    LOK_ASSERT_EQUAL(0UL, skipPathToFilename("/"));
+    LOK_ASSERT_EQUAL(0UL, skipPathToFilename("."));
 
     LOK_ASSERT_EQUAL_STR("filename.cpp",
                          std::string(LOG_FILE_NAME("./path/to/a/looooooong/filename.cpp")));
@@ -386,13 +386,13 @@ void WhiteBoxTests::testPathPrefixTrimming()
 
 #else
 
-    LOK_ASSERT_EQUAL(std::size_t(2), skipPathPrefix("./path/to/a/looooooong/filename.cpp"));
-    LOK_ASSERT_EQUAL(std::size_t(0), skipPathPrefix("path/to/a/looooooong/filename.cpp"));
-    LOK_ASSERT_EQUAL(std::size_t(1), skipPathPrefix("/path/to/a/looooooong/filename.cpp"));
-    LOK_ASSERT_EQUAL(std::size_t(3), skipPathPrefix("../path/to/a/looooooong/filename.cpp"));
-    LOK_ASSERT_EQUAL(std::size_t(0), skipPathPrefix(""));
-    LOK_ASSERT_EQUAL(std::size_t(1), skipPathPrefix("/"));
-    LOK_ASSERT_EQUAL(std::size_t(1), skipPathPrefix("."));
+    LOK_ASSERT_EQUAL(2UL, skipPathPrefix("./path/to/a/looooooong/filename.cpp"));
+    LOK_ASSERT_EQUAL(0UL, skipPathPrefix("path/to/a/looooooong/filename.cpp"));
+    LOK_ASSERT_EQUAL(1UL, skipPathPrefix("/path/to/a/looooooong/filename.cpp"));
+    LOK_ASSERT_EQUAL(3UL, skipPathPrefix("../path/to/a/looooooong/filename.cpp"));
+    LOK_ASSERT_EQUAL(0UL, skipPathPrefix(""));
+    LOK_ASSERT_EQUAL(1UL, skipPathPrefix("/"));
+    LOK_ASSERT_EQUAL(1UL, skipPathPrefix("."));
 
     LOK_ASSERT_EQUAL_STR("path/to/a/looooooong/filename.cpp",
                          std::string(LOG_FILE_NAME("./path/to/a/looooooong/filename.cpp")));
