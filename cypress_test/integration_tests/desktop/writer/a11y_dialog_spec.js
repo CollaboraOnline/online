@@ -171,7 +171,6 @@ describe(['tagdesktop'], 'Accessibility Writer Tests', function () {
 
     function handleDialog(level, command) {
         getActiveDialog(level)
-            .should('exist')
             .then(() => {
                 // Open 'options' subdialogs
                 if (command == '.uno:EditRegion' ||
@@ -190,8 +189,8 @@ describe(['tagdesktop'], 'Accessibility Writer Tests', function () {
 
     function getActiveDialog(level) {
         return cy.cGet('.ui-dialog[role="dialog"]')
-            .should('have.length.at.least', level)
-            .last();
+            .should('have.length', level)
+            .then($dialogs => cy.wrap($dialogs.last()))
     }
 
     function handleTabsInDialog(level) {
@@ -279,9 +278,17 @@ describe(['tagdesktop'], 'Accessibility Writer Tests', function () {
     }
 
     function closeActiveDialog(level) {
-        getActiveDialog(level).within(() => {
-            cy.get('.ui-dialog-titlebar-close').click({ force: true });
-        });
+        // Closing the dialog via the titlebar directly can be fragile.
+        // So find the jsdialog ancestor, because it has a unique id,
+        // and use that id to make a selector and  a get via that is
+        // retryable by cypress.
+        getActiveDialog(level)
+            .parents('.jsdialog-window')
+            .invoke('attr', 'id')
+            .then(dialogId => {
+              cy.cGet(`#${CSS.escape(dialogId)} .ui-dialog-titlebar-close`)
+                .click();
+            });
 
         cy.cGet('.ui-dialog[role="dialog"]').should('have.length', level - 1);
     }
