@@ -206,7 +206,7 @@ inline constexpr bool failed() { return false; }
             std::ostringstream oss##__LINE__;                                                      \
             oss##__LINE__ << message;                                                              \
             const auto msg##__LINE__ = oss##__LINE__.str();                                        \
-            TST_LOG("ERROR: " << (stop ? "Assertion" : "Check") << " failure: "                    \
+            TST_LOG("ERROR: " << ((stop) ? "Assertion" : "Check") << " failure: "                  \
                               << (msg##__LINE__.empty() ? "" : msg##__LINE__ + ' ')                \
                               << lokFormatAssertEq(expected_name, expected, actual_name, actual)); \
             if (stop)                                                                              \
