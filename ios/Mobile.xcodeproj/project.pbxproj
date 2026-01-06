@@ -11,7 +11,6 @@
 		1FCFA28A2B2AF13F007EE2DF /* coolwsd-fork.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1FCFA2892B2AF13C007EE2DF /* coolwsd-fork.cpp */; };
 		3F3A77D22C59B04000947249 /* global.js in Resources */ = {isa = PBXBuildFile; fileRef = 3F3A77D12C59B04000947249 /* global.js */; };
 		3F3B54DD2A3928D100063C01 /* HttpRequest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3F3B54DB2A39288500063C01 /* HttpRequest.cpp */; };
-		3F3B54E02A392CCB00063C01 /* NetUtil.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3F3B54DE2A392C9C00063C01 /* NetUtil.cpp */; };
 		A5C2FA5A2AC1BB3900265946 /* Simd.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A5C2FA592AC1BB3800265946 /* Simd.cpp */; };
 		A5C2FA5D2AC1BEC500265946 /* DeltaSimd.c in Sources */ = {isa = PBXBuildFile; fileRef = A5C2FA5B2AC1BEC500265946 /* DeltaSimd.c */; };
 		BE00F8A021396585001CE2D4 /* cool.html in Resources */ = {isa = PBXBuildFile; fileRef = BE00F89621396585001CE2D4 /* cool.html */; };
@@ -40,9 +39,9 @@
 		BE5EB5CF213FE2D000E0826C /* ClientSession.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BE5EB5CC213FE2D000E0826C /* ClientSession.cpp */; };
 		BE5EB5D0213FE2D000E0826C /* TileCache.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BE5EB5CD213FE2D000E0826C /* TileCache.cpp */; };
 		BE5EB5D22140039100E0826C /* COOLWSD.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BE5EB5D12140039100E0826C /* COOLWSD.cpp */; };
+		BE5EB5D22140039100E0826D /* ClientRequestDispatcher.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BE5EB5D12140039100E0826D /* ClientRequestDispatcher.cpp */; };
 		BE5EB5D22140039100E0836C /* KitWSDGlobals.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BE5EB5D12140039100E0836C /* KitWSDGlobals.cpp */; };
 		BE5EB5D22140039101E0927D /* dumpWsdState.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BE5EB5D12140039110E0836F /* dumpWsdState.cpp */; };
-		BE5EB5D22140039100E0826D /* ClientRequestDispatcher.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BE5EB5D12140039100E0826D /* ClientRequestDispatcher.cpp */; };
 		BE5EB5D421400DC100E0826C /* DocumentBroker.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BE5EB5D321400DC100E0826C /* DocumentBroker.cpp */; };
 		BE5EB5D621401E0F00E0826C /* Storage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BE5EB5D521401E0F00E0826C /* Storage.cpp */; };
 		BE5EB5DA2140363100E0826C /* ios.mm in Sources */ = {isa = PBXBuildFile; fileRef = BE5EB5D92140363100E0826C /* ios.mm */; };
@@ -116,8 +115,6 @@
 		3F3A77D12C59B04000947249 /* global.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; name = global.js; path = ../../../browser/dist/global.js; sourceTree = "<group>"; };
 		3F3B54DB2A39288500063C01 /* HttpRequest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = HttpRequest.cpp; sourceTree = "<group>"; };
 		3F3B54DC2A39288500063C01 /* HttpRequest.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = HttpRequest.hpp; sourceTree = "<group>"; };
-		3F3B54DE2A392C9C00063C01 /* NetUtil.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = NetUtil.cpp; sourceTree = "<group>"; };
-		3F3B54DF2A392C9C00063C01 /* NetUtil.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = NetUtil.hpp; sourceTree = "<group>"; };
 		3F3B54DF2A392C9C00063C02 /* Uri.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Uri.hpp; sourceTree = "<group>"; };
 		92414564BE942221FB823CF9 /* AsyncDNS.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = AsyncDNS.hpp; sourceTree = "<group>"; };
 		A5C2FA582AC1BB3800265946 /* Simd.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Simd.hpp; sourceTree = "<group>"; };
@@ -619,9 +616,9 @@
 		BE5EB5CC213FE2D000E0826C /* ClientSession.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ClientSession.cpp; sourceTree = "<group>"; };
 		BE5EB5CD213FE2D000E0826C /* TileCache.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TileCache.cpp; sourceTree = "<group>"; };
 		BE5EB5D12140039100E0826C /* COOLWSD.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = COOLWSD.cpp; sourceTree = "<group>"; };
+		BE5EB5D12140039100E0826D /* ClientRequestDispatcher.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ClientRequestDispatcher.cpp; sourceTree = "<group>"; };
 		BE5EB5D12140039100E0836C /* KitWSDGlobals.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = KitWSDGlobals.cpp; sourceTree = "<group>"; };
 		BE5EB5D12140039110E0836F /* dumpWsdState.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = dumpWsdState.cpp; sourceTree = "<group>"; };
-		BE5EB5D12140039100E0826D /* ClientRequestDispatcher.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ClientRequestDispatcher.cpp; sourceTree = "<group>"; };
 		BE5EB5D321400DC100E0826C /* DocumentBroker.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DocumentBroker.cpp; sourceTree = "<group>"; };
 		BE5EB5D521401E0F00E0826C /* Storage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Storage.cpp; sourceTree = "<group>"; };
 		BE5EB5D92140363100E0826C /* ios.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = ios.mm; path = ../../ios/ios.mm; sourceTree = "<group>"; };
@@ -3012,8 +3009,6 @@
 				92414564BE942221FB823CF9 /* AsyncDNS.hpp */,
 				3F3B54DB2A39288500063C01 /* HttpRequest.cpp */,
 				3F3B54DC2A39288500063C01 /* HttpRequest.hpp */,
-				3F3B54DE2A392C9C00063C01 /* NetUtil.cpp */,
-				3F3B54DF2A392C9C00063C01 /* NetUtil.hpp */,
 				3F3B54DF2A392C9C00063C02 /* Uri.hpp */,
 				BEA2835C21498AD400848631 /* Socket.cpp */,
 				BEA2835E214A8E2000848631 /* Socket.hpp */,
@@ -3778,12 +3773,11 @@
 				BE980C592CEB557A00FED7BC /* FileUtil-apple.mm in Sources */,
 				BE5EB5D22140039100E0826C /* COOLWSD.cpp in Sources */,
 				BE5EB5D22140039100E0836C /* KitWSDGlobals.cpp in Sources */,
-                BE5EB5D22140039101E0927D /* dumpWsdState.cpp in Sources */,
+				BE5EB5D22140039101E0927D /* dumpWsdState.cpp in Sources */,
 				BE5EB5D22140039100E0826D /* ClientRequestDispatcher.cpp in Sources */,
 				BEFB1EE121C29CC70081D757 /* L10n.mm in Sources */,
 				BEDCC8992456FFAD00FB02BD /* SceneDelegate.mm in Sources */,
 				BE5EB5C6213FE29900E0826C /* SigUtil-dummy.cpp in Sources */,
-				3F3B54E02A392CCB00063C01 /* NetUtil.cpp in Sources */,
 				BE5EB5C1213FE29900E0826C /* Log.cpp in Sources */,
 				A5C2FA5A2AC1BB3900265946 /* Simd.cpp in Sources */,
 				BEDCC84E2452F82800FB02BD /* MobileApp.cpp in Sources */,
