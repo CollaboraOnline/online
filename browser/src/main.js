@@ -87,7 +87,7 @@ app.map = map;
 app.idleHandler.map = map;
 
 if (window.coolParams.get('starterMode')) {
-	if (!window.qtBridgeReady) {
+	if (window.ThisIsTheQtApp && !window.qtBridgeReady) {
 		window.addEventListener('qtbridgeready', () => {
 			map.uiManager.initializeBackstageView();
 		}, { once: true });
