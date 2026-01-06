@@ -78,9 +78,7 @@ JSDialog.listbox = function (
 		container,
 	);
 	listboxArrow.id = 'listbox-arrow-' + data.id;
-	listboxArrow.onclick = function () {
-		listbox.showPicker();
-	};
+	listboxArrow.style.pointerEvents = 'none';
 
 	if (data.enabled === false) {
 		container.disabled = true;
