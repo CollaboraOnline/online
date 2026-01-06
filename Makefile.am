@@ -200,6 +200,7 @@ coolwsd_sources = \
                   wsd/CacheUtil.cpp \
                   wsd/ClientRequestDispatcher.cpp \
                   wsd/CollabBroker.cpp \
+                  wsd/CollabFileProxy.cpp \
                   wsd/CollabSocketHandler.cpp \
                   wsd/ClientSession.cpp \
                   wsd/ContentType.cpp \
@@ -561,6 +562,7 @@ wsd_headers = \
               wsd/CacheUtil.hpp \
               wsd/ClientRequestDispatcher.hpp \
               wsd/CollabBroker.hpp \
+              wsd/CollabFileProxy.hpp \
               wsd/CollabSocketHandler.hpp \
               wsd/ClientSession.hpp \
               wsd/ContentSecurityPolicy.hpp \
