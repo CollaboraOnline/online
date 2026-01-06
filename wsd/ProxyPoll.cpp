@@ -122,15 +122,15 @@ void ProxyPoll::startPump(const std::shared_ptr<StreamSocket>& clientSocket,
                 return;
             }
 
-            ProxyPoll::instance().insertNewSocket(clientSocket);
-            ProxyPoll::instance().insertNewSocket(targetSocket);
-
             // pumps client -> target (direction = true)
             ProxyPoll::instance().addCallback(
                 [targetSocket, clientSocket, proxiedRequest]()
                 {
                     auto clientHandler = std::make_shared<ProxyHandler>(targetSocket, true);
                     clientSocket->setHandler(clientHandler);
+
+                    ProxyPoll::instance().insertNewSocket(clientSocket);
+                    ProxyPoll::instance().insertNewSocket(targetSocket);
 
                     // Send request on the correct thread
                     targetSocket->send(proxiedRequest);
