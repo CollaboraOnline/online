@@ -51,7 +51,7 @@ void RecentFiles::load(const std::string& fileName, int maxFiles)
             uint64_t count;
             std::istringstream(line) >> count;
             entry.timestamp = std::chrono::time_point<std::chrono::system_clock>(std::chrono::system_clock::duration(count));
-            _MRU.push_back(entry);
+            _mostRecentlyUsed.push_back(entry);
         }
     }
 }
@@ -61,13 +61,13 @@ void RecentFiles::add(const std::string& uri)
     assert(_initialised);
 
     // Add entry for the file first in the list, removing old entry for it if it exist.
-    for (auto it = _MRU.begin(); it != _MRU.end(); it++)
+    for (auto it = _mostRecentlyUsed.begin(); it != _mostRecentlyUsed.end(); it++)
         if (it->uri == uri)
         {
-            _MRU.erase(it);
+            _mostRecentlyUsed.erase(it);
             break;
         }
-    _MRU.insert(_MRU.begin(),
+    _mostRecentlyUsed.insert(_mostRecentlyUsed.begin(),
                 { uri, std::chrono::time_point<std::chrono::system_clock>(std::chrono::system_clock::now()) });
 
     // Save the list.
@@ -78,7 +78,7 @@ void RecentFiles::add(const std::string& uri)
         LOG_ERR("Could not open '" << _fileName << "' for writing");
         return;
     }
-    for (const auto& i : _MRU)
+    for (const auto& i : _mostRecentlyUsed)
         stream << i.uri << std::endl << i.timestamp.time_since_epoch().count() << std::endl;
 }
 
@@ -87,19 +87,19 @@ std::string RecentFiles::serialise()
     std::string result;
 
     result = "[ ";
-    for (int i = 0; i < _MRU.size(); i++)
+    for (int i = 0; i < _mostRecentlyUsed.size(); i++)
     {
         std::vector<std::string> segments;
-        Poco::URI(_MRU[i].uri).getPathSegments(segments);
+        Poco::URI(_mostRecentlyUsed[i].uri).getPathSegments(segments);
 
         assert(!segments.empty());
 
         result += "{ "
-            "\"uri\": \"" + _MRU[i].uri + "\", "
+            "\"uri\": \"" + _mostRecentlyUsed[i].uri + "\", "
             "\"name\": \"" + JsonUtil::escapeJSONValue(segments.back()) + "\", "
-            "\"timestamp\": \"" + std::format("{:%FT%TZ}", _MRU[i].timestamp) + "\""
+            "\"timestamp\": \"" + std::format("{:%FT%TZ}", _mostRecentlyUsed[i].timestamp) + "\""
             " }";
-        if (i < _MRU.size() - 1)
+        if (i < _mostRecentlyUsed.size() - 1)
             result += ", ";
     }
     result += " ]";

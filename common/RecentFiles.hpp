@@ -47,7 +47,7 @@ private:
     bool _initialised;
 
     std::string _fileName;
-    std::vector<Entry> _MRU;
+    std::vector<Entry> _mostRecentlyUsed;
     int _maxFiles;
 };
 
