@@ -37,6 +37,7 @@
 #include <wsd/ClientRequestDispatcher.hpp>
 #include <wsd/DocumentBroker.hpp>
 #include <wsd/RequestVettingStation.hpp>
+#include <wsd/CollabFileProxy.hpp>
 #include <wsd/CollabSocketHandler.hpp>
 #include <net/WebSocketHandler.hpp>
 
@@ -1232,6 +1233,62 @@ ClientRequestDispatcher::MessageResult ClientRequestDispatcher::handleMessage(Po
                  requestDetails.equals(2, "ws") && requestDetails.isWebSocket())
             servedSync = handleClientWsUpgrade(request, requestDetails, disposition, socket);
 
+        else if (requestDetails.equals(0, "co") &&
+                 requestDetails.equals(1, "collab") &&
+                 (requestDetails.equals(2, "download") || requestDetails.equals(2, "upload")))
+        {
+            // /co/collab/download or /co/collab/upload endpoints
+            const bool isUpload = requestDetails.equals(2, "upload");
+            LOG_INF("CollabFileProxy " << (isUpload ? "upload" : "download")
+                    << " request: " << request.getURI());
+
+            // Extract WOPISrc from query parameters
+            std::string wopiSrc;
+            Poco::URI requestUri(request.getURI());
+            for (const auto& param : requestUri.getQueryParameters())
+            {
+                if (param.first == "WOPISrc")
+                {
+                    wopiSrc = param.second;
+                    break;
+                }
+            }
+
+            if (wopiSrc.empty())
+            {
+                LOG_ERR("Missing WOPISrc parameter in collab file request");
+                HttpHelper::sendErrorAndShutdown(http::StatusCode::BadRequest, socket);
+                return MessageResult::Ignore;
+            }
+
+            // Extract access_token from cookie
+            std::string accessToken;
+            const std::string cookies = request.get("Cookie", "");
+            if (!cookies.empty())
+            {
+                // Parse cookies: "name=value; name2=value2"
+                const std::size_t tokenPos = cookies.find("access_token=");
+                if (tokenPos != std::string::npos)
+                {
+                    std::size_t start = tokenPos + 13; // length of "access_token="
+                    std::size_t end = cookies.find(';', start);
+                    if (end == std::string::npos)
+                        end = cookies.size();
+                    accessToken = cookies.substr(start, end - start);
+                }
+            }
+
+            if (accessToken.empty())
+            {
+                LOG_ERR("Missing access_token cookie in collab file request");
+                HttpHelper::sendErrorAndShutdown(http::StatusCode::Unauthorized, socket);
+                return MessageResult::Ignore;
+            }
+
+            auto proxy = std::make_shared<CollabFileProxy>(
+                _id, requestDetails, socket, wopiSrc, accessToken, isUpload);
+            proxy->handleRequest(message, COOLWSD::getWebServerPoll(), disposition);
+        }
         else if (requestDetails.equals(0, "co") &&
                  requestDetails.equals(1, "collab") &&
                  requestDetails.isWebSocket())
