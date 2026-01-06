@@ -23,7 +23,7 @@
  * }
  */
 
-/* global JSDialog $ UNOKey app */
+/* global JSDialog UNOKey app */
 
 function _drawingAreaControl (parentContainer, data, builder) {
 	var container = window.L.DomUtil.create('div', builder.options.cssClass + ' ui-drawing-area-container', parentContainer);
@@ -86,15 +86,8 @@ function _drawingAreaControl (parentContainer, data, builder) {
 
 	var getCoordinatesFromEvent = function (e) {
 		var imageElement = document.getElementById(imageId);
-		var ret = [0, 0];
-
-		if (e.offsetX) {
-			ret[0] = e.offsetX;
-			ret[1] = e.offsetY;
-		} else if (e.changedTouches && e.changedTouches.length) {
-			ret[0] = e.changedTouches[e.changedTouches.length-1].pageX - $(imageElement).offset().left;
-			ret[1] = e.changedTouches[e.changedTouches.length-1].pageY - $(imageElement).offset().top;
-		}
+		var boundingBox = imageElement.getBoundingClientRect();
+		var ret = [e.x - boundingBox.left, e.y - boundingBox.top];
 
 		ret[0] = ret[0] / imageElement.offsetWidth;
 		ret[1] = ret[1] / imageElement.offsetHeight;
