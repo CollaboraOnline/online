@@ -44,6 +44,7 @@ cmake_list= \
             ../common/Util-mobile.cpp \
             ../common/Util-unix.cpp \
             ../common/Uri.cpp \
+            ../common/RecentFiles.cpp \
             ../kit/ChildSession.cpp \
             ../kit/DeltaSimd.c \
             ../kit/Kit.cpp \
@@ -79,7 +80,7 @@ if X86
 coda_qt_CXXFLAGS += -mno-direct-extern-access
 endif
 
-coda_qt_SOURCES = coda-qt.cpp WebView.cpp DBusService.cpp RecentDocuments.cpp $(BUILT_SOURCES) $(cmake_list)
+coda_qt_SOURCES = coda-qt.cpp WebView.cpp DBusService.cpp $(BUILT_SOURCES) $(cmake_list)
 
 metainfodir = $(datadir)/metainfo
 metainfo_DATA = com.collaboraoffice.Office.metainfo.xml

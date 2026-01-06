@@ -21,7 +21,7 @@
 #include "FileUtil.hpp"
 #include "qt.hpp"
 #include "DBusService.hpp"
-#include "RecentDocuments.hpp"
+#include "common/RecentFiles.hpp"
 
 #include <Poco/MemoryStream.h>
 #include <Poco/JSON/Parser.h>
@@ -94,6 +94,7 @@ int coolwsd_server_socket_fd = -1;
 static COOLWSD* coolwsd = nullptr;
 static std::thread coolwsdThread;
 QWebEngineProfile* Application::globalProfile = nullptr;
+RecentFiles Application::recentFiles;
 
 static const char* getUserName()
 {
@@ -606,7 +607,7 @@ bool Bridge::saveDocument(const std::string& savePath)
     if (FileUtil::copyAtomic(tempPath, savePath, false))
     {
         LOG_INF("Successfully saved file to location: " << savePath);
-        RecentDocuments::add(QString::fromStdString(savePath));
+        Application::getRecentFiles().add(Poco::URI(Poco::Path(savePath)).toString());
         _pendingSave = false;
         return true;
     }
@@ -887,18 +888,8 @@ QVariant Bridge::cool(const QString& messageStr)
     }
     else if (message == "GETRECENTDOCS")
     {
-        LibreOfficeKitDocumentType docType = LOK_DOCTYPE_TEXT;
-        lok::Document* loKitDoc = DocumentData::get(_document._appDocId).loKitDocument;
-        if (loKitDoc) {
-            docType = static_cast<LibreOfficeKitDocumentType>(loKitDoc->getDocumentType());
-        }
-
-        Poco::JSON::Array::Ptr recentDocs = RecentDocuments::getForAppType(docType);
-        std::ostringstream jsonStream;
-        recentDocs->stringify(jsonStream);
-        QString result = QString::fromStdString(jsonStream.str());
-
-        LOG_TRC_NOFILE("GETRECENTDOCS: returning " << recentDocs->size() << " documents for app type");
+        QString result = QString::fromStdString(Application::getRecentFiles().serialise());
+        LOG_TRC_NOFILE("GETRECENTDOCS: returning recent documents");
         return result;
     }
     else if (message.starts_with(CLIPBOARDSET))
@@ -1161,9 +1152,17 @@ void Application::initialize()
         globalProfile->setCachePath(cacheData);
         globalProfile->setHttpCacheType(QWebEngineProfile::DiskHttpCache);
     }
+
+    // Initialize recent files
+    QString configDir = QStandardPaths::writableLocation(QStandardPaths::ConfigLocation);
+    QDir().mkpath(configDir + "/Collabora");
+    QString recentFilesPath = configDir + "/Collabora/RecentDocuments.conf";
+    recentFiles.load(recentFilesPath.toStdString(), 15);
 }
 
 QWebEngineProfile* Application::getProfile() { return globalProfile; }
+
+RecentFiles& Application::getRecentFiles() { return recentFiles; }
 
 int main(int argc, char** argv)
 {
