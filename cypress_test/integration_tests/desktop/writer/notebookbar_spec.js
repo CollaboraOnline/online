@@ -108,6 +108,13 @@ describe(['tagdesktop'], 'Notebookbar checkbox widgets', function() {
 			cy.get('@x1').should('not.be.equal', x);
 		});
 
+		// Check that there are no tab stops.
+		cy.cGet('.cool-ruler-tabstop-left').should('not.exist');
+		// Add a tab stop with a double click.
+		cy.cGet('.cool-ruler-horizontal-tabstopcontainer').dblclick();
+		// Check that a new tab stop is added.
+		cy.cGet('.cool-ruler-tabstop-left').should('exist');
+
 		cy.cGet('#showruler-input').uncheck();
 		cy.cGet('#showruler-input').should('not.be.checked');
 		cy.cGet('.cool-ruler').should('not.be.visible');
