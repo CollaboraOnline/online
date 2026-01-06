@@ -595,7 +595,18 @@ class BackstageView extends window.L.Class {
 		
 		const fileName = doc.name || (lastSlashIndex >= 0 ? fullPath.slice(lastSlashIndex + 1) : fullPath);
 		const filePath = lastSlashIndex >= 0 ? fullPath.slice(0, lastSlashIndex + 1) : '/';
-	
+
+		if (!doc.doctype) {
+			const ext = fileName.split('.').pop()?.toLowerCase() || '';
+			if (['ods', 'ots', 'xls', 'xlsx', 'csv', 'fods'].includes(ext)) {
+				doc.doctype = 'calc';
+			} else if (['odp', 'otp', 'ppt', 'pptx', 'fodp'].includes(ext)) {
+				doc.doctype = 'impress';
+			} else {
+				doc.doctype = 'writer';  // Default
+			}
+		}
+
 		return {
 			fileName,
 			filePath,

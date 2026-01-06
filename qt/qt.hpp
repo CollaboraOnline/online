@@ -8,6 +8,7 @@
 #pragma once
 
 #include <QWebEngineProfile>
+#include "common/RecentFiles.hpp"
 
 extern int coolwsd_server_socket_fd;
 extern const char* user_name;
@@ -17,10 +18,12 @@ class Application
 {
 private:
     static QWebEngineProfile* globalProfile;
+    static RecentFiles recentFiles;
 
 public:
     static void initialize();
     static QWebEngineProfile* getProfile();
+    static RecentFiles& getRecentFiles();
 };
 
 namespace
