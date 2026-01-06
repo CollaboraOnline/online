@@ -2824,7 +2824,7 @@ kbd,
 	max-height: 19vh;
 }
 
-#ColorPage.jsdialog :is(#iconview_colors, #iconview_recent_colors).ui-iconview .ui-iconview-entry img,
+#ColorPage.jsdialog :is(#iconview_colors, #iconview_recent_colors).ui-iconview .ui-iconview-entry :is(img, span),
 :is(#colorwindow_iv_colors, #colorwindow_iv_recentcolors) .ui-iconview-entry img {
 	padding: 1px;
 }

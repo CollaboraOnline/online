@@ -105,6 +105,14 @@ function _iconViewEntry(
 			builder.options.cssClass,
 			entryContainer,
 		);
+		// Ensure the placeholder is the same size as the image to avoid the dialog changing size
+		if (entry.width !== undefined && entry.height !== undefined) {
+			placeholder.style.width = entry.width + 'px';
+			placeholder.style.height = entry.height + 'px';
+			placeholder.style.overflow = 'hidden';
+			placeholder.style.display = 'block';
+		}
+
 		placeholder.innerText = entry.text ? entry.text : '';
 		if (entry.tooltip) placeholder.title = entry.tooltip;
 		else if (entry.text) placeholder.title = entry.text;
