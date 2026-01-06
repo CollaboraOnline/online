@@ -354,7 +354,7 @@ JSDialog.iconView = function (
 			entry.row,
 			placeholder,
 			entryContainer,
-			entry.text,
+			entry.text ? entry.text : entry.tooltip,
 		);
 	};
 
