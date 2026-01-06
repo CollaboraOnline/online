@@ -22,6 +22,12 @@
 #include <QPushButton>
 #include <QTimer>
 #include <QUuid>
+#include <QPalette>
+#include <QColor>
+#include <optional>
+
+// Detect GNOME portal dark preference (defined in WebView.cpp)
+std::optional<bool> portalPrefersDark();
 
 const QString kTabKey = "application/x-detachable-tab";
 const QString kSourceKey = "application/x-detachable-source";
@@ -149,6 +155,27 @@ DetachableTabWidget::DetachableTabWidget(QWidget* parent)
     setTabBar(tabBar);
     connect(tabBar, &DetachableTabBar::detachTabRequested,
             this, &DetachableTabWidget::handleDetachRequest);
+
+    // Base: hide borders around tabs/windows on GNOME, then theme tabs
+    QString base = QStringLiteral("QTabWidget::pane { border: none; }");
+    QString themed;
+    if (auto prefers = portalPrefersDark(); prefers && *prefers) {
+        themed = QStringLiteral(
+            "QTabBar::tab { background: #2e2e2e; color: #dddddd; padding: 6px 10px; border: 1px solid #424242; border-bottom-color: #2e2e2e; }"
+            "QTabBar::tab:selected { background: #3a3a3a; color: #ffffff; border-color: #5a5a5a; }"
+            "QTabBar::tab:hover { background: #3d3d3d; }"
+            "QTabWidget::tab-bar { alignment: left; }"
+        );
+    } else if (auto prefers2 = portalPrefersDark(); prefers2 && !*prefers2) {
+        // Light preference explicitly set: use light-friendly borders
+        themed = QStringLiteral(
+            "QTabBar::tab { background: #f2f2f2; color: #202020; padding: 6px 10px; border: 1px solid #c6c6c6; border-bottom-color: #e6e6e6; }"
+            "QTabBar::tab:selected { background: #ffffff; color: #000000; border-color: #a0a0a0; }"
+            "QTabBar::tab:hover { background: #fafafa; }"
+            "QTabWidget::tab-bar { alignment: left; }"
+        );
+    }
+    setStyleSheet(base + themed);
 }
 
 DetachableTabWidget::~DetachableTabWidget() {
