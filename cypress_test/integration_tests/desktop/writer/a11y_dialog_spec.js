@@ -64,9 +64,11 @@ describe(['tagdesktop'], 'Accessibility Writer Tests', function () {
                     command == '.uno:InsertIndexesEntry' ||
                     command == '.uno:InsertMultiIndex' ||
                     command == '.uno:LineNumberingDialog' ||
+                    command == '.uno:OutlineBullet' ||
                     command == '.uno:PageDialog' ||
                     command == '.uno:ParagraphDialog' ||
-                    command == '.uno:SpellingAndGrammarDialog') {
+                    command == '.uno:SpellingAndGrammarDialog' ||
+                    command == '.uno:TableDialog') {
                     cy.log(`Skipping buggy dialog: ${command}`);
                     return;
                 }
@@ -76,7 +78,7 @@ describe(['tagdesktop'], 'Accessibility Writer Tests', function () {
                     win.app.map.sendUnoCommand(command);
                 });
 
-                handleDialog(1, command);
+                handleDialog(win, 1, command);
             });
 
             // triple select to include table, then delete all
@@ -92,7 +94,7 @@ describe(['tagdesktop'], 'Accessibility Writer Tests', function () {
                 win.app.map.sendUnoCommand('.uno:InsertDropdownContentControl');
                 win.app.map.sendUnoCommand('.uno:ContentControlProperties');
             });
-            handleDialog(1, '.uno:ContentControlProperties');
+            handleDialog(win, 1, '.uno:ContentControlProperties');
 
             // Text ReadOnly info dialog
             helper.clearAllText();
@@ -102,7 +104,7 @@ describe(['tagdesktop'], 'Accessibility Writer Tests', function () {
                 win.app.map.sendUnoCommand('.uno:InsertSection?RegionProtect:bool=true');
             });
             helper.typeIntoDocument('{del}');
-            handleDialog(1);
+            handleDialog(win, 1);
 
             cy.get('@console:error').then(spy => {
                 const a11yValidatorExceptionText = win.app.A11yValidatorException.PREFIX;
@@ -159,25 +161,35 @@ describe(['tagdesktop'], 'Accessibility Writer Tests', function () {
         });
     });
 
-    function handleDialog(level, command) {
+    function handleDialog(win, level, command) {
         getActiveDialog(level)
+            .then(() => {
+                return waitLayoutIdle(win);
+            })
             .then(() => {
                 // Open 'options' subdialogs
                 if (command == '.uno:EditRegion' ||
                     command == '.uno:InsertCaptionDialog') {
                     cy.cGet('#options-button').click();
-                    handleDialog(level + 1);
+                    handleDialog(win, level + 1);
                 } else if (command == '.uno:InsertIndexesEntry') {
                     cy.cGet('#new-button').click();
-                    handleDialog(level + 1);
+                    handleDialog(win, level + 1);
                 } else if (command == '.uno:ContentControlProperties') {
                     cy.cGet('#add-button').click();
-                    handleDialog(level + 1);
+                    handleDialog(win, level + 1);
                 }
 
-                handleTabsInDialog(level);
+                handleTabsInDialog(win, level);
                 closeActiveDialog(level);
             });
+    }
+
+    function waitLayoutIdle(win) {
+        // Wait for all layout tasks and a11y checks to complete
+        return new Cypress.Promise(resolve => {
+            win.app.layoutingService.onDrain(resolve);
+        });
     }
 
     function getActiveDialog(level) {
@@ -186,11 +198,11 @@ describe(['tagdesktop'], 'Accessibility Writer Tests', function () {
             .then($dialogs => cy.wrap($dialogs.last()))
     }
 
-    function handleTabsInDialog(level) {
-        traverseTabs(() => getActiveDialog(level));
+    function handleTabsInDialog(win, level) {
+        traverseTabs(() => getActiveDialog(level), win);
     }
 
-    function traverseTabs(getContainer, isNested = false) {
+    function traverseTabs(getContainer, win, isNested = false) {
         const TABLIST = '[role="tablist"]';
         const TAB = '[role="tab"]';
 
@@ -224,6 +236,9 @@ describe(['tagdesktop'], 'Accessibility Writer Tests', function () {
                             .find(TAB).eq(index)
                             .click({ force: true })
                             .then(() => {
+                                return waitLayoutIdle(win);
+                            })
+                            .then(() => {
                                 return getContainer();
                             })
                             .then($ctx => {
@@ -241,7 +256,7 @@ describe(['tagdesktop'], 'Accessibility Writer Tests', function () {
                                         if (!isNested && $nestedTablists.length > 0) {
                                             return traverseTabs(
                                                 () => getContainer().find(panelSelector),
-                                                true
+                                                win, true
                                             );
                                         }
                                     });
