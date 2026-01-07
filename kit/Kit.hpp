@@ -559,7 +559,7 @@ std::shared_ptr<lok::Document> getLOKDocumentForAndroidOnly();
 std::shared_ptr<DocumentBroker> getDocumentBrokerForAndroidOnly();
 #endif
 
-extern LibreOfficeKitStruct* loKitPtr;
+extern LibreOfficeKit* loKitPtr;
 
 /// Check if URP is enabled
 bool isURPEnabled();
