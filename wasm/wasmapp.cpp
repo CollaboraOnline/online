@@ -219,11 +219,16 @@ int main(int argc, char* argv_main[])
             const std::string docKind = std::string(argv_main[1]);
             const std::string docDesc = std::string(argv_main[2]);
 
-            if (docKind == "server")
+            if (docKind == "server" || docKind == "collab")
             {
-                remoteUrl = "/wasm/" + docDesc;
+                // 'server' mode: URL is encoded WOPI source, prepend /wasm/ to fetch
+                // 'collab' mode: URL is already a full path (e.g., /co/collab/fetch?token=...)
+                if (docKind == "server")
+                    remoteUrl = "/wasm/" + docDesc;
+                else
+                    remoteUrl = docDesc; // collab mode: use URL directly
 
-                printf("Fetching from url %s\n", remoteUrl.c_str());
+                printf("Fetching from url %s (mode: %s)\n", remoteUrl.c_str(), docKind.c_str());
 
                 emscripten_fetch_attr_t attr;
                 emscripten_fetch_attr_init(&attr);
