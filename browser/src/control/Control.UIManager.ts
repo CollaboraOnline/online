@@ -1836,7 +1836,7 @@ class UIManager extends window.L.Control {
 		title: string | undefined,
 		message1: string,
 		message2: string | null,
-		buttonText: string,
+		buttonText?: string,
 		callback: any = null,
 		withCancel: boolean = false,
 		focusId?: string,
