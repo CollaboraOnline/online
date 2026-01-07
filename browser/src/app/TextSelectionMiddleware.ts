@@ -102,6 +102,7 @@ class TextSelections {
 		var endPos = { x: this.endRectangle.pX1, y: this.endRectangle.pY2 };
 
 		if (app.map._docLayer.isCalcRTL()) {
+			Util.ensureValue(app.activeDocument);
 			// Mirror position from right to left.
 			startPos.x =
 				app.activeDocument.activeLayout.viewedRectangle.pX2 -

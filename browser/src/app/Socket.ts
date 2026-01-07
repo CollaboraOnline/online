@@ -569,7 +569,7 @@ class Socket {
 		);
 	}
 
-	private _getParameterByName(url: string, name: string): string {
+	public static getParameterByName(url: string, name: string): string {
 		// Escape all regex characters.
 		const escape = (str: string): string => {
 			return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
@@ -1469,9 +1469,9 @@ class Socket {
 					},
 				});
 			} else if (textMsg.startsWith('saveas:')) {
-				const accessToken = this._getParameterByName(url, 'access_token');
-				let accessTokenTtl = this._getParameterByName(url, 'access_token_ttl');
-				const noAuthHeader = this._getParameterByName(url, 'no_auth_header');
+				const accessToken = Socket.getParameterByName(url, 'access_token');
+				let accessTokenTtl = Socket.getParameterByName(url, 'access_token_ttl');
+				const noAuthHeader = Socket.getParameterByName(url, 'no_auth_header');
 
 				if (accessToken !== undefined) {
 					if (accessTokenTtl === '') {

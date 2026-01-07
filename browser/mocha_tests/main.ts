@@ -13,7 +13,7 @@
 /// <reference path="./sources.ts" />
 /// <reference path="./helper/canvasContainerSetup.ts" />
 /// <reference path="./helper/rectUtil.ts" />
-/// <reference path="helper/Events.ts"/>
+/// <reference path="./helper/Events.ts"/>
 /// <reference path="./helper/util.ts"/>
 /// <reference path="./data/LOUtilTestData.ts"/>
 /// <reference path="./data/SheetGeometryTestData.ts" />
@@ -28,4 +28,6 @@
 /// <reference path="./Util.test.ts" />
 /// <reference path="./ViewLayout.test.ts" />
 /// <reference path="./ServerCommand.test.ts" />
+/// <reference path="./DomUtil.test.ts" />
+/// <reference path="./Socket.test.ts" />
 // NOTE: reference new tests here ...

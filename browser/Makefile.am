@@ -282,6 +282,7 @@ COOL_JS_LST =\
 	src/app/Socket.ts \
 	src/app/TracingEvents.ts \
 	src/app/ServerCommand.ts \
+	src/app/CoolClipboard.ts \
 	src/Leaflet.js \
 	src/errormessages.js \
 	src/unocommands.js \
@@ -292,14 +293,14 @@ COOL_JS_LST =\
 	src/geometry/Point.ts \
 	src/geometry/Bounds.ts \
 	src/geometry/Transformation.ts \
-	src/dom/DomUtil.js src/geo/LatLng.js \
+	src/app/dom/DomUtil.ts \
+	src/geo/LatLng.js \
 	src/geo/LatLngBounds.js \
 	src/geo/projection/Projection.LonLat.js \
 	src/geo/crs/CRS.js \
 	src/control/IFrameDialog.js \
 	src/map/Map.js \
 	src/control/Control.IdleHandler.ts \
-	src/map/Clipboard.js \
 	src/layer/tile/SheetSwitch.ts \
 	src/layer/Layer.js \
 	src/layer/tile/SheetGeometry.ts \
@@ -357,6 +358,7 @@ COOL_JS_LST =\
 	src/layer/vector/CanvasOverlay.ts \
 	src/canvas/sections/ScrollSection.ts \
 	src/canvas/sections/MouseControl.ts \
+	src/app/LayerUtil.ts \
 	src/layer/tile/CanvasTileLayer.js \
 	src/layer/vector/CDarkOverlay.ts \
 	src/layer/SplitPanesContext.ts \
@@ -378,19 +380,17 @@ COOL_JS_LST =\
 	src/layer/LayerGroup.js \
 	src/geometry/LineUtil.js \
 	src/core/Handler.js \
-	src/dom/DomEvent.js \
+	src/app/dom/DomEvent.ts \
 	src/dom/Draggable.js \
 	src/dom/NotebookbarAccessibilityDefinitions.js \
 	src/dom/NotebookbarAccessibility.js \
 	src/map/handler/Map.Scroll.js \
-	src/dom/DomEvent.Pointer.js \
 	src/map/handler/Map.Keyboard.js \
 	src/map/handler/Map.KeyboardShortcuts.ts \
 	src/map/handler/Map.Welcome.js \
 	src/map/handler/Map.Feedback.js \
 	src/map/handler/Map.Settings.ts \
 	src/map/handler/Map.VersionBar.js \
-	src/dom/DomEvent.MultiClick.js \
 	src/map/handler/Map.Print.js \
 	src/map/handler/Map.SlideShow.js \
 	src/map/handler/Map.FileInserter.js \
@@ -1173,6 +1173,7 @@ pot:
 		src/app/Socket.ts \
 		src/app/TracingEvents.ts \
 		src/app/ServerCommand.ts \
+		src/app/CoolClipboard.ts \
 		src/docdispatcher.ts \
 		src/docstate.ts \
 		src/docstatefunctions.js \
@@ -1182,7 +1183,6 @@ pot:
 		src/layer/marker/TextInput.js \
 		src/layer/tile/CanvasTileLayer.js \
 		src/main.js \
-		src/map/Clipboard.js \
 		src/map/Map.js \
 		src/map/handler/Map.Feedback.js \
 		src/map/handler/Map.FileInserter.js \

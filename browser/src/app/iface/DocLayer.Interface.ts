@@ -58,4 +58,6 @@ interface DocLayerInterface {
 	options: {
 		tileWidthTwips: number;
 	};
+
+	_viewId: number;
 }
