@@ -73,6 +73,7 @@ std::ostream& operator<<(std::ostream& os, const Socket &s);
 
 class Watchdog;
 class SocketPoll;
+class UnxSocketPath;
 
 /// Helper to allow us to easily defer the movement of a socket
 /// between polls to clarify thread ownership.
@@ -987,12 +988,12 @@ public:
                                 const std::shared_ptr<WebSocketHandler>& websocketHandler);
 
     bool insertNewUnixSocket(
-        const std::string &location,
+        const UnxSocketPath &location,
         const std::string &pathAndQuery,
         const std::shared_ptr<WebSocketHandler>& websocketHandler,
         const std::vector<int>* shareFDs = nullptr);
 #else
-    void insertNewFakeSocket(
+    bool insertNewFakeSocket(
         int peerSocket,
         const std::shared_ptr<ProtocolHandlerInterface>& websocketHandler);
 #endif
@@ -1525,7 +1526,11 @@ public:
                 len = readData(buf.data(), available);
                 assert(len == available);
                 notifyBytesRcvd(len);
-                assert(_inBuffer.empty());
+                // It might happen that several messages need to be buffered if they arrive quicker
+                // than we can handle them. In the non-MOBILEAPP case they are WebSocket messages so
+                // they already contain a header indicating their length. Not so in the MOBILEAPP
+                // case, so prefix them with a length header.
+                _inBuffer.append((const char*)&len, sizeof(ssize_t));
                 _inBuffer.append(buf.data(), len);
             }
         }

@@ -543,6 +543,7 @@ class LOUtil {
 			effects: 'pictureeffectsmenu',
 			selectsheetview: 'selecttable',
 			exitsheetview: 'delete',
+			open: 'formularesfapopen',
 		};
 		if (iconURLAliases[cleanName]) {
 			cleanName = iconURLAliases[cleanName];

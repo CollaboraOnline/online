@@ -498,10 +498,12 @@ private:
         //Process data frame
         readPayload(data, payloadLen, mask, _wsPayload);
 #else
-        unsigned char * const p = reinterpret_cast<unsigned char*>(socket->getInBuffer().data());
-        _wsPayload.insert(_wsPayload.end(), p, p + len);
-        const size_t headerLen = 0;
-        const size_t payloadLen = len;
+        // Unwrap what StreamSocket::readIncomingData() did
+        const size_t headerLen = sizeof(ssize_t);
+        ssize_t payloadLen;
+        memcpy(&payloadLen, socket->getInBuffer().data(), headerLen);
+        unsigned char * const p = reinterpret_cast<unsigned char*>(socket->getInBuffer().data() + headerLen);
+        _wsPayload.insert(_wsPayload.end(), p, p + payloadLen);
 #endif
 
         socket->eraseFirstInputBytes(headerLen + payloadLen);
@@ -817,7 +819,7 @@ protected:
             ssize_t i = 0, toSend;
             while (true)
             {
-                toSend = std::min(sizeof(copy), len - i);
+                toSend = std::min(static_cast<uint64_t>(sizeof(copy)), len - i);
                 if (toSend == 0)
                     break;
                 for (ssize_t j = 0; j < toSend; ++j, ++i)

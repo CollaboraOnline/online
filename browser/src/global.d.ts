@@ -290,6 +290,8 @@ interface Window {
 		isMobile(): boolean;
 		isDesktop(): boolean;
 		isTablet(): boolean;
+		isCODesktop(): boolean;
+		isNewDocument(): boolean;
 		getDeviceFormFactor(): string;
 	};
 	prefs: {
@@ -304,6 +306,7 @@ interface Window {
 	};
 	KeyboardShortcuts: KeyboardShortcuts;
 
+	starterScreen: boolean;
 	allowUpdateNotification: boolean;
 	autoShowWelcome: boolean;
 	bundlejsLoaded: boolean;
@@ -328,7 +331,6 @@ interface Window {
 	userInterfaceMode: string;
 	ThisIsAMobileApp: boolean;
 	ThisIsTheEmscriptenApp: boolean;
-	ThisIsTheGtkApp: boolean;
 	wopiSrc: string;
 	zoteroEnabled: boolean;
 	accessToken: string;

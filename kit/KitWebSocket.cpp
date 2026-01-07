@@ -15,10 +15,15 @@
 
 #include <config.h>
 
+// Work around a problem in Poco 1.14.2 and/or Visual Studio and clang-cl: Incude <typeinfo> here.
+#include <typeinfo>
+
 #include <Poco/URI.h>
 
+#ifndef _WIN32
 #include <sysexits.h>
 #include <sys/wait.h>
+#endif
 
 #include <sys/types.h>
 
@@ -87,7 +92,7 @@ void KitWebSocketHandler::handleMessage(const std::vector<char>& data)
 
         if (!_document)
         {
-#ifndef IOS
+#if !MOBILEAPP
             Util::setThreadName("kit" SHARED_DOC_THREADNAME_SUFFIX + docId);
 #endif
             _document = std::make_shared<Document>(
@@ -127,11 +132,11 @@ void KitWebSocketHandler::handleMessage(const std::vector<char>& data)
         }
         else
         {
-#ifdef IOS
+#if MOBILEAPP
             LOG_INF("Setting our KitSocketPoll's termination flag due to 'exit' command.");
-            std::unique_lock<std::mutex> lock(_ksPoll->terminationMutex);
-            _ksPoll->terminationFlag = true;
-            _ksPoll->terminationCV.notify_all();
+            std::unique_lock<std::mutex> lock(_ksPoll->termination->mutex);
+            _ksPoll->termination->flag = true;
+            _ksPoll->termination->cv.notify_all();
 #else
             LOG_INF("Setting TerminationFlag due to 'exit' command.");
             SigUtil::setTerminationFlag();
@@ -208,11 +213,11 @@ void KitWebSocketHandler::onDisconnect()
                 << "] connection lost without exit arriving from wsd. Setting TerminationFlag");
         SigUtil::setTerminationFlag();
     }
-#ifdef IOS
+#if MOBILEAPP
     {
-        std::unique_lock<std::mutex> lock(_ksPoll->terminationMutex);
-        _ksPoll->terminationFlag = true;
-        _ksPoll->terminationCV.notify_all();
+        std::unique_lock<std::mutex> lock(_ksPoll->termination->mutex);
+        _ksPoll->termination->flag = true;
+        _ksPoll->termination->cv.notify_all();
     }
 #endif
     _ksPoll.reset();

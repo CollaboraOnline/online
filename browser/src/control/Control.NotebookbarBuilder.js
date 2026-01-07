@@ -224,10 +224,27 @@ window.L.Control.NotebookbarBuilder = window.L.Control.JSDialogBuilder.extend({
 		const isDesktop = window.mode.isDesktop();
 		const tooltipCollapsed = isDesktop ? _('Click to expand') : _('Tap to expand');
 		const tooltipExpanded = isDesktop ? _('Click to collapse') : _('Tap to collapse');
-		if ($(tabs[t]).hasClass('selected'))
-			tabs[t].setAttribute('data-cooltip', tooltipExpanded);
-		window.L.control.attachTooltipEventListener(tabs[t], builder.map);
+		var isFileTab = tabIds[t] === 'File-tab-label' || tabIds[t] === 'File';
+		var isFileTabForCoda = isFileTab && window.mode.isCODesktop();
+		if (!isFileTabForCoda) {
+			if ($(tabs[t]).hasClass('selected'))
+				tabs[t].setAttribute('data-cooltip', tooltipExpanded);
+			window.L.control.attachTooltipEventListener(tabs[t], builder.map);
+		} else {
+			tabs[t].removeAttribute('data-cooltip');
+		}
 		return function(event) {
+			if (isFileTabForCoda) {
+				if (builder.map.backstageView) {
+					console.log('NotebookbarBuilder: Calling backstageView.toggle()');
+					builder.map.backstageView.toggle();
+				} else {
+					console.error('NotebookbarBuilder: backstageView is NOT initialized!');
+				}
+				event.preventDefault();
+				return;
+			}
+
 			var tabIsSelected = $(tabs[t]).hasClass('selected');
 			var notebookbarIsCollapsed = builder.wizard.isCollapsed();
 
@@ -362,23 +379,25 @@ window.L.Control.NotebookbarBuilder = window.L.Control.JSDialogBuilder.extend({
 					'action': !window.ThisIsAMobileApp ? 'exportepub' : 'downloadas-epub',
 					'text': _('EPUB (.epub)'),
 					'command': !window.ThisIsAMobileApp ? 'exportepub' : 'downloadas-epub'
-				},
-				{
+				}
+			];
+			if (!window.ThisIsTheWindowsApp)
+				// In CODA-W surely just the PDF save with options should be enough
+				submenuOpts.push({
 					'action': !window.ThisIsAMobileApp ? 'exportdirectpdf' : 'downloadas-pdf',
 					'text': _('PDF Document (.pdf)'),
 					'command': !window.ThisIsAMobileApp ? 'exportdirectpdf' : 'downloadas-pdf'
-				},
-				{
-					'action': 'downloadas-html',
-					'text': _('HTML File (.html)')
-				},
-			].concat(!window.ThisIsTheAndroidApp ? [
-				{
+				});
+			submenuOpts.push({
+				'action': 'downloadas-html',
+				'text': _('HTML File (.html)')
+			});
+			if (!window.ThisIsTheAndroidApp)
+				submenuOpts.push({
 					'action': 'exportpdf' ,
 					'text': _('PDF Document (.pdf) as...'),
 					'command': 'exportpdf'
-				}
-			] : []);
+				});
 		} else if (docType === 'spreadsheet') {
 			submenuOpts = [
 				{
@@ -400,19 +419,21 @@ window.L.Control.NotebookbarBuilder = window.L.Control.JSDialogBuilder.extend({
 				{
 					'action': 'downloadas-html',
 					'text': _('HTML File (.html)')
-				},
-				{
+				}
+			];
+			if (!window.ThisIsTheWindowsApp)
+				// As for 'text'
+				submenuOpts.push({
 					'action': !window.ThisIsAMobileApp ? 'exportdirectpdf' : 'downloadas-pdf',
 					'text': _('PDF Document (.pdf)'),
 					'command': !window.ThisIsAMobileApp ? 'exportdirectpdf' : 'downloadas-pdf'
-				},
-			].concat(!window.ThisIsTheAndroidApp ? [
-				{
+				});
+			if (!window.ThisIsTheAndroidApp)
+				submenuOpts.push({
 					'action': 'exportpdf' ,
 					'text': _('PDF Document (.pdf) as...'),
 					'command': 'exportpdf'
-				}
-			] : []);
+				});
 		} else if (docType === 'presentation') {
 			submenuOpts = [
 				{
@@ -434,102 +455,51 @@ window.L.Control.NotebookbarBuilder = window.L.Control.JSDialogBuilder.extend({
 				{
 					'action': 'downloadas-html',
 					'text': _('HTML Document (.html)')
-				},
-				{
-					'action': !window.ThisIsAMobileApp
-						? 'exportdirectpdf'
-						: 'downloadas-pdf',
+				}
+			];
+			if (!window.ThisIsTheWindowsApp)
+				// As for 'text'
+				submenuOpts.push({
+					'action': !window.ThisIsAMobileApp ? 'exportdirectpdf' : 'downloadas-pdf',
 					'text': _('PDF Document (.pdf)'),
-					'command': !window.ThisIsAMobileApp
-						? 'exportdirectpdf'
-						: 'downloadas-pdf',
-				},
-			]
-				.concat(
-					!window.ThisIsTheAndroidApp
-						? [
-								{
-									'action': 'exportpdf',
-									'text': _(
-										'PDF Document (.pdf) as...',
-									),
-									'command': 'exportpdf',
-								},
-							]
-						: [],
-				)
-				.concat(
-					window.extraExportFormats.includes('impress_swf')
-						? [
-								{
-									'action': 'downloadas-swf',
-									'text': _(
-										'Shockwave Flash (.swf)',
-									),
-								},
-							]
-						: [],
-				)
-				.concat(
-					window.extraExportFormats.includes('impress_svg')
-						? [
-								{
-									'action': 'downloadas-svg',
-									'text': _(
-										'Scalable Vector Graphics (.svg)',
-									),
-								},
-							]
-						: [],
-				)
-				.concat(
-					window.extraExportFormats.includes('impress_bmp')
-						? [
-								{
-									'action': 'downloadas-bmp',
-									'text': _(
-										'Current slide as Bitmap (.bmp)',
-									),
-								},
-							]
-						: [],
-				)
-				.concat(
-					window.extraExportFormats.includes('impress_gif')
-						? [
-								{
-									'action': 'downloadas-gif',
-									'text': _(
-										'Current slide as Graphics Interchange Format (.gif)',
-									),
-								},
-							]
-						: [],
-				)
-				.concat(
-					window.extraExportFormats.includes('impress_png')
-						? [
-								{
-									'action': 'downloadas-png',
-									'text': _(
-										'Current slide as Portable Network Graphics (.png)',
-									),
-								},
-							]
-						: [],
-				)
-				.concat(
-					window.extraExportFormats.includes('impress_tiff')
-						? [
-								{
-									'action': 'downloadas-tiff',
-									'text': _(
-										'Current slide as Tag Image File Format (.tiff)',
-									),
-								},
-							]
-						: [],
-				);
+					'command': !window.ThisIsAMobileApp ? 'exportdirectpdf' : 'downloadas-pdf',
+				});
+			if (!window.ThisIsTheAndroidApp)
+				submenuOpts.push({
+					'action': 'exportpdf',
+					'text': _('PDF Document (.pdf) as...'),
+					'command': 'exportpdf'
+				});
+			if (window.extraExportFormats.includes('impress_swf'))
+				submenuOpts.push({
+					'action': 'downloadas-swf',
+					'text': _('Shockwave Flash (.swf)')
+				});
+			if (window.extraExportFormats.includes('impress_svg'))
+				submenuOpts.push({
+					'action': 'downloadas-svg',
+					'text': _('Scalable Vector Graphics (.svg)')
+				});
+			if (window.extraExportFormats.includes('impress_bmp'))
+				submenuOpts.push({
+					'action': 'downloadas-bmp',
+					'text': _('Current slide as Bitmap (.bmp)')
+				});
+			if (window.extraExportFormats.includes('impress_gif'))
+				submenuOpts.push({
+					'action': 'downloadas-gif',
+					'text': _('Current slide as Graphics Interchange Format (.gif)')
+				});
+			if (window.extraExportFormats.includes('impress_png'))
+				submenuOpts.push({
+					'action': 'downloadas-png',
+					'text': _('Current slide as Portable Network Graphics (.png)')
+				});
+			if (window.extraExportFormats.includes('impress_tiff'))
+				submenuOpts.push({
+					'action': 'downloadas-tiff',
+					'text': _('Current slide as Tag Image File Format (.tiff)')
+				});
 		} else if (docType === 'drawing') {
 			submenuOpts = [
 				{

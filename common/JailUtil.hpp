@@ -30,6 +30,8 @@ constexpr const char CHILDROOT_TMP_SHARED_PRESETS_PATH[] = "/tmp/sharedpresets";
 /// The LO installation directory with jail.
 constexpr const char LO_JAIL_SUBPATH[] = "lo";
 
+#ifdef __linux__
+
 /** Linux user/mount namespaces
 
     There cannot be other threads running when calling these namespace
@@ -47,6 +49,8 @@ bool enterMountingNS(uid_t uid, gid_t gid);
 /// Try to put this process into its own user namespace and
 /// map root to uid/gid within that namespace.
 bool enterUserNS(uid_t uid, gid_t gid);
+
+#endif // __linux__
 
 /// Bind mount a jail directory.
 bool bind(const std::string& source, const std::string& target);
@@ -90,6 +94,7 @@ void disableMountNamespaces();
 /// Returns true iff namespace-mounting is enabled in this process.
 bool isMountNamespacesEnabled();
 
+#if ENABLE_CHILDROOTS
 namespace SysTemplate
 {
 /// Setup links for /dev/random and /dev/urandom in systemplate.
@@ -106,6 +111,7 @@ void setupDynamicFiles(const std::string& sysTemplate);
 bool updateDynamicFiles(const std::string& sysTemplate);
 
 } // namespace SysTemplate
+#endif // ENABLE_CHILDROOTS
 
 } // end namespace JailUtil
 

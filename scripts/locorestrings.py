@@ -109,6 +109,10 @@ if __name__ == "__main__":
         poFile = dir + lang + '/svtools/messages.po'
         extractFromPo(poFile, ["STR_ARR_SVT_LANGUAGE_TABLE"], translations)
 
+        # extract 'Info'
+        poFile = dir + lang + '/sfx2/messages.po'
+        extractFromPo(poFile, ["SFX_CB_PROPERTY_STRINGARRAY"], translations)
+
         f = open(onlineDir + '/browser/l10n/locore/' + lang + '.json', 'w', encoding='utf-8')
         f.write('{\n')
 

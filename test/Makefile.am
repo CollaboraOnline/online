@@ -23,6 +23,12 @@ if ENABLE_SSL
 include_paths += ${OPENSSL_CFLAGS}
 endif
 
+if ENABLE_MACOS
+util_platform_cpp = ../common/Util-macos.cpp
+else
+util_platform_cpp = ../common/Util-linux.cpp
+endif
+
 AM_CXXFLAGS = $(CPPUNIT_CFLAGS) -DTDOC=\"$(abs_top_srcdir)/test/data\" -DTDIST=\"$(DIST_FOLDER)\" \
 	-I${top_srcdir}/common -I${top_srcdir}/net -I${top_srcdir}/wsd -I${top_srcdir}/kit \
 	-I${top_srcdir} -I${top_srcdir}/test \
@@ -166,19 +172,22 @@ common_sources = \
 	../common/DummyTraceEventEmitter.cpp \
 	../common/FileUtil.cpp \
 	../common/FileUtil-unix.cpp \
-	../common/Log.cpp \
+	../common/Log-common.cpp \
+	../common/Log-poco.cpp \
 	../common/Protocol.cpp \
 	../common/RegexUtil.cpp \
 	../common/Session.cpp \
 	../common/SigUtil-server.cpp \
 	../common/Simd.cpp \
 	../common/SpookyV2.cpp \
+	../common/Syscall.cpp \
 	../common/StringVector.cpp \
 	../common/TraceEvent.cpp \
 	../common/Unit.cpp \
 	../common/Unit-server.cpp \
 	../common/Uri.cpp \
 	../common/Util-server.cpp \
+        $(util_platform_cpp) \
 	../common/Util-unix.cpp \
 	../common/Util.cpp \
 	../kit/KitQueue.cpp \
@@ -215,7 +224,7 @@ unit_base_la_LIBADD += -lssl -lcrypto
 endif
 
 fakesockettest_CPPFLAGS = -g
-fakesockettest_SOURCES = fakesockettest.cpp  ../net/FakeSocket.cpp ../common/DummyTraceEventEmitter.cpp ../common/Log.cpp ../common/Util.cpp ../common/Util-server.cpp ../common/Util-unix.cpp ../common/Globals.cpp
+fakesockettest_SOURCES = fakesockettest.cpp  ../net/FakeSocket.cpp ../common/DummyTraceEventEmitter.cpp ../common/Log-common.cpp ../common/Log-poco.cpp ../common/Util.cpp ../common/Util-server.cpp $(util_platform_cpp) ../common/Util-unix.cpp ../common/Globals.cpp
 fakesockettest_LDADD = $(CPPUNIT_LIBS)
 
 # old-style unit tests - bootstrapped via UnitClient

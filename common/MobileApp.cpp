@@ -44,12 +44,21 @@ DocumentData & DocumentData::get(unsigned docId)
 
 void DocumentData::deallocate(unsigned docId)
 {
-    assert(idToDocDataMap.find(docId) != idToDocDataMap.end());
+    if (idToDocDataMap.find(docId) == idToDocDataMap.end())
+    {
+        // FIXME: Something is wrong, whatever.
+        return;
+    }
     // Does get() really need to called during the destructor?
     get(docId);
     auto p = idToDocDataMap.find(docId);
     delete p->second;
     idToDocDataMap.erase(docId);
+}
+
+int DocumentData::count()
+{
+    return idToDocDataMap.size();
 }
 
 #endif

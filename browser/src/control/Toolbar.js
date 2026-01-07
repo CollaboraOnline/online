@@ -189,6 +189,12 @@ window.L.Map.include({
 
 		this.off('commandstatechanged', onCommandStateChanged);
 		this.on('commandstatechanged', onCommandStateChanged);
+
+		// Initialize with current state value if available
+		var currentState = this['stateChangeHandler'].getItemValue('.uno:FontHeight');
+		if (currentState) {
+			onCommandStateChanged.call(this, {commandName: '.uno:FontHeight', state: currentState});
+		}
 	},
 
 	applyFont: function (fontName) {
@@ -260,7 +266,7 @@ window.L.Map.include({
 	},
 
 	print: function (options) {
-		if (window.ThisIsTheiOSApp || window.ThisIsTheAndroidApp) {
+		if (window.ThisIsTheiOSApp || window.ThisIsTheAndroidApp || window.ThisIsTheMacOSApp || window.ThisIsTheWindowsApp || window.ThisIsTheQtApp) {
 			window.postMobileMessage('PRINT');
 		} else {
 			this.showBusy(_('Downloading...'), false);
@@ -380,7 +386,7 @@ window.L.Map.include({
 		var isAllowedInReadOnly = false;
 		var allowedCommands = ['.uno:Save', '.uno:WordCountDialog',
 			'.uno:Signature', '.uno:PrepareSignature', '.uno:DownloadSignature', '.uno:InsertSignatureLine',
-			'.uno:ShowResolvedAnnotations',
+			'.uno:ShowResolvedAnnotations', '.uno:Open', '.uno:CloseWin',
 			'.uno:ToolbarMode?Mode:string=notebookbar_online.ui', '.uno:ToolbarMode?Mode:string=Default',
 			'.uno:ExportToEPUB', '.uno:ExportToPDF', '.uno:ExportDirectToPDF', '.uno:MoveKeepInsertMode', '.uno:ShowRuler',
 			'.uno:Navigator'];

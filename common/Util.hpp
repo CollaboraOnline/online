@@ -27,6 +27,7 @@
 #include <string_view>
 #include <utility>
 #include <cctype>
+
 #include <memory.h>
 #include <thread>
 
@@ -172,41 +173,28 @@ namespace Util
         uint64_t _startSys;
     };
 
-    class DirectoryCounter
-    {
-        void *_tasks;
-    public:
-        DirectoryCounter(const char *procPath);
-        ~DirectoryCounter();
-        /// Get number of items in this directory or -1 on error
-        int count();
-    };
+    class CounterImpl;
 
-    #ifdef __FreeBSD__
     /// Needs to open dirent before forking in Kit process
     class ThreadCounter
     {
-        pid_t pid;
+        std::unique_ptr<CounterImpl> _impl;
     public:
         ThreadCounter();
         ~ThreadCounter();
         /// Get number of items in this directory or -1 on error
         int count();
     };
-    #else
-    /// Needs to open dirent before forking in Kit process
-    class ThreadCounter : public DirectoryCounter
-    {
-    public:
-        ThreadCounter() : DirectoryCounter("/proc/self/task") {}
-    };
-    #endif
 
     /// Needs to open dirent before forking in Kit process
-    class FDCounter : public DirectoryCounter
+    class FDCounter
     {
+        std::unique_ptr<CounterImpl> _impl;
     public:
-        FDCounter() : DirectoryCounter("/proc/self/fd") {}
+        FDCounter();
+        ~FDCounter();
+        /// Get number of items in this directory or -1 on error
+        int count();
     };
 
     /// Spawn a process.
@@ -1449,6 +1437,10 @@ int main(int argc, char**argv)
 
     std::string base64Encode(std::string_view input);
 
+#ifdef _WIN32
+    std::wstring string_to_wide_string(const std::string& string);
+    std::string wide_string_to_string(const std::wstring& wide_string);
+#endif
 } // end namespace Util
 
 inline std::ostream& operator<<(std::ostream& os, const std::chrono::system_clock::time_point& ts)

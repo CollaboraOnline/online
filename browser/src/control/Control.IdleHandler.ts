@@ -16,9 +16,11 @@
 
 /* global app L TileManager */
 
+// FIXME: These should surely be somewhere else and not in this random .ts file.
 declare var mode: any;
 declare var ThisIsTheAndroidApp: any;
 declare var postMobileMessage: any;
+declare var postMobileCall: any;
 declare var idleTimeoutSecs: number;
 declare var outOfFocusTimeoutSecs: number;
 

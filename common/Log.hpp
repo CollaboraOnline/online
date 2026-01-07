@@ -68,11 +68,11 @@ namespace Log
     /// Initialize the logging system.
     void initialize(const std::string& name,
                     const std::string& logLevel,
-                    bool withColor,
-                    bool logToFile,
-                    const std::map<std::string, std::string>& config,
-                    bool logToFileUICmd,
-                    const std::map<std::string, std::string>& configUICmd);
+                    bool withColor = false,
+                    bool logToFile = false,
+                    const std::map<std::string, std::string>& config = {},
+                    bool logToFileUICmd = false,
+                    const std::map<std::string, std::string>& configUICmd = {});
 
     /// Shutdown and release the logging system.
     void shutdown();
@@ -150,6 +150,10 @@ namespace Log
         return "0";
     }
 
+#ifdef _WIN32
+    static bool isDebuggerPresent;
+#endif
+
 } // namespace Log
 
 /// A default implementation that is a NOP.
@@ -170,6 +174,16 @@ template <std::size_t N>
 static constexpr std::size_t skipPathToFilename(const char (&s)[N], std::size_t n = N - 1)
 {
     return n == 0 ? 0 : s[n] == '/' ? n + 1 : skipPathToFilename(s, n - 1);
+}
+
+#define LOG_FILE_NAME(f) (&f[skipPathToFilename(f)])
+
+#elif defined _WIN32
+/// Strip the path and leave only the filename.
+template <std::size_t N>
+static constexpr std::size_t skipPathToFilename(const char (&s)[N], std::size_t n = N - 1)
+{
+    return n == 0 ? 0 : (s[n] == '/' || s[n] == '\\') ? n + 1 : skipPathToFilename(s, n - 1);
 }
 
 #define LOG_FILE_NAME(f) (&f[skipPathToFilename(f)])

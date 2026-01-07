@@ -14,8 +14,12 @@
 #include <Kit.hpp>
 #ifdef IOS
 #include "ios.h"
-#elif defined(GTKAPP)
-#include "gtk.hpp"
+#elif defined(MACOS)
+#include "macos.h"
+#elif defined(_WIN32)
+#include "windows.hpp"
+#elif defined(QTAPP)
+#include "qt.hpp"
 #elif defined(__ANDROID__)
 #include "androidapp.hpp"
 #elif WASMAPP

@@ -56,11 +56,12 @@ public:
     static DocumentData &allocate(unsigned docId);
     static DocumentData &get(unsigned docId);
     static void deallocate(unsigned docId);
+    static int count();
 
 #ifdef IOS
     CODocument *coDocument;
-    std::weak_ptr<DocumentBroker> docBroker;
 #endif
+    std::weak_ptr<DocumentBroker> docBroker;
 };
 
 /// Stub/Dummy WOPI types/interface.

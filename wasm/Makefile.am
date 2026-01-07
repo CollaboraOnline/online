@@ -37,7 +37,8 @@ online_SOURCES = \
 	../common/FileUtil.cpp \
 	../common/FileUtil-unix.cpp \
 	../common/CommandControl.cpp \
-	../common/Log.cpp \
+	../common/Log-common.cpp \
+	../common/Log-poco.cpp \
 	../common/TraceEvent.cpp \
 	../common/Protocol.cpp \
 	../common/RegexUtil.cpp \

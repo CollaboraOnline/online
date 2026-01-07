@@ -6,11 +6,13 @@ m4_define([m4_foreachq],[m4_ifelse([$2],[],[],[m4_pushdef([$1])_$0([$1],[$3],[],
 m4_define([_m4_foreachq],[m4_ifelse([$#],[3],[],[m4_define([$1],[$4])$2[]$0([$1],[$2],m4_shift(m4_shift(m4_shift($@))))])])m4_dnl
 m4_define(_YEAR_,m4_esyscmd(date +%Y|tr -d '\n'))m4_dnl
 m4_dnl------------------------------------------------------------------------
-m4_dnl# Define MOBILEAPP as true if this is either for the iOS/Android app or for the gtk+ "app" testbed
+m4_dnl# Define MOBILEAPP as true if this is either for the iOS/Android app or for the Collabora Office apps
 m4_define([MOBILEAPP],[])m4_dnl
 m4_ifelse(IOSAPP,[true],[m4_define([MOBILEAPP],[true])])m4_dnl
-m4_ifelse(GTKAPP,[true],[m4_define([MOBILEAPP],[true])])m4_dnl
+m4_ifelse(MACOSAPP,[true],[m4_define([MOBILEAPP],[true])])m4_dnl
+m4_ifelse(WINDOWSAPP,[true],[m4_define([MOBILEAPP],[true])])m4_dnl
 m4_ifelse(ANDROIDAPP,[true],[m4_define([MOBILEAPP],[true])])m4_dnl
+m4_ifelse(QTAPP,[true],[m4_define([MOBILEAPP],[true])])m4_dnl
 m4_dnl
 m4_dnl# FIXME: This is temporary and not what we actually eventually want.
 m4_dnl# What we really want is not a separate HTML file (produced with M4 conditionals on the below
@@ -44,6 +46,7 @@ m4_ifelse(MOBILEAPP, [true],
 [
   <input type="hidden" id="init-app-type" value="mobile" />
   <input type="hidden" id="init-help-file" value="m4_syscmd([cat html/cool-help.html | sed 's/"/\&quot;/g'])" />
+  <input type="hidden" id="init-product-branding-url" value="INFO_URL" />
 ],
 [
   <input type="hidden" id="init-welcome-url" value="%WELCOME_URL%" />
@@ -51,11 +54,11 @@ m4_ifelse(MOBILEAPP, [true],
   <input type="hidden" id="init-buy-product-url" value="%BUYPRODUCT_URL%" />
   <input type="hidden" id="init-app-type" value="browser" />
   <input type="hidden" id="init-css-vars" value="<!--%CSS_VARIABLES%-->" />
+  <input type="hidden" id="init-product-branding-url" value="%PRODUCT_BRANDING_URL%" />
 ]
 )
 
 <input type="hidden" id="init-product-branding-name" value="%PRODUCT_BRANDING_NAME%" />
-<input type="hidden" id="init-product-branding-url" value="%PRODUCT_BRANDING_URL%" />
 <input type="hidden" id="init-logo-url" value="%LOGO_URL%" />
 
 <input type="hidden" id="init-uri-prefix" value="m4_ifelse(MOBILEAPP, [], [%SERVICE_ROOT%/browser/%VERSION%/])" />
@@ -63,26 +66,25 @@ m4_ifelse(MOBILEAPP, [true],
 
 m4_dnl# For use in conditionals in JS:
 m4_ifelse(IOSAPP, [true], [<input type="hidden" id="init-mobile-app-os-type" value="IOS" />])
-m4_ifelse(GTKAPP, [true], [<input type="hidden" id="init-mobile-app-os-type" value="GTK" />])
+m4_ifelse(MACOSAPP, [true], [<input type="hidden" id="init-mobile-app-os-type" value="MACOS" />])
+m4_ifelse(WINDOWSAPP, [true], [<input type="hidden" id="init-mobile-app-os-type" value="WINDOWS" />])
 m4_ifelse(ANDROIDAPP, [true], [<input type="hidden" id="init-mobile-app-os-type" value="ANDROID" />])
 m4_ifelse(EMSCRIPTENAPP, [true], [<input type="hidden" id="init-mobile-app-os-type" value="EMSCRIPTEN" />])
+m4_ifelse(QTAPP, [true], [<input type="hidden" id="init-mobile-app-os-type" value="QT" />])
 
 m4_ifelse(EMSCRIPTENAPP, [true], [<script type="text/javascript" src="online.js"></script>])
+m4_ifelse(QTAPP, [true], [<script type="text/javascript" src="qrc:///qtwebchannel/qwebchannel.js"></script>])
 
 m4_ifelse(BUNDLE,[],
   <!-- Using individual CSS files -->
   m4_foreachq([fileCSS],[COOL_CSS],[<link rel="stylesheet" href="][m4_ifelse(MOBILEAPP,[],[%SERVICE_ROOT%/browser/%VERSION%/])][fileCSS" />
 ]),
 [<link rel="stylesheet" href="][m4_ifelse(MOBILEAPP,[],[%SERVICE_ROOT%/browser/%VERSION%/])][bundle.css" />])
-
-<!--%BRANDING_CSS%--> <!-- add your logo here -->
-m4_ifelse(IOSAPP,[true],
-  [<link rel="stylesheet" href="Branding/branding.css">])
-m4_ifelse(ANDROIDAPP,[true],
-  [<link rel="stylesheet" href="branding.css">])
-m4_ifelse(EMSCRIPTENAPP,[true],
-  [<link rel="stylesheet" href="branding.css">])
-
+m4_dnl
+m4_dnl Add branding.css for mobile apps, or the placeholder for server processing
+m4_ifelse(MOBILEAPP, [true], [<link rel="stylesheet" href="m4_ifelse(IOSAPP, [true], [Branding/])branding.css" />],
+  [<!--%BRANDING_CSS%--> <!-- add your logo here -->])
+m4_dnl
 m4_dnl Handle localization
 m4_ifelse(MOBILEAPP,[true],
   [
@@ -99,6 +101,19 @@ m4_ifelse(MOBILEAPP,[true],
    <link rel="localizations" href="%SERVICE_ROOT%/browser/%VERSION%/l10n/help-localizations.json" type="application/vnd.oftn.l10n+json"/>
    <link rel="localizations" href="%SERVICE_ROOT%/browser/%VERSION%/l10n/uno-localizations.json" type="application/vnd.oftn.l10n+json"/>]
 )m4_dnl
+<script>
+// Apply dark theme immediately if darkTheme query parameter is present
+(function() {
+	var params = new URLSearchParams(window.location.search);
+	if (params.get('darkTheme') === 'true') {
+		document.documentElement.setAttribute('data-theme', 'dark');
+		var link = document.createElement('link');
+		link.setAttribute('rel', 'stylesheet');
+		link.setAttribute('href', 'm4_ifelse(MOBILEAPP,[],[%SERVICE_ROOT%/browser/%VERSION%/])color-palette-dark.css');
+		document.head.appendChild(link);
+	}
+})();
+</script>
 </head>
 
   <body>
@@ -238,6 +253,7 @@ m4_ifelse(MOBILEAPP,[true],
               <div id="routeToken"></div>
               <div id="timeZone"></div>
               m4_ifelse(MOBILEAPP,[],[<div id="wopi-host-id">%WOPI_HOST_ID%</div>],[<p></p>])
+              m4_ifelse(MOBILEAPP,[],[<p></p>],[<div id="license-information"></div>])
               <p class="about-dialog-info-div"><span dir="ltr">Copyright © _YEAR_, VENDOR.</span></p>
             </div>
           </div>
@@ -307,6 +323,12 @@ m4_dnl This is GLOBAL_JS:
 m4_ifelse(MOBILEAPP, [true],
   [<script type="text/javascript" src="global.js"></script>],
   [<script type="text/javascript" src="%SERVICE_ROOT%/browser/%VERSION%/global.js"></script>]
+)
+
+m4_dnl Templates manifest (loaded as JS to avoid CORS issues with file:// protocol):
+m4_ifelse(MOBILEAPP, [true],
+  [<script type="text/javascript" src="templates/templates.js"></script>],
+  [<script type="text/javascript" src="%SERVICE_ROOT%/browser/%VERSION%/templates/templates.js"></script>]
 )
 
 m4_ifelse(MOBILEAPP,[true],

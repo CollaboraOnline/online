@@ -534,7 +534,7 @@ class Socket {
 			this._map._debug.logIncomingMessages;
 		if (!logMessage) return;
 
-		if (window.ThisIsTheGtkApp) window.postMobileDebug(type + ' ' + msg);
+		if (window.ThisIsAMobileApp) window.postMobileDebug(type + ' ' + msg);
 
 		const debugOn = this._map._debug.debugOn;
 
@@ -1144,7 +1144,7 @@ class Socket {
 
 	private _extractTextImg(e: SlurpMessageEvent): void {
 		if (
-			(window.ThisIsTheiOSApp || window.ThisIsTheEmscriptenApp) &&
+			(window.ThisIsTheiOSApp || window.ThisIsTheWindowsApp || window.ThisIsTheMacOSApp || window.ThisIsTheEmscriptenApp || window.ThisIsTheQtApp) &&
 			typeof e.data === 'string'
 		) {
 			// Another fix for issue #5843 limit splitting on the first newline
