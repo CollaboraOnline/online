@@ -1146,7 +1146,7 @@ if test "x$with_coverage" != "x"; then
 
     AC_DEFUN([AC_PROG_LCOV], [AC_CHECK_PROG(LCOV,lcov,yes)])
     AC_PROG_LCOV
-    if test x"${LCOV}" == x"yes" ; then
+    if test x"${LCOV}" = x"yes" ; then
         AC_MSG_RESULT([yes ($with_coverage)])
         CODE_COVERAGE=1
         CXXFLAGS="$CXXFLAGS --coverage"
