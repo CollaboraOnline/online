@@ -13,12 +13,36 @@
 
 #include <Poco/JSON/Object.h>
 
+#include <chrono>
+#include <map>
 #include <memory>
 #include <mutex>
 #include <string>
 #include <vector>
 
 class CollabSocketHandler;
+class StreamSocket;
+class SocketDisposition;
+class TerminatingPoll;
+
+/// Token length for secure access tokens (32 bytes = 64 hex chars)
+constexpr size_t CollabAccessTokenLength = 32;
+
+/// How long fetch tokens are valid (5 minutes)
+constexpr auto CollabFetchTokenExpiry = std::chrono::minutes(5);
+
+/// Details for a pending fetch request (for HTTP download)
+struct CollabFetchRequest
+{
+    std::string streamUrl;       ///< URL to fetch from
+    std::string accessToken;     ///< WOPI access token
+    std::string wopiSrc;         ///< Original WOPISrc for validation
+    std::string docKey;          ///< Document key to verify live CollabBroker
+    std::string brokerTag;       ///< Broker access token at time of request
+    std::string requestId;       ///< Client-provided request ID
+    std::string stream;          ///< Stream name (contents, userSettings, etc.)
+    std::chrono::steady_clock::time_point expiry;  ///< When this token expires
+};
 
 /// Manages all CollabSocketHandler instances for a single document (docKey).
 /// Similar to DocumentBroker, this class groups all collaboration WebSocket
@@ -28,7 +52,7 @@ class CollabBroker : public std::enable_shared_from_this<CollabBroker>
     const std::string _docKey;
     const std::string _wopiSrc;
 
-    /// Mutex protecting _handlers
+    /// Mutex protecting _handlers and other mutable state
     mutable std::mutex _mutex;
 
     /// Connected handlers
@@ -39,6 +63,10 @@ class CollabBroker : public std::enable_shared_from_this<CollabBroker>
 
     /// WOPI info from the first authenticated handler (shared by all)
     Poco::JSON::Object::Ptr _wopiInfo;
+
+    /// Access tokens for secure download URLs (rotating like clipboard keys)
+    /// [0] is current, [1] is previous (for graceful rotation)
+    std::string _accessTokens[2];
 
 public:
     CollabBroker(const std::string& docKey, const std::string& wopiSrc);
@@ -80,6 +108,15 @@ public:
     /// Sends: {"type": "user_left", "user": {"id": "...", "name": "..."}}
     void notifyUserLeft(const std::shared_ptr<CollabSocketHandler>& handler);
 
+    /// Get the current access token for secure download URLs
+    std::string getCurrentAccessToken() const;
+
+    /// Rotate the access token (old current becomes previous, new current is generated)
+    void rotateAccessToken();
+
+    /// Check if a tag matches either the current or previous access token
+    bool matchesAccessToken(const std::string& tag) const;
+
 private:
     /// Generate a unique ID for a handler
     static std::string generateHandlerId();
@@ -99,5 +136,30 @@ std::shared_ptr<CollabBroker> findOrCreateCollabBroker(const std::string& docKey
 
 /// Remove empty CollabBrokers (called during cleanup)
 void cleanupCollabBrokers();
+
+/// Global fetch requests map and mutex
+extern std::map<std::string, CollabFetchRequest> CollabFetchRequests;
+extern std::mutex CollabFetchRequestsMutex;
+
+/// Create a fetch request and return the token.
+/// The token can be used with /co/collab/fetch?token=... endpoint.
+/// The brokerTag is the broker's current access token for validation.
+std::string createCollabFetchRequest(const std::string& streamUrl,
+                                      const std::string& accessToken,
+                                      const std::string& wopiSrc,
+                                      const std::string& docKey,
+                                      const std::string& brokerTag,
+                                      const std::string& requestId,
+                                      const std::string& stream);
+
+/// Find an existing CollabBroker by docKey (returns nullptr if not found or empty)
+std::shared_ptr<CollabBroker> findCollabBroker(const std::string& docKey);
+
+/// Look up and consume a fetch request by token.
+/// Returns true if found and valid, fills in the request details.
+bool consumeCollabFetchRequest(const std::string& token, CollabFetchRequest& request);
+
+/// Clean up expired fetch requests
+void cleanupCollabFetchRequests();
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

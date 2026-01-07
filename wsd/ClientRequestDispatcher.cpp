@@ -37,6 +37,7 @@
 #include <wsd/ClientRequestDispatcher.hpp>
 #include <wsd/DocumentBroker.hpp>
 #include <wsd/RequestVettingStation.hpp>
+#include <wsd/CollabBroker.hpp>
 #include <wsd/CollabFileProxy.hpp>
 #include <wsd/CollabSocketHandler.hpp>
 #include <net/WebSocketHandler.hpp>
@@ -1277,9 +1278,96 @@ ClientRequestDispatcher::MessageResult ClientRequestDispatcher::handleMessage(Po
                 return MessageResult::Ignore;
             }
 
+            // Compute docKey and look up CollabBroker to reuse authentication
+            const std::string docKey = RequestDetails::getDocKey(wopiSrc);
+            auto broker = findCollabBroker(docKey);
+
+            if (!broker)
+            {
+                // No active collab session - require WebSocket connection first
+                LOG_ERR("CollabFileProxy: No active collab session for docKey ["
+                        << docKey << "] - WebSocket connection required");
+                HttpHelper::sendErrorAndShutdown(http::StatusCode::PreconditionFailed, socket);
+                return MessageResult::Ignore;
+            }
+
+            // Use the broker's WOPI info to bypass CheckFileInfo
+            Poco::JSON::Object::Ptr wopiInfo = broker->getWopiInfo();
+            if (!wopiInfo)
+            {
+                LOG_ERR("CollabFileProxy: No WOPI info in broker for docKey [" << docKey << ']');
+                HttpHelper::sendErrorAndShutdown(http::StatusCode::InternalServerError, socket);
+                return MessageResult::Ignore;
+            }
+
             auto proxy = std::make_shared<CollabFileProxy>(
                 _id, requestDetails, socket, wopiSrc, accessToken, isUpload);
-            proxy->handleRequest(message, COOLWSD::getWebServerPoll(), disposition);
+            proxy->handleDirectRequest(message, wopiInfo, COOLWSD::getWebServerPoll(), disposition);
+        }
+        else if (requestDetails.equals(0, "co") &&
+                 requestDetails.equals(1, "collab") &&
+                 requestDetails.equals(2, "fetch"))
+        {
+            // /co/collab/fetch?token=... endpoint - download via token from WebSocket fetch command
+            LOG_INF("CollabFetch request: " << request.getURI());
+
+            // Extract token from query parameters
+            std::string token;
+            Poco::URI requestUri(request.getURI());
+            for (const auto& param : requestUri.getQueryParameters())
+            {
+                if (param.first == "token")
+                {
+                    token = param.second;
+                    break;
+                }
+            }
+
+            if (token.empty())
+            {
+                LOG_ERR("Missing token parameter in collab fetch request");
+                HttpHelper::sendErrorAndShutdown(http::StatusCode::BadRequest, socket);
+                return MessageResult::Ignore;
+            }
+
+            // Look up and consume the fetch request
+            CollabFetchRequest fetchRequest;
+            if (!consumeCollabFetchRequest(token, fetchRequest))
+            {
+                LOG_ERR("Invalid or expired token in collab fetch request");
+                HttpHelper::sendErrorAndShutdown(http::StatusCode::Unauthorized, socket);
+                return MessageResult::Ignore;
+            }
+
+            // Verify the CollabBroker still exists with active handlers
+            // This ensures the WebSocket connection is still live
+            auto broker = findCollabBroker(fetchRequest.docKey);
+            if (!broker)
+            {
+                LOG_ERR("CollabFetch: No active collab session for docKey ["
+                        << fetchRequest.docKey << ']');
+                HttpHelper::sendErrorAndShutdown(http::StatusCode::Gone, socket);
+                return MessageResult::Ignore;
+            }
+
+            // Verify the broker access token (handles rotation gracefully)
+            if (!broker->matchesAccessToken(fetchRequest.brokerTag))
+            {
+                LOG_ERR("CollabFetch: Invalid broker access token for docKey ["
+                        << fetchRequest.docKey << ']');
+                HttpHelper::sendErrorAndShutdown(http::StatusCode::Unauthorized, socket);
+                return MessageResult::Ignore;
+            }
+
+            LOG_INF("CollabFetch: proxying download for stream [" << fetchRequest.stream
+                    << "] from [" << COOLWSD::anonymizeUrl(fetchRequest.streamUrl) << ']');
+
+            // Create a proxy to handle the download (bypasses CheckFileInfo)
+            auto proxy = std::make_shared<CollabFileProxy>(
+                _id, requestDetails, socket, fetchRequest.wopiSrc, fetchRequest.accessToken, false);
+
+            // Download directly from the pre-configured stream URL
+            proxy->handleFetchRequest(fetchRequest.streamUrl, COOLWSD::getWebServerPoll(), disposition);
         }
         else if (requestDetails.equals(0, "co") &&
                  requestDetails.equals(1, "collab") &&

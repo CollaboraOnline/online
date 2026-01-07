@@ -15,13 +15,21 @@
 #include "CollabBroker.hpp"
 
 #include <COOLWSD.hpp>
+#include <common/JsonUtil.hpp>
 #include <Protocol.hpp>
 #include <RequestDetails.hpp>
+#include <SigUtil.hpp>
 #include <Socket.hpp>
 #include <Util.hpp>
+#include <wopi/StorageConnectionManager.hpp>
 
+#include <common/Uri.hpp>
+
+#include <Poco/JSON/Parser.h>
 #include <Poco/Net/HTTPRequest.h>
 #include <Poco/URI.h>
+
+#include <sstream>
 
 CollabSocketHandler::CollabSocketHandler(const std::shared_ptr<StreamSocket>& socket,
                                          const Poco::Net::HTTPRequest& request,
@@ -59,7 +67,10 @@ void CollabSocketHandler::handleMessage(const std::vector<char>& payload)
         shutdown();
         return;
     }
-    // TODO: Handle authenticated messages
+
+    // Handle authenticated messages
+    const std::string msg(payload.data(), payload.size());
+    handleAuthenticatedMessage(msg);
 }
 
 void CollabSocketHandler::startValidation()
@@ -212,6 +223,275 @@ void CollabSocketHandler::onDisconnect()
 
     // Call base class
     WebSocketHandler::onDisconnect();
+}
+
+void CollabSocketHandler::handleAuthenticatedMessage(const std::string& msg)
+{
+    LOG_DBG("Collab: handling authenticated message: "
+            << COOLProtocol::getAbbreviatedMessage(msg));
+
+    // Parse JSON message
+    Poco::JSON::Object::Ptr json;
+    try
+    {
+        Poco::JSON::Parser parser;
+        auto result = parser.parse(msg);
+        json = result.extract<Poco::JSON::Object::Ptr>();
+    }
+    catch (const std::exception& ex)
+    {
+        LOG_ERR("Collab: failed to parse JSON message: " << ex.what());
+        sendMessage("{\"type\":\"error\",\"error\":\"Invalid JSON\"}");
+        return;
+    }
+
+    if (!json)
+    {
+        sendMessage("{\"type\":\"error\",\"error\":\"Invalid JSON object\"}");
+        return;
+    }
+
+    const std::string type = json->optValue<std::string>("type", std::string());
+    const std::string requestId = json->optValue<std::string>("requestId", std::string());
+
+    if (type == "getfileinfo")
+    {
+        handleGetFileInfo(requestId);
+    }
+    else if (type == "fetch")
+    {
+        const std::string stream = json->optValue<std::string>("stream", "contents");
+        const std::string ifNoneMatch = json->optValue<std::string>("ifNoneMatch", std::string());
+        const std::string ifModifiedSince = json->optValue<std::string>("ifModifiedSince", std::string());
+        handleFetch(stream, requestId, ifNoneMatch, ifModifiedSince);
+    }
+    else
+    {
+        LOG_WRN("Collab: unknown message type: " << type);
+        std::ostringstream oss;
+        oss << "{\"type\":\"error\",\"error\":\"Unknown message type\""
+            << ",\"requestId\":\"" << JsonUtil::escapeJSONValue(requestId) << "\"}";
+        sendMessage(oss.str());
+    }
+}
+
+void CollabSocketHandler::handleGetFileInfo(const std::string& requestId)
+{
+    LOG_INF("Collab: handling getfileinfo request");
+
+    std::ostringstream oss;
+    oss << "{\"type\":\"fileinfo\"";
+
+    if (!requestId.empty())
+        oss << ",\"requestId\":\"" << JsonUtil::escapeJSONValue(requestId) << "\"";
+
+    // Add basic file info from WOPI
+    if (_wopiInfo)
+    {
+        // File metadata
+        const std::string filename = _wopiInfo->optValue<std::string>("BaseFileName", std::string());
+        const int64_t size = _wopiInfo->optValue<int64_t>("Size", 0);
+        const std::string lastModified = _wopiInfo->optValue<std::string>("LastModifiedTime", std::string());
+        const std::string version = _wopiInfo->optValue<std::string>("Version", std::string());
+
+        oss << ",\"filename\":\"" << JsonUtil::escapeJSONValue(filename) << "\"";
+        oss << ",\"size\":" << size;
+        if (!lastModified.empty())
+            oss << ",\"lastModified\":\"" << JsonUtil::escapeJSONValue(lastModified) << "\"";
+        if (!version.empty())
+            oss << ",\"version\":\"" << JsonUtil::escapeJSONValue(version) << "\"";
+
+        // User info
+        oss << ",\"userId\":\"" << JsonUtil::escapeJSONValue(_userId) << "\"";
+        oss << ",\"username\":\"" << JsonUtil::escapeJSONValue(_username) << "\"";
+        oss << ",\"canWrite\":" << (_userCanWrite ? "true" : "false");
+
+        // Available streams with URLs
+        oss << ",\"streams\":{";
+
+        // Primary contents stream (always available)
+        oss << "\"contents\":{";
+        oss << "\"url\":\"" << JsonUtil::escapeJSONValue(buildDownloadUrl("contents")) << "\"";
+        oss << ",\"available\":true";
+        oss << "}";
+
+        // FileUrl - direct download URL if provided by WOPI host
+        const std::string fileUrl = _wopiInfo->optValue<std::string>("FileUrl", std::string());
+        oss << ",\"fileUrl\":{";
+        if (!fileUrl.empty())
+        {
+            oss << "\"url\":\"" << JsonUtil::escapeJSONValue(fileUrl) << "\"";
+            oss << ",\"available\":true";
+        }
+        else
+        {
+            oss << "\"available\":false";
+        }
+        oss << "}";
+
+        // UserSettingsUri - for autotext, dictionaries, etc.
+        const std::string userSettingsUri = _wopiInfo->optValue<std::string>("UserSettingsUri", std::string());
+        oss << ",\"userSettings\":{";
+        if (!userSettingsUri.empty())
+        {
+            oss << "\"url\":\"" << JsonUtil::escapeJSONValue(userSettingsUri) << "\"";
+            oss << ",\"available\":true";
+        }
+        else
+        {
+            oss << "\"available\":false";
+        }
+        oss << "}";
+
+        // TemplateSource - template URL
+        const std::string templateSource = _wopiInfo->optValue<std::string>("TemplateSource", std::string());
+        oss << ",\"templateSource\":{";
+        if (!templateSource.empty())
+        {
+            oss << "\"url\":\"" << JsonUtil::escapeJSONValue(templateSource) << "\"";
+            oss << ",\"available\":true";
+        }
+        else
+        {
+            oss << "\"available\":false";
+        }
+        oss << "}";
+
+        oss << "}"; // close streams
+
+        // Additional WOPI capabilities
+        oss << ",\"capabilities\":{";
+        oss << "\"supportsLocks\":" << (_wopiInfo->optValue<bool>("SupportsLocks", false) ? "true" : "false");
+        oss << ",\"supportsRename\":" << (_wopiInfo->optValue<bool>("SupportsRename", false) ? "true" : "false");
+        oss << ",\"supportsUpdate\":" << (_wopiInfo->optValue<bool>("SupportsUpdate", true) ? "true" : "false");
+        oss << "}";
+    }
+    else
+    {
+        oss << ",\"error\":\"No WOPI info available\"";
+    }
+
+    oss << "}";
+
+    sendMessage(oss.str());
+    LOG_DBG("Collab: sent fileinfo response");
+}
+
+void CollabSocketHandler::handleFetch(const std::string& stream, const std::string& requestId,
+                                       const std::string& /* ifNoneMatch */,
+                                       const std::string& /* ifModifiedSince */)
+{
+    LOG_INF("Collab: handling fetch request for stream: " << stream
+            << ", requestId: " << requestId);
+
+    if (SigUtil::getShutdownRequestFlag())
+    {
+        LOG_WRN("Collab: shutdown in progress, rejecting fetch");
+        std::ostringstream oss;
+        oss << "{\"type\":\"fetch_error\",\"stream\":\"" << JsonUtil::escapeJSONValue(stream) << "\"";
+        if (!requestId.empty())
+            oss << ",\"requestId\":\"" << JsonUtil::escapeJSONValue(requestId) << "\"";
+        oss << ",\"error\":\"Server shutting down\"}";
+        sendMessage(oss.str());
+        return;
+    }
+
+    // Build the URL for the requested stream
+    std::string url;
+    if (stream == "contents")
+    {
+        // Use FileUrl if available, otherwise construct /contents URL
+        if (_wopiInfo)
+        {
+            url = _wopiInfo->optValue<std::string>("FileUrl", std::string());
+        }
+        if (url.empty())
+        {
+            // Construct WOPI /contents URL
+            url = _wopiSrc;
+            if (url.find('?') == std::string::npos)
+                url += "/contents?access_token=" + _accessToken;
+            else
+                url += "/contents&access_token=" + _accessToken;
+        }
+    }
+    else if (stream == "userSettings" && _wopiInfo)
+    {
+        url = _wopiInfo->optValue<std::string>("UserSettingsUri", std::string());
+    }
+    else if (stream == "templateSource" && _wopiInfo)
+    {
+        url = _wopiInfo->optValue<std::string>("TemplateSource", std::string());
+    }
+    else if (stream == "fileUrl" && _wopiInfo)
+    {
+        url = _wopiInfo->optValue<std::string>("FileUrl", std::string());
+    }
+
+    if (url.empty())
+    {
+        LOG_WRN("Collab: stream not available: " << stream);
+        std::ostringstream oss;
+        oss << "{\"type\":\"fetch_error\",\"stream\":\"" << JsonUtil::escapeJSONValue(stream) << "\"";
+        if (!requestId.empty())
+            oss << ",\"requestId\":\"" << JsonUtil::escapeJSONValue(requestId) << "\"";
+        oss << ",\"error\":\"Stream not available\"}";
+        sendMessage(oss.str());
+        return;
+    }
+
+    // Get the broker's access token for secure validation
+    auto broker = _broker.lock();
+    if (!broker)
+    {
+        LOG_ERR("Collab: broker no longer available for fetch");
+        std::ostringstream oss;
+        oss << "{\"type\":\"fetch_error\",\"stream\":\"" << JsonUtil::escapeJSONValue(stream) << "\"";
+        if (!requestId.empty())
+            oss << ",\"requestId\":\"" << JsonUtil::escapeJSONValue(requestId) << "\"";
+        oss << ",\"error\":\"Session expired\"}";
+        sendMessage(oss.str());
+        return;
+    }
+
+    const std::string brokerTag = broker->getCurrentAccessToken();
+
+    // Create a fetch token that the client can use to download via HTTP
+    const std::string token = createCollabFetchRequest(url, _accessToken, _wopiSrc, _docKey,
+                                                        brokerTag, requestId, stream);
+
+    // Build the download URL
+    std::ostringstream downloadUrl;
+    downloadUrl << "/co/collab/fetch?token=" << token;
+
+    // Send the download URL to the client
+    std::ostringstream oss;
+    oss << "{\"type\":\"fetch_url\"";
+    oss << ",\"stream\":\"" << JsonUtil::escapeJSONValue(stream) << "\"";
+    if (!requestId.empty())
+        oss << ",\"requestId\":\"" << JsonUtil::escapeJSONValue(requestId) << "\"";
+    oss << ",\"url\":\"" << JsonUtil::escapeJSONValue(downloadUrl.str()) << "\"";
+    oss << "}";
+
+    sendMessage(oss.str());
+    LOG_DBG("Collab: sent fetch URL for stream: " << stream << ", token: " << token);
+}
+
+void CollabSocketHandler::onFetchComplete(const std::string& /* requestId */,
+                                           const std::string& /* stream */,
+                                           const std::shared_ptr<http::Session>& /* session */)
+{
+    // No longer used - fetch is now via HTTP download URL
+}
+
+std::string CollabSocketHandler::buildDownloadUrl(const std::string& stream) const
+{
+    // Build the /co/collab/download URL for the given stream
+    std::ostringstream oss;
+    oss << "/co/collab/download?WOPISrc=" << Uri::encode(_wopiSrc);
+    if (stream != "contents")
+        oss << "&stream=" << Uri::encode(stream);
+    return oss.str();
 }
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

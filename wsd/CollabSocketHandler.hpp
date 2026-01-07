@@ -13,9 +13,11 @@
 
 #include <net/WebSocketHandler.hpp>
 #include <wsd/wopi/CheckFileInfo.hpp>
+#include <net/HttpRequest.hpp>
 
 #include <Poco/JSON/Object.h>
 
+#include <map>
 #include <memory>
 #include <string>
 
@@ -94,6 +96,26 @@ public:
 private:
     void startValidation();
     void onCheckFileInfoFinished(CheckFileInfo& cfi);
+
+    /// Handle authenticated messages
+    void handleAuthenticatedMessage(const std::string& msg);
+
+    /// Handle getfileinfo request - returns JSON with all file info and available streams
+    void handleGetFileInfo(const std::string& requestId);
+
+    /// Handle fetch request - downloads a stream and sends result via WebSocket
+    void handleFetch(const std::string& stream, const std::string& requestId,
+                     const std::string& ifNoneMatch, const std::string& ifModifiedSince);
+
+    /// Callback when fetch completes
+    void onFetchComplete(const std::string& requestId, const std::string& stream,
+                         const std::shared_ptr<http::Session>& session);
+
+    /// Build the download URL for a given stream
+    std::string buildDownloadUrl(const std::string& stream) const;
+
+    /// Active fetch sessions by requestId
+    std::map<std::string, std::shared_ptr<http::Session>> _fetchSessions;
 };
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

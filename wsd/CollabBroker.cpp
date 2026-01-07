@@ -28,6 +28,10 @@
 std::map<std::string, std::shared_ptr<CollabBroker>> CollabBrokers;
 std::mutex CollabBrokersMutex;
 
+/// Global fetch requests map - keyed by token
+std::map<std::string, CollabFetchRequest> CollabFetchRequests;
+std::mutex CollabFetchRequestsMutex;
+
 namespace
 {
 std::atomic<uint64_t> HandlerIdCounter{0};
@@ -37,6 +41,9 @@ CollabBroker::CollabBroker(const std::string& docKey, const std::string& wopiSrc
     : _docKey(docKey)
     , _wopiSrc(wopiSrc)
 {
+    // Initialize access tokens with random values
+    rotateAccessToken();
+    rotateAccessToken();  // Populate both current and previous
     LOG_INF("CollabBroker created for docKey [" << _docKey << ']');
 }
 
@@ -223,6 +230,48 @@ void CollabBroker::cleanupExpiredHandlers()
         _handlers.end());
 }
 
+std::string CollabBroker::getCurrentAccessToken() const
+{
+    std::lock_guard<std::mutex> lock(_mutex);
+    return _accessTokens[0];
+}
+
+void CollabBroker::rotateAccessToken()
+{
+    std::lock_guard<std::mutex> lock(_mutex);
+
+    // Rotate: current becomes previous
+    _accessTokens[1] = _accessTokens[0];
+
+    // Generate new current token
+    _accessTokens[0] = Util::rng::getHexString(CollabAccessTokenLength);
+
+    LOG_TRC("CollabBroker [" << _docKey << "]: access token rotated to "
+            << _accessTokens[0] << " (previous: " << _accessTokens[1] << ')');
+}
+
+bool CollabBroker::matchesAccessToken(const std::string& tag) const
+{
+    if (tag.empty())
+    {
+        LOG_ERR("Invalid empty access token tag");
+        return false;
+    }
+
+    std::lock_guard<std::mutex> lock(_mutex);
+
+    // Accept both current and previous tokens for graceful rotation
+    if (_accessTokens[0] == tag || _accessTokens[1] == tag)
+    {
+        return true;
+    }
+
+    LOG_WRN("CollabBroker [" << _docKey << "]: access token mismatch - got ["
+            << tag << "], expected [" << _accessTokens[0] << "] or ["
+            << _accessTokens[1] << ']');
+    return false;
+}
+
 std::shared_ptr<CollabBroker> findOrCreateCollabBroker(const std::string& docKey,
                                                         const std::string& wopiSrc)
 {
@@ -265,6 +314,95 @@ void cleanupCollabBrokers()
         {
             LOG_INF("Removing empty CollabBroker for docKey [" << it->first << ']');
             it = CollabBrokers.erase(it);
+        }
+        else
+        {
+            ++it;
+        }
+    }
+}
+
+std::string createCollabFetchRequest(const std::string& streamUrl,
+                                      const std::string& accessToken,
+                                      const std::string& wopiSrc,
+                                      const std::string& docKey,
+                                      const std::string& brokerTag,
+                                      const std::string& requestId,
+                                      const std::string& stream)
+{
+    // Generate a unique token
+    const std::string token = Util::rng::getHexString(CollabAccessTokenLength);
+
+    CollabFetchRequest request;
+    request.streamUrl = streamUrl;
+    request.accessToken = accessToken;
+    request.wopiSrc = wopiSrc;
+    request.docKey = docKey;
+    request.brokerTag = brokerTag;
+    request.requestId = requestId;
+    request.stream = stream;
+    // Token expires after configured duration
+    request.expiry = std::chrono::steady_clock::now() + CollabFetchTokenExpiry;
+
+    {
+        std::lock_guard<std::mutex> lock(CollabFetchRequestsMutex);
+        CollabFetchRequests[token] = std::move(request);
+    }
+
+    LOG_DBG("Created fetch request with token [" << token << "] for stream [" << stream
+            << "] docKey [" << docKey << ']');
+    return token;
+}
+
+std::shared_ptr<CollabBroker> findCollabBroker(const std::string& docKey)
+{
+    std::lock_guard<std::mutex> lock(CollabBrokersMutex);
+
+    auto it = CollabBrokers.find(docKey);
+    if (it != CollabBrokers.end() && it->second && !it->second->isEmpty())
+    {
+        return it->second;
+    }
+    return nullptr;
+}
+
+bool consumeCollabFetchRequest(const std::string& token, CollabFetchRequest& request)
+{
+    std::lock_guard<std::mutex> lock(CollabFetchRequestsMutex);
+
+    auto it = CollabFetchRequests.find(token);
+    if (it == CollabFetchRequests.end())
+    {
+        LOG_WRN("Fetch request not found for token [" << token << ']');
+        return false;
+    }
+
+    // Check if expired
+    if (std::chrono::steady_clock::now() > it->second.expiry)
+    {
+        LOG_WRN("Fetch request expired for token [" << token << ']');
+        CollabFetchRequests.erase(it);
+        return false;
+    }
+
+    request = std::move(it->second);
+    CollabFetchRequests.erase(it);
+
+    LOG_DBG("Consumed fetch request for token [" << token << "] stream [" << request.stream << ']');
+    return true;
+}
+
+void cleanupCollabFetchRequests()
+{
+    std::lock_guard<std::mutex> lock(CollabFetchRequestsMutex);
+
+    const auto now = std::chrono::steady_clock::now();
+    for (auto it = CollabFetchRequests.begin(); it != CollabFetchRequests.end(); )
+    {
+        if (now > it->second.expiry)
+        {
+            LOG_DBG("Removing expired fetch request for token [" << it->first << ']');
+            it = CollabFetchRequests.erase(it);
         }
         else
         {
