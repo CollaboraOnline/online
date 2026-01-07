@@ -2167,6 +2167,95 @@ function showWelcomeSVG() {
 		}
 	}
 
+	// Fetch file using the /co/collab WebSocket endpoint.
+	// Returns a Promise that resolves to the download URL.
+	// Used by WASM builds to download documents via the collab endpoint.
+	global.collabFetchFile = function(wopiSrc, accessToken) {
+		return new Promise(function(resolve, reject) {
+			var wsProtocol = global.location.protocol === 'https:' ? 'wss:' : 'ws:';
+			var wsUrl = wsProtocol + '//' + global.location.host +
+				global.serviceRoot + '/co/collab?WOPISrc=' + encodeURIComponent(wopiSrc);
+
+			global.app.console.log('Connecting to collab endpoint: ' + wsUrl);
+
+			var ws;
+			try {
+				ws = new WebSocket(wsUrl);
+			} catch (err) {
+				reject(new Error('Failed to create WebSocket: ' + err.message));
+				return;
+			}
+
+			var authenticated = false;
+			var timeoutId = setTimeout(function() {
+				if (ws.readyState !== WebSocket.CLOSED) {
+					ws.close();
+				}
+				reject(new Error('Collab fetch timeout'));
+			}, 30000); // 30 second timeout
+
+			ws.onopen = function() {
+				global.app.console.log('Collab WebSocket connected, sending access_token');
+				ws.send('access_token ' + accessToken);
+			};
+
+			ws.onmessage = function(event) {
+				var data = event.data;
+				global.app.console.log('Collab message received: ' + data.substring(0, 100));
+
+				try {
+					var msg = JSON.parse(data);
+
+					if (msg.type === 'authenticated') {
+						authenticated = true;
+						// Request file contents
+						ws.send(JSON.stringify({
+							type: 'fetch',
+							stream: 'contents',
+							requestId: 'wasm-init'
+						}));
+					} else if (msg.type === 'fetch_url' && msg.requestId === 'wasm-init') {
+						clearTimeout(timeoutId);
+						ws.close();
+						if (msg.url) {
+							global.app.console.log('Collab fetch URL: ' + msg.url);
+							resolve(msg.url);
+						} else {
+							reject(new Error('Collab fetch response missing URL'));
+						}
+					} else if (msg.type === 'fetch_error') {
+						clearTimeout(timeoutId);
+						ws.close();
+						reject(new Error('Collab fetch error: ' + (msg.error || 'Unknown error')));
+					} else if (msg.type === 'error') {
+						clearTimeout(timeoutId);
+						ws.close();
+						reject(new Error('Collab error: ' + (msg.message || msg.error || 'Unknown error')));
+					}
+				} catch (e) {
+					// Not JSON, might be a text message
+					if (data.startsWith('error:')) {
+						clearTimeout(timeoutId);
+						ws.close();
+						reject(new Error('Collab error: ' + data));
+					}
+				}
+			};
+
+			ws.onerror = function() {
+				clearTimeout(timeoutId);
+				reject(new Error('Collab WebSocket error'));
+			};
+
+			ws.onclose = function() {
+				clearTimeout(timeoutId);
+				if (!authenticated) {
+					reject(new Error('Collab WebSocket closed before authentication'));
+				}
+			};
+		});
+	};
+
 	function handleViewportChange(event) {
 		var visualViewport = event.target;
 
