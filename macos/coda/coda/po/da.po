@@ -3,18 +3,20 @@ msgstr ""
 "Project-Id-Version: coolwsd 25.04.7.3\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-12-06 18:17+0000\n"
-"PO-Revision-Date: 2025-12-06 18:30+0000\n"
-"Last-Translator: releng <releng@fox.cbg.collabora.co.uk>\n"
-"Language-Team: Danish <dansk@dansk-gruppen.dk>\n"
+"PO-Revision-Date: 2026-01-08 16:27+0000\n"
+"Last-Translator: J A <jokkels@users.noreply.hosted.weblate.org>\n"
+"Language-Team: Danish <https://hosted.weblate.org/projects/collabora-online/"
+"collabora-office-macos-app/da/>\n"
+"Language: da\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: da\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.15.1\n"
 
 msgctxt "1UK-8n-QPP.title"
 msgid "Customize Toolbar…"
-msgstr ""
+msgstr "Tilpas værktøjslinje…"
 
 #. Do not change the placeholder ProductName!
 msgctxt "1Xt-HY-uBw.title"
@@ -23,43 +25,46 @@ msgstr ""
 
 msgctxt "1b7-l0-nxx.title"
 msgid "Find"
-msgstr ""
+msgstr "Find"
 
+#, fuzzy
 msgctxt "1tx-W0-xDw.title"
 msgid "Lower"
-msgstr ""
+msgstr "Sænk"
 
+#, fuzzy
 msgctxt "2h7-ER-AoG.title"
 msgid "Raise"
-msgstr ""
+msgstr "Hæv"
 
 msgctxt "2oI-Rn-ZJC.title"
 msgid "Transformations"
-msgstr ""
+msgstr "Transformationer"
 
 msgctxt "3IN-sU-3Bg.title"
 msgid "Spelling"
-msgstr ""
+msgstr "Stavning"
 
 msgctxt "3Om-Ey-2VK.title"
 msgid "Use Default"
-msgstr ""
+msgstr "Brug standard"
 
 msgctxt "3rS-ZA-NoH.title"
 msgid "Speech"
-msgstr ""
+msgstr "Tale"
 
+#, fuzzy
 msgctxt "46P-cB-AYj.title"
 msgid "Tighten"
-msgstr ""
+msgstr "Stram op"
 
 msgctxt "4EN-yA-p0u.title"
 msgid "Find"
-msgstr ""
+msgstr "Søg"
 
 msgctxt "4J7-dP-txa.title"
 msgid "Enter Full Screen"
-msgstr ""
+msgstr "Anvend fuldskærm"
 
 #. Do not change the placeholder ProductName!
 msgctxt "4sb-4s-VLi.title"
@@ -68,11 +73,12 @@ msgstr ""
 
 msgctxt "5QF-Oa-p0T.title"
 msgid "Edit"
-msgstr ""
+msgstr "Redigér"
 
+#, fuzzy
 msgctxt "5Vv-lz-BsD.title"
 msgid "Copy Style"
-msgstr ""
+msgstr "Kopiér stil"
 
 #. Do not change the placeholder ProductName!
 msgctxt "5kV-Vb-QxS.title"
@@ -81,19 +87,19 @@ msgstr ""
 
 msgctxt "6dh-zS-Vam.title"
 msgid "Redo"
-msgstr ""
+msgstr "Omgør"
 
 msgctxt "78Y-hA-62v.title"
 msgid "Correct Spelling Automatically"
-msgstr ""
+msgstr "Ret stavning automatisk"
 
 msgctxt "8mr-sm-Yjd.title"
 msgid "Writing Direction"
-msgstr ""
+msgstr "Skriveretning"
 
 msgctxt "9ic-FL-obx.title"
 msgid "Substitutions"
-msgstr ""
+msgstr "Udskiftninger"
 
 msgctxt "9yt-4B-nSM.title"
 msgid "Smart Copy/Paste"
