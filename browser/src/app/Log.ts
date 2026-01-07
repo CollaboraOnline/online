@@ -12,9 +12,11 @@
  * Logger contains methods for logging the activity
  */
 
+type Direction = 'INCOMING' | 'OUTGOING';
 interface LogMsg {
 	msg: string;
-	direction: string;
+	direction: Direction;
+	status: string;
 	time: number;
 }
 
@@ -27,7 +29,7 @@ class Logger {
 		this.startTime = null;
 	}
 
-	public log(msg: string, direction: string): void {
+	public log(msg: string, direction: Direction, status: string = ''): void {
 		const time = Date.now();
 		if (!this.startTime) this.startTime = time;
 
@@ -42,7 +44,12 @@ class Logger {
 		const maxMsgLen = 128;
 		if (msg.length > maxMsgLen) msg = msg.substring(0, maxMsgLen);
 		msg = msg.replace(/(\r\n|\n|\r)/gm, ' ');
-		this._logs.push({ msg: msg, direction: direction, time: time });
+		this._logs.push({
+			msg: msg,
+			direction: direction,
+			status: status,
+			time: time,
+		});
 	}
 
 	private _getEntries(): string {
@@ -61,6 +68,7 @@ class Logger {
 				this._logs[i].time +
 				'.' +
 				this._logs[i].direction +
+				this._logs[i].status +
 				'.' +
 				this._logs[i].msg;
 			data += '\n';
