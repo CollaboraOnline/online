@@ -14,6 +14,7 @@
 #include <Poco/Net/HTTPRequest.h>
 #include <ProxyPoll.hpp>
 #include <Unit.hpp>
+#include <COOLWSD.hpp>
 #include <memory>
 
 class ProxyHandler : public SimpleSocketHandler
@@ -118,7 +119,12 @@ void ProxyPoll::startPump(const std::shared_ptr<StreamSocket>& clientSocket,
             if (result != net::AsyncConnectResult::Ok || !targetSocket)
             {
                 LOG_ERR("Failed to connect to target pod");
-                HttpHelper::sendErrorAndShutdown(http::StatusCode::BadGateway, clientSocket);
+                COOLWSD::getWebServerPoll()->addCallback(
+                    [clientSocket]()
+                    {
+                        HttpHelper::sendErrorAndShutdown(http::StatusCode::BadGateway,
+                                                         clientSocket);
+                    });
                 return;
             }
 
