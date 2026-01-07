@@ -40,10 +40,8 @@ std::atomic<uint64_t> HandlerIdCounter{0};
 CollabBroker::CollabBroker(const std::string& docKey, const std::string& wopiSrc)
     : _docKey(docKey)
     , _wopiSrc(wopiSrc)
+    , _accessToken(CollabAccessTokenLength, CollabAccessTokenRotation)
 {
-    // Initialize access tokens with random values
-    rotateAccessToken();
-    rotateAccessToken();  // Populate both current and previous
     LOG_INF("CollabBroker created for docKey [" << _docKey << ']');
 }
 
@@ -232,22 +230,17 @@ void CollabBroker::cleanupExpiredHandlers()
 
 std::string CollabBroker::getCurrentAccessToken() const
 {
-    std::lock_guard<std::mutex> lock(_mutex);
-    return _accessTokens[0];
+    // Rotate if needed (time-based)
+    const_cast<CollabBroker*>(this)->_accessToken.rotateIfNeeded();
+    return _accessToken.getCurrent();
 }
 
 void CollabBroker::rotateAccessToken()
 {
-    std::lock_guard<std::mutex> lock(_mutex);
-
-    // Rotate: current becomes previous
-    _accessTokens[1] = _accessTokens[0];
-
-    // Generate new current token
-    _accessTokens[0] = Util::rng::getHexString(CollabAccessTokenLength);
-
+    _accessToken.rotate();
     LOG_TRC("CollabBroker [" << _docKey << "]: access token rotated to "
-            << _accessTokens[0] << " (previous: " << _accessTokens[1] << ')');
+            << _accessToken.getCurrent() << " (previous: "
+            << _accessToken.getPrevious() << ')');
 }
 
 bool CollabBroker::matchesAccessToken(const std::string& tag) const
@@ -258,17 +251,17 @@ bool CollabBroker::matchesAccessToken(const std::string& tag) const
         return false;
     }
 
-    std::lock_guard<std::mutex> lock(_mutex);
+    // Rotate if needed before validation
+    const_cast<CollabBroker*>(this)->_accessToken.rotateIfNeeded();
 
-    // Accept both current and previous tokens for graceful rotation
-    if (_accessTokens[0] == tag || _accessTokens[1] == tag)
+    if (_accessToken.matches(tag))
     {
         return true;
     }
 
     LOG_WRN("CollabBroker [" << _docKey << "]: access token mismatch - got ["
-            << tag << "], expected [" << _accessTokens[0] << "] or ["
-            << _accessTokens[1] << ']');
+            << tag << "], expected [" << _accessToken.getCurrent() << "] or ["
+            << _accessToken.getPrevious() << ']');
     return false;
 }
 
