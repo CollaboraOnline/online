@@ -58,7 +58,7 @@ extern "C" {
     UnitBase *unit_create_wsd(void);
     UnitBase** unit_create_wsd_multi(void);
     UnitBase *unit_create_kit(void);
-    typedef struct _LibreOfficeKit LibreOfficeKit;
+    typedef struct LibreOfficeKitStruct LibreOfficeKit;
     typedef LibreOfficeKit *(LokHookFunction2)( const char *install_path, const char *user_profile_url );
 }
 /// Derive your WSD unit test / hooks from me.
