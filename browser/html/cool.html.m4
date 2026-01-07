@@ -228,7 +228,26 @@ m4_ifelse(MOBILEAPP,[true],
     </div>
 
     <!-- Remove if you don't want the About dialog -->
-    <div id="about-dialog" tabIndex="0"></div>
+    <dialog>
+      <div id="about-dialog" tabIndex="0">
+        <div id="about-dialog-header">
+          <fig id="integrator-logo"></fig>
+          <h1 id="product-name">Collabora Online</h1>
+        </div>
+        <hr/>
+        <div id="about-dialog-container">
+          <div id="about-dialog-logos">
+            <fig id="product-logo"></fig>
+            <fig id="lokit-logo"></fig>
+          </div>
+          <div id="about-dialog-info-container">
+            <div id="about-dialog-info">
+              <div id="lokit-version" dir="ltr"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </dialog>
 
 m4_ifelse(MOBILEAPP, [true],
      [

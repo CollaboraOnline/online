@@ -21,9 +21,6 @@ declare var brandProductURL: any;
 declare var sanitizeUrl: any;
 
 interface AboutDialogElements {
-	container: HTMLElement;
-	productName: HTMLElement;
-	productString: HTMLElement;
 	coolwsdVersion: HTMLElement;
 	lokitVersion: HTMLElement;
 	servedBy: HTMLElement;
@@ -97,7 +94,10 @@ class AboutDialog {
 	}
 
 	// This method can be used in the future to populate the about dialog content
-	private static populateAboutDialog(elements: AboutDialogElements): void {
+	private static populateAboutDialog(
+		content: HTMLElement,
+		elements: AboutDialogElements,
+	): void {
 		const info = window.app.serverInfo;
 
 		if (!info) {
@@ -121,8 +121,11 @@ class AboutDialog {
 				? brandProductURL
 				: 'https://collaboraonline.github.io/';
 
-		elements.productName.innerText = productName;
-		elements.container.classList.add(
+		const productNameElement = content.querySelector(
+			'#product-name',
+		) as HTMLElement;
+		productNameElement.innerText = productName;
+		content.classList.add(
 			'product-' +
 				productName
 					.split(/[ ()]+/)
@@ -141,10 +144,15 @@ class AboutDialog {
 				'</a>';
 		else productNameWithURL = productName;
 
-		elements.productString.innerText = productStringText.replace(
-			'{productname}',
-			productNameWithURL,
-		);
+		const productStringElement = content.querySelector(
+			'#product-string',
+		) as HTMLElement;
+		if (productStringElement) {
+			productStringElement.innerText = productStringText.replace(
+				'{productname}',
+				productNameWithURL,
+			);
+		}
 
 		// COOLWSD version
 		elements.coolwsdVersion.textContent = info.coolwsdVersion;
@@ -165,6 +173,15 @@ class AboutDialog {
 			`https://gerrit.libreoffice.org/core/+log/${info.lokitHash}`,
 			info.lokitHash.substring(0, 10),
 		);
+
+		// Update lokit-extra position if exists
+		const lokitExtra = content.querySelector('#lokit-extra');
+		if (lokitExtra) {
+			elements.lokitVersion.parentNode.parentNode.insertBefore(
+				lokitExtra,
+				elements.lokitVersion.parentNode,
+			);
+		}
 
 		// Served By and Server ID
 		const label = document.createElement('span');
@@ -231,15 +248,19 @@ class AboutDialog {
 	public show() {
 		const aboutDialogId = 'about-dialog';
 
-		const elements = AboutDialog.createAboutDialogContent();
-		elements.container.style.display = 'block';
+		const content: HTMLElement = document
+			.getElementById(aboutDialogId)
+			.cloneNode(true) as HTMLElement;
+		content.style.display = 'block';
+		const elements = AboutDialog.createAboutDialogContent(content);
 
-		AboutDialog.populateAboutDialog(elements);
+		AboutDialog.populateAboutDialog(content, elements);
 
-		this.adjustIDs(elements.container);
-		this.hideElementsHiddenByDefault(elements.container); // Now we can safely hide the elements that we want hidden by default.
+		this.adjustIDs(content);
+		this.hideElementsHiddenByDefault(content); // Now we can safely hide the elements that we want hidden by default.
 
-		const productName = elements.productName.textContent || '';
+		const productName =
+			content.querySelector('#product-name').textContent || '';
 		this.map.uiManager.showYesNoButton(
 			aboutDialogId + '-box',
 			productName,
@@ -251,7 +272,7 @@ class AboutDialog {
 			true,
 		);
 
-		this.showImpl(aboutDialogId, elements.container);
+		this.showImpl(aboutDialogId, content);
 	}
 
 	showImpl(aboutDialogId: string, content: HTMLElement) {
@@ -423,45 +444,10 @@ class AboutDialog {
 	}
 
 	// Shared static method to create the About dialog structure
-	public static createAboutDialogContent(): AboutDialogElements {
-		const aboutDialog = AboutDialog.createElement('div', {
-			id: 'about-dialog',
-		});
-		aboutDialog.tabIndex = 0;
-
-		const header = AboutDialog.createElement('div', {
-			id: 'about-dialog-header',
-		});
-		header.appendChild(
-			AboutDialog.createElement('fig', { id: 'integrator-logo' }),
-		);
-
-		const productName = AboutDialog.createElement('h1', { id: 'product-name' });
-		header.appendChild(productName);
-		aboutDialog.appendChild(header);
-		aboutDialog.appendChild(document.createElement('hr'));
-
-		const container = AboutDialog.createElement('div', {
-			id: 'about-dialog-container',
-		});
-
-		const logosDiv = AboutDialog.createElement('div', {
-			id: 'about-dialog-logos',
-		});
-		logosDiv.appendChild(
-			AboutDialog.createElement('fig', { id: 'product-logo' }),
-		);
-		logosDiv.appendChild(
-			AboutDialog.createElement('fig', { id: 'lokit-logo' }),
-		);
-		container.appendChild(logosDiv);
-
-		const infoContainer = AboutDialog.createElement('div', {
-			id: 'about-dialog-info-container',
-		});
-		const infoDiv = AboutDialog.createElement('div', {
-			id: 'about-dialog-info',
-		});
+	public static createAboutDialogContent(
+		content: HTMLElement,
+	): AboutDialogElements {
+		const infoDiv = content.querySelector('#about-dialog-info') as HTMLElement;
 
 		const coolwsdLabel = AboutDialog.createElement('div', {
 			id: 'coolwsd-version-label',
@@ -492,10 +478,8 @@ class AboutDialog {
 		const lokitVersionContainer = AboutDialog.createElement('div', {
 			className: 'about-dialog-info-div',
 		});
-		const lokitVersion = AboutDialog.createElement('div', {
-			id: 'lokit-version',
-			attrs: { dir: 'ltr' },
-		});
+
+		const lokitVersion = content.querySelector('#lokit-version') as HTMLElement;
 		lokitVersionContainer.appendChild(lokitVersion);
 		infoDiv.appendChild(lokitVersionContainer);
 
@@ -508,7 +492,9 @@ class AboutDialog {
 		infoDiv.appendChild(slowProxy);
 
 		const jsDialog = AboutDialog.createElement('div', { id: 'js-dialog' });
-		infoDiv.appendChild(jsDialog);
+		if (window.enableDebug) {
+			infoDiv.appendChild(jsDialog);
+		}
 
 		const routeToken = AboutDialog.createElement('div', { id: 'routeToken' });
 		infoDiv.appendChild(routeToken);
@@ -527,18 +513,7 @@ class AboutDialog {
 		});
 		infoDiv.appendChild(copyright);
 
-		const productString = AboutDialog.createElement('div', {
-			id: 'product-string',
-		});
-
-		infoContainer.appendChild(infoDiv);
-		container.appendChild(infoContainer);
-		aboutDialog.appendChild(container);
-
 		return {
-			container: aboutDialog,
-			productName,
-			productString,
 			coolwsdVersion,
 			lokitVersion,
 			servedBy,
