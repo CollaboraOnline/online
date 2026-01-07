@@ -13,14 +13,15 @@
 
 #include <config.h>
 #include <Socket.hpp>
+#include <memory>
 
 // Singleton proxy poll - one thread handles all proxy connections
 class ProxyPoll : public TerminatingPoll
 {
 public:
-    static ProxyPoll& instance()
+    static std::shared_ptr<ProxyPoll> instance()
     {
-        static ProxyPoll poll;
+        static std::shared_ptr<ProxyPoll> poll(new ProxyPoll());
         return poll;
     }
 

@@ -24,6 +24,7 @@ class ProxyHandler : public SimpleSocketHandler
     std::weak_ptr<StreamSocket> _socket;
 
     // 256KB flow control
+    // TODO: What should be the value of MAX_BUFFER ?
     static constexpr size_t MAX_BUFFER = 256 * 1024;
 
     // Track whether we've received any data (to detect connection failures)
@@ -95,8 +96,14 @@ public:
         {
             LOG_ERR("Target connection failed before receiving data, sending 502 Bad Gateway");
             // Peer socket is in ProxyPoll, schedule the error response there
-            ProxyPoll::instance().addCallback(
-                [peer]() { HttpHelper::sendErrorAndShutdown(http::StatusCode::BadGateway, peer); });
+            ProxyPoll::instance()->addCallback(
+                [weakPeer = std::weak_ptr<StreamSocket>(peer)]()
+                {
+                    auto peerSocket = weakPeer.lock();
+                    if (!peerSocket)
+                        return;
+                    HttpHelper::sendErrorAndShutdown(http::StatusCode::BadGateway, peerSocket);
+                });
             return;
         }
 
@@ -119,43 +126,54 @@ void ProxyPoll::startPump(const std::shared_ptr<StreamSocket>& clientSocket,
 
     auto targetHandler = std::make_shared<ProxyHandler>(clientSocket);
 
+    ProxyPoll::instance()->insertNewSocket(clientSocket);
+
     // Async connect to target pod (avoids blocking DNS)
-    net::asyncConnect(targetIp, std::to_string(targetPort),
-                      false, // isSSL - internal traffic typically unencrypted
-                      targetHandler,
-                      [clientSocket, proxiedRequest = std::move(proxiedRequest),
-                       targetHandler](const std::shared_ptr<StreamSocket>& targetSocket,
-                                      net::AsyncConnectResult result)
-                      {
-                          if (result != net::AsyncConnectResult::Ok || !targetSocket)
-                          {
-                              LOG_ERR("Failed to connect to target pod");
-                              // Insert socket into ProxyPoll and send error from its thread
-                              ProxyPoll::instance().addCallback(
-                                  [clientSocket]()
-                                  {
-                                      ProxyPoll::instance().insertNewSocket(clientSocket);
-                                      HttpHelper::sendErrorAndShutdown(http::StatusCode::BadGateway,
-                                                                       clientSocket);
-                                  });
-                              return;
-                          }
+    net::asyncConnect(
+        targetIp, std::to_string(targetPort),
+        false, // isSSL - internal traffic typically unencrypted
+        targetHandler,
+        [weakClient = std::weak_ptr<StreamSocket>(clientSocket),
+         proxiedRequest = std::move(proxiedRequest), targetHandler](
+            const std::shared_ptr<StreamSocket>& targetSocket, net::AsyncConnectResult result)
+        {
+            auto clientSock = weakClient.lock();
+            if (!clientSock)
+                return;
 
-                          // pumps client -> target (direction = true)
-                          ProxyPoll::instance().addCallback(
-                              [targetSocket, clientSocket, proxiedRequest]()
-                              {
-                                  auto clientHandler = std::make_shared<ProxyHandler>(targetSocket);
-                                  clientSocket->setHandler(clientHandler);
+            if (result != net::AsyncConnectResult::Ok || !targetSocket)
+            {
+                LOG_ERR("Failed to connect to target pod");
+                ProxyPoll::instance()->addCallback(
+                    [weakClient]()
+                    {
+                        auto client = weakClient.lock();
+                        if (!client)
+                            return;
+                        HttpHelper::sendErrorAndShutdown(http::StatusCode::BadGateway, client);
+                    });
+                return;
+            }
 
-                                  ProxyPoll::instance().insertNewSocket(clientSocket);
-                                  ProxyPoll::instance().insertNewSocket(targetSocket);
+            ProxyPoll::instance()->insertNewSocket(targetSocket);
 
-                                  // Send request on the correct thread
-                                  LOG_INF("Proxy established: client <-> target");
-                                  targetSocket->send(proxiedRequest);
-                              });
-                      });
+            ProxyPoll::instance()->addCallback(
+                [weakTarget = std::weak_ptr<StreamSocket>(targetSocket), weakClient,
+                 proxiedRequest]()
+                {
+                    auto target = weakTarget.lock();
+                    auto client = weakClient.lock();
+                    if (!target || !client)
+                        return;
+
+                    auto clientHandler = std::make_shared<ProxyHandler>(target);
+                    client->setHandler(clientHandler);
+
+                    // Send request on the correct thread
+                    LOG_INF("Proxy established: client <-> target");
+                    target->send(proxiedRequest);
+                });
+        });
 }
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

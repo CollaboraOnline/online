@@ -2551,7 +2551,7 @@ void ClientRequestDispatcher::handleInternalProxy(const std::string& wopiSrc,
     LOG_DBG("Getting podIP from [" << controllerURI.toString() << ']');
 
     http::Session::FinishedCallback finishedCallback =
-        [this, controllerURL, wopiSrc, socket,
+        [this, controllerURL, wopiSrc, weakSocket = std::weak_ptr<StreamSocket>(socket),
          request](const std::shared_ptr<http::Session>& session)
     {
         if (SigUtil::getShutdownRequestFlag())
@@ -2590,7 +2590,10 @@ void ClientRequestDispatcher::handleInternalProxy(const std::string& wopiSrc,
             return;
 
         LOG_INF("Document [" << wopiSrc << "] is on podIP[" << targetPodIP << "]. Proxying...");
-        ProxyPoll::startPump(socket, targetPodIP, targetPort, request);
+        auto lockedSocket = weakSocket.lock();
+        if (!lockedSocket)
+            return;
+        ProxyPoll::startPump(lockedSocket, targetPodIP, targetPort, request);
     };
 
     httpSession->setFinishedHandler(std::move(finishedCallback));
