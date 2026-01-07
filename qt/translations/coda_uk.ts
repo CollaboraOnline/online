@@ -108,7 +108,7 @@
     <message>
         <location filename="../coda-qt.cpp" line="1017"/>
         <source>Export As</source>
-        <translation>Експортувати Як</translation>
+        <translation>Експортувати як</translation>
     </message>
     <message>
         <location filename="../WebView.cpp" line="205"/>
