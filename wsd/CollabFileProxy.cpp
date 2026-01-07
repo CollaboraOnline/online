@@ -96,6 +96,137 @@ void CollabFileProxy::handleRequest(std::istream& message,
         });
 }
 
+void CollabFileProxy::handleFetchRequest(const std::string& streamUrl,
+                                         const std::shared_ptr<TerminatingPoll>& poll,
+                                         SocketDisposition& disposition)
+{
+    LOG_INF("CollabFileProxy: handling fetch request for stream ["
+            << COOLWSD::anonymizeUrl(streamUrl) << ']');
+
+    std::shared_ptr<StreamSocket> socket = _socket.lock();
+    if (!socket)
+    {
+        LOG_ERR("CollabFileProxy: invalid socket for fetch request");
+        return;
+    }
+
+    // Parse the stream URL and add access token
+    std::string fetchUrl = streamUrl;
+    if (fetchUrl.find('?') == std::string::npos)
+        fetchUrl += "?access_token=" + _accessToken;
+    else
+        fetchUrl += "&access_token=" + _accessToken;
+
+    Poco::URI uri(fetchUrl);
+
+    // Transfer to poll and start download directly (bypassing CheckFileInfo)
+    disposition.setTransfer(*poll,
+        [this, &poll, uri](const std::shared_ptr<Socket>& moveSocket)
+        {
+            LOG_TRC('#' << moveSocket->getFD()
+                        << ": CollabFileProxy: starting direct fetch for ["
+                        << COOLWSD::anonymizeUrl(uri.toString()) << ']');
+
+            doDownload(poll, uri, HTTP_REDIRECTION_LIMIT);
+        });
+}
+
+void CollabFileProxy::handleDirectRequest(std::istream& message,
+                                          Poco::JSON::Object::Ptr wopiInfo,
+                                          const std::shared_ptr<TerminatingPoll>& poll,
+                                          SocketDisposition& disposition)
+{
+    LOG_INF("CollabFileProxy: handling direct " << (_isUpload ? "upload" : "download")
+            << " request for WOPISrc [" << COOLWSD::anonymizeUrl(_wopiSrc) << ']');
+
+    std::shared_ptr<StreamSocket> socket = _socket.lock();
+    if (!socket)
+    {
+        LOG_ERR("CollabFileProxy: invalid socket for direct request");
+        return;
+    }
+
+    if (!wopiInfo)
+    {
+        LOG_ERR("CollabFileProxy: no WOPI info for direct request");
+        HttpHelper::sendErrorAndShutdown(http::StatusCode::InternalServerError, socket);
+        return;
+    }
+
+    // Check write permission for upload
+    if (_isUpload)
+    {
+        bool userCanWrite = false;
+        JsonUtil::findJSONValue(wopiInfo, "UserCanWrite", userCanWrite);
+        if (!userCanWrite)
+        {
+            LOG_ERR("CollabFileProxy: user cannot write to ["
+                    << COOLWSD::anonymizeUrl(_wopiSrc) << ']');
+            HttpHelper::sendErrorAndShutdown(http::StatusCode::Forbidden, socket);
+            return;
+        }
+    }
+
+    // Save upload body if this is an upload request
+    if (_isUpload && _requestDetails.isPost())
+    {
+        _uploadBody = std::string(std::istreambuf_iterator<char>(message), {});
+    }
+
+    // Build WOPI URL with access token
+    std::string wopiUrl = _wopiSrc;
+    if (wopiUrl.find('?') == std::string::npos)
+        wopiUrl += "?access_token=" + _accessToken;
+    else
+        wopiUrl += "&access_token=" + _accessToken;
+
+    const Poco::URI baseUri = RequestDetails::sanitizeURI(wopiUrl);
+
+    // Transfer to poll and execute
+    disposition.setTransfer(*poll,
+        [this, &poll, baseUri, wopiInfo](const std::shared_ptr<Socket>& moveSocket)
+        {
+            LOG_TRC('#' << moveSocket->getFD()
+                        << ": CollabFileProxy: executing direct request for ["
+                        << COOLWSD::anonymizeUrl(_wopiSrc) << ']');
+
+            if (!_isUpload)
+            {
+                // For downloads, check FileUrl first, then default to /contents
+                std::string fileUrl;
+                JsonUtil::findJSONValue(wopiInfo, "FileUrl", fileUrl);
+
+                if (!fileUrl.empty())
+                {
+                    try
+                    {
+                        LOG_INF("CollabFileProxy: GetFile using FileUrl: "
+                                << COOLWSD::anonymizeUrl(fileUrl));
+                        doDownload(poll, Poco::URI(fileUrl), HTTP_REDIRECTION_LIMIT);
+                        return;
+                    }
+                    catch (const std::exception& ex)
+                    {
+                        LOG_ERR("CollabFileProxy: FileUrl download failed: " << ex.what());
+                        // Fall through to default URL
+                    }
+                }
+
+                // Use default URL with /contents suffix
+                Poco::URI uriObject(baseUri);
+                uriObject.setPath(uriObject.getPath() + "/contents");
+                doDownload(poll, uriObject, HTTP_REDIRECTION_LIMIT);
+            }
+            else
+            {
+                // Upload to /contents
+                Poco::URI uriObject(baseUri);
+                uriObject.setPath(uriObject.getPath() + "/contents");
+                doUpload(poll, uriObject, _uploadBody);
+            }
+        });
+}
+
 void CollabFileProxy::checkFileInfo(const std::shared_ptr<TerminatingPoll>& poll,
                                     const Poco::URI& uri, int redirectLimit)
 {
