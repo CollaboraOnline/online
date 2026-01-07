@@ -11,6 +11,8 @@
 
 #pragma once
 
+#include <common/RotatingToken.hpp>
+
 #include <Poco/JSON/Object.h>
 
 #include <chrono>
@@ -27,6 +29,9 @@ class TerminatingPoll;
 
 /// Token length for secure access tokens (32 bytes = 64 hex chars)
 constexpr size_t CollabAccessTokenLength = 32;
+
+/// How long before collab access tokens are rotated (5 minutes)
+constexpr auto CollabAccessTokenRotation = std::chrono::minutes(5);
 
 /// How long fetch tokens are valid (5 minutes)
 constexpr auto CollabFetchTokenExpiry = std::chrono::minutes(5);
@@ -58,15 +63,11 @@ class CollabBroker : public std::enable_shared_from_this<CollabBroker>
     /// Connected handlers
     std::vector<std::weak_ptr<CollabSocketHandler>> _handlers;
 
-    /// Counter for generating handler IDs
-    uint64_t _handlerIdCounter = 0;
-
     /// WOPI info from the first authenticated handler (shared by all)
     Poco::JSON::Object::Ptr _wopiInfo;
 
-    /// Access tokens for secure download URLs (rotating like clipboard keys)
-    /// [0] is current, [1] is previous (for graceful rotation)
-    std::string _accessTokens[2];
+    /// Rotating access tokens for secure download URLs
+    RotatingToken _accessToken;
 
 public:
     CollabBroker(const std::string& docKey, const std::string& wopiSrc);
