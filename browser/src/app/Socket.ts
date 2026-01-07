@@ -528,7 +528,7 @@ class Socket {
 		return this.socket !== undefined && this.socket.readyState === 1;
 	}
 
-	private _logSocket(type: string, msg: string): void {
+	private _logSocket(type: Direction, msg: string): void {
 		const logMessage =
 			this._map._debug.debugNeverStarted ||
 			this._map._debug.logIncomingMessages;
@@ -551,7 +551,7 @@ class Socket {
 		if (!window.fullyLoadedAndReady) status += '[!fullyLoadedAndReady]';
 		if (!window.bundlejsLoaded) status += '[!bundlejsLoaded]';
 
-		app.Log.log(msg, type + status);
+		app.Log.log(msg, type, status);
 
 		if (!window.protocolDebug && !debugOn) return;
 
