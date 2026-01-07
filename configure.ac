@@ -740,7 +740,7 @@ if test \( "$enable_iosapp" = "yes" -a `uname -s` = "Darwin" \) -o \( "$enable_a
    # Sanity checks
    CHK_FILE_VAR(POCOINCLUDE,Poco/Poco.h,Poco include)
    CHK_FILE_VAR(POCOINCLUDE,Poco/Poco.h,Poco include,_ARM64_V8A)
-   CHK_FILE_VAR(POCOINCLUDE,Poco/Poco.h,Poco include,_X64)
+   CHK_FILE_VAR(POCOINCLUDE,Poco/Poco.h,Poco include,_X86)
    CHK_FILE_VAR(POCOINCLUDE,Poco/Poco.h,Poco include,_X86_64)
 
    AC_MSG_CHECKING([for Poco lib directory to build against])
@@ -771,8 +771,8 @@ if test \( "$enable_iosapp" = "yes" -a `uname -s` = "Darwin" \) -o \( "$enable_a
    # Sanity checks
    CHK_FILE_VAR(POCOLIB,libPocoFoundation.a,Poco lib)
    CHK_FILE_VAR(POCOLIB,libPocoFoundation.a,Poco lib,_ARM64_V8A)
-   CHK_FILE_VAR(POCOLIB,libPocoFoundation.a,Poco lib,_X64)
-   CHK_FILE_VAR(POCOLIB,libPocoFoundation.a,Poco lib,_X86_X64)
+   CHK_FILE_VAR(POCOLIB,libPocoFoundation.a,Poco lib,_X86)
+   CHK_FILE_VAR(POCOLIB,libPocoFoundation.a,Poco lib,_X86_64)
 
    if test "$ENABLE_DEBUG" = "true" ; then
        POCODEBUG=d
@@ -806,7 +806,7 @@ if test \( "$enable_iosapp" = "yes" -a `uname -s` = "Darwin" \) -o \( "$enable_a
    # Sanity checks
    CHK_FILE_VAR(ZSTDINCLUDE,zstd.h,Zstd include)
    CHK_FILE_VAR(ZSTDINCLUDE,zstd.h,Zstd include,_ARM64_V8A)
-   CHK_FILE_VAR(ZSTDINCLUDE,zstd.h,Zstd include,_X64)
+   CHK_FILE_VAR(ZSTDINCLUDE,zstd.h,Zstd include,_X86)
    CHK_FILE_VAR(ZSTDINCLUDE,zstd.h,Zstd include,_X86_64)
 
    ZSTDLIB="$with_zstd_libs"
@@ -831,7 +831,7 @@ if test \( "$enable_iosapp" = "yes" -a `uname -s` = "Darwin" \) -o \( "$enable_a
 
    CHK_FILE_VAR(ZSTDLIB,libzstd.a,Zstd lib)
    CHK_FILE_VAR(ZSTDLIB,libzstd.a,Zstd lib,_ARM64_V8A)
-   CHK_FILE_VAR(ZSTDLIB,libzstd.a,Zstd lib,_X64)
+   CHK_FILE_VAR(ZSTDLIB,libzstd.a,Zstd lib,_X86)
    CHK_FILE_VAR(ZSTDLIB,libzstd.a,Zstd lib,_X86_64)
 fi
 
