@@ -55,13 +55,6 @@ public:
             return;
         }
 
-        // Flow control: pause if peer's output buffer is full
-        if (peer->getOutBuffer().size() >= MAX_BUFFER)
-        {
-            LOG_TRC("Backpressure: peer buffer full, pausing read");
-            return;
-        }
-
         // Pump data: self -> peer
         auto& inBuffer = self->getInBuffer();
         if (!inBuffer.empty())
@@ -80,7 +73,17 @@ public:
     int getPollEvents(std::chrono::steady_clock::time_point /*now*/,
                       int64_t& /*timeoutMaxMicroS*/) override
     {
-        return POLLIN; // We're always interested in reading
+        auto peer = _peerSocket.lock();
+        if (!peer)
+            return 0;
+
+        // Flow control: pause if peer's output buffer is full
+        if (peer->getOutBuffer().size() >= MAX_BUFFER)
+        {
+            LOG_TRC("Backpressure: peer buffer full, pausing read");
+            return 0;
+        }
+        return POLLIN;
     }
 
     void performWrites(std::size_t /*capacity*/) override {}
