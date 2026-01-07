@@ -147,6 +147,24 @@ private:
                 socket->send(bytes);
                 socket->asyncShutdown();
             }
+            else if (url.starts_with("/large/"))
+            {
+                // /large/<size> returns a response body of <size> bytes of 'X'
+                const std::string sizeStr = url.substr(sizeof("/large/") - 1);
+                const auto size = Util::i32FromString(sizeStr);
+                if (size.second && size.first > 0)
+                {
+                    http::Response response(http::StatusCode::OK, fd);
+                    response.setBody(std::string(size.first, 'X'));
+                    socket->send(response);
+                }
+                else
+                {
+                    http::Response response(http::StatusCode::BadRequest, fd);
+                    response.setContentLength(0);
+                    socket->send(response);
+                }
+            }
             else
             {
                 http::Response response(http::StatusCode::OK, fd);

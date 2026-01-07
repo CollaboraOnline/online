@@ -68,6 +68,87 @@ public:
     const std::string& getReceived() const { return _received; }
 };
 
+/// Handler that pauses reading initially to trigger backpressure in the proxy,
+/// then resumes reading to drain all data
+class BackpressureTestHandler : public SimpleSocketHandler
+{
+    std::weak_ptr<StreamSocket> _socket;
+    std::string _received;
+    std::chrono::steady_clock::time_point _resumeTime;
+    bool _paused;
+    static constexpr int PAUSE_MS = 300; // Pause reading for 300ms
+
+public:
+    BackpressureTestHandler()
+        : _paused(true)
+    {
+    }
+
+    void onConnect(const std::shared_ptr<StreamSocket>& socket) override
+    {
+        _socket = socket;
+        setLogContext(socket->getFD());
+        _resumeTime = std::chrono::steady_clock::now() + std::chrono::milliseconds(PAUSE_MS);
+        LOG_TRC("BackpressureTestHandler: pausing reads for " << PAUSE_MS << "ms");
+    }
+
+    void handleIncomingMessage(SocketDisposition&) override
+    {
+        auto socket = _socket.lock();
+        if (!socket)
+            return;
+
+        if (_paused)
+        {
+            auto now = std::chrono::steady_clock::now();
+            if (now >= _resumeTime)
+            {
+                _paused = false;
+                LOG_TRC("BackpressureTestHandler: resuming reads");
+            }
+            else
+            {
+                return;
+            }
+        }
+
+        auto& buf = socket->getInBuffer();
+        if (!buf.empty())
+        {
+            LOG_TRC("BackpressureTestHandler: reading "
+                    << buf.size() << " bytes, total: " << (_received.size() + buf.size()));
+            _received.append(buf.data(), buf.size());
+            buf.clear();
+        }
+    }
+
+    int getPollEvents(std::chrono::steady_clock::time_point now, int64_t& timeoutMaxMicroS) override
+    {
+        if (_paused)
+        {
+            if (now >= _resumeTime)
+            {
+                _paused = false;
+                LOG_TRC("BackpressureTestHandler: resuming reads (from getPollEvents)");
+                return POLLIN;
+            }
+
+            // Request wakeup when pause ends
+            auto remaining =
+                std::chrono::duration_cast<std::chrono::microseconds>(_resumeTime - now).count();
+            if (remaining > 0)
+                timeoutMaxMicroS = std::min(timeoutMaxMicroS, remaining);
+            return 0;
+        }
+        return POLLIN;
+    }
+
+    void performWrites(std::size_t) override {}
+    void onDisconnect() override { LOG_TRC("BackpressureTestHandler::onDisconnect"); }
+
+    const std::string& getReceived() const { return _received; }
+};
+
 /// Test the internal ProxyPoll functionality.
 class UnitInternalProxy : public UnitWSD
 {
@@ -96,7 +177,7 @@ public:
         , _clientPoll(std::make_shared<SocketPoll>("client_poll"))
         , _echoPort(0)
     {
-        setTimeout(15s);
+        setTimeout(10s);
     }
 
     /// direction: true = client->target, false = target->client
@@ -304,10 +385,164 @@ public:
     }
 };
 
+/// Test flow control with large data transfer (2MB)
+/// Verifies that backpressure is triggered and data is not lost
+class UnitInternalProxyFlowControl : public UnitWSD
+{
+    STATE_ENUM(Phase, Init, ServerStarted, WaitData, Verify, Done) _phase;
+
+    // 2MB - large enough to fill kernel buffers and trigger backpressure
+    static constexpr size_t DATA_SIZE = 2 * 1024 * 1024;
+
+    std::shared_ptr<SocketPoll> _serverPoll;
+    std::shared_ptr<ServerSocket> _serverSocket;
+    std::shared_ptr<SocketPoll> _clientPoll;
+    std::shared_ptr<BackpressureTestHandler> _captureHandler;
+    int _serverPort;
+
+public:
+    UnitInternalProxyFlowControl()
+        : UnitWSD("UnitInternalProxyFlowControl")
+        , _phase(Phase::Init)
+        , _serverPoll(std::make_shared<SocketPoll>("flowcontrol_server_poll"))
+        , _clientPoll(std::make_shared<SocketPoll>("flowcontrol_client_poll"))
+        , _serverPort(0)
+    {
+        setTimeout(10s);
+    }
+
+    void invokeWSDTest() override
+    {
+        switch (_phase)
+        {
+            case Phase::Init:
+            {
+                TRANSITION_STATE(_phase, Phase::ServerStarted);
+                _clientPoll->startThread();
+                if (!startServer())
+                {
+                    LOK_ASSERT_FAIL("Failed to start server");
+                    return;
+                }
+                break;
+            }
+            case Phase::ServerStarted:
+            {
+                TRANSITION_STATE(_phase, Phase::WaitData);
+                startProxyRequest();
+                break;
+            }
+            case Phase::WaitData:
+            {
+                const std::string& received = _captureHandler->getReceived();
+                size_t bodyStart = received.find("\r\n\r\n");
+                if (bodyStart != std::string::npos)
+                {
+                    bodyStart += 4;
+                    size_t bodySize = received.size() - bodyStart;
+                    if (bodySize >= DATA_SIZE)
+                    {
+                        TST_LOG("Received " << received.size() << " bytes (body: " << bodySize
+                                            << "), proceeding to verify");
+                        TRANSITION_STATE(_phase, Phase::Verify);
+                    }
+                }
+                break;
+            }
+            case Phase::Verify:
+            {
+                TRANSITION_STATE(_phase, Phase::Done);
+
+                const std::string& received = _captureHandler->getReceived();
+                TST_LOG("Total received: " << received.size() << " bytes");
+
+                LOK_ASSERT_MESSAGE("Expected HTTP 200",
+                                   received.find("HTTP/1.1 200") != std::string::npos);
+
+                size_t bodyStart = received.find("\r\n\r\n");
+                LOK_ASSERT_MESSAGE("Expected HTTP headers", bodyStart != std::string::npos);
+                bodyStart += 4;
+
+                std::string body = received.substr(bodyStart);
+                TST_LOG("Body size: " << body.size() << " bytes, expected: " << DATA_SIZE);
+                LOK_ASSERT_MESSAGE("Body size mismatch", body.size() == DATA_SIZE);
+
+                LOK_ASSERT_MESSAGE("Body content mismatch", body == std::string(DATA_SIZE, 'X'));
+
+                TST_LOG("Flow control test passed - all " << DATA_SIZE << " bytes received intact");
+
+                _clientPoll->stop();
+                _serverPoll->stop();
+                exitTest(TestResult::Ok);
+                UnitWSD::get().DocBrokerDestroy("");
+                break;
+            }
+            case Phase::Done:
+                break;
+        }
+    }
+
+private:
+    bool startServer()
+    {
+        auto factory = std::make_shared<EchoServerFactory>();
+        auto now = std::chrono::steady_clock::now();
+
+        for (_serverPort = 19990; _serverPort < 20030; ++_serverPort)
+        {
+            _serverSocket = ServerSocket::create(ServerSocket::Type::Local, _serverPort,
+                                                 Socket::Type::IPv4, now, *_serverPoll, factory);
+            if (_serverSocket)
+                break;
+        }
+
+        if (!_serverSocket)
+        {
+            TST_LOG("Failed to create server socket on any port");
+            return false;
+        }
+
+        _serverPoll->startThread();
+        _serverPoll->insertNewSocket(_serverSocket);
+
+        TST_LOG("Large data server listening on port " << _serverPort);
+        return true;
+    }
+
+    void startProxyRequest()
+    {
+        // Create socket pair for testing (client <-> proxy)
+        int fds[2];
+        if (socketpair(AF_UNIX, SOCK_STREAM | SOCK_NONBLOCK, 0, fds) < 0)
+        {
+            LOK_ASSERT_FAIL("Failed to create socket pair: " << strerror(errno));
+            return;
+        }
+
+        _captureHandler = std::make_shared<BackpressureTestHandler>();
+        auto clientSocket = StreamSocket::create<StreamSocket>(
+            std::string(), fds[0], Socket::Type::Unix, false, HostType::Other, _captureHandler);
+
+        auto proxyHandler = std::make_shared<ServerRequestHandler>();
+        auto proxySocket = StreamSocket::create<StreamSocket>(
+            std::string(), fds[1], Socket::Type::Unix, false, HostType::Other, proxyHandler);
+
+        _clientPoll->insertNewSocket(clientSocket);
+
+        // Request 2MB of data via /large/<size> endpoint
+        Poco::Net::HTTPRequest request("GET", "/large/" + std::to_string(DATA_SIZE), "HTTP/1.1");
+        request.setHost("127.0.0.1:" + std::to_string(_serverPort));
+
+        TST_LOG("Calling ProxyPoll::startPump for " << DATA_SIZE
+                                                    << " bytes to 127.0.0.1:" << _serverPort);
+        ProxyPoll::startPump(proxySocket, "127.0.0.1", _serverPort, request);
+    }
+};
+
 UnitBase** unit_create_wsd_multi(void)
 {
-    return new UnitBase*[3]{ new UnitInternalProxy(), new UnitInternalProxyConnectError(),
-                             nullptr };
+    return new UnitBase*[4]{ new UnitInternalProxy(), new UnitInternalProxyConnectError(),
+                             new UnitInternalProxyFlowControl(), nullptr };
 }
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
