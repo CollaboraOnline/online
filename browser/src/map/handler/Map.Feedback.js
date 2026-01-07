@@ -101,10 +101,6 @@ window.L.Map.Feedback = window.L.Handler.extend({
 		if (this._iframeDialog && this._iframeDialog.hasLoaded())
 			this.removeIframe();
 
-		var lokitHash = document.querySelector('#lokit-version a');
-		lokitHash = lokitHash ? lokitHash.innerText : '';
-		var wopiHostId = document.querySelector('#wopi-host-id');
-		wopiHostId = wopiHostId ? wopiHostId.innerText : '';
 		var proxyPrefixEnabled = window.socketProxy ? "True" : "False";
 
 		var cssVar = getComputedStyle(document.documentElement).getPropertyValue('--co-primary-element');
@@ -112,8 +108,8 @@ window.L.Map.Feedback = window.L.Handler.extend({
 			      { cssvar : cssVar},
 			      { wsdhash : window.app.socket.WSDServer.Hash },
 			      { 'version_number' : window.app.socket.WSDServer.Version },
-			      { 'lokit_hash' : lokitHash },
-			      { 'wopi_host_id' : wopiHostId },
+			      { 'lokit_hash' : window.app.serverInfo.lokitHash },
+			      { 'wopi_host_id' : window.wopiHostId },
 			      { 'proxy_prefix_enabled' : proxyPrefixEnabled },
 			      { 'doc_type': this._map.getDocType()}];
 
