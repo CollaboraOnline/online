@@ -14,7 +14,6 @@
 #include <Poco/Net/HTTPRequest.h>
 #include <ProxyPoll.hpp>
 #include <Unit.hpp>
-#include <COOLWSD.hpp>
 #include <memory>
 
 class ProxyHandler : public SimpleSocketHandler
@@ -90,8 +89,11 @@ public:
 
     void onDisconnect() override
     {
-        if (auto peer = _peerSocket.lock())
-            peer->asyncShutdown();
+        auto peer = _peerSocket.lock();
+        if (!peer)
+            return;
+
+        peer->asyncShutdown();
     }
 };
 
@@ -122,9 +124,10 @@ void ProxyPoll::startPump(const std::shared_ptr<StreamSocket>& clientSocket,
             if (result != net::AsyncConnectResult::Ok || !targetSocket)
             {
                 LOG_ERR("Failed to connect to target pod");
-                COOLWSD::getWebServerPoll()->addCallback(
+                ProxyPoll::instance().addCallback(
                     [clientSocket]()
                     {
+                        ProxyPoll::instance().insertNewSocket(clientSocket);
                         HttpHelper::sendErrorAndShutdown(http::StatusCode::BadGateway,
                                                          clientSocket);
                     });
