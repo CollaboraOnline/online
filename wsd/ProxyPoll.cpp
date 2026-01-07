@@ -29,10 +29,14 @@ class ProxyHandler : public SimpleSocketHandler
     // Direction flag: true = client->target, false = target->client
     bool _isClientToTarget;
 
+    // Track whether we've received any data (to detect connection failures)
+    bool _receivedData;
+
 public:
     ProxyHandler(const std::shared_ptr<StreamSocket>& peer, bool isClientToTarget = false)
         : _peerSocket(peer)
         , _isClientToTarget(isClientToTarget)
+        , _receivedData(false)
     {
     }
 
@@ -58,6 +62,8 @@ public:
         auto& inBuffer = self->getInBuffer();
         if (!inBuffer.empty())
         {
+            _receivedData = true;
+
             if (UnitBase::isUnitTesting())
             {
                 if (UnitWSD* unit = UnitWSD::getMaybeNull())
@@ -93,6 +99,17 @@ public:
         if (!peer)
             return;
 
+        // If this is the target->client handler and we never received any data,
+        // the connection to the target failed. Send 502 Bad Gateway.
+        if (!_isClientToTarget && !_receivedData)
+        {
+            LOG_ERR("Target connection failed before receiving data, sending 502 Bad Gateway");
+            // Peer socket is in ProxyPoll, schedule the error response there
+            ProxyPoll::instance().addCallback(
+                [peer]() { HttpHelper::sendErrorAndShutdown(http::StatusCode::BadGateway, peer); });
+            return;
+        }
+
         peer->asyncShutdown();
     }
 };
@@ -124,6 +141,7 @@ void ProxyPoll::startPump(const std::shared_ptr<StreamSocket>& clientSocket,
             if (result != net::AsyncConnectResult::Ok || !targetSocket)
             {
                 LOG_ERR("Failed to connect to target pod");
+                // Insert socket into ProxyPoll and send error from its thread
                 ProxyPoll::instance().addCallback(
                     [clientSocket]()
                     {
