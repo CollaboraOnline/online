@@ -142,10 +142,9 @@ void ProxyPoll::startPump(const std::shared_ptr<StreamSocket>& clientSocket,
                     ProxyPoll::instance().insertNewSocket(targetSocket);
 
                     // Send request on the correct thread
+                    LOG_INF("Proxy established: client <-> target");
                     targetSocket->send(proxiedRequest);
                 });
-
-            LOG_INF("Proxy established: client <-> target");
         });
 }
 
