@@ -150,7 +150,7 @@ int getCurrentThreadCount()
 
 #endif
 
-_LibreOfficeKit* loKitPtr = nullptr;
+LibreOfficeKit* loKitPtr = nullptr;
 
 static bool EnableWebsocketURP = false;
 #if !MOBILEAPP
