@@ -17,6 +17,8 @@
 #include <net/HttpRequest.hpp>
 #include <net/Socket.hpp>
 
+#include <Poco/JSON/Object.h>
+
 #include <istream>
 #include <memory>
 #include <string>
@@ -33,6 +35,19 @@ public:
 
     void handleRequest(std::istream& message, const std::shared_ptr<TerminatingPoll>& poll,
                        SocketDisposition& disposition);
+
+    /// Handle a fetch request with a pre-authorized URL (from WebSocket token)
+    /// This bypasses CheckFileInfo since the token already validated access.
+    void handleFetchRequest(const std::string& streamUrl,
+                            const std::shared_ptr<TerminatingPoll>& poll,
+                            SocketDisposition& disposition);
+
+    /// Handle download/upload with pre-validated WOPI info from CollabBroker.
+    /// This bypasses CheckFileInfo since the collab session already authenticated.
+    void handleDirectRequest(std::istream& message,
+                             Poco::JSON::Object::Ptr wopiInfo,
+                             const std::shared_ptr<TerminatingPoll>& poll,
+                             SocketDisposition& disposition);
 
 private:
     inline void logPrefix(std::ostream& os) const { os << '#' << _logFD << ": "; }
