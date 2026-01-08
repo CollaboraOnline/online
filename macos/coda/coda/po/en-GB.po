@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: coolwsd 25.04.7.3\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-12-06 18:17+0000\n"
-"PO-Revision-Date: 2026-01-03 21:01+0000\n"
+"PO-Revision-Date: 2026-01-08 16:27+0000\n"
 "Last-Translator: Andi Chandler <andi@gowling.com>\n"
 "Language-Team: English (United Kingdom) <https://hosted.weblate.org/projects/"
 "collabora-online/collabora-office-macos-app/en_GB/>\n"
@@ -74,32 +74,32 @@ msgstr "Edit"
 
 msgctxt "5Vv-lz-BsD.title"
 msgid "Copy Style"
-msgstr ""
+msgstr "Copy Style"
 
 #. Do not change the placeholder ProductName!
 msgctxt "5kV-Vb-QxS.title"
 msgid "About ProductName"
-msgstr ""
+msgstr "About ProductName"
 
 msgctxt "6dh-zS-Vam.title"
 msgid "Redo"
-msgstr ""
+msgstr "Redo"
 
 msgctxt "78Y-hA-62v.title"
 msgid "Correct Spelling Automatically"
-msgstr ""
+msgstr "Correct Spelling Automatically"
 
 msgctxt "8mr-sm-Yjd.title"
 msgid "Writing Direction"
-msgstr ""
+msgstr "Writing Direction"
 
 msgctxt "9ic-FL-obx.title"
 msgid "Substitutions"
-msgstr ""
+msgstr "Substitutions"
 
 msgctxt "9yt-4B-nSM.title"
 msgid "Smart Copy/Paste"
-msgstr ""
+msgstr "Smart Copy/Paste"
 
 msgctxt "AYu-sK-qS6.title"
 msgid "Main Menu"
