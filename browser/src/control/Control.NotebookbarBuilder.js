@@ -80,7 +80,7 @@ window.L.Control.NotebookbarBuilder = window.L.Control.JSDialogBuilder.extend({
 		this._toolitemHandlers['.uno:AutoSum'] = function() {};
 		this._toolitemHandlers['.uno:ReplyComment'] = function() {};
 		this._toolitemHandlers['.uno:DeleteComment'] = function() {};
-		this._toolitemHandlers['.uno:CompareDocuments'] = function() {};
+		this._toolitemHandlers['.uno:CompareDocuments'] = this._compareDocumentsControl;
 		this._toolitemHandlers['.uno:MergeDocuments'] = function() {};
 		this._toolitemHandlers['.uno:FunctionBox'] = function() {};
 		this._toolitemHandlers['.uno:EditAnnotation'] = function() {};
@@ -720,6 +720,18 @@ window.L.Control.NotebookbarBuilder = window.L.Control.JSDialogBuilder.extend({
 		$(control.label).unbind('click');
 		$(control.container).click(function () {
 			window.L.DomUtil.get('selectbackground').click();
+		});
+		builder._preventDocumentLosingFocusOnClick(control.container);
+	},
+
+	_compareDocumentsControl: function(parentContainer, data, builder) {
+		const options = {hasDropdownArrow: false};
+		const control = builder._unoToolButton(parentContainer, data, builder, options);
+
+		$(control.button).unbind('click');
+		$(control.label).unbind('click');
+		$(control.container).click(function () {
+			window.L.DomUtil.get('comparedocuments').click();
 		});
 		builder._preventDocumentLosingFocusOnClick(control.container);
 	},
