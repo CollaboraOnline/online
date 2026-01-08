@@ -18,6 +18,7 @@ window.L.Map.FileInserter = window.L.Handler.extend({
 		this._toInsertMultimedia = {};
 		this._toInsertURL = {};
 		this._toInsertBackground = {};
+		this._toCompareDocuments = {};
 		var parser = document.createElement('a');
 		parser.href = window.host;
 	},
@@ -32,6 +33,7 @@ window.L.Map.FileInserter = window.L.Handler.extend({
 		this._map.on('inserturl', this._onInsertURL, this);
 		this._map.on('childid', this._onChildIdMsg, this);
 		this._map.on('selectbackground', this._onSelectBackground, this);
+		this._map.on('comparedocuments', this._onCompareDocuments, this);
 	},
 
 	removeHooks: function () {
@@ -40,6 +42,7 @@ window.L.Map.FileInserter = window.L.Handler.extend({
 		this._map.off('inserturl', this._onInsertURL, this);
 		this._map.off('childid', this._onChildIdMsg, this);
 		this._map.off('selectbackground', this._onSelectBackground, this);
+		this._map.off('comparedocuments', this._onCompareDocuments, this);
 	},
 
 	_onInsertGraphic: function (e) {
@@ -82,6 +85,15 @@ window.L.Map.FileInserter = window.L.Handler.extend({
 		}
 	},
 
+	_onCompareDocuments: function (e) {
+		if (!this._childId) {
+			app.socket.sendMessage('getchildid');
+			this._toCompareDocuments[Date.now()] = e.file;
+		} else {
+			this._sendFile(Date.now(), e.file, 'comparedocuments');
+		}
+	},
+
 	_onChildIdMsg: function (e) {
 		// When childId is not created (usually when we insert file/URL very first time), we send message to get child ID
 		// and store the file(s) into respective arrays (look at _onInsertGraphic, _onInsertMultimedia, _onInsertURL, _onSelectBackground)
@@ -107,6 +119,11 @@ window.L.Map.FileInserter = window.L.Handler.extend({
 			this._sendFile(name, this._toInsertBackground[name], 'selectbackground');
 		}
 		this._toInsertBackground = {};
+
+		for (name in this._toCompareDocuments) {
+			this._sendFile(name, this._toCompareDocuments[name], 'comparedocuments');
+		}
+		this._toCompareDocuments = {};
 	},
 
 	_sendFile: async function (name, file, type) {
