@@ -540,7 +540,7 @@ window.L.Map = window.L.Evented.extend({
 	},
 
 	zoomToFactor: function (zoom) {
-		return Math.pow(1.2, (zoom - this.options.zoom));
+		return Math.pow(this.options.crs.SCALE, (zoom - this.options.zoom));
 	},
 
 	getDesktopCalcZoomCenter: function() {
@@ -1075,7 +1075,7 @@ window.L.Map = window.L.Evented.extend({
 
 	getScaleZoom: function (scale, fromZoom) {
 		fromZoom = fromZoom === undefined ? this.getZoom() : fromZoom;
-		return fromZoom + (Math.log(scale) / Math.log(1.2));
+		return fromZoom + (Math.log(scale) / Math.log(this.options.crs.SCALE));
 	},
 
 

@@ -8,6 +8,7 @@
 window.L.CRS = {
 	projection: window.L.Projection.LonLat,
 	transformation: new cool.Transformation(1, 0, -1, 0),
+	SCALE: 1.2,
 
 	// converts geo coords to pixel ones
 	latLngToPoint: function (latlng, zoom) {
@@ -37,7 +38,7 @@ window.L.CRS = {
 
 	// defines how the world scales with zoom
 	scale: function (zoom) {
-		return Math.pow(1.2, zoom);
+		return Math.pow(this.SCALE, zoom);
 	},
 
 	// equivalent to doing an unproject with oldZoom then a project with newZoom
