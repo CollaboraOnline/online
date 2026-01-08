@@ -3183,7 +3183,7 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 		oldSize.x *= app.dpiScale;
 		oldSize.y *= app.dpiScale;
 
-		if (this.isWriter() && newSize.x - oldSize.x === 0) { return; }
+		if (this.isImpress() || newSize.x - oldSize.x === 0) { return; }
 
 		var widthTwips = newSize.x * app.tile.size.x / TileManager.tileSize;
 		var ratio = widthTwips / app.activeDocument.fileSize.x;
