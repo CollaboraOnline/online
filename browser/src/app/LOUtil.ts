@@ -111,6 +111,14 @@ class LOUtil {
 		'audio/wav',
 	];
 
+	// Not spreadsheet, presentation or drawing.
+	public static documentMimeFilter = [
+		'application/vnd.oasis.opendocument.text',
+		'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+		'application/msword',
+		'text/rtf',
+	];
+
 	public static onRemoveHTMLElement(
 		element: Element,
 		onDetachCallback: () => void,

@@ -93,6 +93,11 @@ body {
 	top: -100em;
 }
 
+#comparedocuments {
+	position: fixed;
+	top: -100em;
+}
+
 .about-dialog-info-div {
 	margin-inline-end: auto;
 }

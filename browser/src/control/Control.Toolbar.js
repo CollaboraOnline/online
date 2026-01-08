@@ -827,6 +827,19 @@ function onInsertBackground() {
 	return false;
 }
 
+function onCompareDocuments() {
+	const compareDocuments = window.L.DomUtil.get('comparedocuments');
+	if ('files' in compareDocuments) {
+		for (let i = 0; i < compareDocuments.files.length; i++) {
+			const file = compareDocuments.files[i];
+			map.compareDocuments(file);
+		}
+	}
+
+	compareDocuments.value = null;
+	return false;
+}
+
 function onWopiProps(e) {
 	if (e.DisableCopy) {
 		$('#addressInput input').bind('copy', function(evt) {
@@ -1051,6 +1064,7 @@ $(document).ready(function() {
 	// Update supported media mime type insertion
 	const supportedGraphicMime = app.LOUtil.graphicMimeFilter.join(",");
 	const supportedMediaMime = app.LOUtil.mediaMimeFilter.join(",");
+	const supportedDocumentMime = app.LOUtil.documentMimeFilter.join(",");
 
 	const insertgraphic = window.L.DomUtil.get('insertgraphic');
 	if (insertgraphic) {
@@ -1068,6 +1082,12 @@ $(document).ready(function() {
 	if (selectbackground) {
 		selectbackground.accept = supportedGraphicMime;
 		selectbackground.addEventListener('change', onInsertBackground);
+	}
+
+	const comparedocuments = window.L.DomUtil.get('comparedocuments');
+	if (comparedocuments) {
+		comparedocuments.accept = supportedDocumentMime;
+		comparedocuments.addEventListener('change', onCompareDocuments);
 	}
 });
 

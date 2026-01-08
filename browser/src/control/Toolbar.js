@@ -463,6 +463,10 @@ window.L.Map.include({
 		this.fire('selectbackground', {file: file});
 	},
 
+	compareDocuments: function (file) {
+		this.fire('comparedocuments', {file: file});
+	},
+
 	onHelpOpen: function(id, map, productName) {
 		var i;
 		// Display keyboard shortcut or online help
