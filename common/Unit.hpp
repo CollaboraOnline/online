@@ -22,7 +22,7 @@
 
 #include <test/testlog.hpp>
 
-#include <LibreOfficeKit/LibreOfficeKit.h>
+#include <LibreOfficeKit/LibreOfficeKitInit.h>
 
 class UnitBase;
 class UnitWSD;
@@ -60,7 +60,6 @@ extern "C" {
     UnitBase *unit_create_wsd(void);
     UnitBase** unit_create_wsd_multi(void);
     UnitBase *unit_create_kit(void);
-    typedef LibreOfficeKit *(LokHookFunction2)( const char *install_path, const char *user_profile_url );
 }
 /// Derive your WSD unit test / hooks from me.
 class UnitBase
