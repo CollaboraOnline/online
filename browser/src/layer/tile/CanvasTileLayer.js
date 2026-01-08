@@ -536,6 +536,11 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 		return this._docType === 'presentation';
 	},
 
+	// Returns true if the document type is Draw.
+	isDraw: function() {
+		return this._docType === 'drawing';
+	},
+
 	getContainer: function () {
 		return this._container;
 	},
@@ -3171,8 +3176,12 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 
 	// This is really just called on zoomend
 	_fitWidthZoom: function (e, maxZoom) {
-		if (this.isCalc())
+		if (this.isCalc() || this.isDraw())
 			return;
+
+		if (this.isImpress() && !maxZoom)
+			maxZoom = 10;
+
 
 		if (app.activeDocument.fileSize.x === 0) { return; }
 		var oldSize = e ? e.oldSize : this._map.getSize();
@@ -3183,7 +3192,11 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 		oldSize.x *= app.dpiScale;
 		oldSize.y *= app.dpiScale;
 
-		if (this.isImpress() || newSize.x - oldSize.x === 0) { return; }
+		// if we are here then that means we have the document size
+		// therefore we should continue and do the firstFit zoom resize,
+		// or else it keeps waiting for a resize event.
+		if (this._firstFitDone && newSize.x - oldSize.x === 0)
+			return;
 
 		var widthTwips = newSize.x * app.tile.size.x / TileManager.tileSize;
 		var ratio = widthTwips / app.activeDocument.fileSize.x;
