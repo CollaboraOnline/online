@@ -12,100 +12,23 @@
  * Control.ContextMenu
  */
 
-/* global $ _ _UNO app GraphicSelection */
+/* global $ _ _UNO app GraphicSelection JSDialog */
 window.L.Control.ContextMenu = window.L.Control.extend({
 	options: {
 		SEPARATOR: '---------',
-		/*
-		 * Enter UNO commands that should appear in the context menu.
-		 * Entering a UNO command under `general' would enable it for all types
-		 * of documents. If you do not want that, allowlist it in document specific filter.
-		 *
-		 * UNOCOMMANDS_EXTRACT_START <- don't remove this line, it's used by unocommands.py
-		 */
 		allowlist: {
-			/*
-			 * UNO commands for menus are not available sometimes. Presence of Menu commands
-			 * in following list is just for reference and ease of locating uno command
-			 * from context menu structure.
-			 */
-			general: ['Cut', 'Copy', 'Paste', 'PasteSpecial', 'Delete',
-					  'FormatPaintbrush', 'ResetAttributes',
-					  'NumberingStart', 'ContinueNumbering', 'IncrementLevel', 'DecrementLevel',
-					  'OpenHyperlinkOnCursor', 'InsertHyperlink', 'EditHyperlink', 'CopyHyperlinkLocation', 'RemoveHyperlink',
-					  'AnchorMenu', 'SetAnchorToPage', 'SetAnchorToPara', 'SetAnchorAtChar',
-					  'SetAnchorToChar', 'SetAnchorToFrame', 'Crop',
-					  'WrapMenu', 'WrapOff', 'WrapOn', 'WrapIdeal', 'WrapLeft', 'WrapRight', 'WrapThrough',
-					  'WrapThroughTransparencyToggle', 'WrapContour', 'WrapAnchorOnly',
-					  'ConvertMenu', 'ChangeBezier',
-					  'DistributeHorzCenter', 'DistributeHorzDistance','DistributeHorzLeft','DistributeHorzRight',
-					  'DistributeVertBottom', 'DistributeVertCenter', 'DistributeVertDistance', 'DistributeVertTop',
-					  'ArrangeFrameMenu', 'ArrangeMenu', 'BringToFront', 'ObjectForwardOne', 'ObjectBackOne', 'SendToBack',
-					  'RotateMenu', 'RotateLeft', 'RotateRight', 'TransformDialog', 'FormatLine', 'FormatArea',
-					  'FormatChartArea', 'InsertTitles', 'InsertRemoveAxes',
-					  'DeleteLegend', 'DiagramType', 'DataRanges', 'DiagramData', 'View3D', 'ManageThemes',
-					  'FormatWall', 'FormatFloor', 'FormatLegend', 'FormatTitle', 'FormatDataSeries',
-					  'FormatAxis', 'FormatMajorGrid', 'FormatMinorGrid', 'FormatDataLabels',
-					  'FormatDataLabel', 'FormatDataPoint', 'FormatMeanValue', 'FormatXErrorBars', 'FormatYErrorBars',
-					  'FormatTrendline', 'FormatTrendlineEquation', 'FormatSelection', 'FormatStockLoss',
-					  'FormatStockGain', 'InsertDataLabel', 'InsertDataLabels' , 'DeleteDataLabel', 'DeleteDataLabels', 'ResetDataPoint',
-					  'InsertTrendline', 'InsertMeanValue', 'InsertXErrorBars' , 'InsertYErrorBars', 'ResetAllDataPoints' , 'DeleteAxis',
-					  'InsertAxisTitle', 'InsertMinorGrid', 'InsertMajorGrid' , 'InsertAxis', 'DeleteMajorGrid' , 'DeleteMinorGrid',
-					  'SpellCheckIgnoreAll', 'LanguageStatus', 'SpellCheckApplySuggestion', 'PageDialog',
-					  'CompressGraphic', 'GraphicDialog', 'InsertCaptionDialog',
-					  'AnimationEffects', 'ExecuteAnimationEffect',
-					  'InsertAnnotation', 'FormatGroup', 'FormatUngroup'],
+			general: JSDialog.MenuCommands.allowlist.general,
 
-			tracking: ['NextTrackedChange', 'PreviousTrackedChange', 'RejectTrackedChange', 'AcceptTrackedChange', 'ReinstateTrackedChange'],
+			tracking: JSDialog.MenuCommands.allowlist.tracking,
 
-			text: ['TableInsertMenu',
-				   'InsertRowsBefore', 'InsertRowsAfter', 'InsertColumnsBefore', 'InsertColumnsAfter',
-				   'TableDeleteMenu', 'SetObjectToBackground', 'SetObjectToForeground',
-				   'DeleteRows', 'DeleteColumns', 'DeleteTable', 'EditCurrentRegion',
-				   'MergeCells', 'SetOptimalColumnWidth', 'SetOptimalRowHeight',
-				   'UpdateCurIndex','RemoveTableOf',
-				   'ReplyComment', 'DeleteComment', 'DeleteAuthor', 'DeleteAllNotes',
-				   'SpellingAndGrammarDialog', 'FontDialog', 'FontDialogForParagraph', 'TableDialog',
-				   'SpellCheckIgnore', 'FrameDialog', 'UnfloatFrame', 'ContentControlProperties', 'DeleteContentControl',
-				   'AddToWordbook'],
+			text: JSDialog.MenuCommands.allowlist.text,
 
-			spreadsheet: ['MergeCells', 'SplitCell', 'InsertCell', 'DeleteCell',
-					  'RecalcPivotTable', 'DataDataPilotRun', 'DeletePivotTable', 'InsertCalcTable', 'RemoveCalcTable',
-					  'DatabaseSettings', 'FormatCellDialog', 'DeleteNote', 'SetAnchorToCell', 'SetAnchorToCellResize',
-					  'FormatSparklineMenu', 'InsertSparkline', 'DeleteSparkline', 'DeleteSparklineGroup',
-					  'EditSparklineGroup', 'EditSparkline', 'GroupSparklines', 'UngroupSparklines', 'AutoFill'],
+			spreadsheet: JSDialog.MenuCommands.allowlist.spreadsheet,
 
-			presentation: ['SetDefault'],
-			drawing: []
+			presentation: JSDialog.MenuCommands.allowlist.presentation,
+			drawing: JSDialog.MenuCommands.allowlist.drawing,
 		},
-		// UNOCOMMANDS_EXTRACT_END <- don't remove this line, it's used by unocommands.py
-
-		// This denylist contains those menu items which should be disabled on mobile
-		// phones even if they are allowed in general. We need to have only those items here
-		// which are also part of the allowlist, otherwise the menu items are not visible
-		// anyway.
-
-		// For clarity, please keep this list in sections that are sorted in the same order
-		// as the items appear in the allowlist arrays above. Also keep items on separate
-		// lines as in the arrays above.
-		mobileDenylist: [
-			// general
-			'PasteSpecial',
-			'TransformDialog', 'FormatLine', 'FormatArea',
-			'InsertTitles', 'InsertRemoveAxes',
-			'DiagramType', 'DataRanges',
-			'FormatWall', 'FormatDataSeries', 'FormatXErrorBars', 'FormatYErrorBars',
-			'FormatDataPoint', 'FormatAxis', 'FormatMajorGrid', 'FormatMinorGrid',
-			'InsertTrendline', 'InsertXErrorBars' , 'InsertYErrorBars', 'FormatChartArea',
-			'FormatMeanValue', 'DiagramData', 'FormatLegend', 'FormatTrendline',
-			'FormatTrendlineEquation', 'FormatStockLoss', 'FormatStockGain', 'LanguageStatus',
-			'PageDialog',
-			// text
-			'SpellingAndGrammarDialog', 'FontDialog', 'FontDialogForParagraph',
-			// spreadsheet
-			'FormatCellDialog', 'DataDataPilotRun', 'InsertCalcTable',
-			'GroupSparklines', 'UngroupSparklines', 'AutoFill'
-		],
+		mobileDenylist: JSDialog.MenuCommands.mobileDenylist,
 
 	},
 
