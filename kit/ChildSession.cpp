@@ -1814,6 +1814,7 @@ bool ChildSession::insertFile(const StringVector& tokens)
     if (type == "graphic" ||
         type == "graphicurl" ||
         type == "selectbackground" ||
+        type == "comparedocuments" ||
         type == "multimedia" ||
         type == "multimediaurl" )
     {
@@ -1821,7 +1822,8 @@ bool ChildSession::insertFile(const StringVector& tokens)
 
         if constexpr (!Util::isMobileApp())
         {
-            if (type == "graphic" || type == "selectbackground" || type == "multimedia")
+            if (type == "graphic" || type == "selectbackground" || type == "multimedia" ||
+                type == "comparedocuments")
             {
                 std::string jailDoc = getJailDocRoot();
                 url = "file://" + jailDoc + "insertfile/" + name;
@@ -1884,6 +1886,15 @@ bool ChildSession::insertFile(const StringVector& tokens)
                     "}"
                 "}"
             "}";
+        }
+        else if (type == "comparedocuments")
+        {
+            command = ".uno:CompareDocuments";
+            arguments = "{"
+                "\"URL\":{"
+                    "\"type\":\"string\","
+                    "\"value\":\"" + url + "\""
+                "}}";
         } else {
             command = (type == "selectbackground" ? ".uno:SelectBackground" : ".uno:InsertGraphic");
             arguments = "{"
