@@ -310,6 +310,12 @@ export class CommentSection extends CanvasSectionObject {
 		return null;
 	}
 
+	public commentsHiddenOrNotPresent(): boolean {
+		if (this.sectionProperties.show != true || this.sectionProperties.commentList.length == 0)
+			return true;
+		return false;
+	}
+
 	public setCollapsed(): void {
 		if (this.sectionProperties.show != true || this.isEditing()) {
 			return;

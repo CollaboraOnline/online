@@ -91,10 +91,7 @@ class ViewLayoutWriter extends ViewLayoutBase {
 			app.CSections.CommentList.name,
 		) as cool.CommentSection;
 
-		if (
-			commentSection.sectionProperties.show != true ||
-			commentSection.sectionProperties.commentList.length == 0
-		) {
+		if (commentSection.commentsHiddenOrNotPresent()) {
 			this.recenterDocument();
 			return true;
 		}
