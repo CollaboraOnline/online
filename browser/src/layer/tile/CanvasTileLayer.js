@@ -3202,10 +3202,11 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 		var ratio = widthTwips / app.activeDocument.fileSize.x;
 
 		const baseZoomLevel = 10; // represents 100% document zoom
-		maxZoom = maxZoom ? maxZoom : baseZoomLevel;
 		var zoom = this._map.getScaleZoom(ratio, baseZoomLevel);
 
-		zoom = Math.min(maxZoom, Math.max(0.1, zoom));
+		if (maxZoom)
+			zoom = Math.min(maxZoom, Math.max(0.1, zoom));
+
 		// Not clear why we wanted to zoom in the past.
 		// This resets the view & scroll area and does a 'panTo'
 		// to keep the cursor in view.
