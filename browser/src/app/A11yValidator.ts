@@ -50,7 +50,7 @@ class A11yValidator {
 			element.getAttribute('role') === 'button'
 		) {
 			throw new A11yValidatorException(
-				`In '${this.getDialogTitle(element)}': widget of type '${type}' has ${element.tagName} element with role="button". It should use native <button> element instead.`,
+				`In '${this.getDialogTitle(element)}' at '${this.getElementPath(element)}': widget of type '${type}' has ${element.tagName} element with role="button". It should use native <button> element instead.`,
 			);
 		}
 
@@ -73,7 +73,7 @@ class A11yValidator {
 
 			if (!hasAlt)
 				throw new A11yValidatorException(
-					`In '${this.getDialogTitle(element)}': image element with id: ${img.id} in widget of type '${type}' is missing alt attribute`,
+					`In '${this.getDialogTitle(element)}' at '${this.getElementPath(img)}': image in widget of type '${type}' is missing alt attribute`,
 				);
 
 			const parent = img.parentElement;
@@ -95,13 +95,13 @@ class A11yValidator {
 
 				if (!parentHasLabel && !isDecorativeImg)
 					throw new A11yValidatorException(
-						`In '${this.getDialogTitle(element)}': image element with id: ${img.id} inside parent with id: ${parent.id} in widget of type '${type}' has empty alt attribute but parent element lacks label`,
+						`In '${this.getDialogTitle(element)}' at '${this.getElementPath(img)}': image in widget of type '${type}' has empty alt attribute but parent element lacks label`,
 					);
 			}
 
 			if (altValue !== '' && parentHasLabel)
 				throw new A11yValidatorException(
-					`In '${this.getDialogTitle(element)}': image element with id: ${img.id} inside parent with id: ${parent.id} in widget of type '${type}' has non-empty alt attribute but parent element also has label (should not duplicate)`,
+					`In '${this.getDialogTitle(element)}' at '${this.getElementPath(img)}': image in widget of type '${type}' has non-empty alt attribute but parent element also has label (should not duplicate)`,
 				);
 		});
 	}
@@ -119,6 +119,21 @@ class A11yValidator {
 
 		const title = dialog.querySelector('h2.ui-dialog-title');
 		return title?.textContent?.trim() || 'untitled dialog';
+	}
+
+	private getElementPath(element: HTMLElement): string {
+		const ids: string[] = [];
+		let current: HTMLElement | null = element;
+		const dialog = element.closest('.ui-dialog');
+
+		while (current && current !== dialog) {
+			if (current.id) {
+				ids.unshift(current.id);
+			}
+			current = current.parentElement;
+		}
+
+		return ids.length > 0 ? ids.join(' > ') : '(no ids in path)';
 	}
 }
 
