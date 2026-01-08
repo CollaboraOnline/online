@@ -342,6 +342,9 @@ private:
     /// Eg. in readonly mode only few messages should be allowed
     bool filterMessage(const std::string& msg) const;
 
+    /// Returns true if the download message of type 'id' should be allowed or not
+    bool filterDownloadAs(const std::string& id) const;
+
     void dumpState(std::ostream& os) override;
 
     /// Handle invalidation message coming from a kit and transfer it to a tile request.
