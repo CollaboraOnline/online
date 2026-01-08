@@ -8,6 +8,12 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
+/*
+ * Network latency simulation for debugging and testing.
+ *
+ * Delay - Wraps a real socket fd to inject configurable latency.
+ *         Useful for testing behavior under slow network conditions.
+ */
 
 #pragma once
 

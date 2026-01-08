@@ -8,6 +8,10 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
+/*
+ * Implementation of Socket, SocketPoll, and StreamSocket classes.
+ * Contains the poll loop, socket I/O, state dumping, and WebSocket support.
+ */
 
 #include "config.h"
 

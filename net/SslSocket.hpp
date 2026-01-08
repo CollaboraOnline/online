@@ -8,6 +8,13 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
+/*
+ * SSL/TLS stream socket implementation using OpenSSL.
+ *
+ * SslStreamSocket - StreamSocket subclass that wraps I/O with SSL encryption.
+ *                   Handles non-blocking handshake, certificate verification,
+ *                   SNI hostname setting, and SSL error recovery.
+ */
 
 #pragma once
 

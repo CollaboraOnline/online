@@ -8,6 +8,17 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
+/*
+ * HTTP/1.1 protocol implementation for both client and server use.
+ *
+ * http::StatusCode    - Enum of HTTP status codes (200, 404, 500, etc.).
+ * http::Header        - HTTP header collection with case-insensitive lookup.
+ * http::Request       - HTTP request builder with method, URL, headers, body.
+ * http::Response      - HTTP response parser/builder with streaming support.
+ * http::Session       - Async HTTP client session that manages connection,
+ *                       request/response lifecycle, and SSL over SocketPoll.
+ * http::FieldParseState - State machine for incremental header/body parsing.
+ */
 
 #pragma once
 

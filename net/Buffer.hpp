@@ -8,6 +8,13 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
+/*
+ * Efficient byte buffer for network I/O with minimal copying.
+ *
+ * Buffer - std::vector<char> wrapper optimized for socket operations:
+ *          append data, erase consumed bytes from the front, and
+ *          provide direct access for read/write system calls.
+ */
 
 #pragma once
 

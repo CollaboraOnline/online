@@ -8,6 +8,15 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
+/*
+ * Network utility functions and connection helpers.
+ *
+ * net::DefaultValues - Global defaults for socket timeouts and connection limits.
+ * net::HostEntry     - DNS lookup result with IP addresses and canonical name.
+ * net::connect()     - Synchronous TCP connection to host:port with SSL option.
+ * net::asyncConnect()- Asynchronous connection with callback on completion.
+ * Helper functions   - Host resolution, localhost detection, origin comparison.
+ */
 
 #pragma once
 

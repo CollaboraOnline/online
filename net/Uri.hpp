@@ -8,6 +8,12 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
+/*
+ * Simple URI parsing utilities.
+ *
+ * net::parseUri() - Decompose URI into scheme, host, port, and path components.
+ * net::parseUrl() - Extract just the path/query portion from a URI.
+ */
 
 #pragma once
 

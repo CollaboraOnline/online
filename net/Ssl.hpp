@@ -8,6 +8,13 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
+/*
+ * OpenSSL context management for TLS connections.
+ *
+ * ssl::CertificateVerification - Enum for cert verification mode (disabled/required).
+ * SslContext      - Wrapper around SSL_CTX with cert/key loading and DH/ECDH setup.
+ * ssl::Manager    - Singleton manager providing separate server and client SSL contexts.
+ */
 
 #pragma once
 

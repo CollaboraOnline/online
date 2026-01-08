@@ -8,6 +8,18 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
+/*
+ * Core socket infrastructure for non-blocking I/O and event-driven networking.
+ *
+ * Socket              - Base class wrapping a file descriptor with poll event handling.
+ * SocketPoll          - Event loop using poll() to multiplex I/O on multiple sockets;
+ *                       runs callbacks, manages socket lifecycle, and handles wakeups.
+ * StreamSocket        - Bidirectional streaming socket with input/output buffers,
+ *                       timeout handling, and protocol handler delegation.
+ * ProtocolHandlerInterface - Abstract interface for protocol-specific message handling
+ *                       (HTTP, WebSocket, etc.) that processes data from StreamSocket.
+ * SocketDisposition   - Controls socket fate after event handling (continue, close, move).
+ */
 
 #pragma once
 

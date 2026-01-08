@@ -8,6 +8,15 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
+/*
+ * WebSocket protocol handler (RFC 6455) for both client and server roles.
+ *
+ * WebSocketHandler - ProtocolHandlerInterface implementation that handles
+ *                    WebSocket framing, masking, fragmentation, ping/pong,
+ *                    and close handshake. Supports HTTP upgrade on both
+ *                    client (outgoing) and server (incoming) connections.
+ *                    Delegates decoded messages to handleMessage() override.
+ */
 
 #pragma once
 

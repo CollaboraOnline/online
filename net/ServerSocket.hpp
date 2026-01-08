@@ -8,6 +8,14 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
+/*
+ * Listening server sockets that accept incoming connections.
+ *
+ * SocketFactory     - Abstract factory for creating client sockets on accept.
+ * ServerSocket      - TCP server socket that binds, listens, and accepts
+ *                     connections, inserting new sockets into a SocketPoll.
+ * LocalServerSocket - Unix domain socket server for local IPC.
+ */
 
 #pragma once
 

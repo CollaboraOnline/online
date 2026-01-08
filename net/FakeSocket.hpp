@@ -8,6 +8,13 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
+/*
+ * In-process socket emulation for mobile app builds (iOS/Android).
+ *
+ * Provides fakeSocket*() functions that mimic POSIX socket APIs using
+ * in-memory message queues. Allows the same networking code to work
+ * without real network sockets when coolwsd runs embedded in an app.
+ */
 
 #pragma once
 
