@@ -96,8 +96,8 @@ Now point your browser to some https://localhost:9980/browser/c85d8681f3/wasm.ht
 ### Served stand-alone from a plain web server
 
 Once the build is done, you can serve the browser/dist tree from a web server (e.g., via `emrun
-browser/dist/cool.html`) and point your browser at that served cool.html page with a
+--no-browser browser/dist/cool.html`) and point your browser at that served cool.html page with a
 file_path=/some/exisiting/document query paramter, where /some/exisiting/document is the absolute
 path of an exisiting document in the Emscripten file system (cf. online's
 --with-wasm-additional-files configure option; e.g., some
-<http://localhost:6931/cool.html?file_path=/test.odt> for the emrun example).
+<http://localhost:6931/cool.html?file_path=/android/default-document/example.odt> for the emrun example).
