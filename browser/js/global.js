@@ -1690,9 +1690,9 @@ function getInitializerClass() {
 			return new MobileSocket(uri);
 		} else if (global.socketProxy) {
 			return new global.ProxySocket(uri);
-		} else if (global.indirectionUrl != '' && !global.migrating) {
-			global.indirectSocket = true;
-			return new global.IndirectSocket(uri);
+		// } else if (global.indirectionUrl != '' && !global.migrating) {
+		// 	global.indirectSocket = true;
+		// 	return new global.IndirectSocket(uri);
 		} else {
 			return new WebSocket(uri);
 		}
