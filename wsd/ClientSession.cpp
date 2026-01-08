@@ -1535,24 +1535,9 @@ bool ClientSession::filterMessage(const std::string& message) const
     if (tokens.equals(0, "downloadas"))
     {
         std::string id;
-        if (tokens.size() >= 3 && getTokenString(tokens[2], "id", id))
-        {
-            if (id == "print" && _wopiFileInfo && _wopiFileInfo->getDisablePrint())
-            {
-                allowed = false;
-                LOG_WRN("WOPI host has disabled print for this session");
-            }
-            else if (id == "export" && _wopiFileInfo && _wopiFileInfo->getDisableExport())
-            {
-                allowed = false;
-                LOG_WRN("WOPI host has disabled export for this session");
-            }
-        }
-        else
-        {
-            allowed = false;
-            LOG_WRN("No value of id in downloadas message");
-        }
+        if (tokens.size() >= 3)
+            getTokenString(tokens[2], "id", id);
+        allowed = filterDownloadAs(id);
     }
     else if (tokens.equals(0, "gettextselection"))
     {
@@ -1593,6 +1578,32 @@ bool ClientSession::filterMessage(const std::string& message) const
                 allowed = true;
             }
         }
+    }
+
+    return allowed;
+}
+
+bool ClientSession::filterDownloadAs(const std::string& id) const
+{
+    bool allowed = true;
+
+    if (!id.empty())
+    {
+        if (id == "print" && _wopiFileInfo && _wopiFileInfo->getDisablePrint())
+        {
+            allowed = false;
+            LOG_WRN("WOPI host has disabled print for this session");
+        }
+        else if (id == "export" && _wopiFileInfo && _wopiFileInfo->getDisableExport())
+        {
+            allowed = false;
+            LOG_WRN("WOPI host has disabled export for this session");
+        }
+    }
+    else
+    {
+        allowed = false;
+        LOG_WRN("No value of id in downloadas message");
     }
 
     return allowed;
@@ -1765,7 +1776,18 @@ bool ClientSession::handleKitToClientMessage(const std::shared_ptr<Message>& pay
 #endif
 
     const auto& tokens = payload->tokens();
-    if (tokens.equals(0, "unocommandresult:"))
+    if (tokens.equals(0, "downloadas:"))
+    {
+        std::string id;
+        if (tokens.size() >= 4)
+            getTokenString(tokens[3], "id", id);
+        if (!filterDownloadAs(id))
+        {
+            LOG_WRN("Ignoring kit to client message of: " << firstLine);
+            return false;
+        }
+    }
+    else if (tokens.equals(0, "unocommandresult:"))
     {
         LOG_INF("Command: " << firstLine);
         const std::string stringJSON = payload->jsonString();
