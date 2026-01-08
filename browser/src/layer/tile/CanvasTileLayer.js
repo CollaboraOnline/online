@@ -3200,9 +3200,7 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 
 		var widthTwips = newSize.x * app.tile.size.x / TileManager.tileSize;
 		var ratio = widthTwips / app.activeDocument.fileSize.x;
-
-		const baseZoomLevel = 10; // represents 100% document zoom
-		var zoom = this._map.getScaleZoom(ratio, baseZoomLevel);
+		var zoom = this._map.getScaleZoom(ratio);
 
 		if (maxZoom)
 			zoom = Math.min(maxZoom, Math.max(0.1, zoom));
