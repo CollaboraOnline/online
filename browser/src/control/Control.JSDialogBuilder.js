@@ -1349,6 +1349,10 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 			window.L.control.attachTooltipEventListener(pushbutton, builder.map);
 		}
 
+		if (data.aria && data.aria.role) {
+			pushbutton.setAttribute('role', data.aria.role);
+		}
+
 		builder.map.hideRestrictedItems(data, wrapper, pushbutton);
 		builder.map.disableLockedItem(data, wrapper, pushbutton);
 		if (data.hidden)
