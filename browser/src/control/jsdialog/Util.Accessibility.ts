@@ -81,10 +81,23 @@ function addAriaLabel(
 	data: WidgetJSON,
 	builder: JSBuilder,
 ) {
-	if (data.aria?.label && data.aria.label.trim())
+	if (data.aria?.label && data.aria.label.trim()) {
 		element.setAttribute('aria-label', data.aria.label);
-	else if (data.text)
+	} else if (data.text) {
 		element.setAttribute('aria-label', builder._cleanText(data.text));
+	} else {
+		// No valid label source - backend need to add label
+		app.console.warn(
+			'[A11y] Missing aria label: element has no accessible label. ',
+			{
+				elementId: element.id,
+				elementTag: element.tagName,
+				elementClass: element.className,
+				dataId: data.id,
+				dataType: data.type,
+			},
+		);
+	}
 }
 
 JSDialog.SetupA11yLabelForLabelableElement = function (
