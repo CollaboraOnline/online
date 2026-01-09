@@ -113,7 +113,7 @@
     <message>
         <location filename="../WebView.cpp" line="205"/>
         <source>Presenting</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Præsenterer</translation>
     </message>
 </context>
 <context>
@@ -121,17 +121,17 @@
     <message>
         <location filename="../WebView.cpp" line="121"/>
         <source>Unsaved Changes</source>
-        <translation type="unfinished"></translation>
+        <translation>Ikke-gemte ændringer</translation>
     </message>
     <message>
         <location filename="../WebView.cpp" line="122"/>
         <source>The document has unsaved changes. Do you want to close anyway?</source>
-        <translation type="unfinished"></translation>
+        <translation>Dokumentet har ikke-gemte ændringer. Ønsker du at lukke alligevel?</translation>
     </message>
     <message>
         <location filename="../WebView.cpp" line="533"/>
         <source>Start</source>
-        <translation type="unfinished"></translation>
+        <translation>Start</translation>
     </message>
 </context>
 </TS>
