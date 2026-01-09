@@ -20,10 +20,11 @@ class A11yValidatorException extends Error {
 	}
 }
 
-class A11yValidator {
+class A11yValidator extends CypressValidator {
 	private checks: Array<(type: string, element: HTMLElement) => void> = [];
 
 	constructor() {
+		super();
 		this.setupChecks();
 	}
 

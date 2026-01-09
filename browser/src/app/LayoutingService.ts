@@ -17,7 +17,7 @@
 
 type LayoutingTask = () => void;
 
-class LayoutingService {
+class LayoutingService extends CypressValidator {
 	private _requestedFrame: ReturnType<typeof requestAnimationFrame> | null =
 		null;
 	private _layoutTasks: Array<LayoutingTask> = [];
@@ -50,6 +50,9 @@ class LayoutingService {
 			task();
 		} catch (ex) {
 			console.error('LayoutingTask exception: ' + ex);
+			if (this.isValidatorActive()) {
+				throw ex;
+			}
 		}
 
 		return true;
@@ -104,6 +107,9 @@ class LayoutingService {
 				cb();
 			} catch (ex) {
 				console.error('Drain callback exception: ' + ex);
+				if (this.isValidatorActive()) {
+					throw ex;
+				}
 			}
 		}
 	}

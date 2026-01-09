@@ -247,6 +247,7 @@ COOL_LIBS_JS_DST = $(patsubst %.js,$(DIST_FOLDER)/%.js,$(COOL_LIBS_JS))
 COOL_JS_LST =\
 	src/app/DocUtil.ts \
 	src/app/LocaleService.ts \
+	src/app/CypressValidator.ts \
 	src/app/LayoutingService.ts \
 	src/app/ServerConnectionService.ts \
 	src/docstate.ts \
