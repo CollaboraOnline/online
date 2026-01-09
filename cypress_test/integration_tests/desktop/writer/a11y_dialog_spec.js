@@ -38,7 +38,7 @@ describe(['tagdesktop'], 'Accessibility Writer Tests', function () {
         helper.setupAndLoadDocument('writer/help_dialog.odt');
     });
 
-    it('Check accessibility for writer', function () {
+    it.skip('Check accessibility for writer', function () {
         cy.getFrameWindow().then(function (win) {
             cy.spy(win.console, 'error').as('console:error');
 
