@@ -29,6 +29,7 @@ interface AboutDialogElements {
 	routeToken: HTMLElement;
 	timeZone: HTMLElement;
 	wopiHostId: HTMLElement;
+	licenseInformation: HTMLElement;
 	copyright: HTMLElement;
 }
 
@@ -224,6 +225,15 @@ class AboutDialog {
 		// WOPI Host ID
 		elements.wopiHostId.textContent = window.wopiHostId;
 
+		// License information
+		const a = document.createElement('a');
+    a.href = 'javascript:void(0)';
+    a.textContent = _UNO('.uno:ShowLicense');
+    a.addEventListener('click', () => {
+      window.postMobileMessage('LICENSE');
+    });
+    elements.licenseInformation.appendChild(a);
+
 		// Copyright and vendor
 		const span = document.createElement('span');
 		span.setAttribute('dir', 'ltr');
@@ -350,7 +360,7 @@ class AboutDialog {
 	}
 
 	private copyVersionInfoToClipboard() {
-		const info = window.app.serverInfo;
+		const info = window.app.serverInfo
 		let text = '';
 
 		if (!info) {
@@ -507,6 +517,11 @@ class AboutDialog {
 			infoDiv.appendChild(wopiHostId);
 		}
 
+		const licenseInformation = AboutDialog.createElement('div', { id: 'license-information' });
+		if (window.ThisIsTheQtApp) {
+			infoDiv.appendChild(licenseInformation);
+		}
+
 		// Copyright
 		const copyright = AboutDialog.createElement('p', {
 			className: 'about-dialog-info-div',
@@ -522,6 +537,7 @@ class AboutDialog {
 			routeToken,
 			timeZone,
 			wopiHostId,
+			licenseInformation,
 			copyright,
 		};
 	}
