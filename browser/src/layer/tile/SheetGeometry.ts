@@ -320,6 +320,9 @@ export class SheetGeometry {
 	public convertRectangleToTileTwips(simpleRectangle: cool.SimpleRectangle): void {
 		simpleRectangle.x1 = this._columns.getTileTwipsPosFromPrint(simpleRectangle.x1);
 		simpleRectangle.y1 = this._rows.getTileTwipsPosFromPrint(simpleRectangle.y1);
+
+		simpleRectangle.width = this._columns.getTileTwipsPosFromPrint(simpleRectangle.width);
+		simpleRectangle.height = this._rows.getTileTwipsPosFromPrint(simpleRectangle.height);
 	}
 
 	public convertRawRectangleToTileTwips(rectangle: number[]): void {
