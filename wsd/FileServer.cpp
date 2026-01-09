@@ -82,8 +82,13 @@ using Poco::Net::NameValueCollection;
 using Poco::Util::Application;
 
 // We have files that are at least 2.5 MB already.
-// WASM files are in the order of 30 MB, however,
-constexpr auto MaxFileSizeToCacheInBytes = 50 * 1024 * 1024;
+// WASM files are in the order of 30 MB (250 MB in debug builds), however,
+constexpr auto MaxFileSizeToCacheInBytes = 1024 * 1024 *
+#if ENABLE_WASM_SUPPORT && ENABLE_DEBUG
+    500;
+#else
+    50;
+#endif
 constexpr std::string_view MetaViewPort = "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1, minimum-scale=1, interactive-widget=resizes-content\">";
 
 namespace
