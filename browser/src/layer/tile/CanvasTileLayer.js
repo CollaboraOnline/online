@@ -2311,8 +2311,14 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 	adjustTextSelectionRectanglesForCalc: function(rawRectangles, viewId) {
 		if (!app.map._docLayer.sheetGeometry) return;
 
-		for (let i = 0; i < rawRectangles.length; i++) {
-			app.map._docLayer.sheetGeometry.convertRawRectangleToTileTwips(rawRectangles[i]);
+		// This state is false when a shape is selected or a selected shape's text is being edited.
+		// We will use this to determine the origin of the selection rectangles.
+		const cellProtectionState = app.map.stateChangeHandler.getItemValue('.uno:CellProtection') === 'true';
+
+		if (cellProtectionState) {
+			for (let i = 0; i < rawRectangles.length; i++) {
+				app.map._docLayer.sheetGeometry.convertRawRectangleToTileTwips(rawRectangles[i]);
+			}
 		}
 
 		// For Calc, text selection rectangle is sent taking the cursor rectangle as origin.
@@ -2330,7 +2336,7 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 				}
 			}
 		}
-		else if (app.file.textCursor.visible) {
+		else if (app.file.textCursor.visible && cellProtectionState) {
 			for (let i = 0; i < rawRectangles.length; i++) {
 				rawRectangles[i][0] += app.calc.cellCursorRectangle.x1;
 				rawRectangles[i][1] += app.calc.cellCursorRectangle.y1;
