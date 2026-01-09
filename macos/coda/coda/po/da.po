@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: coolwsd 25.04.7.3\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-12-06 18:17+0000\n"
-"PO-Revision-Date: 2026-01-08 16:27+0000\n"
+"PO-Revision-Date: 2026-01-09 19:54+0000\n"
 "Last-Translator: J A <jokkels@users.noreply.hosted.weblate.org>\n"
 "Language-Team: Danish <https://hosted.weblate.org/projects/collabora-online/"
 "collabora-office-macos-app/da/>\n"
@@ -101,37 +101,39 @@ msgctxt "9ic-FL-obx.title"
 msgid "Substitutions"
 msgstr "Udskiftninger"
 
+#, fuzzy
 msgctxt "9yt-4B-nSM.title"
 msgid "Smart Copy/Paste"
-msgstr ""
+msgstr "Smart Copy/Paste"
 
 msgctxt "AYu-sK-qS6.title"
 msgid "Main Menu"
-msgstr ""
+msgstr "Hovedmenu"
 
 msgctxt "BOF-NM-1cW.title"
 msgid "Preferences…"
-msgstr ""
+msgstr "Præferencer…"
 
+#, fuzzy
 msgctxt "BgM-ve-c93.title"
 msgid "\tLeft to Right"
-msgstr ""
+msgstr "\tVenstre til højre"
 
 msgctxt "Bw7-FT-i3A.title"
 msgid "Save As…"
-msgstr ""
+msgstr "Gem som…"
 
 msgctxt "DVo-aG-piG.title"
 msgid "Close"
-msgstr ""
+msgstr "Luk"
 
 msgctxt "Dv1-io-Yv7.title"
 msgid "Spelling and Grammar"
-msgstr ""
+msgstr "Stavning og grammatik"
 
 msgctxt "F2S-fz-NVQ.title"
 msgid "Help"
-msgstr ""
+msgstr "Hjælp"
 
 #. Do not change the placeholder ProductName!
 msgctxt "FKE-Sm-Kum.title"
@@ -140,35 +142,35 @@ msgstr ""
 
 msgctxt "Fal-I4-PZk.title"
 msgid "Text"
-msgstr ""
+msgstr "Tekst"
 
 msgctxt "FeM-D8-WVr.title"
 msgid "Substitutions"
-msgstr ""
+msgstr "Udskiftninger"
 
 msgctxt "GB9-OM-e27.title"
 msgid "Bold"
-msgstr ""
+msgstr "Fed"
 
 msgctxt "GEO-Iw-cKr.title"
 msgid "Format"
-msgstr ""
+msgstr "Format"
 
 msgctxt "GUa-eO-cwY.title"
 msgid "Use Default"
-msgstr ""
+msgstr "Brug standard"
 
 msgctxt "Gi5-1S-RQB.title"
 msgid "Font"
-msgstr ""
+msgstr "Skrifttype"
 
 msgctxt "H1b-Si-o9J.title"
 msgid "Writing Direction"
-msgstr ""
+msgstr "Skriveretning"
 
 msgctxt "H8h-7b-M4v.title"
 msgid "View"
-msgstr ""
+msgstr "Vis"
 
 msgctxt "HFQ-gK-NFA.title"
 msgid "Text Replacement"
