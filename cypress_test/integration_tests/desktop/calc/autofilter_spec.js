@@ -84,7 +84,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'AutoFilter', function() {
 		calcHelper.openAutoFilterMenu();
 
 		//sort by descending order
-		cy.cGet('body').contains('.autofilter', 'Sort Descending').click();
+		cy.cGet('.autofilter').contains('.ui-treeview-entry', 'Sort Descending').click();
 		// Wait for autofilter dialog to close
 		cy.cGet('div.autofilter').should('not.exist');
 
@@ -92,7 +92,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'AutoFilter', function() {
 
 		//sort by ascending order
 		calcHelper.openAutoFilterMenu();
-		cy.cGet('body').contains('.autofilter', 'Sort Ascending').click();
+		cy.cGet('.autofilter').contains('.ui-treeview-entry', 'Sort Ascending').click();
 		// Wait for autofilter dialog to close
 		cy.cGet('div.autofilter').should('not.exist');
 
@@ -143,7 +143,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'AutoFilter', function() {
 		calcHelper.openAutoFilterMenu();
 
 		//Click on `Filter by Color`
-		cy.cGet('body').contains('.autofilter', 'Filter by Color').click();
+		cy.cGet('.autofilter').contains('.ui-treeview-entry', 'Filter by Color').click();
 
 		// Find the table element with ID "background"
 		cy.cGet('#background')
