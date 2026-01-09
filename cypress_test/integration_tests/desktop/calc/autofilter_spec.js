@@ -82,6 +82,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'AutoFilter', function() {
 
 	it('Sort by ascending/descending', function() {
 		calcHelper.openAutoFilterMenu();
+		cy.cGet('.autofilter .vertical').should('be.visible');
 
 		//sort by descending order
 		cy.cGet('.autofilter').contains('.ui-treeview-entry', 'Sort Descending').click();
@@ -92,6 +93,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'AutoFilter', function() {
 
 		//sort by ascending order
 		calcHelper.openAutoFilterMenu();
+		cy.cGet('.autofilter .vertical').should('be.visible');
 		cy.cGet('.autofilter').contains('.ui-treeview-entry', 'Sort Ascending').click();
 		// Wait for autofilter dialog to close
 		cy.cGet('div.autofilter').should('not.exist');
@@ -141,6 +143,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'AutoFilter', function() {
 		desktopHelper.selectColorFromPalette('3FAF46');
 
 		calcHelper.openAutoFilterMenu();
+		cy.cGet('.autofilter .vertical').should('be.visible');
 
 		//Click on `Filter by Color`
 		cy.cGet('.autofilter').contains('.ui-treeview-entry', 'Filter by Color').click();
@@ -165,6 +168,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'AutoFilter', function() {
 	it('Disable already filtered', function () {
 		// Filter row with ['Test 4', ''] on the first column
 		calcHelper.openAutoFilterMenu();
+		cy.cGet('.autofilter .vertical').should('be.visible');
 		cy.cGet('#check_list_box :nth-child(4 of .ui-treeview-entry) > div > input').click();
 		cy.cGet('#ok').click();
 		// Wait for autofilter dialog to close
@@ -172,6 +176,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'AutoFilter', function() {
 
 		// Open autofilter menu on the second column
 		calcHelper.openAutoFilterMenu(true);
+		cy.cGet('.autofilter .vertical').should('be.visible');
 		// Check that '(empty)' option is disabled
 		cy.cGet('#check_list_box :nth-child(3 of .ui-treeview-entry) > div').should('contain.text', '(empty)');
 		cy.cGet('#check_list_box :nth-child(3 of .ui-treeview-entry) > div > input').should('be.disabled');
