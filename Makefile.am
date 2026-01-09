@@ -900,7 +900,7 @@ check-for-system-nss:
 
 check-recursive: eslint
 
-check: check-for-system-nss prettier eslint presets-dir check-recursive
+check: all-local check-for-system-nss prettier eslint presets-dir check-recursive
 	$(GEN_COVERAGE_COMMAND)
 
 coverage-report:
