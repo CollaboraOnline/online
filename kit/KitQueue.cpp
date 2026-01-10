@@ -753,7 +753,7 @@ void KitQueue::pushTileCombineRequest(const Payload &value)
 
     // Breakup tilecombine and deduplicate (we are re-combining
     // the tiles inside popTileQueue() again)
-    const std::string msg = std::string(value.data(), value.size());
+    const std::string_view msg(value.data(), value.size());
     const TileCombined tileCombined = TileCombined::parse(msg);
 
     std::vector<TileDesc>& tileQueue = ensureTileQueue(tileCombined.getCanonicalViewId());
@@ -765,7 +765,7 @@ void KitQueue::pushTileCombineRequest(const Payload &value)
 
 void KitQueue::pushTileQueue(const Payload &value)
 {
-    const std::string msg = std::string(value.data(), value.size());
+    const std::string_view msg(value.data(), value.size());
     const TileDesc desc = TileDesc::parse(msg);
     std::vector<TileDesc>& tileQueue = ensureTileQueue(desc.getCanonicalViewId());
     sortedInsert(tileQueue, desc);
