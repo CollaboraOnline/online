@@ -227,6 +227,17 @@ static constexpr std::size_t skipPathPrefix(const char (&s)[N], std::size_t n = 
         }                                       \
     } while (false)
 
+/// Logs this particular log entry only once in the process lifetime.
+#define LOG_MESSAGE_ONCE_(LVL, A, X, PREFIX, SUFFIX)                                               \
+    do                                                                                             \
+    {                                                                                              \
+        if (LOG_CONDITIONAL(LVL, A))                                                               \
+        {                                                                                          \
+            static std::once_flag UNIQUE_VAR(once);                                                \
+            std::call_once(UNIQUE_VAR(once), [&]() { LOG_BODY_(LVL, X, PREFIX, SUFFIX); });        \
+        }                                                                                          \
+    } while (false)
+
 #define LOG_BODY_(LVL, X, PREFIX, END)                                                             \
     char UNIQUE_VAR(buffer)[1024];                                                                 \
     std::ostringstream oss_(Log::prefix<sizeof(UNIQUE_VAR(buffer)) - 1>(UNIQUE_VAR(buffer), #LVL), \
@@ -269,6 +280,9 @@ static constexpr std::size_t skipPathPrefix(const char (&s)[N], std::size_t n = 
 #define LOG_INF_NOFILE(X) LOGA_INF_NOFILE(Generic, X)
 #define LOG_WRN(X)        LOG_MESSAGE_(WRN, Generic, X, logPrefix, LOG_END)
 #define LOG_ERR(X)        LOG_MESSAGE_(ERR, Generic, X, logPrefix, LOG_END)
+
+#define LOG_WRN_ONCE(X) LOG_MESSAGE_ONCE_(WRN, Generic, X, logPrefix, LOG_END)
+#define LOG_ERR_ONCE(X) LOG_MESSAGE_ONCE_(ERR, Generic, X, logPrefix, LOG_END)
 
 #define LOGA_TRC(A,X)        LOG_MESSAGE_(TRC, A, X, logPrefix, LOG_END)
 #define LOGA_TRC_NOFILE(A,X) LOG_MESSAGE_(TRC, A, X, logPrefix, LOG_END_NOFILE)

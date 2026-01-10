@@ -255,14 +255,9 @@ public:
             const int val = 1;
             if (::setsockopt(_fd, IPPROTO_TCP, TCP_NODELAY, (char*)&val, sizeof(val)) == -1)
             {
-                static std::once_flag once;
-                std::call_once(once,
-                               [&]()
-                               {
-                                   LOG_WRN("Failed setsockopt TCP_NODELAY. Will not report further "
-                                           "failures to set TCP_NODELAY: "
-                                           << strerror(errno));
-                               });
+                LOG_WRN_ONCE("Failed setsockopt TCP_NODELAY. Will not report further "
+                             "failures to set TCP_NODELAY: "
+                             << strerror(errno));
             }
         }
     }
