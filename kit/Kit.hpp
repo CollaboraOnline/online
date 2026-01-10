@@ -153,7 +153,7 @@ public:
 
     static void cleanupChildProcess();
 
-    virtual void wakeupHook() override;
+    void wakeupHook() override;
 
     static KitSocketPoll* getMainPoll() { return mainPoll; }
 
@@ -203,7 +203,7 @@ public:
     Document(const std::shared_ptr<lok::Office>& loKit, const std::string& jailId,
              const std::string& docKey, const std::string& docId, const std::string& url,
              const std::shared_ptr<WebSocketHandler>& websocketHandler, unsigned mobileAppDocId);
-    virtual ~Document();
+    ~Document() final;
 
     const std::string& getUrl() const { return _url; }
 
@@ -269,7 +269,7 @@ private:
     static void reapZombieChildren();
 
     /// Calculate tile rendering priority from a TileDesc
-    virtual Priority getTilePriority(const TileDesc &desc) const override;
+    Priority getTilePriority(const TileDesc& desc) const override;
     virtual std::vector<ViewIdInactivity> getViewIdsByInactivity() const override;
 
 public:
