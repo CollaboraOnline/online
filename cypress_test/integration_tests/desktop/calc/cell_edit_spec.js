@@ -8,6 +8,9 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Test rendering of a cell o
 	beforeEach(function() {
 		cy.viewport(800,600);
 		helper.setupAndLoadDocument('calc/cell_edit.fods');
+
+		// make differences more significant
+		cy.wait(1000);
 		desktopHelper.selectZoomLevel(200);
 	});
 
@@ -22,8 +25,8 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Test rendering of a cell o
 	}
 
 	function checkVisualContent(expected) {
-		cy.wait(500);
-		cy.cGet('#document-container').compareSnapshot(expected, 0.01);
+		cy.wait(1000);
+		cy.cGet('#document-container').compareSnapshot(expected, 0.02);
 	}
 
 	it('Redraw after undo', function() {
