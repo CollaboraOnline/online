@@ -16,6 +16,7 @@
 #include <config.h>
 
 #include <common/Anonymizer.hpp>
+#include <wsd/TileDesc.hpp>
 
 #include <csignal>
 #include <limits>
@@ -2411,20 +2412,20 @@ bool Document::forwardToChild(const std::string_view prefix, const std::vector<c
 TilePrioritizer::Priority Document::getTilePriority(const TileDesc &desc) const
 {
     TilePrioritizer::Priority maxPrio = TilePrioritizer::Priority::NONE;
+    const auto canonicalViewId = desc.getCanonicalViewId();
 
     assert(_sessions.size() > 0);
-    for (const auto& it : _sessions)
+    for (const auto& [sessionName, session] : _sessions)
     {
-        const std::shared_ptr<ChildSession> &session = it.second;
-
         // only interested in sessions that match our viewId
-        if (session->getCanonicalViewId() != desc.getCanonicalViewId())
+        if (session->getCanonicalViewId() != canonicalViewId)
             continue;
 
         maxPrio = std::max(maxPrio, session->getTilePriority(desc));
     }
+
     if (maxPrio == TilePrioritizer::Priority::NONE)
-        LOG_WRN("No sessions match this viewId " << desc.getCanonicalViewId());
+        LOG_WRN("No sessions match this viewId " << canonicalViewId);
     // LOG_TRC("Priority for tile " << desc.generateID() << " is " << maxPrio);
     return maxPrio;
 }

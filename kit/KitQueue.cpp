@@ -620,16 +620,16 @@ TileCombined KitQueue::popTileQueue(std::vector<TileDesc>& tileQueue, TilePriori
     // position, otherwise handle the one that is at the front
     int prioritized = 0;
     TilePrioritizer::Priority prioritySoFar = TilePrioritizer::Priority::NONE;
-    for (size_t i = 0; i < tileQueue.size(); ++i)
+    for (std::size_t i = 0; i < tileQueue.size(); ++i)
     {
-        auto& prio = tileQueue[i];
+        auto& tile = tileQueue[i];
 
-        const TilePrioritizer::Priority p = _prio.getTilePriority(prio);
+        const TilePrioritizer::Priority p = _prio.getTilePriority(tile);
         if (p > prioritySoFar)
         {
             prioritySoFar = p;
-            prioritized = i;
-            msg = prio;
+            prioritized = static_cast<int>(i);
+            msg = tile;
         }
     }
 
