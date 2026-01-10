@@ -6,12 +6,11 @@ var desktopHelper = require('../../common/desktop_helper');
 describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Test rendering of a cell on edit', function() {
 
 	beforeEach(function() {
-		cy.viewport(800,600);
 		helper.setupAndLoadDocument('calc/cell_edit.fods');
+		desktopHelper.selectZoomLevel(200); // make differences more significant
 
-		// make differences more significant
-		cy.wait(1000);
-		desktopHelper.selectZoomLevel(200);
+		cy.viewport(800,600);
+		cy.window().then(win => { win.dispatchEvent(new Event('resize')); });
 	});
 
 	function selectInitialCell() {
