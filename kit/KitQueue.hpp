@@ -169,7 +169,6 @@ private:
     /// @return New message to put into the queue.  If empty, use what was in callbackMsg.
     std::string removeCallbackDuplicate(const std::string& callbackMsg);
 
-    std::vector<TileDesc>* getTileQueue(CanonicalViewId viewid);
     std::vector<TileDesc>& ensureTileQueue(CanonicalViewId viewid);
     TileCombined popTileQueue(std::vector<TileDesc>& tileQueue, TilePrioritizer::Priority &priority);
 

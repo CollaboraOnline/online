@@ -89,21 +89,15 @@ void KitQueue::put(const Payload& value)
         _queue.emplace_back(value);
 }
 
-std::vector<TileDesc>* KitQueue::getTileQueue(CanonicalViewId viewid)
+std::vector<TileDesc>& KitQueue::ensureTileQueue(CanonicalViewId viewid)
 {
     for (auto& queue : _tileQueues)
     {
         if (queue.first == viewid)
-            return &queue.second;
+            return queue.second;
     }
-    return nullptr;
-}
 
-std::vector<TileDesc>& KitQueue::ensureTileQueue(CanonicalViewId viewid)
-{
-    std::vector<TileDesc>* tileQueue = getTileQueue(viewid);
-    if (tileQueue)
-        return *tileQueue;
+    // Create and return a new one.
     return _tileQueues.emplace_back(viewid, std::vector<TileDesc>()).second;
 }
 
