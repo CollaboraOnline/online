@@ -775,16 +775,6 @@ size_t KitQueue::getTileQueueSize() const
     return queuedTiles;
 }
 
-bool KitQueue::isTileQueueEmpty() const
-{
-    for (const auto& queue : _tileQueues)
-    {
-        if (!queue.second.empty())
-            return false;
-    }
-    return true;
-}
-
 std::string KitQueue::combineRemoveText(const StringVector& tokens)
 {
     std::string id;

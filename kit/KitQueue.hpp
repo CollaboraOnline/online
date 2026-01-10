@@ -98,7 +98,15 @@ public:
     /// render queue, with it's priority.
     TileCombined popTileQueue(TilePrioritizer::Priority& priority);
     size_t getTileQueueSize() const;
-    bool isTileQueueEmpty() const;
+    [[nodiscard]] bool isTileQueueEmpty() const
+    {
+        for (const auto& queue : _tileQueues)
+        {
+            if (!queue.second.empty())
+                return false;
+        }
+        return true;
+    }
 
     /// Obtain the next callback
     Callback getCallback()
