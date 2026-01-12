@@ -25,7 +25,7 @@
 /// This is to test that dropping connection is seen as leaving the document
 class SecondJoinQuit : public WopiTestServer
 {
-    STATE_ENUM(Phase, LoadUser1, WaitUser1Loaded, User1Loaded, LoadUser2, WaitUser2Loaded, User2Loaded, DropUser2, ModifyDoc, Done) _phase;
+    STATE_ENUM(Phase, LoadUser1, WaitUser1Loaded, User1Loaded, LoadUser2, WaitUser2Loaded, User2Loaded, DropUser2, ModifyDoc, ModifiedDoc, Done) _phase;
 
     const bool _earlyQuit;
 
@@ -82,7 +82,7 @@ public:
             Poco::JSON::Parser parser0;
             Poco::JSON::Array::Ptr array = parser0.parse(message.substr(9)).extract<Poco::JSON::Array::Ptr>();
             auto const viewsActive = array->size();
-            if (_phase == Phase::ModifyDoc && viewsActive == 1)
+            if (_phase == Phase::ModifiedDoc && viewsActive == 1)
             {
                 TRANSITION_STATE(_phase, Phase::Done);
                 WSD_CMD("closedocument");
@@ -172,6 +172,8 @@ public:
             }
             case Phase::ModifyDoc:
             {
+                TRANSITION_STATE(_phase, Phase::ModifiedDoc);
+
                 // Modify the document.
                 TST_LOG("Modifying");
                 WSD_CMD_BY_CONNECTION_INDEX(0, "key type=input char=97 key=0");
@@ -180,6 +182,7 @@ public:
             }
             case Phase::WaitUser1Loaded:
             case Phase::WaitUser2Loaded:
+            case Phase::ModifiedDoc:
             case Phase::Done:
                 break;
         }
