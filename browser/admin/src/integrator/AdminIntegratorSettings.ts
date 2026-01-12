@@ -426,8 +426,10 @@ class SettingIframe {
 		} else {
 			this.settingsStorage = new OnlineSettingsStorage();
 		}
-		this.insertConfigSections();
-		this.setupLeftNavbar();
+		if (!(window.parent as any).mode.isCODesktop()) {
+			this.insertConfigSections();
+			this.setupLeftNavbar();
+		}
 		this.fetchAndPopulateSharedConfigs();
 		this.wordbook = (window as any).WordBook;
 	}
@@ -1597,42 +1599,44 @@ class SettingIframe {
 
 		const settingsContainer = this._allConfigSection;
 		if (!settingsContainer) return;
-		if (data.xcu && data.xcu.length > 0) {
-			const xcuFileContent = await this.settingsStorage.fetchSettingFile(data.xcu[0].uri);
-			this.xcuEditor = new (window as any).Xcu(
-				this.getFilename(data.xcu[0].uri, false),
-				xcuFileContent,
-			);
-
-			const existingXcuSection = document.getElementById('xcu-section');
-			if (existingXcuSection) {
-				existingXcuSection.remove();
-			}
-
-			const xcuContainer = document.createElement('div');
-			xcuContainer.id = 'xcu-section';
-			xcuContainer.classList.add('section');
-			settingsContainer.appendChild(
-				this.xcuEditor.createXcuEditorUI(xcuContainer),
-			);
-		} else {
-			// If user doesn't have any xcu file, we generate with default settings...
-			try {
-				if (!this.xcuInitializationAttempted) {
-					this.xcuInitializationAttempted = true;
-					this.xcuEditor = new (window as any).Xcu('documentView.xcu', null);
-					await this.xcuEditor.generateXcuAndUpload();
-					return await this.fetchAndPopulateSharedConfigs();
-				} else {
-					document.getElementById('xcu-section')?.remove();
-					console.warn('XCU file not found and automatic creation failed.');
-				}
-			} catch (error) {
-				console.error(
-					'Something went wrong while generating or uploading xcu file:',
-					error,
+		if (!(window.parent as any).mode.isCODesktop()) {
+			if (data.xcu && data.xcu.length > 0) {
+				const xcuFileContent = await this.settingsStorage.fetchSettingFile(data.xcu[0].uri);
+				this.xcuEditor = new (window as any).Xcu(
+					this.getFilename(data.xcu[0].uri, false),
+					xcuFileContent,
 				);
-				document.getElementById('xcu-section')?.remove();
+
+				const existingXcuSection = document.getElementById('xcu-section');
+				if (existingXcuSection) {
+					existingXcuSection.remove();
+				}
+
+				const xcuContainer = document.createElement('div');
+				xcuContainer.id = 'xcu-section';
+				xcuContainer.classList.add('section');
+				settingsContainer.appendChild(
+					this.xcuEditor.createXcuEditorUI(xcuContainer),
+				);
+			} else {
+				// If user doesn't have any xcu file, we generate with default settings...
+				try {
+					if (!this.xcuInitializationAttempted) {
+						this.xcuInitializationAttempted = true;
+						this.xcuEditor = new (window as any).Xcu('documentView.xcu', null);
+						await this.xcuEditor.generateXcuAndUpload();
+						return await this.fetchAndPopulateSharedConfigs();
+					} else {
+						document.getElementById('xcu-section')?.remove();
+						console.warn('XCU file not found and automatic creation failed.');
+					}
+				} catch (error) {
+					console.error(
+						'Something went wrong while generating or uploading xcu file:',
+						error,
+					);
+					document.getElementById('xcu-section')?.remove();
+				}
 			}
 		}
 
