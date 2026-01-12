@@ -611,29 +611,26 @@ TileCombined KitQueue::popTileQueue(std::vector<TileDesc>& tileQueue, TilePriori
 
     LOG_TRC("KitQueue depth: " << tileQueue.size());
 
-    TileDesc msg = tileQueue.front();
-
     // vector of tiles we will render
     std::vector<TileDesc> tiles;
 
     // We are handling a tile; first try to find one that is at the cursor's
     // position, otherwise handle the one that is at the front
     int prioritized = 0;
-    TilePrioritizer::Priority prioritySoFar = TilePrioritizer::Priority::NONE;
-    for (std::size_t i = 0; i < tileQueue.size(); ++i)
+    priority = _prio.getTilePriority(tileQueue[0]);
+    for (std::size_t i = 1; i < tileQueue.size(); ++i)
     {
-        auto& tile = tileQueue[i];
+        const auto& tile = tileQueue[i];
 
         const TilePrioritizer::Priority p = _prio.getTilePriority(tile);
-        if (p > prioritySoFar)
+        if (p > priority)
         {
-            prioritySoFar = p;
+            priority = p;
             prioritized = static_cast<int>(i);
-            msg = tile;
         }
     }
 
-    priority = prioritySoFar;
+    const TileDesc msg = tileQueue[prioritized];
 
     LOG_TRC("Priority tile: " << msg.serialize() <<
             " x-grid=" << msg.getTilePosX() / msg.getTileWidth() <<
