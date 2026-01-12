@@ -104,7 +104,6 @@ function selectFromJSDialogListbox(item, isImage) {
 	cy.log('>> selectFromJSDialogListbox - start');
 
 	cy.cGet('[id$="-dropdown"].modalpopup').should('be.visible');
-	// We use force because the tooltip sometimes hides the items.
 	if (isImage) {
 		cy.wait(1000); // We need some time to render custom entries
 		cy.cGet('[id$="-dropdown"].modalpopup img[alt="' + item + '"]').click();
