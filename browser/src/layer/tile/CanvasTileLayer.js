@@ -632,6 +632,8 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 
 		this._canvas = window.L.DomUtil.createWithId('canvas', 'document-canvas', this._canvasContainer);
 		this._canvas.style.visibility = 'hidden';
+		this._canvas.role = 'img';
+		this._canvas.ariaLabel = _('Online Editor');
 
 		app.sectionContainer = new CanvasSectionContainer(this._canvas, this.isCalc() /* disableDrawing? */);
 		app.activeDocument = new DocumentBase();
