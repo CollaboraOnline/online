@@ -66,8 +66,6 @@ online_SOURCES = \
 	../wsd/COOLWSD.cpp \
 	../wsd/dumpWsdState.cpp \
 	../wsd/ClientRequestDispatcher.cpp \
-	../wsd/CollabBroker.cpp \
-	../wsd/CollabSocketHandler.cpp \
 	../wsd/RequestDetails.cpp \
 	../wsd/RequestVettingStation.cpp \
 	../wsd/SlideCache.cpp \
