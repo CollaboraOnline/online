@@ -66,6 +66,7 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 	it('Apply font name.', function() {
 		helper.setDummyClipboardForCopy();
 		desktopHelper.actionOnSelector('fontName', (selector) => { cy.cGet(selector).click(); });
+		cy.cGet('[id$="-dropdown"].modalpopup span').contains('Alef').scrollIntoView();
 		desktopHelper.selectFromJSDialogListbox('Alef', true);
 		refreshCopyPasteContainer();
 		helper.copy();
