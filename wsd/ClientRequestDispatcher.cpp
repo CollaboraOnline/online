@@ -45,16 +45,16 @@
 #include <wsd/RequestDetails.hpp>
 #include <wsd/RequestVettingStation.hpp>
 #include <wsd/UserMessages.hpp>
-#include <wsd/CollabBroker.hpp>
-#include <wsd/CollabFileProxy.hpp>
-#include <wsd/CollabSocketHandler.hpp>
-#include <net/WebSocketHandler.hpp>
 
 #if !MOBILEAPP
 #include <common/JailUtil.hpp>
 #include <wsd/Admin.hpp>
 #include <wsd/HostUtil.hpp>
 #include <wsd/SpecialBrokers.hpp>
+#include <wsd/CollabBroker.hpp>
+#include <wsd/CollabFileProxy.hpp>
+#include <wsd/CollabSocketHandler.hpp>
+#include <net/WebSocketHandler.hpp>
 #endif // !MOBILEAPP
 
 #include <Poco/DOM/AutoPtr.h>
