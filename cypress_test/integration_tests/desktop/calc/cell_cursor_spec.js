@@ -84,6 +84,26 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Test jumping on large cell
 		// Fix is here: https://github.com/CollaboraOnline/online/pull/13631
 		cy.cGet(helper.addressInputSelector).should('have.value', 'A1');
 	});
+
+	it('Check selected text visual.', function() {
+		cy.cGet('#insertsheet-button').click();
+		cy.wait(1000);
+
+		// Ensure starting point.
+		helper.typeIntoInputField(helper.addressInputSelector, 'A1');
+
+		// Put cell cursor somewhere else.
+		helper.typeIntoInputField(helper.addressInputSelector, 'B10');
+
+		// Insert some text.
+		helper.typeIntoDocument('Lorem ipsum dolor sit amet.');
+
+		helper.typeIntoDocument('{ctrl}a');
+
+		cy.wait(2000);
+
+		cy.cGet('#document-canvas').compareSnapshot('text-selection', 0.02);
+	});
 });
 
 describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Test Cell Selections', function() {
