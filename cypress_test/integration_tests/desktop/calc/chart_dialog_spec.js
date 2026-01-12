@@ -11,13 +11,15 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Chart dialog tests', funct
 	});
 
 	it('Chart format axis(scale) manual min test', function() {
-		const XPos = 10;
-		const YPos = 10;
+		const XPos = 60;
+		const YPos = 30;
 		const minValue = 2.1;
 		// Select chart.
 		calcHelper.clickAtOffset(XPos, YPos);
+		cy.wait(1000);
 		// Enter chart edit mode.
 		helper.typeIntoDocument('{enter}');
+		cy.wait(1000);
 		// Right-click on the thick y-axis and click 'Format Axis'.
 		calcHelper.clickAtOffset(XPos, YPos, true);
 		cy.cGet('a.format-axis').click();
