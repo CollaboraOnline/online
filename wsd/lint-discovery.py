@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 #
 # Copyright the Collabora Online contributors.
 #
@@ -84,7 +84,7 @@ class FilterTypeHandler(xml.sax.handler.ContentHandler):
         if name == "prop" and self.inExtensions:
             self.inExtensions = False
             self.extensions = "".join(self.content).strip()\
-                                .encode("utf-8").split(self.extensionsSep)
+                                .encode("utf-8").split(bytes(self.extensionsSep, "utf-8"))
             self.extensionsSep = " "
             self.content = []
 
@@ -123,7 +123,7 @@ class FilterFragmentHandler(xml.sax.handler.ContentHandler):
         elif name == "prop" and self.inFlags:
             self.inFlags = False
             encodedFlags = "".join(self.content).strip().encode("utf-8")
-            self.flags = encodedFlags.split(" ")
+            self.flags = encodedFlags.split(b" ")
             self.content = []
         elif name == "prop" and self.inDocumentService:
             self.inDocumentService = False
@@ -210,7 +210,9 @@ extensionsSkipList = {
 
 def main():
     discoveryXml = "discovery.xml"
-    repoGuess = os.path.join(os.environ["HOME"], "git/libreoffice/master")
+    repoGuess = os.environ["LOCOREPATH"]
+    if repoGuess is None:
+        repoGuess = os.path.join(os.environ["HOME"], "git/libreoffice/master")
     filterDir = os.path.join(repoGuess, "filter/source/config/fragments")
     if len(sys.argv) >= 3:
         discoveryXml = sys.argv[1]
