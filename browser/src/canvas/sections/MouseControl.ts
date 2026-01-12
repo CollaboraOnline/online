@@ -414,6 +414,23 @@ class MouseControl extends CanvasSectionObject {
 		} else return false;
 	}
 
+	private sendClick(clickInfo: any, count: number) {
+		this.postCoreMouseEvent(
+			'buttondown',
+			clickInfo.sendingPosition,
+			count,
+			clickInfo.buttons,
+			clickInfo.modifier,
+		);
+		this.postCoreMouseEvent(
+			'buttonup',
+			clickInfo.sendingPosition,
+			count,
+			clickInfo.buttons,
+			clickInfo.modifier,
+		);
+	}
+
 	onClick(point: cool.SimplePoint, e: MouseEvent): void {
 		app.map.fire('closepopups');
 		app.map.fire('editorgotfocus');
@@ -437,23 +454,16 @@ class MouseControl extends CanvasSectionObject {
 			}
 		}
 
+		const clickInfo = {
+			sendingPosition: sendingPosition,
+			buttons: buttons,
+			modifier: modifier,
+		};
+
 		if (this.clickTimer) clearTimeout(this.clickTimer);
 		else {
 			// Old code always sends the first click, so do we.
-			this.postCoreMouseEvent(
-				'buttondown',
-				sendingPosition,
-				1,
-				buttons,
-				modifier,
-			);
-			this.postCoreMouseEvent(
-				'buttonup',
-				sendingPosition,
-				1,
-				buttons,
-				modifier,
-			);
+			this.sendClick(clickInfo, 1);
 
 			// For future: Here, we are checking the window size to determine the view mode, we can also check the event type (touch/click).
 			app.map.focus(
@@ -464,21 +474,12 @@ class MouseControl extends CanvasSectionObject {
 		}
 
 		this.clickTimer = setTimeout(() => {
-			if (this.clickCount > 1) {
-				this.postCoreMouseEvent(
-					'buttondown',
-					sendingPosition,
-					this.clickCount,
-					buttons,
-					modifier,
-				);
-				this.postCoreMouseEvent(
-					'buttonup',
-					sendingPosition,
-					this.clickCount,
-					buttons,
-					modifier,
-				);
+			if (this.clickCount === 3 && app.map._docLayer.isCalc()) {
+				// Also send a double click for a triple click in Calc.
+				this.sendClick(clickInfo, 2);
+				this.sendClick(clickInfo, 3);
+			} else if (this.clickCount > 1) {
+				this.sendClick(clickInfo, this.clickCount);
 			}
 
 			this.clickTimer = null;
