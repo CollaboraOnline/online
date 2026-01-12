@@ -37,15 +37,15 @@
 #include <wsd/ClientRequestDispatcher.hpp>
 #include <wsd/DocumentBroker.hpp>
 #include <wsd/RequestVettingStation.hpp>
-#include <wsd/CollabBroker.hpp>
-#include <wsd/CollabFileProxy.hpp>
-#include <wsd/CollabSocketHandler.hpp>
-#include <net/WebSocketHandler.hpp>
 
 #if !MOBILEAPP
 #include <Admin.hpp>
 #include <JailUtil.hpp>
 #include <wsd/SpecialBrokers.hpp>
+#include <wsd/CollabBroker.hpp>
+#include <wsd/CollabFileProxy.hpp>
+#include <wsd/CollabSocketHandler.hpp>
+#include <net/WebSocketHandler.hpp>
 #include <HostUtil.hpp>
 #endif // !MOBILEAPP
 
