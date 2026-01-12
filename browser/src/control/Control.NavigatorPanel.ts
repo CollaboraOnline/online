@@ -417,7 +417,7 @@ class NavigatorPanel extends SidebarBase {
 	handleFloatingButtonVisibilityOnZoomChange() {
 		// Handle special case for impress as the view there is landscape so better to hide Floating Nav ICON on lower zoom compare to other app
 		if (
-			this.map.getZoom() >= 14 ||
+			this.map.getZoom() > 14 ||
 			(this.map.getZoom() >= 13 && this.map.getDocType() === 'presentation')
 		) {
 			this.floatingNavIcon.classList.remove('visible');
