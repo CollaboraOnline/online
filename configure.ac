@@ -1747,19 +1747,6 @@ AS_IF([test `uname -s` = "FreeBSD"],
 AS_IF([test `uname -s` = "FreeBSD"],
       [LIBS="$LIBS -lexecinfo -lz -liconv"])
 
-# need this after the other stuff that uses the compiler because we don't want to run configure-tests with the plugins enabled
-AS_IF([test -n "$with_compiler_plugins"],
-      [CPPFLAGS="$CPPFLAGS -Xclang -load -Xclang ${with_compiler_plugins}/compilerplugins/obj/plugin.so -Xclang -add-plugin -Xclang loplugin -Xclang -plugin-arg-loplugin -Xclang --cool-base-path=\${abs_top_srcdir}"])
-
-# Clang plugin.
-AC_MSG_CHECKING([whether to build a clang plugin])
-if test "$enable_coplugin" = "yes"; then
-    AC_MSG_RESULT([yes])
-    CPPFLAGS="$CPPFLAGS -Xclang -load -Xclang \${abs_top_srcdir}/clang/plugin.so -Xclang -add-plugin -Xclang coplugin"
-else
-    AC_MSG_RESULT([no])
-fi
-
 if test "x${prefix}" = "xNONE"; then
     prefix=/usr/local
 fi
@@ -2218,6 +2205,23 @@ AS_IF([test "$ENABLE_IOSAPP" = "true"],
       ],
       [
       ])
+
+dnl !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+dnl Set plugins.so in CPPFLAGS as the last thing - not to interfere with other checks
+dnl !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+# need this after the other stuff that uses the compiler because we don't want to run configure-tests with the plugins enabled
+AS_IF([test -n "$with_compiler_plugins"],
+      [CPPFLAGS="$CPPFLAGS -Xclang -load -Xclang ${with_compiler_plugins}/compilerplugins/obj/plugin.so -Xclang -add-plugin -Xclang loplugin -Xclang -plugin-arg-loplugin -Xclang --cool-base-path=\${abs_top_srcdir}"])
+
+# Clang plugin.
+AC_MSG_CHECKING([whether to build a clang plugin])
+if test "$enable_coplugin" = "yes"; then
+    AC_MSG_RESULT([yes])
+    CPPFLAGS="$CPPFLAGS -Xclang -load -Xclang \${abs_top_srcdir}/clang/plugin.so -Xclang -add-plugin -Xclang coplugin"
+else
+    AC_MSG_RESULT([no])
+fi
 
 echo "
 Configuration:
