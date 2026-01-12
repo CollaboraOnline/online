@@ -103,6 +103,7 @@ class ServerConnectionService {
 
 		// initialize notebookbar in core
 		app.map.uiManager.initializeLateComponents();
+		JSDialog.RefreshScrollables();
 	}
 
 	public onNotebookbarInCoreInit() {
