@@ -20,9 +20,9 @@ function clickAtOffset(offsetX, offsetY, right=false) {
 	cy.log('Param - offsetX: ' + offsetX);
 	cy.log('Param - offsetY: ' + offsetY);
 
-	cy.cGet('#map').should('exist');
-	cy.cGet('#map').should('be.visible');
-	cy.cGet('#map')
+	cy.cGet('#document-container').should('exist');
+	cy.cGet('#document-container').should('be.visible');
+	cy.cGet('#document-container')
 		.then(function(items) {
 			expect(items).to.have.lengthOf(1);
 			const XPos = items[0].getBoundingClientRect().left + 2 + offsetX;
