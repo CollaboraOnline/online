@@ -62,9 +62,6 @@ describe(['tagdesktop'], 'Accessibility Writer Tests', function () {
                 // don't pass yet
                 if (command == '.uno:FontDialog' ||
                     command == '.uno:InsertFrame' ||
-                    command == '.uno:InsertIndexesEntry' ||
-                    command == '.uno:InsertMultiIndex' ||
-                    command == '.uno:LineNumberingDialog' ||
                     command == '.uno:OutlineBullet' ||
                     command == '.uno:PageDialog' ||
                     command == '.uno:ParagraphDialog' ||
