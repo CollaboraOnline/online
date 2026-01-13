@@ -119,6 +119,9 @@ insertfile name=<name> type=<type>
 
         type = 'comparedocuments': The file has been previously uploaded using insertfile POST
 
+        type = 'comparedocumentsurl': The file is supposed to be downloaded by the core
+                                      itself; it does so from the URL provided in 'name'
+
 selectbackground name=<name>
 
     Inserts a graphic file with the name <name> into the document as background.
