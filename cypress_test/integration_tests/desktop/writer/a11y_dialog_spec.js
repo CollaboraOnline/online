@@ -3,6 +3,7 @@
 var helper = require('../../common/helper');
 
 const allWriterDialogs = [
+    '.uno:ChapterNumberingDialog',
     '.uno:EditRegion',
     '.uno:FontDialog',
     '.uno:FootnoteDialog',
