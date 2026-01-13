@@ -9,6 +9,7 @@
  */
 
 import Cocoa
+import UniformTypeIdentifiers
 import WebKit
 
 final class ConsoleController: NSWindowController {
@@ -104,6 +105,32 @@ class ViewController: NSViewController, WKScriptMessageHandlerWithReply, WKNavig
         self.document = document
         let permission = document.isWelcome ? "view" : "edit"
         self.document.loadDocumentInWebView(webView: webView, permission: permission, isWelcome: document.isWelcome)
+    }
+
+    /**
+     * Make the picking of images work in our webView (via the WKUIDelegate).
+     */
+    func webView(_ webView: WKWebView,
+                 runOpenPanelWith parameters: WKOpenPanelParameters,
+                 initiatedByFrame frame: WKFrameInfo,
+                 completionHandler: @escaping ([URL]?) -> Void) {
+
+        let panel = NSOpenPanel()
+        panel.canChooseFiles = true
+        panel.canChooseDirectories = false
+        panel.allowsMultipleSelection = parameters.allowsMultipleSelection
+
+        // Let the use pick just images
+        panel.allowedContentTypes = [UTType.image]
+
+        panel.beginSheetModal(for: view.window!) { result in
+            if result == .OK {
+                completionHandler(panel.urls)
+            }
+            else {
+                completionHandler(nil)
+            }
+        }
     }
 
     /**
