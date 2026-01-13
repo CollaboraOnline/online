@@ -2544,7 +2544,8 @@ void ClientRequestDispatcher::handleInternalProxy(const std::string& wopiSrc,
                                                   const Poco::Net::HTTPRequest& request)
 {
     // Check if we know where this document is
-    const Poco::URI controllerURI{ controllerURL };
+    Poco::URI controllerURI{ controllerURL };
+    controllerURI.addQueryParameter("WOPISrc", wopiSrc);
     std::shared_ptr<http::Session> httpSession(
         StorageConnectionManager::getHttpSession(controllerURI));
     http::Request controllerRequest(controllerURI.getPathAndQuery());
