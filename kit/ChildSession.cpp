@@ -1814,6 +1814,7 @@ bool ChildSession::insertFile(const StringVector& tokens)
         type == "graphicurl" ||
         type == "selectbackground" ||
         type == "comparedocuments" ||
+        type == "comparedocumentsurl" ||
         type == "multimedia" ||
         type == "multimediaurl" )
     {
@@ -1827,7 +1828,7 @@ bool ChildSession::insertFile(const StringVector& tokens)
                 std::string jailDoc = getJailDocRoot();
                 url = "file://" + jailDoc + "insertfile/" + name;
             }
-            else if (type == "graphicurl" || type == "multimediaurl")
+            else if (type == "graphicurl" || type == "multimediaurl" || type == "comparedocumentsurl")
             {
                 URI::decode(name, url);
                 if (!Util::toLower(url).starts_with("http"))
@@ -1886,7 +1887,7 @@ bool ChildSession::insertFile(const StringVector& tokens)
                 "}"
             "}";
         }
-        else if (type == "comparedocuments")
+        else if (type == "comparedocuments" || type == "comparedocumentsurl")
         {
             command = ".uno:CompareDocuments";
             arguments = "{"
