@@ -2,6 +2,7 @@
 
 var helper = require('../../common/helper');
 var ceHelper = require('../../common/contenteditable_helper');
+var desktopHelper = require('../../common/desktop_helper');
 
 const allWriterDialogs = [
     '.uno:ChapterNumberingDialog',
@@ -122,6 +123,7 @@ describe(['tagdesktop'], 'Accessibility Writer Tests', { testIsolation: false },
             }
         });
         cy.cGet('.jsdialog-window').should('not.exist');
+        desktopHelper.undoAll();
     });
 
     allWriterDialogs.forEach(function (command) {
