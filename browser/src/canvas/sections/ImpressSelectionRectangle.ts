@@ -42,7 +42,8 @@ class SelectionRectangle extends CanvasSectionObject {
 
 		if (
 			this.containerObject.isDraggingSomething() &&
-			this.containerObject.targetSection === this.name
+			this.containerObject.targetSection === this.name &&
+			this.sectionProperties.positionOnMouseDown
 		) {
 			this.sectionProperties.selectionSize = [
 				point.pX - this.sectionProperties.positionOnMouseDown.pX,
