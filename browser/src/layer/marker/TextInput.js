@@ -181,8 +181,12 @@ window.L.TextInput = window.L.Layer.extend({
 	_onPermission: function(e) {
 		if (e.detail.perm === 'edit') {
 			this._textArea.removeAttribute('disabled');
+			this._textArea.setAttribute('contenteditable', 'true');
+			this._textArea.removeAttribute('aria-disabled');
 		} else {
 			this._textArea.setAttribute('disabled', true);
+			this._textArea.setAttribute('contenteditable', 'false');
+			this._textArea.setAttribute('aria-disabled', 'true');
 		}
 	},
 
