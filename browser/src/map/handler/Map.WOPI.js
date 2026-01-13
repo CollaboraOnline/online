@@ -206,10 +206,12 @@ window.L.Map.WOPI = window.L.Handler.extend({
 		if (this.DisableInsertLocalImage) {
 			JSDialog.MenuDefinitions.set('InsertImageMenu', []);
 			JSDialog.MenuDefinitions.set('InsertMultimediaMenu', []);
+			JSDialog.MenuDefinitions.set('CompareDocumentsMenu', []);
 		}
 
 		var menuEntriesImage = JSDialog.MenuDefinitions.get('InsertImageMenu');
 		var menuEntriesMultimedia = JSDialog.MenuDefinitions.get('InsertMultimediaMenu');
+		var menuEntriesCompare = JSDialog.MenuDefinitions.get('CompareDocumentsMenu');
 
 		if (this.EnableInsertRemoteImage) {
 			menuEntriesImage.push({action: 'remotegraphic', text: _UNO('.uno:InsertGraphic', '', true)});
@@ -218,6 +220,8 @@ window.L.Map.WOPI = window.L.Handler.extend({
 		if (this.EnableInsertRemoteFile) {
 			/* Separate, because needs explicit integration support */
 			menuEntriesMultimedia.push({action: 'remotemultimedia', text: _UNO('.uno:InsertAVMedia', '', true)});
+
+			menuEntriesCompare.push({action: 'remotecomparedocuments', text: _UNO('.uno:CompareDocuments', '', true)});
 		}
 
 		this._insertImageMenuSetupDone = true;
@@ -626,6 +630,11 @@ window.L.Map.WOPI = window.L.Handler.extend({
 		else if (msg.MessageId == 'Action_InsertMultimedia') {
 			if (msg.Values) {
 				this._map.insertURL(msg.Values.url, "multimediaurl");
+			}
+		}
+		else if (msg.MessageId == 'Action_CompareDocuments') {
+			if (msg.Values) {
+				this._map.insertURL(msg.Values.url, "comparedocumentsurl");
 			}
 		}
 		else if (msg.MessageId == 'Action_InsertLink') {

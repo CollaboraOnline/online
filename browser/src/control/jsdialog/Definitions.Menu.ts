@@ -1736,6 +1736,12 @@ menuDefinitions.set('InsertMultimediaMenu', [
 	// remote entries added in Map.WOPI
 ] as Array<MenuDefinition>);
 
+menuDefinitions.set('CompareDocumentsMenu', [
+	{ action: 'localcomparedocuments', text: _('Compare Local Document') },
+	// local entry may be removed
+	// remote entries added in Map.WOPI
+] as Array<MenuDefinition>);
+
 menuDefinitions.set('CharSpacingMenu', [
 	{ id: 'space1', text: _('Very Tight'), uno: 'Spacing?Spacing:short=-60' },
 	{ id: 'space1', text: _('Tight'), uno: 'Spacing?Spacing:short=-30' },
