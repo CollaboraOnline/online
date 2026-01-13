@@ -50,7 +50,7 @@ class A11yValidator {
 			element.getAttribute('role') === 'button'
 		) {
 			throw new A11yValidatorException(
-				`For widget of type '${type}' found ${element.tagName} element with role="button". It should use native <button> element instead.`,
+				`In '${this.getDialogTitle(element)}' at '${this.getElementPath(element)}': widget of type '${type}' has ${element.tagName} element with role="button". It should use native <button> element instead.`,
 			);
 		}
 
@@ -71,10 +71,11 @@ class A11yValidator {
 
 			if (!this.isVisible(img)) return; // skip hidden images
 
-			if (!hasAlt)
+			if (!hasAlt) {
 				throw new A11yValidatorException(
-					`Image element with id: ${img.id} in widget of type '${type}' is missing alt attribute`,
+					`In '${this.getDialogTitle(element)}' at '${this.getElementPath(img)}': image in widget of type '${type}' is missing alt attribute`,
 				);
+			}
 
 			const parent = img.parentElement;
 			const span =
@@ -93,16 +94,18 @@ class A11yValidator {
 			if (altValue === '' && parent) {
 				const isDecorativeImg = img.classList.contains('ui-decorative-image'); // exclude ui-decorative-image decorative images - they can have empty alt
 
-				if (!parentHasLabel && !isDecorativeImg)
+				if (!parentHasLabel && !isDecorativeImg) {
 					throw new A11yValidatorException(
-						`Image element with id: ${img.id} inside parent with id: ${parent.id} in widget of type '${type}' has empty alt attribute but parent element lacks label`,
+						`In '${this.getDialogTitle(element)}' at '${this.getElementPath(img)}': image in widget of type '${type}' has empty alt attribute but parent element lacks label`,
 					);
+				}
 			}
 
-			if (altValue !== '' && parentHasLabel)
+			if (altValue !== '' && parentHasLabel) {
 				throw new A11yValidatorException(
-					`Image element with id: ${img.id} inside parent with id: ${parent.id} in widget of type '${type}' has non-empty alt attribute but parent element also has label (should not duplicate)`,
+					`In '${this.getDialogTitle(element)}' at '${this.getElementPath(img)}': image in widget of type '${type}' has non-empty alt attribute but parent element also has label (should not duplicate)`,
 				);
+			}
 		});
 	}
 
@@ -111,6 +114,29 @@ class A11yValidator {
 		if (style.visibility === 'hidden') return false;
 
 		return element.getClientRects().length > 0;
+	}
+
+	private getDialogTitle(element: HTMLElement): string {
+		const dialog = element.closest('.ui-dialog');
+		if (!dialog) return 'unknown dialog';
+
+		const title = dialog.querySelector('h2.ui-dialog-title');
+		return title?.textContent?.trim() || 'untitled dialog';
+	}
+
+	private getElementPath(element: HTMLElement): string {
+		const ids: string[] = [];
+		let current: HTMLElement | null = element;
+		const dialog = element.closest('.ui-dialog');
+
+		while (current && current !== dialog) {
+			if (current.id) {
+				ids.unshift(current.id);
+			}
+			current = current.parentElement;
+		}
+
+		return ids.length > 0 ? ids.join(' > ') : '(no ids in path)';
 	}
 }
 
