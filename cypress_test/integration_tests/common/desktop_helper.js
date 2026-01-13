@@ -562,6 +562,26 @@ function getDropdown(dropdownId) {
 	return cy.cGet('[id^="' + dropdownId + '"].modalpopup');
 }
 
+// Undo all changes until undo is no longer possible
+function undoAll() {
+	cy.log('>> undoAll - start');
+
+	cy.getFrameWindow().then(function(win) {
+		helper.processToIdle(win);
+		cy.cGet('#Home-container .unoUndo').then(function undoStep($undo) {
+			if ($undo.attr('disabled') === undefined) {
+				cy.cGet('#Home-container .unoUndo button').click({force: true});
+				helper.processToIdle(win);
+				cy.cGet('#Home-container .unoUndo').then(undoStep);
+			}
+		});
+	});
+
+	cy.cGet('#Home-container .unoUndo').should('not.have','disabled');
+
+	cy.log('<< undoAll - end');
+}
+
 module.exports.showSidebar = showSidebar;
 module.exports.hideSidebar = hideSidebar;
 module.exports.hideSidebarImpress = hideSidebarImpress;
@@ -600,3 +620,4 @@ module.exports.getNbIcon = getNbIcon;
 module.exports.getCompactIconArrow = getCompactIconArrow;
 module.exports.getNbIconArrow = getNbIconArrow;
 module.exports.getDropdown = getDropdown;
+module.exports.undoAll = undoAll;
