@@ -52,17 +52,20 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Replace Dialog Tests', fun
         cy.cGet('#FindReplaceDialog').should('be.visible');
 
         // Go to first instance - Not Bold text
-        cy.cGet('#searchterm-input-dialog').type('test{enter}');
+        cy.cGet('#searchterm-input-dialog').type('test');
+        cy.realPress('Enter');
         helper.textSelectionShouldExist();
         cy.cGet('#copy-paste-container p b').should('not.exist');
 
         // Search forward again to get to second instance - Bold text
-        cy.cGet('#searchterm-input-dialog').type('{enter}');
+        cy.cGet('#searchterm-input-dialog').focus();
+        cy.realPress('Enter');
         helper.copy();
         cy.cGet('#copy-paste-container p b').should('exist'); 
 
         // Now search backward with Shift+Enter - Not Bold text
-        cy.cGet('#searchterm-input-dialog').type('{shift}{enter}');
+        cy.cGet('#searchterm-input-dialog').focus();
+        cy.realPress('Enter', {shiftKey: true});
         helper.copy();
         cy.cGet('#copy-paste-container p b').should('not.exist');
     });
