@@ -1217,6 +1217,74 @@ function getMenuEntry(index) {
 	return cy.cGet('.ui-dialog-content div.ui-combobox-entry span').eq(index);
 }
 
+var idleCounter = 0;
+
+function waitUntilCoreIsIdle(win) {
+	var expectedIdleID = String(++idleCounter);
+	var spy;
+	var ownSpy = false;
+
+	cy.then(function() {
+		// Check if _onMessage is already wrapped/spied
+		if (win.app.socket._onMessage.restore) {
+			// Already wrapped, use the existing spy
+			spy = win.app.socket._onMessage;
+		} else {
+			// Create our own spy
+			spy = Cypress.sinon.spy(win.app.socket, '_onMessage');
+			ownSpy = true;
+		}
+
+		var idleArgs = {
+			'idleID': { 'type': 'string', 'value': expectedIdleID }
+		};
+		// force of 'true' because sendUnoCommand doesn't want to send a
+		// command if a dialog is open
+		win.app.map.sendUnoCommand('.uno:ReportWhenIdle', idleArgs, /*force*/ true);
+	});
+
+	cy.wrap(null).should(function() {
+		var matchingCall = spy.getCalls().find(function(call) {
+			var evt = call.args && call.args[0];
+			var textMsg = evt && evt.textMsg;
+			if (!textMsg || !textMsg.startsWith('unocommandresult:')) {
+				return false;
+			}
+			var jsonPart = textMsg.replace('unocommandresult:', '').trim();
+			var data = JSON.parse(jsonPart);
+			if (data.commandName !== '.uno:ReportWhenIdle') {
+				return false;
+			}
+			return data.idleID === expectedIdleID;
+		});
+
+		expect(matchingCall, '.uno:ReportWhenIdle result with idleID ' + expectedIdleID).to.be.an('object');
+	});
+
+	return cy.then(function() {
+		// Only restore if we created our own spy
+		if (ownSpy && spy && spy.restore) {
+			spy.restore();
+		}
+	});
+}
+
+function waitUntilLayoutingIsIdle(win) {
+	return cy.then(function() {
+		return new Cypress.Promise(function(resolve) {
+			win.app.layoutingService.onDrain(function() {
+				resolve();
+			});
+		});
+	});
+}
+
+function processToIdle(win) {
+	return waitUntilCoreIsIdle(win).then(function() {
+		return waitUntilLayoutingIsIdle(win);
+	});
+}
+
 module.exports.setupDocument = setupDocument;
 module.exports.loadDocument = loadDocument;
 module.exports.setupAndLoadDocument = setupAndLoadDocument;
@@ -1267,3 +1335,6 @@ module.exports.addressInputSelector = "#addressInput input";
 module.exports.assertImageSize = assertImageSize;
 module.exports.containsFocusElement = containsFocusElement;
 module.exports.getMenuEntry = getMenuEntry;
+module.exports.waitUntilCoreIsIdle = waitUntilCoreIsIdle;
+module.exports.waitUntilLayoutingIsIdle = waitUntilLayoutingIsIdle;
+module.exports.processToIdle = processToIdle;
