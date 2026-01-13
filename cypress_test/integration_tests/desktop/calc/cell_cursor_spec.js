@@ -161,6 +161,30 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Test jumping on large cell
 	});
 });
 
+describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Test triple click content selection.', function() {
+
+	beforeEach(function() {
+		helper.setupAndLoadDocument('calc/cell-content-selection.ods');
+	});
+
+	it('Triple click should select the cell content.', function() {
+		helper.typeIntoInputField(helper.addressInputSelector, 'A1');
+
+		// Triple click on second first in second row
+		cy.cGet('#document-container')
+		.then(function(items) {
+			expect(items).to.have.lengthOf(1);
+			var XPos = items[0].getBoundingClientRect().left + 60;
+			var YPos = items[0].getBoundingClientRect().top + 30;
+			cy.cGet('body').click(XPos, YPos).click(XPos, YPos).click(XPos, YPos); // Triple click.
+		});
+
+		cy.wait(2000);
+		cy.cGet('#document-canvas').compareSnapshot('triple-click', 0.02);
+
+	});
+});
+
 describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Test decimal separator of cells with different languages.', function() {
 	beforeEach(function() {
 		helper.setupAndLoadDocument('calc/decimal_separator.ods');
