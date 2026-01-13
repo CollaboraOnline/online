@@ -133,6 +133,10 @@ window.L.Map.StateChangeHandler = window.L.Handler.extend({
 			}
 		}
 
+		if (commandName == '.uno:HasOverviewPage') {
+			app.impress.hasOverviewPage = e.state === "true";
+		}
+
 		$('#document-container').removeClass('slide-master-mode');
 		$('#document-container').addClass('slide-normal-mode');
 		if (slideMasterPageItem) {
