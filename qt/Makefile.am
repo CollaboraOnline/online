@@ -139,3 +139,41 @@ EXTRA_DIST += $(TS_FILES) run-from-build.in
 CLEANFILES += $(QM_FILES)
 
 ### --- Qt translations integration end ---
+
+### --- WebdriverIO test integration begin ---
+
+# Test directory
+TEST_DIR = test
+
+# Install test dependencies
+test-install-deps:
+	@echo "Installing test dependencies..."
+	cd $(TEST_DIR) && npm install
+
+# Run tests
+test: coda-qt test-install-deps
+	@echo "Running WebdriverIO tests..."
+	cd $(TEST_DIR) && CODA_QT_BINARY=$(abs_builddir)/coda-qt npm test
+
+# Clean test artifacts
+clean-test:
+	@echo "Cleaning test artifacts..."
+	rm -rf $(TEST_DIR)/node_modules
+	rm -f $(TEST_DIR)/package-lock.json
+
+# Check target (runs tests)
+check-local: test
+
+# Add test artifacts to clean targets
+CLEANFILES += $(TEST_DIR)/package-lock.json
+CLEAN_DIRS = $(TEST_DIR)/node_modules
+
+clean-local: clean-test
+
+# Distribute test files
+EXTRA_DIST += \
+	$(TEST_DIR)/package.json \
+	$(TEST_DIR)/wdio.conf.js \
+	$(TEST_DIR)/specs/basic.spec.js
+
+### --- WebdriverIO test integration end ---
