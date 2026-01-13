@@ -11,6 +11,7 @@ const allWriterDialogs = [
     '.uno:InsertBreak',
     '.uno:InsertBookmark',
     '.uno:InsertCaptionDialog',
+    '.uno:InsertFieldCtrl',
     '.uno:InsertFrame',
     '.uno:InsertIndexesEntry',
     '.uno:InsertMultiIndex',
