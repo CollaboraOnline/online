@@ -318,7 +318,7 @@ window.L.Control.PartsPreview = window.L.Control.extend({
 							that._map._clip._execCopyCutPaste('copy', '.uno:CopySlide');
 						},
 						visible: function() {
-							return true;
+							return !(app.impress.hasOverviewPage && that._map._docLayer._selectedPart === 0);
 						}
 					},
 					paste: {
