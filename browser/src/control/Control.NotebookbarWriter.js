@@ -2385,8 +2385,8 @@ window.L.Control.NotebookbarWriter = window.L.Control.Notebookbar.extend({
 				'accessibility': { focusBack: false, combination: 'RC', de: null },
 				'children' : [
 					{
-						'id': 'review-compare',
-						'type': 'bigtoolitem',
+						'id': 'review-compare:CompareDocumentsMenu',
+						'type': 'menubutton',
 						'text': _UNO('.uno:CompareDocuments', 'text'),
 						'command': '.uno:CompareDocuments',
 						'accessibility': { focusBack: true, combination: 'RO', de: null }

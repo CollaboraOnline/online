@@ -132,6 +132,19 @@ class Dispatcher {
 			});
 		};
 
+		this.actionsMap['localcomparedocuments'] = function () {
+			window.L.DomUtil.get('comparedocuments').click();
+		};
+		this.actionsMap['remotecomparedocuments'] = function () {
+			app.map.fire('postMessage', {
+				msgId: 'UI_InsertFile',
+				args: {
+					callback: 'Action_CompareDocuments',
+					mimeTypeFilter: app.LOUtil.documentMimeFilter,
+				},
+			});
+		};
+
 		this.actionsMap['charmapcontrol'] = function () {
 			app.map.sendUnoCommand('.uno:InsertSymbol');
 		};
