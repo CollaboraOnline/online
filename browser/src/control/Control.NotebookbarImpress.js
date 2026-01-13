@@ -498,7 +498,7 @@ window.L.Control.NotebookbarImpress = window.L.Control.NotebookbarWriter.extend(
 				{
 					'id': 'slide-presentation-follow-me',
 					'type': 'bigcustomtoolitem',
-					'text': _('Start Follow-me Presentation'),
+					'text': _('Present to All'),
 					'command': 'followmepresentation',
 					'accessibility': { focusBack: true, combination: 'PL', de: null }
 				} : {},
@@ -506,7 +506,7 @@ window.L.Control.NotebookbarImpress = window.L.Control.NotebookbarWriter.extend(
 				{
 					'id': 'slide-presentation-follow',
 					'type': 'bigcustomtoolitem',
-					'text': _('Follow Presentation'),
+					'text': _('Follow Presenter'),
 					'command': 'followpresentation',
 					'accessibility': { focusBack: true, combination: 'PF', de: null }
 				} : {},
