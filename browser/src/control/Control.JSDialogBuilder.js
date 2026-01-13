@@ -1320,10 +1320,8 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 		const isDisabled = data.enabled === false;
 		if (isDisabled) {
 			wrapper.setAttribute('disabled', 'true');
-			wrapper.setAttribute('aria-disabled', true);
 			pushbutton.setAttribute('disabled', 'true');
 			pushbutton.setAttribute('aria-disabled', true);
-
 		}
 
 		JSDialog.SynchronizeDisabledState(wrapper, [pushbutton]);
@@ -1779,10 +1777,14 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 		const setDisabled = (disabled) => {
 			if (disabled) {
 				div.setAttribute('disabled', 'true');
-				div.setAttribute('aria-disabled', true);
+				if (button) {
+					button.setAttribute('aria-disabled', true);
+				}
 			} else {
 				div.removeAttribute('disabled');
-				div.removeAttribute('aria-disabled');
+				if (button) {
+					button.removeAttribute('aria-disabled');
+				}
 			}
 		};
 
