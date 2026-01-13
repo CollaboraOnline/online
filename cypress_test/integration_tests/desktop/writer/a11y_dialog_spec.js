@@ -1,4 +1,4 @@
-/* global describe expect it cy beforeEach require Cypress */
+/* global describe expect it cy before after afterEach require Cypress */
 
 var helper = require('../../common/helper');
 
@@ -33,141 +33,137 @@ const allWriterDialogs = [
     '.uno:WordCountDialog'
 ];
 
-describe(['tagdesktop'], 'Accessibility Writer Tests', function () {
-    beforeEach(function () {
-        helper.setupAndLoadDocument('writer/help_dialog.odt');
-    });
+// these need a specific context
+const missingContextDialogs = [
+    '.uno:ContourDialog',
+    '.uno:TransformDialog'
+];
 
-    it('Check accessibility for writer', function () {
-        cy.getFrameWindow().then(function (win) {
-            cy.spy(win.console, 'error').as('console:error');
+// don't pass yet
+const buggyDialogs = [
+    '.uno:FontDialog',
+    '.uno:InsertFrame',
+    '.uno:OutlineBullet',
+    '.uno:PageDialog',
+    '.uno:ParagraphDialog',
+    '.uno:SpellingAndGrammarDialog',
+    '.uno:TableDialog'
+];
+
+describe(['tagdesktop'], 'Accessibility Writer Tests', { testIsolation: false }, function () {
+    let win;
+
+    before(function () {
+        helper.setupAndLoadDocument('writer/help_dialog.odt');
+
+        cy.getFrameWindow().then(function (frameWindow) {
+            win = frameWindow;
 
             const enableUICoverage = {
-                'Track': {
-                    'type': 'boolean',
-                    'value': true
-                }
+                'Track': { 'type': 'boolean', 'value': true }
             };
             win.app.map.sendUnoCommand('.uno:UICoverage', enableUICoverage);
+        });
 
-            cy.cGet('.jsdialog-window').should('not.exist');
+        cy.cGet('.jsdialog-window').should('not.exist');
+    });
 
-            cy.wrap(allWriterDialogs).each((command) => {
-                // these need a specific context
-                if (command == '.uno:ContourDialog' ||
-                    command == '.uno:TransformDialog') {
-                    cy.log(`Skipping missing-context dialog: ${command}`);
-                    return;
+    after(function () {
+	cy.spy(win.app.socket, '_onMessage').as('onMessage').log(false);
+
+        // Run after the dialogs are processed and errors checked
+        cy.then(() => {
+            const endUICoverage = {
+                'Report': { 'type': 'boolean', 'value': true },
+                'Track': { 'type': 'boolean', 'value': false }
+            };
+            win.app.map.sendUnoCommand('.uno:UICoverage', endUICoverage);
+        });
+
+        cy.get('@onMessage').should(onMessage => {
+            const matchingCall = onMessage.getCalls().find(call => {
+                const evt = call.args && call.args[0]
+                const textMsg = evt && evt.textMsg;
+                if (!textMsg || !textMsg.startsWith('unocommandresult:')) {
+                    return false;
                 }
-                // don't pass yet
-                if (command == '.uno:FontDialog' ||
-                    command == '.uno:InsertFrame' ||
-                    command == '.uno:OutlineBullet' ||
-                    command == '.uno:PageDialog' ||
-                    command == '.uno:ParagraphDialog' ||
-                    command == '.uno:SpellingAndGrammarDialog' ||
-                    command == '.uno:TableDialog') {
-                    cy.log(`Skipping buggy dialog: ${command}`);
-                    return;
-                }
-
-                cy.log(`Testing dialog: ${command}`);
-                cy.then(() => {
-                    win.app.map.sendUnoCommand(command);
-                });
-
-                handleDialog(win, 1, command);
-            });
-
-            // triple select to include table, then delete all
-            helper.typeIntoDocument('{ctrl}a');
-            helper.typeIntoDocument('{ctrl}a');
-            helper.typeIntoDocument('{ctrl}a');
-            helper.textSelectionShouldExist();
-            helper.typeIntoDocument('{del}');
-            helper.textSelectionShouldNotExist();
-
-            // ContentControlProperties dialog
-            cy.then(() => {
-                win.app.map.sendUnoCommand('.uno:InsertDropdownContentControl');
-                win.app.map.sendUnoCommand('.uno:ContentControlProperties');
-            });
-            handleDialog(win, 1, '.uno:ContentControlProperties');
-
-            // Text ReadOnly info dialog
-            helper.clearAllText();
-            helper.typeIntoDocument('READONLY');
-            helper.selectAllText();
-            cy.then(() => {
-                win.app.map.sendUnoCommand('.uno:InsertSection?RegionProtect:bool=true');
-            });
-            helper.typeIntoDocument('{del}');
-            handleDialog(win, 1);
-
-            cy.get('@console:error').then(spy => {
-                const a11yValidatorExceptionText = win.app.A11yValidatorException.PREFIX;
-                const a11yErrors = spy.getCalls().filter(call =>
-                    String(call.args[0]).includes(a11yValidatorExceptionText)
-                );
-
-                if (a11yErrors.length > 0) {
-                    const errorMessages = a11yErrors.map(call =>
-                        call.args.map(arg => String(arg)).join(' ')
-                    ).join('\n\n');
-
-                    throw new Error(`Found A11y errors:\n${errorMessages}`);
-                }
-            });
-
-            cy.spy(win.app.socket, '_onMessage').as('onMessage').log(false);
-
-            // add to the cypress queue to be run after the dialogs are processed
-            // and errors checked
-            cy.then(() => {
-                    const endUICoverage = {
-                        'Report': { 'type': 'boolean', 'value': true },
-                        'Track': { 'type': 'boolean', 'value': false }
-                    };
-                    win.app.map.sendUnoCommand('.uno:UICoverage', endUICoverage);
-            });
-
-            cy.get('@onMessage').should(onMessage => {
-                const matchingCall = onMessage.getCalls().find(call => {
-                    const evt = call.args && call.args[0]
-                    const textMsg = evt && evt.textMsg;
-                    if (!textMsg || !textMsg.startsWith('unocommandresult:')) {
-                        return false;
-                    }
-                    const jsonPart = textMsg.replace('unocommandresult:', '').trim();
-                    const data = JSON.parse(jsonPart);
-                    return data.commandName === '.uno:UICoverage';
-                });
-
-                expect(matchingCall, '.uno:UICoverage result').to.be.an('object');
-
-                const textMsg = matchingCall.args[0].textMsg;
                 const jsonPart = textMsg.replace('unocommandresult:', '').trim();
-                const result = JSON.parse(jsonPart).result;
-
-                Cypress.log({name: 'UICoverage Message: ', message: JSON.stringify(result)});
-
-                expect(result.used, `used .ui files`).to.not.be.empty;
-
-                // TODO: make this true
-                // expect(result.CompleteWriterDialogCoverage, `complete writer dialog coverage`).to.be.true;
+                const data = JSON.parse(jsonPart);
+                return data.commandName === '.uno:UICoverage';
             });
+
+            expect(matchingCall, '.uno:UICoverage result').to.be.an('object');
+
+            const textMsg = matchingCall.args[0].textMsg;
+            const jsonPart = textMsg.replace('unocommandresult:', '').trim();
+            const result = JSON.parse(jsonPart).result;
+
+            Cypress.log({name: 'UICoverage Message: ', message: JSON.stringify(result)});
+
+            expect(result.used, `used .ui files`).to.not.be.empty;
+
+            // TODO: make this true
+            // expect(result.CompleteWriterDialogCoverage, `complete writer dialog coverage`).to.be.true;
         });
     });
 
-    function runA11yValidation(win) {
-        cy.then(() => {
-            win.app.dispatcher.dispatch('validatedialogsa11y');
+    afterEach(function () {
+        // Close any dialogs that might still be open after a test failure
+        cy.cGet('body').then($body => {
+            const dialogs = $body.find('.jsdialog-window .ui-dialog-titlebar-close');
+            if (dialogs.length > 0) {
+                // Close dialogs from innermost to outermost
+                for (let i = dialogs.length - 1; i >= 0; i--) {
+                    cy.wrap(dialogs[i]).click({ force: true });
+                }
+            }
         });
-        checkA11yErrors(win);
-    }
+        cy.cGet('.jsdialog-window').should('not.exist');
+    });
 
-    function checkA11yErrors(win) {
-        cy.get('@console:error').then(spy => {
+    allWriterDialogs.forEach(function (command) {
+        if (missingContextDialogs.includes(command)) {
+            it.skip(`Dialog ${command} (missing context)`, function () {});
+        } else if (buggyDialogs.includes(command)) {
+            it.skip(`Dialog ${command} (buggy)`, function () {});
+        } else {
+            it(`Dialog ${command}`, function () {
+                testDialog(command);
+            });
+        }
+    });
+
+    it('ContentControlProperties dialog', function () {
+        // triple select to include table, then delete all
+        helper.typeIntoDocument('{ctrl}a');
+        helper.typeIntoDocument('{ctrl}a');
+        helper.typeIntoDocument('{ctrl}a');
+        helper.textSelectionShouldExist();
+        helper.typeIntoDocument('{del}');
+        helper.textSelectionShouldNotExist();
+
+        // ContentControlProperties dialog
+        cy.then(() => {
+            win.app.map.sendUnoCommand('.uno:InsertDropdownContentControl');
+            win.app.map.sendUnoCommand('.uno:ContentControlProperties');
+        });
+        handleDialog(win, 1, '.uno:ContentControlProperties');
+    });
+
+    it('ReadOnly info dialog', function () {
+        // Text ReadOnly info dialog
+        helper.clearAllText();
+        helper.typeIntoDocument('READONLY');
+        helper.selectAllText();
+        cy.then(() => {
+            win.app.map.sendUnoCommand('.uno:InsertSection?RegionProtect:bool=true');
+        });
+        helper.typeIntoDocument('{del}');
+        handleDialog(win, 1);
+    });
+
+    function checkA11yErrors(win, spy) {
+        cy.then(() => {
             const a11yValidatorExceptionText = win.app.A11yValidatorException.PREFIX;
             const a11yErrors = spy.getCalls().filter(call =>
                 String(call.args[0]).includes(a11yValidatorExceptionText)
@@ -179,6 +175,27 @@ describe(['tagdesktop'], 'Accessibility Writer Tests', function () {
                 ).join('\n\n');
 
                 throw new Error(`Found A11y errors:\n${errorMessages}`);
+            }
+        });
+    }
+
+    function testDialog(command) {
+        cy.then(() => {
+            win.app.map.sendUnoCommand(command);
+        });
+
+        handleDialog(win, 1, command);
+    }
+
+    function runA11yValidation(win) {
+        cy.then(() => {
+            var spy = Cypress.sinon.spy(win.console, 'error');
+            win.app.dispatcher.dispatch('validatedialogsa11y');
+
+            checkA11yErrors(win, spy);
+
+            if (spy && spy.restore) {
+                spy.restore();
             }
         });
     }
