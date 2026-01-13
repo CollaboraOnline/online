@@ -490,7 +490,7 @@ window.L.Control.NotebookbarImpress = window.L.Control.NotebookbarWriter.extend(
 			  {
 					'id': 'slide-presentation-in-console',
 					'type': 'bigcustomtoolitem',
-					'text': _('Presenter Console'),
+					'text': _('Presenter View'),
 					'command': 'presenterconsole',
 					'accessibility': { focusBack: true, combination: 'PC', de: null }
 				}: {},
