@@ -3184,8 +3184,8 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 
 
 		if (app.activeDocument.fileSize.x === 0) { return; }
-		var oldSize = e ? e.oldSize : this._map.getSize();
-		var newSize = e ? e.newSize : this._map.getSize();
+		var oldSize = e && e.oldSize ? e.oldSize : this._map.getSize();
+		var newSize = e && e.newSize ? e.newSize : this._map.getSize();
 
 		newSize.x *= app.dpiScale;
 		newSize.y *= app.dpiScale;
@@ -3198,8 +3198,7 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 		if (this._firstFitDone && newSize.x - oldSize.x === 0)
 			return;
 
-		var widthTwips = newSize.x * app.tile.size.x / TileManager.tileSize;
-		var ratio = widthTwips / app.activeDocument.fileSize.x;
+		var ratio = newSize.x / app.activeDocument.fileSize.pX;
 		var zoom = this._map.getScaleZoom(ratio);
 
 		if (maxZoom)
