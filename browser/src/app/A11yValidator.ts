@@ -15,6 +15,8 @@ class A11yValidatorException extends Error {
 	constructor(message: string) {
 		super(message);
 		this.name = A11yValidatorException.PREFIX;
+		// Fix prototype chain for TypeScript extending built-in classes
+		Object.setPrototypeOf(this, A11yValidatorException.prototype);
 	}
 }
 
@@ -31,14 +33,11 @@ class A11yValidator {
 	}
 
 	checkWidget(type: string, element: HTMLElement): void {
-		if (!window.L.Browser.cypressTest) return;
-
 		for (const check of this.checks) {
 			try {
 				check(type, element);
 			} catch (error) {
-				if (error instanceof A11yValidatorException)
-					console.error(error.message);
+				if (error instanceof A11yValidatorException) console.error(error);
 				throw error;
 			}
 		}
@@ -137,6 +136,64 @@ class A11yValidator {
 		}
 
 		return ids.length > 0 ? ids.join(' > ') : '(no ids in path)';
+	}
+
+	validateDialog(dialogElement: HTMLElement): void {
+		const content = dialogElement.querySelector('.ui-dialog-content');
+
+		// Find all widgets in the dialog that have a data-type attribute
+		const widgets = dialogElement.querySelectorAll('[data-widgettype]');
+		let errorCount = 0;
+
+		widgets.forEach((widget) => {
+			if (widget instanceof HTMLElement) {
+				const widgetType = widget.getAttribute('data-widgettype') || 'unknown';
+				try {
+					this.checkWidget(widgetType, widget);
+				} catch (error) {
+					errorCount++;
+					// Error already logged in checkWidget
+				}
+			}
+		});
+
+		// Also validate the dialog content container itself
+		if (content instanceof HTMLElement) {
+			try {
+				this.checkWidget('dialog-content', content);
+			} catch (error) {
+				errorCount++;
+			}
+		}
+
+		if (errorCount === 0) {
+			console.error('A11yValidator: dialog passed all checks');
+		} else {
+			console.error(
+				`A11yValidator: dialog has ${errorCount} accessibility issues`,
+			);
+		}
+	}
+
+	validateAllOpenDialogs(): void {
+		const jsdialog = app.map?.jsdialog;
+		if (!jsdialog || !jsdialog.dialogs) {
+			console.error('A11yValidator: no jsdialog manager found');
+			return;
+		}
+
+		const dialogIds = Object.keys(jsdialog.dialogs);
+		if (dialogIds.length === 0) {
+			console.error('A11yValidator: no open dialogs to validate');
+			return;
+		}
+
+		for (const dialogId of dialogIds) {
+			const dialogInfo = jsdialog.dialogs[dialogId];
+			if (dialogInfo && dialogInfo.container) {
+				this.validateDialog(dialogInfo.container);
+			}
+		}
 	}
 }
 
