@@ -15,4 +15,13 @@
     <string name="no_items">Objekte pole</string>
     <string name="file_exists_warning">Sellise nimega fail on juba olemas ja kirjutatakse üle.</string>
     <string name="file_creation_failed">Faili loomine ei õnnestunud</string>
+    <string name="pref_category_editor">Muutmisvaate seadistused</string>
+    <string name="pref_show_hidden_files">Peidetud failid ja kaustad</string>
+    <string name="pref_show_hidden_files_summary">Peidetud failide ja kaustade nägemiseks lülita sisse</string>
+    <string name="pref_sort_summary">Vali failide järjestamise viis: tähestikuliselt, suuruse või kuupäeva alusel.</string>
+    <string name="pref_viewmode_summary">Vaata faile kas ruudustiku- või loendivaates.</string>
+    <string name="pref_file_explorer_title">Failihalduri paigutus</string>
+    <string name="pref_sort_title">Failide järjestus</string>
+    <string name="pref_filter_title">Vaikimisi failifilter</string>
+    <string name="pref_filter_summary">Vali vaikimisi kasutatav failifilter.</string>
 </resources>
