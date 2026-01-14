@@ -377,4 +377,9 @@ keyboardShortcuts.definitions.set('de', new Array<ShortcutDescriptor>(
     new ShortcutDescriptor({ eventType: 'keydown', modifier: Mod.CTRL | Mod.SHIFT, key: '`', preventDefault: false, platform: Platform.MAC }), // Cycle through windows
 ));
 
+// French shortcuts.
+keyboardShortcuts.definitions.set('fr', new Array<ShortcutDescriptor>(
+    new ShortcutDescriptor({ eventType: 'keydown', modifier: Mod.CTRL, key: 'g', unoAction: '.uno:Bold' }),
+));
+
 window.KeyboardShortcuts = keyboardShortcuts;
