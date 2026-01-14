@@ -181,7 +181,13 @@ private:
         }
     }
 
-private:
+    /// Complete WebSocket upgrade: create WS handler, setup RVS, and start request handling
+    /// @return true if handled (sync error), false for async processing
+    bool completeWsUpgrade(const Poco::Net::HTTPRequest& request,
+                           const RequestDetails& requestDetails,
+                           const std::shared_ptr<StreamSocket>& socket,
+                           unsigned mobileAppDocId = 0);
+
     // The socket that owns us (we can't own it).
     std::weak_ptr<StreamSocket> _socket;
     std::string _id;
