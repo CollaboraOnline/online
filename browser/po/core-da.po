@@ -2,15 +2,15 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: core-da\n"
-"PO-Revision-Date: 2025-11-20 07:06+0000\n"
-"Last-Translator: Lise H <lih@cbrain.com>\n"
+"PO-Revision-Date: 2026-01-09 19:54+0000\n"
+"Last-Translator: J A <jokkels@users.noreply.hosted.weblate.org>\n"
 "Language-Team: Danish <https://hosted.weblate.org/projects/collabora-online/"
 "lokit/da/>\n"
 "Language: da\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.15-dev\n"
+"X-Generator: Weblate 5.15.1\n"
 
 #. ygDfy
 #: module_graphicfilter.ulf
@@ -201,9 +201,12 @@ msgstr ""
 
 #. Yif9X
 #: chart2/uiconfig/ui/sidebarcolors.ui:30
+#, fuzzy
 msgctxt "sidebarcolors|bordertype|tooltip_text"
 msgid "Allow to select a color palette to apply to current chart data series."
 msgstr ""
+"Tillad valg af en farvepalet, der skal anvendes på den aktuelle "
+"diagramdataserie."
 
 #. xGjwG
 #: chart2/uiconfig/ui/sidebarcolors.ui:42
@@ -230,13 +233,13 @@ msgstr "Kanttype"
 #: chart2/uiconfig/ui/sidebartheme.ui:25
 msgctxt "sidebartheme|themelist|tooltip_text"
 msgid "Allow to select a theme to apply to the current chart."
-msgstr ""
+msgstr "Tillad at vælge et tema, der skal anvendes på det aktuelle diagram."
 
 #. aGvuY
 #: chart2/uiconfig/ui/sidebartheme.ui:37
 msgctxt "sidebartheme|themetype-atkobject"
 msgid "Themes"
-msgstr ""
+msgstr "Temaer"
 
 #. YB6Et
 #: chart2/uiconfig/ui/sidebartheme.ui:48
@@ -254,7 +257,7 @@ msgstr ""
 #: chart2/uiconfig/ui/tp_ChartColorPalette.ui:68
 msgctxt "tp_ChartColorPalette|colorfulwin"
 msgid "Colorful"
-msgstr ""
+msgstr "Farverig"
 
 #. 8QjnP
 #: chart2/uiconfig/ui/tp_ChartColorPalette.ui:126
@@ -266,19 +269,19 @@ msgstr ""
 #: chart2/uiconfig/ui/tp_ChartGradients.ui:69
 msgctxt "tp_ChartGradients|lightwin"
 msgid "Light Variations"
-msgstr ""
+msgstr "Lyse variationer"
 
 #. DmWVa
 #: chart2/uiconfig/ui/tp_ChartGradients.ui:128
 msgctxt "tp_ChartGradients|darkwin"
 msgid "Dark Variations"
-msgstr ""
+msgstr "Mørke variationer"
 
 #. FG2rh
 #: chart2/uiconfig/ui/tp_ChartType.ui:114
 msgctxt "tp_ChartType|extended_tip|subtype_iconview"
 msgid "Select a sub type of the basic chart type."
-msgstr ""
+msgstr "Vælg en undertype af den grundlæggende diagramtype."
 
 #. Wh4j6
 #: chart2/uiconfig/ui/tp_ChartType.ui:167
@@ -296,13 +299,13 @@ msgstr ""
 #: cui/uiconfig/ui/hyperlinkinternetpage.ui:64
 msgctxt "hyperlinkinternetpage|target_label"
 msgid "Link:"
-msgstr ""
+msgstr "Link:"
 
 #. gfELk
 #: cui/uiconfig/ui/pageformatpage.ui:260
 msgctxt "pageformatpage|checkResizeAllPages"
 msgid "Resize all pages"
-msgstr ""
+msgstr "Tilpas alle sider"
 
 #. NBdEp
 #: cui/uiconfig/ui/pickbulletpage.ui:45
@@ -332,19 +335,19 @@ msgstr ""
 #: cui/uiconfig/ui/toolbarmodedialog.ui:124
 msgctxt "ToolbarmodeDialog|radiobutton1"
 msgid "Compact"
-msgstr ""
+msgstr "Kompakt"
 
 #. ZbYiG
 #: include/svtools/strings.hrc:71
 msgctxt "STR_FORMAT_ID_MARKDOWN"
 msgid "Markdown"
-msgstr ""
+msgstr "Markdown"
 
 #. HASc5
 #: include/sfx2/strings.hrc:227
 msgctxt "STR_SID_QUICKFIND"
 msgid "Quick Find"
-msgstr ""
+msgstr "Hurtig søgning"
 
 #. 2VmCo
 #: sfx2/uiconfig/ui/licensedialog.ui:41
