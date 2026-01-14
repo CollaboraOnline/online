@@ -802,8 +802,17 @@ window.L.CalcTileLayer = window.L.CanvasTileLayer.extend({
 
 		this._replayPrintTwipsMsgs(differentSheet);
 
-		this.sheetGeometry.setViewArea(this._pixelsToTwips(this._map._getTopLeftPoint()),
-			this._pixelsToTwips(this._map.getSize()));
+		if (this.sheetGeometry.autoFilterChanged) {
+			this.sheetGeometry.autoFilterChanged = false;
+			let firstVisibleRow = this.sheetGeometry.getFirstNewVisibleRow();
+			app.activeDocument.activeLayout.scrollTo(
+				this._map._getTopLeftPoint().x,
+				this.sheetGeometry.getRowsGeometry().getElementData(firstVisibleRow).startpos);
+		} else {
+			this.sheetGeometry.setViewArea(
+				this._pixelsToTwips(this._map._getTopLeftPoint()),
+				this._pixelsToTwips(this._map.getSize()));
+		}
 
 		this._addRemoveGroupSections();
 
@@ -930,6 +939,10 @@ window.L.CalcTileLayer = window.L.CanvasTileLayer.extend({
 		}
 		else if (e.commandName === 'AutoFilterInfo') {
 			app.calc.autoFilterCell = { 'row': e.state.row, 'column': e.state.column };
+		}
+		else if (e.commandName === 'AutoFilterChange')
+		{
+			this.sheetGeometry.autoFilterChanged = true;
 		}
 		else if (e.commandName === 'PivotTableFilterInfo') {
 			app.calc.pivotTableFilterCell = { 'row': e.state.row, 'column': e.state.column };
