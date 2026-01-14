@@ -1,19 +1,19 @@
-# Priit Jõerüüt <jrthwlate@users.noreply.hosted.weblate.org>, 2025.
+# Priit Jõerüüt <jrthwlate@users.noreply.hosted.weblate.org>, 2025, 2026.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-11-17 08:08+0200\n"
-"PO-Revision-Date: 2025-11-18 07:51+0000\n"
+"PO-Revision-Date: 2026-01-06 12:01+0000\n"
 "Last-Translator: Priit Jõerüüt <jrthwlate@users.noreply.hosted.weblate.org>\n"
-"Language-Team: Estonian <https://hosted.weblate.org/projects/"
-"collabora-online/app-store-descriptions/et/>\n"
+"Language-Team: Estonian <https://hosted.weblate.org/projects/collabora-"
+"online/app-store-descriptions/et/>\n"
 "Language: et\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.15-dev\n"
+"X-Generator: Weblate 5.15.1\n"
 
 #. App name - 50 chars limit
 #: descriptions/google-play.html%2Bhtml.body.h3:5-1
@@ -37,6 +37,10 @@ msgid ""
 "and now it's on Android, enhancing your possibilities to work on mobile and "
 "for collaboration."
 msgstr ""
+"Collabora Office on tekstiredaktor, tabelarvutus- ja esitlusprogramm, mis "
+"põhineb maailma populaarseimal avatud lähtekoodiga tarbetarkvaral "
+"LibreOffice - ja nüüd on see saadaval Androidis, suurendades sinu võimalusi "
+"töötada nutiseadmes ja tehes seda ühistööna."
 
 #. Long description
 #: descriptions/google-play.html%2Bhtml.body.p:17-1
@@ -79,11 +83,14 @@ msgid ""
 "href=\"https://col.la/android\"> https://col.la/android</a>. Please note "
 "that anything you enter in the bugtracker will be public."
 msgstr ""
+"Kasuta meie veahaldust aadressil <a href=\"https://col.la/android\"> https://"
+"col.la/android</a> ja lisa manusena kõik probleemsed failid. Palun arvesta, "
+"et kõik veahaldusesse lisatu on avalikult kõigile nähtav."
 
 #. Long description
 #: descriptions/google-play.html%2Bhtml.body.p:40-1
 msgid "About the app:"
-msgstr ""
+msgstr "Rakenduse teave:"
 
 #. Long description
 #: descriptions/google-play.html%2Bhtml.body.p:44-1
@@ -92,6 +99,10 @@ msgid ""
 "Windows, Mac, and Linux. This, combined with a new front-end based on "
 "Collabora Online, reads and saves documents similarly to LibreOffice desktop."
 msgstr ""
+"Androidi Collabora Office kasutab sama sisumootorit, mida LibreOffice "
+"Windowsi, Maci ja Linuxi jaoks. See koos Collabora Online'il põhineva uue "
+"kasutajaliidesega loeb ja salvestab dokumente sarnaselt LibreOffice'i "
+"töölauarakendusele."
 
 #. Long description
 #: descriptions/google-play.html%2Bhtml.body.p:48-1
@@ -101,18 +112,24 @@ msgid ""
 "developing Android support since 2012, with the help of Google Summer of "
 "Code students Andrzej Hunt, Iain Billet and Kaishu Sahu."
 msgstr ""
+"Collabora arendajad Tor Lillqvist, Tomaž Vajngerl, Michael Meeks, Miklos "
+"Vajna, Jan Holešovský, Mert Tümer, Rashesh Padia ja Skyler Grey on Androidi "
+"tuge arendanud alates 2012. aastast ja neile on projektist „Google Summer of "
+"Code“ olnud abiks Andrzej Hunt, Iain Billet ja Kaishu Sahu."
 
 #. Long description
 #: descriptions/google-play.html%2Bhtml.body.p:52-1
 msgid "License:"
-msgstr ""
+msgstr "Litsents:"
 
 #. Long description
 #: descriptions/google-play.html%2Bhtml.body.p:56-1
 msgid "Open Source - Mozilla Public License v2 and other"
 msgstr ""
+"Avatud lähtekood - Mozilla avaliku litsentsi versioon 2 (Mozilla Public "
+"License v2) ja muud"
 
 #. Long description
 #: descriptions/google-play.html%2Bhtml.body.p:60-1
 msgid "Credits:"
-msgstr ""
+msgstr "Tänuavaldused:"
