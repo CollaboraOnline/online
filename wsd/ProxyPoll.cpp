@@ -113,7 +113,8 @@ public:
 
 void ProxyPoll::startPump(const std::shared_ptr<StreamSocket>& clientSocket,
                           const std::string& targetIp, int targetPort,
-                          const Poco::Net::HTTPRequest& originalRequest)
+                          const Poco::Net::HTTPRequest& originalRequest,
+                          const std::shared_ptr<SocketPoll>& fromPoll)
 {
     std::ostringstream oss;
     originalRequest.write(oss);
@@ -126,7 +127,10 @@ void ProxyPoll::startPump(const std::shared_ptr<StreamSocket>& clientSocket,
 
     auto targetHandler = std::make_shared<ProxyHandler>(clientSocket);
 
-    ProxyPoll::instance()->insertNewSocket(clientSocket);
+    // Transfer the client socket from the source poll to proxy_poll
+    fromPoll->transferSocketTo(
+        clientSocket, ProxyPoll::instance(), [](const std::shared_ptr<Socket>& /*moveSocket*/) {},
+        nullptr);
 
     // Async connect to target pod (avoids blocking DNS)
     net::asyncConnect(

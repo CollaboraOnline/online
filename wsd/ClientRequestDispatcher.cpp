@@ -2636,7 +2636,8 @@ void ClientRequestDispatcher::handleInternalProxy(const std::string& wopiSrc,
         auto lockedSocket = weakSocket.lock();
         if (!lockedSocket)
             return;
-        ProxyPoll::startPump(lockedSocket, targetPodIP, targetPort, request);
+        ProxyPoll::startPump(lockedSocket, targetPodIP, targetPort, request,
+                             COOLWSD::getWebServerPoll());
     };
 
     httpSession->setFinishedHandler(std::move(finishedCallback));

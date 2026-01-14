@@ -27,11 +27,9 @@ public:
 
     static void startPump(const std::shared_ptr<StreamSocket>& clientSocket,
                           const std::string& targetIp, int targetPort,
-                          const Poco::Net::HTTPRequest& originalRequest);
-    ~ProxyPoll()
-    {
-        joinThread();
-    }
+                          const Poco::Net::HTTPRequest& originalRequest,
+                          const std::shared_ptr<SocketPoll>& fromPoll);
+    ~ProxyPoll() { joinThread(); }
 
 private:
     ProxyPoll()

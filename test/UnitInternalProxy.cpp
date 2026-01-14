@@ -197,12 +197,13 @@ public:
                                                        false, HostType::Other, proxyHandler);
 
                 _clientPoll->insertNewSocket(clientSocket);
+                _clientPoll->insertNewSocket(proxySocket);
 
                 Poco::Net::HTTPRequest request("GET", "/test", "HTTP/1.1");
                 request.setHost("127.0.0.1:59999");
 
                 TST_LOG("Calling ProxyPoll::startPump with invalid target port 59999");
-                ProxyPoll::startPump(proxySocket, "127.0.0.1", 59999, request);
+                ProxyPoll::startPump(proxySocket, "127.0.0.1", 59999, request, _clientPoll);
                 break;
             }
             case Phase::WaitResponse:
@@ -374,6 +375,7 @@ private:
             std::string(), fds[1], Socket::Type::Unix, false, HostType::Other, proxyHandler);
 
         _clientPoll->insertNewSocket(clientSocket);
+        _clientPoll->insertNewSocket(proxySocket);
 
         // Request 2MB of data via /large/<size> endpoint
         Poco::Net::HTTPRequest request("GET", "/large/" + std::to_string(DATA_SIZE), "HTTP/1.1");
@@ -381,7 +383,7 @@ private:
 
         TST_LOG("Calling ProxyPoll::startPump for " << DATA_SIZE
                                                     << " bytes to 127.0.0.1:" << _serverPort);
-        ProxyPoll::startPump(proxySocket, "127.0.0.1", _serverPort, request);
+        ProxyPoll::startPump(proxySocket, "127.0.0.1", _serverPort, request, _clientPoll);
     }
 };
 
