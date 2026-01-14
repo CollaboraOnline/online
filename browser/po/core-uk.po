@@ -2,17 +2,16 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: core-uk\n"
-"PO-Revision-Date: 2025-11-20 09:07+0000\n"
-"Last-Translator: Максим Горпиніч <gorpinicmaksim0@gmail.com>\n"
-"Language-Team: Ukrainian <https://hosted.weblate.org/projects/"
-"collabora-online/lokit/uk/>\n"
+"PO-Revision-Date: 2026-01-04 22:01+0000\n"
+"Last-Translator: Ole <knedlyk@users.noreply.hosted.weblate.org>\n"
+"Language-Team: Ukrainian <https://hosted.weblate.org/projects/collabora-"
+"online/lokit/uk/>\n"
 "Language: uk\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural="
-"(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? "
-"1 : 2);\n"
-"X-Generator: Weblate 5.15-dev\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Generator: Weblate 5.15.1\n"
 
 #. ygDfy
 #: module_graphicfilter.ulf
@@ -439,7 +438,7 @@ msgstr "2 стовпці різного розміру (лівий < прави�
 #: sw/inc/strings.hrc:498
 msgctxt "STR_REINSTATE_REDLINE"
 msgid "Reinstate change: $1"
-msgstr "Відновити решту: $1"
+msgstr "Відновити зміни: $1"
 
 #. afEVQ
 #: sw/inc/strings.hrc:1536
@@ -870,7 +869,7 @@ msgctxt ""
 "ContextLabel\n"
 "value.text"
 msgid "Clear ~Direct Formatting"
-msgstr "~Очистити пряме форматування"
+msgstr "~Очистити форматування"
 
 #. NfNdn
 #: ChartCommands.xcu
@@ -1112,7 +1111,7 @@ msgctxt ""
 "TooltipLabel\n"
 "value.text"
 msgid "Reinstate All Tracked Changes"
-msgstr "Відновити всі відстежені зміни"
+msgstr "Відновити всі відстежувані зміни"
 
 #. SRvKK
 #: WriterCommands.xcu
@@ -1142,7 +1141,7 @@ msgctxt ""
 "TooltipLabel\n"
 "value.text"
 msgid "Reinstate Track Change"
-msgstr "Відновити зміни відстеження"
+msgstr "Відновити відстеження змін"
 
 #. rTFtt
 #: WriterCommands.xcu
