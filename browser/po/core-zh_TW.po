@@ -2,8 +2,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: core-zh-TW\n"
-"PO-Revision-Date: 2025-12-31 14:51+0000\n"
-"Last-Translator: kevin lin <kevin.linul@gmail.com>\n"
+"PO-Revision-Date: 2026-01-09 03:35+0000\n"
+"Last-Translator: Jeff Huang <jeff.huang@ossii.com.tw>\n"
 "Language-Team: Chinese (Traditional Han script) <https://hosted.weblate.org/"
 "projects/collabora-online/lokit/zh_Hant/>\n"
 "Language: zh_TW\n"
@@ -41,8 +41,8 @@ msgid ""
 "Technology, provided by Collabora Productivity. See https://collaboraoffice."
 "com"
 msgstr ""
-"Collabora Office 是一套基於 LibreOffice 技術的辦公生產力套件，由 Collabora "
-"Productivity 提供。詳情請參見 https://collaboraoffice.com"
+"Collabora Office 是一套以 LibreOffice 技術為基礎開發的辦公室生產力套裝軟體，"
+"由 Collabora Productivity 提供。請見 https://collaboraoffice.com"
 
 #. 4rBwc
 #: include/svx/strings.hrc:1040
@@ -104,8 +104,8 @@ msgid ""
 "For more information please visit ${PRODUCTNAME} home page at <a "
 "href=\"https://collaboraoffice.com\">https://CollaboraOffice.com/</a>."
 msgstr ""
-"欲瞭解更多資訊，請造訪 ${PRODUCTNAME} 官方首頁：<a href=\"https://"
-"collaboraoffice.com\">https://CollaboraOffice.com/</a>。"
+"要取得更多資訊，請造訪 ${PRODUCTNAME} 首頁：<a href=\"https://"
+"collaboraoffice.com\">https://CollaboraOffice.com/</a>."
 
 #. SbQew
 #: chart2/inc/strings.hrc:51
@@ -123,7 +123,7 @@ msgstr "漸層"
 #: chart2/uiconfig/ui/chartcolorpalettepopup.ui:46
 msgctxt "chartcolorpalettepopup|colorfulwin"
 msgid "Colorful"
-msgstr "多彩"
+msgstr "彩色"
 
 #. xmAmH
 #: chart2/uiconfig/ui/chartcolorpalettepopup.ui:98
@@ -171,7 +171,7 @@ msgstr "圖表樣式(_C)："
 #: chart2/uiconfig/ui/dlg_Theme.ui:122
 msgctxt "dlg_Theme|chartload"
 msgid "_Load style to chart"
-msgstr "將樣式套用至圖表(_L)"
+msgstr "將樣式載入至圖表(_L)"
 
 #. YWkrA
 #: chart2/uiconfig/ui/dlg_Theme.ui:134
@@ -189,7 +189,7 @@ msgstr "刪除樣式(_D)"
 #: chart2/uiconfig/ui/dlg_Theme.ui:158
 msgctxt "dlg_Theme|chartsavenew"
 msgid "Save to _new style"
-msgstr "儲存為新樣式(_n)"
+msgstr "儲存為新樣式(_N)"
 
 #. GPgLR
 #: chart2/uiconfig/ui/dlg_Theme.ui:183
@@ -201,7 +201,7 @@ msgstr "管理圖表樣式(_M)"
 #: chart2/uiconfig/ui/sidebarcolors.ui:30
 msgctxt "sidebarcolors|bordertype|tooltip_text"
 msgid "Allow to select a color palette to apply to current chart data series."
-msgstr "允許選擇色彩調色盤以套用至目前圖表的資料系列。"
+msgstr "允許選擇色彩調色盤以套用至目前圖表的資料序列。"
 
 #. xGjwG
 #: chart2/uiconfig/ui/sidebarcolors.ui:42
@@ -214,7 +214,7 @@ msgstr "邊框樣式"
 msgctxt "sidebargradients|bordertype|tooltip_text"
 msgid ""
 "Allow to select a gradient palette to apply to current chart data series."
-msgstr "允許選擇漸層調色盤以套用至目前圖表的資料系列。"
+msgstr "允許選擇漸層調色盤以套用至目前圖表的資料序列。"
 
 #. 3xZSQ
 #: chart2/uiconfig/ui/sidebargradients.ui:42
@@ -226,31 +226,31 @@ msgstr "邊框樣式"
 #: chart2/uiconfig/ui/sidebartheme.ui:25
 msgctxt "sidebartheme|themelist|tooltip_text"
 msgid "Allow to select a theme to apply to the current chart."
-msgstr "允許選擇主題以套用至目前圖表。"
+msgstr "允許選擇佈景主題以套用至目前圖表。"
 
 #. aGvuY
 #: chart2/uiconfig/ui/sidebartheme.ui:37
 msgctxt "sidebartheme|themetype-atkobject"
 msgid "Themes"
-msgstr "主題"
+msgstr "佈景主題"
 
 #. YB6Et
 #: chart2/uiconfig/ui/sidebartheme.ui:48
 msgctxt "sidebartheme|savetonew"
 msgid "_Save to new theme"
-msgstr "儲存為新主題(_S)"
+msgstr "儲存為新佈景主題(_S)"
 
 #. 4C556
 #: chart2/uiconfig/ui/sidebartype.ui:102
 msgctxt "sidebartype|3dschemeft"
 msgid "3D _Scheme:"
-msgstr "3D配色方案(_S)："
+msgstr "3D 組合(_S)："
 
 #. x3adg
 #: chart2/uiconfig/ui/tp_ChartColorPalette.ui:68
 msgctxt "tp_ChartColorPalette|colorfulwin"
 msgid "Colorful"
-msgstr "多彩"
+msgstr "彩色"
 
 #. 8QjnP
 #: chart2/uiconfig/ui/tp_ChartColorPalette.ui:126
@@ -274,13 +274,13 @@ msgstr "深色變化"
 #: chart2/uiconfig/ui/tp_ChartType.ui:114
 msgctxt "tp_ChartType|extended_tip|subtype_iconview"
 msgid "Select a sub type of the basic chart type."
-msgstr "選擇基本圖表類型的子類型。"
+msgstr "選取基本圖表類型的子類型。"
 
 #. Wh4j6
 #: chart2/uiconfig/ui/tp_ChartType.ui:167
 msgctxt "tp_ChartType|3dschemeft"
 msgid "3D _Scheme:"
-msgstr "3D配色方案(_S)："
+msgstr "3D 組合(_S)："
 
 #. ChTwx
 #: cui/inc/strings.hrc:481
@@ -346,7 +346,7 @@ msgstr "快速尋找"
 #: sfx2/uiconfig/ui/licensedialog.ui:41
 msgctxt "licensedialog|eula"
 msgid "_EULA"
-msgstr "最終用戶授權合約(EULA)(_E)"
+msgstr "終端使用者授權合約 (EULA) (_E)"
 
 #. jjkw7
 #: sfx2/uiconfig/ui/licensedialog.ui:85
@@ -356,8 +356,8 @@ msgid ""
 "End User License and Subscription Agreement; choose EULA to see exact "
 "details in English."
 msgstr ""
-"%PRODUCTNAME 二進位套件的使用須遵守最終用戶授權及訂閱合約條款；選取 EULA 可查"
-"看英文原文詳細內容。"
+"%PRODUCTNAME 二進位軟體包的使用須遵守終端使用者授權合約與訂閱協議；選擇 EULA "
+"可檢視英文原文詳細內容。"
 
 #. YHTHB
 #: sfx2/uiconfig/ui/templatepanel.ui:137
@@ -375,7 +375,7 @@ msgstr "依所選建立新樣式"
 #: sfx2/uiconfig/ui/templatepanel.ui:174
 msgctxt "templatepanel|accessible_name|newmenu"
 msgid "Styles actions"
-msgstr "樣式操作"
+msgstr "樣式動作"
 
 #. 7NfdA
 #: sfx2/uiconfig/ui/templatepanel.ui:192
@@ -387,7 +387,7 @@ msgstr "更新樣式"
 #: sfx2/uiconfig/ui/templatepanel.ui:242
 msgctxt "commontemplate|STR_HIGHLIGHT_CHECKBOX"
 msgid "Highlight styles"
-msgstr "突顯"
+msgstr "突顯樣式"
 
 #. fCWMe
 #: sfx2/uiconfig/ui/templatepanel.ui:272
@@ -429,13 +429,13 @@ msgstr "2 欄不等寬（左小於右）"
 #: sw/inc/strings.hrc:498
 msgctxt "STR_REINSTATE_REDLINE"
 msgid "Reinstate change: $1"
-msgstr "恢復變更：$1"
+msgstr "還原變更：$1"
 
 #. afEVQ
 #: sw/inc/strings.hrc:1536
 msgctxt "STR_COMPAT_OPT_UNDERLINETRAILINGSPACE"
 msgid "Underline Word-compatible trailing blanks"
-msgstr "底線 Word 相容的尾端空格"
+msgstr "底線與 Word 相容的尾部空白"
 
 #. B3rfb
 #: sw/uiconfig/swriter/ui/columnpage.ui:122
@@ -448,19 +448,19 @@ msgstr "欄"
 msgctxt "columnpage|extended_tip|column-iconview"
 msgid ""
 "Enter the number of columns that you want in the page, frame, or section."
-msgstr "輸入您希望在頁面、框架或區段中使用的欄數。"
+msgstr "輸入您想要在頁面、外框或區段中使用的欄數。"
 
 #. Ci9GE
 #: sw/uiconfig/swriter/ui/spellmenu.ui:34
 msgctxt "spellmenu|add"
 msgid "Add to _Dictionary (standard.dic)"
-msgstr "新增至字典(_D) (standard.dic)"
+msgstr "新增至字典 (standard.dic) (_D)"
 
 #. FxkzA
 #: sw/uiconfig/swriter/ui/wordcount-mobile.ui:643
 msgctxt "wordcount-mobile|comments"
 msgid "Comments"
-msgstr "註解"
+msgstr "評註"
 
 #. SsL8u
 #: formula/inc/core_resource.hrc:2628
@@ -568,7 +568,7 @@ msgstr "內容："
 #: sd/uiconfig/simpress/ui/layoutpanel.ui:41
 msgctxt "layoutpanel|extended_tip|layoutpanel_icons"
 msgid "List of available layout templates."
-msgstr "可用版面範本清單。"
+msgstr "可用版面配置範本清單。"
 
 #. Y3kBV
 #: filter/uiconfig/ui/impswfdialog.ui:14
@@ -583,14 +583,14 @@ msgid ""
 "1: min. quality\n"
 "100: max. quality"
 msgstr ""
-"1: 最差品質\n"
-"100: 最佳品質"
+"1：最差品質\n"
+"100：最佳品質"
 
 #. oDK6o
 #: filter/uiconfig/ui/impswfdialog.ui:136
 msgctxt "impswfdialog|exportall"
 msgid "Export _all slides (uncheck to export current slide)"
-msgstr "匯出所有投影片 (不勾選只會匯出目前這張投影片)(_A)"
+msgstr "匯出所有投影片（不勾選只會匯出目前這張投影片）(_A)"
 
 #. CB9hD
 #: filter/uiconfig/ui/impswfdialog.ui:155
@@ -620,13 +620,13 @@ msgstr "匯出投影片內容(_S)"
 #: filter/uiconfig/ui/impswfdialog.ui:229
 msgctxt "impswfdialog|exportsound"
 msgid "Export _Verilogix Slide Annotations"
-msgstr "匯出 _Verilogix 投影片註解"
+msgstr "匯出 Verilogix 投影片註解(_V)"
 
 #. EAyk7
 #: filter/uiconfig/ui/impswfdialog.ui:243
 msgctxt "impswfdialog|exportoleasjpeg"
 msgid "Export OLE objects as _JPEG images"
-msgstr "將 OLE 物件匯出為 _JPEG 影像"
+msgstr "將 OLE 物件匯出為 JPEG 影像(_J)"
 
 #. eNsuA
 #: filter/uiconfig/ui/pdfgeneralpage.ui:550
@@ -648,7 +648,9 @@ msgctxt "pdfgeneralpage|pdf_version|tooltip_text"
 msgid ""
 "Select the PDF version. PDF/A version variants creates an ISO 19005 "
 "compliant PDF file, ideal for long-term document preservation."
-msgstr "製作遵循 ISO 19005-2 標準的 PDF 檔，適合長期文件保存之用。"
+msgstr ""
+"選取 PDF 版本。PDF/A 版本變體可建立符合 ISO 19005 標準的 PDF 檔案，非常適合長"
+"期文件保存。"
 
 #. Ac3Ga
 #: filter/uiconfig/ui/pdfgeneralpage.ui:587
@@ -679,14 +681,16 @@ msgid ""
 "used in the source document will be embedded into the generated PDF file. "
 "PDF tags will be written."
 msgstr ""
-"製作 PDF/A-2b 或 PDF/A-1b 格式。這是為了長期保存而定義的電子文件檔格式。所有"
-"來源文件中使用的字型都會內嵌至生成的 PDF 檔中。也會寫入 PDF 標籤。"
+"版本可以是「經典」PDF（即 PDF 1.7、PDF 2.0）或符合 PDF/A 的格式。PDF/A 被定義"
+"為一種用於長期保存與歸檔的的電子文件檔案格式。它只允許與該使用案例相容的 PDF "
+"功能子集。例如來源文件中使用的所有字型都會嵌入到產生的 PDF 檔案中。將會寫入 "
+"PDF 標籤。"
 
 #. te76B
 #: filter/uiconfig/ui/pdfgeneralpage.ui:620
 msgctxt "pdfgeneralpage|pdf_version"
 msgid "PDF_ Version:"
-msgstr "PDF/A 版本(_/)："
+msgstr "PDF/A 版本(_V)："
 
 #. tCrYc
 #: filter/uiconfig/ui/pdfgeneralpage.ui:677
@@ -814,7 +818,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Select Sheet View"
-msgstr "選擇工作表檢視"
+msgstr "選取工作表檢視"
 
 #. vCsC3
 #: CalcCommands.xcu
@@ -834,7 +838,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Manage Themes..."
-msgstr "管理主題…"
+msgstr "管理佈景主題……"
 
 #. 5LESd
 #: ChartCommands.xcu
@@ -884,7 +888,7 @@ msgctxt ""
 "ContextLabel\n"
 "value.text"
 msgid "~Select Table"
-msgstr "選取表格"
+msgstr "選取表格(~S)"
 
 #. zz8gB
 #: DrawImpressCommands.xcu
@@ -934,7 +938,7 @@ msgctxt ""
 "PopupLabel\n"
 "value.text"
 msgid "Insert Hyperlink..."
-msgstr "插入超連結..."
+msgstr "插入超連結……"
 
 #. czVMP
 #: GenericCommands.xcu
@@ -944,7 +948,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Nav~igator select comment."
-msgstr "導覽器選取註解(~i)。"
+msgstr "助手選取評註(~I)。"
 
 #. 77Q3c
 #: GenericCommands.xcu
@@ -954,7 +958,7 @@ msgctxt ""
 "TooltipLabel\n"
 "value.text"
 msgid "Select Comment In The Navigator Window/Sidebar"
-msgstr "在導覽器視窗/側邊欄中選取註解"
+msgstr "在助手視窗/側邊欄中選取評註"
 
 #. 83Euq
 #: GenericCommands.xcu
@@ -995,7 +999,7 @@ msgctxt ""
 "UIName\n"
 "value.text"
 msgid "Slide Sorter/Pane (Canvas)"
-msgstr "投影片排序器/窗格 (Canvas)"
+msgstr "投影片排序器/面板 (Canvas)"
 
 #. BQB9h
 #: ImpressWindowState.xcu
@@ -1006,7 +1010,7 @@ msgctxt ""
 "UIName\n"
 "value.text"
 msgid "Master Slide Sorter/Pane (Canvas)"
-msgstr "母片投影片排序器/窗格 (Canvas)"
+msgstr "投影片母片排序器/面板 (Canvas)"
 
 #. kB8Ri
 #: Sidebar.xcu
@@ -1046,7 +1050,7 @@ msgctxt ""
 "Title\n"
 "value.text"
 msgid "Theme"
-msgstr "主題"
+msgstr "佈景主題"
 
 #. dgWCC
 #: Sidebar.xcu
@@ -1393,7 +1397,7 @@ msgid ""
 "rows, #N/A error will be returned in the additional rows."
 msgstr ""
 "陣列 1, 陣列 2,... 以下要追加的陣列。若陣列的列數較少，將會在額外的列中回傳 "
-"#N/A。"
+"#N/A 錯誤。"
 
 #. 7zS24
 #: sc/inc/scfuncs.hrc:4313
@@ -1421,7 +1425,7 @@ msgid ""
 "columns, #N/A error will be returned in the additional columns."
 msgstr ""
 "陣列 1, 陣列 2,... 以下要追加的陣列。若陣列的欄數較少，將會在額外的欄中回傳 "
-"#N/A。"
+"#N/A 錯誤。"
 
 #. JnsYT
 #: sc/inc/scfuncs.hrc:4323
@@ -1835,7 +1839,7 @@ msgstr "要換行的範圍。"
 #: sc/inc/scfuncs.hrc:4440
 msgctxt "SC_OPCODE_WRAPCOLS"
 msgid "Wrap count"
-msgstr "環繞數"
+msgstr "換行次數"
 
 #. FWsCt
 #: sc/inc/scfuncs.hrc:4441
@@ -1879,7 +1883,7 @@ msgstr "要換行的範圍。"
 #: sc/inc/scfuncs.hrc:4452
 msgctxt "SC_OPCODE_WRAPROWS"
 msgid "Wrap count"
-msgstr "環繞數"
+msgstr "換行次數"
 
 #. 3CEsK
 #: sc/inc/scfuncs.hrc:4453
@@ -1928,13 +1932,13 @@ msgstr "選擇工作表檢視"
 #: sc/uiconfig/scalc/ui/selectsheetviewdialog.ui:44
 msgctxt "selectsheetviewdialog|extended_tip|ok"
 msgid "Saves all changes and closes dialog."
-msgstr "儲存所有變更並關閉對話框。"
+msgstr "儲存所有變更並關閉對話方塊。"
 
 #. kGFYu
 #: sc/uiconfig/scalc/ui/selectsheetviewdialog.ui:63
 msgctxt "selectsheetviewdialog|extended_tip|cancel"
 msgid "Closes dialog and discards all changes."
-msgstr "關閉對話框並捨棄所有變更。"
+msgstr "關閉對話方塊並捨棄所有變更。"
 
 #. sQPFE
 #: sc/uiconfig/scalc/ui/selectsheetviewdialog.ui:134
