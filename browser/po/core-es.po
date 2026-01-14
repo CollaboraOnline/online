@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: core-es\n"
-"PO-Revision-Date: 2025-11-29 11:00+0000\n"
+"PO-Revision-Date: 2026-01-14 23:58+0000\n"
 "Last-Translator: Adolfo Jayme Barrientos <fitojb@ubuntu.com>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/collabora-online/"
 "lokit/es/>\n"
@@ -10,7 +10,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.15-dev\n"
+"X-Generator: Weblate 5.15.2\n"
 
 #. ygDfy
 #: module_graphicfilter.ulf
@@ -147,7 +147,7 @@ msgstr ""
 #: chart2/uiconfig/ui/dlg_Theme.ui:16
 msgctxt "dlg_Theme|ChartThemeDialog"
 msgid "Manage Chart Styles"
-msgstr ""
+msgstr "Gestionar estilos de gráfico"
 
 #. kqBFK
 #: chart2/uiconfig/ui/dlg_Theme.ui:46
@@ -244,25 +244,25 @@ msgstr ""
 #: chart2/uiconfig/ui/tp_ChartColorPalette.ui:68
 msgctxt "tp_ChartColorPalette|colorfulwin"
 msgid "Colorful"
-msgstr ""
+msgstr "Colorida"
 
 #. 8QjnP
 #: chart2/uiconfig/ui/tp_ChartColorPalette.ui:126
 msgctxt "tp_ChartColorPalette|monochromaticwin"
 msgid "Monochromatic"
-msgstr ""
+msgstr "Monocromática"
 
 #. 6JxiC
 #: chart2/uiconfig/ui/tp_ChartGradients.ui:69
 msgctxt "tp_ChartGradients|lightwin"
 msgid "Light Variations"
-msgstr ""
+msgstr "Variaciones de Claro"
 
 #. DmWVa
 #: chart2/uiconfig/ui/tp_ChartGradients.ui:128
 msgctxt "tp_ChartGradients|darkwin"
 msgid "Dark Variations"
-msgstr ""
+msgstr "Variaciones de Oscuro"
 
 #. FG2rh
 #: chart2/uiconfig/ui/tp_ChartType.ui:114
@@ -1582,7 +1582,7 @@ msgstr ""
 #: sc/inc/scfuncs.hrc:4358
 msgctxt "SC_OPCODE_TEXTBEFORE"
 msgid "Instance Number"
-msgstr ""
+msgstr "Número de instancia"
 
 #. sD4zC
 #: sc/inc/scfuncs.hrc:4359
@@ -1975,24 +1975,21 @@ msgstr "Columnas"
 
 #. S4bop
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:114
-#, fuzzy
 msgctxt "sidebardatabase|chk_first_column"
 msgid "First Column"
-msgstr "Columna"
+msgstr "Primera columna"
 
 #. QR56s
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:128
-#, fuzzy
 msgctxt "sidebardatabase|chk_last_column"
 msgid "Last Column"
-msgstr "Columna"
+msgstr "Última columna"
 
 #. BJHqA
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:170
-#, fuzzy
 msgctxt "sidebardatabase|lbl_styles"
 msgid "Table Styles"
-msgstr "Actualizar estilo"
+msgstr "Estilos de tabla"
 
 #. er8nh
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:187
