@@ -742,12 +742,16 @@ class SlideShowPresenter {
 		if (this.isFollower()) {
 			const FollowImg = window.L.DomUtil.create('img', 'right-img', container);
 			FollowImg.id = 'follow';
-			const followText = _('Follow Presentation');
+			const followText = _('Follow Presenter');
 			window.L.control.attachTooltipEventListener(FollowImg, this._map);
 			FollowImg.setAttribute('aria-label', followText);
 			FollowImg.setAttribute('data-cooltip', followText);
 			setImgSize(FollowImg);
-			app.LOUtil.setImage(FollowImg, 'slideshow-slideNext.svg', this._map);
+			app.LOUtil.setImage(
+				FollowImg,
+				'slideshow-followPresenter.svg',
+				this._map,
+			);
 			FollowImg.addEventListener('click', (e: Event) => {
 				e.stopPropagation();
 				this._onA11yString(e.target);
