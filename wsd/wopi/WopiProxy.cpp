@@ -123,7 +123,7 @@ void WopiProxy::handleRequest(std::istream & message,
             }
             // Remove from the current poll and transfer.
             disposition.setTransfer(*poll,
-                [this, &poll, docKey = std::move(docKey), url = std::move(url),
+                [this, poll, docKey = std::move(docKey), url = std::move(url),
                  uriPublic, postBody](const std::shared_ptr<Socket>& moveSocket)
                 {
                     LOG_TRC_S('#' << moveSocket->getFD()
