@@ -171,6 +171,14 @@ describe(['tagdesktop'], 'Accessibility Writer Tests', { testIsolation: false },
            win.app.map.sendUnoCommand('.uno:FrameDialog');
        });
        handleDialog(win, 1, '.uno:FrameDialog');
+       cy.then(() => {
+           win.app.map.sendUnoCommand('.uno:NameGroup');
+       });
+       handleDialog(win, 1, '.uno:NameGroup');
+       cy.then(() => {
+           win.app.map.sendUnoCommand('.uno:ObjectTitleDescription');
+       });
+       handleDialog(win, 1, '.uno:ObjectTitleDescription');
     });
 
     it('ReadOnly info dialog', function () {
