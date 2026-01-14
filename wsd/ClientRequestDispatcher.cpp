@@ -2562,6 +2562,20 @@ void ClientRequestDispatcher::handleInternalProxy(const std::string& wopiSrc,
         }
 
         const std::shared_ptr<const http::Response> httpResponse = session->response();
+
+        // Check for request failure (timeout, connection error, etc.)
+        if (httpResponse->state() == http::Response::State::Error ||
+            httpResponse->state() == http::Response::State::Timeout)
+        {
+            LOG_ERR("Controller request failed for URL[" << controllerURL << "] with state["
+                                                         << httpResponse->state() << ']');
+            auto lockedSocket = weakSocket.lock();
+            if (lockedSocket)
+                HttpHelper::sendErrorAndShutdown(http::StatusCode::ServiceUnavailable,
+                                                 lockedSocket);
+            return;
+        }
+
         const http::StatusLine statusLine = httpResponse->statusLine();
 
         LOG_TRC("Request to URL[" << controllerURL << " returned " << statusLine.statusCode());
@@ -2583,6 +2597,10 @@ void ClientRequestDispatcher::handleInternalProxy(const std::string& wopiSrc,
         {
             LOG_ERR("Failed to get targetPodIP from URL[" << controllerURL << "] with statusCode["
                                                           << statusLine.statusCode() << ']');
+            auto lockedSocket = weakSocket.lock();
+            if (lockedSocket)
+                HttpHelper::sendErrorAndShutdown(http::StatusCode::ServiceUnavailable,
+                                                 lockedSocket);
             return;
         }
 
@@ -2594,6 +2612,10 @@ void ClientRequestDispatcher::handleInternalProxy(const std::string& wopiSrc,
         {
             LOG_ERR("Failed to parse JSON[" << body << "] from URL[" << controllerURL
                                             << "] failed");
+            auto lockedSocket = weakSocket.lock();
+            if (lockedSocket)
+                HttpHelper::sendErrorAndShutdown(http::StatusCode::ServiceUnavailable,
+                                                 lockedSocket);
             return;
         }
 
@@ -2601,7 +2623,14 @@ void ClientRequestDispatcher::handleInternalProxy(const std::string& wopiSrc,
             JsonUtil::getJSONValue<std::string>(targetPodJSON, "pod_ip");
         int targetPort = JsonUtil::getJSONValue<int>(targetPodJSON, "port");
         if (targetPodIP.empty())
+        {
+            LOG_ERR("Empty pod_ip in response from URL[" << controllerURL << ']');
+            auto lockedSocket = weakSocket.lock();
+            if (lockedSocket)
+                HttpHelper::sendErrorAndShutdown(http::StatusCode::ServiceUnavailable,
+                                                 lockedSocket);
             return;
+        }
 
         LOG_INF("Document [" << wopiSrc << "] is on podIP[" << targetPodIP << "]. Proxying...");
         auto lockedSocket = weakSocket.lock();
