@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-12-08 11:25+0100\n"
-"PO-Revision-Date: 2025-12-11 21:00+0000\n"
+"PO-Revision-Date: 2026-01-13 06:40+0000\n"
 "Last-Translator: Amadɣas <massiin@proton.me>\n"
 "Language-Team: Kabyle <https://hosted.weblate.org/projects/collabora-online/"
 "ui/kab/>\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 5.15-dev\n"
+"X-Generator: Weblate 5.15.2-dev\n"
 "X-POOTLE-MTIME: 1463059003.000000\n"
 
 #: admin/admin.strings.js:15
@@ -884,7 +884,7 @@ msgstr " srg"
 
 #: admin/src/Util.js:92 admin/src/Util.js:94
 msgid " mins"
-msgstr ""
+msgstr " addayen"
 
 #: admin/src/Util.js:97
 msgid " s"
@@ -895,26 +895,28 @@ msgid ""
 "The system is currently adjusting resources. Please wait a moment while we "
 "retry your request..."
 msgstr ""
+"Anagraw la iṣeggem akka tura tiɣbula. Ttxil-k·m, rǧu cwiṭ akken ad as-nɛiwed "
+"i usuter-ik·im…"
 
 #: js/global.js:1612
 msgid "The document is being migrated to a new server. Retrying shortly..."
-msgstr ""
+msgstr "Isemli ad yettwasenkez ɣer uqeddac amaynut. Ales akka cwiṭ…"
 
 #: js/global.js:1614
 msgid "Failed to get RouteToken from controller"
-msgstr ""
+msgstr "Yecceḍ wawway n ujiṭun n ubrid seg usenqad"
 
 #: src/app/Debug.ts:138
 msgid "Debug Tools"
-msgstr ""
+msgstr "Ifecka n temseɣtayt"
 
 #: src/app/Debug.ts:140
 msgid "Ctrl+Shift+Alt+D to exit"
-msgstr ""
+msgstr "Ctrl+Shift+Alt+D i tuffɣa"
 
 #: src/app/Debug.ts:1408
 msgid "Event handling has been delayed for an unexpectedly long time: {0}ms"
-msgstr ""
+msgstr "Tiririt n uneḍru tettwaɛeṭṭel ɣef teɣzi ur nettuṛaǧu ara: 0}ms"
 
 #: src/canvas/sections/CommentListSection.ts:1240
 msgid "Modify"
@@ -978,17 +980,17 @@ msgstr "Commentaire"
 #: src/canvas/sections/CommentListSection.ts:1526
 #: src/canvas/sections/CommentListSection.ts:1539
 msgid "Comments Updated"
-msgstr ""
+msgstr "Iwenniten ttwaleqmen"
 
 #: src/canvas/sections/CommentListSection.ts:1527
 msgid "Another user has removed this comment."
-msgstr ""
+msgstr "Aseqdac nniḍen yekkes awennit-agi."
 
 #: src/canvas/sections/CommentListSection.ts:1540
 msgid ""
 "Another user has updated the comment. Would you like to overwrite those "
 "changes?"
-msgstr ""
+msgstr "Aseqdac nniḍen ileqqem uwennit-nni. Tebɣiḍ ad tesfesxeḍ ibeddilen-agi?"
 
 #: src/canvas/sections/CommentListSection.ts:1541 src/core/Socket.js:1259
 msgid "Overwrite"
@@ -1004,7 +1006,7 @@ msgstr "Ẓreg awennit"
 
 #: src/canvas/sections/CommentSection.ts:46
 msgid "Reply comment"
-msgstr ""
+msgstr "Err i uwennit"
 
 #: src/canvas/sections/CommentSection.ts:47
 msgid "Open menu"
@@ -1012,17 +1014,17 @@ msgstr "Ldi umuɣ"
 
 #: src/canvas/sections/CommentSection.ts:347
 msgid "Press Ctrl + Enter to post"
-msgstr ""
+msgstr "Sit ɣef Ctrl + Kcem i tsuffeɣt"
 
 #: src/canvas/sections/CommentSection.ts:411
 #: src/canvas/sections/CommentSection.ts:412
 msgid "Accept change"
-msgstr ""
+msgstr "Qbel abeddel"
 
 #: src/canvas/sections/CommentSection.ts:418
 #: src/canvas/sections/CommentSection.ts:419
 msgid "Reject change"
-msgstr ""
+msgstr "Agi abeddel"
 
 #: src/canvas/sections/CommentSection.ts:443
 msgid "Resolved"
@@ -1072,15 +1074,15 @@ msgstr ""
 
 #: src/control/Control.AboutDialog.ts:185
 msgid "Copy all version information in English"
-msgstr ""
+msgstr "Nɣel akk talɣut n lqem s teglizit"
 
 #: src/control/Control.AddressInputField.ts:67
 msgid "cell address"
-msgstr ""
+msgstr "tansa n tebniqt"
 
 #: src/control/Control.AlertDialog.js:55
 msgid "External link"
-msgstr ""
+msgstr "Aseɣwen azɣaray"
 
 #: src/control/Control.AlertDialog.js:56
 msgid "Open link"
@@ -1088,11 +1090,11 @@ msgstr "Ldi aseɣwen"
 
 #: src/control/Control.AlertDialog.js:68
 msgid "Copied external sources are not allowed"
-msgstr ""
+msgstr "Iɣbula izɣayanin ur ttwaneɣlen ara"
 
 #: src/control/Control.AlertDialog.js:69
 msgid "It seems you have copied a selection that includes external images."
-msgstr ""
+msgstr "Yettban-d am akken tesneɣleḍ tafrayt igebren tugniwin tizɣayanin."
 
 #: src/control/Control.AlertDialog.js:70
 msgid ""
@@ -1100,28 +1102,33 @@ msgid ""
 "possible. Please right click in the image, choose \"Copy Image\" and paste "
 "it into the document instead."
 msgstr ""
+"Asider n teɣbula tizɣarayen ttwagedlent maca asenṭeḍ n tugniwin mazal "
+"yettedu. Ma ulac aɣilif, sit ayeffus ɣef tugna, fren \"Nɣel tugna\" sakin "
+"senṭeḍ-itt ɣer isemli."
 
 #: src/control/Control.AlertDialog.js:74
 msgid "External data source not allowed"
-msgstr ""
+msgstr "Aɣbalu n isefka izɣarayen ur yettusireg ara"
 
 #: src/control/Control.AlertDialog.js:75
 msgid "It seems you have tried to insert external data."
-msgstr ""
+msgstr "Yettban d akken tɛerḍeḍ ad tegreḍ isefka izɣarayen."
 
 #: src/control/Control.AlertDialog.js:76
 msgid ""
 "Selected external data source is forbidden. Please contact the system "
 "administrator."
 msgstr ""
+"Aɣbalu n isefka izɣarayen yettwagdel. Nermes anedbal n unagraw ma ulac "
+"aɣilif."
 
 #: src/control/Control.AlertDialog.js:88 src/map/Clipboard.js:1322
 msgid "Don’t show this again"
-msgstr ""
+msgstr "Ur ttɛawad ara ad d-tessekneḍ aya"
 
 #: src/control/Control.AlertDialog.js:107
 msgid "The server encountered a {0} error while parsing the {1} command."
-msgstr ""
+msgstr "Aqeddac yemlal-d {0} n tuccḍa deg uslaḍ n taladna {1}."
 
 #: src/control/Control.BackstageView.ts:157
 #: src/control/Control.BackstageView.ts:158
@@ -1222,36 +1229,35 @@ msgstr ""
 
 #: src/control/Control.BackstageView.ts:451
 msgid "More Property Info"
-msgstr ""
+msgstr "Ugar n telɣut ɣef tɣaṛa"
 
 #: src/control/Control.BackstageView.ts:530
 msgid "Text Document"
-msgstr ""
+msgstr "Isemli n uḍris"
 
 #: src/control/Control.BackstageView.ts:530
 #: src/control/Control.BackstageView.ts:533
-#, fuzzy
 msgid "Pages"
-msgstr "Asebter"
+msgstr "Isebtar"
 
 #: src/control/Control.BackstageView.ts:531
 msgid "Spreadsheet"
-msgstr ""
+msgstr "Ambellez"
 
 #: src/control/Control.BackstageView.ts:531
 msgid "Sheets"
-msgstr ""
+msgstr "Ifriwen"
 
 #: src/control/Control.BackstageView.ts:532
 #: src/control/Control.NavigatorPanel.ts:189
 #: src/control/Control.NotebookbarImpress.js:1418
 #: src/slideshow/PresenterConsole.js:34
 msgid "Slides"
-msgstr ""
+msgstr "Timeccegin"
 
 #: src/control/Control.BackstageView.ts:538
 msgid "Parts"
-msgstr ""
+msgstr "Iḥricen"
 
 #: src/control/Control.BackstageView.ts:542
 #: src/control/Control.DocumentRepair.js:140
@@ -1260,31 +1266,31 @@ msgstr "Ṣṣenf"
 
 #: src/control/Control.BackstageView.ts:548
 msgid "Mode"
-msgstr ""
+msgstr "Askar"
 
 #: src/control/Control.BackstageView.ts:549
 msgid "View Only"
-msgstr ""
+msgstr "Wali kan"
 
 #: src/control/Control.BackstageView.ts:556
 msgid "File Name"
-msgstr ""
+msgstr "Isem n ufaylu"
 
 #: src/control/Control.BackstageView.ts:658
 msgid "Loading templates…"
-msgstr ""
+msgstr "Asali n tneɣrufin…"
 
 #: src/control/Control.BackstageView.ts:704
 msgid "Search templates"
-msgstr ""
+msgstr "Nadi tineɣrufin"
 
 #: src/control/Control.BackstageView.ts:762
 msgid "No templates match your search."
-msgstr ""
+msgstr "Ulac tineɣrufin yenmeɣran anadi-k·m."
 
 #: src/control/Control.BackstageView.ts:868
 msgid "Blank Spreadsheet"
-msgstr ""
+msgstr "Ambellez ilem"
 
 #: src/control/Control.BackstageView.ts:872
 msgid "Blank Presentation"
@@ -1383,15 +1389,15 @@ msgstr ""
 #: src/control/Control.DownloadProgress.js:111
 msgid ""
 "From now on clipboard notifications will discreetly appear at the bottom."
-msgstr ""
+msgstr "Sya d asawen, ilɣa n tecfawit ad d-banen s tuffra deg tama n wadda."
 
 #: src/control/Control.DownloadProgress.js:272
 msgid "Content copied to clipboard"
-msgstr ""
+msgstr "Agbur yettwanɣel ɣer tecfawit"
 
 #: src/control/Control.DownloadProgress.js:302
 msgid "Download failed"
-msgstr ""
+msgstr "Asider yecceḍ"
 
 #: src/control/Control.ESignature.ts:127
 msgid "Andorra"
@@ -1399,7 +1405,7 @@ msgstr "Undurra"
 
 #: src/control/Control.ESignature.ts:128
 msgid "United Arab Emirates"
-msgstr ""
+msgstr "Limarat Taɛrabin yedduklen"
 
 #: src/control/Control.ESignature.ts:129
 msgid "Albania"
@@ -1423,7 +1429,7 @@ msgstr "Usṭralya"
 
 #: src/control/Control.ESignature.ts:134
 msgid "Åland Islands"
-msgstr ""
+msgstr "Tigzirin Åland"
 
 #: src/control/Control.ESignature.ts:135
 msgid "Azerbaijan"
@@ -1431,7 +1437,7 @@ msgstr "Azerbijan"
 
 #: src/control/Control.ESignature.ts:136
 msgid "Bosnia and Herzegovina"
-msgstr ""
+msgstr "Busnya d Hirziguvina"
 
 #: src/control/Control.ESignature.ts:137
 msgid "Belgium"
@@ -1555,7 +1561,7 @@ msgstr "Kinya"
 
 #: src/control/Control.ESignature.ts:167
 msgid "South Korea"
-msgstr ""
+msgstr "Kurya n Wenẓul"
 
 #: src/control/Control.ESignature.ts:168
 msgid "Kazakhstan"
@@ -1583,7 +1589,7 @@ msgstr "Munaku"
 
 #: src/control/Control.ESignature.ts:174
 msgid "Moldova, Republic of"
-msgstr ""
+msgstr "Mulduva, Tegduda"
 
 #: src/control/Control.ESignature.ts:175
 msgid "Montenegro"
@@ -1591,7 +1597,7 @@ msgstr "Muntinigru"
 
 #: src/control/Control.ESignature.ts:176
 msgid "North Macedonia, Republic of"
-msgstr ""
+msgstr "Masidunya n ugafa, Tagduda"
 
 #: src/control/Control.ESignature.ts:177
 msgid "Malta"
