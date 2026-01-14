@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-12-08 11:25+0100\n"
-"PO-Revision-Date: 2025-12-11 21:00+0000\n"
+"PO-Revision-Date: 2025-12-29 14:42+0000\n"
 "Last-Translator: dukezas <dukezas@gmail.com>\n"
 "Language-Team: Lithuanian <https://hosted.weblate.org/projects/collabora-"
 "online/ui/lt/>\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
 "(n%100<10 || n%100>=20) ? 1 : 2);\n"
-"X-Generator: Weblate 5.15-dev\n"
+"X-Generator: Weblate 5.15.1\n"
 
 #: admin/admin.strings.js:15
 msgid "Admin console"
@@ -1142,12 +1142,12 @@ msgstr "Serveris aptiko {0} klaidą analizuodamas {1} komandą."
 #: src/control/Control.BackstageView.ts:157
 #: src/control/Control.BackstageView.ts:158
 msgid "Close backstage"
-msgstr ""
+msgstr "Uždaryti \"Backstage\" rodinį"
 
 #: src/control/Control.BackstageView.ts:202
 #: src/control/Control.BackstageView.ts:203
 msgid "Back to document"
-msgstr ""
+msgstr "Grįžti į dokumentą"
 
 #: src/control/Control.BackstageView.ts:238
 #: src/control/Control.NotebookbarCalc.js:29
@@ -1155,13 +1155,13 @@ msgstr ""
 #: src/control/Control.NotebookbarImpress.js:83
 #: src/control/Control.NotebookbarWriter.js:43
 msgid "Home"
-msgstr ""
+msgstr "Pagrindinis"
 
 #: src/control/Control.BackstageView.ts:245
 #: src/control/Control.NotebookbarImpress.js:811
 #: src/control/Control.NotebookbarImpress.js:1425
 msgid "New"
-msgstr ""
+msgstr "Naujas"
 
 #: src/control/Control.BackstageView.ts:259
 #: src/control/Control.Notebookbar.js:632
@@ -1175,11 +1175,11 @@ msgstr ""
 #: src/control/Control.NotebookbarWriter.js:218
 #: src/control/Control.NotebookbarWriter.js:251
 msgid "Share"
-msgstr ""
+msgstr "Dalintis"
 
 #: src/control/Control.BackstageView.ts:266
 msgid "Info"
-msgstr ""
+msgstr "Informacija"
 
 #: src/control/Control.BackstageView.ts:280
 #: src/control/Control.NotebookbarCalc.js:165
@@ -1187,44 +1187,44 @@ msgstr ""
 #: src/control/Control.NotebookbarWriter.js:179
 #: src/control/Control.NotebookbarWriter.js:320
 msgid "Save As"
-msgstr ""
+msgstr "Išsaugoti kaip"
 
 #: src/control/Control.BackstageView.ts:294
 msgid "Export"
-msgstr ""
+msgstr "Eksportuoti"
 
 #: src/control/Control.BackstageView.ts:340
 #: src/control/jsdialog/Widget.ColorPicker.ts:421
 msgid "Recent"
-msgstr ""
+msgstr "Nesenas/paskutinis"
 
 #: src/control/Control.BackstageView.ts:341
 msgid "Recently opened documents will appear here"
-msgstr ""
+msgstr "Neseniai atidaryti dokumentai bus rodomi čia"
 
 #: src/control/Control.BackstageView.ts:353
 msgid "New Document"
-msgstr ""
+msgstr "Naujas dokumentas"
 
 #: src/control/Control.BackstageView.ts:354
 msgid "Start from a template or a blank file"
-msgstr ""
+msgstr "Pradėkite nuo šablono arba tuščio failo"
 
 #: src/control/Control.BackstageView.ts:375
 msgid "Document Info"
-msgstr ""
+msgstr "Dokumento informacija"
 
 #: src/control/Control.BackstageView.ts:376
 msgid "View document properties and information"
-msgstr ""
+msgstr "Peržiūrėti dokumento ypatybes ir informaciją"
 
 #: src/control/Control.BackstageView.ts:392
 msgid "Export Document"
-msgstr ""
+msgstr "Eksportuoti dokumentą"
 
 #: src/control/Control.BackstageView.ts:393
 msgid "export your documents in different formats"
-msgstr ""
+msgstr "eksportuoti dokumentus įvairiais formatais"
 
 #: src/control/Control.BackstageView.ts:445 src/control/Control.Menubar.ts:381
 #: src/control/Control.Menubar.ts:1354
@@ -1234,36 +1234,35 @@ msgstr ""
 #: src/control/Control.NotebookbarWriter.js:350
 #: src/control/Control.NotebookbarWriter.js:1603
 msgid "Properties"
-msgstr ""
+msgstr "Ypatybės"
 
 #: src/control/Control.BackstageView.ts:451
 msgid "More Property Info"
-msgstr ""
+msgstr "Daugiau informacijos apie objektą"
 
 #: src/control/Control.BackstageView.ts:530
 msgid "Text Document"
-msgstr ""
+msgstr "Tekstinis dokumentas"
 
 #: src/control/Control.BackstageView.ts:530
 #: src/control/Control.BackstageView.ts:533
-#, fuzzy
 msgid "Pages"
-msgstr "Lapas"
+msgstr "Puslapiai"
 
 #: src/control/Control.BackstageView.ts:531
 msgid "Spreadsheet"
-msgstr ""
+msgstr "Skaičiuoklė"
 
 #: src/control/Control.BackstageView.ts:531
 msgid "Sheets"
-msgstr ""
+msgstr "Lapai"
 
 #: src/control/Control.BackstageView.ts:532
 #: src/control/Control.NavigatorPanel.ts:189
 #: src/control/Control.NotebookbarImpress.js:1418
 #: src/slideshow/PresenterConsole.js:34
 msgid "Slides"
-msgstr ""
+msgstr "Skaidrės"
 
 #: src/control/Control.BackstageView.ts:538
 msgid "Parts"
@@ -1303,9 +1302,8 @@ msgid "Blank Spreadsheet"
 msgstr "Tuščia skaičiuoklė"
 
 #: src/control/Control.BackstageView.ts:872
-#, fuzzy
 msgid "Blank Presentation"
-msgstr "Visaekranė pateiktis"
+msgstr "Tuščias pristatymas"
 
 #: src/control/Control.BackstageView.ts:877
 msgid "Blank Document"
@@ -2068,12 +2066,12 @@ msgstr "Stilių sąrašas"
 #: src/control/Control.Menubar.ts:1310 src/control/Control.Menubar.ts:1360
 #: src/control/Control.Menubar.ts:1374 src/control/Control.Menubar.ts:1397
 msgid "Local Image..."
-msgstr ""
+msgstr "Vietinis atvaizdas..."
 
 #: src/control/Control.Menubar.ts:206 src/control/Control.Menubar.ts:208
 #: src/control/Control.Menubar.ts:1327 src/control/Control.Menubar.ts:1329
 msgid "All"
-msgstr ""
+msgstr "Visi"
 
 #: src/control/Control.Menubar.ts:218 src/control/Control.Menubar.ts:520
 #: src/control/Control.Menubar.ts:674 src/control/Control.Menubar.ts:834
@@ -2082,94 +2080,93 @@ msgstr ""
 #: src/control/Control.NotebookbarImpress.js:1609
 #: src/control/Control.NotebookbarWriter.js:1315
 msgid "Smart Picker"
-msgstr ""
+msgstr "Išmanusis parinkėjas"
 
 #: src/control/Control.Menubar.ts:219 src/control/Control.Menubar.ts:521
 #: src/control/Control.Menubar.ts:675 src/control/Control.Menubar.ts:835
 msgid "AI Assistant"
-msgstr ""
+msgstr "DI padėjėjas"
 
 #: src/control/Control.Menubar.ts:260
 msgid "Text orientation"
-msgstr ""
+msgstr "Teksto orientacija"
 
 #: src/control/Control.Menubar.ts:330
 #: src/control/Notebookbar.WriterReferencesTab.ts:25
 msgid "References"
-msgstr ""
+msgstr "Nuorodos"
 
 #: src/control/Control.Menubar.ts:333
 #: src/control/Notebookbar.WriterReferencesTab.ts:72
 msgid "Update Index"
-msgstr ""
+msgstr "Atnaujinti turinį"
 
 #: src/control/Control.Menubar.ts:342
 #: src/control/Notebookbar.WriterReferencesTab.ts:220
 msgid "Add Citation"
-msgstr ""
+msgstr "Pridėti citatą"
 
 #: src/control/Control.Menubar.ts:343
 #: src/control/Notebookbar.WriterReferencesTab.ts:237
 msgid "Add Citation Note"
-msgstr ""
+msgstr "Pridėti citatos pastabą"
 
 #: src/control/Control.Menubar.ts:344
 #: src/control/Notebookbar.WriterReferencesTab.ts:203
 msgid "Add Bibliography"
-msgstr ""
+msgstr "Pridėti bibliografiją"
 
 #: src/control/Control.Menubar.ts:346
 #: src/control/Notebookbar.WriterReferencesTab.ts:262
 msgid "Refresh Citations"
-msgstr ""
+msgstr "Atnaujinti citatas"
 
 #: src/control/Control.Menubar.ts:347
 #: src/control/Notebookbar.WriterReferencesTab.ts:279
 #: src/control/Control.Zotero.js:1531
 msgid "Unlink Citations"
-msgstr ""
+msgstr "Atsieti citatas"
 
 #: src/control/Control.Menubar.ts:348
 #: src/control/Notebookbar.WriterReferencesTab.ts:296
 msgid "Citation Preferences"
-msgstr ""
+msgstr "Citatų nustatymai"
 
 #: src/control/Control.Menubar.ts:376 src/control/Control.Menubar.ts:1349
 msgid "Insert Rich Text"
-msgstr ""
+msgstr "Įterpti raiškųjį tekstą"
 
 #: src/control/Control.Menubar.ts:377 src/control/Control.Menubar.ts:1350
 msgid "Insert Checkbox"
-msgstr ""
+msgstr "Įterpti žymimąjį langelį"
 
 #: src/control/Control.Menubar.ts:378 src/control/Control.Menubar.ts:1351
 msgid "Insert Dropdown"
-msgstr ""
+msgstr "Įterpti išskleidžiamąjį meniu"
 
 #: src/control/Control.Menubar.ts:379 src/control/Control.Menubar.ts:1352
 msgid "Insert Picture"
-msgstr ""
+msgstr "Įterpti paveikslėlį"
 
 #: src/control/Control.Menubar.ts:380 src/control/Control.Menubar.ts:1353
-#, fuzzy
 msgid "Insert Date"
-msgstr "Įterpti lentelę"
+msgstr "Įterpti datą"
 
 #: src/control/Control.Menubar.ts:401 src/control/Control.Menubar.ts:1098
 #: src/control/Control.NotebookbarWriter.js:472
 msgid "Screen Reading"
-msgstr ""
+msgstr "Ekrano skaitymas"
 
 #: src/control/Control.Menubar.ts:414
 #: src/control/Control.NotebookbarWriter.js:436
 msgid "Forum"
-msgstr ""
+msgstr "Forumas"
 
 #: src/control/Control.Menubar.ts:415 src/control/Control.Menubar.ts:598
 #: src/control/Control.Menubar.ts:737 src/control/Control.Menubar.ts:1035
 #: src/control/Control.NotebookbarWriter.js:448
 msgid "Online Help"
-msgstr ""
+msgstr "Pagalba internetu"
 
 #: src/control/Control.Menubar.ts:416 src/control/Control.Menubar.ts:599
 #: src/control/Control.Menubar.ts:738 src/control/Control.Menubar.ts:1036
@@ -2181,7 +2178,7 @@ msgstr "Spartieji klavišai"
 #: src/control/Control.Menubar.ts:739 src/control/Control.Menubar.ts:1037
 #: src/control/Control.NotebookbarWriter.js:510
 msgid "Report an issue"
-msgstr ""
+msgstr "Pranešti apie problemą"
 
 #: src/control/Control.Menubar.ts:418 src/control/Control.Menubar.ts:601
 #: src/control/Control.Menubar.ts:740 src/control/Control.Menubar.ts:1038
@@ -2189,7 +2186,7 @@ msgstr ""
 #: src/control/Control.Menubar.ts:1227 src/control/Control.Menubar.ts:1302
 #: src/control/Control.NotebookbarWriter.js:524
 msgid "Latest Updates"
-msgstr ""
+msgstr "Pakutiniai atnaujinimai"
 
 #: src/control/Control.Menubar.ts:419 src/control/Control.Menubar.ts:602
 #: src/control/Control.Menubar.ts:741 src/control/Control.Menubar.ts:1039
@@ -2197,7 +2194,7 @@ msgstr ""
 #: src/control/Control.Menubar.ts:1228 src/control/Control.Menubar.ts:1303
 #: src/control/Control.NotebookbarWriter.js:538
 msgid "Send Feedback"
-msgstr ""
+msgstr "Siųsti atsiliepimą"
 
 #: src/control/Control.Menubar.ts:420 src/control/Control.Menubar.ts:603
 #: src/control/Control.Menubar.ts:742 src/control/Control.Menubar.ts:1040
@@ -2205,12 +2202,12 @@ msgstr ""
 #: src/control/Control.ServerAuditDialog.ts:287
 #: src/control/Control.ServerAuditDialog.ts:288
 msgid "Server audit"
-msgstr ""
+msgstr "Serverio auditas"
 
 #: src/control/Control.Menubar.ts:423 src/control/Control.Menubar.ts:606
 #: src/control/Control.Menubar.ts:745 src/control/Control.Menubar.ts:1043
 msgid "Last modification"
-msgstr ""
+msgstr "Paskutiniai pakeitimai"
 
 #: src/control/Control.Menubar.ts:430 src/control/Control.Menubar.ts:443
 #: src/control/Control.Menubar.ts:1128
@@ -2224,78 +2221,77 @@ msgstr "ODF pateiktis (.odp)"
 #: src/control/Control.NotebookbarBuilder.js:432
 #: src/control/Control.NotebookbarBuilder.js:602
 msgid "PowerPoint 2003 Presentation (.ppt)"
-msgstr ""
+msgstr "PowerPoint 2003 pristatymas (.ppt)"
 
 #: src/control/Control.Menubar.ts:432 src/control/Control.Menubar.ts:445
 #: src/control/Control.Menubar.ts:1130
 #: src/control/Control.NotebookbarBuilder.js:428
 #: src/control/Control.NotebookbarBuilder.js:598
 msgid "PowerPoint Presentation (.pptx)"
-msgstr ""
+msgstr "PowerPoint pristatymas (.pptx)"
 
 #: src/control/Control.Menubar.ts:437 src/control/Control.Menubar.ts:616
-#, fuzzy
 msgid "Save Comments"
-msgstr "Komentaras"
+msgstr "Išsaugoti komentarus"
 
 #: src/control/Control.Menubar.ts:446
 #: src/control/Control.NotebookbarBuilder.js:436
 msgid "HTML Document (.html)"
-msgstr ""
+msgstr "HTML dokumentas (.html)"
 
 #: src/control/Control.Menubar.ts:447
 #: src/control/Control.NotebookbarBuilder.js:467
 msgid "Shockwave Flash (.swf)"
-msgstr ""
+msgstr "Shockwave Flash'as (.swf)"
 
 #: src/control/Control.Menubar.ts:448
 #: src/control/Control.NotebookbarBuilder.js:479
 msgid "Scalable Vector Graphics (.svg)"
-msgstr ""
+msgstr "Keičiamo dydžio vektorinė grafika (.svg)"
 
 #: src/control/Control.Menubar.ts:449
 #: src/control/Control.NotebookbarBuilder.js:491
 msgid "Current slide as Bitmap (.bmp)"
-msgstr ""
+msgstr "Esama skaidrė Bitmap formatu (.bmp)"
 
 #: src/control/Control.Menubar.ts:450
 #: src/control/Control.NotebookbarBuilder.js:503
 msgid "Current slide as Graphics Interchange Format (.gif)"
-msgstr ""
+msgstr "Esama skaidrė GIF formatu (.gif)"
 
 #: src/control/Control.Menubar.ts:451
 #: src/control/Control.NotebookbarBuilder.js:515
 msgid "Current slide as Portable Network Graphics (.png)"
-msgstr ""
+msgstr "Esama skaidrė PNG formatu (.png)"
 
 #: src/control/Control.Menubar.ts:452
 #: src/control/Control.NotebookbarBuilder.js:527
 msgid "Current slide as Tag Image File Format (.tiff)"
-msgstr ""
+msgstr "Esama skaidrė TIFF formatu (.tiff)"
 
 #: src/control/Control.Menubar.ts:459
 #: src/control/Control.NotebookbarBuilder.js:665
 msgid "Full Page Slides"
-msgstr ""
+msgstr "Skaidrės per visą lapą"
 
 #: src/control/Control.Menubar.ts:460
 #: src/control/Control.NotebookbarBuilder.js:669
 msgid "Notes Pages"
-msgstr ""
+msgstr "Pastabų puslapiai"
 
 #: src/control/Control.Menubar.ts:494
 #: src/control/Control.NotebookbarImpress.js:644
 msgid "Notes View"
-msgstr ""
+msgstr "Pastabų peržiūra"
 
 #: src/control/Control.Menubar.ts:498
 #: src/control/Control.NotebookbarImpress.js:650
 msgid "Master View"
-msgstr ""
+msgstr "Pagrindinis vaizdas"
 
 #: src/control/Control.Menubar.ts:511
 msgid "Local Multimedia..."
-msgstr ""
+msgstr "Vietinė multimedija..."
 
 #: src/control/Control.Menubar.ts:580 src/control/Control.Menubar.ts:1171
 #: src/control/Control.PresentationBar.js:128
@@ -2304,25 +2300,24 @@ msgstr "Visaekranė pateiktis"
 
 #: src/control/Control.Menubar.ts:581
 msgid "Present current slide"
-msgstr ""
+msgstr "Rodyti dabartinę skaidrę"
 
 #: src/control/Control.Menubar.ts:582
 msgid "Present in new window"
-msgstr ""
+msgstr "Pateikti naujame lange"
 
 #: src/control/Control.Menubar.ts:584
 #: src/control/Control.NotebookbarImpress.js:493
 #: src/slideshow/PresenterConsole.js:249
 msgid "Presenter Console"
-msgstr ""
+msgstr "Pranešėjo konsolė"
 
 #: src/control/Control.Menubar.ts:623 src/control/Control.Menubar.ts:1131
 #: src/control/Control.Menubar.ts:1192
 #: src/control/Control.NotebookbarBuilder.js:424
 #: src/control/Control.NotebookbarBuilder.js:537
-#, fuzzy
 msgid "ODF Drawing (.odg)"
-msgstr "ODF pateiktis (.odp)"
+msgstr "ODF piešinys (.odp)"
 
 #: src/control/Control.Menubar.ts:752 src/control/Control.Menubar.ts:764
 #: src/control/Control.Menubar.ts:1250
@@ -2336,104 +2331,104 @@ msgstr "ODF skaičiuoklės dokumentas (.ods)"
 #: src/control/Control.NotebookbarBuilder.js:394
 #: src/control/Control.NotebookbarBuilder.js:587
 msgid "Excel 2003 Spreadsheet (.xls)"
-msgstr ""
+msgstr "Excel 2003 skaičiuoklė (.xls)"
 
 #: src/control/Control.Menubar.ts:754 src/control/Control.Menubar.ts:766
 #: src/control/Control.Menubar.ts:1252
 #: src/control/Control.NotebookbarBuilder.js:390
 #: src/control/Control.NotebookbarBuilder.js:583
 msgid "Excel Spreadsheet (.xlsx)"
-msgstr ""
+msgstr "Excel skaičiuoklė (.xlsx)"
 
 #: src/control/Control.Menubar.ts:767
 msgid "CSV file (.csv)"
-msgstr ""
+msgstr "CSV failas (.csv)"
 
 #: src/control/Control.Menubar.ts:774
 #: src/control/jsdialog/Definitions.Menu.ts:1572
 msgid "Active sheet"
-msgstr ""
+msgstr "Aktyvus lapas"
 
 #: src/control/Control.Menubar.ts:813
 #: src/control/Control.NotebookbarCalc.js:1513
 msgid "Focus Cell"
-msgstr ""
+msgstr "Fokusuoti langelį"
 
 #: src/control/Control.Menubar.ts:908
 #: src/control/jsdialog/Definitions.Menu.ts:1820
 msgid "Highlight cells with..."
-msgstr ""
+msgstr "Paryškinkite langelius su..."
 
 #: src/control/Control.Menubar.ts:909
 #: src/control/jsdialog/Definitions.Menu.ts:1823
 msgid "Values greater than..."
-msgstr ""
+msgstr "Vertės didesnės už..."
 
 #: src/control/Control.Menubar.ts:910
 #: src/control/jsdialog/Definitions.Menu.ts:1827
 msgid "Values less than..."
-msgstr ""
+msgstr "Vertės mažesnės už..."
 
 #: src/control/Control.Menubar.ts:911
 #: src/control/jsdialog/Definitions.Menu.ts:1831
 msgid "Values equal to..."
-msgstr ""
+msgstr "Vertės lygios..."
 
 #: src/control/Control.Menubar.ts:912
 #: src/control/jsdialog/Definitions.Menu.ts:1835
 msgid "Values between..."
-msgstr ""
+msgstr "Vertės tarp..."
 
 #: src/control/Control.Menubar.ts:913
 #: src/control/jsdialog/Definitions.Menu.ts:1839
 msgid "Values duplicate..."
-msgstr ""
+msgstr "Vertės pasikartoja..."
 
 #: src/control/Control.Menubar.ts:914
 #: src/control/jsdialog/Definitions.Menu.ts:1843
 msgid "Containing text..."
-msgstr ""
+msgstr "Su tekstu..."
 
 #: src/control/Control.Menubar.ts:916 src/control/Control.Menubar.ts:926
 #: src/control/jsdialog/Definitions.Menu.ts:1847
 #: src/control/jsdialog/Definitions.Menu.ts:1878
 msgid "More highlights..."
-msgstr ""
+msgstr "Daugiau paryškinimų..."
 
 #: src/control/Control.Menubar.ts:918
 #: src/control/jsdialog/Definitions.Menu.ts:1851
 msgid "Top/Bottom Rules..."
-msgstr ""
+msgstr "Viršaus/apačios taisyklės..."
 
 #: src/control/Control.Menubar.ts:919
 #: src/control/jsdialog/Definitions.Menu.ts:1854
 msgid "Top N elements..."
-msgstr ""
+msgstr "Viršutiniai N elementai..."
 
 #: src/control/Control.Menubar.ts:920
 #: src/control/jsdialog/Definitions.Menu.ts:1858
 msgid "Top N percent..."
-msgstr ""
+msgstr "Viršutiniai N procentai..."
 
 #: src/control/Control.Menubar.ts:921
 #: src/control/jsdialog/Definitions.Menu.ts:1862
 msgid "Bottom N elements..."
-msgstr ""
+msgstr "Žemutiniai N elementai..."
 
 #: src/control/Control.Menubar.ts:922
 #: src/control/jsdialog/Definitions.Menu.ts:1866
 msgid "Bottom N percent..."
-msgstr ""
+msgstr "Žemutiniai N procentai..."
 
 #: src/control/Control.Menubar.ts:923
 #: src/control/jsdialog/Definitions.Menu.ts:1870
 msgid "Above Average..."
-msgstr ""
+msgstr "Virš vidurkio..."
 
 #: src/control/Control.Menubar.ts:924
 #: src/control/jsdialog/Definitions.Menu.ts:1874
 msgid "Below Average..."
-msgstr ""
+msgstr "Žemiau vidurkio..."
 
 #: src/control/Control.Menubar.ts:1047 src/control/Control.Menubar.ts:1113
 #: src/control/Control.Menubar.ts:1178 src/control/Control.Menubar.ts:1233
@@ -2447,227 +2442,219 @@ msgstr ""
 #: src/control/Control.NotebookbarWriter.js:1000
 #: src/control/Control.Zotero.js:220 src/control/Toolbar.js:582
 #: src/control/Toolbar.js:583
-#, fuzzy
 msgid "Search"
-msgstr "Ieškoti:"
+msgstr "Ieškoti"
 
 #: src/control/Control.Menubar.ts:1100
 #: src/control/Control.NotebookbarCalc.js:1098
 #: src/control/Control.NotebookbarWriter.js:1769
 msgid "Page Setup"
-msgstr ""
+msgstr "Puslapio nustatymai"
 
 #: src/control/Control.Menubar.ts:1244
 msgid "Define print area"
-msgstr ""
+msgstr "Nurodykite spausdinimo sritį"
 
 #: src/control/Control.Menubar.ts:1245
 msgid "Remove print area"
-msgstr ""
+msgstr "Pašalinti spausdinimo sritį"
 
 #: src/control/Control.Menubar.ts:1601 src/control/Control.StatusBar.js:533
 msgid "Reset to Default Language"
-msgstr ""
+msgstr "Atkurti numatytąją kalbą"
 
 #: src/control/Control.Menubar.ts:1632 src/control/Control.Menubar.ts:1633
 #: src/control/Control.Menubar.ts:1634 src/control/Control.Toolbar.js:247
 #: src/control/jsdialog/Definitions.Menu.ts:2100
 msgid "More..."
-msgstr ""
+msgstr "Daugiau..."
 
 #: src/control/Control.Menubar.ts:1976
-#, fuzzy
 msgid "Use Compact view"
-msgstr "Kompaktiškas vaizdas"
+msgstr "Naudoti kompaktišką vaizdą"
 
 #: src/control/Control.Menubar.ts:1978
 msgid "Use Tabbed view"
-msgstr ""
+msgstr "Naudoti skirtukų rodinį"
 
 #: src/control/Control.Menubar.ts:2132
-#, fuzzy
 msgid "Insert Shape"
-msgstr "Įterpti lentelę"
+msgstr "Įterpti figūrą"
 
 #: src/control/Control.Menubar.ts:2216
 msgid "The signature line can now be moved or resized as needed."
-msgstr ""
+msgstr "Parašo eilutę dabar galima perkelti arba keisti dydį pagal poreikį."
 
 #: src/control/Control.Menubar.ts:2218
 msgid "Finish electronic signing"
-msgstr ""
+msgstr "Užbaikite elektroninį parašą"
 
 #: src/control/Control.Menubar.ts:2395
 msgid "file type icon"
-msgstr ""
+msgstr "failo tipo ikona"
 
 #: src/control/Control.MobileBottomBar.js:28
 #: src/control/Control.MobileBottomBar.js:130
 #: src/control/Control.MobileBottomBar.js:198
-#, fuzzy
 msgid "Show the search bar"
-msgstr "Nutraukti paiešką"
+msgstr "Rodyti paieškos juostą"
 
 #: src/control/Control.MobileBottomBar.js:37
 #: src/control/Control.TopToolbar.js:145
 msgid "Borders"
-msgstr ""
+msgstr "Paraštės"
 
 #: src/control/Control.MobileSearchBar.ts:28
-#, fuzzy
 msgid "Hide the search bar"
-msgstr "Nutraukti paiešką"
+msgstr "Slėpti paieškos juostą"
 
 #: src/control/Control.MobileSearchBar.ts:34
-#, fuzzy
 msgid "Clear the search field"
-msgstr "Nutraukti paiešką"
+msgstr "Išvalyti paieškos lauką"
 
 #: src/control/Control.MobileWizardBuilder.js:567
 msgid "Background Color"
-msgstr ""
+msgstr "Fono spalva"
 
 #: src/control/Control.MobileWizardBuilder.js:569
 msgid "Gradient Start"
-msgstr ""
+msgstr "Gradiento pradžia"
 
 #: src/control/Control.MobileWizardBuilder.js:571
 msgid "Gradient End"
-msgstr ""
+msgstr "Gradiento pabaiga"
 
 #: src/control/Control.NavigatorPanel.ts:112
-#, fuzzy
 msgid "Navigation"
-msgstr "Navigatorius"
+msgstr "Navigacija"
 
 #: src/control/Control.NavigatorPanel.ts:133
 msgid "Close Navigation"
-msgstr ""
+msgstr "Uždaryti navigaciją"
 
 #: src/control/Control.NavigatorPanel.ts:227
 msgid "Results"
-msgstr ""
+msgstr "Rezultatai"
 
 #: src/control/Control.NavigatorPanel.ts:474
 msgid "Search..."
-msgstr ""
+msgstr "Ieškoti..."
 
 #: src/control/Control.QuickFindPanel.ts:97
 msgid "Type in the search box to find anything in your document"
-msgstr ""
+msgstr "Įveskite bet ką paieškos laukelyje, kad rastumėte tai savo dokumente"
 
 #: src/control/Notebookbar.ImpressAnimationTab.ts:24
 msgid "Animation"
-msgstr ""
+msgstr "Animacija"
 
 #: src/control/Notebookbar.ImpressAnimationTab.ts:41
 msgid "Applied animations"
-msgstr ""
+msgstr "Taikomosios animacijos"
 
 #: src/control/Notebookbar.ImpressAnimationTab.ts:59
 msgid "Move Up"
-msgstr ""
+msgstr "Aukštyn"
 
 #: src/control/Notebookbar.ImpressAnimationTab.ts:75
 msgid "Move Down"
-msgstr ""
+msgstr "Žemyn"
 
 #: src/control/Notebookbar.ImpressAnimationTab.ts:105
 msgid "Category"
-msgstr ""
+msgstr "Kategorija"
 
 #: src/control/Notebookbar.ImpressAnimationTab.ts:120
 msgid "Start"
-msgstr ""
+msgstr "Pradžia"
 
 #: src/control/Notebookbar.ImpressAnimationTab.ts:140
 msgid "Effect"
-msgstr ""
+msgstr "Efektas"
 
 #: src/control/Notebookbar.ImpressTransitionTab.ts:24
 msgid "Transition"
-msgstr ""
+msgstr "Perėjimas"
 
 #: src/control/Notebookbar.ImpressTransitionTab.ts:41
 #: src/control/Sidebar.FromNotebookbarPanel.ts:108
 msgid "Transitions"
-msgstr ""
+msgstr "Perėjimai"
 
 #: src/control/Notebookbar.ImpressTransitionTab.ts:66
 msgid "Variant"
-msgstr ""
+msgstr "Variantas"
 
 #: src/control/Notebookbar.ImpressTransitionTab.ts:81
 msgid "Duration"
-msgstr ""
+msgstr "Trukmė"
 
 #: src/control/Notebookbar.ImpressTransitionTab.ts:108
 msgid "On mouse click"
-msgstr ""
+msgstr "Paspaudus pelę"
 
 #: src/control/Notebookbar.ImpressTransitionTab.ts:116
 msgid "After"
-msgstr ""
+msgstr "Po"
 
 #: src/control/Notebookbar.ImpressTransitionTab.ts:137
 msgid "Apply to All Slides"
-msgstr ""
+msgstr "Pritaikyti visoms skaidrėms"
 
 #: src/control/Notebookbar.WriterReferencesTab.ts:41
 msgid "Table of content"
-msgstr ""
+msgstr "Turinys"
 
 #: src/control/Notebookbar.WriterReferencesTab.ts:95
 msgid "Footnote/Endnote"
-msgstr ""
+msgstr "Išnaša / Galinė pastaba"
 
 #: src/control/Notebookbar.WriterReferencesTab.ts:312
 #: src/control/Control.NotebookbarDraw.js:1578
 #: src/control/Control.NotebookbarImpress.js:1645
 msgid "Field"
-msgstr ""
+msgstr "Laukelis"
 
 #: src/control/Sidebar.FromNotebookbarPanel.ts:121
 msgid "Animations"
-msgstr ""
+msgstr "Animacijos"
 
 #: src/control/Control.NotebookbarBuilder.js:225
 msgid "Click to expand"
-msgstr ""
+msgstr "Spustelėkite, kad išskleistumėte"
 
 #: src/control/Control.NotebookbarBuilder.js:225
 msgid "Tap to expand"
-msgstr ""
+msgstr "Palieskite, kad išskleistumėte"
 
 #: src/control/Control.NotebookbarBuilder.js:226
 msgid "Click to collapse"
-msgstr ""
+msgstr "Spustelėkite, kad sutrauktumėte"
 
 #: src/control/Control.NotebookbarBuilder.js:226
 #: src/control/Control.NotebookbarBuilder.js:281
 msgid "Tap to collapse"
-msgstr ""
+msgstr "Palieskite, kad sutrauktumėte"
 
 #: src/control/Control.NotebookbarBuilder.js:373
 #: src/control/Control.NotebookbarBuilder.js:402
-#, fuzzy
 msgid "HTML File (.html)"
-msgstr "HTML failas (.html)"
+msgstr "HTML Failas (.html)"
 
 #: src/control/Control.NotebookbarBuilder.js:398
 msgid "CSV File (.csv)"
-msgstr ""
+msgstr "CSV Failas (.csv)"
 
 #: src/control/Control.NotebookbarBuilder.js:541
 msgid "Image (.png)"
-msgstr ""
+msgstr "Paveikslėlis (.png)"
 
 #: src/control/Control.NotebookbarCalc.js:23
 #: src/control/Control.NotebookbarDraw.js:57
 #: src/control/Control.NotebookbarImpress.js:77
 #: src/control/Control.NotebookbarWriter.js:37
 msgid "File"
-msgstr ""
+msgstr "Byla"
 
 #: src/control/Control.NotebookbarCalc.js:36
 #: src/control/Control.NotebookbarCalc.js:1192
@@ -2678,45 +2665,42 @@ msgstr ""
 #: src/control/Control.NotebookbarWriter.js:50
 #: src/control/Control.NotebookbarWriter.js:936
 #: src/control/Control.NotebookbarWriter.js:2405
-#, fuzzy
 msgid "Insert"
-msgstr "Įterpti lentelę"
+msgstr "Įterpti"
 
 #: src/control/Control.NotebookbarCalc.js:42
 #: src/control/Control.NotebookbarDraw.js:1284
 msgid "Page Layout"
-msgstr ""
+msgstr "Puslapio išdėstymas"
 
 #: src/control/Control.NotebookbarCalc.js:48
 msgid "Formulas"
 msgstr "Formulės"
 
 #: src/control/Control.NotebookbarCalc.js:54
-#, fuzzy
 msgid "Data"
-msgstr "Data"
+msgstr "Duomenys"
 
 #: src/control/Control.NotebookbarCalc.js:60
 #: src/control/Control.NotebookbarDraw.js:82
 #: src/control/Control.NotebookbarImpress.js:110
 #: src/control/Control.NotebookbarWriter.js:63
-#, fuzzy
 msgid "Review"
-msgstr "Apžvalga"
+msgstr "Atsiliepimas"
 
 #: src/control/Control.NotebookbarCalc.js:66
 #: src/control/Control.NotebookbarDraw.js:88
 #: src/control/Control.NotebookbarImpress.js:116
 #: src/control/Control.NotebookbarWriter.js:69
 msgid "Format"
-msgstr ""
+msgstr "Formatas"
 
 #: src/control/Control.NotebookbarCalc.js:72
 #: src/control/Control.NotebookbarDraw.js:101
 #: src/control/Control.NotebookbarImpress.js:129
 #: src/control/Control.NotebookbarWriter.js:88
 msgid "Shape"
-msgstr ""
+msgstr "Figūra"
 
 #: src/control/Control.NotebookbarCalc.js:79
 #: src/control/Control.NotebookbarDraw.js:108
@@ -2724,21 +2708,20 @@ msgstr ""
 #: src/control/Control.NotebookbarWriter.js:95
 #: src/control/Control.NotebookbarWriter.js:1587
 msgid "Picture"
-msgstr ""
+msgstr "Paveikslėlis"
 
 #: src/control/Control.NotebookbarCalc.js:86
 #: src/control/Control.NotebookbarDraw.js:115
 #: src/control/Control.NotebookbarImpress.js:150
 #: src/control/Control.NotebookbarWriter.js:102
-#, fuzzy
 msgid "View"
-msgstr "Peržiūros"
+msgstr "Peržiūra"
 
 #: src/control/Control.NotebookbarCalc.js:92
 #: src/control/Control.NotebookbarCalc.js:1908
 #: src/control/Control.NotebookbarCalc.js:2878
 msgid "Sparkline"
-msgstr ""
+msgstr "Miniatiūra"
 
 #: src/control/Control.NotebookbarCalc.js:99
 #: src/control/Control.NotebookbarCalc.js:1879
@@ -2748,9 +2731,8 @@ msgstr ""
 #: src/control/Control.NotebookbarImpress.js:1512
 #: src/control/Control.NotebookbarWriter.js:81
 #: src/control/Control.NotebookbarWriter.js:1215
-#, fuzzy
 msgid "Table"
-msgstr "Lentelės"
+msgstr "Lentelė"
 
 #: src/control/Control.NotebookbarCalc.js:106
 #: src/control/Control.NotebookbarDraw.js:121
@@ -2758,15 +2740,14 @@ msgstr "Lentelės"
 #: src/control/Control.NotebookbarWriter.js:108
 #: src/control/Control.ServerAuditDialog.ts:307
 msgid "Help"
-msgstr ""
+msgstr "Pagalba"
 
 #: src/control/Control.NotebookbarCalc.js:184
 #: src/control/Control.NotebookbarDraw.js:190
 #: src/control/Control.NotebookbarImpress.js:238
 #: src/control/Control.NotebookbarWriter.js:199
-#, fuzzy
 msgid "Export As"
-msgstr "Eksortuoti kaip"
+msgstr "Eksportuoti kaip"
 
 #: src/control/Control.NotebookbarCalc.js:210
 #: src/control/Control.NotebookbarCalc.js:259
@@ -2777,15 +2758,14 @@ msgstr "Eksortuoti kaip"
 #: src/control/Control.NotebookbarWriter.js:226
 #: src/control/Control.NotebookbarWriter.js:275
 msgid "See history"
-msgstr ""
+msgstr "Istorijos peržiūra"
 
 #: src/control/Control.NotebookbarCalc.js:347
 #: src/control/Control.NotebookbarDraw.js:370
 #: src/control/Control.NotebookbarImpress.js:404
 #: src/control/Control.NotebookbarWriter.js:363
-#, fuzzy
 msgid "Signature"
-msgstr "Parašo CA"
+msgstr "Parašas"
 
 #: src/control/Control.NotebookbarCalc.js:363
 #: src/control/Control.NotebookbarDraw.js:387
@@ -2793,14 +2773,14 @@ msgstr "Parašo CA"
 #: src/control/Control.NotebookbarWriter.js:379
 #: src/control/Control.UIManager.ts:325
 msgid "Rename"
-msgstr ""
+msgstr "Pervadinti"
 
 #: src/control/Control.NotebookbarCalc.js:417
 #: src/control/Control.NotebookbarDraw.js:613
 #: src/control/Control.NotebookbarImpress.js:739
 #: src/control/Control.NotebookbarWriter.js:589
 msgid "Clipboard"
-msgstr ""
+msgstr "Iškarpinė"
 
 #: src/control/Control.NotebookbarCalc.js:478
 #: src/control/Control.NotebookbarDraw.js:673
@@ -2811,40 +2791,40 @@ msgstr "Šriftas"
 #: src/control/Control.NotebookbarCalc.js:623
 #: src/control/Control.NotebookbarDraw.js:814
 msgid "Alignment"
-msgstr ""
+msgstr "Lygiavimas"
 
 #: src/control/Control.NotebookbarCalc.js:750
 msgid "Merge & Center"
-msgstr ""
+msgstr "Sujungti ir centruoti"
 
 #: src/control/Control.NotebookbarCalc.js:760
 #: src/control/Control.NotebookbarCalc.js:776
 msgid "Number"
-msgstr ""
+msgstr "Skaičius"
 
 #: src/control/Control.NotebookbarCalc.js:775
 msgid "General"
-msgstr ""
+msgstr "Bendras"
 
 #: src/control/Control.NotebookbarCalc.js:777
 msgid "Percent"
-msgstr ""
+msgstr "Procentai"
 
 #: src/control/Control.NotebookbarCalc.js:778
 msgid "Currency"
-msgstr ""
+msgstr "Valiuta"
 
 #: src/control/Control.NotebookbarCalc.js:781
 msgid "Scientific"
-msgstr ""
+msgstr "Mokslinis"
 
 #: src/control/Control.NotebookbarCalc.js:782
 msgid "Fraction"
-msgstr ""
+msgstr "Trupmena"
 
 #: src/control/Control.NotebookbarCalc.js:783
 msgid "Boolean Value"
-msgstr ""
+msgstr "Boolean reikšmė"
 
 #: src/control/Control.NotebookbarCalc.js:784
 #: src/control/Control.NotebookbarCalc.js:2074
@@ -2853,93 +2833,89 @@ msgstr ""
 #: src/control/Control.NotebookbarImpress.js:1719
 #: src/control/Control.NotebookbarWriter.js:1464
 msgid "Text"
-msgstr ""
+msgstr "Tekstas"
 
 #: src/control/Control.NotebookbarCalc.js:862
 msgid "Cells"
-msgstr ""
+msgstr "Langeliai"
 
 #: src/control/Control.NotebookbarCalc.js:964
 #: src/control/jsdialog/Definitions.Menu.ts:2304
 msgid "Default"
-msgstr ""
+msgstr "Numatytasis"
 
 #: src/control/Control.NotebookbarCalc.js:971
 msgid "Heading 1"
-msgstr ""
+msgstr "Antraštė 1"
 
 #: src/control/Control.NotebookbarCalc.js:978
 msgid "Heading 2"
-msgstr ""
+msgstr "Antraštė 2"
 
 #: src/control/Control.NotebookbarCalc.js:991
 msgid "Good"
-msgstr ""
+msgstr "Geras(ai)"
 
 #: src/control/Control.NotebookbarCalc.js:998
 msgid "Neutral"
-msgstr ""
+msgstr "Neutralus"
 
 #: src/control/Control.NotebookbarCalc.js:1005
 msgid "Bad"
-msgstr ""
+msgstr "Blogas(ai)"
 
 #: src/control/Control.NotebookbarCalc.js:1020
 msgid "Editing"
-msgstr ""
+msgstr "Redagavimas"
 
 #: src/control/Control.NotebookbarCalc.js:1044
 #: src/control/Control.NotebookbarDraw.js:1197
 #: src/control/Control.NotebookbarImpress.js:1288
 #: src/control/Control.NotebookbarWriter.js:1011
 msgid "Replace"
-msgstr ""
+msgstr "Pakeisti"
 
 #: src/control/Control.NotebookbarCalc.js:1108
 #: src/control/Control.NotebookbarWriter.js:1779
 msgid "Margin"
-msgstr ""
+msgstr "Paraštė"
 
 #: src/control/Control.NotebookbarCalc.js:1115
 #: src/control/Control.NotebookbarWriter.js:1786
 msgid "Size"
-msgstr ""
+msgstr "Dydis"
 
 #: src/control/Control.NotebookbarCalc.js:1176
 msgid "Row Height"
-msgstr ""
+msgstr "Eilutės aukštis"
 
 #: src/control/Control.NotebookbarCalc.js:1184
 msgid "Column Width"
-msgstr ""
+msgstr "Stulpelio plotis"
 
 #: src/control/Control.NotebookbarCalc.js:1204
-#, fuzzy
 msgid "Insert Rows Above"
-msgstr "Įterpti lentelę"
+msgstr "Įterpti eillutes virš"
 
 #: src/control/Control.NotebookbarCalc.js:1211
-#, fuzzy
 msgid "Insert Columns Before"
-msgstr "Įterpti lakštą prieš šį"
+msgstr "Įterpti stulpelius prieš"
 
 #: src/control/Control.NotebookbarCalc.js:1218
-#, fuzzy
 msgid "Delete Rows"
-msgstr "Įterpti lentelę"
+msgstr "Ištrinti eilutes"
 
 #: src/control/Control.NotebookbarCalc.js:1230
 msgid "Insert Rows Below"
-msgstr ""
+msgstr "Įterpti eilutes žemiau"
 
 #: src/control/Control.NotebookbarCalc.js:1237
-#, fuzzy
 msgid "Insert Columns After"
-msgstr "Įterpti lakštą už šio"
+msgstr "Įterpti stulpelius už"
 
 #: src/control/Control.NotebookbarCalc.js:1244
 msgid "Delete Columns"
-msgstr ""
+msgstr "Panaikinti stulpelius"
 
 #: src/control/Control.NotebookbarCalc.js:1267
 #: src/control/Control.NotebookbarCalc.js:3040
@@ -2952,7 +2928,7 @@ msgstr ""
 #: src/control/Control.NotebookbarWriter.js:2867
 #: src/control/Control.NotebookbarWriter.js:3190
 msgid "Align"
-msgstr ""
+msgstr "Lygiuoti"
 
 #: src/control/Control.NotebookbarCalc.js:1337
 #: src/control/Control.NotebookbarCalc.js:3107
@@ -2965,95 +2941,95 @@ msgstr ""
 #: src/control/Control.NotebookbarWriter.js:2926
 #: src/control/Control.NotebookbarWriter.js:3249
 msgid "Arrange"
-msgstr ""
+msgstr "Sutvarkyti"
 
 #: src/control/Control.NotebookbarCalc.js:1400
 msgid "Sheet View"
-msgstr ""
+msgstr "Lapo rodinys"
 
 #: src/control/Control.NotebookbarCalc.js:1414
 msgid "Default View"
-msgstr ""
+msgstr "Numatytasis rodinys"
 
 #: src/control/Control.NotebookbarCalc.js:1431
 msgid "Select Sheet View"
-msgstr ""
+msgstr "Pasirinkti lapo rodinį"
 
 #: src/control/Control.NotebookbarCalc.js:1438
 msgid "New Sheet View"
-msgstr ""
+msgstr "Naujas lapo rodinys"
 
 #: src/control/Control.NotebookbarCalc.js:1445
 msgid "Remove Sheet View"
-msgstr ""
+msgstr "Pašalinti lapo rodinį"
 
 #: src/control/Control.NotebookbarCalc.js:1452
 msgid "Exit Sheet View"
-msgstr ""
+msgstr "Išeiti iš lapo rodinio"
 
 #: src/control/Control.NotebookbarCalc.js:1467
 msgid "Freeze"
-msgstr ""
+msgstr "Užfiksuoti"
 
 #: src/control/Control.NotebookbarCalc.js:1521
 #: src/control/Control.NotebookbarDraw.js:420
 #: src/control/Control.NotebookbarImpress.js:537
 #: src/control/Control.NotebookbarWriter.js:1633
 msgid "Zoom"
-msgstr ""
+msgstr "Mastelio keitimas"
 
 #: src/control/Control.NotebookbarCalc.js:1528
 #: src/control/Control.NotebookbarDraw.js:427
 #: src/control/Control.NotebookbarImpress.js:463
 #: src/control/Control.NotebookbarWriter.js:1619
 msgid "Read mode"
-msgstr ""
+msgstr "Skaitymo režimas"
 
 #: src/control/Control.NotebookbarCalc.js:1595
 #: src/control/Control.NotebookbarDraw.js:520
 #: src/control/Control.NotebookbarImpress.js:630
 #: src/control/Control.NotebookbarWriter.js:1726
 msgid "Collapse Tabs"
-msgstr ""
+msgstr "Sutraukti skirtukus"
 
 #: src/control/Control.NotebookbarCalc.js:1608
 #: src/control/Control.NotebookbarDraw.js:508
 #: src/control/Control.NotebookbarImpress.js:618
 #: src/control/Control.NotebookbarWriter.js:1714
 msgid "Status Bar"
-msgstr ""
+msgstr "Būsenos juosta"
 
 #: src/control/Control.NotebookbarCalc.js:1665
 msgid "Table Style Options"
-msgstr ""
+msgstr "Lentelės stiliaus parinktys"
 
 #: src/control/Control.NotebookbarCalc.js:1678
 msgid "Show Header Row"
-msgstr ""
+msgstr "Rodyti antraštės eilutę"
 
 #: src/control/Control.NotebookbarCalc.js:1690
 msgid "Show Total Row"
-msgstr ""
+msgstr "Rodyti \"Viso:\" eilutę"
 
 #: src/control/Control.NotebookbarCalc.js:1708
 msgid "Banded Rows"
-msgstr ""
+msgstr "Juostuotos eilutės"
 
 #: src/control/Control.NotebookbarCalc.js:1720
 msgid "Banded Columns"
-msgstr ""
+msgstr "Juostuoti stulpeliai"
 
 #: src/control/Control.NotebookbarCalc.js:1738
 msgid "First Column"
-msgstr ""
+msgstr "Pirmas stulpelis"
 
 #: src/control/Control.NotebookbarCalc.js:1750
 msgid "Last Column"
-msgstr ""
+msgstr "Paskutinis stulpelis"
 
 #: src/control/Control.NotebookbarCalc.js:1765
 msgid "Show Filter Buttons"
-msgstr ""
+msgstr "Rodyti filtravimo mygtukus"
 
 #: src/control/Control.NotebookbarCalc.js:1801
 #: src/control/Control.NotebookbarCalc.js:2549
@@ -3064,15 +3040,15 @@ msgstr ""
 #: src/control/Control.NotebookbarWriter.js:2975
 #: src/control/Control.NotebookbarWriter.js:3298
 msgid "Group"
-msgstr ""
+msgstr "Grupuoti"
 
 #: src/control/Control.NotebookbarCalc.js:1808
 msgid "Ungroup"
-msgstr ""
+msgstr "Išgrupuoti"
 
 #: src/control/Control.NotebookbarCalc.js:1830
 msgid "Pivot Table"
-msgstr ""
+msgstr "Suvestinė lentelė"
 
 #: src/control/Control.NotebookbarCalc.js:1895
 #: src/control/Control.NotebookbarDraw.js:1015
@@ -3081,7 +3057,7 @@ msgstr ""
 #: src/control/Control.NotebookbarImpress.js:1465
 #: src/control/Control.NotebookbarWriter.js:1223
 msgid "Illustrations"
-msgstr ""
+msgstr "Iliustracijos"
 
 #: src/control/Control.NotebookbarCalc.js:1958
 #: src/control/Control.NotebookbarDraw.js:1029
@@ -3090,74 +3066,72 @@ msgstr ""
 #: src/control/Control.NotebookbarImpress.js:1543
 #: src/control/Control.NotebookbarWriter.js:1268
 msgid "Shapes"
-msgstr ""
+msgstr "Figūros"
 
 #: src/control/Control.NotebookbarCalc.js:2003
 #: src/control/Control.NotebookbarDraw.js:1593
 #: src/control/Control.NotebookbarImpress.js:1630
 #: src/control/Control.NotebookbarWriter.js:1336
 msgid "Assistant"
-msgstr ""
+msgstr "Asistentas"
 
 #: src/control/Control.NotebookbarCalc.js:2174
 msgid "Insert Function"
-msgstr ""
+msgstr "Įterpti funkciją"
 
 #: src/control/Control.NotebookbarCalc.js:2182
-#, fuzzy
 msgid "Function Library"
-msgstr "Funkcija"
+msgstr "Funkcijų biblioteka"
 
 #: src/control/Control.NotebookbarCalc.js:2196
 msgid "AutoSum"
-msgstr ""
+msgstr "Automatinis sumavimas"
 
 #: src/control/Control.NotebookbarCalc.js:2209
 msgid "Financial"
-msgstr ""
+msgstr "Finansinis"
 
 #: src/control/Control.NotebookbarCalc.js:2227
 msgid "Logical"
-msgstr ""
+msgstr "Loginis"
 
 #: src/control/Control.NotebookbarCalc.js:2257
 msgid "Date & Time"
-msgstr ""
+msgstr "Data ir laikas"
 
 #: src/control/Control.NotebookbarCalc.js:2269
 msgid "Lookup & Reference"
-msgstr ""
+msgstr "Paieška ir nuorodos"
 
 #: src/control/Control.NotebookbarCalc.js:2287
 msgid "Math & Trig"
-msgstr ""
+msgstr "Matematika ir trigonometrija"
 
 #: src/control/Control.NotebookbarCalc.js:2299
 msgid "More Functions"
-msgstr ""
+msgstr "Daugiau funkcijų"
 
 #: src/control/Control.NotebookbarCalc.js:2344
 msgid "Range"
-msgstr ""
+msgstr "Diapazonas"
 
 #: src/control/Control.NotebookbarCalc.js:2427
 msgid "Sort"
-msgstr ""
+msgstr "Rūšiuoti"
 
 #: src/control/Control.NotebookbarCalc.js:2473
 msgid "Filter"
-msgstr ""
+msgstr "Filtruoti"
 
 #: src/control/Control.NotebookbarCalc.js:2721
 #: src/control/Control.NotebookbarImpress.js:1977
 #: src/control/Control.NotebookbarWriter.js:2209
-#, fuzzy
 msgid "Comments"
-msgstr "Komentaras"
+msgstr "Komentarai"
 
 #: src/control/Control.NotebookbarCalc.js:2827
 msgid "Format Cells"
-msgstr ""
+msgstr "Formatuoti langelius"
 
 #: src/control/Control.NotebookbarCalc.js:2973
 #: src/control/Control.NotebookbarCalc.js:3330
@@ -3165,28 +3139,28 @@ msgstr ""
 #: src/control/Control.NotebookbarWriter.js:2812
 #: src/control/Control.NotebookbarWriter.js:3135
 msgid "Wrap"
-msgstr ""
+msgstr "Apsupti"
 
 #: src/control/Control.NotebookbarCalc.js:3212
 #: src/control/Control.NotebookbarImpress.js:2696
 #: src/control/Control.NotebookbarWriter.js:3021
 msgid "Image Controls"
-msgstr ""
+msgstr "Paveikslėlio valdikliai"
 
 #: src/control/Control.NotebookbarDraw.js:76
 #: src/control/Control.NotebookbarWriter.js:56
 msgid "Layout"
-msgstr ""
+msgstr "Išdėstymas"
 
 #: src/control/Control.NotebookbarDraw.js:321
 msgid "PDF Document (.pdf) - Expert"
-msgstr ""
+msgstr "PDF dokumentas (.pdf) – ekspertui"
 
 #: src/control/Control.NotebookbarDraw.js:495
 #: src/control/Control.NotebookbarImpress.js:605
 #: src/control/Control.NotebookbarWriter.js:1701
 msgid "Ruler"
-msgstr ""
+msgstr "Liniuotė"
 
 #: src/control/Control.NotebookbarDraw.js:901
 #: src/control/Control.NotebookbarImpress.js:989
@@ -3194,324 +3168,329 @@ msgstr ""
 #: src/control/Control.NotebookbarWriter.js:793
 #: src/control/Control.NotebookbarWriter.js:2578
 msgid "Paragraph"
-msgstr ""
+msgstr "Pastraipa"
 
 #: src/control/Control.NotebookbarImpress.js:96
 msgid "Design"
-msgstr ""
+msgstr "Dizainas"
 
 #: src/control/Control.NotebookbarImpress.js:104
 msgid "Slide Show"
-msgstr ""
+msgstr "Skaidrių rodymas"
 
 #: src/control/Control.NotebookbarImpress.js:143
 msgid "Master"
-msgstr ""
+msgstr "Pagrindinė(is)"
 
 #: src/control/Control.NotebookbarImpress.js:469
 msgid "From Beginning"
-msgstr ""
+msgstr "Nuo pradžių"
 
 #: src/control/Control.NotebookbarImpress.js:476
 msgid "From Current Slide"
-msgstr ""
+msgstr "Nuo esamos skaidrės"
 
 #: src/control/Control.NotebookbarImpress.js:485
 msgid "Present in Window"
-msgstr ""
+msgstr "Pateikti lange"
 
 #: src/control/Control.NotebookbarImpress.js:501
 msgid "Start Follow-me Presentation"
-msgstr ""
+msgstr "Pradėti pristatymą „Sek mane“"
 
 #: src/control/Control.NotebookbarImpress.js:509
 #: src/slideshow/SlideShowPresenter.ts:745
 msgid "Follow Presentation"
-msgstr ""
+msgstr "Sekti pristatymą"
 
 #: src/control/Control.NotebookbarImpress.js:637
 msgid "Slide Views"
-msgstr ""
+msgstr "Skaidrių rodiniai"
 
 #: src/control/Control.NotebookbarImpress.js:676
-#, fuzzy
 msgid "Snap to Grid"
-msgstr "Prisegti prie tinklelio"
+msgstr "Prisegti prie Tinklelio"
 
 #: src/control/Control.NotebookbarImpress.js:800
 #: src/control/Control.NotebookbarImpress.js:1827
 msgid "Slide Layout"
-msgstr ""
+msgstr "Skaidrės(ių) išdėstymas"
 
 #: src/control/Control.NotebookbarImpress.js:822
 #: src/control/Control.NotebookbarImpress.js:1837
 msgid "Change Layout"
-msgstr ""
+msgstr "Keisti išdėstymą"
 
 #: src/control/Control.NotebookbarImpress.js:830
 #: src/control/Control.NotebookbarImpress.js:1844
 msgid "Reset Layout"
-msgstr ""
+msgstr "Atstatyti išdėstymą"
 
 #: src/control/Control.NotebookbarImpress.js:844
 msgid "Character"
-msgstr ""
+msgstr "Veikėjas"
 
 #: src/control/Control.NotebookbarImpress.js:1105
 msgid "Spacing & Color"
-msgstr ""
+msgstr "Tarpai ir spalva"
 
 #: src/control/Control.NotebookbarImpress.js:1805
 msgid "Master Slide Templates"
-msgstr ""
+msgstr "Pagrindinės(ių) skaidrės(ių) šablonai"
 
 #: src/control/Control.NotebookbarImpress.js:1856
 msgid "Slide Size"
-msgstr ""
+msgstr "Skaidrės dydis"
 
 #: src/control/Control.NotebookbarImpress.js:1879
 msgid "Background Image"
-msgstr ""
+msgstr "Pagrindo paveikslėlis"
 
 #: src/control/Control.NotebookbarImpress.js:2081
 msgid "Merge & Split"
-msgstr ""
+msgstr "Sujungti ir padalinti"
 
 #: src/control/Control.NotebookbarImpress.js:2120
 #: src/control/Control.NotebookbarWriter.js:2528
 msgid "Select"
-msgstr ""
+msgstr "Pasirinkti"
 
 #: src/control/Control.NotebookbarImpress.js:2729
 msgid "Effects"
-msgstr ""
+msgstr "Efektai"
 
 #: src/control/Control.NotebookbarWriter.js:75
 msgid "Form"
-msgstr ""
+msgstr "Forma"
 
 #: src/control/Control.NotebookbarWriter.js:395
 msgid "Go Online"
-msgstr ""
+msgstr "Prisijunkite prie interneto"
 
 #: src/control/Control.NotebookbarWriter.js:395
 msgid "Go Offline"
-msgstr ""
+msgstr "Atsijunkite nuo interneto"
 
 #: src/control/Control.NotebookbarWriter.js:923
 #: src/control/Control.Zotero.js:827
-#, fuzzy
 msgid "Styles"
-msgstr "Stilius"
+msgstr "Stiliai"
 
 #: src/control/Control.NotebookbarWriter.js:1069
 msgid "Lists/Bullets"
-msgstr ""
+msgstr "Sąrašai / Ženklai"
 
 #: src/control/Control.NotebookbarWriter.js:1356
 msgid "Header & Footer"
-msgstr ""
+msgstr "Antraštė ir poraštė"
 
 #: src/control/Control.NotebookbarWriter.js:1425
 msgid "Section"
-msgstr ""
+msgstr "Skyrius"
 
 #: src/control/Control.NotebookbarWriter.js:1510
 msgid "Symbols"
-msgstr ""
+msgstr "Simboliai"
 
 #: src/control/Control.NotebookbarWriter.js:1563
 msgid "Rich Text"
-msgstr ""
+msgstr "Raiškusis tekstas"
 
 #: src/control/Control.NotebookbarWriter.js:1571
 msgid "Checkbox"
-msgstr ""
+msgstr "Žymimasis langelis"
 
 #: src/control/Control.NotebookbarWriter.js:1579
 msgid "Dropdown"
-msgstr ""
+msgstr "Išskleidžiamasis (meniu)"
 
 #: src/control/Control.NotebookbarWriter.js:2284
 msgid "Tracking"
-msgstr ""
+msgstr "Sekimas"
 
 #: src/control/Control.NotebookbarWriter.js:2466
 msgid "Split"
-msgstr ""
+msgstr "Padalintas"
 
 #: src/control/Control.NotebookbarWriter.js:2650
 msgid "Number Format"
-msgstr ""
+msgstr "Skaičių formatas"
 
 #: src/control/Control.PartsPreview.js:188
 msgid "preview of page %1"
-msgstr ""
+msgstr "%1 puslapio peržiūra"
 
 #: src/control/Control.PartsPreview.js:190
 msgid "Slide %1"
-msgstr ""
+msgstr "%1 Skaidrė"
 
 #: src/control/Control.PartsPreview.js:263
 msgid "Paste Slide"
-msgstr ""
+msgstr "Įklijuoti skaidrę"
 
 #: src/control/Control.PartsPreview.js:319
 msgid "Paste"
-msgstr ""
+msgstr "Įklijuoti"
 
 #: src/control/Control.SaveState.ts:44
 msgid "Saving"
-msgstr ""
+msgstr "Išsaugomas"
 
 #: src/control/Control.Scroll.Annotation.js:19
 msgid "Scroll up annotations"
-msgstr ""
+msgstr "Slinkti aukštyn anotacijose"
 
 #: src/control/Control.Scroll.Annotation.js:21
 msgid "Scroll down annotations"
-msgstr ""
+msgstr "Slinkti žemyn anotacijose"
 
 #: src/control/Control.ServerAuditDialog.ts:58
 msgid "Your WOPI server is not secure: SSL verification failed"
-msgstr ""
+msgstr "Jūsų WOPI serveris nėra saugus: SSL patvirtinimas nepavyko"
 
 #: src/control/Control.ServerAuditDialog.ts:63
 msgid "No problems with SSL verification detected"
-msgstr ""
+msgstr "Neaptikta problemų su SSL patvirtinimu"
 
 #: src/control/Control.ServerAuditDialog.ts:72
 msgid ""
 "Documents are not effectively contained: missing capabilities or namespaces."
 msgstr ""
+"Dokumentai nėra efektyviai saugomi: trūksta galimybių arba vardų erdvių."
 
 #: src/control/Control.ServerAuditDialog.ts:77
 msgid "Each document is securely contained"
-msgstr ""
+msgstr "Kiekvienas dokumentas yra laikomas saugiai"
 
 #: src/control/Control.ServerAuditDialog.ts:83
 msgid ""
 "BPF filtering of potentially risky system calls (seccomp) is not enabled; a "
 "security hazard."
 msgstr ""
+"Potencialiai rizikingų sistemos iškvietimų (seccomp) BPF filtravimas "
+"neįjungtas - tai kelia pavojų saugumui."
 
 #: src/control/Control.ServerAuditDialog.ts:88
 msgid "System call security filtering enabled"
-msgstr ""
+msgstr "Sistemos iškvietimų saugos filtravimas įjungtas"
 
 #: src/control/Control.ServerAuditDialog.ts:95
 msgid ""
 "Your server is configured with insufficient hardware resources, which may "
 "lead to poor performance."
 msgstr ""
+"Jūsų serveris sukonfigūruotas su nepakankamais aparatinės įrangos "
+"ištekliais, to pasekoje gali sumažėti našumas."
 
 #: src/control/Control.ServerAuditDialog.ts:101
 msgid "Hardware resources are sufficient for optimal performance"
-msgstr ""
+msgstr "Aparatinės įrangos išteklių pakanka optimaliam našumui"
 
 #: src/control/Control.ServerAuditDialog.ts:109
 msgid "Slow Kit jail setup with copying, cannot bind-mount."
 msgstr ""
+"Lėtas „Kit jail\" diegimas su kopijavimu, negalima prijungti ir susieti."
 
 #: src/control/Control.ServerAuditDialog.ts:113
 msgid "Fast kit jail bind mounting enabled"
-msgstr ""
+msgstr "Įjungtas greitas „Kit jail“ tipo tvirtinimas"
 
 #: src/control/Control.ServerAuditDialog.ts:118
 msgid "Poorly performing proxying of all network requests."
-msgstr ""
+msgstr "Prastai veikiantis visų tinklo užklausų tarpinis serveris."
 
 #: src/control/Control.ServerAuditDialog.ts:122
 msgid "Direct network connection"
-msgstr ""
+msgstr "Tiesioginis tinklo ryšys"
 
 #: src/control/Control.ServerAuditDialog.ts:128
 msgid "The IsAdminUser property is not set by integration"
-msgstr ""
+msgstr "Integracijoj nenustatyta IsAdminUser savybė"
 
 #: src/control/Control.ServerAuditDialog.ts:134
 msgid ""
 "Used deprecated is_admin field, integration should use IsAdminUser property "
 "instead"
 msgstr ""
+"Naudojamas pasenęs is_admin laukas, integracija turėtų naudoti IsAdminUser "
+"savybę"
 
 #: src/control/Control.ServerAuditDialog.ts:140
 msgid "The IsAdminUser user property is set by integration"
-msgstr ""
+msgstr "Vartotojo savybę „IsAdminUser“ nustato integracija"
 
 #: src/control/Control.ServerAuditDialog.ts:148
 msgid "PostMessage API is initialized"
-msgstr ""
+msgstr "PostMessage API yra inicializuotas"
 
 #: src/control/Control.ServerAuditDialog.ts:153
 msgid "Integrator is not ready for PostMessage calls"
-msgstr ""
+msgstr "Integratorius nėra pasiruošęs PostMessage iškvietimams"
 
 #: src/control/Control.ServerAuditDialog.ts:161
 msgid "Using namespaces"
-msgstr ""
+msgstr "Naudojant vardų erdves"
 
 #: src/control/Control.ServerAuditDialog.ts:162
 msgid "Not using namespaces"
-msgstr ""
+msgstr "Nenaudojant vardų erdvių"
 
 #: src/control/Control.ServerAuditDialog.ts:236
 msgid "Document container started in {1} ms"
-msgstr ""
+msgstr "Dokumentų konteineris paleistas per {1} ms"
 
 #: src/control/Control.ServerAuditDialog.ts:306
 msgid "Status"
-msgstr ""
+msgstr "Būsena"
 
 #: src/control/Control.ServerAuditDialog.ts:316
 msgid "No issues found"
-msgstr ""
+msgstr "Problemų neaptikta"
 
 #: src/control/Control.ServerAuditDialog.ts:321
 msgid "Alerts:"
-msgstr ""
+msgstr "Įspėjimai:"
 
 #: src/control/Control.ServerAuditDialog.ts:373
 msgid "Check warnings of your server"
-msgstr ""
+msgstr "Patikrinkite savo serverio perspėjimus"
 
 #: src/control/Control.ServerAuditDialog.ts:374
 msgid "OPEN"
-msgstr ""
+msgstr "ATIDARYTI"
 
 #: src/control/Control.SheetsBar.js:51
 msgid "Scroll to the first sheet"
-msgstr ""
+msgstr "Slinkti iki pirmo lapo"
 
 #: src/control/Control.SheetsBar.js:58
 msgid "Scroll left"
-msgstr ""
+msgstr "Slinkti kairėn"
 
 #: src/control/Control.SheetsBar.js:66
 msgid "Scroll right"
-msgstr ""
+msgstr "Slinkti dešinėn"
 
 #: src/control/Control.SheetsBar.js:74
 msgid "Scroll to the last sheet"
-msgstr ""
+msgstr "Slinkti iki passkutinio lapo"
 
 #: src/control/Control.SheetsBar.js:81
-#, fuzzy
 msgid "Insert sheet"
-msgstr "Įterpti lentelę"
+msgstr "Įterpti lapą"
 
 #: src/control/Control.SheetsBar.js:88
 msgid "Show sheet list"
-msgstr ""
+msgstr "Rodyti lapų sąrašą"
 
 #: src/control/Control.StatusBar.js:156
 msgid "On"
-msgstr ""
+msgstr "Įjungta"
 
 #: src/control/Control.StatusBar.js:158
 #: src/control/jsdialog/Definitions.Menu.ts:1767
 msgid "Off"
-msgstr ""
+msgstr "Išjungta"
 
 #: src/control/Control.StatusBar.js:191
 #: src/control/jsdialog/Definitions.Menu.ts:163
@@ -3542,37 +3521,39 @@ msgstr "Suma"
 
 #: src/control/Control.StatusBar.js:197
 msgid "Selection count"
-msgstr ""
+msgstr "Pasirinkimų skaičius"
 
 #: src/control/Control.StatusBar.js:250
 msgid "Multi Page View"
-msgstr ""
+msgstr "Kelių puslapių peržiūra"
 
 #: src/control/Control.StatusBar.js:405
 msgid ""
 "To prevent accidental changes, the author has set this file to open as view-"
 "only"
 msgstr ""
+"Kad išvengti atsitiktinių pakeitimų, autorius nustatė, kad šis failas(byla) "
+"būtų atidaromas tik peržiūrai"
 
 #: src/control/Control.StatusBar.js:455
 msgid "Select multiple cells"
-msgstr ""
+msgstr "Pasirinkite kelis langelius"
 
 #: src/control/Control.StatusBar.js:472
 msgid "Selection mode: inactive"
-msgstr ""
+msgstr "Pasirinkimo režimas: neaktyvus"
 
 #: src/control/Control.StatusBar.js:550
 msgid "Set Language for All text"
-msgstr ""
+msgstr "Nustatyti viso teksto kalbą"
 
 #: src/control/Control.StatusBar.js:553
 msgid "Set Language for Paragraph"
-msgstr ""
+msgstr "Nustatyti pastraipos kalbą"
 
 #: src/control/Control.StatusBar.js:554
 msgid "Set Language for Selection"
-msgstr ""
+msgstr "Nustatyti pasirinktos dalies kalbą"
 
 #: src/control/Control.Tabs.js:53
 msgid "Insert sheet before this"
@@ -3584,24 +3565,23 @@ msgstr "Įterpti lakštą už šio"
 
 #: src/control/Control.Tabs.js:97
 msgid "Move Sheet Left"
-msgstr ""
+msgstr "Perkelti lapą kairėn"
 
 #: src/control/Control.Tabs.js:103
 msgid "Move Sheet Right"
-msgstr ""
+msgstr "Perkelti lapą dešinėn"
 
 #: src/control/Control.Tabs.js:114
 msgid "Copy Sheet..."
-msgstr ""
+msgstr "Kopijuoti lapą..."
 
 #: src/control/Control.Tabs.js:412
-#, fuzzy
 msgid "Are you sure you want to delete sheet, {sheet}?"
-msgstr "Ar tikrai šalinti lakštą „{sheet}“?"
+msgstr "Ar tikrai šalinti lapą „{sheet}“?"
 
 #: src/control/Control.Tabs.js:423
 msgid "Rename sheet"
-msgstr ""
+msgstr "Pervadinti lapą"
 
 #: src/control/Control.Tabs.js:423
 msgid "Enter new sheet name"
@@ -3612,340 +3592,346 @@ msgid ""
 "Conflict Undo/Redo with multiple users. Please use document repair to "
 "resolve"
 msgstr ""
+"Konfliktas dėl anuliavimo/pakartotinio atlikimo tarp kelių naudotojų. "
+"Norėdami išspręsti problemą, naudokite dokumento taisymo funkciją"
 
 #: src/control/Control.TopToolbar.js:109
 msgid "Active Sheet"
-msgstr ""
+msgstr "Aktyvus Lapas"
 
 #: src/control/Control.TopToolbar.js:123
 msgid "Default Style"
-msgstr ""
+msgstr "Numatytasis stilius"
 
 #: src/control/Control.TopToolbar.js:189
 msgid "Insert table"
 msgstr "Įterpti lentelę"
 
 #: src/control/Control.TopToolbar.js:192
-#, fuzzy
 msgid "Insert shapes"
-msgstr "Įterpti lentelę"
+msgstr "Įterpti figūras"
 
 #: src/control/Control.TopToolbar.js:194
 msgid "Insert connectors"
-msgstr ""
+msgstr "Įterpti jungtis"
 
 #: src/control/Control.UIManager.ts:325
 msgid "Enter new name"
-msgstr ""
+msgstr "Įveskite naują vardą"
 
 #: src/control/Control.UIManager.ts:367
 #: src/control/jsdialog/Widget.HTMLContent.ts:46
 msgid "Read-only"
-msgstr ""
+msgstr "Tik skaitymui"
 
 #: src/control/Control.UIManager.ts:368
 #: src/control/jsdialog/Widget.HTMLContent.ts:47
 #: src/control/jsdialog/Widget.HTMLContent.ts:55
 msgid "Permission Mode"
-msgstr ""
+msgstr "Leidimo režimas"
 
 #: src/control/Control.UIManager.ts:1183
 msgid "Hide Menu"
-msgstr ""
+msgstr "Slėpti meniu"
 
 #: src/control/Control.UIManager.ts:1210
 msgid "Show Menu"
-msgstr ""
+msgstr "Rodyti meniu"
 
 #: src/control/Control.UserList.ts:56
 msgid "{user} has joined"
-msgstr ""
+msgstr "{user} prisijungė"
 
 #: src/control/Control.UserList.ts:57
 msgid "{user} has left"
-msgstr ""
+msgstr "{user} atsijungė"
 
 #: src/control/Control.UserList.ts:58
 msgid "Following {user}"
-msgstr ""
+msgstr "Seku {user}"
 
 #: src/control/Control.UserList.ts:59
 msgid "Following the editor"
-msgstr ""
+msgstr "Seku redaktorių"
 
 #: src/control/Control.UserList.ts:60
 msgid "Stop following"
-msgstr ""
+msgstr "Sustabdyti sekimą"
 
 #: src/control/Control.UserList.ts:61
 msgid "Avatar for {user}"
-msgstr ""
+msgstr "{user} avataras"
 
 #: src/control/Control.UserList.ts:81
 msgid "%n users"
-msgstr ""
+msgstr "Vartotojai: %n"
 
 #: src/control/Control.UserList.ts:82
 msgid "1 user"
-msgstr ""
+msgstr "1 vartotojas"
 
 #: src/control/Control.UserList.ts:83
 msgid "0 users"
-msgstr ""
+msgstr "0 vartotojų"
 
 #: src/control/Control.UserList.ts:87
 msgid "User List Summary"
-msgstr ""
+msgstr "Vartotojų sąrašas"
 
 #: src/control/Control.UserList.ts:495
 msgid "Following"
-msgstr ""
+msgstr "Seku"
 
 #: src/control/Control.UserList.ts:552
 msgid "Always follow the editor"
-msgstr ""
+msgstr "Visada sekti redaktorių"
 
 #: src/control/Control.Zotero.js:143
 msgid "Zotero API key is not configured"
-msgstr ""
+msgstr "Nesukonfigūruotas Zotero API raktas"
 
 #: src/control/Control.Zotero.js:162
 msgid "Zotero API key is incorrect"
-msgstr ""
+msgstr "Neteisingas Zotero API raktas"
 
 #: src/control/Control.Zotero.js:189
 msgid "Zotero Warning"
-msgstr ""
+msgstr "Zotero perspėjimas"
 
 #: src/control/Control.Zotero.js:190
 msgid ""
 "The document contains some citations which may be unreachable through web "
 "API. It may cause some problems while editing citations or bibliography."
 msgstr ""
+"Dokumente yra citatų, kurios gali būti nepasiekiamos per žiniatinklio API. "
+"Gali kilti problemų redaguojant citatas ar bibliografiją."
 
 #: src/control/Control.Zotero.js:246 src/core/Socket.js:1175
 msgid "Loading..."
-msgstr "Įkeliama…"
+msgstr "Kraunama…"
 
 #: src/control/Control.Zotero.js:257 src/control/Control.Zotero.js:454
 #: src/slideshow/PresenterConsole.js:31
 #: src/slideshow/SlideShowPresenter.ts:696
 msgid "Previous"
-msgstr ""
+msgstr "Ankstesnis"
 
 #: src/control/Control.Zotero.js:270 src/control/Control.Zotero.js:469
 #: src/slideshow/PresenterConsole.js:32
 #: src/slideshow/SlideShowPresenter.ts:706
 msgid "Next"
-msgstr ""
+msgstr "Sekantis"
 
 #: src/control/Control.Zotero.js:292
-#, fuzzy
 msgid "Language:"
-msgstr "Kalba"
+msgstr "Kalba:"
 
 #: src/control/Control.Zotero.js:307
 msgid "Store as:"
-msgstr ""
+msgstr "Išsaugoti kaip:"
 
 #: src/control/Control.Zotero.js:313 src/control/Control.Zotero.js:436
 msgid "Fields"
-msgstr ""
+msgstr "Laukai"
 
 #: src/control/Control.Zotero.js:314 src/control/Control.Zotero.js:436
 msgid "Bookmarks"
-msgstr ""
+msgstr "Žymės"
 
 #: src/control/Control.Zotero.js:434
 msgid "Footnotes"
-msgstr ""
+msgstr "Išnašos"
 
 #: src/control/Control.Zotero.js:434
 msgid "Endnotes"
-msgstr ""
+msgstr "Pastabos"
 
 #: src/control/Control.Zotero.js:521
 msgid "My Publications"
-msgstr ""
+msgstr "Mano publikacijos"
 
 #: src/control/Control.Zotero.js:527 src/control/Control.Zotero.js:746
 msgid "My Library"
-msgstr ""
+msgstr "Mano biblioteka"
 
 #: src/control/Control.Zotero.js:528
 msgid "Group Libraries"
-msgstr ""
+msgstr "Grupės bibliotekos"
 
 #: src/control/Control.Zotero.js:762
 msgid "Failed to load groups"
-msgstr ""
+msgstr "Nepavyko užkrauti grupių"
 
 #: src/control/Control.Zotero.js:780 src/control/Control.Zotero.js:1124
 msgid "Failed to load collections"
-msgstr ""
+msgstr "Nepavyko užkrauti kolekcijų"
 
 #: src/control/Control.Zotero.js:788
 msgid "Loading references"
-msgstr ""
+msgstr "Įkeliamos nuorodos"
 
 #: src/control/Control.Zotero.js:822
 msgid "Citation Style"
-msgstr ""
+msgstr "Citavimo stilius"
 
 #: src/control/Control.Zotero.js:827
 msgid "An error occurred while fetching style list"
-msgstr ""
+msgstr "Įvyko klaida įkeliant stilių sąrašą"
 
 #: src/control/Control.Zotero.js:835
 msgid "Failed to load styles"
-msgstr ""
+msgstr "Nepavyko užkrauti stilių"
 
 #: src/control/Control.Zotero.js:1152 src/control/Control.Zotero.js:1604
 msgid "Title"
-msgstr ""
+msgstr "Pavadinimas"
 
 #: src/control/Control.Zotero.js:1152 src/control/Control.Zotero.js:1604
 msgid "Creator(s)"
-msgstr ""
+msgstr "Kūrėjas(-ai)"
 
 #: src/control/Control.Zotero.js:1152 src/control/Control.Zotero.js:1604
 msgid "Your library is empty"
-msgstr ""
+msgstr "Jūsų biblioteka yra tuščia"
 
 #: src/control/Control.Zotero.js:1164
 msgid "Failed to load items"
-msgstr ""
+msgstr "Nepavyko užkrauti elementų"
 
 #: src/control/Control.Zotero.js:1216
 msgid "Citation warning"
-msgstr ""
+msgstr "Įspėjimas dėl citatos"
 
 #: src/control/Control.Zotero.js:1217
 msgid ""
 "Once citations are entered their storage and display type can not be "
 "changed."
-msgstr ""
+msgstr "Įvedus citatas, negalima keisti jų saugojimo ir rodymo tipo."
 
 #: src/control/Control.Zotero.js:1218 src/control/Control.Zotero.js:1533
 msgid "Confirm"
-msgstr ""
+msgstr "Patvirtinti"
 
 #: src/control/Control.Zotero.js:1337
 msgid "Add Note"
-msgstr ""
+msgstr "Pridėti pastabą"
 
 #: src/control/Control.Zotero.js:1340
 msgid "An error occurred while fetching notes"
-msgstr ""
+msgstr "Įvyko klaida įkeliant pastabas"
 
 #: src/control/Control.Zotero.js:1471
 msgid "Updated citations"
-msgstr ""
+msgstr "Atnaujintos citatos"
 
 #: src/control/Control.Zotero.js:1473
 msgid "Citations update failed"
-msgstr ""
+msgstr "Nepavyko atnaujinti citatų"
 
 #: src/control/Control.Zotero.js:1477
 msgid "Updating citations"
-msgstr ""
+msgstr "Citatų atnaujinimas"
 
 #: src/control/Control.Zotero.js:1532
 msgid ""
 "Unlinking citations will prevent Collabora Online from updating citations "
 "and bibliography in this document."
 msgstr ""
+"Atsiejus citatas, „Collabora Online“ negalės atnaujinti citatų ir "
+"bibliografijos šiame dokumente."
 
 #: src/control/HRuler.ts:597 src/control/HRuler.ts:769
 msgid "Left Margin"
-msgstr ""
+msgstr "Kairė paraštė"
 
 #: src/control/HRuler.ts:598 src/control/HRuler.ts:770
 msgid "Right Margin"
-msgstr ""
+msgstr "Dešinė paraštė"
 
 #: src/control/HRuler.ts:1093
-#, fuzzy
 msgid "Insert tabstop"
-msgstr "Įterpti lentelę"
+msgstr "Įterpti tabuliaciją"
 
 #: src/control/HRuler.ts:1100
-#, fuzzy
 msgid "Delete tabstop"
-msgstr "Įterpti lentelę"
+msgstr "Pašalinti tabuliaciją"
 
 #: src/control/Parts.js:492
 msgid "Show sheets"
-msgstr ""
+msgstr "Rodyti lapus"
 
 #: src/control/Permission.js:27 src/control/Permission.js:28
-#, fuzzy
 msgid "Edit document"
-msgstr "Redaguoti komentarą"
+msgstr "Redaguoti dokumentą"
 
 #: src/control/Permission.js:85
 msgid "The document could not be locked, and is opened in read-only mode."
-msgstr ""
+msgstr "Nepavyko užrakinti dokumento ir jis atidarytas tik skaitymo režimu."
 
 #: src/control/Permission.js:87 src/control/Permission.js:97
 msgid "Server returned this reason:"
-msgstr ""
+msgstr "Serveris nurodė šią priežastį:"
 
 #: src/control/Permission.js:95
 msgid "The document could not be locked."
-msgstr ""
+msgstr "Dokumento nepavyko užrakinti."
 
 #: src/control/Permission.js:149
 msgid "Enter a file name"
-msgstr ""
+msgstr "Įveskite failo pavadinimą"
 
 #: src/control/Permission.js:168
 msgid "Save as ODF format"
-msgstr ""
+msgstr "Išsaugoti ODF formatu"
 
 #: src/control/Permission.js:169
 msgid "Continue editing"
-msgstr ""
+msgstr "Tęsti redagavimą"
 
 #: src/control/Permission.js:169
 msgid "Continue read only"
-msgstr ""
+msgstr "Tęsti \"tik skaityti\" režime"
 
 #: src/control/Permission.js:182
 msgid ""
 "This document may contain formatting or content that cannot be saved in the "
 "current file format."
 msgstr ""
+"Šiame dokumente gali būti formatavimo ar turinio, kurio negalima išsaugoti "
+"dabartiniu failo formatu."
 
 #: src/control/Signing.js:21
 msgid "The document is not signed."
-msgstr ""
+msgstr "Dokumentas nepasirašytas."
 
 #: src/control/Signing.js:32
 msgid "This document is digitally signed and the signature is valid."
 msgstr ""
+"Šis dokumentas pasirašytas skaitmeniniu būdu ir parašas yra galiojantis."
 
 #: src/control/Signing.js:36
 msgid "This document has an invalid signature."
-msgstr ""
+msgstr "Negaliojantis dokumento parašas."
 
 #: src/control/Signing.js:40
 msgid "The signature was valid, but the document has been modified."
-msgstr ""
+msgstr "Parašas teisingas, bet dokumentas buvo modifikuotas."
 
 #: src/control/Signing.js:44
 msgid "The signature is OK, but the certificate could not be validated."
-msgstr ""
+msgstr "Parašas tinkamas, bet sertifikato patvirtinti nepavyko."
 
 #: src/control/Signing.js:48
 msgid "The signature is OK, but the document is only partially signed."
-msgstr ""
+msgstr "Parašas tinkamas, bet dokumentas pasirašytas tik iš dalies."
 
 #: src/control/Signing.js:52
 msgid ""
 "The signature is OK, but the certificate could not be validated and the "
 "document is only partially signed."
 msgstr ""
+"Parašas tinkamas, bet sertifikato nepavyko patvirtinti ir dokumentas "
+"pasirašytas tik iš dalies."
 
 #: src/control/Toolbar.js:253 src/control/Toolbar.js:266
 msgid "Downloading..."
@@ -3957,388 +3943,388 @@ msgstr "Įrašoma…"
 
 #: src/control/Toolbar.js:301
 msgid "Renaming..."
-msgstr ""
+msgstr "Pervadinimas..."
 
 #: src/control/VRuler.ts:374
 msgid "Top Margin"
-msgstr ""
+msgstr "Viršutinė paraštė"
 
 #: src/control/VRuler.ts:375
 msgid "Bottom Margin"
-msgstr ""
+msgstr "Apatinė paraštė"
 
 #: src/control/jsdialog/Definitions.Menu.ts:111
 #: src/control/jsdialog/Definitions.Menu.ts:1740
 msgid "Normal"
-msgstr ""
+msgstr "Normalus"
 
 #: src/control/jsdialog/Definitions.Menu.ts:116
 msgid "Wide"
-msgstr ""
+msgstr "Platus"
 
 #: src/control/jsdialog/Definitions.Menu.ts:121
 msgid "Narrow"
-msgstr ""
+msgstr "Siauras"
 
 #: src/control/jsdialog/Definitions.Menu.ts:164
 msgid "Min"
-msgstr ""
+msgstr "Minimalus"
 
 #: src/control/jsdialog/Definitions.Menu.ts:165
 msgid "Max"
-msgstr ""
+msgstr "Maksimalus"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1443
 msgid "Edit Single Sparkline"
-msgstr ""
+msgstr "Redaguoti miniatiūrą"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1454
 msgid "Delete Single Sparkline"
-msgstr ""
+msgstr "Ištrinti miniatiūrą"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1490
 msgid "Portrait"
-msgstr ""
+msgstr "Vertikalus"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1496
 msgid "Landscape"
-msgstr ""
+msgstr "Horizontalus"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1502
 msgid "A6"
-msgstr ""
+msgstr "A6"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1503
 msgid "A5"
-msgstr ""
+msgstr "A5"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1504
 msgid "A4"
-msgstr ""
+msgstr "A4"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1505
 msgid "A3"
-msgstr ""
+msgstr "A3"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1506
 msgid "B6 (ISO)"
-msgstr ""
+msgstr "B6 (ISO)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1507
 msgid "B5 (ISO)"
-msgstr ""
+msgstr "B5 (ISO)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1508
 msgid "B4 (ISO)"
-msgstr ""
+msgstr "B4 (ISO)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1509
 msgid "Letter"
-msgstr ""
+msgstr "Laiškas"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1510
 msgid "Legal"
-msgstr ""
+msgstr "Legal"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1511
 msgid "Long Bond"
-msgstr ""
+msgstr "Ilgas Bond"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1512
 msgid "Tabloid"
-msgstr ""
+msgstr "Tabloid'as"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1513
 msgid "B6 (JIS)"
-msgstr ""
+msgstr "B6 (JIS)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1514
 msgid "B5 (JIS)"
-msgstr ""
+msgstr "B5 (JIS)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1515
 msgid "B4 (JIS)"
-msgstr ""
+msgstr "B4 (JIS)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1516
 msgid "16 Kai"
-msgstr ""
+msgstr "16 Kai"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1517
 msgid "32 Kai"
-msgstr ""
+msgstr "32 Kai"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1518
 msgid "Big 32 Kai"
-msgstr ""
+msgstr "Didelis 32 Kai"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1519
 msgid "User"
-msgstr ""
+msgstr "Vartotojo"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1520
 msgid "DL Envelope"
-msgstr ""
+msgstr "DL vokas"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1521
 msgid "C6 Envelope"
-msgstr ""
+msgstr "C6 vokas"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1522
 msgid "C6/5 Envelope"
-msgstr ""
+msgstr "C6/5 vokas"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1523
 msgid "C5 Envelope"
-msgstr ""
+msgstr "C5 vokas"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1524
 msgid "C4 Envelope"
-msgstr ""
+msgstr "C4 vokas"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1527
 msgid "#6¾ Envelope"
-msgstr ""
+msgstr "#6¾ vokas"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1532
 msgid "#7¾ (Monarch) Envelope"
-msgstr ""
+msgstr "#7¾ (Monarch) vokas"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1535
 msgid "#9 Envelope"
-msgstr ""
+msgstr "#9 vokas"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1536
 msgid "#10 Envelope"
-msgstr ""
+msgstr "#10 vokas"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1537
 msgid "#11 Envelope"
-msgstr ""
+msgstr "#11 vokas"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1538
 msgid "#12 Envelope"
-msgstr ""
+msgstr "#12 vokas"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1541
 msgid "Japanese Postcard"
-msgstr ""
+msgstr "Japoniška atvirutė"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1726
 msgid "Insert Local Image"
-msgstr ""
+msgstr "Įterpti vietinį paveikslėlį"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1732
 msgid "Insert Local Multimedia"
-msgstr ""
+msgstr "Įterpti vietinę multimediją"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1738
 msgid "Very Tight"
-msgstr ""
+msgstr "Labai suspaustas"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1739
 msgid "Tight"
-msgstr ""
+msgstr "Suspaustas"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1741
 msgid "Loose"
-msgstr ""
+msgstr "Išplėstas"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1742
 msgid "Very Loose"
-msgstr ""
+msgstr "Labai išplėstas"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1772
 msgid "All users"
-msgstr ""
+msgstr "Visi vartotojai"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1777
 msgid "This user"
-msgstr ""
+msgstr "Šis vartotojas"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1911
 msgid "No Borders"
-msgstr ""
+msgstr "Be apvadų"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1917
 msgid "Left Border"
-msgstr ""
+msgstr "Apvadas kairėje"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1923
 msgid "Right Border"
-msgstr ""
+msgstr "Apvadas dešinėje"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1929
 msgid "Left And Right Borders"
-msgstr ""
+msgstr "Apvadas kairėjė ir dešinėje"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1935
 msgid "Top Border"
-msgstr ""
+msgstr "Apvadas viršuj"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1941
 msgid "Bottom Border"
-msgstr ""
+msgstr "Apvadas apačioj"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1947
 msgid "Top And Bottom Border"
-msgstr ""
+msgstr "Apvadas viršuj ir apačioj"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1953
 msgid "Outer Border"
-msgstr ""
+msgstr "Išorinis apvadas"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1959
 msgid "All Horizontal Lines"
-msgstr ""
+msgstr "Visos horizontalios linijos"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1965
 msgid "Outer Border And Horizontal Lines"
-msgstr ""
+msgstr "Išorinis apvadas ir horizontalios linijos"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1971
 msgid "Outer Border and Vertical Lines"
-msgstr ""
+msgstr "Išorinis apvadas ir vertikalios linijos"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1977
 msgid "Outer Borders And All Inner lines"
-msgstr ""
+msgstr "Išorinis apvadas ir visos vidinės linijos"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1982
 msgid "Line color"
-msgstr ""
+msgstr "Linijos spalva"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1993
 msgid "Line style"
-msgstr ""
+msgstr "Linijos stilius"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1996
 msgid "Hairline (0.05 pt)"
-msgstr ""
+msgstr "Marytės plaukas (0.05 pt)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2005
 msgid "Very thin (0.50 pt)"
-msgstr ""
+msgstr "Labai plona (0.50 pt)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2014
 msgid "Thin (0.75 pt)"
-msgstr ""
+msgstr "Plona (0.75 pt)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2023
 msgid "Medium (1.50 pt)"
-msgstr ""
+msgstr "Vidutinė (1.50 pt)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2032
 msgid "Thick (2.25 pt)"
-msgstr ""
+msgstr "Stora (2.25 pt)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2041
 msgid "Extra thick (4.50 pt)"
-msgstr ""
+msgstr "Labai stora (4.50 pt)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2050
 msgid "Double Hairline (1.10 pt)"
-msgstr ""
+msgstr "Dvigubas Marytės (1.10 pt)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2059
 msgid "Double Hairline (2.35 pt)"
-msgstr ""
+msgstr "Dvigubas Marytės (2.35 pt)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2068
 msgid "Thin/Medium (3.00 pt)"
-msgstr ""
+msgstr "Plona/Vidutinė (3.00 pt)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2077
 msgid "Medium/Hairline (3.05 pt)"
-msgstr ""
+msgstr "Vidutinė/Marytės (3.05 pt)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2086
 msgid "Medium/Medium (4.50 pt)"
-msgstr ""
+msgstr "Vidutinė/Vidutinė (4.50 pt)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2146
 msgid "Standard (4:3)"
-msgstr ""
+msgstr "Standartiškas (4:3)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2151
 msgid "Widescreen (16:9)"
-msgstr ""
+msgstr "Plačiaekranis (16:9)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2161
 msgid "Blank Slide"
-msgstr ""
+msgstr "Tuščia skaidrė"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2162
 msgid "Title Slide"
-msgstr ""
+msgstr "Titulinė skaidrė"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2163
 msgid "Title, Content"
-msgstr ""
+msgstr "Pavadinimas, turinys"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2164
 msgid "Title and 2 Content"
-msgstr ""
+msgstr "Pavadinimas ir du turinio elementai"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2165
 msgid "Title Only"
-msgstr ""
+msgstr "Tik pavadinimas"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2166
 msgid "Centered Text"
-msgstr ""
+msgstr "Centruotas tekstas"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2167
 msgid "Title, 2 Content and Content"
-msgstr ""
+msgstr "Pavadinimas, 2 turinio elementai ir turinys"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2168
 msgid "Title, Content and 2 Content"
-msgstr ""
+msgstr "Pavadinimas, turinys ir 2 turinio elementai"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2169
 msgid "Title, 2 Content over Content"
-msgstr ""
+msgstr "Pavadinimas, 2 Content over Content"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2170
 msgid "Title, Content over Content"
-msgstr ""
+msgstr "Pavadinimas, Content over Content"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2171
 msgid "Title, 4 Content"
-msgstr ""
+msgstr "Pavadinimas, 4 turinio elementai"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2172
 msgid "Title, 6 Content"
-msgstr ""
+msgstr "Pavadinimas, 6 turinio elementai"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2173
 msgid "Vertical Title, Text, Chart"
-msgstr ""
+msgstr "Vertikalus pavadinimas, tekstas, diagrama"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2174
 msgid "Vertical Title, Vertical Text"
-msgstr ""
+msgstr "Vertikalus pavadinimas, vertikalus tekstas"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2175
 msgid "Title, Vertical Text"
-msgstr ""
+msgstr "Pavadinimas, vertikalus tekstas"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2176
 msgid "Title, Vertical Text, Clipart"
-msgstr ""
+msgstr "Pavadinimas, vertikalus tekstas, iliustracija"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2309
 msgid "Grayscale"
-msgstr ""
+msgstr "Pilkos spalvos"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2314
 msgid "Black/White"
-msgstr ""
+msgstr "Juoda/Balta"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2319
 msgid "Watermark"
-msgstr ""
+msgstr "Vandens ženklas"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2327
 msgid "Insert comment"
@@ -4346,84 +4332,86 @@ msgstr "Įterpti komentarą"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2331
 msgid "Comments list"
-msgstr ""
+msgstr "Komentarų sąrašas"
 
 #: src/control/jsdialog/Util.SnackbarController.ts:122
 msgid "Dismiss"
-msgstr ""
+msgstr "Atmesti"
 
 #: src/control/jsdialog/Widget.ColorPicker.ts:46
 #: src/control/jsdialog/Widget.ColorPicker.ts:149
 msgid "Unknown color"
-msgstr ""
+msgstr "Nežinoma spalva"
 
 #: src/control/jsdialog/Widget.ColorPicker.ts:229
 msgid "No fill"
-msgstr ""
+msgstr "Be užpildo"
 
 #: src/control/jsdialog/Widget.ColorPicker.ts:229
 msgid "Automatic"
-msgstr ""
+msgstr "Automatiškas"
 
 #: src/control/jsdialog/Widget.ColorPicker.ts:262
 msgid "Color palette"
-msgstr ""
+msgstr "Spalvų paletė"
 
 #: src/control/jsdialog/Widget.ColorPicker.ts:328
 msgid "Enter custom color in hex format"
-msgstr ""
+msgstr "Įveskite pasirinktinę spalvą hex formatu"
 
 #: src/control/jsdialog/Widget.PageMarginEntry.ts:40
 msgid "Page margin options"
-msgstr ""
+msgstr "Puslapio paraščių parinktys"
 
 #: src/control/jsdialog/Widget.PageMarginEntry.ts:121
 msgid "Top: {top}"
-msgstr ""
+msgstr "Viršus: {top}"
 
 #: src/control/jsdialog/Widget.PageMarginEntry.ts:126
 msgid "Left: {left}"
-msgstr ""
+msgstr "Kairė: {left}"
 
 #: src/control/jsdialog/Widget.PageMarginEntry.ts:136
 msgid "Bottom: {bottom}"
-msgstr ""
+msgstr "Apačia: {bottom}"
 
 #: src/control/jsdialog/Widget.PageMarginEntry.ts:141
 msgid "Right: {right}"
-msgstr ""
+msgstr "Dešinė: {right}"
 
 #: src/control/jsdialog/Widget.PageMarginEntry.ts:165
 msgid "Custom Margins…"
-msgstr ""
+msgstr "Pasirinktos paraštės…"
 
 #: src/control/jsdialog/Widget.PageSizeEntry.ts:69
 msgid "More Paper Sizes..."
-msgstr ""
+msgstr "Daugiau puslapio dydžių..."
 
 #: src/control/jsdialog/Widget.HTMLContent.ts:54
 msgid "Edit mode"
-msgstr ""
+msgstr "Redagavimo režimas"
 
 #: src/control/jsdialog/Widget.HTMLContent.ts:83
 msgid "Number of Pages. Click to open the Go to Page dialog box."
 msgstr ""
+"Puslapių skaičius. Spustelėkite, kad atidarytumėte dialogo langą „Eiti į "
+"puslapį“."
 
 #: src/control/jsdialog/Widget.HTMLContent.ts:95
 msgid "Word Counter"
-msgstr "Žodžių skaičius"
+msgstr "Žodžių skaitiklis"
 
 #: src/control/jsdialog/Widget.HTMLContent.ts:104
 msgid "Number of Sheets"
-msgstr "Lakštų skaičius"
+msgstr "Lapų skaičius"
 
 #: src/control/jsdialog/Widget.HTMLContent.ts:116
 msgid "Entering text mode"
-msgstr ""
+msgstr "Įjungiamas teksto režimas"
 
 #: src/control/jsdialog/Widget.HTMLContent.ts:125
 msgid "Selection Mode"
-msgstr "Atrankos veiksena"
+msgstr "Pasirinkimo režimas"
 
 #: src/control/jsdialog/Widget.HTMLContent.ts:134
 msgid "Selected range of cells"
@@ -4444,57 +4432,55 @@ msgstr "Puslapių skaičius"
 #: src/control/jsdialog/Widget.HTMLContent.ts:176
 #: src/control/jsdialog/Widget.HTMLContent.ts:188
 msgid "Your changes have been saved"
-msgstr ""
+msgstr "Jūsų pakeitimai išsaugoti"
 
 #: src/control/jsdialog/Widget.HTMLContent.ts:200
-#, fuzzy
 msgid "Show Comments"
-msgstr "Komentaras"
+msgstr "Rodyti komentarus"
 
 #: src/control/jsdialog/Widget.MobileBorderSelector.js:96
 msgid "Cell borders"
-msgstr ""
+msgstr "Langeliu kraštai"
 
 #: src/control/jsdialog/Widget.SidebarContainers.ts:72
 msgid "More options for {1}"
-msgstr ""
+msgstr "Daugiau variantų {1}"
 
 #: src/control/jsdialog/Widget.TreeView.ts:1579
 msgid "Headings and objects that you add to the document will appear here"
-msgstr ""
+msgstr "Antraštės ir objektai, kuriuos pridedate prie dokumento, bus rodomi čia"
 
 #: src/app/SocketBase.ts:189
-#, fuzzy
 msgid "Oops, there is a problem connecting to {productname}: "
-msgstr "Nepavyko prisijungti prie „Collabora Online“ : "
+msgstr "Šūds, problemos jungiantis prie {productname}: "
 
 #: src/core/Socket.js:499
 msgid "Server is now reachable. We have to refresh the page now."
-msgstr ""
+msgstr "Serveris dabar pasiekiamas. Turime atnaujinti puslapį."
 
 #: src/core/Socket.js:501
 msgid "Server is now reachable..."
-msgstr ""
+msgstr "Serveris dabar pasiekiamas..."
 
 #: src/core/Socket.js:505
 msgid "RELOAD"
-msgstr ""
+msgstr "PERKRAUTI"
 
 #: src/core/Socket.js:518
 msgid "Cluster configuration warning"
-msgstr ""
+msgstr "Klasterio konfigūracijos įspėjimas"
 
 #: src/core/Socket.js:521
 msgid "Wrong server, reconnecting..."
-msgstr ""
+msgstr "Neteisingas serveris, jungiamasi iš naujo..."
 
 #: src/core/Socket.js:530
 msgid "COOLWSD version:"
-msgstr ""
+msgstr "COOLWSD versija:"
 
 #: src/core/Socket.js:555
 msgid "Served by:"
-msgstr ""
+msgstr "Aptarnaujamas:"
 
 #: src/core/Socket.js:561
 msgid "Unsupported server version."
@@ -4502,44 +4488,48 @@ msgstr "Nesuderinama serverio versija."
 
 #: src/core/Socket.js:565
 msgid "LOKit version:"
-msgstr ""
+msgstr "LOKit versija:"
 
 #: src/core/Socket.js:690
 msgid "Document is getting migrated"
-msgstr ""
+msgstr "Dokumentas yra perkeliamas"
 
 #: src/core/Socket.js:717
 msgid "Session terminated by document owner"
-msgstr ""
+msgstr "Sesiją nutraukė dokumento savininkas"
 
 #: src/core/Socket.js:728
 msgid "Server is shutting down for maintenance (auto-saving)"
-msgstr ""
+msgstr "Serveris išjungiamas priežiūrai (automatinis išsaugojimas)"
 
 #: src/core/Socket.js:734
-#, fuzzy
 msgid "Oops, there is a problem connecting the document"
-msgstr "Nepavyko prisijungti prie „Collabora Online“ : "
+msgstr "Šūds, kilo problema jungiantis prie dokumento"
 
 #: src/core/Socket.js:738
 msgid "Server is down, restarting automatically. Please wait."
 msgstr ""
+"Serveris neveikia, paleidžiamas automatiškai iš naujo. Prašome palaukti."
 
 #: src/core/Socket.js:765
 msgid ""
 "Document has changed in storage. Loading the new document. Your version is "
 "available as revision."
 msgstr ""
+"Dokumentas pakeistas saugykloje. Įkeliamas naujas dokumentas. Jūsų versija "
+"pasiekiama kaip pataisyta."
 
 #: src/core/Socket.js:771
 msgid ""
 "Restoring older revision. Any unsaved changes will be available in version "
 "history"
 msgstr ""
+"Atkuriama senesnė versija. Visi neišsaugoti pakeitimai bus pasiekiami "
+"versijų istorijoje"
 
 #: src/core/Socket.js:777
 msgid "Reloading the document after rename"
-msgstr ""
+msgstr "Naujai įkeliamas dokumentas po pervadinimo"
 
 #: src/core/Socket.js:936
 msgid "Document requires password to view."
@@ -4547,11 +4537,11 @@ msgstr "Dokumentui peržiūrėti reikalingas slaptažodis."
 
 #: src/core/Socket.js:939
 msgid "Document requires password to modify."
-msgstr "Dokumentui taisyti reikalingas slaptažodis."
+msgstr "Dokumentui modifikuoti reikalingas slaptažodis."
 
 #: src/core/Socket.js:941
 msgid "Hit Cancel to open in view-only mode."
-msgstr "Spustelėkite „Atsisakyti“, jei norite dokumentą atverti tik skaitymui."
+msgstr "Spustelėkite „Atsisakyti“, jei norite dokumentą atverti tik peržiūrai."
 
 #: src/core/Socket.js:945
 msgid "Wrong password provided. Please try again."
@@ -4559,115 +4549,120 @@ msgstr "Įvestas neteisingas slaptažodis. Bandykite dar kartą."
 
 #: src/core/Socket.js:983
 msgid "Only the document owner can change the password."
-msgstr ""
+msgstr "Tik dokumento savininkas gali keisti slaptažodį."
 
 #: src/core/Socket.js:1014 src/core/Socket.js:1019
 msgid "Missing Fonts"
-msgstr ""
+msgstr "Trūkstami šriftai"
 
 #: src/core/Socket.js:1051
 msgid "Someone"
-msgstr ""
+msgstr "Kažkas"
 
 #: src/core/Socket.js:1052
 msgid "{username} saved this document as {filename}. Do you want to join?"
-msgstr ""
+msgstr "{username} išsaugojo dokumentą kaip {filename}. Ar norite prisijungti?"
 
 #: src/core/Socket.js:1069
 msgid "The document is being renamed and will reload shortly"
-msgstr ""
+msgstr "Dokumentas pervadinamas ir netrukus bus įkeltas iš naujo"
 
 #: src/core/Socket.js:1072
 msgid "The document is switching to Offline mode and will reload shortly"
 msgstr ""
+"Dokumentas persijungia į neprisijungus veikiantį (offline) režimą ir "
+"netrukus bus įkeltas iš naujo"
 
 #: src/core/Socket.js:1175
 msgid "Connecting..."
-msgstr ""
+msgstr "Jungiamasi..."
 
 #: src/core/Socket.js:1190
 msgid "Server is shutting down"
-msgstr ""
+msgstr "Serveris išsijungia"
 
 #: src/core/Socket.js:1230
 msgid "Exported to storage"
-msgstr ""
+msgstr "Perkeliamas į saugyklą"
 
 #: src/core/Socket.js:1230
 msgid "Successfully exported: "
-msgstr ""
+msgstr "Sėkmingai perkeltas: "
 
 #: src/core/Socket.js:1258
 msgid "Discard"
-msgstr ""
+msgstr "Atšaukti"
 
 #: src/core/Socket.js:1270
 msgid "Save to new file"
-msgstr ""
+msgstr "Išsaugoti naujame faile"
 
 #: src/core/Socket.js:1280
 msgid "Document has been changed"
-msgstr ""
+msgstr "Dokumentas buvo pakeistas"
 
 #: src/core/Socket.js:1281
 msgid ""
 "Document has been changed in storage. What would you like to do with your "
 "unsaved changes?"
 msgstr ""
+"Dokumentas buvo pakeistas saugykloje. Ką norėtumėte daryti su neišsaugotais "
+"pakeitimais?"
 
 #: src/core/Socket.js:1546
 msgid ""
 "Well, this is embarrassing, we cannot connect to your document. Please try "
 "again."
-msgstr "Nepavyko prisijungti prie dokumento. Bandykite dar kartą."
+msgstr ""
+"Tai užknisa, bet nepavyko prisijungti prie dokumento. Bandykite dar kartą."
 
 #: src/core/Socket.js:1563
 msgid "Reconnecting..."
-msgstr ""
+msgstr "Pakartotinai prisijungiama..."
 
 #: src/core/Socket.js:1573
 msgid "The server has been disconnected."
-msgstr ""
+msgstr "Serveris buvo atjungtas."
 
 #: src/docdispatcher.ts:522
 msgid "Are you sure you want to delete this slide?"
-msgstr "Ar tikrai šalinti šią skaidrę?"
+msgstr "Ar tikrai norite pašalinti šią skaidrę?"
 
 #: src/docdispatcher.ts:525
 msgid "Are you sure you want to delete this page?"
-msgstr "Ar tikrai šalinti šį puslapį?"
+msgstr "Ar tikrai norite pašalinti šį puslapį?"
 
 #: src/docstate.ts:136
 msgid "Standard"
-msgstr ""
+msgstr "Standartiškas"
 
 #: src/docstate.ts:281
 msgid "Theme colors"
-msgstr ""
+msgstr "Temos spalvos"
 
 #: src/docstate.ts:282
 msgid "Document colors"
-msgstr ""
+msgstr "Dokumento spalvos"
 
 #: src/docstatefunctions.js:247
 msgid ", cluster configuration error: mis-matching serverid"
-msgstr ""
+msgstr ", klasterio konfigūracijos klaida: neatitinka serverio ID"
 
 #: src/dom/NotebookbarAccessibility.js:234
 msgid "{0} tab selected"
-msgstr ""
+msgstr "{0} skirtukas pasirinktas"
 
 #: src/errormessages.js:22
 msgid "No disk space left on server."
-msgstr ""
+msgstr "Serveryje nebeliko vietos."
 
 #: src/errormessages.js:23
 msgid ""
 "The host URL is empty. The coolwsd server is probably misconfigured, please "
 "contact the administrator."
 msgstr ""
-"Serverio URL adresas tuščias. Tikriausiai netinkamai sukonfigūruotas "
-"„coolwsd“ serveris, kreipkitės į administratorių."
+"Pagrindinio kompiuterio URL laukas tuščias. „Coolwsd“ serveris tikriausiai "
+"sukonfigūruotas netinkamai, susisiekite su administratoriumi."
 
 #: src/errormessages.js:24
 msgid ""
@@ -4676,42 +4671,55 @@ msgid ""
 "when more than {docs} documents or {connections} connections are in use "
 "concurrently."
 msgstr ""
+"Tai nepalaikoma „{productname}“ versija. Siekiant išvengti įspūdžio, kad ji "
+"tinkama diegti įmonėse, šis pranešimas rodomas, kai vienu metu naudojama "
+"daugiau nei {docs} dokumentai arba {connections} ryšiai."
 
 #: src/errormessages.js:25
 msgid "More information and support"
-msgstr ""
+msgstr "Daugiau informacijos ir tech palaikymas"
 
 #: src/errormessages.js:26
 msgid ""
 "This service is limited to {0} documents, and {1} connections total by the "
 "admin. This limit has been reached. Please try again later."
 msgstr ""
+"Administratorius šią paslaugą apribojo iki {0} dokumentų ir {1} ryšių. Šis "
+"limitas pasiektas. Bandykite dar kartą vėliau."
 
 #: src/errormessages.js:27
 msgid ""
 "Service is unavailable. Please try again later and report to your "
 "administrator if the issue persists."
 msgstr ""
+"Paslauga nepasiekiama. Bandykite dar kartą vėliau ir praneškite "
+"administratoriui, jei problema nedingo."
 
 #: src/errormessages.js:28
 msgid ""
 "Unauthorized WOPI host. Please try again later and report to your "
 "administrator if the issue persists."
 msgstr ""
+"Neautorizuotas WOPI serveris. Bandykite dar kartą vėliau ir praneškite "
+"administratoriui, jei problema išlieka."
 
 #: src/errormessages.js:29
 msgid "Authorization error was: '{errormessage}'."
-msgstr ""
+msgstr "Autorizacijos klaida: '{errormessage}'."
 
 #: src/errormessages.js:30
 msgid "Wrong or missing WOPISrc parameter, please contact support."
 msgstr ""
+"Neteisingas arba trūkstamas WOPISrc parametras, susisiekite su palaikymo "
+"tarnyba."
 
 #: src/errormessages.js:31
 msgid ""
 "Your session will expire in {time}. Please save your work and refresh the "
 "session (or webpage) to continue. You might need to login again."
 msgstr ""
+"Jūsų sesija baigsis po {time}. Išsaugokite savo darbą ir atnaujinkite sesiją "
+"(arba tinklalapį), kad galėtumėte tęsti. Gali tekti naujai prisijungti."
 
 #: src/errormessages.js:32
 msgid ""
@@ -4719,38 +4727,47 @@ msgid ""
 "saved. Please refresh the session (or webpage) to continue. You might need "
 "to login again."
 msgstr ""
+"Jūsų sesija baigėsi. Tolesni dokumento pakeitimai gali būti neišsaugoti. "
+"Norėdami tęsti, atnaujinkite sesiją (arba tinklalapį). Gali tekti "
+"prisijungti iš naujo."
 
 #: src/errormessages.js:33
 msgid ""
 "Failed to load the document. Please ensure the file type is supported and "
 "not corrupted, and try again."
 msgstr ""
+"Nepavyko įkelti dokumento. Įsitikinkite, kad failo tipas yra palaikomas ir "
+"nepažeistas, ir bandykite dar kartą."
 
 #: src/errormessages.js:34
 msgid "Invalid link: '{url}'"
-msgstr ""
+msgstr "Neteisinga nuoroda: '{url}'"
 
 #: src/errormessages.js:35
 msgid ""
 "You are leaving the document. The following web page will open in a new "
 "tab: "
-msgstr ""
+msgstr "Jūs išeinate iš dokumento. Šis tinklalapis atsidarys naujame skirtuke: "
 
 #: src/errormessages.js:36
 msgid ""
 "Failed to load the document. This document is either malformed or is taking "
 "more resources than allowed. Please contact the administrator."
 msgstr ""
+"Nepavyko įkelti dokumento. Šis dokumentas yra netinkamai suformatuotas arba "
+"naudoja daugiau išteklių nei leidžiama. Susisiekite su administratoriumi."
 
 #: src/errormessages.js:37
 msgid "Cleaning up the document from the last session."
-msgstr ""
+msgstr "Dokumento valymas po paskutinio seanso."
 
 #: src/errormessages.js:38
 msgid ""
 "We are in the process of cleaning up this document from the last session, "
 "please try again later."
 msgstr ""
+"Šiuo metu valome šį dokumentą po paskutinio seanso, bandykite dar kartą "
+"vėliau."
 
 #: src/errormessages.js:39
 msgid ""
@@ -4760,6 +4777,12 @@ msgid ""
 "storage and/or copy/paste problems. Expected serverId {0} for routeToken "
 "{1} but connected to serverId {2}"
 msgstr ""
+"Jūsų „{productname}“ klasteris, atrodo, yra netinkamai sukonfigūruotas arba "
+"per greitai keičiasi jo dydis – susisiekite su sistemos administratoriumi. "
+"Tęsiant redagavimą, keli vartotojai gali nematyti vienas kito, kilti "
+"dokumentų saugyklos konfliktų ir (arba) kopijavimo / įklijavimo problemų. "
+"Tikėtasi serverio ID {0} maršruto prieigos raktui {1}, bet prisijungta prie "
+"serverio ID {2}"
 
 #: src/errormessages.js:40
 msgid ""
@@ -4768,51 +4791,68 @@ msgid ""
 "administrator. For more info on proxy configuration please checkout https://"
 "sdk.collaboraonline.com/docs/installation/Proxy_settings.html"
 msgstr ""
+"Nepavyko užmegzti \"socket\" ryšio arba \"socket\" ryšys netikėtai nutrūko. "
+"Atvirkštinis tarpinis serveris gali būti netinkamai sukonfigūruotas, "
+"susisiekite su administratoriumi. Daugiau informacijos apie tarpinio "
+"serverio konfigūravimą rasite adresu https://sdk.collaboraonline.com/docs/"
+"installation/Proxy_settings.html"
 
 #: src/errormessages.js:41
 msgid ""
 "Failed to establish socket connection or socket connection closed "
 "unexpectedly."
 msgstr ""
+"Nepavyko užmegzti \"socket\" ryšio arba \"socket\" ryšys netikėtai nutrūko."
 
 #: src/errormessages.js:44
 msgid "Failed to load document."
-msgstr ""
+msgstr "Nepavyko užkrauti dokumento."
 
 #: src/errormessages.js:45
 msgid "Save failed due to no disk space left. Document will now be read-only."
 msgstr ""
+"Nepavyko išsaugoti, nes diske nebėra vietos. Dokumentas dabar bus skirtas "
+"tik skaitymui."
 
 #: src/errormessages.js:46
 msgid ""
 "The document is too large or no disk space left to save. Document will now "
 "be read-only."
 msgstr ""
+"Dokumentas per didelis arba diske nebėra vietos, kad būtų galima jį "
+"išsaugoti. Dabar dokumentas bus skirtas tik skaitymui."
 
 #: src/errormessages.js:47
 msgid ""
 "Document cannot be saved due to expired session, please reopen the document "
 "to continue."
 msgstr ""
+"Dokumento išsaugoti negalima dėl pasibaigusio seanso. Norėdami tęsti, iš "
+"naujo atidarykite dokumentą."
 
 #: src/errormessages.js:48
 msgid "Document cannot be saved."
-msgstr ""
+msgstr "Negalima išsaugoti dokumento."
 
 #: src/errormessages.js:49
 msgid "Document cannot be renamed."
-msgstr ""
+msgstr "Dokumento negalima pervadinti."
 
 #: src/errormessages.js:53
 msgid ""
 "Failed to read document from storage, please try to load the document again."
 msgstr ""
+"Nepavyko nuskaityti dokumento iš saugyklos, pabandykite įkelti dokumentą dar "
+"kartą."
 
 #: src/errormessages.js:54
 msgid ""
 "Save failed due to no storage space left. Document will now be read-only. "
 "Please make sure enough disk space is available and try to save again."
 msgstr ""
+"Išsaugoti nepavyko, nes saugykloje nebėra vietos. Dokumentas dabar bus "
+"skirtas tik skaitymui. Įsitikinkite, kad diske yra pakankamai vietos, ir "
+"bandykite išsaugoti dar kartą."
 
 #: src/errormessages.js:55
 msgid ""
@@ -4820,171 +4860,184 @@ msgid ""
 "storage space. The document will now be read-only but you may still "
 "download it now to preserve a copy locally."
 msgstr ""
+"Nepavyko išsaugoti, nes dokumentas yra per didelis arba viršija likusią "
+"saugyklos vietą. Dokumentas dabar bus skirtas tik skaitymui, bet vis tiek "
+"galite jį atsisiųsti, kad išsaugotumėte kopiją vietoje."
 
 #: src/errormessages.js:56
 msgid ""
 "Document cannot be saved due to expired session, please reload the page to "
 "continue."
 msgstr ""
+"Dokumento išsaugoti negalima dėl pasibaigusio seanso. Norėdami tęsti, "
+"įkelkite puslapį iš naujo."
 
 #: src/errormessages.js:57
 msgid "Document cannot be saved, please check your permissions."
-msgstr ""
+msgstr "Dokumento išsaugoti negalima, pasitikrinkite savo teises."
 
 #: src/errormessages.js:58
 msgid "Document cannot be renamed, please check your permissions."
-msgstr ""
+msgstr "Dokumento pervadinti negalima, pasitikrinkite savo teises."
 
 #: src/errormessages.js:59
 msgid "Document cannot be exported. Please try again."
-msgstr ""
+msgstr "Dokumento eksportuoti negalima. Bandykite dar kartą."
 
 #: src/errormessages.js:64
 msgid "Uploading file to server failed, file not found."
-msgstr ""
+msgstr "Nepavyko įkelti failo į serverį, failas nerastas."
 
 #: src/errormessages.js:65
 msgid "Uploading file to server failed, the file is too large."
-msgstr ""
+msgstr "Nepavyko įkelti failo į serverį, failas per didelis."
 
 #: src/layer/marker/A11yTextInput.js:235
 msgid "Out of table"
-msgstr ""
+msgstr "Už lentelės ribų"
 
 #: src/layer/marker/A11yTextInput.js:238
 msgid "Table with {0} rows and {1} columns"
-msgstr ""
+msgstr "Lentelėje yra eilučių {0} ir stulpelių {1}"
 
 #: src/layer/marker/A11yTextInput.js:243
 msgid "Row {0} through {1}"
-msgstr ""
+msgstr "Eilutės nuo {0} iki {1}"
 
 #: src/layer/marker/A11yTextInput.js:246
 msgid "Row {0}"
-msgstr ""
+msgstr "Eilutė {0}"
 
 #: src/layer/marker/A11yTextInput.js:254
 msgid "Column {0} through {1}"
-msgstr ""
+msgstr "Stulpeliai nuo {0} iki {1}"
 
 #: src/layer/marker/A11yTextInput.js:257
 msgid "Column {0}"
-msgstr ""
+msgstr "Stulpelis {0}"
 
 #: src/layer/marker/A11yTextInput.js:285
 msgid "Editing activated. "
-msgstr ""
+msgstr "Aktyvuotas redagavimas. "
 
 #: src/layer/marker/A11yTextInput.js:304
 msgid "{0} selected"
-msgstr ""
+msgstr "pasirinkta {0}"
 
 #: src/layer/marker/A11yTextInput.js:306
 msgid "Has text: "
-msgstr ""
+msgstr "Tekstas: "
 
 #: src/layer/marker/A11yTextInput.js:311
 msgid "{0} unselected"
-msgstr ""
+msgstr "{0} pasirinkimas atšauktas"
 
 #: src/layer/marker/A11yTextInput.js:315
 msgid "{0} deleted"
-msgstr ""
+msgstr "{0} pašalinta"
 
 #: src/layer/marker/TextInput.js:411
 msgid "Clipboard area"
-msgstr ""
+msgstr "Iškarpinės sritis"
 
 #: src/layer/marker/TextInput.js:461
 msgid "Screen reader support for text content is disabled. "
-msgstr ""
+msgstr "Ekrano skaitytuvo palaikymas tekstiniam turiniui išjungtas. "
 
 #: src/layer/marker/TextInput.js:462
 msgid "You need to enable it both at server level and in the UI. "
 msgstr ""
+"Jums reikia tai įjungti tiek serverio lygmenyje, tiek vartotojo sąsajoje. "
 
 #: src/layer/marker/TextInput.js:463
 msgid "Look for the accessibility section in coolwsd.xml for server setting. "
 msgstr ""
+"Serverio nustatymus rasite faile „coolwsd.xml“ esančiame prieinamumo "
+"skyriuje. "
 
 #: src/layer/marker/TextInput.js:464
 msgid "Also check the voice over toggle under {parentControl}."
 msgstr ""
+"Taip pat patikrinkite balso perjungimo jungiklį skiltyje {parentControl}."
 
 #: src/layer/marker/TextInput.js:466
 msgid "the Help tab"
-msgstr ""
+msgstr "Pagalbos skirtukas"
 
 #: src/layer/marker/TextInput.js:466
 msgid "the View menu"
-msgstr ""
+msgstr "meniu „Rodymas“"
 
 #: src/layer/tile/CanvasTileLayer.js:1594
-#, fuzzy
 msgid "Functions"
-msgstr "Funkcija"
+msgstr "Funkcijos"
 
 #: src/layer/tile/CanvasTileLayer.js:1854
 msgid "Named Range"
-msgstr ""
+msgstr "Įvardytas diapazonas"
 
 #: src/layer/tile/CanvasTileLayer.js:3533
-#, fuzzy
 msgid "No Comments"
-msgstr "Komentaras"
+msgstr "Komentarų nėra"
 
 #: src/main.js:131
 msgid "Warning! The browser you are using is not supported."
-msgstr ""
+msgstr "Dėmesio! Jūsų naudojama naršyklė nepalaikoma."
 
 #: src/map/Clipboard.js:178
 msgid ""
 "To paste outside {productname}, please first click the 'download' button"
 msgstr ""
+"Norėdami įklijuoti už {productname} ribų, pirmiausia spustelėkite mygtuką „"
+"Atsisiųsti“"
 
 #: src/map/Clipboard.js:186
 msgid "Copying from the document disabled"
-msgstr ""
+msgstr "Išjungtas kopijavimas iš dokumento"
 
 #: src/map/Clipboard.js:287
 msgid "warning: copy/paste request timed out"
-msgstr ""
+msgstr "įspėjimas: kopijavimo / įklijavimo užklausos laikas baigėsi"
 
 #: src/map/Clipboard.js:318
 msgid "Failed to download clipboard, please re-copy"
-msgstr ""
+msgstr "Nepavyko atsisiųsti iškarpinės, nukopijuokite dar kartą"
 
 #: src/map/Clipboard.js:1343
 msgid ""
 "Your browser has very limited access to the clipboard, so please use the "
 "paste buttons on your on-screen keyboard instead."
 msgstr ""
+"Jūsų naršyklės prieiga prie iškarpinės yra labai ribota, todėl naudokite "
+"įklijavimo mygtukus ekrano klaviatūroje."
 
 #: src/map/Clipboard.js:1399
 msgid ""
 "A download due to a large copy/paste operation has already started. Please, "
 "wait for the current download or cancel it before starting a new one"
 msgstr ""
+"Jau pradėtas didelės kopijavimo / įklijavimo operacijos atsisiuntimas. Prieš "
+"pradėdami naują, palaukite dabartinio atsisiuntimo pabaigos arba jį atšaukite"
 
 #: src/map/Clipboard.js:1421
 msgid "Paste from this document"
-msgstr ""
+msgstr "Įklijuoti iš šio dokumento"
 
 #: src/map/Clipboard.js:1421
 msgid "Cancel paste special"
-msgstr ""
+msgstr "Atšaukti specialų įklijavimą"
 
 #: src/map/Clipboard.js:1443
 msgid "Your browser has very limited access to the clipboard"
-msgstr ""
+msgstr "Jūsų naršyklės prieiga prie iškarpinės yra labai ribota"
 
 #: src/map/Clipboard.js:1448
 msgid "Please use following combination to see more options:"
-msgstr ""
+msgstr "Norėdami pamatyti daugiau parinkčių, naudokite šį derinį:"
 
 #: src/map/Clipboard.js:1466
 msgid "Close popup to ignore paste special"
-msgstr ""
+msgstr "Uždarykite iššokantį langą, jei norite ignoruoti specialųjį įklijavimą"
 
 #: src/map/Map.js:204
 msgid "Initializing..."
@@ -4992,49 +5045,49 @@ msgstr "Paleidžiama…"
 
 #: src/map/Map.js:487 src/map/Map.js:490 src/map/Map.js:493 src/map/Map.js:496
 msgid "Last saved:"
-msgstr ""
+msgstr "Paskutinis išsaugojimas:"
 
 #: src/map/Map.js:1520
 msgid "Please wait!"
-msgstr ""
+msgstr "Prašome palaukti!"
 
 #: src/map/handler/Map.Feedback.js:95
 msgid "Please send us your feedback"
-msgstr ""
+msgstr "Prašome atsiųsti mums savo atsiliepimą"
 
 #: src/map/handler/Map.FileInserter.js:174
 msgid ""
 "The file of type: {0} cannot be uploaded to server since the file has no "
 "name"
 msgstr ""
+"Failo, kurio tipas yra {0}, negalima įkelti į serverį, nes yra be pavadinimo"
 
 #: src/map/handler/Map.FileInserter.js:176
 msgid ""
 "The file of type: {0} cannot be uploaded to server since the file is empty"
-msgstr ""
+msgstr "Failo, kurio tipas yra {0}, negalima įkelti į serverį, nes yra tuščias"
 
 #: src/map/handler/Map.FileInserter.js:212
-#, fuzzy
 msgid "Uploading..."
 msgstr "Įkeliama…"
 
 #: src/map/handler/Map.FileInserter.js:237
 msgid "Uploading file to server failed with status: {0}"
-msgstr ""
+msgstr "Failo įkėlimas į serverį nepavyko. Būsena: {0}"
 
 #: src/map/handler/Map.Print.js:44
 msgid "Print dialog"
-msgstr ""
+msgstr "\"Spausdinti\" dialogas"
 
 #: src/map/handler/Map.SlideShow.js:59
 #: src/slideshow/SlideShowPresenter.ts:1066
 msgid "Empty Slide Show"
-msgstr ""
+msgstr "Tuščia skaidrių demonstracija"
 
 #: src/map/handler/Map.SlideShow.js:167
 #: src/slideshow/SlideShowPresenter.ts:1094
 msgid "Windowed Presentation Blocked"
-msgstr ""
+msgstr "Lange rodomas pristatymas užblokuotas"
 
 #: src/map/handler/Map.SlideShow.js:168
 #: src/slideshow/SlideShowPresenter.ts:1096
@@ -5043,154 +5096,155 @@ msgid ""
 "slide shows to be displayed in separated windows, allowing for easy screen "
 "sharing."
 msgstr ""
+"Pristatymas buvo užblokuotas. Prašome leisti iššokančiuosius langus "
+"naršyklėje. Tai leis skaidrių demonstracijas rodyti atskiruose languose, "
+"todėl bus lengva bendrinti ekraną."
 
 #: src/map/handler/Map.SlideShow.js:172
 #: src/slideshow/SlideShowPresenter.ts:896
 msgid "Windowed Presentation: "
-msgstr ""
+msgstr "Lange rodomas pristatymas: "
 
 #: src/map/handler/Map.SlideShow.js:202
 #: src/slideshow/SlideShowPresenter.ts:938
 msgid "Presenting in window"
-msgstr ""
+msgstr "Pristatymas lange"
 
 #: src/map/handler/Map.SlideShow.js:203
 #: src/slideshow/SlideShowPresenter.ts:939
 msgid "Close Presentation"
-msgstr ""
+msgstr "Uždaryti pristatymą"
 
 #: src/map/handler/Map.SlideShow.js:230
 msgid "Presenting in fullscreen"
-msgstr ""
+msgstr "Pilnaekranis pristatymas"
 
 #: src/map/handler/Map.SlideShow.js:231
-#, fuzzy
 msgid "End Presentation"
-msgstr "Prezentacija"
+msgstr "Užbaigti pristatymą"
 
 #: src/map/handler/Map.SlideShow.js:295
 #: src/slideshow/SlideShowPresenter.ts:1081
 msgid "Already presenting"
-msgstr ""
+msgstr "Pristatymas jau rodomas"
 
 #: src/map/handler/Map.SlideShow.js:296
 #: src/slideshow/SlideShowPresenter.ts:1082
 msgid "You are already presenting this document"
-msgstr ""
+msgstr "Jūs jau pateikiate šį dokumentą"
 
 #: src/map/handler/Map.SlideShow.js:306
 #: src/slideshow/SlideShowPresenter.ts:1119
 msgid "Presentation disabled"
-msgstr ""
+msgstr "Pristatymas išjungtas"
 
 #: src/map/handler/Map.SlideShow.js:307
 #: src/slideshow/SlideShowPresenter.ts:1120
 msgid "Presentation mode has been disabled for this document"
-msgstr ""
+msgstr "Šiam dokumentui pristatymo režimas išjungtas"
 
 #: src/map/handler/Map.VersionBar.js:50
 msgid "Your Collabora Online server needs updating. Version {0} is available."
-msgstr ""
+msgstr "Jūsų „Collabora Online“ serverį reikia atnaujinti. Yra {0} versija."
 
 #: src/map/handler/Map.WOPI.js:172
 msgid "Creating new file from template..."
-msgstr ""
+msgstr "Kuriamas naujas failas iš šablono..."
 
 #: src/map/handler/Map.WOPI.js:723
 msgid "File name should contain an extension."
-msgstr ""
+msgstr "Failo pavadinime turėtų būti plėtinys."
 
 #: src/map/handler/Map.WOPI.js:731
 msgid "Creating copy..."
-msgstr ""
+msgstr "Kuriama kopija..."
 
 #: src/map/handler/Map.Welcome.js:92
 msgid "Welcome Dialog"
-msgstr ""
+msgstr "Pasisveikinimo dialogas"
 
 #: src/slideshow/PauseTimer.ts:141
 msgid "Pause... ( %SECONDS% )"
-msgstr ""
+msgstr "Pauzė... ( %SECONDS% )"
 
 #: src/slideshow/PresenterConsole.js:29
 msgid "Current Slide"
-msgstr ""
+msgstr "Esama skaidrė"
 
 #: src/slideshow/PresenterConsole.js:30
-#, fuzzy
 msgid "Next Slide"
-msgstr "Kita skaidrė"
+msgstr "Sekanti skaidrė"
 
 #: src/slideshow/PresenterConsole.js:35
 msgid "Pause"
-msgstr ""
+msgstr "Pauzė"
 
 #: src/slideshow/PresenterConsole.js:36
 msgid "Restart"
-msgstr ""
+msgstr "Paleisti iš naujo"
 
 #: src/slideshow/PresenterConsole.js:37
 msgid "Resume"
-msgstr ""
+msgstr "Tęsti"
 
 #: src/slideshow/PresenterConsole.js:38
 msgid "Go Back"
-msgstr ""
+msgstr "Atgal"
 
 #: src/slideshow/PresenterConsole.js:39
 msgid "Zoom In"
-msgstr ""
+msgstr "Priartinti"
 
 #: src/slideshow/PresenterConsole.js:40
 msgid "Zoom Out"
-msgstr ""
+msgstr "Atitolinti"
 
 #: src/slideshow/PresenterConsole.js:178
 msgid "Preview Slide {1}"
-msgstr ""
+msgstr "Peržiūrėti skaidrę {1}"
 
 #: src/slideshow/PresenterConsole.js:1241
 msgid "Slide {0} of {1}"
-msgstr ""
+msgstr "Skaidrė {0} iš {1}"
 
 #: src/slideshow/PresenterConsole.js:1265
 msgid "No Notes"
-msgstr ""
+msgstr "Nėra pastabų"
 
 #: src/slideshow/PresenterConsole.js:1353
 msgid "Repeat in {0} seconds"
-msgstr ""
+msgstr "Pakartojimas po {0} sekundžių"
 
 #: src/slideshow/PresenterConsole.js:1358
 #: src/slideshow/SlideShowPresenter.ts:562
 msgid "Click to exit presentation..."
-msgstr ""
+msgstr "Spustelėkite, kad išeitumėte iš pristatymo..."
 
 #: src/slideshow/SlideShowPresenter.ts:685
 msgid "End Show"
-msgstr ""
+msgstr "Nutraukti pristatymą"
 
 #: src/slideshow/SlideShowPresenter.ts:720
 #: src/slideshow/SlideShowPresenter.ts:733
 msgid "Disable Animations"
-msgstr ""
+msgstr "Išjungti animacijas"
 
 #: src/slideshow/SlideShowPresenter.ts:732
 msgid "Enable Animations"
-msgstr ""
+msgstr "Įjungti animacijas"
 
 #: welcome/welcome.html%2Bhtml.head.title:9-3
 msgid "Collabora Online Welcome"
-msgstr ""
+msgstr "„Collabora Online“ sveiki atvykę"
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h1:26-7
 msgid "Explore The New {coolversion}"
-msgstr ""
+msgstr "Naršykite naują {coolversion} versiją"
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h2:27-7
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h2:38-7
 msgid "Collabora Online Development Edition"
-msgstr ""
+msgstr "„Collabora Online“ kūrėjams"
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.p:28-7
 msgid ""
@@ -5200,10 +5254,15 @@ msgid ""
 "solutions/collabora-office-android-ios/\">apps</a> are also available for "
 "mobile."
 msgstr ""
+"Mėgaukitės naujausiais internetinio produktyvumo patobulinimais, kuriais "
+"galite nemokamai naudotis, tyrinėti ir naudoti kartu su kitais naršyklėje. "
+"Įvairios <a target=\"_blank\" rel=\"noopener\" href=\"https://"
+"www.collaboraonline.com/solutions/collabora-office-android-ios/\">"
+"programėlės</a> taip pat prieinamos mobiliesiems įrenginiams."
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h1:37-7
 msgid "Discover All The Changes"
-msgstr ""
+msgstr "Atraskite visus pasikeitimus"
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.p:39-7
 msgid ""
@@ -5212,14 +5271,18 @@ msgid ""
 "all about: The latest Collabora Online Development Edition, aimed at home "
 "users and small teams."
 msgstr ""
+"Peržiūrėkite <a target=\"_blank\" rel=\"noopener\" href=\"https://"
+"www.collaboraonline.com/code-25-04-release-notes/\">išleidimo pastabas</a> "
+"ir sužinokite viską apie naujausią „Collabora Online Development Edition“, "
+"skirtą namų vartotojams ir mažoms komandoms."
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h1:48-7
 msgid "Get Involved"
-msgstr ""
+msgstr "Įsitraukite"
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h2:49-7
 msgid "https://collaboraonline.github.io/"
-msgstr ""
+msgstr "https://collaboraonline.github.io/"
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.p:50-7
 msgid ""
@@ -5232,6 +5295,14 @@ msgid ""
 "href=\"https://collaboraonline.github.io/post/filebugs/\">filing a bug "
 "report</a> with all the essential steps on how to reproduce it."
 msgstr ""
+"Norėtumėte prisidėti, bet nežinote, nuo ko pradėti? Peržiūrėkite <a "
+"target=\"_blank\" rel=\"noopener\" href=\"https://collaboraonline.github.io/"
+"post/build-code/\">žingsnis po žingsnio instrukcijas</a> ir sukurkite KODĄ "
+"nuo nulio. Taip pat galite padėti su <a target=\"_blank\" rel=\"noopener\" "
+"href=\"https://collaboraonline.github.io/post/translate/\">vertimais</a> "
+"arba <a target=\"_blank\" rel=\"noopener\" href=\"https://"
+"collaboraonline.github.io/post/filebugs/\">pateikdami klaidos ataskaitą</a> "
+"su visais svarbiausiais veiksmais, kaip ją atkurti."
 
 #: welcome/welcome.html%2Bhtml.body.div.div:55-5
 msgid ""
@@ -5240,6 +5311,10 @@ msgid ""
 "translate=\"true\">2</a> <a id=\"slide-3-indicator\" href=\"#slide-3\" data-"
 "translate=\"true\">3</a>"
 msgstr ""
+"<a id=\"slide-1-indicator\" class=\"active\" href=\"#slide-1\" data-"
+"translate=\"true\">1</a> <a id=\"slide-2-indicator\" href=\"#slide-2\" data-"
+"translate=\"true\">2</a> <a id=\"slide-3-indicator\" href=\"#slide-3\" data-"
+"translate=\"true\">3</a>"
 
 #~ msgid "A comment is being edited"
 #~ msgstr "Komentaras redaguojamas"
