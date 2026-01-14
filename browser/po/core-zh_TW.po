@@ -2,9 +2,15 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: core-zh-TW\n"
-"Language: zh-TW\n"
+"PO-Revision-Date: 2025-12-31 14:51+0000\n"
+"Last-Translator: kevin lin <kevin.linul@gmail.com>\n"
+"Language-Team: Chinese (Traditional Han script) <https://hosted.weblate.org/"
+"projects/collabora-online/lokit/zh_Hant/>\n"
+"Language: zh_TW\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Weblate 5.15.1\n"
 
 #. ygDfy
 #: module_graphicfilter.ulf
@@ -13,7 +19,7 @@ msgctxt ""
 "STR_NAME_MODULE_OPTIONAL_GRFFLT_FLASH\n"
 "LngText.text"
 msgid "Macromedia Flash (SWF)"
-msgstr ""
+msgstr "Macromedia Flash (SWF)"
 
 #. qAk8E
 #: module_graphicfilter.ulf
@@ -22,7 +28,7 @@ msgctxt ""
 "STR_DESC_MODULE_OPTIONAL_GRFFLT_FLASH\n"
 "LngText.text"
 msgid "Macromedia Flash (SWF) Export Filter"
-msgstr ""
+msgstr "Macromedia Flash (SWF) 匯出篩選器"
 
 #. vcMGk
 #: folderitem_ooo.ulf
@@ -35,42 +41,44 @@ msgid ""
 "Technology, provided by Collabora Productivity. See https://collaboraoffice."
 "com"
 msgstr ""
+"Collabora Office 是一套基於 LibreOffice 技術的辦公生產力套件，由 Collabora "
+"Productivity 提供。詳情請參見 https://collaboraoffice.com"
 
 #. 4rBwc
 #: include/svx/strings.hrc:1040
 msgctxt "RID_SVXSTR_PASTE_AS_DIALOG_TITLE"
 msgid "Paste As"
-msgstr ""
+msgstr "貼上為"
 
 #. aNZNw
 #: svx/uiconfig/ui/dropdownfielddialog.ui:31
 msgctxt "dropdownDialog|OK"
 msgid "OK"
-msgstr ""
+msgstr "確定"
 
 #. 54Dmg
 #: svx/uiconfig/ui/dropdownfielddialog.ui:44
 msgctxt "dropdownDialog|CANCEL"
 msgid "Cancel"
-msgstr ""
+msgstr "取消"
 
 #. gPAYw
 #: svx/uiconfig/ui/findreplacedialog.ui:67
 msgctxt "findreplacedialog|find_tab_btn"
 msgid "Find"
-msgstr ""
+msgstr "尋找"
 
 #. uknDS
 #: svx/uiconfig/ui/findreplacedialog.ui:80
 msgctxt "findreplacedialog|replace_tab_btn"
 msgid "Replace"
-msgstr ""
+msgstr "取代"
 
 #. 7MFsT
 #: uui/inc/strings.hrc:84
 msgctxt "STR_READONLY_FONT_TITLE"
 msgid "Font Disallows Editing"
-msgstr ""
+msgstr "字型不允許編輯"
 
 #. YRahp
 #: uui/inc/strings.hrc:85
@@ -81,6 +89,10 @@ msgid ""
 "Pressing [ No ] will drop these fonts from the document:\n"
 "$(ARG1)"
 msgstr ""
+"文件中有一個或多個嵌入字型不具編輯權限。\n"
+"是否以唯讀模式開啟文件？\n"
+"按下 [否] 將從文件中移除這些字型：\n"
+"$(ARG1)"
 
 #. 4NkMk
 #: readme.xrm
@@ -92,106 +104,107 @@ msgid ""
 "For more information please visit ${PRODUCTNAME} home page at <a "
 "href=\"https://collaboraoffice.com\">https://CollaboraOffice.com/</a>."
 msgstr ""
+"欲瞭解更多資訊，請造訪 ${PRODUCTNAME} 官方首頁：<a href=\"https://"
+"collaboraoffice.com\">https://CollaboraOffice.com/</a>。"
 
 #. SbQew
 #: chart2/inc/strings.hrc:51
 msgctxt "STR_PAGE_COLOR_PALETTE"
 msgid "Color Palette"
-msgstr ""
+msgstr "色彩調色盤"
 
 #. YZBr8
 #: chart2/inc/strings.hrc:52
 msgctxt "STR_PAGE_GRADIENT_PRESETS"
 msgid "Gradients"
-msgstr ""
+msgstr "漸層"
 
 #. DWGVf
 #: chart2/uiconfig/ui/chartcolorpalettepopup.ui:46
 msgctxt "chartcolorpalettepopup|colorfulwin"
 msgid "Colorful"
-msgstr ""
+msgstr "多彩"
 
 #. xmAmH
 #: chart2/uiconfig/ui/chartcolorpalettepopup.ui:98
 msgctxt "chartcolorpalettepopup|monochromaticwin"
 msgid "Monochromatic"
-msgstr ""
+msgstr "單色"
 
 #. DrjDt
 #: chart2/uiconfig/ui/chartgradientpalettepopup.ui:46
 msgctxt "chartgradientpalettepopup|lightwin"
 msgid "Light Variations"
-msgstr ""
+msgstr "淺色變化"
 
 #. Y3PP5
 #: chart2/uiconfig/ui/chartgradientpalettepopup.ui:97
 msgctxt "chartgradientpalettepopup|darkwin"
 msgid "Dark Variations"
-msgstr ""
+msgstr "深色變化"
 
 #. WWm9R
 #: chart2/uiconfig/ui/chartthemepopup.ui:51
 msgctxt "chartthemepopup|managechartstyle"
 msgid "_Manage chart styles"
-msgstr ""
+msgstr "管理圖表樣式(_M)"
 
 #. BFxBa
 #: chart2/uiconfig/ui/dlg_Theme.ui:16
 msgctxt "dlg_Theme|ChartThemeDialog"
 msgid "Manage Chart Styles"
-msgstr ""
+msgstr "管理圖表樣式"
 
 #. kqBFK
 #: chart2/uiconfig/ui/dlg_Theme.ui:46
 msgctxt "dlg_Theme|iconviewlabel|tooltip_text"
 msgid "Selectable chart styles list."
-msgstr ""
+msgstr "可選圖表樣式清單。"
 
 #. WsSmE
 #: chart2/uiconfig/ui/dlg_Theme.ui:51
 msgctxt "dlg_Theme|iconviewlabel"
 msgid "_Chart styles:"
-msgstr ""
+msgstr "圖表樣式(_C)："
 
 #. DYH5e
 #: chart2/uiconfig/ui/dlg_Theme.ui:122
 msgctxt "dlg_Theme|chartload"
 msgid "_Load style to chart"
-msgstr ""
+msgstr "將樣式套用至圖表(_L)"
 
 #. YWkrA
 #: chart2/uiconfig/ui/dlg_Theme.ui:134
 msgctxt "dlg_Theme|chartsave"
 msgid "_Save to styles"
-msgstr ""
+msgstr "儲存至樣式(_S)"
 
 #. h8L8Y
 #: chart2/uiconfig/ui/dlg_Theme.ui:146
 msgctxt "dlg_Theme|chartdelete"
 msgid "_Delete style"
-msgstr ""
+msgstr "刪除樣式(_D)"
 
 #. g5qPU
 #: chart2/uiconfig/ui/dlg_Theme.ui:158
 msgctxt "dlg_Theme|chartsavenew"
 msgid "Save to _new style"
-msgstr ""
+msgstr "儲存為新樣式(_n)"
 
 #. GPgLR
 #: chart2/uiconfig/ui/dlg_Theme.ui:183
 msgctxt "dlg_Theme|chartmanage"
 msgid "_Manage chart styles"
-msgstr ""
+msgstr "管理圖表樣式(_M)"
 
 #. Yif9X
 #: chart2/uiconfig/ui/sidebarcolors.ui:30
 msgctxt "sidebarcolors|bordertype|tooltip_text"
 msgid "Allow to select a color palette to apply to current chart data series."
-msgstr ""
+msgstr "允許選擇色彩調色盤以套用至目前圖表的資料系列。"
 
 #. xGjwG
 #: chart2/uiconfig/ui/sidebarcolors.ui:42
-#, fuzzy
 msgctxt "sidebarcolors|cellbordertype-atkobject"
 msgid "Border Style"
 msgstr "邊框樣式"
@@ -201,11 +214,10 @@ msgstr "邊框樣式"
 msgctxt "sidebargradients|bordertype|tooltip_text"
 msgid ""
 "Allow to select a gradient palette to apply to current chart data series."
-msgstr ""
+msgstr "允許選擇漸層調色盤以套用至目前圖表的資料系列。"
 
 #. 3xZSQ
 #: chart2/uiconfig/ui/sidebargradients.ui:42
-#, fuzzy
 msgctxt "sidebargradients|cellbordertype-atkobject"
 msgid "Border Style"
 msgstr "邊框樣式"
@@ -214,127 +226,127 @@ msgstr "邊框樣式"
 #: chart2/uiconfig/ui/sidebartheme.ui:25
 msgctxt "sidebartheme|themelist|tooltip_text"
 msgid "Allow to select a theme to apply to the current chart."
-msgstr ""
+msgstr "允許選擇主題以套用至目前圖表。"
 
 #. aGvuY
 #: chart2/uiconfig/ui/sidebartheme.ui:37
 msgctxt "sidebartheme|themetype-atkobject"
 msgid "Themes"
-msgstr ""
+msgstr "主題"
 
 #. YB6Et
 #: chart2/uiconfig/ui/sidebartheme.ui:48
 msgctxt "sidebartheme|savetonew"
 msgid "_Save to new theme"
-msgstr ""
+msgstr "儲存為新主題(_S)"
 
 #. 4C556
 #: chart2/uiconfig/ui/sidebartype.ui:102
 msgctxt "sidebartype|3dschemeft"
 msgid "3D _Scheme:"
-msgstr ""
+msgstr "3D配色方案(_S)："
 
 #. x3adg
 #: chart2/uiconfig/ui/tp_ChartColorPalette.ui:68
 msgctxt "tp_ChartColorPalette|colorfulwin"
 msgid "Colorful"
-msgstr ""
+msgstr "多彩"
 
 #. 8QjnP
 #: chart2/uiconfig/ui/tp_ChartColorPalette.ui:126
 msgctxt "tp_ChartColorPalette|monochromaticwin"
 msgid "Monochromatic"
-msgstr ""
+msgstr "單色"
 
 #. 6JxiC
 #: chart2/uiconfig/ui/tp_ChartGradients.ui:69
 msgctxt "tp_ChartGradients|lightwin"
 msgid "Light Variations"
-msgstr ""
+msgstr "淺色變化"
 
 #. DmWVa
 #: chart2/uiconfig/ui/tp_ChartGradients.ui:128
 msgctxt "tp_ChartGradients|darkwin"
 msgid "Dark Variations"
-msgstr ""
+msgstr "深色變化"
 
 #. FG2rh
 #: chart2/uiconfig/ui/tp_ChartType.ui:114
 msgctxt "tp_ChartType|extended_tip|subtype_iconview"
 msgid "Select a sub type of the basic chart type."
-msgstr ""
+msgstr "選擇基本圖表類型的子類型。"
 
 #. Wh4j6
 #: chart2/uiconfig/ui/tp_ChartType.ui:167
 msgctxt "tp_ChartType|3dschemeft"
 msgid "3D _Scheme:"
-msgstr ""
+msgstr "3D配色方案(_S)："
 
 #. ChTwx
 #: cui/inc/strings.hrc:481
 msgctxt "REG_CALCDBFOCUS"
 msgid "Table Style focus"
-msgstr ""
+msgstr "表格樣式焦點"
 
 #. EPGtZ
 #: cui/uiconfig/ui/hyperlinkinternetpage.ui:64
 msgctxt "hyperlinkinternetpage|target_label"
 msgid "Link:"
-msgstr ""
+msgstr "連結："
 
 #. gfELk
 #: cui/uiconfig/ui/pageformatpage.ui:260
 msgctxt "pageformatpage|checkResizeAllPages"
 msgid "Resize all pages"
-msgstr ""
+msgstr "調整所有頁面大小"
 
 #. NBdEp
 #: cui/uiconfig/ui/pickbulletpage.ui:45
 msgctxt "pickbulletpage|extended_tip|pick_bullet_iconview"
 msgid "Click the bullet style that you want to use."
-msgstr ""
+msgstr "按一下要使用的項目符號樣式。"
 
 #. rkoDB
 #: cui/uiconfig/ui/pickgraphicpage.ui:45
 msgctxt "pickgraphicpage|extended_tip|pick_graphic_iconview"
 msgid "Click the graphics that you want to use as bullets."
-msgstr ""
+msgstr "按一下要用作項目符號的圖案。"
 
 #. WGzy5
 #: cui/uiconfig/ui/picknumberingpage.ui:44
 msgctxt "picknumberingpage|extended_tip|pick_numbering_iconview"
 msgid "Click the numbering scheme that you want to use."
-msgstr ""
+msgstr "按一下要使用的編號樣式。"
 
 #. avppC
 #: cui/uiconfig/ui/pickoutlinepage.ui:44
 msgctxt "pickoutlinepage|extended_tip|pick_outline_iconview"
 msgid "Click the outline style that you want to use."
-msgstr ""
+msgstr "按一下要使用的大綱樣式。"
 
 #. qpArp
 #: cui/uiconfig/ui/toolbarmodedialog.ui:124
 msgctxt "ToolbarmodeDialog|radiobutton1"
 msgid "Compact"
-msgstr ""
+msgstr "精簡"
 
 #. ZbYiG
 #: include/svtools/strings.hrc:71
 msgctxt "STR_FORMAT_ID_MARKDOWN"
 msgid "Markdown"
-msgstr ""
+msgstr "Markdown"
 
 #. HASc5
 #: include/sfx2/strings.hrc:227
 msgctxt "STR_SID_QUICKFIND"
 msgid "Quick Find"
-msgstr ""
+msgstr "快速尋找"
 
 #. 2VmCo
 #: sfx2/uiconfig/ui/licensedialog.ui:41
 msgctxt "licensedialog|eula"
 msgid "_EULA"
-msgstr ""
+msgstr "最終用戶授權合約(EULA)(_E)"
 
 #. jjkw7
 #: sfx2/uiconfig/ui/licensedialog.ui:85
@@ -344,30 +356,32 @@ msgid ""
 "End User License and Subscription Agreement; choose EULA to see exact "
 "details in English."
 msgstr ""
+"%PRODUCTNAME 二進位套件的使用須遵守最終用戶授權及訂閱合約條款；選取 EULA 可查"
+"看英文原文詳細內容。"
 
 #. YHTHB
 #: sfx2/uiconfig/ui/templatepanel.ui:137
 msgctxt "templatepanel|accessible_name|watercan"
 msgid "Fill Format Mode"
-msgstr ""
+msgstr "填滿格式模式"
 
 #. qvBEu
 #: sfx2/uiconfig/ui/templatepanel.ui:156
 msgctxt "templatepanel|accessible_name|new"
 msgid "New Style from Selection"
-msgstr ""
+msgstr "依所選建立新樣式"
 
 #. 5ZAqh
 #: sfx2/uiconfig/ui/templatepanel.ui:174
 msgctxt "templatepanel|accessible_name|newmenu"
 msgid "Styles actions"
-msgstr ""
+msgstr "樣式操作"
 
 #. 7NfdA
 #: sfx2/uiconfig/ui/templatepanel.ui:192
 msgctxt "templatepanel|accessible_name|update"
 msgid "Update Style"
-msgstr ""
+msgstr "更新樣式"
 
 #. BGAhD
 #: sfx2/uiconfig/ui/templatepanel.ui:242
@@ -379,62 +393,62 @@ msgstr "突顯"
 #: sfx2/uiconfig/ui/templatepanel.ui:272
 msgctxt "templatepanel|filter-atkobject"
 msgid "Filter"
-msgstr ""
+msgstr "篩選"
 
 #. 5xrhC
 #: sw/inc/strings.hrc:232
 msgctxt "STR_COLUMN_ICONVIEW_ITEM0"
 msgid "1 column"
-msgstr ""
+msgstr "1 欄"
 
 #. VAfCS
 #: sw/inc/strings.hrc:233
 msgctxt "STR_COLUMN_ICONVIEW_ITEM1"
 msgid "2 columns with equal size"
-msgstr ""
+msgstr "2 欄等寬"
 
 #. g8pFG
 #: sw/inc/strings.hrc:234
 msgctxt "STR_COLUMN_ICONVIEW_ITEM2"
 msgid "3 columns with equal size"
-msgstr ""
+msgstr "3 欄等寬"
 
 #. QJxAd
 #: sw/inc/strings.hrc:235
 msgctxt "STR_COLUMN_ICONVIEW_ITEM3"
 msgid "2 columns with different size (left > right)"
-msgstr ""
+msgstr "2 欄不等寬（左大於右）"
 
 #. MHk4E
 #: sw/inc/strings.hrc:236
 msgctxt "STR_COLUMN_ICONVIEW_ITEM4"
 msgid "2 columns with different size (left < right)"
-msgstr ""
+msgstr "2 欄不等寬（左小於右）"
 
 #. xPgHS
 #: sw/inc/strings.hrc:498
 msgctxt "STR_REINSTATE_REDLINE"
 msgid "Reinstate change: $1"
-msgstr ""
+msgstr "恢復變更：$1"
 
 #. afEVQ
 #: sw/inc/strings.hrc:1536
 msgctxt "STR_COMPAT_OPT_UNDERLINETRAILINGSPACE"
 msgid "Underline Word-compatible trailing blanks"
-msgstr ""
+msgstr "底線 Word 相容的尾端空格"
 
 #. B3rfb
 #: sw/uiconfig/swriter/ui/columnpage.ui:122
 msgctxt "columnpage|columnft"
 msgid "Column"
-msgstr ""
+msgstr "欄"
 
 #. Lurdj
 #: sw/uiconfig/swriter/ui/columnpage.ui:868
 msgctxt "columnpage|extended_tip|column-iconview"
 msgid ""
 "Enter the number of columns that you want in the page, frame, or section."
-msgstr ""
+msgstr "輸入您希望在頁面、框架或區段中使用的欄數。"
 
 #. Ci9GE
 #: sw/uiconfig/swriter/ui/spellmenu.ui:34
@@ -446,7 +460,7 @@ msgstr "新增至字典(_D) (standard.dic)"
 #: sw/uiconfig/swriter/ui/wordcount-mobile.ui:643
 msgctxt "wordcount-mobile|comments"
 msgid "Comments"
-msgstr ""
+msgstr "註解"
 
 #. SsL8u
 #: formula/inc/core_resource.hrc:2628
@@ -536,25 +550,25 @@ msgstr "WRAPROWS"
 #: formula/uiconfig/ui/functionpage.ui:80
 msgctxt "functionpage|label_category"
 msgid "_Category:"
-msgstr ""
+msgstr "類別(_C)："
 
 #. BNnFg
 #: formula/uiconfig/ui/functionpage.ui:115
 msgctxt "functionpage|label_function"
 msgid "_Function:"
-msgstr ""
+msgstr "函式(_F)："
 
 #. zRASZ
 #: formula/uiconfig/ui/structpage.ui:28
 msgctxt "structpage|label_struct"
 msgid "Content:"
-msgstr ""
+msgstr "內容："
 
 #. DPToC
 #: sd/uiconfig/simpress/ui/layoutpanel.ui:41
 msgctxt "layoutpanel|extended_tip|layoutpanel_icons"
 msgid "List of available layout templates."
-msgstr ""
+msgstr "可用版面範本清單。"
 
 #. Y3kBV
 #: filter/uiconfig/ui/impswfdialog.ui:14
@@ -626,7 +640,7 @@ msgctxt "pdfgeneralpage|extended_tip|embed"
 msgid ""
 "This setting enables you to export the document as a .pdf file containing "
 "two file formats: PDF and ODF as an attachment. "
-msgstr "此設定讓您能將文件匯出為內含兩種格式的 .pdf 檔：PDF 和 ODF。"
+msgstr "此設定讓您能將文件匯出為內含兩種格式的 .pdf 檔：PDF 和 ODF。 "
 
 #. NCgBM
 #: filter/uiconfig/ui/pdfgeneralpage.ui:583
@@ -634,7 +648,7 @@ msgctxt "pdfgeneralpage|pdf_version|tooltip_text"
 msgid ""
 "Select the PDF version. PDF/A version variants creates an ISO 19005 "
 "compliant PDF file, ideal for long-term document preservation."
-msgstr "製作遵循 ISO 19005-2 標準的 PDF 檔，適合長期文件保存之用"
+msgstr "製作遵循 ISO 19005-2 標準的 PDF 檔，適合長期文件保存之用。"
 
 #. Ac3Ga
 #: filter/uiconfig/ui/pdfgeneralpage.ui:587
@@ -700,7 +714,7 @@ msgctxt ""
 "UIName\n"
 "value.text"
 msgid "Markdown Document"
-msgstr ""
+msgstr "Markdown 文件"
 
 #. 9Q5Zj
 #: draw_flash_Export.xcu
@@ -710,7 +724,7 @@ msgctxt ""
 "UIName\n"
 "value.text"
 msgid "Macromedia Flash (SWF)"
-msgstr ""
+msgstr "Macromedia Flash (SWF)"
 
 #. MsYCr
 #: impress_flash_Export.xcu
@@ -720,7 +734,7 @@ msgctxt ""
 "UIName\n"
 "value.text"
 msgid "Macromedia Flash (SWF)"
-msgstr ""
+msgstr "Macromedia Flash (SWF)"
 
 #. FoizC
 #: CalcCommands.xcu
@@ -730,7 +744,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Current Sheet View"
-msgstr ""
+msgstr "目前工作表檢視"
 
 #. 3Ep4Y
 #: CalcCommands.xcu
@@ -740,7 +754,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Insert Function"
-msgstr ""
+msgstr "插入函式"
 
 #. rxGTc
 #: CalcCommands.xcu
@@ -750,7 +764,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Print Grid Lines"
-msgstr ""
+msgstr "列印格線"
 
 #. a35bF
 #: CalcCommands.xcu
@@ -760,7 +774,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "New Sheet View"
-msgstr ""
+msgstr "新增工作表檢視"
 
 #. AKfar
 #: CalcCommands.xcu
@@ -770,7 +784,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Remove Sheet View"
-msgstr ""
+msgstr "移除工作表檢視"
 
 #. M52nh
 #: CalcCommands.xcu
@@ -780,7 +794,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Switch To Next Sheet View"
-msgstr ""
+msgstr "切換至下一個工作表檢視"
 
 #. qfgad
 #: CalcCommands.xcu
@@ -790,7 +804,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Switch To Previous Sheet View"
-msgstr ""
+msgstr "切換至上一個工作表檢視"
 
 #. FJEd2
 #: CalcCommands.xcu
@@ -800,7 +814,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Select Sheet View"
-msgstr ""
+msgstr "選擇工作表檢視"
 
 #. vCsC3
 #: CalcCommands.xcu
@@ -810,7 +824,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Exit Sheet View"
-msgstr ""
+msgstr "結束工作表檢視"
 
 #. uuvrm
 #: ChartCommands.xcu
@@ -820,7 +834,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Manage Themes..."
-msgstr ""
+msgstr "管理主題…"
 
 #. 5LESd
 #: ChartCommands.xcu
@@ -860,7 +874,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "New Canvas Slide"
-msgstr ""
+msgstr "新增 Canvas 投影片"
 
 #. w3Yib
 #: DrawImpressCommands.xcu
@@ -880,7 +894,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Re-order pages"
-msgstr ""
+msgstr "重新排序頁面"
 
 #. ca6bM
 #: GenericCommands.xcu
@@ -890,7 +904,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Slide Transitions"
-msgstr ""
+msgstr "投影片轉場"
 
 #. 5pSJ6
 #: GenericCommands.xcu
@@ -900,7 +914,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Master Pages"
-msgstr ""
+msgstr "母片頁面"
 
 #. DCEaK
 #: GenericCommands.xcu
@@ -910,7 +924,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "~Hyperlink"
-msgstr ""
+msgstr "超連結(~H)"
 
 #. aFFu9
 #: GenericCommands.xcu
@@ -920,7 +934,7 @@ msgctxt ""
 "PopupLabel\n"
 "value.text"
 msgid "Insert Hyperlink..."
-msgstr ""
+msgstr "插入超連結..."
 
 #. czVMP
 #: GenericCommands.xcu
@@ -930,7 +944,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Nav~igator select comment."
-msgstr ""
+msgstr "導覽器選取註解(~i)。"
 
 #. 77Q3c
 #: GenericCommands.xcu
@@ -940,7 +954,7 @@ msgctxt ""
 "TooltipLabel\n"
 "value.text"
 msgid "Select Comment In The Navigator Window/Sidebar"
-msgstr ""
+msgstr "在導覽器視窗/側邊欄中選取註解"
 
 #. 83Euq
 #: GenericCommands.xcu
@@ -981,7 +995,7 @@ msgctxt ""
 "UIName\n"
 "value.text"
 msgid "Slide Sorter/Pane (Canvas)"
-msgstr ""
+msgstr "投影片排序器/窗格 (Canvas)"
 
 #. BQB9h
 #: ImpressWindowState.xcu
@@ -992,7 +1006,7 @@ msgctxt ""
 "UIName\n"
 "value.text"
 msgid "Master Slide Sorter/Pane (Canvas)"
-msgstr ""
+msgstr "母片投影片排序器/窗格 (Canvas)"
 
 #. kB8Ri
 #: Sidebar.xcu
@@ -1002,7 +1016,7 @@ msgctxt ""
 "Title\n"
 "value.text"
 msgid "Table Style Options"
-msgstr ""
+msgstr "表格樣式選項"
 
 #. SYFXq
 #: Sidebar.xcu
@@ -1032,7 +1046,7 @@ msgctxt ""
 "Title\n"
 "value.text"
 msgid "Theme"
-msgstr ""
+msgstr "主題"
 
 #. dgWCC
 #: Sidebar.xcu
@@ -1042,7 +1056,7 @@ msgctxt ""
 "Title\n"
 "value.text"
 msgid "Gradients"
-msgstr ""
+msgstr "漸層"
 
 #. ezFez
 #: WriterCommands.xcu
@@ -1168,25 +1182,25 @@ msgstr "所有檢視中的變更(~C)"
 #: sc/inc/globstr.hrc:70
 msgctxt "STR_UNDO_TABLETOTALS"
 msgid "Tabletotals"
-msgstr ""
+msgstr "表格總計"
 
 #. Gip2L
 #: sc/inc/globstr.hrc:211
 msgctxt "STR_TABLE_TOTAL"
 msgid "Summary"
-msgstr ""
+msgstr "摘要"
 
 #. cG7BY
 #: sc/inc/globstr.hrc:594
 msgctxt "STR_SHEET_VIEW_DEFAULT_VIEW_NAME"
 msgid "Default View"
-msgstr ""
+msgstr "預設檢視"
 
 #. aYwkp
 #: sc/inc/globstr.hrc:595
 msgctxt "STR_SHEET_VIEW_TEMPORARY_NAME_TEMPLATE"
 msgid "Temporary View %1"
-msgstr ""
+msgstr "暫時檢視 %1"
 
 #. ADmez
 #: sc/inc/scfuncs.hrc:4257
@@ -1285,7 +1299,7 @@ msgstr "要移除的列數。負數會從陣列的末端開始刪除。"
 #: sc/inc/scfuncs.hrc:4282
 msgctxt "SC_OPCODE_DROP"
 msgid "Columns"
-msgstr ""
+msgstr "欄"
 
 #. cAxPB
 #: sc/inc/scfuncs.hrc:4283
@@ -1331,7 +1345,7 @@ msgstr "擴充陣列中的列數。如果缺少，則不會擴充列。"
 #: sc/inc/scfuncs.hrc:4294
 msgctxt "SC_OPCODE_EXPAND"
 msgid "Columns"
-msgstr ""
+msgstr "欄"
 
 #. EVAXE
 #: sc/inc/scfuncs.hrc:4295
@@ -1357,7 +1371,7 @@ msgstr "要填充的值。預設為 #N/A。"
 #: sc/inc/scfuncs.hrc:4303
 msgctxt "SC_OPCODE_HSTACK"
 msgid "Appends arrays horizontally to create a larger array."
-msgstr ""
+msgstr "將陣列以水平方向附加，建立較大的陣列。"
 
 #. LnAFg
 #: sc/inc/scfuncs.hrc:4304 sc/inc/scfuncs.hrc:4306
@@ -1385,7 +1399,7 @@ msgstr ""
 #: sc/inc/scfuncs.hrc:4313
 msgctxt "SC_OPCODE_VSTACK"
 msgid "Appends arrays vertically to create a larger array."
-msgstr ""
+msgstr "將陣列以垂直方向附加，建立較大的陣列。"
 
 #. rhVRC
 #: sc/inc/scfuncs.hrc:4314 sc/inc/scfuncs.hrc:4316
@@ -1446,7 +1460,7 @@ msgstr "要取得的列數。負數會從陣列的末端開始。"
 #: sc/inc/scfuncs.hrc:4328
 msgctxt "SC_OPCODE_TAKE"
 msgid "Columns"
-msgstr ""
+msgstr "欄"
 
 #. ZexcG
 #: sc/inc/scfuncs.hrc:4329
@@ -1701,7 +1715,7 @@ msgstr "要填充的值。預設為 #N/A。"
 #: sc/inc/scfuncs.hrc:4389
 msgctxt "SC_OPCODE_TOCOL"
 msgid "Transforms an array into a single column."
-msgstr ""
+msgstr "將陣列轉換為單一欄。"
 
 #. UAzNC
 #: sc/inc/scfuncs.hrc:4390
@@ -1815,7 +1829,7 @@ msgstr "範圍"
 #: sc/inc/scfuncs.hrc:4439
 msgctxt "SC_OPCODE_WRAPCOLS"
 msgid "the range to wrap."
-msgstr "環繞範圍"
+msgstr "要換行的範圍。"
 
 #. GE3HQ
 #: sc/inc/scfuncs.hrc:4440
@@ -1859,7 +1873,7 @@ msgstr "範圍"
 #: sc/inc/scfuncs.hrc:4451
 msgctxt "SC_OPCODE_WRAPROWS"
 msgid "the range to wrap."
-msgstr "環繞範圍"
+msgstr "要換行的範圍。"
 
 #. aLHUi
 #: sc/inc/scfuncs.hrc:4452
@@ -1894,6 +1908,9 @@ msgid ""
 "individual cells first select all cells and toggle off the \"Protected\" "
 "option in the Format Cells dialog."
 msgstr ""
+"儲存格保護僅在目前工作表受到保護後才會生效。預設情況下，工作表中的所有儲存格"
+"皆為受保護狀態；若要僅保護特定儲存格，請先選取所有儲存格，然後在「設定儲存格"
+"格式」對話框中將「受保護」選項關閉。"
 
 #. FVsyY
 #: sc/uiconfig/scalc/ui/conditionaleasydialog.ui:8
@@ -1905,31 +1922,31 @@ msgstr "突顯儲存格……"
 #: sc/uiconfig/scalc/ui/selectsheetviewdialog.ui:18
 msgctxt "selectsheetviewdialog|SelectSheetView"
 msgid "Select Sheet View"
-msgstr ""
+msgstr "選擇工作表檢視"
 
 #. GTQJA
 #: sc/uiconfig/scalc/ui/selectsheetviewdialog.ui:44
 msgctxt "selectsheetviewdialog|extended_tip|ok"
 msgid "Saves all changes and closes dialog."
-msgstr ""
+msgstr "儲存所有變更並關閉對話框。"
 
 #. kGFYu
 #: sc/uiconfig/scalc/ui/selectsheetviewdialog.ui:63
 msgctxt "selectsheetviewdialog|extended_tip|cancel"
 msgid "Closes dialog and discards all changes."
-msgstr ""
+msgstr "關閉對話框並捨棄所有變更。"
 
 #. sQPFE
 #: sc/uiconfig/scalc/ui/selectsheetviewdialog.ui:134
 msgctxt "selectsheetviewdialog|extended_tip|entry-list"
 msgid "Available sheet views."
-msgstr ""
+msgstr "可用的工作表檢視。"
 
 #. csyNB
 #: sc/uiconfig/scalc/ui/sheetviewbox.ui:17
 msgctxt "sheetviewbox|sheetview_combobox|accessible_name"
 msgid "Sheet View"
-msgstr ""
+msgstr "工作表檢視"
 
 #. FXK8B
 #: sc/uiconfig/scalc/ui/sidebarcellappearance.ui:87
@@ -1941,426 +1958,424 @@ msgstr "邊框樣式"
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:22
 msgctxt "sidebardatabase|chk_header_row"
 msgid "Show Header Row"
-msgstr ""
+msgstr "顯示標題列"
 
 #. ECtUM
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:36
 msgctxt "sidebardatabase|chk_total_row"
 msgid "Show Total Row"
-msgstr ""
+msgstr "顯示總計列"
 
 #. htZbK
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:50
 msgctxt "sidebardatabase|chk_filter_buttons"
 msgid "Show Filter Buttons"
-msgstr ""
+msgstr "顯示篩選按鈕"
 
 #. MjALC
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:86
 msgctxt "sidebardatabase|chk_banded_rows"
 msgid "Banded Rows"
-msgstr ""
+msgstr "交錯列"
 
 #. GVkZ2
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:100
 msgctxt "sidebardatabase|chk_banded_cols"
 msgid "Banded Columns"
-msgstr ""
+msgstr "交錯欄"
 
 #. S4bop
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:114
-#, fuzzy
 msgctxt "sidebardatabase|chk_first_column"
 msgid "First Column"
-msgstr "欄 "
+msgstr "第一欄"
 
 #. QR56s
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:128
-#, fuzzy
 msgctxt "sidebardatabase|chk_last_column"
 msgid "Last Column"
-msgstr "欄 "
+msgstr "最後一欄"
 
 #. BJHqA
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:170
 msgctxt "sidebardatabase|lbl_styles"
 msgid "Table Styles"
-msgstr ""
+msgstr "表格樣式"
 
 #. er8nh
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:187
 msgctxt "sidebardatabase|none"
 msgid "None"
-msgstr ""
+msgstr "無"
 
 #. XXBL8
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:188
 msgctxt "sidebardatabase|tablestylelight1"
 msgid "Table Style Light 1"
-msgstr ""
+msgstr "表格樣式 淺色 1"
 
 #. NaDRX
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:189
 msgctxt "sidebardatabase|tablestylelight2"
 msgid "Table Style Light 2"
-msgstr ""
+msgstr "表格樣式 淺色 2"
 
 #. EWq9E
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:190
 msgctxt "sidebardatabase|tablestylelight3"
 msgid "Table Style Light 3"
-msgstr ""
+msgstr "表格樣式 淺色 3"
 
 #. GdYaL
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:191
 msgctxt "sidebardatabase|tablestylelight4"
 msgid "Table Style Light 4"
-msgstr ""
+msgstr "表格樣式 淺色 4"
 
 #. 8ZPyk
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:192
 msgctxt "sidebardatabase|tablestylelight5"
 msgid "Table Style Light 5"
-msgstr ""
+msgstr "表格樣式 淺色 5"
 
 #. xcztA
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:193
 msgctxt "sidebardatabase|tablestylelight6"
 msgid "Table Style Light 6"
-msgstr ""
+msgstr "表格樣式 淺色 6"
 
 #. pYufr
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:194
 msgctxt "sidebardatabase|tablestylelight7"
 msgid "Table Style Light 7"
-msgstr ""
+msgstr "表格樣式 淺色 7"
 
 #. beC85
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:195
 msgctxt "sidebardatabase|tablestylelight8"
 msgid "Table Style Light 8"
-msgstr ""
+msgstr "表格樣式 淺色 8"
 
 #. TSbAe
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:196
 msgctxt "sidebardatabase|tablestylelight9"
 msgid "Table Style Light 9"
-msgstr ""
+msgstr "表格樣式 淺色 9"
 
 #. GPxe2
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:197
 msgctxt "sidebardatabase|tablestylelight10"
 msgid "Table Style Light 10"
-msgstr ""
+msgstr "表格樣式 淺色 10"
 
 #. sedZT
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:198
 msgctxt "sidebardatabase|tablestylelight11"
 msgid "Table Style Light 11"
-msgstr ""
+msgstr "表格樣式 淺色 11"
 
 #. VyEM2
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:199
 msgctxt "sidebardatabase|tablestylelight12"
 msgid "Table Style Light 12"
-msgstr ""
+msgstr "表格樣式 淺色 12"
 
 #. FF2AT
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:200
 msgctxt "sidebardatabase|tablestylelight13"
 msgid "Table Style Light 13"
-msgstr ""
+msgstr "表格樣式 淺色 13"
 
 #. pTuyt
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:201
 msgctxt "sidebardatabase|tablestylelight14"
 msgid "Table Style Light 14"
-msgstr ""
+msgstr "表格樣式 淺色 14"
 
 #. zAgnL
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:202
 msgctxt "sidebardatabase|tablestylelight15"
 msgid "Table Style Light 15"
-msgstr ""
+msgstr "表格樣式 淺色 15"
 
 #. L4B9t
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:203
 msgctxt "sidebardatabase|tablestylelight16"
 msgid "Table Style Light 16"
-msgstr ""
+msgstr "表格樣式 淺色 16"
 
 #. ek54L
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:204
 msgctxt "sidebardatabase|tablestylelight17"
 msgid "Table Style Light 17"
-msgstr ""
+msgstr "表格樣式 淺色 17"
 
 #. P6nBG
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:205
 msgctxt "sidebardatabase|tablestylelight18"
 msgid "Table Style Light 18"
-msgstr ""
+msgstr "表格樣式 淺色 18"
 
 #. dnT2p
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:206
 msgctxt "sidebardatabase|tablestylelight19"
 msgid "Table Style Light 19"
-msgstr ""
+msgstr "表格樣式 淺色 19"
 
 #. Bprxv
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:207
 msgctxt "sidebardatabase|tablestylelight20"
 msgid "Table Style Light 20"
-msgstr ""
+msgstr "表格樣式 淺色 20"
 
 #. Z8foN
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:208
 msgctxt "sidebardatabase|tablestylelight21"
 msgid "Table Style Light 21"
-msgstr ""
+msgstr "表格樣式 淺色 21"
 
 #. 2qyXC
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:209
 msgctxt "sidebardatabase|tablestylemedium1"
 msgid "Table Style Medium 1"
-msgstr ""
+msgstr "表格樣式 中等 1"
 
 #. MWzKk
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:210
 msgctxt "sidebardatabase|tablestylemedium2"
 msgid "Table Style Medium 2"
-msgstr ""
+msgstr "表格樣式 中等 2"
 
 #. fFFCC
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:211
 msgctxt "sidebardatabase|tablestylemedium3"
 msgid "Table Style Medium 3"
-msgstr ""
+msgstr "表格樣式 中等 3"
 
 #. FthwA
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:212
 msgctxt "sidebardatabase|tablestylemedium4"
 msgid "Table Style Medium 4"
-msgstr ""
+msgstr "表格樣式 中等 4"
 
 #. rCtpb
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:213
 msgctxt "sidebardatabase|tablestylemedium5"
 msgid "Table Style Medium 5"
-msgstr ""
+msgstr "表格樣式 中等 5"
 
 #. UJ6BA
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:214
 msgctxt "sidebardatabase|tablestylemedium6"
 msgid "Table Style Medium 6"
-msgstr ""
+msgstr "表格樣式 中等 6"
 
 #. EbA2b
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:215
 msgctxt "sidebardatabase|tablestylemedium7"
 msgid "Table Style Medium 7"
-msgstr ""
+msgstr "表格樣式 中等 7"
 
 #. XQS9X
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:216
 msgctxt "sidebardatabase|tablestylemedium8"
 msgid "Table Style Medium 8"
-msgstr ""
+msgstr "表格樣式 中等 8"
 
 #. Dho46
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:217
 msgctxt "sidebardatabase|tablestylemedium9"
 msgid "Table Style Medium 9"
-msgstr ""
+msgstr "表格樣式 中等 9"
 
 #. P7SBG
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:218
 msgctxt "sidebardatabase|tablestylemedium10"
 msgid "Table Style Medium 10"
-msgstr ""
+msgstr "表格樣式 中等 10"
 
 #. Rhfet
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:219
 msgctxt "sidebardatabase|tablestylemedium11"
 msgid "Table Style Medium 11"
-msgstr ""
+msgstr "表格樣式 中等 11"
 
 #. JEdqF
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:220
 msgctxt "sidebardatabase|tablestylemedium12"
 msgid "Table Style Medium 12"
-msgstr ""
+msgstr "表格樣式 中等 12"
 
 #. LWYBs
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:221
 msgctxt "sidebardatabase|tablestylemedium13"
 msgid "Table Style Medium 13"
-msgstr ""
+msgstr "表格樣式 中等 13"
 
 #. HiGPB
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:222
 msgctxt "sidebardatabase|tablestylemedium14"
 msgid "Table Style Medium 14"
-msgstr ""
+msgstr "表格樣式 中等 14"
 
 #. FKMSw
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:223
 msgctxt "sidebardatabase|tablestylemedium15"
 msgid "Table Style Medium 15"
-msgstr ""
+msgstr "表格樣式 中等 15"
 
 #. CuPuC
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:224
 msgctxt "sidebardatabase|tablestylemedium16"
 msgid "Table Style Medium 16"
-msgstr ""
+msgstr "表格樣式 中等 16"
 
 #. ACA7x
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:225
 msgctxt "sidebardatabase|tablestylemedium17"
 msgid "Table Style Medium 17"
-msgstr ""
+msgstr "表格樣式 中等 17"
 
 #. bcDbJ
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:226
 msgctxt "sidebardatabase|tablestylemedium18"
 msgid "Table Style Medium 18"
-msgstr ""
+msgstr "表格樣式 中等 18"
 
 #. d42En
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:227
 msgctxt "sidebardatabase|tablestylemedium19"
 msgid "Table Style Medium 19"
-msgstr ""
+msgstr "表格樣式 中等 19"
 
 #. pfyP6
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:228
 msgctxt "sidebardatabase|tablestylemedium20"
 msgid "Table Style Medium 20"
-msgstr ""
+msgstr "表格樣式 中等 20"
 
 #. n5kSb
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:229
 msgctxt "sidebardatabase|tablestylemedium21"
 msgid "Table Style Medium 21"
-msgstr ""
+msgstr "表格樣式 中等 21"
 
 #. mYnu7
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:230
 msgctxt "sidebardatabase|tablestylemedium22"
 msgid "Table Style Medium 22"
-msgstr ""
+msgstr "表格樣式 中等 22"
 
 #. jGs7c
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:231
 msgctxt "sidebardatabase|tablestylemedium23"
 msgid "Table Style Medium 23"
-msgstr ""
+msgstr "表格樣式 中等 23"
 
 #. vMAB3
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:232
 msgctxt "sidebardatabase|tablestylemedium24"
 msgid "Table Style Medium 24"
-msgstr ""
+msgstr "表格樣式 中等 24"
 
 #. xk5eg
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:233
 msgctxt "sidebardatabase|tablestylemedium25"
 msgid "Table Style Medium 25"
-msgstr ""
+msgstr "表格樣式 中等 25"
 
 #. sA3q2
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:234
 msgctxt "sidebardatabase|tablestylemedium26"
 msgid "Table Style Medium 26"
-msgstr ""
+msgstr "表格樣式 中等 26"
 
 #. usGBf
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:235
 msgctxt "sidebardatabase|tablestylemedium27"
 msgid "Table Style Medium 27"
-msgstr ""
+msgstr "表格樣式 中等 27"
 
 #. 32DXC
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:236
 msgctxt "sidebardatabase|tablestylemedium28"
 msgid "Table Style Medium 28"
-msgstr ""
+msgstr "表格樣式 中等 28"
 
 #. TiDzP
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:237
 msgctxt "sidebardatabase|tablestyledark1"
 msgid "Table Style Dark 1"
-msgstr ""
+msgstr "表格樣式 深色 1"
 
 #. jTCaC
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:238
 msgctxt "sidebardatabase|tablestyledark2"
 msgid "Table Style Dark 2"
-msgstr ""
+msgstr "表格樣式 深色 2"
 
 #. 2FCAs
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:239
 msgctxt "sidebardatabase|tablestyledark3"
 msgid "Table Style Dark 3"
-msgstr ""
+msgstr "表格樣式 深色 3"
 
 #. B3BJY
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:240
 msgctxt "sidebardatabase|tablestyledark4"
 msgid "Table Style Dark 4"
-msgstr ""
+msgstr "表格樣式 深色 4"
 
 #. TfBSE
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:241
 msgctxt "sidebardatabase|tablestyledark5"
 msgid "Table Style Dark 5"
-msgstr ""
+msgstr "表格樣式 深色 5"
 
 #. jvA93
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:242
 msgctxt "sidebardatabase|tablestyledark6"
 msgid "Table Style Dark 6"
-msgstr ""
+msgstr "表格樣式 深色 6"
 
 #. 2DAii
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:243
 msgctxt "sidebardatabase|tablestyledark7"
 msgid "Table Style Dark 7"
-msgstr ""
+msgstr "表格樣式 深色 7"
 
 #. B6GrN
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:244
 msgctxt "sidebardatabase|tablestyledark8"
 msgid "Table Style Dark 8"
-msgstr ""
+msgstr "表格樣式 深色 8"
 
 #. TcGzg
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:245
 msgctxt "sidebardatabase|tablestyledark9"
 msgid "Table Style Dark 9"
-msgstr ""
+msgstr "表格樣式 深色 9"
 
 #. DEL7d
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:246
 msgctxt "sidebardatabase|tablestyledark10"
 msgid "Table Style Dark 10"
-msgstr ""
+msgstr "表格樣式 深色 10"
 
 #. M2TB4
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:247
 msgctxt "sidebardatabase|tablestyledark11"
 msgid "Table Style Dark 11"
-msgstr ""
+msgstr "表格樣式 深色 11"
 
 #. CJUkb
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:251
 msgctxt "sidebardatabase|tablestylenames"
 msgid "Table Style Names"
-msgstr ""
+msgstr "表格樣式名稱"
 
 #. 3FfJ4
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:252
 msgctxt "sidebardatabase|defaulttablestylenames"
 msgid "Default Table Style Names"
-msgstr ""
+msgstr "預設表格樣式名稱"
