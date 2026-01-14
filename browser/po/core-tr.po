@@ -2,9 +2,15 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: core-tr\n"
+"PO-Revision-Date: 2025-12-27 17:00+0000\n"
+"Last-Translator: Bayram Çiçek <bayramcicek2125@gmail.com>\n"
+"Language-Team: Turkish <https://hosted.weblate.org/projects/collabora-online/"
+"lokit/tr/>\n"
 "Language: tr\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.15.1\n"
 
 #. ygDfy
 #: module_graphicfilter.ulf
@@ -46,19 +52,19 @@ msgstr ""
 #: svx/uiconfig/ui/dropdownfielddialog.ui:31
 msgctxt "dropdownDialog|OK"
 msgid "OK"
-msgstr ""
+msgstr "Tamam"
 
 #. 54Dmg
 #: svx/uiconfig/ui/dropdownfielddialog.ui:44
 msgctxt "dropdownDialog|CANCEL"
 msgid "Cancel"
-msgstr ""
+msgstr "İptal"
 
 #. gPAYw
 #: svx/uiconfig/ui/findreplacedialog.ui:67
 msgctxt "findreplacedialog|find_tab_btn"
 msgid "Find"
-msgstr ""
+msgstr "Bul"
 
 #. uknDS
 #: svx/uiconfig/ui/findreplacedialog.ui:80
