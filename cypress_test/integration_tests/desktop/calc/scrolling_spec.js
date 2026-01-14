@@ -8,6 +8,9 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Scroll through document', 
 	beforeEach(function() {
 		helper.setupAndLoadDocument('calc/scrolling.ods');
 		desktopHelper.switchUIToCompact();
+		cy.getFrameWindow().then((win) => {
+			this.win = win;
+		});
 	});
 
 	it('Scrolling to bottom/top', function() {
@@ -88,8 +91,9 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Scroll through document', 
 		cy.cGet('#document-container').realMouseMove(-280, -60, { position: 'bottomRight', scrollBehavior: false });
 		// Drag to the bottom edge
 		cy.cGet('#document-container').realMouseMove(-280, 0, { position: 'bottomRight', scrollBehavior: false });
+		helper.processToIdle(this.win);
 		// Wait for autoscroll and lift the button
-		cy.wait(500);
+		helper.waitForTimers(this.win, 'autoscroll');
 		cy.cGet('#document-container').realMouseUp({ pointer: 'mouse', button: 'left' });
 
 		// Without the fix, the selected range is of the form A17:A22, instead of A17:D22
