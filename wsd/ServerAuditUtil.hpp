@@ -34,7 +34,7 @@ public:
 
     std::string getResultsJSON() const;
 
-    void set(std::string code, std::string status);
+    void set(const std::string& code, std::string status);
     void mergeSettings(const std::shared_ptr<ChildProcess> &proc);
 
     void disable() { _disabled = true; }
