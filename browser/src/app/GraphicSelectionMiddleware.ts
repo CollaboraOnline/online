@@ -65,7 +65,8 @@ class GraphicSelection {
 
 		var videoToInsert =
 			'<?xml version="1.0" encoding="UTF-8"?>\
-		<foreignObject xmlns="http://www.w3.org/2000/svg" overflow="visible" width="' +
+		<svg xmlns="http://www.w3.org/2000/svg">\
+		<foreignObject overflow="visible" width="' +
 			videoDesc.width +
 			'" height="' +
 			videoDesc.height +
@@ -83,7 +84,8 @@ class GraphicSelection {
 			'"/>\
 				</video>\
 			</body>\
-		</foreignObject>';
+		</foreignObject>\
+		</svg>';
 
 		this.handlesSection.addEmbeddedVideo(videoToInsert);
 	}

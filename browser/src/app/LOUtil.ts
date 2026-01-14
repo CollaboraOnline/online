@@ -783,9 +783,22 @@ class LOUtil {
 	public static Rectangle = cool.Rectangle;
 	public static createRectangle = cool.createRectangle;
 
-	public static sanitize(html: string): string {
+	public static sanitize(
+		html: string,
+		profile: 'html' | 'svg' = 'html',
+	): string {
 		if (DOMPurify.isSupported) {
-			return DOMPurify.sanitize(html, { USE_PROFILES: { html: true } });
+			if (profile === 'svg') {
+				return DOMPurify.sanitize(html, {
+					// Enable both SVG and HTML profiles to support HTML content inside foreignObject
+					USE_PROFILES: { svg: true, svgFilters: true, html: true },
+					ADD_TAGS: ['foreignObject'],
+					// Allow HTML content inside foreignObject (for embedded video)
+					// See: https://github.com/cure53/DOMPurify/issues/1002
+					HTML_INTEGRATION_POINTS: { foreignobject: true },
+				});
+			}
+			return DOMPurify.sanitize(html, { USE_PROFILES: { [profile]: true } });
 		}
 		return '';
 	}

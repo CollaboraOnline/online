@@ -485,7 +485,7 @@ class ShapeHandlesSection extends CanvasSectionObject {
 		document.getElementById('canvas-container').appendChild(this.sectionProperties.svg);
 		this.sectionProperties.svg.style.zIndex = 11; // Update z-index or video buttons are unreachable.
 
-		if (!this.sectionProperties.svg.innerHTML.includes('foreignobject')) {
+		if (!this.sectionProperties.svg.innerHTML.includes('foreignObject')) {
 			console.error('Failed to parse svg for embedded video');
 			return;
 		}
@@ -540,7 +540,7 @@ class ShapeHandlesSection extends CanvasSectionObject {
 		this.sectionProperties.svg.style.pointerEvents = 'none';
 		document.getElementById('canvas-container').appendChild(this.sectionProperties.svg);
 
-		this.sectionProperties.svg.innerHTML = data;
+		this.sectionProperties.svg.innerHTML = app.LOUtil.sanitize(data, 'svg');
 		this.sectionProperties.svg.style.position = 'absolute';
 		this.sectionProperties.svg.children[0].style.width = this.sectionProperties.svg.children[0].style.height = 'auto';
 		this.sectionProperties.svg.children[0].style.transformOrigin = 'center';
