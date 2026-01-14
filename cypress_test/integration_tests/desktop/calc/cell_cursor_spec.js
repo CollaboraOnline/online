@@ -32,7 +32,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Test jumping on large cell
 
 		desktopHelper.assertScrollbarPosition('horizontal', 205, 330);
 		helper.typeIntoDocument('{ctrl}f');
-		cy.cGet('input#searchterm-input-dialog').clear().type('FIRST');
+		cy.cGet('input#searchterm-input-dialog').type('{selectAll}FIRST');
 		cy.cGet('#search').find('button').click();
 
 		cy.cGet(helper.addressInputSelector).should('have.value', 'A10');
@@ -55,7 +55,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Test jumping on large cell
 	it('Scroll and check drawing on frozen part of the view', function() {
 		// We will add a new sheet. Go to a cell other than A1. We will check if the new sheet is added by checking the current cell.
 		cy.cGet(helper.addressInputSelector).focus();
-		cy.cGet(helper.addressInputSelector).clear().type('B2{enter}');
+		cy.cGet(helper.addressInputSelector).type('{selectAll}B2{enter}');
 		cy.cGet(helper.addressInputSelector).should('have.value', 'B2');
 
 		// Add a new sheet.
@@ -65,7 +65,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Test jumping on large cell
 
 		// Go to a cell that we know is visible.
 		cy.cGet(helper.addressInputSelector).focus();
-		cy.cGet(helper.addressInputSelector).clear().type('D7{enter}');
+		cy.cGet(helper.addressInputSelector).type('{selectAll}D7{enter}');
 
 		// Find freeze panes button and click.
 		cy.cGet('#View-tab-label').click();
