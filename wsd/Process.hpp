@@ -264,10 +264,7 @@ public:
     std::weak_ptr<FILE> getSMapsFp() const { return _smapsFp; }
 #endif
 
-    std::map<std::string, std::string> getJailProps() const
-    {
-        return _jailProps;
-    }
+    const std::map<std::string, std::string>& getJailProps() const { return _jailProps; }
 
     void moveSocketFromTo(const std::shared_ptr<SocketPoll>& from,
                           const std::shared_ptr<SocketPoll>& to)
