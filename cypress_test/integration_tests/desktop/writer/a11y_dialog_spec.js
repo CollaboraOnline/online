@@ -27,7 +27,6 @@ const allWriterDialogs = [
     '.uno:TableNumberFormatDialog',
     '.uno:TableSort',
     '.uno:ThemeDialog',
-    '.uno:ThesaurusDialog',
     '.uno:TitlePageDialog',
     '.uno:Translate',
     '.uno:Watermark',
@@ -37,15 +36,14 @@ const allWriterDialogs = [
 // these need a specific context
 const missingContextDialogs = [
     '.uno:ContourDialog',
-    '.uno:TransformDialog'
+    '.uno:TransformDialog',
+    '.uno:ThesaurusDialog',
 ];
 
 // don't pass yet
 const buggyDialogs = [
     '.uno:InsertFrame',
     '.uno:OutlineBullet',
-    '.uno:PageDialog',
-    '.uno:ParagraphDialog',
     '.uno:SpellingAndGrammarDialog',
     '.uno:TableDialog'
 ];
