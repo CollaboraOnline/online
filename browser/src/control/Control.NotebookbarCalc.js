@@ -1428,7 +1428,7 @@ window.L.Control.NotebookbarCalc = window.L.Control.NotebookbarWriter.extend({
 									{
 										'id': 'selectsheetview',
 										'type': 'toolitem',
-										'text': _('Select Sheet View'),
+										'text': _('Open Views List'),
 										'command': '.uno:SelectSheetView',
 										'accessibility': { focusBack: true,	combination: 'SS', de: null }
 									},
