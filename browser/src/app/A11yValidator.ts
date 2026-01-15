@@ -81,7 +81,7 @@ class A11yValidator {
 				parent && (parent.querySelector('span.unolabel') as HTMLSpanElement);
 			const explicitLabel = span && span.innerText.trim().length > 0;
 			const visibleLabel =
-				parent && document.querySelector(`label[for^="${parent.id}-"]`);
+				parent && document.querySelector(`label[for="${parent.id}"]`);
 
 			const parentHasLabel =
 				parent &&
