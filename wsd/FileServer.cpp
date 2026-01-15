@@ -1803,6 +1803,7 @@ FileServerRequestHandler::ResourceAccessDetails FileServerRequestHandler::prepro
         }
         Poco::replaceInPlace(preprocess, std::string("%PRODUCT_BRANDING_NAME%"), std::string());
         Poco::replaceInPlace(preprocess, std::string("%PRODUCT_BRANDING_URL%"), std::string());
+        Poco::replaceInPlace(preprocess, std::string("%LOGO_URL%"), std::string());
     #else // configurable
         std::string enableWelcomeMessage = stringifyBoolFromConfig(config, "welcome.enable", false);
         std::string autoShowWelcome = stringifyBoolFromConfig(config, "welcome.enable", false);
