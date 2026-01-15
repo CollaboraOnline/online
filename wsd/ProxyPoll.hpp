@@ -13,6 +13,7 @@
 
 #include <config.h>
 #include <Socket.hpp>
+#include <Log.hpp>
 #include <memory>
 
 // Singleton proxy poll - one thread handles all proxy connections
@@ -29,13 +30,20 @@ public:
                           const std::string& targetIp, int targetPort,
                           const Poco::Net::HTTPRequest& originalRequest,
                           const std::shared_ptr<SocketPoll>& fromPoll);
-    ~ProxyPoll() { joinThread(); }
+    ~ProxyPoll()
+    {
+        LOG_DBG("ProxyPoll::~ProxyPoll: destroying proxy poll, joining thread");
+        joinThread();
+        LOG_DBG("ProxyPoll::~ProxyPoll: thread joined, destruction complete");
+    }
 
 private:
     ProxyPoll()
         : TerminatingPoll("proxy_poll")
     {
+        LOG_DBG("ProxyPoll::ProxyPoll: creating proxy poll singleton, starting thread");
         startThread(); // Spawns new thread running pollingThread()
+        LOG_DBG("ProxyPoll::ProxyPoll: proxy poll thread started");
     }
 };
 
