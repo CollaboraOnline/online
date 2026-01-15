@@ -50,8 +50,11 @@ function _drawingAreaControl (parentContainer, data, builder) {
 		if (builder.map) {
 			window.L.control.attachTooltipEventListener(image, builder.map);
 		}
-	} else if (data.aria && data.aria.label) {
-		container.setAttribute('aria-label', data.aria.label);
+	} else {
+		JSDialog.SetupA11yLabelForNonLabelableElement(container, data, builder);
+	}		
+		
+	if (container.hasAttribute('aria-labelledby') || container.hasAttribute('aria-label')) {
 		image.alt = '';
 	} else if (data.aria && data.aria.description) {
 		image.alt = data.aria.description;
