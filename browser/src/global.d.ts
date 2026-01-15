@@ -161,6 +161,7 @@ interface AppInterface {
 	dispatcher: any;
 	layoutingService: any;
 	serverConnectionService: any;
+	timerRegistry: any;
 	twipsToPixels: number;
 	pixelsToTwips: number;
 	accessibilityState: boolean;

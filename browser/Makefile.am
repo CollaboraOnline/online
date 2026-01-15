@@ -254,6 +254,7 @@ COOL_JS_LST =\
 	src/docdispatcher.ts \
 	src/app/DocEvents.ts \
 	src/core/geometry.ts \
+	src/core/TimerRegistry.ts \
 	src/app/GraphicSelectionMiddleware.ts \
 	src/app/TextSelectionMiddleware.ts \
 	src/app/CellSelectionMarkerMiddleware.ts \

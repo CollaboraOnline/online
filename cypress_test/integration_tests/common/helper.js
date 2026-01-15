@@ -1285,6 +1285,14 @@ function processToIdle(win) {
 	});
 }
 
+// Wait until no timers of the given tag exist.
+// If no timers with the tag exist at call time resolve immediately.
+function waitForTimers(win, tag) {
+	return cy.waitUntil(function() {
+		return !win.app.timerRegistry.hasActive(tag);
+	}, { timeout: Cypress.config('defaultCommandTimeout'), interval: 50 });
+}
+
 module.exports.setupDocument = setupDocument;
 module.exports.loadDocument = loadDocument;
 module.exports.setupAndLoadDocument = setupAndLoadDocument;
@@ -1338,3 +1346,4 @@ module.exports.getMenuEntry = getMenuEntry;
 module.exports.waitUntilCoreIsIdle = waitUntilCoreIsIdle;
 module.exports.waitUntilLayoutingIsIdle = waitUntilLayoutingIsIdle;
 module.exports.processToIdle = processToIdle;
+module.exports.waitForTimers = waitForTimers;
