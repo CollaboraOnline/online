@@ -2726,7 +2726,7 @@ bool ClientRequestDispatcher::handleClientWsUpgrade(const Poco::Net::HTTPRequest
 #if !MOBILEAPP
     // Check if we need to proxy this request to another pod/server
     const std::string controllerURL = ConfigUtil::getString("indirection_endpoint.url", "");
-    if (!controllerURL.empty())
+    if (!controllerURL.empty() && !request.has("X-COOL-Internal-Proxy"))
     {
         const std::string docKey = requestDetails.getDocKey();
         std::unique_lock<std::mutex> docBrokersLock(DocBrokersMutex);
@@ -2734,6 +2734,8 @@ bool ClientRequestDispatcher::handleClientWsUpgrade(const Poco::Net::HTTPRequest
         const std::string wopiSrc = requestDetails.getField(RequestDetails::Field::WOPISrc);
         if (docBrokerIt == DocBrokers.end())
         {
+            LOG_INF("No existing DocBroker for docKey [" << docKey
+                                                            << "], handling internal proxy.");
             handleInternalProxy(wopiSrc, controllerURL, socket, request);
             return false;
         }
