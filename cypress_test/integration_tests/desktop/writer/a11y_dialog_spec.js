@@ -42,7 +42,6 @@ const missingContextDialogs = [
 
 // don't pass yet
 const buggyDialogs = [
-    '.uno:FontDialog',
     '.uno:InsertFrame',
     '.uno:OutlineBullet',
     '.uno:PageDialog',
