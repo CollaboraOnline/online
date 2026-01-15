@@ -47,6 +47,10 @@ function _drawingAreaControl (parentContainer, data, builder) {
 	image.draggable = false;
 	image.ondragstart = function() { return false; };
 
+	container.onSetImage = (dataurl) => {
+		image.src = dataurl;
+	}
+
 	if (data.enabled && data.canFocus) {
 		image.tabIndex = 0;
 	}
