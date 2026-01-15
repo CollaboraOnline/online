@@ -2401,12 +2401,34 @@ class Menubar extends window.L.Control {
 
 			if (window.logoURL) {
 				aItem.style.backgroundImage = "url(" + window.logoURL + ")";
+			} else {
+				const docType = this._map.getDocType();
+
+				let iconClass;
+				let iconTooltip;
+				if (docType === 'text') {
+					iconClass = 'writer-icon-img';
+					iconTooltip = 'Writer';
+				} else if (docType === 'spreadsheet') {
+					iconClass = 'calc-icon-img';
+					iconTooltip = 'Calc';
+				} else if (docType === 'presentation') {
+					iconClass = 'impress-icon-img';
+					iconTooltip = 'Impress';
+				} else if (docType === 'drawing') {
+					iconClass = 'draw-icon-img';
+					iconTooltip = 'Draw';
+				}
+				aItem.classList.add(iconClass);
+				if (iconTooltip) {
+					aItem.setAttribute('data-cooltip', iconTooltip);
+				}
 			}
 
 			if (this._menubarCont != null)
 				this._menubarCont.insertBefore(liItem, this._menubarCont.firstChild);
 
-			var $docLogo = $(aItem);
+			const $docLogo = $(aItem);
 			$docLogo.bind('click', {self: this}, this._createDocument);
 			$docLogo.bind('click', this._createDocument.bind(this));
 		}
