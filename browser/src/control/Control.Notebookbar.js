@@ -85,24 +85,12 @@ window.L.Control.Notebookbar = window.L.Control.extend({
 			const docLogoHeader = window.L.DomUtil.create('div', '');
 			docLogoHeader.id = 'document-header';
 
-			let iconClass = 'document-logo';
+			let iconClass = '';
 			let iconTooltip;
 			if (!window.logoURL) {
-				if (docType === 'text') {
-					iconClass += ' writer-icon-img';
-					iconTooltip = 'Writer';
-				} else if (docType === 'spreadsheet') {
-					iconClass += ' calc-icon-img';
-					iconTooltip = 'Calc';
-				} else if (docType === 'presentation') {
-					iconClass += ' impress-icon-img';
-					iconTooltip = 'Impress';
-				} else if (docType === 'drawing') {
-					iconClass += ' draw-icon-img';
-					iconTooltip = 'Draw';
-				}
+				[iconClass, iconTooltip] = app.LOUtil.getDocumentLogoClass(docType);
 			}
-			const docLogo = window.L.DomUtil.create('a', iconClass, docLogoHeader);
+			const docLogo = window.L.DomUtil.create('a', 'document-logo ' + iconClass, docLogoHeader);
 
 			docLogo.setAttribute('id', 'document-logo');
 			docLogo.setAttribute('type', 'action');

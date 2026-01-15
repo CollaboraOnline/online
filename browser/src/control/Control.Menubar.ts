@@ -2447,12 +2447,17 @@ class Menubar extends window.L.Control {
 
 			if (window.logoURL) {
 				aItem.style.backgroundImage = "url(" + window.logoURL + ")";
+			} else {
+				const docType = this._map.getDocType();
+				const [iconClass, iconTooltip] = app.LOUtil.getDocumentLogoClass(docType);
+				aItem.classList.add(iconClass);
+				aItem.setAttribute('data-cooltip', iconTooltip);
 			}
 
 			if (this._menubarCont != null)
 				this._menubarCont.insertBefore(liItem, this._menubarCont.firstChild);
 
-			var $docLogo = $(aItem);
+			const $docLogo = $(aItem);
 			$docLogo.bind('click', {self: this}, this._createDocument);
 			$docLogo.bind('click', this._createDocument.bind(this));
 		}
