@@ -14,7 +14,7 @@
 
 class TextCursorSection extends HTMLObjectSection {
 	documentObject: boolean = true;
-	interactable: boolean = false; // We don't bother with events.
+	interactable: boolean = true;
 	zIndex: number = app.CSections.DefaultForDocumentObjects.processingOrder;
 	drawingOrder: number = app.CSections.DefaultForDocumentObjects.drawingOrder;
 	processingOrder: number =
@@ -75,6 +75,28 @@ class TextCursorSection extends HTMLObjectSection {
 		return result;
 	}
 
+	// Calculate the position of the cursor header above the actual cursor.
+	getHeaderPosition(): cool.SimplePoint {
+		return new cool.SimplePoint(
+			this.position[0] * app.pixelsToTwips,
+			(this.position[1] - 20) * app.pixelsToTwips,
+		);
+	}
+
+	onMouseEnter(): void {
+		if (!this.sectionProperties.username) {
+			return;
+		}
+
+		// Show the name of the other user, even if the cursor position didn't change.
+		app.definitions.cursorHeaderSection.showCursorHeader(
+			this.sectionProperties.viewId,
+			this.sectionProperties.username,
+			this.getHeaderPosition(),
+			this.sectionProperties.color,
+		);
+	}
+
 	public static addOrUpdateOtherViewCursor(
 		viewId: number,
 		username: string,
@@ -122,16 +144,13 @@ class TextCursorSection extends HTMLObjectSection {
 		section.setShowSection(section.checkMyVisibility());
 		section.onNewDocumentTopLeft();
 		section.adjustHTMLObjectPosition();
-		const documentPosition = new cool.SimplePoint(
-			section.position[0] * app.pixelsToTwips,
-			(section.position[1] - 20) * app.pixelsToTwips,
-		);
+		section.sectionProperties.username = username;
 
 		if (section.showSection && section.isVisible)
 			app.definitions.cursorHeaderSection.showCursorHeader(
 				viewId,
 				username,
-				documentPosition,
+				section.getHeaderPosition(),
 				color,
 			);
 
