@@ -40,6 +40,7 @@ const allWriterDialogs = [
 const missingContextDialogs = [
     '.uno:ContourDialog',
     '.uno:TransformDialog',
+    '.uno:SpellingAndGrammarDialog',
     '.uno:ThesaurusDialog',
 ];
 
@@ -47,8 +48,6 @@ const missingContextDialogs = [
 const buggyDialogs = [
     '.uno:InsertFrame',
     '.uno:OutlineBullet',
-    '.uno:SpellingAndGrammarDialog',
-    '.uno:TableDialog'
 ];
 
 describe(['tagdesktop'], 'Accessibility Writer Tests', { testIsolation: false }, function () {
