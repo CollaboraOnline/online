@@ -137,8 +137,10 @@ export class ScrollSection extends CanvasSectionObject {
 	}
 
 	public cancelAutoScroll(): void {
-		clearInterval(this.autoScrollTimer);
-		this.autoScrollTimer = null;
+		if (this.autoScrollTimer !== null) {
+			app.timerRegistry.clearInterval(this.autoScrollTimer);
+			this.autoScrollTimer = null;
+		}
 		this.map.isAutoScrolling = false;
 	}
 
@@ -147,9 +149,9 @@ export class ScrollSection extends CanvasSectionObject {
 		if (e.vx === 0 && e.vy === 0) {
 			this.cancelAutoScroll();
 		} else {
-			clearInterval(this.autoScrollTimer);
+			this.cancelAutoScroll();
 			this.map.isAutoScrolling = true;
-			this.autoScrollTimer = setInterval(window.L.bind(function() {
+			this.autoScrollTimer = app.timerRegistry.setInterval('autoscroll', window.L.bind(function() {
 				this.onScrollBy({x: e.vx, y: e.vy});
 			}, this), 100);
 		}
