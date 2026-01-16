@@ -64,6 +64,7 @@
 #include <map>
 #include <memory>
 #include <string>
+#include <string_view>
 #include <vector>
 
 std::map<std::string, std::string> ClientRequestDispatcher::StaticFileContentCache;
@@ -868,16 +869,16 @@ void ClientRequestDispatcher::handleIncomingMessage(SocketDisposition& dispositi
     ssize_t len;
     memcpy(&len, socket->getInBuffer().data(), sizeof(ssize_t));
     const char* payload = socket->getInBuffer().data() + sizeof(ssize_t);
-    const char* space = strchr(payload, ' ');
-    if (space != nullptr)
+    auto const space = std::string_view(payload, len).find(' ');
+    if (space != std::string_view::npos)
     {
         // The socket buffer is not nul-terminated so we can't just call strtoull() on the number at
         // its end, it might be followed in memory by more digits. Is there really no better way to
         // parse the number at the end of the buffer than to copy the bytes into a nul-terminated
         // buffer?
-        const size_t appDocIdLen = (payload + len) - (space + 1);
+        const size_t appDocIdLen = len - (space + 1);
         char* appDocIdBuffer = (char*)malloc(appDocIdLen + 1);
-        memcpy(appDocIdBuffer, space + 1, appDocIdLen);
+        memcpy(appDocIdBuffer, payload + space + 1, appDocIdLen);
         appDocIdBuffer[appDocIdLen] = '\0';
         char * end;
         unsigned appDocId = static_cast<unsigned>(std::strtoul(appDocIdBuffer, &end, 10));
@@ -887,7 +888,7 @@ void ClientRequestDispatcher::handleIncomingMessage(SocketDisposition& dispositi
         free(appDocIdBuffer);
 
         handleClientWsUpgrade(
-            request, std::string(payload, space - payload),
+            request, std::string(payload, space),
             disposition, socket, appDocId);
     }
     else
