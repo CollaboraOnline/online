@@ -211,8 +211,8 @@ window.L.Control.Tabs = window.L.Control.extend({
 					dropZoneIndicator.id = 'drop-zone-' + i;
 					var id = 'spreadsheet-tab' + i;
 					var tab = window.L.DomUtil.create('button', 'spreadsheet-tab', ssTabScroll);
-					window.L.DomUtil.create('div', 'lock', tab);
 					var label = window.L.DomUtil.create('div', '', tab);
+					window.L.DomUtil.create('div', 'lock', tab);
 					if (window.mode.isMobile() || window.mode.isTablet()) {
 						(new Hammer(tab, {recognizers: [[Hammer.Press]]}))
 							.on('press', function (j) {
