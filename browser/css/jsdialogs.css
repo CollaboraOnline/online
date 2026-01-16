@@ -3007,7 +3007,8 @@ kbd,
 /* Apply label styling to static text for consistent appearance */
 #FormulaDialog #ParameterPage :is(#editdesc, #pardesc),
 #FormulaDialog #ALTBOX #funcdesc,
-#GotoPageDialog #grid1 #page_count {
+#GotoPageDialog #grid1 #page_count,
+#TocDialog #entries #box1 span.ui-text {
 	margin: auto 0px;
 	color: var(--color-main-text);
 	font-size: var(--default-font-size);
@@ -3066,6 +3067,11 @@ div [id^='themeview'].ui-iconview-entry, div [id^='themeview1col'].ui-iconview-e
 /* Calc - Format Cells - Borders - Line - Style */
 #iconview_lines.ui-iconview {
 	grid-template-columns: repeat(1, 1fr);
+}
+
+/* Writer - References - Table of Content... - Entries - Level */
+#TocDialog #entries #box1 span.ui-text {
+	font-weight: bold;
 }
 
 #imSetInsMode {
