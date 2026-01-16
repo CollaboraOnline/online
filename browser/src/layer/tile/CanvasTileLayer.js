@@ -3175,7 +3175,7 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 	},
 
 	// This is really just called on zoomend
-	_fitWidthZoom: function (e, maxZoom) {
+	_fitWidthZoom: function (e, maxZoom, recalcFirstFit=false) {
 		if (this.isCalc() || this.isDraw())
 			return;
 
@@ -3191,6 +3191,11 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 		newSize.y *= app.dpiScale;
 		oldSize.x *= app.dpiScale;
 		oldSize.y *= app.dpiScale;
+
+		// `recalcFirstFit` is used to recalculate/reset the zoom levels to the
+		// maximum possible zoom level based on the window (canvas) size.
+		if (recalcFirstFit)
+			this._firstFitDone = false;
 
 		// if we are here then that means we have the document size
 		// therefore we should continue and do the firstFit zoom resize,

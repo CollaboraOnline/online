@@ -245,6 +245,9 @@ class Dispatcher {
 		this.actionsMap['zoomreset'] = () => {
 			app.map.setZoom(app.map.options.zoom, null, true);
 		};
+		this.actionsMap['fitwidthzoom'] = () => {
+			app.map._docLayer._fitWidthZoom(undefined, undefined, true);
+		};
 
 		this.actionsMap['searchprev'] = () => {
 			app.searchService.searchPrevious();
