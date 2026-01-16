@@ -236,7 +236,10 @@ lokitclient_SOURCES = common/Log.cpp \
 
 lokitclient_LDADD = libglobals.a
 
-noinst_LIBRARIES = libsimd.a libglobals.a libkitglobals.a libwsdglobals.a libkitwsdglobals.a
+noinst_LIBRARIES = libsyscallinterpose.a libsimd.a libglobals.a libkitglobals.a libwsdglobals.a libkitwsdglobals.a
+
+libsyscallinterpose_a_SOURCES = kit/SyscallInterpose.c
+libsyscallinterpose_a_CFLAGS = $(AM_CFLAGS)
 
 libsimd_a_SOURCES = kit/DeltaSimd.c
 libsimd_a_CFLAGS = @SIMD_CFLAGS@
@@ -254,7 +257,7 @@ coolforkit_sources = kit/ChildSession.cpp \
                      kit/Kit.cpp \
                      kit/KitWebSocket.cpp
 
-coolforkit_ldadd = libsimd.a libkitglobals.a
+coolforkit_ldadd = libsyscallinterpose.a libsimd.a libkitglobals.a -ldl
 
 coolforkit_caps_SOURCES = $(coolforkit_sources) \
                           $(shared_sources) \
