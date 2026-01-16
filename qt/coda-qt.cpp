@@ -1223,11 +1223,24 @@ QWebEngineProfile* Application::getProfile() { return globalProfile; }
 
 RecentFiles& Application::getRecentFiles() { return recentFiles; }
 
+namespace {
+    void updateBrowserEnvironment(void)
+    {
+        const char *varName = "QTWEBENGINE_CHROMIUM_FLAGS";
+        std::string val = (getenv(varName) ? getenv(varName) : "");
+        // avoiding a crasher bug around check-box state emission for now cool#14039
+        val = "--disable-renderer-accessibility --force-renderer-accessibility=false " + val;
+        setenv(varName, val.c_str(), 1);
+    }
+}
+
 int main(int argc, char** argv)
 {
     QApplication app(argc, argv);
 
     user_name = getUserName();
+
+    updateBrowserEnvironment();
 
     QTranslator translator;
     QString locale = QLocale::system().name();
