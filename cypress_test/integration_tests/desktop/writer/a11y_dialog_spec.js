@@ -7,6 +7,7 @@ var desktopHelper = require('../../common/desktop_helper');
 const allWriterDialogs = [
     '.uno:ChapterNumberingDialog',
     '.uno:EditRegion',
+    '.uno:FieldDialog',
     '.uno:FontDialog',
     '.uno:FootnoteDialog',
     '.uno:FormatColumns',
