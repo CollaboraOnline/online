@@ -162,7 +162,7 @@ describe(['tagdesktop'], 'Accessibility Writer Tests', { testIsolation: false },
     });
 
     it.skip('Object dialog', function () {
-       clearAllText();
+       helper.clearAllText({ isTable: true });
        cy.then(() => {
            win.app.map.sendUnoCommand('.uno:InsertObjectChart');
        });
@@ -183,7 +183,7 @@ describe(['tagdesktop'], 'Accessibility Writer Tests', { testIsolation: false },
 
     it('ReadOnly info dialog', function () {
         // Text ReadOnly info dialog
-        clearAllText();
+        helper.clearAllText({ isTable: true });
         helper.typeIntoDocument('READONLY');
         helper.selectAllText();
         cy.then(() => {
@@ -370,24 +370,4 @@ describe(['tagdesktop'], 'Accessibility Writer Tests', { testIsolation: false },
         cy.cGet('.ui-dialog[role="dialog"]').should('have.length', level - 1);
     }
 
-    function clearAllText() {
-        cy.log('>> clearAllText - start');
-
-        cy.log('>> selectAllText - start');
-
-        helper.typeIntoDocument('{ctrl}a');
-        helper.typeIntoDocument('{ctrl}a');
-        helper.typeIntoDocument('{ctrl}a');
-
-        helper.textSelectionShouldExist();
-
-        cy.log('<< selectAllText - end');
-
-        // Then remove
-        helper.typeIntoDocument('{backspace}');
-
-        helper.textSelectionShouldNotExist();
-
-        cy.log('<< clearAllText - end');
-    }
 });
