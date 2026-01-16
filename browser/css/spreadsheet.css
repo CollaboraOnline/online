@@ -71,6 +71,10 @@
 	background-repeat: no-repeat !important;
 }
 
+.spreadsheet-tab.spreadsheet-tab-sheetview:hover > .lock {
+	filter: invert(1) brightness(2);
+}
+
 .spreadsheet-tab.spreadsheet-tab-sheetview-unsynced > .lock, .spreadsheet-tab.spreadsheet-tab-sheetview-unsynced:hover > .lock {
 	width: 16px;
 	height: 16px;
