@@ -174,7 +174,7 @@ class A11yValidator {
 			const htmlFor = (element as HTMLLabelElement).htmlFor?.trim();
 			if(htmlFor) {
 				const referencedElement = document.getElementById(htmlFor);
-				const labelableElements = ['INPUT', 'SELECT', 'TEXTAREA', 'BUTTON', 'METER', 'OUTPUT', 'PROGRESS'];
+				const labelableElements = ['INPUT', 'SELECT', 'TEXTAREA', 'METER', 'OUTPUT', 'PROGRESS'];
 				if(!referencedElement) {
 					throw new A11yValidatorException(
 						`In '${this.getDialogTitle(element)}' at '${this.getElementPath(element)}': label element in widget of type '${type}' has htmlFor attribute pointing to non-existing element with id '${htmlFor}'`
