@@ -30,6 +30,7 @@ class A11yValidator {
 	private setupChecks(): void {
 		this.checks.push(this.checkNativeButtonElement.bind(this));
 		this.checks.push(this.checkImageAltAttribute.bind(this));
+		this.checks.push(this.checkLabelElement.bind(this));
 	}
 
 	checkWidget(type: string, element: HTMLElement): void {
@@ -115,6 +116,37 @@ class A11yValidator {
 			}
 		});
 	}
+
+	private checkLabelElement(type: string, element: HTMLElement): void {
+		if(element.tagName === 'LABEL') {
+			const htmlFor = (element as HTMLLabelElement).htmlFor?.trim();
+			if(htmlFor) {
+				const referencedElement = document.getElementById(htmlFor);
+				const labelableElements = ['INPUT', 'SELECT', 'TEXTAREA', 'BUTTON', 'METER', 'OUTPUT', 'PROGRESS'];
+				if(!referencedElement) {
+					throw new A11yValidatorException(
+						`In '${this.getDialogTitle(element)}' at '${this.getElementPath(element)}': label element in widget of type '${type}' has htmlFor attribute pointing to non-existing element with id '${htmlFor}'`
+					);
+				} else if (!labelableElements.includes(referencedElement.tagName)) {
+					throw new A11yValidatorException(
+						`In '${this.getDialogTitle(element)}' at '${this.getElementPath(element)}': label element in widget of type '${type}' references non-labelable element <${referencedElement.tagName.toLowerCase()}> via htmlFor attribute. Try using aria-labelledby on the referenced element instead.`,
+					);
+				} else if(referencedElement.hasAttribute('aria-labelledby') || referencedElement.hasAttribute('aria-label')){
+					throw new A11yValidatorException(
+						`In '${this.getDialogTitle(element)}' at '${this.getElementPath(element)}': label element in widget of type '${type}' is associated with element with id: '${htmlFor}' via htmlFor, but that element also has aria-label or aria-labelledby attribute. Should not duplicate labelling.`,
+					);
+				}
+			} else {
+				const referencedElement = document.querySelector(`[aria-labelledby="${element.id}"]`);
+				if(!referencedElement) {
+					throw new A11yValidatorException(
+						`In '${this.getDialogTitle(element)}' at '${this.getElementPath(element)}': label element in widget of type '${type}' is not associated with any element via htmlFor or aria-labelledby. Should this element really be a label? If it just represent static text then try converting it into a <span> element instead.`,
+					);
+				}
+			}
+		}
+	}
+
 
 	private isVisible(element: HTMLElement): boolean {
 		const style = getComputedStyle(element);
