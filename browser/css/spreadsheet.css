@@ -64,6 +64,7 @@
 }
 
 .spreadsheet-tab.spreadsheet-tab-sheetview > .lock, .spreadsheet-tab.spreadsheet-tab-sheetview:hover > .lock {
+	margin-inline-start: 4px;
 	width: 16px;
 	height: 16px;
 	background-image: url('images/sheetview.svg') !important;
