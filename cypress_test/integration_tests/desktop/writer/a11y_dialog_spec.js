@@ -184,7 +184,7 @@ describe(['tagdesktop'], 'Accessibility Writer Tests', { testIsolation: false },
     });
 
     it.skip('Graphic dialog', function () {
-        clearAllText();
+        helper.clearAllText();
         desktopHelper.insertImage();
         cy.then(() => {
             win.app.map.sendUnoCommand('.uno:GraphicDialog');
@@ -193,7 +193,7 @@ describe(['tagdesktop'], 'Accessibility Writer Tests', { testIsolation: false },
     });
 
     it('Rename bookmark', function () {
-        clearAllText();
+        helper.clearAllText();
 
         helper.typeIntoDocument('bookmark');
         helper.selectAllText();
