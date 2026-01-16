@@ -44,6 +44,13 @@ static ssize_t (*real_readlink)(const char *, char *, size_t);
 static DIR *(*real_opendir)(const char *);
 static struct dirent *(*real_readdir)(DIR *);
 static int (*real_closedir)(DIR *);
+static int (*real_open)(const char *, int, mode_t);
+static int (*real_creat)(const char *, mode_t);
+static int (*real_close)(int);
+static FILE *(*real_fopen)(const char *, const char *);
+static FILE *(*real_fdopen)(int, const char *);
+static FILE *(*real_freopen)(const char *, const char *, FILE *);
+static int (*real_fclose)(FILE *);
 
 #define INTERPOSE(name) real_##name = dlsym(RTLD_NEXT, #name)
 
@@ -53,6 +60,8 @@ __attribute__((constructor)) static void init(void) {
     INTERPOSE(mount); INTERPOSE(mkdir); INTERPOSE(unlink); INTERPOSE(statfs);
     INTERPOSE(fstatat); INTERPOSE(faccessat); INTERPOSE(openat); INTERPOSE(access);
     INTERPOSE(readlink); INTERPOSE(opendir); INTERPOSE(readdir); INTERPOSE(closedir);
+    INTERPOSE(open); INTERPOSE(creat); INTERPOSE(close);
+    INTERPOSE(fopen); INTERPOSE(fdopen); INTERPOSE(freopen); INTERPOSE(fclose);
 }
 
 int chdir(const char *p) {
@@ -155,4 +164,41 @@ struct dirent *readdir(DIR *d) {
 int closedir(DIR *d) {
     fprintf(stderr, "closedir(%p)\n", d);
     return real_closedir(d);
+}
+
+int open(const char *p, int f, ...) {
+    mode_t m = 0;
+    if (f & O_CREAT) { va_list ap; va_start(ap, f); m = va_arg(ap, mode_t); va_end(ap); }
+    fprintf(stderr, "open(%s, %d, %o)\n", p, f, m);
+    return real_open(p, f, m);
+}
+
+int creat(const char *p, mode_t m) {
+    fprintf(stderr, "creat(%s, %o)\n", p, m);
+    return real_creat(p, m);
+}
+
+int close(int fd) {
+    fprintf(stderr, "close(%d)\n", fd);
+    return real_close(fd);
+}
+
+FILE *fopen(const char *p, const char *m) {
+    fprintf(stderr, "fopen(%s, %s)\n", p, m);
+    return real_fopen(p, m);
+}
+
+FILE *fdopen(int fd, const char *m) {
+    fprintf(stderr, "fdopen(%d, %s)\n", fd, m);
+    return real_fdopen(fd, m);
+}
+
+FILE *freopen(const char *p, const char *m, FILE *s) {
+    fprintf(stderr, "freopen(%s, %s, %p)\n", p, m, s);
+    return real_freopen(p, m, s);
+}
+
+int fclose(FILE *s) {
+    fprintf(stderr, "fclose(%p)\n", s);
+    return real_fclose(s);
 }
