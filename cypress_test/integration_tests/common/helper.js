@@ -462,10 +462,19 @@ function assertCursorAndFocus() {
 }
 
 // Select all text via CTRL+A shortcut.
-function selectAllText() {
+// options.isTable: when true, use multiple ctrl+a to select all text beyond current table
+function selectAllText(options) {
+	var isTable = options && options.isTable;
+
 	cy.log('>> selectAllText - start');
 
-	typeIntoDocument('{ctrl}a');
+	if (isTable) {
+		typeIntoDocument('{ctrl}a');
+		typeIntoDocument('{ctrl}a');
+		typeIntoDocument('{ctrl}a');
+	} else {
+		typeIntoDocument('{ctrl}a');
+	}
 
 	textSelectionShouldExist();
 
@@ -473,13 +482,14 @@ function selectAllText() {
 }
 
 // Clear all text by selecting all and deleting.
-function clearAllText() {
+// options.isTable: when true, use multiple ctrl+a to select all text beyond current table
+function clearAllText(options) {
 	cy.log('>> clearAllText - start');
 
 	//assertCursorAndFocus();
 
 	// Trigger select all
-	selectAllText();
+	selectAllText(options);
 
 	// Then remove
 	typeIntoDocument('{backspace}');
