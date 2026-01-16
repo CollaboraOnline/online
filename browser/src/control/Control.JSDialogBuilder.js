@@ -1453,7 +1453,7 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 		var accKey = builder._getAccessKeyFromText(data.text);
 		builder._stressAccessKey(fixedtext, accKey);
 
-		const labelableElements = ['INPUT', 'SELECT', 'TEXTAREA', 'BUTTON', 'METER', 'OUTPUT', 'PROGRESS'];
+		const labelableElements = ['INPUT', 'SELECT', 'TEXTAREA', 'METER', 'OUTPUT', 'PROGRESS'];
 
 		const updateLabelForAttribute = function(label, labelledControl) {
 			const isLabelable = labelableElements.includes(labelledControl.nodeName);
