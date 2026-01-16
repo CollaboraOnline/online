@@ -252,9 +252,10 @@ libkitwsdglobals_a_SOURCES = wsd/KitWSDGlobals.cpp
 coolforkit_sources = kit/ChildSession.cpp \
                      kit/ForKit.cpp \
                      kit/Kit.cpp \
-                     kit/KitWebSocket.cpp
+                     kit/KitWebSocket.cpp \
+                     kit/LocaleCache.cpp
 
-coolforkit_ldadd = libsimd.a libkitglobals.a
+coolforkit_ldadd = libsimd.a libkitglobals.a -ldl
 
 coolforkit_caps_SOURCES = $(coolforkit_sources) \
                           $(shared_sources) \

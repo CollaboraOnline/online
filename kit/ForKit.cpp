@@ -53,6 +53,13 @@
 #include <common/Watchdog.hpp>
 #include <kit/DeltaSimd.h>
 
+/* Locale cache functions from LocaleCache.cpp */
+extern "C" {
+void locale_cache_init(void);
+void locale_cache_enable(int enable);
+size_t locale_cache_count(void);
+}
+
 namespace
 {
 
@@ -997,6 +1004,12 @@ int forkit_main(int argc, char** argv)
     }
 
     setupKitEnvironment(UserInterface);
+
+    // Initialize locale and timezone cache before sandbox
+    // This reads all system locale data so we can serve queries after sandboxing
+    LOG_DBG("Initializing locale and timezone cache...");
+    locale_cache_init();
+    LOG_DBG("Locale cache initialized with " << locale_cache_count() << " locales");
 
     if (!std::getenv("LD_BIND_NOW")) // must be set by parent.
         LOG_INF("Note: LD_BIND_NOW is not set.");

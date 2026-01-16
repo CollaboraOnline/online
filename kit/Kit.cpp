@@ -4208,6 +4208,10 @@ bool startURP(const std::shared_ptr<lok::Office>& LOKit, void** ppURPContext)
 /// Initializes LibreOfficeKit for cross-fork re-use.
 bool globalPreinit(const std::string &loTemplate)
 {
+    // Enable locale cache so we don't need these files in the systemplate.
+    LOG_DBG("Enabling locale cache before seccomp lockdown");
+    void PreloadLocaleCache();;
+
     std::string loadedLibrary;
     // we deliberately don't dlclose handle on success, make it
     // static so static analysis doesn't see this as a leak
