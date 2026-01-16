@@ -177,6 +177,7 @@ coolwsd_sources = common/Crypto.cpp \
                   wsd/HostUtil.cpp \
                   wsd/ProofKey.cpp \
                   wsd/ProxyProtocol.cpp \
+                  wsd/ProxyPoll.cpp \
                   wsd/ProxyRequestHandler.cpp \
                   wsd/QuarantineUtil.cpp \
                   wsd/RemoteConfig.cpp \
@@ -406,6 +407,7 @@ wsd_headers = wsd/Admin.hpp \
               wsd/Process.hpp \
               wsd/ProofKey.hpp \
               wsd/ProxyProtocol.hpp \
+              wsd/ProxyPoll.hpp \
               wsd/ProxyRequestHandler.hpp \
               wsd/QuarantineUtil.hpp \
               wsd/RemoteConfig.hpp \

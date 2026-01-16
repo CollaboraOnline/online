@@ -156,6 +156,11 @@ private:
                                const std::shared_ptr<StreamSocket>& socket,
                                unsigned mobileAppDocId = 0);
 
+    /// forwards request to different coolwsd server using ProxyPoll
+    void handleInternalProxy(const std::string& wopiSrc, const std::string& controllerURL,
+                             const std::shared_ptr<StreamSocket>& socket,
+                             const Poco::Net::HTTPRequest& request);
+
     /// Lookup cached file content.
     static const std::string& getFileContent(const std::string& filename);
 
@@ -176,7 +181,13 @@ private:
         }
     }
 
-private:
+    /// Complete WebSocket upgrade: create WS handler, setup RVS, and start request handling
+    /// @return true if handled (sync error), false for async processing
+    bool completeWsUpgrade(const Poco::Net::HTTPRequest& request,
+                           const RequestDetails& requestDetails,
+                           const std::shared_ptr<StreamSocket>& socket,
+                           unsigned mobileAppDocId = 0);
+
     // The socket that owns us (we can't own it).
     std::weak_ptr<StreamSocket> _socket;
     std::string _id;

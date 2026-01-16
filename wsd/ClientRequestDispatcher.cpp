@@ -34,8 +34,10 @@
 #include <net/HttpHelper.hpp>
 #include <net/NetUtil.hpp>
 #include <net/Uri.hpp>
+#include <wopi/StorageConnectionManager.hpp>
 #include <wsd/ClientRequestDispatcher.hpp>
 #include <wsd/DocumentBroker.hpp>
+#include <wsd/ProxyPoll.hpp>
 #include <wsd/RequestVettingStation.hpp>
 
 #if !MOBILEAPP
@@ -59,6 +61,7 @@
 #include <Poco/Net/PartHandler.h>
 #include <Poco/SAX/InputSource.h>
 #include <Poco/StreamCopier.h>
+#include <Poco/JSON/Object.h>
 
 #include <algorithm>
 #include <map>
@@ -2535,19 +2538,117 @@ bool ClientRequestDispatcher::handleClientProxyRequest(const Poco::Net::HTTPRequ
 }
 #endif
 
-bool ClientRequestDispatcher::handleClientWsUpgrade(const Poco::Net::HTTPRequest& request,
-                                                    const RequestDetails& requestDetails,
-                                                    SocketDisposition& disposition,
-                                                    const std::shared_ptr<StreamSocket>& socket,
-                                                    unsigned mobileAppDocId)
+void ClientRequestDispatcher::handleInternalProxy(const std::string& wopiSrc,
+                                                  const std::string& controllerURL,
+                                                  const std::shared_ptr<StreamSocket>& socket,
+                                                  const Poco::Net::HTTPRequest& request)
 {
-    const std::string url = requestDetails.getDocumentURI();
-    assert(socket && "Must have a valid socket");
+    // Check if we know where this document is
+    Poco::URI controllerURI{ controllerURL };
+    controllerURI.addQueryParameter("WOPISrc", wopiSrc);
+    std::shared_ptr<http::Session> httpSession(
+        StorageConnectionManager::getHttpSession(controllerURI));
+    http::Request controllerRequest(controllerURI.getPathAndQuery());
+    LOG_DBG("Getting podIP from [" << controllerURI.toString() << ']');
 
-    // must be trace for anonymization
-    LOG_TRC("Client WS request: " << requestDetails.getURI() << ", url: " << url << ", socket #"
-                                  << socket->getFD());
+    http::Session::FinishedCallback finishedCallback =
+        [this, controllerURL, wopiSrc, weakSocket = std::weak_ptr<StreamSocket>(socket),
+         request](const std::shared_ptr<http::Session>& session)
+    {
+        if (SigUtil::getShutdownRequestFlag())
+        {
+            LOG_DBG("Shutdown flagged, giving up on in-flight requests");
+            return;
+        }
 
+        const std::shared_ptr<const http::Response> httpResponse = session->response();
+
+        // Check for request failure (timeout, connection error, etc.)
+        if (httpResponse->state() == http::Response::State::Error ||
+            httpResponse->state() == http::Response::State::Timeout)
+        {
+            LOG_ERR("Controller request failed for URL[" << controllerURL << "] with state["
+                                                         << httpResponse->state() << ']');
+            auto lockedSocket = weakSocket.lock();
+            if (lockedSocket)
+                HttpHelper::sendErrorAndShutdown(http::StatusCode::ServiceUnavailable,
+                                                 lockedSocket);
+            return;
+        }
+
+        const http::StatusLine statusLine = httpResponse->statusLine();
+
+        LOG_TRC("Request to URL[" << controllerURL << " returned " << statusLine.statusCode());
+        http::StatusCode responseStatusCode = statusLine.statusCode();
+        if (responseStatusCode == http::StatusCode::NoContent)
+        {
+            LOG_DBG("Controller returned NoContent, continuing with normal WebSocket upgrade");
+            auto lockedSocket = weakSocket.lock();
+            if (!lockedSocket)
+                return;
+
+            Poco::Net::HTTPRequest mutableRequest(request);
+            RequestDetails requestDetails(mutableRequest, COOLWSD::ServiceRoot);
+
+            completeWsUpgrade(request, requestDetails, lockedSocket, 0);
+            return;
+        }
+        else if (responseStatusCode != http::StatusCode::OK)
+        {
+            LOG_ERR("Failed to get targetPodIP from URL[" << controllerURL << "] with statusCode["
+                                                          << statusLine.statusCode() << ']');
+            auto lockedSocket = weakSocket.lock();
+            if (lockedSocket)
+                HttpHelper::sendErrorAndShutdown(http::StatusCode::ServiceUnavailable,
+                                                 lockedSocket);
+            return;
+        }
+
+        const std::string& body = httpResponse->getBody();
+        LOG_DBG("TargetPod details JSON for [" << controllerURL << "] is: " << body);
+
+        Poco::JSON::Object::Ptr targetPodJSON;
+        if (!JsonUtil::parseJSON(body, targetPodJSON))
+        {
+            LOG_ERR("Failed to parse JSON[" << body << "] from URL[" << controllerURL
+                                            << "] failed");
+            auto lockedSocket = weakSocket.lock();
+            if (lockedSocket)
+                HttpHelper::sendErrorAndShutdown(http::StatusCode::ServiceUnavailable,
+                                                 lockedSocket);
+            return;
+        }
+
+        const std::string targetPodIP =
+            JsonUtil::getJSONValue<std::string>(targetPodJSON, "pod_ip");
+        int targetPort = JsonUtil::getJSONValue<int>(targetPodJSON, "port");
+        if (targetPodIP.empty())
+        {
+            LOG_ERR("Empty pod_ip in response from URL[" << controllerURL << ']');
+            auto lockedSocket = weakSocket.lock();
+            if (lockedSocket)
+                HttpHelper::sendErrorAndShutdown(http::StatusCode::ServiceUnavailable,
+                                                 lockedSocket);
+            return;
+        }
+
+        LOG_INF("Document [" << wopiSrc << "] is on podIP[" << targetPodIP << "]. Proxying...");
+        auto lockedSocket = weakSocket.lock();
+        if (!lockedSocket)
+            return;
+        ProxyPoll::startPump(lockedSocket, targetPodIP, targetPort, request,
+                             COOLWSD::getWebServerPoll());
+    };
+
+    httpSession->setFinishedHandler(std::move(finishedCallback));
+    httpSession->asyncRequest(controllerRequest, COOLWSD::getWebServerPoll());
+}
+
+bool ClientRequestDispatcher::completeWsUpgrade(const Poco::Net::HTTPRequest& request,
+                                                const RequestDetails& requestDetails,
+                                                const std::shared_ptr<StreamSocket>& socket,
+                                                unsigned mobileAppDocId)
+{
     // First Upgrade.
     const bool allowed = allowedOrigin(request, requestDetails);
     auto ws = std::make_shared<WebSocketHandler>(socket, request, allowed);
@@ -2594,6 +2695,7 @@ bool ClientRequestDispatcher::handleClientWsUpgrade(const Poco::Net::HTTPRequest
 
         // We have the client's WS and we either got the proactive CheckFileInfo
         // results, which we can use, or we need to issue a new async CheckFileInfo.
+        SocketDisposition disposition(socket);
         _rvs->handleRequest(_id, requestDetails, ws, socket, mobileAppDocId, disposition);
         return false; // async keep alive
     }
@@ -2606,6 +2708,41 @@ bool ClientRequestDispatcher::handleClientWsUpgrade(const Poco::Net::HTTPRequest
         socket->ignoreInput();
         return true;
     }
+}
+
+bool ClientRequestDispatcher::handleClientWsUpgrade(const Poco::Net::HTTPRequest& request,
+                                                    const RequestDetails& requestDetails,
+                                                    [[maybe_unused]] SocketDisposition& disposition,
+                                                    const std::shared_ptr<StreamSocket>& socket,
+                                                    unsigned mobileAppDocId)
+{
+    const std::string url = requestDetails.getDocumentURI();
+    assert(socket && "Must have a valid socket");
+
+    // must be trace for anonymization
+    LOG_TRC("Client WS request: " << requestDetails.getURI() << ", url: " << url << ", socket #"
+                                  << socket->getFD());
+
+#if !MOBILEAPP
+    // Check if we need to proxy this request to another pod/server
+    const std::string controllerURL = ConfigUtil::getString("indirection_endpoint.url", "");
+    if (!controllerURL.empty() && !request.has("X-COOL-Internal-Proxy"))
+    {
+        const std::string docKey = requestDetails.getDocKey();
+        std::unique_lock<std::mutex> docBrokersLock(DocBrokersMutex);
+        auto docBrokerIt = DocBrokers.find(docKey);
+        const std::string wopiSrc = requestDetails.getField(RequestDetails::Field::WOPISrc);
+        if (docBrokerIt == DocBrokers.end())
+        {
+            LOG_INF("No existing DocBroker for docKey [" << docKey
+                                                            << "], handling internal proxy.");
+            handleInternalProxy(wopiSrc, controllerURL, socket, request);
+            return false;
+        }
+    }
+#endif
+
+    return completeWsUpgrade(request, requestDetails, socket, mobileAppDocId);
 }
 
 /// Lookup cached file content.
