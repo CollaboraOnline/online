@@ -31,6 +31,7 @@ class A11yValidator {
 		this.checks.push(this.checkNativeButtonElement.bind(this));
 		this.checks.push(this.checkImageAltAttribute.bind(this));
 		this.checks.push(this.checkLabelElement.bind(this));
+		this.checks.push(this.checkElementHasLabel.bind(this));
 	}
 
 	checkWidget(type: string, element: HTMLElement): void {
@@ -115,6 +116,57 @@ class A11yValidator {
 				);
 			}
 		});
+	}
+
+	private checkElementHasLabel(type: string, element: HTMLElement): void {
+		if(element.hasAttribute('aria-labelledby')) {
+			const labelledbyId = element.getAttribute('aria-labelledby') as string;
+
+			const referencedElement = document.getElementById(labelledbyId);
+
+			if (!referencedElement) {
+				throw new A11yValidatorException(
+					`In '${this.getDialogTitle(element)}' at '${this.getElementPath(element)}': element in widget of type '${type}' has aria-labelledby attribute pointing to non-existing element with id: '${labelledbyId}'`,
+				);
+			}
+			else {
+				const labelHasHtmlFor =
+					referencedElement.tagName === 'LABEL' && (referencedElement as HTMLLabelElement).htmlFor;
+
+				const htmlForPointsToThisElement =
+					labelHasHtmlFor && (referencedElement as HTMLLabelElement).htmlFor === element.id;
+
+				if(htmlForPointsToThisElement)
+				{
+					throw new A11yValidatorException(
+						`In '${this.getDialogTitle(element)}' at '${this.getElementPath(element)}': element in widget of type '${type}' has aria-labelledby attribute pointing to label element with id: '${labelledbyId}', but that label also has htmlFor attribute pointing to this element. Should not duplicate labelling.`,
+					);
+				}
+			}
+		} else {
+			const visibleLabel = document.querySelector(`label[for="${element.id}"]`);
+			if(!visibleLabel)
+			{
+				const ariaLabel = element.getAttribute('aria-label') ?? '';
+				const hasAriaLabel = ariaLabel.trim() !== '';
+
+				// Form elements must have a label
+				const formElements = ['INPUT', 'SELECT', 'TEXTAREA'];
+
+				if(formElements.includes(element.tagName) && !hasAriaLabel) {
+					throw new A11yValidatorException(
+						`In '${this.getDialogTitle(element)}' at '${this.getElementPath(element)}': element in widget of type '${type}' is missing label: it should have either <label>, aria-labelledby or aria-label attribute.`,
+					);
+				}
+			}
+		}
+
+		for (let i = 0; i < element.children.length; i++) {
+			const child = element.children[i];
+			if (child instanceof HTMLElement) {
+				this.checkElementHasLabel(type, child);
+			}
+		}
 	}
 
 	private checkLabelElement(type: string, element: HTMLElement): void {
