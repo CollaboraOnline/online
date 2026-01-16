@@ -13,6 +13,12 @@
 # 2) Cherry-picks commits from <PR number>
 # 3) Uses './g review' to submit a pull request against <branch>.
 #
+# './g rebase-pr <PR number>' to rebase a PR from CollaboraOnline/online:
+# 1) Fetches PR info (base branch, head branch, contributor).
+# 2) Checks out the PR branch locally.
+# 3) Rebases it against the target branch.
+# 4) Pushes the result back to the contributor's fork if rebase succeeds.
+#
 
 # not_in_standard_branches $BRANCH $REMOTE
 not_in_standard_branches() {
@@ -149,6 +155,95 @@ query($owner: String!, $repo: String!)
     if [ -n "$BRANCH_CREATED" ]; then
         git branch -D $BACKPORT_BRANCH
     fi
+
+    exit 0
+fi
+
+if [ "$1" == "rebase-pr" ]; then
+    if [ -z "$(type -p jq)" ]; then
+        echo "'jq' not found, install it with your package manager."
+        exit 1
+    fi
+
+    PRNUM=$2
+    if [ -z "$PRNUM" ]; then
+        echo "Error: PR number is not specified"
+        echo "Usage: './g rebase-pr <PR number>'"
+        echo "Example: './g rebase-pr 42'"
+        exit 1
+    fi
+
+    # Get PR info: base branch, head branch, head repo owner and name
+    JSON=$(mktemp)
+    gh api graphql --field owner="CollaboraOnline" --field repo="online" -f query='
+query($owner: String!, $repo: String!)
+{
+  repository(owner: $owner, name: $repo)
+  {
+    pullRequest(number: '$PRNUM')
+    {
+     baseRefName
+     headRefName
+     headRepository
+     {
+       name
+       owner
+       {
+         login
+       }
+     }
+    }
+  }
+}' > $JSON
+    BASE_BRANCH=$(cat $JSON | jq --raw-output ".data.repository.pullRequest.baseRefName")
+    HEAD_BRANCH=$(cat $JSON | jq --raw-output ".data.repository.pullRequest.headRefName")
+    HEAD_OWNER=$(cat $JSON | jq --raw-output ".data.repository.pullRequest.headRepository.owner.login")
+    HEAD_REPO=$(cat $JSON | jq --raw-output ".data.repository.pullRequest.headRepository.name")
+    rm $JSON
+
+    if [ "$BASE_BRANCH" == "null" ] || [ "$HEAD_BRANCH" == "null" ] || [ "$HEAD_OWNER" == "null" ] || [ "$HEAD_REPO" == "null" ]; then
+        echo "Error: Could not fetch PR #$PRNUM info. Check if the PR exists."
+        exit 1
+    fi
+
+    echo "PR #$PRNUM: rebasing '$HEAD_OWNER:$HEAD_BRANCH' onto '$BASE_BRANCH'"
+
+    # Fetch the latest from the target branch
+    git fetch $REMOTE $BASE_BRANCH
+
+    # Determine the remote for the PR branch
+    # If the PR is from CollaboraOnline/online itself, reuse the existing remote
+    if [ "$HEAD_OWNER" == "CollaboraOnline" ]; then
+        PR_REMOTE=$REMOTE
+    else
+        PR_REMOTE="git@github.com:$HEAD_OWNER/$HEAD_REPO.git"
+    fi
+
+    # Fetch the PR branch
+    git fetch $PR_REMOTE $HEAD_BRANCH
+
+    # Save the original HEAD for --force-with-lease (needed when pushing to URL without named remote)
+    ORIGINAL_HEAD=$(git rev-parse FETCH_HEAD)
+
+    # Create a local branch for the PR
+    LOCAL_BRANCH="rebase-pr-$PRNUM"
+    git checkout -B $LOCAL_BRANCH FETCH_HEAD
+
+    # Rebase onto the target branch
+    if git rebase $REMOTE/$BASE_BRANCH; then
+        echo "Rebase successful. Pushing to $HEAD_OWNER:$HEAD_BRANCH..."
+        git push --force-with-lease=$HEAD_BRANCH:$ORIGINAL_HEAD $PR_REMOTE $LOCAL_BRANCH:$HEAD_BRANCH
+        echo "Push complete."
+    else
+        echo "Rebase failed. Resolve conflicts and run 'git rebase --continue', then push manually."
+        echo "When done, you can push with: git push --force-with-lease=$HEAD_BRANCH:$ORIGINAL_HEAD $PR_REMOTE $LOCAL_BRANCH:$HEAD_BRANCH"
+        echo "To clean up: git checkout $BRANCH && git branch -D $LOCAL_BRANCH"
+        exit 1
+    fi
+
+    # Return to original branch and clean up
+    git checkout $BRANCH
+    git branch -D $LOCAL_BRANCH
 
     exit 0
 fi
