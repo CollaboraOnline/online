@@ -82,6 +82,18 @@ fi
 
 AC_LANG_PUSH([C++])
 
+AC_MSG_CHECKING([whether $CXX is actually Clang])
+AC_COMPILE_IFELSE([AC_LANG_SOURCE([[
+    #if !defined __clang__
+    #error
+    #endif
+    ]])],
+    [AC_MSG_RESULT([yes])
+     cxx_clang=true],
+    [AC_MSG_RESULT([no])
+     cxx_clang=false])
+AM_CONDITIONAL([CXX_CLANG], [test "$cxx_clang" = true])
+
 # check for python modules
 for MODULE in lxml polib; do
     AC_MSG_CHECKING([for ${MODULE} for python3])

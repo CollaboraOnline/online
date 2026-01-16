@@ -77,7 +77,9 @@ CLEANFILES = $(BUILT_SOURCES)
 
 coda_qt_CXXFLAGS = $(AM_CXXFLAGS)
 if X86
+if !CXX_CLANG
 coda_qt_CXXFLAGS += -mno-direct-extern-access
+endif
 endif
 
 coda_qt_SOURCES = coda-qt.cpp WebView.cpp DBusService.cpp $(BUILT_SOURCES) $(cmake_list)
