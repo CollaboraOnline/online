@@ -35,6 +35,8 @@ class NavigatorPanel extends SidebarBase {
 		this.map.on('doclayerinit', this.onDocLayerInit, this);
 		this.map.on('focussearch', this.focusSearch, this);
 		this.navigationPanel = document.getElementById(`navigation-sidebar`);
+		this.navigationPanel.setAttribute('aria-label', _('Navigation Panel'));
+
 		this.floatingNavIcon = document.getElementById(`navigator-floating-icon`);
 		this.presentationControlsWrapper = this.navigationPanel.querySelector(
 			'#presentation-controls-wrapper',
@@ -104,11 +106,7 @@ class NavigatorPanel extends SidebarBase {
 			navContainer,
 		);
 
-		var navTitle = window.L.DomUtil.create(
-			'span',
-			'navigation-title',
-			navHeader,
-		);
+		var navTitle = window.L.DomUtil.create('h2', 'navigation-title', navHeader);
 		navTitle.textContent = _('Navigation');
 
 		// Create wrapper for search

@@ -499,10 +499,6 @@ span.jsdialog.sidebar.ui-treeview-notexpandable {
 	padding: 16px;
 }
 
-.navigation-title {
-	font-weight: bold;
-}
-
 .close-navigation-wrapper {
 	display: flex;
 	box-sizing: border-box;
