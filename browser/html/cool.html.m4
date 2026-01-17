@@ -173,7 +173,7 @@ m4_ifelse(MOBILEAPP,[true],
     </dialog>
 
     <div id="main-document-content">
-      <div id="navigation-sidebar">
+      <nav id="navigation-sidebar">
         <div id="presentation-controls-wrapper" class="readonly">
           <div id="slide-sorter"></div>
           <div id="presentation-toolbar"></div>
@@ -184,7 +184,7 @@ m4_ifelse(MOBILEAPP,[true],
         <div id="quickfind-dock-wrapper">
           <div id="quickfind-panel" class="sidebar-panel"></div>
         </div>
-      </div>
+      </nav>
       <div id="navigator-floating-icon"></div>
       <div id="document-container" class="readonly" dir="ltr">
         <div id="map"></div>
