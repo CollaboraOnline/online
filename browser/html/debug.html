@@ -48,6 +48,15 @@
                   wopiSrc += ':' + wopiPort;
                 wopiSrc += "/wopi/files/" + encodeURIComponent(filePath);
             }
+            var filename = "Document"; // default
+            if (wopiSrc) {
+                var decodedWopiSrc = decodeURIComponent(wopiSrc);
+                var lastSlash = decodedWopiSrc.lastIndexOf('/');
+                if (lastSlash !== -1) {
+                    filename = decodedWopiSrc.substring(lastSlash + 1);
+                }
+            }
+            document.getElementById("coolframe").title = filename + " - Collabora Online";
             if (req)
               localUrl += 'req=' + req + '&';
 
