@@ -57,14 +57,14 @@ class HelperLineStyles {
 }
 
 class ShapeHandlesSection extends CanvasSectionObject {
-	processingOrder: number = app.CSections.DefaultForDocumentObjects.processingOrder;
-	drawingOrder: number = app.CSections.DefaultForDocumentObjects.drawingOrder;
-	zIndex: number = app.CSections.DefaultForDocumentObjects.zIndex;
+	processingOrder: number = app.CSections.ShapeHandlesSection.processingOrder;
+	drawingOrder: number = app.CSections.ShapeHandlesSection.drawingOrder;
+	zIndex: number = app.CSections.ShapeHandlesSection.zIndex;
 	documentObject: boolean = true;
 	showSection: boolean = false;
 
 	constructor (info: any) {
-        super("shapeHandlesSection");
+		super(app.CSections.ShapeHandlesSection.name);
 
 		this.sectionProperties.info = null;
 		this.sectionProperties.handles = [];
@@ -997,6 +997,54 @@ class ShapeHandlesSection extends CanvasSectionObject {
 		this.containerObject.requestReDraw();
 	}
 
+	private constrainDragToSheetArea(dragDistance: number[]) {
+		if (app.map.getDocType() === 'spreadsheet') {
+			// Cap the drag distance to the document boundaries
+			const calcGridSection = app.sectionContainer.getSectionWithName(
+				app.CSections.CalcGrid.name,
+			);
+			const rowHeaderSection = app.sectionContainer.getSectionWithName(
+				app.CSections.RowHeader.name,
+			) as cool.RowHeader;
+			const columnHeaderSection = app.sectionContainer.getSectionWithName(
+				app.CSections.ColumnHeader.name,
+			) as cool.ColumnHeader;
+
+			if (calcGridSection && rowHeaderSection && columnHeaderSection) {
+				dragDistance[0] = Math.max(
+					calcGridSection.myTopLeft[0] -
+						this.myTopLeft[0] -
+						columnHeaderSection.getHeaderInfo().getDocVisStart(),
+					dragDistance[0],
+				);
+				dragDistance[1] = Math.max(
+					calcGridSection.myTopLeft[1] -
+						this.myTopLeft[1] -
+						rowHeaderSection.getHeaderInfo().getDocVisStart(),
+					dragDistance[1],
+				);
+				// Clip svg at the header edges
+				if (this.sectionProperties.svg) {
+					const cropLeft =
+						Math.max(
+							calcGridSection.myTopLeft[0] -
+								this.myTopLeft[0] -
+								dragDistance[0],
+							0,
+						) / app.dpiScale;
+					const cropTop =
+						Math.max(
+							calcGridSection.myTopLeft[1] -
+								this.myTopLeft[1] -
+								dragDistance[1],
+							0,
+						) / app.dpiScale;
+					this.sectionProperties.svg.style.clipPath = `inset(${cropTop}px 0px 0px ${cropLeft}px)`;
+				}
+			}
+		}
+	}
+
 	onMouseMove(position: cool.SimplePoint, dragDistance: number[]) {
 		let canDrag = !app.file.textCursor.visible;
 
@@ -1008,6 +1056,8 @@ class ShapeHandlesSection extends CanvasSectionObject {
 		}
 
 		if (this.containerObject.isDraggingSomething() && canDrag) {
+			this.constrainDragToSheetArea(dragDistance);
+
 			if (!app.activeDocument.activeLayout.viewedRectangle.equals(this.sectionProperties.viewedRectangleOnMouseDown.toArray())) {
 				const diff = new cool.SimplePoint(
 					app.activeDocument.activeLayout.viewedRectangle.x1 - this.sectionProperties.viewedRectangleOnMouseDown.x1,
