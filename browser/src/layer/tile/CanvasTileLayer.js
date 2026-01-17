@@ -395,7 +395,7 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 		// text, presentation, spreadsheet, etc
 		this._docType = options.docType;
 		this._documentInfo = '';
-		if (this._docType !== 'text')
+		if (!this.isWriter())
 			app.setCursorVisibility(false); // Don't change the default for Writer.
 		// Last cursor position for invalidation
 		this.lastCursorPos = null;
@@ -1275,7 +1275,7 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 		const invalidArea = new cool.SimpleRectangle(command.x, command.y, command.width, command.height);
 		TileManager.overlapInvalidatedRectangleWithView(command.part, command.mode, command.wireId, invalidArea, textMsg);
 
-		if (this._docType === 'presentation' || this._docType === 'drawing') {
+		if (this.isImpress() || this.isDraw()) {
 			if (command.part === this._selectedPart &&
 				command.mode === this._selectedMode &&
 				command.part !== this._lastValidPart) {
@@ -1750,7 +1750,7 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 
 		app.file.textCursor.rectangle = new cool.SimpleRectangle(recCursor.getTopLeft().x, recCursor.getTopLeft().y, recCursor.getSize().x, recCursor.getSize().y);
 
-		if (this._docType === 'text') {
+		if (this.isWriter()) {
 			app.sectionContainer.onCursorPositionChanged();
 		}
 
@@ -2115,7 +2115,7 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 				this._map.fire('commandstatechanged', json);
 			}
 		}
-		else if (textMsg.startsWith('.uno:Context=') && this._docType === 'presentation') {
+		else if (textMsg.startsWith('.uno:Context=') && this.isImpress()) {
 			this._selectionContextChanged(textMsg.replace('.uno:Context=', ''));
 		}
 		else {
@@ -2941,7 +2941,7 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 			app.sectionContainer.getSectionWithName(app.CSections.Scroll.name).pendingScrollEvent = null;
 			var correctedCursor = app.file.textCursor.rectangle.clone();
 
-			if (this._docType === 'text') {
+			if (this.isWriter()) {
 				// For Writer documents, disallow scrolling to cursor outside of the page (horizontally)
 				// Use document dimensions to approximate page width
 				correctedCursor.x1 = clamp(correctedCursor.x1, 0, app.activeDocument.activeLayout.viewSize.x);
@@ -3012,7 +3012,7 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 				// anything if nothing is changed.
 
 				// We will focus map if no comment is being edited (writer only for now).
-				if (this._docType === 'text') {
+				if (this.isWriter()) {
 					var section = app.sectionContainer.getSectionWithName(app.CSections.CommentList.name);
 					if (!section || !section.sectionProperties.selectedComment || !section.sectionProperties.selectedComment.isEdit())
 						this._map.focus(true);
@@ -3637,7 +3637,7 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 	_syncTileContainerSize: function () {
 		if (!this._map) return;
 
-		if (this._docType === 'presentation' || this._docType === 'drawing') this.onResizeImpress();
+		if (this.isImpress() || this.isDraw()) this.onResizeImpress();
 
 		if (!this._container) return;
 
