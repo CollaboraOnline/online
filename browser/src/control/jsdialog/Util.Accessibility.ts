@@ -20,11 +20,34 @@ function findLabelElementById(
 	labelledById: string,
 	suffix: string,
 ): HTMLElement | null {
-	return (
-		container.querySelector(`[id^="${labelledById}-label-${suffix}"]`) ||
-		container.querySelector(`[id^="${labelledById}-label"]`) ||
-		container.querySelector(`[id^="${labelledById}"]`)
+	let candidateBaseId = `${labelledById}-label-${suffix}`;
+	let candidateElements = container.querySelectorAll<HTMLElement>(
+		`[id^="${candidateBaseId}"]`,
 	);
+
+	if (candidateElements.length === 0) {
+		candidateBaseId = `${labelledById}-label`;
+		candidateElements = container.querySelectorAll<HTMLElement>(
+			`[id^="${candidateBaseId}"]`,
+		);
+	}
+
+	if (candidateElements.length === 0) {
+		candidateBaseId = labelledById;
+		candidateElements = container.querySelectorAll<HTMLElement>(
+			`[id^="${candidateBaseId}"]`,
+		);
+	}
+
+	const baseIdMatchRegex = new RegExp(`^${candidateBaseId}(\\d*)$`);
+	for (let i = 0; i < candidateElements.length; i++) {
+		const el = candidateElements[i];
+		if (baseIdMatchRegex.test(el.id)) {
+			return el;
+		}
+	}
+
+	return null;
 }
 
 JSDialog.SetupA11yLabelForLabelableElement = function (
