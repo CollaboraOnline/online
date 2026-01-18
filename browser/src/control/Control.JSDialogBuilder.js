@@ -2519,6 +2519,9 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 
 		if (control) {
 			this._setGridStyles(control, data);
+
+			if (data.type)
+				control.setAttribute('widgettype', data.type);
 		}
 
 		// natural tab-order when using keyboard navigation
