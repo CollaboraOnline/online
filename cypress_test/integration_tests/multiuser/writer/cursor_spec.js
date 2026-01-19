@@ -21,8 +21,8 @@ describe(['tagmultiuser'], 'Check cursor and view behavior', function() {
 		cy.cSetActiveFrame('#iframe2');
 		// Wait for the cursor header to appear (shown when cursor moves), then
 		// wait for it to auto-hide.
-		cy.cGet('#canvas-container .html-object-section').should('contain.text', 'LocalUser');
-		cy.cGet('#canvas-container .html-object-section').should('not.contain.text', 'LocalUser');
+		cy.cGet('#canvas-container .cursor-header-section').should('exist');
+		cy.cGet('#canvas-container .cursor-header-section').should('not.exist');
 
 		// When moving the mouse over the view cursor in the second view:
 		cy.getFrameWindow().then((win) => {
@@ -61,11 +61,9 @@ describe(['tagmultiuser'], 'Check cursor and view behavior', function() {
 
 		// Then make sure that the cursor header appears on mouse enter:
 		// Without the accompanying fix in place, this test would have failed with:
-		// Timed out retrying after 10000ms: expected '[
-		// <div.html-object-section.text-selection-handle-start>, 3 more... ]' to contain
-		// text 'LocalUser', but the text was ''
-		cy.cGet('#canvas-container .html-object-section')
-			.should('contain.text', 'LocalUser');
+		// Timed out retrying after 10000ms: Expected to find element: `#canvas-container
+		// .cursor-header-section`, but never found it.
+		cy.cGet('#canvas-container .cursor-header-section').should('exist');
 	});
 
 	it('Do not center the view if cursor is already visible', function() {
