@@ -407,12 +407,12 @@ void CollabSocketHandler::handleFetch(const std::string& stream, const std::stri
         }
         if (url.empty())
         {
-            // Construct WOPI /contents URL
-            url = _wopiSrc;
-            if (url.find('?') == std::string::npos)
-                url += "/contents?access_token=" + _accessToken;
-            else
-                url += "/contents&access_token=" + _accessToken;
+            // Construct WOPI /contents URL; _wopiSrc may already contain
+            // query parameters, so use Poco::URI to modify only the path.
+            Poco::URI contentsUri(_wopiSrc);
+            contentsUri.setPath(contentsUri.getPath() + "/contents");
+            contentsUri.addQueryParameter("access_token", _accessToken);
+            url = contentsUri.toString();
         }
     }
     else if (stream == "userSettings" && _wopiInfo)
