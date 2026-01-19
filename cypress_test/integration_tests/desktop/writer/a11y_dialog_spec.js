@@ -53,7 +53,6 @@ const allWriterDialogs = [
 // these need a specific context
 const missingContextDialogs = [
     '.uno:ContourDialog',
-    '.uno:TransformDialog',
     '.uno:SpellingAndGrammarDialog',
     '.uno:ThesaurusDialog',
 ];
@@ -238,6 +237,21 @@ describe(['tagdesktop'], 'Accessibility Writer Tests', { testIsolation: false },
                 testDialog(command);
             });
         }
+    });
+
+    it.skip('Transform dialog (buggy)', function () {
+        cy.then(() => {
+            win.app.map.sendUnoCommand('.uno:BasicShapes.octagon');
+        });
+
+        cy.cGet('#test-div-shapeHandlesSection').should('exist');
+
+        cy.then(() => {
+            win.app.map.sendUnoCommand('.uno:TransformDialog');
+        });
+        handleDialog(win, 1);
+        // exit shape mode
+        helper.typeIntoDocument('{esc}');
     });
 
     allWriterDialogs.forEach(function (command) {
