@@ -9,6 +9,7 @@ const allCommonDialogs = [
     '.uno:InsertQrCode',
     '.uno:InsertSymbol',
     '.uno:SearchDialog?InitialFocusReplace:bool=true',
+    '.uno:SearchDialog',
     '.uno:SetDocumentProperties',
     '.uno:SpellingAndGrammarDialog',
     '.uno:SplitCell',
@@ -401,7 +402,12 @@ describe(['tagdesktop'], 'Accessibility Writer Tests', { testIsolation: false },
                 } else if (command == '.uno:ContentControlProperties') {
                     cy.cGet('#add-button').click();
                     handleDialog(win, level + 1);
-                }
+                } else if (command == '.uno:SearchDialog') {
+                    cy.cGet('.ui-expander-label').contains('Other options').should('be.visible').click();
+                    cy.cGet('#similarity-input').check();
+                    cy.cGet('#similaritybtn-button').should('be.enabled').click();
+                    handleDialog(win, level + 1);
+		}
 
                 handleTabsInDialog(win, level, command);
                 closeActiveDialog(level);
