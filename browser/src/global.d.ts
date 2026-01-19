@@ -315,6 +315,7 @@ interface Window {
 	userInterfaceMode: string;
 	ThisIsAMobileApp: boolean;
 	ThisIsTheEmscriptenApp: boolean;
+	ThisIsTheQtApp: boolean;
 	wopiSrc: string;
 	zoteroEnabled: boolean;
 	accessToken: string;
@@ -352,6 +353,13 @@ interface Window {
 	getAccessibilityState(): boolean;
 	makeClientVisibleArea(): string;
 	postMobileDebug(msg: string): void;
+	bridge?: {
+		cool(msg: string): any;
+		debug(msg: string): void;
+		error(msg: string): void;
+		gatherAllWindows(): void;
+		getWindowCount(): number;
+	};
 }
 
 // For localization

@@ -710,6 +710,16 @@ window.L.Control.NotebookbarImpress = window.L.Control.NotebookbarWriter.extend(
 				'text': _UNO('.uno:Sidebar'),
 				'command': '.uno:SidebarDeck.PropertyDeck',
 				'accessibility': { focusBack: true, combination: 'SD', de: null }
+			},
+			{ type: 'separator', id: 'view-sidebar-break', orientation: 'vertical' },
+			{
+				'id': 'gatherwindows',
+				'class': 'unogatherwindows',
+				'type': 'bigcustomtoolitem',
+				'text': _('Gather windows'),
+				'command': 'gatherwindows',
+				'icon': 'lc_combine.svg',
+				'accessibility': { focusBack: true, combination: 'GW', de: null }
 			}
 		];
 

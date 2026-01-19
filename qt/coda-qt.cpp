@@ -22,6 +22,7 @@
 #include "qt.hpp"
 #include "DBusService.hpp"
 #include "common/RecentFiles.hpp"
+#include "DetachableTabs.hpp"
 
 #include <Poco/MemoryStream.h>
 #include <Poco/JSON/Parser.h>
@@ -55,6 +56,7 @@
 #include <QMetaObject>
 #include <QMimeData>
 #include <QObject>
+#include <QPointer>
 #include <QPrinterInfo>
 #include <QProcess>
 #include <QPushButton>
@@ -62,6 +64,7 @@
 #include <QSet>
 #include <QStandardPaths>
 #include <QString>
+#include <QTabWidget>
 #include <QThread>
 #include <QTimer>
 #include <QTranslator>
@@ -459,14 +462,25 @@ Bridge::~Bridge() {
     }
 }
 
+void Bridge::clearWebView()
+{
+    _webView = nullptr;
+}
+
 void Bridge::evalJS(const std::string& script)
 {
-    // Ensure execution on GUI thread – queued if needed
-    QMetaObject::invokeMethod(
-        // TODO: fix needless `this` captures...
-        _webView, [this, script]
-        { _webView->page()->runJavaScript(QString::fromStdString(script)); },
-        Qt::QueuedConnection);
+    // Ensure execution on GUI thread – queued if needed. Use a QPointer
+    // snapshot so the lambda can safely detect if the view was deleted
+    // before the queued call runs.
+    QPointer<QWebEngineView> viewPtr = _webView;
+    QMetaObject::invokeMethod(QApplication::instance(), [viewPtr, script]() {
+        if (!viewPtr)
+            return;
+        QWebEnginePage* p = viewPtr->page();
+        if (!p)
+            return;
+        p->runJavaScript(QString::fromStdString(script));
+    }, Qt::QueuedConnection);
 }
 
 void Bridge::send2JS(const std::vector<char>& buffer)
@@ -646,16 +660,17 @@ void Bridge::saveDocumentAs()
 static void closeStarterScreen()
 {
     WebView* starterScreen = WebView::findStarterScreen();
-    if (starterScreen)
-    {
-        LOG_TRC("Closing starter screen after document action");
-        QTimer::singleShot(0, [starterScreen]() {
-            if (starterScreen->getMainWindow())
-            {
-                starterScreen->getMainWindow()->close();
-            }
-        });
-    }
+    if (!starterScreen)
+        return;
+
+    LOG_TRC("Closing starter screen tab after document action");
+    starterScreen->closeTab();
+}
+
+bool Bridge::promptSaveAs()
+{
+    saveDocumentAs();
+    return true;
 }
 
 QVariant Bridge::cool(const QString& messageStr)
@@ -795,6 +810,7 @@ QVariant Bridge::cool(const QString& messageStr)
         }
 
         LOG_TRC_NOFILE("Document modified status changed: " << (_modified ? "modified" : "unmodified"));
+        emit modifiedChanged(_modified);
     }
     else if (message.starts_with(COMMANDRESULT))
     {
@@ -845,7 +861,10 @@ QVariant Bridge::cool(const QString& messageStr)
             else
             {
                 const std::string savePath = Poco::Path(_document._saveLocationURI.getPath()).toString();
-                saveDocument(savePath);
+                if (saveDocument(savePath)) {
+                    _modified = false;
+                    emit modifiedChanged(_modified);
+                }
             }
         }
     }
@@ -865,13 +884,45 @@ QVariant Bridge::cool(const QString& messageStr)
         QTimer::singleShot(0, [this]() {
             if (_webView)
             {
-                QWidget* topLevel = _webView->window();
-                if (topLevel)
+                // If the web view was added to a QTabWidget, remove that tab
+                // instead of closing the entire top-level window.
+                QWidget* parentWidget = _webView->parentWidget();
+                QTabWidget* tabWidget = qobject_cast<QTabWidget*>(parentWidget);
+                if (tabWidget)
                 {
-                    LOG_INF("Closing document window");
-                    topLevel->hide();
-                    topLevel->close();
-                    topLevel->deleteLater();
+                    int index = tabWidget->indexOf(_webView);
+                    if (index != -1)
+                    {
+                        // Try to prompt for save via owning WebView before closing
+                        quint64 ownerPtr = _webView->property("webview_owner").toULongLong();
+                        WebView* owner = reinterpret_cast<WebView*>((quintptr)ownerPtr);
+                        bool okToClose = true;
+                        if (owner)
+                            okToClose = owner->confirmClose();
+                        if (okToClose)
+                        {
+                                // Prepare and deregister bridge before removing
+                                if (owner)
+                                    owner->prepareForClose();
+                                tabWidget->removeTab(index);
+                            }
+                        else
+                        {
+                            return; // user cancelled
+                        }
+                    }
+                    _webView->deleteLater();
+                }
+                else
+                {
+                    QWidget* topLevel = _webView->window();
+                    if (topLevel)
+                    {
+                        LOG_INF("Closing document window");
+                        topLevel->hide();
+                        topLevel->close();
+                        topLevel->deleteLater();
+                    }
                 }
             }
         });
@@ -920,12 +971,15 @@ QVariant Bridge::cool(const QString& messageStr)
         dialog->setFileMode(QFileDialog::ExistingFiles);
         dialog->setAttribute(Qt::WA_DeleteOnClose);
 
+        Window* targetWindow = _owningWebView->mainWindow();
         QObject::connect(dialog, &QFileDialog::filesSelected,
-                         [](const QStringList& filePaths)
+                         [targetWindow](const QStringList& filePaths)
                          {
-                            coda::openFiles(filePaths);
-                             // Close starter screen if it exists
-                             closeStarterScreen();
+                             coda::openFiles(filePaths, targetWindow);
+                             // Close starter screen after dialog finishes processing
+                             QTimer::singleShot(0, []() {
+                                 closeStarterScreen();
+                             });
                          });
 
         dialog->open();
@@ -968,10 +1022,36 @@ QVariant Bridge::cool(const QString& messageStr)
     }
     else if (message == "uno .uno:CloseWin")
     {
-        // Close the main window associated with this web view
-        if (_webView && _webView->window())
+        // Close the tab if present, otherwise close the main window;
+        if (_webView)
         {
-            _webView->window()->close();
+            QWidget* parentWidget = _webView->parentWidget();
+            QTabWidget* tabWidget = qobject_cast<QTabWidget*>(parentWidget);
+            if (tabWidget)
+            {
+                int index = tabWidget->indexOf(_webView);
+                if (index != -1)
+                {
+                    quint64 ownerPtr = _webView->property("webview_owner").toULongLong();
+                    WebView* owner = reinterpret_cast<WebView*>((quintptr)ownerPtr);
+                    bool okToClose = true;
+                    if (owner)
+                        okToClose = owner->confirmClose();
+                    if (okToClose)
+                    {
+                        if (owner)
+                            owner->prepareForClose();
+                        tabWidget->removeTab(index);
+                    }
+                    else
+                        return {};
+                }
+                _webView->deleteLater();
+            }
+            else if (_webView->window())
+            {
+                _webView->window()->close();
+            }
         }
     }
     else if (message == "PRINT")
@@ -1121,6 +1201,23 @@ QVariant Bridge::cool(const QString& messageStr)
         fakeSocketWriteQueue(_document._fakeClientFd, message.c_str(), message.size());
     }
     return {};
+}
+
+void Bridge::gatherAllWindows()
+{
+    if (!_window)
+        return;
+
+    DetachableTabWidget* tabWidget = qobject_cast<DetachableTabWidget*>(_window->centralWidget());
+    if (tabWidget)
+    {
+        tabWidget->mergeAllTabs();
+    }
+}
+
+int Bridge::getWindowCount()
+{
+    return DetachableTabWidget::getWindowCount();
 }
 
 // Disable accessibility
