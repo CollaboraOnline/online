@@ -16,7 +16,7 @@ class CursorHeaderSection extends HTMLObjectSection {
     static duration = 3000;
 
     constructor(viewId: number, username: string, documentPosition: cool.SimplePoint, color: string) {
-        super(CursorHeaderSection.namePrefix + viewId, null, null, documentPosition);
+        super(CursorHeaderSection.namePrefix + viewId, null, null, documentPosition, 'cursor-header-section');
 
         this.sectionProperties.deletionTimeout = null;
         this.sectionProperties.viewId = viewId;
