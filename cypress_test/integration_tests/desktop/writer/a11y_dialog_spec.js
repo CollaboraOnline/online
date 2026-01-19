@@ -445,6 +445,9 @@ describe(['tagdesktop'], 'Accessibility Writer Dialog Tests', { testIsolation: f
                                 } else if (command == '.uno:HyperlinkDialog' && tabAriaControls == '~Document')  {
                                     cy.cGet('#browse-button').click();
                                     handleDialog(win, level + 1);
+                                } else if (command == '.uno:FontDialog' && tabAriaControls == 'font')  {
+                                    cy.cGet('#btnWestFeatures-button').click();
+                                    handleDialog(win, level + 1);
                                 }
                             })
                             .then(() => {
