@@ -500,6 +500,9 @@ describe(['tagdesktop'], 'Accessibility Writer Tests', { testIsolation: false },
                                 } else if (command == '.uno:HyperlinkDialog' && tabAriaControls == '~Document')  {
                                     cy.cGet('#browse-button').click();
                                     handleDialog(win, level + 1);
+                                } else if (command == '.uno:FontDialog' && tabAriaControls == 'font')  {
+                                    cy.cGet('#btnWestFeatures-button').click();
+                                    handleDialog(win, level + 1);
                                 }
                             })
                             .then(() => {
