@@ -164,7 +164,7 @@ describe(['tagdesktop'], 'Accessibility Writer Tests', { testIsolation: false },
             // Inject a span with role="button" instead of native <button>
             const badElement = win.document.createElement('span');
             badElement.setAttribute('role', 'button');
-            badElement.setAttribute('widgettype', 'pushbutton');
+            badElement.setAttribute('id', 'something');
             badElement.textContent = 'Bad Button';
             $dialog.find('.ui-dialog-content')[0].appendChild(badElement);
         });
@@ -174,7 +174,7 @@ describe(['tagdesktop'], 'Accessibility Writer Tests', { testIsolation: false },
         testA11yErrorDetection(function($dialog, win) {
             // Inject an image without alt attribute
             const container = win.document.createElement('div');
-            container.setAttribute('widgettype', 'pushbutton');
+            container.setAttribute('id', 'something');
             const img = win.document.createElement('img');
             img.src = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7';
             // No alt attribute set
@@ -187,7 +187,7 @@ describe(['tagdesktop'], 'Accessibility Writer Tests', { testIsolation: false },
         testA11yErrorDetection(function($dialog, win) {
             // Inject an image with empty alt="" but parent has no label
             const container = win.document.createElement('div');
-            container.setAttribute('widgettype', 'pushbutton');
+            container.setAttribute('id', 'something');
             container.id = 'test-unlabeled-parent';
             // No aria-label, aria-labelledby, or associated label element
             const img = win.document.createElement('img');
@@ -202,7 +202,7 @@ describe(['tagdesktop'], 'Accessibility Writer Tests', { testIsolation: false },
         testA11yErrorDetection(function($dialog, win) {
             // Inject an image with non-empty alt AND parent has aria-label (duplicate)
             const container = win.document.createElement('div');
-            container.setAttribute('widgettype', 'pushbutton');
+            container.setAttribute('id', 'something');
             container.setAttribute('aria-label', 'Parent Label');
             const img = win.document.createElement('img');
             img.src = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7';
