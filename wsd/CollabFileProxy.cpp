@@ -121,7 +121,8 @@ void CollabFileProxy::handleFetchRequest(const std::string& streamUrl,
 
     // Transfer to poll and start download directly (bypassing CheckFileInfo)
     disposition.setTransfer(*poll,
-        [this, &poll, uri](const std::shared_ptr<Socket>& moveSocket)
+        [this, poll, uri, keepalive = shared_from_this()](
+            const std::shared_ptr<Socket>& moveSocket)
         {
             LOG_TRC('#' << moveSocket->getFD()
                         << ": CollabFileProxy: starting direct fetch for ["
@@ -184,7 +185,8 @@ void CollabFileProxy::handleDirectRequest(std::istream& message,
 
     // Transfer to poll and execute
     disposition.setTransfer(*poll,
-        [this, &poll, baseUri, wopiInfo](const std::shared_ptr<Socket>& moveSocket)
+        [this, poll, baseUri, wopiInfo, keepalive = shared_from_this()](
+            const std::shared_ptr<Socket>& moveSocket)
         {
             LOG_TRC('#' << moveSocket->getFD()
                         << ": CollabFileProxy: executing direct request for ["
@@ -319,7 +321,7 @@ void CollabFileProxy::doDownload(const std::shared_ptr<TerminatingPoll>& poll,
     const auto startTime = std::chrono::steady_clock::now();
 
     http::Session::FinishedCallback finishedCallback =
-        [this, &poll, startTime, uriAnonym, redirectLimit](
+        [this, &poll, startTime, uriAnonym, redirectLimit, keepalive = shared_from_this()](
             const std::shared_ptr<http::Session>& session)
     {
         if (SigUtil::getShutdownRequestFlag())
@@ -412,7 +414,7 @@ void CollabFileProxy::doUpload(const std::shared_ptr<TerminatingPoll>& poll,
     const auto startTime = std::chrono::steady_clock::now();
 
     http::Session::FinishedCallback finishedCallback =
-        [this, startTime, uriAnonym, bodySize = body.size()](
+        [this, startTime, uriAnonym, bodySize = body.size(), keepalive = shared_from_this()](
             const std::shared_ptr<http::Session>& session)
     {
         if (SigUtil::getShutdownRequestFlag())
