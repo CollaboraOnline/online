@@ -248,6 +248,21 @@ describe(['tagdesktop'], 'Accessibility Writer Tests', { testIsolation: false },
         helper.typeIntoDocument('{esc}');
     });
 
+    it('Line dialog', function () {
+        cy.then(() => {
+            win.app.map.sendUnoCommand('.uno:Line');
+        });
+
+        cy.cGet('#test-div-shapeHandlesSection').should('exist');
+
+        cy.then(() => {
+            win.app.map.sendUnoCommand('.uno:FormatLine');
+        });
+        handleDialog(win, 1);
+        // exit line mode
+        helper.typeIntoDocument('{esc}');
+    });
+
     allWriterDialogs.forEach(function (command) {
         if (missingContextDialogs.includes(command)) {
             it.skip(`Dialog ${command} (missing context)`, function () {});
