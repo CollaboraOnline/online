@@ -932,10 +932,10 @@ export class CommentSection extends CanvasSectionObject {
 	}
 
 	private scrollCommentIntoView (comment: Comment) {
-		if (CommentSection.importingComments)
+		if (CommentSection.importingComments || !comment)
 			return;
 
-		const rootComment = this.sectionProperties.commentList[this.getRootIndexOf(comment.sectionProperties.data.id)];
+		const rootComment = this.sectionProperties.commentList[this.getRootIndexOf(comment.sectionProperties?.data.id)];
 
 		if (!rootComment.sectionProperties.data.anchorSPoint) {
 			const anchorPos = rootComment.sectionProperties.data.anchorPos;
