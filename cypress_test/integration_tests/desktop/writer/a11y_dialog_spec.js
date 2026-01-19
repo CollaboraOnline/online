@@ -220,6 +220,7 @@ describe(['tagdesktop'], 'Accessibility Writer Tests', { testIsolation: false },
         helper.clearAllText({ isTable: true });
         helper.typeIntoDocument('READONLY');
         helper.selectAllText();
+				cy.wait(500); // be sure text exists before protection call
         cy.then(() => {
             win.app.map.sendUnoCommand('.uno:InsertSection?RegionProtect:bool=true');
         });
