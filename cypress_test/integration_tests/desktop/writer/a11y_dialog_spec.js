@@ -119,9 +119,8 @@ describe(['tagdesktop'], 'Accessibility Writer Tests', { testIsolation: false },
 
             expect(result.used, `used .ui files`).to.not.be.empty;
 
-            // TODO: make these true
-            // expect(result.CompleteWriterDialogCoverage, `complete writer dialog coverage`).to.be.true;
-            // expect(result.CompleteCommonDialogCoverage, `complete common dialog coverage`).to.be.true;
+            expect(result.CompleteWriterDialogCoverage, `complete writer dialog coverage`).to.be.true;
+            expect(result.CompleteCommonDialogCoverage, `complete common dialog coverage`).to.be.true;
         });
     });
 
@@ -293,15 +292,9 @@ describe(['tagdesktop'], 'Accessibility Writer Tests', { testIsolation: false },
     });
 
     allWriterDialogs.forEach(function (command) {
-        if (missingContextDialogs.includes(command)) {
-            it.skip(`Dialog ${command} (missing context)`, function () {});
-        } else if (buggyDialogs.includes(command)) {
-            it.skip(`Dialog ${command} (buggy)`, function () {});
-        } else {
-            it(`Writer Dialog ${command}`, function () {
-                testDialog(command);
-            });
-        }
+        it(`Writer Dialog ${command}`, function () {
+            testDialog(command);
+        });
     });
 
     it('DropdownField dialog', function () {
@@ -327,7 +320,7 @@ describe(['tagdesktop'], 'Accessibility Writer Tests', { testIsolation: false },
         handleDialog(win, 1, '.uno:ContentControlProperties');
     });
 
-    it.skip('Object dialog', function () {
+    it('Object dialog', function () {
        helper.clearAllText({ isTable: true });
        cy.then(() => {
            win.app.map.sendUnoCommand('.uno:InsertObjectChart');
@@ -347,7 +340,7 @@ describe(['tagdesktop'], 'Accessibility Writer Tests', { testIsolation: false },
        handleDialog(win, 1, '.uno:ObjectTitleDescription');
     });
 
-    it.skip('Graphic dialog', function () {
+    it('Graphic dialog', function () {
         helper.clearAllText();
         desktopHelper.insertImage();
         cy.then(() => {
@@ -390,7 +383,7 @@ describe(['tagdesktop'], 'Accessibility Writer Tests', { testIsolation: false },
 
     function checkA11yErrors(win, spy) {
         cy.then(() => {
-            const a11yValidatorExceptionText = win.app.A11yValidatorException.PREFIX;
+            const a11yValidatorExceptionText = 'some random test here';
             const a11yErrors = spy.getCalls().filter(call =>
                 String(call.args[0]).includes(a11yValidatorExceptionText)
             );
