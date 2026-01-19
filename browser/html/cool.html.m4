@@ -261,6 +261,9 @@ m4_ifelse(MOBILEAPP, [true],
         ]
       )
       data-mobile-app-name='MOBILEAPPNAME'
+      data-wopi-host-id = "%WOPI_HOST_ID%"
+      data-vendor = "VENDOR"
+      data-copyright-year = "_YEAR_"
       />
       ],
      [

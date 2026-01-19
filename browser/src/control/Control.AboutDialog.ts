@@ -494,7 +494,7 @@ class AboutDialog {
 		infoDiv.appendChild(lokitVersionContainer);
 
 		const servedBy = AboutDialog.createElement('div', { id: 'served-by' });
-		if (!window.ThisIsAMobileApp) {
+		if (window.ThisIsAMobileApp) {
 			infoDiv.appendChild(servedBy);
 		}
 
@@ -513,12 +513,12 @@ class AboutDialog {
 		infoDiv.appendChild(timeZone);
 
 		const wopiHostId = AboutDialog.createElement('div', { id: 'wopi-host-id' });
-		if (!window.ThisIsAMobileApp) {
+		if (window.ThisIsAMobileApp) {
 			infoDiv.appendChild(wopiHostId);
 		}
 
 		const licenseInformation = AboutDialog.createElement('div', { id: 'license-information' });
-		if (window.ThisIsTheQtApp) {
+		if (window.ThisIsAMobileApp) {
 			infoDiv.appendChild(licenseInformation);
 		}
 
