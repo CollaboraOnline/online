@@ -25,7 +25,7 @@
 
 /// Proxies file download/upload through the /co/collab endpoint.
 /// Takes WOPISrc from URL and access_token from cookie.
-class CollabFileProxy
+class CollabFileProxy: public std::enable_shared_from_this<CollabFileProxy>
 {
 public:
     CollabFileProxy(std::string id, const RequestDetails& requestDetails,
