@@ -126,6 +126,9 @@ describe(['tagdesktop'], 'Accessibility Writer Tests', { testIsolation: false },
         });
         cy.cGet('.jsdialog-window:not(.ui-overflow-group-popup)').should('not.exist');
         desktopHelper.undoAll();
+        cy.cGet('div.clipboard').as('clipboard');
+        // double click on field at initial cursor position
+        ceHelper.moveCaret('home', 'ctrl');
     });
 
     // Helper to test that a11y validation detects injected errors
@@ -225,9 +228,6 @@ describe(['tagdesktop'], 'Accessibility Writer Tests', { testIsolation: false },
     });
 
     it('DropdownField dialog', function () {
-        cy.cGet('div.clipboard').as('clipboard');
-        // double click on field at initial cursor position
-        ceHelper.moveCaret('home', 'ctrl');
         helper.getBlinkingCursorPosition('P');
         helper.clickAt('P');
         handleDialog(win, 1);
