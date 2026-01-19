@@ -82,7 +82,6 @@ class TreeViewControl {
 	readonly PAGE_ENTRY_PREFIX = '-$#~';
 	readonly PAGE_ENTRY_SUFFIX = '~#$-';
 	readonly PAGE_DIVIDER_ROW_CLASS = 'page-divider-row';
-	_ignoreFocus: boolean = false;
 
 	constructor(data: TreeWidgetJSON, builder: JSBuilder) {
 		this._container = window.L.DomUtil.create(
@@ -96,7 +95,6 @@ class TreeViewControl {
 			data,
 			builder,
 		);
-		if (data.ignoreFocus !== undefined) this._ignoreFocus = data.ignoreFocus;
 	}
 
 	get Container() {
@@ -460,7 +458,7 @@ class TreeViewControl {
 		if (level !== undefined && this._isRealTree)
 			tr.setAttribute('aria-level', '' + level);
 
-		if (entry.selected === true) this.selectEntry(tr, selectionElement);
+		if (entry.selected === true) this.selectEntry(tr, selectionElement, false);
 
 		const disabled = entry.enabled === false;
 		if (disabled) window.L.DomUtil.addClass(tr, 'disabled');
@@ -963,16 +961,20 @@ class TreeViewControl {
 		$(span).toggleClass('collapsed');
 	}
 
-	selectEntry(span: HTMLElement, checkbox: HTMLInputElement) {
+	selectEntry(
+		span: HTMLElement,
+		checkbox: HTMLInputElement,
+		shouldFocus: boolean = false,
+	) {
 		window.L.DomUtil.addClass(span, 'selected');
 		span.setAttribute('aria-selected', 'true');
 		span.tabIndex = 0;
-		if (!this._ignoreFocus) span.focus();
+		if (shouldFocus) span.focus();
 
 		if (checkbox) checkbox.removeAttribute('tabindex');
 	}
 
-	selectEntryByRow(row: number) {
+	selectEntryByRow(row: number, shouldFocus: boolean = false) {
 		const rowElement = this._rows.get(String(row));
 		if (!rowElement) {
 			console.warn('TreeView onSelect: row "' + row + '" not found');
@@ -988,7 +990,7 @@ class TreeViewControl {
 
 		// Select the target row
 		const checkbox = rowElement.querySelector('input') as HTMLInputElement;
-		this.selectEntry(rowElement, checkbox);
+		this.selectEntry(rowElement, checkbox, shouldFocus);
 	}
 
 	unselectEntry(item: HTMLElement) {
@@ -1022,7 +1024,7 @@ class TreeViewControl {
 					this.unselectEntry(item);
 				});
 
-			this.selectEntry(parentContainer, checkbox);
+			this.selectEntry(parentContainer, checkbox, true);
 			if (checkbox && (!e || e.target === checkbox))
 				this.changeCheckboxStateOnClick(checkbox, treeViewData, builder, entry);
 
@@ -1750,7 +1752,7 @@ class TreeViewControl {
 
 		this._tbody = this._container;
 		(this._container as any).onSelect = (position: number) => {
-			this.selectEntryByRow(position);
+			this.selectEntryByRow(position, false);
 		};
 		(this._container as any).filterEntries = this.filterEntries.bind(this);
 		(this._container as any).highlightEntries =
