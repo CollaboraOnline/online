@@ -14,7 +14,7 @@ import WebKit
 /**
  * Presents a WKWebView-based “New…” dialog and forwards the user’s choice back to the controller.
  */
-final class BackstageViewController: NSViewController, WKScriptMessageHandler {
+final class BackstageViewController: NSViewController, WKScriptMessageHandlerWithReply {
 
     /** Callback to be invoked when the Backstage window should be closed. */
     var onClose: (() -> Void)?
@@ -33,8 +33,12 @@ final class BackstageViewController: NSViewController, WKScriptMessageHandler {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        // Setup jsHandler as the entry point to call back from JavaScript
+        let contentController = WKUserContentController()
+        contentController.addScriptMessageHandler(self, contentWorld: .page, name: "lok")
+
         let cfg = WKWebViewConfiguration()
-        cfg.userContentController.add(self, name: "lok")
+        cfg.userContentController = contentController
 
         webView = WKWebView(frame: .zero, configuration: cfg)
         webView.translatesAutoresizingMaskIntoConstraints = false
@@ -73,13 +77,15 @@ final class BackstageViewController: NSViewController, WKScriptMessageHandler {
     /**
      * Receives “lok” messages from cool.html buttons and handles them.
      */
-    func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
-        guard message.name == "lok", let body = message.body as? String else { return }
+    func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) async -> (Any?, String?) {
+        guard message.name == "lok", let body = message.body as? String else { return (nil, nil) }
 
-        // Handle, and potentially close
-        if ViewController.handleBackstageMessage(body) {
-            onClose?()
+        // Handle, and potentially close the window with the Backstage
+        if let result = ViewController.handleBackstageMessage(body, onClose: { self.onClose?() }) {
+            return result
         }
+
+        return (nil, nil)
     }
 
     /**

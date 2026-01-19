@@ -65,7 +65,7 @@ class ViewController: NSViewController, WKScriptMessageHandlerWithReply, WKNavig
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Setup jsHandler as the entry point co call back from JavaScript
+        // Setup jsHandler as the entry point to call back from JavaScript
         let contentController = WKUserContentController()
         contentController.addScriptMessageHandler(self, contentWorld: .page, name: "debug")
         contentController.addScriptMessageHandler(self, contentWorld: .page, name: "lok")
@@ -375,8 +375,8 @@ class ViewController: NSViewController, WKScriptMessageHandlerWithReply, WKNavig
                     }
                     return (nil, nil)
                 }
-                else if ViewController.handleBackstageMessage(body) {
-                    return (nil, nil)
+                else if let result = ViewController.handleBackstageMessage(body) {
+                    return result
                 }
                 else {
                     // Just send the message
@@ -398,9 +398,17 @@ class ViewController: NSViewController, WKScriptMessageHandlerWithReply, WKNavig
 
     /**
      * Functionality shared by the "normal" backstage (that opens when the user chooses "File" in the notebookbar) and the "startup" backstage (that has the templates etc.).
+     *
+     * @param body: The message (command) that we want to handle
+     * @param onClose: In case this is called from backstage that is a separate window & should close the backstage itself, this is what will be called to do that.
+     *
+     * The return value is either nil (means the message was not handled), or pair that would be returned from the handler.
      */
-    static func handleBackstageMessage(_ body: String) -> Bool {
-        if body.hasPrefix("newdoc ") {
+    static func handleBackstageMessage(_ body: String, onClose: (() -> Void)? = nil) -> (Any?, String?)? {
+        if body == "GETRECENTDOCS" {
+            return (RecentFiles.serialize(), nil)
+        }
+        else if body.hasPrefix("newdoc ") {
             let messageBodyItems = body.components(separatedBy: " ")
             var type: String?
             var templatePath: String?
@@ -423,15 +431,18 @@ class ViewController: NSViewController, WKScriptMessageHandlerWithReply, WKNavig
                 (NSDocumentController.shared as? DocumentController)?.createDocument(fromTemplateFor: kind, templatePath: templatePath)
             }
 
-            return true
+            onClose?()
+            return (nil, nil)
         }
         else if body == "uno .uno:Open" {
             // FIXME A real message would be preferred over intercepting a uno command; but this is what the backstage currently uses
             (NSDocumentController.shared as? DocumentController)?.focusOrPresentOpenPanel()
-            return true
+
+            onClose?()
+            return (nil, nil)
         }
 
-        return false
+        return nil // not handled
     }
 
     func exchangeMonitors() {

@@ -507,10 +507,10 @@ class MacOSAppInitializer extends MobileAppInitializer {
 		super();
 
 		window.ThisIsTheMacOSApp = true;
-		window.postMobileMessage = function(msg) { window.webkit.messageHandlers.lok.postMessage(msg); };
+		window.postMobileMessage = function(msg) { return window.webkit.messageHandlers.lok.postMessage(msg); };
 		window.postMobileCall    = window.postMobileMessage;
-		window.postMobileError   = function(msg) { window.webkit.messageHandlers.error.postMessage(msg); };
-		window.postMobileDebug   = function(msg) { window.webkit.messageHandlers.debug.postMessage(msg); };
+		window.postMobileError   = function(msg) { return window.webkit.messageHandlers.error.postMessage(msg); };
+		window.postMobileDebug   = function(msg) { return window.webkit.messageHandlers.debug.postMessage(msg); };
 
 		window.userInterfaceMode = window.coolParams.get('userinterfacemode');
 	}
