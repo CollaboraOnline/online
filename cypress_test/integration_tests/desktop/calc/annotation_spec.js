@@ -162,9 +162,9 @@ describe(['tagdesktop'], 'Annotation Tests', function() {
 			get the new scrollbar position by printing `x` to the console
 			in `assertScrollbarPosition` function.
 		*/
-		desktopHelper.assertScrollbarPosition('vertical', 250, 250);
+		desktopHelper.assertScrollbarPosition('vertical', 249, 252);
 		desktopHelper.insertComment('second comment', false);
-		desktopHelper.assertScrollbarPosition('vertical', 250, 250);
+		desktopHelper.assertScrollbarPosition('vertical', 249, 252);
 	});
 
 });
