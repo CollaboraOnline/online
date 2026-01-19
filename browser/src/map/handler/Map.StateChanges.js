@@ -3,7 +3,7 @@
  * window.L.Map.StateChanges stores the state changes commands coming from core
  * LOK_CALLBACK_STATE_CHANGED callback
  */
-/* global $ app cool */
+/* global $ app cool _ */
 /*eslint no-extend-native:0*/
 window.L.Map.mergeOptions({
 	stateChangeHandler: true
@@ -127,7 +127,7 @@ window.L.Map.StateChangeHandler = window.L.Handler.extend({
 		if (commandName == '.uno:ReshufflePagePopup') {
 			if (!app.map.isReadOnlyMode())
 			{
-				app.map.uiManager.showSnackbar('Apply this order to your presentation?', 'Update Slides', function () {
+				app.map.uiManager.showSnackbar(_('Apply this order to your presentation?'), _('Update Slides'), function () {
 					app.map.sendUnoCommand('.uno:ReshufflePages');
 				});
 			}
