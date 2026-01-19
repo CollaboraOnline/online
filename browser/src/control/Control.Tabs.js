@@ -213,6 +213,7 @@ window.L.Control.Tabs = window.L.Control.extend({
 					var tab = window.L.DomUtil.create('button', 'spreadsheet-tab', ssTabScroll);
 					var label = window.L.DomUtil.create('div', '', tab);
 					window.L.DomUtil.create('div', 'lock', tab);
+					window.L.DomUtil.create('div', 'view-indicator', tab);
 					if (window.mode.isMobile() || window.mode.isTablet()) {
 						(new Hammer(tab, {recognizers: [[Hammer.Press]]}))
 							.on('press', function (j) {

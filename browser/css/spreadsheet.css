@@ -56,6 +56,11 @@
 	border: 1px solid var(--color-border-dark);
 }
 
+.spreadsheet-tab.spreadsheet-tab > div:nth-child(2) {
+	/* Create space between label and anything that comes next */
+	margin-inline-start: 4px;
+}
+
 .spreadsheet-tab.spreadsheet-tab-protected > .lock, .spreadsheet-tab.spreadsheet-tab-protected:hover > .lock {
 	width: 16px;
 	height: 16px;
@@ -63,19 +68,18 @@
 	background-repeat: no-repeat !important;
 }
 
-.spreadsheet-tab.spreadsheet-tab-sheetview > .lock, .spreadsheet-tab.spreadsheet-tab-sheetview:hover > .lock {
-	margin-inline-start: 4px;
+.spreadsheet-tab.spreadsheet-tab-sheetview > .view-indicator, .spreadsheet-tab.spreadsheet-tab-sheetview:hover > .view-indicator {
 	width: 16px;
 	height: 16px;
 	background-image: url('images/sheetview.svg') !important;
 	background-repeat: no-repeat !important;
 }
 
-.spreadsheet-tab.spreadsheet-tab-sheetview:hover > .lock {
+.spreadsheet-tab.spreadsheet-tab-sheetview:hover > .view-indicator {
 	filter: invert(1) brightness(2);
 }
 
-.spreadsheet-tab.spreadsheet-tab-sheetview-unsynced > .lock, .spreadsheet-tab.spreadsheet-tab-sheetview-unsynced:hover > .lock {
+.spreadsheet-tab.spreadsheet-tab-sheetview-unsynced > .view-indicator, .spreadsheet-tab.spreadsheet-tab-sheetview-unsynced:hover > .view-indicator {
 	width: 16px;
 	height: 16px;
 	background-image: url('images/sheetview_unsynced.svg') !important;
