@@ -269,6 +269,29 @@ describe(['tagdesktop'], 'Accessibility Writer Tests', { testIsolation: false },
         helper.typeIntoDocument('{esc}');
     });
 
+    it('PasteSpecial Dialog', function () {
+        // Select some text
+        helper.selectAllText();
+
+        cy.getFrameWindow().then(win => {
+                const selectionStart = win.TextSelections.getStartRectangle();
+                cy.cGet('#document-container').rightclick(selectionStart.pX1, selectionStart.pY1);
+        });
+
+        helper.setDummyClipboardForCopy();
+
+        cy.cGet('body').contains('.context-menu-link', 'Copy')
+                .click();
+
+        cy.then(() => {
+            return helper.processToIdle(win);
+        })
+        .then(() => {
+            win.app.map.sendUnoCommand('.uno:PasteSpecial');
+        })
+        handleDialog(win, 1);
+    });
+
     allWriterDialogs.forEach(function (command) {
         if (missingContextDialogs.includes(command)) {
             it.skip(`Dialog ${command} (missing context)`, function () {});
