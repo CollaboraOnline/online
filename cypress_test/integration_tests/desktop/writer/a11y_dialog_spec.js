@@ -393,7 +393,8 @@ describe(['tagdesktop'], 'Accessibility Writer Tests', { testIsolation: false },
             .then(() => {
                 // Open 'options' subdialogs
                 if (command == '.uno:EditRegion' ||
-                    command == '.uno:InsertCaptionDialog') {
+                    command == '.uno:InsertCaptionDialog' ||
+                    command == '.uno:SpellingAndGrammarDialog') {
                     cy.cGet('#options-button').click();
                     handleDialog(win, level + 1);
                 } else if (command == '.uno:InsertIndexesEntry') {
