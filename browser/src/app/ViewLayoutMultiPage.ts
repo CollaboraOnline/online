@@ -313,6 +313,8 @@ class ViewLayoutMultiPage extends ViewLayoutBase {
 		}
 
 		if (pY !== 0 && this.canScrollVertical(documentAnchor)) {
+			pY /= 10;
+
 			const max =
 				this.scrollProperties.verticalScrollLength -
 				this.scrollProperties.verticalScrollSize;
