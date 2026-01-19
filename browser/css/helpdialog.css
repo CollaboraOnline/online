@@ -39,8 +39,8 @@
 	}
 
 	/* Style for toc-h2 and toc-h3 */
-	.toc-h2 button,
-	.toc-h3 button {
+	.toc-h2 a,
+	.toc-h3 a {
 		border-radius: 5px;
 		/* Add rounded corners */
 		transition: background-color 0.3s ease;
@@ -53,22 +53,22 @@
 	}
 
 	/* Hover effect for toc-h2 and toc-h3 button */
-	.toc-h2 button:hover,
-	.toc-h3 button:hover {
+	.toc-h2 a:hover,
+	.toc-h3 a:hover {
 		background-color: #e0e0e0;
 		/* Darker gray background on hover */
 	}
 
 	/* Style for toc-h2 and toc-h3 button text when clicked */
-	.toc-h2 button:active,
-	.toc-h3 button:active {
+	.toc-h2 a:active,
+	.toc-h3 a:active {
 		color: #555;
 		/* Darker text color when clicked */
 	}
 
 	/* Style for toc-h2 and toc-h3 button text when focused */
-	.toc-h2 button:focus,
-	.toc-h3 button:focus {
+	.toc-h2 a:focus,
+	.toc-h3 a:focus {
 		outline: none;
 		/* Remove outline when focused */
 	}
@@ -111,11 +111,11 @@
 		line-height: 1.5em;
 	}
 
-	button:active {
+	a:active {
 		color: -webkit-activelink;
 	}
 
-	button:focus {
+	a:focus {
 		outline: -webkit-focus-ring-color auto 1px;
 	}
 
