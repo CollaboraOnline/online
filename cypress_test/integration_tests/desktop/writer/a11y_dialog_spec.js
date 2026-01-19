@@ -5,8 +5,16 @@ var ceHelper = require('../../common/contenteditable_helper');
 var desktopHelper = require('../../common/desktop_helper');
 
 const allCommonDialogs = [
+    '.uno:HyperlinkDialog',
+    '.uno:InsertQrCode',
+    '.uno:InsertSymbol',
+    '.uno:SearchDialog?InitialFocusReplace:bool=true',
     '.uno:SetDocumentProperties',
-    '.uno:StyleNewByExample'
+    '.uno:SpellingAndGrammarDialog',
+    '.uno:SplitCell',
+    '.uno:StyleNewByExample',
+    '.uno:ThesaurusDialog',
+    '.uno:WidgetTestDialog'
 ];
 
 const allWriterDialogs = [
@@ -31,8 +39,6 @@ const allWriterDialogs = [
     '.uno:PageDialog',
     '.uno:PageNumberWizard',
     '.uno:ParagraphDialog',
-    '.uno:SearchDialog?InitialFocusReplace:bool=true',
-    '.uno:SpellingAndGrammarDialog',
     '.uno:SplitTable',
     '.uno:TableDialog',
     '.uno:TableNumberFormatDialog',
@@ -54,6 +60,7 @@ const missingContextDialogs = [
 
 // don't pass yet
 const buggyDialogs = [
+    '.uno:HyperlinkDialog',
     '.uno:InsertFrame',
     '.uno:OutlineBullet',
 ];
@@ -222,9 +229,15 @@ describe(['tagdesktop'], 'Accessibility Writer Tests', { testIsolation: false },
     });
 
     allCommonDialogs.forEach(function (command) {
-        it(`Common Dialog ${command}`, function () {
-            testDialog(command);
-        });
+        if (missingContextDialogs.includes(command)) {
+            it.skip(`Dialog ${command} (missing context)`, function () {});
+        } else if (buggyDialogs.includes(command)) {
+            it.skip(`Dialog ${command} (buggy)`, function () {});
+        } else {
+            it(`Common Dialog ${command}`, function () {
+                testDialog(command);
+            });
+        }
     });
 
     allWriterDialogs.forEach(function (command) {
@@ -449,6 +462,9 @@ describe(['tagdesktop'], 'Accessibility Writer Tests', { testIsolation: false },
                                     handleDialog(win, level + 1);
                                     cy.cGet('#protect-input').uncheck();
                                     cy.cGet('#selectpassword-button').should('be.disabled');
+                                } else if (command == '.uno:HyperlinkDialog' && tabAriaControls == '~Document')  {
+                                    cy.cGet('#browse-button').click();
+                                    handleDialog(win, level + 1);
                                 }
                             })
                             .then(() => {
