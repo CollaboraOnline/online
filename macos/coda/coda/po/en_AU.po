@@ -1,0 +1,547 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-12-06 18:17+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: none\n"
+"Language: en_AU\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+
+msgctxt "1UK-8n-QPP.title"
+msgid "Customize Toolbar…"
+msgstr ""
+
+#. Do not change the placeholder ProductName!
+msgctxt "1Xt-HY-uBw.title"
+msgid "ProductName"
+msgstr ""
+
+msgctxt "1b7-l0-nxx.title"
+msgid "Find"
+msgstr ""
+
+msgctxt "1tx-W0-xDw.title"
+msgid "Lower"
+msgstr ""
+
+msgctxt "2h7-ER-AoG.title"
+msgid "Raise"
+msgstr ""
+
+msgctxt "2oI-Rn-ZJC.title"
+msgid "Transformations"
+msgstr ""
+
+msgctxt "3IN-sU-3Bg.title"
+msgid "Spelling"
+msgstr ""
+
+msgctxt "3Om-Ey-2VK.title"
+msgid "Use Default"
+msgstr ""
+
+msgctxt "3rS-ZA-NoH.title"
+msgid "Speech"
+msgstr ""
+
+msgctxt "46P-cB-AYj.title"
+msgid "Tighten"
+msgstr ""
+
+msgctxt "4EN-yA-p0u.title"
+msgid "Find"
+msgstr ""
+
+msgctxt "4J7-dP-txa.title"
+msgid "Enter Full Screen"
+msgstr ""
+
+#. Do not change the placeholder ProductName!
+msgctxt "4sb-4s-VLi.title"
+msgid "Quit ProductName"
+msgstr ""
+
+msgctxt "5QF-Oa-p0T.title"
+msgid "Edit"
+msgstr ""
+
+msgctxt "5Vv-lz-BsD.title"
+msgid "Copy Style"
+msgstr ""
+
+#. Do not change the placeholder ProductName!
+msgctxt "5kV-Vb-QxS.title"
+msgid "About ProductName"
+msgstr ""
+
+msgctxt "6dh-zS-Vam.title"
+msgid "Redo"
+msgstr ""
+
+msgctxt "78Y-hA-62v.title"
+msgid "Correct Spelling Automatically"
+msgstr ""
+
+msgctxt "8mr-sm-Yjd.title"
+msgid "Writing Direction"
+msgstr ""
+
+msgctxt "9ic-FL-obx.title"
+msgid "Substitutions"
+msgstr ""
+
+msgctxt "9yt-4B-nSM.title"
+msgid "Smart Copy/Paste"
+msgstr ""
+
+msgctxt "AYu-sK-qS6.title"
+msgid "Main Menu"
+msgstr ""
+
+msgctxt "BOF-NM-1cW.title"
+msgid "Preferences…"
+msgstr ""
+
+msgctxt "BgM-ve-c93.title"
+msgid "	Left to Right"
+msgstr ""
+
+msgctxt "Bw7-FT-i3A.title"
+msgid "Save As…"
+msgstr ""
+
+msgctxt "DVo-aG-piG.title"
+msgid "Close"
+msgstr ""
+
+msgctxt "Dv1-io-Yv7.title"
+msgid "Spelling and Grammar"
+msgstr ""
+
+msgctxt "F2S-fz-NVQ.title"
+msgid "Help"
+msgstr ""
+
+#. Do not change the placeholder ProductName!
+msgctxt "FKE-Sm-Kum.title"
+msgid "ProductName Help"
+msgstr ""
+
+msgctxt "Fal-I4-PZk.title"
+msgid "Text"
+msgstr ""
+
+msgctxt "FeM-D8-WVr.title"
+msgid "Substitutions"
+msgstr ""
+
+msgctxt "GB9-OM-e27.title"
+msgid "Bold"
+msgstr ""
+
+msgctxt "GEO-Iw-cKr.title"
+msgid "Format"
+msgstr ""
+
+msgctxt "GUa-eO-cwY.title"
+msgid "Use Default"
+msgstr ""
+
+msgctxt "Gi5-1S-RQB.title"
+msgid "Font"
+msgstr ""
+
+msgctxt "H1b-Si-o9J.title"
+msgid "Writing Direction"
+msgstr ""
+
+msgctxt "H8h-7b-M4v.title"
+msgid "View"
+msgstr ""
+
+msgctxt "HFQ-gK-NFA.title"
+msgid "Text Replacement"
+msgstr ""
+
+msgctxt "HFo-cy-zxI.title"
+msgid "Show Spelling and Grammar"
+msgstr ""
+
+msgctxt "HyV-fh-RgO.title"
+msgid "View"
+msgstr ""
+
+msgctxt "I0S-gh-46l.title"
+msgid "Subscript"
+msgstr ""
+
+msgctxt "IAo-SY-fd9.title"
+msgid "Open…"
+msgstr ""
+
+msgctxt "J5U-5w-g23.title"
+msgid "Justify"
+msgstr ""
+
+msgctxt "J7y-lM-qPV.title"
+msgid "Use None"
+msgstr ""
+
+msgctxt "KaW-ft-85H.title"
+msgid "Revert to Saved"
+msgstr ""
+
+msgctxt "Kd2-mp-pUS.title"
+msgid "Show All"
+msgstr ""
+
+msgctxt "LE2-aR-0XJ.title"
+msgid "Bring All to Front"
+msgstr ""
+
+msgctxt "LVM-kO-fVI.title"
+msgid "Paste Ruler"
+msgstr ""
+
+msgctxt "Lbh-J2-qVU.title"
+msgid "	Left to Right"
+msgstr ""
+
+msgctxt "MkV-Pr-PK5.title"
+msgid "Copy Ruler"
+msgstr ""
+
+msgctxt "NMo-om-nkz.title"
+msgid "Services"
+msgstr ""
+
+msgctxt "Nop-cj-93Q.title"
+msgid "	Default"
+msgstr ""
+
+msgctxt "OY7-WF-poV.title"
+msgid "Minimize"
+msgstr ""
+
+msgctxt "OaQ-X3-Vso.title"
+msgid "Baseline"
+msgstr ""
+
+#. Do not change the placeholder ProductName!
+msgctxt "Olw-nP-bQN.title"
+msgid "Hide ProductName"
+msgstr ""
+
+msgctxt "OwM-mh-QMV.title"
+msgid "Find Previous"
+msgstr ""
+
+msgctxt "Oyz-dy-DGm.title"
+msgid "Stop Speaking"
+msgstr ""
+
+msgctxt "Ptp-SP-VEL.title"
+msgid "Bigger"
+msgstr ""
+
+msgctxt "Q5e-8K-NDq.title"
+msgid "Show Fonts"
+msgstr ""
+
+msgctxt "R4o-n2-Eq4.title"
+msgid "Zoom"
+msgstr ""
+
+msgctxt "RB4-Sm-HuC.title"
+msgid "	Right to Left"
+msgstr ""
+
+msgctxt "Rqc-34-cIF.title"
+msgid "Superscript"
+msgstr ""
+
+msgctxt "Ruw-6m-B2m.title"
+msgid "Select All"
+msgstr ""
+
+msgctxt "S0p-oC-mLd.title"
+msgid "Jump to Selection"
+msgstr ""
+
+msgctxt "Td7-aD-5lo.title"
+msgid "Window"
+msgstr ""
+
+msgctxt "UEZ-Bs-lqG.title"
+msgid "Capitalize"
+msgstr ""
+
+msgctxt "VIY-Ag-zcb.title"
+msgid "Center"
+msgstr ""
+
+msgctxt "Vdr-fp-XzO.title"
+msgid "Hide Others"
+msgstr ""
+
+msgctxt "Vjx-xi-njq.title"
+msgid "Italic"
+msgstr ""
+
+msgctxt "W48-6f-4Dl.title"
+msgid "Edit"
+msgstr ""
+
+msgctxt "WRG-CD-K1S.title"
+msgid "Underline"
+msgstr ""
+
+msgctxt "Was-JA-tGl.title"
+msgid "New"
+msgstr ""
+
+msgctxt "WeT-3V-zwk.title"
+msgid "Paste and Match Style"
+msgstr ""
+
+msgctxt "Xz5-n4-O0W.title"
+msgid "Find…"
+msgstr ""
+
+msgctxt "YEy-JH-Tfz.title"
+msgid "Find and Replace…"
+msgstr ""
+
+msgctxt "YGs-j5-SAR.title"
+msgid "	Default"
+msgstr ""
+
+msgctxt "Ynk-f8-cLZ.title"
+msgid "Start Speaking"
+msgstr ""
+
+msgctxt "ZM1-6Q-yy1.title"
+msgid "Align Left"
+msgstr ""
+
+msgctxt "ZvO-Gk-QUH.title"
+msgid "Paragraph"
+msgstr ""
+
+msgctxt "aTl-1u-JFS.title"
+msgid "Print…"
+msgstr ""
+
+msgctxt "aUF-d1-5bR.title"
+msgid "Window"
+msgstr ""
+
+msgctxt "aXa-aM-Jaq.title"
+msgid "Font"
+msgstr ""
+
+msgctxt "agt-UL-0e3.title"
+msgid "Use Default"
+msgstr ""
+
+msgctxt "bgn-CT-cEk.title"
+msgid "Show Colors"
+msgstr ""
+
+msgctxt "bib-Uj-vzu.title"
+msgid "File"
+msgstr ""
+
+msgctxt "buJ-ug-pKt.title"
+msgid "Use Selection for Find"
+msgstr ""
+
+msgctxt "c8a-y6-VQd.title"
+msgid "Transformations"
+msgstr ""
+
+msgctxt "cDB-IK-hbR.title"
+msgid "Use None"
+msgstr ""
+
+msgctxt "cqv-fj-IhA.title"
+msgid "Selection"
+msgstr ""
+
+msgctxt "cwL-P1-jid.title"
+msgid "Smart Links"
+msgstr ""
+
+msgctxt "d9M-CD-aMd.title"
+msgid "Make Lower Case"
+msgstr ""
+
+msgctxt "d9c-me-L2H.title"
+msgid "Text"
+msgstr ""
+
+msgctxt "dMs-cI-mzQ.title"
+msgid "File"
+msgstr ""
+
+msgctxt "dRJ-4n-Yzg.title"
+msgid "Undo"
+msgstr ""
+
+msgctxt "gVA-U4-sdL.title"
+msgid "Paste"
+msgstr ""
+
+msgctxt "hQb-2v-fYv.title"
+msgid "Smart Quotes"
+msgstr ""
+
+msgctxt "hz2-CU-CR7.title"
+msgid "Check Document Now"
+msgstr ""
+
+msgctxt "hz9-B4-Xy5.title"
+msgid "Services"
+msgstr ""
+
+msgctxt "i1d-Er-qST.title"
+msgid "Smaller"
+msgstr ""
+
+msgctxt "ijk-EB-dga.title"
+msgid "Baseline"
+msgstr ""
+
+msgctxt "jBQ-r6-VK2.title"
+msgid "Kern"
+msgstr ""
+
+msgctxt "jFq-tB-4Kx.title"
+msgid "	Right to Left"
+msgstr ""
+
+msgctxt "jxT-CU-nIS.title"
+msgid "Format"
+msgstr ""
+
+msgctxt "kIP-vf-haE.title"
+msgid "Show Sidebar"
+msgstr ""
+
+msgctxt "mK6-2p-4JG.title"
+msgid "Check Grammar With Spelling"
+msgstr ""
+
+msgctxt "o6e-r0-MWq.title"
+msgid "Ligatures"
+msgstr ""
+
+msgctxt "oas-Oc-fiZ.title"
+msgid "Open Recent"
+msgstr ""
+
+msgctxt "ogc-rX-tC1.title"
+msgid "Loosen"
+msgstr ""
+
+msgctxt "pa3-QI-u2k.title"
+msgid "Delete"
+msgstr ""
+
+msgctxt "pxx-59-PXV.title"
+msgid "Save…"
+msgstr ""
+
+msgctxt "q09-fT-Sye.title"
+msgid "Find Next"
+msgstr ""
+
+msgctxt "qIS-W8-SiK.title"
+msgid "Page Setup…"
+msgstr ""
+
+msgctxt "rbD-Rh-wIN.title"
+msgid "Check Spelling While Typing"
+msgstr ""
+
+msgctxt "rgM-f4-ycn.title"
+msgid "Smart Dashes"
+msgstr ""
+
+msgctxt "snW-S8-Cw5.title"
+msgid "Show Toolbar"
+msgstr ""
+
+msgctxt "tRr-pd-1PS.title"
+msgid "Data Detectors"
+msgstr ""
+
+msgctxt "tXI-mr-wws.title"
+msgid "Open Recent"
+msgstr ""
+
+msgctxt "tlD-Oa-oAM.title"
+msgid "Kern"
+msgstr ""
+
+#. Do not change the placeholder ProductName!
+msgctxt "uQy-DD-JDr.title"
+msgid "ProductName"
+msgstr ""
+
+msgctxt "uRl-iY-unG.title"
+msgid "Cut"
+msgstr ""
+
+msgctxt "vFu-3Y-2xa.title"
+msgid "Window"
+msgstr ""
+
+msgctxt "vKC-jM-MkH.title"
+msgid "Paste Style"
+msgstr ""
+
+msgctxt "vLm-3I-IUL.title"
+msgid "Show Ruler"
+msgstr ""
+
+msgctxt "vNY-rz-j42.title"
+msgid "Clear Menu"
+msgstr ""
+
+msgctxt "vmV-6d-7jI.title"
+msgid "Make Upper Case"
+msgstr ""
+
+msgctxt "w0m-vy-SC9.title"
+msgid "Ligatures"
+msgstr ""
+
+msgctxt "wb2-vD-lq4.title"
+msgid "Align Right"
+msgstr ""
+
+msgctxt "wpr-3q-Mcd.title"
+msgid "Help"
+msgstr ""
+
+msgctxt "x3v-GG-iWU.title"
+msgid "Copy"
+msgstr ""
+
+msgctxt "xQD-1f-W4t.title"
+msgid "Use All"
+msgstr ""
+
+msgctxt "xrE-MZ-jX0.title"
+msgid "Speech"
+msgstr ""
+
+msgctxt "z6F-FW-3nz.title"
+msgid "Show Substitutions"
+msgstr ""
