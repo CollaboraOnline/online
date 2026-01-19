@@ -409,10 +409,12 @@ void CollabSocketHandler::handleFetch(const std::string& stream, const std::stri
         {
             // Construct WOPI /contents URL
             url = _wopiSrc;
-            if (url.find('?') == std::string::npos)
+            auto const n = url.find('?');
+            if (n == std::string::npos)
                 url += "/contents?access_token=" + _accessToken;
             else
-                url += "/contents&access_token=" + _accessToken;
+                url = url.substr(0, n) + "/contents" + url.substr(n)
+                    + "&access_token=" + _accessToken;
         }
     }
     else if (stream == "userSettings" && _wopiInfo)
