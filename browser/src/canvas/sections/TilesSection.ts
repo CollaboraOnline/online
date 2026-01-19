@@ -41,6 +41,14 @@ export class TilesSection extends CanvasSectionObject {
 		this.sectionProperties.pageBackgroundTextColor = 'grey';
 		this.sectionProperties.pageBackgroundFont = String(40 * app.roundedDpiScale) + 'px Arial';
 
+		/*
+			Seems that this number is equal to 45 twips in core.
+			Page rectangles are sent from core side.
+			Tiles also overlap with page rectangles but they don't overlap entirely.
+			Tiles render a slightly longer page.
+		*/
+		this.sectionProperties.multiPageViewMagicHeightFix = 3;
+
 		this.isJSDOM = typeof window === 'object' && window.name === 'nodejs';
 
 		this.checkpattern = this.makeCheckPattern();
@@ -346,7 +354,7 @@ export class TilesSection extends CanvasSectionObject {
 					this.drawTileToCanvas(tile, this.context, tilePos.vX, tilePos.vY, TileManager.tileSize, TileManager.tileSize);
 				else {
 					// A tile in Writer may intersect 2 pages.
-					const height1 = layoutRectangle1.pY2 - tilePos.pY;
+					const height1 = layoutRectangle1.pY2 - tilePos.pY + this.sectionProperties.multiPageViewMagicHeightFix;
 					this.drawTileToCanvasCrop(tile, this.context, 0, 0, TileManager.tileSize, height1, tilePos.vX, tilePos.vY, TileManager.tileSize, height1);
 
 					tilePos.pY += TileManager.tileSize;
