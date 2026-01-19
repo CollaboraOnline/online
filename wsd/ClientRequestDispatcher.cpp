@@ -912,7 +912,14 @@ bool allowedOriginByHost(const std::string& host, const std::string& actualOrigi
 
 template <typename T> bool allowedOrigin(const T& request, const RequestDetails& requestDetails)
 {
-    const std::string actualOrigin = request.get("Origin");
+    auto const it = request.find("Origin");
+    if (it == request.end())
+    {
+        LOG_ERR("Rejecting message with no Origin header");
+        return false;
+    }
+
+    const std::string actualOrigin = it->second;
     const ServerURL cnxDetails(requestDetails);
 
     if (net::sameOrigin(cnxDetails.getWebServerUrl(), actualOrigin))
