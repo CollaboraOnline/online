@@ -1410,8 +1410,7 @@ ClientRequestDispatcher::MessageResult ClientRequestDispatcher::handleMessage(Po
                 return MessageResult::Ignore;
             }
 
-            const bool allowed = allowedOrigin(request, requestDetails);
-            auto handler = std::make_shared<CollabSocketHandler>(socket, request, allowed, wopiSrc);
+            auto handler = std::make_shared<CollabSocketHandler>(socket, request, true, wopiSrc);
             socket->setHandler(handler);
         }
 
