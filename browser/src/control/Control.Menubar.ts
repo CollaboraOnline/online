@@ -161,7 +161,7 @@ class Menubar extends window.L.Control {
 					{type: 'separator'},
 					{name: _UNO('.uno:ZoomPlus', 'text'), id: 'zoomin', type: 'action'},
 					{name: _UNO('.uno:ZoomMinus', 'text'), id: 'zoomout', type: 'action',},
-					{name: _('Reset zoom'), id: 'zoomreset', type: 'action'},
+					{name: _('Fit to Screen'), id: 'fitwidthzoom', type: 'action'},
 				] as MenuItem[]).concat([
 					{type: 'separator'},
 					{name: _('Toggle UI Mode'), id: 'toggleuimode', type: 'action'},
@@ -1438,7 +1438,7 @@ class Menubar extends window.L.Control {
 			'downloadas-odp', 'downloadas-ppt', 'downloadas-pptx', 'downloadas-odg', 'exportpdf' , // file menu
 			!window.ThisIsAMobileApp ? 'exportdirectpdf' : 'downloadas-pdf', !window.ThisIsAMobileApp ? 'exportepub' : 'downloadas-epub', // file menu
 			'downloadas-ods', 'downloadas-xls', 'downloadas-xlsx', 'downloadas-csv', 'closedocument', // file menu
-			() => !window.L.Browser.edge ? 'fullscreen' : undefined, 'zoomin', 'zoomout', 'zoomreset', 'showstatusbar', 'showresolved', 'showannotations', 'toggledarktheme', // view menu
+			() => !window.L.Browser.edge ? 'fullscreen' : undefined, 'zoomin', 'zoomout', 'zoomreset', 'fitwidthzoom', 'showstatusbar', 'showresolved', 'showannotations', 'toggledarktheme', // view menu
 			'insert-signatureline', // insert menu
 			'about', 'keyboard-shortcuts', 'latestupdates', 'feedback', 'serveraudit', 'online-help', 'report-an-issue', // help menu
 			'insertcomment'
@@ -2252,6 +2252,8 @@ class Menubar extends window.L.Control {
 			app.dispatcher.dispatch('zoomout');
 		} else if (id === 'zoomreset') {
 			app.dispatcher.dispatch('zoomreset');
+		} else if (id === 'fitwidthzoom') {
+			app.dispatcher.dispatch('fitwidthzoom');
 		} else if (id === 'fullscreen') {
 			app.util.toggleFullScreen();
 		} else if (id === 'showruler') {

@@ -1641,10 +1641,10 @@ window.L.Control.NotebookbarWriter = window.L.Control.Notebookbar.extend({
 						'accessibility': { focusBack: true, combination: 'F', de: 'E' }
 					},
 					{
-						'id': 'zoomreset',
-						'class': 'unozoomreset',
+						'id': 'fitwidthzoom',
+						'class': 'unofitwidthzoom',
 						'type': 'bigcustomtoolitem',
-						'text': _('Reset zoom'),
+						'text': _('Fit to Screen'),
 						'accessibility': { focusBack: true, combination: 'J', de: 'O' }
 					},
 					{
