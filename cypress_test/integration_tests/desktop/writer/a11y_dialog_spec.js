@@ -244,6 +244,12 @@ describe(['tagdesktop'], 'Accessibility Writer Tests', { testIsolation: false },
             win.app.map.sendUnoCommand('.uno:TransformDialog');
         });
         handleDialog(win, 1);
+
+        cy.then(() => {
+            win.app.map.sendUnoCommand('.uno:FormatArea');
+        });
+        handleDialog(win, 1);
+
         // exit shape mode
         helper.typeIntoDocument('{esc}');
     });
