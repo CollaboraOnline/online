@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-11-17 08:08+0200\n"
-"PO-Revision-Date: 2026-01-13 06:40+0000\n"
+"PO-Revision-Date: 2026-01-19 18:01+0000\n"
 "Last-Translator: Amadɣas <massiin@proton.me>\n"
 "Language-Team: Kabyle <https://hosted.weblate.org/projects/collabora-online/"
 "help/kab/>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 5.15.2-dev\n"
+"X-Generator: Weblate 5.16-dev\n"
 "X-POOTLE-MTIME: 1475585999.000000\n"
 
 #: html/cool-help.html%2Bdiv.h1:6-5
@@ -2271,10 +2271,12 @@ msgid ""
 "available in the context menu are related - not extensively - to the "
 "underlying object in the document."
 msgstr ""
+"Umuɣen n usatal llan ɣef tqeffalt tayeffust n tɣerdayt. Tiludna yellan deg "
+"umuɣ n usatal ur cuddent ara aṭas ɣer tɣawsa yellan ddaw n isemli."
 
 #: html/cool-help.html%2Bdiv.div.div.h3:571-5
 msgid "Formatting text"
-msgstr ""
+msgstr "Amasal n uḍris"
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:573-5
 msgid ""
@@ -2302,6 +2304,10 @@ msgid ""
 "objects by formatting directly from the menus, toolbar or context menus. "
 "Direct formatting applies only to the current object selected."
 msgstr ""
+"<span class=\"def\">Amasal usrid:</span> Tzemreḍ aseqdec n umasal n "
+"tɣawsiwin n uḍris n isemli s umasal usrid seg umuɣen, afeggag n yifecka neɣ "
+"umuɣen n usatal. Amasal usrid yettwasnes kan ɣef tɣawsa tamirant "
+"yettwafernen."
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:578-5
 msgid ""
@@ -2317,7 +2323,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.div.h4:586-5
 msgid "Handling Tables"
-msgstr ""
+msgstr "Asefrek n tfelwiyin"
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:587-5
 msgid ""
@@ -2326,6 +2332,10 @@ msgid ""
 "cells with the <span class=\"ui\">Table</span> menu. The default paragraph "
 "style inside cells is “Table contents”."
 msgstr ""
+"Ger tifelwiyin s tignit iwulmen deg ufeggag n yifecka. Fren amḍan amezwaru n "
+"izirigen akked ijga. Rnu izirigen akked ijga s wumuɣ usatal n tebniqt. "
+"Smezdi tibniqin s wumuɣ n <span class=\"ui\">tfelwit</span>. Aɣanib n "
+"tseddart tamezwert deg tebniqin “Igburen n tfelwit”."
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:591-5
 msgid ""
@@ -2333,10 +2343,13 @@ msgid ""
 "cells and choose menu <span class=\"ui\">Table</span> → <span class=\"ui\""
 ">Properties</span>. Fine tune the table with the properties dialog."
 msgstr ""
+"<span class=\"def\">Amasal n tebniqin:</span> Sit ɣef tebniqt neɣ azilal n "
+"tebniqin sakin fren → <span class=\"ui\">iraten</span> n <span class=\"ui\">"
+"Tfelwit</span> n wumuɣ. Ṣeggem tafelwit s s tenkult n udiwenni."
 
 #: html/cool-help.html%2Bdiv.div.div.div.h4:594-5
 msgid "Track changes"
-msgstr ""
+msgstr "Ḍfer ibeddilen"
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:595-5
 msgid ""
@@ -2348,7 +2361,7 @@ msgstr ""
 #: html/cool-help.html%2Bdiv.div.div.div.div.img[alt]:596-29
 #: html/cool-help.html%2Bdiv.div.div.div.div.img[alt]:730-29
 msgid "track changes"
-msgstr ""
+msgstr "ḍfer ibeddilen"
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:597-5
 msgid ""
@@ -2440,6 +2453,8 @@ msgid ""
 "Use the slide pane toolbar in the bottom to start the slideshow, add slide, "
 "duplicate or delete the current slide."
 msgstr ""
+"Seqdec afeggag n ifecka n tmeccegin deg wadda akken ad tebduḍ askan n "
+"tmeccegin, ad ternuḍ timeccegt, ad tneɣleḍ neɣ ad tekkseḍ timeccegt tamirant."
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:638-5
 msgid ""
