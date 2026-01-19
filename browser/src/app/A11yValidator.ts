@@ -141,13 +141,13 @@ class A11yValidator {
 	validateDialog(dialogElement: HTMLElement): void {
 		const content = dialogElement.querySelector('.ui-dialog-content');
 
-		// Find all widgets in the dialog that have a widgettype attribute
-		const widgets = dialogElement.querySelectorAll('[widgettype]');
+		// Find all widgets in the dialog that have an id
+		const widgets = dialogElement.querySelectorAll('[id]');
 		let errorCount = 0;
 
 		widgets.forEach((widget) => {
 			if (widget instanceof HTMLElement) {
-				const widgetType = widget.getAttribute('widgettype') || 'unknown';
+				const widgetType = widget.getAttribute('id') || 'unknown';
 				try {
 					this.checkWidget(widgetType, widget);
 				} catch (error) {
