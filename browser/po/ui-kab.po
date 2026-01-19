@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-12-08 11:25+0100\n"
-"PO-Revision-Date: 2026-01-13 06:40+0000\n"
+"PO-Revision-Date: 2026-01-19 18:01+0000\n"
 "Last-Translator: Amadɣas <massiin@proton.me>\n"
 "Language-Team: Kabyle <https://hosted.weblate.org/projects/collabora-online/"
 "ui/kab/>\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 5.15.2-dev\n"
+"X-Generator: Weblate 5.16-dev\n"
 "X-POOTLE-MTIME: 1463059003.000000\n"
 
 #: admin/admin.strings.js:15
@@ -1669,7 +1669,7 @@ msgstr "Sluvakya"
 
 #: src/control/Control.ESignature.ts:194
 msgid "San Marino"
-msgstr ""
+msgstr "San Marin"
 
 #: src/control/Control.ESignature.ts:195
 msgid "Turkey"
@@ -1677,7 +1677,7 @@ msgstr "Ṭurk"
 
 #: src/control/Control.ESignature.ts:196
 msgid "Taiwan, Province of China"
-msgstr ""
+msgstr "Ṭaywan, Tamnaḍt n ccinwa"
 
 #: src/control/Control.ESignature.ts:197
 msgid "Ukraine"
@@ -1685,7 +1685,7 @@ msgstr "Ukrayin"
 
 #: src/control/Control.ESignature.ts:198
 msgid "United States of America"
-msgstr ""
+msgstr "Iwunak Yedduklen n Marikan"
 
 #: src/control/Control.ESignature.ts:199
 msgid "Holy See (Vatican City State)"
@@ -1697,11 +1697,11 @@ msgstr "Kusuvu"
 
 #: src/control/Control.ESignature.ts:201
 msgid "South Africa"
-msgstr ""
+msgstr "Tafriqt n Wenẓul"
 
 #: src/control/Control.ESignature.ts:335
 msgid "The document is being signed and will be availably shortly"
-msgstr ""
+msgstr "Isemli yettwazmel yerna ur yettɛeṭṭil ara ad d-yeffeɣ"
 
 #: src/control/Control.ESignatureDialog.ts:91
 msgid "Country:"
@@ -1714,7 +1714,7 @@ msgstr "Asaǧǧaw:"
 #: src/control/Control.ESignatureDialog.ts:175
 #: src/control/Control.ESignatureDialog.ts:176
 msgid "Insert Electronic Signature"
-msgstr ""
+msgstr "Ger azmul aliktṛunan"
 
 #: src/control/Control.FormulaBarJSDialog.js:18
 msgid "Expand Formula Bar"
@@ -1785,7 +1785,7 @@ msgstr "Amkuẓ"
 
 #: src/control/Control.JSDialogBuilder.js:549
 msgid "Fixed size"
-msgstr ""
+msgstr "Tiddi tusbiḍt"
 
 #: src/control/Control.JSDialogBuilder.js:1198
 msgid "From"
@@ -3251,11 +3251,11 @@ msgstr "Tiferkit"
 
 #: src/control/Control.NotebookbarWriter.js:395
 msgid "Go Online"
-msgstr ""
+msgstr "Ddu ɣer uẓeṭṭa"
 
 #: src/control/Control.NotebookbarWriter.js:395
 msgid "Go Offline"
-msgstr ""
+msgstr "Uɣal ɣer war tuqqna"
 
 #: src/control/Control.NotebookbarWriter.js:923
 #: src/control/Control.Zotero.js:827
@@ -3264,15 +3264,15 @@ msgstr "Iɣunab"
 
 #: src/control/Control.NotebookbarWriter.js:1069
 msgid "Lists/Bullets"
-msgstr ""
+msgstr "Tebdarin/Tililac"
 
 #: src/control/Control.NotebookbarWriter.js:1356
 msgid "Header & Footer"
-msgstr ""
+msgstr "Inixef d uḍar n usebtar"
 
 #: src/control/Control.NotebookbarWriter.js:1425
 msgid "Section"
-msgstr ""
+msgstr "Tagzemt"
 
 #: src/control/Control.NotebookbarWriter.js:1510
 msgid "Symbols"
@@ -3280,7 +3280,7 @@ msgstr "Izamulen"
 
 #: src/control/Control.NotebookbarWriter.js:1563
 msgid "Rich Text"
-msgstr ""
+msgstr "Aḍris anesbaɣur"
 
 #: src/control/Control.NotebookbarWriter.js:1571
 msgid "Checkbox"
@@ -3292,7 +3292,7 @@ msgstr ""
 
 #: src/control/Control.NotebookbarWriter.js:2284
 msgid "Tracking"
-msgstr ""
+msgstr "Aḍfar"
 
 #: src/control/Control.NotebookbarWriter.js:2466
 msgid "Split"
@@ -3300,19 +3300,19 @@ msgstr ""
 
 #: src/control/Control.NotebookbarWriter.js:2650
 msgid "Number Format"
-msgstr ""
+msgstr "Amasal n wuṭṭun"
 
 #: src/control/Control.PartsPreview.js:188
 msgid "preview of page %1"
-msgstr ""
+msgstr "taskant n usebtar %1"
 
 #: src/control/Control.PartsPreview.js:190
 msgid "Slide %1"
-msgstr ""
+msgstr "Timeccegit %1"
 
 #: src/control/Control.PartsPreview.js:263
 msgid "Paste Slide"
-msgstr ""
+msgstr "Senteḍ tmeccegit"
 
 #: src/control/Control.PartsPreview.js:319
 msgid "Paste"
@@ -3324,19 +3324,19 @@ msgstr "Asekles"
 
 #: src/control/Control.Scroll.Annotation.js:19
 msgid "Scroll up annotations"
-msgstr ""
+msgstr "Drurem iwenniten d asawen"
 
 #: src/control/Control.Scroll.Annotation.js:21
 msgid "Scroll down annotations"
-msgstr ""
+msgstr "Drurem iwenniten d akessar"
 
 #: src/control/Control.ServerAuditDialog.ts:58
 msgid "Your WOPI server is not secure: SSL verification failed"
-msgstr ""
+msgstr "Aqeddac-inek·inem WOPI mačči d aɣelsan: Asenqed SSL ur yeddi ara"
 
 #: src/control/Control.ServerAuditDialog.ts:63
 msgid "No problems with SSL verification detected"
-msgstr ""
+msgstr "Ulac uguren akked usenqed SSL yettwafen"
 
 #: src/control/Control.ServerAuditDialog.ts:72
 msgid ""
@@ -3345,7 +3345,7 @@ msgstr ""
 
 #: src/control/Control.ServerAuditDialog.ts:77
 msgid "Each document is securely contained"
-msgstr ""
+msgstr "Yal isemli yettwaḥrez s wudem aɣelsan"
 
 #: src/control/Control.ServerAuditDialog.ts:83
 msgid ""
