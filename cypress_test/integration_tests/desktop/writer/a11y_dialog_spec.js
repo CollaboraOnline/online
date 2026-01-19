@@ -4,6 +4,11 @@ var helper = require('../../common/helper');
 var ceHelper = require('../../common/contenteditable_helper');
 var desktopHelper = require('../../common/desktop_helper');
 
+const allCommonDialogs = [
+    '.uno:SetDocumentProperties',
+    '.uno:StyleNewByExample'
+];
+
 const allWriterDialogs = [
     '.uno:ChapterNumberingDialog',
     '.uno:EditRegion',
@@ -75,7 +80,7 @@ describe(['tagdesktop'], 'Accessibility Writer Tests', { testIsolation: false },
     });
 
     after(function () {
-	cy.spy(win.app.socket, '_onMessage').as('onMessage').log(false);
+        cy.spy(win.app.socket, '_onMessage').as('onMessage').log(false);
 
         // Run after the dialogs are processed and errors checked
         cy.then(() => {
@@ -108,8 +113,9 @@ describe(['tagdesktop'], 'Accessibility Writer Tests', { testIsolation: false },
 
             expect(result.used, `used .ui files`).to.not.be.empty;
 
-            // TODO: make this true
+            // TODO: make these true
             // expect(result.CompleteWriterDialogCoverage, `complete writer dialog coverage`).to.be.true;
+            // expect(result.CompleteCommonDialogCoverage, `complete common dialog coverage`).to.be.true;
         });
     });
 
@@ -215,13 +221,19 @@ describe(['tagdesktop'], 'Accessibility Writer Tests', { testIsolation: false },
         });
     });
 
+    allCommonDialogs.forEach(function (command) {
+        it(`Common Dialog ${command}`, function () {
+            testDialog(command);
+        });
+    });
+
     allWriterDialogs.forEach(function (command) {
         if (missingContextDialogs.includes(command)) {
             it.skip(`Dialog ${command} (missing context)`, function () {});
         } else if (buggyDialogs.includes(command)) {
             it.skip(`Dialog ${command} (buggy)`, function () {});
         } else {
-            it(`Dialog ${command}`, function () {
+            it(`Writer Dialog ${command}`, function () {
                 testDialog(command);
             });
         }
@@ -371,7 +383,7 @@ describe(['tagdesktop'], 'Accessibility Writer Tests', { testIsolation: false },
                     handleDialog(win, level + 1);
                 }
 
-                handleTabsInDialog(win, level);
+                handleTabsInDialog(win, level, command);
                 closeActiveDialog(level);
             });
     }
@@ -382,11 +394,11 @@ describe(['tagdesktop'], 'Accessibility Writer Tests', { testIsolation: false },
             .then($dialogs => cy.wrap($dialogs.last()))
     }
 
-    function handleTabsInDialog(win, level) {
-        traverseTabs(() => getActiveDialog(level), win);
+    function handleTabsInDialog(win, level, command) {
+        traverseTabs(() => getActiveDialog(level), win, level, command);
     }
 
-    function traverseTabs(getContainer, win, isNested = false) {
+    function traverseTabs(getContainer, win, level, command, isNested = false) {
         const TABLIST = '[role="tablist"]';
         const TAB = '[role="tab"]';
 
@@ -414,6 +426,7 @@ describe(['tagdesktop'], 'Accessibility Writer Tests', { testIsolation: false },
 
                         const $tab = $tabs.eq(index);
                         const tabId = $tab.attr('id');
+                        const tabAriaControls = $tab.attr('aria-controls');
 
                         return getContainer()
                             .find(TABLIST).eq(tabListIndex)
@@ -424,6 +437,19 @@ describe(['tagdesktop'], 'Accessibility Writer Tests', { testIsolation: false },
                             })
                             .then(() => {
                                 runA11yValidation(win);
+                            })
+                            .then(() => {
+                                if (command == '.uno:SetDocumentProperties' && tabAriaControls == 'customprops')  {
+                                    cy.cGet('#durationbutton-button').click();
+                                    handleDialog(win, level + 1);
+                                } else if (command == '.uno:InsertSection' && tabAriaControls == 'section')  {
+                                    // check protect to enable password dialog
+                                    cy.cGet('#protect-input').check();
+                                    cy.cGet('#selectpassword-button').should('not.be.disabled').click();
+                                    handleDialog(win, level + 1);
+                                    cy.cGet('#protect-input').uncheck();
+                                    cy.cGet('#selectpassword-button').should('be.disabled');
+                                }
                             })
                             .then(() => {
                                 return getContainer();
@@ -443,7 +469,7 @@ describe(['tagdesktop'], 'Accessibility Writer Tests', { testIsolation: false },
                                         if (!isNested && $nestedTablists.length > 0) {
                                             return traverseTabs(
                                                 () => getContainer().find(panelSelector),
-                                                win, true
+                                                win, level, command, true
                                             );
                                         }
                                     });
