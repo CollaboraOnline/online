@@ -1744,6 +1744,11 @@ class TreeViewControl {
 		});
 	}
 
+	isMenu(data: TreeWidgetJSON): boolean {
+		if (data.type === 'menu') return true;
+		return false;
+	}
+
 	isListbox(data: TreeWidgetJSON): boolean {
 		if (this.isRealTree(data)) return false;
 
@@ -1802,7 +1807,7 @@ class TreeViewControl {
 		this.fillHeaders(data.headers, builder);
 		this.fillEntries(data, data.entries, builder, 1, this._tbody);
 
-		if (this._isListbox && !data.noSearchField) {
+		if (this._isListbox && !data.noSearchField && !this.isMenu(data)) {
 			this.showSearchBar(this._container);
 		}
 
