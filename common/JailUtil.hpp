@@ -81,6 +81,14 @@ void disableBindMounting();
 /// Returns true iff bind-mounting is enabled in this process.
 bool isBindMountingEnabled();
 
+/// Flag that bind-mounting is configured.
+void enableBindMountingConfigured();
+/// Unflag that bind-mounting is configured.
+void disableBindMountingConfigured();
+
+/// Returns true iff bind-mounting is configured in coolwsd.xml.
+bool isBindMountingConfigured();
+
 /// Enable namespace-mounting in this process.
 void enableMountNamespaces();
 

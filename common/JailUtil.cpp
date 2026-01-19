@@ -482,6 +482,8 @@ void setupChildRoot(bool bindMount, const std::string& childRoot, const std::str
 
 /// The envar name used to control bind-mounting of systemplate/jails.
 constexpr const char* BIND_MOUNTING_ENVAR_NAME = "COOL_BIND_MOUNT";
+/// The envar name used to signal whether bind-mounting is configured.
+constexpr const char* BIND_MOUNTING_CONFIGURED_ENVAR_NAME = "COOL_BIND_MOUNT_CONFIGURED";
 
 void enableBindMounting()
 {
@@ -499,6 +501,24 @@ bool isBindMountingEnabled()
 {
     // Check if we have a valid envar set.
     return std::getenv(BIND_MOUNTING_ENVAR_NAME) != nullptr;
+}
+
+void enableBindMountingConfigured()
+{
+    // Set the envar to enable.
+    setenv(BIND_MOUNTING_CONFIGURED_ENVAR_NAME, "1", 1);
+}
+
+void disableBindMountingConfigured()
+{
+    // Remove the envar to disable.
+    unsetenv(BIND_MOUNTING_CONFIGURED_ENVAR_NAME);
+}
+
+bool isBindMountingConfigured()
+{
+    // Check if we have a valid envar set.
+    return std::getenv(BIND_MOUNTING_CONFIGURED_ENVAR_NAME) != nullptr;
 }
 
 constexpr const char* NAMESPACE_MOUNTING_ENVAR_NAME = "COOL_NAMESPACE_MOUNT";
