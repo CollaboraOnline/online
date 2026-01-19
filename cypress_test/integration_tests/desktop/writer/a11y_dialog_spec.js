@@ -503,7 +503,10 @@ describe(['tagdesktop'], 'Accessibility Writer Tests', { testIsolation: false },
                                 } else if (command == '.uno:FontDialog' && tabAriaControls == 'font')  {
                                     cy.cGet('#btnWestFeatures-button').click();
                                     handleDialog(win, level + 1);
-                                }
+                                } else if (command == '.uno:PageDialog' && tabAriaControls == 'Footer')  {
+                                    cy.cGet('button.ui-pushbutton[aria-label="More..."]:visible').click();
+                                    handleDialog(win, level + 1);
+				}
                             })
                             .then(() => {
                                 return getContainer();
