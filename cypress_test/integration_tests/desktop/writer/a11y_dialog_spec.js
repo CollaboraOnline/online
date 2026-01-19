@@ -8,7 +8,7 @@ const allCommonDialogs = [
     '.uno:HyperlinkDialog',
     '.uno:InsertQrCode',
     '.uno:InsertSymbol',
-    '.uno:SearchDialog?InitialFocusReplace:bool=true',
+    '.uno:RunMacro',
     '.uno:SearchDialog',
     '.uno:SetDocumentProperties',
     '.uno:SpellingAndGrammarDialog',
@@ -529,7 +529,7 @@ describe(['tagdesktop'], 'Accessibility Writer Tests', { testIsolation: false },
                                 } else if (command == '.uno:PageDialog' && tabAriaControls == 'Footer')  {
                                     cy.cGet('button.ui-pushbutton[aria-label="More..."]:visible').click();
                                     handleDialog(win, level + 1);
-				}
+                                }
                             })
                             .then(() => {
                                 return getContainer();
