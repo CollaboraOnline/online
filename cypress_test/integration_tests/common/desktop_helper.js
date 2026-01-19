@@ -218,6 +218,7 @@ function selectZoomLevel(zoomLevel, makeZoomVisible = true) {
 }
 
 // Reset zoom level to 100%.
+// WARN: doesn't work for writer, use fitWidthZoom for that.
 function resetZoomLevel() {
 	cy.log('>> resetZoomLevel - start');
 
@@ -226,6 +227,14 @@ function resetZoomLevel() {
 	shouldHaveZoomLevel('100');
 
 	cy.log('<< resetZoomLevel - end');
+}
+
+function fitWidthZoom() {
+	cy.log('>> fitWidthZoom - start');
+
+	cy.cGet('#toolbar-down #fitwidthzoom').click();
+
+	cy.log('<< fitWidthZoom - end');
 }
 
 function insertImage() {
@@ -596,6 +605,7 @@ module.exports.zoomOut = zoomOut;
 module.exports.shouldHaveZoomLevel = shouldHaveZoomLevel;
 module.exports.selectZoomLevel = selectZoomLevel;
 module.exports.resetZoomLevel = resetZoomLevel;
+module.exports.fitWidthZoom = fitWidthZoom;
 module.exports.insertImage = insertImage;
 module.exports.insertVideo = insertVideo;
 module.exports.deleteImage = deleteImage;

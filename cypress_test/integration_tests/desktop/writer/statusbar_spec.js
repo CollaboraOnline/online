@@ -13,7 +13,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Statubar tests.', function
 			desktopHelper.showStatusBarIfHidden ();
 		}
 
-		desktopHelper.shouldHaveZoomLevel('70');
+		desktopHelper.shouldHaveZoomLevel('100');
 	});
 
 	it('Text selection.', function() {
@@ -32,7 +32,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Statubar tests.', function
 		desktopHelper.assertScrollbarPosition('vertical', 0, 10);
 		cy.cGet('#toolbar-down #nextpage').click();
 		desktopHelper.assertVisiblePage(1, 2, 2);
-		desktopHelper.assertScrollbarPosition('vertical',190, 205);
+		desktopHelper.assertScrollbarPosition('vertical',220, 230);
 	});
 
 	it('Text entering mode.', function() {
@@ -42,17 +42,17 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Statubar tests.', function
 	});
 
 	it('Change zoom level.', function() {
-		desktopHelper.resetZoomLevel();
-		desktopHelper.shouldHaveZoomLevel('100');
+		desktopHelper.fitWidthZoom();
+		desktopHelper.shouldHaveZoomLevel('70');
 		desktopHelper.zoomIn();
-		desktopHelper.shouldHaveZoomLevel('120');
+		desktopHelper.shouldHaveZoomLevel('85');
 		desktopHelper.zoomOut();
-		desktopHelper.shouldHaveZoomLevel('100');
+		desktopHelper.shouldHaveZoomLevel('70');
 	});
 
 	it('Select zoom level.', function() {
-		desktopHelper.resetZoomLevel();
-		desktopHelper.shouldHaveZoomLevel('100');
+		desktopHelper.fitWidthZoom();
+		desktopHelper.shouldHaveZoomLevel('70');
 		desktopHelper.selectZoomLevel('280', false);
 		desktopHelper.shouldHaveZoomLevel('280');
 	});
