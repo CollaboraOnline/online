@@ -37,7 +37,6 @@ class QuickFindPanel extends SidebarBase {
 			data.control.id === 'searchfinds' &&
 			data.control.type === 'treelistbox'
 		) {
-			e.data.control.ignoreFocus = true;
 			e.data.control.noSearchField = true;
 		}
 
