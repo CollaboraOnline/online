@@ -3910,7 +3910,9 @@ void lokit_main(
                             (hasSeccomp ? "ok" : "none"));
         // Are we bind mounting ?
         pathAndQuery.append(std::string("&adms_bindmounted=") +
-                            (JailUtil::isBindMountingEnabled() ? "ok" : "slow"));
+                            (!JailUtil::isBindMountingConfigured()
+                                 ? "not_recommended"
+                                 : (JailUtil::isBindMountingEnabled() ? "ok" : "slow")));
         // Are we using a container - either chroot or namespace ?
         pathAndQuery.append(std::string("&adms_contained=") +
                             (ChildSession::NoCapsForKit ? "uncontained" : "ok"));

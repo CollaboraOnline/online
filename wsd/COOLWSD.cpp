@@ -86,8 +86,9 @@
 #include <wsd/COOLWSDServer.hpp>
 #include <wsd/DocumentBroker.hpp>
 #include <wsd/Process.hpp>
-#include <common/JsonUtil.hpp>
 #include <common/FileUtil.hpp>
+#include <common/JailUtil.hpp>
+#include <common/JsonUtil.hpp>
 
 #include <common/Log.hpp>
 #include <MobileApp.hpp>
@@ -1293,6 +1294,10 @@ void COOLWSD::setupChildRoot(const bool UseMountNamespaces)
         JailUtil::enableBindMounting();
     if (EnableMountNamespaces)
         JailUtil::enableMountNamespaces();
+    if (ConfigUtil::getConfigValue<bool>("mount_jail_tree", true))
+        JailUtil::enableBindMountingConfigured();
+    else
+        JailUtil::disableBindMountingConfigured();
 }
 
 #endif

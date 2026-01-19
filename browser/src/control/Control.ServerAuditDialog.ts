@@ -111,6 +111,11 @@ class ServerAuditDialog {
 					'',
 				],
 				ok: [_('Fast kit jail bind mounting enabled'), 'SDK: bindmount', ''],
+				not_recommended: [
+					_('Fast kit jail bind mounting not configured'),
+					'SDK: bindmount',
+					'',
+				],
 			},
 			proxy: {
 				priority: 12,
