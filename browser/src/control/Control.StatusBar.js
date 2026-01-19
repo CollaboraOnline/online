@@ -254,6 +254,7 @@ class StatusBar extends JSDialog.Toolbar {
 			{type: 'toolitem',  id: 'overview', command: '.uno:InsertCanvasSlide', text: _('Overview'), dataPriority: 9, visible: !app.isReadOnly()},
 			{type: 'separator', id: 'overviewbreak', orientation: 'vertical', dataPriority: 9, visible: !app.isReadOnly()},
 		].concat(window.mode.isTablet() ? [] : [
+			{type: 'customtoolitem',  id: 'fitwidthzoom', command: 'fitwidthzoom', text: _('Fit to Screen'), dataPriority: 8, visible: false},
 			{type: 'customtoolitem',  id: 'zoomreset', command: 'zoomreset', text: _('Reset zoom'), icon: 'zoomreset.svg', dataPriority: 8},
 			{type: 'customtoolitem',  id: 'zoomout', command: 'zoomout', text: _UNO('.uno:ZoomMinus'), icon: 'minus.svg'},
 			{type: 'menubutton', id: 'zoom', text: '100', selected: 'zoom100', menu: this._generateZoomItems(), image: false},
@@ -326,6 +327,8 @@ class StatusBar extends JSDialog.Toolbar {
 				this.showItem('permissionmode-container', true);
 				this.showItem('showcomments-container', true);
 				this.showItem('documentstatus-container', true);
+				this.showItem('fitwidthzoom', true);
+				this.showItem('zoomreset', false);
 
 				this.showItem('multi-page-view', true);
 			}
