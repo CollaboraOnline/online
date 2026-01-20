@@ -1,5 +1,5 @@
-// @ts-strict-ignore
-/* -*- js-indent-level: 8 -*- */
+// @ts-strict-ignore -*- Mode: JavaScript; js-indent-level: 8; fill-column: 100 -*-
+
 /*
  * Copyright the Collabora Online contributors.
  *
@@ -1349,6 +1349,16 @@ class BackstageView extends window.L.Class {
 		if (template.path) {
 			params.push('template=' + encodeURIComponent(template.path));
 		}
+
+		// URI-encode the basename parameter because the syntax for these keyword=value
+		// style of messages doesn't allow spaces inside a value, and a translation of
+		// "Untitled" might contains a space.
+
+		// Eventually, instead of just "Untitled", we might want to use something that
+		// depends on what type of document the template is. Like "Business letter" or
+		// "CV". Such basenames should be in the templates.js file. If a template doesn't
+		// have one, "Untitled" would then be the default.
+		params.push('basename=' + encodeURIComponent(_('Untitled')));
 
 		window.postMobileMessage('newdoc ' + params.join(' '));
 
