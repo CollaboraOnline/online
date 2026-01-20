@@ -541,6 +541,9 @@ describe(['tagdesktop'], 'Accessibility Writer Tests', { testIsolation: false },
                                 if (command == '.uno:SetDocumentProperties' && tabAriaControls == 'customprops')  {
                                     cy.cGet('#durationbutton-button').click();
                                     handleDialog(win, level + 1);
+				} else if (command == '.uno:SetDocumentProperties' && tabAriaControls == 'general')  {
+                                    cy.cGet('#changepass-button').should('not.be.disabled').click();
+                                    handleDialog(win, level + 1);
                                 } else if (command == '.uno:InsertSection' && tabAriaControls == 'section')  {
                                     // check protect to enable password dialog
                                     cy.cGet('#protect-input').check();
