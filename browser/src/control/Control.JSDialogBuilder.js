@@ -1362,9 +1362,6 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 	_linkButtonControl: function(parentContainer, data, builder) {
 		var buttonLink = window.L.DomUtil.create('button', builder.options.cssClass + " ui-linkbutton", parentContainer);
 
-		if (data.labelFor)
-			buttonLink.htmlFor = data.labelFor + '-input';
-
 		if (data.text)
 			buttonLink.textContent = builder._cleanText(data.text);
 		else if (data.html)
@@ -1372,21 +1369,6 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 
 		var accKey = builder._getAccessKeyFromText(data.text);
 		builder._stressAccessKey(buttonLink, accKey);
-
-		app.layoutingService.appendLayoutingTask(function () {
-			var labelledControl = document.getElementById(data.labelFor);
-			if (labelledControl) {
-				var target = labelledControl;
-				var input = labelledControl.querySelector('input');
-				if (input)
-					target = input;
-				var select = labelledControl.querySelector('select');
-				if (select)
-					target = select;
-
-				builder._setAccessKey(target, accKey);
-			}
-		});
 
 		buttonLink.id = data.id;
 		if (data.style && data.style.length) {
