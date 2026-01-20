@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 /* global expect describe it cy beforeEach require Cypress */
 
 var helper = require('../../common/helper');
@@ -196,3 +197,5 @@ describe(['tagdesktop'], 'HideChangeTrackingControls mode tests.', function() {
 		cy.cGet('.notebookbar .unoAcceptTrackedChanges').should('not.exist');
 	});
 });
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 /* global describe it cy require beforeEach expect Cypress */
 
 var helper = require('../../common/helper');
@@ -108,3 +109,5 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Delete Objects', function(
 		cy.cGet('#test-div-shapeHandlesSection').should('not.exist');
 	});
 });
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

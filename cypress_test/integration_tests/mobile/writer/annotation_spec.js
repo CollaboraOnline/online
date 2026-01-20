@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 /* global describe it cy beforeEach require */
 
 var helper = require('../../common/helper');
@@ -201,3 +202,5 @@ describe(['tagmobile'], 'Annotation tests.', function() {
 		cy.cGet('#mentionPopupList').should('be.not.visible');
 	});
 });
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

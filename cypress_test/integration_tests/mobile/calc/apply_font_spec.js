@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 /* global describe it cy beforeEach require */
 
 var helper = require('../../common/helper');
@@ -103,3 +104,5 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Apply font changes.', funct
 			.should('have.attr', 'color', '#00FF00');
 	});
 });
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

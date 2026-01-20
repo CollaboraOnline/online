@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 /* global describe it cy beforeEach require */
 
 var helper = require('../../common/helper');
@@ -73,3 +74,5 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Insert formatting mark via 
 		cy.cGet('#copy-paste-container p').should('contain.text', '\u200f');
 	});
 });
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

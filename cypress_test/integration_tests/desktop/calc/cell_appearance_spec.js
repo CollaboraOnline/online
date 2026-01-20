@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 /* global describe it cy beforeEach require */
 
 var helper = require('../../common/helper');
@@ -209,3 +210,5 @@ describe(['tagdesktop'], 'Change cell appearance.', function() {
 			.should('have.attr', 'style', 'border-left: 1px solid #bf0041');
 	});
 });
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 /* global cy expect */
 
 //warning: after jumbo sheet patch, number of columns become 16000 so if you select whole row and do some operation
@@ -28,3 +29,5 @@ function selectFirstRow() {
 }
 
 module.exports.selectFirstRow = selectFirstRow;
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

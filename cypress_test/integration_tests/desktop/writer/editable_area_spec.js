@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 /* global describe it cy beforeEach require */
 
 var helper = require('../../common/helper');
@@ -1330,3 +1331,5 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Editing - Basic typing', f
 		selectAndCheckText('home', 'Hello Worldgreen redk');
 	});
 });
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

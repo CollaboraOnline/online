@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 /* global describe it cy beforeEach require */
 
 var helper = require('../../common/helper');
@@ -59,3 +60,5 @@ describe(['tagdesktop', 'tagproxy'], 'macro dialog tests', function() {
 			.should('have.text', 'Macro Executed');
 	});
 });
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

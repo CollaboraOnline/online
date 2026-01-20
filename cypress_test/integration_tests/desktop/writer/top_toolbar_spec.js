@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 /* global describe it cy beforeEach require Cypress */
 
 var helper = require('../../common/helper');
@@ -608,3 +609,5 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 		cy.cGet('#Insert-tab-label').should('have.class','selected');
 	});
 });
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

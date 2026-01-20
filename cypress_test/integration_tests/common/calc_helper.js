@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 /* global cy expect Cypress require expect */
 
 var helper = require('./helper');
@@ -372,3 +373,5 @@ module.exports.assertNumberofSheets = assertNumberofSheets;
 module.exports.selectOptionFromContextMenu = selectOptionFromContextMenu;
 module.exports.selectOptionMobileWizard = selectOptionMobileWizard;
 module.exports.hideSelectedRows = hideSelectedRows;
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 /* global describe it cy require beforeEach */
 var helper = require('../../common/helper');
 var calcHelper = require('../../common/calc_helper');
@@ -64,3 +65,5 @@ describe.skip(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Row Column Operation',
 		calcHelper.assertSheetContents(['Hello','','Hi','World','','Bye']);
 	});
 });
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

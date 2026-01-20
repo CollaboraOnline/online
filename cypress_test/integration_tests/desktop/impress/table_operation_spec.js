@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 /* global describe  cy beforeEach it expect require */
 
 var helper = require('../../common/helper');
@@ -262,3 +263,5 @@ describe(['tagdesktop'], 'Table operations', function() {
 			.should('have.length', 4);
 	});
 });
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

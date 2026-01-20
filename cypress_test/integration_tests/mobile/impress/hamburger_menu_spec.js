@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 /* global describe it cy require beforeEach */
 
 var helper = require('../../common/helper');
@@ -274,3 +275,5 @@ describe.skip(['tagmobile'], 'Trigger hamburger menu options.', function() {
 		cy.cGet('div.mobile-wizard.jsdialog-overlay.cancellable').click({force : true});
 	});
 });
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

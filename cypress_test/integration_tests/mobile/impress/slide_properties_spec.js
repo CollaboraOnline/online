@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 /* global describe it cy require expect beforeEach */
 
 var helper = require('../../common/helper');
@@ -419,3 +420,5 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Changing slide properties.'
 		cy.cGet('#displaymasterobjects label').should('not.have.class', 'disabled');
 	});
 });
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

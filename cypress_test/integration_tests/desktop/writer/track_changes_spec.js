@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 /* global describe it cy beforeEach require Cypress expect */
 
 var helper = require('../../common/helper');
@@ -203,3 +204,5 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Track Changes', function (
 
 	});
 });
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

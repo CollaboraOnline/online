@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 /* global cy  require Cypress expect */
 
 var helper = require('./helper');
@@ -621,3 +622,5 @@ module.exports.getCompactIconArrow = getCompactIconArrow;
 module.exports.getNbIconArrow = getNbIconArrow;
 module.exports.getDropdown = getDropdown;
 module.exports.undoAll = undoAll;
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

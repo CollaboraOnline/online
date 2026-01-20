@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 /* global describe it cy beforeEach require expect*/
 
 var helper = require('../../common/helper');
@@ -268,3 +269,5 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Change cell appearance.', f
 			.should('have.attr', 'style', 'border-left: 1px solid #ff9900');
 	});
 });
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 /* global describe it cy beforeEach require */
 
 var helper = require('../../common/helper');
@@ -34,3 +35,5 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'AutoFilter', function() {
 		calcHelper.assertSheetContents(['Cypress Test', 'Status', 'Test 1', 'Pass', 'Test 2', 'Fail', 'Test 3', 'Pass', 'Test 4', '', 'Test 5', 'Fail'], true);
 	});
 });
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

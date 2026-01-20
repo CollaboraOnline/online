@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 /* global describe it cy beforeEach require expect */
 
 var helper = require('../../common/helper');
@@ -49,3 +50,5 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Scroll through document', 
 		desktopHelper.assertScrollbarPosition('horizontal', 340, 660);
 	});
 });
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

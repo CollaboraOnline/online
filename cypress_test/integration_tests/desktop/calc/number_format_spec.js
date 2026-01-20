@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 /* global describe it cy require beforeEach */
 
 var helper = require('../../common/helper');
@@ -50,3 +51,5 @@ describe(['tagdesktop'], 'Number format Tests', function() {
 		cy.cGet('.notebookbar .unoNumberFormatCurrency').should('not.have.class', 'selected');
 	});
 });
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

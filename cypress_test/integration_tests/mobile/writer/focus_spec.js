@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 /* global describe it cy beforeEach require expect*/
 
 var helper = require('../../common/helper');
@@ -167,3 +168,5 @@ describe(['tagmobile', 'tagproxy'], 'Focus tests', function() {
 		helper.assertHaveKeyboardInput();
 	});
 });
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

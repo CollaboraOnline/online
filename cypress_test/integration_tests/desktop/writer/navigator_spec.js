@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 /* global describe it cy beforeEach require */
 
 var helper = require('../../common/helper');
@@ -143,3 +144,5 @@ describe(['tagdesktop'], 'Scroll through document, modify heading', function() {
 		cy.cGet('#contenttree').find('.jsdialog.sidebar.ui-treeview-entry.ui-treeview-notexpandable.selected').find('.jsdialog.sidebar.ui-treeview-cell-text').should('have.text','IntroAduction');
 	});
 });
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

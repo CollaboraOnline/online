@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 /* global describe it cy expect require */
 
 var helper = require('../../common/helper');
@@ -60,3 +61,5 @@ describe(['tagdesktop'], 'Electronic sign operations.', function() {
 		cy.cGet('[id^="signstatus"] div').should('have.class', 'sign_not_ok');
 	});
 });
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

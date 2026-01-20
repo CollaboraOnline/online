@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 /* global describe it cy require expect Cypress */
 
 var helper = require('../../common/helper');
@@ -272,3 +273,5 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Form field button tests.',
 	});
 });
 
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

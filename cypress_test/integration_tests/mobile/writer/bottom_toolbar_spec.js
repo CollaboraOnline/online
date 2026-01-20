@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 /* global describe it cy beforeEach require */
 
 var helper = require('../../common/helper');
@@ -119,3 +120,5 @@ describe.skip('Pushing bottom toolbar items.', function() {
 		cy.cGet('#copy-paste-container p').should('have.attr', 'style').should('contain', 'margin-left: 0.49in');
 	});
 });
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

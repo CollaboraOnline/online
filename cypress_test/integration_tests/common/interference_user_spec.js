@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 /* global describe it cy require Cypress */
 
 var helper = require('./helper');
@@ -88,3 +89,5 @@ describe('Interfering second user.', function() {
 		}, {timeout: 60000, log: false});
 	});
 });
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

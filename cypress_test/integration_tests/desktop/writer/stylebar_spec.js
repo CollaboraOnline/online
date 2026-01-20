@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 /* global describe it cy beforeEach require */
 
 var helper = require('../../common/helper');
@@ -70,3 +71,5 @@ describe(['tagdesktop'], 'Test style sidebar', function() {
 		cy.cGet('#sidebar-dock-wrapper').compareSnapshot('style_sidebar_context_menu', 0.1);
 	});
 });
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

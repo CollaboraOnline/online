@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 /* global describe it cy beforeEach require */
 
 var helper = require('../../common/helper');
@@ -79,3 +80,5 @@ describe.skip(['tagdesktop'], 'Navigator tests.', function () {
 		cy.cGet('#contentbox').contains('.jsdialog.sidebar.ui-treeview-cell-text', 'Image 1').should('not.exist');
 	});
 });
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

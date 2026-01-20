@@ -13,3 +13,5 @@ describe(['tagdesktop'], 'RTL sheet tests', function() {
 		// just load...
 	});
 });
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

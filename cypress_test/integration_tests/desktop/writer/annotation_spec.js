@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 /* global describe it cy require beforeEach */
 
 var helper = require('../../common/helper');
@@ -669,3 +670,5 @@ describe(['tagdesktop'], 'Annotation with @mention', function() {
 		cy.cGet('#annotation-modify-textarea-new').should('have.focus');
 	});
 });
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

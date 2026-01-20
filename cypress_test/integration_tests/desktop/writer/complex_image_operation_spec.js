@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 /* global cy expect describe it require beforeEach */
 
 var helper = require('../../common/helper');
@@ -37,3 +38,5 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Complex image operation te
 		});
 	});
 });
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

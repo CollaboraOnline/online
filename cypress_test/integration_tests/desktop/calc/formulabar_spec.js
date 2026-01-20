@@ -49,3 +49,5 @@ describe(['tagdesktop'], 'Formulabar tests', function() {
 			.should('have.text', '=SUM(Z101:Z104,AB101:AB104' + additionalText + ')');
 	});
 });
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

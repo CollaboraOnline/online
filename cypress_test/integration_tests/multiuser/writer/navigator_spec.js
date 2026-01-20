@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 /* global describe it cy beforeEach require */
 
 var helper = require('../../common/helper');
@@ -54,3 +55,5 @@ describe.skip(['tagmultiuser'], 'Navigator follow the change of document', funct
 		cy.cGet('#contenttree').contains('.jsdialog.sidebar.ui-treeview-cell-text', 'Changedtext').should('not.exist');
 	});
 });
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

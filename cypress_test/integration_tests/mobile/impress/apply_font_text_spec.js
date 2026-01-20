@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 /* global describe it cy beforeEach require */
 
 var helper = require('../../common/helper');
@@ -194,3 +195,5 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Apply font on selected text
 		cy.cGet('text tspan.TextPosition tspan').should('have.attr', 'font-size', '368px');
 	});
 });
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

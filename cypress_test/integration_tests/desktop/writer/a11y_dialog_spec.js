@@ -75,7 +75,7 @@ describe(['tagdesktop'], 'Accessibility Writer Tests', { testIsolation: false },
     });
 
     after(function () {
-	cy.spy(win.app.socket, '_onMessage').as('onMessage').log(false);
+        cy.spy(win.app.socket, '_onMessage').as('onMessage').log(false);
 
         // Run after the dialogs are processed and errors checked
         cy.then(() => {
@@ -489,3 +489,4 @@ describe(['tagdesktop'], 'Accessibility Writer Tests', { testIsolation: false },
     }
 
 });
+

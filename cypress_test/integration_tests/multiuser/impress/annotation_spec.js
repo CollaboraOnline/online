@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 /* global describe it cy require beforeEach */
 
 var desktopHelper = require('../../common/desktop_helper');
@@ -365,3 +366,5 @@ describe(['tagmultiuser'], 'Multiuser Annotation Autosave Tests', function() {
 		cy.cGet('.cool-annotation-content > div').should('have.text','some text0');
 	});
 });
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

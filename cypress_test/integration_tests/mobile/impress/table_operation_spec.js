@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 /* global describe it cy beforeEach expect require */
 
 var helper = require('../../common/helper');
@@ -283,3 +284,5 @@ describe.skip(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Table Operation', func
 	//TODO: add split cells tests
 	//bug: https://github.com/CollaboraOnline/online/issues/3962
 });
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

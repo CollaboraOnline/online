@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 /* global describe it cy require beforeEach */
 
 var helper = require('../../common/helper');
@@ -39,3 +40,5 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Sidebar Tests', function()
 		cy.cGet('#fillattr').compareSnapshot('sidebar_menubutton_color', 0.1);
 	});
 });
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

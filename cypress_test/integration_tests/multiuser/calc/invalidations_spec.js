@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 /* global describe it cy beforeEach expect require Cypress */
 
 var helper = require('../../common/helper');
@@ -52,3 +53,5 @@ describe(['tagmultiuser'], 'Joining a document should not trigger an invalidatio
 		});
 	});
 });
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

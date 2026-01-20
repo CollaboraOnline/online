@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 /* global describe it cy require expect */
 var helper = require('../../common/helper');
 const { selectZoomLevel } = require('../../common/desktop_helper');
@@ -94,3 +95,5 @@ describe.skip(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Open different file t
 		assertData();
 	});
 });
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 /* global describe beforeEach cy it expect require */
 
 var helper = require('../../common/helper');
@@ -117,3 +118,5 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Delete Objects', function()
 		cy.cGet('#test-div-shapeHandlesSection').should('not.exist');
 	});
 });
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

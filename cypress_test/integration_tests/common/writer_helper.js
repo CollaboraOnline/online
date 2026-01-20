@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 /* global cy require*/
 
 var helper = require('./helper');
@@ -84,3 +85,5 @@ module.exports.openFileProperties = openFileProperties;
 module.exports.openQuickFind = openQuickFind;
 module.exports.searchInQuickFind = searchInQuickFind;
 module.exports.assertQuickFindMatches = assertQuickFindMatches;
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

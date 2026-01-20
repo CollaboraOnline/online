@@ -107,3 +107,5 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Slide operations', functio
 			});
 	});
 });
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

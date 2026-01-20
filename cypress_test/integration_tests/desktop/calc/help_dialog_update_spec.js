@@ -39,3 +39,5 @@ describe(['tagscreenshot'], 'Help dialog update', function() {
 	});
 
 });
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

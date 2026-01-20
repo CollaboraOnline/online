@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 /* global cy expect require Cypress */
 
 var helper = require('./helper');
@@ -391,3 +392,5 @@ module.exports.deleteImage = deleteImage;
 module.exports.insertComment = insertComment;
 module.exports.pressPushButtonOfDialog = pressPushButtonOfDialog;
 module.exports.getCompactIcon = getCompactIcon;
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

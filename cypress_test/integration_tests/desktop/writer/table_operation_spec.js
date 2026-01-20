@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 /* global describe it cy beforeEach Cypress require expect */
 
 var helper = require('../../common/helper');
@@ -310,3 +311,5 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Table operations', functio
 		cy.cGet('#copy-paste-container tbody').find('tr').should('have.length.greaterThan', 0);
 	});
 });
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */
