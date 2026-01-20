@@ -211,8 +211,17 @@ void processIntegratorAdminFile(const std::string& payload)
         return;
     alreadyProcessed = true;
 
+    const std::string subFolder =
+#if defined(_WIN32)
+        "cool"
+#elif defined(MACOS)
+        "Resources"
+#else
+        "browser/dist"
+#endif
+        ;
     const std::string filePath =
-        getDataDir() + "/browser/dist/adminIntegratorSettings.html";
+        getDataDir() + "/" + subFolder + "/adminIntegratorSettings.html";
 
     std::string adminFile;
     {
