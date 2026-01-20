@@ -154,7 +154,7 @@ abstract class SettingsStorage {
 
 class DesktopSettingsStorage extends SettingsStorage {
 	async fetchSettingsConfig(): Promise<ConfigData> {
-		const configJson = await (window.parent as any).postMobileMessage(
+		const configJson = await (window.parent as any).postMobileCall(
 			'FETCHSETTINGSCONFIG',
 		);
 		return JSON.parse(configJson);
@@ -174,7 +174,7 @@ class DesktopSettingsStorage extends SettingsStorage {
 	}
 
 	async fetchSettingFile(fileUrl: string): Promise<string | null> {
-		const result = await (window.parent as any).postMobileMessage(
+		const result = await (window.parent as any).postMobileCall(
 			'FETCHSETTINGSFILE ' + fileUrl,
 		);
 		return result.content;
