@@ -510,6 +510,7 @@ algned to the bottom */
 
 /* Expander */
 
+.jsdialog.ui-linkbutton,
 .jsdialog.ui-expander {
 	box-shadow: 0 1px 0px 0 var(--color-border-lighter);
 	background-color: transparent;
