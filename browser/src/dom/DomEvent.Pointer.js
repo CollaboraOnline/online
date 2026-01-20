@@ -120,3 +120,5 @@ window.L.extend(window.L.DomEvent, {
 		obj.addEventListener(this.POINTER_CANCEL, onUp, false);
 	}
 });
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

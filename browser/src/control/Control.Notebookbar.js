@@ -705,3 +705,5 @@ window.L.Control.Notebookbar = window.L.Control.extend({
 		});
 	}
 });
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

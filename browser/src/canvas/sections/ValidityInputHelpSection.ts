@@ -44,3 +44,5 @@ class ValidityInputHelpSection extends HTMLObjectSection {
 }
 
 app.definitions.validityInputHelpSection = ValidityInputHelpSection;
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

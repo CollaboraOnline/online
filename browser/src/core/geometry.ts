@@ -440,3 +440,5 @@ export function rectanglesToPolygon(rectangles: Array<number[]>, converterConsta
 }
 
 }
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

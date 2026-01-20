@@ -81,3 +81,5 @@ export class CornerGroup extends GroupBase {
 	/* Only background and border drawings are needed for this section. And they are handled by CanvasSectionContainer. */
 }
 }
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

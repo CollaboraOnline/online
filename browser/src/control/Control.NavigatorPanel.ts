@@ -579,3 +579,5 @@ class NavigatorPanel extends SidebarBase {
 JSDialog.NavigatorPanel = function (map: any) {
 	return new NavigatorPanel(map);
 };
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

@@ -148,3 +148,5 @@ class PauseTimerGl extends StaticTextRenderer implements PauseTimer {
 SlideShow.PauseTimer = PauseTimer;
 SlideShow.PauseTimer2d = PauseTimer2d;
 SlideShow.PauseTimerGl = PauseTimerGl;
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

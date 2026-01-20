@@ -275,3 +275,5 @@ class Transition3d extends TransitionBase {
 }
 
 SlideShow.Transition3d = Transition3d;
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

@@ -1492,3 +1492,5 @@ window.L.clipboard = function(map) {
 		window.app.console.log('======> Assertion failed!? No window.L.Clipboard object should be needed in the Android app');
 	return new window.L.Clipboard(map);
 };
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

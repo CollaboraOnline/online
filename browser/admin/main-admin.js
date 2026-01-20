@@ -23,3 +23,5 @@ global.l10nstrings = require('./admin.strings.js');
 
 global.d3 = require('d3');
 global.Admin = require('admin-src.js');
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

@@ -208,3 +208,5 @@ window.addEventListener('keyup', function iframeKeyupListener (e) {
 window.L.iframeDialog = function (url, params, element, options) {
 	return new window.L.IFrameDialog(url, params, element, options);
 };
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

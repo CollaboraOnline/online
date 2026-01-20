@@ -76,3 +76,5 @@ abstract class SlideCompositor {
 }
 
 SlideShow.SlideCompositor = SlideCompositor;
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

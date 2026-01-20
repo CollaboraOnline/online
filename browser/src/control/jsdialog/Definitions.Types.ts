@@ -440,3 +440,5 @@ interface AriaLabelAttributes {
 interface SeparatorWidgetJSON extends WidgetJSON {
 	orientation: 'horizontal' | 'vertical';
 }
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

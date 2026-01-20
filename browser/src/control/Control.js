@@ -128,3 +128,5 @@ window.L.Map.include({
 		window.L.DomUtil.remove(this._controlContainer);
 	}
 });
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

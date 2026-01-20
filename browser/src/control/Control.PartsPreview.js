@@ -892,3 +892,5 @@ window.L.Control.PartsPreview = window.L.Control.extend({
 window.L.control.partsPreview = function (container, preview, options) {
 	return new window.L.Control.PartsPreview(container, preview, options);
 };
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

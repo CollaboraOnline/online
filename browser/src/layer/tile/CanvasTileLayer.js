@@ -4167,3 +4167,5 @@ window.L.MessageStore = window.L.Class.extend({
 		messages['textselectionend'] = 'textselectionend: ';
 	}
 });
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

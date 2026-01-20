@@ -218,3 +218,5 @@ class SnackbarController {
 }
 
 JSDialog.SnackbarController = new SnackbarController();
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

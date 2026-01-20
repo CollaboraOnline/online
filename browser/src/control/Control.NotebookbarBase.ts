@@ -152,3 +152,5 @@ class NotebookbarBase extends JSDialogComponent {
 JSDialog.NotebookbarBase = function (map: any, impl: any) {
 	return new NotebookbarBase(map, impl);
 };
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

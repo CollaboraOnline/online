@@ -2654,3 +2654,5 @@ export class CommentSection extends CanvasSectionObject {
 }
 
 app.definitions.CommentSection = cool.CommentSection;
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

@@ -91,3 +91,5 @@ class FadeTransition extends SlideShow.Transition2d {
 }
 
 SlideShow.FadeTransition = FadeTransition;
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

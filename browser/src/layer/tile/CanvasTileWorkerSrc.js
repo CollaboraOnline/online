@@ -111,3 +111,5 @@ if ('undefined' === typeof window) {
 		}
 	}
 }
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

@@ -78,3 +78,5 @@ class DiagonalTransition extends ClippingTransition {
 }
 
 SlideShow.DiagonalTransition = DiagonalTransition;
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

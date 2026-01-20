@@ -2416,3 +2416,5 @@ class TileManager {
 		if (!tile.image) tile.missingContent++;
 	}
 }
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

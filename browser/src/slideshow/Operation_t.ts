@@ -48,3 +48,5 @@ class Operation_t {
 	}
 }
 SlideShow.Operation_t = Operation_t;
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

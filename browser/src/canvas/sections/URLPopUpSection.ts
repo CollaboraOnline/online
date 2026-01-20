@@ -217,3 +217,5 @@ class URLPopUpSection extends HTMLObjectSection {
 		return app.sectionContainer.doesSectionExist(URLPopUpSection.sectionName);
     }
 }
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

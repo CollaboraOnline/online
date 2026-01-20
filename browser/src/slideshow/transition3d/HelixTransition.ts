@@ -105,3 +105,5 @@ function makeHelixTransition(
 }
 
 SlideShow.makeHelixTransition = makeHelixTransition;
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

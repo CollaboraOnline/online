@@ -229,3 +229,5 @@ class Transition2d extends TransitionBase {
 }
 
 SlideShow.Transition2d = Transition2d;
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

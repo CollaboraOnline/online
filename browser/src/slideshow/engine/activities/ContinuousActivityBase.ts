@@ -30,3 +30,5 @@ abstract class ContinuousActivityBase extends SimpleContinuousActivityBase {
 		);
 	}
 }
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

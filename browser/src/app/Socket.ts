@@ -2237,3 +2237,5 @@ class Socket {
 }
 
 app.definitions.Socket = Socket;
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

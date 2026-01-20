@@ -165,3 +165,5 @@ class TraceEvents {
 		return this.createComplete(pretty, { message: textMsg });
 	}
 }
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

@@ -174,3 +174,5 @@ class SidebarFromNotebookbarPanel extends Sidebar {
 JSDialog.SidebarFromNotebookbarPanel = function (map: any) {
 	return new SidebarFromNotebookbarPanel(map);
 };
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

@@ -24,3 +24,5 @@ class BaseClass implements IDAble {
 		this.baseOptions = opts;
 	}
 }
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

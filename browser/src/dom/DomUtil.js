@@ -295,3 +295,5 @@ window.L.DomUtil = {
 		window.L.DomEvent.off(window, 'keydown', window.L.DomUtil.restoreOutline, this);
 	};
 })();
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

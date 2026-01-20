@@ -65,3 +65,5 @@ class VenetianTransition extends ClippingTransition {
 }
 
 SlideShow.VenetianTransition = VenetianTransition;
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

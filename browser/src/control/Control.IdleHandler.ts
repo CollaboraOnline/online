@@ -252,3 +252,5 @@ class IdleHandler {
 
 // Initiate the class.
 app.idleHandler = new IdleHandler();
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

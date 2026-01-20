@@ -108,3 +108,5 @@ class UncoverTransition extends Transition2d {
 }
 
 SlideShow.UncoverTransition = UncoverTransition;
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

@@ -53,3 +53,5 @@ abstract class AnimationActivity {
 	abstract end(): void;
 	abstract setTargets(aTargetElement: any): void;
 }
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

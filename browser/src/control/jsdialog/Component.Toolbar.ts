@@ -243,3 +243,5 @@ class Toolbar extends JSDialogComponent {
 }
 
 JSDialog.Toolbar = Toolbar;
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

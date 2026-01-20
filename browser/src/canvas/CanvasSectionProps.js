@@ -142,3 +142,5 @@ app.CSections.ContentControl.drawingOrder =			1; // Writer.
 app.CSections.Scroll.processingOrder = 				1; // Writer & Impress & Calc.
 
 app.CSections.Scroll.drawingOrder = 					1; // Writer & Impress & Calc.
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

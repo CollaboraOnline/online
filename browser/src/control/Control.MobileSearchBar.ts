@@ -61,3 +61,5 @@ class MobileSearchBar extends Toolbar {
 JSDialog.MobileSearchBar = function (map: any) {
 	return new MobileSearchBar(map);
 };
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

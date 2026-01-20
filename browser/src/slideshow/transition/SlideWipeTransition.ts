@@ -21,3 +21,5 @@ function SlideWipeTransition(transitionParameters: TransitionParameters) {
 }
 
 SlideShow.SlideWipeTransition = SlideWipeTransition;
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

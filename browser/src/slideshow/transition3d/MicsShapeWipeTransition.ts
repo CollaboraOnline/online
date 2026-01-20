@@ -56,3 +56,5 @@ function MicsShapeWipeTransition(transitionParameters: TransitionParameters) {
 }
 
 SlideShow.MicsShapeWipeTransition = MicsShapeWipeTransition;
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

@@ -565,3 +565,5 @@ class TopToolbar extends JSDialog.Toolbar {
 JSDialog.TopToolbar = function (map) {
 	return new TopToolbar(map);
 };
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

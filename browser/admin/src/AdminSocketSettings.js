@@ -124,3 +124,5 @@ var AdminSocketSettings = AdminSocketBase.extend({
 Admin.Settings = function(host) {
 	return new AdminSocketSettings(host);
 };
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

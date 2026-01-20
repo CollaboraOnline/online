@@ -209,3 +209,5 @@ class CPolyline extends CPath {
 		return this.pointSet.empty();
 	}
 }
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

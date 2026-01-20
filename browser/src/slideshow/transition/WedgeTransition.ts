@@ -45,3 +45,5 @@ class WedgeTransition extends ClippingTransition {
 }
 
 SlideShow.WedgeTransition = WedgeTransition;
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

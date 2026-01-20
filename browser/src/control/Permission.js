@@ -248,3 +248,5 @@ window.L.Map.include({
 		return this._permission === 'edit';
 	}
 });
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

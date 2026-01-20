@@ -181,3 +181,5 @@ class SheetsBar {
 JSDialog.SheetsBar = function (map, showNavigation) {
 	return new SheetsBar(map, showNavigation);
 };
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

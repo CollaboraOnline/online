@@ -60,3 +60,5 @@ window.L.Control.PermissionSwitch = window.L.Control.extend({
 window.L.control.permissionSwitch = function (options) {
 	return new window.L.Control.PermissionSwitch(options);
 };
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

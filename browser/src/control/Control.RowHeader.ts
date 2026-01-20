@@ -291,3 +291,5 @@ export class RowHeader extends cool.Header {
 }
 
 app.definitions.rowHeader = cool.RowHeader;
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

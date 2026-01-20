@@ -355,3 +355,5 @@ window.L.installContextMenu = function(options) {
 	}
 	$.contextMenu(options);
 };
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

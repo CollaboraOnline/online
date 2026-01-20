@@ -420,3 +420,5 @@ class ViewLayoutMultiPage extends ViewLayoutBase {
 		return sideSpace;
 	}
 }
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

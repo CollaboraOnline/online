@@ -99,3 +99,5 @@ class Primitive {
 }
 
 SlideShow.Primitive = Primitive;
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

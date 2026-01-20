@@ -135,3 +135,5 @@ class AddressInputField {
 JSDialog.AddressInputField = function (map: any) {
 	return new AddressInputField(map);
 };
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

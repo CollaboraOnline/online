@@ -118,3 +118,5 @@ const MenuCommands: MenuCommandsInterface = {
 };
 
 JSDialog.MenuCommands = MenuCommands;
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

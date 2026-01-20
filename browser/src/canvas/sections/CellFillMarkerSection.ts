@@ -22,3 +22,5 @@ app.definitions.CellFillMarkerSection = class CellFillMarkerSection extends (
 		super(app.CSections.CellFillMarker.name);
 	}
 };
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

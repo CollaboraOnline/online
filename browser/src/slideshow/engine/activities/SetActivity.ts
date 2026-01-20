@@ -113,3 +113,5 @@ class SetActivity extends AnimationActivity {
 		this.aTargetElement = aTargetElement;
 	}
 }
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

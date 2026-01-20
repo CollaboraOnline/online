@@ -29,3 +29,5 @@
 /// <reference path="./ViewLayout.test.ts" />
 /// <reference path="./ServerCommand.test.ts" />
 // NOTE: reference new tests here ...
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

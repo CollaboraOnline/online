@@ -294,3 +294,5 @@ window.L.Map.FileInserter = window.L.Handler.extend({
 });
 
 window.L.Map.addInitHook('addHandler', 'fileInserter', window.L.Map.FileInserter);
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

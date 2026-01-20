@@ -137,3 +137,5 @@ class MobileTopBar extends JSDialog.Toolbar {
 JSDialog.MobileTopBar = function (map: any) {
 	return new MobileTopBar(map);
 };
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

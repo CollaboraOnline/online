@@ -579,3 +579,5 @@ class VRuler extends Ruler {
 		this._markerHorizontalLine.style.left = this._lastposition + 'px';
 	}
 }
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

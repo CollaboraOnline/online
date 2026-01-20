@@ -20,3 +20,5 @@ class NoTransition extends Transition2d {
 }
 
 SlideShow.NoTransition = NoTransition;
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

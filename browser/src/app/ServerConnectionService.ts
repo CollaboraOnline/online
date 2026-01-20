@@ -110,3 +110,5 @@ class ServerConnectionService {
 		app.console.debug('ServerConnectionService: onNotebookbarInCoreInit');
 	}
 }
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

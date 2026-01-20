@@ -61,3 +61,5 @@ class OvalTransition extends ClippingTransition {
 }
 
 SlideShow.OvalTransition = OvalTransition;
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

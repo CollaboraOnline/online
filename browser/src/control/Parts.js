@@ -597,3 +597,5 @@ window.L.Map.include({
 		return this.getDocType() === 'text';
 	},
 });
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

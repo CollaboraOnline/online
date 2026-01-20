@@ -1601,3 +1601,5 @@ window.L.TextInput = window.L.Layer.extend({
 window.L.textInput = function() {
 	return new window.L.TextInput();
 };
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

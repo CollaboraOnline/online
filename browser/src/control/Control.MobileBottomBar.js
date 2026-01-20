@@ -284,3 +284,5 @@ class MobileBottomBar extends JSDialog.Toolbar {
 JSDialog.MobileBottomBar = function (map) {
 	return new MobileBottomBar(map);
 };
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

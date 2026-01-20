@@ -37,3 +37,5 @@ class DiamondTransition extends ClippingTransition {
 }
 
 SlideShow.DiamondTransition = DiamondTransition;
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

@@ -441,3 +441,5 @@ class Xcu {
 }
 
 (window as any).Xcu = Xcu;
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

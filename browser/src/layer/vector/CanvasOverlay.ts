@@ -489,3 +489,5 @@ class CanvasOverlay extends CanvasSectionObject {
 		return this.map;
 	}
 }
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

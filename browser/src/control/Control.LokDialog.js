@@ -1119,3 +1119,5 @@ window.L.Control.LokDialog = window.L.Control.extend({
 window.L.control.lokDialog = function (options) {
 	return new window.L.Control.LokDialog(options);
 };
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

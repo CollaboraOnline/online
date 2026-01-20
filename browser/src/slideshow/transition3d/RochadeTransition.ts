@@ -150,3 +150,5 @@ function RochadeTransition(transitionParameters: TransitionParameters) {
 /* jscpd:ignore-end */
 
 SlideShow.RochadeTransition = RochadeTransition;
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

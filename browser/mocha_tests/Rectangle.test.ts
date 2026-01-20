@@ -362,3 +362,5 @@ describe('coordinate API tests', function () {
 }); // describe('coordinate API tests', function () {
 
 }); // root describe.
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

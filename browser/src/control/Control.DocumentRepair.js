@@ -220,3 +220,5 @@ window.L.Control.DocumentRepair = window.L.Control.extend({
 window.L.control.documentRepair = function (options) {
 	return new window.L.Control.DocumentRepair(options);
 };
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

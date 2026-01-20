@@ -1289,3 +1289,5 @@ window.L.CalcTileLayer = window.L.CanvasTileLayer.extend({
 		return this._selectedPart;
 	},
 });
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

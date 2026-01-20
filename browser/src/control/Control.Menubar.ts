@@ -2987,3 +2987,5 @@ class Menubar extends window.L.Control {
 		}
 	}
 }
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

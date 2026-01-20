@@ -68,3 +68,5 @@ errorMessages.uploadfile = {
 if (typeof window !== 'undefined') {
 	window.errorMessages = errorMessages;
 }
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

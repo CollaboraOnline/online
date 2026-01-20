@@ -385,3 +385,5 @@ window.L.Map.SlideShow = window.L.Handler.extend({
 });
 
 window.L.Map.addInitHook('addHandler', 'slideShow', window.L.Map.SlideShow);
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

@@ -40,3 +40,5 @@ class CutTransition extends SlideShow.Transition2d {
 }
 
 SlideShow.CutTransition = CutTransition;
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

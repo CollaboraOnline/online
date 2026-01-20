@@ -531,3 +531,5 @@ class AboutDialog {
 JSDialog.aboutDialog = (map: any) => {
 	return new AboutDialog(map);
 };
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

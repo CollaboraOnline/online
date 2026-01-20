@@ -2372,3 +2372,5 @@ menuDefinitions.set('PictureEffectsMenu', [
 ] as Array<MenuDefinition>);
 
 JSDialog.MenuDefinitions = menuDefinitions;
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

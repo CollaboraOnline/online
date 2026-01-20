@@ -85,3 +85,5 @@ function TurnAroundTransition(transitionParameters: TransitionParameters) {
 /* jscpd:ignore-end */
 
 SlideShow.TurnAroundTransition = TurnAroundTransition;
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

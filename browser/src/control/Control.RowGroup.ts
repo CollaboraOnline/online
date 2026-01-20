@@ -213,3 +213,5 @@ export class RowGroup extends GroupBase {
 }
 
 }
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

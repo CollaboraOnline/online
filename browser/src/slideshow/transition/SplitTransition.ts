@@ -47,3 +47,5 @@ class SplitTransition extends ClippingTransition {
 }
 
 SlideShow.SplitTransition = SplitTransition;
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

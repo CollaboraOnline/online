@@ -98,3 +98,5 @@ class SourceEventElement implements MouseClickHandler {
 		this._canvas.style.cursor = 'default';
 	}
 }
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

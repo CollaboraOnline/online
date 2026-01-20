@@ -3572,3 +3572,5 @@ window.L.Control.NotebookbarCalc = window.L.Control.NotebookbarWriter.extend({
 window.L.control.notebookbarCalc = function (options) {
 	return new window.L.Control.NotebookbarCalc(options);
 };
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

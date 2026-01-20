@@ -130,3 +130,5 @@ JSDialog.searchEdit = function (
 	const widget = new SearchEditWidget(parentContainer, data, builder, callback);
 	return widget.build();
 };
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

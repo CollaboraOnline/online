@@ -164,3 +164,5 @@ window.L.Map.Scroll = window.L.Handler.extend({
 			true /* noGap */);
 	},
 });
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

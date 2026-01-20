@@ -68,3 +68,5 @@ window.L.extend(window.L.DomEvent, {
 		return this;
 	}
 });
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

@@ -248,3 +248,5 @@ window.L.Layer.getLayerPositionVisibility = function (latlng, boundingClientRect
 		visibility: makeHidden ? 'hidden' : 'visible'
 	};
 };
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

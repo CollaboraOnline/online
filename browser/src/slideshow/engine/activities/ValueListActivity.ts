@@ -224,3 +224,5 @@ type ValueListActivityCtorType = new (
 	aOperatorSet: PropertyOperatorSet,
 	bAccumulate: boolean,
 ) => ActivityBase;
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

@@ -39,3 +39,5 @@ class CircleTransition extends ClippingTransition {
 }
 
 SlideShow.CircleTransition = CircleTransition;
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

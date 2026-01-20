@@ -2205,3 +2205,5 @@ window.L.Control.Zotero = window.L.Control.extend({
 window.L.control.zotero = function (map) {
 	return new window.L.Control.Zotero(map);
 };
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

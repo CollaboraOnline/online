@@ -130,3 +130,5 @@ class TimerRegistry {
 // Global instance
 (window as any).app = (window as any).app || {};
 (window as any).app.timerRegistry = new TimerRegistry();
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

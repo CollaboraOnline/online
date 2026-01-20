@@ -53,3 +53,5 @@ JSDialog.slideLayoutEntry = function (
 	parentContainer.appendChild(widget);
 	return false;
 };
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

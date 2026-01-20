@@ -468,3 +468,5 @@ app.events.on(
 );
 
 app.definitions.graphicSelection = GraphicSelection;
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

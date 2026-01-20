@@ -353,3 +353,5 @@ class FormulaBar {
 JSDialog.FormulaBar = function (map) {
 	return new FormulaBar(map);
 };
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

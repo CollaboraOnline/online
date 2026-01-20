@@ -207,3 +207,5 @@ function testsForPart(partTestData: PartTestData, part: number, zoom: number, sg
 }
 
 }); // root describe
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

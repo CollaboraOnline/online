@@ -95,3 +95,5 @@ function RippleTransition(transitionParameters: TransitionParameters) {
 }
 
 SlideShow.RippleTransition = RippleTransition;
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

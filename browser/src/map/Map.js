@@ -1794,3 +1794,5 @@ window.L.Map = window.L.Evented.extend({
 window.L.map = function (id, options) {
 	return new window.L.Map(id, options);
 };
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

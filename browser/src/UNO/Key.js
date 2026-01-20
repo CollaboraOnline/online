@@ -146,3 +146,5 @@ window.UNOKey = {
 	SELECT_TO_BEGIN_OF_PARAGRAPH: 1564,
 	SELECT_TO_END_OF_PARAGRAPH: 1565
 };
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

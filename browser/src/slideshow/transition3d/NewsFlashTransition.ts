@@ -105,3 +105,5 @@ function NewsFlashTransition(transitionParameters: TransitionParameters) {
 }
 
 SlideShow.NewsFlashTransition = NewsFlashTransition;
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

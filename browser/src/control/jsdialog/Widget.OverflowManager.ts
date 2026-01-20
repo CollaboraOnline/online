@@ -120,3 +120,5 @@ JSDialog.OverflowManager = function (
 	app.console.debug('Create OverflowManager for: "' + data.id + '"');
 	return true;
 } as JSWidgetHandler;
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

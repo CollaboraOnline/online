@@ -47,3 +47,5 @@ JSDialog.calendar = function (parentContainer, data, builder) {
 	const buildInnerData = _calendarControl(parentContainer, data, builder);
 	return buildInnerData;
 };
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

@@ -476,3 +476,5 @@ class LayerRenderer2d implements LayerRenderer {
 
 SlideShow.LayerRendererGl = LayerRendererGl;
 SlideShow.LayerRenderer2d = LayerRenderer2d;
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

@@ -1435,3 +1435,5 @@ class DebugManager {
 }
 
 app.DebugManager = DebugManager;
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

@@ -77,3 +77,5 @@ var AdminSocketBase = Base.extend({
 		dialog.open();
 	}
 });
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

@@ -117,3 +117,5 @@ window.L.Control.AlertDialog = window.L.Control.extend({
 window.L.control.alertDialog = function (options) {
 	return new window.L.Control.AlertDialog(options);
 };
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

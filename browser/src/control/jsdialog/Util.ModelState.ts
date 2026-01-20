@@ -183,3 +183,5 @@ class JSDialogModelState {
 		return null;
 	}
 }
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

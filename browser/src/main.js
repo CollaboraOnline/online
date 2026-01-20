@@ -133,3 +133,5 @@ if (uaLowerCase.indexOf('msie') != -1 || uaLowerCase.indexOf('trident') != -1) {
 }
 
 }(window));
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

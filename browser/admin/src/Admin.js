@@ -3,3 +3,5 @@
 
 var Admin = {};
 module.exports = Admin;
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

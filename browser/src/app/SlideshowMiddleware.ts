@@ -148,3 +148,5 @@ class SlideBitmapManager {
 		this.compressedSlideCache.get(json.slideHash).push({ json, imgRawData });
 	}
 }
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

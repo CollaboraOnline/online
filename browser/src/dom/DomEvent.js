@@ -292,3 +292,5 @@ window.L.DomEvent = {
 
 window.L.DomEvent.addListener = window.L.DomEvent.on;
 window.L.DomEvent.removeListener = window.L.DomEvent.off;
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

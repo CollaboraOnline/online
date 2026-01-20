@@ -101,3 +101,5 @@ class PushTransition extends Transition2d {
 }
 
 SlideShow.PushTransition = PushTransition;
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

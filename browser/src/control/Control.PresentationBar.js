@@ -215,3 +215,5 @@ class PresentationBar {
 JSDialog.PresentationBar = function (map) {
 	return new PresentationBar(map);
 };
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

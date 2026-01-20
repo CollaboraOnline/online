@@ -206,3 +206,5 @@ window.L.LineUtil = {
 		return sqDist ? dx * dx + dy * dy : new cool.Point(x, y);
 	}
 };
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

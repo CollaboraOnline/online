@@ -85,3 +85,5 @@ class CombTransition extends Transition2d {
 }
 
 SlideShow.CombTransition = CombTransition;
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

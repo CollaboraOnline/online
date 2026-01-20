@@ -249,3 +249,5 @@ export class ContentControlSection extends CanvasSectionObject {
 
 app.definitions.ContentControlSection = cool.ContentControlSection;
 
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

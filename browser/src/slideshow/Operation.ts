@@ -40,3 +40,5 @@ class OpsHelper {
 }
 
 SlideShow.OpsHelper = OpsHelper;
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

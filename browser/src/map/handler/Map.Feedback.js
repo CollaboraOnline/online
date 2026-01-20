@@ -162,3 +162,5 @@ window.L.Map.Feedback = window.L.Handler.extend({
 if (window.feedbackUrl && window.prefs.canPersist) {
 	window.L.Map.addInitHook('addHandler', 'feedback', window.L.Map.Feedback);
 }
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

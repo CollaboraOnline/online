@@ -869,3 +869,5 @@ window.L.control.mobileWizardBuilder = function (options) {
 	builder._customizeOptions();
 	return builder;
 };
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

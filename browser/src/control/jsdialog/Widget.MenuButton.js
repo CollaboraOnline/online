@@ -201,3 +201,5 @@ JSDialog.menubuttonControl = function (parentContainer, data, builder) {
 	var buildInnerData = _menubuttonControl(parentContainer, data, builder);
 	return buildInnerData;
 };
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

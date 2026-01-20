@@ -183,3 +183,5 @@ JSDialog.mobileSubmenuTabControl = function (parentContainer, data, builder) {
 	var buildInnerData = _tabsToSubmenuConverter(parentContainer, data, builder);
 	return buildInnerData;
 };
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

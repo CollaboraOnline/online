@@ -88,3 +88,5 @@ if (!Number.MAX_SAFE_INTEGER) {
 window.L.extend = window.L.Util.extend;
 window.L.bind = window.L.Util.bind;
 window.L.setOptions = window.L.Util.setOptions;
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

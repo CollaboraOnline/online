@@ -199,3 +199,5 @@ class A11yValidator {
 
 window.app.a11yValidator = new A11yValidator();
 window.app.A11yValidatorException = A11yValidatorException;
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

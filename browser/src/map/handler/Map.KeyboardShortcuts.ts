@@ -383,3 +383,5 @@ keyboardShortcuts.definitions.set('fr', new Array<ShortcutDescriptor>(
 ));
 
 window.KeyboardShortcuts = keyboardShortcuts;
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

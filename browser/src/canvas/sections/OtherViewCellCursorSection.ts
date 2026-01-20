@@ -232,3 +232,5 @@ class OtherViewCellCursorSection extends CanvasSectionObject {
 }
 
 app.definitions.otherViewCellCursorSection = OtherViewCellCursorSection;
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

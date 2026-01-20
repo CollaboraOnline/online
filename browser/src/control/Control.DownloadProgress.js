@@ -327,3 +327,5 @@ window.L.Control.DownloadProgress = window.L.Control.extend({
 window.L.control.downloadProgress = function (options) {
 	return new window.L.Control.DownloadProgress(options);
 };
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

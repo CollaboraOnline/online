@@ -64,3 +64,4 @@ window.L.control.mobileSlide = function (options) {
 	return new window.L.Control.MobileSlide(options);
 };
 
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

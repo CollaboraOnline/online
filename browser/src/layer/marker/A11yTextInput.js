@@ -627,3 +627,5 @@ window.L.A11yTextInput = window.L.TextInput.extend({
 L.a11yTextInput = function() {
 	return new window.L.A11yTextInput();
 };
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

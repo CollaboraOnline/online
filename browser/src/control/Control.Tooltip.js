@@ -194,3 +194,5 @@ window.L.control.tooltip = function (options) {
 };
 
 window.L.control.attachTooltipEventListener = Tooltip.attachEventListener;
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

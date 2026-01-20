@@ -476,3 +476,5 @@ JSDialog.formulabarEdit = function (parentContainer, data, builder) {
 	var buildInnerData = _formulabarEditControl(parentContainer, data, builder);
 	return buildInnerData;
 };
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

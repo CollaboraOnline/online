@@ -59,3 +59,5 @@ class WheelTransition extends ClippingTransition {
 }
 
 SlideShow.WheelTransition = WheelTransition;
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

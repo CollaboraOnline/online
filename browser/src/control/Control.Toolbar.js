@@ -1179,3 +1179,5 @@ global.onCommandStateChanged = onCommandStateChanged;
 global.processStateChangedCommand = processStateChangedCommand;
 global.getColorPickerData = getColorPickerData;
 }(window));
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

@@ -1776,3 +1776,5 @@ export class Comment extends CanvasSectionObject {
 }
 
 app.definitions.Comment = cool.Comment;
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

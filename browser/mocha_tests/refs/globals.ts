@@ -23,3 +23,5 @@ var app: any = {
     pixelsToTwips: 1 / 15,
     sectionContainer: {}
 };
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

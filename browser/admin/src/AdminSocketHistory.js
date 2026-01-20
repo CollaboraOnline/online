@@ -59,3 +59,5 @@ var AdminSocketHistory = AdminSocketBase.extend({
 Admin.History = function(host) {
 	return new AdminSocketHistory(host);
 };
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

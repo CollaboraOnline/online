@@ -137,3 +137,5 @@ window.L.WriterTileLayer = window.L.CanvasTileLayer.extend({
 		TileManager.resetPreFetching(true);
 	},
 });
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

@@ -501,3 +501,5 @@ function runTestsForContextType(contextType: string, callType: string) {
 	});
 }
 });
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

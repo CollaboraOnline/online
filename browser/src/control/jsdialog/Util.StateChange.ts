@@ -51,3 +51,5 @@ function synchronizeDisabledState(source: Element, targets: Array<Element>) {
 
 JSDialog.OnStateChange = onStateChange;
 JSDialog.SynchronizeDisabledState = synchronizeDisabledState;
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

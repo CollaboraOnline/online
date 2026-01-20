@@ -23,3 +23,5 @@ function EllipseWipeTransition(transitionParameters: TransitionParameters) {
 }
 
 SlideShow.EllipseWipeTransition = EllipseWipeTransition;
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */
