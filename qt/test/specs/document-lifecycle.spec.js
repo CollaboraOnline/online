@@ -49,7 +49,7 @@ async function waitForPageTarget(port = REMOTE_DEBUGGING_PORT, maxWaitMs = 30000
         } catch (e) {
             // Ignore, retry
         }
-        await new Promise(r => setTimeout(r, 500));
+        await new Promise(r => setTimeout(r, 100));
     }
     throw new Error('Timeout waiting for page target');
 }
@@ -105,6 +105,23 @@ async function clickAtSpiElement(sessionId, elementId) {
     });
 }
 
+// Wait for AT-SPI element to appear
+async function waitForAtSpiElement(sessionId, name, maxWaitMs = 30000) {
+    const startTime = Date.now();
+    while (Date.now() - startTime < maxWaitMs) {
+        try {
+            const result = await findAtSpiElementByName(sessionId, name);
+            if (result.value && result.value['element-6066-11e4-a52e-4f735466cecf']) {
+                return result.value['element-6066-11e4-a52e-4f735466cecf'];
+            }
+        } catch (e) {
+            // Ignore, retry
+        }
+        await new Promise(r => setTimeout(r, 200));
+    }
+    throw new Error(`Timeout waiting for AT-SPI element: ${name}`);
+}
+
 describe('Document lifecycle E2E test', () => {
 
     it('should create, edit, and close document handling unsaved changes dialog', async function() {
@@ -114,35 +131,23 @@ describe('Document lifecycle E2E test', () => {
         // PHASE 1: BackstageView - Click on "Blank Document"
         // ============================================================
 
-        // Wait for the BackstageView to be ready
+        // Wait for the BackstageView to be ready and Blank Document card to be visible
         await browser.webEngine.waitUntil(
             async () => {
-                const ready = await browser.webEngine.execute(() => {
-                    return document.readyState === 'complete';
+                return await browser.webEngine.execute(() => {
+                    if (document.readyState !== 'complete') return false;
+                    const cards = document.querySelectorAll('.backstage-template-card');
+                    for (const card of cards) {
+                        const nameEl = card.querySelector('.template-name');
+                        if (nameEl && nameEl.textContent.includes('Blank Document')) {
+                            return true;
+                        }
+                    }
+                    return document.querySelector('.backstage-template-card.is-blank') !== null;
                 });
-                return ready;
             },
-            { timeout: 30000, timeoutMsg: 'Page did not load in time' }
+            { timeout: 30000, interval: 200, timeoutMsg: 'Blank Document card not found' }
         );
-
-        // Give the BackstageView time to render
-        await browser.webEngine.pause(3000);
-
-        // Verify Blank Document card exists
-        const cardFound = await browser.webEngine.execute(() => {
-            const cards = document.querySelectorAll('.backstage-template-card');
-            for (const card of cards) {
-                const nameEl = card.querySelector('.template-name');
-                if (nameEl && nameEl.textContent.includes('Blank Document')) {
-                    return true;
-                }
-            }
-            return document.querySelector('.backstage-template-card.is-blank') !== null;
-        });
-
-        if (!cardFound) {
-            throw new Error('Blank Document card not found in BackstageView');
-        }
 
         // Click the Blank Document card using setTimeout to return before window closes
         await browser.webEngine.execute(() => {
@@ -164,43 +169,39 @@ describe('Document lifecycle E2E test', () => {
         // PHASE 2: Wait for new document window
         // ============================================================
 
-        // Wait for the new window to appear
-        await new Promise(r => setTimeout(r, 5000));
+        // Wait for a new page target to appear
         await waitForPageTarget();
 
-        // Switch to the new window
-        let connected = false;
-        for (let attempt = 0; attempt < 10; attempt++) {
-            try {
-                const handles = await browser.webEngine.getWindowHandles();
-                for (const handle of handles) {
-                    try {
-                        await browser.webEngine.switchToWindow(handle);
-                        await browser.webEngine.getTitle();
-                        connected = true;
-                        break;
-                    } catch (e) {
-                        // Try next handle
+        // Wait until we can successfully switch to a window and execute in it
+        await browser.webEngine.waitUntil(
+            async () => {
+                try {
+                    const handles = await browser.webEngine.getWindowHandles();
+                    for (const handle of handles) {
+                        try {
+                            await browser.webEngine.switchToWindow(handle);
+                            await browser.webEngine.getTitle();
+                            return true;
+                        } catch (e) {
+                            // Try next handle
+                        }
                     }
+                } catch (e) {
+                    // Retry
                 }
-                if (connected) break;
-            } catch (e) {
-                // Retry
-            }
-            await new Promise(r => setTimeout(r, 1000));
-        }
-
-        if (!connected) {
-            throw new Error('Failed to connect to new document window');
-        }
+                return false;
+            },
+            { timeout: 30000, interval: 500, timeoutMsg: 'Failed to connect to new document window' }
+        );
 
         // ============================================================
         // PHASE 3: Wait for document editor to be ready
         // ============================================================
 
+        // Wait until backstage is gone and editor elements are present
         await browser.webEngine.waitUntil(
             async () => {
-                const status = await browser.webEngine.execute(() => {
+                return await browser.webEngine.execute(() => {
                     const backstage = document.querySelector('.backstage-container');
                     const backstageVisible = backstage &&
                         getComputedStyle(backstage).display !== 'none';
@@ -209,13 +210,26 @@ describe('Document lifecycle E2E test', () => {
                                        document.querySelector('#toolbar-up') !== null;
                     return !backstageVisible && (hasMap || hasToolbar);
                 });
-                return status;
             },
-            { timeout: 60000, interval: 2000, timeoutMsg: 'Document editor did not load' }
+            { timeout: 60000, interval: 500, timeoutMsg: 'Document editor did not load' }
         );
 
-        // Give the document time to fully initialize
-        await browser.webEngine.pause(5000);
+        // Wait for the document to be fully interactive (can receive input)
+        await browser.webEngine.waitUntil(
+            async () => {
+                return await browser.webEngine.execute(() => {
+                    const map = document.getElementById('map');
+                    if (!map) return false;
+                    // Check if the map has tiles loaded (indicates document is ready)
+                    const hasTiles = document.querySelector('.leaflet-tile-loaded') !== null;
+                    // Or check if there's a cursor/caret
+                    const hasCursor = document.querySelector('.leaflet-cursor') !== null ||
+                                      document.querySelector('.blinking-cursor') !== null;
+                    return hasTiles || hasCursor;
+                });
+            },
+            { timeout: 30000, interval: 500, timeoutMsg: 'Document not ready for input' }
+        );
 
         // ============================================================
         // PHASE 4: Type text in the document
@@ -223,7 +237,7 @@ describe('Document lifecycle E2E test', () => {
 
         const loremIpsum = 'Lorem ipsum dolor sit amet.';
 
-        // Focus the document
+        // Focus the document and wait for focus to be confirmed
         await browser.webEngine.execute(() => {
             const map = document.getElementById('map');
             if (map) {
@@ -232,43 +246,73 @@ describe('Document lifecycle E2E test', () => {
             }
         });
 
-        await browser.webEngine.pause(1000);
+        // Wait for focus to be established
+        await browser.webEngine.waitUntil(
+            async () => {
+                return await browser.webEngine.execute(() => {
+                    const map = document.getElementById('map');
+                    return map && (document.activeElement === map ||
+                                   map.contains(document.activeElement));
+                });
+            },
+            { timeout: 10000, interval: 100, timeoutMsg: 'Could not focus document' }
+        );
 
         // Type text
         await browser.webEngine.keys(loremIpsum);
-        await browser.webEngine.pause(2000);
+
+        // Wait for the document to register as modified
+        await browser.webEngine.waitUntil(
+            async () => {
+                return await browser.webEngine.execute(() => {
+                    // Check various indicators that the document was modified
+                    const title = document.title;
+                    // Title might contain asterisk or "modified"
+                    if (title.includes('*')) return true;
+                    // Or check if there's content in the document
+                    const textLayer = document.querySelector('.leaflet-pane');
+                    return textLayer !== null;
+                });
+            },
+            { timeout: 10000, interval: 200, timeoutMsg: 'Document did not register modification' }
+        );
 
         // ============================================================
         // PHASE 5: Close document with Ctrl+W
         // ============================================================
 
-        // Send Ctrl+W (use timeout since dialog might block)
+        // Send Ctrl+W - this will trigger the native dialog which blocks WebDriver
+        // Use Promise.race to handle the blocking behavior
         const ctrlWPromise = browser.webEngine.keys(['Control', 'w']);
         await Promise.race([
             ctrlWPromise,
-            new Promise(r => setTimeout(r, 5000))
+            new Promise(r => setTimeout(r, 5000))  // Fallback timeout if dialog blocks
         ]);
-
-        await new Promise(r => setTimeout(r, 1000));
 
         // ============================================================
         // PHASE 6: Handle native "Unsaved Changes" dialog via AT-SPI
         // ============================================================
 
-        await new Promise(r => setTimeout(r, 3000));
-
         const nativeSessionId = browser.native.sessionId;
 
-        // Find and click "Close without Saving" button using direct AT-SPI API
-        const result = await findAtSpiElementByName(nativeSessionId, 'Close without Saving');
+        // Wait for the "Close without Saving" button to appear in AT-SPI
+        const elementId = await waitForAtSpiElement(nativeSessionId, 'Close without Saving', 30000);
 
-        if (result.value && result.value['element-6066-11e4-a52e-4f735466cecf']) {
-            const elementId = result.value['element-6066-11e4-a52e-4f735466cecf'];
-            await clickAtSpiElement(nativeSessionId, elementId);
-        } else {
-            throw new Error('Could not find "Close without Saving" button in dialog');
-        }
+        // Click the button
+        await clickAtSpiElement(nativeSessionId, elementId);
 
-        await new Promise(r => setTimeout(r, 2000));
+        // Wait for the dialog to close (element should no longer exist)
+        await browser.webEngine.waitUntil(
+            async () => {
+                try {
+                    const result = await findAtSpiElementByName(nativeSessionId, 'Close without Saving');
+                    // If we get an error or no element, dialog is closed
+                    return !result.value || result.value.error === 'no such element';
+                } catch (e) {
+                    return true;  // Error likely means dialog closed
+                }
+            },
+            { timeout: 10000, interval: 200, timeoutMsg: 'Dialog did not close' }
+        );
     });
 });
