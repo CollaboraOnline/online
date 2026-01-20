@@ -474,8 +474,10 @@ bool FileServerRequestHandler::isAdminLoggedIn(const HTTPRequest& request, http:
             fileInfo->set("Size", localFile->size);
             fileInfo->set("Version", "1.0");
             fileInfo->set("OwnerId", "test");
-            // usually in debug mode with debug.html the user that opening the document is same therefore set the static userId
-            fileInfo->set("UserId", "0");
+            // usually in debug mode with debug.html the user that opening the document is same therefore set a static userId
+            // if this is not the same as the OwnerId then the user is not considered the owner and cannot change the password
+            // via document, properties
+            fileInfo->set("UserId", "test");
             fileInfo->set("UserFriendlyName", userNameString);
 
             //allow &configid to override etag to force another subforkit
