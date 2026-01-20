@@ -16,8 +16,11 @@
 #include "FakeSocket.hpp"
 #include "MobileApp.hpp"
 #include "FileUtil.hpp"
+#include "JsonUtil.hpp"
 #include "Log.hpp"
+#include "Uri.hpp"
 #include "qt.hpp"
+#include <Poco/JSON/Object.h>
 #include <Poco/URI.h>
 #include <Poco/Path.h>
 
@@ -25,6 +28,15 @@
 #include <cstdlib>
 #include <cstring>
 #include <memory>
+#include <optional>
+
+#include <boost/asio/connect.hpp>
+#include <boost/asio/ip/tcp.hpp>
+#include <boost/asio/ssl/stream.hpp>
+#include <boost/beast/core.hpp>
+#include <boost/beast/ssl.hpp>
+#include <boost/beast/websocket.hpp>
+#include <boost/beast/websocket/ssl.hpp>
 
 #include <QMenuBar>
 #include <QMenu>
@@ -327,6 +339,14 @@ CODAWebEngineView::~CODAWebEngineView()
         QObject::disconnect(_screenRemoved);
 }
 
+struct WebView::ServerConnection {
+    ServerConnection(): ctx(boost::asio::ssl::context::tlsv12_client), ws(ioc, ctx) {}
+
+    boost::asio::io_context ioc;
+    boost::asio::ssl::context ctx;
+    boost::beast::websocket::stream<boost::beast::ssl_stream<boost::asio::ip::tcp::socket>> ws;
+};
+
 WebView::WebView(QWebEngineProfile* profile, bool isWelcome)
     : _mainWindow(new Window(nullptr, this))
     , _webView(std::make_unique<CODAWebEngineView>(_mainWindow))
@@ -473,6 +493,129 @@ void WebView::load(const Poco::URI& fileURL, bool newFile, bool isStarterMode)
             catch (const std::exception& e)
             {
                 LOG_ERR("Exception while copying file to temp: " << e.what());
+                return;
+            }
+        }
+        else if (fileURL.getScheme() == "remote")
+        {
+            assert(!_isWelcome);
+            assert(!newFile);
+
+            try
+            {
+                std::optional<std::string> accessToken;
+                std::optional<std::string> wopiSrc;
+                for (auto const & param: fileURL.getQueryParameters()) {
+                    if (param.first == "access_token") {
+                        accessToken = param.second;
+                    } else if (param.first == "WOPISrc") {
+                        wopiSrc = param.second;
+                    }
+                }
+                if (!(accessToken && wopiSrc)) {
+                    std::abort(); //TODO
+                }
+
+                Poco::Path originalPath(fileURL.getPath());
+                const std::string tempDirectoryPath = FileUtil::createRandomTmpDir();
+                std::vector<std::string> segments;
+                Poco::URI(*wopiSrc).getPathSegments(segments);
+                assert(!segments.empty()); //TODO
+                Poco::Path tempFilePath(tempDirectoryPath, segments.back());
+                const std::string tempFilePathStr = tempFilePath.toString();
+
+                _serverConnection = std::make_unique<ServerConnection>();
+
+                boost::asio::ip::tcp::resolver resolver(_serverConnection->ioc);
+                auto const port = fileURL.getSpecifiedPort();
+                auto const resolved = resolver.resolve(
+                    fileURL.getHost(),
+                    port == 0 ? net::getDefaultPortForScheme("https://") : std::to_string(port));
+                auto const ep = boost::asio::connect(
+                    boost::beast::get_lowest_layer(_serverConnection->ws), resolved);
+                _serverConnection->ws.next_layer().handshake(boost::asio::ssl::stream_base::client);
+                _serverConnection->ws.handshake(
+                    fileURL.getHost() + ":" + std::to_string(ep.port()),
+                    fileURL.getPath() + "/co/collab?WOPISrc=" + Uri::encode(*wopiSrc));
+
+                _serverConnection->ws.write(
+                    boost::asio::buffer(std::string("access_token " + *accessToken)));
+                for (;;) {
+                    boost::beast::flat_buffer buffer;
+                    _serverConnection->ws.read(buffer);
+                    std::string response = boost::beast::buffers_to_string(buffer.data());
+                    if (response.starts_with("progress:")
+                        || response.starts_with("{\"type\":\"user_list\""))
+                    {
+                        // ignore
+                    } else if (response == "authenticated") {
+                        break;
+                    } else {
+                        std::abort(); //TODO
+                    }
+                }
+
+                _serverConnection->ws.write(
+                    boost::asio::buffer(
+                        std::string(
+                            "{\"type\":\"fetch\",\"stream\":\"contents\",\"requestId\":\"coda-init\"}")));
+                std::string url;
+                {
+                    boost::beast::flat_buffer buffer;
+                    _serverConnection->ws.read(buffer);
+                    std::string response = boost::beast::buffers_to_string(buffer.data());
+                    Poco::JSON::Object::Ptr json;
+                    if (!JsonUtil::parseJSON(response, json)) {
+                        std::abort(); //TODO
+                    }
+                    if (!JsonUtil::findJSONValue(json, "url", url)) {
+                        std::abort(); //TODO
+                    }
+                }
+
+                boost::beast::ssl_stream<boost::beast::tcp_stream> stream(
+                    _serverConnection->ioc, _serverConnection->ctx);
+                boost::beast::get_lowest_layer(stream).connect(resolved);
+                stream.handshake(boost::asio::ssl::stream_base::client);
+                boost::beast::http::request<boost::beast::http::string_body> req(
+                    boost::beast::http::verb::get, url, 11);
+                req.set(boost::beast::http::field::host, fileURL.getHost());
+                req.set(boost::beast::http::field::user_agent, BOOST_BEAST_VERSION_STRING);
+                boost::beast::http::write(stream, req);
+                {
+                    boost::beast::flat_buffer buffer;
+                    boost::beast::http::response<boost::beast::http::string_body> res;
+                    boost::beast::http::read(stream, buffer, res);
+                    if (res.result() != boost::beast::http::status::ok) {
+                        std::abort(); //TODO
+                    }
+                    std::ofstream ofs(tempFilePathStr, std::ios::binary);
+                    if (!ofs) {
+                        std::abort(); //TODO
+                    }
+                    ofs << res.body();
+                    ofs.close();
+                }
+                boost::beast::error_code ec;
+                stream.shutdown(ec);
+                if (ec == boost::asio::error::eof
+                    || ec == boost::asio::ssl::error::stream_truncated)
+                {
+                    ec = {};
+                }
+                if (ec) {
+                    throw boost::beast::system_error{ec};
+                }
+
+                _document._fileURL = Poco::URI(tempFilePath);
+                _document._saveLocationURI
+                    = "https://" + fileURL.getHost() + ":" + std::to_string(ep.port())
+                    + fileURL.getPath() + "/co/collab/upload?WOPISrc=" + Uri::encode(*wopiSrc)
+                    + "&access_token=" + Uri::encode(*accessToken);
+            }
+            catch (const std::exception& e)
+            {
+                LOG_ERR("Exception while downloading file to temp: " << e.what());
                 return;
             }
         }

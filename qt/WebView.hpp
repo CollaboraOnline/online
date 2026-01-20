@@ -78,6 +78,8 @@ public:
     QMainWindow* getMainWindow() const { return _mainWindow; }
 
 private:
+    struct ServerConnection;
+
     // query gnome font scaling factor and apply it to the web view
     void queryGnomeFontScalingUpdateZoom();
     QMainWindow* _mainWindow;
@@ -85,6 +87,7 @@ private:
     coda::DocumentData _document;
     bool _isWelcome;
     Bridge* _bridge;
+    std::unique_ptr<ServerConnection> _serverConnection;
 
     static std::vector<WebView*> s_instances;
 };

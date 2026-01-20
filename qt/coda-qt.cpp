@@ -76,6 +76,20 @@
 #include <QWebEngineView>
 #include <QFileInfo>
 
+#include <boost/asio.hpp>
+#include <boost/beast/core/flat_buffer.hpp>
+#include <boost/beast/core/stream_traits.hpp>
+#include <boost/beast/core/tcp_stream.hpp>
+#include <boost/beast/http/field.hpp>
+#include <boost/beast/http/message.hpp>
+#include <boost/beast/http/read.hpp>
+#include <boost/beast/http/status.hpp>
+#include <boost/beast/http/string_body.hpp>
+#include <boost/beast/http/verb.hpp>
+#include <boost/beast/http/write.hpp>
+#include <boost/beast/ssl/ssl_stream.hpp>
+#include <boost/beast/version.hpp>
+
 #include <algorithm>
 #include <cassert>
 #include <cstdlib>
@@ -837,7 +851,8 @@ QVariant Bridge::cool(const QString& messageStr)
         if (isAutosave)
         {
             // for autosaves, only save if we have a save location already.
-            if (!_document._saveLocationURI.empty())
+            if (!_document._saveLocationURI.empty()
+                && _document._saveLocationURI.getScheme() != "https")
             {
                 const std::string savePath = Poco::Path(_document._saveLocationURI.getPath()).toString();
                 saveDocument(savePath);
@@ -852,8 +867,69 @@ QVariant Bridge::cool(const QString& messageStr)
             }
             else
             {
-                const std::string savePath = Poco::Path(_document._saveLocationURI.getPath()).toString();
-                saveDocument(savePath);
+                if (_document._saveLocationURI.getScheme() == "https")
+                {
+                    boost::asio::io_context ioc;
+                    boost::asio::ssl::context ctx(boost::asio::ssl::context::tlsv12_client);
+                    boost::beast::ssl_stream<boost::beast::tcp_stream> stream(ioc, ctx);
+                    boost::asio::ip::tcp::resolver resolver(ioc);
+                    auto const resolved = resolver.resolve(
+                        _document._saveLocationURI.getHost(),
+                        std::to_string(_document._saveLocationURI.getPort()));
+                    boost::beast::get_lowest_layer(stream).connect(resolved);
+                    stream.handshake(boost::asio::ssl::stream_base::client);
+                    boost::beast::http::request<boost::beast::http::string_body> req(
+                        boost::beast::http::verb::post, _document._saveLocationURI.getPathEtc(),
+                        11);
+                    req.set(boost::beast::http::field::host, _document._saveLocationURI.getHost());
+                    req.set(boost::beast::http::field::user_agent, BOOST_BEAST_VERSION_STRING);
+                    std::optional<std::string> accessToken;
+                    for (auto const & param: _document._saveLocationURI.getQueryParameters()) {
+                        if (param.first == "access_token") {
+                            accessToken = param.second;
+                        }
+                    }
+                    if (accessToken) {
+                        req.set(boost::beast::http::field::cookie, "access_token=" + *accessToken);
+                    }
+                    req.set(boost::beast::http::field::content_type, "application/octet-stream");
+                    const std::string tempPath
+                        = Poco::Path(_document._fileURL.getPath()).toString();
+                    std::ifstream f(tempPath, std::ios::binary);
+                    if (!f) {
+                        std::abort(); //TODO
+                    }
+                    std::string body{
+                        std::istreambuf_iterator<char>(f), std::istreambuf_iterator<char>()};
+                    f.close();
+                    req.body() = std::move(body);
+                    req.prepare_payload();
+                    boost::beast::http::write(stream, req);
+                    {
+                        boost::beast::flat_buffer buffer;
+                        boost::beast::http::response<boost::beast::http::string_body> res;
+                        boost::beast::http::read(stream, buffer, res);
+                        if (res.result() != boost::beast::http::status::ok) {
+                            std::abort(); //TODO
+                        }
+                    }
+                    boost::beast::error_code ec;
+                    stream.shutdown(ec);
+                    if (ec == boost::asio::error::eof
+                        || ec == boost::asio::ssl::error::stream_truncated)
+                    {
+                        ec = {};
+                    }
+                    if (ec) {
+                        throw boost::beast::system_error{ec};
+                    }
+                    _pendingSave = false;
+                }
+                else
+                {
+                    const std::string savePath = Poco::Path(_document._saveLocationURI.getPath()).toString();
+                    saveDocument(savePath);
+                }
             }
         }
     }
@@ -1308,8 +1384,12 @@ int main(int argc, char** argv)
         // Convert relative paths to absolute paths
         for (const QString& file : files)
         {
-            QFileInfo fileInfo(file);
-            absoluteFiles << fileInfo.absoluteFilePath();
+            if (file.startsWith("REMOTE:")) {
+                absoluteFiles << file;
+            } else {
+                QFileInfo fileInfo(file);
+                absoluteFiles << fileInfo.absoluteFilePath();
+            }
         }
     }
     else
