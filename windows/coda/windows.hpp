@@ -12,7 +12,12 @@
 
 extern int coolwsd_server_socket_fd;
 extern const char *user_name;
+
+// The location of the app .exe file. Note that currently that is the "program" subfolder of the top
+// directory of the app.
 extern std::string app_installation_path;
+
+// The file: URI for the above.
 extern std::string app_installation_uri;
 
 extern void load_next_document();
