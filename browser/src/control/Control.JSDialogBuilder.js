@@ -1360,18 +1360,18 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 	},
 
 	_linkButtonControl: function(parentContainer, data, builder) {
-		var textContent = window.L.DomUtil.create('label', builder.options.cssClass + " ui-linkbutton", parentContainer);
+		var buttonLink = window.L.DomUtil.create('button', builder.options.cssClass + " ui-linkbutton", parentContainer);
 
 		if (data.labelFor)
-			textContent.htmlFor = data.labelFor + '-input';
+			buttonLink.htmlFor = data.labelFor + '-input';
 
 		if (data.text)
-			textContent.textContent = builder._cleanText(data.text);
+			buttonLink.textContent = builder._cleanText(data.text);
 		else if (data.html)
-			textContent.innerHTML = data.html;
+			buttonLink.innerHTML = data.html;
 
 		var accKey = builder._getAccessKeyFromText(data.text);
-		builder._stressAccessKey(textContent, accKey);
+		builder._stressAccessKey(buttonLink, accKey);
 
 		app.layoutingService.appendLayoutingTask(function () {
 			var labelledControl = document.getElementById(data.labelFor);
@@ -1388,19 +1388,19 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 			}
 		});
 
-		textContent.id = data.id;
+		buttonLink.id = data.id;
 		if (data.style && data.style.length) {
-			window.L.DomUtil.addClass(textContent, data.style);
+			window.L.DomUtil.addClass(buttonLink, data.style);
 		} else {
-			window.L.DomUtil.addClass(textContent, 'ui-text');
+			window.L.DomUtil.addClass(buttonLink, 'ui-text');
 		}
 		if (data.hidden)
-			$(textContent).hide();
+			$(buttonLink).hide();
 
 		var clickFunction = function () {
 				builder.callback('linkbutton', 'click', data, null, builder);
 		};
-		$(textContent).click(clickFunction);
+		$(buttonLink).click(clickFunction);
 		return false;
 	},
 
