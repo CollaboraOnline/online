@@ -5,7 +5,7 @@ var unoCommandsArray = {
 	'AcceptTrackedChange':{text:{context:_('Accept Change'),menu:_('Accept'),},},
 	'AcceptTrackedChangeToNext':{text:{context:_('Accept Track Change and select the next one'),menu:_('Accept and Move to Next'),},},
 	'AcceptTrackedChanges':{text:{context:_('Manage Track Changes'),menu:_('~Manage...'),},},
-	'AccessibilityCheck':{text:{menu:_('~Accessibility Check...'),},},
+	'AccessibilityCheck':{text:{context:_('Accessibility Check'),menu:_('~Accessibility Check...'),},},
 	'AddName':{spreadsheet:{menu:_('~Define...'),},},
 	'AddPrintArea':{spreadsheet:{menu:_('~Add'),},},
 	'AddToWordbook':{global:{menu:_('Add To Dictionary'),},},
