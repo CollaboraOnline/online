@@ -525,28 +525,28 @@ window.L.Map.include({
 		var max;
 		var translatableContent = contentElement.querySelectorAll('h1');
 		for (i = 0, max = translatableContent.length; i < max; i++) {
-			translatableContent[i].innerHTML = translatableContent[i].innerHTML.toLocaleString();
+			translatableContent[i].innerHTML = translatableContent[i].innerHTML.toLocaleHelpString();
 		}
 		translatableContent = contentElement.querySelectorAll('h2');
 		for (i = 0, max = translatableContent.length; i < max; i++) {
-			translatableContent[i].innerHTML = translatableContent[i].innerHTML.toLocaleString();
+			translatableContent[i].innerHTML = translatableContent[i].innerHTML.toLocaleHelpString();
 		}
 		translatableContent = contentElement.querySelectorAll('h3');
 		for (i = 0, max = translatableContent.length; i < max; i++) {
-			translatableContent[i].innerHTML = translatableContent[i].innerHTML.toLocaleString();
+			translatableContent[i].innerHTML = translatableContent[i].innerHTML.toLocaleHelpString();
 		}
 		translatableContent = contentElement.querySelectorAll('h4');
 		for (i = 0, max = translatableContent.length; i < max; i++) {
-			translatableContent[i].innerHTML = translatableContent[i].innerHTML.toLocaleString();
+			translatableContent[i].innerHTML = translatableContent[i].innerHTML.toLocaleHelpString();
 		}
 		translatableContent = contentElement.querySelectorAll('td');
 		for (i = 0, max = translatableContent.length; i < max; i++) {
 			var orig = translatableContent[i].innerHTML;
-			var trans = translatableContent[i].innerHTML.toLocaleString();
+			var trans = translatableContent[i].innerHTML.toLocaleHelpString();
 			// Try harder to get translation of keyboard shortcuts (html2po trims starting <kbd> and ending </kbd>)
 			if (orig === trans && orig.indexOf('kbd') != -1) {
 				var trimmedOrig = orig.replace(/^(<kbd>)/,'').replace(/(<\/kbd>$)/,'');
-				var trimmedTrans = trimmedOrig.toLocaleString();
+				var trimmedTrans = trimmedOrig.toLocaleHelpString();
 				if (trimmedOrig !== trimmedTrans) {
 					trans = '<kbd>' + trimmedTrans + '</kbd>';
 				}
@@ -555,11 +555,11 @@ window.L.Map.include({
 		}
 		translatableContent = contentElement.querySelectorAll('p');
 		for (i = 0, max = translatableContent.length; i < max; i++) {
-			translatableContent[i].innerHTML = translatableContent[i].innerHTML.toLocaleString();
+			translatableContent[i].innerHTML = translatableContent[i].innerHTML.toLocaleHelpString();
 		}
 		translatableContent = contentElement.querySelectorAll('button'); // TOC
 		for (i = 0, max = translatableContent.length; i < max; i++) {
-			translatableContent[i].innerHTML = translatableContent[i].innerHTML.toLocaleString();
+			translatableContent[i].innerHTML = translatableContent[i].innerHTML.toLocaleHelpString();
 		}
 
 		//translatable screenshots

@@ -1878,24 +1878,30 @@ function showWelcomeSVG() {
 		}
 	};
 
-	global._ = function (string) {
-		// In the mobile app case we can't use the stuff from l10n-for-node, as that assumes HTTP.
-		if (global.ThisIsAMobileApp || global.ThisIsTheWindowsApp) {
-			// We use another approach for iOS and CODA-W.
-			if (global.LOCALIZATIONS && Object.prototype.hasOwnProperty.call(global.LOCALIZATIONS, string)) {
-				// global.postMobileDebug('_(' + string + '): YES: ' + global.LOCALIZATIONS[string]);
-				var result = global.LOCALIZATIONS[string];
+	// In the mobile app we have a separate localization dictionary for help strings
+	String.prototype.toLocaleHelpString = function () {
+		// `this` is the string being localized
+		const string = this.valueOf();
+
+		if (global.ThisIsAMobileApp) {
+			if (global.LOCALIZATIONS_HELP && Object.prototype.hasOwnProperty.call(global.LOCALIZATIONS_HELP, string)) {
+				let result = global.LOCALIZATIONS_HELP[string];
 				if (global.LANG === 'de-CH') {
 					result = result.replace(/ß/g, 'ss');
 				}
 				return result;
 			} else {
-				// global.postMobileDebug('_(' + string + '): NO');
-				return string;
+				// try also the normal localization dictionary (global.LOCALIZATIONS) if not present in the help one
+				return string.toLocaleString();
 			}
 		} else {
-			return string.toLocaleString();
+			// fallback to original
+			return originalStringToLocaleString.call(this);
 		}
+	};
+
+	global._ = function (string) {
+		return string.toLocaleString();
 	};
 
 	// Some global variables are defined in cool.html, among them:
