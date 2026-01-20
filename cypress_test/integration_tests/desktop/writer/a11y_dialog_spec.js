@@ -398,7 +398,7 @@ describe(['tagdesktop'], 'Accessibility Writer Dialog Tests', { testIsolation: f
                     cy.cGet('#similarity-input').check();
                     cy.cGet('#similaritybtn-button').should('be.enabled').click();
                     handleDialog(win, level + 1);
-		}
+                }
 
                 handleTabsInDialog(win, level, command);
                 closeActiveDialog(level);
@@ -474,6 +474,9 @@ describe(['tagdesktop'], 'Accessibility Writer Dialog Tests', { testIsolation: f
                                     handleDialog(win, level + 1);
                                 } else if (command == '.uno:PageDialog' && tabAriaControls == 'Footer')  {
                                     cy.cGet('button.ui-pushbutton[aria-label="More..."]:visible').click();
+                                    handleDialog(win, level + 1);
+                                } else if (command == '.uno:PageDialog' && tabAriaControls == 'lbhatch')  {
+                                    cy.cGet('button.ui-pushbutton[aria-label="Add"]:visible').click();
                                     handleDialog(win, level + 1);
                                 }
                             })
