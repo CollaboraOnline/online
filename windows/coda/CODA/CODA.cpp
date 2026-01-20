@@ -39,6 +39,7 @@
 #include <common/Log.hpp>
 #include <common/MobileApp.hpp>
 #include <common/RecentFiles.hpp>
+#include <common/SettingsStorage.hpp>
 #include <common/StringVector.hpp>
 #include <common/Uri.hpp>
 #include <net/FakeSocket.hpp>
@@ -1679,6 +1680,20 @@ static void processMessage(WindowData& data, wil::unique_cotaskmem_string& messa
             else
                 leave_full_screen(data);
         }
+        else if (s == L"SYNCSETTINGS")
+        {
+            Desktop::syncSettings([data](const std::vector<char>& buf) {
+                send2JS(data.hWnd, buf.data(), buf.size());
+            });
+        }
+        else if (s.starts_with(L"UPLOADSETTINGS "))
+        {
+            Desktop::uploadSettings(Util::wide_string_to_string(s.substr(strlen("UPLOADSETTINGS "))));
+        }
+        else if (s.starts_with(L"PROCESSINTEGRATORADMINFILE "))
+        {
+            Desktop::processIntegratorAdminFile(Util::wide_string_to_string(s.substr(strlen("PROCESSINTEGRATORADMINFILE "))));
+        }
         else if (s.starts_with(L"downloadas "))
         {
             // "downloadas name=document.rtf id=export format=rtf options="
@@ -1808,6 +1823,35 @@ static void processMessage(WindowData& data, wil::unique_cotaskmem_string& messa
         {
             do_getrecentdocs(data, id);
         }
+        else if (s.starts_with(L"FETCHSETTINGSFILE "))
+        {
+            auto result = Desktop::fetchSettingsFile(Util::wide_string_to_string(s.substr(strlen("FETCHSETTINGSFILE "))));
+            if (!result.content.empty())
+            {
+                std::string resultAsJavaScriptData =
+                    "{"
+                      "fileName: '" + result.fileName + "'"
+                      ","
+                      "mimeType: '" + result.mimeType + "'"
+                      ","
+                      "content: '" + result.content + "'"
+                    "}";
+
+                PostMessageW(data.hWnd, CODA_WM_EXECUTESCRIPT,
+                             (WPARAM)_strdup(("window.replyFromNativeToCall(" +
+                                              std::to_string(id) +
+                                              ", '" + resultAsJavaScriptData + "')").c_str()), 0);
+            }
+        }
+        else if (s == L"FETCHSETTINGSCONFIG")
+        {
+            PostMessageW(data.hWnd, CODA_WM_EXECUTESCRIPT,
+                         (WPARAM)_strdup(("window.replyFromNativeToCall(" +
+                                          std::to_string(id) +
+                                          ", '" + Desktop::fetchSettingsConfig() + "')").c_str()), 0);
+        }
+        else
+            LOG_ERR("Unhandled CALL message: " + Util::wide_string_to_string(s));
     }
     else if (s.starts_with(L"ERR "))
     {
@@ -1851,6 +1895,26 @@ static const char* getUserName()
     }
 
     return nullptr;
+}
+
+// These functions in the Desktop namespace are called from SettingsStorage.cpp. Unclear whether
+// will be needed in the end. The name comes from CODA-Q. Should ideally be changed to FileUtil,
+// perhaps.
+
+// Expected to return the folder where installed data for the app is stored. Should not end with a
+// slash (or backslash). Note the impedance mismatch with our app_installation_path.
+std::string Desktop::getDataDir()
+{
+    std::string result = app_installation_path;
+    if (!(result.ends_with("/") || result.ends_with("\\")))
+        result += "/";
+    result += "..";
+    return result;
+}
+
+Poco::Path Desktop::getConfigPath()
+{
+    return Poco::Path(localAppData);
 }
 
 int APIENTRY wWinMain(HINSTANCE hInstance, HINSTANCE, PWSTR, int showWindowMode)
