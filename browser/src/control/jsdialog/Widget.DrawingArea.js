@@ -47,7 +47,8 @@ function _drawingAreaControl (parentContainer, data, builder) {
 	image.draggable = false;
 	image.ondragstart = function() { return false; };
 
-	if (data.enabled && data.canFocus) {
+	const isFocusable = data.enabled && data.canFocus;
+	if (isFocusable) {
 		image.tabIndex = 0;
 	}
 
@@ -59,10 +60,15 @@ function _drawingAreaControl (parentContainer, data, builder) {
 		}
 	} else {
 		JSDialog.SetupA11yLabelForNonLabelableElement(container, data, builder);
-	}		
-		
+	}
+
 	if (container.hasAttribute('aria-labelledby') || container.hasAttribute('aria-label')) {
-		image.alt = '';
+		if (isFocusable && data.aria && (data.aria.label || data.aria.description)) {
+			// Focusable images need proper alt text
+			image.alt = data.aria.description || data.aria.label;
+		} else {
+			image.alt = '';
+		}
 	} else if (data.aria && data.aria.description) {
 		image.alt = data.aria.description;
 	}

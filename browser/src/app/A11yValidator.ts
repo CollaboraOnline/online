@@ -90,6 +90,8 @@ class A11yValidator {
 					visibleLabel ||
 					explicitLabel);
 
+			const isFocusable = img.tabIndex === 0;
+
 			if (altValue === '' && parent) {
 				const isDecorativeImg = img.classList.contains('ui-decorative-image'); // exclude ui-decorative-image decorative images - they can have empty alt
 
@@ -100,7 +102,7 @@ class A11yValidator {
 				}
 			}
 
-			if (altValue !== '' && parentHasLabel) {
+			if (altValue !== '' && parentHasLabel && !isFocusable) {
 				throw new A11yValidatorException(
 					`In '${this.getDialogTitle(element)}' at '${this.getElementPath(img)}': image in widget of type '${type}' has non-empty alt attribute but parent element also has label (should not duplicate)`,
 				);
