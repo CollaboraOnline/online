@@ -61,7 +61,7 @@
 #include "CommandControl.hpp"
 #endif
 
-#include <wsd/PlatformDesktop.hpp>
+#include <wsd/Platform-server.hpp>
 
 #include <Poco/DirectoryIterator.h>
 #include <Poco/Exception.h>
@@ -105,7 +105,7 @@
 
 #include <ServerSocket.hpp>
 
-#include <wsd/PlatformMobile.hpp>
+#include <wsd/Platform-mobile.hpp>
 
 using Poco::Util::LayeredConfiguration;
 using Poco::Util::Option;
