@@ -189,52 +189,61 @@ static void processMessage(WindowData& data, wil::unique_cotaskmem_string& messa
     std::abort();
 }
 
-static std::wstring new_document(DocumentType type, const std::string templateRelativePath)
+static FilenameAndUri generate_new_copy(const std::wstring& templateSourcePath,
+                                        const std::wstring& templateBasename,
+                                        const std::wstring& templateExtension)
+{
+    PWSTR documents;
+    SHGetKnownFolderPath(FOLDERID_Documents, 0, NULL, &documents);
+
+    int counter = 0;
+    std::wstring templateCopyPath;
+
+    do
+    {
+        std::wstring number = L"";
+        if (counter > 0)
+            number = L" (" + std::to_wstring(counter) + L")";
+        templateCopyPath = std::wstring(documents) + L"\\" + templateBasename + number + L"." +
+            templateExtension;
+        counter++;
+    } while (std::filesystem::exists(std::filesystem::path(templateCopyPath)));
+
+    std::error_code ec;
+    std::filesystem::copy_file(templateSourcePath, templateCopyPath, ec);
+
+    if (ec)
+        return {};
+
+    auto path = Poco::Path(Util::wide_string_to_string(templateCopyPath));
+
+    return { Util::wide_string_to_string(templateCopyPath), Poco::URI(path).toString() };
+}
+
+static std::wstring new_document(DocumentType type,
+                                 const std::string& templateRelativePath,
+                                 const std::string& basename)
 {
     std::wstring templateBasename, templateExtension, templateSourcePath;
-    if (templateRelativePath == "")
-    {
-        // Old-style simple blank documents
-        switch (type)
-        {
-            case DocumentType::TEXT:
-                templateBasename = L"TextDocument";
-                templateExtension = L"odt";
-                break;
-            case DocumentType::SPREADSHEET:
-                templateBasename = L"Spreadsheet";
-                templateExtension = L"ods";
-                break;
-            case DocumentType::PRESENTATION:
-                templateBasename = L"Presentation";
-                templateExtension = L"odp";
-                break;
-            default:
-                fatal("Unexpected case in new_document()");
-        }
-        templateSourcePath = Util::string_to_wide_string(app_installation_path) +
-            L"..\\templates\\" + templateBasename + L"." +
-            templateExtension;
-    }
-    else
-    {
-        // A template chosen from the "Backstage"
-        std::string decodedTemplateRelativePath;
-        Poco::URI::decode(templateRelativePath, decodedTemplateRelativePath);
 
-        templateSourcePath =
-            Util::string_to_wide_string(app_installation_path +
-                                        "..\\cool\\" + decodedTemplateRelativePath);
-        templateBasename = Util::string_to_wide_string(decodedTemplateRelativePath);
-        templateBasename = templateBasename.substr(templateBasename.find_last_of(L'/') + 1);
-        templateExtension = templateBasename.substr(templateBasename.find_last_of(L'.') + 1);
-        templateBasename = templateBasename.substr(0, templateBasename.find_last_of(L'.'));
-    }
+    // A template chosen from the "Backstage"
+    std::string decodedTemplateRelativePath;
+    Poco::URI::decode(templateRelativePath, decodedTemplateRelativePath);
 
-    // Let the user select where to put the new document, and what name to use for it.
-    auto filenameAndUri = fileSaveDialog(Util::wide_string_to_string(templateBasename), "", Util::wide_string_to_string(templateExtension));
+    templateSourcePath =
+        Util::string_to_wide_string(app_installation_path +
+                                    "..\\cool\\" + decodedTemplateRelativePath);
+    auto wrelpath = Util::string_to_wide_string(decodedTemplateRelativePath);
+    templateExtension = wrelpath.substr(wrelpath.find_last_of(L'.') + 1);
 
-    // If the user cancelled the dialog, retunr an empty string
+    // The basename is URI-encoded because in some localisation it might contain spaces.
+    std::string decodedBasename;
+    Poco::URI::decode(basename, decodedBasename);
+    auto filenameAndUri = generate_new_copy(templateSourcePath,
+                                            Util::string_to_wide_string(decodedBasename),
+                                            templateExtension);
+
+    // If creating a new copy of the template failed, return an empty string
     if (filenameAndUri.uri == "")
         return L"";
 
@@ -242,10 +251,6 @@ static std::wstring new_document(DocumentType type, const std::string templateRe
     if (path.length() > 4 && path[0] == '/' && path[2] == ':' && path[3] == '/')
         path = path.substr(1);
     auto templateCopyPath = Util::string_to_wide_string(Poco::Path(path).toString());
-
-    // The IFileSaveDialog warns if overwriting, so assume the user has noticed and allowed us to go
-    // ahead.
-    std::filesystem::copy_file(templateSourcePath, templateCopyPath, std::filesystem::copy_options::overwrite_existing);
 
     return templateCopyPath;
 }
@@ -1721,10 +1726,15 @@ static void processMessage(WindowData& data, wil::unique_cotaskmem_string& messa
         {
             auto const ns = Util::wide_string_to_string(s);
             auto const tokens = StringVector::tokenize(ns);
-            std::string typeToken, templateToken;
+            std::string typeToken, templateToken, basenameToken;
             if (!COOLProtocol::getTokenString(tokens, "type", typeToken))
             {
                 LOG_ERR("No type parameter in message '" << ns << "'");
+                return;
+            }
+            if (!COOLProtocol::getTokenString(tokens, "basename", basenameToken))
+            {
+                LOG_ERR("No basename parameter in message '" << ns << "'");
                 return;
             }
             DocumentType type;
@@ -1740,7 +1750,7 @@ static void processMessage(WindowData& data, wil::unique_cotaskmem_string& messa
             // This might leave templateToken empty if it is an old-style newdoc message with just
             // the type parameter.
             COOLProtocol::getTokenString(tokens, "template", templateToken);
-            auto newDocument = new_document(type, templateToken);
+            auto newDocument = new_document(type, templateToken, basenameToken);
             if (newDocument != L"")
             {
                 Poco::Path path = Poco::Path(Util::wide_string_to_string(newDocument));
