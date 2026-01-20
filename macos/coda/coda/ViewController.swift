@@ -434,6 +434,31 @@ class ViewController: NSViewController, WKScriptMessageHandlerWithReply, WKNavig
             onClose?()
             return (nil, nil)
         }
+        else if body.hasPrefix("opendoc ") {
+            let messageBodyItems = body.components(separatedBy: " ")
+            var fileURLString: String?
+            if messageBodyItems.count >= 2 {
+                for item in messageBodyItems[1...] {
+                    if item.hasPrefix("file=") {
+                        fileURLString = String(item.dropFirst("file=".count)).removingPercentEncoding
+                    }
+                }
+            }
+
+            guard let fileURLString, let url = URL(string: fileURLString) else {
+                return (nil, "Invalid opendoc message (missing/invalid file=...)")
+            }
+
+            // Open via NSDocument / NSDocumentController
+            NSDocumentController.shared.openDocument(withContentsOf: url, display: true) { _, _, error in
+                if let error {
+                    NSLog("openDocument failed for \(url): \(error)")
+                }
+            }
+
+            onClose?()
+            return (nil, nil)
+        }
         else if body == "uno .uno:Open" {
             // FIXME A real message would be preferred over intercepting a uno command; but this is what the backstage currently uses
             (NSDocumentController.shared as? DocumentController)?.focusOrPresentOpenPanel()
