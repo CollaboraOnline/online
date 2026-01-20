@@ -310,6 +310,10 @@ class ViewController: NSViewController, WKScriptMessageHandlerWithReply, WKNavig
                      NSWorkspace.shared.open(url)
                      return (nil, nil)
                 }
+                else if body == "SYNCSETTINGS" {
+                    // TODO implement
+                    return (nil, nil)
+                }
                 else if body.hasPrefix("downloadas ") {
                     let messageBodyItems = body.components(separatedBy: " ")
                     var format: String?
