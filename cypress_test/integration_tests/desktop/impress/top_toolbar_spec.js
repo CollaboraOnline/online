@@ -57,6 +57,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Top toolbar tests.', funct
 	});
 
 	it('Apply font color on text shape.', function() {
+		desktopHelper.getCompactIconArrow('FontColor').click();
 		desktopHelper.getCompactIconArrow('Color').click();
 		desktopHelper.selectColorFromPalette('FFFF00');
 
@@ -66,6 +67,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Top toolbar tests.', funct
 	});
 
 	it('Apply highlight color on text shape.', function() {
+		desktopHelper.getCompactIconArrow('FontColor').click();
 		desktopHelper.getCompactIconArrow('CharBackColor').click();
 		desktopHelper.selectColorFromPalette('FFBF00');
 
