@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 // @ts-strict-ignore
 /* -*- tab-width: 4 -*- */
 /*
@@ -1120,3 +1121,5 @@ class SlideShowHandler {
 		this.bIsRewinding = false;
 	}
 }
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

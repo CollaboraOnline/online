@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 /*
  * Copyright the Collabora Online contributors.
  *
@@ -48,3 +49,5 @@ class PixelGridSection extends CanvasSectionObject {
 }
 
 app.definitions.pixelGridSection = PixelGridSection;
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

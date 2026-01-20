@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 /* global Proxy _ */
 /*
  * Copyright the Collabora Online contributors.
@@ -206,3 +207,5 @@ class SplitterLinesSection extends CanvasSectionObject {
 		this.context.globalAlpha = 1;
 	}
 }
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 /* -*- tab-width: 4 -*- */
 
 /*
@@ -95,3 +96,5 @@ type AnimationNodeInfo =
 	| AnimateColorNodeInfo
 	| AnimateTransformNodeInfo
 	| TransitionFilterNodeInfo;
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 // @ts-strict-ignore
 /* -*- tab-width: 4 -*- */
 /*
@@ -616,3 +617,5 @@ aActivityQueueDebugPrinter.on();
 
 const aAnimatedElementDebugPrinter = new DebugPrinter();
 aAnimatedElementDebugPrinter.on();
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

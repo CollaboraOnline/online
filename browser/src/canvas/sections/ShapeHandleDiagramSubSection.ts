@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 /* global Proxy _ */
 /*
  * Copyright the Collabora Online contributors.
@@ -206,3 +207,5 @@ class ShapeHandleDiagramSubSection extends CanvasSectionObject {
 }
 
 app.definitions.shapeHandleDiagramSubSection = ShapeHandleDiagramSubSection;
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 /* global Proxy _ */
 /*
  * Copyright the Collabora Online contributors.
@@ -117,3 +118,5 @@ class CommentMarkerSubSection extends HTMLObjectSection {
 }
 
 app.definitions.commentMarkerSubSection = CommentMarkerSubSection;
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

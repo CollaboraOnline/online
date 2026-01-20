@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 // @ts-strict-ignore
 /* -*- tab-width: 4 -*- */
 
@@ -872,3 +873,5 @@ export class TilesSection extends CanvasSectionObject {
 }
 
 }
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

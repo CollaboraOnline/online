@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 // @ts-strict-ignore
 
 /*
@@ -104,3 +105,5 @@ class TextSelectionSection extends CanvasSectionObject {
 		this.context.translate(this.myTopLeft[0], this.myTopLeft[1]);
 	}
 }
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

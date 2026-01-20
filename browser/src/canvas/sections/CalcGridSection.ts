@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 // @ts-strict-ignore
 /* global Proxy _ */
 /*
@@ -189,3 +190,5 @@ class CalcGridSection extends CanvasSectionObject {
 }
 
 app.definitions.calcGridSection = CalcGridSection;
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

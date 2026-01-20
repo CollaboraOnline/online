@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 type DefCallBack = () => void;
 interface WSDServerInfo {
 	Id: string;
@@ -43,3 +44,5 @@ interface MinimalMessageEvent {
 	textMsg: string;
 	callback?: JSDialogCallback | DefCallBack;
 }
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

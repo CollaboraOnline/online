@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 /* -*- tab-width: 4 -*- */
 
 /*
@@ -42,3 +43,5 @@ class FrameSynchronization {
 		this.bIsActive = false;
 	}
 }
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

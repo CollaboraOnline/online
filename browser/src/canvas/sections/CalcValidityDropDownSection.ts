@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 /* global Proxy _ */
 /*
  * Copyright the Collabora Online contributors.
@@ -41,3 +42,5 @@ class CalcValidityDropDown extends HTMLObjectSection {
 		app.map._docLayer._postMouseEvent('buttonup', point.x, point.y, 1, 1, 0);
 	}
 }
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

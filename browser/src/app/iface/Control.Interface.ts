@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 /*
  * Copyright the Collabora Online contributors.
  *
@@ -36,3 +37,5 @@ type ControlCommand =
 			command?: string;
 			id?: string;
 	  };
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

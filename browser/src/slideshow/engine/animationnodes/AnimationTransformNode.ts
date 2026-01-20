@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 // @ts-strict-ignore
 /* -*- tab-width: 4 -*- */
 
@@ -88,3 +89,5 @@ class AnimationTransformNode extends AnimationBaseNode3 {
 		).transformType.toLowerCase();
 	}
 }
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

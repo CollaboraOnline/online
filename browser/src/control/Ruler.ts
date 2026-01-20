@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 // @ts-strict-ignore
 /**
  /*
@@ -157,3 +158,5 @@ abstract class Ruler {
 }
 
 app.definitions.ruler = Ruler;
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

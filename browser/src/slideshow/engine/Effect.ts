@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 /* -*- tab-width: 4 -*- */
 /*
  * Copyright the Collabora Online contributors.
@@ -53,3 +54,5 @@ class Effect {
 		this.eState = EffectState.Ended;
 	}
 }
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

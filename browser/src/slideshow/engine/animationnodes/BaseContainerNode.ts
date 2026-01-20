@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 // @ts-strict-ignore
 /* -*- tab-width: 4 -*- */
 
@@ -586,3 +587,5 @@ class SequentialTimeContainer extends BaseContainerNode {
 		super.dispose();
 	}
 }
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

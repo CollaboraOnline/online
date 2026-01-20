@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 interface HandlerInterface {
 	enable(): void;
 	disable(): void;
@@ -14,3 +15,5 @@ interface WelcomeInterface extends HandlerInterface {
 	remove(): void;
 	onMessage(e: { data: any }): void;
 }
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

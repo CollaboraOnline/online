@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 // @ts-strict-ignore
 /* -*- tab-width: 4 -*- */
 /*
@@ -551,3 +552,5 @@ function createCrossFadeTransition(
 	const eDirection = bModeIn ? DirectionType.Forward : DirectionType.Backward;
 	return new SimpleActivity(aActivityParamSet, aAnimation, eDirection);
 }
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

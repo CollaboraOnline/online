@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 /*
  * Copyright the Collabora Online contributors.
  *
@@ -615,3 +616,5 @@ class MouseControl extends CanvasSectionObject {
 		}
 	}
 }
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

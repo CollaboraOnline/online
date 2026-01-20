@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 // @ts-strict-ignore
 /* -*- tab-width: 4 -*- */
 /*
@@ -132,3 +133,5 @@ class AnimationColorNode extends AnimationBaseNode3 {
 		return sInfo;
 	}
 }
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

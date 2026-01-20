@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 /*
  * Copyright the Collabora Online contributors.
  *
@@ -59,3 +60,5 @@ class ChartContextButtonSection extends GenericButtonSection {
 		this.setShowSection(true);
 	}
 }
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

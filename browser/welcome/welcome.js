@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 window.onload = onLoaded;
 
 function onLoaded() {
@@ -88,3 +89,5 @@ function setTranslatable(root, strings) {
 		setTranslatable(children[i], strings);
 	}
 }
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

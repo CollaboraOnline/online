@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 /*
  * Copyright the Collabora Online contributors.
  *
@@ -118,3 +119,5 @@ interface MapInterface extends Evented {
 	sidebar: Sidebar;
 	getViewColor(viewId: number): number;
 }
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

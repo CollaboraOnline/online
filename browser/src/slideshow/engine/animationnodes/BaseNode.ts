@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 // @ts-strict-ignore
 /* -*- tab-width: 4 -*- */
 
@@ -796,3 +797,5 @@ abstract class BaseNode {
 	public abstract removeEffect(): void;
 	public abstract saveStateOfAnimatedElement(): void;
 }
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */
