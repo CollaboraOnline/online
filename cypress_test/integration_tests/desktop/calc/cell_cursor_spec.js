@@ -102,7 +102,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Test jumping on large cell
 
 		cy.wait(2000);
 
-		cy.cGet('#document-canvas').compareSnapshot('text-selection', 0.02);
+		cy.cGet('#document-container').compareSnapshot('text-selection', 0.02);
 	});
 });
 
@@ -180,7 +180,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Test triple click content 
 		});
 
 		cy.wait(2000);
-		cy.cGet('#document-canvas').compareSnapshot('triple-click', 0.02);
+		cy.cGet('#document-container').compareSnapshot('triple-click', 0.02);
 
 	});
 });
