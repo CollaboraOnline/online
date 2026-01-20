@@ -411,6 +411,41 @@ describe(['tagdesktop'], 'Accessibility Writer Dialog Tests', { testIsolation: f
             .then($dialogs => cy.wrap($dialogs.last()))
     }
 
+    function testNameDialog(win, level) {
+        /* exercise the name dialog */
+        getActiveDialog(level + 1)
+            .then(() => {
+                return helper.processToIdle(win);
+            })
+            .then(() => {
+                runA11yValidation(win);
+            })
+            .then(() => {
+                // save with default suggested name
+                cy.cGet('[role="dialog"][aria-labelledby*="Name"] #ok-button').should('be.enabled').click();
+                return helper.processToIdle(win);
+            })
+            .then(() => {
+                cy.cGet('.ui-dialog[role="dialog"]').should('have.length', level);
+            });
+        /* Then add the same name again so we get the warning subdialog */
+        cy.cGet('button.ui-pushbutton[aria-label="Add"]:visible').click();
+        getActiveDialog(level + 1)
+            .then(() => {
+                return helper.processToIdle(win);
+            })
+            .then(() => {
+                // save with a name that exists to force the warning subdialog
+                cy.cGet('#name_entry-input').clear().type('Hatching 1');
+                cy.cGet('[role="dialog"][aria-labelledby*="Name"] #ok-button').should('be.enabled').click();
+                return helper.processToIdle(win);
+            })
+            .then(() => {
+                // warning subdialog, default close will cancel
+                handleDialog(win, level + 1);
+            });
+    }
+
     function handleTabsInDialog(win, level, command) {
         traverseTabs(() => getActiveDialog(level), win, level, command);
     }
@@ -477,7 +512,7 @@ describe(['tagdesktop'], 'Accessibility Writer Dialog Tests', { testIsolation: f
                                     handleDialog(win, level + 1);
                                 } else if (command == '.uno:PageDialog' && tabAriaControls == 'lbhatch')  {
                                     cy.cGet('button.ui-pushbutton[aria-label="Add"]:visible').click();
-                                    handleDialog(win, level + 1);
+                                    testNameDialog(win, level);
                                 }
                             })
                             .then(() => {
