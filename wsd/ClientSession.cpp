@@ -1633,10 +1633,15 @@ void ClientSession::overrideDocOption()
 
     // follow darkTheme preference if darkBackgroundForTheme is not set
     if (darkBackgroundObj.isNull())
-        setDarkBackground(darkTheme);
+    {
+        if (!darkTheme.empty())
+            setDarkBackground(darkTheme);
+    }
     else
+    {
         JsonUtil::findJSONValue(darkBackgroundObj, darkTheme == "true" ? "dark" : "light",
                                 darkBackgroundForTheme);
+    }
 
     if (!darkTheme.empty())
     {
