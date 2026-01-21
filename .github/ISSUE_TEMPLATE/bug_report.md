@@ -27,7 +27,7 @@ If applicable, add screenshots to help explain your problem.
 
 ### Desktop
 (Please complete the following information)
- - **Collabora version:** [e.g. 23.05.5.3]
+ - **Collabora Office version:** [e.g. 23.05.5.3]
  - **OS and version:** [e.g. Windows 11]
  - **Browser and version:** [e.g. Chrome 114.0]
 
