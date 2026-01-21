@@ -277,6 +277,10 @@ class GraphicSelection {
 	}
 
 	private static checkChartData() {
+		// Chart Context Buttons are disabled now.
+		// we will probably enable it when chart styles will work fine.
+		var disabled = true;
+		if (disabled) return;
 		if (
 			GraphicSelection.extraInfo &&
 			GraphicSelection.extraInfo.isChartPage &&
