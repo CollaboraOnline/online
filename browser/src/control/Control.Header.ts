@@ -727,23 +727,23 @@ export class HeaderInfo {
 		this._dimGeom = this._isColumn ? sheetGeom.getColumnsGeometry() : sheetGeom.getRowsGeometry();
 	}
 
-	findXInCellSelections (cellSelections: cool.Rectangle[], ordinate: number): boolean {
+	findXInCellSelections (cellSelections: cool.SimpleRectangle[], ordinate: number): boolean {
 		for (let i = 0; i < cellSelections.length; i++) {
-			if (cellSelections[i].containsPixelOrdinateX(ordinate))
+			if (cellSelections[i].pContainsX(ordinate))
 				return true;
 		}
 		return false;
 	}
 
-	findYInCellSelections (cellSelections: cool.Rectangle[], ordinate: number): boolean {
+	findYInCellSelections (cellSelections: cool.SimpleRectangle[], ordinate: number): boolean {
 		for (let i = 0; i < cellSelections.length; i++) {
-			if (cellSelections[i].containsPixelOrdinateY(ordinate))
+			if (cellSelections[i].pContainsY(ordinate))
 				return true;
 		}
 		return false;
 	}
 
-	isHeaderEntryHighLighted (cellSelections: cool.Rectangle[], ordinate: number): boolean {
+	isHeaderEntryHighLighted (cellSelections: cool.SimpleRectangle[], ordinate: number): boolean {
 		if (this._isColumn && this._map.wholeRowSelected)
 			return true;
 		else if (!this._isColumn && this._map.wholeColumnSelected)
@@ -759,7 +759,7 @@ export class HeaderInfo {
 	}
 
 	update(section: CanvasSectionObject): void {
-		const cellSelections: cool.Rectangle[] = this._map._docLayer._cellSelections;
+		const cellSelections: cool.SimpleRectangle[] = this._map._docLayer._cellSelections;
 
 		let currentIndex: number;
 		if (app.calc.cellCursorVisible) {
