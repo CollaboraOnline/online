@@ -172,6 +172,9 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Test triple click content 
 
 	beforeEach(function() {
 		helper.setupAndLoadDocument('calc/cell-content-selection.ods');
+		cy.getFrameWindow().then((win) => {
+			this.win = win;
+		});
 	});
 
 	it('Triple click should select the cell content.', function() {
@@ -186,7 +189,9 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Test triple click content 
 			cy.cGet('body').click(XPos, YPos).click(XPos, YPos).click(XPos, YPos); // Triple click.
 		});
 
-		cy.wait(2000);
+		helper.waitForTimers(this.win, 'clicktimer');
+		helper.processToIdle(this.win);
+
 		cy.cGet('#document-container').compareSnapshot('triple-click', 0.02);
 
 	});

@@ -460,7 +460,7 @@ class MouseControl extends CanvasSectionObject {
 			modifier: modifier,
 		};
 
-		if (this.clickTimer) clearTimeout(this.clickTimer);
+		if (this.clickTimer) app.timerRegistry.clearTimeout(this.clickTimer);
 		else {
 			// Old code always sends the first click, so do we.
 			this.sendClick(clickInfo, 1);
@@ -473,18 +473,22 @@ class MouseControl extends CanvasSectionObject {
 			);
 		}
 
-		this.clickTimer = setTimeout(() => {
-			if (this.clickCount === 3 && app.map._docLayer.isCalc()) {
-				// Also send a double click for a triple click in Calc.
-				this.sendClick(clickInfo, 2);
-				this.sendClick(clickInfo, 3);
-			} else if (this.clickCount > 1) {
-				this.sendClick(clickInfo, this.clickCount);
-			}
+		this.clickTimer = app.timerRegistry.setTimeout(
+			'clicktimer',
+			() => {
+				if (this.clickCount === 3 && app.map._docLayer.isCalc()) {
+					// Also send a double click for a triple click in Calc.
+					this.sendClick(clickInfo, 2);
+					this.sendClick(clickInfo, 3);
+				} else if (this.clickCount > 1) {
+					this.sendClick(clickInfo, this.clickCount);
+				}
 
-			this.clickTimer = null;
-			this.clickCount = 0;
-		}, 250);
+				this.clickTimer = null;
+				this.clickCount = 0;
+			},
+			250,
+		);
 	}
 
 	onMultiTouchStart(e: TouchEvent): void {
