@@ -453,7 +453,7 @@ class LayerDrawing {
 				'CompressedCache: fetching slides from CompressedCache, SlideHash :',
 				slideHash,
 			);
-			SlideBitmapManager.renderCachedCompressSlide(
+			SlideBitmapManager.renderCachedCompressedSlide(
 				this.compressedSlideCache.get(slideHash),
 			);
 			return;
@@ -523,18 +523,29 @@ class LayerDrawing {
 			return;
 		}
 
+		if (e.imgBytes) {
+			const promise = SlideBitmapManager.decompressSlideLayer(info, e.imgBytes);
+			if (promise)
+				promise.then((img: ImageBitmap) => {
+					this.handleMsg(info, img);
+				});
+			return;
+		} else this.handleMsg(info, e.image);
+	}
+
+	handleMsg(info: LayerInfo, img: any) {
 		switch (info.group) {
 			case 'Background':
-				this.handleBackgroundMsg(info, e.image);
+				this.handleBackgroundMsg(info, img);
 				break;
 			case 'MasterPage':
-				this.handleMasterPageLayerMsg(info, e.image);
+				this.handleMasterPageLayerMsg(info, img);
 				break;
 			case 'DrawPage':
-				this.handleDrawPageLayerMsg(info, e.image);
+				this.handleDrawPageLayerMsg(info, img);
 				break;
 			case 'TextFields':
-				this.handleTextFieldMsg(info, e.image);
+				this.handleTextFieldMsg(info, img);
 		}
 	}
 
@@ -778,6 +789,20 @@ class LayerDrawing {
 
 	onSlideRenderingComplete(e: any) {
 		if (this.isDisposed()) return;
+
+		if (e.message) {
+			const promise = SlideBitmapManager.waitForSlideDecompression(e.message);
+			if (promise) {
+				promise.then(() => {
+					app.map.fire('sliderenderingcomplete', {
+						success: e.success,
+						compressedLayers: e.message.compressedLayers,
+					});
+				});
+				return;
+			}
+		}
+
 		this.map.fire('handleslideshowprogressbar', { isVisible: false });
 
 		if (!e.success) {
@@ -793,20 +818,21 @@ class LayerDrawing {
 			return;
 		}
 
-		if (e.compressedLayers) {
-			this.prefetchNextCompressedSlide();
-			return;
-		}
-
 		if (this.prefetchedSlideHash) {
 			var currSlideHash = this.prefetchedSlideHash;
 			this.prefetchedSlideHash = null;
-			if (app.isExperimentalMode()) {
+			if (e.compressedLayers) {
 				this.compressedPrefetchSlideHash = currSlideHash;
 				this.prefetchNextCompressedSlide();
 			}
 			return;
 		}
+
+		if (e.compressedLayers) {
+			this.prefetchNextCompressedSlide();
+			return;
+		}
+
 		const reqSlideInfo = this.getSlideInfo(this.requestedSlideHash);
 
 		this.cacheAndNotify();

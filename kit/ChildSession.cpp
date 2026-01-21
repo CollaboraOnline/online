@@ -2536,7 +2536,7 @@ bool ChildSession::renderNextSlideLayer(SlideCompressor& scomp, const unsigned w
                     json = JsonUtil::jsonToString(root);
                 }
 
-                std::string response = "slidelayer: " + json;
+                std::string response = "zstdslidelayer: " + json;
 
                 response += "\n";
 

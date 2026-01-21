@@ -268,7 +268,6 @@ COOL_JS_LST =\
 	src/app/DocumentBase.ts \
 	src/app/DocumentView.ts \
 	src/app/TilesMiddleware.ts \
-	src/app/SlideshowMiddleware.ts \
 	src/app/SearchService.ts \
 	src/app/BaseClass.ts \
 	src/app/Events.ts \
@@ -547,6 +546,7 @@ COOL_JS_LST =\
 	src/slideshow/RenderContext.ts \
 	src/slideshow/VideoRenderer.ts \
 	src/slideshow/SlideRenderer.ts \
+	src/slideshow/SlideshowMiddleware.ts \
 	src/slideshow/SlideShowPresenter.ts \
 	src/slideshow/PresenterConsole.js \
 	src/slideshow/SimpleTextureRenderer.ts \
