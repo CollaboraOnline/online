@@ -1756,7 +1756,7 @@ window.L.Control.NotebookbarCalc = window.L.Control.NotebookbarWriter.extend({
 						'vertical': 'true'
 					},
 					{
-						'type': 'container',
+						'type': 'toolbox',
 						'children': [
 							{
 								'id': 'chk_filter_buttons2',
@@ -1765,20 +1765,20 @@ window.L.Control.NotebookbarCalc = window.L.Control.NotebookbarWriter.extend({
 								'text': _('Filter Buttons'),
 								'accessibility': { focusBack: true,	combination: 'SF', de: null }
 							},
-							{
-								'id': 'tablestyles_cb2',
-								'type': 'listbox',
-								'selectedCount': '1',
-								'selectedEntries': [
-									'0'
-								],
-								'command': '.uno:DatabaseSettings',
-								'accessibility': { focusBack: true,	combination: 'TS', de: null }
-							}
-						],
-						'vertical': 'true'
+						]
 					},
 				]
+			},
+			{ type: 'separator', id: 'table-style-options-break', orientation: 'vertical' },
+			{
+				'id': 'tablestyles_cb2',
+				'type': 'listbox',
+				'selectedCount': '1',
+				'selectedEntries': [
+					'0'
+				],
+				'command': '.uno:DatabaseSettings',
+				'accessibility': { focusBack: true,	combination: 'TS', de: null }
 			}
 		];
 

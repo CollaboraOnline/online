@@ -355,6 +355,10 @@ label.notebookbar.ui-checkbox-label {
 	padding-left: 0;
 }
 
+.notebookbar #table-style-options #chk_filter_buttons2 {
+	margin-bottom: 23px;
+}
+
 #table-HomeTab .unospan-uptoolbar:not(.disabled) {
 	border-top-left-radius: 12px;
 	border-bottom-left-radius: 12px;
