@@ -334,6 +334,10 @@ td.jsdialog > [id^='table-box']:not(.sidebar) {
 	background-color: var(--color-background-darker);
 }
 
+[data-userinterfacemode='classic'] #toolbar-up .jsdialog.ui-separator.vertical {
+	opacity: 0.4;
+}
+
 .ui-toolbar .ui-separator.vertical {
 	height: 14px;
 	width: 1px;
