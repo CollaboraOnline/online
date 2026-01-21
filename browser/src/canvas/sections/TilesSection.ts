@@ -335,7 +335,6 @@ export class TilesSection extends CanvasSectionObject {
 	}
 
 	private drawForViewLayoutMultiPage() {
-		if (!app.activeDocument.activeLayout.areViewTilesReady()) return; // Draw after we have all the tiles.
 
 		const view = app.activeDocument.activeLayout as ViewLayoutMultiPage;
 
