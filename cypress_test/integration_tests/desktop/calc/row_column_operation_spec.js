@@ -37,7 +37,7 @@ describe(['tagdesktop'], 'Row Column Operation', function() {
 
 	it('Insert/Delete Column', function() {
 		//insert column before
-	  desktopHelper.getNbIcon('InsertColumnsBefore', 'Home').click();
+		desktopHelper.getNbIcon('InsertColumnsBefore', 'Home').click();
 		//calcHelper.assertSheetContents(['','Hello','Hi','','World','Bye']);
 		calcHelper.clickOnFirstCell(true, false);
 

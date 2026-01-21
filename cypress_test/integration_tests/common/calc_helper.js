@@ -73,6 +73,9 @@ function clickOnFirstCell(firstClick = true, dblClick = false, isA1 = true) {
 	}
 
 	if (isA1) {
+		cy.getFrameWindow().then(function(win) {
+			helper.processToIdle(win);
+		});
 		cy.cGet(helper.addressInputSelector)
 			.should('have.prop', 'value', 'A1');
 	}
