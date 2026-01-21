@@ -7,6 +7,9 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Page Style dialog tests', 
 	beforeEach(function() {
 		helper.setupAndLoadDocument('writer/styles.odt');
 		cy.viewport(1920, 720);
+		cy.getFrameWindow().then((win) => {
+			this.win = win;
+		});
 	});
 
 	/*
@@ -18,6 +21,8 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Page Style dialog tests', 
 	it('Page Style dialog width', function() {
 		cy.cGet('#Format-tab-label').click();
 		desktopHelper.getNbIcon('PageDialog', 'Format').click();
+
+		helper.processToIdle(this.win);
 
 		cy.cGet('[id^="TemplateDialog"]')
 			.should('be.visible')
