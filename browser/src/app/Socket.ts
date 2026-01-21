@@ -1061,6 +1061,9 @@ class Socket {
 		} else if (textMsg.startsWith('slidelayer:')) {
 			this._onSlideLayerMsg(textMsg, e);
 			return;
+		} else if (textMsg.startsWith('zstdslidelayer:')) {
+			this._onZstdSlideLayerMsg(textMsg, e);
+			return;
 		} else if (textMsg.startsWith('sliderenderingcomplete:')) {
 			this._onSlideRenderingCompleteMsg(textMsg, e);
 			return;
@@ -1069,6 +1072,7 @@ class Socket {
 			!textMsg.startsWith('delta:') &&
 			!textMsg.startsWith('renderfont:') &&
 			!textMsg.startsWith('slidelayer:') &&
+			!textMsg.startsWith('zstdslidelayer:') &&
 			!textMsg.startsWith('windowpaint:')
 		) {
 			if (imgBytes !== undefined) {
@@ -1159,6 +1163,7 @@ class Socket {
 				e.data.startsWith('renderfont:') ||
 				e.data.startsWith('rendersearchlist:') ||
 				e.data.startsWith('slidelayer:') ||
+				e.data.startsWith('zstdslidelayer:') ||
 				e.data.startsWith('windowpaint:')
 			) {
 				let index: number;
@@ -1182,15 +1187,6 @@ class Socket {
 			if (this.image) return !!this.imageIsComplete;
 			return true;
 		};
-
-		// slide rendering is using zstd compressed images (EXPERIMENTAL)
-		const isSlideLayer = e.textMsg.startsWith('slidelayer:');
-		const isSlideRenderComplete = e.textMsg.startsWith(
-			'sliderenderingcomplete:',
-		);
-		const isZstdSlideshowEnabled = app.isExperimentalMode();
-		if (isZstdSlideshowEnabled && (isSlideLayer || isSlideRenderComplete))
-			return;
 
 		const isTile = e.textMsg.startsWith('tile:');
 		const isDelta = e.textMsg.startsWith('delta:');
@@ -2172,15 +2168,26 @@ class Socket {
 		textMsg: string,
 		e: SlurpMessageEvent | MinimalMessageEvent,
 	): void {
-		if (app.isExperimentalMode()) {
-			SlideBitmapManager.handleRenderSlideEvent(e);
-		} else {
-			const content = JSON.parse(textMsg.substring('slidelayer:'.length + 1));
+		const content = JSON.parse(textMsg.substring('slidelayer:'.length + 1));
+		this._map.fire('slidelayer', {
+			message: content,
+			image: (e as SlurpMessageEvent).image,
+		});
+	}
+
+	// 'zstdslidelayer: ' message.
+	private _onZstdSlideLayerMsg(
+		textMsg: string,
+		e: SlurpMessageEvent | MinimalMessageEvent,
+	): void {
+		const content = JSON.parse(textMsg.substring('zstdslidelayer:'.length + 1));
+		const event = e as SlurpMessageEvent;
+		if (event.imgBytes && event.imgIndex !== undefined)
 			this._map.fire('slidelayer', {
 				message: content,
-				image: (e as SlurpMessageEvent).image,
+				imgBytes: event.imgBytes.subarray(event.imgIndex),
 			});
-		}
+		else window.app.console.warn('zstdslidelayer with no image');
 	}
 
 	// 'sliderenderingcomplete: ' message.
@@ -2188,16 +2195,13 @@ class Socket {
 		textMsg: string,
 		e: SlurpMessageEvent | MinimalMessageEvent,
 	): void {
-		if (app.isExperimentalMode()) {
-			SlideBitmapManager.handleSlideRenderingComplete(e);
-		} else {
-			const json = JSON.parse(
-				textMsg.substring('sliderenderingcomplete:'.length + 1),
-			);
-			this._map.fire('sliderenderingcomplete', {
-				success: json.status === 'success',
-			});
-		}
+		const json = JSON.parse(
+			textMsg.substring('sliderenderingcomplete:'.length + 1),
+		);
+		this._map.fire('sliderenderingcomplete', {
+			message: json,
+			success: json.status === 'success',
+		});
 	}
 
 	// 'progress: ' message.

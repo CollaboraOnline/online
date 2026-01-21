@@ -4425,6 +4425,7 @@ bool DocumentBroker::handleInput(const std::shared_ptr<Message>& message)
     if (COOLProtocol::getFirstToken(message->forwardToken(), '-') == "client")
     {
         if (message->firstTokenMatches("slidelayer:") ||
+            message->firstTokenMatches("zstdslidelayer:") ||
             message->firstTokenMatches("sliderenderingcomplete:"))
         {
             handleSlideLayerResponse(message);

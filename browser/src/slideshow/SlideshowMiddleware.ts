@@ -34,7 +34,7 @@ class SlideBitmapManager {
 		return new ImageData(clampedArray, width, height);
 	}
 
-	public static renderCachedCompressSlide(layers: CompressedSlideLayer[]) {
+	public static renderCachedCompressedSlide(layers: CompressedSlideLayer[]) {
 		const pendingLayers: Promise<void>[] = [];
 
 		for (const layer of layers) {
@@ -79,40 +79,28 @@ class SlideBitmapManager {
 			});
 	}
 
-	public static handleRenderSlideEvent(e: any) {
-		if (!e.textMsg.startsWith('slidelayer:')) return;
-		var json = JSON.parse(e.textMsg.substring('slidelayer: '.length));
+	public static decompressSlideLayer(
+		json: any,
+		imgBytes: Uint8Array,
+	): Promise<ImageBitmap> | null {
 		if (json.isCompressed) {
-			this.cacheCompressedLayer(json, e.imgBytes.subarray(e.imgIndex));
-			return;
-		}
-		if (json.width && json.height) {
+			this.cacheCompressedLayer(json, imgBytes);
+		} else if (json.width && json.height) {
 			var imgData = this.decompressAndCreateImageData(
-				e.imgBytes.subarray(e.imgIndex),
+				imgBytes,
 				json.width,
 				json.height,
 			);
-			e.imgPromise = createImageBitmap(imgData);
-			this.pendingLayers.push(e.imgPromise);
-
-			e.imgPromise.then((img: ImageBitmap) => {
-				e.image = img;
-				e.imageIsComplete = true;
-				app.map.fire('slidelayer', {
-					message: json,
-					image: img,
-				});
-			});
+			const imgPromise = createImageBitmap(imgData);
+			this.pendingLayers.push(imgPromise);
+			return imgPromise;
 		}
+		return null;
 	}
 
-	public static handleSlideRenderingComplete(e: any) {
-		if (!e.textMsg.startsWith('sliderenderingcomplete:')) return;
-
-		var json = JSON.parse(
-			e.textMsg.substring('sliderenderingcomplete: '.length),
-		);
-
+	public static waitForSlideDecompression(
+		json: any,
+	): Promise<ImageBitmap[]> | null {
 		if (
 			json.compressedLayers &&
 			this.compressedSlideCache.get(json.slidehash) != null
@@ -125,20 +113,12 @@ class SlideBitmapManager {
 				});
 			}
 			this.compressedSlideCache.delete(json.slidehash);
-			app.map.fire('sliderenderingcomplete', {
-				success: json.status === 'success',
-				compressedLayers: json.compressedLayers,
-			});
-			return;
+			return null;
 		}
 
-		Promise.all(this.pendingLayers).then(() => {
-			this.pendingLayers = [];
-			app.map.fire('sliderenderingcomplete', {
-				success: json.status === 'success',
-				compressedLayers: json.compressedLayers,
-			});
-		});
+		const pendingLayers = this.pendingLayers;
+		this.pendingLayers = [];
+		return Promise.all(pendingLayers);
 	}
 
 	private static cacheCompressedLayer(json: any, imgRawData: Uint8Array) {
