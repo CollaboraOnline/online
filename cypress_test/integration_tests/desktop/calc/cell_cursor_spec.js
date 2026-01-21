@@ -8,6 +8,9 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Test jumping on large cell
 
 	beforeEach(function() {
 		helper.setupAndLoadDocument('calc/cell_cursor.ods');
+		cy.getFrameWindow().then((win) => {
+			this.win = win;
+		});
 	});
 
 	it('No jump on long merged cell', function() {
@@ -87,7 +90,8 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Test jumping on large cell
 
 	it('Check selected text visual.', function() {
 		cy.cGet('#insertsheet-button').click();
-		cy.wait(1000);
+
+		helper.processToIdle(this.win);
 
 		// Ensure starting point.
 		helper.typeIntoInputField(helper.addressInputSelector, 'A1');
@@ -100,7 +104,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Test jumping on large cell
 
 		helper.typeIntoDocument('{ctrl}a');
 
-		cy.wait(2000);
+		helper.processToIdle(this.win);
 
 		cy.cGet('#document-container').compareSnapshot('text-selection', 0.02);
 	});
@@ -112,6 +116,9 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Test Cell Selections', fun
 		desktopHelper.sidebarToggle();
 		cy.cGet('#sidebar-dock-wrapper').should('not.be.visible');
 		cy.viewport(1000, 660);
+		cy.getFrameWindow().then((win) => {
+			this.win = win;
+		});
 	});
 
 	it('Check non-range cell selection with CTRL', function() {
@@ -132,7 +139,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Test Cell Selections', fun
 		cy.wait(500);
 		calcHelper.clickOnACell(2, 6, 2, 10);
 
-		cy.wait(500);
+		helper.processToIdle(this.win);
 
 		cy.cGet('#document-container').compareSnapshot('selections', 0.02);
 	});
@@ -188,23 +195,24 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Test triple click content 
 describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Test decimal separator of cells with different languages.', function() {
 	beforeEach(function() {
 		helper.setupAndLoadDocument('calc/decimal_separator.ods');
+		cy.getFrameWindow().then((win) => {
+			this.win = win;
+		});
 	});
 
 	it('Check different decimal separators', function() {
 		helper.typeIntoInputField(helper.addressInputSelector, 'A1');
-		cy.wait(400);
 
-		cy.window().then(win => {
-			var app = win['0'].app;
-			cy.expect(app.calc.decimalSeparator).to.be.equal('.');
+		helper.processToIdle(this.win);
+		cy.wrap(this.win).then(win => {
+			cy.expect(win.app.calc.decimalSeparator).to.be.equal('.');
 		});
 
 		helper.typeIntoInputField(helper.addressInputSelector, 'B1');
-		cy.wait(400);
 
-		cy.window().then(win => {
-			var app = win['0'].app;
-			cy.expect(app.calc.decimalSeparator).to.be.equal(',');
+		helper.processToIdle(this.win);
+		cy.wrap(this.win).then(win => {
+			cy.expect(win.app.calc.decimalSeparator).to.be.equal(',');
 		});
 	});
 });
