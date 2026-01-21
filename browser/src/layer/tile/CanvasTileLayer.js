@@ -2321,57 +2321,35 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 		return result;
 	},
 
-	adjustTextSelectionRectanglesForCalc: function(rawRectangles, viewId) {
-		if (!app.map._docLayer.sheetGeometry) return;
+	_getRawRectangles(message) {
+		let rawRectangles = message.split('::')[0].split(';');
 
-		// This state is false when a shape is selected or a selected shape's text is being edited.
-		// We will use this to determine the origin of the selection rectangles.
-		let cellProtectionState = app.map.stateChangeHandler.getItemValue('.uno:CellProtection') === 'true';
-
-		// For other views, there is "viewlock" message that indicates if that user is editing inside an object. We will check that.
-		cellProtectionState = viewId !== undefined ? !OtherViewGraphicSelectionSection.hasViewLockInfo(viewId) : cellProtectionState;
-
-		// Do nothing if cellProtectionState is false.
-		if (!cellProtectionState) return;
-
-		for (let i = 0; i < rawRectangles.length; i++) {
-			app.map._docLayer.sheetGeometry.convertRawRectangleToTileTwips(rawRectangles[i]);
+		let refpoint = new cool.SimplePoint(0, 0);
+		if (message.indexOf('::') !== -1) {
+			refpoint = message.split('::')[1].split(',');
+			refpoint = new cool.SimplePoint(parseInt(refpoint[0]), parseInt(refpoint[1]));
 		}
 
-		// For Calc, text selection rectangle is sent taking the cursor rectangle as origin.
-		if (viewId !== undefined) {
-			let section = TextCursorSection.getViewCursorSection(viewId);
-
-			if (section && section.sectionProperties.showCursor === true) {
-				section = OtherViewCellCursorSection.getViewCursorSection(viewId);
-
-				if (section) {
-					for (let i = 0; i < rawRectangles.length; i++) {
-						rawRectangles[i][0] += Math.round(section.position[0] * app.pixelsToTwips);
-						rawRectangles[i][1] += Math.round(section.position[1] * app.pixelsToTwips);
-					}
-				}
-			}
+		if (message !== '' && message !== 'EMPTY') {
+			rawRectangles = rawRectangles.map((rectangle) => {
+				const temp = rectangle.split(',');
+				return [parseInt(temp[0]) + refpoint.x, parseInt(temp[1]) + refpoint.y, parseInt(temp[2]), parseInt(temp[3])];
+			});
 		}
-		else if (app.file.textCursor.visible) {
+		else rawRectangles = [];
+
+		if (this.isCalc() && this.sheetGeometry) {
 			for (let i = 0; i < rawRectangles.length; i++) {
-				rawRectangles[i][0] += app.calc.cellCursorRectangle.x1;
-				rawRectangles[i][1] += app.calc.cellCursorRectangle.y1;
+				this.sheetGeometry.convertRawRectangleToTileTwips(rawRectangles[i]);
 			}
 		}
+
+		return rawRectangles;
 	},
 
 	_onTextSelectionMsg: function (textMsg) {
 		textMsg = textMsg.replace('textselection:', '').trim();
-		let rawRectangles = textMsg.split(';');
-
-		if (textMsg.trim() !== '') {
-			rawRectangles = rawRectangles.map((rectangle) => {
-				const temp = rectangle.split(',');
-				return [parseInt(temp[0]), parseInt(temp[1]), parseInt(temp[2]), parseInt(temp[3])];
-			});
-		}
-		else rawRectangles = [];
+		const rawRectangles = this._getRawRectangles(textMsg);
 
 		if (rawRectangles.length > 0) {
 			TextSelections.activate();
@@ -2388,8 +2366,6 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 				TileManager.updateFileBasedView();
 				setTimeout(function () {app.sectionContainer.requestReDraw();}, 100);
 			}
-			else if (this._docType === 'spreadsheet')
-				this.adjustTextSelectionRectanglesForCalc(rawRectangles);
 
 			app.activeDocument.activeView.updateSelectionRawData(this._selectedMode, this._selectedPart, rawRectangles);
 
@@ -2433,20 +2409,9 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 			return;
 
 		// Get raw rectangles.
-		let twipsRectangles = obj.selection.trim() !== '' ? obj.selection.split(';') : [];
+		const rawRectangles = this._getRawRectangles(obj.selection.trim());
 
-		if (twipsRectangles.length > 0) {
-			// Turn the rectangles' comma seperated string values into integer arrays.
-			twipsRectangles = twipsRectangles.map((element) => {
-				const temp = element.split(',');
-				return [parseInt(temp[0]), parseInt(temp[1]), parseInt(temp[2]), parseInt(temp[3])];
-			});
-		}
-
-		if (this._docType === 'spreadsheet')
-			this.adjustTextSelectionRectanglesForCalc(twipsRectangles, viewId);
-
-		app.activeDocument.getView(viewId).updateSelectionRawData(viewMode, parseInt(obj.part), twipsRectangles);
+		app.activeDocument.getView(viewId).updateSelectionRawData(viewMode, parseInt(obj.part), rawRectangles);
 
 		this._saveMessageForReplay(textMsg, viewId);
 	},
