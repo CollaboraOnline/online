@@ -1630,6 +1630,10 @@ class TreeViewControl {
 		const searchBox = document.createElement('input');
 		searchBox.id = JSDialog.MakeIdUnique('ui-treeview-search-input'); // Form fields should have either a name or an ID - using this instead of a class
 		searchBox.type = 'search';
+		searchBox.setAttribute(
+			'class',
+			'jsdialog ui-edit ui-treeview-search-input',
+		);
 		searchBox.setAttribute('aria-label', _('Search items'));
 		searchBox.setAttribute('aria-controls', this._container.id);
 		searchBox.placeholder = _('Search...');
