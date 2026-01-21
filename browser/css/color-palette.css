@@ -28,11 +28,11 @@
 
 	--color-canvas: #f0f0f0;
 
-	--color-primary: #0b87e7; /* border-color */
+	--color-primary: #006bb3; /* border-color */
 	--color-primary-text: #fff; /* text color when primary-lighter is background */
-	--color-primary-dark: #0063b1;
-	--color-primary-darker: #004b86;
-	--color-primary-lighter: #83beec; /* background-color */
+	--color-primary-dark: #004d80;
+	--color-primary-darker: #003d66;
+	--color-primary-lighter: #e0e0e0; /* background-color */
 
 	--color-border: #b6b6b6;
 	--color-border-dark: #cecece; /* select */
