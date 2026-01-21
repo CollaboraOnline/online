@@ -351,6 +351,8 @@ html[data-theme='dark'] .savemodified.unotoolbutton .unobutton img {
 label.notebookbar.ui-checkbox-label {
 	font-family: var(--cool-font);
 	font-size: var(--header-font-size);
+	white-space: nowrap;
+	padding-left: 0;
 }
 
 #table-HomeTab .unospan-uptoolbar:not(.disabled) {
