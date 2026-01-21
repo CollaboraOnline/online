@@ -95,9 +95,18 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Test jumping on large cell
 		// Put cell cursor somewhere else.
 		helper.typeIntoInputField(helper.addressInputSelector, 'B10');
 
-		// Insert some text.
-		helper.typeIntoDocument('Lorem ipsum dolor sit amet.');
+		cy.cGet('[aria-label="Open Alignment"]').click();
+		cy.cGet('#home-wrap-text45-button').should('be.visible');
+		cy.cGet('#home-wrap-text45-button').click();
 
+		// Below 3 lines are to close the popup.
+		// That properties popup doesn't go by itself.
+		// So I close it here in order to prevent this test from failure when we fix that popup closing issue.
+		cy.cGet('body').type('{esc}'); // Close popup.
+		cy.cGet('#document-canvas').realClick();
+		helper.typeIntoInputField(helper.addressInputSelector, 'B10');
+
+		helper.typeIntoDocument('Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet.');
 		helper.typeIntoDocument('{ctrl}a');
 
 		cy.wait(2000);
