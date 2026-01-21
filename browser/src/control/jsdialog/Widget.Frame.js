@@ -56,8 +56,13 @@ JSDialog.frame = function _frameHandler(parentContainer, data, builder) {
 function shouldUseFieldsetLegend(data) {
 	if (!data.children || data.children.length < 2) return false;
 
-	// First child must be a fixedtext (label) to eligible as group
-	if (data.children[0].type !== 'fixedtext') return false;
+	// Eligible as group if:
+	// First child is a fixedtext (label)
+	// OR first child is container whose children are all fixedtext
+	if (data.children[0].type !== 'fixedtext') {
+		const firstChild = data.children[0];
+		return firstChild.children.every((item) => item.type === 'fixedtext');
+	}
 
 	return true;
 }
@@ -75,11 +80,29 @@ function buildFrame(parentContainer, data, builder, shouldUseFieldsetLegend) {
 
 		frame = container; // No inner frame for form control group
 
-		label = window.L.DomUtil.create(
-			'legend',
-			'ui-frame-label ui-legend ' + builder.options.cssClass,
-			frame,
-		);
+		const firstChild = data.children[0];
+
+		const fixedTexts =
+			firstChild.type === 'fixedtext'
+				? [firstChild]
+				: firstChild.children || [];
+
+		for (const fixedText of fixedTexts) {
+			label = window.L.DomUtil.create(
+				'legend',
+				'ui-frame-label ui-legend ' + builder.options.cssClass,
+				frame,
+			);
+
+			label.innerText = builder._cleanText(_extractLabelText(fixedText));
+			label.id = fixedText.id;
+
+			if (fixedText.visible === false) {
+				window.L.DomUtil.addClass(label, 'hidden');
+			}
+
+			builder.postProcess(frame, fixedText);
+		}
 	} else {
 		container = window.L.DomUtil.create(
 			'div',
@@ -94,19 +117,7 @@ function buildFrame(parentContainer, data, builder, shouldUseFieldsetLegend) {
 			container,
 		);
 		frame.id = data.id + '-frame';
-
-		label = window.L.DomUtil.create(
-			'label',
-			'ui-frame-label ' + builder.options.cssClass,
-			frame,
-		);
-		label.htmlFor = data.id + '-content';
 	}
-	label.innerText = builder._cleanText(_extractLabelText(data.children[0]));
-	label.id = data.children[0].id;
-	if (data.children[0].visible === false)
-		window.L.DomUtil.addClass(label, 'hidden');
-	builder.postProcess(frame, data.children[0]);
 
 	const frameChildren = window.L.DomUtil.create(
 		'div',
@@ -116,7 +127,8 @@ function buildFrame(parentContainer, data, builder, shouldUseFieldsetLegend) {
 	frameChildren.id = data.id + '-content';
 	$(frameChildren).addClass('expanded');
 
-	// skipping the first child(label/legend)
-	const children = data.children.slice(1);
+	const children = shouldUseFieldsetLegend
+		? data.children.slice(1)
+		: data.children;
 	builder.build(frameChildren, children);
 }
