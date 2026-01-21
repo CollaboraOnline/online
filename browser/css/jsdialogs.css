@@ -1015,7 +1015,11 @@ img.context-menu-icon {
 	padding-inline: 4px;
 }
 
-#search_edit.ui-edit.autofilter {
+.ui-treeview-search-input.jsdialog.ui-edit {
+	line-height: var(--default-height);
+}
+.autofilter .ui-treeview-search-input.jsdialog.ui-edit,
+.autofilter .ui-treeview-search-input.jsdialog.ui-edit:hover {
 	width: 100%;
 	width: -moz-available;
 	width: -webkit-fill-available;
