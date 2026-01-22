@@ -384,15 +384,20 @@ function actionOnSelector(name, func) {
 	});
 }
 
+function cygetScrollbarPosition(type) {
+	return cy.cGet('#test-div-' + type + '-scrollbar').then(function($item) {
+		cy.wrap(parseInt($item.text()));
+	});
+}
+
 //type represent horizontal/vertical scrollbar
 //arr : In both cypress GUI and CLI the scrollposition are slightly different
 //so we are passing both in array and assert using oneOf
 function assertScrollbarPosition(type, lowerBound, upperBound) {
 	cy.log('>> assertScrollbarPosition - start');
 
-	cy.cGet('#test-div-' + type + '-scrollbar')
-		.should(function($item) {
-			const x = parseInt($item.text());
+	cygetScrollbarPosition(type)
+		.should(function(x) {
 			expect(x).to.be.within(lowerBound, upperBound);
 		});
 
