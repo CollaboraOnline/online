@@ -112,6 +112,30 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Test jumping on large cell
 
 		cy.cGet('#document-canvas').compareSnapshot('text-selection', 0.02);
 	});
+
+	it('Check right click shows correct context menu.', function() {
+		cy.cGet('#document-container').then(function(items) {
+			const rect = items[0].getBoundingClientRect();
+			const centerX = rect.left + rect.width / 2;
+			const centerY = rect.top + rect.height / 2;
+			const topY = rect.top + 2;
+
+			// Show column context menu first.
+			// Real mouse move to trigger the issue that previous commit fixes.
+			cy.cGet('body').realMouseMove(centerX, topY);
+			cy.cGet('body').rightclick(centerX, topY);
+			cy.cGet('.context-menu-link.insert-columns-before').should('exist');
+			cy.cGet('.context-menu-link.insert-columns-before').should('be.visible');
+
+			// Now show document context menu.
+			cy.cGet('body').realMouseMove(centerX, centerY);
+			cy.cGet('#document-canvas').realClick();
+			cy.wait(300);
+			cy.cGet('body').rightclick(centerX, centerY);
+			cy.cGet('.context-menu-link.paste').should('exist');
+			cy.cGet('.context-menu-link.paste').should('be.visible');
+		});
+	});
 });
 
 describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Test Cell Selections', function() {
