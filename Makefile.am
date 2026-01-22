@@ -163,7 +163,6 @@ shared_sources = common/FileUtil.cpp \
                  $(util_platform_cpp) \
                  common/Util-unix.cpp \
                  common/ConfigUtil.cpp \
-                 common/SettingsStorage.cpp \
                  common/Authorization.cpp \
                  common/CommandControl.cpp \
                  common/Simd.cpp \
