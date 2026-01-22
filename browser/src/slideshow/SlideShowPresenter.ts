@@ -636,6 +636,12 @@ class SlideShowPresenter {
 		this._slideShowHandler.addA11yString(target.getAttribute('aria-label'));
 	}
 
+	private _onPrevNextSlide = (e: Event) => {
+		if (this.isFollower()) this.setFollowing(false);
+		if ((e.target as any).id === 'previous') this._onPrevSlide(e);
+		else if ((e.target as any).id === 'next') this._onNextSlide(e);
+	};
+
 	private _onPrevSlide = (e: Event) => {
 		e.stopPropagation();
 		this._slideShowNavigator.rewindEffect();
@@ -699,7 +705,7 @@ class SlideShowPresenter {
 		setImgSize(leftImg);
 		window.L.control.attachTooltipEventListener(leftImg, this._map);
 		app.LOUtil.setImage(leftImg, 'slideshow-slidePrevious.svg', this._map);
-		leftImg.addEventListener('click', this._onPrevSlide);
+		leftImg.addEventListener('click', this._onPrevNextSlide);
 
 		const rightImg = window.L.DomUtil.create('img', 'right-img', container);
 		rightImg.id = 'next';
@@ -709,7 +715,7 @@ class SlideShowPresenter {
 		rightImg.setAttribute('data-cooltip', slideshowNextText);
 		setImgSize(rightImg);
 		app.LOUtil.setImage(rightImg, 'slideshow-slideNext.svg', this._map);
-		rightImg.addEventListener('click', this._onNextSlide);
+		rightImg.addEventListener('click', this._onPrevNextSlide);
 
 		const animationsImage = window.L.DomUtil.create(
 			'img',
