@@ -581,7 +581,7 @@ export class Comment extends CanvasSectionObject {
 				this.size[0] = 5;
 		}
 		else if (this.sectionProperties.data.cellRange && app.map._docLayer._docType === 'spreadsheet') {
-			this.size = this.calcCellSize();
+			this.size = this.calcOptimumSizeForCalc();
 			var cellPos = app.map._docLayer._cellRangeToTwipRect(this.sectionProperties.data.cellRange).toRectangle();
 			let startX = cellPos[0];
 			if (this.isCalcRTL()) { // Mirroring is done in setPosition
@@ -589,7 +589,7 @@ export class Comment extends CanvasSectionObject {
 				startX += sizeX;  // but adjust for width of the cell.
 			}
 			this.setShowSection(true);
-			var position: Array<number> = [Math.round(cellPos[0] * app.twipsToPixels), Math.round(cellPos[1] * app.twipsToPixels)];
+			var position: Array<number> = [Math.round((cellPos[0] + cellPos[2]) * app.twipsToPixels - this.size[0]), Math.round(cellPos[1] * app.twipsToPixels)];
 
 			this.setPosition(position[0], position[1]);
 		}
@@ -1441,7 +1441,7 @@ export class Comment extends CanvasSectionObject {
 			else if (app.map._docLayer._docType === 'spreadsheet' &&
 				 parseInt(this.sectionProperties.data.tab) === app.map._docLayer._selectedPart) {
 
-				var cellSize = this.calcCellSize();
+				var cellSize = this.calcOptimumSizeForCalc();
 				if (cellSize[0] !== 0 && cellSize[1] !== 0) { // don't draw notes in hidden cells
 					// `zoom` represents the current zoom level of the map, retrieved from `this.map.getZoom()`.
 					// `baseSize` is a constant that defines the base size of the square at the initial zoom level.
@@ -1498,12 +1498,20 @@ export class Comment extends CanvasSectionObject {
 		}
 	}
 
-	public calcCellSize (): number[] {
+	private calcCellSize(): number[] {
 		var cellPos = app.map._docLayer._cellRangeToTwipRect(this.sectionProperties.data.cellRange).toRectangle();
 		return [Math.round((cellPos[2]) * app.twipsToPixels), Math.round((cellPos[3]) * app.twipsToPixels)];
 	}
 
-	public onMouseEnter (): void {
+	private calcOptimumSizeForCalc(): number[] {
+		const size = this.calcCellSize();
+
+		if (size[0] > 40 ) size[0] = 40;
+
+		return size;
+	}
+
+	public onMouseEnter(): void {
 		if (this.calcContinueWithMouseEvent()) {
 			// When mouse is above this section, comment's HTML element will be shown.
 			// If mouse pointer goes to HTML element, onMouseLeave event shouldn't be fired.
@@ -1527,11 +1535,11 @@ export class Comment extends CanvasSectionObject {
 		}
 	}
 
-	public onMouseLeave (point: cool.SimplePoint): void {
+	public onMouseLeave(point: cool.SimplePoint): void {
 		if (this.calcContinueWithMouseEvent()) {
 			if (parseInt(this.sectionProperties.data.tab) === app.map._docLayer._selectedPart) {
 				// Revert the changes we did on "onMouseEnter" event.
-				this.size = this.calcCellSize();
+				this.size = this.calcOptimumSizeForCalc();
 				if (point) {
 					this.hide();
 				}
