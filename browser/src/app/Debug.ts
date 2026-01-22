@@ -120,6 +120,16 @@ class DebugManager {
 
 		// redraw canvas with changed debug overlays
 		this._painter.update();
+
+		if (this._map.uiManager.notebookbar) {
+			if (this.debugOn) {
+				this._map.uiManager.notebookbar.showItem('validatesidebara11y');
+				this._map.uiManager.notebookbar.showItem('validatedialogsa11y');
+			} else {
+				this._map.uiManager.notebookbar.hideItem('validatesidebara11y');
+				this._map.uiManager.notebookbar.hideItem('validatedialogsa11y');
+			}
+		}
 	}
 
 	private _start(): void {
