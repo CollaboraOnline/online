@@ -423,6 +423,7 @@ window.L.Control.NotebookbarWriter = window.L.Control.Notebookbar.extend({
 		var hasFeedback = this.map.feedback;
 		var hasAccessibilitySupport = window.enableAccessibility;
 		var hasAccessibilityCheck = this.map.getDocType() === 'text';
+		const isDebugOn = this.map._debug.debugOn;
 		var hasAbout = window.L.DomUtil.get('about-dialog') !== null;
 		var hasServerAudit = this.getHiddenItems() ? !this.getHiddenItems().includes('server-audit') : true;
 
@@ -480,6 +481,22 @@ window.L.Control.NotebookbarWriter = window.L.Control.Notebookbar.extend({
 						'text': _UNO('.uno:AccessibilityCheck', 'text', true),
 						'command': '.uno:SidebarDeck.A11yCheckDeck',
 						'accessibility': { focusBack: false, combination: 'A', de: null }
+					} : {},
+				hasAccessibilityCheck ?
+					{
+						'id': 'validatesidebara11y',
+						'type': 'bigcustomtoolitem',
+						'text': _('Validate Sidebar'),
+						'visible': isDebugOn ? 'true' : 'false',
+						'accessibility': { focusBack: true,	combination: 'VS', de: null }
+					} : {},
+				hasAccessibilityCheck ?
+					{
+						'id': 'validatedialogsa11y',
+						'type': 'bigcustomtoolitem',
+						'text': _('Validate Dialog'),
+						'visible': isDebugOn ? 'true' : 'false',
+						'accessibility': { focusBack: true,	combination: 'VD', de: null }
 					} : {},
 				hasAccessibilitySupport || hasAccessibilityCheck ?
 					{
