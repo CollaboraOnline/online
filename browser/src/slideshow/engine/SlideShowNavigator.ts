@@ -246,6 +246,7 @@ class SlideShowNavigator {
 	}
 
 	followLeaderSlide() {
+		if (this.presenter.isFollowing()) return;
 		this.presenter.setFollowing(true);
 		// const currentEffect = this.currentLeaderEffect;
 		if (this.currentLeaderSlide === this.currentSlide)
