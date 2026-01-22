@@ -1946,22 +1946,6 @@ class TileManager {
 		}
 	}
 
-	// Returns a guess of how many tiles are yet to arrive
-	public static predictTilesToSlurp() {
-		if (!this.checkPointers()) return 0;
-
-		var size = app.map.getSize();
-
-		if (size.x === 0 || size.y === 0) return 0;
-
-		var zoom = Math.round(app.map.getZoom());
-		var pixelBounds = app.map.getPixelBoundsCore(app.map.getCenter(), zoom);
-
-		var queue = this.getMissingTiles(pixelBounds, zoom);
-
-		return queue.length;
-	}
-
 	public static pruneTiles() {
 		this.updateAllTileDistances();
 		this.garbageCollect();
