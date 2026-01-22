@@ -99,9 +99,8 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Test jumping on large cell
 		// Put cell cursor somewhere else.
 		helper.typeIntoInputField(helper.addressInputSelector, 'B10');
 
-		cy.cGet('[aria-label="Open Alignment"]').click();
-		cy.cGet('#home-wrap-text45-button').should('be.visible');
-		cy.cGet('#home-wrap-text45-button').click();
+		desktopHelper.getNbIconArrow('AlignTop').click();
+		desktopHelper.getNbIcon('WrapText').click();
 
 		// Below 3 lines are to close the popup.
 		// That properties popup doesn't go by itself.
