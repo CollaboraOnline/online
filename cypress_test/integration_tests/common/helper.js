@@ -1303,6 +1303,36 @@ function waitForTimers(win, tag) {
 	}, { timeout: Cypress.config('defaultCommandTimeout'), interval: 50 });
 }
 
+function checkA11yErrors(win, spy) {
+	cy.then(() => {
+		const a11yValidatorExceptionText = win.app.A11yValidatorException.PREFIX;
+		const a11yErrors = spy.getCalls().filter(call =>
+			String(call.args[0]).includes(a11yValidatorExceptionText)
+		);
+
+		if (a11yErrors.length > 0) {
+			const errorMessages = a11yErrors.map(call =>
+				call.args.map(arg => String(arg)).join(' ')
+			).join('\n\n');
+
+			throw new Error(`Found A11y errors:\n${errorMessages}`);
+		}
+	});
+}
+
+function runA11yValidation(win, dispatchCommand) {
+	cy.then(() => {
+		var spy = Cypress.sinon.spy(win.console, 'error');
+		win.app.dispatcher.dispatch(dispatchCommand);
+
+		checkA11yErrors(win, spy);
+
+		if (spy && spy.restore) {
+			spy.restore();
+		}
+	});
+}
+
 module.exports.setupDocument = setupDocument;
 module.exports.loadDocument = loadDocument;
 module.exports.setupAndLoadDocument = setupAndLoadDocument;
@@ -1357,3 +1387,5 @@ module.exports.waitUntilCoreIsIdle = waitUntilCoreIsIdle;
 module.exports.waitUntilLayoutingIsIdle = waitUntilLayoutingIsIdle;
 module.exports.processToIdle = processToIdle;
 module.exports.waitForTimers = waitForTimers;
+module.exports.checkA11yErrors = checkA11yErrors;
+module.exports.runA11yValidation = runA11yValidation;

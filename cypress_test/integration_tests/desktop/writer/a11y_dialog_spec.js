@@ -64,7 +64,7 @@ const buggyDialogs = [
     '.uno:OutlineBullet',
 ];
 
-describe(['tagdesktop'], 'Accessibility Writer Tests', { testIsolation: false }, function () {
+describe(['tagdesktop'], 'Accessibility Writer Dialog Tests', { testIsolation: false }, function () {
     let win;
 
     before(function () {
@@ -350,23 +350,6 @@ describe(['tagdesktop'], 'Accessibility Writer Tests', { testIsolation: false },
         handleDialog(win, 1);
     });
 
-    function checkA11yErrors(win, spy) {
-        cy.then(() => {
-            const a11yValidatorExceptionText = win.app.A11yValidatorException.PREFIX;
-            const a11yErrors = spy.getCalls().filter(call =>
-                String(call.args[0]).includes(a11yValidatorExceptionText)
-            );
-
-            if (a11yErrors.length > 0) {
-                const errorMessages = a11yErrors.map(call =>
-                    call.args.map(arg => String(arg)).join(' ')
-                ).join('\n\n');
-
-                throw new Error(`Found A11y errors:\n${errorMessages}`);
-            }
-        });
-    }
-
     function testDialog(command) {
         cy.then(() => {
             win.app.map.sendUnoCommand(command);
@@ -376,16 +359,7 @@ describe(['tagdesktop'], 'Accessibility Writer Tests', { testIsolation: false },
     }
 
     function runA11yValidation(win) {
-        cy.then(() => {
-            var spy = Cypress.sinon.spy(win.console, 'error');
-            win.app.dispatcher.dispatch('validatedialogsa11y');
-
-            checkA11yErrors(win, spy);
-
-            if (spy && spy.restore) {
-                spy.restore();
-            }
-        });
+        helper.runA11yValidation(win, 'validatedialogsa11y');
     }
 
     function handleDialog(win, level, command) {
