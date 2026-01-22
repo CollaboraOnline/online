@@ -28,7 +28,7 @@ describe(['tagdesktop'], 'Annotation Tests', function() {
 		cy.cGet('#test-div-OwnCellCursor').then((items) => {
 			const cursor = items[0];
 			const clientRectangle = cursor.getBoundingClientRect();
-			const x = Math.round(clientRectangle.left + clientRectangle.width * 0.5);
+			const x = Math.round(clientRectangle.left + clientRectangle.width * 0.7);
 			const y = Math.round(clientRectangle.top + clientRectangle.height * 0.5);
 			const width = clientRectangle.width;
 			const height = clientRectangle.height;
