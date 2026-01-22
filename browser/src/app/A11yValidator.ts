@@ -138,9 +138,7 @@ class A11yValidator {
 		return ids.length > 0 ? ids.join(' > ') : '(no ids in path)';
 	}
 
-	validateDialog(dialogElement: HTMLElement): void {
-		const content = dialogElement.querySelector('.ui-dialog-content');
-
+	validateContainer(dialogElement: HTMLElement): number {
 		// Find all widgets in the dialog that have an id
 		const widgets = dialogElement.querySelectorAll('[id]');
 		let errorCount = 0;
@@ -156,6 +154,14 @@ class A11yValidator {
 				}
 			}
 		});
+
+		return errorCount;
+	}
+
+	validateDialog(dialogElement: HTMLElement): void {
+		const content = dialogElement.querySelector('.ui-dialog-content');
+
+		let errorCount = this.validateContainer(dialogElement);
 
 		// Also validate the dialog content container itself
 		if (content instanceof HTMLElement) {
@@ -193,6 +199,24 @@ class A11yValidator {
 			if (dialogInfo && dialogInfo.container) {
 				this.validateDialog(dialogInfo.container);
 			}
+		}
+	}
+
+	validateSidebar(): void {
+		const currentSidebar = app.map?.sidebar;
+		if (!currentSidebar) {
+			console.error('A11yValidator: no open sidebar to validate');
+			return;
+		}
+
+		const errorCount = this.validateContainer(currentSidebar.container);
+
+		if (errorCount === 0) {
+			console.error('A11yValidator: sidebar passed all checks');
+		} else {
+			console.error(
+				`A11yValidator: sidebar has ${errorCount} accessibility issues`,
+			);
 		}
 	}
 }
