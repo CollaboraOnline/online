@@ -103,3 +103,5 @@ class AutoFillPreviewTooltip extends AutoCompletePopup {
 		super.closePopup();
 	}
 }
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

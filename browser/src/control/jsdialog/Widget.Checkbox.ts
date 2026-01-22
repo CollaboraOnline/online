@@ -134,3 +134,5 @@ JSDialog.Checkbox = function (
 	if (data.hidden) $(checkbox).hide();
 	return false;
 };
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

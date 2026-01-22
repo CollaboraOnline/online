@@ -229,3 +229,5 @@ JSDialog.IsTextInputField = isTextInputField;
 JSDialog.FindFocusableParent = findFocusableParent;
 JSDialog.RayCastToNextElement = rayCastToNextElement;
 JSDialog.FindNextElementInContainer = findNextElementInContainer;
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

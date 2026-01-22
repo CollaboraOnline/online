@@ -1303,3 +1303,5 @@ class SlideShowPresenter {
 }
 
 SlideShow.SlideShowPresenter = SlideShowPresenter;
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 /* global cy require expect Cypress */
 
 var helper = require('./helper');
@@ -250,3 +251,5 @@ module.exports.dblclickOnSelectedShape = dblclickOnSelectedShape;
 module.exports.addSlide = addSlide;
 module.exports.changeSlide = changeSlide;
 module.exports.selectTableInTheCenter = selectTableInTheCenter;
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

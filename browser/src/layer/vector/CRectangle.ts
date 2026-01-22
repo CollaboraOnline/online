@@ -116,3 +116,5 @@ class CCellSelection extends CPathGroup {
 		return this.borderPaths[0].anyRingBoundContains(corePxPoint);
 	}
 }
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

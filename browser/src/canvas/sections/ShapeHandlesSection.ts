@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 // @ts-strict-ignore
 /* global Proxy _ */
 /*
@@ -1251,3 +1252,5 @@ class ShapeHandlesSection extends CanvasSectionObject {
 }
 
 app.definitions.shapeHandlesSection = ShapeHandlesSection;
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

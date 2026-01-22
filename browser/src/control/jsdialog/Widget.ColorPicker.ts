@@ -454,3 +454,5 @@ JSDialog.colorPicker = function (
 
 	return false;
 };
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

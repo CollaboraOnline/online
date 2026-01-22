@@ -131,3 +131,5 @@ class IconUtil {
 }
 
 app.IconUtil = IconUtil;
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

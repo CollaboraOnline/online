@@ -54,3 +54,5 @@ window.L.Control.Selection = window.L.Control.extend({
 window.L.control.selection = function (options) {
 	return new window.L.Control.Selection(options);
 };
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

@@ -345,3 +345,5 @@ window.L.ImpressTileLayer = window.L.CanvasTileLayer.extend({
 		this._map.fire('invalidateparts');
 	}
 });
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

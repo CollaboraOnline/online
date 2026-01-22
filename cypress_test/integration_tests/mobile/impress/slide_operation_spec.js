@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 /* global describe it cy require beforeEach*/
 
 var helper = require('../../common/helper');
@@ -40,3 +41,5 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Slide operations', function
 	});
 
 });
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

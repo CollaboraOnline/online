@@ -53,3 +53,5 @@ class DocEvents {
 // Initiate
 app.events = new DocEvents();
 app.events.initiate();
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

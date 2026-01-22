@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 /* global describe it cy beforeEach require expect */
 
 var helper = require('../../common/helper');
@@ -45,3 +46,5 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Insert objects via insertio
 			});
 	});
 });
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

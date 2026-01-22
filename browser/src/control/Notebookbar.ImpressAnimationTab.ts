@@ -154,3 +154,5 @@ class ImpressAnimationTab implements NotebookbarTab {
 }
 
 JSDialog.ImpressAnimationTab = new ImpressAnimationTab();
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

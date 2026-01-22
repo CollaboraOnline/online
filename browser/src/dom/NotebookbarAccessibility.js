@@ -427,3 +427,5 @@ var NotebookbarAccessibility = function() {
 app.definitions.NotebookbarAccessibility = NotebookbarAccessibility;
 
 app.UI.notebookbarAccessibility = new app.definitions.NotebookbarAccessibility();
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

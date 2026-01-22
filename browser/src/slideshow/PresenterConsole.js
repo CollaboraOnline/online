@@ -1436,3 +1436,5 @@ class PresenterConsole {
 }
 
 SlideShow.PresenterConsole = PresenterConsole;
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

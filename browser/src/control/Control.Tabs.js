@@ -500,3 +500,5 @@ window.L.Control.Tabs = window.L.Control.extend({
 window.L.control.tabs = function (options) {
 	return new window.L.Control.Tabs(options);
 };
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

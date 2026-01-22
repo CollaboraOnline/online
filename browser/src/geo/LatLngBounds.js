@@ -215,3 +215,5 @@ window.L.latLngBounds = function (a, b) { // (LatLngBounds) or (LatLng, LatLng)
 	}
 	return new window.L.LatLngBounds(a, b);
 };
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

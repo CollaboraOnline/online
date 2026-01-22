@@ -97,3 +97,5 @@ window.L.Class.addInitHook = function (fn) { // (Function) || (String, args...)
 	this.prototype._initHooks = this.prototype._initHooks || [];
 	this.prototype._initHooks.push(init);
 };
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

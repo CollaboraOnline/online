@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 /* global describe it cy beforeEach require */
 
 var helper = require('../../common/helper');
@@ -126,3 +127,5 @@ describe(['tagmultiuser'], 'Check overlays after tab switching/operations', func
 
 });
 
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

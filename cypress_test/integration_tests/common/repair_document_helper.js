@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 'use strict';
 /* global cy require */
 
@@ -60,3 +61,5 @@ module.exports = {
 	openRepairDialog,
 	rollbackPastChange,
 };
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

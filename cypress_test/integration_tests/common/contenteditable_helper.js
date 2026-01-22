@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 /* global cy expect*/
 
 function _checkSelectionStart(value) {
@@ -152,3 +153,5 @@ module.exports.checkSelectionRange = checkSelectionRange;
 module.exports.checkCaretPosition = checkCaretPosition;
 module.exports.checkSelectionIsNull = checkSelectionIsNull;
 module.exports.checkSelectionIsEmpty = checkSelectionIsEmpty;
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

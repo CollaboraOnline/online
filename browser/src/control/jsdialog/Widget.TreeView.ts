@@ -1870,3 +1870,5 @@ JSDialog.isDnDActive = function () {
 	var dndElements = document.querySelectorAll('.droptarget');
 	return dndElements && dndElements.length;
 };
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

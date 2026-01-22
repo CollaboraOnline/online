@@ -71,3 +71,5 @@ window.L.Map.VersionBar = window.L.Handler.extend({
 if (window.prefs.canPersist) {
 	window.L.Map.versionBar = new window.L.Map.VersionBar();
 }
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 /* -*- tab-width: 4 -*- */
 /*
  * Copyright the Collabora Online contributors.
@@ -403,3 +404,5 @@ interface Window {
 
 // For localization
 declare function _(text: string): string;
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

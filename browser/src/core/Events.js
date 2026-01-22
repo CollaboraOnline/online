@@ -64,3 +64,5 @@ proto.fireEvent = proto.fire;
 proto.hasEventListeners = proto.listens;
 
 window.L.Mixin = {Events: proto};
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

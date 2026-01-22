@@ -2711,3 +2711,5 @@ window.L.control.jsDialogBuilder = function (options) {
 	builder._setup(options);
 	return builder;
 };
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

@@ -115,3 +115,5 @@ class Logger {
 }
 
 app.Log = new Logger();
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

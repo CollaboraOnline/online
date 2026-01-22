@@ -64,3 +64,5 @@ window.L.Map.Print = window.L.Handler.extend({
 });
 
 window.L.Map.addInitHook('addHandler', 'printHandler', window.L.Map.Print);
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

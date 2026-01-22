@@ -214,3 +214,5 @@ namespace CLineUtil {
 		return _sqDist(_sqClosestPointOnSegment(p, p1, p2), p);
 	}
 }
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

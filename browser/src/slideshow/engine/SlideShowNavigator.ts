@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 // @ts-strict-ignore
 /* -*- tab-width: 4 -*- */
 
@@ -549,3 +550,5 @@ class SlideShowNavigator {
 		this.isEnabled = false;
 	}
 }
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

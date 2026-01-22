@@ -291,3 +291,5 @@ JSDialog.notebookbarIconView = function (
 	commonContainer.onSelect = iconview.onSelect;
 	return false;
 };
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

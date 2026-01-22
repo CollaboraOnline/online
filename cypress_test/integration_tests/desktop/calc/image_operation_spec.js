@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 /* global describe it cy require beforeEach */
 
 var helper = require('../../common/helper');
@@ -70,3 +71,5 @@ describe(['tagdesktop'], 'Image Operation Tests', function() {
 		helper.assertImageSize(347, 232);
 	});
 });
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

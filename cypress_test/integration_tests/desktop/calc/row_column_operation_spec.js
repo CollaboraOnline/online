@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 /* global describe it cy require beforeEach */
 var helper = require('../../common/helper');
 var calcHelper = require('../../common/calc_helper');
@@ -48,3 +49,5 @@ describe(['tagdesktop'], 'Row Column Operation', function() {
 		//calcHelper.assertSheetContents(['Hello','','Hi','World','','Bye']);
 	});
 });
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

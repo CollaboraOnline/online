@@ -1096,3 +1096,5 @@ window.L.Control.JSDialog = window.L.Control.extend({
 window.L.control.jsDialog = function (options) {
 	return new window.L.Control.JSDialog(options);
 };
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

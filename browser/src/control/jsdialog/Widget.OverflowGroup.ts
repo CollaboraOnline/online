@@ -444,3 +444,5 @@ JSDialog.OverflowGroup = function (
 
 	return false;
 } as JSWidgetHandler;
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

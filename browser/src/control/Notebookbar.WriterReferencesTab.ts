@@ -400,3 +400,5 @@ class WriterReferencesTab implements NotebookbarTab {
 }
 
 JSDialog.WriterReferencesTab = new WriterReferencesTab();
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

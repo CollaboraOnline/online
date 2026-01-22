@@ -197,3 +197,5 @@ abstract class SimpleContinuousActivityBase extends ActivityBase {
 		// empty body
 	}
 }
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

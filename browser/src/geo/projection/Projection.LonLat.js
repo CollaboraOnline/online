@@ -18,3 +18,5 @@ window.L.Projection.LonLat = {
 
 	bounds: cool.Bounds.toBounds([-180, -90], [180, 90])
 };
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

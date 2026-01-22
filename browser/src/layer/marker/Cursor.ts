@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 // @ts-strict-ignore
 /* eslint-disable */
 
@@ -287,3 +288,5 @@ class Cursor {
 		return customCursor;
 	};
 }
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

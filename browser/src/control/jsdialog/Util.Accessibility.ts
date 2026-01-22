@@ -129,3 +129,5 @@ JSDialog.AddAriaLabel = function (
 ) {
 	return addAriaLabel(element, data, builder);
 };
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

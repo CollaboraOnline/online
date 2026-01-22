@@ -65,3 +65,5 @@ class CDarkOverlay extends CPathGroup {
 		return rectangles;
 	}
 }
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

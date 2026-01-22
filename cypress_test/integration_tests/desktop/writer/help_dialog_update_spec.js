@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 // This spec file does not test anything and it is use to update
 // help dialog screenshots. You can run this spec using:
 // make UPDATE_SCREENSHOT=true check-desktop spec=writer/help_dialog_update_spec.js
@@ -155,3 +156,5 @@ describe(['tagscreenshot'], 'Help dialog screenshot updation', function() {
 		copyScreenshot('chart.png');
 	});
 });
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

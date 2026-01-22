@@ -120,3 +120,5 @@ function buildFrame(parentContainer, data, builder, shouldUseFieldsetLegend) {
 	const children = data.children.slice(1);
 	builder.build(frameChildren, children);
 }
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

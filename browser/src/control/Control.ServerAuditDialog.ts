@@ -392,3 +392,5 @@ class ServerAuditDialog {
 JSDialog.serverAuditDialog = (map: any) => {
 	return new ServerAuditDialog(map);
 };
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

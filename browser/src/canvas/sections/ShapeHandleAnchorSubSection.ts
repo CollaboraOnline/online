@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 // @ts-strict-ignore
 /* global Proxy _ */
 /*
@@ -106,3 +107,5 @@ class ShapeHandleAnchorSubSection extends HTMLObjectSection {
 		}
 	}
 }
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

@@ -63,3 +63,5 @@ app.definitions.TableFillMarkerSection = class TableFillMarkerSection extends (
 		// no-op: TableFillMarker does not respond to double-click
 	}
 };
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

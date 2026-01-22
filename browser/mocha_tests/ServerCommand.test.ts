@@ -120,3 +120,5 @@ describe('ServerCommand', function() {
 		assert.equal(wireId, sc.wireId);
 	});
 });
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

@@ -147,3 +147,5 @@ window.L.Map.Welcome = window.L.Handler.extend({
 if (!window.L.Browser.cypressTest && window.enableWelcomeMessage && window.prefs.canPersist) {
 	window.L.Map.addInitHook('addHandler', 'welcome', window.L.Map.Welcome);
 }
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

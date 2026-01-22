@@ -101,3 +101,5 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'File Property Tests', func
 		cy.cGet('#cancel.ui-pushbutton-wrapper button').click();
 	});
 });
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 /* global describe it cy beforeEach require */
 
 var helper = require('../../common/helper');
@@ -30,3 +31,5 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Page Style dialog tests', 
 			.should('be.greaterThan', 588).and('be.lessThan', 605);
 	});
 });
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

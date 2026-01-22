@@ -182,3 +182,5 @@ class ClippingTransition extends Transition2d {
 }
 
 SlideShow.ClippingTransition = ClippingTransition;
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

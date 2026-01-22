@@ -251,3 +251,5 @@ window.L.Control.MobileWizard = window.L.Control.extend({
 window.L.control.mobileWizard = function (options) {
 	return new window.L.Control.MobileWizard(options);
 };
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

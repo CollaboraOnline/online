@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 /* global describe it cy beforeEach require */
 
 var helper = require('../../common/helper');
@@ -35,3 +36,5 @@ describe.skip(['tagmultiuser'], 'Sidebar visibility', function() {
 	});
 
 });
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

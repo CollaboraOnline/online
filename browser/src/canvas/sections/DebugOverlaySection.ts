@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 // @ts-strict-ignore
 /*
  * Copyright the Collabora Online contributors.
@@ -79,3 +80,5 @@ class DebugOverlaySection extends CanvasSectionObject {
 }
 
 app.definitions.debugOverlaySection = DebugOverlaySection;
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

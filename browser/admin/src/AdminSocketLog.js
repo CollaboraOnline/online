@@ -185,3 +185,5 @@ var AdminSocketLog = AdminSocketBase.extend({
 Admin.Log = function(host) {
 	return new AdminSocketLog(host);
 };
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

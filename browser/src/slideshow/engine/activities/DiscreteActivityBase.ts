@@ -153,3 +153,5 @@ abstract class DiscreteActivityBase extends ActivityBase {
 		super.dispose();
 	}
 }
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

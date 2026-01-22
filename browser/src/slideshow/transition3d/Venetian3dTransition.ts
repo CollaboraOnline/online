@@ -115,3 +115,5 @@ function Venetian3dTransition(
 }
 
 SlideShow.Venetian3dTransition = Venetian3dTransition;
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

@@ -198,3 +198,5 @@ window.L.Control.DocumentNameInput = window.L.Control.extend({
 window.L.control.documentNameInput = function () {
 	return new window.L.Control.DocumentNameInput();
 };
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

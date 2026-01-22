@@ -134,3 +134,5 @@ abstract class TextureAnimationBase extends SimpleTextureRenderer {
 
 	public abstract render(): void;
 }
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

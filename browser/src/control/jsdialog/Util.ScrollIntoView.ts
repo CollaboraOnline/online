@@ -27,3 +27,5 @@ JSDialog.ScrollIntoViewBlockOption = function (option: string) {
 
 	return option;
 };
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

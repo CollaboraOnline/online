@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 // Don't modify, generated using unocommands.py
 
 var unoCommandsArray = {
@@ -740,3 +741,5 @@ window.removeAccessKey = function(text) {
 
 	return text;
 }
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

@@ -2993,3 +2993,5 @@ window.L.Control.NotebookbarImpress = window.L.Control.NotebookbarWriter.extend(
 window.L.control.notebookbarImpress = function (options) {
 	return new window.L.Control.NotebookbarImpress(options);
 };
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

@@ -67,3 +67,5 @@ window.L.Control.ScrollAnnotation = window.L.Control.extend({
 window.L.control.scrollannotation = function (options) {
 	return new window.L.Control.ScrollAnnotation(options);
 };
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 /* global describe it beforeEach require cy */
 
 var helper = require('../../common/helper');
@@ -73,3 +74,5 @@ describe(['tagdesktop'], 'Editing Operations', function() {
 		expectTypedText();
 	});
 });
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

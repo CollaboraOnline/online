@@ -35,3 +35,5 @@ describe(['tagdesktop'], 'Formula dialog tests', function() {
 		cy.cGet('.ui-dialog').compareSnapshot('formula_dialog_accrintm_collapsed', 0.1);
 	});
 });
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

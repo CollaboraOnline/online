@@ -307,3 +307,5 @@ export class ColumnHeader extends Header {
 }
 
 app.definitions.columnHeader = cool.ColumnHeader;
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

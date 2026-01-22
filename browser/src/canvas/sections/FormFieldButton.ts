@@ -281,3 +281,5 @@ class FormFieldButton extends HTMLObjectSection {
 		super.onNewDocumentTopLeft();
 	}
 }
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

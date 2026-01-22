@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 /* global describe it require cy */
 
 var helper = require('../../common/helper');
@@ -53,3 +54,5 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Text cursor tests.', functi
 		}
 	});
 });
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

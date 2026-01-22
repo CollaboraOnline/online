@@ -239,3 +239,5 @@ window.L.Control.Layers = window.L.Control.extend({
 window.L.control.layers = function (baseLayers, overlays, options) {
 	return new window.L.Control.Layers(baseLayers, overlays, options);
 };
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

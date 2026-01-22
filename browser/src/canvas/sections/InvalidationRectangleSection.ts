@@ -105,3 +105,5 @@ class InvalidationRectangleSection extends CanvasSectionObject {
 		section.addRectangle(x, y, width, height);
 	}
 }
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

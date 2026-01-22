@@ -174,3 +174,5 @@ window.L.Map.StateChangeHandler = window.L.Handler.extend({
 });
 
 window.L.Map.addInitHook('addHandler', 'stateChangeHandler', window.L.Map.StateChangeHandler);
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

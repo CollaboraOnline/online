@@ -43,3 +43,5 @@ class ReflectionTransition extends SimpleTransition {
 }
 
 SlideShow.ReflectionTransition = ReflectionTransition;
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

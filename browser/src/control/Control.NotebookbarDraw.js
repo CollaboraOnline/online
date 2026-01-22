@@ -1859,3 +1859,5 @@ window.L.Control.NotebookbarDraw = window.L.Control.NotebookbarImpress.extend({
 window.L.control.notebookbarDraw = function (options) {
 	return new window.L.Control.NotebookbarDraw(options);
 };
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

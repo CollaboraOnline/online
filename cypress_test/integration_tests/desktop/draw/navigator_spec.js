@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 /* global describe it cy require beforeEach */
 
 var helper = require('../../common/helper');
@@ -111,3 +112,5 @@ describe.skip(['tagdesktop'], 'Scroll through document, insert/delete items', fu
 		checkIfItemNotExist('Shape 1 (Table)');
 	});
 });
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

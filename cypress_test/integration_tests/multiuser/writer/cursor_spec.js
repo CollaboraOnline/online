@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 /* global describe it cy beforeEach require expect */
 
 var helper = require('../../common/helper');
@@ -93,3 +94,5 @@ describe(['tagmultiuser'], 'Check cursor and view behavior', function() {
 		desktopHelper.assertScrollbarPosition('vertical', 375, 390);
 	});
 });
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

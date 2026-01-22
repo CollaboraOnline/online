@@ -72,3 +72,5 @@ function makeFallTransition(transitionParameters: TransitionParameters) {
 }
 
 SlideShow.makeFallTransition = makeFallTransition;
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

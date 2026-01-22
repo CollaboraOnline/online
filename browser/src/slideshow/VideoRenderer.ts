@@ -432,3 +432,5 @@ function makeVideoRenderer(
 		? new VideoRenderer2d(sId, context, slideRenderer)
 		: new VideoRendererGl(sId, context, slideRenderer);
 }
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 /* global describe it cy require beforeEach */
 
 var helper = require('../../common/helper');
@@ -75,3 +76,5 @@ describe(['tagdesktop'], 'Stylesview Iconview Tests', function() {
 		cy.cGet('#format-style-list-dialog-button').should('exist').should('be.visible');
 	});
 });
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

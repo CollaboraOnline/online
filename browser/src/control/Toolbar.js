@@ -910,3 +910,5 @@ window.L.Map.include({
 			this.formulabar.dirty = true;
 	},
 });
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

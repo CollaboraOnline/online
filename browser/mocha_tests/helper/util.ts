@@ -13,3 +13,5 @@ function assertFloat(actual: number, expected: number, eps: number, msg: string)
 	assert.ok(Math.abs(actual - expected) < eps,
 		msg + ` | actual : ${actual}, expected: ${expected}, eps: ${eps}`);
 }
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

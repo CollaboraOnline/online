@@ -139,3 +139,5 @@ function makeRotateAndScaleDepthByHeight(
 
 SlideShow.makeRotateAndScaleDepthByWidth = makeRotateAndScaleDepthByWidth;
 SlideShow.makeRotateAndScaleDepthByHeight = makeRotateAndScaleDepthByHeight;
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

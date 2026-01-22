@@ -278,3 +278,5 @@ JSDialog.GetDropdown = function (id: string) {
 	// TODO: use some register for it
 	return document.body.querySelector('[id^="' + id + '"].modalpopup');
 };
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

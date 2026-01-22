@@ -118,3 +118,5 @@ class OtherViewGraphicSelectionSection extends CanvasSectionObject {
 }
 
 app.definitions.otherViewGraphicSelectionSection = OtherViewGraphicSelectionSection;
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

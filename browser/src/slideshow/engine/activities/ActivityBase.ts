@@ -203,3 +203,5 @@ abstract class ActivityBase extends AnimationActivity {
 	// 	// TODO throw abstract
 	// }
 }
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

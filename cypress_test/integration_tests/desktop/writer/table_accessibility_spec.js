@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 /* global describe it cy beforeEach require */
 
 var helper = require('../../common/helper');
@@ -88,3 +89,5 @@ describe(['taga11yenabled'], 'Table accessibility', function() {
 		ceHelper.checkPlainContent('Item 3.1');
 	});
 });
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

@@ -604,3 +604,5 @@ window.L.control.createUserListWidget = function () {
 	app.map.userList.renderHeaderAvatarPopover(userlistElement);
 	return userlistElement;
 };
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

@@ -60,3 +60,5 @@ function addMockCanvas(window: any): void {
 		};
 	};
 }
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

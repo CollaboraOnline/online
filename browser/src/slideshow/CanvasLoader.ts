@@ -176,3 +176,5 @@ class CanvasLoaderGl extends TextureAnimationBase implements CanvasLoader {
 
 SlideShow.CanvasLoaderGl = CanvasLoaderGl;
 SlideShow.CanvasLoader2d = CanvasLoader2d;
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

@@ -195,3 +195,5 @@ abstract class SidebarBase extends JSDialogComponent {
 	}
 }
 JSDialog.SidebarBase = SidebarBase;
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

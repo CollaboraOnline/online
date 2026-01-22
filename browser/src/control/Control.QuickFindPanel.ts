@@ -153,3 +153,5 @@ class QuickFindPanel extends SidebarBase {
 JSDialog.QuickFindPanel = function (map: any) {
 	return new QuickFindPanel(map);
 };
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

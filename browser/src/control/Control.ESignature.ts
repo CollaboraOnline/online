@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 /*
  * Copyright the Collabora Online contributors.
  *
@@ -457,3 +458,5 @@ namespace cool {
 		}
 	}
 }
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

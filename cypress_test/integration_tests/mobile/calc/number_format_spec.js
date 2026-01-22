@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 /* global describe it cy beforeEach require */
 
 var helper = require('../../common/helper');
@@ -342,3 +343,5 @@ describe.skip(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Apply number formattin
 			.should('have.text', '1,000');
 	});
 });
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 /* global Proxy _ */
 /*
  * Copyright the Collabora Online contributors.
@@ -34,3 +35,5 @@ class ShapeHandleGluePointSubSection extends CanvasSectionObject {
 }
 
 app.definitions.shapeHandleGluePointSubSection = ShapeHandleGluePointSubSection;
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

@@ -69,3 +69,5 @@ l10nstrings.strAbout = _('About');
 if (module) {
 	module.exports = l10nstrings;
 }
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

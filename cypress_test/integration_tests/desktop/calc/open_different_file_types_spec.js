@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 /* global describe it cy require */
 var helper = require('../../common/helper');
 var calcHelper = require('../../common/calc_helper');
@@ -94,3 +95,5 @@ describe.skip(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Open different file t
 		desktopHelper.insertImage();
 	});
 });
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 /* global Proxy _ */
 /*
  * Copyright the Collabora Online contributors.
@@ -134,3 +135,5 @@ class ShapeHandleRotationSubSection extends CanvasSectionObject {
 }
 
 app.definitions.shapeHandleRotationSubSection = ShapeHandleRotationSubSection;
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

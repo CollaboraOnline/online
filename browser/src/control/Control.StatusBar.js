@@ -617,3 +617,5 @@ class StatusBar extends JSDialog.Toolbar {
 JSDialog.StatusBar = function (map) {
 	return new StatusBar(map);
 };
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

@@ -3470,3 +3470,5 @@ window.L.Control.NotebookbarWriter = window.L.Control.Notebookbar.extend({
 window.L.control.notebookbarWriter = function (options) {
 	return new window.L.Control.NotebookbarWriter(options);
 };
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

@@ -406,3 +406,5 @@ class ContextToolbar extends JSDialogComponent {
 		this.container.style.opacity = opacity.toString();
 	}
 }
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 /* -*- tab-width: 4 -*- */
 
 /*
@@ -46,3 +47,5 @@ class NextEffectEventArray {
 		this.aEventArray = [];
 	}
 }
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

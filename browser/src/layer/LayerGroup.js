@@ -112,3 +112,5 @@ window.L.LayerGroup = window.L.Layer.extend({
 window.L.layerGroup = function (layers) {
 	return new window.L.LayerGroup(layers);
 };
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

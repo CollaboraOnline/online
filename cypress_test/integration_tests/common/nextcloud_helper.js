@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 /* global cy Cypress require */
 
 // Nextcloud integration related helper methods.
@@ -110,3 +111,5 @@ function saveFileAs(fileName) {
 module.exports.checkAndCloseSharing = checkAndCloseSharing;
 module.exports.insertImageFromStorage = insertImageFromStorage;
 module.exports.saveFileAs = saveFileAs;
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

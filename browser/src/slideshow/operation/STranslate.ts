@@ -69,3 +69,5 @@ function makeSTranslate(
 }
 
 SlideShow.makeSTranslate = makeSTranslate;
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

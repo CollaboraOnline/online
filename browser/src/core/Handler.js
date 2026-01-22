@@ -27,3 +27,5 @@ window.L.Handler = window.L.Class.extend({
 		return !!this._enabled;
 	}
 });
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

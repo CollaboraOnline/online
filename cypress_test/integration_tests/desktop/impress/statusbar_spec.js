@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 /* global describe it cy beforeEach require Cypress */
 
 var helper = require('../../common/helper');
@@ -37,3 +38,5 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Statubar tests.', function
 		desktopHelper.shouldHaveZoomLevel('280');
 	});
 });
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

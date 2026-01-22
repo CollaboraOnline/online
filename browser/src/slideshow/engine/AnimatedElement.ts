@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 // @ts-strict-ignore
 /* -*- tab-width: 4 -*- */
 
@@ -1320,3 +1321,5 @@ class AnimatedTextElement extends AnimatedElement {
 	}
 	// TODO: to be implemented
 }
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

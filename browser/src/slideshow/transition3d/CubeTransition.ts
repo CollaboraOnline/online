@@ -108,3 +108,5 @@ function CubeTransition(
 }
 
 SlideShow.CubeTransition = CubeTransition;
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

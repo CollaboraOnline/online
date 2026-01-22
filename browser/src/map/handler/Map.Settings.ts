@@ -139,3 +139,5 @@ window.L.Map.Settings = window.L.Handler.extend({
 if (window.prefs.canPersist) {
 	window.L.Map.addInitHook('addHandler', 'settings', window.L.Map.Settings);
 }
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

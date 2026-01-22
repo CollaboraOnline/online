@@ -2344,3 +2344,5 @@ class UIManager extends window.L.Control {
 		return window.prefs.getBoolean(`${docType}.${name}`, defaultValue);
 	}
 }
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

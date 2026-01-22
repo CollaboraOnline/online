@@ -147,3 +147,5 @@ class StaticTextRenderer extends TextureAnimationBase {
 }
 
 SlideShow.StaticTextRenderer = StaticTextRenderer;
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

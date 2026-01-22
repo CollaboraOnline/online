@@ -568,3 +568,5 @@ var AdminSocketAnalytics = AdminSocketBase.extend({
 Admin.Analytics = function(host) {
 	return new AdminSocketAnalytics(host);
 };
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

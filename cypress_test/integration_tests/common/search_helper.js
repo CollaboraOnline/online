@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 /* global cy */
 
 // Search bar related helper methods for mobile.
@@ -88,3 +89,5 @@ module.exports.searchNext = searchNext;
 module.exports.searchPrev = searchPrev;
 module.exports.cancelSearch = cancelSearch;
 module.exports.closeSearchBar = closeSearchBar;
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

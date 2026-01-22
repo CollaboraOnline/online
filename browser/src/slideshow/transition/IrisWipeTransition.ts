@@ -23,3 +23,5 @@ function IrisWipeTransition(transitionParameters: TransitionParameters) {
 }
 
 SlideShow.IrisWipeTransition = IrisWipeTransition;
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

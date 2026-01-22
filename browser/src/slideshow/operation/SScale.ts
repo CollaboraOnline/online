@@ -84,3 +84,5 @@ function makeSScale(
 }
 
 SlideShow.makeSScale = makeSScale;
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

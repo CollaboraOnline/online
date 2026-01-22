@@ -870,3 +870,5 @@ window.L.Map.Keyboard = window.L.Handler.extend({
 		return false;
 	},
 });
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

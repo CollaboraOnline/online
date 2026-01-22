@@ -115,3 +115,5 @@ JSDialog.shouldShowAgain = shouldShowAgain;
 JSDialog.setShowAgain = setShowAgain;
 JSDialog.showInfoModalWithOptions = showInfoModalWithOptions;
 JSDialog.isWidgetInModalPopup = isWidgetInModalPopup;
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

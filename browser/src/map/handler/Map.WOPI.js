@@ -825,3 +825,5 @@ window.L.Map.WOPI = window.L.Handler.extend({
 
 // This handler would only get 'enabled' by map if map.options.wopi = true
 window.L.Map.addInitHook('addHandler', 'wopi', window.L.Map.WOPI);
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

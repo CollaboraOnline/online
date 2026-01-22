@@ -415,3 +415,5 @@ app.impress.isSlideSelected = function (index) {
 		return app.impress.partList[index].selected === 1;
 	} else return false;
 };
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

@@ -380,3 +380,5 @@ class Evented extends BaseClass {
 }
 
 app.Evented = Evented;
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

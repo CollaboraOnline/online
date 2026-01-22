@@ -157,3 +157,5 @@ window.L.Control.LanguageDialog = window.L.Control.extend({
 window.L.control.languageDialog = function (options) {
 	return new window.L.Control.LanguageDialog(options);
 };
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

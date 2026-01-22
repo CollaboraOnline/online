@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 /* global describe it beforeEach require cy */
 
 var helper = require('../../common/helper');
@@ -46,3 +47,5 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Image Operation Tests', fun
 		helper.assertImageSize(284, 63);
 	});
 });
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

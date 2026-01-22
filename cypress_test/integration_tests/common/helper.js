@@ -1357,3 +1357,5 @@ module.exports.waitUntilCoreIsIdle = waitUntilCoreIsIdle;
 module.exports.waitUntilLayoutingIsIdle = waitUntilLayoutingIsIdle;
 module.exports.processToIdle = processToIdle;
 module.exports.waitForTimers = waitForTimers;
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

@@ -478,3 +478,5 @@ class ViewLayoutBase {
 		this.scrollTo(point.pX, point.pY);
 	}
 }
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

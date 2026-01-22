@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 /* global describe it cy require expect */
 
 var helper = require('../../common/helper');
@@ -311,3 +312,5 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Change table properties / l
 	//TODO: add split cell test
 	//bug: https://github.com/CollaboraOnline/online/issues/3962
 });
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

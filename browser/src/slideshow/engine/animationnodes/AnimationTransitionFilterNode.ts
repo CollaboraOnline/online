@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 // @ts-strict-ignore
 /* -*- tab-width: 4 -*- */
 
@@ -185,3 +186,5 @@ class AnimationTransitionFilterNode extends AnimationBaseNode {
 		return sInfo;
 	}
 }
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

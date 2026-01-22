@@ -138,3 +138,5 @@ class PermTextureTransition extends SimpleTransition {
 }
 
 SlideShow.PermTextureTransition = PermTextureTransition;
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

@@ -791,3 +791,5 @@ class LOUtil {
 }
 
 app.LOUtil = LOUtil;
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

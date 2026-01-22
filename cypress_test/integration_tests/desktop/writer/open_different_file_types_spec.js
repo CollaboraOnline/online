@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 /* global describe it cy require */
 var helper = require('../../common/helper');
 var desktopHelper = require('../../common/desktop_helper');
@@ -68,3 +69,5 @@ describe.skip(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Open different file t
 		desktopHelper.openReadOnlyFile('writer/testfile.dotx');
 	});
 });
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

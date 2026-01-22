@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 /* global Proxy _ */
 /*
  * Copyright the Collabora Online contributors.
@@ -343,3 +344,5 @@ if (activateValidation) {
 
 (window as any).JSDialog = { verbose: false }; // initialize jsdialog module
 (window as any).SlideShow = {}; // initialize slideshow module
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

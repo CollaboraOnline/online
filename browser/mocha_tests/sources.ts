@@ -31,3 +31,5 @@
 /// <reference path="../src/app/iface/MapZoom.Interface.ts" />
 /// <reference path="../src/app/ServerCommand.ts" />
 
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

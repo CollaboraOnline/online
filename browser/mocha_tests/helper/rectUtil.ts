@@ -31,3 +31,5 @@ function getSectionRectangle(section: CanvasSectionObject): mtest.Rectangle {
         height: section.size[1],
     };
 }
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

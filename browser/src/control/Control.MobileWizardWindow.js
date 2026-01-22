@@ -798,3 +798,5 @@ window.L.Control.MobileWizardWindow = window.L.Control.extend({
 window.L.control.mobileWizardWindow = function (mobileWizard, id) {
 	return new window.L.Control.MobileWizardWindow(mobileWizard, id);
 };
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

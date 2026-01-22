@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 // @ts-strict-ignore
 /* -*- tab-width: 4 -*- */
 /*
@@ -340,3 +341,5 @@ function evalValuesAttribute(
 		aValueList.push(aValue);
 	}
 }
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

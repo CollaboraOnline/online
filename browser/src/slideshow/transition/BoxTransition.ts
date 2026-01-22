@@ -39,3 +39,5 @@ class BoxTransition extends ClippingTransition {
 }
 
 SlideShow.BoxTransition = BoxTransition;
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

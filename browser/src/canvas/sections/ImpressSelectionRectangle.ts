@@ -92,3 +92,5 @@ class SelectionRectangle extends CanvasSectionObject {
 		}
 	}
 }
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

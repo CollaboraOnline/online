@@ -48,3 +48,5 @@ JSDialog.StaticText = function (
 ) {
 	return staticTextControl(parentContainer, data, builder);
 };
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

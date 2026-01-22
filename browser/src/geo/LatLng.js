@@ -73,3 +73,5 @@ window.L.latLng = function (a, b, c) {
 	}
 	return new window.L.LatLng(a, b, c);
 };
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

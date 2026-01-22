@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 // @ts-strict-ignore
 /** */
 
@@ -43,3 +44,5 @@ class SlideCache {
 }
 
 SlideShow.SlideCache = SlideCache;
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

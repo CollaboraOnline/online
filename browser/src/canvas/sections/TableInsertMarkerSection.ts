@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 /*
  * Copyright the Collabora Online contributors.
  *
@@ -60,3 +61,5 @@ class TableInsertMarkerSection extends HTMLObjectSection {
 		}
 	}
 }
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

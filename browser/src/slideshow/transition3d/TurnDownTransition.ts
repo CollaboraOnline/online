@@ -61,3 +61,5 @@ function TurnDownTransition(transitionParameters: TransitionParameters) {
 /* jscpd:ignore-end */
 
 SlideShow.TurnDownTransition = TurnDownTransition;
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

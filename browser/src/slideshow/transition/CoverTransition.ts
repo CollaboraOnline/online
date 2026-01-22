@@ -121,3 +121,5 @@ class CoverTransition extends Transition2d {
 }
 
 SlideShow.CoverTransition = CoverTransition;
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

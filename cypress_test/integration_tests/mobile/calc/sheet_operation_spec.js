@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 /* global describe it cy beforeEach require */
 
 var helper = require('../../common/helper');
@@ -117,3 +118,5 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Sheet Operation', function 
 		cy.cGet('#spreadsheet-tab0').should('have.text', 'Sheet1');
 	});
 });
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

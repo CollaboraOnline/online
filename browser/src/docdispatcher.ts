@@ -883,3 +883,5 @@ class Dispatcher {
 }
 
 app.definitions['dispatcher'] = Dispatcher;
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

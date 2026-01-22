@@ -131,3 +131,5 @@ class ViewLayoutWriter extends ViewLayoutBase {
 		this.adjustDocumentMarginsForComments(false);
 	}
 }
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

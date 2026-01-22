@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 /* global describe it cy beforeEach require */
 
 var calcHelper = require('../../common/calc_helper');
@@ -34,3 +35,5 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Chart wizard data series d
 		cy.cGet('.lokdialog_container').compareSnapshot('chart_wizard_data_series', 0.1);
 	});
 });
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

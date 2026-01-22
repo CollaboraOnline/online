@@ -259,3 +259,5 @@ namespace cool {
 		return new Rectangle(x, y, width, height);
 	}
 }
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

@@ -220,3 +220,5 @@ window.L.Draggable = window.L.Evented.extend({
 		this._startPoint = undefined;
 	}
 });
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

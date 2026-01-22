@@ -96,3 +96,5 @@ JSDialog.multilineEdit = function (parentContainer, data, builder) {
 	var buildInnerData = _multiLineEditControl(parentContainer, data, builder);
 	return buildInnerData;
 };
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

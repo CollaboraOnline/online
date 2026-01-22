@@ -59,3 +59,5 @@ class BarsTransition extends ClippingTransition {
 }
 
 SlideShow.BarsTransition = BarsTransition;
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

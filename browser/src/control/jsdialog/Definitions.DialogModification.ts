@@ -67,3 +67,5 @@ JSDialog.getDialogModificationCallback = function (
 ): DialogModificationCallback | undefined {
 	return dialogModifications.get(dialogId);
 };
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

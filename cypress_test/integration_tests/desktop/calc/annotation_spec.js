@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 /* global describe it require cy beforeEach */
 
 var helper = require('../../common/helper');
@@ -339,3 +340,5 @@ describe(['tagdesktop'], 'Annotation Autosave Tests', function() {
 		cy.cGet('#annotation-content-area-1').should('have.text','some text0');
 	});
 });
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 /*
  * Copyright the Collabora Online contributors.
  *
@@ -84,3 +85,5 @@ class GenericButtonSection extends HTMLObjectSection {
 		this._lastZoom = 0;
 	}
 }
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

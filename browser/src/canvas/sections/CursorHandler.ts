@@ -81,3 +81,5 @@ class CursorHandler extends HTMLObjectSection {
 		this.getHTMLObject().style.opacity = value;
 	}
 }
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

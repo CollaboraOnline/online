@@ -31,3 +31,5 @@ enum AutoCompleteDialogId {
 	Mention = 'mentionPopup',
 	FormulaUsagePopup = 'formulausagePopup',
 }
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

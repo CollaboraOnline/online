@@ -61,3 +61,5 @@ window.L.CRS = {
 	// coordinate space is unbounded (infinite in all directions)
 	infinite: true,
 };
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

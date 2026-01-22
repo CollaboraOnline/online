@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 /* global Proxy _ */
 /*
  * Copyright the Collabora Online contributors.
@@ -41,3 +42,5 @@ class SplitSection extends CanvasSectionObject {
 }
 
 app.definitions.splitSection = SplitSection;
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

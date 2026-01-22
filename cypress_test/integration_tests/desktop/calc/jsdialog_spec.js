@@ -158,3 +158,5 @@ describe(['tagdesktop'], 'JSDialog unit test', function() {
 		cy.get('@consoleError').should('not.be.called');
 	});
 });
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

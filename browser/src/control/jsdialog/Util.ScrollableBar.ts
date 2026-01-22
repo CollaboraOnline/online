@@ -194,3 +194,5 @@ JSDialog.MakeStatusPriority = function (scrollable: Element, toolItems: any[]) {
 JSDialog.RefreshScrollables = function () {
 	window.dispatchEvent(new Event('resize'));
 };
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

@@ -136,3 +136,5 @@ L.ProgressOverlay = window.L.Layer.extend({
 window.L.progressOverlay = function (size) {
 	return new window.L.ProgressOverlay(size);
 };
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 /* global describe it cy beforeEach require expect Cypress*/
 
 var helper = require('../../common/helper');
@@ -212,3 +213,5 @@ describe(['tagmobile', 'tagnextcloud'], 'Formula bar tests.', function() {
 		cy.cGet('#copy-paste-container table td:nth-of-type(1)').should('have.text', '5');
 	});
 });
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

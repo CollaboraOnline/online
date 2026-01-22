@@ -194,3 +194,5 @@ class TextCursorSection extends HTMLObjectSection {
 		app.sectionContainer.requestReDraw();
 	}
 }
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

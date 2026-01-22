@@ -100,3 +100,5 @@ function makeSRotate(
 }
 
 SlideShow.makeSRotate = makeSRotate;
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

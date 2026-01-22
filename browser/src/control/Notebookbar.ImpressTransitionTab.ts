@@ -144,3 +144,5 @@ class ImpressTransitionTab implements NotebookbarTab {
 }
 
 JSDialog.ImpressTransitionTab = new ImpressTransitionTab();
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

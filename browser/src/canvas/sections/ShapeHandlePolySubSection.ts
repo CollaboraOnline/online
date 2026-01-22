@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 /* global Proxy _ */
 /*
  * Copyright the Collabora Online contributors.
@@ -17,3 +18,5 @@ class ShapeHandlePolySubSection extends ShapeHandleCustomSubSection {
 }
 
 app.definitions.shapeHandlePolySubSection = ShapeHandlePolySubSection;
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

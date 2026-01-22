@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 // @ts-strict-ignore
 /* global Proxy _ */
 /*
@@ -165,3 +166,5 @@ class ContentControlDropdownSubSection extends HTMLObjectSection {
 
 app.definitions.contentControlDropdownSubSection =
 	ContentControlDropdownSubSection;
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

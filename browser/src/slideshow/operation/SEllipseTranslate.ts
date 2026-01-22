@@ -88,3 +88,5 @@ function makeSEllipseTranslate(
 }
 
 SlideShow.makeSEllipseTranslate = makeSEllipseTranslate;
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

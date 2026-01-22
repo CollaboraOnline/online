@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 /* global describe it cy beforeEach require */
 
 var helper = require('../../common/helper');
@@ -41,3 +42,5 @@ describe(['tagmultiuser'], 'Check following the other views', function() {
 		cy.cGet('#followingChip').should('not.be.visible');
 	});
 });
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

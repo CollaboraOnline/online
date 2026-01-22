@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 /* global describe it cy beforeEach require expect*/
 
 var helper = require('../../common/helper');
@@ -65,3 +66,5 @@ describe.skip('Spell checking menu.', function() {
 		cy.cGet('body').contains('.context-menu-link', 'Paste').should('be.visible');
 	});
 });
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

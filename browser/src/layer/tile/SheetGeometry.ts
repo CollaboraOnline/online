@@ -1769,3 +1769,5 @@ function _findFirstMatch(array: any[], key: any, directionProvider: DirectionPro
 }
 
 }
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

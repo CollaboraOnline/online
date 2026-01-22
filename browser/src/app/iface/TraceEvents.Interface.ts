@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 interface CompleteTraceEvent {
 	id: number;
 	tid: number;
@@ -7,3 +8,5 @@ interface CompleteTraceEvent {
 	finish(): void;
 	abort(): void;
 }
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

@@ -173,3 +173,5 @@ class Sidebar extends SidebarBase {
 JSDialog.Sidebar = function (map: MapInterface) {
 	return new Sidebar(map);
 };
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

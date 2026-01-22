@@ -584,3 +584,5 @@ var AdminClusterOverview = AdminSocketBase.extend({
 Admin.ClusterOverview = function (host, routeToken) {
     return new AdminClusterOverview(host, routeToken);
 };
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

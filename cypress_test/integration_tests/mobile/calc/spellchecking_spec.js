@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 /* global describe it cy beforeEach require expect*/
 
 var helper = require('../../common/helper');
@@ -50,3 +51,5 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Calc spell checking menu.',
 		cy.cGet('body').contains('.context-menu-link', 'Paste').should('be.visible');
 	});
 });
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

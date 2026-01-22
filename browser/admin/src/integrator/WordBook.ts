@@ -607,3 +607,5 @@ class VirtualWordList {
 }
 
 (window as any).WordBook = new WordBook();
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

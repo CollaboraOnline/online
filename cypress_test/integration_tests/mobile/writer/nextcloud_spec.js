@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 /* global describe it cy require Cypress */
 
 var helper = require('../../common/helper');
@@ -50,3 +51,5 @@ describe(['tagnextcloud'], 'Nextcloud specific tests.', function() {
 	});
 });
 
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

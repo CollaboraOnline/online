@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 /*
  * Copyright the Collabora Online contributors.
  *
@@ -154,3 +155,5 @@ class TextSelections {
 		app.sectionContainer.removeSection(this.end.name);
 	}
 }
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

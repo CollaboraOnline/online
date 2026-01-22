@@ -136,3 +136,5 @@ class JSDialogMessageRouter {
 }
 
 JSDialog.MessageRouter = new JSDialogMessageRouter();
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

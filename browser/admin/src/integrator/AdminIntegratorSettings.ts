@@ -1916,3 +1916,5 @@ document.addEventListener('DOMContentLoaded', () => {
 
 (window as any)._ = _;
 (window as any).onload = onLoaded;
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

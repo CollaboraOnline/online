@@ -69,3 +69,5 @@ function DissolveTransition3d(transitionParameters: TransitionParameters) {
 /* jscpd:ignore-end */
 
 SlideShow.DissolveTransition3d = DissolveTransition3d;
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */

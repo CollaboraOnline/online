@@ -113,3 +113,5 @@ class LayoutingService {
 		this._setupTimer();
 	}
 }
+
+/* vim:set shiftwidth=8 softtabstop=8 noexpandtab: */
