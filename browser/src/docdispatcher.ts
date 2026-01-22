@@ -342,6 +342,14 @@ class Dispatcher {
 				console.warn('A11yValidator not available');
 			}
 		};
+
+		this.actionsMap['validatesidebara11y'] = () => {
+			if (window.app.a11yValidator) {
+				window.app.a11yValidator.validateSidebar();
+			} else {
+				console.warn('A11yValidator not available');
+			}
+		};
 	}
 
 	private addExportCommands() {
