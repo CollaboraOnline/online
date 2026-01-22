@@ -519,7 +519,6 @@ export class Header extends CanvasSectionObject {
 
 	onMouseEnter(): void {
 		this.context.canvas.style.cursor = this._cursor;
-		this._bindContextMenu();
 	}
 
 	onMouseLeave (point: cool.SimplePoint): void {
