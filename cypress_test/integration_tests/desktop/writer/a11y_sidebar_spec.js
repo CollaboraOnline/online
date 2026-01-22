@@ -1,8 +1,8 @@
-/* global describe expect it cy before after afterEach require Cypress */
+/* global describe expect it cy before after afterEach require */
 
 var helper = require('../../common/helper');
-var ceHelper = require('../../common/contenteditable_helper');
 var desktopHelper = require('../../common/desktop_helper');
+var a11yHelper = require('../../common/a11y_helper');
 
 describe(['tagdesktop'], 'Accessibility Writer Sidebar Tests', { testIsolation: false }, function () {
 	let win;
@@ -19,11 +19,7 @@ describe(['tagdesktop'], 'Accessibility Writer Sidebar Tests', { testIsolation: 
 
 		cy.getFrameWindow().then(function (frameWindow) {
 			win = frameWindow;
-
-			const enableUICoverage = {
-				'Track': { 'type': 'boolean', 'value': true }
-			};
-			win.app.map.sendUnoCommand('.uno:UICoverage', enableUICoverage);
+			a11yHelper.enableUICoverage(win);
 		});
 
 		// Show sidebar again after UICoverage tracking is enabled
@@ -34,49 +30,17 @@ describe(['tagdesktop'], 'Accessibility Writer Sidebar Tests', { testIsolation: 
 	});
 
 	after(function () {
-		cy.spy(win.app.socket, '_onMessage').as('onMessage').log(false);
+		a11yHelper.reportUICoverage(win);
 
-		// Run after the sidebars are processed and errors checked
-		cy.then(() => {
-			const endUICoverage = {
-				'Report': { 'type': 'boolean', 'value': true },
-				'Track': { 'type': 'boolean', 'value': false }
-			};
-			win.app.map.sendUnoCommand('.uno:UICoverage', endUICoverage);
-		});
-
-		cy.get('@onMessage').should(onMessage => {
-			const matchingCall = onMessage.getCalls().find(call => {
-				const evt = call.args && call.args[0]
-				const textMsg = evt && evt.textMsg;
-				if (!textMsg || !textMsg.startsWith('unocommandresult:')) {
-					return false;
-				}
-				const jsonPart = textMsg.replace('unocommandresult:', '').trim();
-				const data = JSON.parse(jsonPart);
-				return data.commandName === '.uno:UICoverage';
-			});
-
-			expect(matchingCall, '.uno:UICoverage result').to.be.an('object');
-
-			const textMsg = matchingCall.args[0].textMsg;
-			const jsonPart = textMsg.replace('unocommandresult:', '').trim();
-			const result = JSON.parse(jsonPart).result;
-
-			Cypress.log({name: 'UICoverage Message: ', message: JSON.stringify(result)});
-
+		cy.get('@uicoverageResult').then(result => {
 			expect(result.used, `used .ui files`).to.not.be.empty;
-
-			// TODO: make these true
+			// TODO: make this true
 			// expect(result.CompleteWriterSidebarCoverage, `complete writer sidebar coverage`).to.be.true;
 		});
 	});
 
 	afterEach(function () {
-		desktopHelper.undoAll();
-		cy.cGet('div.clipboard').as('clipboard');
-		// double click on field at initial cursor position
-		ceHelper.moveCaret('home', 'ctrl');
+		a11yHelper.resetState();
 	});
 
 	it('PropertyDeck: Table Context', function () {
@@ -139,6 +103,6 @@ describe(['tagdesktop'], 'Accessibility Writer Sidebar Tests', { testIsolation: 
 	});
 
 	function runA11yValidation(win) {
-		helper.runA11yValidation(win, 'validatesidebara11y');
+		a11yHelper.runA11yValidation(win, 'validatesidebara11y');
 	}
 });
