@@ -137,6 +137,7 @@ class Menubar extends window.L.Control {
 				{type: 'separator'},
 				{name: _UNO('.uno:ChangesMenu', 'text'), id: 'changesmenu', type: 'menu', menu: [
 					{uno: '.uno:TrackChanges'},
+					{name: _('Compare Changes'), id: 'comparechanges', type: 'action'},
 					{uno: '.uno:ShowTrackedChanges'},
 					{type: 'separator'},
 					{uno: '.uno:AcceptTrackedChanges'},
@@ -2355,6 +2356,8 @@ class Menubar extends window.L.Control {
 			app.dispatcher.dispatch(command);
 		} else if (id === 'columnrowhighlight') {
 			app.dispatcher.dispatch('columnrowhighlight');
+		} else if (id === 'comparechanges') {
+			app.dispatcher.dispatch('comparechanges');
 		} else {
 			// not found
 			app.console.warn('Menubar: unknown action for id: ' + id);

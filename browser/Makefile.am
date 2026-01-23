@@ -263,6 +263,7 @@ COOL_JS_LST =\
 	src/app/ViewLayout.ts \
 	src/app/ViewLayoutWriter.ts \
 	src/app/ViewLayoutMultiPage.ts \
+	src/app/ViewLayoutCompareChanges.ts \
 	src/app/DocumentBase.ts \
 	src/app/DocumentView.ts \
 	src/app/TilesMiddleware.ts \

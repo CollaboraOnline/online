@@ -172,7 +172,7 @@ class ViewLayoutMultiPage extends ViewLayoutBase {
 		return part;
 	}
 
-	private refreshVisibleAreaRectangle(): void {
+	protected refreshVisibleAreaRectangle(): void {
 		const documentAnchor = this.getDocumentAnchorSection();
 		const view = cool.SimpleRectangle.fromCorePixels([
 			this.scrollProperties.viewX,
@@ -222,7 +222,7 @@ class ViewLayoutMultiPage extends ViewLayoutBase {
 		app.sectionContainer.requestReDraw();
 	}
 
-	private updateViewData() {
+	protected updateViewData() {
 		if (!app.file.writer.pageRectangleList.length) return;
 
 		this.refreshVisibleAreaRectangle();

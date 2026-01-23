@@ -2317,6 +2317,15 @@ window.L.Control.NotebookbarWriter = window.L.Control.Notebookbar.extend({
 						'accessibility': { focusBack: true, combination: 'SC', de: null }
 					},
 					{
+						'id': 'compare-tracked-change',
+						'class': '',
+						'type': 'customtoolitem',
+						'text': _('Compare Changes'),
+						'command': 'comparechanges',
+						'inlineLabel': true,
+						'accessibility': { focusBack: true, combination: 'CC' }
+					},
+					{
 						'type': 'container',
 						'children': [
 							{

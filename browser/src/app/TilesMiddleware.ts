@@ -57,7 +57,11 @@ class TileCoordData {
 
 	// Returns SimplePoint. To replace getPos in the short term.
 	getPosSimplePoint() {
-		return cool.SimplePoint.fromCorePixels([this.x, this.y], this.part);
+		return cool.SimplePoint.fromCorePixels(
+			[this.x, this.y],
+			this.part,
+			this.mode,
+		);
 	}
 
 	key(): string {
@@ -1568,13 +1572,17 @@ class TileManager {
 		let needsNewTiles = false;
 		const calc = app.map._docLayer.isCalc();
 
+		let modeArray = [mode];
+		if (app.activeDocument.activeLayout.type === 'ViewLayoutCompareChanges')
+			modeArray = [1, 2];
+
 		for (const [key, tile] of Array.from(this.tiles.entries())) {
 			const coords: TileCoordData = tile.coords;
 			const tileRectangle = this.pixelCoordsToTwipTileBounds(coords);
 
 			if (
 				coords.part === part &&
-				coords.mode === mode &&
+				modeArray.includes(coords.mode) &&
 				(invalidatedRectangle.intersectsRectangle(tileRectangle) ||
 					(calc && !this.tileZoomIsCurrent(coords))) // In calc, we invalidate all tiles with different zoom levels.
 			) {
