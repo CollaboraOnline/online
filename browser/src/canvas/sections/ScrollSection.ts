@@ -164,7 +164,7 @@ export class ScrollSection extends CanvasSectionObject {
 
 		if (e.pos.y > e.map._size.y - 50) {
 			vy = 50;
-		} else if (e.pos.y < 50 && e.map._getTopLeftPoint().y > 50) {
+		} else if (e.pos.y >= 0 && e.pos.y < 50 && e.map._getTopLeftPoint().y > 50) {
 			vy = -50;
 		}
 
@@ -172,7 +172,7 @@ export class ScrollSection extends CanvasSectionObject {
 		const mapLeft: number = this.isRTL() ? e.map._size.x - e.map._getTopLeftPoint().x : e.map._getTopLeftPoint().x;
 		if (mousePosX > e.map._size.x - 50) {
 			vx = 50;
-		} else if (mousePosX < 50 && mapLeft > 50) {
+		} else if (e.pos.x >= 0 && mousePosX < 50 && mapLeft > 50) {
 			vx = -50;
 		}
 
