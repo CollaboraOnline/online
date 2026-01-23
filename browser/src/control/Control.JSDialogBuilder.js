@@ -752,23 +752,26 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 			container.id = data.id;
 
 			var expanded = data.expanded === true || (data.children[0] && data.children[0].checked === true);
-			var expander = window.L.DomUtil.create('button', 'ui-expander ' + builder.options.cssClass, container);
+			var expander = window.L.DomUtil.create('div', 'ui-expander ' + builder.options.cssClass, container);
 			if (data.children[0].text && data.children[0].text !== '') {
 				var prefix = data.children[0].id ? data.children[0].id : data.id;
-				expander.tabIndex = '0';
-				expander.setAttribute('aria-controls', prefix + '-children');
-				var label = window.L.DomUtil.create('span', 'ui-expander-label ' + builder.options.cssClass, expander);
+
+				var expanderBtn = window.L.DomUtil.create('button', 'ui-expander-btn ' + builder.options.cssClass, expander);
+				expanderBtn.tabIndex = '0';
+				expanderBtn.setAttribute('aria-controls', prefix + '-children');
+
+				var label = window.L.DomUtil.create('span', 'ui-expander-label ' + builder.options.cssClass, expanderBtn);
 				label.innerText = builder._cleanText(data.children[0].text);
 				label.id = prefix + '-label';
 				if (data.children[0].visible === false)
 					window.L.DomUtil.addClass(label, 'hidden');
-				builder.postProcess(expander, data.children[0]);
+				builder.postProcess(expanderBtn, data.children[0]);
 
 				var state = data.children.length > 1 && expanded;
 				if (state) {
 					window.L.DomUtil.addClass(label, 'expanded');
 				}
-				expander.setAttribute('aria-expanded', state);
+				expanderBtn.setAttribute('aria-expanded', state);
 
 				var toggleFunction = function () {
 					if (customCallback)
@@ -780,12 +783,12 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 					$(expander).siblings().toggleClass('expanded');
 
 					// Toggle aria-expanded attribute
-					const currentState = expander.getAttribute('aria-expanded') === 'true';
-					expander.setAttribute('aria-expanded', (!currentState).toString());
+					const currentState = expanderBtn.getAttribute('aria-expanded') === 'true';
+					expanderBtn.setAttribute('aria-expanded', (!currentState).toString());
 				};
 
-				$(expander).click(toggleFunction);
-				$(expander).keypress(function (event) {
+				$(expanderBtn).click(toggleFunction);
+				$(expanderBtn).keypress(function (event) {
 					if (event.which === 13) {
 						toggleFunction();
 						event.preventDefault();
@@ -799,12 +802,12 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 			if (expanded) {
 				if (data.children.length > 1) {
 					label.classList.add('expanded');
-					expander.setAttribute('aria-expanded', 'true');
+					expanderBtn.setAttribute('aria-expanded', 'true');
 				}
 				expanderChildren.classList.add('expanded');
 			}
 			else {
-				expander.setAttribute('aria-expanded', 'false');
+				expanderBtn.setAttribute('aria-expanded', 'false');
 			}
 
 			var children = [];

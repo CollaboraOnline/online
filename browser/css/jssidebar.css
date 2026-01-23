@@ -65,6 +65,14 @@ img.sidebar.ui-image {
 	align-items: center;
 }
 
+.sidebar.ui-expander-btn {
+	background: transparent;
+	border: none;
+	padding-inline-end: 2px;
+	display: flex;
+	align-items: center;
+}
+
 .sidebar.ui-expander-label {
 	color: var(--color-main-text);
 	font-size: var(--header-font-size);
@@ -88,7 +96,7 @@ img.sidebar.ui-image {
 	width: 10px;
 	height: 10px;
 	padding: 0;
-	margin: 0;
+	margin: 4px;
 }
 
 .ui-expander-icon-right.jsdialog.sidebar .ui-overflow-group-more.unotoolbutton,
