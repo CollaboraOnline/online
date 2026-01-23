@@ -28,7 +28,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Scroll through document', 
 		helper.typeIntoDocument('{home}');
 		desktopHelper.assertScrollbarPosition('horizontal', 48, 60);
 		helper.typeIntoDocument('{end}');
-		cy.wait(500);
+		helper.processToIdle(this.win);
 		desktopHelper.assertScrollbarPosition('horizontal', 180, 300);
 	});
 
@@ -112,7 +112,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Scroll through document', 
 				const bottom = items[0].getBoundingClientRect().bottom;
 				const horizontalCenter = Math.round(right * 0.5);
 
-				cy.wait(1000);
+				helper.processToIdle(this.win);
 				cy.cGet('body').realMouseDown(horizontalCenter, Math.round(bottom * 0.5));
 
 				cy.cGet('body').realMouseMove(horizontalCenter, bottom - 50);
@@ -120,16 +120,20 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Scroll through document', 
 				// We should have initiated a selection by now. Move the mouse to where the horizontal scroll bar must be (this tests a fix).
 				cy.cGet('body').realMouseMove(horizontalCenter, bottom - 5);
 
+				// Wait for autoscroll to start at the edge before moving outside
+				helper.processToIdle(this.win);
+
 				// Move the mouse pointer outside the document. It should be widening the selection (mouse button is pressed and being held).
 				for (let i = 0; i < 10; i++) {
 					cy.cGet('body').realMouseMove(horizontalCenter, bottom + 20);
-					cy.wait(100);
+					helper.processToIdle(this.win);
 					cy.cGet('body').realMouseMove(horizontalCenter, bottom + 30);
 				}
 
-				// Release the mouse button.
-				cy.wait(100);
+				// Release the mouse button to stop autoscroll
 				cy.cGet('body').realMouseUp();
+				helper.processToIdle(this.win);
+				helper.waitForTimers(this.win, 'autoscroll');
 
 				// Click on the ~center of the window.
 				cy.cGet('body').click(horizontalCenter, Math.round(right * 0.5));
