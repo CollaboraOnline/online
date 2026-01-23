@@ -549,6 +549,7 @@ class LOUtil {
 			graphicfiltersharpen: 'graphicfiltersharpen',
 			graphicfiltersobel: 'graphicfiltersobel',
 			effects: 'pictureeffectsmenu',
+			fitwidthzoom: 'pagewidth',
 		};
 		if (iconURLAliases[cleanName]) {
 			cleanName = iconURLAliases[cleanName];
