@@ -9,12 +9,19 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Interact with bottom toolba
 	beforeEach(function() {
 		helper.setupAndLoadDocument('calc/bottom_toolbar.ods');
 
+		cy.getFrameWindow().then((win) => {
+			this.win = win;
+		});
+
 		// Click on edit button
 		mobileHelper.enableEditingMobile();
 
 		cy.cGet('#toolbar-down').should('exist');
 
 		calcHelper.clickOnFirstCell();
+		cy.then(() => {
+			helper.processToIdle(this.win);
+		});
 	});
 
 	function getTextEndPosForFirstCell() {
