@@ -9,9 +9,12 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Apply paragraph properties 
 	beforeEach(function() {
 		helper.setupAndLoadDocument('impress/apply_paragraph_props_text.odp');
 		mobileHelper.enableEditingMobile();
+		cy.getFrameWindow().then((win) => {
+			this.win = win;
+		});
 	});
 
-	function selectText() {
+	function selectText(win) {
 		// Select the text in the shape by double
 		// clicking in the center of the shape,
 		// which is in the center of the slide,
@@ -21,9 +24,9 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Apply paragraph properties 
 		// but the text needs to be selected for the subsequent button clicks
 
 		cy.cGet('#document-canvas');
-		cy.wait(500); // Wait for document callbacks.
+		helper.processToIdle(win);
 		cy.cGet('#document-canvas').dblclick('center');
-		cy.wait(500);
+		helper.waitForTimers(win, 'clicktimer');
 		helper.typeIntoDocument('{ctrl}a');
 		helper.textSelectionShouldExist();
 	}
@@ -41,7 +44,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Apply paragraph properties 
 	}
 
 	it('Apply horizontal alignment on selected text.', function() {
-		selectText();
+		selectText(this.win);
 		cy.cGet('#document-container g.Page .TextParagraph .TextPosition')
 			.should('have.attr', 'x', '1400');
 
@@ -51,7 +54,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Apply paragraph properties 
 		mobileHelper.closeMobileWizard();
 
 		impressHelper.removeShapeSelection();
-		selectText();
+		selectText(this.win);
 		cy.cGet('#document-container g.Page .TextParagraph .TextPosition')
 			.should('have.attr', 'x', '23583');
 
@@ -61,7 +64,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Apply paragraph properties 
 		mobileHelper.closeMobileWizard();
 
 		impressHelper.removeShapeSelection();
-		selectText();
+		selectText(this.win);
 		cy.cGet('#document-container g.Page .TextParagraph .TextPosition')
 			.should('have.attr', 'x', '1400');
 
@@ -71,7 +74,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Apply paragraph properties 
 		mobileHelper.closeMobileWizard();
 
 		impressHelper.removeShapeSelection();
-		selectText();
+		selectText(this.win);
 		cy.cGet('#document-container g.Page .TextParagraph .TextPosition')
 			.should('have.attr', 'x', '12491');
 
@@ -81,13 +84,13 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Apply paragraph properties 
 		mobileHelper.closeMobileWizard();
 
 		impressHelper.removeShapeSelection();
-		selectText();
+		selectText(this.win);
 		cy.cGet('#document-container g.Page .TextParagraph .TextPosition')
 			.should('have.attr', 'x', '1400');
 	});
 
 	it('Apply vertical alignment on selected text.', function() {
-		selectText();
+		selectText(this.win);
 		cy.cGet('#document-container g.Page .TextParagraph .TextPosition')
 			.should('have.attr', 'y', '4834');
 
@@ -97,7 +100,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Apply paragraph properties 
 		mobileHelper.closeMobileWizard();
 
 		impressHelper.removeShapeSelection();
-		selectText();
+		selectText(this.win);
 		cy.cGet('#document-container g.Page .TextParagraph .TextPosition')
 			.should('have.attr', 'y', '10811');
 
@@ -107,7 +110,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Apply paragraph properties 
 		mobileHelper.closeMobileWizard();
 
 		impressHelper.removeShapeSelection();
-		selectText();
+		selectText(this.win);
 		cy.cGet('#document-container g.Page .TextParagraph .TextPosition')
 			.should('have.attr', 'y', '4834');
 
@@ -117,13 +120,13 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Apply paragraph properties 
 		mobileHelper.closeMobileWizard();
 
 		impressHelper.removeShapeSelection();
-		selectText();
+		selectText(this.win);
 		cy.cGet('#document-container g.Page .TextParagraph .TextPosition').should('have.attr', 'y');
 		cy.cGet('#document-container g.Page .TextParagraph .TextPosition').invoke('attr', 'y').then(parseInt).should('be.closeTo', 7822, 5);
 	});
 
 	it('Apply default bulleting on selected text.', function() {
-		selectText();
+		selectText(this.win);
 		// We have no bulleting by default
 		cy.cGet('#document-container g.Page .BulletChars')
 			.should('not.exist');
@@ -134,13 +137,13 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Apply paragraph properties 
 		mobileHelper.closeMobileWizard();
 
 		impressHelper.removeShapeSelection();
-		selectText();
+		selectText(this.win);
 		cy.cGet('#document-container g.Page .BulletChars')
 			.should('exist');
 	});
 
 	it('Apply default numbering on selected text.', function() {
-		selectText();
+		selectText(this.win);
 		// We have no bulleting by default
 		cy.cGet('#document-container g.Page .SVGTextShape tspan')
 			.should('not.have.attr', 'ooo:numbering-type');
@@ -151,13 +154,13 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Apply paragraph properties 
 		mobileHelper.closeMobileWizard();
 
 		impressHelper.removeShapeSelection();
-		selectText();
+		selectText(this.win);
 		cy.cGet('#document-container g.Page .SVGTextShape tspan')
 			.should('have.attr', 'ooo:numbering-type', 'number-style');
 	});
 
 	it('Apply spacing above on selected text.', function() {
-		selectText();
+		selectText(this.win);
 		cy.cGet('#document-container g.Page .TextParagraph:nth-of-type(2) tspan')
 			.should('have.attr', 'y', '6600');
 
@@ -167,13 +170,13 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Apply paragraph properties 
 		mobileHelper.closeMobileWizard();
 
 		impressHelper.removeShapeSelection();
-		selectText();
+		selectText(this.win);
 		cy.cGet('#document-container g.Page .TextParagraph:nth-of-type(2) tspan')
 			.should('have.attr', 'y', '11180');
 	});
 
 	it('Apply spacing below on selected text.', function() {
-		selectText();
+		selectText(this.win);
 		cy.cGet('#document-container g.Page .TextParagraph:nth-of-type(2) tspan')
 			.should('have.attr', 'y', '6600');
 
@@ -183,13 +186,13 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Apply paragraph properties 
 		mobileHelper.closeMobileWizard();
 
 		impressHelper.removeShapeSelection();
-		selectText();
+		selectText(this.win);
 		cy.cGet('#document-container g.Page .TextParagraph:nth-of-type(2) tspan')
 			.should('have.attr', 'y', '11180');
 	});
 
 	it('Increase/decrease spacing of selected text.', function() {
-		selectText();
+		selectText(this.win);
 		cy.cGet('#document-container g.Page .TextParagraph:nth-of-type(2) tspan')
 			.should('have.attr', 'y', '6600');
 
@@ -199,7 +202,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Apply paragraph properties 
 		mobileHelper.closeMobileWizard();
 
 		impressHelper.removeShapeSelection();
-		selectText();
+		selectText(this.win);
 		cy.cGet('#document-container g.Page .TextParagraph:nth-of-type(2) tspan')
 			.should('have.attr', 'y', '6700');
 
@@ -209,13 +212,13 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Apply paragraph properties 
 		mobileHelper.closeMobileWizard();
 
 		impressHelper.removeShapeSelection();
-		selectText();
+		selectText(this.win);
 		cy.cGet('#document-container g.Page .TextParagraph:nth-of-type(2) tspan')
 			.should('have.attr', 'y', '6600');
 	});
 
 	it('Change writing direction of selected text.', function() {
-		selectText();
+		selectText(this.win);
 		cy.cGet('#document-container g.Page .TextParagraph .TextPosition')
 			.should('have.attr', 'x', '1400');
 
@@ -225,7 +228,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Apply paragraph properties 
 		mobileHelper.closeMobileWizard();
 
 		impressHelper.removeShapeSelection();
-		selectText();
+		selectText(this.win);
 		cy.cGet('#document-container g.Page .TextParagraph .TextPosition')
 			.should('have.attr', 'x', '23584');
 
@@ -235,13 +238,13 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Apply paragraph properties 
 		mobileHelper.closeMobileWizard();
 
 		impressHelper.removeShapeSelection();
-		selectText();
+		selectText(this.win);
 		cy.cGet('#document-container g.Page .TextParagraph .TextPosition')
 			.should('have.attr', 'x', '1400');
 	});
 
 	it('Change bulleting level of selected text.', function() {
-		selectText();
+		selectText(this.win);
 		// We have no bulleting by default
 		cy.cGet('#document-container g.Page .BulletChars')
 			.should('not.exist');
@@ -252,7 +255,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Apply paragraph properties 
 		mobileHelper.closeMobileWizard();
 
 		impressHelper.removeShapeSelection();
-		selectText();
+		selectText(this.win);
 		cy.cGet('#document-container g.Page .BulletChars')
 			.should('exist');
 		cy.cGet('#document-container g.Page .BulletChar:nth-of-type(2) g')
@@ -264,7 +267,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Apply paragraph properties 
 		mobileHelper.closeMobileWizard();
 
 		impressHelper.removeShapeSelection();
-		selectText();
+		selectText(this.win);
 		cy.cGet('#document-container g.Page .BulletChar:nth-of-type(2) g')
 			.should('have.attr', 'transform', 'translate(2900,4536)');
 
@@ -274,7 +277,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Apply paragraph properties 
 		mobileHelper.closeMobileWizard();
 
 		impressHelper.removeShapeSelection();
-		selectText();
+		selectText(this.win);
 		cy.cGet('#document-container g.Page .BulletChar:nth-of-type(2) g')
 			.should('have.attr', 'transform', 'translate(1700,4563)');
 	});
