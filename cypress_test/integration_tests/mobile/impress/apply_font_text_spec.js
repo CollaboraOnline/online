@@ -9,9 +9,12 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Apply font on selected text
 	beforeEach(function() {
 		helper.setupAndLoadDocument('impress/apply_font_text.odp');
 		mobileHelper.enableEditingMobile();
+		cy.getFrameWindow().then((win) => {
+			this.win = win;
+		});
 	});
 
-	function selectText() {
+	function selectText(win) {
 		// Select the text in the shape by double
 		// clicking in the center of the shape,
 		// which is in the center of the slide,
@@ -21,19 +24,21 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Apply font on selected text
 		// Click on the center to focus the shape first.
 		// Then click again to place the cursor.
 		cy.cGet('#document-canvas').click('center');
+		helper.processToIdle(win);
 		cy.cGet('#test-div-shape-handle-2').then(function(element) {
 			const rect = element[0].getBoundingClientRect();
 			const x = rect.right + 15;
 			const y = rect.bottom + 15;
 			cy.cGet('#document-canvas').dblclick(x, y);
 		});
-		cy.wait(1000); // We need to get the cursor visibility callback from core side.
+		// Wait for cursor visibility callback from core side
+		helper.processToIdle(win);
 		helper.typeIntoDocument('{ctrl}a');
 		helper.textSelectionShouldExist();
 	}
 
 	it('Apply bold on selected text.', function() {
-		selectText();
+		selectText(this.win);
 
 		mobileHelper.openTextPropertiesPanel();
 		cy.cGet('#mobile-wizard .unoBold').click();
@@ -45,7 +50,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Apply font on selected text
 	});
 
 	it('Apply italic on selected text.', function() {
-		selectText();
+		selectText(this.win);
 
 		mobileHelper.openTextPropertiesPanel();
 		cy.cGet('#mobile-wizard .unoItalic').click();
@@ -57,7 +62,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Apply font on selected text
 	});
 
 	it('Apply underline on selected text.', function() {
-		selectText();
+		selectText(this.win);
 
 		mobileHelper.openTextPropertiesPanel();
 		cy.cGet('#mobile-wizard .unoUnderline').click();
@@ -69,7 +74,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Apply font on selected text
 	});
 
 	it('Apply strikeout on selected text.', function() {
-		selectText();
+		selectText(this.win);
 
 		mobileHelper.openTextPropertiesPanel();
 		cy.cGet('#mobile-wizard .unoStrikeout').click();
@@ -81,7 +86,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Apply font on selected text
 	});
 
 	it('Apply shadowed on selected text.', function() {
-		selectText();
+		selectText(this.win);
 
 		mobileHelper.openTextPropertiesPanel();
 		cy.cGet('#mobile-wizard .unoShadowed').click();
@@ -92,14 +97,14 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Apply font on selected text
 
 		// Reselect text
 		impressHelper.removeShapeSelection();
-		selectText();
+		selectText(this.win);
 
 		mobileHelper.openTextPropertiesPanel();
 		cy.cGet('#mobile-wizard .unoShadowed').should('have.class','selected');
 	});
 
 	it('Change font name of selected text.', function() {
-		selectText();
+		selectText(this.win);
 
 		mobileHelper.openTextPropertiesPanel();
 		cy.cGet('#font').click();
@@ -112,7 +117,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Apply font on selected text
 	});
 
 	it('Change font size of selected text.', function() {
-		selectText();
+		selectText(this.win);
 
 		mobileHelper.openTextPropertiesPanel();
 		cy.cGet('#fontsizecombobox').click();
@@ -125,7 +130,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Apply font on selected text
 	});
 
 	it('Apply text color on selected text.', function() {
-		selectText();
+		selectText(this.win);
 
 		cy.cGet('text tspan.TextPosition tspan').not('.PlaceholderText').should('have.attr', 'fill', 'rgb(0,0,0)');
 
@@ -140,11 +145,10 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Apply font on selected text
 	});
 
 	it('Apply highlight on selected text.', function() {
-		selectText();
+		selectText(this.win);
 
 		mobileHelper.openTextPropertiesPanel();
-		cy.wait(200); // selectFromColorPicker sporadically fails if not given time to load
-		cy.cGet('#CharBackColor .ui-header').click();
+		cy.cGet('#CharBackColor .ui-header').scrollIntoView().click();
 		mobileHelper.selectFromColorPicker('#CharBackColor', 2, 2);
 		cy.cGet('#CharBackColor .color-sample-selected')
 			.should('have.attr', 'style', 'background-color: rgb(204, 0, 0);');
@@ -155,15 +159,15 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Apply font on selected text
 
 		// Reselect text
 		impressHelper.removeShapeSelection();
-		selectText();
+		selectText(this.win);
 
 		mobileHelper.openTextPropertiesPanel();
-		cy.cGet('#CharBackColor .color-sample-selected')
+		cy.cGet('#CharBackColor .color-sample-selected').scrollIntoView()
 			.should('have.attr', 'style', 'background-color: rgb(204, 0, 0);');
 	});
 
 	it('Apply superscript on selected text.', function() {
-		selectText();
+		selectText(this.win);
 		cy.cGet('text tspan.TextPosition').should('have.attr', 'y', '3495');
 		cy.cGet('text tspan.TextPosition tspan').should('have.attr', 'font-size', '635px');
 
@@ -179,7 +183,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Apply font on selected text
 	});
 
 	it('Apply subscript on selected text.', function() {
-		selectText();
+		selectText(this.win);
 
 		mobileHelper.openTextPropertiesPanel();
 		cy.cGet('text tspan.TextPosition').should('have.attr', 'y', '3495');
