@@ -8,6 +8,10 @@ describe(['tagdesktop'], 'Test style sidebar', function() {
 		cy.viewport(1920,1080);
 		helper.setupAndLoadDocument('writer/stylebar.odt');
 
+		cy.getFrameWindow().then((win) => {
+			this.win = win;
+		});
+
 		// wait for notebookbar load
 		cy.cGet('#stylesview .ui-iconview-entry img').should('exist');
 
@@ -41,7 +45,7 @@ describe(['tagdesktop'], 'Test style sidebar', function() {
 	it('Style sidebar updates rendered preview on added style', function() {
 		getEntry('Complimentary Close').click();
 
-		cy.wait(2000); // stabilize
+		helper.processToIdle(this.win); // stabilize
 		cy.cGet('#sidebar-dock-wrapper').compareSnapshot('style_initial', 0.07);
 
 		// open context menu and "new" dialog
@@ -53,13 +57,13 @@ describe(['tagdesktop'], 'Test style sidebar', function() {
 		cy.cGet('[id^="TemplateDialog"].jsdialog').should('exist');
 		cy.cGet('.button-primary').click();
 		cy.cGet('[id^="TemplateDialog"].jsdialog').should('not.exist');
-		cy.wait(2000); // stabilize
+		helper.processToIdle(this.win); // stabilize
 
 		// check image after style was added
 		getEntry('Complimentary Close').parent().parent().parent().parent()
 			.find('.ui-treeview-expander-column').should('exist').click();
 
-		cy.wait(2000); // stabilize
+		helper.processToIdle(this.win); // stabilize
 		cy.cGet('#sidebar-dock-wrapper').compareSnapshot('style_added', 0.07);
 	});
 
