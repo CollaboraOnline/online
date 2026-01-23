@@ -204,6 +204,11 @@ window.L.Control.Notebookbar = window.L.Control.extend({
 	},
 
 	clearNotebookbar: function() {
+		// viewMode is injected into the optionstoolbox, which belongs to the notebookbar.
+		// When switching to Viewing mode the notebookbar is removed, so we first detach
+		// viewMode to keep the permission indicator/dropdown from disappearing.
+		this._detachViewModeFromNotebookbar();
+
 		$('.root-container.notebookbar').remove();
 		$('.notebookbar-tabs-container').remove();
 		$('.notebookbar-shortcuts-bar').remove();
@@ -648,7 +653,44 @@ window.L.Control.Notebookbar = window.L.Control.extend({
 		return optionsToolItems;
 	},
 
+	_detachViewModeFromNotebookbar: function () {
+		const viewMode = document.getElementById('viewMode');
+		if (!viewMode)
+			return;
+	
+		const optionsSection = document.querySelector('.notebookbar-options-section');
+		if (optionsSection && optionsSection.contains(viewMode)) {
+			const anchor = document.getElementById('closebuttonwrapperseparator');
+			if (anchor)
+				anchor.parentNode.insertBefore(viewMode, anchor);
+		}
+	},
+
+	_moveViewModeIntoOptionsToolbox: function () {
+		// Check for viewMode which exists in cool.html.m4
+		const viewMode = document.getElementById('viewMode');
+		if (!viewMode)
+			return;
+
+		const optionsSection = document.querySelector('.notebookbar-options-section');
+		if (!optionsSection)
+			return;
+
+		const toolboxRow = optionsSection.querySelector('.toolbox.level-0#optionstoolboxdown');
+		if (!toolboxRow)
+			return;
+
+		// Move viewMode before Share (if Share exists), otherwise append to the end
+		const share = toolboxRow.querySelector('#shareas');
+		if (share)
+			toolboxRow.insertBefore(viewMode, share);
+		else
+			toolboxRow.appendChild(viewMode);
+	},
+
 	createOptionsSection: function(childrenArray) {
+		// First detach viewMode to avoid it being removed with the options section
+		this._detachViewModeFromNotebookbar();
 		$('.notebookbar-options-section').remove();
 
 		var optionsSection = window.L.DomUtil.create('div', 'notebookbar-options-section');
@@ -665,6 +707,8 @@ window.L.Control.Notebookbar = window.L.Control.extend({
 		if (childrenArray === undefined)
 			childrenArray = this.getOptionsSectionData();
 		builder.build(optionsSection, childrenArray);
+
+		this._moveViewModeIntoOptionsToolbox();
 	},
 
 	// dynamically show/hide items
