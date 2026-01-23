@@ -88,14 +88,18 @@ class MouseControl extends CanvasSectionObject {
 		viewToDocumentPos =
 			app.activeDocument.activeLayout.canvasToDocumentPoint(viewToDocumentPos);
 
-		app.map._docLayer._postMouseEvent(
-			eventType,
-			viewToDocumentPos.x,
-			viewToDocumentPos.y,
-			clickCount,
-			buttons,
-			modifier,
-		);
+		if (Number.isNaN(viewToDocumentPos.x) || Number.isNaN(viewToDocumentPos.y))
+			return;
+		else {
+			app.map._docLayer._postMouseEvent(
+				eventType,
+				viewToDocumentPos.x,
+				viewToDocumentPos.y,
+				clickCount,
+				buttons,
+				modifier,
+			);
+		}
 	}
 
 	public onContextMenu(point: cool.SimplePoint, e: MouseEvent): void {

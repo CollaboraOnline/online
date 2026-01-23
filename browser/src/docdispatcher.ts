@@ -738,6 +738,30 @@ class Dispatcher {
 				app.sectionContainer.requestReDraw();
 			}
 		};
+
+		this.actionsMap['comparechanges'] = function () {
+			if (app.activeDocument && app.activeDocument.activeLayout) {
+				let commandState = false;
+				if (
+					app.activeDocument.activeLayout.type === 'ViewLayoutCompareChanges'
+				) {
+					app.activeDocument.activeLayout = new ViewLayoutWriter();
+				} else {
+					app.activeDocument.activeLayout = new ViewLayoutCompareChanges();
+					commandState = true;
+				}
+
+				app.map.fire('commandstatechanged', {
+					commandName: 'comparechanges',
+					state: commandState ? 'true' : 'false',
+				});
+				app.activeDocument.activeLayout.sendClientVisibleArea();
+				app.sectionContainer.requestReDraw();
+			}
+
+			Util.ensureValue(app.activeDocument);
+			app.socket.sendMessage('uno .uno:RedlineRenderMode');
+		};
 	}
 
 	private addMobileCommands() {

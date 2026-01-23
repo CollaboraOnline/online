@@ -289,14 +289,19 @@ class ViewLayoutBase {
 		this.scrollProperties.horizontalScrollStep = documentAnchor.size[0] / 2;
 	}
 
-	public areViewTilesReady(): boolean {
+	public areViewTilesReady(request = false): boolean {
+		let allReady = true;
+
 		for (let i = 0; i < this.currentCoordList.length; i++) {
 			const tempTile = TileManager.get(this.currentCoordList[i]);
 
-			if (!tempTile || tempTile.needsFetch()) return false;
+			if (!tempTile || tempTile.needsFetch()) allReady = false;
 		}
 
-		return true;
+		if (!allReady && request)
+			TileManager.checkRequestTiles(this.currentCoordList);
+
+		return allReady;
 	}
 
 	protected refreshCurrentCoordList() {
