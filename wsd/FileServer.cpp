@@ -2274,6 +2274,7 @@ void FileServerRequestHandler::fetchSettingFile(const Poco::Net::HTTPRequest& re
     http::Response clientResponse(http::StatusCode::OK);
     clientResponse.set("Content-Type", "text/plain; charset=utf-8");
     clientResponse.set("Cache-Control", "no-cache");
+    clientResponse.set("Content-Disposition", "attachment");
     clientResponse.setBody(httpResponse->getBody());
     socket->send(clientResponse);
     LOG_DBG("Successfully fetched setting file from [" << uriAnonym << "]");
