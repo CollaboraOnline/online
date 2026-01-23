@@ -1221,6 +1221,57 @@ void COOLWSD::requestTerminateSpareKits()
     }
 }
 
+// Due to the possibility of enterMountingNS failing at an intermediate stage
+// after entering a usernamespace, but unable to enter a useful mounting namespace
+// do a test mount in another separate child whose failure don't affect the parent
+bool COOLWSD::testMountingNSInFork()
+{
+    Log::preFork();
+
+    pid_t pid = fork();
+    if (!pid)
+    {
+        // Child
+        Log::postFork();
+
+        // setupChildRoot does a test bind mount + umount to see if that fully works
+        // so we have a mount namespace here just for the purposes of that test
+        LOG_DBG("Test moving into user namespace as uid 0 in level 2 child");
+
+        int ret = JailUtil::enterMountingNS(geteuid(), getegid());
+
+        LOG_DBG("Level 2 child enterMountingNS result is: " << ret);
+
+        _exit(ret);
+    }
+
+    // Parent
+
+    if (pid == -1)
+    {
+        LOG_SYS("testMountingNSInFork fork failed");
+        return false;
+    }
+
+    int wstatus;
+    const int rc = waitpid(pid, &wstatus, 0);
+    if (rc == -1)
+    {
+        LOG_SYS("testMountingNSInFork waitpid failed");
+        return false;
+    }
+
+    if (!WIFEXITED(wstatus))
+    {
+        LOG_SYS("testMountingNSInFork abnormal termination");
+        return false;
+    }
+
+    int status = WEXITSTATUS(wstatus);
+    LOG_DBG("testMountingNSInFork status: " << std::hex << status << std::dec);
+    return status == 1;
+}
+
 void COOLWSD::setupChildRoot(const bool UseMountNamespaces)
 {
     JailUtil::disableBindMounting(); // Default to assume failure
@@ -1243,8 +1294,14 @@ void COOLWSD::setupChildRoot(const bool UseMountNamespaces)
         {
             // setupChildRoot does a test bind mount + umount to see if that fully works
             // so we have a mount namespace here just for the purposes of that test
+
+            // First see if it works in (another) throw away child so a successful
+            // NEWUSER, but a failed NEWNS, or an unusable one, doesn't affect this
+            // process. So on failure we can skip the enterMountingNS at this level.
+            const bool childMountWorked = COOLWSD::testMountingNSInFork();
+
             LOG_DBG("Move into user namespace as uid 0");
-            if (JailUtil::enterMountingNS(geteuid(), getegid()))
+            if (childMountWorked && JailUtil::enterMountingNS(geteuid(), getegid()))
                 JailUtil::enableMountNamespaces();
             else
                 LOG_ERR("creating usernamespace for mount user failed.");
