@@ -1662,7 +1662,7 @@ window.L.Control.NotebookbarWriter = window.L.Control.Notebookbar.extend({
 						'class': 'unofitwidthzoom',
 						'type': 'bigcustomtoolitem',
 						'text': _('Page Width'),
-						'accessibility': { focusBack: true, combination: 'J', de: 'O' }
+						'accessibility': { focusBack: true, combination: 'J', de: 'Ö' }
 					},
 					{
 						'type': 'container',
