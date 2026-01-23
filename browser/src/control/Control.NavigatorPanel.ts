@@ -320,6 +320,25 @@ class NavigatorPanel extends SidebarBase {
 				this.focusSearch();
 			}.bind(this),
 		);
+
+		// Make button semi-transparent in debug mode
+		const updateOpacity = () => {
+			try {
+				const isDebug = !!(
+					this.map &&
+					this.map._debug &&
+					this.map._debug.isOn &&
+					this.map._debug.isOn()
+				);
+				buttonWrapper.style.opacity = isDebug ? '0.5' : '';
+			} catch (e) {
+				// no-op
+			}
+		};
+		updateOpacity();
+		// Re-check on zoom or nav show/hide
+		this.map.on('zoomend', updateOpacity, this);
+		this.map.on('debugtoggle', updateOpacity, this);
 	}
 
 	onNavigator(data: FireEvent) {
