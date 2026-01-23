@@ -62,7 +62,7 @@ describe(['tagmultiuser'], 'Check cell cursor and view behavior', function() {
 
 		cy.cGet(helper.addressInputSelector).type('{selectAll}A400{enter}');
 		desktopHelper.assertScrollbarPosition('vertical', 400, 500);
-		calcHelper.clickOnFirstCell(true, false, false);
+		calcHelper.clickOnFirstCell(true, false, 'A400');
 		helper.typeIntoDocument('abc{enter}');
 
 		// second view should jump there
