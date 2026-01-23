@@ -15,9 +15,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Test jumping on large cell
 
 	it('No jump on long merged cell', function() {
 		desktopHelper.assertScrollbarPosition('horizontal', 205, 330);
-		calcHelper.clickOnFirstCell(true, false, false);
-
-		cy.cGet(helper.addressInputSelector).should('have.value', 'A1:Z1');
+		calcHelper.clickOnFirstCell(true, false, 'A1:Z1');
 		desktopHelper.assertScrollbarPosition('horizontal', 205, 330);
 	});
 
