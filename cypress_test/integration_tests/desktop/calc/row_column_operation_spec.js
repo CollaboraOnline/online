@@ -4,11 +4,15 @@ var calcHelper = require('../../common/calc_helper');
 var desktopHelper = require('../../common/desktop_helper');
 
 describe(['tagdesktop'], 'Row Column Operation', function() {
+	let win;
 
 	beforeEach(function() {
 		helper.setupAndLoadDocument('calc/row_column_operation.ods');
 		desktopHelper.switchUIToNotebookbar();
 		cy.viewport(1920,1080);
+		cy.getFrameWindow().then(function(frameWindow) {
+			win = frameWindow;
+		});
 		helper.setDummyClipboardForCopy();
 		calcHelper.assertSheetContents(['Hello','Hi','World','Bye'], true);
 		calcHelper.clickOnFirstCell(true,false);
@@ -39,7 +43,7 @@ describe(['tagdesktop'], 'Row Column Operation', function() {
 
 		//delete column
 		desktopHelper.getNbIcon('DeleteColumns', 'Home').click();
-		cy.wait(500);
+		helper.processToIdle(win);
 		//calcHelper.assertSheetContents(['Hello','Hi','World','Bye']);
 		calcHelper.clickOnFirstCell(true,false);
 
