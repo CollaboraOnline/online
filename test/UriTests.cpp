@@ -32,8 +32,8 @@ void UriTests::testEncode()
 {
     constexpr std::string_view testname = __func__;
 
-    LOK_ASSERT(Uri::needsEncoding("www.example.com") == false);
-    LOK_ASSERT(Uri::needsEncoding("www.example.com/file") == true);
+    LOK_ASSERT_EQUAL(false, Uri::needsEncoding("www.example.com"));
+    LOK_ASSERT_EQUAL(true, Uri::needsEncoding("www.example.com/file"));
 
     LOK_ASSERT_EQUAL_STR("www.example.com%2Ffile", Uri("www.example.com/file").encoded());
     LOK_ASSERT_EQUAL_STR("www.example.com%2Ffile", Uri::encode("www.example.com/file"));

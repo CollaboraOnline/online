@@ -45,7 +45,7 @@ void NetUtilWhiteBoxTests::testBufferClass()
     Buffer buf;
     LOK_ASSERT_EQUAL(0UL, buf.size());
     LOK_ASSERT_EQUAL(true, buf.empty());
-    LOK_ASSERT(buf.getBlock() == nullptr);
+    LOK_ASSERT_EQUAL(nullptr, buf.getBlock());
     buf.eraseFirst(buf.size());
     LOK_ASSERT_EQUAL(0UL, buf.size());
     LOK_ASSERT_EQUAL(true, buf.empty());
