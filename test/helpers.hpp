@@ -579,9 +579,9 @@ std::string assertNotInResponse(T& ws, const std::string& prefix, const std::str
     return res;
 }
 
-inline bool getProgressWithIdValue(const std::string &msg, const std::string &idValue)
+inline bool getProgressWithIdValue(const std::string_view msg, const std::string_view idValue)
 {
-    const std::string prefix = "progress:";
+    const std::string_view prefix = "progress:";
     if (!COOLProtocol::matchPrefix(prefix, msg))
         return false;
 
