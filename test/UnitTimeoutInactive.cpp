@@ -58,7 +58,7 @@ public:
 inline UnitBase::TestResult UnitTimeoutInactivity::testHttp(bool forceInactivityTO)
 {
     setTestname(__func__);
-    TST_LOG("Starting Test: " << testname << ": forceInactivityTO " << forceInactivityTO);
+    TST_LOG("Starting Test: forceInactivityTO " << forceInactivityTO);
 
     const std::string documentURL = "/favicon.ico";
 
@@ -81,13 +81,13 @@ inline UnitBase::TestResult UnitTimeoutInactivity::testHttp(bool forceInactivity
 
         session = http::Session::create(helpers::getTestServerURI());
         {
-            TST_LOG("Test Req1: " << testname << ": `" << documentURL << "`");
+            TST_LOG("Test Req1: `" << documentURL << "`");
             http::Request request(documentURL, http::Request::VERB_GET);
             const std::shared_ptr<const http::Response> response =
                 session->syncRequest(request, *socketPoller);
             TST_LOG("Response1: " << response->header().toString());
-            TST_LOG("Response1 size: " << testname << ": `" << documentURL
-                                       << "`: " << response->header().getContentLength());
+            TST_LOG("Response1 size: `" << documentURL
+                                        << "`: " << response->header().getContentLength());
             if( session->isConnected() ) {
                 LOK_ASSERT_EQUAL(http::StatusCode::OK, response->statusCode());
                 LOK_ASSERT(http::Header::ConnectionToken::None ==
@@ -102,13 +102,13 @@ inline UnitBase::TestResult UnitTimeoutInactivity::testHttp(bool forceInactivity
             if (forceInactivityTO) {
                 std::this_thread::sleep_for( net::Defaults.inactivityTimeout * 2 );
             }
-            TST_LOG("Test Req2: " << testname << ": `" << documentURL << "`");
+            TST_LOG("Test Req2: `" << documentURL << "`");
             http::Request request(documentURL, http::Request::VERB_GET);
             const std::shared_ptr<const http::Response> response =
                 session->syncRequest(request, *socketPoller);
             TST_LOG("Response2: " << response->header().toString());
-            TST_LOG("Response2 size: " << testname << ": `" << documentURL
-                                       << "`: " << response->header().getContentLength());
+            TST_LOG("Response2 size: `" << documentURL
+                                        << "`: " << response->header().getContentLength());
             if( session->isConnected() ) {
                 LOK_ASSERT_EQUAL(http::StatusCode::OK, response->statusCode());
                 LOK_ASSERT(http::Header::ConnectionToken::None ==
@@ -156,7 +156,7 @@ inline UnitBase::TestResult UnitTimeoutInactivity::testHttp(bool forceInactivity
 UnitBase::TestResult UnitTimeoutInactivity::testWS(bool forceInactivityTO)
 {
     setTestname(__func__);
-    TST_LOG("Starting Test: " << testname << ": forceInactivityTO " << forceInactivityTO);
+    TST_LOG("Starting Test: forceInactivityTO " << forceInactivityTO);
 
     std::shared_ptr<http::WebSocketSession> session;
 
@@ -170,22 +170,22 @@ UnitBase::TestResult UnitTimeoutInactivity::testWS(bool forceInactivityTO)
         http::Request req(documentURL);
         session->asyncRequest(req, socketPoll());
         session->sendMessage("load url=" + documentURL);
-        TST_LOG("Test: XX0 " << testname << ": connected " << session->isConnected());
+        TST_LOG("Test: XX0: connected " << session->isConnected());
 
         assertMessage(*session, "progress:", "find");
         assertMessage(*session, "progress:", "connect");
         assertMessage(*session, "progress:", "ready");
-        TST_LOG("Test: XX1 " << testname << ": connected " << session->isConnected());
+        TST_LOG("Test: XX1: connected " << session->isConnected());
         LOK_ASSERT_EQUAL(true, session->isConnected());
 
         if (forceInactivityTO) {
             std::this_thread::sleep_for( net::Defaults.inactivityTimeout * 2 );
         }
-        TST_LOG("Test: XX2 " << testname << ": connected " << session->isConnected());
+        TST_LOG("Test: XX2: connected " << session->isConnected());
         session->sendMessage("ping");
-        TST_LOG("Test: XX3b " << testname << ": connected " << session->isConnected());
+        TST_LOG("Test: XX3b: connected " << session->isConnected());
         assertMessage(*session, "", "pong");
-        TST_LOG("Test: XX3c " << testname << ": connected " << session->isConnected());
+        TST_LOG("Test: XX3c: connected " << session->isConnected());
     }
     catch (const Poco::Exception& exc)
     {
