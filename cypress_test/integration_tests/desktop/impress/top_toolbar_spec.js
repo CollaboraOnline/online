@@ -16,7 +16,10 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Top toolbar tests.', funct
 			desktopHelper.hideSidebarImpress();
 		}
 
-		cy.wait(1000);
+		cy.getFrameWindow().then((win) => {
+			this.win = win;
+			helper.processToIdle(win);
+		});
 
 		impressHelper.selectTextShapeInTheCenter();
 	});
@@ -162,7 +165,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Top toolbar tests.', funct
 
 		// Ctrl-click to open hyperlink pop-up
 		impressHelper.clickCenterOfSlide( {ctrlKey: true} );
-		cy.wait(500);
+		helper.processToIdle(this.win);
 
 		cy.cGet('[id^="info-modal-label2"]').should('have.text', 'http://www.something.com/');
 		cy.cGet('#openlink-response').should('exist');
