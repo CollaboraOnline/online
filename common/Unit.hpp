@@ -306,7 +306,7 @@ public:
     static std::string getUnitLibPath() { return std::string(UnitLibPath); }
 
     const std::string& getTestname() const { return testname; }
-    void setTestname(const std::string& name) { testname = name; }
+    void setTestname(std::string name) { testname = std::move(name); }
 
     std::shared_ptr<SocketPoll> socketPoll();
 
