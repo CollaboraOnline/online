@@ -11,6 +11,9 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Test rendering of a cell o
 
 		cy.viewport(800,600);
 		cy.window().then(win => { win.dispatchEvent(new Event('resize')); });
+		cy.getFrameWindow().then((win) => {
+			this.win = win;
+		});
 	});
 
 	function selectInitialCell() {
@@ -23,8 +26,8 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Test rendering of a cell o
 			.should('have.text', expected);
 	}
 
-	function checkVisualContent(expected) {
-		cy.wait(1000);
+	function checkVisualContent(win, expected) {
+		helper.processToIdle(win);
 		cy.cGet('#document-container').compareSnapshot(expected, 0.02);
 	}
 
@@ -35,7 +38,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Test rendering of a cell o
 
 		selectInitialCell();
 		checkTextContent('');
-		checkVisualContent('empty');
+		checkVisualContent(this.win, 'empty');
 
 		// type something
 		const testString = 'TEST STRING';
@@ -51,7 +54,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Test rendering of a cell o
 		// verify cell content
 		selectInitialCell();
 		checkTextContent(testString);
-		checkVisualContent('teststring');
+		checkVisualContent(this.win, 'teststring');
 
 		// undo
 		desktopHelper.getNbIcon('Undo').click();
@@ -59,6 +62,6 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Test rendering of a cell o
 		// verify cell content
 		selectInitialCell();
 		checkTextContent('');
-		checkVisualContent('empty_selected');
+		checkVisualContent(this.win, 'empty_selected');
 	});
 });
