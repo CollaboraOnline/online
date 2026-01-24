@@ -191,21 +191,23 @@ UnitBase::TestResult UnitTimeoutInactivity::testWS(bool forceInactivityTO)
     {
         LOK_ASSERT_FAIL(exc.displayText());
     }
+
     size_t connected = 0;
+    TST_LOG("SessionA " << ": connected " << session->isConnected());
+    if (session->isConnected())
     {
-        TST_LOG("SessionA " << ": connected " << session->isConnected());
-        if( session->isConnected() )
-        {
-            ++connected;
-            session->asyncShutdown();
-        }
+        ++connected;
+        session->asyncShutdown();
     }
+
     TST_LOG("Test: X01 Connected: " << connected);
-    if( forceInactivityTO )
+    if (forceInactivityTO)
     {
-        LOK_ASSERT(0 == connected);
-    } else {
-        LOK_ASSERT(1 == connected);
+        LOK_ASSERT_EQUAL(0UL, connected);
+    }
+    else
+    {
+        LOK_ASSERT_EQUAL(1UL, connected);
     }
 
     TST_LOG("Ending Test: " << testname);
