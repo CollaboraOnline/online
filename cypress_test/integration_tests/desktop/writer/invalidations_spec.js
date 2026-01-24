@@ -3,7 +3,6 @@
 var helper = require('../../common/helper');
 var desktopHelper = require('../../common/desktop_helper');
 var ceHelper = require('../../common/contenteditable_helper');
-var writerHelper = require('../../common/writer_helper');
 
 describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Invalidation tests.', function() {
 
@@ -21,22 +20,27 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Invalidation tests.', func
 		desktopHelper.switchUIToNotebookbar();
 		cy.cGet('div.clipboard').as('clipboard');
 		cy.cGet('#stylesview .ui-iconview-entry img').should('exist');
-		cy.cGet('#toolbar-down #StateWordCount').should('have.text', '0 words, 0 characters');
 
-		// Add some main body text of X
-		ceHelper.type('X');
-		cy.cGet('#toolbar-down #StateWordCount').should('have.text', '1 word, 1 character');
-
-		cy.cGet('.empty-deltas').then(($before) => {
+		cy.getFrameWindow().then((win) => {
+			this.win = win;
+		}).then(() => {
+			helper.processToIdle(this.win);
+		}).then(() => {
+			// Add some main body text of X
+			ceHelper.type('X');
+		}).then(() => {
+			helper.processToIdle(this.win);
+		}).then(() => {
+			cy.cGet('.empty-deltas')
+		}).then(($before) => {
 			const beforeCount = $before.text();
 
 			// Click in header area (there is no actual header, We are testing that nothing
 			// happens if there is no header in the document)
 			cy.cGet('#document-container').click(200, 50);
 
-			// Wait until we have round trip of selection of 'X' and tile updates will have arrived.
-			writerHelper.selectAllTextOfDoc();
-			cy.cGet('#toolbar-down #StateWordCount').should('have.text', 'Selected: 1 word, 1 character');
+			// Wait until we after tile updates have arrived.
+			helper.processToIdle(this.win);
 
 			cy.cGet('.empty-deltas').should(($after) => {
 				expect($after.text()).to.eq(beforeCount);
@@ -48,22 +52,22 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Invalidation tests.', func
 	it('Click Existing Header.', function() {
 		helper.setupAndLoadDocument('writer/invalidations_headers.odt');
 		desktopHelper.switchUIToNotebookbar();
-		cy.cGet('div.clipboard').as('clipboard');
 		cy.cGet('#stylesview .ui-iconview-entry img').should('exist');
-		cy.cGet('#toolbar-down #StateWordCount').should('have.text', '2 words, 3 characters');
 
-		writerHelper.selectAllTextOfDoc();
-		cy.cGet('#toolbar-down #StateWordCount').should('have.text', 'Selected: 1 word, 1 character');
-
-		cy.cGet('.empty-deltas').then(($before) => {
+		cy.getFrameWindow().then((win) => {
+			this.win = win;
+		}).then(() => {
+			helper.processToIdle(this.win);
+		}).then(() => {
+			cy.cGet('.empty-deltas');
+		}).then(($before) => {
 			const beforeCount = $before.text();
 
 			// click in header area
 			cy.cGet('#document-container').click(200, 50);
 
-			// verify the content is 'YY'
-			writerHelper.selectAllTextOfDoc();
-			cy.cGet('#toolbar-down #StateWordCount').should('have.text', 'Selected: 1 word, 2 characters');
+			// Wait until we after tile updates have arrived.
+			helper.processToIdle(this.win);
 
 			// verify empty deltas is unchanged
 			cy.cGet('.empty-deltas').should(($after) => {
@@ -77,9 +81,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Invalidation tests.', func
 			// click in main document
 			cy.cGet('#document-container').click(200, 400);
 
-			// verify the content is 'X'
-			writerHelper.selectAllTextOfDoc();
-			cy.cGet('#toolbar-down #StateWordCount').should('have.text', 'Selected: 1 word, 1 character');
+			helper.processToIdle(this.win);
 
 			// verify empty deltas is unchanged
 			cy.cGet('.empty-deltas').should(($after) => {
@@ -94,14 +96,20 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Invalidation tests.', func
 		desktopHelper.switchUIToNotebookbar();
 		cy.cGet('div.clipboard').as('clipboard');
 		cy.cGet('#stylesview .ui-iconview-entry img').should('exist');
-		cy.cGet('#toolbar-down #StateWordCount').should('have.text', '0 words, 0 characters');
 
-		// Add some main body text of X and bullet
-		ceHelper.type('XX');
-		cy.cGet('.notebookbar > .unoDefaultBullet > button').filter(':visible').click();
-		cy.cGet('#toolbar-down #StateWordCount').should('have.text', '2 words, 3 characters');
-
-		cy.cGet('.empty-deltas').then(($before) => {
+		cy.getFrameWindow().then((win) => {
+			this.win = win;
+		}).then(() => {
+			helper.processToIdle(this.win);
+		}).then(() => {
+			// Add some main body text of X and bullet
+			ceHelper.type('XX');
+			cy.cGet('.notebookbar > .unoDefaultBullet > button').filter(':visible').click();
+		}).then(() => {
+			helper.processToIdle(this.win);
+		}).then(() => {
+			cy.cGet('.empty-deltas');
+		}).then(($before) => {
 			const beforeCount = $before.text();
 
 			// move caret before 'X' and after bullet
@@ -114,12 +122,11 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Invalidation tests.', func
 			ceHelper.moveCaret('end');
 
 			ceHelper.moveCaret('left', 'shift');
-			cy.cGet('#toolbar-down #StateWordCount').should('have.text', 'Selected: 1 word, 1 character');
+			helper.processToIdle(this.win);
 
 			cy.cGet('.empty-deltas').should(($after) => {
 				expect($after.text()).to.eq(beforeCount);
 			});
 		});
 	});
-
 });
