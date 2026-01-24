@@ -67,7 +67,7 @@ void checkzDelta(const std::vector<char> &zDelta, const char *legend)
 #endif
 
     LOK_ASSERT(zDelta.size() >= 4);
-    LOK_ASSERT(zDelta[0] == 'D');
+    LOK_ASSERT_EQUAL('D', zDelta[0]);
 
     std::vector<char> delta;
     delta.resize(1024*1024*4); // lots of extra space.
@@ -116,7 +116,7 @@ void checkzDelta(const std::vector<char> &zDelta, const char *legend)
             break;
         }
         case 't': // termination
-            LOK_ASSERT(i == delta.size() - 1);
+            LOK_ASSERT_EQUAL(delta.size() - 1, i);
 #if DEBUG_DELTA_TESTS
             std::cout << "t(ermination) - delta ended\n";
 #endif
@@ -138,7 +138,7 @@ std::vector<char> DeltaTests::applyDelta(const std::vector<char>& pixmap, uint32
                                          const std::string_view testname)
 {
     LOK_ASSERT(zDelta.size() >= 4);
-    LOK_ASSERT(zDelta[0] == 'D');
+    LOK_ASSERT_EQUAL('D', zDelta[0]);
 
     std::vector<char> delta;
     delta.resize(1024*1024*4); // lots of extra space.
@@ -200,7 +200,7 @@ std::vector<char> DeltaTests::applyDelta(const std::vector<char>& pixmap, uint32
             break;
         }
         case 't': // termination
-            LOK_ASSERT(i == delta.size() - 1);
+            LOK_ASSERT_EQUAL(delta.size() - 1, i);
             i++;
             break;
         default:
@@ -331,7 +331,7 @@ void DeltaTests::testRleRandom()
         TileLocation(42, 2, 3, 0, CanonicalViewId(1), 0),
         output, 1, true, false, LOK_TILEMODE_RGBA);
     LOK_ASSERT(size > 1);
-    LOK_ASSERT(output[0] == 'Z');
+    LOK_ASSERT_EQUAL('Z', output[0]);
 
     // Decompress
     std::vector<char> frame;

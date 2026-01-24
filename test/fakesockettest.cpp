@@ -74,16 +74,16 @@ void FakeSocketTest::testBasic()
     // First check invalid fds.
 
     rc = fakeSocketListen(10);
-    LOK_ASSERT(rc == -1);
-    LOK_ASSERT(errno == EBADF);
+    LOK_ASSERT_EQUAL(-1, rc);
+    LOK_ASSERT_EQUAL(EBADF, errno);
 
     rc = fakeSocketWrite(20, "hah", 3);
-    LOK_ASSERT(rc == -1);
-    LOK_ASSERT(errno == EBADF);
+    LOK_ASSERT_EQUAL(-1, rc);
+    LOK_ASSERT_EQUAL(EBADF, errno);
 
     rc = fakeSocketRead(30, buf, 3);
-    LOK_ASSERT(rc == -1);
-    LOK_ASSERT(errno == EBADF);
+    LOK_ASSERT_EQUAL(-1, rc);
+    LOK_ASSERT_EQUAL(EBADF, errno);
 
     // Create three sockets: s0, s1 and s2.
     int s0 = fakeSocketSocket();
@@ -145,7 +145,7 @@ void FakeSocketTest::testBasic()
             LOK_ASSERT(clientSockets[i] != acceptedSockets[j]);
             if (fakeSocketPeer(clientSockets[i]) == acceptedSockets[j])
             {
-                LOK_ASSERT(fakeSocketPeer(acceptedSockets[j]) == clientSockets[i]);
+                LOK_ASSERT_EQUAL(clientSockets[i], fakeSocketPeer(acceptedSockets[j]));
                 LOK_ASSERT(!haveMatch);
                 haveMatch = true;
             }
@@ -165,118 +165,118 @@ void FakeSocketTest::testBasic()
 
     // fakeSocketAvailableDataLength() returns the length of the *first* buffer only, if any
     rc = fakeSocketAvailableDataLength(fakeSocketPeer(clientSockets[0]));
-    LOK_ASSERT(rc == 5);
+    LOK_ASSERT_EQUAL(5, rc);
 
     rc = fakeSocketRead(fakeSocketPeer(clientSockets[0]), buf, 10);
-    LOK_ASSERT(rc == 5);
-    LOK_ASSERT(memcmp(buf, "hello", 5) == 0);
+    LOK_ASSERT_EQUAL(5, rc);
+    LOK_ASSERT_EQUAL(0, memcmp(buf, "hello", 5));
 
     rc = fakeSocketAvailableDataLength(fakeSocketPeer(clientSockets[0]));
-    LOK_ASSERT(rc == 9);
+    LOK_ASSERT_EQUAL(9, rc);
 
     rc = fakeSocketRead(fakeSocketPeer(clientSockets[0]), buf, 100);
-    LOK_ASSERT(rc == 9);
-    LOK_ASSERT(memcmp(buf, "greetings", 9) == 0);
+    LOK_ASSERT_EQUAL(9, rc);
+    LOK_ASSERT_EQUAL(0, memcmp(buf, "greetings", 9));
 
     rc = fakeSocketRead(fakeSocketPeer(clientSockets[7]), buf, 100);
-    LOK_ASSERT(rc == 4);
-    LOK_ASSERT(memcmp(buf, "moin", 4) == 0);
+    LOK_ASSERT_EQUAL(4, rc);
+    LOK_ASSERT_EQUAL(0, memcmp(buf, "moin", 4));
 
     rc = fakeSocketWrite(fakeSocketPeer(clientSockets[9]), "goodbye", 7);
     LOK_ASSERT(rc > 0);
 
     rc = fakeSocketRead(clientSockets[9], buf, 4);
-    LOK_ASSERT(rc == -1);
+    LOK_ASSERT_EQUAL(-1, rc);
     // Note: not really the right errno, but what else? See FakeSocket.cpp.
-    LOK_ASSERT(errno == EAGAIN);
+    LOK_ASSERT_EQUAL(EAGAIN, errno);
 
     rc = fakeSocketRead(clientSockets[9], buf, 100);
-    LOK_ASSERT(rc == 7);
+    LOK_ASSERT_EQUAL(7, rc);
 
     // Close a socket. Reading from its peer should then return an EOF indication (0).
     fakeSocketClose(fakeSocketPeer(clientSockets[5]));
 
     rc = fakeSocketAvailableDataLength(clientSockets[5]);
-    LOK_ASSERT(rc == 0);
+    LOK_ASSERT_EQUAL(0, rc);
 
     rc = fakeSocketRead(clientSockets[5], buf, 100);
-    LOK_ASSERT(rc == 0);
+    LOK_ASSERT_EQUAL(0, rc);
 
     rc = fakeSocketAvailableDataLength(clientSockets[5]);
-    LOK_ASSERT(rc == 0);
+    LOK_ASSERT_EQUAL(0, rc);
 
     rc = fakeSocketRead(clientSockets[5], buf, 100);
-    LOK_ASSERT(rc == 0);
+    LOK_ASSERT_EQUAL(0, rc);
 
     // Test the "pipe" functionality, that creates an already connected socket pair.
     int pipe[2];
     rc = fakeSocketPipe2(pipe);
-    LOK_ASSERT(rc == 0);
+    LOK_ASSERT_EQUAL(0, rc);
 
     rc = fakeSocketWrite(pipe[0], "x", 1);
-    LOK_ASSERT(rc == 1);
+    LOK_ASSERT_EQUAL(1, rc);
 
     rc = fakeSocketAvailableDataLength(pipe[1]);
-    LOK_ASSERT(rc == 1);
+    LOK_ASSERT_EQUAL(1, rc);
 
     rc = fakeSocketRead(pipe[1], buf, 1);
-    LOK_ASSERT(rc == 1);
+    LOK_ASSERT_EQUAL(1, rc);
 
-    LOK_ASSERT(buf[0] == 'x');
+    LOK_ASSERT_EQUAL('x', buf[0]);
 
     rc = fakeSocketWrite(pipe[1], "y", 1);
-    LOK_ASSERT(rc == 1);
+    LOK_ASSERT_EQUAL(1, rc);
 
     rc = fakeSocketRead(pipe[0], buf, 1);
-    LOK_ASSERT(rc == 1);
-    LOK_ASSERT(buf[0] == 'y');
+    LOK_ASSERT_EQUAL(1, rc);
+    LOK_ASSERT_EQUAL('y', buf[0]);
 
     rc = fakeSocketWrite(pipe[0], "z", 1);
-    LOK_ASSERT(rc == 1);
+    LOK_ASSERT_EQUAL(1, rc);
 
     rc = fakeSocketShutdown(pipe[0]);
-    LOK_ASSERT(rc == 0);
+    LOK_ASSERT_EQUAL(0, rc);
 
     rc = fakeSocketRead(pipe[1], buf, 1);
-    LOK_ASSERT(rc == 1);
-    LOK_ASSERT(buf[0] == 'z');
+    LOK_ASSERT_EQUAL(1, rc);
+    LOK_ASSERT_EQUAL('z', buf[0]);
 
     rc = fakeSocketWrite(pipe[0], "a", 1);
-    LOK_ASSERT(rc == -1);
-    LOK_ASSERT(errno == EPIPE);
+    LOK_ASSERT_EQUAL(-1, rc);
+    LOK_ASSERT_EQUAL(EPIPE, errno);
 
     rc = fakeSocketRead(pipe[0], buf, 1);
-    LOK_ASSERT(rc == 0);
+    LOK_ASSERT_EQUAL(0, rc);
 
     rc = fakeSocketRead(pipe[0], buf, 1);
-    LOK_ASSERT(rc == 0);
+    LOK_ASSERT_EQUAL(0, rc);
 
     rc = fakeSocketClose(pipe[0]);
-    LOK_ASSERT(rc == 0);
+    LOK_ASSERT_EQUAL(0, rc);
 
     rc = fakeSocketClose(pipe[0]);
-    LOK_ASSERT(rc == -1);
-    LOK_ASSERT(errno == EBADF);
+    LOK_ASSERT_EQUAL(-1, rc);
+    LOK_ASSERT_EQUAL(EBADF, errno);
 
     rc = fakeSocketClose(pipe[1]);
-    LOK_ASSERT(rc == 0);
+    LOK_ASSERT_EQUAL(0, rc);
 
     rc = fakeSocketClose(pipe[1]);
-    LOK_ASSERT(rc == -1);
-    LOK_ASSERT(errno == EBADF);
+    LOK_ASSERT_EQUAL(-1, rc);
+    LOK_ASSERT_EQUAL(EBADF, errno);
 
     // Create a pipe again.
 
     rc = fakeSocketPipe2(pipe);
-    LOK_ASSERT(rc == 0);
+    LOK_ASSERT_EQUAL(0, rc);
 
     rc = fakeSocketAvailableDataLength(pipe[0]);
-    LOK_ASSERT(rc == -1);
-    LOK_ASSERT(errno == EAGAIN);
+    LOK_ASSERT_EQUAL(-1, rc);
+    LOK_ASSERT_EQUAL(EAGAIN, errno);
 
     rc = fakeSocketAvailableDataLength(pipe[1]);
-    LOK_ASSERT(rc == -1);
-    LOK_ASSERT(errno == EAGAIN);
+    LOK_ASSERT_EQUAL(-1, rc);
+    LOK_ASSERT_EQUAL(EAGAIN, errno);
 
     // Test poll functionality.
 
@@ -292,17 +292,17 @@ void FakeSocketTest::testBasic()
     pollfds[3].events = POLLIN | POLLOUT;
 
     rc = fakeSocketPoll(pollfds, 4, -1);
-    LOK_ASSERT(rc == 3);
+    LOK_ASSERT_EQUAL(3, rc);
     // s0 is a listening socket, nothing.
     // Hmm, does a real poll() set POLLIN for a listening socket? Probably only if there is a
     // connection in progress, and that is not the case here for s0.
-    LOK_ASSERT(pollfds[0].revents == 0);
+    LOK_ASSERT_EQUAL(0, static_cast<int>(pollfds[0].revents));
     // clientSockets[5] has a closed peer, apparently POLLIN is what should be set then?
-    LOK_ASSERT(pollfds[1].revents == POLLIN);
+    LOK_ASSERT_EQUAL(POLLIN, static_cast<int>(pollfds[1].revents));
     // clientSockets[7] has nothing to be read, but can be written to
-    LOK_ASSERT(pollfds[2].revents == POLLOUT);
+    LOK_ASSERT_EQUAL(POLLOUT, static_cast<int>(pollfds[2].revents));
     // 1234 is invalid
-    LOK_ASSERT(pollfds[3].revents == POLLNVAL);
+    LOK_ASSERT_EQUAL(POLLNVAL, static_cast<int>(pollfds[3].revents));
 }
 
 CPPUNIT_TEST_SUITE_REGISTRATION(FakeSocketTest);

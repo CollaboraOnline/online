@@ -566,16 +566,16 @@ void HttpWhiteBoxTests::testMultiPartDataParser()
     LOK_ASSERT(r.hasNextPart());
     Poco::Net::MessageHeader h;
     r.nextPart(h);
-    LOK_ASSERT_EQUAL( 2, h.size() );
-    LOK_ASSERT_EQUAL( firstContentDisposition, h["Content-Disposition"] );
-    LOK_ASSERT_EQUAL( firstContentType, h["Content-Type"] );
+    LOK_ASSERT_EQUAL(2UL, h.size());
+    LOK_ASSERT_EQUAL(firstContentDisposition, h["Content-Disposition"]);
+    LOK_ASSERT_EQUAL(firstContentType, h["Content-Type"]);
     LOK_ASSERT_EQUAL_STR(firstPartData, getStreamData(r.stream()));
 
     LOK_ASSERT(r.hasNextPart());
     r.nextPart(h);
-    LOK_ASSERT_EQUAL( 2, h.size() );
-    LOK_ASSERT_EQUAL( secondContentDisposition, h["Content-Disposition"] );
-    LOK_ASSERT_EQUAL( secondContentType, h["Content-Type"] );
+    LOK_ASSERT_EQUAL(2UL, h.size());
+    LOK_ASSERT_EQUAL(secondContentDisposition, h["Content-Disposition"]);
+    LOK_ASSERT_EQUAL(secondContentType, h["Content-Type"]);
     LOK_ASSERT_EQUAL_STR(secondPartData, getStreamData(r.stream()));
 
     http::MultipartDataParser multipart(boundary);
