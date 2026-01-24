@@ -177,7 +177,7 @@ public:
     /// when no new messages are received within the given timeout.
     std::vector<char> poll(const std::function<bool(const std::vector<char>&)>& cb,
                            std::chrono::milliseconds timeout,
-                           const std::string& context = std::string())
+                           const std::string_view context = std::string_view())
     {
         LOG_DBG(context << " polling for " << timeout);
 
@@ -220,8 +220,9 @@ public:
     }
 
     /// Wait until the given prefix is matched and return the payload.
-    std::vector<char> waitForMessage(const std::string& prefix, std::chrono::milliseconds timeout,
-                                     const std::string& context = std::string())
+    std::vector<char> waitForMessage(const std::string_view prefix,
+                                     std::chrono::milliseconds timeout,
+                                     const std::string_view context = std::string_view())
     {
         LOG_DBG(context << " waiting for [" << prefix << "] for " << timeout);
 
@@ -233,9 +234,9 @@ public:
     }
 
     /// Wait until one of the given prefixes is matched and return the payload.
-    std::vector<char> waitForMessageAny(const std::vector<std::string>& prefixes,
+    std::vector<char> waitForMessageAny(const std::vector<std::string_view>& prefixes,
                                         std::chrono::milliseconds timeout,
-                                        const std::string& context = std::string())
+                                        const std::string_view context = std::string_view())
     {
         LOG_DBG(context << "Waiting for any [" << Util::join(prefixes, ", ") << "] for "
                         << timeout);
@@ -243,7 +244,7 @@ public:
         return poll(
             [&](const std::vector<char>& message)
             {
-                for (const std::string& prefix : prefixes)
+                for (const std::string_view prefix : prefixes)
                 {
                     if (matchMessage(prefix, message, context))
                     {
@@ -357,8 +358,8 @@ private:
         _inCv.notify_one();
     }
 
-    bool matchMessage(const std::string& prefix, const std::vector<char>& message,
-                      const std::string& context)
+    bool matchMessage(const std::string_view prefix, const std::vector<char>& message,
+                      const std::string_view context)
     {
         const auto header = COOLProtocol::getFirstLine(message);
         const bool match = COOLProtocol::matchPrefix(prefix, header);

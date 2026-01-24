@@ -216,8 +216,8 @@ inline void getDocumentPathAndURL(const std::string& docFilename, std::string& d
     TST_LOG("Test file: " << documentPath);
 }
 
-inline
-void sendTextFrame(COOLWebSocket& socket, const std::string& string, const std::string& testname)
+inline void sendTextFrame(COOLWebSocket& socket, const std::string& string,
+                          const std::string_view testname)
 {
     TST_LOG("Sending " << string.size()
                        << " bytes: " << COOLProtocol::getAbbreviatedMessage(string));
@@ -225,13 +225,14 @@ void sendTextFrame(COOLWebSocket& socket, const std::string& string, const std::
 }
 
 inline void sendTextFrame(const std::shared_ptr<COOLWebSocket>& socket, const std::string& string,
-                          const std::string& testname)
+                          const std::string_view testname)
 {
     sendTextFrame(*socket, string, testname);
 }
 
 inline void sendTextFrame(const std::shared_ptr<http::WebSocketSession>& ws,
-                          const std::string& string, const std::string& testname = std::string())
+                          const std::string& string,
+                          const std::string_view testname = std::string_view())
 {
     TST_LOG("Sending " << string.size()
                        << " bytes: " << COOLProtocol::getAbbreviatedMessage(string));
@@ -405,9 +406,8 @@ inline std::string const& getTestServerURI(const std::string& proto = "http")
     return serverURI;
 }
 
-
 inline std::vector<char>
-getResponseMessage(COOLWebSocket& ws, const std::string& prefix, const std::string& testname,
+getResponseMessage(COOLWebSocket& ws, const std::string& prefix, const std::string_view testname,
                    const std::chrono::milliseconds timeoutMs = std::chrono::seconds(10))
 {
     try
@@ -500,10 +500,10 @@ inline std::shared_ptr<TileDesc> getResponseDesc(const std::shared_ptr<http::Web
         TileDesc::parse(StringVector::tokenize(tile.data(), tile.size())));
 }
 
-inline std::string getResponseString(const std::shared_ptr<http::WebSocketSession>& ws,
-                                     const std::string& prefix, const std::string& testname,
-                                     const std::chrono::milliseconds timeoutMs
-                                     = std::chrono::seconds(10))
+inline std::string
+getResponseString(const std::shared_ptr<http::WebSocketSession>& ws, const std::string_view prefix,
+                  const std::string_view testname,
+                  const std::chrono::milliseconds timeoutMs = std::chrono::seconds(10))
 {
     const std::vector<char> response = ws->waitForMessage(prefix, timeoutMs, testname);
 
@@ -512,7 +512,7 @@ inline std::string getResponseString(const std::shared_ptr<http::WebSocketSessio
 
 inline std::string
 getResponseStringAny(const std::shared_ptr<http::WebSocketSession>& ws,
-                     const std::vector<std::string>& prefixes, const std::string& testname,
+                     const std::vector<std::string_view>& prefixes, const std::string& testname,
                      const std::chrono::milliseconds timeoutMs = std::chrono::seconds(10))
 {
     const std::vector<char> response = ws->waitForMessageAny(prefixes, timeoutMs, testname);
