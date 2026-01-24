@@ -17,6 +17,7 @@
 #include <cassert>
 #include <cstddef>
 #include <string>
+#include <string_view>
 #include <vector>
 
 #include <Poco/Dynamic/Var.h>
@@ -29,12 +30,12 @@ namespace JsonUtil
 
 // Parse the json string and fill the Poco::JSON object
 // Returns true if parsing successful otherwise false
-inline bool parseJSON(const std::string& json, Poco::JSON::Object::Ptr& object)
+inline bool parseJSON(const std::string_view json, Poco::JSON::Object::Ptr& object)
 {
     const std::size_t index = json.find_first_of('{');
     if (index != std::string::npos)
     {
-        const std::string stringJSON = json.substr(index);
+        const std::string stringJSON = std::string(json.substr(index));
         Poco::JSON::Parser parser;
         try
         {

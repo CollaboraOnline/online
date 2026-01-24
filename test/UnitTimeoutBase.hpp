@@ -32,20 +32,25 @@ public:
         std::vector<char> res = session.poll(
             [&](const std::vector<char>& message) -> bool
             {
-                const std::string msg(std::string(message.begin(), message.end()));
+                const std::string_view msg(message.begin(), message.end());
                 TST_LOG("Got WS response: " << msg);
                 if (!msg.starts_with("error:"))
                 {
-                    if( expectedPrefix == "progress:") {
+                    if (expectedPrefix == "progress:")
+                    {
                         LOK_ASSERT_EQUAL(COOLProtocol::matchPrefix(expectedPrefix, msg), true);
                         LOK_ASSERT(helpers::getProgressWithIdValue(msg, expectedId));
                         TST_LOG("Good WS response(0): " << msg);
                         return true;
-                    } else if( msg.find(expectedId) != std::string::npos ) {
+                    }
+                    else if (msg.find(expectedId) != std::string::npos)
+                    {
                         // simple match
                         TST_LOG("Good WS response(1): " << msg);
                         return true;
-                    } else {
+                    }
+                    else
+                    {
                         const bool c = session.isConnected();
                         TST_LOG("Some WS response(2): " << msg << ", connected " << c);
                         return !c; // continue waiting for 'it' if still connected
@@ -54,7 +59,7 @@ public:
                 else
                 {
                     // check error message
-                    LOK_ASSERT_EQUAL(std::string(SERVICE_UNAVAILABLE_INTERNAL_ERROR), msg);
+                    LOK_ASSERT_EQUAL_STR(SERVICE_UNAVAILABLE_INTERNAL_ERROR, msg);
 
                     // close frame message
                     return true;
