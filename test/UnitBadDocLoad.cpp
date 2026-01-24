@@ -116,7 +116,7 @@ UnitBase::TestResult UnitBadDocLoad::testMaxDocuments()
 
     if (MAX_DOCUMENTS > 20)
     {
-        std::cerr << "Skipping " << testname << "test since MAX_DOCUMENTS (" << MAX_DOCUMENTS
+        std::cerr << "skipping test since MAX_DOCUMENTS (" << MAX_DOCUMENTS
                   << ") is too high to test. Set to a more sensible number, ideally a dozen or so."
                   << std::endl;
         return TestResult::Ok;
@@ -175,7 +175,7 @@ UnitBase::TestResult UnitBadDocLoad::testMaxConnections()
 
     if (MAX_CONNECTIONS > 40)
     {
-        std::cerr << "Skipping " << testname << "test since MAX_CONNECTION (" << MAX_CONNECTIONS
+        std::cerr << "skipping test since MAX_CONNECTION (" << MAX_CONNECTIONS
                   << ") is too high to test. Set to a more sensible number, ideally a dozen or so."
                   << std::endl;
         return TestResult::Ok;
@@ -245,7 +245,7 @@ UnitBase::TestResult UnitBadDocLoad::testMaxViews()
 
     if (MAX_CONNECTIONS > 40)
     {
-        std::cerr << "Skipping " << testname << "test since MAX_CONNECTION (" << MAX_CONNECTIONS
+        std::cerr << "skipping test since MAX_CONNECTION (" << MAX_CONNECTIONS
                   << ") is too high to test. Set to a more sensible number, ideally a dozen or so."
                   << std::endl;
         return TestResult::Ok;
