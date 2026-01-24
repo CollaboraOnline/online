@@ -258,23 +258,11 @@ public:
     }
 
     /// Send a text message to our peer.
-    void sendMessage(const std::string& msg)
+    void sendMessage(const std::string_view msg)
     {
         {
             std::unique_lock<std::mutex> lock(_outMutex);
             _outQueue.emplace_back(msg.data(), msg.data() + msg.size());
-        }
-
-        const auto pollPtr = _socketPoll.lock();
-        if (pollPtr)
-            pollPtr->wakeup();
-    }
-
-    template <std::size_t N> void sendMessage(const char (&msg)[N])
-    {
-        {
-            std::unique_lock<std::mutex> lock(_outMutex);
-            _outQueue.emplace_back(msg, msg + N - 1); // Minus the null-terminator.
         }
 
         const auto pollPtr = _socketPoll.lock();

@@ -216,7 +216,7 @@ inline void getDocumentPathAndURL(const std::string& docFilename, std::string& d
     TST_LOG("Test file: " << documentPath);
 }
 
-inline void sendTextFrame(COOLWebSocket& socket, const std::string& string,
+inline void sendTextFrame(COOLWebSocket& socket, const std::string_view string,
                           const std::string_view testname)
 {
     TST_LOG("Sending " << string.size()
@@ -224,14 +224,14 @@ inline void sendTextFrame(COOLWebSocket& socket, const std::string& string,
     socket.sendFrame(string.data(), string.size());
 }
 
-inline void sendTextFrame(const std::shared_ptr<COOLWebSocket>& socket, const std::string& string,
-                          const std::string_view testname)
+inline void sendTextFrame(const std::shared_ptr<COOLWebSocket>& socket,
+                          const std::string_view string, const std::string_view testname)
 {
     sendTextFrame(*socket, string, testname);
 }
 
 inline void sendTextFrame(const std::shared_ptr<http::WebSocketSession>& ws,
-                          const std::string& string,
+                          const std::string_view string,
                           const std::string_view testname = std::string_view())
 {
     TST_LOG("Sending " << string.size()
@@ -407,7 +407,8 @@ inline std::string const& getTestServerURI(const std::string& proto = "http")
 }
 
 inline std::vector<char>
-getResponseMessage(COOLWebSocket& ws, const std::string& prefix, const std::string_view testname,
+getResponseMessage(COOLWebSocket& ws, const std::string_view prefix,
+                   const std::string_view testname,
                    const std::chrono::milliseconds timeoutMs = std::chrono::seconds(10))
 {
     try
@@ -478,18 +479,18 @@ getResponseMessage(COOLWebSocket& ws, const std::string& prefix, const std::stri
     return std::vector<char>();
 }
 
-inline std::vector<char> getResponseMessage(const std::shared_ptr<http::WebSocketSession>& ws,
-                                     const std::string& prefix, const std::string& testname,
-                                     const std::chrono::milliseconds timeoutMs
-                                     = std::chrono::seconds(10))
+inline std::vector<char>
+getResponseMessage(const std::shared_ptr<http::WebSocketSession>& ws, const std::string_view prefix,
+                   const std::string_view testname,
+                   const std::chrono::milliseconds timeoutMs = std::chrono::seconds(10))
 {
     return ws->waitForMessage(prefix, timeoutMs, testname);
 }
 
-inline std::shared_ptr<TileDesc> getResponseDesc(const std::shared_ptr<http::WebSocketSession>& ws,
-                                                 const std::string& prefix, const std::string& testname,
-                                                 const std::chrono::milliseconds timeoutMs
-                                                 = std::chrono::seconds(10))
+inline std::shared_ptr<TileDesc>
+getResponseDesc(const std::shared_ptr<http::WebSocketSession>& ws, const std::string_view prefix,
+                const std::string_view testname,
+                const std::chrono::milliseconds timeoutMs = std::chrono::seconds(10))
 {
     std::vector<char> tile = getResponseMessage(ws, prefix, testname, timeoutMs);
 
@@ -512,7 +513,7 @@ getResponseString(const std::shared_ptr<http::WebSocketSession>& ws, const std::
 
 inline std::string
 getResponseStringAny(const std::shared_ptr<http::WebSocketSession>& ws,
-                     const std::vector<std::string_view>& prefixes, const std::string& testname,
+                     const std::vector<std::string_view>& prefixes, const std::string_view testname,
                      const std::chrono::milliseconds timeoutMs = std::chrono::seconds(10))
 {
     const std::vector<char> response = ws->waitForMessageAny(prefixes, timeoutMs, testname);
@@ -520,10 +521,10 @@ getResponseStringAny(const std::shared_ptr<http::WebSocketSession>& ws,
     return std::string(response.data(), response.size());
 }
 
-inline std::vector<std::string> getAllResponsesTimed(const std::shared_ptr<http::WebSocketSession>& ws,
-                                                     const std::string& prefix, const std::string& testname,
-                                                     const std::chrono::milliseconds timeoutMs
-                                                     = std::chrono::seconds(5))
+inline std::vector<std::string>
+getAllResponsesTimed(const std::shared_ptr<http::WebSocketSession>& ws,
+                     const std::string_view prefix, const std::string_view testname,
+                     const std::chrono::milliseconds timeoutMs = std::chrono::seconds(5))
 {
     std::vector<std::string> responses;
 
@@ -540,19 +541,18 @@ inline std::vector<std::string> getAllResponsesTimed(const std::shared_ptr<http:
     return responses;
 }
 
-
-inline std::string assertResponseString(const std::shared_ptr<http::WebSocketSession>& ws,
-                                        const std::string& prefix, const std::string& testname,
-                                        const std::chrono::milliseconds timeoutMs
-                                        = std::chrono::seconds(10))
+inline std::string
+assertResponseString(const std::shared_ptr<http::WebSocketSession>& ws,
+                     const std::string_view prefix, const std::string_view testname,
+                     const std::chrono::milliseconds timeoutMs = std::chrono::seconds(10))
 {
     auto res = getResponseString(ws, prefix, testname, timeoutMs);
-    LOK_ASSERT_EQUAL(prefix, res.substr(0, prefix.length()));
+    LOK_ASSERT_EQUAL_STR(prefix, res.substr(0, prefix.length()));
     return res;
 }
 
 inline int countMessages(const std::shared_ptr<http::WebSocketSession>& ws,
-                         const std::string& prefix, const std::string& testname,
+                         const std::string_view prefix, const std::string_view testname,
                          const std::chrono::milliseconds timeoutMs = std::chrono::seconds(10))
 {
     int count = 0;
@@ -563,7 +563,7 @@ inline int countMessages(const std::shared_ptr<http::WebSocketSession>& ws,
 }
 
 template <typename T>
-std::string getResponseString(T& ws, const std::string& prefix, const std::string& testname,
+std::string getResponseString(T& ws, const std::string_view prefix, const std::string_view testname,
                               const std::chrono::milliseconds timeoutMs = std::chrono::seconds(10))
 {
     const auto response = getResponseMessage(ws, prefix, testname, timeoutMs);
@@ -572,16 +572,17 @@ std::string getResponseString(T& ws, const std::string& prefix, const std::strin
 
 /// Assert that we don't get a response with the given prefix.
 template <typename T>
-std::string assertNotInResponse(T& ws, const std::string& prefix, const std::string& testname)
+std::string assertNotInResponse(T& ws, const std::string_view prefix,
+                                const std::string_view testname)
 {
     const auto res = getResponseString(ws, prefix, testname, std::chrono::milliseconds(1000));
-    LOK_ASSERT_MESSAGE(testname + "Did not expect getting message [" + res + "].", res.empty());
+    LOK_ASSERT_MESSAGE("Did not expect getting message [" + res + ']', res.empty());
     return res;
 }
 
 inline bool getProgressWithIdValue(const std::string_view msg, const std::string_view idValue)
 {
-    const std::string_view prefix = "progress:";
+    static constexpr std::string_view prefix = "progress:";
     if (!COOLProtocol::matchPrefix(prefix, msg))
         return false;
 
@@ -594,7 +595,7 @@ inline bool getProgressWithIdValue(const std::string_view msg, const std::string
 }
 
 inline bool isDocumentLoaded(
-    const std::shared_ptr<http::WebSocketSession>& ws, const std::string& testname,
+    const std::shared_ptr<http::WebSocketSession>& ws, const std::string_view testname,
     bool isView = true,
     const std::chrono::milliseconds timeout = std::chrono::seconds(COMMAND_TIMEOUT_SECS * 4))
 {
@@ -607,7 +608,7 @@ inline bool isDocumentLoaded(
     }
     else
     {
-        const std::string prefix = "progress:";
+        static constexpr std::string_view prefix = "progress:";
         while (true)
         {
             const std::string message = getResponseString(ws, prefix, testname, timeout);
@@ -630,7 +631,7 @@ inline bool isDocumentLoaded(
 // connectLOKit ensures the websocket is connected to a kit process.
 inline std::shared_ptr<http::WebSocketSession>
 connectLOKit(const std::shared_ptr<SocketPoll>& socketPoll, const Poco::URI& uri,
-             const std::string& url, const std::string& testname)
+             const std::string& url, const std::string_view testname)
 {
     TST_LOG("Connecting to " << uri.toString() << " with URL: " << url);
     constexpr int max_retries = 11;
@@ -690,7 +691,7 @@ connectLOKit(const std::shared_ptr<SocketPoll>& socketPoll, const Poco::URI& uri
 /// By default, allow longer time for loading.
 inline std::shared_ptr<http::WebSocketSession> loadDocAndGetSession(
     const std::shared_ptr<SocketPoll>& socketPoll, const Poco::URI& uri,
-    const std::string& documentURL, const std::string& testname, bool isView = true,
+    const std::string& documentURL, const std::string_view testname, bool isView = true,
     bool isAssert = true, const std::string& loadParams = std::string(),
     const std::chrono::milliseconds timeout = std::chrono::seconds(COMMAND_TIMEOUT_SECS * 4))
 {
@@ -942,8 +943,8 @@ inline bool svgMatch(const std::string& testname, const std::vector<char>& respo
 
 /// Sends a command and waits for an event in response, with retrying.
 inline bool sendAndWait(const std::shared_ptr<http::WebSocketSession>& ws,
-                        const std::string& testname, const std::string& command,
-                        const std::string& response,
+                        const std::string_view testname, const std::string_view command,
+                        const std::string_view response,
                         std::chrono::milliseconds timeoutPerAttempt = std::chrono::seconds(10),
                         int repeat = COMMAND_RETRY_COUNT)
 {
@@ -997,7 +998,7 @@ inline bool sendAndDrain(const std::shared_ptr<http::WebSocketSession>& ws,
 
 /// Select all and wait for the text selection update.
 inline bool selectAll(const std::shared_ptr<http::WebSocketSession>& ws,
-                      const std::string& testname,
+                      const std::string_view testname,
                       std::chrono::milliseconds timeoutPerAttempt = std::chrono::seconds(10),
                       int retry = COMMAND_RETRY_COUNT)
 {
@@ -1007,7 +1008,7 @@ inline bool selectAll(const std::shared_ptr<http::WebSocketSession>& ws,
 
 /// Delete all and wait for the text selection update.
 inline bool deleteAll(const std::shared_ptr<http::WebSocketSession>& ws,
-                      const std::string& testname,
+                      const std::string_view testname,
                       std::chrono::milliseconds timeoutPerAttempt = std::chrono::seconds(10),
                       int retry = COMMAND_RETRY_COUNT)
 {
@@ -1023,11 +1024,12 @@ inline bool deleteAll(const std::shared_ptr<http::WebSocketSession>& ws,
 }
 
 inline std::string getAllText(const std::shared_ptr<http::WebSocketSession>& socket,
-                              const std::string& testname,
-                              const std::string& expected = std::string(),
+                              const std::string_view testname,
+                              const std::string_view expected = std::string_view(),
                               int retry = COMMAND_RETRY_COUNT)
 {
-    static const std::string prefix = "textselectioncontent: ";
+    static constexpr std::string_view prefix = "textselectioncontent: ";
+    const std::string match = std::string(prefix) + std::string(expected);
 
     for (int i = 1; i <= retry; ++i)
     {
@@ -1036,12 +1038,12 @@ inline std::string getAllText(const std::shared_ptr<http::WebSocketSession>& soc
         selectAll(socket, testname);
 
         sendTextFrame(socket, "gettextselection mimetype=text/plain;charset=utf-8", testname);
-        std::string text = getResponseString(socket, prefix, testname);
+        const std::string text = getResponseString(socket, prefix, testname);
         if (!text.empty())
         {
             if (expected.empty())
                 return text;
-            else if ((prefix + expected) == text)
+            else if (match == text)
                 return text;
             else
                 LOG_DBG("text selection mismatch text received: '" << text <<
