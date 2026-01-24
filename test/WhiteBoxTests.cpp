@@ -826,7 +826,7 @@ void WhiteBoxTests::testStat()
                    .time_since_epoch()
                    .count()
                == static_cast<long>(st.modifiedTimeMs() / 1000));
-    LOK_ASSERT(st.modifiedTime().tv_sec == static_cast<long>(st.modifiedTimeMs() / 1000));
+    LOK_ASSERT_EQUAL(static_cast<long>(st.modifiedTimeMs() / 1000), st.modifiedTime().tv_sec);
     LOK_ASSERT(st.modifiedTime().tv_nsec / 1000
                == static_cast<long>(st.modifiedTimeUs())
                       - (st.modifiedTime().tv_sec * 1000 * 1000));

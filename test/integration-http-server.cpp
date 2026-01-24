@@ -646,7 +646,7 @@ void HTTPServerTest::testExtractDocStructure()
     std::string actualString = actualStream.str();
     std::string expectedString = " { \"DocStructure\": { \"ContentControls.ByIndex.0\": { \"id\": -428815899, \"tag\": \"machine-readable\", \"alias\": \"Human Readable\", \"content\": \"plain text value\", \"type\": \"plain-text\"}, \"ContentControls.ByIndex.1\": { \"id\": -1833055349, \"tag\": \"name\", \"alias\": \"Name\", \"content\": \"\", \"type\": \"plain-text\"}}}";
 
-    LOK_ASSERT(actualString == expectedString);
+    LOK_ASSERT_EQUAL(expectedString, actualString );
 }
 
 void HTTPServerTest::testTransformDocStructure()
@@ -727,7 +727,7 @@ void HTTPServerTest::testTransformDocStructure()
         std::string actualString = actualStream.str();
         std::string expectedString = " { \"DocStructure\": { \"ContentControls.ByIndex.0\": { \"id\": -428815899, \"tag\": \"machine-readable\", \"alias\": \"Human Readable\", \"content\": \"Short text\", \"type\": \"plain-text\"}, \"ContentControls.ByIndex.1\": { \"id\": -1833055349, \"tag\": \"name\", \"alias\": \"Name\", \"content\": \"\", \"type\": \"plain-text\"}}}";
 
-        LOK_ASSERT(actualString == expectedString);
+        LOK_ASSERT_EQUAL(expectedString, actualString );
     }
 }
 
