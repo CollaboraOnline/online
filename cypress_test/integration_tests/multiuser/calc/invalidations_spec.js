@@ -17,17 +17,23 @@ describe(['tagmultiuser'], 'Joining a document should not trigger an invalidatio
 	it('Join document', function() {
 		cy.cSetActiveFrame('#iframe1');
 
-		cy.cGet('#InsertMode', { timeout: Cypress.config('defaultCommandTimeout') * 2.0 }).should('not.be.visible');
-		helper.typeIntoDocument('X');
-		cy.cGet('#InsertMode', { timeout: Cypress.config('defaultCommandTimeout') * 2.0 }).should('have.text', 'Insert');
-		helper.typeIntoDocument('{enter}');
-		cy.cGet('#InsertMode', { timeout: Cypress.config('defaultCommandTimeout') * 2.0 }).should('not.be.visible');
-		cy.cGet(helper.addressInputSelector).should('have.prop', 'value', 'A2');
-		helper.typeIntoDocument('{uparrow}');
-		// wait until round trip of cell address
-		cy.cGet(helper.addressInputSelector).should('have.prop', 'value', 'A1');
-
-		cy.cGet('.empty-deltas').then(($before) => {
+		cy.getFrameWindow().then((win) => {
+			this.win1 = win;
+		}).then(() => {
+			helper.processToIdle(this.win1);
+		}).then(() => {
+			helper.typeIntoDocument('X');
+			helper.typeIntoDocument('{enter}');
+		}).then(() => {
+			helper.processToIdle(this.win1);
+		}).then(() => {
+			helper.typeIntoDocument('{uparrow}');
+		}).then(() => {
+			// Wait until after tile updates have arrived.
+			helper.processToIdle(this.win1);
+		}).then(() => {
+			cy.cGet('.empty-deltas');
+		}).then(($before) => {
 			const beforeCount = $before.text();
 
 			// joining triggered some theme related invalidations
@@ -41,10 +47,10 @@ describe(['tagmultiuser'], 'Joining a document should not trigger an invalidatio
 			helper.documentChecks(true);
 
 			cy.cSetActiveFrame('#iframe1');
-			cy.cGet(helper.addressInputSelector).should('have.prop', 'value', 'A1');
-			// wait until round trip of cell address
 			helper.typeIntoDocument('{rightarrow}');
-			cy.cGet(helper.addressInputSelector).should('have.prop', 'value', 'B1');
+
+			// Wait until after tile updates have arrived.
+			helper.processToIdle(this.win1);
 
 			cy.cGet('.empty-deltas').should(($after) => {
 				expect($after.text()).to.eq(beforeCount);
