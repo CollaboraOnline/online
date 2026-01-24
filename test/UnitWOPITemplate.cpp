@@ -106,7 +106,7 @@ public:
             }
 
             const std::streamsize size = request.getContentLength();
-            LOK_ASSERT( size > 0 );
+            LOK_ASSERT(size > 0);
 
             const std::string body = "{\"LastModifiedTime\": \"" +
                                      Util::getIso8601FracformatTime(getFileLastModifiedTime()) + "\" }";

@@ -230,7 +230,7 @@ void HttpRequestTests::testBadResponse()
             httpSession->syncRequest(httpRequest);
 
         LOK_ASSERT(httpResponse->done());
-        LOK_ASSERT_EQUAL( http::Response::State::Error, httpResponse->state() );
+        LOK_ASSERT_EQUAL(http::Response::State::Error, httpResponse->state());
     }
 }
 
@@ -259,7 +259,7 @@ void HttpRequestTests::testGoodResponse()
             httpSession->syncRequest(httpRequest);
 
         LOK_ASSERT(httpResponse->done());
-        LOK_ASSERT_EQUAL( http::Response::State::Complete, httpResponse->state() );
+        LOK_ASSERT_EQUAL(http::Response::State::Complete, httpResponse->state());
         LOK_ASSERT(!httpResponse->statusLine().httpVersion().empty());
         LOK_ASSERT(!httpResponse->statusLine().reasonPhrase().empty());
         LOK_ASSERT_EQUAL(http::StatusCode::OK, httpResponse->statusLine().statusCode());
@@ -327,7 +327,7 @@ void HttpRequestTests::testSimpleGet()
         const std::shared_ptr<const http::Response> httpResponse = httpSession->response();
 
         LOK_ASSERT_EQUAL_MESSAGE("Timed out waiting for the onFinished handler", false, timedout);
-        LOK_ASSERT_EQUAL( http::Response::State::Complete, httpResponse->state() );
+        LOK_ASSERT_EQUAL(http::Response::State::Complete, httpResponse->state());
         LOK_ASSERT(!httpResponse->statusLine().httpVersion().empty());
         LOK_ASSERT(!httpResponse->statusLine().reasonPhrase().empty());
         LOK_ASSERT_EQUAL(http::StatusCode::OK, httpResponse->statusLine().statusCode());
@@ -361,7 +361,7 @@ void HttpRequestTests::testSimpleGetSync()
         const std::shared_ptr<const http::Response> httpResponse
             = httpSession->syncRequest(httpRequest);
         LOK_ASSERT(httpResponse->done());
-        LOK_ASSERT_EQUAL( http::Response::State::Complete, httpResponse->state() );
+        LOK_ASSERT_EQUAL(http::Response::State::Complete, httpResponse->state());
 
         LOK_ASSERT(!httpResponse->statusLine().httpVersion().empty());
         LOK_ASSERT(!httpResponse->statusLine().reasonPhrase().empty());
@@ -397,7 +397,7 @@ void HttpRequestTests::testChunkedGetSync()
         const std::shared_ptr<const http::Response> httpResponse
             = httpSession->syncRequest(httpRequest);
         LOK_ASSERT(httpResponse->done());
-        LOK_ASSERT_EQUAL( http::Response::State::Complete, httpResponse->state() );
+        LOK_ASSERT_EQUAL(http::Response::State::Complete, httpResponse->state());
 
         LOK_ASSERT(!httpResponse->statusLine().httpVersion().empty());
         LOK_ASSERT(!httpResponse->statusLine().reasonPhrase().empty());
@@ -433,7 +433,7 @@ void HttpRequestTests::testChunkedGetSync_External()
         const std::shared_ptr<const http::Response> httpResponse
             = httpSession->syncRequest(httpRequest);
         LOK_ASSERT(httpResponse->done());
-        LOK_ASSERT_EQUAL( http::Response::State::Complete, httpResponse->state() );
+        LOK_ASSERT_EQUAL(http::Response::State::Complete, httpResponse->state());
 
         LOK_ASSERT(!httpResponse->statusLine().httpVersion().empty());
         LOK_ASSERT(!httpResponse->statusLine().reasonPhrase().empty());
@@ -671,7 +671,7 @@ void HttpRequestTests::testSimplePost_External()
     cv.wait_for(lock, DefTimeoutSeconds, [&]() { return timedout == false; });
 
     const std::shared_ptr<const http::Response> httpResponse = httpSession->response();
-    LOK_ASSERT_EQUAL( http::Response::State::Complete, httpResponse->state() );
+    LOK_ASSERT_EQUAL(http::Response::State::Complete, httpResponse->state());
     LOK_ASSERT(!httpResponse->statusLine().httpVersion().empty());
     LOK_ASSERT(!httpResponse->statusLine().reasonPhrase().empty());
     LOK_ASSERT_EQUAL(http::StatusCode::OK, httpResponse->statusLine().statusCode());
@@ -701,7 +701,7 @@ void HttpRequestTests::testTimeout()
     const std::shared_ptr<const http::Response> httpResponse
         = httpSession->syncRequest(httpRequest);
     LOK_ASSERT(httpResponse->done());
-    LOK_ASSERT_EQUAL( http::Response::State::Timeout, httpResponse->state() );
+    LOK_ASSERT_EQUAL(http::Response::State::Timeout, httpResponse->state());
 }
 
 void HttpRequestTests::testInvalidPoll()
@@ -724,12 +724,12 @@ void HttpRequestTests::testInvalidPoll()
                                        { calledFailed = true; });
 
     std::weak_ptr<SocketPoll> poll;
-    LOK_ASSERT_EQUAL( false, httpSession->asyncRequest(httpRequest, poll, false) );
+    LOK_ASSERT_EQUAL(false, httpSession->asyncRequest(httpRequest, poll, false));
 
-    LOK_ASSERT_EQUAL( nullptr, httpSession->response() );
+    LOK_ASSERT(!httpSession->response());
 
-    LOK_ASSERT_EQUAL( true, calledFailed );
-    LOK_ASSERT_EQUAL( false, calledFinished ); //FIXME: We should call onFinished.
+    LOK_ASSERT_EQUAL(true, calledFailed);
+    LOK_ASSERT_EQUAL(false, calledFinished); //FIXME: We should call onFinished.
 }
 
 void HttpRequestTests::testOnFinished_Complete()
@@ -745,7 +745,7 @@ void HttpRequestTests::testOnFinished_Complete()
     bool completed = false;
     httpSession->setFinishedHandler([&](const std::shared_ptr<http::Session>& session) {
         LOK_ASSERT(session->response()->done());
-        LOK_ASSERT_EQUAL( http::Response::State::Complete, session->response()->state() );
+        LOK_ASSERT_EQUAL(http::Response::State::Complete, session->response()->state());
         completed = true;
         return true;
     });
@@ -754,7 +754,7 @@ void HttpRequestTests::testOnFinished_Complete()
         = httpSession->syncRequest(httpRequest);
     LOK_ASSERT(completed);
     LOK_ASSERT(httpResponse->done());
-    LOK_ASSERT_EQUAL( http::Response::State::Complete, httpResponse->state() );
+    LOK_ASSERT_EQUAL(http::Response::State::Complete, httpResponse->state());
 }
 
 void HttpRequestTests::testOnFinished_Timeout()
@@ -772,7 +772,7 @@ void HttpRequestTests::testOnFinished_Timeout()
     bool completed = false;
     httpSession->setFinishedHandler([&](const std::shared_ptr<http::Session>& session) {
         LOK_ASSERT(session->response()->done());
-        LOK_ASSERT_EQUAL( http::Response::State::Timeout, session->response()->state() );
+        LOK_ASSERT_EQUAL(http::Response::State::Timeout, session->response()->state());
         completed = true;
         return true;
     });
@@ -781,7 +781,7 @@ void HttpRequestTests::testOnFinished_Timeout()
         = httpSession->syncRequest(httpRequest);
     LOK_ASSERT(completed);
     LOK_ASSERT(httpResponse->done());
-    LOK_ASSERT_EQUAL( http::Response::State::Timeout, httpResponse->state() );
+    LOK_ASSERT_EQUAL(http::Response::State::Timeout, httpResponse->state());
 }
 
 void HttpRequestTests::testPost()
@@ -809,7 +809,7 @@ void HttpRequestTests::testPost()
             httpSession->syncRequest(httpRequest);
 
         LOK_ASSERT(httpResponse->done());
-        LOK_ASSERT_EQUAL( http::Response::State::Complete, httpResponse->state() );
+        LOK_ASSERT_EQUAL(http::Response::State::Complete, httpResponse->state());
         LOK_ASSERT(!httpResponse->statusLine().httpVersion().empty());
         LOK_ASSERT(!httpResponse->statusLine().reasonPhrase().empty());
         LOK_ASSERT_EQUAL(http::StatusCode::OK, httpResponse->statusLine().statusCode());
