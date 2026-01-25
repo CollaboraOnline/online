@@ -20,6 +20,9 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Annotation Tests',function(
 
 		helper.reloadDocument(newFilePath);
 		mobileHelper.enableEditingMobile();
+		cy.getFrameWindow().then((win) => {
+			helper.processToIdle(win);
+		});
 		mobileHelper.openCommentWizard();
 		cy.cGet('#mobile-wizard-content').should('exist');
 		cy.cGet('#annotation-content-area-1').should('have.text', 'some text');

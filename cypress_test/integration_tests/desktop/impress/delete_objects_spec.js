@@ -40,13 +40,10 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Delete Objects', function(
 		// Press delete button. If the document is correctly activated, the second page shouldn't be deleted.
 		helper.typeIntoDocument('{del}');
 
-		/*
-			Manually tested the failing case.
-			This wait is a little long but it takes more than 3 seconds to remove the preview while testing.
-			We are testing if we accidentaly delete the slide or not. To be sure we didn't delete it, we need to wait.
-			Or below condition will succeed first, then the page will be deleted = false positive.
-		*/
-		cy.wait(5000);
+		// Wait until server has processed the delete command.
+		cy.getFrameWindow().then((win) => {
+			helper.processToIdle(win);
+		});
 
 		// Check if the second page still exists.
 		cy.cGet('#preview-img-part-1').should('exist');
