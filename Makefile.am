@@ -262,11 +262,17 @@ coolforkit_caps_SOURCES = $(coolforkit_sources) \
 
 coolforkit_caps_LDADD = ${coolforkit_ldadd}
 
+# Define variant to ensure different binary content and thus different build-id
+coolforkit_caps_CPPFLAGS = $(AM_CPPFLAGS) -DCOOL_FORKIT_VARIANT=\"caps\"
+
 coolforkit_ns_SOURCES = $(coolforkit_sources) \
                         $(shared_sources) \
                         kit/forkit-main.cpp
 
 coolforkit_ns_LDADD = ${coolforkit_ldadd}
+
+# Define variant to ensure different binary content and thus different build-id
+coolforkit_ns_CPPFLAGS = $(AM_CPPFLAGS) -DCOOL_FORKIT_VARIANT=\"ns\"
 
 if ENABLE_DEBUG
 coolwsd_inproc_SOURCES = $(coolwsd_sources) \
