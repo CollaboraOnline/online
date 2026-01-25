@@ -9,19 +9,24 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Delete Objects', function()
 		helper.setupAndLoadDocument('impress/delete_objects.odp');
 
 		mobileHelper.enableEditingMobile();
+
+		cy.getFrameWindow().then((win) => {
+			this.win = win;
+		});
 	});
 
 	it('Delete Text', function() {
 		helper.setDummyClipboardForCopy();
+
 		cy.cGet('#document-container').dblclick('center');
 
-		cy.wait(500);
+		// Wait for text edit mode (cursor should appear)
+		cy.cGet('.cursor-overlay .blinking-cursor').should('be.visible');
 
 		helper.typeIntoDocument('text');
-		cy.wait(500);
 
 		helper.selectAllText();
-		cy.wait(500);
+		helper.processToIdle(this.win);
 
 		helper.copy();
 
@@ -30,6 +35,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Delete Objects', function()
 		helper.typeIntoDocument('{del}');
 
 		helper.typeIntoDocument('{ctrl}a');
+		helper.processToIdle(this.win);
 
 		helper.textSelectionShouldNotExist();
 	});
@@ -102,7 +108,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Delete Objects', function()
 		cy.cGet('#FontworkGalleryDialog #ok.ui-pushbutton-wrapper button').click();
 		cy.cGet('#FontworkGalleryDialog').should('not.exist');
 
-		cy.wait(200);
+		helper.processToIdle(this.win);
 
 		cy.cGet('#test-div-shapeHandlesSection')
 			.should('exist');
