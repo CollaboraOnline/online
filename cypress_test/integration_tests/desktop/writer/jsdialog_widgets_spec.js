@@ -6,16 +6,21 @@ var desktopHelper = require('../../common/desktop_helper');
 describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'JSDialog widgets visual tests', function() {
 	beforeEach(function() {
 		helper.setupAndLoadDocument('writer/help_dialog.odt');
-		cy.cGet('#Help-tab-label').click();
-		desktopHelper.getNbIcon('About', 'Help').click();
+		cy.getFrameWindow().then((win) => {
+			this.win = win;
+			cy.cGet('#Help-tab-label').click();
+			desktopHelper.getNbIcon('About', 'Help').click();
 
-		cy.cGet('#modal-dialog-about-dialog-box')
-			.should('be.visible')
-			.should('not.be.empty')
-			.contains('#js-dialog a', 'View widgets')
-			.click();
+			cy.cGet('#modal-dialog-about-dialog-box')
+				.should('be.visible')
+				.should('not.be.empty')
+				.contains('#js-dialog a', 'View widgets')
+				.click();
 
-			cy.wait(500); // be sure we finished all animations
+			cy.cGet('.ui-dialog[aria-labelledby="Test Widgets"]').should('be.visible');
+			// Wait for fadein animation to complete
+			cy.cGet('.jsdialog-window.fadein').should('have.css', 'opacity', '1');
+		});
 	});
 
 	it('Combobox', function() {
@@ -86,7 +91,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'JSDialog widgets visual te
 		cy.cGet('#contenttree2').then(
 			(trees) => {
 				trees[0].filterEntries('Row 2');
-				cy.wait(200);
+				helper.processToIdle(this.win);
 				cy.cGet('#contenttree2').compareSnapshot('treeview_headers_filter', 0.12);
 			});
 	});
