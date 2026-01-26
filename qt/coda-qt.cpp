@@ -1286,18 +1286,21 @@ void Application::initialize()
     }
 
     // Initialize recent files
-    QString configDir = QStandardPaths::writableLocation(QStandardPaths::ConfigLocation);
-    QDir().mkpath(configDir + "/Collabora");
-    QString recentFilesPath = configDir + "/Collabora/RecentDocuments.conf";
-    recentFiles.load(recentFilesPath.toStdString(), 15);
+    Poco::Path configDir = Desktop::getConfigPath();
+    recentFiles.load(configDir.append("RecentDocuments.conf").toString(), 15);
 }
 
 Poco::Path Desktop::getConfigPath()
 {
-    QString pathStr = QStandardPaths::writableLocation(QStandardPaths::ConfigLocation) + "/Collabora";
+    QString pathStr = QStandardPaths::writableLocation(QStandardPaths::AppConfigLocation);
+    QDir().mkpath(pathStr);
     Poco::Path configPath(pathStr.toStdString());
     Poco::File configDir(configPath);
-    assert(configDir.exists() && configDir.isDirectory());
+    if (!configDir.exists() || !configDir.isDirectory())
+    {
+        LOG_ERR("getConfigPath: following configuration directory does not exist, trouble ahead:"
+                << pathStr.toStdString());
+    }
     return configPath;
 }
 
