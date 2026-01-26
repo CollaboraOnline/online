@@ -6,6 +6,9 @@
 	--color-on-primary: #ffffff;
 	--color-primary-text: #ffffff;
 
+	user-select: none;
+	-webkit-user-select: none; /* Safari / WKWebView */
+
 	position: fixed;
 	top: 0;
 	left: 0;
