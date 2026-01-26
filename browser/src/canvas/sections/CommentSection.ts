@@ -151,6 +151,7 @@ export class Comment extends CanvasSectionObject {
 		this.sectionProperties.childLines = [];
 		this.sectionProperties.childCommentOffset = 8;
 		this.sectionProperties.commentMarkerSubSection = null; // For Impress and Draw documents.
+		this.sectionProperties.calcCommentAreaWidth = 40; // Calc comment area doesn't cover the whole cell, in order to allow multi-cell selections.
 
 		this.convertRectanglesToCoreCoordinates(); // Convert rectangle coordiantes into core pixels on initialization.
 
@@ -848,10 +849,7 @@ export class Comment extends CanvasSectionObject {
 
 	public positionCalcComment(): void {
 		if (!(<any>window).mode.isMobile()) {
-			var cellPos = app.map._docLayer._cellRangeToTwipRect(this.sectionProperties.data.cellRange).toRectangle();
-			var originalSize = [Math.round((cellPos[2]) * app.twipsToPixels), Math.round((cellPos[3]) * app.twipsToPixels)];
-
-			const startX = this.isCalcRTL() ? this.myTopLeft[0] - this.getCommentWidth() : this.myTopLeft[0] + originalSize[0] - 3;
+			const startX = this.isCalcRTL() ? this.myTopLeft[0] - this.getCommentWidth() : this.myTopLeft[0] + this.calcOptimumSizeForCalc()[0] - 3;
 
 			var pos: Array<number> = [Math.round(startX / app.dpiScale), Math.round(this.myTopLeft[1] / app.dpiScale)];
 			this.sectionProperties.container.style.transform = 'translate3d(' + pos[0] + 'px, ' + pos[1] + 'px, 0px)';
@@ -1553,7 +1551,7 @@ export class Comment extends CanvasSectionObject {
 	private calcOptimumSizeForCalc(): number[] {
 		const size = this.calcCellSize();
 
-		if (size[0] > 40 ) size[0] = 40;
+		if (size[0] > this.sectionProperties.calcCommentAreaWidth) size[0] = this.sectionProperties.calcCommentAreaWidth;
 
 		return size;
 	}
