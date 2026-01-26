@@ -351,7 +351,7 @@ class BackstageView extends window.L.Class {
 			},
 			{
 				id: 'about',
-				label: _UNO('.uno:About'),
+				label: _('About'),
 				type: 'action',
 				actionType: 'about',
 				visible: !this.isStarterMode,
