@@ -2364,7 +2364,14 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 				}
 			}
 			break;
-
+		case 'setImage':
+			console.log(control);
+			if (typeof control.onSetImage === 'function') {
+				control.onSetImage(data.image);
+			}
+			
+			break;
+		
 		case 'rendered_entry':
 		case 'rendered_combobox_entry':
 		{
