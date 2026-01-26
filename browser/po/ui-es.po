@@ -1231,12 +1231,12 @@ msgstr "Opciones"
 
 #: src/control/Control.BackstageView.ts:401
 msgid "Start a new document from one of the following templates."
-msgstr ""
+msgstr "Inicie un nuevo documento a partir de una de las siguiente plantillas."
 
 #: src/control/Control.BackstageView.ts:438
 #: src/control/Control.BackstageView.ts:441
 msgid "More Templates"
-msgstr ""
+msgstr "Más Plantillas"
 
 #: src/control/Control.BackstageView.ts:463
 #: src/control/jsdialog/Widget.ColorPicker.ts:413
@@ -1249,11 +1249,11 @@ msgstr ""
 
 #: src/control/Control.BackstageView.ts:518
 msgid "Name"
-msgstr ""
+msgstr "Nombre"
 
 #: src/control/Control.BackstageView.ts:521
 msgid "Modified Date"
-msgstr ""
+msgstr "Fecha de modificación"
 
 #: src/control/Control.BackstageView.ts:697
 msgid "Document Info"
@@ -1356,7 +1356,7 @@ msgstr "Documento vacío"
 
 #: src/control/Control.BackstageView.ts:1361
 msgid "Untitled"
-msgstr ""
+msgstr "Sin título"
 
 #: src/control/Control.Command.js:90
 msgid "Unlock"
@@ -3540,7 +3540,7 @@ msgstr "Recuento de selección"
 
 #: src/control/Control.StatusBar.js:394
 msgid "The document is probably locked and has been opened as view-only"
-msgstr ""
+msgstr "Es probable que el documento esté bloqueado y se haya abierto en modo de solo lectura"
 
 #: src/control/Control.StatusBar.js:403
 msgid ""
