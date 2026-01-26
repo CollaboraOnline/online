@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-01-19 22:57+0200\n"
-"PO-Revision-Date: 2026-01-19 18:01+0000\n"
+"PO-Revision-Date: 2026-01-20 23:01+0000\n"
 "Last-Translator: Amadɣas <massiin@proton.me>\n"
 "Language-Team: Kabyle <https://hosted.weblate.org/projects/collabora-online/"
 "help/kab/>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Translate Toolkit 3.6.0\n"
+"X-Generator: Weblate 5.16-dev\n"
 "X-POOTLE-MTIME: 1475585999.000000\n"
 
 #: html/cool-help.html%2Bdiv.h1:6-5
@@ -1302,13 +1302,12 @@ msgid "Navigating in Spreadsheets"
 msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:134-38
-#, fuzzy
 msgid "Moves the cursor to the first cell in the sheet (A1)."
-msgstr "Smutti taḥnaccaḍt ɣer tebniqt tamezwarut n wadur amiran."
+msgstr "Smutti taḥnaccaḍt ɣer tebniqt tamezwarut n ifer (A1)."
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:135-38
 msgid "Moves the cursor to the last cell on the sheet that contains data."
-msgstr "Smutti taḥnaccaḍt ɣer tebniqt taneggarut deg tferkit ideg llan yisefka."
+msgstr "Smutti taḥnaccaḍt ɣer tebniqt taneggarut deg ifer ideg llan yisefka."
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:136-38
 msgid "Moves the cursor to the first cell of the current row."
@@ -1436,7 +1435,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:146-38
 msgid "Go to next sheet."
-msgstr ""
+msgstr "Ddu ɣer ifer i d-iteddun."
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:146-82
 #, fuzzy
@@ -1450,7 +1449,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:147-38
 msgid "Go to previous sheet."
-msgstr ""
+msgstr "Ddu ɣer ifer yezrin."
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:147-86
 #, fuzzy
@@ -1483,7 +1482,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:149-38
 msgid "Moves one sheet to the left."
-msgstr ""
+msgstr "Senkez ifer ɣer tama tazelmaḍt."
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:149-93
 #, fuzzy
@@ -1870,7 +1869,7 @@ msgstr "Amasal n imbellezen"
 #: html/cool-help.html%2Bdiv.div.h2:335-9
 #: html/cool-help.html%2Bdiv.div.div.h3:759-5
 msgid "Spreadsheets"
-msgstr "Tiferlit n usiḍen"
+msgstr "Imbellezen"
 
 #: html/cool-help.html%2Bdiv.div.h2:338-9
 #: html/cool-help.html%2Bdiv.div.h3:547-5

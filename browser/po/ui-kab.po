@@ -7,8 +7,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-12-08 11:25+0100\n"
-"PO-Revision-Date: 2026-01-19 18:01+0000\n"
-"Last-Translator: ButterflyOfFire <boffire@users.noreply.hosted.weblate.org>\n"
+"PO-Revision-Date: 2026-01-25 08:51+0000\n"
+"Last-Translator: Amadɣas <massiin@proton.me>\n"
 "Language-Team: Kabyle <https://hosted.weblate.org/projects/collabora-online/"
 "ui/kab/>\n"
 "Language: kab\n"
@@ -482,7 +482,7 @@ msgstr ""
 #: src/control/Control.Menubar.ts:775 src/control/Control.TopToolbar.js:110
 #: src/control/jsdialog/Definitions.Menu.ts:1573
 msgid "All Sheets"
-msgstr ""
+msgstr "Akk Ifriwen"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:185
 msgid "Content"
@@ -2843,7 +2843,7 @@ msgstr "Yelha"
 
 #: src/control/Control.NotebookbarCalc.js:998
 msgid "Neutral"
-msgstr "Amagnu"
+msgstr "Arawsan"
 
 #: src/control/Control.NotebookbarCalc.js:1005
 msgid "Bad"
@@ -3355,17 +3355,19 @@ msgstr ""
 
 #: src/control/Control.ServerAuditDialog.ts:88
 msgid "System call security filtering enabled"
-msgstr ""
+msgstr "Tastayt n usiwel n tɣellist n unagraw termed"
 
 #: src/control/Control.ServerAuditDialog.ts:95
 msgid ""
 "Your server is configured with insufficient hardware resources, which may "
 "lead to poor performance."
 msgstr ""
+"Aqeddac-ik·im yettuswel s teɣbula n warrum ixuṣṣen, win izemren ad yawi ɣer "
+"tmellit ur neǧhid."
 
 #: src/control/Control.ServerAuditDialog.ts:101
 msgid "Hardware resources are sufficient for optimal performance"
-msgstr ""
+msgstr "Tiɣbula n warrum xuṣṣent i temlellit ifazen"
 
 #: src/control/Control.ServerAuditDialog.ts:109
 msgid "Slow Kit jail setup with copying, cannot bind-mount."
@@ -3381,7 +3383,7 @@ msgstr ""
 
 #: src/control/Control.ServerAuditDialog.ts:122
 msgid "Direct network connection"
-msgstr ""
+msgstr "Tuqqna ɣer uẓeṭṭa srid"
 
 #: src/control/Control.ServerAuditDialog.ts:128
 msgid "The IsAdminUser property is not set by integration"
@@ -3407,15 +3409,15 @@ msgstr ""
 
 #: src/control/Control.ServerAuditDialog.ts:161
 msgid "Using namespaces"
-msgstr ""
+msgstr "Aseqdec n tallunin n yisem"
 
 #: src/control/Control.ServerAuditDialog.ts:162
 msgid "Not using namespaces"
-msgstr ""
+msgstr "Ur seqdac ara tallunin n yisem"
 
 #: src/control/Control.ServerAuditDialog.ts:236
 msgid "Document container started in {1} ms"
-msgstr ""
+msgstr "Amagbar n yisemli yebda deg {1} ms"
 
 #: src/control/Control.ServerAuditDialog.ts:306
 msgid "Status"
@@ -3423,15 +3425,15 @@ msgstr "Addad"
 
 #: src/control/Control.ServerAuditDialog.ts:316
 msgid "No issues found"
-msgstr ""
+msgstr "Ulac uguren yettwafen"
 
 #: src/control/Control.ServerAuditDialog.ts:321
 msgid "Alerts:"
-msgstr ""
+msgstr "Ilɣuten:"
 
 #: src/control/Control.ServerAuditDialog.ts:373
 msgid "Check warnings of your server"
-msgstr ""
+msgstr "Senqed ilɣa n uqeddac-ik·im"
 
 #: src/control/Control.ServerAuditDialog.ts:374
 msgid "OPEN"
@@ -3439,41 +3441,41 @@ msgstr "YELDI"
 
 #: src/control/Control.SheetsBar.js:51
 msgid "Scroll to the first sheet"
-msgstr ""
+msgstr "Drurem arma d ifer amezwaru"
 
 #: src/control/Control.SheetsBar.js:58
 msgid "Scroll left"
-msgstr ""
+msgstr "Drurem ɣer zelmaḍ"
 
 #: src/control/Control.SheetsBar.js:66
 msgid "Scroll right"
-msgstr ""
+msgstr "Drurem ɣer uyeffus"
 
 #: src/control/Control.SheetsBar.js:74
 msgid "Scroll to the last sheet"
-msgstr ""
+msgstr "Drurem arma d ifer aneggaru"
 
 #: src/control/Control.SheetsBar.js:81
 msgid "Insert sheet"
-msgstr "Ger-d tiferkit"
+msgstr "Ger ifer"
 
 #: src/control/Control.SheetsBar.js:88
 msgid "Show sheet list"
-msgstr ""
+msgstr "Sken tabdart n ifer"
 
 #: src/control/Control.StatusBar.js:156
 msgid "On"
-msgstr ""
+msgstr "Yermed"
 
 #: src/control/Control.StatusBar.js:158
 #: src/control/jsdialog/Definitions.Menu.ts:1767
 msgid "Off"
-msgstr ""
+msgstr "Yensa"
 
 #: src/control/Control.StatusBar.js:191
 #: src/control/jsdialog/Definitions.Menu.ts:163
 msgid "Average"
-msgstr "Talemmast"
+msgstr "Alemmas"
 
 #: src/control/Control.StatusBar.js:192
 msgid "CountA"
@@ -3486,11 +3488,11 @@ msgstr "Amḍan"
 
 #: src/control/Control.StatusBar.js:194
 msgid "Maximum"
-msgstr "Maximum"
+msgstr "Afellay"
 
 #: src/control/Control.StatusBar.js:195
 msgid "Minimum"
-msgstr "Minimum"
+msgstr "Adday"
 
 #: src/control/Control.StatusBar.js:196
 #: src/control/jsdialog/Definitions.Menu.ts:162
@@ -3503,65 +3505,67 @@ msgstr "Amḍan n ufran"
 
 #: src/control/Control.StatusBar.js:250
 msgid "Multi Page View"
-msgstr ""
+msgstr "Taskant usget n isebtar"
 
 #: src/control/Control.StatusBar.js:405
 msgid ""
 "To prevent accidental changes, the author has set this file to open as view-"
 "only"
 msgstr ""
+"Akken ad tseḥbeseḍ ibeddilen n usehwu, ameskar yesbadu afaylu-agi iwakken ad "
+"yeldi kan am tskant"
 
 #: src/control/Control.StatusBar.js:455
 msgid "Select multiple cells"
-msgstr ""
+msgstr "Fren ddeqs n tebniqin"
 
 #: src/control/Control.StatusBar.js:472
 msgid "Selection mode: inactive"
-msgstr ""
+msgstr "Askar n tefrayt: ur yermid ara"
 
 #: src/control/Control.StatusBar.js:550
 msgid "Set Language for All text"
-msgstr "Sbadu tutlayt i uḍris s umata"
+msgstr "Sbadu tutlayt i akk aḍris"
 
 #: src/control/Control.StatusBar.js:553
 msgid "Set Language for Paragraph"
-msgstr "Sbadu tutlayt n tṣeddart"
+msgstr "Sbadu tutlayt i tṣeddart"
 
 #: src/control/Control.StatusBar.js:554
 msgid "Set Language for Selection"
-msgstr ""
+msgstr "Sbadu tutlayt i tefrayt"
 
 #: src/control/Control.Tabs.js:53
 msgid "Insert sheet before this"
-msgstr ""
+msgstr "Ger ifer send ta"
 
 #: src/control/Control.Tabs.js:58
 msgid "Insert sheet after this"
-msgstr ""
+msgstr "Ger ifer deffir wa"
 
 #: src/control/Control.Tabs.js:97
 msgid "Move Sheet Left"
-msgstr ""
+msgstr "Smutti ifer ɣer uzelmaḍ"
 
 #: src/control/Control.Tabs.js:103
 msgid "Move Sheet Right"
-msgstr ""
+msgstr "Smutti ifer ɣer uyeffus"
 
 #: src/control/Control.Tabs.js:114
 msgid "Copy Sheet..."
-msgstr ""
+msgstr "Nɣel ifer..."
 
 #: src/control/Control.Tabs.js:412
 msgid "Are you sure you want to delete sheet, {sheet}?"
-msgstr ""
+msgstr "Tebɣiḍ ad tekkseḍ ifer, {sheet}?"
 
 #: src/control/Control.Tabs.js:423
 msgid "Rename sheet"
-msgstr ""
+msgstr "Snifel isem n yifer"
 
 #: src/control/Control.Tabs.js:423
 msgid "Enter new sheet name"
-msgstr ""
+msgstr "Sekcem isem n yifer amaynut"
 
 #: src/control/Control.Toolbar.js:969
 msgid ""
@@ -3571,11 +3575,11 @@ msgstr ""
 
 #: src/control/Control.TopToolbar.js:109
 msgid "Active Sheet"
-msgstr ""
+msgstr "Ifer urmid"
 
 #: src/control/Control.TopToolbar.js:123
 msgid "Default Style"
-msgstr "Aɣanib n lexṣas"
+msgstr "Aɣanib amezwer"
 
 #: src/control/Control.TopToolbar.js:189
 msgid "Insert table"
@@ -3587,7 +3591,7 @@ msgstr "Ger-d talɣiwin"
 
 #: src/control/Control.TopToolbar.js:194
 msgid "Insert connectors"
-msgstr ""
+msgstr "Ger tuqqniwin"
 
 #: src/control/Control.UIManager.ts:325
 msgid "Enter new name"
@@ -3602,11 +3606,11 @@ msgstr "Taɣuri kan"
 #: src/control/jsdialog/Widget.HTMLContent.ts:47
 #: src/control/jsdialog/Widget.HTMLContent.ts:55
 msgid "Permission Mode"
-msgstr ""
+msgstr "Askar n usireg"
 
 #: src/control/Control.UIManager.ts:1183
 msgid "Hide Menu"
-msgstr ""
+msgstr "Ffer umuɣ"
 
 #: src/control/Control.UIManager.ts:1210
 msgid "Show Menu"
@@ -3614,27 +3618,27 @@ msgstr "Sken-d umuɣ"
 
 #: src/control/Control.UserList.ts:56
 msgid "{user} has joined"
-msgstr ""
+msgstr "{user] yekcem-d"
 
 #: src/control/Control.UserList.ts:57
 msgid "{user} has left"
-msgstr ""
+msgstr "{user] yeffeɣ"
 
 #: src/control/Control.UserList.ts:58
 msgid "Following {user}"
-msgstr ""
+msgstr "Aḍfar n {user}"
 
 #: src/control/Control.UserList.ts:59
 msgid "Following the editor"
-msgstr ""
+msgstr "Aḍfar n umaẓrag"
 
 #: src/control/Control.UserList.ts:60
 msgid "Stop following"
-msgstr ""
+msgstr "Seḥbes aḍfaṛ"
 
 #: src/control/Control.UserList.ts:61
 msgid "Avatar for {user}"
-msgstr ""
+msgstr "Avaṭar n {user}"
 
 #: src/control/Control.UserList.ts:81
 msgid "%n users"
@@ -3650,7 +3654,7 @@ msgstr "0 n yiseqdacen"
 
 #: src/control/Control.UserList.ts:87
 msgid "User List Summary"
-msgstr ""
+msgstr "Agzul n tebdart n iseqdacen"
 
 #: src/control/Control.UserList.ts:495
 msgid "Following"
@@ -3658,19 +3662,19 @@ msgstr "Teṭṭafareḍ"
 
 #: src/control/Control.UserList.ts:552
 msgid "Always follow the editor"
-msgstr ""
+msgstr "Dima ḍfer amaẓrag"
 
 #: src/control/Control.Zotero.js:143
 msgid "Zotero API key is not configured"
-msgstr ""
+msgstr "Tasarutt API Zotero ur tettusbadu ara"
 
 #: src/control/Control.Zotero.js:162
 msgid "Zotero API key is incorrect"
-msgstr ""
+msgstr "Tasarutt API Zotero d tarmeɣtut"
 
 #: src/control/Control.Zotero.js:189
 msgid "Zotero Warning"
-msgstr ""
+msgstr "Alɣu n Zotero"
 
 #: src/control/Control.Zotero.js:190
 msgid ""
@@ -3686,7 +3690,7 @@ msgstr "Yessalay-d…"
 #: src/slideshow/PresenterConsole.js:31
 #: src/slideshow/SlideShowPresenter.ts:696
 msgid "Previous"
-msgstr ""
+msgstr "Uzwir"
 
 #: src/control/Control.Zotero.js:270 src/control/Control.Zotero.js:469
 #: src/slideshow/PresenterConsole.js:32
@@ -3700,7 +3704,7 @@ msgstr "Tutlayt :"
 
 #: src/control/Control.Zotero.js:307
 msgid "Store as:"
-msgstr ""
+msgstr "Sekles am:"
 
 #: src/control/Control.Zotero.js:313 src/control/Control.Zotero.js:436
 msgid "Fields"
@@ -3712,47 +3716,47 @@ msgstr "Ticraḍ"
 
 #: src/control/Control.Zotero.js:434
 msgid "Footnotes"
-msgstr ""
+msgstr "Tizmilin n ddaw usebtar"
 
 #: src/control/Control.Zotero.js:434
 msgid "Endnotes"
-msgstr ""
+msgstr "Tizmilin n tagarra"
 
 #: src/control/Control.Zotero.js:521
 msgid "My Publications"
-msgstr ""
+msgstr "asuffeɣ-iw"
 
 #: src/control/Control.Zotero.js:527 src/control/Control.Zotero.js:746
 msgid "My Library"
-msgstr ""
+msgstr "Tamkarḍit-iw"
 
 #: src/control/Control.Zotero.js:528
 msgid "Group Libraries"
-msgstr ""
+msgstr "Imkarḍiyen n ugraw"
 
 #: src/control/Control.Zotero.js:762
 msgid "Failed to load groups"
-msgstr ""
+msgstr "Yecceḍ usali n yigrawen"
 
 #: src/control/Control.Zotero.js:780 src/control/Control.Zotero.js:1124
 msgid "Failed to load collections"
-msgstr ""
+msgstr "Yecceḍ usali n tigrummiwin"
 
 #: src/control/Control.Zotero.js:788
 msgid "Loading references"
-msgstr ""
+msgstr "Asali n temsisɣelt"
 
 #: src/control/Control.Zotero.js:822
 msgid "Citation Style"
-msgstr ""
+msgstr "Aɣanib n tnebdurt"
 
 #: src/control/Control.Zotero.js:827
 msgid "An error occurred while fetching style list"
-msgstr ""
+msgstr "Teḍra-d tuccḍa di tririt n tebdart n uɣanib"
 
 #: src/control/Control.Zotero.js:835
 msgid "Failed to load styles"
-msgstr ""
+msgstr "Yecceḍ usali n iɣunab"
 
 #: src/control/Control.Zotero.js:1152 src/control/Control.Zotero.js:1604
 msgid "Title"
@@ -3764,11 +3768,11 @@ msgstr "Ameslal (i-en)"
 
 #: src/control/Control.Zotero.js:1152 src/control/Control.Zotero.js:1604
 msgid "Your library is empty"
-msgstr ""
+msgstr "Tamkarḍit-ik·im d tilemt"
 
 #: src/control/Control.Zotero.js:1164
 msgid "Failed to load items"
-msgstr ""
+msgstr "Yecceḍ usali n iferdisen"
 
 #: src/control/Control.Zotero.js:1216
 msgid "Citation warning"
@@ -3786,23 +3790,23 @@ msgstr "Sentem"
 
 #: src/control/Control.Zotero.js:1337
 msgid "Add Note"
-msgstr ""
+msgstr "Rnu tazmilt"
 
 #: src/control/Control.Zotero.js:1340
 msgid "An error occurred while fetching notes"
-msgstr ""
+msgstr "Teḍra-d tuccḍa di tririt n tezmilin"
 
 #: src/control/Control.Zotero.js:1471
 msgid "Updated citations"
-msgstr ""
+msgstr "Tinebdurin yettwaleqmen"
 
 #: src/control/Control.Zotero.js:1473
 msgid "Citations update failed"
-msgstr ""
+msgstr "Aleqqem n tnebdurin ur yeddi ara"
 
 #: src/control/Control.Zotero.js:1477
 msgid "Updating citations"
-msgstr ""
+msgstr "Leqqem tnebdurin"
 
 #: src/control/Control.Zotero.js:1532
 msgid ""
@@ -3812,7 +3816,7 @@ msgstr ""
 
 #: src/control/HRuler.ts:597 src/control/HRuler.ts:769
 msgid "Left Margin"
-msgstr ""
+msgstr "Tama tazelmaḍt"
 
 #: src/control/HRuler.ts:598 src/control/HRuler.ts:770
 msgid "Right Margin"
@@ -3828,7 +3832,7 @@ msgstr ""
 
 #: src/control/Parts.js:492
 msgid "Show sheets"
-msgstr ""
+msgstr "Sken ifriwen"
 
 #: src/control/Permission.js:27 src/control/Permission.js:28
 msgid "Edit document"
@@ -3837,14 +3841,15 @@ msgstr "Ẓreg isemli"
 #: src/control/Permission.js:85
 msgid "The document could not be locked, and is opened in read-only mode."
 msgstr ""
+"Isemli ur izmir ara ad yettwasekkeṛ, yerna ad yeldi deg uskar n tɣuri kan."
 
 #: src/control/Permission.js:87 src/control/Permission.js:97
 msgid "Server returned this reason:"
-msgstr ""
+msgstr "Aqeddac yerra-d ssebba-agi:"
 
 #: src/control/Permission.js:95
 msgid "The document could not be locked."
-msgstr ""
+msgstr "Isemli ulamek ara yettwasekkeṛ."
 
 #: src/control/Permission.js:149
 msgid "Enter a file name"
@@ -3852,51 +3857,55 @@ msgstr "Sekcem-d isem i ufaylu"
 
 #: src/control/Permission.js:168
 msgid "Save as ODF format"
-msgstr ""
+msgstr "Sekles am umasal ODF"
 
 #: src/control/Permission.js:169
 msgid "Continue editing"
-msgstr ""
+msgstr "Kemmel asiẓreg"
 
 #: src/control/Permission.js:169
 msgid "Continue read only"
-msgstr ""
+msgstr "Kemmel taɣuri kan"
 
 #: src/control/Permission.js:182
 msgid ""
 "This document may contain formatting or content that cannot be saved in the "
 "current file format."
 msgstr ""
+"Isemli-agi yezmer ad yesɛu amsal neɣ agbur ur nezmir ara ad yettwasekles deg "
+"umasal n ufaylu amiran."
 
 #: src/control/Signing.js:21
 msgid "The document is not signed."
-msgstr ""
+msgstr "Isemli ur yettwazmel ara."
 
 #: src/control/Signing.js:32
 msgid "This document is digitally signed and the signature is valid."
-msgstr ""
+msgstr "Isemli-agi yettwazmel s wudem umḍin yerna azmul d ameɣtu."
 
 #: src/control/Signing.js:36
 msgid "This document has an invalid signature."
-msgstr ""
+msgstr "Isemli-agi yesɛa azmul arameɣtu."
 
 #: src/control/Signing.js:40
 msgid "The signature was valid, but the document has been modified."
-msgstr ""
+msgstr "Azmul d ameɣtu, maca isemli yettwabeddel."
 
 #: src/control/Signing.js:44
 msgid "The signature is OK, but the certificate could not be validated."
-msgstr ""
+msgstr "Azmel d ameɣtu, maca aselkin ur yezmir ara ad yettwasentem."
 
 #: src/control/Signing.js:48
 msgid "The signature is OK, but the document is only partially signed."
-msgstr ""
+msgstr "Azmel d ameɣtu, maca isemli yettuzmel kan s kra n uḥric."
 
 #: src/control/Signing.js:52
 msgid ""
 "The signature is OK, but the certificate could not be validated and the "
 "document is only partially signed."
 msgstr ""
+"Azmel d ameɣtu, maca aselkin ur yezmir ara ad yettwasentem yerna isemli "
+"yettwazmel kan s kra n uḥric."
 
 #: src/control/Toolbar.js:253 src/control/Toolbar.js:266
 msgid "Downloading..."
@@ -3912,16 +3921,16 @@ msgstr "Asnifel n yisem…"
 
 #: src/control/VRuler.ts:374
 msgid "Top Margin"
-msgstr ""
+msgstr "Tama n ufella"
 
 #: src/control/VRuler.ts:375
 msgid "Bottom Margin"
-msgstr ""
+msgstr "Tama n wadda"
 
 #: src/control/jsdialog/Definitions.Menu.ts:111
 #: src/control/jsdialog/Definitions.Menu.ts:1740
 msgid "Normal"
-msgstr ""
+msgstr "Amagnu"
 
 #: src/control/jsdialog/Definitions.Menu.ts:116
 msgid "Wide"
@@ -3933,11 +3942,11 @@ msgstr "Udyiq"
 
 #: src/control/jsdialog/Definitions.Menu.ts:164
 msgid "Min"
-msgstr ""
+msgstr "adday"
 
 #: src/control/jsdialog/Definitions.Menu.ts:165
 msgid "Max"
-msgstr ""
+msgstr "afellay"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1443
 msgid "Edit Single Sparkline"
