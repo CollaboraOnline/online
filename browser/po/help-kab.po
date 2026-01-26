@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-11-17 08:08+0200\n"
+"POT-Creation-Date: 2026-01-26 10:37+0200\n"
 "PO-Revision-Date: 2026-01-19 18:01+0000\n"
 "Last-Translator: Amadɣas <massiin@proton.me>\n"
 "Language-Team: Kabyle <https://hosted.weblate.org/projects/collabora-online/"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 5.16-dev\n"
+"X-Generator: Translate Toolkit 3.6.0\n"
 "X-POOTLE-MTIME: 1475585999.000000\n"
 
 #: html/cool-help.html%2Bdiv.h1:6-5
@@ -607,8 +607,9 @@ msgstr ""
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:72-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:235-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:300-38
+#, fuzzy
 msgid "Go to beginning of line"
-msgstr ""
+msgstr "Ddu ɣer tazwara n wawal"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:72-88
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:136-119
@@ -793,8 +794,8 @@ msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
 "\"kbd--plus\">+</span><kbd>Backspace</kbd>"
 msgstr ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
-"class=\"kbd--plus\">+</span><kbd>Tuɣalin</kbd>"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
+"\"kbd--plus\">+</span><kbd>Tuɣalin</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:89-38
 msgid "Delete to end of sentence"
@@ -805,8 +806,8 @@ msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
 "\"kbd--plus\">+</span><kbd>Del</kbd>"
 msgstr ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
-"class=\"kbd--plus\">+</span><kbd>Kkes</kbd>"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
+"\"kbd--plus\">+</span><kbd>Kkes</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.h2:93-9
 msgid "Shortcut Keys for Tables"
@@ -896,10 +897,14 @@ msgid "<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Insert</kbd>"
 msgstr "Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Ger"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:103-129
+#, fuzzy
 msgid ""
 "3 seconds in Insert mode, Arrow Key inserts row/column, <kbd>Ctrl</kbd><span "
 "class=\"kbd--plus\">+</span><kbd>Arrow Key</kbd> inserts cell"
 msgstr ""
+"3 n tasinin deg uskar n tukksa, Tasarut n uneccab tekkes izirigen/ijga, "
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Tasarut n Uneccab</"
+"kbd> smezdi tibniqin akked tebniqt n lǧar"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:104-38
 msgid "<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Del</kbd>"
@@ -911,17 +916,17 @@ msgid ""
 "class=\"kbd--plus\">+</span><kbd>Arrow key</kbd> merges cell with "
 "neighboring cell"
 msgstr ""
-"3 n tasinin deg uskar n tukksa, Tasarut n uneccab tekkes izirigen/ijga, <kbd>"
-"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Tasarut n Uneccab</kbd> "
-"smezdi tibniqin akked tebniqt n lǧar"
+"3 n tasinin deg uskar n tukksa, Tasarut n uneccab tekkes izirigen/ijga, "
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Tasarut n Uneccab</"
+"kbd> smezdi tibniqin akked tebniqt n lǧar"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:105-38
 msgid ""
 "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</kbd><span class="
 "\"kbd--plus\">+</span><kbd>Del</kbd>"
 msgstr ""
-"<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</kbd><span "
-"class=\"kbd--plus\">+</span><kbd>Kkes</kbd>"
+"<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</kbd><span class="
+"\"kbd--plus\">+</span><kbd>Kkes</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td.p:105-197
 msgid ""
@@ -1082,8 +1087,9 @@ msgid "Navigating in Spreadsheets"
 msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:134-38
+#, fuzzy
 msgid "Moves the cursor to the first cell in the sheet (A1)."
-msgstr ""
+msgstr "Smutti taḥnaccaḍt ɣer tebniqt tamezwarut n wadur amiran."
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:135-38
 msgid "Moves the cursor to the last cell on the sheet that contains data."
@@ -1133,8 +1139,8 @@ msgstr ""
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:141-188
 msgid "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Page Down</kbd>"
 msgstr ""
-"<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Asebter d akesser</"
-"kbd>"
+"<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Asebter d "
+"akesser</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:142-38
 msgid ""
@@ -1269,8 +1275,8 @@ msgid ""
 "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</kbd><span class="
 "\"kbd--plus\">+</span><kbd>Page Up</kbd>"
 msgstr ""
-"<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</kbd><span "
-"class=\"kbd--plus\">+</span><kbd>Asebter d Asawen</kbd>"
+"<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</kbd><span class="
+"\"kbd--plus\">+</span><kbd>Asebter d Asawen</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:152-38
 msgid ""
@@ -1284,8 +1290,8 @@ msgid ""
 "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</kbd><span class="
 "\"kbd--plus\">+</span><kbd>Page Down</kbd>"
 msgstr ""
-"<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</kbd><span "
-"class=\"kbd--plus\">+</span><kbd>Asebter d akessar</kbd>"
+"<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</kbd><span class="
+"\"kbd--plus\">+</span><kbd>Asebter d akessar</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:153-38
 msgid ""
@@ -1324,8 +1330,8 @@ msgstr "Kkes tibniqin (am deg umuɣ Ẓreg - Kkes tibniqin)"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:156-110
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Minus key</kbd>"
 msgstr ""
-"<kbd></kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Tasarut taddayt</"
-"kbd>"
+"<kbd></kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Tasarut "
+"taddayt</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.h2:160-9
 #, fuzzy
@@ -1376,16 +1382,17 @@ msgstr ""
 "--plus\">+</span><kbd>2"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:178-38
+#, fuzzy
 msgid "Standard date format"
-msgstr ""
+msgstr "Amasal alugan"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:178-85
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
 "\"kbd--plus\">+</span><kbd>3</kbd>"
 msgstr ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
-"class=\"kbd--plus\">+</span><kbd>3</kbd>"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
+"\"kbd--plus\">+</span><kbd>3</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:179-38
 msgid "Standard currency format"
@@ -1396,8 +1403,8 @@ msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
 "\"kbd--plus\">+</span><kbd>4</kbd>"
 msgstr ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
-"class=\"kbd--plus\">+</span><kbd>4</kbd>"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
+"\"kbd--plus\">+</span><kbd>4</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:180-38
 msgid "Standard percentage format (two decimal places)"
@@ -1408,8 +1415,8 @@ msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
 "\"kbd--plus\">+</span><kbd>5</kbd>"
 msgstr ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
-"class=\"kbd--plus\">+</span><kbd>5</kbd>"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
+"\"kbd--plus\">+</span><kbd>5</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:181-38
 msgid "Standard format"
@@ -1420,8 +1427,8 @@ msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
 "\"kbd--plus\">+</span><kbd>6</kbd>"
 msgstr ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
-"class=\"kbd--plus\">+</span><kbd>6</kbd>"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
+"\"kbd--plus\">+</span><kbd>6</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.h2:185-9
 msgid "Insert"
@@ -1435,8 +1442,8 @@ msgstr "Ger azemz"
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>;</kbd> or <kbd>,</kbd>"
 msgstr ""
-"<kbd><kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>;</kbd>neɣ<kbd>,</"
-"kbd>"
+"<kbd><kbd>Ctrl</kbd><span class=\"kbd--plus\""
+">+</span><kbd>;</kbd>neɣ<kbd>,</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:211-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:276-38
@@ -1452,8 +1459,9 @@ msgstr "Tabulation"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:212-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:277-38
+#, fuzzy
 msgid "Promote list item (list item has to be selected)"
-msgstr ""
+msgstr "Sneqs aswir n uferdis n tabdart (aferdis n tebdart ilaq ad yettwafren)"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:212-113
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:250-127
@@ -1465,8 +1473,9 @@ msgstr "Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Tarigla"
 
 #: html/cool-help.html%2Bdiv.div.div.h2:216-9
 #: html/cool-help.html%2Bdiv.div.div.h2:281-9
+#, fuzzy
 msgid "Text selection and navigation in a textbox"
-msgstr ""
+msgstr "Tafrayt n uḍris akked tunigin deg isemli"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:238-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:303-38
@@ -1526,8 +1535,9 @@ msgid "Select all in drawing page"
 msgstr "Fren akk deg umray / sebter n usunneɣ"
 
 #: html/cool-help.html%2Bdiv.h1:323-5
+#, fuzzy
 msgid "<span class=\"productname\">{productname}</span> Help"
-msgstr ""
+msgstr "<span class=\"productname\">{isem n ufaris}</span> imbellezen"
 
 #: html/cool-help.html%2Bdiv.p:324-5
 #: html/cool-help.html%2Bdiv.div.h3:360-5
@@ -1781,9 +1791,8 @@ msgid ""
 "To open document, click on the file to open the <span class=\"productname\""
 ">{productname}</span> module associated to the document format."
 msgstr ""
-"I ulday n yisemli, sit ɣef ufaylu i wakken ad teldiḍ<span "
-"class=\"productname\">{isem n ufaris}</span> uzegrir icudden ɣer umasal n "
-"isemli."
+"I ulday n yisemli, sit ɣef ufaylu i wakken ad teldiḍ<span class=\"productname"
+"\">{isem n ufaris}</span> uzegrir icudden ɣer umasal n isemli."
 
 #: html/cool-help.html%2Bdiv.div.div.p:413-30
 msgid ""
@@ -1846,13 +1855,13 @@ msgid ""
 "in external applications. This step also converts complex object types into "
 "static images."
 msgstr ""
-"Iwakken ad tneɣleḍ iḥricen meqqren n ugbur ɣer isnasen-nniḍen ɣef yibenk-"
-"ik·im, iseqdacen ilaq ad tekkin ɣef tqeffalt <span class=\"ui\">Sekker "
-"asider</span>, sakkin, ales anɣel n waya ɣer tecfawit-nsen i wakken ad ilin "
-"wejden i usnas anican i tɣuri. Ayagi yezmer ad yili s uwiǧit amecṭuḥ i d-"
-"yekkan s idis n wadda ayeffus, ilaq kkan usifeḍ n ugbur i usenteḍ deg "
-"isnasen izɣarayen. Asurif-agi ad iselket daɣen anaw n tɣawsa tuddist ɣer "
-"tugniwin tisbeddiyin."
+"Iwakken ad tneɣleḍ iḥricen meqqren n ugbur ɣer isnasen-nniḍen ɣef yibenk-ik·"
+"im, iseqdacen ilaq ad tekkin ɣef tqeffalt <span class=\"ui\">Sekker asider</"
+"span>, sakkin, ales anɣel n waya ɣer tecfawit-nsen i wakken ad ilin wejden i "
+"usnas anican i tɣuri. Ayagi yezmer ad yili s uwiǧit amecṭuḥ i d-yekkan s "
+"idis n wadda ayeffus, ilaq kkan usifeḍ n ugbur i usenteḍ deg isnasen "
+"izɣarayen. Asurif-agi ad iselket daɣen anaw n tɣawsa tuddist ɣer tugniwin "
+"tisbeddiyin."
 
 #: html/cool-help.html%2Bdiv.div.div.h4:427-5
 msgid "Document repair"
@@ -2071,8 +2080,8 @@ msgid ""
 "Click on the submenu (<span class=\"cool-annotation-menu icon-size\"></span>)"
 " icon to reply, move and delete comments."
 msgstr ""
-"Ssit ɣef tignit n umuɣ anaddaw <span class=\"cool-annotation-menu icon-"
-"size\"></span> akken ad d-terreḍ, smutti udiɣ ad tekkseḍ iwenniten."
+"Ssit ɣef tignit n umuɣ anaddaw <span class=\"cool-annotation-menu icon-size\""
+"></span> akken ad d-terreḍ, smutti udiɣ ad tekkseḍ iwenniten."
 
 #: html/cool-help.html%2Bdiv.div.div.h4:481-5
 msgid "Spellchecking"
@@ -2344,8 +2353,8 @@ msgid ""
 ">Properties</span>. Fine tune the table with the properties dialog."
 msgstr ""
 "<span class=\"def\">Amasal n tebniqin:</span> Sit ɣef tebniqt neɣ azilal n "
-"tebniqin sakin fren → <span class=\"ui\">iraten</span> n <span class=\"ui\">"
-"Tfelwit</span> n wumuɣ. Ṣeggem tafelwit s s tenkult n udiwenni."
+"tebniqin sakin fren → <span class=\"ui\">iraten</span> n <span class=\"ui\""
+">Tfelwit</span> n wumuɣ. Ṣeggem tafelwit s s tenkult n udiwenni."
 
 #: html/cool-help.html%2Bdiv.div.div.div.h4:594-5
 msgid "Track changes"

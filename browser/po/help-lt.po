@@ -2,18 +2,18 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-11-17 08:08+0200\n"
+"POT-Creation-Date: 2026-01-26 10:37+0200\n"
 "PO-Revision-Date: 2025-12-29 14:42+0000\n"
 "Last-Translator: dukezas <dukezas@gmail.com>\n"
-"Language-Team: Lithuanian <https://hosted.weblate.org/projects/collabora-"
-"online/help/lt/>\n"
+"Language-Team: Lithuanian <https://hosted.weblate.org/projects/"
+"collabora-online/help/lt/>\n"
 "Language: lt\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
-"(n%100<10 || n%100>=20) ? 1 : 2);\n"
-"X-Generator: Weblate 5.15.1\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && (n"
+"%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Generator: Translate Toolkit 3.6.0\n"
 
 #: html/cool-help.html%2Bdiv.h1:6-5
 msgid "Keyboard Shortcuts"
@@ -441,8 +441,8 @@ msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
 "\"kbd--plus\">+</span><kbd>Arrow Left</kbd>"
 msgstr ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
-"class=\"kbd--plus\">+</span><kbd>Rodyklė kairėn</kbd>"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
+"\"kbd--plus\">+</span><kbd>Rodyklė kairėn</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:60-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:223-38
@@ -501,8 +501,8 @@ msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
 "\"kbd--plus\">+</span><kbd>Arrow Right</kbd>"
 msgstr ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
-"class=\"kbd--plus\">+</span><kbd>Rodyklė dešinėn</kbd>"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
+"\"kbd--plus\">+</span><kbd>Rodyklė dešinėn</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:64-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:227-38
@@ -861,10 +861,9 @@ msgid ""
 "first press goes to beginning of the active cell, second press goes to "
 "beginning of the current table, third press goes to beginning of document."
 msgstr ""
-"Jei aktyvus langelis tuščias: pereinama į lentelės pradžią. Priešingu "
-"atveju: pirmas paspaudimas pereina į aktyvaus langelio pradžią, antras "
-"paspaudimas – į dabartinės lentelės pradžią, trečias paspaudimas – į "
-"dokumento pradžią."
+"Jei aktyvus langelis tuščias: pereinama į lentelės pradžią. Priešingu atveju:"
+" pirmas paspaudimas pereina į aktyvaus langelio pradžią, antras paspaudimas –"
+" į dabartinės lentelės pradžią, trečias paspaudimas – į dokumento pradžią."
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:97-127
 msgid ""
@@ -872,10 +871,9 @@ msgid ""
 "press goes to the end of the active cell, second press goes to the end of "
 "the current table, third press goes to the end of the document."
 msgstr ""
-"Jei aktyvus langelis tuščias: pereinama į lentelės pabaigą. Priešingu "
-"atveju: pirmas paspaudimas pereina į aktyvaus langelio pabaigą, antras "
-"paspaudimas – į dabartinės lentelės pabaigą, trečias paspaudimas – į "
-"dokumento pabaigą."
+"Jei aktyvus langelis tuščias: pereinama į lentelės pabaigą. Priešingu atveju:"
+" pirmas paspaudimas pereina į aktyvaus langelio pabaigą, antras paspaudimas –"
+" į dabartinės lentelės pabaigą, trečias paspaudimas – į dokumento pabaigą."
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:98-38
 #, fuzzy
@@ -889,8 +887,8 @@ msgid ""
 "instead."
 msgstr ""
 "Įterpia tabuliacijos žymę (tik lentelėse). Priklausomai nuo naudojamos langų "
-"tvarkyklės galima naudoti kombinaciją <kbd>Alt</kbd><span class=\"kbd--"
-"plus\">+</span><kbd>Tab</kbd>."
+"tvarkyklės galima naudoti kombinaciją <kbd>Alt</kbd><span class=\"kbd--plus\""
+">+</span><kbd>Tab</kbd>."
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:99-38
 #, fuzzy
@@ -1613,8 +1611,9 @@ msgid "Select all in drawing page"
 msgstr ""
 
 #: html/cool-help.html%2Bdiv.h1:323-5
+#, fuzzy
 msgid "<span class=\"productname\">{productname}</span> Help"
-msgstr ""
+msgstr "Prezentacijos <span class=\"productname\">{productname}</span>"
 
 #: html/cool-help.html%2Bdiv.p:324-5
 #: html/cool-help.html%2Bdiv.div.h3:360-5
@@ -1624,8 +1623,9 @@ msgstr "Teksto formatavimas"
 
 #: html/cool-help.html%2Bdiv.p:325-5
 #: html/cool-help.html%2Bdiv.div.h3:371-5
+#, fuzzy
 msgid "<span class=\"productname\">{productname}</span> user interface"
-msgstr ""
+msgstr "Prezentacijos <span class=\"productname\">{productname}</span>"
 
 #: html/cool-help.html%2Bdiv.p:326-5
 #: html/cool-help.html%2Bdiv.div.h3:409-5
@@ -1634,8 +1634,9 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.p:327-5
 #: html/cool-help.html%2Bdiv.div.h3:419-5
+#, fuzzy
 msgid "Editing documents"
-msgstr ""
+msgstr "Tekstinių dokumentų redagavimas"
 
 #: html/cool-help.html%2Bdiv.p:328-5
 #: html/cool-help.html%2Bdiv.div.p:334-9
@@ -1648,8 +1649,9 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.p:330-9
 #: html/cool-help.html%2Bdiv.div.h2:489-5
+#, fuzzy
 msgid "<span class=\"productname\">{productname}</span> spreadsheets"
-msgstr ""
+msgstr "Tekstiniai dokumentai <span class=\"productname\">{productname}</span>"
 
 #: html/cool-help.html%2Bdiv.div.p:331-9
 #: html/cool-help.html%2Bdiv.div.div.h3:492-5
@@ -1901,9 +1903,9 @@ msgid ""
 "download formats available depends on the application. All applications "
 "exports documents in PDF format."
 msgstr ""
-"Norėdami atsisiųsti dokumentą, atsisiųskite jį iš programos <span "
-"class=\"productname\">{productname}</span> meniu <span class=\"ui\">Failas</"
-"span>. Galimi atsisiuntimo formatai priklauso nuo programos. Visos programos "
+"Norėdami atsisiųsti dokumentą, atsisiųskite jį iš programos <span class="
+"\"productname\">{productname}</span> meniu <span class=\"ui\">Failas</span>. "
+"Galimi atsisiuntimo formatai priklauso nuo programos. Visos programos "
 "eksportuoja dokumentus PDF formatu."
 
 #: html/cool-help.html%2Bdiv.div.div.p:412-30
@@ -1912,8 +1914,8 @@ msgid ""
 ">{productname}</span> module associated to the document format."
 msgstr ""
 "Norėdami atidaryti dokumentą, spustelėkite failą, kad atidarytumėte su "
-"dokumento formatu susietą programos <span class=\"productname\">{productname}"
-"</span> modulį."
+"dokumento formatu susietą programos <span class=\"productname\""
+">{productname}</span> modulį."
 
 #: html/cool-help.html%2Bdiv.div.div.p:413-30
 msgid ""
@@ -1924,8 +1926,8 @@ msgid ""
 msgstr ""
 "<span class=\"productname\">{productname}</span> dokumentai išsaugomi "
 "automatiškai, bet jei norite, kad dokumentas būtų sinchronizuojamas "
-"anksčiau, galite priverstinai išsaugoti naudodami meniu <span class=\"ui\">"
-"Failas</span> opcija <span class=\"ui\">Išsaugoti</span>."
+"anksčiau, galite priverstinai išsaugoti naudodami meniu <span class=\"ui\""
+">Failas</span> opcija <span class=\"ui\">Išsaugoti</span>."
 
 #: html/cool-help.html%2Bdiv.div.div.p:414-30
 msgid ""
@@ -1977,8 +1979,8 @@ msgstr ""
 "kbd><span class=\"kbd--plus\">+</span><kbd>X</kbd>, <kbd>Ctrl</kbd><span "
 "class=\"kbd--plus\">+</span><kbd>C</kbd>, <kbd>Ctrl</kbd><span class=\"kbd--"
 "plus\">+</span><kbd>V</kbd>). Dėl saugumo priežasčių norint įklijuoti "
-"kompiuteryje, būtina naudoti <kbd>Ctrl</kbd><span class=\"kbd--plus\">+</"
-"span><kbd>V</kbd>, tačiau iškirpimui ir kopijavimui galima naudoti "
+"kompiuteryje, būtina naudoti <kbd>Ctrl</kbd><span class=\"kbd--plus\""
+">+</span><kbd>V</kbd>, tačiau iškirpimui ir kopijavimui galima naudoti "
 "kontekstinius meniu. „Android“ arba „iOS“ sistemose tekstą reikia pasirinkti "
 "dukart spustelėjus, o norint pasiekti kopijavimo / iškirpimo / įklijavimo "
 "funkcijas per kontekstinį meniu, reikia ilgiau palaikyti paspaudus."
@@ -2093,8 +2095,8 @@ msgid ""
 "plus\">+</span><kbd>V</kbd>"
 msgstr ""
 "Galite įklijuoti kaip neformatuotą tekstą naudodami sparčiuosius klavišus: "
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
-"class=\"kbd--plus\">+</span><kbd>V</kbd>"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
+"\"kbd--plus\">+</span><kbd>V</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.p:443-5
 msgid ""
