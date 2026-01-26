@@ -173,6 +173,36 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Test Cell Selections', fun
 
 		cy.cGet('#document-container').compareSnapshot('selections', 0.02);
 	});
+
+	it('Should not scroll after a right click', function() {
+		helper.typeIntoInputField(helper.addressInputSelector, 'Z1000');
+
+		cy.cGet('#document-container').rightclick();
+		cy.cGet('.context-menu-link.paste').should('exist');
+		cy.cGet('.context-menu-link.paste').should('be.visible');
+
+		cy.cGet('#document-container').then(function(items) {
+			const rect = items[0].getBoundingClientRect();
+			const left = rect.left + 20;
+			const topY = rect.top + 20;
+
+			cy.cGet('body').click(left, topY);
+
+
+			// We clicked on right button, then left button. Then we will move the mouse outside of the view.
+			// It shouldn't scroll when the mouse is outside.
+			cy.cGet('#document-container').realMouseMove(left + 50, topY + 50);
+			cy.cGet('#document-container').realMouseMove(left + 75, topY + 75);
+			cy.cGet('#document-container').realMouseMove(left + 100, topY + 100);
+			cy.cGet('#document-container').realMouseMove(left + 125, topY + 125);
+			cy.cGet('#document-container').realMouseMove(left + 150, topY + 150);
+		});
+
+		cy.wait(1000);
+
+		// This doesn't pass without the fix in this commit.
+		cy.cGet('#document-container').compareSnapshot('scroll-check', 0.02);
+	});
 });
 
 describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Test jumping on large cell selection with split panes', function() {
