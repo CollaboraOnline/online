@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-12-08 11:25+0100\n"
-"PO-Revision-Date: 2025-12-09 11:58+0000\n"
+"PO-Revision-Date: 2026-01-22 09:01+0000\n"
 "Last-Translator: Tigran Zargaryan <tigranflib@gmail.com>\n"
 "Language-Team: Armenian <https://hosted.weblate.org/projects/collabora-"
 "online/ui/hy/>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 5.15-dev\n"
+"X-Generator: Weblate 5.16-dev\n"
 
 #: admin/admin.strings.js:15
 msgid "Admin console"
@@ -3012,7 +3012,7 @@ msgstr "Ծալել ներդիրները"
 #: src/control/Control.NotebookbarImpress.js:618
 #: src/control/Control.NotebookbarWriter.js:1714
 msgid "Status Bar"
-msgstr "Կարգավիճակի գոտի"
+msgstr "Կարգավիճակի վահանակ"
 
 #: src/control/Control.NotebookbarCalc.js:1665
 msgid "Table Style Options"
