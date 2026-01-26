@@ -12,6 +12,7 @@ const allCommonDialogs = [
     '.uno:RunMacro',
     '.uno:SearchDialog',
     '.uno:SetDocumentProperties',
+    '.uno:Signature',
     '.uno:SpellingAndGrammarDialog',
     '.uno:SplitCell',
     '.uno:StyleNewByExample',
@@ -74,7 +75,7 @@ describe(['tagdesktop'], 'Accessibility Writer Dialog Tests', { testIsolation: f
     let hasLinguisticData = false;
 
     before(function () {
-        helper.setupAndLoadDocument('writer/help_dialog.odt');
+        helper.setupAndLoadDocument('writer/help_dialog.odt', /*isMultiUser=*/false, /*copyCertificates=*/true);
 
         // to make insertImage use the correct buttons
         desktopHelper.switchUIToNotebookbar();
@@ -401,12 +402,21 @@ describe(['tagdesktop'], 'Accessibility Writer Dialog Tests', { testIsolation: f
                 } else if (command == '.uno:ContentControlProperties') {
                     cy.cGet('#add-button').click();
                     handleDialog(win, level + 1);
+                } else if (command == '.uno:ThemeDialog') {
+                    cy.cGet('#button_add-button').click();
+                    handleDialog(win, level + 1);
                 } else if (command == '.uno:SearchDialog') {
                     cy.cGet('.ui-expander-label').contains('Other options').should('be.visible').click();
                     cy.cGet('#similarity-input').check();
                     cy.cGet('#similaritybtn-button').should('be.enabled').click();
                     handleDialog(win, level + 1);
-                }
+                } else if (command == '.uno:Signature') {
+                    cy.cGet('#signatures .ui-treeview-entry > div:first-child').click();
+                    cy.cGet('#view-button').should('be.enabled').click();
+                    handleDialog(win, level + 1);
+                    cy.cGet('#sign-button').should('be.enabled').click();
+                    handleDialog(win, level + 1);
+                };
 
                 handleTabsInDialog(win, level, command);
                 closeActiveDialog(level);
