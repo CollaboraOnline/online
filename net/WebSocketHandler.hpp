@@ -17,6 +17,7 @@
 #include <common/Unit.hpp>
 #include <common/Util.hpp>
 #include <net/HttpHelper.hpp>
+#include <string_view>
 #if !MOBILEAPP
 #include <net/HttpRequest.hpp>
 #endif
@@ -703,7 +704,7 @@ public:
     }
 
     /// Sends a WebSocket Text message.
-    int sendMessage(const std::string_view& msg) const
+    int sendMessage(const std::string_view msg) const
     {
         return sendTextMessage(msg.data(), msg.size());
     }
