@@ -3,16 +3,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-01-19 22:57+0200\n"
-"PO-Revision-Date: 2026-01-01 17:01+0000\n"
+"PO-Revision-Date: 2026-01-26 07:30+0000\n"
 "Last-Translator: Arif Budiman <arifpedia@gmail.com>\n"
-"Language-Team: Indonesian <https://hosted.weblate.org/projects/"
-"collabora-online/help/id/>\n"
+"Language-Team: Indonesian <https://hosted.weblate.org/projects/collabora-"
+"online/help/id/>\n"
 "Language: id\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Translate Toolkit 3.6.0\n"
+"X-Generator: Weblate 5.16-dev\n"
 
 #: html/cool-help.html%2Bdiv.h1:6-5
 msgid "Keyboard Shortcuts"
@@ -2050,7 +2050,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.div.img[alt]:385-29
 msgid "The status bar"
-msgstr ""
+msgstr "Bilah status"
 
 #: html/cool-help.html%2Bdiv.div.div.p:388-5
 msgid ""
@@ -2062,8 +2062,8 @@ msgstr ""
 "<span class=\"def\">Bilah pencarian:</span> Pencarian dimulai secara "
 "otomatis ketika konten dimasukkan ke dalam kotak pencarian, dan jendela "
 "dokumen secara otomatis berpindah ke kemunculan pertama yang ditemukan. "
-"Pencarian tidak peka huruf besar/kecil. Ada tiga tombol tepat di sebelah "
-"kotak pencarian:"
+"Pencarian tidak membedakan huruf besar/kecil. Ada tiga tombol tepat di "
+"sebelah kotak pencarian:"
 
 #: html/cool-help.html%2Bdiv.div.div.ul.li:390-7
 #, fuzzy
@@ -2076,7 +2076,7 @@ msgstr "Cari maju"
 
 #: html/cool-help.html%2Bdiv.div.div.ul.li:392-7
 msgid "Cancel the search (appears only when a text has been searched)"
-msgstr "Batalkan pencarian (hanya muncul ketika teks telah dicari)"
+msgstr "Batalkan pencarian (muncul hanya ketika suatu teks telah dicari)"
 
 #: html/cool-help.html%2Bdiv.div.div.p:396-5
 #, fuzzy
@@ -2111,10 +2111,13 @@ msgid ""
 "details about the current document. The actual information depends on the "
 "nature of the document."
 msgstr ""
+"<span class=\"def\">Bilah informasi:</span> Bilah informasi menampilkan "
+"rincian tentang dokumen saat ini. Informasi yang ditampilkan bergantung pada "
+"sifat dokumen."
 
 #: html/cool-help.html%2Bdiv.div.div.div.img[alt]:402-29
 msgid "The information bar"
-msgstr ""
+msgstr "Bilah informasi"
 
 #: html/cool-help.html%2Bdiv.div.p:407-5
 msgid ""
@@ -2586,7 +2589,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.div.div.img[alt]:501-29
 msgid "format cells"
-msgstr ""
+msgstr "memformat sel"
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:506-30
 msgid ""
@@ -2660,7 +2663,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.div.div.img[alt]:519-29
 msgid "outlining"
-msgstr ""
+msgstr "penyusunan kerangka"
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:522-5
 msgid ""
@@ -2729,7 +2732,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.div.div.img[alt]:538-29
 msgid "cell comments"
-msgstr ""
+msgstr "komentar sel"
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:541-5
 msgid ""
@@ -2747,7 +2750,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.div.div.img[alt]:542-29
 msgid "conditional formatting"
-msgstr ""
+msgstr "pemformatan bersyarat"
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:550-30
 msgid ""
@@ -2832,8 +2835,8 @@ msgid ""
 "paragraph style to a paragraph. Choose menu <span class=\"ui\">Edit</span> → "
 "<span class=\"ui\">Edit styles</span> to change style."
 msgstr ""
-"<span class=\"def\">Pemformatan gaya:</span> <span class=\"productname\""
-">{productname}</span> mendukung gaya paragraf. Anda bisa menerapkan gaya "
+"<span class=\"def\">Pemformatan gaya:</span> <span class=\"productname\">"
+"{productname}</span> mendukung gaya paragraf. Anda bisa menerapkan gaya "
 "paragraf yang sudah ada ke paragraf. Pilih menu <span class=\"ui\">Sunting</"
 "span> → <span class=\"ui\">Sunting gaya</span> untuk mengubah gaya."
 
@@ -2860,7 +2863,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.div.div.img[alt]:573-29
 msgid "insert table"
-msgstr ""
+msgstr "sisipkan tabel"
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:576-5
 msgid ""
@@ -3025,7 +3028,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.div.div.img[alt]:619-29
 msgid "slide layouts"
-msgstr ""
+msgstr "tata letak slide"
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:621-30
 msgid ""
@@ -3210,7 +3213,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.div.img[alt]:669-29
 msgid "thesaurus"
-msgstr ""
+msgstr "tesaurus"
 
 #: html/cool-help.html%2Bdiv.div.div.h4:672-5
 msgid ""
@@ -3397,7 +3400,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.div.div.img[alt]:712-29
 msgid "manage changes"
-msgstr ""
+msgstr "kelola perubahan"
 
 #: html/cool-help.html%2Bdiv.div.div.div.h4:715-5
 msgid "How do I set the margins of the document?"
@@ -3429,7 +3432,7 @@ msgstr "Atur margin halaman pada dialog."
 
 #: html/cool-help.html%2Bdiv.div.div.div.div.img[alt]:722-29
 msgid "page style"
-msgstr ""
+msgstr "gaya halaman"
 
 #: html/cool-help.html%2Bdiv.div.div.div.h4:725-5
 msgid "How do I change the page orientation to landscape inside my document"
@@ -3670,9 +3673,8 @@ msgid ""
 "Screen Presentation</span> or click on the left-most icon in the bottom of "
 "the slide panel:"
 msgstr ""
-"Pilih <span class=\"ui\">Pertunjukan Salindia</span> → <span class=\"ui\""
-">Presentasi Layar Penuh</span> atau klik ikon paling kiri di bagian bawah "
-"panel salindia:"
+"Pilih <span class=\"ui\">Slide Show</span> → <span class=\"ui\">Full Screen "
+"Presentation</span> atau klik ikon paling kiri di bagian bawah panel slide:"
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li.img[alt]:803-176
 #, fuzzy
@@ -3704,7 +3706,7 @@ msgstr "Posisi dan Ukuran"
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li:814-7
 msgid "Set the properties of the element of the object."
-msgstr "Atur properti dari elemen objek."
+msgstr "Atur properti elemen dari objek tersebut."
 
 #~ msgid "<span class=\"def\">The information bar:</span> At the right of the search bar, a set of information on the document is displayed. The actual information depends on the nature of the document."
 #~ msgstr "<span class=\"def\">Bilah informasi:</span> Di sebelah kanan bilah pencarian, sekumpulan informasi pada dokumen ditampilkan. Informasi aktual tergantung pada sifat dokumen."
