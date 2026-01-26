@@ -74,6 +74,8 @@ describe(['tagdesktop'], 'Accessibility Writer Dialog Tests', { testIsolation: f
         // to make insertImage use the correct buttons
         desktopHelper.switchUIToNotebookbar();
 
+        helper.setDummyClipboardForCopy();
+
         cy.getFrameWindow().then(function (frameWindow) {
             win = frameWindow;
             a11yHelper.enableUICoverage(win);
@@ -245,22 +247,12 @@ describe(['tagdesktop'], 'Accessibility Writer Dialog Tests', { testIsolation: f
         // Select some text
         helper.selectAllText();
 
-        cy.getFrameWindow().then(win => {
-                const selectionStart = win.TextSelections.getStartRectangle();
-                cy.cGet('#document-container').rightclick(selectionStart.pX1, selectionStart.pY1);
-        });
-
-        helper.setDummyClipboardForCopy();
-
-        cy.cGet('body').contains('.context-menu-link', 'Copy')
-                .click();
-
-        cy.then(() => {
+        helper.copy().then(() => {
             return helper.processToIdle(win);
         })
         .then(() => {
             win.app.map.sendUnoCommand('.uno:PasteSpecial');
-        })
+        });
         handleDialog(win, 1);
     });
 
