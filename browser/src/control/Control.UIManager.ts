@@ -1783,8 +1783,10 @@ class UIManager extends window.L.Control {
 	isAnyDialogOpen(): boolean {
 		if (this.map.jsdialog)
 			return this.map.jsdialog.hasDialogOpened();
-		else
+		else if (this.mobileWizard)
 			return this.mobileWizard.isOpen();
+		else
+			return false;
 	}
 
 	/**

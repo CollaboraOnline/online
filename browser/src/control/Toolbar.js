@@ -777,7 +777,8 @@ window.L.Map.include({
 	},
 
 	showLOAboutDialog: function() {
-		this.aboutDialog.show();
+		if (this.aboutDialog)
+			this.aboutDialog.show();
 	},
 
 	extractContent: function(html) {
