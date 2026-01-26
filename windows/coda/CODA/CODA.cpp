@@ -1247,12 +1247,12 @@ static LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM l
                 windowData[hWnd].app2js.join();
             if (DocumentData::count() == 0)
             {
-                stopServer();
                 if (persistentWindowSizeStoreOK)
                 {
                     persistentWindowSizeStoreOK = false;
                     persistentWindowSizeStore.close();
                 }
+                stopServer();
             }
             break;
 
