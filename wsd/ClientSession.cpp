@@ -2448,7 +2448,7 @@ bool ClientSession::handleKitToClientMessage(const std::shared_ptr<Message>& pay
         return handleSaveAs(payload, docBroker, saveAsSocket);
     }
 
-#elif defined(QTAPP)
+#elif defined(QTAPP) || defined(_WIN32)
     else if (tokens.size() == 3 && tokens.equals(0, "saveas:"))
     {
         // For mobile/desktop apps, the file has been saved directly by LOKit

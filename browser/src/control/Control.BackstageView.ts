@@ -379,7 +379,7 @@ class BackstageView extends window.L.Class {
 		const featureFlags: Record<string, boolean> = {
 			share: !!wopi.EnableShare,
 			save: !wopi.HideSaveOption,
-			saveAs: !wopi.UserCanNotWriteRelative || window.ThisIsTheQtApp,
+			saveAs: !wopi.UserCanNotWriteRelative || window.ThisIsTheQtApp || window.ThisIsTheWindowsApp,
 			print: !wopi.HidePrintOption,
 			repair: !wopi.HideRepairOption,
 		};
