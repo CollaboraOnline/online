@@ -257,6 +257,8 @@ window.L.Control.PartsPreview = window.L.Control.extend({
 				nPos = that._findClickedPart(frame) - 1;
 			else if (this.isPaddingClick(frame, e, 'bottom'))
 				nPos = that._findClickedPart(frame);
+			else if (this.isPaddingClick(frame, e, 'right') || this.isPaddingClick(frame, e, 'left'))
+				nPos = that._findClickedPart(frame);
 
 			$trigger.contextMenu(true);
 			if (!that._isSelected(e))
@@ -269,11 +271,10 @@ window.L.Control.PartsPreview = window.L.Control.extend({
 						name: app.IconUtil.createMenuItemLink(_('Paste Slide'), 'Paste'),
 						isHtmlName: true,
 						callback: function(key, options) {
-							var part = that._findClickedPart(options.$trigger[0].parentNode);
-							if (part !== null) {
+								if (!nPos)
+									nPos = that._findClickedPart(options.$trigger[0]);
 								that._setPart(that.copiedSlide);
-								that._map.duplicatePage(parseInt(part));
-							}
+								that._map.duplicatePage(nPos);
 						},
 						visible: function() {
 							return that.copiedSlide;
