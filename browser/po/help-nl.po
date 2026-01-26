@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-01-19 22:57+0200\n"
-"PO-Revision-Date: 2025-12-10 20:00+0000\n"
+"PO-Revision-Date: 2026-01-20 23:02+0000\n"
 "Last-Translator: Stephan Paternotte <stephan@paternottes.net>\n"
 "Language-Team: Dutch <https://hosted.weblate.org/projects/collabora-online/"
 "help/nl/>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Translate Toolkit 3.6.0\n"
+"X-Generator: Weblate 5.16-dev\n"
 
 #: html/cool-help.html%2Bdiv.h1:6-5
 msgid "Keyboard Shortcuts"
@@ -2060,7 +2060,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.div.img[alt]:385-29
 msgid "The status bar"
-msgstr ""
+msgstr "De statusbalk"
 
 #: html/cool-help.html%2Bdiv.div.div.p:388-5
 msgid ""
@@ -2075,7 +2075,6 @@ msgstr ""
 "hoofdlettergevoelig. Er zijn drie knoppen direct naast het zoekvak:"
 
 #: html/cool-help.html%2Bdiv.div.div.ul.li:390-7
-#, fuzzy
 msgid "Search backwards>"
 msgstr "Terugwaarts zoeken"
 
@@ -2089,18 +2088,16 @@ msgstr ""
 "Annuleer de zoekopdracht (verschijnt alleen wanneer een tekst is doorzocht)"
 
 #: html/cool-help.html%2Bdiv.div.div.p:396-5
-#, fuzzy
 msgid ""
 "<span class=\"def\">The zoom bar:</span> The zoom bar includes buttons to "
 "reset zoom to 100%, zoom out and zoom in. The zoom applies to the document "
 "area, the user interface is not affected. The current level of zoom is shown "
 "in this area."
 msgstr ""
-"<span class=\"def\">De Zoombalk:</span> Rechts van de Statusbalk bevindt "
-"zich een set knoppen waarmee u tot 100% kunt inzoomen, uitzoomen en "
-"inzoomen. De zoom is van toepassing op het documentgebied, de "
-"gebruikersinterface wordt niet beïnvloed. Het huidige zoomniveau wordt in "
-"dit gebied weergegeven."
+"<span class=\"def\">De Zoombalk:</span> Rechts van de Statusbalk bevinden "
+"zich knoppen waarmee u tot 100% kunt inzoomen, uitzoomen en inzoomen. De "
+"zoom is van toepassing op het documentgebied, de gebruikersinterface wordt "
+"niet beïnvloed. Het huidige zoomniveau wordt in dit gebied weergegeven."
 
 #: html/cool-help.html%2Bdiv.div.div.p:397-5
 msgid ""
@@ -2123,10 +2120,13 @@ msgid ""
 "details about the current document. The actual information depends on the "
 "nature of the document."
 msgstr ""
+"<span class=\"def\">De informatiebalk:</span> Op de informatiebalk worden "
+"details over het huidige document weergegeven. De feitelijke informatie is "
+"afhankelijk van de aard van het document."
 
 #: html/cool-help.html%2Bdiv.div.div.div.img[alt]:402-29
 msgid "The information bar"
-msgstr ""
+msgstr "De Informatiebalk"
 
 #: html/cool-help.html%2Bdiv.div.p:407-5
 msgid ""
@@ -2607,7 +2607,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.div.div.img[alt]:501-29
 msgid "format cells"
-msgstr ""
+msgstr "cellen opmaken"
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:506-30
 msgid ""
@@ -2682,7 +2682,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.div.div.img[alt]:519-29
 msgid "outlining"
-msgstr ""
+msgstr "uitlijning"
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:522-5
 msgid ""
@@ -2753,7 +2753,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.div.div.img[alt]:538-29
 msgid "cell comments"
-msgstr ""
+msgstr "cel-commentaar"
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:541-5
 msgid ""
@@ -2771,7 +2771,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.div.div.img[alt]:542-29
 msgid "conditional formatting"
-msgstr ""
+msgstr "conditionele opmaak"
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:550-30
 msgid ""
@@ -2863,9 +2863,8 @@ msgstr ""
 "span> → <span class=\"ui\">Bewerk stijlen</span> om de stijl te wijzigen."
 
 #: html/cool-help.html%2Bdiv.div.div.div.div.img[alt]:565-29
-#, fuzzy
 msgid "style formatting"
-msgstr "Celopmaak"
+msgstr "stijl-opmaak"
 
 #: html/cool-help.html%2Bdiv.div.div.div.h4:571-5
 msgid "Handling Tables"
@@ -2885,7 +2884,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.div.div.img[alt]:573-29
 msgid "insert table"
-msgstr ""
+msgstr "tabel invoegen"
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:576-5
 msgid ""
@@ -3050,7 +3049,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.div.div.img[alt]:619-29
 msgid "slide layouts"
-msgstr ""
+msgstr "dia-opmaak"
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:621-30
 msgid ""
@@ -3428,7 +3427,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.div.div.img[alt]:712-29
 msgid "manage changes"
-msgstr ""
+msgstr "wijzigingen beheren"
 
 #: html/cool-help.html%2Bdiv.div.div.div.h4:715-5
 msgid "How do I set the margins of the document?"
@@ -3460,7 +3459,7 @@ msgstr "Stel de paginamarges in het dialoogvenster in."
 
 #: html/cool-help.html%2Bdiv.div.div.div.div.img[alt]:722-29
 msgid "page style"
-msgstr ""
+msgstr "paginaopmaak"
 
 #: html/cool-help.html%2Bdiv.div.div.div.h4:725-5
 msgid "How do I change the page orientation to landscape inside my document"
@@ -3520,14 +3519,14 @@ msgstr "Selecteer de tekst met het bestaande formaat"
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li:740-7
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li:782-7
-#, fuzzy
 msgid ""
 "Click on the clone formatting icon <img alt=\"format paintbrush\" class"
 "=\"icon-size\" src=\"images/lc_formatpaintbrush.svg\" />. The mouse pointer "
 "turns to a paint bucket."
 msgstr ""
-"Klik op het kloonopmaak pictogram <img class=\"icon-size\" src=\"images"
-"/lc_formatpaintbrush.svg\" />. De muisaanwijzer verandert in een verfemmer."
+"Klik op het kloonopmaak pictogram <img alt=\"format paintbrush\" "
+"class=\"icon-size\" src=\"images/lc_formatpaintbrush.svg\" />. De "
+"muisaanwijzer verandert in een verfemmer."
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li:741-7
 msgid "Select the text you want to apply the new format."
@@ -3612,11 +3611,11 @@ msgid ""
 "\"true\">+</span><kbd>V</kbd>. The <span class=\"ui\">Text Import</span> "
 "dialog opens to let you describe the precise format of the CSV data."
 msgstr ""
-"Plakken vanuit de browser <span class=\"ui\">Bewerken</span> → <span class="
-"\"ui\">Plakken</span> of druk op <kbd>Ctrl</kbd><span class=\"kbd--plus \""
-">+</span><kbd>V</kbd>. Het dialoogvenster <span class=\"ui\">Tekst "
-"importeren</span> wordt geopend waarin u de exacte indeling van de CSV-"
-"gegevens kunt beschrijven."
+"Plakken vanuit de browser <span class=\"ui\">Bewerken</span> → <span "
+"class=\"ui\">Plakken</span> of druk op <kbd>Ctrl</kbd><span class=\"kbd--"
+"plus\" aria-hidden=\"true\">+</span><kbd>V</kbd>. Het dialoogvenster <span "
+"class=\"ui\">Tekst importeren</span> wordt geopend waarin u de exacte "
+"indeling van de CSV-gegevens kunt beschrijven."
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.div.img[alt]:772-31
 msgid "import"
@@ -3704,9 +3703,8 @@ msgstr ""
 "diapaneel:"
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li.img[alt]:803-176
-#, fuzzy
 msgid "slide show"
-msgstr "Presentatie"
+msgstr "presentatie"
 
 #: html/cool-help.html%2Bdiv.div.div.div.h4:807-5
 msgid "How can I change the line, area and position of a shape in my slides?"
