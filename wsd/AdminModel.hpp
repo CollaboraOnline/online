@@ -152,11 +152,11 @@ public:
 };
 
 /// A document in Admin controller.
-class Document final
+class AdminDocument final
 {
 public:
-    Document(const std::string& docKey, pid_t pid,
-             const std::string& filename, const Poco::URI& wopiSrc)
+    AdminDocument(const std::string& docKey, pid_t pid, const std::string& filename,
+                  const Poco::URI& wopiSrc)
         : _wopiSrc(wopiSrc.toString())
         , _hostName(wopiSrc.getHost())
         , _docKey(docKey)
@@ -440,7 +440,7 @@ public:
     void sendShutdownReceivedMsg();
 
 private:
-    void doRemove(std::map<std::string, Document>::iterator &docIt);
+    void doRemove(std::map<std::string, AdminDocument>::iterator &docIt);
 
     std::string getMemStats() const;
 
@@ -462,7 +462,7 @@ private:
     DocProcSettings _defDocProcSettings;
 
     std::map<int, Subscriber> _subscribers;
-    std::map<std::string, Document> _documents;
+    std::map<std::string, AdminDocument> _documents;
 
     /// The serialized histories of all expired documents.
     std::vector<std::string> _expiredDocumentsHistories;

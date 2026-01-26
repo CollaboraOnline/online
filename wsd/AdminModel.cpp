@@ -55,7 +55,7 @@ std::string concat(const std::string_view &prefix, const std::string_view name,
 
 } // namespace
 
-void Document::addView(const std::string& sessionId, const std::string& userName,
+void AdminDocument::addView(const std::string& sessionId, const std::string& userName,
                        const std::string& userId, bool readOnly)
 {
     const auto ret = _views.emplace(sessionId, View(sessionId, userName, userId, readOnly));
@@ -69,7 +69,7 @@ void Document::addView(const std::string& sessionId, const std::string& userName
     }
 }
 
-int Document::expireView(const std::string& sessionId)
+int AdminDocument::expireView(const std::string& sessionId)
 {
     auto it = _views.find(sessionId);
     if (it != _views.end())
@@ -85,14 +85,14 @@ int Document::expireView(const std::string& sessionId)
     return _activeViews;
 }
 
-void Document::setViewLoadDuration(const std::string& sessionId, std::chrono::milliseconds viewLoadDuration)
+void AdminDocument::setViewLoadDuration(const std::string& sessionId, std::chrono::milliseconds viewLoadDuration)
 {
     std::map<std::string, View>::iterator it = _views.find(sessionId);
     if (it != _views.end())
         it->second.setLoadDuration(viewLoadDuration);
 }
 
-std::string Document::getSnapshot(std::time_t now) const
+std::string AdminDocument::getSnapshot(std::time_t now) const
 {
     std::ostringstream oss;
     oss << '{';
@@ -119,7 +119,7 @@ std::string Document::getSnapshot(std::time_t now) const
     return oss.str();
 }
 
-const std::string Document::getHistory() const
+const std::string AdminDocument::getHistory() const
 {
     std::ostringstream oss;
     oss << "{";
@@ -139,7 +139,7 @@ const std::string Document::getHistory() const
     return oss.str();
 }
 
-void Document::takeSnapshot()
+void AdminDocument::takeSnapshot()
 {
     std::time_t now = std::time(nullptr);
     if (now == _lastSnapshotTime)
@@ -148,7 +148,7 @@ void Document::takeSnapshot()
     _lastSnapshotTime = now;
 }
 
-std::string Document::to_string() const
+std::string AdminDocument::to_string() const
 {
     std::ostringstream oss;
     std::string encodedFilename;
@@ -162,7 +162,7 @@ std::string Document::to_string() const
     return oss.str();
 }
 
-void Document::updateMemoryDirty()
+void AdminDocument::updateMemoryDirty()
 {
     // Avoid accessing smaps too often
     const time_t now = std::time(nullptr);
@@ -177,7 +177,7 @@ void Document::updateMemoryDirty()
     }
 }
 
-void Document::setLastJiffies(size_t newJ)
+void AdminDocument::setLastJiffies(size_t newJ)
 {
     const auto now = std::chrono::steady_clock::now();
     auto sinceMs = std::chrono::duration_cast<std::chrono::milliseconds>(now - _lastJiffyTime).count();
@@ -361,7 +361,7 @@ size_t AdminModel::getKitsJiffies() const
                 if(newJ >= prevJ)
                 {
                     totalJ += (newJ - prevJ);
-                    const_cast<Document&>(it.second).setLastJiffies(newJ);
+                    const_cast<AdminDocument&>(it.second).setLastJiffies(newJ);
                 }
             }
         }
@@ -563,7 +563,7 @@ void AdminModel::addDocument(const std::string& docKey, pid_t pid,
 {
     ASSERT_CORRECT_THREAD_OWNER(_owner);
     const auto ret =
-        _documents.emplace(docKey, Document(docKey, pid, filename, wopiSrc));
+        _documents.emplace(docKey, AdminDocument(docKey, pid, filename, wopiSrc));
     ret.first->second.setProcSMapsFp(smapsFp);
     ret.first->second.takeSnapshot();
     ret.first->second.addView(sessionId, userName, userId, isViewReadOnly);
@@ -779,7 +779,7 @@ void AdminModel::cleanupResourceConsumingDocs()
 
     for (auto& it: _documents)
     {
-        Document& doc = it.second;
+        AdminDocument& doc = it.second;
         if (!doc.isExpired())
         {
             size_t idleTime = doc.getIdleTime();
@@ -1069,7 +1069,7 @@ struct DocumentAggregateStats final
     : _resConsCount(0), _resConsAbortCount(0), _resConsAbortPendingCount(0)
     {}
 
-    void Update(const Document &d, bool active)
+    void Update(const AdminDocument &d, bool active)
     {
         _kitUsedMemory.Update(d.getMemoryDirty() * 1024, active);
         _viewsCount.Update(d.getViews().size(), active);
@@ -1134,7 +1134,7 @@ struct KitProcStats
 /// we don't need to keep the Document instances around.
 static DocumentAggregateStats ExpiredDocStats;
 
-void AdminModel::doRemove(std::map<std::string, Document>::iterator& docIt)
+void AdminModel::doRemove(std::map<std::string, AdminDocument>::iterator& docIt)
 {
     ASSERT_CORRECT_THREAD_OWNER(_owner);
 
@@ -1263,7 +1263,7 @@ void AdminModel::getMetrics(std::ostream& oss) const
     // dump document data
     for (const auto& it : _documents)
     {
-        const Document &doc = it.second;
+        const AdminDocument &doc = it.second;
         std::string pid = std::to_string(doc.getPid());
 
         std::string encodedFilename;
