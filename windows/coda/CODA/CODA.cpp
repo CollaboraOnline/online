@@ -102,6 +102,7 @@ struct WindowData
     DWORD lastAnyonesClipboardModification;
     wil::com_ptr<ICoreWebView2Controller> webViewController;
     wil::com_ptr<ICoreWebView2> webView;
+    std::thread app2js;
 };
 
 struct PersistedDocumentWindowSize
@@ -152,7 +153,9 @@ static bool persistentWindowSizeStoreOK;
 
 static RecentFiles recentFiles;
 
-static FilenameAndUri fileSaveDialog(const std::string& name, const std::string& folder, const std::string& extension);
+static FilenameAndUri fileSaveDialog(const std::string& name,
+                                     const std::string& folder,
+                                     const std::vector<COMDLG_FILTERSPEC>& extensions);
 
 static void openCOOLWindow(const FilenameAndUri& filenameAndUri, DocumentMode mode);
 
@@ -308,7 +311,14 @@ void output_file_dialog_from_core(const char* suggestedURI, char* result, size_t
     auto folder = path.substr(0, lastSlash);
     auto lastPeriod = filename.find_last_of('.');
     auto extension = filename.substr(lastPeriod + 1);
-    auto filenameAndUri = fileSaveDialog(filename, folder, extension);
+    auto filenameAndUri = fileSaveDialog(filename, folder,
+                                         {
+                                             {
+                                                 Util::string_to_wide_string(extension).c_str(),
+                                                 Util::string_to_wide_string("*." + extension).c_str()
+                                             }
+                                         });
+
     if (filenameAndUri.uri.size() < resultLen)
     {
         strcpy(result, filenameAndUri.uri.c_str());
@@ -323,24 +333,14 @@ static void stopServer()
     coolwsdThread.join();
 }
 
-static void do_hullo_handling_things(WindowData& data)
+static void createAndStartMessagePumpThread(WindowData& data)
 {
-    // FIXME: Code snippet shared with mobile.cpp, factor out into separate file.
-
-    // Now we know that the JS has started completely
-
-    // Contact the permanently (during app lifetime) listening COOLWSD server "public" socket
-    assert(coolwsd_server_socket_fd != -1);
-    int rc = fakeSocketConnect(data.fakeClientFd, coolwsd_server_socket_fd);
-    (void)rc;
-    assert(rc != -1);
-
     // Create a socket pair to notify the below thread when the document has been closed
     fakeSocketPipe2(data.closeNotificationPipeForForwardingThread);
 
     // Start another thread to read responses and forward them to the JavaScript
-    std::thread(
-        [data]
+    data.app2js = std::thread(
+        [&data]
         {
             Util::setThreadName("app2js " + std::to_string(data.appDocId));
             while (true)
@@ -385,8 +385,20 @@ static void do_hullo_handling_things(WindowData& data)
                 }
             }
             assert(false);
-        })
-        .detach();
+        });
+}
+
+static void do_hullo_handling_things(WindowData& data)
+{
+    // Now we know that the JS has started completely
+
+    // Contact the permanently (during app lifetime) listening COOLWSD server "public" socket
+    assert(coolwsd_server_socket_fd != -1);
+    int rc = fakeSocketConnect(data.fakeClientFd, coolwsd_server_socket_fd);
+    (void)rc;
+    assert(rc != -1);
+
+    createAndStartMessagePumpThread(data);
 
     // First we must send the URL. This corresponds to the GET request with Upgrade to WebSocket.
     // This *must* be the first message written to the "client" thread. We don't need to do this
@@ -914,7 +926,40 @@ static std::vector<FilenameAndUri> fileOpenDialog()
     return result;
 }
 
-static FilenameAndUri fileSaveDialog(const std::string& name, const std::string& folder, const std::string& extension)
+static std::vector<COMDLG_FILTERSPEC>getSaveAsFormats(int docType)
+{
+    std::vector<COMDLG_FILTERSPEC> result;
+
+    if (docType == LOK_DOCTYPE_TEXT)
+    {
+        result.push_back({L"ODT", L"*.odt"});
+        result.push_back({L"RTF", L"*.rtf"});
+        result.push_back({L"DOCX", L"*.docx"});
+        result.push_back({L"DOC", L"*.doc"});
+    }
+    else if (docType == LOK_DOCTYPE_SPREADSHEET)
+    {
+        result.push_back({L"ODS", L"*.ods"});
+        result.push_back({L"XLSX", L"*.xlsx"});
+        result.push_back({L"XLS", L"*.xls"});
+    }
+    else if (docType == LOK_DOCTYPE_PRESENTATION)
+    {
+        result.push_back({L"ODP", L"*.odp"});
+        result.push_back({L"PPTX", L"*.pptx"});
+        result.push_back({L"PPT", L"*.ppt"});
+    }
+    else if (docType == LOK_DOCTYPE_DRAWING)
+    {
+        result.push_back({L"ODG", L"*.odg"});
+    }
+
+    return result;
+}
+
+static FilenameAndUri fileSaveDialog(const std::string& name,
+                                     const std::string& folder,
+                                     const std::vector<COMDLG_FILTERSPEC>& extensions)
 {
     IFileSaveDialog* dialog;
 
@@ -932,19 +977,16 @@ static FilenameAndUri fileSaveDialog(const std::string& name, const std::string&
     if (!SUCCEEDED(dialog->SetOptions(options)))
         fatal("dialog->SetOptions() failed");
 
-    if (!SUCCEEDED(dialog->SetDefaultExtension(Util::string_to_wide_string(extension).c_str())))
-        fatal("dialog->SetDefaultExtension() failed");
+    if (extensions.size() > 0)
+    {
+        if (!SUCCEEDED(dialog->SetDefaultExtension(extensions[0].pszSpec)))
+            fatal("dialog->SetDefaultExtension() failed");
 
-    wchar_t* extensionCopy = _wcsdup(Util::string_to_wide_string("*." + extension).c_str());
+        if (!SUCCEEDED(dialog->SetFileTypes(extensions.size(), extensions.data())))
+            fatal("dialog->SetFileTypes() failed");
+    }
 
-    COMDLG_FILTERSPEC filter[] = {
-        { L"Only allowed", extensionCopy }
-    };
-
-    if (!SUCCEEDED(dialog->SetFileTypes(sizeof(filter) / sizeof(filter[0]), &filter[0])))
-        fatal("dialog->SetFileTypes() failed");
-
-    if (!SUCCEEDED(dialog->SetFileName(Util::string_to_wide_string(name).c_str())))
+    if (name != "" && !SUCCEEDED(dialog->SetFileName(Util::string_to_wide_string(name).c_str())))
         fatal("dialog->SetFileName() failed");
 
     if (folder != "")
@@ -963,8 +1005,6 @@ static FilenameAndUri fileSaveDialog(const std::string& name, const std::string&
 
     if (!SUCCEEDED(dialog->Show(hiddenOwnerWindow)))
         return {};
-
-    std::free(extensionCopy);
 
     IShellItem* item;
     if (!SUCCEEDED(dialog->GetResult(&item)))
@@ -1203,6 +1243,8 @@ static LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM l
             break;
 
         case WM_DESTROY:
+            if (windowData[hWnd].app2js.joinable())
+                windowData[hWnd].app2js.join();
             if (DocumentData::count() == 0)
             {
                 stopServer();
@@ -1682,7 +1724,7 @@ static void processMessage(WindowData& data, wil::unique_cotaskmem_string& messa
         }
         else if (s == L"SYNCSETTINGS")
         {
-            Desktop::syncSettings([data](const std::vector<char>& buf) {
+            Desktop::syncSettings([&data](const std::vector<char>& buf) {
                 send2JS(data.hWnd, buf.data(), buf.size());
             });
         }
@@ -1714,10 +1756,66 @@ static void processMessage(WindowData& data, wil::unique_cotaskmem_string& messa
             auto const extension = name.substr(dot + 1);
             auto const basename = data.filenameAndUri.filename.substr(
                 0, data.filenameAndUri.filename.find_last_of('.'));
-            auto filenameAndUri = fileSaveDialog(basename + "." + extension, "", extension);
+            auto filenameAndUri = fileSaveDialog(basename + "." + extension,
+                                                 "",
+                                                 {
+                                                     {
+                                                         Util::string_to_wide_string(extension).c_str(),
+                                                         Util::string_to_wide_string("*." + extension).c_str()
+                                                     }
+                                                 });
 
             if (filenameAndUri.filename != "")
                 DocumentData::get(data.appDocId).loKitDocument->saveAs(filenameAndUri.uri.c_str(), extension.c_str(), nullptr);
+        }
+        else if (s.starts_with(L"loaddocument "))
+        {
+            // "loaddocument url=file:///path/to/file.ext"
+            auto const ns = Util::wide_string_to_string(s);
+            auto const tokens = StringVector::tokenize(ns);
+            std::string url;
+            if (!COOLProtocol::getTokenString(tokens, "url", url))
+            {
+                LOG_ERR("No url parameter in message '" << ns << "'");
+                return;
+            }
+            // Close the existing fakesocket
+            if (data.fakeClientFd != -1)
+            {
+                fakeSocketClose(data.fakeClientFd);
+                data.fakeClientFd = -1;
+            }
+
+            // Close the existing forwarding thread
+            if (data.app2js.joinable()) {
+                fakeSocketClose(data.closeNotificationPipeForForwardingThread[0]);
+                data.app2js.join();
+            }
+
+            data.fakeClientFd = fakeSocketSocket();
+            DocumentData::deallocate(data.appDocId);
+            data.appDocId = generate_new_app_doc_id();
+            auto path = Poco::URI(url).getPath();
+            auto lastSlash = path.find_last_of('/');
+            auto filename = path.substr(lastSlash + 1);
+            data.filenameAndUri = { filename, Poco::URI(url).toString() } ;
+
+            // Connect to COOLWSD
+            int rc = fakeSocketConnect(data.fakeClientFd, coolwsd_server_socket_fd);
+            if (rc == -1)
+            {
+                LOG_ERR("loaddocument: failed to connect fakesocket");
+                return;
+            }
+
+            createAndStartMessagePumpThread(data);
+
+            // Send the initial message with the new file URL and appDocId
+            std::string message(data.filenameAndUri.uri + " " + std::to_string(data.appDocId));
+            fakeSocketWriteQueue(data.fakeClientFd, message.c_str(), message.size());
+
+            // Update window title with new filename
+            SetWindowTextW(data.hWnd, Util::string_to_wide_string(data.filenameAndUri.filename + " - " APP_NAME).c_str());
         }
         else if (s == L"uno .uno:Open")
         {
@@ -1732,6 +1830,28 @@ static void processMessage(WindowData& data, wil::unique_cotaskmem_string& messa
             // Close the starter window
             if (data.mode == DocumentMode::STARTER)
                 PostMessage(data.hWnd, WM_CLOSE, 0, 0);
+        }
+        else if (s == L"uno .uno:SaveAs")
+        {
+            auto loKitDoc = DocumentData::get(data.appDocId).loKitDocument;
+            const int docType = loKitDoc->getDocumentType();
+            const auto formats = getSaveAsFormats(docType);
+            auto filenameAndUri = fileSaveDialog("", "", formats);
+
+            if (filenameAndUri.filename != "")
+            {
+                auto dot = filenameAndUri.filename.find_last_of('.');
+                if (dot == std::string::npos || dot == filenameAndUri.filename.length() - 1)
+                {
+                    LOG_ERR("No file name extension in '" << filenameAndUri.filename << "'");
+                    return;
+                }
+                // Send saveas command to COOLWSD with the selected format
+                std::string saveasCmd = "saveas url=" + filenameAndUri.uri +
+                    " format=" + filenameAndUri.filename.substr(dot + 1) +
+                    " options=";
+                fakeSocketWriteQueue(data.fakeClientFd, saveasCmd.c_str(), saveasCmd.size());
+            }
         }
         else if (s == L"uno .uno:CloseWin")
         {
