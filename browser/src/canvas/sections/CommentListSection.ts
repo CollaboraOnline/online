@@ -1894,6 +1894,10 @@ export class CommentSection extends CanvasSectionObject {
 		comment.rectanglesOriginal = this.stringToRectangles(comment.textRange || comment.anchorPos || comment.rectangle || cellPos); // This unmodified version will be kept for re-calculations.
 		comment.anchorPos = this.stringToRectangles(comment.anchorPos || comment.rectangle || cellPos)[0];
 		comment.anchorSPoint = new cool.SimplePoint(comment.anchorPos[0], comment.anchorPos[1]);
+
+		if (app.map._docLayer._docType === 'spreadsheet' && app.map._docLayer.sheetGeometry)
+			app.map._docLayer.sheetGeometry.convertToTileTwips(comment.anchorSPoint);
+
 		comment.parthash = comment.parthash ? comment.parthash: null;
 		comment.tab = (comment.tab || comment.tab === 0) ? comment.tab: null;
 		comment.layoutStatus = comment.layoutStatus !== undefined ? parseInt(comment.layoutStatus): null;
