@@ -31,7 +31,7 @@ if [ -z "$COLLABORA_ONLINE_REPO" ]; then
   COLLABORA_ONLINE_REPO="https://github.com/CollaboraOnline/online.git"
 fi;
 if [ -z "$COLLABORA_ONLINE_BRANCH" ]; then
-  COLLABORA_ONLINE_BRANCH="master"
+  COLLABORA_ONLINE_BRANCH="main"
 fi;
 echo "Building online branch '$COLLABORA_ONLINE_BRANCH' from '$COLLABORA_ONLINE_REPO'"
 
@@ -82,7 +82,7 @@ fi
 
 # core repo
 if test ! -d core ; then
-  git clone https://git.libreoffice.org/core || exit 1
+  git clone --depth=1 --branch "$CORE_BRANCH" https://git.libreoffice.org/core || exit 1
 fi
 
 ( cd core && git fetch --all && git checkout $CORE_BRANCH && ./g pull -r ) || exit 1
@@ -90,7 +90,7 @@ fi
 
 # online repo
 if test ! -d online ; then
-  git clone --depth=1 "$COLLABORA_ONLINE_REPO" online || exit 1
+  git clone --depth=1 --branch "$COLLABORA_ONLINE_BRANCH" "$COLLABORA_ONLINE_REPO" online || exit 1
 fi
 
 ( cd online && git fetch --all && git checkout -f $COLLABORA_ONLINE_BRANCH && git clean -f -d && git pull -r ) || exit 1
