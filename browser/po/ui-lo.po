@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-12-08 11:25+0100\n"
-"PO-Revision-Date: 2025-11-28 07:08+0000\n"
+"PO-Revision-Date: 2026-01-26 15:08+0000\n"
 "Last-Translator: BoneNI <bounkirdni@gmail.com>\n"
 "Language-Team: Lao <https://hosted.weblate.org/projects/collabora-online/ui/"
 "lo/>\n"
-"Language: \n"
+"Language: lo\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 5.15-dev\n"
+"X-Generator: Weblate 5.16-dev\n"
 
 #: admin/admin.strings.js:15
 msgid "Admin console"
@@ -34,7 +34,7 @@ msgstr "ພາບລວມ"
 
 #: admin/admin.strings.js:18
 msgid "(current)"
-msgstr "(ປະຈຸບັນ)"
+msgstr "(ປັດຈຸບັນ)"
 
 #: admin/admin.strings.js:19
 msgid "Analytics"
@@ -45,9 +45,8 @@ msgid "History"
 msgstr "ປະຫວັດ"
 
 #: admin/admin.strings.js:21
-#, fuzzy
 msgid "Log"
-msgstr "ລັອກອິນ"
+msgstr "ບັນທຶກ"
 
 #: admin/admin.strings.js:22
 msgid "Dashboard"
@@ -62,20 +61,17 @@ msgid "User Name"
 msgstr "ຊື່ຜູ້ໃຊ້"
 
 #: admin/admin.strings.js:25
-#, fuzzy
 msgid "Documents open"
-msgstr "ເອກະສານໄດ້ຖືກເປີດແລ້ວ"
+msgstr "ເອກະສານທີ່ເປີດຢູ່"
 
 #: admin/admin.strings.js:26 admin/src/AdminSocketOverview.js:82
 #: admin/src/AdminSocketOverview.js:131 admin/src/AdminSocketOverview.js:358
-#, fuzzy
 msgid " user(s)."
-msgstr "0 ຜູ້ໃຊ້"
+msgstr " ຜູ້ໃຊ້."
 
 #: admin/admin.strings.js:27 admin/src/AdminSocketOverview.js:214
-#, fuzzy
 msgid " document(s) open."
-msgstr "ເອກະສານໄດ້ຖືກເປີດແລ້ວ"
+msgstr " ເອກະສານທີ່ເປີດຢູ່."
 
 #: admin/admin.strings.js:28
 msgid "Number of Documents"
@@ -217,9 +213,8 @@ msgid "Server uptime"
 msgstr "ໄລຍະເວລາເປີດເຄື່ອງຂອງເຊີບເວີ"
 
 #: admin/admin.strings.js:59
-#, fuzzy
 msgid "Refresh Log"
-msgstr "ລີເຟລສ"
+msgstr "ໂຫຼດບັນທຶກໃໝ່"
 
 #: admin/admin.strings.js:60
 msgid "Channel Filter:"
@@ -738,7 +733,7 @@ msgstr "ມຸມມອງແບບກະທັດຮັດ"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:1186
 msgid "Something went wrong while uploading the file. Please try again."
-msgstr "ມີບາງຢ່າງຜິດພາດຂະນະທີ່ອັບໂຫຼດໄຟລ໌. ກະລຸນາລອງໃໝ່ອີກຄັ້ງ."
+msgstr "ມີບາງຢ່າງຜິດພາດຂະນະທີ່ອັບໂຫຼດໄຟລ໌. ກະລຸນາລອງໃໝ່ອີຄັ້ງ."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:1262
 #: src/canvas/sections/CommentSection.ts:1172
@@ -892,7 +887,7 @@ msgstr " ຊມ."
 
 #: admin/src/Util.js:92 admin/src/Util.js:94
 msgid " mins"
-msgstr " ນທ."
+msgstr " ນທ"
 
 #: admin/src/Util.js:97
 msgid " s"
@@ -1041,7 +1036,6 @@ msgstr "ແກ້ໄຂແລ້ວ"
 #: src/canvas/sections/CommentSection.ts:1171
 #: src/canvas/sections/CommentSection.ts:1176
 #: src/control/Control.SaveState.ts:62
-#, fuzzy
 msgid "Saved"
 msgstr "ບັນທຶກ"
 
@@ -1066,9 +1060,8 @@ msgid "No color"
 msgstr "ບໍ່ມີສີ"
 
 #: src/control/ColorPicker.ts:275
-#, fuzzy
 msgid "Automatic color"
-msgstr "ບໍ່ມີສີ"
+msgstr "ສີອັດຕະໂນມັດ"
 
 #: src/control/Control.AboutDialog.ts:112
 msgid "This version of {productname} is powered by"
@@ -1140,12 +1133,12 @@ msgstr "ເຊີບເວີພົບຂໍ້ຜິດພາດ {0} ຂະນ�
 #: src/control/Control.BackstageView.ts:157
 #: src/control/Control.BackstageView.ts:158
 msgid "Close backstage"
-msgstr ""
+msgstr "ປິດໜ້າຈໍຈັດການໄຟລ໌"
 
 #: src/control/Control.BackstageView.ts:202
 #: src/control/Control.BackstageView.ts:203
 msgid "Back to document"
-msgstr ""
+msgstr "ກັບຄືນສູ່ເອກະສານ"
 
 #: src/control/Control.BackstageView.ts:238
 #: src/control/Control.NotebookbarCalc.js:29
@@ -1153,7 +1146,7 @@ msgstr ""
 #: src/control/Control.NotebookbarImpress.js:83
 #: src/control/Control.NotebookbarWriter.js:43
 msgid "Home"
-msgstr "Home"
+msgstr "ໜ້າຫຼັກ"
 
 #: src/control/Control.BackstageView.ts:245
 #: src/control/Control.NotebookbarImpress.js:811
@@ -1177,7 +1170,7 @@ msgstr "ແບ່ງປັນ"
 
 #: src/control/Control.BackstageView.ts:266
 msgid "Info"
-msgstr ""
+msgstr "ຂໍ້ມູນ"
 
 #: src/control/Control.BackstageView.ts:280
 #: src/control/Control.NotebookbarCalc.js:165
@@ -1189,7 +1182,7 @@ msgstr "ບັນທຶກເປັນ"
 
 #: src/control/Control.BackstageView.ts:294
 msgid "Export"
-msgstr ""
+msgstr "ສົ່ງອອກ"
 
 #: src/control/Control.BackstageView.ts:340
 #: src/control/jsdialog/Widget.ColorPicker.ts:421
@@ -1198,31 +1191,31 @@ msgstr "ຫຼ້າສຸດ"
 
 #: src/control/Control.BackstageView.ts:341
 msgid "Recently opened documents will appear here"
-msgstr ""
+msgstr "ເອກະສານທີ່ເປີດເມື່ອບໍ່ດົນມານີ້ຈະປະກົດຢູ່ທີ່ນີ້"
 
 #: src/control/Control.BackstageView.ts:353
 msgid "New Document"
-msgstr ""
+msgstr "ເອກະສານໃໝ່"
 
 #: src/control/Control.BackstageView.ts:354
 msgid "Start from a template or a blank file"
-msgstr ""
+msgstr "ເລີ່ມຕົ້ນຈາກເທັມເພດ ຫຼື ໄຟລ໌ເປົ່າ"
 
 #: src/control/Control.BackstageView.ts:375
 msgid "Document Info"
-msgstr ""
+msgstr "ຂໍ້ມູນເອກະສານ"
 
 #: src/control/Control.BackstageView.ts:376
 msgid "View document properties and information"
-msgstr ""
+msgstr "ເບິ່ງຄຸນສົມບັດ ແລະ ຂໍ້ມູນເອກະສານ"
 
 #: src/control/Control.BackstageView.ts:392
 msgid "Export Document"
-msgstr ""
+msgstr "ສົ່ງອອກເອກະສານ"
 
 #: src/control/Control.BackstageView.ts:393
 msgid "export your documents in different formats"
-msgstr ""
+msgstr "ສົ່ງອອກເອກະສານຂອງທ່ານໃນຮູບແບບຕ່າງໆ"
 
 #: src/control/Control.BackstageView.ts:445 src/control/Control.Menubar.ts:381
 #: src/control/Control.Menubar.ts:1354
@@ -1236,25 +1229,24 @@ msgstr "ຄຸນສົມບັດ"
 
 #: src/control/Control.BackstageView.ts:451
 msgid "More Property Info"
-msgstr ""
+msgstr "ຂໍ້ມູນຄຸນສົມບັດເພີ່ມເຕີມ"
 
 #: src/control/Control.BackstageView.ts:530
 msgid "Text Document"
-msgstr ""
+msgstr "ເອກະສານຂໍ້ຄວາມ"
 
 #: src/control/Control.BackstageView.ts:530
 #: src/control/Control.BackstageView.ts:533
-#, fuzzy
 msgid "Pages"
 msgstr "ໜ້າ"
 
 #: src/control/Control.BackstageView.ts:531
 msgid "Spreadsheet"
-msgstr ""
+msgstr "ສະເປຣດຊີດ"
 
 #: src/control/Control.BackstageView.ts:531
 msgid "Sheets"
-msgstr ""
+msgstr "ຊີດ"
 
 #: src/control/Control.BackstageView.ts:532
 #: src/control/Control.NavigatorPanel.ts:189
@@ -1265,7 +1257,7 @@ msgstr "ສະໄລດ໌"
 
 #: src/control/Control.BackstageView.ts:538
 msgid "Parts"
-msgstr ""
+msgstr "ສ່ວນຕ່າງໆ"
 
 #: src/control/Control.BackstageView.ts:542
 #: src/control/Control.DocumentRepair.js:140
@@ -1274,40 +1266,39 @@ msgstr "ປະເພດ"
 
 #: src/control/Control.BackstageView.ts:548
 msgid "Mode"
-msgstr ""
+msgstr "ໂໝດ"
 
 #: src/control/Control.BackstageView.ts:549
 msgid "View Only"
-msgstr ""
+msgstr "ເບິ່ງເທົ່ານັ້ນ"
 
 #: src/control/Control.BackstageView.ts:556
 msgid "File Name"
-msgstr ""
+msgstr "ຊື່ໄຟລ໌"
 
 #: src/control/Control.BackstageView.ts:658
 msgid "Loading templates…"
-msgstr ""
+msgstr "ກຳລັງໂຫຼດເທັມເພດ…"
 
 #: src/control/Control.BackstageView.ts:704
 msgid "Search templates"
-msgstr ""
+msgstr "ຄຄົ້ນຫາເທັມເພດ"
 
 #: src/control/Control.BackstageView.ts:762
 msgid "No templates match your search."
-msgstr ""
+msgstr "ບໍ່ມີເທັມເພດທີ່ກົງກັບການຄົ້ນຫາຂອງທ່ານ."
 
 #: src/control/Control.BackstageView.ts:868
 msgid "Blank Spreadsheet"
-msgstr ""
+msgstr "ສະເປຣດຊີດເປົ່າ"
 
 #: src/control/Control.BackstageView.ts:872
-#, fuzzy
 msgid "Blank Presentation"
-msgstr "ຈົບການນຳສະເໜີ"
+msgstr "ການນຳສະເໜີເປົ່າ"
 
 #: src/control/Control.BackstageView.ts:877
 msgid "Blank Document"
-msgstr ""
+msgstr "ເອກະສານເປົ່າ"
 
 #: src/control/Control.Command.js:90
 msgid "Unlock"
@@ -1704,7 +1695,7 @@ msgstr "ນະຄອນວາຕິກັນ"
 
 #: src/control/Control.ESignature.ts:200
 msgid "Kosovo"
-msgstr "ໂຄໂຊໂວ"
+msgstr "ໂໂຄໂຊໂວ"
 
 #: src/control/Control.ESignature.ts:201
 msgid "South Africa"
@@ -1860,9 +1851,8 @@ msgid "Columns"
 msgstr "ຖັນ"
 
 #: src/control/Control.JSDialogBuilder.js:2402
-#, fuzzy
 msgid "Insert Table"
-msgstr "ປ້ອນເຂົ້າໃສ່ຕາຕະລາງ"
+msgstr "ແຊກຕາຕະລາງ"
 
 #: src/control/Control.LanguageDialog.js:64 src/control/Control.Menubar.ts:393
 #: src/control/Control.Menubar.ts:395 src/control/Control.Menubar.ts:397
@@ -1949,9 +1939,8 @@ msgid "EPUB (.epub)"
 msgstr "EPUB (.epub)"
 
 #: src/control/Control.Menubar.ts:106 src/control/Control.UIManager.ts:325
-#, fuzzy
 msgid "Rename Document"
-msgstr "ຊ້ອມແຊມເອກະສານ"
+msgstr "ປ່ຽນຊື່ເອກະສານ"
 
 #: src/control/Control.Menubar.ts:107 src/control/Control.Menubar.ts:438
 #: src/control/Control.Menubar.ts:617 src/control/Control.Menubar.ts:759
@@ -1981,9 +1970,8 @@ msgstr "ດາວໂຫຼດເປັນ"
 #: src/control/Control.NotebookbarBuilder.js:378
 #: src/control/Control.NotebookbarBuilder.js:412
 #: src/control/Control.NotebookbarBuilder.js:454
-#, fuzzy
 msgid "PDF Document (.pdf) as..."
-msgstr "ເອກະສານ PDF (.pdf)"
+msgstr "ເອກະສານ PDF (.pdf)..."
 
 #: src/control/Control.Menubar.ts:117 src/control/Control.Menubar.ts:768
 msgid "HTML file (.html)"
@@ -2148,9 +2136,8 @@ msgid "Insert Picture"
 msgstr "ແຊກຮູບພາບ"
 
 #: src/control/Control.Menubar.ts:380 src/control/Control.Menubar.ts:1353
-#, fuzzy
 msgid "Insert Date"
-msgstr "ປ້ອນເຂົ້າໃສ່ຕາຕະລາງ"
+msgstr "ແຊກວັນທີ"
 
 #: src/control/Control.Menubar.ts:401 src/control/Control.Menubar.ts:1098
 #: src/control/Control.NotebookbarWriter.js:472
@@ -2231,9 +2218,8 @@ msgid "PowerPoint Presentation (.pptx)"
 msgstr "ການນຳສະເໜີ PowerPoint (.pptx)"
 
 #: src/control/Control.Menubar.ts:437 src/control/Control.Menubar.ts:616
-#, fuzzy
 msgid "Save Comments"
-msgstr "ຄຳເຫັນ"
+msgstr "ບັນທືກຄຳເຫັນ"
 
 #: src/control/Control.Menubar.ts:446
 #: src/control/Control.NotebookbarBuilder.js:436
@@ -2317,9 +2303,8 @@ msgstr "ແຜງຄວບຄຸມຜູ້ນຳສະເໜີ"
 #: src/control/Control.Menubar.ts:1192
 #: src/control/Control.NotebookbarBuilder.js:424
 #: src/control/Control.NotebookbarBuilder.js:537
-#, fuzzy
 msgid "ODF Drawing (.odg)"
-msgstr "ODF presentation (.odp)"
+msgstr "ODF Drawing (.odg)"
 
 #: src/control/Control.Menubar.ts:752 src/control/Control.Menubar.ts:764
 #: src/control/Control.Menubar.ts:1250
@@ -2480,9 +2465,8 @@ msgid "Use Tabbed view"
 msgstr "ໃຊ້ມຸມມອງແບບແຖບ"
 
 #: src/control/Control.Menubar.ts:2132
-#, fuzzy
 msgid "Insert Shape"
-msgstr "ປ້ອນເຂົ້າໃສ່ຕາຕະລາງ"
+msgstr "ແຊກຮູບຊົງ"
 
 #: src/control/Control.Menubar.ts:2216
 msgid "The signature line can now be moved or resized as needed."
@@ -2520,14 +2504,12 @@ msgid "Background Color"
 msgstr "ສີພື້ນຫຼັງ"
 
 #: src/control/Control.MobileWizardBuilder.js:569
-#, fuzzy
 msgid "Gradient Start"
 msgstr "ຄວາມຊັນ"
 
 #: src/control/Control.MobileWizardBuilder.js:571
-#, fuzzy
 msgid "Gradient End"
-msgstr "ຄວາມຊັນ"
+msgstr "ສິ້ນສຸດໄລ່ສີ"
 
 #: src/control/Control.NavigatorPanel.ts:112
 msgid "Navigation"
@@ -2604,7 +2586,7 @@ msgstr "ຫຼັງຈາກ"
 
 #: src/control/Notebookbar.ImpressTransitionTab.ts:137
 msgid "Apply to All Slides"
-msgstr ""
+msgstr "ນຳໃຊ້ກັບທຸກສະໄລດ໌"
 
 #: src/control/Notebookbar.WriterReferencesTab.ts:41
 msgid "Table of content"
@@ -2618,7 +2600,7 @@ msgstr "ອ້າງອີງທ້າຍໜ້າ/ທ້າຍເອກະສ�
 #: src/control/Control.NotebookbarDraw.js:1578
 #: src/control/Control.NotebookbarImpress.js:1645
 msgid "Field"
-msgstr "ຟິວ"
+msgstr "ຟິວດ໌"
 
 #: src/control/Sidebar.FromNotebookbarPanel.ts:121
 msgid "Animations"
@@ -2690,9 +2672,8 @@ msgstr "ຂໍ້ມູນ"
 #: src/control/Control.NotebookbarDraw.js:82
 #: src/control/Control.NotebookbarImpress.js:110
 #: src/control/Control.NotebookbarWriter.js:63
-#, fuzzy
 msgid "Review"
-msgstr "ພາບລວມ"
+msgstr "ກວດທານ"
 
 #: src/control/Control.NotebookbarCalc.js:66
 #: src/control/Control.NotebookbarDraw.js:88
@@ -2752,9 +2733,8 @@ msgstr "ຊ່ວຍເຫຼືອ"
 #: src/control/Control.NotebookbarDraw.js:190
 #: src/control/Control.NotebookbarImpress.js:238
 #: src/control/Control.NotebookbarWriter.js:199
-#, fuzzy
 msgid "Export As"
-msgstr "ນຳອອກເປັນ"
+msgstr "ສົ່ງອອກເປັນ"
 
 #: src/control/Control.NotebookbarCalc.js:210
 #: src/control/Control.NotebookbarCalc.js:259
@@ -2818,9 +2798,8 @@ msgid "Percent"
 msgstr "ເປີເຊັນ"
 
 #: src/control/Control.NotebookbarCalc.js:778
-#, fuzzy
 msgid "Currency"
-msgstr "ປະຈຸບັນ"
+msgstr "ສະກຸນເງິນ"
 
 #: src/control/Control.NotebookbarCalc.js:781
 msgid "Scientific"
@@ -2840,13 +2819,12 @@ msgstr "ຄ່າບູລີນ"
 #: src/control/Control.NotebookbarDraw.js:1668
 #: src/control/Control.NotebookbarImpress.js:1719
 #: src/control/Control.NotebookbarWriter.js:1464
-#, fuzzy
 msgid "Text"
-msgstr "ເຕັກ"
+msgstr "ຂໍ້ຄວາມ"
 
 #: src/control/Control.NotebookbarCalc.js:862
 msgid "Cells"
-msgstr "ຕາລາງ"
+msgstr "ເຊວ"
 
 #: src/control/Control.NotebookbarCalc.js:964
 #: src/control/jsdialog/Definitions.Menu.ts:2304
@@ -2867,7 +2845,7 @@ msgstr "ດີ"
 
 #: src/control/Control.NotebookbarCalc.js:998
 msgid "Neutral"
-msgstr "ກາງ"
+msgstr "ປົກກະຕິ"
 
 #: src/control/Control.NotebookbarCalc.js:1005
 msgid "Bad"
@@ -2903,34 +2881,28 @@ msgid "Column Width"
 msgstr "ຄວາມກວ້າງຖັນ"
 
 #: src/control/Control.NotebookbarCalc.js:1204
-#, fuzzy
 msgid "Insert Rows Above"
-msgstr "ປ້ອນເຂົ້າໃສ່ຕາຕະລາງ"
+msgstr "ແຊກແຖວດ້ານເທິງ"
 
 #: src/control/Control.NotebookbarCalc.js:1211
-#, fuzzy
 msgid "Insert Columns Before"
-msgstr "ປ້ອນຊີດຫລັງຈາກນີ້"
+msgstr "ແຊກຖັນກ່ອນໜ້ານີ້"
 
 #: src/control/Control.NotebookbarCalc.js:1218
-#, fuzzy
 msgid "Delete Rows"
-msgstr "ລືບ"
+msgstr "ລຶບແຖວ"
 
 #: src/control/Control.NotebookbarCalc.js:1230
-#, fuzzy
 msgid "Insert Rows Below"
-msgstr "ປ້ອນຊີດ"
+msgstr "ແຊກແຖວດ້ານລຸ່ມ"
 
 #: src/control/Control.NotebookbarCalc.js:1237
-#, fuzzy
 msgid "Insert Columns After"
-msgstr "ປ້ອນຊີດກ່ອນຫນ້ານີ້"
+msgstr "ແຊກຖັນຫຼັງຈາກນີ້"
 
 #: src/control/Control.NotebookbarCalc.js:1244
-#, fuzzy
 msgid "Delete Columns"
-msgstr "ຖັນ"
+msgstr "ລຶບຖັນ"
 
 #: src/control/Control.NotebookbarCalc.js:1267
 #: src/control/Control.NotebookbarCalc.js:3040
@@ -2984,7 +2956,7 @@ msgstr "ອອກຈາກມຸມມອງຊີດ"
 
 #: src/control/Control.NotebookbarCalc.js:1467
 msgid "Freeze"
-msgstr "ຄຶງໄວ້"
+msgstr "ຄຶງ"
 
 #: src/control/Control.NotebookbarCalc.js:1521
 #: src/control/Control.NotebookbarDraw.js:420
@@ -3016,35 +2988,35 @@ msgstr "ແຖບສະຖານະ"
 
 #: src/control/Control.NotebookbarCalc.js:1665
 msgid "Table Style Options"
-msgstr ""
+msgstr "ຕົວເລືອກຮູບແບບຕາຕະລາງ"
 
 #: src/control/Control.NotebookbarCalc.js:1678
 msgid "Show Header Row"
-msgstr ""
+msgstr "ສະແດງແຖວຫົວຂໍ້"
 
 #: src/control/Control.NotebookbarCalc.js:1690
 msgid "Show Total Row"
-msgstr ""
+msgstr "ສະແດງແຖວຜົນລວມ"
 
 #: src/control/Control.NotebookbarCalc.js:1708
 msgid "Banded Rows"
-msgstr ""
+msgstr "ແຖວແບບສະລັບສີ"
 
 #: src/control/Control.NotebookbarCalc.js:1720
 msgid "Banded Columns"
-msgstr ""
+msgstr "ຖັນແບບສະລັບສີ"
 
 #: src/control/Control.NotebookbarCalc.js:1738
 msgid "First Column"
-msgstr ""
+msgstr "ຖັນທຳອິດ"
 
 #: src/control/Control.NotebookbarCalc.js:1750
 msgid "Last Column"
-msgstr ""
+msgstr "ຖັນສຸດທ້າຍ"
 
 #: src/control/Control.NotebookbarCalc.js:1765
 msgid "Show Filter Buttons"
-msgstr ""
+msgstr "ສະແດງປຸ່ມຕົວກອງ"
 
 #: src/control/Control.NotebookbarCalc.js:1801
 #: src/control/Control.NotebookbarCalc.js:2549
@@ -3092,7 +3064,7 @@ msgstr "ຜູ້ຊ່ວຍ"
 
 #: src/control/Control.NotebookbarCalc.js:2174
 msgid "Insert Function"
-msgstr "ໃສ່ຟັງຊັນ"
+msgstr "ແຊກຟັງຊັນ"
 
 #: src/control/Control.NotebookbarCalc.js:2182
 msgid "Function Library"
@@ -3108,7 +3080,7 @@ msgstr "ການເງິນ"
 
 #: src/control/Control.NotebookbarCalc.js:2227
 msgid "Logical"
-msgstr "ເຫດຜົນ"
+msgstr "ທາງຕັກກະ"
 
 #: src/control/Control.NotebookbarCalc.js:2257
 msgid "Date & Time"
@@ -3141,7 +3113,6 @@ msgstr "ຕົວກອງ"
 #: src/control/Control.NotebookbarCalc.js:2721
 #: src/control/Control.NotebookbarImpress.js:1977
 #: src/control/Control.NotebookbarWriter.js:2209
-#, fuzzy
 msgid "Comments"
 msgstr "ຄຳເຫັນ"
 
@@ -3289,9 +3260,8 @@ msgstr "ໄປທີ່ອອບລາຍ"
 
 #: src/control/Control.NotebookbarWriter.js:923
 #: src/control/Control.Zotero.js:827
-#, fuzzy
 msgid "Styles"
-msgstr "ສະຕາຍ"
+msgstr "ຮູບແບບ"
 
 #: src/control/Control.NotebookbarWriter.js:1069
 msgid "Lists/Bullets"
@@ -3455,7 +3425,6 @@ msgid "Document container started in {1} ms"
 msgstr "ຄອນເທນເນີເອກະສານເລີ່ມຕົ້ນໃນ {1} ມິນລິວິນາທີ"
 
 #: src/control/Control.ServerAuditDialog.ts:306
-#, fuzzy
 msgid "Status"
 msgstr "ສະຖານະ:"
 
@@ -3493,7 +3462,7 @@ msgstr "ເລື່ອນໄປທີ່ຊີດສຸດທ້າຍ"
 
 #: src/control/Control.SheetsBar.js:81
 msgid "Insert sheet"
-msgstr "ໃສ່ຊີດ"
+msgstr "ແຊກຊີດ"
 
 #: src/control/Control.SheetsBar.js:88
 msgid "Show sheet list"
@@ -3541,7 +3510,7 @@ msgstr "ຈຳນວນທີ່ເລືອກ"
 
 #: src/control/Control.StatusBar.js:250
 msgid "Multi Page View"
-msgstr ""
+msgstr "ມຸມມອງຫຼາຍໜ້າ"
 
 #: src/control/Control.StatusBar.js:405
 msgid ""
@@ -3573,11 +3542,11 @@ msgstr "ຕັ້ງຄ່າພາສາສຳລັບສ່ວນທີ່ເ
 
 #: src/control/Control.Tabs.js:53
 msgid "Insert sheet before this"
-msgstr "ໃສ່ຊີດກ່ອນໜ້ານີ້"
+msgstr "ແຊກຊີດກ່ອນໜ້ານີ້"
 
 #: src/control/Control.Tabs.js:58
 msgid "Insert sheet after this"
-msgstr "ໃສ່ຊີດຫຼັງຈາກນີ້"
+msgstr "ແຊກຊີດຫຼັງຈາກນີ້"
 
 #: src/control/Control.Tabs.js:97
 msgid "Move Sheet Left"
@@ -3592,7 +3561,6 @@ msgid "Copy Sheet..."
 msgstr "ສຳເນົາຊີດ..."
 
 #: src/control/Control.Tabs.js:412
-#, fuzzy
 msgid "Are you sure you want to delete sheet, {sheet}?"
 msgstr "ທ່ານແນ່ໃຈແລ້ວບໍ່ວ່າຈະລຶບຊີດນີ້ {sheet} ?"
 
@@ -3618,20 +3586,19 @@ msgstr "ຊີດທີ່ໃຊ້ງານຢູ່"
 
 #: src/control/Control.TopToolbar.js:123
 msgid "Default Style"
-msgstr "ສະໄຕລ໌ເລີ່ມຕົ້ນ"
+msgstr "ຮູບແບບເລີ່ມຕົ້ນ"
 
 #: src/control/Control.TopToolbar.js:189
 msgid "Insert table"
-msgstr "ໃສ່ຕາຕະລາງ"
+msgstr "ແຊກຕາຕະລາງ"
 
 #: src/control/Control.TopToolbar.js:192
-#, fuzzy
 msgid "Insert shapes"
-msgstr "ປ້ອນເຂົ້າໃສ່ຕາຕະລາງ"
+msgstr "ແຊກຮູບຮ່າງ"
 
 #: src/control/Control.TopToolbar.js:194
 msgid "Insert connectors"
-msgstr "ໃສ່ຕົວເຊື່ອມ"
+msgstr "ແຊກຕົວເຊື່ອມ"
 
 #: src/control/Control.UIManager.ts:325
 msgid "Enter new name"
@@ -3639,7 +3606,6 @@ msgstr "ປ້ອນຊື່ໃໝ່"
 
 #: src/control/Control.UIManager.ts:367
 #: src/control/jsdialog/Widget.HTMLContent.ts:46
-#, fuzzy
 msgid "Read-only"
 msgstr "ອ່ານຢ່າງດຽວ"
 
@@ -3738,9 +3704,8 @@ msgstr "ກ່ອນໜ້າ"
 #: src/control/Control.Zotero.js:270 src/control/Control.Zotero.js:469
 #: src/slideshow/PresenterConsole.js:32
 #: src/slideshow/SlideShowPresenter.ts:706
-#, fuzzy
 msgid "Next"
-msgstr "ເຕັກ"
+msgstr "ຕໍ່ໄປ"
 
 #: src/control/Control.Zotero.js:292
 msgid "Language:"
@@ -3871,12 +3836,10 @@ msgid "Right Margin"
 msgstr "ຂອບຂວາ"
 
 #: src/control/HRuler.ts:1093
-#, fuzzy
 msgid "Insert tabstop"
 msgstr "ປ້ອນເຂົ້າໃສ່ຕາຕະລາງ"
 
 #: src/control/HRuler.ts:1100
-#, fuzzy
 msgid "Delete tabstop"
 msgstr "ປ້ອນເຂົ້າໃສ່ຕາຕະລາງ"
 
@@ -3937,7 +3900,6 @@ msgid "This document has an invalid signature."
 msgstr "ເອກະສານນີ້ມີລາຍເຊັນທີ່ບໍ່ຖືກຕ້ອງ."
 
 #: src/control/Signing.js:40
-#, fuzzy
 msgid "The signature was valid, but the document has been modified."
 msgstr "ລາຍເຊັນດິຈິຕັລຖືກຕ້ອງ, ແຕ່ວ່າເອກະສານໄດ້ຮັບການແກ້ໄຂແລ້ວ."
 
@@ -4135,11 +4097,11 @@ msgstr "ໄປສະນີຍະບັດຍີ່ປຸ່ນ"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1726
 msgid "Insert Local Image"
-msgstr "ໃສ່ຮູບພາບຈາກເຄື່ອງ"
+msgstr "ແຊກຮູບພາບຈາກເຄື່ອງ"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1732
 msgid "Insert Local Multimedia"
-msgstr "ໃສ່ມັນຕິມີເດຍຈາກເຄື່ອງ"
+msgstr "ແຊກມັນຕິມີເດຍຈາກເຄື່ອງ"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1738
 msgid "Very Tight"
@@ -4218,7 +4180,6 @@ msgid "Line color"
 msgstr "ສີເສັ້ນ"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1993
-#, fuzzy
 msgid "Line style"
 msgstr "ຮູບແບບຂອງເສັ້ນ:"
 
@@ -4377,11 +4338,11 @@ msgstr "ອັດຕະໂນມັດ"
 
 #: src/control/jsdialog/Widget.ColorPicker.ts:262
 msgid "Color palette"
-msgstr ""
+msgstr "ຈານສີ"
 
 #: src/control/jsdialog/Widget.ColorPicker.ts:328
 msgid "Enter custom color in hex format"
-msgstr ""
+msgstr "ປ້ອນສີທີ່ກຳນົດເອງໃນຮູບແບບ hex"
 
 #: src/control/jsdialog/Widget.PageMarginEntry.ts:40
 msgid "Page margin options"
@@ -4457,9 +4418,8 @@ msgid "Your changes have been saved"
 msgstr "ການປ່ຽນແປງຂອງທ່ານຖືກບັນທຶກແລ້ວ"
 
 #: src/control/jsdialog/Widget.HTMLContent.ts:200
-#, fuzzy
 msgid "Show Comments"
-msgstr "ຄຳເຫັນ"
+msgstr "ໂຊຄຳເຫັນ"
 
 #: src/control/jsdialog/Widget.MobileBorderSelector.js:96
 msgid "Cell borders"
@@ -4474,7 +4434,6 @@ msgid "Headings and objects that you add to the document will appear here"
 msgstr "ຫົວຂໍ້ ແລະ ວັດຖຸທີ່ທ່ານເພີ່ມເຂົ້າໃນເອກະສານຈະປະກົດຢູ່ທີ່ນີ້"
 
 #: src/app/SocketBase.ts:189
-#, fuzzy
 msgid "Oops, there is a problem connecting to {productname}: "
 msgstr "Oops, ເກີດມີບັນຫາໃນການເຊື່ອມຕໍໄປຫາ LibreOffice ອອນໄລນ: "
 
@@ -4527,9 +4486,8 @@ msgid "Server is shutting down for maintenance (auto-saving)"
 msgstr "ເຊີບເວີກຳລັງປິດເພື່ອບຳລຸງຮັກສາ (ກຳລັງບັນທຶກອັດຕະໂນມັດ)"
 
 #: src/core/Socket.js:734
-#, fuzzy
 msgid "Oops, there is a problem connecting the document"
-msgstr "Oops, ເກີດມີບັນຫາໃນການເຊື່ອມຕໍໄປຫາ LibreOffice ອອນໄລນ: "
+msgstr "ຂໍອະໄພ, ເກີດບັນຫາໃນການເຊື່ອມຕໍ່ກັບເອກະສານ"
 
 #: src/core/Socket.js:738
 msgid "Server is down, restarting automatically. Please wait."
@@ -4951,7 +4909,7 @@ msgstr "ລຶບ {0} ແລ້ວ"
 
 #: src/layer/marker/TextInput.js:411
 msgid "Clipboard area"
-msgstr ""
+msgstr "ພື້ນທີ່ຄລິບບອດ"
 
 #: src/layer/marker/TextInput.js:461
 msgid "Screen reader support for text content is disabled. "
@@ -4986,9 +4944,8 @@ msgid "Named Range"
 msgstr "ຊ່ວງທີ່ຕັ້ງຊື່"
 
 #: src/layer/tile/CanvasTileLayer.js:3533
-#, fuzzy
 msgid "No Comments"
-msgstr "ຄຳເຫັນ"
+msgstr "ບໍ່ມີຄຳເຫັນ"
 
 #: src/main.js:131
 msgid "Warning! The browser you are using is not supported."
@@ -5180,7 +5137,6 @@ msgid "Current Slide"
 msgstr "ສະໄລດ໌ປັດຈຸບັນ"
 
 #: src/slideshow/PresenterConsole.js:30
-#, fuzzy
 msgid "Next Slide"
 msgstr "ສະໄລດຕໍ່ໄປ"
 

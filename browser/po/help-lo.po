@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-01-19 22:57+0200\n"
-"PO-Revision-Date: 2025-11-28 07:08+0000\n"
+"PO-Revision-Date: 2026-01-26 15:09+0000\n"
 "Last-Translator: BoneNI <bounkirdni@gmail.com>\n"
 "Language-Team: Lao <https://hosted.weblate.org/projects/collabora-online/"
 "help/lo/>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Translate Toolkit 3.6.0\n"
+"X-Generator: Weblate 5.16-dev\n"
 
 #: html/cool-help.html%2Bdiv.h1:6-5
 msgid "Keyboard Shortcuts"
@@ -744,7 +744,7 @@ msgstr "ໄປທີ່ຈຸດເລີ່ມຕົ້ນຂອງແຖວ"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:235-88
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:300-88
 msgid "Home"
-msgstr "Home"
+msgstr "ໜ້າຫຼັກ"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:73-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:236-38
@@ -874,26 +874,24 @@ msgid "Switch cursor between text and header"
 msgstr "ສະຫຼັບເຄີເຊີລະຫວ່າງຂໍ້ຄວາມ ແລະ ຫົວເອກະສານ"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:81-102
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>PageUp</kbd>"
 msgstr ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
-">+</span><kbd>PageUp</kbd>"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>"
+"PageUp</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:82-38
 msgid "Extend the selection up one page"
 msgstr "ຂະຫຍາຍການເລືອກຂຶ້ນເທິງໜຶ່ງໜ້າ"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:82-97
-#, fuzzy
 msgid ""
 "<kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>PageUp</kbd>"
 msgstr ""
-"<kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
-">+</span><kbd>PageUp</kbd>"
+"<kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>"
+"PageUp</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:83-38
 msgid "Move the view down one page"
@@ -908,26 +906,24 @@ msgid "Switch cursor between text and footer"
 msgstr "ສະຫຼັບເຄີເຊີລະຫວ່າງຂໍ້ຄວາມ ແລະ ທ້າຍເອກະສານ"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:84-102
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>PageDown</kbd>"
 msgstr ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
-">+</span><kbd>PageDown</kbd>"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>"
+"PageDown</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:85-38
 msgid "Extend the selection down one page"
 msgstr "ຂະຫຍາຍການເລືອກລົງລຸ່ມໜຶ່ງໜ້າ"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:85-99
-#, fuzzy
 msgid ""
 "<kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>PageDown</kbd>"
 msgstr ""
-"<kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
-">+</span><kbd>PageDown</kbd>"
+"<kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>"
+"PageDown</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:86-38
 msgid "Delete to beginning of word"
@@ -1241,15 +1237,14 @@ msgid "Insert non-breaking space"
 msgstr "ແຊກຍະຫວ່າງທີ່ບໍ່ຕັດຄຳ"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:121-90
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>Space</kbd>"
 msgstr ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
-">+</span><kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
-">+</span><kbd>Space</kbd>"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>"
+"Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>"
+"Space</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:122-38
 msgid "Insert line break"
@@ -2045,7 +2040,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.div.img[alt]:385-29
 msgid "The status bar"
-msgstr ""
+msgstr "ແຖບສະຖານະ"
 
 #: html/cool-help.html%2Bdiv.div.div.p:388-5
 msgid ""
@@ -2060,7 +2055,6 @@ msgstr ""
 "ການຄົ້ນຫາບໍ່ໄດ້ຈຳແນກຕົວພິມໃຫຍ່-ນ້ອຍ. ມີສາມປຸ່ມຢູ່ຖັດຈາກກ່ອງຄົ້ນຫາ:"
 
 #: html/cool-help.html%2Bdiv.div.div.ul.li:390-7
-#, fuzzy
 msgid "Search backwards>"
 msgstr "ຄົ້ນຫາຍ້ອນຫຼັງ"
 
@@ -2073,17 +2067,15 @@ msgid "Cancel the search (appears only when a text has been searched)"
 msgstr "ຍົກເລີກການຄົ້ນຫາ (ຈະປາກົດຂຶ້ນເມື່ອມີການຄົ້ນຫາຂໍ້ຄວາມແລ້ວເທົ່ານັ້ນ)"
 
 #: html/cool-help.html%2Bdiv.div.div.p:396-5
-#, fuzzy
 msgid ""
 "<span class=\"def\">The zoom bar:</span> The zoom bar includes buttons to "
 "reset zoom to 100%, zoom out and zoom in. The zoom applies to the document "
 "area, the user interface is not affected. The current level of zoom is shown "
 "in this area."
 msgstr ""
-"<span class=\"def\">ແຖບຊູມ:</span> ຢູ່ທາງຂວາຂອງແຖບສະຖານະ, "
-"ມີຊຸດປຸ່ມທີ່ຊ່ວຍໃຫ້ທ່ານສາມາດຊູມໄປທີ່ 100%, ຊູມອອກ ແລະ ຊູມເຂົ້າ. "
-"ການຊູມຈະນຳໃຊ້ກັບພື້ນທີ່ເອກະສານ, ສ່ວນຕິດຕໍ່ຜູ້ໃຊ້ຈະບໍ່ໄດ້ຮັບຜົນກະທົບ. "
-"ລະດັບການຊູມປັດຈຸບັນຈະສະແດງຢູ່ໃນພື້ນທີ່ນີ້."
+"<span class=\"def\">ແຖບຊູມ:</span> ແຖບຊູມປະກອບດ້ວຍປຸ່ມເພື່ອຕັ້ງຄ່າການຊູມຄືນໃໝ່ເປັນ 100%, ຊູມ"
+"ອອກ ແລະ ຊູມເຂົ້າ. ການຊູມຈະນຳໃຊ້ກັບພື້ນທີ່ເອກະສານ, ສ່ວນຕິດຕໍ່ຜູ້ໃຊ້ຈະບໍ່ໄດ້ຮັບຜົນກະທົບ. ລະດັບການຊູມປັດຈຸບັ"
+"ນຈະສະແດງຢູ່ໃນພື້ນທີ່ນີ້."
 
 #: html/cool-help.html%2Bdiv.div.div.p:397-5
 msgid ""
@@ -2104,10 +2096,12 @@ msgid ""
 "details about the current document. The actual information depends on the "
 "nature of the document."
 msgstr ""
+"<span class=\"def\">ແຖບຂໍ້ມູນ:</span> ແຖບຂໍ້ມູນສະແດງລາຍລະອຽດກ່ຽວກັບເອກະສານປັດຈຸບັນ. ຂໍ້ມູນຕົ"
+"ວຈິງແມ່ນຂຶ້ນກັບລັກສະນະຂອງເອກະສານ."
 
 #: html/cool-help.html%2Bdiv.div.div.div.img[alt]:402-29
 msgid "The information bar"
-msgstr ""
+msgstr "ແຖບຂໍ້ມູນ"
 
 #: html/cool-help.html%2Bdiv.div.p:407-5
 msgid ""
@@ -2155,9 +2149,8 @@ msgid ""
 "a “Download PDF export?” popup shows. You can print this PDF in your "
 "favorite PDF reader."
 msgstr ""
-"ຂຶ້ນຢູ່ກັບຄວາມສາມາດຂອງບຣາວເຊີຂອງທ່ານ, ໜ້າຕ່າງການພິມອາດຈະປາກົດຂຶ້ນ ຫຼື 팝업 "
-"\"ດາວໂຫຼດການສົ່ງອອກ PDF?\" ຈະສະແດງ. ທ່ານສາມາດພິມ PDF ນີ້ໃນໂປຣແກຣມອ່ານ PDF "
-"ທີ່ທ່ານມັກ."
+"ຂຶ້ນຢູ່ກັບຄວາມສາມາດຂອງບຣາວເຊີຂອງທ່ານ, ໜ້າຕ່າງການພິມອາດຈະປາກົດຂຶ້ນ ຫຼື ປັອບອັບ \"ດາວໂຫຼດການສົ່ງອອ"
+"ກ PDF?\" ຈະສະແດງ. ທ່ານສາມາດພິມ PDF ນີ້ໃນໂປຣແກຣມອ່ານ PDF ທີ່ທ່ານມັກ."
 
 #: html/cool-help.html%2Bdiv.div.div.p:412-30
 msgid ""
@@ -2565,7 +2558,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.div.div.img[alt]:501-29
 msgid "format cells"
-msgstr ""
+msgstr "ຈັດຮູບແບບຊ່ອງ"
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:506-30
 msgid ""
@@ -2637,7 +2630,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.div.div.img[alt]:519-29
 msgid "outlining"
-msgstr ""
+msgstr "ການສ້າງໂຄງຮ່າງ"
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:522-5
 msgid ""
@@ -2706,7 +2699,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.div.div.img[alt]:538-29
 msgid "cell comments"
-msgstr ""
+msgstr "ຄຳເຫັນໃນຊ່ອງ"
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:541-5
 msgid ""
@@ -2724,7 +2717,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.div.div.img[alt]:542-29
 msgid "conditional formatting"
-msgstr ""
+msgstr "ການຈັດຮູບແບບຕາມເງື່ອນໄຂ"
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:550-30
 msgid ""
@@ -2816,9 +2809,8 @@ msgstr ""
 "ເພື່ອປ່ຽນຮູບແບບ."
 
 #: html/cool-help.html%2Bdiv.div.div.div.div.img[alt]:565-29
-#, fuzzy
 msgid "style formatting"
-msgstr "ການຈັດຮູບແບບຊ່ອງ"
+msgstr "ການຈັດຮູບແບບສະໄຕລ໌"
 
 #: html/cool-help.html%2Bdiv.div.div.div.h4:571-5
 msgid "Handling Tables"
@@ -2837,7 +2829,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.div.div.img[alt]:573-29
 msgid "insert table"
-msgstr ""
+msgstr "ແຊກຕາຕະລາງ"
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:576-5
 msgid ""
@@ -2994,7 +2986,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.div.div.img[alt]:619-29
 msgid "slide layouts"
-msgstr ""
+msgstr "ໂຄງຮ່າງສະໄລ້"
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:621-30
 msgid ""
@@ -3178,7 +3170,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.div.img[alt]:669-29
 msgid "thesaurus"
-msgstr ""
+msgstr "ພົດຈະນານຸກົມຄຳສັບຄ້າຍຄືກັນ"
 
 #: html/cool-help.html%2Bdiv.div.div.h4:672-5
 msgid ""
@@ -3360,7 +3352,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.div.div.img[alt]:712-29
 msgid "manage changes"
-msgstr ""
+msgstr "ຈັດການການປ່ຽນແປງ"
 
 #: html/cool-help.html%2Bdiv.div.div.div.h4:715-5
 msgid "How do I set the margins of the document?"
@@ -3392,7 +3384,7 @@ msgstr "ຕັ້ງຄ່າຂອບໜ້າໃນກ່ອງໂຕ້ຕອ
 
 #: html/cool-help.html%2Bdiv.div.div.div.div.img[alt]:722-29
 msgid "page style"
-msgstr ""
+msgstr "ຮູບແບບໜ້າ"
 
 #: html/cool-help.html%2Bdiv.div.div.div.h4:725-5
 msgid "How do I change the page orientation to landscape inside my document"
@@ -3450,14 +3442,13 @@ msgstr "ເລືອກຂໍ້ຄວາມທີ່ມີຮູບແບບທ
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li:740-7
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li:782-7
-#, fuzzy
 msgid ""
 "Click on the clone formatting icon <img alt=\"format paintbrush\" class"
 "=\"icon-size\" src=\"images/lc_formatpaintbrush.svg\" />. The mouse pointer "
 "turns to a paint bucket."
 msgstr ""
-"ຄລິກທີ່ໄອຄອນສຳເນົາຮູບແບບ <img class=\"icon-size\" src=\"images"
-"/lc_formatpaintbrush.svg\" />. ຕົວຊີ້ເມົາສ໌ຈະປ່ຽນເປັນຖັງສີ."
+"ຄລິກທີ່ໄອຄອນສຳເນົາຮູບແບບ <img alt=\"format paintbrush\" class=\"icon-size\" "
+"src=\"images/lc_formatpaintbrush.svg\" />. ຕົວຊີ້ເມົາສ໌ຈະປ່ຽນເປັນຖັງສີ."
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li:741-7
 msgid "Select the text you want to apply the new format."
@@ -3627,7 +3618,6 @@ msgstr ""
 ">ການນຳສະເໜີເຕັມຈໍ</span> ຫຼື ຄລິກທີ່ໄອຄອນຊ້າຍສຸດຢູ່ດ້ານລຸ່ມຂອງແຖບສະໄລ້:"
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li.img[alt]:803-176
-#, fuzzy
 msgid "slide show"
 msgstr "ການສະແດງສະໄລ້"
 
