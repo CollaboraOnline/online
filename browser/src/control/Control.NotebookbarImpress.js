@@ -1804,13 +1804,26 @@ window.L.Control.NotebookbarImpress = window.L.Control.NotebookbarWriter.extend(
 			},
 			{ type: 'separator', id: 'design-masterslides-break', orientation: 'vertical' },
 			{
-				'id': 'design-theme-dialog',
-				'type': 'bigtoolitem',
-				'text': _UNO('.uno:ThemeDialog'),
-				'command': '.uno:ThemeDialog',
-				'accessibility': { focusBack: false, combination: 'J', de: null }
+				'id': 'themes-group',
+				'type': 'overflowgroup',
+				'name': _('Themes'),
+				'nofold': true,
+				'icon': 'lc_themesthames.svg',
+				'children': [
+					{
+						'id': 'iconview_theme_colors', // has to match core id
+						'type': 'iconview'
+					}
+				]
 			},
-			{ type: 'separator', id: 'design-themedialog-break', orientation: 'vertical' },
+			{
+				'id': 'add-theme-dialog',
+				'type': 'bigtoolitem',
+				'text': _UNO('.uno:AddTheme'),
+				'command': '.uno:AddTheme',
+				'accessibility': { focusBack: false, combination: 'AT', de: null }
+			},
+			{ type: 'separator', id: 'theme-break', orientation: 'vertical' },
 			{
 				'type': 'overflowgroup',
 				'id': 'design-slide-layout',
