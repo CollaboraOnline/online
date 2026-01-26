@@ -43,6 +43,11 @@ final class BackstageViewController: NSViewController, WKScriptMessageHandlerWit
         webView = WKWebView(frame: .zero, configuration: cfg)
         webView.translatesAutoresizingMaskIntoConstraints = false
 
+#if DEBUG
+        // Enable possibility to debug the webview from Safari
+        webView.isInspectable = true
+#endif
+
         view.addSubview(webView)
         NSLayoutConstraint.activate([
             webView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
