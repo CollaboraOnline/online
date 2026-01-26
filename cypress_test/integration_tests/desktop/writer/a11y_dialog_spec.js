@@ -51,11 +51,14 @@ const allWriterDialogs = [
     '.uno:WordCountDialog'
 ];
 
+const needLinguisticDataDialogs = [
+    '.uno:SpellingAndGrammarDialog',
+    '.uno:ThesaurusDialog',
+];
+
 // these need a specific context
 const missingContextDialogs = [
     '.uno:ContourDialog',
-    '.uno:SpellingAndGrammarDialog',
-    '.uno:ThesaurusDialog',
 ];
 
 // don't pass yet
@@ -67,6 +70,7 @@ const buggyDialogs = [
 
 describe(['tagdesktop'], 'Accessibility Writer Dialog Tests', { testIsolation: false }, function () {
     let win;
+    let hasLinguisticData = false;
 
     before(function () {
         helper.setupAndLoadDocument('writer/help_dialog.odt');
@@ -82,10 +86,17 @@ describe(['tagdesktop'], 'Accessibility Writer Dialog Tests', { testIsolation: f
         });
 
         cy.cGet('.jsdialog-window').should('not.exist');
+
+        cy.then(() => {
+            return helper.processToIdle(win);
+        }).then(() => {
+            const thesaurusState = win.app.map.stateChangeHandler.getItemValue('.uno:ThesaurusDialog');
+            hasLinguisticData = (thesaurusState === 'enabled');
+        });
     });
 
     after(function () {
-        a11yHelper.reportUICoverage(win);
+        a11yHelper.reportUICoverage(win, hasLinguisticData);
 
         cy.get('@uicoverageResult').then(result => {
             expect(result.used, `used .ui files`).to.not.be.empty;
@@ -202,6 +213,10 @@ describe(['tagdesktop'], 'Accessibility Writer Dialog Tests', { testIsolation: f
             it.skip(`Dialog ${command} (buggy)`, function () {});
         } else {
             it(`Common Dialog ${command}`, function () {
+                if (!hasLinguisticData && needLinguisticDataDialogs.includes(command)) {
+                    this._runnable.title += ' (skipped: missing linguistic data)';
+                    this.skip();
+                }
                 testDialog(command);
             });
         }
