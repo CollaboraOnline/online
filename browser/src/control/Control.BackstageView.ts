@@ -341,7 +341,7 @@ class BackstageView extends window.L.Class {
 				icon: 'lc_exportto.svg',
 				visible: !this.isStarterMode,
 			},
-			{ type: 'separator', id: 'sidebar-horizonatal-break', label: '', visible: !this.isStarterMode },
+			{ type: 'separator', id: 'sidebar-horizontal-break', label: '', visible: !this.isStarterMode },
 			{
 				id: 'options',
 				label: _('Options'),

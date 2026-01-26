@@ -167,7 +167,7 @@
 	display: none;
 }
 
-#backstage-sidebar-horizonatal-break.backstage-sidebar-item {
+#backstage-sidebar-horizontal-break.backstage-sidebar-item {
 	height: 2px;
 	background-color: var(--color-toolbar-border);
 	padding: 0;
