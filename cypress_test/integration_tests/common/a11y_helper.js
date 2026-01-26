@@ -19,12 +19,14 @@ function enableUICoverage(win) {
  * Report UICoverage and verify results. Call this in the `after` hook.
  * Returns the result object via a Cypress alias '@uicoverageResult' for additional assertions.
  * @param {Object} win - The frame window object
+ * @param {boolean} hasLinguisticData - Whether linguistic data (thesaurus, etc.) is available
  */
-function reportUICoverage(win) {
+function reportUICoverage(win, hasLinguisticData = true) {
 	cy.spy(win.app.socket, '_onMessage').as('onMessage').log(false);
 
 	cy.then(() => {
 		const endUICoverage = {
+			'LinguisticDataAvailable': { 'type': 'boolean', 'value': hasLinguisticData },
 			'Report': { 'type': 'boolean', 'value': true },
 			'Track': { 'type': 'boolean', 'value': false }
 		};
