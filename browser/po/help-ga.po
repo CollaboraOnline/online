@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-01-19 22:57+0200\n"
-"PO-Revision-Date: 2025-09-23 09:47+0000\n"
+"PO-Revision-Date: 2026-01-22 11:49+0000\n"
 "Last-Translator: Aindriú Mac Giolla Eoin <aindriu80@gmail.com>\n"
 "Language-Team: Irish <https://hosted.weblate.org/projects/collabora-online/"
 "help/ga/>\n"
@@ -11,9 +11,9 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=5; plural=n==1 ? 0 : n==2 ? 1 : (n>2 && n<7) ? 2 :("
-"n>6 && n<11) ? 3 : 4;\n"
-"X-Generator: Translate Toolkit 3.6.0\n"
+"Plural-Forms: nplurals=5; plural=n==1 ? 0 : n==2 ? 1 : (n>2 && n<7) ? 2 :(n>"
+"6 && n<11) ? 3 : 4;\n"
+"X-Generator: Weblate 5.16-dev\n"
 
 #: html/cool-help.html%2Bdiv.h1:6-5
 msgid "Keyboard Shortcuts"
@@ -2060,7 +2060,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.div.img[alt]:385-29
 msgid "The status bar"
-msgstr ""
+msgstr "An barra stádais"
 
 #: html/cool-help.html%2Bdiv.div.div.p:388-5
 msgid ""
@@ -2076,9 +2076,8 @@ msgstr ""
 "cuardaigh:"
 
 #: html/cool-help.html%2Bdiv.div.div.ul.li:390-7
-#, fuzzy
 msgid "Search backwards>"
-msgstr "Cuardaigh ar ais"
+msgstr "Cuardaigh ar gcúl>"
 
 #: html/cool-help.html%2Bdiv.div.div.ul.li:391-7
 msgid "Search forward"
@@ -2089,17 +2088,16 @@ msgid "Cancel the search (appears only when a text has been searched)"
 msgstr "Cealaigh an cuardach (ní fheictear ach nuair a chuardaíodh téacs)"
 
 #: html/cool-help.html%2Bdiv.div.div.p:396-5
-#, fuzzy
 msgid ""
 "<span class=\"def\">The zoom bar:</span> The zoom bar includes buttons to "
 "reset zoom to 100%, zoom out and zoom in. The zoom applies to the document "
 "area, the user interface is not affected. The current level of zoom is shown "
 "in this area."
 msgstr ""
-"<span class=\"def\">An barra súmáil:</span> Ar thaobh na láimhe deise den "
-"bharra stádais, tá sraith cnaipí ann a ligeann duit zúmáil go 100%, zúmáil "
-"amach agus zúmáil isteach. limistéar an doiciméid, níl aon tionchar ar an "
-"gcomhéadan úsáideora. Taispeántar an leibhéal súmála reatha sa réimse seo."
+"<span class=\"def\">An barra súmála:</span> Tá cnaipí sa bharra súmála chun "
+"an súmála a athshocrú go 100%, súmála amach agus súmála isteach. Baineann an "
+"súmála leis an limistéar doiciméad, níl aon tionchar ar an gcomhéadan "
+"úsáideora. Taispeántar an leibhéal súmála reatha sa limistéar seo."
 
 #: html/cool-help.html%2Bdiv.div.div.p:397-5
 msgid ""
@@ -2122,10 +2120,13 @@ msgid ""
 "details about the current document. The actual information depends on the "
 "nature of the document."
 msgstr ""
+"<span class=\"def\">An barra eolais:</span> Taispeánann an barra eolais "
+"sonraí faoin doiciméad reatha. Braitheann an fhaisnéis iarbhír ar chineál an "
+"doiciméid."
 
 #: html/cool-help.html%2Bdiv.div.div.div.img[alt]:402-29
 msgid "The information bar"
-msgstr ""
+msgstr "An barra faisnéise"
 
 #: html/cool-help.html%2Bdiv.div.p:407-5
 msgid ""
@@ -2212,21 +2213,21 @@ msgid ""
 "tapping, and using a long-tap to access copy/cut/paste via the context menu "
 "is required."
 msgstr ""
-"Tacaítear le hábhar saibhir a chóipeáil/gearr agus a ghreamú, ní hamháin "
-"laistigh de dhoiciméad ar leith, ach freisin thar dhoiciméid ar an gcéanna "
-"nó difriúil <span class=\"productname\">{productname}</span>. Le haghaidh na "
-"n-úsáidí inmheánacha seo, is féidir le húsáideoirí inneachar, lena n-"
-"áirítear íomhánna agus ábhar measctha, a chóipeáil/ghearradh ar ríomhaire "
-"trí na haicearraí méarchláir a úsáid go díreach (<kbd>Ctrl</kbd><span class="
-"\"kbd--plus\" aria-hidden=\"true\">+</span <kbd>X</kbd>, <kbd>Ctrl</"
-"kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>C</kbd>, "
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
-">+</span><kbd>V</kbd>). Ar chúiseanna slándála is gá <kbd>Ctrl</kbd><span "
-"class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>V</kbd> a úsáid chun a "
-"ghreamú ar ríomhaire, ach is féidir roghchláir comhthéacs a a úsáidtear le "
-"haghaidh gearrtha agus cóipe. Ar Android nó iOS is gá téacs a roghnú trí "
-"thapáil faoi dhó, agus tapáil fhada a úsáid chun cóip/gearradh/greamaigh a "
-"rochtain tríd an roghchlár comhthéacs."
+"Tacaítear le cóipeáil/gearradh agus greamaigh ábhar saibhir, ní hamháin "
+"laistigh d'aon doiciméad ar leith, ach freisin trasna doiciméad ar an <span "
+"class=\"productname\">{productname}</span> céanna nó ar chlár difriúil. Chun "
+"na n-úsáidí inmheánacha seo, is féidir le húsáideoirí ábhar a chóipeáil/a "
+"ghearradh, lena n-áirítear íomhánna agus ábhar measctha, ar ríomhaire trí na "
+"haicearraí méarchláir a úsáid go díreach (<kbd>Ctrl</kbd><span class=\"kbd--"
+"plus\" aria-hidden=\"true\">+</span><kbd>X</kbd>, <kbd>Ctrl</kbd><span "
+"class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>C</kbd>, <kbd>Ctrl</"
+"kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>V</kbd>). Ar "
+"chúiseanna slándála, is gá <kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-"
+"hidden=\"true\">+</span><kbd>V</kbd> a úsáid chun greamú ar ríomhaire, ach "
+"is féidir biachláir chomhthéacs a úsáid le haghaidh gearrtha agus cóipeála. "
+"Ar Android nó iOS, is gá téacs a roghnú trí thapáil faoi dhó, agus tapáil "
+"fhada a úsáid chun rochtain a fháil ar chóipeáil/gearr/ghreamú tríd an "
+"roghchlár comhthéacs."
 
 #: html/cool-help.html%2Bdiv.div.div.p:420-5
 msgid ""
@@ -2342,9 +2343,10 @@ msgid ""
 "kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>Shift</"
 "kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>V</kbd>"
 msgstr ""
-"Is féidir leat téacs neamhfhormáidithe a ghreamú le haicearra an mhéarchláir:"
-" <kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
-">+</span><kbd>Shift</kbd><span class=\"kbd- -plus\">+</span><kbd>V</kbd>"
+"Is féidir leat téacs neamhfhormáidithe a ghreamú leis an aicearra méarchláir "
+"seo a leanas: <kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">"
+"+</span><kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</"
+"span><kbd>V</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.p:439-5
 msgid ""
@@ -2605,7 +2607,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.div.div.img[alt]:501-29
 msgid "format cells"
-msgstr ""
+msgstr "formáidigh cealla"
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:506-30
 msgid ""
@@ -2642,7 +2644,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li.div.img[alt]:511-34
 msgid "filter"
-msgstr "scag"
+msgstr "scagaire"
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li:513-7
 msgid ""
@@ -2679,7 +2681,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.div.div.img[alt]:519-29
 msgid "outlining"
-msgstr ""
+msgstr "imlíne"
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:522-5
 msgid ""
@@ -2749,7 +2751,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.div.div.img[alt]:538-29
 msgid "cell comments"
-msgstr ""
+msgstr "tuairimí cille"
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:541-5
 msgid ""
@@ -2767,7 +2769,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.div.div.img[alt]:542-29
 msgid "conditional formatting"
-msgstr ""
+msgstr "formáidiú coinníollach"
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:550-30
 msgid ""
@@ -2853,16 +2855,15 @@ msgid ""
 "paragraph style to a paragraph. Choose menu <span class=\"ui\">Edit</span> → "
 "<span class=\"ui\">Edit styles</span> to change style."
 msgstr ""
-"<span class=\"def\">Formáidiú stíle: tacaíonn <span class=\"productname\""
-">{productname}</span> le stíleanna ailt. Is féidir leat stíl ailt atá ann "
-"cheana a chur i bhfeidhm ar alt. Roghnaigh roghchlár <span class=\"ui\">Cuir "
-"in eagar</span> → <span class=\"ui\">Cuir stíleanna in eagar</span> chun an "
-"stíl a athrú."
+"<span class=\"def\">Formáidiú stíl:</span> Tacaíonn <span "
+"class=\"productname\">{productname}</span> le stíleanna míre. Is féidir leat "
+"stíl mhíre atá ann cheana a chur i bhfeidhm ar mhír. Roghnaigh roghchlár "
+"<span class=\"ui\">Eagar</span> → <span class=\"ui\">Eagar stíleanna</span> "
+"chun an stíl a athrú."
 
 #: html/cool-help.html%2Bdiv.div.div.div.div.img[alt]:565-29
-#, fuzzy
 msgid "style formatting"
-msgstr "Formáidiú cille"
+msgstr "formáidiú stíl"
 
 #: html/cool-help.html%2Bdiv.div.div.div.h4:571-5
 msgid "Handling Tables"
@@ -2883,7 +2884,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.div.div.img[alt]:573-29
 msgid "insert table"
-msgstr ""
+msgstr "cuir isteach tábla"
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:576-5
 msgid ""
@@ -2891,10 +2892,10 @@ msgid ""
 "cells and choose menu <span class=\"ui\">Table</span> → <span class=\"ui\""
 ">Properties</span>. Fine tune the table with the properties dialog."
 msgstr ""
-"<span class=\"def\">Cealla á fhormáidiú:</span> Cliceáil sa chill nó sa raon "
-"cealla agus roghnaigh roghchlár <span class=\"ui\">Tábla</span> → <span "
-"class=\"ui\">Airíonna< /span>. Mionchoigeartú ar an tábla leis an dialóg "
-"airíonna."
+"<span class=\"def\">Formáidiú cealla:</span> Cliceáil sa chill nó sa raon "
+"cealla agus roghnaigh an roghchlár <span class=\"ui\">Tábla</span> → <span "
+"class=\"ui\">Airíonna</span>. Déan an tábla a choigeartú go mín leis an "
+"dialóg airíonna."
 
 #: html/cool-help.html%2Bdiv.div.div.div.h4:579-5
 msgid "Track changes"
@@ -3051,7 +3052,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.div.div.img[alt]:619-29
 msgid "slide layouts"
-msgstr ""
+msgstr "leagan amach sleamhnán"
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:621-30
 msgid ""
@@ -3238,7 +3239,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.div.img[alt]:669-29
 msgid "thesaurus"
-msgstr ""
+msgstr "téasáras"
 
 #: html/cool-help.html%2Bdiv.div.div.h4:672-5
 msgid ""
@@ -3430,7 +3431,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.div.div.img[alt]:712-29
 msgid "manage changes"
-msgstr ""
+msgstr "bainistigh athruithe"
 
 #: html/cool-help.html%2Bdiv.div.div.div.h4:715-5
 msgid "How do I set the margins of the document?"
@@ -3462,7 +3463,7 @@ msgstr "Socraigh corrlach an leathanaigh sa dialóg."
 
 #: html/cool-help.html%2Bdiv.div.div.div.div.img[alt]:722-29
 msgid "page style"
-msgstr ""
+msgstr "stíl leathanaigh"
 
 #: html/cool-help.html%2Bdiv.div.div.div.h4:725-5
 msgid "How do I change the page orientation to landscape inside my document"
@@ -3526,15 +3527,14 @@ msgstr "Roghnaigh an téacs leis an bhformáid atá ann cheana"
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li:740-7
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li:782-7
-#, fuzzy
 msgid ""
 "Click on the clone formatting icon <img alt=\"format paintbrush\" class"
 "=\"icon-size\" src=\"images/lc_formatpaintbrush.svg\" />. The mouse pointer "
 "turns to a paint bucket."
 msgstr ""
-"Cliceáil ar an deilbhín formáidithe clón <img class=\"icon-size\" src="
-"\"images/lc_formatpaintbrush.svg\" />. Casann an pointeoir luiche go buicéad "
-"péinte."
+"Cliceáil ar dheilbhín formáidithe an chlón <img alt=\"format paintbrush\" "
+"class=\"icon-size\" src=\"images/lc_formatpaintbrush.svg\" />. Casann "
+"pointeoir na luiche ina bhuicéad péinte."
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li:741-7
 msgid "Select the text you want to apply the new format."
@@ -3619,10 +3619,11 @@ msgid ""
 "\"true\">+</span><kbd>V</kbd>. The <span class=\"ui\">Text Import</span> "
 "dialog opens to let you describe the precise format of the CSV data."
 msgstr ""
-"Greamaigh ón mbrabhsálaí <span class=\"ui\">Eagar</span> → <span class=\"ui\""
-">Greamaigh</span> nó brúigh <kbd>Ctrl</kbd><span class=\"kbd--plus \""
-">+</span><kbd>V</kbd>. Osclaíonn dialóg <span class=\"ui\">Iompórtáil Téacs</"
-"span> chun ligean duit cur síos a dhéanamh ar fhormáid bheacht na sonraí CSV."
+"Greamaigh ón mbrabhsálaí <span class=\"ui\">Eagar</span> → <span "
+"class=\"ui\">Greamaigh</span> nó brúigh <kbd>Ctrl</kbd><span class=\"kbd--"
+"plus\" aria-hidden=\"true\">+</span><kbd>V</kbd>. Osclaítear an dialóg <span "
+"class=\"ui\">Iompórtáil Téacs</span> chun ligean duit cur síos a dhéanamh ar "
+"fhormáid bheacht na sonraí CSV."
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.div.img[alt]:772-31
 msgid "import"
@@ -3717,9 +3718,8 @@ msgstr ""
 "bun an phainéil sleamhnáin:"
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li.img[alt]:803-176
-#, fuzzy
 msgid "slide show"
-msgstr "Seó sleamhnáin"
+msgstr "taispeántas sleamhnán"
 
 #: html/cool-help.html%2Bdiv.div.div.div.h4:807-5
 msgid "How can I change the line, area and position of a shape in my slides?"
