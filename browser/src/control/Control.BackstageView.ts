@@ -347,7 +347,7 @@ class BackstageView extends window.L.Class {
 				label: _('Options'),
 				type: 'action',
 				actionType: 'options',
-				visible: !this.isStarterMode,
+				visible: false /* it was !this.isStarterMode and we can revert, when the dialog is good enough */,
 			},
 			{
 				id: 'about',
