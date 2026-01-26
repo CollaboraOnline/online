@@ -5,6 +5,7 @@ var desktopHelper = require('../../common/desktop_helper');
 var a11yHelper = require('../../common/a11y_helper');
 
 const allCommonDialogs = [
+    '.uno:AcceptTrackedChanges',
     '.uno:HyperlinkDialog',
     '.uno:InsertQrCode',
     '.uno:InsertSymbol',
