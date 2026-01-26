@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-01-19 22:57+0200\n"
-"PO-Revision-Date: 2025-09-22 10:54+0000\n"
-"Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
+"PO-Revision-Date: 2026-01-20 23:02+0000\n"
+"Last-Translator: Ettore Atalan <atalanttore@googlemail.com>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/collabora-online/"
 "help/de/>\n"
 "Language: de\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Translate Toolkit 3.6.0\n"
+"X-Generator: Weblate 5.16-dev\n"
 
 #: html/cool-help.html%2Bdiv.h1:6-5
 msgid "Keyboard Shortcuts"
@@ -2065,7 +2065,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.div.img[alt]:385-29
 msgid "The status bar"
-msgstr ""
+msgstr "Die Statusleiste"
 
 #: html/cool-help.html%2Bdiv.div.div.p:388-5
 msgid ""
@@ -2081,9 +2081,8 @@ msgstr ""
 "befinden sich drei Schaltflächen:"
 
 #: html/cool-help.html%2Bdiv.div.div.ul.li:390-7
-#, fuzzy
 msgid "Search backwards>"
-msgstr "Rückwärts suchen"
+msgstr "Rückwärts suchen>"
 
 #: html/cool-help.html%2Bdiv.div.div.ul.li:391-7
 msgid "Search forward"
@@ -2130,7 +2129,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.div.img[alt]:402-29
 msgid "The information bar"
-msgstr ""
+msgstr "Die Informationsleiste"
 
 #: html/cool-help.html%2Bdiv.div.p:407-5
 msgid ""
@@ -2781,7 +2780,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.div.div.img[alt]:542-29
 msgid "conditional formatting"
-msgstr ""
+msgstr "bedingte Formatierung"
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:550-30
 msgid ""
@@ -2876,9 +2875,8 @@ msgstr ""
 "span>, um eine Vorlage zu ändern."
 
 #: html/cool-help.html%2Bdiv.div.div.div.div.img[alt]:565-29
-#, fuzzy
 msgid "style formatting"
-msgstr "Zellenformatierung"
+msgstr "Stilformatierung"
 
 #: html/cool-help.html%2Bdiv.div.div.div.h4:571-5
 msgid "Handling Tables"
@@ -2899,7 +2897,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.div.div.img[alt]:573-29
 msgid "insert table"
-msgstr ""
+msgstr "Tabelle einfügen"
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:576-5
 msgid ""
@@ -3258,7 +3256,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.div.img[alt]:669-29
 msgid "thesaurus"
-msgstr ""
+msgstr "Thesaurus"
 
 #: html/cool-help.html%2Bdiv.div.div.h4:672-5
 msgid ""
@@ -3451,7 +3449,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.div.div.img[alt]:712-29
 msgid "manage changes"
-msgstr ""
+msgstr "Änderungen verwalten"
 
 #: html/cool-help.html%2Bdiv.div.div.div.h4:715-5
 msgid "How do I set the margins of the document?"
@@ -3483,7 +3481,7 @@ msgstr "Legen Sie die Seitenränder im Dialog fest."
 
 #: html/cool-help.html%2Bdiv.div.div.div.div.img[alt]:722-29
 msgid "page style"
-msgstr ""
+msgstr "Seitenstil"
 
 #: html/cool-help.html%2Bdiv.div.div.div.h4:725-5
 msgid "How do I change the page orientation to landscape inside my document"
