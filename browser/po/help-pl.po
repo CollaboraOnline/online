@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-01-19 22:57+0200\n"
-"PO-Revision-Date: 2025-09-22 12:42+0000\n"
+"PO-Revision-Date: 2026-01-22 13:54+0000\n"
 "Last-Translator: Matthaiks <kitynska@gmail.com>\n"
 "Language-Team: Polish <https://hosted.weblate.org/projects/collabora-online/"
 "help/pl/>\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
 "|| n%100>=20) ? 1 : 2);\n"
-"X-Generator: Translate Toolkit 3.6.0\n"
+"X-Generator: Weblate 5.16-dev\n"
 
 #: html/cool-help.html%2Bdiv.h1:6-5
 msgid "Keyboard Shortcuts"
@@ -2059,7 +2059,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.div.img[alt]:385-29
 msgid "The status bar"
-msgstr ""
+msgstr "Pasek stanu"
 
 #: html/cool-help.html%2Bdiv.div.div.p:388-5
 msgid ""
@@ -2075,7 +2075,6 @@ msgstr ""
 "trzy przyciski:"
 
 #: html/cool-help.html%2Bdiv.div.div.ul.li:390-7
-#, fuzzy
 msgid "Search backwards>"
 msgstr "Szukaj wstecz"
 
@@ -2089,18 +2088,16 @@ msgstr ""
 "Anuluj wyszukiwanie (pojawia się tylko jeśli był wyszukiwany jakiś tekst)"
 
 #: html/cool-help.html%2Bdiv.div.div.p:396-5
-#, fuzzy
 msgid ""
 "<span class=\"def\">The zoom bar:</span> The zoom bar includes buttons to "
 "reset zoom to 100%, zoom out and zoom in. The zoom applies to the document "
 "area, the user interface is not affected. The current level of zoom is shown "
 "in this area."
 msgstr ""
-"<span class=\"def\">Pasek powiększenia:</span> Po prawej od paska stanu "
-"znajdują się przyciski pozwalające ustawić, zmniejszyć oraz zwiększyć "
-"powiększenie. Powiększenie działa tylko w obszarze dokumentu i nie ma wpływu "
-"na interfejs użytkownika. Aktualne powiększenie jest pokazywane w tym "
-"obszarze."
+"<span class=\"def\">Pasek powiększenia:</span> zawiera przyciski do "
+"resetowania powiększenia do 100%, pomniejszania i powiększania. Powiększenie "
+"dotyczy obszaru dokumentu, nie ma wpływu na interfejs użytkownika. Aktualny "
+"poziom powiększenia jest wyświetlany w tym obszarze."
 
 #: html/cool-help.html%2Bdiv.div.div.p:397-5
 msgid ""
@@ -2122,10 +2119,13 @@ msgid ""
 "details about the current document. The actual information depends on the "
 "nature of the document."
 msgstr ""
+"<span class=\"def\">Pasek informacji:</span> wyświetla szczegółowe "
+"informacje o bieżącym dokumencie. Rzeczywiste informacje zależą od "
+"charakteru dokumentu."
 
 #: html/cool-help.html%2Bdiv.div.div.div.img[alt]:402-29
 msgid "The information bar"
-msgstr ""
+msgstr "Pasek informacji"
 
 #: html/cool-help.html%2Bdiv.div.p:407-5
 msgid ""
@@ -2589,7 +2589,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.div.div.img[alt]:501-29
 msgid "format cells"
-msgstr ""
+msgstr "formatuj komórki"
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:506-30
 msgid ""
@@ -2661,7 +2661,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.div.div.img[alt]:519-29
 msgid "outlining"
-msgstr ""
+msgstr "zarysowanie"
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:522-5
 msgid ""
@@ -2732,7 +2732,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.div.div.img[alt]:538-29
 msgid "cell comments"
-msgstr ""
+msgstr "komentarze komórek"
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:541-5
 msgid ""
@@ -2750,7 +2750,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.div.div.img[alt]:542-29
 msgid "conditional formatting"
-msgstr ""
+msgstr "formatowanie warunkowe"
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:550-30
 msgid ""
@@ -2838,9 +2838,8 @@ msgstr ""
 "class=\"ui\">Edycja stylu...</span> aby zmienić styl."
 
 #: html/cool-help.html%2Bdiv.div.div.div.div.img[alt]:565-29
-#, fuzzy
 msgid "style formatting"
-msgstr "Formatowanie komórki"
+msgstr "formatowanie stylu"
 
 #: html/cool-help.html%2Bdiv.div.div.div.h4:571-5
 msgid "Handling Tables"
@@ -2860,7 +2859,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.div.div.img[alt]:573-29
 msgid "insert table"
-msgstr ""
+msgstr "wstaw tabelę"
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:576-5
 msgid ""
@@ -3021,7 +3020,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.div.div.img[alt]:619-29
 msgid "slide layouts"
-msgstr ""
+msgstr "układy slajdów"
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:621-30
 msgid ""
@@ -3204,7 +3203,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.div.img[alt]:669-29
 msgid "thesaurus"
-msgstr ""
+msgstr "słownik synonimów"
 
 #: html/cool-help.html%2Bdiv.div.div.h4:672-5
 msgid ""
@@ -3388,7 +3387,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.div.div.img[alt]:712-29
 msgid "manage changes"
-msgstr ""
+msgstr "zarządzaj zmianami"
 
 #: html/cool-help.html%2Bdiv.div.div.div.h4:715-5
 msgid "How do I set the margins of the document?"
@@ -3420,7 +3419,7 @@ msgstr "Ustaw marginesy strony w oknie dialogowym."
 
 #: html/cool-help.html%2Bdiv.div.div.div.div.img[alt]:722-29
 msgid "page style"
-msgstr ""
+msgstr "styl strony"
 
 #: html/cool-help.html%2Bdiv.div.div.div.h4:725-5
 msgid "How do I change the page orientation to landscape inside my document"
@@ -3480,14 +3479,14 @@ msgstr "Zaznacz tekst z istniejącym formatowaniem"
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li:740-7
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li:782-7
-#, fuzzy
 msgid ""
 "Click on the clone formatting icon <img alt=\"format paintbrush\" class"
 "=\"icon-size\" src=\"images/lc_formatpaintbrush.svg\" />. The mouse pointer "
 "turns to a paint bucket."
 msgstr ""
-"Kliknij ikonę klonowania formatowania <img class=\"icon-size\" src=\"images"
-"/lc_formatpaintbrush.svg\" />. Kursor myszy zmieni się w kubełek z farbą."
+"Kliknij ikonę klonowania formatowania <img alt=\"format paintbrush\" "
+"class=\"icon-size\" src=\"images/lc_formatpaintbrush.svg\" />. Wskaźnik "
+"myszy zmienia się w wiadro z farbą."
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li:741-7
 msgid "Select the text you want to apply the new format."
@@ -3657,9 +3656,8 @@ msgstr ""
 "najbardziej po lewej stronie na dole panelu slajdów:"
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li.img[alt]:803-176
-#, fuzzy
 msgid "slide show"
-msgstr "Pokaz slajdów"
+msgstr "pokaz slajdów"
 
 #: html/cool-help.html%2Bdiv.div.div.div.h4:807-5
 msgid "How can I change the line, area and position of a shape in my slides?"
