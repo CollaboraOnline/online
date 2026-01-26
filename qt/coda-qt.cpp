@@ -1359,7 +1359,19 @@ int main(int argc, char** argv)
 
     QCommandLineOption debugOption(
         QStringList() << "d" << "debug",
-        "Enable debug output."
+        "Enable debug output (shortcut for --log-level=trace)."
+    );
+    QCommandLineOption logLevelOption(
+        QStringList() << "log-level",
+        "Set log level (none, fatal, critical, error, warning, notice, information, debug, trace).",
+        "level",
+        "warning"
+    );
+    QCommandLineOption logDisabledAreasOption(
+        QStringList() << "log-disabled-areas",
+        "Comma-separated list of log areas to disable (Generic, Pixel, Socket, WebSocket, Http, WebServer, Storage, WOPI, Admin, Javascript).",
+        "areas",
+        "Socket,WebSocket,Admin,Pixel"
     );
     QCommandLineOption textDocumentOption(
         QStringList() << "textdocument" << "writer",
@@ -1379,6 +1391,8 @@ int main(int argc, char** argv)
     );
 
     argParser.addOption(debugOption);
+    argParser.addOption(logLevelOption);
+    argParser.addOption(logDisabledAreasOption);
     argParser.addOption(textDocumentOption);
     argParser.addOption(spreadsheetOption);
     argParser.addOption(presentationOption);
@@ -1387,11 +1401,13 @@ int main(int argc, char** argv)
     argParser.process(app);
     QStringList files = argParser.positionalArguments();
 
-    std::string logLevel = "warning";
+    std::string logLevel = argParser.value(logLevelOption).toStdString();
     if (argParser.isSet(debugOption))
         logLevel = "trace";
 
     Log::initialize(QApplication::applicationName().toStdString(), logLevel);
+    Log::setDisabledAreas(argParser.value(logDisabledAreasOption).toStdString());
+
     Util::setThreadName("main");
 
     fakeSocketSetLoggingCallback([](const std::string& line) { LOG_TRC_NOFILE(line); });
