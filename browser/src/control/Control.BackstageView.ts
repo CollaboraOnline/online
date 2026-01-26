@@ -341,7 +341,7 @@ class BackstageView extends window.L.Class {
 				icon: 'lc_exportto.svg',
 				visible: !this.isStarterMode,
 			},
-			{ type: 'separator', id: 'sidebar-horizonatal-break', label: '' },
+			{ type: 'separator', id: 'sidebar-horizonatal-break', label: '', visible: !this.isStarterMode },
 			{
 				id: 'options',
 				label: _('Options'),
@@ -354,7 +354,7 @@ class BackstageView extends window.L.Class {
 				label: _UNO('.uno:About'),
 				type: 'action',
 				actionType: 'about',
-				visible: true,
+				visible: !this.isStarterMode,
 			},
 		];
 	}
