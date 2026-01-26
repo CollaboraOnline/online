@@ -293,7 +293,8 @@ COOL_JS_LST =\
 	src/geometry/Point.ts \
 	src/geometry/Bounds.ts \
 	src/geometry/Transformation.ts \
-	src/dom/DomUtil.js src/geo/LatLng.js \
+	src/app/dom/DomUtil.ts \
+	src/geo/LatLng.js \
 	src/geo/LatLngBounds.js \
 	src/geo/projection/Projection.LonLat.js \
 	src/geo/crs/CRS.js \

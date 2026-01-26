@@ -14,13 +14,13 @@
 function assertPosSize(actual: mtest.Rectangle, expected: mtest.Rectangle) {
     // Only assert components of expected that are provided.
     if (typeof expected.x === 'number')
-        assert.equal(actual.x, expected.x, 'Left mismatch');
+        nodeassert.equal(actual.x, expected.x, 'Left mismatch');
     if (typeof expected.y === 'number')
-        assert.equal(actual.y, expected.y, 'Top mismatch');
+        nodeassert.equal(actual.y, expected.y, 'Top mismatch');
     if (typeof expected.width === 'number')
-        assert.equal(actual.width, expected.width, 'Width mismatch');
+        nodeassert.equal(actual.width, expected.width, 'Width mismatch');
     if (typeof expected.height === 'number')
-        assert.equal(actual.height, expected.height, 'Height mismatch');
+        nodeassert.equal(actual.height, expected.height, 'Height mismatch');
 }
 
 function getSectionRectangle(section: CanvasSectionObject): mtest.Rectangle {
