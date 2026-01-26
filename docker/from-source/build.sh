@@ -82,19 +82,18 @@ fi
 
 # core repo
 if test ! -d core ; then
-  git clone https://git.libreoffice.org/core || exit 1
+  git clone --branch "$CORE_BRANCH" https://git.libreoffice.org/core || exit 1
 fi
 
-( cd core && git fetch --all && git checkout $CORE_BRANCH && ./g pull -r ) || exit 1
+( cd core && git fetch --all && git switch -C $CORE_BRANCH && ./g pull -r ) || exit 1
 
 
 # online repo
 if test ! -d online ; then
-  git clone --depth=1 "$COLLABORA_ONLINE_REPO" online || exit 1
+  git clone "$COLLABORA_ONLINE_REPO" --branch "$COLLABORA_ONLINE_BRANCH" online || exit 1
 fi
 
-( cd online && git fetch --all && git checkout -f $COLLABORA_ONLINE_BRANCH && git clean -f -d && git pull -r ) || exit 1
-
+( cd online && git fetch --all && git switch -f -C $COLLABORA_ONLINE_BRANCH  && git clean -f -d && git pull -r ) || exit 1
 
 # brand repo
 if test ! -d online-branding ; then
