@@ -88,6 +88,8 @@
 "Columns ~Before":"列の左(~B)",
 "Comments":"コメント",
 "Comme~nt":"コメント(~N)",
+"Compare":"比較",
+"Compare Non-Track Changed Document":"変更が追跡されていないドキュメントを比較",
 "Connector":"コネクター",
 "Connector Ends with Arrow":"矢印終点コネクター",
 "Connector with Arrows":"双方向矢印コネクター",
