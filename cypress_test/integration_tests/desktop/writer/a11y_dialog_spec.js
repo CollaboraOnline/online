@@ -6,6 +6,10 @@ var a11yHelper = require('../../common/a11y_helper');
 
 const allCommonDialogs = [
     '.uno:AcceptTrackedChanges',
+    { command: '.uno:ExportToEPUB', args: { SynchronMode: { type: 'boolean', value: false } } },
+    { command: '.uno:ExportToPDF', args: { SynchronMode: { type: 'boolean', value: false } } },
+    '.uno:FontworkGalleryFloater',
+    '.uno:GotoPage',
     '.uno:HyperlinkDialog',
     '.uno:InsertQrCode',
     '.uno:InsertSymbol',
@@ -208,7 +212,8 @@ describe(['tagdesktop'], 'Accessibility Writer Dialog Tests', { testIsolation: f
         });
     });
 
-    allCommonDialogs.forEach(function (command) {
+    allCommonDialogs.forEach(function (commandSpec) {
+        const command = typeof commandSpec === 'string' ? commandSpec : commandSpec.command;
         if (missingContextDialogs.includes(command)) {
             it.skip(`Dialog ${command} (missing context)`, function () {});
         } else if (buggyDialogs.includes(command)) {
@@ -219,7 +224,7 @@ describe(['tagdesktop'], 'Accessibility Writer Dialog Tests', { testIsolation: f
                     this._runnable.title += ' (skipped: missing linguistic data)';
                     this.skip();
                 }
-                testDialog(command);
+                testDialog(commandSpec);
             });
         }
     });
@@ -273,14 +278,15 @@ describe(['tagdesktop'], 'Accessibility Writer Dialog Tests', { testIsolation: f
         handleDialog(win, 1);
     });
 
-    allWriterDialogs.forEach(function (command) {
+    allWriterDialogs.forEach(function (commandSpec) {
+        const command = typeof commandSpec === 'string' ? commandSpec : commandSpec.command;
         if (missingContextDialogs.includes(command)) {
             it.skip(`Dialog ${command} (missing context)`, function () {});
         } else if (buggyDialogs.includes(command)) {
             it.skip(`Dialog ${command} (buggy)`, function () {});
         } else {
             it(`Writer Dialog ${command}`, function () {
-                testDialog(command);
+                testDialog(commandSpec);
             });
         }
     });
@@ -335,6 +341,10 @@ describe(['tagdesktop'], 'Accessibility Writer Dialog Tests', { testIsolation: f
             win.app.map.sendUnoCommand('.uno:GraphicDialog');
         });
         handleDialog(win, 1, '.uno:GraphicDialog');
+        cy.then(() => {
+            win.app.map.sendUnoCommand('.uno:CompressGraphic');
+        });
+        handleDialog(win, 1, '.uno:GraphicDialog');
     });
 
     it('Rename bookmark', function () {
@@ -357,6 +367,31 @@ describe(['tagdesktop'], 'Accessibility Writer Dialog Tests', { testIsolation: f
         });
     });
 
+    it('PDF export warning dialog', function () {
+        cy.then(() => {
+            const args = { SynchronMode: { type: 'boolean', value: false } };
+            win.app.map.sendUnoCommand('.uno:ExportToPDF', args);
+        });
+
+        getActiveDialog(1)
+            .then(() => {
+               return helper.processToIdle(win);
+            })
+            .then(() => {
+                cy.cGet('#forms-input').check();
+                cy.cGet('#pdf_version-input').select('PDF/A-1b (PDF 1.4 base)');
+                cy.cGet('#ok-button').click();
+            })
+            .then(() => {
+               // pdf export dialog should dismiss and a warning dialog should appear
+               return helper.processToIdle(win);
+            })
+            .then(() => {
+                // and the warning dialog we're interested in should appear
+                handleDialog(win, 1);
+            });
+    });
+
     it('ReadOnly info dialog', function () {
         // Text ReadOnly info dialog
         helper.clearAllText({ isTable: true });
@@ -369,9 +404,12 @@ describe(['tagdesktop'], 'Accessibility Writer Dialog Tests', { testIsolation: f
         handleDialog(win, 1);
     });
 
-    function testDialog(command) {
+    function testDialog(commandSpec) {
+        const command = typeof commandSpec === 'string' ? commandSpec : commandSpec.command;
+        const args = typeof commandSpec === 'string' ? undefined : commandSpec.args;
+
         cy.then(() => {
-            win.app.map.sendUnoCommand(command);
+            win.app.map.sendUnoCommand(command, args);
         });
 
         handleDialog(win, 1, command);
@@ -512,7 +550,7 @@ describe(['tagdesktop'], 'Accessibility Writer Dialog Tests', { testIsolation: f
                                 if (command == '.uno:SetDocumentProperties' && tabAriaControls == 'customprops')  {
                                     cy.cGet('#durationbutton-button').click();
                                     handleDialog(win, level + 1);
-				} else if (command == '.uno:SetDocumentProperties' && tabAriaControls == 'general')  {
+                                } else if (command == '.uno:SetDocumentProperties' && tabAriaControls == 'general')  {
                                     cy.cGet('#changepass-button').should('not.be.disabled').click();
                                     handleDialog(win, level + 1);
                                 } else if (command == '.uno:InsertSection' && tabAriaControls == 'section')  {
