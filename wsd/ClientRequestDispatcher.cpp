@@ -1001,7 +1001,7 @@ ClientRequestDispatcher::MessageResult ClientRequestDispatcher::handleMessage(Po
                                                                               ssize_t headerSize)
 {
     const bool closeConnection = !request.getKeepAlive(); // HTTP/1.1: closeConnection true w/ "Connection: close" only!
-    LOG_DBG("Handling request: " << request.getURI() << ", closeConnection " << closeConnection);
+    LOG_TRC("Handling Message for request: " << request.getURI() << ", closeConnection " << closeConnection);
 
     // denotes whether the request has been served synchronously
     bool servedSync = false;
