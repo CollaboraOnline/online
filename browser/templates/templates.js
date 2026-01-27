@@ -1,8 +1,9 @@
+/* -*- js-indent-level: 8; fill-column: 100 -*- */
 // Manually edited
-	window.CODA_TEMPLATES = [
+window.CODA_TEMPLATES = [
 	{
 		"id": "writer-modern-business-letter-sans-serif",
-		"name": "Modern Business Letter Sans Serif",
+		"name": _("Modern Business Letter (sans-serif)"),
 		"type": "writer",
 		"category": "writer",
 		"path": "templates/files/text/Modern_business_letter_sans_serif.odt",
@@ -11,7 +12,7 @@
 	},
 	{
 		"id": "writer-modern-business-letter-serif",
-		"name": "Modern Business Letter Serif",
+		"name": _("Modern Business Letter (serif)"),
 		"type": "writer",
 		"category": "writer",
 		"path": "templates/files/text/Modern_business_letter_serif.odt",
@@ -20,7 +21,7 @@
 	},
 	{
 		"id": "writer-cv",
-		"name": "CV",
+		"name": _("CV"),
 		"type": "writer",
 		"category": "writer",
 		"path": "templates/files/text/CV.odt",
@@ -29,7 +30,7 @@
 	},
 	{
 		"id": "writer-resume1page",
-		"name": "Resume One Page",
+		"name": _("Resume (one-page)"),
 		"type": "writer",
 		"category": "writer",
 		"path": "templates/files/text/Resume1page.odt",
@@ -38,7 +39,7 @@
 	},
 	{
 		"id": "writer-styles-default",
-		"name": "Default Style",
+		"name": _("Default Style"),
 		"type": "writer",
 		"category": "writer",
 		"path": "templates/files/text/Default.odt",
@@ -47,7 +48,7 @@
 	},
 	{
 		"id": "writer-styles-modern",
-		"name": "Modern Style",
+		"name": _("Modern Style"),
 		"type": "writer",
 		"category": "writer",
 		"path": "templates/files/text/Modern.odt",
@@ -56,7 +57,7 @@
 	},
 	{
 		"id": "writer-styles-simple",
-		"name": "Simple Style",
+		"name": _("Simple Style"),
 		"type": "writer",
 		"category": "writer",
 		"path": "templates/files/text/Simple.odt",
@@ -65,7 +66,7 @@
 	},
 	{
 		"id": "impress-beehive",
-		"name": "Beehive",
+		"name": _("Beehive"),
 		"type": "impress",
 		"category": "impress",
 		"path": "templates/files/presentation/Beehive.odp",
@@ -74,7 +75,7 @@
 	},
 	{
 		"id": "impress-blue-curve",
-		"name": "Blue Curve",
+		"name": _("Blue Curve"),
 		"type": "impress",
 		"category": "impress",
 		"path": "templates/files/presentation/Blue_Curve.odp",
@@ -83,7 +84,7 @@
 	},
 	{
 		"id": "impress-blueprint-plans",
-		"name": "Blueprint Plans",
+		"name": _("Blueprint Plans"),
 		"type": "impress",
 		"category": "impress",
 		"path": "templates/files/presentation/Blueprint_Plans.odp",
@@ -92,7 +93,7 @@
 	},
 	{
 		"id": "impress-candy",
-		"name": "Candy",
+		"name": _("Candy"),
 		"type": "impress",
 		"category": "impress",
 		"path": "templates/files/presentation/Candy.odp",
@@ -101,7 +102,7 @@
 	},
 	{
 		"id": "impress-dna",
-		"name": "DNA",
+		"name": _("DNA"),
 		"type": "impress",
 		"category": "impress",
 		"path": "templates/files/presentation/DNA.odp",
@@ -110,7 +111,7 @@
 	},
 	{
 		"id": "impress-focus",
-		"name": "Focus",
+		"name": _("Focus"),
 		"type": "impress",
 		"category": "impress",
 		"path": "templates/files/presentation/Focus.odp",
@@ -119,7 +120,7 @@
 	},
 	{
 		"id": "impress-forestbird",
-		"name": "Forestbird",
+		"name": _("Forestbird"),
 		"type": "impress",
 		"category": "impress",
 		"path": "templates/files/presentation/Forestbird.odp",
@@ -128,7 +129,7 @@
 	},
 	{
 		"id": "impress-freshes",
-		"name": "Freshes",
+		"name": _("Freshes"),
 		"type": "impress",
 		"category": "impress",
 		"path": "templates/files/presentation/Freshes.odp",
@@ -137,7 +138,7 @@
 	},
 	{
 		"id": "impress-grey-elegant",
-		"name": "Grey Elegant",
+		"name": _("Grey Elegant"),
 		"type": "impress",
 		"category": "impress",
 		"path": "templates/files/presentation/Grey_Elegant.odp",
@@ -146,7 +147,7 @@
 	},
 	{
 		"id": "impress-growing-liberty",
-		"name": "Growing Liberty",
+		"name": _("Growing Liberty"),
 		"type": "impress",
 		"category": "impress",
 		"path": "templates/files/presentation/Growing_Liberty.odp",
@@ -155,7 +156,7 @@
 	},
 	{
 		"id": "impress-inspiration",
-		"name": "Inspiration",
+		"name": _("Inspiration"),
 		"type": "impress",
 		"category": "impress",
 		"path": "templates/files/presentation/Inspiration.odp",
@@ -164,7 +165,7 @@
 	},
 	{
 		"id": "impress-lights",
-		"name": "Lights",
+		"name": _("Lights"),
 		"type": "impress",
 		"category": "impress",
 		"path": "templates/files/presentation/Lights.odp",
@@ -173,7 +174,7 @@
 	},
 	{
 		"id": "impress-metropolis",
-		"name": "Metropolis",
+		"name": _("Metropolis"),
 		"type": "impress",
 		"category": "impress",
 		"path": "templates/files/presentation/Metropolis.odp",
@@ -182,7 +183,7 @@
 	},
 	{
 		"id": "impress-midnightblue",
-		"name": "Midnightblue",
+		"name": _("Midnight Blue"),
 		"type": "impress",
 		"category": "impress",
 		"path": "templates/files/presentation/Midnightblue.odp",
@@ -191,7 +192,7 @@
 	},
 	{
 		"id": "impress-nature-illustration",
-		"name": "Nature Illustration",
+		"name": _("Nature Illustration"),
 		"type": "impress",
 		"category": "impress",
 		"path": "templates/files/presentation/Nature_Illustration.odp",
@@ -200,7 +201,7 @@
 	},
 	{
 		"id": "impress-pencil",
-		"name": "Pencil",
+		"name": _("Pencil"),
 		"type": "impress",
 		"category": "impress",
 		"path": "templates/files/presentation/Pencil.odp",
@@ -209,7 +210,7 @@
 	},
 	{
 		"id": "impress-piano",
-		"name": "Piano",
+		"name": _("Piano"),
 		"type": "impress",
 		"category": "impress",
 		"path": "templates/files/presentation/Piano.odp",
@@ -218,7 +219,7 @@
 	},
 	{
 		"id": "impress-portfolio",
-		"name": "Portfolio",
+		"name": _("Portfolio"),
 		"type": "impress",
 		"category": "impress",
 		"path": "templates/files/presentation/Portfolio.odp",
@@ -227,7 +228,7 @@
 	},
 	{
 		"id": "impress-progress",
-		"name": "Progress",
+		"name": _("Progress"),
 		"type": "impress",
 		"category": "impress",
 		"path": "templates/files/presentation/Progress.odp",
@@ -236,7 +237,7 @@
 	},
 	{
 		"id": "impress-sunset",
-		"name": "Sunset",
+		"name": _("Sunset"),
 		"type": "impress",
 		"category": "impress",
 		"path": "templates/files/presentation/Sunset.odp",
@@ -245,7 +246,7 @@
 	},
 	{
 		"id": "impress-vintage",
-		"name": "Vintage",
+		"name": _("Vintage"),
 		"type": "impress",
 		"category": "impress",
 		"path": "templates/files/presentation/Vintage.odp",
@@ -254,7 +255,7 @@
 	},
 	{
 		"id": "impress-vivid",
-		"name": "Vivid",
+		"name": _("Vivid"),
 		"type": "impress",
 		"category": "impress",
 		"path": "templates/files/presentation/Vivid.odp",
@@ -263,7 +264,7 @@
 	},
 	{
 		"id": "impress-yellow-idea",
-		"name": "Yellow Idea",
+		"name": _("Yellow Idea"),
 		"type": "impress",
 		"category": "impress",
 		"path": "templates/files/presentation/Yellow_Idea.odp",
