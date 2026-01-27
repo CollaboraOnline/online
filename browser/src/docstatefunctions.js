@@ -93,7 +93,7 @@ app.isXOrdinateInFrozenPane = function (pixelX) {
 	if (app.map._docLayer._splitPanesContext) {
 		const splitPos = app.map._docLayer._splitPanesContext.getSplitPos();
 
-		if (pixelX < splitPos.x) return true;
+		if (pixelX < splitPos.x && pixelX >= 0) return true;
 		else return false;
 	} else return false;
 };
@@ -102,7 +102,7 @@ app.isYOrdinateInFrozenPane = function (pixelY) {
 	if (app.map._docLayer._splitPanesContext) {
 		const splitPos = app.map._docLayer._splitPanesContext.getSplitPos();
 
-		if (pixelY < splitPos.y) return true;
+		if (pixelY < splitPos.y && pixelY >= 0) return true;
 		else return false;
 	} else return false;
 };
