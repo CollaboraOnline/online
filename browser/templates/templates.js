@@ -7,6 +7,7 @@ window.CODA_TEMPLATES = [
 		"type": "writer",
 		"category": "writer",
 		"path": "templates/files/text/Modern_business_letter_sans_serif.odt",
+		"basename": _("Business Letter"),
 		"preview": "templates/previews/text/writer-modern-business-letter-sans-serif.png",
 		"featured": true
 	},
@@ -16,6 +17,7 @@ window.CODA_TEMPLATES = [
 		"type": "writer",
 		"category": "writer",
 		"path": "templates/files/text/Modern_business_letter_serif.odt",
+		"basename": _("Business Letter"),
 		"preview": "templates/previews/text/writer-modern-business-letter-serif.png",
 		"featured": true
 	},
@@ -25,6 +27,7 @@ window.CODA_TEMPLATES = [
 		"type": "writer",
 		"category": "writer",
 		"path": "templates/files/text/CV.odt",
+		"basename": _("CV"),
 		"preview": "templates/previews/text/writer-cv.png",
 		"featured": true
 	},
@@ -34,6 +37,7 @@ window.CODA_TEMPLATES = [
 		"type": "writer",
 		"category": "writer",
 		"path": "templates/files/text/Resume1page.odt",
+		"basename": _("Resume"),
 		"preview": "templates/previews/text/writer-resume1page.png",
 		"featured": true
 	},
@@ -43,6 +47,7 @@ window.CODA_TEMPLATES = [
 		"type": "writer",
 		"category": "writer",
 		"path": "templates/files/text/Default.odt",
+		"basename": _("Text Document"),
 		"preview": "templates/previews/text/writer-styles-default.png",
 		"featured": false
 	},
@@ -52,6 +57,7 @@ window.CODA_TEMPLATES = [
 		"type": "writer",
 		"category": "writer",
 		"path": "templates/files/text/Modern.odt",
+		"basename": _("Text Document"),
 		"preview": "templates/previews/text/writer-styles-modern.png",
 		"featured": false
 	},
@@ -61,6 +67,7 @@ window.CODA_TEMPLATES = [
 		"type": "writer",
 		"category": "writer",
 		"path": "templates/files/text/Simple.odt",
+		"basename": _("Text Document"),
 		"preview": "templates/previews/text/writer-styles-simple.png",
 		"featured": false
 	},
@@ -70,6 +77,7 @@ window.CODA_TEMPLATES = [
 		"type": "impress",
 		"category": "impress",
 		"path": "templates/files/presentation/Beehive.odp",
+		"basename": _("Presentation"),
 		"preview": "templates/previews/presentation/impress-beehive.png",
 		"featured": false
 	},
@@ -79,6 +87,7 @@ window.CODA_TEMPLATES = [
 		"type": "impress",
 		"category": "impress",
 		"path": "templates/files/presentation/Blue_Curve.odp",
+		"basename": _("Presentation"),
 		"preview": "templates/previews/presentation/impress-blue-curve.png",
 		"featured": false
 	},
@@ -88,6 +97,7 @@ window.CODA_TEMPLATES = [
 		"type": "impress",
 		"category": "impress",
 		"path": "templates/files/presentation/Blueprint_Plans.odp",
+		"basename": _("Presentation"),
 		"preview": "templates/previews/presentation/impress-blueprint-plans.png",
 		"featured": false
 	},
@@ -97,6 +107,7 @@ window.CODA_TEMPLATES = [
 		"type": "impress",
 		"category": "impress",
 		"path": "templates/files/presentation/Candy.odp",
+		"basename": _("Presentation"),
 		"preview": "templates/previews/presentation/impress-candy.png",
 		"featured": false
 	},
@@ -106,6 +117,7 @@ window.CODA_TEMPLATES = [
 		"type": "impress",
 		"category": "impress",
 		"path": "templates/files/presentation/DNA.odp",
+		"basename": _("Presentation"),
 		"preview": "templates/previews/presentation/impress-dna.png",
 		"featured": false
 	},
@@ -115,6 +127,7 @@ window.CODA_TEMPLATES = [
 		"type": "impress",
 		"category": "impress",
 		"path": "templates/files/presentation/Focus.odp",
+		"basename": _("Presentation"),
 		"preview": "templates/previews/presentation/impress-focus.png",
 		"featured": false
 	},
@@ -124,6 +137,7 @@ window.CODA_TEMPLATES = [
 		"type": "impress",
 		"category": "impress",
 		"path": "templates/files/presentation/Forestbird.odp",
+		"basename": _("Presentation"),
 		"preview": "templates/previews/presentation/impress-forestbird.png",
 		"featured": false
 	},
@@ -133,6 +147,7 @@ window.CODA_TEMPLATES = [
 		"type": "impress",
 		"category": "impress",
 		"path": "templates/files/presentation/Freshes.odp",
+		"basename": _("Presentation"),
 		"preview": "templates/previews/presentation/impress-freshes.png",
 		"featured": false
 	},
@@ -142,6 +157,7 @@ window.CODA_TEMPLATES = [
 		"type": "impress",
 		"category": "impress",
 		"path": "templates/files/presentation/Grey_Elegant.odp",
+		"basename": _("Presentation"),
 		"preview": "templates/previews/presentation/impress-grey-elegant.png",
 		"featured": false
 	},
@@ -151,6 +167,7 @@ window.CODA_TEMPLATES = [
 		"type": "impress",
 		"category": "impress",
 		"path": "templates/files/presentation/Growing_Liberty.odp",
+		"basename": _("Presentation"),
 		"preview": "templates/previews/presentation/impress-growing-liberty.png",
 		"featured": false
 	},
@@ -160,6 +177,7 @@ window.CODA_TEMPLATES = [
 		"type": "impress",
 		"category": "impress",
 		"path": "templates/files/presentation/Inspiration.odp",
+		"basename": _("Presentation"),
 		"preview": "templates/previews/presentation/impress-inspiration.png",
 		"featured": false
 	},
@@ -169,6 +187,7 @@ window.CODA_TEMPLATES = [
 		"type": "impress",
 		"category": "impress",
 		"path": "templates/files/presentation/Lights.odp",
+		"basename": _("Presentation"),
 		"preview": "templates/previews/presentation/impress-lights.png",
 		"featured": false
 	},
@@ -178,6 +197,7 @@ window.CODA_TEMPLATES = [
 		"type": "impress",
 		"category": "impress",
 		"path": "templates/files/presentation/Metropolis.odp",
+		"basename": _("Presentation"),
 		"preview": "templates/previews/presentation/impress-metropolis.png",
 		"featured": false
 	},
@@ -187,6 +207,7 @@ window.CODA_TEMPLATES = [
 		"type": "impress",
 		"category": "impress",
 		"path": "templates/files/presentation/Midnightblue.odp",
+		"basename": _("Presentation"),
 		"preview": "templates/previews/presentation/impress-midnightblue.png",
 		"featured": false
 	},
@@ -196,6 +217,7 @@ window.CODA_TEMPLATES = [
 		"type": "impress",
 		"category": "impress",
 		"path": "templates/files/presentation/Nature_Illustration.odp",
+		"basename": _("Presentation"),
 		"preview": "templates/previews/presentation/impress-nature-illustration.png",
 		"featured": false
 	},
@@ -205,6 +227,7 @@ window.CODA_TEMPLATES = [
 		"type": "impress",
 		"category": "impress",
 		"path": "templates/files/presentation/Pencil.odp",
+		"basename": _("Presentation"),
 		"preview": "templates/previews/presentation/impress-pencil.png",
 		"featured": false
 	},
@@ -214,6 +237,7 @@ window.CODA_TEMPLATES = [
 		"type": "impress",
 		"category": "impress",
 		"path": "templates/files/presentation/Piano.odp",
+		"basename": _("Presentation"),
 		"preview": "templates/previews/presentation/impress-piano.png",
 		"featured": false
 	},
@@ -223,6 +247,7 @@ window.CODA_TEMPLATES = [
 		"type": "impress",
 		"category": "impress",
 		"path": "templates/files/presentation/Portfolio.odp",
+		"basename": _("Presentation"),
 		"preview": "templates/previews/presentation/impress-portfolio.png",
 		"featured": false
 	},
@@ -232,6 +257,7 @@ window.CODA_TEMPLATES = [
 		"type": "impress",
 		"category": "impress",
 		"path": "templates/files/presentation/Progress.odp",
+		"basename": _("Presentation"),
 		"preview": "templates/previews/presentation/impress-progress.png",
 		"featured": false
 	},
@@ -241,6 +267,7 @@ window.CODA_TEMPLATES = [
 		"type": "impress",
 		"category": "impress",
 		"path": "templates/files/presentation/Sunset.odp",
+		"basename": _("Presentation"),
 		"preview": "templates/previews/presentation/impress-sunset.png",
 		"featured": false
 	},
@@ -249,6 +276,7 @@ window.CODA_TEMPLATES = [
 		"name": _("Vintage"),
 		"type": "impress",
 		"category": "impress",
+		"basename": _("Presentation"),
 		"path": "templates/files/presentation/Vintage.odp",
 		"preview": "templates/previews/presentation/impress-vintage.png",
 		"featured": false
@@ -259,6 +287,7 @@ window.CODA_TEMPLATES = [
 		"type": "impress",
 		"category": "impress",
 		"path": "templates/files/presentation/Vivid.odp",
+		"basename": _("Presentation"),
 		"preview": "templates/previews/presentation/impress-vivid.png",
 		"featured": false
 	},
@@ -268,8 +297,8 @@ window.CODA_TEMPLATES = [
 		"type": "impress",
 		"category": "impress",
 		"path": "templates/files/presentation/Yellow_Idea.odp",
+		"basename": _("Presentation"),
 		"preview": "templates/previews/presentation/impress-yellow-idea.png",
 		"featured": false
 	}
 ];
-	
