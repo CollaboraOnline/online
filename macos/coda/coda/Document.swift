@@ -254,7 +254,16 @@ class Document: NSDocument {
 
             // Set branded icon based on document type
             if let icon = Document.iconForType(typeName: type) {
+                // General icon for the entire window
                 win.standardWindowButton(.documentIconButton)?.image = icon
+
+                // Show the icon at the right side of the tab in the tabbed view too
+                let view = NSImageView(image: icon)
+                NSLayoutConstraint.activate([
+                    view.widthAnchor.constraint(equalToConstant: 24), // add some breathing space to the left and right, it's centered inside that
+                    view.heightAnchor.constraint(equalToConstant: 16),
+                ])
+                win.tab.accessoryView = view
             }
         }
 
