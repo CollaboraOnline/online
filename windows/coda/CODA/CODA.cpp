@@ -226,19 +226,46 @@ static FilenameAndUri generate_new_copy(const std::wstring& templateSourcePath,
 
 static std::wstring new_document(DocumentType type,
                                  const std::string& templateRelativePath,
-                                 const std::string& basename)
+                                 std::string basename)
 {
     std::wstring templateBasename, templateExtension, templateSourcePath;
 
-    // A template chosen from the "Backstage"
-    std::string decodedTemplateRelativePath;
-    Poco::URI::decode(templateRelativePath, decodedTemplateRelativePath);
+    if (templateRelativePath == "")
+    {
+        // Old-style simple blank documents
+        switch (type)
+        {
+            case DocumentType::TEXT:
+                templateBasename = L"TextDocument";
+                templateExtension = L"odt";
+                break;
+            case DocumentType::SPREADSHEET:
+                templateBasename = L"Spreadsheet";
+                templateExtension = L"ods";
+                break;
+            case DocumentType::PRESENTATION:
+                templateBasename = L"Presentation";
+                templateExtension = L"odp";
+                break;
+            default:
+                fatal("Unexpected case in new_document()");
+        }
+        basename = Util::wide_string_to_string(templateBasename);
+        templateSourcePath = Util::string_to_wide_string(app_installation_path) +
+            L"..\\templates\\" + templateBasename + L"." + templateExtension;
+    }
+    else
+    {
+        // A template chosen from the "Backstage"
+        std::string decodedTemplateRelativePath;
+        Poco::URI::decode(templateRelativePath, decodedTemplateRelativePath);
 
-    templateSourcePath =
-        Util::string_to_wide_string(app_installation_path +
-                                    "..\\cool\\" + decodedTemplateRelativePath);
-    auto wrelpath = Util::string_to_wide_string(decodedTemplateRelativePath);
-    templateExtension = wrelpath.substr(wrelpath.find_last_of(L'.') + 1);
+        templateSourcePath =
+            Util::string_to_wide_string(app_installation_path +
+                                        "..\\cool\\" + decodedTemplateRelativePath);
+        auto wrelpath = Util::string_to_wide_string(decodedTemplateRelativePath);
+        templateExtension = wrelpath.substr(wrelpath.find_last_of(L'.') + 1);
+    }
 
     // The basename is URI-encoded because in some localisation it might contain spaces.
     std::string decodedBasename;
