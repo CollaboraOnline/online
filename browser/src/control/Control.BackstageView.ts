@@ -44,6 +44,7 @@ interface TemplateData {
 	name: string;
 	type: TemplateType;
 	path?: string;
+	basename?: string;
 	preview?: string;
 	featured?: boolean;
 	searchText: string;
@@ -55,6 +56,7 @@ interface TemplateManifestEntry {
 	type?: string;
 	category?: string;
 	path: string;
+	basename?: string | null;
 	preview?: string | null;
 	featured?: boolean;
 }
@@ -911,6 +913,7 @@ class BackstageView extends window.L.Class {
 				name,
 				type,
 				path: absolutePath,
+				basename: entry.basename || undefined,
 				preview: entry.preview || undefined,
 				featured: !!entry.featured,
 				searchText: searchComponents.join(' ').toLowerCase(),
@@ -1334,13 +1337,12 @@ class BackstageView extends window.L.Class {
 
 		// URI-encode the basename parameter because the syntax for these keyword=value
 		// style of messages doesn't allow spaces inside a value, and a translation of
-		// "Untitled" might contains a space.
+		// the template file basename might contains a space.
 
-		// Eventually, instead of just "Untitled", we might want to use something that
-		// depends on what type of document the template is. Like "Business letter" or
-		// "CV". Such basenames should be in the templates.js file. If a template doesn't
-		// have one, "Untitled" would then be the default.
-		params.push('basename=' + encodeURIComponent(_('Untitled')));
+		// Such basenames should be in the templates.js file. If a template doesn't
+		// have one, the localisation of "Untitled" is the default.
+		const basename = template.basename || _('Untitled');
+		params.push('basename=' + encodeURIComponent(basename));
 
 		window.postMobileMessage('newdoc ' + params.join(' '));
 
