@@ -136,6 +136,42 @@ define npm_source
 	done
 endef
 
+# SVG icons
+icons_dir = $(srcdir)/images
+
+# Generate into the source tree so tsc --rootDir ./src sees it
+icons_ts = src/control/Control.BackstageSVGIcons.ts
+
+# Backstage icons have to be embedded, so that the coloring works on the DOM
+BACKSTAGE_SVG_NAMES = \
+	lc_home.svg \
+	lc_newdoc.svg \
+	lc_open.svg \
+	lc_shareas.svg \
+	lc_printpreview.svg \
+	lc_save.svg \
+	lc_saveacopy.svg \
+	lc_printlayout.svg \
+	lc_exportto.svg
+
+BACKSTAGE_SVGS = $(addprefix $(icons_dir)/,$(BACKSTAGE_SVG_NAMES))
+
+$(icons_ts): Makefile.am Makefile $(BACKSTAGE_SVGS)
+	@mkdir -p "$(dir $@)"
+	@{ \
+	  echo "// AUTO-GENERATED. DO NOT EDIT."; \
+	  echo "const BackstageSVGIcons: Record<string, string> = {"; \
+	  for f in $(BACKSTAGE_SVGS); do \
+	    name=$$(basename "$$f"); \
+	    echo "  \"$$name\": \`"; \
+	    sed -e 's/\\/\\\\/g' -e 's/`/\\`/g' -e 's/\$${/\\$${/g' "$$f"; \
+	    echo "\`,"; \
+	  done; \
+	  echo "};"; \
+	} > "$@"
+
+BUILT_SOURCES += $(icons_ts)
+
 COOL_ADMIN_TS = \
 	admin/src/ModalDialogCreator.ts \
 	admin/src/integrator/AdminIntegratorSettings.ts \
@@ -520,6 +556,7 @@ COOL_JS_LST =\
 	src/control/Control.NotebookbarImpress.js \
 	src/control/Control.NotebookbarDraw.js \
 	src/control/Control.NotebookbarBuilder.js \
+	$(icons_ts) \
 	src/control/Control.BackstageView.ts \
 	src/control/Control.ContextToolbar.ts \
 	src/control/Control.Layers.js \
