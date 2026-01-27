@@ -95,6 +95,12 @@ class A11yValidator {
 			if (altValue === '' && parent) {
 				const isDecorativeImg = img.classList.contains('ui-decorative-image'); // exclude ui-decorative-image decorative images - they can have empty alt
 
+				if (isFocusable) {
+					throw new A11yValidatorException(
+						`In '${this.getDialogTitle(element)}' at '${this.getElementPath(img)}': focusable image in widget of type '${type}' has empty alt attribute (screen readers need alt text for focusable images)`,
+					);
+				}
+
 				if (!parentHasLabel && !isDecorativeImg) {
 					throw new A11yValidatorException(
 						`In '${this.getDialogTitle(element)}' at '${this.getElementPath(img)}': image in widget of type '${type}' has empty alt attribute but parent element lacks label`,
