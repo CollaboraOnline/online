@@ -1851,6 +1851,10 @@ input[type='number']:hover::-webkit-outer-spin-button {
 	margin-inline-end: 4px;
 }
 
+[data-userinterfacemode='classic'] #toolbar-wrapper .jsdialog.menubutton img {
+	margin-inline-end: 0;
+}
+
 button.menubutton.sidebar > span {
 	box-shadow: none !important;
 	font-size: var(--default-font-size) !important;
