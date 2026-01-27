@@ -1790,7 +1790,7 @@ window.L.Control.NotebookbarWriter = window.L.Control.Notebookbar.extend({
 					{
 						'id': 'Layout-OrientationMenu:MenuOrientation',
 						'type': 'menubutton',
-						'text': _UNO('.uno:Orientation'),
+						'text': _UNO('.uno:Orientation', 'text'),
 						'enabled': 'true',
 						'accessibility': { focusBack: true, combination: 'O', de: '4' }
 					}
