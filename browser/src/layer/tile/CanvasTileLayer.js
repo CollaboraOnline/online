@@ -3139,6 +3139,11 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 		}
 	},
 
+	recalculateZoomOnResize: function() {
+		if (this.isWriter())
+			this._invalidateZoomFirstFit = true;
+	},
+
 	// This is really just called on zoomend
 	_fitWidthZoom: function (e, maxZoom, recalcFirstFit=false) {
 		if (this.isCalc() || this.isDraw())
@@ -3147,6 +3152,10 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 		if (this.isImpress() && !maxZoom)
 			maxZoom = 10;
 
+		if (this._invalidateZoomFirstFit) {
+			recalcFirstFit = true;
+			this._invalidateZoomFirstFit = false;
+		}
 
 		if (app.activeDocument.fileSize.x === 0) { return; }
 		var oldSize = e && e.oldSize ? e.oldSize : this._map.getSize();
@@ -3680,6 +3689,15 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 		this._oleCSelections = new CSelections(undefined, this._canvasOverlay,
 			this._selectionsDataDiv, this._map, false /* isView */, undefined, 'ole');
 		this._references = new CReferences(this._canvasOverlay);
+
+		/*
+		 * `recalculateZoomOnResize` sets this flag to `true`. Then in `_fitWidthZoom`
+		 * we set the `recalcFirstFit` to `true` & set this flag to `false`. It helps
+		 * deal with delayed resizes as the 'resize' events are fired separately from the
+		 * UI code which triggers them.
+		 */
+		this._invalidateZoomFirstFit = false;
+
 		this._referencesAll = [];
 
 		this._debug = map._debug;
