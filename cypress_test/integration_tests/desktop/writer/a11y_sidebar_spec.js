@@ -34,7 +34,7 @@ describe(['tagdesktop'], 'Accessibility Writer Sidebar Tests', { testIsolation: 
 
 		cy.get('@uicoverageResult').then(result => {
 			expect(result.used, `used .ui files`).to.not.be.empty;
-			// TODO: make this true
+			// TODO, make this true
 			// expect(result.CompleteWriterSidebarCoverage, `complete writer sidebar coverage`).to.be.true;
 		});
 	});
@@ -49,10 +49,127 @@ describe(['tagdesktop'], 'Accessibility Writer Sidebar Tests', { testIsolation: 
 	});
 
 	it.skip('PropertyDeck: Graphic Context: (Buggy)', function () {
-		helper.clearAllText();
+		helper.clearAllText({ isTable: true });
 		desktopHelper.insertImage();
 
 		helper.processToIdle(win);
+		runA11yValidation(win);
+	});
+
+	it.skip('Chart (LinePropertyPanel buggy)', function () {
+		helper.clearAllText({ isTable: true });
+		cy.then(() => {
+			win.app.map.sendUnoCommand('.uno:InsertObjectChart');
+		});
+
+		cy.cGet('#test-div-shapeHandlesSection').should('exist');
+
+		// Enter chart edit mode
+		cy.realPress('Enter');
+		helper.processToIdle(win);
+
+		// Default chart deck panels
+		runA11yValidation(win);
+
+		// Now use tab to select the inner 'Chart' element
+		cy.realPress('Tab');
+		helper.processToIdle(win);
+		runA11yValidation(win);
+
+		// Go a level down the hierarchy, Data Series: Column 1
+		cy.realPress('Enter');
+		helper.processToIdle(win);
+		runA11yValidation(win);
+
+		// Go a level down the hierarchy, Data point 1 in data series 1
+		cy.realPress('Enter');
+		helper.processToIdle(win);
+		runA11yValidation(win);
+
+		cy.realPress('Escape'); // back up a level
+		cy.realPress('Tab'); // Data Series: Column 2
+		cy.realPress('Tab'); // Data Series: Column 3
+		cy.realPress('Tab'); // X Axis
+		helper.processToIdle(win);
+		runA11yValidation(win);
+
+		cy.realPress('Escape'); // Go a level up the hierarchy
+		helper.processToIdle(win);
+
+		helper.processToIdle(win);
+		// Data series selected, expect data series panel to be tested.
+		runA11yValidation(win);
+
+		// Two esc get us out of the chart navigation and then chart edit mode
+		escLevel(win, 2);
+		helper.processToIdle(win);
+
+		// At which point the sidebar disappears
+		cy.cGet('#sidebar-dock-wrapper').should('not.be.visible');
+		// And just the shape is selected
+		cy.cGet('#test-div-shapeHandlesSection').should('exist');
+
+		// esc to get back to main document
+		escLevel(win, 1);
+		helper.processToIdle(win);
+
+		// sidebar starts again, and grabs focus to itself
+		cy.cGet('#sidebar-dock-wrapper').should('be.visible').then(function(sidebar) {
+			helper.waitForTimers(win, 'sidebarstealfocus');
+			helper.waitUntilLayoutingIsIdle(win);
+			helper.containsFocusElement(sidebar[0], true);
+		});
+
+		// esc to send focus back to main document
+		escLevel(win, 1);
+		helper.processToIdle(win);
+
+		// focus stays here after that
+		cy.cGet('div.clipboard').should('have.focus');
+	});
+
+	it.skip('Math (PosSizePropertyPanel buggy)', function () {
+		helper.clearAllText({ isTable: true });
+		cy.then(() => {
+			win.app.map.sendUnoCommand('.uno:InsertObjectStarMath');
+		});
+
+		cy.cGet('#test-div-shapeHandlesSection').should('exist');
+
+		helper.processToIdle(win);
+		runA11yValidation(win);
+
+		// Exit the math edit code, which conviently for testing gives
+		// the 'empty' placeholder sidebar
+		helper.typeIntoDocument('{esc}');
+
+		helper.processToIdle(win);
+		runA11yValidation(win);
+
+		// Deselect the math object
+		helper.typeIntoDocument('{esc}');
+	});
+
+	it.skip('PropertyDeck: Line Context (Buggy)', function () {
+		cy.then(() => {
+			win.app.map.sendUnoCommand('.uno:Line');
+		});
+
+		cy.cGet('#test-div-shapeHandlesSection').should('exist');
+
+		helper.processToIdle(win);
+		runA11yValidation(win);
+	});
+
+	it.skip('PropertyDeck: Fontwork Context: (Buggy)', function () {
+		cy.then(() => {
+			win.app.map.sendUnoCommand('.uno:FontworkGalleryFloater');
+		});
+
+		cy.cGet('.ui-dialog[role="dialog"]');
+		cy.cGet('#ok-button').click();
+		helper.processToIdle(win);
+		// and the sidebar we're interested in should appear
 		runA11yValidation(win);
 	});
 
@@ -102,7 +219,29 @@ describe(['tagdesktop'], 'Accessibility Writer Sidebar Tests', { testIsolation: 
 		});
 	});
 
+	it('InspectorDeck', function() {
+		cy.then(() => {
+			win.app.map.sendUnoCommand('.uno:SidebarDeck.InspectorDeck');
+			helper.processToIdle(win);
+		});
+
+		runA11yValidation(win);
+
+		cy.then(() => {
+			win.app.map.sendUnoCommand('.uno:SidebarDeck.PropertyDeck');
+			helper.processToIdle(win);
+		});
+	});
+
 	function runA11yValidation(win) {
 		a11yHelper.runA11yValidation(win, 'validatesidebara11y');
 	}
+
+	function escLevel(win, count) {
+		for (var i = 0; i < count; i++) {
+			helper.typeIntoDocument('{esc}');
+			helper.processToIdle(win);
+		}
+	}
+
 });
