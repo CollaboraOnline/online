@@ -84,6 +84,8 @@
 "Columns ~Before":"Vasakule",
 "Comments":"Märkused",
 "Comme~nt":"Märkus",
+"Compare":"Võrdle",
+"Compare Non-Track Changed Document":"Võrdle dokumendiga, kus pole muudatusi jälitatud",
 "Connector":"Konnektor",
 "Connector Ends with Arrow":"Noolega lõppev konnektor",
 "Connector with Arrows":"Nooltega konnektor",

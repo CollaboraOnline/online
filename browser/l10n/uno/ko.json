@@ -81,6 +81,8 @@
 "Columns ~Before":"앞의 열(~B)",
 "Comments":"주석",
 "Comme~nt":"설명(~N)",
+"Compare":"비교",
+"Compare Non-Track Changed Document":"추적되지 않은 변경 사항과 비교하기",
 "Connector":"연결자",
 "Connector Ends with Arrow":"마침화살표가 있는 연결자",
 "Connector with Arrows":"화살표가 있는 연결자",

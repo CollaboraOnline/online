@@ -89,6 +89,8 @@
 "Columns ~Before":"Sarakkeita ennen",
 "Comments":"Huomautukset",
 "Comme~nt":"Huomautus",
+"Compare":"Vertaa",
+"Compare Non-Track Changed Document":"Vertaa asiakirjaa ilman muutosten jäljitystä",
 "Connector":"Yhdysviiva",
 "Connector Ends with Arrow":"Yhdysviiva, lopussa nuoli",
 "Connector with Arrows":"Nuolipäinen yhdysviiva",
