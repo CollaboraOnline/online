@@ -86,6 +86,8 @@
 "Columns ~Before":"前方插入列(~B)",
 "Comments":"批注",
 "Comme~nt":"批注(~N)",
+"Compare":"比较",
+"Compare Non-Track Changed Document":"比较未追踪修订的文档",
 "Connector":"连接符",
 "Connector Ends with Arrow":"尾端为箭头的连接符",
 "Connector with Arrows":"两端为箭头的连接符",
