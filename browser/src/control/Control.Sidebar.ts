@@ -17,6 +17,7 @@
 class Sidebar extends SidebarBase {
 	targetDeckCommand: string;
 	isUserRequest: boolean; /// automatic or user request to show the sidebar
+	sidebarShownTheFirstTime: boolean = true;
 
 	constructor(map: MapInterface) {
 		super(map, SidebarType.Sidebar);
@@ -161,6 +162,11 @@ class Sidebar extends SidebarBase {
 				}
 
 				this.map.uiManager.setDocTypePref('ShowSidebar', true);
+
+				if (this.sidebarShownTheFirstTime) {
+					app.serverConnectionService.onShowSidebar();
+					this.sidebarShownTheFirstTime = false;
+				}
 			} else {
 				this.closeSidebar();
 			}
