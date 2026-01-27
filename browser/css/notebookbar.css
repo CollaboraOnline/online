@@ -163,15 +163,22 @@ nav [id^='save'].saved img,
 	padding-left: var(--btn-img-size) !important;
 }
 
-html:not([data-theme='dark']) .unoSave.savemodified .unobutton img,
-html:not([data-theme='dark']) .savemodified.unotoolbutton .unobutton img {
+html:not([data-theme='dark']) .unoSave.savemodified .unobutton img {
 	background: url('images/lc_savemodified.svg') no-repeat center;
 }
 
-html[data-theme='dark'] .unoSave.savemodified .unobutton img,
-html[data-theme='dark'] .savemodified.unotoolbutton .unobutton img {
+html:not([data-theme='dark']) .savemodified.unotoolbutton .unobutton img {
+	background: url('images/compact_savemodified.svg') no-repeat center;
+}
+
+html[data-theme='dark'] .unoSave.savemodified .unobutton img {
 	background: url('images/dark/lc_savemodified.svg') no-repeat center;
 }
+
+html[data-theme='dark'] .savemodified.unotoolbutton .unobutton img {
+	background: url('images/dark/compact_savemodified.svg') no-repeat center;
+}
+
 
 .notebookbar-shortcuts-bar .notebookbar.unotoolbutton {
 	margin: 0px !important;
@@ -264,7 +271,7 @@ html[data-theme='dark'] .savemodified.unotoolbutton .unobutton img {
 	color: var(--color-main-text);
 }
 
-/* Curve isn't in a vertical notebookbar, so it's center-aligned by default instead of top-aligned. 
+/* Curve isn't in a vertical notebookbar, so it's center-aligned by default instead of top-aligned.
 	This rule ensures it aligns to the top. */
 .horizontal.notebookbar #insert-illustrations.ui-overflow-group .ui-overflow-group-content,
 .horizontal.notebookbar #insert-illustrations.ui-overflow-group .top-row-overflow-group {
