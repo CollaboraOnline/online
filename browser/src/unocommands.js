@@ -8,6 +8,7 @@ var unoCommandsArray = {
 	'AccessibilityCheck':{text:{context:_('Accessibility Check'),menu:_('~Accessibility Check...'),},},
 	'AddName':{spreadsheet:{menu:_('~Define...'),},},
 	'AddPrintArea':{spreadsheet:{menu:_('~Add'),},},
+	'AddTheme':{global:{menu:_('Add Theme...'),},},	
 	'AddToWordbook':{global:{menu:_('Add To Dictionary'),},},
 	'AlignBlock':{spreadsheet:{menu:_('Justified'),},},
 	'AlignBottom':{spreadsheet:{menu:_('Align Bottom'),},text:{menu:_('Align Bottom to Anchor'),},},
