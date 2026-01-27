@@ -76,6 +76,7 @@
 #include <QWebEngineProfile>
 #include <QWebEngineView>
 #include <QFileInfo>
+#include <QLoggingCategory>
 
 #include <algorithm>
 #include <cassert>
@@ -1402,8 +1403,14 @@ int main(int argc, char** argv)
     QStringList files = argParser.positionalArguments();
 
     std::string logLevel = argParser.value(logLevelOption).toStdString();
-    if (argParser.isSet(debugOption))
+    bool debugMode = argParser.isSet(debugOption);
+    if (debugMode)
         logLevel = "trace";
+
+    // Disable QtWebEngine's JavaScript console logging (js: ... messages) unless
+    // in debug mode or user has set QT_LOGGING_RULES environment variable
+    if (!debugMode && !qEnvironmentVariableIsSet("QT_LOGGING_RULES"))
+        QLoggingCategory::setFilterRules(QStringLiteral("js=false"));
 
     Log::initialize(QApplication::applicationName().toStdString(), logLevel);
     Log::setDisabledAreas(argParser.value(logDisabledAreasOption).toStdString());
