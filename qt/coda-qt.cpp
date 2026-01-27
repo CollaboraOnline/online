@@ -24,6 +24,7 @@
 #include "DBusService.hpp"
 #include "common/RecentFiles.hpp"
 #include "common/SettingsStorage.hpp"
+#include <common/StringVector.hpp>
 
 #include <Poco/MemoryStream.h>
 #include <Poco/JSON/Parser.h>
@@ -773,7 +774,7 @@ QVariant Bridge::cool(const QString& messageStr)
     constexpr std::string_view HYPERLINK = "HYPERLINK ";
     constexpr std::string_view COMMANDSTATECHANGED = "COMMANDSTATECHANGED ";
     constexpr std::string_view COMMANDRESULT = "COMMANDRESULT ";
-    constexpr std::string_view NEWDOCTYPE = "newdoc type=";
+    constexpr std::string_view NEWDOC = "newdoc ";
     constexpr std::string_view OPENDOC = "opendoc file=";
     constexpr std::string_view FULLSCREENPRESENTATION = "FULLSCREENPRESENTATION ";
     constexpr std::string_view UPLOADSETTINGS = "UPLOADSETTINGS ";
@@ -1218,29 +1219,34 @@ QVariant Bridge::cool(const QString& messageStr)
         LOG_INF("opendoc: opened file: " << absolutePath.toStdString());
         return {};
     }
-    else if (message.starts_with(NEWDOCTYPE))
+    else if (message.starts_with(NEWDOC))
     {
         // e.g."newdoc type=writer template=%2Fhome%2F...something.ott"
-        // template is optional and not always there
-        std::string args = message.substr(NEWDOCTYPE.size());
+        auto const tokens = StringVector::tokenize(message);
 
-        // templateType is one of "writer", "calc", "draw", or "impress"
-        auto [templateType, templateArgs] = Util::split(args, ' ');
+        std::string typeToken, templateToken;
+        if (!COOLProtocol::getTokenString(tokens, "type", typeToken))
+        {
+            LOG_ERR("No type parameter in message '" << message << "'");
+            return {};
+        }
+
+        // template is optional
+        COOLProtocol::getTokenString(tokens, "template", templateToken);
 
         std::string templatePath;
-        constexpr std::string_view TEMPLATE_PREFIX = "template=";
-        if(templateArgs.starts_with(TEMPLATE_PREFIX))
+        if (!templateToken.empty())
         {
-            std::string_view templateVal = templateArgs.substr(TEMPLATE_PREFIX.size());
-            templatePath = QUrl::fromPercentEncoding(QByteArray(templateVal.data(), templateVal.size())).toStdString();
+            templatePath =
+                QUrl::fromPercentEncoding(QByteArray::fromStdString(templateToken)).toStdString();
         }
 
         // Always create new window
         WebView* webViewInstance = WebView::createNewDocument(
-            Application::getProfile(), std::string(templateType), templatePath);
+            Application::getProfile(), typeToken, templatePath);
         if (!webViewInstance)
         {
-            LOG_ERR("Failed to create new document of type: " << templateType);
+            LOG_ERR("Failed to create new document of type: " << typeToken);
             return {};
         }
 
