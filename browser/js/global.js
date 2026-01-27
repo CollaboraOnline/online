@@ -435,6 +435,9 @@ class BrowserInitializer extends InitializerBase {
 		window.geolocationSetup = element.dataset.geolocationSetup.toLowerCase().trim() === "true";
 		window.canvasSlideshowEnabled = element.dataset.canvasSlideshowEnabled.toLowerCase().trim() === "true";
 		window.wopiSettingBaseUrl = element.dataset.wopiSettingBaseUrl;
+		window.wopiHostId = element.dataset.wopiHostId;
+		window.vendor = element.dataset.vendor;
+		window.copyrightYear = element.dataset.copyrightYear;
 	}
 
 	postMessageHandler(e) {
@@ -474,6 +477,9 @@ class MobileAppInitializer extends InitializerBase {
 
 		window.MobileAppName = element.dataset.mobileAppName;
 		window.brandProductName = element.dataset.mobileAppName;
+		window.wopiHostId = element.dataset.wopiHostId;
+		window.vendor = element.dataset.vendor;
+		window.copyrightYear = element.dataset.copyrightYear;
 
 		window.coolLogging = "true";
 		window.outOfFocusTimeoutSecs = 1000000;

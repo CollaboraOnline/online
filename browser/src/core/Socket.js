@@ -693,34 +693,12 @@ app.definitions.Socket = class Socket extends SocketBase {
 				}
 			}
 
-			document.getElementById('coolwsd-version-label').textContent = _('COOLWSD version:');
-			var h = this.WSDServer.Hash;
-			if (parseInt(h,16).toString(16) === h.toLowerCase().replace(/^0+/, '')) {
-				const anchor = document.createElement('a');
-				anchor.setAttribute('href', 'https://github.com/CollaboraOnline/online/commits/' + h);
-				anchor.setAttribute('target', '_blank');
-				anchor.textContent = h;
-
-				const versionContainer = document.getElementById('coolwsd-version');
-				versionContainer.replaceChildren();
-
-				versionContainer.appendChild(document.createTextNode(this.WSDServer.Version));
-
-				let span = document.createElement('span');
-				span.appendChild(document.createTextNode('git hash:\xA0'));
-				span.appendChild(anchor);
-				span.appendChild(document.createTextNode(this.WSDServer.Options));
-				versionContainer.appendChild(span);
-			}
-			else {
-				document.getElementById('coolwsd-version').textContent = this.WSDServer.Version;
-			}
-
-			if (!window.ThisIsAMobileApp) {
-				var idUri = window.makeHttpUrl('/hosting/discovery');
-				$('#served-by-label').text(_('Served by:'));
-				$('#coolwsd-id').html('<a target="_blank" href="' + idUri + '">' + this.WSDServer.Id + '</a>');
-			}
+			Object.assign(window.app.serverInfo, {
+				coolwsdVersion: this.WSDServer.Version || '',
+				coolwsdHash: this.WSDServer.Hash || '',
+				serverId: this.WSDServer.Id || '',
+				wsdOptions: this.WSDServer.Options || '',
+			});
 
 			// TODO: For now we expect perfect match in protocol versions
 			if (this.WSDServer.Protocol !== this.ProtocolVersionNumber) {
@@ -728,41 +706,23 @@ app.definitions.Socket = class Socket extends SocketBase {
 			}
 		}
 		else if (textMsg.startsWith('lokitversion ')) {
-			document.getElementById('lokit-version-label').textContent = _('LOKit version:');
-
 			const lokitVersionObj = JSON.parse(textMsg.substring(textMsg.indexOf('{')));
 
-			const versionContainer = document.getElementById('lokit-version');
-			versionContainer.replaceChildren();
-			versionContainer.appendChild(document.createTextNode(lokitVersionObj.ProductName + '\xA0' + lokitVersionObj.ProductVersion + lokitVersionObj.ProductExtension));
-
-			h = lokitVersionObj.BuildId.substring(0, 10);
-			if (parseInt(h,16).toString(16) === h.toLowerCase().replace(/^0+/, '')) {
-				const anchor = document.createElement('a');
-				anchor.setAttribute('target', '_blank');
-				anchor.setAttribute('href', 'https://git.libreoffice.org/core/+log/' + lokitVersionObj.BuildId + '/');
-				anchor.textContent = 'git hash: ' + h;
-
-				const span = document.createElement('span');
-				span.appendChild(anchor);
-				versionContainer.appendChild(span);
-			}
-			else {
-				const span = document.createElement('span');
-				span.textContent = 'git hash:\xA0' + h;
-				versionContainer.appendChild(span);
-			}
-
 			this.TunnelledDialogImageCacheSize = lokitVersionObj.tunnelled_dialog_image_cache_size;
+
+			Object.assign(window.app.serverInfo, {
+				lokitVersionName: lokitVersionObj.ProductName,
+				lokitVersionNumber: lokitVersionObj.ProductVersion,
+				lokitVersionSuffix: lokitVersionObj.ProductExtension,
+				lokitHash: lokitVersionObj.BuildId,
+			});
 		}
 		else if (textMsg.startsWith('enabletraceeventlogging ')) {
 			this.enableTraceEventLogging = true;
 		}
 		else if (textMsg.startsWith('osinfo ')) {
-			var osInfo = textMsg.replace('osinfo ', '');
-			var osInfoElement = document.getElementById('os-info');
-			if (osInfoElement)
-				osInfoElement.innerText = osInfo;
+			const osInfo = textMsg.replace('osinfo ', '');
+			window.app.serverInfo.osInfo = osInfo;
 		}
 		else if (textMsg.startsWith('clipboardkey: ')) {
 			var key = textMsg.substring('clipboardkey: '.length);
