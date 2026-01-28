@@ -639,6 +639,13 @@ app.definitions.Socket = class Socket extends SocketBase {
 
 		var command = this.parseServerCmd(textMsg);
 
+		if (textMsg.startsWith('TODO-REDIRECT ')) {
+			if (confirm(
+				"Multiple users are editing this document. Start collaborating?"))
+			{
+				window.location.replace(textMsg.substring(14));
+			}
+		}
 		if (textMsg.startsWith('coolserver ')) {
 			// This must be the first message, unless we reconnect.
 			var oldVersion = null;

@@ -12,6 +12,7 @@
 #pragma once
 
 #include <memory>
+#include <thread>
 
 #include <QObject>
 #include <QVariant>
@@ -88,6 +89,7 @@ private:
     bool _isWelcome;
     Bridge* _bridge;
     std::unique_ptr<ServerConnection> _serverConnection;
+    std::jthread _serverThread;
 
     static std::vector<WebView*> s_instances;
 };

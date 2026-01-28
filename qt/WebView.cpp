@@ -18,6 +18,7 @@
 #include "FileUtil.hpp"
 #include "JsonUtil.hpp"
 #include "Log.hpp"
+#include "StateEnum.hpp"
 #include "Uri.hpp"
 #include "qt.hpp"
 #include <Poco/JSON/Object.h>
@@ -25,10 +26,13 @@
 #include <Poco/Path.h>
 
 #include <cassert>
+#include <condition_variable>
 #include <cstdlib>
 #include <cstring>
 #include <memory>
+#include <mutex>
 #include <optional>
+#include <thread>
 
 #include <boost/asio/connect.hpp>
 #include <boost/asio/ip/tcp.hpp>
@@ -46,6 +50,7 @@
 #include <QGuiApplication>
 #include <QScreen>
 #include <QTimer>
+#include <QWebEngineCertificateError>
 #include <QWebEngineFullScreenRequest>
 #include <QWebEngineSettings>
 #include <QFile>
@@ -342,9 +347,17 @@ CODAWebEngineView::~CODAWebEngineView()
 struct WebView::ServerConnection {
     ServerConnection(): ctx(boost::asio::ssl::context::tlsv12_client), ws(ioc, ctx) {}
 
+    STATE_ENUM(State, Initial, Authenticated, Fetched);
+
     boost::asio::io_context ioc;
     boost::asio::ssl::context ctx;
     boost::beast::websocket::stream<boost::beast::ssl_stream<boost::asio::ip::tcp::socket>> ws;
+
+    std::mutex mutex;
+    std::condition_variable cv;
+    State state = State::Initial;
+    std::string response;
+    bool multiUser = false;
 };
 
 WebView::WebView(QWebEngineProfile* profile, bool isWelcome)
@@ -389,6 +402,14 @@ WebView::WebView(QWebEngineProfile* profile, bool isWelcome)
 }
 
 WebView::~WebView() {
+    if (_serverThread.joinable()) {
+        assert(_serverConnection);
+        _serverThread.request_stop();
+        boost::beast::error_code ec;
+        _serverConnection->ws.close(boost::beast::websocket::close_code::normal, ec);
+        _serverThread.join();
+    }
+
     std::erase(s_instances, this);
 
     // Only delete our bridge - Qt's parent-child ownership handles the rest
@@ -450,6 +471,9 @@ std::optional<bool> portalPrefersDark() {
 
 void WebView::load(const Poco::URI& fileURL, bool newFile, bool isStarterMode)
 {
+    bool requestRedirect = false;
+    std::string redirectUrl;
+
     if (isStarterMode)
     {
         // Starter screen mode: no COOLWSD connection needed
@@ -501,6 +525,16 @@ void WebView::load(const Poco::URI& fileURL, bool newFile, bool isStarterMode)
             assert(!_isWelcome);
             assert(!newFile);
 
+            _webView->page()->settings()->setAttribute(
+                QWebEngineSettings::LocalContentCanAccessRemoteUrls, true);
+#if ENABLE_DEBUG
+            QObject::connect(
+                _webView->page(), &QWebEnginePage::certificateError,
+                [](QWebEngineCertificateError const & certificateError) {
+                    const_cast<QWebEngineCertificateError &>(certificateError).acceptCertificate();
+                });
+#endif
+
             try
             {
                 std::optional<std::string> accessToken;
@@ -538,20 +572,100 @@ void WebView::load(const Poco::URI& fileURL, bool newFile, bool isStarterMode)
                     fileURL.getHost() + ":" + std::to_string(ep.port()),
                     fileURL.getPath() + "/co/collab?WOPISrc=" + Uri::encode(*wopiSrc));
 
+                redirectUrl = "https://" + fileURL.getHost() + ":" + std::to_string(ep.port())
+                    + fileURL.getPath() + "/browser/0000000000/cool.html?WOPISrc="
+                    + Uri::encode(*wopiSrc) + "&access_token=" + Uri::encode(*accessToken);
+                assert(!_serverThread.joinable());
+                _serverThread = std::jthread(
+                    [this, redirectUrl](std::stop_token stop) {
+                        Util::setThreadName("serverThread");
+                        for (auto done = false; !done;) {
+                            boost::beast::flat_buffer buffer;
+                            boost::beast::error_code ec;
+                            _serverConnection->ws.read(buffer, ec);
+                            if (ec) {
+                                if (ec == boost::beast::websocket::error::closed
+                                    && stop.stop_requested())
+                                {
+                                    break;
+                                }
+                            }
+                            std::string response = boost::beast::buffers_to_string(buffer.data());
+                            ServerConnection::State state;
+                            {
+                                std::scoped_lock l(_serverConnection->mutex);
+                                state = _serverConnection->state;
+                            }
+                            switch (state) {
+                            case ServerConnection::State::Initial:
+                                if (response.starts_with("progress:")) {
+                                    // ignore
+                                } else if (response.starts_with("{\"type\":\"user_list\"")) {
+                                    Poco::JSON::Object::Ptr json;
+                                    if (!JsonUtil::parseJSON(response, json)) {
+                                        std::abort(); //TODO
+                                    }
+                                    auto const users = json->getArray("users");
+                                    if (!users) {
+                                        std::abort(); //TODO
+                                    }
+                                    if (!users->empty()) {
+                                        _serverConnection->multiUser = true;
+                                    }
+                                } else if (response == "authenticated") {
+                                    {
+                                        std::scoped_lock l(_serverConnection->mutex);
+                                        _serverConnection->state
+                                            = ServerConnection::State::Authenticated;
+                                    }
+                                    _serverConnection->cv.notify_all();
+                                } else {
+                                    std::abort(); //TODO
+                                }
+                                break;
+                            case ServerConnection::State::Authenticated:
+                                if (response.starts_with("{\"type\":\"fetch_url\"")) {
+                                    {
+                                        std::scoped_lock l(_serverConnection->mutex);
+                                        _serverConnection->state
+                                            = ServerConnection::State::Fetched;
+                                        _serverConnection->response = std::move(response);
+                                    }
+                                    _serverConnection->cv.notify_all();
+                                } else {
+                                    std::abort(); //TODO
+                                }
+                                break;
+                            case ServerConnection::State::Fetched:
+                                if (response.empty()) {
+                                    done = true;
+                                } else if (response.starts_with("{\"type\":\"user_joined\"")) {
+                                    _bridge->send2JS("TODO-REDIRECT " + redirectUrl);
+                                    break;
+                                } else if (response.starts_with("{\"type\":\"user_left\"")) {
+
+                                } else {
+                                    std::abort(); //TODO
+                                }
+                                break;
+                            default:
+                                std::abort(); //TODO: unreachable
+                            }
+                        }
+                    });
+
                 _serverConnection->ws.write(
                     boost::asio::buffer(std::string("access_token " + *accessToken)));
-                for (;;) {
-                    boost::beast::flat_buffer buffer;
-                    _serverConnection->ws.read(buffer);
-                    std::string response = boost::beast::buffers_to_string(buffer.data());
-                    if (response.starts_with("progress:")
-                        || response.starts_with("{\"type\":\"user_list\""))
-                    {
-                        // ignore
-                    } else if (response == "authenticated") {
-                        break;
-                    } else {
-                        std::abort(); //TODO
+                {
+                    std::unique_lock l(_serverConnection->mutex);
+                    _serverConnection->cv.wait(
+                        l,
+                        [this] {
+                            return _serverConnection->state
+                                == ServerConnection::State::Authenticated;
+                        });
+                    if (_serverConnection->multiUser) {
+                        requestRedirect = true;
                     }
                 }
 
@@ -559,18 +673,23 @@ void WebView::load(const Poco::URI& fileURL, bool newFile, bool isStarterMode)
                     boost::asio::buffer(
                         std::string(
                             "{\"type\":\"fetch\",\"stream\":\"contents\",\"requestId\":\"coda-init\"}")));
-                std::string url;
+                std::string response;
                 {
-                    boost::beast::flat_buffer buffer;
-                    _serverConnection->ws.read(buffer);
-                    std::string response = boost::beast::buffers_to_string(buffer.data());
-                    Poco::JSON::Object::Ptr json;
-                    if (!JsonUtil::parseJSON(response, json)) {
-                        std::abort(); //TODO
-                    }
-                    if (!JsonUtil::findJSONValue(json, "url", url)) {
-                        std::abort(); //TODO
-                    }
+                    std::unique_lock l(_serverConnection->mutex);
+                    _serverConnection->cv.wait(
+                        l,
+                        [this] {
+                            return _serverConnection->state == ServerConnection::State::Fetched;
+                        });
+                    response = std::move(_serverConnection->response);
+                }
+                Poco::JSON::Object::Ptr json;
+                if (!JsonUtil::parseJSON(response, json)) {
+                    std::abort(); //TODO
+                }
+                std::string url;
+                if (!JsonUtil::findJSONValue(json, "url", url)) {
+                    std::abort(); //TODO
                 }
 
                 boost::beast::ssl_stream<boost::beast::tcp_stream> stream(
@@ -686,6 +805,10 @@ void WebView::load(const Poco::URI& fileURL, bool newFile, bool isStarterMode)
         _webView->window()->setWindowTitle(applicationTitle);
 
     _webView->load(QUrl(QString::fromStdString(urlAndQueryStr)));
+
+    if (requestRedirect) {
+        _bridge->redirect = redirectUrl;
+    }
 
     auto size = getWindowSize(_isWelcome || isStarterMode);
 

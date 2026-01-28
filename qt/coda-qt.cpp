@@ -492,7 +492,11 @@ void Bridge::send2JS(const std::vector<char>& buffer)
         return;
 
     const std::string_view bufferView(buffer.data(), buffer.size());
+    send2JS(bufferView);
+}
 
+void Bridge::send2JS(std::string_view bufferView)
+{
     LOG_TRC_NOFILE(
         "Send to JS: " << COOLProtocol::getAbbreviatedMessage(bufferView.data(), bufferView.size()));
 
@@ -763,6 +767,10 @@ QVariant Bridge::cool(const QString& messageStr)
         std::string message(_document._fileURL.toString() +
                             (" " + std::to_string(_document._appDocId)));
         fakeSocketWriteQueue(_document._fakeClientFd, message.c_str(), message.size());
+
+        if (redirect) {
+            send2JS("TODO-REDIRECT " + *redirect);
+        }
     }
     else if (message == "WELCOME")
     {

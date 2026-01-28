@@ -15,6 +15,7 @@
 #include <QObject>
 #include <QVariant>
 #include <string>
+#include <string_view>
 #include <thread>
 #include "Document.hpp"
 
@@ -60,9 +61,12 @@ public:
 
     // send Online → JS
     void send2JS(const std::vector<char>& buffer);
+    void send2JS(std::string_view buffer);
 
     bool isModified() const { return _modified; }
     bool isPendingSave() const { return _pendingSave; }
+
+    std::optional<std::string> redirect;
 
 public slots: // called from JavaScript
     // Called from JS via window.postMobileMessage
