@@ -3076,3 +3076,7 @@ div [id^='themeview'].ui-iconview-entry, div [id^='themeview1col'].ui-iconview-e
 #imSetInsMode {
 	content: url('images/queryinsmode.svg');
 }
+
+#ManageStylePage #box1 #desc {
+	display: block;
+}
