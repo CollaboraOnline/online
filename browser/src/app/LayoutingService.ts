@@ -60,6 +60,13 @@ class LayoutingService {
 		this._requestedFrame = null;
 	}
 
+	// Called by CanvasSectionContainer after it synchronously flushes tasks
+	public triggerDrainCallbacks(): void {
+		if (!this.hasTasksPending()) {
+			this._runDrainCallbacks();
+		}
+	}
+
 	// internal implementation below
 
 	private _setupTimer() {

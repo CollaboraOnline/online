@@ -597,6 +597,9 @@ class CanvasSectionContainer {
 			layoutingService.cancelFrame();
 
 		while (layoutingService.runTheTopTask());
+
+		// Trigger drain callbacks since we bypassed the normal async flow
+		layoutingService.triggerDrainCallbacks();
 	}
 
 	private isCanvasSizeValidAfterDisplayChange(): boolean {
