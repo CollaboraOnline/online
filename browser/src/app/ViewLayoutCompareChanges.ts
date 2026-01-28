@@ -14,7 +14,7 @@ enum TileMode {
 	RightSide = 2,
 }
 
-class ViewLayoutCompareChanges extends ViewLayoutMultiPage {
+class ViewLayoutCompareChanges extends ViewLayoutNewBase {
 	public readonly type: string = 'ViewLayoutCompareChanges';
 	private halfWidth = 0; // Half width of the view.
 	private viewGap = Math.round(20 / app.dpiScale); // The gap between the 2 views.
@@ -22,6 +22,8 @@ class ViewLayoutCompareChanges extends ViewLayoutMultiPage {
 
 	constructor() {
 		super();
+
+		this.updateViewData();
 	}
 
 	protected refreshCurrentCoordList() {
@@ -64,8 +66,6 @@ class ViewLayoutCompareChanges extends ViewLayoutMultiPage {
 	protected updateViewData() {
 		Util.ensureValue(app.activeDocument);
 
-		if (!app.file.writer.pageRectangleList.length) return;
-
 		const anchorSection = this.getDocumentAnchorSection();
 		this.halfWidth = Math.round(anchorSection.size[0] * 0.5);
 
@@ -91,21 +91,26 @@ class ViewLayoutCompareChanges extends ViewLayoutMultiPage {
 		TileManager.checkRequestTiles(this.currentCoordList);
 	}
 
-	public documentToViewX(point: cool.SimplePoint): number {
+	private getDeflectionX(mode: TileMode): number {
 		Util.ensureValue(app.activeDocument);
 
-		if (point.mode === TileMode.LeftSide)
+		if (mode === TileMode.LeftSide)
 			return (
 				this.halfWidth -
-				app.activeDocument.fileSize.pX +
-				point.pX -
+				app.activeDocument.fileSize.pX -
 				this.scrollProperties.viewX -
 				this.viewGap
 			);
-		else
-			return (
-				point.pX - this.scrollProperties.viewX + this.halfWidth + this.viewGap
-			);
+		else return this.halfWidth + this.viewGap - this.scrollProperties.viewX;
+	}
+
+	public documentToViewX(point: cool.SimplePoint): number {
+		Util.ensureValue(app.activeDocument);
+
+		// Default to right side.
+		if (point.mode === -1) point.mode = TileMode.RightSide;
+
+		return point.pX + this.getDeflectionX(point.mode);
 	}
 
 	public documentToViewY(point: cool.SimplePoint): number {
@@ -115,20 +120,27 @@ class ViewLayoutCompareChanges extends ViewLayoutMultiPage {
 	public canvasToDocumentPoint(point: cool.SimplePoint): cool.SimplePoint {
 		const result = point.clone();
 
-		if (this.scrollProperties.viewX) result.pX += this.scrollProperties.viewX;
-		result.pY += this.scrollProperties.viewY;
+		point.mode =
+			point.pX < this.halfWidth ? TileMode.LeftSide : TileMode.RightSide;
+
+		result.pX -= this.getDeflectionX(point.mode);
+		result.pY += this.scrollProperties.viewY - this.yStart;
 
 		return result;
 	}
 
-	public scrollTo(pX: number, pY: number): void {
-		const point = cool.SimplePoint.fromCorePixels([pX, pY]);
-		if (!this.viewedRectangle.containsPoint(point.toArray())) {
-			return;
-		}
+	public canScrollHorizontal(documentAnchor: CanvasSectionObject): boolean {
+		return this.viewSize.pX > Math.round(documentAnchor.size[0] * 0.5);
 	}
 
-	public reset() {
-		this.updateViewData();
+	public scroll(pX: number, pY: number): boolean {
+		const scrolled = super.scroll(pX, pY);
+
+		if (scrolled) {
+			this.updateViewData();
+			app.sectionContainer.requestReDraw();
+		}
+
+		return scrolled;
 	}
 }

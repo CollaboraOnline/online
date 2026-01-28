@@ -321,8 +321,8 @@ class ViewLayoutBase {
 			Math.floor(this._viewedRectangle.pY1 / TileManager.tileSize) *
 			TileManager.tileSize;
 
-		for (let i = 0; i < columnCount; i++) {
-			for (let j = 0; j < rowCount; j++) {
+		for (let i = 0; i <= columnCount; i++) {
+			for (let j = 0; j <= rowCount; j++) {
 				const coords = new TileCoordData(
 					startX + i * TileManager.tileSize,
 					startY + j * TileManager.tileSize,
@@ -330,7 +330,7 @@ class ViewLayoutBase {
 					0,
 				);
 
-				if (coords.x >= 0 && coords.y >= 0) this.currentCoordList.push(coords);
+				if (TileManager.isValidTile(coords)) this.currentCoordList.push(coords);
 			}
 		}
 	}
@@ -408,7 +408,7 @@ class ViewLayoutBase {
 	// This function shouldn't care about the document content, size etc.
 	// All this cares is the current scroll position and the scroll length.
 	// For making a portion of the document visible, use other methods.
-	private scrollVertical(pY: number): void {
+	protected scrollVertical(pY: number): void {
 		const scrollProps: ScrollProperties = this.scrollProperties;
 
 		let control = scrollProps.moveBy ? scrollProps.moveBy[1] : 0; // Add pending offset.
