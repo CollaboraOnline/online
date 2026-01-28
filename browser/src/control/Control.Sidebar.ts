@@ -148,16 +148,20 @@ class Sidebar extends SidebarBase {
 
 					// schedule focus after animation so it will not shift the browser page
 					if (this.isUserRequest) {
-						setTimeout(() => {
-							app.layoutingService.appendLayoutingTask(() => {
-								const focusables = JSDialog.GetFocusableElements(
-									this.container,
-								);
-								if (focusables && focusables.length) {
-									focusables[0].focus();
-								}
-							});
-						}, 250); // see animation time in #sidebar-dock-wrapper.visible
+						app.timerRegistry.setTimeout(
+							'sidebarstealfocus',
+							() => {
+								app.layoutingService.appendLayoutingTask(() => {
+									const focusables = JSDialog.GetFocusableElements(
+										this.container,
+									);
+									if (focusables && focusables.length) {
+										focusables[0].focus();
+									}
+								});
+							},
+							250,
+						); // see animation time in #sidebar-dock-wrapper.visible
 					}
 				}
 
