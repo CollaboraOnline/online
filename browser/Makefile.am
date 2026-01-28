@@ -1265,7 +1265,8 @@ pot:
 		src/map/handler/Map.Settings.ts \
 		src/slideshow/PauseTimer.ts \
 		src/slideshow/PresenterConsole.js \
-		src/slideshow/SlideShowPresenter.ts
+		src/slideshow/SlideShowPresenter.ts \
+		templates/templates.js
 
 	html2po --pot --input=html/cool-help.html --output=po/templates/cool-help.pot --duplicates=merge
 	html2po --pot --input=descriptions/google-play.html --output=po/templates/descriptions.pot --duplicates=merge --keepcomments
