@@ -16,10 +16,11 @@ if !ENABLE_MOBILEAPP
 L10N_JSON = $(patsubst $(srcdir)/po/help-%.po,$(DIST_FOLDER)/l10n/help-%.json,$(L10N_PO))
 L10N_JSON += $(patsubst $(srcdir)/po/ui-%.po,$(DIST_FOLDER)/l10n/ui-%.json,$(L10N_PO))
 else
-L10N_IOS_ALL_JS = $(DIST_FOLDER)/l10n-all.js
-L10N_JSON = $(L10N_IOS_ALL_JS)
+L10N_ALL_JS = $(DIST_FOLDER)/l10n-all.js
+L10N_JSON = $(L10N_ALL_JS)
+L10N_ALL_JS_ENTRY = l10n-all.js
 
-$(L10N_IOS_ALL_JS) : $(wildcard $(srcdir)/po/ui-*.po) $(wildcard $(srcdir)/po/help-*.po) $(shell find $(srcdir)/l10n -name '*.*') $(srcdir)/util/create-l10n-all-js.pl
+$(L10N_ALL_JS) : $(wildcard $(srcdir)/po/ui-*.po) $(wildcard $(srcdir)/po/help-*.po) $(shell find $(srcdir)/l10n -name '*.*') $(srcdir)/util/create-l10n-all-js.pl
 	for F in $(wildcard $(srcdir)/po/ui-*.po); do \
 		$(srcdir)/util/po2json.py $$F -o $$F.json; \
 	done
@@ -755,7 +756,7 @@ endef
 define bundle_all
 	$(if $(IS_SEPARATE),\
 		@touch $@,\
-		$(QUIET_M4) m4 -PE -DL10N_IOS_ALL_JS=$(L10N_IOS_ALL_JS) \
+		$(QUIET_M4) m4 -PE -DL10N_ALL_JS=$(L10N_ALL_JS) \
 			-DNODE_MODULES_JS=$(subst $(SPACE),$(COMMA),$(NODE_MODULES_JS)) \
 			-DCOOL_LIBS_JS=$(subst $(SPACE),$(COMMA),$(COOL_LIBS_JS_SRC)) \
 			-DCOOL_JS=$(INTERMEDIATE_DIR)/cool-src.js \
@@ -959,7 +960,7 @@ $(INTERMEDIATE_DIR)/COOL_JS.m4.jslist: $(COOL_JS_DST)
 	$(QUIET_CMP) if cmp -s $(INTERMEDIATE_DIR)/COOL_JS.m4.jslist.tmp $(INTERMEDIATE_DIR)/COOL_JS.m4.jslist; then rm $(INTERMEDIATE_DIR)/COOL_JS.m4.jslist.tmp; else mv $(INTERMEDIATE_DIR)/COOL_JS.m4.jslist.tmp $(INTERMEDIATE_DIR)/COOL_JS.m4.jslist; fi
 
 $(INTERMEDIATE_DIR)/COOL_JS.m4: $(INTERMEDIATE_DIR)/COOL_JS.m4.jslist
-	$(foreach file,$(NODE_MODULES_JS) $(COOL_LIBS_JS) $(patsubst %.ts,%.js,$(COOL_JS_WEBORDER)), $(shell echo -n $(file), >> $(INTERMEDIATE_DIR)/COOL_JS.m4.tmp))
+	$(foreach file,$(L10N_ALL_JS_ENTRY) $(NODE_MODULES_JS) $(COOL_LIBS_JS) $(patsubst %.ts,%.js,$(COOL_JS_WEBORDER)), $(shell echo -n $(file), >> $(INTERMEDIATE_DIR)/COOL_JS.m4.tmp))
 	@truncate $(if $(filter Darwin FreeBSD,$(shell uname -s)),-s -1,--size=-1) $(INTERMEDIATE_DIR)/COOL_JS.m4.tmp
 	@mv $(INTERMEDIATE_DIR)/COOL_JS.m4.tmp $(INTERMEDIATE_DIR)/COOL_JS.m4
 
