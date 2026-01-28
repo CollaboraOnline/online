@@ -99,7 +99,7 @@ class A11yValidator {
 
 				if (isFocusable) {
 					throw new A11yValidatorException(
-						`In '${this.getDialogTitle(element)}' at '${this.getElementPath(img)}': focusable image in widget of type '${type}' has empty alt attribute (screen readers need alt text for focusable images)`,
+						`In '${this.getDialogTitle(element)}' at '${this.getElementPath(img)}': focusable image in widget of type '${type}' has empty alt attribute (screen readers need alt text for focusable images) or make it decorative by removing tabIndex`,
 					);
 				}
 
