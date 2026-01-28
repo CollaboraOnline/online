@@ -261,6 +261,7 @@ COOL_JS_LST =\
 	src/app/TableMiddleware.ts \
 	src/app/ImpressSelectionMiddleware.ts \
 	src/app/ViewLayout.ts \
+	src/app/ViewLayoutNewBase.ts \
 	src/app/ViewLayoutWriter.ts \
 	src/app/ViewLayoutMultiPage.ts \
 	src/app/ViewLayoutCompareChanges.ts \
