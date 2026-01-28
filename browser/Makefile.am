@@ -402,6 +402,8 @@ COOL_JS_LST =\
 	src/map/handler/Map.WOPI.js \
 	src/control/jsdialog/Util.UniqueId.ts \
 	src/control/jsdialog/Definitions.MenuCommands.ts \
+	src/control/jsdialog/Control.ts \
+	src/control/jsdialog/Control.ContextMenu.ts \
 	src/control/Control.AboutDialog.ts \
 	src/control/Control.Toolbar.js \
 	src/control/Control.Command.js \

@@ -126,21 +126,46 @@ class MouseControl extends CanvasSectionObject {
 		}
 	}
 
+	// Gets the mouse position either on browser page or within the
+	// canvas in css pixels.
+	private _getMousePosition(browserPage: boolean): cool.PointLike {
+		Util.ensureValue(app.activeDocument);
+		const pagePosition = this.currentPosition.clone();
+		let docTLx = app.activeDocument.activeLayout.viewedRectangle.pX1;
+		let docTLy = app.activeDocument.activeLayout.viewedRectangle.pY1;
+		if (app.map.getDocType() === 'spreadsheet') {
+			if (app.isXOrdinateInFrozenPane(pagePosition.pX)) {
+				docTLx = 0;
+			}
+
+			if (app.isYOrdinateInFrozenPane(pagePosition.pY)) {
+				docTLy = 0;
+			}
+		}
+		pagePosition.pX -= docTLx - this.containerObject.getDocumentAnchor()[0];
+		pagePosition.pY -= docTLy - this.containerObject.getDocumentAnchor()[1];
+		if (browserPage) {
+			const boundingClientRectangle =
+				this.context.canvas.getBoundingClientRect();
+			return {
+				x: pagePosition.cX + boundingClientRectangle.x,
+				y: pagePosition.cY + boundingClientRectangle.y,
+			};
+		}
+		return {
+			x: pagePosition.cX,
+			y: pagePosition.cY,
+		};
+	}
+
 	// Gets the mouse position on browser page in CSS pixels.
 	public getMousePagePosition() {
-		Util.ensureValue(app.activeDocument);
-		const boundingClientRectangle = this.context.canvas.getBoundingClientRect();
-		const pagePosition = this.currentPosition.clone();
-		pagePosition.pX -=
-			app.activeDocument.activeLayout.viewedRectangle.pX1 -
-			this.containerObject.getDocumentAnchor()[0];
-		pagePosition.pY -=
-			app.activeDocument.activeLayout.viewedRectangle.pY1 -
-			this.containerObject.getDocumentAnchor()[1];
-		return {
-			x: pagePosition.cX + boundingClientRectangle.left,
-			y: pagePosition.cY + boundingClientRectangle.top,
-		};
+		return this._getMousePosition(true);
+	}
+
+	// Gets the mouse position on canvas in CSS pixels.
+	public getMouseCanvasPosition() {
+		return this._getMousePosition(false);
 	}
 
 	// This is useful when a section handles the event but wants to set the document mouse position.
