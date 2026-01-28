@@ -9,6 +9,11 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+enum TileMode {
+	LeftSide = 1,
+	RightSide = 2,
+}
+
 class ViewLayoutCompareChanges extends ViewLayoutMultiPage {
 	public readonly type: string = 'ViewLayoutCompareChanges';
 	private halfWidth = 0; // Half width of the view.
@@ -28,10 +33,16 @@ class ViewLayoutCompareChanges extends ViewLayoutMultiPage {
 			const item: TileCoordData = this.currentCoordList[i];
 
 			additionalCoords.push(
-				new TileCoordData(item.x, item.y, item.z, item.part, 2),
+				new TileCoordData(
+					item.x,
+					item.y,
+					item.z,
+					item.part,
+					TileMode.RightSide,
+				),
 			);
 
-			item.mode = 1;
+			item.mode = TileMode.LeftSide;
 		}
 
 		for (let i = 0; i < additionalCoords.length; i++) {
@@ -83,7 +94,7 @@ class ViewLayoutCompareChanges extends ViewLayoutMultiPage {
 	public documentToViewX(point: cool.SimplePoint): number {
 		Util.ensureValue(app.activeDocument);
 
-		if (point.mode === 1)
+		if (point.mode === TileMode.LeftSide)
 			return (
 				this.halfWidth -
 				app.activeDocument.fileSize.pX +
