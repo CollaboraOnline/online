@@ -741,26 +741,25 @@ class Dispatcher {
 
 		this.actionsMap['comparechanges'] = function () {
 			if (app.activeDocument && app.activeDocument.activeLayout) {
-				let commandState = false;
-				if (
-					app.activeDocument.activeLayout.type === 'ViewLayoutCompareChanges'
-				) {
-					app.activeDocument.activeLayout = new ViewLayoutWriter();
-				} else {
-					app.activeDocument.activeLayout = new ViewLayoutCompareChanges();
-					commandState = true;
-				}
+				Util.ensureValue(app.activeDocument);
+				app.socket.sendMessage('uno .uno:RedlineRenderMode');
+
+				const commandState =
+					app.activeDocument.activeLayout.type === 'ViewLayoutCompareChanges';
 
 				app.map.fire('commandstatechanged', {
 					commandName: 'comparechanges',
-					state: commandState ? 'true' : 'false',
+					state: !commandState ? 'true' : 'false',
 				});
+
+				app.activeDocument.activeLayout = commandState
+					? new ViewLayoutWriter()
+					: new ViewLayoutCompareChanges();
+
+				TileManager.redraw();
 				app.activeDocument.activeLayout.sendClientVisibleArea();
 				app.sectionContainer.requestReDraw();
 			}
-
-			Util.ensureValue(app.activeDocument);
-			app.socket.sendMessage('uno .uno:RedlineRenderMode');
 		};
 	}
 

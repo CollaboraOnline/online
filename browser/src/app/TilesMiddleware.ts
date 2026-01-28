@@ -1992,8 +1992,8 @@ class TileManager {
 		if (coords.x < 0 || coords.y < 0) {
 			return false;
 		} else if (
-			coords.x * app.pixelsToTwips > app.activeDocument.fileSize.x ||
-			coords.y * app.pixelsToTwips > app.activeDocument.fileSize.y
+			coords.x * app.pixelsToTwips >= app.activeDocument.fileSize.x ||
+			coords.y * app.pixelsToTwips >= app.activeDocument.fileSize.y
 		) {
 			return false;
 		} else return true;
