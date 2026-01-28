@@ -215,6 +215,8 @@ JSDialog.iconView = function (
 		position: number,
 		iconViewData: IconViewJSON,
 	) => {
+		if (!iconViewData.entries) return;
+
 		for (const entry of iconViewData.entries) {
 			entry.selected = false;
 		}
@@ -388,6 +390,12 @@ JSDialog.iconView = function (
 	});
 
 	app.layoutingService.appendLayoutingTask(() => {
+		const shouldSelectFirstEntry =
+			data?.entries?.length > 0
+				? !data.entries.some((entry) => entry.selected === true)
+				: false;
+		if (shouldSelectFirstEntry) data.entries[0].selected = true;
+
 		for (const i in data.entries) {
 			_iconViewEntry(iconview, data, data.entries[i], builder);
 		}

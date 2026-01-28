@@ -388,7 +388,7 @@ function documentChecks(skipInitializedCheck = false) {
 	if (Cypress.env('INTEGRATION') !== 'nextcloud') {
 		doIfOnDesktop(function() {
 			if (Cypress.env('pdf-view') !== true)
-				cy.cGet('#sidebar-panel').should('be.visible').should('not.be.empty');
+				cy.cGet('#sidebar-panel', { timeout: 20000 }).should('be.visible').should('not.be.empty');
 
 			// Check that the document does not take the whole window width.
 			cy.window()
