@@ -27,11 +27,22 @@ function plugin(on, config) {
 		if (process.env.ENABLE_CONSOLE_LOG) {
 			const logToOutput = require('cypress-log-to-output')
 
+			// Log levels in order of priority (highest to lowest)
+			const logLevels = ['error', 'warning', 'log', 'info', 'debug', 'verbose'];
+			const configuredLevel = process.env.ENABLE_CONSOLE_LOG.toLowerCase();
+			// Find the index of the configured level, default to 'error' if not found
+			let maxLevelIndex = logLevels.indexOf(configuredLevel);
+			if (maxLevelIndex === -1) {
+				// If value is just truthy (e.g., "1" or "true"), default to error
+				maxLevelIndex = 0;
+			}
+
 			logToOutput.install(on, function(type, event) {
-				if (event.level === 'error' || event.type === 'error') {
+				if (event.type === 'error') {
 					return true;
 				}
-				return false;
+				const eventLevelIndex = logLevels.indexOf(event.level);
+				return eventLevelIndex !== -1 && eventLevelIndex <= maxLevelIndex;
 			});
 
 			launchOptions = logToOutput.browserLaunchHandler(browser, launchOptions);

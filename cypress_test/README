@@ -254,11 +254,27 @@ Unfortunately this does not work for multi-user tests.
 
 2. ENABLE_CONSOLE_LOG
 
-With this flag we can enable logging for console.error() messages and so they
-will be displayed in the terminal. It's useful when we can reproduce a test
+With this flag we can enable logging for browser console messages which will
+be displayed in the terminal. It's useful when we can reproduce a test
 failure only in headless mode and we need to debug the client-side JS code.
 
+The value specifies the minimum log level to display. Each level includes
+all higher priority levels above it:
+
+    error   - console.error() only (default when set to "1" or "true")
+    warning - console.warn() and above
+    log     - console.log() and above
+    info    - console.info() and above
+    debug   - console.debug() and above
+    verbose - all console output
+
+Examples:
+
     ENABLE_CONSOLE_LOG="1" make check-mobile spec=writer/apply_font_spec.js
+    ENABLE_CONSOLE_LOG="error" make check-mobile spec=writer/apply_font_spec.js
+    ENABLE_CONSOLE_LOG="warning" make check-mobile spec=writer/apply_font_spec.js
+    ENABLE_CONSOLE_LOG="log" make check-mobile spec=writer/apply_font_spec.js
+    ENABLE_CONSOLE_LOG="verbose" make check-mobile spec=writer/apply_font_spec.js
 
 3. CYPRESS_A11Y (true|false, default: true)
 You can enable/disable accessibility support during running a test suite.
@@ -312,9 +328,10 @@ Used Packages
     cy.log() in the test code.
 
 - cypress-log-to-output:
-    This one can be used to dump console.error() messages to the command
+    This one can be used to dump browser console messages to the command
     line. To enable this functionality you need to set ENABLE_CONSOLE_LOG
-    environment variable. e.g. `ENABLE_CONSOLE_LOG="1" make check-mobile`.
+    environment variable to a log level (error, warning, log, info, debug,
+    verbose). e.g. `ENABLE_CONSOLE_LOG="warning" make check-mobile`.
 
 - cypress-select-tests:
     We can filter out tests or test suites before execution using this
