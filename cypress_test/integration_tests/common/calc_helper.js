@@ -333,7 +333,6 @@ function assertNumberofSheets(n) {
 function selectOptionFromContextMenu(contextMenu) {
 	cy.log('>> selectOptionFromContextMenu - start');
 
-	cy.wait(1000);
 	cy.cGet('.spreadsheet-tab.spreadsheet-tab-selected').rightclick();
 	cy.cGet('body').contains('.context-menu-link', contextMenu).click();
 
@@ -348,8 +347,7 @@ function selectOptionMobileWizard(menu) {
 	};
 
 	cy.cGet('.spreadsheet-tab.spreadsheet-tab-selected')
-		.trigger('pointerdown', eventOptions)
-		.wait(1000);
+		.trigger('pointerdown', eventOptions);
 
 	cy.cGet('body').contains('.ui-header.level-0.mobile-wizard.ui-widget', menu)
 		.click();
