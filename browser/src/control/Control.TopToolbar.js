@@ -103,6 +103,8 @@ class TopToolbar extends JSDialog.Toolbar {
 		var saveGroup = [
 			{type: 'customtoolitem',  id: 'closemobile', desktop: false, mobile: false, tablet: true, visible: false},
 			{type: 'customtoolitem',  id: 'save', command: 'save', text: _UNO('.uno:Save'), lockUno: '.uno:Save'},
+		];
+		var printGroup = [
 			{type: 'customtoolitem',  id: 'print', command: 'print', text: _UNO('.uno:Print'), mobile: false, tablet: false, lockUno: '.uno:Print'},
 			{type: 'menubutton',  id: 'printoptions',  command: 'printoptions', noLabel: true, text: _UNO('.uno:Print', 'text'), mobile: false, tablet: false, lockUno: '.uno:Print',
 				menu: [
@@ -205,6 +207,8 @@ class TopToolbar extends JSDialog.Toolbar {
 				{type: 'separator', orientation: 'vertical', id: 'savebreak', mobile: false},
 				{type: 'overflowgroup', id: 'undo-toptoolbar', children: undoGroup},
 				{type: 'separator', orientation: 'vertical', id: 'redobreak', mobile: false, tablet: false,},
+				{type: 'overflowgroup', id: 'save-toptoolbar', children: printGroup},
+				{type: 'separator', orientation: 'vertical', id: 'printbreak', mobile: false},
 				{type: 'overflowgroup', id: 'font-toptoolbar', children: fontGroup},
 				{type: 'separator', orientation: 'vertical', id: 'breakfontsizes', invisible: true, mobile: false, tablet: false},
 				{type: 'overflowgroup', id: 'format-toptoolbar', children: formatGroup},
