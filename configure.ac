@@ -11,7 +11,9 @@ AM_INIT_AUTOMAKE([1.10 foreign subdir-objects tar-pax -Wno-portability])
 AC_CONFIG_MACRO_DIR([m4])
 
 # We don't want to require pkg-config and PKG_CHECK_MODULES on macOS
-m4_if(m4_esyscmd_s([uname -s]),Darwin,[m4_define([PKG_CHECK_MODULES],[])],[])
+# It may be missing, and then we'd generate broken shell code; but
+# let's guard against accidental use.
+m4_if(m4_esyscmd_s([uname -s]),Darwin,[m4_define([PKG_CHECK_MODULES],[AC_MSG_ERROR([It's not expected to use [PKG_CHECK_MODULES] on macOS, please fix configure.ac and make pkg-config a requirement if you really need it.])])],[])
 
 COOLWSD_VERSION_MAJOR=`echo $VERSION | awk -F. '{print $1}'`
 COOLWSD_VERSION_MINOR=`echo $VERSION | awk -F. '{print $2}'`
@@ -63,12 +65,6 @@ AC_DEFINE_UNQUOTED([COOLWSD_BUILDCONFIG],[["$ac_configure_args"]],[Options passe
 # this is a dummy header, autoheader adds all entries to it
 # don't include config_unused.h anywhere!
 AC_CONFIG_HEADERS([config_unused.h])
-
-# maintain config.h.in and config_version.h.in manually
-# config.h.in is for configurable variables that are stable if configure parameters are unchanged
-AC_CONFIG_HEADERS([config.h])
-# config_version.h.in is for version/hash related variables
-AC_CONFIG_HEADERS([config_version.h])
 
 # Checks for programs.
 AC_PROG_CXX
@@ -141,6 +137,22 @@ AC_ARG_ENABLE([anonymization],
 AC_ARG_ENABLE([iosapp],
               AS_HELP_STRING([--enable-iosapp],
                              [Use on a Mac where you will build the iOS app.]))
+
+AC_ARG_ENABLE([macosapp],
+              AS_HELP_STRING([--enable-macosapp],
+                             [Use on a Mac where you will build the macOS app.]))
+
+AC_ARG_ENABLE([windowsapp],
+              AS_HELP_STRING([--enable-windowsapp],
+                             [Use in WSL2 on a Windows PC where you will build the Windows app that works
+                              similarly to the iOS app, from the JavaScript and the pseudo WebSocket
+                              message plumbing point of view.]))
+
+AC_ARG_ENABLE([coda],
+              AS_HELP_STRING([--enable-coda],
+                             [Use to build a CODA app. This will build the entire coolwsd, so that it runs under the hood
+                              inside the app. Do NOT use together with --enable-*app, this is supposed to be a
+                              different approach that allows multiple documents open at the same time.]))
 
 AC_ARG_WITH([wasm-fallback],
               AS_HELP_STRING([--with-wasm-fallback=<path>],
@@ -253,7 +265,7 @@ AC_ARG_WITH([lokit-path],
 
 AC_ARG_WITH([lo-path],
             AS_HELP_STRING([--with-lo-path=<path>],
-                           [Path to a working installation directory or instdir of LibreOffice]))
+                           [Path to a working installation directory or instdir of LibreOffice, to be used at runtime]))
 
 AC_ARG_WITH([lo-sourcedir],
             AS_HELP_STRING([--with-lo-sourcedir=<path>],
@@ -315,6 +327,16 @@ AC_ARG_WITH([libpng-libs],
             AS_HELP_STRING([--with-libpng-libs=<path>],
                            [Path to the "lib" directory with the libpng
                             libraries.  Not used on Android.]))
+
+AC_ARG_WITH([zlib-includes],
+            AS_HELP_STRING([--with-zlib-includes=<path>],
+                           [Path to the "include" directory with the libpng
+                            headers. Only used on Windows.]))
+
+AC_ARG_WITH([zlib-libs],
+            AS_HELP_STRING([--with-zlib-libs=<path>],
+                           [Path to the "lib" directory with the zlib
+                            libraries. Only used on Windows.]))
 
 AC_ARG_WITH([cppunit-includes],
             AS_HELP_STRING([--with-cppunit-includes=<path>],
@@ -425,8 +447,9 @@ AC_ARG_ENABLE([experimental],
               AS_HELP_STRING([--enable-experimental],
                              [Enable experimental features and behavior]))
 
-# Handle options
-AS_IF([test "$enable_debug" = yes -a -n "$with_poco_libs"],
+# Debug POCO libraries are named like 'PocoNetSSLd' instead of just 'PocoNetSSL',
+# but Homebrew does not have those, so avoid this suffix for macOS
+AS_IF([test "$enable_debug" = yes -a -n "$with_poco_libs" -a `uname -s` != Darwin],
       [POCO_DEBUG_SUFFIX=d],
       [POCO_DEBUG_SUFFIX=])
 
@@ -625,7 +648,7 @@ ZSTDLIB_X86=
 ZSTDLIB_X86_64=
 
 CORE_VERSION_HASH=""
-if test \( "$enable_iosapp" = "yes" -a `uname -s` = "Darwin" \) -o \( "$enable_androidapp" = "yes" \) -o "$host_os" = "emscripten" ; then
+if test \( "$enable_iosapp" = "yes" -a `uname -s` = "Darwin" \) -o \( "$enable_windowsapp" = "yes" \) -o \( "$enable_androidapp" = "yes" \) -o "$host_os" = "emscripten" ; then
    if test "$enable_androidapp" = "yes" ; then
       AC_MSG_CHECKING([for Android ABI to build for])
       if test -n "$with_android_abi" ; then
@@ -649,7 +672,7 @@ if test \( "$enable_iosapp" = "yes" -a `uname -s` = "Darwin" \) -o \( "$enable_a
 
    AC_MSG_CHECKING([for LibreOffice build tree to build against])
    if test -z "$with_lo_builddir"; then
-      AC_MSG_ERROR([You MUST use the --with-lo-builddir option when configuring the mobile app build tree.])
+      AC_MSG_ERROR([You MUST use the --with-lo-builddir option when configuring the mobile or Windows app build tree.])
    fi
 
    LOBUILDDIR="$with_lo_builddir"
@@ -678,15 +701,21 @@ if test \( "$enable_iosapp" = "yes" -a `uname -s` = "Darwin" \) -o \( "$enable_a
 
    LOBUILDDIR=`readlink -f "$LOBUILDDIR"`
 
-   # Get the git hash of the core build
-   CORE_VERSION_HASH=`cd $LOBUILDDIR && grep buildid instdir/program/setuprc | sed -e 's/buildid=//' -e 's/............................$//'`
-
-   # Sanity check, just a random object file in the LibreOffice build tree
-   if test \( "$enable_iosapp" = "yes" -a -f "$LOBUILDDIR/workdir/CxxObject/vcl/ios/iosinst.o" \) -o \( "$enable_androidapp" = "yes" -a -f "$LOBUILDDIR/workdir/LinkTarget/StaticLibrary/liblibpng.a" \) -o \( "$host_os" = "emscripten" -a -f "${LOBUILDDIR}/workdir/LinkTarget/StaticLibrary/liblibpng.a" \); then
-       AC_MSG_RESULT([$LOBUILDDIR])
+   # Get the git hash of the core build.
+   # Also use the setuprc or setup.ini file existence as a sanity check.
+   if test "$enable_windowsapp" = "yes"; then
+      setuprc=setup.ini
    else
-       AC_MSG_ERROR([This is not a LibreOffice core build directory: $LOBUILDDIR])
+      setuprc=setuprc
    fi
+
+   if test -f "$LOBUILDDIR/instdir/program/$setuprc"; then
+      AC_MSG_RESULT([$LOBUILDDIR])
+   else
+      AC_MSG_ERROR([This is not a LibreOffice core build directory: $LOBUILDDIR])
+   fi
+
+   CORE_VERSION_HASH=`grep buildid $LOBUILDDIR/instdir/program/$setuprc | sed -e 's/buildid=//' -e 's/............................$//'`
 
    if test -n "$LOBUILDDIR_ARM64_V8A" ; then
       if test -f "$LOBUILDDIR_ARM64_V8A/workdir/LinkTarget/StaticLibrary/liblibpng.a" ; then
@@ -712,9 +741,13 @@ if test \( "$enable_iosapp" = "yes" -a `uname -s` = "Darwin" \) -o \( "$enable_a
       fi
    fi
 
+   if test "$enable_windowsapp" = "yes" ; then
+      LOBUILDDIR_WINDOWS=`cd "$LOBUILDDIR" && cmd.exe /c cd | tr '\\\\' '/' | tr -d '\r'`
+   fi
+
    AC_MSG_CHECKING([for Poco include directory to build against])
    if test -z "$with_poco_includes"; then
-      AC_MSG_ERROR([You MUST use the --with-poco-includes option when configuring the mobile app build tree.])
+      AC_MSG_ERROR([You MUST use the --with-poco-includes option when configuring the mobile or Windows app build tree.])
    fi
 
    POCOINCLUDE="$with_poco_includes"
@@ -743,6 +776,10 @@ if test \( "$enable_iosapp" = "yes" -a `uname -s` = "Darwin" \) -o \( "$enable_a
    CHK_FILE_VAR(POCOINCLUDE,Poco/Poco.h,Poco include,_X86)
    CHK_FILE_VAR(POCOINCLUDE,Poco/Poco.h,Poco include,_X86_64)
 
+   if test "$enable_windowsapp" = "yes" ; then
+      POCOINCLUDE_WINDOWS=`cd "$POCOINCLUDE" && cmd.exe /c cd | tr '\\\\' '/' | tr -d '\r'`
+   fi
+
    AC_MSG_CHECKING([for Poco lib directory to build against])
    if test -z "$with_poco_libs"; then
       AC_MSG_ERROR([You MUST use the --with-poco-libs option when configuring the mobile app build tree.])
@@ -769,18 +806,31 @@ if test \( "$enable_iosapp" = "yes" -a `uname -s` = "Darwin" \) -o \( "$enable_a
    fi
 
    # Sanity checks
-   CHK_FILE_VAR(POCOLIB,libPocoFoundation.a,Poco lib)
-   CHK_FILE_VAR(POCOLIB,libPocoFoundation.a,Poco lib,_ARM64_V8A)
-   CHK_FILE_VAR(POCOLIB,libPocoFoundation.a,Poco lib,_X86)
-   CHK_FILE_VAR(POCOLIB,libPocoFoundation.a,Poco lib,_X86_64)
+   if test "$enable_windowsapp" = "yes"; then
+      CHK_FILE_VAR(POCOLIB,PocoFoundationmd.lib,Poco lib)
+      CHK_FILE_VAR(POCOLIB,PocoFoundationmdd.lib,Poco lib)
+   else
+      CHK_FILE_VAR(POCOLIB,libPocoFoundation.a,Poco lib)
+      CHK_FILE_VAR(POCOLIB,libPocoFoundation.a,Poco lib,_ARM64_V8A)
+      CHK_FILE_VAR(POCOLIB,libPocoFoundation.a,Poco lib,_X86)
+      CHK_FILE_VAR(POCOLIB,libPocoFoundation.a,Poco lib,_X86_64)
+   fi
+
+   if test "$enable_windowsapp" = "yes" ; then
+      POCOLIB_WINDOWS=`cd "$POCOLIB" && cmd.exe /c cd | tr '\\\\' '/' | tr -d '\r'`
+   fi
 
    if test "$ENABLE_DEBUG" = "true" ; then
        POCODEBUG=d
    fi
 
-   AC_MSG_CHECKING([for zstd lib directory to build against])
+   AC_MSG_CHECKING([for zstd include directory to build against])
+   if test -z "$with_zstd_includes"; then
+      AC_MSG_ERROR([You MUST use the --with-zstd-includes option when configuring the mobile or Windows app build tree.])
+   fi
+
    if test -z "$with_zstd_libs"; then
-      AC_MSG_ERROR([You MUST use the --with-zstd-libs option when configuring the mobile app build tree.])
+      AC_MSG_ERROR([You MUST use the --with-zstd-libs option when configuring the mobile or Windows app build tree.])
    fi
 
    ZSTDINCLUDE="$with_zstd_includes"
@@ -809,6 +859,12 @@ if test \( "$enable_iosapp" = "yes" -a `uname -s` = "Darwin" \) -o \( "$enable_a
    CHK_FILE_VAR(ZSTDINCLUDE,zstd.h,Zstd include,_X86)
    CHK_FILE_VAR(ZSTDINCLUDE,zstd.h,Zstd include,_X86_64)
 
+   if test "$enable_windowsapp" = "yes" ; then
+      ZSTDINCLUDE_WINDOWS=`cd "$ZSTDINCLUDE" && cmd.exe /c cd | tr '\\\\' '/' | tr -d '\r'`
+   fi
+
+   AC_MSG_CHECKING([for zstd lib directory to build against])
+
    ZSTDLIB="$with_zstd_libs"
    if test "$enable_androidapp" = "yes" ; then
       if echo "$ZSTDLIB" | grep -qs ':' ; then
@@ -829,14 +885,23 @@ if test \( "$enable_iosapp" = "yes" -a `uname -s` = "Darwin" \) -o \( "$enable_a
       fi
    fi
 
-   CHK_FILE_VAR(ZSTDLIB,libzstd.a,Zstd lib)
-   CHK_FILE_VAR(ZSTDLIB,libzstd.a,Zstd lib,_ARM64_V8A)
-   CHK_FILE_VAR(ZSTDLIB,libzstd.a,Zstd lib,_X86)
-   CHK_FILE_VAR(ZSTDLIB,libzstd.a,Zstd lib,_X86_64)
+   if test "$enable_windowsapp"; then
+      CHK_FILE_VAR(ZSTDLIB,libzstd_static.lib,Zstd lib)
+   else
+      CHK_FILE_VAR(ZSTDLIB,libzstd.a,Zstd lib)
+      CHK_FILE_VAR(ZSTDLIB,libzstd.a,Zstd lib,_ARM64_V8A)
+      CHK_FILE_VAR(ZSTDLIB,libzstd.a,Zstd lib,_X86)
+      CHK_FILE_VAR(ZSTDLIB,libzstd.a,Zstd lib,_X86_64)
+   fi
+
+   if test "$enable_windowsapp" = "yes" ; then
+     ZSTDLIB_WINDOWS=`cd "$ZSTDLIB" && cmd.exe /c cd | tr '\\\\' '/' | tr -d '\r'`
+   fi
 fi
 
 AC_SUBST(LOSOURCEDIR)
 AC_SUBST(LOBUILDDIR)
+AC_SUBST(LOBUILDDIR_WINDOWS)
 AC_SUBST(ANDROID_ABI)
 AC_SUBST(ANDROID_ABI_SPLIT)
 AC_SUBST(LOBUILDDIR_ARM64_V8A)
@@ -846,19 +911,23 @@ AC_SUBST(POCOINCLUDE)
 AC_SUBST(POCOINCLUDE_ARM64_V8A)
 AC_SUBST(POCOINCLUDE_X86)
 AC_SUBST(POCOINCLUDE_X86_64)
+AC_SUBST(POCOINCLUDE_WINDOWS)
 AC_SUBST(POCOLIB)
 AC_SUBST(POCOLIB_ARM64_V8A)
 AC_SUBST(POCOLIB_X86)
 AC_SUBST(POCOLIB_X86_64)
+AC_SUBST(POCOLIB_WINDOWS)
 AC_SUBST(POCODEBUG)
 AC_SUBST(ZSTDINCLUDE)
 AC_SUBST(ZSTDINCLUDE_ARM64_V8A)
 AC_SUBST(ZSTDINCLUDE_X86)
 AC_SUBST(ZSTDINCLUDE_X86_64)
+AC_SUBST(ZSTDINCLUDE_WINDOWS)
 AC_SUBST(ZSTDLIB)
 AC_SUBST(ZSTDLIB_ARM64_V8A)
 AC_SUBST(ZSTDLIB_X86)
 AC_SUBST(ZSTDLIB_X86_64)
+AC_SUBST(ZSTDLIB_WINDOWS)
 AC_SUBST([CORE_VERSION_HASH])
 
 AC_DEFINE_UNQUOTED([CORE_VERSION_HASH],[["$CORE_VERSION_HASH"]],[LibreOffice core git hash if present])
@@ -866,24 +935,44 @@ AC_DEFINE_UNQUOTED([CORE_VERSION_HASH],[["$CORE_VERSION_HASH"]],[LibreOffice cor
 LIBPNG_INCLUDES="$with_libpng_includes"
 LIBPNG_LIBS="$with_libpng_libs"
 
-if test "$enable_iosapp" != yes -a "$enable_androidapp" != yes; then
+if test "$enable_windowsapp" = "yes" ; then
+   LIBPNG_INCLUDES_WINDOWS=`cd "$LIBPNG_INCLUDES" && cmd.exe /c cd | tr '\\\\' '/' | tr -d '\r'`
+   LIBPNG_LIBS_WINDOWS=`cd "$LIBPNG_LIBS" && cmd.exe /c cd | tr '\\\\' '/' | tr -d '\r'`
+fi
+
+AC_SUBST(LIBPNG_INCLUDES)
+AC_SUBST(LIBPNG_INCLUDES_WINDOWS)
+AC_SUBST(LIBPNG_LIBS)
+AC_SUBST(LIBPNG_LIBS_WINDOWS)
+
+ZLIB_INCLUDES="$with_zlib_includes"
+ZLIB_LIBS="$with_zlib_libs"
+
+if test "$enable_windowsapp" = "yes" ; then
+   ZLIB_INCLUDES_WINDOWS=`cd "$ZLIB_INCLUDES" && cmd.exe /c cd | tr '\\\\' '/' | tr -d '\r'`
+   ZLIB_LIBS_WINDOWS=`cd "$ZLIB_LIBS" && cmd.exe /c cd | tr '\\\\' '/' | tr -d '\r'`
+fi
+
+AC_SUBST(ZLIB_INCLUDES_WINDOWS)
+AC_SUBST(ZLIB_LIBS_WINDOWS)
+
+if test "$enable_iosapp" != yes -a "$enable_windowsapp" != yes -a "$enable_androidapp" != yes; then
    LOKIT_PATH=`readlink -f $with_lokit_path`
 fi
 
 if test "$enable_iosapp" = "yes" -o "$enable_androidapp" = "yes"; then
    if test -n "$LIBPNG_INCLUDES" ; then
-      AC_MSG_ERROR([--with-libpng-includes is ignored on Android, please remove the parameter.])
+      AC_MSG_ERROR([--with-libpng-includes is ignored on iOS / Android, please remove the parameter.])
    fi
    if test -n "$LIBPNG_LIBS" ; then
-      AC_MSG_ERROR([--with-libpng-libs is ignored on Android, please remove the parameter.])
+      AC_MSG_ERROR([--with-libpng-libs is ignored on iOS / Android, please remove the parameter.])
    fi
    if test -n "$LOKIT_PATH" ; then
-      AC_MSG_ERROR([--with-lokit-path is ignored on Android, please remove the parameter.])
+      AC_MSG_ERROR([--with-lokit-path is ignored on iOS / Android, please remove the parameter.])
       LOKIT_PATH=`readlink -f $LOBUILDDIR/include`
    fi
 fi
-AC_SUBST(LIBPNG_INCLUDES)
-AC_SUBST(LIBPNG_LIBS)
+
 AC_SUBST(LOKIT_PATH)
 
 ENABLE_ANDROIDAPP=
@@ -913,8 +1002,8 @@ AC_SUBST(APP_NAME)
 
 VENDOR=
 AC_MSG_CHECKING([for vendor])
-if test "$enable_iosapp" = yes -a -z "$with_vendor"; then
-    AC_MSG_ERROR([You must use --with-vendor when configuring for the iOS app])
+if test \( "$enable_iosapp" = yes -o "$enable_macosapp" = yes \) -a -z "$with_vendor"; then
+    AC_MSG_ERROR([You must use --with-vendor when configuring for the iOS / macOS app])
 fi
 if test -z "$with_vendor" -o "$with_vendor" = "no"; then
     VENDOR="$USERNAME"
@@ -959,6 +1048,49 @@ AC_SUBST(ENABLE_IOSAPP)
 AM_CONDITIONAL([ENABLE_IOSAPP], [test "$ENABLE_IOSAPP" = "true"])
 AC_SUBST(IOSAPP_BUNDLE_SHORT_VERSION)
 AC_SUBST(IOSAPP_BUNDLE_VERSION)
+
+# Check if we are on macOS (darwin) to define "MACOS" in config.h
+# We want this to be general, regardless of using --enable-macosapp, and it
+# could be potentially extended to handle the other defines like IOS, WASMAPP
+# or _WINDOWS (but at least iOS and Windows are using their own config.h)
+ENABLE_MACOS=
+case "$host_os" in
+    darwin*)
+        ENABLE_MACOS=true
+        AC_DEFINE([MACOS], [1], [Define to 1 if building for macOS])
+        ;;
+esac
+
+# Are we building on macOS at all, but eg. only the coolwsd?
+AC_SUBST(ENABLE_MACOS)
+AM_CONDITIONAL([ENABLE_MACOS], [test "$ENABLE_MACOS" = "true"])
+
+ENABLE_MACOSAPP=
+#MACOSAPP_BUNDLE_VERSION=
+
+if test "$enable_macosapp" = "yes"; then
+   ENABLE_MACOSAPP=true
+
+   #if test -f BUNDLE-VERSION; then
+   #    MACOSAPP_BUNDLE_VERSION=$(cat BUNDLE-VERSION)
+   #else
+   #    MACOSAPP_BUNDLE_VERSION=1
+   #fi
+   #echo $MACOSAPP_BUNDLE_VERSION >BUNDLE-VERSION
+fi
+
+# Are we building the macOS CODA?
+AC_SUBST(ENABLE_MACOSAPP)
+AM_CONDITIONAL([ENABLE_MACOSAPP], [test "$ENABLE_MACOSAPP" = "true"])
+#AC_SUBST(MACOSAPP_BUNDLE_VERSION)
+
+ENABLE_WINDOWSAPP=
+
+if test "$enable_windowsapp" = "yes"; then
+   ENABLE_WINDOWSAPP=true
+fi
+AC_SUBST(ENABLE_WINDOWSAPP)
+AM_CONDITIONAL([ENABLE_WINDOWSAPP], [test "$ENABLE_WINDOWSAPP" = "true"])
 
 AC_MSG_CHECKING([for custom icon theme])
 CUSTOM_ICONS_DIRECTORY=
@@ -1273,7 +1405,16 @@ AS_IF([test "$ENABLE_IOSAPP" != "true" -a "$ENABLE_ANDROIDAPP" != "true"],
       [AC_MSG_CHECKING([for LibreOffice path])
       if test -n "$with_lo_path"; then
           # strip trailing '/' from LO_PATH, 'ln -s' with such path will otherwise fail
-          LO_PATH=`readlink -f ${with_lo_path%/}`
+          if test "$ENABLE_WINDOWSAPP" != "true"; then
+              LO_PATH=`readlink -f ${with_lo_path%/}`
+          else
+              # LO_PATH is the path used at run-time to find the
+              # LibreOffice shared libraries. When running configure
+              # for the CODA-W app it is not used at configure or
+              # build time. Thus it should be a Windows path and not a
+              # WSL one.
+              LO_PATH="$with_lo_path"
+          fi
           AC_MSG_RESULT([found])
       else
           AC_MSG_RESULT([not found])
@@ -1287,9 +1428,16 @@ SYSTEMPLATE_PATH=not-set
 have_lo_path=false
 AC_MSG_CHECKING([whether to run tests against a LibreOffice])
 version_file="$with_lo_path/program/versionrc"
+version_file_macos="$with_lo_path/Contents/Resources/versionrc"
 if test -f $version_file; then
     JAILS_PATH="\${abs_top_builddir}/jails"
     CACHE_PATH="\${abs_top_builddir}/cache"
+    SYSTEMPLATE_PATH="\${abs_top_builddir}/systemplate"
+    have_lo_path=true
+    lo_msg="test against $LO_PATH"
+    AC_MSG_RESULT([yes])
+elif test `uname -s` = Darwin -a -f "$version_file_macos"; then
+    JAILS_PATH="\${abs_top_builddir}/jails"
     SYSTEMPLATE_PATH="\${abs_top_builddir}/systemplate"
     have_lo_path=true
     lo_msg="test against $LO_PATH"
@@ -1385,8 +1533,8 @@ AM_CONDITIONAL([ENABLE_DEBUG], [test "$ENABLE_DEBUG" = "true"])
 mobile_app=
 ENABLE_MOBILEAPP=
 MOBILEAPP=0
-AC_MSG_CHECKING([if this is a mobile app])
-if test "$enable_gtkapp" = "yes" -o "$enable_iosapp" = "yes" -o "$enable_androidapp" = "yes" -o "$host_os" = "emscripten" ; then
+AC_MSG_CHECKING([whether this is a mobile app])
+if test "$enable_gtkapp" = "yes" -o "$enable_iosapp" = "yes" -o "$enable_macosapp" = "yes" -o "$enable_windowsapp" = "yes" -o "$enable_androidapp" = "yes" -o "$host_os" = "emscripten" ; then
      AC_MSG_RESULT([yes])
      mobile_app=true;
      MOBILEAPP=1
@@ -1397,6 +1545,23 @@ fi
 AC_DEFINE_UNQUOTED([MOBILEAPP],[$MOBILEAPP],[Define to 1 if this is a mobileapp (eg. Android) build.])
 AC_SUBST(ENABLE_MOBILEAPP)
 AM_CONDITIONAL([ENABLE_MOBILEAPP], [test "$ENABLE_MOBILEAPP" = "true"])
+
+AC_MSG_CHECKING([whether to enable the CODA build])
+if test "$enable_coda" = "yes"; then
+    AC_MSG_RESULT([yes])
+    if test "$ENABLE_MOBILEAPP" = "true" ; then
+        AC_MSG_ERROR([--enable-coda conflicts with --enable-(androidapp|gtkapp|iosapp|macosapp|windowsapp), please decide for one or the other.])
+    fi
+    if test "$ENABLE_DEBUG" != "true" ; then
+        AC_MSG_ERROR([--enable-coda currently depends on --enable-debug, please add it to ./configure. Many things haven't been updated to build a production CODA app yet.])
+    fi
+    AC_DEFINE([ENABLE_CHILDROOTS],0,[Disable systemplate and jails when building CODA.])
+    AC_DEFINE([ENABLE_CODA],1,[Enable the CODA build - disable the main() function in COOLWSD etc.])
+else
+    AC_MSG_RESULT([no])
+    AC_DEFINE([ENABLE_CHILDROOTS],1,[Normal server, enable systemplate and jails.])
+    AC_DEFINE([ENABLE_CODA],0,[Disable the CODA build - normal server, the main() function in COOLWSD is the entry point, etc.])
+fi
 
 if test "$host_os" = "emscripten" ; then
     ENABLE_EMSCRIPTENAPP=true
@@ -1501,7 +1666,7 @@ fi
 AS_IF([test "$ENABLE_SSL" = "true"],
       [LIBS="$LIBS -lssl -lcrypto"])
 
-AS_IF([test "$ENABLE_IOSAPP" != "true" -a "$ENABLE_ANDROIDAPP" != "true" -a "$host_os" != "emscripten"],
+AS_IF([test "$ENABLE_IOSAPP" != "true" -a "$ENABLE_WINDOWSAPP" != "true" -a "$ENABLE_ANDROIDAPP" != "true" -a "$host_os" != "emscripten"],
       [AC_CHECK_HEADERS([LibreOfficeKit/LibreOfficeKit.h],
                         [],
                         [AC_MSG_ERROR([header LibreOfficeKit/LibreOfficeKit.h not found, perhaps you want to use --with-lokit-path])])
@@ -1617,23 +1782,12 @@ AS_IF([test `uname -s` = "Linux" -o `uname -s` = "FreeBSD" -o `uname -s` = "Darw
        ])
 
 AS_IF([test `uname -s` = "FreeBSD"],
-      AC_CHECK_LIB(iconv, libiconv_open, [], [AC_MSG_ERROR([No. Install 3rd-party libiconv.])]))
+      [AC_CHECK_LIB(iconv, libiconv_open, [], [AC_MSG_ERROR([No. Install 3rd-party libiconv.])])],
+      [AS_IF([test `uname -s` = "Darwin" -a "$ENABLE_IOSAPP" != "true"],
+             [AC_CHECK_LIB(iconv, iconv_open, [], [AC_MSG_ERROR([No, please install libiconv.])])])])
 
 AS_IF([test `uname -s` = "FreeBSD"],
       [LIBS="$LIBS -lexecinfo -lz -liconv"])
-
-# need this after the other stuff that uses the compiler because we don't want to run configure-tests with the plugins enabled
-AS_IF([test -n "$with_compiler_plugins"],
-      [CPPFLAGS="$CPPFLAGS -Xclang -load -Xclang ${with_compiler_plugins}/compilerplugins/obj/plugin.so -Xclang -add-plugin -Xclang loplugin -Xclang -plugin-arg-loplugin -Xclang --cool-base-path=\${abs_top_srcdir}"])
-
-# Clang plugin.
-AC_MSG_CHECKING([whether to build a clang plugin])
-if test "$enable_coplugin" = "yes"; then
-    AC_MSG_RESULT([yes])
-    CPPFLAGS="$CPPFLAGS -Xclang -load -Xclang \${abs_top_srcdir}/clang/plugin.so -Xclang -add-plugin -Xclang coplugin"
-else
-    AC_MSG_RESULT([no])
-fi
 
 if test "x${prefix}" = "xNONE"; then
     prefix=/usr/local
@@ -1727,8 +1881,11 @@ AS_IF([test "$ENABLE_IOSAPP" = "true"],
       ])
 AC_SUBST(IOSAPP_FONTS)
 
+# TODO MACOSAPP_FONTS?
+
 AC_CHECK_FUNCS(ppoll)
 AC_CHECK_FUNCS([memrchr])
+AC_CHECK_FUNCS([pipe2])
 
 ENABLE_CYPRESS=false
 if test "$enable_cypress" = "yes"; then
@@ -1979,10 +2136,44 @@ AC_CONFIG_FILES([Makefile
                  coolwsd.xml
                  debian/coolwsd.postinst])
 
+# maintain config.h.in and config_version.h.in manually
+# config.h.in is for configurable variables that are stable if configure parameters are unchanged
+if test "$enable_iosapp" != "yes" -a "$enable_windowsapp" != "yes"; then
+    AC_CONFIG_HEADERS([config.h])
+fi
+
+# config_version.h.in is for version/hash related variables
+AC_CONFIG_HEADERS([config_version.h])
+
 if test "$enable_iosapp" = "yes"; then
     AC_CONFIG_FILES([ios/config.h
                  ios/Mobile/Info.plist
                  ios/Mobile/Resources/Settings.bundle/Root.plist])
+fi
+
+if test `uname -s` = "Darwin"; then
+    # Homebrew uses different paths on Intel and Apple Silicon macOS.
+    # Having a separate /opt/homebrew makes more sense, but I guess
+    # backward compatibility keeps it as /usr/local on Intel Macs.
+    if test `uname -m` = "x86_64"; then
+        HOMEBREW_PATH=/usr/local
+    else
+        HOMEBREW_PATH=/opt/homebrew
+    fi
+    AC_SUBST(HOMEBREW_PATH)
+    AC_CONFIG_FILES([macos/coda/Config.xcconfig
+                     macos/coolwsd/gmake-wrapper.sh],
+                    [chmod +x macos/coolwsd/gmake-wrapper.sh])
+fi
+
+if test "$enable_windowsapp" = "yes"; then
+    # Don't use AC_CONFIG_HEADERS for windows/coda/config.h because we
+    # don't want to set random stuff that the configure script thinks
+    # it has detected, as that is very misleading because it is run on
+    # WSL. Ideally we shouldn't need to run the configure script when
+    # building CODA-W at all. Later.
+    AC_CONFIG_FILES([windows/coda/config.h
+                     windows/coda/config.props])
 fi
 
 if test "$enable_androidapp" = "yes"; then
@@ -2068,6 +2259,23 @@ AS_IF([test "$ENABLE_IOSAPP" = "true"],
       ],
       [
       ])
+
+dnl !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+dnl Set plugins.so in CPPFLAGS as the last thing - not to interfere with other checks
+dnl !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+# need this after the other stuff that uses the compiler because we don't want to run configure-tests with the plugins enabled
+AS_IF([test -n "$with_compiler_plugins"],
+      [CPPFLAGS="$CPPFLAGS -Xclang -load -Xclang ${with_compiler_plugins}/compilerplugins/obj/plugin.so -Xclang -add-plugin -Xclang loplugin -Xclang -plugin-arg-loplugin -Xclang --cool-base-path=\${abs_top_srcdir}"])
+
+# Clang plugin.
+AC_MSG_CHECKING([whether to build a clang plugin])
+if test "$enable_coplugin" = "yes"; then
+    AC_MSG_RESULT([yes])
+    CPPFLAGS="$CPPFLAGS -Xclang -load -Xclang \${abs_top_srcdir}/clang/plugin.so -Xclang -add-plugin -Xclang coplugin"
+else
+    AC_MSG_RESULT([no])
+fi
 
 echo "
 Configuration:

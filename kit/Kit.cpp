@@ -36,7 +36,7 @@
 #include <sys/capability.h>
 #endif
 
-#if defined(__FreeBSD__)
+#if defined(__FreeBSD__) || defined(MACOS)
 #include <ftw.h>
 #define FTW_CONTINUE 0
 #define FTW_STOP (-1)
@@ -44,12 +44,14 @@
 #define FTW_ACTIONRETVAL 0
 #endif
 
+#ifndef _WIN32
 #include <unistd.h>
 #include <utime.h>
 #include <sys/time.h>
 #include <sys/resource.h>
 #include <sys/wait.h>
 #include <sysexits.h>
+#endif
 
 #include <atomic>
 #include <cassert>
@@ -98,6 +100,7 @@
 #include <common/security.h>
 #include <common/Seccomp.hpp>
 #include <common/SigUtil.hpp>
+#include <common/Syscall.hpp>
 #include <common/TraceEvent.hpp>
 #include <common/Watchdog.hpp>
 #include <BgSaveWatchDog.hpp>
@@ -113,6 +116,13 @@
 #ifdef IOS
 #include "ios.h"
 #include "DocumentBroker.hpp"
+#elif defined(MACOS) && MOBILEAPP
+#include "macos.h"
+#include "DocumentBroker.hpp"
+#endif
+
+#ifdef _WIN32
+#include "windows.hpp"
 #endif
 
 using Poco::Exception;
@@ -827,7 +837,7 @@ Document::~Document()
         session.second->resetDocManager();
     }
 
-#ifdef IOS
+#if defined(IOS) || defined(MACOS) || defined(_WIN32)
     DocumentData::deallocate(_mobileAppDocId);
 #endif
 
@@ -2075,7 +2085,7 @@ std::shared_ptr<lok::Document> Document::load(const std::shared_ptr<ChildSession
         const auto duration = std::chrono::steady_clock::now() - start;
         const auto elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(duration);
         LOG_DBG("Returned lokit::documentLoad(" << anonymizeUrl(url) << ") in " << elapsed);
-#ifdef IOS
+#if defined(IOS) || defined(MACOS) || defined(_WIN32)
         DocumentData::get(_mobileAppDocId).loKitDocument = _loKitDocument.get();
         {
             std::unique_lock<std::mutex> docBrokersLock(DocBrokersMutex);
@@ -3427,7 +3437,11 @@ void lokit_main(
                 = std::chrono::steady_clock::now();
 
             userdir_url = "file:///tmp/user";
+#ifndef __APPLE__
             instdir_path = '/' + std::string(JailUtil::LO_JAIL_SUBPATH) + "/program";
+#else
+            instdir_path = '/' + std::string(JailUtil::LO_JAIL_SUBPATH) + "/Contents/Frameworks";
+#endif
             allowedPaths += ":r:/" + std::string(JailUtil::LO_JAIL_SUBPATH);
 
             Poco::Path jailLOInstallation(jailPath, JailUtil::LO_JAIL_SUBPATH);
@@ -3453,6 +3467,7 @@ void lokit_main(
             const std::string sysTemplateSubDir = Poco::Path(tempRoot, "systemplate-" + jailId).toString();
             const std::string jailEtcDir = Poco::Path(jailPath, "etc").toString();
 
+#if ENABLE_CHILDROOTS
             if (sysTemplateIncomplete && JailUtil::isBindMountingEnabled())
             {
                 const std::string sysTemplateEtcDir = Poco::Path(sysTemplate, "etc").toString();
@@ -3471,6 +3486,7 @@ void lokit_main(
                     JailUtil::disableBindMounting(); // We can't mount from incomplete systemplate.
                 }
             }
+#endif
 
             // The bind-mount implementation: inlined here to mirror
             // the fallback link/copy version bellow.
@@ -3669,6 +3685,7 @@ void lokit_main(
                 linkGCDAFiles(jailPathStr);
 #endif
 
+#if ENABLE_CHILDROOTS
                 // Update the dynamic files inside the jail.
                 if (!JailUtil::SysTemplate::updateDynamicFiles(jailPathStr))
                 {
@@ -3679,6 +3696,7 @@ void lokit_main(
                            "read-only, running the installation scripts with the owner's account "
                            "should update these files. Some functionality may be missing.");
                 }
+#endif
 
                 if (usingMountNamespace)
                 {
@@ -3758,7 +3776,11 @@ void lokit_main(
             LOG_INF("Using template ["
                     << loTemplate << "] as install subpath directly, without chroot jail setup.");
             userdir_url = "file://" + jailPathStr + "tmp/user";
+#ifndef __APPLE__
             instdir_path = '/' + loTemplate + "/program";
+#else
+            instdir_path = '/' + loTemplate + "/Contents/Frameworks";
+#endif
             allowedPaths += ":r:" + loTemplate;
             JailRoot = jailPathStr;
 
@@ -3934,14 +3956,18 @@ void lokit_main(
 #if (defined(__linux__) && !defined(__ANDROID__)) || defined(__FreeBSD__)
         Poco::URI userInstallationURI("file", LO_PATH);
         LibreOfficeKit *kit = lok_init_2(LO_PATH "/program", userInstallationURI.toString().c_str());
-#else
-
-#ifdef IOS // In the iOS app we call lok_init_2() just once, when the app starts
+#elif defined(MACOS)
+        // this is the MACOS MOBILEAPP case
+        LibreOfficeKit *kit = lok_init_2((getBundlePath() + "/Contents/lokit/Frameworks").c_str(), getAppSupportURL().c_str());
+#elif defined(IOS) // In the iOS app we call lok_init_2() just once, when the app starts
         static LibreOfficeKit *kit = lo_kit;
+#elif defined(_WIN32)
+        LibreOfficeKit *kit = lok_init_2
+            ((app_installation_path + "lo\\program").c_str(),
+             (app_installation_uri + "lo").c_str());
 #else
+        // FIXME: I wonder for which platform this is supposed to be? Android?
         static LibreOfficeKit *kit = lok_init_2(nullptr, nullptr);
-#endif
-
 #endif
 
         assert(kit);
@@ -3970,7 +3996,7 @@ void lokit_main(
 
         if (isURPEnabled())
         {
-            if (pipe2(URPtoLoFDs, O_CLOEXEC) != 0 || pipe2(URPfromLoFDs, O_CLOEXEC | O_NONBLOCK) != 0)
+            if (Syscall::pipe2(URPtoLoFDs, O_CLOEXEC) != 0 || Syscall::pipe2(URPfromLoFDs, O_CLOEXEC | O_NONBLOCK) != 0)
                 LOG_ERR("Failed to create urp pipe " << strerror(errno));
             else
             {
@@ -4099,7 +4125,11 @@ void consistencyCheckJail()
         if ((failedTmp = (!tmp.good() || !tmp.isDirectory())))
             LOG_ERR("Fatal system error: Kit jail is missing its /tmp directory");
 
+#ifndef __APPLE__
         FileUtil::Stat lo(InstDirPath + "/unorc");
+#else
+        FileUtil::Stat lo(InstDirPath + "/../Resources/ure/etc/unorc");
+#endif
         if ((failedLo = (!lo.good() || !lo.isFile())))
             LOG_ERR("Fatal system error: Kit jail is missing its LibreOfficeKit directory at '" << InstDirPath << "'");
 
@@ -4214,7 +4244,11 @@ bool globalPreinit(const std::string &loTemplate)
     // we deliberately don't dlclose handle on success, make it
     // static so static analysis doesn't see this as a leak
     static void *handle;
+#ifndef __APPLE__
     std::string libMerged = loTemplate + "/program/libmergedlo.so";
+#else
+    std::string libMerged = loTemplate + "/Contents/Frameworks/libmergedlo.dylib";
+#endif
     if (File(libMerged).exists())
     {
         LOG_TRC("dlopen(" << libMerged << ", RTLD_GLOBAL|RTLD_NOW)");
@@ -4228,7 +4262,11 @@ bool globalPreinit(const std::string &loTemplate)
     }
     else
     {
+#ifndef __APPLE__
         std::string libSofficeapp = loTemplate + "/program/libsofficeapp.so";
+#else
+        std::string libSofficeapp = loTemplate + "/Contents/Frameworks/libsofficeapp.dylib";
+#endif
         if (File(libSofficeapp).exists())
         {
             LOG_TRC("dlopen(" << libSofficeapp << ", RTLD_GLOBAL|RTLD_NOW)");
@@ -4273,9 +4311,15 @@ bool globalPreinit(const std::string &loTemplate)
              "javaloader javavm jdbc rpt rptui rptxml ",
              0 /* no overwrite */);
 
-    LOG_TRC("Invoking lok_preinit_2(" << loTemplate << "/program\", \"file:///tmp/user\")");
+#ifndef __APPLE__
+    const std::string lokProgramDir = loTemplate + "/program";
+#else
+    const std::string lokProgramDir = loTemplate + "/Contents/Frameworks";
+#endif
+
+    LOG_TRC("Invoking lok_preinit_2(" << lokProgramDir << ", \"file:///tmp/user\")");
     const auto start = std::chrono::steady_clock::now();
-    if (preInit((loTemplate + "/program").c_str(), "file:///tmp/user", &loKitPtr) != 0)
+    if (preInit(lokProgramDir.c_str(), "file:///tmp/user", &loKitPtr) != 0)
     {
         LOG_FTL("lok_preinit() in " << loadedLibrary << " failed");
         dlclose(handle);
@@ -4284,7 +4328,7 @@ bool globalPreinit(const std::string &loTemplate)
 
     LOG_DBG("After lok_preinit_2: loKitPtr=" << loKitPtr);
 
-    LOG_TRC("Finished lok_preinit(" << loTemplate << "/program\", \"file:///tmp/user\") in "
+    LOG_TRC("Finished lok_preinit(" << lokProgramDir << ", \"file:///tmp/user\") in "
                                     << std::chrono::duration_cast<std::chrono::milliseconds>(
                                            std::chrono::steady_clock::now() - start));
     return true;
@@ -4305,15 +4349,15 @@ std::string anonymizeUsername(const std::string& username)
 void dump_kit_state()
 {
     std::ostringstream oss(Util::makeDumpStateStream());
-    oss << "Start Kit " << getpid() << " Dump State:\n";
+    oss << "Start Kit " << Util::getProcessId() << " Dump State:\n";
 
     SigUtil::signalLogActivity();
 
     KitSocketPoll::dumpGlobalState(oss);
 
-    oss << "\nMalloc info [" << getpid() << "]: \n\t"
+    oss << "\nMalloc info [" << Util::getProcessId() << "]: \n\t"
         << Util::replace(Util::getMallocInfo(), "\n", "\n\t") << '\n';
-    oss << "\nEnd Kit " << getpid() << " Dump State.\n";
+    oss << "\nEnd Kit " << Util::getProcessId() << " Dump State.\n";
 
     const std::string msg = oss.str();
     fprintf(stderr, "%s", msg.c_str()); // Log in the journal.

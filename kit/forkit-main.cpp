@@ -12,9 +12,10 @@
 #include "config.h"
 #include "Common.hpp"
 #include "Kit.hpp"
+#include "ServerSocket.hpp"
 
 int ClientPortNumber = DEFAULT_CLIENT_PORT_NUMBER;
-std::string MasterLocation;
+UnxSocketPath MasterLocation;
 
 // Embed variant string to ensure different build-id for coolforkit-caps vs coolforkit-ns
 #ifdef COOL_FORKIT_VARIANT

@@ -45,7 +45,7 @@
 #  include <execinfo.h>
 #endif
 
-#if !defined(ANDROID) && !defined(IOS) && !defined(__FreeBSD__)
+#if !defined(ANDROID) && !defined(IOS) && !defined(MACOS) && !defined(__FreeBSD__)
 #  include <sys/prctl.h>
 #endif
 #if defined(__FreeBSD__)
@@ -588,7 +588,7 @@ void resetTerminationFlags()
 
     void dieOnParentDeath()
     {
-#if !defined(ANDROID) && !defined(__FreeBSD__)
+#if defined(__linux__) && !defined(ANDROID)
         prctl(PR_SET_PDEATHSIG, SIGKILL);
 #endif
 #if defined(__FreeBSD__)

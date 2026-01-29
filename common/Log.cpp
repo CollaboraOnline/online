@@ -29,7 +29,13 @@
 #include <iostream>
 #include <sstream>
 #include <string>
+#ifndef _WIN32
 #include <unistd.h>
+#else
+#define WIN32_LEAN_AND_MEAN
+#include <Windows.h>
+#include <cstdio>
+#endif
 #include <unordered_map>
 
 namespace
@@ -134,6 +140,7 @@ namespace Log
         /// Write the given buffer to stderr directly.
         static inline std::size_t writeRaw(const char* data, std::size_t count)
         {
+#ifndef _WIN32
 #if WASMAPP
             // In WASM, stdout works best.
             constexpr int LOG_FILE_FD = STDOUT_FILENO;
@@ -159,6 +166,19 @@ namespace Log
                 count -= wrote;
             }
             return ptr - data;
+#else // _WIN32
+            if (!IsDebuggerPresent())
+                fwrite(data, count, 1, stderr);
+            else
+            {
+                char *s = (char *)malloc(count + 1);
+                memcpy(s, data, count);
+                s[count] = 0;
+                OutputDebugStringA(s);
+                free(s);
+            }
+            return count;
+#endif
         }
 
         template <std::size_t N> inline void writeRaw(const char (&data)[N])
@@ -474,7 +494,7 @@ namespace Log
     char* prefix(const std::chrono::time_point<std::chrono::system_clock>& tp, char* buffer,
                  const std::string_view level)
     {
-#if defined(IOS) || defined(__FreeBSD__)
+#if defined(IOS) || defined(__FreeBSD__) || defined(_WIN32)
         // Don't bother with the "Source" which would be just "Mobile" always (or whatever the app
         // process is called depending on platform and configuration) and non-informative as there
         // is just one process in the app anyway.
@@ -610,13 +630,13 @@ namespace Log
             const auto it = config.find("flush");
             if (it == config.end() || Util::toLower(it->second) != "false")
             {
-                // Buffered logging, reduces number of write(2) syscalls.
-                channel = static_cast<Poco::Channel*>(new Log::BufferedConsoleChannel());
+                // Unbuffered (flushed) logging, directly writes each entry (to stderr).
+                channel = static_cast<Poco::Channel*>(new Log::ConsoleChannel());
             }
             else
             {
-                // Unbuffered logging, directly writes each entry (to stderr).
-                channel = static_cast<Poco::Channel*>(new Log::ConsoleChannel());
+                // Buffered logging, reduces number of write(2) syscalls.
+                channel = static_cast<Poco::Channel*>(new Log::BufferedConsoleChannel());
             }
         }
 

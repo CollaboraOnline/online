@@ -14,6 +14,10 @@
 #include <Kit.hpp>
 #ifdef IOS
 #include "ios.h"
+#elif defined(MACOS)
+#include "macos.h"
+#elif defined(_WIN32)
+#include "windows.hpp"
 #elif defined(GTKAPP)
 #include "gtk.hpp"
 #elif defined(__ANDROID__)

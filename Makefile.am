@@ -106,7 +106,10 @@ if !ENABLE_DEBUG
 AM_CPPFLAGS += -DNDEBUG
 endif
 
-AM_LDFLAGS = -Wl,-E -lpam $(ZLIB_LIBS) $(ZSTD_LIBS) ${PNG_LIBS}
+AM_LDFLAGS = -lpam $(ZLIB_LIBS) $(ZSTD_LIBS) ${PNG_LIBS}
+if !ENABLE_MACOS
+AM_LDFLAGS += -Wl,-E
+endif
 
 # Clang's linker doesn't like -pthread.
 if !HAVE_CLANG
@@ -121,6 +124,12 @@ AM_LDFLAGS += ${OPENSSL_LIBS}
 else
 coolwsd_LDADD += ${OPENSSL_LIBS}
 coolconfig_LDADD += ${OPENSSL_LIBS}
+endif
+
+if ENABLE_MACOS
+util_platform_cpp = common/Util-macos.cpp
+else
+util_platform_cpp = common/Util-linux.cpp
 endif
 
 AM_ETAGSFLAGS = --c++-kinds=+p --fields=+iaS --extra=+q -R --totals=yes --exclude=browser/node_modules --exclude=browser/dist *
@@ -138,12 +147,14 @@ shared_sources = common/FileUtil.cpp \
                  common/RegexUtil.cpp \
                  common/SigUtil-server.cpp \
                  common/SpookyV2.cpp \
+                 common/Syscall.cpp \
                  common/TraceEvent.cpp \
                  common/Unit.cpp \
                  common/Unit-server.cpp \
                  common/Uri.cpp \
                  common/Util.cpp \
                  common/Util-server.cpp \
+                 $(util_platform_cpp) \
                  common/Util-unix.cpp \
                  common/ConfigUtil.cpp \
                  common/Authorization.cpp \
@@ -220,6 +231,7 @@ connect_SOURCES = tools/Connect.cpp \
                   common/StringVector.cpp \
                   common/Util.cpp \
                   common/Util-server.cpp \
+                  $(util_platform_cpp) \
                   common/Util-unix.cpp
 
 connect_LDADD = libglobals.a
@@ -232,6 +244,7 @@ lokitclient_SOURCES = common/Log.cpp \
                       common/TraceEvent.cpp \
                       common/Util.cpp \
                       common/Util-server.cpp \
+                      $(util_platform_cpp) \
                       common/Util-unix.cpp
 
 lokitclient_LDADD = libglobals.a
@@ -344,6 +357,7 @@ clientnb_SOURCES = net/clientnb.cpp \
                    common/StringVector.cpp \
                    common/Util.cpp \
                    common/Util-server.cpp \
+                   $(util_platform_cpp) \
                    common/Util-unix.cpp
 
 clientnb_LDADD = libsimd.a libglobals.a
@@ -359,6 +373,7 @@ coolbench_SOURCES = tools/Benchmark.cpp \
                     common/StringVector.cpp \
                     common/Util.cpp \
                     common/Util-server.cpp \
+                    $(util_platform_cpp) \
                     common/Util-unix.cpp \
                     common/Simd.cpp
 
@@ -453,6 +468,7 @@ shared_headers = common/Anonymizer.hpp \
                  common/StringVector.hpp \
                  common/Seccomp.hpp \
                  common/Session.hpp \
+                 common/Syscall.hpp \
                  common/Unit.hpp \
                  common/Uri.hpp \
                  common/Util.hpp \

@@ -235,6 +235,10 @@ unsigned long SslContext::id()
     return syscall(SYS_gettid);
 #elif defined(__FreeBSD__)
     return pthread_getthreadid_np();
+#elif defined(__APPLE__)
+    uint64_t tid = 0;
+    pthread_threadid_np(NULL, &tid);
+    return tid;
 #else
 #error Implement for your platform
 #endif

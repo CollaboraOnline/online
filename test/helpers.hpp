@@ -16,6 +16,7 @@
 #include <Socket.hpp>
 #include <WebSocketSession.hpp>
 #include <common/ConfigUtil.hpp>
+#include <common/Syscall.hpp>
 #include <common/Unit.hpp>
 #include <common/Util.hpp>
 #include <test/lokassert.hpp>
@@ -352,7 +353,7 @@ inline int connectToLocalServer(int portNumber, int socketTimeOutMS, bool blocki
     int socketFD = 0;
     struct sockaddr_in serv_addr;
 
-    if ((socketFD = socket(AF_INET, SOCK_STREAM | SOCK_CLOEXEC, 0)) < 0)
+    if ((socketFD = Syscall::socket_cloexec_nonblock(AF_INET, 0 /*SOCK_STREAM | SOCK_CLOEXEC*/, 0)) < 0)
     {
         LOG_ERR("helpers::connectToLocalServer: Server client could not be created.");
         return -1;

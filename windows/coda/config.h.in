@@ -1,0 +1,187 @@
+/* -*- Mode: C++; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4; fill-column: 100 -*- */
+/* config.h.  Manually edited from config.h.in.  */
+/* config.h.in.  Generated from configure.ac by autoheader.  */
+
+#pragma once
+
+/* Variables that usually don't change once configured */
+
+/* The user-visible name of the app you build. */
+#define APP_NAME "@APP_NAME@"
+
+/* Default value of feature_lock.calc_unlock_highlights */
+#define CALC_UNLOCK_HIGHLIGHTS ""
+
+/* Define to 1 if this is a code-coverage build. */
+#define CODE_COVERAGE 0
+
+/* Enable permanent anonymization in logs */
+#define COOLWSD_ANONYMIZE_USER_DATA false
+
+/* Options passed to configure script */
+#undef COOLWSD_BUILDCONFIG
+
+/* Directory that contains configuration of coolwsd */
+#define COOLWSD_CONFIGDIR "."
+
+/* Default coolwsd loglevel */
+/* Set in CODALib.vcxproj differently for Release and Debug */
+
+/* Destination for Trace Event output */
+#undef COOLWSD_TRACEEVENTFILE
+
+/* The user-name which is allowed to run coolwsd and its tools */
+#undef COOL_USER_ID
+
+/* Default number of pre-spawn children */
+#define NUM_PRESPAWN_CHILDREN "1"
+
+/* Absolute path to the top-level source directory */
+#undef DEBUG_ABSSRCDIR
+
+/* Whether to disable SECCOMP */
+#define DISABLE_SECCOMP 1
+
+/* Default value of feature_lock.draw_unlock_highlights */
+#undef DRAW_UNLOCK_HIGHLIGHTS
+
+/* Whether to compile in some extra debugging support code and disable some
+   security pieces */
+#undef ENABLE_DEBUG
+
+/* Whether to compile and enable feature locking */
+#undef ENABLE_FEATURE_LOCK
+
+/* Whether to compile and enable feature restrictions */
+#undef ENABLE_FEATURE_RESTRICTION
+
+/* Whether to enable SSL */
+#define ENABLE_SSL 0
+
+/* Whether to default to using SSL_VERIFY_PEER */
+#undef SSL_VERIFY
+
+/* Whether to enable support key */
+#define ENABLE_SUPPORT_KEY 0
+
+/* Should the Release notes message be shown on upgrade */
+#undef ENABLE_WELCOME_MESSAGE
+
+/* User feedback URL. */
+#undef FEEDBACK_URL
+
+/* Define to 1 libcap (cap_get_proc) is available, otherwise 0 */
+#define HAVE_LIBCAP 0
+
+/* Whether OpenSSL has PKCS5_PBKDF2_HMAC() */
+#define HAVE_PKCS5_PBKDF2_HMAC 0
+
+/* Define to 1 if the `ppoll' function is available, otherwise 0. */
+#define HAVE_PPOLL 0
+
+/* Define to 1 if you have the `memrchr' function. */
+#define HAVE_MEMRCHR 0
+
+/* Define to 1 if you have the `pipe2' function. */
+#define HAVE_PIPE2 0
+
+/* Default value of help root URL */
+#undef HELP_URL
+
+/* Default value of feature_lock.impress_unlock_highlights */
+#undef IMPRESS_UNLOCK_HIGHLIGHTS
+
+/* Infobar URL. */
+#undef INFOBAR_URL
+
+/* Define to 1 if this is a libfuzzer build. */
+#undef LIBFUZZER
+
+/* Default value of feature_lock.locked_commands */
+#undef LOCKED_COMMANDS
+
+/* Enable logging of test assertions */
+#undef LOK_LOG_ASSERTIONS
+
+/* Path to LibreOffice installation */
+#define LO_PATH "@LO_PATH@"
+
+/* Limit the maximum number of open connections */
+#define MAX_CONNECTIONS 100
+
+/* Limit the maximum number of open documents */
+#define MAX_DOCUMENTS 100
+
+/* Define to 1 if this is a mobileapp (eg. Android) build. */
+#define MOBILEAPP 1
+
+/* Define to 1 when we should use systemplate and jails (eg. normal coolwsd server), otherwise 0 (eg. CODA). */
+#define ENABLE_CHILDROOTS 0
+
+/* Define to 1 when the compiled code is supposed to be part of CODA (the entry point is from the app, not from main() etc.), otherwise 0 (ie. normal server). */
+#define ENABLE_CODA 1
+
+/* Default value of feature_lock.unlock_description */
+#define UNLOCK_DESCRIPTION ""
+
+/* Default value of feature_lock.unlock_link */
+#define UNLOCK_LINK ""
+
+/* Default value of feature_lock.unlock_title */
+#define UNLOCK_TITLE ""
+
+/* The welcome url of the build. */
+#define WELCOME_URL ""
+
+/* Default value of feature_lock.writer_unlock_highlights */
+#define WRITER_UNLOCK_HIGHLIGHTS ""
+
+/* Should we enable SIMD acceleration */
+#define ENABLE_SIMD 0
+
+/* Define to 1 if this is the WASM app build. */
+#define WASMAPP 0
+
+/* Define to 1 if building for macOS */
+#undef MACOS
+
+/* Makes config variables conditionally static, only in non-debug builds, to allow for overriding them in unit-tests. */
+#ifdef ENABLE_DEBUG
+#define CONFIG_STATIC
+#else
+#define CONFIG_STATIC static
+#endif
+
+/* Stuff manually added just for CODA for Windows */
+
+typedef __int64 ssize_t;
+typedef int pid_t;
+
+// MSVC's _putenv_s doesn't do removal of environment variables, but we don't need that anyway
+#define setenv(variable, value, one) _putenv_s(variable, value)
+
+#define strcasecmp _stricmp
+
+#define POLLIN   0x001
+#define POLLPRI  0x002
+#define POLLOUT  0x004
+#define POLLERR  0x008
+#define POLLHUP  0x010
+#define POLLNVAL 0x020
+
+struct pollfd {
+  int fd;
+  short events;
+  short revents;
+};
+
+// I give up, let's define these here
+#define EX_OK 0
+#define EX_SOFTWARE 1
+
+#define MOBILEAPP 1
+
+#define EXTERNC extern "C"
+#define EXPORT EXTERNC __declspec(dllexport)
+
+#define ENABLE_LOCAL_FILESYSTEM 1

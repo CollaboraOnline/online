@@ -1,4 +1,4 @@
-/* -*- js-indent-level: 8 -*- */
+/* -*- js-indent-level: 8; fill-column: 100 -*- */
 
 /* global Module ArrayBuffer Uint8Array _ */
 
@@ -477,6 +477,19 @@ class IOSAppInitializer extends MobileAppInitializer {
 	}
 }
 
+class MacOSAppInitializer extends MobileAppInitializer {
+	constructor() {
+		super();
+
+		window.ThisIsTheMacOSApp = true;
+		window.postMobileMessage = function(msg) { window.webkit.messageHandlers.lok.postMessage(msg); };
+		window.postMobileError   = function(msg) { window.webkit.messageHandlers.error.postMessage(msg); };
+		window.postMobileDebug   = function(msg) { window.webkit.messageHandlers.debug.postMessage(msg); };
+
+		window.userInterfaceMode = window.coolParams.get('userinterfacemode');
+	}
+}
+
 class GTKAppInitializer extends MobileAppInitializer {
 	constructor() {
 		super();
@@ -485,6 +498,24 @@ class GTKAppInitializer extends MobileAppInitializer {
 		window.postMobileMessage = function(msg) { window.webkit.messageHandlers.cool.postMessage(msg, '*'); };
 		window.postMobileError   = function(msg) { window.webkit.messageHandlers.error.postMessage(msg, '*'); };
 		window.postMobileDebug   = function(msg) { window.webkit.messageHandlers.debug.postMessage(msg, '*'); };
+	}
+}
+
+class WindowsAppInitializer extends MobileAppInitializer {
+	constructor() {
+		super();
+
+		window.ThisIsTheWindowsApp = true;
+		window.postMobileMessage = function(msg) { window.chrome.webview.postMessage('MSG ' + msg); };
+
+		// FIXME: No registration of separate handlers in Windows WebView2, so just log
+		// errors and debug messages? Maybe instead send a JSON object with separate name
+		// and body? But then we would have to parse that JSON object from the string in C#
+		// anyway.
+		window.postMobileError   = function(msg) { window.chrome.webview.postMessage('ERR ' + msg); };
+		window.postMobileDebug   = function(msg) { window.chrome.webview.postMessage('DBG ' + msg); };
+
+		window.userInterfaceMode = window.coolParams.get('userinterfacemode');
 	}
 }
 
@@ -528,8 +559,12 @@ function getInitializerClass() {
 
 			if (osType === "IOS")
 				return new IOSAppInitializer();
+			else if (osType === "MACOS")
+				return new MacOSAppInitializer();
 			else if (osType === "GTK")
 				return new GTKAppInitializer();
+			else if (osType === "WINDOWS")
+				return new WindowsAppInitializer();
 			else if (osType === "ANDROID")
 				return new AndroidAppInitializer();
 			else if (osType === "EMSCRIPTEN")

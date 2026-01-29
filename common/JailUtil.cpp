@@ -43,6 +43,7 @@ namespace
 
 static const std::string CoolTestMountpoint = "cool_test_mount";
 
+#ifdef __linux__
 static void setdeny()
 {
     std::ofstream of("/proc/self/setgroups");
@@ -61,6 +62,8 @@ static void mapuser(uid_t origuid, uid_t newuid, gid_t origgid, gid_t newgid)
         of << newgid << " " << origgid << " 1";
     }
 }
+#endif // __linux__
+
 } // namespace
 
 bool enterMountingNS(uid_t uid, gid_t gid)
@@ -238,12 +241,15 @@ constexpr const char* COPIED_JAIL_MARKER_FILE = "delete.me";
 
 void markJailCopied(const std::string& root)
 {
+#if ENABLE_CHILDROOTS
     // The reason we should be able to create this file
     // is because the jail must be writable.
     // Failing this will cause an exception, signaling an error.
     Poco::File(root + '/' + COPIED_JAIL_MARKER_FILE).createFile();
+#endif
 }
 
+#if ENABLE_CHILDROOTS
 bool isJailCopied(const std::string& root)
 {
     // If the marker file exists, the jail was copied.
@@ -288,6 +294,7 @@ void removeAuxFolders(const std::string &root)
     FileUtil::removeFile(Poco::Path(root, "tmp").toString(), true);
     FileUtil::removeFile(Poco::Path(root, "linkable").toString(), true);
 }
+#endif
 
 /*
     The tmp dir of a path/<jailid>/tmp is mounted from (or linked to) a
@@ -298,6 +305,7 @@ void removeAuxFolders(const std::string &root)
 */
 void removeAssocTmpOfJail(const std::string &root)
 {
+#if ENABLE_CHILDROOTS
     Poco::Path jailPath(root);
     jailPath.makeDirectory();
     const std::string jailId = jailPath[jailPath.depth() - 1];
@@ -307,12 +315,14 @@ void removeAssocTmpOfJail(const std::string &root)
     jailPath.pushDirectory(std::string("cool-") + jailId);
 
     FileUtil::removeFile(jailPath.toString(), true);
+#endif
 }
 
 } // namespace
 
 bool tryRemoveJail(const std::string& root)
 {
+#if ENABLE_CHILDROOTS
     const bool emptyJail = FileUtil::isEmptyDirectory(root);
     if (!emptyJail && !FileUtil::Stat(root + '/' + LO_JAIL_SUBPATH).exists())
         return false; // not a jail.
@@ -343,6 +353,7 @@ bool tryRemoveJail(const std::string& root)
     safeRemoveDir(root);
 
     removeAssocTmpOfJail(root);
+#endif
 
     return true;
 }
@@ -354,6 +365,7 @@ bool tryRemoveJail(const std::string& root)
 /// inadvertently delete the contents of the mount-points.
 void cleanupJails(const std::string& root)
 {
+#if ENABLE_CHILDROOTS
     LOG_INF("Cleaning up childroot directory [" << root << "].");
 
     FileUtil::Stat stRoot(root);
@@ -433,18 +445,22 @@ void cleanupJails(const std::string& root)
         safeRemoveDir(root);
     else
         LOG_WRN("Jails root directory [" << root << "] is not empty. Will not remove it.");
+#endif
 }
 
 void createJailPath(const std::string& path)
 {
+#if ENABLE_CHILDROOTS
     LOG_INF("Creating jail path (if missing): " << path);
     Poco::File(path).createDirectories();
     if (chmod(path.c_str(), S_IXUSR | S_IWUSR | S_IRUSR) != 0)
         LOG_WRN_SYS("chmod(\"" << path << "\") failed");
+#endif
 }
 
 void setupChildRoot(bool bindMount, const std::string& childRoot, const std::string& sysTemplate)
 {
+#if ENABLE_CHILDROOTS
     // Start with a clean slate.
     cleanupJails(childRoot);
 
@@ -478,6 +494,7 @@ void setupChildRoot(bool bindMount, const std::string& childRoot, const std::str
     else
         LOG_INF("Disabling Bind-Mounting of jail contents per "
                 "mount_jail_tree config in coolwsd.xml.");
+#endif
 }
 
 /// The envar name used to control bind-mounting of systemplate/jails.
@@ -542,6 +559,7 @@ bool isMountNamespacesEnabled()
 }
 
 
+#if ENABLE_CHILDROOTS
 namespace SysTemplate
 {
 /// The network and other system files we need to keep up-to-date in jails.
@@ -749,6 +767,7 @@ void setupRandomDeviceLinks(const std::string& sysTemplate)
 }
 
 } // namespace SysTemplate
+#endif // ENABLE_CHILDROOTS
 
 } // namespace JailUtil
 
