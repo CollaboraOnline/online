@@ -6,22 +6,22 @@ ENV BUILDDIR /build
 
 WORKDIR /build
 
-#RUN --mount=type=cache,target=/var/cache/apt apt-get update && \
-#    DEBIAN_FRONTEND=noninteractive TZ=Etc/UTC apt-get -y install libpng16-16 fontconfig adduser cpio tzdata \
-#    findutils nano \
-#    libcap2-bin openssl openssh-client \
-#    libxcb-shm0 libxcb-render0 libxrender1 libxext6 \
-#    fonts-wqy-zenhei fonts-wqy-microhei fonts-droid-fallback \
-#    fonts-noto-cjk \
-#    libpoco-dev python3-polib libcap-dev npm \
-#    libpam-dev libzstd-dev wget git build-essential libtool \
-#    libcap2-bin python3-lxml libpng-dev libcppunit-dev \
-#    pkg-config fontconfig snapd chromium-browser \
-#    rsync curl \
-#    # core build dependencies, only those that are needed for LOKit
-#    git build-essential zip ccache autoconf gperf nasm xsltproc flex bison
+RUN --mount=type=cache,target=/var/cache/apt apt-get update && \
+    DEBIAN_FRONTEND=noninteractive TZ=Etc/UTC apt-get -y install libpng16-16 fontconfig adduser cpio tzdata \
+    findutils nano \
+    libcap2-bin openssl openssh-client \
+    libxcb-shm0 libxcb-render0 libxrender1 libxext6 \
+    fonts-wqy-zenhei fonts-wqy-microhei fonts-droid-fallback \
+    fonts-noto-cjk \
+    libpoco-dev python3-polib libcap-dev npm \
+    libpam-dev libzstd-dev wget git build-essential libtool \
+    libcap2-bin python3-lxml libpng-dev libcppunit-dev \
+    pkg-config fontconfig snapd chromium-browser \
+    rsync curl \
+    # core build dependencies, only those that are needed for LOKit
+    git build-essential zip ccache autoconf gperf nasm xsltproc flex bison
 
-#RUN curl -fsSL https://deb.nodesource.com/setup_20.x -o nodesource_setup.sh && bash nodesource_setup.sh && apt install -y nodejs
+RUN curl -fsSL https://deb.nodesource.com/setup_20.x -o nodesource_setup.sh && bash nodesource_setup.sh && apt install -y nodejs
 
 RUN mkdir -p $BUILDDIR
 
@@ -78,6 +78,6 @@ RUN setcap cap_fowner,cap_chown,cap_sys_chroot=ep /usr/bin/coolforkit-caps && \
 EXPOSE 9980
 
 # switch to cool user (use numeric user id to be compatible with Kubernetes Pod Security Policies)
-USER 100
+USER 1001
 
 ENTRYPOINT ["/start-collabora-online.sh"]
