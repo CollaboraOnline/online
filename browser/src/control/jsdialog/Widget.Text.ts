@@ -22,7 +22,7 @@ function staticTextControl(
 ) {
 	var statictext = window.L.DomUtil.create(
 		'span',
-		builder.options.cssClass,
+		builder.options.cssClass + ' static-label',
 		parentContainer,
 	);
 

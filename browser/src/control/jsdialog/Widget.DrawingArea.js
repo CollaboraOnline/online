@@ -50,6 +50,8 @@ function _drawingAreaControl (parentContainer, data, builder) {
 	const isFocusable = data.enabled && data.canFocus;
 	if (isFocusable) {
 		image.tabIndex = 0;
+	} else {
+		image.classList.add('ui-decorative-image');
 	}
 
 	if (data.text) {

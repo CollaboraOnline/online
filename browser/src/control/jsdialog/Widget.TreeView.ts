@@ -198,6 +198,7 @@ class TreeViewControl {
 			builder.options.cssClass + ' ui-treeview-checkbox',
 			parent,
 		);
+		checkbox.id = `${treeViewData.id}-checkbox-${entry.row}`;
 		checkbox.type = 'checkbox';
 		checkbox.tabIndex = -1;
 
@@ -218,6 +219,7 @@ class TreeViewControl {
 			builder.options.cssClass + ' ui-treeview-checkbox',
 			parent,
 		);
+		radioButton.id = `${treeViewData.id}-radio-${entry.row}`;
 		radioButton.type = 'radio';
 		radioButton.tabIndex = -1;
 
@@ -500,6 +502,7 @@ class TreeViewControl {
 		parent: HTMLElement,
 		entry: TreeEntryJSON,
 		index: any,
+		selectionElement: HTMLInputElement,
 		builder: JSBuilder,
 	) {
 		const text =
@@ -555,11 +558,15 @@ class TreeViewControl {
 				treeViewData.highlightTerm,
 			);
 		} else {
+			const elementType = selectionElement ? 'label' : 'span';
 			cell = window.L.DomUtil.create(
-				'span',
+				elementType,
 				builder.options.cssClass + ` ui-treeview-cell-text-content`,
 				parent,
 			);
+			if (selectionElement) {
+				cell.setAttribute('for', selectionElement.id);
+			}
 			cell.innerText = text;
 		}
 
@@ -750,7 +757,14 @@ class TreeViewControl {
 				entry.columns[index].text &&
 				!this.isSeparator(entry.columns[index])
 			) {
-				this.createTextCell(treeViewData, text, entry, index, builder);
+				this.createTextCell(
+					treeViewData,
+					text,
+					entry,
+					index,
+					selectionElement,
+					builder,
+				);
 			}
 
 			// row sub-elements
