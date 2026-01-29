@@ -84,6 +84,8 @@ public:
     static std::string ServiceRoot; ///< There are installations that need prefixing every page with some path.
     static std::string TmpFontDir;
     static std::string LOKitVersion;
+    static std::string LOKitVersionNumber;
+    static std::string LOKitVersionHash;
     static bool EnableTraceEventLogging;
     static bool EnableAccessibility;
     static bool EnableMountNamespaces;

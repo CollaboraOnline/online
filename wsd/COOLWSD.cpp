@@ -782,6 +782,8 @@ std::string COOLWSD::FileServerRoot;
 std::string COOLWSD::ServiceRoot;
 std::string COOLWSD::TmpFontDir;
 std::string COOLWSD::LOKitVersion;
+std::string COOLWSD::LOKitVersionNumber;
+std::string COOLWSD::LOKitVersionHash;
 std::string COOLWSD::ConfigFile = COOLWSD_CONFIGDIR "/coolwsd.xml";
 std::string COOLWSD::ConfigDir = COOLWSD_CONFIGDIR "/conf.d";
 bool COOLWSD::EnableTraceEventLogging = false;
@@ -3056,7 +3058,15 @@ private:
                 else if (param.first == "configid")
                     configId = param.second;
                 else if (param.first == "version")
+                {
                     COOLWSD::LOKitVersion = param.second;
+                    Poco::JSON::Object::Ptr object;
+                    if (JsonUtil::parseJSON(COOLWSD::LOKitVersion, object))
+                    {
+                        COOLWSD::LOKitVersionNumber = JsonUtil::getJSONValue<std::string>(object, "ProductVersion") + JsonUtil::getJSONValue<std::string>(object, "ProductExtension");
+                        COOLWSD::LOKitVersionHash = JsonUtil::getJSONValue<std::string>(object, "BuildId").substr(0, 8);
+                    }
+                }
                 else if (param.first.size() > 6 &&
                          param.first.compare(0, 5, "adms_") == 0)
                     admsProps[param.first.substr(5)] = param.second;
