@@ -47,6 +47,7 @@ app.CSections.ColumnGroup = 			{ name: 'column group'		, zIndex: 5 };
 app.CSections.RowGroup = 				{ name: 'row group'			, zIndex: 5 };
 app.CSections.CornerGroup = 			{ name: 'corner group'		, zIndex: 5 };
 app.CSections.SelectionRectangle =      { name: 'selection-rectangle', zIndex: 5 };
+app.CSections.ShapeHandlesSection =	{ name: 'shapeHandlesSection', zIndex: 5 };
 
 app.CSections.Comment =				{ name: 'comment'			, zIndex: 7	}; // This class is for comment markers. It is a document object. One should change instance's name after initializing (there may be many instances of this class).
 
@@ -95,6 +96,7 @@ app.CSections.Debug.Splits.processingOrder = 			71; // Calc. This is bound to ti
 app.CSections.MouseControl.processingOrder =            72; // Writer & Impress & Calc. Bound to tiles.
 app.CSections.SelectionRectangle.processingOrder =      73; // Impress.
 app.CSections.TextSelection.processingOrder =           74; // All.
+app.CSections.ShapeHandlesSection.processingOrder =	75;
 app.CSections.Splitter.processingOrder = 			    80; // Calc.
 
 app.CSections.CalcGrid.drawingOrder = 				40; // Calc.
@@ -116,6 +118,7 @@ app.CSections.CellFillMarker.drawingOrder =			95; // Calc.
 app.CSections.RowGroup.drawingOrder =					100; // Calc.
 app.CSections.ColumnGroup.drawingOrder =				110; // Calc.
 app.CSections.CornerGroup.drawingOrder =				120; // Calc.
+app.CSections.ShapeHandlesSection.drawingOrder =			125; // Calc.
 app.CSections.CornerHeader.drawingOrder =				130; // Calc.
 app.CSections.RowHeader.drawingOrder = 				140; // Calc.
 app.CSections.ColumnHeader.drawingOrder = 			150; // Calc.
