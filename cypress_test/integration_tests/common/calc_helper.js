@@ -355,6 +355,22 @@ function selectOptionMobileWizard(menu) {
 		.click();
 }
 
+// Wait for the core to be idle and then assert the address input has the expected value.
+// This is useful after operations that navigate to a cell (e.g., find, goto)
+// where there is a round-trip from browser to core before the address updates.
+// Parameters:
+// win - the frame window object (from cy.getFrameWindow())
+// expectedAddress - the expected cell address (e.g., 'A1', 'C300')
+function assertAddressAfterIdle(win, expectedAddress) {
+	cy.log('>> assertAddressAfterIdle - start');
+	cy.log('Param - expectedAddress: ' + expectedAddress);
+
+	helper.processToIdle(win);
+	cy.cGet(helper.addressInputSelector).should('have.value', expectedAddress);
+
+	cy.log('<< assertAddressAfterIdle - end');
+}
+
 module.exports.clickAtOffset = clickAtOffset;
 module.exports.clickOnFirstCell = clickOnFirstCell;
 module.exports.clickOnACell = clickOnACell;
@@ -372,3 +388,4 @@ module.exports.assertNumberofSheets = assertNumberofSheets;
 module.exports.selectOptionFromContextMenu = selectOptionFromContextMenu;
 module.exports.selectOptionMobileWizard = selectOptionMobileWizard;
 module.exports.hideSelectedRows = hideSelectedRows;
+module.exports.assertAddressAfterIdle = assertAddressAfterIdle;
