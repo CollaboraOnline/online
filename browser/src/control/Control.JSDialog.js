@@ -186,6 +186,9 @@ window.L.Control.JSDialog = window.L.Control.extend({
 			return;
 
 		const dialog = this.dialogs[id];
+		if (!dialog)
+			return;
+
 		app.layoutingService.appendLayoutingTask(() => {
 			if (!dialog.lastFocusedElement) {
 				this.map.focus();
