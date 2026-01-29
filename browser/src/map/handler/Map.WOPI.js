@@ -221,7 +221,7 @@ window.L.Map.WOPI = window.L.Handler.extend({
 			/* Separate, because needs explicit integration support */
 			menuEntriesMultimedia.push({action: 'remotemultimedia', text: _UNO('.uno:InsertAVMedia', '', true)});
 
-			menuEntriesCompare.push({action: 'remotecomparedocuments', text: _UNO('.uno:CompareDocuments', '', true)});
+			menuEntriesCompare.push({action: 'remotecomparedocuments', text: _('Compare Document...')});
 		}
 
 		this._insertImageMenuSetupDone = true;
