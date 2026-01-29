@@ -21,7 +21,7 @@ BEGIN {
     eval {
         require Cpanel::JSON::XS;
         Cpanel::JSON::XS->import(qw(decode_json encode_json));
-        $json_pretty = Cpanel::JSON::XS->new->utf8->canonical->pretty;
+        $json_pretty = Cpanel::JSON::XS->new->utf8->canonical->pretty->allow_nonref;
         1;
     } or eval {
         require JSON::XS;
@@ -66,8 +66,8 @@ sub insert(@) {
                 my $prev = $seen_in{$k} // '(unknown)';
 
                 # Also, warn only if the value changes (stringify via JSON for a simple deep-ish compare).
-                my $old_json = encode_json($merged{$k});
-                my $new_json = encode_json($obj->{$k});
+                my $old_json = $json_pretty->encode($merged{$k});
+                my $new_json = $json_pretty->encode($obj->{$k});
 
                 if ($old_json ne $new_json) {
                     my $old_s = _short($old_json, 140);
