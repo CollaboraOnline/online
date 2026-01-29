@@ -71,11 +71,8 @@ function clickOnFirstCell(firstClick = true, dblClick = false, expectedCell = 'A
 	}
 
 	cy.getFrameWindow().then(function(win) {
-		helper.processToIdle(win);
+		assertAddressAfterIdle(win, expectedCell);
 	});
-
-	cy.cGet(helper.addressInputSelector)
-		.should('have.prop', 'value', expectedCell);
 
 	cy.log('<< clickOnFirstCell - end');
 }
