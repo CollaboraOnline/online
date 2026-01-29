@@ -339,6 +339,7 @@ interface Window {
 	documentSigningEnabled: boolean;
 	deviceFormFactor?: string;
 	enableAccessibility: boolean;
+	enableExperimentalFeatures: boolean;
 	enableDebug: boolean;
 	enableMacrosExecution: boolean;
 	enableWelcomeMessage: boolean;
@@ -375,6 +376,7 @@ interface Window {
 	errorMessages: ErrorMessages;
 	queueMsg: MessageInterface[];
 
+	makeWopiCoolWsUrl(path: string, docUrlParams: string): string;
 	makeWsUrlWopiSrc(
 		path: string,
 		docUrlParams: string,
