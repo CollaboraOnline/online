@@ -103,8 +103,18 @@ class PermissionViewMode extends JSDialogComponent {
 			image: false, // Suppress image generation
 			visible: visible, // JSDialogBuilder checks visible: false
 			menu: [
-				{ id: 'view', text: _('Viewing Mode'), type: 'action' },
-				{ id: 'edit', text: _('Editing Mode'), type: 'action' },
+				{
+					id: 'view',
+					text: _('Viewing Mode'),
+					type: 'action',
+					selected: !this.map.isEditMode(),
+				},
+				{
+					id: 'edit',
+					text: _('Editing Mode'),
+					type: 'action',
+					selected: this.map.isEditMode(),
+				},
 			],
 		};
 	}

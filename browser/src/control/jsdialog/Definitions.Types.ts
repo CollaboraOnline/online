@@ -201,7 +201,8 @@ interface MenuDefinition extends WidgetJSON {
 	img?: string; // icon name
 	icon?: string; // icon name FIXME: duplicated property, used in exportMenuButton
 	checked?: boolean; // state of check mark
-	items?: Array<any>; // submenu
+	items?: Array<any>;
+	selected?: boolean; // selected state for entry
 }
 
 interface HtmlContentJson extends WidgetJSON {
