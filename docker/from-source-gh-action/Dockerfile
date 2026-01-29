@@ -2,7 +2,7 @@ FROM ubuntu:24.04 AS builder
 
 ENV CORE_ASSETS https://github.com/CollaboraOnline/online/releases/download/for-code-assets/core-co-24.04-assets.tar.gz
 ENV BUILDDIR /build
-ENV ONLINE_EXTRA_BUILD_OPTIONS --enable-experimental
+#ENV ONLINE_EXTRA_BUILD_OPTIONS --enable-experimental
 
 WORKDIR /build
 
@@ -35,7 +35,7 @@ RUN cd builddir && tar xf poco-1.12.5p2-all.tar.gz && cd poco-1.12.5p2-all/ && \
 
 COPY / $BUILDDIR/
 
-RUN bash build.sh
+RUN cd $BUILDDIR && chmod +x build.sh && bash build.sh
 
 # Build the final image
 FROM ubuntu:24.04
