@@ -75,7 +75,7 @@ const MenuCommands: MenuCommandsInterface = {
 			   'ReplyComment', 'DeleteComment', 'DeleteAuthor', 'DeleteAllNotes',
 			   'SpellingAndGrammarDialog', 'FontDialog', 'FontDialogForParagraph', 'TableDialog',
 			   'SpellCheckIgnore', 'FrameDialog', 'UnfloatFrame', 'ContentControlProperties', 'DeleteContentControl',
-			   'AddToWordbook'],
+			   'AddToWordbook', 'ReplaceText'],
 
 		spreadsheet: ['MergeCells', 'SplitCell', 'InsertCell', 'DeleteCell',
 				  'RecalcPivotTable', 'DataDataPilotRun', 'DeletePivotTable', 'InsertCalcTable', 'RemoveCalcTable',

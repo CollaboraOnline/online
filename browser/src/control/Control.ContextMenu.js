@@ -123,6 +123,9 @@ window.L.Control.ContextMenu = window.L.Control.extend({
 						callback: function(key) {
 							if (key === '.uno:InsertAnnotation') {
 								app.map.insertComment();
+							} else if (key === '.uno:ReplaceText') {
+								console.log('xxx: ', app.map._clip._selectionContent);
+								map.sendUnoCommand(key + ".uno:ReplaceText?Text:string=Rashesh");
 							} else if (map._clip === undefined || !map._clip.filterExecCopyPaste(key)) {
 								map.sendUnoCommand(key);
 								// For spelling context menu we need to remove selection
