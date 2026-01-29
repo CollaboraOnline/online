@@ -3089,3 +3089,71 @@ div [id^='themeview'].ui-iconview-entry, div [id^='themeview1col'].ui-iconview-e
 #ManageStylePage #box1 #desc {
 	display: block;
 }
+
+/* AI Rewrite Text Dialog */
+#AIRewriteTextDialog {
+	min-width: 600px;
+}
+
+#AIRewriteTextDialog #presetbuttons {
+	gap: 8px;
+	margin-bottom: 8px;
+}
+
+/* Selected preset button styling (toggle button checked state) */
+#AIRewriteTextDialog #presetbuttons .ui-toggle.checked button {
+	background-color: var(--color-primary);
+	color: var(--color-primary-text);
+	border-color: var(--color-primary);
+}
+
+#AIRewriteTextDialog #customlabel {
+	margin-top: 8px;
+}
+
+/* Center the Rewrite button */
+#AIRewriteTextDialog #rewritebtncontainer {
+	justify-content: center;
+	margin: 12px 0;
+}
+
+#AIRewriteTextDialog #loadingprogress {
+	margin: 8px 0;
+	width: 100%;
+}
+
+/* Separator styling */
+#AIRewriteTextDialog #separator {
+	margin: 8px 0 16px;
+}
+
+#AIRewriteTextDialog #textcolumns {
+	gap: 16px;
+}
+
+#AIRewriteTextDialog #leftcolumn,
+#AIRewriteTextDialog #rightcolumn {
+	flex: 1;
+	min-width: 250px;
+}
+
+#AIRewriteTextDialog #originaltext,
+#AIRewriteTextDialog #resulttext {
+	min-height: 150px;
+	max-height: 300px;
+	resize: vertical;
+	overflow-y: auto;
+	word-wrap: break-word;
+	white-space: pre-wrap;
+}
+
+#AIRewriteTextDialog #resulttext::placeholder {
+	color: var(--color-text-lighter);
+	font-style: italic;
+}
+
+/* Error message styling */
+#AIRewriteTextDialog #statuslabel {
+	color: var(--color-error);
+	margin: 8px 0;
+}

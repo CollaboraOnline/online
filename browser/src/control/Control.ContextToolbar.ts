@@ -297,6 +297,31 @@ class ContextToolbar extends JSDialogComponent {
 				text: _UNO('.uno:InsertAnnotation'),
 				command: '.uno:InsertAnnotation',
 			} as ToolItemWidgetJSON,
+			{
+				type: 'separator',
+				id: 'home-aiconfig-break',
+				orientation: 'vertical',
+			} as SeparatorWidgetJSON,
+			{
+				id: 'home-aiconfig',
+				type: 'menubutton',
+				text: _('AI'),
+				icon: 'lc_settings.svg', // Replace with AI icon when available
+				menu: [
+					{
+						type: 'action',
+						id: 'rewrite-selection',
+						text: _('Rewrite Selection'),
+						action: 'rewritetextai'
+					},
+					{
+						type: 'action',
+						id: 'ai-settings',
+						text: _('Settings'),
+						action: 'ai-settings',
+					},
+				] as Array<MenuDefinition>,
+			} as MenuButtonWidgetJSON,
 		];
 	}
 

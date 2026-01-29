@@ -17,6 +17,7 @@
  *     id: 'id',
  *     type: 'multilineedit',
  *     text: 'text content\nsecond line',
+ *     placeholder: 'Enter text here', // shown when textarea is empty
  *     html: '<a href="hyperlink">hyperlink</a>' // only if contenteditable is true
  *     cursor: true,
  *     contenteditable: false
@@ -48,8 +49,11 @@ function _multiLineEditControl(parentContainer, data, builder, callback) {
 	if (data.contenteditable)
 		edit.setAttribute('contenteditable', 'true');
 
-	if (controlType === 'textarea')
+	if (controlType === 'textarea') {
 		edit.value = builder._cleanText(data.text);
+		if (data.placeholder)
+			edit.setAttribute('placeholder', data.placeholder);
+	}
 	else if (controlType === 'p') {
 		data.text = data.text.replace(/(?:\r\n|\r|\n)/g, '<br>');
 		edit.textContent = builder._cleanText(data.text);

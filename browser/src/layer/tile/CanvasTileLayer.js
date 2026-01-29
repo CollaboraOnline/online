@@ -937,12 +937,21 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 				textMsgHtml = textMsgContent;
 			}
 
-			if (this._map._clip) {
-				this._map._clip.setTextSelectionHTML(textMsgHtml, textMsgPlainText);
-			} else
-				// hack for ios and android to get selected text into hyperlink insertion dialog
-				this._selectedTextContent = textMsgHtml;
+		if (this._map._clip) {
+			this._map._clip.setTextSelectionHTML(textMsgHtml, textMsgPlainText);
+		} else
+			// hack for ios and android to get selected text into hyperlink insertion dialog
+			this._selectedTextContent = textMsgHtml;
+
+		// Fire map event for external listeners (e.g., AI RewriteTextDialog)
+		if (this._map) {
+			this._map.fire('textselectioncontent', {
+				msg: textMsg,
+				html: textMsgHtml,
+				plainText: textMsgPlainText
+			});
 		}
+	}
 		else if (textMsg.startsWith('clipboardchanged')) {
 			var jMessage = textMsg.substr(17);
 			jMessage = JSON.parse(jMessage);

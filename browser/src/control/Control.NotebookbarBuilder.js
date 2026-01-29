@@ -42,6 +42,7 @@ window.L.Control.NotebookbarBuilder = window.L.Control.JSDialogBuilder.extend({
 
 		this._toolitemHandlers['.uno:SelectBackground'] = this._selectBackgroundControl;
 		this._toolitemHandlers['.uno:InsertAnnotation'] = this._insertAnnotationControl;
+		this._toolitemHandlers['.uno:AISettings'] = this._aiSettingsControl;
 		this._toolitemHandlers['.uno:SetDefault'] = this._formattingControl;
 		this._toolitemHandlers['.uno:Save'] = this._saveControl;
 		this._toolitemHandlers['.uno:SaveAs'] = this._saveAsControl;
@@ -746,6 +747,18 @@ window.L.Control.NotebookbarBuilder = window.L.Control.JSDialogBuilder.extend({
 			if (!(docLayer._docType === 'spreadsheet' && GraphicSelection.hasActiveSelection())) {
 				builder.map.insertComment();
 			}
+		});
+		builder._preventDocumentLosingFocusOnClick(control.container);
+	},
+
+	_aiSettingsControl: function(parentContainer, data, builder) {
+		var control = builder._unoToolButton(parentContainer, data, builder);
+		$(control.button).unbind('click');
+		$(control.label).unbind('click');
+		$(control.container).click(function (e) {
+			e.preventDefault();
+			var dialog = JSDialog.aiProviderDialog();
+			dialog.open();
 		});
 		builder._preventDocumentLosingFocusOnClick(control.container);
 	},
