@@ -20,6 +20,10 @@ describe(['tagdesktop'], 'Test style sidebar', function() {
 		cy.viewport(1000,660);
 
 		getEntry('Complimentary Close'); // check render exists
+
+		cy.getFrameWindow().then((win) => {
+			this.win = win;
+		});
 	});
 
 	/// finds rendered entry or text one and scrolls into view to trigger observer action
@@ -66,7 +70,7 @@ describe(['tagdesktop'], 'Test style sidebar', function() {
 		cy.cGet('#__MENU__').should('exist');
 
 		// visually check position and renders
-		cy.wait(500);
+		helper.processToIdle(this.win);
 		cy.cGet('#sidebar-dock-wrapper').compareSnapshot('style_sidebar_context_menu', 0.1);
 	});
 });
