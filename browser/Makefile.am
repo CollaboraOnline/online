@@ -428,6 +428,7 @@ COOL_JS_LST =\
 	src/control/Control.Tooltip.js \
 	src/control/Control.ESignature.ts \
 	src/control/Control.ESignatureDialog.ts \
+	src/control/Control.AIDialogs.ts \
 	src/control/ColorPicker.ts \
 	src/control/jsdialog/Util.Shortcuts.ts \
 	src/control/jsdialog/Util.ModelState.ts \
