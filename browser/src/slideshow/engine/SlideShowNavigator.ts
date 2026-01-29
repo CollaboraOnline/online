@@ -199,6 +199,10 @@ class SlideShowNavigator {
 
 	switchSlide(nOffset: number, bSkipTransition: boolean) {
 		NAVDBG.print('SlideShowNavigator.switchSlide: nOffset: ' + nOffset);
+		if (this.currentSlide === undefined) {
+			NAVDBG.print('SlideShowNavigator.switchSlide: currentSlide undefined');
+			return;
+		}
 		this.displaySlide(this.currentSlide + nOffset, bSkipTransition);
 	}
 
