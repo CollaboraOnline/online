@@ -36,4 +36,6 @@
 + (void)LOG_ERR:(NSString *_Nonnull)message NS_SWIFT_NAME(LOG_ERR(_:));
 + (void)LOG_TRC:(NSString *_Nonnull)message NS_SWIFT_NAME(LOG_TRC(_:));
 
++ (bool)isRtlLanguage:(NSString *_Nonnull)language;
+
 @end
