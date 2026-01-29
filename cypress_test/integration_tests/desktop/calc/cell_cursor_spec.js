@@ -49,7 +49,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Test jumping on large cell
 		calcHelper.selectOptionFromContextMenu('Insert sheet before this');
 
 		// we should see the top left corner of the sheet
-		cy.cGet(helper.addressInputSelector).should('have.value', 'A1');
+		calcHelper.assertAddressAfterIdle(this.win, 'A1');
 		desktopHelper.assertScrollbarPosition('vertical', 0, 30);
 	});
 
@@ -62,7 +62,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Test jumping on large cell
 		// Add a new sheet.
 		cy.cGet('#insertsheet-button').click();
 		// Cell cursor will go to A1 by default. So we understand that the new sheet is added.
-		cy.cGet(helper.addressInputSelector).should('have.value', 'A1');
+		calcHelper.assertAddressAfterIdle(this.win, 'A1');
 
 		// Go to a cell that we know is visible.
 		cy.cGet(helper.addressInputSelector).focus();
@@ -239,6 +239,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Test triple click content 
 
 	it('Triple click should select the cell content.', function() {
 		helper.typeIntoInputField(helper.addressInputSelector, 'A1');
+		calcHelper.assertAddressAfterIdle(this.win, 'A1');
 
 		// Triple click on second first in second row
 		cy.cGet('#document-container')
