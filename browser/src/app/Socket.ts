@@ -1144,7 +1144,10 @@ class Socket {
 
 	private _extractTextImg(e: SlurpMessageEvent): void {
 		if (
-			(window.ThisIsTheiOSApp || window.ThisIsTheEmscriptenApp) &&
+			(window.ThisIsTheiOSApp ||
+				window.ThisIsTheWindowsApp ||
+				window.ThisIsTheMacOSApp ||
+				window.ThisIsTheEmscriptenApp) &&
 			typeof e.data === 'string'
 		) {
 			// Another fix for issue #5843 limit splitting on the first newline

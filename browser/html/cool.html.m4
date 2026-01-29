@@ -9,7 +9,9 @@ m4_dnl------------------------------------------------------------------------
 m4_dnl# Define MOBILEAPP as true if this is either for the iOS/Android app or for the gtk+ "app" testbed
 m4_define([MOBILEAPP],[])m4_dnl
 m4_ifelse(IOSAPP,[true],[m4_define([MOBILEAPP],[true])])m4_dnl
+m4_ifelse(MACOSAPP,[true],[m4_define([MOBILEAPP],[true])])m4_dnl
 m4_ifelse(GTKAPP,[true],[m4_define([MOBILEAPP],[true])])m4_dnl
+m4_ifelse(WINDOWSAPP,[true],[m4_define([MOBILEAPP],[true])])m4_dnl
 m4_ifelse(ANDROIDAPP,[true],[m4_define([MOBILEAPP],[true])])m4_dnl
 m4_dnl
 m4_dnl# FIXME: This is temporary and not what we actually eventually want.
@@ -63,7 +65,9 @@ m4_ifelse(MOBILEAPP, [true],
 
 m4_dnl# For use in conditionals in JS:
 m4_ifelse(IOSAPP, [true], [<input type="hidden" id="init-mobile-app-os-type" value="IOS" />])
+m4_ifelse(MACOSAPP, [true], [<input type="hidden" id="init-mobile-app-os-type" value="MACOS" />])
 m4_ifelse(GTKAPP, [true], [<input type="hidden" id="init-mobile-app-os-type" value="GTK" />])
+m4_ifelse(WINDOWSAPP, [true], [<input type="hidden" id="init-mobile-app-os-type" value="WINDOWS" />])
 m4_ifelse(ANDROIDAPP, [true], [<input type="hidden" id="init-mobile-app-os-type" value="ANDROID" />])
 m4_ifelse(EMSCRIPTENAPP, [true], [<input type="hidden" id="init-mobile-app-os-type" value="EMSCRIPTEN" />])
 
@@ -74,15 +78,11 @@ m4_ifelse(BUNDLE,[],
   m4_foreachq([fileCSS],[COOL_CSS],[<link rel="stylesheet" href="][m4_ifelse(MOBILEAPP,[],[%SERVICE_ROOT%/browser/%VERSION%/])][fileCSS" />
 ]),
 [<link rel="stylesheet" href="][m4_ifelse(MOBILEAPP,[],[%SERVICE_ROOT%/browser/%VERSION%/])][bundle.css" />])
-
-<!--%BRANDING_CSS%--> <!-- add your logo here -->
-m4_ifelse(IOSAPP,[true],
-  [<link rel="stylesheet" href="Branding/branding.css">])
-m4_ifelse(ANDROIDAPP,[true],
-  [<link rel="stylesheet" href="branding.css">])
-m4_ifelse(EMSCRIPTENAPP,[true],
-  [<link rel="stylesheet" href="branding.css">])
-
+m4_dnl
+m4_dnl Add branding.css for mobile apps, or the placeholder for server processing
+m4_ifelse(MOBILEAPP, [true], [<link rel="stylesheet" href="m4_ifelse(IOSAPP, [true], [Branding/])branding.css" />],
+  [<!--%BRANDING_CSS%--> <!-- add your logo here -->])
+m4_dnl
 m4_dnl Handle localization
 m4_ifelse(MOBILEAPP,[true],
   [

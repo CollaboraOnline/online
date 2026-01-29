@@ -37,21 +37,16 @@
 #include <cstdlib>
 #include <cstring>
 #include <ctime>
-#include <dirent.h>
-#include <fcntl.h>
 #include <iomanip>
 #include <iostream>
 #include <limits>
 #include <mutex>
 #include <random>
-#include <spawn.h>
 #include <sstream>
 #include <string>
 #include <sys/stat.h>
 #include <sys/types.h>
-#include <sys/uio.h>
 #include <thread>
-#include <unistd.h>
 
 #ifndef COOLWSD_BUILDCONFIG
 #define COOLWSD_BUILDCONFIG
@@ -61,7 +56,7 @@
 #include "SigHandlerTrap.hpp"
 #endif
 
-#if !defined(__ANDROID__) && !defined(__EMSCRIPTEN__)
+#if !defined(__ANDROID__) && !defined(__EMSCRIPTEN__) && !defined(_WIN32)
 #  include <execinfo.h>
 #  include <cxxabi.h>
 #endif
@@ -77,6 +72,14 @@
 #import <Foundation/Foundation.h>
 #endif
 
+#ifndef _WIN32
+#include <sys/uio.h>
+#include <unistd.h>
+#include <dirent.h>
+#include <fcntl.h>
+#include <spawn.h>
+#endif
+
 #if defined __GLIBC__
 #include <malloc.h>
 #if defined(M_TRIM_THRESHOLD)
@@ -86,6 +89,10 @@
 
 #if defined __EMSCRIPTEN__
 #include <emscripten/console.h>
+#endif
+
+#ifdef _WIN32
+#include <processthreadsapi.h>
 #endif
 
 // for version info
@@ -264,6 +271,14 @@ namespace Util
         if (!ThreadTid)
             thr_self(&ThreadTid);
         return ThreadTid;
+#elif defined __APPLE__
+        if (!ThreadTid)
+        {
+            uint64_t tid;
+            if (pthread_threadid_np(NULL, &tid) == 0)
+                ThreadTid = tid;
+        }
+        return ThreadTid;
 #else
         static long threadCounter = 1;
         if (!ThreadTid)
@@ -277,6 +292,7 @@ namespace Util
 #if defined __linux__
         ::syscall(SYS_tgkill, getpid(), tid, signal);
 #else
+        (void) signal;
         LOG_WRN("No tgkill for thread " << tid);
 #endif
     }
@@ -313,6 +329,9 @@ namespace Util
         LOG_INF("Thread " << getThreadId() << ") is now called [" << s << ']');
 #elif defined __EMSCRIPTEN__
         emscripten_console_logf("COOL thread name: \"%s\"", s.c_str());
+#elif defined _WIN32
+        SetThreadDescription(GetCurrentThread(), string_to_wide_string(s).c_str());
+        LOG_INF("Thread " << getThreadId() << ") is now called [" << s << ']');
 #endif
 
         // Emit a metadata Trace Event identifying this thread. This will invoke a different function
@@ -945,6 +964,8 @@ namespace Util
                 free(rawSymbols);
             }
         }
+#else
+        (void) maxFrames;
 #endif
         if (0 == _frames.size())
         {

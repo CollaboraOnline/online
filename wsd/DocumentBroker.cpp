@@ -20,7 +20,6 @@
 #include <common/Common.hpp>
 #include <common/ConfigUtil.hpp>
 #include <common/FileUtil.hpp>
-#include <common/JailUtil.hpp>
 #include <common/JsonUtil.hpp>
 #include <common/Log.hpp>
 #include <common/Message.hpp>
@@ -61,7 +60,9 @@
 #include <stdexcept>
 #include <string>
 #include <sys/types.h>
+#ifndef _WIN32
 #include <sysexits.h>
+#endif
 #include <utility>
 
 using namespace std::literals;
@@ -1317,14 +1318,14 @@ bool DocumentBroker::doDownloadDocument(const Authorization& auth,
 
     std::string localPathEncoded;
     Poco::URI::encode(localPath, "#?", localPathEncoded);
-    _uriJailed = Poco::URI(Poco::URI("file://"), localPathEncoded).toString();
+    _uriJailed = Poco::URI(Poco::Path(localPath)).toString();
     _uriJailedAnonym =
-        Poco::URI(Poco::URI("file://"), COOLWSD::anonymizeUrl(localPathEncoded)).toString();
+        Poco::URI(Poco::Path(COOLWSD::anonymizeUrl(localPathEncoded))).toString();
     for (const auto& it : additionalFileLocalPaths)
     {
         std::string additionalFileLocalPathEncoded;
         Poco::URI::encode(it.second, "#?", additionalFileLocalPathEncoded);
-        _additionalFileUrisJailed[it.first] = Poco::URI(Poco::URI("file://"), additionalFileLocalPathEncoded).toString();
+        _additionalFileUrisJailed[it.first] = Poco::URI(Poco::Path(additionalFileLocalPathEncoded)).toString();
     }
 
     _filename = filename;
