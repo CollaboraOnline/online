@@ -2,6 +2,7 @@
 
 var helper = require('../../common/helper');
 var desktopHelper = require('../../common/desktop_helper');
+var calcHelper = require('../../common/calc_helper');
 
 describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Test rendering of a cell on edit', function() {
 
@@ -16,9 +17,9 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Test rendering of a cell o
 		});
 	});
 
-	function selectInitialCell() {
+	function selectInitialCell(win) {
 		helper.typeIntoInputField(helper.addressInputSelector, 'CA980');
-		cy.cGet(helper.addressInputSelector).should('have.value', 'CA980');
+		calcHelper.assertAddressAfterIdle(win, 'CA980');
 	}
 
 	function checkTextContent(expected) {
@@ -36,7 +37,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Test rendering of a cell o
 		desktopHelper.assertScrollbarPosition('horizontal', 325, 355);
 		desktopHelper.assertScrollbarPosition('vertical', 270, 330);
 
-		selectInitialCell();
+		selectInitialCell(this.win);
 		checkTextContent('');
 		checkVisualContent(this.win, 'empty');
 
@@ -52,7 +53,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Test rendering of a cell o
 		checkTextContent('');
 
 		// verify cell content
-		selectInitialCell();
+		selectInitialCell(this.win);
 		checkTextContent(testString);
 		checkVisualContent(this.win, 'teststring');
 
@@ -60,7 +61,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Test rendering of a cell o
 		desktopHelper.getNbIcon('Undo').click();
 
 		// verify cell content
-		selectInitialCell();
+		selectInitialCell(this.win);
 		checkTextContent('');
 		checkVisualContent(this.win, 'empty_selected');
 	});
