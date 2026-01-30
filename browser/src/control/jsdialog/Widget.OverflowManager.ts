@@ -71,6 +71,7 @@ class OverflowManager {
 			'OverflowManager: onResize, scheduledRefresh = ' +
 				(this.scheduledRefresh !== '' ? 'true' : 'false'),
 		);
+		this.lastMaxWidth = -1;
 
 		if (this.scheduledRefresh !== '') {
 			// collapse events
