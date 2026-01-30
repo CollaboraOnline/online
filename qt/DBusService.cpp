@@ -52,7 +52,7 @@ namespace coda
 
     void openNewDocument(const QString& templateType)
     {
-        WebView* webViewInstance = WebView::createNewDocument(Application::getProfile(), templateType.toStdString());
+        WebView* webViewInstance = WebView::createNewDocument(Application::getProfile(), templateType.toStdString(), {}, {});
         if (!webViewInstance)
         {
             LOG_ERR("Failed to create new document");
