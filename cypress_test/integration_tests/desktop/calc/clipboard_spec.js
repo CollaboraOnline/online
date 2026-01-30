@@ -80,8 +80,6 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Calc clipboard tests.', fu
 		var html = '<div id="meta-origin" data-coolorigin="%META_URL%">ignored</div>';
 		setDummyClipboard('text/html', html);
 
-		cy.wait(200);
-
 		// When pasting C1 to D1:
 		helper.typeIntoInputField(helper.addressInputSelector, 'D1');
 		cy.cGet(helper.addressInputSelector).should('have.prop', 'value', 'D1');
