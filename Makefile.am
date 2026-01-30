@@ -851,7 +851,7 @@ clean-clangd:
 clean-vscode: clean-clangd
 	cd $(abs_srcdir) && rm -rf .vscode
 
-browser/node_modules: browser/package.json browser/archived-packages
+browser/node_modules: browser/package.json browser/node_shrinkpack
 	@echo "=== npm install (browser) starting at $$(date) ==="
 	@cd browser && npm install --loglevel=info
 	@echo "=== npm install (browser) finished at $$(date) ==="
