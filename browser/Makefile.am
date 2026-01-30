@@ -937,7 +937,7 @@ $(DIST_FOLDER)/cool.html: $(srcdir)/html/cool.html.m4 \
 		$(srcdir)/html/cool.html.m4 > $@
 
 node_modules: package.json node_shrinkpack
-	@npm install
+	@npm ci --offline
 	@touch node_modules
 
 update-shrinkpack:
