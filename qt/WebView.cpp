@@ -151,7 +151,8 @@ Poco::Path getTemplatePath(const std::string& templateType, const std::string& t
     return resolvedPath;
 }
 
-std::pair<QString, QString> getDocumentNameInfo(const std::string& templateType)
+std::pair<QString, QString> getDocumentNameInfo(const std::string& templateType,
+                                                const std::string& baseName)
 {
     QString docNamePrefix;
     QString extension;
@@ -182,6 +183,10 @@ std::pair<QString, QString> getDocumentNameInfo(const std::string& templateType)
         docNamePrefix = QObject::tr("Text Document");
         extension = "odt";
     }
+
+    // if we received an explicit basename in the `newdoc` message use that.
+    if (!baseName.empty())
+        docNamePrefix = QString::fromStdString(baseName);
 
     return {docNamePrefix, extension};
 }
@@ -633,7 +638,7 @@ void WebView::load(const Poco::URI& fileURL, bool newFile, bool isStarterMode)
     _mainWindow->show();
 }
 
-WebView* WebView::createNewDocument(QWebEngineProfile* profile, const std::string& templateType, const std::string& templatePath)
+WebView* WebView::createNewDocument(QWebEngineProfile* profile, const std::string& templateType, const std::string& templatePath, const std::string& basename)
 {
     // Get template file path
     Poco::Path templatePathObj = getTemplatePath(templateType, templatePath);
@@ -642,7 +647,7 @@ WebView* WebView::createNewDocument(QWebEngineProfile* profile, const std::strin
     QString documentsDir = getDocumentsDirectory();
 
     // Get document name prefix and extension based on template type
-    auto [docNamePrefix, extension] = getDocumentNameInfo(templateType);
+    auto [docNamePrefix, extension] = getDocumentNameInfo(templateType, basename);
 
     // Find the next available document name
     QString newFilePath = findNextAvailableDocumentName(documentsDir, docNamePrefix, extension);

@@ -65,7 +65,10 @@ public:
     QMainWindow* mainWindow() { return _mainWindow; }
 
     void load(const Poco::URI& fileURL = Poco::URI(), bool newFile = false, bool isStarterMode = false);
-    static WebView* createNewDocument(QWebEngineProfile* profile, const std::string& templateType, const std::string& templatePath = "");
+
+    // templatePath and basename can be empty strings and are optional.
+    static WebView* createNewDocument(QWebEngineProfile* profile, const std::string& templateType,
+                                      const std::string& templatePath, const std::string& baseName);
 
     static WebView* findOpenDocument(const Poco::URI& documentURI);
     static WebView* findStarterScreen();

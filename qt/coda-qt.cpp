@@ -1064,7 +1064,7 @@ QVariant Bridge::cool(const QString& messageStr)
     }
     else if (message == "uno .uno:NewDoc" || message == "uno .uno:NewDocText")
     {
-        WebView* webViewInstance = WebView::createNewDocument(Application::getProfile(), "writer");
+        WebView* webViewInstance = WebView::createNewDocument(Application::getProfile(), "writer", {}, {});
         if (!webViewInstance)
         {
             LOG_ERR("Failed to create new text document");
@@ -1072,7 +1072,7 @@ QVariant Bridge::cool(const QString& messageStr)
     }
     else if (message == "uno .uno:NewDocSpreadsheet")
     {
-        WebView* webViewInstance = WebView::createNewDocument(Application::getProfile(), "calc");
+        WebView* webViewInstance = WebView::createNewDocument(Application::getProfile(), "calc", {}, {});
         if (!webViewInstance)
         {
             LOG_ERR("Failed to create new spreadsheet");
@@ -1080,7 +1080,7 @@ QVariant Bridge::cool(const QString& messageStr)
     }
     else if (message == "uno .uno:NewDocPresentation")
     {
-        WebView* webViewInstance = WebView::createNewDocument(Application::getProfile(), "impress");
+        WebView* webViewInstance = WebView::createNewDocument(Application::getProfile(), "impress", {}, {});
         if (!webViewInstance)
         {
             LOG_ERR("Failed to create new presentation");
@@ -1088,7 +1088,7 @@ QVariant Bridge::cool(const QString& messageStr)
     }
     else if (message == "uno .uno:NewDocDraw")
     {
-        WebView* webViewInstance = WebView::createNewDocument(Application::getProfile(), "draw");
+        WebView* webViewInstance = WebView::createNewDocument(Application::getProfile(), "draw", {}, {});
         if (!webViewInstance)
         {
             LOG_ERR("Failed to create new drawing");
@@ -1222,10 +1222,10 @@ QVariant Bridge::cool(const QString& messageStr)
     }
     else if (message.starts_with(NEWDOC))
     {
-        // e.g."newdoc type=writer template=%2Fhome%2F...something.ott"
+        // e.g."newdoc type=writer template=%2Fhome%2F...something.ott basename=Cool%20Text%20CV"
         auto const tokens = StringVector::tokenize(message);
 
-        std::string typeToken, templateToken;
+        std::string typeToken, templateToken, basenameToken;
         if (!COOLProtocol::getTokenString(tokens, "type", typeToken))
         {
             LOG_ERR("No type parameter in message '" << message << "'");
@@ -1235,6 +1235,10 @@ QVariant Bridge::cool(const QString& messageStr)
         // template is optional
         COOLProtocol::getTokenString(tokens, "template", templateToken);
 
+        // basename is optional, when provided overrides the default file
+        // names like "Text Document (1).odt" to "basename (1).odt"
+        COOLProtocol::getTokenString(tokens, "basename", basenameToken);
+
         std::string templatePath;
         if (!templateToken.empty())
         {
@@ -1242,9 +1246,12 @@ QVariant Bridge::cool(const QString& messageStr)
                 QUrl::fromPercentEncoding(QByteArray::fromStdString(templateToken)).toStdString();
         }
 
+        std::string decodedBasename;
+        Poco::URI::decode(basenameToken, decodedBasename);
+
         // Always create new window
-        WebView* webViewInstance = WebView::createNewDocument(
-            Application::getProfile(), typeToken, templatePath);
+        WebView* webViewInstance = WebView::createNewDocument(Application::getProfile(), typeToken,
+                                                              templatePath, decodedBasename);
         if (!webViewInstance)
         {
             LOG_ERR("Failed to create new document of type: " << typeToken);
