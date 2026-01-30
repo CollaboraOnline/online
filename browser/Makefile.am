@@ -938,7 +938,7 @@ $(DIST_FOLDER)/cool.html: $(srcdir)/html/cool.html.m4 \
 
 node_modules: package.json node_shrinkpack
 	@echo "=== npm install (browser) starting at $$(date) ==="
-	@npm install --loglevel=info
+	@npm ci --offline --loglevel=info
 	@echo "=== npm install (browser) finished at $$(date) ==="
 	@touch node_modules
 
