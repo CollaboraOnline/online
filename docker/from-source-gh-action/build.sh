@@ -24,7 +24,7 @@ if [ -z "$COLLABORA_ONLINE_REPO" ]; then
   COLLABORA_ONLINE_REPO="https://github.com/CollaboraOnline/online.git"
 fi;
 if [ -z "$COLLABORA_ONLINE_BRANCH" ]; then
-  COLLABORA_ONLINE_BRANCH="master"
+  COLLABORA_ONLINE_BRANCH="main"
 fi;
 echo "Building online branch '$COLLABORA_ONLINE_BRANCH' from '$COLLABORA_ONLINE_REPO'"
 
@@ -73,11 +73,16 @@ fi
 
 
 # Clone online repo
-if test ! -d online ; then
-  git clone --depth=1 "$COLLABORA_ONLINE_REPO" online || exit 1
-fi
+#if test ! -d online ; then
+#  git clone --depth=1 "$COLLABORA_ONLINE_REPO" online || exit 1
+#fi
+#
+#( cd online && git fetch --all && git checkout -f $COLLABORA_ONLINE_BRANCH && git clean -f -d && git pull -r ) || exit 1
 
-( cd online && git fetch --all && git checkout -f $COLLABORA_ONLINE_BRANCH && git clean -f -d && git pull -r ) || exit 1
+if [ ! -d "online" ] && [ ! -d "wsd" ] && [ ! -d "kit" ]; then
+    echo "Ошибка: похоже, мы не в правильном репозитории Collabora Online"
+    exit 1
+fi
 
 ##### LOKit (core) #####
 
