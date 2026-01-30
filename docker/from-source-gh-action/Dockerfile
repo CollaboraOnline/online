@@ -37,7 +37,7 @@ COPY / $BUILDDIR/
 COPY docker/from-source-gh-action/build.sh $BUILDDIR/build.sh
 RUN cd $BUILDDIR &&  \
     chmod +x build.sh  \
-    && bash build.sh
+    && build.sh
 
 # Build the final image
 FROM ubuntu:24.04
