@@ -192,5 +192,6 @@ JSDialog.MakeStatusPriority = function (scrollable: Element, toolItems: any[]) {
 };
 
 JSDialog.RefreshScrollables = function () {
+	app.console.debug('JSDialog.RefreshScrollables');
 	window.dispatchEvent(new Event('resize'));
 };
