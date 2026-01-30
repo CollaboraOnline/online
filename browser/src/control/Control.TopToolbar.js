@@ -217,11 +217,11 @@ class TopToolbar extends JSDialog.Toolbar {
 			]},
 			{type: 'spacer', id: 'topspacer'},
 			{type: 'separator', orientation: 'vertical', id: 'breaksidebar', visible: false},
-			{type: 'toolitem',  id: 'sidebar', text: _UNO('.uno:Sidebar', '', true), command: '.uno:SidebarDeck.PropertyDeck', visible: false},
-			{type: 'toolitem',  id: 'modifypage', text: _UNO('.uno:ModifyPage', 'presentation', true), command: '.uno:ModifyPage', visible: false},
-			{type: 'customtoolitem',  id: 'slidechangewindow', text: _UNO('.uno:SlideChangeWindow', 'presentation', true), command: 'transitiondeck', icon: 'lc_slidechangewindow.svg', visible: false},
-			{type: 'toolitem',  id: 'customanimation', text: _UNO('.uno:CustomAnimation', 'presentation', true), command: '.uno:CustomAnimation', visible: false},
-			{type: 'toolitem',  id: 'masterslidespanel', text: _UNO('.uno:MasterSlidesPanel', 'presentation', true), command: '.uno:MasterSlidesPanel', visible: false},
+			{type: 'toolitem',  id: 'sidebar', text: _UNO('.uno:Sidebar', '', true), command: '.uno:SidebarDeck.PropertyDeck', visible: false, icon: 'compact_sidebar.svg'},
+			{type: 'toolitem',  id: 'modifypage', text: _UNO('.uno:ModifyPage', 'presentation', true), command: '.uno:ModifyPage', visible: false, icon: 'compact_sidebar.svg'},
+			{type: 'customtoolitem',  id: 'slidechangewindow', text: _UNO('.uno:SlideChangeWindow', 'presentation', true), command: 'transitiondeck', icon: 'compact_slidechangewindow.svg', visible: false},
+			{type: 'toolitem',  id: 'customanimation', text: _UNO('.uno:CustomAnimation', 'presentation', true), command: '.uno:CustomAnimation', visible: false, icon: 'compact_customanimation.svg'},
+			{type: 'toolitem',  id: 'masterslidespanel', text: _UNO('.uno:MasterSlidesPanel', 'presentation', true), command: '.uno:MasterSlidesPanel', visible: false, icon: 'compact_masterslides.svg'},
 			{type: 'customtoolitem',  id: 'fold', desktop: false, mobile: false, tablet: true, iosapptablet: false, visible: false},
 		];
 
