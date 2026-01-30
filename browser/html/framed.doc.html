@@ -274,10 +274,15 @@
 
       // Wrap the message execution to catch exceptions
       function executeMessage() {
+          let paramArea = document.getElementById('execute-param');
+          if (!paramArea.checkValidity()) {
+              paramArea.reportValidity();
+              return;
+          }
           try {
               Execute(
                   document.getElementById('execute-message').value,
-                  JSON.parse(document.getElementById('execute-param').value)
+                  JSON.parse(paramArea.value)
               );
           } catch(e) {
               console.error("Execute message error:", e);
@@ -501,6 +506,21 @@
           file_path = file_path.substr(0, index + 1) + filename;
           startCool(frameUrl, file_path);
       }
+
+      document.addEventListener("DOMContentLoaded", function(event) {
+          let paramArea = document.getElementById('execute-param');
+          paramArea.checkValidity = () => {
+            let valid = true;
+            try {
+              JSON.parse(paramArea.value);
+              paramArea.setCustomValidity('');
+            } catch(e) {
+              paramArea.setCustomValidity("Not valid json : \n" + e);
+              valid = false;
+            }
+            return valid;
+          };
+      });
 
     </script>
 
