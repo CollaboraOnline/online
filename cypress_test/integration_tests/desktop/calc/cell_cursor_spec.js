@@ -72,7 +72,6 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Test jumping on large cell
 		cy.cGet('#View-tab-label').click();
 		desktopHelper.getNbIconArrow('FreezePanes').click();
 		desktopHelper.getNbIcon('FreezePanes').last().click();
-		cy.cGet('.jsdialog-overlay').click(); // close popup
 
 		// Scroll down.
 		helper.typeIntoInputField(helper.addressInputSelector, 'Z110');
