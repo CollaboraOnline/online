@@ -11,6 +11,10 @@ describe.skip(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Change alignment setti
 
 		// Click on edit button
 		mobileHelper.enableEditingMobile();
+
+		cy.getFrameWindow().then((win) => {
+			this.win = win;
+		});
 	});
 
 	function getTextEndPosForFirstCell() {
@@ -95,7 +99,7 @@ describe.skip(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Change alignment setti
 
 		// TODO: we don't have a way of testing this
 		// copy container doesn't have info about this
-		cy.wait(100);
+		helper.processToIdle(this.win);
 
 		cy.cGet('.unoParaLeftToRight').click();
 

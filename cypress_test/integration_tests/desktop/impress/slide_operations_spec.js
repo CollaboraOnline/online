@@ -10,6 +10,9 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Slide operations', functio
 	beforeEach(function() {
 		helper.setupAndLoadDocument('impress/slide_operations.odp');
 		desktopHelper.switchUIToNotebookbar();
+		cy.getFrameWindow().then((win) => {
+			this.win = win;
+		});
 	});
 
 	it('Add slides', function() {
@@ -42,7 +45,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Slide operations', functio
 
 	it('Check slide sorter focus', function() {
 		cy.cGet('#insertpage-button').click();
-		cy.wait(100);
+		helper.processToIdle(this.win);
 
 		// Set the focus to slide sorter.
 		cy.cGet('#preview-frame-part-0').click();

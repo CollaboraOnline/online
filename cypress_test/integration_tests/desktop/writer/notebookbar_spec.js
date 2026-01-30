@@ -16,6 +16,9 @@ describe(['tagdesktop'], 'Notebookbar tests.', function() {
 		}
 
 		writerHelper.selectAllTextOfDoc();
+		cy.getFrameWindow().then((win) => {
+			this.win = win;
+		});
 	});
 
 	function checkCollapsedGroups() {
@@ -28,7 +31,7 @@ describe(['tagdesktop'], 'Notebookbar tests.', function() {
 
 	it('Check collapsed state after mode switch', function() {
 		cy.viewport(1280, 600);
-		cy.wait(100); // stabilize
+		helper.processToIdle(this.win); // stabilize
 
 		checkCollapsedGroups();
 		desktopHelper.switchUIToCompact();

@@ -11,6 +11,9 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'File Property Tests', func
 		cy.viewport(1400, 1000);
 		helper.setupAndLoadDocument('writer/file_properties.odt');
 		desktopHelper.switchUIToNotebookbar();
+		cy.getFrameWindow().then((win) => {
+			this.win = win;
+		});
 	});
 
 	it('Add File Description.', function() {
@@ -71,7 +74,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'File Property Tests', func
 
 		// click the sub-dialog ok button
 		cy.cGet('#ok.ui-pushbutton-wrapper button').invoke('slice', 1).click();
-		cy.wait(100); // give a bit of time to spin the loop and update jsdialogs
+		helper.processToIdle(this.win); // give a bit of time to spin the loop and update jsdialogs
 		cy.cGet('#ok.ui-pushbutton-wrapper button').click();
 
 		// Check property saved
