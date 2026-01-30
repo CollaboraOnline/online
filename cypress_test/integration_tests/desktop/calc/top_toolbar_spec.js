@@ -11,6 +11,9 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 		newFilePath = helper.setupAndLoadDocument('calc/top_toolbar.ods');
 		desktopHelper.switchUIToCompact();
 		helper.typeIntoInputField(helper.addressInputSelector, 'A1');
+		cy.getFrameWindow().then((win) => {
+			this.win = win;
+		});
 	});
 
 	it('Save.', function () {
@@ -86,7 +89,7 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 		helper.typeIntoDocument('{enter}');
 		// Wait for enter to work before clicking on first cell again
 		cy.cGet(helper.addressInputSelector).should('have.prop', 'value', 'A2');
-		cy.wait(100);
+		helper.processToIdle(this.win);
 
 		// Turn text wrap on
 		calcHelper.clickOnFirstCell();
@@ -96,7 +99,7 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 		helper.typeIntoDocument('{enter}');
 		// Wait for enter to work before clicking on first cell again
 		cy.cGet(helper.addressInputSelector).should('have.prop', 'value', 'A2');
-		cy.wait(100);
+		helper.processToIdle(this.win);
 
 		// Get cursor position at end of line after wrap
 		calcHelper.dblClickOnFirstCell();

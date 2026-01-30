@@ -16,7 +16,10 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Statubar tests.', function
 		desktopHelper.shouldHaveZoomLevel('100');
 
 		cy.cGet(helper.addressInputSelector).should('have.value', 'A3');
-		cy.wait(100);
+		cy.getFrameWindow().then((win) => {
+			this.win = win;
+			helper.processToIdle(this.win);
+		});
 	});
 
 	it('Selected sheet.', function() {

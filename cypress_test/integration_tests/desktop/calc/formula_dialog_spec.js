@@ -7,6 +7,9 @@ describe(['tagdesktop'], 'Formula dialog tests', function() {
 
 	beforeEach(function() {
 		helper.setupAndLoadDocument('calc/formula_dialog.ods');
+		cy.getFrameWindow().then((win) => {
+			this.win = win;
+		});
 	});
 
 	it('Formula dialog visual regression test', function() {
@@ -24,7 +27,7 @@ describe(['tagdesktop'], 'Formula dialog tests', function() {
 
 		cy.cGet('.ui-dialog').compareSnapshot('formula_dialog_accrintm', 0.1);
 
-		cy.wait(100);
+		helper.processToIdle(this.win);
 
 		// collapse to selection mode
 		cy.cGet('#FormulaDialog #RB_ARG1-button').click();
