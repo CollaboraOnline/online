@@ -21,6 +21,10 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Calc clipboard tests.', fu
 		cy.cGet('#map').focus();
 		calcHelper.clickOnFirstCell();
 		cy.cGet(helper.addressInputSelector).should('have.prop', 'value', 'A1');
+
+		cy.getFrameWindow().then((win) => {
+			this.win = win;
+		});
 	});
 
 	function setDummyClipboard(type, content, image = false, fail = false, imageHtml = undefined) {
@@ -80,7 +84,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Calc clipboard tests.', fu
 		var html = '<div id="meta-origin" data-coolorigin="%META_URL%">ignored</div>';
 		setDummyClipboard('text/html', html);
 
-		cy.wait(200);
+		helper.processToIdle(this.win);
 
 		// When pasting C1 to D1:
 		helper.typeIntoInputField(helper.addressInputSelector, 'D1');
