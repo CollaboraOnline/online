@@ -940,6 +940,13 @@ node_modules: package.json node_shrinkpack
 	@npm install
 	@touch node_modules
 
+update-shrinkpack:
+	npm update
+	npm shrinkwrap
+	npx shrinkpack
+	cp npm-shrinkwrap.json npm-shrinkwrap.json.in
+	@echo "Done. Remember to commit node_shrinkpack/ and npm-shrinkwrap.json.in"
+
 $(DIST_FOLDER)/device-%.css: $(srcdir)/css/device-%.css
 	@mkdir -p $(dir $@)
 	@if test -z '$(ENABLE_BROWSERSYNC)'; then \
