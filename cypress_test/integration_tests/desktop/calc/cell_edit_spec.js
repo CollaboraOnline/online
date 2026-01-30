@@ -46,8 +46,8 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Test rendering of a cell o
 
 		desktopHelper.getNbIconArrow('Grow').click();
 		desktopHelper.getNbIcon('Bold').click();
+		desktopHelper.getNbIconArrow('Grow').click();
 		desktopHelper.getNbIcon('Underline').click();
-		cy.cGet('.jsdialog-overlay').click();
 
 		helper.typeIntoDocument(testString + '{enter}');
 		checkTextContent('');

@@ -40,8 +40,7 @@ describe(['tagmultiuser'], 'Check cell cursor and view behavior', function() {
 
 			// now insert row in the first view
 			cy.cSetActiveFrame('#iframe1');
-			desktopHelper.getNbIconArrow('InsertRowsBefore').click();
-			desktopHelper.getNbIcon('InsertRowsBefore').last().click();
+			desktopHelper.getNbIcon('InsertRowsBefore').first().click();
 
 			// verify that second view is still at the: A400
 			cy.cSetActiveFrame('#iframe2');
