@@ -21,9 +21,19 @@ jobs:
         run: |
           echo ::set-output name=tag::$(echo ${GITHUB_REF:10})
 
-      - name: Build and tag image
-        run: |
-          docker build -f docker/from-source-gh-action/Dockerfile -t "${{ steps.global_env.outputs.DOCKERHUB_IMAGE_NAME }}:${{steps.gen_tags.outputs.tag}}" .
+#      - name: Build and tag image
+#        run: |
+#          docker build -f docker/from-source-gh-action/Dockerfile -t "${{ steps.global_env.outputs.DOCKERHUB_IMAGE_NAME }}:${{steps.gen_tags.outputs.tag}}" .
+
+      - name: Build container image
+        uses: docker/build-push-action@v6
+        with:
+          push: false
+          context: docker/from-source-gh-action/
+          # platforms: linux/amd64,linux/arm64
+          file: docker/from-source-gh-action/Dockerfile
+          tags: |
+            ${{ steps.global_env.outputs.DOCKERHUB_IMAGE_NAME }}:${{steps.gen_tags.outputs.tag}}
 
       - name: Docker login
         run: docker login registry.vaulterix.ru -u ${{secrets.new_registry_user}} -p ${{secrets.new_registry_password}}

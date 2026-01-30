@@ -2,7 +2,7 @@ FROM ubuntu:24.04 AS builder
 
 ENV CORE_ASSETS https://github.com/CollaboraOnline/online/releases/download/for-code-assets/core-co-24.04-assets.tar.gz
 ENV BUILDDIR /build
-#ENV ONLINE_EXTRA_BUILD_OPTIONS --enable-experimental
+ENV ONLINE_EXTRA_BUILD_OPTIONS --enable-experimental
 
 WORKDIR /build
 
@@ -34,10 +34,8 @@ RUN cd builddir && tar xf poco-1.12.5p2-all.tar.gz && cd poco-1.12.5p2-all/ && \
     make install
 
 COPY / $BUILDDIR/
-COPY docker/from-source-gh-action/build.sh $BUILDDIR/build.sh
-RUN cd $BUILDDIR &&  \
-    chmod +x build.sh  \
-    && build.sh
+
+RUN bash build.sh
 
 # Build the final image
 FROM ubuntu:24.04
@@ -60,7 +58,7 @@ RUN apt-get update \
 COPY --from=builder /build/instdir /
 
 # copy the shell script which can start Collabora Online (coolwsd)
-COPY docker/from-source-gh-action/start-collabora-online.sh /start-collabora-online.sh
+COPY /start-collabora-online.sh /start-collabora-online.sh
 
 # set up Collabora Online (normally done by postinstall script of package)
 # Fix permissions
