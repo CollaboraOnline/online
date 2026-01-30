@@ -937,7 +937,9 @@ $(DIST_FOLDER)/cool.html: $(srcdir)/html/cool.html.m4 \
 		$(srcdir)/html/cool.html.m4 > $@
 
 node_modules: package.json archived-packages
-	@npm install
+	@echo "=== npm install (browser) starting at $$(date) ==="
+	@npm install --loglevel=info
+	@echo "=== npm install (browser) finished at $$(date) ==="
 	@touch node_modules
 
 $(DIST_FOLDER)/device-%.css: $(srcdir)/css/device-%.css

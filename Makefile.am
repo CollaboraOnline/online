@@ -852,7 +852,9 @@ clean-vscode: clean-clangd
 	cd $(abs_srcdir) && rm -rf .vscode
 
 browser/node_modules: browser/package.json browser/archived-packages
-	@cd browser && npm install
+	@echo "=== npm install (browser) starting at $$(date) ==="
+	@cd browser && npm install --loglevel=info
+	@echo "=== npm install (browser) finished at $$(date) ==="
 
 eslint: browser/node_modules
 	@$(MAKE) -C browser eslint
