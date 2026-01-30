@@ -1,5 +1,7 @@
 bin_PROGRAMS = coda-qt
 
+EXTRA_coda_qt_DEPENDENCIES = run-from-build
+
 include_paths = -I${top_srcdir}/common -I${top_srcdir}/net -I${top_srcdir}/kit -I${top_srcdir}/wsd -I${top_srcdir} ${ZSTD_CFLAGS} ${QT6_CFLAGS}
 
 warning_flags = -Wall -Werror -Wno-parentheses -Wno-sign-compare -Wno-unused-variable
