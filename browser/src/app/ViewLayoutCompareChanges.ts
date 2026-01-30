@@ -23,7 +23,26 @@ class ViewLayoutCompareChanges extends ViewLayoutNewBase {
 	constructor() {
 		super();
 
+		this.adjustViewZoomLevel();
 		this.updateViewData();
+	}
+
+	private adjustViewZoomLevel() {
+		Util.ensureValue(app.activeDocument);
+
+		const min = 0.1;
+		const max = 10;
+
+		const anchorSection = this.getDocumentAnchorSection();
+		this.halfWidth = Math.round(anchorSection.size[0] * 0.5);
+
+		const ratio = this.halfWidth / app.activeDocument.fileSize.pX;
+		let zoom = app.map.getScaleZoom(ratio);
+		zoom = Math.min(max, Math.max(min, zoom));
+
+		if (zoom > 1) zoom = Math.floor(zoom);
+
+		app.map.setZoom(zoom, { animate: false });
 	}
 
 	protected refreshCurrentCoordList() {
@@ -67,7 +86,6 @@ class ViewLayoutCompareChanges extends ViewLayoutNewBase {
 		Util.ensureValue(app.activeDocument);
 
 		const anchorSection = this.getDocumentAnchorSection();
-		this.halfWidth = Math.round(anchorSection.size[0] * 0.5);
 
 		this._viewSize = cool.SimplePoint.fromCorePixels([
 			Math.max(
