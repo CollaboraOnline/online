@@ -32,7 +32,7 @@
     "mocha": "8.2.1",
     "prettier": "^3.1.1",
     "select2": "4.0.13",
-    "shrinkpack": "1.0.0-alpha",
+    "shrinkpack": "0.20.0",
     "smartmenus": "1.0.0",
     "stylelint": "13.7.0",
     "tmp": "0.2.4",
