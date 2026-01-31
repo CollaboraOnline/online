@@ -76,7 +76,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Searching via find dialog.
 		findHelper.typeIntoSearchField('q');
 
 		// Should be no new selection
-		cy.cGet(helper.addressInputSelector).should('have.value', 'A2');
+		calcHelper.assertAddressAfterIdle(this.win, 'A2');
 	});
 
 	it('Search next / prev instance.', function() {
