@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-12-06 18:17+0000\n"
-"PO-Revision-Date: 2026-01-06 13:01+0000\n"
+"PO-Revision-Date: 2026-02-01 15:01+0000\n"
 "Last-Translator: Priit Jõerüüt <jrthwlate@users.noreply.hosted.weblate.org>\n"
 "Language-Team: Estonian <https://hosted.weblate.org/projects/collabora-"
 "online/collabora-office-macos-app/et/>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.15.1\n"
+"X-Generator: Weblate 5.16-dev\n"
 
 msgctxt "1UK-8n-QPP.title"
 msgid "Customize Toolbar…"
@@ -29,31 +29,31 @@ msgstr "Otsi"
 
 msgctxt "1tx-W0-xDw.title"
 msgid "Lower"
-msgstr ""
+msgstr "Madalda"
 
 msgctxt "2h7-ER-AoG.title"
 msgid "Raise"
-msgstr ""
+msgstr "Tõsta"
 
 msgctxt "2oI-Rn-ZJC.title"
 msgid "Transformations"
-msgstr ""
+msgstr "Teisenemised"
 
 msgctxt "3IN-sU-3Bg.title"
 msgid "Spelling"
-msgstr ""
+msgstr "Õigekiri"
 
 msgctxt "3Om-Ey-2VK.title"
 msgid "Use Default"
-msgstr ""
+msgstr "Kasuta vaikimisi väärtust"
 
 msgctxt "3rS-ZA-NoH.title"
 msgid "Speech"
-msgstr ""
+msgstr "Kõne"
 
 msgctxt "46P-cB-AYj.title"
 msgid "Tighten"
-msgstr ""
+msgstr "Tihenda"
 
 msgctxt "4EN-yA-p0u.title"
 msgid "Find"
@@ -232,7 +232,7 @@ msgstr "Minimeeri"
 
 msgctxt "OaQ-X3-Vso.title"
 msgid "Baseline"
-msgstr ""
+msgstr "Alusjoon"
 
 #. Do not change the placeholder ProductName!
 msgctxt "Olw-nP-bQN.title"
@@ -365,164 +365,164 @@ msgstr "Kasuta otsimiseks valikut"
 
 msgctxt "c8a-y6-VQd.title"
 msgid "Transformations"
-msgstr ""
+msgstr "Teisenemised"
 
 msgctxt "cDB-IK-hbR.title"
 msgid "Use None"
-msgstr ""
+msgstr "Ära kasuta ühtegi"
 
 msgctxt "cqv-fj-IhA.title"
 msgid "Selection"
-msgstr ""
+msgstr "Valik"
 
 msgctxt "cwL-P1-jid.title"
 msgid "Smart Links"
-msgstr ""
+msgstr "Nutilingid"
 
 msgctxt "d9M-CD-aMd.title"
 msgid "Make Lower Case"
-msgstr ""
+msgstr "Muuda väiketähtedeks"
 
 msgctxt "d9c-me-L2H.title"
 msgid "Text"
-msgstr ""
+msgstr "Tekst"
 
 msgctxt "dMs-cI-mzQ.title"
 msgid "File"
-msgstr ""
+msgstr "Fail"
 
 msgctxt "dRJ-4n-Yzg.title"
 msgid "Undo"
-msgstr ""
+msgstr "Võta tegevus tagasi"
 
 msgctxt "gVA-U4-sdL.title"
 msgid "Paste"
-msgstr ""
+msgstr "Aseta"
 
 msgctxt "hQb-2v-fYv.title"
 msgid "Smart Quotes"
-msgstr ""
+msgstr "Nutikad tsiteerimised"
 
 msgctxt "hz2-CU-CR7.title"
 msgid "Check Document Now"
-msgstr ""
+msgstr "Kontrolli nüüd dokumenti"
 
 msgctxt "hz9-B4-Xy5.title"
 msgid "Services"
-msgstr ""
+msgstr "Teenused"
 
 msgctxt "i1d-Er-qST.title"
 msgid "Smaller"
-msgstr ""
+msgstr "Väiksem"
 
 msgctxt "ijk-EB-dga.title"
 msgid "Baseline"
-msgstr ""
+msgstr "Alusjoon"
 
 msgctxt "jBQ-r6-VK2.title"
 msgid "Kern"
-msgstr ""
+msgstr "Tähesobitus"
 
 msgctxt "jFq-tB-4Kx.title"
 msgid "	Right to Left"
-msgstr ""
+msgstr "\tParemalt vasakule"
 
 msgctxt "jxT-CU-nIS.title"
 msgid "Format"
-msgstr ""
+msgstr "Vorming"
 
 msgctxt "kIP-vf-haE.title"
 msgid "Show Sidebar"
-msgstr ""
+msgstr "Näita külgriba"
 
 msgctxt "mK6-2p-4JG.title"
 msgid "Check Grammar With Spelling"
-msgstr ""
+msgstr "Kontrolli grammatikat ja õigekirja"
 
 msgctxt "o6e-r0-MWq.title"
 msgid "Ligatures"
-msgstr ""
+msgstr "Liittähed (ligatuurid)"
 
 msgctxt "oas-Oc-fiZ.title"
 msgid "Open Recent"
-msgstr ""
+msgstr "Ava viimati kasutatud"
 
 msgctxt "ogc-rX-tC1.title"
 msgid "Loosen"
-msgstr ""
+msgstr "Lõdvenda"
 
 msgctxt "pa3-QI-u2k.title"
 msgid "Delete"
-msgstr ""
+msgstr "Kustuta"
 
 msgctxt "pxx-59-PXV.title"
 msgid "Save…"
-msgstr ""
+msgstr "Salvesta…"
 
 msgctxt "q09-fT-Sye.title"
 msgid "Find Next"
-msgstr ""
+msgstr "Näita järgmist"
 
 msgctxt "qIS-W8-SiK.title"
 msgid "Page Setup…"
-msgstr ""
+msgstr "Lehe paigutus…"
 
 msgctxt "rbD-Rh-wIN.title"
 msgid "Check Spelling While Typing"
-msgstr ""
+msgstr "Kontrolli õigekirja sisestamise ajal"
 
 msgctxt "rgM-f4-ycn.title"
 msgid "Smart Dashes"
-msgstr ""
+msgstr "Nutikriipsud"
 
 msgctxt "snW-S8-Cw5.title"
 msgid "Show Toolbar"
-msgstr ""
+msgstr "Näita tööriistariba"
 
 msgctxt "tRr-pd-1PS.title"
 msgid "Data Detectors"
-msgstr ""
+msgstr "Andmetuvastajad"
 
 msgctxt "tXI-mr-wws.title"
 msgid "Open Recent"
-msgstr ""
+msgstr "Ava viimati kasutatud"
 
 msgctxt "tlD-Oa-oAM.title"
 msgid "Kern"
-msgstr ""
+msgstr "Tähesobitus"
 
 #. Do not change the placeholder ProductName!
 msgctxt "uQy-DD-JDr.title"
 msgid "ProductName"
-msgstr ""
+msgstr "ProductName"
 
 msgctxt "uRl-iY-unG.title"
 msgid "Cut"
-msgstr ""
+msgstr "Lõika"
 
 msgctxt "vFu-3Y-2xa.title"
 msgid "Window"
-msgstr ""
+msgstr "Aken"
 
 msgctxt "vKC-jM-MkH.title"
 msgid "Paste Style"
-msgstr ""
+msgstr "Aseta kujundusega"
 
 msgctxt "vLm-3I-IUL.title"
 msgid "Show Ruler"
-msgstr ""
+msgstr "Näita joonlauda"
 
 msgctxt "vNY-rz-j42.title"
 msgid "Clear Menu"
-msgstr ""
+msgstr "Tühjenda menüü"
 
 msgctxt "vmV-6d-7jI.title"
 msgid "Make Upper Case"
-msgstr ""
+msgstr "Muuda suurtähtedeks"
 
 msgctxt "w0m-vy-SC9.title"
 msgid "Ligatures"
-msgstr ""
+msgstr "Liittähed (ligatuurid)"
 
 msgctxt "wb2-vD-lq4.title"
 msgid "Align Right"
@@ -542,8 +542,8 @@ msgstr "Kasuta kõiki"
 
 msgctxt "xrE-MZ-jX0.title"
 msgid "Speech"
-msgstr ""
+msgstr "Kõne"
 
 msgctxt "z6F-FW-3nz.title"
 msgid "Show Substitutions"
-msgstr ""
+msgstr "Näita asendusi"
