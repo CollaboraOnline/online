@@ -357,11 +357,6 @@ private:
 
     std::string getReason() const;
 
-    static UnitBase* get(UnitType type);
-
-    /// setup global instance for get() method
-    static void rememberInstance(UnitType type, UnitBase* instance);
-
     static void* DlHandle; ///< The handle to the unit-test .so.
     static char *UnitLibPath;
     static UnitBase** GlobalArray; ///< All the tests.
