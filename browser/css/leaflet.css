@@ -699,6 +699,11 @@ div.leaflet-cursor-container:hover > .leaflet-cursor-header {
 	}
 }
 
+@keyframes MoveUpDown {
+	0%, 100% {bottom: -38px;}
+	50% {bottom: -48px;}
+}
+
 .leaflet-text-selection-container {
 	position: absolute;
 	text-align: center;
@@ -823,7 +828,17 @@ input.clipboard {
 	margin: 0 0 4px;
 	text-align: center;
 }
-
+.leaflet-progress-spinner::before {
+	content: '';
+	position: relative;
+	animation: MoveUpDown 1s linear infinite;
+	z-index: 1;
+	display: block;
+	width: 100%;
+	height: 78px;
+	margin: 0 0 4px;
+	background: var(--spinner-logo) no-repeat 44px center/78px;
+}
 .leaflet-progress-spinner-canvas {
 	position: static !important;
 }
