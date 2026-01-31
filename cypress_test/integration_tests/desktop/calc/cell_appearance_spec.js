@@ -194,10 +194,11 @@ describe(['tagdesktop'], 'Change cell appearance.', function() {
 		calcHelper.clickOnFirstCell();
 		// Apply left border first
 		cy.cGet('.notebookbar .unoSetBorderStyle .arrowbackground').click();
-		cy.wait(500);
+		cy.cGet('.ui-dialog-content').should('be.visible');
 		helper.getMenuEntry(1).click();
 
-		cy.wait(500); // Wait for first popup to close.
+		// Wait for popup to close before clicking next button
+		cy.cGet('.ui-dialog-content').should('not.exist');
 
 		// Then apply border color
 		cy.cGet('.unoFrameLineColor .arrowbackground').click();
