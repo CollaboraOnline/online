@@ -255,7 +255,9 @@ JSDialog.OpenDropdown = function (
 			);
 		};
 	};
-	window.L.Map.THIS.fire('closepopups'); // close popups if a dropdown menu is opened
+	if (!isSubmenu) {
+		window.L.Map.THIS.fire('closepopups'); // close popups if a dropdown menu is opened
+	}
 	window.L.Map.THIS.fire('jsdialog', {
 		data: json,
 		callback: generateCallback(entries),
