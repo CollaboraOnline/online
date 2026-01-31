@@ -204,6 +204,15 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Test Cell Selections', fun
 		// This doesn't pass without the fix in this commit.
 		cy.cGet('#document-container').compareSnapshot('scroll-check', 0.02);
 	});
+
+	it('Compare full window size between local and CI', function() {
+		// This test captures a full window screenshot to compare dimensions
+		// between local Chrome (144+) and CI Chrome (123).
+		// Local Chrome 132+ has a 79px UI reservation in headless mode that
+		// reduces the effective viewport. See cypress-io/cypress#27260.
+		// Expected: 1000x660 (the viewport size set in beforeEach)
+		cy.compareSnapshot('full-window-size-check', 0.0);
+	});
 });
 
 describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Test jumping on large cell selection with split panes', function() {
