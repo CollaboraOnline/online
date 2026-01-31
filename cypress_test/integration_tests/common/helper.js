@@ -1,6 +1,13 @@
 /* -*- js-indent-level: 8 -*- */
 /* global cy Cypress expect */
 
+// Maximum viewport height for consistent screenshots across environments.
+// Some Chrome/Chromium headless configurations reserve space for UI (or
+// something of that nature) so viewport must be <= 581px to fit within that
+// max available space to produce identical screenshots.
+// See cypress-io/cypress#27260.
+const maxScreenshotableViewportHeight = 581;
+
 /*
  * Prepares the test document by copying or uploading it
  * filePath: test document file path
@@ -1357,3 +1364,4 @@ module.exports.waitUntilCoreIsIdle = waitUntilCoreIsIdle;
 module.exports.waitUntilLayoutingIsIdle = waitUntilLayoutingIsIdle;
 module.exports.processToIdle = processToIdle;
 module.exports.waitForTimers = waitForTimers;
+module.exports.maxScreenshotableViewportHeight = maxScreenshotableViewportHeight;
