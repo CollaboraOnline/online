@@ -43,16 +43,16 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Searching via find dialog.
 	it('Search existing word when not following own view', function() {
 		desktopHelper.assertScrollbarPosition('vertical', 10, 30);
 
-		cy.getFrameWindow().its('app').then((app) => {
-			expect(app.isFollowingOff()).to.be.false;
+		cy.then(() => {
+			expect(this.win.app.isFollowingOff()).to.be.false;
 		});
 
 		desktopHelper.scrollViewDown();
 
 		desktopHelper.assertScrollbarPosition('vertical', 175, 205);
 
-		cy.getFrameWindow().its('app').then((app) => {
-			expect(app.isFollowingOff()).to.be.true;
+		cy.then(() => {
+			expect(this.win.app.isFollowingOff()).to.be.true;
 		});
 
 		helper.setDummyClipboardForCopy();
