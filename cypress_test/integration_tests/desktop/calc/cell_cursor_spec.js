@@ -268,15 +268,15 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Test decimal separator of 
 
 	it('Check different decimal separators', function() {
 		helper.typeIntoInputField(helper.addressInputSelector, 'A1');
+		calcHelper.assertAddressAfterIdle(this.win, 'A1');
 
-		helper.processToIdle(this.win);
 		cy.wrap(this.win).then(win => {
 			cy.expect(win.app.calc.decimalSeparator).to.be.equal('.');
 		});
 
 		helper.typeIntoInputField(helper.addressInputSelector, 'B1');
+		calcHelper.assertAddressAfterIdle(this.win, 'B1');
 
-		helper.processToIdle(this.win);
 		cy.wrap(this.win).then(win => {
 			cy.expect(win.app.calc.decimalSeparator).to.be.equal(',');
 		});
