@@ -108,13 +108,17 @@ class ServerAuditDialog {
 				slow: [
 					_('Slow Kit jail setup with copying, cannot bind-mount.'),
 					'SDK: bindmount',
-					'',
+					'https://sdk.collaboraonline.com/docs/installation/Configuration.html#performance',
 				],
-				ok: [_('Fast kit jail bind mounting enabled'), 'SDK: bindmount', ''],
+				ok: [
+					_('Fast kit jail bind mounting enabled'),
+					'SDK: bindmount',
+					'https://sdk.collaboraonline.com/docs/installation/Configuration.html#performance',
+				],
 				not_recommended: [
 					_('Fast kit jail bind mounting not configured'),
 					'SDK: bindmount',
-					'',
+					'https://sdk.collaboraonline.com/docs/installation/Configuration.html#performance',
 				],
 			},
 			proxy: {
