@@ -403,6 +403,12 @@ class VRuler extends Ruler {
 	}
 
 	_fixOffset() {
+		app.layoutingService.appendLayoutingTask(() => {
+			this._fixOffsetImpl();
+		});
+	}
+
+	_fixOffsetImpl() {
 		// in case of disabled ruler at docload or event like 'moveend' calculation of offset can be ignored
 		if (
 			!app.activeDocument ||
