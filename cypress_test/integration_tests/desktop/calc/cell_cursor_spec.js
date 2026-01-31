@@ -145,7 +145,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Test Cell Selections', fun
 		helper.setupAndLoadDocument('calc/empty-selections.ods');
 		desktopHelper.sidebarToggle();
 		cy.cGet('#sidebar-dock-wrapper').should('not.be.visible');
-		cy.viewport(1000, 660);
+		cy.viewport(1000, helper.maxScreenshotableViewportHeight);
 		cy.getFrameWindow().then((win) => {
 			this.win = win;
 			helper.processToIdle(win);
