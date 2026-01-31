@@ -810,13 +810,7 @@ class HRuler extends Ruler {
 		}
 	}
 
-	_fixOffset() {
-		app.layoutingService.appendLayoutingTask(() => {
-			this._fixOffsetImpl();
-		});
-	}
-
-	_fixOffsetImpl() {
+	protected _fixOffsetImpl(): void {
 		if (!app.activeDocument || app.activeDocument.fileSize.x === 0) return;
 
 		const rulerOffset =
