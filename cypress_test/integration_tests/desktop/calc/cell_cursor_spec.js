@@ -148,6 +148,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Test Cell Selections', fun
 		cy.viewport(1000, 660);
 		cy.getFrameWindow().then((win) => {
 			this.win = win;
+			helper.processToIdle(win);
 		});
 	});
 
