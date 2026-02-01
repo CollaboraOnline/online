@@ -44,8 +44,6 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Delete Objects', function(
 		desktopHelper.getCompactIcon('InsertObjectChart').click();
 		// Click on the ok button of chart jsdialog.
 		cy.cGet('.ui-pushbutton.jsdialog.button-primary').click();
-		// Close the overflow toolbar. Doing this before closing the chart jsdialog does not work.
-		cy.cGet('.jsdialog-overlay').click();
 		cy.cGet('#test-div-shapeHandlesSection').should('exist');
 		// delete
 		helper.typeIntoDocument('{del}');

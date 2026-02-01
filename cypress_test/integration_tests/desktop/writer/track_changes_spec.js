@@ -45,7 +45,6 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Track Changes', function (
 			cy.cGet('#insertannotation').click();
 			cy.cGet('#annotation-modify-textarea-new').type('some text' + n, { force: true });
 			cy.cGet('#annotation-save-new').click({force: true});
-			cy.cGet('.jsdialog-overlay').click();
 			// Wait for animation
 			cy.wait(500);
 		}
@@ -55,7 +54,6 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Track Changes', function (
 		cy.cGet('#insertannotation').click();
 		cy.cGet('#annotation-modify-textarea-new').type('some text2', { force: true });
 		cy.cGet('#annotation-save-new').click({force: true});
-		cy.cGet('.jsdialog-overlay').click();
 		cy.wait(500);
 		helper.typeIntoDocument('{home}');
 		cy.cGet('div.cool-annotation').should('have.length', 3);
@@ -91,7 +89,6 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Track Changes', function (
 			cy.cGet('#insertannotation').click();
 			cy.cGet('#annotation-modify-textarea-new').type('some text' + n, { force: true });
 			cy.cGet('#annotation-save-new').click({force: true});
-			cy.cGet('.jsdialog-overlay').click();
 			// Wait for animation
 			cy.wait(500);
 		}
@@ -101,7 +98,6 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Track Changes', function (
 		cy.cGet('#insertannotation').click();
 		cy.cGet('#annotation-modify-textarea-new').type('some text2', { force: true });
 		cy.cGet('#annotation-save-new').click({force: true});
-		cy.cGet('.jsdialog-overlay').click();
 		cy.wait(500);
 		helper.typeIntoDocument('{home}');
 		cy.cGet('div.cool-annotation').should('have.length', 3);
@@ -153,7 +149,6 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Track Changes', function (
 			cy.cGet('#insertannotation').click();
 			cy.cGet('#annotation-modify-textarea-new').type('some text' + n);
 			cy.cGet('#annotation-save-new').click();
-			cy.cGet('.jsdialog-overlay').click();
 			// Wait for animation
 			cy.wait(500);
 		}
