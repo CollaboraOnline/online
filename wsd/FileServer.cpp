@@ -632,7 +632,7 @@ bool FileServerRequestHandler::isAdminLoggedIn(const HTTPRequest& request, http:
             {
                 Poco::Path filePath(item.second);
                 uri += filePath.parent().toString();
-                std::string fileName = filePath.getFileName();
+                const std::string& fileName = filePath.getFileName();
                 uri += "?file_name=" + fileName;
                 queryDelim = '&';
             }
