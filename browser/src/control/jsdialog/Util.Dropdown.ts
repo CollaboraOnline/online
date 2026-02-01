@@ -226,13 +226,19 @@ JSDialog.OpenDropdown = function (
 
 					return;
 				} else if (eventType === 'selected' && entry && entry.uno) {
-					if (
-						earlyCallbackCall &&
-						innerCallback) {
-						innerCallback(objectType, eventType, object, data, entry || builder)
+					if (earlyCallbackCall && innerCallback) {
+						innerCallback(
+							objectType,
+							eventType,
+							object,
+							data,
+							entry || builder,
+						);
 					} else {
 						const uno =
-							entry.uno.indexOf('.uno:') === 0 ? entry.uno : '.uno:' + entry.uno;
+							entry.uno.indexOf('.uno:') === 0
+								? entry.uno
+								: '.uno:' + entry.uno;
 						window.L.Map.THIS.sendUnoCommand(uno);
 					}
 					JSDialog.CloseDropdown(rootId ? rootId : id);

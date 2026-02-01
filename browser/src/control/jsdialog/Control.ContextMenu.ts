@@ -140,7 +140,6 @@ class ContextMenuControl extends JSControl {
 				);
 			map.fire('mobilewizard', { data: menuData });
 		} else {
-
 			this._addMenu(contextMenu);
 			$('#' + this._menuRootID).focus();
 			this.hasContextMenu = true;
@@ -180,12 +179,16 @@ class ContextMenuControl extends JSControl {
 			const unoentry = entry as MenuDefinition;
 			Util.ensureValue(unoentry.uno);
 			const uno =
-				unoentry.uno.indexOf('.uno:') === 0 ? unoentry.uno : '.uno:' + unoentry.uno;
-			if (app.map._clip === undefined || !app.map._clip.filterExecCopyPaste(uno)) {
+				unoentry.uno.indexOf('.uno:') === 0
+					? unoentry.uno
+					: '.uno:' + unoentry.uno;
+			if (
+				app.map._clip === undefined ||
+				!app.map._clip.filterExecCopyPaste(uno)
+			) {
 				app.map.sendUnoCommand(uno);
 				// For spelling context menu we need to remove selection
-				if (this._spellingContextMenu)
-					app.map._docLayer._clearSelections();
+				if (this._spellingContextMenu) app.map._docLayer._clearSelections();
 				// Give the stolen focus back to map
 				app.map.focus();
 			}
@@ -202,7 +205,7 @@ class ContextMenuControl extends JSControl {
 			'',
 			false,
 			this._menuID,
-			true, /* earlyCallbackCall? */
+			true /* earlyCallbackCall? */,
 		);
 	}
 
