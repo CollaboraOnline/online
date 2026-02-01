@@ -412,7 +412,7 @@ SubForKitMap::iterator dropSubForKit(SubForKitMap::iterator it)
     LastSubForKitBrokerExitTimes.erase(configId);
     OutstandingForks.erase(configId);
     it = SubForKitProcs.erase(it);
-    UnitWSD::get().killSubForKit(configId);
+    UNITWSD_CALL(killSubForKit(configId));
 
     return it;
 }
@@ -1140,21 +1140,21 @@ void ForKitProcWSHandler::handleMessage(const std::vector<char> &data)
             {
                 LOG_INF(segFaultcount << " coolkit processes crashed with segmentation fault.");
                 SigUtil::addActivity("coolkit(s) crashed");
-                UnitWSD::get().kitSegfault(segFaultcount);
+                UNITWSD_CALL(kitSegfault(segFaultcount));
             }
 
             if (killedCount)
             {
                 LOG_INF(killedCount << " coolkit processes killed.");
                 SigUtil::addActivity("coolkit(s) killed");
-                UnitWSD::get().kitKilled(killedCount);
+                UNITWSD_CALL(kitKilled(killedCount));
             }
 
             if (oomKilledCount)
             {
                 LOG_INF(oomKilledCount << " coolkit processes killed by oom.");
                 SigUtil::addActivity("coolkit(s) killed by oom");
-                UnitWSD::get().kitOomKilled(oomKilledCount);
+                UNITWSD_CALL(kitOomKilled(oomKilledCount));
             }
         }
         else
@@ -1180,7 +1180,7 @@ COOLWSD::~COOLWSD()
     if (UnitBase::isUnitTesting())
     {
         // We won't have a valid UnitWSD::get() when not testing.
-        UnitWSD::get().setWSD(nullptr);
+        UNITWSD_CALL(setWSD(nullptr));
     }
 }
 
@@ -1582,10 +1582,10 @@ void COOLWSD::innerInitialize(Poco::Util::Application& self)
     {
         throw std::runtime_error("Failed to load wsd unit test library.");
     }
-    UnitWSD::get().setWSD(this);
+    UNITWSD_CALL(setWSD(this));
 
     // Allow UT to manipulate before using configuration values.
-    UnitWSD::get().configure(conf);
+    UNITWSD_CALL(configure(conf));
 
     // Trace Event Logging.
     EnableTraceEventLogging = ConfigUtil::getConfigValue<bool>(conf, "trace_event[@enable]", false);
@@ -3089,7 +3089,7 @@ private:
                     std::unique_lock<std::mutex> lock(NewChildrenMutex);
                     rebalanceChildren(configId, COOLWSD::NumPreSpawnedChildren);
 
-                    UnitWSD::get().newSubForKit(SubForKitProcs[configId], configId);
+                    UNITWSD_CALL(newSubForKit(SubForKitProcs[configId], configId));
                 }
 
                 return;
@@ -3156,7 +3156,7 @@ private:
             auto child = std::make_shared<ChildProcess>(pid, jailId, configId, socket, request, admsProps);
 
             if constexpr (!Util::isMobileApp())
-                UnitWSD::get().newChild(child);
+                UNITWSD_CALL(newChild(child));
 
             _pid = pid;
             _socketFD = socket->getFD();
@@ -3875,7 +3875,7 @@ void COOLWSD::innerMain()
 
         if (UnitWSD::isUnitTesting() && !SigUtil::getShutdownRequestFlag())
         {
-            UnitWSD::get().invokeTest();
+            UNITWSD_CALL(invokeTest());
 
             // More frequent polling while testing, to reduce total test time.
             waitMicroS =

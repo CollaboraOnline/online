@@ -202,7 +202,7 @@ bool Subscriber::notify(const std::string& message)
 
         try
         {
-            UnitWSD::get().onAdminNotifyMessage(message);
+            UNITWSD_CALL(onAdminNotifyMessage(message));
             webSocket->sendMessage(message);
             return true;
         }

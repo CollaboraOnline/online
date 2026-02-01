@@ -177,10 +177,9 @@ Tile TileCache::lookupTile(const TileDesc& tile)
 
     Tile ret = findTile(tile);
 
-    UnitWSD::get().lookupTile(tile.getPart(), tile.getEditMode(),
-                              tile.getWidth(), tile.getHeight(),
-                              tile.getTilePosX(), tile.getTilePosY(),
-                              tile.getTileWidth(), tile.getTileHeight(), ret);
+    UNITWSD_CALL(lookupTile(tile.getPart(), tile.getEditMode(), tile.getWidth(), tile.getHeight(),
+                            tile.getTilePosX(), tile.getTilePosY(), tile.getTileWidth(),
+                            tile.getTileHeight(), ret));
 
     return ret;
 }
