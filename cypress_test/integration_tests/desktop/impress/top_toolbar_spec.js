@@ -161,6 +161,8 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Top toolbar tests.', funct
 		cy.cGet('#target-input').type('www.something.com');
 		cy.cGet('#ok').click();
 
+		helper.processToIdle(this.win);
+
 		impressHelper.removeShapeSelection();
 
 		// Ctrl-click to open hyperlink pop-up

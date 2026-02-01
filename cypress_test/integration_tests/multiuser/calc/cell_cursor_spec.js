@@ -15,39 +15,41 @@ describe(['tagmultiuser'], 'Check cell cursor and view behavior', function() {
 	it('Jump on modification above in the sheet', function() {
 		// second view follow the first one
 		cy.cSetActiveFrame('#iframe2');
-		cy.cGet('#userListHeader').click();
-		cy.cGet('.user-list-item').eq(1).click();
-		cy.cGet('.jsdialog-overlay').should('not.exist');
+		cy.getFrameWindow().then((win2) => {
+			cy.cGet('#userListHeader').click();
+			cy.cGet('.user-list-item').eq(1).click();
+			cy.cGet('.jsdialog-overlay').should('not.exist');
 
-		// first view goes somewhere in the middle of a sheet: A400
-		cy.cSetActiveFrame('#iframe1');
+			// first view goes somewhere in the middle of a sheet: A400
+			cy.cSetActiveFrame('#iframe1');
 
-		cy.cGet(helper.addressInputSelector).type('{selectAll}A400{enter}');
-		desktopHelper.assertScrollbarPosition('vertical', 400, 670);
-		cy.cGet('#sc_input_window .ui-custom-textarea-text-layer').click();
-		cy.cGet('#sc_input_window .ui-custom-textarea-text-layer').type('some text{enter}');
+			cy.cGet(helper.addressInputSelector).type('{selectAll}A400{enter}');
+			desktopHelper.assertScrollbarPosition('vertical', 400, 670);
+			cy.cGet('#sc_input_window .ui-custom-textarea-text-layer').click();
+			cy.cGet('#sc_input_window .ui-custom-textarea-text-layer').type('some text{enter}');
 
-		// turn off following in the second view
-		cy.cSetActiveFrame('#iframe2');
-		cy.cGet('#followingChip').click();
+			// turn off following in the second view
+			cy.cSetActiveFrame('#iframe2');
+			cy.cGet('#followingChip').click();
 
-		// verify that second view is scrolled to the: A400
-		desktopHelper.assertScrollbarPosition('vertical', 400, 670);
+			// verify that second view is scrolled to the: A400
+			desktopHelper.assertScrollbarPosition('vertical', 400, 670);
 
-		// second view should still have cursor at the end: A588
-		cy.cGet(helper.addressInputSelector).should('have.prop', 'value', 'A588');
+			// second view should still have cursor at the end: A588
+			calcHelper.assertAddressAfterIdle(win2, 'A588');
 
-		// now insert row in the first view
-		cy.cSetActiveFrame('#iframe1');
-		desktopHelper.getNbIconArrow('InsertRowsBefore').click();
-		desktopHelper.getNbIcon('InsertRowsBefore').last().click();
+			// now insert row in the first view
+			cy.cSetActiveFrame('#iframe1');
+			desktopHelper.getNbIconArrow('InsertRowsBefore').click();
+			desktopHelper.getNbIcon('InsertRowsBefore').last().click();
 
-		// verify that second view is still at the: A400
-		cy.cSetActiveFrame('#iframe2');
-		desktopHelper.assertScrollbarPosition('vertical', 400, 670);
+			// verify that second view is still at the: A400
+			cy.cSetActiveFrame('#iframe2');
+			desktopHelper.assertScrollbarPosition('vertical', 400, 670);
 
-		// second view should still have cursor at the previous cell: A588+1
-		cy.cGet(helper.addressInputSelector).should('have.prop', 'value', 'A589');
+			// second view should still have cursor at the previous cell: A588+1
+			calcHelper.assertAddressAfterIdle(win2, 'A589');
+		});
 	});
 
 	it('Jump to the other sheet', function() {
@@ -59,32 +61,33 @@ describe(['tagmultiuser'], 'Check cell cursor and view behavior', function() {
 
 		// first view goes somewhere in the middle of a sheet
 		cy.cSetActiveFrame('#iframe1');
+		cy.getFrameWindow().then((win1) => {
+			cy.cGet(helper.addressInputSelector).type('{selectAll}A400{enter}');
+			desktopHelper.assertScrollbarPosition('vertical', 400, 500);
+			calcHelper.clickOnFirstCell(true, false, 'A400');
+			helper.typeIntoDocument('abc{enter}');
 
-		cy.cGet(helper.addressInputSelector).type('{selectAll}A400{enter}');
-		desktopHelper.assertScrollbarPosition('vertical', 400, 500);
-		calcHelper.clickOnFirstCell(true, false, 'A400');
-		helper.typeIntoDocument('abc{enter}');
+			// second view should jump there
+			cy.cSetActiveFrame('#iframe2');
+			desktopHelper.assertScrollbarPosition('vertical', 400, 500);
 
-		// second view should jump there
-		cy.cSetActiveFrame('#iframe2');
-		desktopHelper.assertScrollbarPosition('vertical', 400, 500);
+			// first view inserts sheet before current one
+			cy.cSetActiveFrame('#iframe1');
+			calcHelper.selectOptionFromContextMenu('Insert sheet before this');
+			cy.cGet('#map').focus();
 
-		// first view inserts sheet before current one
-		cy.cSetActiveFrame('#iframe1');
-		calcHelper.selectOptionFromContextMenu('Insert sheet before this');
-		cy.cGet('#map').focus();
+			// we should see A1
+			calcHelper.assertAddressAfterIdle(win1, 'A1');
+			desktopHelper.assertScrollbarPosition('vertical', 0, 30);
 
-		// we should see A1
-		cy.cGet(helper.addressInputSelector).should('have.prop', 'value', 'A1');
-		desktopHelper.assertScrollbarPosition('vertical', 0, 30);
+			// verify that second view followed the first one
+			cy.cSetActiveFrame('#iframe2');
+			desktopHelper.assertScrollbarPosition('vertical', 0, 30);
 
-		// verify that second view followed the first one
-		cy.cSetActiveFrame('#iframe2');
-		desktopHelper.assertScrollbarPosition('vertical', 0, 30);
-
-		// first goes to second sheet and we should see A388
-		cy.cSetActiveFrame('#iframe1');
-		cy.cGet('#spreadsheet-tab1').click();
-		desktopHelper.assertScrollbarPosition('vertical', 400, 500);
+			// first goes to second sheet and we should see A388
+			cy.cSetActiveFrame('#iframe1');
+			cy.cGet('#spreadsheet-tab1').click();
+			desktopHelper.assertScrollbarPosition('vertical', 400, 500);
+		});
 	});
 });
