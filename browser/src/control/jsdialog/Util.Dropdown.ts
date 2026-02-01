@@ -32,6 +32,9 @@ JSDialog.OpenDropdown = function (
 	innerCallback: JSDialogMenuCallback,
 	popupAnchor: string,
 	isSubmenu: boolean,
+	// If rootId is provided, even selecting inner menu
+	// entry will close the root menu.
+	rootId?: string,
 ) {
 	const json = {
 		id: _createDropdownId(id),
@@ -203,6 +206,7 @@ JSDialog.OpenDropdown = function (
 						generateCallback(entry.items),
 						'top-end',
 						true,
+						rootId,
 					);
 					lastSubMenuOpened = subMenuId;
 
@@ -223,7 +227,7 @@ JSDialog.OpenDropdown = function (
 					const uno =
 						entry.uno.indexOf('.uno:') === 0 ? entry.uno : '.uno:' + entry.uno;
 					window.L.Map.THIS.sendUnoCommand(uno);
-					JSDialog.CloseDropdown(id);
+					JSDialog.CloseDropdown(rootId ? rootId : id);
 					return;
 				} else {
 					app.console.error(

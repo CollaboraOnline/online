@@ -180,6 +180,7 @@ class ContextMenuControl extends JSControl {
 			callback,
 			'',
 			false,
+			this._menuID,
 		);
 	}
 
