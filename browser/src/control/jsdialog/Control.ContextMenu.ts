@@ -168,8 +168,13 @@ class ContextMenuControl extends JSControl {
 			data: any,
 			entry: JSBuilder | MenuDefinition,
 		): boolean => {
+			if ((entry as MenuDefinition).id === '.uno:InsertAnnotation') {
+				app.map.insertComment();
+				return false;
+			}
+
 			this._map?.focus();
-			return true;
+			return false;
 		};
 
 		JSDialog.OpenDropdown(
@@ -199,7 +204,7 @@ class ContextMenuControl extends JSControl {
 			if (!value.items) {
 				entries.push({
 					id: command,
-					uno: command,
+					uno: command !== '.uno:InsertAnnotation' ? command : undefined,
 					type: 'comboboxentry',
 					text: value.name,
 					img: command,
