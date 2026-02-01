@@ -453,7 +453,7 @@ void AdminSocketHandler::sendTextFrame(const std::string& message)
 {
     if constexpr (!Util::isFuzzing())
     {
-        UnitWSD::get().onAdminQueryMessage(message);
+        UNITWSD_CALL(onAdminQueryMessage(message));
     }
 
     if (_isAuthenticated)

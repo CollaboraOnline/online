@@ -124,7 +124,7 @@ void ChildProcess::setDocumentBroker(const std::shared_ptr<DocumentBroker>& docB
 
     if (UnitWSD::isUnitTesting())
     {
-        UnitWSD::get().onDocBrokerAttachKitProcess(docBroker->getDocKey(), getPid());
+        UNITWSD_CALL(onDocBrokerAttachKitProcess(docBroker->getDocKey(), getPid()));
     }
 }
 
@@ -3391,7 +3391,7 @@ void DocumentBroker::onViewLoaded(const std::shared_ptr<ClientSession>& session)
     // A view loaded.
     if (UnitWSD::isUnitTesting())
     {
-        UnitWSD::get().onDocBrokerViewLoaded(getDocKey(), session);
+        UNITWSD_CALL(onDocBrokerViewLoaded(getDocKey(), session));
     }
 }
 
@@ -4533,7 +4533,7 @@ bool DocumentBroker::handleInput(const std::shared_ptr<Message>& message)
 #if ENABLE_DEBUG
         else if (message->firstTokenMatches("unitresult:"))
         {
-            UnitWSD::get().processUnitResult(message->tokens());
+            UNITWSD_CALL(processUnitResult(message->tokens()));
         }
 #endif
         else

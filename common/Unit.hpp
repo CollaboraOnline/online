@@ -722,4 +722,10 @@ private:
 #define LOK_ASSERT_STATE(VAR, STATE)                                                               \
     LOK_ASSERT_MESSAGE("Expected " #VAR " to be in " #STATE " but was " << name(VAR), VAR == STATE)
 
+#ifdef ENABLE_DEBUG
+#define UNITWSD_CALL(X) UnitWSD::get().X
+#else // !ENABLE_DEBUG
+#define UNITWSD_CALL(X) (void)0
+#endif // !ENABLE_DEBUG
+
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
