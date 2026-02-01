@@ -53,6 +53,10 @@ export class Header extends CanvasSectionObject {
 
 	getFont: () => string;
 
+	getHeaderInfo(): HeaderInfo {
+		return this._headerInfo;
+	}
+
 	constructor (name: string) {
 		super(name);
 	}
@@ -917,6 +921,10 @@ export class HeaderInfo {
 
 	getElementData (index: number): HeaderEntryData {
 		return this._elements[index];
+	}
+
+	getDocVisStart(): number {
+		return this._docVisStart;
 	}
 
 	getRowData (index: number): HeaderEntryData {
