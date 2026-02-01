@@ -783,9 +783,49 @@ class LOUtil {
 	public static Rectangle = cool.Rectangle;
 	public static createRectangle = cool.createRectangle;
 
-	public static sanitize(html: string): string {
+	public static sanitize(
+		html: string,
+		profile: 'html' | 'svg' = 'html',
+	): string {
 		if (DOMPurify.isSupported) {
-			return DOMPurify.sanitize(html, { USE_PROFILES: { html: true } });
+			if (profile === 'svg') {
+				return DOMPurify.sanitize(html, {
+					// Enable both SVG and HTML profiles to support HTML content inside foreignObject
+					USE_PROFILES: { svg: true, svgFilters: true, html: true },
+					ADD_TAGS: ['foreignObject'],
+					// Allow ODF namespaced attributes used by LibreOffice SVG export.
+					// See: core/filter/source/svg/svgexport.cxx for the full list.
+					ADD_ATTR: [
+						'ooo:background-visibility',
+						'ooo:date-time-field',
+						'ooo:date-time-format',
+						'ooo:date-time-visibility',
+						'ooo:display-name',
+						'ooo:footer-field',
+						'ooo:footer-visibility',
+						'ooo:has-custom-background',
+						'ooo:has-transition',
+						'ooo:header-field',
+						'ooo:id-list',
+						'ooo:master',
+						'ooo:master-objects-visibility',
+						'ooo:name',
+						'ooo:number-of-slides',
+						'ooo:numbering-type',
+						'ooo:page-number-visibility',
+						'ooo:page-numbering-type',
+						'ooo:slide',
+						'ooo:slide-duration',
+						'ooo:start-slide-number',
+						'ooo:text-adjust',
+						'ooo:use-positioned-chars',
+					],
+					// Allow HTML content inside foreignObject (for embedded video)
+					// See: https://github.com/cure53/DOMPurify/issues/1002
+					HTML_INTEGRATION_POINTS: { foreignobject: true },
+				});
+			}
+			return DOMPurify.sanitize(html, { USE_PROFILES: { [profile]: true } });
 		}
 		return '';
 	}
