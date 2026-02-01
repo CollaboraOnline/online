@@ -936,9 +936,18 @@ $(DIST_FOLDER)/cool.html: $(srcdir)/html/cool.html.m4 \
 		-DVENDOR="$(VENDOR)" \
 		$(srcdir)/html/cool.html.m4 > $@
 
-node_modules: package.json archived-packages
-	@npm install
+node_modules: package.json node_shrinkpack
+	@echo "=== npm install (browser) starting at $$(date) ==="
+	@npm ci --offline --loglevel=info
+	@echo "=== npm install (browser) finished at $$(date) ==="
 	@touch node_modules
+
+update-shrinkpack:
+	npm update
+	npm shrinkwrap
+	npx shrinkpack
+	cp npm-shrinkwrap.json npm-shrinkwrap.json.in
+	@echo "Done. Remember to commit node_shrinkpack/ and npm-shrinkwrap.json.in"
 
 $(DIST_FOLDER)/device-%.css: $(srcdir)/css/device-%.css
 	@mkdir -p $(dir $@)
