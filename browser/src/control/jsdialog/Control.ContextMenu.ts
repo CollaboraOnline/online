@@ -172,7 +172,15 @@ class ContextMenuControl extends JSControl {
 			return true;
 		};
 
-		JSDialog.OpenDropdown(this._menuID, menuRoot, entries, callback, '', false);
+		JSDialog.OpenDropdown(
+			this._menuID,
+			menuRoot,
+			entries,
+			callback,
+			'',
+			false,
+			this._menuID,
+		);
 	}
 
 	private _getMenuEntries(
