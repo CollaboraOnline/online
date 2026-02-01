@@ -75,6 +75,9 @@ class ContextMenuControl extends JSControl {
 		}
 		JSDialog.CloseDropdown(this._menuID);
 		this.hasContextMenu = false;
+
+		// Give the stolen focus back to map
+		app.map.focus();
 	}
 
 	private _onMouseDown(): void {
@@ -173,11 +176,36 @@ class ContextMenuControl extends JSControl {
 				return false;
 			}
 
+			const unoentry = entry as MenuDefinition;
+			Util.ensureValue(unoentry.uno);
+			const uno =
+				unoentry.uno.indexOf('.uno:') === 0
+					? unoentry.uno
+					: '.uno:' + unoentry.uno;
+			if (
+				app.map._clip === undefined ||
+				!app.map._clip.filterExecCopyPaste(uno)
+			) {
+				app.map.sendUnoCommand(uno);
+				// For spelling context menu we need to remove selection
+				if (this._spellingContextMenu) app.map._docLayer._clearSelections();
+				// Give the stolen focus back to map
+				app.map.focus();
+			}
+
 			this._map?.focus();
 			return false;
 		};
 
-		JSDialog.OpenDropdown(this._menuID, menuRoot, entries, callback, '', false);
+		JSDialog.OpenDropdown(
+			this._menuID,
+			menuRoot,
+			entries,
+			callback,
+			'',
+			false,
+			true /* earlyCallbackCall? */,
+		);
 	}
 
 	private _getMenuEntries(
@@ -196,7 +224,7 @@ class ContextMenuControl extends JSControl {
 			if (!value.items) {
 				entries.push({
 					id: command,
-					uno: command !== '.uno:InsertAnnotation' ? command : undefined,
+					uno: command,
 					type: 'comboboxentry',
 					text: value.name,
 					img: command,
