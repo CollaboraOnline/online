@@ -24,8 +24,8 @@
     <string name="about_notice">Sken tamawt</string>
     <string name="about_moreinfo">Ugar n telɣut</string>
     <string name="new_textdocument">Isemli aḍris amaynut</string>
-    <string name="new_presentation">Asenked amaynut</string>
-    <string name="new_spreadsheet">Rnu ambellez</string>
+    <string name="new_presentation">Tihawt tamaynut</string>
+    <string name="new_spreadsheet">Tafelwit taliktṛunant Tamaynut</string>
     <string name="default_document_name">war azwel</string>
     <string name="filter">Sizdeg s</string>
     <string name="sort">Smizwer s:</string>
@@ -47,8 +47,8 @@
     <string name="share_via">Bḍu s</string>
     <string name="filter_everything">Akk</string>
     <string name="filter_documents">Isemliyen</string>
-    <string name="filter_spreadsheets">Imbellezen</string>
-    <string name="filter_presentations">Asenked</string>
+    <string name="filter_spreadsheets">Tifelwitin tiliktṛunanin</string>
+    <string name="filter_presentations">Tihawin</string>
     <string name="document_locations">Idigen n yisemli</string>
     <string name="close_document_locations">Mdel idigen n yisemli</string>
     <string name="local_documents">Akaram n yisemliyen</string>
@@ -99,7 +99,7 @@
     <string name="no_items">Ulac iferdisen</string>
     <string name="no_recent_items">Ttxil-k ldi afaylu s useqdec n tignit n ukaram deg ufeggag n ifecka.</string>
     <string name="app_vendor">Lqem-agi yettunefk-d s ɣuṛ $VENDOR.</string>
-    <string name="app_description">$APP_NAME d atrar, yeshel i useqdec, d aɣbalu yeldin i usekker n weḍris, tiferkit n usiḍen, tihawt d ugar.</string>
+    <string name="app_description">$APP_NAME d atrar, yeshel i useqdec, d aɣbalu yeldin i usekker n weḍris, tiferkiyin n usiḍen, tihawt d ugar.</string>
     <string name="app_version">Lqem:%1$s, Build ID: %2$s</string>
     <string name="app_name_settings">Iɣewwaren</string>
     <string name="theme">Asentel</string>

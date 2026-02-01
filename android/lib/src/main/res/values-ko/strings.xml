@@ -15,9 +15,11 @@
     <string name="cant_open_the_document">문서를 열 수 없습니다</string>
     <string name="view_only">보기 전용</string>
     <string name="edit_copy">사본 편집하기</string>
-    <string name="ask_for_copy">이 문서는 읽기 전용입니다. 편집을 위해 사본을 만드시겠습니까\?</string>
+    <string name="ask_for_copy">이 문서는 읽기 전용입니다. 편집을 위해 사본을 만드시겠습니까?</string>
     <string name="use_text">텍스트 형식 사용하기</string>
     <string name="use_odf">ODF 형식 사용하기</string>
     <string name="ask_for_convert_odf">파일 형식 확정하기</string>
     <string name="convert_odf_message">이 문서에는 현재 선택한 \"텍스트\" 파일 형식으로 저장할 수 없는 서식 또는 콘텐츠가 포함되어 있을 수 있습니다.</string>
+    <string name="rate_our_app_text"></string>
+    <string name="later"></string>
 </resources>

@@ -2,15 +2,15 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: core-co-25.04\n"
-"PO-Revision-Date: 2025-12-05 23:53+0000\n"
-"Last-Translator: Rob Pearson <rob.dunedin@gmail.com>\n"
+"PO-Revision-Date: 2026-02-03 11:58+0000\n"
+"Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
 "Language-Team: English (South Africa) <https://hosted.weblate.org/projects/"
 "collabora-online/lokit/en_ZA/>\n"
 "Language: en_ZA\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.15-dev\n"
+"X-Generator: Weblate 5.16-dev\n"
 
 #. ygDfy
 #: module_graphicfilter.ulf
@@ -42,8 +42,8 @@ msgid ""
 "com"
 msgstr ""
 "Collabora Office, the office productivity suite based on LibreOffice "
-"Technology, provided by Collabora Productivity. See https://collaboraoffice."
-"com"
+"Technology, provided by Collabora Productivity. See https://"
+"collaboraoffice.com"
 
 #. 4rBwc
 #: include/svx/strings.hrc:1040
@@ -202,8 +202,7 @@ msgstr "_Manage chart styles"
 #: chart2/uiconfig/ui/sidebarcolors.ui:30
 msgctxt "sidebarcolors|bordertype|tooltip_text"
 msgid "Allow to select a color palette to apply to current chart data series."
-msgstr ""
-"Allow to select a colour palette to apply to current chart data series."
+msgstr "Allow to select a colour palette to apply to current chart data series."
 
 #. xGjwG
 #: chart2/uiconfig/ui/sidebarcolors.ui:42

@@ -11,7 +11,7 @@
     <string name="cant_open_the_document">कागजात खोल्न सकेन</string>
     <string name="view_only">हेर्नुहोस मात्र</string>
     <string name="edit_copy">प्रतिलिपि सम्पादन गर्नुहोस्</string>
-    <string name="ask_for_copy">यो कागजात पढ्ने मात्र हो। के तपाइँ सम्पादनको लागि प्रतिलिपि बनाउन चाहनुहुन्छ\?</string>
+    <string name="ask_for_copy">यो कागजात पढ्ने मात्र हो। के तपाइँ सम्पादनको लागि प्रतिलिपि बनाउन चाहनुहुन्छ?</string>
     <string name="use_text">शब्द ढाँचा प्रयोग गर्नुहोस्</string>
     <string name="use_odf">ODF ढाँचा प्रयोग गर्नुहोस्</string>
     <string name="ask_for_convert_odf">फाइल ढाँचा पुष्टि गर्नुहोस्</string>

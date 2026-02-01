@@ -2,8 +2,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: core-he\n"
-"PO-Revision-Date: 2025-11-13 17:52+0000\n"
-"Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
+"PO-Revision-Date: 2026-02-03 12:15+0000\n"
+"Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
 "Language-Team: Hebrew <https://hosted.weblate.org/projects/collabora-online/"
 "lokit/he/>\n"
 "Language: he\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=(n == 1) ? 0 : ((n == 2) ? 1 : ((n > 10 && "
 "n % 10 == 0) ? 2 : 3));\n"
-"X-Generator: Weblate 5.15-dev\n"
+"X-Generator: Weblate 5.16-dev\n"
 
 #. ygDfy
 #: module_graphicfilter.ulf
@@ -632,8 +632,8 @@ msgid ""
 "This setting enables you to export the document as a .pdf file containing "
 "two file formats: PDF and ODF as an attachment. "
 msgstr ""
-"הגדרה זו מאפשרת לייצא את המסמך כקובץ pdf המכיל בתוכו שתי תצורות קבצים: PDF "
-"ו־ODF. "
+"הגדרה זו מאפשרת לייצא את המסמך כקובץ pdf המכיל בתוכו שתי תצורות קבצים: PDF ו־"
+"ODF. "
 
 #. NCgBM
 #: filter/uiconfig/ui/pdfgeneralpage.ui:583

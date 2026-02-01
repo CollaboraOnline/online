@@ -2,7 +2,7 @@
 <resources>
     <string name="title_activity_show_html">À propos</string>
     <string name="directory_not_saved">Répertoire non enregistré.</string>
-    <string name="bmp_null">Bmp est nul !</string>
+    <string name="bmp_null">Bmp est nul !</string>
     <string name="unable_to_go_further">Impossible d\'aller plus loin.</string>
     <string name="share_document">Partager le document</string>
     <string name="loading">Chargement...</string>
@@ -27,7 +27,7 @@
     <string name="user_name">Nom d\'utilisateur</string>
     <string name="server_url_and_port">URL et port du serveur cloud.</string>
     <string name="server_url">URL du serveur</string>
-    <string name="otg_warning">Fonctionnalité expérimentale : à utiliser uniquement si le périphérique OTG est accessible en écriture.</string>
+    <string name="otg_warning">Fonctionnalité expérimentale : à utiliser uniquement si le périphérique OTG est accessible en écriture.</string>
     <string name="otg_device_path">Chemin du périphérique OTG</string>
     <string name="external_sd_path">Chemin du SD externe</string>
     <string name="physical_storage_settings">Paramètres de stockage physique</string>
@@ -80,7 +80,7 @@
     <string name="pref_sort_title">Ordre des fichiers</string>
     <string name="pref_file_explorer_title">Disposition du gestionnaire de fichiers</string>
     <string name="pref_viewmode_summary">Voir les fichiers en grille ou en liste.</string>
-    <string name="pref_sort_summary">Sélectionnez comment ordonner les fichiers : A-Z, par taille ou par date.</string>
+    <string name="pref_sort_summary">Sélectionnez comment ordonner les fichiers : A-Z, par taille ou par date.</string>
     <string name="pref_show_hidden_files_summary">Activer pour afficher les fichiers/dossiers cachés</string>
     <string name="pref_show_hidden_files">Fichiers/dossiers cachés</string>
     <string name="pref_category_explorer">Paramétrages du gestionnaire de fichiers</string>
@@ -102,9 +102,7 @@
     <string name="remove_from_list">Supprimer de la liste</string>
     <string name="file_actions_icon_desc">Actions du fichier</string>
     <string name="pref_category_editor">Paramètres de l\'éditeur</string>
-    <string name="app_version_and_hash">Version : %1$s
-\nonline git-hash : %2$s
-\ncore git-hash : %3$s</string>
+    <string name="app_version_and_hash">Version : %1$s \nonline git-hash : %2$s \ncore git-hash : %3$s</string>
     <string name="theme_light">Clair</string>
     <string name="theme_dark">Sombre</string>
     <string name="theme_system_default">Valeur par défaut du système</string>

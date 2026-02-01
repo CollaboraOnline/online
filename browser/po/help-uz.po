@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-01-19 22:57+0200\n"
-"PO-Revision-Date: 2020-10-08 12:25+0000\n"
-"Last-Translator: Allan Nordhøy <epost@anotheragency.no>\n"
+"PO-Revision-Date: 2026-02-03 13:24+0000\n"
+"Last-Translator: Anonymous <noreply@weblate.org>\n"
 "Language-Team: Uzbek <https://hosted.weblate.org/projects/collabora-online/"
 "help/uz/>\n"
 "Language: uz\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Translate Toolkit 3.6.0\n"
+"X-Generator: Weblate 5.16-dev\n"
 
 #: html/cool-help.html%2Bdiv.h1:6-5
 msgid "Keyboard Shortcuts"
@@ -96,8 +96,8 @@ msgid ""
 ">+</span><kbd>V</kbd>"
 msgstr ""
 "Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>Alt</"
-"kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>Shift</"
-"kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>V"
+"kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>Shift</kbd>"
+"<span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>V"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:16-38
 msgid "Print (Download as PDF)"
@@ -492,8 +492,8 @@ msgid ""
 "<kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</"
 "span><kbd>Arrow Left</kbd>"
 msgstr ""
-"Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</"
-"span><kbd>Chapga strelkasi"
+"Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>"
+"Chapga strelkasi"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:58-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:221-38
@@ -557,8 +557,8 @@ msgid ""
 "<kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</"
 "span><kbd>Arrow Right</kbd>"
 msgstr ""
-"Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>O‘"
-"ngga strelkasi"
+"Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>"
+"O‘ngga strelkasi"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:62-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:225-38
@@ -622,8 +622,8 @@ msgid ""
 "<kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</"
 "span><kbd>Arrow Up</kbd>"
 msgstr ""
-"Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</"
-"span><kbd>Tepaga strelkasi"
+"Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>"
+"Tepaga strelkasi"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:66-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:229-38
@@ -687,8 +687,8 @@ msgid ""
 "<kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</"
 "span><kbd>Arrow Down</kbd>"
 msgstr ""
-"Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</"
-"span><kbd>Pastga ko‘rsatkichi"
+"Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>"
+"Pastga ko‘rsatkichi"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:70-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:233-38
@@ -904,8 +904,8 @@ msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>PageDown</kbd>"
 msgstr ""
-"Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
-">+</span><kbd>PageDown"
+"Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>"
+"PageDown"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:85-38
 msgid "Extend the selection down one page"
@@ -917,8 +917,8 @@ msgid ""
 "<kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>PageDown</kbd>"
 msgstr ""
-"Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
-">+</span><kbd>PageDown"
+"Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>"
+"PageDown"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:86-38
 msgid "Delete to beginning of word"
@@ -930,8 +930,8 @@ msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>Backspace</kbd>"
 msgstr ""
-"Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
-">+</span><kbd>Backspace"
+"Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>"
+"Backspace"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:87-38
 msgid "Delete to end of word"
@@ -1021,8 +1021,8 @@ msgid ""
 ">+</span><kbd>Tab</kbd> may be used instead."
 msgstr ""
 "To‘xtaydigan ichki oyna kiritadi (faqat jadvallarda). Oyna menejeriga qarab, "
-"o‘rniga Alt</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</"
-"span><kbd>Tab tugmalaridan foydalanish mumkin."
+"o‘rniga Alt</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>"
+"Tab tugmalaridan foydalanish mumkin."
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:99-38
 #, fuzzy
@@ -1030,8 +1030,8 @@ msgid ""
 "<kbd>Alt</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</"
 "span><kbd>Arrow Keys</kbd>"
 msgstr ""
-"Alt</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>Ko‘"
-"rsatkich tugmalari"
+"Alt</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>"
+"Ko‘rsatkich tugmalari"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:99-152
 msgid ""
@@ -1082,8 +1082,8 @@ msgid ""
 "span><kbd>Arrow Keys</kbd>"
 msgstr ""
 "Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>Alt</"
-"kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>Shift</"
-"kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>Ko‘rsatkich "
+"kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>Shift</kbd>"
+"<span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>Ko‘rsatkich "
 "tugmalari"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:103-38
@@ -1102,8 +1102,8 @@ msgid ""
 "inserts cell"
 msgstr ""
 "Kirtish rejimida 3 soniya,  Ko‘rsatkich tugmasi qator/ustunni kiritiadi, "
-"Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>Ko‘"
-"rsatkich tugmasi katakni kiritadi"
+"Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>"
+"Ko‘rsatkich tugmasi katakni kiritadi"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:104-38
 #, fuzzy
@@ -1121,8 +1121,8 @@ msgid ""
 "cell with neighboring cell"
 msgstr ""
 "3 soniya O‘chirish rejimida, Ko‘rsatkich tugmasi qator/ustunni o‘chiradi, "
-"Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>Ko‘"
-"rsatkich tugmasi katakning yonidagi kataklar bilan birlashtiradi"
+"Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>"
+"Ko‘rsatkich tugmasi katakning yonidagi kataklar bilan birlashtiradi"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:105-38
 #, fuzzy
@@ -1140,9 +1140,9 @@ msgid ""
 "current sentence is deleted. If the cursor is at the end of a cell, and no "
 "whole cell is selected, the contents of the next cell are deleted."
 msgstr ""
-"Butun katak tanlanmasa, kursordan oxirigacha belgilangan joriy gap matni o‘"
-"chiriladi. Agar kursor katak oxirida bo‘lsa va butun katak belgilanmagan bo‘"
-"lsa, keyingi katak tarkibi o‘chiriladi."
+"Butun katak tanlanmasa, kursordan oxirigacha belgilangan joriy gap matni "
+"o‘chiriladi. Agar kursor katak oxirida bo‘lsa va butun katak belgilanmagan "
+"bo‘lsa, keyingi katak tarkibi o‘chiriladi."
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td.p:106-1
 msgid ""
@@ -1309,8 +1309,8 @@ msgid ""
 "Insert new paragraph without numbering inside a list. Does not work when the "
 "cursor is at the end of the list."
 msgstr ""
-"Ro‘xatda raqamlamasdan yangi paragraf kiritish. Kursor ro‘yxat oxirida bo‘"
-"lsa, ishlamaydi."
+"Ro‘xatda raqamlamasdan yangi paragraf kiritish. Kursor ro‘yxat oxirida "
+"bo‘lsa, ishlamaydi."
 
 #: html/cool-help.html%2Bdiv.div.div.h2:132-9
 msgid "Navigating in Spreadsheets"
@@ -1368,8 +1368,8 @@ msgid ""
 "<kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</"
 "span><kbd>Page Down</kbd>"
 msgstr ""
-"Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
-">+</span><kbd>PageDown"
+"Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>"
+"PageDown"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:142-38
 msgid ""
@@ -1501,8 +1501,8 @@ msgid ""
 "<kbd>Alt</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</"
 "span><kbd>Page Down</kbd>"
 msgstr ""
-"Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
-">+</span><kbd>PageDown"
+"Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>"
+"PageDown"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:151-38
 msgid ""

@@ -13,4 +13,13 @@
     <string name="storage_permission_required">Stoor-permissie is benodig.</string>
     <string name="temp_file_saving_disabled">Die lêer is lees-alleen, stoor is geblokkeer.</string>
     <string name="file_chromeos_read_only">Hier lêer kan nie in die lokasie gestoor word nie, open dit lees-alleen. Verskuif na \"Play\"-lêers vir volle lees/skryf toegang.</string>
+    <string name="restarting"></string>
+    <string name="convert_odf_message"></string>
+    <string name="edit_copy"></string>
+    <string name="view_only"></string>
+    <string name="use_odf"></string>
+    <string name="cant_open_the_document"></string>
+    <string name="ask_for_convert_odf"></string>
+    <string name="use_text"></string>
+    <string name="ask_for_copy"></string>
 </resources>

@@ -2,8 +2,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: core-sl\n"
-"PO-Revision-Date: 2025-12-13 18:47+0000\n"
-"Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
+"PO-Revision-Date: 2026-02-03 12:22+0000\n"
+"Last-Translator: Anonymous <noreply@weblate.org>\n"
 "Language-Team: Slovenian <https://hosted.weblate.org/projects/collabora-"
 "online/lokit/sl/>\n"
 "Language: sl\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || "
 "n%100==4 ? 2 : 3;\n"
-"X-Generator: Weblate 5.15-dev\n"
+"X-Generator: Weblate 5.16-dev\n"
 
 #. ygDfy
 #: module_graphicfilter.ulf
@@ -106,8 +106,8 @@ msgid ""
 "For more information please visit ${PRODUCTNAME} home page at <a "
 "href=\"https://collaboraoffice.com\">https://CollaboraOffice.com/</a>."
 msgstr ""
-"Za več informacij obiščite domačo stran ${PRODUCTNAME} na naslovu <a href="
-"\"https://collaboraoffice.com\">https://CollaboraOffice.com/</a>"
+"Za več informacij obiščite domačo stran ${PRODUCTNAME} na naslovu <a "
+"href=\"https://collaboraoffice.com\">https://CollaboraOffice.com/</a>"
 
 #. SbQew
 #: chart2/inc/strings.hrc:51

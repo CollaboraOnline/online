@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-01-19 22:57+0200\n"
-"PO-Revision-Date: 2022-05-16 15:16+0000\n"
-"Last-Translator: Diggaj Upadhyay <dcozupadhyay@duck.com>\n"
+"PO-Revision-Date: 2026-02-03 13:11+0000\n"
+"Last-Translator: Anonymous <noreply@weblate.org>\n"
 "Language-Team: Nepali <https://hosted.weblate.org/projects/collabora-online/"
 "help/ne/>\n"
 "Language: ne\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Translate Toolkit 3.6.0\n"
+"X-Generator: Weblate 5.16-dev\n"
 
 #: html/cool-help.html%2Bdiv.h1:6-5
 msgid "Keyboard Shortcuts"
@@ -97,8 +97,8 @@ msgid ""
 ">+</span><kbd>V</kbd>"
 msgstr ""
 "Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>Alt</"
-"kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>Shift</"
-"kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>V"
+"kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>Shift</kbd>"
+"<span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>V"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:16-38
 msgid "Print (Download as PDF)"
@@ -899,8 +899,8 @@ msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>PageDown</kbd>"
 msgstr ""
-"Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
-">+</span><kbd>PageDown"
+"Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>"
+"PageDown"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:85-38
 msgid "Extend the selection down one page"
@@ -912,8 +912,8 @@ msgid ""
 "<kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>PageDown</kbd>"
 msgstr ""
-"Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
-">+</span><kbd>PageDown"
+"Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>"
+"PageDown"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:86-38
 msgid "Delete to beginning of word"
@@ -925,8 +925,8 @@ msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>Backspace</kbd>"
 msgstr ""
-"Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
-">+</span><kbd>Backspace"
+"Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>"
+"Backspace"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:87-38
 msgid "Delete to end of word"
@@ -977,8 +977,8 @@ msgid ""
 "If the active cell is empty: selects the whole table. Otherwise: selects the "
 "contents of the active cell. Pressing again selects the entire table."
 msgstr ""
-"यदि सक्रिय कक्ष खाली छ भने: पूरा तालिका चयन गर्नुहोस्। हैन भने: सक्रिय कक्षको"
-" सामाग्रीहरू चयन गर्नुहोस्। फेरि थिच्दा सम्पूर्ण तालिका चयनहुन्छ।"
+"यदि सक्रिय कक्ष खाली छ भने: पूरा तालिका चयन गर्नुहोस्। हैन भने: सक्रिय कक्षको सामाग्रीहरू "
+"चयन गर्नुहोस्। फेरि थिच्दा सम्पूर्ण तालिका चयनहुन्छ।"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:96-147
 msgid ""
@@ -986,9 +986,8 @@ msgid ""
 "first press goes to beginning of the active cell, second press goes to "
 "beginning of the current table, third press goes to beginning of document."
 msgstr ""
-"यदि सक्रिय तालिका खाली छ भने: तालिकाको सुरुमा जान्छ। हैन भने: पहिलो प्रेस "
-"सक्रिय कक्षमा जान्छ, दोस्रो प्रेस हालको तालिकाको सुरुमा जान्छ, तेस्रो प्रेस "
-"कागजातको सुरुमा जान्छ।"
+"यदि सक्रिय तालिका खाली छ भने: तालिकाको सुरुमा जान्छ। हैन भने: पहिलो प्रेस सक्रिय कक्षमा "
+"जान्छ, दोस्रो प्रेस हालको तालिकाको सुरुमा जान्छ, तेस्रो प्रेस कागजातको सुरुमा जान्छ।"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:97-146
 msgid ""
@@ -996,9 +995,9 @@ msgid ""
 "press goes to the end of the active cell, second press goes to the end of "
 "the current table, third press goes to the end of the document."
 msgstr ""
-"यदि सक्रिय तालिका खाली छ भने: तालिकाको अन्त्यमा जान्छ। हैन भने: पहिलो प्रेस "
-"सक्रिय कक्षको अन्त्यमा जान्छ, दोस्रो प्रेस हालको तालिकाको अन्त्यमा जान्छ, "
-"तेस्रो प्रेस कागजातको अन्त्यमा जान्छ।"
+"यदि सक्रिय तालिका खाली छ भने: तालिकाको अन्त्यमा जान्छ। हैन भने: पहिलो प्रेस सक्रिय "
+"कक्षको अन्त्यमा जान्छ, दोस्रो प्रेस हालको तालिकाको अन्त्यमा जान्छ, तेस्रो प्रेस कागजातको "
+"अन्त्यमा जान्छ।"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:98-38
 #, fuzzy
@@ -1015,9 +1014,9 @@ msgid ""
 "<kbd>Alt</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>Tab</kbd> may be used instead."
 msgstr ""
-"ट्याब स्टप सम्मिलित गर्दछ (केवल तालिकाहरूमा)। प्रयोगमा रहेको विन्डो "
-"प्रबन्धकको आधारमा, Alt</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
-">+</span><kbd>Tab को सट्टा प्रयोग गर्न सकिन्छ।"
+"ट्याब स्टप सम्मिलित गर्दछ (केवल तालिकाहरूमा)। प्रयोगमा रहेको विन्डो प्रबन्धकको आधारमा, "
+"Alt</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>Tab को "
+"सट्टा प्रयोग गर्न सकिन्छ।"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:99-38
 #, fuzzy
@@ -1071,8 +1070,8 @@ msgid ""
 "span><kbd>Arrow Keys</kbd>"
 msgstr ""
 "Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>Alt</"
-"kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>Shift</"
-"kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>Arrow Keys"
+"kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>Shift</kbd>"
+"<span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>Arrow Keys"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:103-38
 #, fuzzy
@@ -1089,9 +1088,8 @@ msgid ""
 "class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>Arrow Key</kbd> "
 "inserts cell"
 msgstr ""
-"इन्सर्ट मोडमा ३ सेकेन्ड, एरो कुञ्जिले पङ्क्ति/स्तम्भ घुसाउँछ, Ctrl</"
-"kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>एरो "
-"कुञ्जिहरुले सेल घुसाउँछ"
+"इन्सर्ट मोडमा ३ सेकेन्ड, एरो कुञ्जिले पङ्क्ति/स्तम्भ घुसाउँछ, Ctrl</kbd><span class=\"kbd--"
+"plus\" aria-hidden=\"true\">+</span><kbd>एरो कुञ्जिहरुले सेल घुसाउँछ"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:104-38
 #, fuzzy
@@ -1108,9 +1106,8 @@ msgid ""
 "class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>Arrow key</kbd> merges "
 "cell with neighboring cell"
 msgstr ""
-"मेटाउने मोडमा ३ सेकेन्ड, एरो कुञ्जिले पङ्क्ति/स्तम्भ मेटाउँछ, Ctrl</"
-"kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>एरो कुञ्जिले "
-"सेल संग गाभ्छ"
+"मेटाउने मोडमा ३ सेकेन्ड, एरो कुञ्जिले पङ्क्ति/स्तम्भ मेटाउँछ, Ctrl</kbd><span class=\"kbd--"
+"plus\" aria-hidden=\"true\">+</span><kbd>एरो कुञ्जिले सेल संग गाभ्छ"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:105-38
 #, fuzzy
@@ -1128,9 +1125,8 @@ msgid ""
 "current sentence is deleted. If the cursor is at the end of a cell, and no "
 "whole cell is selected, the contents of the next cell are deleted."
 msgstr ""
-"यदि केही पनि चयन गरिएन भने, कर्सर देखि हालको वाक्य सम्मको पाठ मेटाइन्छ। यदि "
-"कक्ष चयन गरिएन भने, र कर्सर सेलको अन्त्यमा छ भने अर्को कक्षका सम्पूर्ण "
-"सामग्रीहरु मेटाइन्छ।"
+"यदि केही पनि चयन गरिएन भने, कर्सर देखि हालको वाक्य सम्मको पाठ मेटाइन्छ। यदि कक्ष चयन "
+"गरिएन भने, र कर्सर सेलको अन्त्यमा छ भने अर्को कक्षका सम्पूर्ण सामग्रीहरु मेटाइन्छ।"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td.p:106-1
 msgid ""
@@ -1138,8 +1134,8 @@ msgid ""
 "paragraph following the table will be deleted, unless it is the last "
 "paragraph in the document."
 msgstr ""
-"यदि सम्पूर्ण कक्ष चयन गरिएन भने र कर्सर टेबलको अन्त्यमा छ भने, टेबल संगैको "
-"अनुच्छेद मेटाईनेछ, जबसम्म यो कागजातमा अन्तिम अनुच्छेद हो।"
+"यदि सम्पूर्ण कक्ष चयन गरिएन भने र कर्सर टेबलको अन्त्यमा छ भने, टेबल संगैको अनुच्छेद मेटाईनेछ, "
+"जबसम्म यो कागजातमा अन्तिम अनुच्छेद हो।"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td.p:107-1
 msgid ""
@@ -1147,9 +1143,8 @@ msgid ""
 "will be deleted. If all rows are selected completely or partially, the "
 "entire table will be deleted."
 msgstr ""
-"यदि एक वा बढी कक्षहरू चयन गरिन्छ भने, चयन समावेश सम्पूर्ण पङ्क्तिहरू "
-"मेटाइनेछ। यदि सबै पङ्क्तिहरू पूर्ण वा आंशिकरूपमा चयन गरिन्छ भने सम्पूर्ण "
-"तालिका मेटाइनेछ।"
+"यदि एक वा बढी कक्षहरू चयन गरिन्छ भने, चयन समावेश सम्पूर्ण पङ्क्तिहरू मेटाइनेछ। यदि सबै "
+"पङ्क्तिहरू पूर्ण वा आंशिकरूपमा चयन गरिन्छ भने सम्पूर्ण तालिका मेटाइनेछ।"
 
 #: html/cool-help.html%2Bdiv.div.div.h2:112-9
 msgid "Word processor functions"
@@ -1298,8 +1293,7 @@ msgid ""
 "Insert new paragraph without numbering inside a list. Does not work when the "
 "cursor is at the end of the list."
 msgstr ""
-"सूची भित्र क्रमाङ्क नगरी नयाँ अनुच्छेद सम्मिलित गर्नुहोस्। कर्सर सूचीको अन्त "
-"हुँदा काम गर्दैन।"
+"सूची भित्र क्रमाङ्क नगरी नयाँ अनुच्छेद सम्मिलित गर्नुहोस्। कर्सर सूचीको अन्त हुँदा काम गर्दैन।"
 
 #: html/cool-help.html%2Bdiv.div.div.h2:132-9
 msgid "Navigating in Spreadsheets"
@@ -1336,8 +1330,8 @@ msgid ""
 "Selects cells from the current cell up to one page in the current column or "
 "extends the existing selection one page up."
 msgstr ""
-"हालको कक्षबाट हालको स्तम्भमा एक पृष्ठसम्म कक्षहरू चयन गर्दछ वा अवस्थित चयनला"
-"ई एक पृष्ठ माथि विस्तार गर्दछ।"
+"हालको कक्षबाट हालको स्तम्भमा एक पृष्ठसम्म कक्षहरू चयन गर्दछ वा अवस्थित चयनलाई एक पृष्ठ "
+"माथि विस्तार गर्दछ।"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:140-184
 #, fuzzy
@@ -1352,8 +1346,8 @@ msgid ""
 "Selects cells from the current cell down to one page in the current column "
 "or extends the existing selection one page down."
 msgstr ""
-"हालको स्तम्भमा एक पृष्ठमा हालको कक्षबाट सेलहरू चयन गर्दछ वा अवस्थित चयनलाई "
-"एक पृष्ठ तल विस्तार गर्दछ।"
+"हालको स्तम्भमा एक पृष्ठमा हालको कक्षबाट सेलहरू चयन गर्दछ वा अवस्थित चयनलाई एक पृष्ठ तल "
+"विस्तार गर्दछ।"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:141-188
 #, fuzzy
@@ -1361,8 +1355,8 @@ msgid ""
 "<kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</"
 "span><kbd>Page Down</kbd>"
 msgstr ""
-"Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
-">+</span><kbd>PageDown"
+"Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>"
+"PageDown"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:142-38
 msgid ""
@@ -1493,8 +1487,8 @@ msgid ""
 "<kbd>Alt</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</"
 "span><kbd>Page Down</kbd>"
 msgstr ""
-"Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
-">+</span><kbd>PageDown"
+"Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>"
+"PageDown"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:151-38
 msgid ""
@@ -1758,8 +1752,8 @@ msgid ""
 "Escape current mode, i.e. from edit mode switch to object selection mode, "
 "from object selection mode switch to view mode."
 msgstr ""
-"वर्तमान मोड छोड्नुहोस, उदाहरणका लागी, सम्पादन मोडबाट बस्तु चयन मोडमा स्विच "
-"गर्नुहोस, वस्तु चयन मोडबाट भियु मोड स्विच गर्नुहोस।"
+"वर्तमान मोड छोड्नुहोस, उदाहरणका लागी, सम्पादन मोडबाट बस्तु चयन मोडमा स्विच गर्नुहोस, "
+"वस्तु चयन मोडबाट भियु मोड स्विच गर्नुहोस।"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:248-186
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:313-186

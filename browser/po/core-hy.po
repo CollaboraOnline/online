@@ -2,15 +2,15 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: core-hy\n"
-"PO-Revision-Date: 2025-11-21 06:30+0000\n"
-"Last-Translator: Tigran Zargaryan <tigranflib@gmail.com>\n"
-"Language-Team: Armenian <https://hosted.weblate.org/projects/"
-"collabora-online/lokit/hy/>\n"
+"PO-Revision-Date: 2026-02-03 12:54+0000\n"
+"Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
+"Language-Team: Armenian <https://hosted.weblate.org/projects/collabora-"
+"online/lokit/hy/>\n"
 "Language: hy\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 5.15-dev\n"
+"X-Generator: Weblate 5.16-dev\n"
 
 #. ygDfy
 #: module_graphicfilter.ulf
@@ -640,8 +640,7 @@ msgstr "Արտահանել OLE օբյեկտները որպես _JPEG պատկե�
 #: filter/uiconfig/ui/pdfgeneralpage.ui:550
 msgctxt "pdfgeneralpage|embed|tooltip_text"
 msgid "Creates a PDF that embeds the original ODF file as an attachment."
-msgstr ""
-"Ստեղծում է PDF նիշք, որը ներկառուցում է բնօրինակ ODF նիշքը որպես կցորդ։"
+msgstr "Ստեղծում է PDF նիշք, որը ներկառուցում է բնօրինակ ODF նիշքը որպես կցորդ։"
 
 #. JS7DG
 #: filter/uiconfig/ui/pdfgeneralpage.ui:556
@@ -1362,8 +1361,8 @@ msgid ""
 "The number of rows in the expanded array. If missing, rows will not be "
 "expanded."
 msgstr ""
-"Ընդարձակված զանգվածում տողերի քանակը։ Եթե բացակայում է, տողերը չեն "
-"ընդարձակվի։"
+"Ընդարձակված զանգվածում տողերի քանակը։ Եթե բացակայում է, տողերը չեն ընդարձակվի"
+"։"
 
 #. qjcxB
 #: sc/inc/scfuncs.hrc:4294
@@ -1427,8 +1426,8 @@ msgstr ""
 msgctxt "SC_OPCODE_VSTACK"
 msgid "Appends arrays vertically to create a larger array."
 msgstr ""
-"Ուղղահայաց կերպով ավելացնում է զանգվածները՝ ավելի մեծ զանգված ստեղծելու "
-"համար։"
+"Ուղղահայաց կերպով ավելացնում է զանգվածները՝ ավելի մեծ զանգված ստեղծելու համար"
+"։"
 
 #. rhVRC
 #: sc/inc/scfuncs.hrc:4314 sc/inc/scfuncs.hrc:4316
@@ -1506,8 +1505,7 @@ msgstr ""
 #: sc/inc/scfuncs.hrc:4335
 msgctxt "SC_OPCODE_TEXTAFTER"
 msgid "Returns the text that occurs after a given substring or delimiter."
-msgstr ""
-"Վերադարձնում է տրված ենթատողից կամ սահմանազատիչից հետո հանդիպող տեքստը։"
+msgstr "Վերադարձնում է տրված ենթատողից կամ սահմանազատիչից հետո հանդիպող տեքստը։"
 
 #. cicY2
 #: sc/inc/scfuncs.hrc:4336

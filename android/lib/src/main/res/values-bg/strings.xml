@@ -14,4 +14,13 @@
     <string name="rate_our_app_text">Ако го харесвате, моля, дайте ни 5 звездички в Google Play. Добрите ви рецензии са най-силната ни мотивация.</string>
     <string name="rate_our_app_title">Благодарим ви, че използвате %1$s!</string>
     <string name="file_chromeos_read_only">Файлът не може да се запише в това местоположение, ще бъде отворен само за четене. Преместете го в папката Play Files за пълен достъп за четене и писане.</string>
+    <string name="restarting"></string>
+    <string name="convert_odf_message"></string>
+    <string name="edit_copy"></string>
+    <string name="view_only"></string>
+    <string name="use_odf"></string>
+    <string name="cant_open_the_document"></string>
+    <string name="ask_for_convert_odf"></string>
+    <string name="use_text"></string>
+    <string name="ask_for_copy"></string>
 </resources>

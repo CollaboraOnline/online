@@ -14,7 +14,7 @@
     <string name="later">Później</string>
     <string name="rate_now">Oceń teraz</string>
     <string name="file_chromeos_read_only">Tego pliku tylko do odczytu nie można zapisać w tej lokalizacji. Przenieś go do plików Play, aby uzyskać pełny dostęp do odczytu i zapisu.</string>
-    <string name="ask_for_copy">Ten dokument jest tylko do odczytu. Chcesz zrobić kopię do edycji\?</string>
+    <string name="ask_for_copy">Ten dokument jest tylko do odczytu. Chcesz zrobić kopię do edycji?</string>
     <string name="edit_copy">Edytuj kopię</string>
     <string name="view_only">Tylko podgląd</string>
     <string name="restarting">Ponowne uruchamianie...</string>

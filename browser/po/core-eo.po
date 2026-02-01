@@ -2,9 +2,15 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: core-eo\n"
+"PO-Revision-Date: 2026-02-03 13:09+0000\n"
+"Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
+"Language-Team: Esperanto <https://hosted.weblate.org/projects/collabora-"
+"online/lokit/eo/>\n"
 "Language: eo\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.16-dev\n"
 
 #. ygDfy
 #: module_graphicfilter.ulf
@@ -574,8 +580,7 @@ msgstr ""
 #: filter/uiconfig/ui/impswfdialog.ui:136
 msgctxt "impswfdialog|exportall"
 msgid "Export _all slides (uncheck to export current slide)"
-msgstr ""
-"Eksporti ĉiujn lumbildojn (malmarku por eksporti la aktualan lumbildon)"
+msgstr "Eksporti ĉiujn lumbildojn (malmarku por eksporti la aktualan lumbildon)"
 
 #. CB9hD
 #: filter/uiconfig/ui/impswfdialog.ui:155

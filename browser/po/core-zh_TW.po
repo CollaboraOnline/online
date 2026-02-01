@@ -2,15 +2,15 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: core-zh-TW\n"
-"PO-Revision-Date: 2026-01-09 03:35+0000\n"
-"Last-Translator: Jeff Huang <jeff.huang@ossii.com.tw>\n"
+"PO-Revision-Date: 2026-02-03 12:55+0000\n"
+"Last-Translator: Anonymous <noreply@weblate.org>\n"
 "Language-Team: Chinese (Traditional Han script) <https://hosted.weblate.org/"
 "projects/collabora-online/lokit/zh_Hant/>\n"
 "Language: zh_TW\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 5.15.1\n"
+"X-Generator: Weblate 5.16-dev\n"
 
 #. ygDfy
 #: module_graphicfilter.ulf
@@ -1688,8 +1688,7 @@ msgctxt "SC_OPCODE_TEXTSPLIT"
 msgid ""
 "Set to TRUE to ignore consecutive delimiters otherwise it creates an empty "
 "cell. The default is FALSE."
-msgstr ""
-"設定為 TRUE 會忽略連續的分隔符，否則會建立一個空的儲存格。預設為 FALSE。"
+msgstr "設定為 TRUE 會忽略連續的分隔符，否則會建立一個空的儲存格。預設為 FALSE。"
 
 #. kkAYp
 #: sc/inc/scfuncs.hrc:4380
@@ -1762,8 +1761,7 @@ msgctxt "SC_OPCODE_TOCOL"
 msgid ""
 "Scan the array by column. FALSE or omitted (default) - the array is scanned "
 "by row. TRUE - the array is scanned by column."
-msgstr ""
-"逐欄掃描陣列。FALSE 或省略（預設）- 陣列逐列掃描。TRUE - 陣列逐欄掃描。"
+msgstr "逐欄掃描陣列。FALSE 或省略（預設）- 陣列逐列掃描。TRUE - 陣列逐欄掃描。"
 
 #. PGyxj
 #: sc/inc/scfuncs.hrc:4401
@@ -1812,8 +1810,7 @@ msgctxt "SC_OPCODE_TOROW"
 msgid ""
 "Scan the array by column. FALSE or omitted (default) - the array is scanned "
 "by row. TRUE - the array is scanned by column."
-msgstr ""
-"逐欄掃描陣列。FALSE 或省略（預設）- 陣列逐列掃描。TRUE - 陣列逐欄掃描。"
+msgstr "逐欄掃描陣列。FALSE 或省略（預設）- 陣列逐列掃描。TRUE - 陣列逐欄掃描。"
 
 #. oBDEA
 #: sc/inc/scfuncs.hrc:4437

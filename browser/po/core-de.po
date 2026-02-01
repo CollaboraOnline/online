@@ -2,15 +2,15 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: core-de\n"
-"PO-Revision-Date: 2026-01-04 22:01+0000\n"
-"Last-Translator: Ettore Atalan <atalanttore@googlemail.com>\n"
+"PO-Revision-Date: 2026-02-03 12:23+0000\n"
+"Last-Translator: Lily Logua <lily.logua@gmail.com>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/collabora-online/"
 "lokit/de/>\n"
 "Language: de\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.15.1\n"
+"X-Generator: Weblate 5.16-dev\n"
 
 #. ygDfy
 #: module_graphicfilter.ulf
@@ -795,7 +795,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "New Sheet View"
-msgstr ""
+msgstr "Neu Tabellenansicht"
 
 #. AKfar
 #: CalcCommands.xcu
@@ -805,7 +805,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Remove Sheet View"
-msgstr ""
+msgstr "Tabellenansicht entfernen"
 
 #. M52nh
 #: CalcCommands.xcu
@@ -815,7 +815,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Switch To Next Sheet View"
-msgstr ""
+msgstr "Zur nächsten Tabellenansicht wechseln"
 
 #. qfgad
 #: CalcCommands.xcu
@@ -825,7 +825,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Switch To Previous Sheet View"
-msgstr ""
+msgstr "Zur vorherigen Tabellenansicht wechseln"
 
 #. FJEd2
 #: CalcCommands.xcu
@@ -835,7 +835,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Select Sheet View"
-msgstr ""
+msgstr "Tabellenansicht wechseln"
 
 #. vCsC3
 #: CalcCommands.xcu
@@ -845,7 +845,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Exit Sheet View"
-msgstr ""
+msgstr "Tabellenansicht Beenden"
 
 #. uuvrm
 #: ChartCommands.xcu

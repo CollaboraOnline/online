@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-12-08 11:25+0100\n"
-"PO-Revision-Date: 2024-01-22 15:44+0000\n"
-"Last-Translator: Seungcheon Seo <seoseungcheon@gmail.com>\n"
+"PO-Revision-Date: 2026-02-03 12:10+0000\n"
+"Last-Translator: HerMin <jetem@me.com>\n"
 "Language-Team: Korean <https://hosted.weblate.org/projects/collabora-online/"
 "ui/ko/>\n"
-"Language: \n"
+"Language: ko\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 5.4-dev\n"
+"X-Generator: Weblate 5.16-dev\n"
 
 #: admin/admin.strings.js:15
 msgid "Admin console"
@@ -3591,7 +3591,8 @@ msgstr "새 시트 이름을 입력하십시오"
 msgid ""
 "Conflict Undo/Redo with multiple users. Please use document repair to "
 "resolve"
-msgstr "여러 사용자에 의한 실행 취소/다시 실행이 서로 충돌했습니다. 이 문제를 "
+msgstr ""
+"여러 사용자에 의한 실행 취소/다시 실행이 서로 충돌했습니다. 이 문제를 "
 "해결하려면 문서 복구를 사용하십시오."
 
 #: src/control/Control.TopToolbar.js:109
@@ -4515,14 +4516,16 @@ msgstr ""
 msgid ""
 "Document has changed in storage. Loading the new document. Your version is "
 "available as revision."
-msgstr "저장소의 문서가 변경되었습니다. 새 문서를 불러 옵니다. 작업한 내용은 개정 "
+msgstr ""
+"저장소의 문서가 변경되었습니다. 새 문서를 불러 옵니다. 작업한 내용은 개정 "
 "이력에서 확인할 수 있습니다."
 
 #: src/core/Socket.js:771
 msgid ""
 "Restoring older revision. Any unsaved changes will be available in version "
 "history"
-msgstr "이전 버전으로 복구합니다. 저장되지 않은 변경 사항은 개정 내역에서 확인할 수 "
+msgstr ""
+"이전 버전으로 복구합니다. 저장되지 않은 변경 사항은 개정 내역에서 확인할 수 "
 "있습니다."
 
 #: src/core/Socket.js:777
@@ -4654,7 +4657,8 @@ msgstr ""
 msgid ""
 "The host URL is empty. The coolwsd server is probably misconfigured, please "
 "contact the administrator."
-msgstr "호스트 URL이 비어 있습니다. coolwsd 서버가 잘못 구성된 것일 수 있습니다. "
+msgstr ""
+"호스트 URL이 비어 있습니다. coolwsd 서버가 잘못 구성된 것일 수 있습니다. "
 "관리자에게 문의하십시오."
 
 #: src/errormessages.js:24
@@ -4685,14 +4689,16 @@ msgstr ""
 msgid ""
 "Service is unavailable. Please try again later and report to your "
 "administrator if the issue persists."
-msgstr "서비스를 사용할 수 없습니다. 나중에 다시 시도하거나 이 문제가 지속되면 "
+msgstr ""
+"서비스를 사용할 수 없습니다. 나중에 다시 시도하거나 이 문제가 지속되면 "
 "관리자에게 문의하십시오."
 
 #: src/errormessages.js:28
 msgid ""
 "Unauthorized WOPI host. Please try again later and report to your "
 "administrator if the issue persists."
-msgstr "인증되지 않은 WOPI 호스트입니다. 나중에 다시 시도하거나 이 문제가 지속되면 "
+msgstr ""
+"인증되지 않은 WOPI 호스트입니다. 나중에 다시 시도하거나 이 문제가 지속되면 "
 "경우 관리자에게 문의하십시오."
 
 #: src/errormessages.js:29
@@ -4708,7 +4714,8 @@ msgstr "WOPISrc 매개 변수가 잘못되었거나 누락되었습니다. 지�
 msgid ""
 "Your session will expire in {time}. Please save your work and refresh the "
 "session (or webpage) to continue. You might need to login again."
-msgstr "세션이 {time} 내에 만료됩니다. 계속하려면 작업을 저장하고 세션(또는 웹페이지)"
+msgstr ""
+"세션이 {time} 내에 만료됩니다. 계속하려면 작업을 저장하고 세션(또는 웹페이지)"
 "를 새로 고침하십시오."
 
 #: src/errormessages.js:32
@@ -4717,14 +4724,16 @@ msgid ""
 "Your session has expired. Further changes to the document might not be "
 "saved. Please refresh the session (or webpage) to continue. You might need "
 "to login again."
-msgstr "세션이 만료되었습니다. 이후의 변경 사항은 저장되지 않습니다. 계속하려면 세션("
-"또는 웹페이지)를 새로 고침하십시오."
+msgstr ""
+"세션이 만료되었습니다. 이후의 변경 사항은 저장되지 않습니다. 계속하려면 세션"
+"(또는 웹페이지)를 새로 고침하십시오."
 
 #: src/errormessages.js:33
 msgid ""
 "Failed to load the document. Please ensure the file type is supported and "
 "not corrupted, and try again."
-msgstr "문서를 불러오지 못했습니다. 지원되는 파일 형식인지, 망가진 파일이 아닌지 "
+msgstr ""
+"문서를 불러오지 못했습니다. 지원되는 파일 형식인지, 망가진 파일이 아닌지 "
 "확인하고 재시도하십시오."
 
 #: src/errormessages.js:34
@@ -4741,7 +4750,8 @@ msgstr ""
 msgid ""
 "Failed to load the document. This document is either malformed or is taking "
 "more resources than allowed. Please contact the administrator."
-msgstr "문서 열기 실패하였습니다. 이 문서는 유효하지 않거나, 허용된 자원보다 많이 "
+msgstr ""
+"문서 열기 실패하였습니다. 이 문서는 유효하지 않거나, 허용된 자원보다 많이 "
 "사용하려고 합니다. 관리자에게 연락하시기 바랍니다."
 
 #: src/errormessages.js:37
@@ -4783,7 +4793,8 @@ msgstr "문서 열기 실패하였음."
 
 #: src/errormessages.js:45
 msgid "Save failed due to no disk space left. Document will now be read-only."
-msgstr "디스크 용량이 부족하여 저장이 실패하였습니다. 문서는 바로 읽기전용으로 "
+msgstr ""
+"디스크 용량이 부족하여 저장이 실패하였습니다. 문서는 바로 읽기전용으로 "
 "전환합니다."
 
 #: src/errormessages.js:46

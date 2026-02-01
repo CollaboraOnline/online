@@ -2,15 +2,15 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: core-lo\n"
-"PO-Revision-Date: 2025-11-28 06:42+0000\n"
-"Last-Translator: BoneNI <bounkirdni@gmail.com>\n"
+"PO-Revision-Date: 2026-02-03 12:04+0000\n"
+"Last-Translator: Anonymous <noreply@weblate.org>\n"
 "Language-Team: Lao <https://hosted.weblate.org/projects/collabora-online/"
 "lokit/lo/>\n"
 "Language: lo\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 5.15-dev\n"
+"X-Generator: Weblate 5.16-dev\n"
 
 #. ygDfy
 #: module_graphicfilter.ulf
@@ -104,8 +104,8 @@ msgid ""
 "For more information please visit ${PRODUCTNAME} home page at <a "
 "href=\"https://collaboraoffice.com\">https://CollaboraOffice.com/</a>."
 msgstr ""
-"ສໍາລັບຂໍ້ມູນເພີ່ມເຕີມ, ກະລຸນາເຂົ້າເບິ່ງໜ້າຫຼັກຂອງ ${PRODUCTNAME} ໄດ້ທີ່ <a href="
-"\"https://collaboraoffice.com\">https://CollaboraOffice.com/</a>."
+"ສໍາລັບຂໍ້ມູນເພີ່ມເຕີມ, ກະລຸນາເຂົ້າເບິ່ງໜ້າຫຼັກຂອງ ${PRODUCTNAME} ໄດ້ທີ່ <a href=\"https://"
+"collaboraoffice.com\">https://CollaboraOffice.com/</a>."
 
 #. SbQew
 #: chart2/inc/strings.hrc:51
@@ -356,8 +356,8 @@ msgid ""
 "End User License and Subscription Agreement; choose EULA to see exact "
 "details in English."
 msgstr ""
-"ແພັກເກດໄບນາຣີຂອງ %PRODUCTNAME ແມ່ນມີໃຫ້ພາຍໃຕ້ເງື່ອນໄຂຂອງສັນຍາອະນຸຍາດຜູ້ໃຊ້ ແລະ "
-"ສັນຍາການສະໝັກໃຊ້; ເລືອກ EULA ເພື່ອເບິ່ງລາຍລະອຽດທີ່ແນ່ນອນເປັນພາສາອັງກິດ."
+"ແພັກເກດໄບນາຣີຂອງ %PRODUCTNAME ແມ່ນມີໃຫ້ພາຍໃຕ້ເງື່ອນໄຂຂອງສັນຍາອະນຸຍາດຜູ້ໃຊ້ ແລະ ສັນຍາການສະໝັກ"
+"ໃຊ້; ເລືອກ EULA ເພື່ອເບິ່ງລາຍລະອຽດທີ່ແນ່ນອນເປັນພາສາອັງກິດ."
 
 #. YHTHB
 #: sfx2/uiconfig/ui/templatepanel.ui:137
@@ -641,8 +641,8 @@ msgid ""
 "This setting enables you to export the document as a .pdf file containing "
 "two file formats: PDF and ODF as an attachment. "
 msgstr ""
-"ການຕັ້ງຄ່ານີ້ຊ່ວຍໃຫ້ທ່ານສາມາດສົ່ງອອກເອກະສານເປັນໄຟລ໌ .pdf ທີ່ບັນຈຸສອງຮູບແບບໄຟລ໌: PDF ແລະ ODF "
-"ເປັນໄຟລ໌ແນບ. "
+"ການຕັ້ງຄ່ານີ້ຊ່ວຍໃຫ້ທ່ານສາມາດສົ່ງອອກເອກະສານເປັນໄຟລ໌ .pdf ທີ່ບັນຈຸສອງຮູບແບບໄຟລ໌: PDF ແລະ ODF ເປັນ"
+"ໄຟລ໌ແນບ. "
 
 #. NCgBM
 #: filter/uiconfig/ui/pdfgeneralpage.ui:583
@@ -651,8 +651,8 @@ msgid ""
 "Select the PDF version. PDF/A version variants creates an ISO 19005 "
 "compliant PDF file, ideal for long-term document preservation."
 msgstr ""
-"ເລືອກເວີຊັນ PDF. ຮູບແບບຕ່າງໆຂອງເວີຊັນ PDF/A ສ້າງໄຟລ໌ PDF ທີ່ສອດຄ່ອງກັບ ISO 19005, "
-"ເໝາະສຳລັບການເກັບຮັກສາເອກະສານໃນໄລຍະຍາວ."
+"ເລືອກເວີຊັນ PDF. ຮູບແບບຕ່າງໆຂອງເວີຊັນ PDF/A ສ້າງໄຟລ໌ PDF ທີ່ສອດຄ່ອງກັບ ISO 19005, ເໝາະສຳລັບ"
+"ການເກັບຮັກສາເອກະສານໃນໄລຍະຍາວ."
 
 #. Ac3Ga
 #: filter/uiconfig/ui/pdfgeneralpage.ui:587
@@ -683,10 +683,10 @@ msgid ""
 "used in the source document will be embedded into the generated PDF file. "
 "PDF tags will be written."
 msgstr ""
-"ເວີຊັນສາມາດເປັນ PDF \"ຄລາສສິກ\" (ເຊັ່ນ PDF 1.7, PDF 2.0) ຫຼື ສອດຄ່ອງກັບ PDF/A. PDF/A "
-"ຖືກກຳນົດເປັນຮູບແບບໄຟລ໌ເອກະສານອີເລັກໂທຣນິກສໍາລັບການເກັບຮັກສາ ແລະ ເກັບມ້ຽນໃນໄລຍະຍາວ. "
-"ມັນອະນຸຍາດໃຫ້ໃຊ້ພຽງແຕ່ບາງຄຸນສົມບັດຂອງ PDF ທີ່ເຂົ້າກັນໄດ້ກັບກໍລະນີການນຳໃຊ້ນັ້ນ. ຕົວຢ່າງ: "
-"ຟອນທັງໝົດທີ່ໃຊ້ໃນເອກະສານຕົ້ນສະບັບຈະຖືກຝັງເຂົ້າໄປໃນໄຟລ໌ PDF ທີ່ສ້າງຂຶ້ນ. ແທັກ PDF ຈະຖືກຂຽນ."
+"ເວີຊັນສາມາດເປັນ PDF \"ຄລາສສິກ\" (ເຊັ່ນ PDF 1.7, PDF 2.0) ຫຼື ສອດຄ່ອງກັບ PDF/A. PDF/A ຖືກ"
+"ກຳນົດເປັນຮູບແບບໄຟລ໌ເອກະສານອີເລັກໂທຣນິກສໍາລັບການເກັບຮັກສາ ແລະ ເກັບມ້ຽນໃນໄລຍະຍາວ. ມັນອະນຸຍາດໃຫ້"
+"ໃຊ້ພຽງແຕ່ບາງຄຸນສົມບັດຂອງ PDF ທີ່ເຂົ້າກັນໄດ້ກັບກໍລະນີການນຳໃຊ້ນັ້ນ. ຕົວຢ່າງ: ຟອນທັງໝົດທີ່ໃຊ້ໃນເອກະສານຕົ້ນ"
+"ສະບັບຈະຖືກຝັງເຂົ້າໄປໃນໄຟລ໌ PDF ທີ່ສ້າງຂຶ້ນ. ແທັກ PDF ຈະຖືກຂຽນ."
 
 #. te76B
 #: filter/uiconfig/ui/pdfgeneralpage.ui:620
@@ -1399,8 +1399,8 @@ msgid ""
 "Array 1, Array 2,... The following arrays to append. If an array has fewer "
 "rows, #N/A error will be returned in the additional rows."
 msgstr ""
-"ອາເຣ 1, ອາເຣ 2,... ອາເຣຕໍ່ໄປທີ່ຈະຕໍ່. ຖ້າອາເຣມີແຖວໜ້ອຍກວ່າ, ຈະສົ່ງຄ່າຜິດພາດ #N/A "
-"ໃນແຖວເພີ່ມເຕີມ."
+"ອາເຣ 1, ອາເຣ 2,... ອາເຣຕໍ່ໄປທີ່ຈະຕໍ່. ຖ້າອາເຣມີແຖວໜ້ອຍກວ່າ, ຈະສົ່ງຄ່າຜິດພາດ #N/A ໃນແຖວເພີ່ມເຕີ"
+"ມ."
 
 #. 7zS24
 #: sc/inc/scfuncs.hrc:4313
@@ -1757,8 +1757,8 @@ msgid ""
 "(default). 1 - ignore blank cells. 2 - ignore cells with error. 3 - ignore "
 "blanks cells and cells with error."
 msgstr ""
-"ຈະບໍ່ສົນໃຈຄ່າບາງປະເພດຫຼືບໍ່. 0 ຫຼື ບໍ່ລະບຸ - ເກັບທຸກຄ່າ (ເລີ່ມຕົ້ນ). 1 - ບໍ່ສົນໃຈເຊລວ່າງ. 2 - "
-"ບໍ່ສົນໃຈເຊລທີ່ຜິດພາດ. 3 - ບໍ່ສົນໃຈເຊລວ່າງ ແລະ ເຊລທີ່ຜິດພາດ."
+"ຈະບໍ່ສົນໃຈຄ່າບາງປະເພດຫຼືບໍ່. 0 ຫຼື ບໍ່ລະບຸ - ເກັບທຸກຄ່າ (ເລີ່ມຕົ້ນ). 1 - ບໍ່ສົນໃຈເຊລວ່າງ. 2 - ບໍ່ສົນໃຈເຊ"
+"ລທີ່ຜິດພາດ. 3 - ບໍ່ສົນໃຈເຊລວ່າງ ແລະ ເຊລທີ່ຜິດພາດ."
 
 #. qNLAi
 #: sc/inc/scfuncs.hrc:4394
@@ -1773,8 +1773,8 @@ msgid ""
 "Scan the array by column. FALSE or omitted (default) - the array is scanned "
 "by row. TRUE - the array is scanned by column."
 msgstr ""
-"ສະແກນອາເຣຕາມຖັນ. FALSE ຫຼື ບໍ່ລະບຸ (ເລີ່ມຕົ້ນ) - ອາເຣຈະຖືກສະແກນຕາມແຖວ. TRUE - "
-"ອາເຣຈະຖືກສະແກນຕາມຖັນ."
+"ສະແກນອາເຣຕາມຖັນ. FALSE ຫຼື ບໍ່ລະບຸ (ເລີ່ມຕົ້ນ) - ອາເຣຈະຖືກສະແກນຕາມແຖວ. TRUE - ອາເຣຈະຖືກສະ"
+"ແກນຕາມຖັນ."
 
 #. PGyxj
 #: sc/inc/scfuncs.hrc:4401
@@ -1808,8 +1808,8 @@ msgid ""
 "(default). 1 - ignore blank cells. 2 - ignore cells with error. 3 - ignore "
 "blanks cells and cells with error."
 msgstr ""
-"ຈະບໍ່ສົນໃຈຄ່າບາງປະເພດຫຼືບໍ່. 0 ຫຼື ບໍ່ລະບຸ - ເກັບທຸກຄ່າ (ເລີ່ມຕົ້ນ). 1 - ບໍ່ສົນໃຈເຊລວ່າງ. 2 - "
-"ບໍ່ສົນໃຈເຊລທີ່ຜິດພາດ. 3 - ບໍ່ສົນໃຈເຊລວ່າງ ແລະ ເຊລທີ່ຜິດພາດ."
+"ຈະບໍ່ສົນໃຈຄ່າບາງປະເພດຫຼືບໍ່. 0 ຫຼື ບໍ່ລະບຸ - ເກັບທຸກຄ່າ (ເລີ່ມຕົ້ນ). 1 - ບໍ່ສົນໃຈເຊລວ່າງ. 2 - ບໍ່ສົນໃຈເຊ"
+"ລທີ່ຜິດພາດ. 3 - ບໍ່ສົນໃຈເຊລວ່າງ ແລະ ເຊລທີ່ຜິດພາດ."
 
 #. E4XDf
 #: sc/inc/scfuncs.hrc:4406
@@ -1824,8 +1824,8 @@ msgid ""
 "Scan the array by column. FALSE or omitted (default) - the array is scanned "
 "by row. TRUE - the array is scanned by column."
 msgstr ""
-"ສະແກນອາເຣຕາມຖັນ. FALSE ຫຼື ບໍ່ລະບຸ (ເລີ່ມຕົ້ນ) - ອາເຣຈະຖືກສະແກນຕາມແຖວ. TRUE - "
-"ອາເຣຈະຖືກສະແກນຕາມຖັນ."
+"ສະແກນອາເຣຕາມຖັນ. FALSE ຫຼື ບໍ່ລະບຸ (ເລີ່ມຕົ້ນ) - ອາເຣຈະຖືກສະແກນຕາມແຖວ. TRUE - ອາເຣຈະຖືກສະ"
+"ແກນຕາມຖັນ."
 
 #. oBDEA
 #: sc/inc/scfuncs.hrc:4437
@@ -1926,9 +1926,9 @@ msgid ""
 "individual cells first select all cells and toggle off the \"Protected\" "
 "option in the Format Cells dialog."
 msgstr ""
-"ການປ້ອງກັນເຊລຈະມີຜົນກໍຕໍ່ເມື່ອແຜ່ນງານປັດຈຸບັນຖືກປ້ອງກັນແລ້ວເທົ່ານັ້ນ. ໂດຍຄ່າເລີ່ມຕົ້ນ, "
-"ທຸກໆເຊລໃນແຜ່ນງານແມ່ນຖືກປ້ອງກັນໄວ້ - ເພື່ອທີ່ຈະປ້ອງກັນແຕ່ລະເຊລ, ກ່ອນອື່ນໃຫ້ເລືອກເຊລທັງໝົດ ແລະ "
-"ປິດໂຕເລືອກ \"ຖືກປ້ອງກັນ\" ໃນກ່ອງໂຕ້ຕອບຈັດຮູບແບບເຊລ."
+"ການປ້ອງກັນເຊລຈະມີຜົນກໍຕໍ່ເມື່ອແຜ່ນງານປັດຈຸບັນຖືກປ້ອງກັນແລ້ວເທົ່ານັ້ນ. ໂດຍຄ່າເລີ່ມຕົ້ນ, ທຸກໆເຊລໃນແຜ່ນງານແມ່"
+"ນຖືກປ້ອງກັນໄວ້ - ເພື່ອທີ່ຈະປ້ອງກັນແຕ່ລະເຊລ, ກ່ອນອື່ນໃຫ້ເລືອກເຊລທັງໝົດ ແລະ ປິດໂຕເລືອກ \"ຖືກປ້ອງກັນ\" "
+"ໃນກ່ອງໂຕ້ຕອບຈັດຮູບແບບເຊລ."
 
 #. FVsyY
 #: sc/uiconfig/scalc/ui/conditionaleasydialog.ui:8

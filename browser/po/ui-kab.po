@@ -7,8 +7,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-12-08 11:25+0100\n"
-"PO-Revision-Date: 2026-01-25 08:51+0000\n"
-"Last-Translator: Amadɣas <massiin@proton.me>\n"
+"PO-Revision-Date: 2026-02-03 12:53+0000\n"
+"Last-Translator: ButterflyOfFire <boffire@users.noreply.hosted.weblate.org>\n"
 "Language-Team: Kabyle <https://hosted.weblate.org/projects/collabora-online/"
 "ui/kab/>\n"
 "Language: kab\n"
@@ -71,7 +71,7 @@ msgstr " iseqdacen."
 
 #: admin/admin.strings.js:27 admin/src/AdminSocketOverview.js:214
 msgid " document(s) open."
-msgstr ""
+msgstr " isemliyen yeldin."
 
 #: admin/admin.strings.js:28
 msgid "Number of Documents"
@@ -132,15 +132,15 @@ msgstr "Idlifen"
 
 #: admin/admin.strings.js:42
 msgid "Memory Graph"
-msgstr ""
+msgstr "Udlif n tkatut"
 
 #: admin/admin.strings.js:43
 msgid "CPU Graph"
-msgstr ""
+msgstr "Udlif n uferdis alemmas usesfer"
 
 #: admin/admin.strings.js:44
 msgid "Network Graph"
-msgstr ""
+msgstr "Udlif n uzeṭṭa"
 
 #: admin/admin.strings.js:45
 #: admin/src/integrator/AdminIntegratorSettings.ts:764
@@ -161,35 +161,36 @@ msgstr "Sekles"
 
 #: admin/admin.strings.js:46
 msgid "Cache size of memory statistics"
-msgstr ""
+msgstr "Tiddi n tuffirt n tdaddanin n tkatut"
 
 #: admin/admin.strings.js:47
 msgid "Time interval of memory statistics (in ms)"
-msgstr ""
+msgstr "Azilal n wakud n tdaddanin n tkatut (deg mili-tasint)"
 
 #: admin/admin.strings.js:48
 msgid "Cache size of CPU statistics"
-msgstr ""
+msgstr "Tiddi n tuffirt n tdaddanin n uferdis alemmas usesfer"
 
 #: admin/admin.strings.js:49
 msgid "Time interval of CPU statistics (in ms)"
-msgstr ""
+msgstr "Azilal n wakud n tdaddanin n uferdis alemmas usesfer (mili-tasint)"
 
 #: admin/admin.strings.js:50 admin/src/AdminSocketOverview.js:100
 msgid "Kill session."
-msgstr ""
+msgstr "Enɣ tiɣimit."
 
 #: admin/admin.strings.js:51
 msgid "Maximum Document process virtual memory (in MB) - reduce only"
-msgstr ""
+msgstr "Takatut tuhlist tafellayt i usesfer n isemliyen (MAṬ) - Senɣes kan"
 
 #: admin/admin.strings.js:52
 msgid "Maximum Document process stack memory (in KB) - reduce only"
-msgstr ""
+msgstr "Takatut ukufi tafellayt i usesfer n isemliyen (KAṬ) - Senɣes kan"
 
 #: admin/admin.strings.js:53
 msgid "Maximum file size allowed to write to disk (in MB) - reduce only"
 msgstr ""
+"Tiddi tafellayt n ufaylu yettwasirgen i tira deg uḍebsi (MAṬ) - Senɣes kan"
 
 #: admin/admin.strings.js:54
 msgid "Documents:"
@@ -210,7 +211,7 @@ msgstr "Seḥbes aqeddac"
 
 #: admin/admin.strings.js:58
 msgid "Server uptime"
-msgstr ""
+msgstr "Tanzagt useddu n uqeddac"
 
 #: admin/admin.strings.js:59
 msgid "Refresh Log"
@@ -218,7 +219,7 @@ msgstr "Smiren aɣmis"
 
 #: admin/admin.strings.js:60
 msgid "Channel Filter:"
-msgstr ""
+msgstr "Tastayt n ubadu:"
 
 #: admin/admin.strings.js:61 src/control/Control.JSDialogBuilder.js:524
 #: src/control/Control.StatusBar.js:198 src/control/Control.StatusBar.js:203
@@ -227,11 +228,11 @@ msgstr "Ula yiwen"
 
 #: admin/admin.strings.js:62
 msgid "Set Log Levels"
-msgstr ""
+msgstr "Sbadu iswiren n uɣmis"
 
 #: admin/admin.strings.js:63
 msgid "Log Levels"
-msgstr ""
+msgstr "Iswiren n uɣmis"
 
 #: admin/admin.strings.js:64 src/control/Control.AlertDialog.js:32
 #: src/control/Control.AlertDialog.js:38
@@ -244,7 +245,7 @@ msgstr "Mdel"
 
 #: admin/admin.strings.js:65
 msgid "Update Log Levels"
-msgstr ""
+msgstr "Leqqem iswiren n uɣmis"
 
 #: admin/admin.strings.js:66
 msgid "Version Information"
@@ -400,44 +401,44 @@ msgstr "Askar ubrik"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:161
 msgid "Compact layout"
-msgstr ""
+msgstr "Taneɣruft takussimt"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:162
 msgid "Show status bar"
-msgstr ""
+msgstr "Sken afeggag n waddad"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:163
 #: src/control/Control.Menubar.ts:168 src/control/Control.Menubar.ts:492
 msgid "Show Ruler"
-msgstr ""
+msgstr "Sken alugen"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:164
 msgid "Accessibility Checker"
-msgstr ""
+msgstr "Amsenqad n tuffart"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:165
 #: src/control/Control.NavigatorPanel.ts:287
 msgid "Navigator"
-msgstr ""
+msgstr "Iminig"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:166
 msgid "Show Sidebar"
-msgstr ""
+msgstr "Sken agalis n yidis"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:167
 msgid "Custom Animation"
-msgstr ""
+msgstr "Merru yugnen"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:170
 msgid "Style List"
-msgstr ""
+msgstr "Aɣanib n tebdart"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:173
 #: src/control/Control.NotebookbarCalc.js:1147
 #: src/control/Control.NotebookbarDraw.js:527
 #: src/control/Control.NotebookbarImpress.js:660
 msgid "Grid"
-msgstr ""
+msgstr "Iẓiki"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:174
 #: src/control/Control.BackstageView.ts:287
@@ -451,7 +452,7 @@ msgstr "Tiyyaḍ"
 #: admin/src/integrator/AdminIntegratorSettings.ts:176
 #: src/control/Control.NotebookbarImpress.js:669
 msgid "Show Grid"
-msgstr ""
+msgstr "Sken iẓiki"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:177
 msgid "Snap to grid"
@@ -460,7 +461,7 @@ msgstr ""
 #: admin/src/integrator/AdminIntegratorSettings.ts:178
 #: admin/src/integrator/AdminIntegratorSettings.ts:184
 msgid "Size to grid"
-msgstr ""
+msgstr "Tiddi ɣer yiẓiki"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:179
 msgid "Synchronize axes"
@@ -547,7 +548,7 @@ msgstr ""
 #: admin/src/integrator/AdminIntegratorSettings.ts:198
 #: src/control/Control.BackstageView.ts:532
 msgid "Presentation"
-msgstr "Tanekda"
+msgstr "Tihawt"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:199
 #: src/control/Control.Zotero.js:1340 src/slideshow/PresenterConsole.js:33
@@ -670,7 +671,7 @@ msgstr "URL n twila yettwabḍan ulac-it deg imuttiyen."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:414
 msgid "Access token is missing in initial variables."
-msgstr "Ajiṭun n unekcum ulac-it deg yimuttiyen imezwura."
+msgstr "Tiddest n unekcum ulac-it deg yimuttiyen imezwura."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:450
 msgid "Something went wrong. Please try to refresh the page."
@@ -754,11 +755,11 @@ msgstr "Édition"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:1341
 msgid "View Settings"
-msgstr ""
+msgstr "Iɣewwaṛen n tmeẓri"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:1342
 msgid "Adjust view settings."
-msgstr ""
+msgstr "Ṣeggem iɣewwaṛen n tmeẓri."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:1352
 msgid "Option"
@@ -769,10 +770,12 @@ msgid ""
 "To use Zotero specify your API key here. You can create your API key in "
 "your "
 msgstr ""
+"I useqdec n Zotero, mudd-d tasarut-ik·im API dagi. Tzemreḍ ad snulfuḍ "
+"tasarut-ik·im API deg "
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:1386
 msgid "Zotero account API settings"
-msgstr ""
+msgstr "Iɣewwaṛen API n umiḍan Zotero"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:1395
 msgid "Document Signing"
@@ -783,10 +786,12 @@ msgid ""
 "To use document signing, specify your signing certificate, key and CA chain "
 "here."
 msgstr ""
+"I useqdec n uzmul n yisemli, mudd-d aselkin-ik·im n uzmul, tasarut akked "
+"uzrar CA dagi."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:1457
 msgid "(Warning: Server accessibility must be enabled to toggle)"
-msgstr ""
+msgstr "(Ɣur-k·m: Tuffart uqeddac yessefk ad tettwasrmed i uqluqel)"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:1766
 #: src/map/handler/Map.WOPI.js:723
@@ -795,27 +800,27 @@ msgstr "Tuccḍa"
 
 #: admin/src/integrator/WordBook.ts:117
 msgid "Standard dictionary"
-msgstr ""
+msgstr "Amawal n tizeɣt"
 
 #: admin/src/integrator/WordBook.ts:118
 msgid "Words are ignored by the spell checker"
-msgstr ""
+msgstr "Awalen ttwazeglen sɣur umsenqad n tira"
 
 #: admin/src/integrator/WordBook.ts:122
 msgid "Dictionary of exceptions"
-msgstr ""
+msgstr "Amawal n tsuraf"
 
 #: admin/src/integrator/WordBook.ts:123
 msgid "Exception words are underlined while checking spelling"
-msgstr ""
+msgstr "Awalen n tsuraf sɛun ijerriḍen n ddaw ticki yella umsenqed n tira"
 
 #: admin/src/integrator/WordBook.ts:132
 msgid "Loading Wordbook..."
-msgstr ""
+msgstr "Asali n umawal…"
 
 #: admin/src/integrator/WordBook.ts:333
 msgid "Type to add a word"
-msgstr ""
+msgstr "Aru iwakken ad ternuḍ awal"
 
 #: admin/src/integrator/WordBook.ts:338
 #: src/control/Notebookbar.ImpressAnimationTab.ts:67
@@ -824,15 +829,15 @@ msgstr "Rnu"
 
 #: admin/src/integrator/WordBook.ts:466
 msgid "Invalid dictionary format. Please check the file."
-msgstr ""
+msgstr "Amasal n umawal d armeɣtu. Ttxil-k·m senqed afaylu."
 
 #: admin/src/integrator/WordBook.ts:486
 msgid "Something went wrong while uploading dictionary file"
-msgstr ""
+msgstr "Yella kra n wugur deg usali n ufaylu n umawal"
 
 #: admin/src/integrator/Xcu.ts:160 admin/src/integrator/Xcu.ts:172
 msgid "Something went wrong while loading Document settings."
-msgstr ""
+msgstr "Yella kra n wugur deg usali n yiɣewwaṛen n isemli."
 
 #: admin/src/integrator/Xcu.ts:312
 msgid "Document Settings"
@@ -840,7 +845,7 @@ msgstr "Iɣewwaren n isemli"
 
 #: admin/src/integrator/Xcu.ts:363
 msgid "Select a tab to view settings."
-msgstr ""
+msgstr "Fren iccer iwakken ad twaliḍ iɣewwaṛen."
 
 #: admin/src/Util.js:26
 msgid "kB"
@@ -936,7 +941,7 @@ msgstr "Supprimer"
 
 #: src/canvas/sections/CommentListSection.ts:1258
 msgid "Remove Thread"
-msgstr ""
+msgstr "Kkes Adras"
 
 #: src/canvas/sections/CommentListSection.ts:1264
 msgid "Resolve"
@@ -944,15 +949,15 @@ msgstr "Fru"
 
 #: src/canvas/sections/CommentListSection.ts:1264
 msgid "Unresolve"
-msgstr ""
+msgstr "Ur yefri ara"
 
 #: src/canvas/sections/CommentListSection.ts:1270
 msgid "Unresolve Thread"
-msgstr ""
+msgstr "Adras ur yefri ara"
 
 #: src/canvas/sections/CommentListSection.ts:1270
 msgid "Resolve Thread"
-msgstr ""
+msgstr "Adras yefra"
 
 #: src/canvas/sections/CommentListSection.ts:1276
 msgid "Promote to top comment"
@@ -960,15 +965,15 @@ msgstr ""
 
 #: src/canvas/sections/CommentListSection.ts:1282
 msgid "Show on the side"
-msgstr ""
+msgstr "Sken-d ɣef yidis"
 
 #: src/canvas/sections/CommentListSection.ts:1282
 msgid "Open in full view"
-msgstr ""
+msgstr "Ldi deg teskant tummidt"
 
 #: src/canvas/sections/CommentListSection.ts:1288
 msgid "Show in navigator"
-msgstr ""
+msgstr "Sken deg yiminig"
 
 #: src/canvas/sections/CommentListSection.ts:1316
 #: src/control/Control.JSDialogBuilder.js:1718
@@ -1038,19 +1043,19 @@ msgstr "Yettwasekles"
 
 #: src/canvas/sections/ShapeHandlesSection.ts:476
 msgid "Document contains unsupported media"
-msgstr ""
+msgstr "Isemli yegber amidya ur nettwasefrak ara"
 
 #: src/canvas/sections/URLPopUpSection.ts:67
 msgid "Copy link location"
-msgstr ""
+msgstr "Nɣel adig n useɣwen"
 
 #: src/canvas/sections/URLPopUpSection.ts:81
 msgid "Edit link"
-msgstr ""
+msgstr "Ẓreg aseɣwen"
 
 #: src/canvas/sections/URLPopUpSection.ts:96
 msgid "Remove link"
-msgstr ""
+msgstr "Kkes aseɣwen"
 
 #: src/control/ColorPicker.ts:270
 msgid "No color"
@@ -1066,11 +1071,11 @@ msgstr ""
 
 #: src/control/Control.AboutDialog.ts:135
 msgid "\"Slow Proxy\""
-msgstr ""
+msgstr "\"Apṛuksi ẓẓay\""
 
 #: src/control/Control.AboutDialog.ts:147
 msgid "Time zone:"
-msgstr ""
+msgstr "Tamnaḍt n wakud:"
 
 #: src/control/Control.AboutDialog.ts:185
 msgid "Copy all version information in English"
@@ -1102,7 +1107,7 @@ msgid ""
 "possible. Please right click in the image, choose \"Copy Image\" and paste "
 "it into the document instead."
 msgstr ""
-"Asider n teɣbula tizɣarayen ttwagedlent maca asenṭeḍ n tugniwin mazal "
+"Asader n teɣbula tizɣarayen ttwagedlent maca asenṭeḍ n tugniwin mazal "
 "yettedu. Ma ulac aɣilif, sit ayeffus ɣef tugna, fren \"Nɣel tugna\" sakin "
 "senṭeḍ-itt ɣer isemli."
 
@@ -1242,7 +1247,7 @@ msgstr "Isebtar"
 
 #: src/control/Control.BackstageView.ts:531
 msgid "Spreadsheet"
-msgstr "Ambellez"
+msgstr "Tafelwit taliktṛunant"
 
 #: src/control/Control.BackstageView.ts:531
 msgid "Sheets"
@@ -1253,7 +1258,7 @@ msgstr "Ifriwen"
 #: src/control/Control.NotebookbarImpress.js:1418
 #: src/slideshow/PresenterConsole.js:34
 msgid "Slides"
-msgstr "Timeccegin"
+msgstr "Tigriwin"
 
 #: src/control/Control.BackstageView.ts:538
 msgid "Parts"
@@ -1290,11 +1295,11 @@ msgstr "Ulac tineɣrufin yenmeɣran anadi-k·m."
 
 #: src/control/Control.BackstageView.ts:868
 msgid "Blank Spreadsheet"
-msgstr "Ambellez ilem"
+msgstr "Tafelwit taliktṛunant tilemt"
 
 #: src/control/Control.BackstageView.ts:872
 msgid "Blank Presentation"
-msgstr ""
+msgstr "Tihawt tilemt"
 
 #: src/control/Control.BackstageView.ts:877
 msgid "Blank Document"
@@ -1370,7 +1375,7 @@ msgstr ""
 #: src/control/Control.NotebookbarImpress.js:361
 #: src/control/Control.NotebookbarWriter.js:320
 msgid "Download"
-msgstr "Sider"
+msgstr "Sader"
 
 #: src/control/Control.DownloadProgress.js:80
 msgid "Downloading clipboard content"
@@ -1397,7 +1402,7 @@ msgstr "Agbur yettwanɣel ɣer tecfawit"
 
 #: src/control/Control.DownloadProgress.js:302
 msgid "Download failed"
-msgstr "Asider yecceḍ"
+msgstr "Asader yecceḍ"
 
 #: src/control/Control.ESignature.ts:127
 msgid "Andorra"
@@ -1726,7 +1731,7 @@ msgstr "Amarag n twuri"
 
 #: src/control/Control.FormulaBarJSDialog.js:75
 msgid "Select Function"
-msgstr ""
+msgstr "Fren tawuri"
 
 #: src/control/Control.FormulaBarJSDialog.js:81
 #: src/control/Control.NotebookbarWriter.js:114
@@ -1741,7 +1746,7 @@ msgstr "Qbel"
 
 #: src/control/Control.FormulaBarJSDialog.js:171
 msgid "Collapse Formula Bar"
-msgstr ""
+msgstr "Senɣes afeggag n tenfalit"
 
 #: src/control/Control.IdleHandler.ts:43
 msgid "Idle document - please click to reload and resume editing"
@@ -1750,10 +1755,12 @@ msgstr ""
 #: src/control/Control.IdleHandler.ts:45
 msgid "Idle document - please tap to reload and resume editing"
 msgstr ""
+"Isemli amsgunfu - Ttxil-k·m tekki iwakken ad talseḍ asali sakin ad tkemmeleḍ "
+"asiẓreg"
 
 #: src/control/Control.JSDialog.js:337
 msgid "Close dialog"
-msgstr ""
+msgstr "Mdel tanaka n udiwenni"
 
 #: src/control/Control.JSDialogBuilder.js:527
 msgid "Solid"
@@ -1765,7 +1772,7 @@ msgstr "Imzirig"
 
 #: src/control/Control.JSDialogBuilder.js:533
 msgid "Axial"
-msgstr ""
+msgstr "Agellusan"
 
 #: src/control/Control.JSDialogBuilder.js:536
 msgid "Radial"
@@ -1777,7 +1784,7 @@ msgstr ""
 
 #: src/control/Control.JSDialogBuilder.js:543
 msgid "Quadratic"
-msgstr ""
+msgstr "Asnuzmir"
 
 #: src/control/Control.JSDialogBuilder.js:546
 msgid "Square"
@@ -1801,7 +1808,7 @@ msgstr "Couleur"
 
 #: src/control/Control.JSDialogBuilder.js:1280
 msgid "Select range"
-msgstr ""
+msgstr "Fren azilal"
 
 #: src/control/Control.JSDialogBuilder.js:1407
 #: src/control/Control.NotebookbarBuilder.js:151
@@ -1832,7 +1839,7 @@ msgstr "Tiririyin"
 
 #: src/control/Control.JSDialogBuilder.js:1782
 msgid "Insert Comment"
-msgstr ""
+msgstr "Ger awennit"
 
 #: src/control/Control.JSDialogBuilder.js:2059
 msgid "Open {name}"
@@ -1857,7 +1864,7 @@ msgstr "Ger-d tafelwit"
 #: src/control/Control.Menubar.ts:592 src/control/Control.Menubar.ts:734
 #: src/control/Control.Menubar.ts:1028 src/control/Control.StatusBar.js:534
 msgid "None (Do not check spelling)"
-msgstr ""
+msgstr "Ulac (Ur ssenqad ara tira)"
 
 #: src/control/Control.LanguageDialog.js:82
 msgid "Select language"
@@ -1869,7 +1876,7 @@ msgstr "Tutlayt"
 
 #: src/control/Control.Mention.ts:181
 msgid "No search results found!"
-msgstr ""
+msgstr "Ulac igmaḍ n unadi yettwafen!"
 
 #: src/control/Control.Menubar.ts:97 src/control/Control.Menubar.ts:112
 #: src/control/Control.Menubar.ts:1063
@@ -1897,7 +1904,7 @@ msgstr "Isemli Word (.docx)"
 #: src/control/Control.NotebookbarBuilder.js:351
 #: src/control/Control.NotebookbarBuilder.js:564
 msgid "Rich Text (.rtf)"
-msgstr ""
+msgstr "Aḍris anesbaɣuṛ (.rtf)"
 
 #: src/control/Control.Menubar.ts:102 src/control/Control.Menubar.ts:109
 #: src/control/Control.Menubar.ts:434 src/control/Control.Menubar.ts:440
@@ -1952,7 +1959,7 @@ msgstr "Bḍu..."
 #: src/control/Control.Menubar.ts:1056 src/control/Control.Menubar.ts:1121
 #: src/control/Control.Menubar.ts:1187 src/control/Control.Menubar.ts:1241
 msgid "See revision history"
-msgstr ""
+msgstr "Wali amazray n usenqed"
 
 #: src/control/Control.Menubar.ts:109 src/control/Control.Menubar.ts:440
 #: src/control/Control.Menubar.ts:620 src/control/Control.Menubar.ts:761
@@ -1973,7 +1980,7 @@ msgstr "Isemli PDF (.pdf) am..."
 
 #: src/control/Control.Menubar.ts:117 src/control/Control.Menubar.ts:768
 msgid "HTML file (.html)"
-msgstr ""
+msgstr "Afaylu HTML (.html)"
 
 #: src/control/Control.Menubar.ts:120 src/control/Control.Menubar.ts:456
 #: src/control/Control.Menubar.ts:627 src/control/Control.Menubar.ts:771
@@ -2012,22 +2019,22 @@ msgstr "Seggem"
 #: src/control/Control.NotebookbarWriter.js:1647
 #: src/control/Control.StatusBar.js:255
 msgid "Reset zoom"
-msgstr ""
+msgstr "Ales awennez n usemɣer"
 
 #: src/control/Control.Menubar.ts:167 src/control/Control.Menubar.ts:491
 #: src/control/Control.Menubar.ts:658 src/control/Control.Menubar.ts:803
 msgid "Toggle UI Mode"
-msgstr ""
+msgstr "Qluqel askar n ugrudem n useqdac"
 
 #: src/control/Control.Menubar.ts:169 src/control/Control.Menubar.ts:493
 #: src/control/Control.Menubar.ts:663 src/control/Control.Menubar.ts:804
 msgid "Show Status Bar"
-msgstr ""
+msgstr "Sken Afeggag n Waddad"
 
 #: src/control/Control.Menubar.ts:170 src/control/Control.Menubar.ts:495
 #: src/control/Control.Menubar.ts:664 src/control/Control.Menubar.ts:805
 msgid "Hide Menu Bar"
-msgstr ""
+msgstr "Ffer Afeggag n Wumuɣ"
 
 #: src/control/Control.Menubar.ts:172 src/control/Control.Menubar.ts:497
 #: src/control/Control.Menubar.ts:660 src/control/Control.Menubar.ts:807
@@ -2038,20 +2045,20 @@ msgstr ""
 #: src/control/Control.NotebookbarImpress.js:696
 #: src/control/Control.NotebookbarWriter.js:1741
 msgid "Invert Background"
-msgstr ""
+msgstr "Tti agilal"
 
 #: src/control/Control.Menubar.ts:174 src/control/Control.Menubar.ts:810
 #: src/control/Control.NotebookbarCalc.js:2817
 #: src/control/Control.NotebookbarWriter.js:1059
 msgid "Style list"
-msgstr ""
+msgstr "Tabdart n uɣanib"
 
 #: src/control/Control.Menubar.ts:182 src/control/Control.Menubar.ts:509
 #: src/control/Control.Menubar.ts:667 src/control/Control.Menubar.ts:821
 #: src/control/Control.Menubar.ts:1310 src/control/Control.Menubar.ts:1360
 #: src/control/Control.Menubar.ts:1374 src/control/Control.Menubar.ts:1397
 msgid "Local Image..."
-msgstr ""
+msgstr "Tugna tadigant..."
 
 #: src/control/Control.Menubar.ts:206 src/control/Control.Menubar.ts:208
 #: src/control/Control.Menubar.ts:1327 src/control/Control.Menubar.ts:1329
@@ -2065,12 +2072,12 @@ msgstr "Meṛṛa"
 #: src/control/Control.NotebookbarImpress.js:1609
 #: src/control/Control.NotebookbarWriter.js:1315
 msgid "Smart Picker"
-msgstr ""
+msgstr "Amefran amegzu"
 
 #: src/control/Control.Menubar.ts:219 src/control/Control.Menubar.ts:521
 #: src/control/Control.Menubar.ts:675 src/control/Control.Menubar.ts:835
 msgid "AI Assistant"
-msgstr ""
+msgstr "Amedhal n Tegzi Taragmawant"
 
 #: src/control/Control.Menubar.ts:260
 msgid "Text orientation"
@@ -2084,33 +2091,33 @@ msgstr "Timsisɣal"
 #: src/control/Control.Menubar.ts:333
 #: src/control/Notebookbar.WriterReferencesTab.ts:72
 msgid "Update Index"
-msgstr ""
+msgstr "Leqqem amatar"
 
 #: src/control/Control.Menubar.ts:342
 #: src/control/Notebookbar.WriterReferencesTab.ts:220
 msgid "Add Citation"
-msgstr ""
+msgstr "Rnu tanebdert"
 
 #: src/control/Control.Menubar.ts:343
 #: src/control/Notebookbar.WriterReferencesTab.ts:237
 msgid "Add Citation Note"
-msgstr ""
+msgstr "Rnu tazmilt n tnebdert"
 
 #: src/control/Control.Menubar.ts:344
 #: src/control/Notebookbar.WriterReferencesTab.ts:203
 msgid "Add Bibliography"
-msgstr ""
+msgstr "Rnu tameddurt"
 
 #: src/control/Control.Menubar.ts:346
 #: src/control/Notebookbar.WriterReferencesTab.ts:262
 msgid "Refresh Citations"
-msgstr ""
+msgstr "Sismeḍ Tinebdurin"
 
 #: src/control/Control.Menubar.ts:347
 #: src/control/Notebookbar.WriterReferencesTab.ts:279
 #: src/control/Control.Zotero.js:1531
 msgid "Unlink Citations"
-msgstr ""
+msgstr "Kkes Aseɣwen n Tnebdurin"
 
 #: src/control/Control.Menubar.ts:348
 #: src/control/Notebookbar.WriterReferencesTab.ts:296
@@ -2237,27 +2244,27 @@ msgstr ""
 #: src/control/Control.Menubar.ts:449
 #: src/control/Control.NotebookbarBuilder.js:491
 msgid "Current slide as Bitmap (.bmp)"
-msgstr ""
+msgstr "Tigri tamirant am Bitmap (.bmp)"
 
 #: src/control/Control.Menubar.ts:450
 #: src/control/Control.NotebookbarBuilder.js:503
 msgid "Current slide as Graphics Interchange Format (.gif)"
-msgstr ""
+msgstr "Tigri tamirant am Umasal n usemmeskel n udlif (.gif)"
 
 #: src/control/Control.Menubar.ts:451
 #: src/control/Control.NotebookbarBuilder.js:515
 msgid "Current slide as Portable Network Graphics (.png)"
-msgstr ""
+msgstr "Tigri tamirant am Udlif n uẓeṭṭa yettazgin (.png)"
 
 #: src/control/Control.Menubar.ts:452
 #: src/control/Control.NotebookbarBuilder.js:527
 msgid "Current slide as Tag Image File Format (.tiff)"
-msgstr ""
+msgstr "Tigri tamirant am Umasal n ufaylu n tugna n tebzimt (.tiff)"
 
 #: src/control/Control.Menubar.ts:459
 #: src/control/Control.NotebookbarBuilder.js:665
 msgid "Full Page Slides"
-msgstr ""
+msgstr "Tigriwin n usebter ačuran"
 
 #: src/control/Control.Menubar.ts:460
 #: src/control/Control.NotebookbarBuilder.js:669
@@ -2281,11 +2288,11 @@ msgstr ""
 #: src/control/Control.Menubar.ts:580 src/control/Control.Menubar.ts:1171
 #: src/control/Control.PresentationBar.js:128
 msgid "Fullscreen presentation"
-msgstr ""
+msgstr "Tihawt n ugdil ačuran"
 
 #: src/control/Control.Menubar.ts:581
 msgid "Present current slide"
-msgstr ""
+msgstr "Smahi tigri tamirant"
 
 #: src/control/Control.Menubar.ts:582
 msgid "Present in new window"
@@ -2309,21 +2316,21 @@ msgstr ""
 #: src/control/Control.NotebookbarBuilder.js:386
 #: src/control/Control.NotebookbarBuilder.js:579
 msgid "ODF spreadsheet (.ods)"
-msgstr ""
+msgstr "Tafelwit taliktṛunant ODF (.ods)"
 
 #: src/control/Control.Menubar.ts:753 src/control/Control.Menubar.ts:765
 #: src/control/Control.Menubar.ts:1251
 #: src/control/Control.NotebookbarBuilder.js:394
 #: src/control/Control.NotebookbarBuilder.js:587
 msgid "Excel 2003 Spreadsheet (.xls)"
-msgstr ""
+msgstr "Tafelwit taliktṛunant Excel 2003 (.xls)"
 
 #: src/control/Control.Menubar.ts:754 src/control/Control.Menubar.ts:766
 #: src/control/Control.Menubar.ts:1252
 #: src/control/Control.NotebookbarBuilder.js:390
 #: src/control/Control.NotebookbarBuilder.js:583
 msgid "Excel Spreadsheet (.xlsx)"
-msgstr ""
+msgstr "Tafelwit taliktṛunant Excel (.xlsx)"
 
 #: src/control/Control.Menubar.ts:767
 msgid "CSV file (.csv)"
@@ -2584,7 +2591,7 @@ msgstr ""
 
 #: src/control/Notebookbar.ImpressTransitionTab.ts:137
 msgid "Apply to All Slides"
-msgstr ""
+msgstr "Snes i tigriwin meṛṛa"
 
 #: src/control/Notebookbar.WriterReferencesTab.ts:41
 msgid "Table of content"
@@ -3161,7 +3168,7 @@ msgstr "Afeṣṣel"
 
 #: src/control/Control.NotebookbarImpress.js:104
 msgid "Slide Show"
-msgstr ""
+msgstr "Tigri n Tugna"
 
 #: src/control/Control.NotebookbarImpress.js:143
 msgid "Master"
@@ -3173,7 +3180,7 @@ msgstr ""
 
 #: src/control/Control.NotebookbarImpress.js:476
 msgid "From Current Slide"
-msgstr ""
+msgstr "Seg Tigri Tamirant"
 
 #: src/control/Control.NotebookbarImpress.js:485
 msgid "Present in Window"
@@ -3181,16 +3188,16 @@ msgstr ""
 
 #: src/control/Control.NotebookbarImpress.js:501
 msgid "Start Follow-me Presentation"
-msgstr ""
+msgstr "Senker tihawt Ḍefret-iyi-d"
 
 #: src/control/Control.NotebookbarImpress.js:509
 #: src/slideshow/SlideShowPresenter.ts:745
 msgid "Follow Presentation"
-msgstr ""
+msgstr "Ḍfer Tihawt"
 
 #: src/control/Control.NotebookbarImpress.js:637
 msgid "Slide Views"
-msgstr ""
+msgstr "Taskant n Tigri"
 
 #: src/control/Control.NotebookbarImpress.js:676
 msgid "Snap to Grid"
@@ -3199,7 +3206,7 @@ msgstr ""
 #: src/control/Control.NotebookbarImpress.js:800
 #: src/control/Control.NotebookbarImpress.js:1827
 msgid "Slide Layout"
-msgstr ""
+msgstr "Taneɣruft n Tigri"
 
 #: src/control/Control.NotebookbarImpress.js:822
 #: src/control/Control.NotebookbarImpress.js:1837
@@ -3221,11 +3228,11 @@ msgstr ""
 
 #: src/control/Control.NotebookbarImpress.js:1805
 msgid "Master Slide Templates"
-msgstr ""
+msgstr "Tineɣrufin n Tigri Tagejdant"
 
 #: src/control/Control.NotebookbarImpress.js:1856
 msgid "Slide Size"
-msgstr ""
+msgstr "Tiddi n Tigri"
 
 #: src/control/Control.NotebookbarImpress.js:1879
 msgid "Background Image"
@@ -3308,11 +3315,11 @@ msgstr "taskant n usebtar %1"
 
 #: src/control/Control.PartsPreview.js:190
 msgid "Slide %1"
-msgstr "Timeccegit %1"
+msgstr "Tigri %1"
 
 #: src/control/Control.PartsPreview.js:263
 msgid "Paste Slide"
-msgstr "Senteḍ tmeccegit"
+msgstr "Senteḍ Tigri"
 
 #: src/control/Control.PartsPreview.js:319
 msgid "Paste"
@@ -3441,7 +3448,7 @@ msgstr "YELDI"
 
 #: src/control/Control.SheetsBar.js:51
 msgid "Scroll to the first sheet"
-msgstr "Drurem arma d ifer amezwaru"
+msgstr "Drurem arma d tiferkit tamezwarut"
 
 #: src/control/Control.SheetsBar.js:58
 msgid "Scroll left"
@@ -3453,15 +3460,15 @@ msgstr "Drurem ɣer uyeffus"
 
 #: src/control/Control.SheetsBar.js:74
 msgid "Scroll to the last sheet"
-msgstr "Drurem arma d ifer aneggaru"
+msgstr "Drurem arma d tiferkit taneggarut"
 
 #: src/control/Control.SheetsBar.js:81
 msgid "Insert sheet"
-msgstr "Ger ifer"
+msgstr "Ger tiferkit"
 
 #: src/control/Control.SheetsBar.js:88
 msgid "Show sheet list"
-msgstr "Sken tabdart n ifer"
+msgstr "Sken tabdart n tferkit"
 
 #: src/control/Control.StatusBar.js:156
 msgid "On"
@@ -3537,35 +3544,35 @@ msgstr "Sbadu tutlayt i tefrayt"
 
 #: src/control/Control.Tabs.js:53
 msgid "Insert sheet before this"
-msgstr "Ger ifer send ta"
+msgstr "Ger tiferkit send tagi"
 
 #: src/control/Control.Tabs.js:58
 msgid "Insert sheet after this"
-msgstr "Ger ifer deffir wa"
+msgstr "Ger tiferkit deffir tagi"
 
 #: src/control/Control.Tabs.js:97
 msgid "Move Sheet Left"
-msgstr "Smutti ifer ɣer uzelmaḍ"
+msgstr "Smutti tiferkit ɣer uzelmaḍ"
 
 #: src/control/Control.Tabs.js:103
 msgid "Move Sheet Right"
-msgstr "Smutti ifer ɣer uyeffus"
+msgstr "Smutti tiferkit ɣer uyeffus"
 
 #: src/control/Control.Tabs.js:114
 msgid "Copy Sheet..."
-msgstr "Nɣel ifer..."
+msgstr "Nɣel tiferkit..."
 
 #: src/control/Control.Tabs.js:412
 msgid "Are you sure you want to delete sheet, {sheet}?"
-msgstr "Tebɣiḍ ad tekkseḍ ifer, {sheet}?"
+msgstr "Tebɣiḍ ad tekkseḍ tiferkit, {sheet}?"
 
 #: src/control/Control.Tabs.js:423
 msgid "Rename sheet"
-msgstr "Snifel isem n yifer"
+msgstr "Snifel isem n tferkit"
 
 #: src/control/Control.Tabs.js:423
 msgid "Enter new sheet name"
-msgstr "Sekcem isem n yifer amaynut"
+msgstr "Sekcem isem n tferkit tamaynut"
 
 #: src/control/Control.Toolbar.js:969
 msgid ""
@@ -3575,7 +3582,7 @@ msgstr ""
 
 #: src/control/Control.TopToolbar.js:109
 msgid "Active Sheet"
-msgstr "Ifer urmid"
+msgstr "Tiferkit turmidt"
 
 #: src/control/Control.TopToolbar.js:123
 msgid "Default Style"
@@ -3748,7 +3755,7 @@ msgstr "Asali n temsisɣelt"
 
 #: src/control/Control.Zotero.js:822
 msgid "Citation Style"
-msgstr "Aɣanib n tnebdurt"
+msgstr "Aɣanib n tnebdert"
 
 #: src/control/Control.Zotero.js:827
 msgid "An error occurred while fetching style list"
@@ -3909,7 +3916,7 @@ msgstr ""
 
 #: src/control/Toolbar.js:253 src/control/Toolbar.js:266
 msgid "Downloading..."
-msgstr "Asider..."
+msgstr "Asader..."
 
 #: src/control/Toolbar.js:282 src/control/jsdialog/Widget.HTMLContent.ts:181
 msgid "Saving..."
@@ -3950,19 +3957,19 @@ msgstr "afellay"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1443
 msgid "Edit Single Sparkline"
-msgstr ""
+msgstr "Ẓreg udlif ameẓyan asuf"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1454
 msgid "Delete Single Sparkline"
-msgstr ""
+msgstr "Kkes udlif ameẓyan asuf"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1490
 msgid "Portrait"
-msgstr "Tafrist"
+msgstr "Tarudemt"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1496
 msgid "Landscape"
-msgstr "Agama"
+msgstr "Imeẓri"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1502
 msgid "A6"
@@ -3994,15 +4001,15 @@ msgstr "B4 (ISO)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1509
 msgid "Letter"
-msgstr ""
+msgstr "Tabratt"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1510
 msgid "Legal"
-msgstr ""
+msgstr "Azerfan"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1511
 msgid "Long Bond"
-msgstr ""
+msgstr "Lkaɣeḍ aɣezzfan"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1512
 msgid "Tabloid"
@@ -4030,7 +4037,7 @@ msgstr "32 Kai"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1518
 msgid "Big 32 Kai"
-msgstr "Big 32 Kai"
+msgstr "32 Kai amuqṛan"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1519
 msgid "User"
@@ -4038,47 +4045,47 @@ msgstr "Aseqdac"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1520
 msgid "DL Envelope"
-msgstr ""
+msgstr "Tajellabt DL"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1521
 msgid "C6 Envelope"
-msgstr ""
+msgstr "Tajellabt C6"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1522
 msgid "C6/5 Envelope"
-msgstr ""
+msgstr "Tajellabt C6/5"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1523
 msgid "C5 Envelope"
-msgstr ""
+msgstr "Tajellabt C5"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1524
 msgid "C4 Envelope"
-msgstr ""
+msgstr "Tajellabt C4"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1527
 msgid "#6¾ Envelope"
-msgstr ""
+msgstr "Tajellabt #6¾"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1532
 msgid "#7¾ (Monarch) Envelope"
-msgstr ""
+msgstr "Tajellabt #7¾(Agellid)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1535
 msgid "#9 Envelope"
-msgstr ""
+msgstr "Tajellabt #9"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1536
 msgid "#10 Envelope"
-msgstr ""
+msgstr "Tajellabt #10"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1537
 msgid "#11 Envelope"
-msgstr ""
+msgstr "Tajellabt #11"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1538
 msgid "#12 Envelope"
-msgstr ""
+msgstr "Tajellabt #12"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1541
 msgid "Japanese Postcard"
@@ -4086,27 +4093,27 @@ msgstr ""
 
 #: src/control/jsdialog/Definitions.Menu.ts:1726
 msgid "Insert Local Image"
-msgstr ""
+msgstr "Ger tugna tadigant"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1732
 msgid "Insert Local Multimedia"
-msgstr ""
+msgstr "Ger agetmidya adigan"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1738
 msgid "Very Tight"
-msgstr ""
+msgstr "Izeyyer aṭas"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1739
 msgid "Tight"
-msgstr ""
+msgstr "Izeyyer"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1741
 msgid "Loose"
-msgstr ""
+msgstr "S tallunt"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1742
 msgid "Very Loose"
-msgstr ""
+msgstr "S tallunt aṭas"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1772
 msgid "All users"
@@ -4118,171 +4125,171 @@ msgstr "Aseqdac-a"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1911
 msgid "No Borders"
-msgstr ""
+msgstr "Ulac iran"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1917
 msgid "Left Border"
-msgstr ""
+msgstr "Iri azelmaḍ"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1923
 msgid "Right Border"
-msgstr ""
+msgstr "Iri ayeffus"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1929
 msgid "Left And Right Borders"
-msgstr ""
+msgstr "Iran n zelmeḍ akked yeffus"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1935
 msgid "Top Border"
-msgstr ""
+msgstr "Iri n ufella"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1941
 msgid "Bottom Border"
-msgstr ""
+msgstr "Iri n wadda"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1947
 msgid "Top And Bottom Border"
-msgstr ""
+msgstr "Iri n wadda akked ukessar"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1953
 msgid "Outer Border"
-msgstr ""
+msgstr "Iri uffiɣ"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1959
 msgid "All Horizontal Lines"
-msgstr ""
+msgstr "Akk izirigen iglawanen"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1965
 msgid "Outer Border And Horizontal Lines"
-msgstr ""
+msgstr "Iri uffiɣ akked izirigen iglawanen"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1971
 msgid "Outer Border and Vertical Lines"
-msgstr ""
+msgstr "Iri uffiɣ akked izirigen ibdiden"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1977
 msgid "Outer Borders And All Inner lines"
-msgstr ""
+msgstr "Iran uffiɣen akked akk izirigen n daxel"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1982
 msgid "Line color"
-msgstr ""
+msgstr "Ini n izirig"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1993
 msgid "Line style"
-msgstr ""
+msgstr "Aɣanib n izirig"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1996
 msgid "Hairline (0.05 pt)"
-msgstr ""
+msgstr "Izirig n unẓad (0.05 pt)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2005
 msgid "Very thin (0.50 pt)"
-msgstr ""
+msgstr "Arqaq mliḥ (0.50 pt)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2014
 msgid "Thin (0.75 pt)"
-msgstr ""
+msgstr "Arqaq (0.75 pt)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2023
 msgid "Medium (1.50 pt)"
-msgstr ""
+msgstr "D almas (1.50 pt)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2032
 msgid "Thick (2.25 pt)"
-msgstr ""
+msgstr "Zzur (2.25 pt)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2041
 msgid "Extra thick (4.50 pt)"
-msgstr ""
+msgstr "Zur aṭas (4.50 pt)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2050
 msgid "Double Hairline (1.10 pt)"
-msgstr ""
+msgstr "Izirig n unẓad uslig (1.10 pt)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2059
 msgid "Double Hairline (2.35 pt)"
-msgstr ""
+msgstr "Izirig n unẓad uslig (2.35 pt)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2068
 msgid "Thin/Medium (3.00 pt)"
-msgstr ""
+msgstr "Arqaq/Almas (3.00 pt)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2077
 msgid "Medium/Hairline (3.05 pt)"
-msgstr ""
+msgstr "Almas/Izirig n unẓad (3.05 pt)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2086
 msgid "Medium/Medium (4.50 pt)"
-msgstr ""
+msgstr "Almas/Almas (4.50 pt)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2146
 msgid "Standard (4:3)"
-msgstr ""
+msgstr "Tizeɣt (4:3)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2151
 msgid "Widescreen (16:9)"
-msgstr ""
+msgstr "Agdil ahrawan (16:9)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2161
 msgid "Blank Slide"
-msgstr ""
+msgstr "Tigri tilemt"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2162
 msgid "Title Slide"
-msgstr ""
+msgstr "Tigri n uzwel"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2163
 msgid "Title, Content"
-msgstr ""
+msgstr "Azwel, agbur"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2164
 msgid "Title and 2 Content"
-msgstr ""
+msgstr "Azwel akked 2 igburen"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2165
 msgid "Title Only"
-msgstr ""
+msgstr "Azwel kan"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2166
 msgid "Centered Text"
-msgstr ""
+msgstr "Aḍris s wudem alemmas"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2167
 msgid "Title, 2 Content and Content"
-msgstr ""
+msgstr "Azwel, 2 igburen akked ugbur"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2168
 msgid "Title, Content and 2 Content"
-msgstr ""
+msgstr "Azwel, agbur akked 2 igburen"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2169
 msgid "Title, 2 Content over Content"
-msgstr ""
+msgstr "Azwel, 2 igburen ɣef ugbur"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2170
 msgid "Title, Content over Content"
-msgstr ""
+msgstr "Azwel, agbur ɣef ugbur"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2171
 msgid "Title, 4 Content"
-msgstr ""
+msgstr "Azwel, 4 igburen"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2172
 msgid "Title, 6 Content"
-msgstr ""
+msgstr "Azwel, 6 igburen"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2173
 msgid "Vertical Title, Text, Chart"
-msgstr ""
+msgstr "Azwel ubdid, Aḍris, Udlif"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2174
 msgid "Vertical Title, Vertical Text"
-msgstr ""
+msgstr "Azwel Ubdid, Aḍris Ubdid"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2175
 msgid "Title, Vertical Text"
-msgstr ""
+msgstr "Azwel, Aḍris Ubdid"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2176
 msgid "Title, Vertical Text, Clipart"
@@ -4395,7 +4402,7 @@ msgstr ""
 
 #: src/control/jsdialog/Widget.HTMLContent.ts:152
 msgid "Number of Slides"
-msgstr ""
+msgstr "Amḍan n Tigriwin"
 
 #: src/control/jsdialog/Widget.HTMLContent.ts:164
 msgid "Number of Pages"
@@ -4587,9 +4594,8 @@ msgid "The server has been disconnected."
 msgstr ""
 
 #: src/docdispatcher.ts:522
-#, fuzzy
 msgid "Are you sure you want to delete this slide?"
-msgstr "D tidet tebɣiḍ ad tfakkeḍ tiɣimit-a?"
+msgstr "D tidet tebɣiḍ ad tekkseḍ tigri-agi?"
 
 #: src/docdispatcher.ts:525
 msgid "Are you sure you want to delete this page?"
@@ -4982,7 +4988,7 @@ msgstr ""
 #: src/map/handler/Map.SlideShow.js:59
 #: src/slideshow/SlideShowPresenter.ts:1066
 msgid "Empty Slide Show"
-msgstr ""
+msgstr "Tigri n tugna d tilemt"
 
 #: src/map/handler/Map.SlideShow.js:167
 #: src/slideshow/SlideShowPresenter.ts:1094
@@ -4996,6 +5002,9 @@ msgid ""
 "slide shows to be displayed in separated windows, allowing for easy screen "
 "sharing."
 msgstr ""
+"Tihawt tettusewḥel. Ma ulac aɣilif, sireg isfuyla udhimen deg iminig-ik·im. "
+"Ayagi ad yesireg askan n tigriwin n tugna deg isfuyla yemgaraden, ayen ara "
+"yessifsusen beṭṭu n ugdi."
 
 #: src/map/handler/Map.SlideShow.js:172
 #: src/slideshow/SlideShowPresenter.ts:896
@@ -5010,7 +5019,7 @@ msgstr ""
 #: src/map/handler/Map.SlideShow.js:203
 #: src/slideshow/SlideShowPresenter.ts:939
 msgid "Close Presentation"
-msgstr ""
+msgstr "Mdel Tihawt"
 
 #: src/map/handler/Map.SlideShow.js:230
 msgid "Presenting in fullscreen"
@@ -5018,7 +5027,7 @@ msgstr ""
 
 #: src/map/handler/Map.SlideShow.js:231
 msgid "End Presentation"
-msgstr ""
+msgstr "Fak Tihawt"
 
 #: src/map/handler/Map.SlideShow.js:295
 #: src/slideshow/SlideShowPresenter.ts:1081
@@ -5033,12 +5042,12 @@ msgstr ""
 #: src/map/handler/Map.SlideShow.js:306
 #: src/slideshow/SlideShowPresenter.ts:1119
 msgid "Presentation disabled"
-msgstr ""
+msgstr "Tihawt tensa"
 
 #: src/map/handler/Map.SlideShow.js:307
 #: src/slideshow/SlideShowPresenter.ts:1120
 msgid "Presentation mode has been disabled for this document"
-msgstr ""
+msgstr "Askar Tihawt yensa i yisemli-a"
 
 #: src/map/handler/Map.VersionBar.js:50
 msgid "Your Collabora Online server needs updating. Version {0} is available."
@@ -5066,11 +5075,11 @@ msgstr ""
 
 #: src/slideshow/PresenterConsole.js:29
 msgid "Current Slide"
-msgstr ""
+msgstr "Tigri tamirant"
 
 #: src/slideshow/PresenterConsole.js:30
 msgid "Next Slide"
-msgstr ""
+msgstr "Tigri Tuḍfirt"
 
 #: src/slideshow/PresenterConsole.js:35
 msgid "Pause"
@@ -5098,11 +5107,11 @@ msgstr ""
 
 #: src/slideshow/PresenterConsole.js:178
 msgid "Preview Slide {1}"
-msgstr ""
+msgstr "Tigri Tuzwirt {1}"
 
 #: src/slideshow/PresenterConsole.js:1241
 msgid "Slide {0} of {1}"
-msgstr ""
+msgstr "Tigri {0] n {1}"
 
 #: src/slideshow/PresenterConsole.js:1265
 msgid "No Notes"
@@ -5115,7 +5124,7 @@ msgstr ""
 #: src/slideshow/PresenterConsole.js:1358
 #: src/slideshow/SlideShowPresenter.ts:562
 msgid "Click to exit presentation..."
-msgstr ""
+msgstr "Sit iwakken ad teffɣeḍ seg tihawt…"
 
 #: src/slideshow/SlideShowPresenter.ts:685
 msgid "End Show"

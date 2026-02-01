@@ -76,9 +76,7 @@
     <string name="app_description">$APP_NAME ye un paquete modernu de productividá informática, fácil d\'utilizar y de códigu abiertu pa procesamientu de testos, fueyes de cálculu, presentaciones y más.</string>
     <string name="pref_category_editor">Axustes del editor</string>
     <string name="file_actions_icon_desc">Aiciones de ficheros</string>
-    <string name="app_version_and_hash">Versión: %1$s
-\nRevisión del depósitu Git «online»: %2$s
-\nRevisión del depósitu Git «core»: %3$s</string>
+    <string name="app_version_and_hash">Versión: %1$s \nRevisión del depósitu Git «online»: %2$s \nRevisión del depósitu Git «core»: %3$s</string>
     <string name="unable_to_go_further">Nun se pue dir más allá.</string>
     <string name="theme">Tema</string>
     <string name="theme_system_default">Predetermináu del sistema</string>
@@ -96,4 +94,23 @@
     <string name="storage_provider_settings">Axustes del fornidor d\'almacenamientu</string>
     <string name="theme_dark">Escuru</string>
     <string name="choose_theme">Escueyi\'l tema</string>
+    <string name="theme_light"></string>
+    <string name="action_create"></string>
+    <string name="create_new_document_title"></string>
+    <string name="ext_document_provider_error"></string>
+    <string name="negative_im_sure"></string>
+    <string name="otg_device_path"></string>
+    <string name="bmp_null"></string>
+    <string name="reason_required_to_read_documents"></string>
+    <string name="confirm_label"></string>
+    <string name="up_description"></string>
+    <string name="enter_filename"></string>
+    <string name="server_url_and_port"></string>
+    <string name="directory_browser_label"></string>
+    <string name="otg_warning"></string>
+    <string name="directory_not_saved"></string>
+    <string name="current_dir"></string>
+    <string name="otg_missing_error"></string>
+    <string name="bad_directory"></string>
+    <string name="share_document"></string>
 </resources>

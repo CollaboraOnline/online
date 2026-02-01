@@ -2,8 +2,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: core-uk\n"
-"PO-Revision-Date: 2026-01-04 22:01+0000\n"
-"Last-Translator: Ole <knedlyk@users.noreply.hosted.weblate.org>\n"
+"PO-Revision-Date: 2026-02-03 12:28+0000\n"
+"Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
 "Language-Team: Ukrainian <https://hosted.weblate.org/projects/collabora-"
 "online/lokit/uk/>\n"
 "Language: uk\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
 "n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
-"X-Generator: Weblate 5.15.1\n"
+"X-Generator: Weblate 5.16-dev\n"
 
 #. ygDfy
 #: module_graphicfilter.ulf
@@ -107,8 +107,8 @@ msgid ""
 "For more information please visit ${PRODUCTNAME} home page at <a "
 "href=\"https://collaboraoffice.com\">https://CollaboraOffice.com/</a>."
 msgstr ""
-"Для отримання додаткової інформації відвідайте головну сторінку "
-"${PRODUCTNAME} за адресою <a href=\"https://collaboraoffice.com\">https://"
+"Для отримання додаткової інформації відвідайте головну сторінку $"
+"{PRODUCTNAME} за адресою <a href=\"https://collaboraoffice.com\">https://"
 "CollaboraOffice.com/</a>."
 
 #. SbQew

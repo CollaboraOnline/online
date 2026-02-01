@@ -2,16 +2,16 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: core-pl\n"
-"PO-Revision-Date: 2025-11-20 09:07+0000\n"
-"Last-Translator: Matthaiks <kitynska@gmail.com>\n"
+"PO-Revision-Date: 2026-02-03 12:28+0000\n"
+"Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
 "Language-Team: Polish <https://hosted.weblate.org/projects/collabora-online/"
 "lokit/pl/>\n"
 "Language: pl\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural="
-"(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
-"X-Generator: Weblate 5.15-dev\n"
+"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
+"|| n%100>=20) ? 1 : 2);\n"
+"X-Generator: Weblate 5.16-dev\n"
 
 #. ygDfy
 #: module_graphicfilter.ulf
@@ -1977,8 +1977,8 @@ msgid ""
 msgstr ""
 "Ochrona komórek działa tylko po włączeniu ochrony bieżącego arkusza. "
 "Domyślnie chronione są wszystkie komórki w arkuszu – aby chronić pojedyncze "
-"komórki, należy najpierw zaznaczyć wszystkie komórki i wyłączyć opcję "
-"„Chronione” w oknie dialogowym Formatuj komórki."
+"komórki, należy najpierw zaznaczyć wszystkie komórki i wyłączyć opcję „"
+"Chronione” w oknie dialogowym Formatuj komórki."
 
 #. FVsyY
 #: sc/uiconfig/scalc/ui/conditionaleasydialog.ui:8

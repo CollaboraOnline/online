@@ -2,9 +2,15 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: core-nb\n"
+"PO-Revision-Date: 2026-02-03 12:21+0000\n"
+"Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
+"Language-Team: Norwegian Bokmål <https://hosted.weblate.org/projects/"
+"collabora-online/lokit/nb_NO/>\n"
 "Language: nb\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.16-dev\n"
 
 #. ygDfy
 #: module_graphicfilter.ulf
@@ -620,8 +626,7 @@ msgstr "Eksporter OLE-objekt som _JPEG-bilder"
 #: filter/uiconfig/ui/pdfgeneralpage.ui:550
 msgctxt "pdfgeneralpage|embed|tooltip_text"
 msgid "Creates a PDF that embeds the original ODF file as an attachment."
-msgstr ""
-"Oppretter en PDF som bygger inn den originale ODF-filen som et vedlegg."
+msgstr "Oppretter en PDF som bygger inn den originale ODF-filen som et vedlegg."
 
 #. JS7DG
 #: filter/uiconfig/ui/pdfgeneralpage.ui:556
@@ -1777,8 +1782,8 @@ msgid ""
 "blanks cells and cells with error."
 msgstr ""
 "Om man skal ignorere visse typer verdier. 0 eller utelatt - behold alle "
-"verdier (standard). 1 - ignorer tomme celler. 2 - ignorer celler med feil. 3 "
-"- ignorer tomme celler og celler med feil."
+"verdier (standard). 1 - ignorer tomme celler. 2 - ignorer celler med feil. "
+"3 - ignorer tomme celler og celler med feil."
 
 #. qNLAi
 #: sc/inc/scfuncs.hrc:4394

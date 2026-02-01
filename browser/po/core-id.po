@@ -2,15 +2,15 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: core-id\n"
-"PO-Revision-Date: 2026-01-01 17:01+0000\n"
-"Last-Translator: Arif Budiman <arifpedia@gmail.com>\n"
+"PO-Revision-Date: 2026-02-03 13:24+0000\n"
+"Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
 "Language-Team: Indonesian <https://hosted.weblate.org/projects/collabora-"
 "online/lokit/id/>\n"
 "Language: id\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 5.15.1\n"
+"X-Generator: Weblate 5.16-dev\n"
 
 #. ygDfy
 #: module_graphicfilter.ulf
@@ -650,8 +650,8 @@ msgid ""
 "This setting enables you to export the document as a .pdf file containing "
 "two file formats: PDF and ODF as an attachment. "
 msgstr ""
-"Pengaturan ini memungkinkan Anda untuk mengekspor dokumen sebagai berkas ."
-"pdf yang berisi dua format berkas: PDF dan ODF."
+"Pengaturan ini memungkinkan Anda untuk mengekspor dokumen sebagai berkas "
+".pdf yang berisi dua format berkas: PDF dan ODF."
 
 #. NCgBM
 #: filter/uiconfig/ui/pdfgeneralpage.ui:583

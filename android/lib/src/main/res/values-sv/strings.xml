@@ -18,7 +18,7 @@
     <string name="use_odf">Använd ODF-format</string>
     <string name="use_text">Använd textformat</string>
     <string name="edit_copy">Redigera en kopia</string>
-    <string name="ask_for_copy">Detta dokument är skrivskyddat. Vill du göra en kopia för redigering\?</string>
+    <string name="ask_for_copy">Detta dokument är skrivskyddat. Vill du göra en kopia för redigering?</string>
     <string name="view_only">Visa endast</string>
     <string name="cant_open_the_document">Det gick inte att öppna dokumentet</string>
     <string name="restarting">Startar om...</string>

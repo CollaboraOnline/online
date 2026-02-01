@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="loading">Lade …</string>
+    <string name="loading">Lade …</string>
     <string name="cannot_open_file_chooser">Kann Dateiauswahldialog nicht laden</string>
     <string name="failed_to_insert_image">Einfügen der Grafik schlug fehl</string>
     <string name="failed_to_load_file">Fehler beim Ermitteln der zu ladenden Datei</string>
@@ -13,10 +13,10 @@
     <string name="rate_now">Jetzt bewerten</string>
     <string name="preparing_for_the_first_start_after_an_update">Vorbereitung auf den ersten Start nach einem Update.</string>
     <string name="file_chromeos_read_only">Diese Datei kann nicht an diesem Speicherort gespeichert werden und ist schreibgeschützt. Verschieben Sie es in die Wiedergabedateien, um vollen Lese- / Schreibzugriff zu erhalten.</string>
-    <string name="ask_for_copy">Dieses Dokument ist schreibgeschützt. Möchten Sie eine Kopie zur Bearbeitung erstellen\?</string>
+    <string name="ask_for_copy">Dieses Dokument ist schreibgeschützt. Möchten Sie eine Kopie zur Bearbeitung erstellen?</string>
     <string name="edit_copy">Eine Kopie bearbeiten</string>
     <string name="view_only">Nur anzeigen</string>
-    <string name="restarting">Neustart …</string>
+    <string name="restarting">Neustart …</string>
     <string name="convert_odf_message">Dieses Dokument enthält möglicherweise Formatierungen oder Inhalte, die nicht in dem aktuell gewählten Dateiformat \"Text\" gespeichert werden können.</string>
     <string name="ask_for_convert_odf">Bestätigen Sie das Datei-Format</string>
     <string name="use_odf">Benutzen Sie das ODF-Format</string>

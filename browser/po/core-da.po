@@ -2,15 +2,15 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: core-da\n"
-"PO-Revision-Date: 2026-01-09 19:54+0000\n"
-"Last-Translator: J A <jokkels@users.noreply.hosted.weblate.org>\n"
+"PO-Revision-Date: 2026-02-03 12:52+0000\n"
+"Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
 "Language-Team: Danish <https://hosted.weblate.org/projects/collabora-online/"
 "lokit/da/>\n"
 "Language: da\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.15.1\n"
+"X-Generator: Weblate 5.16-dev\n"
 
 #. ygDfy
 #: module_graphicfilter.ulf
@@ -646,8 +646,8 @@ msgid ""
 "This setting enables you to export the document as a .pdf file containing "
 "two file formats: PDF and ODF as an attachment. "
 msgstr ""
-"Denne indstilling sætter dig i stand til at eksportere dokumentet som en ."
-"pdf-fil, der indeholder to filformater: PDF og ODF. "
+"Denne indstilling sætter dig i stand til at eksportere dokumentet som en "
+".pdf-fil, der indeholder to filformater: PDF og ODF. "
 
 #. NCgBM
 #: filter/uiconfig/ui/pdfgeneralpage.ui:583

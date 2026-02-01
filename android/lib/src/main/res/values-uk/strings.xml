@@ -14,7 +14,7 @@
     <string name="later">Пізніше</string>
     <string name="rate_now">Оцінити зараз</string>
     <string name="file_chromeos_read_only">Цей файл неможливо зберегти за вказаним призначенням, відкриваю в режимі читання. Перемістіть його до Play файлів для повного доступу до операцій читання/запису.</string>
-    <string name="ask_for_copy">Цей документ доступний лише для читання. Створити копію для редагування\?</string>
+    <string name="ask_for_copy">Цей документ доступний лише для читання. Створити копію для редагування?</string>
     <string name="edit_copy">Змінити копію</string>
     <string name="view_only">Лише перегляд</string>
     <string name="restarting">Перезапуск...</string>

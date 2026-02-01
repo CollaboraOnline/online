@@ -3,16 +3,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-01-19 22:57+0200\n"
-"PO-Revision-Date: 2023-11-29 05:17+0000\n"
-"Last-Translator: Sveinn í Felli <sv1@fellsnet.is>\n"
-"Language-Team: Icelandic <https://hosted.weblate.org/projects/"
-"collabora-online/help/is/>\n"
+"PO-Revision-Date: 2026-02-03 12:26+0000\n"
+"Last-Translator: Anonymous <noreply@weblate.org>\n"
+"Language-Team: Icelandic <https://hosted.weblate.org/projects/collabora-"
+"online/help/is/>\n"
 "Language: is\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n % 10 != 1 || n % 100 == 11;\n"
-"X-Generator: Translate Toolkit 3.6.0\n"
+"X-Generator: Weblate 5.16-dev\n"
 
 #: html/cool-help.html%2Bdiv.h1:6-5
 msgid "Keyboard Shortcuts"
@@ -96,8 +96,8 @@ msgid ""
 ">+</span><kbd>V</kbd>"
 msgstr ""
 "Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>Alt</"
-"kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>Shift</"
-"kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>V"
+"kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>Shift</kbd>"
+"<span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>V"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:16-38
 msgid "Print (Download as PDF)"
@@ -491,8 +491,8 @@ msgid ""
 "<kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</"
 "span><kbd>Arrow Left</kbd>"
 msgstr ""
-"Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
-">+</span><kbd>ÖrVinstri"
+"Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>"
+"ÖrVinstri"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:58-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:221-38
@@ -508,8 +508,8 @@ msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</"
 "span><kbd>Arrow Left</kbd>"
 msgstr ""
-"Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
-">+</span><kbd>ÖrVinstri"
+"Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>"
+"ÖrVinstri"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:59-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:222-38
@@ -555,8 +555,8 @@ msgid ""
 "<kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</"
 "span><kbd>Arrow Right</kbd>"
 msgstr ""
-"Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
-">+</span><kbd>ÖrHægri"
+"Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>"
+"ÖrHægri"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:62-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:225-38
@@ -680,8 +680,8 @@ msgid ""
 "<kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</"
 "span><kbd>Arrow Down</kbd>"
 msgstr ""
-"Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
-">+</span><kbd>ÖrNiður"
+"Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>"
+"ÖrNiður"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:70-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:233-38
@@ -875,8 +875,8 @@ msgid ""
 "<kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>PageUp</kbd>"
 msgstr ""
-"Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
-">+</span><kbd>SíðaUpp"
+"Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>"
+"SíðaUpp"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:83-38
 msgid "Move the view down one page"
@@ -896,8 +896,8 @@ msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>PageDown</kbd>"
 msgstr ""
-"Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
-">+</span><kbd>SíðaNiður"
+"Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>"
+"SíðaNiður"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:85-38
 msgid "Extend the selection down one page"
@@ -909,8 +909,8 @@ msgid ""
 "<kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>PageDown</kbd>"
 msgstr ""
-"Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
-">+</span><kbd>SíðaNiður"
+"Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>"
+"SíðaNiður"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:86-38
 msgid "Delete to beginning of word"
@@ -1005,8 +1005,8 @@ msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>Tab</kbd>"
 msgstr ""
-"Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</"
-"span><kbd>Dálklykill (Tab)"
+"Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>"
+"Dálklykill (Tab)"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:98-146
 msgid ""
@@ -1025,8 +1025,8 @@ msgid ""
 "<kbd>Alt</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</"
 "span><kbd>Arrow Keys</kbd>"
 msgstr ""
-"Alt</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
-">+</span><kbd>Örvalyklar"
+"Alt</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>"
+"Örvalyklar"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:99-152
 msgid ""
@@ -1071,8 +1071,8 @@ msgid ""
 "span><kbd>Arrow Keys</kbd>"
 msgstr ""
 "Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>Alt</"
-"kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>Shift</"
-"kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>Örvalyklar"
+"kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>Shift</kbd>"
+"<span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>Örvalyklar"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:103-38
 #, fuzzy
@@ -1088,9 +1088,9 @@ msgid ""
 "class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>Arrow Key</kbd> "
 "inserts cell"
 msgstr ""
-"3 sekúndur í innsetningarham, örvalyklar setja inn röð/dálk, <kbd>Ctrl</"
-"kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>örvalykill</"
-"kbd> setur inn reit"
+"3 sekúndur í innsetningarham, örvalyklar setja inn röð/dálk, <kbd>Ctrl</kbd>"
+"<span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>örvalykill</kbd> "
+"setur inn reit"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:104-38
 #, fuzzy
@@ -1107,9 +1107,9 @@ msgid ""
 "class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>Arrow key</kbd> merges "
 "cell with neighboring cell"
 msgstr ""
-"3 sekúndur í innsetningarham, örvalyklar eyðir röð/dálki, <kbd>Ctrl</"
-"kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>örvalykill</"
-"kbd> sameinar reit við grannreit sinn"
+"3 sekúndur í innsetningarham, örvalyklar eyðir röð/dálki, <kbd>Ctrl</kbd>"
+"<span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>örvalykill</kbd> "
+"sameinar reit við grannreit sinn"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:105-38
 #, fuzzy
@@ -1344,8 +1344,8 @@ msgid ""
 "<kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</"
 "span><kbd>Page Up</kbd>"
 msgstr ""
-"Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
-">+</span><kbd>SíðaUpp"
+"Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>"
+"SíðaUpp"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:141-38
 msgid ""
@@ -1359,8 +1359,8 @@ msgid ""
 "<kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</"
 "span><kbd>Page Down</kbd>"
 msgstr ""
-"Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
-">+</span><kbd>SíðaNiður"
+"Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>"
+"SíðaNiður"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:142-38
 msgid ""
@@ -1375,8 +1375,8 @@ msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</"
 "span><kbd>Left Arrow</kbd>"
 msgstr ""
-"Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</"
-"span><kbd>Vinstri ör"
+"Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>"
+"Vinstri ör"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:143-38
 msgid ""
@@ -1493,8 +1493,8 @@ msgid ""
 "<kbd>Alt</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</"
 "span><kbd>Page Down</kbd>"
 msgstr ""
-"Alt</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
-">+</span><kbd>SíðaNiður"
+"Alt</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>"
+"SíðaNiður"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:151-38
 msgid ""
@@ -1733,8 +1733,8 @@ msgid ""
 "<kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>Tab</kbd>"
 msgstr ""
-"Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</"
-"span><kbd>Dálklykill (Tab)"
+"Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>"
+"Dálklykill (Tab)"
 
 #: html/cool-help.html%2Bdiv.div.div.h2:216-9
 #: html/cool-help.html%2Bdiv.div.div.h2:281-9
@@ -2730,8 +2730,8 @@ msgid ""
 "What are the documents file formats supported by <span class=\"productname\""
 ">{productname}</span>?"
 msgstr ""
-"Hvaða skráasnið skjala eru studd af <span class=\"productname\""
-">{productname}</span>?"
+"Hvaða skráasnið skjala eru studd af <span class=\"productname\">{productname}"
+"</span>?"
 
 #: html/cool-help.html%2Bdiv.div.div.p:631-5
 msgid ""
@@ -2767,8 +2767,8 @@ msgstr "Láttu músarbendilinn svífa yfir heiti skjalsins á valmyndastikunni."
 #: html/cool-help.html%2Bdiv.div.div.ol.li:642-7
 msgid "Type the new file name in the text box and press <kbd>Enter</kbd>."
 msgstr ""
-"Skrifaðu nýtt heiti fyrir skrána í textareitinn og ýttu síðan á "
-"<kbd>Enter</kbd>."
+"Skrifaðu nýtt heiti fyrir skrána í textareitinn og ýttu síðan á <kbd>Enter</"
+"kbd>."
 
 #: html/cool-help.html%2Bdiv.div.div.p:644-5
 msgid "A copy of the document is saved with the new name in the same folder."
@@ -2792,8 +2792,8 @@ msgstr ""
 "<span class=\"productname\">{productname}</span> vistar skjalið reglulega í "
 "bakgrunni, þú getur ekki bara lokað forritinu án þess að vista skjalið. Til "
 "að hætta við breytingar, þarftu annað hvort að afturkalla þær eða nota <span "
-"class=\"ui\">Breytingaskrá</span> í <span class=\"ui\""
-">Skrá</span>-valmyndinni."
+"class=\"ui\">Breytingaskrá</span> í <span class=\"ui\">Skrá</span>-"
+"valmyndinni."
 
 #: html/cool-help.html%2Bdiv.div.div.h4:651-5
 msgid ""
@@ -2823,8 +2823,8 @@ msgid ""
 "span> and select the language for the whole document. Optionally you can set "
 "languages for the selected text and for the current paragraph."
 msgstr ""
-"Farðu í valmyndina <span class=\"ui\">Verkfæri</span> → <span class=\"ui\""
-">Tungumál</span> og veldu tungumálið sem á að gilda fyrir allt skjalið. Eins "
+"Farðu í valmyndina <span class=\"ui\">Verkfæri</span> → <span class=\"ui\">"
+"Tungumál</span> og veldu tungumálið sem á að gilda fyrir allt skjalið. Eins "
 "er hægt að velja tungumál fyrir valinn texta eða núverandi málsgrein."
 
 #: html/cool-help.html%2Bdiv.div.div.h4:659-5
@@ -2883,8 +2883,8 @@ msgid ""
 msgstr ""
 "Táknið <span class=\"blue\">¶</span> er svokallað sniðmerki. Það hjálpar til "
 "við breytingar og hliðjöfnun texta og kemur ekki fram við prentun. Til að "
-"víxla því af og á við birtingu skjals, farðu í valmyndina <span class=\"ui\""
-">Skoða</span> → <span class=\"ui\">Sniðmerki</span>."
+"víxla því af og á við birtingu skjals, farðu í valmyndina <span class=\"ui\">"
+"Skoða</span> → <span class=\"ui\">Sniðmerki</span>."
 
 #: html/cool-help.html%2Bdiv.div.div.div.h4:680-5
 msgid "How do I get a word count of my document?"
@@ -3226,8 +3226,9 @@ msgstr ""
 "Bein snið er þegar breytingum á sniði er beitt beint á valið efni í "
 "málsgrein eða töflureiknireit, þannig að það yfirskrifi úthlutaðan stíl. Til "
 "að endurheimta viðkomandi stíl skal velja viðkomandi texta eða "
-"töflureiknireit og velja <span class=\"ui\">Sníða</span> → <span class=\"ui\""
-">Hreinsa handvirk snið</span> eða nota hnappinn á verkfærastikunni."
+"töflureiknireit og velja <span class=\"ui\">Sníða</span> → <span "
+"class=\"ui\">Hreinsa handvirk snið</span> eða nota hnappinn á "
+"verkfærastikunni."
 
 #: html/cool-help.html%2Bdiv.div.div.div.h4:791-5
 msgid "How do I rename a sheet?"
@@ -3279,8 +3280,8 @@ msgid ""
 "Size</span>). A dialog opens."
 msgstr ""
 "Veldu <span class=\"ui\">Sníða</span> → <span class=\"ui\">Lína</span> (eða "
-"<span class=\"ui\">Flötur</span>, eða <span class=\"ui\">Staða og "
-"stærð</span>). Samskiptagluggi mun opnast."
+"<span class=\"ui\">Flötur</span>, eða <span class=\"ui\">Staða og stærð</"
+"span>). Samskiptagluggi mun opnast."
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.div.img[alt]:813-31
 msgid "Position and Size"

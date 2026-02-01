@@ -2,15 +2,15 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: core-fr\n"
-"PO-Revision-Date: 2025-12-28 20:00+0000\n"
-"Last-Translator: Samael Nephilim <hyozanryuu@gmail.com>\n"
+"PO-Revision-Date: 2026-02-03 13:12+0000\n"
+"Last-Translator: Pedro Silva <pedro.silva@collabora.com>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/collabora-online/"
 "lokit/fr/>\n"
 "Language: fr\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 5.15.1\n"
+"X-Generator: Weblate 5.16-dev\n"
 
 #. ygDfy
 #: module_graphicfilter.ulf
@@ -776,7 +776,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "New Sheet View"
-msgstr ""
+msgstr "Nouvelle feuille personnelle"
 
 #. AKfar
 #: CalcCommands.xcu
@@ -786,7 +786,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Remove Sheet View"
-msgstr ""
+msgstr "Supprimer l'affichage de la feuille"
 
 #. M52nh
 #: CalcCommands.xcu
@@ -796,7 +796,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Switch To Next Sheet View"
-msgstr ""
+msgstr "Changer de feuille suivante"
 
 #. qfgad
 #: CalcCommands.xcu
@@ -806,7 +806,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Switch To Previous Sheet View"
-msgstr ""
+msgstr "Changer de feuille précédente"
 
 #. FJEd2
 #: CalcCommands.xcu
@@ -816,7 +816,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Select Sheet View"
-msgstr ""
+msgstr "Commuter l'affichage de la feuille"
 
 #. vCsC3
 #: CalcCommands.xcu
@@ -826,7 +826,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Exit Sheet View"
-msgstr ""
+msgstr "Quitter la feuille personnelle"
 
 #. uuvrm
 #: ChartCommands.xcu
@@ -1196,13 +1196,13 @@ msgstr ""
 #: sc/inc/globstr.hrc:594
 msgctxt "STR_SHEET_VIEW_DEFAULT_VIEW_NAME"
 msgid "Default View"
-msgstr ""
+msgstr "Par défaut"
 
 #. aYwkp
 #: sc/inc/globstr.hrc:595
 msgctxt "STR_SHEET_VIEW_TEMPORARY_NAME_TEMPLATE"
 msgid "Temporary View %1"
-msgstr ""
+msgstr "Affichage temporaire %1"
 
 #. ADmez
 #: sc/inc/scfuncs.hrc:4257
@@ -1975,31 +1975,31 @@ msgstr "Mettre en surbrillance les cellules..."
 #: sc/uiconfig/scalc/ui/selectsheetviewdialog.ui:18
 msgctxt "selectsheetviewdialog|SelectSheetView"
 msgid "Select Sheet View"
-msgstr ""
+msgstr "Changer de feuille suivante"
 
 #. GTQJA
 #: sc/uiconfig/scalc/ui/selectsheetviewdialog.ui:44
 msgctxt "selectsheetviewdialog|extended_tip|ok"
 msgid "Saves all changes and closes dialog."
-msgstr ""
+msgstr "Enregistre les modifications et ferme la boîte de dialogue."
 
 #. kGFYu
 #: sc/uiconfig/scalc/ui/selectsheetviewdialog.ui:63
 msgctxt "selectsheetviewdialog|extended_tip|cancel"
 msgid "Closes dialog and discards all changes."
-msgstr ""
+msgstr "Ferme la boîte de dialogue et annule toutes les modifications."
 
 #. sQPFE
 #: sc/uiconfig/scalc/ui/selectsheetviewdialog.ui:134
 msgctxt "selectsheetviewdialog|extended_tip|entry-list"
 msgid "Available sheet views."
-msgstr ""
+msgstr "Vues de feuilles disponibles."
 
 #. csyNB
 #: sc/uiconfig/scalc/ui/sheetviewbox.ui:17
 msgctxt "sheetviewbox|sheetview_combobox|accessible_name"
 msgid "Sheet View"
-msgstr ""
+msgstr "Affichage de feuille"
 
 #. FXK8B
 #: sc/uiconfig/scalc/ui/sidebarcellappearance.ui:87

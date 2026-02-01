@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-12-08 11:25+0100\n"
-"PO-Revision-Date: 2021-11-18 08:06+0000\n"
-"Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
+"PO-Revision-Date: 2026-02-03 12:10+0000\n"
+"Last-Translator: Anonymous <noreply@weblate.org>\n"
 "Language-Team: Nepali <https://hosted.weblate.org/projects/collabora-online/"
 "ui/ne/>\n"
-"Language: \n"
+"Language: ne\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.9.1-dev\n"
+"X-Generator: Weblate 5.16-dev\n"
 
 #: admin/admin.strings.js:15
 msgid "Admin console"
@@ -1744,15 +1744,13 @@ msgstr ""
 #: src/control/Control.IdleHandler.ts:43
 msgid "Idle document - please click to reload and resume editing"
 msgstr ""
-"निष्क्रिय कागजात - कृपया पुन: लोड गर्न र सम्पादन पुनः सुरु गर्न क्लिक "
-"गर्नुहोस्"
+"निष्क्रिय कागजात - कृपया पुन: लोड गर्न र सम्पादन पुनः सुरु गर्न क्लिक गर्नुहोस्"
 
 #: src/control/Control.IdleHandler.ts:45
 #, fuzzy
 msgid "Idle document - please tap to reload and resume editing"
 msgstr ""
-"निष्क्रिय कागजात - कृपया पुन: लोड गर्न र सम्पादन पुनः सुरु गर्न क्लिक "
-"गर्नुहोस्"
+"निष्क्रिय कागजात - कृपया पुन: लोड गर्न र सम्पादन पुनः सुरु गर्न क्लिक गर्नुहोस्"
 
 #: src/control/Control.JSDialog.js:337
 msgid "Close dialog"
@@ -3597,8 +3595,8 @@ msgid ""
 "Conflict Undo/Redo with multiple users. Please use document repair to "
 "resolve"
 msgstr ""
-"धेरै प्रयोगकर्ताहरू सँग विवादास्पद अनडू/रिडू। कृपया समाधान गर्नको लागि कागजा"
-"त मर्मत प्रयोग गर्नुहोस्"
+"धेरै प्रयोगकर्ताहरू सँग विवादास्पद अनडू/रिडू। कृपया समाधान गर्नको लागि कागजात मर्मत "
+"प्रयोग गर्नुहोस्"
 
 #: src/control/Control.TopToolbar.js:109
 msgid "Active Sheet"
@@ -4517,16 +4515,15 @@ msgid ""
 "Document has changed in storage. Loading the new document. Your version is "
 "available as revision."
 msgstr ""
-"भण्डारणमा कागजात परिवर्तन भएको छ। नयाँ कागजात लोड गर्दै। तपाइँको संस्करण "
-"परिमार्जनको रूपमा उपलब्ध छ।"
+"भण्डारणमा कागजात परिवर्तन भएको छ। नयाँ कागजात लोड गर्दै। तपाइँको संस्करण परिमार्जनको "
+"रूपमा उपलब्ध छ।"
 
 #: src/core/Socket.js:771
 msgid ""
 "Restoring older revision. Any unsaved changes will be available in version "
 "history"
 msgstr ""
-"पुरानो संशोधन पुनर्स्थापित गर्दै। कुनै बचत नगरिएको परिवर्तनहरु संस्करण "
-"इतिहासमा उपलब्ध हुनेछ"
+"पुरानो संशोधन पुनर्स्थापित गर्दै। कुनै बचत नगरिएको परिवर्तनहरु संस्करण इतिहासमा उपलब्ध हुनेछ"
 
 #: src/core/Socket.js:777
 msgid "Reloading the document after rename"
@@ -4613,8 +4610,7 @@ msgid ""
 "Well, this is embarrassing, we cannot connect to your document. Please try "
 "again."
 msgstr ""
-"खैर, यो लज्जास्पद छ, हामी तपाईंको कागजात सँग जोड्न सक्दैनौँ। कृपया पुन: प्रया"
-"स गर्नुहोस।"
+"खैर, यो लज्जास्पद छ, हामी तपाईंको कागजात सँग जोड्न सक्दैनौँ। कृपया पुन: प्रयास गर्नुहोस।"
 
 #: src/core/Socket.js:1563
 #, fuzzy
@@ -4662,8 +4658,8 @@ msgid ""
 "The host URL is empty. The coolwsd server is probably misconfigured, please "
 "contact the administrator."
 msgstr ""
-"होस्ट URL खाली छ। Coolwsd सर्भर शायद गलत कन्फिगर गरिएको छ, कृपया प्रशासकलाई "
-"सम्पर्क गर्नुहोस्।"
+"होस्ट URL खाली छ। Coolwsd सर्भर शायद गलत कन्फिगर गरिएको छ, कृपया प्रशासकलाई सम्पर्क "
+"गर्नुहोस्।"
 
 #: src/errormessages.js:24
 #, fuzzy
@@ -4673,9 +4669,9 @@ msgid ""
 "when more than {docs} documents or {connections} connections are in use "
 "concurrently."
 msgstr ""
-"यो {productname}को एक असमर्थित संस्करण हो। उद्यमहरूमा स्थापनाको लागि यो "
-"उपयुक्त छ भन्ने धारणाबाट बच्न {docs} कागजात अथवा {connections} जडानहरू भन्दा "
-"बढी समानान्तर प्रयोग भइरहेको अवस्थामा यो सन्देश देखिन्छ।"
+"यो {productname}को एक असमर्थित संस्करण हो। उद्यमहरूमा स्थापनाको लागि यो उपयुक्त छ "
+"भन्ने धारणाबाट बच्न {docs} कागजात अथवा {connections} जडानहरू भन्दा बढी समानान्तर "
+"प्रयोग भइरहेको अवस्थामा यो सन्देश देखिन्छ।"
 
 #: src/errormessages.js:25
 msgid "More information and support"
@@ -4686,24 +4682,24 @@ msgid ""
 "This service is limited to {0} documents, and {1} connections total by the "
 "admin. This limit has been reached. Please try again later."
 msgstr ""
-"यो सेवा व्यवस्थापक द्वारा कुल {0} कागजातहरूमा र {1} जडानहरुमा सीमित छ। यो "
-"सीमा पुग्यो। फेरी प्रयास गर्नु होला।"
+"यो सेवा व्यवस्थापक द्वारा कुल {0} कागजातहरूमा र {1} जडानहरुमा सीमित छ। यो सीमा पुग्यो"
+"। फेरी प्रयास गर्नु होला।"
 
 #: src/errormessages.js:27
 msgid ""
 "Service is unavailable. Please try again later and report to your "
 "administrator if the issue persists."
 msgstr ""
-"सेवा अनुपलब्ध छ। कृपया पछि पुन: प्रयास गर्नुहोस् र यदि तपाईंको मुद्दा जारी "
-"रहन्छ भने प्रशासकलाई रिपोर्ट गर्नुहोस्।"
+"सेवा अनुपलब्ध छ। कृपया पछि पुन: प्रयास गर्नुहोस् र यदि तपाईंको मुद्दा जारी रहन्छ भने "
+"प्रशासकलाई रिपोर्ट गर्नुहोस्।"
 
 #: src/errormessages.js:28
 msgid ""
 "Unauthorized WOPI host. Please try again later and report to your "
 "administrator if the issue persists."
 msgstr ""
-"अनधिकृत WOPI होस्ट। कृपया पछि पुन: प्रयास गर्नुहोस् र यदि तपाईंको मुद्दा जारी"
-" रहन्छ भने प्रशासकलाई रिपोर्ट गर्नुहोस्।"
+"अनधिकृत WOPI होस्ट। कृपया पछि पुन: प्रयास गर्नुहोस् र यदि तपाईंको मुद्दा जारी रहन्छ भने "
+"प्रशासकलाई रिपोर्ट गर्नुहोस्।"
 
 #: src/errormessages.js:29
 msgid "Authorization error was: '{errormessage}'."
@@ -4719,8 +4715,8 @@ msgid ""
 "Your session will expire in {time}. Please save your work and refresh the "
 "session (or webpage) to continue. You might need to login again."
 msgstr ""
-"तपाईंको सेसन {time} मा समाप्त हुनेछ। कृपया आफ्नो काम सुरक्षित गर्नुहोस् र "
-"जारी राख्न सेसन(वा वेबपेज) रिफ्रेस गर्नुहोस्।"
+"तपाईंको सेसन {time} मा समाप्त हुनेछ। कृपया आफ्नो काम सुरक्षित गर्नुहोस् र जारी राख्न सेसन"
+"(वा वेबपेज) रिफ्रेस गर्नुहोस्।"
 
 #: src/errormessages.js:32
 #, fuzzy
@@ -4729,16 +4725,16 @@ msgid ""
 "saved. Please refresh the session (or webpage) to continue. You might need "
 "to login again."
 msgstr ""
-"तपाइँको सेसन समाप्त भएको छ। कागजातमा थप परिवर्तनहरू सुरक्षित हुन सक्दछन्। "
-"कृपया जारी राख्न सेसन (वा वेबपेज) पुन: ताजा गर्नुहोस्।"
+"तपाइँको सेसन समाप्त भएको छ। कागजातमा थप परिवर्तनहरू सुरक्षित हुन सक्दछन्। कृपया जारी "
+"राख्न सेसन (वा वेबपेज) पुन: ताजा गर्नुहोस्।"
 
 #: src/errormessages.js:33
 msgid ""
 "Failed to load the document. Please ensure the file type is supported and "
 "not corrupted, and try again."
 msgstr ""
-"कागजात लोड गर्न असफल भयो। कृपया सुनिश्चित गर्नुहोस् कि फाइल प्रकार समर्थित छ "
-"र करप्ट छैन, र फेरि प्रयास गर्नुहोस्।"
+"कागजात लोड गर्न असफल भयो। कृपया सुनिश्चित गर्नुहोस् कि फाइल प्रकार समर्थित छ र करप्ट "
+"छैन, र फेरि प्रयास गर्नुहोस्।"
 
 #: src/errormessages.js:34
 msgid "Invalid link: '{url}'"

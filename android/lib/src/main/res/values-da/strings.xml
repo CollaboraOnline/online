@@ -21,5 +21,5 @@
     <string name="convert_odf_message">Dette dokument kan indeholde formatering eller indhold, som ikke kan gemmes i det valgte filformat \"Text\".</string>
     <string name="cant_open_the_document">Dokumentet kunne ikke åbnes</string>
     <string name="view_only">Kun visning</string>
-    <string name="ask_for_copy">Dette dokument er skrivebeskyttet. Ønsker du at lave en kopi til redigering\?</string>
+    <string name="ask_for_copy">Dette dokument er skrivebeskyttet. Ønsker du at lave en kopi til redigering?</string>
 </resources>

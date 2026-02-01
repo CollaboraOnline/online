@@ -1,11 +1,12 @@
 # bruh <quangtrung02hn16@gmail.com>, 2021.
+# Loc Huynh <huynhloc.contact@gmail.com>, 2026.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-11-17 08:08+0200\n"
-"PO-Revision-Date: 2021-06-11 22:37+0000\n"
-"Last-Translator: bruh <quangtrung02hn16@gmail.com>\n"
+"PO-Revision-Date: 2026-02-03 12:53+0000\n"
+"Last-Translator: Loc Huynh <huynhloc.contact@gmail.com>\n"
 "Language-Team: Vietnamese <https://hosted.weblate.org/projects/collabora-"
 "online/app-store-descriptions/vi/>\n"
 "Language: vi\n"
@@ -13,7 +14,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Translate Toolkit 3.6.0\n"
+"X-Generator: Weblate 5.16-dev\n"
 
 #. App name - 50 chars limit
 #: descriptions/google-play.html%2Bhtml.body.h3:5-1

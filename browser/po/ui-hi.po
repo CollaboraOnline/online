@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-12-08 11:25+0100\n"
-"PO-Revision-Date: 2024-07-10 16:13+0000\n"
+"PO-Revision-Date: 2026-02-03 12:26+0000\n"
 "Last-Translator: Darshan Upadhyay <darshan.upadhyay1188@gmail.com>\n"
 "Language-Team: Hindi <https://hosted.weblate.org/projects/collabora-online/"
 "ui/hi/>\n"
-"Language: \n"
+"Language: hi\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 5.7-dev\n"
+"X-Generator: Weblate 5.16-dev\n"
 
 #: admin/admin.strings.js:15
 msgid "Admin console"
@@ -190,8 +190,7 @@ msgstr "दस्तावेज़ प्रक्रिया की अधि
 #: admin/admin.strings.js:53
 msgid "Maximum file size allowed to write to disk (in MB) - reduce only"
 msgstr ""
-"अधिकतम फ़ाइल का माप जो डिस्क पर लिखा जा सकता है (MB में) - केवल कम कर सकते "
-"हैं"
+"अधिकतम फ़ाइल का माप जो डिस्क पर लिखा जा सकता है (MB में) - केवल कम कर सकते हैं"
 
 #: admin/admin.strings.js:54
 msgid "Documents:"
@@ -3593,8 +3592,8 @@ msgid ""
 "Conflict Undo/Redo with multiple users. Please use document repair to "
 "resolve"
 msgstr ""
-"एकाधिक उपयोगकर्ता के कारण अंडु-रीडु टकराव पाया गया है। ठीक करने के लीये "
-"कृप्या दस्तावेज़ ठीक का उपयोग करें।"
+"एकाधिक उपयोगकर्ता के कारण अंडु-रीडु टकराव पाया गया है। ठीक करने के लीये कृप्या दस्तावेज़ "
+"ठीक का उपयोग करें।"
 
 #: src/control/Control.TopToolbar.js:109
 msgid "Active Sheet"
@@ -4509,16 +4508,15 @@ msgid ""
 "Document has changed in storage. Loading the new document. Your version is "
 "available as revision."
 msgstr ""
-"दस्तावेज़ भंडारण में बदल गया है। अब नया दस्तावेज़ खोला जा रहा है। आपका संस्"
-"करण संशोधन के रूप में उपलब्ध है।"
+"दस्तावेज़ भंडारण में बदल गया है। अब नया दस्तावेज़ खोला जा रहा है। आपका संस्करण संशोधन के रूप "
+"में उपलब्ध है।"
 
 #: src/core/Socket.js:771
 msgid ""
 "Restoring older revision. Any unsaved changes will be available in version "
 "history"
 msgstr ""
-"पुराना संशोधन खोला जा रहा है। कोइ भी ना सहेजा हुआ बदलाव संस्करण इतिहास मे "
-"उपलब्ध रहेगा।"
+"पुराना संशोधन खोला जा रहा है। कोइ भी ना सहेजा हुआ बदलाव संस्करण इतिहास मे उपलब्ध रहेगा।"
 
 #: src/core/Socket.js:777
 msgid "Reloading the document after rename"
@@ -4603,8 +4601,7 @@ msgid ""
 "Well, this is embarrassing, we cannot connect to your document. Please try "
 "again."
 msgstr ""
-"बड़े ही दुःख की बात है की हम आपके दस्तवेज को नहीं खोल पा रहे हैंI कृपया पुनः "
-"प्रयास करें ।"
+"बड़े ही दुःख की बात है की हम आपके दस्तवेज को नहीं खोल पा रहे हैंI कृपया पुनः प्रयास करें ।"
 
 #: src/core/Socket.js:1563
 #, fuzzy
@@ -4652,8 +4649,7 @@ msgid ""
 "The host URL is empty. The coolwsd server is probably misconfigured, please "
 "contact the administrator."
 msgstr ""
-"होस्ट URL खाली है। सर्वर शायद गलत तरह से सथापीत है, कृप्या अपने प्रबंधक से "
-"संपर्क करें।"
+"होस्ट URL खाली है। सर्वर शायद गलत तरह से सथापीत है, कृप्या अपने प्रबंधक से संपर्क करें।"
 
 #: src/errormessages.js:24
 msgid ""
@@ -4672,24 +4668,24 @@ msgid ""
 "This service is limited to {0} documents, and {1} connections total by the "
 "admin. This limit has been reached. Please try again later."
 msgstr ""
-"यह सेवा प्रशासक द्वरा कुल मिलाकर केवल {0} दस्तावेज़ों आैर {1} कनेक्शनों तक "
-"सिमीत की गयी है। यह सिमा पार हो चुकी है। कृप्या फीर प्रयास करें।"
+"यह सेवा प्रशासक द्वरा कुल मिलाकर केवल {0} दस्तावेज़ों आैर {1} कनेक्शनों तक सिमीत की गयी है"
+"। यह सिमा पार हो चुकी है। कृप्या फीर प्रयास करें।"
 
 #: src/errormessages.js:27
 msgid ""
 "Service is unavailable. Please try again later and report to your "
 "administrator if the issue persists."
 msgstr ""
-"सेवा अभी अनुप्लब्ध है। कृप्या बाद में प्रयास करें आैर यदि स्मसया फिर भी रहती "
-"है तो अपने तंत्र प्रबंधक को बतायें।"
+"सेवा अभी अनुप्लब्ध है। कृप्या बाद में प्रयास करें आैर यदि स्मसया फिर भी रहती है तो अपने तंत्र "
+"प्रबंधक को बतायें।"
 
 #: src/errormessages.js:28
 msgid ""
 "Unauthorized WOPI host. Please try again later and report to your "
 "administrator if the issue persists."
 msgstr ""
-"WOPI होस्ट अनधिकृत है। कृप्या बाद में प्रयास करें आैर यदि स्मसया फिर भी रहती "
-"है तो अपने तंत्र प्रबंधक को बतायें।"
+"WOPI होस्ट अनधिकृत है। कृप्या बाद में प्रयास करें आैर यदि स्मसया फिर भी रहती है तो अपने "
+"तंत्र प्रबंधक को बतायें।"
 
 #: src/errormessages.js:29
 msgid "Authorization error was: '{errormessage}'."
@@ -4705,8 +4701,8 @@ msgid ""
 "Your session will expire in {time}. Please save your work and refresh the "
 "session (or webpage) to continue. You might need to login again."
 msgstr ""
-"अापका सत्र {time} में खतम हो जायेगा। कृप्या अपना काम सहेज लें आैर अागे बढने "
-"के लिये सत्र को ताजा करें।"
+"अापका सत्र {time} में खतम हो जायेगा। कृप्या अपना काम सहेज लें आैर अागे बढने के लिये सत्र को "
+"ताजा करें।"
 
 #: src/errormessages.js:32
 #, fuzzy
@@ -4715,16 +4711,16 @@ msgid ""
 "saved. Please refresh the session (or webpage) to continue. You might need "
 "to login again."
 msgstr ""
-"अापका सत्र खत्म हो चुका है। अब से दस्तावेज़ में होने वाला काम सहेजा नही "
-"जायेगा। आगे बढने के लिये कृप्या सत्र को ताजा करें।"
+"अापका सत्र खत्म हो चुका है। अब से दस्तावेज़ में होने वाला काम सहेजा नही जायेगा। आगे बढने के "
+"लिये कृप्या सत्र को ताजा करें।"
 
 #: src/errormessages.js:33
 msgid ""
 "Failed to load the document. Please ensure the file type is supported and "
 "not corrupted, and try again."
 msgstr ""
-"दस्तावेज़ को खोला नही जा सका। कृप्या सुनिशचित कर लें की फ़ाइल टाइप सही है आै"
-"र खराब नही है, आैर फीर प्रयास करें।"
+"दस्तावेज़ को खोला नही जा सका। कृप्या सुनिशचित कर लें की फ़ाइल टाइप सही है आैर खराब नही "
+"है, आैर फीर प्रयास करें।"
 
 #: src/errormessages.js:34
 msgid "Invalid link: '{url}'"

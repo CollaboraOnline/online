@@ -2,7 +2,7 @@
 <resources>
     <string name="file_chromeos_read_only">Tệp này không thể được lưu trong vị trí này, đang mở nó dưới dạng chỉ đọc. Di chuyển nó vào các tệp Phát để truy cập đọc/viết đầy đủ.</string>
     <string name="cant_open_the_document">Không thể mở tài liệu</string>
-    <string name="ask_for_copy">Tài liệu này là chỉ đọc. Bạn có muốn tạo một bản sao để chỉnh sửa không\?</string>
+    <string name="ask_for_copy">Tài liệu này là chỉ đọc. Bạn có muốn tạo một bản sao để chỉnh sửa không?</string>
     <string name="edit_copy">Chỉnh sửa một bản sao</string>
     <string name="view_only">Chỉ xem</string>
     <string name="restarting">Đang khởi động lại...</string>

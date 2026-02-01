@@ -2,9 +2,15 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: core-ja\n"
+"PO-Revision-Date: 2026-02-03 12:29+0000\n"
+"Last-Translator: Jun Nogata <nogajun@gmail.com>\n"
+"Language-Team: Japanese <https://hosted.weblate.org/projects/collabora-"
+"online/lokit/ja/>\n"
 "Language: ja\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Weblate 5.16-dev\n"
 
 #. ygDfy
 #: module_graphicfilter.ulf
@@ -575,8 +581,8 @@ msgstr ""
 msgctxt "impswfdialog|exportall"
 msgid "Export _all slides (uncheck to export current slide)"
 msgstr ""
-"すべてのスライドをエクスポートする (チェックオフで現在のスライドをエクスポー"
-"ト)(_A)"
+"すべてのスライドをエクスポートする (チェックオフで現在のスライドを"
+"エクスポート)(_A)"
 
 #. CB9hD
 #: filter/uiconfig/ui/impswfdialog.ui:155
@@ -667,9 +673,9 @@ msgid ""
 "used in the source document will be embedded into the generated PDF file. "
 "PDF tags will be written."
 msgstr ""
-"PDF/A-2b、またはPDF/A-1b形式に変換します。これは、長期保存用の電子文書ファイ"
-"ル形式と定義されています。生成されたPDFファイルには、元の文書で使用されていた"
-"すべてのフォントが埋め込まれます。PDFタグも書き込まれます。"
+"PDF/A-2b、またはPDF/A-1b形式に変換します。これは、長期保存用の電子文書"
+"ファイル形式と定義されています。生成されたPDFファイルには、元の文書で使用され"
+"ていたすべてのフォントが埋め込まれます。PDFタグも書き込まれます。"
 
 #. te76B
 #: filter/uiconfig/ui/pdfgeneralpage.ui:620
@@ -1282,8 +1288,7 @@ msgstr "行"
 msgctxt "SC_OPCODE_DROP"
 msgid ""
 "The number of rows to drop. A negative value drops from the end of the array."
-msgstr ""
-"除外する行数を指定します。負の数を指定すると、行列の末尾から除外されます。"
+msgstr "除外する行数を指定します。負の数を指定すると、行列の末尾から除外されます。"
 
 #. 6sAoA
 #: sc/inc/scfuncs.hrc:4282
@@ -1297,8 +1302,7 @@ msgctxt "SC_OPCODE_DROP"
 msgid ""
 "The number of columns to drop. A negative value drops from the end of the "
 "array."
-msgstr ""
-"除外する列数を指定します。負の数を指定すると行列の末尾から除外されます。"
+msgstr "除外する列数を指定します。負の数を指定すると行列の末尾から除外されます。"
 
 #. cXvVY
 #: sc/inc/scfuncs.hrc:4289
@@ -1529,8 +1533,7 @@ msgstr ""
 #: sc/inc/scfuncs.hrc:4345
 msgctxt "SC_OPCODE_TEXTAFTER"
 msgid "Set to 1 to treat the end of text as a delimiter. The default is 0."
-msgstr ""
-"1を指定すると、テキストの末尾が区切り文字として扱われます。既定値は0です。"
+msgstr "1を指定すると、テキストの末尾が区切り文字として扱われます。既定値は0です。"
 
 #. PG6qj
 #: sc/inc/scfuncs.hrc:4346
@@ -1612,8 +1615,7 @@ msgstr ""
 #: sc/inc/scfuncs.hrc:4363
 msgctxt "SC_OPCODE_TEXTBEFORE"
 msgid "Set to 1 to treat the end of text as a delimiter. The default is 0."
-msgstr ""
-"1を指定すると、テキストの末尾が区切り文字として扱われます。既定値は0です。"
+msgstr "1を指定すると、テキストの末尾が区切り文字として扱われます。既定値は0です。"
 
 #. aCnZX
 #: sc/inc/scfuncs.hrc:4364
@@ -1741,9 +1743,9 @@ msgid ""
 "(default). 1 - ignore blank cells. 2 - ignore cells with error. 3 - ignore "
 "blanks cells and cells with error."
 msgstr ""
-"特定の種類の値を無視します。0または省略すると、すべての値を保持します（既"
-"定）。1は空のセルを無視します。2はエラーのセルを無視します。3は空のセルとエ"
-"ラーのセルを無視します。"
+"特定の種類の値を無視します。0または省略すると、すべての値を保持します（既定）"
+"。1は空のセルを無視します。2はエラーのセルを無視します。3は空のセルとエラーの"
+"セルを無視します。"
 
 #. qNLAi
 #: sc/inc/scfuncs.hrc:4394
@@ -1791,9 +1793,9 @@ msgid ""
 "(default). 1 - ignore blank cells. 2 - ignore cells with error. 3 - ignore "
 "blanks cells and cells with error."
 msgstr ""
-"特定の種類の値を無視します。0または省略すると、すべての値が保持されます（既"
-"定）。1は空のセルを無視します。2はエラーのセルを無視します。3は空のセルとエ"
-"ラーのセルを無視します。"
+"特定の種類の値を無視します。0または省略すると、すべての値が保持されます（既定"
+"）。1は空のセルを無視します。2はエラーのセルを無視します。3は空のセルとエラー"
+"のセルを無視します。"
 
 #. E4XDf
 #: sc/inc/scfuncs.hrc:4406

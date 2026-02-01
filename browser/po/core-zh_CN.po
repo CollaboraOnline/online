@@ -2,9 +2,15 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: core-zh-CN\n"
-"Language: zh-CN\n"
+"PO-Revision-Date: 2026-02-03 13:05+0000\n"
+"Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
+"Language-Team: Chinese (Simplified Han script) <https://hosted.weblate.org/"
+"projects/collabora-online/lokit/zh_Hans/>\n"
+"Language: zh_CN\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Weblate 5.16-dev\n"
 
 #. ygDfy
 #: module_graphicfilter.ulf
@@ -1501,8 +1507,8 @@ msgid ""
 "The instance of the delimiter after which to extract text. The default is 1. "
 "A negative number starts searching from the end."
 msgstr ""
-"从第几次出现的边界符之后开始提取文本。默认值为 1。负值表示从文本末尾开始搜"
-"索。"
+"从第几次出现的边界符之后开始提取文本。默认值为 1。负值表示从文本末尾开始搜索"
+"。"
 
 #. fpoGj
 #: sc/inc/scfuncs.hrc:4342
@@ -1583,8 +1589,8 @@ msgid ""
 "The instance of the delimiter before which to extract text. The default is "
 "1. A negative number starts searching from the end."
 msgstr ""
-"从第几次出现的边界符之前开始提取文本。默认值为 1。负值表示从文本末尾开始搜"
-"索。"
+"从第几次出现的边界符之前开始提取文本。默认值为 1。负值表示从文本末尾开始搜索"
+"。"
 
 #. Adzeh
 #: sc/inc/scfuncs.hrc:4360

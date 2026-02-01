@@ -11,6 +11,15 @@
     <string name="restarting">പുനരാരംഭിക്കുന്നു...</string>
     <string name="view_only">കാണുക മാത്രം</string>
     <string name="cant_open_the_document">പ്രമാണം തുറക്കാനായില്ല</string>
-    <string name="ask_for_copy">ഈ പ്രമാണം വായിക്കാൻ മാത്രമുള്ളതാണ്. തിരുത്താൻ നിങ്ങൾക്ക് ഒരു പകർപ്പ് നിർമ്മിക്കണോ\?</string>
+    <string name="ask_for_copy">ഈ പ്രമാണം വായിക്കാൻ മാത്രമുള്ളതാണ്. തിരുത്താൻ നിങ്ങൾക്ക് ഒരു പകർപ്പ് നിർമ്മിക്കണോ?</string>
     <string name="rate_our_app_text">നിങ്ങൾക്കിത് ഇഷ്‌ടമാണെങ്കിൽ, ഗൂഗിൾ പ്ലേസ്റ്റോറിൽ ഞങ്ങൾക്ക് 5 നക്ഷത്രങ്ങൾ നൽകുക. നിങ്ങളുടെ നല്ല അവലോകനങ്ങളാണ് ഞങ്ങളുടെ മികച്ച പ്രചോദനം.</string>
+    <string name="cannot_open_file_chooser"></string>
+    <string name="convert_odf_message"></string>
+    <string name="temp_file_saving_disabled"></string>
+    <string name="use_odf"></string>
+    <string name="ask_for_convert_odf"></string>
+    <string name="use_text"></string>
+    <string name="failed_to_load_file"></string>
+    <string name="loading"></string>
+    <string name="file_chromeos_read_only"></string>
 </resources>

@@ -2,15 +2,15 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: core-sv\n"
-"PO-Revision-Date: 2025-11-20 15:40+0000\n"
-"Last-Translator: Leif-Jöran Olsson <info@friprogramvarusyndikatet.se>\n"
+"PO-Revision-Date: 2026-02-03 13:04+0000\n"
+"Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
 "Language-Team: Swedish <https://hosted.weblate.org/projects/collabora-online/"
 "lokit/sv/>\n"
 "Language: sv\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.15-dev\n"
+"X-Generator: Weblate 5.16-dev\n"
 
 #. ygDfy
 #: module_graphicfilter.ulf
@@ -453,8 +453,7 @@ msgstr "Kolumn"
 msgctxt "columnpage|extended_tip|column-iconview"
 msgid ""
 "Enter the number of columns that you want in the page, frame, or section."
-msgstr ""
-"Ange antalet kolumner som du vill ha på sidan, i ramen eller avsnittet."
+msgstr "Ange antalet kolumner som du vill ha på sidan, i ramen eller avsnittet."
 
 #. Ci9GE
 #: sw/uiconfig/swriter/ui/spellmenu.ui:34
@@ -1794,8 +1793,8 @@ msgid ""
 "blanks cells and cells with error."
 msgstr ""
 "Om man ska ignorera vissa typer av värden. 0 eller utelämnad - behåll alla "
-"värden (standard). 1 - ignorera tomma celler. 2 - ignorera celler med fel. 3 "
-"- ignorera tomma celler och celler med fel."
+"värden (standard). 1 - ignorera tomma celler. 2 - ignorera celler med fel. "
+"3 - ignorera tomma celler och celler med fel."
 
 #. qNLAi
 #: sc/inc/scfuncs.hrc:4394
@@ -1846,8 +1845,8 @@ msgid ""
 "blanks cells and cells with error."
 msgstr ""
 "Om man ska ignorera vissa typer av värden. 0 eller utelämnad - behåll alla "
-"värden (standard). 1 - ignorera tomma celler. 2 - ignorera celler med fel. 3 "
-"- ignorera tomma celler och celler med fel."
+"värden (standard). 1 - ignorera tomma celler. 2 - ignorera celler med fel. "
+"3 - ignorera tomma celler och celler med fel."
 
 #. E4XDf
 #: sc/inc/scfuncs.hrc:4406

@@ -2,15 +2,15 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: core-nl\n"
-"PO-Revision-Date: 2025-11-22 09:56+0000\n"
-"Last-Translator: Sebastiaan Veld <sebastiaan.veld@gmail.com>\n"
+"PO-Revision-Date: 2026-02-03 12:58+0000\n"
+"Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
 "Language-Team: Dutch <https://hosted.weblate.org/projects/collabora-online/"
 "lokit/nl/>\n"
 "Language: nl\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.15-dev\n"
+"X-Generator: Weblate 5.16-dev\n"
 
 #. ygDfy
 #: module_graphicfilter.ulf
@@ -1996,8 +1996,8 @@ msgid ""
 msgstr ""
 "Celbescherming is alleen effectief nadat het huidige blad is beveiligd. "
 "Standaard zijn alle cellen in een blad beveiligd. Om afzonderlijke cellen te "
-"beveiligen, selecteert u eerst alle cellen en schakelt u de optie "
-"‘Beveiligd’ uit in het dialoogvenster ‘Cellen opmaken’."
+"beveiligen, selecteert u eerst alle cellen en schakelt u de optie ‘Beveiligd"
+"’ uit in het dialoogvenster ‘Cellen opmaken’."
 
 #. FVsyY
 #: sc/uiconfig/scalc/ui/conditionaleasydialog.ui:8
