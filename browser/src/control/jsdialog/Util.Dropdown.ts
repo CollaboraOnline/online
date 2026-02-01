@@ -32,6 +32,7 @@ JSDialog.OpenDropdown = function (
 	innerCallback: JSDialogMenuCallback,
 	popupAnchor: string,
 	isSubmenu: boolean,
+	earlyCallbackCall?: boolean,
 ) {
 	const json = {
 		id: _createDropdownId(id),
@@ -221,6 +222,7 @@ JSDialog.OpenDropdown = function (
 						generateCallback(entry.items),
 						'top-end',
 						true,
+						earlyCallbackCall,
 					);
 					lastSubMenuOpened = subMenuId;
 
@@ -238,9 +240,21 @@ JSDialog.OpenDropdown = function (
 
 					return;
 				} else if (eventType === 'selected' && entry && entry.uno) {
-					const uno =
-						entry.uno.indexOf('.uno:') === 0 ? entry.uno : '.uno:' + entry.uno;
-					window.L.Map.THIS.sendUnoCommand(uno);
+					if (earlyCallbackCall && innerCallback) {
+						innerCallback(
+							objectType,
+							eventType,
+							object,
+							data,
+							entry || builder,
+						);
+					} else {
+						const uno =
+							entry.uno.indexOf('.uno:') === 0
+								? entry.uno
+								: '.uno:' + entry.uno;
+						window.L.Map.THIS.sendUnoCommand(uno);
+					}
 					JSDialog.CloseAllDropdowns();
 					return;
 				} else {
@@ -257,6 +271,7 @@ JSDialog.OpenDropdown = function (
 			// for multi-level menus last parameter should be used to handle event (it contains selected entry)
 			// usually last param is builder see: JSDialogCallback
 			if (
+				!earlyCallbackCall &&
 				innerCallback &&
 				innerCallback(objectType, eventType, object, data, entry || builder)
 			)
