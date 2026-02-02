@@ -83,6 +83,17 @@ interface ExportSections {
 	downloadAs: ExportOptionItem[];
 }
 
+/**
+ * BackstageSVGIcons is a generated map of the form 'icon_name' -> 'SVG content'.
+ *
+ * It is created as generated JS directly, and bundled, so that things work
+ * together.
+ *
+ * We need to do it this way, because it is very complicated to combine a
+ * compiled TS with generated TS in out-of-tree builds.
+ */
+declare const BackstageSVGIcons: Record<string, string>;
+
 class BackstageView extends window.L.Class {
 	private readonly container: HTMLElement;
 	private contentArea!: HTMLElement;

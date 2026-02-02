@@ -7,7 +7,6 @@ tmp/**/*
 index.html
 bower.json
 component.json
-/src/control/Control.BackstageSVGIcons.ts
 
 mocha.log
 mocha_tests/workdir/
