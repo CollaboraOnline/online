@@ -55,8 +55,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Test jumping on large cell
 
 	it('Scroll and check drawing on frozen part of the view', function() {
 		// We will add a new sheet. Go to a cell other than A1. We will check if the new sheet is added by checking the current cell.
-		cy.cGet(helper.addressInputSelector).focus();
-		cy.cGet(helper.addressInputSelector).type('{selectAll}B2{enter}');
+		helper.typeIntoInputField(helper.addressInputSelector, 'B2');
 		calcHelper.assertAddressAfterIdle(this.win, 'B2');
 
 		// Add a new sheet.
@@ -65,8 +64,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Test jumping on large cell
 		calcHelper.assertAddressAfterIdle(this.win, 'A1');
 
 		// Go to a cell that we know is visible.
-		cy.cGet(helper.addressInputSelector).focus();
-		cy.cGet(helper.addressInputSelector).type('{selectAll}D7{enter}');
+		helper.typeIntoInputField(helper.addressInputSelector, 'D7');
 		calcHelper.assertAddressAfterIdle(this.win, 'D7');
 
 		// Find freeze panes button and click.
