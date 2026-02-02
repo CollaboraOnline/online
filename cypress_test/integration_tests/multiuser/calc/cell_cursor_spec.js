@@ -40,14 +40,19 @@ describe(['tagmultiuser'], 'Check cell cursor and view behavior', function() {
 
 			// now insert row in the first view
 			cy.cSetActiveFrame('#iframe1');
-			desktopHelper.getNbIcon('InsertRowsBefore').first().click();
+			cy.getFrameWindow().then((win1) => {
+				desktopHelper.getNbIcon('InsertRowsBefore').first().click();
 
-			// verify that second view is still at the: A400
-			cy.cSetActiveFrame('#iframe2');
-			desktopHelper.assertScrollbarPosition('vertical', 400, 670);
+				// wait for row insertion to complete in first view
+				helper.processToIdle(win1);
 
-			// second view should still have cursor at the previous cell: A588+1
-			calcHelper.assertAddressAfterIdle(win2, 'A589');
+				// verify that second view is still at the: A400
+				cy.cSetActiveFrame('#iframe2');
+				desktopHelper.assertScrollbarPosition('vertical', 400, 670);
+
+				// second view should still have cursor at the previous cell: A588+1
+				calcHelper.assertAddressAfterIdle(win2, 'A589');
+			});
 		});
 	});
 
