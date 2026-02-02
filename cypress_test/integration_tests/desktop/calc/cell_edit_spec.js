@@ -10,10 +10,12 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Test rendering of a cell o
 		helper.setupAndLoadDocument('calc/cell_edit.fods');
 		desktopHelper.selectZoomLevel(200); // make differences more significant
 
-		cy.viewport(800,600);
+		cy.viewport(800, helper.maxScreenshotableViewportHeight);
 		cy.window().then(win => { win.dispatchEvent(new Event('resize')); });
 		cy.getFrameWindow().then((win) => {
 			this.win = win;
+			// wait for zoom rendering and viewport resize to complete
+			helper.processToIdle(win);
 		});
 	});
 
@@ -35,7 +37,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Test rendering of a cell o
 	it('Redraw after undo', function() {
 		// setup initial state
 		desktopHelper.assertScrollbarPosition('horizontal', 325, 355);
-		desktopHelper.assertScrollbarPosition('vertical', 270, 330);
+		desktopHelper.assertScrollbarPosition('vertical', 235, 300);
 
 		selectInitialCell(this.win);
 		checkTextContent('');
