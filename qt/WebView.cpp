@@ -47,7 +47,6 @@
 #include <QCloseEvent>
 #include <QMessageBox>
 #include <algorithm>
-#include <QDBusInterface>
 #include <QDBusConnection>
 #include <QDBusMessage>
 #include <QDBusVariant>
@@ -522,16 +521,15 @@ std::pair<int, int> getWindowSize(bool isWelcome)
 }
 
 std::optional<bool> portalPrefersDark() {
-    QDBusInterface iface(
+    QDBusMessage message = QDBusMessage::createMethodCall(
         "org.freedesktop.portal.Desktop",
         "/org/freedesktop/portal/desktop",
         "org.freedesktop.portal.Settings",
-        QDBusConnection::sessionBus()
+        "Read"
     );
-    if (!iface.isValid()) return std::nullopt;
+    message << "org.freedesktop.appearance" << "color-scheme";
 
-    QDBusReply<QVariant> reply = iface.call("Read",
-        "org.freedesktop.appearance", "color-scheme");
+    QDBusReply<QVariant> reply = QDBusConnection::sessionBus().call(message);
     if (!reply.isValid()) return std::nullopt;
 
     QVariant v = reply.value();
