@@ -1,4 +1,4 @@
-/* global describe it cy beforeEach expect require Cypress */
+/* global describe it cy beforeEach expect require */
 
 var helper = require('../../common/helper');
 var desktopHelper = require('../../common/desktop_helper');
