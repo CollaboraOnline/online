@@ -398,7 +398,7 @@ void DocumentBroker::pollThread()
             break;
         }
 
-        if (_unitWsd && _unitWsd->isFinished())
+        if (UNITWSD_CALL_INSTANCE(_unitWsd, isFinished()))
         {
             stop("UnitTestFinished");
             break;
@@ -738,13 +738,15 @@ void DocumentBroker::pollThread()
                                                             : "not uploaded to storage";
 
             // The test may override (if it was expected).
-            if (_unitWsd && !_unitWsd->onDataLoss("Data-loss detected while exiting [" + _docKey +
-                                                  "]: " + reason))
+            if (_unitWsd &&
+                !UNITWSD_CALL_INSTANCE(_unitWsd, onDataLoss("Data-loss detected while exiting [" +
+                                                            _docKey + "]: " + reason)))
                 reason.clear();
         }
     }
 
-    if (!reason.empty() || (_unitWsd && _unitWsd->isFinished() && _unitWsd->failed()))
+    if (!reason.empty() || (UNITWSD_CALL_INSTANCE(_unitWsd, isFinished()) &&
+                            UNITWSD_CALL_INSTANCE(_unitWsd, failed())))
     {
         std::ostringstream state(Util::makeDumpStateStream());
         state << "DocBroker [" << _docKey << "] stopped "
@@ -963,10 +965,9 @@ bool DocumentBroker::download(
     LOG_INF("Loading [" << _docKey << "] for session [" << sessionId << "] in jail [" << jailId
                         << "] from URI [" << uriPublic.toString() << ']');
 
-    if (_unitWsd)
     {
-        bool result;
-        if (_unitWsd->filterLoad(sessionId, jailId, result))
+        bool result = false;
+        if (UNITWSD_CALL_INSTANCE(_unitWsd, filterLoad(sessionId, jailId, result)))
             return result;
     }
 
@@ -3826,7 +3827,7 @@ bool DocumentBroker::sendUnoSave(const std::shared_ptr<ClientSession>& session,
     constexpr std::size_t MaxFailureCountForBackgroundSaving = 2; // Give only 1 extra chance.
 
     // Note: It's odd to capture these here, but this function is used from ClientSession too.
-    const bool autosave = isAutosave || (_unitWsd && _unitWsd->isAutosave());
+    const bool autosave = isAutosave || UNITWSD_CALL_INSTANCE(_unitWsd, isAutosave());
     const bool backgroundConfigured = (autosave && _backgroundAutoSave) || _backgroundManualSave;
     const bool canBackground = forceBackgroundEnv || (!finalWrite && backgroundConfigured);
     const bool background = canBackground && _saveManager.lastSaveSuccessful() &&
@@ -4305,7 +4306,7 @@ void DocumentBroker::alertAllUsers(const std::string& msg)
 {
     ASSERT_CORRECT_THREAD();
 
-    if (_unitWsd && _unitWsd->filterAlertAllusers(msg))
+    if (UNITWSD_CALL_INSTANCE(_unitWsd, filterAlertAllusers(msg)))
         return;
 
     auto payload = std::make_shared<Message>(msg, Message::Dir::Out);
@@ -4461,7 +4462,7 @@ bool DocumentBroker::handleInput(const std::shared_ptr<Message>& message)
             COOLWSD::dumpOutgoingTrace(getJailId(), "0", message->abbr());
     }
 
-    if (_unitWsd && _unitWsd->filterLOKitMessage(message))
+    if (UNITWSD_CALL_INSTANCE(_unitWsd, filterLOKitMessage(message)))
         return true;
 
     if (COOLProtocol::getFirstToken(message->forwardToken(), '-') == "client")
