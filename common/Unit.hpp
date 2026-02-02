@@ -150,7 +150,7 @@ public:
     /// Do we have a unit test library hooking things & loaded
     static bool isUnitTesting()
     {
-#ifdef ENABLE_DEBUG
+#if ENABLE_DEBUG
         return DlHandle;
 #else
         return false; // In non-debug builds unit-tests cannot be run. See test/run_unit.sh.
