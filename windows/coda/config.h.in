@@ -47,7 +47,7 @@
 
 /* Whether to compile in some extra debugging support code and disable some
    security pieces */
-#undef ENABLE_DEBUG
+#define ENABLE_DEBUG @ENABLE_DEBUG_0_OR_1@
 
 /* Whether to compile and enable feature locking */
 #undef ENABLE_FEATURE_LOCK
@@ -143,7 +143,7 @@
 #undef MACOS
 
 /* Makes config variables conditionally static, only in non-debug builds, to allow for overriding them in unit-tests. */
-#ifdef ENABLE_DEBUG
+#if ENABLE_DEBUG
 #define CONFIG_STATIC
 #else
 #define CONFIG_STATIC static

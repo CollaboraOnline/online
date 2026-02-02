@@ -103,6 +103,8 @@ void setLevel(const std::string& logLevel)
     }
 }
 
+void setDisabledAreas(const std::string &areaStr) { }
+
 Level getLevel() { return level; }
 
 const std::string& getLevelName() { return levelName; }
