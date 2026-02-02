@@ -1216,6 +1216,18 @@ if test "x$with_sanitizer" != "x"; then
 else
     AC_MSG_RESULT([no])
 fi
+ENABLE_RUNTIME_OPTIMIZATIONS=
+for i in $CC; do
+    case $i in
+    -fsanitize=*)
+        ENABLE_RUNTIME_OPTIMIZATIONS=no
+        break
+        ;;
+    esac
+done
+if test "$ENABLE_RUNTIME_OPTIMIZATIONS" != no; then
+    AC_DEFINE([ENABLE_RUNTIME_OPTIMIZATIONS],1,[Define to 1 if this is not a santitizers build.])
+fi
 
 # Check for C++20 support.
 HAVE_CXXSTD=
