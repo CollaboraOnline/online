@@ -20,6 +20,10 @@
 #include <macos.h>
 #endif
 
+#ifdef _WIN32
+#include <windows.hpp>
+#endif
+
 inline void setupKitEnvironment(const std::string& userInterface)
 {
     // Setup & check environment
@@ -37,6 +41,9 @@ inline void setupKitEnvironment(const std::string& userInterface)
         );
 #ifdef IOS
     layers += "user:*${BRAND_BASE_DIR}/coolkitconfig.xcu ";
+#elif defined(_WIN32)
+    // app_installation_uri ends with a slash
+    layers += "user:*" + app_installation_uri + "../coolkitconfig.xcu ";
 #elif defined(MACOS) && MOBILEAPP
     layers += "user:*" + getResourceURL("coolkitconfig", "xcu");
 #elif ENABLE_DEBUG && !defined(ANDROID) // '*' denotes non-writable.
