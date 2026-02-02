@@ -17,7 +17,7 @@
 #include <Poco/URI.h>
 #include <Poco/Path.h>
 #include <QDBusConnection>
-#include <QDBusInterface>
+#include <QDBusMessage>
 #include <QDBusReply>
 #include <QDBusConnectionInterface>
 #include <QFileInfo>
@@ -102,28 +102,23 @@ bool DBusService::tryForwardToExistingInstance(const QStringList& files, const Q
         return false;
     }
 
-    QDBusInterface dbusInterface(SERVICE_NAME, OBJECT_PATH, SERVICE_NAME, sessionBus);
-
-    if (!dbusInterface.isValid())
-    {
-        LOG_ERR("Failed to connect to existing instance via DBus: " << dbusInterface.lastError().message().toStdString());
-        return false;
-    }
-
-    QDBusReply<void> reply;
+    QDBusMessage dbusMessage;
     if (!files.isEmpty())
     {
-        reply = dbusInterface.call("openFiles", files);
+        dbusMessage = QDBusMessage::createMethodCall(SERVICE_NAME, OBJECT_PATH, SERVICE_NAME, "openFiles");
+        dbusMessage.setArguments(QVariantList{ files });
     }
     else if (!templateType.isEmpty())
     {
-        reply = dbusInterface.call("openNewDocument", templateType);
+        dbusMessage = QDBusMessage::createMethodCall(SERVICE_NAME, OBJECT_PATH, SERVICE_NAME, "openNewDocument");
+        dbusMessage.setArguments(QVariantList{ templateType });
     }
     else
     {
-        reply = dbusInterface.call("activate");
+        dbusMessage = QDBusMessage::createMethodCall(SERVICE_NAME, OBJECT_PATH, SERVICE_NAME, "activate");
     }
 
+    QDBusReply<void> reply = sessionBus.call(dbusMessage);
     if (!reply.isValid())
     {
         LOG_ERR("DBus call failed: " << reply.error().message().toStdString());
