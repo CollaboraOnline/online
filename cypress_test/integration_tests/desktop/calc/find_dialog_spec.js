@@ -41,29 +41,33 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Searching via find dialog.
 	});
 
 	it('Search existing word when not following own view', function() {
+		helper.processToIdle(this.win);
 		desktopHelper.assertScrollbarPosition('vertical', 10, 30);
 
-		cy.then(() => {
-			expect(this.win.app.isFollowingOff()).to.be.false;
+		cy.wrap(this.win.app).should((app) => {
+			return app && app.isFollowingOff() === false;
 		});
 
 		desktopHelper.scrollViewDown();
+		helper.processToIdle(this.win);
 
 		desktopHelper.assertScrollbarPosition('vertical', 175, 205);
 
-		cy.then(() => {
-			expect(this.win.app.isFollowingOff()).to.be.true;
+		cy.wrap(this.win.app).should((app) => {
+			return app && app.isFollowingOff() === true;
 		});
 
 		helper.setDummyClipboardForCopy();
 		findHelper.openFindDialog();
 		findHelper.typeIntoSearchField('a');
+		helper.processToIdle(this.win);
 
 		findHelper.findNext();
 		calcHelper.assertAddressAfterIdle(this.win, 'A1');
 		desktopHelper.assertScrollbarPosition('vertical', 10, 30);
 
 		desktopHelper.scrollViewDown();
+		helper.processToIdle(this.win);
 
 		findHelper.typeIntoSearchField('c');
 		findHelper.findNext();
