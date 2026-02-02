@@ -522,6 +522,7 @@ class SlideShowNavigator {
 		if (handler) {
 			aEvent.preventDefault();
 			aEvent.stopPropagation();
+			if (this.presenter.isFollower()) this.presenter.setFollowing(false);
 			handler();
 		}
 	}
