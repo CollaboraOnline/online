@@ -43,7 +43,7 @@
 #include <QComboBox>
 #include <QCommandLineOption>
 #include <QCommandLineParser>
-#include <QDBusInterface>
+#include <QDBusConnection>
 #include <QDBusReply>
 #include <QDesktopServices>
 #include <QDialog>
@@ -106,14 +106,14 @@ static const char* getUserName()
     static QByteArray storage;
     storage.clear();
 
-    QDBusInterface iface(
+    QDBusMessage message = QDBusMessage::createMethodCall(
         "org.freedesktop.portal.Desktop",
         "/org/freedesktop/portal/desktop",
         "org.freedesktop.portal.Accounts",
-        QDBusConnection::sessionBus()
+        "GetUserInformation"
     );
 
-    QDBusReply<QVariantMap> reply = iface.call("GetUserInformation");
+    QDBusReply<QVariantMap> reply = QDBusConnection::sessionBus().call(message);
 
     if (reply.isValid()) {
         QVariantMap map = reply.value();
