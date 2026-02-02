@@ -166,6 +166,7 @@
   <ItemDefinitionGroup>
     <PostBuildEvent>
       <Command>
+        copy ..\..\..\coolkitconfig.xcu $(OutDir)..
         robocopy ..\..\..\browser\dist $(OutDir)..\cool *.* /E /XF debug.html framed.doc.html framed.html load.doc.html multidocs.html tsconfig.tsbuildinfo l10n-all.js wasm.html /XD src
         xcopy ..\..\..\browser\dist\src\layer\tile\CanvasTileUtils.js $(OutDir)..\cool\src\layer\tile\ /f /y
         xcopy ..\..\..\browser\dist\src\layer\tile\TileWorker.js $(OutDir)..\cool\src\layer\tile\ /f /y
