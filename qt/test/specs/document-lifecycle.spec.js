@@ -54,6 +54,63 @@ async function waitForPageTarget(port = REMOTE_DEBUGGING_PORT, maxWaitMs = 30000
     throw new Error('Timeout waiting for page target');
 }
 
+// Wait until the document selection reflects the typed text.
+async function waitForTypedText(expectedText, maxWaitMs = 20000) {
+    try {
+        await browser.webEngine.waitUntil(
+            async () => {
+                return await browser.webEngine.execute((text) => {
+                    const area = document.getElementById('clipboard-area');
+                    const areaText = area ? area.textContent || '' : '';
+                    const readable = document.getElementById('readable-content');
+                    const readableText = readable ? readable.textContent || '' : '';
+                    const textInput = window.app && app.map && app.map._textInput &&
+                        app.map._textInput.getPlainTextContent
+                        ? app.map._textInput.getPlainTextContent()
+                        : '';
+                    const selectionPlain = window.app && app.map && app.map._clip
+                        ? (app.map._clip._selectionPlainTextContent || '')
+                        : '';
+
+                    if (areaText.includes(text) ||
+                        readableText.includes(text) ||
+                        textInput.includes(text) ||
+                        selectionPlain.includes(text)) {
+                        return true;
+                    }
+                    if (app.socket) {
+                        app.socket.sendMessage('gettextselection mimetype=text/plain;charset=utf-8');
+                    }
+                    return false;
+                }, expectedText);
+            },
+            { timeout: maxWaitMs, interval: 300, timeoutMsg: 'Typed text not found in document selection' }
+        );
+    } catch (error) {
+        const debugState = await browser.webEngine.execute(() => {
+            const area = document.getElementById('clipboard-area');
+            const readable = document.getElementById('readable-content');
+            const clip = window.app && app.map && app.map._clip ? app.map._clip : null;
+            const textInput = window.app && app.map && app.map._textInput &&
+                app.map._textInput.getPlainTextContent
+                ? app.map._textInput.getPlainTextContent()
+                : null;
+            return {
+                hasApp: !!window.app,
+                hasMap: !!(window.app && app.map),
+                hasClip: !!clip,
+                selectionType: clip ? clip._selectionType : null,
+                selectionPlain: clip ? clip._selectionPlainTextContent : null,
+                areaText: area ? area.textContent : null,
+                readableText: readable ? readable.textContent : null,
+                textInput,
+                title: document.title
+            };
+        });
+        throw new Error(`Typed text not found in document selection. Debug: ${JSON.stringify(debugState)}`);
+    }
+}
+
 // Helper to find element using AT-SPI's native 'name' strategy
 async function findAtSpiElementByName(sessionId, name) {
     return new Promise((resolve, reject) => {
@@ -261,21 +318,8 @@ describe('Document lifecycle E2E test', () => {
         // Type text
         await browser.webEngine.keys(loremIpsum);
 
-        // Wait for the document to register as modified
-        await browser.webEngine.waitUntil(
-            async () => {
-                return await browser.webEngine.execute(() => {
-                    // Check various indicators that the document was modified
-                    const title = document.title;
-                    // Title might contain asterisk or "modified"
-                    if (title.includes('*')) return true;
-                    // Or check if there's content in the document
-                    const textLayer = document.querySelector('.leaflet-pane');
-                    return textLayer !== null;
-                });
-            },
-            { timeout: 10000, interval: 200, timeoutMsg: 'Document did not register modification' }
-        );
+        // Wait for the typed text to appear in the document model.
+        await waitForTypedText(loremIpsum, 20000);
 
         // ============================================================
         // PHASE 5: Close document with Ctrl+W
