@@ -398,8 +398,7 @@ void AsyncDNS::resolveDNS()
         // Unlock to allow entries to queue up in _lookups while resolving
         _lock.unlock();
 
-        if (_unitWsd)
-            _unitWsd->filterResolveDNS(_activeLookup.query);
+        UNITWSD_CALL_INSTANCE(_unitWsd, filterResolveDNS(_activeLookup.query));
 
         _activeLookup.cb(_resolver->resolveDNS(_activeLookup.query));
 
