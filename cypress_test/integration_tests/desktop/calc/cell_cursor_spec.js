@@ -247,7 +247,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Test triple click content 
 			expect(items).to.have.lengthOf(1);
 			var XPos = items[0].getBoundingClientRect().left + 60;
 			var YPos = items[0].getBoundingClientRect().top + 30;
-			cy.cGet('body').click(XPos, YPos).click(XPos, YPos).click(XPos, YPos); // Triple click.
+			cy.cGet('body').realClick({position: {x: XPos, y: YPos}, clickCount: 3}) // Triple click.
 		});
 
 		helper.waitForTimers(this.win, 'clicktimer');
