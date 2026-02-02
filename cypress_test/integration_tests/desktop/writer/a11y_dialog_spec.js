@@ -74,7 +74,6 @@ const buggyDialogs = [
     '.uno:OutlineBullet',
 
     // Below dialogs have tabindex=0 with empty alt tag
-    '.uno:InsertSymbol',
     '.uno:EditStyle?Param:string=Example&Family:short=1',
     '.uno:EditStyle?Param:string=Heading&Family:short=2',
     '.uno:FontDialog',
