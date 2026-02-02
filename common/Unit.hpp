@@ -724,8 +724,10 @@ private:
 
 #ifdef ENABLE_DEBUG
 #define UNITWSD_CALL(X) UnitWSD::get().X
+#define UNITWSD_CALL_INSTANCE(INST, X) ((INST) ? (INST)->X : decltype((INST)->X)())
 #else // !ENABLE_DEBUG
 #define UNITWSD_CALL(X) (void)0
+#define UNITWSD_CALL_INSTANCE(INST, X) false
 #endif // !ENABLE_DEBUG
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
