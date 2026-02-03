@@ -62,11 +62,6 @@ const needLinguisticDataDialogs = [
     '.uno:ThesaurusDialog',
 ];
 
-// these need a specific context
-const missingContextDialogs = [
-    '.uno:ContourDialog',
-];
-
 // don't pass yet
 const buggyDialogs = [
     // TODO: fix newly added
@@ -244,9 +239,7 @@ describe(['tagdesktop'], 'Accessibility Writer Dialog Tests', { testIsolation: f
 
     allCommonDialogs.forEach(function (commandSpec) {
         const command = typeof commandSpec === 'string' ? commandSpec : commandSpec.command;
-        if (missingContextDialogs.includes(command)) {
-            it.skip(`Dialog ${command} (missing context)`, function () {});
-        } else if (buggyDialogs.includes(command)) {
+        if (buggyDialogs.includes(command)) {
             it.skip(`Dialog ${command} (buggy)`, function () {});
         } else {
             it(`Common Dialog ${command}`, function () {
@@ -310,9 +303,7 @@ describe(['tagdesktop'], 'Accessibility Writer Dialog Tests', { testIsolation: f
 
     allWriterDialogs.forEach(function (commandSpec) {
         const command = typeof commandSpec === 'string' ? commandSpec : commandSpec.command;
-        if (missingContextDialogs.includes(command)) {
-            it.skip(`Dialog ${command} (missing context)`, function () {});
-        } else if (buggyDialogs.includes(command)) {
+        if (buggyDialogs.includes(command)) {
             it.skip(`Dialog ${command} (buggy)`, function () {});
         } else {
             it(`Writer Dialog ${command}`, function () {
