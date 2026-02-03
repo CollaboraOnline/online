@@ -25,7 +25,8 @@
 
 #include <wincrypt.h>
 
-#include "WebView2.h"
+#include <WebView2.h>
+#include <WebView2EnvironmentOptions.h>
 
 #include <wrl.h>
 #include <wil/com.h>
@@ -112,6 +113,8 @@ struct PersistedDocumentWindowSize
 };
 
 static std::map<HWND, WindowData> windowData;
+
+static bool enableWebDriver = false;
 
 static HINSTANCE appInstance;
 static int appShowMode;
@@ -1498,8 +1501,15 @@ static void openCOOLWindow(const FilenameAndUri& filenameAndUri, DocumentMode mo
 
     AddClipboardFormatListener(hWnd);
 
+    auto options = Microsoft::WRL::Make<CoreWebView2EnvironmentOptions>();
+
+    if (enableWebDriver)
+        options->put_AdditionalBrowserArguments(L"--remote-debugging-port=9222");
+
     CreateCoreWebView2EnvironmentWithOptions(
-        nullptr, (Util::string_to_wide_string(localAppData) + L"\\UDF").c_str(), nullptr,
+        nullptr,
+        (Util::string_to_wide_string(localAppData) + L"\\UDF").c_str(),
+        options.Get(),
         Microsoft::WRL::Callback<ICoreWebView2CreateCoreWebView2EnvironmentCompletedHandler>(
             [&data](HRESULT result, ICoreWebView2Environment* env) -> HRESULT
             {
@@ -2163,6 +2173,9 @@ int APIENTRY wWinMain(HINSTANCE hInstance, HINSTANCE, PWSTR, int showWindowMode)
                                           hInstance, NULL);
         ShowWindow(hiddenOwnerWindow, SW_HIDE);
     }
+
+    if (std::getenv("CODA_ENABLE_WEBDRIVER"))
+        enableWebDriver = true;
 
     DocumentMode mode = DocumentMode::EDIT;
     if (__argc == 1 || wcscmp(__wargv[1], L"--disable-background-networking") == 0)
