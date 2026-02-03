@@ -1546,12 +1546,12 @@ AS_IF([test "$ENABLE_IOSAPP" != "true" -a "$ENABLE_ANDROIDAPP" != "true" -a "$ho
        AC_MSG_CHECKING([POCO version])
        AC_COMPILE_IFELSE([AC_LANG_SOURCE([
        #include <Poco/Version.h>
-       #if POCO_VERSION < 0x01070100
-       #error Require Poco 1.7.1 or newer
+       #if POCO_VERSION < 0x010C0000
+       #error Require Poco 1.12.0 or newer
        #endif
        ])],
                          [AC_MSG_RESULT([OK])],
-                         [AC_MSG_ERROR([The POCO version is too old])])
+                         [AC_MSG_ERROR([The POCO version is too old, 1.12.0 or newer required])])
 
        AC_MSG_CHECKING([POCO bugs])
        AC_COMPILE_IFELSE([AC_LANG_SOURCE([
