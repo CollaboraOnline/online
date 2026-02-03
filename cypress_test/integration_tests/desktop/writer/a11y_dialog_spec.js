@@ -38,6 +38,11 @@ const allWriterDialogs = [
     '.uno:WordCountDialog'
 ];
 
+// 'common' dialogs that writer specifically does not support
+const excludedCommonDialogs = [
+    '.uno:SpellDialog'
+];
+
 // don't pass yet
 const buggyWriterDialogs = [
     // TODO: fix newly added
@@ -215,7 +220,10 @@ describe(['tagdesktop'], 'Accessibility Writer Dialog Tests', { testIsolation: f
 
     a11yHelper.allCommonDialogs.forEach(function (commandSpec) {
         const command = typeof commandSpec === 'string' ? commandSpec : commandSpec.command;
-        if (a11yHelper.isBuggyCommonDialog(command)) {
+        if (excludedCommonDialogs.includes(command)) {
+            // silently skip the common dialogs that writer doesn't have
+            return;
+        } else if (a11yHelper.isBuggyCommonDialog(command)) {
             it.skip(`Common Dialog ${command} (buggy)`, function () {});
         } else {
             it(`Common Dialog ${command}`, function () {
