@@ -386,7 +386,6 @@ function testDialog(win, commandSpec) {
 
 const allCommonDialogs = [
 	'.uno:AcceptTrackedChanges',
-	{ command: '.uno:ExportToEPUB', args: { SynchronMode: { type: 'boolean', value: false } } },
 	{ command: '.uno:ExportToPDF', args: { SynchronMode: { type: 'boolean', value: false } } },
 	'.uno:FontworkGalleryFloater',
 	'.uno:GotoPage',

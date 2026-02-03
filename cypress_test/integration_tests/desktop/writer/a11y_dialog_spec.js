@@ -9,6 +9,7 @@ const allWriterDialogs = [
     '.uno:EditRegion',
     '.uno:EditStyle?Param:string=Example&Family:short=1',
     '.uno:EditStyle?Param:string=Heading&Family:short=2',
+    { command: '.uno:ExportToEPUB', args: { SynchronMode: { type: 'boolean', value: false } } },
     '.uno:FieldDialog',
     '.uno:FontDialog',
     '.uno:FootnoteDialog',
