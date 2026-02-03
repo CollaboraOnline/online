@@ -71,7 +71,6 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Test jumping on large cell
 		cy.cGet('#View-tab-label').click();
 		desktopHelper.getNbIconArrow('FreezePanes').click();
 		desktopHelper.getNbIcon('FreezePanes').last().click();
-		cy.cGet('.jsdialog-overlay').click(); // close popup
 
 		// Scroll down.
 		helper.typeIntoInputField(helper.addressInputSelector, 'Z110');
@@ -99,11 +98,6 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Test jumping on large cell
 		desktopHelper.getNbIconArrow('AlignTop').click();
 		desktopHelper.getNbIcon('WrapText').click();
 
-		// Below 3 lines are to close the popup.
-		// That properties popup doesn't go by itself.
-		// So I close it here in order to prevent this test from failure when we fix that popup closing issue.
-		cy.cGet('body').type('{esc}'); // Close popup.
-		cy.cGet('#document-canvas').realClick();
 		helper.typeIntoInputField(helper.addressInputSelector, 'B10');
 
 		helper.typeIntoDocument('Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet.');
