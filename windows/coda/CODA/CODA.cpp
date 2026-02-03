@@ -693,10 +693,7 @@ static void do_paste_or_read(ClipboardOp op, WindowData& data)
                     continue;
                 wchar_t* wtext = (wchar_t*)GlobalLock(data);
                 if (!wtext)
-                {
-                    GlobalUnlock(data);
                     continue;
-                }
                 std::string text = Util::wide_string_to_string(std::wstring(wtext));
                 GlobalUnlock(data);
 
@@ -736,10 +733,7 @@ static void do_paste_or_read(ClipboardOp op, WindowData& data)
                     size_t size = GlobalSize(data);
                     const char* source = (const char*)GlobalLock(data);
                     if (!source)
-                    {
-                        GlobalUnlock(data);
                         continue;
-                    }
 
                     std::string fragment;
                     if (name == L"HTML Format")
