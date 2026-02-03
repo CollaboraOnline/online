@@ -601,6 +601,7 @@ static void do_cut_or_copy(ClipboardOp op, WindowData& data)
             format = RegisterClipboardFormatW(L"HTML (HyperText Markup Language)");
         else if (strcmp(mimeTypes[i], "image/png") == 0)
         {
+            // For PNG two clipboard formats seem to occur
             format = RegisterClipboardFormatW(L"image/png");
             format2 = RegisterClipboardFormatW(L"PNG");
         }
@@ -634,8 +635,18 @@ static void do_cut_or_copy(ClipboardOp op, WindowData& data)
                 memcpy(copy, streams[i], sizes[i]);
                 GlobalUnlock(hglData);
                 SetClipboardData(format, hglData);
-                if (format2)
-                    SetClipboardData(format2, hglData);
+            }
+            if (format2)
+            {
+                // Must allocate another handle for the other format
+                HANDLE hglData2 = GlobalAlloc(GMEM_MOVEABLE, sizes[i]);
+                if (hglData2)
+                {
+                    char* copy2 = (char*)GlobalLock(hglData2);
+                    memcpy(copy2, streams[i], sizes[i]);
+                    GlobalUnlock(hglData2);
+                    SetClipboardData(format2, hglData2);
+                }
             }
         }
     }
