@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-19 22:57+0200\n"
+"POT-Creation-Date: 2026-02-03 23:25+0200\n"
 "PO-Revision-Date: 2026-02-03 12:40+0000\n"
 "Last-Translator: Anonymous <noreply@weblate.org>\n"
 "Language-Team: Korean <https://hosted.weblate.org/projects/collabora-online/"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 5.16-dev\n"
+"X-Generator: Translate Toolkit 3.6.0\n"
 
 #: html/cool-help.html%2Bdiv.h1:6-5
 msgid "Keyboard Shortcuts"
@@ -96,8 +96,8 @@ msgid ""
 ">+</span><kbd>V</kbd>"
 msgstr ""
 "Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>Alt</"
-"kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>Shift</kbd>"
-"<span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>V"
+"kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>Shift</"
+"kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>V"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:16-38
 msgid "Print (Download as PDF)"
@@ -556,8 +556,8 @@ msgid ""
 "<kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</"
 "span><kbd>Arrow Right</kbd>"
 msgstr ""
-"Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>"
-"오른쪽 화살표"
+"Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</"
+"span><kbd>오른쪽 화살표"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:62-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:225-38
@@ -684,8 +684,8 @@ msgid ""
 "<kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</"
 "span><kbd>Arrow Down</kbd>"
 msgstr ""
-"Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>"
-"오른쪽 화살표"
+"Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</"
+"span><kbd>오른쪽 화살표"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:70-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:233-38
@@ -900,8 +900,8 @@ msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>PageDown</kbd>"
 msgstr ""
-"Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>"
-"PageDown"
+"Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>PageDown"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:85-38
 msgid "Extend the selection down one page"
@@ -913,8 +913,8 @@ msgid ""
 "<kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>PageDown</kbd>"
 msgstr ""
-"Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>"
-"PageDown"
+"Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>PageDown"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:86-38
 msgid "Delete to beginning of word"
@@ -926,8 +926,8 @@ msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>Backspace</kbd>"
 msgstr ""
-"Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>"
-"Backspace"
+"Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>Backspace"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:87-38
 msgid "Delete to end of word"
@@ -977,8 +977,7 @@ msgstr "단축키 표"
 msgid ""
 "If the active cell is empty: selects the whole table. Otherwise: selects the "
 "contents of the active cell. Pressing again selects the entire table."
-msgstr ""
-"현재 셀이 비어 있을 경우: 표 전체를 선택. 그 외: 현재 셀의 내용을 선택. 한번 "
+msgstr "현재 셀이 비어 있을 경우: 표 전체를 선택. 그 외: 현재 셀의 내용을 선택. 한번 "
 "더 실행하면 표 전체를 선택"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:96-147
@@ -1015,9 +1014,9 @@ msgid ""
 "<kbd>Alt</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>Tab</kbd> may be used instead."
 msgstr ""
-"탭 삽입하기(표 내에서만). 사용하는 윈도우 관리자에 따라 Alt</kbd><span "
-"class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>Tab 를 사용해야 할 "
-"수도 있습니다."
+"탭 삽입하기(표 내에서만). 사용하는 윈도우 관리자에 따라 Alt</kbd><span class="
+"\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>Tab 를 사용해야 할 수도 "
+"있습니다."
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:99-38
 #, fuzzy
@@ -1071,8 +1070,8 @@ msgid ""
 "span><kbd>Arrow Keys</kbd>"
 msgstr ""
 "Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>Alt</"
-"kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>Shift</kbd>"
-"<span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>화살표 키"
+"kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>Shift</"
+"kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>화살표 키"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:103-38
 #, fuzzy
@@ -1135,8 +1134,7 @@ msgid ""
 "If no whole cell is selected and the cursor is at the end of the table, the "
 "paragraph following the table will be deleted, unless it is the last "
 "paragraph in the document."
-msgstr ""
-"셀 전체가 선택되지 않았고 커서가 표의 끝에 있을 경우, 표 다음에 오는 단락이 "
+msgstr "셀 전체가 선택되지 않았고 커서가 표의 끝에 있을 경우, 표 다음에 오는 단락이 "
 "삭제됩니다.(문서 마지막 단락인 경우 제외)"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td.p:107-1
@@ -1351,8 +1349,8 @@ msgid ""
 "<kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</"
 "span><kbd>Page Down</kbd>"
 msgstr ""
-"Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>"
-"PageDown"
+"Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>PageDown"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:142-38
 msgid ""
@@ -1483,8 +1481,8 @@ msgid ""
 "<kbd>Alt</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</"
 "span><kbd>Page Down</kbd>"
 msgstr ""
-"Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>"
-"PageDown"
+"Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>PageDown"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:151-38
 msgid ""
@@ -1747,8 +1745,7 @@ msgstr ""
 msgid ""
 "Escape current mode, i.e. from edit mode switch to object selection mode, "
 "from object selection mode switch to view mode."
-msgstr ""
-"현재 모드에서 벗어나기. 예) 편집모드에서 개체 선택 모드로 전환, 또는 개체 "
+msgstr "현재 모드에서 벗어나기. 예) 편집모드에서 개체 선택 모드로 전환, 또는 개체 "
 "선택 모드에서 보기 모드로 전환"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:248-186
@@ -1948,11 +1945,13 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.p:375-5
 msgid ""
-"<span class=\"def\">The menu bar:</span> The main menu is placed on the top "
-"and includes many options, commands for printing, editing, viewing and other "
-"advanced commands. You can hide the menu bar clicking on the <span class"
-"=\"w2ui-icon fold icon-size\"></span> icon on the far right. Click on the "
-"<span class=\"w2ui-icon unfold icon-size\"></span> icon to show the menu."
+"<span class=\"def\">The menu bar:</span> The main menu is at the top and "
+"includes many options, such as commands for printing, editing, viewing, and "
+"other advanced commands. You can hide the menu bar by clicking the hide icon "
+"<span class=\"w2ui-icon fold icon-size\" role=\"img\" aria-label=\"hide menu "
+"bar\" title=\"Hide menu bar\"></span> on the far right. To show it again, "
+"click the show icon <span class=\"w2ui-icon unfold icon-size\" role=\"img\" "
+"aria-label=\"show menu bar\" title=\"Show menu bar\"></span>."
 msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.p:378-5
