@@ -27,7 +27,7 @@ function findLabelElementById(
 	);
 }
 
-function setupA11yLabelForLabelableElement(
+JSDialog.SetupA11yLabelForLabelableElement = function (
 	parentContainer: HTMLElement,
 	content: HTMLElement,
 	data: WidgetJSON,
@@ -64,9 +64,9 @@ function setupA11yLabelForLabelableElement(
 			}
 		});
 	});
-}
+};
 
-function setupA11yLabelForNonLabelableElement(
+JSDialog.SetupA11yLabelForNonLabelableElement = function (
 	container: HTMLElement,
 	data: WidgetJSON,
 	builder: JSBuilder,
@@ -74,9 +74,9 @@ function setupA11yLabelForNonLabelableElement(
 	if (data.labelledBy)
 		container.setAttribute('aria-labelledby', data.labelledBy);
 	else JSDialog.AddAriaLabel(container, data, builder);
-}
+};
 
-function addAriaLabel(
+JSDialog.AddAriaLabel = function (
 	element: HTMLElement,
 	data: WidgetJSON,
 	builder: JSBuilder,
@@ -98,9 +98,9 @@ function addAriaLabel(
 			},
 		);
 	}
-}
+};
 
-function addAltAttrOnFocusableImg(
+JSDialog.AddAltAttrOnFocusableImg = function (
 	image: HTMLImageElement,
 	data: WidgetJSON,
 	builder: JSBuilder,
@@ -120,42 +120,4 @@ function addAltAttrOnFocusableImg(
 			imageClass: image.className,
 		});
 	}
-}
-
-JSDialog.SetupA11yLabelForLabelableElement = function (
-	parentContainer: HTMLElement,
-	content: HTMLElement,
-	data: WidgetJSON,
-	builder: JSBuilder,
-) {
-	return setupA11yLabelForLabelableElement(
-		parentContainer,
-		content,
-		data,
-		builder,
-	);
-};
-
-JSDialog.SetupA11yLabelForNonLabelableElement = function (
-	container: HTMLElement,
-	data: WidgetJSON,
-	builder: JSBuilder,
-) {
-	return setupA11yLabelForNonLabelableElement(container, data, builder);
-};
-
-JSDialog.AddAriaLabel = function (
-	element: HTMLElement,
-	data: WidgetJSON,
-	builder: JSBuilder,
-) {
-	return addAriaLabel(element, data, builder);
-};
-
-JSDialog.AddAltAttrOnFocusableImg = function (
-	image: HTMLImageElement,
-	data: WidgetJSON,
-	builder: JSBuilder,
-) {
-	return addAltAttrOnFocusableImg(image, data, builder);
 };
