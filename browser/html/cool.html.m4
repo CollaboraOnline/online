@@ -242,19 +242,7 @@ m4_ifelse(MOBILEAPP,[true],
           </div>
           <div id="about-dialog-info-container">
             <div id="about-dialog-info">
-              <div id="coolwsd-version-label"></div>
-              <div class="about-dialog-info-div"><div id="coolwsd-version" dir="ltr"></div></div>
-              <div class="spacer"></div>
-              <div id="lokit-version-label"></div>
-              <div class="about-dialog-info-div"><div id="lokit-version" dir="ltr"></div></div>
-              m4_ifelse(MOBILEAPP,[],[<div id="served-by"><span id="served-by-label"></span>&nbsp;<span id="os-info"></span>&nbsp;<wbr><span id="coolwsd-id"></span></div>],[<p></p>])
-              <div id="slow-proxy"></div>
-              m4_ifelse(DEBUG,[true],[<div id="js-dialog">JSDialogs: <a href="#">View widgets</a></div>])
-              <div id="routeToken"></div>
-              <div id="timeZone"></div>
-              m4_ifelse(MOBILEAPP,[],[<div id="wopi-host-id">%WOPI_HOST_ID%</div>],[<p></p>])
-              m4_ifelse(MOBILEAPP,[],[<p></p>],[<div id="license-information"></div>])
-              <p class="about-dialog-info-div"><span dir="ltr">Copyright © _YEAR_, VENDOR.</span></p>
+              <div id="lokit-version" dir="ltr"></div>
             </div>
           </div>
         </div>
@@ -273,6 +261,9 @@ m4_ifelse(MOBILEAPP, [true],
         ]
       )
       data-mobile-app-name='MOBILEAPPNAME'
+      data-wopi-host-id = "%WOPI_HOST_ID%"
+      data-vendor = "VENDOR"
+      data-copyright-year = "_YEAR_"
       />
       ],
      [
@@ -316,6 +307,9 @@ m4_ifelse(MOBILEAPP, [true],
       data-geolocation-setup = "%GEOLOCATION_SETUP%"
       data-canvas-slideshow-enabled = "%CANVAS_SLIDESHOW_ENABLED%"
       data-wopi-setting-base-url = "%WOPI_SETTING_BASE_URL%"
+      data-wopi-host-id = "%WOPI_HOST_ID%"
+      data-vendor = VENDOR
+      data-copyright-year = _YEAR_
       />
     ])
 
