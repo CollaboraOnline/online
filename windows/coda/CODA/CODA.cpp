@@ -267,7 +267,10 @@ static std::wstring new_document(DocumentType type,
             Util::string_to_wide_string(app_installation_path +
                                         "..\\cool\\" + decodedTemplateRelativePath);
         auto wrelpath = Util::string_to_wide_string(decodedTemplateRelativePath);
-        templateExtension = wrelpath.substr(wrelpath.find_last_of(L'.') + 1);
+        auto const lastDot = wrelpath.find_last_of(L'.');
+        if (lastDot == std::wstring::npos)
+            return L"";
+        templateExtension = wrelpath.substr(lastDot + 1);
     }
 
     // The basename is URI-encoded because in some localisation it might contain spaces.
