@@ -55,9 +55,14 @@ jobs:
         sudo sh -c "echo deb-src http://security.ubuntu.com/ubuntu/ noble-security main restricted >> /etc/apt/sources.list"
         sudo sh -c "echo deb-src http://security.ubuntu.com/ubuntu/ noble-security universe >> /etc/apt/sources.list"
         sudo sh -c "echo deb-src http://security.ubuntu.com/ubuntu/ noble-security multiverse >> /etc/apt/sources.list"
-        sudo apt-get update
-        sudo apt install -y libunwind-dev
-        sudo apt-get install -y build-essential git libpoco-dev libcap-dev python3-polib npm libpng-dev python3-lxml libpam-dev libzstd-dev libssl-dev libcppunit-dev
+        sudo apt update
+        sudo apt install -y libunwind-dev build-essential git libcap-dev python3-polib npm libpng-dev python3-lxml libpam-dev libzstd-dev libssl-dev libcppunit-dev wget cmake
+        wget https://pocoproject.org/releases/poco-1.12.5p2/poco-1.12.5p2-all.tar.gz
+        tar xf poco-1.12.5p2-all.tar.gz
+        cd poco-1.12.5p2-all
+        ./configure --static --no-tests --no-samples --no-sharedlibs --cflags="-fPIC" --omit=Zip,Data,Data/SQLite,Data/ODBC,Data/MySQL,MongoDB,PDF,CppParser,PageCompiler,Redis,Encodings,ActiveRecord,Prometheus,JWT
+        make -j `nproc`
+        sudo make install
 
     - if: matrix.language == 'cpp'
       name: Configure
