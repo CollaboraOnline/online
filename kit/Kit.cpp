@@ -1459,6 +1459,23 @@ void Document::handleSaveMessage(const std::string &)
     {
         LOG_TRC("BgSave completed");
 
+        // unregister the view callbacks
+        const int viewCount = getLOKitDocument()->getViewsCount();
+        std::vector<int> viewIds(viewCount);
+        getLOKitDocument()->getViewIds(viewIds.data(), viewCount);
+        for (const auto viewId : viewIds)
+        {
+            _loKitDocument->setView(viewId);
+            _loKitDocument->registerCallback(nullptr, nullptr);
+        }
+
+        // cleanup any lingering file-system pieces
+        _loKitDocument.reset();
+
+        // any further messages are not interesting.
+        if (_queue)
+            _queue->clear();
+
         auto socket = _saveProcessParent.lock();
         if (socket)
         {
@@ -1472,23 +1489,6 @@ void Document::handleSaveMessage(const std::string &)
         }
         else
             LOG_TRC("Shutting down already shutdown bgsv child's socket to parent kit post save");
-
-        // any further messages are not interesting.
-        if (_queue)
-            _queue->clear();
-
-        // unregister the view callbacks
-        const int viewCount = getLOKitDocument()->getViewsCount();
-        std::vector<int> viewIds(viewCount);
-        getLOKitDocument()->getViewIds(viewIds.data(), viewCount);
-        for (const auto viewId : viewIds)
-        {
-            _loKitDocument->setView(viewId);
-            _loKitDocument->registerCallback(nullptr, nullptr);
-        }
-
-        // cleanup any lingering file-system pieces
-        _loKitDocument.reset();
 
         // Next step in the chain is BgSaveChildWebSocketHandler::onDisconnect
     }
