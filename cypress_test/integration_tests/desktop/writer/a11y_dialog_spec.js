@@ -4,26 +4,6 @@ var helper = require('../../common/helper');
 var desktopHelper = require('../../common/desktop_helper');
 var a11yHelper = require('../../common/a11y_helper');
 
-const allCommonDialogs = [
-    '.uno:AcceptTrackedChanges',
-    { command: '.uno:ExportToEPUB', args: { SynchronMode: { type: 'boolean', value: false } } },
-    { command: '.uno:ExportToPDF', args: { SynchronMode: { type: 'boolean', value: false } } },
-    '.uno:FontworkGalleryFloater',
-    '.uno:GotoPage',
-    '.uno:HyperlinkDialog',
-    '.uno:InsertQrCode',
-    '.uno:InsertSymbol',
-    '.uno:RunMacro',
-    '.uno:SearchDialog',
-    '.uno:SetDocumentProperties',
-    '.uno:Signature',
-    '.uno:SpellingAndGrammarDialog',
-    '.uno:SplitCell',
-    '.uno:StyleNewByExample',
-    '.uno:ThesaurusDialog',
-    '.uno:WidgetTestDialog'
-];
-
 const allWriterDialogs = [
     '.uno:ChapterNumberingDialog',
     '.uno:EditRegion',
@@ -57,13 +37,8 @@ const allWriterDialogs = [
     '.uno:WordCountDialog'
 ];
 
-const needLinguisticDataDialogs = [
-    '.uno:SpellingAndGrammarDialog',
-    '.uno:ThesaurusDialog',
-];
-
 // don't pass yet
-const buggyDialogs = [
+const buggyWriterDialogs = [
     // TODO: fix newly added
     '.uno:AcceptTrackedChanges',
     '.uno:HyperlinkDialog',
@@ -159,10 +134,10 @@ describe(['tagdesktop'], 'Accessibility Writer Dialog Tests', { testIsolation: f
             win.app.map.sendUnoCommand('.uno:FontDialog');
         });
 
-        getActiveDialog(1)
+        a11yHelper.getActiveDialog(1)
             .then(() => helper.processToIdle(win))
             .then(() => {
-                getActiveDialog(1).then($dialog => {
+                a11yHelper.getActiveDialog(1).then($dialog => {
                     injectBadElement($dialog, win);
                 });
             })
@@ -180,7 +155,7 @@ describe(['tagdesktop'], 'Accessibility Writer Dialog Tests', { testIsolation: f
                 });
             })
             .then(() => {
-                closeActiveDialog(1);
+                a11yHelper.closeActiveDialog(1);
             });
     }
 
@@ -237,17 +212,17 @@ describe(['tagdesktop'], 'Accessibility Writer Dialog Tests', { testIsolation: f
         });
     });
 
-    allCommonDialogs.forEach(function (commandSpec) {
+    a11yHelper.allCommonDialogs.forEach(function (commandSpec) {
         const command = typeof commandSpec === 'string' ? commandSpec : commandSpec.command;
-        if (buggyDialogs.includes(command)) {
-            it.skip(`Dialog ${command} (buggy)`, function () {});
+        if (a11yHelper.isBuggyCommonDialog(command)) {
+            it.skip(`Common Dialog ${command} (buggy)`, function () {});
         } else {
             it(`Common Dialog ${command}`, function () {
-                if (!hasLinguisticData && needLinguisticDataDialogs.includes(command)) {
+                if (!hasLinguisticData && a11yHelper.needsLinguisticData(command)) {
                     this._runnable.title += ' (skipped: missing linguistic data)';
                     this.skip();
                 }
-                testDialog(commandSpec);
+                a11yHelper.testDialog(win, commandSpec);
             });
         }
     });
@@ -262,12 +237,12 @@ describe(['tagdesktop'], 'Accessibility Writer Dialog Tests', { testIsolation: f
         cy.then(() => {
             win.app.map.sendUnoCommand('.uno:TransformDialog');
         });
-        handleDialog(win, 1);
+        a11yHelper.handleDialog(win, 1);
 
         cy.then(() => {
             win.app.map.sendUnoCommand('.uno:FormatArea');
         });
-        handleDialog(win, 1);
+        a11yHelper.handleDialog(win, 1);
 
         // exit shape mode
         helper.typeIntoDocument('{esc}');
@@ -283,7 +258,7 @@ describe(['tagdesktop'], 'Accessibility Writer Dialog Tests', { testIsolation: f
         cy.then(() => {
             win.app.map.sendUnoCommand('.uno:FormatLine');
         });
-        handleDialog(win, 1);
+        a11yHelper.handleDialog(win, 1);
         // exit line mode
         helper.typeIntoDocument('{esc}');
     });
@@ -298,16 +273,16 @@ describe(['tagdesktop'], 'Accessibility Writer Dialog Tests', { testIsolation: f
         .then(() => {
             win.app.map.sendUnoCommand('.uno:PasteSpecial');
         });
-        handleDialog(win, 1);
+        a11yHelper.handleDialog(win, 1);
     });
 
     allWriterDialogs.forEach(function (commandSpec) {
         const command = typeof commandSpec === 'string' ? commandSpec : commandSpec.command;
-        if (buggyDialogs.includes(command)) {
+        if (buggyWriterDialogs.includes(command)) {
             it.skip(`Dialog ${command} (buggy)`, function () {});
         } else {
             it(`Writer Dialog ${command}`, function () {
-                testDialog(commandSpec);
+                a11yHelper.testDialog(win, commandSpec);
             });
         }
     });
@@ -315,7 +290,7 @@ describe(['tagdesktop'], 'Accessibility Writer Dialog Tests', { testIsolation: f
     it('DropdownField dialog', function () {
         helper.getBlinkingCursorPosition('P');
         helper.clickAt('P');
-        handleDialog(win, 1);
+        a11yHelper.handleDialog(win, 1);
     });
 
     it('ContentControlProperties dialog', function () {
@@ -332,7 +307,7 @@ describe(['tagdesktop'], 'Accessibility Writer Dialog Tests', { testIsolation: f
             win.app.map.sendUnoCommand('.uno:InsertDropdownContentControl');
             win.app.map.sendUnoCommand('.uno:ContentControlProperties');
         });
-        handleDialog(win, 1, '.uno:ContentControlProperties');
+        a11yHelper.handleDialog(win, 1, '.uno:ContentControlProperties');
     });
 
     it.skip('Object dialog', function () {
@@ -344,15 +319,15 @@ describe(['tagdesktop'], 'Accessibility Writer Dialog Tests', { testIsolation: f
        cy.then(() => {
            win.app.map.sendUnoCommand('.uno:FrameDialog');
        });
-       handleDialog(win, 1, '.uno:FrameDialog');
+       a11yHelper.handleDialog(win, 1, '.uno:FrameDialog');
        cy.then(() => {
            win.app.map.sendUnoCommand('.uno:NameGroup');
        });
-       handleDialog(win, 1, '.uno:NameGroup');
+       a11yHelper.handleDialog(win, 1, '.uno:NameGroup');
        cy.then(() => {
            win.app.map.sendUnoCommand('.uno:ObjectTitleDescription');
        });
-       handleDialog(win, 1, '.uno:ObjectTitleDescription');
+       a11yHelper.handleDialog(win, 1, '.uno:ObjectTitleDescription');
     });
 
     it.skip('Graphic dialog', function () {
@@ -361,11 +336,11 @@ describe(['tagdesktop'], 'Accessibility Writer Dialog Tests', { testIsolation: f
         cy.then(() => {
             win.app.map.sendUnoCommand('.uno:GraphicDialog');
         });
-        handleDialog(win, 1, '.uno:GraphicDialog');
+        a11yHelper.handleDialog(win, 1, '.uno:GraphicDialog');
         cy.then(() => {
             win.app.map.sendUnoCommand('.uno:CompressGraphic');
         });
-        handleDialog(win, 1, '.uno:GraphicDialog');
+        a11yHelper.handleDialog(win, 1, '.uno:GraphicDialog');
     });
 
     it('Rename bookmark', function () {
@@ -379,12 +354,12 @@ describe(['tagdesktop'], 'Accessibility Writer Dialog Tests', { testIsolation: f
             // edit bookmark
             win.app.map.sendUnoCommand('.uno:InsertBookmark');
         });
-        getActiveDialog(1).should('exist')
+        a11yHelper.getActiveDialog(1).should('exist')
             .then(() => {
             cy.cGet('#bookmarks .ui-treeview-entry > div:first-child').click();
             cy.cGet('#rename-button').should('be.enabled').click();
-            handleDialog(win, 2);
-            closeActiveDialog(1);
+            a11yHelper.handleDialog(win, 2);
+            a11yHelper.closeActiveDialog(1);
         });
     });
 
@@ -394,7 +369,7 @@ describe(['tagdesktop'], 'Accessibility Writer Dialog Tests', { testIsolation: f
             win.app.map.sendUnoCommand('.uno:ExportToPDF', args);
         });
 
-        getActiveDialog(1)
+        a11yHelper.getActiveDialog(1)
             .then(() => {
                return helper.processToIdle(win);
             })
@@ -409,7 +384,7 @@ describe(['tagdesktop'], 'Accessibility Writer Dialog Tests', { testIsolation: f
             })
             .then(() => {
                 // and the warning dialog we're interested in should appear
-                handleDialog(win, 1);
+                a11yHelper.handleDialog(win, 1);
             });
     });
 
@@ -422,240 +397,7 @@ describe(['tagdesktop'], 'Accessibility Writer Dialog Tests', { testIsolation: f
             win.app.map.sendUnoCommand('.uno:InsertSection?RegionProtect:bool=true');
         });
         helper.typeIntoDocument('{del}');
-        handleDialog(win, 1);
+        a11yHelper.handleDialog(win, 1);
     });
-
-    function testDialog(commandSpec) {
-        const command = typeof commandSpec === 'string' ? commandSpec : commandSpec.command;
-        const args = typeof commandSpec === 'string' ? undefined : commandSpec.args;
-
-        cy.then(() => {
-            win.app.map.sendUnoCommand(command, args);
-        });
-
-        handleDialog(win, 1, command);
-    }
-
-    function runA11yValidation(win) {
-        a11yHelper.runA11yValidation(win, 'validatedialogsa11y');
-    }
-
-    function handleDialog(win, level, command) {
-        getActiveDialog(level)
-            .then(() => {
-               return helper.processToIdle(win);
-            })
-            .then(() => {
-                runA11yValidation(win);
-            })
-            .then(() => {
-                // Open 'options' subdialogs
-                if (command == '.uno:EditRegion' ||
-                    command == '.uno:InsertCaptionDialog' ||
-                    command == '.uno:SpellingAndGrammarDialog') {
-                    cy.cGet('#options-button').click();
-                    handleDialog(win, level + 1);
-                } else if (command == '.uno:InsertIndexesEntry') {
-                    cy.cGet('#new-button').click();
-                    handleDialog(win, level + 1);
-                } else if (command == '.uno:ContentControlProperties') {
-                    cy.cGet('#add-button').click();
-                    handleDialog(win, level + 1);
-                } else if (command == '.uno:ThemeDialog') {
-                    cy.cGet('#button_add-button').click();
-                    handleDialog(win, level + 1);
-                } else if (command == '.uno:SearchDialog') {
-                    cy.cGet('.ui-expander-label').contains('Other options').should('be.visible').click();
-                    cy.cGet('#similarity-input').check();
-                    cy.cGet('#similaritybtn-button').should('be.enabled').click();
-                    handleDialog(win, level + 1);
-                } else if (command == '.uno:Signature') {
-                    cy.cGet('#signatures .ui-treeview-entry > div:first-child').click();
-                    cy.cGet('#view-button').should('be.enabled').click();
-                    handleDialog(win, level + 1);
-                    cy.cGet('#sign-button').should('be.enabled').click();
-                    handleDialog(win, level + 1);
-                };
-
-                handleTabsInDialog(win, level, command);
-                closeActiveDialog(level);
-            });
-    }
-
-    function getActiveDialog(level) {
-        return cy.cGet('.ui-dialog[role="dialog"]')
-            .should('have.length', level)
-            .then($dialogs => cy.wrap($dialogs.last()))
-    }
-
-    function testNameDialog(win, level) {
-        /* exercise the name dialog */
-        getActiveDialog(level + 1)
-            .then(() => {
-                return helper.processToIdle(win);
-            })
-            .then(() => {
-                runA11yValidation(win);
-            })
-            .then(() => {
-                // save with default suggested name
-                cy.cGet('[role="dialog"][aria-labelledby*="Name"] #ok-button').should('be.enabled').click();
-                return helper.processToIdle(win);
-            })
-            .then(() => {
-                cy.cGet('.ui-dialog[role="dialog"]').should('have.length', level);
-            });
-        /* Then add the same name again so we get the warning subdialog */
-        cy.cGet('button.ui-pushbutton[aria-label="Add"]:visible').click();
-        getActiveDialog(level + 1)
-            .then(() => {
-                return helper.processToIdle(win);
-            })
-            .then(() => {
-                // save with a name that exists to force the warning subdialog
-                cy.cGet('#name_entry-input').type('{selectall}{backspace}Hatching 1');
-                cy.cGet('[role="dialog"][aria-labelledby*="Name"] #ok-button').should('be.enabled').click();
-                return helper.processToIdle(win);
-            })
-            .then(() => {
-                // warning subdialog, default close will cancel
-                handleDialog(win, level + 1);
-            });
-    }
-
-    function handleTabsInDialog(win, level, command) {
-        traverseTabs(() => getActiveDialog(level), win, level, command);
-    }
-
-    function traverseTabs(getContainer, win, level, command, isNested = false) {
-        const TABLIST = '[role="tablist"]';
-        const TAB = '[role="tab"]';
-
-        return getContainer().then($container => {
-            let $tabLists;
-
-            if (!isNested) {
-                // For top-level tabs, select only direct tab lists under #tabcontrol
-                // to avoid picking up tab lists from nested tab-panels
-                $tabLists = $container.find('#tabcontrol > ' + TABLIST);
-            } else {
-                // For nested tabs, the container is already the relevant tab-panel,
-                // so select all tab lists within it
-                $tabLists = $container.find(TABLIST);
-            }
-
-            if (!$tabLists.length) return;
-
-            return Cypress._.reduce($tabLists, (chain, tabListEl, tabListIndex) => {
-                return chain.then(() => {
-                    const $tabs = Cypress.$(tabListEl).find(TAB);
-
-                    const clickTabByIndex = (index) => {
-                        if (index >= $tabs.length) return cy.wrap(null);
-
-                        const $tab = $tabs.eq(index);
-                        const tabId = $tab.attr('id');
-                        const tabAriaControls = $tab.attr('aria-controls');
-
-                        return getContainer()
-                            .find(TABLIST).eq(tabListIndex)
-                            .find(TAB).eq(index)
-                            .click({ force: true })
-                            .then(() => {
-                                return helper.processToIdle(win);
-                            })
-                            .then(() => {
-                                runA11yValidation(win);
-                            })
-                            .then(() => {
-                                if (command == '.uno:SetDocumentProperties' && tabAriaControls == 'customprops')  {
-                                    cy.cGet('#durationbutton-button').click();
-                                    handleDialog(win, level + 1);
-                                } else if (command == '.uno:SetDocumentProperties' && tabAriaControls == 'general')  {
-                                    cy.cGet('#changepass-button').should('not.be.disabled').click();
-                                    handleDialog(win, level + 1);
-                                } else if (command == '.uno:InsertSection' && tabAriaControls == 'section')  {
-                                    // check protect to enable password dialog
-                                    cy.cGet('#protect-input').check();
-                                    cy.cGet('#selectpassword-button').should('not.be.disabled').click();
-                                    handleDialog(win, level + 1);
-                                    cy.cGet('#protect-input').uncheck();
-                                    cy.cGet('#selectpassword-button').should('be.disabled');
-                                } else if (command == '.uno:HyperlinkDialog' && tabAriaControls == '~Document')  {
-                                    cy.cGet('#browse-button').click();
-                                    handleDialog(win, level + 1);
-                                } else if (command == '.uno:FontDialog' && tabAriaControls == 'font')  {
-                                    cy.cGet('#btnWestFeatures-button').click();
-                                    handleDialog(win, level + 1);
-                                } else if (command == '.uno:PageDialog' && tabAriaControls == 'Footer')  {
-                                    cy.cGet('button.ui-pushbutton[aria-label="More..."]:visible').click();
-                                    handleDialog(win, level + 1);
-                                } else if (command == '.uno:PageDialog' && tabAriaControls == 'lbhatch')  {
-                                    cy.cGet('button.ui-pushbutton[aria-label="Add"]:visible').click();
-                                    testNameDialog(win, level);
-                                }
-                            })
-                            .then(() => {
-                                return getContainer();
-                            })
-                            .then($ctx => {
-                                const $panel = getActiveTabPanel($ctx, tabId);
-
-                                if (!$panel || !$panel.length) return;
-
-                                const panelId = $panel.attr('id');
-                                const panelSelector = `#${CSS.escape(panelId)}`;
-
-                                return getContainer()
-                                    .then(() => {
-                                        const $nestedTablists = $panel.find(TABLIST);
-
-                                        if (!isNested && $nestedTablists.length > 0) {
-                                            return traverseTabs(
-                                                () => getContainer().find(panelSelector),
-                                                win, level, command, true
-                                            );
-                                        }
-                                    });
-                            })
-                            .then(() => {
-                                return clickTabByIndex(index + 1);
-                            });
-                    };
-
-                    return clickTabByIndex(0);
-                });
-            }, cy.wrap(null));
-        });
-    }
-
-    function getActiveTabPanel($container, activeTabId) {
-        const tabSelector = `#${CSS.escape(activeTabId)}`;
-        const $activeTab = $container.find(tabSelector);
-
-        if (!$activeTab.length) return null;
-
-        const panelId = $activeTab.attr('aria-controls');
-        if (!panelId) return null;
-
-        const panelSelector = `#${CSS.escape(panelId)}[role="tabpanel"]`;
-        return $container.find(panelSelector);
-    }
-
-    function closeActiveDialog(level) {
-        // Closing the dialog via the titlebar directly can be fragile.
-        // So find the jsdialog ancestor, because it has a unique id,
-        // and use that id to make a selector and  a get via that is
-        // retryable by cypress.
-        getActiveDialog(level)
-            .parents('.jsdialog-window')
-            .invoke('attr', 'id')
-            .then(dialogId => {
-              cy.cGet(`#${CSS.escape(dialogId)} .ui-dialog-titlebar-close`)
-                .click();
-            });
-
-        cy.cGet('.ui-dialog[role="dialog"]').should('have.length', level - 1);
-    }
 
 });
