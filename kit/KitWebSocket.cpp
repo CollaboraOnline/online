@@ -343,14 +343,16 @@ void BgSaveParentWebSocketHandler::onDisconnect()
 {
     LOG_TRC("Disconnected background web socket to child " << _childPid);
 
-#if !MOBILEAPP
-    // reap and de-zombify children.
-    const auto [ret, sig] = SigUtil::reapZombieChild(_childPid, /*sighandler=*/false);
-    if (sig)
-        reportFailedSave(std::string("crashed with status ") + SigUtil::signalName(sig));
-    else if (ret <= 0)
-        LOG_WRN("Background save process disconnected but not terminated " << _childPid);
-#endif
+    if constexpr (!Util::isMobileApp())
+    {
+        // reap and de-zombify children.
+        const auto [ret, sig] = SigUtil::reapZombieChild(_childPid, /*sighandler=*/false);
+        if (sig)
+            reportFailedSave(std::string("crashed with status ") + SigUtil::signalName(sig));
+        else if (ret <= 0)
+            LOG_WRN("Background save process disconnected but not terminated " << _childPid);
+    }
+
     if (!_saveCompleted)
         reportFailedSave("terminated without saving");
 }
