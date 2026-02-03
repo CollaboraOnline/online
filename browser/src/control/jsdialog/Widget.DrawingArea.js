@@ -43,13 +43,15 @@ function _drawingAreaControl (parentContainer, data, builder) {
 	var imageId = data.id + '-img';
 	image.id = imageId;
 	image.src = data.image.replace(/\\/g, '');
-	image.alt = data.text;
 	image.draggable = false;
 	image.ondragstart = function() { return false; };
 
-	const isFocusable = data.enabled && data.canFocus;
-	if (isFocusable) {
+	const isFocusableImg = data.enabled && data.canFocus;
+	if (isFocusableImg) {
 		image.tabIndex = 0;
+		JSDialog.AddAltAttrOnFocusableImg(image, data, builder);
+	} else {
+		image.classList.add('ui-decorative-image');
 	}
 
 	if (data.text) {
@@ -58,19 +60,6 @@ function _drawingAreaControl (parentContainer, data, builder) {
 		if (builder.map) {
 			window.L.control.attachTooltipEventListener(image, builder.map);
 		}
-	} else {
-		JSDialog.SetupA11yLabelForNonLabelableElement(container, data, builder);
-	}
-
-	if (container.hasAttribute('aria-labelledby') || container.hasAttribute('aria-label')) {
-		if (isFocusable && data.aria && (data.aria.label || data.aria.description)) {
-			// Focusable images need proper alt text
-			image.alt = data.aria.description || data.aria.label;
-		} else {
-			image.alt = '';
-		}
-	} else if (data.aria && data.aria.description) {
-		image.alt = data.aria.description;
 	}
 
 	// Line width dialog is affected from delay on image render.
