@@ -620,7 +620,7 @@ static void do_cut_or_copy(ClipboardOp op, WindowData& data)
             {
                 wchar_t* wcopy = (wchar_t*)GlobalLock(hglData);
                 memcpy(wcopy, wtext.c_str(), byteSize - 2);
-                wcopy[sizes[i]] = 0;
+                wcopy[wtext.size()] = 0;
                 GlobalUnlock(hglData);
                 SetClipboardData(CF_UNICODETEXT, hglData);
             }
