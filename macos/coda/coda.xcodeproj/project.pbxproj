@@ -530,7 +530,6 @@
 					};
 					BECC4BBB2CBD3FA400A120B3 = {
 						CreatedOnToolsVersion = 16.0;
-						TestTargetID = BECC4BAA2CBD3FA300A120B3;
 					};
 					BECC4BC52CBD3FA400A120B3 = {
 						CreatedOnToolsVersion = 16.0;
@@ -582,6 +581,9 @@
 				hu,
 				el,
 				ja,
+				en_AU,
+				vi,
+				et,
 			);
 			mainGroup = BECC4BA22CBD3FA300A120B3;
 			minimizedProjectReferenceProxies = 1;
@@ -635,24 +637,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		BEA82CDF2EC2201700CDC5A6 /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			alwaysOutOfDate = 1;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-			);
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "# Make sure the JS bits are up-to-date: run make in the login shell (so that Homebrew etc. is set up)\nset -e\n\"${SHELL:-/bin/zsh}\" -lic 'make -C \"$SRCROOT/../..\" all'\n";
-		};
 		BE1234562CDA3024004111EF /* Generate Document Icons */ = {
 			isa = PBXShellScriptBuildPhase;
 			alwaysOutOfDate = 1;
@@ -679,6 +663,24 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"$SRCROOT/generate-document-icons.sh\"\n";
+		};
+		BEA82CDF2EC2201700CDC5A6 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Make sure the JS bits are up-to-date: run make in the login shell (so that Homebrew etc. is set up)\nset -e\n\"${SHELL:-/bin/zsh}\" -lic 'make -C \"$SRCROOT/../..\" all'\n";
 		};
 		BEE076602CDA3024004111EF /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -1002,7 +1004,7 @@
 					"-lz",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "$(APP_PACKAGE_NAME)";
-				PRODUCT_MODULE_NAME = coda;
+				PRODUCT_MODULE_NAME = "$(TARGET_NAME:c99extidentifier)";
 				PRODUCT_NAME = "$(APP_BUNDLE_NAME)";
 				STRINGS_FILE_INFOPLIST_RENAME = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -1064,7 +1066,7 @@
 					"-lz",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "$(APP_PACKAGE_NAME)";
-				PRODUCT_MODULE_NAME = coda;
+				PRODUCT_MODULE_NAME = "$(TARGET_NAME:c99extidentifier)";
 				PRODUCT_NAME = "$(APP_BUNDLE_NAME)";
 				STRINGS_FILE_INFOPLIST_RENAME = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -1076,7 +1078,6 @@
 		BECC4BD42CBD3FA400A120B3 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = J4FQ687VJK;
@@ -1084,17 +1085,16 @@
 				MACOSX_DEPLOYMENT_TARGET = 15.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.collabora.codaTests;
+				PRODUCT_MODULE_NAME = "$(TARGET_NAME:c99extidentifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/coda.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/coda";
 			};
 			name = Debug;
 		};
 		BECC4BD52CBD3FA400A120B3 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = J4FQ687VJK;
@@ -1102,10 +1102,10 @@
 				MACOSX_DEPLOYMENT_TARGET = 15.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.collabora.codaTests;
+				PRODUCT_MODULE_NAME = "$(TARGET_NAME:c99extidentifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/coda.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/coda";
 			};
 			name = Release;
 		};
@@ -1118,6 +1118,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.collabora.codaUITests;
+				PRODUCT_MODULE_NAME = "$(TARGET_NAME:c99extidentifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
@@ -1134,6 +1135,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.collabora.codaUITests;
+				PRODUCT_MODULE_NAME = "$(TARGET_NAME:c99extidentifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
