@@ -332,6 +332,17 @@ static void send2JS(const HWND hWnd, const char* buffer, int length)
 // LOK file save dialog callback.
 void output_file_dialog_from_core(const char* suggestedURI, char* result, size_t resultLen)
 {
+    // Some sanity checks first.
+    if (resultLen == 0)
+        return;
+
+    // The absolutely shortest file: URI on Windows would be something like "file:///C:/f".
+    if (resultLen < 12)
+    {
+        result[0] = '\0';
+        return;
+    }
+
     auto URI = Poco::URI(suggestedURI);
     auto path = URI.getPath();
     if (path.size() > 4 && path[0] == '/' && path[2] == ':' && path[3] == '/')
@@ -350,9 +361,9 @@ void output_file_dialog_from_core(const char* suggestedURI, char* result, size_t
                                          });
 
     if (filenameAndUri.uri.size() < resultLen)
-    {
         strcpy(result, filenameAndUri.uri.c_str());
-    }
+    else
+        result[0] = '\0';
 }
 
 static void stopServer()
