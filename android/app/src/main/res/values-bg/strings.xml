@@ -110,7 +110,4 @@
     <string name="theme_system_default">Подразбирана за системата</string>
     <string name="choose_theme">Изберете тема</string>
     <string name="theme">Тема</string>
-    <string name="pref_user_name_guest"></string>
-    <string name="pref_user_name"></string>
-    <string name="pref_user_name_info"></string>
 </resources>

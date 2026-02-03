@@ -108,7 +108,4 @@
     <string name="theme_system_default">Standard systema</string>
     <string name="choose_theme">Drastu wubrać</string>
     <string name="theme">Drasta</string>
-    <string name="pref_user_name_guest"></string>
-    <string name="pref_user_name"></string>
-    <string name="pref_user_name_info"></string>
 </resources>

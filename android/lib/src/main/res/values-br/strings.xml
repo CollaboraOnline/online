@@ -1,25 +1,3 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="restarting"></string>
-    <string name="rate_our_app_text"></string>
-    <string name="exiting"></string>
-    <string name="cannot_open_file_chooser"></string>
-    <string name="storage_permission_required"></string>
-    <string name="convert_odf_message"></string>
-    <string name="rate_our_app_title"></string>
-    <string name="rate_now"></string>
-    <string name="temp_file_saving_disabled"></string>
-    <string name="edit_copy"></string>
-    <string name="view_only"></string>
-    <string name="use_odf"></string>
-    <string name="failed_to_insert_image"></string>
-    <string name="cant_open_the_document"></string>
-    <string name="ask_for_copy"></string>
-    <string name="ask_for_convert_odf"></string>
-    <string name="use_text"></string>
-    <string name="failed_to_load_file"></string>
-    <string name="preparing_for_the_first_start_after_an_update"></string>
-    <string name="loading"></string>
-    <string name="file_chromeos_read_only"></string>
-    <string name="later"></string>
 </resources>

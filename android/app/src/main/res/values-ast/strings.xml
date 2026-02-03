@@ -94,23 +94,4 @@
     <string name="storage_provider_settings">Axustes del fornidor d\'almacenamientu</string>
     <string name="theme_dark">Escuru</string>
     <string name="choose_theme">Escueyi\'l tema</string>
-    <string name="theme_light"></string>
-    <string name="action_create"></string>
-    <string name="create_new_document_title"></string>
-    <string name="ext_document_provider_error"></string>
-    <string name="negative_im_sure"></string>
-    <string name="otg_device_path"></string>
-    <string name="bmp_null"></string>
-    <string name="reason_required_to_read_documents"></string>
-    <string name="confirm_label"></string>
-    <string name="up_description"></string>
-    <string name="enter_filename"></string>
-    <string name="server_url_and_port"></string>
-    <string name="directory_browser_label"></string>
-    <string name="otg_warning"></string>
-    <string name="directory_not_saved"></string>
-    <string name="current_dir"></string>
-    <string name="otg_missing_error"></string>
-    <string name="bad_directory"></string>
-    <string name="share_document"></string>
 </resources>

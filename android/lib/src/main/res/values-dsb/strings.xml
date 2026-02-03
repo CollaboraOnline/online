@@ -14,13 +14,4 @@
     <string name="later">Pózdźej</string>
     <string name="rate_now">Něnto pógódnośiś</string>
     <string name="file_chromeos_read_only">Toś ta dataja njedajo se na toś tom městnje składowaś, wócynja se jano pśeśiwo pisanjeju šćitana. Pśesuńśo ju do wótgrawańskich datajow za połny cytański/pisański pśistup.</string>
-    <string name="restarting"></string>
-    <string name="convert_odf_message"></string>
-    <string name="edit_copy"></string>
-    <string name="view_only"></string>
-    <string name="use_odf"></string>
-    <string name="cant_open_the_document"></string>
-    <string name="ask_for_convert_odf"></string>
-    <string name="use_text"></string>
-    <string name="ask_for_copy"></string>
 </resources>

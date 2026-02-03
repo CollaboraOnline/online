@@ -18,8 +18,4 @@
     <string name="use_text">Usar el formatu Testu</string>
     <string name="convert_odf_message">Esti documentu pue contener formatu o conteníu que nun pue guardase nel formatu de ficheru «Testu».</string>
     <string name="ask_for_copy">Esti documentu ye namái de llectura. ¿Quies facer una copia pa editala?</string>
-    <string name="rate_our_app_text"></string>
-    <string name="rate_now"></string>
-    <string name="edit_copy"></string>
-    <string name="view_only"></string>
 </resources>
