@@ -2319,7 +2319,7 @@ window.L.Control.NotebookbarWriter = window.L.Control.Notebookbar.extend({
 					{
 						'id': 'compare-tracked-change',
 						'type': 'bigcustomtoolitem',
-						'text': _('Compare Changes'),
+						'text': _('View Changes'),
 						'command': 'comparechanges',
 						'accessibility': { focusBack: true, combination: 'CC' }
 					},
@@ -2411,7 +2411,7 @@ window.L.Control.NotebookbarWriter = window.L.Control.Notebookbar.extend({
 					{
 						'id': 'review-compare:CompareDocumentsMenu',
 						'type': 'menubutton',
-						'text': _('Document Comparison'),
+						'text': _('Compare Documents'),
 						'command': '.uno:CompareDocuments',
 						'accessibility': { focusBack: true, combination: 'CD', de: null }
 					},
