@@ -520,19 +520,28 @@ class DeltaGenerator {
         }
     }
 
-    static void
-    copy_row (unsigned char *dest, const unsigned char *srcBytes, unsigned int count, LibreOfficeKitTileMode mode)
+    static void copy_row(unsigned char *dest, const unsigned char *srcBytes,
+                         unsigned int count, LibreOfficeKitTileMode mode)
     {
         switch (mode)
         {
-            case LOK_TILEMODE_RGBA:
-                std::memcpy(dest, srcBytes, count * 4);
+        case LOK_TILEMODE_RGBA:
+            std::memcpy(dest, srcBytes, count * 4);
+            break;
+        case LOK_TILEMODE_BGRA:
+            if (simd::HasAVX2 &&
+                simd_copyRowSwapRB(dest, srcBytes, count))
                 break;
-            case LOK_TILEMODE_BGRA:
-                std::memcpy(dest, srcBytes, count * 4);
-                for (size_t j = 0; j < count * 4; j += 4)
-                    std::swap(dest[j], dest[j+2]);
-                break;
+
+            // Scalar fallback
+            for (size_t i = 0; i < count * 4; i += 4)
+            {
+                dest[i + 0] = srcBytes[i + 2];
+                dest[i + 1] = srcBytes[i + 1];
+                dest[i + 2] = srcBytes[i + 0];
+                dest[i + 3] = srcBytes[i + 3];
+            }
+            break;
         }
     }
 
