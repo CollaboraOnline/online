@@ -100,6 +100,28 @@ function addAriaLabel(
 	}
 }
 
+function addAltAttrOnFocusableImg(
+	image: HTMLImageElement,
+	data: WidgetJSON,
+	builder: JSBuilder,
+) {
+	if (image.tabIndex !== 0) return;
+
+	if (data.text?.trim()) {
+		image.alt = builder._cleanText(data.text);
+	} else if (data.aria?.label && data.aria.label.trim()) {
+		image.alt = data.aria.label;
+	} else if (data.aria?.description && data.aria.description.trim()) {
+		image.alt = data.aria.description;
+	} else {
+		// Missing alt attribute on focusable img
+		app.console.warn('[A11y] Missing alt attribue on focusable img.', {
+			imageId: image.id,
+			imageClass: image.className,
+		});
+	}
+}
+
 JSDialog.SetupA11yLabelForLabelableElement = function (
 	parentContainer: HTMLElement,
 	content: HTMLElement,
@@ -128,4 +150,12 @@ JSDialog.AddAriaLabel = function (
 	builder: JSBuilder,
 ) {
 	return addAriaLabel(element, data, builder);
+};
+
+JSDialog.AddAltAttrOnFocusableImg = function (
+	image: HTMLImageElement,
+	data: WidgetJSON,
+	builder: JSBuilder,
+) {
+	return addAltAttrOnFocusableImg(image, data, builder);
 };
