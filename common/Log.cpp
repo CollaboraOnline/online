@@ -122,6 +122,9 @@ public:
 
 namespace Log
 {
+    extern StaticHelper Static;
+    extern StaticUIHelper StaticUILog;
+
     using namespace Poco;
 
     class ConsoleChannel : public Poco::Channel
@@ -209,6 +212,13 @@ namespace Log
         NextThreadIdIndex = 0;
         memset(ThreadIdArray, 0, sizeof(ThreadIdArray));
 #endif // !NDEBUG
+
+        // The PID has changed after the fork.
+        std::ostringstream oss;
+        oss << Static.getName();
+        if constexpr (!Util::isMobileApp())
+            oss << '-' << std::setw(5) << std::setfill('0') << Util::getProcessId();
+        Static.setId(oss.str());
     }
 
     class BufferedConsoleChannel : public ConsoleChannel
@@ -388,9 +398,6 @@ namespace Log
     private:
         std::unordered_map<Poco::Message::Priority, std::string> _colorByPriority;
     };
-
-    extern StaticHelper Static;
-    extern StaticUIHelper StaticUILog;
 
     namespace
     {
