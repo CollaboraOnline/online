@@ -338,6 +338,7 @@ function handleDialog(win, level, command) {
 			// Writer-specific subdialogs
 			if (command == '.uno:EditRegion' ||
 			    command == '.uno:InsertCaptionDialog' ||
+			    command == '.uno:SpellDialog' ||
 			    command == '.uno:SpellingAndGrammarDialog') {
 				cy.cGet('#options-button').click();
 				handleDialog(win, level + 1);
@@ -396,6 +397,7 @@ const allCommonDialogs = [
 	'.uno:SearchDialog',
 	'.uno:SetDocumentProperties',
 	'.uno:Signature',
+	'.uno:SpellDialog',
 	'.uno:SpellingAndGrammarDialog',
 	'.uno:SplitCell',
 	'.uno:StyleNewByExample',
@@ -404,6 +406,7 @@ const allCommonDialogs = [
 ];
 
 const needLinguisticDataDialogs = [
+	'.uno:SpellDialog',
 	'.uno:SpellingAndGrammarDialog',
 	'.uno:ThesaurusDialog',
 ];
