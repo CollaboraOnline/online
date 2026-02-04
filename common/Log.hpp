@@ -11,6 +11,9 @@
 
 #pragma once
 
+#include <common/StateEnum.hpp>
+#include <common/Util.hpp>
+
 #include <cerrno>
 #include <chrono>
 #include <cstddef>
@@ -27,9 +30,6 @@
 #if defined __EMSCRIPTEN__
 #include <emscripten/console.h>
 #endif
-
-#include "Util.hpp"
-#include "StateEnum.hpp"
 
 namespace Log
 {
@@ -185,13 +185,7 @@ static constexpr std::size_t skipPathPrefix(const char (&s)[N], std::size_t n = 
 #define LOG_FILE_NAME(f) (&f[skipPathPrefix(f)])
 #endif
 
-// Macro expansion doesn't happen when # or ## operators are used,
-// so we need an indirection to expand macros before using the result.
-#define CONCATINATE_IMPL(X, Y) X##Y
-#define CONCATINATE(X, Y) CONCATINATE_IMPL(X, Y)
 #define UNIQUE_VAR(X) CONCATINATE(X, __LINE__)
-#define STRINGIFY(X) #X
-#define STRING(X) STRINGIFY(X)
 
 #ifdef __ANDROID__
 

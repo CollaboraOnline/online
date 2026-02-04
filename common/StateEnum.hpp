@@ -18,9 +18,15 @@
 /// Some ideas from https://stackoverflow.com/questions/28828957/enum-to-string-in-modern-c11-c14-c17-and-future-c20
 /// and from https://github.com/pfultz2/Cloak/wiki/C-Preprocessor-tricks,-tips,-and-idioms
 
-#define STRINGIFY1(_, e) #e,
+// Macro expansion doesn't happen when # or ## operators are used,
+// so we need an indirection to expand macros before using the result.
+#define CONCATINATE_IMPL(X, Y) X##Y
+#define CONCATINATE(X, Y) CONCATINATE_IMPL(X, Y)
+#define STRINGIFY(X) #X
+#define STRING(X) STRINGIFY(X)
+
+#define STRINGIFY1(_, e) STRINGIFY(e),
 #define STRINGIFY2(NAME, e) #NAME "::" #e,
-#define CONCAT(X, Y) X##Y
 #define CALL(X, ...) X(__VA_ARGS__)
 
 #define APPLY1(MACRO, NAME, e) MACRO(NAME, e)
@@ -44,7 +50,7 @@
 #define COUNT_ARGS(...) GET_COUNT(__VA_ARGS__, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1)
 
 #define APPLY(MACRO, NAME, ...)                                                                    \
-    CALL(CONCAT, APPLY, COUNT_ARGS(__VA_ARGS__))(MACRO, NAME, __VA_ARGS__)
+    CALL(CONCATINATE, APPLY, COUNT_ARGS(__VA_ARGS__))(MACRO, NAME, __VA_ARGS__)
 #define FOR_EACH(MACRO, NAME, ...) APPLY(MACRO, NAME, __VA_ARGS__)
 
 /// Define a state-machine with various independent states.
