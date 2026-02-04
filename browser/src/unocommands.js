@@ -121,6 +121,7 @@ var unoCommandsArray = {
 	'CommonAlignRight':{global:{menu:_('Right'),},},
 	'CommonAlignTop':{global:{menu:_('Top'),},},
 	'CommonAlignVerticalCenter':{global:{menu:_('Center'),},},
+	'CompareDocuments':{global:{context:_('Compare Non-Track Changed Document'),menu:_('Compare'),},},
 	'CompressGraphic':{global:{menu:_('Co~mpress...'),},presentation:{menu:_('Co~mpress...'),},},
 	'CondDateFormatDialog':{spreadsheet:{menu:_('Date...'),},},
 	'ConditionalFormatManagerDialog':{spreadsheet:{menu:_('Manage...'),},},
