@@ -82,11 +82,11 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Replace Dialog Tests', fun
         cy.cGet('#FindReplaceDialog').should('be.visible');
 
         // Search for text first
-        cy.cGet('#searchterm-input-dialog').type('test{enter}');
+        cy.cGet('#searchterm-input-dialog').type('test').realPress('Enter');
         helper.textSelectionShouldExist();
 
         // Type replacement and press Enter
-        cy.cGet('#replaceterm-input-dialog').type('replaced{enter}');
+        cy.cGet('#replaceterm-input-dialog').type('replaced').realPress('Enter');
 
         // Close the dialog
         cy.cGet('.ui-dialog-titlebar-close').click();
