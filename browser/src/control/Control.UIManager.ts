@@ -1129,13 +1129,21 @@ class UIManager extends window.L.Control {
 
 		var found = false;
 		if (this.getCurrentMode() === 'classic') {
-			found ||= this.showCommandInClassicToolbar(command, show);
-			found ||= this.showCommandInMenubar(command, show);
+			if (this.showCommandInClassicToolbar(command, show)) {
+				found = true;
+			}
+			if (this.showCommandInMenubar(command, show)) {
+				found = true;
+			}
 		}
 
 		if (this.notebookbar) {
-			if (this.getCurrentMode() === 'notebookbar') this.notebookbar.reloadShortcutsBar();
-			found ||= this.notebookbar.showNotebookbarCommand(command, show);
+			if (this.getCurrentMode() === 'notebookbar') {
+				this.notebookbar.reloadShortcutsBar();
+			}
+			if (this.notebookbar.showNotebookbarCommand(command, show)) {
+				found = true;
+			}
 		}
 
 		if (!found)
