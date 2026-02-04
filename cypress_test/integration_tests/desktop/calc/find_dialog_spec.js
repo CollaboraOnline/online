@@ -45,16 +45,15 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Searching via find dialog.
 		desktopHelper.assertScrollbarPosition('vertical', 10, 30);
 
 		cy.wrap(this.win.app).should((app) => {
-			return app && app.isFollowingOff() === false;
+			expect(app.isFollowingOff()).to.be.false;
 		});
 
 		desktopHelper.scrollViewDown();
 		helper.processToIdle(this.win);
-
 		desktopHelper.assertScrollbarPosition('vertical', 175, 205);
 
 		cy.wrap(this.win.app).should((app) => {
-			return app && app.isFollowingOff() === true;
+			expect(app.isFollowingOff()).to.be.true;
 		});
 
 		helper.setDummyClipboardForCopy();
