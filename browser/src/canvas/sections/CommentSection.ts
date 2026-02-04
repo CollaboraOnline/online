@@ -1788,14 +1788,41 @@ export class Comment extends CanvasSectionObject {
 
 	public autoCompleteMention(username: string, profileLink: string, replacement: string): void {
 		const selection = window.getSelection();
-		if (!selection.rangeCount) return;
+		if (!selection)
+			return;
 
-		const range = selection.getRangeAt(0);
+		const editorElement = this.getActiveEditorElement();
+		let range: Range | null = null;
+		if (selection.rangeCount) {
+			const candidateRange = selection.getRangeAt(0);
+			if (
+				!editorElement ||
+				editorElement.contains(candidateRange.startContainer)
+			)
+				range = candidateRange;
+		}
+		const container = range ? range.startContainer : null;
+		let textNode: Text | null = null;
+		let cursorPosition = range ? range.endOffset : 0;
 
-		const cursorPosition = range.endOffset;
-		const container = range.startContainer;
+		if (container && container.nodeType === Node.TEXT_NODE) {
+			textNode = container as Text;
+		} else if (!range) {
+			if (!editorElement) return;
+			const walker = document.createTreeWalker(
+				editorElement,
+				NodeFilter.SHOW_TEXT,
+				null,
+			);
+			textNode = walker.nextNode() as Text | null;
+			if (!textNode) {
+				textNode = document.createTextNode('');
+				editorElement.appendChild(textNode);
+			}
+			cursorPosition = textNode.textContent?.length ?? 0;
+		}
 
-		const containerText = container.textContent || '';
+		const containerText = textNode?.textContent || container?.textContent || editorElement?.textContent || '';
 		const mentionStart = containerText.lastIndexOf(replacement, cursorPosition);
 
 		if (mentionStart !== -1) {
@@ -1808,8 +1835,12 @@ export class Comment extends CanvasSectionObject {
 			hyperlink.href = profileLink;
 			hyperlink.textContent = `@${username}`;
 
-			container.textContent = beforeMention;
-			container.parentNode?.insertBefore(hyperlink, container.nextSibling);
+			if (!textNode || !textNode.parentNode) {
+				return;
+			}
+
+			textNode.textContent = beforeMention;
+			textNode.parentNode?.insertBefore(hyperlink, textNode.nextSibling);
 
 			const afterTextNode = document.createTextNode(afterMention);
 			const extraSpaceNode = document.createTextNode('\u00A0');
@@ -1823,6 +1854,33 @@ export class Comment extends CanvasSectionObject {
 			selection.removeAllRanges();
 			selection.addRange(newRange);
 		}
+	}
+
+	private getActiveEditorElement(): HTMLElement | null {
+		if ((<any>window).mode.isMobile()) {
+			const commentSection = app.sectionContainer.getSectionWithName(
+				app.CSections.CommentList.name,
+			);
+			const isMobileCommentActive = commentSection?.isMobileCommentActive();
+			if (!isMobileCommentActive) return null;
+			const mobileCommentModalId = commentSection?.getMobileCommentModalId();
+			return document.getElementById(mobileCommentModalId);
+		}
+		if (
+			this.sectionProperties.nodeModify &&
+			this.sectionProperties.nodeModify.style.display !== 'none'
+		)
+			return this.sectionProperties.nodeModifyText;
+		if (
+			this.sectionProperties.nodeReply &&
+			this.sectionProperties.nodeReply.style.display !== 'none'
+		)
+			return this.sectionProperties.nodeReplyText;
+		return (
+			this.sectionProperties.nodeModifyText ||
+			this.sectionProperties.nodeReplyText ||
+			null
+		);
 	}
 }
 
