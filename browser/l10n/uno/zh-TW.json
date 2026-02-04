@@ -86,6 +86,8 @@
 "Columns ~Before":"前方插欄(~B)",
 "Comments":"評註",
 "Comme~nt":"評註(~N)",
+"Compare":"比對",
+"Compare Non-Track Changed Document":"比對未追蹤修訂的文件",
 "Connector":"連接線",
 "Connector Ends with Arrow":"尾端為箭頭的連接線",
 "Connector with Arrows":"兩端為箭頭的連接線",
