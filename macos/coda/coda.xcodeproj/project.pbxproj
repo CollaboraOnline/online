@@ -59,6 +59,7 @@
 		BEA264B12CBE99340007435A /* RequestDetails.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BEA264A92CBE99340007435A /* RequestDetails.cpp */; };
 		BEA264B32CBE99340007435A /* DocumentBroker.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BEA264A72CBE99340007435A /* DocumentBroker.cpp */; };
 		BEA82C9D2EC2116E00CDC5A6 /* font in Resources */ = {isa = PBXBuildFile; fileRef = BEA82C9C2EC2116A00CDC5A6 /* font */; };
+		BEB7CC182F332BF8006FCAE9 /* TestPlan.xctestplan in Resources */ = {isa = PBXBuildFile; fileRef = BEB7CC172F332BF8006FCAE9 /* TestPlan.xctestplan */; };
 		BEEF3F862CE2139E00ABE785 /* coolkitconfig.xcu in Resources */ = {isa = PBXBuildFile; fileRef = BEEF3F852CE2139E00ABE785 /* coolkitconfig.xcu */; };
 		BEF5CE8F2D633CE60006FD77 /* discovery.xml in Resources */ = {isa = PBXBuildFile; fileRef = BEF5CE8E2D633CE60006FD77 /* discovery.xml */; };
 		BEF6F02D2DD1EC0200EA06BF /* RegexUtil.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BEF6F02C2DD1EC0200EA06BF /* RegexUtil.cpp */; };
@@ -170,6 +171,7 @@
 		BEA264AC2CBE99340007435A /* TileCache.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = TileCache.cpp; path = ../../../../wsd/TileCache.cpp; sourceTree = "<group>"; };
 		BEA264B52CBE9BEF0007435A /* Storage.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = Storage.hpp; path = ../../../../wsd/Storage.hpp; sourceTree = "<group>"; };
 		BEA82C9C2EC2116A00CDC5A6 /* font */ = {isa = PBXFileReference; lastKnownFileType = folder; name = font; path = "../../../browser/node_modules/jquery-contextmenu/dist/font"; sourceTree = "<group>"; };
+		BEB7CC172F332BF8006FCAE9 /* TestPlan.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = TestPlan.xctestplan; sourceTree = "<group>"; };
 		BECC4BAB2CBD3FA300A120B3 /* Collabora Office.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Collabora Office.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		BECC4BBC2CBD3FA400A120B3 /* codaTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = codaTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		BECC4BC62CBD3FA400A120B3 /* codaUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = codaUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -419,6 +421,7 @@
 		BECC4BA22CBD3FA300A120B3 = {
 			isa = PBXGroup;
 			children = (
+				BEB7CC172F332BF8006FCAE9 /* TestPlan.xctestplan */,
 				BE22492A2CC79AAC00385A9C /* Resources */,
 				BEA2637D2CBE39C30007435A /* Online */,
 				BECC4BAD2CBD3FA300A120B3 /* coda */,
@@ -605,6 +608,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				BE22AA9C2CC7AE7400385A9C /* images in Resources */,
+				BEB7CC182F332BF8006FCAE9 /* TestPlan.xctestplan in Resources */,
 				BE862C4D2EB9066E0061664E /* templates in Resources */,
 				BEF5CE8F2D633CE60006FD77 /* discovery.xml in Resources */,
 				BE4C62612D5B736200047DF2 /* coolwsd.xml in Resources */,

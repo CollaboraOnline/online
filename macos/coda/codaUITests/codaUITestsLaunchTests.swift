@@ -1,16 +1,19 @@
-//
-//  codaUITestsLaunchTests.swift
-//  codaUITests
-//
-//  Created by Jan Holešovský on 14.10.2024.
-//
+/*
+ * Copyright the Collabora Online contributors.
+ *
+ * SPDX-License-Identifier: MPL-2.0
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
 
 import XCTest
 
 final class codaUITestsLaunchTests: XCTestCase {
 
     override class var runsForEachTargetApplicationUIConfiguration: Bool {
-        true
+        false // FIXME: Currently test just one configuration, instead all the languages & light/dark theme combinations
     }
 
     override func setUpWithError() throws {
@@ -18,15 +21,17 @@ final class codaUITestsLaunchTests: XCTestCase {
     }
 
     @MainActor
-    func testLaunch() throws {
+    func testBackstageAfterStartup() throws {
         let app = XCUIApplication()
         app.launch()
 
-        // Insert steps here to perform after app launch but before taking a screenshot,
-        // such as logging into a test account or navigating somewhere in the app
+        // Wait until the main window exists
+        let window = app.windows["CODA.BackstageWindow"]
+        XCTAssertTrue(window.waitForExistence(timeout: 5), "The backstage window did not appear")
 
-        let attachment = XCTAttachment(screenshot: app.screenshot())
-        attachment.name = "Launch Screen"
+        // Screenshot just the window
+        let attachment = XCTAttachment(screenshot: window.screenshot())
+        attachment.name = "Backstage Window"
         attachment.lifetime = .keepAlways
         add(attachment)
     }

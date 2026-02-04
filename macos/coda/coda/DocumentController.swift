@@ -135,6 +135,7 @@ final class DocumentController: NSDocumentController {
         w.title = AppDelegate.getAppName() // FIXME anything more?
         w.styleMask = [.titled, .closable, .miniaturizable]
         w.setContentSize(NSSize(width: 1000, height: 640))
+        w.setAccessibilityIdentifier("CODA.BackstageWindow")
         w.center()
 
         let wc = NSWindowController(window: w)

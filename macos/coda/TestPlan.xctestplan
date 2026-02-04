@@ -1,0 +1,24 @@
+{
+  "configurations" : [
+    {
+      "id" : "DE74CEC3-4B3E-4D41-A561-185400AE4AAB",
+      "name" : "Configuration 1",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "testTimeoutsEnabled" : true
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:coda.xcodeproj",
+        "identifier" : "BECC4BC52CBD3FA400A120B3",
+        "name" : "codaUITests"
+      }
+    }
+  ],
+  "version" : 1
+}
