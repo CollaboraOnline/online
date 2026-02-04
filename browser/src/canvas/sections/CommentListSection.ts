@@ -374,7 +374,7 @@ export class CommentSection extends CanvasSectionObject {
 		*/
 		if (app.activeDocument.activeLayout.viewHasEnoughSpaceToShowFullWidthComments())
 			return false;
-		return availableSpace < this.sectionProperties.commentWidth && availableSpace > this.sectionProperties.collapsedCommentWidth;
+		return availableSpace < this.sectionProperties.commentWidth && availableSpace >= 0;
 	}
 
 	public hideAllComments (): void {
