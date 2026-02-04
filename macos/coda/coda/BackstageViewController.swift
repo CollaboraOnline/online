@@ -42,6 +42,7 @@ final class BackstageViewController: NSViewController, WKScriptMessageHandlerWit
 
         webView = WKWebView(frame: .zero, configuration: cfg)
         webView.translatesAutoresizingMaskIntoConstraints = false
+        webView.setAccessibilityIdentifier("CODA.BackstageWindow.WebView")
 
 #if DEBUG
         // Enable possibility to debug the webview from Safari

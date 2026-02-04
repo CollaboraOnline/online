@@ -29,6 +29,10 @@ final class codaUITestsLaunchTests: XCTestCase {
         let window = app.windows["CODA.BackstageWindow"]
         XCTAssertTrue(window.waitForExistence(timeout: 5), "The backstage window did not appear")
 
+        // Find the webview
+        let webView = window.groups["CODA.BackstageWindow.WebView"]
+        XCTAssertTrue(webView.waitForExistence(timeout: 5), "The webview did not appear")
+
         // Screenshot just the window
         let attachment = XCTAttachment(screenshot: window.screenshot())
         attachment.name = "Backstage Window"
