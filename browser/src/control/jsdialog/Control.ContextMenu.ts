@@ -42,9 +42,9 @@ interface MenuCfg {
 class ContextMenuControl extends JSControl {
 	private _prevMousePos: PositionInterface | null = null;
 	private _currMousePos: PositionInterface | null = null;
-	private _menuID: string = 'jsd-context-menu-id';
-	private _menuRootID: string = 'jsd-context-menu-root-id';
-	private _menuRoot: HTMLElement | null = null;
+	private _menuID: string = 'jsd-context-menu';
+	private _menuPosID: string = 'canvas-context-menupos';
+	private _menuPosEl: HTMLElement | null = null;
 	private _autoFillContextMenu: boolean = false;
 	private _spellingContextMenu: boolean = false;
 	public hasContextMenu: boolean = false;
@@ -141,7 +141,7 @@ class ContextMenuControl extends JSControl {
 			map.fire('mobilewizard', { data: menuData });
 		} else {
 			this._addMenu(contextMenu);
-			$('#' + this._menuRootID).focus();
+			$('#' + this._menuPosID).focus();
 			this.hasContextMenu = true;
 		}
 	}
@@ -153,16 +153,16 @@ class ContextMenuControl extends JSControl {
 		Util.ensureValue(position);
 		const container = document.getElementById('canvas-container');
 		Util.ensureValue(container);
-		if (!this._menuRoot) {
-			this._menuRoot = document.createElement('div');
-			this._menuRoot.id = this._menuRootID;
-			container.append(this._menuRoot);
+		if (!this._menuPosEl) {
+			this._menuPosEl = document.createElement('div');
+			this._menuPosEl.id = this._menuPosID;
+			container.append(this._menuPosEl);
 		}
-		const menuRoot = this._menuRoot;
-		menuRoot.style.position = 'absolute';
-		menuRoot.style.zIndex = '1500';
-		menuRoot.style.left = position.x + 'px';
-		menuRoot.style.top = position.y + 'px';
+		const menuPosEl = this._menuPosEl;
+		menuPosEl.style.position = 'absolute';
+		menuPosEl.style.zIndex = '1500';
+		menuPosEl.style.left = position.x + 'px';
+		menuPosEl.style.top = position.y + 'px';
 		const entries = this._getMenuEntries(contextMenu);
 		const callback = (
 			objectType: string,
@@ -199,7 +199,7 @@ class ContextMenuControl extends JSControl {
 
 		JSDialog.OpenDropdown(
 			this._menuID,
-			menuRoot,
+			menuPosEl,
 			entries,
 			callback,
 			'',
