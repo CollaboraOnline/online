@@ -2114,7 +2114,7 @@ export class CommentSection extends CanvasSectionObject {
 		this.sectionProperties.canvasContainerTop = document.getElementById('document-container').getBoundingClientRect().top;
 
 		const availableSpace = this.calculateAvailableSpace();
-		if (this.sectionProperties.commentList.length > 0) {
+		if (!this.commentsHiddenOrNotPresent()) {
 			this.orderCommentList();
 			if (relayout)
 				this.resetCommentsSize();
@@ -2405,7 +2405,7 @@ export class CommentSection extends CanvasSectionObject {
 	}
 
 	private resizeLastComment (): void {
-		if (app.map._docLayer._docType === 'text' && this.sectionProperties.commentList.length > 0) {
+		if (app.map._docLayer._docType === 'text' && !this.commentsHiddenOrNotPresent()) {
 			const minMaxHeight = Number(getComputedStyle(document.documentElement).getPropertyValue('--annotation-min-size'));
 			const maxMaxHeight = Number(getComputedStyle(document.documentElement).getPropertyValue('--annotation-max-size'));
 			//last comment
