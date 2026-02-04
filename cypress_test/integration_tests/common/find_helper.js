@@ -8,6 +8,10 @@ var helper = require('./helper');
 function waitForFindReplaceDialog() {
     cy.cGet('.jsdialog-window.fadein').should('have.css', 'opacity', '1');
     cy.cGet('#FindReplaceDialog').should('be.visible');
+    // Wait for dialog initialization to complete (grab_focus messages etc)
+    cy.getFrameWindow().then(function(win) {
+        helper.processToIdle(win);
+    });
 }
 
 // Open the find dialog
