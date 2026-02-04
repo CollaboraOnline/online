@@ -1313,30 +1313,25 @@ window.L.Map = window.L.Evented.extend({
 
 	// private methods that modify map state
 
-	_resetView: function (center, zoom, preserveMapOffset, afterZoomAnim) {
-
+	_resetView: function (center, zoom) {
 		var zoomChanged = (this._zoom !== zoom);
 
-		if (!afterZoomAnim) {
-			this.fire('movestart');
+		this.fire('movestart');
 
-			if (zoomChanged) {
-				this.fire('zoomstart');
-			}
+		if (zoomChanged) {
+			this.fire('zoomstart');
 		}
 
 		this._zoom = zoom;
 
-		if (!preserveMapOffset) {
-			window.L.DomUtil.setPosition(this._mapPane, new cool.Point(0, 0));
-		}
+		window.L.DomUtil.setPosition(this._mapPane, new cool.Point(0, 0));
 
 		this._pixelOrigin = this._getNewPixelOrigin(center);
 
 		var loading = !this._loaded;
 		this._loaded = true;
 
-		this.fire('viewreset', {hard: !preserveMapOffset});
+		this.fire('viewreset', {hard: true});
 
 		if (loading) {
 			this.fire('load');
@@ -1344,7 +1339,7 @@ window.L.Map = window.L.Evented.extend({
 
 		this.fire('move');
 
-		if (zoomChanged || afterZoomAnim) {
+		if (zoomChanged) {
 			this.fire('zoomend');
 			this.fire('zoomlevelschange');
 		}
@@ -1352,7 +1347,7 @@ window.L.Map = window.L.Evented.extend({
 		// don't allow to turn off the following when moving to other sheet
 		var backupFollowed = app.getFollowedViewId();
 
-		this.fire('moveend', {hard: !preserveMapOffset});
+		this.fire('moveend', {hard: true});
 
 		app.setFollowingUser(backupFollowed);
 	},
