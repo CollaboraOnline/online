@@ -2403,19 +2403,11 @@ window.L.Control.NotebookbarWriter = window.L.Control.Notebookbar.extend({
 			},
 			{ type: 'separator', id: 'review-accepttrackedchanges-break', orientation: 'vertical' },
 			hideChangeTrackingControls ? {} : {
-				'type': 'overflowgroup',
-				'id': 'review-compare',
-				'name':_('Compare'),
-				'accessibility': { focusBack: false, combination: 'RC', de: null },
-				'children' : [
-					{
-						'id': 'review-compare:CompareDocumentsMenu',
-						'type': 'menubutton',
-						'text': _('Compare Documents'),
-						'command': '.uno:CompareDocuments',
-						'accessibility': { focusBack: true, combination: 'CD', de: null }
-					},
-				]
+				'id': 'review-compare:CompareDocumentsMenu',
+				'type': 'menubutton',
+				'text': _UNO('.uno:CompareDocuments', 'text'),
+				'command': '.uno:CompareDocuments',
+				'accessibility': { focusBack: true, combination: 'RO', de: null }
 			},
 			hideChangeTrackingControls ? {} : { type: 'separator', id: 'review-compare-break', orientation: 'vertical' },
 			{
