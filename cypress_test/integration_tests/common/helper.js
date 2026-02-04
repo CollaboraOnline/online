@@ -1255,9 +1255,9 @@ function waitUntilCoreIsIdle(win) {
 		var idleArgs = {
 			'idleID': { 'type': 'string', 'value': expectedIdleID }
 		};
-		// force of 'true' because sendUnoCommand doesn't want to send a
-		// command if a dialog is open
-		win.app.map.sendUnoCommand('.uno:ReportWhenIdle', idleArgs, /*force*/ true);
+		// Use sendMessage directly to avoid side effects from sendUnoCommand
+		// (e.g. re-enabling following state)
+		win.app.socket.sendMessage('uno .uno:ReportWhenIdle ' + JSON.stringify(idleArgs));
 	});
 
 	cy.wrap(null).should(function() {
