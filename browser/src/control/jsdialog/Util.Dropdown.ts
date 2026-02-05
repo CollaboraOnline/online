@@ -184,6 +184,9 @@ JSDialog.OpenDropdown = function (
 			if (typeof data === 'number') pos = data;
 			else pos = data ? parseInt(data.substr(0, data.indexOf(';'))) : -1;
 			const entry = targetEntries && pos >= 0 ? targetEntries[pos] : null;
+			if (entry) {
+				entry.pos = pos;
+			}
 			const subMenuId = object.id + '-' + pos;
 
 			if (eventType === 'selected' || eventType === 'showsubmenu') {
