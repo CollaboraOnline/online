@@ -69,6 +69,10 @@ class ContextMenuControl extends JSControl {
 	}
 
 	private _onClosePopup() {
+		if (!this.hasContextMenu) {
+			return;
+		}
+
 		if (this._autoFillContextMenu) {
 			this._autoFillContextMenu = false;
 			app.map._docLayer._resetReferencesMarks();
