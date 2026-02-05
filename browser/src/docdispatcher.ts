@@ -772,6 +772,7 @@ class Dispatcher {
 				// Try to handle this in constructor for compare-changes layout.
 				if (commandState) {
 					TileManager.redraw();
+					app.map._docLayer._fitWidthZoom(null, null, true);
 					app.activeDocument.activeLayout.sendClientVisibleArea();
 					app.sectionContainer.requestReDraw();
 				}
