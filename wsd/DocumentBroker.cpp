@@ -3207,11 +3207,13 @@ void DocumentBroker::handleUploadToStorageFailed(const StorageBase::UploadResult
 
     if (uploadResult.getResult() == StorageBase::UploadResult::Result::TOO_LARGE)
     {
-        LOG_WRN("Got Entitity Too Large while uploading docKey ["
-                << _docKey << "] to URI [" << _uploadRequest->uriAnonym()
-                << "]. If a reverse-proxy is used, it might be misconfigured. Alternatively, the "
-                   "WOPI host might be low on disk or hitting a quota limit. Making all sessions "
-                   "on doc read-only and notifying clients.");
+        LOG_WRN(
+            "Got Entitity Too Large while uploading docKey ["
+            << _docKey << "] to URI [" << _uploadRequest->uriAnonym() << "] of "
+            << _storageManager.getSizeAsUploaded()
+            << " bytes. If a reverse-proxy is used, it might be misconfigured. Alternatively, the "
+               "WOPI host might be low on disk or hitting a quota limit. Making all sessions "
+               "on doc read-only and notifying clients.");
 
         // Make everyone readonly and tell everyone that the file is too large for the storage.
         for (const auto& sessionIt : _sessions)
@@ -3225,8 +3227,9 @@ void DocumentBroker::handleUploadToStorageFailed(const StorageBase::UploadResult
     else if (uploadResult.getResult() == StorageBase::UploadResult::Result::DISKFULL)
     {
         LOG_WRN("Disk full while uploading docKey ["
-                << _docKey << "] to URI [" << _uploadRequest->uriAnonym()
-                << "]. Making all sessions on doc read-only and notifying clients.");
+                << _docKey << "] to URI [" << _uploadRequest->uriAnonym() << "] of "
+                << _storageManager.getSizeAsUploaded()
+                << " bytes. Making all sessions on doc read-only and notifying clients.");
 
         // Make everyone readonly and tell everyone that storage is low on diskspace.
         for (const auto& sessionIt : _sessions)
@@ -3243,26 +3246,33 @@ void DocumentBroker::handleUploadToStorageFailed(const StorageBase::UploadResult
         const auto session = _uploadRequest->session();
         if (session)
         {
-            LOG_ERR("Cannot upload docKey ["
-                    << _docKey << "] to storage URI [" << _uploadRequest->uriAnonym()
-                    << "]. Invalid or expired access token. Notifying client and invalidating the "
-                       "authorization token of session ["
-                    << session->getId() << ']');
+            LOG_ERR(
+                "Cannot upload docKey ["
+                << _docKey << "] to storage URI [" << _uploadRequest->uriAnonym() << "] of "
+                << _storageManager.getSizeAsUploaded()
+                << " bytes. Invalid or expired access token. Notifying client and invalidating the "
+                   "authorization token of session ["
+                << session->getId() << ']');
             session->sendTextFrameAndLogError("error: cmd=storage kind=saveunauthorized");
             session->invalidateAuthorizationToken();
         }
         else
         {
             LOG_ERR("Cannot upload docKey ["
-                    << _docKey << "] to storage URI [" << _uploadRequest->uriAnonym()
-                    << "]. Invalid or expired access token. The client session is closed.");
+                    << _docKey << "] to storage URI [" << _uploadRequest->uriAnonym() << "] of "
+                    << _storageManager.getSizeAsUploaded()
+                    << " bytes. Invalid or expired access token. The client session is closed.");
         }
 
         broadcastSaveResult(false, "Invalid or expired access token");
     }
     else if (uploadResult.getResult() == StorageBase::UploadResult::Result::FAILED)
     {
-        LOG_DBG("Last upload failed: " << uploadResult.getReason());
+        // Likely timed out.
+        LOG_INF("Failed to upload docKey [" << _docKey << "] to storage URI ["
+                                            << _uploadRequest->uriAnonym() << "] of "
+                                            << _storageManager.getSizeAsUploaded()
+                                            << " bytes with reason: " << uploadResult.getReason());
 
         // Since we've failed to get a response, we cannot know if the
         // Storage has been updated. As such, we need to re-sync the
@@ -3278,7 +3288,9 @@ void DocumentBroker::handleUploadToStorageFailed(const StorageBase::UploadResult
     else if (uploadResult.getResult() == StorageBase::UploadResult::Result::DOC_CHANGED
              || uploadResult.getResult() == StorageBase::UploadResult::Result::CONFLICT)
     {
-        LOG_ERR("PutFile says that Document [" << _docKey << "] changed in storage");
+        LOG_ERR("PutFile failed for docKey ["
+                << _docKey << "] to storage URI [" << _uploadRequest->uriAnonym() << "] of "
+                << _storageManager.getSizeAsUploaded() << " bytes because it's changed in storage");
         broadcastSaveResult(false, "Conflict: Document changed in storage",
                             uploadResult.getReason());
         handleDocumentConflict();
