@@ -55,14 +55,7 @@ Note: in above priority, specifically for first two items(referenced using eithe
 	1. Connected to visible label via mnemonic_widget => most likely already referenced correctly
 	2. Connected via label-for and labelled-by attribute => add relevant parsing logic in online side if not exist already
 	3. Only have accessible-description => we should add new accessible-name here to produce the aria-label in json and parse it in online.
-11. If a label is not referencing to any element then in online side it shoud not parse it as `<label>` instead it should be `<span>`. this can be easily achievable by adding below static role to label.
-	1. ```
-	   <child internal-child="accessible">
-          <object class="AtkObject" id="<GtkLabel-id>-atkobject">
-             <property name="AtkObject::accessible-role">static</property>
-          </object>
-       </child>
-	   ```
+11. If a label is referencing to a form control element then core side json must have `labelFor` property which can be set using either `mnemonic-widget` or via accessibility relation property of type `label-for`. Otherwise, online will create `<span>` element
 12. When implement a new control - please check if it has aria attribute in json? if yes, try to use it in control logic to make that element capture by assistive technology
 13. Each input field/form field should have either visible label, aria-labelledby or aria-label to make it accessible
 14. If a input field have visible label then make sure that both are programmatically connected using either for attriubte of label or aria-labelledby attribute in input element
