@@ -563,7 +563,7 @@ class UIManager extends window.L.Control {
 
 		this.refreshTheme();
 
-		var startFolloMePresntationGet = this.map.isPresentationOrDrawing() && window.coolParams.get('startFollowMePresentation');
+		var startFolloMePresntationGet = this.map.isPresentationOrDrawing();
 		var presentationLeaderIdGet = this.map.isPresentationOrDrawing() && window.coolParams.get('presentationLeaderId');
 		var startPresentationGet = this.map.isPresentationOrDrawing() && window.coolParams.get('startPresentation');
 		if (this.map.wopi.PresentationLeader)
@@ -573,7 +573,7 @@ class UIManager extends window.L.Control {
 		// check for "presentation" dispatch event only after document gets fully loaded
 		// in case if the leader is defined we have to wait a little longer to get the viewer info
 		const startPresentation = () => {
-			if (startFolloMePresntationGet === 'true' || startFolloMePresntationGet === '1') {
+			if (startFolloMePresntationGet) {
 				const dispatchFollowPresentation = () => {
 					app.dispatcher.dispatch('followpresentation');
 					this.map.off('slideshowfollowon', dispatchFollowPresentation);
