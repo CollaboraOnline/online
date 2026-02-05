@@ -2498,19 +2498,21 @@ bool DocumentBroker::isStorageOutdated() const
             << " and the last uploaded file was modified at " << lastModifiedTime << ", which are "
             << (currentModifiedTime == lastModifiedTime ? "identical" : "different"));
 
-#if ENABLE_DEBUG
-    if (_storageManager.getLastUploadedFileModifiedLocalTime() !=
-        _saveManager.getLastModifiedLocalTime())
+    if (Util::isDebugEnabled())
     {
-        const std::chrono::steady_clock::time_point now = std::chrono::steady_clock::now();
-        LOG_ERR("StorageManager's lastModifiedTime ["
+        if (_storageManager.getLastUploadedFileModifiedLocalTime() !=
+            _saveManager.getLastModifiedLocalTime())
+        {
+            const std::chrono::steady_clock::time_point now = std::chrono::steady_clock::now();
+            LOG_ERR(
+                "StorageManager's lastModifiedTime ["
                 << Util::getTimeForLog(now, _storageManager.getLastUploadedFileModifiedLocalTime())
                 << "] doesn't match that of SaveManager's ["
                 << Util::getTimeForLog(now, _saveManager.getLastModifiedLocalTime())
                 << "]. File lastModifiedTime: [" << Util::getTimeForLog(now, currentModifiedTime)
                 << ']');
+        }
     }
-#endif
 
     // Compare to the last uploaded file's modified-time.
     return currentModifiedTime != lastModifiedTime;
@@ -4512,12 +4514,10 @@ bool DocumentBroker::handleInput(const std::shared_ptr<Message>& message)
         {
             clearCaches();
         }
-#if ENABLE_DEBUG
-        else if (message->firstTokenMatches("unitresult:"))
+        else if (Util::isDebugEnabled() && message->firstTokenMatches("unitresult:"))
         {
             UNITWSD_CALL(processUnitResult(message->tokens()));
         }
-#endif
         else
         {
             LOG_ERR("Unexpected message: [" << message->abbr() << ']');
