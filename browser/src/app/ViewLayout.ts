@@ -74,6 +74,11 @@ class ViewLayoutBase {
 		);
 	}
 
+	public adjustViewZoomLevel() {
+		if (app.map._docLayer)
+			app.map._docLayer._fitWidthZoom(undefined, undefined, true);
+	}
+
 	public documentToViewY(point: cool.SimplePoint): number {
 		return (
 			point.pY - this._viewedRectangle.pY1 + this._documentAnchorPosition[1]

@@ -27,7 +27,7 @@ class ViewLayoutCompareChanges extends ViewLayoutNewBase {
 		this.updateViewData();
 	}
 
-	private adjustViewZoomLevel() {
+	public adjustViewZoomLevel() {
 		Util.ensureValue(app.activeDocument);
 
 		const min = 0.1;

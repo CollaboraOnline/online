@@ -246,7 +246,8 @@ class Dispatcher {
 			app.map.setZoom(app.map.options.zoom, null, true);
 		};
 		this.actionsMap['fitwidthzoom'] = () => {
-			app.map._docLayer._fitWidthZoom(undefined, undefined, true);
+			if (app.activeDocument.activeLayout)
+				app.activeDocument.activeLayout.adjustViewZoomLevel();
 		};
 
 		this.actionsMap['searchprev'] = () => {
@@ -725,6 +726,7 @@ class Dispatcher {
 				let commandState = false;
 				if (app.activeDocument.activeLayout.type === 'ViewLayoutMultiPage') {
 					app.activeDocument.activeLayout = new ViewLayoutWriter();
+					app.activeDocument.activeLayout.adjustViewZoomLevel();
 				} else {
 					app.activeDocument.activeLayout = new ViewLayoutMultiPage();
 					commandState = true;
