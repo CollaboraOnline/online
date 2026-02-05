@@ -311,6 +311,16 @@ Moreover in describe you can use the taga11yenabled tag for tests that should
 be run only when accessibility is enabled, and the taga11ydisabled tag
 for tests that should be run only when accessibility is disabled.
 
+4. ENABLE_CPULOAD
+
+Some flaky tests only fail under high CPU load. Use this flag to run
+tests while generating artificial CPU load (one busy loop per core):
+
+    ENABLE_CPULOAD="1" make check-desktop spec=calc/find_dialog_spec.js
+
+You can verify load is active by checking `cat /proc/loadavg` - the first
+number should be close to or above your CPU core count.
+
 Known issues
 ------------
 

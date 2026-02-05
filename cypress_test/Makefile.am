@@ -72,6 +72,7 @@ ALLOWED_PORTS = $(if $(findstring php-proxy, $(CYPRESS_INTEGRATION)),$(PHP_PROXY
 			$(if $(findstring nextcloud, $(CYPRESS_INTEGRATION)),$(NEXTCLOUD_PORT),$(shell seq 9900 1 9980)))
 
 KILL_COMMAND=$(if $(coolwsd),true,pkill -F $(PID_FILE) || pkill --signal SIGKILL -F $(PID_FILE))
+LOAD_PID_FILE=$(abs_builddir)/workdir/load.pids
 PARALLEL_BUILD = $(findstring -j,$(MAKEFLAGS))
 DISPLAY_NUMBER = 100
 HEADLESS_BUILD := $(findstring Command failed,$(shell xhost > /dev/null 2>&1 || echo "Command failed, so we are in a headless environment."))
@@ -840,6 +841,22 @@ define run_test_parallel
 		--config-file $(CYPRESS_CONFIG)
 endef
 
+# Shell commands for CPU load generation (expanded conditionally based on ENABLE_CPULOAD)
+LOAD_START_CMD = $(if $(ENABLE_CPULOAD),\
+	echo "Starting CPU load generators..."; \
+	rm -f $(LOAD_PID_FILE); \
+	for i in $$(seq 1 $$(nproc)); do \
+		(while true; do :; done) & echo $$! >> $(LOAD_PID_FILE); \
+	done; \
+	echo "Load generators started";)
+LOAD_STOP_CMD = $(if $(ENABLE_CPULOAD),\
+	echo "Stopping CPU load generators..."; \
+	if [ -f $(LOAD_PID_FILE) ]; then \
+		while read pid; do kill $$pid 2>/dev/null || true; done < $(LOAD_PID_FILE); \
+		rm -f $(LOAD_PID_FILE); \
+	fi; \
+	echo "Load generators stopped";)
+
 # Run one test \ tests in headless mode.
 #
 # Parameters:
@@ -848,14 +865,15 @@ endef
 # 3 - env:		 list of environment variables (e.g. cypress' --env argument).
 # 4 - spec (optional):   test file path (e.g. cypress' --spec argument)
 define run_test_headless
+	$(LOAD_START_CMD) \
 	$(CYPRESS_BINARY) run \
 		--browser $(BROWSER) \
 		--headless \
 		--config-file $(CYPRESS_CONFIG) \
 		--config $(1) \
 		--env $(2) \
-		$(if $(3),--spec=$(3)) \
-		|| ($(KILL_COMMAND) && false)
+		$(if $(3),--spec=$(3)); \
+		rc=$$?; $(LOAD_STOP_CMD) $(KILL_COMMAND) || true; exit $$rc
 endef
 
 # Checks whether the given spec file exists.
