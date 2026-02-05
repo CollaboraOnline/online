@@ -23,6 +23,27 @@ class ViewLayoutMultiPage extends ViewLayoutNewBase {
 		app.map.on('zoomend', this.reset.bind(this));
 
 		this.reset();
+		this.adjustViewZoomLevel();
+	}
+
+	public adjustViewZoomLevel() {
+		Util.ensureValue(app.activeDocument);
+
+		const min = 0.1;
+		const max = 10;
+
+		const anchorSection = this.getDocumentAnchorSection();
+
+		// Take 50% of the width and try to render 2 pages side by side.
+		const halfWidth = Math.round(anchorSection.size[0] * 0.5);
+
+		const ratio = halfWidth / app.activeDocument.fileSize.pX;
+		let zoom = app.map.getScaleZoom(ratio);
+		zoom = Math.min(max, Math.max(min, zoom));
+
+		if (zoom > 1) zoom = Math.floor(zoom);
+
+		app.map.setZoom(zoom, { animate: false });
 	}
 
 	private resetViewLayout() {
