@@ -768,9 +768,13 @@ class Dispatcher {
 					? new ViewLayoutWriter()
 					: new ViewLayoutCompareChanges();
 
-				TileManager.redraw();
-				app.activeDocument.activeLayout.sendClientVisibleArea();
-				app.sectionContainer.requestReDraw();
+				// Do this only if we are switching to Writer normal layout.
+				// Try to handle this in constructor for compare-changes layout.
+				if (commandState) {
+					TileManager.redraw();
+					app.activeDocument.activeLayout.sendClientVisibleArea();
+					app.sectionContainer.requestReDraw();
+				}
 			}
 		};
 	}

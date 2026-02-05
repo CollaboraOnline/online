@@ -46,6 +46,20 @@ class URLPopUpSection extends HTMLObjectSection {
 		this.getHTMLObject().style.pointerEvents = '';
     }
 
+	adjustHTMLObjectPosition() {
+		const divBoundingRectangle = this.sectionProperties.objectDiv.getBoundingClientRect();
+		const arrowBoundingRectangle = this.arrowDiv.getBoundingClientRect();
+
+		const left = Math.round((this.sectionProperties.documentPosition.vX / app.dpiScale) - (arrowBoundingRectangle.width * 0.5)) + 'px';
+		const top = Math.round((this.sectionProperties.documentPosition.vY / app.dpiScale) - divBoundingRectangle.height - (arrowBoundingRectangle.height * 0.5)) + 'px';
+
+		if (this.sectionProperties.objectDiv.style.left !== left)
+			this.sectionProperties.objectDiv.style.left = left;
+
+		if (this.sectionProperties.objectDiv.style.top !== top)
+			this.sectionProperties.objectDiv.style.top = top;
+	}
+
 	getPopUpWidth(): number {
 		return this.getHTMLObject().getBoundingClientRect().width;
 	}

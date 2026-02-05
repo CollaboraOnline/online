@@ -295,11 +295,8 @@ class ViewLayoutBase {
 		for (let i = 0; i < this.currentCoordList.length; i++) {
 			const tempTile = TileManager.get(this.currentCoordList[i]);
 
-			if (!tempTile || tempTile.needsFetch()) allReady = false;
+			if (!tempTile || !tempTile.isReady()) allReady = false;
 		}
-
-		if (!allReady && request)
-			TileManager.checkRequestTiles(this.currentCoordList);
 
 		return allReady;
 	}

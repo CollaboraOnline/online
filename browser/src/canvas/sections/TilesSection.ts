@@ -366,7 +366,7 @@ export class TilesSection extends CanvasSectionObject {
 	}
 
 	private drawForViewLayoutCompareChanges() {
-		if (!app.activeDocument.activeLayout.areViewTilesReady(true)) return; // Draw after we have all the tiles.
+		if (!app.activeDocument.activeLayout.areViewTilesReady()) return; // Draw after we have all the tiles.
 
 		const view = app.activeDocument.activeLayout as ViewLayoutCompareChanges;
 
