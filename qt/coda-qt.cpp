@@ -1016,7 +1016,14 @@ QVariant Bridge::cool(const QString& messageStr)
                 // If the web view was added to a QTabWidget, remove that tab
                 // instead of closing the entire top-level window.
                 QWidget* parentWidget = _webView->parentWidget();
-                QTabWidget* tabWidget = qobject_cast<QTabWidget*>(parentWidget);
+                QTabWidget* tabWidget = nullptr;
+                while (parentWidget)
+                {
+                    tabWidget = qobject_cast<QTabWidget*>(parentWidget);
+                    if (tabWidget)
+                        break;
+                    parentWidget = parentWidget->parentWidget();
+                }
                 if (tabWidget)
                 {
                     int index = tabWidget->indexOf(_webView);
@@ -1157,27 +1164,19 @@ QVariant Bridge::cool(const QString& messageStr)
         if (_webView)
         {
             QWidget* parentWidget = _webView->parentWidget();
-            QTabWidget* tabWidget = qobject_cast<QTabWidget*>(parentWidget);
+            QTabWidget* tabWidget = nullptr;
+            while (parentWidget)
+            {
+                tabWidget = qobject_cast<QTabWidget*>(parentWidget);
+                if (tabWidget)
+                    break;
+                parentWidget = parentWidget->parentWidget();
+            }
             if (tabWidget)
             {
                 int index = tabWidget->indexOf(_webView);
                 if (index != -1)
-                {
-                    quint64 ownerPtr = _webView->property("webview_owner").toULongLong();
-                    WebView* owner = reinterpret_cast<WebView*>((quintptr)ownerPtr);
-                    bool okToClose = true;
-                    if (owner)
-                        okToClose = owner->confirmClose();
-                    if (okToClose)
-                    {
-                        if (owner)
-                            owner->prepareForClose();
-                        tabWidget->removeTab(index);
-                    }
-                    else
-                        return {};
-                }
-                _webView->deleteLater();
+                    emit tabWidget->tabCloseRequested(index);
             }
             else if (_webView->window())
             {
