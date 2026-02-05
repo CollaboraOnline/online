@@ -107,7 +107,7 @@ function _menubuttonControl (parentContainer, data, builder) {
 					JSDialog.CloseDropdown(dropdownId);
 					return true;
 				} else if (eventType === 'selected' && entry && entry.action) {
-					app.dispatcher.dispatch(entry.action);
+					app.dispatcher.dispatch(entry.action, entry);
 					JSDialog.CloseDropdown(dropdownId);
 					return true;
 				} else if (eventType === 'selected' && entry && entry.id) {
