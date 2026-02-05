@@ -61,7 +61,7 @@ function openQuickFind() {
 function searchInQuickFind(text) {
 	cy.log('>> searchInQuickFind - start');
 
-	cy.cGet('input#navigator-search-input').clear().type(text);
+	cy.cGet('input#navigator-search-input').type('{selectall}{backspace}' + text);
 	cy.cGet('input#navigator-search-input').should('have.prop', 'value', text);
 
 	cy.cGet('#navigator-search-button').click();
