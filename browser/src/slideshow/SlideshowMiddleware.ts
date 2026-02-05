@@ -79,40 +79,24 @@ class SlideBitmapManager {
 			});
 	}
 
-	public static handleRenderSlideEvent(e: any) {
-		if (!e.textMsg.startsWith('slidelayer:')) return;
-		var json = JSON.parse(e.textMsg.substring('slidelayer: '.length));
+	public static decompressSlideLayer(json: any, imgBytes: Uint8Array) : Promise<ImageBitmap> | null {
 		if (json.isCompressed) {
-			this.cacheCompressedLayer(json, e.imgBytes.subarray(e.imgIndex));
+			this.cacheCompressedLayer(json, imgBytes);
 			return;
 		}
 		if (json.width && json.height) {
 			var imgData = this.decompressAndCreateImageData(
-				e.imgBytes.subarray(e.imgIndex),
+				imgBytes,
 				json.width,
 				json.height,
 			);
-			e.imgPromise = createImageBitmap(imgData);
-			this.pendingLayers.push(e.imgPromise);
-
-			e.imgPromise.then((img: ImageBitmap) => {
-				e.image = img;
-				e.imageIsComplete = true;
-				app.map.fire('slidelayer', {
-					message: json,
-					image: img,
-				});
-			});
+			const imgPromise = createImageBitmap(imgData);
+			this.pendingLayers.push(imgPromise);
+			return imgPromise;
 		}
 	}
 
-	public static handleSlideRenderingComplete(e: any) {
-		if (!e.textMsg.startsWith('sliderenderingcomplete:')) return;
-
-		var json = JSON.parse(
-			e.textMsg.substring('sliderenderingcomplete: '.length),
-		);
-
+	public static waitForSlideDecompression(json: any) : Promise<any> | null {
 		if (
 			json.compressedLayers &&
 			this.compressedSlideCache.get(json.slidehash) != null
@@ -125,20 +109,12 @@ class SlideBitmapManager {
 				});
 			}
 			this.compressedSlideCache.delete(json.slidehash);
-			app.map.fire('sliderenderingcomplete', {
-				success: json.status === 'success',
-				compressedLayers: json.compressedLayers,
-			});
 			return;
 		}
 
-		Promise.all(this.pendingLayers).then(() => {
-			this.pendingLayers = [];
-			app.map.fire('sliderenderingcomplete', {
-				success: json.status === 'success',
-				compressedLayers: json.compressedLayers,
-			});
-		});
+		const pendingLayers = this.pendingLayers;
+		this.pendingLayers = [];
+		return Promise.all(pendingLayers);
 	}
 
 	private static cacheCompressedLayer(json: any, imgRawData: Uint8Array) {
