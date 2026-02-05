@@ -1322,11 +1322,15 @@ class TileManager {
 		return boundList.map((x: any) => this.pxBoundsToTileRange(x));
 	}
 
-	private static updateTileDistance(tile: Tile, zoom: number) {
+	private static updateTileDistance(
+		tile: Tile,
+		zoom: number,
+		ignoreMode = false,
+	) {
 		if (
 			tile.coords.z !== zoom ||
 			tile.coords.part !== app.map._docLayer._selectedPart ||
-			tile.coords.mode !== app.map._docLayer._selectedMode
+			(tile.coords.mode !== app.map._docLayer._selectedMode && !ignoreMode)
 		)
 			tile.distanceFromView = Number.MAX_SAFE_INTEGER;
 		else {
@@ -1362,8 +1366,14 @@ class TileManager {
 		else {
 			const zoom = Math.round(app.map.getZoom());
 
+			// 2 modes are active at the same time in compare changes view mode.
+			// If we don't ignore mode in that view mode, left side of the view is garbage collected, which is sad.
+			const ignoreMode =
+				app.activeDocument &&
+				app.activeDocument.activeLayout.type === 'ViewLayoutCompareChanges';
+
 			for (const [_index, tile] of this.tiles.entries()) {
-				this.updateTileDistance(tile, zoom);
+				this.updateTileDistance(tile, zoom, ignoreMode);
 			}
 
 			this.sortTileBitmapList();
@@ -2248,14 +2258,15 @@ class TileManager {
 		);
 	}
 
-	public static checkRequestTiles(coordList: TileCoordData[]): void {
+	// The "currentCoordList" is the currently visible coordinates list.
+	public static checkRequestTiles(currentCoordList: TileCoordData[]): void {
 		const tileCombineQueue = [];
-		for (var i = 0; i < coordList.length; i++) {
-			let tile = TileManager.get(coordList[i]);
+		for (var i = 0; i < currentCoordList.length; i++) {
+			let tile = TileManager.get(currentCoordList[i]);
 
-			if (!tile) tile = TileManager.createTile(coordList[i]);
+			if (!tile) tile = TileManager.createTile(currentCoordList[i]);
 
-			if (tile.needsFetch()) tileCombineQueue.push(coordList[i]);
+			if (tile.needsFetch()) tileCombineQueue.push(currentCoordList[i]);
 			else this.makeTileCurrent(tile);
 		}
 

@@ -514,10 +514,10 @@ export class ScrollSection extends CanvasSectionObject {
 		if (app.activeDocument.activeLayout.canScrollHorizontal(documentAnchor)) {
 			if ((<any>window).mode.isDesktop() || this.sectionProperties.mouseIsOnHorizontalScrollBar)
 				this.showHorizontalScrollBar();
-			else
+			else if (this.sectionProperties.drawHorizontalScrollBar === true)
 				this.hideHorizontalScrollBar();
 		}
-		else this.hideHorizontalScrollBar();
+		else if (this.sectionProperties.drawHorizontalScrollBar === true) this.hideHorizontalScrollBar();
 
 		temp = point.pX >= this.size[0] - scrollProps.usableThickness;
 		temp = temp && (!mirrorX && point.pX >= this.size[0] - scrollProps.usableThickness) || (mirrorX && point.pX <= scrollProps.usableThickness);
