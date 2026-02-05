@@ -43,8 +43,6 @@ class Socket {
 	private _slurpTimer: TimeoutHdl | undefined;
 	private _renderEventTimer: TimeoutHdl | undefined;
 	private _renderEventTimerStart: DOMHighResTimeStamp | undefined;
-	private _slurpTimerDelay: number | undefined;
-	private _slurpTimerLaunchTime: number | undefined;
 	private timer: ReturnType<typeof setInterval> | undefined;
 	public threadLocalLoggingLevelToggle: boolean;
 
@@ -66,8 +64,6 @@ class Socket {
 		this._slurpTimer = undefined;
 		this._renderEventTimer = undefined;
 		this._renderEventTimerStart = undefined;
-		this._slurpTimerDelay = undefined;
-		this._slurpTimerLaunchTime = undefined;
 		this.timer = undefined;
 		this.socket = undefined;
 		this.traceEvents = new TraceEvents(this);
@@ -469,14 +465,9 @@ class Socket {
 		const docLayer = this._map ? this._map._docLayer : undefined;
 		if (docLayer && docLayer.filterSlurpedMessage(e)) return;
 
-		const predictedTiles = TileManager.predictTilesToSlurp();
-		// scale delay, to a max of 50ms, according to the number of
-		// tiles predicted to arrive.
-		const delayMS = Math.max(Math.min(predictedTiles, 50), 1);
-
 		if (!this._slurpQueue) this._slurpQueue = [];
 		this._slurpQueue.push(e);
-		this._queueSlurpEventEmission(delayMS);
+		this._queueSlurpEventEmission();
 	}
 
 	private _emptyQueue(): void {
@@ -610,48 +601,18 @@ class Socket {
 		return true;
 	}
 
-	private _queueSlurpEventEmission(delayMS: number): void {
-		let now = Date.now();
-		if (this._slurpTimer && this._slurpTimerDelay != delayMS) {
-			// The timer already exists, but now want to change timeout _slurpTimerDelay to delayMS.
-			// Cancel it and reschedule by replacement with another timer using the desired delayMS
-			// adjusted as if used at the original launch time.
-			clearTimeout(this._slurpTimer);
-			this._slurpTimer = undefined;
-			this._slurpTimerDelay = delayMS;
-
-			now = Date.now();
-			if (this._slurpTimerLaunchTime === undefined) {
-				console.assert(
-					false,
-					'_slurpTimerLaunchTime is undefined when _slurpTimer exists!',
-				);
-				return;
-			}
-			const sinceLaunchMS = now - this._slurpTimerLaunchTime;
-			delayMS -= sinceLaunchMS;
-			if (delayMS <= 0) delayMS = 1;
-		}
-
+	private _queueSlurpEventEmission(): void {
 		if (!this._slurpTimer) {
-			if (!this._slurpTimerLaunchTime) {
-				// The initial launch of the timer, rescheduling replacements retain
-				// the launch time
-				this._slurpTimerLaunchTime = now;
-				this._slurpTimerDelay = delayMS;
-			}
 			this._slurpTimer = setTimeout(
 				function (this: Socket) {
 					this._slurpTimer = undefined;
-					this._slurpTimerLaunchTime = undefined;
-					this._slurpTimerDelay = undefined;
 					if (this._inLayerTransaction) {
 						this._slurpDuringTransaction = true;
 						return;
 					}
 					this._emitSlurpedEvents();
 				}.bind(this),
-				delayMS,
+				1,
 			);
 		}
 	}
@@ -776,7 +737,7 @@ class Socket {
 				this._inLayerTransaction = false;
 				if (this._slurpDuringTransaction) {
 					this._slurpDuringTransaction = false;
-					this._queueSlurpEventEmission(1);
+					this._queueSlurpEventEmission();
 				}
 			};
 
@@ -1238,7 +1199,7 @@ class Socket {
 		e.image = imageElement;
 		imageElement.onload = function (this: Socket) {
 			e.imageIsComplete = true;
-			this._queueSlurpEventEmission(1);
+			this._queueSlurpEventEmission();
 			if (imageElement.completeTraceEvent)
 				imageElement.completeTraceEvent.finish();
 		}.bind(this);
@@ -1251,7 +1212,7 @@ class Socket {
 			function (this: Socket, err: ErrorEvent) {
 				window.app.console.log('Failed to load image ' + img + ' fun ' + err);
 				e.imageIsComplete = true;
-				this._queueSlurpEventEmission(1);
+				this._queueSlurpEventEmission();
 				if (imageElement.completeTraceEvent)
 					imageElement.completeTraceEvent.abort();
 			}.bind(this),
