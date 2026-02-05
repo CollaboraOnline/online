@@ -89,14 +89,13 @@ std::string RecentFiles::serialise()
     result = "[ ";
     for (int i = 0; i < _mostRecentlyUsed.size(); i++)
     {
+        Poco::URI uri(_mostRecentlyUsed[i].uri);
         std::vector<std::string> segments;
-        Poco::URI(_mostRecentlyUsed[i].uri).getPathSegments(segments);
-
-        assert(!segments.empty());
+        uri.getPathSegments(segments);
 
         result += "{ "
             "\"uri\": \"" + _mostRecentlyUsed[i].uri + "\", "
-            "\"name\": \"" + JsonUtil::escapeJSONValue(segments.back()) + "\", "
+            "\"name\": \"" + JsonUtil::escapeJSONValue(segments.empty() ? uri.getPathEtc() : segments.back()) + "\", "
             "\"timestamp\": \"" + std::format("{:%FT%TZ}", _mostRecentlyUsed[i].timestamp) + "\""
             " }";
         if (i < _mostRecentlyUsed.size() - 1)
