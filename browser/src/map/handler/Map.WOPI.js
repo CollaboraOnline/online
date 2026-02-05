@@ -58,17 +58,16 @@ window.L.Map.WOPI = window.L.Handler.extend({
 
 	initialize: function(map) {
 		this._map = map;
+
+		// init message handlers should be available as soon as possible
+		this._map.on('docloaded', this._postLoaded, this);
+		app.events.on('updatepermission', this._postLoaded.bind(this));
+		this._map.on('viewinfo', this._postLoaded, this);
+		this._map.on('initializedui', this._postLoaded, this);
 	},
 
 	addHooks: function() {
 		this._map.on('postMessage', this._postMessage, this);
-
-		// init messages
-		this._map.on('docloaded', this._postLoaded, this);
-		app.events.on('updatepermission', this._postLoaded.bind(this));
-		// This indicates that 'viewinfo' message has already arrived
-		this._map.on('viewinfo', this._postLoaded, this);
-		this._map.on('initializedui', this._postLoaded, this);
 
 		this._map.on('wopiprops', this._setWopiProps, this);
 		window.L.DomEvent.on(window, 'message', this._postMessageListener, this);
