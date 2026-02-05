@@ -296,8 +296,7 @@ function selectCellsInRange(range) {
 	cy.log('>> selectCellsInRange - start');
 
 	cy.cGet(helper.addressInputSelector)
-		.clear()
-		.type(range + '{enter}');
+		.type('{selectall}{backspace}' + range + '{enter}');
 
 	cy.log('<< selectCellsInRange - end');
 }

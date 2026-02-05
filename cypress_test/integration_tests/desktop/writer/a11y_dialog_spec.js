@@ -493,7 +493,7 @@ describe(['tagdesktop'], 'Accessibility Writer Dialog Tests', { testIsolation: f
             })
             .then(() => {
                 // save with a name that exists to force the warning subdialog
-                cy.cGet('#name_entry-input').clear().type('Hatching 1');
+                cy.cGet('#name_entry-input').type('{selectall}{backspace}Hatching 1');
                 cy.cGet('[role="dialog"][aria-labelledby*="Name"] #ok-button').should('be.enabled').click();
                 return helper.processToIdle(win);
             })

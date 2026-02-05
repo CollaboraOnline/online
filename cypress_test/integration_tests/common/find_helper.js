@@ -34,7 +34,7 @@ function openFindDialog() {
 function typeIntoSearchField(text) {
     cy.log('>> typeIntoSearchField - start');
 
-    cy.cGet('input#searchterm-input-dialog').clear().type(text);
+    cy.cGet('input#searchterm-input-dialog').type('{selectall}{backspace}' + text);
     cy.cGet('input#searchterm-input-dialog').should('have.prop', 'value', text);
 
     cy.cGet('#search').should('not.be.disabled');
