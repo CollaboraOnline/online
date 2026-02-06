@@ -1436,7 +1436,7 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 
 	_fixedtextControl: function(parentContainer, data, builder) {
 		// Check if this label should render as static content(i.e. span) instead of interactive label
-		if (!data.labelFor)
+		if (!data.labelFor || !JSDialog.GetFormControlTypesInLO().has(data.labelForType))
 			return JSDialog.StaticText(parentContainer, data, builder);
 
 		var fixedtext = window.L.DomUtil.create('label', builder.options.cssClass, parentContainer);
