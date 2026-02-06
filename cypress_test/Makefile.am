@@ -554,7 +554,11 @@ MULTIUSER_ENV = \
 # Parameters:
 # 1 - +env (optional):	additional env variables (will be appended to $(MULTIUSER_ENV).
 define run_all_multiuser_tests
-	$(foreach test,$(MULTIUSER_TEST_FILES),$(call run_multiuser_test,$(test),$(1)))
+	$(V)echo "Running cypress multi-user tests..."
+	$(V)echo
+	$(eval ENV_EXTENDED=$(MULTIUSER_ENV)$(if $(1),$(COMMA)$(1)))
+	$(call run_test_headless,\
+		$(MULTIUSER_CONFIG),$(ENV_EXTENDED),)
 endef
 
 # Run one multiuser test / all multiuser tests in interactive test runner.
