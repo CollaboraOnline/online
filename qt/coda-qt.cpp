@@ -17,6 +17,7 @@
 #include "MobileApp.hpp"
 #include "Clipboard.hpp"
 #include "Protocol.hpp"
+#include "Uri.hpp"
 #include "Util.hpp"
 #include "FileUtil.hpp"
 #include "qstandardpaths.h"
@@ -803,14 +804,20 @@ QVariant Bridge::cool(const QString& messageStr)
         if (message.size() > 5) {
             auto const fileURL = _document._fileURL;
 
+            std::optional<std::string> accessToken;
             std::optional<std::string> wopiSrc;
             for (auto const & param: fileURL.getQueryParameters()) {
-                if (param.first == "WOPISrc") {
-                    wopiSrc = param.second;
-                    break;
+                if (param.first == "access_token") {
+                    if (!accessToken) {
+                        accessToken = param.second;
+                    }
+                } else if (param.first == "WOPISrc") {
+                    if (!wopiSrc) {
+                        wopiSrc = param.second;
+                    }
                 }
             }
-            if (!wopiSrc) {
+            if (!(accessToken && wopiSrc)) {
                 std::abort(); //TODO
             }
 
@@ -832,7 +839,7 @@ QVariant Bridge::cool(const QString& messageStr)
                 port == 0 ? net::getDefaultPortForScheme("https://") : std::to_string(port));
 
             boost::beast::ssl_stream<boost::beast::tcp_stream> stream(ioc, ctx);
-            boost::beast::get_lowest_layer(stream).connect(resolved);
+            auto const ep = boost::beast::get_lowest_layer(stream).connect(resolved);
             stream.handshake(boost::asio::ssl::stream_base::client);
             boost::beast::http::request<boost::beast::http::string_body> req(
                 boost::beast::http::verb::get, message.substr(6), 11);
@@ -863,6 +870,10 @@ QVariant Bridge::cool(const QString& messageStr)
             }
 
             _document._fileURL = Poco::URI(tempFilePath);
+            _document._remoteSaveLocationURI =
+                "https://" + fileURL.getHost() + ":" + std::to_string(ep.port())
+                + fileURL.getPath() + "/co/collab/upload?WOPISrc=" + Uri::encode(*wopiSrc)
+                + "&access_token=" + Uri::encode(*accessToken);
         }
 
         // Skip for starter screen (no document connection needed)
@@ -1003,18 +1014,12 @@ QVariant Bridge::cool(const QString& messageStr)
     }
     else if (message.starts_with(COMMANDRESULT))
     {
-        return {};
         const auto object = parseJsonFromMessage(message, COMMANDRESULT.size());
         if (!object)
             return {};
 
         const std::string commandName = object->get("commandName").toString();
         const bool success = object->get("success").convert<bool>();
-        bool wasModified = false;
-        if (object->has("wasModified"))
-        {
-            wasModified = object->get("wasModified").convert<bool>();
-        }
 
         bool isAutosave = false;
         if (object->has("isAutosave"))
@@ -1023,9 +1028,62 @@ QVariant Bridge::cool(const QString& messageStr)
         }
 
         // only handle successful .uno:Save commands
-        // let manually triggered saves through even if the document is not modified.
-        if (commandName != ".uno:Save" || !success || (!wasModified && isAutosave))
+        if (commandName != ".uno:Save" || !success)
             return {};
+
+        if (!isAutosave && !_document._remoteSaveLocationURI.empty()) {
+            boost::asio::io_context ioc;
+            boost::asio::ssl::context ctx(boost::asio::ssl::context::tlsv12_client);
+            boost::beast::ssl_stream<boost::beast::tcp_stream> stream(ioc, ctx);
+            boost::asio::ip::tcp::resolver resolver(ioc);
+            auto const resolved = resolver.resolve(
+                _document._remoteSaveLocationURI.getHost(),
+                std::to_string(_document._remoteSaveLocationURI.getPort()));
+            boost::beast::get_lowest_layer(stream).connect(resolved);
+            stream.handshake(boost::asio::ssl::stream_base::client);
+            boost::beast::http::request<boost::beast::http::string_body> req(
+                boost::beast::http::verb::post, _document._remoteSaveLocationURI.getPathEtc(), 11);
+            req.set(boost::beast::http::field::host, _document._remoteSaveLocationURI.getHost());
+            req.set(boost::beast::http::field::user_agent, BOOST_BEAST_VERSION_STRING);
+            std::optional<std::string> accessToken;
+            for (auto const & param: _document._remoteSaveLocationURI.getQueryParameters()) {
+                if (param.first == "access_token") {
+                    accessToken = param.second;
+                    break;
+                }
+            }
+            if (accessToken) {
+                req.set(boost::beast::http::field::cookie, "access_token=" + *accessToken);
+            }
+            req.set(boost::beast::http::field::content_type, "application/octet-stream");
+            const std::string tempPath = Poco::Path(_document._fileURL.getPath()).toString();
+            std::ifstream f(tempPath, std::ios::binary);
+            if (!f) {
+                std::abort(); //TODO
+            }
+            std::string body{
+                std::istreambuf_iterator<char>(f), std::istreambuf_iterator<char>()};
+            f.close();
+            req.body() = std::move(body);
+            req.prepare_payload();
+            boost::beast::http::write(stream, req);
+            {
+                boost::beast::flat_buffer buffer;
+                boost::beast::http::response<boost::beast::http::string_body> res;
+                boost::beast::http::read(stream, buffer, res);
+                if (res.result() != boost::beast::http::status::ok) {
+                    std::abort(); //TODO
+                }
+            }
+            boost::beast::error_code ec;
+            stream.shutdown(ec);
+            if (ec == boost::asio::error::eof || ec == boost::asio::ssl::error::stream_truncated) {
+                ec = {};
+            }
+            if (ec) {
+                throw boost::beast::system_error{ec};
+            }
+        }
     }
     else if (message.starts_with(UPLOADSETTINGS))
     {

@@ -20,6 +20,7 @@ struct DocumentData
     Poco::URI _fileURL;
     int _fakeClientFd = -1;
     unsigned _appDocId = 0;
+    Poco::URI _remoteSaveLocationURI;
 };
 
 unsigned generateNewAppDocId();
