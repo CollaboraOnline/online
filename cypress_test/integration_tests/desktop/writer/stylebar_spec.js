@@ -19,37 +19,36 @@ describe(['tagdesktop'], 'Test style sidebar', function() {
 		cy.cGet('#toolbar-up [id^="format-style-dialog"] button:visible').click();
 		cy.cGet('#StyleListDeck').should('exist').should('be.visible');
 
-		renderEntry('Complimentary Close');
-
-		cy.viewport(1000,660);
-
-		getEntry('Complimentary Close'); // check render exists
-
 		cy.getFrameWindow().then((win) => {
 			this.win = win;
-		});
+			renderEntry(this.win, 'Complimentary Close');
+			cy.viewport(1000,660);
+			getEntry(this.win, 'Complimentary Close'); // check render exists
+		})
 	});
 
 	/// finds rendered entry or text one and scrolls into view to trigger observer action
-	function renderEntry(text) {
+	function renderEntry(win, text) {
+		helper.processToIdle(win);
 		cy.cGet('#treeview .ui-treeview-cell-text [textContent="' + text + '"], #treeview img.ui-treeview-custom-render[alt="' + text + '"]',
 			{ timeout: 20000 }).should('exist').scrollIntoView();
 	}
 
 	/// finds rendered entry
-	function getEntry(text) {
+	function getEntry(win, text) {
+		helper.processToIdle(win);
 		return cy.cGet('#treeview img.ui-treeview-custom-render[alt="' + text + '"]', { timeout: 20000 })
 			.should('exist');
 	}
 
 	it('Style sidebar updates rendered preview on added style', function() {
-		getEntry('Complimentary Close').click();
+		getEntry(this.win, 'Complimentary Close').click();
 
 		helper.processToIdle(this.win); // stabilize
 		cy.cGet('#sidebar-dock-wrapper').compareSnapshot('style_initial', 0.07);
 
 		// open context menu and "new" dialog
-		getEntry('Complimentary Close').rightclick();
+		getEntry(this.win, 'Complimentary Close').rightclick();
 		cy.cGet('#__MENU__').should('exist');
 		cy.cGet('#__MENU__ .ui-treeview-cell-text-content').contains('New').click();
 
@@ -57,10 +56,9 @@ describe(['tagdesktop'], 'Test style sidebar', function() {
 		cy.cGet('[id^="TemplateDialog"].jsdialog').should('exist');
 		cy.cGet('.button-primary').click();
 		cy.cGet('[id^="TemplateDialog"].jsdialog').should('not.exist');
-		helper.processToIdle(this.win); // stabilize
 
 		// check image after style was added
-		getEntry('Complimentary Close').parent().parent().parent().parent()
+		getEntry(this.win, 'Complimentary Close').parent().parent().parent().parent()
 			.find('.ui-treeview-expander-column').should('exist').click();
 
 		helper.processToIdle(this.win); // stabilize
@@ -68,8 +66,8 @@ describe(['tagdesktop'], 'Test style sidebar', function() {
 	});
 
 	it('Style sidebar context menu on node with spaces', function() {
-		getEntry('Complimentary Close').click();
-		getEntry('Complimentary Close').rightclick();
+		getEntry(this.win, 'Complimentary Close').click();
+		getEntry(this.win, 'Complimentary Close').rightclick();
 
 		cy.cGet('#__MENU__').should('exist');
 
