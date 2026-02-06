@@ -144,3 +144,28 @@ JSDialog.AddAltAttrOnFocusableImg = function (
 		});
 	}
 };
+
+JSDialog.GetFormControlTypesInLO = function() {
+	return new Set([
+		'spinfield',
+		'edit',
+		'formattedfield',
+		'metricfield',
+		'combobox',
+		'radiobutton',
+		'checkbox',
+		'time',
+		'listbox',
+	]);
+};
+
+JSDialog.GetFormControlTypesInCO = function() {
+	return new Set([
+		'INPUT', 
+		'SELECT', 
+		'TEXTAREA',
+		'METER',
+		'OUTPUT',
+		'PROGRESS',
+	]);
+};
