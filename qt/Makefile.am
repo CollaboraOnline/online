@@ -16,7 +16,7 @@ if !ENABLE_DEBUG
 AM_CPPFLAGS += -DNDEBUG
 endif
 
-AM_LDFLAGS = -pthread ${QT6_LIBS} -ldl $(ZSTD_LIBS) ${PNG_LIBS} -lPocoZip
+AM_LDFLAGS = -pthread ${QT6_LIBS} -ldl $(ZSTD_LIBS) ${PNG_LIBS} -lPocoZip ${OPENSSL_LIBS}
 
 # Android's CMakefile list re-worked:
 

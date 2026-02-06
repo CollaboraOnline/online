@@ -223,8 +223,12 @@ int main(int argc, char** argv)
         // Convert relative paths to absolute paths
         for (const QString& file : files)
         {
-            QFileInfo fileInfo(file);
-            absoluteFiles << fileInfo.absoluteFilePath();
+            if (file.startsWith("remote:", Qt::CaseInsensitive)) {
+                absoluteFiles << file;
+            } else {
+                QFileInfo fileInfo(file);
+                absoluteFiles << fileInfo.absoluteFilePath();
+            }
         }
     }
     else

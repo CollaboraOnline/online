@@ -1638,6 +1638,8 @@ AS_IF([test "$ENABLE_QTAPP" = true],
              AC_MSG_WARN([lupdate not found in $QT_BIN_DIR])
        fi
        AC_SUBST(LUPDATE)
+
+       PKG_CHECK_MODULES([OPENSSL], [openssl])
 ])
 
 AM_CONDITIONAL([ENABLE_DEBUG], [test "$ENABLE_DEBUG" = "true"])
