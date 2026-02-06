@@ -4,6 +4,46 @@ entries:
   - annotations:
       artifacthub.io/images: |
         - name: collabora
+          image: docker.io/collabora/code:25.04.8.3.1
+        - name: nginx
+          image: docker.io/nginx:1.25
+        - name: twostoryrobot/simple-file-upload
+          image: docker.io/twostoryrobot/simple-file-upload@sha256:547fc4360b31d8604b7a26202914e87cd13609cc938fd83f412c77eb44aa1cc4
+    apiVersion: v2
+    appVersion: 25.04.8.3.1
+    created: "2026-02-06T17:57:23.59524176Z"
+    description: Collabora Online helm chart
+    digest: 304a8fffe71e5f57f270ac425244eb5d8315f6776e3c48e4559f1c7ee6330b73
+    home: https://www.collaboraonline.com/code/
+    icon: https://avatars0.githubusercontent.com/u/22418908?s=200&v=4
+    keywords:
+    - collabora-online
+    - collabora
+    - code
+    - nextcloud
+    - office
+    maintainers:
+    - email: k.erber@erber-freelance.de
+      name: Klaus Erber
+      url: https://www.erber-freelance.de/
+    - email: martin.mueller@dataport.de
+      name: Martin Müller
+      url: https://dphoenixsuite.de
+    - email: geno+dev@fireorbit.de
+      name: Geno
+      url: https://fireorbit.de
+    name: collabora-online
+    sources:
+    - https://github.com/CollaboraOnline/online
+    - https://github.com/CollaboraOnline/online/tree/master/docker
+    - https://github.com/CollaboraOnline/online/tree/master/kubernetes/helm/collabora-online
+    type: application
+    urls:
+    - https://github.com/CollaboraOnline/online/releases/download/helm-collabora-online-1.1.56/collabora-online-1.1.56.tgz
+    version: 1.1.56
+  - annotations:
+      artifacthub.io/images: |
+        - name: collabora
           image: docker.io/collabora/code:25.04.8.2.1
         - name: nginx
           image: docker.io/nginx:1.25
@@ -2311,4 +2351,4 @@ entries:
     urls:
     - https://github.com/CollaboraOnline/online/releases/download/helm-collabora-online-1.0.1/collabora-online-1.0.1.tgz
     version: 1.0.1
-generated: "2026-01-28T19:25:08.189780272Z"
+generated: "2026-02-06T17:57:23.595427465Z"
