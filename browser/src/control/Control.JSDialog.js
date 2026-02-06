@@ -102,7 +102,9 @@ window.L.Control.JSDialog = window.L.Control.extend({
 				this.closePopover(id, sendCloseEvent);
 			else
 				this.closeDialog(id, sendCloseEvent);
+			return true;
 		}
+		return false;
 	},
 
 	closeAll: function(leaveSnackbar) {
@@ -203,6 +205,26 @@ window.L.Control.JSDialog = window.L.Control.extend({
 				this.map.focus();
 			}
 		});
+	},
+
+	// Manage focus after a close
+	// hadOpenedDialog: whether there were dialogs open before the close
+	// dialogKeys: snapshot of dialog keys taken before the close
+	focusAfterClose: function(hadOpenedDialog, dialogKeys) {
+		if (hadOpenedDialog && dialogKeys.length) {
+			var lastKey = dialogKeys[dialogKeys.length - 1];
+			const lastDialog = this.dialogs[lastKey];
+			const lastContainer = lastDialog ? lastDialog.container : null;
+			if (lastDialog && lastDialog.canHaveFocus && lastContainer) {
+				var initialFocusElement = JSDialog.GetFocusableElements(lastContainer);
+				if (initialFocusElement && initialFocusElement.length)
+					initialFocusElement[0].focus();
+				else
+					lastContainer.focus();
+			}
+		} else if (hadOpenedDialog) {
+			this.map.focus();
+		}
 	},
 
 	setTabs: function() {
@@ -820,22 +842,11 @@ window.L.Control.JSDialog = window.L.Control.extend({
 			const dialogs = Object.keys(this.dialogs);
 			const hadOpenedDialog = dialogs.length > 0;
 
-			this.close(instance.id, false);
+			const didClose = this.close(instance.id, false);
 
-			// Manage focus
-			if (hadOpenedDialog && dialogs.length) {
-				var lastKey = dialogs[dialogs.length - 1];
-				const lastDialog = this.dialogs[lastKey];
-				const lastContainer = lastDialog.container;
-				if (lastDialog.canHaveFocus && lastContainer) {
-					var initialFocusElement = JSDialog.GetFocusableElements(lastContainer);
-					if (initialFocusElement && initialFocusElement.length)
-						initialFocusElement[0].focus();
-					else
-						lastContainer.focus();
-				}
-			} else if (hadOpenedDialog){
-				this.map.focus();
+			if (didClose) {
+				// Manage focus
+				this.focusAfterClose(hadOpenedDialog, dialogs);
 			}
 		}
 		else {
