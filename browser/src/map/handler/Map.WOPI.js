@@ -56,14 +56,25 @@ window.L.Map.WOPI = window.L.Handler.extend({
 	_appLoaded: false,
 	_insertImageMenuSetupDone: false,
 
-	initialize: function(map) {
-		this._map = map;
-
-		// init message handlers should be available as soon as possible
+	postLoadEnable: function() {
 		this._map.on('docloaded', this._postLoaded, this);
-		app.events.on('updatepermission', this._postLoaded.bind(this));
+		app.events.on('updatepermission', this._postLoadedBound);
 		this._map.on('viewinfo', this._postLoaded, this);
 		this._map.on('initializedui', this._postLoaded, this);
+	},
+
+	postLoadDisable: function() {
+		this._map.off('docloaded', this._postLoaded, this);
+		app.events.off('updatepermission', this._postLoadedBound);
+		this._map.off('viewinfo', this._postLoaded, this);
+		this._map.off('initializedui', this._postLoaded, this);
+	},
+
+	initialize: function(map) {
+		this._map = map;
+		this._postLoadedBound = this._postLoaded.bind(this);
+		// init messages handlers should be available as soon as possible
+		this.postLoadEnable();
 	},
 
 	addHooks: function() {
@@ -106,9 +117,7 @@ window.L.Map.WOPI = window.L.Handler.extend({
 	removeHooks: function() {
 		this._map.off('postMessage', this._postMessage, this);
 
-		// init messages
-		this._map.off('docloaded', this._postLoaded, this);
-		this._map.off('viewinfo', this._postLoaded, this);
+		this.postLoadDisable();
 
 		this._map.off('wopiprops', this._setWopiProps, this);
 		window.L.DomEvent.off(window, 'message', this._postMessageListener, this);
