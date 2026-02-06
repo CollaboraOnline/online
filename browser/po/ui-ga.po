@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-02-03 23:25+0100\n"
-"PO-Revision-Date: 2026-02-03 13:04+0000\n"
-"Last-Translator: Anonymous <noreply@weblate.org>\n"
+"PO-Revision-Date: 2026-02-04 13:07+0000\n"
+"Last-Translator: Aindriú Mac Giolla Eoin <aindriu80@gmail.com>\n"
 "Language-Team: Irish <https://hosted.weblate.org/projects/collabora-online/"
 "ui/ga/>\n"
-"Language: \n"
+"Language: ga\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=5; plural=n==1 ? 0 : n==2 ? 1 : (n>2 && n<7) ? 2 :("
-"n>6 && n<11) ? 3 : 4;\n"
+"Plural-Forms: nplurals=5; plural=n==1 ? 0 : n==2 ? 1 : (n>2 && n<7) ? 2 :(n>"
+"6 && n<11) ? 3 : 4;\n"
 "X-Generator: Weblate 5.16-dev\n"
 
 #: admin/admin.strings.js:15
@@ -385,7 +385,7 @@ msgstr "Síniú CA"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:160
 msgid "In-document Screen Reader"
-msgstr ""
+msgstr "Léitheoir Scáileáin In-Doiciméad"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:161
 #: src/control/Control.Menubar.ts:172 src/control/Control.Menubar.ts:497
@@ -855,7 +855,7 @@ msgstr "Roghnaigh cluaisín chun socruithe a fheiceáil."
 
 #: admin/src/Util.js:26
 msgid "kB"
-msgstr "kBGenericName"
+msgstr "kB"
 
 #: admin/src/Util.js:26
 msgid "MB"
@@ -1081,13 +1081,12 @@ msgid "This version of {productname} is powered by"
 msgstr "Tá an leagan seo de {productname} faoi thiomáint ag"
 
 #: src/control/Control.AboutDialog.ts:189
-#, fuzzy
 msgid "Served by: "
-msgstr "Arna sheirbheáil ag:"
+msgstr "Freastalaíte ag: "
 
 #: src/control/Control.AboutDialog.ts:212
 msgid "View widgets"
-msgstr ""
+msgstr "Féach ar ghiuirléidí"
 
 #: src/control/Control.AboutDialog.ts:236
 msgid "\"Slow Proxy\""
@@ -1880,7 +1879,7 @@ msgstr "Deisiú"
 
 #: src/control/Control.Menubar.ts:140
 msgid "Compare Changes"
-msgstr ""
+msgstr "Déan Comparáid idir Athruithe"
 
 #: src/control/Control.Menubar.ts:159 src/control/Control.Menubar.ts:480
 #: src/control/Control.Menubar.ts:486 src/control/Control.Menubar.ts:647
@@ -1895,7 +1894,7 @@ msgstr "Athshocraigh súmáil"
 
 #: src/control/Control.Menubar.ts:165
 msgid "Fit to Screen"
-msgstr ""
+msgstr "Oiriúnaigh don Scáileán"
 
 #: src/control/Control.Menubar.ts:168 src/control/Control.Menubar.ts:492
 #: src/control/Control.Menubar.ts:659 src/control/Control.Menubar.ts:804
@@ -2402,7 +2401,7 @@ msgstr "Deireadh an Ghrádáin"
 
 #: src/control/Control.NavigatorPanel.ts:38
 msgid "Navigation Panel"
-msgstr ""
+msgstr "Painéal Loingseoireachta"
 
 #: src/control/Control.NavigatorPanel.ts:110
 msgid "Navigation"
@@ -2632,7 +2631,7 @@ msgstr "SparklineName"
 
 #: src/control/Control.NotebookbarCalc.js:99
 msgid "Table Design"
-msgstr ""
+msgstr "Dearadh Tábla"
 
 #: src/control/Control.NotebookbarCalc.js:106
 #: src/control/Control.NotebookbarDraw.js:121
@@ -2861,7 +2860,7 @@ msgstr "Amharc Réamhshocraithe"
 
 #: src/control/Control.NotebookbarCalc.js:1431
 msgid "Open Views List"
-msgstr ""
+msgstr "Oscail Liosta Radharcanna"
 
 #: src/control/Control.NotebookbarCalc.js:1438
 msgid "New Sheet View"
@@ -2913,11 +2912,11 @@ msgstr "Roghanna Stíl Tábla"
 
 #: src/control/Control.NotebookbarCalc.js:1678
 msgid "Header Row"
-msgstr ""
+msgstr "Ró Ceanntásca"
 
 #: src/control/Control.NotebookbarCalc.js:1690
 msgid "Total Row"
-msgstr ""
+msgstr "Iomlán na Ró"
 
 #: src/control/Control.NotebookbarCalc.js:1708
 msgid "Banded Rows"
@@ -2937,7 +2936,7 @@ msgstr "Colún Deireanach"
 
 #: src/control/Control.NotebookbarCalc.js:1765
 msgid "Filter Buttons"
-msgstr ""
+msgstr "Cnaipí Scagaire"
 
 #: src/control/Control.NotebookbarCalc.js:1801
 #: src/control/Control.NotebookbarCalc.js:2549
@@ -3114,16 +3113,16 @@ msgstr "I láthair i bhFuinneog"
 
 #: src/control/Control.NotebookbarImpress.js:493
 msgid "Presenter View"
-msgstr ""
+msgstr "Radharc Láithreora"
 
 #: src/control/Control.NotebookbarImpress.js:501
 msgid "Present to All"
-msgstr ""
+msgstr "Cuir i Láthair do Chách"
 
 #: src/control/Control.NotebookbarImpress.js:509
 #: src/slideshow/SlideShowPresenter.ts:751
 msgid "Follow Presenter"
-msgstr ""
+msgstr "Lean an Láithreoir"
 
 #: src/control/Control.NotebookbarImpress.js:637
 msgid "Slide Views"
@@ -3167,7 +3166,7 @@ msgstr "Teimpléid Sleamhnán Máistir"
 
 #: src/control/Control.NotebookbarImpress.js:1809
 msgid "Themes"
-msgstr ""
+msgstr "Téamaí"
 
 #: src/control/Control.NotebookbarImpress.js:1859
 msgid "Slide Size"
@@ -3204,11 +3203,11 @@ msgstr "Téigh As Líne"
 
 #: src/control/Control.NotebookbarWriter.js:489
 msgid "Validate Sidebar"
-msgstr ""
+msgstr "Bailíochtú Barra Taoibh"
 
 #: src/control/Control.NotebookbarWriter.js:497
 msgid "Validate Dialog"
-msgstr ""
+msgstr "Bailíochtú Dialóg"
 
 #: src/control/Control.NotebookbarWriter.js:940
 #: src/control/Control.Zotero.js:827
@@ -3245,7 +3244,7 @@ msgstr "Anuas"
 
 #: src/control/Control.NotebookbarWriter.js:1664
 msgid "Page Width"
-msgstr ""
+msgstr "Leithead Leathanaigh"
 
 #: src/control/Control.NotebookbarWriter.js:2301
 msgid "Tracking"
@@ -3253,15 +3252,15 @@ msgstr "Rianú"
 
 #: src/control/Control.NotebookbarWriter.js:2322
 msgid "View Changes"
-msgstr ""
+msgstr "Féach ar Athruithe"
 
 #: src/control/Control.NotebookbarWriter.js:2408
 msgid "Compare"
-msgstr ""
+msgstr "Déan comparáid"
 
 #: src/control/Control.NotebookbarWriter.js:2414
 msgid "Compare Documents"
-msgstr ""
+msgstr "Déan Comparáid idir Doiciméid"
 
 #: src/control/Control.NotebookbarWriter.js:2506
 msgid "Split"
@@ -3355,7 +3354,7 @@ msgstr "Cumasaíodh gléasadh ceangail jail fast trealamh tapa"
 
 #: src/control/Control.ServerAuditDialog.ts:119
 msgid "Fast kit jail bind mounting not configured"
-msgstr ""
+msgstr "Níl gléasadh ceangail jail kit tapa cumraithe"
 
 #: src/control/Control.ServerAuditDialog.ts:127
 msgid "Poorly performing proxying of all network requests."
@@ -3491,7 +3490,7 @@ msgstr "Amharc Il-Leathanaigh"
 
 #: src/control/Control.StatusBar.js:257
 msgid "Zoom to Fit Page Width"
-msgstr ""
+msgstr "Zúmáil chun Oiriúnú do Leithead an Leathanaigh"
 
 #: src/control/Control.StatusBar.js:414
 msgid ""
@@ -3927,16 +3926,16 @@ msgstr "Inléite amháin"
 
 #: src/control/PermissionMode.ts:108
 msgid "Viewing Mode"
-msgstr ""
+msgstr "Mód Amharc"
 
 #: src/control/PermissionMode.ts:114
 msgid "Editing Mode"
-msgstr ""
+msgstr "Mód Eagarthóireachta"
 
 #: src/control/PermissionMode.ts:125 src/control/PermissionMode.ts:176
 #: src/control/PermissionMode.ts:182 src/control/PermissionMode.ts:188
 msgid "Viewing"
-msgstr ""
+msgstr "Ag féachaint"
 
 #: src/control/jsdialog/Definitions.Menu.ts:111
 #: src/control/jsdialog/Definitions.Menu.ts:1748
@@ -4105,7 +4104,7 @@ msgstr "Ionsáigh Ilmheáin Logánta"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1740
 msgid "Compare Local Document"
-msgstr ""
+msgstr "Déan Comparáid idir Doiciméad Áitiúil"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1746
 msgid "Very Tight"
@@ -4447,7 +4446,7 @@ msgstr ""
 
 #: src/control/jsdialog/Widget.TreeView.ts:1637
 msgid "Search items"
-msgstr ""
+msgstr "Cuardaigh míreanna"
 
 #: src/app/Socket.ts:189
 msgid "Oops, there is a problem connecting to {productname}: "
@@ -4928,7 +4927,7 @@ msgstr "an roghchlár Amharc"
 
 #: src/layer/tile/CanvasTileLayer.js:461
 msgid "Online Editor"
-msgstr ""
+msgstr "Eagarthóir Ar Líne"
 
 #: src/layer/tile/CanvasTileLayer.js:1456
 msgid "Functions"
@@ -5122,7 +5121,7 @@ msgstr "Comhad nua á chruthú as teimpléad..."
 
 #: src/map/handler/Map.WOPI.js:224
 msgid "Compare Document..."
-msgstr ""
+msgstr "Déan comparáid idir an Doiciméad..."
 
 #: src/map/handler/Map.WOPI.js:732
 msgid "File name should contain an extension."
