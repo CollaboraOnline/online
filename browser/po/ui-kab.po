@@ -7,11 +7,11 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-02-03 23:25+0100\n"
-"PO-Revision-Date: 2026-02-03 12:53+0000\n"
-"Last-Translator: ButterflyOfFire <boffire@users.noreply.hosted.weblate.org>\n"
+"PO-Revision-Date: 2026-02-05 04:11+0000\n"
+"Last-Translator: Amadɣas <massiin@proton.me>\n"
 "Language-Team: Kabyle <https://hosted.weblate.org/projects/collabora-online/"
 "ui/kab/>\n"
-"Language: \n"
+"Language: kab\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -2265,32 +2265,32 @@ msgstr ""
 #: src/control/Control.Menubar.ts:920
 #: src/control/jsdialog/Definitions.Menu.ts:1862
 msgid "Top N elements..."
-msgstr ""
+msgstr "Iferdisen ufella N.."
 
 #: src/control/Control.Menubar.ts:921
 #: src/control/jsdialog/Definitions.Menu.ts:1866
 msgid "Top N percent..."
-msgstr ""
+msgstr "Afmiḍi ufella N..."
 
 #: src/control/Control.Menubar.ts:922
 #: src/control/jsdialog/Definitions.Menu.ts:1870
 msgid "Bottom N elements..."
-msgstr ""
+msgstr "Iferdisen n wadda N..."
 
 #: src/control/Control.Menubar.ts:923
 #: src/control/jsdialog/Definitions.Menu.ts:1874
 msgid "Bottom N percent..."
-msgstr ""
+msgstr "Afmiḍi n wadda N..."
 
 #: src/control/Control.Menubar.ts:924
 #: src/control/jsdialog/Definitions.Menu.ts:1878
 msgid "Above Average..."
-msgstr ""
+msgstr "Nnig n tlemmast..."
 
 #: src/control/Control.Menubar.ts:925
 #: src/control/jsdialog/Definitions.Menu.ts:1882
 msgid "Below Average..."
-msgstr ""
+msgstr "Ddaw n tlemmast..."
 
 #: src/control/Control.Menubar.ts:1048 src/control/Control.Menubar.ts:1114
 #: src/control/Control.Menubar.ts:1179 src/control/Control.Menubar.ts:1234
@@ -2316,11 +2316,11 @@ msgstr "Tawila n usebtar"
 
 #: src/control/Control.Menubar.ts:1245
 msgid "Define print area"
-msgstr ""
+msgstr "Sbadu tamnaḍt n usiggez"
 
 #: src/control/Control.Menubar.ts:1246
 msgid "Remove print area"
-msgstr ""
+msgstr "Kkes tamnaḍt n usiggez"
 
 #: src/control/Control.Menubar.ts:1606 src/control/Control.StatusBar.js:542
 msgid "Reset to Default Language"
@@ -2333,13 +2333,12 @@ msgid "More..."
 msgstr "Ugar..."
 
 #: src/control/Control.Menubar.ts:1981
-#, fuzzy
 msgid "Use Compact view"
-msgstr "Taskant takussimt"
+msgstr "Seqdec taskant takussimt"
 
 #: src/control/Control.Menubar.ts:1983
 msgid "Use Tabbed view"
-msgstr ""
+msgstr "Seqdec taskant s yiccaren"
 
 #: src/control/Control.Menubar.ts:2169
 msgid "Insert Shape"
@@ -2348,14 +2347,16 @@ msgstr "Ger-d talɣa"
 #: src/control/Control.Menubar.ts:2253
 msgid "The signature line can now be moved or resized as needed."
 msgstr ""
+"Izirig n uzmul yezmer tura ad yettwasmutti neɣ ad yettuwennez deg teɣzi "
+"almend n wayen tesriḍ."
 
 #: src/control/Control.Menubar.ts:2255
 msgid "Finish electronic signing"
-msgstr ""
+msgstr "Fak azmul aliktṛunan"
 
 #: src/control/Control.Menubar.ts:2436
 msgid "file type icon"
-msgstr ""
+msgstr "tignit n wanaw n ufaylu"
 
 #: src/control/Control.MobileBottomBar.js:28
 #: src/control/Control.MobileBottomBar.js:130
@@ -2374,32 +2375,31 @@ msgstr "Sken afeggag n unadi"
 
 #: src/control/Control.MobileSearchBar.ts:34
 msgid "Clear the search field"
-msgstr ""
+msgstr "Sfeḍ urti n unadi"
 
 #: src/control/Control.MobileWizardBuilder.js:567
 msgid "Background Color"
-msgstr ""
+msgstr "Ini n ugilal"
 
 #: src/control/Control.MobileWizardBuilder.js:569
 msgid "Gradient Start"
-msgstr ""
+msgstr "Tazwara n tfesna n yini"
 
 #: src/control/Control.MobileWizardBuilder.js:571
 msgid "Gradient End"
-msgstr ""
+msgstr "Tagara n tfesna n yini"
 
 #: src/control/Control.NavigatorPanel.ts:38
 msgid "Navigation Panel"
-msgstr ""
+msgstr "Agalis n yinig"
 
 #: src/control/Control.NavigatorPanel.ts:110
-#, fuzzy
 msgid "Navigation"
-msgstr "Iminig"
+msgstr "Tunigin"
 
 #: src/control/Control.NavigatorPanel.ts:131
 msgid "Close Navigation"
-msgstr ""
+msgstr "Mdel Tunigin"
 
 #: src/control/Control.NavigatorPanel.ts:187
 #: src/control/Control.NotebookbarImpress.js:1408
@@ -2409,7 +2409,7 @@ msgstr "Tigriwin"
 
 #: src/control/Control.NavigatorPanel.ts:225
 msgid "Results"
-msgstr ""
+msgstr "Igmaḍ"
 
 #: src/control/Control.NavigatorPanel.ts:473
 #: src/control/jsdialog/Widget.TreeView.ts:1639
@@ -2418,23 +2418,23 @@ msgstr "Nadi..."
 
 #: src/control/Control.QuickFindPanel.ts:122
 msgid "Type in the search box to find anything in your document"
-msgstr ""
+msgstr "Aru di tenkult n unadi akken ad tafeḍ kra tebɣiḍ deg yisemli-ik·im"
 
 #: src/control/Notebookbar.ImpressAnimationTab.ts:24
 msgid "Animation"
-msgstr ""
+msgstr "Merru"
 
 #: src/control/Notebookbar.ImpressAnimationTab.ts:41
 msgid "Applied animations"
-msgstr ""
+msgstr "Merru yettwasnesen"
 
 #: src/control/Notebookbar.ImpressAnimationTab.ts:59
 msgid "Move Up"
-msgstr ""
+msgstr "Ali d asawen"
 
 #: src/control/Notebookbar.ImpressAnimationTab.ts:75
 msgid "Move Down"
-msgstr ""
+msgstr "Ddu d akessar"
 
 #: src/control/Notebookbar.ImpressAnimationTab.ts:105
 msgid "Category"
@@ -2445,18 +2445,17 @@ msgid "Start"
 msgstr "Tazwara"
 
 #: src/control/Notebookbar.ImpressAnimationTab.ts:140
-#, fuzzy
 msgid "Effect"
-msgstr "Isemda"
+msgstr "Asemdu"
 
 #: src/control/Notebookbar.ImpressTransitionTab.ts:24
 msgid "Transition"
-msgstr ""
+msgstr "Asaka"
 
 #: src/control/Notebookbar.ImpressTransitionTab.ts:41
 #: src/control/Sidebar.FromNotebookbarPanel.ts:108
 msgid "Transitions"
-msgstr ""
+msgstr "Isuka"
 
 #: src/control/Notebookbar.ImpressTransitionTab.ts:66
 msgid "Variant"
