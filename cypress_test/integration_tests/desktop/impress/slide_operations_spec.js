@@ -18,14 +18,14 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Slide operations', functio
 	it('Add slides', function() {
 		cy.cGet('#presentation-toolbar #insertpage').click();
 
-		impressHelper.assertNumberOfSlidePreviews(2);
+		impressHelper.assertSlidePreviewCountAfterIdle(this.win, 2);
 	});
 
 	it('Remove slides', function() {
 		// Add slides
 		cy.cGet('#presentation-toolbar #insertpage').click();
 
-		impressHelper.assertNumberOfSlidePreviews(2);
+		impressHelper.assertSlidePreviewCountAfterIdle(this.win, 2);
 
 		// Remove Slides
 		cy.cGet('#presentation-toolbar #deletepage')
@@ -39,7 +39,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Slide operations', functio
 		cy.cGet('#presentation-toolbar #deletepage')
 			.should('have.attr', 'disabled')
 
-		impressHelper.assertNumberOfSlidePreviews(1);
+		impressHelper.assertSlidePreviewCountAfterIdle(this.win, 1);
 
 	});
 
@@ -74,7 +74,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Slide operations', functio
 		cy.cGet('#Insert-tab-label').click();
 		desktopHelper.getNbIcon('DuplicatePage', 'Insert').click();
 
-		impressHelper.assertNumberOfSlidePreviews(2);
+		impressHelper.assertSlidePreviewCountAfterIdle(this.win, 2);
 		cy.cGet('#SlideStatus').should('have.text', 'Slide 2 of 2');
 		cy.cGet('[id^=annotation-content-area-]').should('include.text', 'some text0');
 

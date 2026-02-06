@@ -55,13 +55,15 @@ function typeTextAndVerify(text, expected, copy) {
 // We use the number of slide previews as indicators.
 // Parameters:
 // slides - number of expected slides
-function assertNumberOfSlidePreviews(slides) {
-	cy.log('>> assertNumberOfSlidePreviews - start');
+function assertSlidePreviewCountAfterIdle(win, slides) {
+	cy.log('>> assertSlidePreviewCountAfterIdle - start');
 
+	helper.processToIdle(win);
+	// +1 to account for #first-drop-site which also has the .preview-frame class
 	cy.cGet('#slide-sorter .preview-frame')
 		.should('have.length', slides + 1);
 
-	cy.log('<< assertNumberOfSlidePreviews - end');
+	cy.log('<< assertSlidePreviewCountAfterIdle - end');
 }
 
 // Trigger mouse click on center of the screen
@@ -240,7 +242,7 @@ function changeSlide(changeNum,direction) {
 module.exports.assertNotInTextEditMode = assertNotInTextEditMode;
 module.exports.assertInTextEditMode = assertInTextEditMode;
 module.exports.typeTextAndVerify = typeTextAndVerify;
-module.exports.assertNumberOfSlidePreviews = assertNumberOfSlidePreviews;
+module.exports.assertSlidePreviewCountAfterIdle = assertSlidePreviewCountAfterIdle;
 module.exports.clickCenterOfSlide = clickCenterOfSlide;
 module.exports.selectTextShapeInTheCenter = selectTextShapeInTheCenter;
 module.exports.triggerNewSVGForShapeInTheCenter = triggerNewSVGForShapeInTheCenter;
