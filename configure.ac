@@ -8,6 +8,11 @@ LT_INIT([shared, disable-static, dlopen])
 
 AM_INIT_AUTOMAKE([1.10 foreign subdir-objects tar-pax -Wno-portability])
 
+# Drop the 'u' from automake's default 'cru' to silence the warning:
+# "ar: `u' modifier ignored since `D' is the default (see `U')"
+# Don't use 'crD' as the 'D' flag is GNU-specific and unsupported on macOS/FreeBSD.
+AC_SUBST([ARFLAGS], [cr])
+
 AC_CONFIG_MACRO_DIR([m4])
 
 # We don't want to require pkg-config and PKG_CHECK_MODULES on macOS
