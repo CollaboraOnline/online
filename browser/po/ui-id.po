@@ -12,11 +12,11 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-02-03 23:25+0100\n"
-"PO-Revision-Date: 2026-02-03 12:17+0000\n"
+"PO-Revision-Date: 2026-02-04 10:50+0000\n"
 "Last-Translator: Arif Budiman <arifpedia@gmail.com>\n"
-"Language-Team: Indonesian <https://hosted.weblate.org/projects/"
-"collabora-online/ui/id/>\n"
-"Language: \n"
+"Language-Team: Indonesian <https://hosted.weblate.org/projects/collabora-"
+"online/ui/id/>\n"
+"Language: id\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -388,7 +388,7 @@ msgstr "CA Tanda tangan"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:160
 msgid "In-document Screen Reader"
-msgstr ""
+msgstr "Pembaca Layar dalam dokumen"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:161
 #: src/control/Control.Menubar.ts:172 src/control/Control.Menubar.ts:497
@@ -1078,13 +1078,12 @@ msgid "This version of {productname} is powered by"
 msgstr "Versi {productname} ini ditenagai oleh"
 
 #: src/control/Control.AboutDialog.ts:189
-#, fuzzy
 msgid "Served by: "
-msgstr "Dilayani oleh:"
+msgstr "Dilayani oleh: "
 
 #: src/control/Control.AboutDialog.ts:212
 msgid "View widgets"
-msgstr ""
+msgstr "Lihat widget"
 
 #: src/control/Control.AboutDialog.ts:236
 msgid "\"Slow Proxy\""
@@ -1875,7 +1874,7 @@ msgstr "Perbaiki"
 
 #: src/control/Control.Menubar.ts:140
 msgid "Compare Changes"
-msgstr ""
+msgstr "Bandingkan Perubahan"
 
 #: src/control/Control.Menubar.ts:159 src/control/Control.Menubar.ts:480
 #: src/control/Control.Menubar.ts:486 src/control/Control.Menubar.ts:647
@@ -1890,7 +1889,7 @@ msgstr "Atur ulang zum"
 
 #: src/control/Control.Menubar.ts:165
 msgid "Fit to Screen"
-msgstr ""
+msgstr "Sesuaikan dengan Layar"
 
 #: src/control/Control.Menubar.ts:168 src/control/Control.Menubar.ts:492
 #: src/control/Control.Menubar.ts:659 src/control/Control.Menubar.ts:804
@@ -2399,7 +2398,7 @@ msgstr "Akhir Gradien"
 
 #: src/control/Control.NavigatorPanel.ts:38
 msgid "Navigation Panel"
-msgstr ""
+msgstr "Panel Navigasi"
 
 #: src/control/Control.NavigatorPanel.ts:110
 msgid "Navigation"
@@ -2629,7 +2628,7 @@ msgstr "Grafik mini"
 
 #: src/control/Control.NotebookbarCalc.js:99
 msgid "Table Design"
-msgstr ""
+msgstr "Desain Tabel"
 
 #: src/control/Control.NotebookbarCalc.js:106
 #: src/control/Control.NotebookbarDraw.js:121
@@ -2858,7 +2857,7 @@ msgstr "Tilikan Baku"
 
 #: src/control/Control.NotebookbarCalc.js:1431
 msgid "Open Views List"
-msgstr ""
+msgstr "Buka Daftar Tampilan"
 
 #: src/control/Control.NotebookbarCalc.js:1438
 msgid "New Sheet View"
@@ -2910,11 +2909,11 @@ msgstr "Pilihan Gaya Tabel"
 
 #: src/control/Control.NotebookbarCalc.js:1678
 msgid "Header Row"
-msgstr ""
+msgstr "Baris Header"
 
 #: src/control/Control.NotebookbarCalc.js:1690
 msgid "Total Row"
-msgstr ""
+msgstr "Baris Total"
 
 #: src/control/Control.NotebookbarCalc.js:1708
 msgid "Banded Rows"
@@ -2934,7 +2933,7 @@ msgstr "Kolom Terakhir"
 
 #: src/control/Control.NotebookbarCalc.js:1765
 msgid "Filter Buttons"
-msgstr ""
+msgstr "Tombol Filter"
 
 #: src/control/Control.NotebookbarCalc.js:1801
 #: src/control/Control.NotebookbarCalc.js:2549
@@ -3111,16 +3110,16 @@ msgstr "Ada dalam Jendela"
 
 #: src/control/Control.NotebookbarImpress.js:493
 msgid "Presenter View"
-msgstr ""
+msgstr "Tampilan Penyaji"
 
 #: src/control/Control.NotebookbarImpress.js:501
 msgid "Present to All"
-msgstr ""
+msgstr "Sajikan ke Semua"
 
 #: src/control/Control.NotebookbarImpress.js:509
 #: src/slideshow/SlideShowPresenter.ts:751
 msgid "Follow Presenter"
-msgstr ""
+msgstr "Ikuti Penyaji"
 
 #: src/control/Control.NotebookbarImpress.js:637
 msgid "Slide Views"
@@ -3164,7 +3163,7 @@ msgstr "Templat Salindia Induk"
 
 #: src/control/Control.NotebookbarImpress.js:1809
 msgid "Themes"
-msgstr ""
+msgstr "Tema"
 
 #: src/control/Control.NotebookbarImpress.js:1859
 msgid "Slide Size"
@@ -3201,11 +3200,11 @@ msgstr "Pergi Luring"
 
 #: src/control/Control.NotebookbarWriter.js:489
 msgid "Validate Sidebar"
-msgstr ""
+msgstr "Bilah Samping Validasi"
 
 #: src/control/Control.NotebookbarWriter.js:497
 msgid "Validate Dialog"
-msgstr ""
+msgstr "Dialog Validasi"
 
 #: src/control/Control.NotebookbarWriter.js:940
 #: src/control/Control.Zotero.js:827
@@ -3242,7 +3241,7 @@ msgstr "Tarik turun"
 
 #: src/control/Control.NotebookbarWriter.js:1664
 msgid "Page Width"
-msgstr ""
+msgstr "Lebar Halaman"
 
 #: src/control/Control.NotebookbarWriter.js:2301
 msgid "Tracking"
@@ -3250,15 +3249,15 @@ msgstr "Pelacakan"
 
 #: src/control/Control.NotebookbarWriter.js:2322
 msgid "View Changes"
-msgstr ""
+msgstr "Lihat Perubahan"
 
 #: src/control/Control.NotebookbarWriter.js:2408
 msgid "Compare"
-msgstr ""
+msgstr "Bandingkan"
 
 #: src/control/Control.NotebookbarWriter.js:2414
 msgid "Compare Documents"
-msgstr ""
+msgstr "Bandingkan Dokumen"
 
 #: src/control/Control.NotebookbarWriter.js:2506
 msgid "Split"
@@ -3348,7 +3347,7 @@ msgstr "Pengaitan pengikatan jail fast kit diaktifkan"
 
 #: src/control/Control.ServerAuditDialog.ts:119
 msgid "Fast kit jail bind mounting not configured"
-msgstr ""
+msgstr "Mounting bind kit jail cepat tidak dikonfigurasi"
 
 #: src/control/Control.ServerAuditDialog.ts:127
 msgid "Poorly performing proxying of all network requests."
@@ -3484,7 +3483,7 @@ msgstr "Tilikan Banyak Halaman"
 
 #: src/control/Control.StatusBar.js:257
 msgid "Zoom to Fit Page Width"
-msgstr ""
+msgstr "Perbesar agar Sesuai Lebar Halaman"
 
 #: src/control/Control.StatusBar.js:414
 msgid ""
@@ -3916,16 +3915,16 @@ msgstr "Hanya baca"
 
 #: src/control/PermissionMode.ts:108
 msgid "Viewing Mode"
-msgstr ""
+msgstr "Mode Tampilan"
 
 #: src/control/PermissionMode.ts:114
 msgid "Editing Mode"
-msgstr ""
+msgstr "Mode Pengeditan"
 
 #: src/control/PermissionMode.ts:125 src/control/PermissionMode.ts:176
 #: src/control/PermissionMode.ts:182 src/control/PermissionMode.ts:188
 msgid "Viewing"
-msgstr ""
+msgstr "Menampilkan"
 
 #: src/control/jsdialog/Definitions.Menu.ts:111
 #: src/control/jsdialog/Definitions.Menu.ts:1748
@@ -4094,7 +4093,7 @@ msgstr "Sisipkan Multimedia Lokal"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1740
 msgid "Compare Local Document"
-msgstr ""
+msgstr "Bandingkan Dokumen Lokal"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1746
 msgid "Very Tight"
@@ -4432,7 +4431,7 @@ msgstr "Judul dan objek yang Anda tambahkan ke dokumen akan muncul di sini"
 
 #: src/control/jsdialog/Widget.TreeView.ts:1637
 msgid "Search items"
-msgstr ""
+msgstr "Cari item"
 
 #: src/app/Socket.ts:189
 msgid "Oops, there is a problem connecting to {productname}: "
@@ -4900,7 +4899,7 @@ msgstr "menu Tilikan"
 
 #: src/layer/tile/CanvasTileLayer.js:461
 msgid "Online Editor"
-msgstr ""
+msgstr "Editor Daring"
 
 #: src/layer/tile/CanvasTileLayer.js:1456
 msgid "Functions"
@@ -5088,7 +5087,7 @@ msgstr "Membuat berkas baru dari templat..."
 
 #: src/map/handler/Map.WOPI.js:224
 msgid "Compare Document..."
-msgstr ""
+msgstr "Bandingkan Dokumen..."
 
 #: src/map/handler/Map.WOPI.js:732
 msgid "File name should contain an extension."
