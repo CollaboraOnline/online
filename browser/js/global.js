@@ -689,6 +689,12 @@ function showWelcomeSVG() {
 	document.body.insertBefore(loaderDiv, document.body.firstChild);
 }
 
+function TODO_REDIRECT(url) {
+	if (confirm("Multiple users are editing this document. Start collaborating?")) {
+		window.location.replace(url);
+	}
+}
+
 (function (global) {
 	const initializer = getInitializerClass();
 	initializer.afterInitialization();
@@ -1933,6 +1939,12 @@ function showWelcomeSVG() {
 				'wss://' + url.host + url.pathname
 				+ (url.pathname.endsWith('/') ? '' : '/') + 'co/collab?WOPISrc='
 				+ encodeURIComponent(wopiSrc)));
+			const redirect = 'https://' + url.host + url.pathname
+				+ (url.pathname.endsWith('/') ? '' : '/')
+				+ 'browser/0000000000/cool.html?WOPISrc='
+				+ encodeURIComponent(wopiSrc) + "&access_token="
+				+ encodeURIComponent(accessToken);
+			let multiUser = false;
 			ws.onerror = () => console.assert(false); //TODO
 			ws.onclose = () => console.assert(false); //TODO
 			ws.onopen = () => ws.send('access_token ' + accessToken);
@@ -1949,10 +1961,17 @@ function showWelcomeSVG() {
 					const msg = JSON.parse(e.data);
 					switch (msg.type) {
 					case 'fetch_url':
-						resolve(msg.url);
+						resolve({
+							url: msg.url,
+							redirect: multiUser ? redirect : null});
+						break;
+					case 'user_joined':
+						TODO_REDIRECT(redirect);
 						break;
 					case 'user_list':
-						// ignore
+						if (msg.users.length !== 0) {
+							multiUser = true;
+						}
 						break;
 					default:
 						console.assert(false); //TODO
@@ -2206,9 +2225,12 @@ function showWelcomeSVG() {
 		if (global.ThisIsAMobileApp && !global.ThisIsTheEmscriptenApp && !window.starterScreen) {
 			if (global.getRemote) {
 				global.getRemote.then(
-					(url) => {
-						global.postMobileMessage('HULLO ' + url);
+					(res) => {
+						global.postMobileMessage('HULLO ' + res.url);
 						this.socket.onopen();
+						if (res.redirect !== null) {
+							TODO_REDIRECT(res.redirect);
+						}
 					},
 					() => console.assert(false) //TODO
 				);
