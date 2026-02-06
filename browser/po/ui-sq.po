@@ -8,11 +8,11 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-02-03 23:25+0100\n"
-"PO-Revision-Date: 2026-02-03 13:17+0000\n"
-"Last-Translator: Anonymous <noreply@weblate.org>\n"
-"Language-Team: Albanian <https://hosted.weblate.org/projects/"
-"collabora-online/ui/sq/>\n"
-"Language: \n"
+"PO-Revision-Date: 2026-02-04 13:07+0000\n"
+"Last-Translator: Besnik Bleta <besnik@programeshqip.org>\n"
+"Language-Team: Albanian <https://hosted.weblate.org/projects/collabora-"
+"online/ui/sq/>\n"
+"Language: sq\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -388,7 +388,7 @@ msgstr "AD Nënshkrimi"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:160
 msgid "In-document Screen Reader"
-msgstr ""
+msgstr "Lexues Ekrani Brenda Dokumenti"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:161
 #: src/control/Control.Menubar.ts:172 src/control/Control.Menubar.ts:497
@@ -457,9 +457,8 @@ msgid "Show Grid"
 msgstr "Shfaq Rrjetë"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:178
-#, fuzzy
 msgid "Snap to grid"
-msgstr "Madhësi sa rrjeta"
+msgstr ""
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:179
 #: admin/src/integrator/AdminIntegratorSettings.ts:185
@@ -471,9 +470,8 @@ msgid "Synchronize axes"
 msgstr "Njëkohëso boshtet"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:181
-#, fuzzy
 msgid "Snap grid"
-msgstr "Madhësi sa rrjeta"
+msgstr ""
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:182
 msgid "Empty Pages"
@@ -1083,13 +1081,12 @@ msgid "This version of {productname} is powered by"
 msgstr "Ky version i {productname} bazohet në"
 
 #: src/control/Control.AboutDialog.ts:189
-#, fuzzy
 msgid "Served by: "
-msgstr "Shërbyer nga:"
+msgstr "Shërbyer nga: "
 
 #: src/control/Control.AboutDialog.ts:212
 msgid "View widgets"
-msgstr ""
+msgstr "Shihni widget-e"
 
 #: src/control/Control.AboutDialog.ts:236
 msgid "\"Slow Proxy\""
@@ -1881,7 +1878,7 @@ msgstr "Riparoje"
 
 #: src/control/Control.Menubar.ts:140
 msgid "Compare Changes"
-msgstr ""
+msgstr "Krahasoni Ndryshime"
 
 #: src/control/Control.Menubar.ts:159 src/control/Control.Menubar.ts:480
 #: src/control/Control.Menubar.ts:486 src/control/Control.Menubar.ts:647
@@ -1896,7 +1893,7 @@ msgstr "Zeroje zoom-in"
 
 #: src/control/Control.Menubar.ts:165
 msgid "Fit to Screen"
-msgstr ""
+msgstr "Sa Ta Nxërë Ekrani"
 
 #: src/control/Control.Menubar.ts:168 src/control/Control.Menubar.ts:492
 #: src/control/Control.Menubar.ts:659 src/control/Control.Menubar.ts:804
@@ -2403,7 +2400,7 @@ msgstr "Fund Gradienti"
 
 #: src/control/Control.NavigatorPanel.ts:38
 msgid "Navigation Panel"
-msgstr ""
+msgstr "Panel Lëvizjesh"
 
 #: src/control/Control.NavigatorPanel.ts:110
 msgid "Navigation"
@@ -2488,7 +2485,7 @@ msgstr "Pas"
 
 #: src/control/Notebookbar.ImpressTransitionTab.ts:137
 msgid "Apply to All Slides"
-msgstr ""
+msgstr "Aplikoje Mbi Tërë Diapozitivat"
 
 #: src/control/Notebookbar.WriterReferencesTab.ts:41
 msgid "Table of content"
@@ -2863,7 +2860,7 @@ msgstr "Pamje Parazgjedhje"
 
 #: src/control/Control.NotebookbarCalc.js:1431
 msgid "Open Views List"
-msgstr ""
+msgstr "Hap Listë Pamjesh"
 
 #: src/control/Control.NotebookbarCalc.js:1438
 msgid "New Sheet View"
@@ -2911,11 +2908,11 @@ msgstr "Shtyllë Gjendjesh"
 
 #: src/control/Control.NotebookbarCalc.js:1665
 msgid "Table Style Options"
-msgstr ""
+msgstr "Mundësi Stili Tabele"
 
 #: src/control/Control.NotebookbarCalc.js:1678
 msgid "Header Row"
-msgstr ""
+msgstr "Rresht Kryesh"
 
 #: src/control/Control.NotebookbarCalc.js:1690
 msgid "Total Row"
@@ -2931,11 +2928,11 @@ msgstr ""
 
 #: src/control/Control.NotebookbarCalc.js:1738
 msgid "First Column"
-msgstr ""
+msgstr "Shtylla e Parë"
 
 #: src/control/Control.NotebookbarCalc.js:1750
 msgid "Last Column"
-msgstr ""
+msgstr "Shtylla e Fundit"
 
 #: src/control/Control.NotebookbarCalc.js:1765
 msgid "Filter Buttons"
@@ -3116,25 +3113,24 @@ msgstr "Paraqite Në Dritare"
 
 #: src/control/Control.NotebookbarImpress.js:493
 msgid "Presenter View"
-msgstr ""
+msgstr "Pamje Paraqitësi"
 
 #: src/control/Control.NotebookbarImpress.js:501
 msgid "Present to All"
-msgstr ""
+msgstr "Paraqitja të Tërëve"
 
 #: src/control/Control.NotebookbarImpress.js:509
 #: src/slideshow/SlideShowPresenter.ts:751
 msgid "Follow Presenter"
-msgstr ""
+msgstr "Ndiq Paraqitësin"
 
 #: src/control/Control.NotebookbarImpress.js:637
 msgid "Slide Views"
 msgstr "Parje Diapozitivash"
 
 #: src/control/Control.NotebookbarImpress.js:676
-#, fuzzy
 msgid "Snap to Grid"
-msgstr "Madhësi sa rrjeta"
+msgstr ""
 
 #: src/control/Control.NotebookbarImpress.js:800
 #: src/control/Control.NotebookbarImpress.js:1830
@@ -3170,7 +3166,7 @@ msgstr ""
 
 #: src/control/Control.NotebookbarImpress.js:1809
 msgid "Themes"
-msgstr ""
+msgstr "Tema"
 
 #: src/control/Control.NotebookbarImpress.js:1859
 msgid "Slide Size"
@@ -3248,7 +3244,7 @@ msgstr "Menu Hapmbyll"
 
 #: src/control/Control.NotebookbarWriter.js:1664
 msgid "Page Width"
-msgstr ""
+msgstr "Gjerësi Faqeje"
 
 #: src/control/Control.NotebookbarWriter.js:2301
 msgid "Tracking"
@@ -3256,15 +3252,15 @@ msgstr "Ndjekje"
 
 #: src/control/Control.NotebookbarWriter.js:2322
 msgid "View Changes"
-msgstr ""
+msgstr "Shihni Ndryshime"
 
 #: src/control/Control.NotebookbarWriter.js:2408
 msgid "Compare"
-msgstr ""
+msgstr "Krahasoni"
 
 #: src/control/Control.NotebookbarWriter.js:2414
 msgid "Compare Documents"
-msgstr ""
+msgstr "Krahasoni Dokumente"
 
 #: src/control/Control.NotebookbarWriter.js:2506
 msgid "Split"
@@ -3361,7 +3357,7 @@ msgstr ""
 
 #: src/control/Control.ServerAuditDialog.ts:131
 msgid "Direct network connection"
-msgstr "lidhje e drejtpërdrejtë në rrjet"
+msgstr "Lidhje e drejtpërdrejtë në rrjet"
 
 #: src/control/Control.ServerAuditDialog.ts:137
 msgid "The IsAdminUser property is not set by integration"
@@ -3489,7 +3485,7 @@ msgstr ""
 
 #: src/control/Control.StatusBar.js:257
 msgid "Zoom to Fit Page Width"
-msgstr ""
+msgstr "Zmadhoje Sa Ta Nxërë Gjerësia e Faqes"
 
 #: src/control/Control.StatusBar.js:414
 msgid ""
@@ -3921,11 +3917,11 @@ msgstr "Vetëm për lexim"
 
 #: src/control/PermissionMode.ts:108
 msgid "Viewing Mode"
-msgstr ""
+msgstr "Mënyrë Parjeje"
 
 #: src/control/PermissionMode.ts:114
 msgid "Editing Mode"
-msgstr ""
+msgstr "Mënyrë Përpunimi"
 
 #: src/control/PermissionMode.ts:125 src/control/PermissionMode.ts:176
 #: src/control/PermissionMode.ts:182 src/control/PermissionMode.ts:188
@@ -4011,7 +4007,7 @@ msgstr ""
 
 #: src/control/jsdialog/Definitions.Menu.ts:1513
 msgid "Tabloid"
-msgstr ""
+msgstr "Tabloid"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1514
 msgid "B6 (JIS)"
@@ -4099,7 +4095,7 @@ msgstr "Futni Multimedia lokale"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1740
 msgid "Compare Local Document"
-msgstr ""
+msgstr "Krahasoni Dokument Vendor"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1746
 msgid "Very Tight"
@@ -4336,11 +4332,11 @@ msgstr "I vetvetishëm"
 
 #: src/control/jsdialog/Widget.ColorPicker.ts:262
 msgid "Color palette"
-msgstr ""
+msgstr "Paletë ngjyrash"
 
 #: src/control/jsdialog/Widget.ColorPicker.ts:328
 msgid "Enter custom color in hex format"
-msgstr ""
+msgstr "Jepni ngjyrë vetjake në format gjashtëmbëdhjetësh"
 
 #: src/control/jsdialog/Widget.ColorPicker.ts:421
 msgid "Recent"
@@ -4911,7 +4907,7 @@ msgstr "menunë Shiheni"
 
 #: src/layer/tile/CanvasTileLayer.js:461
 msgid "Online Editor"
-msgstr ""
+msgstr "Përpunues Në Internet"
 
 #: src/layer/tile/CanvasTileLayer.js:1456
 msgid "Functions"
@@ -5106,7 +5102,7 @@ msgstr "Po krijohet kartelë e re prej gjedheje…"
 
 #: src/map/handler/Map.WOPI.js:224
 msgid "Compare Document..."
-msgstr ""
+msgstr "Krahasoni Dokument…"
 
 #: src/map/handler/Map.WOPI.js:732
 msgid "File name should contain an extension."
