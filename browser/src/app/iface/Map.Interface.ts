@@ -32,6 +32,7 @@ interface MapInterface extends Evented {
 
 	stateChangeHandler: {
 		getItemValue(unoCmd: string): string;
+		setItemValue(unoCmd: string, value: any): void;
 	};
 
 	sendUnoCommand(unoCmd: string): void;
