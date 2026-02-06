@@ -45,9 +45,6 @@ const excludedCommonDialogs = [
 
 // don't pass yet
 const buggyWriterDialogs = [
-    // TODO: fix newly added
-    '.uno:AcceptTrackedChanges',
-    '.uno:HyperlinkDialog',
     '.uno:InsertFrame',
     '.uno:OutlineBullet',
     '.uno:ChapterNumberingDialog',
@@ -57,23 +54,12 @@ const buggyWriterDialogs = [
     '.uno:InsertMultiIndex',
     '.uno:InsertSection',
     '.uno:TableNumberFormatDialog',
-    '.uno:InsertQrCode',
-    '.uno:RunMacro',
-    '.uno:SearchDialog',
-    '.uno:SetDocumentProperties',
-    '.uno:Signature',
-    '.uno:SpellingAndGrammarDialog',
-    '.uno:SplitCell',
-    '.uno:StyleNewByExample',
-    '.uno:ThesaurusDialog',
-    '.uno:WidgetTestDialog',
 
     // TODO: existing dialog => newly added secondary dialogs are failing
     '.uno:FontDialog', // Fix: Font Feature dialog needs Frame Structure
     '.uno:PageDialog', // Fix: Duplicate Name dialog box is failing
 
     // Below dialogs have tabindex=0 with empty alt tag
-    '.uno:InsertSymbol',
     '.uno:EditStyle?Param:string=Example&Family:short=1',
     '.uno:EditStyle?Param:string=Heading&Family:short=2',
     '.uno:ParagraphDialog',

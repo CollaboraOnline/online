@@ -6,7 +6,45 @@ var desktopHelper = require('../../common/desktop_helper');
 var a11yHelper = require('../../common/a11y_helper');
 
 const allCalcDialogs = [
-    '.uno:FormatCellDialog'
+    '.uno:AddName',
+    '.uno:AnalysisOfVarianceDialog',
+    '.uno:ChiSquareTestDialog',
+    '.uno:ColumnWidth',
+    '.uno:ConditionalFormatManagerDialog',
+    '.uno:CorrelationDialog',
+    '.uno:CovarianceDialog',
+    '.uno:DataSort',
+    '.uno:DataFilterSpecialFilter',
+    '.uno:DataFilterStandardFilter',
+    '.uno:DefineName',
+    '.uno:DefineDBName',
+    '.uno:DeleteCell',
+    '.uno:Delete',
+    '.uno:DescriptiveStatisticsDialog',
+    '.uno:ExponentialSmoothingDialog',
+    '.uno:FormatCellDialog',
+    '.uno:FourierAnalysisDialog',
+    '.uno:FunctionDialog',
+    '.uno:FTestDialog',
+    '.uno:GoalSeekDialog',
+    '.uno:Group',
+    '.uno:InsertCell',
+    '.uno:InsertObjectChart',
+    '.uno:InsertSparkline',
+    '.uno:JumpToTable',
+    '.uno:Move?FromContextMenu:bool=true&MoveOrCopySheetDialog:bool=true&ContextMenuIndex=0',
+    '.uno:MovingAverageDialog',
+    '.uno:PageFormatDialog',
+    '.uno:Protect',
+    '.uno:RegressionDialog',
+    '.uno:RowHeight',
+    '.uno:SamplingDialog',
+    '.uno:SelectDB',
+    '.uno:SetOptimalColumnWidth',
+    '.uno:SetOptimalRowHeight',
+    '.uno:TTestDialog',
+    '.uno:Validation',
+    '.uno:ZTestDialog',
 ];
 
 // 'common' dialogs that calc specifically does not support
@@ -19,11 +57,18 @@ const excludedCommonDialogs = [
 
 // don't pass yet
 const buggyCalcDialogs = [
+    '.uno:DataFilterSpecialFilter',
+    '.uno:DataFilterStandardFilter',
+    '.uno:DefineName',
+    '.uno:DefineDBName',
+    '.uno:Delete',
     '.uno:FormatCellDialog',
-    '.uno:InsertQrCode',
-    '.uno:InsertSymbol',
-    '.uno:Signature',
+    '.uno:FunctionDialog',
+    '.uno:InsertObjectChart',
+    '.uno:JumpToTable',
+    '.uno:PageFormatDialog',
     '.uno:StyleNewByExample',
+    '.uno:Validation',
 ];
 
 describe(['tagdesktop'], 'Accessibility Calc Dialog Tests', { testIsolation: false }, function () {
@@ -82,7 +127,7 @@ describe(['tagdesktop'], 'Accessibility Calc Dialog Tests', { testIsolation: fal
 
         a11yHelper.resetState();
 
-	// make C5 the home cell for all tests
+        // make C5 the home cell for all tests
         helper.typeIntoInputField(helper.addressInputSelector, 'C5');
         calcHelper.assertAddressAfterIdle(win, 'C5');
     });
@@ -94,7 +139,7 @@ describe(['tagdesktop'], 'Accessibility Calc Dialog Tests', { testIsolation: fal
             return;
         } else if (a11yHelper.isBuggyCommonDialog(command)) {
             it.skip(`Common Dialog ${command} (buggy)`, function () {});
-	} else if (buggyCalcDialogs.includes(command)) {
+        } else if (buggyCalcDialogs.includes(command)) {
             it.skip(`Dialog ${command} (buggy)`, function () {});
         } else {
             it(`Common Dialog ${command}`, function () {
@@ -118,4 +163,38 @@ describe(['tagdesktop'], 'Accessibility Calc Dialog Tests', { testIsolation: fal
         }
     });
 
+    it('PasteSpecial Dialog', function () {
+        // Select some text
+        helper.selectAllText();
+
+        helper.copy().then(() => {
+            return helper.processToIdle(win);
+        })
+        .then(() => {
+            win.app.map.sendUnoCommand('.uno:PasteSpecial');
+        });
+        a11yHelper.handleDialog(win, 1);
+    });
+
+    it.skip('Font Dialog (Buggy)', function () {
+        calcHelper.dblClickOnFirstCell();
+
+        cy.then(() => {
+            win.app.map.sendUnoCommand('.uno:FontDialog');
+        });
+
+        a11yHelper.handleDialog(win, 1, ".uno:FontDialog");
+
+        helper.typeIntoDocument('{esc}');
+    });
+
+    it('Merge Cells Dialog', function () {
+        helper.typeIntoInputField(helper.addressInputSelector, 'A1:A3')
+
+        cy.then(() => {
+            win.app.map.sendUnoCommand('.uno:MergeCells');
+        });
+
+        a11yHelper.handleDialog(win, 1, ".uno:MergeCells");
+    });
 });

@@ -268,7 +268,7 @@ function traverseTabs(getContainer, win, level, command, isNested = false) {
 							} else if (command == '.uno:FontDialog' && tabAriaControls == 'font') {
 								cy.cGet('#btnWestFeatures-button').click();
 								handleDialog(win, level + 1);
-							} else if (command == '.uno:PageDialog' && tabAriaControls == 'Footer') {
+							} else if ((command == '.uno:PageDialog' || command == '.uno:PageFormatDialog') && tabAriaControls == 'Footer') {
 								cy.cGet('button.ui-pushbutton[aria-label="More..."]:visible').click();
 								handleDialog(win, level + 1);
 							} else if (command == '.uno:PageDialog' && tabAriaControls == 'lbhatch') {
@@ -412,7 +412,22 @@ const needLinguisticDataDialogs = [
 ];
 
 const buggyCommonDialogs = [
+	// TODO: fix newly added
+	'.uno:AcceptTrackedChanges',
 	'.uno:HyperlinkDialog',
+	'.uno:InsertQrCode',
+	'.uno:InsertSymbol',
+	'.uno:RunMacro',
+	'.uno:Signature',
+
+	'.uno:SearchDialog',
+	'.uno:SetDocumentProperties',
+	'.uno:SpellDialog',
+	'.uno:SpellingAndGrammarDialog',
+	'.uno:SplitCell',
+	'.uno:StyleNewByExample',
+	'.uno:ThesaurusDialog',
+	'.uno:WidgetTestDialog',
 ];
 
 /**
