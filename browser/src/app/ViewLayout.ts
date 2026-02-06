@@ -193,7 +193,7 @@ class ViewLayoutBase {
 	private calculateHorizontalScrollLength(
 		documentAnchor: CanvasSectionObject,
 	): void {
-		const result: number = documentAnchor.size[0];
+		const canvasWidth: number = documentAnchor.size[0];
 		this.scrollProperties.xOffset = documentAnchor.myTopLeft[0];
 
 		if (app.map._docLayer._docType === 'spreadsheet') {
@@ -206,10 +206,12 @@ class ViewLayoutBase {
 
 			this.scrollProperties.xOffset += splitPos.x;
 			this.scrollProperties.horizontalScrollLength =
-				result - splitPos.x - this.scrollProperties.horizontalScrollRightOffset;
+				canvasWidth -
+				splitPos.x -
+				this.scrollProperties.horizontalScrollRightOffset;
 		} else {
 			this.scrollProperties.horizontalScrollLength =
-				result - this.scrollProperties.horizontalScrollRightOffset;
+				canvasWidth - this.scrollProperties.horizontalScrollRightOffset;
 		}
 	}
 
