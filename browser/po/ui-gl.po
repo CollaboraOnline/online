@@ -8,11 +8,11 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-02-03 23:25+0100\n"
-"PO-Revision-Date: 2026-02-03 13:20+0000\n"
-"Last-Translator: Adolfo Jayme Barrientos <fitojb@ubuntu.com>\n"
-"Language-Team: Galician <https://hosted.weblate.org/projects/"
-"collabora-online/ui/gl/>\n"
-"Language: \n"
+"PO-Revision-Date: 2026-02-06 10:01+0000\n"
+"Last-Translator: \"Miguel A. Bouzada\" <mbouzada@gmail.com>\n"
+"Language-Team: Galician <https://hosted.weblate.org/projects/collabora-"
+"online/ui/gl/>\n"
+"Language: gl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -390,7 +390,7 @@ msgstr "CA de sinatura"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:160
 msgid "In-document Screen Reader"
-msgstr ""
+msgstr "Lector de pantalla integrado no documento"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:161
 #: src/control/Control.Menubar.ts:172 src/control/Control.Menubar.ts:497
@@ -670,7 +670,7 @@ msgstr "Axuste o comportamento dos documentos de oficina."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:369
 msgid "Upload Xcu"
-msgstr "Enviar un XCU"
+msgstr "Enviar un .xcu"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:420
 msgid "Shared Config URL is missing in initial variables."
@@ -1078,13 +1078,12 @@ msgid "This version of {productname} is powered by"
 msgstr "Esta versión de {productname} funciona grazas a"
 
 #: src/control/Control.AboutDialog.ts:189
-#, fuzzy
 msgid "Served by: "
-msgstr "Servido por:"
+msgstr "Servido por: "
 
 #: src/control/Control.AboutDialog.ts:212
 msgid "View widgets"
-msgstr ""
+msgstr "Ver os trebellos"
 
 #: src/control/Control.AboutDialog.ts:236
 msgid "\"Slow Proxy\""
@@ -1872,7 +1871,7 @@ msgstr "Reparar"
 
 #: src/control/Control.Menubar.ts:140
 msgid "Compare Changes"
-msgstr ""
+msgstr "Comparar os cambios"
 
 #: src/control/Control.Menubar.ts:159 src/control/Control.Menubar.ts:480
 #: src/control/Control.Menubar.ts:486 src/control/Control.Menubar.ts:647
@@ -1887,7 +1886,7 @@ msgstr "Restaurar a ampliación"
 
 #: src/control/Control.Menubar.ts:165
 msgid "Fit to Screen"
-msgstr ""
+msgstr "Axustado á pantalla"
 
 #: src/control/Control.Menubar.ts:168 src/control/Control.Menubar.ts:492
 #: src/control/Control.Menubar.ts:659 src/control/Control.Menubar.ts:804
@@ -2396,7 +2395,7 @@ msgstr "Final da gradación"
 
 #: src/control/Control.NavigatorPanel.ts:38
 msgid "Navigation Panel"
-msgstr ""
+msgstr "Panel de navegación"
 
 #: src/control/Control.NavigatorPanel.ts:110
 msgid "Navigation"
@@ -2626,7 +2625,7 @@ msgstr "Minigráfico de liña"
 
 #: src/control/Control.NotebookbarCalc.js:99
 msgid "Table Design"
-msgstr ""
+msgstr "Deseño de táboas"
 
 #: src/control/Control.NotebookbarCalc.js:106
 #: src/control/Control.NotebookbarDraw.js:121
@@ -2855,7 +2854,7 @@ msgstr "Vista predeterminada"
 
 #: src/control/Control.NotebookbarCalc.js:1431
 msgid "Open Views List"
-msgstr ""
+msgstr "Abrir a lista de vistas"
 
 #: src/control/Control.NotebookbarCalc.js:1438
 msgid "New Sheet View"
@@ -2907,11 +2906,11 @@ msgstr "Opcións de estilo da táboa"
 
 #: src/control/Control.NotebookbarCalc.js:1678
 msgid "Header Row"
-msgstr ""
+msgstr "Fila de cabeceiras"
 
 #: src/control/Control.NotebookbarCalc.js:1690
 msgid "Total Row"
-msgstr ""
+msgstr "Total de filas"
 
 #: src/control/Control.NotebookbarCalc.js:1708
 msgid "Banded Rows"
@@ -2931,7 +2930,7 @@ msgstr "Última columna"
 
 #: src/control/Control.NotebookbarCalc.js:1765
 msgid "Filter Buttons"
-msgstr ""
+msgstr "Botóns de filtro"
 
 #: src/control/Control.NotebookbarCalc.js:1801
 #: src/control/Control.NotebookbarCalc.js:2549
@@ -3108,16 +3107,16 @@ msgstr "Presentar en xanela"
 
 #: src/control/Control.NotebookbarImpress.js:493
 msgid "Presenter View"
-msgstr ""
+msgstr "Vista do presentador"
 
 #: src/control/Control.NotebookbarImpress.js:501
 msgid "Present to All"
-msgstr ""
+msgstr "Presentar para todos"
 
 #: src/control/Control.NotebookbarImpress.js:509
 #: src/slideshow/SlideShowPresenter.ts:751
 msgid "Follow Presenter"
-msgstr ""
+msgstr "Seguir ao presentador"
 
 #: src/control/Control.NotebookbarImpress.js:637
 msgid "Slide Views"
@@ -3161,7 +3160,7 @@ msgstr "Modelos padrón de diapositivas"
 
 #: src/control/Control.NotebookbarImpress.js:1809
 msgid "Themes"
-msgstr ""
+msgstr "Temas"
 
 #: src/control/Control.NotebookbarImpress.js:1859
 msgid "Slide Size"
@@ -3198,11 +3197,11 @@ msgstr "Desconectarse"
 
 #: src/control/Control.NotebookbarWriter.js:489
 msgid "Validate Sidebar"
-msgstr ""
+msgstr "Validar a barra lateral"
 
 #: src/control/Control.NotebookbarWriter.js:497
 msgid "Validate Dialog"
-msgstr ""
+msgstr "Validar o diálogo"
 
 #: src/control/Control.NotebookbarWriter.js:940
 #: src/control/Control.Zotero.js:827
@@ -3239,7 +3238,7 @@ msgstr "Despregábel"
 
 #: src/control/Control.NotebookbarWriter.js:1664
 msgid "Page Width"
-msgstr ""
+msgstr "Largo de páxina"
 
 #: src/control/Control.NotebookbarWriter.js:2301
 msgid "Tracking"
@@ -3247,15 +3246,15 @@ msgstr "Control de cambios"
 
 #: src/control/Control.NotebookbarWriter.js:2322
 msgid "View Changes"
-msgstr ""
+msgstr "Ver os cambios"
 
 #: src/control/Control.NotebookbarWriter.js:2408
 msgid "Compare"
-msgstr ""
+msgstr "Comparar"
 
 #: src/control/Control.NotebookbarWriter.js:2414
 msgid "Compare Documents"
-msgstr ""
+msgstr "Comparar documentos"
 
 #: src/control/Control.NotebookbarWriter.js:2506
 msgid "Split"
@@ -3347,7 +3346,7 @@ msgstr "Activada a gaiola de Kit rápida, con montaxe vinculada"
 
 #: src/control/Control.ServerAuditDialog.ts:119
 msgid "Fast kit jail bind mounting not configured"
-msgstr ""
+msgstr "A gaiola de Kit rápida, con montaxe vinculada non está configurada"
 
 #: src/control/Control.ServerAuditDialog.ts:127
 msgid "Poorly performing proxying of all network requests."
@@ -3483,7 +3482,7 @@ msgstr "Vista de varias páxinas"
 
 #: src/control/Control.StatusBar.js:257
 msgid "Zoom to Fit Page Width"
-msgstr ""
+msgstr "Ampliar para axustar ao largo da páxina"
 
 #: src/control/Control.StatusBar.js:414
 msgid ""
@@ -3915,16 +3914,16 @@ msgstr "Só lectura"
 
 #: src/control/PermissionMode.ts:108
 msgid "Viewing Mode"
-msgstr ""
+msgstr "Modo de vista"
 
 #: src/control/PermissionMode.ts:114
 msgid "Editing Mode"
-msgstr ""
+msgstr "Modo de edición"
 
 #: src/control/PermissionMode.ts:125 src/control/PermissionMode.ts:176
 #: src/control/PermissionMode.ts:182 src/control/PermissionMode.ts:188
 msgid "Viewing"
-msgstr ""
+msgstr "Ollando"
 
 #: src/control/jsdialog/Definitions.Menu.ts:111
 #: src/control/jsdialog/Definitions.Menu.ts:1748
@@ -4093,7 +4092,7 @@ msgstr "Inserir multimedia local"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1740
 msgid "Compare Local Document"
-msgstr ""
+msgstr "Comparar o documento local"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1746
 msgid "Very Tight"
@@ -4431,7 +4430,7 @@ msgstr "Os títulos e obxectos que engada ao documento aparecerán aquí"
 
 #: src/control/jsdialog/Widget.TreeView.ts:1637
 msgid "Search items"
-msgstr ""
+msgstr "Buscar elementos"
 
 #: src/app/Socket.ts:189
 msgid "Oops, there is a problem connecting to {productname}: "
@@ -4908,7 +4907,7 @@ msgstr "o menú Ver"
 
 #: src/layer/tile/CanvasTileLayer.js:461
 msgid "Online Editor"
-msgstr ""
+msgstr "Editor en liña"
 
 #: src/layer/tile/CanvasTileLayer.js:1456
 msgid "Functions"
@@ -5101,7 +5100,7 @@ msgstr "Creando un ficheiro novo a partir do modelo…"
 
 #: src/map/handler/Map.WOPI.js:224
 msgid "Compare Document..."
-msgstr ""
+msgstr "Comparar documentos…"
 
 #: src/map/handler/Map.WOPI.js:732
 msgid "File name should contain an extension."
