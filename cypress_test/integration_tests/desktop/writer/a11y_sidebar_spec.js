@@ -179,7 +179,7 @@ describe(['tagdesktop'], 'Accessibility Writer Sidebar Tests', { testIsolation: 
 			helper.processToIdle(win);
 		});
 
-		cy.cGet('#updateLinkButton').click();
+		cy.cGet('.A11yCheckIssuesPanel .ui-linkbutton').click();
 
 		helper.processToIdle(win);
 		runA11yValidation(win);
