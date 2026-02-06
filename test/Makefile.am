@@ -189,6 +189,7 @@ common_sources = \
 	../net/Socket.cpp \
 	../net/NetUtil.cpp \
 	../wsd/Auth.cpp \
+	../common/CommandControl.cpp \
 	../wsd/HostUtil.cpp
 
 globals_sources = ../common/Globals.cpp
