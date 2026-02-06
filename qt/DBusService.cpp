@@ -31,7 +31,9 @@ namespace coda
     {
         for (const QString& file : files)
         {
-            Poco::URI fileURL(Poco::Path(file.toStdString()));
+            auto const remote = file.startsWith("remote:", Qt::CaseInsensitive);
+            auto const fileURL = remote
+                ? Poco::URI(file.toStdString()) : Poco::URI(Poco::Path(file.toStdString()));
 
             // if document is already open, just activate it
             WebView* existingDocument = WebView::findOpenDocument(fileURL);
@@ -44,8 +46,13 @@ namespace coda
             WebView* webViewInstance = new WebView(Application::getProfile());
             webViewInstance->load(fileURL);
 
-            QFileInfo fileInfo(file);
-            Poco::URI uri(Poco::Path(fileInfo.absoluteFilePath().toStdString()));
+            Poco::URI uri;
+            if (remote) {
+                uri = fileURL;
+            } else {
+                QFileInfo fileInfo(file);
+                uri = Poco::URI(Poco::Path(fileInfo.absoluteFilePath().toStdString()));
+            }
             Application::getRecentFiles().add(uri.toString());
         }
     }

@@ -1590,6 +1590,7 @@ AS_IF([test "$ENABLE_QTAPP" = true],
        if test "x$LRELEASE" = "x:"; then
              AC_MSG_ERROR([lrelease or lrelease6 not found – please install Qt Linguist tools])
        fi
+       PKG_CHECK_MODULES([OPENSSL], [openssl])
 ])
 
 AM_CONDITIONAL([ENABLE_DEBUG], [test "$ENABLE_DEBUG" = "true"])

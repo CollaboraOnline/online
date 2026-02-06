@@ -1917,23 +1917,71 @@ function showWelcomeSVG() {
 
 	var docParams, wopiParams;
 	var filePath = global.coolParams.get('file_path');
-	global.wopiSrc = global.coolParams.get('WOPISrc');
-	if (global.wopiSrc != '') {
-		global.docURL = decodeURIComponent(global.wopiSrc);
-		if (global.accessToken !== '') {
-			wopiParams = { 'access_token': global.accessToken, 'access_token_ttl': global.accessTokenTTL, 'no_auth_header': global.noAuthHeader };
+	if (filePath.startsWith('remote:')) {
+		const url = new URL('https' + filePath.substring(6));
+			// to parse the remote URL into a hierarchical URL object, replace its
+			// "made-up" scheme (which the URL class wouldn't treat as hierarchical)
+			// with 'https' (which works fine as we don't use the scheme of the created
+			// URL object in any way)
+		const accessToken = url.searchParams.get('access_token');
+		const wopiSrc = url.searchParams.get('WOPISrc');
+		if (accessToken === null || wopiSrc === null) {
+			console.assert(false); //TODO
 		}
-		else if (global.accessHeader !== '') {
-			wopiParams = { 'access_header': global.accessHeader };
-		}
-
-		if (wopiParams) {
-			docParams = Object.keys(wopiParams).map(function(key) {
-				return encodeURIComponent(key) + '=' + encodeURIComponent(wopiParams[key]);
-			}).join('&');
-		}
-	} else {
+		global.getRemote = new Promise((resolve) => {
+			const ws = new WebSocket(new URL(
+				'wss://' + url.host + url.pathname
+				+ (url.pathname.endsWith('/') ? '' : '/') + 'co/collab?WOPISrc='
+				+ encodeURIComponent(wopiSrc)));
+			ws.onerror = () => console.assert(false); //TODO
+			ws.onclose = () => console.assert(false); //TODO
+			ws.onopen = () => ws.send('access_token ' + accessToken);
+			ws.onmessage = (e) => {
+				if (e.data.startsWith('progress:')) {
+					// ignore
+				} else if (e.data === 'authenticated') {
+					ws.send(JSON.stringify({
+						type: 'fetch',
+						stream: 'contents',
+						requestId: 'coda-init'
+					}));
+				} else if (e.data.startsWith('{')) {
+					const msg = JSON.parse(e.data);
+					switch (msg.type) {
+					case 'fetch_url':
+						resolve(msg.url);
+						break;
+					case 'user_list':
+						// ignore
+						break;
+					default:
+						console.assert(false); //TODO
+					}
+				} else {
+					console.assert(false); //TODO
+				}
+			};
+		});
 		global.docURL = filePath;
+	} else {
+		global.wopiSrc = global.coolParams.get('WOPISrc');
+		if (global.wopiSrc != '') {
+			global.docURL = decodeURIComponent(global.wopiSrc);
+			if (global.accessToken !== '') {
+				wopiParams = { 'access_token': global.accessToken, 'access_token_ttl': global.accessTokenTTL, 'no_auth_header': global.noAuthHeader };
+			}
+			else if (global.accessHeader !== '') {
+				wopiParams = { 'access_header': global.accessHeader };
+			}
+
+			if (wopiParams) {
+				docParams = Object.keys(wopiParams).map(function(key) {
+					return encodeURIComponent(key) + '=' + encodeURIComponent(wopiParams[key]);
+				}).join('&');
+			}
+		} else {
+			global.docURL = filePath;
+		}
 	}
 
 	// Form a valid WS URL to the host with the given path.
@@ -2156,14 +2204,24 @@ function showWelcomeSVG() {
 		global.socket.binaryType = 'arraybuffer';
 
 		if (global.ThisIsAMobileApp && !global.ThisIsTheEmscriptenApp && !window.starterScreen) {
-			// This corresponds to the initial GET request when creating a WebSocket
-			// connection and tells the app's code that it is OK to start invoking
-			// TheFakeWebSocket's onmessage handler. The app code that handles this
-			// special message knows the document to be edited anyway, and can send it
-			// on as necessary to the Online code.
-			global.postMobileMessage('HULLO');
-			// A FakeWebSocket is immediately open.
-			this.socket.onopen();
+			if (global.getRemote) {
+				global.getRemote.then(
+					(url) => {
+						global.postMobileMessage('HULLO ' + url);
+						this.socket.onopen();
+					},
+					() => console.assert(false) //TODO
+				);
+			} else {
+				// This corresponds to the initial GET request when creating a WebSocket
+				// connection and tells the app's code that it is OK to start invoking
+				// TheFakeWebSocket's onmessage handler. The app code that handles this
+				// special message knows the document to be edited anyway, and can send it
+				// on as necessary to the Online code.
+				global.postMobileMessage('HULLO');
+				// A FakeWebSocket is immediately open.
+				this.socket.onopen();
+			}
 		}
 	}
 

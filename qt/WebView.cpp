@@ -35,6 +35,7 @@
 #include <QGuiApplication>
 #include <QScreen>
 #include <QTimer>
+#include <QWebEngineCertificateError>
 #include <QWebEngineFullScreenRequest>
 #include <QWebEngineSettings>
 #include <QFile>
@@ -562,6 +563,19 @@ void WebView::load(const Poco::URI& fileURL, bool newFile, bool isStarterMode)
             ._fakeClientFd = fakeSocketSocket(),
             ._appDocId = coda::generateNewAppDocId(),
         };
+
+        if (fileURL.getScheme() == "remote")
+        {
+            _webView->page()->settings()->setAttribute(
+                QWebEngineSettings::LocalContentCanAccessRemoteUrls, true);
+#if ENABLE_DEBUG
+            QObject::connect(
+                _webView->page(), &QWebEnginePage::certificateError,
+                [](QWebEngineCertificateError const & certificateError) {
+                    const_cast<QWebEngineCertificateError &>(certificateError).acceptCertificate();
+                });
+#endif
+        }
     }
 
     // setup js c++ communication

@@ -78,6 +78,16 @@
 #include <QFileInfo>
 #include <QLoggingCategory>
 
+#include <boost/asio.hpp>
+#include <boost/asio/ssl.hpp>
+#include <boost/beast/core/tcp_stream.hpp>
+#include <boost/beast/http/message.hpp>
+#include <boost/beast/http/read.hpp>
+#include <boost/beast/http/string_body.hpp>
+#include <boost/beast/http/write.hpp>
+#include <boost/beast/ssl/ssl_stream.hpp>
+#include <boost/beast/version.hpp>
+
 #include <algorithm>
 #include <cassert>
 #include <cstdlib>
@@ -788,8 +798,73 @@ QVariant Bridge::cool(const QString& messageStr)
     const std::string message = messageStr.toStdString();
     LOG_TRC_NOFILE("From JS: cool: " << message);
 
-    if (message == "HULLO")
+    if (message.starts_with("HULLO"))
     {
+        if (message.size() > 5) {
+            auto const fileURL = _document._fileURL;
+
+            std::optional<std::string> wopiSrc;
+            for (auto const & param: fileURL.getQueryParameters()) {
+                if (param.first == "WOPISrc") {
+                    wopiSrc = param.second;
+                    break;
+                }
+            }
+            if (!wopiSrc) {
+                std::abort(); //TODO
+            }
+
+            Poco::Path originalPath(fileURL.getPath());
+            const std::string tempDirectoryPath = FileUtil::createRandomTmpDir();
+            std::vector<std::string> segments;
+            Poco::URI(*wopiSrc).getPathSegments(segments);
+            assert(!segments.empty()); //TODO
+            Poco::Path tempFilePath(tempDirectoryPath, segments.back());
+            const std::string tempFilePathStr = tempFilePath.toString();
+
+            boost::asio::io_context ioc;
+            boost::asio::ssl::context ctx(boost::asio::ssl::context::tlsv12_client);
+
+            boost::asio::ip::tcp::resolver resolver(ioc);
+            auto const port = fileURL.getSpecifiedPort();
+            auto const resolved = resolver.resolve(
+                fileURL.getHost(),
+                port == 0 ? net::getDefaultPortForScheme("https://") : std::to_string(port));
+
+            boost::beast::ssl_stream<boost::beast::tcp_stream> stream(ioc, ctx);
+            boost::beast::get_lowest_layer(stream).connect(resolved);
+            stream.handshake(boost::asio::ssl::stream_base::client);
+            boost::beast::http::request<boost::beast::http::string_body> req(
+                boost::beast::http::verb::get, message.substr(6), 11);
+            req.set(boost::beast::http::field::host, fileURL.getHost());
+            req.set(boost::beast::http::field::user_agent, BOOST_BEAST_VERSION_STRING);
+            boost::beast::http::write(stream, req);
+            {
+                boost::beast::flat_buffer buffer;
+                boost::beast::http::response<boost::beast::http::string_body> res;
+                boost::beast::http::read(stream, buffer, res);
+                if (res.result() != boost::beast::http::status::ok) {
+                    std::abort(); //TODO
+                }
+                std::ofstream ofs(tempFilePathStr, std::ios::binary);
+                if (!ofs) {
+                    std::abort(); //TODO
+                }
+                ofs << res.body();
+                ofs.close();
+            }
+            boost::beast::error_code ec;
+            stream.shutdown(ec);
+            if (ec == boost::asio::error::eof || ec == boost::asio::ssl::error::stream_truncated) {
+                ec = {};
+            }
+            if (ec) {
+                throw boost::beast::system_error{ec};
+            }
+
+            _document._fileURL = Poco::URI(tempFilePath);
+        }
+
         // Skip for starter screen (no document connection needed)
         if (_document._fakeClientFd == -1) {
             LOG_TRC_NOFILE("Starter screen - skipping COOLWSD connection");
@@ -1205,16 +1280,21 @@ QVariant Bridge::cool(const QString& messageStr)
         QString decodedUri = QUrl::fromPercentEncoding(QByteArray(fileArg.data(), fileArg.size()));
 
         QUrl url(decodedUri);
-        QString localPath = url.isLocalFile() ? url.toLocalFile() : decodedUri;
+        QString absolutePath;
+        if (url.scheme() == "remote") {
+            absolutePath = decodedUri;
+        } else {
+            QString localPath = url.isLocalFile() ? url.toLocalFile() : decodedUri;
 
-        QFileInfo fileInfo(localPath);
-        if (!fileInfo.exists() || !fileInfo.isFile())
-        {
-            LOG_ERR("opendoc: file does not exist: " << localPath.toStdString());
-            return {};
+            QFileInfo fileInfo(localPath);
+            if (!fileInfo.exists() || !fileInfo.isFile())
+            {
+                LOG_ERR("opendoc: file does not exist: " << localPath.toStdString());
+                return {};
+            }
+
+            absolutePath = fileInfo.absoluteFilePath();
         }
-
-        QString absolutePath = fileInfo.absoluteFilePath();
         coda::openFiles(QStringList() << absolutePath);
 
         LOG_INF("opendoc: opened file: " << absolutePath.toStdString());
@@ -1434,8 +1514,12 @@ int main(int argc, char** argv)
         // Convert relative paths to absolute paths
         for (const QString& file : files)
         {
-            QFileInfo fileInfo(file);
-            absoluteFiles << fileInfo.absoluteFilePath();
+            if (file.startsWith("remote:", Qt::CaseInsensitive)) {
+                absoluteFiles << file;
+            } else {
+                QFileInfo fileInfo(file);
+                absoluteFiles << fileInfo.absoluteFilePath();
+            }
         }
     }
     else
