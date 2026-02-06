@@ -8,11 +8,11 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-02-03 23:25+0100\n"
-"PO-Revision-Date: 2026-02-03 13:18+0000\n"
-"Last-Translator: Adolfo Jayme Barrientos <fitojb@ubuntu.com>\n"
+"PO-Revision-Date: 2026-02-06 10:01+0000\n"
+"Last-Translator: Rhoslyn Prys <rprys@posteo.net>\n"
 "Language-Team: Welsh <https://hosted.weblate.org/projects/collabora-online/"
 "ui/cy/>\n"
-"Language: \n"
+"Language: cy\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -383,7 +383,7 @@ msgstr "CA Llofnod"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:160
 msgid "In-document Screen Reader"
-msgstr ""
+msgstr "Darllenydd Sgrin o fewn y Ddogfen"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:161
 #: src/control/Control.Menubar.ts:172 src/control/Control.Menubar.ts:497
@@ -1075,13 +1075,12 @@ msgid "This version of {productname} is powered by"
 msgstr "Mae'r fersiwn yma o {productname} yn cael ei yrru gan"
 
 #: src/control/Control.AboutDialog.ts:189
-#, fuzzy
 msgid "Served by: "
-msgstr "Gweinyddwyd gan:"
+msgstr "Gweinyddwyd gan: "
 
 #: src/control/Control.AboutDialog.ts:212
 msgid "View widgets"
-msgstr ""
+msgstr "Gweld teclynnau"
 
 #: src/control/Control.AboutDialog.ts:236
 msgid "\"Slow Proxy\""
@@ -1870,7 +1869,7 @@ msgstr "Trwsio"
 
 #: src/control/Control.Menubar.ts:140
 msgid "Compare Changes"
-msgstr ""
+msgstr "Cymharu Newidiadau"
 
 #: src/control/Control.Menubar.ts:159 src/control/Control.Menubar.ts:480
 #: src/control/Control.Menubar.ts:486 src/control/Control.Menubar.ts:647
@@ -1885,7 +1884,7 @@ msgstr "Ailosod chwyddo"
 
 #: src/control/Control.Menubar.ts:165
 msgid "Fit to Screen"
-msgstr ""
+msgstr "Ffitio i'r Sgrin"
 
 #: src/control/Control.Menubar.ts:168 src/control/Control.Menubar.ts:492
 #: src/control/Control.Menubar.ts:659 src/control/Control.Menubar.ts:804
@@ -2393,7 +2392,7 @@ msgstr "Diwedd Graddiant"
 
 #: src/control/Control.NavigatorPanel.ts:38
 msgid "Navigation Panel"
-msgstr ""
+msgstr "Panel Llywio"
 
 #: src/control/Control.NavigatorPanel.ts:110
 msgid "Navigation"
@@ -2623,7 +2622,7 @@ msgstr "Sparkline"
 
 #: src/control/Control.NotebookbarCalc.js:99
 msgid "Table Design"
-msgstr ""
+msgstr "Cynllun Tabl"
 
 #: src/control/Control.NotebookbarCalc.js:106
 #: src/control/Control.NotebookbarDraw.js:121
@@ -2852,7 +2851,7 @@ msgstr "Golwg Rhagosodedig"
 
 #: src/control/Control.NotebookbarCalc.js:1431
 msgid "Open Views List"
-msgstr ""
+msgstr "Agor Rhestr Golygon"
 
 #: src/control/Control.NotebookbarCalc.js:1438
 msgid "New Sheet View"
@@ -2904,11 +2903,11 @@ msgstr "Dewisiadau Arddull Tabl"
 
 #: src/control/Control.NotebookbarCalc.js:1678
 msgid "Header Row"
-msgstr ""
+msgstr "Rhestr Pennyn"
 
 #: src/control/Control.NotebookbarCalc.js:1690
 msgid "Total Row"
-msgstr ""
+msgstr "Cyfanswm Rhesi"
 
 #: src/control/Control.NotebookbarCalc.js:1708
 msgid "Banded Rows"
@@ -2928,7 +2927,7 @@ msgstr "Colofn Olaf"
 
 #: src/control/Control.NotebookbarCalc.js:1765
 msgid "Filter Buttons"
-msgstr ""
+msgstr "Hidlo Botymau"
 
 #: src/control/Control.NotebookbarCalc.js:1801
 #: src/control/Control.NotebookbarCalc.js:2549
@@ -3105,16 +3104,16 @@ msgstr "Presennol mewn Ffenest"
 
 #: src/control/Control.NotebookbarImpress.js:493
 msgid "Presenter View"
-msgstr ""
+msgstr "Golwg Cyflwynydd"
 
 #: src/control/Control.NotebookbarImpress.js:501
 msgid "Present to All"
-msgstr ""
+msgstr "Cyflwyno i Bawb"
 
 #: src/control/Control.NotebookbarImpress.js:509
 #: src/slideshow/SlideShowPresenter.ts:751
 msgid "Follow Presenter"
-msgstr ""
+msgstr "Dilyn y Cyflwynydd"
 
 #: src/control/Control.NotebookbarImpress.js:637
 msgid "Slide Views"
@@ -3158,7 +3157,7 @@ msgstr "Templedi Prif Sleidiau"
 
 #: src/control/Control.NotebookbarImpress.js:1809
 msgid "Themes"
-msgstr ""
+msgstr "Themâu"
 
 #: src/control/Control.NotebookbarImpress.js:1859
 msgid "Slide Size"
@@ -3195,11 +3194,11 @@ msgstr "Mynd All-lein"
 
 #: src/control/Control.NotebookbarWriter.js:489
 msgid "Validate Sidebar"
-msgstr ""
+msgstr "Dilysu'r Bar Ochr"
 
 #: src/control/Control.NotebookbarWriter.js:497
 msgid "Validate Dialog"
-msgstr ""
+msgstr "Dilysu'r Ddeialog"
 
 #: src/control/Control.NotebookbarWriter.js:940
 #: src/control/Control.Zotero.js:827
@@ -3236,7 +3235,7 @@ msgstr "Cwymplen"
 
 #: src/control/Control.NotebookbarWriter.js:1664
 msgid "Page Width"
-msgstr ""
+msgstr "Lled Tudalen"
 
 #: src/control/Control.NotebookbarWriter.js:2301
 msgid "Tracking"
@@ -3244,15 +3243,15 @@ msgstr "Tracio"
 
 #: src/control/Control.NotebookbarWriter.js:2322
 msgid "View Changes"
-msgstr ""
+msgstr "Gweld y Newidiadau"
 
 #: src/control/Control.NotebookbarWriter.js:2408
 msgid "Compare"
-msgstr ""
+msgstr "Cymharu"
 
 #: src/control/Control.NotebookbarWriter.js:2414
 msgid "Compare Documents"
-msgstr ""
+msgstr "Cymharu Dogfennau"
 
 #: src/control/Control.NotebookbarWriter.js:2506
 msgid "Split"
@@ -3343,7 +3342,7 @@ msgstr "Wedi galluogi fast kit jail bind mount"
 
 #: src/control/Control.ServerAuditDialog.ts:119
 msgid "Fast kit jail bind mounting not configured"
-msgstr ""
+msgstr "Arosod rhwymiad fast kit jail heb ei ffurfweddu"
 
 #: src/control/Control.ServerAuditDialog.ts:127
 msgid "Poorly performing proxying of all network requests."
@@ -3479,7 +3478,7 @@ msgstr "Golwg Tudalennau Lluosog"
 
 #: src/control/Control.StatusBar.js:257
 msgid "Zoom to Fit Page Width"
-msgstr ""
+msgstr "Chwyddo i Ffitio Lled Tudalen"
 
 #: src/control/Control.StatusBar.js:414
 msgid ""
@@ -3912,16 +3911,16 @@ msgstr "Darllen y unig"
 
 #: src/control/PermissionMode.ts:108
 msgid "Viewing Mode"
-msgstr ""
+msgstr "Y Modd Golwg"
 
 #: src/control/PermissionMode.ts:114
 msgid "Editing Mode"
-msgstr ""
+msgstr "Y Modd Golygu"
 
 #: src/control/PermissionMode.ts:125 src/control/PermissionMode.ts:176
 #: src/control/PermissionMode.ts:182 src/control/PermissionMode.ts:188
 msgid "Viewing"
-msgstr ""
+msgstr "Golwg"
 
 #: src/control/jsdialog/Definitions.Menu.ts:111
 #: src/control/jsdialog/Definitions.Menu.ts:1748
@@ -4090,7 +4089,7 @@ msgstr "Mewnosod Amlgyfrwng Lleol"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1740
 msgid "Compare Local Document"
-msgstr ""
+msgstr "Cymharu Dogfen Leol"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1746
 msgid "Very Tight"
@@ -4430,7 +4429,7 @@ msgstr ""
 
 #: src/control/jsdialog/Widget.TreeView.ts:1637
 msgid "Search items"
-msgstr ""
+msgstr "Eitemau Chwilio"
 
 #: src/app/Socket.ts:189
 msgid "Oops, there is a problem connecting to {productname}: "
@@ -4900,7 +4899,7 @@ msgstr "y ddewislen Golwg"
 
 #: src/layer/tile/CanvasTileLayer.js:461
 msgid "Online Editor"
-msgstr ""
+msgstr "Golygydd Ar-lein"
 
 #: src/layer/tile/CanvasTileLayer.js:1456
 msgid "Functions"
@@ -5092,7 +5091,7 @@ msgstr "Creu ffeil newydd o dempled..."
 
 #: src/map/handler/Map.WOPI.js:224
 msgid "Compare Document..."
-msgstr ""
+msgstr "Cymharu Dogfen..."
 
 #: src/map/handler/Map.WOPI.js:732
 msgid "File name should contain an extension."
