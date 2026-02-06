@@ -1916,7 +1916,13 @@ class Menubar extends window.L.Control {
 					if (unoCommand.startsWith(constLanguage)) {
 						unoCommand = constLanguage;
 						languageAndCode = this._map[constState].getItemValue(unoCommand);
-						lang = languageAndCode.split(';')[0];
+						lang = languageAndCode.split(';');
+						if (lang.length) {
+							lang = lang[0];
+						} else {
+							lang = '';
+							app.console.error('Menubar _beforeShow: missing language');
+						}
 						data = decodeURIComponent($(aItem).data(constUno));
 						if (data.indexOf(lang) !== -1) {
 							$(aItem).addClass(constChecked);
