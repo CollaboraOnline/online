@@ -8,11 +8,11 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-02-03 23:25+0100\n"
-"PO-Revision-Date: 2026-02-03 12:14+0000\n"
-"Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
-"Language-Team: Armenian <https://hosted.weblate.org/projects/"
-"collabora-online/ui/hy/>\n"
-"Language: \n"
+"PO-Revision-Date: 2026-02-04 10:50+0000\n"
+"Last-Translator: Tigran Zargaryan <tigranflib@gmail.com>\n"
+"Language-Team: Armenian <https://hosted.weblate.org/projects/collabora-"
+"online/ui/hy/>\n"
+"Language: hy\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -388,7 +388,7 @@ msgstr "Ստորագրություն CA"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:160
 msgid "In-document Screen Reader"
-msgstr ""
+msgstr "Փաստաթղթի ներսում էկրանի ընթերցիչ"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:161
 #: src/control/Control.Menubar.ts:172 src/control/Control.Menubar.ts:497
@@ -1081,13 +1081,12 @@ msgid "This version of {productname} is powered by"
 msgstr "{productname}-ի այս տարբերակը սնուցվում է"
 
 #: src/control/Control.AboutDialog.ts:189
-#, fuzzy
 msgid "Served by: "
-msgstr "Սպասարկված է:"
+msgstr "Սպասարկված է: "
 
 #: src/control/Control.AboutDialog.ts:212
 msgid "View widgets"
-msgstr ""
+msgstr "Դիտել վիջեթները"
 
 #: src/control/Control.AboutDialog.ts:236
 msgid "\"Slow Proxy\""
@@ -1877,7 +1876,7 @@ msgstr "Վերանորոգում"
 
 #: src/control/Control.Menubar.ts:140
 msgid "Compare Changes"
-msgstr ""
+msgstr "Համեմատել փոփոխությունները"
 
 #: src/control/Control.Menubar.ts:159 src/control/Control.Menubar.ts:480
 #: src/control/Control.Menubar.ts:486 src/control/Control.Menubar.ts:647
@@ -1892,7 +1891,7 @@ msgstr "Վերագործարկեք մեծացումը"
 
 #: src/control/Control.Menubar.ts:165
 msgid "Fit to Screen"
-msgstr ""
+msgstr "Հարմարեցնել էկրանին"
 
 #: src/control/Control.Menubar.ts:168 src/control/Control.Menubar.ts:492
 #: src/control/Control.Menubar.ts:659 src/control/Control.Menubar.ts:804
@@ -2401,7 +2400,7 @@ msgstr "Գրադիենտի վերջ"
 
 #: src/control/Control.NavigatorPanel.ts:38
 msgid "Navigation Panel"
-msgstr ""
+msgstr "Նավարկման վահանակ"
 
 #: src/control/Control.NavigatorPanel.ts:110
 msgid "Navigation"
@@ -2631,7 +2630,7 @@ msgstr "Կայծքագիծ"
 
 #: src/control/Control.NotebookbarCalc.js:99
 msgid "Table Design"
-msgstr ""
+msgstr "Աղյուսակի դիզայն"
 
 #: src/control/Control.NotebookbarCalc.js:106
 #: src/control/Control.NotebookbarDraw.js:121
@@ -2860,7 +2859,7 @@ msgstr "Լռելյայն տեսք"
 
 #: src/control/Control.NotebookbarCalc.js:1431
 msgid "Open Views List"
-msgstr ""
+msgstr "Բացել դիտումների ցանկը"
 
 #: src/control/Control.NotebookbarCalc.js:1438
 msgid "New Sheet View"
@@ -2912,11 +2911,11 @@ msgstr "Աղյուսակի ոճի ընտրանքներ"
 
 #: src/control/Control.NotebookbarCalc.js:1678
 msgid "Header Row"
-msgstr ""
+msgstr "Վերնախորագրի տող"
 
 #: src/control/Control.NotebookbarCalc.js:1690
 msgid "Total Row"
-msgstr ""
+msgstr "Ընդհանուր տող"
 
 #: src/control/Control.NotebookbarCalc.js:1708
 msgid "Banded Rows"
@@ -2936,7 +2935,7 @@ msgstr "Վերջին սյունակ"
 
 #: src/control/Control.NotebookbarCalc.js:1765
 msgid "Filter Buttons"
-msgstr ""
+msgstr "Զտիչի կոճակներ"
 
 #: src/control/Control.NotebookbarCalc.js:1801
 #: src/control/Control.NotebookbarCalc.js:2549
@@ -3113,16 +3112,16 @@ msgstr "Ներկայացնել պատուհանում"
 
 #: src/control/Control.NotebookbarImpress.js:493
 msgid "Presenter View"
-msgstr ""
+msgstr "Ներկայացնողի տեսք"
 
 #: src/control/Control.NotebookbarImpress.js:501
 msgid "Present to All"
-msgstr ""
+msgstr "Ներկայացնել բոլորին"
 
 #: src/control/Control.NotebookbarImpress.js:509
 #: src/slideshow/SlideShowPresenter.ts:751
 msgid "Follow Presenter"
-msgstr ""
+msgstr "Հետևեք ներկայացնողին"
 
 #: src/control/Control.NotebookbarImpress.js:637
 msgid "Slide Views"
@@ -3166,7 +3165,7 @@ msgstr "Վարպետ սահիկի կաղապարներ"
 
 #: src/control/Control.NotebookbarImpress.js:1809
 msgid "Themes"
-msgstr ""
+msgstr "Թեմաներ"
 
 #: src/control/Control.NotebookbarImpress.js:1859
 msgid "Slide Size"
@@ -3203,11 +3202,11 @@ msgstr "Գնա Անցանց"
 
 #: src/control/Control.NotebookbarWriter.js:489
 msgid "Validate Sidebar"
-msgstr ""
+msgstr "Կողային վահանակի վավերացում"
 
 #: src/control/Control.NotebookbarWriter.js:497
 msgid "Validate Dialog"
-msgstr ""
+msgstr "Երկխոսության վավերացում"
 
 #: src/control/Control.NotebookbarWriter.js:940
 #: src/control/Control.Zotero.js:827
@@ -3244,7 +3243,7 @@ msgstr "Բացվող ցանկ"
 
 #: src/control/Control.NotebookbarWriter.js:1664
 msgid "Page Width"
-msgstr ""
+msgstr "Էջի լայնությունը"
 
 #: src/control/Control.NotebookbarWriter.js:2301
 msgid "Tracking"
@@ -3252,15 +3251,15 @@ msgstr "Հետևում"
 
 #: src/control/Control.NotebookbarWriter.js:2322
 msgid "View Changes"
-msgstr ""
+msgstr "Դիտել փոփոխությունները"
 
 #: src/control/Control.NotebookbarWriter.js:2408
 msgid "Compare"
-msgstr ""
+msgstr "Համեմատել"
 
 #: src/control/Control.NotebookbarWriter.js:2414
 msgid "Compare Documents"
-msgstr ""
+msgstr "Համեմատեք փաստաթղթերը"
 
 #: src/control/Control.NotebookbarWriter.js:2506
 msgid "Split"
@@ -3351,7 +3350,7 @@ msgstr "Արագ kit jail ամրացման միացումը միացված է"
 
 #: src/control/Control.ServerAuditDialog.ts:119
 msgid "Fast kit jail bind mounting not configured"
-msgstr ""
+msgstr "Fast kit jail bind մոնտաժը կարգավորված չէ"
 
 #: src/control/Control.ServerAuditDialog.ts:127
 msgid "Poorly performing proxying of all network requests."
@@ -3487,7 +3486,7 @@ msgstr "Բազմաէջ դիտում"
 
 #: src/control/Control.StatusBar.js:257
 msgid "Zoom to Fit Page Width"
-msgstr ""
+msgstr "Մեծացնել էջի լայնությանը համապատասխան"
 
 #: src/control/Control.StatusBar.js:414
 msgid ""
@@ -3919,16 +3918,16 @@ msgstr "Միայն-կարդալ"
 
 #: src/control/PermissionMode.ts:108
 msgid "Viewing Mode"
-msgstr ""
+msgstr "Դիտման ռեժիմ"
 
 #: src/control/PermissionMode.ts:114
 msgid "Editing Mode"
-msgstr ""
+msgstr "Խմբագրման ռեժիմ"
 
 #: src/control/PermissionMode.ts:125 src/control/PermissionMode.ts:176
 #: src/control/PermissionMode.ts:182 src/control/PermissionMode.ts:188
 msgid "Viewing"
-msgstr ""
+msgstr "Դիտում"
 
 #: src/control/jsdialog/Definitions.Menu.ts:111
 #: src/control/jsdialog/Definitions.Menu.ts:1748
@@ -4097,7 +4096,7 @@ msgstr "Տեղային մուլտիմեդիայի տեղադրում"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1740
 msgid "Compare Local Document"
-msgstr ""
+msgstr "Համեմատել տեղային փաստաթուղթը"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1746
 msgid "Very Tight"
@@ -4436,7 +4435,7 @@ msgstr "Փաստաթղթին ավելացված վերնախորագրերն ո�
 
 #: src/control/jsdialog/Widget.TreeView.ts:1637
 msgid "Search items"
-msgstr ""
+msgstr "Որոնել տարրերը"
 
 #: src/app/Socket.ts:189
 msgid "Oops, there is a problem connecting to {productname}: "
@@ -4914,7 +4913,7 @@ msgstr "«Դիտել» ընտրացանկը"
 
 #: src/layer/tile/CanvasTileLayer.js:461
 msgid "Online Editor"
-msgstr ""
+msgstr "Առցանց խմբագրիչ"
 
 #: src/layer/tile/CanvasTileLayer.js:1456
 msgid "Functions"
@@ -5100,7 +5099,7 @@ msgstr "Կաղապարից նոր նիշքի ստեղծում..."
 
 #: src/map/handler/Map.WOPI.js:224
 msgid "Compare Document..."
-msgstr ""
+msgstr "Համեմատել փաստաթուղթը..."
 
 #: src/map/handler/Map.WOPI.js:732
 msgid "File name should contain an extension."
