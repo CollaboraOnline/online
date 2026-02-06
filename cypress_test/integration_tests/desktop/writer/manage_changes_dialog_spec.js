@@ -25,5 +25,11 @@ describe(['tagdesktop', 'tagnextcloud', 'tagscreenshot'], 'Manage Changes Dialog
 		cy.cGet('#writerchanges .ui-treeview-entry.ui-treeview-expandable[aria-level="2"][aria-expanded="false"] .ui-treeview-expander-column')
 			.eq(0).click();
 		cy.cGet('#writerchanges').compareSnapshot('writer_manage_changes_tree', 0.1);
+		// test sort feature
+		cy.cGet('#writerchanges .ui-treeview-header-sort-icon').should('be.not.visible');
+		cy.cGet('#writerchanges .ui-treeview-header-text').contains('Author').click();
+		cy.cGet('#writerchanges .ui-treeview-header-sort-icon').should('be.visible');
+		cy.cGet('#sortbycombobox option:selected').should('have.text', 'Author');
+		cy.cGet('#writerchanges').compareSnapshot('writer_manage_changes_tree_sorted', 0.1);
 	});
 });

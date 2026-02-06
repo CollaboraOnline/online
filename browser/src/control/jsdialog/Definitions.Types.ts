@@ -371,6 +371,7 @@ interface TreeEntryJSON {
 interface TreeHeaderJSON {
 	text: string;
 	sortable: boolean; // can be sorted by column
+	arrow?: 'up' | 'down'; // sorting arrow to show
 }
 
 interface TreeWidgetJSON extends WidgetJSON {

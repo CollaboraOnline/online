@@ -582,12 +582,12 @@ algned to the bottom */
 	display: none;
 }
 
-.ui-treeview-header-sort-icon.up::after {
+.ui-treeview-header-sort-icon.down::after {
 	transform: rotate(180deg);
 	display: inline-block;
 }
 
-.ui-treeview-header-sort-icon.down::after {
+.ui-treeview-header-sort-icon.up::after {
 	display: inline-block;
 }
 

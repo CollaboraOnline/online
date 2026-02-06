@@ -333,11 +333,12 @@ class TreeViewControl {
 		span.innerText = header.text;
 
 		if (header.sortable !== false) {
-			window.L.DomUtil.create(
+			const icon = window.L.DomUtil.create(
 				'span',
 				builder.options.cssClass + ' ui-treeview-header-sort-icon',
 				span,
 			);
+			if (header.arrow) window.L.DomUtil.addClass(icon, header.arrow);
 		}
 	}
 
@@ -1498,38 +1499,11 @@ class TreeViewControl {
 		};
 	}
 
-	sortByColumn(icon: HTMLSpanElement, columnIndex: number, up: boolean) {
-		this.clearSorting();
-		window.L.DomUtil.addClass(icon, up ? 'up' : 'down');
-
-		var toSort: Array<HTMLDivElement> = [];
-
-		const container = this._container;
-		container
-			.querySelectorAll(
-				':not(.ui-treeview-expanded-content) .ui-treeview-entry',
-			)
-			.forEach((item: HTMLDivElement) => {
-				toSort.push(item);
-				container.removeChild(item);
-			});
-
-		toSort.sort(this.getSortComparator(columnIndex, up));
-
-		toSort.forEach((item) => {
-			container.insertBefore(item, container.lastChild.nextSibling);
-		});
-	}
-
-	clearSorting() {
-		var icons = this._thead.querySelectorAll('.ui-treeview-header-sort-icon');
-		icons.forEach((icon) => {
-			window.L.DomUtil.removeClass(icon, 'down');
-			window.L.DomUtil.removeClass(icon, 'up');
-		});
-	}
-
-	fillHeaders(headers: Array<TreeHeaderJSON>, builder: JSBuilder) {
+	fillHeaders(
+		data: TreeWidgetJSON,
+		headers: Array<TreeHeaderJSON>,
+		builder: JSBuilder,
+	) {
 		if (!headers) return;
 
 		this._thead = window.L.DomUtil.create(
@@ -1563,9 +1537,7 @@ class TreeViewControl {
 
 			var clickFunction = (columnIndex: number, icon: HTMLSpanElement) => {
 				return () => {
-					if (window.L.DomUtil.hasClass(icon, 'down'))
-						this.sortByColumn(icon, columnIndex + dummyCells, true);
-					else this.sortByColumn(icon, columnIndex + dummyCells, false);
+					builder.callback('treeview', 'columnclick', data, index, builder);
 				};
 			};
 
@@ -1810,7 +1782,7 @@ class TreeViewControl {
 		else this._container.setAttribute('role', 'grid');
 
 		this.preprocessColumnData(data.entries);
-		this.fillHeaders(data.headers, builder);
+		this.fillHeaders(data, data.headers, builder);
 		this.fillEntries(data, data.entries, builder, 1, this._tbody);
 
 		if (this._isListbox && !data.noSearchField && !this.isMenu(data)) {
