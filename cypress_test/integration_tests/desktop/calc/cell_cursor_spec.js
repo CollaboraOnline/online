@@ -86,6 +86,8 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Test jumping on large cell
 	});
 
 	it('Check selected text visual.', function() {
+		cy.viewport(1000, helper.maxScreenshotableViewportHeight);
+		helper.processToIdle(this.win);
 		cy.cGet('#insertsheet-button').click();
 
 		helper.processToIdle(this.win);
@@ -232,6 +234,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Test triple click content 
 
 	beforeEach(function() {
 		helper.setupAndLoadDocument('calc/cell-content-selection.ods');
+		cy.viewport(1000, helper.maxScreenshotableViewportHeight);
 		cy.getFrameWindow().then((win) => {
 			this.win = win;
 		});
