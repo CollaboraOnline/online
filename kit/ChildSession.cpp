@@ -1422,7 +1422,8 @@ bool ChildSession::downloadAs(const StringVector& tokens)
     const std::string tmpDir = FileUtil::createRandomDir(jailDoc);
     const std::string urlToSend = tmpDir + '/' + filenameParam.getFileName();
     const std::string url = jailDoc + urlToSend;
-    const std::string urlAnonym = jailDoc + tmpDir + '/' + Poco::Path(nameAnonym).getFileName();
+    const std::string filename = Poco::Path(nameAnonym).getFileName();
+    const std::string urlAnonym = jailDoc + tmpDir + '/' + filename;
 
     LOG_DBG("Calling LOK's saveAs with URL: ["
             << urlAnonym << "], Format: [" << (format.empty() ? "(nullptr)" : format.c_str())
@@ -1446,8 +1447,8 @@ bool ChildSession::downloadAs(const StringVector& tokens)
     _docManager->sendFrame(docBrokerMessage.c_str(), docBrokerMessage.length());
 
     // Send download id to the client
-    sendTextFrame("downloadas: downloadid=" + tmpDir +
-                  " port=" + std::to_string(ClientPortNumber) + " id=" + id);
+    sendTextFrame("downloadas: downloadid=" + tmpDir + " port=" + std::to_string(ClientPortNumber) +
+                  " id=" + id + " filename=" + filename);
 #endif
     return true;
 }

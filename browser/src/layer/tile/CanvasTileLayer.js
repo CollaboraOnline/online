@@ -1549,7 +1549,7 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 
 		this._map.hideBusy();
 		if (this._map['wopi'].DownloadAsPostMessage) {
-			this._map.fire('postMessage', {msgId: 'Download_As', args: {Type: command.id, URL: url}});
+			this._map.fire('postMessage', {msgId: 'Download_As', args: {Type: command.id, URL: url, filename: command.filename}});
 		}
 		else if (command.id === 'print') {
 			if (this._map.options.print === false || window.L.Browser.cypressTest) {

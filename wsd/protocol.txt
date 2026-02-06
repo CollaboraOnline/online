@@ -560,7 +560,7 @@ contextmenu: <json description of the context menu>
             ]
         }
 
-downloadas: jail=<jail directory> dir=<a tmp dir> name=<name> port=<port>
+downloadas: jail=<jail directory> dir=<a tmp dir> name=<name> port=<port> filename=<filename>
 
     The client should then request http://server:port/jail/dir/name in order to download
     the document
