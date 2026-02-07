@@ -77,6 +77,7 @@ interface MapInterface extends Evented {
 		BaseFileName: string;
 		HideExportOption: boolean;
 		UserCanWrite: boolean;
+		HideChangeTrackingControls: boolean;
 	};
 
 	loadDocument(socket?: SockInterface): void;
@@ -113,6 +114,7 @@ interface MapInterface extends Evented {
 	saveAs(filenme: string, format?: string, options?: string): void;
 
 	addControl(control: any): void;
+	removeControl(control: any): void;
 
 	_shouldStartReadOnly(): boolean;
 	_switchToEditMode(): void;
@@ -124,4 +126,7 @@ interface MapInterface extends Evented {
 	userList: UserList;
 	sidebar: Sidebar;
 	getViewColor(viewId: number): number;
+
+	_controlCorners: Record<string, any>;
+	_contextMenu: ContextMenuControl;
 }

@@ -32,6 +32,10 @@ JSDialog.OpenDropdown = function (
 	innerCallback: JSDialogMenuCallback,
 	popupAnchor: string,
 	isSubmenu: boolean,
+	// If rootId is provided, even selecting inner menu
+	// entry will close the root menu.
+	rootId?: string,
+	earlyCallbackCall?: boolean,
 ) {
 	const json = {
 		id: _createDropdownId(id),
@@ -221,6 +225,8 @@ JSDialog.OpenDropdown = function (
 						generateCallback(entry.items),
 						'top-end',
 						true,
+						rootId,
+						earlyCallbackCall,
 					);
 					lastSubMenuOpened = subMenuId;
 
@@ -238,10 +244,22 @@ JSDialog.OpenDropdown = function (
 
 					return;
 				} else if (eventType === 'selected' && entry && entry.uno) {
-					const uno =
-						entry.uno.indexOf('.uno:') === 0 ? entry.uno : '.uno:' + entry.uno;
-					window.L.Map.THIS.sendUnoCommand(uno);
-					JSDialog.CloseDropdown(id);
+					if (earlyCallbackCall && innerCallback) {
+						innerCallback(
+							objectType,
+							eventType,
+							object,
+							data,
+							entry || builder,
+						);
+					} else {
+						const uno =
+							entry.uno.indexOf('.uno:') === 0
+								? entry.uno
+								: '.uno:' + entry.uno;
+						window.L.Map.THIS.sendUnoCommand(uno);
+					}
+					JSDialog.CloseDropdown(rootId ? rootId : id);
 					return;
 				} else {
 					app.console.error(
@@ -261,6 +279,7 @@ JSDialog.OpenDropdown = function (
 			// for multi-level menus last parameter should be used to handle event (it contains selected entry)
 			// usually last param is builder see: JSDialogCallback
 			if (
+				!earlyCallbackCall &&
 				innerCallback &&
 				innerCallback(objectType, eventType, object, data, entry || builder)
 			)
@@ -270,7 +289,9 @@ JSDialog.OpenDropdown = function (
 			else console.debug('Dropdown: unhandled action: "' + eventType + '"');
 		};
 	};
-	window.L.Map.THIS.fire('closepopups'); // close popups if a dropdown menu is opened
+	if (!isSubmenu) {
+		window.L.Map.THIS.fire('closepopups'); // close popups if a dropdown menu is opened
+	}
 	window.L.Map.THIS.fire('jsdialog', {
 		data: json,
 		callback: generateCallback(entries),
