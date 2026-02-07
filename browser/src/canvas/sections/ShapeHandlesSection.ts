@@ -1267,8 +1267,9 @@ class ShapeHandlesSection extends CanvasSectionObject {
 	onClick(point: cool.SimplePoint, e: MouseEvent): void {
 		point.pX += this.position[0];
 		point.pY += this.position[1];
-		app.map._docLayer._postMouseEvent('buttondown', point.x, point.y, 1, 1, 0);
-		app.map._docLayer._postMouseEvent('buttonup', point.x, point.y, 1, 1, 0);
+		var modifier = MouseControl.readModifier(e);
+		app.map._docLayer._postMouseEvent('buttondown', point.x, point.y, 1, 1, modifier);
+		app.map._docLayer._postMouseEvent('buttonup', point.x, point.y, 1, 1, modifier);
 
 		// There is no native "double-click" event for touch devices. But we need to support double-tap.
 		if ((e as any).pointerType === 'touch') {
