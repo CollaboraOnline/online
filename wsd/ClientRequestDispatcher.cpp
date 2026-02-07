@@ -529,7 +529,7 @@ public:
         };
 
         net::AsyncDNS::lookup(_addressesToResolve.front(), std::move(pushHostnameResolvedToPoll),
-                              dumpState);
+                              std::move(dumpState));
     }
 
     void hostnameResolved(const net::HostEntry& hostEntry)

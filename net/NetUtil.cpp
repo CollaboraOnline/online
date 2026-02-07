@@ -210,7 +210,7 @@ static HostEntry syncResolveDNS(const std::string& addressToCheck)
 
     std::unique_lock<std::mutex> lock(mutex);
 
-    AsyncDNS::lookup(addressToCheck, std::move(callback), dumpState);
+    AsyncDNS::lookup(addressToCheck, std::move(callback), std::move(dumpState));
 
     cv.wait(lock, [&result]{ return static_cast<bool>(result); });
 
@@ -400,10 +400,10 @@ void AsyncDNS::resolveDNS()
     }
 }
 
-void AsyncDNS::addLookup(std::string lookup, DNSThreadFn cb, const DNSThreadDumpStateFn& dumpState)
+void AsyncDNS::addLookup(std::string lookup, DNSThreadFn cb, DNSThreadDumpStateFn dumpState)
 {
     std::unique_lock<std::mutex> guard(_lock);
-    _lookups.emplace(std::move(lookup), std::move(cb), dumpState);
+    _lookups.emplace(std::move(lookup), std::move(cb), std::move(dumpState));
     guard.unlock();
     _condition.notify_one();
 }
@@ -438,10 +438,9 @@ void AsyncDNS::stopAsyncDNS()
 }
 
 //static
-void AsyncDNS::lookup(std::string searchEntry, DNSThreadFn cb,
-                      const DNSThreadDumpStateFn& dumpState)
+void AsyncDNS::lookup(std::string searchEntry, DNSThreadFn cb, DNSThreadDumpStateFn dumpState)
 {
-    AsyncDNSThread->addLookup(std::move(searchEntry), std::move(cb), dumpState);
+    AsyncDNSThread->addLookup(std::move(searchEntry), std::move(cb), std::move(dumpState));
 }
 
 void
@@ -542,7 +541,7 @@ asyncConnect(const std::string& host, const std::string& port, const bool isSSL,
         return state;
     };
 
-    AsyncDNS::lookup(host, std::move(callback), dumpState);
+    AsyncDNS::lookup(std::move(host), std::move(callback), std::move(dumpState));
 }
 
 std::shared_ptr<StreamSocket>
