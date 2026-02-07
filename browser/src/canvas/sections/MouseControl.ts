@@ -46,7 +46,7 @@ class MouseControl extends CanvasSectionObject {
 		super(name);
 	}
 
-	private readModifier(e: MouseEvent) {
+	static readModifier(e: MouseEvent) {
 		let modifier = 0;
 		const shift = e.shiftKey ? app.UNOModifier.SHIFT : 0;
 		const ctrl = e.ctrlKey ? app.UNOModifier.CTRL : 0;
@@ -113,7 +113,7 @@ class MouseControl extends CanvasSectionObject {
 		e.stopImmediatePropagation();
 
 		const buttons = app.LOButtons.right;
-		const modifier = this.readModifier(e);
+		const modifier = MouseControl.readModifier(e);
 
 		if (modifier === 0) {
 			this.postCoreMouseEvent(
@@ -282,7 +282,7 @@ class MouseControl extends CanvasSectionObject {
 		clearTimeout(this.mouseMoveTimer);
 
 		const count = 1;
-		const modifier = this.readModifier(e);
+		const modifier = MouseControl.readModifier(e);
 
 		if (!this.containerObject.isDraggingSomething()) {
 			this.mouseMoveTimer = setTimeout(() => {
@@ -365,7 +365,7 @@ class MouseControl extends CanvasSectionObject {
 				this.currentPosition,
 				1,
 				app.LOButtons.left,
-				this.readModifier(e),
+				MouseControl.readModifier(e),
 			);
 
 			app.map.fire('scrollvelocity', { vx: 0, vy: 0 });
@@ -449,7 +449,7 @@ class MouseControl extends CanvasSectionObject {
 		// Right click is not supported. And click event doesn't have "buttons" property set. Safe to set it here to default.
 		let buttons = app.LOButtons.left;
 
-		let modifier = this.readModifier(e);
+		let modifier = MouseControl.readModifier(e);
 		const sendingPosition = this.currentPosition.clone();
 
 		// Turn ctrl-left-click into right-click for browsers on macOS
@@ -595,7 +595,7 @@ class MouseControl extends CanvasSectionObject {
 	onDrop(position: cool.SimplePoint, e: DragEvent): void {
 		this.refreshPosition(position);
 
-		const modifier = this.readModifier(e);
+		const modifier = MouseControl.readModifier(e);
 
 		// Move the cursor, so that the insert position is as close to the drop coordinates as possible.
 		this.postCoreMouseEvent(
