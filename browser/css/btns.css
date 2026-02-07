@@ -81,6 +81,7 @@
 	color: var(--color-text-darker);
 	border-radius: var(--border-radius);
 	background-color: var(--color-background-tabs-group);
+	overflow: hidden;
 }
 
 /* toolbuttons selected */
