@@ -135,7 +135,7 @@ function removeShapeSelection() {
 			expect(overlay.children('svg').length).to.equal(0);
 		});
 
-	cy.cGet('.leaflet-drag-transform-marker').should('not.exist');
+	cy.cGet('#test-div-shapeHandlesSection').should('not.exist');
 
 	cy.log('<< removeShapeSelection - end');
 }
