@@ -441,6 +441,7 @@ interface CheckboxWidgetJSON extends WidgetJSON {
 interface AriaLabelAttributes {
 	label?: string;
 	description?: string;
+	role?: string;
 }
 
 interface SeparatorWidgetJSON extends WidgetJSON {
