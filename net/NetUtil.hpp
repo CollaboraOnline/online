@@ -104,7 +104,7 @@ enum class AsyncConnectResult : std::uint8_t {
 using asyncConnectCB =
     std::function<void(std::shared_ptr<StreamSocket>, AsyncConnectResult result)>;
 
-void asyncConnect(const std::string& host, const std::string& port, bool isSSL,
+void asyncConnect(std::string host, const std::string& port, bool isSSL,
                   const std::shared_ptr<ProtocolHandlerInterface>& protocolHandler,
                   const asyncConnectCB& asyncCb);
 
