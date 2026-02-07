@@ -1671,7 +1671,7 @@ AC_CONFIG_LINKS([browser/.prettierrc:browser/.prettierrc])
 AC_CONFIG_LINKS([cypress_test/package.json:cypress_test/package.json])
 AC_CONFIG_COMMANDS_PRE([
 if test "$srcdir" != '.'; then
-   dst_dirs="cypress_test/plugins cypress_test/eslint_plugin browser/archived-packages"
+   dst_dirs="cypress_test/plugins cypress_test/eslint_plugin browser/node_shrinkpack"
    src_dir=
    dir_name=
    for dst_dir in $dst_dirs
