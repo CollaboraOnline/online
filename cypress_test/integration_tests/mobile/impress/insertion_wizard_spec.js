@@ -10,6 +10,9 @@ describe(['tagmobile', 'tagnextcloud'], 'Impress insertion wizard.', function() 
 		helper.setupAndLoadDocument('impress/insertion_wizard.odp');
 
 		mobileHelper.enableEditingMobile();
+		cy.getFrameWindow().then((win) => {
+			this.win = win;
+		});
 	});
 
 	function selectionShouldBeTextShape(checkShape) {
@@ -370,10 +373,10 @@ describe(['tagmobile', 'tagnextcloud'], 'Impress insertion wizard.', function() 
 	});
 
 	it('Insert new slide with plus button.', function() {
-		impressHelper.assertNumberOfSlidePreviews(1);
+		impressHelper.assertSlidePreviewCountAfterIdle(this.win, 1);
 		cy.cGet('body').contains('.leaflet-control-zoom-in', '+').should('be.visible');
 		cy.cGet('body').contains('.leaflet-control-zoom-in', '+').click();
-		impressHelper.assertNumberOfSlidePreviews(2);
+		impressHelper.assertSlidePreviewCountAfterIdle(this.win, 2);
 		if (Cypress.env('INTEGRATION') !== 'nextcloud') {
 			cy.cGet('#toolbar-mobile-back').click();
 			cy.cGet('.leaflet-control-zoom-in').should('not.exist');

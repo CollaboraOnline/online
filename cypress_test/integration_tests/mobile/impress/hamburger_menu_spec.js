@@ -13,6 +13,9 @@ describe.skip(['tagmobile'], 'Trigger hamburger menu options.', function() {
 
 		// Click on edit button
 		mobileHelper.enableEditingMobile();
+		cy.getFrameWindow().then((win) => {
+			this.win = win;
+		});
 	});
 
 	it('Save', { defaultCommandTimeout: 60000 }, function() {
@@ -212,27 +215,27 @@ describe.skip(['tagmobile'], 'Trigger hamburger menu options.', function() {
 	});
 
 	it('Slide: New Slide.', function() {
-		impressHelper.assertNumberOfSlidePreviews(1);
+		impressHelper.assertSlidePreviewCountAfterIdle(this.win, 1);
 
 		mobileHelper.selectHamburgerMenuItem(['Slide', 'New Slide']);
 
-		impressHelper.assertNumberOfSlidePreviews(2);
+		impressHelper.assertSlidePreviewCountAfterIdle(this.win, 2);
 	});
 
 	it('Slide: Duplicate Slide.', function() {
-		impressHelper.assertNumberOfSlidePreviews(1);
+		impressHelper.assertSlidePreviewCountAfterIdle(this.win, 1);
 
 		mobileHelper.selectHamburgerMenuItem(['Slide', 'Duplicate Slide']);
 
-		impressHelper.assertNumberOfSlidePreviews(2);
+		impressHelper.assertSlidePreviewCountAfterIdle(this.win, 2);
 	});
 
 	it('Slide: Delete Slide.', function() {
-		impressHelper.assertNumberOfSlidePreviews(1);
+		impressHelper.assertSlidePreviewCountAfterIdle(this.win, 1);
 
 		mobileHelper.selectHamburgerMenuItem(['Slide', 'New Slide']);
 
-		impressHelper.assertNumberOfSlidePreviews(2);
+		impressHelper.assertSlidePreviewCountAfterIdle(this.win, 2);
 
 		mobileHelper.selectHamburgerMenuItem(['Slide', 'Delete Slide']);
 
@@ -240,7 +243,7 @@ describe.skip(['tagmobile'], 'Trigger hamburger menu options.', function() {
 		cy.cGet('#deleteslide-modal-response').click();
 		cy.cGet('#mobile-wizard-content-modal-dialog-deleteslide-modal').should('not.exist');
 
-		impressHelper.assertNumberOfSlidePreviews(1);
+		impressHelper.assertSlidePreviewCountAfterIdle(this.win, 1);
 	});
 
 	it('Full Screen.', function() {
