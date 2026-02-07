@@ -44,8 +44,7 @@ public:
     using DNSThreadFn = std::function<void(const HostEntry& hostEntry)>;
     using DNSThreadDumpStateFn = std::function<std::string()>;
 
-    static void lookup(std::string searchEntry, DNSThreadFn cb,
-                       const DNSThreadDumpStateFn& dumpState);
+    static void lookup(std::string searchEntry, DNSThreadFn cb, DNSThreadDumpStateFn dumpState);
 
 private:
     UnitWSD* const _unitWsd;
@@ -60,13 +59,11 @@ private:
         AsyncDNS::DNSThreadFn cb;
         AsyncDNS::DNSThreadDumpStateFn dumpState;
 
-        Lookup()
-        {
-        }
-        Lookup(const std::string& q, const AsyncDNS::DNSThreadFn& c, const AsyncDNS::DNSThreadDumpStateFn& d)
-            : query(q),
-            cb(c),
-            dumpState(d)
+        Lookup() = default;
+        Lookup(std::string q, AsyncDNS::DNSThreadFn c, AsyncDNS::DNSThreadDumpStateFn d)
+            : query(std::move(q))
+            , cb(std::move(c))
+            , dumpState(std::move(d))
         {
         }
     };
@@ -74,7 +71,7 @@ private:
     Lookup _activeLookup;
 
     void resolveDNS();
-    void addLookup(std::string lookup, DNSThreadFn cb, const DNSThreadDumpStateFn& dumpState);
+    void addLookup(std::string lookup, DNSThreadFn cb, DNSThreadDumpStateFn dumpState);
 
     void startThread();
     void joinThread();
