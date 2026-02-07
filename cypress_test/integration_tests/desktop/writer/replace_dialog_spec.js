@@ -6,6 +6,9 @@ var findHelper = require('../../common/find_helper');
 describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Replace Dialog Tests', function() {
     beforeEach(function() {
         helper.setupAndLoadDocument('writer/find_replace.odt');
+        cy.getFrameWindow().then(function(win) {
+            this.win = win;
+        });
     });
 
     it('Ctrl H should open search dialog with replace tab active', function() {
@@ -89,8 +92,14 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Replace Dialog Tests', fun
         // Type replacement and press Enter
         cy.cGet('#replaceterm-input-dialog').type('replaced').realPress('Enter');
 
-        // Close the dialog
-        cy.cGet('.ui-dialog-titlebar-close').click();
+        // The replace triggers a jsdialog update and when the browser-side
+        // processes the update the dialog gets rebuilt, and
+        // .ui-dialog-titlebar-close temporarily disappears, so wait for the
+        // replace operation round-trip and dialog rebuild to complete before
+        // closing the dialog.
+        helper.processToIdle(this.win);
+
+        findHelper.closeFindDialog();
 
         // Select all text to verify replacement happened
         helper.selectAllText();
