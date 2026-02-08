@@ -421,6 +421,10 @@ interface IconViewJSON extends WidgetJSON {
 	selectionmode: string; // single or multiple
 }
 
+interface IconViewListJSON extends WidgetJSON {
+	children: Array<IconViewJSON>;
+}
+
 interface IconViewElement extends HTMLElement {
 	requestRenders: (
 		entry: IconViewEntry,
@@ -433,6 +437,10 @@ interface IconViewElement extends HTMLElement {
 		entryData: any,
 		builder: JSBuilder,
 	) => void;
+}
+
+interface IconViewWrapper extends Element {
+	updateDropdown?: (id: string, pos: number) => void;
 }
 
 interface EditWidgetJSON extends WidgetJSON {
