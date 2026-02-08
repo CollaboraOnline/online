@@ -56,7 +56,11 @@ class HostEntry
     std::string makeIPAddress(const sockaddr* ai_addr);
 
 public:
-    HostEntry(const std::string& desc);
+    HostEntry(std::string desc);
+    HostEntry(const HostEntry&) = default;
+    HostEntry(HostEntry&&) = default;
+    HostEntry& operator=(const HostEntry&) = default;
+    HostEntry& operator=(HostEntry&&) = default;
     ~HostEntry();
 
     bool good() const { return _saved_errno == 0 && _eaino == 0; }
