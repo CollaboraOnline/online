@@ -91,8 +91,8 @@ std::string HostEntry::errorMessage() const
     return std::string("[" + _requestName + "]: " + errmsg);
 }
 
-HostEntry::HostEntry(const std::string& desc)
-    : _requestName(desc)
+HostEntry::HostEntry(std::string desc)
+    : _requestName(std::move(desc))
     , _saved_errno(0)
     , _eaino(0)
 {
@@ -101,7 +101,7 @@ HostEntry::HostEntry(const std::string& desc)
     hints.ai_flags = AI_CANONNAME | AI_ADDRCONFIG;
 
     addrinfo* ainfo = nullptr;
-    int rc = getaddrinfo(desc.c_str(), nullptr, &hints, &ainfo);
+    int rc = getaddrinfo(_requestName.c_str(), nullptr, &hints, &ainfo);
     if (rc != 0)
     {
         setEAI(rc);
@@ -132,10 +132,10 @@ struct DNSCacheEntry
     HostEntry hostEntry;
     std::chrono::steady_clock::time_point lookupTime;
 
-    DNSCacheEntry(const std::string& address, const HostEntry& entry,
+    DNSCacheEntry(std::string address, HostEntry entry,
                   const std::chrono::steady_clock::time_point time)
-        : queryAddress(address)
-        , hostEntry(entry)
+        : queryAddress(std::move(address))
+        , hostEntry(std::move(entry))
         , lookupTime(time)
     {
     }
