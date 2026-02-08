@@ -42,8 +42,12 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Delete Objects', function(
 		desktopHelper.getCompactIconArrow('DefaultNumbering').click();
 		// Click on insert chart button.
 		desktopHelper.getCompactIcon('InsertObjectChart').click();
+
 		// Click on the ok button of chart jsdialog.
+		cy.cGet('#CHART2_HID_SCH_WIZARD_ROADMAP').should('exist');
 		cy.cGet('.ui-pushbutton.jsdialog.button-primary').click();
+		cy.cGet('#CHART2_HID_SCH_WIZARD_ROADMAP').should('not.exist');
+
 		cy.cGet('#test-div-shapeHandlesSection').should('exist');
 		// delete
 		helper.typeIntoDocument('{del}');
