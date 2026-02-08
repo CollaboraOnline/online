@@ -480,7 +480,6 @@ label.notebookbar.ui-checkbox-label {
 
 /* Styles preview */
 .jsdialog #stylesview:not(.sidebar),
-.jsdialog #masterpageall_icons:not(.sidebar),
 .jsdialog #transitions_icons:not(.sidebar),
 .jsdialog #iconview_theme_colors:not(.sidebar) {
 	height: auto !important;
@@ -531,17 +530,16 @@ label.notebookbar.ui-checkbox-label {
 }
 
 .jsdialog #stylesview:not(.sidebar),
-.jsdialog #masterpageall_icons:not(.sidebar),
 .jsdialog #transitions_icons:not(.sidebar),
 .notebookbar #stylesview-iconview,
 .notebookbar #masterpageall_icons-iconview,
+.notebookbar #masterpage_icons-wrapper,
 .notebookbar #transitions_icons-iconview,
 .notebookbar #iconview_theme_colors-iconview,
 #custom_animation_list,
 #effect_list {
 	height: var(--notebookbar-element-height);
 	overflow: auto;
-	display: grid;
 	row-gap: 0;
 	padding: 0px;
 
@@ -576,7 +574,7 @@ label.notebookbar.ui-checkbox-label {
 	justify-content: center;
 }
 
-#masterpageall_icons-dropdown,
+#masterpage_iconslist-dropdown,
 #stylesview-dropdown,
 #iconview_theme_colors-dropdown {
 	margin-top: 37px !important;
@@ -723,14 +721,21 @@ label.notebookbar.ui-checkbox-label {
 
 /* Design Tab */
 
-.jsdialog #masterpageall_icons,
-#masterpageall_icons-iconview {
+#masterpageall_icons-iconview,
+#masterpage_icons-wrapper {
 	width: 15vw !important;
 	max-width: 265px;
 	min-width: 90px;
-	grid-template-columns: repeat(auto-fit, minmax(85px, 1fr));
-	grid-template-rows: repeat(auto-fit, minmax(62px, 1fr));
 	margin-left: 5px;
+}
+
+#masterpageall_icons,
+#masterpagecurrent_icons {
+	overflow: unset;
+	height: auto !important;
+	margin: 0 !important;
+	border: none !important;
+	grid-template-columns: repeat(auto-fit, minmax(85px, 1fr));
 }
 
 /* Transition Tab */
@@ -1000,12 +1005,12 @@ label.notebookbar.ui-checkbox-label {
 	height: var(--btn-img-size);
 }
 
-#masterpageall_icons .notebookbar.ui-iconview-entry {
+#masterpage_icons-wrapper .notebookbar.ui-iconview-entry {
 	align-self: start;
 	margin-top: 6px;
 }
 
-#masterpageall_icons .notebookbar.ui-iconview-entry img {
+#masterpage_icons-wrapper .notebookbar.ui-iconview-entry img {
 	height: 45px;
 	width: 80px;
 }

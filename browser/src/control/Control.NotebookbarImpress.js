@@ -1797,8 +1797,20 @@ window.L.Control.NotebookbarImpress = window.L.Control.NotebookbarWriter.extend(
 				'icon': 'lc_masterslide.svg',
 				'children': [
 					{
-						'id': 'masterpageall_icons', // has to match core id
-						'type': 'iconview'
+						'id': 'masterpage_iconslist',
+						'type': 'iconviewlist',
+						'items': [
+							{
+								'id': 'masterpagecurrent_icons', // has to match core id
+								'type': 'iconview',
+								'label': _('This Presentation')
+							},
+							{
+								'id': 'masterpageall_icons', // has to match core id
+								'type': 'iconview',
+								'label': _('Presentation Templates')
+							}
+						]
 					}
 				]
 			},
@@ -1812,7 +1824,7 @@ window.L.Control.NotebookbarImpress = window.L.Control.NotebookbarWriter.extend(
 				'children': [
 					{
 						'id': 'iconview_theme_colors', // has to match core id
-						'type': 'iconview'
+						'type': 'notebookbariconview'
 					}
 				]
 			},
