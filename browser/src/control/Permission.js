@@ -26,6 +26,8 @@ window.L.Map.include({
 		button.attr('role', 'button');
 		button.attr('title', _('Edit document'));
 		button.attr('aria-label', _('Edit document'));
+		let startInEditMode = window.prefs.getBoolean("startInEditMode", false);
+
 		// app.file.fileBasedView is new view that has continuous scrolling
 		// used for PDF and we don't permit editing for PDFs
 		// this._shouldStartReadOnly() is a check for files that should start in readonly mode and even on desktop browser
@@ -34,15 +36,25 @@ window.L.Map.include({
 		//
 		// For mobile we need to display the edit button for all the cases except for PDF
 		// we offer save-as to another place where the user can edit the document
+
+		if (typeof this._startInEditModeConsumed === 'undefined') {
+			this._startInEditModeConsumed = false;
+		}
+		if (this._startInEditModeConsumed) {
+			startInEditMode = false;
+		} else if (startInEditMode) {
+			this._startInEditModeConsumed = true;
+		}
+
 		var isPDF = app.file.fileBasedView && app.file.editComment;
-		if (!isPDF && (this._shouldStartReadOnly() || window.mode.isMobile() || window.mode.isTablet())) {
+		if (!isPDF && (this._shouldStartReadOnly() || ((window.mode.isMobile() || window.mode.isTablet()) && !startInEditMode))) {
 			button.css('display', 'flex');
 		} else {
 			button.hide();
 		}
 		var that = this;
 		if (perm === 'edit') {
-			if (this._shouldStartReadOnly() || window.mode.isMobile() || window.mode.isTablet()) {
+			if (this._shouldStartReadOnly() || ((window.mode.isMobile() || window.mode.isTablet()) && !startInEditMode)) {
 				button.on('click', function () {
 					that._switchToEditMode();
 				});
