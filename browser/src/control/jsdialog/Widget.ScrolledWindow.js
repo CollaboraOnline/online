@@ -54,8 +54,10 @@ function _scrolledWindowControl(parentContainer, data, builder) {
 		scrollwindow.id = data.id;
 
 	// drawing areas inside scrollwindows should be not cropped so we add special class
-	if (_hasDrawingAreaInside(data.children))
+	if (_hasDrawingAreaInside(data.children)) {
 		window.L.DomUtil.addClass(scrollwindow, 'has-ui-drawing-area');
+		scrollwindow.setAttribute('tabindex', '-1');
+	}
 
 	var content = window.L.DomUtil.create('div', builder.options.cssClass + ' ui-scrollwindow-content', scrollwindow);
 
