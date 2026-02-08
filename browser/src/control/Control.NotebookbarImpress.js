@@ -1804,8 +1804,20 @@ window.L.Control.NotebookbarImpress = window.L.Control.NotebookbarWriter.extend(
 				'icon': 'lc_masterslide.svg',
 				'children': [
 					{
-						'id': 'masterpageall_icons', // has to match core id
-						'type': 'iconview'
+						'id': 'masterpagenb',
+						'type': 'iconviewlist',
+						'children': [
+							{
+								'id': 'masterpagecurrent_icons', // has to match core id
+								'type': 'iconview',
+								'label': _('This Presentation')
+							},
+							{
+								'id': 'masterpageall_icons', // has to match core id
+								'type': 'iconview',
+								'label': _('Presentation Templates')
+							}
+						]
 					}
 				]
 			},

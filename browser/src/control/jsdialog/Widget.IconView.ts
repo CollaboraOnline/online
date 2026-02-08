@@ -270,6 +270,7 @@ JSDialog.iconView = function (
 	);
 
 	iconview.id = data.id;
+	iconview.data = data;
 	const isMultiSelect = data.selectionmode === 'multiple';
 
 	if (isMultiSelect) {
