@@ -373,8 +373,9 @@ function waitForInterferingUser() {
 function documentChecks(skipInitializedCheck = false) {
 	cy.log('>> documentChecks - start');
 
-	cy.cGet('#document-canvas', {timeout : Cypress.config('defaultCommandTimeout') * 2.0});
+	var canvasCheck = cy.cGet('#document-canvas', {timeout : Cypress.config('defaultCommandTimeout') * 2.0});
 	if (!skipInitializedCheck) {
+		canvasCheck.should('be.visible');
 		cy.cGet('#map', {timeout : Cypress.config('defaultCommandTimeout') * 2.0})
 			.should('have.class', 'initialized');
 	}
@@ -423,6 +424,11 @@ function documentChecks(skipInitializedCheck = false) {
 			cy.cGet('#pos_window-input-address.addressInput').should('exist');
 			//cy.cGet('#pos_window-input-address.addressInput').should('not.be.empty');
 		});
+	}
+
+	// Ensure the busypopup overlay is gone so it doesn't swallow clicks.
+	if (!skipInitializedCheck) {
+		cy.cGet('#busypopup-overlay').should('not.exist');
 	}
 
 	if (Cypress.env('INTERFERENCE_TEST') === true) {
