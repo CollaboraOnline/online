@@ -491,12 +491,12 @@ label.notebookbar.ui-checkbox-label {
 	line-height: 22px;
 }
 
-/* Styles preview */
-.jsdialog #stylesview:not(.sidebar),
-.jsdialog #masterpageall_icons:not(.sidebar),
-.jsdialog #tablestyles_design:not(.sidebar),
-.jsdialog #transitions_icons:not(.sidebar),
-.jsdialog #iconview_theme_colors:not(.sidebar) {
+/* Styles preview #<originalid>-iconview-list */
+.jsdialog #stylesview-iconview-list:not(.sidebar),
+.jsdialog #masterpagenb-iconview-list:not(.sidebar),
+.jsdialog #tablestyles_design-iconview-list:not(.sidebar),
+.jsdialog #transitions_icons-iconview-list:not(.sidebar),
+.jsdialog #iconview_theme_colors-iconview-list:not(.sidebar) {
 	height: auto !important;
 	min-height: 64px !important;
 	border: none !important;
@@ -544,15 +544,17 @@ label.notebookbar.ui-checkbox-label {
 	box-sizing: border-box;
 }
 
-.jsdialog #stylesview:not(.sidebar),
-.jsdialog #masterpageall_icons:not(.sidebar),
-.jsdialog #tablestyles_design:not(.sidebar),
-.jsdialog #transitions_icons:not(.sidebar),
-.notebookbar #stylesview-iconview,
-.notebookbar #masterpageall_icons-iconview,
-.notebookbar #tablestyles_design-iconview,
-.notebookbar #transitions_icons-iconview,
-.notebookbar #iconview_theme_colors-iconview,
+/* #<originalid> (inner iconview) */
+.jsdialog #stylesview-iconview-list:not(.sidebar),
+.jasialog #masterpagenb-iconview-list:not(.sidebar),
+.jsdialog #tablestyles_design-iconview-list:not(.sidebar),
+.jsdialog #transitions_icons-iconview-list:not(.sidebar),
+.notebookbar #stylesview,
+.notebookbar #masterpageall_icons,
+.notebookbar #masterpagecurrent_icons,
+.notebookbar #tablestyles_design,
+.notebookbar #transitions_icons,
+.notebookbar #iconview_theme_colors,
 #custom_animation_list,
 #effect_list {
 	height: var(--notebookbar-element-height);
@@ -592,7 +594,7 @@ label.notebookbar.ui-checkbox-label {
 	justify-content: center;
 }
 
-#masterpageall_icons-dropdown,
+#masterpagenb-dropdown,
 #stylesview-dropdown,
 #iconview_theme_colors-dropdown {
 	margin-top: 37px !important;
@@ -621,7 +623,7 @@ label.notebookbar.ui-checkbox-label {
 }
 
 .jsdialog #stylesview .ui-iconview-entry,
-.notebookbar #stylesview-iconview .ui-iconview-entry {
+.notebookbar #stylesview .ui-iconview-entry {
 	box-sizing: border-box;
 	padding-top: 0px;
 	align-self: start;
@@ -633,12 +635,12 @@ label.notebookbar.ui-checkbox-label {
 }
 
 .jsdialog #stylesview .icon-view-item-container,
-.notebookbar #stylesview-iconview .icon-view-item-container {
+.notebookbar #stylesview .icon-view-item-container {
 	margin: unset;
 }
 
 .jsdialog #stylesview .ui-iconview-entry-title,
-.notebookbar #stylesview-iconview .ui-iconview-entry-title {
+.notebookbar #stylesview .ui-iconview-entry-title {
 	display: none;
 }
 
@@ -740,7 +742,9 @@ label.notebookbar.ui-checkbox-label {
 /* Design Tab */
 
 .jsdialog #masterpageall_icons,
-#masterpageall_icons-iconview {
+.jsdialog #masterpagecurrent_icons
+#masterpageall_icons,
+#masterpagecurrent_icons {
 	width: 15vw !important;
 	max-width: 265px;
 	min-width: 90px;
@@ -1023,12 +1027,3 @@ label.notebookbar.ui-checkbox-label {
 	height: var(--btn-img-size);
 }
 
-#masterpageall_icons .notebookbar.ui-iconview-entry {
-	align-self: start;
-	margin-top: 6px;
-}
-
-#masterpageall_icons .notebookbar.ui-iconview-entry img {
-	height: 45px;
-	width: 80px;
-}
