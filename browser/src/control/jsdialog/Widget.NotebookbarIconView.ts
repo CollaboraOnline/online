@@ -96,6 +96,23 @@ JSDialog.notebookbarIconView = function (
 	data: IconViewJSON,
 	builder: JSBuilder,
 ) {
+	const iconviewlistdata = {
+		id: data.id + '-iconview-list',
+		type: 'iconviewlist',
+		children: [data],
+	};
+	return JSDialog.notebookbarIconViewList(
+		parentContainer,
+		iconviewlistdata,
+		builder,
+	);
+};
+
+JSDialog.notebookbarIconViewList = function (
+	parentContainer: Element,
+	data: IconViewListJSON,
+	builder: JSBuilder,
+) {
 	const commonContainer = window.L.DomUtil.create(
 		'div',
 		builder.options.cssClass + ' ui-iconview-window',
@@ -103,29 +120,18 @@ JSDialog.notebookbarIconView = function (
 	);
 	commonContainer.id = data.id;
 
-	/*
-		deep copy to not repeat id. below we override
-		`iconview.requestRenders` and `iconview.updateRenders`
-		because core knows this iconview by the id
-		without `-iconview` at the end and thus any
-		updates/requests should be sent with that `id`.
-	*/
-	let innerData: IconViewJSON | null = null;
-	if (window.structuredClone) {
-		try {
-			innerData = window.structuredClone(data);
-			innerData.id = innerData.id + '-iconview';
-		} catch (e) {
-			app.console.debug('NotebookbarIconView: ' + e);
-			return false;
-		}
+	// we insert into DOM only the first iconview (rest is accessible only in the dropdown)
+	JSDialog.iconView(commonContainer, data.children[0], builder);
+	// builder will not do it for us - we manage children (return is false in this handler)
+	builder.postProcess(commonContainer, data.children[0]);
+
+	const iconViews = commonContainer.querySelectorAll('.ui-iconview');
+	const iconview = iconViews.length ? iconViews[0] : null;
+	if (!iconview) {
+		app.console.error('IconView cannot be created: ' + data.id);
+		return false;
 	}
 
-	// create the inner iconview
-	JSDialog.iconView(commonContainer, innerData, builder);
-	const iconview = commonContainer.querySelector('.ui-iconview') as any;
-
-	// create the button's container
 	const buttonsContainer = window.L.DomUtil.create(
 		'div',
 		builder.options.cssClass + ' ui-iconview-buttons-container',
@@ -166,7 +172,7 @@ JSDialog.notebookbarIconView = function (
 		JSDialog.OpenDropdown(
 			data.id,
 			commonContainer,
-			_getDropdownContent(data),
+			_getDropdownContent(data.children[0]),
 			notebookbarIconViewCallback,
 		);
 		bIsExpanded = true;
@@ -203,8 +209,6 @@ JSDialog.notebookbarIconView = function (
 		{ focusBack: true, combination: 'SD', de: null },
 		true /* opensPopup */,
 	);
-
-	commonContainer.appendChild(buttonsContainer);
 
 	commonContainer._onDropDown = function (opened: boolean) {
 		if (opened) {
@@ -275,16 +279,16 @@ JSDialog.notebookbarIconView = function (
 	}
 
 	commonContainer.updateRenders = iconview.updateRenders = (pos: number) => {
-		iconview.updateRendersImpl(pos, data.id, iconview);
+		iconview.updateRendersImpl(pos, data.children[0].id, iconview);
 
 		// also update the dropdown (if any);
 		const dropdownContainer = JSDialog.GetDropdown(data.id);
 		if (dropdownContainer)
-			iconview.updateRendersImpl(pos, data.id, dropdownContainer);
+			iconview.updateRendersImpl(pos, data.children[0].id, dropdownContainer);
 	};
 
 	iconview.updateSelection = (position: number) => {
-		iconview.updateSelectionImpl(position, data);
+		iconview.updateSelectionImpl(position, data.children[0]);
 	};
 
 	/*
@@ -297,7 +301,12 @@ JSDialog.notebookbarIconView = function (
 		placeholder: Element,
 		entryContainer: Element,
 	) => {
-		iconview.requestRendersImpl(data.id, entry, placeholder, entryContainer);
+		iconview.requestRendersImpl(
+			data.children[0].id,
+			entry,
+			placeholder,
+			entryContainer,
+		);
 	};
 
 	/*
@@ -310,7 +319,7 @@ JSDialog.notebookbarIconView = function (
 		entry: any,
 		builder: JSBuilder,
 	) => {
-		builder.callback(objectType, eventType, data, entry, builder);
+		builder.callback(objectType, eventType, data.children[0], entry, builder);
 	};
 
 	commonContainer.onSelect = iconview.onSelect;
