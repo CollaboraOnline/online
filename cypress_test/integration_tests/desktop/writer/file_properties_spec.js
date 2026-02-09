@@ -17,9 +17,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'File Property Tests', func
 	});
 
 	it('Add File Description.', function() {
-		cy.wait(1000);
-
-		writerHelper.openFileProperties();
+		writerHelper.openFileProperties(this.win);
 
 		cy.cGet('#tabcontrol-2').click();
 
@@ -29,9 +27,10 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'File Property Tests', func
 
 		cy.cGet('#ok.ui-pushbutton-wrapper').click();
 
-		writerHelper.openFileProperties();
+		writerHelper.openFileProperties(this.win);
 
 		cy.cGet('#tabcontrol-2').click();
+
 		cy.cGet('#title-input.ui-edit').should('have.value', 'New Title');
 		cy.cGet('#comments.ui-textarea').should('have.value', 'New');
 
@@ -39,7 +38,8 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'File Property Tests', func
 	});
 
 	it('Add Custom Property.', function() {
-		writerHelper.openFileProperties();
+		writerHelper.openFileProperties(this.win);
+
 		cy.cGet('#tabcontrol-3').click();
 
 		// Add property
@@ -50,8 +50,10 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'File Property Tests', func
 		cy.cGet('#ok.ui-pushbutton-wrapper button').click();
 
 		// Check property saved
-		writerHelper.openFileProperties();
+		writerHelper.openFileProperties(this.win);
+
 		cy.cGet('#tabcontrol-3').click();
+
 		cy.cGet('#valueedit-input').should('have.value', '123 Address');
 		cy.cGet('#namebox-input-dialog').should('have.value', 'Mailstop');
 
@@ -59,7 +61,8 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'File Property Tests', func
 	});
 
 	it('Add Custom Duration Property.', function() {
-		writerHelper.openFileProperties();
+		writerHelper.openFileProperties(this.win);
+
 		cy.cGet('#tabcontrol-3').click();
 
 		// Add property
@@ -78,15 +81,18 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'File Property Tests', func
 		cy.cGet('#ok.ui-pushbutton-wrapper button').click();
 
 		// Check property saved
-		writerHelper.openFileProperties();
+		writerHelper.openFileProperties(this.win);
+
 		cy.cGet('#tabcontrol-3').click();
+
 		cy.cGet('#duration-input').should('have.value', '- Y: 1 M: 0 D: 2 H: 0 M: 0 S: 3');
 		cy.cGet('#namebox-input-dialog').should('have.value', 'Received from');
 		cy.cGet('#cancel.ui-pushbutton-wrapper button').click();
 	});
 
 	it('Add Custom Yes/No Property.', function() {
-		writerHelper.openFileProperties();
+		writerHelper.openFileProperties(this.win);
+
 		cy.cGet('#tabcontrol-3').click();
 
 		// Add property
@@ -97,8 +103,10 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'File Property Tests', func
 		cy.cGet('#ok.ui-pushbutton-wrapper button').click();
 
 		// Check property saved
-		writerHelper.openFileProperties();
+		writerHelper.openFileProperties(this.win);
+
 		cy.cGet('#tabcontrol-3').click();
+
 		cy.cGet('#yes-input').should('be.checked');
 		cy.cGet('#namebox-input-dialog').should('have.value', 'Telephone number');
 		cy.cGet('#cancel.ui-pushbutton-wrapper button').click();
