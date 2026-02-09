@@ -45,25 +45,7 @@ const excludedCommonDialogs = [
 
 // don't pass yet
 const buggyWriterDialogs = [
-    '.uno:InsertFrame',
-    '.uno:OutlineBullet',
-    '.uno:ChapterNumberingDialog',
-    '.uno:EditRegion',
-    '.uno:FormatColumns',
-    '.uno:InsertCaptionDialog',
-    '.uno:InsertMultiIndex',
     '.uno:InsertSection',
-    '.uno:TableNumberFormatDialog',
-
-    // TODO: existing dialog => newly added secondary dialogs are failing
-    '.uno:FontDialog', // Fix: Font Feature dialog needs Frame Structure
-    '.uno:PageDialog', // Fix: Duplicate Name dialog box is failing
-
-    // Below dialogs have tabindex=0 with empty alt tag
-    '.uno:EditStyle?Param:string=Example&Family:short=1',
-    '.uno:EditStyle?Param:string=Heading&Family:short=2',
-    '.uno:ParagraphDialog',
-    '.uno:TableDialog',
 ];
 
 describe(['tagdesktop'], 'Accessibility Writer Dialog Tests', { testIsolation: false }, function () {
@@ -229,7 +211,7 @@ describe(['tagdesktop'], 'Accessibility Writer Dialog Tests', { testIsolation: f
         }
     });
 
-    it.skip('Transform dialog (buggy)', function () {
+    it('Transform dialog', function () {
         cy.then(() => {
             win.app.map.sendUnoCommand('.uno:BasicShapes.octagon');
         });
@@ -250,7 +232,7 @@ describe(['tagdesktop'], 'Accessibility Writer Dialog Tests', { testIsolation: f
         helper.typeIntoDocument('{esc}');
     });
 
-    it.skip('Line dialog (buggy)', function () {
+    it('Line dialog', function () {
         cy.then(() => {
             win.app.map.sendUnoCommand('.uno:Line');
         });
@@ -312,7 +294,7 @@ describe(['tagdesktop'], 'Accessibility Writer Dialog Tests', { testIsolation: f
         a11yHelper.handleDialog(win, 1, '.uno:ContentControlProperties');
     });
 
-    it.skip('Object dialog', function () {
+    it('Object dialog', function () {
         helper.clearAllText({ isTable: true });
         cy.then(() => {
             win.app.map.sendUnoCommand('.uno:InsertObjectChart');
@@ -358,7 +340,7 @@ describe(['tagdesktop'], 'Accessibility Writer Dialog Tests', { testIsolation: f
        cy.cGet('div.clipboard').should('have.focus');
     });
 
-    it.skip('Graphic dialog', function () {
+    it('Graphic dialog', function () {
         helper.clearAllText();
         desktopHelper.insertImage();
         cy.then(() => {
@@ -391,7 +373,7 @@ describe(['tagdesktop'], 'Accessibility Writer Dialog Tests', { testIsolation: f
         });
     });
 
-    it.skip('PDF export warning dialog (buggy)', function () {
+    it('PDF export warning dialog', function () {
         cy.then(() => {
             const args = { SynchronMode: { type: 'boolean', value: false } };
             win.app.map.sendUnoCommand('.uno:ExportToPDF', args);
@@ -416,7 +398,7 @@ describe(['tagdesktop'], 'Accessibility Writer Dialog Tests', { testIsolation: f
             });
     });
 
-    it.skip('ReadOnly info dialog (buggy)', function () {
+    it('ReadOnly info dialog', function () {
         // Text ReadOnly info dialog
         helper.clearAllText({ isTable: true });
         helper.typeIntoDocument('READONLY');
