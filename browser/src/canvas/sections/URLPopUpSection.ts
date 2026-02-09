@@ -46,15 +46,17 @@ class URLPopUpSection extends HTMLObjectSection {
 		this.getHTMLObject().style.pointerEvents = '';
     }
 
-	adjustHTMLObjectPosition(arrowAtTop = false) {
+	adjustHTMLObjectPosition() {
+		if (app.map._docLayer.isCalc()) {
+			super.adjustHTMLObjectPosition();
+			return;
+		}
+
 		const divBoundingRectangle = this.sectionProperties.objectDiv.getBoundingClientRect();
 		const arrowBoundingRectangle = this.arrowDiv.getBoundingClientRect();
 
-		const position = cool.SimplePoint.fromCorePixels(this.position);
-		const verticalDiff = arrowAtTop ? 0 : divBoundingRectangle.height;
-
-		const left = Math.round((position.vX / app.dpiScale) - (arrowBoundingRectangle.width * 0.5)) + 'px';
-		const top = Math.round((position.vY / app.dpiScale) - verticalDiff - (arrowBoundingRectangle.height * 0.5)) + 'px';
+		const left = Math.round((this.sectionProperties.documentPosition.vX / app.dpiScale) - (arrowBoundingRectangle.width * 0.5)) + 'px';
+		const top = Math.round((this.sectionProperties.documentPosition.vY / app.dpiScale) - divBoundingRectangle.height - (arrowBoundingRectangle.height * 0.5)) + 'px';
 
 		if (this.sectionProperties.objectDiv.style.left !== left)
 			this.sectionProperties.objectDiv.style.left = left;
@@ -211,7 +213,7 @@ class URLPopUpSection extends HTMLObjectSection {
 		if (checkLeft < 0) originalLeft = app.activeDocument.activeLayout.viewedRectangle.pX1;
 
 		section.setPosition(originalLeft, originalTop);
-		section.adjustHTMLObjectPosition(arrowAtTop);
+		section.adjustHTMLObjectPosition();
 		section.reLocateArrow(arrowAtTop);
 		section.containerObject.requestReDraw();
 	}
