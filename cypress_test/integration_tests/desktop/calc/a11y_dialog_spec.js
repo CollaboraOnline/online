@@ -10,6 +10,7 @@ const allCalcDialogs = [
     '.uno:AnalysisOfVarianceDialog',
     '.uno:ChiSquareTestDialog',
     '.uno:ColumnWidth',
+    '.uno:ConditionalFormatEasy?FormatRule:short=0',
     '.uno:ConditionalFormatManagerDialog',
     '.uno:CorrelationDialog',
     '.uno:CovarianceDialog',
@@ -21,6 +22,8 @@ const allCalcDialogs = [
     '.uno:DeleteCell',
     '.uno:Delete',
     '.uno:DescriptiveStatisticsDialog',
+    '.uno:EditHeaderAndFooter',
+    '.uno:EditStyle?Param:string=Heading&Family:short=2',
     '.uno:ExponentialSmoothingDialog',
     '.uno:FormatCellDialog',
     '.uno:FourierAnalysisDialog',
@@ -40,6 +43,7 @@ const allCalcDialogs = [
     '.uno:RowHeight',
     '.uno:SamplingDialog',
     '.uno:SelectDB',
+    '.uno:SelectSheetView',
     '.uno:SetOptimalColumnWidth',
     '.uno:SetOptimalRowHeight',
     '.uno:TTestDialog',
@@ -63,6 +67,8 @@ const buggyCalcDialogs = [
     '.uno:DefineName',
     '.uno:DefineDBName',
     '.uno:Delete',
+    '.uno:EditHeaderAndFooter',
+    '.uno:EditStyle?Param:string=Heading&Family:short=2',
     '.uno:FormatCellDialog',
     '.uno:FunctionDialog',
     '.uno:InsertObjectChart',
@@ -199,4 +205,24 @@ describe(['tagdesktop'], 'Accessibility Calc Dialog Tests', { testIsolation: fal
 
         a11yHelper.handleDialog(win, 1, ".uno:MergeCells");
     });
+
+    it('Select Source Dialog', function () {
+        helper.typeIntoInputField(helper.addressInputSelector, 'A1:A3')
+        cy.then(() => {
+            win.app.map.sendUnoCommand('.uno:DataDataPilotRun');
+        });
+	// This is just the 'select source' dialog, not the pivot table dialog
+        a11yHelper.handleDialog(win, 1);
+    });
+
+    it.skip('Pivot Table Dialog (Buggy)', function () {
+        cy.cGet('#spreadsheet-tab3').click();
+        helper.typeIntoInputField(helper.addressInputSelector, 'A1:B1')
+        cy.then(() => {
+            win.app.map.sendUnoCommand('.uno:DataDataPilotRun');
+        });
+        a11yHelper.handleDialog(win, 1, ".uno:DataDataPilotRun");
+        cy.cGet('#spreadsheet-tab0').click();
+    });
+
 });

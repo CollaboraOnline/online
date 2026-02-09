@@ -339,7 +339,8 @@ function handleDialog(win, level, command) {
 			if (command == '.uno:EditRegion' ||
 			    command == '.uno:InsertCaptionDialog' ||
 			    command == '.uno:SpellDialog' ||
-			    command == '.uno:SpellingAndGrammarDialog') {
+			    command == '.uno:SpellingAndGrammarDialog' ||
+			    command == '.uno:DataDataPilotRun:Field') {
 				cy.cGet('#options-button').click();
 				handleDialog(win, level + 1);
 			} else if (command == '.uno:InsertIndexesEntry') {
@@ -362,6 +363,12 @@ function handleDialog(win, level, command) {
 				handleDialog(win, level + 1);
 				cy.cGet('#sign-button').should('be.enabled').click();
 				handleDialog(win, level + 1);
+			} else if (command == '.uno:DataDataPilotRun') {
+				cy.cGet('#listbox-page .ui-treeview-entry > div:first-child').dblclick();
+				handleDialog(win, level + 1, '.uno:DataDataPilotRun:Field');
+
+				cy.cGet('#listbox-data .ui-treeview-entry > div:first-child').dblclick();
+				handleDialog(win, level + 1, '.uno:DataDataPilotRun:Data');
 			}
 
 			handleTabsInDialog(win, level, command);

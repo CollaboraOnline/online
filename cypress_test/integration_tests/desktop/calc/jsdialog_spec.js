@@ -154,7 +154,7 @@ describe(['tagdesktop'], 'JSDialog unit test', function() {
 		cy.cGet('#Format [id^="format-style-dialog"]:visible button').click();
 		cy.cGet('#filter-input').select('4');
 		cy.wait(500);
-		cy.cGet('#flatview .ui-treeview-entry').rightclick();
+		cy.cGet('#flatview .ui-treeview-entry').eq(6).rightclick();
 		cy.get('@consoleError').should('not.be.called');
 	});
 });
