@@ -225,4 +225,9 @@ describe(['tagdesktop'], 'Accessibility Calc Dialog Tests', { testIsolation: fal
         cy.cGet('#spreadsheet-tab0').click();
     });
 
+    it('AutoCorrect Warning Dialog)', function () {
+        helper.typeIntoDocument('=2x3{enter}');
+        a11yHelper.handleDialog(win, 1, '', true);
+    });
+
 });

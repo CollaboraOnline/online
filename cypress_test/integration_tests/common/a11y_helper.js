@@ -141,6 +141,23 @@ function closeActiveDialog(level) {
 }
 
 /**
+ * Close the active warning dialog at a specific nesting level.
+ * @param {number} level - The dialog nesting level
+ * @param {string} buttonSelector - The button to close the dialog with.
+ */
+function closeActiveWarningDialog(level, buttonSelector = '#no-button') {
+	getActiveDialog(level)
+		.parents('.jsdialog-window')
+		.invoke('attr', 'id')
+		.then(dialogId => {
+			cy.cGet(`#${CSS.escape(dialogId)} ` + buttonSelector)
+				.click();
+		});
+
+	cy.cGet('.ui-dialog[role="dialog"]').should('have.length', level - 1);
+}
+
+/**
  * Get the active tab panel for a given tab.
  * @param {jQuery} $container - The container element
  * @param {string} activeTabId - The ID of the active tab
@@ -325,8 +342,9 @@ function handleTabsInDialog(win, level, command) {
  * @param {Object} win - The frame window object
  * @param {number} level - The dialog nesting level
  * @param {string} command - The uno command that opened the dialog (optional)
+ * @param {boolean} isWarningDialog - If this is a warning dialog
  */
-function handleDialog(win, level, command) {
+function handleDialog(win, level, command, isWarningDialog) {
 	getActiveDialog(level)
 		.then(() => {
 			return helper.processToIdle(win);
@@ -372,7 +390,11 @@ function handleDialog(win, level, command) {
 			}
 
 			handleTabsInDialog(win, level, command);
-			closeActiveDialog(level);
+			if (isWarningDialog) {
+				closeActiveWarningDialog(level);
+			} else {
+				closeActiveDialog(level);
+			}
 		});
 }
 
