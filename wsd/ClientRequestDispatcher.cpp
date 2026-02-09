@@ -2788,12 +2788,12 @@ std::string getCapabilitiesJson(bool convertToAvailable)
     // Set the product name
     capabilities->set("productName", ConfigUtil::getString("product_name", APP_NAME));
 
+    // Set the Server ID
+    capabilities->set("serverId", Util::getProcessIdentifier());
+
     CONFIG_STATIC const bool sig = ConfigUtil::getBool("security.server_signature", false);
     if (sig)
     {
-        // Set the Server ID
-        capabilities->set("serverId", Util::getProcessIdentifier());
-
         // Set the product version
         capabilities->set("productVersion", Util::getCoolVersion());
 
