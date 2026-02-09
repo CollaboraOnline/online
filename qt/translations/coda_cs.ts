@@ -67,7 +67,7 @@
     <message>
         <location filename="../coda-qt.cpp" line="416"/>
         <source>Failed to print document. Please check your printer settings.</source>
-        <translation>Tisk dokumentu se nezdařil. Zkontrolujte nastavení tiskárny.</translation>
+        <translation>Tisk dokumentu se nepodařil. Zkontrolujte nastavení tiskárny.</translation>
     </message>
     <message>
         <location filename="../coda-qt.cpp" line="575"/>
