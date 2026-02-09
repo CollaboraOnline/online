@@ -649,6 +649,13 @@ class SlideShowPresenter {
 
 	private _onNextSlide = (e: Event) => {
 		e.stopPropagation();
+		// Do not allow follower to go ahead of the leader
+		if (
+			this.isFollower() &&
+			this._slideShowNavigator.currentSlideIndex ===
+				this._slideShowNavigator.getLeaderSlide()
+		)
+			return;
 		if (this._navigateSkipTransition) this._slideShowNavigator.skipEffect();
 		else this._slideShowNavigator.dispatchEffect();
 	};
