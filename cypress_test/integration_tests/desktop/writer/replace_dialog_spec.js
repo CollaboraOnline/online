@@ -13,7 +13,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Replace Dialog Tests', fun
 
     it('Ctrl H should open search dialog with replace tab active', function() {
         helper.typeIntoDocument('{ctrl}h');
-        findHelper.waitForFindReplaceDialog();
+        findHelper.waitForFindReplaceDialog(this.win);
 
         // Verify that the replace tab is active
         cy.cGet('#replace_tab_btn').should('have.class', 'checked');
@@ -27,7 +27,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Replace Dialog Tests', fun
         cy.viewport(1920,1080);
         // Click the Replace button from the notebookbar
         cy.cGet('#Home-container [id^="home-search-dialog"] button:visible').click();
-        findHelper.waitForFindReplaceDialog();
+        findHelper.waitForFindReplaceDialog(this.win);
 
         // Verify that the replace tab is active
         cy.cGet('#replace_tab_btn').should('have.class', 'checked');
@@ -40,7 +40,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Replace Dialog Tests', fun
     it('Enter key in search field triggers search', function() {
         helper.setDummyClipboardForCopy();
         helper.typeIntoDocument('{ctrl}h');
-        findHelper.waitForFindReplaceDialog();
+        findHelper.waitForFindReplaceDialog(this.win);
 
         cy.cGet('#searchterm-input-dialog').type('test').realPress('Enter');
 
@@ -53,7 +53,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Replace Dialog Tests', fun
     it('Shift plus Enter in search field triggers backward search', function() {
         helper.setDummyClipboardForCopy();
         helper.typeIntoDocument('{ctrl}h');
-        findHelper.waitForFindReplaceDialog();
+        findHelper.waitForFindReplaceDialog(this.win);
 
         // Go to first instance - Not Bold text
         cy.cGet('#searchterm-input-dialog').type('test');
@@ -83,7 +83,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Replace Dialog Tests', fun
         cy.cGet('#copy-paste-container').should('not.contain.text', 'replaced');
 
         helper.typeIntoDocument('{ctrl}h');
-        findHelper.waitForFindReplaceDialog();
+        findHelper.waitForFindReplaceDialog(this.win);
 
         // Search for text first
         cy.cGet('#searchterm-input-dialog').type('test').realPress('Enter');
@@ -112,7 +112,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Replace Dialog Tests', fun
     it('Enter key on checkbox toggles it', function() {
 
         helper.typeIntoDocument('{ctrl}h');
-        findHelper.waitForFindReplaceDialog();
+        findHelper.waitForFindReplaceDialog(this.win);
 
         // Get initial state
         cy.cGet('#matchcase-input').should('not.be.checked');

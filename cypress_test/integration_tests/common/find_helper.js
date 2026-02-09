@@ -5,24 +5,22 @@ var helper = require('./helper');
 
 // Wait for Find/Replace dialog to be fully visible
 // (fadein animation complete and dialog exists)
-function waitForFindReplaceDialog() {
+function waitForFindReplaceDialog(win) {
     cy.cGet('.jsdialog-window.fadein').should('have.css', 'opacity', '1');
     cy.cGet('#FindReplaceDialog').should('be.visible');
     // Wait for dialog initialization to complete (grab_focus messages etc)
-    cy.getFrameWindow().then(function(win) {
-        helper.processToIdle(win);
-    });
+    helper.processToIdle(win);
 }
 
 // Open the find dialog
-function openFindDialog() {
+function openFindDialog(win) {
     cy.log('>> openFindDialog - start');
 
     cy.cGet('.jsdialog-window').should('not.exist');
 
     helper.typeIntoDocument('{ctrl}f');
 
-    waitForFindReplaceDialog();
+    waitForFindReplaceDialog(win);
 
     cy.log('<< openFindDialog - end');
 }
