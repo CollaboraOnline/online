@@ -302,7 +302,8 @@ class TreeViewControl {
 	) {
 		const image = window.L.DomUtil.create(
 			'img',
-			builder.options.cssClass + ' ui-treeview-checkbox ui-treeview-image',
+			builder.options.cssClass +
+				' ui-treeview-checkbox ui-treeview-image ui-decorative-image',
 			parentContainer,
 		);
 		image.src = imageUrl;
