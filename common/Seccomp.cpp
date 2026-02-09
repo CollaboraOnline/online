@@ -175,7 +175,9 @@ bool lockdown([[maybe_unused]] Type type)
         KILL_SYSCALL(wait4),
 #endif
         KILL_SYSCALL(kill),   // !
+#ifdef __NR_shmctl
         KILL_SYSCALL(shmctl),
+#endif
         KILL_SYSCALL(ptrace), // tracing
         KILL_SYSCALL(capset),
 #ifdef __NR_uselib
