@@ -3149,6 +3149,12 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 		if (this.isCalc() || this.isDraw())
 			return;
 
+		if (this._map.uiManager.getStartCompareChanges()) {
+			// comparechanges view, don't zoom in, to have space for two pages side by
+			// side.
+			return;
+		}
+
 		if (this.isImpress() && !maxZoom)
 			maxZoom = 10;
 

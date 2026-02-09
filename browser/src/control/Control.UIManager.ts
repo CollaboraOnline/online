@@ -549,6 +549,17 @@ class UIManager extends window.L.Control {
 				this.map.quickFindPanel = JSDialog.QuickFindPanel(this.map);
 				this.map.addControl(this.map.quickFindPanel);
 			}
+
+			if (this.getStartCompareChanges()) {
+				// Don't switch to the comparechanges view yet, first wait for the
+				// document to be loaded to avoid accessing not yet initialized
+				// state.
+				const enterCompareChanges = () => {
+					app.dispatcher.dispatch('comparechanges');
+					this.map.off('docloaded', enterCompareChanges);
+				};
+				this.map.on('docloaded', enterCompareChanges);
+			}
 		}
 
 		if (this.map.isPresentationOrDrawing() && (isDesktop || window.mode.isTablet())) {
@@ -2350,5 +2361,10 @@ class UIManager extends window.L.Control {
 	getBooleanDocTypePref(name: string, defaultValue: boolean = false): boolean {
 		const docType = this.map.getDocType();
 		return window.prefs.getBoolean(`${docType}.${name}`, defaultValue);
+	}
+
+	getStartCompareChanges(): boolean {
+		const compareChangesOption = window.coolParams.get('comparechanges');
+		return compareChangesOption === 'true' || compareChangesOption === '1';
 	}
 }
