@@ -46,6 +46,9 @@ class Socket {
 	private _slurpTimerDelay: number | undefined;
 	private _slurpTimerLaunchTime: number | undefined;
 	private timer: ReturnType<typeof setInterval> | undefined;
+	private workers: Worker[] = [];
+	private workerMessageHandlers: Map<string, any> = new Map();
+	private workerErrorHandlers: any[] = [];
 	public threadLocalLoggingLevelToggle: boolean;
 
 	private socket?: SockInterface;
@@ -71,6 +74,68 @@ class Socket {
 		this.timer = undefined;
 		this.socket = undefined;
 		this.traceEvents = new TraceEvents(this);
+
+		if (window.Worker && !(window as any).ThisIsAMobileApp) {
+			window.app.console.info('Creating TaskWorkers');
+			for (let i = 0; i < 4; ++i) {
+				this.workers.push(
+					new Worker(app.LOUtil.getURL('/src/app/TaskWorker.js')),
+				);
+				this.workers[i].addEventListener('message', (e: any) =>
+					this.onWorkerMessage(e),
+				);
+				this.workers[i].addEventListener('error', (e: any) =>
+					this.onWorkerError(e),
+				);
+			}
+		}
+	}
+
+	public getTaskWorkers(): Worker[] {
+		return this.workers.slice();
+	}
+
+	public setTaskHandler(message: string, callback: any) {
+		if (this.workerMessageHandlers.has(message))
+			window.app.console.warn(
+				'Duplicate task handler for ' + message,
+				callback,
+			);
+		this.workerMessageHandlers.set(message, callback);
+	}
+
+	public addTaskErrorHandler(callback: any) {
+		this.workerErrorHandlers.push(callback);
+	}
+
+	private onWorkerMessage(e: any) {
+		const callback = this.workerMessageHandlers.get(e.data.message);
+		if (!callback) {
+			window.app.console.warn('Unhandled worker message', e);
+			return;
+		}
+
+		callback(e);
+	}
+
+	private onWorkerError(e: any) {
+		if (e) window.app.console.error('Worker-related error encountered', e);
+		while (this.workers.length) {
+			const worker = this.workers.shift();
+			if (!worker) continue;
+			try {
+				worker.terminate();
+			} catch (e) {
+				window.app.console.error('Error terminating worker thread', e);
+			}
+		}
+		this.workerMessageHandlers.clear();
+		if (e) for (const callback of this.workerErrorHandlers) callback(e);
+		this.workerErrorHandlers = [];
+	}
+
+	public disableTaskWorkers() {
+		this.onWorkerError(null);
 	}
 
 	public sendMessage(msg: MessageInterface): void {

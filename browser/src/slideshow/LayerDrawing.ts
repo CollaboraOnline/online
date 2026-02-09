@@ -109,6 +109,9 @@ class LayerDrawing {
 	private videoRenderers: Map<string, Array<VideoRenderer>> = new Map();
 	private isTransitionActive: boolean = false;
 	private queuedLayers: any[] = [];
+	private isDecompressing: boolean = false;
+	private decompressionQueue: any[] = [];
+	private completionQueue: any[] = [];
 
 	constructor(mapObj: any, helper: LayersCompositor) {
 		this.map = mapObj;
@@ -501,6 +504,11 @@ class LayerDrawing {
 			this.queuedLayers.push(e);
 			return;
 		}
+		if (this.isDecompressing) {
+			this.decompressionQueue.push(e);
+			return;
+		}
+
 		const info = e.message;
 		if (!info) {
 			window.app.console.log(
@@ -525,10 +533,22 @@ class LayerDrawing {
 
 		if (e.imgBytes) {
 			const promise = SlideBitmapManager.decompressSlideLayer(info, e.imgBytes);
-			if (promise)
-				promise.then((img: ImageBitmap) => {
-					this.handleMsg(info, img);
-				});
+			if (promise) {
+				this.isDecompressing = true;
+				promise
+					.then((img: ImageBitmap) => {
+						this.handleMsg(info, img);
+					})
+					.finally(() => {
+						this.isDecompressing = false;
+						while (this.decompressionQueue.length) {
+							this.onSlideLayerMsg(this.decompressionQueue.shift());
+							if (this.isDecompressing) return;
+						}
+						while (this.completionQueue.length)
+							this.onSlideRenderingComplete(this.completionQueue.shift());
+					});
+			}
 			return;
 		} else this.handleMsg(info, e.image);
 	}
@@ -789,6 +809,10 @@ class LayerDrawing {
 
 	onSlideRenderingComplete(e: any) {
 		if (this.isDisposed()) return;
+		if (this.isDecompressing) {
+			this.completionQueue.push(e);
+			return;
+		}
 
 		if (e.message) {
 			const promise = SlideBitmapManager.waitForSlideDecompression(e.message);

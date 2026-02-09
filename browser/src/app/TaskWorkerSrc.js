@@ -24,7 +24,7 @@ if ('undefined' === typeof window) {
 
 	addEventListener('message', onMessage);
 
-	console.info('CanvasTileWorker initialised');
+	console.info('TaskWorker initialised');
 
 	function onMessage(e) {
 		switch (e.data.message) {
@@ -103,6 +103,25 @@ if ('undefined' === typeof window) {
 						bitmaps,
 					);
 				});
+				break;
+			}
+
+			case 'decompressImageData': {
+				const img = new Uint8ClampedArray(
+					self.fzstd.decompress(e.data.rawData),
+				);
+				createImageBitmap(new ImageData(img, e.data.width, e.data.height)).then(
+					(bitmap) => {
+						postMessage(
+							{
+								message: 'decompressedImageData',
+								id: e.data.id,
+								bitmap: bitmap,
+							},
+							[bitmap],
+						);
+					},
+				);
 				break;
 			}
 
