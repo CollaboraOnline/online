@@ -60,6 +60,6 @@
   "scripts": {
     "test": "mocha mocha_tests/workdir/main.js",
     "test-single": "mocha mocha_tests/workdir/main.js -g",
-    "duplication": "jscpd --ignore src/layer/tile/CanvasTileWorker.js ./src/ --exitCode 1 --min-lines 17"
+    "duplication": "jscpd --ignore src/app/TaskWorker.js ./src/ --exitCode 1 --min-lines 17"
   }
 }

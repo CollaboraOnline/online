@@ -95,7 +95,7 @@ browser/admin/jsconfig.json
 browser/dist
 browser/compilets
 browser/typescript_js
-browser/src/layer/tile/CanvasTileWorker.js
+browser/src/app/TaskWorker.js
 
 coolforkit
 coolforkitns

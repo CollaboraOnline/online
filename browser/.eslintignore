@@ -4,6 +4,6 @@
 **/js/sanitize-url.js
 **/js/l10n.js
 **/src/unocommands.js
-**/src/layer/tile/CanvasTileWorker.js
+**/src/app/TaskWorker.js
 node_modules
 dist/src

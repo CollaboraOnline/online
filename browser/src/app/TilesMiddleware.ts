@@ -237,7 +237,6 @@ class TileManager {
 	private static _adjacentTilePreFetcher: any;
 	private static inTransaction: number = 0;
 	private static pendingDeltas: any = [];
-	private static workers: Worker[] = [];
 	private static transactionCallbacks: any[] = [];
 	private static nPendingWorkerTasks: number = 0;
 	private static nullDeltaUpdate = 0;
@@ -269,20 +268,11 @@ class TileManager {
 	private static afterFirstTileTasks: Array<AfterFirstTileTask> = [];
 
 	public static initialize() {
-		if (window.Worker && !(window as any).ThisIsAMobileApp) {
-			window.app.console.info('Creating CanvasTileWorkers');
-			for (let i = 0; i < 4; ++i) {
-				this.workers.push(
-					new Worker(app.LOUtil.getURL('/src/layer/tile/TileWorker.js')),
-				);
-				this.workers[i].addEventListener('message', (e: any) =>
-					this.onWorkerMessage(e),
-				);
-				this.workers[i].addEventListener('error', (e: any) =>
-					this.disableWorkers(e),
-				);
-			}
-		}
+		window.app.socket.setTaskHandler(
+			'endTransaction',
+			this.onWorkerEndTransaction.bind(this),
+		);
+		window.app.socket.addTaskErrorHandler(this.onWorkerError.bind(this));
 	}
 
 	public static appendAfterFirstTileTask(task: AfterFirstTileTask): void {
@@ -551,12 +541,13 @@ class TileManager {
 		}
 	}
 
-	private static decompressPendingDeltas(message: string) {
-		if (this.workers.length) {
+	private static decompressPendingDeltas() {
+		const workers = window.app.socket.getTaskWorkers();
+		if (workers.length) {
 			// The same tiles need to go to the same workers each time so that the image cache
 			// is valid. Split work up based on the tile coords.
 			const deltaBuckets = [];
-			for (let i = 0; i < this.workers.length; ++i) {
+			for (let i = 0; i < workers.length; ++i) {
 				deltaBuckets.push([]);
 			}
 			while (this.pendingDeltas.length) {
@@ -564,16 +555,16 @@ class TileManager {
 				const bucket =
 					Math.round(
 						delta.key.x / this.tileSize + delta.key.y / this.tileSize,
-					) % this.workers.length;
+					) % workers.length;
 
 				// Replace TileCoordData with string representation
 				delta.key = delta.key.key();
 
 				deltaBuckets[bucket].push(delta);
 			}
-			for (let i = 0; i < this.workers.length; ++i) {
+			for (let i = 0; i < workers.length; ++i) {
 				const deltas: any[] = deltaBuckets[i];
-				const worker = this.workers[i];
+				const worker = workers[i];
 				if (this.debugDeltas)
 					window.app.console.debug(
 						'XXX delta bucket (' + i + ') length: ' + deltas.length,
@@ -582,7 +573,7 @@ class TileManager {
 					++this.nPendingWorkerTasks;
 					worker.postMessage(
 						{
-							message: message,
+							message: 'endTransaction',
 							deltas: deltas,
 							cachedTiles: this.tileImageCache,
 							tileSize: this.tileSize,
@@ -598,7 +589,7 @@ class TileManager {
 			// Replace TileCoords with string representation
 			for (const delta of this.pendingDeltas) delta.key = delta.key.key();
 
-			this.onWorkerMessage({
+			this.onWorkerEndTransaction({
 				data: {
 					message: 'endTransaction',
 					deltas: this.pendingDeltas,
@@ -974,34 +965,14 @@ class TileManager {
 		}
 
 		try {
-			this.decompressPendingDeltas('endTransaction');
+			this.decompressPendingDeltas();
 		} catch (e) {
 			window.app.console.error('Failed to decompress pending deltas');
+			window.app.socket.disableTaskWorkers();
 			this.inTransaction = 0;
-			this.disableWorkers(e);
 			if (callback) callback();
 			return;
 		}
-	}
-
-	public static disableWorkers(e: any = null) {
-		if (e) window.app.console.error('Worker-related error encountered', e);
-		if (!this.workers.length) return;
-
-		window.app.console.warn('Disabling worker threads');
-		while (this.workers.length) {
-			const worker = this.workers.shift();
-			try {
-				worker.terminate();
-			} catch (e) {
-				window.app.console.error('Error terminating worker thread', e);
-			}
-		}
-
-		this.pendingDeltas.length = 0;
-		this.nPendingWorkerTasks = 0;
-		while (this.transactionCallbacks.length) this.transactionCallbacks.pop()();
-		this.redraw();
 	}
 
 	private static applyDelta(
@@ -2095,131 +2066,128 @@ class TileManager {
 			this.initPreFetchAdjacentTiles();
 	}
 
-	public static onWorkerMessage(e: any) {
+	public static onWorkerEndTransaction(e: any) {
 		const bitmaps: ImageBitmap[] = [];
 		const bitmapPromises: Promise<ImageBitmap>[] = [];
 		const pendingDeltas: any[] = [];
-		switch (e.data.message) {
-			case 'endTransaction':
-				if (this.nPendingWorkerTasks) --this.nPendingWorkerTasks;
-				else window.app.console.warn('Unexpected worker message');
 
-				for (const x of e.data.deltas) {
-					const tile = this.tiles.get(x.key);
+		if (this.nPendingWorkerTasks) --this.nPendingWorkerTasks;
+		else window.app.console.warn('Unexpected worker message');
 
-					if (!tile) {
-						if (this.debugDeltas)
-							window.app.console.warn(
-								'Tile deleted during rawDelta decompression.',
-							);
-						continue;
+		for (const x of e.data.deltas) {
+			const tile = this.tiles.get(x.key);
+
+			if (!tile) {
+				if (this.debugDeltas)
+					window.app.console.warn(
+						'Tile deleted during rawDelta decompression.',
+					);
+				continue;
+			}
+
+			let rawDeltas: any[] = [];
+			const firstDelta = tile.rawDeltas.findIndex((d) => d.id === x.ids[0]);
+			const lastDelta = tile.rawDeltas.findIndex((d) => d.id === x.ids[1]);
+			if (firstDelta !== -1 && lastDelta !== -1)
+				rawDeltas = tile.rawDeltas.slice(firstDelta, lastDelta + 1);
+			else
+				window.app.console.warn(
+					'Unusual: Received unknown decompressed keyframe delta(s)',
+				);
+
+			const lastDecompressedId = tile.decompressedId;
+			tile.decompressedId = x.ids[1];
+
+			// if rehydrating from rawDeltas, don't update counts
+			if (x.wireMessage) {
+				if (x.isKeyframe) {
+					tile.loadCount++;
+					tile.deltaCount = 0;
+					tile.updateCount = 0;
+					if (app.map._debug.tileDataOn) {
+						app.map._debug.tileDataAddLoad();
 					}
-
-					let rawDeltas: any[] = [];
-					const firstDelta = tile.rawDeltas.findIndex((d) => d.id === x.ids[0]);
-					const lastDelta = tile.rawDeltas.findIndex((d) => d.id === x.ids[1]);
-					if (firstDelta !== -1 && lastDelta !== -1)
-						rawDeltas = tile.rawDeltas.slice(firstDelta, lastDelta + 1);
-					else
-						window.app.console.warn(
-							'Unusual: Received unknown decompressed keyframe delta(s)',
-						);
-
-					const lastDecompressedId = tile.decompressedId;
-					tile.decompressedId = x.ids[1];
-
-					// if rehydrating from rawDeltas, don't update counts
-					if (x.wireMessage) {
-						if (x.isKeyframe) {
-							tile.loadCount++;
-							tile.deltaCount = 0;
-							tile.updateCount = 0;
-							if (app.map._debug.tileDataOn) {
-								app.map._debug.tileDataAddLoad();
-							}
-						} else if (rawDeltas.length === 0) {
-							tile.updateCount++;
-							this.nullDeltaUpdate++;
-							if (app.map._docLayer._emptyDeltaDiv) {
-								app.map._docLayer._emptyDeltaDiv.innerText =
-									this.nullDeltaUpdate;
-							}
-							if (app.map._debug.tileDataOn) {
-								app.map._debug.tileDataAddUpdate();
-							}
-							continue; // that was easy
-						} else {
-							tile.deltaCount++;
-							if (app.map._debug.tileDataOn) {
-								app.map._debug.tileDataAddDelta();
-							}
-						}
+				} else if (rawDeltas.length === 0) {
+					tile.updateCount++;
+					this.nullDeltaUpdate++;
+					if (app.map._docLayer._emptyDeltaDiv) {
+						app.map._docLayer._emptyDeltaDiv.innerText = this.nullDeltaUpdate;
 					}
-
-					if (!x.isKeyframe) {
-						if (lastDecompressedId !== 0) {
-							if (x.ids[0] !== lastDecompressedId + 1) {
-								window.app.console.warn(
-									'Unusual: Received discontiguous decompressed delta',
-								);
-							}
-						} else {
-							if (this.debugDeltas)
-								window.app.console.warn(
-									"Decompressed delta received on GC'd tile",
-								);
-							continue;
-						}
+					if (app.map._debug.tileDataOn) {
+						app.map._debug.tileDataAddUpdate();
 					}
-
-					if (!x.bitmap) {
-						// This path is taken when this is called on the DOM thread (i.e. the worker
-						// hasn't decompressed the raw delta)
-						x.deltas = (window as any).fzstd.decompress(x.rawDelta);
-						if (x.isKeyframe) {
-							x.keyframeBuffer = new Uint8Array(
-								e.data.tileSize * e.data.tileSize * 4,
-							);
-							x.keyframeDeltaSize = cool.CanvasTileUtils.unrle(
-								x.deltas,
-								e.data.tileSize,
-								e.data.tileSize,
-								x.keyframeBuffer,
-							);
-						} else x.keyframeDeltaSize = 0;
-
-						this.applyDelta(
-							tile,
-							rawDeltas,
-							x.deltas,
-							x.keyframeDeltaSize,
-							x.keyframeBuffer,
-						);
-
-						this.createTileBitmap(tile, x, pendingDeltas, bitmapPromises);
-					} else {
-						this.tileImageCache.set(x.key, null);
-						bitmaps.push(x.bitmap);
-						pendingDeltas.push(x);
+					continue; // that was easy
+				} else {
+					tile.deltaCount++;
+					if (app.map._debug.tileDataOn) {
+						app.map._debug.tileDataAddDelta();
 					}
 				}
+			}
 
-				if (bitmapPromises.length && bitmaps.length)
-					window.app.console.warn(
-						'Unusual: Sync and async tile decompression happening simultaneously',
+			if (!x.isKeyframe) {
+				if (lastDecompressedId !== 0) {
+					if (x.ids[0] !== lastDecompressedId + 1) {
+						window.app.console.warn(
+							'Unusual: Received discontiguous decompressed delta',
+						);
+					}
+				} else {
+					if (this.debugDeltas)
+						window.app.console.warn("Decompressed delta received on GC'd tile");
+					continue;
+				}
+			}
+
+			if (!x.bitmap) {
+				// This path is taken when this is called on the DOM thread (i.e. the worker
+				// hasn't decompressed the raw delta)
+				x.deltas = (window as any).fzstd.decompress(x.rawDelta);
+				if (x.isKeyframe) {
+					x.keyframeBuffer = new Uint8Array(
+						e.data.tileSize * e.data.tileSize * 4,
 					);
-				if (bitmaps.length)
-					this.endTransactionHandleBitmaps(pendingDeltas, bitmaps);
-				if (bitmapPromises.length)
-					Promise.all(bitmapPromises).then((bitmaps) => {
-						this.endTransactionHandleBitmaps(pendingDeltas, bitmaps);
-					});
-				break;
+					x.keyframeDeltaSize = cool.CanvasTileUtils.unrle(
+						x.deltas,
+						e.data.tileSize,
+						e.data.tileSize,
+						x.keyframeBuffer,
+					);
+				} else x.keyframeDeltaSize = 0;
 
-			default:
-				window.app.console.error('Unrecognised message from worker');
-				this.disableWorkers();
+				this.applyDelta(
+					tile,
+					rawDeltas,
+					x.deltas,
+					x.keyframeDeltaSize,
+					x.keyframeBuffer,
+				);
+
+				this.createTileBitmap(tile, x, pendingDeltas, bitmapPromises);
+			} else {
+				this.tileImageCache.set(x.key, null);
+				bitmaps.push(x.bitmap);
+				pendingDeltas.push(x);
+			}
 		}
+
+		if (bitmapPromises.length && bitmaps.length)
+			window.app.console.warn(
+				'Unusual: Sync and async tile decompression happening simultaneously',
+			);
+		if (bitmaps.length)
+			this.endTransactionHandleBitmaps(pendingDeltas, bitmaps);
+		if (bitmapPromises.length)
+			Promise.all(bitmapPromises).then((bitmaps) => {
+				this.endTransactionHandleBitmaps(pendingDeltas, bitmaps);
+			});
+	}
+
+	public static onWorkerError(e: any) {
+		this.pendingDeltas.length = 0;
+		this.nPendingWorkerTasks = 0;
+		while (this.transactionCallbacks.length) this.transactionCallbacks.pop()();
+		this.redraw();
 	}
 
 	public static updateOnChangePart() {

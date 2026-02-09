@@ -1050,7 +1050,7 @@ bool FileServerRequestHandler::handleRequest(const HTTPRequest& request,
             return true;
         }
 
-        if (endPoint == "TileWorker.js")
+        if (endPoint == "TaskWorker.js")
         {
             replaceServiceRoot(request, response, requestDetails, socket);
             return true;

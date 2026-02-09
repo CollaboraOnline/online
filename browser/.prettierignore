@@ -4,7 +4,7 @@
 **/js/sanitize-url.js
 **/js/l10n.js
 **/src/unocommands.js
-**/src/layer/tile/CanvasTileWorker.js
+**/src/app/TaskWorker.js
 # Prettier breaks the assumption made by unocommands.py.
 **/src/control/jsdialog/Definitions.MenuCommands.ts
 node_modules
