@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: coolwsd 25.04.7.3\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-12-06 18:17+0000\n"
-"PO-Revision-Date: 2025-12-09 04:00+0000\n"
+"PO-Revision-Date: 2026-02-10 19:09+0000\n"
 "Last-Translator: Stanislav Horáček <stanislav.horacek@gmail.com>\n"
 "Language-Team: Czech <https://hosted.weblate.org/projects/collabora-online/"
 "collabora-office-macos-app/cs/>\n"
@@ -12,11 +12,11 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=((n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2);\n"
-"X-Generator: Weblate 5.15-dev\n"
+"X-Generator: Weblate 5.16-dev\n"
 
 msgctxt "1UK-8n-QPP.title"
 msgid "Customize Toolbar…"
-msgstr "Přizpůsobit panel nástrojů…"
+msgstr "Přizpůsobit nástrojovou lištu…"
 
 #. Do not change the placeholder ProductName!
 msgctxt "1Xt-HY-uBw.title"
@@ -53,7 +53,7 @@ msgstr "Řeč"
 
 msgctxt "46P-cB-AYj.title"
 msgid "Tighten"
-msgstr "Zpřísnit"
+msgstr "Těsnější"
 
 msgctxt "4EN-yA-p0u.title"
 msgid "Find"
@@ -66,7 +66,7 @@ msgstr "Přepnout na celou obrazovku"
 #. Do not change the placeholder ProductName!
 msgctxt "4sb-4s-VLi.title"
 msgid "Quit ProductName"
-msgstr "Konec ProductName"
+msgstr "Ukončit ProductName"
 
 msgctxt "5QF-Oa-p0T.title"
 msgid "Edit"
@@ -95,7 +95,7 @@ msgstr "Směr psaní"
 
 msgctxt "9ic-FL-obx.title"
 msgid "Substitutions"
-msgstr "Nahrazování"
+msgstr "Náhrady"
 
 msgctxt "9yt-4B-nSM.title"
 msgid "Smart Copy/Paste"
@@ -140,11 +140,11 @@ msgstr "Text"
 
 msgctxt "FeM-D8-WVr.title"
 msgid "Substitutions"
-msgstr "Nahrazování"
+msgstr "Náhrady"
 
 msgctxt "GB9-OM-e27.title"
 msgid "Bold"
-msgstr "Tučný"
+msgstr "Tučné"
 
 msgctxt "GEO-Iw-cKr.title"
 msgid "Format"
@@ -156,7 +156,7 @@ msgstr "Použít výchozí"
 
 msgctxt "Gi5-1S-RQB.title"
 msgid "Font"
-msgstr "Font"
+msgstr "Písmo"
 
 msgctxt "H1b-Si-o9J.title"
 msgid "Writing Direction"
@@ -180,7 +180,7 @@ msgstr "Zobrazit"
 
 msgctxt "I0S-gh-46l.title"
 msgid "Subscript"
-msgstr "Index"
+msgstr "Dolní index"
 
 msgctxt "IAo-SY-fd9.title"
 msgid "Open…"
@@ -192,7 +192,7 @@ msgstr "Zarovnat"
 
 msgctxt "J7y-lM-qPV.title"
 msgid "Use None"
-msgstr "Nepoužít"
+msgstr "Nepoužívat žádný"
 
 msgctxt "KaW-ft-85H.title"
 msgid "Revert to Saved"
@@ -232,7 +232,7 @@ msgstr "Minimalizovat"
 
 msgctxt "OaQ-X3-Vso.title"
 msgid "Baseline"
-msgstr "Základní úroveň"
+msgstr "Základní linka"
 
 #. Do not change the placeholder ProductName!
 msgctxt "Olw-nP-bQN.title"
@@ -293,7 +293,7 @@ msgstr "Skrýt ostatní"
 
 msgctxt "Vjx-xi-njq.title"
 msgid "Italic"
-msgstr "kurzíva"
+msgstr "Kurzíva"
 
 msgctxt "W48-6f-4Dl.title"
 msgid "Edit"
@@ -449,7 +449,7 @@ msgstr "Otevřít poslední"
 
 msgctxt "ogc-rX-tC1.title"
 msgid "Loosen"
-msgstr "Uvolnit"
+msgstr "Volnější"
 
 msgctxt "pa3-QI-u2k.title"
 msgid "Delete"
