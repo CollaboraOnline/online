@@ -7,11 +7,14 @@ describe(['tagdesktop'], 'Searching via find dialog' ,function() {
 
 	beforeEach(function() {
 		helper.setupAndLoadDocument('impress/search_bar.odp');
+		cy.getFrameWindow().then((win) => {
+			this.win = win;
+		});
 	});
 
 	it('Search existing word.', function() {
 		helper.setDummyClipboardForCopy();
-		findHelper.openFindDialog();
+		findHelper.openFindDialog(this.win);
 		findHelper.typeIntoSearchField('a');
 
 		findHelper.findNext();
@@ -31,7 +34,7 @@ describe(['tagdesktop'], 'Searching via find dialog' ,function() {
 		helper.selectAllText();
 		helper.textSelectionShouldExist();
 
-		findHelper.openFindDialog();
+		findHelper.openFindDialog(this.win);
 		findHelper.typeIntoSearchField('q');
 		findHelper.findNext();
 
@@ -40,7 +43,7 @@ describe(['tagdesktop'], 'Searching via find dialog' ,function() {
 
 	it('Search next / prev instance.', function() {
 		helper.setDummyClipboardForCopy();
-		findHelper.openFindDialog();
+		findHelper.openFindDialog(this.win);
 		findHelper.typeIntoSearchField('a');
 
 		findHelper.findNext();
@@ -57,7 +60,7 @@ describe(['tagdesktop'], 'Searching via find dialog' ,function() {
 		helper.expectTextForClipboard('a');
 
 		// Search next instance
-		findHelper.openFindDialog();
+		findHelper.openFindDialog(this.win);
 		findHelper.typeIntoSearchField('a');
 		findHelper.findNext();
 		findHelper.closeFindDialog();
@@ -78,7 +81,7 @@ describe(['tagdesktop'], 'Searching via find dialog' ,function() {
 			});
 
 		// Search prev instance
-		findHelper.openFindDialog();
+		findHelper.openFindDialog(this.win);
 		findHelper.typeIntoSearchField('a');
 		findHelper.findPrev();
 		findHelper.closeFindDialog();
@@ -101,7 +104,7 @@ describe(['tagdesktop'], 'Searching via find dialog' ,function() {
 
 	it('Search wrap at the document end.', function() {
 		helper.setDummyClipboardForCopy();
-		findHelper.openFindDialog();
+		findHelper.openFindDialog(this.win);
 		findHelper.typeIntoSearchField('a');
 
 		findHelper.findNext();
@@ -117,7 +120,7 @@ describe(['tagdesktop'], 'Searching via find dialog' ,function() {
 		helper.getCursorPos('left', 'cursorOrigLeft');
 
 		// Search next instance
-		findHelper.openFindDialog();
+		findHelper.openFindDialog(this.win);
 		findHelper.typeIntoSearchField('a');
 		findHelper.findNext();
 		findHelper.closeFindDialog();
@@ -137,7 +140,7 @@ describe(['tagdesktop'], 'Searching via find dialog' ,function() {
 			});
 
 		// Search next instance, which is in the beginning of the document.
-		findHelper.openFindDialog();
+		findHelper.openFindDialog(this.win);
 		findHelper.typeIntoSearchField('a');
 		findHelper.findNext();
 		findHelper.closeFindDialog();

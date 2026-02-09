@@ -515,13 +515,11 @@ function scrollWriterDocumentToTop() {
 	assertScrollbarPosition('vertical', 0, 10);
 }
 
-function scrollViewDown() {
-	cy.getFrameWindow()
-		.its('L')
-		.then(function(L) {
-			L.Map.THIS.panBy({x: 0, y: 4000});
-			updateFollowingUsers();
-		});
+function scrollViewDown(win) {
+	cy.then(function() {
+		win.L.Map.THIS.panBy({x: 0, y: 4000});
+		win.app.updateFollowingUsers();
+	});
 }
 
 function updateFollowingUsers() {

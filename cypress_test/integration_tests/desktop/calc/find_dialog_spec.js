@@ -17,7 +17,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Searching via find dialog.
 
 	it('Search existing word.', function() {
 		helper.setDummyClipboardForCopy();
-		findHelper.openFindDialog();
+		findHelper.openFindDialog(this.win);
 		findHelper.typeIntoSearchField('a');
 
 		findHelper.findNext();
@@ -48,7 +48,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Searching via find dialog.
 			expect(app.isFollowingOff()).to.be.false;
 		});
 
-		desktopHelper.scrollViewDown();
+		desktopHelper.scrollViewDown(this.win);
 		helper.processToIdle(this.win);
 		desktopHelper.assertScrollbarPosition('vertical', 175, 205);
 
@@ -57,7 +57,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Searching via find dialog.
 		});
 
 		helper.setDummyClipboardForCopy();
-		findHelper.openFindDialog();
+		findHelper.openFindDialog(this.win);
 		findHelper.typeIntoSearchField('a');
 		helper.processToIdle(this.win);
 
@@ -65,7 +65,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Searching via find dialog.
 		calcHelper.assertAddressAfterIdle(this.win, 'A1');
 		desktopHelper.assertScrollbarPosition('vertical', 10, 30);
 
-		desktopHelper.scrollViewDown();
+		desktopHelper.scrollViewDown(this.win);
 		helper.processToIdle(this.win);
 
 		findHelper.typeIntoSearchField('c');
@@ -75,7 +75,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Searching via find dialog.
 	});
 
 	it('Search not existing word.', function() {
-		findHelper.openFindDialog();
+		findHelper.openFindDialog(this.win);
 		findHelper.typeIntoSearchField('q');
 
 		// Should be no new selection
@@ -84,7 +84,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Searching via find dialog.
 
 	it('Search next / prev instance.', function() {
 		helper.setDummyClipboardForCopy();
-		findHelper.openFindDialog();
+		findHelper.openFindDialog(this.win);
 		findHelper.typeIntoSearchField('d');
 		findHelper.findNext();
 		calcHelper.assertAddressAfterIdle(this.win, 'A472');
@@ -106,7 +106,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Searching via find dialog.
 
 	it('Search wrap at document end', function() {
 		helper.setDummyClipboardForCopy();
-		findHelper.openFindDialog();
+		findHelper.openFindDialog(this.win);
 		findHelper.typeIntoSearchField('a');
 
 		findHelper.findNext();
@@ -140,7 +140,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Jump to result.', function
 
 	it('Search existing word.', function() {
 		helper.setDummyClipboardForCopy();
-		findHelper.openFindDialog();
+		findHelper.openFindDialog(this.win);
 		findHelper.typeIntoSearchField('result');
 
 		findHelper.findNext();
