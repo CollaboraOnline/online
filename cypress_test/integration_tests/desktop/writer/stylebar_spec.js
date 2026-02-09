@@ -27,6 +27,7 @@ describe(['tagdesktop'], 'Test style sidebar', function() {
 
 		cy.getFrameWindow().then((win) => {
 			this.win = win;
+			helper.processToIdle(win);
 		});
 	});
 
