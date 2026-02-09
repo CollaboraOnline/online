@@ -265,7 +265,7 @@ NODE_BINS = \
 $(NODE_BINS): $(NPM_INSTALLED);
 
 $(NPM_INSTALLED): package.json eslint_plugin/index.js eslint_plugin/package.json
-	$(V)npm install --no-audit
+	$(V)UV_USE_IO_URING=0 npm install --no-audit
 	$(V)echo node_modules:
 	$(V)ls node_modules
 	$(V)mkdir -p $(dir $(NPM_INSTALLED))
@@ -771,7 +771,7 @@ do-run-cov: @JAILS_PATH@ @CACHE_PATH@ $(NODE_BINS)
 	$(V)echo
 	rm -rf .nyc_output
 	rm -rf coverage
-	npm install @cypress/code-coverage --no-save
+	UV_USE_IO_URING=0 npm install @cypress/code-coverage --no-save
 	$(V)echo "import '@cypress/code-coverage/support';" >> $(SUPPORT_FILE_ABS)
 	$(V)echo "" >> $(SUPPORT_FILE_ABS)
 	cd .. && npx nyc instrument --compact=false browser/src browser/dist/src && cd cypress_test
