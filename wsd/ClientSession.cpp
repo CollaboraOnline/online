@@ -397,9 +397,16 @@ void ClientSession::handleClipboardRequest(DocumentBroker::ClipboardRequest     
                     std::string commandName;
                     JsonUtil::findJSONValue(json, "commandName", commandName);
                     http::Session::FinishedCallback finishedCallback =
-                        [this, commandName=std::move(commandName),
+                        [selfWeak = weak_from_this(), this, commandName=std::move(commandName),
                          docBroker, jailClipFile, clipFile](const std::shared_ptr<http::Session>& session)
                     {
+                        std::shared_ptr<MessageHandlerInterface> selfLifecycle = selfWeak.lock();
+                        if (!selfLifecycle)
+                        {
+                            LOG_ERR_S("Session that requested: " << clipFile << " has already ended.");
+                            return;
+                        }
+
                         const std::shared_ptr<const http::Response> httpResponse =
                             session->response();
                         if (httpResponse->statusLine().statusCode() != http::StatusCode::OK)
