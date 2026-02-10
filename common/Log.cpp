@@ -782,7 +782,8 @@ namespace Log
 #endif // !NDEBUG
 
             assert(ThreadLocalBufferCount <= 1 &&
-                   "Unstopped threads may have unflushed buffered log entries");
+                   "Unstopped threads may have unflushed buffered log entries. "
+                   "This is common if there has been an earlier fatal error. Check previous log entries");
         }
 
         // continue logging shutdown on mobile
