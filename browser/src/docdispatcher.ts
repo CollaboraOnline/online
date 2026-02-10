@@ -96,29 +96,7 @@ class Dispatcher {
 		this.actionsMap['remoteaicontent'] = function () {
 			app.map.fire('postMessage', { msgId: 'UI_InsertAIContent' });
 		};
-		this.actionsMap['ai-settings'] = function () {
-			const dialog = JSDialog.aiProviderDialog();
-			dialog.open();
-		};
 		this.actionsMap['rewritetextai'] = async function () {
-			// Check if AI is configured
-			const apiKey = window.prefs.get('AIPreferenceApiKey');
-			const model = window.prefs.get('AIPreferenceModel');
-			const provider = window.prefs.get('AIPreferenceProvider');
-
-			// If not configured, open settings dialog first
-			if (!apiKey || !model || !provider) {
-				const settingsDialog = JSDialog.aiProviderDialog();
-				settingsDialog.open();
-
-				// Show info message
-				app.map.uiManager.showInfoModal(
-					'ai-settings-required',
-					_('Please configure AI settings first to use text rewriting features.')
-				);
-				return;
-			}
-
 			// Check if text is selected
 			const copyState = app.map['stateChangeHandler']?.getItemValue('.uno:Copy');
 
