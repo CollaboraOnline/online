@@ -31,6 +31,8 @@ window.L.Map.include({
 			return;
 		}
 
+		app.idleHandler.notifyActive();
+
 		var docLayer = this._docLayer;
 		var docType = docLayer._docType;
 		var isTheSamePart = false;
@@ -290,6 +292,7 @@ window.L.Map.include({
 
 	goToPage: function (page) {
 		var docLayer = this._docLayer;
+		app.idleHandler.notifyActive();
 		if (page === 'prev') {
 			if (docLayer._currentPage > 0) {
 				docLayer._currentPage -= 1;
@@ -335,6 +338,7 @@ window.L.Map.include({
 			return;
 		}
 
+		app.idleHandler.notifyActive();
 		if (this.isPresentationOrDrawing()) {
 			if (nPos === undefined) {
 				app.socket.sendMessage('uno .uno:InsertPage');
@@ -392,6 +396,7 @@ window.L.Map.include({
 		if (!this.isPresentationOrDrawing()) {
 			return;
 		}
+		app.idleHandler.notifyActive();
 
 		if (pos === undefined) {
 			app.socket.sendMessage('uno .uno:DuplicatePage');
@@ -423,6 +428,7 @@ window.L.Map.include({
 		else {
 			return;
 		}
+		app.idleHandler.notifyActive();
 
 		var docLayer = this._docLayer;
 		// TO DO: Deleting all the pages causes problem.
