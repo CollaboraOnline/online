@@ -1597,26 +1597,32 @@ class SettingIframe {
 		container.appendChild(
 			this.createViewSettingsTextBox('aiApiKey', data, false, true),
 		);
-		container.appendChild(
-			this.createViewSettingsTextBox('aiModel', data, false, true),
+
+		const modelField = document.createElement('div');
+		modelField.id = 'aiModelcontainer';
+		modelField.classList.add('view-input-container');
+
+		const modelHeading = this.createHeading(this._viewSettingLabels.aiModel);
+		modelHeading.classList.add('view-setting-small-label');
+		modelField.appendChild(modelHeading);
+
+		const modelSelect = this.createSelectInput(
+			'aiModel',
+			[{ value: '', label: _('Fetch models to select') }],
+			data.aiModel || '',
+			(selectEl) => {
+				data.aiModel = selectEl.value;
+			},
 		);
+		modelSelect.disabled = true;
+		modelField.appendChild(modelSelect);
+		container.appendChild(modelField);
 
 		const customUrlInput = container.querySelector(
 			'#aiCustomUrl',
 		) as HTMLInputElement | null;
 		if (customUrlInput) {
 			customUrlInput.placeholder = _('e.g.') + 'http://localhost:11434/v1';
-		}
-
-		const modelInput = container.querySelector(
-			'#aiModel',
-		) as HTMLInputElement | null;
-		const modelDatalist = document.createElement('datalist');
-		modelDatalist.id = 'aiModelOptions';
-		container.appendChild(modelDatalist);
-		if (modelInput) {
-			modelInput.setAttribute('list', modelDatalist.id);
-			modelInput.autocomplete = 'off';
 		}
 
 		const status = document.createElement('div');
@@ -1660,9 +1666,9 @@ class SettingIframe {
 		const customUrlInput = root.querySelector(
 			'#aiCustomUrl',
 		) as HTMLInputElement | null;
-		const modelInput = root.querySelector(
+		const modelSelect = root.querySelector(
 			'#aiModel',
-		) as HTMLInputElement | null;
+		) as HTMLSelectElement | null;
 
 		const queueFetch = () => {
 			this.scheduleAIModelFetch(data);
@@ -1684,8 +1690,8 @@ class SettingIframe {
 			queueFetch();
 		});
 
-		modelInput?.addEventListener('input', () => {
-			data.aiModel = modelInput.value;
+		modelSelect?.addEventListener('change', () => {
+			data.aiModel = modelSelect.value;
 		});
 	}
 
@@ -1713,6 +1719,7 @@ class SettingIframe {
 
 		if (!apiKey || (isCustom && !baseUrl)) {
 			this.setAIStatus('', false, true);
+			this.resetAIModelSelect();
 			return;
 		}
 
@@ -1767,25 +1774,7 @@ class SettingIframe {
 				? data.aiModel
 				: modelIds[0];
 			data.aiModel = selectedModel;
-
-			const modelInput = document.getElementById(
-				'aiModel',
-			) as HTMLInputElement | null;
-			if (modelInput) {
-				modelInput.value = selectedModel;
-			}
-
-			const modelDatalist = document.getElementById(
-				'aiModelOptions',
-			) as HTMLDataListElement | null;
-			if (modelDatalist) {
-				modelDatalist.innerHTML = '';
-				modelIds.forEach((modelId) => {
-					const option = document.createElement('option');
-					option.value = modelId;
-					modelDatalist.appendChild(option);
-				});
-			}
+			this.updateAIModelSelect(modelIds, selectedModel);
 
 			this.setAIStatus(_('Models fetched successfully'), false);
 		} catch (error) {
@@ -1795,7 +1784,45 @@ class SettingIframe {
 			const message =
 				error instanceof Error ? error.message : _('Failed to fetch models');
 			this.setAIStatus(message, true);
+			this.resetAIModelSelect();
 		}
+	}
+
+	private updateAIModelSelect(
+		modelIds: string[],
+		selectedModel: string,
+	): void {
+		const modelSelect = document.getElementById(
+			'aiModel',
+		) as HTMLSelectElement | null;
+		if (!modelSelect) {
+			return;
+		}
+		modelSelect.innerHTML = '';
+		modelIds.forEach((modelId) => {
+			const option = document.createElement('option');
+			option.value = modelId;
+			option.textContent = modelId;
+			modelSelect.appendChild(option);
+		});
+		modelSelect.value = selectedModel;
+		modelSelect.disabled = modelIds.length === 0;
+	}
+
+	private resetAIModelSelect(): void {
+		const modelSelect = document.getElementById(
+			'aiModel',
+		) as HTMLSelectElement | null;
+		if (!modelSelect) {
+			return;
+		}
+		modelSelect.innerHTML = '';
+		const option = document.createElement('option');
+		option.value = '';
+		option.textContent = _('Fetch models to select');
+		modelSelect.appendChild(option);
+		modelSelect.value = '';
+		modelSelect.disabled = true;
 	}
 
 	private setAIStatus(
