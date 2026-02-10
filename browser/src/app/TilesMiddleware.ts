@@ -1389,16 +1389,16 @@ class TileManager {
 			)
 		) {
 			this.beginTransaction();
-			const queue_ = this.checkRequestTiles(
+			const queue = this.checkRequestTiles(
 				app.activeDocument.activeLayout.getCurrentCoordList(),
 				false,
 			);
 			this.endTransaction(null);
-			return queue_;
+			return queue;
 		}
 
 		var tileRanges = this.pxBoundsToTileRanges(pixelBounds);
-		var queue = [];
+		const queue = [];
 
 		// If we're looking for tiles for the current (visible) area, update tile distance.
 		if (isCurrent) {
