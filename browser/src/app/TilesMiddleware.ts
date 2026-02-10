@@ -1381,7 +1381,7 @@ class TileManager {
 	}
 
 	private static getMissingTiles(
-		pixelBounds: any,
+		pixelBounds: cool.Bounds,
 		zoom: number,
 		isCurrent: boolean = false,
 	) {
