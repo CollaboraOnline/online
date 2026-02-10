@@ -456,7 +456,7 @@ namespace cool {
 			const timeoutPromise = new Promise<string>((_resolve, reject) => {
 				setTimeout(() => {
 					reject(new Error(_('Request timeout')));
-				}, 30000);
+				}, 40000);
 			});
 
 			// Make API call
@@ -477,15 +477,32 @@ namespace cool {
 
 				const data = await response.json();
 
-				// Extract text from OpenAI-compatible response format
-				const result = data.choices?.[0]?.message?.content || '';
+			// Extract text from OpenAI-compatible response format
+			const choice = data.choices?.[0];
+			const result = choice?.message?.content || '';
+			const reasoning = choice?.message?.reasoning || '';
+			const finishReason = choice?.finish_reason || '';
 
-				if (!result) {
-					throw new Error(_('No response from AI'));
+			if (!result) {
+				if (reasoning) {
+					throw new Error(
+						_(
+							'This model returned only internal reasoning and no output. Try a different model or shorter input.',
+						),
+					);
 				}
+				if (finishReason === 'length') {
+					throw new Error(
+						_(
+							'The model ran out of tokens before producing output. Try a shorter input or a model with a larger output budget.',
+						),
+					);
+				}
+				throw new Error(_('No response from AI'));
+			}
 
-				return result;
-			};
+			return result;
+		};
 
 			// Race between API call and timeout
 			try {
