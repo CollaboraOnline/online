@@ -1325,10 +1325,18 @@ class TileManager {
 	}
 
 	private static updateTileDistance(tile: Tile, zoom: number) {
+		let modes = [app.map._docLayer._selectedMode];
+		if (
+			app.activeDocument &&
+			app.activeDocument.activeLayout.type === 'ViewLayoutCompareChanges'
+		) {
+			// 2 modes are active at the same time in compare changes view mode.
+			modes = [TileMode.LeftSide, TileMode.RightSide];
+		}
 		if (
 			tile.coords.z !== zoom ||
 			tile.coords.part !== app.map._docLayer._selectedPart ||
-			!app.activeDocument.isModeActive(tile.coords.mode)
+			!modes.includes(tile.coords.mode)
 		)
 			tile.distanceFromView = Number.MAX_SAFE_INTEGER;
 		else {
@@ -1401,13 +1409,8 @@ class TileManager {
 
 		// If we're looking for tiles for the current (visible) area, update tile distance.
 		if (isCurrent) {
-			// 2 modes are active at the same time in compare changes view mode.
-			const ignoreMode =
-				app.activeDocument &&
-				app.activeDocument.activeLayout.type === 'ViewLayoutCompareChanges';
-
 			for (const tile of this.tiles.values()) {
-				this.updateTileDistance(tile, zoom, ignoreMode);
+				this.updateTileDistance(tile, zoom);
 			}
 			this.sortTileBitmapList();
 		}
@@ -1481,11 +1484,6 @@ class TileManager {
 
 		const zoom = Math.round(app.map.getZoom());
 
-		// 2 modes are active at the same time in compare changes view mode.
-		const ignoreMode =
-			app.activeDocument &&
-			app.activeDocument.activeLayout.type === 'ViewLayoutCompareChanges';
-
 		// Ensure tiles exist for requested coordinates
 		for (let i = 0; i < coordsQueue.length; i++) {
 			const key = coordsQueue[i].key();
@@ -1495,7 +1493,7 @@ class TileManager {
 				tile = this.createTile(coordsQueue[i]);
 
 				// Newly created tiles have a distance of zero, which means they're current.
-				if (!isCurrent) this.updateTileDistance(tile, zoom, ignoreMode);
+				if (!isCurrent) this.updateTileDistance(tile, zoom);
 			}
 		}
 
@@ -1931,11 +1929,7 @@ class TileManager {
 
 		if (!tile) {
 			tile = this.createTile(coords);
-			// 2 modes are active at the same time in compare changes view mode.
-			const ignoreMode =
-				app.activeDocument &&
-				app.activeDocument.activeLayout.type === 'ViewLayoutCompareChanges';
-			this.updateTileDistance(tile, Math.round(app.map.getZoom()), ignoreMode);
+			this.updateTileDistance(tile, Math.round(app.map.getZoom()));
 		}
 
 		tile.viewId = tileMsgObj.nviewid;
