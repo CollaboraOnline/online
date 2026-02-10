@@ -202,7 +202,7 @@ protected:
 
         if (filename.size() == 1 && std::isdigit(filename[0]))
         {
-            const auto number = std::stoi(filename);
+            const auto number = NumUtil::stoi(filename);
             if (number >= 1 && number <= 9)
             {
                 // Fake filename, depends on implicit filename.

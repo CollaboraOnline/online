@@ -769,11 +769,11 @@ void parseDocSize(const std::string& message, const std::string& type,
     const Poco::SharedPtr<Poco::JSON::Object>& statusJsonObject = statusJsonVar.extract<Poco::JSON::Object::Ptr>();
 
     const std::string text = statusJsonObject->get("type").toString();
-    parts = std::stoi(statusJsonObject->get("partscount").toString());
-    part = std::stoi(statusJsonObject->get("selectedpart").toString());
-    width = std::stoi(statusJsonObject->get("width").toString());
-    height = std::stoi(statusJsonObject->get("height").toString());
-    viewid = std::stoi(statusJsonObject->get("viewid").toString());
+    parts = NumUtil::stoi(statusJsonObject->get("partscount").toString());
+    part = NumUtil::stoi(statusJsonObject->get("selectedpart").toString());
+    width = NumUtil::stoi(statusJsonObject->get("width").toString());
+    height = NumUtil::stoi(statusJsonObject->get("height").toString());
+    viewid = NumUtil::stoi(statusJsonObject->get("viewid").toString());
     LOK_ASSERT_EQUAL(type, text);
     LOK_ASSERT(parts > 0);
     LOK_ASSERT(part >= 0);

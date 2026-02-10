@@ -11,6 +11,7 @@
 
 #pragma once
 
+#include <common/NumUtil.hpp>
 #include <net/HttpRequest.hpp>
 
 #include <algorithm>
@@ -152,7 +153,7 @@ public:
             // Could be a suffix
             try
             {
-                start = std::stoi(endString);
+                start = NumUtil::stoi(endString);
                 startIsSuffix = true;
             }
             catch (std::invalid_argument&)
@@ -168,8 +169,8 @@ public:
 
         try
         {
-            start = std::stoi(std::string(startString));
-            end = std::stoi(endString) + 1;
+            start = NumUtil::stoi(std::string(startString));
+            end = NumUtil::stoi(endString) + 1;
         }
         catch (std::invalid_argument&)
         {

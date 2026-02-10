@@ -16,6 +16,7 @@
 
 #include <common/Common.hpp>
 #include <common/Log.hpp>
+#include <common/NumUtil.hpp>
 #include <common/Protocol.hpp>
 #include <common/Rectangle.hpp>
 #include <common/TraceEvent.hpp>
@@ -1000,10 +1001,10 @@ namespace Util
         StringVector tokens(StringVector::tokenize(rectangle, ','));
         if (tokens.size() == 4)
         {
-            _x1 = std::stoi(tokens[0]);
-            _y1 = std::stoi(tokens[1]);
-            _x2 = _x1 + std::stoi(tokens[2]);
-            _y2 = _y1 + std::stoi(tokens[3]);
+            _x1 = NumUtil::stoi(tokens[0]);
+            _y1 = NumUtil::stoi(tokens[1]);
+            _x2 = _x1 + NumUtil::stoi(tokens[2]);
+            _y2 = _y1 + NumUtil::stoi(tokens[3]);
         }
         else
         {

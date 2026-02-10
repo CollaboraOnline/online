@@ -22,6 +22,7 @@
 #include <common/JsonUtil.hpp>
 #include <common/LangUtil.hpp>
 #include <common/Log.hpp>
+#include <common/NumUtil.hpp>
 #include <common/Protocol.hpp>
 #include <common/Util.hpp>
 #include <common/base64.hpp>
@@ -193,11 +194,9 @@ bool isConfigAuthOk(const std::string& userProvidedUsr, const std::string& userP
         }
 
         std::vector<unsigned char> userProvidedPwdHash(tokens[4].size() / 2);
-        PKCS5_PBKDF2_HMAC(userProvidedPwd.c_str(), -1,
-                          saltData.data(), saltData.size(),
-                          std::stoi(tokens[2]),
-                          EVP_sha512(),
-                          userProvidedPwdHash.size(), userProvidedPwdHash.data());
+        PKCS5_PBKDF2_HMAC(userProvidedPwd.c_str(), -1, saltData.data(), saltData.size(),
+                          NumUtil::stoi(tokens[2]), EVP_sha512(), userProvidedPwdHash.size(),
+                          userProvidedPwdHash.data());
 
         std::stringstream stream;
         for (unsigned long j = 0; j < userProvidedPwdHash.size(); ++j)

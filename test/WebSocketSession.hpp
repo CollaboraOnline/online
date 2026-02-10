@@ -117,7 +117,7 @@ public:
         const bool secure
             = lowerScheme.starts_with("https") || lowerScheme.starts_with("wss");
 
-        const int portInt = port.empty() ? 0 : std::stoi(port);
+        const int portInt = port.empty() ? 0 : NumUtil::stoi(port);
         return create(host, secure ? Protocol::HttpSsl : Protocol::HttpUnencrypted, portInt);
     }
 

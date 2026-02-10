@@ -39,10 +39,10 @@ void getCursor(const std::string& message, int& cursorX, int& cursorY, int& curs
     text = command->get("commandValues").toString();
     LOK_ASSERT(!text.empty());
     StringVector position(StringVector::tokenize(text, ','));
-    cursorX = std::stoi(position[0]);
-    cursorY = std::stoi(position[1]);
-    cursorWidth = std::stoi(position[2]);
-    cursorHeight = std::stoi(position[3]);
+    cursorX = NumUtil::stoi(position[0]);
+    cursorY = NumUtil::stoi(position[1]);
+    cursorWidth = NumUtil::stoi(position[2]);
+    cursorHeight = NumUtil::stoi(position[3]);
     LOK_ASSERT(cursorX >= 0);
     LOK_ASSERT(cursorY >= 0);
     LOK_ASSERT(cursorWidth >= 0);

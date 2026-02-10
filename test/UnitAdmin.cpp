@@ -236,7 +236,7 @@ private:
             }
 
             // store document pid
-            _docPid1 = std::stoi(tokens[1]);
+            _docPid1 = NumUtil::stoi(tokens[1]);
             _usersCount++;
         }
         _docsCount++;
@@ -264,7 +264,7 @@ private:
             }
 
             // store document pid
-            _docPid2 = std::stoi(tokens[1]);
+            _docPid2 = NumUtil::stoi(tokens[1]);
             _usersCount++;
         }
 
@@ -299,7 +299,7 @@ private:
             }
 
             // store document pid
-            _docPid3 = std::stoi(tokens[1]);
+            _docPid3 = NumUtil::stoi(tokens[1]);
             _usersCount++;
         }
         _docsCount++;
@@ -329,7 +329,7 @@ private:
             LOG_INF("testUsersCount: Unrecognized message format");
             return TestResult::Failed;
         }
-        else if (std::stoi(tokens[1]) != _usersCount)
+        else if (NumUtil::stoi(tokens[1]) != _usersCount)
         {
             LOG_INF("testUsersCount: Incorrect users count "
                       ", expected: " + std::to_string(_usersCount) +
@@ -356,14 +356,13 @@ private:
         lock.unlock();
 
         StringVector tokens(StringVector::tokenize(_messageReceived, ' '));
-        if (tokens.size() != 2 ||
-            tokens[0] != "active_docs_count" ||
-            std::stoi(tokens[1]) != _docsCount)
+        if (tokens.size() != 2 || tokens[0] != "active_docs_count" ||
+            NumUtil::stoi(tokens[1]) != _docsCount)
         {
             LOG_INF("testDocCount: Unrecognized message format");
             return TestResult::Failed;
         }
-        else if (std::stoi(tokens[1]) != _docsCount)
+        else if (NumUtil::stoi(tokens[1]) != _docsCount)
         {
             LOG_INF("testDocCount: Incorrect doc count "
                       ", expected: " + std::to_string(_docsCount) +

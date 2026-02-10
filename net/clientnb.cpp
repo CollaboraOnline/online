@@ -11,6 +11,7 @@
 
 #include <config.h>
 
+#include <common/NumUtil.hpp>
 #include <common/Util.hpp>
 
 #include <cstdlib>
@@ -102,7 +103,7 @@ public:
         try {
 //            std::cerr << "try to get response\n";
             const std::string result = getResponseString();
-            number = std::stoi(result);
+            number = NumUtil::stoi(result);
         }
         catch (const Poco::Exception &e)
         {
