@@ -547,20 +547,15 @@ protected:
     {
         Poco::URI uriReq(Uri::decode(request.getURI()));
 
-        {
-            std::ostringstream oss;
-            oss << "FakeWOPIHost: " << request.getMethod() << " request URI [" << uriReq.toString()
-                << "]:\n";
-            Util::joinPair(oss, request, " / ");
+        TST_LOG("FakeWOPIHost: " << request.getMethod() << " request URI [" << uriReq.toString()
+                                 << "]: " <<
+                [&](auto& log)
+                {
+                    Util::joinPair(log, request, " / ");
+                } << (UnitBase::get().isFinished() ? " - Ignoring as test has finished" : ""));
 
-            if (UnitBase::get().isFinished())
-                oss << "\nIgnoring as test has finished";
-
-            TST_LOG(oss.str());
-
-            if (UnitBase::get().isFinished())
-                return false;
-        }
+        if (UnitBase::get().isFinished())
+            return false;
 
         assertTargetTest(uriReq);
 
