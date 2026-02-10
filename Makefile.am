@@ -493,6 +493,7 @@ shared_headers = \
                  common/Log.hpp \
                  common/Message.hpp \
                  common/MobileApp.hpp \
+                 common/NumUtil.hpp \
                  common/Png.hpp \
                  common/Protocol.hpp \
                  common/Rectangle.hpp \

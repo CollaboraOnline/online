@@ -20,6 +20,7 @@
 
 #include <common/HexUtil.hpp>
 #include <common/Log.hpp>
+#include <common/NumUtil.hpp>
 #include <common/Util.hpp>
 
 #include <Poco/MemoryStream.h>
@@ -267,7 +268,7 @@ FieldParseState StatusLine::parse(const char* p, int64_t& len)
         LOG_ERR("StatusLine::parse: expected valid integer number");
         return FieldParseState::Invalid;
     }
-    _statusCode = Util::safe_atoi(&p[off], len - off);
+    _statusCode = NumUtil::safe_atoi(&p[off], len - off);
     if (_statusCode < MinValidStatusCode || _statusCode > MaxValidStatusCode)
     {
         LOG_ERR("StatusLine::parse: Invalid StatusCode [" << _statusCode << "]");

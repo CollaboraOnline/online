@@ -160,6 +160,7 @@ test_base_sources = \
 	KitQueueTests.cpp \
 	LoggingWhiteBoxTests.cpp \
 	NetUtilWhiteBoxTests.cpp \
+	NumUtilWhiteBoxTests.cpp \
 	RequestDetailsTests.cpp \
 	StringVectorTests.cpp \
 	TestGlobals.cpp \

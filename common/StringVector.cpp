@@ -14,7 +14,7 @@
 
 #include "StringVector.hpp"
 
-#include <common/Util.hpp>
+#include <common/NumUtil.hpp>
 
 bool StringVector::equals(std::size_t index, const StringVector& other, std::size_t otherIndex)
 {
@@ -49,7 +49,7 @@ bool StringVector::getUInt32(std::size_t index, const std::string& key, uint32_t
             _string.compare(token._index, key.size(), key, 0, key.size()) == 0 &&
             _string[token._index + key.size()] == '=')
     {
-        value = Util::safe_atoi(&_string[token._index + offset], token._length - offset);
+        value = NumUtil::safe_atoi(&_string[token._index + offset], token._length - offset);
         return value < std::numeric_limits<uint32_t>::max();
     }
 
@@ -82,7 +82,7 @@ bool StringVector::getNameIntegerPair(std::size_t index, std::string& name, int&
 
     name = _string.substr(token._index, mid - token._index);
     size_t offset = mid + 1;
-    value = Util::safe_atoi(&_string[offset], token._index + token._length - offset);
+    value = NumUtil::safe_atoi(&_string[offset], token._index + token._length - offset);
     return value > std::numeric_limits<int>::min() && value < std::numeric_limits<int>::max();
 }
 

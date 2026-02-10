@@ -1393,13 +1393,6 @@ int main(int argc, char**argv)
 #define ASSERT_CORRECT_THREAD_OWNER(OWNER) Util::assertCorrectThread(OWNER, __FILE__, __LINE__)
 #endif
 
-    /**
-     * Similar to std::atoi() but does not require p to be null-terminated.
-     *
-     * Returns std::numeric_limits<int>::min/max() if the result would overflow.
-     */
-    int safe_atoi(const char* p, int len);
-
     /// Sleep based on count of seconds in env. var
     void sleepFromEnvIfSet(const char *domain, const char *envVar);
 
