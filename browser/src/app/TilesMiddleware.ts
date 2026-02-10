@@ -1390,8 +1390,13 @@ class TileManager {
 
 		// If we're looking for tiles for the current (visible) area, update tile distance.
 		if (isCurrent) {
+			// 2 modes are active at the same time in compare changes view mode.
+			const ignoreMode =
+				app.activeDocument &&
+				app.activeDocument.activeLayout.type === 'ViewLayoutCompareChanges';
+
 			for (const tile of this.tiles.values()) {
-				this.updateTileDistance(tile, zoom);
+				this.updateTileDistance(tile, zoom, ignoreMode);
 			}
 			this.sortTileBitmapList();
 		}
@@ -1466,6 +1471,11 @@ class TileManager {
 
 		const zoom = Math.round(app.map.getZoom());
 
+		// 2 modes are active at the same time in compare changes view mode.
+		const ignoreMode =
+			app.activeDocument &&
+			app.activeDocument.activeLayout.type === 'ViewLayoutCompareChanges';
+
 		// Ensure tiles exist for requested coordinates
 		for (let i = 0; i < coordsQueue.length; i++) {
 			const key = coordsQueue[i].key();
@@ -1475,7 +1485,7 @@ class TileManager {
 				tile = this.createTile(coordsQueue[i]);
 
 				// Newly created tiles have a distance of zero, which means they're current.
-				if (!isCurrent) this.updateTileDistance(tile, zoom);
+				if (!isCurrent) this.updateTileDistance(tile, zoom, ignoreMode);
 			}
 		}
 
@@ -1899,7 +1909,11 @@ class TileManager {
 
 		if (!tile) {
 			tile = this.createTile(coords);
-			this.updateTileDistance(tile, Math.round(app.map.getZoom()));
+			// 2 modes are active at the same time in compare changes view mode.
+			const ignoreMode =
+				app.activeDocument &&
+				app.activeDocument.activeLayout.type === 'ViewLayoutCompareChanges';
+			this.updateTileDistance(tile, Math.round(app.map.getZoom()), ignoreMode);
 		}
 
 		tile.viewId = tileMsgObj.nviewid;
