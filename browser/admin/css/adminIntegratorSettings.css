@@ -343,22 +343,26 @@ ul {
   font-weight: 500 !important;
 }
 
-.view-input-container input[type='text'] {
-  width: 100%;
-  max-width: 400px;
-  padding: 8px 12px;
-  font-size: 15px;
-  border: 1px solid var(--settings-border);
-  border-radius: 4px;
-  color: var(--settings-text);
-  background-color: var(--settings-background);
-  transition: border-color 0.2s ease;
+.view-input-container input[type='text'],
+.view-input-container input[type='password'],
+.view-input-container select {
+	width: 100%;
+	max-width: 400px;
+	padding: 8px 12px;
+	font-size: 15px;
+	border: 1px solid var(--settings-border);
+	border-radius: 4px;
+	color: var(--settings-text);
+	background-color: var(--settings-background);
+	transition: border-color 0.2s ease;
 }
 
-.view-input-container input[type='text']:focus {
-  outline: none;
-  border-color: var(--settings-btn-primary);
-  box-shadow: 0 0 0 2px rgba(0, 120, 212, 0.1);
+.view-input-container input[type='text']:focus,
+.view-input-container input[type='password']:focus,
+.view-input-container select:focus {
+	outline: none;
+	border-color: var(--settings-btn-primary);
+	box-shadow: 0 0 0 2px rgba(0, 120, 212, 0.1);
 }
 
 
