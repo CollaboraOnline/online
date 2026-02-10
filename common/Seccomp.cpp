@@ -58,7 +58,11 @@
 #  define SECCOMP_REG(_ctx, _reg) ((_ctx)->uc_mcontext.arm_##_reg)
 #  define SECCOMP_SYSCALL(_ctx)   SECCOMP_REG(_ctx, r7)
 #elif defined(__powerpc64__)
-#  define AUDIT_ARCH_NR AUDIT_ARCH_PPC64
+#  if __BYTE_ORDER__ == __ORDER_LITTLE_ENDIAN__
+#    define AUDIT_ARCH_NR AUDIT_ARCH_PPC64LE
+#  else
+#    define AUDIT_ARCH_NR AUDIT_ARCH_PPC64
+#  endif
 #  define SECCOMP_REG(_ctx, _reg) ((_ctx)->uc_mcontext.regs->gpr[_reg])
 #  define SECCOMP_SYSCALL(_ctx)   SECCOMP_REG(_ctx, 0)
 #else
