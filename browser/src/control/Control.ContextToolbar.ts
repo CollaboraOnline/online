@@ -164,7 +164,7 @@ class ContextToolbar extends JSDialogComponent {
 		const currentFontName = this.map._getCurrentFontName();
 		const currentFontSize =
 			this.map['stateChangeHandler'].getItemValue('.uno:FontHeight');
-		return [
+		const contextItems: ToolItemWidgetJSON[] = [
 			{
 				type: 'container',
 				children: [
@@ -297,32 +297,33 @@ class ContextToolbar extends JSDialogComponent {
 				text: _UNO('.uno:InsertAnnotation'),
 				command: '.uno:InsertAnnotation',
 			} as ToolItemWidgetJSON,
-			{
-				type: 'separator',
-				id: 'home-aiconfig-break',
-				orientation: 'vertical',
-			} as SeparatorWidgetJSON,
-			{
-				id: 'home-aiconfig',
-				type: 'menubutton',
-				text: _('AI'),
-				icon: 'lc_settings.svg', // Replace with AI icon when available
-				menu: [
-					{
-						type: 'action',
-						id: 'rewrite-selection',
-						text: _('Rewrite Selection'),
-						action: 'rewritetextai'
-					},
-					{
-						type: 'action',
-						id: 'ai-settings',
-						text: _('Settings'),
-						action: 'ai-settings',
-					},
-				] as Array<MenuDefinition>,
-			} as MenuButtonWidgetJSON,
 		];
+
+		if (this.map.aiSettings?.isConfigured()) {
+			contextItems.push(
+				{
+					type: 'separator',
+					id: 'home-aiconfig-break',
+					orientation: 'vertical',
+				} as SeparatorWidgetJSON,
+				{
+					id: 'home-aiconfig',
+					type: 'menubutton',
+					text: _('AI'),
+					icon: 'lc_settings.svg', // Replace with AI icon when available
+					menu: [
+						{
+							type: 'action',
+							id: 'rewrite-selection',
+							text: _('Rewrite Selection'),
+							action: 'rewritetextai'
+						},
+					] as Array<MenuDefinition>,
+				} as MenuButtonWidgetJSON,
+			);
+		}
+
+		return contextItems;
 	}
 
 	insertAdditionalContextButton(button: any) {
