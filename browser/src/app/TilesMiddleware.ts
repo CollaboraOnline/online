@@ -1383,6 +1383,20 @@ class TileManager {
 		zoom: number,
 		isCurrent: boolean = false,
 	) {
+		if (
+			['ViewLayoutCompareChanges', 'ViewLayoutMultiPage'].includes(
+				app.activeDocument.activeLayout.type,
+			)
+		) {
+			this.beginTransaction();
+			const queue_ = this.checkRequestTiles(
+				app.activeDocument.activeLayout.getCurrentCoordList(),
+				false,
+			);
+			this.endTransaction(null);
+			return queue_;
+		}
+
 		var tileRanges = this.pxBoundsToTileRanges(pixelBounds);
 		var queue = [];
 
@@ -2257,7 +2271,10 @@ class TileManager {
 	}
 
 	// The "currentCoordList" is the currently visible coordinates list.
-	public static checkRequestTiles(currentCoordList: TileCoordData[]): void {
+	public static checkRequestTiles(
+		currentCoordList: TileCoordData[],
+		sendTileCombine = true,
+	): TileCoordData[] {
 		const tileCombineQueue = [];
 		for (var i = 0; i < currentCoordList.length; i++) {
 			let tile = TileManager.get(currentCoordList[i]);
@@ -2268,7 +2285,10 @@ class TileManager {
 			else this.makeTileCurrent(tile);
 		}
 
-		TileManager.sendTileCombineRequest(tileCombineQueue);
+		// Prefetching algortihm etc doesn't need this function to send tile combine request.
+		if (sendTileCombine) TileManager.sendTileCombineRequest(tileCombineQueue);
+
+		return tileCombineQueue;
 	}
 
 	public static updateFileBasedView(
