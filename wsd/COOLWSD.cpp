@@ -52,6 +52,7 @@
 #include <common/JsonUtil.hpp>
 #include <common/Log.hpp>
 #include <common/MobileApp.hpp>
+#include <common/NumUtil.hpp>
 #include <common/Protocol.hpp>
 #include <common/RegexUtil.hpp>
 #include <common/Session.hpp>
@@ -2532,7 +2533,7 @@ void COOLWSD::handleOption(const std::string& optionName,
     else if (optionName == "cleanup")
         CleanupOnly = true; // Flag for later as we need the config.
     else if (optionName == "port")
-        ClientPortNumber = std::stoi(value);
+        ClientPortNumber = NumUtil::stoi(value);
 #if ENABLE_DEBUG
     else if (optionName == "find-free-port")
         FindFreePort = true;
@@ -2568,7 +2569,7 @@ void COOLWSD::handleOption(const std::string& optionName,
         SigUtil::setUnattended();
     }
     else if (optionName == "careerspan")
-        careerSpanMs = std::chrono::seconds(std::stoi(value)); // Convert second to ms
+        careerSpanMs = std::chrono::seconds(NumUtil::stoi(value)); // Convert second to ms
     else if (optionName == "singlekit")
     {
         SingleKit = true;
@@ -2579,7 +2580,7 @@ void COOLWSD::handleOption(const std::string& optionName,
 
     static const char* latencyMs = std::getenv("COOL_DELAY_SOCKET_MS");
     if (latencyMs)
-        SimulatedLatencyMs = std::stoi(latencyMs);
+        SimulatedLatencyMs = NumUtil::stoi(latencyMs);
 #endif
 
 #else

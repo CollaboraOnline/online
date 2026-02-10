@@ -18,6 +18,7 @@
 
 #include <common/HexUtil.hpp>
 #include <common/Log.hpp>
+#include <common/NumUtil.hpp>
 #include <common/Protocol.hpp>
 #include <common/Unit.hpp>
 #include <common/Util.hpp>
@@ -1015,7 +1016,7 @@ protected:
 
 #if !MOBILEAPP
         // create our websocket goodness ...
-        const int wsVersion = std::stoi(req.get("Sec-WebSocket-Version", "13"));
+        const int wsVersion = NumUtil::stoi(req.get("Sec-WebSocket-Version", "13"));
         const std::string wsKey = req.get("Sec-WebSocket-Key", "");
         const std::string wsProtocol = req.get("Sec-WebSocket-Protocol", "chat");
         // FIXME: other sanity checks ...

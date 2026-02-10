@@ -18,6 +18,8 @@
 
 #include "Protocol.hpp"
 
+#include <common/NumUtil.hpp>
+
 #include <cstring>
 #include <map>
 #include <string>
@@ -37,7 +39,7 @@ namespace COOLProtocol
         StringVector firstTokens(StringVector::tokenize(version, '.'));
         if (firstTokens.size() > 0)
         {
-            major = std::stoi(firstTokens[0]);
+            major = NumUtil::stoi(firstTokens[0]);
 
             StringVector secondTokens;
             if (firstTokens.size() > 1)
@@ -46,7 +48,7 @@ namespace COOLProtocol
             }
             if (secondTokens.size() > 0)
             {
-                minor = std::stoi(secondTokens[0]);
+                minor = NumUtil::stoi(secondTokens[0]);
             }
 
             if (secondTokens.size() > 1)
