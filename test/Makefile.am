@@ -106,6 +106,7 @@ all_la_unit_tests = \
 	unit-timeout_none.la \
 	unit-serversock_accept1.la \
 	unit-streamsock_ctor1.la \
+	unit-clipboard-close.la \
 	unit-kit-child-session.la
 #	unit-admin.la
 #	unit-tilecache.la # Empty test.
@@ -241,6 +242,8 @@ unit_typing_la_SOURCES = UnitTyping.cpp
 unit_typing_la_LIBADD = $(CPPUNIT_LIBS)
 unit_copy_paste_la_SOURCES = UnitCopyPaste.cpp
 unit_copy_paste_la_LIBADD = $(CPPUNIT_LIBS)
+unit_clipboard_close_la_SOURCES = UnitClipboardClose.cpp
+unit_clipboard_close_la_LIBADD = $(CPPUNIT_LIBS)
 unit_copy_paste_writer_la_SOURCES = UnitCopyPasteWriter.cpp
 unit_copy_paste_writer_la_LIBADD = $(CPPUNIT_LIBS)
 unit_convert_la_SOURCES = UnitConvert.cpp

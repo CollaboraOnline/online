@@ -54,6 +54,8 @@ namespace Poco
 class Session;
 class StorageBase;
 
+namespace http { class Session; }
+
 typedef UnitBase *(CreateUnitHooksFunction)();
 typedef UnitBase**(CreateUnitHooksFunctionMulti)();
 extern "C" {
@@ -556,6 +558,17 @@ public:
     {
         return false;
     }
+
+    /// Called before a clipboard download URL is used.
+    /// Override to replace the URL, e.g. with a non-routable address to test timeouts.
+    virtual void filterClipboardDownloadURL(std::string& /*url*/) {}
+
+    /// Called after an async clipboard download request is set up.
+    /// Override to adjust the session, e.g. to set a shorter timeout.
+    virtual void onClipboardDownloadRequest(std::shared_ptr<http::Session>& /*httpSession*/) {}
+
+    /// Called when the clipboard download callback detects its session has already been destroyed.
+    virtual void onClipboardDownloadSessionGone() {}
 
     /// Called before uri is set as a preinstall settings asset
     virtual void filterRegisterPresetAsset(std::string& /*uri*/) {}
