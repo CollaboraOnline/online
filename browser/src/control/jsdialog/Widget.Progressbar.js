@@ -32,6 +32,8 @@ JSDialog.progressbar = function (parentContainer, data, builder) {
 	progressbar.id = data.id + '-progress';
 	progressbar.tabIndex = '0';
 
+	JSDialog.SetupA11yLabelForLabelableElement(parentContainer, progressbar, data, builder);
+
 	if (data.value !== undefined)
 		progressbar.value = data.value;
 	else
