@@ -152,6 +152,8 @@ private:
     static void fetchSettingFile(const Poco::Net::HTTPRequest& request,
                                    std::istream& message,
                                    const std::shared_ptr<StreamSocket>& socket);
+    static void fetchModels(const Poco::Net::HTTPRequest& request, std::istream& message,
+                            const std::shared_ptr<StreamSocket>& socket);
 
     static void deleteWopiSettingConfigs(const Poco::Net::HTTPRequest& request,
                                          std::istream& message,

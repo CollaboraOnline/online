@@ -1025,6 +1025,12 @@ bool FileServerRequestHandler::handleRequest(const HTTPRequest& request,
             return true;
         }
 
+        if (endPoint == "fetch-models")
+        {
+            fetchModels(request, message, socket);
+            return true;
+        }
+
         // Is this a file we read at startup - if not; it's not for serving.
         if (FileHash.find(relPath) == FileHash.end() &&
             FileHash.find(relPath + ".br") == FileHash.end())
@@ -2294,9 +2300,74 @@ void FileServerRequestHandler::fetchSettingFile(const Poco::Net::HTTPRequest& re
     LOG_DBG("Successfully fetched setting file from [" << uriAnonym << "]");
 }
 
-void FileServerRequestHandler::deleteWopiSettingConfigs(
-    const Poco::Net::HTTPRequest& request, std::istream& message,
-    const std::shared_ptr<StreamSocket>& socket)
+void FileServerRequestHandler::fetchModels(const Poco::Net::HTTPRequest& request,
+                                           std::istream& message,
+                                           const std::shared_ptr<StreamSocket>& socket)
+{
+    Poco::Net::HTMLForm form(request, message);
+
+    const std::string& provider = form.get("provider", std::string());
+    const std::string& apiKey = form.get("apiKey", std::string());
+    std::string baseUrl = form.get("baseUrl", std::string());
+
+    const std::string& shortMessage = "Failed to fetch AI models";
+    if (provider.empty() || apiKey.empty())
+    {
+        sendError(http::StatusCode::BadRequest, getRequestPath(request), socket, shortMessage,
+                  "Missing provider or apiKey in the payload");
+        return;
+    }
+
+    if (provider == "custom" && baseUrl.empty())
+    {
+        sendError(http::StatusCode::BadRequest, getRequestPath(request), socket, shortMessage,
+                  "Missing baseUrl for custom provider");
+        return;
+    }
+
+    if (baseUrl.empty())
+    {
+        sendError(http::StatusCode::BadRequest, getRequestPath(request), socket, shortMessage,
+                  "Missing baseUrl for provider");
+        return;
+    }
+    if (baseUrl.back() == '/')
+        baseUrl.pop_back();
+    baseUrl += "/v1/models";
+
+    Poco::URI uri(baseUrl);
+    const std::string& uriAnonym = COOLWSD::anonymizeUrl(uri.toString());
+
+    Authorization auth(Authorization::Type::Token, apiKey, false);
+    auto httpRequest = StorageConnectionManager::createHttpRequest(uri, auth);
+    httpRequest.setVerb(http::Request::VERB_GET);
+    httpRequest.set("Content-Type", "application/json");
+
+    auto httpSession = StorageConnectionManager::getHttpSession(uri);
+    auto httpResponse = httpSession->syncRequest(httpRequest);
+
+    const auto statusCode = httpResponse->statusLine().statusCode();
+    if (statusCode != http::StatusCode::OK)
+    {
+        std::ostringstream responseContent;
+        responseContent << httpResponse->getBody();
+        sendError(statusCode, getRequestPath(request), socket, shortMessage,
+                  httpResponse->statusLine().reasonPhrase() +
+                      ". Response: " + responseContent.str());
+        return;
+    }
+
+    http::Response clientResponse(http::StatusCode::OK);
+    clientResponse.set("Content-Type", "application/json; charset=utf-8");
+    clientResponse.set("Cache-Control", "no-cache");
+    clientResponse.setBody(httpResponse->getBody());
+    socket->send(clientResponse);
+    LOG_DBG("Successfully fetched models from [" << uriAnonym << "]");
+}
+
+void FileServerRequestHandler::deleteWopiSettingConfigs(const Poco::Net::HTTPRequest& request,
+                                                        std::istream& message,
+                                                        const std::shared_ptr<StreamSocket>& socket)
 {
     Poco::Net::HTMLForm form(request, message);
 
