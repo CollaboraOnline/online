@@ -16,6 +16,7 @@
 #include <cstdint>
 #include <cstdlib>
 #include <limits>
+#include <stdexcept>
 #include <string_view>
 #include <type_traits>
 #include <utility>
@@ -386,6 +387,22 @@ inline int safe_atoi(const char* p, int len)
     }
 
     return multiplier * ret;
+}
+
+/// Fast string to 32-bit signed int conversion.
+/// Optimized for performance with manual parsing and minimal branches.
+/// Drop-in replacement to std::stoi() that accepts string_view.
+inline std::int32_t stoi(const std::string_view str)
+{
+    std::size_t offset = 0;
+    const auto [value, res] = parseStrToInt32(str, offset);
+    if (offset == 0)
+        throw std::invalid_argument("stoi");
+
+    if (res == StrToState::Overflow)
+        throw std::out_of_range("stoi");
+
+    return value;
 }
 
 } // namespace NumUtil

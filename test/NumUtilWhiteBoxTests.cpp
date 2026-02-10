@@ -19,7 +19,9 @@
 #include <cppunit/extensions/HelperMacros.h>
 
 #include <cerrno>
+#include <cstdint>
 #include <limits>
+#include <stdexcept>
 #include <string>
 #include <string_view>
 
@@ -31,6 +33,7 @@ class NumUtilWhiteBoxTests : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST(testI64FromString);
     CPPUNIT_TEST(testU32FromString);
     CPPUNIT_TEST(testU64FromString);
+    CPPUNIT_TEST(testStoi);
     CPPUNIT_TEST(testSafeAtoi);
     CPPUNIT_TEST(testStrtoint64MatchesStrtol);
     CPPUNIT_TEST(testStrtouint64MatchesStrtoul);
@@ -43,12 +46,17 @@ class NumUtilWhiteBoxTests : public CPPUNIT_NS::TestFixture
     void testI64FromString();
     void testU32FromString();
     void testU64FromString();
+    void testStoi();
     void testSafeAtoi();
     void testStrtoint64MatchesStrtol();
     void testStrtouint64MatchesStrtoul();
     void testStrtoint64MatchesStrtoll();
     void testStrtouint64MatchesStrtoull();
     void testParseStrTo();
+    void testStrtoiWithOffset();
+
+    void stoiCompare(std::int64_t num);
+    void stoiTest(const std::string& str, std::int64_t num);
 };
 
 void NumUtilWhiteBoxTests::testI32FromString()
@@ -570,6 +578,221 @@ void NumUtilWhiteBoxTests::testU64FromString()
     LOK_ASSERT_EQUAL(static_cast<std::uint64_t>(99), NumUtil::u64FromString("-1", 99));
     LOK_ASSERT_EQUAL(static_cast<std::uint64_t>(88), NumUtil::u64FromString("  ", 88));
     LOK_ASSERT_EQUAL(static_cast<std::uint64_t>(50), NumUtil::u64FromString("  50", 99));
+}
+
+void NumUtilWhiteBoxTests::stoiTest(const std::string& str, std::int64_t num)
+{
+    constexpr std::string_view testname = __func__;
+
+    bool unexpectedThrow = false;
+    try
+    {
+        const auto value = std::stoi(str);
+        unexpectedThrow = true; // std::stoi() didn't throw, so we shouldn't either.
+
+        LOK_ASSERT_EQUAL(num, static_cast<std::int64_t>(value));
+        LOK_ASSERT_EQUAL(num, static_cast<std::int64_t>(NumUtil::stoi(str)));
+    }
+    catch (const std::invalid_argument&)
+    {
+        if (!unexpectedThrow)
+        {
+            TST_LOG("std::stoi(" << str
+                                 << ") threw invalid_argument, now checking NumUtil::stoi()");
+        }
+        else
+        {
+            LOK_ASSERT_FAIL("Unexpected to get invalid_argument exception for [" << str << ']');
+        }
+
+        try
+        {
+            LOK_ASSERT_EQUAL_CTX(num, static_cast<std::int64_t>(NumUtil::stoi(str)), str);
+            LOK_ASSERT_FAIL("Expected invalid_argument exception to be thrown for [" << str << ']');
+        }
+        catch (const std::invalid_argument&)
+        {
+            LOK_ASSERT_PASS("Got invalid_argument exception as expected for [" << str << ']');
+        }
+    }
+    catch (const std::out_of_range&)
+    {
+        if (!unexpectedThrow)
+        {
+            TST_LOG("std::stoi(" << str << ") threw out_of_range, now checking NumUtil::stoi()");
+        }
+        else
+        {
+            LOK_ASSERT_FAIL("Unexpected to get out_of_range exception for [" << str << ']');
+        }
+
+        try
+        {
+            LOK_ASSERT_EQUAL_CTX(num, static_cast<std::int64_t>(NumUtil::stoi(str)), str);
+            LOK_ASSERT_FAIL("Expected out_of_range exception to be thrown for [" << str << ']');
+        }
+        catch (const std::out_of_range&)
+        {
+            LOK_ASSERT_PASS("Got out_of_range exception as expected for [" << str << ']');
+        }
+    }
+    catch (const std::exception&)
+    {
+        if (!unexpectedThrow)
+        {
+            TST_LOG("std::stoi(" << str << ") threw an exception, now checking NumUtil::stoi()");
+        }
+        else
+        {
+            LOK_ASSERT_FAIL("Unexpected to get exception for [" << str << ']');
+        }
+
+        try
+        {
+            LOK_ASSERT_EQUAL_CTX(num, static_cast<std::int64_t>(NumUtil::stoi(str)), str);
+            LOK_ASSERT_FAIL("Expected exception to be thrown for [" << str << ']');
+        }
+        catch (const std::exception&)
+        {
+            LOK_ASSERT_PASS("Got exception as expected for [" << str << ']');
+        }
+    }
+}
+
+void NumUtilWhiteBoxTests::stoiCompare(std::int64_t num)
+{
+    constexpr std::string_view testname = __func__;
+
+    LOK_ASSERT_EQUAL(num, num);
+    const auto str = std::to_string(num);
+    LOK_ASSERT(!str.empty());
+
+    stoiTest(str, num);
+}
+
+void NumUtilWhiteBoxTests::testStoi()
+{
+    constexpr std::string_view testname = __func__;
+
+    try
+    {
+        stoiCompare(0);
+        stoiCompare(1);
+        stoiCompare(-1);
+        stoiCompare(1L << 34);
+        stoiCompare(-(1L << 34));
+        for (int i = 0; i < 10000; ++i)
+        {
+            stoiCompare(Util::rng::getNext());
+        }
+
+        // Test empty string - should throw invalid_argument.
+        stoiTest("", 0);
+
+        // Test whitespace only - should throw invalid_argument.
+        stoiTest("   ", 0);
+
+        // Test non-numeric string - should throw invalid_argument.
+        stoiTest("abc", 0);
+
+        // Test string starting with letters - should throw invalid_argument.
+        stoiTest("abc123", 0);
+
+        // Test leading whitespace with valid number - should parse successfully.
+        LOK_ASSERT_EQUAL(123, NumUtil::stoi("  123"));
+        LOK_ASSERT_EQUAL(456, NumUtil::stoi("\t456"));
+        LOK_ASSERT_EQUAL(789, NumUtil::stoi("   \t  789"));
+
+        // Test trailing non-numeric characters - should parse the numeric part.
+        LOK_ASSERT_EQUAL(123, NumUtil::stoi("123abc"));
+        LOK_ASSERT_EQUAL(456, NumUtil::stoi("456xyz"));
+        LOK_ASSERT_EQUAL(789, NumUtil::stoi("789   "));
+
+        // Test plus sign prefix - should work.
+        LOK_ASSERT_EQUAL(123, NumUtil::stoi("+123"));
+        LOK_ASSERT_EQUAL(0, NumUtil::stoi("+0"));
+
+        // Test minus sign prefix - should work.
+        LOK_ASSERT_EQUAL(-123, NumUtil::stoi("-123"));
+        LOK_ASSERT_EQUAL(0, NumUtil::stoi("-0"));
+
+        // Test just a minus sign - should throw invalid_argument.
+        stoiTest("-", 0);
+
+        // Test just a plus sign - should throw invalid_argument.
+        stoiTest("+", 0);
+
+        // Test double signs - should throw invalid_argument.
+        stoiTest("--123", 0);
+
+        // Test double signs + should throw invalid_argument.
+        stoiTest("++123", 0);
+
+        // Test leading zeros - should work.
+        LOK_ASSERT_EQUAL(123, NumUtil::stoi("00123"));
+        LOK_ASSERT_EQUAL(0, NumUtil::stoi("0000"));
+        LOK_ASSERT_EQUAL(-123, NumUtil::stoi("-00123"));
+
+        // Test INT32_MAX boundary.
+        LOK_ASSERT_EQUAL(std::numeric_limits<std::int32_t>::max(), NumUtil::stoi("2147483647"));
+
+        // Test INT32_MIN boundary.
+        LOK_ASSERT_EQUAL(std::numeric_limits<std::int32_t>::min(), NumUtil::stoi("-2147483648"));
+
+        // Test INT32_MAX + 1 - should throw out_of_range.
+        stoiTest("2147483648", 0);
+
+        // Test INT32_MIN - 1 - should throw out_of_range.
+        stoiTest("-2147483649", 0);
+
+        // Test very large positive number - should throw out_of_range.
+        stoiTest("9999999999999999999", 0);
+
+        // Test very large negative number - should throw out_of_range.
+        stoiTest("-9999999999999999999", 0);
+
+        // Test single zero.
+        LOK_ASSERT_EQUAL(0, NumUtil::stoi("0"));
+
+        // Test negative zero.
+        LOK_ASSERT_EQUAL(0, NumUtil::stoi("-0"));
+
+        // Test positive zero.
+        LOK_ASSERT_EQUAL(0, NumUtil::stoi("+0"));
+
+        // Test single digit numbers.
+        LOK_ASSERT_EQUAL(1, NumUtil::stoi("1"));
+        LOK_ASSERT_EQUAL(9, NumUtil::stoi("9"));
+        LOK_ASSERT_EQUAL(-1, NumUtil::stoi("-1"));
+        LOK_ASSERT_EQUAL(-9, NumUtil::stoi("-9"));
+
+        // Test common values.
+        LOK_ASSERT_EQUAL(100, NumUtil::stoi("100"));
+        LOK_ASSERT_EQUAL(1000, NumUtil::stoi("1000"));
+        LOK_ASSERT_EQUAL(1000000, NumUtil::stoi("1000000"));
+        LOK_ASSERT_EQUAL(-100, NumUtil::stoi("-100"));
+        LOK_ASSERT_EQUAL(-1000, NumUtil::stoi("-1000"));
+        LOK_ASSERT_EQUAL(-1000000, NumUtil::stoi("-1000000"));
+
+        // Test whitespace + bare sign - should throw invalid_argument.
+        stoiTest(" -", 0);
+        stoiTest("\t+", 0);
+        stoiTest("  +", 0);
+
+        // Test whitespace + sign + non-digit - should throw invalid_argument.
+        stoiTest(" -a", 0);
+
+        // Test tab-only whitespace - should throw invalid_argument.
+        stoiTest("\t", 0);
+        stoiTest("\t\t", 0);
+
+        // Test mixed double signs - should throw invalid_argument.
+        stoiTest("+-123", 0);
+    }
+    catch (const std::exception& exc)
+    {
+        LOK_ASSERT_FAIL("Unexpected: " << exc.what());
+    }
 }
 
 void NumUtilWhiteBoxTests::testSafeAtoi()
