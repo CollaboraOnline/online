@@ -214,34 +214,33 @@ class ShapeHandlesSection extends CanvasSectionObject {
 
 		const center = this.getShapeCenter();
 
-		const radians = Math.atan2((center[1] - topMiddle.y), (topMiddle.x - center[0]));
+		const radians = Math.atan2((center.y - topMiddle.y), (topMiddle.x - center.x));
 		return radians - Math.PI * 0.5;
 	}
 
-	getShapeCenter(twips = true) {
+	private getShapeCenter() {
 		let topLeft = this.sectionProperties.info.handles.kinds.rectangle['1'][0];
 		topLeft = new cool.SimplePoint(parseInt(topLeft.point.x), parseInt(topLeft.point.y));
 
 		let bottomRight = this.sectionProperties.info.handles.kinds.rectangle['8'][0];
 		bottomRight = new cool.SimplePoint(parseInt(bottomRight.point.x), parseInt(bottomRight.point.y));
 
-		if (twips)
-			return [Math.round((topLeft.x + bottomRight.x) / 2), Math.round((topLeft.y + bottomRight.y) / 2)]; // number array in twips.
-		else
-			return [Math.round((topLeft.pX + bottomRight.pX) / 2), Math.round((topLeft.pY + bottomRight.pY) / 2)]; // number array in core pixels.
+		const center = new cool.SimplePoint((topLeft.x + bottomRight.x) * 0.5, (topLeft.y + bottomRight.y) * 0.5);
+
+		return center;
 	}
 
 	/*
 		Selection rectangle is different from the object's inner rectangle.
 		Handlers are positioned based on object's inner rectangle (~borders). So we need to get the object's inner rectangle and its rotation angle.
 	*/
-	getShapeRectangleProperties() {
+	private getShapeRectangleProperties() {
 		if (!this.sectionProperties.info.handles?.kinds?.rectangle)
 			return null;
 
 		return {
 			angleRadian: this.getShapeAngleRadians(),
-			center: this.getShapeCenter(false),
+			center: this.getShapeCenter(),
 			height: this.getShapeHeight(false),
 			width: this.getShapeWidth(false)
 		};
