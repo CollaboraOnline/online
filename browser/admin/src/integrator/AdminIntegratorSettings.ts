@@ -464,6 +464,22 @@ class SettingIframe {
 	private _sectionObserver: IntersectionObserver | null = null;
 	private _visibleSections: Set<Element> = new Set();
 
+	private getAPIEndpoints() {
+		return {
+			uploadSettings: window.serviceRoot + '/browser/dist/upload-settings',
+
+			fetchSharedConfig:
+				window.serviceRoot + '/browser/dist/fetch-settings-config',
+
+			deleteSharedConfig:
+				window.serviceRoot + '/browser/dist/delete-settings-config',
+
+			fetchSettingFile:
+				window.serviceRoot + '/browser/dist/fetch-settings-file',
+			fetchModels: window.serviceRoot + '/browser/dist/fetch-models',
+		};
+	}
+
 	private PATH = {
 		autoTextUpload: () => this.settingConfigBasePath() + '/autotext/',
 		wordBookUpload: () => this.settingConfigBasePath() + '/wordbook/',
@@ -1786,22 +1802,24 @@ class SettingIframe {
 		this.setAIStatus(_('Fetching models...'), false);
 
 		try {
-			const url = `${baseUrl.replace(/\/$/, '')}/v1/models`;
-			const headers: HeadersInit = {
-				'Content-Type': 'application/json',
-			};
-			headers['Authorization'] = `Bearer ${apiKey}`;
+			const formData = new FormData();
+			formData.append('provider', provider.id);
+			formData.append('apiKey', apiKey);
+			formData.append('baseUrl', baseUrl);
 
-			const response = await fetch(url, {
-				headers,
+			const response = await fetch(this.getAPIEndpoints().fetchModels, {
+				method: 'POST',
+				body: formData,
 				signal: this._aiModelFetchAbort.signal,
 			});
 
 			if (!response.ok) {
 				const errorCode = response.status;
-				const errorMsg =
+				const errorText = await response.text();
+				const fallbackMsg =
 					AI_ERROR_MESSAGES[errorCode] ||
 					_(`API error (${errorCode}): ${response.statusText}`);
+				const errorMsg = errorText ? `${fallbackMsg}. ${errorText}` : fallbackMsg;
 				throw new Error(errorMsg);
 			}
 
