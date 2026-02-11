@@ -9,56 +9,6 @@
  */
 
 namespace cool {
-	export interface AIModel {
-		id: string;
-		name: string;
-	}
-
-	export interface AIProvider {
-		id: string;
-		name: string;
-		baseUrl: string;
-		isCustom?: boolean;
-	}
-
-	export const AI_PROVIDERS: Array<AIProvider> = [
-		{
-			id: 'openai',
-			name: 'OpenAI',
-			baseUrl: 'https://api.openai.com',
-		},
-		{
-			id: 'groq',
-			name: 'Groq',
-			baseUrl: 'https://api.groq.com/openai',
-		},
-		{
-			id: 'together',
-			name: 'Together AI',
-			baseUrl: 'https://api.together.xyz',
-		},
-		{
-			id: 'mistral',
-			name: 'Mistral AI',
-			baseUrl: 'https://api.mistral.ai',
-		},
-		{
-			id: 'custom',
-			name: 'Custom (OpenAI Compatible)',
-			baseUrl: '',
-			isCustom: true,
-		},
-	];
-
-	const ERROR_MESSAGES: Record<number, string> = {
-		400: 'Invalid request',
-		401: 'Invalid API key',
-		403: 'API key lacks permissions',
-		429: 'Rate limited - please wait a moment and retry',
-		500: 'API server error - try again later',
-		503: 'Service temporarily unavailable',
-	};
-
 	interface PresetPrompt {
 		id: string;
 		label: string;
@@ -104,14 +54,13 @@ namespace cool {
 			},
 		];
 
-	async open(): Promise<void> {
-		// Check if AI is configured
-		const aiSettings = app.map?.aiSettings;
-		if (!aiSettings?.isConfigured()) {
-			this.showError(_('AI settings not configured'));
-			setTimeout(() => this.close(), 3000);
-			return;
-		}
+		async open(): Promise<void> {
+			// Check if AI is configured
+			if (!app.map.isAIEnabled) {
+				this.showError(_('AI settings not configured'));
+				setTimeout(() => this.close(), 3000);
+				return;
+			}
 
 			try {
 				// Fetch selected text
@@ -141,7 +90,6 @@ namespace cool {
 			};
 			app.map.fire('jsdialog', dialogBuildEvent);
 		}
-
 
 		private getJSON(): JSDialogJSON {
 			const children = this.getChildrenJSON();
@@ -379,141 +327,58 @@ namespace cool {
 			this.updateDialog();
 
 			try {
-				const settings = app.map?.aiSettings?.getConfig();
-				if (!settings) {
-					throw new Error(_('AI settings not configured'));
-				}
-
-				this.rewrittenText = await this.callAIAPI(
-					settings.provider,
-					settings.model,
-					settings.apiKey,
-					settings.customUrl,
-					prompt,
-					this.originalText,
-				);
+				this.rewrittenText = await this.requestRewrite(prompt);
 				this.hasResult = true;
-				this.isProcessing = false;
-				this.updateDialog();
 			} catch (error) {
 				this.showError(
 					error instanceof Error ? error.message : _('Failed to rewrite text'),
 				);
+			} finally {
 				this.isProcessing = false;
 				this.updateDialog();
 			}
 		}
 
-		private async callAIAPI(
-			providerId: string,
-			modelId: string,
-			apiKey: string,
-			customUrl: string,
-			userPrompt: string,
-			selectedText: string,
-		): Promise<string> {
-			const provider = AI_PROVIDERS.find((p) => p.id === providerId);
-			if (!provider) {
-				throw new Error(_('Invalid provider configuration'));
-			}
-
-			// Determine base URL
-			const baseUrl = provider.isCustom ? customUrl : provider.baseUrl;
-			if (!baseUrl) {
-				throw new Error(_('Invalid provider configuration'));
-			}
-
-			// Build API URL (OpenAI-compatible format)
-			const url = `${baseUrl.replace(/\/$/, '')}/v1/chat/completions`;
-
-			// Build headers with Bearer auth
-			const headers: HeadersInit = {
-				'Content-Type': 'application/json',
-			};
-			if (apiKey) {
-				headers['Authorization'] = `Bearer ${apiKey}`;
-			}
-
-			// System message to ensure clean output
-			const systemMessage =
-				'You are a text rewriting assistant. Your task is to rewrite text according to the user\'s instructions. Preserve the original language; do not translate unless the user explicitly requests it. IMPORTANT: Return ONLY the rewritten text, nothing else. Do not include explanations, introductions, or any meta-commentary. Do not wrap the text in quotes. Do not say things like "Here is the rewritten text:" - just provide the rewritten text directly.';
-
-			const payload = {
-				model: modelId,
-				messages: [
-					{
-						role: 'system',
-						content: systemMessage,
-					},
-					{
-						role: 'user',
-						content: `${userPrompt}\n\nText to rewrite:\n${selectedText}`,
-					},
-				],
-			};
-
-			// Create timeout promise that rejects
-			const timeoutPromise = new Promise<string>((_resolve, reject) => {
-				setTimeout(() => {
+		private async requestRewrite(prompt: string): Promise<string> {
+			return new Promise((resolve, reject) => {
+				const timeout = setTimeout(() => {
+					app.map.off('commandresult', handleResponse);
 					reject(new Error(_('Request timeout')));
 				}, 40000);
+
+				const handleResponse = (e: any) => {
+					if (!e || e.commandName !== '.uno:RewriteAI') {
+						return;
+					}
+
+					app.map.off('commandresult', handleResponse);
+					clearTimeout(timeout);
+
+					if (e.success) {
+						const resultText = typeof e.result === 'string' ? e.result : '';
+						if (resultText) {
+							resolve(resultText);
+							return;
+						}
+						reject(new Error(_('No response from AI')));
+						return;
+					}
+
+					const errorMessage =
+						typeof e.result === 'string' && e.result.trim().length > 0
+							? e.result
+							: _('Failed to rewrite text');
+					reject(new Error(errorMessage));
+				};
+
+				app.map.on('commandresult', handleResponse);
+
+				const encodedSelectedText = encodeURIComponent(this.originalText);
+				const encodedPrompt = encodeURIComponent(prompt);
+				app.socket.sendMessage(
+					`uno .uno:RewriteAI selectedText=${encodedSelectedText} prompt=${encodedPrompt}`,
+				);
 			});
-
-			// Make API call
-			const apiCall = async (): Promise<string> => {
-				const response = await fetch(url, {
-					method: 'POST',
-					headers,
-					body: JSON.stringify(payload),
-				});
-
-				if (!response.ok) {
-					const errorCode = response.status;
-					const errorMsg =
-						ERROR_MESSAGES[errorCode] ||
-						_(`API error (${errorCode}): ${response.statusText}`);
-					throw new Error(errorMsg);
-				}
-
-				const data = await response.json();
-
-			// Extract text from OpenAI-compatible response format
-			const choice = data.choices?.[0];
-			const result = choice?.message?.content || '';
-			const reasoning = choice?.message?.reasoning || '';
-			const finishReason = choice?.finish_reason || '';
-
-			if (!result) {
-				if (reasoning) {
-					throw new Error(
-						_(
-							'This model returned only internal reasoning and no output. Try a different model or shorter input.',
-						),
-					);
-				}
-				if (finishReason === 'length') {
-					throw new Error(
-						_(
-							'The model ran out of tokens before producing output. Try a shorter input or a model with a larger output budget.',
-						),
-					);
-				}
-				throw new Error(_('No response from AI'));
-			}
-
-			return result;
-		};
-
-			// Race between API call and timeout
-			try {
-				const result = await Promise.race<string>([apiCall(), timeoutPromise]);
-				return result;
-			} catch (error) {
-				if (error instanceof TypeError) {
-					throw new Error(_('Network error - please check your connection'));
-				}
-				throw error;
-			}
 		}
 
 		private replaceSelection(): void {

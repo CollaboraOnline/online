@@ -1805,6 +1805,17 @@ static std::string extractViewSettings(const std::string& viewSettingsPath,
             session->uploadViewSettingsToWopiHost();
         }
 
+        // remove API key from view settings before sending to client, client doesn't need to know about it
+        // and it will be set in session for later use when calling AI provider,
+        // also it is safer to not expose it to client side
+        viewSettings->remove("aiProviderAPIKey");
+        viewSettings->remove("aiProviderModel");
+        viewSettings->remove("aiProviderURL");
+
+        // Let client know whether AI features are enabled based on the presence of necessary fields,
+        // so client can decide to show/hide AI related UI
+        viewSettings->set("aiEnabled", !aiProviderAPIKey.empty() && !aiProviderModel.empty() &&
+                                           !aiProviderURL.empty());
         viewSettingsString = JsonUtil::jsonToString(viewSettings);
     }
     catch (const std::exception& exc)
