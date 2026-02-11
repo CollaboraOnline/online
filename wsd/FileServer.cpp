@@ -1916,8 +1916,6 @@ FileServerRequestHandler::ResourceAccessDetails FileServerRequestHandler::prepro
     csp.appendDirective("connect-src", "'self'");
     csp.appendDirectiveUrl("connect-src", "https://www.zotero.org");
     csp.appendDirectiveUrl("connect-src", "https://api.zotero.org");
-    csp.appendDirectiveUrl("connect-src", "https://generativelanguage.googleapis.com");
-    csp.appendDirectiveUrl("connect-src", "https://openrouter.ai");
     csp.appendDirectiveUrl("connect-src", cnxDetails.getWebSocketUrl());
     csp.appendDirectiveUrl("connect-src", cnxDetails.getWebServerUrl());
     csp.appendDirectiveUrl("connect-src", indirectionURI.getAuthority());
