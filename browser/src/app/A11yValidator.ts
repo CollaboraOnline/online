@@ -22,6 +22,7 @@ class A11yValidatorException extends Error {
 
 class A11yValidator {
 	private checks: Array<(type: string, element: HTMLElement) => void> = [];
+	private _directlyValidatedElements: Set<Element> | null = null;
 
 	constructor() {
 		this.setupChecks();
@@ -57,8 +58,8 @@ class A11yValidator {
 
 		for (let i = 0; i < element.children.length; i++) {
 			const child = element.children[i];
-			if (child instanceof HTMLElement) {
-				this.checkNativeButtonElement(type, child);
+			if (this.shouldCheckChild(child)) {
+				this.checkNativeButtonElement(type, child as HTMLElement);
 			}
 		}
 	}
@@ -162,8 +163,8 @@ class A11yValidator {
 
 		for (let i = 0; i < element.children.length; i++) {
 			const child = element.children[i];
-			if (child instanceof HTMLElement) {
-				this.checkElementHasLabel(type, child);
+			if (this.shouldCheckChild(child)) {
+				this.checkElementHasLabel(type, child as HTMLElement);
 			}
 		}
 	}
@@ -204,6 +205,13 @@ class A11yValidator {
 		}
 	}
 
+	private shouldCheckChild(child: Element): boolean {
+		return (
+			child instanceof HTMLElement &&
+			!this._directlyValidatedElements?.has(child)
+		);
+	}
+
 	private isVisible(element: HTMLElement): boolean {
 		const style = getComputedStyle(element);
 		if (style.visibility === 'hidden') return false;
@@ -239,6 +247,12 @@ class A11yValidator {
 		const widgets = dialogElement.querySelectorAll('[id]');
 		let errorCount = 0;
 
+		// Build a set of widget elements so that the recursive checks
+		// (checkNativeButtonElement, checkElementHasLabel) can skip
+		// children that will be validated individually.  Without this,
+		// every parent re-walks all descendants → O(n²).
+		this._directlyValidatedElements = new Set(Array.from(widgets));
+
 		widgets.forEach((widget) => {
 			if (widget instanceof HTMLElement) {
 				const widgetType = widget.getAttribute('id') || 'unknown';
@@ -251,6 +265,7 @@ class A11yValidator {
 			}
 		});
 
+		this._directlyValidatedElements = null;
 		return errorCount;
 	}
 
