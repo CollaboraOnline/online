@@ -1982,6 +1982,9 @@ fi
 AC_SUBST([ENABLE_WASM_ZETAJS_EXAMPLE])
 AM_CONDITIONAL([ENABLE_WASM_ZETAJS_EXAMPLE], [test "$ENABLE_WASM_ZETAJS_EXAMPLE" = true])
 
+AC_SUBST([WAYLAND_DISPLAY])
+AM_CONDITIONAL([WAYLAND_RUNNING], [test ! -z "$WAYLAND_DISPLAY"])
+
 AC_CONFIG_FILES([Makefile
                  cypress_test/Makefile
                  gtk/Makefile

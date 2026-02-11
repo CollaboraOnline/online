@@ -75,9 +75,13 @@ KILL_COMMAND=$(if $(coolwsd),true,pkill -F $(PID_FILE) || pkill --signal SIGKILL
 LOAD_PID_FILE=$(abs_builddir)/workdir/load.pids
 PARALLEL_BUILD = $(findstring -j,$(MAKEFLAGS))
 DISPLAY_NUMBER = 100
+if WAYLAND_RUNNING
+export DISPLAY=$(shell echo $$DISPLAY)
+else
 HEADLESS_BUILD := $(findstring Command failed,$(shell xhost > /dev/null 2>&1 || echo "Command failed, so we are in a headless environment."))
 export HEADLESS_DISPLAY=$(shell who | grep `whoami` | grep -v ": " | xargs | cut -d " " -f2)
 export DISPLAY=$(if $(HEADLESS_BUILD),:$(DISPLAY_NUMBER),$(shell echo $$DISPLAY))
+endif
 
 COMMA :=,
 EMPTY :=
