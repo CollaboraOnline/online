@@ -3,7 +3,6 @@
 var helper = require('../../common/helper');
 var desktopHelper = require('../../common/desktop_helper');
 var ceHelper = require('../../common/contenteditable_helper');
-var writerHelper = require('../../common/writer_helper');
 
 function waitForInit(hasClass) {
 	// TODO: skipDocumentCheck=FALSE in beforeEach, let's do it here once for now
@@ -28,38 +27,47 @@ describe(['tagmultiuser'], 'Joining a document should not trigger an invalidatio
 		// grammar checking kicks in at server-side idle after a change.
 		localStorage.setItem('spellOnline', false);
 		helper.setupAndLoadDocument('writer/invalidations.odt',
-																/* skipDocumentCheck */ true,
-																/* isMulti */ true);
+			/* skipDocumentCheck */ true,
+			/* isMulti */ true);
 		desktopHelper.switchUIToNotebookbar();
 	});
 
-	it.skip('Join document', function() {
+	it('Join document', function() {
 		cy.cSetActiveFrame('#iframe1');
 		waitForInit(true);
-		cy.cGet('#toolbar-down #StateWordCount').should('have.text', '0 words, 0 characters');
 
-		ceHelper.type('X');
-		cy.wait(1000);
-
-		cy.cSetActiveFrame('#iframe2');
-		waitForInit(false);
-		cy.cGet('#toolbar-down #StateWordCount', { timeout: 60 }).should('have.text', '1 word, 1 character');
-
-		cy.cSetActiveFrame('#iframe1');
-		writerHelper.selectAllTextOfDoc();
-		cy.cGet('#toolbar-down #StateWordCount', { timeout: 60 }).should('have.text', '1 word, 1 character');
-
-		cy.cGet('.empty-deltas').then(($before) => {
+		cy.getFrameWindow().then((win) => {
+			this.win1 = win;
+		}).then(() => {
+			helper.processToIdle(this.win1);
+		}).then(() => {
+			ceHelper.type('X');
+		}).then(() => {
+			helper.processToIdle(this.win1);
+		}).then(() => {
+			cy.cSetActiveFrame('#iframe2');
+			waitForInit(false);
+		}).then(() => {
+			cy.cSetActiveFrame('#iframe1');
+		}).then(() => {
+			helper.processToIdle(this.win1);
+		}).then(() => {
+			cy.cGet('.empty-deltas');
+		}).then(($before) => {
 			const beforeCount = $before.text();
 
 			// joining triggered a theme related invalidation
 			cy.cSetActiveFrame('#iframe2');
 			cy.get('#form2').submit();
+			// Wait for page to unload
 			cy.wait(1000);
+			// Wait for page to finish loading
+			helper.documentChecks(true);
 
 			cy.cSetActiveFrame('#iframe1');
-			writerHelper.selectAllTextOfDoc();
-			cy.cGet('#toolbar-down #StateWordCount', { timeout: 60 }).should('have.text', '1 word, 1 character');
+
+			// Wait until after tile updates have arrived.
+			helper.processToIdle(this.win1);
 
 			cy.cGet('.empty-deltas').should(($after) => {
 				expect($after.text()).to.eq(beforeCount);
@@ -67,24 +75,29 @@ describe(['tagmultiuser'], 'Joining a document should not trigger an invalidatio
 		});
 	});
 
-	it.skip('Join after document save and modify', function() {
+	it('Join after document save and modify', function() {
 		cy.cSetActiveFrame('#iframe1');
 		waitForInit(true);
-		cy.cGet('#toolbar-down #StateWordCount', { timeout: 60 }).should('have.text', '0 words, 0 characters');
 
-		ceHelper.type('X');
-		cy.wait(1000);
-
-		cy.cSetActiveFrame('#iframe2');
-		waitForInit(false);
-		cy.cGet('#toolbar-down #StateWordCount', { timeout: 60 }).should('have.text', '1 word, 1 character');
-
-		cy.cSetActiveFrame('#iframe1');
-		writerHelper.selectAllTextOfDoc();
-		cy.cGet('#document-container').click({force:true});
-		cy.cGet('#toolbar-down #StateWordCount', { timeout: 60 }).should('have.text', '1 word, 1 character');
-
-		cy.cGet('.empty-deltas').then(($before) => {
+		cy.getFrameWindow().then((win) => {
+			this.win1 = win;
+		}).then(() => {
+			helper.processToIdle(this.win1);
+		}).then(() => {
+			ceHelper.type('X');
+		}).then(() => {
+			helper.processToIdle(this.win1);
+		}).then(() => {
+			cy.cSetActiveFrame('#iframe2');
+			waitForInit(false);
+		}).then(() => {
+			cy.cSetActiveFrame('#iframe1');
+			cy.cGet('#document-container').click({force:true});
+		}).then(() => {
+			helper.processToIdle(this.win1);
+		}).then(() => {
+			cy.cGet('.empty-deltas');
+		}).then(($before) => {
 			var beforeCount = parseInt($before.text());
 
 			// joins after a save triggered excessive invalidations on changes
@@ -100,14 +113,13 @@ describe(['tagmultiuser'], 'Joining a document should not trigger an invalidatio
 			helper.documentChecks(true);
 
 			cy.cSetActiveFrame('#iframe1');
-			writerHelper.selectAllTextOfDoc();
 			cy.cGet('#document-container').click({force:true});
-			cy.cGet('#toolbar-down #StateWordCount', { timeout: 60 }).should('have.text', '1 word, 1 character');
+
+			helper.processToIdle(this.win1);
 
 			ceHelper.type('X');
-			cy.wait(1000);
 
-			cy.cGet('#toolbar-down #StateWordCount', { timeout: 60 }).should('have.text', '1 word, 2 characters');
+			helper.processToIdle(this.win1);
 
 			cy.cGet('.empty-deltas').should(($after) => {
 				// allow one row of empty deltas, the case this protects regression against
