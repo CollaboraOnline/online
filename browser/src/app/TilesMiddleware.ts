@@ -1573,6 +1573,10 @@ class TileManager {
 		return this.tiles.get(coords.key());
 	}
 
+	public static getTiles(): Map<string, Tile> {
+		return this.tiles;
+	}
+
 	private static pixelCoordsToTwipTileBounds(coords: TileCoordData): number[] {
 		// We need to calculate pixelsToTwips for the scale of this tile. 15 is the ratio between pixels and twips when the scale is 1.
 		const pixelsToTwipsForTile = 15 / app.dpiScale / coords.scale;
