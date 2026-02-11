@@ -1531,18 +1531,19 @@ void ClientSession::uploadBrowserSettingsToWopiHost()
     _browserSettingsJSON->stringify(jsonStream, 2);
     httpRequest.setBody(jsonStream.str(), "application/json; charset=utf-8");
 
+    const std::string logPfx = getLogPrefix();
     http::Session::FinishedCallback finishedCallback =
-        [this, uriAnonym](const std::shared_ptr<http::Session>& wopiSession)
+        [uriAnonym, logPfx](const std::shared_ptr<http::Session>& wopiSession)
     {
         const std::shared_ptr<const http::Response> httpResponse = wopiSession->response();
         const http::StatusLine statusLine = httpResponse->statusLine();
         if (statusLine.statusCode() != http::StatusCode::OK)
         {
-            LOG_ERR("Failed to upload updated browsersetting to wopiHost["
+            LOG_ERR_S(logPfx << "Failed to upload updated browsersetting to wopiHost["
                     << uriAnonym << "] with status[" << statusLine.reasonPhrase() << ']');
             return;
         }
-        LOG_TRC("Successfully uploaded browsersetting to wopiHost");
+        LOG_TRC_S(logPfx << "Successfully uploaded browsersetting to wopiHost");
     };
 
     LOG_DBG("Uploading browsersetting json [" << jsonStream.str() << "] to wopiHost[" << uriAnonym
@@ -1572,8 +1573,9 @@ void ClientSession::uploadViewSettingsToWopiHost()
         _viewSettingsJSON->stringify(jsonStream, 2);
         httpRequest.setBody(jsonStream.str(), "application/json; charset=utf-8");
 
+        const std::string logPfx = getLogPrefix();
         http::Session::FinishedCallback finishedCallback =
-            [this, uriAnonym](const std::shared_ptr<http::Session>& wopiSession)
+            [uriAnonym, logPfx](const std::shared_ptr<http::Session>& wopiSession)
         {
             wopiSession->asyncShutdown();
 
@@ -1581,11 +1583,11 @@ void ClientSession::uploadViewSettingsToWopiHost()
             const http::StatusLine statusLine = httpResponse->statusLine();
             if (statusLine.statusCode() != http::StatusCode::OK)
             {
-                LOG_ERR("Failed to upload updated viewsetting to wopiHost["
+                LOG_ERR_S(logPfx << "Failed to upload updated viewsetting to wopiHost["
                         << uriAnonym << "] with status[" << statusLine.reasonPhrase() << ']');
                 return;
             }
-            LOG_TRC("Successfully uploaded viewsetting to wopiHost");
+            LOG_TRC_S(logPfx << "Successfully uploaded viewsetting to wopiHost");
         };
 
         LOG_DBG("Uploading viewsetting json [" << jsonStream.str() << "] to wopiHost[" << uriAnonym
