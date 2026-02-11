@@ -106,6 +106,9 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Delete Objects', function()
 		cy.cGet('body').contains('.menu-entry-with-icon', 'Chart...').click();
 		cy.cGet('#test-div-shapeHandlesSection').should('exist');
 
+		// exit active object mode
+		helper.typeIntoDocument('{esc}');
+
 		cy.cGet('#document-container').then(function(item) {
 			const boundingRectangle = item[0].getBoundingClientRect();
 			const x = boundingRectangle.left + boundingRectangle.width / 2;

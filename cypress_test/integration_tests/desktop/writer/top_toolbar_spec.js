@@ -339,6 +339,9 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 
 		cy.cGet('#test-div-shapeHandlesSection').should('exist');
 
+		// exit active object mode
+		helper.typeIntoDocument('{esc}');
+
 		//delete
 		helper.typeIntoDocument('{del}');
 
