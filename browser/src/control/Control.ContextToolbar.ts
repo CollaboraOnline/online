@@ -299,7 +299,7 @@ class ContextToolbar extends JSDialogComponent {
 			} as ToolItemWidgetJSON,
 		];
 
-		if (this.map.aiSettings?.isConfigured()) {
+		if (this.map.isAIEnabled) {
 			contextItems.push(
 				{
 					type: 'separator',

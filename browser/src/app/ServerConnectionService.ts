@@ -19,56 +19,7 @@ interface ViewSetting {
 	zoteroAPIKey?: string;
 	accessibilityState: boolean;
 	signatureCertificate?: string;
-	aiProvider?: string;
-	aiApiKey?: string;
-	aiModel?: string;
-	aiCustomUrl?: string;
-}
-
-interface AISettingsConfig {
-	provider: string;
-	model: string;
-	apiKey: string;
-	customUrl: string;
-}
-
-class AISettings {
-	private config: AISettingsConfig = {
-		provider: '',
-		model: '',
-		apiKey: '',
-		customUrl: '',
-	};
-
-	public updateFromViewSetting(viewSetting: ViewSetting): void {
-		if (viewSetting.aiProvider !== undefined) {
-			this.config.provider = viewSetting.aiProvider;
-		}
-		if (viewSetting.aiModel !== undefined) {
-			this.config.model = viewSetting.aiModel;
-		}
-		if (viewSetting.aiApiKey !== undefined) {
-			this.config.apiKey = viewSetting.aiApiKey;
-		}
-		if (viewSetting.aiCustomUrl !== undefined) {
-			this.config.customUrl = viewSetting.aiCustomUrl;
-		}
-	}
-
-	public getConfig(): AISettingsConfig | null {
-		if (!this.isConfigured()) {
-			return null;
-		}
-		return { ...this.config };
-	}
-
-	public isConfigured(): boolean {
-		return !!(
-			this.config.provider &&
-			this.config.model &&
-			this.config.apiKey
-		);
-	}
+	aiEnabled?: boolean;
 }
 
 class ServerConnectionService {
@@ -90,9 +41,7 @@ class ServerConnectionService {
 			return;
 		}
 
-		if (!app.map.aiSettings) {
-			app.map.aiSettings = new AISettings();
-		}
+		app.map.isAIEnabled = !!viewSetting.aiEnabled;
 
 		let zoteroPlugin = app.map.zotero;
 		const zoteroAPIKey = viewSetting.zoteroAPIKey;
@@ -117,8 +66,6 @@ class ServerConnectionService {
 			app.console.debug('ServerConnectionService: initialize accessibility');
 			app.map.lockAccessibilityOn();
 		}
-
-		app.map.aiSettings.updateFromViewSetting(viewSetting);
 	}
 
 	public onSpecializedUI(docType: string) {

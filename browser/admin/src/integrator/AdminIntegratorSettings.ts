@@ -50,8 +50,8 @@ interface ViewSettings {
 	signatureKey: string;
 	signatureCa: string;
 	aiProviderURL: string;
-	aiApiKey: string;
-	aiModel: string;
+	aiProviderAPIKey: string;
+	aiProviderModel: string;
 }
 
 interface AIProvider {
@@ -387,8 +387,8 @@ class SettingIframe {
 		signatureKey: _('Signature Key'),
 		signatureCa: _('Signature CA'),
 		aiProvider: _('Provider'),
-		aiApiKey: _('API Key'),
-		aiModel: _('Model'),
+		aiProviderAPIKey: _('API Key'),
+		aiProviderModel: _('Model'),
 		aiProviderURL: _('Base URL'),
 	};
 	private readonly settingLabels: Record<string, string> = {
@@ -1677,23 +1677,23 @@ class SettingIframe {
 				this.isCustomProviderSelected(container, data) ? 'block' : 'none';
 		}
 		container.appendChild(
-			this.createViewSettingsTextBox('aiApiKey', data, false, true),
+			this.createViewSettingsTextBox('aiProviderAPIKey', data, false, true),
 		);
 
 		const modelField = document.createElement('div');
 		modelField.id = 'aiModelcontainer';
 		modelField.classList.add('view-input-container');
 
-		const modelHeading = this.createHeading(this._viewSettingLabels.aiModel);
+		const modelHeading = this.createHeading(this._viewSettingLabels.aiProviderModel);
 		modelHeading.classList.add('view-setting-small-label');
 		modelField.appendChild(modelHeading);
 
 		const modelSelect = this.createSelectInput(
-			'aiModel',
+			'aiProviderModel',
 			[{ value: '', label: _('Fetch models to select') }],
-			data.aiModel || '',
+			data.aiProviderModel || '',
 			(selectEl) => {
-				data.aiModel = selectEl.value;
+				data.aiProviderModel = selectEl.value;
 			},
 		);
 		modelSelect.disabled = true;
@@ -1719,7 +1719,7 @@ class SettingIframe {
 
 		this.syncAISettingsVisibility(data, container);
 		this.attachAISettingsAutoFetch(data, container);
-		if (data.aiApiKey) {
+		if (data.aiProviderAPIKey) {
 			this.scheduleAIModelFetch(data);
 		}
 
@@ -1781,7 +1781,7 @@ class SettingIframe {
 		});
 
 		apiKeyInput?.addEventListener('input', () => {
-			data.aiApiKey = apiKeyInput.value;
+			data.aiProviderAPIKey = apiKeyInput.value;
 			queueFetch();
 		});
 
@@ -1794,7 +1794,7 @@ class SettingIframe {
 		});
 
 		modelSelect?.addEventListener('change', () => {
-			data.aiModel = modelSelect.value;
+			data.aiProviderModel = modelSelect.value;
 		});
 	}
 
@@ -1819,7 +1819,7 @@ class SettingIframe {
 		const baseUrl = isCustom
 			? this.normalizeBaseUrl(data.aiProviderURL || '')
 			: provider.baseUrl;
-		const apiKey = data.aiApiKey || '';
+		const apiKey = data.aiProviderAPIKey || '';
 
 		if (!apiKey || (isCustom && !baseUrl)) {
 			this.setAIStatus('', false, true);
@@ -1874,10 +1874,10 @@ class SettingIframe {
 				return;
 			}
 
-			const selectedModel = modelIds.includes(data.aiModel)
-				? data.aiModel
+			const selectedModel = modelIds.includes(data.aiProviderModel)
+				? data.aiProviderModel
 				: modelIds[0];
-			data.aiModel = selectedModel;
+			data.aiProviderModel = selectedModel;
 			this.updateAIModelSelect(modelIds, selectedModel);
 
 			this.setAIStatus(_('Models fetched successfully'), false);
@@ -1897,7 +1897,7 @@ class SettingIframe {
 		selectedModel: string,
 	): void {
 		const modelSelect = document.getElementById(
-			'aiModel',
+			'aiProviderModel',
 		) as HTMLSelectElement | null;
 		if (!modelSelect) {
 			return;
@@ -1915,7 +1915,7 @@ class SettingIframe {
 
 	private resetAIModelSelect(): void {
 		const modelSelect = document.getElementById(
-			'aiModel',
+			'aiProviderModel',
 		) as HTMLSelectElement | null;
 		if (!modelSelect) {
 			return;
@@ -2216,7 +2216,7 @@ class SettingIframe {
 			'signatureCa',
 		].includes(key);
 
-		const isSecretField = key === 'aiApiKey';
+		const isSecretField = key === 'aiProviderAPIKey';
 
 		if (isSignatureField) {
 			const textarea = this.createTextArea(
@@ -2306,8 +2306,8 @@ class SettingIframe {
 			signatureKey: '',
 			signatureCa: '',
 			aiProviderURL: this.getDefaultAIProviderURL(),
-			aiApiKey: '',
-			aiModel: '',
+			aiProviderAPIKey: '',
+			aiProviderModel: '',
 		};
 	}
 
