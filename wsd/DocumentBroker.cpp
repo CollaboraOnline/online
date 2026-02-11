@@ -1350,6 +1350,80 @@ bool DocumentBroker::doDownloadDocument(const Authorization& auth,
 }
 
 #if !MOBILEAPP
+
+static void updateServerPrivateField(const Poco::JSON::Object::Ptr& adminConfig,
+                                      Poco::JSON::Object::Ptr& serverInfo,
+                                      const std::string& fieldName,
+                                      bool& needUpdate)
+{
+    std::string adminValue, existingValue;
+    if (JsonUtil::findJSONValue(adminConfig, fieldName, adminValue))
+    {
+        JsonUtil::findJSONValue(serverInfo, fieldName, existingValue);
+        if (adminValue.empty() && !existingValue.empty())
+        {
+            needUpdate = true;
+        }
+        else if (!adminValue.empty())
+        {
+            serverInfo->set(fieldName, adminValue);
+            LOG_DBG("Overriding " << fieldName << " from admin settings file");
+        }
+    }
+}
+
+static void applyAdminServerPrivateInfo(const std::shared_ptr<ClientSession>& session,
+                                        const std::string& adminConfigPath)
+{
+    std::ifstream ifs(adminConfigPath);
+    if (!ifs.good())
+        return;
+
+    Poco::JSON::Object::Ptr adminConfig;
+    try
+    {
+        Poco::JSON::Parser parser;
+        auto result = parser.parse(ifs);
+        adminConfig = result.extract<Poco::JSON::Object::Ptr>();
+    }
+    catch (const std::exception& exc)
+    {
+        LOG_ERR("Failed to parse admin server private info: " << exc.what());
+        return;
+    }
+
+    const std::string currentInfo = session->getServerPrivateInfo();
+    Poco::JSON::Object::Ptr serverInfo;
+
+    if (currentInfo.empty() || !JsonUtil::parseJSON(currentInfo, serverInfo))
+    {
+        const std::string adminConfigJson = JsonUtil::jsonToString(adminConfig);
+        session->setServerPrivateInfo(adminConfigJson);
+        return;
+    }
+
+    bool serverPrivateInfoNeedUpdate = false;
+
+    updateServerPrivateField(adminConfig, serverInfo, "ESignatureClientId", serverPrivateInfoNeedUpdate);
+    updateServerPrivateField(adminConfig, serverInfo, "ESignatureSecret", serverPrivateInfoNeedUpdate);
+
+    const std::string updatedInfo = JsonUtil::jsonToString(serverInfo);
+    session->setServerPrivateInfo(updatedInfo);
+
+    if (serverPrivateInfoNeedUpdate)
+    {
+        const std::optional<bool> isAdmin = session->getIsAdminUser();
+        if (isAdmin.has_value() && isAdmin.value())
+        {
+            session->uploadServerPrivateInfoToWopiHost();
+        }
+        else
+        {
+            LOG_WRN("Skipping serverPrivateInfo upload - user is not admin");
+        }
+    }
+}
+
 std::string
 DocumentBroker::updateSessionWithWopiInfo(const std::shared_ptr<ClientSession>& session,
                                           WopiStorage* wopiStorage,
@@ -1637,6 +1711,8 @@ void PresetsInstallTask::addGroup(const Poco::JSON::Object::Ptr& settings, const
             filePath = Poco::Path(destDir.toString(), "browsersetting.json").toString();
         else if (groupName == "viewsetting")
             filePath = Poco::Path(destDir.toString(), "viewsetting.json").toString();
+        else if (groupName == "serverprivateinfo")
+            filePath = Poco::Path(destDir.toString(), "serverprivateinfo.json").toString();
         else
         {
             // Check for a file_name='something' and use that if it exists and
@@ -1691,6 +1767,7 @@ void PresetsInstallTask::install(const Poco::JSON::Object::Ptr& settings,
         else
         {
             addGroup(settings, "browsersetting", presets);
+            addGroup(settings, "serverprivateinfo", presets);
             addGroup(settings, "autotext", presets);
             addGroup(settings, "wordbook", presets);
             addGroup(settings, "viewsetting", presets);
@@ -1845,6 +1922,20 @@ void DocumentBroker::asyncInstallPresets(const std::shared_ptr<ClientSession>& s
                 const std::string settings = extractViewSettings(viewSettings, session, _isViewSettingsUpdated);
                 session->sendTextFrame("viewsetting: " + settings);
             }
+
+            if (!_configId.empty())
+            {
+                const std::string sharedPresets = Poco::Path(COOLWSD::ChildRoot, JailUtil::CHILDROOT_TMP_SHARED_PRESETS_PATH).toString();
+                const std::string configIdPresets = Poco::Path(sharedPresets, Uri::encode(_configId)).toString();
+                const std::string serverPrivateInfoPath = configIdPresets + "/serverprivateinfo/serverprivateinfo.json";
+                LOG_DBG("Checking for serverprivateinfo at: " << serverPrivateInfoPath);
+
+                if (FileUtil::Stat(serverPrivateInfoPath).exists())
+                {
+                    applyAdminServerPrivateInfo(session, serverPrivateInfoPath);
+                }
+            }
+
             forwardToChild(session, "addconfig");
         }
         else
@@ -5129,6 +5220,24 @@ bool DocumentBroker::forwardUrpToChild(const std::string& message)
 }
 
 std::string
+DocumentBroker::applyServerPrivateInfo(const std::string& message,
+                                       const std::shared_ptr<ClientSession>& session) const
+{
+    const std::string& serverPrivateInfo = session->getServerPrivateInfo();
+    if (serverPrivateInfo.empty())
+    {
+        LOG_TRC("No serverPrivateInfo to add to load message for session[" << session->getId() << "]");
+        return message;
+    }
+
+    std::string encodedServerPrivateInfo;
+    Poco::URI::encode(serverPrivateInfo, "", encodedServerPrivateInfo);
+
+    LOG_TRC("Adding serverPrivateInfo to load message for session[" << session->getId() << "]");
+    return message + " serverprivateinfo=" + encodedServerPrivateInfo;
+}
+
+std::string
 DocumentBroker::applySignViewSettings(const std::string& message,
                                       const std::shared_ptr<ClientSession>& session) const
 {
@@ -5208,6 +5317,13 @@ std::string DocumentBroker::applyViewSetting(const std::string& message, const s
     return applyBrowserAccessibility(msgWithSignSettings, viewId);
 }
 
+std::string DocumentBroker::applyAllSettings(const std::string& message, const std::string& viewId,
+                                             const std::shared_ptr<ClientSession>& session)
+{
+    std::string msgWithServerInfo = applyServerPrivateInfo(message, session);
+    return applyViewSetting(msgWithServerInfo, viewId, session);
+}
+
 bool DocumentBroker::forwardToChild(const std::shared_ptr<ClientSession>& session,
                                     const std::string& message, bool binary)
 {
@@ -5273,13 +5389,13 @@ bool DocumentBroker::forwardToChild(const std::shared_ptr<ClientSession>& sessio
                     if (!selfLifecycle)
                         return;
 
-                    _childProcess->sendFrame(applyViewSetting(msg, viewId, session), binary);
+                    _childProcess->sendFrame(applyAllSettings(msg, viewId, session), binary);
                 };
                 _asyncInstallTask->appendCallback(sendLoad);
                 return true;
             }
 #endif
-            return _childProcess->sendFrame(applyViewSetting(msg, viewId, session), binary);
+            return _childProcess->sendFrame(applyAllSettings(msg, viewId, session), binary);
         }
     }
 

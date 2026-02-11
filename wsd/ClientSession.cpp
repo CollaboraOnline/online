@@ -1551,14 +1551,15 @@ void ClientSession::uploadBrowserSettingsToWopiHost()
     httpSession->asyncRequest(httpRequest, COOLWSD::getWebServerPoll());
 }
 
-void ClientSession::uploadViewSettingsToWopiHost()
+void ClientSession::uploadSettingsToWopiHost(const std::string& filePath,
+                                              const std::string& jsonBody,
+                                              const std::string& settingName)
 {
     try
     {
         const Authorization& auth = getAuthorization();
         Poco::URI uriObject = DocumentBroker::getPresetUploadBaseUrl(_uriPublic);
 
-        const std::string filePath = "/settings/userconfig/viewsetting/viewsetting.json";
         uriObject.addQueryParameter("fileId", filePath);
         auth.authorizeURI(uriObject);
 
@@ -1568,12 +1569,10 @@ void ClientSession::uploadViewSettingsToWopiHost()
         httpRequest.setVerb(http::Request::VERB_POST);
         auto httpSession = StorageConnectionManager::getHttpSession(uriObject);
 
-        std::ostringstream jsonStream;
-        _viewSettingsJSON->stringify(jsonStream, 2);
-        httpRequest.setBody(jsonStream.str(), "application/json; charset=utf-8");
+        httpRequest.setBody(jsonBody, "application/json; charset=utf-8");
 
         http::Session::FinishedCallback finishedCallback =
-            [this, uriAnonym](const std::shared_ptr<http::Session>& wopiSession)
+            [this, uriAnonym, settingName](const std::shared_ptr<http::Session>& wopiSession)
         {
             wopiSession->asyncShutdown();
 
@@ -1581,22 +1580,42 @@ void ClientSession::uploadViewSettingsToWopiHost()
             const http::StatusLine statusLine = httpResponse->statusLine();
             if (statusLine.statusCode() != http::StatusCode::OK)
             {
-                LOG_ERR("Failed to upload updated viewsetting to wopiHost["
+                LOG_ERR("Failed to upload updated " << settingName << " to wopiHost["
                         << uriAnonym << "] with status[" << statusLine.reasonPhrase() << ']');
                 return;
             }
-            LOG_TRC("Successfully uploaded viewsetting to wopiHost");
+            LOG_TRC("Successfully uploaded " << settingName << " to wopiHost");
         };
 
-        LOG_DBG("Uploading viewsetting json [" << jsonStream.str() << "] to wopiHost[" << uriAnonym
-                                               << ']');
+        LOG_DBG("Uploading " << settingName << " json [" << jsonBody << ']');
         httpSession->setFinishedHandler(std::move(finishedCallback));
         httpSession->asyncRequest(httpRequest, COOLWSD::getWebServerPoll());
     }
     catch (const std::exception& e)
     {
-        LOG_ERR("Failed to upload viewsetting to WOPI host: " << e.what());
+        LOG_ERR("Failed to upload " << settingName << " to WOPI host: " << e.what());
     }
+}
+
+void ClientSession::uploadViewSettingsToWopiHost()
+{
+    std::ostringstream jsonStream;
+    _viewSettingsJSON->stringify(jsonStream, 2);
+    uploadSettingsToWopiHost("/settings/userconfig/viewsetting/viewsetting.json", jsonStream.str(),
+                             "viewsetting");
+}
+
+void ClientSession::uploadServerPrivateInfoToWopiHost()
+{
+    const std::string& serverPrivateInfo = getServerPrivateInfo();
+    if (serverPrivateInfo.empty())
+    {
+        LOG_TRC("No serverPrivateInfo to upload to WOPI host");
+        return;
+    }
+
+    uploadSettingsToWopiHost("/settings/systemconfig/serverprivateinfo/serverprivateinfo.json",
+                             serverPrivateInfo, "serverprivateinfo");
 }
 
 void ClientSession::updateBrowserSettingsJSON(const std::string& json)

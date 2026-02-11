@@ -1730,12 +1730,20 @@ private:
     std::string applyBrowserAccessibility(const std::string& message,
                                        const std::string& viewId);
 
+    /// Apply server private info specially esign values
+    std::string applyServerPrivateInfo(const std::string& message,
+                                       const std::shared_ptr<ClientSession>& session) const;
+
     /// Apply signature view settings to the message
     std::string applySignViewSettings(const std::string& message,
                                       const std::shared_ptr<ClientSession>& session) const;
 
     /// Apply all view settings (signature and accessibility) to the message
     std::string applyViewSetting(const std::string& message, const std::string& viewId,
+                                 const std::shared_ptr<ClientSession>& session);
+
+    /// Apply all settings serverPrivateInfo(sharedconfig) and view settings(userconfig) to the message
+    std::string applyAllSettings(const std::string& message, const std::string& viewId,
                                  const std::shared_ptr<ClientSession>& session);
 
     /// What type are we: affects priority.
