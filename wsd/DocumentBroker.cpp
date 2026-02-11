@@ -1799,7 +1799,6 @@ static std::string extractViewSettings(const std::string& viewSettingsPath,
         JsonUtil::findJSONValue(viewSettings, "aiProviderModel", aiProviderModel);
         JsonUtil::findJSONValue(viewSettings, "aiProviderURL", aiProviderURL);
 
-        // TODO: remove AI provider fields from viewsettings.json before sending it to client ?
         session->setAIProviderAPIKey(aiProviderAPIKey);
         session->setAIProviderModel(aiProviderModel);
         session->setAIProviderURL(aiProviderURL);
