@@ -618,10 +618,11 @@ static void rebalanceChildren(const std::string& configId, int64_t balance)
 
     if (balance > 0 && (rebalance || OutstandingForks[configId] == 0))
     {
-        LOG_DBG("prespawnChildren: Have " << available << " spare "
-                                          << (available == 1 ? "child" : "children") << ", and "
-                                          << OutstandingForks[configId] << " outstanding, forking " << balance
-                                          << " more. Time since last request: " << durationMs);
+        LOG_DBG("prespawnChildren ["
+                << configId << "]: Have " << available << " spare "
+                << (available == 1 ? "child" : "children") << ", and " << OutstandingForks[configId]
+                << " outstanding (total: " << NewChildren.size() << "), forking " << balance
+                << " more. Time since last request: " << durationMs);
         forkChildren(configId, balance);
     }
 }
