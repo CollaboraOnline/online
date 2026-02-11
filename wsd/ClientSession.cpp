@@ -569,7 +569,7 @@ bool ClientSession::handleAIAction(const StringVector& tokens)
 
         const std::string apiKey = getAIProviderAPIKey();
         const std::string model = getAIProviderModel();
-        std::string baseUrl = getAIProviderCustomURL();
+        std::string baseUrl = getAIProviderURL();
 
         if (apiKey.empty() || model.empty() || baseUrl.empty())
         {

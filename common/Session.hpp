@@ -296,8 +296,8 @@ public:
     std::string getAIProviderModel() const { return _aiProviderModel; }
     void setAIProviderModel(const std::string& val) { _aiProviderModel = val; }
 
-    std::string getAIProviderCustomURL() const { return _aiProviderCustomURL; }
-    void setAIProviderCustomURL(const std::string& val) { _aiProviderCustomURL = val; }
+    std::string getAIProviderURL() const { return _aiProviderURL; }
+    void setAIProviderURL(const std::string& val) { _aiProviderURL = val; }
 
     const std::string& getSignatureCertificate() const { return _signatureCertificate; }
     void setSignatureCertificate(const std::string& cert) { _signatureCertificate = cert; }
@@ -473,7 +473,7 @@ private:
     std::string _aiProviderModel;
 
     // AI Provider custom URL, if not using the default one for the specified model.
-    std::string _aiProviderCustomURL;
+    std::string _aiProviderURL;
 
     /// Digital signature certificate, key, and CA
     std::string _signatureCertificate;

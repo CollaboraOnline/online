@@ -1751,7 +1751,7 @@ static std::string extractViewSettings(const std::string& viewSettingsPath,
         }
 
         std::string zoteroAPIKey, signatureCertificate, signatureKey, signatureCa, aiProviderAPIKey,
-            aiProviderModel, aiProviderCustomURL;
+            aiProviderModel, aiProviderURL;
 
         bool viewSettingsNeedUpdate = false;
 
@@ -1791,12 +1791,12 @@ static std::string extractViewSettings(const std::string& viewSettingsPath,
 
         JsonUtil::findJSONValue(viewSettings, "aiProviderAPIKey", aiProviderAPIKey);
         JsonUtil::findJSONValue(viewSettings, "aiProviderModel", aiProviderModel);
-        JsonUtil::findJSONValue(viewSettings, "aiProviderCustomURL", aiProviderCustomURL);
+        JsonUtil::findJSONValue(viewSettings, "aiProviderURL", aiProviderURL);
 
         // TODO: remove AI provider fields from viewsettings.json before sending it to client ?
         session->setAIProviderAPIKey(aiProviderAPIKey);
         session->setAIProviderModel(aiProviderModel);
-        session->setAIProviderCustomURL(aiProviderCustomURL);
+        session->setAIProviderURL(aiProviderURL);
 
         if (viewSettingsNeedUpdate)
         {

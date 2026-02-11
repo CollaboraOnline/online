@@ -49,10 +49,9 @@ interface ViewSettings {
 	signatureCert: string;
 	signatureKey: string;
 	signatureCa: string;
-	aiProvider: string;
+	aiProviderURL: string;
 	aiApiKey: string;
 	aiModel: string;
-	aiCustomUrl: string;
 }
 
 interface AIProvider {
@@ -202,6 +201,7 @@ class SettingIframe {
 	private _aiModelFetchTimeout: number | null = null;
 	private _aiModelFetchAbort: AbortController | null = null;
 	private _aiModelFetchSeq = 0;
+	private _lastCustomAIProviderURL = '';
 	private _viewSettingLabels = {
 		zoteroAPIKey: 'Zotero',
 		signatureCert: _('Signature Certificate'),
@@ -210,7 +210,7 @@ class SettingIframe {
 		aiProvider: _('Provider'),
 		aiApiKey: _('API Key'),
 		aiModel: _('Model'),
-		aiCustomUrl: _('Base URL'),
+		aiProviderURL: _('Base URL'),
 	};
 	private readonly settingLabels: Record<string, string> = {
 		accessibilityState: _('In-document Screen Reader'),
@@ -1431,7 +1431,9 @@ class SettingIframe {
 
 	private generateViewSettingUI(data: ViewSettings) {
 		this._viewSetting = data;
-		this._viewSetting.aiProvider = data.aiProvider || 'openai';
+		this._viewSetting.aiProviderURL =
+			this.normalizeBaseUrl(data.aiProviderURL || '') ||
+			this.getDefaultAIProviderURL();
 		const settingsContainer = this._allConfigSection;
 		if (!settingsContainer) {
 			return;
@@ -1464,7 +1466,7 @@ class SettingIframe {
 			'signatureCert',
 			'signatureKey',
 			'signatureCa',
-			'aiProvider',
+			'aiProviderURL',
 		];
 
 		for (const key of allViewSettingsKeys) {
@@ -1512,7 +1514,7 @@ class SettingIframe {
 					this.createViewSettingsTextBox(key, data, false, true),
 				);
 			}
-			else if (key === 'aiProvider') {
+			else if (key === 'aiProviderURL') {
 				fieldset.appendChild(this.createHeading(_('AI Settings')));
 				const aiDesc = document.createElement('p');
 				aiDesc.className = 'view-setting-description';
@@ -1576,23 +1578,26 @@ class SettingIframe {
 		const providerSelect = this.createSelectInput(
 			'aiProvider',
 			providerOptions,
-			data.aiProvider || 'openai',
+			this.getProviderIdFromUrl(data.aiProviderURL),
 			(selectEl) => {
-				data.aiProvider = selectEl.value;
+				const provider = this.getProviderById(selectEl.value);
+				if (provider && !provider.isCustom) {
+					data.aiProviderURL = provider.baseUrl;
+				}
 			},
 		);
 		providerField.appendChild(providerSelect);
 		container.appendChild(providerField);
 
 		container.appendChild(
-			this.createViewSettingsTextBox('aiCustomUrl', data, false, true),
+			this.createViewSettingsTextBox('aiProviderURL', data, false, true),
 		);
 		const customUrlContainer = container.querySelector(
-			'#aiCustomUrlcontainer',
+			'#aiProviderURLcontainer',
 		) as HTMLElement | null;
 		if (customUrlContainer) {
 			customUrlContainer.style.display =
-				data.aiProvider === 'custom' ? 'block' : 'none';
+				this.isCustomProviderSelected(container, data) ? 'block' : 'none';
 		}
 		container.appendChild(
 			this.createViewSettingsTextBox('aiApiKey', data, false, true),
@@ -1619,10 +1624,14 @@ class SettingIframe {
 		container.appendChild(modelField);
 
 		const customUrlInput = container.querySelector(
-			'#aiCustomUrl',
+			'#aiProviderURL',
 		) as HTMLInputElement | null;
 		if (customUrlInput) {
 			customUrlInput.placeholder = _('e.g.') + 'http://localhost:11434/v1';
+		}
+
+		if (this.getProviderIdFromUrl(data.aiProviderURL) === 'custom') {
+			this._lastCustomAIProviderURL = data.aiProviderURL;
 		}
 
 		const status = document.createElement('div');
@@ -1644,9 +1653,9 @@ class SettingIframe {
 		data: ViewSettings,
 		root: ParentNode = document,
 	): void {
-		const isCustomProvider = data.aiProvider === 'custom';
+		const isCustomProvider = this.isCustomProviderSelected(root, data);
 		const customUrlContainer = root.querySelector(
-			'#aiCustomUrlcontainer',
+			'#aiProviderURLcontainer',
 		) as HTMLElement | null;
 		if (customUrlContainer) {
 			customUrlContainer.style.display = isCustomProvider ? 'block' : 'none';
@@ -1664,7 +1673,7 @@ class SettingIframe {
 			'#aiApiKey',
 		) as HTMLInputElement | null;
 		const customUrlInput = root.querySelector(
-			'#aiCustomUrl',
+			'#aiProviderURL',
 		) as HTMLInputElement | null;
 		const modelSelect = root.querySelector(
 			'#aiModel',
@@ -1675,7 +1684,21 @@ class SettingIframe {
 		};
 
 		providerInput?.addEventListener('change', () => {
-			data.aiProvider = providerInput.value;
+			const selectedProvider = this.getProviderById(providerInput.value);
+			if (selectedProvider && !selectedProvider.isCustom) {
+				if (customUrlInput) {
+					this._lastCustomAIProviderURL = customUrlInput.value;
+				}
+				data.aiProviderURL = selectedProvider.baseUrl;
+				if (customUrlInput) {
+					customUrlInput.value = selectedProvider.baseUrl;
+				}
+			} else if (customUrlInput) {
+				customUrlInput.value = this._lastCustomAIProviderURL;
+				data.aiProviderURL = customUrlInput.value;
+			} else {
+				data.aiProviderURL = '';
+			}
 			this.syncAISettingsVisibility(data, root);
 			queueFetch();
 		});
@@ -1686,8 +1709,11 @@ class SettingIframe {
 		});
 
 		customUrlInput?.addEventListener('input', () => {
-			data.aiCustomUrl = customUrlInput.value;
-			queueFetch();
+			if (this.isCustomProviderSelected(root, data)) {
+				data.aiProviderURL = customUrlInput.value;
+				this._lastCustomAIProviderURL = customUrlInput.value;
+				queueFetch();
+			}
 		});
 
 		modelSelect?.addEventListener('change', () => {
@@ -1705,16 +1731,17 @@ class SettingIframe {
 	}
 
 	private async fetchAIModels(data: ViewSettings): Promise<void> {
-		const provider = AI_PROVIDERS.find(
-			(p) => p.id === (data.aiProvider || 'openai'),
-		);
+		const providerId = this.getSelectedProviderId(data);
+		const provider = this.getProviderById(providerId);
 		if (!provider) {
 			this.setAIStatus(_('Invalid provider configuration'), true);
 			return;
 		}
 
 		const isCustom = provider.isCustom ?? false;
-		const baseUrl = isCustom ? (data.aiCustomUrl || '') : provider.baseUrl;
+		const baseUrl = isCustom
+			? this.normalizeBaseUrl(data.aiProviderURL || '')
+			: provider.baseUrl;
 		const apiKey = data.aiApiKey || '';
 
 		if (!apiKey || (isCustom && !baseUrl)) {
@@ -2192,11 +2219,57 @@ class SettingIframe {
 			signatureCert: '',
 			signatureKey: '',
 			signatureCa: '',
-			aiProvider: 'openai',
+			aiProviderURL: this.getDefaultAIProviderURL(),
 			aiApiKey: '',
 			aiModel: '',
-			aiCustomUrl: '',
 		};
+	}
+
+	private normalizeBaseUrl(value: string): string {
+		return value ? value.replace(/\/+$/, '') : '';
+	}
+
+	private getProviderById(id: string): AIProvider | undefined {
+		return AI_PROVIDERS.find((provider) => provider.id === id);
+	}
+
+	private getProviderByUrl(url: string): AIProvider | undefined {
+		const normalizedUrl = this.normalizeBaseUrl(url || '');
+		return AI_PROVIDERS.find(
+			(provider) =>
+				!provider.isCustom &&
+				this.normalizeBaseUrl(provider.baseUrl) === normalizedUrl,
+		);
+	}
+
+	private getProviderIdFromUrl(url: string): string {
+		const provider = this.getProviderByUrl(url);
+		return provider ? provider.id : 'custom';
+	}
+
+	private getSelectedProviderId(
+		data: ViewSettings,
+		root: ParentNode = document,
+	): string {
+		const providerSelect = root.querySelector(
+			'#aiProvider',
+		) as HTMLSelectElement | null;
+		if (providerSelect?.value) {
+			return providerSelect.value;
+		}
+		return this.getProviderIdFromUrl(data.aiProviderURL);
+	}
+
+	private isCustomProviderSelected(
+		root: ParentNode,
+		data: ViewSettings,
+	): boolean {
+		return this.getSelectedProviderId(data, root) === 'custom';
+	}
+
+	private getDefaultAIProviderURL(): string {
+		const provider = this.getProviderById('openai');
+		return provider ? provider.baseUrl : '';
 	}
 
 	private getConfigType(): string {
