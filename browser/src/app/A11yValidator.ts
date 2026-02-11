@@ -242,7 +242,10 @@ class A11yValidator {
 		return ids.length > 0 ? ids.join(' > ') : '(no ids in path)';
 	}
 
-	validateContainer(dialogElement: HTMLElement): number {
+	validateContainer(
+		dialogElement: HTMLElement,
+		extraElement?: HTMLElement,
+	): number {
 		// Find all widgets in the dialog that have an id
 		const widgets = dialogElement.querySelectorAll('[id]');
 		let errorCount = 0;
@@ -265,6 +268,14 @@ class A11yValidator {
 			}
 		});
 
+		if (extraElement && !this._directlyValidatedElements.has(extraElement)) {
+			try {
+				this.checkWidget('dialog-content', extraElement);
+			} catch (error) {
+				errorCount++;
+			}
+		}
+
 		this._directlyValidatedElements = null;
 		return errorCount;
 	}
@@ -272,16 +283,10 @@ class A11yValidator {
 	validateDialog(dialogElement: HTMLElement): void {
 		const content = dialogElement.querySelector('.ui-dialog-content');
 
-		let errorCount = this.validateContainer(dialogElement);
-
-		// Also validate the dialog content container itself
-		if (content instanceof HTMLElement) {
-			try {
-				this.checkWidget('dialog-content', content);
-			} catch (error) {
-				errorCount++;
-			}
-		}
+		const errorCount = this.validateContainer(
+			dialogElement,
+			content instanceof HTMLElement ? content : undefined,
+		);
 
 		if (errorCount === 0) {
 			console.error('A11yValidator: dialog passed all checks');
