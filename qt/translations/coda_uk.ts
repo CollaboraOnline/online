@@ -11,13 +11,13 @@
     <message>
         <location filename="../coda-qt.cpp" line="297"/>
         <source>Select Printer:</source>
-        <translation>Виберіть принтер:</translation>
+        <translation>Вибрати принтер:</translation>
     </message>
     <message>
         <location filename="../coda-qt.cpp" line="306"/>
         <location filename="../coda-qt.cpp" line="379"/>
         <source>Default Printer</source>
-        <translation>Принтер за замовчуванням</translation>
+        <translation>Усталений принтер</translation>
     </message>
     <message>
         <location filename="../coda-qt.cpp" line="311"/>
