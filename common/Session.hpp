@@ -290,6 +290,15 @@ public:
 
     void setZoteroAPIKey(const std::string& val) { _zoteroAPIKey = val; }
 
+    std::string getAIProviderAPIKey() const { return _aiProviderAPIKey; }
+    void setAIProviderAPIKey(const std::string& val) { _aiProviderAPIKey = val; }
+
+    std::string getAIProviderModel() const { return _aiProviderModel; }
+    void setAIProviderModel(const std::string& val) { _aiProviderModel = val; }
+
+    std::string getAIProviderCustomURL() const { return _aiProviderCustomURL; }
+    void setAIProviderCustomURL(const std::string& val) { _aiProviderCustomURL = val; }
+
     const std::string& getSignatureCertificate() const { return _signatureCertificate; }
     void setSignatureCertificate(const std::string& cert) { _signatureCertificate = cert; }
 
@@ -456,6 +465,15 @@ private:
 
     /// Zotero API Key
     std::string _zoteroAPIKey;
+
+    /// AI Provider API key
+    std::string _aiProviderAPIKey;
+
+    // AI Provider model, e.g. "gpt-4", "gpt-3.5-turbo", etc.
+    std::string _aiProviderModel;
+
+    // AI Provider custom URL, if not using the default one for the specified model.
+    std::string _aiProviderCustomURL;
 
     /// Digital signature certificate, key, and CA
     std::string _signatureCertificate;

@@ -32,6 +32,7 @@
 #include <wsd/FileServer.hpp>
 #include <wsd/TileDesc.hpp>
 
+#include <Poco/JSON/Array.h>
 #include <Poco/JSON/Parser.h>
 #include <Poco/MemoryStream.h>
 #include <Poco/Net/HTTPResponse.h>
@@ -542,6 +543,228 @@ makeSignatureActionSession(std::shared_ptr<ClientSession> clientSession,
     httpSession->setFinishedHandler(std::move(finishedCallback));
     return httpSession;
 }
+} // namespace
+
+bool ClientSession::handleAIAction(const StringVector& tokens)
+{
+    std::string commandName = tokens[1];
+    std::string requestUrl;
+    if (commandName == ".uno:RewriteAI")
+    {
+        std::string selectedText;
+        std::string prompt;
+        if (!getTokenString(tokens, "selectedText", selectedText) ||
+            !getTokenString(tokens, "prompt", prompt))
+        {
+            Poco::JSON::Object::Ptr resultArguments = new Poco::JSON::Object();
+            resultArguments->set("commandName", commandName);
+            resultArguments->set("success", false);
+            resultArguments->set("result", "Missing selectedText or prompt");
+
+            std::ostringstream oss;
+            resultArguments->stringify(oss);
+            sendTextFrame("unocommandresult: " + oss.str());
+            return true;
+        }
+
+        const std::string apiKey = getAIProviderAPIKey();
+        const std::string model = getAIProviderModel();
+        std::string baseUrl = getAIProviderCustomURL();
+
+        if (apiKey.empty() || model.empty() || baseUrl.empty())
+        {
+            Poco::JSON::Object::Ptr resultArguments = new Poco::JSON::Object();
+            resultArguments->set("commandName", commandName);
+            resultArguments->set("success", false);
+            resultArguments->set("result", "AI settings not configured");
+
+            std::ostringstream oss;
+            resultArguments->stringify(oss);
+            sendTextFrame("unocommandresult: " + oss.str());
+            return true;
+        }
+
+        if (!baseUrl.empty() && baseUrl.back() == '/')
+        {
+            baseUrl.pop_back();
+        }
+
+        requestUrl = baseUrl;
+        requestUrl.append("/v1/chat/completions");
+
+        const std::string systemMessage =
+            "You are a text rewriting assistant. Your task is to rewrite text according to the "
+            "user's instructions. Preserve the original language; do not translate unless the "
+            "user explicitly requests it. IMPORTANT: Return ONLY the rewritten text, nothing "
+            "else. Do not include explanations, introductions, or any meta-commentary. Do not "
+            "wrap the text in quotes. Do not say things like \"Here is the rewritten text:\" - "
+            "just provide the rewritten text directly.";
+
+        std::string userMessage;
+        userMessage.reserve(prompt.size() + selectedText.size() + 32);
+        userMessage.append(prompt);
+        userMessage.append("\n\nText to rewrite:\n");
+        userMessage.append(selectedText);
+
+        std::string payload;
+        payload.reserve(model.size() + systemMessage.size() + userMessage.size() + 128);
+        payload.append("{\"model\":\"");
+        payload.append(JsonUtil::escapeJSONValue(model));
+        payload.append("\",\"messages\":[{\"role\":\"system\",\"content\":\"");
+        payload.append(JsonUtil::escapeJSONValue(systemMessage));
+        payload.append("\"},{\"role\":\"user\",\"content\":\"");
+        payload.append(JsonUtil::escapeJSONValue(userMessage));
+        payload.append("\"}]}");
+
+        std::shared_ptr<http::Session> httpSession = http::Session::create(requestUrl);
+        if (!httpSession)
+        {
+            LOG_WRN("AIAction: failed to create HTTP session");
+            return false;
+        }
+
+        httpSession->setTimeout(std::chrono::seconds(40));
+
+        auto sendResult = [clientSession = client_from_this(),
+                           commandName](bool success, const std::string& resultText)
+        {
+            Poco::JSON::Object::Ptr resultArguments = new Poco::JSON::Object();
+            resultArguments->set("commandName", commandName);
+            resultArguments->set("success", success);
+            resultArguments->set("result", resultText);
+
+            std::ostringstream oss;
+            resultArguments->stringify(oss);
+            clientSession->sendTextFrame("unocommandresult: " + oss.str());
+        };
+
+        http::Session::FinishedCallback finishedCallback =
+            [sendResult](const std::shared_ptr<http::Session>& session)
+        {
+            const std::shared_ptr<const http::Response> httpResponse = session->response();
+            const http::StatusCode statusCode = httpResponse->statusLine().statusCode();
+
+            if (statusCode == http::StatusCode::None)
+            {
+                sendResult(false, "Request timeout");
+                return;
+            }
+
+            if (statusCode != http::StatusCode::OK)
+            {
+                std::string errorMessage;
+                switch (statusCode)
+                {
+                    case http::StatusCode::BadRequest:
+                        errorMessage = "Invalid request";
+                        break;
+                    case http::StatusCode::Unauthorized:
+                        errorMessage = "Invalid API key";
+                        break;
+                    case http::StatusCode::Forbidden:
+                        errorMessage = "API key lacks permissions";
+                        break;
+                    case http::StatusCode::TooManyRequests:
+                        errorMessage = "Rate limited - please wait a moment and retry";
+                        break;
+                    case http::StatusCode::InternalServerError:
+                        errorMessage = "API server error - try again later";
+                        break;
+                    case http::StatusCode::ServiceUnavailable:
+                        errorMessage = "Service temporarily unavailable";
+                        break;
+                    default:
+                        errorMessage = "API error (";
+                        errorMessage.append(std::to_string(static_cast<int>(statusCode)));
+                        errorMessage.append("): ");
+                        errorMessage.append(httpResponse->statusLine().reasonPhrase());
+                        break;
+                }
+
+                sendResult(false, errorMessage);
+                return;
+            }
+
+            const std::string& responseBody = httpResponse->getBody();
+            Poco::JSON::Object::Ptr responseObject = new Poco::JSON::Object();
+            if (!JsonUtil::parseJSON(responseBody, responseObject))
+            {
+                sendResult(false, "No response from AI");
+                return;
+            }
+
+            Poco::JSON::Array::Ptr choices = responseObject->getArray("choices");
+            if (!choices || choices->size() == 0)
+            {
+                sendResult(false, "No response from AI");
+                return;
+            }
+
+            Poco::JSON::Object::Ptr choice = choices->getObject(0);
+            if (!choice)
+            {
+                sendResult(false, "No response from AI");
+                return;
+            }
+
+            std::string finishReason;
+            JsonUtil::findJSONValue(choice, "finish_reason", finishReason);
+
+            Poco::JSON::Object::Ptr message = choice->getObject("message");
+            if (!message)
+            {
+                sendResult(false, "No response from AI");
+                return;
+            }
+
+            std::string result;
+            std::string reasoning;
+            JsonUtil::findJSONValue(message, "content", result);
+            JsonUtil::findJSONValue(message, "reasoning", reasoning);
+
+            if (result.empty())
+            {
+                if (!reasoning.empty())
+                {
+                    sendResult(false,
+                               "This model returned only internal reasoning and no output. Try a "
+                               "different model or shorter input.");
+                    return;
+                }
+                if (finishReason == "length")
+                {
+                    sendResult(false, "The model ran out of tokens before producing output. Try a "
+                                      "shorter input or a model with a larger output budget.");
+                    return;
+                }
+
+                sendResult(false, "No response from AI");
+                return;
+            }
+
+            sendResult(true, result);
+        };
+
+        httpSession->setFinishedHandler(std::move(finishedCallback));
+
+        http::Session::ConnectFailCallback connectFailCallback =
+            [sendResult](const std::shared_ptr<http::Session>& /*session*/)
+        { sendResult(false, "Network error - please check your connection"); };
+        httpSession->setConnectFailHandler(std::move(connectFailCallback));
+
+        http::Request httpRequest(Poco::URI(requestUrl).getPathAndQuery());
+        httpRequest.setVerb(http::Request::VERB_POST);
+        httpRequest.set("Content-Type", "application/json");
+        std::string authHeader = "Bearer ";
+        authHeader.append(apiKey);
+        httpRequest.set("Authorization", std::move(authHeader));
+        httpRequest.setBody(payload, "application/json");
+
+        std::shared_ptr<DocumentBroker> docBroker = getDocumentBroker();
+        httpSession->asyncRequest(httpRequest, docBroker->getPoll());
+        return true;
+    }
+    return false;
 }
 
 bool ClientSession::handleSignatureAction(const StringVector& tokens)
@@ -1390,6 +1613,10 @@ bool ClientSession::_handleInput(const char *buffer, int length)
             if (tokens.equals(1, ".uno:PrepareSignature") || tokens.equals(1, ".uno:DownloadSignature"))
             {
                 return handleSignatureAction(tokens);
+            }
+            else if (tokens.equals(1, ".uno:RewriteAI"))
+            {
+                return handleAIAction(tokens);
             }
         }
 #endif

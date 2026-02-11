@@ -342,6 +342,8 @@ private:
 
     bool handleSignatureAction(const StringVector& tokens);
 
+    bool handleAIAction(const StringVector& tokens);
+
     bool loadDocument(const char* buffer, int length, const StringVector& tokens,
                       const std::shared_ptr<DocumentBroker>& docBroker);
     bool getStatus(const char* buffer, int length,
