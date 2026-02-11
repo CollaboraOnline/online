@@ -151,6 +151,13 @@ describe(['tagdesktop'], 'Accessibility Writer Dialog Tests', { testIsolation: f
             });
     }
 
+    function escLevel(win, count) {
+            for (var i = 0; i < count; i++) {
+                    helper.typeIntoDocument('{esc}');
+                    helper.processToIdle(win);
+            }
+    }
+
     it('Detects non-native button element error', function () {
         testA11yErrorDetection(function($dialog, win) {
             // Inject a span with role="button" instead of native <button>
@@ -306,23 +313,49 @@ describe(['tagdesktop'], 'Accessibility Writer Dialog Tests', { testIsolation: f
     });
 
     it.skip('Object dialog', function () {
-       helper.clearAllText({ isTable: true });
-       cy.then(() => {
-           win.app.map.sendUnoCommand('.uno:InsertObjectChart');
+        helper.clearAllText({ isTable: true });
+        cy.then(() => {
+            win.app.map.sendUnoCommand('.uno:InsertObjectChart');
+        });
+        cy.cGet('#test-div-shapeHandlesSection').should('exist');
+
+        // Two esc get us out of the chart navigation and then chart edit mode
+        escLevel(win, 2);
+        helper.processToIdle(win);
+
+        // At which point the sidebar disappears, and just the shape is selected
+        cy.cGet('#sidebar-dock-wrapper').should('not.be.visible');
+
+        cy.then(() => {
+            win.app.map.sendUnoCommand('.uno:FrameDialog');
+        });
+        a11yHelper.handleDialog(win, 1, '.uno:FrameDialog');
+        cy.then(() => {
+            win.app.map.sendUnoCommand('.uno:NameGroup');
+        });
+        a11yHelper.handleDialog(win, 1, '.uno:NameGroup');
+        cy.then(() => {
+            win.app.map.sendUnoCommand('.uno:ObjectTitleDescription');
+        });
+        a11yHelper.handleDialog(win, 1, '.uno:ObjectTitleDescription');
+
+        // esc to get back to main document
+        escLevel(win, 1);
+        helper.processToIdle(win);
+
+        // sidebar starts again, and grabs focus to itself
+        cy.cGet('#sidebar-dock-wrapper').should('be.visible').then(function(sidebar) {
+                helper.waitForTimers(win, 'sidebarstealfocus');
+                helper.waitUntilLayoutingIsIdle(win);
+                helper.containsFocusElement(sidebar[0], true);
        });
-       cy.cGet('#test-div-shapeHandlesSection').should('exist');
-       cy.then(() => {
-           win.app.map.sendUnoCommand('.uno:FrameDialog');
-       });
-       a11yHelper.handleDialog(win, 1, '.uno:FrameDialog');
-       cy.then(() => {
-           win.app.map.sendUnoCommand('.uno:NameGroup');
-       });
-       a11yHelper.handleDialog(win, 1, '.uno:NameGroup');
-       cy.then(() => {
-           win.app.map.sendUnoCommand('.uno:ObjectTitleDescription');
-       });
-       a11yHelper.handleDialog(win, 1, '.uno:ObjectTitleDescription');
+
+       // esc to send focus back to main document
+       escLevel(win, 1);
+       helper.processToIdle(win);
+
+       // focus stays here after that
+       cy.cGet('div.clipboard').should('have.focus');
     });
 
     it.skip('Graphic dialog', function () {
