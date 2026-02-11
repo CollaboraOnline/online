@@ -128,6 +128,7 @@ class SlideShowPresenter {
 	_progressBarContainer: HTMLDivElement | null = null;
 	_slideNavContainer: HTMLDivElement | null = null;
 	_enableA11y: boolean = false;
+	_fromPresenterConsole: boolean = false;
 	private _pauseTimer: PauseTimerGl | PauseTimer2d;
 	private _slideControlsTimer: ReturnType<typeof setTimeout> | null = null;
 	private _slideShowHandler: SlideShowHandler;
@@ -1005,7 +1006,7 @@ class SlideShowPresenter {
 		}
 
 		if (this._checkAlreadyPresenting()) {
-			this._notifyAlreadyPresenting();
+			if (!this._fromPresenterConsole) this._notifyAlreadyPresenting();
 			return false;
 		}
 

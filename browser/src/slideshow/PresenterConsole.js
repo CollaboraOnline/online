@@ -35,6 +35,7 @@ class PresenterConsole {
 			pause: _('Pause'),
 			restart: _('Restart'),
 			resume: _('Resume'),
+			presentToAll: _('Present to all'),
 			goBack: _('Go Back'),
 			zoomIn: _('Zoom In'),
 			zoomOut: _('Zoom Out'),
@@ -70,6 +71,9 @@ class PresenterConsole {
 												</button>
 												<button type="button" id="restart" data-cooltip="${this.labels.restart}" aria-label="${this.labels.restart}">
 													<img src="${LOUtil.getImageURL('presenterscreen-ButtonRestartTimerNormal.svg')}">
+												</button>
+												<button type="button" id="presentToAll" data-cooltip="${this.labels.presentToAll}" aria-label="${this.labels.presentToAll}">
+													<img src="${LOUtil.getImageURL('presenterscreen-ButtonFollowMeNormal.svg')}">
 												</button>
 											 </div>
 											<div id="today"></div>
@@ -847,6 +851,9 @@ class PresenterConsole {
 					1000,
 				);
 				break;
+			case 'presentToAll':
+				this._onPresentToAll();
+				break;
 			case 'help':
 				// TODO. add help.collaboraonline.com
 				window.open('https://collaboraonline.com', '_blank', 'noopener');
@@ -1027,6 +1034,12 @@ class PresenterConsole {
 		}
 	}
 
+	_onPresentToAll() {
+		app.map.slideShowPresenter.setLeader(true);
+		app.map.slideShowPresenter._fromPresenterConsole = true;
+		app.map.fire('newpresentinwindow');
+	}
+
 	_disableButton(elem) {
 		elem.disabled = true;
 		elem.style.opacity = '0.5';
@@ -1141,6 +1154,7 @@ class PresenterConsole {
 		if (this._proxyPresenter && !this._proxyPresenter.closed)
 			this._proxyPresenter.close();
 
+		app.map.slideShowPresenter._fromPresenterConsole = false;
 		window.removeEventListener('beforeunload', this._boundOnWindowClose);
 
 		this._presenter.endPresentation(true);
@@ -1155,6 +1169,7 @@ class PresenterConsole {
 		this._proxyPresenter.removeEventListener('keydown', this._boundOnKeyDown);
 		this._proxyPresenter.clearInterval(this._timer);
 		this._proxyPresenter.close();
+		app.map.slideShowPresenter._fromPresenterConsole = false;
 
 		delete this._proxyPresenter;
 		delete this._currentIndex;
