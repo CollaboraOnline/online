@@ -1122,12 +1122,22 @@ class ShapeHandlesSection extends CanvasSectionObject {
 				}
 			}
 
-			const left = GraphicSelection.rectangle.pX1;
-			const top = GraphicSelection.rectangle.pY1;
+			if (app.map._docLayer.isCalc()) {
+				const left = GraphicSelection.rectangle.pX1;
+				const top = GraphicSelection.rectangle.pY1;
 
-			this.sectionProperties.svg.style.left = Math.round((left - app.activeDocument.activeLayout.viewedRectangle.pX1 + this.containerObject.getDocumentAnchor()[0]) / app.dpiScale) + 'px';
-			this.sectionProperties.svg.style.top = Math.round((top - app.activeDocument.activeLayout.viewedRectangle.pY1 + this.containerObject.getDocumentAnchor()[1]) / app.dpiScale) + 'px';
-			this.sectionProperties.svgPosition = [left, top];
+				this.sectionProperties.svg.style.left = Math.round((left - app.activeDocument.activeLayout.viewedRectangle.pX1 + this.containerObject.getDocumentAnchor()[0]) / app.dpiScale) + 'px';
+				this.sectionProperties.svg.style.top = Math.round((top - app.activeDocument.activeLayout.viewedRectangle.pY1 + this.containerObject.getDocumentAnchor()[1]) / app.dpiScale) + 'px';
+				this.sectionProperties.svgPosition = [left, top];
+			}
+			else {
+				const left = GraphicSelection.rectangle.v1X;
+				const top = GraphicSelection.rectangle.v1Y;
+
+				this.sectionProperties.svg.style.left = Math.round((left + this.containerObject.getDocumentAnchor()[0]) / app.dpiScale) + 'px';
+				this.sectionProperties.svg.style.top = Math.round((top + this.containerObject.getDocumentAnchor()[1]) / app.dpiScale) + 'px';
+				this.sectionProperties.svgPosition = [left, top];
+			}
 		}
 		this.hideSVG();
 	}
