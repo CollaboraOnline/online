@@ -24,7 +24,8 @@ class ViewLayoutCompareChanges extends ViewLayoutNewBase {
 		super();
 
 		this.adjustViewZoomLevel();
-		this.updateViewData();
+
+		app.layoutingService.appendLayoutingTask(() => this.updateViewData());
 	}
 
 	public adjustViewZoomLevel() {
