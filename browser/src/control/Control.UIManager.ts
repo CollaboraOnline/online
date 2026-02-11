@@ -32,6 +32,11 @@ interface UIModeCommand {
 	mode: UIMode;
 }
 
+// Type of the 'statusindicator' event payload.
+interface StatusIndicatorEvent {
+	statusType: string;
+}
+
 /**
  * UIManager class – initializes UI elements (toolbars, menubar, ruler, etc.) and controls their visibility.
  */
@@ -552,13 +557,19 @@ class UIManager extends window.L.Control {
 
 			if (this.getStartCompareChanges()) {
 				// Don't switch to the comparechanges view yet, first wait for the
-				// document to be loaded to avoid accessing not yet initialized
-				// state.
-				const enterCompareChanges = () => {
+				// initializationcomplete event, which fires after
+				// app.activeDocument.fileSize is set, otherwise the tile manager
+				// would discard valid tiles.
+				const enterCompareChanges = (
+					e: StatusIndicatorEvent,
+				) => {
+					if (e.statusType !== 'initializationcomplete') {
+						return;
+					}
 					app.dispatcher.dispatch('comparechanges');
-					this.map.off('docloaded', enterCompareChanges);
+					this.map.off('statusindicator', enterCompareChanges);
 				};
-				this.map.on('docloaded', enterCompareChanges);
+				this.map.on('statusindicator', enterCompareChanges);
 			}
 		}
 
