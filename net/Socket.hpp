@@ -566,8 +566,11 @@ protected:
     /// Sets the context used by logPrefix.
     void setLogContext(int fd) { _fdSocket = fd; }
 
+    /// Returns the log prefix string for use outside of member context.
+    std::string getLogPrefix() const { return '#' + std::to_string(_fdSocket) + ": "; }
+
     /// Used by the logging macros to automatically log a context prefix.
-    inline void logPrefix(std::ostream& os) const { os << '#' << _fdSocket << ": "; }
+    inline void logPrefix(std::ostream& os) const { os << getLogPrefix(); }
 
 public:
     ProtocolHandlerInterface()

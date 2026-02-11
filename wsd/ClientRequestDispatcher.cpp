@@ -1421,6 +1421,7 @@ bool ClientRequestDispatcher::handleWopiDiscoveryRequest(
     return true;
 }
 
+//static
 void ClientRequestDispatcher::sendResult(const std::shared_ptr<StreamSocket>& socket, CheckStatus result)
 {
     std::string output = R"({"status": ")" + JsonUtil::escapeJSONValue(nameShort(result)) + "\"}\n";
@@ -1432,7 +1433,7 @@ void ClientRequestDispatcher::sendResult(const std::shared_ptr<StreamSocket>& so
     jsonResponse.set("X-Content-Type-Options", "nosniff");
 
     socket->sendAndShutdown(jsonResponse);
-    LOG_INF("Wopi Access Check request, result: " << nameShort(result));
+    LOG_INF_S("Wopi Access Check request, result: " << nameShort(result));
 }
 
 bool ClientRequestDispatcher::handleWopiAccessCheckRequest(
@@ -1556,9 +1557,10 @@ bool ClientRequestDispatcher::handleWopiAccessCheckRequest(
     httpProbeSession->setTimeout(std::chrono::seconds(2));
 
     std::weak_ptr<StreamSocket> socketWeak(socket);
+    const std::string logPfx = getLogPrefix();
 
     httpProbeSession->setConnectFailHandler(
-        [socketWeak, callbackUrlStr, this](const std::shared_ptr<http::Session>& probeSession)
+        [socketWeak, callbackUrlStr, logPfx](const std::shared_ptr<http::Session>& probeSession)
         {
             CheckStatus status = CheckStatus::UnspecifiedError;
 
@@ -1583,34 +1585,32 @@ bool ClientRequestDispatcher::handleWopiAccessCheckRequest(
                     status = CheckStatus::ExpiredCertificate;
                 } else {
                     status = CheckStatus::CertificateValidation;
-                    LOG_DBG("Result ssl: " << probeSession->getSslVerifyMessage());
+                    LOG_DBG_S(logPfx << "Result ssl: " << probeSession->getSslVerifyMessage());
                 }
             }
-#else
-            (void) this; // to make the compiler happy wrt. the lambda capture
 #endif
 
             std::shared_ptr<StreamSocket> destSocket = socketWeak.lock();
             if (!destSocket)
             {
-                LOG_ERR("Invalid socket while sending wopi access check result for: "
+                LOG_ERR_S(logPfx << "Invalid socket while sending wopi access check result for: "
                         << callbackUrlStr);
                 return;
             }
             sendResult(destSocket, status);
     });
 
-    auto finishHandler = [socketWeak, callbackUrlStr = std::move(callbackUrlStr),
-                          this](const std::shared_ptr<http::Session>& probeSession)
+    auto finishHandler = [socketWeak, callbackUrlStr = std::move(callbackUrlStr), logPfx]
+                          (const std::shared_ptr<http::Session>& probeSession)
     {
-        LOG_TRC("finishHandler ");
+        LOG_TRC_S(logPfx << "finishHandler ");
 
         const auto lastErrno = errno;
 
         const std::shared_ptr<http::Response> httpResponse = probeSession->response();
         const http::Response::State responseState = httpResponse->state();
         const http::StatusCode statusCode = httpResponse->statusCode();
-        LOG_DBG("Wopi Access Check: got response state: " << responseState << " "
+        LOG_DBG_S(logPfx << "Wopi Access Check: got response state: " << responseState << " "
                                             << ", response status code: " << statusCode << " "
                                             << ", last errno: " << lastErrno);
 
@@ -1643,7 +1643,7 @@ bool ClientRequestDispatcher::handleWopiAccessCheckRequest(
                 status = CheckStatus::Ok;
             } else {
                 status = CheckStatus::CertificateValidation;
-                LOG_WRN("Unexpected failed Result ssl in a connection success: " << probeSession->getSslVerifyMessage());
+                LOG_WRN_S(logPfx << "Unexpected failed Result ssl in a connection success: " << probeSession->getSslVerifyMessage());
             }
         }
 #endif
@@ -1651,8 +1651,8 @@ bool ClientRequestDispatcher::handleWopiAccessCheckRequest(
         std::shared_ptr<StreamSocket> destSocket = socketWeak.lock();
         if (!destSocket)
         {
-            LOG_ERR(
-                "Invalid socket while sending wopi access check result for: " << callbackUrlStr);
+            LOG_ERR_S(logPfx
+                << "Invalid socket while sending wopi access check result for: " << callbackUrlStr);
             return;
         }
         sendResult(destSocket, status);

@@ -127,7 +127,7 @@ private:
                                   const RequestDetails& requestDetails,
                                   std::istream& message, SocketDisposition& disposition);
 
-    void sendResult(const std::shared_ptr<StreamSocket>& socket, CheckStatus result);
+    static void sendResult(const std::shared_ptr<StreamSocket>& socket, CheckStatus result);
 
     enum class MessageResult : std::uint8_t
     {
