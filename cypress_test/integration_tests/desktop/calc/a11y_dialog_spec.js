@@ -23,6 +23,7 @@ const allCalcDialogs = [
     '.uno:Delete',
     '.uno:DescriptiveStatisticsDialog',
     '.uno:EditHeaderAndFooter',
+    '.uno:EditPrintArea',
     '.uno:EditStyle?Param:string=Heading&Family:short=2',
     '.uno:ExponentialSmoothingDialog',
     '.uno:FormatCellDialog',
@@ -196,7 +197,7 @@ describe(['tagdesktop'], 'Accessibility Calc Dialog Tests', { testIsolation: fal
         cy.then(() => {
             win.app.map.sendUnoCommand('.uno:DataDataPilotRun');
         });
-	// This is just the 'select source' dialog, not the pivot table dialog
+        // This is just the 'select source' dialog, not the pivot table dialog
         a11yHelper.handleDialog(win, 1);
     });
 
@@ -210,9 +211,8 @@ describe(['tagdesktop'], 'Accessibility Calc Dialog Tests', { testIsolation: fal
         cy.cGet('#spreadsheet-tab0').click();
     });
 
-    it('AutoCorrect Warning Dialog)', function () {
+    it('AutoCorrect Warning Dialog', function () {
         helper.typeIntoDocument('=2x3{enter}');
         a11yHelper.handleDialog(win, 1, '', true);
     });
-
 });
