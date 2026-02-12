@@ -31,7 +31,6 @@ const allWriterDialogs = [
     '.uno:TableDialog',
     '.uno:TableNumberFormatDialog',
     '.uno:TableSort',
-    '.uno:ThemeDialog',
     '.uno:TitlePageDialog',
     '.uno:Translate',
     '.uno:Watermark',
