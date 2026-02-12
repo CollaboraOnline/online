@@ -19,7 +19,7 @@ type TaskId = string;
 type SimpleTask = () => void;
 type LayoutingTask = { taskId: TaskId; func: SimpleTask };
 
-class LayoutingService {
+class LayoutingService extends CypressValidator {
 	private _requestedFrame: ReturnType<typeof requestAnimationFrame> | null =
 		null;
 	private _layoutTasks: Array<LayoutingTask> = [];
@@ -64,6 +64,9 @@ class LayoutingService {
 			task.func();
 		} catch (ex) {
 			console.error('LayoutingTask exception: ' + ex);
+			if (this.isValidatorActive()) {
+				throw ex;
+			}
 		}
 
 		return true;
@@ -125,6 +128,9 @@ class LayoutingService {
 				cb();
 			} catch (ex) {
 				console.error('Drain callback exception: ' + ex);
+				if (this.isValidatorActive()) {
+					throw ex;
+				}
 			}
 		}
 	}
