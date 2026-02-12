@@ -53,6 +53,11 @@ function clickOnFirstCell(firstClick = true, dblClick = false, expectedCell = 'A
 	cy.log('Param - dblClick: ' + dblClick);
 	cy.log('Param - expectedCell: ' + expectedCell);
 
+	// Flush any pending layouting tasks before clicking
+	cy.getFrameWindow().then(function(win) {
+		helper.processToIdle(win);
+	});
+
 	// Use the tile's edge to find the first cell's position
 	cy.cGet('#canvas-container').then(function(items) {
 			expect(items).to.have.lengthOf(1);
