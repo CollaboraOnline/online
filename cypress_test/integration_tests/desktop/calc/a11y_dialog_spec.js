@@ -174,6 +174,7 @@ describe(['tagdesktop'], 'Accessibility Calc Dialog Tests', { testIsolation: fal
     });
 
     it.skip('PasteSpecial Dialog (Buggy)', function () {
+        helper.setDummyClipboardForCopy('text/html');
         // Select some text
         helper.selectAllText();
 
@@ -184,6 +185,20 @@ describe(['tagdesktop'], 'Accessibility Calc Dialog Tests', { testIsolation: fal
             win.app.map.sendUnoCommand('.uno:PasteSpecial');
         });
         a11yHelper.handleDialog(win, 1);
+    });
+
+    it.skip('Text Import Dialog (Buggy)', function () {
+        helper.setDummyClipboardForCopy('text/plain');
+        // Select some text
+        helper.selectAllText();
+
+        helper.copy().then(() => {
+            return helper.processToIdle(win);
+        })
+        .then(() => {
+            win.app.map.sendUnoCommand('.uno:PasteTextImportDialog');
+        });
+        a11yHelper.handleDialog(win, 1, '.uno:PasteTextImportDialog');
     });
 
     it.skip('Font Dialog (Buggy)', function () {
