@@ -288,7 +288,7 @@ function traverseTabs(getContainer, win, level, command, isNested = false) {
 							} else if ((command == '.uno:PageDialog' || command == '.uno:PageFormatDialog') && tabAriaControls == 'Footer') {
 								cy.cGet('button.ui-pushbutton[aria-label="More..."]:visible').click();
 								handleDialog(win, level + 1);
-							} else if (command == '.uno:PageDialog' && tabAriaControls == 'lbhatch') {
+							} else if (command == '.uno:FormatArea' && tabAriaControls == 'lbhatch') {
 								cy.cGet('button.ui-pushbutton[aria-label="Add"]:visible').click();
 								testNameDialog(win, level);
 							}
@@ -438,6 +438,7 @@ const allCommonDialogs = [
 	'.uno:SpellingAndGrammarDialog',
 	'.uno:SplitCell',
 	'.uno:StyleNewByExample',
+	'.uno:ThemeDialog',
 	'.uno:ThesaurusDialog',
 	'.uno:WidgetTestDialog'
 ];
