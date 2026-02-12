@@ -288,4 +288,8 @@ describe(['tagdesktop'], 'Accessibility Calc Dialog Tests', { testIsolation: fal
         helper.typeIntoDocument('=2x3{enter}');
         a11yHelper.handleDialog(win, 1, '', true);
     });
+
+    it('PDF export warning dialog', function () {
+        a11yHelper.testPDFExportWarningDialog(win);
+    });
 });

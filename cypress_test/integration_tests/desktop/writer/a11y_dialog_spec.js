@@ -373,28 +373,7 @@ describe(['tagdesktop'], 'Accessibility Writer Dialog Tests', { testIsolation: f
     });
 
     it('PDF export warning dialog', function () {
-        cy.then(() => {
-            const args = { SynchronMode: { type: 'boolean', value: false } };
-            win.app.map.sendUnoCommand('.uno:ExportToPDF', args);
-        });
-
-        a11yHelper.getActiveDialog(1)
-            .then(() => {
-               return helper.processToIdle(win);
-            })
-            .then(() => {
-                cy.cGet('#forms-input').check();
-                cy.cGet('#pdf_version-input').select('PDF/A-1b (PDF 1.4 base)');
-                cy.cGet('#ok-button').click();
-            })
-            .then(() => {
-               // pdf export dialog should dismiss and a warning dialog should appear
-               return helper.processToIdle(win);
-            })
-            .then(() => {
-                // and the warning dialog we're interested in should appear
-                a11yHelper.handleDialog(win, 1);
-            });
+        a11yHelper.testPDFExportWarningDialog(win);
     });
 
     it('ReadOnly info dialog', function () {
