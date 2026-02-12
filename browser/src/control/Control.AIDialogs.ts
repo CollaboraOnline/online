@@ -439,11 +439,14 @@ namespace cool {
 				}
 			} else if (eventType === 'change') {
 				if (object.id === 'customprompt') {
+					let updateDialog = false;
+					if (data != '' && this.currentPrompt == '') updateDialog = true;
 					this.currentPrompt = data;
 					if (this.selectedPresetId) {
 						this.selectedPresetId = '';
-						this.updateDialog();
+						updateDialog = true;
 					}
+					if (updateDialog) this.updateDialog();
 				} else if (object.id === 'resulttext') {
 					this.rewrittenText = data;
 				}
