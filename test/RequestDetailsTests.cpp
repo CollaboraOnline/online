@@ -30,6 +30,7 @@ class RequestDetailsTests : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST(testLocal);
     CPPUNIT_TEST(testLocalHexified);
     CPPUNIT_TEST(testRequestDetails);
+    CPPUNIT_TEST(testCoolWs);
     CPPUNIT_TEST(testAuthorization);
 
     CPPUNIT_TEST_SUITE_END();
@@ -39,6 +40,7 @@ class RequestDetailsTests : public CPPUNIT_NS::TestFixture
     void testLocal();
     void testLocalHexified();
     void testRequestDetails();
+    void testCoolWs();
     void testAuthorization();
 };
 
@@ -781,8 +783,8 @@ void RequestDetailsTests::testRequestDetails()
         const std::map<std::string, std::string>& params = details.getDocumentURIParams();
         LOK_ASSERT_EQUAL(static_cast<std::size_t>(3), params.size());
         auto it = params.find("access_header");
-        const std::string access_header
-            = "Authorization: Bearer poiuytrewq\r\n\r\nX-Requested-With: XMLHttpRequest";
+        const std::string access_header =
+            "Authorization:%20Bearer%20poiuytrewq%0D%0A%0D%0AX-Requested-With:%20XMLHttpRequest";
         LOK_ASSERT_EQUAL(access_header, it != params.end() ? it->second : "");
         it = params.find("reuse_cookies");
         const std::string reuse_cookies
@@ -827,6 +829,421 @@ void RequestDetailsTests::testRequestDetails()
     }
 }
 
+/// Tests the Cool URI 2.0.
+void RequestDetailsTests::testCoolWs()
+{
+    constexpr std::string_view testname = __func__;
+
+    static const std::string Root = "localhost:9980";
+
+    static const std::string ProxyPrefix =
+        "http://localhost/nextcloud/apps/richdocuments/proxy.php?req=";
+
+    {
+        static const std::string URI =
+            "/cool//"
+            "ws?WOPISrc=http%3A%2F%2Flocalhost%2Fnextcloud%2Findex.php%2Fapps%2Frichdocuments%"
+            "2Fwopi%2Ffiles%2F593_ocqiesh0cngs&access_token=MN0KXXDv9GJ1wCCLnQcjVQT2T7WrfYpA&"
+            "access_token_ttl=0&reuse_cookies=oc_sessionPassphrase%"
+            "3D8nFRqycbs7bP97yxCuJviBbVKdCXmuiXp6ZYH0DfUoy5UZDCTQgLwluvbgRbKrdKodJteG3uNE19KNUAoE5t"
+            "ypf4oBGwJdFY%252F5W9RNST8wEHWkUVIjZy7vmY0ZX38PlS%3Anc_sameSiteCookielax%3Dtrue%3Anc_"
+            "sameSiteCookiestrict%3Dtrue%3Aocqiesh0cngs%3Dr5ujg4tpvgu9paaf5bguiokgjl%3AXCookieName%"
+            "3DXCookieValue%3ASuperCookieName%3DBAZINGA&compat=b26112ab1b6f2ed98ce1329f0f344791%"
+            "2Fclose%2F31";
+
+        Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, URI,
+                                       Poco::Net::HTTPMessage::HTTP_1_1);
+        request.setHost(Root);
+        request.set("User-Agent", http::getAgentString());
+        request.set("ProxyPrefix", ProxyPrefix);
+
+        RequestDetails details(request, "");
+        LOK_ASSERT_EQUAL(true, details.isProxy());
+        LOK_ASSERT_EQUAL(ProxyPrefix, details.getProxyPrefix());
+
+        LOK_ASSERT_EQUAL(Root, details.getHostUntrusted());
+        LOK_ASSERT_EQUAL(false, details.isWebSocket());
+        LOK_ASSERT_EQUAL(true, details.isGet());
+
+        LOK_ASSERT_EQUAL_STR("b26112ab1b6f2ed98ce1329f0f344791",
+                             details.getField(RequestDetails::Field::SessionId));
+        LOK_ASSERT_EQUAL_STR("close", details.getField(RequestDetails::Field::Command));
+        LOK_ASSERT_EQUAL_STR("31", details.getField(RequestDetails::Field::Serial));
+
+        const std::string docUri =
+            "http://localhost/nextcloud/index.php/apps/richdocuments/wopi/files/"
+            "593_ocqiesh0cngs?access_token=MN0KXXDv9GJ1wCCLnQcjVQT2T7WrfYpA&access_token_ttl=0&"
+            "reuse_cookies=oc_sessionPassphrase%"
+            "3D8nFRqycbs7bP97yxCuJviBbVKdCXmuiXp6ZYH0DfUoy5UZDCTQgLwluvbgRbKrdKodJteG3uNE19KNUAoE5t"
+            "ypf4oBGwJdFY%252F5W9RNST8wEHWkUVIjZy7vmY0ZX38PlS%3Anc_sameSiteCookielax%3Dtrue%3Anc_"
+            "sameSiteCookiestrict%3Dtrue%3Aocqiesh0cngs%3Dr5ujg4tpvgu9paaf5bguiokgjl%3AXCookieName%"
+            "3DXCookieValue%3ASuperCookieName%3DBAZINGA";
+        LOK_ASSERT_EQUAL(docUri, details.getDocumentURI());
+
+        const std::string wopiSrc =
+            "http://localhost/nextcloud/index.php/apps/richdocuments/wopi/files/593_ocqiesh0cngs";
+
+        LOK_ASSERT_EQUAL(wopiSrc, details.getField(RequestDetails::Field::WOPISrc));
+
+        LOK_ASSERT_EQUAL(static_cast<std::size_t>(3), details.size());
+        LOK_ASSERT_EQUAL_STR("cool", details[0]);
+        LOK_ASSERT_EQUAL_STR("cool", details.getField(RequestDetails::Field::Type));
+        LOK_ASSERT(details.equals(RequestDetails::Field::Type, "cool"));
+        LOK_ASSERT(details.equals(0, "cool"));
+        LOK_ASSERT_EQUAL_STR("ws", details[1]);
+        LOK_ASSERT_EQUAL_STR(
+            "WOPISrc=http%3A%2F%2Flocalhost%2Fnextcloud%2Findex.php%2Fapps%2Frichdocuments%"
+            "2Fwopi%2Ffiles%2F593_ocqiesh0cngs&access_token=MN0KXXDv9GJ1wCCLnQcjVQT2T7WrfYpA&"
+            "access_token_ttl=0&reuse_cookies=oc_sessionPassphrase%"
+            "3D8nFRqycbs7bP97yxCuJviBbVKdCXmuiXp6ZYH0DfUoy5UZDCTQgLwluvbgRbKrdKodJteG3uNE19KNUAoE5t"
+            "ypf4oBGwJdFY%252F5W9RNST8wEHWkUVIjZy7vmY0ZX38PlS%3Anc_sameSiteCookielax%3Dtrue%3Anc_"
+            "sameSiteCookiestrict%3Dtrue%3Aocqiesh0cngs%3Dr5ujg4tpvgu9paaf5bguiokgjl%3AXCookieName%"
+            "3DXCookieValue%3ASuperCookieName%3DBAZINGA&compat=b26112ab1b6f2ed98ce1329f0f344791%"
+            "2Fclose%2F31",
+            details[2]);
+
+        LOK_ASSERT_EQUAL_STR("cool", details.getField(RequestDetails::Field::Type));
+        LOK_ASSERT(details.equals(RequestDetails::Field::Type, "cool"));
+        LOK_ASSERT_EQUAL_STR("b26112ab1b6f2ed98ce1329f0f344791",
+                             details.getField(RequestDetails::Field::SessionId));
+        LOK_ASSERT(
+            details.equals(RequestDetails::Field::SessionId, "b26112ab1b6f2ed98ce1329f0f344791"));
+        LOK_ASSERT_EQUAL_STR("close", details.getField(RequestDetails::Field::Command));
+        LOK_ASSERT(details.equals(RequestDetails::Field::Command, "close"));
+        LOK_ASSERT_EQUAL_STR("31", details.getField(RequestDetails::Field::Serial));
+        LOK_ASSERT(details.equals(RequestDetails::Field::Serial, "31"));
+
+        http::Request request2(URI);
+        request2.set("Host", Root);
+        request2.set("User-Agent", http::getAgentString());
+        request2.set("ProxyPrefix", ProxyPrefix);
+        http::RequestParser reqParser(request2);
+        LOK_ASSERT_EQUAL(details, RequestDetails(reqParser, ""));
+    }
+
+    {
+        static const std::string URI =
+            "/cool//"
+            "ws?WOPISrc=http%3A%2F%2Flocalhost%2Fnextcloud%2Findex.php%2Fapps%2Frichdocuments%"
+            "2Fwopi%2Ffiles%2F6734_ocqiesh0cngs&access_token%3DO87cwh0WlwIawoDkafkqOtVNTygxbiBN%"
+            "26access_token_ttl%3D0%26no_a";
+
+        Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, URI,
+                                       Poco::Net::HTTPMessage::HTTP_1_1);
+        request.setHost(Root);
+        request.set("User-Agent", http::getAgentString());
+        request.set("ProxyPrefix", ProxyPrefix);
+        request.set("Upgrade", "websocket");
+
+        RequestDetails details(request, "");
+        LOK_ASSERT_EQUAL(true, details.isProxy());
+        LOK_ASSERT_EQUAL(ProxyPrefix, details.getProxyPrefix());
+
+        LOK_ASSERT_EQUAL(Root, details.getHostUntrusted());
+        LOK_ASSERT(details.isWebSocket());
+        LOK_ASSERT_EQUAL(true, details.isGet());
+
+        LOK_ASSERT_EQUAL_STR(std::string(), details.getField(RequestDetails::Field::SessionId));
+        LOK_ASSERT_EQUAL_STR(std::string(), details.getField(RequestDetails::Field::Command));
+        LOK_ASSERT_EQUAL_STR(std::string(), details.getField(RequestDetails::Field::Serial));
+
+        const std::string docUri =
+            "http://localhost/nextcloud/index.php/apps/richdocuments/wopi/files/"
+            "6734_ocqiesh0cngs?access_token=O87cwh0WlwIawoDkafkqOtVNTygxbiBN&access_token_ttl=0&no_"
+            "a=";
+        LOK_ASSERT_EQUAL(docUri, details.getDocumentURI());
+
+        const std::string wopiSrc =
+            "http://localhost/nextcloud/index.php/apps/richdocuments/wopi/files/6734_ocqiesh0cngs";
+
+        LOK_ASSERT_EQUAL(wopiSrc, details.getField(RequestDetails::Field::WOPISrc));
+
+        LOK_ASSERT_EQUAL(static_cast<std::size_t>(3), details.size());
+        LOK_ASSERT_EQUAL_STR("cool", details[0]);
+        LOK_ASSERT_EQUAL_STR("cool", details.getField(RequestDetails::Field::Type));
+        LOK_ASSERT(details.equals(RequestDetails::Field::Type, "cool"));
+        LOK_ASSERT(details.equals(0, "cool"));
+        LOK_ASSERT(details.equals(1, "ws"));
+
+        LOK_ASSERT_EQUAL_STR("ws", details[1]);
+        LOK_ASSERT_EQUAL_STR(
+            "WOPISrc=http%3A%2F%2Flocalhost%2Fnextcloud%2Findex.php%2Fapps%2Frichdocuments%"
+            "2Fwopi%2Ffiles%2F6734_ocqiesh0cngs&access_token%3DO87cwh0WlwIawoDkafkqOtVNTygxbiBN%"
+            "26access_token_ttl%3D0%26no_a",
+            details[2]);
+
+        LOK_ASSERT_EQUAL_STR("cool", details.getField(RequestDetails::Field::Type));
+        LOK_ASSERT(details.equals(RequestDetails::Field::Type, "cool"));
+        LOK_ASSERT_EQUAL_STR(std::string(), details.getField(RequestDetails::Field::SessionId));
+        LOK_ASSERT(details.equals(RequestDetails::Field::SessionId, std::string()));
+        LOK_ASSERT_EQUAL_STR(std::string(), details.getField(RequestDetails::Field::Command));
+        LOK_ASSERT(details.equals(RequestDetails::Field::Command, std::string()));
+        LOK_ASSERT_EQUAL_STR(std::string(), details.getField(RequestDetails::Field::Serial));
+        LOK_ASSERT(details.equals(RequestDetails::Field::Serial, std::string()));
+
+        http::Request request2(URI);
+        request2.set("Host", Root);
+        request2.set("User-Agent", http::getAgentString());
+        request2.set("ProxyPrefix", ProxyPrefix);
+        request2.set("Upgrade", "WebSocket");
+        http::RequestParser reqParser(request2);
+        LOK_ASSERT_EQUAL(details, RequestDetails(reqParser, ""));
+    }
+
+    {
+        static const std::string URI =
+            "/cool/"
+            "http%3A%2F%2Flocalhost%2Fowncloud%2Findex.php%2Fapps%2Frichdocuments%2Fwopi%2Ffiles%"
+            "2F165_ocgdpzbkm39u%3Faccess_token%3DODhIXdJdbsVYQoKKCuaYofyzrovxD3MQ%26access_token_"
+            "ttl%"
+            "3D0%26reuse_cookies%3DXCookieName%253DXCookieValue%253ASuperCookieName%253DBAZINGA/"
+            "ws?WOPISrc=http%3A%2F%2Flocalhost%2Fowncloud%2Findex.php%2Fapps%2Frichdocuments%"
+            "2Fwopi%"
+            "2Ffiles%2F165_ocgdpzbkm39u&compat=/ws/1c99a7bcdbf3209782d7eb38512e6564/write/2";
+
+        Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, URI,
+                                       Poco::Net::HTTPMessage::HTTP_1_1);
+        request.setHost(Root);
+        request.set("User-Agent", http::getAgentString());
+        request.set("ProxyPrefix", ProxyPrefix);
+
+        RequestDetails details(request, "");
+        LOK_ASSERT_EQUAL(true, details.isProxy());
+        LOK_ASSERT_EQUAL(ProxyPrefix, details.getProxyPrefix());
+
+        LOK_ASSERT_EQUAL(Root, details.getHostUntrusted());
+        LOK_ASSERT_EQUAL(false, details.isWebSocket());
+        LOK_ASSERT_EQUAL(true, details.isGet());
+
+        const std::string docUri =
+            "http://localhost/owncloud/index.php/apps/richdocuments/wopi/files/"
+            "165_ocgdpzbkm39u?access_token=ODhIXdJdbsVYQoKKCuaYofyzrovxD3MQ&access_token_ttl=0&"
+            "reuse_cookies=XCookieName%3DXCookieValue%3ASuperCookieName%3DBAZINGA";
+
+        LOK_ASSERT_EQUAL(docUri, details.getDocumentURI());
+
+        const std::string wopiSrc =
+            "http://localhost/owncloud/index.php/apps/richdocuments/wopi/files/"
+            "165_ocgdpzbkm39u";
+
+        LOK_ASSERT_EQUAL(wopiSrc, details.getField(RequestDetails::Field::WOPISrc));
+
+        LOK_ASSERT_EQUAL(static_cast<std::size_t>(8), details.size());
+        LOK_ASSERT_EQUAL_STR("cool", details[0]);
+        LOK_ASSERT(details.equals(0, "cool"));
+        LOK_ASSERT_EQUAL_STR(
+            "http%3A%2F%2Flocalhost%2Fowncloud%2Findex.php%2Fapps%2Frichdocuments%2Fwopi%2Ffiles%"
+            "2F165_ocgdpzbkm39u%3Faccess_token%3DODhIXdJdbsVYQoKKCuaYofyzrovxD3MQ%26access_token_"
+            "ttl%3D0%26reuse_cookies%3DXCookieName%253DXCookieValue%253ASuperCookieName%"
+            "253DBAZINGA",
+            details[1]);
+        LOK_ASSERT_EQUAL_STR("ws", details[2]);
+        LOK_ASSERT_EQUAL_STR("WOPISrc=http%3A%2F%2Flocalhost%2Fowncloud%2Findex.php%2Fapps%"
+                             "2Frichdocuments%2Fwopi%2Ffiles%2F165_ocgdpzbkm39u&compat=",
+                             details[3]);
+        LOK_ASSERT_EQUAL_STR("ws", details[4]);
+        LOK_ASSERT_EQUAL_STR("1c99a7bcdbf3209782d7eb38512e6564", details[5]);
+        LOK_ASSERT_EQUAL_STR("write", details[6]);
+        LOK_ASSERT_EQUAL_STR("2", details[7]);
+
+        LOK_ASSERT_EQUAL_STR("cool", details.getField(RequestDetails::Field::Type));
+        LOK_ASSERT(details.equals(RequestDetails::Field::Type, "cool"));
+        LOK_ASSERT_EQUAL_STR("1c99a7bcdbf3209782d7eb38512e6564",
+                             details.getField(RequestDetails::Field::SessionId));
+        LOK_ASSERT(
+            details.equals(RequestDetails::Field::SessionId, "1c99a7bcdbf3209782d7eb38512e6564"));
+        LOK_ASSERT_EQUAL_STR("write", details.getField(RequestDetails::Field::Command));
+        LOK_ASSERT(details.equals(RequestDetails::Field::Command, "write"));
+        LOK_ASSERT_EQUAL_STR("2", details.getField(RequestDetails::Field::Serial));
+        LOK_ASSERT(details.equals(RequestDetails::Field::Serial, "2"));
+
+        http::Request request2(URI);
+        request2.set("Host", Root);
+        request2.set("User-Agent", http::getAgentString());
+        request2.set("ProxyPrefix", ProxyPrefix);
+        http::RequestParser reqParser(request2);
+        LOK_ASSERT_EQUAL(details, RequestDetails(reqParser, ""));
+    }
+
+    {
+        static const std::string URI =
+            "/cool/%2Ftmp%2Fslideshow_b8c3225b_setclientpart.odp/Ar3M1X89mVaryYkh/"
+            "UjaCGP4cYHlU6TvUGdnFTPi8hjOS87uFym7ruWMq3F3jBr0kSPgVhbKz5CwUyV8R/slideshow.svg";
+
+        Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, URI,
+                                       Poco::Net::HTTPMessage::HTTP_1_1);
+        request.setHost(Root);
+        request.set("User-Agent", http::getAgentString());
+        request.set("ProxyPrefix", ProxyPrefix);
+
+        RequestDetails details(request, "");
+        LOK_ASSERT_EQUAL(true, details.isProxy());
+        LOK_ASSERT_EQUAL(ProxyPrefix, details.getProxyPrefix());
+
+        LOK_ASSERT_EQUAL(Root, details.getHostUntrusted());
+        LOK_ASSERT_EQUAL(false, details.isWebSocket());
+        LOK_ASSERT_EQUAL(true, details.isGet());
+
+        const std::string docUri = "/tmp/slideshow_b8c3225b_setclientpart.odp";
+
+        LOK_ASSERT_EQUAL(docUri, details.getDocumentURI());
+
+        LOK_ASSERT_EQUAL(std::string(), details.getField(RequestDetails::Field::WOPISrc));
+
+        LOK_ASSERT_EQUAL(static_cast<std::size_t>(5), details.size());
+        LOK_ASSERT_EQUAL_STR("cool", details[0]);
+        LOK_ASSERT(details.equals(0, "cool"));
+        LOK_ASSERT_EQUAL_STR("%2Ftmp%2Fslideshow_b8c3225b_setclientpart.odp", details[1]);
+        LOK_ASSERT_EQUAL_STR("Ar3M1X89mVaryYkh", details[2]);
+        LOK_ASSERT_EQUAL_STR("UjaCGP4cYHlU6TvUGdnFTPi8hjOS87uFym7ruWMq3F3jBr0kSPgVhbKz5CwUyV8R",
+                             details[3]);
+        LOK_ASSERT_EQUAL_STR("slideshow.svg", details[4]);
+
+        LOK_ASSERT_EQUAL_STR("cool", details.getField(RequestDetails::Field::Type));
+        LOK_ASSERT(details.equals(RequestDetails::Field::Type, "cool"));
+        LOK_ASSERT_EQUAL_STR("", details.getField(RequestDetails::Field::SessionId));
+        LOK_ASSERT(details.equals(RequestDetails::Field::SessionId, ""));
+        LOK_ASSERT_EQUAL_STR("", details.getField(RequestDetails::Field::Command));
+        LOK_ASSERT(details.equals(RequestDetails::Field::Command, ""));
+        LOK_ASSERT_EQUAL_STR("", details.getField(RequestDetails::Field::Serial));
+        LOK_ASSERT(details.equals(RequestDetails::Field::Serial, ""));
+
+        http::Request request2(URI);
+        request2.set("Host", Root);
+        request2.set("User-Agent", http::getAgentString());
+        request2.set("ProxyPrefix", ProxyPrefix);
+        http::RequestParser reqParser(request2);
+        LOK_ASSERT_EQUAL(details, RequestDetails(reqParser, ""));
+    }
+
+    {
+        static const std::string URI = "/cool/"
+                                       "clipboard?WOPISrc=file%3A%2F%2F%2Ftmp%2Fcopypasteef324307_"
+                                       "empty.ods&ServerId=7add98ed&ViewId=0&Tag=5f7972ce4e6a37dd";
+
+        Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, URI,
+                                       Poco::Net::HTTPMessage::HTTP_1_1);
+        request.setHost(Root);
+        request.set("User-Agent", http::getAgentString());
+        request.set("ProxyPrefix", ProxyPrefix);
+
+        RequestDetails details(request, "");
+        LOK_ASSERT_EQUAL(true, details.isProxy());
+        LOK_ASSERT_EQUAL(ProxyPrefix, details.getProxyPrefix());
+
+        LOK_ASSERT_EQUAL(Root, details.getHostUntrusted());
+        LOK_ASSERT_EQUAL(false, details.isWebSocket());
+        LOK_ASSERT_EQUAL(true, details.isGet());
+
+        const std::string docUri = "clipboard";
+
+        LOK_ASSERT_EQUAL(docUri, details.getDocumentURI());
+
+        LOK_ASSERT_EQUAL(static_cast<std::size_t>(3), details.size());
+        LOK_ASSERT_EQUAL_STR("cool", details[0]);
+        LOK_ASSERT(details.equals(0, "cool"));
+        LOK_ASSERT_EQUAL_STR("clipboard", details[1]);
+
+        LOK_ASSERT_EQUAL_STR("cool", details.getField(RequestDetails::Field::Type));
+        LOK_ASSERT(details.equals(RequestDetails::Field::Type, "cool"));
+        LOK_ASSERT_EQUAL_STR("", details.getField(RequestDetails::Field::SessionId));
+        LOK_ASSERT(details.equals(RequestDetails::Field::SessionId, ""));
+        LOK_ASSERT_EQUAL_STR("", details.getField(RequestDetails::Field::Command));
+        LOK_ASSERT(details.equals(RequestDetails::Field::Command, ""));
+        LOK_ASSERT_EQUAL_STR("", details.getField(RequestDetails::Field::Serial));
+        LOK_ASSERT(details.equals(RequestDetails::Field::Serial, ""));
+
+        http::Request request2(URI);
+        request2.set("Host", Root);
+        request2.set("User-Agent", http::getAgentString());
+        request2.set("ProxyPrefix", ProxyPrefix);
+        http::RequestParser reqParser(request2);
+        LOK_ASSERT_EQUAL(details, RequestDetails(reqParser, ""));
+    }
+
+    {
+        static const std::string URI =
+            "/cool/"
+            "ws?WOPISrc=https%3A%2F%2Fexample.com%3A8443%2Frest%2Ffiles%2Fwopi%2Ffiles%"
+            "2F8ac75551de4d89e60002&access_header=Authorization%3A%2520Bearer%2520poiuytrewq%250D%"
+            "250A%250D%250AX-Requested-With%3A%2520XMLHttpRequest&reuse_cookies=lang%3Den-us%3A_ga_"
+            "LMX4TVJ02K%3DGS1.1%3AToken%3DeyJhbGciOiJIUzUxMiJ9.vajknfkfajksdljfiwjek-W90fmgVb3C-00-"
+            "eSkJBDqDNSYA%3APublicToken%3Dabc%3AZNPCQ003-32383700%3De9c71c3b%3AJSESSIONID%3Dnode0."
+            "node0&permission=edit&compat=/ws";
+
+        Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, URI,
+                                       Poco::Net::HTTPMessage::HTTP_1_1);
+        request.setHost(Root);
+        request.set("User-Agent", http::getAgentString());
+        request.set("ProxyPrefix", ProxyPrefix);
+
+        RequestDetails details(request, "");
+        LOK_ASSERT_EQUAL(true, details.isProxy());
+        LOK_ASSERT_EQUAL(ProxyPrefix, details.getProxyPrefix());
+
+        LOK_ASSERT_EQUAL(Root, details.getHostUntrusted());
+        LOK_ASSERT_EQUAL(false, details.isWebSocket());
+        LOK_ASSERT_EQUAL(true, details.isGet());
+
+        const std::string docUri =
+            "https://example.com:8443/rest/files/wopi/files/"
+            "8ac75551de4d89e60002?access_header=Authorization%3A%2520Bearer%2520poiuytrewq%250D%"
+            "250A%250D%250AX-Requested-With%3A%2520XMLHttpRequest&permission=edit&reuse_cookies="
+            "lang%3Den-us%3A_ga_LMX4TVJ02K%3DGS1.1%3AToken%3DeyJhbGciOiJIUzUxMiJ9."
+            "vajknfkfajksdljfiwjek-W90fmgVb3C-00-eSkJBDqDNSYA%3APublicToken%3Dabc%3AZNPCQ003-"
+            "32383700%3De9c71c3b%3AJSESSIONID%3Dnode0.node0";
+
+        LOK_ASSERT_EQUAL(docUri, details.getDocumentURI());
+
+        const std::map<std::string, std::string>& params = details.getDocumentURIParams();
+        LOK_ASSERT_EQUAL(static_cast<std::size_t>(3), params.size());
+        auto it = params.find("access_header");
+        const std::string access_header =
+            "Authorization:%20Bearer%20poiuytrewq%0D%0A%0D%0AX-Requested-With:%20XMLHttpRequest";
+        LOK_ASSERT_EQUAL(access_header, it != params.end() ? it->second : "");
+        it = params.find("reuse_cookies");
+        const std::string reuse_cookies =
+            "lang=en-us:_ga_LMX4TVJ02K=GS1.1:Token=eyJhbGciOiJIUzUxMiJ9.vajknfkfajksdljfiwjek-"
+            "W90fmgVb3C-00-eSkJBDqDNSYA:PublicToken=abc:ZNPCQ003-32383700=e9c71c3b:JSESSIONID="
+            "node0.node0";
+        LOK_ASSERT_EQUAL(reuse_cookies, it != params.end() ? it->second : "");
+        it = params.find("permission");
+        const std::string permission = "edit";
+        LOK_ASSERT_EQUAL(permission, it != params.end() ? it->second : "");
+
+        LOK_ASSERT_EQUAL(static_cast<std::size_t>(4), details.size());
+        LOK_ASSERT_EQUAL_STR("cool", details[0]);
+        LOK_ASSERT(details.equals(0, "cool"));
+        LOK_ASSERT_EQUAL_STR("ws", details[1]);
+        LOK_ASSERT(details.equals(1, "ws"));
+
+        const std::string encodedDocUri =
+            "WOPISrc=https%3A%2F%2Fexample.com%3A8443%2Frest%2Ffiles%2Fwopi%2Ffiles%"
+            "2F8ac75551de4d89e60002&access_header=Authorization%3A%2520Bearer%2520poiuytrewq%250D%"
+            "250A%250D%250AX-Requested-With%3A%2520XMLHttpRequest&reuse_cookies=lang%3Den-us%3A_ga_"
+            "LMX4TVJ02K%3DGS1.1%3AToken%3DeyJhbGciOiJIUzUxMiJ9.vajknfkfajksdljfiwjek-W90fmgVb3C-00-"
+            "eSkJBDqDNSYA%3APublicToken%3Dabc%3AZNPCQ003-32383700%3De9c71c3b%3AJSESSIONID%3Dnode0."
+            "node0&permission=edit&compat=";
+
+        LOK_ASSERT_EQUAL(encodedDocUri, details[2]);
+
+        LOK_ASSERT_EQUAL_STR("cool", details.getField(RequestDetails::Field::Type));
+        LOK_ASSERT(details.equals(RequestDetails::Field::Type, "cool"));
+        LOK_ASSERT_EQUAL_STR("ws", details.getField(RequestDetails::Field::SessionId));
+        LOK_ASSERT(details.equals(RequestDetails::Field::SessionId, "ws"));
+        LOK_ASSERT_EQUAL_STR("", details.getField(RequestDetails::Field::Command));
+        LOK_ASSERT(details.equals(RequestDetails::Field::Command, ""));
+        LOK_ASSERT_EQUAL_STR("", details.getField(RequestDetails::Field::Serial));
+        LOK_ASSERT(details.equals(RequestDetails::Field::Serial, ""));
+
+        http::Request request2(URI);
+        request2.set("Host", Root);
+        request2.set("User-Agent", http::getAgentString());
+        request2.set("ProxyPrefix", ProxyPrefix);
+        http::RequestParser reqParser(request2);
+        LOK_ASSERT_EQUAL(details, RequestDetails(reqParser, ""));
+    }
+}
 void RequestDetailsTests::testAuthorization()
 {
     constexpr std::string_view testname = __func__;

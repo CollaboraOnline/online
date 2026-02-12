@@ -36,7 +36,7 @@
  * Example:
  *  convert-to
  *
- * cool URI: used to load cool.html and other static files.
+ * browser URI: used to load cool.html and other static files.
  * Origin: the page where the document will be embedded.
  * Format:
  *  /browser/<coolwsd-version-hash>/[path/]<filename>.<ext>[?WOPISrc=<encoded-document-URI>]
@@ -45,9 +45,9 @@
  *  /browser/49c225146/src/map/Clipboard.js
  *  /browser/49c225146/cool.html?WOPISrc=http%3A%2F%2Flocalhost%2Fnextcloud%2Findex.php%2Fapps%2Frichdocuments%2Fwopi%2Ffiles%2F593_ocqiesh0cngs&title=empty.odt&lang=en-us&closebutton=1&revisionhistory=1
  *
- * cool URI: used to load the document.
+ * cool URI: used to load the document (see below for newer format).
  * Origin: cool.html
- * Format:
+ * Format (up-to 25.04):
  *  /cool/<encoded-document-URI+options>/ws?WOPISrc=<encoded-document-URI>&compat=/ws[/<sessionId>/<command>/<serial>]
  * Identifier: /cool/.
  *
@@ -93,6 +93,46 @@
  *
  * Alternatively, the documentURI (encoded) could be hexified, as follows:
  * /cool/0x123456789/ws?WOPISrc=<encoded-document-URI>&compat=/ws[/<sessionId>/<command>/<serial>]
+ *
+ * cool URI 2.0: used to load the document.
+ * Origin: cool.html
+ * Format (post 25.04):
+ *  /cool/ws?WOPISrc=<encoded-document-URI>&<options>&compat=/ws[/<sessionId>/<command>/<serial>]
+ * Identifier: /cool/.
+ *
+ * Example:
+ *  /cool/ws?
+ *  WOPISrc=http%3A%2F%2Flocalhost%2Fowncloud%2Findex.php%2Fapps%2Frichdocuments%2Fwopi%2F
+ *  files%2F165_ocgdpzbkm39u&access_token=ODhIXdJdbsVYQoKKCuaYofyzrovxD3MQ&access_token_ttl=0
+ *  &compat=%2F1c99a7bcdbf3209782d7eb38512e6564%2Fwrite%2F2
+ *  Where:
+ *      options:
+ *          access_token=ODhIXdJdbsVYQoKKCuaYofyzrovxD3MQ&access_token_ttl=0
+ *      WOPISrc:
+ *          http%3A%2F%2Flocalhost%2Fowncloud%2Findex.php%2Fapps%2Frichdocuments%2Fwopi%2Ffiles%2F165_ocgdpzbkm39u
+ *      sessionId:
+ *          1c99a7bcdbf3209782d7eb38512e6564
+ *      command:
+ *          write
+ *      serial:
+ *          2
+ *  In decoded form:
+ *      document-URI+options:
+ *          http://localhost/owncloud/index.php/apps/richdocuments/wopi/files/165_ocgdpzbkm39u?access_token=
+ *          ODhIXdJdbsVYQoKKCuaYofyzrovxD3MQ&access_token_ttl=0
+ *      document-URI:
+ *          http://localhost/owncloud/index.php/apps/richdocuments/wopi/files/165_ocgdpzbkm39u
+ *
+ * This is the new and simplified form. It avoids duplicate document-URI (once in the document-URI+options and once
+ * in the WOPISrc), and makes the options more transparent.
+ *
+ * The different sections are henceforth given names to help both in documenting and
+ * communicating them, and to facilitate parsing them.
+ *
+ * /cool/ws?WOPISrc=<encoded-document-URI>[&<options>][&compat=<encoded-sessionId-command-serial>
+ *                  |-------WOPISrc------|  |options|          |--------------compat------------|
+ *                                                             |sessionId|/|-command-|/|-serial-|
+ *
  */
 class RequestDetails
 {
