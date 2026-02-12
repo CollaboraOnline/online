@@ -50,6 +50,7 @@ window.L.Control.Notebookbar = window.L.Control.extend({
 			this.model.fullUpdate(this.getFullJSON(this.HOME_TAB_ID));
 
 		this.map.on('notebookbar', this.onNotebookbar, this);
+		this.map.on('commandstatechanged', this.onCommandStateChanged, this);
 	},
 
 	// on show
@@ -530,6 +531,23 @@ window.L.Control.Notebookbar = window.L.Control.extend({
 			const tabId = defaultTab.attr('id');
 			this.updateButtonVisibilityForContext(requestedContext, tabId);
 			return;
+		}
+	},
+
+	onCommandStateChanged: function(event) {
+		if (event.commandName === 'TableAutoFillInfo' && this.map.getDocType() === 'spreadsheet') {
+			var isTable = false;
+			if (event.state && event.state.rectangle && event.state.rectangle !== 'EMPTY') {
+				isTable = true;
+			}
+
+			if (isTable) {
+				if (this._lastContext !== 'Table') {
+					app.events.fire('contextchange', { appId: 'com.sun.star.sheet.SpreadsheetDocument', context: 'Table' });
+				}
+			} else if (this._lastContext === 'Table') {
+				app.events.fire('contextchange', { appId: 'com.sun.star.sheet.SpreadsheetDocument', context: 'default' });
+			}
 		}
 	},
 
