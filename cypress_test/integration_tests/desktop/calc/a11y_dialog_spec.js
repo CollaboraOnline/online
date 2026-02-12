@@ -56,7 +56,6 @@ const allCalcDialogs = [
 const excludedCommonDialogs = [
     '.uno:AcceptTrackedChanges',
     '.uno:GotoPage',
-    '.uno:Signature', // need to add signing infra
     '.uno:SpellingAndGrammarDialog',
     '.uno:SplitCell',
 ];
