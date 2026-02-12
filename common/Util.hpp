@@ -32,7 +32,7 @@
 
 #include <Poco/File.h>
 #include <Poco/Path.h>
-#include <Poco/RegularExpression.h>
+#include <regex>
 
 #define LOK_USE_UNSTABLE_API
 #include <LibreOfficeKit/LibreOfficeKitEnums.h>
