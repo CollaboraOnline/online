@@ -297,32 +297,21 @@ class ContextToolbar extends JSDialogComponent {
 				text: _UNO('.uno:InsertAnnotation'),
 				command: '.uno:InsertAnnotation',
 			} as ToolItemWidgetJSON,
+			{
+				type: 'separator',
+				id: 'home-aiconfig-break',
+				orientation: 'vertical',
+				visible: !!this.map.isAIEnabled,
+			} as SeparatorWidgetJSON,
+			{
+				id: 'home-airewrite',
+				type: 'bigcustomtoolitem',
+				text: _('Rewrite'),
+				icon: 'lc_ai_rewrite.svg',
+				visible: !!this.map.isAIEnabled,
+				command: 'rewritetextai',
+			} as ToolItemWidgetJSON,
 		];
-
-		if (this.map.isAIEnabled) {
-			contextItems.push(
-				{
-					type: 'separator',
-					id: 'home-aiconfig-break',
-					orientation: 'vertical',
-				} as SeparatorWidgetJSON,
-				{
-					id: 'home-aiconfig',
-					type: 'menubutton',
-					text: _('AI'),
-					icon: 'lc_settings.svg', // Replace with AI icon when available
-					menu: [
-						{
-							type: 'action',
-							id: 'rewrite-selection',
-							text: _('Rewrite Selection'),
-							action: 'rewritetextai'
-						},
-					] as Array<MenuDefinition>,
-				} as MenuButtonWidgetJSON,
-			);
-		}
-
 		return contextItems;
 	}
 

@@ -96,22 +96,6 @@ class Dispatcher {
 		this.actionsMap['remoteaicontent'] = function () {
 			app.map.fire('postMessage', { msgId: 'UI_InsertAIContent' });
 		};
-		this.actionsMap['rewritetextai'] = async function () {
-			// Check if text is selected
-			const copyState = app.map['stateChangeHandler']?.getItemValue('.uno:Copy');
-
-			if (copyState !== 'enabled') {
-				app.map.uiManager.showInfoModal(
-					'no-text-selected',
-					_('Please select text to rewrite.')
-				);
-				return;
-			}
-
-			// Open rewrite dialog
-			const dialog = JSDialog.aiRewriteTextDialog();
-			dialog.open();
-		};
 		// TODO: deduplicate
 		this.actionsMap['hyperlinkdialog'] = function () {
 			app.map.sendUnoCommand('.uno:HyperlinkDialog');
@@ -366,6 +350,25 @@ class Dispatcher {
 			} else {
 				console.warn('A11yValidator not available');
 			}
+		};
+	}
+
+	private addAICommands() {
+		this.actionsMap['rewritetextai'] = function () {
+			// Check if text is selected
+			const copyState =
+				app.map['stateChangeHandler']?.getItemValue('.uno:Copy');
+
+			if (copyState !== 'enabled') {
+				app.map.uiManager.showInfoModal(
+					'no-text-selected',
+					_('Please select text to rewrite.'),
+				);
+				return;
+			}
+
+			const dialog = JSDialog.aiRewriteTextDialog();
+			dialog.open();
 		};
 	}
 
@@ -883,6 +886,7 @@ class Dispatcher {
 
 		this.addGeneralCommands();
 		this.addExportCommands();
+		this.addAICommands();
 
 		if (docType === 'text') {
 			this.addWriterCommands();
