@@ -2435,6 +2435,7 @@ class Menubar extends window.L.Control {
 	 */
 	private _createFileIcon(): void {
 		if (!(window.logoURL && window.logoURL == "none")) {
+			var docType = this._map.getDocType();
 			var liItem = window.L.DomUtil.create('li', '');
 			liItem.id = 'document-header';
 			liItem.setAttribute('role', 'menuitem');
@@ -2445,7 +2446,23 @@ class Menubar extends window.L.Control {
 			aItem.setAttribute('aria-label', _('file type icon'));
 			aItem.target = '_blank';
 
-			if (window.logoURL) {
+			var iconClass = 'document-logo';
+			var iconTooltip;
+			if (!window.logoURL) {
+				if (docType === 'text') {
+					iconClass += ' writer-icon-img';
+					iconTooltip = 'Writer';
+				} else if (docType === 'spreadsheet') {
+					iconClass += ' calc-icon-img';
+					iconTooltip = 'Calc';
+				} else if (docType === 'presentation') {
+					iconClass += ' impress-icon-img';
+					iconTooltip = 'Impress';
+				} else if (docType === 'drawing') {
+					iconClass += ' draw-icon-img';
+					iconTooltip = 'Draw';
+				}
+			} else {
 				aItem.style.backgroundImage = "url(" + window.logoURL + ")";
 			}
 
@@ -2453,6 +2470,10 @@ class Menubar extends window.L.Control {
 				this._menubarCont.insertBefore(liItem, this._menubarCont.firstChild);
 
 			var $docLogo = $(aItem);
+			$docLogo.addClass(iconClass);
+			if (iconTooltip) {
+				$docLogo.attr('data-cooltip', iconTooltip);
+			}
 			$docLogo.bind('click', {self: this}, this._createDocument);
 			$docLogo.bind('click', this._createDocument.bind(this));
 		}
