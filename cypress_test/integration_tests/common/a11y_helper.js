@@ -387,6 +387,14 @@ function handleDialog(win, level, command, isWarningDialog) {
 
 				cy.cGet('#listbox-data .ui-treeview-entry > div:first-child').dblclick();
 				handleDialog(win, level + 1, '.uno:DataDataPilotRun:Data');
+			} else if (command == '.uno:InsertObjectChart') {
+				cy.cGet('#next').click();
+				helper.processToIdle(win);
+				cy.cGet('#IB_RANGE-button').click();
+				// At some point this might begin to behave as if the current dialog turned
+				// into a cell selector, in which case the dialog will be the same level
+				// not a level higher I imagine.
+				handleDialog(win, level + 1);
 			}
 
 			handleTabsInDialog(win, level, command);
