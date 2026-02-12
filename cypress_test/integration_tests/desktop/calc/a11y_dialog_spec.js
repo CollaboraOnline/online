@@ -1,4 +1,4 @@
-/* global describe expect it cy before after afterEach require */
+/* global describe expect it cy Cypress before after afterEach require */
 
 var helper = require('../../common/helper');
 var calcHelper = require('../../common/calc_helper');
@@ -171,6 +171,48 @@ describe(['tagdesktop'], 'Accessibility Calc Dialog Tests', { testIsolation: fal
                 a11yHelper.testDialog(win, commandSpec);
             });
         }
+    });
+
+    it('Graphic dialog', function () {
+        cy.viewport(1920,1080);
+        helper.processToIdle(win);
+
+        desktopHelper.insertImage('calc');
+
+        a11yHelper.testDialog(win, '.uno:CompressGraphic');
+        a11yHelper.testDialog(win, '.uno:TransformDialog');
+        a11yHelper.testDialog(win, '.uno:FormatArea');
+        a11yHelper.testDialog(win, '.uno:FormatLine');
+
+        // exit shape mode
+        helper.typeIntoDocument('{esc}');
+
+        cy.viewport(Cypress.config('viewportWidth'), Cypress.config('viewportHeight'));
+        desktopHelper.selectZoomLevel('100', false);
+
+        // exit shape mode
+        helper.typeIntoDocument('{esc}');
+
+        cy.viewport(Cypress.config('viewportWidth'), Cypress.config('viewportHeight'));
+        desktopHelper.selectZoomLevel('100', false);
+    });
+
+    it('Shape paragraph dialog', function () {
+        cy.then(() => {
+            win.app.map.sendUnoCommand('.uno:BasicShapes.octagon');
+        });
+
+        cy.cGet('#test-div-shapeHandlesSection').should('exist');
+
+        helper.typeIntoDocument('{enter}');
+
+        cy.then(() => {
+            win.app.map.sendUnoCommand('.uno:ParagraphDialog');
+        });
+        a11yHelper.handleDialog(win, 1);
+
+        // exit shape mode
+        helper.typeIntoDocument('{esc}');
     });
 
     it.skip('PasteSpecial Dialog (Buggy)', function () {
