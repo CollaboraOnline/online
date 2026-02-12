@@ -120,7 +120,6 @@ m4_ifelse(MOBILEAPP,[true],
         <ul id="main-menu" class="sm sm-simple lo-menu readonly"></ul>
         <div id="document-titlebar">
           <div class="document-title">
-            <!-- visuallyhidden: hide it visually but keep it available to screen reader and other assistive technology -->
             <label class="visuallyhidden" for="document-name-input" aria-hidden="false">Document name</label>
             <input id="document-name-input" type="text" spellcheck="false" disabled="true" />
             <div class="loading-bar-container">
