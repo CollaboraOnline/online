@@ -18,7 +18,6 @@
 #include <Poco/Net/HTTPServerRequest.h>
 #include <Poco/Net/HTTPServerResponse.h>
 #include <Poco/Net/SocketAddress.h>
-#include <Poco/Version.h>
 
 #include "Common.hpp"
 
@@ -78,18 +77,10 @@ public:
     {
         return _dummyStream;
     }
-#if POCO_VERSION < 0x01080000
-    virtual bool expectContinue() const override
-    {
-        return false;
-    }
-#endif
-#if POCO_VERSION >= 0x01080000
     virtual bool secure() const override
     {
         return true;
     }
-#endif
     virtual const Poco::Net::SocketAddress& clientAddress() const override
     {
         return _clientAddress;
