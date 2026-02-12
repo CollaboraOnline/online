@@ -18,13 +18,12 @@
 
 #include <ProofKey.hpp>
 #include <Poco/Crypto/RSAKey.h>
-#include <Poco/Crypto/DigestEngine.h>
-#include <common/Util.hpp>
 
 #include <openssl/bn.h>
-#include <openssl/pem.h>
 #include <openssl/buffer.h>
-#include <openssl/opensslv.h>
+#include <openssl/evp.h>
+#include <openssl/param_build.h>
+#include <openssl/core_names.h>
 
 #include <cppunit/extensions/HelperMacros.h>
 
@@ -71,37 +70,48 @@ void WopiProofTests::verifySignature(const std::string& access, const std::strin
                                      int64_t ticks, const std::string& discoveryModulus,
                                      const std::string& discoveryExponent,
                                      const std::string& msgProofStr,
-                                     [[maybe_unused]] const std::string_view testname)
+                                     const std::string_view testname)
 {
-#if OPENSSL_VERSION_NUMBER > 0x10100000L && OPENSSL_VERSION_NUMBER < 0x30000000L
     std::vector<unsigned char> proof = Proof::GetProof(access, uri, ticks);
 
-    BIGNUM *modulus = Base64ToNum(discoveryModulus);
-    BIGNUM *exponent = Base64ToNum(discoveryExponent);
+    BIGNUM* modulus = Base64ToNum(discoveryModulus);
+    BIGNUM* exponent = Base64ToNum(discoveryExponent);
 
-    RSA *rsa = RSA_new();
-    LOK_ASSERT(rsa != nullptr);
-    LOK_ASSERT_EQUAL(1, RSA_set0_key(rsa, modulus, exponent, nullptr));
+    // Build an EVP_PKEY from modulus + exponent using OSSL_PARAM_BLD.
+    OSSL_PARAM_BLD* bld = OSSL_PARAM_BLD_new();
+    LOK_ASSERT(bld != nullptr);
+    LOK_ASSERT_EQUAL(1, OSSL_PARAM_BLD_push_BN(bld, OSSL_PKEY_PARAM_RSA_N, modulus));
+    LOK_ASSERT_EQUAL(1, OSSL_PARAM_BLD_push_BN(bld, OSSL_PKEY_PARAM_RSA_E, exponent));
+    OSSL_PARAM* params = OSSL_PARAM_BLD_to_param(bld);
+    LOK_ASSERT(params != nullptr);
 
+    EVP_PKEY_CTX* pctx = EVP_PKEY_CTX_new_from_name(nullptr, "RSA", nullptr);
+    LOK_ASSERT(pctx != nullptr);
+    LOK_ASSERT(EVP_PKEY_fromdata_init(pctx) > 0);
+
+    EVP_PKEY* pkey = nullptr;
+    LOK_ASSERT(EVP_PKEY_fromdata(pctx, &pkey, EVP_PKEY_PUBLIC_KEY, params) > 0);
+    LOK_ASSERT(pkey != nullptr);
+
+    EVP_PKEY_CTX_free(pctx);
+    OSSL_PARAM_free(params);
+    OSSL_PARAM_BLD_free(bld);
+    BN_free(modulus);
+    BN_free(exponent);
+
+    // Verify the signature using EVP_DigestVerify.
     std::vector<unsigned char> msgProof = Proof::Base64ToBytes(msgProofStr);
 
-    Poco::Crypto::DigestEngine digestEngine("SHA256");
-    digestEngine.update(proof.data(), proof.size());
-    std::vector<unsigned char> digest = digestEngine.digest();
+    EVP_MD_CTX* mdctx = EVP_MD_CTX_new();
+    LOK_ASSERT(mdctx != nullptr);
+    LOK_ASSERT_EQUAL(1, EVP_DigestVerifyInit(mdctx, nullptr, EVP_sha256(), nullptr, pkey));
+    LOK_ASSERT_EQUAL(1, EVP_DigestVerifyUpdate(mdctx, proof.data(), proof.size()));
+    LOK_ASSERT_EQUAL(1, EVP_DigestVerifyFinal(mdctx, msgProof.data(), msgProof.size()));
 
-    LOK_ASSERT_EQUAL(1, RSA_verify(digestEngine.nid(),
-                                   digest.data(), digest.size(),
-                                   msgProof.data(), msgProof.size(),
-                                   rsa));
+    EVP_MD_CTX_free(mdctx);
+    EVP_PKEY_free(pkey);
 
-    RSA_free(rsa);
-#else
-    (void)access; (void)uri; (void)ticks;
-    (void)discoveryModulus; (void)discoveryExponent;
-    (void)msgProofStr;
-    TST_LOG("OpenSSL too old/new to verify keys easily "
-            << OPENSSL_VERSION_TEXT << " needs to be at least 1.1.0, but not 3.0\n");
-#endif
+    TST_LOG("Signature verified successfully with " << OPENSSL_VERSION_TEXT);
 }
 
 void WopiProofTests::testExistingProof()
