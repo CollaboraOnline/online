@@ -311,6 +311,7 @@ COOL_JS_LST =\
 	src/canvas/CanvasSectionContainer.ts \
 	src/canvas/CanvasSectionObject.ts \
 	src/canvas/sections/HTMLObjectSection.ts \
+	src/canvas/sections/CompareChangesLabelSection.ts \
 	src/canvas/sections/CommentMarkerSubSection.ts \
 	src/canvas/sections/CommentSection.ts \
 	src/canvas/sections/CommentListSection.ts \
@@ -1112,6 +1113,7 @@ pot:
 		src/app/IconUtil.ts \
 		src/canvas/sections/CommentListSection.ts \
 		src/canvas/sections/CommentSection.ts \
+		src/canvas/sections/CompareChangesLabelSection.ts \
 		src/canvas/sections/ShapeHandlesSection.ts \
 		src/canvas/sections/URLPopUpSection.ts \
 		src/canvas/sections/TableInsertMarkerSection.ts \
