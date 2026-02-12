@@ -480,6 +480,9 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 		this._painter._tilesSection = app.sectionContainer.getSectionWithName('tiles');
 		app.sectionContainer.setDocumentAnchorSection(app.CSections.Tiles.name);
 
+		if (this._docType === 'text')
+			app.sectionContainer.addSection(new app.definitions.compareChangesLabelSection());
+
 		app.sectionContainer.getSectionWithName('tiles').onResize();
 
 		this._canvasOverlay = new CanvasOverlay(this._map, app.sectionContainer.getContext());
