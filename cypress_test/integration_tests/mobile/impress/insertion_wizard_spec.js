@@ -286,6 +286,7 @@ describe(['tagmobile', 'tagnextcloud'], 'Impress insertion wizard.', function() 
 		mobileHelper.openInsertionWizard();
 		cy.cGet('body').contains('.menu-entry-with-icon', 'More Fields...').click();
 		cy.cGet('body').contains('.menu-entry-with-icon', 'Date (fixed)').click();
+		cy.cGet('body').type('{esc}');
 		// Check the text
 		impressHelper.selectTextOfShape();
 		helper.copy();
@@ -300,6 +301,7 @@ describe(['tagmobile', 'tagnextcloud'], 'Impress insertion wizard.', function() 
 		mobileHelper.openInsertionWizard();
 		cy.cGet('body').contains('.menu-entry-with-icon', 'More Fields...').click();
 		cy.cGet('body').contains('.menu-entry-with-icon', 'Date (variable)').click();
+		cy.cGet('body').type('{esc}');
 		// Check the text
 		impressHelper.selectTextOfShape();
 		helper.copy();
@@ -314,6 +316,7 @@ describe(['tagmobile', 'tagnextcloud'], 'Impress insertion wizard.', function() 
 		mobileHelper.openInsertionWizard();
 		cy.cGet('body').contains('.menu-entry-with-icon', 'More Fields...').click();
 		cy.cGet('body').contains('.menu-entry-with-icon', 'Time (fixed)').click();
+		cy.cGet('body').type('{esc}');
 		// Check the text
 		impressHelper.selectTextOfShape();
 		helper.copy();
@@ -328,6 +331,7 @@ describe(['tagmobile', 'tagnextcloud'], 'Impress insertion wizard.', function() 
 		mobileHelper.openInsertionWizard();
 		cy.cGet('body').contains('.menu-entry-with-icon', 'More Fields...').click();
 		cy.cGet('body').contains('.menu-entry-with-icon', 'Time (variable)').click();
+		cy.cGet('body').type('{esc}');
 		// Check the text
 		impressHelper.selectTextOfShape();
 		helper.copy();
@@ -342,6 +346,7 @@ describe(['tagmobile', 'tagnextcloud'], 'Impress insertion wizard.', function() 
 		mobileHelper.openInsertionWizard();
 		cy.cGet('body').contains('.menu-entry-with-icon', 'More Fields...').click();
 		cy.cGet('body').contains('.menu-entry-with-icon', 'Slide Number').click();
+		cy.cGet('body').type('{esc}');
 		// Check the text
 		impressHelper.selectTextOfShape();
 		helper.copy();
@@ -354,6 +359,7 @@ describe(['tagmobile', 'tagnextcloud'], 'Impress insertion wizard.', function() 
 		mobileHelper.openInsertionWizard();
 		cy.cGet('body').contains('.menu-entry-with-icon', 'More Fields...').click();
 		cy.cGet('body').contains('.menu-entry-with-icon', 'Slide Title').click();
+		cy.cGet('body').type('{esc}');
 		// Check the text
 		impressHelper.selectTextOfShape();
 		helper.copy();
@@ -366,6 +372,7 @@ describe(['tagmobile', 'tagnextcloud'], 'Impress insertion wizard.', function() 
 		mobileHelper.openInsertionWizard();
 		cy.cGet('body').contains('.menu-entry-with-icon', 'More Fields...').click();
 		cy.cGet('body').contains('.menu-entry-with-icon', 'Slide Count').click();
+		cy.cGet('body').type('{esc}');
 		// Check the text
 		impressHelper.selectTextOfShape();
 		helper.copy();
