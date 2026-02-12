@@ -480,6 +480,9 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 		this._painter._tilesSection = app.sectionContainer.getSectionWithName('tiles');
 		app.sectionContainer.setDocumentAnchorSection(app.CSections.Tiles.name);
 
+		if (this._docType === 'text')
+			app.sectionContainer.addSection(new app.definitions.compareChangesLabelSection());
+
 		app.sectionContainer.getSectionWithName('tiles').onResize();
 
 		this._canvasOverlay = new CanvasOverlay(this._map, app.sectionContainer.getContext());
@@ -3148,6 +3151,12 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 	_fitWidthZoom: function (e, maxZoom, recalcFirstFit=false) {
 		if (this.isCalc() || this.isDraw())
 			return;
+
+		if (this._map.uiManager.getStartCompareChanges()) {
+			// comparechanges view, don't zoom in, to have space for two pages side by
+			// side.
+			return;
+		}
 
 		if (this.isImpress() && !maxZoom)
 			maxZoom = 10;

@@ -126,9 +126,18 @@ function removeShapeSelection() {
 			var XPos = items[0].getBoundingClientRect().left + 10;
 			var YPos = items[0].getBoundingClientRect().top + 10;
 			cy.cGet('body').click(XPos, YPos);
-			cy.cGet('body').type('{esc}');
-			cy.cGet('body').type('{esc}');
 		});
+
+	// The click triggers MouseControl.onClick which calls focus(false),
+	// blurring the textarea on mobile. Re-focus depends on INCOMING
+	// invalidatecursor from core. processToIdle ensures that message
+	// has been received before we send the Esc keys.
+	cy.getFrameWindow().then(function(win) {
+		helper.processToIdle(win);
+	});
+
+	cy.cGet('body').type('{esc}');
+	cy.cGet('body').type('{esc}');
 
 	cy.cGet('#document-container')
 		.should(function(overlay) {

@@ -373,6 +373,7 @@ interface TreeEntryJSON {
 interface TreeHeaderJSON {
 	text: string;
 	sortable: boolean; // can be sorted by column
+	arrow?: 'up' | 'down'; // sorting arrow to show
 }
 
 interface TreeWidgetJSON extends WidgetJSON {
@@ -387,6 +388,7 @@ interface TreeWidgetJSON extends WidgetJSON {
 	highlightTerm?: string; // what, if any, entries are we highlighting?
 	customEntryRenderer?: boolean;
 	noSearchField?: boolean; // When true, the widget shouldn't have a search field added
+	sortLocally?: boolean; // When true, the widget will run sort algorithm in JS isntead of callback (lists only)
 }
 
 interface IconViewEntry {

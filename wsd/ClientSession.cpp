@@ -396,9 +396,18 @@ void ClientSession::handleClipboardRequest(DocumentBroker::ClipboardRequest     
                     std::string commandName;
                     JsonUtil::findJSONValue(json, "commandName", commandName);
                     http::Session::FinishedCallback finishedCallback =
-                        [this, commandName=std::move(commandName),
+                        [selfWeak = weak_from_this(), this, commandName=std::move(commandName),
                          docBroker, jailClipFile, clipFile](const std::shared_ptr<http::Session>& session)
                     {
+                        std::shared_ptr<MessageHandlerInterface> selfLifecycle = selfWeak.lock();
+                        if (!selfLifecycle)
+                        {
+                            LOG_ERR_S("Session that requested: " << clipFile << " has already ended.");
+                            if (UnitWSD::isUnitTesting())
+                                UnitWSD::get().onClipboardDownloadSessionGone();
+                            return;
+                        }
+
                         const std::shared_ptr<const http::Response> httpResponse =
                             session->response();
                         if (httpResponse->statusLine().statusCode() != http::StatusCode::OK)
@@ -430,6 +439,9 @@ void ClientSession::handleClipboardRequest(DocumentBroker::ClipboardRequest     
                         }
                     };
 
+                    if (UnitWSD::isUnitTesting())
+                        UnitWSD::get().filterClipboardDownloadURL(url);
+
                     const std::string pathAndQuery = Poco::URI(url).getPathAndQuery();
                     if (pathAndQuery.find("/cool/clipboard") != std::string::npos)
                     {
@@ -447,6 +459,10 @@ void ClientSession::handleClipboardRequest(DocumentBroker::ClipboardRequest     
                             httpSession->setConnectFailHandler(std::move(connectFailCallback));
                             http::Request httpRequest(Poco::URI(url).getPathAndQuery());
                             httpSession->asyncRequest(httpRequest, docBroker->getPoll());
+
+                            if (UnitWSD::isUnitTesting())
+                                UnitWSD::get().onClipboardDownloadRequest(httpSession);
+
                             const std::shared_ptr<http::Response> httpResponse = httpSession->response();
                             httpResponse->saveBodyToFile(jailClipFile);
                         }

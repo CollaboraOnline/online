@@ -311,6 +311,7 @@ COOL_JS_LST =\
 	src/canvas/CanvasSectionContainer.ts \
 	src/canvas/CanvasSectionObject.ts \
 	src/canvas/sections/HTMLObjectSection.ts \
+	src/canvas/sections/CompareChangesLabelSection.ts \
 	src/canvas/sections/CommentMarkerSubSection.ts \
 	src/canvas/sections/CommentSection.ts \
 	src/canvas/sections/CommentListSection.ts \
@@ -937,7 +938,7 @@ $(DIST_FOLDER)/cool.html: $(srcdir)/html/cool.html.m4 \
 		$(srcdir)/html/cool.html.m4 > $@
 
 node_modules: package.json node_shrinkpack
-	@npm ci --offline
+	@UV_USE_IO_URING=0 npm ci --offline
 	@touch node_modules
 
 update-shrinkpack:
@@ -1112,6 +1113,7 @@ pot:
 		src/app/IconUtil.ts \
 		src/canvas/sections/CommentListSection.ts \
 		src/canvas/sections/CommentSection.ts \
+		src/canvas/sections/CompareChangesLabelSection.ts \
 		src/canvas/sections/ShapeHandlesSection.ts \
 		src/canvas/sections/URLPopUpSection.ts \
 		src/canvas/sections/TableInsertMarkerSection.ts \

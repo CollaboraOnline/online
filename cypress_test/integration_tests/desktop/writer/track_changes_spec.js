@@ -143,6 +143,39 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Track Changes', function (
 		cy.cGet('#AcceptRejectChangesDialog img.swresredline_deletedimg').should('be.visible');
 	});
 
+	it('View Changes mode has tiles for both modes', function () {
+		// Given a document with tracked changes:
+		desktopHelper.switchUIToNotebookbar();
+		cy.cGet('#Review-tab-label').click();
+
+		// When entering doc compare mode via View Changes:
+		desktopHelper.getNbIcon('TrackChanges', 'Review').click();
+		cy.cGet('#compare-tracked-change').filter(':visible').click();
+
+		// Then tiles should exist for both mode=1 (LeftSide) and mode=2 (RightSide)
+		// with content:
+		cy.getFrameWindow().then(function(win) {
+			cy.wrap(null).should(function() {
+				const tiles = win.TileManager.getTiles();
+				let hasMode1 = false;
+				let hasMode2 = false;
+				tiles.forEach(function(tile) {
+					if (tile.coords.mode === 1 && tile.hasContent() && tile.distanceFromView < Number.MAX_SAFE_INTEGER) {
+						hasMode1 = true;
+					}
+					if (tile.coords.mode === 2 && tile.hasContent() && tile.distanceFromView < Number.MAX_SAFE_INTEGER) {
+						hasMode2 = true;
+					}
+				});
+				// Without the accompanying fix in place, this test would have failed with:
+				// Timed out retrying after 10000ms: mode=1 (LeftSide) tiles with content and valid distance: expected false to be true
+				// i.e. left side tiles were missing.
+				expect(hasMode1, 'mode=1 (LeftSide) tiles with content and valid distance').to.be.true;
+				expect(hasMode2, 'mode=2 (RightSide) tiles with content and valid distance').to.be.true;
+			});
+		});
+	});
+
 	it.skip('Comment Undo-Redo', function () {
 		for (var n = 0; n < 2; n++) {
 			desktopHelper.getCompactIconArrow('DefaultNumbering').click();

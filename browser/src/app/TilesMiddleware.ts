@@ -1322,15 +1322,19 @@ class TileManager {
 		return boundList.map((x: any) => this.pxBoundsToTileRange(x));
 	}
 
-	private static updateTileDistance(
-		tile: Tile,
-		zoom: number,
-		ignoreMode = false,
-	) {
+	private static updateTileDistance(tile: Tile, zoom: number) {
+		let modes = [app.map._docLayer._selectedMode];
+		if (
+			app.activeDocument &&
+			app.activeDocument.activeLayout.type === 'ViewLayoutCompareChanges'
+		) {
+			// 2 modes are active at the same time in compare changes view mode.
+			modes = [TileMode.LeftSide, TileMode.RightSide];
+		}
 		if (
 			tile.coords.z !== zoom ||
 			tile.coords.part !== app.map._docLayer._selectedPart ||
-			(tile.coords.mode !== app.map._docLayer._selectedMode && !ignoreMode)
+			!modes.includes(tile.coords.mode)
 		)
 			tile.distanceFromView = Number.MAX_SAFE_INTEGER;
 		else {
@@ -1366,14 +1370,8 @@ class TileManager {
 		else {
 			const zoom = Math.round(app.map.getZoom());
 
-			// 2 modes are active at the same time in compare changes view mode.
-			// If we don't ignore mode in that view mode, left side of the view is garbage collected, which is sad.
-			const ignoreMode =
-				app.activeDocument &&
-				app.activeDocument.activeLayout.type === 'ViewLayoutCompareChanges';
-
 			for (const [_index, tile] of this.tiles.entries()) {
-				this.updateTileDistance(tile, zoom, ignoreMode);
+				this.updateTileDistance(tile, zoom);
 			}
 
 			this.sortTileBitmapList();
@@ -1381,12 +1379,26 @@ class TileManager {
 	}
 
 	private static getMissingTiles(
-		pixelBounds: any,
+		pixelBounds: cool.Bounds,
 		zoom: number,
 		isCurrent: boolean = false,
 	) {
+		if (
+			['ViewLayoutCompareChanges', 'ViewLayoutMultiPage'].includes(
+				app.activeDocument.activeLayout.type,
+			)
+		) {
+			this.beginTransaction();
+			const queue = this.checkRequestTiles(
+				app.activeDocument.activeLayout.getCurrentCoordList(),
+				false,
+			);
+			this.endTransaction(null);
+			return queue;
+		}
+
 		var tileRanges = this.pxBoundsToTileRanges(pixelBounds);
-		var queue = [];
+		const queue = [];
 
 		// If we're looking for tiles for the current (visible) area, update tile distance.
 		if (isCurrent) {
@@ -1559,6 +1571,10 @@ class TileManager {
 
 	public static get(coords: TileCoordData): Tile {
 		return this.tiles.get(coords.key());
+	}
+
+	public static getTiles(): Map<string, Tile> {
+		return this.tiles;
 	}
 
 	private static pixelCoordsToTwipTileBounds(coords: TileCoordData): number[] {
@@ -2259,7 +2275,10 @@ class TileManager {
 	}
 
 	// The "currentCoordList" is the currently visible coordinates list.
-	public static checkRequestTiles(currentCoordList: TileCoordData[]): void {
+	public static checkRequestTiles(
+		currentCoordList: TileCoordData[],
+		sendTileCombine = true,
+	): TileCoordData[] {
 		const tileCombineQueue = [];
 		for (var i = 0; i < currentCoordList.length; i++) {
 			let tile = TileManager.get(currentCoordList[i]);
@@ -2270,7 +2289,10 @@ class TileManager {
 			else this.makeTileCurrent(tile);
 		}
 
-		TileManager.sendTileCombineRequest(tileCombineQueue);
+		// Prefetching algortihm etc doesn't need this function to send tile combine request.
+		if (sendTileCombine) TileManager.sendTileCombineRequest(tileCombineQueue);
+
+		return tileCombineQueue;
 	}
 
 	public static updateFileBasedView(

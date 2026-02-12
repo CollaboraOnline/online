@@ -22,6 +22,8 @@ void simd_deltaInit(void);
 
 int simd_initPixRowSimd(const uint32_t *from, uint32_t *scratch, size_t *scratchLen, uint64_t *rleMask);
 
+int simd_copyRowSwapRB(unsigned char *dest, const unsigned char *src, unsigned int count);
+
 #ifdef __cplusplus
 } // extern "C"
 #endif

@@ -83,9 +83,9 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'JSDialog widgets visual te
 		// use sort feature
 		cy.cGet('#contenttree2 .ui-treeview-header-sort-icon').should('be.not.visible');
 		cy.cGet('#contenttree2 .ui-treeview-header-text').contains('Column 2').click();
-		cy.cGet('#contenttree2 .ui-treeview-header-text').contains('Column 2').click();
 		cy.cGet('#contenttree2 .ui-treeview-header-sort-icon').should('be.visible');
-		cy.cGet('#contenttree2').compareSnapshot('treeview_headers_sort', 0.14);
+		cy.cGet('#contenttree2 .ui-treeview-header-text').contains('Column 2').click();
+		cy.cGet('#contenttree2').compareSnapshot('treeview_headers_sort', 0.1);
 
 		// use filter feature
 		cy.cGet('#contenttree2').then(

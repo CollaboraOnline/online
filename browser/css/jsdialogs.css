@@ -451,6 +451,7 @@ algned to the bottom */
 	margin-bottom: 14px !important;
 }
 
+#table-style-options .notebookbar.ui-overflow-group-inner,
 .unotoolbutton.notebookbar.ui-content.has-label > *:not(.arrowbackground) {
 	height: var(--notebookbar-element-height) !important;
 	align-content: center;
@@ -1927,8 +1928,8 @@ button.menubutton.sidebar > span {
 .ui-color-picker-entry {
 	border: 1px solid transparent;
 	cursor: pointer;
-	width: 16px;
-	height: 16px;
+	width: 24px;
+	height: 24px;
 	appearance: none;
 	webkit-appearance: none;
 	margin: 0;
@@ -2994,7 +2995,7 @@ kbd,
 
 /* Listbox UI grid */
 .jsdialog.ui-grid[role='listbox']:not(:has(> .ui-iconview)) {
-	max-height: min(470px, 45vh);
+	max-height: 99vh;
 }
 
 .jsdialog.ui-grid[role='listbox'] {

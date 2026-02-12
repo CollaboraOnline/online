@@ -20,8 +20,7 @@ class ViewLayoutWriter extends ViewLayoutBase {
 
 	constructor() {
 		super();
-		app.map.on('zoomlevelschange', this.documentZoomOrResizeCallback, this);
-		app.map.on('resize', this.documentZoomOrResizeCallback, this);
+		app.map.on('zoomlevelschange', this.documentZoomCallback, this);
 		app.map.on('deleteannotation', this.annotationOperationsCallback, this);
 		app.map.on('insertannotation', this.annotationOperationsCallback, this);
 		app.map.on('importannotations', this.annotationOperationsCallback, this);
@@ -78,6 +77,19 @@ class ViewLayoutWriter extends ViewLayoutBase {
 		);
 	}
 
+	public getDocumentScrollOffset() {
+		if (this.commentsHiddenOrNotPresent()) return 0;
+		if (!this.viewHasEnoughSpaceToShowFullWidthComments()) return 0;
+
+		if (this.documentCanMoveLeft(true)) {
+			this.documentScrollOffset = 0;
+			this.documentScrollOffset = this.documentMoveLeftByOffset();
+			return this.documentScrollOffset;
+		}
+
+		return 0;
+	}
+
 	private recenterDocument() {
 		if (this.documentScrollOffset == 0) return;
 
@@ -111,19 +123,28 @@ class ViewLayoutWriter extends ViewLayoutBase {
 		}
 	}
 
-	private adjustDocumentMarginsForComments(onZoomOrResize: boolean) {
+	private adjustDocumentMarginsForComments(onZoom: boolean) {
 		this.unselectSelectedCommentIfAny();
 
 		if (this.commentsHiddenOrNotPresent()) return;
 
-		if (this.documentCanMoveLeft(onZoomOrResize)) {
-			if (onZoomOrResize) this.documentScrollOffset = 0;
+		if (this.documentCanMoveLeft(onZoom)) {
+			if (onZoom) this.documentScrollOffset = 0;
 			this.documentScrollOffset = this.documentMoveLeftByOffset();
-			this.scrollHorizontal(this.documentScrollOffset, true);
+			/*
+			 * we scrollHorizontal by 1 to trigger the layouting tasks in
+			 * the `ScrollSection.doMove` function, which calls `map.panBy`
+			 * to adjust the document center, and there we add the offset
+			 * to the x component to move the document to the left.
+			 * we only do it for the zoom events because for resize,
+			 * the layouting tasks are scheduled automatically by other
+			 * code, like that in CommentListSection.ts (updateDOM)
+			 */
+			this.scrollHorizontal(1, true);
 		}
 	}
 
-	private documentZoomOrResizeCallback() {
+	private documentZoomCallback() {
 		this.adjustDocumentMarginsForComments(true);
 	}
 

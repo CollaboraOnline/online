@@ -22,7 +22,7 @@ function selectAllTextOfDoc() {
 	cy.log('<< selectAllTextOfDoc - end');
 }
 
-function openFileProperties() {
+function openFileProperties(win) {
 	cy.log('>> openFileProperties - start');
 
 	cy.cGet('.jsdialog-window').should('not.exist');
@@ -33,6 +33,8 @@ function openFileProperties() {
 
 		cy.cGet('#File-container .unoSetDocumentProperties').click();
 	});
+
+	helper.processToIdle(win);
 
 	cy.cGet('.jsdialog-window').should('exist');
 

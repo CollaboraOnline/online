@@ -37,7 +37,7 @@ describe(['tagmultiuser'], 'Follow me slide show', function() {
 
         cy.cSetActiveFrame('#iframe2');
         getSlideShow().should('be.visible');
-        getSlideShowContent().find("#endshow").click();
+        getSlideShowContent().find(".slideshow-nav-container #endshow").click();
         getSlideShow().should('not.exist');
         cy.cGet('.notebookbar #slide-presentation-follow-me').should('be.not.visible');
         cy.cGet('.notebookbar #slide-presentation-follow').should('be.visible');
@@ -65,7 +65,7 @@ describe(['tagmultiuser'], 'Follow me slide show', function() {
         getSlideShow().should('be.visible');
         for (let i = 0; i < 5; i++) {
             cy.wait(500);
-            getSlideShowContent().find("#next").click();
+            getSlideShowContent().find(".slideshow-nav-container #next").click();
         }
         getSlideShowCanvas().compareSnapshot('slide2_effect3', 0.1);
 
@@ -75,7 +75,7 @@ describe(['tagmultiuser'], 'Follow me slide show', function() {
 
         // go to previous effect
         cy.cSetActiveFrame('#iframe2');
-        getSlideShowContent().find("#previous").click();
+        getSlideShowContent().find(".slideshow-nav-container #previous").click();
         getSlideShowCanvas().compareSnapshot('slide2_effect2', 0.1);
         cy.cSetActiveFrame('#iframe1');
         getSlideShowCanvas().compareSnapshot('slide2_effect2', 0.1);
@@ -84,7 +84,7 @@ describe(['tagmultiuser'], 'Follow me slide show', function() {
         cy.cSetActiveFrame('#iframe2');
         for (let i = 0; i < 3; i++) {
             cy.wait(500);
-            getSlideShowContent().find("#previous").click();
+            getSlideShowContent().find(".slideshow-nav-container #previous").click();
         }
         getSlideShowCanvas().compareSnapshot('effect1', 0.1);
         cy.cSetActiveFrame('#iframe1');
@@ -100,7 +100,7 @@ describe(['tagmultiuser'], 'Follow me slide show', function() {
         getSlideShow().should('be.visible');
         for (let i = 0; i < 4; i++) {
             cy.wait(500);
-            getSlideShowContent().find("#next").click();
+            getSlideShowContent().find(".slideshow-nav-container #next").click();
         }
         getSlideShowCanvas().compareSnapshot('slide2_effect2', 0.1);
 
@@ -108,12 +108,12 @@ describe(['tagmultiuser'], 'Follow me slide show', function() {
         getSlideShow().should('be.visible');
         getSlideShowCanvas().compareSnapshot('slide2_effect2', 0.1);
 
-        //unfollow by going 2 slides forward
+        //unfollow by going 1 slide backward
         for (let i = 0; i < 3; i++) {
             cy.wait(500);
-            getSlideShowContent().find("#next").click();
+            getSlideShowContent().find(".slideshow-nav-container #previous").click();
         }
-        getSlideShowCanvas().compareSnapshot('slide4', 0.1);
+        getSlideShowCanvas().compareSnapshot('effect1', 0.1);
 
         //start following again
         cy.cSetActiveFrame('#iframe1');
@@ -123,7 +123,7 @@ describe(['tagmultiuser'], 'Follow me slide show', function() {
         getSlideShowCanvas().compareSnapshot('slide2_effect2', 0.1);
 
         cy.cSetActiveFrame('#iframe2');
-        getSlideShowContent().find("#next").click();
+        getSlideShowContent().find(".slideshow-nav-container #next").click();
         cy.wait(500);
         getSlideShowCanvas().compareSnapshot('slide2_effect3', 0.1);
     });
@@ -137,12 +137,12 @@ describe(['tagmultiuser'], 'Follow me slide show', function() {
         getSlideShow().should('be.visible');
         for (let i = 0; i < 4; i++) {
             cy.wait(500);
-            getSlideShowContent().find("#next").click();
+            getSlideShowContent().find(".slideshow-nav-container #next").click();
         }
         getSlideShowCanvas().compareSnapshot('slide2_effect2', 0.1);
 
         cy.cSetActiveFrame('#iframe1');
-        getSlideShowContent().find("#endshow").click();
+        getSlideShowContent().find(".slideshow-nav-container #endshow").click();
         getSlideShow().should('not.exist');
         cy.wait(1000);
         cy.cGet('.notebookbar #slide-presentation-follow').should('be.visible');
@@ -155,7 +155,7 @@ describe(['tagmultiuser'], 'Follow me slide show', function() {
         cy.cSetActiveFrame('#iframe2');
         cy.cGet('.notebookbar #slide-presentation-follow-me').click();
         cy.wait(500);
-        getSlideShowContent().find("#next").click();
+        getSlideShowContent().find(".slideshow-nav-container #next").click();
         cy.wait(500);
 
         getSlideShowCanvas().compareSnapshot('effect1', 0.1);
@@ -164,7 +164,7 @@ describe(['tagmultiuser'], 'Follow me slide show', function() {
         getSlideShowCanvas().compareSnapshot('effect1', 0.1);
 
         cy.cSetActiveFrame('#iframe2');
-        getSlideShowContent().find("#endshow").click();
+        getSlideShowContent().find(".slideshow-nav-container #endshow").click();
         getSlideShow().should('not.exist');
         cy.cSetActiveFrame('#iframe1');
         getSlideShow().should('not.exist');

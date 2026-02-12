@@ -22,6 +22,7 @@ class A11yValidatorException extends Error {
 
 class A11yValidator {
 	private checks: Array<(type: string, element: HTMLElement) => void> = [];
+	private _directlyValidatedElements: Set<Element> | null = null;
 
 	constructor() {
 		this.setupChecks();
@@ -57,8 +58,8 @@ class A11yValidator {
 
 		for (let i = 0; i < element.children.length; i++) {
 			const child = element.children[i];
-			if (child instanceof HTMLElement) {
-				this.checkNativeButtonElement(type, child);
+			if (this.shouldCheckChild(child)) {
+				this.checkNativeButtonElement(type, child as HTMLElement);
 			}
 		}
 	}
@@ -149,10 +150,10 @@ class A11yValidator {
 				const ariaLabel = element.getAttribute('aria-label') ?? '';
 				const hasAriaLabel = ariaLabel.trim() !== '';
 
-				// Form elements must have a label
-				const formElements = ['INPUT', 'SELECT', 'TEXTAREA'];
-
-				if (formElements.includes(element.tagName) && !hasAriaLabel) {
+				if (
+					JSDialog.GetFormControlTypesInCO().has(element.tagName) &&
+					!hasAriaLabel
+				) {
 					throw new A11yValidatorException(
 						`In '${this.getDialogTitle(element)}' at '${this.getElementPath(element)}': element in widget of type '${type}' is missing label: it should have either <label>, aria-labelledby or aria-label attribute.`,
 					);
@@ -162,8 +163,8 @@ class A11yValidator {
 
 		for (let i = 0; i < element.children.length; i++) {
 			const child = element.children[i];
-			if (child instanceof HTMLElement) {
-				this.checkElementHasLabel(type, child);
+			if (this.shouldCheckChild(child)) {
+				this.checkElementHasLabel(type, child as HTMLElement);
 			}
 		}
 	}
@@ -173,19 +174,13 @@ class A11yValidator {
 			const htmlFor = (element as HTMLLabelElement).htmlFor?.trim();
 			if (htmlFor) {
 				const referencedElement = document.getElementById(htmlFor);
-				const labelableElements = [
-					'INPUT',
-					'SELECT',
-					'TEXTAREA',
-					'METER',
-					'OUTPUT',
-					'PROGRESS',
-				];
 				if (!referencedElement) {
 					throw new A11yValidatorException(
 						`In '${this.getDialogTitle(element)}' at '${this.getElementPath(element)}': label element in widget of type '${type}' has htmlFor attribute pointing to non-existing element with id '${htmlFor}'`,
 					);
-				} else if (!labelableElements.includes(referencedElement.tagName)) {
+				} else if (
+					!JSDialog.GetFormControlTypesInCO().has(referencedElement.tagName)
+				) {
 					throw new A11yValidatorException(
 						`In '${this.getDialogTitle(element)}' at '${this.getElementPath(element)}': label element in widget of type '${type}' references non-labelable element <${referencedElement.tagName.toLowerCase()}> via htmlFor attribute. Try using aria-labelledby on the referenced element instead.`,
 					);
@@ -208,6 +203,13 @@ class A11yValidator {
 				}
 			}
 		}
+	}
+
+	private shouldCheckChild(child: Element): boolean {
+		return (
+			child instanceof HTMLElement &&
+			!this._directlyValidatedElements?.has(child)
+		);
 	}
 
 	private isVisible(element: HTMLElement): boolean {
@@ -240,10 +242,19 @@ class A11yValidator {
 		return ids.length > 0 ? ids.join(' > ') : '(no ids in path)';
 	}
 
-	validateContainer(dialogElement: HTMLElement): number {
+	validateContainer(
+		dialogElement: HTMLElement,
+		extraElement?: HTMLElement,
+	): number {
 		// Find all widgets in the dialog that have an id
 		const widgets = dialogElement.querySelectorAll('[id]');
 		let errorCount = 0;
+
+		// Build a set of widget elements so that the recursive checks
+		// (checkNativeButtonElement, checkElementHasLabel) can skip
+		// children that will be validated individually.  Without this,
+		// every parent re-walks all descendants → O(n²).
+		this._directlyValidatedElements = new Set(Array.from(widgets));
 
 		widgets.forEach((widget) => {
 			if (widget instanceof HTMLElement) {
@@ -257,22 +268,25 @@ class A11yValidator {
 			}
 		});
 
+		if (extraElement && !this._directlyValidatedElements.has(extraElement)) {
+			try {
+				this.checkWidget('dialog-content', extraElement);
+			} catch (error) {
+				errorCount++;
+			}
+		}
+
+		this._directlyValidatedElements = null;
 		return errorCount;
 	}
 
 	validateDialog(dialogElement: HTMLElement): void {
 		const content = dialogElement.querySelector('.ui-dialog-content');
 
-		let errorCount = this.validateContainer(dialogElement);
-
-		// Also validate the dialog content container itself
-		if (content instanceof HTMLElement) {
-			try {
-				this.checkWidget('dialog-content', content);
-			} catch (error) {
-				errorCount++;
-			}
-		}
+		const errorCount = this.validateContainer(
+			dialogElement,
+			content instanceof HTMLElement ? content : undefined,
+		);
 
 		if (errorCount === 0) {
 			console.error('A11yValidator: dialog passed all checks');

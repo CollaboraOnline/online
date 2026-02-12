@@ -30,6 +30,11 @@ function enableEditingMobile() {
 			.should('be.visible');
 	});
 
+	// Wait until core has processed outstanding input and has returned to idle.
+	cy.getFrameWindow().then((win) => {
+		helper.processToIdle(win);
+	});
+
 	cy.log('<< enableEditingMobile - end');
 }
 

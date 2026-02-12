@@ -37,9 +37,8 @@ function typeIntoSearchField(text) {
     cy.cGet('input#searchterm-input-dialog').type('{selectall}{backspace}' + text);
     cy.cGet('input#searchterm-input-dialog').should('have.prop', 'value', text);
 
-    cy.cGet('#search').should('not.be.disabled');
-    cy.cGet('#searchall').should('not.be.disabled'); //doesnt seem to exist in impress
-    cy.cGet('#backsearch').should('not.be.disabled');
+    cy.cGet('#search-button').should('not.have.attr', 'disabled');
+    cy.cGet('#backsearch-button').should('not.have.attr', 'disabled');
 
     cy.log('<< typeIntoSearchField - end');
 }
@@ -48,8 +47,8 @@ function typeIntoSearchField(text) {
 function findNext() {
     cy.log('>> findNext - start');
 
-    cy.cGet('#search').should('not.have.attr', 'disabled');
-    cy.cGet('#search').click();
+    cy.cGet('#search-button').should('not.have.attr', 'disabled');
+    cy.cGet('#search-button').click();
 
     cy.log('<< findNext - end');
 }
@@ -58,8 +57,8 @@ function findNext() {
 function findPrev() {
     cy.log('>> findPrev - start');
 
-    cy.cGet('#backsearch').should('not.have.attr', 'disabled');
-    cy.cGet('#backsearch').click();
+    cy.cGet('#backsearch-button').should('not.have.attr', 'disabled');
+    cy.cGet('#backsearch-button').click();
 
     cy.log('<< findPrev - end');
 }

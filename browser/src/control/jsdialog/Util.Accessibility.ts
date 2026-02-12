@@ -19,7 +19,14 @@ function findLabelElementById(
 	container: HTMLElement | Document,
 	labelledById: string,
 	suffix: string,
+	content: HTMLElement,
 ): HTMLElement | null {
+	// First try to find a label element with matching id and for attribute
+	const label = container.querySelector<HTMLElement>(
+		`[id^="${labelledById}"][for="${content.id}"]`,
+	);
+	if (label) return label;
+
 	let candidateBaseId = `${labelledById}-label-${suffix}`;
 	let candidateElements = container.querySelectorAll<HTMLElement>(
 		`[id^="${candidateBaseId}"]`,
@@ -68,8 +75,14 @@ JSDialog.SetupA11yLabelForLabelableElement = function (
 					parentContainer,
 					data.labelledBy,
 					builder.options.suffix,
+					content,
 				) ||
-				findLabelElementById(document, data.labelledBy, builder.options.suffix);
+				findLabelElementById(
+					document,
+					data.labelledBy,
+					builder.options.suffix,
+					content,
+				);
 
 			if (!element) {
 				JSDialog.AddAriaLabel(content, data, builder);
@@ -143,4 +156,29 @@ JSDialog.AddAltAttrOnFocusableImg = function (
 			imageClass: image.className,
 		});
 	}
+};
+
+JSDialog.GetFormControlTypesInLO = function () {
+	return new Set([
+		'spinfield',
+		'edit',
+		'formattedfield',
+		'metricfield',
+		'combobox',
+		'radiobutton',
+		'checkbox',
+		'time',
+		'listbox',
+	]);
+};
+
+JSDialog.GetFormControlTypesInCO = function () {
+	return new Set([
+		'INPUT',
+		'SELECT',
+		'TEXTAREA',
+		'METER',
+		'OUTPUT',
+		'PROGRESS',
+	]);
 };

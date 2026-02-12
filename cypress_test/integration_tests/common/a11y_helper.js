@@ -412,22 +412,7 @@ const needLinguisticDataDialogs = [
 ];
 
 const buggyCommonDialogs = [
-	// TODO: fix newly added
-	'.uno:AcceptTrackedChanges',
-	'.uno:HyperlinkDialog',
-	'.uno:InsertQrCode',
-	'.uno:InsertSymbol',
-	'.uno:RunMacro',
-	'.uno:Signature',
-
-	'.uno:SearchDialog',
-	'.uno:SetDocumentProperties',
-	'.uno:SpellDialog',
-	'.uno:SpellingAndGrammarDialog',
-	'.uno:SplitCell',
-	'.uno:StyleNewByExample',
 	'.uno:ThesaurusDialog',
-	'.uno:WidgetTestDialog',
 ];
 
 /**

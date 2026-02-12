@@ -106,6 +106,7 @@ all_la_unit_tests = \
 	unit-timeout_none.la \
 	unit-serversock_accept1.la \
 	unit-streamsock_ctor1.la \
+	unit-clipboard-close.la \
 	unit-kit-child-session.la
 #	unit-admin.la
 #	unit-tilecache.la # Empty test.
@@ -206,7 +207,7 @@ unittest_SOURCES = \
 	../wsd/TestStubs.cpp \
 	test.cpp
 
-unittest_LDADD = $(CPPUNIT_LIBS)
+unittest_LDADD = $(top_builddir)/libsimd.a $(CPPUNIT_LIBS)
 if ENABLE_SSL
 unittest_SOURCES += ../net/Ssl.cpp
 unithttplib_SOURCES += ../net/Ssl.cpp
@@ -241,6 +242,8 @@ unit_typing_la_SOURCES = UnitTyping.cpp
 unit_typing_la_LIBADD = $(CPPUNIT_LIBS)
 unit_copy_paste_la_SOURCES = UnitCopyPaste.cpp
 unit_copy_paste_la_LIBADD = $(CPPUNIT_LIBS)
+unit_clipboard_close_la_SOURCES = UnitClipboardClose.cpp
+unit_clipboard_close_la_LIBADD = $(CPPUNIT_LIBS)
 unit_copy_paste_writer_la_SOURCES = UnitCopyPasteWriter.cpp
 unit_copy_paste_writer_la_LIBADD = $(CPPUNIT_LIBS)
 unit_convert_la_SOURCES = UnitConvert.cpp

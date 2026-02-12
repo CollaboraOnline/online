@@ -45,25 +45,7 @@ const excludedCommonDialogs = [
 
 // don't pass yet
 const buggyWriterDialogs = [
-    '.uno:InsertFrame',
-    '.uno:OutlineBullet',
-    '.uno:ChapterNumberingDialog',
-    '.uno:EditRegion',
-    '.uno:FormatColumns',
-    '.uno:InsertCaptionDialog',
-    '.uno:InsertMultiIndex',
     '.uno:InsertSection',
-    '.uno:TableNumberFormatDialog',
-
-    // TODO: existing dialog => newly added secondary dialogs are failing
-    '.uno:FontDialog', // Fix: Font Feature dialog needs Frame Structure
-    '.uno:PageDialog', // Fix: Duplicate Name dialog box is failing
-
-    // Below dialogs have tabindex=0 with empty alt tag
-    '.uno:EditStyle?Param:string=Example&Family:short=1',
-    '.uno:EditStyle?Param:string=Heading&Family:short=2',
-    '.uno:ParagraphDialog',
-    '.uno:TableDialog',
 ];
 
 describe(['tagdesktop'], 'Accessibility Writer Dialog Tests', { testIsolation: false }, function () {
@@ -151,6 +133,13 @@ describe(['tagdesktop'], 'Accessibility Writer Dialog Tests', { testIsolation: f
             });
     }
 
+    function escLevel(win, count) {
+            for (var i = 0; i < count; i++) {
+                    helper.typeIntoDocument('{esc}');
+                    helper.processToIdle(win);
+            }
+    }
+
     it('Detects non-native button element error', function () {
         testA11yErrorDetection(function($dialog, win) {
             // Inject a span with role="button" instead of native <button>
@@ -222,7 +211,7 @@ describe(['tagdesktop'], 'Accessibility Writer Dialog Tests', { testIsolation: f
         }
     });
 
-    it.skip('Transform dialog (buggy)', function () {
+    it('Transform dialog', function () {
         cy.then(() => {
             win.app.map.sendUnoCommand('.uno:BasicShapes.octagon');
         });
@@ -243,7 +232,7 @@ describe(['tagdesktop'], 'Accessibility Writer Dialog Tests', { testIsolation: f
         helper.typeIntoDocument('{esc}');
     });
 
-    it.skip('Line dialog (buggy)', function () {
+    it('Line dialog', function () {
         cy.then(() => {
             win.app.map.sendUnoCommand('.uno:Line');
         });
@@ -305,27 +294,53 @@ describe(['tagdesktop'], 'Accessibility Writer Dialog Tests', { testIsolation: f
         a11yHelper.handleDialog(win, 1, '.uno:ContentControlProperties');
     });
 
-    it.skip('Object dialog', function () {
-       helper.clearAllText({ isTable: true });
-       cy.then(() => {
-           win.app.map.sendUnoCommand('.uno:InsertObjectChart');
+    it('Object dialog', function () {
+        helper.clearAllText({ isTable: true });
+        cy.then(() => {
+            win.app.map.sendUnoCommand('.uno:InsertObjectChart');
+        });
+        cy.cGet('#test-div-shapeHandlesSection').should('exist');
+
+        // Two esc get us out of the chart navigation and then chart edit mode
+        escLevel(win, 2);
+        helper.processToIdle(win);
+
+        // At which point the sidebar disappears, and just the shape is selected
+        cy.cGet('#sidebar-dock-wrapper').should('not.be.visible');
+
+        cy.then(() => {
+            win.app.map.sendUnoCommand('.uno:FrameDialog');
+        });
+        a11yHelper.handleDialog(win, 1, '.uno:FrameDialog');
+        cy.then(() => {
+            win.app.map.sendUnoCommand('.uno:NameGroup');
+        });
+        a11yHelper.handleDialog(win, 1, '.uno:NameGroup');
+        cy.then(() => {
+            win.app.map.sendUnoCommand('.uno:ObjectTitleDescription');
+        });
+        a11yHelper.handleDialog(win, 1, '.uno:ObjectTitleDescription');
+
+        // esc to get back to main document
+        escLevel(win, 1);
+        helper.processToIdle(win);
+
+        // sidebar starts again, and grabs focus to itself
+        cy.cGet('#sidebar-dock-wrapper').should('be.visible').then(function(sidebar) {
+                helper.waitForTimers(win, 'sidebarstealfocus');
+                helper.waitUntilLayoutingIsIdle(win);
+                helper.containsFocusElement(sidebar[0], true);
        });
-       cy.cGet('#test-div-shapeHandlesSection').should('exist');
-       cy.then(() => {
-           win.app.map.sendUnoCommand('.uno:FrameDialog');
-       });
-       a11yHelper.handleDialog(win, 1, '.uno:FrameDialog');
-       cy.then(() => {
-           win.app.map.sendUnoCommand('.uno:NameGroup');
-       });
-       a11yHelper.handleDialog(win, 1, '.uno:NameGroup');
-       cy.then(() => {
-           win.app.map.sendUnoCommand('.uno:ObjectTitleDescription');
-       });
-       a11yHelper.handleDialog(win, 1, '.uno:ObjectTitleDescription');
+
+       // esc to send focus back to main document
+       escLevel(win, 1);
+       helper.processToIdle(win);
+
+       // focus stays here after that
+       cy.cGet('div.clipboard').should('have.focus');
     });
 
-    it.skip('Graphic dialog', function () {
+    it('Graphic dialog', function () {
         helper.clearAllText();
         desktopHelper.insertImage();
         cy.then(() => {
@@ -358,7 +373,7 @@ describe(['tagdesktop'], 'Accessibility Writer Dialog Tests', { testIsolation: f
         });
     });
 
-    it.skip('PDF export warning dialog (buggy)', function () {
+    it('PDF export warning dialog', function () {
         cy.then(() => {
             const args = { SynchronMode: { type: 'boolean', value: false } };
             win.app.map.sendUnoCommand('.uno:ExportToPDF', args);
@@ -383,7 +398,7 @@ describe(['tagdesktop'], 'Accessibility Writer Dialog Tests', { testIsolation: f
             });
     });
 
-    it.skip('ReadOnly info dialog (buggy)', function () {
+    it('ReadOnly info dialog', function () {
         // Text ReadOnly info dialog
         helper.clearAllText({ isTable: true });
         helper.typeIntoDocument('READONLY');

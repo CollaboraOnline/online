@@ -32,6 +32,11 @@ interface UIModeCommand {
 	mode: UIMode;
 }
 
+// Type of the 'statusindicator' event payload.
+interface StatusIndicatorEvent {
+	statusType: string;
+}
+
 /**
  * UIManager class – initializes UI elements (toolbars, menubar, ruler, etc.) and controls their visibility.
  */
@@ -548,6 +553,23 @@ class UIManager extends window.L.Control {
 				// setup quickfind panel
 				this.map.quickFindPanel = JSDialog.QuickFindPanel(this.map);
 				this.map.addControl(this.map.quickFindPanel);
+			}
+
+			if (this.getStartCompareChanges()) {
+				// Don't switch to the comparechanges view yet, first wait for the
+				// initializationcomplete event, which fires after
+				// app.activeDocument.fileSize is set, otherwise the tile manager
+				// would discard valid tiles.
+				const enterCompareChanges = (
+					e: StatusIndicatorEvent,
+				) => {
+					if (e.statusType !== 'initializationcomplete') {
+						return;
+					}
+					app.dispatcher.dispatch('comparechanges');
+					this.map.off('statusindicator', enterCompareChanges);
+				};
+				this.map.on('statusindicator', enterCompareChanges);
 			}
 		}
 
@@ -2350,5 +2372,10 @@ class UIManager extends window.L.Control {
 	getBooleanDocTypePref(name: string, defaultValue: boolean = false): boolean {
 		const docType = this.map.getDocType();
 		return window.prefs.getBoolean(`${docType}.${name}`, defaultValue);
+	}
+
+	getStartCompareChanges(): boolean {
+		const compareChangesOption = window.coolParams.get('comparechanges');
+		return compareChangesOption === 'true' || compareChangesOption === '1';
 	}
 }

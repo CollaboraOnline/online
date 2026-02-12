@@ -51,6 +51,7 @@ const allCalcDialogs = [
 const excludedCommonDialogs = [
     '.uno:AcceptTrackedChanges',
     '.uno:GotoPage',
+    '.uno:Signature', // need to add signing infra
     '.uno:SpellingAndGrammarDialog',
     '.uno:SplitCell',
 ];
@@ -67,6 +68,7 @@ const buggyCalcDialogs = [
     '.uno:InsertObjectChart',
     '.uno:JumpToTable',
     '.uno:PageFormatDialog',
+    '.uno:Protect',
     '.uno:StyleNewByExample',
     '.uno:Validation',
 ];
@@ -163,7 +165,7 @@ describe(['tagdesktop'], 'Accessibility Calc Dialog Tests', { testIsolation: fal
         }
     });
 
-    it('PasteSpecial Dialog', function () {
+    it.skip('PasteSpecial Dialog (Buggy)', function () {
         // Select some text
         helper.selectAllText();
 

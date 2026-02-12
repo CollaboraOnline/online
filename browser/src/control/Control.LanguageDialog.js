@@ -101,7 +101,8 @@ window.L.Control.LanguageDialog = window.L.Control.extend({
 							type: 'treelistbox',
 							id: 'languages',
 							headers: [ { text: _('Language') } ],
-							entries: languageEntries
+							entries: languageEntries,
+							sortLocally: true,
 						},
 						{
 							id: 'LanguageDialog-buttonbox',

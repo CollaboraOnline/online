@@ -1436,7 +1436,7 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 
 	_fixedtextControl: function(parentContainer, data, builder) {
 		// Check if this label should render as static content(i.e. span) instead of interactive label
-		if (!data.labelFor)
+		if (!data.labelFor || !JSDialog.GetFormControlTypesInLO().has(data.labelForType))
 			return JSDialog.StaticText(parentContainer, data, builder);
 
 		var fixedtext = window.L.DomUtil.create('label', builder.options.cssClass, parentContainer);
@@ -1451,10 +1451,8 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 		var accKey = builder._getAccessKeyFromText(data.text);
 		builder._stressAccessKey(fixedtext, accKey);
 
-		const labelableElements = ['INPUT', 'SELECT', 'TEXTAREA', 'METER', 'OUTPUT', 'PROGRESS'];
-
 		const updateLabelForAttribute = function(label, labelledControl) {
-			const isLabelable = labelableElements.includes(labelledControl.nodeName);
+			const isLabelable = JSDialog.GetFormControlTypesInCO().has(labelledControl.nodeName);
 			const isHiddenInput = labelledControl.nodeName === 'INPUT' && labelledControl.type === 'hidden';
 
 			// For labelable element always use htmlFor
@@ -1734,6 +1732,8 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 		const isSplitButton = !!data.applyCallback;
 		const isDropdownButton = !!data.dropdown;
 
+		const hasPopupRole = data.aria && data.aria.role === 'popup';
+
 		/**
 		 * Determines if the dropdown arrow should be interactive (focusable button) vs decorative (div).
 		 * This affects ARIA attribute placement and arrowbackground element type creation.
@@ -1813,7 +1813,7 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 				button.accessKey = data.accessKey;
 
 			// if dropdown arrow does not exist or is not interactive then only button can have aria-haspopup
-			if (hasPopUp && !isArrowInteractive)
+			if (hasPopUp && !isArrowInteractive || hasPopupRole)
 				button.setAttribute('aria-haspopup', true);
 
 			if (data.w2icon) {
@@ -1879,13 +1879,15 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 			const selectFn = () => {
 				window.L.DomUtil.addClass(button, 'selected');
 				window.L.DomUtil.addClass(div, 'selected');
-				button.setAttribute('aria-pressed', true);
+				if(!button.hasAttribute('aria-haspopup'))
+					button.setAttribute('aria-pressed', true);
 			};
 
 			const unSelectFn = () => {
 				window.L.DomUtil.removeClass(button, 'selected');
 				window.L.DomUtil.removeClass(div, 'selected');
-				button.setAttribute('aria-pressed', false);
+				if(!button.hasAttribute('aria-haspopup'))
+					button.setAttribute('aria-pressed', false);
 			};
 
 			if (data.command) {
