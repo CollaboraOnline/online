@@ -478,6 +478,35 @@ function isBuggyCommonDialog(command) {
 	return buggyCommonDialogs.includes(command);
 }
 
+/**
+ * Test the PDF export warning dialog by exporting with conflicting options.
+ * @param {Object} win - The frame window object
+ */
+function testPDFExportWarningDialog(win) {
+	cy.then(() => {
+		const args = { SynchronMode: { type: 'boolean', value: false } };
+		win.app.map.sendUnoCommand('.uno:ExportToPDF', args);
+	});
+
+	getActiveDialog(1)
+		.then(() => {
+			return helper.processToIdle(win);
+		})
+		.then(() => {
+			cy.cGet('#forms-input').check();
+			cy.cGet('#pdf_version-input').select('PDF/A-1b (PDF 1.4 base)');
+			cy.cGet('#ok-button').click();
+		})
+		.then(() => {
+			// pdf export dialog should dismiss and a warning dialog should appear
+			return helper.processToIdle(win);
+		})
+		.then(() => {
+			// and the warning dialog we're interested in should appear
+			handleDialog(win, 1);
+		});
+}
+
 module.exports.enableUICoverage = enableUICoverage;
 module.exports.reportUICoverage = reportUICoverage;
 module.exports.resetState = resetState;
@@ -493,3 +522,4 @@ module.exports.testDialog = testDialog;
 module.exports.allCommonDialogs = allCommonDialogs;
 module.exports.needsLinguisticData = needsLinguisticData;
 module.exports.isBuggyCommonDialog = isBuggyCommonDialog;
+module.exports.testPDFExportWarningDialog = testPDFExportWarningDialog;
