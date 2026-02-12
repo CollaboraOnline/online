@@ -19,8 +19,6 @@
 
 #include "RegexUtil.hpp"
 
-#include <Poco/RegularExpression.h>
-
 #include <regex>
 
 namespace RegexUtil
@@ -38,12 +36,10 @@ bool matchRegex(const std::set<std::string>& set, const std::string& subject)
         try
         {
             // Not performance critical to warrant caching.
-            Poco::RegularExpression re(value, Poco::RegularExpression::RE_CASELESS);
-            Poco::RegularExpression::Match reMatch;
+            std::regex re(value, std::regex_constants::icase);
 
             // Must be a full match.
-            if (re.match(subject, reMatch) && reMatch.offset == 0 &&
-                reMatch.length == subject.size())
+            if (std::regex_match(subject, re))
             {
                 return true;
             }
@@ -70,12 +66,10 @@ std::string getValue(const std::map<std::string, std::string>& map, const std::s
         try
         {
             // Not performance critical to warrant caching.
-            Poco::RegularExpression re(value.first, Poco::RegularExpression::RE_CASELESS);
-            Poco::RegularExpression::Match reMatch;
+            std::regex re(value.first, std::regex_constants::icase);
 
             // Must be a full match.
-            if (re.match(subject, reMatch) && reMatch.offset == 0 &&
-                reMatch.length == subject.size())
+            if (std::regex_match(subject, re))
             {
                 return value.second;
             }
@@ -103,12 +97,10 @@ std::string getValue(const std::set<std::string>& set, const std::string& subjec
         try
         {
             // Not performance critical to warrant caching.
-            Poco::RegularExpression re(value, Poco::RegularExpression::RE_CASELESS);
-            Poco::RegularExpression::Match reMatch;
+            std::regex re(value, std::regex_constants::icase);
 
             // Must be a full match.
-            if (re.match(subject, reMatch) && reMatch.offset == 0 &&
-                reMatch.length == subject.size())
+            if (std::regex_match(subject, re))
             {
                 return value;
             }

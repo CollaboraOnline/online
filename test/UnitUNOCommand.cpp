@@ -21,7 +21,7 @@
 #include <string>
 
 #include <Poco/Exception.h>
-#include <Poco/RegularExpression.h>
+#include <regex>
 #include <Poco/URI.h>
 #include <test/lokassert.hpp>
 
@@ -34,7 +34,7 @@ void testStateChanged(const std::string& filename, std::set<std::string>& comman
 {
     const auto testname = "stateChanged_" + filename + ' ';
 
-    Poco::RegularExpression reUno("\\.[a-zA-Z]*\\:[a-zA-Z]*\\=");
+    std::regex reUno("\\.[a-zA-Z]*\\:[a-zA-Z]*\\=");
 
     std::shared_ptr<SocketPoll> socketPoll = std::make_shared<SocketPoll>("UnitEachView");
     socketPoll->startThread();
@@ -44,7 +44,6 @@ void testStateChanged(const std::string& filename, std::set<std::string>& comman
     helpers::SocketProcessor(testname, socket,
         [&](const std::string& msg)
         {
-            Poco::RegularExpression::MatchVec matches;
             if (msg.starts_with("statechanged: {"))
             {
                 // Payload is JSON, the commandName key has the command name.
@@ -55,10 +54,14 @@ void testStateChanged(const std::string& filename, std::set<std::string>& comman
                 std::string commandName = root->get("commandName").toString();
                 commands.erase(commandName + "=");
             }
-            else if (reUno.match(msg, 0, matches) > 0 && matches.size() == 1)
+            else
             {
-                // Payload is a commandName=...status... plain text format.
-                commands.erase(msg.substr(matches[0].offset, matches[0].length));
+                std::smatch matches;
+                if (std::regex_search(msg, matches, reUno))
+                {
+                    // Payload is a commandName=...status... plain text format.
+                    commands.erase(matches[0].str());
+                }
             }
 
             return !commands.empty();

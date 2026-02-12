@@ -62,7 +62,6 @@
 #include <Poco/Net/NameValueCollection.h>
 #include <Poco/Net/NetException.h>
 #include <Poco/Net/PartHandler.h>
-#include <Poco/RegularExpression.h>
 #include <Poco/Runnable.h>
 #include <Poco/SHA1Engine.h>
 #include <Poco/StreamCopier.h>
@@ -75,6 +74,7 @@
 #include <iomanip>
 #include <sstream>
 #include <string>
+#include <regex>
 #include <vector>
 
 #include <dirent.h>
@@ -858,12 +858,12 @@ std::string FileServerRequestHandler::getRequestPathname(const HTTPRequest& requ
 
     std::string path(requestUri.getPath());
 
-    Poco::RegularExpression gitHashRe("/([0-9a-f]+)/");
-    std::string gitHash;
-    if (gitHashRe.extract(path, gitHash))
+    static const std::regex gitHashRe("/([0-9a-f]+)/");
+    std::smatch gitHashMatch;
+    if (std::regex_search(path, gitHashMatch, gitHashRe))
     {
         // Convert version back to a real file name.
-        Poco::replaceInPlace(path, std::string("/browser" + gitHash), std::string("/browser/dist/"));
+        Poco::replaceInPlace(path, std::string("/browser" + gitHashMatch[0].str()), std::string("/browser/dist/"));
     }
 
 #if !MOBILEAPP

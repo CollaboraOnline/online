@@ -31,7 +31,7 @@
 #include <Poco/Net/HTTPResponse.h>
 #include <Poco/Net/InvalidCertificateHandler.h>
 #include <Poco/Net/SSLManager.h>
-#include <Poco/RegularExpression.h>
+#include <regex>
 #include <Poco/StreamCopier.h>
 #include <Poco/URI.h>
 
@@ -77,7 +77,7 @@ class HTTPServerTest : public CPPUNIT_NS::TestFixture
     void testRenderSearchResult();
 
 protected:
-    void assertHTTPFilesExist(const Poco::URI& uri, Poco::RegularExpression& expr,
+    void assertHTTPFilesExist(const Poco::URI& uri, const std::regex& expr,
                               const std::string& html, const std::string& mimetype,
                               const std::string_view testname);
 
@@ -276,18 +276,18 @@ void HTTPServerTest::testCoolPost()
     LOK_ASSERT(html.find("OnJvb3Qgey0tY28tcHJpbWFyeS10ZXh0OiNmZmZmZmY7LS1jby1wcmltYXJ5LWVsZW1lbnQ6IzAwODJjOTstLWNvLXRleHQtYWNjZW50OiMwMDgyYzk7LS1jby1wcmltYXJ5LWxpZ2h0OiNlNmYzZmE7LS1jby1wcmltYXJ5LWVsZW1lbnQtbGlnaHQ6IzE3YWRmZjstLWNvLWNvbG9yLWVycm9yOiNlOTMyMmQ7LS1jby1jb2xvci13YXJuaW5nOiNlY2E3MDA7LS1jby1jb2xvci1zdWNjZXNzOiM0NmJhNjE7LS1jby1ib3JkZXItcmFkaXVzOjNweDstLWNvLWJvcmRlci1yYWRpdXMtbGFyZ2U6MTBweDstLWNvLWxvYWRpbmctbGlnaHQ6I2NjYzstLWNvLWxvYWRpbmctZGFyazojNDQ0Oy0tY28tYm94LXNoYWRvdzpyZ2JhKDc3LCA3NywgNzcsIDAuNSk7LS1jby1ib3JkZXI6I2VkZWRlZDstLWNvLWJvcmRlci1kYXJrOiNkYmRiZGI7LS1jby1ib3JkZXItcmFkaXVzLXBpbGw6MTAwcHg7fQ") != std::string::npos);
 }
 
-void HTTPServerTest::assertHTTPFilesExist(const Poco::URI& uri, Poco::RegularExpression& expr,
+void HTTPServerTest::assertHTTPFilesExist(const Poco::URI& uri, const std::regex& expr,
                                           const std::string& html, const std::string& mimetype,
                                           const std::string_view testname)
 {
-    Poco::RegularExpression::MatchVec matches;
     bool found = false;
 
-    for (int offset = 0; expr.match(html, offset, matches) > 0; offset = static_cast<int>(matches[0].offset + matches[0].length))
+    for (auto it = std::sregex_iterator(html.begin(), html.end(), expr); it != std::sregex_iterator(); ++it)
     {
+        const std::smatch& matches = *it;
         found = true;
         LOK_ASSERT_EQUAL(2, (int)matches.size());
-        Poco::URI uriScript(html.substr(matches[1].offset, matches[1].length));
+        Poco::URI uriScript(matches[1].str());
         if (uriScript.getHost().empty())
         {
             std::string scriptString(uriScript.toString());
@@ -330,10 +330,10 @@ void HTTPServerTest::testScriptsAndLinksGet()
     std::string html;
     Poco::StreamCopier::copyToString(rs, html);
 
-    Poco::RegularExpression script("<script.*?src=\"(.*?)\"");
+    std::regex script("<script.*?src=\"(.*?)\"");
     assertHTTPFilesExist(_uri, script, html, "application/javascript", testname);
 
-    Poco::RegularExpression link("<link.*?href=\"(.*?)\"");
+    std::regex link("<link.*?href=\"(.*?)\"");
     assertHTTPFilesExist(_uri, link, html, std::string(), testname);
 }
 
@@ -355,10 +355,10 @@ void HTTPServerTest::testScriptsAndLinksPost()
     std::string html;
     Poco::StreamCopier::copyToString(rs, html);
 
-    Poco::RegularExpression script("<script.*?src=\"(.*?)\"");
+    std::regex script("<script.*?src=\"(.*?)\"");
     assertHTTPFilesExist(_uri, script, html, "application/javascript", testname);
 
-    Poco::RegularExpression link("<link.*?href=\"(.*?)\"");
+    std::regex link("<link.*?href=\"(.*?)\"");
     assertHTTPFilesExist(_uri, link, html, std::string(), testname);
 }
 

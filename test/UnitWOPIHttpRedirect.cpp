@@ -24,6 +24,7 @@
 
 #include <Poco/Net/HTTPRequest.h>
 
+#include <regex>
 #include <string>
 
 class UnitWopiHttpRedirect : public WopiTestServer
@@ -44,17 +45,17 @@ public:
                                    const std::shared_ptr<StreamSocket>& socket) override
     {
         Poco::URI uriReq(request.getURI());
-        Poco::RegularExpression regInfo("/wopi/files/1");
+        static const std::regex regInfo("/wopi/files/1");
         std::string redirectUri = "/wopi/files/0";
-        Poco::RegularExpression regRedirected(redirectUri);
-        Poco::RegularExpression regContents("/wopi/files/0/contents");
+        static const std::regex regRedirected("/wopi/files/0");
+        static const std::regex regContents("/wopi/files/0/contents");
         std::string redirectUri2 = "/wopi/files/2/contents";
-        Poco::RegularExpression regContentsRedirected(redirectUri2);
+        static const std::regex regContentsRedirected("/wopi/files/2/contents");
 
         TST_LOG("FakeWOPIHost: Request URI [" << uriReq.toString() << "]:\n");
 
         // CheckFileInfo - returns redirect response
-        if (request.getMethod() == "GET" && regInfo.match(uriReq.getPath()))
+        if (request.getMethod() == "GET" && std::regex_match(uriReq.getPath(), regInfo))
         {
             TST_LOG("FakeWOPIHost: Handling CheckFileInfo (1/2)");
 
@@ -70,7 +71,7 @@ public:
             return true;
         }
         // CheckFileInfo - for redirected URI
-        else if (request.getMethod() == "GET" && regRedirected.match(uriReq.getPath()) && !regContents.match(uriReq.getPath()))
+        else if (request.getMethod() == "GET" && std::regex_match(uriReq.getPath(), regRedirected) && !std::regex_match(uriReq.getPath(), regContents))
         {
             TST_LOG("FakeWOPIHost: Handling CheckFileInfo: (2/2)");
 
@@ -97,7 +98,7 @@ public:
             return true;
         }
         // GetFile - first try
-        else if (request.getMethod() == "GET" && regContents.match(uriReq.getPath()))
+        else if (request.getMethod() == "GET" && std::regex_match(uriReq.getPath(), regContents))
         {
             TST_LOG("FakeWOPIHost: Handling GetFile: " << uriReq.getPath());
 
@@ -113,7 +114,7 @@ public:
             return true;
         }
         // GetFile - redirected
-        else if (request.getMethod() == "GET" && regContentsRedirected.match(uriReq.getPath()))
+        else if (request.getMethod() == "GET" && std::regex_match(uriReq.getPath(), regContentsRedirected))
         {
             TST_LOG("FakeWOPIHost: Handling GetFile: " << uriReq.getPath());
 
@@ -179,13 +180,13 @@ public:
                                    const std::shared_ptr<StreamSocket>& socket) override
     {
         Poco::URI uriReq(request.getURI());
-        Poco::RegularExpression regInfo("/wopi/files/[0-9]+");
+        static const std::regex regInfo("/wopi/files/[0-9]+");
         static unsigned redirectionCount = 0;
 
         TST_LOG("FakeWOPIHost: Request URI [" << uriReq.toString() << "]:\n");
 
         // CheckFileInfo - always returns redirect response
-        if (request.getMethod() == "GET" && regInfo.match(uriReq.getPath()))
+        if (request.getMethod() == "GET" && std::regex_match(uriReq.getPath(), regInfo))
         {
             TST_LOG("FakeWOPIHost: Handling CheckFileInfo");
 
