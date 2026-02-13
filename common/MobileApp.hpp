@@ -13,9 +13,6 @@
 
 #if MOBILEAPP
 
-#define LIBO_INTERNAL_ONLY
-#include <LibreOfficeKit/LibreOfficeKit.hxx>
-
 #include <Storage.hpp>
 
 #ifdef IOS
@@ -38,6 +35,11 @@
 // the core SfxViewShell::GetDocId() returns, but there might be situations where multi-threading
 // and opening of several documents in sequence very quickly might cause discrepancies, so it is
 // better to use a different counter to be sure. Patches to use just one counter welcome.
+
+namespace lok
+{
+class Document;
+}
 
 class DocumentData
 {

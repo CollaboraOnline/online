@@ -20,6 +20,7 @@
 #include <common/Util.hpp>
 
 #define LOK_USE_UNSTABLE_API
+#include <LibreOfficeKit/LibreOfficeKit.hxx>
 #include <LibreOfficeKit/LibreOfficeKitEnums.h>
 
 #include <Poco/StreamCopier.h>
