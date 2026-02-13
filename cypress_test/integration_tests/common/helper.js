@@ -1316,6 +1316,27 @@ function waitForTimers(win, tag) {
 	}, { timeout: Cypress.config('defaultCommandTimeout'), interval: 50 });
 }
 
+// Wait until the slideshow animation engine has finished all activities
+// (effects, transitions) and the final frame has been painted to the canvas.
+function waitForSlideShowIdle(win) {
+	cy.wrap(null).should(function() {
+		var presenter = win.app.map.slideShowPresenter;
+		var handler = presenter ? presenter._slideShowHandler : null;
+		var isIdle = handler ? !handler.isRunning() : false;
+		expect(isIdle, 'slideshow animation engine is idle').to.be.true;
+	});
+
+	// Wait one more rAF to ensure the final composited
+	// frame has been painted to the canvas.
+	return cy.then(function() {
+		return new Cypress.Promise(function(resolve) {
+			win.requestAnimationFrame(function() {
+				resolve();
+			});
+		});
+	});
+}
+
 module.exports.setupDocument = setupDocument;
 module.exports.loadDocument = loadDocument;
 module.exports.setupAndLoadDocument = setupAndLoadDocument;
@@ -1370,4 +1391,5 @@ module.exports.waitUntilCoreIsIdle = waitUntilCoreIsIdle;
 module.exports.waitUntilLayoutingIsIdle = waitUntilLayoutingIsIdle;
 module.exports.processToIdle = processToIdle;
 module.exports.waitForTimers = waitForTimers;
+module.exports.waitForSlideShowIdle = waitForSlideShowIdle;
 module.exports.maxScreenshotableViewportHeight = maxScreenshotableViewportHeight;

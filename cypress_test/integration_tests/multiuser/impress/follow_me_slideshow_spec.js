@@ -21,9 +21,15 @@ describe(['tagmultiuser'], 'Follow me slide show', function() {
             helper.setupAndLoadDocument('impress/follow.odp',true);
 
             cy.cSetActiveFrame('#iframe1');
+            cy.getFrameWindow().then((win1) => {
+                this.win1 = win1;
+            })
             cy.cGet('.notebookbar #Slideshow-tab-label').click();
 
             cy.cSetActiveFrame('#iframe2');
+            cy.getFrameWindow().then((win2) => {
+                this.win2 = win2;
+            })
             cy.cGet('.notebookbar #Slideshow-tab-label').click();
         });
 
@@ -46,85 +52,94 @@ describe(['tagmultiuser'], 'Follow me slide show', function() {
     it('Go to next effect', function () {
         cy.cSetActiveFrame('#iframe2');
         cy.cGet('.notebookbar #slide-presentation-follow-me').click();
-        cy.wait(500);
+        helper.processToIdle(this.win2);
         getSlideShow().should('be.visible');
         getSlideShowContent().find('#slideshow-canvas').click();
-        cy.wait(500);
+        helper.processToIdle(this.win2);
 
         cy.cSetActiveFrame('#iframe1');
         getSlideShow().should('be.visible');
+        helper.waitForSlideShowIdle(this.win1);
         getSlideShowCanvas().compareSnapshot('effect1', 0.1);
     });
 
     it('Go to previous effect and slide', function () {
         cy.cSetActiveFrame('#iframe2');
         cy.cGet('.notebookbar #slide-presentation-follow-me').click();
-        cy.wait(500);
+        helper.processToIdle(this.win2);
 
         //move to nextslide last effect
         getSlideShow().should('be.visible');
         for (let i = 0; i < 5; i++) {
-            cy.wait(500);
             getSlideShowContent().find(".slideshow-nav-container #next").click();
+            helper.processToIdle(this.win2);
         }
+        helper.waitForSlideShowIdle(this.win2);
         getSlideShowCanvas().compareSnapshot('slide2_effect3', 0.1);
 
         cy.cSetActiveFrame('#iframe1');
         getSlideShow().should('be.visible');
+        helper.waitForSlideShowIdle(this.win1);
         getSlideShowCanvas().compareSnapshot('slide2_effect3', 0.1);
 
         // go to previous effect
         cy.cSetActiveFrame('#iframe2');
         getSlideShowContent().find(".slideshow-nav-container #previous").click();
+        helper.waitForSlideShowIdle(this.win2);
         getSlideShowCanvas().compareSnapshot('slide2_effect2', 0.1);
         cy.cSetActiveFrame('#iframe1');
+        helper.waitForSlideShowIdle(this.win1);
         getSlideShowCanvas().compareSnapshot('slide2_effect2', 0.1);
 
         //go to previous effect
         cy.cSetActiveFrame('#iframe2');
         for (let i = 0; i < 3; i++) {
-            cy.wait(500);
             getSlideShowContent().find(".slideshow-nav-container #previous").click();
+            helper.processToIdle(this.win2);
         }
+        helper.waitForSlideShowIdle(this.win2);
         getSlideShowCanvas().compareSnapshot('effect1', 0.1);
         cy.cSetActiveFrame('#iframe1');
+        helper.waitForSlideShowIdle(this.win1);
         getSlideShowCanvas().compareSnapshot('effect1', 0.1);
     });
 
     it('Follow and unfollow', function () {
         cy.cSetActiveFrame('#iframe2');
         cy.cGet('.notebookbar #slide-presentation-follow-me').click();
-        cy.wait(500);
+        helper.processToIdle(this.win2);
 
         //move to nextslide last effect
         getSlideShow().should('be.visible');
         for (let i = 0; i < 4; i++) {
-            cy.wait(500);
+            helper.processToIdle(this.win2);
             getSlideShowContent().find(".slideshow-nav-container #next").click();
         }
+        helper.waitForSlideShowIdle(this.win2);
         getSlideShowCanvas().compareSnapshot('slide2_effect2', 0.1);
 
         cy.cSetActiveFrame('#iframe1');
         getSlideShow().should('be.visible');
+        helper.waitForSlideShowIdle(this.win2);
         getSlideShowCanvas().compareSnapshot('slide2_effect2', 0.1);
 
         //unfollow by going 1 slide backward
         for (let i = 0; i < 3; i++) {
-            cy.wait(500);
+            helper.processToIdle(this.win2);
             getSlideShowContent().find(".slideshow-nav-container #previous").click();
         }
+        helper.waitForSlideShowIdle(this.win2);
         getSlideShowCanvas().compareSnapshot('effect1', 0.1);
 
         //start following again
         cy.cSetActiveFrame('#iframe1');
-        cy.wait(500);
         getSlideShowContent().find("#follow").click();
-        cy.wait(500);
+        helper.waitForSlideShowIdle(this.win1);
         getSlideShowCanvas().compareSnapshot('slide2_effect2', 0.1);
 
         cy.cSetActiveFrame('#iframe2');
         getSlideShowContent().find(".slideshow-nav-container #next").click();
-        cy.wait(500);
+        helper.waitForSlideShowIdle(this.win1);
         getSlideShowCanvas().compareSnapshot('slide2_effect3', 0.1);
     });
 
