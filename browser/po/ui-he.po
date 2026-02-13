@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-02-03 23:25+0100\n"
-"PO-Revision-Date: 2026-02-05 04:11+0000\n"
+"PO-Revision-Date: 2026-02-09 03:09+0000\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: Hebrew <https://hosted.weblate.org/projects/collabora-online/"
 "ui/he/>\n"
@@ -3174,11 +3174,11 @@ msgstr "ניתוק מהאינטרנט"
 
 #: src/control/Control.NotebookbarWriter.js:489
 msgid "Validate Sidebar"
-msgstr ""
+msgstr "סרגל צד אימות"
 
 #: src/control/Control.NotebookbarWriter.js:497
 msgid "Validate Dialog"
-msgstr ""
+msgstr "חלונית אימות"
 
 #: src/control/Control.NotebookbarWriter.js:940
 #: src/control/Control.Zotero.js:827
@@ -4001,19 +4001,19 @@ msgstr ""
 
 #: src/control/jsdialog/Definitions.Menu.ts:1522
 msgid "C6 Envelope"
-msgstr ""
+msgstr "מעטפת C6"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1523
 msgid "C6/5 Envelope"
-msgstr ""
+msgstr "מעטפת C6/5"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1524
 msgid "C5 Envelope"
-msgstr ""
+msgstr "מעטפת C5"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1525
 msgid "C4 Envelope"
-msgstr ""
+msgstr "מעטפת C4"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1528
 msgid "#6¾ Envelope"
@@ -4053,7 +4053,7 @@ msgstr "הוספת מולטימדיה מקומית"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1740
 msgid "Compare Local Document"
-msgstr ""
+msgstr "השוואת מסמך מקומי"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1746
 msgid "Very Tight"
