@@ -1,13 +1,13 @@
 # Jan Holesovsky <kendy@collabora.com>, 2020.
 # Weblate <noreply@weblate.org>, 2020.
-# Stanislav Horáček <stanislav.horacek@gmail.com>, 2021, 2024.
+# Stanislav Horáček <stanislav.horacek@gmail.com>, 2021, 2024, 2026.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-02-03 23:25+0200\n"
-"PO-Revision-Date: 2026-02-03 12:40+0000\n"
-"Last-Translator: Anonymous <noreply@weblate.org>\n"
+"PO-Revision-Date: 2026-02-10 19:09+0000\n"
+"Last-Translator: Stanislav Horáček <stanislav.horacek@gmail.com>\n"
 "Language-Team: Czech <https://hosted.weblate.org/projects/collabora-online/"
 "app-store-descriptions/cs/>\n"
 "Language: cs\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=((n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2);\n"
-"X-Generator: Translate Toolkit 3.6.0\n"
+"X-Generator: Weblate 5.16-dev\n"
 
 #. App name - 50 chars limit
 #: descriptions/google-play.html%2Bhtml.body.h3:5-1
@@ -28,7 +28,8 @@ msgid ""
 "LibreOffice based editor for Microsoft Office, LibreOffice and OpenOffice "
 "docs."
 msgstr ""
-"LibreOffice editor na dokumenty LibreOffice, OpenOffice a Microsoft Office."
+"Na LibreOffice založený editor na dokumenty MS Office, LibreOffice a "
+"OpenOffice."
 
 #. Long description
 #: descriptions/google-play.html%2Bhtml.body.p:13-1
@@ -117,7 +118,7 @@ msgstr ""
 "Vývojáři společnosti Collabora Tor Lillqvist, Tomaž Vajngerl, Michael Meeks, "
 "Miklos Vajna, Jan Holešovský, Mert Tümer, Rashesh Padia and Skyler Grey "
 "připravují podporu pro Android od roku 2012, a to s pomocí studentů programu "
-"Google Summer of Code, kterými jsou Andrzej Hunt, Iain Billet a Kaishu Sahu."
+"Google Summer of Code, kterými byli Andrzej Hunt, Iain Billet a Kaishu Sahu."
 
 #. Long description
 #: descriptions/google-play.html%2Bhtml.body.p:52-1

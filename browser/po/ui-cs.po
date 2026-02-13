@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-02-03 23:25+0100\n"
-"PO-Revision-Date: 2026-02-06 10:02+0000\n"
+"PO-Revision-Date: 2026-02-08 00:09+0000\n"
 "Last-Translator: Stanislav Horáček <stanislav.horacek@gmail.com>\n"
 "Language-Team: Czech <https://hosted.weblate.org/projects/collabora-online/"
 "ui/cs/>\n"
@@ -2478,7 +2478,7 @@ msgstr "Po"
 
 #: src/control/Notebookbar.ImpressTransitionTab.ts:137
 msgid "Apply to All Slides"
-msgstr "Použít na všechny obrazovky"
+msgstr "Použít na všechny snímky"
 
 #: src/control/Notebookbar.WriterReferencesTab.ts:41
 msgid "Table of content"
@@ -2913,11 +2913,11 @@ msgstr "Řádek součtu"
 
 #: src/control/Control.NotebookbarCalc.js:1708
 msgid "Banded Rows"
-msgstr "Svázané řádky"
+msgstr "Pruhované řádky"
 
 #: src/control/Control.NotebookbarCalc.js:1720
 msgid "Banded Columns"
-msgstr "Svázané sloupce"
+msgstr "Pruhované sloupce"
 
 #: src/control/Control.NotebookbarCalc.js:1738
 msgid "First Column"
@@ -4326,11 +4326,11 @@ msgstr "Automaticky"
 
 #: src/control/jsdialog/Widget.ColorPicker.ts:262
 msgid "Color palette"
-msgstr "Paleta barev"
+msgstr "Barevná paleta"
 
 #: src/control/jsdialog/Widget.ColorPicker.ts:328
 msgid "Enter custom color in hex format"
-msgstr "Zadejte vlastní barvu v hexadecimálním formátu"
+msgstr "Zadejte vlastní barvu v šestnáctkovém formátu"
 
 #: src/control/jsdialog/Widget.ColorPicker.ts:421
 msgid "Recent"
@@ -4865,7 +4865,7 @@ msgstr "smazáno {0}"
 
 #: src/layer/marker/TextInput.js:411
 msgid "Clipboard area"
-msgstr "Plocha schránky"
+msgstr "Oblast schránky"
 
 #: src/layer/marker/TextInput.js:461
 msgid "Screen reader support for text content is disabled. "

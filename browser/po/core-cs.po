@@ -2,8 +2,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: core-cs\n"
-"PO-Revision-Date: 2026-02-03 13:11+0000\n"
-"Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
+"PO-Revision-Date: 2026-02-10 19:09+0000\n"
+"Last-Translator: Stanislav Horáček <stanislav.horacek@gmail.com>\n"
 "Language-Team: Czech <https://hosted.weblate.org/projects/collabora-online/"
 "lokit/cs/>\n"
 "Language: cs\n"
@@ -67,7 +67,7 @@ msgstr "Zrušit"
 #: svx/uiconfig/ui/findreplacedialog.ui:67
 msgctxt "findreplacedialog|find_tab_btn"
 msgid "Find"
-msgstr "Hledat"
+msgstr "Najít"
 
 #. uknDS
 #: svx/uiconfig/ui/findreplacedialog.ui:80
@@ -113,13 +113,13 @@ msgstr ""
 #: chart2/inc/strings.hrc:51
 msgctxt "STR_PAGE_COLOR_PALETTE"
 msgid "Color Palette"
-msgstr "Paleta barev"
+msgstr "Barevná paleta"
 
 #. YZBr8
 #: chart2/inc/strings.hrc:52
 msgctxt "STR_PAGE_GRADIENT_PRESETS"
 msgid "Gradients"
-msgstr "Gradienty"
+msgstr "Přechody"
 
 #. DWGVf
 #: chart2/uiconfig/ui/chartcolorpalettepopup.ui:46
@@ -137,13 +137,13 @@ msgstr "Monochromatický"
 #: chart2/uiconfig/ui/chartgradientpalettepopup.ui:46
 msgctxt "chartgradientpalettepopup|lightwin"
 msgid "Light Variations"
-msgstr "Světelné variace"
+msgstr "Světlé variace"
 
 #. Y3PP5
 #: chart2/uiconfig/ui/chartgradientpalettepopup.ui:97
 msgctxt "chartgradientpalettepopup|darkwin"
 msgid "Dark Variations"
-msgstr "Temné variace"
+msgstr "Tmavé variace"
 
 #. WWm9R
 #: chart2/uiconfig/ui/chartthemepopup.ui:51
@@ -204,7 +204,7 @@ msgstr "_Spravovat styly grafů"
 msgctxt "sidebarcolors|bordertype|tooltip_text"
 msgid "Allow to select a color palette to apply to current chart data series."
 msgstr ""
-"Umožnit vybírat barevnou paletu, kterou uplatnit na stávající sérii dat "
+"Umožňuje vybrat barevnou paletu, která se použije na aktuální datovou řadu "
 "grafu."
 
 #. xGjwG
@@ -219,8 +219,8 @@ msgctxt "sidebargradients|bordertype|tooltip_text"
 msgid ""
 "Allow to select a gradient palette to apply to current chart data series."
 msgstr ""
-"Umožnit vybrat paletu přechodů kterou uplatnit na posloupnosti dat "
-"stávajícího grafu."
+"Umožňuje vybrat paletu přechodu, která se použije na aktuální datovou řadu "
+"grafu."
 
 #. 3xZSQ
 #: chart2/uiconfig/ui/sidebargradients.ui:42
@@ -232,19 +232,19 @@ msgstr "Styl ohraničení"
 #: chart2/uiconfig/ui/sidebartheme.ui:25
 msgctxt "sidebartheme|themelist|tooltip_text"
 msgid "Allow to select a theme to apply to the current chart."
-msgstr "Umožnit vybrat vzhled který uplatnit na stávající graf."
+msgstr "Umožňuje vybrat motiv vzhledu, který se použije na aktuální graf."
 
 #. aGvuY
 #: chart2/uiconfig/ui/sidebartheme.ui:37
 msgctxt "sidebartheme|themetype-atkobject"
 msgid "Themes"
-msgstr "Vzhledy"
+msgstr "Motivy vzhledu"
 
 #. YB6Et
 #: chart2/uiconfig/ui/sidebartheme.ui:48
 msgctxt "sidebartheme|savetonew"
 msgid "_Save to new theme"
-msgstr "_Uložit do nového vzhledu"
+msgstr "_Uložit do nového motivu"
 
 #. 4C556
 #: chart2/uiconfig/ui/sidebartype.ui:102
@@ -280,7 +280,7 @@ msgstr "Tmavé variace"
 #: chart2/uiconfig/ui/tp_ChartType.ui:114
 msgctxt "tp_ChartType|extended_tip|subtype_iconview"
 msgid "Select a sub type of the basic chart type."
-msgstr "Vyberte dílčí typ základního typu grafu."
+msgstr "Vyberte variantu základního typu grafu."
 
 #. Wh4j6
 #: chart2/uiconfig/ui/tp_ChartType.ui:167
@@ -316,7 +316,7 @@ msgstr "Klikněte na styl odrážek, který chcete použít."
 #: cui/uiconfig/ui/pickgraphicpage.ui:45
 msgctxt "pickgraphicpage|extended_tip|pick_graphic_iconview"
 msgid "Click the graphics that you want to use as bullets."
-msgstr "Klikněte na grafiky, které chcete použít jako odrážky."
+msgstr "Klikněte na obrázky, které chcete použít jako odrážky."
 
 #. WGzy5
 #: cui/uiconfig/ui/picknumberingpage.ui:44
@@ -328,13 +328,13 @@ msgstr "Klikněte na schéma číslování, které chcete použít."
 #: cui/uiconfig/ui/pickoutlinepage.ui:44
 msgctxt "pickoutlinepage|extended_tip|pick_outline_iconview"
 msgid "Click the outline style that you want to use."
-msgstr "Klikněte na styl obrysů, které chcete použít."
+msgstr "Klikněte na styl osnovy, který chcete použít."
 
 #. qpArp
 #: cui/uiconfig/ui/toolbarmodedialog.ui:124
 msgctxt "ToolbarmodeDialog|radiobutton1"
 msgid "Compact"
-msgstr "Zhuštěné"
+msgstr "Kompaktní"
 
 #. ZbYiG
 #: include/svtools/strings.hrc:71
@@ -370,7 +370,7 @@ msgstr ""
 #: sfx2/uiconfig/ui/templatepanel.ui:137
 msgctxt "templatepanel|accessible_name|watercan"
 msgid "Fill Format Mode"
-msgstr "Režim formátu výplně"
+msgstr "Režim vyplňování formátu"
 
 #. qvBEu
 #: sfx2/uiconfig/ui/templatepanel.ui:156
@@ -382,13 +382,13 @@ msgstr "Nový styl z výběru"
 #: sfx2/uiconfig/ui/templatepanel.ui:174
 msgctxt "templatepanel|accessible_name|newmenu"
 msgid "Styles actions"
-msgstr "Akce ohledně stylů"
+msgstr "Akce stylů"
 
 #. 7NfdA
 #: sfx2/uiconfig/ui/templatepanel.ui:192
 msgctxt "templatepanel|accessible_name|update"
 msgid "Update Style"
-msgstr "Zaktualizovat styl"
+msgstr "Aktualizovat styl"
 
 #. BGAhD
 #: sfx2/uiconfig/ui/templatepanel.ui:242
@@ -436,7 +436,7 @@ msgstr "2 sloupce s různou velikostí (levý < pravý)"
 #: sw/inc/strings.hrc:498
 msgctxt "STR_REINSTATE_REDLINE"
 msgid "Reinstate change: $1"
-msgstr "Znovu zavést změnu: $1"
+msgstr "Odmítnout, ale sledovat změnu: $1"
 
 #. afEVQ
 #: sw/inc/strings.hrc:1536
@@ -456,8 +456,7 @@ msgctxt "columnpage|extended_tip|column-iconview"
 msgid ""
 "Enter the number of columns that you want in the page, frame, or section."
 msgstr ""
-"Zadejte počet sloupců které chcete, aby byly na stránce, v rámečku nebo "
-"sekci."
+"Zadejte počet sloupců, který chcete míst na stránce, v rámci nebo v sekci."
 
 #. Ci9GE
 #: sw/uiconfig/swriter/ui/spellmenu.ui:34
@@ -577,7 +576,7 @@ msgstr "Obsah:"
 #: sd/uiconfig/simpress/ui/layoutpanel.ui:41
 msgctxt "layoutpanel|extended_tip|layoutpanel_icons"
 msgid "List of available layout templates."
-msgstr "Seznam šablon rozvržení, které jsou k dispozici."
+msgstr "Seznam dostupných šablon rozvržení."
 
 #. Y3kBV
 #: filter/uiconfig/ui/impswfdialog.ui:14
@@ -730,7 +729,7 @@ msgctxt ""
 "UIName\n"
 "value.text"
 msgid "Markdown Document"
-msgstr "Markdown dokument"
+msgstr "Dokument Markdown"
 
 #. 9Q5Zj
 #: draw_flash_Export.xcu
@@ -760,7 +759,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Current Sheet View"
-msgstr "Stávající zobrazení sešitu"
+msgstr "Aktuální zobrazení listu"
 
 #. 3Ep4Y
 #: CalcCommands.xcu
@@ -790,7 +789,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "New Sheet View"
-msgstr "Nové zobrazení sešitu"
+msgstr "Nové zobrazení listu"
 
 #. AKfar
 #: CalcCommands.xcu
@@ -800,7 +799,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Remove Sheet View"
-msgstr "Odebrat zobrazení sešitu"
+msgstr "Odstranit zobrazení listu"
 
 #. M52nh
 #: CalcCommands.xcu
@@ -810,7 +809,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Switch To Next Sheet View"
-msgstr "Přepnout na další zobrazení sešitu"
+msgstr "Přepnout na další zobrazení listu"
 
 #. qfgad
 #: CalcCommands.xcu
@@ -820,7 +819,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Switch To Previous Sheet View"
-msgstr "Přepnout na předchozí zobrazení sešitu"
+msgstr "Přepnout na předchozí zobrazení listu"
 
 #. FJEd2
 #: CalcCommands.xcu
@@ -830,7 +829,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Select Sheet View"
-msgstr "Vybrat zobrazení sešitu"
+msgstr "Vybrat zobrazení listu"
 
 #. vCsC3
 #: CalcCommands.xcu
@@ -840,7 +839,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Exit Sheet View"
-msgstr "Ukončit zobrazení sešitu"
+msgstr "Ukončit zobrazení listu"
 
 #. uuvrm
 #: ChartCommands.xcu
@@ -850,7 +849,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Manage Themes..."
-msgstr "Spravovat vzhledy…"
+msgstr "Spravovat motivy vzhledu…"
 
 #. 5LESd
 #: ChartCommands.xcu
@@ -930,7 +929,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Master Pages"
-msgstr "Hlavní stránky"
+msgstr "Předlohy stránky"
 
 #. DCEaK
 #: GenericCommands.xcu
@@ -940,7 +939,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "~Hyperlink"
-msgstr "~hypertextový odkaz"
+msgstr "~Hypertextový odkaz"
 
 #. aFFu9
 #: GenericCommands.xcu
@@ -960,7 +959,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Nav~igator select comment."
-msgstr "Nav~igátor vybrat komentář."
+msgstr "Vybrat ~komentář v Navigátoru"
 
 #. 77Q3c
 #: GenericCommands.xcu
@@ -970,7 +969,7 @@ msgctxt ""
 "TooltipLabel\n"
 "value.text"
 msgid "Select Comment In The Navigator Window/Sidebar"
-msgstr "Vybrat komentář v okně / postranním panelu Navigátora"
+msgstr "Vybrat komentář v okně / na postranní listě Navigátoru"
 
 #. 83Euq
 #: GenericCommands.xcu
@@ -1011,7 +1010,7 @@ msgctxt ""
 "UIName\n"
 "value.text"
 msgid "Slide Sorter/Pane (Canvas)"
-msgstr "Seřazování/podokno snímku (plátno)"
+msgstr "Pořadač/panel snímku (plátno)"
 
 #. BQB9h
 #: ImpressWindowState.xcu
@@ -1022,7 +1021,7 @@ msgctxt ""
 "UIName\n"
 "value.text"
 msgid "Master Slide Sorter/Pane (Canvas)"
-msgstr "Hlavní snímek řazení/podokno (plátno)"
+msgstr "Pořadač/panel předlohy snímku (plátno)"
 
 #. kB8Ri
 #: Sidebar.xcu
@@ -1052,7 +1051,7 @@ msgctxt ""
 "Title\n"
 "value.text"
 msgid "Colors"
-msgstr "Barva"
+msgstr "Barvy"
 
 #. zz34M
 #: Sidebar.xcu
@@ -1062,7 +1061,7 @@ msgctxt ""
 "Title\n"
 "value.text"
 msgid "Theme"
-msgstr "Vzhled"
+msgstr "Motiv vzhledu"
 
 #. dgWCC
 #: Sidebar.xcu
@@ -1082,7 +1081,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Reinstate and Move to Next"
-msgstr "Obnovit a přesunout na další"
+msgstr "Odmítnout, ale sledovat a přesunout na další"
 
 #. NmvTm
 #: WriterCommands.xcu
@@ -1092,7 +1091,7 @@ msgctxt ""
 "TooltipLabel\n"
 "value.text"
 msgid "Reinstate Track Change and select the next one"
-msgstr "Obnovit sledovanou změnu a vybrat další"
+msgstr "Odmítnout, ale sledovat změnu a vybrat další"
 
 #. KVYrC
 #: WriterCommands.xcu
@@ -1102,7 +1101,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Reinstate All"
-msgstr "Obnovit vše"
+msgstr "Odmítnout, ale sledovat vše"
 
 #. QkP7E
 #: WriterCommands.xcu
@@ -1112,7 +1111,7 @@ msgctxt ""
 "TooltipLabel\n"
 "value.text"
 msgid "Reinstate All Tracked Changes"
-msgstr "Obnovit všechny sledované změny"
+msgstr "Odmítnout, ale sledovat všechny změny"
 
 #. SRvKK
 #: WriterCommands.xcu
@@ -1122,7 +1121,7 @@ msgctxt ""
 "PopupLabel\n"
 "value.text"
 msgid "Reinstate All Changes"
-msgstr "Obnovit všechny změny"
+msgstr "Odmítnout, ale sledovat všechny změny"
 
 #. 6w9UB
 #: WriterCommands.xcu
@@ -1132,7 +1131,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Reinstate"
-msgstr "Obnovit"
+msgstr "Odmítnout, ale sledovat"
 
 #. RgBxU
 #: WriterCommands.xcu
@@ -1142,7 +1141,7 @@ msgctxt ""
 "TooltipLabel\n"
 "value.text"
 msgid "Reinstate Track Change"
-msgstr "Obnovit sledovanou změnu"
+msgstr "Odmítnout, ale sledovat změnu"
 
 #. rTFtt
 #: WriterCommands.xcu
@@ -1152,7 +1151,7 @@ msgctxt ""
 "PopupLabel\n"
 "value.text"
 msgid "Reinstate Change"
-msgstr "Obnovit změnu"
+msgstr "Odmítnout, ale sledovat změnu"
 
 #. duoP7
 #: WriterCommands.xcu
@@ -1760,7 +1759,7 @@ msgstr "Hodnota, která se má doplnit. Výchozí je #N/A."
 #: sc/inc/scfuncs.hrc:4389
 msgctxt "SC_OPCODE_TOCOL"
 msgid "Transforms an array into a single column."
-msgstr "Přeměnit pole na jeden sloupec."
+msgstr "Transformuje matici na jediný sloupec."
 
 #. UAzNC
 #: sc/inc/scfuncs.hrc:4390
@@ -1976,31 +1975,31 @@ msgstr "Zvýraznit buňky..."
 #: sc/uiconfig/scalc/ui/selectsheetviewdialog.ui:18
 msgctxt "selectsheetviewdialog|SelectSheetView"
 msgid "Select Sheet View"
-msgstr "Vybrat zobrazení sešitu"
+msgstr "Vybrat zobrazení listu"
 
 #. GTQJA
 #: sc/uiconfig/scalc/ui/selectsheetviewdialog.ui:44
 msgctxt "selectsheetviewdialog|extended_tip|ok"
 msgid "Saves all changes and closes dialog."
-msgstr "Uloží všechny změny a zavře dialog."
+msgstr "Uloží všechny změny a zavře dialogové okno."
 
 #. kGFYu
 #: sc/uiconfig/scalc/ui/selectsheetviewdialog.ui:63
 msgctxt "selectsheetviewdialog|extended_tip|cancel"
 msgid "Closes dialog and discards all changes."
-msgstr "Zavře dialog a zahodí veškeré změny."
+msgstr "Zavře dialogové okno a zahodí všechny změny."
 
 #. sQPFE
 #: sc/uiconfig/scalc/ui/selectsheetviewdialog.ui:134
 msgctxt "selectsheetviewdialog|extended_tip|entry-list"
 msgid "Available sheet views."
-msgstr "Zobrazení sešitu k dispozici."
+msgstr "Dostupná zobrazení listu."
 
 #. csyNB
 #: sc/uiconfig/scalc/ui/sheetviewbox.ui:17
 msgctxt "sheetviewbox|sheetview_combobox|accessible_name"
 msgid "Sheet View"
-msgstr "Zobrazení sešitu"
+msgstr "Zobrazení listu"
 
 #. FXK8B
 #: sc/uiconfig/scalc/ui/sidebarcellappearance.ui:87
