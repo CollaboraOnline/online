@@ -177,7 +177,18 @@ class CompareChangesLabelSection extends HTMLObjectSection {
 		if (props) {
 			this.updateSubtitle(this.leftSubtitle, props.metadata.otherDocument);
 			this.updateSubtitle(this.rightSubtitle, props.metadata.thisDocument);
+			this.leftSubtitle.style.display = '';
+			this.rightSubtitle.style.display = '';
+		} else {
+			this.leftSubtitle.style.display = 'none';
+			this.rightSubtitle.style.display = 'none';
 		}
+
+		// We only have a subtitle right after comparing; so if we don't have a subtitle,
+		// center the title vertically.
+		const titleHeight = props ? this.labelHeight / 2 : this.labelHeight;
+		this.leftTitle.style.lineHeight = titleHeight + 'px';
+		this.rightTitle.style.lineHeight = titleHeight + 'px';
 
 		this.leftLabel.style.display = '';
 		this.leftLabel.style.left = leftX + 'px';
