@@ -16,11 +16,14 @@
 #include <kit/StateRecorder.hpp>
 #include <kit/Watermark.hpp>
 
-#define LOK_USE_UNSTABLE_API
-#include <LibreOfficeKit/LibreOfficeKit.hxx>
-
 #include <chrono>
 #include <queue>
+
+namespace lok
+{
+class Document;
+class Office;
+}
 
 class Document;
 class ChildSession;

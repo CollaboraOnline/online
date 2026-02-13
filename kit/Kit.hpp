@@ -26,8 +26,7 @@
 
 #include <Socket.hpp>
 
-#define LOK_USE_UNSTABLE_API
-#include <LibreOfficeKit/LibreOfficeKit.hxx>
+#include <LibreOfficeKit/LibreOfficeKitTypes.h>
 
 #if MOBILEAPP
 
@@ -41,6 +40,14 @@
 #ifdef IOS
 void runKitLoopInAThread();
 #endif
+
+namespace lok
+{
+class Document;
+class Office;
+}
+struct LibreOfficeKitStruct;
+using LibreOfficeKit = LibreOfficeKitStruct;
 
 void lokit_main(
 #if !MOBILEAPP
