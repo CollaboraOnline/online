@@ -31,6 +31,7 @@ JSDialog.comboboxEntry = function (parentContainer, data, builder) {
 	entry.id = data.id;
 	entry.setAttribute('role', 'option');
 	entry.setAttribute('tabindex', '-1');
+	entry.setAttribute('data-filter-text', data.text.toLowerCase());
 
 	if (data.hasSubMenu)
 		window.L.DomUtil.addClass(entry, 'ui-has-menu');
@@ -327,6 +328,69 @@ JSDialog.combobox = function (parentContainer, data, builder) {
 		};
 
 		JSDialog.OpenDropdown(data.id, container, entries, callback);
+
+		if (entries.length > 0) {
+			// Inject search field after dropdown DOM is created.
+			// Double-nest so it runs after setupInitialFocus.
+			app.layoutingService.appendLayoutingTask(function () {
+				app.layoutingService.appendLayoutingTask(function () {
+					var dropdownRoot = JSDialog.GetDropdown(data.id);
+					if (!dropdownRoot)
+						return;
+
+					var grid = dropdownRoot.querySelector('.ui-grid[role="listbox"]');
+					if (!grid || grid.querySelector('.ui-combobox-search-input'))
+						return;
+
+					var searchContainer = document.createElement('div');
+					searchContainer.className = 'ui-combobox-search-container';
+
+					var searchInput = document.createElement('input');
+					searchInput.type = 'search';
+					searchInput.className = 'jsdialog ui-edit ui-combobox-search-input';
+					searchInput.setAttribute('placeholder', _('Search...'));
+					searchInput.setAttribute('aria-label', _('Filter entries'));
+					searchInput.setAttribute('autocomplete', 'off');
+					searchContainer.appendChild(searchInput);
+
+					grid.insertAdjacentElement('afterbegin', searchContainer);
+
+					searchInput.addEventListener('input', function () {
+						var filterText = searchInput.value.trim().toLowerCase();
+						var allEntries = grid.querySelectorAll('.ui-combobox-entry');
+						allEntries.forEach(function (entry) {
+							var text = entry.getAttribute('data-filter-text') || '';
+							if (filterText === '' || text.indexOf(filterText) >= 0) {
+								window.L.DomUtil.removeClass(entry, 'hidden');
+							} else {
+								window.L.DomUtil.addClass(entry, 'hidden');
+							}
+						});
+					});
+
+					searchInput.addEventListener('keydown', function (event) {
+						if (event.key === 'ArrowDown') {
+							var firstVisible = grid.querySelector('.ui-combobox-entry:not(.hidden)');
+							if (firstVisible) {
+								firstVisible.focus();
+								event.preventDefault();
+							}
+						} else if (event.key === 'Enter') {
+							var firstVisible = grid.querySelector('.ui-combobox-entry:not(.hidden)');
+							if (firstVisible)
+								firstVisible.click();
+							event.preventDefault();
+						} else if (event.key === 'Escape') {
+							JSDialog.CloseDropdown(comboboxId);
+							content.focus();
+							event.preventDefault();
+						}
+					});
+
+					searchInput.focus();
+				});
+			});
+		}
 	};
 
 	button.addEventListener('click', clickFunction);
