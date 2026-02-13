@@ -188,6 +188,7 @@ div.sidebar.ui-grid .checkbutton.sidebar,
 #gradientstyle > .sidebar.ui-listbox,
 #gradangle > .sidebar.spinfield,
 #fontsizecombobox .sidebar.ui-listbox,
+#fontsizecombobox .sidebar.ui-combobox,
 #TableEditPanel .sidebar.spinfieldcontainer input,
 #ParaPropertyPanel .sidebar.spinfieldcontainer input {
 	min-width: 87px;
@@ -195,7 +196,9 @@ div.sidebar.ui-grid .checkbutton.sidebar,
 }
 
 #fontnamecombobox > .sidebar.jsdialog.ui-listbox,
-#applystyle > .sidebar.jsdialog.ui-listbox {
+#fontnamecombobox > .sidebar.jsdialog.ui-combobox,
+#applystyle > .sidebar.jsdialog.ui-listbox,
+#applystyle > .sidebar.jsdialog.ui-combobox {
 	width: 198px;
 }
 
