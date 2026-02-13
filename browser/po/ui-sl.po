@@ -5,16 +5,16 @@ msgstr ""
 "Project-Id-Version: Collabora Online UI\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-02-03 23:25+0100\n"
-"PO-Revision-Date: 2026-02-03 12:51+0000\n"
-"Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
-"Language-Team: Slovenian <https://hosted.weblate.org/projects/"
-"collabora-online/ui/sl/>\n"
-"Language: \n"
+"PO-Revision-Date: 2026-02-08 00:09+0000\n"
+"Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
+"Language-Team: Slovenian <https://hosted.weblate.org/projects/collabora-"
+"online/ui/sl/>\n"
+"Language: sl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n"
-"%100==4 ? 2 : 3;\n"
+"Plural-Forms: nplurals=4; plural=n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || "
+"n%100==4 ? 2 : 3;\n"
 "X-Accelerator-Marker: ~\n"
 "X-Generator: Weblate 5.16-dev\n"
 "X-Poedit-SourceCharset: UTF-8\n"
@@ -387,7 +387,7 @@ msgstr "Overitelj digitalnega potrdila"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:160
 msgid "In-document Screen Reader"
-msgstr ""
+msgstr "Zaslonski bralnik sredi dokumenta"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:161
 #: src/control/Control.Menubar.ts:172 src/control/Control.Menubar.ts:497
@@ -1075,13 +1075,12 @@ msgid "This version of {productname} is powered by"
 msgstr "To različico {productname} poganja"
 
 #: src/control/Control.AboutDialog.ts:189
-#, fuzzy
 msgid "Served by: "
-msgstr "Streže:"
+msgstr "Streže: "
 
 #: src/control/Control.AboutDialog.ts:212
 msgid "View widgets"
-msgstr ""
+msgstr "Pokaži gradnike"
 
 #: src/control/Control.AboutDialog.ts:236
 msgid "\"Slow Proxy\""
@@ -1869,7 +1868,7 @@ msgstr "Popravi"
 
 #: src/control/Control.Menubar.ts:140
 msgid "Compare Changes"
-msgstr ""
+msgstr "Primerjaj spremembe"
 
 #: src/control/Control.Menubar.ts:159 src/control/Control.Menubar.ts:480
 #: src/control/Control.Menubar.ts:486 src/control/Control.Menubar.ts:647
@@ -2622,7 +2621,7 @@ msgstr "Mini grafikon"
 
 #: src/control/Control.NotebookbarCalc.js:99
 msgid "Table Design"
-msgstr ""
+msgstr "Oblikovanje tabele"
 
 #: src/control/Control.NotebookbarCalc.js:106
 #: src/control/Control.NotebookbarDraw.js:121
@@ -2851,7 +2850,7 @@ msgstr "Privzeti pogled"
 
 #: src/control/Control.NotebookbarCalc.js:1431
 msgid "Open Views List"
-msgstr ""
+msgstr "Odpri seznam pogledov"
 
 #: src/control/Control.NotebookbarCalc.js:1438
 msgid "New Sheet View"
