@@ -41,7 +41,6 @@
         "l10n-for-node": "0.0.1",
         "mocha": "8.2.1",
         "prettier": "^3.1.1",
-        "select2": "4.0.13",
         "shrinkpack": "0.20.0",
         "smartmenus": "1.0.0",
         "stylelint": "13.7.0",
@@ -8307,13 +8306,6 @@
       "engines": {
         "node": ">=10"
       }
-    },
-    "node_modules/select2": {
-      "version": "4.0.13",
-      "resolved": "file:node_shrinkpack/select2-4.0.13.tar",
-      "integrity": "sha512-1JeB87s6oN/TDxQQYCvS5EFoQyvV6eYMZZ0AeA4tdFDYWN3BAGZ8npr17UBFddU0lgAt3H0yjX3X6/ekOj1yjw== sha512-che59hB75VcmkUTTeGko9dlOxpYmx2T0f8efrZLMYDfkCFZsyJd0fmHgIrKwBT6RrtqvzFU3Ow+uCliKyYKrlA==",
-      "dev": true,
-      "license": "MIT"
     },
     "node_modules/semver": {
       "version": "7.7.3",

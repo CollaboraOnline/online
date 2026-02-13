@@ -188,10 +188,9 @@ window.L.Control.NotebookbarBuilder = window.L.Control.JSDialogBuilder.extend({
 			var row = window.L.DomUtil.create('div', 'notebookbar row', table);
 			var button = window.L.DomUtil.createWithId('button', data.id + 'ios', row);
 
-			$(table).addClass('select2 select2-container select2-container--default');
-			// Fix issue #5838 Don't add the "select2-selection--single" class
-			$(row).addClass('select2-selection');
-			$(button).addClass('select2-selection__rendered');
+			$(table).addClass('ui-combobox jsdialog');
+			$(row).addClass('ui-combobox-content');
+			$(button).addClass('ui-combobox-content');
 
 			if (data.selectedEntries.length && data.entries[data.selectedEntries[0]])
 				button.innerText = data.entries[data.selectedEntries[0]];

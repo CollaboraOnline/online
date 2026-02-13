@@ -153,12 +153,10 @@ NODE_MODULES_SRC =\
 	autolinker@3.14.1 \
 	dompurify@3.2.4 \
 	json-js@1.1.2 \
-	select2@4.0.13 \
 	l10n-for-node@0.0.1 \
 	@braintree/sanitize-url@6.0.0
 
 COOL_CSS_LST =\
-	$(builddir)/node_modules/select2/dist/css/select2.css \
 	$(srcdir)/css/leaflet.css \
 	$(srcdir)/css/leaflet-spinner.css \
 	$(srcdir)/css/selectionMarkers.css \
@@ -227,7 +225,6 @@ NODE_MODULES_JS =\
 COOL_LIBS_JS =\
 	ResizeObserverPolyfill.js \
 	Autolinker.js \
-	select2.js \
 	sanitize-url.js
 
 if !ENABLE_MOBILEAPP

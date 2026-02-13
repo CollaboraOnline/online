@@ -83,16 +83,15 @@ function selectColorFromPalette(color) {
 	cy.log('<< selectColorFromPalette - end');
 }
 
-// Select an item from a listbox widget used on top toolbar.
+// Select an item from a listbox/combobox widget used on top toolbar.
 // Parameters:
 // item - item string, that we use a selector to find the right list item.
 function selectFromListbox(item) {
 	cy.log('>> selectFromListbox - start');
 
-	cy.cGet('.select2-dropdown').should('be.visible');
-	// We use force because the tooltip sometimes hides the items.
-	cy.cGet('body').contains('.select2-results__option', item).click();
-	cy.cGet('.select2-dropdown').should('not.exist');
+	cy.cGet('[id$="-dropdown"].modalpopup').should('be.visible');
+	cy.cGet('[id$="-dropdown"].modalpopup').contains('span', item).click();
+	cy.cGet('[id$="-dropdown"].modalpopup').should('not.exist');
 
 	cy.log('<< selectFromListbox - end');
 }
