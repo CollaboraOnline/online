@@ -37,79 +37,41 @@ window.L.Map.include({
 		}
 	},
 
-	onFontSelect: function(e) {
-		var font = e.target.value;
-		this.applyFont(font);
-		this.focus();
-	},
-
 	_getCurrentFontName: function() {
 		return this['stateChangeHandler'].getItemValue('.uno:CharFontName');
 	},
 
-	createFontSelector: function(nodeSelector) {
+	createFontSelector: function(containerId) {
 		var that = this;
+		var container = document.getElementById(containerId);
+		if (!container)
+			return;
 
-		var fontcombobox = $(nodeSelector);
-		if (!fontcombobox.hasClass('select2')) {
-			fontcombobox.select2({
-				placeholder: _('Font')
-			});
-		}
-
-		var createSelector = function() {
+		var populateEntries = function() {
 			var commandValues = that.getToolbarCommandValues('.uno:CharFontName');
-
-			var data = []; // reset data in order to avoid that the font select box is populated with styles, too.
-			// Old browsers don't like Object.keys with
-			// empty arguments
-			if (typeof commandValues === 'object') {
-				data = data.concat(Object.keys(commandValues));
+			if (typeof commandValues === 'object' && container.updateEntries) {
+				var fontNames = Object.keys(commandValues);
+				container.updateEntries(fontNames);
 			}
-			fontcombobox.empty();
-			for (var i = 0; i < data.length; ++i) {
-				if (!data[i]) continue;
-				var option = document.createElement('option');
-				option.text = data[i];
-				option.value = data[i];
-				fontcombobox.append(option);
-			}
-			fontcombobox.on('select2:select', that.onFontSelect.bind(that));
-
-			fontcombobox.val(that._getCurrentFontName()).trigger('change');
+			var currentFont = that._getCurrentFontName();
+			if (currentFont && container.onSetText)
+				container.onSetText(currentFont);
 		};
 
-		createSelector();
+		populateEntries();
 
 		var onCommandStateChanged = function(e) {
-			var commandName = e.commandName;
-
-			if (commandName !== '.uno:CharFontName')
+			if (e.commandName !== '.uno:CharFontName')
 				return;
 
-			var state = e.state;
-			var found = false;
-			fontcombobox.children('option').each(function () {
-				var value = this.value;
-				if (value.toLowerCase() === state.toLowerCase()) {
-					found = true;
-					return;
-				}
-			});
-
-			if (!found && state) {
-				fontcombobox
-					.append($('<option></option>')
-						.text(state));
-			}
-
-			fontcombobox.val(state).trigger('change');
-			this['stateChangeHandler'].setItemValue('.uno:CharFontName', state);
+			if (container.onSetText)
+				container.onSetText(e.state);
+			this['stateChangeHandler'].setItemValue('.uno:CharFontName', e.state);
 		};
 
 		var onFontListChanged = function(e) {
 			if (e.commandName === '.uno:CharFontName')
-				createSelector();
+				populateEntries();
 		};
 
 		this.off('commandstatechanged', onCommandStateChanged);
@@ -118,72 +80,21 @@ window.L.Map.include({
 		this.on('updatetoolbarcommandvalues', onFontListChanged);
 	},
 
-	onFontSizeSelect: function(e) {
-		this.applyFontSize(e.target.value);
-		this.focus();
-	},
-
-	createFontSizeSelector: function(nodeSelector) {
-		var data = [6, 7, 8, 9, 10, 10.5, 11, 12, 13, 14, 15, 16, 18, 20,
-			22, 24, 26, 28, 32, 36, 40, 44, 48, 54, 60, 66, 72, 80, 88, 96];
-
-		var fontsizecombobox = $(nodeSelector);
-		if (!fontsizecombobox.hasClass('select2')) {
-			fontsizecombobox.select2({
-				dropdownAutoWidth: true,
-				width: 'auto',
-				placeholder: _('Font Size'),
-				//Allow manually entered font size.
-				createTag: function(query) {
-					return {
-						id: query.term,
-						text: query.term,
-						tag: true
-					};
-				},
-				tags: true,
-				sorter: function(data) { return data.sort(function(a, b) {
-					return parseFloat(a.text) - parseFloat(b.text);
-				});}
-			});
-		}
-
-		fontsizecombobox.empty();
-		for (var i = 0; i < data.length; ++i) {
-			var option = document.createElement('option');
-			option.text = data[i];
-			option.value = data[i];
-			fontsizecombobox.append(option);
-		}
-		fontsizecombobox.off('select2:select', this.onFontSizeSelect.bind(this)).on('select2:select', this.onFontSizeSelect.bind(this));
+	createFontSizeSelector: function(containerId) {
+		var container = document.getElementById(containerId);
+		if (!container)
+			return;
 
 		var onCommandStateChanged = function(e) {
-			var commandName = e.commandName;
-
-			if (commandName !== '.uno:FontHeight')
+			if (e.commandName !== '.uno:FontHeight')
 				return;
 
 			var state = e.state;
-			var found = false;
-
-			if (state === '0') {
+			if (state === '0')
 				state = '';
-			}
 
-			fontsizecombobox.children('option').each(function (i, e) {
-				if ($(e).text() === state) {
-					found = true;
-				}
-			});
-
-			if (!found) {
-				// we need to add the size
-				fontsizecombobox
-					.append($('<option>')
-						.text(state).val(state));
-			}
-
-			fontsizecombobox.val(state).trigger('change');
+			if (container.onSetText)
+				container.onSetText(state);
 			this['stateChangeHandler'].setItemValue('.uno:FontHeight', state);
 		};
 
