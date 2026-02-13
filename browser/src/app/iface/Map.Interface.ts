@@ -125,5 +125,4 @@ interface MapInterface extends Evented {
 	sidebar: Sidebar;
 	getViewColor(viewId: number): number;
 	isAIConfigured?: boolean;
-	disableAISettings?: boolean;
 }
