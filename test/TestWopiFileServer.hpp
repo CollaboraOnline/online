@@ -422,6 +422,26 @@ void handleSettingsRequest(const Poco::Net::HTTPRequest& request, const std::str
     const std::string prefix = "/wopi/settings";
     std::string configPath = path.toString().substr(prefix.length());
 
+    // When called via fetch-settings-config, the type is passed as a query
+    // parameter and the path has no config filename suffix.  Map the type
+    // parameter to the corresponding config path so the existing handler
+    // logic works for both the direct and proxied request styles.
+    if (configPath.empty() || configPath == "/")
+    {
+        const auto params = requestUri.getQueryParameters();
+        for (const auto& param : params)
+        {
+            if (param.first == "type")
+            {
+                if (param.second == "userconfig")
+                    configPath = "/userconfig.json";
+                else if (param.second == "systemconfig")
+                    configPath = "/sharedconfig.json";
+                break;
+            }
+        }
+    }
+
     if (request.getMethod() == "GET" && configPath.ends_with("config.json"))
     {
         // For unittests ensure there is a testname="whatever" on these responses
