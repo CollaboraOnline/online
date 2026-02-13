@@ -105,8 +105,7 @@ function selectFromJSDialogListbox(item, isImage) {
 
 	cy.cGet('[id$="-dropdown"].modalpopup').should('be.visible');
 	if (isImage) {
-		cy.wait(1000); // We need some time to render custom entries
-		cy.cGet('[id$="-dropdown"].modalpopup img[alt="' + item + '"]').click();
+		cy.cGet('[id$="-dropdown"].modalpopup img[alt="' + item + '"]').should('be.visible').click();
 	} else
 		cy.cGet('[id$="-dropdown"].modalpopup').contains('span', item).click();
 
@@ -177,9 +176,6 @@ function doZoom(zoomIn) {
 	} else {
 		cy.cGet('#toolbar-down #zoomout').click();
 	}
-
-	// Wait for animation to complete
-	cy.wait(500);
 
 	cy.cGet('#toolbar-down #zoom .unolabel')
 		.should(function(zoomLevel) {

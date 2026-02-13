@@ -774,7 +774,9 @@ function isImageWhite(selector, expectWhite = true) {
 function isCanvasWhite(expectWhite = true) {
 	cy.log('>> isCanvasWhite - start');
 
-	cy.wait(300);
+	cy.getFrameWindow().then((win) => {
+		processToIdle(win);
+	});
 	cy.cGet('#document-canvas').should('exist').then(function(canvas) {
 		var result = true;
 		var context = canvas[0].getContext('2d');
@@ -1077,9 +1079,11 @@ function typeIntoInputField(selector, text, clearBefore = true)
 {
 	cy.log('>> typeIntoInputField - start');
 
-	cy.wait(600);
-	cy.cGet(selector).type((clearBefore ? '{selectall}{backspace}' : '') + text + '{enter}');
-	cy.wait(600);
+	if (clearBefore) {
+		cy.cGet(selector).type('{selectall}{backspace}' + text + '{enter}');
+	} else {
+		cy.cGet(selector).type(text + '{enter}');
+	}
 	cy.cGet(selector).should('have.value', text);
 
 	cy.log('<< typeIntoInputField - end');
