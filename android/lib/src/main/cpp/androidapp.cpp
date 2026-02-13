@@ -21,6 +21,9 @@
 #include <SetupKitEnvironment.hpp>
 #include <common/Util.hpp>
 
+#define LIBO_INTERNAL_ONLY
+#include <LibreOfficeKit/LibreOfficeKit.hxx>
+
 #include <osl/detail/android-bootstrap.h>
 
 const int SHOW_JS_MAXLEN = 70;

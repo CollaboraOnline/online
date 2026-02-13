@@ -35,6 +35,9 @@
 #include <kit/SetupKitEnvironment.hpp>
 #include <net/ServerSocket.hpp>
 
+#define LOK_USE_UNSTABLE_API
+#include <LibreOfficeKit/LibreOfficeKit.hxx>
+
 #include <Poco/Path.h>
 #include <Poco/URI.h>
 
