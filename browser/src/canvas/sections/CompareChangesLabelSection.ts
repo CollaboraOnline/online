@@ -24,8 +24,14 @@ class CompareChangesLabelSection extends HTMLObjectSection {
 	anchor: string[] = ['top', 'left'];
 
 	private readonly labelHeight: number = 32;
-	private leftLabel: HTMLSpanElement;
-	private rightLabel: HTMLSpanElement;
+
+	// Left and right labels, a title & optional subtitle inside each.
+	private leftLabel: HTMLDivElement;
+	private leftTitle: HTMLDivElement;
+	private leftSubtitle: HTMLDivElement;
+	private rightLabel: HTMLDivElement;
+	private rightTitle: HTMLDivElement;
+	private rightSubtitle: HTMLDivElement;
 
 	constructor() {
 		super(
@@ -35,8 +41,12 @@ class CompareChangesLabelSection extends HTMLObjectSection {
 			new cool.SimplePoint(0, 0),
 			'compare-changes-labels',
 		);
-		this.leftLabel = document.createElement('span');
-		this.rightLabel = document.createElement('span');
+		this.leftLabel = document.createElement('div');
+		this.leftTitle = document.createElement('div');
+		this.leftSubtitle = document.createElement('div');
+		this.rightLabel = document.createElement('div');
+		this.rightTitle = document.createElement('div');
+		this.rightSubtitle = document.createElement('div');
 		this.setupLabels();
 	}
 
@@ -47,29 +57,36 @@ class CompareChangesLabelSection extends HTMLObjectSection {
 		// Be on top of the text cursor.
 		container.style.zIndex = '1001';
 
-		this.leftLabel.textContent = '';
 		this.leftLabel.style.position = 'absolute';
 		this.leftLabel.style.height = this.labelHeight + 'px';
-		this.leftLabel.style.lineHeight = this.labelHeight + 'px';
 		this.leftLabel.style.backgroundColor = '#d63031';
 		this.leftLabel.style.color = 'white';
-		this.leftLabel.style.fontSize = '16px';
 		this.leftLabel.style.textAlign = 'center';
+		this.leftTitle.style.fontSize = '16px';
+		this.leftTitle.style.lineHeight = '16px';
+		this.leftSubtitle.style.fontSize = '12px';
+		this.leftSubtitle.style.lineHeight = '16px';
+		this.leftSubtitle.textContent = 'left test';
+		this.leftLabel.appendChild(this.leftTitle);
+		this.leftLabel.appendChild(this.leftSubtitle);
 		container.appendChild(this.leftLabel);
 
-		this.rightLabel.textContent = '';
 		this.rightLabel.style.position = 'absolute';
 		this.rightLabel.style.height = this.labelHeight + 'px';
-		this.rightLabel.style.lineHeight = this.labelHeight + 'px';
 		this.rightLabel.style.backgroundColor = '#00b894';
 		this.rightLabel.style.color = 'white';
-		this.rightLabel.style.fontSize = '16px';
 		this.rightLabel.style.textAlign = 'center';
+		this.rightTitle.style.fontSize = '16px';
+		this.rightTitle.style.lineHeight = '16px';
+		this.rightSubtitle.style.fontSize = '12px';
+		this.rightSubtitle.style.lineHeight = '16px';
+		this.rightSubtitle.textContent = 'right test';
+		this.rightLabel.appendChild(this.rightTitle);
+		this.rightLabel.appendChild(this.rightSubtitle);
 		container.appendChild(this.rightLabel);
 	}
 
 	override onDraw(): void {
-		this.adjustHTMLObjectPosition();
 		const container = this.getHTMLObject();
 
 		if (
@@ -80,6 +97,7 @@ class CompareChangesLabelSection extends HTMLObjectSection {
 			return;
 		}
 
+		this.adjustHTMLObjectPosition();
 		container.style.display = '';
 
 		const layout = app.activeDocument.activeLayout as ViewLayoutCompareChanges;
@@ -119,11 +137,11 @@ class CompareChangesLabelSection extends HTMLObjectSection {
 		const docName =
 			(document.getElementById('document-name-input') as HTMLInputElement)
 				?.value || '';
-		this.leftLabel.textContent = _('%1: Initial Version').replace(
+		this.leftTitle.textContent = _('%1: Initial Version').replace(
 			'%1',
 			docName,
 		);
-		this.rightLabel.textContent = _('%1: Current Version').replace(
+		this.rightTitle.textContent = _('%1: Current Version').replace(
 			'%1',
 			docName,
 		);
