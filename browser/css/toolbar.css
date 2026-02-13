@@ -192,8 +192,7 @@
 	color: var(--color-primary);
 }
 
-.w2ui-toolbar table.w2ui-button .w2ui-tb-down > div,
-.select2-container--default .select2-selection--single .select2-selection__arrow b {
+.w2ui-toolbar table.w2ui-button .w2ui-tb-down > div {
 	border-top: 5px solid var(--color-main-text);
 }
 #toolbar-down .ToolbarStatusInactive {
@@ -254,20 +253,6 @@
 	height: 18px;
 	background-image: none;
 	background-color: var(--color-border-lighter);
-}
-
-/* For MS Edge 40, the select2 combo boxes need to have higher z-index than #map
- * Ideal would be to add the class to select2-container <span>, but
- * https://github.com/select2/select2/issues/285
- * So, for now just define the z-index here separately for the same class that select2 uses
- * as a container
- */
-.select2-container {
-	z-index: 1000;
-}
-
-.select2-container .select2-selection--single {
-	height: 100%;
 }
 
 /* scroll wrapper */
@@ -515,85 +500,16 @@ button.leaflet-control-search-next
 	font-size: var(--default-font-size);
 }
 
-/* select box */
-.select2 span {
-	font-family: var(--cool-font);
-}
-.select2-results__option {
-	padding: 5px;
-	font-family: var(--cool-font);
-	color: var(--color-main-text);
-	font-size: var(--default-font-size);
-	overflow: hidden;
-	text-overflow: ellipsis;
-}
-.select2-selection__rendered {
-	font-family: var(--cool-font);
-	font-size: var(--default-font-size);
-}
-.select2-container--default .select2-selection--single,
 .sidebar.jsdialog.ui-listbox {
 	background-color: var(--color-background-dark);
 	color: var(--color-text-dark);
 	border-radius: var(--border-radius);
 	border: 1px solid var(--color-border-dark);
 }
-[data-userinterfacemode='classic'] #toolbar-up .select2-container--default .select2-selection--single,
-.sidebar.jsdialog.ui-listbox {
-	background-color: transparent !important;
-	border-color: transparent;
-}
-.select2-container--default .select2-selection--single .select2-selection__rendered {
-	line-height: 24px;
-	background-color: var(--color-background-dark);
-	color: var(--color-text-dark);
-	border-radius: var(--border-radius);
-}
-.select2-container--default .select2-selection--single .select2-selection__rendered:hover,
 .sidebar.jsdialog.ui-listbox:hover,
 .w2ui-toolbar table.w2ui-button.checked:hover {
 	background-color: var(--color-background-lighter);
 	color: var(--color-text-darker);
-}
-.select2-dropdown {
-	background-color: var(--color-main-background);
-	border: 1px solid var(--color-border-dark);
-	border-radius: var(--border-radius);
-}
-.select2-container--default .select2-results__option[aria-selected='true'] {
-	background-color: var(--color-background-dark);
-	color: var(--color-text-dark);
-}
-.select2-container--default .select2-results__option--highlighted[aria-selected] {
-	background-color: var(--color-background-darker);
-	color: var(--color-text-darker);
-}
-.select2-container--default .select2-search--dropdown .select2-search__field {
-	background-color: var(--color-background-lighter);
-	border: 1px solid var(--color-border);
-	border-radius: var(--border-radius);
-	color: var(--color-text-dark);
-}
-.select2-container--default .select2-results__option[aria-disabled='true'] {
-	color: var(--color-border-lighter);
-}
-#styles-input {
-	width: 150px !important;
-}
-#toolbar-up #fontnamecombobox .select2-container {
-	margin-left: 5px;
-	margin-right: 5px;
-	width: 150px !important;
-}
-#fontnamecombobox.select2 {
-	border-color: transparent;
-	background-color: transparent;
-	line-height: 24px;
-	padding-right: 8px;
-}
-#toolbar-up #fontsizecombobox .select2-container {
-	min-width: 55px !important;
-	margin: 0px 4px;
 }
 #fontsizecombobox-input-notebookbar,
 #fontsizecombobox-input-sidebar,
