@@ -335,6 +335,24 @@ class A11yValidator {
 			);
 		}
 	}
+
+	validateNotebookbar(): void {
+		const notebookbar = app.map?.uiManager?.notebookbar;
+		if (!notebookbar) {
+			console.error('A11yValidator: no notebookbar to validate');
+			return;
+		}
+
+		const errorCount = this.validateContainer(notebookbar.container);
+
+		if (errorCount === 0) {
+			console.error('A11yValidator: notebookbar passed all checks');
+		} else {
+			console.error(
+				`A11yValidator: notebookbar has ${errorCount} accessibility issues`,
+			);
+		}
+	}
 }
 
 window.app.a11yValidator = new A11yValidator();
