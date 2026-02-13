@@ -27,7 +27,7 @@
     <string name="app_version">Версія: %1$s, збірка: %2$s</string>
     <string name="app_name_settings">Налаштування</string>
     <string name="otg_missing_error">Недійсний файл привілеїв. Перевірте Ваш OTG пристрій і/або налаштування.</string>
-    <string name="ext_document_provider_error">Недійсний файл привілеїв. Перевірте свої налаштування SD-карти.</string>
+    <string name="ext_document_provider_error">Недійсний кореневий файл. Перевірте налаштування SD-картки.</string>
     <string name="owncloud_unspecified_error">Помилка підключення до хмарного сервера. Перевірте свої налаштування і/або спробуйте пізніше.</string>
     <string name="owncloud_unauthorized">Не вдалося авторизуватись на хмарному сервері. Перевірте свої налаштування.</string>
     <string name="owncloud_wrong_connection">Не можна під\'єднатися до хмарного сервера. Перевірте свої налаштування.</string>
@@ -73,7 +73,7 @@
     <string name="physical_storage_settings">Налаштування фізичного простору зберігання</string>
     <string name="title_activity_show_html">Про програму</string>
     <string name="directory_not_saved">Каталог не збережено.</string>
-    <string name="bmp_null">BMP пустий!</string>
+    <string name="bmp_null">BMP порожній!</string>
     <string name="unable_to_go_further">Неможливо іти далі.</string>
     <string name="share_document">Поділитись документом</string>
     <string name="loading">Завантаження...</string>
