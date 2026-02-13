@@ -341,6 +341,7 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 
 		// exit active object mode
 		helper.typeIntoDocument('{esc}');
+		helper.typeIntoDocument('{esc}');
 
 		//delete
 		helper.typeIntoDocument('{del}');
