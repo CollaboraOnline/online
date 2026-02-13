@@ -1771,9 +1771,12 @@ window.L.Control.NotebookbarCalc = window.L.Control.NotebookbarWriter.extend({
 			},
 			{ type: 'separator', id: 'table-style-options-break', orientation: 'vertical' },
 			{
-				'id': 'tablestyles_design:TableStylesMenu',
-				'type': 'menubutton',
-				'text': _('Table Styles'),
+				'id': 'tablestyles_cb2',
+				'type': 'listbox',
+				'selectedCount': '1',
+				'selectedEntries': [
+					'0'
+				],
 				'command': '.uno:DatabaseSettings',
 				'accessibility': { focusBack: true,	combination: 'TS', de: null }
 			}

@@ -454,18 +454,6 @@ class Dispatcher {
 			document.getElementById('#addressInput input').focus();
 		};
 
-		this.actionsMap['apply-table-style'] = function (entry: MenuDefinition) {
-			const windowId = WindowId.Notebookbar;
-			const data = entry.pos + ';' + entry.text;
-			const message =
-				'dialogevent ' +
-				windowId +
-				' {"id":"tablestyles_cb2", "cmd": "selected", "data": "' +
-				data +
-				'", "type": "combobox"}';
-			app.socket.sendMessage(message);
-		};
-
 		// sheets toolbar
 		this.actionsMap['insertsheet'] = function () {
 			var nPos = $('#spreadsheet-tab-scroll')[0].childElementCount;

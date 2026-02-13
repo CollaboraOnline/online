@@ -203,7 +203,6 @@ interface MenuDefinition extends WidgetJSON {
 	checked?: boolean; // state of check mark
 	items?: Array<any>;
 	selected?: boolean; // selected state for entry
-	pos?: number | string; // identifier of an entry
 }
 
 interface HtmlContentJson extends WidgetJSON {
