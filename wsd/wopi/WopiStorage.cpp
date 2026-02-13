@@ -978,8 +978,12 @@ WopiStorage::handleUploadToStorageResponse(const WopiUploadDetails& details,
             {
                 const std::string lastModifiedTime =
                     JsonUtil::getJSONValue<std::string>(object, "LastModifiedTime");
-                LOG_TRC(wopiLog << " returns LastModifiedTime [" << lastModifiedTime << "].");
-                setLastModifiedTime(lastModifiedTime);
+                if (lastModifiedTime.empty()) {
+                    LOG_WRN(wopiLog << " Missing LastModifiedTime from PutFile answer.");
+                } else {
+                    LOG_TRC(wopiLog << " returns LastModifiedTime [" << lastModifiedTime << "].");
+                    setLastModifiedTime(lastModifiedTime);
+                }
 
                 if (details.isSaveAs || details.isRename)
                 {
