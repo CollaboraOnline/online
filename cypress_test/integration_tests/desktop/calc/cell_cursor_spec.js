@@ -55,8 +55,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Test jumping on large cell
 
 	it('Scroll and check drawing on frozen part of the view', function() {
 		// We will add a new sheet. Go to a cell other than A1. We will check if the new sheet is added by checking the current cell.
-		helper.typeIntoInputField(helper.addressInputSelector, 'B2');
-		calcHelper.assertAddressAfterIdle(this.win, 'B2');
+		calcHelper.enterCellAddressAndConfirm(this.win, 'B2');
 
 		// Add a new sheet.
 		cy.cGet('#insertsheet-button').click();
@@ -64,8 +63,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Test jumping on large cell
 		calcHelper.assertAddressAfterIdle(this.win, 'A1');
 
 		// Go to a cell that we know is visible.
-		helper.typeIntoInputField(helper.addressInputSelector, 'D7');
-		calcHelper.assertAddressAfterIdle(this.win, 'D7');
+		calcHelper.enterCellAddressAndConfirm(this.win, 'D7');
 
 		// Find freeze panes button and click.
 		cy.cGet('#View-tab-label').click();
@@ -238,8 +236,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Test triple click content 
 	});
 
 	it('Triple click should select the cell content.', function() {
-		helper.typeIntoInputField(helper.addressInputSelector, 'A1');
-		calcHelper.assertAddressAfterIdle(this.win, 'A1');
+		calcHelper.enterCellAddressAndConfirm(this.win, 'A1');
 
 		// Triple click on second first in second row
 		cy.cGet('#document-container')
@@ -267,15 +264,13 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Test decimal separator of 
 	});
 
 	it('Check different decimal separators', function() {
-		helper.typeIntoInputField(helper.addressInputSelector, 'A1');
-		calcHelper.assertAddressAfterIdle(this.win, 'A1');
+		calcHelper.enterCellAddressAndConfirm(this.win, 'A1');
 
 		cy.wrap(this.win).then(win => {
 			cy.expect(win.app.calc.decimalSeparator).to.be.equal('.');
 		});
 
-		helper.typeIntoInputField(helper.addressInputSelector, 'B1');
-		calcHelper.assertAddressAfterIdle(this.win, 'B1');
+		calcHelper.enterCellAddressAndConfirm(this.win, 'B1');
 
 		cy.wrap(this.win).then(win => {
 			cy.expect(win.app.calc.decimalSeparator).to.be.equal(',');

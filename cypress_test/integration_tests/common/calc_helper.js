@@ -390,3 +390,11 @@ module.exports.selectOptionFromContextMenu = selectOptionFromContextMenu;
 module.exports.selectOptionMobileWizard = selectOptionMobileWizard;
 module.exports.hideSelectedRows = hideSelectedRows;
 module.exports.assertAddressAfterIdle = assertAddressAfterIdle;
+
+// Navigate to a cell address by typing into the address input field,
+// then wait for the core to be idle and assert the address is correct.
+function enterCellAddressAndConfirm(win, address) {
+	helper.typeIntoInputField(helper.addressInputSelector, address);
+	assertAddressAfterIdle(win, address);
+}
+module.exports.enterCellAddressAndConfirm = enterCellAddressAndConfirm;

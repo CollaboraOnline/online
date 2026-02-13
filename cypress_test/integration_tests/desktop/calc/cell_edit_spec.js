@@ -20,8 +20,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Test rendering of a cell o
 	});
 
 	function selectInitialCell(win) {
-		helper.typeIntoInputField(helper.addressInputSelector, 'CA980');
-		calcHelper.assertAddressAfterIdle(win, 'CA980');
+		calcHelper.enterCellAddressAndConfirm(win, 'CA980');
 	}
 
 	function checkTextContent(expected) {
