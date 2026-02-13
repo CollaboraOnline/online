@@ -233,6 +233,17 @@ function setupOverflowMenu(
 					menu?.classList.add('ui-overflow-group-popup');
 
 					migrateItems(hiddenItems, menu);
+					menu.addEventListener(
+						'click',
+						function (e: MouseEvent) {
+							const target = e.target as HTMLElement;
+							const toolbutton = target.closest('.unotoolbutton');
+							if (toolbutton) {
+								JSDialog.CloseDropdown(dropdownId);
+							}
+						},
+						{ capture: true },
+					);
 					menu.addEventListener('keydown', function (e: KeyboardEvent) {
 						let key;
 						if (e.key === 'Tab') {
