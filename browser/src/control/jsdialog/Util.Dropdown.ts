@@ -70,21 +70,6 @@ JSDialog.OpenDropdown = function (
 		else return false;
 	};
 
-	for (let i = 0; i < entries.length; i++) {
-		if (entries[i].statusCommand) {
-			const items = window.L.Map.THIS['stateChangeHandler'];
-			const val = items.getItemValue(entries[i].statusCommand);
-			if (val) {
-				const index = parseInt(val);
-				if (index === i) {
-					entries[i].selected = true;
-				} else {
-					entries[i].selected = false;
-				}
-			}
-		}
-	}
-
 	const shouldSelectFirstEntry =
 		entries.length > 0
 			? !entries.some((entry) => entry.selected === true)
