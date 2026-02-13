@@ -57,31 +57,41 @@ class CompareChangesLabelSection extends HTMLObjectSection {
 		// Be on top of the text cursor.
 		container.style.zIndex = '1001';
 
-		this.leftLabel.style.position = 'absolute';
-		this.leftLabel.style.height = this.labelHeight + 'px';
-		this.leftLabel.style.backgroundColor = '#d63031';
-		this.leftLabel.style.color = 'white';
-		this.leftLabel.style.textAlign = 'center';
-		this.leftTitle.style.fontSize = '16px';
-		this.leftTitle.style.lineHeight = '16px';
-		this.leftSubtitle.style.fontSize = '12px';
-		this.leftSubtitle.style.lineHeight = '16px';
-		this.leftLabel.appendChild(this.leftTitle);
-		this.leftLabel.appendChild(this.leftSubtitle);
-		container.appendChild(this.leftLabel);
+		this.setupLabel(
+			container,
+			this.leftLabel,
+			this.leftTitle,
+			this.leftSubtitle,
+			'#d63031',
+		);
+		this.setupLabel(
+			container,
+			this.rightLabel,
+			this.rightTitle,
+			this.rightSubtitle,
+			'#00b894',
+		);
+	}
 
-		this.rightLabel.style.position = 'absolute';
-		this.rightLabel.style.height = this.labelHeight + 'px';
-		this.rightLabel.style.backgroundColor = '#00b894';
-		this.rightLabel.style.color = 'white';
-		this.rightLabel.style.textAlign = 'center';
-		this.rightTitle.style.fontSize = '16px';
-		this.rightTitle.style.lineHeight = '16px';
-		this.rightSubtitle.style.fontSize = '12px';
-		this.rightSubtitle.style.lineHeight = '16px';
-		this.rightLabel.appendChild(this.rightTitle);
-		this.rightLabel.appendChild(this.rightSubtitle);
-		container.appendChild(this.rightLabel);
+	private setupLabel(
+		container: HTMLDivElement,
+		label: HTMLDivElement,
+		title: HTMLDivElement,
+		subtitle: HTMLDivElement,
+		backgroundColor: string,
+	): void {
+		label.style.position = 'absolute';
+		label.style.height = this.labelHeight + 'px';
+		label.style.backgroundColor = backgroundColor;
+		label.style.color = 'white';
+		label.style.textAlign = 'center';
+		title.style.fontSize = '16px';
+		title.style.lineHeight = '16px';
+		subtitle.style.fontSize = '12px';
+		subtitle.style.lineHeight = '16px';
+		label.appendChild(title);
+		label.appendChild(subtitle);
+		container.appendChild(label);
 	}
 
 	private updateSubtitle(
