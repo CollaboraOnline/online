@@ -71,6 +71,9 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Test jumping on large cell
 		desktopHelper.getNbIcon('FreezePanes').last().click();
 		cy.cGet('.jsdialog-overlay').click(); // close popup
 
+		// Wait for freeze panes statechanged message to arrive from core.
+		helper.waitForMapState('.uno:FreezePanes', 'true');
+
 		// Scroll down.
 		calcHelper.enterCellAddressAndConfirm(this.win, 'Z110');
 

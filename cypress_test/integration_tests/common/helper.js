@@ -1316,6 +1316,18 @@ function waitForTimers(win, tag) {
 	}, { timeout: Cypress.config('defaultCommandTimeout'), interval: 50 });
 }
 
+// Waits for a map stateChangeHandler item to reach the expected value.
+// Useful after sending uno commands where the state change message from
+// core may arrive asynchronously based on a state change timer from core
+function waitForMapState(command, expectedValue) {
+	cy.log('>> waitForMapState - start');
+	cy.log('Param - command: ' + command + ', expectedValue: ' + expectedValue);
+	cy.getFrameWindow().should(win => {
+		expect(win.app.map['stateChangeHandler'].getItemValue(command)).to.equal(expectedValue);
+	});
+	cy.log('<< waitForMapState - end');
+}
+
 module.exports.setupDocument = setupDocument;
 module.exports.loadDocument = loadDocument;
 module.exports.setupAndLoadDocument = setupAndLoadDocument;
@@ -1370,4 +1382,5 @@ module.exports.waitUntilCoreIsIdle = waitUntilCoreIsIdle;
 module.exports.waitUntilLayoutingIsIdle = waitUntilLayoutingIsIdle;
 module.exports.processToIdle = processToIdle;
 module.exports.waitForTimers = waitForTimers;
+module.exports.waitForMapState = waitForMapState;
 module.exports.maxScreenshotableViewportHeight = maxScreenshotableViewportHeight;
