@@ -68,7 +68,11 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Test jumping on large cell
 		// Find freeze panes button and click.
 		cy.cGet('#View-tab-label').click();
 		desktopHelper.getNbIconArrow('FreezePanes').click();
-		desktopHelper.getNbIcon('FreezePanes').last().click();
+		// There are two FreezePanes buttons, the first in the main
+		// toolbar we clicked to create the dropdown in which the
+		// second appears. We want to wait until that second one is
+		// available and click that one, not reclick the first.
+		desktopHelper.getNbIcon('FreezePanes').should('have.length', 2).last().click();
 		cy.cGet('.jsdialog-overlay').click(); // close popup
 
 		// Wait for freeze panes statechanged message to arrive from core.
