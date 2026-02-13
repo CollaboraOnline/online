@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-02-03 23:25+0100\n"
-"PO-Revision-Date: 2026-02-05 04:11+0000\n"
+"PO-Revision-Date: 2026-02-13 15:39+0000\n"
 "Last-Translator: Amadɣas <massiin@proton.me>\n"
 "Language-Team: Kabyle <https://hosted.weblate.org/projects/collabora-online/"
 "ui/kab/>\n"
@@ -383,7 +383,7 @@ msgstr "Azmul CA"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:160
 msgid "In-document Screen Reader"
-msgstr ""
+msgstr "Ameɣri n ugdil usliɣ ɣer yisemli"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:161
 #: src/control/Control.Menubar.ts:172 src/control/Control.Menubar.ts:497
@@ -452,9 +452,8 @@ msgid "Show Grid"
 msgstr "Sken iẓiki"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:178
-#, fuzzy
 msgid "Snap to grid"
-msgstr "Tiddi ɣer yiẓiki"
+msgstr "Reyyec ɣer yiẓiki"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:179
 #: admin/src/integrator/AdminIntegratorSettings.ts:185
@@ -463,25 +462,25 @@ msgstr "Tiddi ɣer yiẓiki"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:180
 msgid "Synchronize axes"
-msgstr ""
+msgstr "Semtawi igellusen"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:181
 msgid "Snap grid"
-msgstr ""
+msgstr "Iẓiki n ureyyec"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:182
 msgid "Empty Pages"
-msgstr ""
+msgstr "Isebtar ilmawen"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:183
 msgid "Force Breaks"
-msgstr ""
+msgstr "Ḥettem Tirẓi"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:184
 #: src/control/Control.Menubar.ts:776 src/control/Control.TopToolbar.js:110
 #: src/control/jsdialog/Definitions.Menu.ts:1575
 msgid "All Sheets"
-msgstr "Akk Ifriwen"
+msgstr "Akk Tiferkiyin"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:186
 msgid "Content"
@@ -500,7 +499,7 @@ msgstr "Asebter"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:189
 msgid "Fit to page"
-msgstr ""
+msgstr "Sezg ɣer usebtar"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:190
 msgid "Tile pages"
@@ -508,15 +507,15 @@ msgstr ""
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:191
 msgid "Booklet"
-msgstr ""
+msgstr "Tadlist"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:192
 msgid "Booklet front"
-msgstr ""
+msgstr "Tadlist s zdat"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:193
 msgid "Booklet back"
-msgstr ""
+msgstr "Tadlist s deffir"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:194
 msgid "Page name"
@@ -536,11 +535,11 @@ msgstr "Akud"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:197
 msgid "Hidden pages"
-msgstr ""
+msgstr "Isebtar yeffren"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:198
 msgid "From printer setup"
-msgstr ""
+msgstr "Seg usebded n tsaggazt"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:199
 msgid "Presentation"
@@ -671,48 +670,45 @@ msgstr "Tiddest n unekcum ulac-it deg yimuttiyen imezwura."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:462
 msgid "Something went wrong. Please try to refresh the page."
-msgstr ""
+msgstr "Yella wayen ur neddi ara akken ilaq. Ttxil-k·m, ɛreḍ asismeḍ usebter."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:599
-#, fuzzy
 msgid ""
 "Something went wrong while fetching setting file. Please try to refresh the "
 "page."
 msgstr ""
-"Yella wacu ur neddi ara deg tukksa n ufaylu. Ttxil-k·m eɛreḍ ad tesmiren "
-"asebter."
+"Yella wacu ur neddi ara ad d-yawi afaylu n yiɣewwaṛen. Ttxil-k·m ɛreḍ "
+"asismeḍ usebter."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:624
-#, fuzzy
 msgid ""
 "Something went wrong while fetching wordbook. Please try to refresh the "
 "page."
 msgstr ""
-"Yella wacu ur neddi ara deg tukksa n ufaylu. Ttxil-k·m eɛreḍ ad tesmiren "
-"asebter."
+"Yella wacu ur neddi ara akken ad d-yawi amawal. Ttxil-k·m ɛreḍ asismeḍ "
+"usebter."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:634
 msgid "Interface Settings"
-msgstr ""
+msgstr "Iɣewwaṛen n ugrudem"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:636
 msgid "Set default interface preferences."
-msgstr ""
+msgstr "Sbadu ismenyifen n ugrudem amezwer."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:744
-#, fuzzy
 msgid "Select a tab to browser settings."
-msgstr "Fren iccer iwakken ad twaliḍ iɣewwaṛen."
+msgstr "Fren iccer i usnirem n iɣewwaṛen."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:757
 #: admin/src/integrator/Xcu.ts:376
 msgid "Reset to default Document settings"
-msgstr ""
+msgstr "Ales awennez ɣer iɣewwaṛen n isemli amezwer"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:761
 #: admin/src/integrator/Xcu.ts:390
 msgid "Are you sure you want to reset Document settings?"
-msgstr ""
+msgstr "Tebɣiḍ ad talseḍ awennez n iɣewwaṛen n isemli?"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:778
 #: admin/src/integrator/Xcu.ts:405
@@ -1176,7 +1172,7 @@ msgstr "Abrid"
 #: src/control/Control.DocumentRepair.js:27
 #: src/control/Control.DocumentRepair.js:28
 msgid "Repair Document"
-msgstr "Seggem isemli"
+msgstr "Seɣti Isemli"
 
 #: src/control/Control.DocumentRepair.js:124
 #: src/control/Control.UserList.ts:387
@@ -1862,7 +1858,7 @@ msgstr "Mdel isemli"
 #: src/control/Control.NotebookbarImpress.js:376
 #: src/control/Control.NotebookbarWriter.js:335
 msgid "Repair"
-msgstr "Seggem"
+msgstr "Seɣti"
 
 #: src/control/Control.Menubar.ts:140
 msgid "Compare Changes"
@@ -2771,12 +2767,12 @@ msgstr ""
 #: src/control/Control.NotebookbarImpress.js:1288
 #: src/control/Control.NotebookbarWriter.js:1028
 msgid "Replace"
-msgstr ""
+msgstr "Semselsi"
 
 #: src/control/Control.NotebookbarCalc.js:1108
 #: src/control/Control.NotebookbarWriter.js:1796
 msgid "Margin"
-msgstr ""
+msgstr "Tama"
 
 #: src/control/Control.NotebookbarCalc.js:1115
 #: src/control/Control.NotebookbarWriter.js:1803
@@ -2785,19 +2781,19 @@ msgstr "Tiddi"
 
 #: src/control/Control.NotebookbarCalc.js:1176
 msgid "Row Height"
-msgstr ""
+msgstr "Teɣzi n wadur"
 
 #: src/control/Control.NotebookbarCalc.js:1184
 msgid "Column Width"
-msgstr ""
+msgstr "Tehri n tgejdit"
 
 #: src/control/Control.NotebookbarCalc.js:1204
 msgid "Insert Rows Above"
-msgstr ""
+msgstr "Ger aduren Nnig"
 
 #: src/control/Control.NotebookbarCalc.js:1211
 msgid "Insert Columns Before"
-msgstr ""
+msgstr "Ger Tigejda Send"
 
 #: src/control/Control.NotebookbarCalc.js:1218
 msgid "Delete Rows"
@@ -2805,11 +2801,11 @@ msgstr "Kkes izirigen"
 
 #: src/control/Control.NotebookbarCalc.js:1230
 msgid "Insert Rows Below"
-msgstr ""
+msgstr "Ger aduren ddaw"
 
 #: src/control/Control.NotebookbarCalc.js:1237
 msgid "Insert Columns After"
-msgstr ""
+msgstr "Ger Tigejda Seld"
 
 #: src/control/Control.NotebookbarCalc.js:1244
 msgid "Delete Columns"
@@ -2826,7 +2822,7 @@ msgstr "Kkes Tigejda"
 #: src/control/Control.NotebookbarWriter.js:2907
 #: src/control/Control.NotebookbarWriter.js:3230
 msgid "Align"
-msgstr ""
+msgstr "Reyyec"
 
 #: src/control/Control.NotebookbarCalc.js:1337
 #: src/control/Control.NotebookbarCalc.js:3107
@@ -2839,75 +2835,75 @@ msgstr ""
 #: src/control/Control.NotebookbarWriter.js:2966
 #: src/control/Control.NotebookbarWriter.js:3289
 msgid "Arrange"
-msgstr ""
+msgstr "Seggem"
 
 #: src/control/Control.NotebookbarCalc.js:1400
 msgid "Sheet View"
-msgstr ""
+msgstr "Taskant n tferkit"
 
 #: src/control/Control.NotebookbarCalc.js:1414
 msgid "Default View"
-msgstr ""
+msgstr "Taskant Tamezwert"
 
 #: src/control/Control.NotebookbarCalc.js:1431
 msgid "Open Views List"
-msgstr ""
+msgstr "Ldi Tabdart n Teskanin"
 
 #: src/control/Control.NotebookbarCalc.js:1438
 msgid "New Sheet View"
-msgstr ""
+msgstr "Taskant n tferkit tamaynut"
 
 #: src/control/Control.NotebookbarCalc.js:1445
 msgid "Remove Sheet View"
-msgstr ""
+msgstr "Kkes taskant n tferkit"
 
 #: src/control/Control.NotebookbarCalc.js:1452
 msgid "Exit Sheet View"
-msgstr ""
+msgstr "Ffeɣ Taskant n tferkit"
 
 #: src/control/Control.NotebookbarCalc.js:1467
 msgid "Freeze"
-msgstr ""
+msgstr "Gres"
 
 #: src/control/Control.NotebookbarCalc.js:1521
 #: src/control/Control.NotebookbarDraw.js:420
 #: src/control/Control.NotebookbarImpress.js:537
 #: src/control/Control.NotebookbarWriter.js:1650
 msgid "Zoom"
-msgstr ""
+msgstr "Semɣeṛ"
 
 #: src/control/Control.NotebookbarCalc.js:1528
 #: src/control/Control.NotebookbarDraw.js:427
 #: src/control/Control.NotebookbarImpress.js:463
 #: src/control/Control.NotebookbarWriter.js:1636
 msgid "Read mode"
-msgstr ""
+msgstr "Askar n tɣuri"
 
 #: src/control/Control.NotebookbarCalc.js:1595
 #: src/control/Control.NotebookbarDraw.js:520
 #: src/control/Control.NotebookbarImpress.js:630
 #: src/control/Control.NotebookbarWriter.js:1743
 msgid "Collapse Tabs"
-msgstr ""
+msgstr "Semẓi iccaren"
 
 #: src/control/Control.NotebookbarCalc.js:1608
 #: src/control/Control.NotebookbarDraw.js:508
 #: src/control/Control.NotebookbarImpress.js:618
 #: src/control/Control.NotebookbarWriter.js:1731
 msgid "Status Bar"
-msgstr ""
+msgstr "Afeggag n waddad"
 
 #: src/control/Control.NotebookbarCalc.js:1665
 msgid "Table Style Options"
-msgstr ""
+msgstr "Tinefrunin n uɣanib n tfelwit"
 
 #: src/control/Control.NotebookbarCalc.js:1678
 msgid "Header Row"
-msgstr ""
+msgstr "Adur n Tsenṭit"
 
 #: src/control/Control.NotebookbarCalc.js:1690
 msgid "Total Row"
-msgstr ""
+msgstr "Adur uɣrid"
 
 #: src/control/Control.NotebookbarCalc.js:1708
 msgid "Banded Rows"
@@ -2919,15 +2915,15 @@ msgstr ""
 
 #: src/control/Control.NotebookbarCalc.js:1738
 msgid "First Column"
-msgstr ""
+msgstr "Tigejdit tamezwarut"
 
 #: src/control/Control.NotebookbarCalc.js:1750
 msgid "Last Column"
-msgstr ""
+msgstr "Tigejdit taneggarut"
 
 #: src/control/Control.NotebookbarCalc.js:1765
 msgid "Filter Buttons"
-msgstr ""
+msgstr "Tiqeffalin n testayt"
 
 #: src/control/Control.NotebookbarCalc.js:1801
 #: src/control/Control.NotebookbarCalc.js:2549
@@ -2980,13 +2976,12 @@ msgstr "Talɣiwin"
 #: src/control/Control.NotebookbarDraw.js:1593
 #: src/control/Control.NotebookbarImpress.js:1620
 #: src/control/Control.NotebookbarWriter.js:1353
-#, fuzzy
 msgid "Assistant"
-msgstr "Amedhal n Tegzi Taragmawant"
+msgstr "Amallal"
 
 #: src/control/Control.NotebookbarCalc.js:2174
 msgid "Insert Function"
-msgstr ""
+msgstr "Ger tawuri"
 
 #: src/control/Control.NotebookbarCalc.js:2182
 msgid "Function Library"
@@ -2998,11 +2993,11 @@ msgstr ""
 
 #: src/control/Control.NotebookbarCalc.js:2209
 msgid "Financial"
-msgstr ""
+msgstr "Adriman"
 
 #: src/control/Control.NotebookbarCalc.js:2227
 msgid "Logical"
-msgstr ""
+msgstr "Ameẓẓul"
 
 #: src/control/Control.NotebookbarCalc.js:2257
 msgid "Date & Time"
@@ -3018,19 +3013,19 @@ msgstr ""
 
 #: src/control/Control.NotebookbarCalc.js:2299
 msgid "More Functions"
-msgstr ""
+msgstr "Ugar n Tiwuriwin"
 
 #: src/control/Control.NotebookbarCalc.js:2344
 msgid "Range"
-msgstr ""
+msgstr "Azilal"
 
 #: src/control/Control.NotebookbarCalc.js:2427
 msgid "Sort"
-msgstr ""
+msgstr "Smizzwer"
 
 #: src/control/Control.NotebookbarCalc.js:2473
 msgid "Filter"
-msgstr ""
+msgstr "Tastayt"
 
 #: src/control/Control.NotebookbarCalc.js:2721
 #: src/control/Control.NotebookbarImpress.js:1980
@@ -3040,7 +3035,7 @@ msgstr "Iwenniten"
 
 #: src/control/Control.NotebookbarCalc.js:2827
 msgid "Format Cells"
-msgstr ""
+msgstr "Msel tibniqin"
 
 #: src/control/Control.NotebookbarCalc.js:2973
 #: src/control/Control.NotebookbarCalc.js:3330
@@ -3048,13 +3043,13 @@ msgstr ""
 #: src/control/Control.NotebookbarWriter.js:2852
 #: src/control/Control.NotebookbarWriter.js:3175
 msgid "Wrap"
-msgstr ""
+msgstr "Akwbal"
 
 #: src/control/Control.NotebookbarCalc.js:3212
 #: src/control/Control.NotebookbarImpress.js:2699
 #: src/control/Control.NotebookbarWriter.js:3061
 msgid "Image Controls"
-msgstr ""
+msgstr "Isenqaden n tugna"
 
 #: src/control/Control.NotebookbarDraw.js:76
 #: src/control/Control.NotebookbarWriter.js:56
@@ -3063,7 +3058,7 @@ msgstr "Aseggem n usebtar"
 
 #: src/control/Control.NotebookbarDraw.js:321
 msgid "PDF Document (.pdf) - Expert"
-msgstr ""
+msgstr "Isemli PDF (.pdf) - Aɛebbay"
 
 #: src/control/Control.NotebookbarDraw.js:495
 #: src/control/Control.NotebookbarImpress.js:605
@@ -3093,7 +3088,7 @@ msgstr ""
 
 #: src/control/Control.NotebookbarImpress.js:469
 msgid "From Beginning"
-msgstr ""
+msgstr "Seg Tazwara"
 
 #: src/control/Control.NotebookbarImpress.js:476
 msgid "From Current Slide"
@@ -3101,20 +3096,20 @@ msgstr "Seg Tigri Tamirant"
 
 #: src/control/Control.NotebookbarImpress.js:485
 msgid "Present in Window"
-msgstr ""
+msgstr "Tihawt deg Usfaylu"
 
 #: src/control/Control.NotebookbarImpress.js:493
 msgid "Presenter View"
-msgstr ""
+msgstr "Taskant n Tihawt"
 
 #: src/control/Control.NotebookbarImpress.js:501
 msgid "Present to All"
-msgstr ""
+msgstr "Smahi ɣer Meṛṛa"
 
 #: src/control/Control.NotebookbarImpress.js:509
 #: src/slideshow/SlideShowPresenter.ts:751
 msgid "Follow Presenter"
-msgstr ""
+msgstr "Ḍfer Amsahi"
 
 #: src/control/Control.NotebookbarImpress.js:637
 msgid "Slide Views"
@@ -3137,12 +3132,12 @@ msgstr "Amaynut"
 #: src/control/Control.NotebookbarImpress.js:822
 #: src/control/Control.NotebookbarImpress.js:1840
 msgid "Change Layout"
-msgstr ""
+msgstr "Snifel taneɣruft"
 
 #: src/control/Control.NotebookbarImpress.js:830
 #: src/control/Control.NotebookbarImpress.js:1847
 msgid "Reset Layout"
-msgstr ""
+msgstr "Ales Taneɣruft"
 
 #: src/control/Control.NotebookbarImpress.js:844
 msgid "Character"
@@ -3150,7 +3145,7 @@ msgstr "Asekkil"
 
 #: src/control/Control.NotebookbarImpress.js:1105
 msgid "Spacing & Color"
-msgstr ""
+msgstr "Tallunt akked yini"
 
 #: src/control/Control.NotebookbarImpress.js:1795
 msgid "Master Slide Templates"
@@ -3158,7 +3153,7 @@ msgstr "Tineɣrufin n Tigri Tagejdant"
 
 #: src/control/Control.NotebookbarImpress.js:1809
 msgid "Themes"
-msgstr ""
+msgstr "Isental"
 
 #: src/control/Control.NotebookbarImpress.js:1859
 msgid "Slide Size"
@@ -3166,7 +3161,7 @@ msgstr "Tiddi n Tigri"
 
 #: src/control/Control.NotebookbarImpress.js:1882
 msgid "Background Image"
-msgstr ""
+msgstr "Tugna n ugilal"
 
 #: src/control/Control.NotebookbarImpress.js:2084
 msgid "Merge & Split"
@@ -3196,11 +3191,11 @@ msgstr "Uɣal ɣer war tuqqna"
 
 #: src/control/Control.NotebookbarWriter.js:489
 msgid "Validate Sidebar"
-msgstr ""
+msgstr "Sentem afeggag n yidis"
 
 #: src/control/Control.NotebookbarWriter.js:497
 msgid "Validate Dialog"
-msgstr ""
+msgstr "Sentem Tankult n udiwenni"
 
 #: src/control/Control.NotebookbarWriter.js:940
 #: src/control/Control.Zotero.js:827
@@ -3237,7 +3232,7 @@ msgstr ""
 
 #: src/control/Control.NotebookbarWriter.js:1664
 msgid "Page Width"
-msgstr ""
+msgstr "Tehri n usebter"
 
 #: src/control/Control.NotebookbarWriter.js:2301
 msgid "Tracking"
@@ -3245,15 +3240,15 @@ msgstr "Aḍfar"
 
 #: src/control/Control.NotebookbarWriter.js:2322
 msgid "View Changes"
-msgstr ""
+msgstr "Wali ibeddilen"
 
 #: src/control/Control.NotebookbarWriter.js:2408
 msgid "Compare"
-msgstr ""
+msgstr "Snemhel"
 
 #: src/control/Control.NotebookbarWriter.js:2414
 msgid "Compare Documents"
-msgstr ""
+msgstr "Snemhel Isemli"
 
 #: src/control/Control.NotebookbarWriter.js:2506
 msgid "Split"
