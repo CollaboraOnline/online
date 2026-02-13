@@ -428,5 +428,18 @@ JSDialog.combobox = function (parentContainer, data, builder) {
 		content.value = text;
 	};
 
+	container.updateEntries = function (newEntries) {
+		entries = [];
+		for (var i = 0; i < newEntries.length; i++) {
+			entries.push({
+				text: newEntries[i].toString(),
+				selected: false,
+				customRenderer: data.customEntryRenderer
+			});
+		}
+		if (JSDialog.GetDropdown(data.id))
+			JSDialog.CloseDropdown(data.id);
+	};
+
 	return false;
 };

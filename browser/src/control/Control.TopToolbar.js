@@ -62,8 +62,27 @@ class TopToolbar extends JSDialog.Toolbar {
 	}
 
 	callback(objectType, eventType, object, data, builder) {
-		if (object.id === 'fontnamecombobox' || object.id === 'fontsizecombobox' || object.id === 'styles') {
-			// managed by non-JSDialog code
+		if (object.id === 'fontnamecombobox') {
+			if (eventType === 'selected')
+				this.map.applyFont(data.substr(data.indexOf(';') + 1));
+			else if (eventType === 'change')
+				this.map.applyFont(data);
+			this.map.focus();
+			return;
+		}
+		if (object.id === 'fontsizecombobox') {
+			if (eventType === 'selected')
+				this.map.applyFontSize(data.substr(data.indexOf(';') + 1));
+			else if (eventType === 'change')
+				this.map.applyFontSize(data);
+			this.map.focus();
+			return;
+		}
+		if (object.id === 'styles') {
+			if (eventType === 'selected')
+				this.onStyleSelect({target: {value: data.substr(data.indexOf(';') + 1)}});
+			else if (eventType === 'change')
+				this.onStyleSelect({target: {value: data}});
 			return;
 		}
 
@@ -82,7 +101,12 @@ class TopToolbar extends JSDialog.Toolbar {
 			this.map.applyStyle(style, 'CellStyles');
 		}
 		else if (this.map.getDocType() === 'presentation' || this.map.getDocType() === 'drawing') {
-			this.map.applyLayout(style);
+			var layoutId = style;
+			window.L.Styles.impressLayout.forEach(function(layout) {
+				if (_(layout.text) === style)
+					layoutId = layout.id;
+			});
+			this.map.applyLayout(layoutId);
 		}
 		this.map.focus();
 	}
@@ -122,9 +146,9 @@ class TopToolbar extends JSDialog.Toolbar {
 			{type: 'toolitem',  id: 'reset', text: _UNO('.uno:ResetAttributes', 'text'), visible: false, command: '.uno:ResetAttributes', mobile: false, icon: 'compact_setdefault.svg'},
 			{type: 'toolitem',  id: 'resetimpress', class: 'unoResetAttributes', text: _UNO('.uno:SetDefault', 'presentation', 'true'), visible: false, command: '.uno:SetDefault', mobile: false, icon: 'compact_setdefault.svg'},
 			{type: 'separator', orientation: 'vertical', id: 'breakreset', invisible: true, mobile: false, tablet: false,},
-			{type: 'listbox', id: 'styles', text: _('Default Style'), desktop: true, mobile: false, tablet: false},
-			{type: 'listbox', id: 'fontnamecombobox', text: 'Carlito', command: '.uno:CharFontName', mobile: false},
-			{type: 'listbox', id: 'fontsizecombobox', text: '12 pt', command: '.uno:FontHeight', mobile: false,}
+			{type: 'combobox', id: 'styles', text: _('Default Style'), desktop: true, mobile: false, tablet: false, changeOnEnterOnly: true},
+			{type: 'combobox', id: 'fontnamecombobox', text: 'Carlito', command: '.uno:CharFontName', mobile: false, changeOnEnterOnly: true},
+			{type: 'combobox', id: 'fontsizecombobox', text: '12 pt', command: '.uno:FontHeight', mobile: false, changeOnEnterOnly: true, entries: ['6','7','8','9','10','10.5','11','12','13','14','15','16','18','20','22','24','26','28','32','36','40','44','48','54','60','66','72','80','88','96']}
 		];
 		var formatGroup = [
 			{type: 'toolitem',  id: 'bold', text: _UNO('.uno:Bold'), command: '.uno:Bold'},
@@ -312,7 +336,7 @@ class TopToolbar extends JSDialog.Toolbar {
 			}
 		}
 
-		this.map.createFontSelector('#fontnamecombobox-input');
+		this.map.createFontSelector('fontnamecombobox');
 
 		// on mode switch NB -> Compact
 		if (this.map._docLoadedOnce)
@@ -361,21 +385,16 @@ class TopToolbar extends JSDialog.Toolbar {
 			}
 			break;
 		case 'presentation':
-			// Fill the style select box if not yet filled
-			if ($('#styles-input')[0] && $('#styles-input')[0].length === 1) {
-				var data = [''];
-				// Inserts a separator element
-				data = data.concat({text: '\u2500\u2500\u2500\u2500\u2500\u2500', enabled: false});
-
-				window.L.Styles.impressLayout.forEach(function(layout) {
-					data = data.concat({id: layout.id, text: _(layout.text)});
-				}, this);
-
-				$('#styles-input').select2({
-					data: data,
-					placeholder: _UNO('.uno:LayoutStatus', 'presentation')
-				});
-				$('#styles-input').on('select2:select', this.onStyleSelect.bind(this));
+			{
+				// Fill the style combobox with Impress layouts
+				var stylesContainer = document.getElementById('styles');
+				if (stylesContainer && stylesContainer.updateEntries) {
+					var layoutEntries = [];
+					window.L.Styles.impressLayout.forEach(function(layout) {
+						layoutEntries.push(_(layout.text));
+					});
+					stylesContainer.updateEntries(layoutEntries);
+				}
 			}
 
 			if (this.parentContainer) {
@@ -407,23 +426,22 @@ class TopToolbar extends JSDialog.Toolbar {
 
 		this.updateVisibilityForToolbar();
 
-		this.map.createFontSizeSelector('#fontsizecombobox-input');
+		this.map.createFontSizeSelector('fontsizecombobox');
 
 		JSDialog.RefreshScrollables();
 	}
 
 	onUpdatePermission(e) {
-		if (e.detail.perm === 'edit') {
-			// Enable list boxes
-			$('#styles-input').prop('disabled', false);
-			$('#fontnamecombobox-input').prop('disabled', false);
-			$('#fontsizecombobox-input').prop('disabled', false);
-		} else {
-			// Disable list boxes
-			$('#styles-input').prop('disabled', true);
-			$('#fontnamecombobox-input').prop('disabled', true);
-			$('#fontsizecombobox-input').prop('disabled', true);
-		}
+		var ids = ['styles', 'fontnamecombobox', 'fontsizecombobox'];
+		ids.forEach(function(id) {
+			var el = document.getElementById(id);
+			if (el) {
+				if (e.detail.perm === 'edit')
+					el.removeAttribute('disabled');
+				else
+					el.setAttribute('disabled', 'true');
+			}
+		});
 	}
 
 	onWopiProps(e) {
@@ -450,112 +468,80 @@ class TopToolbar extends JSDialog.Toolbar {
 		}
 	}
 
-	// TODO: create dedicated widget for styles listbox
 	updateCommandValues(e) {
-		var data = [];
-		var commandValues;
-		// 1) For .uno:StyleApply
-		// we need an empty option for the place holder to work
-		if (e.commandName === '.uno:StyleApply') {
-			var styles = [];
-			var topStyles = [];
-			commandValues = this.map.getToolbarCommandValues(e.commandName);
-			if (typeof commandValues === 'undefined')
-				return;
-			var commands = commandValues.Commands;
-			if (commands && commands.length > 0) {
+		if (e.commandName !== '.uno:StyleApply')
+			return;
 
-				commands.forEach(function (command) {
-					var translated = command.text;
-					if (window.L.Styles.styleMappings[command.text]) {
-						// if it's in English, translate it
-						translated = window.L.Styles.styleMappings[command.text].toLocaleString();
-					}
-					data = data.concat({id: command.id, text: translated });
-				}, this);
-			}
+		var commandValues = this.map.getToolbarCommandValues(e.commandName);
+		if (typeof commandValues === 'undefined')
+			return;
 
-			if (this.map.getDocType() === 'text') {
-				styles = commandValues.ParagraphStyles.slice(7);
-				topStyles = commandValues.ParagraphStyles.slice(0, 7);
-			}
-			else if (this.map.getDocType() === 'spreadsheet') {
-				styles = commandValues.CellStyles;
-			}
-			else if (this.map.getDocType() === 'presentation') {
-				// styles are not applied for presentation
-				return;
-			}
+		if (this.map.getDocType() === 'presentation') {
+			// styles are not applied for presentation
+			return;
+		}
 
-			if (topStyles.length > 0) {
-				// Inserts a separator element
-				data = data.concat({text: '\u2500\u2500\u2500\u2500\u2500\u2500', enabled: false});
-
-				topStyles.forEach(function (style) {
-					data = data.concat({id: style, text: window.L.Styles.styleMappings[style].toLocaleString()});
-				}, this);
-			}
-
-			if (styles !== undefined && styles.length > 0) {
-				// Inserts a separator element
-				data = data.concat({text: '\u2500\u2500\u2500\u2500\u2500\u2500', enabled: false});
-
-				styles.forEach(function (style) {
-					var localeStyle;
-					if (style.startsWith('outline')) {
-						var outlineLevel = style.split('outline')[1];
-						localeStyle = 'Outline'.toLocaleString() + ' ' + outlineLevel;
-					} else {
-						localeStyle = window.L.Styles.styleMappings[style];
-						localeStyle = localeStyle === undefined ? style : localeStyle.toLocaleString();
-					}
-
-					data = data.concat({id: style, text: localeStyle});
-				}, this);
-			}
-
-			$('#styles-input').select2({
-				data: data,
-				placeholder: _('Style')
+		var entries = [];
+		var commands = commandValues.Commands;
+		if (commands && commands.length > 0) {
+			commands.forEach(function (command) {
+				var translated = command.text;
+				if (window.L.Styles.styleMappings[command.text]) {
+					translated = window.L.Styles.styleMappings[command.text].toLocaleString();
+				}
+				entries.push(translated);
 			});
-			$('#styles-input').val(this.stylesSelectValue).trigger('change');
-			$('#styles-input').on('select2:select', this.onStyleSelect.bind(this));
+		}
+
+		var styles = [];
+		var topStyles = [];
+		if (this.map.getDocType() === 'text') {
+			styles = commandValues.ParagraphStyles.slice(7);
+			topStyles = commandValues.ParagraphStyles.slice(0, 7);
+		}
+		else if (this.map.getDocType() === 'spreadsheet') {
+			styles = commandValues.CellStyles;
+		}
+
+		topStyles.forEach(function (style) {
+			entries.push(window.L.Styles.styleMappings[style].toLocaleString());
+		});
+
+		if (styles !== undefined && styles.length > 0) {
+			styles.forEach(function (style) {
+				var localeStyle;
+				if (style.startsWith('outline')) {
+					var outlineLevel = style.split('outline')[1];
+					localeStyle = 'Outline'.toLocaleString() + ' ' + outlineLevel;
+				} else {
+					localeStyle = window.L.Styles.styleMappings[style];
+					localeStyle = localeStyle === undefined ? style : localeStyle.toLocaleString();
+				}
+				entries.push(localeStyle);
+			});
+		}
+
+		var container = document.getElementById('styles');
+		if (container && container.updateEntries) {
+			container.updateEntries(entries);
+			if (this.stylesSelectValue)
+				container.onSetText(this.stylesSelectValue);
 		}
 	}
 
 	processStateChangedCommand(commandName, state) {
-		var found = false;
-
 		if (commandName === '.uno:StyleApply') {
-			if (!state) {
+			if (!state)
 				return;
-			}
 
 			// For impress documents, no styles is supported.
-			if (this.map.getDocType() === 'presentation') {
+			if (this.map.getDocType() === 'presentation')
 				return;
-			}
-
-			$('#styles-input option').each(function () {
-				var value = this.value;
-				// For writer we get UI names; ideally we should be getting only programmatic ones
-				// For eg: 'Text body' vs 'Text Body'
-				// (likely to be fixed in core to make the pattern consistent)
-				if (state && value.toLowerCase() === state.toLowerCase()) {
-					state = value;
-					found = true;
-					return;
-				}
-			});
-			if (!found) {
-				// we need to add the size
-				$('#styles-input')
-					.append($('<option></option>')
-						.text(state));
-			}
 
 			this.stylesSelectValue = state;
-			$('#styles-input').val(state).trigger('change');
+			var container = document.getElementById('styles');
+			if (container && container.onSetText)
+				container.onSetText(state);
 		}
 
 		window.processStateChangedCommand(commandName, state);
