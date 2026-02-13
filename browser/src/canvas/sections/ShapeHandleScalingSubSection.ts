@@ -262,6 +262,7 @@ class ShapeHandleScalingSubSection extends CanvasSectionObject {
 		}
 	}
 
+	// Uses the given "point" parameter and modifies it.
 	private calculateRatioPoint(point: cool.SimplePoint, shapeRecProps: any) {
 		const isVerticalHandler = ['2', '7'].includes(this.sectionProperties.ownInfo.kind);
 
@@ -279,7 +280,7 @@ class ShapeHandleScalingSubSection extends CanvasSectionObject {
 
 		if (isVerticalHandler)
 			point.pX = shapeRecProps.center.pX + secondaryDelta * direction;
-		 else
+		else
 			point.pY = shapeRecProps.center.pY + secondaryDelta * direction;
 	}
 
