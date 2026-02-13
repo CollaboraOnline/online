@@ -8,11 +8,11 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-02-03 23:25+0100\n"
-"PO-Revision-Date: 2026-02-03 12:17+0000\n"
-"Last-Translator: \"Mathieu B.\" <mathieu.bousquet2@gmail.com>\n"
+"PO-Revision-Date: 2026-02-13 15:39+0000\n"
+"Last-Translator: Méven Car <meven.car@collabora.com>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/collabora-online/"
 "ui/fr/>\n"
-"Language: \n"
+"Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -382,18 +382,16 @@ msgid "Signature Certificate"
 msgstr "Certificat de Signature"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:156
-#, fuzzy
 msgid "Signature Key"
-msgstr "Signature"
+msgstr "Signature de la clé de chiffrement"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:157
-#, fuzzy
 msgid "Signature CA"
-msgstr "Signature"
+msgstr "Signature de l'Autorité de Certification (CA)"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:160
 msgid "In-document Screen Reader"
-msgstr ""
+msgstr "Lecteur d'écran intégré dans le document"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:161
 #: src/control/Control.Menubar.ts:172 src/control/Control.Menubar.ts:497
@@ -464,24 +462,21 @@ msgid "Show Grid"
 msgstr "Afficher la grille"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:178
-#, fuzzy
 msgid "Snap to grid"
-msgstr "Aligner sur la grille"
+msgstr "Aimanter sur la grille"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:179
 #: admin/src/integrator/AdminIntegratorSettings.ts:185
-#, fuzzy
 msgid "Size to grid"
-msgstr "Aligner sur la grille"
+msgstr "Dimensionner selon la grille"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:180
 msgid "Synchronize axes"
 msgstr "Synchronisation des axes"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:181
-#, fuzzy
 msgid "Snap grid"
-msgstr "Aligner sur la grille"
+msgstr "Aimanter la grille"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:182
 msgid "Empty Pages"
@@ -567,9 +562,8 @@ msgid "Notes"
 msgstr "Notes"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:201
-#, fuzzy
 msgid "Handouts"
-msgstr "À distribuer"
+msgstr "Polycopié"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:202
 #: src/control/Control.NavigatorPanel.ts:208
@@ -585,9 +579,8 @@ msgid "Images"
 msgstr "Images"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:205
-#, fuzzy
 msgid "Tables"
-msgstr "Tableau"
+msgstr "Tableaux"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:206
 msgid "Controls"
@@ -806,9 +799,8 @@ msgid "Zotero account API settings"
 msgstr "les paramètres d'API de votre Compte Zotero"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:1414
-#, fuzzy
 msgid "Document Signing"
-msgstr "Paramètres du document"
+msgstr "Signature électronique de document"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:1418
 msgid ""
@@ -932,8 +924,8 @@ msgstr ""
 #: js/global.js:1609
 msgid "The document is being migrated to a new server. Retrying shortly..."
 msgstr ""
-"Le document est en cours de migration vers un nouveau serveur.\n"
-"Ré-essaie sous-peu..."
+"Le document est en cours de migration vers un nouveau serveur. Ré-essaie "
+"sous-peu..."
 
 #: js/global.js:1611
 msgid "Failed to get RouteToken from controller"
@@ -1102,13 +1094,12 @@ msgid "This version of {productname} is powered by"
 msgstr "Cette version de {productname} est propulsée par"
 
 #: src/control/Control.AboutDialog.ts:189
-#, fuzzy
 msgid "Served by: "
-msgstr "Servi par :"
+msgstr "Servi par : "
 
 #: src/control/Control.AboutDialog.ts:212
 msgid "View widgets"
-msgstr ""
+msgstr "Composants d'interface"
 
 #: src/control/Control.AboutDialog.ts:236
 msgid "\"Slow Proxy\""
@@ -1878,9 +1869,8 @@ msgstr "Fichier HTML (.html)"
 #: src/control/Control.NotebookbarImpress.js:438
 #: src/control/Control.NotebookbarWriter.js:412
 #: src/map/handler/Map.Settings.ts:73
-#, fuzzy
 msgid "Options"
-msgstr "Option"
+msgstr "Options"
 
 #: src/control/Control.Menubar.ts:123 src/control/Control.Menubar.ts:463
 #: src/control/Control.Menubar.ts:630 src/control/Control.Menubar.ts:778
@@ -1901,7 +1891,7 @@ msgstr "Restaurer"
 
 #: src/control/Control.Menubar.ts:140
 msgid "Compare Changes"
-msgstr ""
+msgstr "Comparer les Changements"
 
 #: src/control/Control.Menubar.ts:159 src/control/Control.Menubar.ts:480
 #: src/control/Control.Menubar.ts:486 src/control/Control.Menubar.ts:647
@@ -1916,7 +1906,7 @@ msgstr "Ré-initialiser le zoom"
 
 #: src/control/Control.Menubar.ts:165
 msgid "Fit to Screen"
-msgstr ""
+msgstr "Adapter à l'écran"
 
 #: src/control/Control.Menubar.ts:168 src/control/Control.Menubar.ts:492
 #: src/control/Control.Menubar.ts:659 src/control/Control.Menubar.ts:804
@@ -2425,7 +2415,7 @@ msgstr "Fin du dégradé"
 
 #: src/control/Control.NavigatorPanel.ts:38
 msgid "Navigation Panel"
-msgstr ""
+msgstr "Panneau de Navigation"
 
 #: src/control/Control.NavigatorPanel.ts:110
 msgid "Navigation"
@@ -2481,9 +2471,8 @@ msgid "Start"
 msgstr "Démarrer"
 
 #: src/control/Notebookbar.ImpressAnimationTab.ts:140
-#, fuzzy
 msgid "Effect"
-msgstr "Effets"
+msgstr "Effet"
 
 #: src/control/Notebookbar.ImpressTransitionTab.ts:24
 msgid "Transition"
@@ -2525,9 +2514,8 @@ msgstr "Note de bas ou fin de page"
 #: src/control/Notebookbar.WriterReferencesTab.ts:312
 #: src/control/Control.NotebookbarDraw.js:1578
 #: src/control/Control.NotebookbarImpress.js:1635
-#, fuzzy
 msgid "Field"
-msgstr "Champs"
+msgstr "Champ"
 
 #: src/control/Sidebar.FromNotebookbarPanel.ts:121
 msgid "Animations"
@@ -2608,9 +2596,8 @@ msgid "Page Layout"
 msgstr "Mise en page"
 
 #: src/control/Control.NotebookbarCalc.js:48
-#, fuzzy
 msgid "Formulas"
-msgstr "Formule"
+msgstr "Formules"
 
 #: src/control/Control.NotebookbarCalc.js:54
 msgid "Data"
@@ -2660,7 +2647,7 @@ msgstr "Sparkline"
 
 #: src/control/Control.NotebookbarCalc.js:99
 msgid "Table Design"
-msgstr ""
+msgstr "Conception de Tableau"
 
 #: src/control/Control.NotebookbarCalc.js:106
 #: src/control/Control.NotebookbarDraw.js:121
@@ -2880,9 +2867,8 @@ msgid "Arrange"
 msgstr "Arranger"
 
 #: src/control/Control.NotebookbarCalc.js:1400
-#, fuzzy
 msgid "Sheet View"
-msgstr "Aperçu de la feuille"
+msgstr "Vue de la feuille"
 
 #: src/control/Control.NotebookbarCalc.js:1414
 msgid "Default View"
@@ -2890,7 +2876,7 @@ msgstr "Vue par Défaut"
 
 #: src/control/Control.NotebookbarCalc.js:1431
 msgid "Open Views List"
-msgstr ""
+msgstr "Ouvrir la Liste des Vues"
 
 #: src/control/Control.NotebookbarCalc.js:1438
 msgid "New Sheet View"
@@ -2942,19 +2928,19 @@ msgstr "Options de Style de Tableau"
 
 #: src/control/Control.NotebookbarCalc.js:1678
 msgid "Header Row"
-msgstr ""
+msgstr "En-tête de Ligne"
 
 #: src/control/Control.NotebookbarCalc.js:1690
 msgid "Total Row"
-msgstr ""
+msgstr "Ligne des Totaux"
 
 #: src/control/Control.NotebookbarCalc.js:1708
 msgid "Banded Rows"
-msgstr ""
+msgstr "Lignes à Bandes"
 
 #: src/control/Control.NotebookbarCalc.js:1720
 msgid "Banded Columns"
-msgstr ""
+msgstr "Colonnes à Bandes"
 
 #: src/control/Control.NotebookbarCalc.js:1738
 msgid "First Column"
@@ -2966,7 +2952,7 @@ msgstr "Dernière Colonne"
 
 #: src/control/Control.NotebookbarCalc.js:1765
 msgid "Filter Buttons"
-msgstr ""
+msgstr "Filtrer les Boutons"
 
 #: src/control/Control.NotebookbarCalc.js:1801
 #: src/control/Control.NotebookbarCalc.js:2549
@@ -3143,16 +3129,16 @@ msgstr "Présenter dans une fenêtre"
 
 #: src/control/Control.NotebookbarImpress.js:493
 msgid "Presenter View"
-msgstr ""
+msgstr "Vue du Présentateur"
 
 #: src/control/Control.NotebookbarImpress.js:501
 msgid "Present to All"
-msgstr ""
+msgstr "Présenter à Tous"
 
 #: src/control/Control.NotebookbarImpress.js:509
 #: src/slideshow/SlideShowPresenter.ts:751
 msgid "Follow Presenter"
-msgstr ""
+msgstr "Suivre le Présentateur"
 
 #: src/control/Control.NotebookbarImpress.js:637
 msgid "Slide Views"
@@ -3196,7 +3182,7 @@ msgstr "Modèles de Diapo Maîtresse"
 
 #: src/control/Control.NotebookbarImpress.js:1809
 msgid "Themes"
-msgstr ""
+msgstr "Thèmes"
 
 #: src/control/Control.NotebookbarImpress.js:1859
 msgid "Slide Size"
@@ -3233,11 +3219,11 @@ msgstr "Aller en mode hors-ligne"
 
 #: src/control/Control.NotebookbarWriter.js:489
 msgid "Validate Sidebar"
-msgstr ""
+msgstr "Barre latérale de Validation"
 
 #: src/control/Control.NotebookbarWriter.js:497
 msgid "Validate Dialog"
-msgstr ""
+msgstr "Dialogue de Validation"
 
 #: src/control/Control.NotebookbarWriter.js:940
 #: src/control/Control.Zotero.js:827
@@ -3274,7 +3260,7 @@ msgstr "Menu déroulant"
 
 #: src/control/Control.NotebookbarWriter.js:1664
 msgid "Page Width"
-msgstr ""
+msgstr "Largeur de Page"
 
 #: src/control/Control.NotebookbarWriter.js:2301
 msgid "Tracking"
@@ -3282,15 +3268,15 @@ msgstr "Enregistrer"
 
 #: src/control/Control.NotebookbarWriter.js:2322
 msgid "View Changes"
-msgstr ""
+msgstr "Voir les Changements"
 
 #: src/control/Control.NotebookbarWriter.js:2408
 msgid "Compare"
-msgstr ""
+msgstr "Comparer"
 
 #: src/control/Control.NotebookbarWriter.js:2414
 msgid "Compare Documents"
-msgstr ""
+msgstr "Comparer des Documents"
 
 #: src/control/Control.NotebookbarWriter.js:2506
 msgid "Split"
@@ -3340,6 +3326,8 @@ msgstr "Aucun problème détecté pendant la vérification SSL"
 msgid ""
 "Documents are not effectively contained: missing capabilities or namespaces."
 msgstr ""
+"Les Documents ne sont pas effectivement conteneurisés: il manque des "
+"capability ou des namespace."
 
 #: src/control/Control.ServerAuditDialog.ts:77
 msgid "Each document is securely contained"
@@ -3350,6 +3338,8 @@ msgid ""
 "BPF filtering of potentially risky system calls (seccomp) is not enabled; a "
 "security hazard."
 msgstr ""
+"Le filtrage d'appel système risqué BPF (seccomp) n'est pas activé ; c'est un "
+"risque de sécurité."
 
 #: src/control/Control.ServerAuditDialog.ts:88
 msgid "System call security filtering enabled"
@@ -3371,18 +3361,21 @@ msgstr ""
 #: src/control/Control.ServerAuditDialog.ts:109
 msgid "Slow Kit jail setup with copying, cannot bind-mount."
 msgstr ""
+"Configuration du cloisonnement du Kit lente en copie, impossible de bind-"
+"mount."
 
 #: src/control/Control.ServerAuditDialog.ts:114
 msgid "Fast kit jail bind mounting enabled"
-msgstr ""
+msgstr "Cloisonnement du Kit rapide via l'utilisation de bind-mount."
 
 #: src/control/Control.ServerAuditDialog.ts:119
 msgid "Fast kit jail bind mounting not configured"
 msgstr ""
+"Cloisonnement du Kit rapide via l'utilisation de bind-mount non configuré."
 
 #: src/control/Control.ServerAuditDialog.ts:127
 msgid "Poorly performing proxying of all network requests."
-msgstr ""
+msgstr "Bas niveau de performance de proxy pour toutes les requêtes."
 
 #: src/control/Control.ServerAuditDialog.ts:131
 msgid "Direct network connection"
@@ -3437,9 +3430,8 @@ msgid "Alerts:"
 msgstr "Alertes :"
 
 #: src/control/Control.ServerAuditDialog.ts:396
-#, fuzzy
 msgid "Check warnings of your server"
-msgstr "Vérifiez les avertissements de sécurité de votre serveur"
+msgstr "Vérifiez les avertissements(warning) de votre serveur"
 
 #: src/control/Control.ServerAuditDialog.ts:397
 msgid "OPEN"
@@ -3515,7 +3507,7 @@ msgstr "Vue de multiple page"
 
 #: src/control/Control.StatusBar.js:257
 msgid "Zoom to Fit Page Width"
-msgstr ""
+msgstr "Zoomer en ajustant à la Largeur de la Page"
 
 #: src/control/Control.StatusBar.js:414
 msgid ""
@@ -3949,16 +3941,16 @@ msgstr "Lecture seule"
 
 #: src/control/PermissionMode.ts:108
 msgid "Viewing Mode"
-msgstr ""
+msgstr "Mode de Visualisation"
 
 #: src/control/PermissionMode.ts:114
 msgid "Editing Mode"
-msgstr ""
+msgstr "Mode d'Édition"
 
 #: src/control/PermissionMode.ts:125 src/control/PermissionMode.ts:176
 #: src/control/PermissionMode.ts:182 src/control/PermissionMode.ts:188
 msgid "Viewing"
-msgstr ""
+msgstr "Visualisation"
 
 #: src/control/jsdialog/Definitions.Menu.ts:111
 #: src/control/jsdialog/Definitions.Menu.ts:1748
@@ -4131,7 +4123,7 @@ msgstr "Insérer un fichier multimédia local"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1740
 msgid "Compare Local Document"
-msgstr ""
+msgstr "Comparer avec un Document Local"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1746
 msgid "Very Tight"
@@ -4415,6 +4407,7 @@ msgstr "Mode édition"
 #: src/control/jsdialog/Widget.HTMLContent.ts:72
 msgid "Number of Pages. Click to open the Go to Page dialog box."
 msgstr ""
+"Nombre de Pages. Cliquer pour ouvrir la boîte de dialogue Aller à la Page."
 
 #: src/control/jsdialog/Widget.HTMLContent.ts:84
 msgid "Word Counter"
@@ -4471,7 +4464,7 @@ msgstr "Les titres et les objets que vous ajoutez au document apparaîtront ici"
 
 #: src/control/jsdialog/Widget.TreeView.ts:1637
 msgid "Search items"
-msgstr ""
+msgstr "Chercher des éléments"
 
 #: src/app/Socket.ts:189
 msgid "Oops, there is a problem connecting to {productname}: "
@@ -4923,7 +4916,7 @@ msgstr "{0} supprimé"
 
 #: src/layer/marker/TextInput.js:411
 msgid "Clipboard area"
-msgstr ""
+msgstr "Zone de Presse Papier"
 
 #: src/layer/marker/TextInput.js:461
 msgid "Screen reader support for text content is disabled. "
@@ -4955,7 +4948,7 @@ msgstr "le menu Affichage"
 
 #: src/layer/tile/CanvasTileLayer.js:461
 msgid "Online Editor"
-msgstr ""
+msgstr "Éditeur en Ligne"
 
 #: src/layer/tile/CanvasTileLayer.js:1456
 msgid "Functions"
@@ -5150,7 +5143,7 @@ msgstr "Création d'un nouveau fichier à partir d'un modèle..."
 
 #: src/map/handler/Map.WOPI.js:224
 msgid "Compare Document..."
-msgstr ""
+msgstr "Compare le Document..."
 
 #: src/map/handler/Map.WOPI.js:732
 msgid "File name should contain an extension."
@@ -5223,7 +5216,7 @@ msgstr "Cliquez pour quitter la présentation …"
 
 #: src/slideshow/SlideShowPresenter.ts:691
 msgid "End Show"
-msgstr ""
+msgstr "Fin de Présentation"
 
 #: src/slideshow/SlideShowPresenter.ts:726
 #: src/slideshow/SlideShowPresenter.ts:739
