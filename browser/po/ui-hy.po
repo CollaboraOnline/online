@@ -8,11 +8,11 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-02-13 16:44+0100\n"
-"PO-Revision-Date: 2026-02-04 10:50+0000\n"
+"PO-Revision-Date: 2026-02-13 17:53+0000\n"
 "Last-Translator: Tigran Zargaryan <tigranflib@gmail.com>\n"
-"Language-Team: Armenian <https://hosted.weblate.org/projects/"
-"collabora-online/ui/hy/>\n"
-"Language: \n"
+"Language-Team: Armenian <https://hosted.weblate.org/projects/collabora-"
+"online/ui/hy/>\n"
+"Language: hy\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -1055,15 +1055,15 @@ msgstr "Պահպանված է"
 
 #: src/canvas/sections/CompareChangesLabelSection.ts:111
 msgid "Last edited by %1 on %2"
-msgstr ""
+msgstr "Վերջին անգամ խմբագրվել է %1 -ի կողմից %2 -ին"
 
 #: src/canvas/sections/CompareChangesLabelSection.ts:167
 msgid "%1: Initial Version"
-msgstr ""
+msgstr "%1: Սկզբնական տարբերակ"
 
 #: src/canvas/sections/CompareChangesLabelSection.ts:171
 msgid "%1: Current Version"
-msgstr ""
+msgstr "%1: Ընթացիկ տարբերակ"
 
 #: src/canvas/sections/ShapeHandlesSection.ts:475
 msgid "Document contains unsupported media"
@@ -2952,7 +2952,7 @@ msgstr "Զտիչի կոճակներ"
 
 #: src/control/Control.NotebookbarCalc.js:1776
 msgid "Table Styles"
-msgstr ""
+msgstr "Աղյուսակային ոճեր"
 
 #: src/control/Control.NotebookbarCalc.js:1798
 #: src/control/Control.NotebookbarCalc.js:2546
@@ -4097,243 +4097,243 @@ msgstr "Ճապոնական բացիկ"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1715
 msgid "Table Style Light 1"
-msgstr ""
+msgstr "Աղյուսակի ոճ Լույս 1"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1721
 msgid "Table Style Light 2"
-msgstr ""
+msgstr "Աղյուսակի ոճ Լույս 2"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1727
 msgid "Table Style Light 3"
-msgstr ""
+msgstr "Աղյուսակի ոճ Լույս 3"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1733
 msgid "Table Style Light 4"
-msgstr ""
+msgstr "Աղյուսակի ոճ Լույս 4"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1739
 msgid "Table Style Light 5"
-msgstr ""
+msgstr "Աղյուսակի ոճ Լույս 5"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1745
 msgid "Table Style Light 6"
-msgstr ""
+msgstr "Աղյուսակի ոճ Լույս 6"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1751
 msgid "Table Style Light 7"
-msgstr ""
+msgstr "Աղյուսակի ոճ Թեթև 7"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1757
 msgid "Table Style Light 8"
-msgstr ""
+msgstr "Աղյուսակի ոճ Թեթև 8"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1763
 msgid "Table Style Light 9"
-msgstr ""
+msgstr "Աղյուսակի ոճ Թեթև 9"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1769
 msgid "Table Style Light 10"
-msgstr ""
+msgstr "Աղյուսակի ոճ Թեթև 10"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1775
 msgid "Table Style Light 11"
-msgstr ""
+msgstr "Աղյուսակի ոճ Թեթև 11"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1781
 msgid "Table Style Light 12"
-msgstr ""
+msgstr "Աղյուսակի ոճ Թեթև 12"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1787
 msgid "Table Style Light 13"
-msgstr ""
+msgstr "Աղյուսակի ոճ Թեթև 13"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1793
 msgid "Table Style Light 14"
-msgstr ""
+msgstr "Աղյուսակի ոճ Թեթև 14"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1799
 msgid "Table Style Light 15"
-msgstr ""
+msgstr "Աղյուսակի ոճ Թեթև 15"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1805
 msgid "Table Style Light 16"
-msgstr ""
+msgstr "Աղյուսակի ոճ Թեթև 16"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1811
 msgid "Table Style Light 17"
-msgstr ""
+msgstr "Աղյուսակի ոճ Թեթև 17"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1817
 msgid "Table Style Light 18"
-msgstr ""
+msgstr "Աղյուսակի ոճ Թեթև 18"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1823
 msgid "Table Style Light 19"
-msgstr ""
+msgstr "Աղյուսակի ոճ Թեթև 19"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1829
 msgid "Table Style Light 20"
-msgstr ""
+msgstr "Աղյուսակի ոճ Թեթև 20"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1835
 msgid "Table Style Light 21"
-msgstr ""
+msgstr "Աղյուսակի ոճ Թեթև 21"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1841
 msgid "Table Style Medium 1"
-msgstr ""
+msgstr "Աղյուսակի ոճ Միջին 1"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1847
 msgid "Table Style Medium 2"
-msgstr ""
+msgstr "Աղյուսակի ոճ Միջին 2"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1853
 msgid "Table Style Medium 3"
-msgstr ""
+msgstr "Աղյուսակի ոճ Միջին 3"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1859
 msgid "Table Style Medium 4"
-msgstr ""
+msgstr "Աղյուսակի ոճ Միջին 4"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1865
 msgid "Table Style Medium 5"
-msgstr ""
+msgstr "Աղյուսակի ոճ Միջին 5"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1871
 msgid "Table Style Medium 6"
-msgstr ""
+msgstr "Աղյուսակի ոճ Միջին 6"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1877
 msgid "Table Style Medium 7"
-msgstr ""
+msgstr "Աղյուսակի ոճ Միջին 7"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1883
 msgid "Table Style Medium 8"
-msgstr ""
+msgstr "Աղյուսակի ոճ Միջին 8"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1889
 msgid "Table Style Medium 9"
-msgstr ""
+msgstr "Աղյուսակի ոճ Միջին 9"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1895
 msgid "Table Style Medium 10"
-msgstr ""
+msgstr "Աղյուսակի ոճ Միջին 10"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1901
 msgid "Table Style Medium 11"
-msgstr ""
+msgstr "Աղյուսակի ոճ Միջին 11"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1907
 msgid "Table Style Medium 12"
-msgstr ""
+msgstr "Աղյուսակի ոճ Միջին 12"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1913
 msgid "Table Style Medium 13"
-msgstr ""
+msgstr "Աղյուսակի ոճ Միջին 13"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1919
 msgid "Table Style Medium 14"
-msgstr ""
+msgstr "Աղյուսակի ոճ Միջին 14"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1925
 msgid "Table Style Medium 15"
-msgstr ""
+msgstr "Աղյուսակի ոճ Միջին 15"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1931
 msgid "Table Style Medium 16"
-msgstr ""
+msgstr "Աղյուսակի ոճ Միջին 16"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1937
 msgid "Table Style Medium 17"
-msgstr ""
+msgstr "Աղյուսակի ոճ Միջին 17"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1943
 msgid "Table Style Medium 18"
-msgstr ""
+msgstr "Աղյուսակի ոճ Միջին 18"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1949
 msgid "Table Style Medium 19"
-msgstr ""
+msgstr "Աղյուսակի ոճ Միջին 19"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1955
 msgid "Table Style Medium 20"
-msgstr ""
+msgstr "Աղյուսակի ոճ Միջին 20"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1961
 msgid "Table Style Medium 21"
-msgstr ""
+msgstr "Աղյուսակի ոճ Միջին 21"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1967
 msgid "Table Style Medium 22"
-msgstr ""
+msgstr "Աղյուսակի ոճ Միջին 22"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1973
 msgid "Table Style Medium 23"
-msgstr ""
+msgstr "Աղյուսակի ոճ Միջին 23"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1979
 msgid "Table Style Medium 24"
-msgstr ""
+msgstr "Աղյուսակի ոճ Միջին 24"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1985
 msgid "Table Style Medium 25"
-msgstr ""
+msgstr "Աղյուսակի ոճ Միջին 25"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1991
 msgid "Table Style Medium 26"
-msgstr ""
+msgstr "Աղյուսակի ոճ Միջին 26"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1997
 msgid "Table Style Medium 27"
-msgstr ""
+msgstr "Աղյուսակի ոճ Միջին 27"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2003
 msgid "Table Style Medium 28"
-msgstr ""
+msgstr "Աղյուսակի ոճ Միջին 28"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2009
 msgid "Table Style Dark 1"
-msgstr ""
+msgstr "Աղյուսակի ոճ Մուգ 1"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2015
 msgid "Table Style Dark 2"
-msgstr ""
+msgstr "Աղյուսակի ոճ Մուգ 2"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2021
 msgid "Table Style Dark 3"
-msgstr ""
+msgstr "Աղյուսակի ոճ Մուգ 3"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2027
 msgid "Table Style Dark 4"
-msgstr ""
+msgstr "Աղյուսակի ոճ Մուգ 4"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2033
 msgid "Table Style Dark 5"
-msgstr ""
+msgstr "Աղյուսակի ոճ Մուգ 5"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2039
 msgid "Table Style Dark 6"
-msgstr ""
+msgstr "Աղյուսակի ոճ Մուգ 6"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2045
 msgid "Table Style Dark 7"
-msgstr ""
+msgstr "Աղյուսակի ոճ Մուգ 7"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2051
 msgid "Table Style Dark 8"
-msgstr ""
+msgstr "Աղյուսակի ոճ Մուգ 8"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2057
 msgid "Table Style Dark 9"
-msgstr ""
+msgstr "Աղյուսակի ոճ Մուգ 9"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2063
 msgid "Table Style Dark 10"
-msgstr ""
+msgstr "Աղյուսակի ոճ Մուգ 10"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2069
 msgid "Table Style Dark 11"
-msgstr ""
+msgstr "Աղյուսակի ոճ Մուգ 11"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2092
 msgid "Insert Local Image"
@@ -5387,7 +5387,6 @@ msgid "Resume"
 msgstr "Վերսկսել"
 
 #: src/slideshow/PresenterConsole.js:38
-#, fuzzy
 msgid "Present to all"
 msgstr "Ներկայացնել բոլորին"
 
