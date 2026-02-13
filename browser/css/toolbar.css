@@ -511,10 +511,27 @@ button.leaflet-control-search-next
 	background-color: var(--color-background-lighter);
 	color: var(--color-text-darker);
 }
-#fontsizecombobox-input-notebookbar,
-#fontsizecombobox-input-sidebar,
-#fontsizecombobox-input-context-toolbar {
-	width: 55px !important;
+#toolbar-up #fontnamecombobox {
+	width: 150px;
+	margin: 0 5px;
+}
+#toolbar-up #fontsizecombobox {
+	min-width: 6.5em;
+	width: 6.5em;
+	margin: 0 4px;
+}
+#fontsizecombobox-dropdown .ui-grid {
+	width: 6.5em;
+}
+#fontsizecombobox-dropdown .ui-combobox-search-container {
+	display: none;
+}
+#toolbar-up #styles {
+	margin: 0 4px;
+}
+#fontsizecombobox.ui-combobox {
+	min-width: 6.5em;
+	width: 6.5em;
 }
 .evo-cp-wrap {
 	/* hide the color pick div */
