@@ -28,7 +28,7 @@
     <string name="new_spreadsheet">Tafelwit taliktṛunant Tamaynut</string>
     <string name="default_document_name">war azwel</string>
     <string name="filter">Sizdeg s</string>
-    <string name="sort">Smizwer s:</string>
+    <string name="sort">Smizwer s</string>
     <string name="sort_smallest">Imeẓyanen d imezwura</string>
     <string name="sort_largest">Imeqqranene d imezwura</string>
     <string name="sort_az">A-Z</string>
@@ -69,7 +69,7 @@
     <string name="otg_warning">Tamahilt tarmitant: Seqdec kan ma yell ibenk OTG yettwaray.</string>
     <string name="server_url">URL n uqeddac</string>
     <string name="server_url_and_port">Tansa URL &amp; tewwurt n uqeddac asigna.</string>
-    <string name="user_name">Isem n useqdac:</string>
+    <string name="user_name">Isem n useqdac</string>
     <string name="password">Awal uffir</string>
     <string name="up_description">Ɣer ukaram asaraw</string>
     <string name="confirm_label">Sentem</string>
