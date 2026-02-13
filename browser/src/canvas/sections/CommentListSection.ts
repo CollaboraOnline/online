@@ -369,6 +369,8 @@ export class CommentSection extends CanvasSectionObject {
 	}
 
 	public shouldCollapse (): boolean {
+		if (app.map._docLayer._docType === 'text')
+			return false;
 		if (!this.containerObject.getDocumentAnchorSection() || app.map._docLayer._docType === 'spreadsheet' || (<any>window).mode.isMobile())
 			return false;
 		const availableSpace = this.calculateAvailableSpace();
@@ -2343,6 +2345,7 @@ export class CommentSection extends CanvasSectionObject {
 				}
 			}
 		}
+		this.update();
 	}
 
 	private orderCommentList (): void {
