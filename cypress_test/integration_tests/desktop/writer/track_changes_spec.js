@@ -146,6 +146,9 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Track Changes', function (
 	it('View Changes mode has tiles for both modes', function () {
 		// Given a document with tracked changes:
 		desktopHelper.switchUIToNotebookbar();
+		// No labels by default:
+		cy.cGet('.compare-changes-labels').should('have.css', 'display', 'none');
+
 		cy.cGet('#Review-tab-label').click();
 
 		// When entering doc compare mode via View Changes:
@@ -174,6 +177,8 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Track Changes', function (
 				expect(hasMode2, 'mode=2 (RightSide) tiles with content and valid distance').to.be.true;
 			});
 		});
+		// Labels should be visible:
+		cy.cGet('.compare-changes-labels').should('not.have.css', 'display', 'none');
 	});
 
 	it.skip('Comment Undo-Redo', function () {
