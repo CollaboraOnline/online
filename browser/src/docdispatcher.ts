@@ -351,6 +351,14 @@ class Dispatcher {
 				console.warn('A11yValidator not available');
 			}
 		};
+
+		this.actionsMap['validatenotebookbara11y'] = () => {
+			if (window.app.a11yValidator) {
+				window.app.a11yValidator.validateNotebookbar();
+			} else {
+				console.warn('A11yValidator not available');
+			}
+		};
 	}
 
 	private addExportCommands() {
