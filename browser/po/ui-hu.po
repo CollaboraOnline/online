@@ -8,11 +8,11 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-02-13 16:44+0100\n"
-"PO-Revision-Date: 2026-02-04 10:50+0000\n"
+"PO-Revision-Date: 2026-02-13 17:53+0000\n"
 "Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
-"Language-Team: Hungarian <https://hosted.weblate.org/projects/"
-"collabora-online/ui/hu/>\n"
-"Language: \n"
+"Language-Team: Hungarian <https://hosted.weblate.org/projects/collabora-"
+"online/ui/hu/>\n"
+"Language: hu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -1052,15 +1052,15 @@ msgstr "Mentve"
 
 #: src/canvas/sections/CompareChangesLabelSection.ts:111
 msgid "Last edited by %1 on %2"
-msgstr ""
+msgstr "Utolsó szerkesztés %1 %2"
 
 #: src/canvas/sections/CompareChangesLabelSection.ts:167
 msgid "%1: Initial Version"
-msgstr ""
+msgstr "%1: Kezdeti verzió"
 
 #: src/canvas/sections/CompareChangesLabelSection.ts:171
 msgid "%1: Current Version"
-msgstr ""
+msgstr "%1: Jelenlegi verzió"
 
 #: src/canvas/sections/ShapeHandlesSection.ts:475
 msgid "Document contains unsupported media"
@@ -2948,7 +2948,7 @@ msgstr "Szűrőgombok"
 
 #: src/control/Control.NotebookbarCalc.js:1776
 msgid "Table Styles"
-msgstr ""
+msgstr "Táblázatstílusok"
 
 #: src/control/Control.NotebookbarCalc.js:1798
 #: src/control/Control.NotebookbarCalc.js:2546
@@ -4093,87 +4093,87 @@ msgstr "Japán levelezőlap"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1715
 msgid "Table Style Light 1"
-msgstr ""
+msgstr "Világos táblázatstílus 1"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1721
 msgid "Table Style Light 2"
-msgstr ""
+msgstr "Világos táblázatstílus 2"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1727
 msgid "Table Style Light 3"
-msgstr ""
+msgstr "Világos táblázatstílus 3"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1733
 msgid "Table Style Light 4"
-msgstr ""
+msgstr "Világos táblázatstílus 4"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1739
 msgid "Table Style Light 5"
-msgstr ""
+msgstr "Világos táblázatstílus 5"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1745
 msgid "Table Style Light 6"
-msgstr ""
+msgstr "Világos táblázatstílus 6"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1751
 msgid "Table Style Light 7"
-msgstr ""
+msgstr "Világos táblázatstílus 7"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1757
 msgid "Table Style Light 8"
-msgstr ""
+msgstr "Világos táblázatstílus 8"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1763
 msgid "Table Style Light 9"
-msgstr ""
+msgstr "Világos táblázatstílus 9"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1769
 msgid "Table Style Light 10"
-msgstr ""
+msgstr "Világos táblázatstílus 10"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1775
 msgid "Table Style Light 11"
-msgstr ""
+msgstr "Világos táblázatstílus 11"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1781
 msgid "Table Style Light 12"
-msgstr ""
+msgstr "Világos táblázatstílus 12"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1787
 msgid "Table Style Light 13"
-msgstr ""
+msgstr "Világos táblázatstílus 13"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1793
 msgid "Table Style Light 14"
-msgstr ""
+msgstr "Világos táblázatstílus 14"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1799
 msgid "Table Style Light 15"
-msgstr ""
+msgstr "Világos táblázatstílus 15"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1805
 msgid "Table Style Light 16"
-msgstr ""
+msgstr "Világos táblázatstílus 16"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1811
 msgid "Table Style Light 17"
-msgstr ""
+msgstr "Világos táblázatstílus 17"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1817
 msgid "Table Style Light 18"
-msgstr ""
+msgstr "Világos táblázatstílus 18"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1823
 msgid "Table Style Light 19"
-msgstr ""
+msgstr "Világos táblázatstílus 19"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1829
 msgid "Table Style Light 20"
-msgstr ""
+msgstr "Világos táblázatstílus 20"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1835
 msgid "Table Style Light 21"
-msgstr ""
+msgstr "Világos táblázatstílus 21"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1841
 msgid "Table Style Medium 1"
