@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-02-03 23:25+0200\n"
-"PO-Revision-Date: 2026-02-03 13:14+0000\n"
+"PO-Revision-Date: 2026-02-09 03:09+0000\n"
 "Last-Translator: Rob Pearson <rob.dunedin@gmail.com>\n"
 "Language-Team: English (Australia) <https://hosted.weblate.org/projects/"
 "collabora-online/help/en_AU/>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Translate Toolkit 3.6.0\n"
+"X-Generator: Weblate 5.16-dev\n"
 "X-POOTLE-MTIME: 1463059002.000000\n"
 
 #: html/cool-help.html%2Bdiv.h1:6-5
@@ -1779,7 +1779,7 @@ msgstr "Text selection and navigation in a textbox"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:238-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:303-38
 msgid "Go and select text to start of textbox"
-msgstr "Go and select text to start of textbox"
+msgstr "Go and select text to the start of the textbox"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:242-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:307-38
@@ -2016,6 +2016,13 @@ msgid ""
 "click the show icon <span class=\"w2ui-icon unfold icon-size\" role=\"img\" "
 "aria-label=\"show menu bar\" title=\"Show menu bar\"></span>."
 msgstr ""
+"<span class=\"def\">The menu bar:</span> The main menu is at the top and "
+"includes many options, such as commands for printing, editing, viewing, and "
+"other advanced commands. You can hide the menu bar by clicking the hide icon "
+"<span class=\"w2ui-icon fold icon-size\" role=\"img\" aria-label=\"hide menu "
+"bar\" title=\"Hide menu bar\"></span> on the far right. To show it again, "
+"click the show icon <span class=\"w2ui-icon unfold icon-size\" role=\"img\" "
+"aria-label=\"show menu bar\" title=\"Show menu bar\"></span>."
 
 #: html/cool-help.html%2Bdiv.div.div.p:378-5
 msgid ""
@@ -2045,7 +2052,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.div.img[alt]:385-29
 msgid "The status bar"
-msgstr ""
+msgstr "The status bar"
 
 #: html/cool-help.html%2Bdiv.div.div.p:388-5
 msgid ""
@@ -2060,9 +2067,8 @@ msgstr ""
 "sensitive. There are three buttons right next to the search box:"
 
 #: html/cool-help.html%2Bdiv.div.div.ul.li:390-7
-#, fuzzy
 msgid "Search backwards>"
-msgstr "Search backwards"
+msgstr "Search backwards>"
 
 #: html/cool-help.html%2Bdiv.div.div.ul.li:391-7
 msgid "Search forward"
@@ -2073,17 +2079,16 @@ msgid "Cancel the search (appears only when a text has been searched)"
 msgstr "Cancel the search (appears only when a text has been searched)"
 
 #: html/cool-help.html%2Bdiv.div.div.p:396-5
-#, fuzzy
 msgid ""
 "<span class=\"def\">The zoom bar:</span> The zoom bar includes buttons to "
 "reset zoom to 100%, zoom out and zoom in. The zoom applies to the document "
 "area, the user interface is not affected. The current level of zoom is shown "
 "in this area."
 msgstr ""
-"<span class=\"def\">The zoom bar:</span> At the right of the status bar, "
-"there is a set of buttons that allow you to zoom to 100%, zoom out and zoom "
-"in. The zoom applies to the document area, the user interface is not "
-"affected. The current level of zoom is shown in this area."
+"<span class=\"def\">The zoom bar:</span> The zoom bar includes buttons to "
+"reset zoom to 100%, zoom out and zoom in. The zoom applies to the document "
+"area, the user interface is not affected. The current level of zoom is shown "
+"in this area."
 
 #: html/cool-help.html%2Bdiv.div.div.p:397-5
 msgid ""
@@ -2103,10 +2108,13 @@ msgid ""
 "details about the current document. The actual information depends on the "
 "nature of the document."
 msgstr ""
+"<span class=\"def\">The information bar:</span> The information bar displays "
+"details about the current document. The actual information depends on the "
+"nature of the document."
 
 #: html/cool-help.html%2Bdiv.div.div.div.img[alt]:402-29
 msgid "The information bar"
-msgstr ""
+msgstr "The information bar"
 
 #: html/cool-help.html%2Bdiv.div.p:407-5
 msgid ""
@@ -2355,7 +2363,7 @@ msgid ""
 "visualization of charts in documents. To add a chart:"
 msgstr ""
 "<span class=\"productname\">{productname}</span> supports inserting and "
-"visualization of charts in documents. To add a chart:"
+"visualisation of charts in documents. To add a chart:"
 
 #: html/cool-help.html%2Bdiv.div.div.ol.li:450-7
 msgid ""
@@ -2480,7 +2488,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.h4:476-5
 msgid "Spellchecking"
-msgstr "Spellchecking"
+msgstr "Spell checking"
 
 #: html/cool-help.html%2Bdiv.div.div.p:477-5
 msgid ""
@@ -2530,7 +2538,7 @@ msgstr ""
 msgid ""
 "Formulas are entered in the formula bar. Enter '=' and insert the formula."
 msgstr ""
-"Formulas are entered in the formula bar. Enter '=' and insert the formula."
+"Formulae are entered in the formula bar. Enter '=' and insert the formula."
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:492-5
 msgid "All spreadsheets functions and mathematical rules applies."
@@ -2568,7 +2576,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.div.div.img[alt]:501-29
 msgid "format cells"
-msgstr ""
+msgstr "format cells"
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:506-30
 msgid ""
@@ -2640,7 +2648,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.div.div.img[alt]:519-29
 msgid "outlining"
-msgstr ""
+msgstr "outlining"
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:522-5
 msgid ""
@@ -2709,7 +2717,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.div.div.img[alt]:538-29
 msgid "cell comments"
-msgstr ""
+msgstr "cell comments"
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:541-5
 msgid ""
@@ -2727,7 +2735,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.div.div.img[alt]:542-29
 msgid "conditional formatting"
-msgstr ""
+msgstr "conditional formatting"
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:550-30
 msgid ""
@@ -2816,9 +2824,8 @@ msgstr ""
 "<span class=\"ui\">Edit styles</span> to change style."
 
 #: html/cool-help.html%2Bdiv.div.div.div.div.img[alt]:565-29
-#, fuzzy
 msgid "style formatting"
-msgstr "Cell formatting"
+msgstr "style formatting"
 
 #: html/cool-help.html%2Bdiv.div.div.div.h4:571-5
 msgid "Handling Tables"
@@ -2838,7 +2845,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.div.div.img[alt]:573-29
 msgid "insert table"
-msgstr ""
+msgstr "insert table"
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:576-5
 msgid ""
@@ -2999,7 +3006,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.div.div.img[alt]:619-29
 msgid "slide layouts"
-msgstr ""
+msgstr "slide layouts"
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:621-30
 msgid ""
@@ -3181,7 +3188,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.div.img[alt]:669-29
 msgid "thesaurus"
-msgstr ""
+msgstr "thesaurus"
 
 #: html/cool-help.html%2Bdiv.div.div.h4:672-5
 msgid ""
@@ -3311,7 +3318,7 @@ msgstr "Deletions are marked with coloured strike-through characters."
 
 #: html/cool-help.html%2Bdiv.div.div.div.ul.li:704-7
 msgid "Additions are marked with colored underlined characters."
-msgstr "Additions are marked with colored underlined characters."
+msgstr "Additions are marked with coloured underlined characters."
 
 #: html/cool-help.html%2Bdiv.div.div.div.ul.li:705-7
 msgid "All changes are marked with a vertical bar in the right margin."
@@ -3364,7 +3371,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.div.div.img[alt]:712-29
 msgid "manage changes"
-msgstr ""
+msgstr "manage changes"
 
 #: html/cool-help.html%2Bdiv.div.div.div.h4:715-5
 msgid "How do I set the margins of the document?"
@@ -3396,7 +3403,7 @@ msgstr "Set the page margins in the dialogue box."
 
 #: html/cool-help.html%2Bdiv.div.div.div.div.img[alt]:722-29
 msgid "page style"
-msgstr ""
+msgstr "page style"
 
 #: html/cool-help.html%2Bdiv.div.div.div.h4:725-5
 msgid "How do I change the page orientation to landscape inside my document"
@@ -3456,14 +3463,14 @@ msgstr "Select the text with the existing format"
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li:740-7
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li:782-7
-#, fuzzy
 msgid ""
 "Click on the clone formatting icon <img alt=\"format paintbrush\" class"
 "=\"icon-size\" src=\"images/lc_formatpaintbrush.svg\" />. The mouse pointer "
 "turns to a paint bucket."
 msgstr ""
-"Click on the clone formatting icon <img class=\"icon-size\" src=\"images"
-"/lc_formatpaintbrush.svg\" />. The mouse pointer turns to a paint bucket."
+"Click on the clone formatting icon <img alt=\"format paintbrush\" "
+"class=\"icon-size\" src=\"images/lc_formatpaintbrush.svg\" />. The mouse "
+"pointer turns to a paint bucket."
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li:741-7
 msgid "Select the text you want to apply the new format."
@@ -3638,9 +3645,8 @@ msgstr ""
 "the slide panel:"
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li.img[alt]:803-176
-#, fuzzy
 msgid "slide show"
-msgstr "Slide show"
+msgstr "slide show"
 
 #: html/cool-help.html%2Bdiv.div.div.div.h4:807-5
 msgid "How can I change the line, area and position of a shape in my slides?"
