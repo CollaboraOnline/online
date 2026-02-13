@@ -85,6 +85,10 @@ export class CommentSection extends CanvasSectionObject {
 	zIndex: number = app.CSections.CommentList.zIndex;
 	interactable: boolean = false;
 	sectionProperties: {
+		// remember the tab when importComments() was called.
+		calcLastTab: number;
+		// Keep a reference to the original set of comments received.
+		calcMasterList: Array<any>;
 		commentList: Array<Comment>;
 		selectedComment: Comment | null;
 		calcCurrentComment: Comment | null;
@@ -128,6 +132,8 @@ export class CommentSection extends CanvasSectionObject {
 		this.map = window.L.Map.THIS;
 		this.anchor = ['top', 'right'];
 		this.sectionProperties.docLayer = this.map._docLayer;
+		this.sectionProperties.calcLastTab = -1;
+		this.sectionProperties.calcMasterList = [];
 		this.sectionProperties.commentList = new Array(0);
 		this.sectionProperties.selectedComment = null;
 		this.sectionProperties.arrow = null;
@@ -159,6 +165,7 @@ export class CommentSection extends CanvasSectionObject {
 
 		this.map.on('RedlineAccept', this.onRedlineAccept, this);
 		this.map.on('RedlineReject', this.onRedlineReject, this);
+		this.map.on('updateparts', this.importPartSpecificComments, this);
 		this.map.on('updateparts', this.showHideComments, this);
 		this.map.on('AnnotationScrollUp', this.onAnnotationScrollUp, this);
 		this.map.on('AnnotationScrollDown', this.onAnnotationScrollDown, this);
@@ -2510,7 +2517,42 @@ export class CommentSection extends CanvasSectionObject {
 		this.sectionProperties.commentList = newOrder;
 	}
 
-	public importComments (commentList: any): void {
+	// Needed in the case of a document with lots of comments(30K)
+	// filters out comments that don't below to current tab.
+	// Doing this at this outer level makes a big difference.
+	private spreadSheetFilteredComments(newCommentList?: any[]): any[] {
+		const out: any[] = [];
+		if (newCommentList) {
+			this.sectionProperties.calcMasterList = newCommentList;
+		}
+		for (let i = 0; i < this.sectionProperties.calcMasterList.length; i++) {
+			const comment = this.sectionProperties.calcMasterList[i];
+			if (comment.tab == app.map._docLayer._selectedPart) {
+				out.push(structuredClone(comment));
+			}
+		}
+
+		this.sectionProperties.calcLastTab = app.map._docLayer._selectedPart;
+
+		return out;
+	}
+
+	// Needed for calc because of spreadSheetFilteredComments().
+	// Gets called every updateparts event.
+	private importPartSpecificComments(): void {
+		if (app.map._docLayer._docType !== 'spreadsheet') {
+			return;
+		}
+
+		if (this.sectionProperties.calcLastTab == app.map._docLayer._selectedPart) {
+			// To ignore updateparts events without actual change in sheet.
+			return;
+		}
+
+		this.importComments();
+	}
+
+	public importComments (commentList?: any): void {
 		this.disableLayoutAnimation = true;
 		var comment;
 		if (Comment.isAnyEdit()) {
@@ -2519,9 +2561,22 @@ export class CommentSection extends CanvasSectionObject {
 		}
 
 		CommentSection.importingComments = true;
-
+		let drawPaused = false;
+		if (app.map._docLayer._docType === 'spreadsheet') {
+			if (!commentList) {
+				this.containerObject.pauseDrawing();
+				drawPaused = true;
+				commentList = this.spreadSheetFilteredComments();
+			} else {
+				commentList = this.turnIntoAList(commentList);
+				commentList = this.spreadSheetFilteredComments(commentList);
+			}
+		} else {
+			// Non calc document commentList must never be undefined or null.
+			console.assert(commentList);
+			commentList = this.turnIntoAList(commentList);
+		}
 		this.clearList();
-		commentList = this.turnIntoAList(commentList);
 
 		if (commentList.length > 0) {
 			for (var i = 0; i < commentList.length; i++) {
@@ -2562,8 +2617,10 @@ export class CommentSection extends CanvasSectionObject {
 		this.sectionProperties.reLayout = true;
 		this.sectionProperties.firstImport = true;
 		this.updateDOM();
-
 		CommentSection.importingComments = false;
+		if (drawPaused) {
+			this.containerObject.resumeDrawing();
+		}
 	}
 
 	// Accepts redlines/changes comments.
