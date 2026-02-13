@@ -69,7 +69,10 @@ describe(['tagdesktop'], 'Test style sidebar', function() {
 	});
 
 	it('Style sidebar context menu on node with spaces', function() {
-		getEntry('Complimentary Close').click();
+		cy.waitUntil(() => {
+		    return getEntry('Complimentary Close').click()
+		}, { timeout: 5000});
+		cy.wait(1000);
 		getEntry('Complimentary Close').rightclick();
 
 		cy.cGet('#__MENU__').should('exist');
