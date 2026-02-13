@@ -594,6 +594,15 @@ ul {
   flex-shrink: 0;
 }
 
+.checkbox-content__inner {
+    display: flex;
+    flex-direction: column;
+}
+
+.checkbox-content--with-warning {
+    align-items: flex-start;
+}
+
 .xcu-settings-grid,
 .browser-settings-grid {
   display: grid;
