@@ -352,6 +352,7 @@ export class CommentSection extends CanvasSectionObject {
 	}
 
 	public shouldCollapse (): boolean {
+		return false;
 		if (!this.containerObject.getDocumentAnchorSection() || app.map._docLayer._docType === 'spreadsheet' || (<any>window).mode.isMobile())
 			return false;
 		const availableSpace = this.calculateAvailableSpace();
