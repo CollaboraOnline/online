@@ -301,14 +301,14 @@ class ContextToolbar extends JSDialogComponent {
 				type: 'separator',
 				id: 'home-aiconfig-break',
 				orientation: 'vertical',
-				visible: !!this.map.isAIEnabled,
+				visible: !!this.map.wopi.DisableAISettings,
 			} as SeparatorWidgetJSON,
 			{
 				id: 'home-airewrite',
 				type: 'bigcustomtoolitem',
 				text: _('Rewrite'),
 				icon: 'lc_ai_rewrite.svg',
-				visible: !!this.map.isAIEnabled,
+				visible: !!this.map.wopi.DisableAISettings,
 				command: 'rewritetextai',
 			} as ToolItemWidgetJSON,
 		];

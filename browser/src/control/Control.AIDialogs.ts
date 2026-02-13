@@ -56,7 +56,7 @@ namespace cool {
 
 		async open(): Promise<void> {
 			// Check if AI is configured
-			if (!app.map.isAIEnabled) {
+			if (!app.map.isAIConfigured) {
 				this.showError(_('AI settings not configured'));
 				setTimeout(() => this.close(), 3000);
 				return;

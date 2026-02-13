@@ -23,6 +23,7 @@ interface Window {
 	accessTokenTTL?: string;
 	enableAccessibility?: boolean;
 	enableDebug?: boolean;
+	disableAISettings?: boolean;
 	wopiSettingBaseUrl?: string;
 	iframeType?: string;
 	cssVars?: string;
@@ -536,6 +537,7 @@ class SettingIframe {
 		window.accessTokenTTL = element.dataset.accessTokenTtl;
 		window.enableDebug = element.dataset.enableDebug === 'true';
 		window.enableAccessibility = element.dataset.enableAccessibility === 'true';
+		window.disableAISettings = element.dataset.disableAiSettings === 'true';
 		window.wopiSettingBaseUrl = element.dataset.wopiSettingBaseUrl ?? '';
 		window.iframeType = element.dataset.iframeType || 'user';
 		window.cssVars = element.dataset.cssVars || '';
@@ -1591,7 +1593,7 @@ class SettingIframe {
 					this.createViewSettingsTextBox(key, data, false, true),
 				);
 			}
-			else if (key === 'aiProviderURL') {
+			else if (key === 'aiProviderURL' && !window.disableAISettings) {
 				fieldset.appendChild(this.createHeading(_('AI Settings')));
 				const aiDesc = document.createElement('p');
 				aiDesc.className = 'view-setting-description';

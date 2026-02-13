@@ -66,6 +66,7 @@ m4_dnl------------------------------------------------------------------------
         data-css-vars="<!--%CSS_VARIABLES%-->"
         data-version-hash="%VERSION%"
         data-lang="%UI_LANG%"
+        data-disable-ai-settings="%DISABLE_AI_SETTINGS%"
       />
     </div>
   </body>

@@ -2008,6 +2008,12 @@ void FileServerRequestHandler::preprocessIntegratorAdminFile(const HTTPRequest& 
     std::string enableAccessibility = stringifyBoolFromConfig(config, "accessibility.enable", false);
     Poco::replaceInPlace(adminFile, std::string("%ENABLE_ACCESSIBILITY%"), enableAccessibility);
 
+    // AI settings are disabled if the WOPI integrator requests it
+    const std::string disableAIFromWopi = form.get("disable_ai_settings", "false");
+    const bool disableAISettings = disableAIFromWopi == "true";
+    Poco::replaceInPlace(adminFile, std::string("%DISABLE_AI_SETTINGS%"),
+                         std::string(disableAISettings ? "true" : "false"));
+
     updateThemeResources(adminFile, responseRoot, urv[BRANDING_THEME], config);
 
     Poco::replaceInPlace(adminFile, std::string("%UI_LANG%"), requestDetails.getParam("lang"));

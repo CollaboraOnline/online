@@ -19,7 +19,7 @@ interface ViewSetting {
 	zoteroAPIKey?: string;
 	accessibilityState: boolean;
 	signatureCertificate?: string;
-	aiEnabled?: boolean;
+	aiConfigured?: boolean;
 }
 
 class ServerConnectionService {
@@ -41,7 +41,7 @@ class ServerConnectionService {
 			return;
 		}
 
-		app.map.isAIEnabled = !!viewSetting.aiEnabled;
+		app.map.isAIConfigured = !!viewSetting.aiConfigured;
 
 		let zoteroPlugin = app.map.zotero;
 		const zoteroAPIKey = viewSetting.zoteroAPIKey;

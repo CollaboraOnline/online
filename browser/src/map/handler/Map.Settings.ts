@@ -58,6 +58,8 @@ window.L.Map.Settings = window.L.Handler.extend({
 
 		const theme = window.prefs.getBoolean('darkTheme') ? 'dark' : 'light';
 
+		const disableAI = this._map.disableAISettings || false;
+
 		const params: Array<Record<string, any>> = [
 			{ ui_theme: theme },
 			{ lang: window.langParam },
@@ -65,6 +67,7 @@ window.L.Map.Settings = window.L.Handler.extend({
 			{ access_token: window.accessToken },
 			{ access_token_ttl: window.accessTokenTTL },
 			{ wopi_setting_base_url: window.wopiSettingBaseUrl },
+			{ disable_ai_settings: disableAI },
 		];
 
 		if (window.mode.isCODesktop())

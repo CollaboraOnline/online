@@ -75,6 +75,7 @@ interface MapInterface extends Evented {
 		UserCanNotWriteRelative: boolean;
 		BaseFileName: string;
 		HideExportOption: boolean;
+		DisableAISettings: boolean;
 		UserCanWrite: boolean;
 	};
 
@@ -123,5 +124,6 @@ interface MapInterface extends Evented {
 	userList: UserList;
 	sidebar: Sidebar;
 	getViewColor(viewId: number): number;
-	isAIEnabled?: boolean;
+	isAIConfigured?: boolean;
+	disableAISettings?: boolean;
 }

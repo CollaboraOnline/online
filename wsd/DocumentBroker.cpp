@@ -1490,6 +1490,7 @@ DocumentBroker::updateSessionWithWopiInfo(const std::shared_ptr<ClientSession>& 
     wopiInfo->set("DisableInsertLocalImage", wopiFileInfo->getDisableInsertLocalImage());
     wopiInfo->set("EnableRemoteLinkPicker", wopiFileInfo->getEnableRemoteLinkPicker());
     wopiInfo->set("EnableRemoteAIContent", wopiFileInfo->getEnableRemoteAIContent());
+    wopiInfo->set("DisableAISettings", wopiFileInfo->getDisableAISettings());
     wopiInfo->set("EnableShare", wopiFileInfo->getEnableShare());
     wopiInfo->set("HideUserList", wopiFileInfo->getHideUserList());
     wopiInfo->set("SupportsRename", wopiFileInfo->getSupportsRename());
@@ -1819,8 +1820,9 @@ static std::string extractViewSettings(const std::string& viewSettingsPath,
 
         // Let client know whether AI features are enabled based on the presence of necessary fields,
         // so client can decide to show/hide AI related UI
-        viewSettings->set("aiEnabled", !aiProviderAPIKey.empty() && !aiProviderModel.empty() &&
-                                           !aiProviderURL.empty());
+        const bool aiConfigured = !aiProviderAPIKey.empty() && !aiProviderModel.empty() &&
+                                  !aiProviderURL.empty();
+        viewSettings->set("aiConfigured", aiConfigured);
         viewSettingsString = JsonUtil::jsonToString(viewSettings);
     }
     catch (const std::exception& exc)
