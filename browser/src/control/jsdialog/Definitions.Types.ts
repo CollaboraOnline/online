@@ -203,7 +203,6 @@ interface MenuDefinition extends WidgetJSON {
 	checked?: boolean; // state of check mark
 	items?: Array<any>;
 	selected?: boolean; // selected state for entry
-	statusCommand?: string; // UNO command used to retrieve the status/value of the entry
 	pos?: number | string; // identifier of an entry
 }
 
