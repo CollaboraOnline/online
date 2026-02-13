@@ -4,6 +4,14 @@ var helper = require('../../common/helper');
 var calcHelper = require('../../common/calc_helper');
 var desktopHelper = require('../../common/desktop_helper');
 
+// That properties popup doesn't go by itself.
+// So I close it here in order to prevent this test from failure when we fix that popup closing issue.
+function closeNotebookbarPopup() {
+	cy.cGet('body').type('{esc}');
+	cy.cGet('#document-canvas').realClick();
+	cy.cGet('.jsdialog-overlay').should('not.exist');
+}
+
 describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Test jumping on large cell selection', function() {
 
 	beforeEach(function() {
@@ -70,8 +78,12 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Test jumping on large cell
 		// Find freeze panes button and click.
 		cy.cGet('#View-tab-label').click();
 		desktopHelper.getNbIconArrow('FreezePanes').click();
-		desktopHelper.getNbIcon('FreezePanes').last().click();
-		cy.cGet('.jsdialog-overlay').click(); // close popup
+		// There are two FreezePanes buttons, the first in the main
+		// toolbar we clicked to create the dropdown in which the
+		// second appears. We want to wait until that second one is
+		// available and click that one, not reclick the first.
+		desktopHelper.getNbIcon('FreezePanes').filter(':visible').should('not.have.length', 1).last().click();
+		closeNotebookbarPopup();
 
 		// Scroll down.
 		helper.typeIntoInputField(helper.addressInputSelector, 'Z110');
@@ -99,11 +111,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Test jumping on large cell
 		desktopHelper.getNbIconArrow('AlignTop').click();
 		desktopHelper.getNbIcon('WrapText').click();
 
-		// Below 3 lines are to close the popup.
-		// That properties popup doesn't go by itself.
-		// So I close it here in order to prevent this test from failure when we fix that popup closing issue.
-		cy.cGet('body').type('{esc}'); // Close popup.
-		cy.cGet('#document-canvas').realClick();
+		closeNotebookbarPopup();
 		helper.typeIntoInputField(helper.addressInputSelector, 'B10');
 
 		helper.typeIntoDocument('Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet.');
