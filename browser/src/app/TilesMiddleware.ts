@@ -1424,8 +1424,6 @@ class TileManager {
 		coordsQueue: Array<TileCoordData>,
 	) {
 		const part: number = app.map._docLayer._selectedPart;
-		const mode: number = app.map._docLayer._selectedMode;
-
 		const modes = this.getModeArray();
 
 		for (let i = coordsQueue.length - 1; i > 0; i--) {
