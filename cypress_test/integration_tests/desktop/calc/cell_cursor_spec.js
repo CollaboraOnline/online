@@ -72,7 +72,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Test jumping on large cell
 		cy.cGet('.jsdialog-overlay').click(); // close popup
 
 		// Scroll down.
-		helper.typeIntoInputField(helper.addressInputSelector, 'Z110');
+		calcHelper.enterCellAddressAndConfirm(this.win, 'Z110');
 
 		// Now click on A1. Use click for this, not the input field. We also need to test the core coordinates.
 		calcHelper.clickOnFirstCell();
