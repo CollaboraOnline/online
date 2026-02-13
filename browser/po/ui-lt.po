@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-02-03 23:25+0100\n"
-"PO-Revision-Date: 2026-02-03 12:19+0000\n"
-"Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
-"Language-Team: Lithuanian <https://hosted.weblate.org/projects/"
-"collabora-online/ui/lt/>\n"
-"Language: \n"
+"PO-Revision-Date: 2026-02-10 19:09+0000\n"
+"Last-Translator: dukezas <dukezas@gmail.com>\n"
+"Language-Team: Lithuanian <https://hosted.weblate.org/projects/collabora-"
+"online/ui/lt/>\n"
+"Language: lt\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && (n"
-"%100<10 || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"(n%100<10 || n%100>=20) ? 1 : 2);\n"
 "X-Generator: Weblate 5.16-dev\n"
 
 #: admin/admin.strings.js:15
@@ -281,7 +281,7 @@ msgstr "Prašome palaukti, „Kubernetes“ klasteris keičiamas..."
 
 #: admin/src/AdminClusterOverview.js:550 admin/src/AdminSocketOverview.js:420
 msgid "Failed to set jwt authentication cookie over insecure connection"
-msgstr "Nepavyko nustatyti JWT autentifikavimo slapuko per nesaugų ryšį"
+msgstr "Nepavyko nustatyti \"jwt\" autentifikavimo slapuko per nesaugų ryšį"
 
 #: admin/src/AdminClusterOverview.js:553 admin/src/AdminSocketOverview.js:424
 msgid "Failed to authenticate this session over protocol {0}"
@@ -384,7 +384,7 @@ msgstr "Parašo CA"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:160
 msgid "In-document Screen Reader"
-msgstr ""
+msgstr "Dokumento ekrano skaitytuvas"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:161
 #: src/control/Control.Menubar.ts:172 src/control/Control.Menubar.ts:497
@@ -1068,13 +1068,12 @@ msgid "This version of {productname} is powered by"
 msgstr "Šią „{produktovardas}“ versiją teikia"
 
 #: src/control/Control.AboutDialog.ts:189
-#, fuzzy
 msgid "Served by: "
-msgstr "Aptarnaujamas:"
+msgstr "Aptarnaujamas: "
 
 #: src/control/Control.AboutDialog.ts:212
 msgid "View widgets"
-msgstr ""
+msgstr "Peržiūrėti valdiklius"
 
 #: src/control/Control.AboutDialog.ts:236
 msgid "\"Slow Proxy\""
@@ -1864,7 +1863,7 @@ msgstr "Taisyti"
 
 #: src/control/Control.Menubar.ts:140
 msgid "Compare Changes"
-msgstr ""
+msgstr "Palyginti pakeitimus"
 
 #: src/control/Control.Menubar.ts:159 src/control/Control.Menubar.ts:480
 #: src/control/Control.Menubar.ts:486 src/control/Control.Menubar.ts:647
@@ -1879,7 +1878,7 @@ msgstr "Atstatyti mastelį"
 
 #: src/control/Control.Menubar.ts:165
 msgid "Fit to Screen"
-msgstr ""
+msgstr "Pritaikyti prie ekrano"
 
 #: src/control/Control.Menubar.ts:168 src/control/Control.Menubar.ts:492
 #: src/control/Control.Menubar.ts:659 src/control/Control.Menubar.ts:804
@@ -2386,7 +2385,7 @@ msgstr "Gradiento pabaiga"
 
 #: src/control/Control.NavigatorPanel.ts:38
 msgid "Navigation Panel"
-msgstr ""
+msgstr "Navigavimo skydelis"
 
 #: src/control/Control.NavigatorPanel.ts:110
 msgid "Navigation"
@@ -2606,7 +2605,7 @@ msgstr "Paveikslėlis"
 #: src/control/Control.NotebookbarImpress.js:150
 #: src/control/Control.NotebookbarWriter.js:102
 msgid "View"
-msgstr "Peržiūra"
+msgstr "Peržiūra/Vaizdas"
 
 #: src/control/Control.NotebookbarCalc.js:92
 #: src/control/Control.NotebookbarCalc.js:1908
@@ -2616,7 +2615,7 @@ msgstr "Miniatiūra"
 
 #: src/control/Control.NotebookbarCalc.js:99
 msgid "Table Design"
-msgstr ""
+msgstr "Lentelės dizainas"
 
 #: src/control/Control.NotebookbarCalc.js:106
 #: src/control/Control.NotebookbarDraw.js:121
@@ -2845,7 +2844,7 @@ msgstr "Numatytasis rodinys"
 
 #: src/control/Control.NotebookbarCalc.js:1431
 msgid "Open Views List"
-msgstr ""
+msgstr "Atidaryti rodinių sąrašą"
 
 #: src/control/Control.NotebookbarCalc.js:1438
 msgid "New Sheet View"
@@ -2897,11 +2896,11 @@ msgstr "Lentelės stiliaus parinktys"
 
 #: src/control/Control.NotebookbarCalc.js:1678
 msgid "Header Row"
-msgstr ""
+msgstr "Antraštės eilutė"
 
 #: src/control/Control.NotebookbarCalc.js:1690
 msgid "Total Row"
-msgstr ""
+msgstr "\"Viso\" eilutė"
 
 #: src/control/Control.NotebookbarCalc.js:1708
 msgid "Banded Rows"
@@ -2921,7 +2920,7 @@ msgstr "Paskutinis stulpelis"
 
 #: src/control/Control.NotebookbarCalc.js:1765
 msgid "Filter Buttons"
-msgstr ""
+msgstr "Filtrų mygtukai"
 
 #: src/control/Control.NotebookbarCalc.js:1801
 #: src/control/Control.NotebookbarCalc.js:2549
@@ -3098,16 +3097,16 @@ msgstr "Pateikti lange"
 
 #: src/control/Control.NotebookbarImpress.js:493
 msgid "Presenter View"
-msgstr ""
+msgstr "Pranešėjo rodinys"
 
 #: src/control/Control.NotebookbarImpress.js:501
 msgid "Present to All"
-msgstr ""
+msgstr "Rodyti visiems"
 
 #: src/control/Control.NotebookbarImpress.js:509
 #: src/slideshow/SlideShowPresenter.ts:751
 msgid "Follow Presenter"
-msgstr ""
+msgstr "Sekti pranešėją"
 
 #: src/control/Control.NotebookbarImpress.js:637
 msgid "Slide Views"
@@ -3151,7 +3150,7 @@ msgstr "Pagrindinės(ių) skaidrės(ių) šablonai"
 
 #: src/control/Control.NotebookbarImpress.js:1809
 msgid "Themes"
-msgstr ""
+msgstr "Temos"
 
 #: src/control/Control.NotebookbarImpress.js:1859
 msgid "Slide Size"
@@ -3188,11 +3187,11 @@ msgstr "Atsijunkite nuo interneto"
 
 #: src/control/Control.NotebookbarWriter.js:489
 msgid "Validate Sidebar"
-msgstr ""
+msgstr "Šoninės juostos patikrinimas"
 
 #: src/control/Control.NotebookbarWriter.js:497
 msgid "Validate Dialog"
-msgstr ""
+msgstr "Patvirtinimo dialogas"
 
 #: src/control/Control.NotebookbarWriter.js:940
 #: src/control/Control.Zotero.js:827
@@ -3229,7 +3228,7 @@ msgstr "Išskleidžiamasis (meniu)"
 
 #: src/control/Control.NotebookbarWriter.js:1664
 msgid "Page Width"
-msgstr ""
+msgstr "Puslapio plotis"
 
 #: src/control/Control.NotebookbarWriter.js:2301
 msgid "Tracking"
@@ -3237,15 +3236,15 @@ msgstr "Sekimas"
 
 #: src/control/Control.NotebookbarWriter.js:2322
 msgid "View Changes"
-msgstr ""
+msgstr "Rodyti pakeitimus"
 
 #: src/control/Control.NotebookbarWriter.js:2408
 msgid "Compare"
-msgstr ""
+msgstr "Palyginti"
 
 #: src/control/Control.NotebookbarWriter.js:2414
 msgid "Compare Documents"
-msgstr ""
+msgstr "Dokumentų palyginimas"
 
 #: src/control/Control.NotebookbarWriter.js:2506
 msgid "Split"
@@ -3336,7 +3335,7 @@ msgstr "Įjungtas greitas „Kit jail“ tipo tvirtinimas"
 
 #: src/control/Control.ServerAuditDialog.ts:119
 msgid "Fast kit jail bind mounting not configured"
-msgstr ""
+msgstr "Nesukonfigūruotas \"Fast kit jail bind\" tvirtinimas"
 
 #: src/control/Control.ServerAuditDialog.ts:127
 msgid "Poorly performing proxying of all network requests."
@@ -3472,7 +3471,7 @@ msgstr "Kelių puslapių peržiūra"
 
 #: src/control/Control.StatusBar.js:257
 msgid "Zoom to Fit Page Width"
-msgstr ""
+msgstr "Priartinti, kad tilptų į puslapį"
 
 #: src/control/Control.StatusBar.js:414
 msgid ""
@@ -3902,16 +3901,16 @@ msgstr "Tik skaitymui"
 
 #: src/control/PermissionMode.ts:108
 msgid "Viewing Mode"
-msgstr ""
+msgstr "Peržiūros režimas"
 
 #: src/control/PermissionMode.ts:114
 msgid "Editing Mode"
-msgstr ""
+msgstr "Redagavimo režimas"
 
 #: src/control/PermissionMode.ts:125 src/control/PermissionMode.ts:176
 #: src/control/PermissionMode.ts:182 src/control/PermissionMode.ts:188
 msgid "Viewing"
-msgstr ""
+msgstr "Peržiūra"
 
 #: src/control/jsdialog/Definitions.Menu.ts:111
 #: src/control/jsdialog/Definitions.Menu.ts:1748
@@ -4080,7 +4079,7 @@ msgstr "Įterpti vietinę multimediją"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1740
 msgid "Compare Local Document"
-msgstr ""
+msgstr "Palyginti vietinį dokumentą"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1746
 msgid "Very Tight"
@@ -4357,7 +4356,7 @@ msgstr "Daugiau puslapio dydžių..."
 
 #: src/control/jsdialog/Widget.HTMLContent.ts:43
 msgid "Edit mode"
-msgstr "Redagavimo režimas"
+msgstr "Redagavimo Režimas"
 
 #: src/control/jsdialog/Widget.HTMLContent.ts:72
 msgid "Number of Pages. Click to open the Go to Page dialog box."
@@ -4420,7 +4419,7 @@ msgstr "Antraštės ir objektai, kuriuos pridedate prie dokumento, bus rodomi č
 
 #: src/control/jsdialog/Widget.TreeView.ts:1637
 msgid "Search items"
-msgstr ""
+msgstr "Ieškoti elementų"
 
 #: src/app/Socket.ts:189
 msgid "Oops, there is a problem connecting to {productname}: "
@@ -4893,7 +4892,7 @@ msgstr "meniu „Rodymas“"
 
 #: src/layer/tile/CanvasTileLayer.js:461
 msgid "Online Editor"
-msgstr ""
+msgstr "Internetinis redaktorius"
 
 #: src/layer/tile/CanvasTileLayer.js:1456
 msgid "Functions"
@@ -5080,7 +5079,7 @@ msgstr "Kuriamas naujas failas iš šablono..."
 
 #: src/map/handler/Map.WOPI.js:224
 msgid "Compare Document..."
-msgstr ""
+msgstr "Palyginti dokumentą..."
 
 #: src/map/handler/Map.WOPI.js:732
 msgid "File name should contain an extension."
