@@ -13,17 +13,17 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-02-13 16:44+0100\n"
-"PO-Revision-Date: 2026-02-04 10:50+0000\n"
+"PO-Revision-Date: 2026-02-13 17:54+0000\n"
 "Last-Translator: Matthaiks <kitynska@gmail.com>\n"
 "Language-Team: Polish <https://hosted.weblate.org/projects/collabora-online/"
 "ui/pl/>\n"
-"Language: \n"
+"Language: pl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=(n==1 ? 0 : (n%10>=2 && n%10<=4) && (n"
-"%100<12 || n%100>14) ? 1 : n!=1 && (n%10>=0 && n%10<=1) || (n%10>=5 && n"
-"%10<=9) || (n%100>=12 && n%100<=14) ? 2 : 3);\n"
+"Plural-Forms: nplurals=4; plural=(n==1 ? 0 : (n%10>=2 && n%10<=4) && "
+"(n%100<12 || n%100>14) ? 1 : n!=1 && (n%10>=0 && n%10<=1) || (n%10>=5 && "
+"n%10<=9) || (n%100>=12 && n%100<=14) ? 2 : 3);\n"
 "X-Generator: Weblate 5.16-dev\n"
 
 #: admin/admin.strings.js:15
@@ -1050,15 +1050,15 @@ msgstr "Zapisano"
 
 #: src/canvas/sections/CompareChangesLabelSection.ts:111
 msgid "Last edited by %1 on %2"
-msgstr ""
+msgstr "Ostatnio edytowany przez %1 dnia %2"
 
 #: src/canvas/sections/CompareChangesLabelSection.ts:167
 msgid "%1: Initial Version"
-msgstr ""
+msgstr "%1: wersja początkowa"
 
 #: src/canvas/sections/CompareChangesLabelSection.ts:171
 msgid "%1: Current Version"
-msgstr ""
+msgstr "%1: wersja bieżąca"
 
 #: src/canvas/sections/ShapeHandlesSection.ts:475
 msgid "Document contains unsupported media"
@@ -2942,7 +2942,7 @@ msgstr "Przyciski filtrów"
 
 #: src/control/Control.NotebookbarCalc.js:1776
 msgid "Table Styles"
-msgstr ""
+msgstr "Style tabeli"
 
 #: src/control/Control.NotebookbarCalc.js:1798
 #: src/control/Control.NotebookbarCalc.js:2546
@@ -3123,7 +3123,7 @@ msgstr "Widok prezentera"
 
 #: src/control/Control.NotebookbarImpress.js:501
 msgid "Present to All"
-msgstr "Prezentuj dla wszystkich"
+msgstr "Prezentuj wszystkim"
 
 #: src/control/Control.NotebookbarImpress.js:509
 #: src/slideshow/SlideShowPresenter.ts:759
@@ -4091,243 +4091,243 @@ msgstr "Japońska karta pocztowa"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1715
 msgid "Table Style Light 1"
-msgstr ""
+msgstr "Styl tabeli „Jasny 1”"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1721
 msgid "Table Style Light 2"
-msgstr ""
+msgstr "Styl tabeli „Jasny 2”"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1727
 msgid "Table Style Light 3"
-msgstr ""
+msgstr "Styl tabeli „Jasny 3”"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1733
 msgid "Table Style Light 4"
-msgstr ""
+msgstr "Styl tabeli „Jasny 4”"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1739
 msgid "Table Style Light 5"
-msgstr ""
+msgstr "Styl tabeli „Jasny 5”"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1745
 msgid "Table Style Light 6"
-msgstr ""
+msgstr "Styl tabeli „Jasny 6”"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1751
 msgid "Table Style Light 7"
-msgstr ""
+msgstr "Styl tabeli „Jasny 7”"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1757
 msgid "Table Style Light 8"
-msgstr ""
+msgstr "Styl tabeli „Jasny 8”"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1763
 msgid "Table Style Light 9"
-msgstr ""
+msgstr "Styl tabeli „Jasny 9”"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1769
 msgid "Table Style Light 10"
-msgstr ""
+msgstr "Styl tabeli „Jasny 10”"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1775
 msgid "Table Style Light 11"
-msgstr ""
+msgstr "Styl tabeli „Jasny 11”"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1781
 msgid "Table Style Light 12"
-msgstr ""
+msgstr "Styl tabeli „Jasny 12”"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1787
 msgid "Table Style Light 13"
-msgstr ""
+msgstr "Styl tabeli „Jasny 13”"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1793
 msgid "Table Style Light 14"
-msgstr ""
+msgstr "Styl tabeli „Jasny 14”"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1799
 msgid "Table Style Light 15"
-msgstr ""
+msgstr "Styl tabeli „Jasny 15”"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1805
 msgid "Table Style Light 16"
-msgstr ""
+msgstr "Styl tabeli „Jasny 16”"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1811
 msgid "Table Style Light 17"
-msgstr ""
+msgstr "Styl tabeli „Jasny 17”"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1817
 msgid "Table Style Light 18"
-msgstr ""
+msgstr "Styl tabeli „Jasny 18”"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1823
 msgid "Table Style Light 19"
-msgstr ""
+msgstr "Styl tabeli „Jasny 19”"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1829
 msgid "Table Style Light 20"
-msgstr ""
+msgstr "Styl tabeli „Jasny 20”"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1835
 msgid "Table Style Light 21"
-msgstr ""
+msgstr "Styl tabeli „Jasny 21”"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1841
 msgid "Table Style Medium 1"
-msgstr ""
+msgstr "Styl tabeli „Średni 1”"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1847
 msgid "Table Style Medium 2"
-msgstr ""
+msgstr "Styl tabeli „Średni 2”"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1853
 msgid "Table Style Medium 3"
-msgstr ""
+msgstr "Styl tabeli „Średni 3”"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1859
 msgid "Table Style Medium 4"
-msgstr ""
+msgstr "Styl tabeli „Średni 4”"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1865
 msgid "Table Style Medium 5"
-msgstr ""
+msgstr "Styl tabeli „Średni 5”"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1871
 msgid "Table Style Medium 6"
-msgstr ""
+msgstr "Styl tabeli „Średni 6”"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1877
 msgid "Table Style Medium 7"
-msgstr ""
+msgstr "Styl tabeli „Średni 7”"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1883
 msgid "Table Style Medium 8"
-msgstr ""
+msgstr "Styl tabeli „Średni 8”"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1889
 msgid "Table Style Medium 9"
-msgstr ""
+msgstr "Styl tabeli „Średni 9”"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1895
 msgid "Table Style Medium 10"
-msgstr ""
+msgstr "Styl tabeli „Średni 10”"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1901
 msgid "Table Style Medium 11"
-msgstr ""
+msgstr "Styl tabeli „Średni 11”"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1907
 msgid "Table Style Medium 12"
-msgstr ""
+msgstr "Styl tabeli „Średni 12”"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1913
 msgid "Table Style Medium 13"
-msgstr ""
+msgstr "Styl tabeli „Średni 13”"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1919
 msgid "Table Style Medium 14"
-msgstr ""
+msgstr "Styl tabeli „Średni 14”"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1925
 msgid "Table Style Medium 15"
-msgstr ""
+msgstr "Styl tabeli „Średni 15”"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1931
 msgid "Table Style Medium 16"
-msgstr ""
+msgstr "Styl tabeli „Średni 16”"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1937
 msgid "Table Style Medium 17"
-msgstr ""
+msgstr "Styl tabeli „Średni 17”"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1943
 msgid "Table Style Medium 18"
-msgstr ""
+msgstr "Styl tabeli „Średni 18”"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1949
 msgid "Table Style Medium 19"
-msgstr ""
+msgstr "Styl tabeli „Średni 19”"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1955
 msgid "Table Style Medium 20"
-msgstr ""
+msgstr "Styl tabeli „Średni 20”"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1961
 msgid "Table Style Medium 21"
-msgstr ""
+msgstr "Styl tabeli „Średni 21”"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1967
 msgid "Table Style Medium 22"
-msgstr ""
+msgstr "Styl tabeli „Średni 22”"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1973
 msgid "Table Style Medium 23"
-msgstr ""
+msgstr "Styl tabeli „Średni 23”"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1979
 msgid "Table Style Medium 24"
-msgstr ""
+msgstr "Styl tabeli „Średni 24”"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1985
 msgid "Table Style Medium 25"
-msgstr ""
+msgstr "Styl tabeli „Średni 25”"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1991
 msgid "Table Style Medium 26"
-msgstr ""
+msgstr "Styl tabeli „Średni 26”"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1997
 msgid "Table Style Medium 27"
-msgstr ""
+msgstr "Styl tabeli „Średni 27”"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2003
 msgid "Table Style Medium 28"
-msgstr ""
+msgstr "Styl tabeli „Średni 28”"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2009
 msgid "Table Style Dark 1"
-msgstr ""
+msgstr "Styl tabeli „Ciemny 1”"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2015
 msgid "Table Style Dark 2"
-msgstr ""
+msgstr "Styl tabeli „Ciemny 2”"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2021
 msgid "Table Style Dark 3"
-msgstr ""
+msgstr "Styl tabeli „Ciemny 3”"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2027
 msgid "Table Style Dark 4"
-msgstr ""
+msgstr "Styl tabeli „Ciemny 4”"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2033
 msgid "Table Style Dark 5"
-msgstr ""
+msgstr "Styl tabeli „Ciemny 5”"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2039
 msgid "Table Style Dark 6"
-msgstr ""
+msgstr "Styl tabeli „Ciemny 6”"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2045
 msgid "Table Style Dark 7"
-msgstr ""
+msgstr "Styl tabeli „Ciemny 7”"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2051
 msgid "Table Style Dark 8"
-msgstr ""
+msgstr "Styl tabeli „Ciemny 8”"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2057
 msgid "Table Style Dark 9"
-msgstr ""
+msgstr "Styl tabeli „Ciemny 9”"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2063
 msgid "Table Style Dark 10"
-msgstr ""
+msgstr "Styl tabeli „Ciemny 10”"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2069
 msgid "Table Style Dark 11"
-msgstr ""
+msgstr "Styl tabeli „Ciemny 11”"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2092
 msgid "Insert Local Image"
@@ -5380,9 +5380,8 @@ msgid "Resume"
 msgstr "Wznów"
 
 #: src/slideshow/PresenterConsole.js:38
-#, fuzzy
 msgid "Present to all"
-msgstr "Prezentuj dla wszystkich"
+msgstr "Prezentuj wszystkim"
 
 #: src/slideshow/PresenterConsole.js:39
 msgid "Go Back"
