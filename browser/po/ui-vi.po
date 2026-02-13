@@ -8,11 +8,11 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-02-03 23:25+0100\n"
-"PO-Revision-Date: 2026-02-03 11:54+0000\n"
-"Last-Translator: Adolfo Jayme Barrientos <fitojb@ubuntu.com>\n"
-"Language-Team: Vietnamese <https://hosted.weblate.org/projects/"
-"collabora-online/ui/vi/>\n"
-"Language: \n"
+"PO-Revision-Date: 2026-02-12 19:10+0000\n"
+"Last-Translator: Loc Huynh <huynhloc.contact@gmail.com>\n"
+"Language-Team: Vietnamese <https://hosted.weblate.org/projects/collabora-"
+"online/ui/vi/>\n"
+"Language: vi\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -250,7 +250,7 @@ msgstr "Thông tin phiên bản"
 
 #: admin/admin.strings.js:67
 msgid "License"
-msgstr ""
+msgstr "Giấy phép"
 
 #: admin/admin.strings.js:68 src/control/Control.Menubar.ts:422
 #: src/control/Control.Menubar.ts:605 src/control/Control.Menubar.ts:744
@@ -259,23 +259,23 @@ msgstr ""
 #: src/control/Control.Menubar.ts:1305
 #: src/control/Control.NotebookbarWriter.js:568
 msgid "About"
-msgstr "Về thông tin"
+msgstr "Giới thiệu"
 
 #: admin/src/AdminClusterOverview.js:105
 msgid "CPU History"
-msgstr ""
+msgstr "Lịch sử CPU"
 
 #: admin/src/AdminClusterOverview.js:116
 msgid "Memory History"
-msgstr ""
+msgstr "Lịch sử bộ nhớ"
 
 #: admin/src/AdminClusterOverview.js:356
 msgid "Memory"
-msgstr ""
+msgstr "Bộ nhớ"
 
 #: admin/src/AdminClusterOverview.js:540
 msgid "Please wait kubernetes cluster is scaling..."
-msgstr ""
+msgstr "Vui lòng đợi cụm kubernetes đang mở rộng..."
 
 #: admin/src/AdminClusterOverview.js:550 admin/src/AdminSocketOverview.js:420
 msgid "Failed to set jwt authentication cookie over insecure connection"
@@ -315,7 +315,7 @@ msgstr "Cảnh báo"
 #: src/slideshow/SlideShowPresenter.ts:1109
 #: src/slideshow/SlideShowPresenter.ts:1132
 msgid "OK"
-msgstr "Đồng ý"
+msgstr "OK"
 
 #: admin/src/AdminClusterOverview.js:561 admin/src/AdminSocketOverview.js:109
 #: admin/src/AdminSocketOverview.js:432 admin/src/AdminSocketSettings.js:48
@@ -346,7 +346,7 @@ msgstr "Đã gửi"
 
 #: admin/src/AdminSocketAnalytics.js:255
 msgid "Connections"
-msgstr ""
+msgstr "Kết nối"
 
 #: admin/src/AdminSocketBase.js:62
 msgid "Server has been shut down; please reload the page."
@@ -370,19 +370,19 @@ msgstr "Bạn có chắc chắn muốn tắt máy chủ không?"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:155
 msgid "Signature Certificate"
-msgstr ""
+msgstr "Chứng chỉ chữ ký"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:156
 msgid "Signature Key"
-msgstr ""
+msgstr "Khóa chữ ký"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:157
 msgid "Signature CA"
-msgstr ""
+msgstr "Chữ ký CA"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:160
 msgid "In-document Screen Reader"
-msgstr ""
+msgstr "Trình đọc màn hình trong tài liệu"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:161
 #: src/control/Control.Menubar.ts:172 src/control/Control.Menubar.ts:497
@@ -398,10 +398,9 @@ msgstr "Chế độ tối"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:162
 msgid "Compact layout"
-msgstr ""
+msgstr "Bố cục nhỏ gọn"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:163
-#, fuzzy
 msgid "Show status bar"
 msgstr "Hiển thị thanh trạng thái"
 
@@ -412,69 +411,69 @@ msgstr "Hiển thị thước"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:165
 msgid "Accessibility Checker"
-msgstr ""
+msgstr "Trình kiểm tra khả năng truy cập"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:166
 #: src/control/Control.NavigatorPanel.ts:285
 msgid "Navigator"
-msgstr ""
+msgstr "Bộ điều hướng"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:167
 msgid "Show Sidebar"
-msgstr ""
+msgstr "Hiển thị thanh bên"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:168
 msgid "Custom Animation"
-msgstr ""
+msgstr "Hoạt ảnh tùy chỉnh"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:171
 msgid "Style List"
-msgstr ""
+msgstr "Danh sách phong cách"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:174
 #: src/control/Control.NotebookbarCalc.js:1147
 #: src/control/Control.NotebookbarDraw.js:527
 #: src/control/Control.NotebookbarImpress.js:660
 msgid "Grid"
-msgstr ""
+msgstr "Lưới"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:175
 msgid "Print"
-msgstr ""
+msgstr "In"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:176
 msgid "Other"
-msgstr ""
+msgstr "Khác"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:177
 #: src/control/Control.NotebookbarImpress.js:669
 msgid "Show Grid"
-msgstr ""
+msgstr "Hiển thị lưới"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:178
 msgid "Snap to grid"
-msgstr ""
+msgstr "Đính vào lưới"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:179
 #: admin/src/integrator/AdminIntegratorSettings.ts:185
 msgid "Size to grid"
-msgstr ""
+msgstr "Kích thước theo lưới"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:180
 msgid "Synchronize axes"
-msgstr ""
+msgstr "Đồng bộ hóa các trục"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:181
 msgid "Snap grid"
-msgstr ""
+msgstr "Lưới chụp"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:182
 msgid "Empty Pages"
-msgstr ""
+msgstr "Trang trống"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:183
 msgid "Force Breaks"
-msgstr ""
+msgstr "Buộc nghỉ"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:184
 #: src/control/Control.Menubar.ts:776 src/control/Control.TopToolbar.js:110
@@ -484,42 +483,42 @@ msgstr "Tất cả trang tính"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:186
 msgid "Content"
-msgstr ""
+msgstr "Nội dung"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:187
 msgid "Drawing"
-msgstr ""
+msgstr "Bản vẽ"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:188
 #: src/control/Control.NotebookbarDraw.js:1226
 #: src/control/Control.NotebookbarDraw.js:1426
 #: src/control/Control.NotebookbarWriter.js:1209
 msgid "Page"
-msgstr ""
+msgstr "Trang"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:189
 msgid "Fit to page"
-msgstr ""
+msgstr "Vừa với trang"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:190
 msgid "Tile pages"
-msgstr ""
+msgstr "Các trang xếp chồng"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:191
 msgid "Booklet"
-msgstr ""
+msgstr "Tập sách"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:192
 msgid "Booklet front"
-msgstr ""
+msgstr "Mặt trước của tập sách"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:193
 msgid "Booklet back"
-msgstr ""
+msgstr "Mặt sau của tập sách"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:194
 msgid "Page name"
-msgstr ""
+msgstr "Tên trang"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:195
 #: src/control/Control.NotebookbarCalc.js:779
@@ -535,11 +534,11 @@ msgstr "Thời gian"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:197
 msgid "Hidden pages"
-msgstr ""
+msgstr "Các trang ẩn"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:198
 msgid "From printer setup"
-msgstr ""
+msgstr "Từ thiết lập máy in"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:199
 msgid "Presentation"
@@ -552,173 +551,176 @@ msgstr "Ghi chú"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:201
 msgid "Handouts"
-msgstr ""
+msgstr "Tài liệu phát tay"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:202
 #: src/control/Control.NavigatorPanel.ts:208
 msgid "Outline"
-msgstr ""
+msgstr "Tóm tắt"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:203
 msgid "Handout horizontal"
-msgstr ""
+msgstr "Bài tập ngang"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:204
 msgid "Images"
-msgstr ""
+msgstr "Hình ảnh"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:205
-#, fuzzy
 msgid "Tables"
 msgstr "Bảng"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:206
 msgid "Controls"
-msgstr ""
+msgstr "Điều khiển"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:207
 msgid "Background"
-msgstr ""
+msgstr "Bối cảnh"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:208
 msgid "Print Black"
-msgstr ""
+msgstr "In đen"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:209
 msgid "Hidden text"
-msgstr ""
+msgstr "Văn bản ẩn"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:210
 msgid "Placeholders"
-msgstr ""
+msgstr "Phần giữ chỗ"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:211
 msgid "Left pages"
-msgstr ""
+msgstr "Trang bên trái"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:212
 msgid "Right pages"
-msgstr ""
+msgstr "Trang bên phải"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:213
 msgid "Brochure"
-msgstr ""
+msgstr "Sách nhỏ"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:214
 msgid "Brochure Right to Left"
-msgstr ""
+msgstr "Sách nhỏ từ phải sang trái"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:215
 msgid "Images and Objects"
-msgstr ""
+msgstr "Hình ảnh và đối tượng"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:320
 msgid "Invalid JSON file"
-msgstr ""
+msgstr "Tệp JSON không hợp lệ"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:324
 msgid "Error reading file"
-msgstr ""
+msgstr "Lỗi khi đọc tệp"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:336
 msgid "Autotext"
-msgstr ""
+msgstr "Văn bản tự động"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:338
 msgid ""
 "Upload reusable text snippets (.bau). To insert the text in your document, "
 "type the shortcut for an AutoText entry and press F3."
 msgstr ""
+"Tải lên các đoạn văn bản có thể sử dụng lại (.bau). Để chèn văn bản vào tài "
+"liệu của bạn, hãy nhập phím tắt cho mục nhập Văn bản tự động và nhấn F3."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:344
 msgid "Upload Autotext"
-msgstr ""
+msgstr "Tự động tải lên"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:349
 msgid "Custom dictionaries"
-msgstr ""
+msgstr "Từ điển tùy chỉnh"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:351
 msgid ""
 "Add or edit words in a spell check dictionary. Words in your wordbook (."
 "dic) will be available for spelling checks."
 msgstr ""
+"Thêm hoặc chỉnh sửa các từ trong từ điển kiểm tra chính tả. Các từ trong sổ "
+"từ (.dic) của bạn sẽ có sẵn để kiểm tra chính tả."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:357
 msgid "Upload Wordbook"
-msgstr ""
+msgstr "Tải lên Wordbook"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:362
 msgid "Document settings"
-msgstr ""
+msgstr "Cài đặt tài liệu"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:363
 #: admin/src/integrator/Xcu.ts:316
 msgid "Adjust how office documents behave."
-msgstr ""
+msgstr "Điều chỉnh cách hoạt động của tài liệu văn phòng."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:369
 msgid "Upload Xcu"
-msgstr ""
+msgstr "Tải lên Xcu"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:420
 msgid "Shared Config URL is missing in initial variables."
-msgstr ""
+msgstr "URL Config được chia sẻ bị thiếu trong các biến ban đầu."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:426
 msgid "Access token is missing in initial variables."
-msgstr ""
+msgstr "Token truy cập bị thiếu trong các biến ban đầu."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:462
 msgid "Something went wrong. Please try to refresh the page."
-msgstr ""
+msgstr "Đã xảy ra lỗi. Hãy thử làm mới trang."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:599
 msgid ""
 "Something went wrong while fetching setting file. Please try to refresh the "
 "page."
-msgstr ""
+msgstr "Đã xảy ra lỗi khi tìm nạp tệp cài đặt. Hãy thử làm mới trang."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:624
 msgid ""
 "Something went wrong while fetching wordbook. Please try to refresh the "
 "page."
-msgstr ""
+msgstr "Đã xảy ra lỗi khi tìm nạp wordbook. Hãy thử làm mới trang."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:634
 msgid "Interface Settings"
-msgstr ""
+msgstr "Cài đặt giao diện"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:636
 msgid "Set default interface preferences."
-msgstr ""
+msgstr "Đặt tùy chọn giao diện mặc định."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:744
 msgid "Select a tab to browser settings."
-msgstr ""
+msgstr "Chọn một tab để cài đặt trình duyệt."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:757
 #: admin/src/integrator/Xcu.ts:376
 msgid "Reset to default Document settings"
-msgstr ""
+msgstr "Đặt lại về Cài đặt tài liệu mặc định"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:761
 #: admin/src/integrator/Xcu.ts:390
 msgid "Are you sure you want to reset Document settings?"
-msgstr ""
+msgstr "Bạn có chắc chắn muốn đặt lại Cài đặt tài liệu không?"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:778
 #: admin/src/integrator/Xcu.ts:405
 msgid "Save Document settings"
-msgstr ""
+msgstr "Lưu Cài đặt tài liệu"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:1049
 msgid "(Warning: Server accessibility must be enabled to toggle)"
-msgstr ""
+msgstr "(Cảnh báo: Phải bật khả năng truy cập máy chủ để chuyển đổi)"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:1131
 msgid "Notebookbar view"
-msgstr ""
+msgstr "Chế độ xem Notebookbar"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:1138
 #: src/control/Control.NotebookbarCalc.js:1582
@@ -730,7 +732,7 @@ msgstr "Chế độ xem nhỏ gọn"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:1211
 msgid "Something went wrong while uploading the file. Please try again."
-msgstr ""
+msgstr "Đã xảy ra lỗi khi tải tệp lên. Vui lòng thử lại."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:1287
 #: src/canvas/sections/CommentSection.ts:1132
@@ -743,7 +745,7 @@ msgstr "Xóa"
 msgid ""
 "Something went wrong while deleting the file. Please try refreshing the "
 "page."
-msgstr ""
+msgstr "Đã xảy ra lỗi khi xóa tệp. Hãy thử làm mới trang."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:1340
 msgid "Edit"
@@ -751,35 +753,39 @@ msgstr "Chỉnh sửa"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:1366
 msgid "View Settings"
-msgstr ""
+msgstr "Xem cài đặt"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:1367
 msgid "Adjust view settings."
-msgstr ""
+msgstr "Điều chỉnh cài đặt chế độ xem."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:1377
 msgid "Option"
-msgstr ""
+msgstr "Tùy chọn"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:1397
 msgid ""
 "To use Zotero specify your API key here. You can create your API key in "
 "your "
 msgstr ""
+"Để sử dụng Zotero, hãy chỉ định khóa API của bạn tại đây. Bạn có thể tạo "
+"khóa API trong "
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:1405
 msgid "Zotero account API settings"
-msgstr ""
+msgstr "Cài đặt API tài khoản Zotero"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:1414
 msgid "Document Signing"
-msgstr ""
+msgstr "Ký tài liệu"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:1418
 msgid ""
 "To use document signing, specify your signing certificate, key and CA chain "
 "here."
 msgstr ""
+"Để sử dụng tính năng ký tài liệu, hãy chỉ định chứng chỉ ký, khóa và chuỗi "
+"CA của bạn tại đây."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:1823
 #: src/map/handler/Map.WOPI.js:732
@@ -788,52 +794,52 @@ msgstr "Lỗi"
 
 #: admin/src/integrator/WordBook.ts:117
 msgid "Standard dictionary"
-msgstr ""
+msgstr "Từ điển chuẩn"
 
 #: admin/src/integrator/WordBook.ts:118
 msgid "Words are ignored by the spell checker"
-msgstr ""
+msgstr "Các từ bị trình kiểm tra chính tả bỏ qua"
 
 #: admin/src/integrator/WordBook.ts:122
 msgid "Dictionary of exceptions"
-msgstr ""
+msgstr "Từ điển ngoại lệ"
 
 #: admin/src/integrator/WordBook.ts:123
 msgid "Exception words are underlined while checking spelling"
-msgstr ""
+msgstr "Các từ ngoại lệ được gạch chân khi kiểm tra chính tả"
 
 #: admin/src/integrator/WordBook.ts:132
 msgid "Loading Wordbook..."
-msgstr ""
+msgstr "Đang tải Wordbook..."
 
 #: admin/src/integrator/WordBook.ts:333
 msgid "Type to add a word"
-msgstr ""
+msgstr "Nhập để thêm một từ"
 
 #: admin/src/integrator/WordBook.ts:338
 #: src/control/Notebookbar.ImpressAnimationTab.ts:67
 msgid "Add"
-msgstr ""
+msgstr "Thêm"
 
 #: admin/src/integrator/WordBook.ts:466
 msgid "Invalid dictionary format. Please check the file."
-msgstr ""
+msgstr "Định dạng từ điển không hợp lệ. Vui lòng kiểm tra tập tin."
 
 #: admin/src/integrator/WordBook.ts:486
 msgid "Something went wrong while uploading dictionary file"
-msgstr ""
+msgstr "Đã xảy ra lỗi khi tải lên tệp từ điển"
 
 #: admin/src/integrator/Xcu.ts:160 admin/src/integrator/Xcu.ts:172
 msgid "Something went wrong while loading Document settings."
-msgstr ""
+msgstr "Đã xảy ra lỗi khi tải Cài đặt tài liệu."
 
 #: admin/src/integrator/Xcu.ts:312
 msgid "Document Settings"
-msgstr ""
+msgstr "Cài đặt tài liệu"
 
 #: admin/src/integrator/Xcu.ts:363
 msgid "Select a tab to view settings."
-msgstr ""
+msgstr "Chọn một tab để xem cài đặt."
 
 #: admin/src/Util.js:26
 msgid "kB"
@@ -888,26 +894,32 @@ msgid ""
 "The system is currently adjusting resources. Please wait a moment while we "
 "retry your request..."
 msgstr ""
+"Hệ thống hiện đang điều chỉnh tài nguyên. Vui lòng đợi một lát trong khi "
+"chúng tôi thử lại yêu cầu của bạn..."
 
 #: js/global.js:1609
 msgid "The document is being migrated to a new server. Retrying shortly..."
 msgstr ""
+"Tài liệu đang được di chuyển sang máy chủ mới. Đang thử lại trong thời gian "
+"ngắn..."
 
 #: js/global.js:1611
 msgid "Failed to get RouteToken from controller"
-msgstr ""
+msgstr "Không thể lấy RouteToken từ bộ điều khiển"
 
 #: src/app/Debug.ts:148
 msgid "Debug Tools"
-msgstr ""
+msgstr "Công cụ gỡ lỗi"
 
 #: src/app/Debug.ts:150
 msgid "Ctrl+Shift+Alt+D to exit"
-msgstr ""
+msgstr "Ctrl+Shift+Alt+D để thoát"
 
 #: src/app/Debug.ts:1433
 msgid "Event handling has been delayed for an unexpectedly long time: {0}ms"
 msgstr ""
+"Việc xử lý sự kiện đã bị trì hoãn trong một thời gian dài ngoài dự kiến: {0}"
+"ms"
 
 #: src/canvas/sections/CommentListSection.ts:1238
 msgid "Modify"
@@ -927,7 +939,7 @@ msgstr "Xóa"
 
 #: src/canvas/sections/CommentListSection.ts:1256
 msgid "Remove Thread"
-msgstr "Xóa chủ đề"
+msgstr "Xóa luồng"
 
 #: src/canvas/sections/CommentListSection.ts:1262
 msgid "Resolve"
@@ -935,53 +947,55 @@ msgstr "Giải quyết"
 
 #: src/canvas/sections/CommentListSection.ts:1262
 msgid "Unresolve"
-msgstr "Thu hồi giải pháp"
+msgstr "Chưa giải quyết"
 
 #: src/canvas/sections/CommentListSection.ts:1268
 msgid "Unresolve Thread"
-msgstr "Chủ đề chưa giải quyết"
+msgstr "Luồng chưa giải quyết"
 
 #: src/canvas/sections/CommentListSection.ts:1268
 msgid "Resolve Thread"
-msgstr "Giải quyết Chủ đề"
+msgstr "Giải quyết luồng"
 
 #: src/canvas/sections/CommentListSection.ts:1274
 msgid "Promote to top comment"
-msgstr ""
+msgstr "Thăng hạng lên bình luận đầu"
 
 #: src/canvas/sections/CommentListSection.ts:1280
 msgid "Show on the side"
-msgstr ""
+msgstr "Hiển thị ở bên cạnh"
 
 #: src/canvas/sections/CommentListSection.ts:1280
 msgid "Open in full view"
-msgstr ""
+msgstr "Mở ở chế độ xem toàn bộ"
 
 #: src/canvas/sections/CommentListSection.ts:1286
 msgid "Show in navigator"
-msgstr ""
+msgstr "Hiển thị trong trình điều hướng"
 
 #: src/canvas/sections/CommentListSection.ts:1314
 #: src/control/Control.JSDialogBuilder.js:1634
 #: src/layer/tile/CanvasTileLayer.js:3346
 #: src/layer/tile/CanvasTileLayer.js:3357
 msgid "Comment"
-msgstr "Chú thích"
+msgstr "Bình luận"
 
 #: src/canvas/sections/CommentListSection.ts:1540
 #: src/canvas/sections/CommentListSection.ts:1553
 msgid "Comments Updated"
-msgstr ""
+msgstr "Bình luận được cập nhật"
 
 #: src/canvas/sections/CommentListSection.ts:1541
 msgid "Another user has removed this comment."
-msgstr ""
+msgstr "Một người dùng khác đã xóa bình luận này."
 
 #: src/canvas/sections/CommentListSection.ts:1554
 msgid ""
 "Another user has updated the comment. Would you like to overwrite those "
 "changes?"
 msgstr ""
+"Một người dùng khác đã cập nhật bình luận. Bạn có muốn ghi đè những thay đổi "
+"đó không?"
 
 #: src/canvas/sections/CommentListSection.ts:1555 src/app/Socket.ts:1369
 msgid "Overwrite"
@@ -989,15 +1003,15 @@ msgstr "Ghi đè"
 
 #: src/canvas/sections/CommentListSection.ts:1556
 msgid "Update"
-msgstr ""
+msgstr "Cập nhật"
 
 #: src/canvas/sections/CommentSection.ts:45
 msgid "Edit comment"
-msgstr ""
+msgstr "Chỉnh sửa bình luận"
 
 #: src/canvas/sections/CommentSection.ts:46
 msgid "Reply comment"
-msgstr ""
+msgstr "Trả lời bình luận"
 
 #: src/canvas/sections/CommentSection.ts:47
 msgid "Open menu"
@@ -1005,7 +1019,7 @@ msgstr "Mở menu"
 
 #: src/canvas/sections/CommentSection.ts:346
 msgid "Press Ctrl + Enter to post"
-msgstr ""
+msgstr "Nhấn Ctrl + Enter để đăng"
 
 #: src/canvas/sections/CommentSection.ts:418
 #: src/canvas/sections/CommentSection.ts:419
@@ -1024,13 +1038,12 @@ msgstr "Đã giải quyết"
 #: src/canvas/sections/CommentSection.ts:1131
 #: src/canvas/sections/CommentSection.ts:1136
 #: src/control/Control.SaveState.ts:62
-#, fuzzy
 msgid "Saved"
 msgstr "Lưu"
 
 #: src/canvas/sections/ShapeHandlesSection.ts:476
 msgid "Document contains unsupported media"
-msgstr ""
+msgstr "Tài liệu chứa phương tiện không được hỗ trợ"
 
 #: src/canvas/sections/URLPopUpSection.ts:67
 msgid "Copy link location"
@@ -1057,13 +1070,12 @@ msgid "This version of {productname} is powered by"
 msgstr "Phiên bản {productname} này được cung cấp bởi"
 
 #: src/control/Control.AboutDialog.ts:189
-#, fuzzy
 msgid "Served by: "
-msgstr "Phục vụ bởi:"
+msgstr "Phục vụ bởi: "
 
 #: src/control/Control.AboutDialog.ts:212
 msgid "View widgets"
-msgstr ""
+msgstr "Xem widgets"
 
 #: src/control/Control.AboutDialog.ts:236
 msgid "\"Slow Proxy\""
@@ -1071,7 +1083,7 @@ msgstr "\"Proxy chậm\""
 
 #: src/control/Control.AboutDialog.ts:243
 msgid "Time zone:"
-msgstr ""
+msgstr "Múi giờ:"
 
 #: src/control/Control.AboutDialog.ts:298
 msgid "Copy all version information in English"
@@ -1099,11 +1111,11 @@ msgstr "Mở đường dẫn"
 
 #: src/control/Control.AlertDialog.js:68
 msgid "Copied external sources are not allowed"
-msgstr ""
+msgstr "Không được phép sao chép các nguồn bên ngoài"
 
 #: src/control/Control.AlertDialog.js:69
 msgid "It seems you have copied a selection that includes external images."
-msgstr ""
+msgstr "Có vẻ như bạn đã sao chép một vùng chọn bao gồm các hình ảnh bên ngoài."
 
 #: src/control/Control.AlertDialog.js:70
 msgid ""
@@ -1111,24 +1123,29 @@ msgid ""
 "possible. Please right click in the image, choose \"Copy Image\" and paste "
 "it into the document instead."
 msgstr ""
+"Việc tải xuống các tài nguyên bên ngoài bị cấm nhưng vẫn có thể dán hình "
+"ảnh. Vui lòng nhấp chuột phải vào hình ảnh, chọn \"Sao chép hình ảnh\" và "
+"dán nó vào tài liệu."
 
 #: src/control/Control.AlertDialog.js:74
 msgid "External data source not allowed"
-msgstr ""
+msgstr "Không cho phép nguồn dữ liệu bên ngoài"
 
 #: src/control/Control.AlertDialog.js:75
 msgid "It seems you have tried to insert external data."
-msgstr ""
+msgstr "Có vẻ như bạn đã cố gắng chèn dữ liệu bên ngoài."
 
 #: src/control/Control.AlertDialog.js:76
 msgid ""
 "Selected external data source is forbidden. Please contact the system "
 "administrator."
 msgstr ""
+"Nguồn dữ liệu bên ngoài đã chọn bị cấm. Vui lòng liên hệ với quản trị viên "
+"hệ thống."
 
 #: src/control/Control.AlertDialog.js:88 src/map/Clipboard.js:1322
 msgid "Don’t show this again"
-msgstr ""
+msgstr "Đừng hiển thị lại"
 
 #: src/control/Control.AlertDialog.js:107
 msgid "The server encountered a {0} error while parsing the {1} command."
@@ -1144,11 +1161,11 @@ msgstr "Dán đặc biệt"
 
 #: src/control/Control.ContextMenu.js:208
 msgid "Copy Cells"
-msgstr ""
+msgstr "Sao chép ô"
 
 #: src/control/Control.ContextMenu.js:213
 msgid "Fill Series"
-msgstr ""
+msgstr "Đổ màu hàng loạt"
 
 #: src/control/Control.DocumentNameInput.js:115
 msgid "Path"
@@ -1194,13 +1211,15 @@ msgstr "Hoàn tác"
 
 #: src/control/Control.DownloadProgress.js:43
 msgid "Download Selection"
-msgstr ""
+msgstr "Lựa chọn tải xuống"
 
 #: src/control/Control.DownloadProgress.js:48
 msgid ""
 "If you want to share large elements outside of {productname} it's necessary "
 "to first download them."
 msgstr ""
+"Nếu bạn muốn chia sẻ các phần tử lớn bên ngoài {productname} thì trước tiên "
+"bạn phải tải chúng xuống."
 
 #: src/control/Control.DownloadProgress.js:61
 #: src/control/Control.NotebookbarCalc.js:304
@@ -1212,7 +1231,7 @@ msgstr "Tải xuống"
 
 #: src/control/Control.DownloadProgress.js:80
 msgid "Downloading clipboard content"
-msgstr ""
+msgstr "Đang tải xuống nội dung bộ nhớ tạm"
 
 #: src/control/Control.DownloadProgress.js:87
 #: src/control/Control.DownloadProgress.js:112
@@ -1223,340 +1242,341 @@ msgstr "Sao chép"
 #: src/control/Control.DownloadProgress.js:110
 msgid "Download completed and ready to be copied to clipboard."
 msgstr ""
+"Quá trình tải xuống đã hoàn tất và sẵn sàng để sao chép vào khay nhớ tạm."
 
 #: src/control/Control.DownloadProgress.js:111
 msgid ""
 "From now on clipboard notifications will discreetly appear at the bottom."
-msgstr ""
+msgstr "Từ giờ trở đi, thông báo bộ nhớ tạm sẽ xuất hiện kín đáo ở phía dưới."
 
 #: src/control/Control.DownloadProgress.js:272
 msgid "Content copied to clipboard"
-msgstr ""
+msgstr "Nội dung được sao chép vào bộ nhớ tạm"
 
 #: src/control/Control.DownloadProgress.js:302
 msgid "Download failed"
-msgstr ""
+msgstr "Tải xuống không thành công"
 
 #: src/control/Control.ESignature.ts:127
 msgid "Andorra"
-msgstr ""
+msgstr "Andorra"
 
 #: src/control/Control.ESignature.ts:128
 msgid "United Arab Emirates"
-msgstr ""
+msgstr "Các tiểu vương quốc Ả Rập thống nhất"
 
 #: src/control/Control.ESignature.ts:129
 msgid "Albania"
-msgstr ""
+msgstr "Albania"
 
 #: src/control/Control.ESignature.ts:130
 msgid "Armenia"
-msgstr ""
+msgstr "Armenia"
 
 #: src/control/Control.ESignature.ts:131
 msgid "Argentina"
-msgstr ""
+msgstr "Argentina"
 
 #: src/control/Control.ESignature.ts:132
 msgid "Austria"
-msgstr ""
+msgstr "Áo"
 
 #: src/control/Control.ESignature.ts:133
 msgid "Australia"
-msgstr ""
+msgstr "Úc"
 
 #: src/control/Control.ESignature.ts:134
 msgid "Åland Islands"
-msgstr ""
+msgstr "Quần đảo Åland"
 
 #: src/control/Control.ESignature.ts:135
 msgid "Azerbaijan"
-msgstr ""
+msgstr "Azerbaijan"
 
 #: src/control/Control.ESignature.ts:136
 msgid "Bosnia and Herzegovina"
-msgstr ""
+msgstr "Bosnia và Herzegovina"
 
 #: src/control/Control.ESignature.ts:137
 msgid "Belgium"
-msgstr ""
+msgstr "Bỉ"
 
 #: src/control/Control.ESignature.ts:138
 msgid "Bulgaria"
-msgstr ""
+msgstr "Bulgaria"
 
 #: src/control/Control.ESignature.ts:139
 msgid "Brazil"
-msgstr ""
+msgstr "Brazil"
 
 #: src/control/Control.ESignature.ts:140
 msgid "Belarus"
-msgstr ""
+msgstr "Belarus"
 
 #: src/control/Control.ESignature.ts:141
 msgid "Canada"
-msgstr ""
+msgstr "Canada"
 
 #: src/control/Control.ESignature.ts:142
 msgid "Switzerland"
-msgstr ""
+msgstr "Thụy Sĩ"
 
 #: src/control/Control.ESignature.ts:143
 msgid "Chile"
-msgstr ""
+msgstr "Chile"
 
 #: src/control/Control.ESignature.ts:144
 msgid "China"
-msgstr ""
+msgstr "Trung Quốc"
 
 #: src/control/Control.ESignature.ts:145
 msgid "Cyprus"
-msgstr ""
+msgstr "Síp"
 
 #: src/control/Control.ESignature.ts:146
 msgid "Czech Republic"
-msgstr ""
+msgstr "Cộng hòa Séc"
 
 #: src/control/Control.ESignature.ts:147
 msgid "Germany"
-msgstr ""
+msgstr "Đức"
 
 #: src/control/Control.ESignature.ts:148
 msgid "Denmark"
-msgstr ""
+msgstr "Đan Mạch"
 
 #: src/control/Control.ESignature.ts:149
 msgid "Estonia"
-msgstr ""
+msgstr "Estonia"
 
 #: src/control/Control.ESignature.ts:150
 msgid "Spain"
-msgstr ""
+msgstr "Tây Ban Nha"
 
 #: src/control/Control.ESignature.ts:151
 msgid "Finland"
-msgstr ""
+msgstr "Phần Lan"
 
 #: src/control/Control.ESignature.ts:152
 msgid "France"
-msgstr ""
+msgstr "Pháp"
 
 #: src/control/Control.ESignature.ts:153
 msgid "United Kingdom"
-msgstr ""
+msgstr "Vương quốc Anh"
 
 #: src/control/Control.ESignature.ts:154
 msgid "Georgia"
-msgstr ""
+msgstr "Georgia"
 
 #: src/control/Control.ESignature.ts:155
 msgid "Guernsey"
-msgstr ""
+msgstr "Guernsey"
 
 #: src/control/Control.ESignature.ts:156
 msgid "Greece"
-msgstr ""
+msgstr "Hy Lạp"
 
 #: src/control/Control.ESignature.ts:157
 msgid "Croatia"
-msgstr ""
+msgstr "Croatia"
 
 #: src/control/Control.ESignature.ts:158
 msgid "Hungary"
-msgstr ""
+msgstr "Hungary"
 
 #: src/control/Control.ESignature.ts:159
 msgid "Indonesia"
-msgstr ""
+msgstr "Indonesia"
 
 #: src/control/Control.ESignature.ts:160
 msgid "Ireland"
-msgstr ""
+msgstr "Ireland"
 
 #: src/control/Control.ESignature.ts:161
 msgid "Israel"
-msgstr ""
+msgstr "Israel"
 
 #: src/control/Control.ESignature.ts:162
 msgid "India"
-msgstr ""
+msgstr "Ấn Độ"
 
 #: src/control/Control.ESignature.ts:163
 msgid "Iceland"
-msgstr ""
+msgstr "Iceland"
 
 #: src/control/Control.ESignature.ts:164
 msgid "Italy"
-msgstr ""
+msgstr "Ý"
 
 #: src/control/Control.ESignature.ts:165
 msgid "Japan"
-msgstr ""
+msgstr "Nhật Bản"
 
 #: src/control/Control.ESignature.ts:166
 msgid "Kenya"
-msgstr ""
+msgstr "Kenya"
 
 #: src/control/Control.ESignature.ts:167
 msgid "South Korea"
-msgstr ""
+msgstr "Hàn Quốc"
 
 #: src/control/Control.ESignature.ts:168
 msgid "Kazakhstan"
-msgstr ""
+msgstr "Kazakhstan"
 
 #: src/control/Control.ESignature.ts:169
 msgid "Liechtenstein"
-msgstr ""
+msgstr "Liechtenstein"
 
 #: src/control/Control.ESignature.ts:170
 msgid "Lithuania"
-msgstr ""
+msgstr "Litva"
 
 #: src/control/Control.ESignature.ts:171
 msgid "Luxembourg"
-msgstr ""
+msgstr "Luxembourg"
 
 #: src/control/Control.ESignature.ts:172
 msgid "Latvia"
-msgstr ""
+msgstr "Latvia"
 
 #: src/control/Control.ESignature.ts:173
 msgid "Monaco"
-msgstr ""
+msgstr "Monaco"
 
 #: src/control/Control.ESignature.ts:174
 msgid "Moldova, Republic of"
-msgstr ""
+msgstr "Moldova, Cộng hòa"
 
 #: src/control/Control.ESignature.ts:175
 msgid "Montenegro"
-msgstr ""
+msgstr "Montenegro"
 
 #: src/control/Control.ESignature.ts:176
 msgid "North Macedonia, Republic of"
-msgstr ""
+msgstr "Bắc Macedonia, Cộng hòa"
 
 #: src/control/Control.ESignature.ts:177
 msgid "Malta"
-msgstr ""
+msgstr "Malta"
 
 #: src/control/Control.ESignature.ts:178
 msgid "Mexico"
-msgstr ""
+msgstr "Mexico"
 
 #: src/control/Control.ESignature.ts:179
 msgid "Netherlands"
-msgstr ""
+msgstr "Hà Lan"
 
 #: src/control/Control.ESignature.ts:180
 msgid "Norway"
-msgstr ""
+msgstr "Na Uy"
 
 #: src/control/Control.ESignature.ts:181
 msgid "New Zealand"
-msgstr ""
+msgstr "New Zealand"
 
 #: src/control/Control.ESignature.ts:182
 msgid "Philippines"
-msgstr ""
+msgstr "Philippines"
 
 #: src/control/Control.ESignature.ts:183
 msgid "Poland"
-msgstr ""
+msgstr "Ba Lan"
 
 #: src/control/Control.ESignature.ts:184
 msgid "Portugal"
-msgstr ""
+msgstr "Bồ Đào Nha"
 
 #: src/control/Control.ESignature.ts:185
 msgid "Qatar"
-msgstr ""
+msgstr "Qatar"
 
 #: src/control/Control.ESignature.ts:186
 msgid "Romania"
-msgstr ""
+msgstr "Romania"
 
 #: src/control/Control.ESignature.ts:187
 msgid "Serbia"
-msgstr ""
+msgstr "Serbia"
 
 #: src/control/Control.ESignature.ts:188
 msgid "Russian Federation"
-msgstr ""
+msgstr "Liên bang Nga"
 
 #: src/control/Control.ESignature.ts:189
 msgid "Saudi Arabia"
-msgstr ""
+msgstr "Ả Rập Saudi"
 
 #: src/control/Control.ESignature.ts:190
 msgid "Sweden"
-msgstr ""
+msgstr "Thụy Điển"
 
 #: src/control/Control.ESignature.ts:191
 msgid "Singapore"
-msgstr ""
+msgstr "Singapore"
 
 #: src/control/Control.ESignature.ts:192
 msgid "Slovenia"
-msgstr ""
+msgstr "Slovenia"
 
 #: src/control/Control.ESignature.ts:193
 msgid "Slovakia"
-msgstr ""
+msgstr "Slovakia"
 
 #: src/control/Control.ESignature.ts:194
 msgid "San Marino"
-msgstr ""
+msgstr "San Marino"
 
 #: src/control/Control.ESignature.ts:195
 msgid "Turkey"
-msgstr ""
+msgstr "Thổ Nhĩ Kỳ"
 
 #: src/control/Control.ESignature.ts:196
 msgid "Taiwan, Province of China"
-msgstr ""
+msgstr "Đài Loan, tỉnh Trung Quốc"
 
 #: src/control/Control.ESignature.ts:197
 msgid "Ukraine"
-msgstr ""
+msgstr "Ukraine"
 
 #: src/control/Control.ESignature.ts:198
 msgid "United States of America"
-msgstr ""
+msgstr "Hoa Kỳ"
 
 #: src/control/Control.ESignature.ts:199
 msgid "Holy See (Vatican City State)"
-msgstr ""
+msgstr "Tòa thánh (Thành phố Vatican)"
 
 #: src/control/Control.ESignature.ts:200
 msgid "Kosovo"
-msgstr ""
+msgstr "Kosovo"
 
 #: src/control/Control.ESignature.ts:201
 msgid "South Africa"
-msgstr ""
+msgstr "Nam Phi"
 
 #: src/control/Control.ESignature.ts:335
 msgid "The document is being signed and will be availably shortly"
-msgstr ""
+msgstr "Tài liệu đang được ký và sẽ sớm có sẵn"
 
 #: src/control/Control.ESignatureDialog.ts:91
 msgid "Country:"
-msgstr ""
+msgstr "Quốc gia:"
 
 #: src/control/Control.ESignatureDialog.ts:120
 msgid "Provider:"
-msgstr ""
+msgstr "Nhà cung cấp:"
 
 #: src/control/Control.ESignatureDialog.ts:175
 #: src/control/Control.ESignatureDialog.ts:176
 msgid "Insert Electronic Signature"
-msgstr ""
+msgstr "Chèn chữ ký điện tử"
 
 #: src/control/Control.FormulaBarJSDialog.js:18
 msgid "Expand Formula Bar"
-msgstr ""
+msgstr "Mở rộng Thanh công thức"
 
 #: src/control/Control.FormulaBarJSDialog.js:19
 msgid "Function Wizard"
@@ -1564,7 +1584,7 @@ msgstr "Chèn hàm"
 
 #: src/control/Control.FormulaBarJSDialog.js:75
 msgid "Select Function"
-msgstr ""
+msgstr "Chọn chức năng"
 
 #: src/control/Control.FormulaBarJSDialog.js:81
 #: src/control/Control.NotebookbarWriter.js:114
@@ -1579,7 +1599,7 @@ msgstr "Chấp nhận"
 
 #: src/control/Control.FormulaBarJSDialog.js:171
 msgid "Collapse Formula Bar"
-msgstr ""
+msgstr "Thu gọn thanh công thức"
 
 #: src/control/Control.IdleHandler.ts:43
 msgid "Idle document - please click to reload and resume editing"
@@ -1593,7 +1613,7 @@ msgstr ""
 
 #: src/control/Control.JSDialog.js:343
 msgid "Close dialog"
-msgstr ""
+msgstr "Đóng hộp thoại"
 
 #: src/control/Control.JSDialogBuilder.js:527
 msgid "Solid"
@@ -1676,7 +1696,7 @@ msgstr "Chèn bình luận"
 
 #: src/control/Control.JSDialogBuilder.js:1973
 msgid "Open {name}"
-msgstr ""
+msgstr "Mở {name}"
 
 #: src/control/Control.JSDialogBuilder.js:2209
 #: src/control/Control.Menubar.ts:937
@@ -1709,7 +1729,7 @@ msgstr "Ngôn ngữ"
 
 #: src/control/Control.Mention.ts:181
 msgid "No search results found!"
-msgstr ""
+msgstr "Không tìm thấy kết quả tìm kiếm nào!"
 
 #: src/control/Control.Menubar.ts:97 src/control/Control.Menubar.ts:112
 #: src/control/Control.Menubar.ts:1064
@@ -1737,7 +1757,7 @@ msgstr "Tài liệu văn bản Word (.docx)"
 #: src/control/Control.NotebookbarBuilder.js:351
 #: src/control/Control.NotebookbarBuilder.js:564
 msgid "Rich Text (.rtf)"
-msgstr "Tài liệu văn bản RTF (.rtf)"
+msgstr "Rich Text (.rtf)"
 
 #: src/control/Control.Menubar.ts:102 src/control/Control.Menubar.ts:109
 #: src/control/Control.Menubar.ts:435 src/control/Control.Menubar.ts:441
@@ -1813,7 +1833,7 @@ msgstr "Tài liệu PDF (.pdf) dưới dạng…"
 
 #: src/control/Control.Menubar.ts:117 src/control/Control.Menubar.ts:769
 msgid "HTML file (.html)"
-msgstr ""
+msgstr "Tệp HTML (.html)"
 
 #: src/control/Control.Menubar.ts:120 src/control/Control.Menubar.ts:457
 #: src/control/Control.Menubar.ts:628 src/control/Control.Menubar.ts:772
@@ -1823,7 +1843,7 @@ msgstr ""
 #: src/control/Control.NotebookbarWriter.js:412
 #: src/map/handler/Map.Settings.ts:73
 msgid "Options"
-msgstr ""
+msgstr "Tùy chọn"
 
 #: src/control/Control.Menubar.ts:123 src/control/Control.Menubar.ts:463
 #: src/control/Control.Menubar.ts:630 src/control/Control.Menubar.ts:778
@@ -1844,7 +1864,7 @@ msgstr "Sửa"
 
 #: src/control/Control.Menubar.ts:140
 msgid "Compare Changes"
-msgstr ""
+msgstr "So sánh các thay đổi"
 
 #: src/control/Control.Menubar.ts:159 src/control/Control.Menubar.ts:480
 #: src/control/Control.Menubar.ts:486 src/control/Control.Menubar.ts:647
@@ -1859,7 +1879,7 @@ msgstr "Đặt lại thu phóng"
 
 #: src/control/Control.Menubar.ts:165
 msgid "Fit to Screen"
-msgstr ""
+msgstr "Vừa với màn hình"
 
 #: src/control/Control.Menubar.ts:168 src/control/Control.Menubar.ts:492
 #: src/control/Control.Menubar.ts:659 src/control/Control.Menubar.ts:804
@@ -1885,13 +1905,13 @@ msgstr "Ẩn thanh menu"
 #: src/control/Control.NotebookbarImpress.js:696
 #: src/control/Control.NotebookbarWriter.js:1758
 msgid "Invert Background"
-msgstr ""
+msgstr "Đảo ngược nền"
 
 #: src/control/Control.Menubar.ts:175 src/control/Control.Menubar.ts:811
 #: src/control/Control.NotebookbarCalc.js:2817
 #: src/control/Control.NotebookbarWriter.js:1076
 msgid "Style list"
-msgstr ""
+msgstr "Danh sách kiểu dáng"
 
 #: src/control/Control.Menubar.ts:183 src/control/Control.Menubar.ts:510
 #: src/control/Control.Menubar.ts:668 src/control/Control.Menubar.ts:822
@@ -1917,7 +1937,7 @@ msgstr "Bộ chọn thông minh"
 #: src/control/Control.Menubar.ts:220 src/control/Control.Menubar.ts:522
 #: src/control/Control.Menubar.ts:676 src/control/Control.Menubar.ts:836
 msgid "AI Assistant"
-msgstr ""
+msgstr "Trợ lý AI"
 
 #: src/control/Control.Menubar.ts:261
 msgid "Text orientation"
@@ -1996,7 +2016,7 @@ msgstr "Thuộc tính"
 #: src/control/Control.Menubar.ts:402 src/control/Control.Menubar.ts:1099
 #: src/control/Control.NotebookbarWriter.js:473
 msgid "Screen Reading"
-msgstr ""
+msgstr "Đọc màn hình"
 
 #: src/control/Control.Menubar.ts:415
 #: src/control/Control.NotebookbarWriter.js:437
@@ -2043,7 +2063,7 @@ msgstr "Gửi phản hồi"
 #: src/control/Control.ServerAuditDialog.ts:299
 #: src/control/Control.ServerAuditDialog.ts:300
 msgid "Server audit"
-msgstr ""
+msgstr "Kiểm tra máy chủ"
 
 #: src/control/Control.Menubar.ts:424 src/control/Control.Menubar.ts:607
 #: src/control/Control.Menubar.ts:746 src/control/Control.Menubar.ts:1044
@@ -2073,57 +2093,57 @@ msgstr "Bản trình bày Power Point (.pptx)"
 
 #: src/control/Control.Menubar.ts:438 src/control/Control.Menubar.ts:617
 msgid "Save Comments"
-msgstr "Lưu chú thích"
+msgstr "Lưu bình luận"
 
 #: src/control/Control.Menubar.ts:447
 #: src/control/Control.NotebookbarBuilder.js:436
 msgid "HTML Document (.html)"
-msgstr ""
+msgstr "Tài liệu HTML (.html)"
 
 #: src/control/Control.Menubar.ts:448
 #: src/control/Control.NotebookbarBuilder.js:467
 msgid "Shockwave Flash (.swf)"
-msgstr ""
+msgstr "Shockwave Flash (.swf)"
 
 #: src/control/Control.Menubar.ts:449
 #: src/control/Control.NotebookbarBuilder.js:479
 msgid "Scalable Vector Graphics (.svg)"
-msgstr ""
+msgstr "Scalable Vector Graphics (.svg)"
 
 #: src/control/Control.Menubar.ts:450
 #: src/control/Control.NotebookbarBuilder.js:491
 msgid "Current slide as Bitmap (.bmp)"
-msgstr ""
+msgstr "Trang trình chiếu hiện tại dưới dạng Bitmap (.bmp)"
 
 #: src/control/Control.Menubar.ts:451
 #: src/control/Control.NotebookbarBuilder.js:503
 msgid "Current slide as Graphics Interchange Format (.gif)"
-msgstr ""
+msgstr "Trang trình chiếu hiện tại ở Graphics Interchange Format (.gif)"
 
 #: src/control/Control.Menubar.ts:452
 #: src/control/Control.NotebookbarBuilder.js:515
 msgid "Current slide as Portable Network Graphics (.png)"
-msgstr ""
+msgstr "Trang trình chiếu hiện tại dưới dạng Portable Network Graphics (.png)"
 
 #: src/control/Control.Menubar.ts:453
 #: src/control/Control.NotebookbarBuilder.js:527
 msgid "Current slide as Tag Image File Format (.tiff)"
-msgstr ""
+msgstr "Trang trình chiếu hiện tại dưới dạng Tag Image File Format (.tiff)"
 
 #: src/control/Control.Menubar.ts:460
 #: src/control/Control.NotebookbarBuilder.js:665
 msgid "Full Page Slides"
-msgstr ""
+msgstr "Trang trình chiếu toàn trang"
 
 #: src/control/Control.Menubar.ts:461
 #: src/control/Control.NotebookbarBuilder.js:669
 msgid "Notes Pages"
-msgstr ""
+msgstr "Trang ghi chú"
 
 #: src/control/Control.Menubar.ts:495
 #: src/control/Control.NotebookbarImpress.js:644
 msgid "Notes View"
-msgstr ""
+msgstr "Xem ghi chú"
 
 #: src/control/Control.Menubar.ts:499
 #: src/control/Control.NotebookbarImpress.js:650
@@ -2132,7 +2152,7 @@ msgstr "Chế độ xem chính"
 
 #: src/control/Control.Menubar.ts:512
 msgid "Local Multimedia..."
-msgstr ""
+msgstr "Đa phương tiện cục bộ..."
 
 #: src/control/Control.Menubar.ts:581 src/control/Control.Menubar.ts:1172
 #: src/control/Control.PresentationBar.js:128
@@ -2141,15 +2161,15 @@ msgstr "Trình chiếu toàn màn hình"
 
 #: src/control/Control.Menubar.ts:582
 msgid "Present current slide"
-msgstr "Trình chiếu trang hiện tại"
+msgstr "Trang trình chiếu hiện tại"
 
 #: src/control/Control.Menubar.ts:583
 msgid "Present in new window"
-msgstr ""
+msgstr "Hiện trong cửa sổ mới"
 
 #: src/control/Control.Menubar.ts:585 src/slideshow/PresenterConsole.js:249
 msgid "Presenter Console"
-msgstr ""
+msgstr "Bảng điều khiển dành cho người thuyết trình"
 
 #: src/control/Control.Menubar.ts:624 src/control/Control.Menubar.ts:1132
 #: src/control/Control.Menubar.ts:1193
@@ -2191,83 +2211,83 @@ msgstr "Trang tính đang hoạt động"
 #: src/control/Control.Menubar.ts:814
 #: src/control/Control.NotebookbarCalc.js:1513
 msgid "Focus Cell"
-msgstr ""
+msgstr "Ô tiêu điểm"
 
 #: src/control/Control.Menubar.ts:909
 #: src/control/jsdialog/Definitions.Menu.ts:1828
 msgid "Highlight cells with..."
-msgstr ""
+msgstr "Đánh dấu các ô bằng..."
 
 #: src/control/Control.Menubar.ts:910
 #: src/control/jsdialog/Definitions.Menu.ts:1831
 msgid "Values greater than..."
-msgstr ""
+msgstr "Giá trị lớn hơn..."
 
 #: src/control/Control.Menubar.ts:911
 #: src/control/jsdialog/Definitions.Menu.ts:1835
 msgid "Values less than..."
-msgstr ""
+msgstr "Giá trị nhỏ hơn..."
 
 #: src/control/Control.Menubar.ts:912
 #: src/control/jsdialog/Definitions.Menu.ts:1839
 msgid "Values equal to..."
-msgstr ""
+msgstr "Các giá trị bằng..."
 
 #: src/control/Control.Menubar.ts:913
 #: src/control/jsdialog/Definitions.Menu.ts:1843
 msgid "Values between..."
-msgstr ""
+msgstr "Giá trị giữa..."
 
 #: src/control/Control.Menubar.ts:914
 #: src/control/jsdialog/Definitions.Menu.ts:1847
 msgid "Values duplicate..."
-msgstr ""
+msgstr "Các giá trị trùng lặp..."
 
 #: src/control/Control.Menubar.ts:915
 #: src/control/jsdialog/Definitions.Menu.ts:1851
 msgid "Containing text..."
-msgstr ""
+msgstr "Chứa văn bản..."
 
 #: src/control/Control.Menubar.ts:917 src/control/Control.Menubar.ts:927
 #: src/control/jsdialog/Definitions.Menu.ts:1855
 #: src/control/jsdialog/Definitions.Menu.ts:1886
 msgid "More highlights..."
-msgstr ""
+msgstr "Điểm nổi bật khác..."
 
 #: src/control/Control.Menubar.ts:919
 #: src/control/jsdialog/Definitions.Menu.ts:1859
 msgid "Top/Bottom Rules..."
-msgstr ""
+msgstr "Quy tắc trên/dưới..."
 
 #: src/control/Control.Menubar.ts:920
 #: src/control/jsdialog/Definitions.Menu.ts:1862
 msgid "Top N elements..."
-msgstr ""
+msgstr "N phần tử hàng đầu..."
 
 #: src/control/Control.Menubar.ts:921
 #: src/control/jsdialog/Definitions.Menu.ts:1866
 msgid "Top N percent..."
-msgstr ""
+msgstr "N phần trăm hàng đầu..."
 
 #: src/control/Control.Menubar.ts:922
 #: src/control/jsdialog/Definitions.Menu.ts:1870
 msgid "Bottom N elements..."
-msgstr ""
+msgstr "Phần tử N phía dưới..."
 
 #: src/control/Control.Menubar.ts:923
 #: src/control/jsdialog/Definitions.Menu.ts:1874
 msgid "Bottom N percent..."
-msgstr ""
+msgstr "N phần trăm dưới cùng..."
 
 #: src/control/Control.Menubar.ts:924
 #: src/control/jsdialog/Definitions.Menu.ts:1878
 msgid "Above Average..."
-msgstr ""
+msgstr "Trên mức trung bình..."
 
 #: src/control/Control.Menubar.ts:925
 #: src/control/jsdialog/Definitions.Menu.ts:1882
 msgid "Below Average..."
-msgstr ""
+msgstr "Dưới mức trung bình..."
 
 #: src/control/Control.Menubar.ts:1048 src/control/Control.Menubar.ts:1114
 #: src/control/Control.Menubar.ts:1179 src/control/Control.Menubar.ts:1234
@@ -2315,7 +2335,7 @@ msgstr "Sử dụng chế độ xem Thu gọn"
 
 #: src/control/Control.Menubar.ts:1983
 msgid "Use Tabbed view"
-msgstr "Sử dụng chế độ xem theo thẻ"
+msgstr "Sử dụng Chế độ xem theo thẻ"
 
 #: src/control/Control.Menubar.ts:2169
 msgid "Insert Shape"
@@ -2324,10 +2344,11 @@ msgstr "Chèn hình dạng"
 #: src/control/Control.Menubar.ts:2253
 msgid "The signature line can now be moved or resized as needed."
 msgstr ""
+"Dòng chữ ký hiện có thể được di chuyển hoặc thay đổi kích thước nếu cần."
 
 #: src/control/Control.Menubar.ts:2255
 msgid "Finish electronic signing"
-msgstr ""
+msgstr "Hoàn tất ký điện tử"
 
 #: src/control/Control.Menubar.ts:2436
 msgid "file type icon"
@@ -2366,110 +2387,109 @@ msgstr "Kết thúc chuyển màu"
 
 #: src/control/Control.NavigatorPanel.ts:38
 msgid "Navigation Panel"
-msgstr ""
+msgstr "Thanh điều hướng"
 
 #: src/control/Control.NavigatorPanel.ts:110
 msgid "Navigation"
-msgstr ""
+msgstr "Điều hướng"
 
 #: src/control/Control.NavigatorPanel.ts:131
 msgid "Close Navigation"
-msgstr ""
+msgstr "Đóng Điều hướng"
 
 #: src/control/Control.NavigatorPanel.ts:187
 #: src/control/Control.NotebookbarImpress.js:1408
 #: src/slideshow/PresenterConsole.js:34
 msgid "Slides"
-msgstr ""
+msgstr "Trang trình chiếu"
 
 #: src/control/Control.NavigatorPanel.ts:225
 msgid "Results"
-msgstr ""
+msgstr "Kết quả"
 
 #: src/control/Control.NavigatorPanel.ts:473
 #: src/control/jsdialog/Widget.TreeView.ts:1639
 msgid "Search..."
-msgstr ""
+msgstr "Tìm kiếm..."
 
 #: src/control/Control.QuickFindPanel.ts:122
 msgid "Type in the search box to find anything in your document"
-msgstr ""
+msgstr "Nhập vào hộp tìm kiếm để tìm bất kỳ nội dung nào trong tài liệu của bạn"
 
 #: src/control/Notebookbar.ImpressAnimationTab.ts:24
 msgid "Animation"
-msgstr ""
+msgstr "Ảnh động"
 
 #: src/control/Notebookbar.ImpressAnimationTab.ts:41
 msgid "Applied animations"
-msgstr ""
+msgstr "Ảnh động được áp dụng"
 
 #: src/control/Notebookbar.ImpressAnimationTab.ts:59
 msgid "Move Up"
-msgstr ""
+msgstr "Tiến lên"
 
 #: src/control/Notebookbar.ImpressAnimationTab.ts:75
 msgid "Move Down"
-msgstr ""
+msgstr "Di chuyển xuống"
 
 #: src/control/Notebookbar.ImpressAnimationTab.ts:105
 msgid "Category"
-msgstr ""
+msgstr "Danh mục"
 
 #: src/control/Notebookbar.ImpressAnimationTab.ts:120
 msgid "Start"
-msgstr ""
+msgstr "Bắt đầu"
 
 #: src/control/Notebookbar.ImpressAnimationTab.ts:140
 msgid "Effect"
-msgstr ""
+msgstr "Hiệu ứng"
 
 #: src/control/Notebookbar.ImpressTransitionTab.ts:24
 msgid "Transition"
-msgstr ""
+msgstr "Chuyển đổi"
 
 #: src/control/Notebookbar.ImpressTransitionTab.ts:41
 #: src/control/Sidebar.FromNotebookbarPanel.ts:108
 msgid "Transitions"
-msgstr ""
+msgstr "Chuyển tiếp"
 
 #: src/control/Notebookbar.ImpressTransitionTab.ts:66
 msgid "Variant"
-msgstr ""
+msgstr "Biến thể"
 
 #: src/control/Notebookbar.ImpressTransitionTab.ts:81
 msgid "Duration"
-msgstr ""
+msgstr "Thời lượng"
 
 #: src/control/Notebookbar.ImpressTransitionTab.ts:108
 msgid "On mouse click"
-msgstr ""
+msgstr "Khi nhấp chuột"
 
 #: src/control/Notebookbar.ImpressTransitionTab.ts:116
 msgid "After"
-msgstr ""
+msgstr "Sau"
 
 #: src/control/Notebookbar.ImpressTransitionTab.ts:137
 msgid "Apply to All Slides"
-msgstr ""
+msgstr "Áp dụng cho tất cả các trang trình chiếu"
 
 #: src/control/Notebookbar.WriterReferencesTab.ts:41
 msgid "Table of content"
-msgstr ""
+msgstr "Mục lục"
 
 #: src/control/Notebookbar.WriterReferencesTab.ts:95
 msgid "Footnote/Endnote"
-msgstr ""
+msgstr "Chú thích cuối trang/Chú thích cuối trang"
 
 #: src/control/Notebookbar.WriterReferencesTab.ts:312
 #: src/control/Control.NotebookbarDraw.js:1578
 #: src/control/Control.NotebookbarImpress.js:1635
-#, fuzzy
 msgid "Field"
 msgstr "Trường"
 
 #: src/control/Sidebar.FromNotebookbarPanel.ts:121
 msgid "Animations"
-msgstr ""
+msgstr "Ảnh động"
 
 #: src/control/Control.Notebookbar.js:645
 #: src/control/Control.NotebookbarCalc.js:202
@@ -2486,7 +2506,7 @@ msgstr "Chia sẻ"
 
 #: src/control/Control.NotebookbarBuilder.js:225
 msgid "Click to expand"
-msgstr ""
+msgstr "Nhấp để mở rộng"
 
 #: src/control/Control.NotebookbarBuilder.js:225
 msgid "Tap to expand"
@@ -2494,7 +2514,7 @@ msgstr "Nhấn để mở rộng"
 
 #: src/control/Control.NotebookbarBuilder.js:226
 msgid "Click to collapse"
-msgstr ""
+msgstr "Nhấp để thu gọn"
 
 #: src/control/Control.NotebookbarBuilder.js:226
 #: src/control/Control.NotebookbarBuilder.js:281
@@ -2504,11 +2524,11 @@ msgstr "Nhấn để thu gọn"
 #: src/control/Control.NotebookbarBuilder.js:373
 #: src/control/Control.NotebookbarBuilder.js:402
 msgid "HTML File (.html)"
-msgstr ""
+msgstr "Tệp HTML (.html)"
 
 #: src/control/Control.NotebookbarBuilder.js:398
 msgid "CSV File (.csv)"
-msgstr "Tài liệu CSV (.csv)"
+msgstr "Tệp CSV (.csv)"
 
 #: src/control/Control.NotebookbarBuilder.js:541
 msgid "Image (.png)"
@@ -2542,12 +2562,10 @@ msgstr "Chèn"
 
 #: src/control/Control.NotebookbarCalc.js:42
 #: src/control/Control.NotebookbarDraw.js:1284
-#, fuzzy
 msgid "Page Layout"
 msgstr "Bố cục trang"
 
 #: src/control/Control.NotebookbarCalc.js:48
-#, fuzzy
 msgid "Formulas"
 msgstr "Công thức"
 
@@ -2573,7 +2591,6 @@ msgstr "Định dạng"
 #: src/control/Control.NotebookbarDraw.js:101
 #: src/control/Control.NotebookbarImpress.js:129
 #: src/control/Control.NotebookbarWriter.js:88
-#, fuzzy
 msgid "Shape"
 msgstr "Hình dạng"
 
@@ -2600,7 +2617,7 @@ msgstr "Biểu đồ thu nhỏ"
 
 #: src/control/Control.NotebookbarCalc.js:99
 msgid "Table Design"
-msgstr ""
+msgstr "Thiết kế bảng"
 
 #: src/control/Control.NotebookbarCalc.js:106
 #: src/control/Control.NotebookbarDraw.js:121
@@ -2640,7 +2657,7 @@ msgstr "Xem lịch sử"
 #: src/control/Control.NotebookbarImpress.js:404
 #: src/control/Control.NotebookbarWriter.js:363
 msgid "Signature"
-msgstr ""
+msgstr "Chữ ký"
 
 #: src/control/Control.NotebookbarCalc.js:363
 #: src/control/Control.NotebookbarDraw.js:387
@@ -2655,22 +2672,22 @@ msgstr "Đổi tên"
 #: src/control/Control.NotebookbarImpress.js:739
 #: src/control/Control.NotebookbarWriter.js:606
 msgid "Clipboard"
-msgstr ""
+msgstr "Bộ nhớ tạm"
 
 #: src/control/Control.NotebookbarCalc.js:478
 #: src/control/Control.NotebookbarDraw.js:673
 #: src/control/Control.NotebookbarWriter.js:665 src/control/Toolbar.js:56
 msgid "Font"
-msgstr "Font"
+msgstr "Phông chữ"
 
 #: src/control/Control.NotebookbarCalc.js:623
 #: src/control/Control.NotebookbarDraw.js:814
 msgid "Alignment"
-msgstr ""
+msgstr "Căn chỉnh"
 
 #: src/control/Control.NotebookbarCalc.js:750
 msgid "Merge & Center"
-msgstr ""
+msgstr "Hợp nhất & Trung tâm"
 
 #: src/control/Control.NotebookbarCalc.js:760
 #: src/control/Control.NotebookbarCalc.js:776
@@ -2712,7 +2729,7 @@ msgstr "Bản văn"
 
 #: src/control/Control.NotebookbarCalc.js:862
 msgid "Cells"
-msgstr ""
+msgstr "Tế bào"
 
 #: src/control/Control.NotebookbarCalc.js:964
 #: src/control/jsdialog/Definitions.Menu.ts:2314
@@ -2742,24 +2759,24 @@ msgstr "Tệ"
 #: src/control/Control.NotebookbarCalc.js:1020
 #: src/control/PermissionMode.ts:173
 msgid "Editing"
-msgstr ""
+msgstr "Chỉnh sửa"
 
 #: src/control/Control.NotebookbarCalc.js:1044
 #: src/control/Control.NotebookbarDraw.js:1197
 #: src/control/Control.NotebookbarImpress.js:1288
 #: src/control/Control.NotebookbarWriter.js:1028
 msgid "Replace"
-msgstr ""
+msgstr "Thay thế"
 
 #: src/control/Control.NotebookbarCalc.js:1108
 #: src/control/Control.NotebookbarWriter.js:1796
 msgid "Margin"
-msgstr ""
+msgstr "Lề"
 
 #: src/control/Control.NotebookbarCalc.js:1115
 #: src/control/Control.NotebookbarWriter.js:1803
 msgid "Size"
-msgstr ""
+msgstr "Kích thước"
 
 #: src/control/Control.NotebookbarCalc.js:1176
 msgid "Row Height"
@@ -2804,7 +2821,7 @@ msgstr "Xóa cột"
 #: src/control/Control.NotebookbarWriter.js:2907
 #: src/control/Control.NotebookbarWriter.js:3230
 msgid "Align"
-msgstr ""
+msgstr "Căn chỉnh"
 
 #: src/control/Control.NotebookbarCalc.js:1337
 #: src/control/Control.NotebookbarCalc.js:3107
@@ -2817,42 +2834,42 @@ msgstr ""
 #: src/control/Control.NotebookbarWriter.js:2966
 #: src/control/Control.NotebookbarWriter.js:3289
 msgid "Arrange"
-msgstr ""
+msgstr "Sắp xếp"
 
 #: src/control/Control.NotebookbarCalc.js:1400
 msgid "Sheet View"
-msgstr ""
+msgstr "Xem trang tính"
 
 #: src/control/Control.NotebookbarCalc.js:1414
 msgid "Default View"
-msgstr ""
+msgstr "Chế độ xem mặc định"
 
 #: src/control/Control.NotebookbarCalc.js:1431
 msgid "Open Views List"
-msgstr ""
+msgstr "Mở danh sách xem"
 
 #: src/control/Control.NotebookbarCalc.js:1438
 msgid "New Sheet View"
-msgstr ""
+msgstr "Chế độ xem trang tính mới"
 
 #: src/control/Control.NotebookbarCalc.js:1445
 msgid "Remove Sheet View"
-msgstr ""
+msgstr "Xóa dạng xem trang tính"
 
 #: src/control/Control.NotebookbarCalc.js:1452
 msgid "Exit Sheet View"
-msgstr ""
+msgstr "Thoát khỏi chế độ xem trang tính"
 
 #: src/control/Control.NotebookbarCalc.js:1467
 msgid "Freeze"
-msgstr ""
+msgstr "Đóng băng"
 
 #: src/control/Control.NotebookbarCalc.js:1521
 #: src/control/Control.NotebookbarDraw.js:420
 #: src/control/Control.NotebookbarImpress.js:537
 #: src/control/Control.NotebookbarWriter.js:1650
 msgid "Zoom"
-msgstr ""
+msgstr "Phóng"
 
 #: src/control/Control.NotebookbarCalc.js:1528
 #: src/control/Control.NotebookbarDraw.js:427
@@ -2877,35 +2894,35 @@ msgstr "Thanh trạng thái"
 
 #: src/control/Control.NotebookbarCalc.js:1665
 msgid "Table Style Options"
-msgstr ""
+msgstr "Tùy chọn kiểu bảng"
 
 #: src/control/Control.NotebookbarCalc.js:1678
 msgid "Header Row"
-msgstr ""
+msgstr "Hàng tiêu đề"
 
 #: src/control/Control.NotebookbarCalc.js:1690
 msgid "Total Row"
-msgstr ""
+msgstr "Tổng số hàng"
 
 #: src/control/Control.NotebookbarCalc.js:1708
 msgid "Banded Rows"
-msgstr ""
+msgstr "Hàng có dải băng"
 
 #: src/control/Control.NotebookbarCalc.js:1720
 msgid "Banded Columns"
-msgstr ""
+msgstr "Cột có dải băng"
 
 #: src/control/Control.NotebookbarCalc.js:1738
 msgid "First Column"
-msgstr ""
+msgstr "Cột đầu tiên"
 
 #: src/control/Control.NotebookbarCalc.js:1750
 msgid "Last Column"
-msgstr ""
+msgstr "Cột cuối cùng"
 
 #: src/control/Control.NotebookbarCalc.js:1765
 msgid "Filter Buttons"
-msgstr ""
+msgstr "Nút lọc"
 
 #: src/control/Control.NotebookbarCalc.js:1801
 #: src/control/Control.NotebookbarCalc.js:2549
@@ -2916,15 +2933,15 @@ msgstr ""
 #: src/control/Control.NotebookbarWriter.js:3015
 #: src/control/Control.NotebookbarWriter.js:3338
 msgid "Group"
-msgstr ""
+msgstr "Nhóm"
 
 #: src/control/Control.NotebookbarCalc.js:1808
 msgid "Ungroup"
-msgstr ""
+msgstr "Bỏ nhóm"
 
 #: src/control/Control.NotebookbarCalc.js:1830
 msgid "Pivot Table"
-msgstr ""
+msgstr "Bảng tổng hợp"
 
 #: src/control/Control.NotebookbarCalc.js:1879
 #: src/control/Control.NotebookbarDraw.js:94
@@ -2943,7 +2960,7 @@ msgstr "Bảng"
 #: src/control/Control.NotebookbarImpress.js:1455
 #: src/control/Control.NotebookbarWriter.js:1240
 msgid "Illustrations"
-msgstr ""
+msgstr "Hình minh họa"
 
 #: src/control/Control.NotebookbarCalc.js:1958
 #: src/control/Control.NotebookbarDraw.js:1029
@@ -2959,67 +2976,65 @@ msgstr "Hình dạng"
 #: src/control/Control.NotebookbarImpress.js:1620
 #: src/control/Control.NotebookbarWriter.js:1353
 msgid "Assistant"
-msgstr ""
+msgstr "Trợ lý"
 
 #: src/control/Control.NotebookbarCalc.js:2174
 msgid "Insert Function"
-msgstr ""
+msgstr "Chức năng chèn"
 
 #: src/control/Control.NotebookbarCalc.js:2182
-#, fuzzy
 msgid "Function Library"
-msgstr "Chèn hàm"
+msgstr "Thư viện hàm"
 
 #: src/control/Control.NotebookbarCalc.js:2196
 msgid "AutoSum"
-msgstr ""
+msgstr "Tự tính tổng"
 
 #: src/control/Control.NotebookbarCalc.js:2209
 msgid "Financial"
-msgstr ""
+msgstr "Tài chính"
 
 #: src/control/Control.NotebookbarCalc.js:2227
 msgid "Logical"
-msgstr ""
+msgstr "Hợp lý"
 
 #: src/control/Control.NotebookbarCalc.js:2257
 msgid "Date & Time"
-msgstr ""
+msgstr "Ngày & Giờ"
 
 #: src/control/Control.NotebookbarCalc.js:2269
 msgid "Lookup & Reference"
-msgstr ""
+msgstr "Tra cứu & Tham khảo"
 
 #: src/control/Control.NotebookbarCalc.js:2287
 msgid "Math & Trig"
-msgstr ""
+msgstr "Toán & Lượng giác"
 
 #: src/control/Control.NotebookbarCalc.js:2299
 msgid "More Functions"
-msgstr ""
+msgstr "Chức năng khác"
 
 #: src/control/Control.NotebookbarCalc.js:2344
 msgid "Range"
-msgstr ""
+msgstr "Phạm vi"
 
 #: src/control/Control.NotebookbarCalc.js:2427
 msgid "Sort"
-msgstr ""
+msgstr "Sắp xếp"
 
 #: src/control/Control.NotebookbarCalc.js:2473
 msgid "Filter"
-msgstr ""
+msgstr "Bộ lọc"
 
 #: src/control/Control.NotebookbarCalc.js:2721
 #: src/control/Control.NotebookbarImpress.js:1980
 #: src/control/Control.NotebookbarWriter.js:2226
-#, fuzzy
 msgid "Comments"
-msgstr "Chú thích"
+msgstr "Bình luận"
 
 #: src/control/Control.NotebookbarCalc.js:2827
 msgid "Format Cells"
-msgstr ""
+msgstr "Định dạng ô"
 
 #: src/control/Control.NotebookbarCalc.js:2973
 #: src/control/Control.NotebookbarCalc.js:3330
@@ -3027,13 +3042,13 @@ msgstr ""
 #: src/control/Control.NotebookbarWriter.js:2852
 #: src/control/Control.NotebookbarWriter.js:3175
 msgid "Wrap"
-msgstr ""
+msgstr "Gói"
 
 #: src/control/Control.NotebookbarCalc.js:3212
 #: src/control/Control.NotebookbarImpress.js:2699
 #: src/control/Control.NotebookbarWriter.js:3061
 msgid "Image Controls"
-msgstr ""
+msgstr "Điều khiển hình ảnh"
 
 #: src/control/Control.NotebookbarDraw.js:76
 #: src/control/Control.NotebookbarWriter.js:56
@@ -3056,110 +3071,109 @@ msgstr "Thước kẻ"
 #: src/control/Control.NotebookbarWriter.js:810
 #: src/control/Control.NotebookbarWriter.js:2618
 msgid "Paragraph"
-msgstr ""
+msgstr "Đoạn"
 
 #: src/control/Control.NotebookbarImpress.js:96
 msgid "Design"
-msgstr ""
+msgstr "Thiết kế"
 
 #: src/control/Control.NotebookbarImpress.js:104
 msgid "Slide Show"
-msgstr ""
+msgstr "Hiện trang trình chiếu"
 
 #: src/control/Control.NotebookbarImpress.js:143
 msgid "Master"
-msgstr "Cái"
+msgstr "Chính"
 
 #: src/control/Control.NotebookbarImpress.js:469
 msgid "From Beginning"
-msgstr ""
+msgstr "Từ đầu"
 
 #: src/control/Control.NotebookbarImpress.js:476
 msgid "From Current Slide"
-msgstr ""
+msgstr "Từ trang trình chiếu hiện tại"
 
 #: src/control/Control.NotebookbarImpress.js:485
 msgid "Present in Window"
-msgstr ""
+msgstr "Thuyết trình trong cửa sổ"
 
 #: src/control/Control.NotebookbarImpress.js:493
 msgid "Presenter View"
-msgstr ""
+msgstr "Chế độ xem của người thuyết trình"
 
 #: src/control/Control.NotebookbarImpress.js:501
 msgid "Present to All"
-msgstr ""
+msgstr "Trình bày cho tất cả mọi người"
 
 #: src/control/Control.NotebookbarImpress.js:509
 #: src/slideshow/SlideShowPresenter.ts:751
 msgid "Follow Presenter"
-msgstr ""
+msgstr "Theo dõi người thuyết trình"
 
 #: src/control/Control.NotebookbarImpress.js:637
 msgid "Slide Views"
-msgstr ""
+msgstr "Chế độ xem trang trình chiếu"
 
 #: src/control/Control.NotebookbarImpress.js:676
 msgid "Snap to Grid"
-msgstr ""
+msgstr "Gắn vào lưới"
 
 #: src/control/Control.NotebookbarImpress.js:800
 #: src/control/Control.NotebookbarImpress.js:1830
 msgid "Slide Layout"
-msgstr ""
+msgstr "Bố cục trang trình chiếu"
 
 #: src/control/Control.NotebookbarImpress.js:811
 #: src/control/Control.NotebookbarImpress.js:1415
 msgid "New"
-msgstr ""
+msgstr "Mới"
 
 #: src/control/Control.NotebookbarImpress.js:822
 #: src/control/Control.NotebookbarImpress.js:1840
-#, fuzzy
 msgid "Change Layout"
-msgstr "Bố cục trang"
+msgstr "Thay đổi bố cục"
 
 #: src/control/Control.NotebookbarImpress.js:830
 #: src/control/Control.NotebookbarImpress.js:1847
 msgid "Reset Layout"
-msgstr ""
+msgstr "Đặt lại bố cục"
 
 #: src/control/Control.NotebookbarImpress.js:844
 msgid "Character"
-msgstr ""
+msgstr "Ký tự"
 
 #: src/control/Control.NotebookbarImpress.js:1105
 msgid "Spacing & Color"
-msgstr ""
+msgstr "Khoảng cách & Màu sắc"
 
 #: src/control/Control.NotebookbarImpress.js:1795
 msgid "Master Slide Templates"
-msgstr ""
+msgstr "Mẫu trang trình chiếu chính"
 
 #: src/control/Control.NotebookbarImpress.js:1809
 msgid "Themes"
-msgstr ""
+msgstr "Chủ đề"
 
 #: src/control/Control.NotebookbarImpress.js:1859
 msgid "Slide Size"
-msgstr ""
+msgstr "Kích thước trang trình chiếu"
 
 #: src/control/Control.NotebookbarImpress.js:1882
 msgid "Background Image"
-msgstr ""
+msgstr "Hình nền"
 
 #: src/control/Control.NotebookbarImpress.js:2084
 msgid "Merge & Split"
-msgstr ""
+msgstr "Gộp & Chia"
 
 #: src/control/Control.NotebookbarImpress.js:2123
 #: src/control/Control.NotebookbarWriter.js:2568
 msgid "Select"
-msgstr ""
+msgstr "Chọn"
 
 #: src/control/Control.NotebookbarImpress.js:2732
 msgid "Effects"
-msgstr ""
+msgstr "Hiệu ứng"
 
 #: src/control/Control.NotebookbarWriter.js:75
 msgid "Form"
@@ -3167,19 +3181,19 @@ msgstr "Biểu mẫu"
 
 #: src/control/Control.NotebookbarWriter.js:395
 msgid "Go Online"
-msgstr ""
+msgstr "Lên mạng"
 
 #: src/control/Control.NotebookbarWriter.js:395
 msgid "Go Offline"
-msgstr ""
+msgstr "Ngoại tuyến"
 
 #: src/control/Control.NotebookbarWriter.js:489
 msgid "Validate Sidebar"
-msgstr ""
+msgstr "Xác thực thanh bên"
 
 #: src/control/Control.NotebookbarWriter.js:497
 msgid "Validate Dialog"
-msgstr ""
+msgstr "Hộp thoại xác thực"
 
 #: src/control/Control.NotebookbarWriter.js:940
 #: src/control/Control.Zotero.js:827
@@ -3188,19 +3202,19 @@ msgstr "Kiểu"
 
 #: src/control/Control.NotebookbarWriter.js:1086
 msgid "Lists/Bullets"
-msgstr ""
+msgstr "Danh sách/Dấu đầu dòng"
 
 #: src/control/Control.NotebookbarWriter.js:1373
 msgid "Header & Footer"
-msgstr ""
+msgstr "Đầu trang & Chân trang"
 
 #: src/control/Control.NotebookbarWriter.js:1442
 msgid "Section"
-msgstr ""
+msgstr "Phần"
 
 #: src/control/Control.NotebookbarWriter.js:1527
 msgid "Symbols"
-msgstr ""
+msgstr "Biểu tượng"
 
 #: src/control/Control.NotebookbarWriter.js:1580
 msgid "Rich Text"
@@ -3216,44 +3230,43 @@ msgstr "Danh sách thả xuống"
 
 #: src/control/Control.NotebookbarWriter.js:1664
 msgid "Page Width"
-msgstr ""
+msgstr "Chiều rộng trang"
 
 #: src/control/Control.NotebookbarWriter.js:2301
 msgid "Tracking"
-msgstr ""
+msgstr "Theo dõi"
 
 #: src/control/Control.NotebookbarWriter.js:2322
 msgid "View Changes"
-msgstr ""
+msgstr "Xem các thay đổi"
 
 #: src/control/Control.NotebookbarWriter.js:2408
 msgid "Compare"
-msgstr ""
+msgstr "So sánh"
 
 #: src/control/Control.NotebookbarWriter.js:2414
 msgid "Compare Documents"
-msgstr ""
+msgstr "So sánh tài liệu"
 
 #: src/control/Control.NotebookbarWriter.js:2506
 msgid "Split"
-msgstr ""
+msgstr "Tách"
 
 #: src/control/Control.NotebookbarWriter.js:2690
 msgid "Number Format"
-msgstr ""
+msgstr "Định dạng số"
 
 #: src/control/Control.PartsPreview.js:193
-#, fuzzy
 msgid "preview of page %1"
-msgstr "xem trước trang "
+msgstr "xem trước trang %1"
 
 #: src/control/Control.PartsPreview.js:195
 msgid "Slide %1"
-msgstr ""
+msgstr "Trang trình chiếu %1"
 
 #: src/control/Control.PartsPreview.js:271
 msgid "Paste Slide"
-msgstr "Dán trang chiếu"
+msgstr "Dán trang trình chiếu"
 
 #: src/control/Control.PartsPreview.js:326
 msgid "Paste"
@@ -3261,7 +3274,7 @@ msgstr "Dán"
 
 #: src/control/Control.SaveState.ts:44
 msgid "Saving"
-msgstr ""
+msgstr "Đang lưu"
 
 #: src/control/Control.Scroll.Annotation.js:19
 msgid "Scroll up annotations"
@@ -3273,115 +3286,122 @@ msgstr "Cuộn xuống các chú thích"
 
 #: src/control/Control.ServerAuditDialog.ts:58
 msgid "Your WOPI server is not secure: SSL verification failed"
-msgstr ""
+msgstr "Máy chủ WOPI của bạn không an toàn: Xác minh SSL không thành công"
 
 #: src/control/Control.ServerAuditDialog.ts:63
 msgid "No problems with SSL verification detected"
-msgstr ""
+msgstr "Không phát hiện thấy sự cố nào với xác minh SSL"
 
 #: src/control/Control.ServerAuditDialog.ts:72
 msgid ""
 "Documents are not effectively contained: missing capabilities or namespaces."
 msgstr ""
+"Tài liệu không được chứa một cách hiệu quả: thiếu khả năng hoặc không gian "
+"tên."
 
 #: src/control/Control.ServerAuditDialog.ts:77
 msgid "Each document is securely contained"
-msgstr ""
+msgstr "Mỗi tài liệu được lưu trữ an toàn"
 
 #: src/control/Control.ServerAuditDialog.ts:83
 msgid ""
 "BPF filtering of potentially risky system calls (seccomp) is not enabled; a "
 "security hazard."
 msgstr ""
+"Tính năng lọc BPF của các cuộc gọi hệ thống tiềm ẩn rủi ro (seccomp) không "
+"được bật; một mối nguy hiểm về an ninh."
 
 #: src/control/Control.ServerAuditDialog.ts:88
 msgid "System call security filtering enabled"
-msgstr ""
+msgstr "Đã bật tính năng lọc bảo mật cuộc gọi hệ thống"
 
 #: src/control/Control.ServerAuditDialog.ts:95
 msgid ""
 "Your server is configured with insufficient hardware resources, which may "
 "lead to poor performance."
 msgstr ""
+"Máy chủ của bạn được cấu hình không đủ tài nguyên phần cứng, điều này có thể "
+"dẫn đến hiệu suất kém."
 
 #: src/control/Control.ServerAuditDialog.ts:101
 msgid "Hardware resources are sufficient for optimal performance"
-msgstr ""
+msgstr "Tài nguyên phần cứng đủ để có hiệu suất tối ưu"
 
 #: src/control/Control.ServerAuditDialog.ts:109
 msgid "Slow Kit jail setup with copying, cannot bind-mount."
-msgstr ""
+msgstr "Thiết lập jail Kit chậm bằng cách sao chép, không thể liên kết gắn kết."
 
 #: src/control/Control.ServerAuditDialog.ts:114
 msgid "Fast kit jail bind mounting enabled"
-msgstr ""
+msgstr "Đã bật tính năng gắn liên kết jail kit nhanh"
 
 #: src/control/Control.ServerAuditDialog.ts:119
 msgid "Fast kit jail bind mounting not configured"
-msgstr ""
+msgstr "Việc gắn kit jail bind nhanh không được định cấu hình"
 
 #: src/control/Control.ServerAuditDialog.ts:127
 msgid "Poorly performing proxying of all network requests."
-msgstr ""
+msgstr "Việc ủy quyền tất cả các yêu cầu mạng thực hiện kém."
 
 #: src/control/Control.ServerAuditDialog.ts:131
 msgid "Direct network connection"
-msgstr ""
+msgstr "Kết nối mạng trực tiếp"
 
 #: src/control/Control.ServerAuditDialog.ts:137
 msgid "The IsAdminUser property is not set by integration"
-msgstr ""
+msgstr "Thuộc tính IsAdminUser không được thiết lập bởi tích hợp"
 
 #: src/control/Control.ServerAuditDialog.ts:143
 msgid ""
 "Used deprecated is_admin field, integration should use IsAdminUser property "
 "instead"
 msgstr ""
+"Đã sử dụng trường is_admin không dùng nữa, thay vào đó, việc tích hợp nên sử "
+"dụng thuộc tính IsAdminUser"
 
 #: src/control/Control.ServerAuditDialog.ts:149
 msgid "The IsAdminUser user property is set by integration"
-msgstr ""
+msgstr "Thuộc tính người dùng IsAdminUser được thiết lập bằng cách tích hợp"
 
 #: src/control/Control.ServerAuditDialog.ts:157
 msgid "PostMessage API is initialized"
-msgstr ""
+msgstr "API PostMessage được khởi tạo"
 
 #: src/control/Control.ServerAuditDialog.ts:162
 msgid "Integrator is not ready for PostMessage calls"
-msgstr ""
+msgstr "Trình tích hợp chưa sẵn sàng cho cuộc gọi PostMessage"
 
 #: src/control/Control.ServerAuditDialog.ts:170
 msgid "Using namespaces"
-msgstr ""
+msgstr "Sử dụng không gian tên"
 
 #: src/control/Control.ServerAuditDialog.ts:171
 msgid "Not using namespaces"
-msgstr ""
+msgstr "Không sử dụng không gian tên"
 
 #: src/control/Control.ServerAuditDialog.ts:248
 msgid "Document container started in {1} ms"
-msgstr ""
+msgstr "Vùng chứa tài liệu bắt đầu sau {1} ms"
 
 #: src/control/Control.ServerAuditDialog.ts:318
-#, fuzzy
 msgid "Status"
-msgstr "Trạng thái:"
+msgstr "Trạng thái"
 
 #: src/control/Control.ServerAuditDialog.ts:328
 msgid "No issues found"
-msgstr ""
+msgstr "Không tìm thấy vấn đề nào"
 
 #: src/control/Control.ServerAuditDialog.ts:333
 msgid "Alerts:"
-msgstr ""
+msgstr "Cảnh báo:"
 
 #: src/control/Control.ServerAuditDialog.ts:396
 msgid "Check warnings of your server"
-msgstr ""
+msgstr "Kiểm tra cảnh báo của máy chủ của bạn"
 
 #: src/control/Control.ServerAuditDialog.ts:397
 msgid "OPEN"
-msgstr ""
+msgstr "MỞ"
 
 #: src/control/Control.SheetsBar.js:51
 msgid "Scroll to the first sheet"
@@ -3405,16 +3425,16 @@ msgstr "Chèn trang tính"
 
 #: src/control/Control.SheetsBar.js:88
 msgid "Show sheet list"
-msgstr ""
+msgstr "Hiển thị danh sách trang tính"
 
 #: src/control/Control.StatusBar.js:156
 msgid "On"
-msgstr ""
+msgstr "Bật"
 
 #: src/control/Control.StatusBar.js:158
 #: src/control/jsdialog/Definitions.Menu.ts:1775
 msgid "Off"
-msgstr ""
+msgstr "Tắt"
 
 #: src/control/Control.StatusBar.js:191
 #: src/control/jsdialog/Definitions.Menu.ts:163
@@ -3423,7 +3443,7 @@ msgstr "Trung bình"
 
 #: src/control/Control.StatusBar.js:192
 msgid "CountA"
-msgstr "Đếm A"
+msgstr "ĐếmA"
 
 #: src/control/Control.StatusBar.js:193
 #: src/control/jsdialog/Definitions.Menu.ts:166
@@ -3449,17 +3469,18 @@ msgstr "Số lượng lựa chọn"
 
 #: src/control/Control.StatusBar.js:250
 msgid "Multi Page View"
-msgstr ""
+msgstr "Xem nhiều trang"
 
 #: src/control/Control.StatusBar.js:257
 msgid "Zoom to Fit Page Width"
-msgstr ""
+msgstr "Zoom để vừa với chiều rộng trang"
 
 #: src/control/Control.StatusBar.js:414
 msgid ""
 "To prevent accidental changes, the author has set this file to open as view-"
 "only"
 msgstr ""
+"Để tránh những thay đổi vô tình, tác giả đã đặt tệp này ở chế độ chỉ xem"
 
 #: src/control/Control.StatusBar.js:464
 msgid "Select multiple cells"
@@ -3471,7 +3492,7 @@ msgstr "Chế độ lựa chọn: không hoạt động"
 
 #: src/control/Control.StatusBar.js:559
 msgid "Set Language for All text"
-msgstr "Đặt ngôn ngữ cho tất cả văn bản"
+msgstr "Đặt ngôn ngữ cho Tất cả văn bản"
 
 #: src/control/Control.StatusBar.js:562
 msgid "Set Language for Paragraph"
@@ -3479,7 +3500,7 @@ msgstr "Đặt ngôn ngữ cho Đoạn văn"
 
 #: src/control/Control.StatusBar.js:563
 msgid "Set Language for Selection"
-msgstr "Đặt ngôn ngữ cho lựa chọn"
+msgstr "Đặt ngôn ngữ cho Lựa chọn"
 
 #: src/control/Control.Tabs.js:53
 msgid "Insert sheet before this"
@@ -3518,7 +3539,7 @@ msgid ""
 "Conflict Undo/Redo with multiple users. Please use document repair to "
 "resolve"
 msgstr ""
-"Xung đột Hoàn tác /Làm lại với nhiều người dùng. Vui lòng sử dụng sửa chữa "
+"Xung đột Hoàn tác/Làm lại với nhiều người dùng. Vui lòng sử dụng sửa chữa "
 "tài liệu để giải quyết"
 
 #: src/control/Control.TopToolbar.js:109
@@ -3543,15 +3564,15 @@ msgstr "Chèn các đầu nối"
 
 #: src/control/Control.UIManager.ts:326
 msgid "Enter new name"
-msgstr ""
+msgstr "Nhập tên mới"
 
 #: src/control/Control.UIManager.ts:1171
 msgid "Hide Menu"
-msgstr "Ẩn Menu"
+msgstr "Ẩn menu"
 
 #: src/control/Control.UIManager.ts:1198
 msgid "Show Menu"
-msgstr ""
+msgstr "Hiển thị menu"
 
 #: src/control/Control.UserList.ts:56
 msgid "{user} has joined"
@@ -3563,19 +3584,19 @@ msgstr "{user} đã rời đi"
 
 #: src/control/Control.UserList.ts:58
 msgid "Following {user}"
-msgstr ""
+msgstr "Đang theo dõi {user}"
 
 #: src/control/Control.UserList.ts:59
 msgid "Following the editor"
-msgstr ""
+msgstr "Theo dõi trình chỉnh sửa"
 
 #: src/control/Control.UserList.ts:60
 msgid "Stop following"
-msgstr ""
+msgstr "Dừng theo dõi"
 
 #: src/control/Control.UserList.ts:61
 msgid "Avatar for {user}"
-msgstr ""
+msgstr "Hình đại diện cho {user}"
 
 #: src/control/Control.UserList.ts:81
 msgid "%n users"
@@ -3591,7 +3612,7 @@ msgstr "0 người dùng"
 
 #: src/control/Control.UserList.ts:87
 msgid "User List Summary"
-msgstr ""
+msgstr "Tóm tắt danh sách người dùng"
 
 #: src/control/Control.UserList.ts:495
 msgid "Following"
@@ -3629,7 +3650,7 @@ msgstr "Đang tải..."
 #: src/slideshow/PresenterConsole.js:31
 #: src/slideshow/SlideShowPresenter.ts:702
 msgid "Previous"
-msgstr ""
+msgstr "Trước đó"
 
 #: src/control/Control.Zotero.js:270 src/control/Control.Zotero.js:469
 #: src/slideshow/PresenterConsole.js:32
@@ -3683,7 +3704,7 @@ msgstr "Không tải được bộ sưu tập"
 
 #: src/control/Control.Zotero.js:788
 msgid "Loading references"
-msgstr ""
+msgstr "Đang tải tài liệu tham khảo"
 
 #: src/control/Control.Zotero.js:822
 msgid "Citation Style"
@@ -3771,15 +3792,15 @@ msgstr "Chèn vị trí dừng tab"
 
 #: src/control/HRuler.ts:1113
 msgid "Delete tabstop"
-msgstr "Xóa vị trí dừng Tab"
+msgstr "Xóa vị trí dừng tab"
 
 #: src/control/Parts.js:491
 msgid "Show sheets"
-msgstr ""
+msgstr "Hiển thị trang tính"
 
 #: src/control/Permission.js:27 src/control/Permission.js:28
 msgid "Edit document"
-msgstr ""
+msgstr "Chỉnh sửa tài liệu"
 
 #: src/control/Permission.js:85
 msgid "The document could not be locked, and is opened in read-only mode."
@@ -3819,7 +3840,7 @@ msgstr ""
 
 #: src/control/Signing.js:21
 msgid "The document is not signed."
-msgstr ""
+msgstr "Tài liệu chưa được ký."
 
 #: src/control/Signing.js:32
 msgid "This document is digitally signed and the signature is valid."
@@ -3863,11 +3884,11 @@ msgstr "Đang đổi tên..."
 
 #: src/control/VRuler.ts:374
 msgid "Top Margin"
-msgstr ""
+msgstr "Lề trên"
 
 #: src/control/VRuler.ts:375
 msgid "Bottom Margin"
-msgstr ""
+msgstr "Lề dưới"
 
 #: src/control/PermissionMode.ts:74
 #: src/control/jsdialog/Widget.HTMLContent.ts:36
@@ -3882,16 +3903,16 @@ msgstr "Chỉ đọc"
 
 #: src/control/PermissionMode.ts:108
 msgid "Viewing Mode"
-msgstr ""
+msgstr "Chế độ xem"
 
 #: src/control/PermissionMode.ts:114
 msgid "Editing Mode"
-msgstr ""
+msgstr "Chế độ chỉnh sửa"
 
 #: src/control/PermissionMode.ts:125 src/control/PermissionMode.ts:176
 #: src/control/PermissionMode.ts:182 src/control/PermissionMode.ts:188
 msgid "Viewing"
-msgstr ""
+msgstr "Đang xem"
 
 #: src/control/jsdialog/Definitions.Menu.ts:111
 #: src/control/jsdialog/Definitions.Menu.ts:1748
@@ -3900,11 +3921,11 @@ msgstr "Bình thường"
 
 #: src/control/jsdialog/Definitions.Menu.ts:116
 msgid "Wide"
-msgstr ""
+msgstr "Rộng"
 
 #: src/control/jsdialog/Definitions.Menu.ts:121
 msgid "Narrow"
-msgstr ""
+msgstr "Thu hẹp"
 
 #: src/control/jsdialog/Definitions.Menu.ts:164
 msgid "Min"
@@ -3916,139 +3937,139 @@ msgstr "Tối đa"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1443
 msgid "Edit Single Sparkline"
-msgstr ""
+msgstr "Chỉnh sửa Sparkline đơn"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1454
 msgid "Delete Single Sparkline"
-msgstr ""
+msgstr "Xóa Sparkline đơn"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1491
 msgid "Portrait"
-msgstr ""
+msgstr "Nằm dọc"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1497
 msgid "Landscape"
-msgstr ""
+msgstr "Nằm ngang"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1503
 msgid "A6"
-msgstr ""
+msgstr "A6"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1504
 msgid "A5"
-msgstr ""
+msgstr "A5"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1505
 msgid "A4"
-msgstr ""
+msgstr "A4"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1506
 msgid "A3"
-msgstr ""
+msgstr "A3"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1507
 msgid "B6 (ISO)"
-msgstr ""
+msgstr "B6 (ISO)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1508
 msgid "B5 (ISO)"
-msgstr ""
+msgstr "B5 (ISO)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1509
 msgid "B4 (ISO)"
-msgstr ""
+msgstr "B4 (ISO)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1510
 msgid "Letter"
-msgstr ""
+msgstr "Letter"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1511
 msgid "Legal"
-msgstr ""
+msgstr "Pháp lý"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1512
 msgid "Long Bond"
-msgstr ""
+msgstr "Trái phiếu dài"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1513
 msgid "Tabloid"
-msgstr ""
+msgstr "Tabloid"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1514
 msgid "B6 (JIS)"
-msgstr ""
+msgstr "B6 (JIS)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1515
 msgid "B5 (JIS)"
-msgstr ""
+msgstr "B5 (JIS)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1516
 msgid "B4 (JIS)"
-msgstr ""
+msgstr "B4 (JIS)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1517
 msgid "16 Kai"
-msgstr ""
+msgstr "16 Kai"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1518
 msgid "32 Kai"
-msgstr ""
+msgstr "32 Kai"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1519
 msgid "Big 32 Kai"
-msgstr ""
+msgstr "Big 32 Kai"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1520
 msgid "User"
-msgstr ""
+msgstr "Người dùng"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1521
 msgid "DL Envelope"
-msgstr ""
+msgstr "Phong bì DL"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1522
 msgid "C6 Envelope"
-msgstr ""
+msgstr "Phong bì C6"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1523
 msgid "C6/5 Envelope"
-msgstr ""
+msgstr "Phong bì C6/5"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1524
 msgid "C5 Envelope"
-msgstr ""
+msgstr "Phong bì C5"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1525
 msgid "C4 Envelope"
-msgstr ""
+msgstr "Phong bì C4"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1528
 msgid "#6¾ Envelope"
-msgstr ""
+msgstr "#6¾ Phong bì"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1533
 msgid "#7¾ (Monarch) Envelope"
-msgstr ""
+msgstr "#7¾ (Monarch) Phong bì"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1536
 msgid "#9 Envelope"
-msgstr ""
+msgstr "#9 Phong bì"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1537
 msgid "#10 Envelope"
-msgstr ""
+msgstr "Phong bì #10"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1538
 msgid "#11 Envelope"
-msgstr ""
+msgstr "Phong bì #11"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1539
 msgid "#12 Envelope"
-msgstr ""
+msgstr "Phong bì #12"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1542
 msgid "Japanese Postcard"
-msgstr ""
+msgstr "Bưu thiếp tiếng Nhật"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1728
 msgid "Insert Local Image"
@@ -4056,229 +4077,227 @@ msgstr "Chèn ảnh trên thiết bị"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1734
 msgid "Insert Local Multimedia"
-msgstr ""
+msgstr "Chèn đa phương tiện cục bộ"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1740
 msgid "Compare Local Document"
-msgstr ""
+msgstr "So sánh tài liệu cục bộ"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1746
 msgid "Very Tight"
-msgstr "Rất chặt"
+msgstr "Rất khít"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1747
 msgid "Tight"
-msgstr "Chặt"
+msgstr "Khít"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1749
 msgid "Loose"
-msgstr "Lỏng"
+msgstr "Thoáng"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1750
 msgid "Very Loose"
-msgstr "Rất lỏng"
+msgstr "Rất thoáng"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1780
 msgid "All users"
-msgstr ""
+msgstr "Tất cả người dùng"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1785
 msgid "This user"
-msgstr ""
+msgstr "Người dùng này"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1919
 msgid "No Borders"
-msgstr ""
+msgstr "Không viền"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1925
 msgid "Left Border"
-msgstr ""
+msgstr "Viền trái"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1931
 msgid "Right Border"
-msgstr ""
+msgstr "Viền phải"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1937
 msgid "Left And Right Borders"
-msgstr ""
+msgstr "Viền trái và phải"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1943
 msgid "Top Border"
-msgstr ""
+msgstr "Đường viền trên cùng"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1949
 msgid "Bottom Border"
-msgstr ""
+msgstr "Viền dưới"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1955
 msgid "Top And Bottom Border"
-msgstr ""
+msgstr "Viền trên và dưới"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1961
 msgid "Outer Border"
-msgstr ""
+msgstr "Viền ngoài"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1967
 msgid "All Horizontal Lines"
-msgstr ""
+msgstr "Tất cả các đường ngang"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1973
 msgid "Outer Border And Horizontal Lines"
-msgstr ""
+msgstr "Đường viền ngoài và đường ngang"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1979
 msgid "Outer Border and Vertical Lines"
-msgstr ""
+msgstr "Đường viền ngoài và đường dọc"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1985
 msgid "Outer Borders And All Inner lines"
-msgstr ""
+msgstr "Viền ngoài và tất cả các dòng bên trong"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1990
 msgid "Line color"
-msgstr ""
+msgstr "Màu đường kẻ"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2001
-#, fuzzy
 msgid "Line style"
 msgstr "Kiểu dòng:"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2004
 msgid "Hairline (0.05 pt)"
-msgstr ""
+msgstr "Đường chân tóc (0.05 pt)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2013
 msgid "Very thin (0.50 pt)"
-msgstr ""
+msgstr "Rất mỏng (0.50 pt)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2022
 msgid "Thin (0.75 pt)"
-msgstr ""
+msgstr "Mỏng (0.75 pt)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2031
 msgid "Medium (1.50 pt)"
-msgstr ""
+msgstr "Trung bình (1.50 pt)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2040
 msgid "Thick (2.25 pt)"
-msgstr ""
+msgstr "Dày (2.25 pt)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2049
 msgid "Extra thick (4.50 pt)"
-msgstr ""
+msgstr "Cực dày (4.50 pt)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2058
 msgid "Double Hairline (1.10 pt)"
-msgstr ""
+msgstr "Đường chân tóc đôi (1.10 pt)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2067
 msgid "Double Hairline (2.35 pt)"
-msgstr ""
+msgstr "Đường chân tóc đôi (2.35 pt)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2076
 msgid "Thin/Medium (3.00 pt)"
-msgstr ""
+msgstr "Mỏng/Trung bình (3.00 pt)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2085
 msgid "Medium/Hairline (3.05 pt)"
-msgstr ""
+msgstr "Trung bình/Chân tóc (3.05 pt)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2094
 msgid "Medium/Medium (4.50 pt)"
-msgstr ""
+msgstr "Trung bình/Trung bình (4.50 pt)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2154
 msgid "Standard (4:3)"
-msgstr ""
+msgstr "Tiêu chuẩn (4:3)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2159
 msgid "Widescreen (16:9)"
-msgstr ""
+msgstr "Màn hình rộng (16:9)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2169
 msgid "Blank Slide"
-msgstr ""
+msgstr "Trang trình chiếu trống"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2170
 msgid "Title Slide"
-msgstr ""
+msgstr "Trang trình chiếu tiêu đề"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2171
 msgid "Title, Content"
-msgstr ""
+msgstr "Tiêu đề, nội dung"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2172
 msgid "Title and 2 Content"
-msgstr ""
+msgstr "Tiêu đề và 2 nội dung"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2173
 msgid "Title Only"
-msgstr ""
+msgstr "Chỉ tiêu đề"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2174
 msgid "Centered Text"
-msgstr ""
+msgstr "Văn bản được căn giữa"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2175
 msgid "Title, 2 Content and Content"
-msgstr ""
+msgstr "Tiêu đề, 2 Nội dung và Nội dung"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2176
 msgid "Title, Content and 2 Content"
-msgstr ""
+msgstr "Tiêu đề, nội dung và 2 nội dung"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2177
 msgid "Title, 2 Content over Content"
-msgstr ""
+msgstr "Tiêu đề, 2 nội dung trên nội dung"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2178
 msgid "Title, Content over Content"
-msgstr ""
+msgstr "Tiêu đề, Nội dung trên Nội dung"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2179
 msgid "Title, 4 Content"
-msgstr ""
+msgstr "Tiêu đề, 4 nội dung"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2180
 msgid "Title, 6 Content"
-msgstr ""
+msgstr "Tiêu đề, 6 nội dung"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2181
 msgid "Vertical Title, Text, Chart"
-msgstr ""
+msgstr "Tiêu đề dọc, văn bản, biểu đồ"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2182
 msgid "Vertical Title, Vertical Text"
-msgstr ""
+msgstr "Tiêu đề dọc, văn bản dọc"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2183
 msgid "Title, Vertical Text"
-msgstr ""
+msgstr "Tiêu đề, văn bản dọc"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2184
 msgid "Title, Vertical Text, Clipart"
-msgstr ""
+msgstr "Tiêu đề, văn bản dọc, hình minh họa"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2319
 msgid "Grayscale"
-msgstr ""
+msgstr "Thang độ xám"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2324
 msgid "Black/White"
-msgstr ""
+msgstr "Đen/Trắng"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2329
 msgid "Watermark"
-msgstr ""
+msgstr "Hình mờ"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2337
-#, fuzzy
 msgid "Insert comment"
 msgstr "Chèn bình luận"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2341
 msgid "Comments list"
-msgstr ""
+msgstr "Danh sách bình luận"
 
 #: src/control/jsdialog/Util.SnackbarController.ts:122
 msgid "Dismiss"
@@ -4287,11 +4306,11 @@ msgstr "Bỏ qua"
 #: src/control/jsdialog/Widget.ColorPicker.ts:46
 #: src/control/jsdialog/Widget.ColorPicker.ts:149
 msgid "Unknown color"
-msgstr ""
+msgstr "Màu không xác định"
 
 #: src/control/jsdialog/Widget.ColorPicker.ts:229
 msgid "No fill"
-msgstr ""
+msgstr "Không điền"
 
 #: src/control/jsdialog/Widget.ColorPicker.ts:229
 msgid "Automatic"
@@ -4299,11 +4318,11 @@ msgstr "Tự động"
 
 #: src/control/jsdialog/Widget.ColorPicker.ts:262
 msgid "Color palette"
-msgstr ""
+msgstr "Bảng màu"
 
 #: src/control/jsdialog/Widget.ColorPicker.ts:328
 msgid "Enter custom color in hex format"
-msgstr ""
+msgstr "Nhập màu tùy chỉnh ở định dạng hex"
 
 #: src/control/jsdialog/Widget.ColorPicker.ts:421
 msgid "Recent"
@@ -4311,39 +4330,39 @@ msgstr "Gần đây"
 
 #: src/control/jsdialog/Widget.PageMarginEntry.ts:40
 msgid "Page margin options"
-msgstr ""
+msgstr "Tùy chọn lề trang"
 
 #: src/control/jsdialog/Widget.PageMarginEntry.ts:141
 msgid "Top: {top}"
-msgstr ""
+msgstr "Trên cùng: {top}"
 
 #: src/control/jsdialog/Widget.PageMarginEntry.ts:146
 msgid "Left: {left}"
-msgstr ""
+msgstr "Trái: {left}"
 
 #: src/control/jsdialog/Widget.PageMarginEntry.ts:156
 msgid "Bottom: {bottom}"
-msgstr ""
+msgstr "Dưới: {bottom}"
 
 #: src/control/jsdialog/Widget.PageMarginEntry.ts:161
 msgid "Right: {right}"
-msgstr ""
+msgstr "Phải: {right}"
 
 #: src/control/jsdialog/Widget.PageMarginEntry.ts:185
 msgid "Custom Margins…"
-msgstr ""
+msgstr "Lề tùy chỉnh…"
 
 #: src/control/jsdialog/Widget.PageSizeEntry.ts:69
 msgid "More Paper Sizes..."
-msgstr ""
+msgstr "Nhiều kích cỡ giấy hơn..."
 
 #: src/control/jsdialog/Widget.HTMLContent.ts:43
 msgid "Edit mode"
-msgstr ""
+msgstr "Chế độ chỉnh sửa"
 
 #: src/control/jsdialog/Widget.HTMLContent.ts:72
 msgid "Number of Pages. Click to open the Go to Page dialog box."
-msgstr ""
+msgstr "Số trang. Bấm để mở hộp thoại Đi tới Trang."
 
 #: src/control/jsdialog/Widget.HTMLContent.ts:84
 msgid "Word Counter"
@@ -4371,7 +4390,7 @@ msgstr "Lựa chọn chức năng"
 
 #: src/control/jsdialog/Widget.HTMLContent.ts:141
 msgid "Number of Slides"
-msgstr "Số lượng trang chiếu"
+msgstr "Số lượng trang trình chiếu"
 
 #: src/control/jsdialog/Widget.HTMLContent.ts:153
 msgid "Number of Pages"
@@ -4380,12 +4399,11 @@ msgstr "Số trang"
 #: src/control/jsdialog/Widget.HTMLContent.ts:165
 #: src/control/jsdialog/Widget.HTMLContent.ts:177
 msgid "Your changes have been saved"
-msgstr ""
+msgstr "Các thay đổi của bạn đã được lưu"
 
 #: src/control/jsdialog/Widget.HTMLContent.ts:189
-#, fuzzy
 msgid "Show Comments"
-msgstr "Không có bình luận"
+msgstr "Hiện bình luận"
 
 #: src/control/jsdialog/Widget.MobileBorderSelector.js:96
 msgid "Cell borders"
@@ -4393,7 +4411,7 @@ msgstr "Đường viền ô"
 
 #: src/control/jsdialog/Widget.SidebarContainers.ts:72
 msgid "More options for {1}"
-msgstr ""
+msgstr "Tùy chọn khác cho {1}"
 
 #: src/control/jsdialog/Widget.TreeView.ts:1589
 msgid "Headings and objects that you add to the document will appear here"
@@ -4401,7 +4419,7 @@ msgstr "Các tiêu đề và đối tượng mà bạn thêm vào tài liệu s�
 
 #: src/control/jsdialog/Widget.TreeView.ts:1637
 msgid "Search items"
-msgstr ""
+msgstr "Các mục tìm kiếm"
 
 #: src/app/Socket.ts:189
 msgid "Oops, there is a problem connecting to {productname}: "
@@ -4519,7 +4537,7 @@ msgstr "Tài liệu đang được đổi tên và sắp tải lại"
 
 #: src/app/Socket.ts:2152
 msgid "The document is switching to Offline mode and will reload shortly"
-msgstr ""
+msgstr "Tài liệu đang chuyển sang chế độ Ngoại tuyến và sẽ sớm tải lại"
 
 #: src/app/Socket.ts:2215
 msgid "Connecting..."
@@ -4527,7 +4545,7 @@ msgstr "Đang kết nối..."
 
 #: src/app/Socket.ts:2231
 msgid "Server is shutting down"
-msgstr ""
+msgstr "Máy chủ đang tắt"
 
 #: src/docdispatcher.ts:554
 msgid "Are you sure you want to delete this slide?"
@@ -4539,23 +4557,23 @@ msgstr "Bạn có chắc chắn muốn xóa trang này không?"
 
 #: src/docstate.ts:137
 msgid "Standard"
-msgstr ""
+msgstr "Tiêu chuẩn"
 
 #: src/docstate.ts:282
 msgid "Theme colors"
-msgstr ""
+msgstr "Màu chủ đề"
 
 #: src/docstate.ts:283
 msgid "Document colors"
-msgstr ""
+msgstr "Màu tài liệu"
 
 #: src/docstatefunctions.js:247
 msgid ", cluster configuration error: mis-matching serverid"
-msgstr ""
+msgstr ", cụm configuration error: serverid khớp sai"
 
 #: src/dom/NotebookbarAccessibility.js:234
 msgid "{0} tab selected"
-msgstr ""
+msgstr "đã chọn tab {0}"
 
 #: src/errormessages.js:22
 msgid "No disk space left on server."
@@ -4576,9 +4594,9 @@ msgid ""
 "when more than {docs} documents or {connections} connections are in use "
 "concurrently."
 msgstr ""
-"Đây là phiên bản không được hỗ trợ của {productname}. Để tránh HIỂU NHẦM "
-"rằng nó phù hợp để triển khai trong doanh nghiệp, thông báo này xuất hiện "
-"khi nhiều hơn {docs} tài liệu hoặc {kết nối} kết nối được sử dụng đồng thời."
+"Đây là phiên bản không được hỗ trợ của {productname}. Để tránh ấn tượng rằng "
+"nó phù hợp để triển khai trong doanh nghiệp, thông báo này xuất hiện khi có "
+"nhiều hơn {docs} tài liệu hoặc kết nối {connections} được sử dụng đồng thời."
 
 #: src/errormessages.js:25
 msgid "More information and support"
@@ -4610,7 +4628,7 @@ msgstr ""
 
 #: src/errormessages.js:29
 msgid "Authorization error was: '{errormessage}'."
-msgstr ""
+msgstr "Lỗi ủy quyền là: '{errormessage}'."
 
 #: src/errormessages.js:30
 msgid "Wrong or missing WOPISrc parameter, please contact support."
@@ -4694,12 +4712,16 @@ msgid ""
 "administrator. For more info on proxy configuration please checkout https://"
 "sdk.collaboraonline.com/docs/installation/Proxy_settings.html"
 msgstr ""
+"Không thể thiết lập kết nối ổ cắm hoặc kết nối ổ cắm bị đóng đột ngột. Proxy "
+"ngược có thể bị saiconfigure, vui lòng liên hệ với administrator. Để biết "
+"thêm thông tin về proxy configuration, vui lòng kiểm tra https://"
+"sdk.collaboraonline.com/docs/installation/Proxy_settings.html"
 
 #: src/errormessages.js:41
 msgid ""
 "Failed to establish socket connection or socket connection closed "
 "unexpectedly."
-msgstr ""
+msgstr "Không thể thiết lập kết nối ổ cắm hoặc kết nối ổ cắm bị đóng đột ngột."
 
 #: src/errormessages.js:44
 msgid "Failed to load document."
@@ -4724,6 +4746,8 @@ msgid ""
 "Document cannot be saved due to expired session, please reopen the document "
 "to continue."
 msgstr ""
+"Không thể lưu tài liệu do phiên đã hết hạn, vui lòng mở lại tài liệu để tiếp "
+"tục."
 
 #: src/errormessages.js:48
 msgid "Document cannot be saved."
@@ -4761,6 +4785,8 @@ msgid ""
 "Document cannot be saved due to expired session, please reload the page to "
 "continue."
 msgstr ""
+"Không thể lưu tài liệu do phiên đã hết hạn, vui lòng tải lại trang để tiếp "
+"tục."
 
 #: src/errormessages.js:57
 msgid "Document cannot be saved, please check your permissions."
@@ -4784,79 +4810,80 @@ msgstr "Tải tệp lên máy chủ không thành công, tệp quá lớn."
 
 #: src/layer/marker/A11yTextInput.js:235
 msgid "Out of table"
-msgstr ""
+msgstr "Ngoài bảng"
 
 #: src/layer/marker/A11yTextInput.js:238
 msgid "Table with {0} rows and {1} columns"
-msgstr ""
+msgstr "Bảng có {0} hàng và {1} cột"
 
 #: src/layer/marker/A11yTextInput.js:243
 msgid "Row {0} through {1}"
-msgstr ""
+msgstr "Hàng từ {0} đến {1}"
 
 #: src/layer/marker/A11yTextInput.js:246
 msgid "Row {0}"
-msgstr ""
+msgstr "Hàng {0}"
 
 #: src/layer/marker/A11yTextInput.js:254
 msgid "Column {0} through {1}"
-msgstr ""
+msgstr "Cột từ {0} đến {1}"
 
 #: src/layer/marker/A11yTextInput.js:257
 msgid "Column {0}"
-msgstr ""
+msgstr "Cột {0}"
 
 #: src/layer/marker/A11yTextInput.js:285
 msgid "Editing activated. "
-msgstr ""
+msgstr "Đã kích hoạt chỉnh sửa. "
 
 #: src/layer/marker/A11yTextInput.js:304
 msgid "{0} selected"
-msgstr ""
+msgstr "đã chọn {0}"
 
 #: src/layer/marker/A11yTextInput.js:306
 msgid "Has text: "
-msgstr ""
+msgstr "Có văn bản: "
 
 #: src/layer/marker/A11yTextInput.js:311
 msgid "{0} unselected"
-msgstr ""
+msgstr "{0} chưa được chọn"
 
 #: src/layer/marker/A11yTextInput.js:315
 msgid "{0} deleted"
-msgstr ""
+msgstr "{0} đã bị xóa"
 
 #: src/layer/marker/TextInput.js:411
 msgid "Clipboard area"
-msgstr ""
+msgstr "Khu vực bộ nhớ tạm"
 
 #: src/layer/marker/TextInput.js:461
 msgid "Screen reader support for text content is disabled. "
-msgstr ""
+msgstr "Hỗ trợ trình đọc màn hình cho nội dung văn bản bị tắt. "
 
 #: src/layer/marker/TextInput.js:462
 msgid "You need to enable it both at server level and in the UI. "
 msgstr ""
+"Bạn cần kích hoạt nó ở cả cấp độ máy chủ và trong giao diện người dùng. "
 
 #: src/layer/marker/TextInput.js:463
 msgid "Look for the accessibility section in coolwsd.xml for server setting. "
-msgstr ""
+msgstr "Tìm phần trợ năng trong coolwsd.xml để biết cài đặt máy chủ. "
 
 #: src/layer/marker/TextInput.js:464
 msgid "Also check the voice over toggle under {parentControl}."
-msgstr ""
+msgstr "Đồng thời kiểm tra chuyển đổi giọng nói trong {parentControl}."
 
 #: src/layer/marker/TextInput.js:466
 msgid "the Help tab"
-msgstr ""
+msgstr "tab Trợ giúp"
 
 #: src/layer/marker/TextInput.js:466
 msgid "the View menu"
-msgstr ""
+msgstr "menu Xem"
 
 #: src/layer/tile/CanvasTileLayer.js:461
 msgid "Online Editor"
-msgstr ""
+msgstr "Trình chỉnh sửa trực tuyến"
 
 #: src/layer/tile/CanvasTileLayer.js:1456
 msgid "Functions"
@@ -4864,7 +4891,7 @@ msgstr "Chức năng"
 
 #: src/layer/tile/CanvasTileLayer.js:1716
 msgid "Named Range"
-msgstr ""
+msgstr "Phạm vi được đặt tên"
 
 #: src/layer/tile/CanvasTileLayer.js:3374
 msgid "No Comments"
@@ -4897,35 +4924,37 @@ msgid ""
 "Your browser has very limited access to the clipboard, so please use the "
 "paste buttons on your on-screen keyboard instead."
 msgstr ""
+"Trình duyệt của bạn có quyền truy cập rất hạn chế vào khay nhớ tạm, vì vậy, "
+"vui lòng sử dụng các nút dán trên bàn phím ảo để thay thế."
 
 #: src/map/Clipboard.js:1399
-#, fuzzy
 msgid ""
 "A download due to a large copy/paste operation has already started. Please, "
 "wait for the current download or cancel it before starting a new one"
 msgstr ""
-"<p> Quá trình tải xuống do thao tác sao chép / dán lớn đã bắt đầu. Vui lòng "
-"đợi tải xuống hiện tại hoặc hủy trước khi bắt đầu tải xuống mới </p>"
+"Quá trình tải xuống do thao tác sao chép/dán dung lượng lớn đã bắt đầu. Vui "
+"lòng đợi bản tải xuống hiện tại hoặc hủy nó trước khi bắt đầu bản tải xuống "
+"mới"
 
 #: src/map/Clipboard.js:1421
 msgid "Paste from this document"
-msgstr ""
+msgstr "Dán từ tài liệu này"
 
 #: src/map/Clipboard.js:1421
 msgid "Cancel paste special"
-msgstr ""
+msgstr "Hủy dán đặc biệt"
 
 #: src/map/Clipboard.js:1443
 msgid "Your browser has very limited access to the clipboard"
-msgstr ""
+msgstr "Trình duyệt của bạn có quyền truy cập rất hạn chế vào khay nhớ tạm"
 
 #: src/map/Clipboard.js:1448
 msgid "Please use following combination to see more options:"
-msgstr ""
+msgstr "Vui lòng sử dụng kết hợp sau để xem thêm tùy chọn:"
 
 #: src/map/Clipboard.js:1466
 msgid "Close popup to ignore paste special"
-msgstr ""
+msgstr "Đóng cửa sổ bật lên để bỏ qua dán đặc biệt"
 
 #: src/map/Map.js:204
 msgid "Initializing..."
@@ -4937,7 +4966,7 @@ msgstr "Lưu lần cuối:"
 
 #: src/map/Map.js:1496
 msgid "Please wait!"
-msgstr ""
+msgstr "Vui lòng đợi!"
 
 #: src/map/handler/Map.Feedback.js:95
 msgid "Please send us your feedback"
@@ -4966,17 +4995,17 @@ msgstr "Tải tệp lên máy chủ không thành công với trạng thái: {0}
 
 #: src/map/handler/Map.Print.js:44
 msgid "Print dialog"
-msgstr ""
+msgstr "Hộp thoại in"
 
 #: src/map/handler/Map.SlideShow.js:59
 #: src/slideshow/SlideShowPresenter.ts:1076
 msgid "Empty Slide Show"
-msgstr ""
+msgstr "Hiện trang trình chiếu trống"
 
 #: src/map/handler/Map.SlideShow.js:167
 #: src/slideshow/SlideShowPresenter.ts:1104
 msgid "Windowed Presentation Blocked"
-msgstr ""
+msgstr "Bản trình bày có cửa sổ bị chặn"
 
 #: src/map/handler/Map.SlideShow.js:168
 #: src/slideshow/SlideShowPresenter.ts:1106
@@ -4985,55 +5014,56 @@ msgid ""
 "slide shows to be displayed in separated windows, allowing for easy screen "
 "sharing."
 msgstr ""
+"Trình chiếu đã bị chặn. Vui lòng cho phép cửa sổ bật lên trong trình duyệt "
+"của bạn. Điều này cho phép trình chiếu được hiển thị trong các cửa sổ riêng "
+"biệt, cho phép chia sẻ màn hình dễ dàng."
 
 #: src/map/handler/Map.SlideShow.js:172
 #: src/slideshow/SlideShowPresenter.ts:906
 msgid "Windowed Presentation: "
-msgstr ""
+msgstr "Bản trình bày có cửa sổ: "
 
 #: src/map/handler/Map.SlideShow.js:202
 #: src/slideshow/SlideShowPresenter.ts:948
 msgid "Presenting in window"
-msgstr ""
+msgstr "Trình bày trong cửa sổ"
 
 #: src/map/handler/Map.SlideShow.js:203
 #: src/slideshow/SlideShowPresenter.ts:949
-#, fuzzy
 msgid "Close Presentation"
-msgstr "Trình chiếu"
+msgstr "Đóng bản thuyết trình"
 
 #: src/map/handler/Map.SlideShow.js:230
 msgid "Presenting in fullscreen"
-msgstr ""
+msgstr "Hiển thị ở chế độ toàn màn hình"
 
 #: src/map/handler/Map.SlideShow.js:231
-#, fuzzy
 msgid "End Presentation"
-msgstr "Trình chiếu"
+msgstr "Kết thúc bản thuyết trình"
 
 #: src/map/handler/Map.SlideShow.js:295
 #: src/slideshow/SlideShowPresenter.ts:1091
 msgid "Already presenting"
-msgstr ""
+msgstr "Đã trình bày"
 
 #: src/map/handler/Map.SlideShow.js:296
 #: src/slideshow/SlideShowPresenter.ts:1092
 msgid "You are already presenting this document"
-msgstr ""
+msgstr "Bạn đã trình bày tài liệu này"
 
 #: src/map/handler/Map.SlideShow.js:306
 #: src/slideshow/SlideShowPresenter.ts:1129
 msgid "Presentation disabled"
-msgstr ""
+msgstr "Đã tắt bản trình bày"
 
 #: src/map/handler/Map.SlideShow.js:307
 #: src/slideshow/SlideShowPresenter.ts:1130
 msgid "Presentation mode has been disabled for this document"
-msgstr ""
+msgstr "Chế độ trình bày đã bị tắt đối với tài liệu này"
 
 #: src/map/handler/Map.VersionBar.js:50
 msgid "Your Collabora Online server needs updating. Version {0} is available."
-msgstr ""
+msgstr "Máy chủ Collabora Online của bạn cần cập nhật. Đã có phiên bản {0}."
 
 #: src/map/handler/Map.WOPI.js:172
 msgid "Creating new file from template..."
@@ -5041,7 +5071,7 @@ msgstr "Tạo tệp mới từ mẫu..."
 
 #: src/map/handler/Map.WOPI.js:224
 msgid "Compare Document..."
-msgstr ""
+msgstr "So sánh tài liệu..."
 
 #: src/map/handler/Map.WOPI.js:732
 msgid "File name should contain an extension."
@@ -5053,82 +5083,81 @@ msgstr "Đang tạo bản sao ..."
 
 #: src/map/handler/Map.Welcome.js:92
 msgid "Welcome Dialog"
-msgstr ""
+msgstr "Hộp thoại chào mừng"
 
 #: src/slideshow/PauseTimer.ts:141
 msgid "Pause... ( %SECONDS% )"
-msgstr ""
+msgstr "Tạm dừng... ( %SECONDS% )"
 
 #: src/slideshow/PresenterConsole.js:29
 msgid "Current Slide"
-msgstr ""
+msgstr "Trang trình chiếu hiện tại"
 
 #: src/slideshow/PresenterConsole.js:30
-#, fuzzy
 msgid "Next Slide"
-msgstr "Trang chiếu tiếp"
+msgstr "Trang trình chiếu tiếp theo"
 
 #: src/slideshow/PresenterConsole.js:35
 msgid "Pause"
-msgstr ""
+msgstr "Tạm dừng"
 
 #: src/slideshow/PresenterConsole.js:36
 msgid "Restart"
-msgstr ""
+msgstr "Khởi động lại"
 
 #: src/slideshow/PresenterConsole.js:37
 msgid "Resume"
-msgstr ""
+msgstr "Tiếp tục"
 
 #: src/slideshow/PresenterConsole.js:38
 msgid "Go Back"
-msgstr ""
+msgstr "Quay lại"
 
 #: src/slideshow/PresenterConsole.js:39
 msgid "Zoom In"
-msgstr ""
+msgstr "Phóng to"
 
 #: src/slideshow/PresenterConsole.js:40
 msgid "Zoom Out"
-msgstr ""
+msgstr "Thu nhỏ"
 
 #: src/slideshow/PresenterConsole.js:178
 msgid "Preview Slide {1}"
-msgstr ""
+msgstr "Trang trình chiếu xem trước {1}"
 
 #: src/slideshow/PresenterConsole.js:1241
 msgid "Slide {0} of {1}"
-msgstr ""
+msgstr "Trang trình chiếu {0} trên {1}"
 
 #: src/slideshow/PresenterConsole.js:1265
 msgid "No Notes"
-msgstr ""
+msgstr "Không có ghi chú"
 
 #: src/slideshow/PresenterConsole.js:1353
 msgid "Repeat in {0} seconds"
-msgstr ""
+msgstr "Lặp lại sau {0} giây"
 
 #: src/slideshow/PresenterConsole.js:1358
 #: src/slideshow/SlideShowPresenter.ts:562
 msgid "Click to exit presentation..."
-msgstr ""
+msgstr "Nhấp để thoát khỏi bản trình bày..."
 
 #: src/slideshow/SlideShowPresenter.ts:691
 msgid "End Show"
-msgstr ""
+msgstr "Kết thúc chương trình"
 
 #: src/slideshow/SlideShowPresenter.ts:726
 #: src/slideshow/SlideShowPresenter.ts:739
 msgid "Disable Animations"
-msgstr ""
+msgstr "Tắt ảnh động"
 
 #: src/slideshow/SlideShowPresenter.ts:738
 msgid "Enable Animations"
-msgstr ""
+msgstr "Kích hoạt ảnh động"
 
 #: welcome/welcome.html%2Bhtml.head.title:9-3
 msgid "Collabora Online Welcome"
-msgstr "Collabora Online Chào mừng"
+msgstr "Chào mừng Collabora Online"
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h1:26-7
 msgid "Explore The New {coolversion}"
@@ -5137,10 +5166,9 @@ msgstr "Khám phá phiên bản mới {coolversion}"
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h2:27-7
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h2:38-7
 msgid "Collabora Online Development Edition"
-msgstr "Collabora Online bản Phát triển"
+msgstr "Bản Phát triển Collabora Online"
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.p:28-7
-#, fuzzy
 msgid ""
 "Enjoy the latest developments in online productivity, free for you to use, "
 "to explore and to use with others in the browser. Various <a "
@@ -5149,27 +5177,26 @@ msgid ""
 "mobile."
 msgstr ""
 "Tận hưởng những phát triển mới nhất về năng suất trực tuyến, miễn phí để bạn "
-"sử dụng, khám phá và sử dụng với những người khác trong trình duyệt. Nhiều "
-"<a target=\"_blank\" href=\"https://www.collaboraonline.com/solutions/"
-"collabora-office-android-ios/\">ứng dụng</a> cũng có sẵn cho thiết bị di "
-"động."
+"sử dụng, khám phá và sử dụng với những người khác trên trình duyệt. Nhiều <a "
+"target=\"_blank\" rel=\"noopener\" href=\"https://www.collaboraonline.com/"
+"solutions/collabora-office-android-ios/\">ứng dụng</a> khác nhau cũng có sẵn "
+"cho thiết bị di động."
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h1:37-7
 msgid "Discover All The Changes"
 msgstr "Khám phá tất cả các thay đổi"
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.p:39-7
-#, fuzzy
 msgid ""
 "Check the <a target=\"_blank\" rel=\"noopener\" href=\"https://www."
 "collaboraonline.com/code-25-04-release-notes/\">release notes</a> and learn "
 "all about: The latest Collabora Online Development Edition, aimed at home "
 "users and small teams."
 msgstr ""
-"Kiểm tra <a target=\"_blank\" href=\"https://www.collaboraonline.com/"
-"code-25-04-release-notes/\">ghi chú phát hành</a> và tìm hiểu tất cả về: "
-"Phiên bản mới nhất của Collabora Online Development Edition,dành cho người "
-"dùng gia đình và các nhóm nhỏ."
+"Hãy xem <a target=\"_blank\" rel=\"noopener\" href=\"https://"
+"www.collaboraonline.com/code-25-04-release-notes/\">ghi chú phát hành</a> và "
+"tìm hiểu tất cả về: Phiên bản phát triển trực tuyến Collabora mới nhất, dành "
+"cho người dùng gia đình và các nhóm nhỏ."
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h1:48-7
 msgid "Get Involved"
@@ -5180,7 +5207,6 @@ msgid "https://collaboraonline.github.io/"
 msgstr "https://collaboraonline.github.io/"
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.p:50-7
-#, fuzzy
 msgid ""
 "Are you interested in contributing but don’t know where to start? Head over "
 "to the <a target=\"_blank\" rel=\"noopener\" href=\"https://collaboraonline."
@@ -5191,13 +5217,14 @@ msgid ""
 "href=\"https://collaboraonline.github.io/post/filebugs/\">filing a bug "
 "report</a> with all the essential steps on how to reproduce it."
 msgstr ""
-"Bạn có quan tâm đến việc đóng góp nhưng không biết bắt đầu từ đâu? Hãy xem "
-"<a target=\"_blank\" href=\"https://collaboraonline.github.io/post/"
-"build-code/\">hướng dẫn từng bước</a> và tạo CODE từ đầu. Bạn cũng có thể "
-"trợ giúp bằng <a target=\"_blank\" href=\"https://collaboraonline.github.io/"
-"post/translate/\">bản dịch</a> hoặc bằng <a target=\"_blank\" href=\"https"
-"://collaboraonline.github.io/post/filebugs/\">gửi báo cáo lỗi</a> cùng với "
-"tất cả các bước cần thiết về cách tạo lại lỗi đó."
+"Bạn có muốn đóng góp nhưng không biết bắt đầu từ đâu? Hãy xem <a "
+"target=\"_blank\" rel=\"noopener\" href=\"https://collaboraonline.github.io/"
+"post/build-code/\">hướng dẫn từng bước</a> và xây dựng CODE từ đầu. Bạn cũng "
+"có thể trợ giúp bằng <a target=\"_blank\" rel=\"noopener\" href=\"https://"
+"collaboraonline.github.io/post/translate/\">bản dịch</a> hoặc bằng cách <a "
+"target=\"_blank\" rel=\"noopener\" href=\"https://collaboraonline.github.io/"
+"post/filebugs/\">gửi báo cáo lỗi</a> với tất cả các bước cần thiết về cách "
+"tái tạo báo cáo đó."
 
 #: welcome/welcome.html%2Bhtml.body.div.div:55-5
 msgid ""
@@ -5206,6 +5233,10 @@ msgid ""
 "translate=\"true\">2</a> <a id=\"slide-3-indicator\" href=\"#slide-3\" data-"
 "translate=\"true\">3</a>"
 msgstr ""
+"<a id=\"slide-1-indicator\" class=\"active\" href=\"#slide-1\" data-"
+"translate=\"true\">1</a> <a id=\"slide-2-indicator\" href=\"#slide-2\" data-"
+"translate=\"true\">2</a> <a id=\"slide-3-indicator\" href=\"#slide-3\" data-"
+"translate=\"true\">3</a>"
 
 #~ msgid "Session terminated by document owner"
 #~ msgstr "Phiên bị chấm dứt bởi chủ sở hữu tài liệu"

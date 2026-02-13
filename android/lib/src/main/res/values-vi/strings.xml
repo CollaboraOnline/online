@@ -7,7 +7,7 @@
     <string name="view_only">Chỉ xem</string>
     <string name="restarting">Đang khởi động lại...</string>
     <string name="exiting">Đang thoát...</string>
-    <string name="rate_our_app_text">Nếu bạn thích nó, hãy cho chúng tôi 5 sao trên CH Play. Những đánh giá tốt của bạn là động lực tốt nhất của chúng tôi.</string>
+    <string name="rate_our_app_text">Nếu bạn thích nó, vui lòng cho chúng tôi 5 sao trên Google Play. Đánh giá tốt của bạn là động lực tốt nhất của chúng tôi.</string>
     <string name="rate_now">Đánh giá ngay</string>
     <string name="preparing_for_the_first_start_after_an_update">Đang chuẩn bị cho lần bắt đầu đầu tiên sau một bản cập nhật.</string>
     <string name="cannot_open_file_chooser">Không thể mở trình chọn tệp</string>
