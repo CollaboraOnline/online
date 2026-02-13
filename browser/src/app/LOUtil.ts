@@ -210,6 +210,61 @@ class LOUtil {
 		return rectangles;
 	}
 
+	// Map of locale → icon filenames that have locale-specific variants.
+	private static localizedIcons: Record<string, string[]> = {
+		ar: ['lc_chapternumberingdialog.svg', 'lc_linenumberingdialog.svg'],
+		de: [
+			'lc_bold.svg',
+			'lc_italic.svg',
+			'lc_numberformatdecdecimals.svg',
+			'lc_numberformatdecimal.svg',
+			'lc_numberformatincdecimals.svg',
+			'lc_numberformatthousands.svg',
+		],
+		es: ['lc_bold.svg', 'lc_underline.svg', 'lc_underlinedouble.svg'],
+		fr: ['lc_bold.svg'],
+		hu: ['lc_italic.svg', 'lc_underline.svg', 'lc_underlinedouble.svg'],
+		it: ['lc_italic.svg'],
+		km: [
+			'lc_bold.svg',
+			'lc_italic.svg',
+			'lc_underline.svg',
+			'lc_underlinedouble.svg',
+		],
+		ko: [
+			'lc_bold.svg',
+			'lc_charfontname.svg',
+			'lc_color.svg',
+			'lc_datasort.svg',
+			'lc_editstyle.svg',
+			'lc_fontdialog.svg',
+			'lc_grow.svg',
+			'lc_italic.svg',
+			'lc_overline.svg',
+			'lc_shadowed.svg',
+			'lc_shrink.svg',
+			'lc_sortascending.svg',
+			'lc_sortdescending.svg',
+			'lc_strikeout.svg',
+			'lc_stylenewbyexample.svg',
+			'lc_styleupdatebyexample.svg',
+			'lc_text.svg',
+			'lc_underline.svg',
+			'lc_underlinedouble.svg',
+			'lc_verticaltext.svg',
+		],
+		nl: ['lc_bold.svg', 'lc_underline.svg', 'lc_underlinedouble.svg'],
+		pl: ['lc_underline.svg', 'lc_underlinedouble.svg'],
+		ru: ['lc_bold.svg', 'lc_underline.svg', 'lc_underlinedouble.svg'],
+		sl: ['lc_bold.svg', 'lc_italic.svg'],
+		tr: ['lc_italic.svg'],
+	};
+
+	private static getUILanguageCode(): string {
+		const lang = (String as any).locale || '';
+		return lang.split('-')[0].split('_')[0].toLowerCase();
+	}
+
 	// Some items will only be present in dark mode so we will not check errors
 	// for those in other mode.
 	public static onlydarkModeItems: string[] = ['invertbackground'];
@@ -306,9 +361,16 @@ class LOUtil {
 			return defaultImageURL;
 		}
 
+		const lang = LOUtil.getUILanguageCode();
+		const hasLocalized = lang && LOUtil.localizedIcons[lang]?.includes(imgName);
+
 		if ((window as any).prefs.getBoolean('darkTheme')) {
+			if (hasLocalized)
+				return LOUtil.getURL('images/dark/' + lang + '/' + imgName);
 			return LOUtil.getURL('images/dark/' + imgName);
 		}
+
+		if (hasLocalized) return LOUtil.getURL('images/' + lang + '/' + imgName);
 
 		const dummyEmptyImg =
 			'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=';
