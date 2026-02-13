@@ -66,7 +66,6 @@ class CompareChangesLabelSection extends HTMLObjectSection {
 		this.leftTitle.style.lineHeight = '16px';
 		this.leftSubtitle.style.fontSize = '12px';
 		this.leftSubtitle.style.lineHeight = '16px';
-		this.leftSubtitle.textContent = 'left test';
 		this.leftLabel.appendChild(this.leftTitle);
 		this.leftLabel.appendChild(this.leftSubtitle);
 		container.appendChild(this.leftLabel);
@@ -80,10 +79,28 @@ class CompareChangesLabelSection extends HTMLObjectSection {
 		this.rightTitle.style.lineHeight = '16px';
 		this.rightSubtitle.style.fontSize = '12px';
 		this.rightSubtitle.style.lineHeight = '16px';
-		this.rightSubtitle.textContent = 'right test';
 		this.rightLabel.appendChild(this.rightTitle);
 		this.rightLabel.appendChild(this.rightSubtitle);
 		container.appendChild(this.rightLabel);
+	}
+
+	private updateSubtitle(
+		element: HTMLDivElement,
+		info: DocumentMetadata,
+	): void {
+		const locale = String.locale;
+		const dateOptions: Intl.DateTimeFormatOptions = {
+			year: 'numeric',
+			month: 'long',
+			day: 'numeric',
+		};
+		const date = new Date(info.modificationDate).toLocaleDateString(
+			locale,
+			dateOptions,
+		);
+		element.textContent = _('Last edited by %1 on %2')
+			.replace('%1', info.modifiedBy)
+			.replace('%2', date);
 	}
 
 	override onDraw(): void {
@@ -145,6 +162,12 @@ class CompareChangesLabelSection extends HTMLObjectSection {
 			'%1',
 			docName,
 		);
+
+		const props = app.writer.compareDocumentProperties;
+		if (props) {
+			this.updateSubtitle(this.leftSubtitle, props.metadata.otherDocument);
+			this.updateSubtitle(this.rightSubtitle, props.metadata.thisDocument);
+		}
 
 		this.leftLabel.style.display = '';
 		this.leftLabel.style.left = leftX + 'px';

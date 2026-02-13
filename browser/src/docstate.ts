@@ -61,6 +61,9 @@
 		notesMode: false, // Opposite of "NormalMultiPaneGUI".
 		twipsCorrection: 0.567, // There is a constant ratio between tiletwips and impress page twips. For now, this seems safe to use.
 	},
+	writer: {
+		compareDocumentProperties: null,
+	},
 	map: null, // Make map object a part of this.
 	util: null, // Attach the Util class.
 	LOUtil: null, // Attach the LOUtil class.

@@ -11,6 +11,20 @@
 
 // TypeScript declarations for the global scope (e.g., window, document, etc.)
 
+interface DocumentMetadata {
+	modifiedBy: string;
+	modificationDate: string;
+}
+
+interface CompareDocumentsMetadata {
+	otherDocument: DocumentMetadata;
+	thisDocument: DocumentMetadata;
+}
+
+interface CompareDocumentProperties {
+	metadata: CompareDocumentsMetadata;
+}
+
 interface COOLTouch {
 	isTouchEvent: (e: Event | HammerInput) => boolean;
 	touchOnly: <F extends (e: Event | HammerInput) => void>(
@@ -153,6 +167,9 @@ interface AppInterface {
 		getIndexFromSlideHash(hash: number): number;
 		isSlideHidden(partNo: number): boolean;
 		areAllSlidesHidden(): boolean;
+	};
+	writer: {
+		compareDocumentProperties: CompareDocumentProperties | null;
 	};
 	IconUtil: typeof IconUtil;
 	Evented: typeof Evented;

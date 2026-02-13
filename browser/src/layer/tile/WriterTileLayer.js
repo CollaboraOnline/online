@@ -31,7 +31,16 @@ window.L.WriterTileLayer = window.L.CanvasTileLayer.extend({
 	},
 
 	beforeAdd: function (map) {
+		map.on('commandstatechanged', this._onCommandStateChanged, this);
 		map.uiManager.initializeSpecializedUI('text');
+	},
+
+	_onCommandStateChanged: function (e) {
+		if (e.commandName === 'CompareDocumentsProperties') {
+			if (e.state) {
+				app.writer.compareDocumentProperties = e.state;
+			}
+		}
 	},
 
 	_onCommandValuesMsg: function (textMsg) {
