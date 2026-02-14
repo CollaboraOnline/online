@@ -78,7 +78,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Top toolbar tests.', funct
 	});
 
 	it('Apply a selected font name on the text shape', function() {
-		cy.cGet('#fontnamecombobox').click();
+		cy.cGet('#fontnamecombobox .ui-combobox-button').click();
 		desktopHelper.selectFromListbox('Liberation Mono');
 
 		impressHelper.triggerNewSVGForShapeInTheCenter();
@@ -87,7 +87,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Top toolbar tests.', funct
 	});
 
 	it('Apply a selected font size on the text shape', function() {
-		cy.cGet('#fontsizecombobox').click();
+		cy.cGet('#fontsizecombobox .ui-combobox-button').click();
 		desktopHelper.selectFromListbox('22');
 
 		impressHelper.triggerNewSVGForShapeInTheCenter();
