@@ -355,6 +355,8 @@ void BgSaveParentWebSocketHandler::onDisconnect()
 
     if (!_saveCompleted)
         reportFailedSave("terminated without saving");
+
+    WebSocketHandler::onDisconnect(); // Invoke the default handler.
 }
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
