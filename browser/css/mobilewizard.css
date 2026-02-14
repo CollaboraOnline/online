@@ -497,11 +497,6 @@ p.mobile-wizard.ui-combobox-text.selected {
 	border-bottom: solid 1px var(--color-primary-dark);
 }
 
-[id|='tb_colorselector'] .w2ui-tb-caption > div {
-	height: 32px !important;
-	width: 32px !important;
-}
-
 [name|='colorselector'] {
 	width: 80px;
 }
@@ -1039,10 +1034,6 @@ label[disabled] {
 #toolbar-search {
 	background-color: var(--color-main-background);
 }
-.w2ui-toolbar table {
-	height: var(--header-height);
-}
-
 #criteria.ui-tab, #inputhelp.ui-tab {
 	width: 30% !important;
 }
