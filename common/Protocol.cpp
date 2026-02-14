@@ -61,10 +61,9 @@ namespace COOLProtocol
             token.compare(0, name.size(), name) == 0 &&
             token[name.size()] == '=')
         {
-            const char* str = token.data() + name.size() + 1;
-            char* endptr = nullptr;
-            value = strtol(str, &endptr, 10);
-            return (endptr > str);
+            bool success;
+            std::tie(value, success) = Util::i32FromString(token.substr(name.size() + 1));
+            return success;
         }
 
         return false;

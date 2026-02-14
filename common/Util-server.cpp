@@ -493,7 +493,7 @@ std::size_t getStatFromPid(const pid_t pid, int ind)
                     if (index == ind)
                     {
                         fclose(fp);
-                        return strtol(&s[pos], nullptr, 10);
+                        return Util::u64FromString(&s[pos], 0).first;
                     }
                     ++index;
                     pos = s.find(' ', pos + 1);
