@@ -163,6 +163,10 @@ JSDialog.toolbox = function (
 
 	JSDialog.SetupA11yLabelForNonLabelableElement(toolbox, data, builder);
 
+	if (data.aria?.role) {
+		toolbox.setAttribute('role', data.aria.role);
+	}
+
 	const enabledCallback = function (enable: boolean) {
 		for (const j in data.children) {
 			const childId = data.children[j].id;
