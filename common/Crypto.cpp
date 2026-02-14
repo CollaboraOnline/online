@@ -14,7 +14,8 @@
 #include "Crypto.hpp"
 #include "Log.hpp"
 
-#include <Poco/Base64Decoder.h>
+#include <common/base64.hpp>
+
 #include <Poco/Crypto/RSADigestEngine.h>
 #include <Poco/DateTimeParser.h>
 #include <Poco/DigestStream.h>
@@ -103,11 +104,9 @@ bool SupportKey::verify()
         RSADigestEngine rsaEngine(keyPub, RSADigestEngine::DigestType::DIGEST_SHA1);
         rsaEngine.update(_impl->_data);
 
-        std::istringstream sigStream(_impl->_signature);
-        Poco::Base64Decoder rawStream(sigStream);
-
-        std::istreambuf_iterator<char> eos;
-        std::vector<unsigned char> rawSignature(std::istreambuf_iterator<char>(rawStream), eos);
+        std::string rawSig;
+        macaron::Base64::Decode(_impl->_signature, rawSig);
+        std::vector<unsigned char> rawSignature(rawSig.begin(), rawSig.end());
         LOG_INF("Signature of length " << rawSignature.size()
                 << " data size: " << _impl->_data.length());
         if (!rsaEngine.verify(rawSignature))

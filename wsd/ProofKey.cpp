@@ -18,10 +18,10 @@
 #include <cstdlib>
 #include <vector>
 
-#include <Poco/Base64Decoder.h>
+#include <common/base64.hpp>
+
 #include <Poco/Crypto/RSADigestEngine.h>
 #include <Poco/Crypto/RSAKey.h>
-#include <Poco/LineEndingConverter.h>
 
 #include "Exceptions.hpp"
 #include <Log.hpp>
@@ -73,15 +73,9 @@ std::vector<unsigned char> ToNetworkOrderBytes(const T& x)
 
 std::vector<unsigned char> Proof::Base64ToBytes(const std::string &str)
 {
-    std::istringstream oss(str);
-    Poco::Base64Decoder decoder(oss);
-
-    char c = 0;
-    std::vector<unsigned char> vec;
-    while (decoder.get(c))
-        vec.push_back(static_cast<unsigned char>(c));
-
-    return vec;
+    std::string decoded;
+    macaron::Base64::Decode(str, decoded);
+    return std::vector<unsigned char>(decoded.begin(), decoded.end());
 }
 
 void Proof::initialize()

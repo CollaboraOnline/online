@@ -19,14 +19,9 @@
 #include "Util.hpp"
 #include "common/Common.hpp"
 
-#include <Poco/Base64Decoder.h>
-#include <Poco/Base64Encoder.h>
-#include <Poco/ConsoleChannel.h>
-#include <Poco/Exception.h>
-#include <Poco/Format.h>
+#include <common/base64.hpp>
+
 #include <Poco/HexBinaryEncoder.h>
-#include <Poco/LineEndingConverter.h>
-#include <Poco/TemporaryFile.h>
 #include <Poco/URI.h>
 #include <Poco/Util/Application.h>
 
@@ -153,10 +148,9 @@ namespace Util
         /// Note: May contain '/' characters.
         std::string getB64String(const std::size_t length)
         {
-            std::stringstream ss;
-            Poco::Base64Encoder b64(ss);
-            b64.write(getBytes(length).data(), length);
-            return ss.str().substr(0, length);
+            auto bytes = getBytes(length);
+            return macaron::Base64::Encode(
+                std::string_view(bytes.data(), length)).substr(0, length);
         }
 
         std::string getFilename(const std::size_t length)
@@ -1012,30 +1006,19 @@ namespace Util
 
     std::string base64Encode(std::string_view input)
     {
-        std::ostringstream oss;
-        Poco::Base64Encoder encoder(oss);
-        encoder << input;
-        encoder.close();
-        return oss.str();
+        return macaron::Base64::Encode(input);
     }
 
     std::string base64EncodeRemovingNewLines(const std::string_view& input)
     {
-        std::ostringstream oss;
-        // Use a line ending converter to remove these CRLF.
-        Poco::OutputLineEndingConverter lineEndingConv(oss, "");
-        Poco::Base64Encoder encoder(lineEndingConv);
-        encoder << input;
-        encoder.close();
-        return oss.str();
+        // macaron::Base64::Encode never inserts line breaks.
+        return macaron::Base64::Encode(input);
     }
 
     std::string base64Decode(const std::string& input)
     {
-        std::istringstream istr(input);
         std::string decoded;
-        Poco::Base64Decoder decoder(istr);
-        decoder >> decoded;
+        macaron::Base64::Decode(input, decoded);
         return decoded;
     }
 
