@@ -469,15 +469,16 @@ UnitBase::TestResult UnitSession::testSlideShowMultiDL()
 
             StringVector tokens(StringVector::tokenize(response.substr(11), ' '));
             // "downloadas: downloadId= port= id=slideshow"
-            const std::string downloadId = tokens[0].substr(std::string("downloadId=").size());
-            const int port = NumUtil::stoi(tokens[1].substr(std::string("port=").size()));
+            const std::string downloadId = tokens[0].substr(std::string_view("downloadId=").size());
+            const int port =
+                NumUtil::stoi(std::string_view(tokens[1]).substr(std::string_view("port=").size()));
             const std::string id_has = tokens[2].substr(std::string("id=").size());
             LOK_ASSERT(!downloadId.empty());
             LOK_ASSERT_EQUAL(static_cast<int>(Poco::URI(helpers::getTestServerURI()).getPort()),
                              port);
             LOK_ASSERT_EQUAL(id_req, id_has);
             TST_LOG(testname << ": Download Response: " << id_has << ": count " << dlIter << "/"
-                             << dlCount << ": " + downloadId);
+                             << dlCount << ": " << downloadId);
             {
                 std::string encodedDoc;
                 Poco::URI::encode(documentPath, ":/?", encodedDoc);
