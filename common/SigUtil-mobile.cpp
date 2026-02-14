@@ -11,9 +11,10 @@
 
 #include <config.h>
 
-#include <common/Log.hpp>
 #include "SigUtil.hpp"
-#include <Socket.hpp>
+
+#include <common/Log.hpp>
+#include <net/Socket.hpp>
 
 #include <string>
 

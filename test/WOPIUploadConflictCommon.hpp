@@ -15,7 +15,7 @@
 
 #include <Poco/Net/HTTPRequest.h>
 
-#include "WopiTestServer.hpp"
+#include <WopiTestServer.hpp>
 
 /**
  * This is a base class with a number of test cases which assert that the

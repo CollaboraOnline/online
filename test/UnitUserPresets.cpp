@@ -11,11 +11,11 @@
 
 #include <config.h>
 
-#include "WopiTestServer.hpp"
-#include "Unit.hpp"
-#include "lokassert.hpp"
-#include "testlog.hpp"
-#include "FileUtil.hpp"
+#include <WopiTestServer.hpp>
+#include <Unit.hpp>
+#include <lokassert.hpp>
+#include <testlog.hpp>
+#include <common/FileUtil.hpp>
 #include <wsd/DocumentBroker.hpp>
 #include <wsd/Process.hpp>
 

@@ -25,7 +25,7 @@
 #include <common/Util.hpp>
 #include <helpers.hpp>
 
-#include "UnitTimeoutBase.hpp"
+#include <UnitTimeoutBase.hpp>
 
 /// Test suite class for injected StreamSocket ctor exceptions, handled by ServerSocket::accept
 class UnitStreamSocketCtorFailure1 : public UnitTimeoutBase0

@@ -11,7 +11,7 @@
 
 #include <config.h>
 
-#include "WopiTestServer.hpp"
+#include <WopiTestServer.hpp>
 #include <common/Log.hpp>
 #include <Unit.hpp>
 #include <UnitHTTP.hpp>

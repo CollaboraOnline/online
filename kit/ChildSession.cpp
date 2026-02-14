@@ -45,7 +45,7 @@
 #include <common/TraceEvent.hpp>
 #include <common/SpookyV2.h>
 #include <common/Uri.hpp>
-#include "KitHelper.hpp"
+#include <KitHelper.hpp>
 #include <Png.hpp>
 #include <Clipboard.hpp>
 #include <CommandControl.hpp>
@@ -56,7 +56,7 @@
 #endif
 
 #if WASMAPP
-#include "wasmapp.hpp"
+#include <wasmapp.hpp>
 #endif
 
 #include <climits>

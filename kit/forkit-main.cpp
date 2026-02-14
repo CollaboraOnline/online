@@ -10,8 +10,8 @@
  */
 
 #include <config.h>
-#include "Common.hpp"
-#include "Kit.hpp"
+#include <Common.hpp>
+#include <Kit.hpp>
 
 int ClientPortNumber = DEFAULT_CLIENT_PORT_NUMBER;
 std::string MasterLocation;

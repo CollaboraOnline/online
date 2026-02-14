@@ -11,7 +11,7 @@
 #include <config.h>
 
 #include <common/Log.hpp>
-#include "StringVector.hpp"
+#include <common/StringVector.hpp>
 #include <common/Util.hpp>
 
 #include <Poco/Exception.h>

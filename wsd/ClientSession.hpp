@@ -11,11 +11,11 @@
 
 #pragma once
 
-#include "Session.hpp"
-#include "Storage.hpp"
-#include "SenderQueue.hpp"
-#include "ServerURL.hpp"
-#include "DocumentBroker.hpp"
+#include <Session.hpp>
+#include <Storage.hpp>
+#include <SenderQueue.hpp>
+#include <ServerURL.hpp>
+#include <DocumentBroker.hpp>
 
 #include <Poco/JSON/Object.h>
 #include <Poco/SharedPtr.h>

@@ -13,9 +13,9 @@
 
 #include <chrono>
 
-#include "HttpRequest.hpp"
+#include <HttpRequest.hpp>
 #include <common/Util.hpp>
-#include "lokassert.hpp"
+#include <lokassert.hpp>
 
 #include <WopiTestServer.hpp>
 #include <common/Log.hpp>

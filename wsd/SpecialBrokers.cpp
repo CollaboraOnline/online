@@ -13,13 +13,6 @@
 
 #include "SpecialBrokers.hpp"
 
-#include <atomic>
-#include <cassert>
-#include <chrono>
-#include <ctime>
-#include <memory>
-#include <string>
-
 #include <Poco/DigestStream.h>
 #include <Poco/Exception.h>
 #include <Poco/Path.h>
@@ -27,13 +20,13 @@
 #include <Poco/StreamCopier.h>
 #include <Poco/URI.h>
 
-#include "ClientSession.hpp"
-#include "Common.hpp"
-#include "COOLWSD.hpp"
-#include "FileServer.hpp"
-#include "Socket.hpp"
-#include "TileCache.hpp"
-#include "QuarantineUtil.hpp"
+#include <ClientSession.hpp>
+#include <Common.hpp>
+#include <COOLWSD.hpp>
+#include <FileServer.hpp>
+#include <Socket.hpp>
+#include <TileCache.hpp>
+#include <QuarantineUtil.hpp>
 #include <common/JsonUtil.hpp>
 #include <common/Log.hpp>
 #include <common/Message.hpp>
@@ -48,6 +41,14 @@
 #include <wopi/CheckFileInfo.hpp>
 #include <net/HttpHelper.hpp>
 #endif
+
+#include <atomic>
+#include <cassert>
+#include <chrono>
+#include <ctime>
+#include <memory>
+#include <string>
+
 #include <sys/types.h>
 #include <sys/wait.h>
 

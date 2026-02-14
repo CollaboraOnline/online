@@ -11,7 +11,7 @@
 
 #pragma once
 
-#include "CharacterConverter.hpp"
+#include <CharacterConverter.hpp>
 #include <COOLWSD.hpp>
 #include <HttpRequest.hpp>
 #include <common/Log.hpp>

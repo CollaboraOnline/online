@@ -11,8 +11,9 @@
 
 #include <config.h>
 
-#include <memory.h>
 #include "SpookyV2.h"
+
+#include <memory.h>
 
 #define ALLOW_UNALIGNED_READS true
 

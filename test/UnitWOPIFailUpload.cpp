@@ -11,7 +11,7 @@
 
 #include <config.h>
 
-#include "WOPIUploadConflictCommon.hpp"
+#include <WOPIUploadConflictCommon.hpp>
 
 #include <chrono>
 #include <string>
@@ -20,7 +20,7 @@
 #include <Poco/Net/HTTPRequest.h>
 
 #include <common/Log.hpp>
-#include "lokassert.hpp"
+#include <lokassert.hpp>
 
 using namespace std::literals;
 

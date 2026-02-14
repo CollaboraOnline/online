@@ -13,13 +13,13 @@
 
 #include <Kit.hpp>
 #ifdef IOS
-#include "ios.h"
+#include <ios.h>
 #elif defined(GTKAPP)
-#include "gtk.hpp"
+#include <gtk.hpp>
 #elif defined(__ANDROID__)
-#include "androidapp.hpp"
+#include <androidapp.hpp>
 #elif WASMAPP
-#include "wasmapp.hpp"
+#include <wasmapp.hpp>
 #endif
 
 #endif // MOBILEAPP

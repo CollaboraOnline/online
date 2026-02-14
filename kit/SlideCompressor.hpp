@@ -15,7 +15,7 @@
 #include <memory>
 #include <functional>
 
-#include "ThreadPool.hpp"
+#include <ThreadPool.hpp>
 
 /// Do slide compression work in a thread pool
 class SlideCompressor {

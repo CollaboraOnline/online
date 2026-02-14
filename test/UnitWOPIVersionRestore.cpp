@@ -11,9 +11,9 @@
 
 #include <config.h>
 
-#include "WopiTestServer.hpp"
-#include "Unit.hpp"
-#include "lokassert.hpp"
+#include <WopiTestServer.hpp>
+#include <Unit.hpp>
+#include <lokassert.hpp>
 
 #include <Poco/Net/HTTPRequest.h>
 #include <Poco/Util/LayeredConfiguration.h>

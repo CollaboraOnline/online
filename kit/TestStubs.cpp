@@ -15,8 +15,8 @@
 
 #include <config.h>
 
-#include "common/Common.hpp"
-#include "ChildSession.hpp"
+#include <common/Common.hpp>
+#include <ChildSession.hpp>
 
 void ChildSession::loKitCallback(const int /* type */, const std::string& /* payload */) {}
 void ChildSession::disconnect() {}

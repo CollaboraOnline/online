@@ -10,10 +10,10 @@
  */
 #include <config.h>
 
-#include "StringVector.hpp"
+#include <common/StringVector.hpp>
 #include <common/Util.hpp>
-#include "COOLWSD.hpp"
-#include "Kit.hpp"
+#include <COOLWSD.hpp>
+#include <Kit.hpp>
 
 void setKitInProcess() { Util::setKitInProcess(true); }
 

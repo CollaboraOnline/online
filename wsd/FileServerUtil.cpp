@@ -11,11 +11,10 @@
 
 #include <config.h>
 
-#include "FileServer.hpp"
-
 #include <common/JsonUtil.hpp>
 #include <common/StringVector.hpp>
 #include <common/base64.hpp>
+#include <wsd/FileServer.hpp>
 
 #include <cctype>
 

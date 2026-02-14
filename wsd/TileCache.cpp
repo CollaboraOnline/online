@@ -13,6 +13,14 @@
 
 #include "TileCache.hpp"
 
+#include <common/Common.hpp>
+#include <common/FileUtil.hpp>
+#include <common/Protocol.hpp>
+#include <common/StringVector.hpp>
+#include <common/Unit.hpp>
+#include <common/Util.hpp>
+#include <wsd/ClientSession.hpp>
+
 #include <cassert>
 #include <climits>
 #include <cstddef>
@@ -24,14 +32,6 @@
 #include <string>
 #include <utility>
 #include <vector>
-
-#include "ClientSession.hpp"
-#include <Common.hpp>
-#include <Protocol.hpp>
-#include <common/StringVector.hpp>
-#include <Unit.hpp>
-#include <common/Util.hpp>
-#include <common/FileUtil.hpp>
 
 using namespace COOLProtocol;
 

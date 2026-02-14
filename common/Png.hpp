@@ -59,7 +59,7 @@
 #include <fstream>
 
 #include <common/Log.hpp>
-#include "TraceEvent.hpp"
+#include <TraceEvent.hpp>
 
 namespace Png
 {

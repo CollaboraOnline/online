@@ -24,15 +24,15 @@
 
 #include <wsd/TileDesc.hpp>
 
-#include "Socket.hpp"
+#include <Socket.hpp>
 
 #define LOK_USE_UNSTABLE_API
 #include <LibreOfficeKit/LibreOfficeKit.hxx>
 
 #if MOBILEAPP
 
-#include "ClientSession.hpp"
-#include "DocumentBroker.hpp"
+#include <ClientSession.hpp>
+#include <DocumentBroker.hpp>
 
 #endif
 

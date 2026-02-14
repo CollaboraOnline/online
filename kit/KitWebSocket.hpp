@@ -15,9 +15,18 @@
 
 #include <net/WebSocketHandler.hpp>
 
+#include <memory>
+#include <string>
+
+class ChildSession;
 class Document;
 class KitQueue;
 class KitSocketPoll;
+
+namespace lok
+{
+class Office;
+}
 
 class KitWebSocketHandler final : public WebSocketHandler
 {
@@ -88,24 +97,11 @@ class BgSaveParentWebSocketHandler final : public WebSocketHandler
     std::shared_ptr<ChildSession> _session;
 
 public:
-    BgSaveParentWebSocketHandler(const std::string& socketName,
-                                 const pid_t childPid,
+    BgSaveParentWebSocketHandler(const std::string& socketName, const pid_t childPid,
                                  std::shared_ptr<Document> document,
-                                 const std::shared_ptr<ChildSession> &session)
-        : WebSocketHandler(/* isClient = */ false, /* isMasking */ false)
-        , _childPid(childPid)
-        , _saveCompleted(false)
-        , _socketName(socketName)
-        , _document(std::move(document))
-        , _session(session)
-    {
-        _document->bgSaveStarted();
-    }
+                                 const std::shared_ptr<ChildSession>& session);
 
-    ~BgSaveParentWebSocketHandler()
-    {
-        _document->bgSaveEnded();
-    }
+    ~BgSaveParentWebSocketHandler();
 
 protected:
     virtual void handleMessage(const std::vector<char>& data) override;

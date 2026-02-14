@@ -11,8 +11,8 @@
 
 #include <config.h>
 
-#include "Unit.hpp"
-#include "WopiTestServer.hpp"
+#include <Unit.hpp>
+#include <WopiTestServer.hpp>
 
 using namespace helpers;
 

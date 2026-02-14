@@ -11,8 +11,8 @@
 
 #include <config.h>
 
-#include "HttpRequest.hpp"
-#include "lokassert.hpp"
+#include <HttpRequest.hpp>
+#include <lokassert.hpp>
 
 #include <WopiTestServer.hpp>
 #include <common/Log.hpp>

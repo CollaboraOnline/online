@@ -11,12 +11,12 @@
 
 #include <config.h>
 
+#include "FileUtil.hpp"
+
 #include <common/Anonymizer.hpp>
 #include <common/Log.hpp>
 #include <common/Unit.hpp>
 #include <common/Util.hpp>
-
-#include "FileUtil.hpp"
 
 #include <Poco/File.h>
 #include <Poco/Path.h>

@@ -12,8 +12,9 @@
 #include <config.h>
 
 #include "Authorization.hpp"
+
 #include <common/Log.hpp>
-#include "StringVector.hpp"
+#include <common/StringVector.hpp>
 #include <common/Uri.hpp>
 
 #include <Poco/Net/HTTPRequest.h>

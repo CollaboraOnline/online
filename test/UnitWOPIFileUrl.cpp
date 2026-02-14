@@ -11,7 +11,7 @@
 
 #include <config.h>
 
-#include "lokassert.hpp"
+#include <lokassert.hpp>
 
 #include <Poco/Net/HTTPRequest.h>
 

@@ -12,7 +12,8 @@
 #include <config.h>
 
 #include "Log.hpp"
-#include "StaticLogHelper.hpp"
+
+#include <common/StaticLogHelper.hpp>
 #include <common/Util.hpp>
 
 #include <Poco/AutoPtr.h>

@@ -15,11 +15,11 @@
 
 #include "MobileApp.hpp"
 
+#include <common/Log.hpp>
+
 #include <cassert>
 #include <map>
 #include <mutex>
-
-#include <common/Log.hpp>
 
 static std::map<unsigned, DocumentData*> idToDocDataMap;
 static std::mutex idToDocDataMapMutex;

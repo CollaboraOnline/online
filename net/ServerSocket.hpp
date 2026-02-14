@@ -11,10 +11,10 @@
 
 #pragma once
 
-#include "NetUtil.hpp"
-#include "memory"
+#include <NetUtil.hpp>
+#include <memory>
 
-#include "Socket.hpp"
+#include <Socket.hpp>
 #include <common/Log.hpp>
 
 class SocketFactory
