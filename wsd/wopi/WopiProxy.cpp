@@ -11,16 +11,13 @@
 
 #include <config.h>
 
-#include <iterator>
-#include <optional>
-
 #include "WopiProxy.hpp"
 
 #include <common/Anonymizer.hpp>
-#include "FileUtil.hpp"
-#include "HttpHelper.hpp"
-#include "HttpRequest.hpp"
-#include "Protocol.hpp"
+#include <common/FileUtil.hpp>
+#include <HttpHelper.hpp>
+#include <HttpRequest.hpp>
+#include <Protocol.hpp>
 #include <COOLWSD.hpp>
 #include <Exceptions.hpp>
 #include <common/Log.hpp>
@@ -28,6 +25,9 @@
 #include <common/JsonUtil.hpp>
 #include <wopi/StorageConnectionManager.hpp>
 #include <wopi/WopiStorage.hpp>
+
+#include <iterator>
+#include <optional>
 
 void WopiProxy::handleRequest(std::istream & message,
                               [[maybe_unused]] const std::shared_ptr<TerminatingPoll>& poll,

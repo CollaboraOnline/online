@@ -11,8 +11,9 @@
 
 #include <config.h>
 
-#include <common/Anonymizer.hpp>
 #include "ClientSession.hpp"
+
+#include <common/Anonymizer.hpp>
 #include <fuzzer/Common.hpp>
 
 bool DoInitialization()

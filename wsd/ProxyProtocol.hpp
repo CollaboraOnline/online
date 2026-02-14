@@ -11,7 +11,7 @@
 
 #pragma once
 
-#include "StateEnum.hpp"
+#include <StateEnum.hpp>
 #include <map>
 #include <memory>
 #include <net/Socket.hpp>

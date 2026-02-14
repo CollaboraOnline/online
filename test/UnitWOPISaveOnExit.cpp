@@ -11,7 +11,7 @@
 
 #include <config.h>
 
-#include "WOPIUploadConflictCommon.hpp"
+#include <WOPIUploadConflictCommon.hpp>
 
 #include <atomic>
 #include <string>
@@ -19,8 +19,8 @@
 
 #include <Poco/Net/HTTPRequest.h>
 
-#include "Unit.hpp"
-#include "lokassert.hpp"
+#include <Unit.hpp>
+#include <lokassert.hpp>
 
 class UnitWOPISaveOnExit : public WOPIUploadConflictCommon
 {

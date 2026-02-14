@@ -15,24 +15,23 @@
 
 #include <config.h>
 
-#include <Poco/URI.h>
-
-#include <sysexits.h>
-#include <sys/wait.h>
-
-#include <sys/types.h>
+#include "KitWebSocket.hpp"
 
 #include <common/Anonymizer.hpp>
-#include <common/Seccomp.hpp>
 #include <common/JsonUtil.hpp>
+#include <common/Seccomp.hpp>
+#include <common/SigUtil.hpp>
 #include <common/TraceEvent.hpp>
 #include <common/Uri.hpp>
-
-#include "Kit.hpp"
-#include "ChildSession.hpp"
-#include "SigUtil.hpp"
 #include <common/Util.hpp>
-#include "KitWebSocket.hpp"
+#include <kit/ChildSession.hpp>
+#include <kit/Kit.hpp>
+
+#include <Poco/URI.h>
+
+#include <sys/types.h>
+#include <sys/wait.h>
+#include <sysexits.h>
 
 using Poco::Exception;
 
@@ -242,6 +241,21 @@ BgSaveChildWebSocketHandler::~BgSaveChildWebSocketHandler()
 }
 
 // Kit handler for messages from transient background save Kit
+
+BgSaveParentWebSocketHandler::BgSaveParentWebSocketHandler(
+    const std::string& socketName, const pid_t childPid, std::shared_ptr<Document> document,
+    const std::shared_ptr<ChildSession>& session)
+    : WebSocketHandler(/* isClient = */ false, /* isMasking */ false)
+    , _childPid(childPid)
+    , _saveCompleted(false)
+    , _socketName(socketName)
+    , _document(std::move(document))
+    , _session(session)
+{
+    _document->bgSaveStarted();
+}
+
+BgSaveParentWebSocketHandler::~BgSaveParentWebSocketHandler() { _document->bgSaveEnded(); }
 
 void BgSaveParentWebSocketHandler::terminateSave(const std::string &reason)
 {

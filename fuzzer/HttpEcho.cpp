@@ -9,7 +9,7 @@
 
 #include <cstdlib>
 
-#include "Socket.hpp"
+#include <Socket.hpp>
 #include <test/HttpTestServer.hpp>
 
 #include <Poco/URI.h>
@@ -21,7 +21,7 @@
 #include <test/lokassert.hpp>
 
 #if ENABLE_SSL
-#include "Ssl.hpp"
+#include <Ssl.hpp>
 #include <net/SslSocket.hpp>
 #endif
 #include <net/ServerSocket.hpp>

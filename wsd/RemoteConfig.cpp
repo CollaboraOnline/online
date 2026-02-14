@@ -9,14 +9,15 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+#include <config.h>
+
 #if defined(MOBILEAPP) && MOBILEAPP
 #error This file should be excluded from Mobile App builds
 #endif // MOBILEAPP
 
-#include <config.h>
-
 #include "RemoteConfig.hpp"
 
+#include <common/CommandControl.hpp>
 #include <common/JsonUtil.hpp>
 #include <net/HttpRequest.hpp>
 #include <net/Socket.hpp>
@@ -24,7 +25,6 @@
 #include <wsd/COOLWSD.hpp>
 #include <wsd/HostUtil.hpp>
 #include <wsd/wopi/StorageConnectionManager.hpp>
-#include <CommandControl.hpp>
 
 #include <Poco/URI.h>
 #include <Poco/Util/LayeredConfiguration.h>

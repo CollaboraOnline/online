@@ -20,13 +20,14 @@
 
 #include <config.h>
 
-#include "DocumentBroker.hpp"
-#include "ClientSession.hpp"
 #include "ProxyProtocol.hpp"
-#include "Exceptions.hpp"
-#include "COOLWSD.hpp"
+
 #include <common/Util.hpp>
-#include <Socket.hpp>
+#include <net/Socket.hpp>
+#include <wsd/COOLWSD.hpp>
+#include <wsd/ClientSession.hpp>
+#include <wsd/DocumentBroker.hpp>
+#include <wsd/Exceptions.hpp>
 
 #include <memory>
 #include <string>

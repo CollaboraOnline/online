@@ -13,8 +13,11 @@
 
 #include "Auth.hpp"
 
-#include <cstdlib>
-#include <string>
+#include <common/ConfigUtil.hpp>
+#include <common/JsonUtil.hpp>
+#include <common/Log.hpp>
+#include <common/Protocol.hpp>
+#include <common/Util.hpp>
 
 #include <Poco/Crypto/RSADigestEngine.h>
 #include <Poco/Crypto/RSAKey.h>
@@ -26,11 +29,8 @@
 #include <Poco/Net/NetException.h>
 #include <Poco/URI.h>
 
-#include <common/JsonUtil.hpp>
-#include <common/Log.hpp>
-#include <Protocol.hpp>
-#include <common/Util.hpp>
-#include <common/ConfigUtil.hpp>
+#include <cstdlib>
+#include <string>
 
 using Poco::OutputLineEndingConverter;
 

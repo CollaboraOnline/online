@@ -12,6 +12,7 @@
 #include <config.h>
 
 #include "Crypto.hpp"
+
 #include <common/Log.hpp>
 
 #include <Poco/Base64Decoder.h>
@@ -24,7 +25,7 @@
 #include <sstream>
 
 #if ENABLE_SUPPORT_KEY
-#include "support-public-key.hpp"
+#include <support-public-key.hpp>
 #endif
 
 using namespace Poco;

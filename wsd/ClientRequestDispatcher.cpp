@@ -12,7 +12,7 @@
 #include <config.h>
 
 #if ENABLE_FEATURE_LOCK
-#include "CommandControl.hpp"
+#include <CommandControl.hpp>
 #endif
 
 #include <common/Anonymizer.hpp>

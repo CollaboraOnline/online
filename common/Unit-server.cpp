@@ -7,15 +7,16 @@
 
 #include <config.h>
 
-#include <common/Log.hpp>
 #include "Unit.hpp"
+
+#include <common/Log.hpp>
 #include <common/Util.hpp>
+
+#include <test/testlog.hpp>
 
 // A "server" COOL is always running on a Unixish OS, so we can
 // include this unconditionally.
 #include <dlfcn.h>
-
-#include <test/testlog.hpp>
 
 UnitBase** UnitBase::linkAndCreateUnit([[maybe_unused]] UnitType type,
                                        [[maybe_unused]] const std::string& unitLibPath)

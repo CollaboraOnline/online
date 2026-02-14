@@ -25,7 +25,7 @@
 #include <common/Util.hpp>
 #include <helpers.hpp>
 
-#include "UnitTimeoutBase.hpp"
+#include <UnitTimeoutBase.hpp>
 
 /// Test suite class for injected ServerSocket accept failures
 class UnitServerSocketAcceptFailure1 : public UnitTimeoutBase0

@@ -11,7 +11,7 @@
 
 #include <config.h>
 
-#include "WOPIUploadConflictCommon.hpp"
+#include <WOPIUploadConflictCommon.hpp>
 
 #include <ctime>
 #include <string>
@@ -19,7 +19,7 @@
 
 #include <Poco/Net/HTTPRequest.h>
 
-#include "lokassert.hpp"
+#include <lokassert.hpp>
 
 class UnitWOPIDocumentConflict : public WOPIUploadConflictCommon
 {

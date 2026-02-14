@@ -13,18 +13,18 @@
 
 #include "QuarantineUtil.hpp"
 
+#include <common/Common.hpp>
+#include <common/FileUtil.hpp>
+#include <common/Log.hpp>
+#include <common/StringVector.hpp>
+#include <common/Util.hpp>
+#include <wsd/ClientSession.hpp>
+#include <wsd/DocumentBroker.hpp>
+
 #include <Poco/Path.h>
 #include <Poco/URI.h>
-#include "ClientSession.hpp"
-#include "DocumentBroker.hpp"
-#include "FileUtil.hpp"
-#include <common/Util.hpp>
 
 #include <chrono>
-#include <common/Common.hpp>
-#include <common/StringVector.hpp>
-#include <common/Log.hpp>
-
 #include <exception>
 #include <mutex>
 #include <stdexcept>

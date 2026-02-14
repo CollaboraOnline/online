@@ -11,13 +11,11 @@
 
 #include <config.h>
 
-#include <cstdlib>
-#include <cstring>
-#include <fstream>
-#include <iostream>
-#include <mutex>
-#include <sysexits.h>
-#include <thread>
+#include <common/Common.hpp>
+#include <common/Log.hpp>
+#include <common/Protocol.hpp>
+#include <common/Util.hpp>
+#include <tools/COOLWebSocket.hpp>
 
 #include <Poco/Net/AcceptCertificateHandler.h>
 #include <Poco/Net/Context.h>
@@ -33,11 +31,13 @@
 #include <Poco/URI.h>
 #include <Poco/Util/Application.h>
 
-#include <Common.hpp>
-#include <Protocol.hpp>
-#include "COOLWebSocket.hpp"
-#include <common/Log.hpp>
-#include <common/Util.hpp>
+#include <cstdlib>
+#include <cstring>
+#include <fstream>
+#include <iostream>
+#include <mutex>
+#include <sysexits.h>
+#include <thread>
 
 using namespace COOLProtocol;
 

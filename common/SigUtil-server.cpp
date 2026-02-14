@@ -11,10 +11,11 @@
 
 #include <config.h>
 
-#include "Common.hpp"
-#include <common/Log.hpp>
-#include "SigHandlerTrap.hpp"
 #include "SigUtil.hpp"
+
+#include <Common.hpp>
+#include <common/Log.hpp>
+#include <SigHandlerTrap.hpp>
 #include <Socket.hpp>
 #include <test/testlog.hpp>
 #include <common/Util.hpp>

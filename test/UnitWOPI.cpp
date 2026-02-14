@@ -12,7 +12,7 @@
 #include <config.h>
 
 #include <common/Util.hpp>
-#include "lokassert.hpp"
+#include <lokassert.hpp>
 
 #include <WopiTestServer.hpp>
 

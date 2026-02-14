@@ -10,10 +10,10 @@
  */
 #include <config.h>
 
-#include "StringVector.hpp"
+#include <common/StringVector.hpp>
 #include <common/Util.hpp>
-#include "TraceEvent.hpp"
-#include "COOLWSD.hpp"
+#include <TraceEvent.hpp>
+#include <COOLWSD.hpp>
 
 void setKitInProcess() { Util::setKitInProcess(false); }
 

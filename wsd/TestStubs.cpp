@@ -15,9 +15,9 @@
 
 #include <config.h>
 
-#include "DocumentBroker.hpp"
+#include <DocumentBroker.hpp>
 
-#include "ClientSession.hpp"
+#include <ClientSession.hpp>
 
 void DocumentBroker::assertCorrectThread(const char*, int) const {}
 

@@ -21,8 +21,8 @@
 #include <Rectangle.hpp>
 
 #include <common/Log.hpp>
-#include "Common.hpp"
-#include "TileDesc.hpp"
+#include <Common.hpp>
+#include <TileDesc.hpp>
 
 class ClientSession;
 

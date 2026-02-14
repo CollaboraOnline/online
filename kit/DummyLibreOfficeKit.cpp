@@ -13,12 +13,12 @@
 
 #include "DummyLibreOfficeKit.hpp"
 
+#include <LibreOfficeKit/LibreOfficeKitEnums.h>
+#include <LibreOfficeKit/LibreOfficeKitTypes.h>
+
 #include <cstdlib>
 #include <cstring>
 #include <memory>
-
-#include <LibreOfficeKit/LibreOfficeKitEnums.h>
-#include <LibreOfficeKit/LibreOfficeKitTypes.h>
 
 struct LibLODocument_Impl : public _LibreOfficeKitDocument
 {

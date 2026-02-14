@@ -11,7 +11,7 @@
 
 #include <config.h>
 
-#include "WebSocketSession.hpp"
+#include <WebSocketSession.hpp>
 
 #include <Poco/Net/AcceptCertificateHandler.h>
 #include <Poco/Net/HTTPRequest.h>

@@ -13,21 +13,22 @@
 
 #include "ProofKey.hpp"
 
-#include <algorithm>
-#include <cassert>
-#include <cstdlib>
-#include <vector>
+#include <common/Log.hpp>
+#include <common/Util.hpp>
+#include <wsd/Exceptions.hpp>
 
 #include <Poco/Base64Decoder.h>
 #include <Poco/Crypto/RSADigestEngine.h>
 #include <Poco/Crypto/RSAKey.h>
 #include <Poco/LineEndingConverter.h>
 
-#include "Exceptions.hpp"
-#include <common/Log.hpp>
-#include <common/Util.hpp>
+#include <algorithm>
+#include <cassert>
+#include <cstdlib>
+#include <vector>
 
-namespace{
+namespace
+{
 
 std::vector<unsigned char> getBytesLE(const unsigned char* bytesInHostOrder, const size_t n)
 {

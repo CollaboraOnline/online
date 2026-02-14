@@ -11,8 +11,9 @@
 
 #include <config.h>
 
-#include <common/Log.hpp>
 #include "SigUtil.hpp"
+
+#include <common/Log.hpp>
 
 #include <string>
 

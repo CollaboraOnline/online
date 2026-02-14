@@ -11,49 +11,49 @@
 
 #include <config.h>
 
-#include <chrono>
-#include <memory>
-#include <string>
-
-#include <Poco/Exception.h>
+#include "Storage.hpp"
 
 #if !MOBILEAPP
+
+#include <net/HttpRequest.hpp>
+#include <wopi/WopiStorage.hpp>
+#include <wsd/Auth.hpp>
+#include <wsd/HostUtil.hpp>
+#include <wsd/ProofKey.hpp>
 
 #include <cassert>
 #include <cerrno>
 
-#include <Auth.hpp>
-#include <HostUtil.hpp>
-#include <ProofKey.hpp>
-#include <HttpRequest.hpp>
-#include <wopi/WopiStorage.hpp>
+#endif // !MOBILEAPP
 
-#endif
-
-#include <Poco/StreamCopier.h>
-#include <Poco/Path.h>
-#include <Poco/URI.h>
-
-#include <CommandControl.hpp>
-#include <Common.hpp>
-#include <Exceptions.hpp>
-#include <common/Log.hpp>
-#include <NetUtil.hpp>
-#include <Storage.hpp>
-#include <Unit.hpp>
-#include <common/Util.hpp>
+#include <common/CommandControl.hpp>
+#include <common/Common.hpp>
 #include <common/ConfigUtil.hpp>
 #include <common/FileUtil.hpp>
 #include <common/JsonUtil.hpp>
+#include <common/Log.hpp>
 #include <common/TraceEvent.hpp>
+#include <common/Unit.hpp>
+#include <common/Util.hpp>
+#include <net/NetUtil.hpp>
 #include <wsd/COOLWSD.hpp>
+#include <wsd/Exceptions.hpp>
+
+#include <Poco/Exception.h>
+#include <Poco/Path.h>
+#include <Poco/StreamCopier.h>
+#include <Poco/URI.h>
+
+#include <chrono>
+#include <memory>
+#include <string>
 
 #ifdef IOS
 #include <ios.h>
 #elif defined(__ANDROID__)
-#include "androidapp.hpp"
+#include <androidapp.hpp>
 #elif defined(GTKAPP)
-#include "gtk.hpp"
+#include <gtk.hpp>
 #endif // IOS
 
 #if ENABLE_LOCAL_FILESYSTEM

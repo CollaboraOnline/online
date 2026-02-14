@@ -11,7 +11,7 @@
 
 #include <config.h>
 
-#include "HostUtil.hpp"
+#include <HostUtil.hpp>
 
 #include <test/lokassert.hpp>
 

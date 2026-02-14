@@ -14,8 +14,9 @@
 
 #include "RegexUtil.hpp"
 
-#include <regex>
 #include <Poco/RegularExpression.h>
+
+#include <regex>
 
 namespace RegexUtil
 {

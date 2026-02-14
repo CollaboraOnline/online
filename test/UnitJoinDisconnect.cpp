@@ -11,8 +11,8 @@
 
 #include <config.h>
 
-#include "lokassert.hpp"
-#include "Unit.hpp"
+#include <lokassert.hpp>
+#include <Unit.hpp>
 #include <WopiTestServer.hpp>
 #include <common/Log.hpp>
 #include <helpers.hpp>

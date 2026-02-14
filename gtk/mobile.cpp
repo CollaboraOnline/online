@@ -20,13 +20,13 @@
 #  include<JavaScriptCore/JavaScript.h>
 #endif
 
-#include "FakeSocket.hpp"
+#include <FakeSocket.hpp>
 #include <common/Log.hpp>
-#include "COOLWSD.hpp"
-#include "Protocol.hpp"
+#include <COOLWSD.hpp>
+#include <Protocol.hpp>
 #include <common/Util.hpp>
 
-#include "gtk.hpp"
+#include <gtk.hpp>
 
 const char *user_name = "Dummy";
 

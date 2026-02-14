@@ -59,7 +59,7 @@
 #endif
 
 #if !MOBILEAPP
-#include "SigHandlerTrap.hpp"
+#include <SigHandlerTrap.hpp>
 #endif
 
 #if !defined(__ANDROID__) && !defined(__EMSCRIPTEN__)

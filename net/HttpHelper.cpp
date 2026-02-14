@@ -12,18 +12,18 @@
 #include <config.h>
 
 #include "HttpHelper.hpp"
-#include "HttpRequest.hpp"
-
-#include <algorithm>
-#include <string>
-#include <zlib.h>
-
-#include <Poco/Net/HTTPResponse.h>
 
 #include <common/Common.hpp>
 #include <common/FileUtil.hpp>
 #include <common/Util.hpp>
+#include <net/HttpRequest.hpp>
 #include <net/Socket.hpp>
+
+#include <Poco/Net/HTTPResponse.h>
+
+#include <algorithm>
+#include <string>
+#include <zlib.h>
 
 namespace
 {

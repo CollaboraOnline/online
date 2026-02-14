@@ -18,8 +18,8 @@
 #include <vector>
 #include <functional>
 
-#include "Protocol.hpp"
-#include "StringVector.hpp"
+#include <Protocol.hpp>
+#include <common/StringVector.hpp>
 #include <common/Log.hpp>
 #include <common/Util.hpp>
 

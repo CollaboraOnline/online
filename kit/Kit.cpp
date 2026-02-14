@@ -15,6 +15,8 @@
 
 #include <config.h>
 
+#include "Kit.hpp"
+
 #include <common/Anonymizer.hpp>
 #include <wsd/TileDesc.hpp>
 
@@ -73,13 +75,12 @@
 #include <Poco/Exception.h>
 #include <Poco/URI.h>
 
-#include "ChildSession.hpp"
+#include <ChildSession.hpp>
 #include <Common.hpp>
 #include <MobileApp.hpp>
 #include <common/FileUtil.hpp>
 #include <common/JsonUtil.hpp>
-#include "KitHelper.hpp"
-#include "Kit.hpp"
+#include <KitHelper.hpp>
 #include <Protocol.hpp>
 #include <common/Log.hpp>
 #include <Png.hpp>
@@ -88,8 +89,8 @@
 #include <UserMessages.hpp>
 #include <common/Util.hpp>
 #include <common/JsonUtil.hpp>
-#include "RenderTiles.hpp"
-#include "KitWebSocket.hpp"
+#include <RenderTiles.hpp>
+#include <KitWebSocket.hpp>
 #include <common/ConfigUtil.hpp>
 #include <common/Uri.hpp>
 
@@ -104,15 +105,15 @@
 #endif
 
 #if MOBILEAPP
-#include "COOLWSD.hpp"
+#include <COOLWSD.hpp>
 #ifndef IOS
-#include "SetupKitEnvironment.hpp"
+#include <SetupKitEnvironment.hpp>
 #endif
 #endif
 
 #ifdef IOS
-#include "ios.h"
-#include "DocumentBroker.hpp"
+#include <ios.h>
+#include <DocumentBroker.hpp>
 #endif
 
 using Poco::Exception;
