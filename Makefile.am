@@ -637,6 +637,7 @@ clean-local:
 if ENABLE_DEBUG
 # can write to /tmp/coolwsd.log
   OUTPUT_TO_FILE=true
+  FIND_FREE_PORT_PARAM=--find-free-port
 else
 # can't write to /var/log/coolwsd.log
   OUTPUT_TO_FILE=false
@@ -658,6 +659,7 @@ setup-wsd: all @JAILS_PATH@ @CACHE_PATH@ presets-dir
 	@echo
 
 COMMON_PARAMS = \
+	$(FIND_FREE_PORT_PARAM) \
 	$(if $(TEST_APPARMOR),--disable-cool-user-checking) \
 	--o:sys_template_path="@SYSTEMPLATE_PATH@" \
 	--o:child_root_path="@JAILS_PATH@" \
