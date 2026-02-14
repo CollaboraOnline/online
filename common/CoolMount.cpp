@@ -18,6 +18,7 @@
 #include <cstdio>
 #include <cstdlib>
 #include <cstring>
+#include <string_view>
 #include <sys/mount.h>
 #include <sys/stat.h>
 #include <sysexits.h>
@@ -152,14 +153,14 @@ int domount(int argc, const char* const* argv)
     }
 
     const char* option = argv[1];
-    if ((argc == 3 || argc == 4) && strcmp(option, "-u") == 0) // Unmount
+    if ((argc == 3 || argc == 4) && (option == std::string_view("-u"))) // Unmount
     {
         bool silent = false;
         int argpos = 2;
 
         if (argc == 4)
         {
-            if (strcmp(argv[argpos], "-s") != 0)
+            if (argv[argpos] != std::string_view("-s"))
             {
                 fprintf(stderr, "%s: only -s allowed [%s].\n", program, argv[argpos]);
                 return EX_USAGE;
@@ -208,7 +209,7 @@ int domount(int argc, const char* const* argv)
         }
     }
 #ifdef __FreeBSD__
-    else if (argc == 3 && strcmp(option, "-d") == 0) // Mount devfs
+    else if (argc == 3 && option == std::string_view("-d")) // Mount devfs
     {
         const char* target = argv[2];
 
@@ -295,7 +296,7 @@ int domount(int argc, const char* const* argv)
         // Mount the source path as the target path.
         // First bind to mount an existing directory node into the chroot.
         // MS_BIND ignores other flags.
-        if (strcmp(option, "-b") == 0) // Shared or Bind Mount.
+        if (option == std::string_view("-b")) // Shared or Bind Mount.
         {
             const int retval
                 = MOUNT(source, target, nullptr, (MS_MGC_VAL | MS_BIND | MS_REC), nullptr);
@@ -306,7 +307,7 @@ int domount(int argc, const char* const* argv)
                 return EX_SOFTWARE;
             }
         }
-        else if (strcmp(option, "-r") == 0) // Readonly Mount.
+        else if (option == std::string_view("-r")) // Readonly Mount.
         {
             // Now we need to set read-only and other flags with a remount.
             unsigned long mountflags = (MS_BIND | MS_REMOUNT | MS_NODEV | MS_NOSUID | MS_RDONLY);

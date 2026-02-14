@@ -24,6 +24,7 @@
 #include <pwd.h>
 #include <unistd.h>
 #include <string.h>
+#include <string>
 #include <stdio.h>
 
 #ifndef COOL_USER_ID
