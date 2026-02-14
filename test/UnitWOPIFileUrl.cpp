@@ -13,6 +13,8 @@
 
 #include "lokassert.hpp"
 
+#include <regex>
+
 #include <Poco/Net/HTTPRequest.h>
 
 #include <WopiTestServer.hpp>
@@ -81,14 +83,14 @@ public:
                                                << " request: " << uriReq.toString());
 
         constexpr auto DefaultUrlFilename = "empty.odt";
-        static const Poco::RegularExpression regContent("/wopi/files/[0-9]/contents");
+        static const std::regex regContent("/wopi/files/[0-9]/contents");
 
         if (request.getMethod() == "GET")
         {
-            static const Poco::RegularExpression regInfo("/wopi/files/[0-9]");
+            static const std::regex regInfo("/wopi/files/[0-9]");
 
             // CheckFileInfo
-            if (regInfo.match(uriReq.getPath()))
+            if (std::regex_match(uriReq.getPath(), regInfo))
             {
                 TST_LOG("FakeWOPIHost: Handling WOPI::CheckFileInfo: " << uriReq.getPath());
 
@@ -128,7 +130,7 @@ public:
                 return true;
             }
 
-            if (regContent.match(uriReq.getPath()))
+            if (std::regex_match(uriReq.getPath(), regContent))
             {
                 if (_fileUrlState == FileUrlState::Valid)
                 {
@@ -153,7 +155,7 @@ public:
             LOK_ASSERT_STATE(_phase, Phase::WaitPutFile);
 
             LOK_ASSERT_MESSAGE("Always the default URI must be used for PutFile",
-                               regContent.match(uriReq.getPath()));
+                               std::regex_match(uriReq.getPath(), regContent));
 
             std::streamsize size = request.getContentLength();
             LOK_ASSERT(size > 0);
