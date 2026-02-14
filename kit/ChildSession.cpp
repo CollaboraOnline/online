@@ -549,6 +549,7 @@ bool ChildSession::_handleInput(const char *buffer, int length)
         assert(Util::isFuzzing() ||
                tokens.equals(0, "clientzoom") ||
                tokens.equals(0, "clientvisiblearea") ||
+               tokens.equals(0, "clientviewstate") ||
                tokens.equals(0, "outlinestate") ||
                tokens.equals(0, "downloadas") ||
                tokens.equals(0, "getchildid") ||
@@ -598,6 +599,10 @@ bool ChildSession::_handleInput(const char *buffer, int length)
         else if (tokens.equals(0, "clientvisiblearea"))
         {
             return clientVisibleArea(tokens);
+        }
+        else if (tokens.equals(0, "clientviewstate"))
+        {
+            return clientViewState(tokens);
         }
         else if (tokens.equals(0, "outlinestate"))
         {
@@ -1298,6 +1303,42 @@ bool ChildSession::clientVisibleArea(const StringVector& tokens)
 
     _clientVisibleArea = Util::Rectangle(x, y, width, height);
     getLOKitDocument()->setClientVisibleArea(x, y, width, height);
+    return true;
+}
+
+bool ChildSession::clientViewState(const StringVector& tokens)
+{
+    int x, y, width, height;
+    int tilePixelWidth, tilePixelHeight, tileTwipWidth, tileTwipHeight;
+
+    if (!getTokenInteger(tokens, "x", x) ||
+        !getTokenInteger(tokens, "y", y) ||
+        !getTokenInteger(tokens, "width", width) ||
+        !getTokenInteger(tokens, "height", height) ||
+        !getTokenInteger(tokens, "tilepixelwidth", tilePixelWidth) ||
+        !getTokenInteger(tokens, "tilepixelheight", tilePixelHeight) ||
+        !getTokenInteger(tokens, "tiletwipwidth", tileTwipWidth) ||
+        !getTokenInteger(tokens, "tiletwipheight", tileTwipHeight))
+    {
+        sendTextFrameAndLogError("error: cmd=clientviewstate kind=syntax");
+        return false;
+    }
+
+    getLOKitDocument()->setView(_viewId);
+
+    getLOKitDocument()->setClientZoom(tilePixelWidth, tilePixelHeight, tileTwipWidth, tileTwipHeight);
+
+    std::string dpiScale, zoom;
+    if (getTokenString(tokens, "dpiscale", dpiScale) &&
+        getTokenString(tokens, "zoompercent", zoom))
+    {
+        getLOKitDocument()->setViewOption("dpiscale", dpiScale.c_str());
+        getLOKitDocument()->setViewOption("zoom", zoom.c_str());
+    }
+
+    _clientVisibleArea = Util::Rectangle(x, y, width, height);
+    getLOKitDocument()->setClientVisibleArea(x, y, width, height);
+
     return true;
 }
 

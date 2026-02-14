@@ -67,6 +67,7 @@ class WhiteBoxTests : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST(testFindInVector);
     CPPUNIT_TEST(testJoinPair);
     CPPUNIT_TEST(testThreadPool);
+    CPPUNIT_TEST(testClientViewStateParsing);
     CPPUNIT_TEST_SUITE_END();
 
     void testCOOLProtocolFunctions();
@@ -93,6 +94,7 @@ class WhiteBoxTests : public CPPUNIT_NS::TestFixture
     void testFindInVector();
     void testJoinPair();
     void testThreadPool();
+    void testClientViewStateParsing();
 
     size_t waitForThreads(size_t count);
 };
@@ -1048,6 +1050,127 @@ void WhiteBoxTests::testThreadPool()
     pool.start();
     LOK_ASSERT_EQUAL(size_t(7), pool._threads.size());
 //    LOK_ASSERT_EQUAL(size_t(7 + existingUnrelatedThreads), waitForThreads(8 + existingUnrelatedThreads));
+}
+
+void WhiteBoxTests::testClientViewStateParsing()
+{
+    constexpr std::string_view testname = __func__;
+
+    // Test combined clientviewstate message without split panes.
+    {
+        const std::string msg =
+            "clientviewstate x=100 y=200 width=27960 height=5160 "
+            "tilepixelwidth=256 tilepixelheight=256 tiletwipwidth=3840 "
+            "tiletwipheight=3840 dpiscale=1 zoompercent=100";
+        const StringVector tokens = StringVector::tokenize(msg);
+
+        LOK_ASSERT(tokens.equals(0, "clientviewstate"));
+
+        int x, y, width, height;
+        LOK_ASSERT(COOLProtocol::getTokenInteger(tokens, "x", x));
+        LOK_ASSERT_EQUAL(100, x);
+        LOK_ASSERT(COOLProtocol::getTokenInteger(tokens, "y", y));
+        LOK_ASSERT_EQUAL(200, y);
+        LOK_ASSERT(COOLProtocol::getTokenInteger(tokens, "width", width));
+        LOK_ASSERT_EQUAL(27960, width);
+        LOK_ASSERT(COOLProtocol::getTokenInteger(tokens, "height", height));
+        LOK_ASSERT_EQUAL(5160, height);
+
+        int tilePixelWidth, tilePixelHeight, tileTwipWidth, tileTwipHeight;
+        LOK_ASSERT(COOLProtocol::getTokenInteger(tokens, "tilepixelwidth", tilePixelWidth));
+        LOK_ASSERT_EQUAL(256, tilePixelWidth);
+        LOK_ASSERT(COOLProtocol::getTokenInteger(tokens, "tilepixelheight", tilePixelHeight));
+        LOK_ASSERT_EQUAL(256, tilePixelHeight);
+        LOK_ASSERT(COOLProtocol::getTokenInteger(tokens, "tiletwipwidth", tileTwipWidth));
+        LOK_ASSERT_EQUAL(3840, tileTwipWidth);
+        LOK_ASSERT(COOLProtocol::getTokenInteger(tokens, "tiletwipheight", tileTwipHeight));
+        LOK_ASSERT_EQUAL(3840, tileTwipHeight);
+
+        std::string dpiScale, zoom;
+        LOK_ASSERT(COOLProtocol::getTokenString(tokens, "dpiscale", dpiScale));
+        LOK_ASSERT_EQUAL_STR("1", dpiScale);
+        LOK_ASSERT(COOLProtocol::getTokenString(tokens, "zoompercent", zoom));
+        LOK_ASSERT_EQUAL_STR("100", zoom);
+
+        // No split panes present.
+        int splitX = 0, splitY = 0;
+        LOK_ASSERT(!COOLProtocol::getTokenInteger(tokens, "splitx", splitX));
+        LOK_ASSERT_EQUAL(0, splitX);
+        LOK_ASSERT(!COOLProtocol::getTokenInteger(tokens, "splity", splitY));
+        LOK_ASSERT_EQUAL(0, splitY);
+    }
+
+    // Test combined clientviewstate message with split panes.
+    {
+        const std::string msg =
+            "clientviewstate x=-4005 y=0 width=50490 height=72300 "
+            "splitx=5000 splity=3000 "
+            "tilepixelwidth=256 tilepixelheight=256 tiletwipwidth=3200 "
+            "tiletwipheight=3200 dpiscale=2 zoompercent=150";
+        const StringVector tokens = StringVector::tokenize(msg);
+
+        int x, y, width, height;
+        LOK_ASSERT(COOLProtocol::getTokenInteger(tokens, "x", x));
+        LOK_ASSERT_EQUAL(-4005, x);
+        LOK_ASSERT(COOLProtocol::getTokenInteger(tokens, "y", y));
+        LOK_ASSERT_EQUAL(0, y);
+        LOK_ASSERT(COOLProtocol::getTokenInteger(tokens, "width", width));
+        LOK_ASSERT_EQUAL(50490, width);
+        LOK_ASSERT(COOLProtocol::getTokenInteger(tokens, "height", height));
+        LOK_ASSERT_EQUAL(72300, height);
+
+        int splitX, splitY;
+        LOK_ASSERT(COOLProtocol::getTokenInteger(tokens, "splitx", splitX));
+        LOK_ASSERT_EQUAL(5000, splitX);
+        LOK_ASSERT(COOLProtocol::getTokenInteger(tokens, "splity", splitY));
+        LOK_ASSERT_EQUAL(3000, splitY);
+
+        int tilePixelWidth, tilePixelHeight, tileTwipWidth, tileTwipHeight;
+        LOK_ASSERT(COOLProtocol::getTokenInteger(tokens, "tilepixelwidth", tilePixelWidth));
+        LOK_ASSERT_EQUAL(256, tilePixelWidth);
+        LOK_ASSERT(COOLProtocol::getTokenInteger(tokens, "tilepixelheight", tilePixelHeight));
+        LOK_ASSERT_EQUAL(256, tilePixelHeight);
+        LOK_ASSERT(COOLProtocol::getTokenInteger(tokens, "tiletwipwidth", tileTwipWidth));
+        LOK_ASSERT_EQUAL(3200, tileTwipWidth);
+        LOK_ASSERT(COOLProtocol::getTokenInteger(tokens, "tiletwipheight", tileTwipHeight));
+        LOK_ASSERT_EQUAL(3200, tileTwipHeight);
+
+        std::string dpiScale, zoom;
+        LOK_ASSERT(COOLProtocol::getTokenString(tokens, "dpiscale", dpiScale));
+        LOK_ASSERT_EQUAL_STR("2", dpiScale);
+        LOK_ASSERT(COOLProtocol::getTokenString(tokens, "zoompercent", zoom));
+        LOK_ASSERT_EQUAL_STR("150", zoom);
+    }
+
+    // Verify that name-based lookup does not confuse similar parameter names.
+    // e.g., "x" must not match "splitx", "width" must not match "tilepixelwidth".
+    {
+        const std::string msg =
+            "clientviewstate x=10 y=20 width=300 height=400 "
+            "splitx=55 splity=66 "
+            "tilepixelwidth=256 tilepixelheight=256 "
+            "tiletwipwidth=3840 tiletwipheight=3840 "
+            "dpiscale=1 zoompercent=100";
+        const StringVector tokens = StringVector::tokenize(msg);
+
+        int x, width;
+        LOK_ASSERT(COOLProtocol::getTokenInteger(tokens, "x", x));
+        LOK_ASSERT_EQUAL(10, x);
+        LOK_ASSERT(COOLProtocol::getTokenInteger(tokens, "width", width));
+        LOK_ASSERT_EQUAL(300, width);
+
+        int splitX;
+        LOK_ASSERT(COOLProtocol::getTokenInteger(tokens, "splitx", splitX));
+        LOK_ASSERT_EQUAL(55, splitX);
+
+        int tilePixelWidth;
+        LOK_ASSERT(COOLProtocol::getTokenInteger(tokens, "tilepixelwidth", tilePixelWidth));
+        LOK_ASSERT_EQUAL(256, tilePixelWidth);
+
+        int tileTwipWidth;
+        LOK_ASSERT(COOLProtocol::getTokenInteger(tokens, "tiletwipwidth", tileTwipWidth));
+        LOK_ASSERT_EQUAL(3840, tileTwipWidth);
+    }
 }
 
 CPPUNIT_TEST_SUITE_REGISTRATION(WhiteBoxTests);

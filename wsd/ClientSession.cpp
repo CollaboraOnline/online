@@ -1076,6 +1076,53 @@ bool ClientSession::_handleInput(const char *buffer, int length)
         _clientVisibleArea = Util::Rectangle(x, y, width, height);
         return forwardToChild(std::string(buffer, length), docBroker);
     }
+    else if (tokens.equals(0, "clientviewstate"))
+    {
+        // Combined clientvisiblearea + clientzoom message to reduce round-trips.
+        int x;
+        int y;
+        int width;
+        int height;
+        int tilePixelWidth;
+        int tilePixelHeight;
+        int tileTwipWidth;
+        int tileTwipHeight;
+
+        if (!getTokenInteger(tokens, "x", x) ||
+            !getTokenInteger(tokens, "y", y) ||
+            !getTokenInteger(tokens, "width", width) ||
+            !getTokenInteger(tokens, "height", height) ||
+            !getTokenInteger(tokens, "tilepixelwidth", tilePixelWidth) ||
+            !getTokenInteger(tokens, "tilepixelheight", tilePixelHeight) ||
+            !getTokenInteger(tokens, "tiletwipwidth", tileTwipWidth) ||
+            !getTokenInteger(tokens, "tiletwipheight", tileTwipHeight))
+        {
+            logSyntaxErrorDetails(tokens, firstLine);
+            return true;
+        }
+
+        // Optional split pane parameters.
+        int splitX = 0;
+        int splitY = 0;
+        getTokenInteger(tokens, "splitx", splitX);
+        getTokenInteger(tokens, "splity", splitY);
+        _splitX = splitX;
+        _splitY = splitY;
+
+        if (width < 0)
+            width = 0;
+        if (height < 0)
+            height = 0;
+
+        _clientVisibleArea = Util::Rectangle(x, y, width, height);
+
+        _tileWidthPixel = tilePixelWidth;
+        _tileHeightPixel = tilePixelHeight;
+        _tileWidthTwips = tileTwipWidth;
+        _tileHeightTwips = tileTwipHeight;
+
+        return forwardToChild(std::string(buffer, length), docBroker);
+    }
     else if (tokens.equals(0, "setclientpart"))
     {
         if(!_isTextDocument)

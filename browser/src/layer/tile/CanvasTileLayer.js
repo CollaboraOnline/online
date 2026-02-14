@@ -721,9 +721,11 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 		TileManager.update();
 	},
 
-	_sendClientZoom: function (forceUpdate) {
+	// Returns the zoom payload string if it has changed (or forced), null otherwise.
+	// Updates the internal cache.
+	_getClientZoomPayload: function (forceUpdate) {
 		if (!this._map._docLoaded)
-			return;
+			return null;
 
 		var newClientZoom = 'tilepixelwidth=' + TileManager.tileSize + ' ' +
 		    'tilepixelheight=' + TileManager.tileSize + ' ' +
@@ -733,11 +735,17 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 		    'zoompercent=' + this._map.getZoomPercent()
 
 		if (this._clientZoom !== newClientZoom || forceUpdate || this.isImpress()) {
-			// the zoom level has changed
-			app.socket.sendMessage('clientzoom ' + newClientZoom);
-
 			if (!this._map._fatal && app.idleHandler._active && app.socket.connected())
 				this._clientZoom = newClientZoom;
+			return newClientZoom;
+		}
+		return null;
+	},
+
+	_sendClientZoom: function (forceUpdate) {
+		var payload = this._getClientZoomPayload(forceUpdate);
+		if (payload !== null) {
+			app.socket.sendMessage('clientzoom ' + payload);
 		}
 	},
 

@@ -103,8 +103,10 @@ class ViewLayoutBase {
 		this.lastViewedRectangle = new cool.SimpleRectangle(0, 0, 0, 0);
 	}
 
-	public sendClientVisibleArea(forceUpdate: boolean = false): void {
-		if (!app.map._docLoaded) return;
+	// Returns the visible area parameters string (without prefix) if changed, null otherwise.
+	// Performs side effects (splitter updates, context toolbar hiding) and updates cache.
+	public getClientVisibleAreaPayload(forceUpdate: boolean = false): string | null {
+		if (!app.map._docLoaded) return null;
 
 		var splitPos = app.map._docLayer._splitPanesContext
 			? app.map._docLayer._splitPanesContext.getSplitPos()
@@ -118,8 +120,8 @@ class ViewLayoutBase {
 		splitPos = app.map._docLayer._corePixelsToTwips(splitPos);
 		var size = visibleArea.getSize();
 		var visibleTopLeft = visibleArea.min;
-		var newClientVisibleAreaCommand =
-			'clientvisiblearea x=' +
+		var payload =
+			'x=' +
 			Math.round(visibleTopLeft.x) +
 			' y=' +
 			Math.round(visibleTopLeft.y) +
@@ -132,6 +134,8 @@ class ViewLayoutBase {
 			' splity=' +
 			Math.round(splitPos.y);
 
+		var newClientVisibleAreaCommand = 'clientvisiblearea ' + payload;
+
 		if (
 			this.clientVisibleAreaCommand !== newClientVisibleAreaCommand ||
 			forceUpdate
@@ -143,11 +147,18 @@ class ViewLayoutBase {
 			if (app.map._docLayer._xSplitter) {
 				app.map._docLayer._xSplitter.onPositionChange();
 			}
-			// Visible area is dirty, update it on the server
-			app.socket.sendMessage(newClientVisibleAreaCommand);
 			if (app.map.contextToolbar) app.map.contextToolbar.hideContextToolbar(); // hide context toolbar when scroll/window resize etc...
 			if (!app.map._fatal && app.idleHandler._active && app.socket.connected())
 				this.clientVisibleAreaCommand = newClientVisibleAreaCommand;
+			return payload;
+		}
+		return null;
+	}
+
+	public sendClientVisibleArea(forceUpdate: boolean = false): void {
+		var payload = this.getClientVisibleAreaPayload(forceUpdate);
+		if (payload !== null) {
+			app.socket.sendMessage('clientvisiblearea ' + payload);
 		}
 	}
 

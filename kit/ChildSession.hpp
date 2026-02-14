@@ -179,6 +179,7 @@ private:
 
     bool clientZoom(const StringVector& tokens);
     bool clientVisibleArea(const StringVector& tokens);
+    bool clientViewState(const StringVector& tokens);
     bool outlineState(const StringVector& tokens);
     bool downloadAs(const StringVector& tokens);
     bool getChildId();

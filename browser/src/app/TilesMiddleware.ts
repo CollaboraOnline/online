@@ -2064,13 +2064,27 @@ class TileManager {
 		var pixelBounds = map.getPixelBoundsCore(center, zoom);
 		var queue = this.getMissingTiles(pixelBounds, zoom, true);
 
-		app.map._docLayer._sendClientZoom();
-		app.activeDocument.activeLayout.sendClientVisibleArea();
+		this.sendClientViewState();
 
 		if (queue.length !== 0) this.addTiles(queue, true);
 
 		if (app.map._docLayer.isCalc() || app.map._docLayer.isWriter())
 			this.initPreFetchAdjacentTiles();
+	}
+
+	// Sends clientvisiblearea and clientzoom as a single combined message when both
+	// need updating, reducing WebSocket round-trips.
+	private static sendClientViewState(): void {
+		var zoomPayload = app.map._docLayer._getClientZoomPayload();
+		var areaPayload = app.activeDocument.activeLayout.getClientVisibleAreaPayload();
+
+		if (zoomPayload !== null && areaPayload !== null) {
+			app.socket.sendMessage('clientviewstate ' + areaPayload + ' ' + zoomPayload);
+		} else if (zoomPayload !== null) {
+			app.socket.sendMessage('clientzoom ' + zoomPayload);
+		} else if (areaPayload !== null) {
+			app.socket.sendMessage('clientvisiblearea ' + areaPayload);
+		}
 	}
 
 	public static onWorkerEndTransaction(e: any) {
@@ -2384,8 +2398,7 @@ class TileManager {
 		if (checkOnly) {
 			return queue;
 		} else {
-			app.activeDocument.activeLayout.sendClientVisibleArea();
-			app.map._docLayer._sendClientZoom();
+			this.sendClientViewState();
 
 			var tileCombineQueue = [];
 			for (var i = 0; i < queue.length; i++) {

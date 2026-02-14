@@ -377,6 +377,18 @@ clientzoom tilepixelwidth=<width> tilepixelheight=<height> tiletwipwidth=<twipWi
 
     This command ensures that the rendered tiles match the correct zoom level and DPI scaling.
 
+clientviewstate x=<x> y=<y> width=<width> height=<height> [splitx=<splitX> splity=<splitY>] tilepixelwidth=<tileWidth> tilepixelheight=<tileHeight> tiletwipwidth=<twipWidth> tiletwipheight=<twipHeight> dpiscale=<scale> zoompercent=<zoomLevel>
+
+    Combined clientvisiblearea and clientzoom message that sets both the visible
+    area and zoom level in a single round-trip. Equivalent to sending both
+    clientvisiblearea and clientzoom separately.
+
+    <x>, <y>, <width>, <height> define the client visible area in twips.
+
+    <splitX>, <splitY> are optional frozen pane split positions in twips.
+
+    Tile and zoom parameters are the same as in the clientzoom command.
+
 commandvalues command=<UNOCommand>[?param1=value1&param2=value2...]
 
     Sends a UNO command from the client to the server.
