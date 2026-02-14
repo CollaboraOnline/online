@@ -181,12 +181,6 @@ textarea.cool-annotation-textarea {
 	height: 100%;
 	overflow-y: scroll;
 }
-#toolbar-up.w2ui-toolbar {
-	padding-top: 0px;
-	padding-bottom: 0px;
-	background: transparent;
-	align-self: end;
-}
 .formulabar.unotoolbutton {
 	justify-self: center;
 }
@@ -263,44 +257,8 @@ textarea.cool-annotation-textarea {
 	filter: drop-shadow(0px 0px 4px var(--color-primary-darker));
 	border-color: transparent;
 }
-#toolbar-down table.w2ui-button .w2ui-tb-image {
-	margin: 5px 9px !important;
-}
-#toolbar-down table.w2ui-button .textcolor {
-	margin-bottom: 0px !important;
-}
-#toolbar-down table.w2ui-button .backcolor {
-	margin-bottom: 0px !important;
-}
-#toolbar-down table.w2ui-button .selected-color-classic {
-	height: 5px;
-	width: 26px;
-	margin: auto;
-	position: relative;
-	top: -6px;
-	border: 1px solid var(--color-border-dark);
-	border-radius: 7px;
-	outline: 1px solid var(--color-background-lighter);
-}
-.w2ui-toolbar .w2ui-break {
-	background-image: none;
-	background-color: #dae6f3;
-}
-#formulabar .w2ui-break {
-	visibility: hidden;
-}
 #setgamma input.spinfield, #linewidth input.spinfield, #nolines input.spinfield {
 	width: 140px !important;
-}
-#toolbar-down table.w2ui-button:not(.checked) td.w2ui-tb-down > div {
-	border-top: none !important;
-	margin-top: 0 !important;
-	border-bottom: 5px solid #8D99A7 !important;
-}
-#toolbar-down table.w2ui-button.checked td.w2ui-tb-down > div {
-	border-bottom: none;
-	border-top: 5px solid #8D99A7;
-	margin-bottom: 5px !important;
 }
 #toolbar-search #search * {
 	width: 100% !important;
