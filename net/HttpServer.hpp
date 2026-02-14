@@ -149,45 +149,34 @@ public:
             endString = range.substr(dashPos + 1);
         }
 
-        int start = 0;
-        int end = -1;
-        bool startIsSuffix = false;
-
         if (startString.empty())
         {
             // Could be a suffix
-            try
-            {
-                start = NumUtil::stoi(endString);
-                startIsSuffix = true;
-            }
-            catch (std::invalid_argument&)
-            {
-            }
-            catch (std::out_of_range&)
-            {
-            }
+            auto [start, success] = NumUtil::i32FromString(endString);
+            const bool startIsSuffix = success;
+            if (!success)
+                start = 0;
 
+            constexpr int end = -1;
             return asyncUpload(std::move(fromFile), std::move(responseHeaders), start, end,
                                startIsSuffix, http::StatusCode::PartialContent);
         }
 
-        try
+        auto [start, startOk] = NumUtil::i32FromString(startString);
+        auto end = NumUtil::i32FromString(endString, -1);
+        if (!startOk)
         {
-            start = NumUtil::stoi(std::string(startString));
-            end = NumUtil::stoi(endString) + 1;
+            start = 0;
+            end = -1;
         }
-        catch (std::invalid_argument&)
+        else if (end >= 0)
         {
-        }
-        catch (std::out_of_range&)
-        {
+            ++end; // The end is exclusive in our implementation.
         }
 
         // FIXME: does not support ranges that specify multiple comma-separated values
-
         return asyncUpload(std::move(fromFile), std::move(responseHeaders), start, end,
-                           startIsSuffix, http::StatusCode::PartialContent);
+                           /*startIsSuffix=*/false, http::StatusCode::PartialContent);
     }
 
     int getStart() const
