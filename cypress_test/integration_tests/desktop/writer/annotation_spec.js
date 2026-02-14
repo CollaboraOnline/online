@@ -134,7 +134,7 @@ describe(['tagdesktop'], 'Annotation Tests', function() {
 
 		for (let width = 1420; width < 1500; width += 20) {
 			cy.viewport(width, 600);
-			cy.cGet('#comment-container-1').should('be.not.visible');
+			cy.cGet('#comment-container-1').should('be.visible');
 		}
 
 		for (let width = 1500; width < 1620; width += 20) {
@@ -204,7 +204,7 @@ describe(['tagdesktop'], 'Annotation Tests', function() {
 			can't move left anymore, so we collapse the comments.
 		*/
 		cy.viewport(1284, 600);
-		cy.cGet('#comment-container-1').should('be.not.visible');
+		cy.cGet('#comment-container-1').should('be.visible');
 
 		cy.viewport(1285, 600);
 		cy.cGet('#comment-container-1').should('be.visible');
@@ -318,7 +318,7 @@ describe(['tagdesktop'], 'Collapsed Annotation Tests', function() {
 		cy.cGet('#map').focus();
 		helper.typeIntoDocument('{home}');
 		cy.cGet('.cool-annotation-info-collapsed').should('have.text','!');
-		cy.cGet('.cool-annotation-info-collapsed').should('be.visible');
+		cy.cGet('.cool-annotation-info-collapsed').should('be.not.visible');
 		cy.cGet('.cool-annotation-img').click();
 		cy.cGet('.annotation-button-autosaved').should('be.visible');
 		cy.cGet('.annotation-button-delete').should('be.visible');

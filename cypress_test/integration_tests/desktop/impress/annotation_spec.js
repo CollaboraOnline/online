@@ -161,7 +161,7 @@ describe(['tagdesktop'], 'Collapsed Annotation Tests', function() {
 		cy.cGet('#map').focus();
 		helper.typeIntoDocument('{home}');
 		cy.cGet('.cool-annotation-info-collapsed').should('have.text','!');
-		cy.cGet('.cool-annotation-info-collapsed').should('be.visible');
+		cy.cGet('.cool-annotation-info-collapsed').should('be.not.visible');
 		cy.cGet('.cool-annotation-img').click();
 		cy.cGet('.annotation-button-autosaved').should('be.visible');
 		cy.cGet('.annotation-button-delete').should('be.visible');

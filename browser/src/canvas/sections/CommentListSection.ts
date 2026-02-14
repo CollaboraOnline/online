@@ -352,6 +352,7 @@ export class CommentSection extends CanvasSectionObject {
 	}
 
 	public shouldCollapse (): boolean {
+		return false;
 		if (!this.containerObject.getDocumentAnchorSection() || app.map._docLayer._docType === 'spreadsheet' || (<any>window).mode.isMobile())
 			return false;
 		const availableSpace = this.calculateAvailableSpace();
@@ -367,7 +368,7 @@ export class CommentSection extends CanvasSectionObject {
 		*/
 		if (app.activeDocument.activeLayout.viewHasEnoughSpaceToShowFullWidthComments())
 			return false;
-		return availableSpace < this.sectionProperties.commentWidth && availableSpace > this.sectionProperties.collapsedCommentWidth;
+		return availableSpace < this.sectionProperties.commentWidth && availableSpace >= 0;
 	}
 
 	public hideAllComments (): void {
@@ -2114,7 +2115,7 @@ export class CommentSection extends CanvasSectionObject {
 		this.sectionProperties.canvasContainerTop = document.getElementById('document-container').getBoundingClientRect().top;
 
 		const availableSpace = this.calculateAvailableSpace();
-		if (this.sectionProperties.commentList.length > 0) {
+		if (!this.commentsHiddenOrNotPresent()) {
 			this.orderCommentList();
 			if (relayout)
 				this.resetCommentsSize();
@@ -2405,7 +2406,7 @@ export class CommentSection extends CanvasSectionObject {
 	}
 
 	private resizeLastComment (): void {
-		if (app.map._docLayer._docType === 'text' && this.sectionProperties.commentList.length > 0) {
+		if (app.map._docLayer._docType === 'text' && !this.commentsHiddenOrNotPresent()) {
 			const minMaxHeight = Number(getComputedStyle(document.documentElement).getPropertyValue('--annotation-min-size'));
 			const maxMaxHeight = Number(getComputedStyle(document.documentElement).getPropertyValue('--annotation-max-size'));
 			//last comment
