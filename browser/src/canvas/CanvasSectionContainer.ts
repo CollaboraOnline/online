@@ -614,7 +614,7 @@ class CanvasSectionContainer {
 			if (documentContainer && documentContainer.clientWidth !== 0 || documentContainer.clientHeight !== 0) {
 				if (app.map._docLayer) {
 					app.map._docLayer._syncTileContainerSize(true);
-					app.activeDocument.activeLayout.sendClientVisibleArea();
+					TileManager.sendClientViewState();
 					this.requestReDraw();
 					return false;
 				}

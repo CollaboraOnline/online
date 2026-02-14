@@ -13,8 +13,7 @@
 >+303>5F60VM3GSNLKvaFE>001>commandvalues command=.uno:CharFontName
 >+256>5F60VM3GSNLKvaFE>001>canceltiles
 >+4179>5F60VM3GSNLKvaFE>001>tilecombine nviewid=0 part=0 width=256 height=256 tileposx=0,3840,7680,11520,15360,19200,0,3840,7680,11520,15360,19200,0,3840,7680,11520,15360,19200,0,3840,7680,11520,15360,19200 tileposy=0,0,0,0,0,0,3840,3840,3840,3840,3840,3840,7680,7680,7680,7680,7680,7680,11520,11520,11520,11520,11520,11520 tilewidth=3840 tileheight=3840
->+265>5F60VM3GSNLKvaFE>001>clientvisiblearea x=0 y=0 width=22125 height=11745 splitx=0 splity=0
->+263>5F60VM3GSNLKvaFE>001>clientzoom tilepixelwidth=256 tilepixelheight=256 tiletwipwidth=3840 tiletwipheight=3840
+>+265>5F60VM3GSNLKvaFE>05c>clientviewstate x=0 y=0 width=22125 height=11745 splitx=0 splity=0 tilepix=256 tiletwip=3840
 >+238>5F60VM3GSNLKvaFE>001>canceltiles
 >+2268>5F60VM3GSNLKvaFE>001>tilecombine nviewid=0 part=0 width=256 height=256 tileposx=0,3840,7680,11520,15360,19200,0,3840,7680,11520,15360,19200,0,3840,7680,11520,15360,19200,0,3840,7680,11520,15360,19200 tileposy=0,0,0,0,0,0,3840,3840,3840,3840,3840,3840,7680,7680,7680,7680,7680,7680,11520,11520,11520,11520,11520,11520 tilewidth=3840 tileheight=3840
 >+249>5F60VM3GSNLKvaFE>001>canceltiles
@@ -2411,13 +2410,11 @@
 >+1384770>5F60VM3GSNLKvaFE>001>commandvalues command=.uno:ViewAnnotationsPosition
 >+363>5F60VM3GSNLKvaFE>001>commandvalues command=.uno:SheetGeometryData?columns=1&sizes=1&hidden=1&filtered=1
 >+361>5F60VM3GSNLKvaFE>001>commandvalues command=.uno:ViewAnnotationsPosition
->+359>5F60VM3GSNLKvaFE>001>clientvisiblearea x=0 y=267375270 width=22125 height=11745 splitx=0 splity=0
->+277>5F60VM3GSNLKvaFE>001>clientzoom tilepixelwidth=256 tilepixelheight=256 tiletwipwidth=3840 tiletwipheight=3840
+>+359>5F60VM3GSNLKvaFE>064>clientviewstate x=0 y=267375270 width=22125 height=11745 splitx=0 splity=0 tilepix=256 tiletwip=3840
 >+564>5F60VM3GSNLKvaFE>001>commandvalues command=.uno:ViewAnnotationsPosition
 >+1132792>5F60VM3GSNLKvaFE>001>commandvalues command=.uno:ViewAnnotationsPosition
 >+473>5F60VM3GSNLKvaFE>001>commandvalues command=.uno:ViewAnnotationsPosition
->+342>5F60VM3GSNLKvaFE>001>clientvisiblearea x=0 y=13755 width=22125 height=11745 splitx=0 splity=0
->+463>5F60VM3GSNLKvaFE>001>clientzoom tilepixelwidth=256 tilepixelheight=256 tiletwipwidth=3840 tiletwipheight=3840
+>+342>5F60VM3GSNLKvaFE>060>clientviewstate x=0 y=13755 width=22125 height=11745 splitx=0 splity=0 tilepix=256 tiletwip=3840
 >+430>5F60VM3GSNLKvaFE>001>canceltiles
 >+4142>5F60VM3GSNLKvaFE>001>tilecombine nviewid=0 part=0 width=256 height=256 tileposx=0,3840,7680,11520,15360,19200,0,3840,7680,11520,15360,19200,0,3840,7680,11520,15360,19200,0,3840,7680,11520,15360,19200 tileposy=11520,11520,11520,11520,11520,11520,15360,15360,15360,15360,15360,15360,19200,19200,19200,19200,19200,19200,23040,23040,23040,23040,23040,23040 tilewidth=3840 tileheight=3840
 >+2350>5F60VM3GSNLKvaFE>001>commandvalues command=.uno:ViewAnnotationsPosition
@@ -2427,8 +2424,7 @@
 >+2788>5F60VM3GSNLKvaFE>001>tilecombine nviewid=0 part=0 width=256 height=256 tileposx=0,3840,7680,11520,15360,19200,0,3840,7680,11520,15360,19200,0,3840,7680,11520,15360,19200,0,3840,7680,11520,15360,19200 tileposy=11520,11520,11520,11520,11520,11520,15360,15360,15360,15360,15360,15360,19200,19200,19200,19200,19200,19200,23040,23040,23040,23040,23040,23040 tilewidth=3840 tileheight=3840
 >+999>5F60VM3GSNLKvaFE>001>canceltiles
 >+1943>5F60VM3GSNLKvaFE>001>tilecombine nviewid=0 part=0 width=256 height=256 tileposx=0,3840,7680,11520,15360,19200,0,3840,7680,11520,15360,19200,0,3840,7680,11520,15360,19200,0,3840,7680,11520,15360,19200 tileposy=11520,11520,11520,11520,11520,11520,15360,15360,15360,15360,15360,15360,19200,19200,19200,19200,19200,19200,23040,23040,23040,23040,23040,23040 tilewidth=3840 tileheight=3840
->+748>5F60VM3GSNLKvaFE>001>clientvisiblearea x=0 y=0 width=22125 height=11745 splitx=0 splity=0
->+407>5F60VM3GSNLKvaFE>001>clientzoom tilepixelwidth=256 tilepixelheight=256 tiletwipwidth=3840 tiletwipheight=3840
+>+748>5F60VM3GSNLKvaFE>05c>clientviewstate x=0 y=0 width=22125 height=11745 splitx=0 splity=0 tilepix=256 tiletwip=3840
 >+689>5F60VM3GSNLKvaFE>001>canceltiles
 >+532913>5F60VM3GSNLKvaFE>001>tilecombine nviewid=0 part=0 width=256 height=256 tileposx=0,3840,7680,11520,15360,19200,0,3840,7680,11520,15360,19200,0,3840,7680,11520,15360,19200,0,3840,7680,11520,15360,19200 tileposy=0,0,0,0,0,0,3840,3840,3840,3840,3840,3840,7680,7680,7680,7680,7680,7680,11520,11520,11520,11520,11520,11520 tilewidth=3840 tileheight=3840
 >+1498>5F60VM3GSNLKvaFE>001>commandvalues command=.uno:ViewAnnotationsPosition

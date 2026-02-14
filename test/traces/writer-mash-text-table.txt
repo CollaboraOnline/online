@@ -9,11 +9,10 @@
 >3129678>HWCp8Bcln3Hg7xKN>02d>commandvalues command=.uno:ViewAnnotations
 >3129921>HWCp8Bcln3Hg7xKN>02d>commandvalues command=.uno:StyleApply
 >3130160>HWCp8Bcln3Hg7xKN>02d>commandvalues command=.uno:CharFontName
->3241335>HWCp8Bcln3Hg7xKN>02d>clientvisiblearea x=-2625 y=-3705 width=18060 height=23805 splitx=0 splity=0
->3241571>HWCp8Bcln3Hg7xKN>02d>clientzoom tilepixelwidth=256 tilepixelheight=256 tiletwipwidth=3072 tiletwipheight=3072
+>3241335>HWCp8Bcln3Hg7xKN>064>clientviewstate x=-2625 y=-3705 width=18060 height=23805 splitx=0 splity=0 tilepix=256 tiletwip=3072
 >3241992>HWCp8Bcln3Hg7xKN>02d>canceltiles
 >3244497>HWCp8Bcln3Hg7xKN>02d>tilecombine nviewid=0 part=0 width=256 height=256 tileposx=0,3072,6144,9216,12288,0,3072,6144,9216,12288,0,3072,6144,9216,12288,0,3072,6144,9216,12288,0,3072,6144,9216,12288,0,3072,6144,9216,12288 tileposy=0,0,0,0,0,3072,3072,3072,3072,3072,6144,6144,6144,6144,6144,9216,9216,9216,9216,9216,12288,12288,12288,12288,12288,15360,15360,15360,15360,15360 tilewidth=3072 tileheight=3072
->3309605>HWCp8Bcln3Hg7xKN>02d>clientvisiblearea x=-2625 y=-3240 width=18060 height=22890 splitx=0 splity=0
+>3309605>HWCp8Bcln3Hg7xKN>064>clientviewstate x=-2625 y=-3240 width=18060 height=22890 splitx=0 splity=0 tilepix=256 tiletwip=3072
 >3309895>HWCp8Bcln3Hg7xKN>02d>canceltiles
 >3311954>HWCp8Bcln3Hg7xKN>02d>tilecombine nviewid=0 part=0 width=256 height=256 tileposx=0,3072,6144,9216,12288,0,3072,6144,9216,12288,0,3072,6144,9216,12288,0,3072,6144,9216,12288,0,3072,6144,9216,12288,0,3072,6144,9216,12288 tileposy=0,0,0,0,0,3072,3072,3072,3072,3072,6144,6144,6144,6144,6144,9216,9216,9216,9216,9216,12288,12288,12288,12288,12288,15360,15360,15360,15360,15360 tilewidth=3072 tileheight=3072
 >3564980>HWCp8Bcln3Hg7xKN>02d>canceltiles
@@ -1724,15 +1723,15 @@
 >142378560>HWCp8Bcln3Hg7xKN>02d>mouse type=move x=7245 y=1787.9999549999998 count=1 buttons=0 modifier=0
 >143344953>HWCp8Bcln3Hg7xKN>02d>mouse type=move x=12015 y=-1047.000045 count=1 buttons=0 modifier=0
 >143962094>HWCp8Bcln3Hg7xKN>02d>mouse type=move x=3525 y=-3207.0000450000002 count=1 buttons=0 modifier=0
->149130538>HWCp8Bcln3Hg7xKN>02d>clientvisiblearea x=-375 y=-3240 width=13560 height=22890 splitx=0 splity=0
+>149130538>HWCp8Bcln3Hg7xKN>063>clientviewstate x=-375 y=-3240 width=13560 height=22890 splitx=0 splity=0 tilepix=256 tiletwip=3072
 >149132040>HWCp8Bcln3Hg7xKN>02d>tilecombine nviewid=0 part=0 width=256 height=256 tileposx=0,3072,6144,9216,12288,0,3072,6144,9216,12288,0,3072,6144,9216,12288,0,3072,6144,9216,12288,0,3072,6144,9216,12288 tileposy=0,0,0,0,0,3072,3072,3072,3072,3072,6144,6144,6144,6144,6144,9216,9216,9216,9216,9216,12288,12288,12288,12288,12288 tilewidth=3072 tileheight=3072
 >149138328>HWCp8Bcln3Hg7xKN>02d>tilecombine nviewid=0 part=0 width=256 height=256 tileposx=0,3072,6144,9216,12288,0,3072,6144,9216,12288,0,3072,6144,9216,12288,0,3072,6144,9216,12288,0,3072,6144,9216,12288 tileposy=0,0,0,0,0,3072,3072,3072,3072,3072,6144,6144,6144,6144,6144,9216,9216,9216,9216,9216,12288,12288,12288,12288,12288 tilewidth=3072 tileheight=3072
 >156195415>HWCp8Bcln3Hg7xKN>02d>mouse type=move x=6525 y=3767.9999549999998 count=1 buttons=0 modifier=0
 >156744903>HWCp8Bcln3Hg7xKN>02d>mouse type=move x=12975 y=13202.999955 count=1 buttons=0 modifier=0
 >158195853>HWCp8Bcln3Hg7xKN>02d>mouse type=move x=13155 y=17057.999955 count=1 buttons=0 modifier=0
 >158523880>HWCp8Bcln3Hg7xKN>02d>uno .uno:InsertAnnotation {"Text":{"type":"string","value":"Sometimes we have a comment\n"},"Author":{"type":"string","value":"LocalUser#1"}}
->158565088>HWCp8Bcln3Hg7xKN>02d>clientvisiblearea x=-2625 y=-3240 width=18060 height=22890 splitx=0 splity=0
->158650029>HWCp8Bcln3Hg7xKN>02d>clientvisiblearea x=-375 y=-3240 width=13560 height=22890 splitx=0 splity=0
+>158565088>HWCp8Bcln3Hg7xKN>064>clientviewstate x=-2625 y=-3240 width=18060 height=22890 splitx=0 splity=0 tilepix=256 tiletwip=3072
+>158650029>HWCp8Bcln3Hg7xKN>063>clientviewstate x=-375 y=-3240 width=13560 height=22890 splitx=0 splity=0 tilepix=256 tiletwip=3072
 >158650639>HWCp8Bcln3Hg7xKN>02d>tilecombine nviewid=0 part=0 width=256 height=256 tileposx=0,3072,6144,9216 tileposy=12288,12288,12288,12288 tilewidth=3072 tileheight=3072
 >159694572>HWCp8Bcln3Hg7xKN>02d>mouse type=move x=6555 y=4727.999954999999 count=1 buttons=0 modifier=0
 >160113528>HWCp8Bcln3Hg7xKN>02d>mouse type=move x=5805 y=-3177.0000450000002 count=1 buttons=0 modifier=0
@@ -1741,7 +1740,7 @@
 >167055527>HWCp8Bcln3Hg7xKN>02d>mouse type=buttonup x=2820 y=14447.999955 count=1 buttons=1 modifier=0
 >167056464>HWCp8Bcln3Hg7xKN>02d>mouse type=move x=2820 y=14447.999955 count=1 buttons=0 modifier=0
 >167366366>HWCp8Bcln3Hg7xKN>02d>key type=input char=0 key=9472
->167399549>HWCp8Bcln3Hg7xKN>02d>clientvisiblearea x=-375 y=0 width=13560 height=22890 splitx=0 splity=0
+>167399549>HWCp8Bcln3Hg7xKN>05f>clientviewstate x=-375 y=0 width=13560 height=22890 splitx=0 splity=0 tilepix=256 tiletwip=3072
 >167399858>HWCp8Bcln3Hg7xKN>02d>canceltiles
 >167401039>HWCp8Bcln3Hg7xKN>02d>tilecombine nviewid=0 part=0 width=256 height=256 tileposx=0,3072,6144,9216,12288,0,3072,6144,9216,12288,0,3072,6144,9216,12288,0,3072,6144,9216,12288,0,3072,6144,9216,12288,0,3072,6144,9216,12288,0,3072,6144,9216,12288,0,3072,6144,9216,12288 tileposy=0,0,0,0,0,3072,3072,3072,3072,3072,6144,6144,6144,6144,6144,9216,9216,9216,9216,9216,12288,12288,12288,12288,12288,15360,15360,15360,15360,15360,18432,18432,18432,18432,18432,21504,21504,21504,21504,21504 tilewidth=3072 tileheight=3072
 >167406209>HWCp8Bcln3Hg7xKN>02d>canceltiles

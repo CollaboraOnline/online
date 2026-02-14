@@ -1029,51 +1029,48 @@ bool ClientSession::_handleInput(const char *buffer, int length)
         // contract and do as told, not as we expect the API to be used. Use force if provided.
         docBroker->uploadToStorage(client_from_this(), force);
     }
-    else if (tokens.equals(0, "clientvisiblearea"))
+    else if (tokens.equals(0, "clientviewstate"))
     {
+        // Combined clientvisiblearea + clientzoom message to reduce round-trips.
+        // Tiles are always square so tilepix and tiletwip are single values.
         int x;
         int y;
         int width;
         int height;
-        if ((tokens.size() != 5 && tokens.size() != 7) ||
-            !getTokenInteger(tokens[1], "x", x) ||
-            !getTokenInteger(tokens[2], "y", y) ||
-            !getTokenInteger(tokens[3], "width", width) ||
-            !getTokenInteger(tokens[4], "height", height))
+        int tilePix;
+        int tileTwip;
+
+        if (!getTokenInteger(tokens, "x", x) ||
+            !getTokenInteger(tokens, "y", y) ||
+            !getTokenInteger(tokens, "width", width) ||
+            !getTokenInteger(tokens, "height", height) ||
+            !getTokenInteger(tokens, "tilepix", tilePix) ||
+            !getTokenInteger(tokens, "tiletwip", tileTwip))
         {
-            // Be forgiving and log instead of disconnecting.
-            // sendTextFrameAndLogError("error: cmd=clientvisiblearea kind=syntax");
             logSyntaxErrorDetails(tokens, firstLine);
             return true;
         }
 
-        if (tokens.size() == 7)
-        {
-            int splitX;
-            int splitY;
-            if (!getTokenInteger(tokens[5], "splitx", splitX) ||
-                !getTokenInteger(tokens[6], "splity", splitY))
-            {
-                logSyntaxErrorDetails(tokens, firstLine);
-                return true;
-            }
+        // Optional split pane parameters.
+        int splitX = 0;
+        int splitY = 0;
+        getTokenInteger(tokens, "splitx", splitX);
+        getTokenInteger(tokens, "splity", splitY);
+        _splitX = splitX;
+        _splitY = splitY;
 
-            _splitX = splitX;
-            _splitY = splitY;
-        }
-
-        // Untrusted user input, make sure these are not negative.
         if (width < 0)
-        {
             width = 0;
-        }
-
         if (height < 0)
-        {
             height = 0;
-        }
 
         _clientVisibleArea = Util::Rectangle(x, y, width, height);
+
+        _tileWidthPixel = tilePix;
+        _tileHeightPixel = tilePix;
+        _tileWidthTwips = tileTwip;
+        _tileHeightTwips = tileTwip;
+
         return forwardToChild(std::string(buffer, length), docBroker);
     }
     else if (tokens.equals(0, "setclientpart"))
@@ -1125,30 +1122,6 @@ bool ClientSession::_handleInput(const char *buffer, int length)
                 docBroker->updateLastModifyingActivityTime();
             return forwardToChild(std::string(buffer, length), docBroker);
         }
-    }
-    else if (tokens.equals(0, "clientzoom"))
-    {
-        int tilePixelWidth;
-        int tilePixelHeight;
-        int tileTwipWidth;
-        int tileTwipHeight;
-        if (tokens.size() < 5 ||
-            !getTokenInteger(tokens[1], "tilepixelwidth", tilePixelWidth) ||
-            !getTokenInteger(tokens[2], "tilepixelheight", tilePixelHeight) ||
-            !getTokenInteger(tokens[3], "tiletwipwidth", tileTwipWidth) ||
-            !getTokenInteger(tokens[4], "tiletwipheight", tileTwipHeight))
-        {
-            // Be forgiving and log instead of disconnecting.
-            // sendTextFrameAndLogError("error: cmd=clientzoom kind=syntax");
-            logSyntaxErrorDetails(tokens, firstLine);
-            return true;
-        }
-
-        _tileWidthPixel = tilePixelWidth;
-        _tileHeightPixel = tilePixelHeight;
-        _tileWidthTwips = tileTwipWidth;
-        _tileHeightTwips = tileTwipHeight;
-        return forwardToChild(std::string(buffer, length), docBroker);
     }
     else if (tokens.equals(0, "tileprocessed"))
     {

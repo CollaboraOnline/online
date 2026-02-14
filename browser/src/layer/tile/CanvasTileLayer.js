@@ -613,11 +613,10 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 		}
 	},
 
-	// These variables indicates the clientvisiblearea sent to the server and stored by the server
-	// We need to reset them when we are reconnecting to the server or reloading a document
-	// because the server needs new data even if the client is unmodified.
+	// Reset cached view state so the next sendClientViewState() resends even if
+	// the client values haven't changed (needed on reconnect / document reload).
 	_resetClientVisArea: function ()  {
-		this._clientZoom = '';
+		TileManager.resetClientViewState();
 		app.activeDocument.activeLayout.resetClientVisibleArea();
 	},
 
@@ -721,24 +720,12 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 		TileManager.update();
 	},
 
-	_sendClientZoom: function (forceUpdate) {
-		if (!this._map._docLoaded)
-			return;
-
-		var newClientZoom = 'tilepixelwidth=' + TileManager.tileSize + ' ' +
-		    'tilepixelheight=' + TileManager.tileSize + ' ' +
-		    'tiletwipwidth=' + app.tile.size.x + ' ' +
-		    'tiletwipheight=' + app.tile.size.y + ' ' +
+	// Returns the current zoom parameters string (always computed, no change detection).
+	_buildZoomPayload: function () {
+		return 'tilepix=' + TileManager.tileSize + ' ' +
+		    'tiletwip=' + app.tile.size.x + ' ' +
 		    'dpiscale=' + window.devicePixelRatio + ' ' +
-		    'zoompercent=' + this._map.getZoomPercent()
-
-		if (this._clientZoom !== newClientZoom || forceUpdate || this.isImpress()) {
-			// the zoom level has changed
-			app.socket.sendMessage('clientzoom ' + newClientZoom);
-
-			if (!this._map._fatal && app.idleHandler._active && app.socket.connected())
-				this._clientZoom = newClientZoom;
-		}
+		    'zoompercent=' + this._map.getZoomPercent();
 	},
 
 	_twipsRectangleToPixelBounds: function (strRectangle) {

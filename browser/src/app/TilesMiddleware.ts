@@ -2064,13 +2064,39 @@ class TileManager {
 		var pixelBounds = map.getPixelBoundsCore(center, zoom);
 		var queue = this.getMissingTiles(pixelBounds, zoom, true);
 
-		app.map._docLayer._sendClientZoom();
-		app.activeDocument.activeLayout.sendClientVisibleArea();
+		this.sendClientViewState();
 
 		if (queue.length !== 0) this.addTiles(queue, true);
 
 		if (app.map._docLayer.isCalc() || app.map._docLayer.isWriter())
 			this.initPreFetchAdjacentTiles();
+	}
+
+	private static _lastClientViewState: string = '';
+
+	public static resetClientViewState(): void {
+		this._lastClientViewState = '';
+	}
+
+	// Builds and sends a clientviewstate message with all view parameters.
+	// Change detection avoids sending duplicate messages.
+	public static sendClientViewState(forceUpdate: boolean = false): void {
+		if (!app.map._docLoaded) return;
+
+		var areaPayload =
+			app.activeDocument.activeLayout.buildAreaPayload(forceUpdate);
+		var zoomPayload = app.map._docLayer._buildZoomPayload();
+		var msg = 'clientviewstate ' + areaPayload + ' ' + zoomPayload;
+
+		if (
+			this._lastClientViewState !== msg ||
+			forceUpdate ||
+			app.map._docLayer.isImpress()
+		) {
+			app.socket.sendMessage(msg);
+			if (!app.map._fatal && app.idleHandler._active && app.socket.connected())
+				this._lastClientViewState = msg;
+		}
 	}
 
 	public static onWorkerEndTransaction(e: any) {
@@ -2384,8 +2410,7 @@ class TileManager {
 		if (checkOnly) {
 			return queue;
 		} else {
-			app.activeDocument.activeLayout.sendClientVisibleArea();
-			app.map._docLayer._sendClientZoom();
+			this.sendClientViewState();
 
 			var tileCombineQueue = [];
 			for (var i = 0; i < queue.length; i++) {

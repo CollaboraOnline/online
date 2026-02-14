@@ -232,7 +232,7 @@ class ViewLayoutMultiPage extends ViewLayoutNewBase {
 		if (app.map._docLayer?._cursorMarker)
 			app.map._docLayer._cursorMarker.update();
 
-		this.sendClientVisibleArea();
+		TileManager.sendClientViewState();
 
 		this.refreshCurrentCoordList();
 		TileManager.checkRequestTiles(this.currentCoordList);

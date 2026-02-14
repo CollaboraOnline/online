@@ -9,8 +9,7 @@
 >48870118>SH1x9l8hEeFGasMA>044>commandvalues command=.uno:ViewAnnotations
 >48870376>SH1x9l8hEeFGasMA>044>commandvalues command=.uno:StyleApply
 >48870736>SH1x9l8hEeFGasMA>044>commandvalues command=.uno:CharFontName
->49003805>SH1x9l8hEeFGasMA>044>clientvisiblearea x=-2625 y=0 width=18060 height=23805 splitx=0 splity=0
->49004032>SH1x9l8hEeFGasMA>044>clientzoom tilepixelwidth=256 tilepixelheight=256 tiletwipwidth=3072 tiletwipheight=3072
+>49003805>SH1x9l8hEeFGasMA>060>clientviewstate x=-2625 y=0 width=18060 height=23805 splitx=0 splity=0 tilepix=256 tiletwip=3072
 >49004271>SH1x9l8hEeFGasMA>044>canceltiles
 >49005543>SH1x9l8hEeFGasMA>044>tilecombine nviewid=0 part=0 width=256 height=256 tileposx=0,3072,6144,9216,12288,0,3072,6144,9216,12288,0,3072,6144,9216,12288,0,3072,6144,9216,12288,0,3072,6144,9216,12288,0,3072,6144,9216,12288,0,3072,6144,9216,12288,0,3072,6144,9216,12288 tileposy=0,0,0,0,0,3072,3072,3072,3072,3072,6144,6144,6144,6144,6144,9216,9216,9216,9216,9216,12288,12288,12288,12288,12288,15360,15360,15360,15360,15360,18432,18432,18432,18432,18432,21504,21504,21504,21504,21504 tilewidth=3072 tileheight=3072
 >49557008>SH1x9l8hEeFGasMA>044>tileprocessed tile=0:9216:0:3072:3072:0
@@ -53,7 +52,7 @@
 >49609983>SH1x9l8hEeFGasMA>044>tileprocessed tile=0:6144:21504:3072:3072:0
 >49610102>SH1x9l8hEeFGasMA>044>tileprocessed tile=0:9216:21504:3072:3072:0
 >49612657>SH1x9l8hEeFGasMA>044>tileprocessed tile=0:12288:21504:3072:3072:0
->51417620>SH1x9l8hEeFGasMA>044>clientvisiblearea x=-2625 y=0 width=18060 height=22890 splitx=0 splity=0
+>51417620>SH1x9l8hEeFGasMA>060>clientviewstate x=-2625 y=0 width=18060 height=22890 splitx=0 splity=0 tilepix=256 tiletwip=3072
 >51417879>SH1x9l8hEeFGasMA>044>mouse type=move x=6870 y=7367.999954999999 count=1 buttons=0 modifier=0
 >51492715>SH1x9l8hEeFGasMA>044>mouse type=buttondown x=6870 y=7367.999954999999 count=1 buttons=1 modifier=0
 >51493925>SH1x9l8hEeFGasMA>044>mouse type=buttonup x=6870 y=7367.999954999999 count=1 buttons=1 modifier=0

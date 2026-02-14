@@ -547,8 +547,7 @@ bool ChildSession::_handleInput(const char *buffer, int length)
         // i.e. need to be handled in a child process.
 
         assert(Util::isFuzzing() ||
-               tokens.equals(0, "clientzoom") ||
-               tokens.equals(0, "clientvisiblearea") ||
+               tokens.equals(0, "clientviewstate") ||
                tokens.equals(0, "outlinestate") ||
                tokens.equals(0, "downloadas") ||
                tokens.equals(0, "getchildid") ||
@@ -591,13 +590,9 @@ bool ChildSession::_handleInput(const char *buffer, int length)
                tokens.equals(0, "getpresentationinfo"));
 
         ProfileZone pz("ChildSession::_handleInput:" + tokens[0]);
-        if (tokens.equals(0, "clientzoom"))
+        if (tokens.equals(0, "clientviewstate"))
         {
-            return clientZoom(tokens);
-        }
-        else if (tokens.equals(0, "clientvisiblearea"))
-        {
-            return clientVisibleArea(tokens);
+            return clientViewState(tokens);
         }
         else if (tokens.equals(0, "outlinestate"))
         {
@@ -1247,57 +1242,37 @@ bool ChildSession::getCommandValues(const StringVector& tokens)
     return success;
 }
 
-bool ChildSession::clientZoom(const StringVector& tokens)
+bool ChildSession::clientViewState(const StringVector& tokens)
 {
-    int tilePixelWidth, tilePixelHeight, tileTwipWidth, tileTwipHeight;
-    std::string dpiScale, zoom;
+    int x, y, width, height;
+    int tilePix, tileTwip; // Tiles are always square.
 
-    if (tokens.size() < 5 ||
-        !getTokenInteger(tokens[1], "tilepixelwidth", tilePixelWidth) ||
-        !getTokenInteger(tokens[2], "tilepixelheight", tilePixelHeight) ||
-        !getTokenInteger(tokens[3], "tiletwipwidth", tileTwipWidth) ||
-        !getTokenInteger(tokens[4], "tiletwipheight", tileTwipHeight))
+    if (!getTokenInteger(tokens, "x", x) ||
+        !getTokenInteger(tokens, "y", y) ||
+        !getTokenInteger(tokens, "width", width) ||
+        !getTokenInteger(tokens, "height", height) ||
+        !getTokenInteger(tokens, "tilepix", tilePix) ||
+        !getTokenInteger(tokens, "tiletwip", tileTwip))
     {
-        sendTextFrameAndLogError("error: cmd=clientzoom kind=syntax");
+        sendTextFrameAndLogError("error: cmd=clientviewstate kind=syntax");
         return false;
     }
 
     getLOKitDocument()->setView(_viewId);
 
-    getLOKitDocument()->setClientZoom(tilePixelWidth, tilePixelHeight, tileTwipWidth, tileTwipHeight);
+    getLOKitDocument()->setClientZoom(tilePix, tilePix, tileTwip, tileTwip);
 
-    if (tokens.size() == 7 &&
-        getTokenString(tokens[5], "dpiscale", dpiScale) &&
-        getTokenString(tokens[6], "zoompercent", zoom))
+    std::string dpiScale, zoom;
+    if (getTokenString(tokens, "dpiscale", dpiScale) &&
+        getTokenString(tokens, "zoompercent", zoom))
     {
         getLOKitDocument()->setViewOption("dpiscale", dpiScale.c_str());
         getLOKitDocument()->setViewOption("zoom", zoom.c_str());
     }
 
-    return true;
-}
-
-bool ChildSession::clientVisibleArea(const StringVector& tokens)
-{
-    int x;
-    int y;
-    int width;
-    int height;
-
-    if ((tokens.size() != 5 && tokens.size() != 7) ||
-        !getTokenInteger(tokens[1], "x", x) ||
-        !getTokenInteger(tokens[2], "y", y) ||
-        !getTokenInteger(tokens[3], "width", width) ||
-        !getTokenInteger(tokens[4], "height", height))
-    {
-        sendTextFrameAndLogError("error: cmd=clientvisiblearea kind=syntax");
-        return false;
-    }
-
-    getLOKitDocument()->setView(_viewId);
-
     _clientVisibleArea = Util::Rectangle(x, y, width, height);
     getLOKitDocument()->setClientVisibleArea(x, y, width, height);
+
     return true;
 }
 

@@ -29,22 +29,16 @@ class ViewLayoutNewBase extends ViewLayoutBase {
 		super();
 	}
 
-	public sendClientVisibleArea() {
-		const visibleAreaCommand =
-			'clientvisiblearea x=' +
+	public buildAreaPayload(): string {
+		return (
+			'x=' +
 			this.viewedRectangle.x1 +
 			' y=' +
 			this.viewedRectangle.y1 +
 			' width=' +
 			this.viewedRectangle.width +
 			' height=' +
-			this.viewedRectangle.height;
-
-		app.socket.sendMessage(visibleAreaCommand);
-
-		return new cool.Bounds(
-			new cool.Point(this.viewedRectangle.pX1, this.viewedRectangle.pY1),
-			new cool.Point(this.viewedRectangle.pX2, this.viewedRectangle.pY2),
+			this.viewedRectangle.height
 		);
 	}
 

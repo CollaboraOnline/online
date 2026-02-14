@@ -272,8 +272,7 @@ public:
         // setup.
         for (int i = 0; i < numTyping; ++i)
         {
-            messages[i].push_back("clientvisiblearea x=0 y=0 width=27960 height=5160");
-            messages[i].push_back("clientzoom tilepixelwidth=256 tilepixelheight=256 tiletwipwidth=3840 tiletwipheight=3840");
+            messages[i].push_back("clientviewstate x=0 y=0 width=27960 height=5160 tilepix=256 tiletwip=3840");
             messages[i].push_back("commandvalues command=.uno:ViewRowColumnHeaders?x=-15&y=3870&width=0&height=5160");
             messages[i].push_back("useractive");
         }

@@ -9,8 +9,7 @@
 >+41>Ol7pnV5kNXeGYUa1>06b>commandvalues command=.uno:ViewAnnotations
 >+14>Ol7pnV5kNXeGYUa1>06b>commandvalues command=.uno:StyleApply
 >+28>Ol7pnV5kNXeGYUa1>06b>commandvalues command=.uno:CharFontName
->+9721>Ol7pnV5kNXeGYUa1>06b>clientvisiblearea x=-6465 y=-1455 width=28785 height=14805 splitx=0 splity=0
->+43>Ol7pnV5kNXeGYUa1>06b>clientzoom tilepixelwidth=256 tilepixelheight=256 tiletwipwidth=3840 tiletwipheight=3840
+>+9721>Ol7pnV5kNXeGYUa1>064>clientviewstate x=-6465 y=-1455 width=28785 height=14805 splitx=0 splity=0 tilepix=256 tiletwip=3840
 >+386>Ol7pnV5kNXeGYUa1>06b>tilecombine nviewid=0 part=0 width=256 height=256 tileposx=0,3840,7680,11520,15360,0,3840,7680,11520,15360,0,3840,7680,11520,15360,0,3840,7680,11520,15360 tileposy=0,0,0,0,0,3840,3840,3840,3840,3840,7680,7680,7680,7680,7680,11520,11520,11520,11520,11520 oldwid=0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 tilewidth=3840 tileheight=3840
 >+1058>Ol7pnV5kNXeGYUa1>06b>uno .uno:ToolbarMode?Mode:string=Default
 >+42987>Ol7pnV5kNXeGYUa1>06b>uno .uno:ToolbarMode?Mode:string=notebookbar_online.ui
@@ -18,23 +17,23 @@
 >+39>Ol7pnV5kNXeGYUa1>06b>commandvalues command=.uno:ViewAnnotations
 >+12>Ol7pnV5kNXeGYUa1>06b>commandvalues command=.uno:StyleApply
 >+34>Ol7pnV5kNXeGYUa1>06b>commandvalues command=.uno:CharFontName
->+37363>Ol7pnV5kNXeGYUa1>06b>clientvisiblearea x=-5085 y=-900 width=26025 height=13695 splitx=0 splity=0
+>+37363>Ol7pnV5kNXeGYUa1>063>clientviewstate x=-5085 y=-900 width=26025 height=13695 splitx=0 splity=0 tilepix=256 tiletwip=3840
 >+37>Ol7pnV5kNXeGYUa1>06b>tilecombine nviewid=0 part=0 width=256 height=256 tileposx=0,3840,7680,11520,15360,0,3840,7680,11520,15360,0,3840,7680,11520,15360,0,3840,7680,11520,15360 tileposy=0,0,0,0,0,3840,3840,3840,3840,3840,7680,7680,7680,7680,7680,11520,11520,11520,11520,11520 oldwid=0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 tilewidth=3840 tileheight=3840
 >+10539>Ol7pnV5kNXeGYUa1>06b>tile nviewid=0 part=0 width=180 height=135 tileposx=0 tileposy=0 tilewidth=15875 tileheight=11906 id=0
 >+137161>Ol7pnV5kNXeGYUa1>06b>tilecombine nviewid=0 part=1 width=256 height=256 tileposx=0,3840,7680,11520,15360,0,3840,7680,11520,15360,0,3840,7680,11520,15360,0,3840,7680,11520,15360 tileposy=0,0,0,0,0,3840,3840,3840,3840,3840,7680,7680,7680,7680,7680,11520,11520,11520,11520,11520 oldwid=0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 tilewidth=3840 tileheight=3840
 >+7239>Ol7pnV5kNXeGYUa1>06b>uno .uno:SidebarShow
->+183746>Ol7pnV5kNXeGYUa1>06b>clientvisiblearea x=-4980 y=-900 width=25830 height=13695 splitx=0 splity=0
->+9663>Ol7pnV5kNXeGYUa1>06b>clientvisiblearea x=-4905 y=-900 width=25665 height=13695 splitx=0 splity=0
->+13455>Ol7pnV5kNXeGYUa1>06b>clientvisiblearea x=-4770 y=-900 width=25395 height=13695 splitx=0 splity=0
->+12176>Ol7pnV5kNXeGYUa1>06b>clientvisiblearea x=-4575 y=-900 width=25020 height=13695 splitx=0 splity=0
->+17152>Ol7pnV5kNXeGYUa1>06b>clientvisiblearea x=-4305 y=-900 width=24465 height=13695 splitx=0 splity=0
->+16827>Ol7pnV5kNXeGYUa1>06b>clientvisiblearea x=-3990 y=-900 width=23835 height=13695 splitx=0 splity=0
->+17232>Ol7pnV5kNXeGYUa1>06b>clientvisiblearea x=-3690 y=-900 width=23235 height=13695 splitx=0 splity=0
->+16924>Ol7pnV5kNXeGYUa1>06b>clientvisiblearea x=-3360 y=-900 width=22590 height=13695 splitx=0 splity=0
->+15533>Ol7pnV5kNXeGYUa1>06b>clientvisiblearea x=-3105 y=-900 width=22080 height=13695 splitx=0 splity=0
->+16433>Ol7pnV5kNXeGYUa1>06b>clientvisiblearea x=-2895 y=-900 width=21645 height=13695 splitx=0 splity=0
->+17818>Ol7pnV5kNXeGYUa1>06b>clientvisiblearea x=-2730 y=-900 width=21330 height=13695 splitx=0 splity=0
->+15668>Ol7pnV5kNXeGYUa1>06b>clientvisiblearea x=-2670 y=-900 width=21210 height=13695 splitx=0 splity=0
+>+183746>Ol7pnV5kNXeGYUa1>063>clientviewstate x=-4980 y=-900 width=25830 height=13695 splitx=0 splity=0 tilepix=256 tiletwip=3840
+>+9663>Ol7pnV5kNXeGYUa1>063>clientviewstate x=-4905 y=-900 width=25665 height=13695 splitx=0 splity=0 tilepix=256 tiletwip=3840
+>+13455>Ol7pnV5kNXeGYUa1>063>clientviewstate x=-4770 y=-900 width=25395 height=13695 splitx=0 splity=0 tilepix=256 tiletwip=3840
+>+12176>Ol7pnV5kNXeGYUa1>063>clientviewstate x=-4575 y=-900 width=25020 height=13695 splitx=0 splity=0 tilepix=256 tiletwip=3840
+>+17152>Ol7pnV5kNXeGYUa1>063>clientviewstate x=-4305 y=-900 width=24465 height=13695 splitx=0 splity=0 tilepix=256 tiletwip=3840
+>+16827>Ol7pnV5kNXeGYUa1>063>clientviewstate x=-3990 y=-900 width=23835 height=13695 splitx=0 splity=0 tilepix=256 tiletwip=3840
+>+17232>Ol7pnV5kNXeGYUa1>063>clientviewstate x=-3690 y=-900 width=23235 height=13695 splitx=0 splity=0 tilepix=256 tiletwip=3840
+>+16924>Ol7pnV5kNXeGYUa1>063>clientviewstate x=-3360 y=-900 width=22590 height=13695 splitx=0 splity=0 tilepix=256 tiletwip=3840
+>+15533>Ol7pnV5kNXeGYUa1>063>clientviewstate x=-3105 y=-900 width=22080 height=13695 splitx=0 splity=0 tilepix=256 tiletwip=3840
+>+16433>Ol7pnV5kNXeGYUa1>063>clientviewstate x=-2895 y=-900 width=21645 height=13695 splitx=0 splity=0 tilepix=256 tiletwip=3840
+>+17818>Ol7pnV5kNXeGYUa1>063>clientviewstate x=-2730 y=-900 width=21330 height=13695 splitx=0 splity=0 tilepix=256 tiletwip=3840
+>+15668>Ol7pnV5kNXeGYUa1>063>clientviewstate x=-2670 y=-900 width=21210 height=13695 splitx=0 splity=0 tilepix=256 tiletwip=3840
 >+399644>Ol7pnV5kNXeGYUa1>06b>tile nviewid=0 part=0 width=180 height=135 tileposx=0 tileposy=0 tilewidth=15875 tileheight=11906 id=0
 >+405235>Ol7pnV5kNXeGYUa1>06b>mouse type=move x=11055 y=6480 count=1 buttons=0 modifier=0
 >+28181>Ol7pnV5kNXeGYUa1>06b>mouse type=buttondown x=11055 y=6480 count=1 buttons=1 modifier=0
@@ -174,7 +173,7 @@
 >+584942>Ol7pnV5kNXeGYUa1>06b>tile nviewid=0 part=1 width=180 height=135 tileposx=0 tileposy=0 tilewidth=15875 tileheight=11906 id=1
 >+1813809>Ol7pnV5kNXeGYUa1>06b>uno .uno:BasicShapes.round-rectangle
 >+60692>Ol7pnV5kNXeGYUa1>06b>rendershapeselection mimetype=image/svg+xml
->+59636>Ol7pnV5kNXeGYUa1>06b>clientvisiblearea x=-2595 y=-900 width=21060 height=13695 splitx=0 splity=0
+>+59636>Ol7pnV5kNXeGYUa1>063>clientviewstate x=-2595 y=-900 width=21060 height=13695 splitx=0 splity=0 tilepix=256 tiletwip=3840
 >+705575>Ol7pnV5kNXeGYUa1>06b>mouse type=move x=6180 y=4620 count=1 buttons=0 modifier=0
 >+166839>Ol7pnV5kNXeGYUa1>06b>mouse type=move x=6150 y=4620 count=1 buttons=0 modifier=0
 >+45955>Ol7pnV5kNXeGYUa1>06b>tile nviewid=0 part=1 width=180 height=135 tileposx=0 tileposy=0 tilewidth=15875 tileheight=11906 id=1
