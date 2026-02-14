@@ -303,6 +303,11 @@
 	display: none;
 }
 
+#pos_window-dropdown .ui-combobox-search-container,
+#sheetview_combobox-dropdown .ui-combobox-search-container {
+	display: none;
+}
+
 #formulabar > .root-container > .formulabar {
 	display: grid;
 	grid-template-columns: 112px auto;

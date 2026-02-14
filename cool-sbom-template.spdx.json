@@ -179,14 +179,6 @@
       "licenseConcluded": "MIT"
     },
     {
-      "SPDXID": "SPDXRef-select2",
-      "name": "Select2",
-      "versionInfo": "4.0.13",
-      "filesAnalyzed": false,
-      "downloadLocation": "NONE",
-      "licenseConcluded": "MIT"
-    },
-    {
       "SPDXID": "SPDXRef-smartmenus",
       "name": "SmartMenus jQuery Plugin",
       "versionInfo": "1.0.0",
@@ -342,11 +334,6 @@
       "spdxElementId": "SPDXRef-coolwsd",
       "relationshipType": "CONTAINS",
       "relatedSpdxElement": "SPDXRef-ResizeObserverPolyfill"
-    },
-    {
-      "spdxElementId": "SPDXRef-coolwsd",
-      "relationshipType": "CONTAINS",
-      "relatedSpdxElement": "SPDXRef-select2"
     },
     {
       "spdxElementId": "SPDXRef-coolwsd",

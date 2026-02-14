@@ -76,7 +76,7 @@ void RequestDetailsTests::testDownloadURI()
     }
 
     {
-        static const std::string URI = "/browser/49c225146/select2.css";
+        static const std::string URI = "/browser/49c225146/cool.html";
 
         Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, URI,
                                        Poco::Net::HTTPMessage::HTTP_1_1);
@@ -92,7 +92,7 @@ void RequestDetailsTests::testDownloadURI()
         LOK_ASSERT(details.equals(RequestDetails::Field::Type, "browser"));
         LOK_ASSERT(details.equals(0, "browser"));
         LOK_ASSERT_EQUAL_STR("49c225146", details[1]);
-        LOK_ASSERT_EQUAL_STR("select2.css", details[2]);
+        LOK_ASSERT_EQUAL_STR("cool.html", details[2]);
 
         http::Request request2(URI);
         request2.set("Host", Root);

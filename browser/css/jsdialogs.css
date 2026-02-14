@@ -1329,6 +1329,20 @@ input[type='number']:hover::-webkit-outer-spin-button {
 	grid-gap: 0px;
 }
 
+.ui-combobox-search-container {
+	position: sticky;
+	top: 0;
+	z-index: 1;
+	background-color: var(--color-background-lighter);
+	padding: 4px;
+}
+
+.ui-combobox-search-input {
+	width: 100%;
+	box-sizing: border-box;
+	line-height: var(--default-height);
+}
+
 .ui-combobox-entry {
 	width: calc(100% + 15px); /* + padding for scrollbar */
 	display: flex;
