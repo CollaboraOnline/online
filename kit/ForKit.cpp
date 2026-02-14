@@ -53,6 +53,9 @@
 #include <common/Watchdog.hpp>
 #include <kit/DeltaSimd.h>
 
+#define LOK_USE_UNSTABLE_API
+#include <LibreOfficeKit/LibreOfficeKit.hxx>
+
 namespace
 {
 
