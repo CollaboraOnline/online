@@ -243,7 +243,7 @@ UnitBase::TestResult UnitCalc::testCalcRenderAfterNewView53()
         return TestResult::Ok;
     }
 
-    helpers::sendTextFrame(socket, "clientvisiblearea x=750 y=1861 width=20583 height=6997",
+    helpers::sendTextFrame(socket, "clientviewstate x=750 y=1861 width=20583 height=6997 tilepix=256 tiletwip=3840",
                            testname);
     helpers::sendTextFrame(socket, "key type=input char=0 key=1031", testname);
 

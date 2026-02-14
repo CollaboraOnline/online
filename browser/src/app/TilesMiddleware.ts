@@ -2083,11 +2083,16 @@ class TileManager {
 	public static sendClientViewState(forceUpdate: boolean = false): void {
 		if (!app.map._docLoaded) return;
 
-		var areaPayload = app.activeDocument.activeLayout.buildAreaPayload(forceUpdate);
+		var areaPayload =
+			app.activeDocument.activeLayout.buildAreaPayload(forceUpdate);
 		var zoomPayload = app.map._docLayer._buildZoomPayload();
 		var msg = 'clientviewstate ' + areaPayload + ' ' + zoomPayload;
 
-		if (this._lastClientViewState !== msg || forceUpdate || app.map._docLayer.isImpress()) {
+		if (
+			this._lastClientViewState !== msg ||
+			forceUpdate ||
+			app.map._docLayer.isImpress()
+		) {
 			app.socket.sendMessage(msg);
 			if (!app.map._fatal && app.idleHandler._active && app.socket.connected())
 				this._lastClientViewState = msg;

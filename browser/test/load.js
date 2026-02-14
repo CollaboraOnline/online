@@ -262,9 +262,7 @@ window.onload = function() {
 				let index = nodeIndex % tileSizes.length;
 				// send zoom request
 				console.debug('sending zoom request: %', zoomLevels[index]);
-				let zoomMessage = `clientzoom tilepixelwidth=256 tilepixelheight=256 tiletwipwidth=${tileSizes[index]} tiletwipheight=${tileSizes[index]}`;
-				console.debug(zoomMessage);
-				window.app.socket.sendMessage(zoomMessage);
+				TileManager.sendClientViewState(true);
 				await sleep(500);
 				// mash the keyboard:
 				let dummyInput = 'askdjf ,asdhflkas r;we f;akdn.adh ;o wh;fa he;qw e.fkahsd ;vbawe.kguday;f vas.,mdb kaery kejraerga';

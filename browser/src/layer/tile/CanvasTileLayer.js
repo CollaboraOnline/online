@@ -722,10 +722,8 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 
 	// Returns the current zoom parameters string (always computed, no change detection).
 	_buildZoomPayload: function () {
-		return 'tilepixelwidth=' + TileManager.tileSize + ' ' +
-		    'tilepixelheight=' + TileManager.tileSize + ' ' +
-		    'tiletwipwidth=' + app.tile.size.x + ' ' +
-		    'tiletwipheight=' + app.tile.size.y + ' ' +
+		return 'tilepix=' + TileManager.tileSize + ' ' +
+		    'tiletwip=' + app.tile.size.x + ' ' +
 		    'dpiscale=' + window.devicePixelRatio + ' ' +
 		    'zoompercent=' + this._map.getZoomPercent();
 	},

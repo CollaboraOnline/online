@@ -15,8 +15,7 @@
 >+212>Zpw35k42cC20faEL>001>canceltiles
 >+1547>Zpw35k42cC20faEL>001>tilecombine nviewid=0 part=0 width=256 height=256 tileposx=0,3840,7680,11520,15360,0,3840,7680,11520,15360,0,3840,7680,11520,15360,0,3840,7680,11520,15360 tileposy=0,0,0,0,0,3840,3840,3840,3840,3840,7680,7680,7680,7680,7680,11520,11520,11520,11520,11520 tilewidth=3840 tileheight=3840
 >+409>Zpw35k42cC20faEL>001>tile nviewid=0 part=0 width=180 height=135 tileposx=0 tileposy=0 tilewidth=15875 tileheight=11906 id=0 broadcast=no
->+557>Zpw35k42cC20faEL>001>clientvisiblearea x=-2085 y=-195 width=20040 height=12300 splitx=0 splity=0
->+545>Zpw35k42cC20faEL>001>clientzoom tilepixelwidth=256 tilepixelheight=256 tiletwipwidth=3840 tiletwipheight=3840
+>+557>Zpw35k42cC20faEL>063>clientviewstate x=-2085 y=-195 width=20040 height=12300 splitx=0 splity=0 tilepix=256 tiletwip=3840
 >+605>Zpw35k42cC20faEL>001>canceltiles
 >+1480>Zpw35k42cC20faEL>001>tilecombine nviewid=0 part=0 width=256 height=256 tileposx=0,3840,7680,11520,15360,0,3840,7680,11520,15360,0,3840,7680,11520,15360,0,3840,7680,11520,15360 tileposy=0,0,0,0,0,3840,3840,3840,3840,3840,7680,7680,7680,7680,7680,11520,11520,11520,11520,11520 tilewidth=3840 tileheight=3840
 >+4139>Zpw35k42cC20faEL>001>tile nviewid=0 part=0 width=180 height=135 tileposx=0 tileposy=0 tilewidth=15875 tileheight=11906 id=0 broadcast=no
@@ -539,7 +538,7 @@
 >+328>Zpw35k42cC20faEL>001>tile nviewid=0 part=2 width=180 height=135 tileposx=0 tileposy=0 tilewidth=15875 tileheight=11906 id=2 broadcast=no
 >+744032>Zpw35k42cC20faEL>001>gettextselection mimetype=text/html
 >+792>Zpw35k42cC20faEL>001>mouse type=move x=945 y=930 count=1 buttons=0 modifier=0
->+628439>Zpw35k42cC20faEL>001>clientvisiblearea x=-1980 y=-195 width=19815 height=12300 splitx=0 splity=0
+>+628439>Zpw35k42cC20faEL>063>clientviewstate x=-1980 y=-195 width=19815 height=12300 splitx=0 splity=0 tilepix=256 tiletwip=3840
 >+474>Zpw35k42cC20faEL>001>canceltiles
 >+4767>Zpw35k42cC20faEL>001>tilecombine nviewid=0 part=5 width=256 height=256 tileposx=0,3840,7680,11520,15360,0,3840,7680,11520,15360,0,3840,7680,11520,15360,0,3840,7680,11520,15360 tileposy=0,0,0,0,0,3840,3840,3840,3840,3840,7680,7680,7680,7680,7680,11520,11520,11520,11520,11520 tilewidth=3840 tileheight=3840
 >+1394>Zpw35k42cC20faEL>001>canceltiles
@@ -878,7 +877,7 @@
 >+47059907>Zpw35k42cC20faEL>001>tile nviewid=0 part=7 width=180 height=135 tileposx=0 tileposy=0 tilewidth=15875 tileheight=11906 id=7 broadcast=no
 >+53523100>Zpw35k42cC20faEL>001>mouse type=move x=-90 y=2205 count=1 buttons=0 modifier=0
 >+469892>Zpw35k42cC20faEL>001>uno .uno:InsertAnnotation {"Text":{"type":"string","value":"gddffss"},"Author":{"type":"string","value":"LocalUser#0"}}
->+1205099>Zpw35k42cC20faEL>001>clientvisiblearea x=0 y=-195 width=15315 height=12300 splitx=0 splity=0
+>+1205099>Zpw35k42cC20faEL>05f>clientviewstate x=0 y=-195 width=15315 height=12300 splitx=0 splity=0 tilepix=256 tiletwip=3840
 >+1296>Zpw35k42cC20faEL>001>canceltiles
 >+10792>Zpw35k42cC20faEL>001>tilecombine nviewid=0 part=7 width=256 height=256 tileposx=0,3840,7680,11520,0,3840,7680,11520,0,3840,7680,11520,0,3840,7680,11520 tileposy=0,0,0,0,3840,3840,3840,3840,7680,7680,7680,7680,11520,11520,11520,11520 tilewidth=3840 tileheight=3840
 >+3673>Zpw35k42cC20faEL>001>canceltiles

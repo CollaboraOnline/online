@@ -43,8 +43,7 @@ void UnitInvalidation::setupSession(const std::shared_ptr<http::WebSocketSession
     helpers::sendTextFrame(session, "useractive", testname);
     helpers::sendTextFrame(session, "a11ystate false", testname);
     helpers::sendTextFrame(session, "uno .uno:ToolbarMode?Mode:string=notebookbar_online.ui", testname);
-    helpers::sendTextFrame(session, "clientzoom tilepixelwidth=256 tilepixelheight=256 tiletwipwidth=2560 tiletwipheight=2560 dpiscale=1.5 zoom=10", testname);
-    helpers::sendTextFrame(session, "clientvisiblearea x=0 y=0 width=5120 height=5120 splitx=0 splity=0", testname);
+    helpers::sendTextFrame(session, "clientviewstate x=0 y=0 width=5120 height=5120 splitx=0 splity=0 tilepix=256 tiletwip=2560 dpiscale=1.5 zoompercent=10", testname);
     helpers::sendTextFrame(session, "commandvalues command=.uno:CellCursor?outputHeight=256&outputWidth=256&tileHeight=2560&tileWidth=2560", testname);
 
     // Let the app get somewhat setup ...

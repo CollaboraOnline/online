@@ -1245,16 +1245,14 @@ bool ChildSession::getCommandValues(const StringVector& tokens)
 bool ChildSession::clientViewState(const StringVector& tokens)
 {
     int x, y, width, height;
-    int tilePixelWidth, tilePixelHeight, tileTwipWidth, tileTwipHeight;
+    int tilePix, tileTwip; // Tiles are always square.
 
     if (!getTokenInteger(tokens, "x", x) ||
         !getTokenInteger(tokens, "y", y) ||
         !getTokenInteger(tokens, "width", width) ||
         !getTokenInteger(tokens, "height", height) ||
-        !getTokenInteger(tokens, "tilepixelwidth", tilePixelWidth) ||
-        !getTokenInteger(tokens, "tilepixelheight", tilePixelHeight) ||
-        !getTokenInteger(tokens, "tiletwipwidth", tileTwipWidth) ||
-        !getTokenInteger(tokens, "tiletwipheight", tileTwipHeight))
+        !getTokenInteger(tokens, "tilepix", tilePix) ||
+        !getTokenInteger(tokens, "tiletwip", tileTwip))
     {
         sendTextFrameAndLogError("error: cmd=clientviewstate kind=syntax");
         return false;
@@ -1262,7 +1260,7 @@ bool ChildSession::clientViewState(const StringVector& tokens)
 
     getLOKitDocument()->setView(_viewId);
 
-    getLOKitDocument()->setClientZoom(tilePixelWidth, tilePixelHeight, tileTwipWidth, tileTwipHeight);
+    getLOKitDocument()->setClientZoom(tilePix, tilePix, tileTwip, tileTwip);
 
     std::string dpiScale, zoom;
     if (getTokenString(tokens, "dpiscale", dpiScale) &&

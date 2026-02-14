@@ -359,7 +359,7 @@ paintwindow <id> rectangle=<x>,<y>,<width>,<height> dpiscale=<scale>
 
     <scale> is a scaling factor, e.g. 1 for non-HiDPI.
 
-clientviewstate x=<x> y=<y> width=<width> height=<height> [splitx=<splitX> splity=<splitY>] tilepixelwidth=<tileWidth> tilepixelheight=<tileHeight> tiletwipwidth=<twipWidth> tiletwipheight=<twipHeight> dpiscale=<scale> zoompercent=<zoomLevel>
+clientviewstate x=<x> y=<y> width=<width> height=<height> [splitx=<splitX> splity=<splitY>] tilepix=<tilePix> tiletwip=<tileTwip> dpiscale=<scale> zoompercent=<zoomLevel>
 
     Sets the client visible area and zoom level.
 
@@ -367,9 +367,9 @@ clientviewstate x=<x> y=<y> width=<width> height=<height> [splitx=<splitX> split
 
     <splitX>, <splitY> are optional frozen pane split positions in twips.
 
-    <tileWidth> and <tileHeight> define the tile dimensions in pixels.
+    <tilePix> is the square tile dimension in pixels (tiles are always square).
 
-    <twipWidth> and <twipHeight> define the tile dimensions in twips.
+    <tileTwip> is the square tile dimension in twips.
 
     <scale> is the DPI scaling factor, e.g., 1 for non-HiDPI displays.
 

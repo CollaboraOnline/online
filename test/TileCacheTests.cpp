@@ -1404,7 +1404,7 @@ void TileCacheTests::testTileRequestByInvalidation()
 
     // 2. use case: invalidation of one tile inside the client visible area
     // Now set the client visible area
-    sendTextFrame(socket, "clientviewstate x=-4005 y=0 width=50490 height=72300 tilepixelwidth=256 tilepixelheight=256 tiletwipwidth=3840 tiletwipheight=3840");
+    sendTextFrame(socket, "clientviewstate x=-4005 y=0 width=50490 height=72300 tilepix=256 tiletwip=3840");
 
     // Type one character to trigger invalidation
     sendChar(socket, 'x', skNone, testname);
@@ -1433,7 +1433,7 @@ void TileCacheTests::testTileRequestByZoom()
         = loadDocAndGetSession(_socketPoll, _uri, documentURL, testname);
 
     // Set the client visible area
-    sendTextFrame(socket, "clientviewstate x=-2662 y=0 width=16000 height=9875 tilepixelwidth=256 tilepixelheight=256 tiletwipwidth=3200 tiletwipheight=3200");
+    sendTextFrame(socket, "clientviewstate x=-2662 y=0 width=16000 height=9875 tilepix=256 tiletwip=3200");
 
     // Request all tile of the visible area (it happens by zoom)
     sendTextFrame(socket, "tilecombine nviewid=0 part=0 width=256 height=256 tileposx=0,3200,6400,9600,12800,0,3200,6400,9600,12800,0,3200,6400,9600,12800,0,3200,6400,9600,12800 tileposy=0,0,0,0,0,3200,3200,3200,3200,3200,6400,6400,6400,6400,6400,9600,9600,9600,9600,9600 tilewidth=3200 tileheight=3200");
@@ -1460,7 +1460,7 @@ void TileCacheTests::testTileWireIDHandling()
         = loadDocAndGetSession(_socketPoll, _uri, documentURL, testname);
 
     // Set the client visible area
-    sendTextFrame(socket, "clientviewstate x=-4005 y=0 width=50490 height=72300 tilepixelwidth=256 tilepixelheight=256 tiletwipwidth=3840 tiletwipheight=3840");
+    sendTextFrame(socket, "clientviewstate x=-4005 y=0 width=50490 height=72300 tilepix=256 tiletwip=3840");
 
     // Type one character to trigger invalidation
     sendChar(socket, 'x', skNone, testname);
@@ -1513,7 +1513,7 @@ void TileCacheTests::testTileProcessed()
         = loadDocAndGetSession(_socketPoll, _uri, documentURL, testname);
 
     // Set the client visible area
-    sendTextFrame(socket, "clientviewstate x=-2662 y=0 width=10000 height=9000 tilepixelwidth=256 tilepixelheight=256 tiletwipwidth=3200 tiletwipheight=3200");
+    sendTextFrame(socket, "clientviewstate x=-2662 y=0 width=10000 height=9000 tilepix=256 tiletwip=3200");
 
     for (int i = 0; i < 100; ++i)
         getResponseMessage(socket, "spinandwait:", testname, 10ms);
@@ -1581,7 +1581,7 @@ void TileCacheTests::testTileInvalidatedOutside()
 
     // Set client visible area to make it not having intersection with the invalidate rectangle, but having shared tiles
     std::ostringstream oss;
-    oss << "clientviewstate x=0 y=" << (y + height + 100) << " width=50490 height=72300 tilepixelwidth=256 tilepixelheight=256 tiletwipwidth=3840 tiletwipheight=3840";
+    oss << "clientviewstate x=0 y=" << (y + height + 100) << " width=50490 height=72300 tilepix=256 tiletwip=3840";
     sendTextFrame(socket, oss.str());
 
     // Type one character to trigger invalidation
@@ -1613,7 +1613,7 @@ void TileCacheTests::testTileBeingRenderedHandling()
         = loadDocAndGetSession(_socketPoll, _uri, documentURL, testname);
 
     // Set the client visible area
-    sendTextFrame(socket, "clientviewstate x=-2662 y=0 width=16000 height=9875 tilepixelwidth=256 tilepixelheight=256 tiletwipwidth=3200 tiletwipheight=3200");
+    sendTextFrame(socket, "clientviewstate x=-2662 y=0 width=16000 height=9875 tilepix=256 tiletwip=3200");
 
     // Type one character to trigger invalidation
     sendChar(socket, 'x', skNone, testname);
@@ -1666,12 +1666,12 @@ void TileCacheTests::testWireIDFilteringOnWSDSide()
     std::shared_ptr<http::WebSocketSession> socket1
         = loadDocAndGetSession(_socketPoll, _uri, documentURL, testname);
     // Set the client visible area
-    sendTextFrame(socket1, "clientviewstate x=-4005 y=0 width=50490 height=72300 tilepixelwidth=256 tilepixelheight=256 tiletwipwidth=3840 tiletwipheight=3840");
+    sendTextFrame(socket1, "clientviewstate x=-4005 y=0 width=50490 height=72300 tilepix=256 tiletwip=3840");
 
     std::shared_ptr<http::WebSocketSession> socket2
         = loadDocAndGetSession(_socketPoll, _uri, documentURL, testname, true);
     // Set the client visible area
-    sendTextFrame(socket1, "clientviewstate x=-4005 y=0 width=50490 height=72300 tilepixelwidth=256 tilepixelheight=256 tiletwipwidth=3840 tiletwipheight=3840");
+    sendTextFrame(socket1, "clientviewstate x=-4005 y=0 width=50490 height=72300 tilepix=256 tiletwip=3840");
 
     //1. First make the first client to trigger the kit to filter out tiles based on identical wireIDs
 
@@ -1742,7 +1742,7 @@ void TileCacheTests::testLimitTileVersionsOnFly()
         = loadDocAndGetSession(_socketPoll, _uri, documentURL, testname);
 
     // Set the client visible area
-    sendTextFrame(socket, "clientviewstate x=-2662 y=0 width=16000 height=9875 tilepixelwidth=256 tilepixelheight=256 tiletwipwidth=3200 tiletwipheight=3200");
+    sendTextFrame(socket, "clientviewstate x=-2662 y=0 width=16000 height=9875 tilepix=256 tiletwip=3200");
 
     // Type one character to trigger sending tiles
     sendChar(socket, 'x', skNone, testname);

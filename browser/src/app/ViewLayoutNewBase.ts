@@ -30,14 +30,16 @@ class ViewLayoutNewBase extends ViewLayoutBase {
 	}
 
 	public buildAreaPayload(): string {
-		return 'x=' +
+		return (
+			'x=' +
 			this.viewedRectangle.x1 +
 			' y=' +
 			this.viewedRectangle.y1 +
 			' width=' +
 			this.viewedRectangle.width +
 			' height=' +
-			this.viewedRectangle.height;
+			this.viewedRectangle.height
+		);
 	}
 
 	public refreshScrollProperties(): any {

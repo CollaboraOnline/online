@@ -1032,23 +1032,20 @@ bool ClientSession::_handleInput(const char *buffer, int length)
     else if (tokens.equals(0, "clientviewstate"))
     {
         // Combined clientvisiblearea + clientzoom message to reduce round-trips.
+        // Tiles are always square so tilepix and tiletwip are single values.
         int x;
         int y;
         int width;
         int height;
-        int tilePixelWidth;
-        int tilePixelHeight;
-        int tileTwipWidth;
-        int tileTwipHeight;
+        int tilePix;
+        int tileTwip;
 
         if (!getTokenInteger(tokens, "x", x) ||
             !getTokenInteger(tokens, "y", y) ||
             !getTokenInteger(tokens, "width", width) ||
             !getTokenInteger(tokens, "height", height) ||
-            !getTokenInteger(tokens, "tilepixelwidth", tilePixelWidth) ||
-            !getTokenInteger(tokens, "tilepixelheight", tilePixelHeight) ||
-            !getTokenInteger(tokens, "tiletwipwidth", tileTwipWidth) ||
-            !getTokenInteger(tokens, "tiletwipheight", tileTwipHeight))
+            !getTokenInteger(tokens, "tilepix", tilePix) ||
+            !getTokenInteger(tokens, "tiletwip", tileTwip))
         {
             logSyntaxErrorDetails(tokens, firstLine);
             return true;
@@ -1069,10 +1066,10 @@ bool ClientSession::_handleInput(const char *buffer, int length)
 
         _clientVisibleArea = Util::Rectangle(x, y, width, height);
 
-        _tileWidthPixel = tilePixelWidth;
-        _tileHeightPixel = tilePixelHeight;
-        _tileWidthTwips = tileTwipWidth;
-        _tileHeightTwips = tileTwipHeight;
+        _tileWidthPixel = tilePix;
+        _tileHeightPixel = tilePix;
+        _tileWidthTwips = tileTwip;
+        _tileHeightTwips = tileTwip;
 
         return forwardToChild(std::string(buffer, length), docBroker);
     }

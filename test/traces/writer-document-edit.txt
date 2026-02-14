@@ -13,8 +13,8 @@
 >+266>ObOgeUSNlVNMdCb6>001>commandvalues command=.uno:CharFontName
 >+266>ObOgeUSNlVNMdCb6>001>canceltiles
 >+1316>ObOgeUSNlVNMdCb6>001>tilecombine nviewid=0 part=0 width=256 height=256 tileposx=0,3840,7680,11520,0,3840,7680,11520,0,3840,7680,11520,0,3840,7680,11520 tileposy=0,0,0,0,3840,3840,3840,3840,7680,7680,7680,7680,11520,11520,11520,11520 tilewidth=3840 tileheight=3840
->+212>ObOgeUSNlVNMdCb6>001>clientzoom tilepixelwidth=256 tilepixelheight=256 tiletwipwidth=3840 tiletwipheight=3840
->+247>ObOgeUSNlVNMdCb6>001>clientvisiblearea x=-5025 y=0 width=22860 height=13215 splitx=0 splity=0
+>+212>ObOgeUSNlVNMdCb6>029>clientviewstate tilepix=256 tiletwip=3840
+>+247>ObOgeUSNlVNMdCb6>060>clientviewstate x=-5025 y=0 width=22860 height=13215 splitx=0 splity=0 tilepix=256 tiletwip=3840
 >+236>ObOgeUSNlVNMdCb6>001>mouse type=move x=3150 y=2220 count=1 buttons=0 modifier=0
 >+262>ObOgeUSNlVNMdCb6>001>mouse type=buttondown x=3150 y=2220 count=1 buttons=1 modifier=0
 >+243>ObOgeUSNlVNMdCb6>001>mouse type=buttonup x=3150 y=2220 count=1 buttons=1 modifier=0
@@ -1037,7 +1037,7 @@
 >+277980>ObOgeUSNlVNMdCb6>001>mouse type=move x=10785 y=15 count=1 buttons=0 modifier=0
 >+1056491>ObOgeUSNlVNMdCb6>001>mouse type=move x=8460 y=735 count=1 buttons=0 modifier=0
 >+671194>ObOgeUSNlVNMdCb6>001>mouse type=move x=13455 y=15 count=1 buttons=0 modifier=0
->+848444>ObOgeUSNlVNMdCb6>001>clientvisiblearea x=-2775 y=0 width=18360 height=13215 splitx=0 splity=0
+>+848444>ObOgeUSNlVNMdCb6>060>clientviewstate x=-2775 y=0 width=18360 height=13215 splitx=0 splity=0 tilepix=256 tiletwip=3840
 >+3037>ObOgeUSNlVNMdCb6>001>canceltiles
 >+225>ObOgeUSNlVNMdCb6>001>tilecombine nviewid=0 part=0 width=256 height=256 tileposx=0,3840,7680,11520,0,3840,7680,11520,0,3840,7680,11520,0,3840,7680,11520 tileposy=0,0,0,0,3840,3840,3840,3840,7680,7680,7680,7680,11520,11520,11520,11520 tilewidth=3840 tileheight=3840
 >+48841>ObOgeUSNlVNMdCb6>001>canceltiles
@@ -1045,8 +1045,8 @@
 >+792700>ObOgeUSNlVNMdCb6>001>mouse type=move x=15960 y=90 count=1 buttons=0 modifier=0
 >+7369277>ObOgeUSNlVNMdCb6>001>mouse type=move x=15540 y=5505 count=1 buttons=0 modifier=0
 >+904781>ObOgeUSNlVNMdCb6>001>uno .uno:InsertAnnotation {"Text":{"type":"string","value":"Comment"},"Author":{"type":"string","value":"LocalUser#0"}}
->+30248>ObOgeUSNlVNMdCb6>001>clientvisiblearea x=-5025 y=0 width=22860 height=13215 splitx=0 splity=0
->+123293>ObOgeUSNlVNMdCb6>001>clientvisiblearea x=-2775 y=0 width=18360 height=13215 splitx=0 splity=0
+>+30248>ObOgeUSNlVNMdCb6>060>clientviewstate x=-5025 y=0 width=22860 height=13215 splitx=0 splity=0 tilepix=256 tiletwip=3840
+>+123293>ObOgeUSNlVNMdCb6>060>clientviewstate x=-2775 y=0 width=18360 height=13215 splitx=0 splity=0 tilepix=256 tiletwip=3840
 >+386>ObOgeUSNlVNMdCb6>001>tilecombine nviewid=0 part=0 width=256 height=256 tileposx=0,3840,7680 tileposy=3840,3840,3840 tilewidth=3840 tileheight=3840
 >+79474>ObOgeUSNlVNMdCb6>001>tilecombine nviewid=0 part=0 width=256 height=256 tileposx=0,3840,7680 tileposy=3840,3840,3840 tilewidth=3840 tileheight=3840
 >+1055096>ObOgeUSNlVNMdCb6>001>mouse type=move x=13215 y=1515 count=1 buttons=0 modifier=0
@@ -1128,7 +1128,7 @@
 >+708546>ObOgeUSNlVNMdCb6>001>gettextselection mimetype=text/html
 >+402>ObOgeUSNlVNMdCb6>001>mouse type=move x=12615 y=75 count=1 buttons=0 modifier=0
 >+2856936>ObOgeUSNlVNMdCb6>001>tilecombine nviewid=0 part=0 width=256 height=256 tileposx=0,3840,7680,11520 tileposy=15360,15360,15360,15360 tilewidth=3840 tileheight=3840
->+7344812>ObOgeUSNlVNMdCb6>001>clientvisiblearea x=-2775 y=0 width=18360 height=13200 splitx=0 splity=0
+>+7344812>ObOgeUSNlVNMdCb6>060>clientviewstate x=-2775 y=0 width=18360 height=13200 splitx=0 splity=0 tilepix=256 tiletwip=3840
 >+446>ObOgeUSNlVNMdCb6>001>mouse type=move x=13635 y=690 count=1 buttons=0 modifier=0
 >+1149484>ObOgeUSNlVNMdCb6>001>mouse type=move x=8595 y=2850 count=1 buttons=0 modifier=0
 >+296772>ObOgeUSNlVNMdCb6>001>mouse type=buttondown x=8595 y=2850 count=1 buttons=1 modifier=0
