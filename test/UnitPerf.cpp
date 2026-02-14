@@ -13,11 +13,11 @@
 #include <config_version.h>
 
 #include <Unit.hpp>
-#include <Util.hpp>
-#include <JsonUtil.hpp>
-#include <FileUtil.hpp>
+#include <common/Util.hpp>
+#include <common/JsonUtil.hpp>
+#include <common/FileUtil.hpp>
 #include <helpers.hpp>
-#include <StringVector.hpp>
+#include <common/StringVector.hpp>
 #include <WebSocketSession.hpp>
 #include <wsd/COOLWSD.hpp>
 #include <wsd/DocumentBroker.hpp>

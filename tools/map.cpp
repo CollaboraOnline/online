@@ -36,7 +36,7 @@
 #include <math.h>
 
 #include <common/HexUtil.hpp>
-#include <Util.hpp>
+#include <common/Util.hpp>
 
 #ifdef __FreeBSD__
 void error(int status, int errnum, const char *format, ...)

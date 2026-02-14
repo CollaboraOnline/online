@@ -24,8 +24,8 @@
 #include <Poco/LineEndingConverter.h>
 
 #include "Exceptions.hpp"
-#include <Log.hpp>
-#include <Util.hpp>
+#include <common/Log.hpp>
+#include <common/Util.hpp>
 
 namespace{
 

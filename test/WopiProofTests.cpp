@@ -19,7 +19,7 @@
 #include <ProofKey.hpp>
 #include <Poco/Crypto/RSAKey.h>
 #include <Poco/Crypto/DigestEngine.h>
-#include <Util.hpp>
+#include <common/Util.hpp>
 
 #include <openssl/bn.h>
 #include <openssl/pem.h>

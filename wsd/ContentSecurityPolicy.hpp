@@ -11,9 +11,9 @@
 
 #pragma once
 
-#include "Log.hpp"
+#include <common/Log.hpp>
 #include "StringVector.hpp"
-#include "Util.hpp"
+#include <common/Util.hpp>
 #include <sstream>
 #include <string>
 #include <unordered_map>

@@ -18,11 +18,11 @@
 #include <TraceEvent.hpp>
 #include <wopi/StorageConnectionManager.hpp>
 #include <Exceptions.hpp>
-#include <Log.hpp>
+#include <common/Log.hpp>
 #include <DocumentBroker.hpp>
 #include <ClientSession.hpp>
 #include <common/JsonUtil.hpp>
-#include <Util.hpp>
+#include <common/Util.hpp>
 
 bool CheckFileInfo::checkFileInfo(int redirectLimit)
 {

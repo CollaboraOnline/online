@@ -18,7 +18,7 @@
 #include <test/lokassert.hpp>
 
 #include <Unit.hpp>
-#include <Util.hpp>
+#include <common/Util.hpp>
 #include <helpers.hpp>
 
 /// TIFF load testcase.

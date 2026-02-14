@@ -28,9 +28,9 @@
 #include "ClientSession.hpp"
 #include <Common.hpp>
 #include <Protocol.hpp>
-#include <StringVector.hpp>
+#include <common/StringVector.hpp>
 #include <Unit.hpp>
-#include <Util.hpp>
+#include <common/Util.hpp>
 #include <common/FileUtil.hpp>
 
 using namespace COOLProtocol;

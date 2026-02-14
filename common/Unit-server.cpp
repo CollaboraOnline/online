@@ -7,9 +7,9 @@
 
 #include <config.h>
 
-#include "Log.hpp"
+#include <common/Log.hpp>
 #include "Unit.hpp"
-#include "Util.hpp"
+#include <common/Util.hpp>
 
 // A "server" COOL is always running on a Unixish OS, so we can
 // include this unconditionally.

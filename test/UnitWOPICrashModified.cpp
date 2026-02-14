@@ -12,9 +12,9 @@
 #include <config.h>
 
 #include <WopiTestServer.hpp>
-#include <Log.hpp>
+#include <common/Log.hpp>
 #include <Unit.hpp>
-#include <Util.hpp>
+#include <common/Util.hpp>
 #include <lokassert.hpp>
 
 #include <csignal>

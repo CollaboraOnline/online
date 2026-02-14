@@ -31,7 +31,7 @@
 #include "Kit.hpp"
 #include "ChildSession.hpp"
 #include "SigUtil.hpp"
-#include "Util.hpp"
+#include <common/Util.hpp>
 #include "KitWebSocket.hpp"
 
 using Poco::Exception;

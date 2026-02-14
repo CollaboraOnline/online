@@ -19,11 +19,11 @@
 #include <Exceptions.hpp>
 #include <HostUtil.hpp>
 #include <HttpRequest.hpp>
-#include <Log.hpp>
+#include <common/Log.hpp>
 #include <NetUtil.hpp>
 #include <ProofKey.hpp>
 #include <Unit.hpp>
-#include <Util.hpp>
+#include <common/Util.hpp>
 #include <common/Anonymizer.hpp>
 #include <common/FileUtil.hpp>
 #include <common/JsonUtil.hpp>

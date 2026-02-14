@@ -23,13 +23,13 @@
 #include <Exceptions.hpp>
 #include <FileServer.hpp>
 #include <HttpRequest.hpp>
-#include <JsonUtil.hpp>
+#include <common/JsonUtil.hpp>
 #include <ProofKey.hpp>
 #include <ProxyRequestHandler.hpp>
 #include <RequestDetails.hpp>
 #include <Socket.hpp>
 #include <UserMessages.hpp>
-#include <Util.hpp>
+#include <common/Util.hpp>
 #include <net/AsyncDNS.hpp>
 #include <net/HttpHelper.hpp>
 #include <net/NetUtil.hpp>

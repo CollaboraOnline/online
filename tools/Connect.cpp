@@ -36,8 +36,8 @@
 #include <Common.hpp>
 #include <Protocol.hpp>
 #include "COOLWebSocket.hpp"
-#include <Log.hpp>
-#include <Util.hpp>
+#include <common/Log.hpp>
+#include <common/Util.hpp>
 
 using namespace COOLProtocol;
 

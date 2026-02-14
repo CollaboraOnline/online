@@ -13,7 +13,7 @@
 
 #include "Unit.hpp"
 #include <WopiTestServer.hpp>
-#include <Log.hpp>
+#include <common/Log.hpp>
 
 class UnitWopiLanguages : public WopiTestServer
 {

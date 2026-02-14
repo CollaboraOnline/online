@@ -11,7 +11,7 @@
 
 // Compile and link this into test and utility executables that need it to link
 
-#include "config.h"
+#include <config.h>
 
 #include <common/TraceEvent.hpp>
 

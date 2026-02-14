@@ -41,7 +41,7 @@
 #include <Ssl.hpp>
 #include <SslSocket.hpp>
 #endif
-#include <Log.hpp>
+#include <common/Log.hpp>
 #include <common/ConfigUtil.hpp>
 
 bool filterTests(CPPUNIT_NS::TestRunner& runner, CPPUNIT_NS::Test* testRegistry, const std::string& testName)

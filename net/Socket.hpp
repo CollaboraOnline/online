@@ -34,9 +34,9 @@
 #include <thread>
 
 #include <common/StateEnum.hpp>
-#include "Log.hpp"
+#include <common/Log.hpp>
 #include "NetUtil.hpp"
-#include "Util.hpp"
+#include <common/Util.hpp>
 #include "Buffer.hpp"
 #include "SigUtil.hpp"
 

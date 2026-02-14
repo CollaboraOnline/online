@@ -18,7 +18,7 @@
 #include <Message.hpp>
 #include <kit/KitQueue.hpp>
 #include <SenderQueue.hpp>
-#include <Util.hpp>
+#include <common/Util.hpp>
 
 #include <cppunit/extensions/HelperMacros.h>
 

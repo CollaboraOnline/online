@@ -11,7 +11,7 @@
 
 #pragma once
 
-#include <Log.hpp>
+#include <common/Log.hpp>
 
 #include <cstdint>
 #include <iconv.h>

@@ -12,7 +12,7 @@
 #include <config.h>
 
 #include "Authorization.hpp"
-#include "Log.hpp"
+#include <common/Log.hpp>
 #include "StringVector.hpp"
 #include <common/Uri.hpp>
 

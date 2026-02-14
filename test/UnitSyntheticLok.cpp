@@ -12,9 +12,9 @@
 #include <config.h>
 
 #include <Unit.hpp>
-#include <Util.hpp>
+#include <common/Util.hpp>
 #include <helpers.hpp>
-#include <StringVector.hpp>
+#include <common/StringVector.hpp>
 #include <WebSocketSession.hpp>
 #include <test/testlog.hpp>
 #include <test/lokassert.hpp>

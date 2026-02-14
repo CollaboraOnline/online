@@ -10,7 +10,7 @@
  */
 #include <config.h>
 
-#include "Util.hpp"
+#include <common/Util.hpp>
 
 namespace Util
 {

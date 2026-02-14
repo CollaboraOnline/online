@@ -19,7 +19,7 @@
 
 #include <Poco/Net/HTTPRequest.h>
 
-#include "Log.hpp"
+#include <common/Log.hpp>
 #include "lokassert.hpp"
 
 using namespace std::literals;

@@ -12,7 +12,7 @@
 #include <config.h>
 
 #include <Unit.hpp>
-#include <Util.hpp>
+#include <common/Util.hpp>
 #include <helpers.hpp>
 #include <WebSocketSession.hpp>
 #include <test/lokassert.hpp>

@@ -15,11 +15,11 @@
 
 #include <FakeSocket.hpp>
 #include <Kit.hpp>
-#include <Log.hpp>
+#include <common/Log.hpp>
 #include <COOLWSD.hpp>
 #include <Protocol.hpp>
 #include <SetupKitEnvironment.hpp>
-#include <Util.hpp>
+#include <common/Util.hpp>
 
 #include <osl/detail/android-bootstrap.h>
 
