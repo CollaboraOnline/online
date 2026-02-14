@@ -141,12 +141,16 @@ function createColor(
 
 	// Set color tooltips
 	var colorTooltip;
-	const found = themeColors.find(
-		(item: ThemeColor) => item.Value.toLowerCase() === colorItem.toLowerCase(),
-	);
-	if (found) colorTooltip = found.Name;
-	else if (window.app.colorNames) colorTooltip = findColorName(colorItem);
-	else colorTooltip = _('Unknown color');
+	if (themeData) {
+		const found = themeColors.find(
+			(item: ThemeColor) =>
+				item.Value.toLowerCase() === colorItem.toLowerCase(),
+		);
+		if (found) colorTooltip = found.Name;
+	}
+	if (!colorTooltip && window.app.colorNames)
+		colorTooltip = findColorName(colorItem);
+	if (!colorTooltip) colorTooltip = _('Unknown color');
 
 	if (window.enableAccessibility) {
 		color.setAttribute('aria-label', colorTooltip);
