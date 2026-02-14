@@ -813,7 +813,7 @@ public:
         basicAuth.append(":");
         basicAuth.append(password);
         editHeader().add(std::string(Header::Authorization),
-                         "Basic " + Util::base64EncodeRemovingNewLines(basicAuth));
+                         "Basic " + Util::base64Encode(basicAuth));
     }
 
     /// Returns the username and password from the Authorization header, per RFC-7235.

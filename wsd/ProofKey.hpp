@@ -51,7 +51,8 @@ private:
 
     static std::string BytesToBase64(const std::vector<unsigned char>& bytes)
     {
-        return Util::base64EncodeRemovingNewLines(bytes);
+        return Util::base64Encode(
+            std::string_view(reinterpret_cast<const char*>(bytes.data()), bytes.size()));
     }
 
     static std::vector<unsigned char> Base64ToBytes(const std::string &str);
