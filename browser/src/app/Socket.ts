@@ -472,6 +472,9 @@ class Socket {
 			this._map._docLayer._resetDocumentInfo();
 		}
 
+		// We don't want them back on re-connection.
+		this._delayedMessages = [];
+
 		if (isActive && this._reconnecting) {
 			// Don't show this before first transparently trying to reconnect.
 			this._map.fire('error', {
