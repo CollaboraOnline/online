@@ -11,10 +11,13 @@
 
 #include <config.h>
 
-#include <condition_variable>
-#include <mutex>
-#include <thread>
-#include <chrono>
+#include <common/Common.hpp>
+#include <common/Log.hpp>
+#include <common/Unit.hpp>
+#include <common/Util.hpp>
+
+#include <test/UnitHTTP.hpp>
+#include <test/helpers.hpp>
 
 #include <Poco/Net/HTTPBasicCredentials.h>
 #include <Poco/Net/HTTPCookie.h>
@@ -23,12 +26,10 @@
 #include <Poco/Net/NetException.h>
 #include <Poco/URI.h>
 
-#include <Common.hpp>
-#include <Log.hpp>
-#include <Unit.hpp>
-#include <UnitHTTP.hpp>
-#include <Util.hpp>
-#include <helpers.hpp>
+#include <chrono>
+#include <condition_variable>
+#include <mutex>
+#include <thread>
 
 #define UNIT_URI "/coolwsd/unit-admin"
 

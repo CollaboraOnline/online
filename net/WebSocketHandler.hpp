@@ -17,7 +17,6 @@
 #include <common/Unit.hpp>
 #include <common/Util.hpp>
 #include <net/HttpHelper.hpp>
-#include <string_view>
 #if !MOBILEAPP
 #include <net/HttpRequest.hpp>
 #endif
@@ -29,6 +28,7 @@
 #include <chrono>
 #include <memory>
 #include <string>
+#include <string_view>
 #include <vector>
 
 class WebSocketHandler : public ProtocolHandlerInterface

@@ -11,8 +11,14 @@
 
 #include <config.h>
 
-#include <HttpRequest.hpp>
-#include <Socket.hpp>
+#include <common/Unit.hpp>
+#include <common/Util.hpp>
+#include <net/HttpRequest.hpp>
+#include <net/Socket.hpp>
+#include <wsd/UserMessages.hpp>
+
+#include <test/helpers.hpp>
+#include <test/lokassert.hpp>
 
 #include <Poco/DOM/DOMParser.h>
 #include <Poco/DOM/Document.h>
@@ -21,12 +27,6 @@
 #include <Poco/DOM/NodeIterator.h>
 #include <Poco/SAX/InputSource.h>
 #include <Poco/URI.h>
-#include <test/lokassert.hpp>
-
-#include <Unit.hpp>
-#include <UserMessages.hpp>
-#include <Util.hpp>
-#include <helpers.hpp>
 
 #include <memory>
 #include <regex>

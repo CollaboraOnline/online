@@ -11,6 +11,8 @@
 
 #include <config.h>
 
+#include <common/Util.hpp>
+
 #include <cstdlib>
 #include <cstring>
 #include <iostream>
@@ -34,8 +36,6 @@
 #include <Poco/Util/Option.h>
 #include <Poco/Util/OptionSet.h>
 #include <Poco/Runnable.h>
-
-#include <Util.hpp>
 
 using Poco::Runnable;
 using Poco::Net::HTTPRequest;

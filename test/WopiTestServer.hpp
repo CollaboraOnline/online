@@ -11,17 +11,18 @@
 
 #pragma once
 
-#include "Protocol.hpp"
-#include "HttpRequest.hpp"
-#include "helpers.hpp"
-#include "Log.hpp"
-#include "Unit.hpp"
-#include "Util.hpp"
-#include "UnitWSDClient.hpp"
-#include "StringVector.hpp"
-#include "lokassert.hpp"
+#include <common/JsonUtil.hpp>
+#include <common/Log.hpp>
+#include <common/Protocol.hpp>
+#include <common/StringVector.hpp>
+#include <common/Unit.hpp>
+#include <common/Util.hpp>
+#include <net/HttpRequest.hpp>
 
-#include <JsonUtil.hpp>
+#include <test/UnitWSDClient.hpp>
+#include <test/helpers.hpp>
+#include <test/lokassert.hpp>
+
 #include <Poco/URI.h>
 #include <Poco/Util/LayeredConfiguration.h>
 

@@ -11,14 +11,10 @@
 
 #include <config.h>
 
-#include <cassert>
-#include <cstdlib>
-#include <cstring>
-#include <fstream>
-#include <iostream>
-#include <memory>
-#include <sysexits.h>
-#include <unistd.h>
+#include <common/Png.hpp>
+#include <common/Protocol.hpp>
+#include <common/Util.hpp>
+#include <kit/KitHelper.hpp>
 
 #define LOK_USE_UNSTABLE_API
 #include <LibreOfficeKit/LibreOfficeKitInit.h>
@@ -28,10 +24,13 @@
 #include <Poco/URI.h>
 #include <Poco/Util/Application.h>
 
-#include <KitHelper.hpp>
-#include <Png.hpp>
-#include <Util.hpp>
-#include <Protocol.hpp>
+#include <cassert>
+#include <cstdlib>
+#include <cstring>
+#include <fstream>
+#include <iostream>
+#include <sysexits.h>
+#include <unistd.h>
 
 using Poco::TemporaryFile;
 using Poco::Util::Application;

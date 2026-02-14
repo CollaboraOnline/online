@@ -11,33 +11,32 @@
 
 #include <config.h>
 
-#include <unistd.h>
+#include <common/Common.hpp>
+#include <common/Protocol.hpp>
+#include <common/Util.hpp>
+
+#include <Poco/Net/AcceptCertificateHandler.h>
+#include <Poco/Net/FilePartSource.h>
+#include <Poco/Net/HTMLForm.h>
+#include <Poco/Net/HTTPClientSession.h>
+#include <Poco/Net/HTTPRequest.h>
+#include <Poco/Net/HTTPResponse.h>
+#include <Poco/Net/HTTPSClientSession.h>
+#include <Poco/Net/KeyConsoleHandler.h>
+#include <Poco/Net/SSLManager.h>
+#include <Poco/StreamCopier.h>
+#include <Poco/URI.h>
+#include <Poco/Util/Application.h>
+#include <Poco/Util/OptionSet.h>
 
 #include <algorithm>
 #include <cstdlib>
 #include <cstring>
 #include <fstream>
 #include <iostream>
-#include <thread>
 #include <sysexits.h>
-
-#include <Poco/Net/HTMLForm.h>
-#include <Poco/Net/HTTPClientSession.h>
-#include <Poco/Net/HTTPSClientSession.h>
-#include <Poco/Net/HTTPRequest.h>
-#include <Poco/Net/HTTPResponse.h>
-#include <Poco/Net/FilePartSource.h>
-#include <Poco/Net/SSLManager.h>
-#include <Poco/Net/KeyConsoleHandler.h>
-#include <Poco/Net/AcceptCertificateHandler.h>
-#include <Poco/StreamCopier.h>
-#include <Poco/URI.h>
-#include <Poco/Util/Application.h>
-#include <Poco/Util/OptionSet.h>
-
-#include <Common.hpp>
-#include <Protocol.hpp>
-#include <Util.hpp>
+#include <thread>
+#include <unistd.h>
 
 /// Simple command-line tool for file format conversion.
 class Tool: public Poco::Util::Application

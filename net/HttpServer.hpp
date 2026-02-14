@@ -11,14 +11,14 @@
 
 #pragma once
 
+#include <net/HttpRequest.hpp>
+
 #include <algorithm>
 #include <chrono>
 #include <cstdint>
 #include <iostream>
 #include <string>
 #include <utility>
-
-#include <net/HttpRequest.hpp>
 
 namespace http
 {
