@@ -11,9 +11,10 @@
 
 #include <config.h>
 
-#include "FileUtil.hpp"
 #include "JailUtil.hpp"
-#include "Log.hpp"
+
+#include <common/FileUtil.hpp>
+#include <common/Log.hpp>
 
 #include <SigUtil.hpp>
 #include <csignal>

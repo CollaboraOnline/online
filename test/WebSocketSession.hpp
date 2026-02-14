@@ -11,24 +11,24 @@
 
 #pragma once
 
-#include <chrono>
-#include <cstdint>
-#include <iostream>
-#include <memory>
-#include <condition_variable>
-#include <mutex>
-#include <string>
-
-#include "NetUtil.hpp"
-#include "SigUtil.hpp"
-#include <net/Socket.hpp>
+#include <common/Log.hpp>
+#include <common/SigUtil.hpp>
+#include <common/Util.hpp>
 #include <net/HttpRequest.hpp>
+#include <net/NetUtil.hpp>
+#include <net/Socket.hpp>
 #include <net/WebSocketHandler.hpp>
 #if ENABLE_SSL
 #include <net/SslSocket.hpp>
 #endif
-#include "Log.hpp"
-#include "Util.hpp"
+
+#include <chrono>
+#include <condition_variable>
+#include <cstdint>
+#include <iostream>
+#include <memory>
+#include <mutex>
+#include <string>
 
 // This is a partial implementation of RFC 6455
 // The WebSocket Protocol.

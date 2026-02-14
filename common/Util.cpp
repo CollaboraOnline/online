@@ -12,12 +12,13 @@
 #include <config.h>
 #include <config_version.h>
 
-#include "Log.hpp"
-#include "Protocol.hpp"
-#include "Rectangle.hpp"
-#include "TraceEvent.hpp"
 #include "Util.hpp"
-#include "common/Common.hpp"
+
+#include <common/Common.hpp>
+#include <common/Log.hpp>
+#include <common/Protocol.hpp>
+#include <common/Rectangle.hpp>
+#include <common/TraceEvent.hpp>
 
 #include <Poco/Base64Decoder.h>
 #include <Poco/Base64Encoder.h>

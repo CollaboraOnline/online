@@ -11,6 +11,28 @@
 
 #include <config.h>
 
+#include <common/Common.hpp>
+#include <common/ConfigUtil.hpp>
+#include <common/JsonUtil.hpp>
+#include <common/Log.hpp>
+#include <common/Protocol.hpp>
+#include <common/SigUtil.hpp>
+#include <common/StringVector.hpp>
+#include <common/Unit.hpp>
+#include <common/Uri.hpp>
+#include <common/Util.hpp>
+#include <net/Socket.hpp>
+#if ENABLE_SSL
+#include <SslSocket.hpp>
+#endif
+#include <net/WebSocketHandler.hpp>
+#include <wsd/Admin.hpp>
+#include <wsd/AdminModel.hpp>
+#include <wsd/Auth.hpp>
+#include <wsd/COOLWSD.hpp>
+
+#include <Poco/Net/HTTPRequest.h>
+
 #include <chrono>
 #include <csignal>
 #include <cstdint>
@@ -19,30 +41,6 @@
 #include <string>
 #include <sys/poll.h>
 #include <unistd.h>
-
-#include <Poco/Net/HTTPRequest.h>
-
-#include "Admin.hpp"
-#include "AdminModel.hpp"
-#include "Auth.hpp"
-#include "ConfigUtil.hpp"
-#include <Common.hpp>
-#include <COOLWSD.hpp>
-#include <Log.hpp>
-#include <Protocol.hpp>
-#include <StringVector.hpp>
-#include <Unit.hpp>
-#include <Util.hpp>
-#include <common/JsonUtil.hpp>
-#include <common/Uri.hpp>
-
-#include <net/Socket.hpp>
-#if ENABLE_SSL
-#include <SslSocket.hpp>
-#endif
-#include <net/WebSocketHandler.hpp>
-
-#include <common/SigUtil.hpp>
 
 using namespace COOLProtocol;
 

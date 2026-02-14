@@ -11,17 +11,18 @@
 
 #include <config.h>
 
-#include <memory>
-#include <sstream>
-#include <string>
+#include <common/Unit.hpp>
+
+#include <test/helpers.hpp>
+#include <test/lokassert.hpp>
 
 #include <Poco/Exception.h>
 #include <Poco/RegularExpression.h>
 #include <Poco/URI.h>
-#include <test/lokassert.hpp>
 
-#include <Unit.hpp>
-#include <helpers.hpp>
+#include <memory>
+#include <sstream>
+#include <string>
 
 using namespace std::literals;
 

@@ -11,15 +11,14 @@
 
 #include <config.h>
 
-#include "NetUtil.hpp"
-#include "AsyncDNS.hpp"
-#include <common/Util.hpp>
 #include <common/Unit.hpp>
+#include <common/Util.hpp>
+#include <net/AsyncDNS.hpp>
+#include <net/NetUtil.hpp>
+#include <net/Socket.hpp>
 #include <net/Uri.hpp>
-
-#include "Socket.hpp"
 #if ENABLE_SSL && !MOBILEAPP
-#include "SslSocket.hpp"
+#include <net/SslSocket.hpp>
 #endif
 
 #include <Poco/Exception.h>

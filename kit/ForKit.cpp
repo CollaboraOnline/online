@@ -15,6 +15,27 @@
 
 #include <config.h>
 
+#include <WebSocketHandler.hpp>
+#include <common/Common.hpp>
+#include <common/ConfigUtil.hpp>
+#include <common/FileUtil.hpp>
+#include <common/JailUtil.hpp>
+#include <common/Log.hpp>
+#include <common/Seccomp.hpp>
+#include <common/SigUtil.hpp>
+#include <common/Simd.hpp>
+#include <common/Unit.hpp>
+#include <common/Uri.hpp>
+#include <common/Util.hpp>
+#include <common/Watchdog.hpp>
+#include <common/security.h>
+#include <kit/DeltaSimd.h>
+#include <kit/Kit.hpp>
+#include <kit/SetupKitEnvironment.hpp>
+
+#include <Poco/Path.h>
+#include <Poco/URI.h>
+
 #if HAVE_LIBCAP
 #include <sys/capability.h>
 #endif
@@ -30,28 +51,6 @@
 #include <thread>
 #include <chrono>
 #include <utility>
-
-#include <Poco/Path.h>
-#include <Poco/URI.h>
-
-#include <Common.hpp>
-#include "Kit.hpp"
-#include "SetupKitEnvironment.hpp"
-#include <Log.hpp>
-#include <Simd.hpp>
-#include <Unit.hpp>
-#include <Util.hpp>
-#include <WebSocketHandler.hpp>
-
-#include <common/FileUtil.hpp>
-#include <common/JailUtil.hpp>
-#include <common/Seccomp.hpp>
-#include <common/SigUtil.hpp>
-#include <common/security.h>
-#include <common/ConfigUtil.hpp>
-#include <common/Uri.hpp>
-#include <common/Watchdog.hpp>
-#include <kit/DeltaSimd.h>
 
 namespace
 {

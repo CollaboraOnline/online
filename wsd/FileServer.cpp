@@ -14,29 +14,28 @@
 
 #include "FileServer.hpp"
 
-#include "Auth.hpp"
-#include "COOLWSD.hpp"
-#include "Exceptions.hpp"
-#include "FileUtil.hpp"
-#include "HttpRequest.hpp"
-#include "RequestDetails.hpp"
-#include "ServerURL.hpp"
-#include <Common.hpp>
-#include <Crypto.hpp>
-#include <Log.hpp>
-#include <Protocol.hpp>
-#include <Util.hpp>
-#include <JsonUtil.hpp>
-#include <common/ConfigUtil.hpp>
-#include <Poco/Net/HTTPClientSession.h>
-#include <wopi/StorageConnectionManager.hpp>
 #include <common/Authorization.hpp>
+#include <common/Common.hpp>
+#include <common/ConfigUtil.hpp>
+#include <common/Crypto.hpp>
+#include <common/FileUtil.hpp>
+#include <common/JsonUtil.hpp>
 #include <common/LangUtil.hpp>
+#include <common/Log.hpp>
+#include <common/Protocol.hpp>
+#include <common/Util.hpp>
 #include <common/base64.hpp>
+#include <net/HttpRequest.hpp>
 #if !MOBILEAPP
 #include <net/HttpHelper.hpp>
 #endif
-#include <ContentSecurityPolicy.hpp>
+#include <wopi/StorageConnectionManager.hpp>
+#include <wsd/Auth.hpp>
+#include <wsd/COOLWSD.hpp>
+#include <wsd/ContentSecurityPolicy.hpp>
+#include <wsd/Exceptions.hpp>
+#include <wsd/RequestDetails.hpp>
+#include <wsd/ServerURL.hpp>
 
 #include <Poco/DateTime.h>
 #include <Poco/DateTimeFormat.h>
@@ -46,22 +45,20 @@
 #include <Poco/MemoryStream.h>
 #include <Poco/Net/HTMLForm.h>
 #include <Poco/Net/HTTPBasicCredentials.h>
+#include <Poco/Net/HTTPClientSession.h>
 #include <Poco/Net/HTTPCookie.h>
 #include <Poco/Net/HTTPRequest.h>
 #include <Poco/Net/HTTPResponse.h>
+#include <Poco/Net/MessageHeader.h>
 #include <Poco/Net/NameValueCollection.h>
 #include <Poco/Net/NetException.h>
+#include <Poco/Net/PartHandler.h>
 #include <Poco/RegularExpression.h>
 #include <Poco/Runnable.h>
 #include <Poco/SHA1Engine.h>
 #include <Poco/StreamCopier.h>
 #include <Poco/URI.h>
 #include <Poco/Util/LayeredConfiguration.h>
-#include <Poco/Net/PartHandler.h>
-#include <Poco/Net/MessageHeader.h>
-#include <sstream>
-
-
 
 #include <chrono>
 #include <iomanip>

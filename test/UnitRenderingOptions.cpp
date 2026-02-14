@@ -11,15 +11,16 @@
 
 #include <config.h>
 
-#include <memory>
-#include <string>
+#include <common/Unit.hpp>
+#include <common/Util.hpp>
 
-#include <Poco/URI.h>
+#include <test/helpers.hpp>
 #include <test/lokassert.hpp>
 
-#include <Unit.hpp>
-#include <Util.hpp>
-#include <helpers.hpp>
+#include <Poco/URI.h>
+
+#include <memory>
+#include <string>
 
 /// Rendering options testcase.
 class UnitRenderingOptions : public UnitWSD
