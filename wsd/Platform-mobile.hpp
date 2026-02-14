@@ -9,6 +9,9 @@
  */
 #pragma once
 
+//  This file's purpose is to reduce clutter in other files
+//  by isolating conditional mobile-related includes.
+
 #if MOBILEAPP
 
 #include <Kit.hpp>

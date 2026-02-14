@@ -405,9 +405,8 @@ wsd_headers = wsd/Admin.hpp \
               wsd/Exceptions.hpp \
               wsd/FileServer.hpp \
               wsd/HostUtil.hpp \
-              wsd/PlatformDesktop.hpp \
-              wsd/PlatformMobile.hpp \
-              wsd/PlatformUnix.hpp \
+              wsd/Platform-mobile.hpp \
+              wsd/Platform-server.hpp \
               wsd/PresetsInstall.hpp \
               wsd/Process.hpp \
               wsd/ProofKey.hpp \
@@ -422,7 +421,6 @@ wsd_headers = wsd/Admin.hpp \
               wsd/ServerURL.hpp \
               wsd/SlideCache.hpp \
               wsd/SpecialBrokers.hpp \
-              wsd/SslConfig.hpp \
               wsd/Storage.hpp \
               wsd/TileCache.hpp \
               wsd/TileDesc.hpp \
