@@ -1630,9 +1630,10 @@ public:
 
         extractVariable(form, "permission", PERMISSION);
 
-#if ENABLE_DEBUG
-        extractVariable(form, "configid", DEBUG_WOPI_CONFIG_ID);
-#endif
+        if constexpr (Util::isDebugEnabled())
+        {
+            extractVariable(form, "configid", DEBUG_WOPI_CONFIG_ID);
+        }
 
         extractVariable(form, "wopi_setting_base_url", WOPI_SETTING_BASE_URL);
 
@@ -1763,11 +1764,9 @@ FileServerRequestHandler::ResourceAccessDetails FileServerRequestHandler::prepro
     std::string protocolDebug = stringifyBoolFromConfig(config, "logging.protocol", false);
     Poco::replaceInPlace(preprocess, std::string("%PROTOCOL_DEBUG%"), protocolDebug);
 
-    bool enableDebug = false;
-#if ENABLE_DEBUG
-    enableDebug = true;
-#endif
-    std::string enableDebugStr = stringifyBoolFromConfig(config, "logging.protocol", enableDebug);
+    std::string enableDebugStr =
+        stringifyBoolFromConfig(config, "logging.protocol", Util::isDebugEnabled());
+
     Poco::replaceInPlace(preprocess, std::string("%ENABLE_DEBUG%"), enableDebugStr);
 
     static const std::string hexifyEmbeddedUrls =
@@ -2489,13 +2488,10 @@ void FileServerRequestHandler::preprocessIntegratorAdminFile(const HTTPRequest& 
     Poco::replaceInPlace(adminFile, CSS_VARS, cssVarsToStyle(urv[CSS_VARS]));
     Poco::replaceInPlace(adminFile, UI_THEME, urv[UI_THEME]);
     Poco::replaceInPlace(adminFile, VERSION, Util::getCoolVersionHash());
-#if ENABLE_DEBUG
-    const bool enableDebug = true;
-#else
-    const bool enableDebug = false;
-#endif
+
     Poco::replaceInPlace(adminFile, std::string("%ENABLE_DEBUG%"),
-                         std::string(enableDebug ? "true" : "false"));
+                         std::string(Util::isDebugEnabled() ? "true" : "false"));
+
     std::string enableAccessibility = stringifyBoolFromConfig(config, "accessibility.enable", false);
     Poco::replaceInPlace(adminFile, std::string("%ENABLE_ACCESSIBILITY%"), enableAccessibility);
 
