@@ -144,7 +144,7 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 
 	it('Apply font style.', function() {
 		helper.setDummyClipboardForCopy();
-		cy.cGet('#toolbar-up #fontnamecombobox').click();
+		cy.cGet('#toolbar-up #fontnamecombobox .ui-combobox-button').click();
 		desktopHelper.selectFromListbox('Alef');
 		calcHelper.selectEntireSheet();
 		helper.copy();
@@ -153,7 +153,7 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 
 	it('Apply font size.', function() {
 		helper.setDummyClipboardForCopy();
-		cy.cGet('#toolbar-up #fontsizecombobox').click();
+		cy.cGet('#toolbar-up #fontsizecombobox .ui-combobox-button').click();
 		desktopHelper.selectFromListbox('12');
 		calcHelper.selectEntireSheet();
 		helper.copy();

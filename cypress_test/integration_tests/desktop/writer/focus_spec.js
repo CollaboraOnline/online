@@ -80,8 +80,8 @@ describe(['tagdesktop', 'tagproxy'], 'Focus tests', function() {
 		cy.cGet('body').type('{ctrl}a');
 
 		// Change font size by slow typing
-		cy.cGet('#fontsizecombobox > input.ui-combobox-content').click();
-		cy.cGet('#fontsizecombobox > input.ui-combobox-content').clear();
+		cy.cGet('#toolbar-up #fontsizecombobox > input.ui-combobox-content').click();
+		cy.cGet('#toolbar-up #fontsizecombobox > input.ui-combobox-content').clear();
 		helper.assertFocus('tagName', 'INPUT');
 		helper.assertFocus('parentElement.id', 'fontsizecombobox');
 		var text = '999';
