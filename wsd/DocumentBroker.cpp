@@ -5304,7 +5304,7 @@ bool DocumentBroker::forwardToClient(const std::shared_ptr<Message>& payload)
             // Broadcast to all.
             // Events could cause the removal of sessions.
             std::map<std::string, std::shared_ptr<ClientSession>> sessions(_sessions);
-            for (const auto& it : _sessions)
+            for (const auto& it : sessions)
             {
                 if (!it.second->inWaitDisconnected())
                     it.second->handleKitToClientMessage(payload);
