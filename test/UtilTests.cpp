@@ -42,7 +42,7 @@ class UtilTests : public CPPUNIT_NS::TestFixture
 #endif
     CPPUNIT_TEST(testEliminatePrefix);
     CPPUNIT_TEST(testStreamMatch);
-    CPPUNIT_TEST(testBase64EncodeRemovingNewLines);
+    CPPUNIT_TEST(testBase64Encode);
     CPPUNIT_TEST(testBase64Decode);
 
     CPPUNIT_TEST_SUITE_END();
@@ -55,7 +55,7 @@ class UtilTests : public CPPUNIT_NS::TestFixture
     void testUtf8();
     void testEliminatePrefix();
     void testStreamMatch();
-    void testBase64EncodeRemovingNewLines();
+    void testBase64Encode();
     void testBase64Decode();
 };
 
@@ -268,34 +268,28 @@ void UtilTests::testStreamMatch()
     LOK_ASSERT_EQUAL_STR(final, os.str());
 }
 
-void UtilTests::testBase64EncodeRemovingNewLines()
+void UtilTests::testBase64Encode()
 {
     constexpr std::string_view testname = __func__;
 
     // Simple string.
-    LOK_ASSERT_EQUAL(std::string("SGVsbG8="),
-                     Util::base64EncodeRemovingNewLines("Hello"));
+    LOK_ASSERT_EQUAL(std::string("SGVsbG8="), Util::base64Encode("Hello"));
+
+    // Input with newlines is encoded as-is (newlines become part of the encoding).
+    std::string withNewLines = "Hello\nWorld\n";
+    std::string encoded = Util::base64Encode(withNewLines);
+    LOK_ASSERT_EQUAL(withNewLines, Util::base64Decode(encoded));
+
+    // Round-trip with longer content.
+    std::string longer = "The quick brown fox jumps over the lazy dog";
+    LOK_ASSERT_EQUAL(longer, Util::base64Decode(Util::base64Encode(longer)));
 
     // Long input (>54 bytes) would trigger Poco line breaks every 72 output
     // chars. Verify the output contains no newlines.
     std::string longInput(200, 'A');
-    std::string encoded = Util::base64EncodeRemovingNewLines(longInput);
-    LOK_ASSERT(encoded.find('\n') == std::string::npos);
-    LOK_ASSERT(encoded.find('\r') == std::string::npos);
-
-#if 0
-    // Input containing newlines is preserved through round-trip: the function
-    // strips output newlines (from the encoder), not input newlines.
-    // ... and it turns out that current base64Decode has a bug there anyway
-    std::string withNewLines = "Hello\nWorld\n";
-    std::string encodedNL = Util::base64EncodeRemovingNewLines(withNewLines);
-    LOK_ASSERT_EQUAL(withNewLines, Util::base64Decode(encodedNL));
-
-    // Vector<unsigned char> overload.
-    std::vector<unsigned char> vec = {'H', 'i', '\n'};
-    LOK_ASSERT_EQUAL(std::string("Hi\n"),
-                     Util::base64Decode(Util::base64EncodeRemovingNewLines(vec)));
-#endif
+    std::string longencoded = Util::base64Encode(longInput);
+    LOK_ASSERT(longencoded.find('\n') == std::string::npos);
+    LOK_ASSERT(longencoded.find('\r') == std::string::npos);
 }
 
 void UtilTests::testBase64Decode()
@@ -305,12 +299,9 @@ void UtilTests::testBase64Decode()
     // Simple round-trip.
     LOK_ASSERT_EQUAL(std::string("Hello"), Util::base64Decode("SGVsbG8="));
 
-#if 0
     // Decode longer string.
-    // ... and it turns out that current base64Decode has a bug there anyway
     LOK_ASSERT_EQUAL(std::string("Hello World!"),
                      Util::base64Decode("SGVsbG8gV29ybGQh"));
-#endif
 }
 
 CPPUNIT_TEST_SUITE_REGISTRATION(UtilTests);

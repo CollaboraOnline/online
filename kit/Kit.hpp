@@ -11,10 +11,6 @@
 
 #pragma once
 
-#include <typeinfo>
-
-#include <Poco/Util/XMLConfiguration.h>
-
 #include <map>
 #include <string>
 
