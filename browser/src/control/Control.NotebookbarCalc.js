@@ -2882,12 +2882,25 @@ window.L.Control.NotebookbarCalc = window.L.Control.NotebookbarWriter.extend({
 			},
 			{ type: 'separator', id: 'format-sparkline-break', orientation: 'vertical' },
 			{
-				'id': 'format-theme-dialog',
+				'id': 'themes-group',
+				'type': 'overflowgroup',
+				'name': _('Themes'),
+				'nofold': true,
+				'icon': 'lc_themesthames.svg',
+				'children': [
+					{
+						'id': 'iconview_theme_colors', // has to match core id
+						'type': 'iconview'
+					}
+				]
+			},
+			{
+				'id': 'add-theme-dialog',
 				'type': 'bigtoolitem',
-				'text': _UNO('.uno:ThemeDialog'),
-				'command': '.uno:ThemeDialog',
-				'accessibility': { focusBack: false, combination: 'J', de: null }
-			}
+				'text': _UNO('.uno:AddTheme'),
+				'command': '.uno:AddTheme',
+				'accessibility': { focusBack: false, combination: 'AT', de: null }
+			},
 		];
 
 		return this.getTabPage('Format', content);
