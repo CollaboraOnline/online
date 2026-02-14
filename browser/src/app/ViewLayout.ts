@@ -36,6 +36,8 @@ class ScrollProperties {
 	moveBy: number[] | null = null; // Pending move event (pX, pY).
 }
 
+// FIXME: should be abstract to split Writer and other layouts
+// so we can have abstract methods and be warned about missing bits
 class ViewLayoutBase {
 	public readonly type: string = 'ViewLayoutBase';
 
@@ -188,6 +190,13 @@ class ViewLayoutBase {
 
 	protected getDocumentAnchorSection(): CanvasSectionObject {
 		return app.sectionContainer.getDocumentAnchorSection();
+	}
+
+	/// used in Views which can show pages (Writer) to determine left alignment
+	// FIXME: confusing name, should be abstract
+	public getDocumentScrollOffset(): number {
+		app.console.error('not implemented');
+		return 0;
 	}
 
 	private calculateHorizontalScrollLength(
