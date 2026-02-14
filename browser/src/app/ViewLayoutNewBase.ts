@@ -29,7 +29,7 @@ class ViewLayoutNewBase extends ViewLayoutBase {
 		super();
 	}
 
-	public getClientVisibleAreaPayload(): string {
+	public buildAreaPayload(): string {
 		return 'x=' +
 			this.viewedRectangle.x1 +
 			' y=' +
@@ -41,7 +41,7 @@ class ViewLayoutNewBase extends ViewLayoutBase {
 	}
 
 	public sendClientVisibleArea() {
-		app.socket.sendMessage('clientvisiblearea ' + this.getClientVisibleAreaPayload());
+		TileManager.sendClientViewState();
 
 		return new cool.Bounds(
 			new cool.Point(this.viewedRectangle.pX1, this.viewedRectangle.pY1),

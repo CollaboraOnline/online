@@ -177,8 +177,6 @@ private:
     bool sendFontRendering(const StringVector& tokens);
     bool getCommandValues(const StringVector& tokens);
 
-    bool clientZoom(const StringVector& tokens);
-    bool clientVisibleArea(const StringVector& tokens);
     bool clientViewState(const StringVector& tokens);
     bool outlineState(const StringVector& tokens);
     bool downloadAs(const StringVector& tokens);

@@ -47,7 +47,7 @@ void UnitAnyInput::invokeWSDTest()
     socketPoll->startThread();
     std::shared_ptr<http::WebSocketSession> socket = helpers::loadDocAndGetSession(
         socketPoll, Poco::URI(helpers::getTestServerURI()), documentURL, testname);
-    helpers::sendTextFrame(socket, "clientvisiblearea x=0 y=0 width=12240 height=15840", testname);
+    helpers::sendTextFrame(socket, "clientviewstate x=0 y=0 width=12240 height=15840 tilepixelwidth=256 tilepixelheight=256 tiletwipwidth=3840 tiletwipheight=3840", testname);
 
     // When inserting a page break (Ctrl+Enter) and instantly asking for the state of the layout:
     helpers::sendTextFrame(socket, "key type=input char=0 key=9472", testname);

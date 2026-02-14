@@ -721,32 +721,18 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 		TileManager.update();
 	},
 
-	// Returns the zoom payload string if it has changed (or forced), null otherwise.
-	// Updates the internal cache.
-	_getClientZoomPayload: function (forceUpdate) {
-		if (!this._map._docLoaded)
-			return null;
-
-		var newClientZoom = 'tilepixelwidth=' + TileManager.tileSize + ' ' +
+	// Returns the current zoom parameters string (always computed, no change detection).
+	_buildZoomPayload: function () {
+		return 'tilepixelwidth=' + TileManager.tileSize + ' ' +
 		    'tilepixelheight=' + TileManager.tileSize + ' ' +
 		    'tiletwipwidth=' + app.tile.size.x + ' ' +
 		    'tiletwipheight=' + app.tile.size.y + ' ' +
 		    'dpiscale=' + window.devicePixelRatio + ' ' +
-		    'zoompercent=' + this._map.getZoomPercent()
-
-		if (this._clientZoom !== newClientZoom || forceUpdate || this.isImpress()) {
-			if (!this._map._fatal && app.idleHandler._active && app.socket.connected())
-				this._clientZoom = newClientZoom;
-			return newClientZoom;
-		}
-		return null;
+		    'zoompercent=' + this._map.getZoomPercent();
 	},
 
 	_sendClientZoom: function (forceUpdate) {
-		var payload = this._getClientZoomPayload(forceUpdate);
-		if (payload !== null) {
-			app.socket.sendMessage('clientzoom ' + payload);
-		}
+		TileManager.sendClientViewState(forceUpdate);
 	},
 
 	_twipsRectangleToPixelBounds: function (strRectangle) {

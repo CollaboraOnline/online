@@ -2072,18 +2072,21 @@ class TileManager {
 			this.initPreFetchAdjacentTiles();
 	}
 
-	// Sends clientvisiblearea and clientzoom as a single combined message when both
-	// need updating, reducing WebSocket round-trips.
-	private static sendClientViewState(): void {
-		var zoomPayload = app.map._docLayer._getClientZoomPayload();
-		var areaPayload = app.activeDocument.activeLayout.getClientVisibleAreaPayload();
+	private static _lastClientViewState: string = '';
 
-		if (zoomPayload !== null && areaPayload !== null) {
-			app.socket.sendMessage('clientviewstate ' + areaPayload + ' ' + zoomPayload);
-		} else if (zoomPayload !== null) {
-			app.socket.sendMessage('clientzoom ' + zoomPayload);
-		} else if (areaPayload !== null) {
-			app.socket.sendMessage('clientvisiblearea ' + areaPayload);
+	// Builds and sends a clientviewstate message with all view parameters.
+	// Change detection avoids sending duplicate messages.
+	public static sendClientViewState(forceUpdate: boolean = false): void {
+		if (!app.map._docLoaded) return;
+
+		var areaPayload = app.activeDocument.activeLayout.buildAreaPayload(forceUpdate);
+		var zoomPayload = app.map._docLayer._buildZoomPayload();
+		var msg = 'clientviewstate ' + areaPayload + ' ' + zoomPayload;
+
+		if (this._lastClientViewState !== msg || forceUpdate || app.map._docLayer.isImpress()) {
+			app.socket.sendMessage(msg);
+			if (!app.map._fatal && app.idleHandler._active && app.socket.connected())
+				this._lastClientViewState = msg;
 		}
 	}
 

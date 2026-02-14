@@ -1029,53 +1029,6 @@ bool ClientSession::_handleInput(const char *buffer, int length)
         // contract and do as told, not as we expect the API to be used. Use force if provided.
         docBroker->uploadToStorage(client_from_this(), force);
     }
-    else if (tokens.equals(0, "clientvisiblearea"))
-    {
-        int x;
-        int y;
-        int width;
-        int height;
-        if ((tokens.size() != 5 && tokens.size() != 7) ||
-            !getTokenInteger(tokens[1], "x", x) ||
-            !getTokenInteger(tokens[2], "y", y) ||
-            !getTokenInteger(tokens[3], "width", width) ||
-            !getTokenInteger(tokens[4], "height", height))
-        {
-            // Be forgiving and log instead of disconnecting.
-            // sendTextFrameAndLogError("error: cmd=clientvisiblearea kind=syntax");
-            logSyntaxErrorDetails(tokens, firstLine);
-            return true;
-        }
-
-        if (tokens.size() == 7)
-        {
-            int splitX;
-            int splitY;
-            if (!getTokenInteger(tokens[5], "splitx", splitX) ||
-                !getTokenInteger(tokens[6], "splity", splitY))
-            {
-                logSyntaxErrorDetails(tokens, firstLine);
-                return true;
-            }
-
-            _splitX = splitX;
-            _splitY = splitY;
-        }
-
-        // Untrusted user input, make sure these are not negative.
-        if (width < 0)
-        {
-            width = 0;
-        }
-
-        if (height < 0)
-        {
-            height = 0;
-        }
-
-        _clientVisibleArea = Util::Rectangle(x, y, width, height);
-        return forwardToChild(std::string(buffer, length), docBroker);
-    }
     else if (tokens.equals(0, "clientviewstate"))
     {
         // Combined clientvisiblearea + clientzoom message to reduce round-trips.
@@ -1172,30 +1125,6 @@ bool ClientSession::_handleInput(const char *buffer, int length)
                 docBroker->updateLastModifyingActivityTime();
             return forwardToChild(std::string(buffer, length), docBroker);
         }
-    }
-    else if (tokens.equals(0, "clientzoom"))
-    {
-        int tilePixelWidth;
-        int tilePixelHeight;
-        int tileTwipWidth;
-        int tileTwipHeight;
-        if (tokens.size() < 5 ||
-            !getTokenInteger(tokens[1], "tilepixelwidth", tilePixelWidth) ||
-            !getTokenInteger(tokens[2], "tilepixelheight", tilePixelHeight) ||
-            !getTokenInteger(tokens[3], "tiletwipwidth", tileTwipWidth) ||
-            !getTokenInteger(tokens[4], "tiletwipheight", tileTwipHeight))
-        {
-            // Be forgiving and log instead of disconnecting.
-            // sendTextFrameAndLogError("error: cmd=clientzoom kind=syntax");
-            logSyntaxErrorDetails(tokens, firstLine);
-            return true;
-        }
-
-        _tileWidthPixel = tilePixelWidth;
-        _tileHeightPixel = tilePixelHeight;
-        _tileWidthTwips = tileTwipWidth;
-        _tileHeightTwips = tileTwipHeight;
-        return forwardToChild(std::string(buffer, length), docBroker);
     }
     else if (tokens.equals(0, "tileprocessed"))
     {
