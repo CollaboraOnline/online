@@ -104,6 +104,7 @@ class JSDialogMessageRouter {
 				);
 			}
 		} else if (msgData.jsontype === 'dialog') {
+			app.socket._map.fire('closepopups');
 			app.socket._map.fire('jsdialog', { data: msgData, callback: callbackFn });
 		} else if (msgData.jsontype === 'sidebar') {
 			app.socket._map.fire('sidebar', { data: msgData });
