@@ -1583,7 +1583,7 @@ export class CommentSection extends CanvasSectionObject {
 	}
 
 	private actionPerformedByCurrentUser(obj: any): boolean {
-		return obj.comment.author === this.map._viewInfo[this.map._docLayer._editorId].username;
+		return obj.comment.author === this.map._viewInfo[this.map._docLayer._viewId].username;
 	}
 
 	public onACKComment (obj: any): void {
