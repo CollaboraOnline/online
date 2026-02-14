@@ -72,6 +72,10 @@ function _menubuttonControl (parentContainer, data, builder) {
 		var options = {hasDropdownArrow: menuEntries.length > 1};
 		var control = builder._unoToolButton(parentContainer, data, builder, options);
 
+		if (!window.L.DomUtil.hasClass(control.container, 'selected')) {
+			control.button.removeAttribute('aria-pressed');
+		}
+
 		var isSplitButton = !!data.applyCallback;
 		// can be function or string with command identifier
 		const applyCallback =
