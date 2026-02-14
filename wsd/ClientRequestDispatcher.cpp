@@ -884,12 +884,12 @@ void ClientRequestDispatcher::handleIncomingMessage(SocketDisposition& dispositi
     char* appDocIdBuffer = (char*)malloc(appDocIdLen + 1);
     memcpy(appDocIdBuffer, space + 1, appDocIdLen);
     appDocIdBuffer[appDocIdLen] = '\0';
-    unsigned appDocId = std::strtoul(appDocIdBuffer, nullptr, 10);
+    const unsigned mobileAppDocId = Util::u64FromString(appDocIdBuffer, 0).first;
     free(appDocIdBuffer);
 
     handleClientWsUpgrade(
         request, std::string(socket->getInBuffer().data(), space - socket->getInBuffer().data()),
-        disposition, socket, appDocId);
+        disposition, socket, mobileAppDocId);
 #else // IOS
     handleClientWsUpgrade(
         request,

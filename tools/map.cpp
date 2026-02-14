@@ -785,7 +785,7 @@ int main(int argc, char **argv)
 
         if (*dir_proc->d_name > '0' && *dir_proc->d_name <= '9')
         {
-            unsigned pid_proc = strtoul(dir_proc->d_name, nullptr, 10);
+            const unsigned pid_proc = Util::u64FromString(dir_proc->d_name, 0).first;
 
             snprintf(path_proc, sizeof(path_proc), "/proc/%s/%s", dir_proc->d_name, "cmdline");
             if (read_buffer(cmdline, sizeof(cmdline), path_proc, ' ') &&
