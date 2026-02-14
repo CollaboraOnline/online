@@ -150,10 +150,6 @@ class ViewLayoutBase {
 		return payload;
 	}
 
-	public sendClientVisibleArea(forceUpdate: boolean = false): void {
-		TileManager.sendClientViewState(forceUpdate);
-	}
-
 	public getLastPanDirection(): Array<number> {
 		var dx: number = this._viewedRectangle.pX1 - this.lastViewedRectangle.pX1;
 		var dy: number = this._viewedRectangle.pY1 - this.lastViewedRectangle.pY1;

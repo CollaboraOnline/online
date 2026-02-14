@@ -40,15 +40,6 @@ class ViewLayoutNewBase extends ViewLayoutBase {
 			this.viewedRectangle.height;
 	}
 
-	public sendClientVisibleArea() {
-		TileManager.sendClientViewState();
-
-		return new cool.Bounds(
-			new cool.Point(this.viewedRectangle.pX1, this.viewedRectangle.pY1),
-			new cool.Point(this.viewedRectangle.pX2, this.viewedRectangle.pY2),
-		);
-	}
-
 	public refreshScrollProperties(): any {
 		const documentAnchor = this.getDocumentAnchorSection();
 

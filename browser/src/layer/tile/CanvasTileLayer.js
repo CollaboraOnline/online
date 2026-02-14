@@ -613,11 +613,10 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 		}
 	},
 
-	// These variables indicates the clientvisiblearea sent to the server and stored by the server
-	// We need to reset them when we are reconnecting to the server or reloading a document
-	// because the server needs new data even if the client is unmodified.
+	// Reset cached view state so the next sendClientViewState() resends even if
+	// the client values haven't changed (needed on reconnect / document reload).
 	_resetClientVisArea: function ()  {
-		this._clientZoom = '';
+		TileManager.resetClientViewState();
 		app.activeDocument.activeLayout.resetClientVisibleArea();
 	},
 
@@ -729,10 +728,6 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 		    'tiletwipheight=' + app.tile.size.y + ' ' +
 		    'dpiscale=' + window.devicePixelRatio + ' ' +
 		    'zoompercent=' + this._map.getZoomPercent();
-	},
-
-	_sendClientZoom: function (forceUpdate) {
-		TileManager.sendClientViewState(forceUpdate);
 	},
 
 	_twipsRectangleToPixelBounds: function (strRectangle) {

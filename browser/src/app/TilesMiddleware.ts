@@ -2074,6 +2074,10 @@ class TileManager {
 
 	private static _lastClientViewState: string = '';
 
+	public static resetClientViewState(): void {
+		this._lastClientViewState = '';
+	}
+
 	// Builds and sends a clientviewstate message with all view parameters.
 	// Change detection avoids sending duplicate messages.
 	public static sendClientViewState(forceUpdate: boolean = false): void {

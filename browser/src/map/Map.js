@@ -282,7 +282,7 @@ window.L.Map = window.L.Evented.extend({
 					window.postMobileMessage('hideProgressbar');
 				}
 
-				app.activeDocument.activeLayout.sendClientVisibleArea(true);
+				TileManager.sendClientViewState(true);
 				app.serverConnectionService.onDocumentLoaded();
 			} else if (this._docLayer && app.sectionContainer) {
 				// remove the comments and changes

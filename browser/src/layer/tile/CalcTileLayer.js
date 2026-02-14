@@ -175,7 +175,7 @@ window.L.CalcTileLayer = window.L.CanvasTileLayer.extend({
 	},
 
 	_onZoomRowColumns: function () {
-		this._sendClientZoom();
+		TileManager.sendClientViewState();
 		if (this.sheetGeometry) {
 			this.sheetGeometry.setTileGeometryData(app.tile.size.x, app.tile.size.y,
 				TileManager.tileSize);
