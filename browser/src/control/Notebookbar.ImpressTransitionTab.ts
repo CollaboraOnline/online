@@ -42,7 +42,7 @@ class ImpressTransitionTab implements NotebookbarTab {
 				children: [
 					{
 						id: 'transitions_icons',
-						type: 'iconview',
+						type: 'notebookbariconview',
 						entries: [...Array(29).keys()].map((n: number) => {
 							return { ondemand: true, selected: false, row: n };
 						}),

@@ -406,6 +406,11 @@ interface IconViewJSON extends WidgetJSON {
 	singleclickactivate: boolean; // activates element on single click instead of just selection
 	textWithIconEnabled: boolean; // To identify if we should add text below the icon or not.
 	selectionmode: string; // single or multiple
+	label: string;
+}
+
+interface IconViewListJSON extends WidgetJSON {
+	items : Array<IconViewJSON>;
 }
 
 interface IconViewElement extends HTMLElement {
@@ -420,6 +425,10 @@ interface IconViewElement extends HTMLElement {
 		entryData: any,
 		builder: JSBuilder,
 	) => void;
+}
+
+interface IconViewWrapper extends Element {
+  updateDropdown?: (id: string, pos: number) => void;
 }
 
 interface EditWidgetJSON extends WidgetJSON {

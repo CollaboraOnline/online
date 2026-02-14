@@ -270,6 +270,7 @@ JSDialog.iconView = function (
 	);
 
 	iconview.id = data.id;
+	iconview.data = data;
 	const isMultiSelect = data.selectionmode === 'multiple';
 
 	if (isMultiSelect) {
@@ -416,6 +417,9 @@ JSDialog.iconView = function (
 	};
 
 	iconview.updateRenders = (pos: number) => {
+		const iconviewWrapper = iconview.parentNode as IconViewWrapper;
+		// signal the parent to update dropdown
+		iconviewWrapper.updateDropdown?.(data.id, pos);
 		iconview.updateRendersImpl(pos, data.id, iconview);
 	};
 
