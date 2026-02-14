@@ -9,11 +9,15 @@ describe(['tagdesktop'], 'Annotation Tests', function() {
 	beforeEach(function() {
 		helper.setupAndLoadDocument('calc/annotation.ods');
 		desktopHelper.switchUIToNotebookbar();
+		cy.getFrameWindow().then((win) => {
+			this.win = win;
+			helper.processToIdle(win);
+		});
 	});
 
 	it('Insert',function() {
 		// Make sure we know the cell adress.
-		helper.typeIntoInputField(helper.addressInputSelector, 'B2');
+		calcHelper.enterCellAddressAndConfirm(this.win, 'B2');
 
 		desktopHelper.insertComment();
 
@@ -148,14 +152,14 @@ describe(['tagdesktop'], 'Annotation Tests', function() {
 	});
 
 	it('View Jump', function() {
-		helper.typeIntoInputField(helper.addressInputSelector, 'A100');
+		calcHelper.enterCellAddressAndConfirm(this.win, 'A100');
 		desktopHelper.insertComment();
 		/* comments are hidden in calc by default, so no visibility assert */
 		cy.cGet('#comment-container-1').should('exist')
 		cy.cGet('#Home-tab-label').click();
 
-		helper.typeIntoInputField(helper.addressInputSelector, 'A150');
-		helper.typeIntoInputField(helper.addressInputSelector, 'A135');
+		calcHelper.enterCellAddressAndConfirm(this.win, 'A150');
+		calcHelper.enterCellAddressAndConfirm(this.win, 'A135');
 
 		/*
 			NOTE: this scrollbar position might change in future. one can
