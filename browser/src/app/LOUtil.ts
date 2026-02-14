@@ -891,6 +891,26 @@ class LOUtil {
 		}
 		return '';
 	}
+
+	public static getDocumentLogoClass(docType: string) {
+		let iconClass: string;
+		let iconTooltip: string;
+		if (docType === 'text') {
+			iconClass = 'writer-icon-img';
+			iconTooltip = 'Writer';
+		} else if (docType === 'spreadsheet') {
+			iconClass = 'calc-icon-img';
+			iconTooltip = 'Calc';
+		} else if (docType === 'presentation') {
+			iconClass = 'impress-icon-img';
+			iconTooltip = 'Impress';
+		} else if (docType === 'drawing') {
+			iconClass = 'draw-icon-img';
+			iconTooltip = 'Draw';
+		}
+
+		return [iconClass, iconTooltip];
+	}
 }
 
 app.LOUtil = LOUtil;
