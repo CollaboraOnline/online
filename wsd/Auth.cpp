@@ -19,7 +19,6 @@
 #include <Poco/Crypto/RSADigestEngine.h>
 #include <Poco/Crypto/RSAKey.h>
 #include <Poco/Dynamic/Var.h>
-#include <Poco/LineEndingConverter.h>
 #include <Poco/Net/HTTPClientSession.h>
 #include <Poco/Net/HTTPRequest.h>
 #include <Poco/Net/HTTPResponse.h>
@@ -31,8 +30,6 @@
 #include <Protocol.hpp>
 #include <Util.hpp>
 #include <common/ConfigUtil.hpp>
-
-using Poco::OutputLineEndingConverter;
 
 std::unique_ptr<Poco::Crypto::RSAKey> JWTAuth::_key(
     new Poco::Crypto::RSAKey(Poco::Crypto::RSAKey(Poco::Crypto::RSAKey::KL_2048, Poco::Crypto::RSAKey::EXP_LARGE)));
