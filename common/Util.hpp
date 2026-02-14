@@ -1236,6 +1236,7 @@ int main(int argc, char**argv)
 
     /// Convert a string to 32-bit signed int.
     /// Returns the parsed value and a boolean indicating success or failure.
+    /// const auto [number, success] = Util::i32FromString(portString);
     inline std::pair<std::int32_t, bool> i32FromString(const std::string_view input)
     {
         const char* str = input.data();

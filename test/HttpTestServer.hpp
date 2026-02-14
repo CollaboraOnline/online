@@ -108,29 +108,30 @@ private:
             // Return test data.
             if (url.starts_with("/status/"))
             {
-                const auto statusCode = Util::i32FromString(url.substr(sizeof("/status")));
-                const auto reason = http::getReasonPhraseForCode(statusCode.first);
-                LOG_TRC("HandleIncomingMessage: got StatusCode " << statusCode.first
+                const auto [statusCode, success] =
+                    Util::i32FromString(std::string_view(url).substr(sizeof("/status")));
+                const auto reason = http::getReasonPhraseForCode(statusCode);
+                LOG_TRC("HandleIncomingMessage: got StatusCode " << statusCode
                                                                  << ", sending back: " << reason);
 
-                http::Response response(http::StatusLine(statusCode.first), fd);
-                if (statusCode.first == 402)
+                http::Response response(http::StatusLine(statusCode), fd);
+                if (statusCode == 402)
                 {
                     response.setBody("Pay me!");
                 }
-                else if (statusCode.first == 406)
+                else if (statusCode == 406)
                 {
                     response.setBody(
                         R"({"message": "Client did not request a supported media type.", )"
                         R"("accept": ["image/webp", "image/svg+xml", "image/jpeg", "image/png", "image/*"]})");
                 }
-                else if (statusCode.first == 418)
+                else if (statusCode == 418)
                 {
                     response.setBody("I'm a teapot!");
                 }
 
-                if (response.getBody().empty() && statusCode.first >= 200 && statusCode.first != 204
-                    && statusCode.first != 304) // No Content for other tags.
+                if (response.getBody().empty() && statusCode >= 200 && statusCode != 204 &&
+                    statusCode != 304) // No Content for other tags.
                 {
                     response.setContentLength(0);
                 }

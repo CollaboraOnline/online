@@ -1168,10 +1168,9 @@ bool ClientSession::_handleInput(const char *buffer, int length)
         }
 
         // call onTileProcessed on each tileID of tileid1, tileid2, ...
-        auto lambda = [this](size_t /*nIndex*/, const std::string_view token){
-            std::string copy(token);
-            TileWireId wireId = 0; bool res;
-            std::tie(wireId, res) = Util::i32FromString(copy);
+        auto lambda = [this](size_t /*nIndex*/, const std::string_view token)
+        {
+            const auto [wireId, res] = Util::i32FromString(token);
             if (!res)
                 LOG_WRN("Invalid syntax for tileprocessed wireid '" << token << "'");
             onTileProcessed(wireId);

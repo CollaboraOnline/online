@@ -1403,9 +1403,9 @@ public:
         if (portString.empty())
             return create(std::move(hostname), protocol, getDefaultPort(protocol));
 
-        const std::pair<std::int32_t, bool> portPair = Util::i32FromString(portString);
-        if (portPair.second && portPair.first > 0)
-            return create(std::move(hostname), protocol, portPair.first);
+        const auto [port, success] = Util::i32FromString(portString);
+        if (success && port > 0)
+            return create(std::move(hostname), protocol, port);
 
         LOG_ERR_S("Invalid port [" << portString << "] in URI [" << uri
                                    << "] to http::Session::create");
