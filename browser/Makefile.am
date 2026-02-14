@@ -684,7 +684,7 @@ dist-hook:
 		-not -path './dist/*' \
 		-not -path './debug/*' \
 		-not -path './release/*' \
-		-exec cp --parents {} $(distdir) \;
+		-exec cp -p --parents {} $(distdir) \;
 
 SUBDIRS = l10n images
 
