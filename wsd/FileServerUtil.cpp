@@ -12,13 +12,12 @@
 #include <config.h>
 
 #include "FileServer.hpp"
-#include "StringVector.hpp"
 
 #include <JsonUtil.hpp>
+#include <common/StringVector.hpp>
+#include <common/base64.hpp>
 
 #include <cctype>
-
-#include <common/base64.hpp>
 
 PreProcessedFile::PreProcessedFile(std::string filename, const std::string& data)
     : _filename(std::move(filename))
