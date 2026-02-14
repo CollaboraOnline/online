@@ -1377,7 +1377,7 @@ int main(int argc, char**argv)
 
     /// Base-64 encode the given input.
     std::string base64Encode(std::string_view input);
-    /// Base-64 encode the given input, stripping CRLF endings, if any.
+    /// Strip new-lines from @a input (e.g. from a signature digest) and base-64 encode.
     std::string base64EncodeRemovingNewLines(const std::string_view& input);
     inline std::string base64EncodeRemovingNewLines(const std::vector<unsigned char>& input)
     {
