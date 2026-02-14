@@ -33,7 +33,7 @@ namespace net
 class DefaultValues
 {
 public:
-    /// StreamSocket inactivity timeout in us (3600s default). Zero disables instrument.
+    /// StreamSocket inactivity timeout in us (5s default). Zero disables instrument.
     std::chrono::microseconds inactivityTimeout;
 
     /// Maximum number of concurrent external TCP connections. Zero disables instrument,
