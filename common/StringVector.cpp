@@ -5,11 +5,11 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-#include "config.h"
+#include <config.h>
 
 #include "StringVector.hpp"
 
-#include "Util.hpp"
+#include <common/Util.hpp>
 
 bool StringVector::equals(std::size_t index, const StringVector& other, std::size_t otherIndex)
 {

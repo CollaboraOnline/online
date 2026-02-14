@@ -11,8 +11,8 @@
 
 #pragma once
 
-#include <StringVector.hpp>
-#include <Util.hpp>
+#include <common/StringVector.hpp>
+#include <common/Util.hpp>
 
 #include <cstdint>
 #include <cstdlib>

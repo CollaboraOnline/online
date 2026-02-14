@@ -14,10 +14,10 @@
 #include <fstream>
 #include <thread>
 
-#include <Log.hpp>
+#include <common/Log.hpp>
 #include <Unit.hpp>
 #include <UnitHTTP.hpp>
-#include <Util.hpp>
+#include <common/Util.hpp>
 #include <helpers.hpp>
 #include <WopiTestServer.hpp>
 

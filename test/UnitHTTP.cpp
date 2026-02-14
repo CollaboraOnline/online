@@ -22,8 +22,8 @@
 #include <Poco/Net/HTTPSClientSession.h>
 #include <Poco/StreamCopier.h>
 
-#include <Log.hpp>
-#include <Util.hpp>
+#include <common/Log.hpp>
+#include <common/Util.hpp>
 #include <Unit.hpp>
 #include <lokassert.hpp>
 

@@ -12,7 +12,7 @@
 #include <config.h>
 
 #include "Crypto.hpp"
-#include "Log.hpp"
+#include <common/Log.hpp>
 
 #include <Poco/Base64Decoder.h>
 #include <Poco/Crypto/RSADigestEngine.h>

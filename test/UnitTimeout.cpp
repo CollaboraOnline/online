@@ -15,8 +15,8 @@
 
 #include <sysexits.h>
 
-#include <Log.hpp>
-#include <Util.hpp>
+#include <common/Log.hpp>
+#include <common/Util.hpp>
 #include <Unit.hpp>
 
 using namespace std::literals;

@@ -14,7 +14,7 @@
 #include <Poco/Net/HTTPRequest.h>
 
 #include <WopiTestServer.hpp>
-#include <Log.hpp>
+#include <common/Log.hpp>
 #include <Unit.hpp>
 #include <UnitHTTP.hpp>
 #include <helpers.hpp>

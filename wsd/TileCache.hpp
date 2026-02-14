@@ -20,7 +20,7 @@
 
 #include <Rectangle.hpp>
 
-#include "Log.hpp"
+#include <common/Log.hpp>
 #include "Common.hpp"
 #include "TileDesc.hpp"
 

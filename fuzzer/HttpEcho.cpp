@@ -28,8 +28,8 @@
 #include <net/DelaySocket.hpp>
 #include <net/HttpRequest.hpp>
 #include <net/AsyncDNS.hpp>
-#include <FileUtil.hpp>
-#include <Util.hpp>
+#include <common/FileUtil.hpp>
+#include <common/Util.hpp>
 #include <fuzzer/Common.hpp>
 
 class HttpRequestTests final

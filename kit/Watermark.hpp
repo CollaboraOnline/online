@@ -16,7 +16,7 @@
 #include <LibreOfficeKit/LibreOfficeKit.hxx>
 #include <LibreOfficeKit/LibreOfficeKitEnums.h>
 #include <vector>
-#include <Log.hpp>
+#include <common/Log.hpp>
 #include <cstdlib>
 #include <string>
 #include <cmath>

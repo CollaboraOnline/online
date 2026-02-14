@@ -9,7 +9,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-#include "config.h"
+#include <config.h>
 
 #if MOBILEAPP
 
@@ -19,7 +19,7 @@
 #include <map>
 #include <mutex>
 
-#include "Log.hpp"
+#include <common/Log.hpp>
 
 static std::map<unsigned, DocumentData*> idToDocDataMap;
 static std::mutex idToDocDataMapMutex;

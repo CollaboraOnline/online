@@ -37,11 +37,11 @@
 #include <CommandControl.hpp>
 #include <Common.hpp>
 #include <Exceptions.hpp>
-#include <Log.hpp>
+#include <common/Log.hpp>
 #include <NetUtil.hpp>
 #include <Storage.hpp>
 #include <Unit.hpp>
-#include <Util.hpp>
+#include <common/Util.hpp>
 #include <common/ConfigUtil.hpp>
 #include <common/FileUtil.hpp>
 #include <common/JsonUtil.hpp>

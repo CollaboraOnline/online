@@ -14,7 +14,7 @@
 #include <cstdlib>
 #include <string>
 
-#include <Log.hpp>
+#include <common/Log.hpp>
 
 inline void setupKitEnvironment(const std::string& userInterface)
 {

@@ -23,10 +23,10 @@
 #include <sstream>
 #include <string>
 
-#include <Log.hpp>
+#include <common/Log.hpp>
 #include <Protocol.hpp>
 #include <Unit.hpp>
-#include <Util.hpp>
+#include <common/Util.hpp>
 #include <common/ConfigUtil.hpp>
 #include <net/WebSocketHandler.hpp>
 #include <wsd/COOLWSD.hpp>

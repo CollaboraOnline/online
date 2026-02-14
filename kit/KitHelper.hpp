@@ -15,8 +15,8 @@
 #include <unordered_map>
 #include <cstdlib>
 
-#include <JsonUtil.hpp>
-#include <Util.hpp>
+#include <common/JsonUtil.hpp>
+#include <common/Util.hpp>
 
 #define LOK_USE_UNSTABLE_API
 #include <LibreOfficeKit/LibreOfficeKit.h>

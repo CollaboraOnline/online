@@ -23,8 +23,8 @@
 #include "Protocol.hpp"
 #include <COOLWSD.hpp>
 #include <Exceptions.hpp>
-#include <Log.hpp>
-#include <Util.hpp>
+#include <common/Log.hpp>
+#include <common/Util.hpp>
 #include <common/JsonUtil.hpp>
 #include <wopi/StorageConnectionManager.hpp>
 #include <wopi/WopiStorage.hpp>

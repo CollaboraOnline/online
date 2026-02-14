@@ -12,7 +12,7 @@
 #include <config.h>
 
 #include <ConfigUtil.hpp>
-#include <Util.hpp>
+#include <common/Util.hpp>
 
 #include <Poco/Util/AbstractConfiguration.h>
 #include <Poco/Util/XMLConfiguration.h>

@@ -26,10 +26,10 @@
 #include <Poco/Net/NetException.h>
 #include <Poco/URI.h>
 
-#include <JsonUtil.hpp>
-#include <Log.hpp>
+#include <common/JsonUtil.hpp>
+#include <common/Log.hpp>
 #include <Protocol.hpp>
-#include <Util.hpp>
+#include <common/Util.hpp>
 #include <common/ConfigUtil.hpp>
 
 using Poco::OutputLineEndingConverter;

@@ -14,8 +14,8 @@
 #include <map>
 #include <string>
 
-#include "config.h"
-#include <Log.hpp>
+#include <config.h>
+#include <common/Log.hpp>
 #include <Ssl.hpp>
 
 namespace fuzzer

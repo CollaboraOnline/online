@@ -11,7 +11,7 @@
 
 #include <config.h>
 
-#include "Log.hpp"
+#include <common/Log.hpp>
 #include "SigUtil.hpp"
 #include <Socket.hpp>
 

@@ -18,13 +18,13 @@
 #include <RequestDetails.hpp>
 #include <TraceEvent.hpp>
 #include <Exceptions.hpp>
-#include <Log.hpp>
+#include <common/Log.hpp>
 #include <DocumentBroker.hpp>
 #include <ClientSession.hpp>
 #include <common/JailUtil.hpp>
 #include <common/JsonUtil.hpp>
 #include <CacheUtil.hpp>
-#include <Util.hpp>
+#include <common/Util.hpp>
 #include <ServerAuditUtil.hpp>
 #include <wsd/Storage.hpp>
 

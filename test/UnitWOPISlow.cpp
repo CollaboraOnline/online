@@ -14,11 +14,11 @@
 #include <chrono>
 
 #include "HttpRequest.hpp"
-#include "Util.hpp"
+#include <common/Util.hpp>
 #include "lokassert.hpp"
 
 #include <WopiTestServer.hpp>
-#include <Log.hpp>
+#include <common/Log.hpp>
 #include <Unit.hpp>
 #include <UnitHTTP.hpp>
 #include <cstddef>

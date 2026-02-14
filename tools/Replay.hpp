@@ -20,7 +20,7 @@
 #include "Socket.hpp"
 #include "WebSocketHandler.hpp"
 #include <TraceFile.hpp>
-#include <Util.hpp>
+#include <common/Util.hpp>
 #include <common/Log.hpp>
 #include <net/Ssl.hpp>
 #include <wsd/TileDesc.hpp>

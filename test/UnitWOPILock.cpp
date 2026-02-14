@@ -14,7 +14,7 @@
 #include "lokassert.hpp"
 #include "Unit.hpp"
 #include <WopiTestServer.hpp>
-#include <Log.hpp>
+#include <common/Log.hpp>
 #include <helpers.hpp>
 #include <wsd/ClientSession.hpp>
 

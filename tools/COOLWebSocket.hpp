@@ -17,7 +17,7 @@
 
 #include <Common.hpp>
 #include <Protocol.hpp>
-#include <Log.hpp>
+#include <common/Log.hpp>
 
 #include <iomanip>
 

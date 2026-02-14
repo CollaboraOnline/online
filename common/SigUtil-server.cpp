@@ -12,12 +12,12 @@
 #include <config.h>
 
 #include "Common.hpp"
-#include "Log.hpp"
+#include <common/Log.hpp>
 #include "SigHandlerTrap.hpp"
 #include "SigUtil.hpp"
 #include <Socket.hpp>
 #include <test/testlog.hpp>
-#include "Util.hpp"
+#include <common/Util.hpp>
 
 #include <array>
 #include <atomic>

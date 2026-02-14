@@ -10,9 +10,9 @@
  */
 #include <config.h>
 
-#include "Log.hpp"
+#include <common/Log.hpp>
 #include "StringVector.hpp"
-#include "Util.hpp"
+#include <common/Util.hpp>
 
 #include <Poco/Exception.h>
 

@@ -21,10 +21,10 @@
 #endif
 
 #include "FakeSocket.hpp"
-#include "Log.hpp"
+#include <common/Log.hpp>
 #include "COOLWSD.hpp"
 #include "Protocol.hpp"
-#include "Util.hpp"
+#include <common/Util.hpp>
 
 #include "gtk.hpp"
 

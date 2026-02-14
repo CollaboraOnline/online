@@ -14,7 +14,7 @@
 #include <Exceptions.hpp>
 #include <Protocol.hpp>
 #include <Rectangle.hpp>
-#include <StringVector.hpp>
+#include <common/StringVector.hpp>
 
 #include <cassert>
 #include <unordered_map>

@@ -12,7 +12,7 @@
  * Benchmark various bits of cool code.
  */
 
-#include "config.h"
+#include <config.h>
 
 #include <chrono>
 
