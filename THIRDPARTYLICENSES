@@ -263,6 +263,10 @@ ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+Macaron – C++ single header base64 decode/encoder for C++ 11 and above.
+Copyright (c) 2016-2024 tomykaira
+MIT License
+
 Collabora Online client side JavaScript code uses the following 3rd party modules.
 
 Autolinker.js
