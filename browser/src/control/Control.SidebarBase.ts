@@ -173,7 +173,7 @@ abstract class SidebarBase extends JSDialogComponent {
 		this.wrapper.style.maxHeight =
 			this.documentContainer.getBoundingClientRect().height + 'px';
 		if (this.container) {
-			this.container.style.height =
+			(this.container as HTMLElement).style.height =
 				this.documentContainer.getBoundingClientRect().height + 'px';
 		}
 	}
