@@ -18,6 +18,7 @@
 #include "Seccomp.hpp"
 
 #include <common/Log.hpp>
+#include <common/NumUtil.hpp>
 #include <common/SigUtil.hpp>
 
 #include <dlfcn.h>
@@ -329,19 +330,20 @@ bool handleSetrlimitCommand(const StringVector& tokens)
     {
         if (tokens.equals(1, "limit_virt_mem_mb"))
         {
-            setRLimit(std::stoi(tokens[2]) * 1024 * 1024, RLIMIT_AS, "RLIMIT_AS", "bytes");
+            setRLimit(NumUtil::stoi(tokens[2]) * 1024 * 1024, RLIMIT_AS, "RLIMIT_AS", "bytes");
         }
         else if (tokens.equals(1, "limit_stack_mem_kb"))
         {
-            setRLimit(std::stoi(tokens[2]) * 1024, RLIMIT_STACK, "RLIMIT_STACK", "bytes");
+            setRLimit(NumUtil::stoi(tokens[2]) * 1024, RLIMIT_STACK, "RLIMIT_STACK", "bytes");
         }
         else if (tokens.equals(1, "limit_file_size_mb"))
         {
-            setRLimit(std::stoi(tokens[2]) * 1024 * 1024, RLIMIT_FSIZE, "RLIMIT_FSIZE", "bytes");
+            setRLimit(NumUtil::stoi(tokens[2]) * 1024 * 1024, RLIMIT_FSIZE, "RLIMIT_FSIZE",
+                      "bytes");
         }
         else if (tokens.equals(1, "limit_num_open_files"))
         {
-            setRLimit(std::stoi(tokens[2]), RLIMIT_NOFILE, "RLIMIT_NOFILE", "files");
+            setRLimit(NumUtil::stoi(tokens[2]), RLIMIT_NOFILE, "RLIMIT_NOFILE", "files");
         }
         else
             return false;

@@ -14,6 +14,7 @@
 #include <common/Anonymizer.hpp>
 #include <common/ConfigUtil.hpp>
 #include <common/Crypto.hpp>
+#include <common/NumUtil.hpp>
 #include <common/Util.hpp>
 
 #include <openssl/evp.h>
@@ -223,7 +224,7 @@ void Config::handleOption(const std::string& optionName, const std::string& opti
     }
     else if (optionName == "pwd-salt-length")
     {
-        unsigned len = std::stoi(optionValue);
+        unsigned len = NumUtil::stoi(optionValue);
         if (len < MIN_PWD_SALT_LENGTH)
         {
             len = MIN_PWD_SALT_LENGTH;
@@ -233,7 +234,7 @@ void Config::handleOption(const std::string& optionName, const std::string& opti
     }
     else if (optionName == "pwd-iterations")
     {
-        unsigned len = std::stoi(optionValue);
+        unsigned len = NumUtil::stoi(optionValue);
         if (len < MIN_PWD_ITERATIONS)
         {
             len = MIN_PWD_ITERATIONS;
@@ -243,7 +244,7 @@ void Config::handleOption(const std::string& optionName, const std::string& opti
     }
     else if (optionName == "pwd-hash-length")
     {
-        unsigned len = std::stoi(optionValue);
+        unsigned len = NumUtil::stoi(optionValue);
         if (len < MIN_PWD_HASH_LENGTH)
         {
             len = MIN_PWD_HASH_LENGTH;

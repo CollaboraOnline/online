@@ -12,6 +12,7 @@
 #include <config.h>
 
 #include <common/Common.hpp>
+#include <common/NumUtil.hpp>
 #include <common/Protocol.hpp>
 #include <common/Util.hpp>
 
@@ -188,7 +189,7 @@ void Tool::handleOption(const std::string& optionName,
     else if (optionName == "outdir")
         _destinationDir = value;
     else if (optionName == "parallelism")
-        _numWorkers = std::max(std::stoi(value), 1);
+        _numWorkers = std::max(NumUtil::stoi(value), 1);
     else if (optionName == "server")
         _serverURI = value;
     else if (optionName == "no-check-certificate")

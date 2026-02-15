@@ -15,6 +15,7 @@
 
 #include <common/FileUtil.hpp>
 #include <common/Log.hpp>
+#include <common/NumUtil.hpp>
 
 #include <SigUtil.hpp>
 #include <csignal>
@@ -382,7 +383,7 @@ void cleanupJails(const std::string& root)
                 bool skip = false;
                 std::string pidStr = jail.substr(0, pidSepPos);
                 try {
-                    int pid = std::stoi(pidStr);
+                    int pid = NumUtil::stoi(pidStr);
                     LOG_TRC("Checking pid for jail " << pid << " " << root);
                     if (pid != getpid() && ::kill(pid, 0) == 0)
                     {

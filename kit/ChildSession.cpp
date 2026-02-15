@@ -16,6 +16,7 @@
 #include <common/Anonymizer.hpp>
 #include <common/HexUtil.hpp>
 #include <common/Log.hpp>
+#include <common/NumUtil.hpp>
 #include <common/Unit.hpp>
 #include <common/Util.hpp>
 
@@ -2607,17 +2608,17 @@ bool ChildSession::renderSlide(const StringVector& tokens)
     int part = -1;
     std::string partString;
     if (getTokenString(tokens[2], "part", partString))
-        part = std::stoi(partString);
+        part = NumUtil::stoi(partString);
 
     unsigned suggestedWidth = 0;
     std::string widthString;
     if (getTokenString(tokens[3], "width", widthString))
-        suggestedWidth = std::stoi(widthString);
+        suggestedWidth = NumUtil::stoi(widthString);
 
     unsigned suggestedHeight = 0;
     std::string heightString;
     if (getTokenString(tokens[4], "height", heightString))
-        suggestedHeight = std::stoi(heightString);
+        suggestedHeight = NumUtil::stoi(heightString);
 
     if (hash.empty() || part < 0 || suggestedWidth == 0 || suggestedHeight == 0)
     {
@@ -2628,12 +2629,12 @@ bool ChildSession::renderSlide(const StringVector& tokens)
     bool renderBackground = true;
     std::string renderBackgroundString;
     if (tokens.size() > 5 && getTokenString(tokens[5], "renderBackground", renderBackgroundString))
-        renderBackground = std::stoi(renderBackgroundString) > 0;
+        renderBackground = NumUtil::stoi(renderBackgroundString) > 0;
 
     bool renderMasterPage = true;
     std::string renderMasterPageString;
     if (tokens.size() > 6 && getTokenString(tokens[6], "renderMasterPage", renderMasterPageString))
-        renderMasterPage = std::stoi(renderMasterPageString) > 0;
+        renderMasterPage = NumUtil::stoi(renderMasterPageString) > 0;
 
     double devicePixelRatio = 1.0;
     std::string devicePixelRatioString;
@@ -2643,7 +2644,7 @@ bool ChildSession::renderSlide(const StringVector& tokens)
     bool compressedLayers = false;
     std::string compressedLayersString;
     if (tokens.size() > 8 && getTokenString(tokens[8], "compressedLayers", compressedLayersString))
-        compressedLayers = std::stoi(compressedLayersString) > 0;
+        compressedLayers = NumUtil::stoi(compressedLayersString) > 0;
 
     unsigned bufferWidth = suggestedWidth;
     unsigned bufferHeight = suggestedHeight;
@@ -3553,13 +3554,14 @@ void ChildSession::loKitCallback(const int type, const std::string& payload)
                 int part, x, y, width, height, mode = 0;
                 try
                 {
-                    x = std::stoi(tokens[0]);
-                    y = std::stoi(tokens[1]);
-                    width = std::stoi(tokens[2]);
-                    height = std::stoi(tokens[3]);
-                    part = (_docType != "text" ? std::stoi(tokens[4]) : 0); // Writer renders everything as part 0.
+                    x = NumUtil::stoi(tokens[0]);
+                    y = NumUtil::stoi(tokens[1]);
+                    width = NumUtil::stoi(tokens[2]);
+                    height = NumUtil::stoi(tokens[3]);
+                    part = (_docType != "text" ? NumUtil::stoi(tokens[4])
+                                               : 0); // Writer renders everything as part 0.
                     if (tokens.size() == 6)
-                        mode = std::stoi(tokens[5]);
+                        mode = NumUtil::stoi(tokens[5]);
                 }
                 catch (const std::out_of_range&)
                 {

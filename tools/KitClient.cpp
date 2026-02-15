@@ -11,6 +11,7 @@
 
 #include <config.h>
 
+#include <common/NumUtil.hpp>
 #include <common/Png.hpp>
 #include <common/Protocol.hpp>
 #include <common/Util.hpp>
@@ -123,13 +124,13 @@ protected:
                     continue;
                 }
 
-                int partNumber(std::stoi(tokens[1]));
-                int canvasWidth(std::stoi(tokens[2]));
-                int canvasHeight(std::stoi(tokens[3]));
-                int tilePosX(std::stoi(tokens[4]));
-                int tilePosY(std::stoi(tokens[5]));
-                int tileWidth(std::stoi(tokens[6]));
-                int tileHeight(std::stoi(tokens[7]));
+                int partNumber(NumUtil::stoi(tokens[1]));
+                int canvasWidth(NumUtil::stoi(tokens[2]));
+                int canvasHeight(NumUtil::stoi(tokens[3]));
+                int tilePosX(NumUtil::stoi(tokens[4]));
+                int tilePosY(NumUtil::stoi(tokens[5]));
+                int tileWidth(NumUtil::stoi(tokens[6]));
+                int tileHeight(NumUtil::stoi(tokens[7]));
 
                 std::vector<unsigned char> pixmap(canvasWidth*canvasHeight*4);
                 loKitDocument->pClass->setPart(loKitDocument, partNumber);

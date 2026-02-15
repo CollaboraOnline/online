@@ -21,6 +21,7 @@
 #include <common/FileUtil.hpp>
 #include <common/JailUtil.hpp>
 #include <common/Log.hpp>
+#include <common/NumUtil.hpp>
 #include <common/Seccomp.hpp>
 #include <common/SigUtil.hpp>
 #include <common/Simd.hpp>
@@ -160,7 +161,7 @@ protected:
         }
         else if (tokens.size() == 2 && tokens.equals(0, "spawn"))
         {
-            const int count = std::stoi(tokens[1]);
+            const int count = NumUtil::stoi(tokens[1]);
             if (count > 0)
             {
                 LOG_INF("Setting to spawn " << count << " child" << (count == 1 ? "" : "ren")

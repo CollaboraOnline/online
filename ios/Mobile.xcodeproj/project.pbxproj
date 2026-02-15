@@ -586,6 +586,7 @@
 		BE58E129217F295B00249358 /* Log.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Log.hpp; sourceTree = "<group>"; };
 		BE58E12A217F295B00249358 /* Png.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Png.hpp; sourceTree = "<group>"; };
 		BE58E12B217F295B00249358 /* SigUtil.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = SigUtil.hpp; sourceTree = "<group>"; };
+		BE58E12C217F295B00249359 /* NumUtil.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = NumUtil.hpp; sourceTree = "<group>"; };
 		BE58E12C217F295B00249358 /* Util.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Util.hpp; sourceTree = "<group>"; };
 		BE58E12C217F295B01249358 /* RegexUtil.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = RegexUtil.hpp; sourceTree = "<group>"; };
 		BE58E12C218F295B00249358 /* Uri.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Uri.hpp; sourceTree = "<group>"; };
@@ -2275,6 +2276,7 @@
 				BE5315362CF5C48200A384A4 /* Unit-mobile.cpp */,
 				BE58E12C218F295B00249358 /* Uri.hpp */,
 				BE5EB5BC214FE29900E0826C /* Uri.cpp */,
+				BE58E12C217F295B00249359 /* NumUtil.hpp */,
 				BE58E12C217F295B00249358 /* Util.hpp */,
 				BE5EB5BC213FE29900E0826C /* Util.cpp */,
 				1F957DC12BA82296006C9E78 /* Util-mobile.cpp */,

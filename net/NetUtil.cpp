@@ -11,6 +11,7 @@
 
 #include <config.h>
 
+#include <common/NumUtil.hpp>
 #include <common/Unit.hpp>
 #include <common/Util.hpp>
 #include <net/AsyncDNS.hpp>
@@ -488,7 +489,8 @@ void asyncConnect(std::string host, const std::string& port, const bool isSSL,
                         continue;
                     }
 
-                    auto addrWithPort = dupAddrWithPort(ai->ai_addr, ai->ai_addrlen, std::stoi(port));
+                    auto addrWithPort =
+                        dupAddrWithPort(ai->ai_addr, ai->ai_addrlen, NumUtil::stoi(port));
                     int res = ::connect(fd, addrWithPort.get(), ai->ai_addrlen);
                     if (res < 0 && errno != EINPROGRESS)
                     {
@@ -578,7 +580,8 @@ connect(const std::string& host, const std::string& port, const bool isSSL,
                     continue;
                 }
 
-                auto addrWithPort = dupAddrWithPort(ai->ai_addr, ai->ai_addrlen, std::stoi(port));
+                auto addrWithPort =
+                    dupAddrWithPort(ai->ai_addr, ai->ai_addrlen, NumUtil::stoi(port));
                 int res = ::connect(fd, addrWithPort.get(), ai->ai_addrlen);
                 if (res < 0 && errno != EINPROGRESS)
                 {

@@ -15,6 +15,7 @@
 #include <common/ConfigUtil.hpp>
 #include <common/JsonUtil.hpp>
 #include <common/Log.hpp>
+#include <common/NumUtil.hpp>
 #include <common/Protocol.hpp>
 #include <common/SigUtil.hpp>
 #include <common/StringVector.hpp>
@@ -177,7 +178,7 @@ void AdminSocketHandler::handleMessage(const std::vector<char> &payload)
     {
         try
         {
-            const int pid = std::stoi(tokens[1]);
+            const int pid = NumUtil::stoi(tokens[1]);
             LOG_INF("Admin request to kill PID: " << pid);
 
             std::set<pid_t> pids = model.getDocumentPids();
@@ -250,7 +251,7 @@ void AdminSocketHandler::handleMessage(const std::vector<char> &payload)
             int settingVal = 0;
             try
             {
-                settingVal = std::stoi(setting[1]);
+                settingVal = NumUtil::stoi(setting[1]);
             }
             catch (const std::exception& exc)
             {

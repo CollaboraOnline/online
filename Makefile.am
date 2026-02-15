@@ -435,44 +435,45 @@ wsd_headers = wsd/Admin.hpp \
               wsd/wopi/WopiStorage.hpp
 
 shared_headers = common/Anonymizer.hpp \
-                 common/Common.hpp \
+                 common/Authorization.hpp \
                  common/CharacterConverter.hpp \
                  common/Clipboard.hpp \
+                 common/CommandControl.hpp \
+                 common/Common.hpp \
+                 common/ConfigUtil.hpp \
                  common/Crypto.hpp \
+                 common/FileUtil.hpp \
                  common/Globals.hpp \
                  common/HexUtil.hpp \
-                 common/JsonUtil.hpp \
-                 common/FileUtil.hpp \
                  common/JailUtil.hpp \
+                 common/JsonUtil.hpp \
                  common/LangUtil.hpp \
                  common/Log.hpp \
+                 common/Message.hpp \
+                 common/MobileApp.hpp \
+                 common/NumUtil.hpp \
+                 common/Png.hpp \
                  common/Protocol.hpp \
+                 common/Rectangle.hpp \
                  common/RegexUtil.hpp \
+                 common/RenderTiles.hpp \
+                 common/Seccomp.hpp \
+                 common/Session.hpp \
+                 common/SigHandlerTrap.hpp \
+                 common/SigUtil.hpp \
+                 common/Simd.hpp \
+                 common/SpookyV2.h \
                  common/StateEnum.hpp \
                  common/StaticLogHelper.hpp \
                  common/StringVector.hpp \
-                 common/Seccomp.hpp \
-                 common/Session.hpp \
+                 common/ThreadPool.hpp \
+                 common/TraceEvent.hpp \
                  common/Unit.hpp \
                  common/Uri.hpp \
                  common/Util.hpp \
-                 common/ConfigUtil.hpp \
-                 common/Authorization.hpp \
-                 common/Message.hpp \
-                 common/MobileApp.hpp \
-                 common/Png.hpp \
-                 common/TraceEvent.hpp \
-                 common/Rectangle.hpp \
-                 common/RenderTiles.hpp \
-                 common/SigUtil.hpp \
-                 common/SigHandlerTrap.hpp \
-                 common/security.h \
-                 common/SpookyV2.h \
-                 common/CommandControl.hpp \
-                 common/Simd.hpp \
-                 common/ThreadPool.hpp \
                  common/Watchdog.hpp \
                  common/base64.hpp \
+                 common/security.h \
                  kit/BgSaveWatchDog.hpp \
                  kit/KitGlobals.hpp \
                  kit/KitQueue.hpp \
@@ -481,9 +482,9 @@ shared_headers = common/Anonymizer.hpp \
                  net/Buffer.hpp \
                  net/DelaySocket.hpp \
                  net/FakeSocket.hpp \
+                 net/HttpHelper.hpp \
                  net/HttpRequest.hpp \
                  net/HttpServer.hpp \
-                 net/HttpHelper.hpp \
                  net/NetUtil.hpp \
                  net/ServerSocket.hpp \
                  net/Socket.hpp \
@@ -503,7 +504,7 @@ kit_headers = kit/ChildSession.hpp \
               kit/KitHelper.hpp \
               kit/KitWebSocket.hpp \
               kit/SetupKitEnvironment.hpp \
-	      kit/SlideCompressor.hpp \
+              kit/SlideCompressor.hpp \
               kit/StateRecorder.hpp \
               kit/Watermark.hpp
 
