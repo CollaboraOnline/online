@@ -2602,6 +2602,15 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 			var isContainer = this.isContainerType(childData.type);
 			if (hasManyChildren && isContainer) {
 				var table = window.L.DomUtil.createWithId('div', childData.id, containerToInsert);
+
+				if (childData.cargo && childData.cargo['custom-label']) {
+					var label = window.L.DomUtil.create('label', '', table);
+					label.textContent = childData.cargo['custom-label'];
+					label.htmlFor = childData.cargo['custom-label-for'] + '-input';
+					table.id = '';
+					table = window.L.DomUtil.createWithId('div', childData.id, table);
+				}
+
 				$(table).addClass(this.options.cssClass);
 
 				if (!isVertical) {
