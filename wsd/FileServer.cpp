@@ -68,8 +68,6 @@
 #include <Poco/StreamCopier.h>
 #include <Poco/URI.h>
 #include <Poco/Util/LayeredConfiguration.h>
-#include <Poco/Net/PartHandler.h>
-#include <Poco/Net/MessageHeader.h>
 
 #include <chrono>
 #include <iomanip>
