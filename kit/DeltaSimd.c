@@ -51,7 +51,7 @@ void init_gather_lut()
         while (i<8) // pad to copy first point
                 lut[i++] = 0;
 
-#if DEBUG_LUG
+#if DEBUG_LUT
         fprintf(stderr, "lut mask: 0x%x generates %d %d %d %d %d %d %d %d\n",
                 pattern, lut[7], lut[6], lut[5], lut[4], lut[3], lut[2], lut[1], lut[0]);
 #endif

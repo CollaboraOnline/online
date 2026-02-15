@@ -106,10 +106,9 @@ namespace COOLProtocol
         static_assert(N > 1, "Token name must be at least one character long.");
         if (token.size() > N && token[N - 1] == '=' && token.compare(0, N - 1, name) == 0)
         {
-            const char* str = token.data() + N;
-            char* endptr = nullptr;
-            value = std::strtol(str, &endptr, 10);
-            return (endptr > str);
+            bool success;
+            std::tie(value, success) = Util::i32FromString(token.substr(N));
+            return success;
         }
 
         return false;
