@@ -203,6 +203,7 @@ interface AppInterface {
 		allowManageRedlines: boolean;
 		readOnly: boolean;
 		permission: string;
+		viewModeExtensions: string;
 		disableSidebar: boolean;
 		textCursor: {
 			visible: boolean;

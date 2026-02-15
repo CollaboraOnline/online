@@ -111,6 +111,14 @@ app.isReadOnly = function () {
 	return app.file.readOnly;
 };
 
+app.isViewModeExtension = function (extension) {
+	if (app.file.viewModeExtensions && extension) {
+		var extensionList = app.file.viewModeExtensions.split('|');
+		return extensionList.indexOf(extension.toLowerCase()) !== -1;
+	}
+	return false;
+};
+
 app.getScale = function () {
 	return ((app.tile.size.pX / app.tile.size.x) * 15) / app.dpiScale;
 };
