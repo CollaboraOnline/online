@@ -475,6 +475,7 @@ class Document: NSDocument {
     static func addCommonCOOLQueryItems(to components: inout URLComponents) {
         let lang = Locale.preferredLanguages.first ?? "en-US"
         components.queryItems?.append(URLQueryItem(name: "lang", value: lang))
+        components.queryItems?.append(URLQueryItem(name: "dir", value: COWrapper.isRtlLanguage(lang) ? "rtl" : ""))
 
         // Add darkTheme parameter if user has dark mode enabled
         if NSApp.effectiveAppearance.bestMatch(from: [.darkAqua, .aqua]) == .darkAqua {
@@ -503,7 +504,6 @@ class Document: NSDocument {
             URLQueryItem(name: "permission", value: permission),
             URLQueryItem(name: "appdocid", value: "\(self.appDocId)"),
             URLQueryItem(name: "userinterfacemode", value: "notebookbar"),
-            // TODO: add "dir" if needed
         ]
 
         // Add lang and (potentially) darkTheme

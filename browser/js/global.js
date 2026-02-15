@@ -462,6 +462,9 @@ class MobileAppInitializer extends InitializerBase {
 		window.ThisIsAMobileApp = true;
 		window.HelpFile = document.getElementById("init-help-file").value;
 
+		// Related to issue #5841: the mobile apps set the base text direction via the "dir" parameter
+		document.dir = window.coolParams.get('dir');
+
 		// stash this so we can use it for presenter console despite
 		// MobileAppInitializer redirection of general 'open' use
 		window.origOpen = window.open;
@@ -492,9 +495,6 @@ class IOSAppInitializer extends MobileAppInitializer {
 		window.postMobileCall    = window.postMobileMessage;
 		window.postMobileError   = function(msg) { window.webkit.messageHandlers.error.postMessage(msg); };
 		window.postMobileDebug   = function(msg) { window.webkit.messageHandlers.debug.postMessage(msg); };
-
-		// Related to issue #5841: the iOS app sets the base text direction via the "dir" parameter
-		document.dir = window.coolParams.get('dir');
 
 		window.userInterfaceMode = window.coolParams.get('userinterfacemode');
 

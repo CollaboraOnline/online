@@ -36,6 +36,7 @@
 #include "litecask.h"
 
 #include <common/Clipboard.hpp>
+#include <common/LangUtil.hpp>
 #include <common/Protocol.hpp>
 #include <common/Log.hpp>
 #include <common/MobileApp.hpp>
@@ -1680,11 +1681,11 @@ static void openCOOLWindow(const FilenameAndUri& filenameAndUri, DocumentMode mo
                                     "file_path=" + data.filenameAndUri.uri +
                                     std::string("&permission=edit") +
                                     std::string("&appdocid=") + std::to_string(data.appDocId) +
-                                    std::string("&userinterfacemode=notebookbar"
-                                                "&dir=ltr");
+                                    std::string("&userinterfacemode=notebookbar");
                             }
 
                             coolURL += "&lang=" + uiLanguage;
+                            coolURL += "&dir=" + std::string(LangUtil::isRtlLanguage(uiLanguage) ? "rtl" : "");
 
                             if (!isLightTheme())
                                 coolURL +=
