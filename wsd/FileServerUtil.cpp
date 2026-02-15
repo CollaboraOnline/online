@@ -270,6 +270,11 @@ std::string FileServerRequestHandler::uiDefaultsToJSON(const std::string& uiDefa
             json.set("touchscreenHint", keyValue[1]);
             continue;
         }
+        if (keyValue.equals(0, "startInEditMode"))
+        {
+            json.set("startInEditMode", keyValue[1]);
+            continue;
+        }
         if (keyValue.equals(0, "OnscreenKeyboardHint"))
         {
             json.set("onscreenKeyboardHint", keyValue[1]);
