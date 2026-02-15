@@ -311,7 +311,15 @@ Moreover in describe you can use the taga11yenabled tag for tests that should
 be run only when accessibility is enabled, and the taga11ydisabled tag
 for tests that should be run only when accessibility is disabled.
 
-4. ENABLE_CPULOAD
+4. CYPRESS_retries
+
+By default, tests retry once in headless mode (runMode: 1 in cypress.config.ts).
+When debugging a failing test, retries can create confusing duplicate log output.
+Disable retries by setting CYPRESS_retries=0:
+
+    CYPRESS_retries=0 make check-desktop spec=writer/form_field_spec.js
+
+5. ENABLE_CPULOAD
 
 Some flaky tests only fail under high CPU load. Use this flag to run
 tests while generating artificial CPU load (one busy loop per core):

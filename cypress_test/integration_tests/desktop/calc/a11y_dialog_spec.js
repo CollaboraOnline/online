@@ -101,8 +101,7 @@ describe(['tagdesktop'], 'Accessibility Calc Dialog Tests', { testIsolation: fal
 
         cy.then(() => {
             // Go to a cell with text to enable thesaurus (if there is linguistic data available).
-            helper.typeIntoInputField(helper.addressInputSelector, 'C5');
-            calcHelper.assertAddressAfterIdle(win, 'C5');
+            calcHelper.enterCellAddressAndConfirm(win, 'C5');
         }).then(() => {
             const thesaurusState = win.app.map.stateChangeHandler.getItemValue('.uno:ThesaurusDialog');
             hasLinguisticData = (thesaurusState === 'enabled');
@@ -136,8 +135,7 @@ describe(['tagdesktop'], 'Accessibility Calc Dialog Tests', { testIsolation: fal
         a11yHelper.resetState();
 
         // make C5 the home cell for all tests
-        helper.typeIntoInputField(helper.addressInputSelector, 'C5');
-        calcHelper.assertAddressAfterIdle(win, 'C5');
+        calcHelper.enterCellAddressAndConfirm(win, 'C5');
     });
 
     a11yHelper.allCommonDialogs.forEach(function (commandSpec) {
