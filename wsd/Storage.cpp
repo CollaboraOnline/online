@@ -9,6 +9,11 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * Implementation of storage backends and WOPI protocol.
+ * Classes: StorageBase, LocalStorage
+ */
+
 #include <config.h>
 
 #include "Storage.hpp"

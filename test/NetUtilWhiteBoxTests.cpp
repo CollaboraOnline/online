@@ -9,6 +9,10 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * White box unit test for network utilities including buffers and URI handling.
+ */
+
 #include <config.h>
 
 #include <net/Buffer.hpp>

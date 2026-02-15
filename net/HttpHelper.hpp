@@ -9,6 +9,11 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * HTTP utility functions for sending error responses and files.
+ * Functions: sendError(), sendErrorAndShutdown(), sendFileAndShutdown()
+ */
+
 #pragma once
 
 #include <common/Uri.hpp>

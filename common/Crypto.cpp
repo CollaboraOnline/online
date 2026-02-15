@@ -9,6 +9,11 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * Cryptographic support key validation using RSA signatures.
+ * Classes: SupportKey - Key verification and expiry checking
+ */
+
 #include <config.h>
 
 #include "Crypto.hpp"

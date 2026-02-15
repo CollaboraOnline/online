@@ -9,6 +9,11 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * Dispatches incoming client HTTP/WebSocket requests to appropriate handlers.
+ * Classes: ClientRequestDispatcher
+ */
+
 #pragma once
 
 #include <RequestVettingStation.hpp>

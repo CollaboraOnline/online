@@ -9,6 +9,11 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * HTTP server configuration and setup.
+ * Classes: COOLWSDServer
+ */
+
 #include <ServerSocket.hpp>
 
 class Admin;

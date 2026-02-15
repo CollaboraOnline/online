@@ -9,6 +9,11 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * Implementation of network latency simulation using delayed socket pairs.
+ * Classes: DelaySocket (internal), Delay
+ */
+
 #include <config.h>
 
 #include <net/DelaySocket.hpp>

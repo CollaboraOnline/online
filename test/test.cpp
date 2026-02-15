@@ -9,6 +9,10 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * Main test runner for client tests.
+ */
+
 #include <config.h>
 
 #define TST_LOG_REDIRECT

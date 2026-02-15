@@ -9,6 +9,11 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * Mobile app document data management.
+ * Classes: DocumentData - Document lifecycle and data storage
+ */
+
 #include <config.h>
 
 #if MOBILEAPP

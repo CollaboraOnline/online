@@ -9,6 +9,10 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * Custom assertion utilities and output operators for test framework integration.
+ */
+
 #pragma once
 
 #include <testlog.hpp>

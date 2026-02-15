@@ -9,6 +9,11 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * Cross-platform file and directory utilities.
+ * Functions: copy(), removeFile(), stat(), updateTimestamps()
+ */
+
 #include <config.h>
 
 #include "FileUtil.hpp"

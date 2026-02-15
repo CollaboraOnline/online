@@ -9,6 +9,11 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * Asynchronous HTTP/1.1 client implementation with request/response handling.
+ * Classes: http::Session, http::Request, http::Response, http::Header
+ */
+
 #pragma once
 
 #include <common/Common.hpp>

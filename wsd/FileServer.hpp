@@ -9,6 +9,11 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * Static file serving for browser UI resources.
+ * Classes: FileServerRequestHandler
+ */
+
 #pragma once
 
 #include <COOLWSD.hpp>

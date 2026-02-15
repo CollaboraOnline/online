@@ -9,6 +9,11 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * Client session management in WSD process.
+ * Classes: ClientSession
+ */
+
 #pragma once
 
 #include <Session.hpp>

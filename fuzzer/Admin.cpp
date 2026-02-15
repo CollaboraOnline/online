@@ -9,6 +9,11 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * Fuzzer for Admin console message handling.
+ * Functions: LLVMFuzzerTestOneInput() - Tests Admin::handleMessage()
+ */
+
 #include <config.h>
 
 #include "Admin.hpp"

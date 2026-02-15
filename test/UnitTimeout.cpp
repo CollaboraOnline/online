@@ -9,6 +9,10 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * Unit test for timeout functionality.
+ */
+
 #include <config.h>
 
 #include <chrono>

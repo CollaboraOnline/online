@@ -9,6 +9,10 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * White box unit tests for various internal components.
+ */
+
 #include <config.h>
 
 #include <common/Anonymizer.hpp>

@@ -9,6 +9,11 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * Base session class for document editing.
+ * Classes: Session - Protocol message handling and session management
+ */
+
 #include <config.h>
 
 #include "Session.hpp"

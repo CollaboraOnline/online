@@ -9,6 +9,12 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * Implementation of socket API emulation for mobile platforms.
+ * Classes: FakeSocketPair (internal)
+ * Functions: fakeSocket* family implementing socket operations
+ */
+
 #include <config.h>
 
 #include <fcntl.h>

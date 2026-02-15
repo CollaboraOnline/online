@@ -9,6 +9,11 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * Dummy LibreOfficeKit implementation for testing.
+ * Classes: LibLODocument_Impl, LibLibreOffice_Impl - Mock LOK interfaces
+ */
+
 #include <config.h>
 
 #include "DummyLibreOfficeKit.hpp"

@@ -8,6 +8,10 @@
 //   July 12 2012: was passing out variables in final to in/out in short
 //   July 30 2012: I reintroduced the buffer overflow
 //   August 5 2012: SpookyV2: d = should be d += in short hash, and remove extra mix from long hash
+/*
+ * SpookyHash V2 - Fast 128-bit noncryptographic hash function.
+ * Classes: SpookyHash - Functions: Hash128(), Short(), Final()
+ */
 
 #include <config.h>
 

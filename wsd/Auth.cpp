@@ -9,6 +9,11 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * Implementation of JWT authentication and authorization.
+ * Classes: JWTAuth
+ */
+
 #include <config.h>
 
 #include "Auth.hpp"

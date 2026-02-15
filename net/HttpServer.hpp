@@ -9,6 +9,11 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * HTTP server session for handling asynchronous responses with range support.
+ * Classes: http::ServerSession
+ */
+
 #pragma once
 
 #include <net/HttpRequest.hpp>

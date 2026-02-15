@@ -9,6 +9,11 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * Data model for admin console views and document tracking.
+ * Classes: View, DocCleanupSettings, DocProcSettings, Document, Subscriber, AdminModel
+ */
+
 #pragma once
 
 #include <common/Log.hpp>

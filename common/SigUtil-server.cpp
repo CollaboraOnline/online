@@ -9,6 +9,11 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * Server-side signal handling and process state management.
+ * Functions: setTerminationSignals(), requestShutdown(), dumpState()
+ */
+
 #include <config.h>
 
 #include "SigUtil.hpp"

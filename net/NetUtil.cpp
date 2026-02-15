@@ -9,6 +9,12 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * Implementation of network utilities: host resolution, connection, SSL setup.
+ * Classes: net::HostEntry
+ * Functions: connect(), resolve(), localhostIPv4/IPv6()
+ */
+
 #include <config.h>
 
 #include <common/Unit.hpp>

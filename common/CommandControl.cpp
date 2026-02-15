@@ -9,6 +9,11 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * Feature lock and command control management.
+ * Classes: LockManager - Manages locked commands and read-only hosts
+ */
+
 #include <config.h>
 
 #include "CommandControl.hpp"

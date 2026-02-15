@@ -9,6 +9,11 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * UI command logging for debugging and replay.
+ * Classes: LogUiCmd - Command logging and file management
+ */
+
 #include <config.h>
 #include <kit/LogUI.hpp>
 #include <common/Log.hpp>

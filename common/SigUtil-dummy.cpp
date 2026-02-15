@@ -9,6 +9,11 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * Dummy/stub signal handling implementations for testing.
+ * Functions: triggerDumpState(), getShutdownRequestFlag()
+ */
+
 #include <config.h>
 
 #include "SigUtil.hpp"

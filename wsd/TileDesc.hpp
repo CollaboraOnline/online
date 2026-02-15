@@ -9,6 +9,11 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * Tile descriptor for tile requests and metadata.
+ * Classes: TileDesc, TileCombined
+ */
+
 #pragma once
 
 #include <Exceptions.hpp>

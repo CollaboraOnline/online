@@ -9,6 +9,11 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * Unit tests for tile delta generation and compression.
+ * Classes: DeltaTests
+ */
+
 #include <config.h>
 
 #include <test/lokassert.hpp>

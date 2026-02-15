@@ -9,6 +9,11 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * Implementation of WOPI proof key verification.
+ * Classes: ProofKey
+ */
+
 #include <config.h>
 
 #include "ProofKey.hpp"
