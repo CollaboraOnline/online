@@ -1890,6 +1890,14 @@ window.L.Control.NotebookbarCalc = window.L.Control.NotebookbarWriter.extend({
 			},
 			{ type: 'separator', id: 'insert-deletecalctable-break', orientation: 'vertical' },
 			{
+				'id': 'insert-insert-annotation',
+				'type': 'bigtoolitem',
+				'text': _UNO('.uno:InsertAnnotation'),
+				'command': '.uno:InsertAnnotation',
+				'accessibility': { focusBack: true,	combination: 'IA', de: null }
+			},
+			{ type: 'separator', id: 'insert-annotation-break', orientation: 'vertical' },
+			{
 				'type': 'overflowgroup',
 				'id': 'insert-illustrations',
 				'name':_('Illustrations'),
@@ -2128,38 +2136,12 @@ window.L.Control.NotebookbarCalc = window.L.Control.NotebookbarWriter.extend({
 			},
 			{ type: 'separator', id: 'insert-editheaderandfooter-break', orientation: 'vertical' },
 			{
-				'id': 'Insert-Charmap-Annotation',
-				'type': 'container',
-				'children': [
-					{
-						'id': 'LineA153',
-						'type': 'toolbox',
-						'children': [
-							{
-								'id': 'CharmapControl',
-								'class': 'unoCharmapControl',
-								'type': 'customtoolitem',
-								'text': _UNO('.uno:CharmapControl'),
-								'command': 'charmapcontrol',
-								'accessibility': { focusBack: true,	combination: 'ZS', de: null }
-							}
-						]
-					},
-					{
-						'id': 'LineB163',
-						'type': 'toolbox',
-						'children': [
-							{
-								'id': 'insert-insert-annotation',
-								'type': 'toolitem',
-								'text': _UNO('.uno:InsertAnnotation', 'text'),
-								'command': '.uno:InsertAnnotation',
-								'accessibility': { focusBack: true,	combination: 'IA', de: null }
-							}
-						]
-					}
-				],
-				'vertical': 'true'
+				'id': 'CharmapControl',
+				'class': 'unoCharmapControl',
+				'type': 'customtoolitem',
+				'text': _UNO('.uno:CharmapControl'),
+				'command': 'charmapcontrol',
+				'accessibility': { focusBack: true,	combination: 'ZS', de: null }
 			}
 		];
 
