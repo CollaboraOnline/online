@@ -9,6 +9,11 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * Implementation of admin data model and document statistics.
+ * Classes: Document, Subscriber, AdminModel
+ */
+
 #include <config.h>
 
 #include "AdminModel.hpp"

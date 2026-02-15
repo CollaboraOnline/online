@@ -9,6 +9,11 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * OpenSSL context management for SSL/TLS connections.
+ * Classes: SslContext, ssl::CertificateVerification
+ */
+
 #pragma once
 
 #include <common/Util.hpp>

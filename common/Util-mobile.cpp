@@ -8,6 +8,12 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
+
+/*
+ * Mobile platform no-op implementations of desktop utility functions.
+ * Classes: DirectoryCounter - Functions: spawnProcess(), getMemoryUsage*()
+ */
+
 #include <config.h>
 
 #include <common/Util.hpp>

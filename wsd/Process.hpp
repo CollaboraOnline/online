@@ -9,6 +9,11 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * Process management for Kit and child processes.
+ * Classes: Process, ChildProcess, ForKitProcess
+ */
+
 #pragma once
 
 #include <common/FileUtil.hpp>

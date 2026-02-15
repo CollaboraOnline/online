@@ -9,6 +9,11 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * Implementation of tile cache storage and retrieval.
+ * Classes: TileCache
+ */
+
 #include <config.h>
 
 #include "TileCache.hpp"

@@ -9,6 +9,10 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * WebSocket session management for testing.
+ */
+
 #pragma once
 
 #include <common/Log.hpp>

@@ -9,6 +9,11 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * Audit logging for server events.
+ * Functions: auditLog()
+ */
+
 #pragma once
 
 #include <string>

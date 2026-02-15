@@ -9,6 +9,10 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * Unit test for large paste operations.
+ */
+
 #include <config.h>
 
 #include <memory>

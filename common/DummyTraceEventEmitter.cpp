@@ -9,6 +9,11 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * Dummy stub implementations for TraceEvent emission.
+ * Functions: emitOneRecordingIfEnabled(), emitOneRecording()
+ */
+
 // Compile and link this into test and utility executables that need it to link
 
 #include <config.h>

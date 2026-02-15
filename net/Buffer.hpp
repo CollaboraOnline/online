@@ -9,6 +9,11 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * Memory-efficient buffer for network I/O with offset-based reading.
+ * Classes: Buffer
+ */
+
 #pragma once
 
 #include <common/HexUtil.hpp>

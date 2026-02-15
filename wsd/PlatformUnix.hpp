@@ -7,6 +7,12 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
+
+/*
+ * Unix platform initialization and capabilities.
+ * Functions: dropCapability(), symlinkPathToJail()
+ */
+
 #pragma once
 
 #ifdef __linux__

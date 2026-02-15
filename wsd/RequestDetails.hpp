@@ -9,6 +9,11 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * HTTP request parsing and details extraction.
+ * Classes: RequestDetails
+ */
+
 #pragma once
 
 #include <common/Log.hpp>

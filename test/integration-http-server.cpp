@@ -9,6 +9,10 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * Test server for HTTP integration testing.
+ */
+
 #include <config.h>
 
 #include <helpers.hpp>

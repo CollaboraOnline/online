@@ -9,6 +9,10 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * Helper utilities for Kit process ID management in tests.
+ */
+
 #pragma once
 
 #include <Common.hpp>

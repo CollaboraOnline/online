@@ -9,6 +9,11 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * Main server application class and entry point.
+ * Classes: COOLWSD
+ */
+
 #pragma once
 
 #include <common/ConfigUtil.hpp>

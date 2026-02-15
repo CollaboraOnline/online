@@ -9,6 +9,10 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * White box unit test for file server functionality.
+ */
+
 #include <config.h>
 
 #include <wsd/FileServer.hpp>

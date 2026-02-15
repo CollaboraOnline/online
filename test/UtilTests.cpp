@@ -9,6 +9,10 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * Unit test for utility functions including character conversion and hex utilities.
+ */
+
 #include <config.h>
 
 #include <test/lokassert.hpp>

@@ -9,6 +9,10 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * HTTP test utilities and helper classes.
+ */
+
 #pragma once
 
 #include <sstream>

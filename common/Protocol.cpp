@@ -9,6 +9,11 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * COOL protocol parsing and message formatting.
+ * Functions: ParseVersion(), getAbbreviatedMessage(), tokenize()
+ */
+
 #include <config.h>
 
 #include "Protocol.hpp"

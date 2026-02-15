@@ -9,6 +9,11 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * Implementation of HTTP utility functions for file serving and compression.
+ * Functions: sendFileAndShutdown(), sendCompressed/Uncompressed file helpers
+ */
+
 #include <config.h>
 
 #include "HttpHelper.hpp"

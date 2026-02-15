@@ -9,6 +9,11 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * Direct LibreOfficeKit client for testing and benchmarking.
+ * Functions: Document loading, tile rendering, command execution
+ */
+
 #include <config.h>
 
 #include <common/Png.hpp>

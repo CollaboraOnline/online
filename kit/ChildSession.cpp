@@ -9,6 +9,11 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * Kit process child session handling LOK commands.
+ * Classes: ChildSession - Document session command processing
+ */
+
 #include <config.h>
 
 #include "ChildSession.hpp"

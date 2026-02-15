@@ -9,6 +9,11 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * Asynchronous DNS resolution using a dedicated background thread.
+ * Classes: AsyncDNS, DNSResolver
+ */
+
 #pragma once
 
 #include <atomic>

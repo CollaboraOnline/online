@@ -9,6 +9,11 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * Unix-specific file utility implementations.
+ * Functions: linkOrCopyFile(), realpath(), file operations
+ */
+
 #include <config.h>
 
 #include <common/Anonymizer.hpp>

@@ -9,6 +9,11 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * Implementation of file quarantine mechanism.
+ * Functions: quarantineFile()
+ */
+
 #include <config.h>
 
 #include "QuarantineUtil.hpp"

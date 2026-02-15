@@ -9,6 +9,11 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * Implementation of main server application logic.
+ * Classes: COOLWSD
+ */
+
 #include <config.h>
 #include <config_version.h>
 

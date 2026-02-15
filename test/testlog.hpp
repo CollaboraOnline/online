@@ -9,6 +9,10 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * Test logging utilities and timing functions.
+ */
+
 #pragma once
 
 #include <common/Log.hpp>
