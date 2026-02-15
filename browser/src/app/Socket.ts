@@ -1732,6 +1732,11 @@ class Socket {
 			this._map.setPermission(app.file.permission);
 		}
 
+		// Store the view mode extensions list from server configuration
+		if (json.viewModeExtensions) {
+			app.file.viewModeExtensions = json.viewModeExtensions;
+		}
+
 		app.setCommentEditingPermission(json.editComment); // May be allowed even in readonly mode.
 		app.setRedlineManagementAllowed(json.manageRedlines); // May be allowed even in readonly mode.
 	}

@@ -176,6 +176,7 @@ std::atomic<std::chrono::milliseconds> ChildSpawnTimeoutMs =
 
 std::atomic<unsigned> COOLWSD::NumConnections;
 std::unordered_set<std::string> COOLWSD::EditFileExtensions;
+std::string COOLWSD::ViewModeFileExtensions;
 
 extern "C"
 {
@@ -1462,6 +1463,11 @@ void COOLWSD::innerInitialize(Poco::Util::Application& self)
 
     if (EnableAccessibility)
         UserInterface = "notebookbar";
+
+    // Load view mode file extensions configuration
+    COOLWSD::ViewModeFileExtensions = ConfigUtil::getConfigValue<std::string>(
+        conf, "view_mode.file_extensions", "");
+    LOG_DBG_S("View mode extensions: [" << COOLWSD::ViewModeFileExtensions << ']');
 
     // Set the log-level after complete initialization to force maximum details at startup.
     LogLevel = ConfigUtil::getConfigValue<std::string>(conf, "logging.level", "trace");
