@@ -271,6 +271,10 @@
 
     </user_interface>
 
+    <readonly_mode desc="Document format-specific read-only mode settings">
+      <file_extensions desc="Pipe-separated list of file extensions that should open in readonly mode by default (e.g., docx|xlsx|pptx|doc|xls|ppt|docm|xlsm|pptm). This is useful for MS Office formats until full interop is ensured. Empty to disable." type="string" default="docx|xlsx|pptx|doc|xls|ppt|docm|xlsm|pptm|dot|xlt|pot">docx|xlsx|pptx|doc|xls|ppt|docm|xlsm|pptm|dot|xlt|pot</file_extensions>
+    </readonly_mode>
+
     <storage desc="Backend storage">
         <filesystem allow="false" />
         <wopi desc="Allow/deny wopi storage." allow="true">

@@ -176,6 +176,7 @@ std::atomic<std::chrono::milliseconds> ChildSpawnTimeoutMs =
 
 std::atomic<unsigned> COOLWSD::NumConnections;
 std::unordered_set<std::string> COOLWSD::EditFileExtensions;
+std::unordered_set<std::string> COOLWSD::ReadOnlyFileExtensions;
 
 extern "C"
 {
@@ -1433,6 +1434,28 @@ void COOLWSD::innerInitialize(Poco::Util::Application& self)
 
     if (EnableAccessibility)
         UserInterface = "notebookbar";
+
+    // Load readonly mode file extensions configuration
+    std::string readonlyExtensions = ConfigUtil::getConfigValue<std::string>(
+        conf, "readonly_mode.file_extensions", "");
+    if (!readonlyExtensions.empty())
+    {
+        std::istringstream iss(readonlyExtensions);
+        std::string ext;
+        while (std::getline(iss, ext, '|'))
+        {
+            // Trim whitespace
+            ext.erase(0, ext.find_first_not_of(" \t\r\n"));
+            ext.erase(ext.find_last_not_of(" \t\r\n") + 1);
+            // Convert to lowercase and insert
+            if (!ext.empty())
+            {
+                std::transform(ext.begin(), ext.end(), ext.begin(), ::tolower);
+                COOLWSD::ReadOnlyFileExtensions.insert(ext);
+                LOG_DBG_S("Added readonly extension: [" << ext << ']');
+            }
+        }
+    }
 
     // Set the log-level after complete initialization to force maximum details at startup.
     LogLevel = ConfigUtil::getConfigValue<std::string>(conf, "logging.level", "trace");

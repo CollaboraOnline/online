@@ -131,6 +131,7 @@ public:
 #endif
 
     static std::unordered_set<std::string> EditFileExtensions;
+    static std::unordered_set<std::string> ReadOnlyFileExtensions;
     static unsigned MaxConnections;
     static unsigned MaxDocuments;
     static std::string HardwareResourceWarning;
@@ -180,6 +181,14 @@ public:
             return false; // mark everything else editable on mobile
         }
         return EditFileExtensions.find(lowerCaseExtension) == EditFileExtensions.end();
+    }
+
+    /// Return true if extension should be opened in readonly mode by default.
+    static bool IsReadOnlyFileExtension(const std::string& extension)
+    {
+        std::string lowerCaseExtension = extension;
+        std::transform(lowerCaseExtension.begin(), lowerCaseExtension.end(), lowerCaseExtension.begin(), ::tolower);
+        return ReadOnlyFileExtensions.find(lowerCaseExtension) != ReadOnlyFileExtensions.end();
     }
 
     /// Trace a new session and take a snapshot of the file.
