@@ -489,6 +489,16 @@ algned to the bottom */
 	margin-bottom: 6px;
 }
 
+.sidebar .jsdialog.ui-alignment .ui-togglebutton.loOrientationBtn button {
+    padding: 2px !important;
+    margin-right: 4px;
+    min-width: 26px;
+    min-height: 26px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 .ui-tab.hidden.jsdialog {
 	visibility: hidden !important;
 }
