@@ -67,6 +67,7 @@ class WhiteBoxTests : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST(testFindInVector);
     CPPUNIT_TEST(testJoinPair);
     CPPUNIT_TEST(testThreadPool);
+    CPPUNIT_TEST(testRemoveFile);
     CPPUNIT_TEST_SUITE_END();
 
     void testCOOLProtocolFunctions();
@@ -93,6 +94,7 @@ class WhiteBoxTests : public CPPUNIT_NS::TestFixture
     void testFindInVector();
     void testJoinPair();
     void testThreadPool();
+    void testRemoveFile();
 
     size_t waitForThreads(size_t count);
 };
@@ -1049,6 +1051,58 @@ void WhiteBoxTests::testThreadPool()
     LOK_ASSERT_EQUAL(size_t(7), pool._threads.size());
 //    LOK_ASSERT_EQUAL(size_t(7 + existingUnrelatedThreads), waitForThreads(8 + existingUnrelatedThreads));
 }
+
+
+void WhiteBoxTests::testRemoveFile()
+{
+    constexpr std::string_view testname = __func__;
+    const std::string baseDir = FileUtil::getSysTempDirectoryPath();
+
+    // test for file
+    {
+        const std::string testFile = baseDir + "/removefile_test_file.tmp";
+        FileUtil::removeFile(testFile, false); // Curățare inițială
+
+        {
+            std::ofstream ofs(testFile);
+        }
+
+        LOK_ASSERT(FileUtil::Stat(testFile).exists());
+
+        FileUtil::removeFile(testFile, false);
+        LOK_ASSERT(!FileUtil::Stat(testFile).exists());
+
+        FileUtil::removeFile(testFile, false);
+        LOK_ASSERT(!FileUtil::Stat(testFile).exists());
+    }
+
+    // test for directory
+    {
+        const std::string testDir = baseDir + "/removefile_test_dir.tmp";
+        const std::string innerFile = testDir + "/inner_file.txt";
+
+        FileUtil::removeFile(testDir, true);
+
+        LOK_ASSERT(FileUtil::makeDirectory(testDir) == 0);
+        {
+            std::ofstream ofs(innerFile);
+        }
+
+        LOK_ASSERT(FileUtil::Stat(testDir).exists());
+        LOK_ASSERT(FileUtil::Stat(innerFile).exists());
+
+        FileUtil::removeFile(testDir, false);
+
+        LOK_ASSERT(FileUtil::Stat(testDir).exists());
+        LOK_ASSERT(FileUtil::Stat(innerFile).exists());
+
+        FileUtil::removeFile(testDir, true);
+
+        LOK_ASSERT(!FileUtil::Stat(testDir).exists());
+        LOK_ASSERT(!FileUtil::Stat(innerFile).exists());
+    }
+}
+
 
 CPPUNIT_TEST_SUITE_REGISTRATION(WhiteBoxTests);
 
