@@ -2123,6 +2123,12 @@ void ClientSession::sendFileMode(const bool readOnly, const bool editComments, b
     result += editComments ? "true": "false";
     result += ", \"manageRedlines\": ";
     result += manageRedlines ? "true" : "false";
+
+    // Add the view mode extensions list from configuration
+    result += ", \"viewModeExtensions\": \"";
+    result += COOLWSD::ViewModeFileExtensions;
+    result += "\"";
+
     result += "}";
     sendTextFrame(result);
 }
