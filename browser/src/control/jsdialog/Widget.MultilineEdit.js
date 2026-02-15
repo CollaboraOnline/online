@@ -82,6 +82,10 @@ function _multiLineEditControl(parentContainer, data, builder, callback) {
 		edit.disabled = true;
 	}
 
+	if (controlType === 'textarea' && data.readonly === true) {
+		edit.readOnly = true;
+	}
+
 	function _keyupChangeHandler() {
 		if (callback)
 			callback(this.value);
