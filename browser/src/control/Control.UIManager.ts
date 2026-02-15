@@ -408,7 +408,7 @@ class UIManager extends window.L.Control {
 		this.map.addControl(window.L.control.languageDialog());
 		this.map.dialog = window.L.control.lokDialog();
 		this.map.addControl(this.map.dialog);
-		this.map.addControl(window.L.control.contextMenu());
+		this.map.addControl(new ContextMenuControl());
 		this.map.userList = window.L.control.userList();
 		this.map.addControl(this.map.userList);
 		this.map.aboutDialog = JSDialog.aboutDialog(this.map);
