@@ -131,6 +131,7 @@ public:
 #endif
 
     static std::unordered_set<std::string> EditFileExtensions;
+    static std::string ViewModeFileExtensions;
     static unsigned MaxConnections;
     static unsigned MaxDocuments;
     static std::string HardwareResourceWarning;
@@ -181,6 +182,7 @@ public:
         }
         return EditFileExtensions.find(lowerCaseExtension) == EditFileExtensions.end();
     }
+
 
     /// Trace a new session and take a snapshot of the file.
     static void dumpNewSessionTrace(const std::string& id, const std::string& sessionId, const std::string& uri, const std::string& path);

@@ -227,6 +227,7 @@ static const std::unordered_map<std::string, std::string> DefAppConfig = {
     { "quarantine_files.max_versions_to_maintain", "5" },
     { "quarantine_files.path", "" },
     { "quarantine_files[@enable]", "false" },
+    { "view_mode.file_extensions", "docx|xlsx|pptx|doc|xls|ppt|docm|xlsm|pptm|dot|xlt|pot|dotx|dotm|xltx|xltm|potx|potm|ppsx" },
     { "remote_asset_config.url", "" },
     { "remote_config.remote_url", "" },
     { "remote_font_config.url", "" },

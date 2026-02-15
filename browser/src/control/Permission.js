@@ -111,7 +111,11 @@ window.L.Map.include({
 		var fileName = this['wopi'].BaseFileName;
 		// use this feature for only integration.
 		if (!fileName) return false;
-		var extension = this._getFileExtension(fileName);
+		var extension = this._getFileExtension(fileName).toLowerCase();
+		
+		// Check if this is a view mode format from server configuration
+		if (app.isViewModeExtension(extension)) return true;
+		
 		if (!Object.prototype.hasOwnProperty.call(this.readonlyStartingFormats, extension))
 			return false;
 		return true;
@@ -163,6 +167,13 @@ window.L.Map.include({
 		if (this._shouldStartReadOnly() && !window.ThisIsAMobileApp) {
 			var fileName = this['wopi'].BaseFileName;
 			var extension = this._getFileExtension(fileName);
+			
+			// For defined formats (from server config), just proceed to edit mode without dialog
+			if (app.isViewModeExtension(extension)) {
+				this._proceedEditMode();
+				return;
+			}
+			
 			var extensionInfo = this.readonlyStartingFormats[extension];
 
 			var yesButtonText = !this['wopi'].UserCanNotWriteRelative ? _('Save as ODF format'): null;
