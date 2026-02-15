@@ -101,6 +101,9 @@ public:
     static bool AnonymizeUserData;
     static bool CheckCoolUser;
     static bool CleanupOnly;
+#if ENABLE_DEBUG
+    static bool FindFreePort;
+#endif
     static bool IsProxyPrefixEnabled;
     static std::atomic<unsigned> NumConnections;
     static std::unique_ptr<TraceFileWriter> TraceDumper;

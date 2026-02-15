@@ -783,6 +783,9 @@ std::string COOLWSD::UserInterface = "default";
 bool COOLWSD::AnonymizeUserData = false;
 bool COOLWSD::CheckCoolUser = true;
 bool COOLWSD::CleanupOnly = false; ///< If we should cleanup and exit.
+#if ENABLE_DEBUG
+bool COOLWSD::FindFreePort = false; ///< If we should find a free port to listen on.
+#endif
 bool COOLWSD::IsProxyPrefixEnabled = false;
 unsigned COOLWSD::MaxConnections;
 unsigned COOLWSD::MaxDocuments;
@@ -2348,6 +2351,12 @@ void COOLWSD::defineOptions(Poco::Util::OptionSet& optionSet)
                         .repeatable(false)
                         .argument("port_number"));
 
+#if ENABLE_DEBUG
+    optionSet.addOption(Option("find-free-port", "", "Find a free port to listen on, starting from the default.")
+                        .required(false)
+                        .repeatable(false));
+#endif
+
     optionSet.addOption(Option("disable-ssl", "", "Disable SSL security layer.")
                         .required(false)
                         .repeatable(false));
@@ -2437,6 +2446,10 @@ void COOLWSD::handleOption(const std::string& optionName,
         CleanupOnly = true; // Flag for later as we need the config.
     else if (optionName == "port")
         ClientPortNumber = std::stoi(value);
+#if ENABLE_DEBUG
+    else if (optionName == "find-free-port")
+        FindFreePort = true;
+#endif
     else if (optionName == "disable-ssl")
         _overrideSettings["ssl.enable"] = "false";
     else if (optionName == "disable-cool-user-checking")
@@ -3528,7 +3541,11 @@ std::shared_ptr<ServerSocket> COOLWSDServer::findServerPort()
 #ifdef BUILDING_TESTS
            true
 #else
-           UnitWSD::isUnitTesting()
+           (UnitWSD::isUnitTesting()
+#if ENABLE_DEBUG
+            || COOLWSD::FindFreePort
+#endif
+           )
 #endif
         )
     {
