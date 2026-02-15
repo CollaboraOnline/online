@@ -9,6 +9,11 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * Implementation of special purpose brokers.
+ * Classes: ThumbnailBroker, SystemTemplatesBroker
+ */
+
 #include <config.h>
 
 #include "SpecialBrokers.hpp"

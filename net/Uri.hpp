@@ -9,6 +9,11 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * URI parsing and decomposition utilities.
+ * Functions: parseUri()
+ */
+
 #pragma once
 
 #include <string>

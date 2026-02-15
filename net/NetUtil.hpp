@@ -9,6 +9,12 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * Network-related utility functions and helper classes.
+ * Classes: net::HostEntry, net::DefaultValues
+ * Functions: connect(), resolve(), localhostIPv4/IPv6()
+ */
+
 #pragma once
 
 #include <chrono>

@@ -9,6 +9,10 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * Common utilities for WOPI upload conflict testing scenarios.
+ */
+
 #pragma once
 
 #include <string>

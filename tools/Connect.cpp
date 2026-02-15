@@ -9,6 +9,11 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * WebSocket connection utility for connecting to COOL server.
+ * Functions: connectToURL(), saveResponse()
+ */
+
 #include <config.h>
 
 #include <common/Common.hpp>

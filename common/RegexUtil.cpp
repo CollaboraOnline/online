@@ -9,6 +9,11 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * Regular expression matching utilities.
+ * Classes: RegexListMatcher - Functions: matchRegex()
+ */
+
 #include <config.h>
 #include <config_version.h>
 

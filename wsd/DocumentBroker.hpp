@@ -9,6 +9,11 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * Manages document lifecycle and coordinates client/kit communication.
+ * Classes: DocumentBroker, ConvertToBroker
+ */
+
 #pragma once
 
 #include <common/Authorization.hpp>

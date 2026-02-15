@@ -9,6 +9,10 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * Unit test for proxy protocol handling.
+ */
+
 #include <config.h>
 
 #include <Common.hpp>

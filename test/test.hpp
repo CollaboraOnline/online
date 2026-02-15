@@ -9,6 +9,10 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * Test framework utilities for running client tests standalone or within WSD.
+ */
+
 #pragma once
 
 /// Are we running inside WSD or by ourselves.

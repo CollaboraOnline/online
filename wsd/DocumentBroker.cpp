@@ -9,6 +9,11 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * Implementation of document broker and session management.
+ * Classes: DocumentBroker, ConvertToBroker
+ */
+
 #include <config.h>
 
 #include "DocumentBroker.hpp"

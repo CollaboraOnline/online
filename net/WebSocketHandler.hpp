@@ -9,6 +9,11 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * WebSocket protocol handler for frame parsing, masking, and message handling.
+ * Classes: WebSocketHandler
+ */
+
 #pragma once
 
 #include <common/HexUtil.hpp>

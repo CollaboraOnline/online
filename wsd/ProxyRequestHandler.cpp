@@ -9,6 +9,11 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * Implementation of proxy request handling.
+ * Classes: ProxyRequestHandler
+ */
+
 #include <config.h>
 
 #include "ProxyRequestHandler.hpp"

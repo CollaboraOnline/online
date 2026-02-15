@@ -9,6 +9,10 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * HTTP test server utilities for testing HTTP functionality.
+ */
+
 #pragma once
 
 #include <common/Log.hpp>

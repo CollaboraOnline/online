@@ -9,6 +9,11 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * Implementation of request detail parsing.
+ * Classes: RequestDetails
+ */
+
 #include <config.h>
 
 #include "RequestDetails.hpp"

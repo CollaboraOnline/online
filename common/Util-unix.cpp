@@ -9,6 +9,11 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * Unix-specific utility implementations.
+ * Functions: getURandom(), getBytes() - Random number generation
+ */
+
 #include <config.h>
 
 #include <common/Log.hpp>

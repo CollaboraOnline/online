@@ -5,6 +5,11 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * Chrome trace event recording for performance profiling.
+ * Classes: TraceEvent, ProfileZone - Event emission and zone tracking
+ */
+
 // To build a freestanding test executable for just TraceEvent:
 // clang++ -Wall -Wextra -DTEST_TRACEEVENT_EXE TraceEvent.cpp -o TraceEvent -pthread
 

@@ -5,6 +5,11 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * Simple HTTP echo server for fuzzing and testing.
+ * Functions: HTTP request echo, socket handling
+ */
+
 #include <config.h>
 
 #include <cstdlib>

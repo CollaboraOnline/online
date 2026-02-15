@@ -9,6 +9,11 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * Core socket abstractions: non-blocking I/O, polling, and protocol handling.
+ * Classes: Socket, StreamSocket, SocketPoll, ProtocolHandlerInterface, SocketDisposition
+ */
+
 #pragma once
 
 #if !MOBILEAPP

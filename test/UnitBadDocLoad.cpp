@@ -9,6 +9,10 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * Unit test for document loading error handling and bad document scenarios.
+ */
+
 #include <config.h>
 
 #include <Png.hpp>

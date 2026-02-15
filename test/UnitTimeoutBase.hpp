@@ -9,6 +9,10 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * Base class for timeout-related unit tests.
+ */
+
 #include <common/Unit.hpp>
 #include <common/Util.hpp>
 #include <net/HttpRequest.hpp>

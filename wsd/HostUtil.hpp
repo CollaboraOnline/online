@@ -9,6 +9,11 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * Host and alias management utilities.
+ * Functions: parseAliases(), isHostAllowed()
+ */
+
 #pragma once
 
 // HostUtil is only used in non-mobile apps.

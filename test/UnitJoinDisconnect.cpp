@@ -9,6 +9,10 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * Unit test for client join and disconnect scenarios.
+ */
+
 #include <config.h>
 
 #include <lokassert.hpp>

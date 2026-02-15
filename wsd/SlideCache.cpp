@@ -9,6 +9,11 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * Implementation of slide cache management.
+ * Classes: SlideCache
+ */
+
 #include <config.h>
 
 #include "SlideCache.hpp"

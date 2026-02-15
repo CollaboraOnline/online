@@ -5,6 +5,11 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * GTK/WebKit2 based mobile application.
+ * Functions: GTK window setup, WebKit integration, fake socket handling
+ */
+
 #include <config.h>
 
 #include <sysexits.h>

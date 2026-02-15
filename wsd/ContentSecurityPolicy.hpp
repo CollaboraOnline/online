@@ -9,6 +9,11 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * Content Security Policy header generation for HTTP responses.
+ * Classes: ContentSecurityPolicy
+ */
+
 #pragma once
 
 #include <common/Log.hpp>

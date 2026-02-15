@@ -9,6 +9,11 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * Implementation of asynchronous HTTP/1.1 client with header parsing and state management.
+ * Classes: http::Session, http::Request, http::Response, http::Header
+ */
+
 #include <config.h>
 
 #include "HttpRequest.hpp"

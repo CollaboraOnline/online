@@ -9,6 +9,11 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * Implementation of administrative interface and websocket handlers.
+ * Classes: AdminSocketHandler, MonitorSocketHandler, Admin
+ */
+
 #include <config.h>
 
 #include <common/Common.hpp>

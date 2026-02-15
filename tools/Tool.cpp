@@ -9,6 +9,11 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * General utility tool for document conversion and inspection.
+ * Functions: Document conversion, property inspection
+ */
+
 #include <config.h>
 
 #include <common/Common.hpp>

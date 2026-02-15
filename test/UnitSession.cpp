@@ -9,6 +9,10 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * Unit test for session-related functionality including XML/DOM parsing.
+ */
+
 #include <config.h>
 
 #include <common/Unit.hpp>

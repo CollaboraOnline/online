@@ -9,6 +9,10 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * Unit test for WOPI file URL handling.
+ */
+
 #include <config.h>
 
 #include <lokassert.hpp>

@@ -9,6 +9,11 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * Trace file recording for debugging and analysis.
+ * Classes: TraceFileWriter, TraceFileReader
+ */
+
 #pragma once
 
 #include <common/FileUtil.hpp>

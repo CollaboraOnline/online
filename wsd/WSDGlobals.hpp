@@ -9,6 +9,11 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * Global variables and state for WSD process.
+ * Functions: getDocBrokers()
+ */
+
 #pragma once
 
 #include <common/Clipboard.hpp>
