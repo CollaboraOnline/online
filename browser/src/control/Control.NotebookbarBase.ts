@@ -39,17 +39,20 @@ class NotebookbarBase extends JSDialogComponent {
 				this.builder.onCommandStateChanged,
 				this.builder,
 			);
+			this.map.on('updatetoolbarcommandvalues', this.onCommandValues, this);
 		}
 	}
 
 	// when we hide the UI
 	public onRemove() {
-		if (this.builder)
+		if (this.builder) {
 			this.map.off(
 				'commandstatechanged',
 				this.builder.onCommandStateChanged,
 				this.builder,
 			);
+			this.map.off('updatetoolbarcommandvalues', this.onCommandValues, this);
+		}
 
 		if (this.impl) this.impl.onRemove();
 	}
@@ -88,6 +91,11 @@ class NotebookbarBase extends JSDialogComponent {
 		return false;
 	}
 
+	private onCommandValues(e: any) {
+		if (this.builder && this.builder.onCommandValues) {
+			this.builder.onCommandValues(e);
+		}
+	}
 	protected onJSAction(e: any) {
 		if (super.onJSAction(e)) {
 			this.impl?.setInitialized(true);

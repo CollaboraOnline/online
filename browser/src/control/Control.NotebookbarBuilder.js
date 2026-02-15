@@ -172,7 +172,51 @@ window.L.Control.NotebookbarBuilder = window.L.Control.JSDialogBuilder.extend({
 			}
 		}
 	},
+	onCommandValues: function (e) {
+		if (e.commandName === '.uno:StyleApply') {
+			var commandValues = e.commandValues;
+			if (!commandValues) return;
 
+			var styles = [];
+			if (this.map.getDocType() === 'text') {
+				styles = commandValues.ParagraphStyles;
+			} else if (this.map.getDocType() === 'spreadsheet') {
+				styles = commandValues.CellStyles;
+			}
+
+			if (styles && styles.length > 0) {
+				var widgetData = this.wizard.model.getById('stylesview');
+				if (widgetData) {
+					var entries = [];
+					styles.forEach(function (style, index) {
+						var localeStyle;
+						if (style.startsWith('outline')) {
+							var outlineLevel = style.split('outline')[1];
+							localeStyle = 'Outline'.toLocaleString() + ' ' + outlineLevel;
+						} else {
+							localeStyle = window.L.Styles.styleMappings[style];
+							localeStyle =
+								localeStyle === undefined
+									? style
+									: localeStyle.toLocaleString();
+						}
+						entries.push({
+							text: localeStyle,
+							id: style,
+							row: index,
+							selected: false,
+							ondemand: true,
+							width: 96,
+							height: 72,
+						});
+					});
+
+					widgetData.entries = entries;
+					this.updateWidget(this.wizard.container, widgetData);
+				}
+			}
+		}
+	},
 	_comboboxControl: function(parentContainer, data, builder) {
 		if (!data.entries || data.entries.length === 0)
 			return false;

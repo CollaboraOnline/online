@@ -70,6 +70,7 @@ interface JSBuilder {
 	postProcess: (parentContainer: Element, data: WidgetJSON) => void;
 	setWindowId: (id: WindowId | number) => void;
 	onCommandStateChanged: (event: any) => void;
+	onCommandValues?: (event: any) => void;
 
 	// helpers FIXME: put as local in Control.Containers.ts
 	_getGridColumns: (data: WidgetJSON[]) => number;
