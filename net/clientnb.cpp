@@ -9,6 +9,11 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * Simple HTTP/WebSocket client for testing and benchmarking purposes.
+ * Application: command-line test client using Poco networking
+ */
+
 #include <config.h>
 
 #include <common/Util.hpp>

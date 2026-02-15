@@ -9,6 +9,10 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * Base class for WSD client unit tests.
+ */
+
 #include <helpers.hpp>
 #include <lokassert.hpp>
 #include <testlog.hpp>

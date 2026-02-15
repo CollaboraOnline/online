@@ -9,6 +9,11 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * Request validation and authorization gateway.
+ * Classes: RequestVettingStation
+ */
+
 #pragma once
 
 #include <RequestDetails.hpp>

@@ -9,6 +9,11 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * Implementation of request vetting and validation.
+ * Classes: RequestVettingStation
+ */
+
 #include <config.h>
 
 #include <RequestVettingStation.hpp>

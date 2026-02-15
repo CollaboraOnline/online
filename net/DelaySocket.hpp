@@ -9,6 +9,11 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * Network latency simulation for local debugging and testing.
+ * Classes: Delay
+ */
+
 #pragma once
 
 #include <Socket.hpp>

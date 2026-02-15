@@ -9,6 +9,11 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * Utilities for cache directory management and cleanup.
+ * Functions: getCacheDir(), clearCacheDir()
+ */
+
 #pragma once
 
 #include <string>

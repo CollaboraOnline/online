@@ -9,6 +9,11 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * Tile caching for rendered document tiles.
+ * Classes: TileCache
+ */
+
 #pragma once
 
 #include <iosfwd>

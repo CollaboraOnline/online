@@ -9,6 +9,11 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * Kit process callback queue management and optimization.
+ * Classes: KitQueue, Callback - LOK callback handling and deduplication
+ */
+
 #include <config.h>
 
 #include "KitQueue.hpp"

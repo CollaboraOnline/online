@@ -9,6 +9,11 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * Configuration file manipulation utility.
+ * Functions: Password generation, config setting/getting, XML editing
+ */
+
 #include <config.h>
 
 #include <common/Anonymizer.hpp>

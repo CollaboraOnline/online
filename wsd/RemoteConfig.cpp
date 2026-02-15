@@ -9,6 +9,11 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * Implementation of remote configuration polling.
+ * Classes: RemoteConfigPoll
+ */
+
 #include <config.h>
 
 #if defined(MOBILEAPP) && MOBILEAPP

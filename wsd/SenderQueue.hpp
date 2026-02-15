@@ -9,6 +9,11 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * Message queue for sending data to clients.
+ * Classes: SenderQueue
+ */
+
 #pragma once
 
 #include <common/SigUtil.hpp>

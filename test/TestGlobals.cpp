@@ -9,6 +9,10 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * Test global variable definitions.
+ */
+
 #include <config.h>
 
 #include <kit/KitGlobals.hpp>

@@ -9,6 +9,11 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * Unit tests for HTTP request parsing and handling.
+ * Classes: HttpRequestTests, HttpSyncTests
+ */
+
 #include <config.h>
 
 #include <HttpTestServer.hpp>

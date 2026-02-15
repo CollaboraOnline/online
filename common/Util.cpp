@@ -9,6 +9,11 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * General utility functions and helpers.
+ * Functions: String manipulation, encoding, process management, system info
+ */
+
 #include <config.h>
 #include <config_version.h>
 

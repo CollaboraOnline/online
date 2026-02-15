@@ -9,6 +9,11 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * Implementation of client request routing and handling.
+ * Classes: ClientRequestDispatcher
+ */
+
 #include <config.h>
 
 #if ENABLE_FEATURE_LOCK

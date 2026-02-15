@@ -9,6 +9,11 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * URL construction and manipulation for server endpoints.
+ * Classes: ServerURL
+ */
+
 #pragma once
 
 #include <string>

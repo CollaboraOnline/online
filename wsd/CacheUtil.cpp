@@ -9,6 +9,11 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * Implementation of cache utilities.
+ * Functions: getCacheDir(), clearCacheDir()
+ */
+
 #include <config.h>
 
 #include "CacheUtil.hpp"

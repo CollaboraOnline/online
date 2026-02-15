@@ -9,6 +9,11 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * SSL/TLS socket implementation using OpenSSL for encrypted connections.
+ * Classes: SslStreamSocket
+ */
+
 #pragma once
 
 #include <common/Log.hpp>

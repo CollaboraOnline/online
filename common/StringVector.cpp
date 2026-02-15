@@ -5,6 +5,11 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * Efficient string tokenization without memory allocation.
+ * Classes: StringVector - Zero-copy string token management
+ */
+
 #include <config.h>
 
 #include "StringVector.hpp"

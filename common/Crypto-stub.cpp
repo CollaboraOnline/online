@@ -9,6 +9,11 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * Stub implementation of cryptographic support key validation.
+ * Classes: SupportKey - Returns no-op/always-valid responses
+ */
+
 #include <config.h>
 
 #include "Crypto.hpp"

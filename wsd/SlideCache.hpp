@@ -9,6 +9,11 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * Caching for slide previews and thumbnails.
+ * Classes: SlideCache
+ */
+
 #pragma once
 
 #include <common/Message.hpp>

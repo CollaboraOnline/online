@@ -9,6 +9,10 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * Unit test for preforking functionality.
+ */
+
 #include <config.h>
 
 #include <Unit.hpp>

@@ -9,6 +9,10 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * WOPI test server implementation for unit tests.
+ */
+
 #pragma once
 
 #include <common/JsonUtil.hpp>

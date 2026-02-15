@@ -9,6 +9,11 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * Special document brokers for system operations.
+ * Classes: ThumbnailBroker, SystemTemplatesBroker
+ */
+
 #pragma once
 
 #if MOBILEAPP

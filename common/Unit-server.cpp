@@ -5,6 +5,11 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * Server-side unit test framework dynamic library loading.
+ * Functions: linkAndCreateUnit(), closeUnit() - DL library management
+ */
+
 #include <config.h>
 
 #include "Unit.hpp"

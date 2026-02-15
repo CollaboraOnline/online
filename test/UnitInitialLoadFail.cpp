@@ -9,6 +9,10 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * Unit test for handling initial document load failures.
+ */
+
 #include <config.h>
 
 #include <lokassert.hpp>

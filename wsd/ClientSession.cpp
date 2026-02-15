@@ -9,6 +9,11 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * Implementation of client session handling and message processing.
+ * Classes: ClientSession
+ */
+
 #include <config.h>
 
 #include "ClientSession.hpp"

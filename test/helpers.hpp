@@ -9,6 +9,11 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * Common helper functions and utilities for testing. Independent implementations to avoid
+ * reusing code under test.
+ */
+
 #pragma once
 
 #include <common/Common.hpp>

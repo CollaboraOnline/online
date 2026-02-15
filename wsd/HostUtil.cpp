@@ -9,6 +9,11 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * Implementation of host validation and alias parsing.
+ * Functions: parseAliases(), isHostAllowed()
+ */
+
 #include <config.h>
 
 // HostUtil is only used in non-mobile apps.

@@ -9,6 +9,11 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * Implementation of OpenSSL context initialization and management.
+ * Classes: SslContext, ssl::Lock (for OpenSSL < 1.1)
+ */
+
 #include <config.h>
 
 #include "Ssl.hpp"

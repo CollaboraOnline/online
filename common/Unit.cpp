@@ -5,6 +5,11 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * Base unit testing framework implementation.
+ * Classes: UnitBase, UnitWSD, UnitKit - Test lifecycle management
+ */
+
 #include <config.h>
 
 #include <Unit.hpp>

@@ -9,6 +9,11 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * Implementation of WSD global state management.
+ * Functions: getDocBrokers(), getNewChild_Blocks()
+ */
+
 #include <config.h>
 
 #include "WSDGlobals.hpp"
