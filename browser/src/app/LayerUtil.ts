@@ -51,7 +51,6 @@ class CSelections extends BaseClass {
 	private _isText: boolean;
 	private _isOle: boolean;
 	private _selection?: CPolygon | CDarkOverlay | CCellSelection;
-	private _selectedMode: number;
 
 	constructor(
 		pointSet: CPointSet,
@@ -74,7 +73,6 @@ class CSelections extends BaseClass {
 		this._isOle = selectionType === 'ole';
 		this._selection = undefined;
 		this._updateSelection();
-		this._selectedMode = 0;
 	}
 
 	public empty(): boolean {
