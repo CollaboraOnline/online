@@ -16,6 +16,7 @@ function _createButtonForNotebookbarIconview(
 	id: string,
 	buttonClass: string,
 	icon: string,
+	ariaLabel: string,
 	builder: JSBuilder,
 	onClickCallback: any,
 ) {
@@ -34,9 +35,15 @@ function _createButtonForNotebookbarIconview(
 		container,
 	);
 	button.id = id + '-button';
-	button.className = 'ui-content unobutton ' + buttonClass;
-	container.appendChild(button);
-	parentContainer.appendChild(container);
+
+	const a11yData: WidgetJSON = {
+		id: id,
+		type: 'iconview-button',
+		aria: {
+			label: ariaLabel,
+		},
+	};
+	JSDialog.SetupA11yLabelForNonLabelableElement(button, a11yData, builder);
 
 	// add the icon
 	const buttonImage = window.L.DomUtil.create(
@@ -165,6 +172,7 @@ JSDialog.notebookbarIconView = function (
 		data.id + '-scroll-up',
 		'ui-iconview-scroll-up-button',
 		'lc_searchprev.svg',
+		_('Scroll up'),
 		builder,
 		scrollUpCallback,
 	);
@@ -174,6 +182,7 @@ JSDialog.notebookbarIconView = function (
 		data.id + '-scroll-down',
 		'ui-iconview-scroll-down-button',
 		'lc_searchnext.svg',
+		_('Scroll down'),
 		builder,
 		scrollDownCallback,
 	);
@@ -183,6 +192,7 @@ JSDialog.notebookbarIconView = function (
 		data.id + '-expand',
 		'ui-iconview-expander-button',
 		'lc_iconviewexpander.svg',
+		_('More options'),
 		builder,
 		expanderCallback,
 	);
