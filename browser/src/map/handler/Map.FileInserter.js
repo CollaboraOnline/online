@@ -265,7 +265,22 @@ window.L.Map.FileInserter = window.L.Handler.extend({
 				formData.append('url', file.url);
 				formData.append('filename', file.filename);
 			} else {
-				formData.append('file', file);
+				// Read file into memory first to handle content:// URIs
+				// (e.g. files from Google Drive on Android WebView)
+				// that may become inaccessible during XHR upload.
+				try {
+					let fileData = await new Promise(function(resolve, reject) {
+						let reader = new FileReader();
+						reader.onload = function(e) { resolve(e.target.result); };
+						reader.onerror = function(e) { reject(e); };
+						reader.readAsArrayBuffer(file);
+					});
+					formData.append('file', new Blob([fileData], {type: file.type}), file.name);
+				} catch (e) {
+					map.hideBusy();
+					map.fire('error', {msg: _('Failed to read the selected file.'), critical: false});
+					return;
+				}
 			}
 			xmlHttp.send(formData);
 
