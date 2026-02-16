@@ -161,25 +161,26 @@ class CompareChangesLabelSection extends HTMLObjectSection {
 		);
 		const rightX = layout.documentToViewX(rightOrigin);
 
-		const docName =
-			(document.getElementById('document-name-input') as HTMLInputElement)
-				?.value || '';
-		this.leftTitle.textContent = _('%1: Initial Version').replace(
-			'%1',
-			docName,
-		);
-		this.rightTitle.textContent = _('%1: Current Version').replace(
-			'%1',
-			docName,
-		);
-
 		const props = app.writer.compareDocumentProperties;
 		if (props) {
+			const docName =
+				(document.getElementById('document-name-input') as HTMLInputElement)
+					?.value || '';
+			this.leftTitle.textContent = _('%1: Initial Version').replace(
+				'%1',
+				docName,
+			);
+			this.rightTitle.textContent = _('%1: Current Version').replace(
+				'%1',
+				docName,
+			);
 			this.updateSubtitle(this.leftSubtitle, props.metadata.otherDocument);
 			this.updateSubtitle(this.rightSubtitle, props.metadata.thisDocument);
 			this.leftSubtitle.style.display = '';
 			this.rightSubtitle.style.display = '';
 		} else {
+			this.leftTitle.textContent = _('Initial Version');
+			this.rightTitle.textContent = _('Current Version');
 			this.leftSubtitle.style.display = 'none';
 			this.rightSubtitle.style.display = 'none';
 		}
