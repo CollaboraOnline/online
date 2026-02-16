@@ -4,10 +4,6 @@ var helper = require('../../common/helper');
 var desktopHelper = require('../../common/desktop_helper');
 var a11yHelper = require('../../common/a11y_helper');
 
-// don't pass yet
-var buggyTabs = [
-];
-
 describe(['tagdesktop'], 'Accessibility Writer Notebookbar Tests', { testIsolation: false }, function () {
 	var tabs;
 	var allTabNames;
@@ -115,17 +111,9 @@ describe(['tagdesktop'], 'Accessibility Writer Notebookbar Tests', { testIsolati
 			var chain = cy.wrap(null);
 			nonContextTabs.forEach(function (tab) {
 				chain = chain.then(function () {
-					if (buggyTabs.includes(tab.name)) {
-						visitedTabNames.push(tab.name);
-					} else {
-						selectAndValidateTab(tab);
-					}
+					selectAndValidateTab(tab);
 				});
 			});
 		});
-	});
-
-	buggyTabs.forEach(function (name) {
-		it.skip('Notebookbar tab: ' + name + ' (buggy)', function () {});
 	});
 });
