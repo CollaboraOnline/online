@@ -112,7 +112,7 @@ function buildFrame(parentContainer, data, builder) {
 	const groupControl = isGroupControl(data);
 	const fieldsetLegend = groupControl ? shouldUseFieldsetLegend(data) : false;
 
-	let container, frame, label;
+	let container, frame, label, groupLabelCandidateId;
 
 	if (groupControl) {
 		container = window.L.DomUtil.create(
@@ -123,7 +123,6 @@ function buildFrame(parentContainer, data, builder) {
 		container.id = data.id;
 
 		frame = container; // No inner frame for form control group
-		if (!fieldsetLegend) frame.setAttribute('role', 'group');
 
 		const firstChild = data.children[0];
 
@@ -144,8 +143,8 @@ function buildFrame(parentContainer, data, builder) {
 
 			if (fixedText.visible === false) {
 				window.L.DomUtil.addClass(label, 'hidden');
-			} else if (!fieldsetLegend) {
-				frame.setAttribute('aria-labelledby', label.id);
+			} else {
+				groupLabelCandidateId = fixedText.id;
 			}
 
 			builder.postProcess(frame, fixedText);
@@ -176,4 +175,15 @@ function buildFrame(parentContainer, data, builder) {
 
 	const children = groupControl ? data.children.slice(1) : data.children;
 	builder.build(frameChildren, children);
+
+	if (
+		groupControl &&
+		!fieldsetLegend &&
+		JSDialog.FindFocusableWithin(frameChildren, 'next')
+	) {
+		frame.setAttribute('role', 'group');
+		if (groupLabelCandidateId) {
+			frame.setAttribute('aria-labelledby', groupLabelCandidateId);
+		}
+	}
 }
