@@ -1,11 +1,8 @@
 ﻿// -*- tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4; fill-column: 100 -*-
 
 using OpenQA.Selenium.Edge;
-using OpenQA.Selenium.Support.UI;
 using System;
-using System.Collections.Generic;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Automation;
 
 namespace WebDriverThing
@@ -18,8 +15,28 @@ namespace WebDriverThing
             System.Environment.Exit(1);
         }
 
-        static void openFile(EdgeDriver driver, string pathname)
+        static EdgeDriver connectToWebView2()
         {
+            EdgeDriverService service = EdgeDriverService.CreateDefaultService();
+            service.EnableVerboseLogging = true;
+
+            EdgeOptions eo = new EdgeOptions();
+
+            eo.UseWebView = true;
+            eo.DebuggerAddress = "localhost:9222";
+            // This file needs to exist but it can be totally random, even empty, huh?
+            eo.BinaryLocation = @"C:\Users\tml\lo\online-coda25-coda\foobar.exe";
+
+            EdgeDriver driver = new EdgeDriver(service, eo);
+            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(2);
+
+            return driver;
+        }
+
+        static void openFile(string pathname)
+        {
+            var driver = connectToWebView2();
+
             var openButton = driver.FindElement(OpenQA.Selenium.By.Id("backstage-open"));
             if (openButton == null)
                 fatal("Could not find the 'Open' button on the initial backstage");
@@ -71,21 +88,10 @@ namespace WebDriverThing
 
         static void Main(string[] args)
         {
-            EdgeDriverService service = EdgeDriverService.CreateDefaultService();
-            service.EnableVerboseLogging = true;
-
-            EdgeOptions eo = new EdgeOptions();
-
-            eo.UseWebView = true;
-            eo.DebuggerAddress = "localhost:9222";
-            // This file needs to exist but it can be totally random, even empty, huh?
-            eo.BinaryLocation = @"C:\Users\tml\lo\online-coda25-coda\foobar.exe";
-
-            EdgeDriver driver = new EdgeDriver(service, eo);
-            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(2);
-
             // Use the Open button to load a document.
-            openFile(driver, @"C:\Users\tml\sailing.odt");
+            openFile(@"C:\Users\tml\sailing.odt");
+
+            var driver = connectToWebView2();
 
             // At first, click the button to enable editing.
             // Give for the document time to load.
