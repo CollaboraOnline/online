@@ -1803,9 +1803,9 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 				button.tabIndex = -1; // prevent button from taking focus since container div itself is focusable element
 			button.id = buttonId;
 
-			itemsToSyncWithContainer.push(button);
+			JSDialog.SetupA11yLabelForNonLabelableElement(button, data, builder);
 
-			JSDialog.AddAriaLabel(button, data, builder);
+			itemsToSyncWithContainer.push(button);
 
 			if (!data.accessKey)
 				builder._setAccessKey(button, builder._getAccessKeyFromText(data.text));
@@ -1860,7 +1860,7 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 			}
 
 			// for Accessibility : graphic elements are located within buttons, the img should receive an empty alt
-			if(button.getAttribute('aria-label')){ // if we already set the aria-label then do not go for image alt attr
+			if (button.getAttribute('aria-label') || button.getAttribute('aria-labelledby')){ // if we already set the aria-label or aria-labelledby then do not go for image alt attr
 				buttonImage.alt = '';
 			}
 			else if (buttonImage !== false) {

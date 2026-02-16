@@ -161,8 +161,6 @@ JSDialog.toolbox = function (
 		}
 	}
 
-	JSDialog.SetupA11yLabelForNonLabelableElement(toolbox, data, builder);
-
 	const enabledCallback = function (enable: boolean) {
 		for (const j in data.children) {
 			const childId = data.children[j].id;
@@ -186,6 +184,15 @@ JSDialog.toolbox = function (
 	const inlineLabels = builder.options.useInLineLabelsForUnoButtons;
 	if (data.hasVerticalParent === true && data.children.length === 1)
 		builder.options.useInLineLabelsForUnoButtons = true;
+
+	if (data.children.length === 1) {
+		if (!data.children[0].labelledBy && data.labelledBy)
+			data.children[0].labelledBy = data.labelledBy;
+		else if (!data.children[0].aria && data.aria)
+			data.children[0].aria = data.aria;
+	} else {
+		JSDialog.SetupA11yLabelForNonLabelableElement(toolbox, data, builder);
+	}
 
 	builder.build(toolbox, data.children, false);
 
