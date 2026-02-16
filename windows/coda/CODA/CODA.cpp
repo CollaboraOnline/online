@@ -1675,7 +1675,8 @@ static void openCOOLWindow(const FilenameAndUri& filenameAndUri, DocumentMode mo
                                 coolURL += "starterMode=true";
                             else
                             {
-                                recentFiles.add(data.filenameAndUri.uri);
+                                if (data.mode != DocumentMode::WELCOME)
+                                    recentFiles.add(data.filenameAndUri.uri);
                                 coolURL +=
                                     "file_path=" + data.filenameAndUri.uri +
                                     std::string("&permission=edit") +
