@@ -1778,6 +1778,14 @@ class TreeViewControl {
 		return false;
 	}
 
+	static hasSearchField(data: TreeWidgetJSON): boolean {
+		return (
+			!data.noSearchField &&
+			!TreeViewControl.isMenu(data) &&
+			TreeViewControl.isListbox(data)
+		);
+	}
+
 	static isListbox(data: TreeWidgetJSON): boolean {
 		if (TreeViewControl.isRealTree(data)) return false;
 
@@ -1836,7 +1844,7 @@ class TreeViewControl {
 		this.fillHeaders(data, data.headers, builder);
 		this.fillEntries(data, data.entries, builder, 1, this._tbody);
 
-		if (this._isListbox && !data.noSearchField && !this.isMenu(data)) {
+		if (TreeViewControl.hasSearchField(data)) {
 			this.showSearchBar(this._container);
 		}
 
@@ -1892,6 +1900,8 @@ JSDialog.treeView = function (
 
 	return false;
 };
+
+JSDialog.TreeViewHasSearchField = TreeViewControl.hasSearchField;
 
 JSDialog.isDnDActive = function () {
 	var dndElements = document.querySelectorAll('.droptarget');
