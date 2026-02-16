@@ -11,33 +11,34 @@
 
 #pragma once
 
-#include <cassert>
-#include <cerrno>
-#include <chrono>
-#include <cstddef>
-#include <cstdint>
-#include <cstring>
-#include <algorithm>
-#include <iomanip>
-#include <limits>
-#include <mutex>
-#include <sstream>
-#include <string>
-#include <map>
-#include <string_view>
-#include <utility>
-#include <cctype>
-#include <memory.h>
-#include <thread>
+#include <Poco/Net/HTTPRequest.h>
+#define LOK_USE_UNSTABLE_API
+#include <LibreOfficeKit/LibreOfficeKitEnums.h>
+
+#include <common/StringVector.hpp>
 
 #include <Poco/File.h>
 #include <Poco/Path.h>
 #include <regex>
 
-#define LOK_USE_UNSTABLE_API
-#include <LibreOfficeKit/LibreOfficeKitEnums.h>
-
-#include <common/StringVector.hpp>
+#include <algorithm>
+#include <cassert>
+#include <cctype>
+#include <cerrno>
+#include <chrono>
+#include <cstddef>
+#include <cstdint>
+#include <cstring>
+#include <iomanip>
+#include <limits>
+#include <map>
+#include <memory.h>
+#include <mutex>
+#include <sstream>
+#include <string>
+#include <string_view>
+#include <thread>
+#include <utility>
 
 #define STRINGIFY(X) #X
 
