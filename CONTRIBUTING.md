@@ -49,6 +49,53 @@ We use the Developer Certificate of Origin (DCO) as a additional safeguard for t
 
 Use your real name (sorry, no pseudonyms or anonymous contributions). If you set your `user.name` and `user.email` git configs, you can sign your commit automatically with `git commit -s`.
 
+### Change-Id
+
+We use [change-ids concept](https://gerrit-review.googlesource.com/Documentation/user-changeid.html) in Collabora Online. For more information see [.git-hooks/commit-msg](https://github.com/CollaboraOnline/online/blob/main/.git-hooks/commit-msg). Change-id will be automatically added with the sign-off line if the following script is ran `./scripts/refresh-git-hooks`.
+
+### For non-technical people
+
+Hello, and thanks for stopping by! Do you want to work on an icon or perhaps fix a label but have no technical background? Follow the steps:
+
+1. Install GitHub Desktop App
+2. Clone this reprository to your computer. [Follow the instructions at docs.github](https://docs.github.com/en/desktop/adding-and-cloning-repositories/cloning-and-forking-repositories-from-github-desktop)
+3. Generate a Change-Id. Before you commit, you need to generate a unique Change-Id. It must be a 40-character hex string (like a SHA-1 hash) with a capital `I` in front. Here's the easiest way:
+    1. Use an online generate random sha1 hash tool such as: https://emn178.github.io/online-tools/sha1.html
+    2. In the input box, type something unique — for example, today's date and time and your commit topic, like: `2025-02-16 14:35 fix sidebar dropdown`
+    3. The tool will show a 40-character result like `a7f1d92e4b083c56d1f2e9a4b5c6d7e8f9012345`
+    4. Copy that result and add a capital `I` at the beginning
+
+So your Change-Id would look like:
+```
+Ia1b2c3d4e5f67890abcdef1234567890
+```
+4. Write Your Commit Message in GitHub Desktop. When you're ready to commit in GitHub Desktop, you'll see two text boxes at the bottom-left:
+- **Summary** (the small box) — This is your short commit title
+- **Description** (the larger box) — This is where you add the extra lines, write your description (if any), then leave **one blank line** and add these two lines:
+
+```
+Change-Id: I<your-generated-id>
+Signed-off-by: Pedro Silva <pedro.silva@collabora.com>
+```
+
+Replace `Pedro Silva` with your name and `<pedro.silva@collabora.com>` with your email address.
+
+Example
+
+**Summary box:**
+```
+sidebar: fix dropdown not closing on click
+```
+
+**Description box:**
+```
+Fixed the issue where the dropdown menu in the sidebar
+would not close when clicking outside of it.
+
+Change-Id: Ia1b2c3d4e5f67890abcdef1234567890
+Signed-off-by: Pedro Silva <pedro.silva@collabora.com>
+```
+
 ### AI Policy
 
 We consider AI tools that help programming just one more tool that, if used judiciously, can help
