@@ -16,6 +16,7 @@ class DocumentBase {
 	public tableMiddleware: TableMiddleware;
 	public selectionMiddleware: ImpressSelectionMiddleware | null;
 	public mouseControl: MouseControl | null = null;
+	private _activeModes: number[] = [0];
 	protected views: Map<number, DocumentViewBase> = new Map<
 		number,
 		DocumentViewBase
@@ -95,5 +96,17 @@ class DocumentBase {
 			this.views.set(viewID, new DocumentViewBase(viewID));
 			return this.views.get(viewID) as DocumentViewBase;
 		}
+	}
+
+	public set activeModes(modes: number[]) {
+		this._activeModes = modes.slice();
+	}
+
+	public get activeModes() {
+		return this._activeModes.slice();
+	}
+
+	public isModeActive(mode: number): boolean {
+		return this._activeModes.includes(mode);
 	}
 }

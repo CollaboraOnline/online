@@ -1273,14 +1273,14 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 		}
 
 		if (isNaN(command.mode))
-			command.mode = this._selectedMode;
+			command.mode = app.activeDocument.activeModes[0];
 
 		const invalidArea = new cool.SimpleRectangle(command.x, command.y, command.width, command.height);
 		TileManager.overlapInvalidatedRectangleWithView(command.part, command.mode, command.wireId, invalidArea, textMsg);
 
 		if (this.isImpress() || this.isDraw()) {
 			if (command.part === this._selectedPart &&
-				command.mode === this._selectedMode &&
+				app.activeDocument.isModeActive(command.mode) &&
 				command.part !== this._lastValidPart) {
 				this._map.fire('updatepart', {part: this._lastValidPart, docType: this._docType});
 				this._lastValidPart = command.part;
@@ -1339,7 +1339,7 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 				var part = parseInt(commaargs.length > 0 ? commaargs[0] : '');
 				var mode = parseInt(commaargs.length > 1 ? commaargs[1] : '');
 
-				mode = (isNaN(mode) ? this._selectedMode : mode);
+				mode = (isNaN(mode) ? app.activeDocument.activeModes[0] : mode);
 				msg += 'part=' + (isNaN(part) ? this._selectedPart : part)
 					+ ((mode && mode !== 0) ? (' mode=' + mode) : '')
 					+ ' ';
@@ -2240,7 +2240,7 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 				setTimeout(function () {app.sectionContainer.requestReDraw();}, 100);
 			}
 
-			app.activeDocument.activeView.updateSelectionRawData(this._selectedMode, this._selectedPart, rawRectangles);
+			app.activeDocument.activeView.updateSelectionRawData(app.activeDocument.activeModes[0], this._selectedPart, rawRectangles);
 
 			if (this._map._textInput._cursorHandler)
 				this._map._textInput._cursorHandler.setShowSection(false); // User selected text, we remove the carret marker.

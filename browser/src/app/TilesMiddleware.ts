@@ -689,7 +689,7 @@ class TileManager {
 			updated = true;
 		}
 
-		const mode = this._docLayer._selectedMode;
+		const mode = app.activeDocument.activeModes[0];
 		if (this._preFetchMode !== mode) {
 			this._preFetchMode = mode;
 			updated = true;
@@ -1100,7 +1100,7 @@ class TileManager {
 		if (this._partTilePreFetcher) clearTimeout(this._partTilePreFetcher);
 
 		this._partTilePreFetcher = setTimeout(() => {
-			this.preFetchPartTiles(targetPart, this._docLayer._selectedMode);
+			this.preFetchPartTiles(targetPart, app.activeDocument.activeModes[0]);
 		}, 100);
 	}
 
@@ -1293,24 +1293,11 @@ class TileManager {
 		return boundList.map((x: any) => this.pxBoundsToTileRange(x));
 	}
 
-	private static getModeArray() {
-		let modes = [app.map._docLayer._selectedMode];
-		if (
-			app.activeDocument &&
-			app.activeDocument.activeLayout.type === 'ViewLayoutCompareChanges'
-		) {
-			// 2 modes are active at the same time in compare changes view mode.
-			modes = [TileMode.LeftSide, TileMode.RightSide];
-		}
-		return modes;
-	}
-
 	private static updateTileDistance(tile: Tile, zoom: number) {
-		const modes = this.getModeArray();
 		if (
 			tile.coords.z !== zoom ||
 			tile.coords.part !== app.map._docLayer._selectedPart ||
-			!modes.includes(tile.coords.mode)
+			!app.activeDocument.isModeActive(tile.coords.mode)
 		)
 			tile.distanceFromView = Number.MAX_SAFE_INTEGER;
 		else {
@@ -1402,7 +1389,7 @@ class TileManager {
 						j * this.tileSize,
 						zoom,
 						app.map._docLayer._selectedPart,
-						app.map._docLayer._selectedMode,
+						app.activeDocument.activeModes[0],
 					);
 
 					if (!this.isValidTile(coords)) continue;
@@ -1424,12 +1411,11 @@ class TileManager {
 		coordsQueue: Array<TileCoordData>,
 	) {
 		const part: number = app.map._docLayer._selectedPart;
-		const modes = this.getModeArray();
 
 		for (let i = coordsQueue.length - 1; i > 0; i--) {
 			if (
 				coordsQueue[i].part !== part ||
-				!modes.includes(coordsQueue[i].mode) ||
+				!app.activeDocument.isModeActive(coordsQueue[i].mode) ||
 				!this.tileNeedsFetch(coordsQueue[i].key())
 			) {
 				coordsQueue.splice(i, 1);
@@ -1603,7 +1589,7 @@ class TileManager {
 				textMsg,
 			);
 
-			if (needsNewTiles && mode === app.map._docLayer._selectedMode)
+			if (needsNewTiles && app.activeDocument.isModeActive(mode))
 				app.map._docLayer._debug.addTileInvalidationMessage(textMsg);
 		}
 	}
@@ -1618,7 +1604,7 @@ class TileManager {
 		var interval = 250;
 		var idleTime = 750;
 		this._preFetchPart = this._docLayer._selectedPart;
-		this._preFetchMode = this._docLayer._selectedMode;
+		this._preFetchMode = app.activeDocument.activeModes[0];
 		this._preFetchIdle = setTimeout(
 			window.L.bind(function () {
 				this._tilesPreFetcher = setInterval(

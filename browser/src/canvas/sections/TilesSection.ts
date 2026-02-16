@@ -401,7 +401,7 @@ export class TilesSection extends CanvasSectionObject {
 
 		var zoom = Math.round(this.map.getZoom());
 		var part = this.sectionProperties.docLayer._selectedPart;
-		var mode = this.sectionProperties.docLayer._selectedMode;
+		var mode = app.activeDocument.activeModes[0];
 
 		if (this.sectionProperties.tsManager.waitForTiles()) {
 			if (!this.haveAllTilesInView(zoom, part, mode, ctx))
@@ -721,7 +721,7 @@ export class TilesSection extends CanvasSectionObject {
 		var docLayer = this.sectionProperties.docLayer;
 		var zoom = Math.round(this.map.getZoom());
 		var part = docLayer._selectedPart;
-		var mode = docLayer._selectedMode;
+		var mode = app.activeDocument.activeModes[0];
 		var splitPos = ctx.splitPos;
 
 		this.containerObject.setPenPosition(this);
