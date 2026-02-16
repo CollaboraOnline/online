@@ -84,46 +84,43 @@ class URLPopUpSection extends HTMLObjectSection {
         const link = window.L.DomUtil.createWithId('a', this.linkId, parent);
 		link.innerText = url;
 		const copyLinkText = _('Copy link location');
-		const copyBtn = window.L.DomUtil.createWithId('div', this.copyButtonId, parent);
+		const copyBtn = window.L.DomUtil.createWithId('button', this.copyButtonId, parent);
 		window.L.DomUtil.addClass(copyBtn, 'hyperlink-popup-btn');
 		copyBtn.setAttribute('title', copyLinkText);
-		copyBtn.setAttribute('role', 'button');
 		copyBtn.setAttribute('aria-label', copyLinkText);
 
         const imgCopyBtn = window.L.DomUtil.create('img', 'hyperlink-pop-up-copyimg', copyBtn);
 		app.LOUtil.setImage(imgCopyBtn, 'lc_copyhyperlinklocation.svg', app.map);
 		imgCopyBtn.setAttribute('width', 18);
 		imgCopyBtn.setAttribute('height', 18);
-		imgCopyBtn.setAttribute('alt', copyLinkText);
+		imgCopyBtn.setAttribute('alt', '');
 		imgCopyBtn.style.padding = '4px';
 
 		const editLinkText = _('Edit link');
-		const editBtn = window.L.DomUtil.createWithId('div', this.editButtonId, parent);
+		const editBtn = window.L.DomUtil.createWithId('button', this.editButtonId, parent);
 		window.L.DomUtil.addClass(editBtn, 'hyperlink-popup-btn');
 		editBtn.setAttribute('title', editLinkText);
-		editBtn.setAttribute('role', 'button');
-		editBtn.setAttribute('aria-label', copyLinkText);
+		editBtn.setAttribute('aria-label', editLinkText);
 
 
 		const imgEditBtn = window.L.DomUtil.create('img', 'hyperlink-pop-up-editimg', editBtn);
 		app.LOUtil.setImage(imgEditBtn, 'lc_edithyperlink.svg', app.map);
 		imgEditBtn.setAttribute('width', 18);
 		imgEditBtn.setAttribute('height', 18);
-		imgEditBtn.setAttribute('alt', editLinkText);
+		imgEditBtn.setAttribute('alt', '');
 		imgEditBtn.style.padding = '4px';
 
 		const removeLinkText = _('Remove link');
-		const removeBtn = window.L.DomUtil.createWithId('div', this.removeButtonId, parent);
+		const removeBtn = window.L.DomUtil.createWithId('button', this.removeButtonId, parent);
 		window.L.DomUtil.addClass(removeBtn, 'hyperlink-popup-btn');
 		removeBtn.setAttribute('title', removeLinkText);
-		removeBtn.setAttribute('role', 'button');
 		removeBtn.setAttribute('aria-label', removeLinkText);
 
 		const imgRemoveBtn = window.L.DomUtil.create('img', 'hyperlink-pop-up-removeimg', removeBtn);
 		app.LOUtil.setImage(imgRemoveBtn, 'lc_removehyperlink.svg', app.map);
 		imgRemoveBtn.setAttribute('width', 18);
 		imgRemoveBtn.setAttribute('height', 18);
-		imgRemoveBtn.setAttribute('alt', removeLinkText);
+		imgRemoveBtn.setAttribute('alt', '');
 		imgRemoveBtn.style.padding = '4px';
 
 		this.arrowDiv = document.createElement('div');
