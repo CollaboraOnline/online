@@ -147,6 +147,8 @@ ios/Mobile/Branding
 ios/Mobile/Resources/Settings.bundle/Root.plist
 ios/Mobile/coolkitconfig.xcu
 
+ios/FakeQuickLook/Info.plist
+
 # symlinks created by configure for the iOS app Xcode project
 lobuilddir-symlink
 pocoinclude-symlink
