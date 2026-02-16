@@ -48,11 +48,13 @@ namespace FileUtil
         return name;
     }
 
+    namespace
+    {
     // Handle short writes and EINTR
-    ssize_t writeBuffer(int to, const char *buffer, size_t size, const std::string& toPath)
+    ssize_t writeBuffer(int to, const char* buffer, size_t size, const std::string& toPath)
     {
         size_t count = size;
-        const char *ptr = buffer;
+        const char* ptr = buffer;
         while (count)
         {
             ssize_t written;
@@ -65,6 +67,7 @@ namespace FileUtil
         }
         return size;
     }
+    } // namespace
 
     bool copy(const std::string& fromPath, const std::string& toPath, bool log, bool throw_on_error,
               LOG_CAPTURE_CALLER)
