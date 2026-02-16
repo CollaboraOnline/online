@@ -517,12 +517,12 @@ button.leaflet-control-search-next
 #toolbar-up #fontnamecombobox {
 	width: 150px;
 	max-width: 150px;
-	margin: 0 5px;
+	margin: auto 5px;
 }
 #toolbar-up #fontsizecombobox {
 	min-width: 70px;
 	width: 70px;
-	margin: 0 4px;
+	margin: auto 4px;
 }
 #fontsizecombobox-dropdown .ui-grid {
 	width: 6.5em;
@@ -533,7 +533,7 @@ button.leaflet-control-search-next
 #toolbar-up #styles {
 	width: 150px;
 	max-width: 150px;
-	margin: 0 4px;
+	margin: auto 4px;
 }
 .evo-cp-wrap {
 	/* hide the color pick div */
