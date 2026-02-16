@@ -77,7 +77,8 @@ window.L.ImpressTileLayer = window.L.CanvasTileLayer.extend({
 		}
 
 		if (isDrawOrNotesPage) {
-			this._selectedMode = newContext === 'NotesPage' ? 2 : 0;
+			const mode = newContext === 'NotesPage' ? 2 : 0;
+			app.activeDocument.activeModes = [mode];
 			TileManager.refreshTilesInBackground();
 			TileManager.update();
 		}
@@ -300,8 +301,9 @@ window.L.ImpressTileLayer = window.L.CanvasTileLayer.extend({
 
 				this._documentInfo = textMsg;
 
-				this._selectedMode = (statusJSON.mode !== undefined) ? statusJSON.mode : (statusJSON.parts.length > 0 && statusJSON.parts[0].mode !== undefined ? statusJSON.parts[0].mode : 0);
-				this._map.fire('impressmodechanged', {mode: this._selectedMode});
+				const mode = (statusJSON.mode !== undefined) ? statusJSON.mode : (statusJSON.parts.length > 0 && statusJSON.parts[0].mode !== undefined ? statusJSON.parts[0].mode : 0);
+				app.activeDocument.activeModes = [mode];
+				this._map.fire('impressmodechanged', {mode: mode});
 
 				this._map.fire('updateparts', {});
 

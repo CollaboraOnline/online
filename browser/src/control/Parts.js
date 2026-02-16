@@ -245,7 +245,7 @@ window.L.Map.include({
 		else maxHeight = Math.round(tileHeight * maxWidth / tileWidth);
 
 		if (fetchThumbnail) {
-			var mode = docLayer._selectedMode;
+			var mode = app.activeDocument.activeModes[0];
 			this._addPreviewToQueue(part, 'tile ' +
 							'nviewid=0' + ' ' +
 							'part=' + String(part) + ' ' +
@@ -275,7 +275,7 @@ window.L.Map.include({
 		this._docPreviews[id] = {id: id, part: part, width: width, height: height, tilePosX: tilePosX,
 			tilePosY: tilePosY, tileWidth: tileWidth, tileHeight: tileHeight, autoUpdate: autoUpdate, invalid: false};
 
-		var mode = this._docLayer._selectedMode;
+		var mode = app.activeDocument.activeModes[0];
 		this._addPreviewToQueue(part, 'tile ' +
 							'nviewid=0' + ' ' +
 							'part=' + part + ' ' +

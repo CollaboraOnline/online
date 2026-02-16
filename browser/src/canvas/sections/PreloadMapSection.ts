@@ -26,6 +26,7 @@ class PreloadMapSection extends CanvasSectionObject {
 		elapsedTime?: number,
 		subsetBounds?: Bounds,
 	): void {
+		Util.ensureValue(app.activeDocument);
 		var docLayer = app.map._docLayer;
 		var ctx = docLayer._painter._paintContext();
 
@@ -103,7 +104,7 @@ class PreloadMapSection extends CanvasSectionObject {
 							j * TileManager.tileSize,
 							zoom,
 							range.part,
-							docLayer._selectedMode,
+							app.activeDocument.activeModes[0],
 						);
 						const tile: Tile = TileManager.get(coords);
 

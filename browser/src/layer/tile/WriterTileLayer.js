@@ -133,7 +133,10 @@ window.L.WriterTileLayer = window.L.CanvasTileLayer.extend({
 
 		this._documentInfo = textMsg;
 		this._selectedPart = 0;
-		this._selectedMode = (statusJSON.mode !== undefined) ? statusJSON.mode : 0;
+
+		const mode = (statusJSON.mode !== undefined) ? statusJSON.mode : 0;
+		app.activeDocument.activeModes = [mode];
+
 		this._parts = 1;
 		this._currentPage = statusJSON.selectedpart;
 		this._pages = statusJSON.partscount;
