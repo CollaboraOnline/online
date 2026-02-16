@@ -933,6 +933,8 @@ bool FileServerRequestHandler::handleRequest(const HTTPRequest& request,
         http::Response response(http::StatusCode::OK);
         if( requestDetails.closeConnection() )
             response.setConnectionToken(http::Header::ConnectionToken::Close);
+        else
+            response.add("Keep-Alive", "timeout=3");
         hstsHeaders(response);
 
         const auto& config = Application::instance().config();

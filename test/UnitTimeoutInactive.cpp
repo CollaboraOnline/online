@@ -38,8 +38,10 @@ class UnitTimeoutInactivity : public UnitTimeoutBase0
 
     void configure(Poco::Util::LayeredConfiguration& /* config */) override
     {
-        // net::Defaults.inactivityTimeout = 3600s;
+        // net::Defaults.inactivityTimeout = 5s;
         net::Defaults.inactivityTimeout = 360ms;
+        // net::Defaults.wsInactivityTimeout = 3600s;
+        net::Defaults.wsInactivityTimeout = 360ms;
         //
         // The following WSPing setup would cause ping/pong packages avoiding the inactivity TO
         //   net::Defaults.wsPingAvgTimeout = std::chrono::microseconds(25);

@@ -91,7 +91,8 @@ std::unique_ptr<Watchdog> SocketPoll::PollWatchdog;
 
 std::atomic<size_t> StreamSocket::ExternalConnectionCount = 0;
 
-net::DefaultValues net::Defaults = { .inactivityTimeout = std::chrono::seconds(3600),
+net::DefaultValues net::Defaults = { .inactivityTimeout = std::chrono::seconds(5), /* cf. Apache */
+                                     .wsInactivityTimeout = std::chrono::seconds(3600),
                                      .maxExtConnections = 200000 /* arbitrary value to be resolved */ };
 
 constexpr std::string_view Socket::toString(Type t)
@@ -1584,9 +1585,13 @@ bool StreamSocket::checkRemoval(std::chrono::steady_clock::time_point now)
     const auto durLast =
         std::chrono::duration_cast<std::chrono::milliseconds>(now - getLastSeenTime());
 
-    // Timeout criteria: Violate maximum inactivity (default 3600s).
-    const bool isInactive = net::Defaults.inactivityTimeout > std::chrono::microseconds::zero() &&
-        durLast > net::Defaults.inactivityTimeout;
+    // Use the longer WebSocket timeout for upgraded connections.
+    const auto& timeout = isWebSocket() ? net::Defaults.wsInactivityTimeout
+                                        : net::Defaults.inactivityTimeout;
+
+    // Timeout criteria: Violate maximum inactivity.
+    const bool isInactive = timeout > std::chrono::microseconds::zero() &&
+        durLast > timeout;
 
     // Timeout criteria: Shall terminate?
     const bool isTermination = SigUtil::getTerminationFlag();
