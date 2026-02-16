@@ -55,8 +55,9 @@ void UnitStreamSocketCtorFailure1::simulateExternalSocketCtorException(std::shar
     const size_t extStreamSocketCount = ++_externalStreamSocketCount;
     if (extStreamSocketCount % ExternalStreamSocketCtorFailureInterval == 0)
     {
-        LOG_DBG("Injecting recoverable StreamSocket ctor exception " << extStreamSocketCount
-                << "/" << ExternalStreamSocketCtorFailureInterval << ": " << socket);
+        LOG_DBG("Injecting recoverable StreamSocket ctor exception "
+                << extStreamSocketCount << "/" << ExternalStreamSocketCtorFailureInterval << ": "
+                << socket.get());
         throw std::runtime_error("Test: StreamSocket exception: fd " + std::to_string(socket->getFD()));
     }
 }
