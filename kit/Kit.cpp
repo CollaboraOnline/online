@@ -1979,7 +1979,13 @@ std::shared_ptr<lok::Document> Document::load(const std::shared_ptr<ChildSession
 {
     const std::string sessionId = session->getId();
 
+#ifdef _WIN32
+    // For this to work with UNC paths, we need to use getDocURL() here, which is the original full
+    // URL including the server. getJailedFilePath() ignores the server.
+    const std::string& uri = session->getDocURL();
+#else
     const std::string& uri = session->getJailedFilePath();
+#endif
     const std::string& uriAnonym = session->getJailedFilePathAnonym();
     const std::string& userName = session->getUserName();
     const std::string& userNameAnonym = session->getUserNameAnonym();

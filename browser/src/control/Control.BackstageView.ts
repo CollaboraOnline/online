@@ -580,11 +580,18 @@ class BackstageView extends window.L.Class {
 		const url = new URL(uri);
 		let fullPath = url.pathname;
 
-		// On Windows a file: URI looks like this: file:///C:/Users/tml/foo.odt .
-		// URL::pathname has a leading slash and is thus not valid as a pathname, we need to
-		// strip that slash away.
+		// On Windows a file: URI for a local file looks like this:
+		// file:///C:/Users/tml/foo.odt .  URL::pathname has a leading slash and is thus not
+		// valid as a pathname, we need to strip that slash away.
 		if (window.ThisIsTheWindowsApp && fullPath[0] === '/' && fullPath[2] === ':')
 			fullPath = fullPath.slice(1);
+
+		// On Windows, a file: URI for a UNC path looks like this:
+		// file://server/share/sibdur/foo.odt . We obviously want to show the complete UNC
+		// path for the directory where the document is, and the "server" path is in
+		// url.host.
+		if (window.ThisIsTheWindowsApp && url.host !== '')
+			fullPath = '//' + url.host + fullPath;
 
 		// We want to show a more native pathname with backslashes instead of the slashes as
 		// used in file URIs.
