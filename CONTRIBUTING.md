@@ -58,7 +58,7 @@ We use [change-ids concept](https://gerrit-review.googlesource.com/Documentation
 Hello, and thanks for stopping by! Do you want to work on an icon or perhaps fix a label but have no technical background? Follow the steps:
 
 1. Install GitHub Desktop App
-2. Clone this reprository to your computer. [Follow the instructions at docs.github](https://docs.github.com/en/desktop/adding-and-cloning-repositories/cloning-and-forking-repositories-from-github-desktop)
+2. Clone this repository to your computer. [Follow the instructions at docs.github](https://docs.github.com/en/desktop/adding-and-cloning-repositories/cloning-and-forking-repositories-from-github-desktop)
 3. Generate a Change-Id. Before you commit, you need to generate a unique Change-Id. It must be a 40-character hex string (like a SHA-1 hash) with a capital `I` in front. Here's the easiest way:
     1. Use an online generate random sha1 hash tool such as: https://emn178.github.io/online-tools/sha1.html
     2. In the input box, type something unique — for example, today's date and time and your commit topic, like: `2025-02-16 14:35 fix sidebar dropdown`
