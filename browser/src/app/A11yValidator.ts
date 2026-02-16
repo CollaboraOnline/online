@@ -33,6 +33,7 @@ class A11yValidator {
 		this.checks.push(this.checkImageAltAttribute.bind(this));
 		this.checks.push(this.checkLabelElement.bind(this));
 		this.checks.push(this.checkElementHasLabel.bind(this));
+		this.checks.push(this.checkAriaControls.bind(this));
 	}
 
 	checkWidget(type: string, element: HTMLElement): void {
@@ -201,6 +202,28 @@ class A11yValidator {
 						`In '${this.getDialogTitle(element)}' at '${this.getElementPath(element)}': label element in widget of type '${type}' is not associated with any element via htmlFor or aria-labelledby. Should this element really be a label? If it just represent static text then try converting it into a <span> element instead.`,
 					);
 				}
+			}
+		}
+	}
+
+	// TODO: there are some elements on which aria-controls only added
+	// when the relevant element exist in DOM. Need to handle that case as well.
+	private checkAriaControls(type: string, element: HTMLElement): void {
+		const controlledElementId = element.getAttribute('aria-controls') || '';
+		if (controlledElementId.trim() !== '') {
+			const referencedElement = document.getElementById(controlledElementId);
+
+			if (!referencedElement) {
+				throw new A11yValidatorException(
+					`In '${this.getDialogTitle(element)}' at '${this.getElementPath(element)}': element is widget of type '${type}' has aria-control attribute but mentioned element does not exist in DOM. Only add this attribute when mentioned element exist in DOM.`,
+				);
+			}
+		}
+
+		for (let i = 0; i < element.children.length; i++) {
+			const child = element.children[i];
+			if (this.shouldCheckChild(child)) {
+				this.checkAriaControls(type, child as HTMLElement);
 			}
 		}
 	}
