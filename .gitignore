@@ -147,6 +147,8 @@ ios/Mobile/Branding
 ios/Mobile/Resources/Settings.bundle/Root.plist
 ios/Mobile/coolkitconfig.xcu
 
+ios/FakeQuickLook/Info.plist
+
 # symlinks created by configure for the iOS app Xcode project
 lobuilddir-symlink
 pocoinclude-symlink
@@ -155,6 +157,7 @@ zstdinclude-symlink
 zstdlib-symlink
 ICU.dat
 ios/Mobile/Assets.xcassets/AppIcon.appiconset
+ios/FakeQuickLook/Assets.xcassets/Icon.imageset
 
 # build numbers/versions
 BUNDLE-VERSION
