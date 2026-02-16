@@ -916,6 +916,17 @@ static void exchangeMonitors(WindowData& data)
     enter_full_screen(data, monitors[newPresentationMonitor].hMonitor, false);
 }
 
+static std::string pathToURI(const Poco::Path& path)
+{
+    auto uri = Poco::URI(path);
+
+    if (path.getNode() == "")
+        return uri.toString();
+
+    uri.setHost(path.getNode());
+    return uri.toString();
+}
+
 static std::vector<FilenameAndUri> fileOpenDialog()
 {
     IFileOpenDialog* dialog;
@@ -964,7 +975,7 @@ static std::vector<FilenameAndUri> fileOpenDialog()
             SUCCEEDED(item->GetDisplayName(SIGDN_FILESYSPATH, &fileSysPath)))
         {
             auto path = Poco::Path(Util::wide_string_to_string(std::wstring(fileSysPath)));
-            result.push_back({ path.getFileName(), Poco::URI(path).toString() });
+            result.push_back({ path.getFileName(), pathToURI(path) });
             CoTaskMemFree(fileSysPath);
             item->Release();
         }
