@@ -47,13 +47,15 @@ class TextCursorSection extends HTMLObjectSection {
 	}
 
 	checkMyVisibility() {
+		Util.ensureValue(app.activeDocument);
+
 		let result = this.sectionProperties.showCursor && this.size[1] > 0;
 
 		if (result) {
 			if (!app.map._docLayer.isWriter()) {
 				if (
 					this.sectionProperties.part !== app.map._docLayer._selectedPart ||
-					this.sectionProperties.mode !== app.map._docLayer._selectedMode
+					!app.activeDocument.isModeActive(this.sectionProperties.mode)
 				)
 					result = false;
 			}

@@ -449,7 +449,9 @@ window.L.CalcTileLayer = window.L.CanvasTileLayer.extend({
 
 			this._lastColumn = statusJSON.lastcolumn;
 			this._lastRow = statusJSON.lastrow;
-			this._selectedMode = (statusJSON.mode !== undefined) ? statusJSON.mode : 0;
+
+			const mode = (statusJSON.mode !== undefined) ? statusJSON.mode : 0;
+			app.activeDocument.activeModes = [mode];
 
 			if (this.sheetGeometry && this._selectedPart != this.sheetGeometry.getPart()) {
 				// Core initiated sheet switch, need to get full sheetGeometry data for the selected sheet.
