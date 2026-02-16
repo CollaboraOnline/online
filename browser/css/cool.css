@@ -1501,3 +1501,17 @@ body {
 	background-color: var(--color-insert-marker-background-dark) !important;
 	background: url('images/lc_chartsavetonewtheme.svg') no-repeat center center /20px;
 }
+
+#compare-changes-left-label {
+	position: absolute;
+	text-align: center;
+	background-color: var(--color-main-background);
+	color: rgb(var(--doc-type));
+}
+
+#compare-changes-right-label {
+	position: absolute;
+	text-align: center;
+	background-color: rgb(var(--doc-type));
+	color: var(--color-background-lighter);
+}

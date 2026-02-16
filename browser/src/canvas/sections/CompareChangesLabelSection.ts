@@ -57,19 +57,19 @@ class CompareChangesLabelSection extends HTMLObjectSection {
 		// Be on top of the text cursor.
 		container.style.zIndex = '1001';
 
+		this.leftLabel.id = 'compare-changes-left-label';
+		this.rightLabel.id = 'compare-changes-right-label';
 		this.setupLabel(
 			container,
 			this.leftLabel,
 			this.leftTitle,
 			this.leftSubtitle,
-			'#d63031',
 		);
 		this.setupLabel(
 			container,
 			this.rightLabel,
 			this.rightTitle,
 			this.rightSubtitle,
-			'#00b894',
 		);
 	}
 
@@ -78,13 +78,8 @@ class CompareChangesLabelSection extends HTMLObjectSection {
 		label: HTMLDivElement,
 		title: HTMLDivElement,
 		subtitle: HTMLDivElement,
-		backgroundColor: string,
 	): void {
-		label.style.position = 'absolute';
 		label.style.height = this.labelHeight + 'px';
-		label.style.backgroundColor = backgroundColor;
-		label.style.color = 'white';
-		label.style.textAlign = 'center';
 		title.style.fontSize = '16px';
 		title.style.lineHeight = '16px';
 		subtitle.style.fontSize = '12px';
