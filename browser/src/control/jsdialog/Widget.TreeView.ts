@@ -1464,7 +1464,7 @@ class TreeViewControl {
 		}
 	}
 
-	isRealTree(data: TreeWidgetJSON) {
+	static isRealTree(data: TreeWidgetJSON) {
 		let isRealTreeView = false;
 		for (var i in data.entries) {
 			if (data.entries[i].children && data.entries[i].children.length) {
@@ -1773,13 +1773,13 @@ class TreeViewControl {
 		});
 	}
 
-	isMenu(data: TreeWidgetJSON): boolean {
+	static isMenu(data: TreeWidgetJSON): boolean {
 		if (data.type === 'menu') return true;
 		return false;
 	}
 
-	isListbox(data: TreeWidgetJSON): boolean {
-		if (this.isRealTree(data)) return false;
+	static isListbox(data: TreeWidgetJSON): boolean {
+		if (TreeViewControl.isRealTree(data)) return false;
 
 		const columns = TreeViewControl.countColumns(data);
 		if (columns !== 1) return false;
@@ -1800,8 +1800,8 @@ class TreeViewControl {
 		builder: JSBuilder,
 		parentContainer: HTMLElement,
 	) {
-		this._isRealTree = this.isRealTree(data);
-		this._isListbox = this.isListbox(data);
+		this._isRealTree = TreeViewControl.isRealTree(data);
+		this._isListbox = TreeViewControl.isListbox(data);
 		this._columns = TreeViewControl.countColumns(data);
 		this._hasState = TreeViewControl.hasState(data);
 		this._hasIcon = TreeViewControl.hasIcon(data);
