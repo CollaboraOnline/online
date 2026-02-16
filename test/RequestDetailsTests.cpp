@@ -22,6 +22,8 @@
 #include <HttpRequest.hpp>
 #include <RequestDetails.hpp>
 
+#include <Poco/Net/HTTPRequest.h>
+
 #include <cppunit/extensions/HelperMacros.h>
 
 /// RequestDetails unit-tests.

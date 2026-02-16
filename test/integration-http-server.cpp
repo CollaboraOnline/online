@@ -23,16 +23,7 @@
 #include <common/FileUtil.hpp>
 #include <KitPidHelpers.hpp>
 
-#include <Poco/Net/AcceptCertificateHandler.h>
-#include <Poco/Net/FilePartSource.h>
-#include <Poco/Net/HTMLForm.h>
-#include <Poco/Net/HTTPClientSession.h>
-#include <Poco/Net/HTTPRequest.h>
-#include <Poco/Net/HTTPResponse.h>
-#include <Poco/Net/InvalidCertificateHandler.h>
-#include <Poco/Net/SSLManager.h>
 #include <regex>
-#include <Poco/StreamCopier.h>
 #include <Poco/URI.h>
 
 #include <cppunit/extensions/HelperMacros.h>
@@ -85,21 +76,10 @@ public:
     HTTPServerTest()
         : _uri(helpers::getTestServerURI())
     {
-#if ENABLE_SSL
-        Poco::Net::initializeSSL();
-        // Just accept the certificate anyway for testing purposes
-        Poco::SharedPtr<Poco::Net::InvalidCertificateHandler> invalidCertHandler = new Poco::Net::AcceptCertificateHandler(false);
-        Poco::Net::Context::Params sslParams;
-        Poco::Net::Context::Ptr sslContext = new Poco::Net::Context(Poco::Net::Context::CLIENT_USE, sslParams);
-        Poco::Net::SSLManager::instance().initializeClient(nullptr, std::move(invalidCertHandler), std::move(sslContext));
-#endif
     }
 
     ~HTTPServerTest()
     {
-#if ENABLE_SSL
-        Poco::Net::uninitializeSSL();
-#endif
     }
 
     void setUp()
@@ -142,12 +122,8 @@ void HTTPServerTest::testCoolGet()
     LOK_ASSERT_EQUAL(http::StatusCode::OK, httpResponse->statusLine().statusCode());
     LOK_ASSERT_EQUAL_STR("text/html", httpResponse->header().getContentType());
 
-    //FIXME: Replace with own URI parser.
-    Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, pathAndQuery);
-    Poco::Net::HTMLForm param(request);
-
     const std::string& html = httpResponse->getBody();
-    LOK_ASSERT(html.find(param["access_token"]) != std::string::npos);
+    LOK_ASSERT(html.find("111111111") != std::string::npos);
     LOK_ASSERT(html.find(_uri.getHost()) != std::string::npos);
     LOK_ASSERT(html.find(Util::getCoolVersionHash()) != std::string::npos);
 }
@@ -156,28 +132,22 @@ void HTTPServerTest::testCoolPostPoco()
 {
     constexpr std::string_view testname = __func__;
 
-    std::unique_ptr<Poco::Net::HTTPClientSession> session(helpers::createSession(_uri));
+    auto httpSession = http::Session::create(_uri.toString());
+    http::Request request("/browser/dist/cool.html", http::Request::VERB_POST);
+    // URL-encode form data
+    std::string body = "access_token=2222222222&buy_product=https%3A%2F%2Fjim%3Abob%40nowhere.com%2Fother%2Fstuff%3Fa%3Db%3Bc%3Dd%23somethingelse";
+    request.setBody(body, "application/x-www-form-urlencoded");
+    auto httpResponse = httpSession->syncRequest(request);
 
-    Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_POST, "/browser/dist/cool.html");
-    Poco::Net::HTMLForm form;
-    form.set("access_token", "2222222222");
-    form.set("buy_product", "https://jim:bob@nowhere.com/other/stuff?a=b;c=d#somethingelse");
-    form.prepareSubmit(request);
-    std::ostream& ostr = session->sendRequest(request);
-    form.write(ostr);
+    LOK_ASSERT_EQUAL(http::StatusCode::OK, httpResponse->statusCode());
 
-    Poco::Net::HTTPResponse response;
-    std::istream& rs = session->receiveResponse(response);
-    LOK_ASSERT_EQUAL(Poco::Net::HTTPResponse::HTTP_OK, response.getStatus());
+    const std::string& html = httpResponse->getBody();
 
-    std::string html;
-    Poco::StreamCopier::copyToString(rs, html);
-
-    LOK_ASSERT(html.find(form["access_token"]) != std::string::npos);
-    LOK_ASSERT(html.find(form["buy_product"]) != std::string::npos);
+    LOK_ASSERT(html.find("2222222222") != std::string::npos);
+    LOK_ASSERT(html.find("https://jim:bob@nowhere.com/other/stuff?a=b;c=d#somethingelse") != std::string::npos);
     LOK_ASSERT(html.find(_uri.getHost()) != std::string::npos);
 
-    std::string csp = response["Content-Security-Policy"];
+    std::string csp = httpResponse->get("Content-Security-Policy");
     StringVector lines = StringVector::tokenize(csp, ';');
     TST_LOG("CSP - " << csp << " tokens " << lines.size());
     for (size_t i = 0; i < lines.size(); ++i)
@@ -296,18 +266,12 @@ void HTTPServerTest::assertHTTPFilesExist(const Poco::URI& uri, const std::regex
             if (scriptString.find("/branding.") != std::string::npos)
                 continue;
 
-            std::unique_ptr<Poco::Net::HTTPClientSession> session(helpers::createSession(uri));
-
-            Poco::Net::HTTPRequest requestScript(Poco::Net::HTTPRequest::HTTP_GET, scriptString);
-            session->sendRequest(requestScript);
-
-            Poco::Net::HTTPResponse responseScript;
-            session->receiveResponse(responseScript);
+            auto scriptResponse = http::get(uri.toString(), scriptString);
             std::string msg("cool.html references: " + scriptString + " which should exist.");
-            LOK_ASSERT_EQUAL_MESSAGE(msg, Poco::Net::HTTPResponse::HTTP_OK, responseScript.getStatus());
+            LOK_ASSERT_EQUAL_MESSAGE(msg, static_cast<unsigned>(http::StatusCode::OK), static_cast<unsigned>(scriptResponse->statusCode()));
 
             if (!mimetype.empty())
-            LOK_ASSERT_EQUAL(mimetype, responseScript.getContentType());
+            LOK_ASSERT_EQUAL(mimetype, scriptResponse->header().getContentType());
         }
     }
 
@@ -318,17 +282,9 @@ void HTTPServerTest::testScriptsAndLinksGet()
 {
     constexpr std::string_view testname = __func__;
 
-    std::unique_ptr<Poco::Net::HTTPClientSession> session(helpers::createSession(_uri));
-
-    Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, "/browser/dist/cool.html");
-    session->sendRequest(request);
-
-    Poco::Net::HTTPResponse response;
-    std::istream& rs = session->receiveResponse(response);
-    LOK_ASSERT_EQUAL(Poco::Net::HTTPResponse::HTTP_OK, response.getStatus());
-
-    std::string html;
-    Poco::StreamCopier::copyToString(rs, html);
+    auto httpResponse = http::get(_uri.toString(), "/browser/dist/cool.html");
+    LOK_ASSERT_EQUAL(http::StatusCode::OK, httpResponse->statusCode());
+    const std::string& html = httpResponse->getBody();
 
     std::regex script("<script.*?src=\"(.*?)\"");
     assertHTTPFilesExist(_uri, script, html, "application/javascript", testname);
@@ -341,19 +297,12 @@ void HTTPServerTest::testScriptsAndLinksPost()
 {
     constexpr std::string_view testname = __func__;
 
-    std::unique_ptr<Poco::Net::HTTPClientSession> session(helpers::createSession(_uri));
-
-    Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_POST, "/browser/dist/cool.html");
-    std::string body;
-    request.setContentLength((int) body.length());
-    session->sendRequest(request) << body;
-
-    Poco::Net::HTTPResponse response;
-    std::istream& rs = session->receiveResponse(response);
-    LOK_ASSERT_EQUAL(Poco::Net::HTTPResponse::HTTP_OK, response.getStatus());
-
-    std::string html;
-    Poco::StreamCopier::copyToString(rs, html);
+    auto httpSession = http::Session::create(_uri.toString());
+    http::Request request("/browser/dist/cool.html", http::Request::VERB_POST);
+    request.setBody("", "text/plain");
+    auto httpResponse = httpSession->syncRequest(request);
+    LOK_ASSERT_EQUAL(http::StatusCode::OK, httpResponse->statusCode());
+    const std::string& html = httpResponse->getBody();
 
     std::regex script("<script.*?src=\"(.*?)\"");
     assertHTTPFilesExist(_uri, script, html, "application/javascript", testname);
@@ -366,32 +315,24 @@ void HTTPServerTest::testConvertTo()
 {
     const char *testname = "testConvertTo";
     const std::string srcPath = helpers::getTempFileCopyPath(TDOC, "hello.odt", "convertTo_");
-    std::unique_ptr<Poco::Net::HTTPClientSession> session(helpers::createSession(_uri));
-    session->setTimeout(Poco::Timespan(COMMAND_TIMEOUT_SECS, 0)); // 5 seconds.
 
     TST_LOG("Convert-to odt -> txt");
 
-    Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_POST, "/cool/convert-to");
-    Poco::Net::HTMLForm form;
-    form.setEncoding(Poco::Net::HTMLForm::ENCODING_MULTIPART);
-    form.set("format", "txt");
-    form.addPart("data", new Poco::Net::FilePartSource(srcPath));
-    form.prepareSubmit(request);
-    try
+    auto httpSession = http::Session::create(_uri.toString());
+    httpSession->setTimeout(std::chrono::seconds(COMMAND_TIMEOUT_SECS));
+    http::Request request("/cool/convert-to", http::Request::VERB_POST);
+    helpers::MultipartFormBody form;
+    form.addField("format", "txt");
+    form.addFile("data", srcPath);
+    form.applyTo(request);
+    auto httpResponse = httpSession->syncRequest(request);
+    if (httpResponse->state() != http::Response::State::Complete)
     {
-        form.write(session->sendRequest(request));
+        std::this_thread::sleep_for(std::chrono::seconds(COMMAND_TIMEOUT_SECS));
+        httpSession = http::Session::create(_uri.toString());
+        httpSession->setTimeout(std::chrono::seconds(COMMAND_TIMEOUT_SECS));
+        httpResponse = httpSession->syncRequest(request);
     }
-    catch (const std::exception& ex)
-    {
-        // In case the server is still starting up.
-        sleep(COMMAND_TIMEOUT_SECS);
-        form.write(session->sendRequest(request));
-    }
-
-    Poco::Net::HTTPResponse response;
-    std::stringstream actualStream;
-    std::istream& responseStream = session->receiveResponse(response);
-    Poco::StreamCopier::copyStream(responseStream, actualStream);
 
     std::ifstream fileStream(TDOC "/hello.txt");
     std::stringstream expectedStream;
@@ -402,7 +343,7 @@ void HTTPServerTest::testConvertTo()
 
     // In some cases the result is prefixed with (the UTF-8 encoding of) the Unicode BOM
     // (U+FEFF). Skip that.
-    std::string actualString = actualStream.str();
+    std::string actualString = httpResponse->getBody();
     if (actualString.size() > 3 && actualString[0] == '\xEF' && actualString[1] == '\xBB' && actualString[2] == '\xBF')
         actualString = actualString.substr(3);
     LOK_ASSERT_EQUAL(expectedStream.str(), actualString);
@@ -412,37 +353,29 @@ void HTTPServerTest::testConvertTo2()
 {
     const char *testname = "testConvertTo2";
     const std::string srcPath = helpers::getTempFileCopyPath(TDOC, "convert-to.xlsx", "convertTo_");
-    std::unique_ptr<Poco::Net::HTTPClientSession> session(helpers::createSession(_uri));
-    session->setTimeout(Poco::Timespan(COMMAND_TIMEOUT_SECS * 2, 0)); // 10 seconds.
 
     TST_LOG("Convert-to #2 xlsx -> png");
 
-    Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_POST, "/cool/convert-to");
-    Poco::Net::HTMLForm form;
-    form.setEncoding(Poco::Net::HTMLForm::ENCODING_MULTIPART);
-    form.set("format", "png");
-    form.addPart("data", new Poco::Net::FilePartSource(srcPath));
-    form.prepareSubmit(request);
-    try
+    auto httpSession = http::Session::create(_uri.toString());
+    httpSession->setTimeout(std::chrono::seconds(COMMAND_TIMEOUT_SECS * 2));
+    http::Request request("/cool/convert-to", http::Request::VERB_POST);
+    helpers::MultipartFormBody form;
+    form.addField("format", "png");
+    form.addFile("data", srcPath);
+    form.applyTo(request);
+    auto httpResponse = httpSession->syncRequest(request);
+    if (httpResponse->state() != http::Response::State::Complete)
     {
-        form.write(session->sendRequest(request));
+        std::this_thread::sleep_for(std::chrono::seconds(COMMAND_TIMEOUT_SECS));
+        httpSession = http::Session::create(_uri.toString());
+        httpSession->setTimeout(std::chrono::seconds(COMMAND_TIMEOUT_SECS * 2));
+        httpResponse = httpSession->syncRequest(request);
     }
-    catch (const std::exception& ex)
-    {
-        // In case the server is still starting up.
-        sleep(COMMAND_TIMEOUT_SECS);
-        form.write(session->sendRequest(request));
-    }
-
-    Poco::Net::HTTPResponse response;
-    std::stringstream actualStream;
-    std::istream& responseStream = session->receiveResponse(response);
-    Poco::StreamCopier::copyStream(responseStream, actualStream);
 
     // Remove the temp files.
     FileUtil::removeFile(srcPath);
 
-    std::string actualString = actualStream.str();
+    std::string actualString = httpResponse->getBody();
     LOK_ASSERT(actualString.size() >= 100);
 //  LOK_ASSERT_EQUAL(actualString[0], 0x89);
     LOK_ASSERT_EQUAL(actualString[1], 'P');
@@ -456,49 +389,33 @@ void HTTPServerTest::testConvertToWithForwardedIP_Deny()
     constexpr int TimeoutSeconds = COMMAND_TIMEOUT_SECS * 2; // Sometimes dns resolving is slow.
 
     // Test a forwarded IP which is not allowed to use convert-to feature
-    try
+    TST_LOG("Converting from a disallowed IP.");
+
+    const std::string srcPath = helpers::getTempFileCopyPath(TDOC, "hello.odt", testname);
+
+    auto httpSession = http::Session::create(_uri.toString());
+    httpSession->setTimeout(std::chrono::seconds(TimeoutSeconds));
+    http::Request request("/cool/convert-to", http::Request::VERB_POST);
+    LOK_ASSERT(!request.has("X-Forwarded-For"));
+    request.add("X-Forwarded-For", getNotAllowedTestServerURI().getHost() + ", " + _uri.getHost());
+    helpers::MultipartFormBody form;
+    form.addField("format", "txt");
+    form.addFile("data", srcPath);
+    form.applyTo(request);
+    auto httpResponse = httpSession->syncRequest(request);
+    if (httpResponse->state() != http::Response::State::Complete)
     {
-        TST_LOG("Converting from a disallowed IP.");
-
-        const std::string srcPath = helpers::getTempFileCopyPath(TDOC, "hello.odt", testname);
-        std::unique_ptr<Poco::Net::HTTPClientSession> session(helpers::createSession(_uri));
-        session->setTimeout(Poco::Timespan(TimeoutSeconds, 0));
-
-        Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_POST, "/cool/convert-to");
-        LOK_ASSERT(!request.has("X-Forwarded-For"));
-        request.add("X-Forwarded-For", getNotAllowedTestServerURI().getHost() + ", " + _uri.getHost());
-        Poco::Net::HTMLForm form;
-        form.setEncoding(Poco::Net::HTMLForm::ENCODING_MULTIPART);
-        form.set("format", "txt");
-        form.addPart("data", new Poco::Net::FilePartSource(srcPath));
-        form.prepareSubmit(request);
-        try
-        {
-            form.write(session->sendRequest(request));
-        }
-        catch (const std::exception& ex)
-        {
-            // In case the server is still starting up.
-            sleep(COMMAND_TIMEOUT_SECS);
-            form.write(session->sendRequest(request));
-        }
-
-        Poco::Net::HTTPResponse response;
-        std::stringstream actualStream;
-        std::istream& responseStream = session->receiveResponse(response);
-        Poco::StreamCopier::copyStream(responseStream, actualStream);
-
-        // Remove the temp files.
-        FileUtil::removeFile(srcPath);
-
-        std::string actualString = actualStream.str();
-        LOK_ASSERT(actualString.empty()); // <- we did not get the converted file
+        std::this_thread::sleep_for(std::chrono::seconds(COMMAND_TIMEOUT_SECS));
+        httpSession = http::Session::create(_uri.toString());
+        httpSession->setTimeout(std::chrono::seconds(TimeoutSeconds));
+        httpResponse = httpSession->syncRequest(request);
     }
-    catch(const Poco::Exception& exc)
-    {
-        LOK_ASSERT_FAIL(exc.displayText()
-                        << ": " << (exc.nested() ? exc.nested()->displayText() : ""));
-    }
+
+    // Remove the temp files.
+    FileUtil::removeFile(srcPath);
+
+    std::string actualString = httpResponse->getBody();
+    LOK_ASSERT(actualString.empty()); // <- we did not get the converted file
 }
 
 void HTTPServerTest::testConvertToWithForwardedIP_Allow()
@@ -507,57 +424,41 @@ void HTTPServerTest::testConvertToWithForwardedIP_Allow()
     constexpr int TimeoutSeconds = COMMAND_TIMEOUT_SECS * 2; // Sometimes dns resolving is slow.
 
     // Test a forwarded IP which is allowed to use convert-to feature
-    try
+    TST_LOG("Converting from an allowed IP.");
+
+    const std::string srcPath = helpers::getTempFileCopyPath(TDOC, "hello.odt", testname);
+
+    auto httpSession = http::Session::create(_uri.toString());
+    httpSession->setTimeout(std::chrono::seconds(TimeoutSeconds));
+    http::Request request("/cool/convert-to", http::Request::VERB_POST);
+    LOK_ASSERT(!request.has("X-Forwarded-For"));
+    request.add("X-Forwarded-For", _uri.getHost() + ", " + _uri.getHost());
+    helpers::MultipartFormBody form;
+    form.addField("format", "txt");
+    form.addFile("data", srcPath);
+    form.applyTo(request);
+    auto httpResponse = httpSession->syncRequest(request);
+    if (httpResponse->state() != http::Response::State::Complete)
     {
-        TST_LOG("Converting from an allowed IP.");
-
-        const std::string srcPath = helpers::getTempFileCopyPath(TDOC, "hello.odt", testname);
-        std::unique_ptr<Poco::Net::HTTPClientSession> session(helpers::createSession(_uri));
-        session->setTimeout(Poco::Timespan(TimeoutSeconds, 0));
-
-        Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_POST, "/cool/convert-to");
-        LOK_ASSERT(!request.has("X-Forwarded-For"));
-        request.add("X-Forwarded-For", _uri.getHost() + ", " + _uri.getHost());
-        Poco::Net::HTMLForm form;
-        form.setEncoding(Poco::Net::HTMLForm::ENCODING_MULTIPART);
-        form.set("format", "txt");
-        form.addPart("data", new Poco::Net::FilePartSource(srcPath));
-        form.prepareSubmit(request);
-        try
-        {
-            form.write(session->sendRequest(request));
-        }
-        catch (const std::exception& ex)
-        {
-            // In case the server is still starting up.
-            sleep(COMMAND_TIMEOUT_SECS);
-            form.write(session->sendRequest(request));
-        }
-
-        Poco::Net::HTTPResponse response;
-        std::stringstream actualStream;
-        std::istream& responseStream = session->receiveResponse(response);
-        Poco::StreamCopier::copyStream(responseStream, actualStream);
-
-        std::ifstream fileStream(TDOC "/hello.txt");
-        std::stringstream expectedStream;
-        expectedStream << fileStream.rdbuf();
-
-        // Remove the temp files.
-        FileUtil::removeFile(srcPath);
-
-        // In some cases the result is prefixed with (the UTF-8 encoding of) the Unicode BOM
-        // (U+FEFF). Skip that.
-        std::string actualString = actualStream.str();
-        if (actualString.size() > 3 && actualString[0] == '\xEF' && actualString[1] == '\xBB' && actualString[2] == '\xBF')
-            actualString = actualString.substr(3);
-        LOK_ASSERT_EQUAL(expectedStream.str(), actualString); // <- we got the converted file
+        std::this_thread::sleep_for(std::chrono::seconds(COMMAND_TIMEOUT_SECS));
+        httpSession = http::Session::create(_uri.toString());
+        httpSession->setTimeout(std::chrono::seconds(TimeoutSeconds));
+        httpResponse = httpSession->syncRequest(request);
     }
-    catch(const Poco::Exception& exc)
-    {
-        LOK_ASSERT_FAIL(exc.displayText()
-                        << ": " << (exc.nested() ? exc.nested()->displayText() : ""));
-    }
+
+    std::ifstream fileStream(TDOC "/hello.txt");
+    std::stringstream expectedStream;
+    expectedStream << fileStream.rdbuf();
+
+    // Remove the temp files.
+    FileUtil::removeFile(srcPath);
+
+    // In some cases the result is prefixed with (the UTF-8 encoding of) the Unicode BOM
+    // (U+FEFF). Skip that.
+    std::string actualString = httpResponse->getBody();
+    if (actualString.size() > 3 && actualString[0] == '\xEF' && actualString[1] == '\xBB' && actualString[2] == '\xBF')
+        actualString = actualString.substr(3);
+    LOK_ASSERT_EQUAL(expectedStream.str(), actualString); // <- we got the converted file
 }
 
 void HTTPServerTest::testConvertToWithForwardedIP_DenyMulti()
@@ -566,88 +467,64 @@ void HTTPServerTest::testConvertToWithForwardedIP_DenyMulti()
     constexpr int TimeoutSeconds = COMMAND_TIMEOUT_SECS * 2; // Sometimes dns resolving is slow.
 
     // Test a forwarded header with three IPs, one is not allowed -> request is denied.
-    try
+    TST_LOG("Converting from multiple IPs, on disallowed.");
+
+    const std::string srcPath = helpers::getTempFileCopyPath(TDOC, "hello.odt", testname);
+
+    auto httpSession = http::Session::create(_uri.toString());
+    httpSession->setTimeout(std::chrono::seconds(TimeoutSeconds));
+    http::Request request("/cool/convert-to", http::Request::VERB_POST);
+    LOK_ASSERT(!request.has("X-Forwarded-For"));
+    request.add("X-Forwarded-For", _uri.getHost() + ", "
+                                   + getNotAllowedTestServerURI().getHost() + ", "
+                                   + _uri.getHost());
+    helpers::MultipartFormBody form;
+    form.addField("format", "txt");
+    form.addFile("data", srcPath);
+    form.applyTo(request);
+    auto httpResponse = httpSession->syncRequest(request);
+    if (httpResponse->state() != http::Response::State::Complete)
     {
-        TST_LOG("Converting from multiple IPs, on disallowed.");
-
-        const std::string srcPath = helpers::getTempFileCopyPath(TDOC, "hello.odt", testname);
-        std::unique_ptr<Poco::Net::HTTPClientSession> session(helpers::createSession(_uri));
-        session->setTimeout(Poco::Timespan(TimeoutSeconds, 0));
-
-        Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_POST, "/cool/convert-to");
-        LOK_ASSERT(!request.has("X-Forwarded-For"));
-        request.add("X-Forwarded-For", _uri.getHost() + ", "
-                                       + getNotAllowedTestServerURI().getHost() + ", "
-                                       + _uri.getHost());
-        Poco::Net::HTMLForm form;
-        form.setEncoding(Poco::Net::HTMLForm::ENCODING_MULTIPART);
-        form.set("format", "txt");
-        form.addPart("data", new Poco::Net::FilePartSource(srcPath));
-        form.prepareSubmit(request);
-        try
-        {
-            form.write(session->sendRequest(request));
-        }
-        catch (const std::exception& ex)
-        {
-            // In case the server is still starting up.
-            sleep(COMMAND_TIMEOUT_SECS);
-            form.write(session->sendRequest(request));
-        }
-
-        Poco::Net::HTTPResponse response;
-        std::stringstream actualStream;
-        std::istream& responseStream = session->receiveResponse(response);
-        Poco::StreamCopier::copyStream(responseStream, actualStream);
-
-        // Remove the temp files.
-        FileUtil::removeFile(srcPath);
-
-        std::string actualString = actualStream.str();
-        LOK_ASSERT(actualString.empty()); // <- we did not get the converted file
+        std::this_thread::sleep_for(std::chrono::seconds(COMMAND_TIMEOUT_SECS));
+        httpSession = http::Session::create(_uri.toString());
+        httpSession->setTimeout(std::chrono::seconds(TimeoutSeconds));
+        httpResponse = httpSession->syncRequest(request);
     }
-    catch(const Poco::Exception& exc)
-    {
-        LOK_ASSERT_FAIL(exc.displayText()
-                        << ": " << (exc.nested() ? exc.nested()->displayText() : ""));
-    }
+
+    // Remove the temp files.
+    FileUtil::removeFile(srcPath);
+
+    std::string actualString = httpResponse->getBody();
+    LOK_ASSERT(actualString.empty()); // <- we did not get the converted file
 }
 
 void HTTPServerTest::testExtractDocStructure()
 {
     const char *testname = "testExtractDocStructure";
     const std::string srcPath = helpers::getTempFileCopyPath(TDOC, "docStructure.docx", "docStructure_");
-    std::unique_ptr<Poco::Net::HTTPClientSession> session(helpers::createSession(_uri));
-    session->setTimeout(Poco::Timespan(COMMAND_TIMEOUT_SECS * 2, 0)); // 10 seconds.
 
     TST_LOG("extract-document-structure");
 
-    Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_POST, "/cool/extract-document-structure");
-    Poco::Net::HTMLForm form;
-    form.setEncoding(Poco::Net::HTMLForm::ENCODING_MULTIPART);
-    form.set("filter", "contentcontrol");
-    form.addPart("data", new Poco::Net::FilePartSource(srcPath));
-    form.prepareSubmit(request);
-    try
+    auto httpSession = http::Session::create(_uri.toString());
+    httpSession->setTimeout(std::chrono::seconds(COMMAND_TIMEOUT_SECS * 2));
+    http::Request request("/cool/extract-document-structure", http::Request::VERB_POST);
+    helpers::MultipartFormBody form;
+    form.addField("filter", "contentcontrol");
+    form.addFile("data", srcPath);
+    form.applyTo(request);
+    auto httpResponse = httpSession->syncRequest(request);
+    if (httpResponse->state() != http::Response::State::Complete)
     {
-        form.write(session->sendRequest(request));
+        std::this_thread::sleep_for(std::chrono::seconds(COMMAND_TIMEOUT_SECS));
+        httpSession = http::Session::create(_uri.toString());
+        httpSession->setTimeout(std::chrono::seconds(COMMAND_TIMEOUT_SECS * 2));
+        httpResponse = httpSession->syncRequest(request);
     }
-    catch (const std::exception& ex)
-    {
-        // In case the server is still starting up.
-        sleep(COMMAND_TIMEOUT_SECS);
-        form.write(session->sendRequest(request));
-    }
-
-    Poco::Net::HTTPResponse response;
-    std::stringstream actualStream;
-    std::istream& responseStream = session->receiveResponse(response);
-    Poco::StreamCopier::copyStream(responseStream, actualStream);
 
     // Remove the temp files.
     FileUtil::removeFile(srcPath);
 
-    std::string actualString = actualStream.str();
+    std::string actualString = httpResponse->getBody();
     std::string expectedString = " { \"DocStructure\": { \"ContentControls.ByIndex.0\": { \"id\": -428815899, \"tag\": \"machine-readable\", \"alias\": \"Human Readable\", \"content\": \"plain text value\", \"type\": \"plain-text\"}, \"ContentControls.ByIndex.1\": { \"id\": -1833055349, \"tag\": \"name\", \"alias\": \"Name\", \"content\": \"\", \"type\": \"plain-text\"}}}";
 
     LOK_ASSERT_EQUAL(expectedString, actualString );
@@ -658,38 +535,30 @@ void HTTPServerTest::testTransformDocStructure()
     const char *testname = "testTransformDocStructure";
     {
         const std::string srcPath = helpers::getTempFileCopyPath(TDOC, "docStructure.docx", "docStructure_");
-        std::unique_ptr<Poco::Net::HTTPClientSession> session(helpers::createSession(_uri));
-        session->setTimeout(Poco::Timespan(COMMAND_TIMEOUT_SECS * 2, 0)); // 10 seconds.
 
         TST_LOG("transform-document-structure");
 
-        Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_POST, "/cool/transform-document-structure");
-        Poco::Net::HTMLForm form;
-        form.setEncoding(Poco::Net::HTMLForm::ENCODING_MULTIPART);
-        form.set("format", "docx");
-        form.set("transform", "{\"Transforms\":{\"ContentControls.ByIndex.0\":{\"content\":\"Short text\"}}}");
-        form.addPart("data", new Poco::Net::FilePartSource(srcPath));
-        form.prepareSubmit(request);
-        try
+        auto httpSession = http::Session::create(_uri.toString());
+        httpSession->setTimeout(std::chrono::seconds(COMMAND_TIMEOUT_SECS * 2));
+        http::Request request("/cool/transform-document-structure", http::Request::VERB_POST);
+        helpers::MultipartFormBody form;
+        form.addField("format", "docx");
+        form.addField("transform", "{\"Transforms\":{\"ContentControls.ByIndex.0\":{\"content\":\"Short text\"}}}");
+        form.addFile("data", srcPath);
+        form.applyTo(request);
+        auto httpResponse = httpSession->syncRequest(request);
+        if (httpResponse->state() != http::Response::State::Complete)
         {
-            form.write(session->sendRequest(request));
+            std::this_thread::sleep_for(std::chrono::seconds(COMMAND_TIMEOUT_SECS));
+            httpSession = http::Session::create(_uri.toString());
+            httpSession->setTimeout(std::chrono::seconds(COMMAND_TIMEOUT_SECS * 2));
+            httpResponse = httpSession->syncRequest(request);
         }
-        catch (const std::exception& ex)
-        {
-            // In case the server is still starting up.
-            sleep(COMMAND_TIMEOUT_SECS);
-            form.write(session->sendRequest(request));
-        }
-
-        Poco::Net::HTTPResponse response;
-        std::stringstream actualStream;
-        std::istream& responseStream = session->receiveResponse(response);
-        Poco::StreamCopier::copyStream(responseStream, actualStream);
 
         // Remove the temp files.
         FileUtil::removeFile(srcPath);
 
-        std::string actualString = actualStream.str();
+        std::string actualString = httpResponse->getBody();
 
         std::ofstream fileStream(TDOC "/docStructureTransformed.docx");
         fileStream << actualString;
@@ -697,38 +566,30 @@ void HTTPServerTest::testTransformDocStructure()
     //To check the result, extract Document Structure
     {
         const std::string srcPath2 = helpers::getTempFileCopyPath(TDOC, "docStructureTransformed.docx", "docStructureTransformed_");
-        std::unique_ptr<Poco::Net::HTTPClientSession> session(helpers::createSession(_uri));
-        session->setTimeout(Poco::Timespan(COMMAND_TIMEOUT_SECS * 2, 0)); // 10 seconds.
 
         TST_LOG("transform-document-structure-check");
 
-        Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_POST, "/cool/extract-document-structure");
-        Poco::Net::HTMLForm form;
-        form.setEncoding(Poco::Net::HTMLForm::ENCODING_MULTIPART);
-        form.set("format", "docx");
-        form.set("filter", "contentcontrol");
-        form.addPart("data", new Poco::Net::FilePartSource(srcPath2));
-        form.prepareSubmit(request);
-        try
+        auto httpSession = http::Session::create(_uri.toString());
+        httpSession->setTimeout(std::chrono::seconds(COMMAND_TIMEOUT_SECS * 2));
+        http::Request request("/cool/extract-document-structure", http::Request::VERB_POST);
+        helpers::MultipartFormBody form;
+        form.addField("format", "docx");
+        form.addField("filter", "contentcontrol");
+        form.addFile("data", srcPath2);
+        form.applyTo(request);
+        auto httpResponse = httpSession->syncRequest(request);
+        if (httpResponse->state() != http::Response::State::Complete)
         {
-            form.write(session->sendRequest(request));
+            std::this_thread::sleep_for(std::chrono::seconds(COMMAND_TIMEOUT_SECS));
+            httpSession = http::Session::create(_uri.toString());
+            httpSession->setTimeout(std::chrono::seconds(COMMAND_TIMEOUT_SECS * 2));
+            httpResponse = httpSession->syncRequest(request);
         }
-        catch (const std::exception& ex)
-        {
-            // In case the server is still starting up.
-            sleep(COMMAND_TIMEOUT_SECS);
-            form.write(session->sendRequest(request));
-        }
-
-        Poco::Net::HTTPResponse response;
-        std::stringstream actualStream;
-        std::istream& responseStream = session->receiveResponse(response);
-        Poco::StreamCopier::copyStream(responseStream, actualStream);
 
         // Remove the temp files.
         FileUtil::removeFile(srcPath2);
 
-        std::string actualString = actualStream.str();
+        std::string actualString = httpResponse->getBody();
         std::string expectedString = " { \"DocStructure\": { \"ContentControls.ByIndex.0\": { \"id\": -428815899, \"tag\": \"machine-readable\", \"alias\": \"Human Readable\", \"content\": \"Short text\", \"type\": \"plain-text\"}, \"ContentControls.ByIndex.1\": { \"id\": -1833055349, \"tag\": \"name\", \"alias\": \"Name\", \"content\": \"\", \"type\": \"plain-text\"}}}";
 
         LOK_ASSERT_EQUAL(expectedString, actualString );
@@ -740,36 +601,28 @@ void HTTPServerTest::testRenderSearchResult()
     const char* testname = "testRenderSearchResult";
     const std::string srcPathDoc = helpers::getTempFileCopyPath(TDOC, "RenderSearchResultTest.odt", testname);
     const std::string srcPathXml = helpers::getTempFileCopyPath(TDOC, "RenderSearchResultFragment.xml", testname);
-    std::unique_ptr<Poco::Net::HTTPClientSession> session(helpers::createSession(_uri));
-    session->setTimeout(Poco::Timespan(COMMAND_TIMEOUT_SECS * 2, 0)); // 10 seconds.
 
-    Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_POST, "/cool/render-search-result");
-    Poco::Net::HTMLForm form;
-    form.setEncoding(Poco::Net::HTMLForm::ENCODING_MULTIPART);
-    form.addPart("document", new Poco::Net::FilePartSource(srcPathDoc));
-    form.addPart("result", new Poco::Net::FilePartSource(srcPathXml));
-    form.prepareSubmit(request);
-    try
+    auto httpSession = http::Session::create(_uri.toString());
+    httpSession->setTimeout(std::chrono::seconds(COMMAND_TIMEOUT_SECS * 2));
+    http::Request request("/cool/render-search-result", http::Request::VERB_POST);
+    helpers::MultipartFormBody form;
+    form.addFile("document", srcPathDoc);
+    form.addFile("result", srcPathXml);
+    form.applyTo(request);
+    auto httpResponse = httpSession->syncRequest(request);
+    if (httpResponse->state() != http::Response::State::Complete)
     {
-        form.write(session->sendRequest(request));
+        std::this_thread::sleep_for(std::chrono::seconds(COMMAND_TIMEOUT_SECS));
+        httpSession = http::Session::create(_uri.toString());
+        httpSession->setTimeout(std::chrono::seconds(COMMAND_TIMEOUT_SECS * 2));
+        httpResponse = httpSession->syncRequest(request);
     }
-    catch (const std::exception& ex)
-    {
-        // In case the server is still starting up.
-        sleep(COMMAND_TIMEOUT_SECS);
-        form.write(session->sendRequest(request));
-    }
-
-    Poco::Net::HTTPResponse response;
-    std::stringstream actualStream;
-    std::istream& responseStream = session->receiveResponse(response);
-    Poco::StreamCopier::copyStream(responseStream, actualStream);
 
     // Remove the temp files.
     FileUtil::removeFile(srcPathDoc);
     FileUtil::removeFile(srcPathXml);
 
-    std::string actualString = actualStream.str();
+    std::string actualString = httpResponse->getBody();
 
     LOK_ASSERT(actualString.size() >= 100);
     LOK_ASSERT_EQUAL(actualString[1], 'P');

@@ -27,21 +27,14 @@
 #include <test/helpers.hpp>
 #include <test/lokassert.hpp>
 
+#include <JsonUtil.hpp>
+#include <Poco/Net/HTTPRequest.h>
 #include <Poco/URI.h>
 #include <Poco/Util/LayeredConfiguration.h>
 
 #include <cctype>
 #include <sstream>
 #include <vector>
-
-namespace Poco
-{
-namespace Net
-{
-class HTTPRequest;
-}
-
-} // namespace Poco
 
 /// Simulates a WOPI server for testing purposes.
 /// Currently only serves one file contents.
