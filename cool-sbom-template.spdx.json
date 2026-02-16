@@ -147,14 +147,6 @@
       "licenseConcluded": "MIT"
     },
     {
-      "SPDXID": "SPDXRef-jquery-mousewheel",
-      "name": "jQuery Mousewheel",
-      "versionInfo": "3.1.13",
-      "filesAnalyzed": false,
-      "downloadLocation": "NONE",
-      "licenseConcluded": "MIT"
-    },
-    {
       "SPDXID": "SPDXRef-jquery-ui",
       "name": "jQuery UI",
       "versionInfo": "1.13.2",
@@ -314,11 +306,6 @@
       "spdxElementId": "SPDXRef-coolwsd",
       "relationshipType": "CONTAINS",
       "relatedSpdxElement": "SPDXRef-jquery-contextMenu"
-    },
-    {
-      "spdxElementId": "SPDXRef-coolwsd",
-      "relationshipType": "CONTAINS",
-      "relatedSpdxElement": "SPDXRef-jquery-mousewheel"
     },
     {
       "spdxElementId": "SPDXRef-coolwsd",
