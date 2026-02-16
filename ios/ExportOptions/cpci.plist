@@ -10,6 +10,8 @@
   <dict>
     <key>com.collabora.office.Mobile</key>
     <string>Browserstack distribution</string>
+    <key>com.collabora.office.Mobile.FakeQuickLook</key>
+    <string>Browserstack fakequicklook</string>
   </dict>
 </dict>
 </plist>
