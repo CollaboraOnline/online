@@ -769,7 +769,11 @@ class SlideShowPresenter {
 			FollowImg.addEventListener('click', (e: Event) => {
 				e.stopPropagation();
 				this._onA11yString(e.target);
-				this._slideShowNavigator.followLeaderSlide();
+				if (this.isFollowing()) {
+					this.setFollowing(false);
+				} else {
+					this._slideShowNavigator.followLeaderSlide();
+				}
 			});
 		}
 
@@ -1305,6 +1309,22 @@ class SlideShowPresenter {
 
 	setFollowing(follow: boolean): void {
 		this._isFollowing = follow;
+		if (this._slideNavContainer) {
+			const followBtn = this._slideNavContainer.querySelector('#follow');
+			if (followBtn) {
+				if (follow) {
+					followBtn.classList.add('following');
+					const stopFollowText = _('Stop Following');
+					followBtn.setAttribute('aria-label', stopFollowText);
+					followBtn.setAttribute('data-cooltip', stopFollowText);
+				} else {
+					followBtn.classList.remove('following');
+					const followText = _('Follow Presenter');
+					followBtn.setAttribute('aria-label', followText);
+					followBtn.setAttribute('data-cooltip', followText);
+				}
+			}
+		}
 	}
 
 	isFollowing(): boolean {
