@@ -40,9 +40,10 @@ std::map<std::string, std::string> getParams(const std::string& uri)
         {
             LOG_WRN("WOPISrc validation error: unencoded WOPISrc [" << param.second
                                                                     << "] in URL: " << uri);
-#if ENABLE_DEBUG
-            throw std::runtime_error("WOPISrc must be URI-encoded");
-#endif // ENABLE_DEBUG
+            if constexpr (Util::isDebugEnabled())
+            {
+                throw std::runtime_error("WOPISrc must be URI-encoded");
+            }
         }
 
         std::string key = Uri::decode(param.first);
