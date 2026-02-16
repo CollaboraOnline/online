@@ -25,6 +25,7 @@
 
 #include <Poco/Net/HTTPBasicCredentials.h>
 #include <Poco/Net/HTTPCookie.h>
+#include <Poco/Net/HTTPRequest.h>
 #include <Poco/Net/HTTPResponse.h>
 #include <Poco/Net/NameValueCollection.h>
 #include <Poco/Net/NetException.h>
