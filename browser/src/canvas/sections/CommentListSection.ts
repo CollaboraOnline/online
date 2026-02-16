@@ -990,8 +990,8 @@ export class CommentSection extends CanvasSectionObject {
 	public unselect (): void {
 		if (this.sectionProperties.selectedComment && this.sectionProperties.selectedComment.sectionProperties.data.id != 'new') {
 			for (const comment of this.sectionProperties.commentList) {
-				if ($(comment.sectionProperties.container).hasClass('annotation-active'))
-					$(comment.sectionProperties.container).removeClass('annotation-active');
+				if (window.L.DomUtil.hasClass(comment.sectionProperties.container, 'annotation-active'))
+					window.L.DomUtil.removeClass(comment.sectionProperties.container, 'annotation-active');
 			}
 
 			if (app.map._docLayer._docType === 'spreadsheet')
