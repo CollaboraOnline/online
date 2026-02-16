@@ -71,6 +71,10 @@ class OverflowManager {
 			'OverflowManager: onResize, scheduledRefresh = ' +
 				(this.scheduledRefresh !== '' ? 'true' : 'false'),
 		);
+
+		// skip spurious resize events where the width hasn't actually changed
+		if (this.lastMaxWidth === window.innerWidth) return;
+
 		this.lastMaxWidth = -1;
 
 		if (this.scheduledRefresh !== '') {
