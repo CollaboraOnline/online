@@ -994,6 +994,14 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 		else if (textMsg.startsWith('unocommandresult:')) {
 			this._onUnoCommandResultMsg(textMsg);
 		}
+		else if (textMsg.startsWith('aichatresult:')) {
+			try {
+				var json = JSON.parse(textMsg.substring('aichatresult:'.length));
+				this._map.fire('aichatresult', json);
+			} catch (e) {
+				window.app.console.error('Failed to parse aichatresult: ' + e);
+			}
+		}
 		else if (textMsg.startsWith('hrulerupdate:')) {
 			this._onRulerUpdate(textMsg);
 		}

@@ -710,7 +710,15 @@ window.L.Control.NotebookbarImpress = window.L.Control.NotebookbarWriter.extend(
 				'text': _UNO('.uno:Sidebar'),
 				'command': '.uno:SidebarDeck.PropertyDeck',
 				'accessibility': { focusBack: true, combination: 'SD', de: null }
-			}
+			},
+			!this.map['wopi'].DisableAISettings ? {
+				'id': 'view-ai-sidebar',
+				'type': 'bigcustomtoolitem',
+				'text': _('AI Assistant'),
+				'icon': 'lc_ai_sidebar.svg',
+				'command': 'aichat',
+				'accessibility': { focusBack: true, combination: 'AI', de: null }
+			} : {}
 		];
 
 		return this.getTabPage('View', content);

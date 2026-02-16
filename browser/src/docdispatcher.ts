@@ -378,6 +378,18 @@ class Dispatcher {
 			const dialog = JSDialog.aiRewriteTextDialog();
 			dialog.open();
 		};
+
+		this.actionsMap['aichat'] = function () {
+			if (!app.map.isAIConfigured) {
+				app.map.uiManager.showInfoModal(
+					'ai-not-configured',
+					_('AI settings not configured'),
+				);
+				return;
+			}
+			const sidebar = JSDialog.getAIChatSidebar();
+			sidebar.toggle();
+		};
 	}
 
 	private addExportCommands() {

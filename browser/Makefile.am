@@ -220,6 +220,7 @@ COOL_CSS_LST =\
 	$(srcdir)/css/backstage.css \
 	$(srcdir)/css/jssidebar.css \
 	$(srcdir)/css/forced-colors.css \
+	$(srcdir)/css/aichat-sidebar.css \
 	$(srcdir)/css/override-smartmenus.css \
 	$(srcdir)/css/jquery-ui-lightness.css \
 	$(srcdir)/css/infobar.css \
@@ -463,6 +464,7 @@ COOL_JS_LST =\
 	src/control/Control.ESignature.ts \
 	src/control/Control.ESignatureDialog.ts \
 	src/control/Control.AIDialogs.ts \
+	src/control/Control.AIChatSidebar.ts \
 	src/control/ColorPicker.ts \
 	src/control/jsdialog/Util.Shortcuts.ts \
 	src/control/jsdialog/Util.ModelState.ts \

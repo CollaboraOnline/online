@@ -814,6 +814,211 @@ bool ClientSession::handleAIAction(const StringVector& tokens)
     return false;
 }
 
+void ClientSession::sendAIChatResult(bool success, const std::string& text,
+                                     const std::string& requestId)
+{
+    Poco::JSON::Object::Ptr result = new Poco::JSON::Object();
+    result->set("success", success);
+    if (success)
+        result->set("content", text);
+    else
+        result->set("error", text);
+    result->set("requestId", requestId);
+
+    std::ostringstream oss;
+    result->stringify(oss);
+    sendTextFrame("aichatresult:" + oss.str());
+}
+
+bool ClientSession::handleAIChatAction(const std::string& firstLine)
+{
+    // Extract JSON payload after "aichat: "
+    const std::string jsonPayload = firstLine.substr(strlen("aichat: "));
+
+    Poco::JSON::Object::Ptr requestObj = new Poco::JSON::Object();
+    if (!JsonUtil::parseJSON(jsonPayload, requestObj))
+    {
+        sendAIChatResult(false, "Invalid request format", "");
+        return true;
+    }
+
+    std::string requestId;
+    JsonUtil::findJSONValue(requestObj, "requestId", requestId);
+
+    Poco::JSON::Array::Ptr messages = requestObj->getArray("messages");
+    if (!messages || messages->size() == 0)
+    {
+        sendAIChatResult(false, "No messages provided", requestId);
+        return true;
+    }
+
+    // Get AI provider settings
+    const std::string apiKey = getAIProviderAPIKey();
+    const std::string model = getAIProviderModel();
+    std::string baseUrl = getAIProviderURL();
+
+    if (apiKey.empty() || model.empty() || baseUrl.empty())
+    {
+        sendAIChatResult(false, "AI settings not configured", requestId);
+        return true;
+    }
+
+    if (!baseUrl.empty() && baseUrl.back() == '/')
+        baseUrl.pop_back();
+
+    std::string requestUrl = baseUrl;
+    requestUrl.append("/v1/chat/completions");
+
+    // Build HTTP payload with model and messages
+    Poco::JSON::Object::Ptr payload = new Poco::JSON::Object();
+    payload->set("model", model);
+    payload->set("messages", messages);
+
+    std::ostringstream payloadStream;
+    payload->stringify(payloadStream);
+    std::string payloadStr = payloadStream.str();
+
+    std::shared_ptr<http::Session> httpSession = http::Session::create(requestUrl);
+    if (!httpSession)
+    {
+        LOG_WRN("AIChatAction: failed to create HTTP session");
+        sendAIChatResult(false, "Failed to create HTTP session", requestId);
+        return true;
+    }
+
+    httpSession->setTimeout(std::chrono::seconds(40));
+
+    auto sendResult = [clientSession = client_from_this(),
+                       requestId](bool success, const std::string& resultText)
+    { clientSession->sendAIChatResult(success, resultText, requestId); };
+
+    http::Session::FinishedCallback finishedCallback =
+        [sendResult](const std::shared_ptr<http::Session>& session)
+    {
+        const std::shared_ptr<const http::Response> httpResponse = session->response();
+        const http::StatusCode statusCode = httpResponse->statusLine().statusCode();
+
+        if (statusCode == http::StatusCode::None)
+        {
+            sendResult(false, "Request timeout");
+            return;
+        }
+
+        if (statusCode != http::StatusCode::OK)
+        {
+            std::string errorMessage;
+            switch (statusCode)
+            {
+                case http::StatusCode::BadRequest:
+                    errorMessage = "Invalid request";
+                    break;
+                case http::StatusCode::Unauthorized:
+                    errorMessage = "Invalid API key";
+                    break;
+                case http::StatusCode::Forbidden:
+                    errorMessage = "API key lacks permissions";
+                    break;
+                case http::StatusCode::TooManyRequests:
+                    errorMessage = "Rate limited - please wait a moment and retry";
+                    break;
+                case http::StatusCode::InternalServerError:
+                    errorMessage = "API server error - try again later";
+                    break;
+                case http::StatusCode::ServiceUnavailable:
+                    errorMessage = "Service temporarily unavailable";
+                    break;
+                default:
+                    errorMessage = "API error (";
+                    errorMessage.append(std::to_string(static_cast<int>(statusCode)));
+                    errorMessage.append("): ");
+                    errorMessage.append(httpResponse->statusLine().reasonPhrase());
+                    break;
+            }
+
+            sendResult(false, errorMessage);
+            return;
+        }
+
+        const std::string& responseBody = httpResponse->getBody();
+        Poco::JSON::Object::Ptr responseObject = new Poco::JSON::Object();
+        if (!JsonUtil::parseJSON(responseBody, responseObject))
+        {
+            sendResult(false, "No response from AI");
+            return;
+        }
+
+        Poco::JSON::Array::Ptr choices = responseObject->getArray("choices");
+        if (!choices || choices->size() == 0)
+        {
+            sendResult(false, "No response from AI");
+            return;
+        }
+
+        Poco::JSON::Object::Ptr choice = choices->getObject(0);
+        if (!choice)
+        {
+            sendResult(false, "No response from AI");
+            return;
+        }
+
+        std::string finishReason;
+        JsonUtil::findJSONValue(choice, "finish_reason", finishReason);
+
+        Poco::JSON::Object::Ptr message = choice->getObject("message");
+        if (!message)
+        {
+            sendResult(false, "No response from AI");
+            return;
+        }
+
+        std::string result;
+        std::string reasoning;
+        JsonUtil::findJSONValue(message, "content", result);
+        JsonUtil::findJSONValue(message, "reasoning", reasoning);
+
+        if (result.empty())
+        {
+            if (!reasoning.empty())
+            {
+                sendResult(false,
+                           "This model returned only internal reasoning and no output. Try a "
+                           "different model or shorter input.");
+                return;
+            }
+            if (finishReason == "length")
+            {
+                sendResult(false, "The model ran out of tokens before producing output. Try a "
+                                  "shorter input or a model with a larger output budget.");
+                return;
+            }
+
+            sendResult(false, "No response from AI");
+            return;
+        }
+
+        sendResult(true, result);
+    };
+
+    httpSession->setFinishedHandler(std::move(finishedCallback));
+
+    http::Session::ConnectFailCallback connectFailCallback =
+        [sendResult](const std::shared_ptr<http::Session>& /*session*/)
+    { sendResult(false, "Network error - please check your connection"); };
+    httpSession->setConnectFailHandler(std::move(connectFailCallback));
+
+    http::Request httpRequest(Poco::URI(requestUrl).getPathAndQuery());
+    httpRequest.setVerb(http::Request::VERB_POST);
+    httpRequest.set("Content-Type", "application/json");
+    std::string authHeader = "Bearer ";
+    authHeader.append(apiKey);
+    httpRequest.set("Authorization", std::move(authHeader));
+    httpRequest.setBody(payloadStr, "application/json");
+
+    std::shared_ptr<DocumentBroker> docBroker = getDocumentBroker();
+    httpSession->asyncRequest(httpRequest, docBroker->getPoll());
+    return true;
+}
+
 bool ClientSession::handleSignatureAction(const StringVector& tokens)
 {
     // Make the HTTP session: this requires an URL
@@ -1592,6 +1797,12 @@ bool ClientSession::_handleInput(const char *buffer, int length)
     {
         return forwardToChild(std::string(buffer, length), docBroker);
     }
+#if !MOBILEAPP
+    else if (tokens.equals(0, "aichat:"))
+    {
+        return handleAIChatAction(firstLine);
+    }
+#endif
     else if (tokens.equals(0, "resetaccesstoken"))
     {
         if (tokens.size() != 2)

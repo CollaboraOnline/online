@@ -371,6 +371,22 @@ body {
 	border-inline-start: 1px solid var(--color-border);
 }
 
+#aichat-dock-wrapper {
+	display: none;
+	background: var(--color-main-background);
+	position: relative;
+	overflow: hidden;
+	z-index: 990;
+	max-width: 350px;
+	height: 100%;
+}
+
+#aichat-dock-wrapper.visible {
+	display: block;
+	animation: 200ms ease-out appear-from-right;
+	border-inline-start: 1px solid var(--color-border);
+}
+
 @keyframes appear-from-right {
 	from {
 		transform: translateX(100%);

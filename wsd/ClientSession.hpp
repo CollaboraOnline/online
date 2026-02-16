@@ -349,6 +349,10 @@ private:
 
     bool handleAIAction(const StringVector& tokens);
 
+    bool handleAIChatAction(const std::string& firstLine);
+    void sendAIChatResult(bool success, const std::string& text,
+                          const std::string& requestId);
+
     bool loadDocument(const char* buffer, int length, const StringVector& tokens,
                       const std::shared_ptr<DocumentBroker>& docBroker);
     bool getStatus(const char* buffer, int length,

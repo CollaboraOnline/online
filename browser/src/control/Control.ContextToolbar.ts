@@ -297,20 +297,6 @@ class ContextToolbar extends JSDialogComponent {
 				text: _UNO('.uno:InsertAnnotation'),
 				command: '.uno:InsertAnnotation',
 			} as ToolItemWidgetJSON,
-			{
-				type: 'separator',
-				id: 'home-aiconfig-break',
-				orientation: 'vertical',
-				visible: !!this.map.wopi.DisableAISettings,
-			} as SeparatorWidgetJSON,
-			{
-				id: 'home-airewrite',
-				type: 'bigcustomtoolitem',
-				text: _('Rewrite'),
-				icon: 'lc_ai_rewrite.svg',
-				visible: !!this.map.wopi.DisableAISettings,
-				command: 'rewritetextai',
-			} as ToolItemWidgetJSON,
 		];
 		return contextItems;
 	}

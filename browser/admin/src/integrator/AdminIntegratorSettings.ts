@@ -1592,8 +1592,7 @@ class SettingIframe {
 				fieldset.appendChild(
 					this.createViewSettingsTextBox(key, data, false, true),
 				);
-			}
-			else if (key === 'aiProviderURL' && !window.disableAISettings) {
+			} else if (key === 'aiProviderURL' && !window.disableAISettings) {
 				fieldset.appendChild(this.createHeading(_('AI Settings')));
 				const aiDesc = document.createElement('p');
 				aiDesc.className = 'view-setting-description';
@@ -1675,8 +1674,12 @@ class SettingIframe {
 			'#aiProviderURLcontainer',
 		) as HTMLElement | null;
 		if (customUrlContainer) {
-			customUrlContainer.style.display =
-				this.isCustomProviderSelected(container, data) ? 'block' : 'none';
+			customUrlContainer.style.display = this.isCustomProviderSelected(
+				container,
+				data,
+			)
+				? 'block'
+				: 'none';
 		}
 		container.appendChild(
 			this.createViewSettingsTextBox('aiProviderAPIKey', data, false, true),
@@ -1686,7 +1689,9 @@ class SettingIframe {
 		modelField.id = 'aiModelcontainer';
 		modelField.classList.add('view-input-container');
 
-		const modelHeading = this.createHeading(this._viewSettingLabels.aiProviderModel);
+		const modelHeading = this.createHeading(
+			this._viewSettingLabels.aiProviderModel,
+		);
 		modelHeading.classList.add('view-setting-small-label');
 		modelField.appendChild(modelHeading);
 
@@ -1855,7 +1860,9 @@ class SettingIframe {
 				const fallbackMsg =
 					AI_ERROR_MESSAGES[errorCode] ||
 					_(`API error (${errorCode}): ${response.statusText}`);
-				const errorMsg = errorText ? `${fallbackMsg}. ${errorText}` : fallbackMsg;
+				const errorMsg = errorText
+					? `${fallbackMsg}. ${errorText}`
+					: fallbackMsg;
 				throw new Error(errorMsg);
 			}
 
@@ -1894,10 +1901,7 @@ class SettingIframe {
 		}
 	}
 
-	private updateAIModelSelect(
-		modelIds: string[],
-		selectedModel: string,
-	): void {
+	private updateAIModelSelect(modelIds: string[], selectedModel: string): void {
 		const modelSelect = document.getElementById(
 			'aiProviderModel',
 		) as HTMLSelectElement | null;
