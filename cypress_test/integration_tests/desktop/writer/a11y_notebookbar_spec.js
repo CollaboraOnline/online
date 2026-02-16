@@ -6,7 +6,6 @@ var a11yHelper = require('../../common/a11y_helper');
 
 // don't pass yet
 var buggyTabs = [
-	'Home',
 ];
 
 describe(['tagdesktop'], 'Accessibility Writer Notebookbar Tests', { testIsolation: false }, function () {
