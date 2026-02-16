@@ -1808,12 +1808,8 @@ bool StreamSocket::parseHeader(const std::string_view clientName, size_t headerS
     const std::streamsize contentLength = request.getContentLength();
     const std::streamsize available = bufferSize;
 
-    LOG_INF("parseHeader: " << clientName << " HTTP Request: " << request.getMethod()
-                            << ", uri: [" << request.getURI() << "] " << request.getVersion()
-                            << ", sz[header " << map._headerSize << ", content "
-                            << contentLength << "], offset " << headerSize << ", chunked "
-                            << request.getChunkedTransferEncoding() << ", "
-                            << [&](auto& log) { Util::joinPair(log, request, " / "); });
+    LOG_INF("parseHeader: " << clientName << " HTTP Request: " << request << ", sz[header "
+                            << map._headerSize << "], offset " << headerSize);
 
     if (contentLength != Poco::Net::HTTPMessage::UNKNOWN_CONTENT_LENGTH)
     {

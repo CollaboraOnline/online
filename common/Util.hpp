@@ -1460,6 +1460,15 @@ inline std::ostream& operator<<(std::ostream& os, const std::chrono::system_cloc
 
 inline std::ostream& operator<<(std::ostream& os, const Util::Backtrace& bt) { return bt.send(os); }
 
+inline std::ostream& operator<<(std::ostream& os, const Poco::Net::HTTPRequest& request)
+{
+    os << request.getMethod() << ' ' << request.getVersion() << ' ' << request.getURI()
+       << ", content-length: " << request.getContentLength64()
+       << ", chunked: " << request.getChunkedTransferEncoding() << ", ";
+    Util::joinPair(os, request, " / ");
+    return os;
+}
+
 // std::to_underlying will be available in C++23
 template <typename Enum> constexpr std::underlying_type_t<Enum> to_underlying(Enum e)
 {

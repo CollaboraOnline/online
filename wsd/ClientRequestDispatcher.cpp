@@ -985,7 +985,7 @@ void ClientRequestDispatcher::handleFullMessage(Poco::Net::HTTPRequest& request,
     _lastSeenHTTPHeader = now;
 
     const bool closeConnection = !request.getKeepAlive(); // HTTP/1.1: closeConnection true w/ "Connection: close" only!
-    LOG_DBG("Handling request: " << request.getURI() << ", closeConnection " << closeConnection);
+    LOG_DBG("Handling request: " << request.getURI() << ", closeConnection: " << closeConnection);
 
     ClientRequestDispatcher::MessageResult result = handleMessage(request, message, disposition, socket, headerSize);
     if (result == MessageResult::Ignore)
@@ -1007,11 +1007,7 @@ ClientRequestDispatcher::MessageResult ClientRequestDispatcher::handleMessage(Po
                                                                               ssize_t headerSize)
 {
     const bool closeConnection = !request.getKeepAlive(); // HTTP/1.1: closeConnection true w/ "Connection: close" only!
-    LOG_DBG("Handling request: " << request.getMethod() << ' ' << request.getVersion() << ' '
-                                 << request.getURI() << ", content " << request.getContentLength64()
-                                 << ", chunked " << request.getChunkedTransferEncoding()
-                                 << ", closeConnection " << closeConnection << ", "
-                                 << [&](auto& log) { Util::joinPair(log, request, " / "); });
+    LOG_DBG("Handling request: " << request << ", closeConnection: " << closeConnection);
 
     // denotes whether the request has been served synchronously
     bool servedSync = false;
@@ -1274,11 +1270,8 @@ ClientRequestDispatcher::MessageResult ClientRequestDispatcher::handleMessage(Po
     }
     catch (const BadRequestException& exc)
     {
-        LOG_ERR("Bad request: " << request.getMethod() << request.getVersion() << ' '
-                                << request.getURI() << ", length: " << request.getContentLength64()
-                                << ", chunked: " << request.getChunkedTransferEncoding()
-                                << ", closeConnection " << closeConnection << ", " << [&](auto& log)
-                { Util::joinPair(log, request, " / "); } << ", socket-data: ["
+        LOG_ERR("Bad request: " << request << ", closeConnection: " << closeConnection
+                                << ", socket-data: ["
                                 << COOLProtocol::getAbbreviatedMessage(socket->getInBuffer())
                                 << "]: " << exc.what());
 
@@ -1289,11 +1282,8 @@ ClientRequestDispatcher::MessageResult ClientRequestDispatcher::handleMessage(Po
     catch (const std::exception& exc)
     {
         LOG_ERR("Exception while processing incoming request: "
-                << request.getMethod() << request.getVersion() << ' ' << request.getURI()
-                << ", length: " << request.getContentLength64() << ", chunked: "
-                << request.getChunkedTransferEncoding() << ", closeConnection " << closeConnection
-                << ", " << [&](auto& log) { Util::joinPair(log, request, " / "); }
-                << ", socket-data: [" << COOLProtocol::getAbbreviatedMessage(socket->getInBuffer())
+                << request << ", closeConnection: " << closeConnection << ", socket-data: ["
+                << COOLProtocol::getAbbreviatedMessage(socket->getInBuffer())
                 << "]: " << exc.what());
 
         // Bad request.
