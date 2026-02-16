@@ -787,6 +787,7 @@ window.L.Control.NotebookbarCalc = window.L.Control.NotebookbarWriter.extend({
 							'selectedEntries': [
 								'0'
 							],
+							'aria': { 'label': _('Number Format') },
 							'accessibility': { focusBack: true,	combination: 'N', de: null }
 						},
 						{
@@ -1778,6 +1779,7 @@ window.L.Control.NotebookbarCalc = window.L.Control.NotebookbarWriter.extend({
 					'0'
 				],
 				'command': '.uno:DatabaseSettings',
+				'aria': { 'label': _('Table Styles') },
 				'accessibility': { focusBack: true,	combination: 'TS', de: null }
 			}
 		];
