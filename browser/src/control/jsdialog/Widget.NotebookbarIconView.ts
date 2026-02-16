@@ -28,15 +28,23 @@ function _createButtonForNotebookbarIconview(
 	container.id = id;
 
 	// create the button
-	const button = document.createElement('button');
+	const button = window.L.DomUtil.create(
+		'button',
+		'ui-content unobutton ' + buttonClass,
+		container,
+	);
 	button.id = id + '-button';
 	button.className = 'ui-content unobutton ' + buttonClass;
 	container.appendChild(button);
 	parentContainer.appendChild(container);
 
 	// add the icon
-	const buttonImage = window.L.DomUtil.create('img', '', button);
-	buttonImage.className = 'ui-iconview-button-icon';
+	const buttonImage = window.L.DomUtil.create(
+		'img',
+		'ui-iconview-button-icon',
+		button,
+	);
+	buttonImage.alt = '';
 	app.LOUtil.setImage(buttonImage, icon, builder.map);
 
 	// set the onclick callback
