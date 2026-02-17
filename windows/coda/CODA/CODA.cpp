@@ -1079,7 +1079,7 @@ static FilenameAndUri fileSaveDialog(const std::string& name,
     item->Release();
     dialog->Release();
 
-    return { path.getFileName(), Poco::URI(path).toString() };
+    return { path.getFileName(), pathToURI(path) };
 }
 
 static void arrangePresentationWindows(WindowData& data)
