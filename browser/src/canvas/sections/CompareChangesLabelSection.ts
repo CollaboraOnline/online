@@ -93,6 +93,12 @@ class CompareChangesLabelSection extends HTMLObjectSection {
 		container.appendChild(label);
 	}
 
+	private static setTextContent(element: HTMLElement, text: string): void {
+		if (element.textContent !== text) {
+			element.textContent = text;
+		}
+	}
+
 	private updateSubtitle(
 		element: HTMLDivElement,
 		info: DocumentMetadata,
@@ -107,9 +113,12 @@ class CompareChangesLabelSection extends HTMLObjectSection {
 			locale,
 			dateOptions,
 		);
-		element.textContent = _('Last edited by %1 on %2')
-			.replace('%1', info.modifiedBy)
-			.replace('%2', date);
+		CompareChangesLabelSection.setTextContent(
+			element,
+			_('Last edited by %1 on %2')
+				.replace('%1', info.modifiedBy)
+				.replace('%2', date),
+		);
 	}
 
 	override onDraw(): void {
@@ -167,21 +176,27 @@ class CompareChangesLabelSection extends HTMLObjectSection {
 					?.value || '';
 			// See if onCompareDocuments() has an old doc name for us.
 			const oldDocName = app.writer.compareDocumentOldFileName || docName;
-			this.leftTitle.textContent = _('%1: Initial Version').replace(
-				'%1',
-				oldDocName,
+			CompareChangesLabelSection.setTextContent(
+				this.leftTitle,
+				_('%1: Initial Version').replace('%1', oldDocName),
 			);
-			this.rightTitle.textContent = _('%1: Current Version').replace(
-				'%1',
-				docName,
+			CompareChangesLabelSection.setTextContent(
+				this.rightTitle,
+				_('%1: Current Version').replace('%1', docName),
 			);
 			this.updateSubtitle(this.leftSubtitle, props.metadata.otherDocument);
 			this.updateSubtitle(this.rightSubtitle, props.metadata.thisDocument);
 			this.leftSubtitle.style.display = '';
 			this.rightSubtitle.style.display = '';
 		} else {
-			this.leftTitle.textContent = _('Initial Version');
-			this.rightTitle.textContent = _('Current Version');
+			CompareChangesLabelSection.setTextContent(
+				this.leftTitle,
+				_('Initial Version'),
+			);
+			CompareChangesLabelSection.setTextContent(
+				this.rightTitle,
+				_('Current Version'),
+			);
 			this.leftSubtitle.style.display = 'none';
 			this.rightSubtitle.style.display = 'none';
 		}
