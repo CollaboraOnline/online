@@ -62,7 +62,7 @@
 #include <SigHandlerTrap.hpp>
 #endif
 
-#if !defined(__ANDROID__) && !defined(__EMSCRIPTEN__) && !defined(_WIN32)
+#if defined(__GLIBC__)
 #  include <execinfo.h>
 #  include <cxxabi.h>
 #endif
@@ -943,7 +943,7 @@ namespace Util
     Backtrace::Backtrace([[maybe_unused]] const int maxFrames, const int skip)
         : skipFrames(skip)
     {
-#if defined(__linux) && !defined(__ANDROID__) && !defined(__EMSCRIPTEN__)
+#if defined(__GLIBC__)
         std::vector<void*> backtraceBuffer(maxFrames + skip, nullptr);
 
         const int numSlots = ::backtrace(backtraceBuffer.data(), backtraceBuffer.size());

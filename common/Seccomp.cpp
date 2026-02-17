@@ -35,7 +35,6 @@
 #if DISABLE_SECCOMP == 0
 #include <linux/seccomp.h>
 #endif
-#include <malloc.h>
 #include <signal.h>
 #include <sys/prctl.h>
 #include <sys/syscall.h>
@@ -139,7 +138,7 @@ bool lockdown([[maybe_unused]] Type type)
         ACCEPT_SYSCALL(write),
         ACCEPT_SYSCALL(futex),
 
-        // glibc's 'poll' has to answer for this lot:
+        // 'poll' implementation may use these epoll syscalls:
 #if !defined(__NR_epoll_wait) && defined(__NR_epoll_pwait)
         ACCEPT_SYSCALL(epoll_pwait),
 #else

@@ -34,6 +34,13 @@ else
     LOCALBASE=usr/local/
 fi
 
+# Detect C library
+if ldd --version 2>&1 | grep -qi musl; then
+    LIBC=musl
+else
+    LIBC=glibc
+fi
+
 cd / || exit 1
 
 (
@@ -41,29 +48,44 @@ cd / || exit 1
 # into the template tree of system files for the chroot jails.
 
 # First essential files and shared objects
-find etc/ld.so.* \
-     lib/ld-* lib64/ld-* \
-     lib/libnss_* lib64/libnss_* lib/*/libnss_* \
-     lib/*/nss/*.so \
-     lib/libresolv* lib64/libresolv* lib/*/libresolv* \
-     var/cache/fontconfig \
-     etc/fonts \
-     usr/lib/locale/en_US.utf8 \
-     usr/lib/locale/C.UTF-8 \
-     usr/lib/locale/locale_archive \
-     usr/lib/*/nss/*.so \
-     usr/lib/*/libsqlite* \
-     usr/share/zoneinfo/* \
-     usr/share/liblangtag \
-     usr/share/hyphen \
-	 -type f 2>/dev/null
+if [ "$LIBC" != "musl" ]; then
+    find etc/ld.so.* \
+         lib/ld-* lib64/ld-* \
+         lib/libnss_* lib64/libnss_* lib/*/libnss_* \
+         lib/*/nss/*.so \
+         lib/libresolv* lib64/libresolv* lib/*/libresolv* \
+         var/cache/fontconfig \
+         etc/fonts \
+         usr/lib/locale/en_US.utf8 \
+         usr/lib/locale/C.UTF-8 \
+         usr/lib/locale/locale_archive \
+         usr/lib/*/nss/*.so \
+         usr/lib/*/libsqlite* \
+         usr/share/zoneinfo/* \
+         usr/share/liblangtag \
+         usr/share/hyphen \
+         -type f 2>/dev/null
 
-find etc/fonts \
-     lib/ld-* lib64/ld-* \
-     lib/libnss_* lib64/libnss_* lib/*/libnss_* \
-     lib/libresolv* lib64/libresolv* lib/*/libresolv* \
-     usr/lib/*/libsqlite* \
-	-type l 2>/dev/null
+    find etc/fonts \
+         lib/ld-* lib64/ld-* \
+         lib/libnss_* lib64/libnss_* lib/*/libnss_* \
+         lib/libresolv* lib64/libresolv* lib/*/libresolv* \
+         usr/lib/*/libsqlite* \
+        -type l 2>/dev/null
+else
+    # musl doesn't use libnss, libresolv, or glibc locale files
+    find var/cache/fontconfig \
+         etc/fonts \
+         usr/lib/*/libsqlite* \
+         usr/share/zoneinfo/* \
+         usr/share/liblangtag \
+         usr/share/hyphen \
+         -type f 2>/dev/null
+
+    find etc/fonts \
+         usr/lib/*/libsqlite* \
+        -type l 2>/dev/null
+fi
 
 # Find the first of these that exist to fulfill ssltls
 # via openssl requirements
@@ -90,7 +112,11 @@ cpio -p -d -L $CHROOT
 # Link the dynamic files, replacing any existing.
 rm -f $CHROOT/etc/copied
 mkdir -p $CHROOT/etc/
-for file in hosts nsswitch.conf resolv.conf passwd group host.conf timezone localtime
+ETC_FILES="hosts resolv.conf passwd group host.conf timezone localtime"
+if [ "$LIBC" != "musl" ]; then
+    ETC_FILES="$ETC_FILES nsswitch.conf"
+fi
+for file in $ETC_FILES
 do
     # echo "Linking/Copying /etc/$file"
     # Prefer hard-linking, fallback to just copying (do *not* use symlinking because that would be relative to the jail).
