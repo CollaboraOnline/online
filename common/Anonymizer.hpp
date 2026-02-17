@@ -32,7 +32,7 @@
 /// will have a different prefix counter.
 class Anonymizer
 {
-    Anonymizer(const std::uint64_t salt)
+    explicit Anonymizer(const std::uint64_t salt)
         : _salt(salt)
     {
     }

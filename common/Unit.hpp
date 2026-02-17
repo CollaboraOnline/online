@@ -401,7 +401,7 @@ class UnitWSD : public UnitBase
     bool _hasKitHooks;
 
 public:
-    UnitWSD(const std::string& testname);
+    explicit UnitWSD(const std::string& testname);
 
     virtual ~UnitWSD();
 

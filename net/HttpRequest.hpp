@@ -845,7 +845,7 @@ class MultipartDataParser final
     static constexpr std::size_t MaxLineLength = 512;
 
 public:
-    MultipartDataParser(const std::string& boundary)
+    explicit MultipartDataParser(const std::string& boundary)
         : _delimiter("\r\n--" + boundary)
         , _dashBoundary(&_delimiter[2], _delimiter.size() - 2) // Skip CRLF
         , _boundary(&_delimiter[4], _delimiter.size() - 4) // Skip CRLF--
@@ -900,7 +900,7 @@ public:
 
     /// Construct a parser from a Request instance.
     /// Typically used for testing.
-    RequestParser(http::Request& request)
+    explicit RequestParser(http::Request& request)
         : _recvBodySize(0)
     {
         // By default we store the body in memory.
@@ -999,7 +999,7 @@ public:
 
     /// Construct a StatusLine with a given code and
     /// the default protocol version.
-    StatusLine(unsigned statusCodeNumber)
+    explicit StatusLine(unsigned statusCodeNumber)
         : _httpVersion(HTTP_1_1)
         , _versionMajor(1)
         , _versionMinor(1)
@@ -1008,7 +1008,7 @@ public:
     {
     }
 
-    StatusLine(StatusCode statusCode)
+    explicit StatusLine(StatusCode statusCode)
         : StatusLine(static_cast<unsigned>(statusCode))
     {
     }

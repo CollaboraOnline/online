@@ -887,9 +887,10 @@ void ClientRequestDispatcher::handleIncomingMessage(SocketDisposition& dispositi
     const unsigned mobileAppDocId = Util::u64FromString(appDocIdBuffer, 0).first;
     free(appDocIdBuffer);
 
-    handleClientWsUpgrade(
-        request, std::string(socket->getInBuffer().data(), space - socket->getInBuffer().data()),
-        disposition, socket, mobileAppDocId);
+    handleClientWsUpgrade(request,
+                          RequestDetails(std::string(socket->getInBuffer().data(),
+                                                     space - socket->getInBuffer().data())),
+                          disposition, socket, mobileAppDocId);
 #else // IOS
     handleClientWsUpgrade(
         request,

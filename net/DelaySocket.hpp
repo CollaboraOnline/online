@@ -28,7 +28,7 @@
 class Delay final
 {
 public:
-    Delay(std::size_t latencyMs);
+    explicit Delay(std::size_t latencyMs);
     ~Delay();
 
     static int create(int delayMs, int physicalFd);
