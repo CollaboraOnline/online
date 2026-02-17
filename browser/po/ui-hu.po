@@ -8,11 +8,11 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-02-13 19:20+0100\n"
-"PO-Revision-Date: 2026-02-13 17:53+0000\n"
+"PO-Revision-Date: 2026-02-14 19:12+0000\n"
 "Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
-"Language-Team: Hungarian <https://hosted.weblate.org/projects/"
-"collabora-online/ui/hu/>\n"
-"Language: \n"
+"Language-Team: Hungarian <https://hosted.weblate.org/projects/collabora-"
+"online/ui/hu/>\n"
+"Language: hu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -5141,7 +5141,6 @@ msgid "Resume"
 msgstr "Folytatás"
 
 #: src/slideshow/PresenterConsole.js:38
-#, fuzzy
 msgid "Present to all"
 msgstr "Prezentálás mindenkinek"
 
