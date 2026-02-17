@@ -12,11 +12,11 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-02-13 19:20+0100\n"
-"PO-Revision-Date: 2026-02-08 00:09+0000\n"
+"PO-Revision-Date: 2026-02-15 23:09+0000\n"
 "Last-Translator: Stanislav Horáček <stanislav.horacek@gmail.com>\n"
 "Language-Team: Czech <https://hosted.weblate.org/projects/collabora-online/"
 "ui/cs/>\n"
-"Language: \n"
+"Language: cs\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -1047,15 +1047,15 @@ msgstr "Uloženo"
 
 #: src/canvas/sections/CompareChangesLabelSection.ts:111
 msgid "Last edited by %1 on %2"
-msgstr ""
+msgstr "Naposledy upraveno uživatelem %1 v %2"
 
 #: src/canvas/sections/CompareChangesLabelSection.ts:167
 msgid "%1: Initial Version"
-msgstr ""
+msgstr "%1: Počáteční verze"
 
 #: src/canvas/sections/CompareChangesLabelSection.ts:171
 msgid "%1: Current Version"
-msgstr ""
+msgstr "%1: Aktuální verze"
 
 #: src/canvas/sections/ShapeHandlesSection.ts:475
 msgid "Document contains unsupported media"
@@ -5130,7 +5130,6 @@ msgid "Resume"
 msgstr "Pokračovat"
 
 #: src/slideshow/PresenterConsole.js:38
-#, fuzzy
 msgid "Present to all"
 msgstr "Prezentovat všem"
 
