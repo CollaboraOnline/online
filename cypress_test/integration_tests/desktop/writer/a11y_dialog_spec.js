@@ -197,8 +197,6 @@ describe(['tagdesktop'], 'Accessibility Writer Dialog Tests', { testIsolation: f
         if (excludedCommonDialogs.includes(command)) {
             // silently skip the common dialogs that writer doesn't have
             return;
-        } else if (a11yHelper.isBuggyCommonDialog(command)) {
-            it.skip(`Common Dialog ${command} (buggy)`, function () {});
         } else {
             it(`Common Dialog ${command}`, function () {
                 if (!hasLinguisticData && a11yHelper.needsLinguisticData(command)) {
