@@ -387,6 +387,7 @@ interface TreeWidgetJSON extends WidgetJSON {
 	customEntryRenderer?: boolean;
 	noSearchField?: boolean; // When true, the widget shouldn't have a search field added
 	sortLocally?: boolean; // When true, the widget will run sort algorithm in JS isntead of callback (lists only)
+	role?: string; // ARIA role from core: 'tree', 'treegrid', 'listbox', or 'grid'
 }
 
 interface IconViewEntry {
