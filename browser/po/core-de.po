@@ -2,8 +2,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: core-de\n"
-"PO-Revision-Date: 2026-02-03 12:23+0000\n"
-"Last-Translator: Lily Logua <lily.logua@gmail.com>\n"
+"PO-Revision-Date: 2026-02-14 19:12+0000\n"
+"Last-Translator: alxhu <hosted.weblate.org@alxhu.de>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/collabora-online/"
 "lokit/de/>\n"
 "Language: de\n"
@@ -366,6 +366,9 @@ msgid ""
 "End User License and Subscription Agreement; choose EULA to see exact "
 "details in English."
 msgstr ""
+"Das Binärpaket %PRODUCTNAME wird unter den Bedingungen der Endbenutzer-"
+"Lizenzvereinbarung zur Verfügung gestellt; wählen Sie EULA, um die genauen "
+"Details auf Englisch anzuzeigen."
 
 #. YHTHB
 #: sfx2/uiconfig/ui/templatepanel.ui:137
@@ -765,7 +768,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Current Sheet View"
-msgstr ""
+msgstr "Aktuelle Tabellenansicht"
 
 #. 3Ep4Y
 #: CalcCommands.xcu
