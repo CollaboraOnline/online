@@ -150,6 +150,7 @@ class SlideShowPresenter {
 	// which means they are not leader but they are not follower either
 	private _isFollower: boolean = false;
 	private _isFollowing: boolean = false;
+	private _followBtn: HTMLElement | null = null;
 
 	private showFollow(me: boolean) {
 		this._map.uiManager.showButton('slide-presentation-follow', !me);
@@ -754,19 +755,18 @@ class SlideShowPresenter {
 		);
 
 		if (this.isFollower()) {
-			const FollowImg = window.L.DomUtil.create('img', 'right-img', container);
-			FollowImg.id = 'follow';
-			const followText = _('Follow Presenter');
-			window.L.control.attachTooltipEventListener(FollowImg, this._map);
-			FollowImg.setAttribute('aria-label', followText);
-			FollowImg.setAttribute('data-cooltip', followText);
-			setImgSize(FollowImg);
+			const followImg = window.L.DomUtil.create('img', 'right-img', container);
+			this._followBtn = followImg;
+			followImg.id = 'follow';
+			window.L.control.attachTooltipEventListener(followImg, this._map);
+			this.setFollowing(this.isFollowing());
+			setImgSize(followImg);
 			app.LOUtil.setImage(
-				FollowImg,
+				followImg,
 				'slideshow-followPresenter.svg',
 				this._map,
 			);
-			FollowImg.addEventListener('click', (e: Event) => {
+			followImg.addEventListener('click', (e: Event) => {
 				e.stopPropagation();
 				this._onA11yString(e.target);
 				if (this.isFollowing()) {
@@ -1309,20 +1309,17 @@ class SlideShowPresenter {
 
 	setFollowing(follow: boolean): void {
 		this._isFollowing = follow;
-		if (this._slideNavContainer) {
-			const followBtn = this._slideNavContainer.querySelector('#follow');
-			if (followBtn) {
-				if (follow) {
-					followBtn.classList.add('following');
-					const stopFollowText = _('Stop Following');
-					followBtn.setAttribute('aria-label', stopFollowText);
-					followBtn.setAttribute('data-cooltip', stopFollowText);
-				} else {
-					followBtn.classList.remove('following');
-					const followText = _('Follow Presenter');
-					followBtn.setAttribute('aria-label', followText);
-					followBtn.setAttribute('data-cooltip', followText);
-				}
+		if (this._followBtn) {
+			if (follow) {
+				this._followBtn.classList.add('following');
+				const stopFollowText = _('Stop Following');
+				this._followBtn.setAttribute('aria-label', stopFollowText);
+				this._followBtn.setAttribute('data-cooltip', stopFollowText);
+			} else {
+				this._followBtn.classList.remove('following');
+				const followText = _('Follow Presenter');
+				this._followBtn.setAttribute('aria-label', followText);
+				this._followBtn.setAttribute('data-cooltip', followText);
 			}
 		}
 	}
