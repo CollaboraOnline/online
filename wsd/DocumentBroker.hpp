@@ -584,6 +584,9 @@ public:
     int getLeaderEffect() const {return _docState.getLeaderEffect();}
     void setLeaderEffect(int leaderEffect)  { _docState.setLeaderEffect(leaderEffect);}
 
+    const std::string& getLeaderSessionId() const { return _docState.getLeaderSessionId(); }
+    void setLeaderSessionId(const std::string& sessionId) { _docState.setLeaderSessionId(sessionId); }
+
 #if !MOBILEAPP && !WASMAPP
     /// Get server audit util
     const ServerAuditUtil& getServerAudit() const { return _serverAudit; }
@@ -1671,6 +1674,9 @@ private:
         int getLeaderEffect() const {return _currentLeaderEffect;}
         void setLeaderEffect(int leaderEffect)  { _currentLeaderEffect = leaderEffect;}
 
+        const std::string& getLeaderSessionId() const { return _leaderSessionId; }
+        void setLeaderSessionId(const std::string& sessionId) { _leaderSessionId = sessionId; }
+
         void dumpState(std::ostream& os, const std::string& indent = "\n  ") const
         {
             os << indent << "doc state: " << name(status());
@@ -1694,6 +1700,7 @@ private:
         bool _isFollowmeSlideShowOn = false;
         int _currentLeaderEffect = -1;
         int _currentLeaderSlide = -1;
+        std::string _leaderSessionId; ///< Session ID of the follow-me presentation leader.
     };
 
     /// Transition to a given activity. Returns false if an activity exists.
