@@ -8,11 +8,11 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-02-13 19:20+0100\n"
-"PO-Revision-Date: 2026-02-06 10:01+0000\n"
+"PO-Revision-Date: 2026-02-14 19:12+0000\n"
 "Last-Translator: Rhoslyn Prys <rprys@posteo.net>\n"
 "Language-Team: Welsh <https://hosted.weblate.org/projects/collabora-online/"
 "ui/cy/>\n"
-"Language: \n"
+"Language: cy\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -1048,15 +1048,15 @@ msgstr "Cadwyd"
 
 #: src/canvas/sections/CompareChangesLabelSection.ts:111
 msgid "Last edited by %1 on %2"
-msgstr ""
+msgstr "Golygwyd diwethaf gan %1 ar %2"
 
 #: src/canvas/sections/CompareChangesLabelSection.ts:167
 msgid "%1: Initial Version"
-msgstr ""
+msgstr "%1: Y Fersiwn Cyntaf"
 
 #: src/canvas/sections/CompareChangesLabelSection.ts:171
 msgid "%1: Current Version"
-msgstr ""
+msgstr "%1: Y Fersiwn Cyfredol"
 
 #: src/canvas/sections/ShapeHandlesSection.ts:475
 msgid "Document contains unsupported media"
@@ -5134,9 +5134,8 @@ msgid "Resume"
 msgstr "Ail gychwyn"
 
 #: src/slideshow/PresenterConsole.js:38
-#, fuzzy
 msgid "Present to all"
-msgstr "Cyflwyno i Bawb"
+msgstr "Cyflwyno i bawb"
 
 #: src/slideshow/PresenterConsole.js:39
 msgid "Go Back"
