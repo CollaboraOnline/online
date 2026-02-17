@@ -58,7 +58,11 @@ class CompareChangesLabelSection extends HTMLObjectSection {
 		container.style.zIndex = '1001';
 
 		this.leftLabel.id = 'compare-changes-left-label';
+		this.leftTitle.id = 'compare-changes-left-title';
+		this.leftSubtitle.id = 'compare-changes-left-subtitle';
 		this.rightLabel.id = 'compare-changes-right-label';
+		this.rightTitle.id = 'compare-changes-right-title';
+		this.rightSubtitle.id = 'compare-changes-right-subtitle';
 		this.setupLabel(
 			container,
 			this.leftLabel,
@@ -161,9 +165,11 @@ class CompareChangesLabelSection extends HTMLObjectSection {
 			const docName =
 				(document.getElementById('document-name-input') as HTMLInputElement)
 					?.value || '';
+			// See if onCompareDocuments() has an old doc name for us.
+			const oldDocName = app.writer.compareDocumentOldFileName || docName;
 			this.leftTitle.textContent = _('%1: Initial Version').replace(
 				'%1',
-				docName,
+				oldDocName,
 			);
 			this.rightTitle.textContent = _('%1: Current Version').replace(
 				'%1',

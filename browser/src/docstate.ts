@@ -63,6 +63,7 @@
 	},
 	writer: {
 		compareDocumentProperties: null,
+		compareDocumentOldFileName: null,
 	},
 	map: null, // Make map object a part of this.
 	util: null, // Attach the Util class.

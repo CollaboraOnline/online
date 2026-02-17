@@ -141,6 +141,17 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Track Changes', function (
 
 		// Then make sure the manage changes dialog finds a deletion:
 		cy.cGet('#AcceptRejectChangesDialog img.swresredline_deletedimg').should('be.visible');
+
+		// And when closing the dialog and entering doc compare mode:
+		cy.cGet('#AcceptRejectChangesDialog').parents('.jsdialog-window').find('.ui-dialog-titlebar-close').click();
+		cy.cGet('#AcceptRejectChangesDialog').should('not.exist');
+		desktopHelper.getNbIcon('TrackChanges', 'Review').click();
+		cy.cGet('#compare-tracked-change').filter(':visible').click();
+
+		// Then the left label should show the old document name:
+		cy.cGet('#compare-changes-left-title').should(function($el) {
+			expect($el.text()).to.match(/^track_changes_old\.odt/);
+		});
 	});
 
 	it('View Changes mode has tiles for both modes', function () {
