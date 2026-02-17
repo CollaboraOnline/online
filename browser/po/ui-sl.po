@@ -5,18 +5,18 @@ msgstr ""
 "Project-Id-Version: Collabora Online UI\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-02-13 19:20+0100\n"
-"PO-Revision-Date: 2026-02-08 00:09+0000\n"
+"PO-Revision-Date: 2026-02-17 22:35+0000\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
-"Language-Team: Slovenian <https://hosted.weblate.org/projects/"
-"collabora-online/ui/sl/>\n"
-"Language: \n"
+"Language-Team: Slovenian <https://hosted.weblate.org/projects/collabora-"
+"online/ui/sl/>\n"
+"Language: sl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n"
-"%100==4 ? 2 : 3;\n"
+"Plural-Forms: nplurals=4; plural=n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || "
+"n%100==4 ? 2 : 3;\n"
 "X-Accelerator-Marker: ~\n"
-"X-Generator: Weblate 5.16-dev\n"
+"X-Generator: Weblate 5.16.1-dev\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 
 #: admin/admin.strings.js:15
@@ -1048,15 +1048,15 @@ msgstr "Shranjeno"
 
 #: src/canvas/sections/CompareChangesLabelSection.ts:111
 msgid "Last edited by %1 on %2"
-msgstr ""
+msgstr "Nazadnje urejeno %2 (%1)"
 
 #: src/canvas/sections/CompareChangesLabelSection.ts:167
 msgid "%1: Initial Version"
-msgstr ""
+msgstr "%1: začetna različica"
 
 #: src/canvas/sections/CompareChangesLabelSection.ts:171
 msgid "%1: Current Version"
-msgstr ""
+msgstr "%1: trenutna različica"
 
 #: src/canvas/sections/ShapeHandlesSection.ts:475
 msgid "Document contains unsupported media"
@@ -1895,7 +1895,7 @@ msgstr "Ponastavi povečavo"
 
 #: src/control/Control.Menubar.ts:168
 msgid "Fit to Screen"
-msgstr ""
+msgstr "Prilagodi zaslonu"
 
 #: src/control/Control.Menubar.ts:171 src/control/Control.Menubar.ts:495
 #: src/control/Control.Menubar.ts:662 src/control/Control.Menubar.ts:807
@@ -2403,7 +2403,7 @@ msgstr "Konec preliva"
 
 #: src/control/Control.NavigatorPanel.ts:38
 msgid "Navigation Panel"
-msgstr ""
+msgstr "Podokno krmarjenja"
 
 #: src/control/Control.NavigatorPanel.ts:110
 msgid "Navigation"
@@ -3168,7 +3168,7 @@ msgstr "Predloge matric prosojnice"
 
 #: src/control/Control.NotebookbarImpress.js:1809
 msgid "Themes"
-msgstr ""
+msgstr "Teme"
 
 #: src/control/Control.NotebookbarImpress.js:1859
 msgid "Slide Size"
@@ -3246,7 +3246,7 @@ msgstr "Spustni meni"
 
 #: src/control/Control.NotebookbarWriter.js:1664
 msgid "Page Width"
-msgstr ""
+msgstr "Širina strani"
 
 #: src/control/Control.NotebookbarWriter.js:2301
 msgid "Tracking"
@@ -3254,7 +3254,7 @@ msgstr "Sledenje"
 
 #: src/control/Control.NotebookbarWriter.js:2322
 msgid "View Changes"
-msgstr ""
+msgstr "Pokaži spremembe"
 
 #: src/control/Control.NotebookbarWriter.js:2498
 msgid "Split"
@@ -4091,7 +4091,7 @@ msgstr "Vstavi krajevno večpredstavno vsebino"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1740
 msgid "Compare Local Document"
-msgstr ""
+msgstr "Primerjaj krajevni dokument"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1746
 msgid "Very Tight"
@@ -4429,7 +4429,7 @@ msgstr "Naslovi in predmeti, ki jih dodate dokumentu, se pojavijo tukaj"
 
 #: src/control/jsdialog/Widget.TreeView.ts:1660
 msgid "Search items"
-msgstr ""
+msgstr "Išči elemente"
 
 #: src/app/Socket.ts:254
 msgid "Oops, there is a problem connecting to {productname}: "
@@ -4898,7 +4898,7 @@ msgstr "meni Pogled"
 
 #: src/layer/tile/CanvasTileLayer.js:461
 msgid "Online Editor"
-msgstr ""
+msgstr "Spletni urejevalnik"
 
 #: src/layer/tile/CanvasTileLayer.js:1459
 msgid "Functions"
@@ -5091,7 +5091,7 @@ msgstr "Ustvarjanje nove datoteke iz predloge ..."
 
 #: src/map/handler/Map.WOPI.js:232
 msgid "Compare Document..."
-msgstr ""
+msgstr "Primerjaj dokument ..."
 
 #: src/map/handler/Map.WOPI.js:740
 msgid "File name should contain an extension."
