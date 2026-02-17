@@ -3009,7 +3009,7 @@ kbd,
 
 /* Listbox UI grid */
 .jsdialog.ui-grid[role='listbox']:not(:has(> .ui-iconview)) {
-	max-height: 99vh;
+	max-height: min(470px, 45vh);
 }
 
 .jsdialog.ui-grid[role='listbox'] {
