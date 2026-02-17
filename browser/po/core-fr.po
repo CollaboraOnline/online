@@ -2,15 +2,15 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: core-fr\n"
-"PO-Revision-Date: 2026-02-04 13:07+0000\n"
-"Last-Translator: Pedro Silva <pedro.silva@collabora.com>\n"
+"PO-Revision-Date: 2026-02-17 01:09+0000\n"
+"Last-Translator: Méven Car <meven.car@collabora.com>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/collabora-online/"
 "lokit/fr/>\n"
 "Language: fr\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 5.16-dev\n"
+"X-Generator: Weblate 5.16\n"
 
 #. ygDfy
 #: module_graphicfilter.ulf
@@ -28,7 +28,7 @@ msgctxt ""
 "STR_DESC_MODULE_OPTIONAL_GRFFLT_FLASH\n"
 "LngText.text"
 msgid "Macromedia Flash (SWF) Export Filter"
-msgstr ""
+msgstr "Filtre d'export Macromedia Flash (SWF)"
 
 #. vcMGk
 #: folderitem_ooo.ulf
@@ -41,6 +41,9 @@ msgid ""
 "Technology, provided by Collabora Productivity. See https://collaboraoffice."
 "com"
 msgstr ""
+"Collabora Office, la suite de bureautique basée sur la technologie "
+"LibreOffice, éditée par Collabora Productivity. Voir https://"
+"collaboraoffice.com"
 
 #. 4rBwc
 #: include/svx/strings.hrc:1040
@@ -64,7 +67,7 @@ msgstr "Annuler"
 #: svx/uiconfig/ui/findreplacedialog.ui:67
 msgctxt "findreplacedialog|find_tab_btn"
 msgid "Find"
-msgstr ""
+msgstr "Trouver"
 
 #. uknDS
 #: svx/uiconfig/ui/findreplacedialog.ui:80
@@ -147,55 +150,57 @@ msgstr ""
 #: chart2/uiconfig/ui/dlg_Theme.ui:16
 msgctxt "dlg_Theme|ChartThemeDialog"
 msgid "Manage Chart Styles"
-msgstr ""
+msgstr "Gérer les styles de Graphe"
 
 #. kqBFK
 #: chart2/uiconfig/ui/dlg_Theme.ui:46
 msgctxt "dlg_Theme|iconviewlabel|tooltip_text"
 msgid "Selectable chart styles list."
-msgstr ""
+msgstr "Liste de styles de graphe sélectionnable."
 
 #. WsSmE
 #: chart2/uiconfig/ui/dlg_Theme.ui:51
 msgctxt "dlg_Theme|iconviewlabel"
 msgid "_Chart styles:"
-msgstr ""
+msgstr "_Styles de graphe:"
 
 #. DYH5e
 #: chart2/uiconfig/ui/dlg_Theme.ui:122
 msgctxt "dlg_Theme|chartload"
 msgid "_Load style to chart"
-msgstr ""
+msgstr "_Appliquer le style au graphe"
 
 #. YWkrA
 #: chart2/uiconfig/ui/dlg_Theme.ui:134
 msgctxt "dlg_Theme|chartsave"
 msgid "_Save to styles"
-msgstr ""
+msgstr "_Ajouter au styles"
 
 #. h8L8Y
 #: chart2/uiconfig/ui/dlg_Theme.ui:146
 msgctxt "dlg_Theme|chartdelete"
 msgid "_Delete style"
-msgstr ""
+msgstr "_Supprimer le style"
 
 #. g5qPU
 #: chart2/uiconfig/ui/dlg_Theme.ui:158
 msgctxt "dlg_Theme|chartsavenew"
 msgid "Save to _new style"
-msgstr ""
+msgstr "Sauvegarder en _nouveau style"
 
 #. GPgLR
 #: chart2/uiconfig/ui/dlg_Theme.ui:183
 msgctxt "dlg_Theme|chartmanage"
 msgid "_Manage chart styles"
-msgstr ""
+msgstr "_Gérer les styles de graphe"
 
 #. Yif9X
 #: chart2/uiconfig/ui/sidebarcolors.ui:30
 msgctxt "sidebarcolors|bordertype|tooltip_text"
 msgid "Allow to select a color palette to apply to current chart data series."
 msgstr ""
+"Permet de sélectionner une palette de couleur à appliquer à la série de "
+"données du graphe courant."
 
 #. xGjwG
 #: chart2/uiconfig/ui/sidebarcolors.ui:42
@@ -210,6 +215,8 @@ msgctxt "sidebargradients|bordertype|tooltip_text"
 msgid ""
 "Allow to select a gradient palette to apply to current chart data series."
 msgstr ""
+"Permet de sélectionner un palette de dégradé à appliquer à la série de "
+"données du graphe courant."
 
 #. 3xZSQ
 #: chart2/uiconfig/ui/sidebargradients.ui:42
@@ -222,19 +229,19 @@ msgstr "Style de bordure"
 #: chart2/uiconfig/ui/sidebartheme.ui:25
 msgctxt "sidebartheme|themelist|tooltip_text"
 msgid "Allow to select a theme to apply to the current chart."
-msgstr ""
+msgstr "Permet de sélectionner un thème à appliquer au graphe courant."
 
 #. aGvuY
 #: chart2/uiconfig/ui/sidebartheme.ui:37
 msgctxt "sidebartheme|themetype-atkobject"
 msgid "Themes"
-msgstr ""
+msgstr "Thèmes"
 
 #. YB6Et
 #: chart2/uiconfig/ui/sidebartheme.ui:48
 msgctxt "sidebartheme|savetonew"
 msgid "_Save to new theme"
-msgstr ""
+msgstr "_Sauvegarder dans un nouveau thème"
 
 #. 4C556
 #: chart2/uiconfig/ui/sidebartype.ui:102
@@ -246,31 +253,31 @@ msgstr ""
 #: chart2/uiconfig/ui/tp_ChartColorPalette.ui:68
 msgctxt "tp_ChartColorPalette|colorfulwin"
 msgid "Colorful"
-msgstr ""
+msgstr "Coloré"
 
 #. 8QjnP
 #: chart2/uiconfig/ui/tp_ChartColorPalette.ui:126
 msgctxt "tp_ChartColorPalette|monochromaticwin"
 msgid "Monochromatic"
-msgstr ""
+msgstr "Monochrome"
 
 #. 6JxiC
 #: chart2/uiconfig/ui/tp_ChartGradients.ui:69
 msgctxt "tp_ChartGradients|lightwin"
 msgid "Light Variations"
-msgstr ""
+msgstr "Variations claires"
 
 #. DmWVa
 #: chart2/uiconfig/ui/tp_ChartGradients.ui:128
 msgctxt "tp_ChartGradients|darkwin"
 msgid "Dark Variations"
-msgstr ""
+msgstr "Variations sombres"
 
 #. FG2rh
 #: chart2/uiconfig/ui/tp_ChartType.ui:114
 msgctxt "tp_ChartType|extended_tip|subtype_iconview"
 msgid "Select a sub type of the basic chart type."
-msgstr ""
+msgstr "Sélectionner un sous-type du type de graphe de base."
 
 #. Wh4j6
 #: chart2/uiconfig/ui/tp_ChartType.ui:167
@@ -288,43 +295,43 @@ msgstr ""
 #: cui/uiconfig/ui/hyperlinkinternetpage.ui:64
 msgctxt "hyperlinkinternetpage|target_label"
 msgid "Link:"
-msgstr ""
+msgstr "Lien :"
 
 #. gfELk
 #: cui/uiconfig/ui/pageformatpage.ui:260
 msgctxt "pageformatpage|checkResizeAllPages"
 msgid "Resize all pages"
-msgstr ""
+msgstr "Redimensionner toutes les pages"
 
 #. NBdEp
 #: cui/uiconfig/ui/pickbulletpage.ui:45
 msgctxt "pickbulletpage|extended_tip|pick_bullet_iconview"
 msgid "Click the bullet style that you want to use."
-msgstr ""
+msgstr "Cliquer le style de puce que vous souhaitez utiliser."
 
 #. rkoDB
 #: cui/uiconfig/ui/pickgraphicpage.ui:45
 msgctxt "pickgraphicpage|extended_tip|pick_graphic_iconview"
 msgid "Click the graphics that you want to use as bullets."
-msgstr ""
+msgstr "Cliquer sur le pictogramme que vous souhaitez utiliser comme puce."
 
 #. WGzy5
 #: cui/uiconfig/ui/picknumberingpage.ui:44
 msgctxt "picknumberingpage|extended_tip|pick_numbering_iconview"
 msgid "Click the numbering scheme that you want to use."
-msgstr ""
+msgstr "Cliquer sur le format d'énumération que vous souhaitez utiliser."
 
 #. avppC
 #: cui/uiconfig/ui/pickoutlinepage.ui:44
 msgctxt "pickoutlinepage|extended_tip|pick_outline_iconview"
 msgid "Click the outline style that you want to use."
-msgstr ""
+msgstr "Cliquer sur le style d'encadrement que vous souhaitez utiliser."
 
 #. qpArp
 #: cui/uiconfig/ui/toolbarmodedialog.ui:124
 msgctxt "ToolbarmodeDialog|radiobutton1"
 msgid "Compact"
-msgstr ""
+msgstr "Compact"
 
 #. ZbYiG
 #: include/svtools/strings.hrc:71
@@ -336,13 +343,13 @@ msgstr ""
 #: include/sfx2/strings.hrc:227
 msgctxt "STR_SID_QUICKFIND"
 msgid "Quick Find"
-msgstr ""
+msgstr "Trouver rapidement"
 
 #. 2VmCo
 #: sfx2/uiconfig/ui/licensedialog.ui:41
 msgctxt "licensedialog|eula"
 msgid "_EULA"
-msgstr ""
+msgstr "_EULA"
 
 #. jjkw7
 #: sfx2/uiconfig/ui/licensedialog.ui:85
@@ -357,25 +364,25 @@ msgstr ""
 #: sfx2/uiconfig/ui/templatepanel.ui:137
 msgctxt "templatepanel|accessible_name|watercan"
 msgid "Fill Format Mode"
-msgstr ""
+msgstr "Mode format de remplissage"
 
 #. qvBEu
 #: sfx2/uiconfig/ui/templatepanel.ui:156
 msgctxt "templatepanel|accessible_name|new"
 msgid "New Style from Selection"
-msgstr ""
+msgstr "Nouveau style depuis la Sélection"
 
 #. 5ZAqh
 #: sfx2/uiconfig/ui/templatepanel.ui:174
 msgctxt "templatepanel|accessible_name|newmenu"
 msgid "Styles actions"
-msgstr ""
+msgstr "Actions de styles"
 
 #. 7NfdA
 #: sfx2/uiconfig/ui/templatepanel.ui:192
 msgctxt "templatepanel|accessible_name|update"
 msgid "Update Style"
-msgstr ""
+msgstr "Mettre à jour le Style"
 
 #. BGAhD
 #: sfx2/uiconfig/ui/templatepanel.ui:242
@@ -387,55 +394,55 @@ msgstr "Mise en évidence"
 #: sfx2/uiconfig/ui/templatepanel.ui:272
 msgctxt "templatepanel|filter-atkobject"
 msgid "Filter"
-msgstr ""
+msgstr "Filtrer"
 
 #. 5xrhC
 #: sw/inc/strings.hrc:232
 msgctxt "STR_COLUMN_ICONVIEW_ITEM0"
 msgid "1 column"
-msgstr ""
+msgstr "1 colonne"
 
 #. VAfCS
 #: sw/inc/strings.hrc:233
 msgctxt "STR_COLUMN_ICONVIEW_ITEM1"
 msgid "2 columns with equal size"
-msgstr ""
+msgstr "2 colonnes avec la même taille"
 
 #. g8pFG
 #: sw/inc/strings.hrc:234
 msgctxt "STR_COLUMN_ICONVIEW_ITEM2"
 msgid "3 columns with equal size"
-msgstr ""
+msgstr "3 colonnes avec la même taille"
 
 #. QJxAd
 #: sw/inc/strings.hrc:235
 msgctxt "STR_COLUMN_ICONVIEW_ITEM3"
 msgid "2 columns with different size (left > right)"
-msgstr ""
+msgstr "2 colonnes avec des tailles différents (gauche > droite)"
 
 #. MHk4E
 #: sw/inc/strings.hrc:236
 msgctxt "STR_COLUMN_ICONVIEW_ITEM4"
 msgid "2 columns with different size (left < right)"
-msgstr ""
+msgstr "2 colonnes avec des tailles différentes (gauche < droite)"
 
 #. xPgHS
 #: sw/inc/strings.hrc:498
 msgctxt "STR_REINSTATE_REDLINE"
 msgid "Reinstate change: $1"
-msgstr ""
+msgstr "Réappliquer le changement : $1"
 
 #. afEVQ
 #: sw/inc/strings.hrc:1536
 msgctxt "STR_COMPAT_OPT_UNDERLINETRAILINGSPACE"
 msgid "Underline Word-compatible trailing blanks"
-msgstr ""
+msgstr "Sous-ligner les blancs de fin de ligne compatible avec Word"
 
 #. B3rfb
 #: sw/uiconfig/swriter/ui/columnpage.ui:122
 msgctxt "columnpage|columnft"
 msgid "Column"
-msgstr ""
+msgstr "Colonne"
 
 #. Lurdj
 #: sw/uiconfig/swriter/ui/columnpage.ui:868
@@ -443,6 +450,8 @@ msgctxt "columnpage|extended_tip|column-iconview"
 msgid ""
 "Enter the number of columns that you want in the page, frame, or section."
 msgstr ""
+"Entrer le nombre de colonnes que vous souhaitez dans la page, le cadre ou la "
+"section."
 
 #. Ci9GE
 #: sw/uiconfig/swriter/ui/spellmenu.ui:34
@@ -454,7 +463,7 @@ msgstr "Ajouter au _dictionnaire (standard.dic)"
 #: sw/uiconfig/swriter/ui/wordcount-mobile.ui:643
 msgctxt "wordcount-mobile|comments"
 msgid "Comments"
-msgstr ""
+msgstr "Commentaires"
 
 #. SsL8u
 #: formula/inc/core_resource.hrc:2628
@@ -544,25 +553,25 @@ msgstr "ORGA.LIGNES"
 #: formula/uiconfig/ui/functionpage.ui:80
 msgctxt "functionpage|label_category"
 msgid "_Category:"
-msgstr ""
+msgstr "_Catégorie :"
 
 #. BNnFg
 #: formula/uiconfig/ui/functionpage.ui:115
 msgctxt "functionpage|label_function"
 msgid "_Function:"
-msgstr ""
+msgstr "_Fonction :"
 
 #. zRASZ
 #: formula/uiconfig/ui/structpage.ui:28
 msgctxt "structpage|label_struct"
 msgid "Content:"
-msgstr ""
+msgstr "Contenu :"
 
 #. DPToC
 #: sd/uiconfig/simpress/ui/layoutpanel.ui:41
 msgctxt "layoutpanel|extended_tip|layoutpanel_icons"
 msgid "List of available layout templates."
-msgstr ""
+msgstr "Liste des mises en page de modèle disponible."
 
 #. Y3kBV
 #: filter/uiconfig/ui/impswfdialog.ui:14
@@ -726,7 +735,7 @@ msgctxt ""
 "UIName\n"
 "value.text"
 msgid "Macromedia Flash (SWF)"
-msgstr ""
+msgstr "Macromedia Flash (SWF)"
 
 #. MsYCr
 #: impress_flash_Export.xcu
@@ -736,7 +745,7 @@ msgctxt ""
 "UIName\n"
 "value.text"
 msgid "Macromedia Flash (SWF)"
-msgstr ""
+msgstr "Macromedia Flash (SWF)"
 
 #. FoizC
 #: CalcCommands.xcu
@@ -746,7 +755,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Current Sheet View"
-msgstr ""
+msgstr "Vue de feuille de calcul courrante"
 
 #. 3Ep4Y
 #: CalcCommands.xcu
@@ -756,7 +765,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Insert Function"
-msgstr ""
+msgstr "Insérer une Fonction"
 
 #. rxGTc
 #: CalcCommands.xcu
@@ -766,7 +775,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Print Grid Lines"
-msgstr ""
+msgstr "Ligne de Grille d'Impression"
 
 #. a35bF
 #: CalcCommands.xcu
@@ -836,7 +845,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Manage Themes..."
-msgstr ""
+msgstr "Gérer les Thèmes..."
 
 #. 5LESd
 #: ChartCommands.xcu
@@ -896,7 +905,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Re-order pages"
-msgstr ""
+msgstr "Re-trier les pages"
 
 #. ca6bM
 #: GenericCommands.xcu
@@ -906,7 +915,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Slide Transitions"
-msgstr ""
+msgstr "Transitions de Diapo"
 
 #. 5pSJ6
 #: GenericCommands.xcu
@@ -916,7 +925,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Master Pages"
-msgstr ""
+msgstr "Pages Maîtresse"
 
 #. DCEaK
 #: GenericCommands.xcu
@@ -926,7 +935,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "~Hyperlink"
-msgstr ""
+msgstr "~Hyperlien"
 
 #. aFFu9
 #: GenericCommands.xcu
@@ -936,7 +945,7 @@ msgctxt ""
 "PopupLabel\n"
 "value.text"
 msgid "Insert Hyperlink..."
-msgstr ""
+msgstr "Insérer Hyperlien..."
 
 #. czVMP
 #: GenericCommands.xcu
@@ -1999,7 +2008,7 @@ msgstr "Vues de feuilles disponibles."
 #: sc/uiconfig/scalc/ui/sheetviewbox.ui:17
 msgctxt "sheetviewbox|sheetview_combobox|accessible_name"
 msgid "Sheet View"
-msgstr "Feuille personnelle"
+msgstr "Vue de Feuille"
 
 #. FXK8B
 #: sc/uiconfig/scalc/ui/sidebarcellappearance.ui:87
