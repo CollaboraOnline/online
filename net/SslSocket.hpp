@@ -306,14 +306,13 @@ private:
             const unsigned long bioError = ERR_peek_error();
             if (bioError != 0)
             {
-                const size_t errorStringLength = 256;
-                std::unique_ptr<char[]> errorString = std::make_unique<char[]>(errorStringLength);
-                ERR_error_string_n(bioError, errorString.get(), errorStringLength);
+                constexpr size_t errorStringLength = 256;
+                char errorString[errorStringLength + 1] = { '\0' };
+                ERR_error_string_n(bioError, errorString, errorStringLength);
 
-                LOG_DBG("Unexpected SSL error ("
-                        << "'" << errorString << "'"
-                        << ") after success implies uncleared earlier errors or "
-                           "a bug in the SSL library");
+                LOG_DBG("Unexpected SSL error (" << errorString
+                                                 << ") after success implies uncleared earlier "
+                                                    "errors or a bug in the SSL library");
                 ERR_clear_error();
             }
 
