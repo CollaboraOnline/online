@@ -1684,7 +1684,7 @@ private:
             _kitDisconnected; ///< Disconnected from the Kit. Implies unloading.
         bool _interactive; ///< If the document has interactive dialogs before load
         bool _isFollowmeSlideShowOn = false;
-        int _currentLeaderEffect = -1;
+        int _currentLeaderEffect = 0;
         int _currentLeaderSlide = -1;
     };
 

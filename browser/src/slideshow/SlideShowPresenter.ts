@@ -240,13 +240,13 @@ class SlideShowPresenter {
 							? 0
 							: this._slideShowNavigator.getLeaderSlide(),
 					startEffectNumber:
-						this._slideShowNavigator.getLeaderEffect() === -1
+						this._slideShowNavigator.getLeaderEffect() === 0
 							? undefined
 							: this._slideShowNavigator.getLeaderEffect(),
 				});
 				break;
 			case 'dispatcheffect':
-				if (this.isFollowing()) this._slideShowNavigator.dispatchEffect();
+				if (this.isFollowing()) this._slideShowNavigator.dispatchEffect(false);
 				break;
 			case 'rewindeffect':
 				if (this.isFollowing()) this._slideShowNavigator.rewindEffect();
