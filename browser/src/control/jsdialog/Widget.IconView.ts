@@ -42,6 +42,22 @@ function _createEntryImage(
 		img.alt = '';
 	}
 
+	// FIXME: not beautiful - would be great to know the dimensions
+	// for all of these up-front and do this nicely @ dpiscale for
+	// all icon views.
+	if (
+		parent &&
+		parent.parentElement &&
+		parent.parentElement.id &&
+		parent.parentElement.id.startsWith('stylesview')
+	) {
+		img.addEventListener('load', () => {
+			const ratio = window.devicePixelRatio || 1;
+			img.style.width = img.naturalWidth / ratio + 'px';
+			img.style.height = img.naturalHeight / ratio + 'px';
+		});
+	}
+
 	if (entryData.tooltip) img.title = entryData.tooltip;
 	else if (entryData.text) img.title = entryData.text;
 	else img.title = '';
