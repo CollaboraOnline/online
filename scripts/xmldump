@@ -63,7 +63,7 @@ def read_and_aggregate(zip_path, file_counts, element_counts, attribute_counts):
                     element_counts[elem.tag] += 1
                     # Count attribute *names*
                     for attr_name in elem.attrib.keys():
-                        attribute_counts[elem.tag] += 1
+                        attribute_counts[attr_name] += 1
             except Exception as e:
                 print(f"  [!] Failed to parse {name}: {e}", file=sys.stderr)
 
