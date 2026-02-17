@@ -170,6 +170,7 @@ interface AppInterface {
 	};
 	writer: {
 		compareDocumentProperties: CompareDocumentProperties | null;
+		compareDocumentOldFileName: string | null;
 	};
 	IconUtil: typeof IconUtil;
 	Evented: typeof Evented;

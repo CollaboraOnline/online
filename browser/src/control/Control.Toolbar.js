@@ -832,6 +832,8 @@ function onCompareDocuments() {
 	if ('files' in compareDocuments) {
 		for (let i = 0; i < compareDocuments.files.length; i++) {
 			const file = compareDocuments.files[i];
+			// Remember old file name for CompareChangesLabelSection
+			app.writer.compareDocumentOldFileName = file.name;
 			map.compareDocuments(file);
 		}
 	}
