@@ -26,9 +26,9 @@
     <string name="app_description">$APP_NAME це сучасний, простий у використанні набір програм з відкритим кодом для обробки текстів, електронних таблиць, презентацій тощо.</string>
     <string name="app_version">Версія: %1$s, збірка: %2$s</string>
     <string name="app_name_settings">Налаштування</string>
-    <string name="otg_missing_error">Недійсний файл привілеїв. Перевірте Ваш OTG пристрій і/або налаштування.</string>
-    <string name="ext_document_provider_error">Недійсний кореневий файл. Перевірте налаштування SD-картки.</string>
-    <string name="owncloud_unspecified_error">Помилка підключення до хмарного сервера. Перевірте свої налаштування і/або спробуйте пізніше.</string>
+    <string name="otg_missing_error">Недійсний файл привілеїв. Перевірте ваш пристрій OTG та/або налаштування.</string>
+    <string name="ext_document_provider_error">Недійсний кореневий файл. Перевірте налаштування картки пам\'яті SD.</string>
+    <string name="owncloud_unspecified_error">Помилка підключення до хмарного сервера. Перевірте свої налаштування та/або спробуйте пізніше.</string>
     <string name="owncloud_unauthorized">Не вдалося авторизуватись на хмарному сервері. Перевірте свої налаштування.</string>
     <string name="owncloud_wrong_connection">Не можна під\'єднатися до хмарного сервера. Перевірте свої налаштування.</string>
     <string name="usb_connected_configure">USB під\'єднано, налаштуйте свій пристрій.</string>
@@ -99,7 +99,7 @@
     <string name="server_url_and_port">URL і порт хмарного сервера.</string>
     <string name="server_url">URL сервера</string>
     <string name="otg_warning">Експериментальна можливість: Використовувати, тільки якщо OTG пристрій доступний для запису.</string>
-    <string name="pref_category_editor">Налаштування Редактора</string>
+    <string name="pref_category_editor">Налаштування редактора</string>
     <string name="remove_from_list">Видалити зі списку</string>
     <string name="file_actions_icon_desc">Дії з файлами</string>
     <string name="app_version_and_hash">Версія: %1$s \nonline git-hash: %2$s \ncore git-hash: %3$s</string>
