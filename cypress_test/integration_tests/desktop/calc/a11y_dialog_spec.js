@@ -73,10 +73,7 @@ const buggyCalcDialogs = [
     '.uno:FormatCellDialog',
     '.uno:FunctionDialog',
     '.uno:InsertObjectChart',
-    '.uno:JumpToTable',
     '.uno:PageFormatDialog',
-    '.uno:Protect',
-    '.uno:StyleNewByExample',
     '.uno:Validation',
 ];
 
