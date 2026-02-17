@@ -2219,7 +2219,7 @@ int APIENTRY wWinMain(HINSTANCE hInstance, HINSTANCE, PWSTR, int showWindowMode)
         for (int i = 1; i < __argc; i++)
         {
             auto path = Poco::Path(Util::wide_string_to_string(__wargv[i]));
-            filenamesAndUrisToOpen.push_back({ path.getFileName(), Poco::URI(path).toString() });
+            filenamesAndUrisToOpen.push_back({ path.getFileName(), pathToURI(path) });
         }
     }
 
