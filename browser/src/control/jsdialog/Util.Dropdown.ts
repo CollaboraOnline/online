@@ -226,12 +226,8 @@ JSDialog.OpenDropdown = function (
 					JSDialog.CloseDropdown(id);
 					return;
 				} else {
-					app.console.error(
-						'Dropdown: unhandled action: "' +
-							eventType +
-							'" for entry: "' +
-							JSON.stringify(entry) +
-							'"',
+					app.console.debug(
+						'Dropdown: potential unhandled action: "' + eventType + '"',
 					);
 				}
 			} else if (eventType === 'hidedropdown') {
@@ -249,7 +245,14 @@ JSDialog.OpenDropdown = function (
 				return;
 
 			if (eventType === 'selected') JSDialog.CloseDropdown(id);
-			else console.debug('Dropdown: unhandled action: "' + eventType + '"');
+
+			app.console.warn(
+				'Dropdown: unhandled action: "' +
+					eventType +
+					'" for entry: "' +
+					JSON.stringify(entry) +
+					'"',
+			);
 		};
 	};
 	window.L.Map.THIS.fire('closepopups'); // close popups if a dropdown menu is opened
