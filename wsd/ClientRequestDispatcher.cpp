@@ -2790,21 +2790,17 @@ std::string getCapabilitiesJson(bool convertToAvailable)
     // Set the Server ID
     capabilities->set("serverId", Util::getProcessIdentifier());
 
-    CONFIG_STATIC const bool sig = ConfigUtil::getBool("security.server_signature", false);
-    if (sig)
-    {
-        // Set the product version
-        capabilities->set("productVersion", Util::getCoolVersion());
+    // Set the product version
+    capabilities->set("productVersion", Util::getCoolVersion());
 
-        // Set the product version hash
-        capabilities->set("productVersionHash", Util::getCoolVersionHash());
+    // Set the product version hash
+    capabilities->set("productVersionHash", Util::getCoolVersionHash());
 
-        // Set the kit version
-        capabilities->set("productKitVersion", COOLWSD::LOKitVersionNumber);
+    // Set the kit version
+    capabilities->set("productKitVersion", COOLWSD::LOKitVersionNumber);
 
-        // Set the kit version hash
-        capabilities->set("productKitVersionHash", COOLWSD::LOKitVersionHash);
-    }
+    // Set the kit version hash
+    capabilities->set("productKitVersionHash", COOLWSD::LOKitVersionHash);
 
     // Set that this is a proxy.php-enabled instance
     capabilities->set("hasProxyPrefix", COOLWSD::IsProxyPrefixEnabled);
