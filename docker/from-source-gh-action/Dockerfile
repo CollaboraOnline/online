@@ -56,7 +56,7 @@ RUN apt-get update \
     fonts-noto-cjk ca-certificates \
     && rm -rf /var/lib/apt/lists/*
 # copy freshly built LOKit and Collabora Online
-COPY --from=builder /build/instdir /
+COPY --from=builder /build/docker/from-source-gh-action/instdir /
 
 # copy the shell script which can start Collabora Online (coolwsd)
 COPY docker/from-source-gh-action/start-collabora-online.sh /start-collabora-online.sh
