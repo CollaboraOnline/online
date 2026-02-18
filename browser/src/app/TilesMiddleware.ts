@@ -225,7 +225,7 @@ class TileManager {
 	private static _docLayer: any;
 	private static _zoom: number;
 	private static _preFetchPart: number;
-	private static _preFetchMode: number[];
+	private static _preFetchMode: number[] = [];
 	private static _hasEditPerm: boolean;
 	private static _pixelBounds: any;
 	private static _splitPos: any;
@@ -690,8 +690,9 @@ class TileManager {
 		}
 
 		if (
-			this._preFetchMode.every(function (item) {
-				return app.activeDocument.activeModes.includes(item);
+			app.activeDocument &&
+			!app.activeDocument.activeModes.every((item) => {
+				return this._preFetchMode.includes(item);
 			})
 		) {
 			this._preFetchMode = app.activeDocument.activeModes;
