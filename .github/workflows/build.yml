@@ -34,8 +34,12 @@ jobs:
           tags: |
             ${{ steps.global_env.outputs.DOCKERHUB_IMAGE_NAME }}:${{steps.gen_tags.outputs.tag}}
 
-      - name: Docker login
-        run: docker login registry.vaulterix.ru -u ${{secrets.new_registry_user}} -p ${{secrets.new_registry_password}}
+      - name: Docker Registry login
+        uses: docker/login-action@v3
+        with:
+          registry: registry.vaulterix.ru
+          username: ${{secrets.registry_user}}
+          password: ${{secrets.registry_password}}
 
       - name: Publish image
         env:
