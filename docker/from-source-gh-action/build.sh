@@ -63,9 +63,9 @@ fi
 mkdir -p core
 (
     cd core || exit 1
-    wget -O core-assets.tar.xz "$CORE_ASSETS"
-    tar -xJf core-assets.tar.xz
-    rm core-assets.tar.xz
+    wget -O core-assets.tar.gz "$CORE_ASSETS"
+    tar -xzf core-assets.tar.gz
+    rm core-assets.tar.gz
 ) || exit 1
 
 # Копируем собранный lokit
