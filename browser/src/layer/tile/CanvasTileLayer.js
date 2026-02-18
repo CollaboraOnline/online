@@ -984,6 +984,8 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 		else if (textMsg.startsWith('complexselection:')) {
 			if (this._map._clip)
 				this._map._clip.onComplexSelection(textMsg.substr('complexselection:'.length));
+			if (this._map)
+				this._map.fire('complexselection', { msg: textMsg });
 		}
 		else if (textMsg.startsWith('windowpaint:')) {
 			this._onDialogPaintMsg(textMsg, img);

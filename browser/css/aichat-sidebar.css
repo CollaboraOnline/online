@@ -155,6 +155,18 @@
 	animation: aichat-pulse 3s ease-in-out infinite;
 }
 
+/* ── Hint (transient inline warning) ── */
+
+#aichat-hint {
+	padding: 8px 14px;
+	font-size: 12px;
+	line-height: 1.5;
+	color: #7c6f2a;
+	background: #fef9e7;
+	border-top: 1px solid #f0e6b4;
+	flex-shrink: 0;
+}
+
 /* ── Message bubbles (shared) ── */
 
 [id^='aichat-msg-'] {

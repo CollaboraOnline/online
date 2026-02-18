@@ -38,6 +38,7 @@ namespace cool {
 		private inputText: string = '';
 		private _isActive: boolean = false;
 		private lastSentSelectedText: string = '';
+		private hintText: string = '';
 
 		private builder: any;
 		private container: HTMLElement;
@@ -192,15 +193,24 @@ namespace cool {
 		}
 
 		private getWidgetJSON(): any {
+			const children: any[] = [
+				this.getHeaderJSON(),
+				this.getMessagesAreaJSON(),
+			];
+			if (this.hintText) {
+				children.push({
+					id: 'aichat-hint',
+					type: 'fixedtext',
+					text: this.hintText,
+					enabled: true,
+				});
+			}
+			children.push(this.getInputJSON());
 			return {
 				id: 'aichat-main',
 				type: 'container',
 				vertical: true,
-				children: [
-					this.getHeaderJSON(),
-					this.getMessagesAreaJSON(),
-					this.getInputJSON(),
-				],
+				children: children,
 			};
 		}
 
@@ -519,11 +529,28 @@ namespace cool {
 			const text = this.inputText.trim();
 			if (!text || this.isProcessing) return;
 
+			if (!TextSelections.isActive()) {
+				this.hintText = _(
+					'Please select some text in the document first, so the AI assistant can help you with it.',
+				);
+				this.render();
+				return;
+			}
+
+			this.hintText = '';
+
 			let selectedText = '';
 			try {
 				selectedText = await this.fetchSelectedMarkdown();
-			} catch {
-				// No selection is fine
+			} catch (e: any) {
+				if (e?.message === 'complexselection') {
+					this.hintText = _(
+						'The selection contains images or other non-text content that cannot be sent as context.',
+					);
+					this.render();
+					return;
+				}
+				// Other errors (timeout, parse failure) — silently continue without selection
 			}
 
 			// Don't re-send identical selection context
@@ -621,21 +648,36 @@ namespace cool {
 			this.currentRequestId = '';
 			this.inputText = '';
 			this.lastSentSelectedText = '';
+			this.hintText = '';
+			this.render();
+		}
+
+		private addMessage(role: 'user' | 'assistant', content: string): void {
+			this.messages.push({
+				role: role,
+				content: content,
+				timestamp: Date.now(),
+			});
 			this.render();
 		}
 
 		private async fetchSelectedMarkdown(): Promise<string> {
 			return new Promise((resolve, reject) => {
+				const cleanup = () => {
+					clearTimeout(timeout);
+					app.map.off('textselectioncontent', handleTextResponse);
+					app.map.off('complexselection', handleComplexResponse);
+				};
+
 				const timeout = setTimeout(() => {
-					app.map.off('textselectioncontent', handleResponse);
+					cleanup();
 					reject(new Error(_('Selection fetch timeout')));
 				}, 5000);
 
-				const handleResponse = (e: any) => {
+				const handleTextResponse = (e: any) => {
 					const textMsg = e.msg || '';
 					if (textMsg.startsWith('textselectioncontent:')) {
-						app.map.off('textselectioncontent', handleResponse);
-						clearTimeout(timeout);
+						cleanup();
 
 						const content = textMsg.substring('textselectioncontent:'.length);
 						try {
@@ -653,7 +695,13 @@ namespace cool {
 					}
 				};
 
-				app.map.on('textselectioncontent', handleResponse);
+				const handleComplexResponse = () => {
+					cleanup();
+					reject(new Error('complexselection'));
+				};
+
+				app.map.on('textselectioncontent', handleTextResponse);
+				app.map.on('complexselection', handleComplexResponse);
 				app.socket.sendMessage(
 					'gettextselection mimetype=text/markdown;charset=utf-8',
 				);
