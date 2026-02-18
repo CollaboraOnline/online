@@ -174,8 +174,11 @@ inline constexpr bool failed() { return false; }
 /// Check the truth of a condition, logging on success.
 #define LOK_CHECK(condition) LOK_ASSERT_MESSAGE_IMPL("", condition, false, false)
 
+/// Assert the truth of a condition, logging on success, with a context.
+#define LOK_ASSERT_CTX(condition, CTX) LOK_ASSERT_MESSAGE_IMPL(CTX, condition, false, true)
+
 /// Assert the truth of a condition, logging on success.
-#define LOK_ASSERT(condition) LOK_ASSERT_MESSAGE_IMPL("", condition, false, true)
+#define LOK_ASSERT(condition) LOK_ASSERT_CTX(condition, "")
 
 /// Check the truth of a condition without logging on success.
 #define LOK_CHECK_SILENT(condition) LOK_ASSERT_MESSAGE_IMPL("", condition, true, false)
@@ -235,8 +238,18 @@ inline constexpr bool failed() { return false; }
 /// Check the equality of two expressions with guarantees of single evaluation.
 #define LOK_CHECK_EQUAL(EXP, ACT) LOK_CHECK_EQUAL_MESSAGE((#EXP) << " != " << (#ACT), EXP, ACT)
 
+/// Check the equality of two expressions with guarantees of single evaluation, with a context.
+/// ERROR: Check failure: 1 != 0, context: [comparing 0 and 1], Expected 0 [0] == 1 [1]
+#define LOK_CHECK_EQUAL_CTX(EXP, ACT, CTX)                                                         \
+    LOK_CHECK_EQUAL_MESSAGE((#EXP) << " != " << (#ACT) << ", context: [" << CTX << "],", EXP, ACT)
+
 /// Assert the equality of two expressions with guarantees of single evaluation.
 #define LOK_ASSERT_EQUAL(EXP, ACT) LOK_ASSERT_EQUAL_MESSAGE((#EXP) << " != " << (#ACT), EXP, ACT)
+
+/// Check the equality of two expressions with guarantees of single evaluation, with a context.
+/// ERROR: Assertion failure: 1 != 0, context: [comparing 0 and 1], Expected 0 [0] == 1 [1]
+#define LOK_ASSERT_EQUAL_CTX(EXP, ACT, CTX)                                                        \
+    LOK_ASSERT_EQUAL_MESSAGE((#EXP) << " != " << (#ACT) << ", context: [" << CTX << "],", EXP, ACT)
 
 /// Check the equality of two expressions with guarantees of single evaluation.
 #define LOK_CHECK_EQUAL_STR(EXP, ACT)                                                              \
