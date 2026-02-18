@@ -39,8 +39,9 @@
 #include <sys/capability.h>
 #endif
 
-#if defined(__FreeBSD__) || defined(MACOS)
+#if defined(__FreeBSD__) || defined(MACOS) || (defined(__linux__) && !defined(__GLIBC__))
 #include <ftw.h>
+// FTW_CONTINUE, FTW_STOP, FTW_SKIP_SUBTREE, FTW_ACTIONRETVAL are glibc extensions
 #define FTW_CONTINUE 0
 #define FTW_STOP (-1)
 #define FTW_SKIP_SUBTREE 0

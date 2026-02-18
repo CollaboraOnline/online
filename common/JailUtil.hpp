@@ -12,6 +12,7 @@
 #pragma once
 
 #include <string>
+#include <sys/types.h>
 
 namespace JailUtil
 {
