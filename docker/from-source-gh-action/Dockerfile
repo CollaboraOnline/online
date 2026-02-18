@@ -59,7 +59,7 @@ RUN apt-get update \
 COPY --from=builder /build/instdir /
 
 # copy the shell script which can start Collabora Online (coolwsd)
-COPY /start-collabora-online.sh /start-collabora-online.sh
+COPY docker/from-source-gh-action/start-collabora-online.sh /start-collabora-online.sh
 
 # set up Collabora Online (normally done by postinstall script of package)
 # Fix permissions
