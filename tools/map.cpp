@@ -21,11 +21,12 @@
 #include <unordered_map>
 #include <unordered_set>
 
+#include <stdarg.h>
 #include <stdint.h>
 #include <string.h>
 #include <ctype.h>
 #include <errno.h>
-#ifdef __linux__
+#if defined(__GLIBC__)
 #include <error.h>
 #endif
 #include <fcntl.h>
@@ -39,7 +40,7 @@
 #include <common/HexUtil.hpp>
 #include <common/Util.hpp>
 
-#ifndef __linux__
+#if !defined(__GLIBC__)
 void error(int status, int errnum, const char *format, ...)
 {
     va_list args;
