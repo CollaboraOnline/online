@@ -642,6 +642,11 @@ window.L.Map.WOPI = window.L.Handler.extend({
 		}
 		else if (msg.MessageId == 'Action_CompareDocuments') {
 			if (msg.Values) {
+				if (msg.Values.filename) {
+					// Remember old file name for CompareChangesLabelSection.
+					app.writer.compareDocumentOldFileName = msg.Values.filename;
+				}
+
 				this._map.insertURL(msg.Values.url, "comparedocumentsurl");
 			}
 		}
