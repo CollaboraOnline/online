@@ -326,7 +326,7 @@ window.L.Control.PartsPreview = window.L.Control.extend({
 						name: app.IconUtil.createMenuItemLink(_('Paste'), 'Paste'),
 						isHtmlName: true,
 						callback: function() {
-							that._map._clip._execCopyCutPaste('paste', ".uno:Paste")
+							that._map._clip.filterExecCopyPaste('.uno:Paste');
 						},
 					},
 					newslide: {
