@@ -11,12 +11,19 @@
 
 echo "Building from current repository (expected branch: vaulterix/co-24.04 or similar custom fork)"
 
-# Проверяем, что мы внутри репозитория Collabora Online (есть ключевые директории)
+SRCDIR=$(realpath "$(dirname "$0")")
+SOURCE_ROOT=$(realpath "$SRCDIR/../..")  # Поднимаемся к корню репо (/build в контейнере)
+INSTDIR="$SRCDIR/instdir"
+BUILDDIR="$SRCDIR/builddir"
+
+# Проверка теперь на SOURCE_ROOT, чтобы учесть поддир
+cd "$SOURCE_ROOT" || exit 1
 if [ ! -d "wsd" ] && [ ! -d "kit" ] && [ ! -f "Makefile.am" ]; then
     echo "ERROR: This script must be run from inside Collabora Online source tree"
     echo "       (expected files/directories like src/, wsd/, kit/, autogen.sh etc. not found)"
     exit 1
 fi
+cd "$SRCDIR" || exit 1  # Возвращаемся в dir скрипта
 
 if [ -z "$CORE_ASSETS" ]; then
     CORE_ASSETS="https://github.com/CollaboraOnline/online/releases/download/for-code-assets/core-co-24.04-assets.tar.gz"
@@ -29,10 +36,6 @@ if [ -z "$CORE_BUILD_TARGET" ]; then
     CORE_BUILD_TARGET=""
 fi
 echo "LOKit (core) build target: '$CORE_BUILD_TARGET'"
-
-SRCDIR=$(realpath "$(dirname "$0")")
-INSTDIR="$SRCDIR/instdir"
-BUILDDIR="$SRCDIR/builddir"
 
 mkdir -p "$BUILDDIR"
 cd "$BUILDDIR" || exit 1
@@ -71,7 +74,8 @@ cp -a core/instdir "$INSTDIR/opt/lokit"
 
 ##### coolwsd & cool (online часть) #####
 
-# Используем текущий код (из вашей ветки vaulterix/co-24.04)
+# Переходим в корень исходников для билда online
+cd "$SOURCE_ROOT" || exit 1
 
 # build
 ( ./autogen.sh ) || exit 1

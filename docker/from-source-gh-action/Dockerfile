@@ -36,7 +36,7 @@ RUN cd builddir && tar xf poco-1.12.5p2-all.tar.gz && cd poco-1.12.5p2-all/ && \
 
 COPY / $BUILDDIR/
 
-RUN bash build.sh
+RUN bash docker/from-source-gh-action/build.sh
 
 # Build the final image
 FROM ubuntu:24.04
