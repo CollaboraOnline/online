@@ -15,7 +15,6 @@
 #include "FakeSocket.hpp"
 #include "Log.hpp"
 #include "MobileApp.hpp"
-#include "Clipboard.hpp"
 #include "Protocol.hpp"
 #include "Util.hpp"
 #include "FileUtil.hpp"
@@ -26,7 +25,6 @@
 #include "common/SettingsStorage.hpp"
 #include <common/StringVector.hpp>
 
-#include <Poco/MemoryStream.h>
 #include <Poco/JSON/Parser.h>
 #include <Poco/JSON/Object.h>
 #include <Poco/JSON/Array.h>
@@ -98,6 +96,7 @@ const int SHOW_JS_MAXLEN = 300;
 int coolwsd_server_socket_fd = -1;
 static COOLWSD* coolwsd = nullptr;
 static std::thread coolwsdThread;
+static std::atomic<unsigned> sClipboardSourceDocId{0};
 QWebEngineProfile* Application::globalProfile = nullptr;
 RecentFiles Application::recentFiles;
 
@@ -157,118 +156,97 @@ static const char* getUserName()
 
 static void getClipboard(unsigned appDocId)
 {
-    std::unique_ptr<QMimeData> mimeData(new QMimeData());
-
     lok::Document* loKitDoc = DocumentData::get(appDocId).loKitDocument;
     if (!loKitDoc)
     {
-        LOG_DBG("Couldn't get the loKitDocument in getClipboardInternal");
+        LOG_DBG("getClipboard: no loKitDocument");
         return;
     }
 
-    const char** mimeTypes = nullptr;
     size_t outCount = 0;
     char** outMimeTypes = nullptr;
     size_t* outSizes = nullptr;
     char** outStreams = nullptr;
 
-    if (!loKitDoc->getClipboard(mimeTypes, &outCount, &outMimeTypes, &outSizes, &outStreams))
+    if (!loKitDoc->getClipboard(nullptr, &outCount, &outMimeTypes, &outSizes, &outStreams)
+        || outCount == 0)
     {
-        LOG_DBG("Failed to fetch mime-types in getClipboardInternal");
+        LOG_DBG("getClipboard: empty or failed");
         return;
     }
 
-    if (outCount == 0)
-        return;
-
+    auto mimeData = std::make_unique<QMimeData>();
     for (size_t i = 0; i < outCount; ++i)
     {
-        QString mimeType = QString::fromUtf8(outMimeTypes[i]);
-        QByteArray byteData(outStreams[i], static_cast<int>(outSizes[i]));
-
-        if (mimeType == "text/plain")
-        {
-            QString text = QString::fromUtf8(byteData);
-            mimeData->setText(text);
-        }
-        else if (mimeType.startsWith("image/"))
-        {
-            QImage image;
-            image.loadFromData(byteData);
-            if (!image.isNull())
-                mimeData->setImageData(image);
-        }
-
-        // Always include raw data as well
-        mimeData->setData(mimeType, byteData);
+        if (outStreams[i] != nullptr && outSizes[i] > 0)
+            mimeData->setData(QString::fromUtf8(outMimeTypes[i]),
+                              QByteArray(outStreams[i], static_cast<int>(outSizes[i])));
+        free(outMimeTypes[i]);
+        free(outStreams[i]);
     }
+    free(outMimeTypes);
+    free(outSizes);
+    free(outStreams);
 
-    // Set the mime data to the system clipboard
-    QClipboard* clipboard = QGuiApplication::clipboard();
-    clipboard->setMimeData(mimeData.release());
+    QGuiApplication::clipboard()->setMimeData(mimeData.release());
+    sClipboardSourceDocId.store(appDocId);
 }
 
 static void setClipboard(unsigned appDocId)
 {
-    QClipboard* clipboard = QApplication::clipboard();
-    if (!clipboard)
+    lok::Document* loKitDoc = DocumentData::get(appDocId).loKitDocument;
+    if (!loKitDoc)
         return;
 
-    std::vector<std::string> mimeTypes;
-    std::vector<char const *> mimeTypePtrs;
-    std::vector<std::size_t> sizes;
-    std::vector<char const *> streams;
-    auto const data = clipboard->mimeData(QClipboard::Clipboard);
-    for (auto const & format: data->formats()) {
-        mimeTypes.push_back(format.toStdString());
-        auto const stream = data->data(format);
-        sizes.push_back(stream.size());
-        streams.push_back(stream.data());
-    }
-    for (auto const & type: mimeTypes) {
-        mimeTypePtrs.push_back(type.c_str());
-    }
-    DocumentData::get(appDocId).loKitDocument->setClipboard(
-        mimeTypes.size(), mimeTypePtrs.data(), sizes.data(), streams.data());
-}
+    const QMimeData* data = QApplication::clipboard()->mimeData();
+    if (!data)
+        return;
 
-static void setClipboardFromContent(unsigned appDocId, const std::string& content)
-{
-    std::vector<const char*> streams;
-    std::vector<const char*> mimeTypes;
+    // Limit MIME types that LOKit can consume. Keeping this set small also avoids IPC round-trips
+    // to clipboard owners for formats they won't provide usefully (e.g. Emacs advertises many X11
+    // atoms and app-specific types alongside text/plain).
+    auto isLoKitFormat = [](const QString& f)
+    {
+        return f.startsWith(QLatin1String("text/"))
+            || f == QLatin1String("image/png")
+            || f == QLatin1String("image/jpeg")
+            || f == QLatin1String("image/bmp")
+            || f.startsWith(QLatin1String("image/svg+"))   // image/svg+xml and ;params
+            || f.startsWith(QLatin1String("application/x-openoffice-"))
+            || f.startsWith(QLatin1String("application/x-libreoffice-"))
+            || f.startsWith(QLatin1String("application/vnd.oasis.opendocument."))
+            || f.startsWith(QLatin1String("application/vnd.sun.xml."))
+            || f == QLatin1String("application/msword")
+            || f == QLatin1String("application/mathml+xml")
+            || f == QLatin1String("application/pdf");
+    };
+
+    std::vector<std::string> mimeTypeStrings;
+    std::vector<QByteArray> byteArrays;
+    for (const QString& format : data->formats())
+    {
+        if (!isLoKitFormat(format))
+            continue;
+        QByteArray bytes = data->data(format);
+        if (bytes.isEmpty())
+            continue;
+        mimeTypeStrings.push_back(format.toStdString());
+        byteArrays.push_back(std::move(bytes));
+    }
+
+    std::vector<const char*> mimeTypePtrs;
     std::vector<size_t> sizes;
-    ClipboardData data;
-
-    if (content.rfind("<!DOCTYPE html>", 0) == 0) // prefix test
+    std::vector<const char*> streams;
+    for (size_t i = 0; i < mimeTypeStrings.size(); ++i)
     {
-        streams.push_back(content.data());
-        mimeTypes.push_back("text/html");
-        sizes.push_back(content.length());
-    }
-    else
-    {
-        Poco::MemoryInputStream mis(content.data(), content.size());
-
-        data.read(mis); // parses into _content / _mimeTypes
-
-        const size_t n = data.size();
-        streams.reserve(n);
-        mimeTypes.reserve(n);
-        sizes.reserve(n);
-
-        for (size_t i = 0; i < n; ++i)
-        {
-            streams.push_back(data._content[i].c_str());
-            mimeTypes.push_back(data._mimeTypes[i].c_str());
-            sizes.push_back(data._content[i].length());
-        }
+        mimeTypePtrs.push_back(mimeTypeStrings[i].c_str());
+        sizes.push_back(byteArrays[i].size());
+        streams.push_back(byteArrays[i].data());
     }
 
-    if (!streams.empty())
-    {
-        DocumentData::get(appDocId).loKitDocument->setClipboard(streams.size(), mimeTypes.data(),
-                                                                sizes.data(), streams.data());
-    }
+    if (!mimeTypePtrs.empty())
+        loKitDoc->setClipboard(mimeTypePtrs.size(), mimeTypePtrs.data(), sizes.data(),
+                               streams.data());
 }
 
 // Helper structure for save-as format options
@@ -770,7 +748,6 @@ static void closeStarterScreen()
 
 QVariant Bridge::cool(const QString& messageStr)
 {
-    constexpr std::string_view CLIPBOARDSET = "CLIPBOARDSET ";
     constexpr std::string_view DOWNLOADAS = "downloadas ";
     constexpr std::string_view HYPERLINK = "HYPERLINK ";
     constexpr std::string_view COMMANDSTATECHANGED = "COMMANDSTATECHANGED ";
@@ -928,7 +905,6 @@ QVariant Bridge::cool(const QString& messageStr)
     }
     else if (message.starts_with(COMMANDRESULT))
     {
-        return {};
         const auto object = parseJsonFromMessage(message, COMMANDRESULT.size());
         if (!object)
             return {};
@@ -946,6 +922,11 @@ QVariant Bridge::cool(const QString& messageStr)
         {
             isAutosave = object->get("isAutosave").convert<bool>();
         }
+
+        // Sync LOKit clipboard to system clipboard after copy or cut.
+        if (commandName == ".uno:Copy" || commandName == ".uno:Cut"
+            || commandName == ".uno:CopySlide")
+            getClipboard(_document._appDocId);
 
         // only handle successful .uno:Save commands
         // let manually triggered saves through even if the document is not modified.
@@ -1008,26 +989,47 @@ QVariant Bridge::cool(const QString& messageStr)
             }
         });
     }
-    else if (message == "CLIPBOARDWRITE")
+    else if (message == "COPY")
     {
-        getClipboard(_document._appDocId);
+        // Forward to Kit; clipboardchanged: response will trigger getClipboard() in send2JS.
+        static const std::string copyCmd = "uno .uno:Copy";
+        fakeSocketWriteQueue(_document._fakeClientFd, copyCmd.c_str(), copyCmd.size());
     }
-    else if (message == "CLIPBOARDREAD")
+    else if (message == "COPYSLIDE")
     {
-        // WARN: this is only cargo-culted and not tested yet.
-        setClipboard(_document._appDocId);
-        return "(internal)";
+        // CopySlide is used from the slide sorter; send the correct UNO command.
+        static const std::string copySlideCmd = "uno .uno:CopySlide";
+        fakeSocketWriteQueue(_document._fakeClientFd, copySlideCmd.c_str(), copySlideCmd.size());
+    }
+    else if (message == "CUT")
+    {
+        // Forward to Kit; clipboardchanged: response will trigger getClipboard() in send2JS.
+        static const std::string cutCmd = "uno .uno:Cut";
+        fakeSocketWriteQueue(_document._fakeClientFd, cutCmd.c_str(), cutCmd.size());
+    }
+    else if (message == "PASTE")
+    {
+        // Sync system clipboard → LOKit internal clipboard only if an external app
+        // wrote the clipboard since our last copy (same logic as Windows do_paste_or_read).
+        if (!QApplication::clipboard()->ownsClipboard() ||
+            sClipboardSourceDocId.load() != _document._appDocId)
+            setClipboard(_document._appDocId);
+        static const std::string pasteCmd = "uno .uno:Paste";
+        fakeSocketWriteQueue(_document._fakeClientFd, pasteCmd.c_str(), pasteCmd.size());
+    }
+    else if (message == "PASTESPECIAL")
+    {
+        if (!QApplication::clipboard()->ownsClipboard() ||
+            sClipboardSourceDocId.load() != _document._appDocId)
+            setClipboard(_document._appDocId);
+        static const std::string pasteCmd = "uno .uno:PasteSpecial";
+        fakeSocketWriteQueue(_document._fakeClientFd, pasteCmd.c_str(), pasteCmd.size());
     }
     else if (message == "GETRECENTDOCS")
     {
         QString result = QString::fromStdString(Application::getRecentFiles().serialise());
         LOG_TRC_NOFILE("GETRECENTDOCS: returning recent documents");
         return result;
-    }
-    else if (message.starts_with(CLIPBOARDSET))
-    {
-        std::string content = message.substr(CLIPBOARDSET.size());
-        setClipboardFromContent(_document._appDocId, content);
     }
     else if (message.starts_with(FULLSCREENPRESENTATION))
     {

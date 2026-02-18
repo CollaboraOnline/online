@@ -484,7 +484,7 @@ window.L.Clipboard = window.L.Class.extend({
 	_sendToInternalClipboard: async function (content) {
 		if (window.ThisIsTheiOSApp || window.ThisIsTheMacOSApp) {
 			await window.webkit.messageHandlers.clipboard.postMessage(`sendToInternal ${await content.text()}`); // no need to base64 in this direction...
-		} else if (window.ThisIsTheWindowsApp || window.ThisIsTheQtApp) {
+		} else if (window.ThisIsTheWindowsApp) {
 			await window.postMobileMessage(`CLIPBOARDSET ${await content.text()}`);
 		} else {
 			var formData = new FormData();
@@ -919,6 +919,18 @@ window.L.Clipboard = window.L.Class.extend({
 
 	_asyncAttemptNavigatorClipboardWrite: async function(params) {
 		const command = this._unoCommandForCopyCutPaste;
+
+		if (window.ThisIsTheQtApp) {
+			// Qt handles UNO command and clipboard sync only via COPY/CUT/COPYSLIDE messages.
+			if (command === '.uno:Cut')
+				window.postMobileMessage('CUT');
+			else if (command === '.uno:CopySlide')
+				window.postMobileMessage('COPYSLIDE');
+			else
+				window.postMobileMessage('COPY');
+			return;
+		}
+
 		const check_ = this._sendCommandAndWaitForCompletion(command, params);
 
 		// I strongly disrecommend awaiting before the clipboard.write line in the
@@ -943,7 +955,7 @@ window.L.Clipboard = window.L.Class.extend({
 				return; // Either wrong command or a pending event.
 
 			await window.webkit.messageHandlers.clipboard.postMessage(`write`);
-		} else if (window.ThisIsTheWindowsApp || window.ThisIsTheQtApp) {
+		} else if (window.ThisIsTheWindowsApp) {
 			// As above.
 			if (await check_ === null)
 				return;
@@ -1027,7 +1039,7 @@ window.L.Clipboard = window.L.Class.extend({
 
 	// Executes the navigator.clipboard.read() call, if it's available.
 	_navigatorClipboardRead: function(isSpecial) {
-		if (!window.L.Browser.clipboardApiAvailable && !window.ThisIsTheiOSApp && !window.ThisIsTheMacOSApp && !window.ThisIsTheWindowsApp && !window.ThisIsTheQtApp) {
+		if (!window.L.Browser.clipboardApiAvailable && !window.ThisIsTheiOSApp && !window.ThisIsTheMacOSApp && !window.ThisIsTheWindowsApp) {
 			return false;
 		}
 
@@ -1079,11 +1091,6 @@ window.L.Clipboard = window.L.Class.extend({
 		return this._MobileAppReadClipboard(encodedClipboardData);
 	},
 
-	_QtReadClipboard: async function() {
-		const encodedClipboardData = await window.postMobileMessage('CLIPBOARDREAD');
-		return this._MobileAppReadClipboard(encodedClipboardData);
-	},
-
 	_asyncAttemptNavigatorClipboardRead: async function(isSpecial) {
 		var clipboard = navigator.clipboard;
 		if (window.L.Browser.cypressTest) {
@@ -1095,8 +1102,6 @@ window.L.Clipboard = window.L.Class.extend({
 				clipboardContents = await this._iOSReadClipboard();
 			else if (window.ThisIsTheWindowsApp)
 				clipboardContents = await this._WindowsReadClipboard();
-			else if (window.ThisIsTheQtApp)
-				clipboardContents = await this._QtReadClipboard();
 			else
 				clipboardContents = await clipboard.read();
 
@@ -1185,6 +1190,25 @@ window.L.Clipboard = window.L.Class.extend({
 				return true;
 			} else if (cmd === '.uno:Paste') {
 				window.postMobileMessage('PASTE');
+				return true;
+			}
+		}
+
+		if (window.ThisIsTheQtApp) {
+			if (cmd === '.uno:Cut') {
+				window.postMobileMessage('CUT');
+				return true;
+			} else if (cmd === '.uno:Copy') {
+				window.postMobileMessage('COPY');
+				return true;
+			} else if (cmd === '.uno:CopySlide') {
+				window.postMobileMessage('COPYSLIDE');
+				return true;
+			} else if (cmd === '.uno:Paste') {
+				window.postMobileMessage('PASTE');
+				return true;
+			} else if (cmd === '.uno:PasteSpecial') {
+				window.postMobileMessage('PASTESPECIAL');
 				return true;
 			}
 		}
@@ -1291,13 +1315,20 @@ window.L.Clipboard = window.L.Class.extend({
 
 		if (ev.clipboardData) {
 			ev.preventDefault();
+			this._map._textInput._abortComposition(ev);
+			this._clipboardSerial++;
+
+			if (window.ThisIsTheQtApp) {
+				// Like Windows: native code handles clipboard sync + paste entirely.
+				window.postMobileMessage('PASTE');
+				return false;
+			}
+
 			var usePasteKeyEvent = ev.usePasteKeyEvent;
 			// Always capture the html content separate as we may lose it when we
 			// pass the clipboard data to a different context (async calls, f.e.).
 			var htmlText = ev.clipboardData.getData('text/html');
 			var hasFinished = this.dataTransferToDocument(ev.clipboardData, /* preferInternal = */ true, htmlText, usePasteKeyEvent);
-			this._map._textInput._abortComposition(ev);
-			this._clipboardSerial++;
 			if (hasFinished)
 				this._stopHideDownload();
 		}
