@@ -313,15 +313,19 @@ JSDialog.combobox = function (parentContainer, data, builder) {
 		var parentBuilder = builder;
 		var callback = function(objectType, eventType, object, data) {
 			// send command with correct WindowId (from parent, not dropdown)
+			let result;
 			if (eventType !== 'close')
-				parentBuilder.callback(objectType, eventType, object, data, parentBuilder);
+				result = parentBuilder.callback(objectType, eventType, object, data, parentBuilder);
 
 			// close after selection
 			if (eventType === 'selected') {
 				container.onSelect(_extractPos(data));
 				container.onSetText(_extractText(data));
 
-				JSDialog.CloseDropdown(comboboxId);
+				// Pass through if the parent callback has already set the focus
+				// somewhere that shouldn't be changed by the CloseDropdown, e.g.
+				// toolbar font name/size
+				JSDialog.CloseDropdown(comboboxId, result === 'focusHandled');
 			}
 
 			return true;

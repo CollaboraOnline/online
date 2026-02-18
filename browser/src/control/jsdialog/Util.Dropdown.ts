@@ -262,12 +262,13 @@ JSDialog.OpenDropdown = function (
 	});
 };
 
-JSDialog.CloseDropdown = function (id: string) {
+JSDialog.CloseDropdown = function (id: string, focusHandled?: boolean) {
 	window.L.Map.THIS.fire('jsdialog', {
 		data: {
 			id: _createDropdownId(id),
 			jsontype: 'dialog',
 			action: 'close',
+			focusHandled: focusHandled === true,
 		},
 	});
 };

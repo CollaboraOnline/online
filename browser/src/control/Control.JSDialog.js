@@ -87,7 +87,7 @@ window.L.Control.JSDialog = window.L.Control.extend({
 		return builder;
 	},
 
-	close: function(id, sendCloseEvent) {
+	close: function(id, sendCloseEvent, focusHandled) {
 		if (id !== undefined && this.dialogs[id]) {
 			const dialog = this.dialogs[id];
 			if (!sendCloseEvent && dialog.overlay && !dialog.isSubmenu) {
@@ -99,7 +99,7 @@ window.L.Control.JSDialog = window.L.Control.extend({
 				clearTimeout(dialog.timeoutId);
 
 			if (dialog.isPopup)
-				this.closePopover(id, sendCloseEvent);
+				this.closePopover(id, sendCloseEvent, focusHandled);
 			else
 				this.closeDialog(id, sendCloseEvent);
 			return true;
@@ -142,7 +142,7 @@ window.L.Control.JSDialog = window.L.Control.extend({
 
 	// sendCloseEvent means that we only send a command to the server
 	// we want to kill HTML popup when we receive feedback from the server
-	closePopover: function(id, sendCloseEvent) {
+	closePopover: function(id, sendCloseEvent, focusHandled) {
 		if (id === undefined || !this.dialogs[id]) {
 			app.console.warn('missing popover data');
 			return;
@@ -169,12 +169,14 @@ window.L.Control.JSDialog = window.L.Control.extend({
 				popupParent._onDropDown(false);
 
 			// Need to change focus to last element before we clear the current dialog
-			this.focusToLastElement(id);
+			if (!focusHandled)
+				this.focusToLastElement(id);
 			this.clearDialog(id);
 			return;
 		}
 
-		this.focusToLastElement(id);
+		if (!focusHandled)
+			this.focusToLastElement(id);
 	},
 
 	onCloseAll: function() {
@@ -842,9 +844,9 @@ window.L.Control.JSDialog = window.L.Control.extend({
 			const dialogs = Object.keys(this.dialogs);
 			const hadOpenedDialog = dialogs.length > 0;
 
-			const didClose = this.close(instance.id, false);
+			const didClose = this.close(instance.id, false, instance.focusHandled);
 
-			if (didClose) {
+			if (didClose && !instance.focusHandled) {
 				// Manage focus
 				this.focusAfterClose(hadOpenedDialog, dialogs);
 			}

@@ -68,7 +68,7 @@ class TopToolbar extends JSDialog.Toolbar {
 			else if (eventType === 'change')
 				this.map.applyFont(data);
 			this.map.focus();
-			return;
+			return 'focusHandled';
 		}
 		if (object.id === 'fontsizecombobox') {
 			if (eventType === 'selected')
@@ -76,13 +76,16 @@ class TopToolbar extends JSDialog.Toolbar {
 			else if (eventType === 'change')
 				this.map.applyFontSize(data);
 			this.map.focus();
-			return;
+			return 'focusHandled';
 		}
 		if (object.id === 'styles') {
-			if (eventType === 'selected')
+			if (eventType === 'selected') {
 				this.onStyleSelect({target: {value: data.substr(data.indexOf(';') + 1)}});
-			else if (eventType === 'change')
+				return 'focusHandled';
+			} else if (eventType === 'change') {
 				this.onStyleSelect({target: {value: data}});
+				return 'focusHandled';
+			}
 			return;
 		}
 
