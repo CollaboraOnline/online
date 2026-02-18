@@ -12,7 +12,7 @@
 echo "Building from current repository (expected branch: vaulterix/co-24.04 or similar custom fork)"
 
 # Проверяем, что мы внутри репозитория Collabora Online (есть ключевые директории)
-if [ ! -f "src/coolwsd.cpp" ] && [ ! -d "wsd" ] && [ ! -d "kit" ] && [ ! -f "Makefile.am" ]; then
+if [ ! -d "wsd" ] && [ ! -d "kit" ] && [ ! -f "Makefile.am" ]; then
     echo "ERROR: This script must be run from inside Collabora Online source tree"
     echo "       (expected files/directories like src/, wsd/, kit/, autogen.sh etc. not found)"
     exit 1
