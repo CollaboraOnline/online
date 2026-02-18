@@ -44,7 +44,7 @@
 #include <iomanip>
 #include <sstream>
 #include <string>
-#include <sys/poll.h>
+#include <poll.h>
 #include <unistd.h>
 
 using namespace COOLProtocol;
