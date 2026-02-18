@@ -60,7 +60,8 @@ COPY --from=builder /build/docker/from-source-gh-action/instdir /
 
 # copy the shell script which can start Collabora Online (coolwsd)
 COPY docker/from-source-gh-action/start-collabora-online.sh /start-collabora-online.sh
-
+COPY docker/from-source-gh-action/branding/brnading.css /usr/share/coolwsd/browser/dist/branding.css
+COPY docker/from-source-gh-action/branding/device-desktop.css /usr/share/coolwsd/browser/dist/device-desktop.css
 # set up Collabora Online (normally done by postinstall script of package)
 # Fix permissions
 RUN setcap cap_fowner,cap_chown,cap_sys_chroot=ep /usr/bin/coolforkit-caps && \
@@ -73,9 +74,6 @@ RUN setcap cap_fowner,cap_chown,cap_sys_chroot=ep /usr/bin/coolforkit-caps && \
     chown cool:cool /var/log/coolwsd.log && \
     chown -R cool:cool /opt/ && \
     chown -R cool:cool /etc/coolwsd \
-
-COPY docker/from-source-gh-action/branding/brnading.css /usr/share/coolwsd/browser/dist/branding.css
-COPY docker/from-source-gh-action/branding/device-desktop.css /usr/share/coolwsd/browser/dist/device-desktop.css
 
 EXPOSE 9980
 
