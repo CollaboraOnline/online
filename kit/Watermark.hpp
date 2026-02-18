@@ -118,6 +118,95 @@ private:
             }
     }
 
+    /// Render multi-line watermark text by rendering each line separately
+    /// and composing them with proper inter-line spacing.
+    /// Sets width and height to the actual composed pixmap dimensions.
+    std::vector<unsigned char> renderMultiLineText(int& width, int& height)
+    {
+        // Split text into non-empty lines
+        std::vector<std::string> lines;
+        std::string::size_type start = 0;
+        std::string::size_type pos;
+        while ((pos = _text.find('\n', start)) != std::string::npos)
+        {
+            std::string line = _text.substr(start, pos - start);
+            if (!line.empty())
+                lines.push_back(std::move(line));
+            start = pos + 1;
+        }
+        if (start < _text.size())
+            lines.push_back(_text.substr(start));
+
+        if (lines.empty())
+            return {};
+
+        // Render each line separately at natural size (width=0, height=0
+        // triggers default font size) so that all lines share the same
+        // font metrics and the spacing between them is not compressed.
+        struct LinePixmap
+        {
+            std::vector<unsigned char> pixels;
+            int width;
+            int height;
+        };
+        std::vector<LinePixmap> rendered;
+        int maxWidth = 0;
+        int totalHeight = 0;
+        int lineSpacing = 0;
+
+        for (const auto& line : lines)
+        {
+            int w = 0, h = 0;
+            unsigned char* px = _loKitDoc->renderFont(_font.c_str(), line.c_str(), &w, &h, 0);
+            if (!px || w <= 0 || h <= 0)
+            {
+                std::free(px);
+                continue;
+            }
+            rendered.push_back({
+                std::vector<unsigned char>(px, px + w * h * 4), w, h
+            });
+            std::free(px);
+
+            maxWidth = std::max(maxWidth, w);
+            totalHeight += h;
+            if (lineSpacing == 0)
+                lineSpacing = std::max(1, static_cast<int>(h * 0.4));
+        }
+
+        if (rendered.empty())
+            return {};
+
+        // Add inter-line spacing
+        totalHeight += lineSpacing * (static_cast<int>(rendered.size()) - 1);
+
+        // Compose all lines into a single RGBA bitmap
+        width = maxWidth;
+        height = totalHeight;
+        std::vector<unsigned char> result(width * height * 4, 0);
+
+        int yOffset = 0;
+        for (const auto& rl : rendered)
+        {
+            for (int y = 0; y < rl.height && (y + yOffset) < height; ++y)
+            {
+                const int copyWidth = std::min(rl.width, width);
+                for (int x = 0; x < copyWidth; ++x)
+                {
+                    const int srcIdx = (y * rl.width + x) * 4;
+                    const int dstIdx = ((y + yOffset) * width + x) * 4;
+                    result[dstIdx + 0] = rl.pixels[srcIdx + 0];
+                    result[dstIdx + 1] = rl.pixels[srcIdx + 1];
+                    result[dstIdx + 2] = rl.pixels[srcIdx + 2];
+                    result[dstIdx + 3] = rl.pixels[srcIdx + 3];
+                }
+            }
+            yOffset += rl.height + lineSpacing;
+        }
+
+        return result;
+    }
+
     /// Create bitmap that we later use as the watermark for every tile.
     const PixmapData* getPixmap(int width, int height)
     {
@@ -138,19 +227,32 @@ private:
         // are always set to 0 (black) and the alpha level is 0 everywhere
         // except on the text area; the alpha level take into account of
         // performing anti-aliasing over the text edges.
-        unsigned char* textPixels = _loKitDoc->renderFont(_font.c_str(), _text.c_str(), &width, &height, 0);
+        std::vector<unsigned char> text;
+        if (_text.find('\n') != std::string::npos)
+        {
+            // Multi-line: render each line separately for proper spacing.
+            // Passing the full multi-line string to renderFont squeezes all
+            // lines into a constrained area with insufficient line spacing.
+            text = renderMultiLineText(width, height);
+        }
+        else
+        {
+            // Single-line: use renderFont directly with size constraints.
+            unsigned char* textPixels = _loKitDoc->renderFont(_font.c_str(), _text.c_str(), &width, &height, 0);
+            if (textPixels)
+            {
+                text.assign(textPixels, textPixels + width * height * 4);
+                std::free(textPixels);
+            }
+        }
 
-        if (!textPixels)
+        if (text.empty())
         {
             LOG_ERR("Watermark: rendering failed.");
             return nullptr;
         }
 
         const unsigned int pixel_count = width * height * 4;
-
-        std::vector<unsigned char> text(textPixels, textPixels + pixel_count);
-        // No longer needed.
-        std::free(textPixels);
 
         _pixmaps.emplace(key, PixmapData(width, height));
         PixmapData& pmData = _pixmaps[key];
