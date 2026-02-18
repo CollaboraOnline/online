@@ -72,7 +72,10 @@ RUN setcap cap_fowner,cap_chown,cap_sys_chroot=ep /usr/bin/coolforkit-caps && \
     touch /var/log/coolwsd.log && \
     chown cool:cool /var/log/coolwsd.log && \
     chown -R cool:cool /opt/ && \
-    chown -R cool:cool /etc/coolwsd
+    chown -R cool:cool /etc/coolwsd \
+
+COPY docker/from-source-gh-action/brnading/brnading.css /usr/share/coolwsd/browser/dist/branding.css
+COPY docker/from-source-gh-action/brnading/device-desktop.css /usr/share/coolwsd/browser/dist/device-desktop.css
 
 EXPOSE 9980
 
