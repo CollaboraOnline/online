@@ -154,6 +154,35 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Track Changes', function (
 		});
 	});
 
+	it('Compare remote documents', function () {
+		// Given a document:
+		desktopHelper.switchUIToNotebookbar();
+		// Switch to the 'Review' tab.
+		cy.cGet('#Review-tab-label').click();
+
+		// When getting an Action_CompareDocuments message with a filename:
+		cy.getFrameWindow().then(function(win) {
+			const message = {
+				'MessageId': 'Action_CompareDocuments',
+				'Values': {
+					'url': 'https://www.example.com/dummy',
+					'filename': 'remote_old.odt',
+				}
+			};
+			win.postMessage(JSON.stringify(message), '*');
+		});
+
+		// Then the doc compare mode left label should show the old document name:
+		// Click on 'Tracking' -> 'View Changes'.
+		cy.cGet('#review-tracking').click();
+		// If this is visible or not is not interesting, we want to assert the resulting
+		// title.
+		cy.cGet('#compare-tracked-change').click({force: true});
+		cy.cGet('#compare-changes-left-title').should(function($el) {
+			expect($el.text()).to.match(/^remote_old\.odt/);
+		});
+	});
+
 	it('View Changes mode has tiles for both modes', function () {
 		// Given a document with tracked changes:
 		desktopHelper.switchUIToNotebookbar();
