@@ -83,6 +83,7 @@ void LoggingTests::testGetTimeForLog()
                          Util::getTimeForLog(now, now + 12h + 7min + 5s + 369ms));
 
     ::setenv("TZ", timezoneName.data(), 1); // Restore the timeezone.
+    tzset();
 }
 
 void LoggingTests::testIso8601Time()
