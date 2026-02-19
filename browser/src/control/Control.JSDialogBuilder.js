@@ -1941,7 +1941,8 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 				arrowbackground = window.L.DomUtil.create('div', 'arrowbackground', div);
 				arrowbackground.setAttribute('aria-hidden', 'true');
 			}
-			window.L.DomUtil.create('i', 'unoarrow', arrowbackground);
+			var unoarrow = window.L.DomUtil.create('span', 'unoarrow', arrowbackground);
+			unoarrow.setAttribute('aria-hidden', 'true');
 			controls['arrow'] = arrowbackground;
 
 			if (!hasDropdownArrow && isDropdownButton) {

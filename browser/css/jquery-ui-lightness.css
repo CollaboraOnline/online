@@ -933,7 +933,7 @@ body .ui-tooltip,
 }
 .ui-tooltip-content,
 [data-title]:after,
-.menubutton.sidebar:hover span {
+.menubutton.sidebar:hover span:not(.unoarrow) {
 	font-size: 0.8em;
 	color: var(--color-main-text);
 	background: var(--color-background-lighter);
@@ -1329,7 +1329,7 @@ a.ui-button:active,
 }
 .ui-widget-shadow,
 [data-title]:after,
-.menubutton.sidebar:hover span {
+.menubutton.sidebar:hover span:not(.unoarrow) {
 	-webkit-box-shadow: 0px 0px 4px 2px var(--color-box-shadow);
 	box-shadow: 0px 0px 4px 2px var(--color-box-shadow);
 }
