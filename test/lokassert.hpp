@@ -154,7 +154,7 @@ inline constexpr bool failed() { return false; }
             }                                                                                      \
             else if (!silent)                                                                      \
             {                                                                                      \
-                LOK_TRACE("PASS: " << (#condition) << " [true]");                                  \
+                LOK_TRACE("PASS: " << (#condition) << " [true], context: [" << message << "]");    \
             }                                                                                      \
         }                                                                                          \
     } while (false)
