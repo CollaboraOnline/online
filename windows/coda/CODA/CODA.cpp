@@ -314,9 +314,12 @@ static void send2JS(const HWND hWnd, const char* buffer, int length)
 
     DWORD base64len = length * 2 + 100;
     std::vector<char> base64(base64len);
-    CryptBinaryToStringA((BYTE*)buffer, length, CRYPT_STRING_BASE64 | CRYPT_STRING_NOCRLF,
-                         base64.data(), &base64len);
-    base64[base64len] = '\0';
+    if (!CryptBinaryToStringA((BYTE*)buffer, length, CRYPT_STRING_BASE64 | CRYPT_STRING_NOCRLF,
+                              base64.data(), &base64len))
+    {
+        LOG_ERR("CryptBinaryToStringA failed: " << GetLastError());
+        return;
+    }
 
     if (binaryMessage)
         LOG_TRC("To execute in JS: " << pretext << "stuff" << posttext);
