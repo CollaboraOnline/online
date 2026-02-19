@@ -265,7 +265,11 @@ NODE_BINS = \
 
 $(NODE_BINS): $(NPM_INSTALLED);
 
-$(NPM_INSTALLED): package.json eslint_plugin/index.js eslint_plugin/package.json
+$(NPM_INSTALLED): package.json eslint_plugin/index.js eslint_plugin/package.json $(wildcard patches/*.patch)
+#	patch-package cannot apply updated patches over already-patched files
+#	remove patched packages so npm install restores clean originals first.
+#	https://github.com/ds300/patch-package/issues/227
+	$(V)rm -rf node_modules/cypress node_modules/cypress-log-to-output
 	$(V)UV_USE_IO_URING=0 npm install --no-audit
 	$(V)echo node_modules:
 	$(V)ls node_modules
