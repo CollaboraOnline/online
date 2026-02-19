@@ -29,6 +29,7 @@ namespace cool {
 		selectedText?: string;
 		timestamp: number;
 		isError?: boolean;
+		imageData?: string;
 	}
 
 	export class AIChatSidebar {
@@ -83,6 +84,30 @@ namespace cool {
 			'write it',
 		];
 
+		private readonly IMAGE_KEYWORDS: string[] = [
+			'generate image',
+			'generate an image',
+			'generate a image',
+			'generate picture',
+			'generate a picture',
+			'create image',
+			'create an image',
+			'create a image',
+			'create picture',
+			'create a picture',
+			'draw image',
+			'draw an image',
+			'draw a image',
+			'draw picture',
+			'draw a picture',
+			'draw me',
+			'make image',
+			'make an image',
+			'make a image',
+			'make picture',
+			'make a picture',
+		];
+
 		constructor() {
 			this.container = document.getElementById('aichat-panel') as HTMLElement;
 			this.wrapper = document.getElementById(
@@ -106,6 +131,7 @@ namespace cool {
 
 		private registerChatHandlers(): void {
 			app.map.on('aichatresult', this.onAIChatResult, this);
+			app.map.on('aiimageresult', this.onAIImageResult, this);
 		}
 
 		toggle(): void {
@@ -170,8 +196,10 @@ namespace cool {
 			};
 			// Action button tooltips
 			for (let i = 0; i < this.messages.length; i++) {
-				tooltips[`aichat-insert-${i}`] = _('Insert at cursor');
-				tooltips[`aichat-copy-${i}`] = _('Copy to clipboard');
+				tooltips[`aichat-insert-text-${i}`] = _('Insert at cursor');
+				tooltips[`aichat-copy-text-${i}`] = _('Copy to clipboard');
+				tooltips[`aichat-insert-img-${i}`] = _('Insert at cursor');
+				tooltips[`aichat-copy-img-${i}`] = _('Copy to clipboard');
 			}
 			for (const [id, tip] of Object.entries(tooltips)) {
 				const wrapper = document.getElementById(id);
@@ -336,28 +364,45 @@ namespace cool {
 				});
 			}
 
-			// Message content - use displayContent for UI, content for API
-			const displayText = msg.displayContent || msg.content;
-			if (isUser || msg.isError) {
+			if (msg.imageData) {
+				// Image message
 				children.push({
 					id: `aichat-msg-text-${index}`,
 					type: 'fixedtext',
-					text: displayText,
+					html: app.LOUtil.sanitize(
+						'<img src="data:image/png;base64,' +
+							msg.imageData +
+							'" alt="' +
+							this.escapeHtml(_('AI generated image')) +
+							'" class="aichat-generated-image" />',
+					),
 					enabled: true,
 				});
+				children.push(this.getImageActionsJSON(index));
 			} else {
-				children.push({
-					id: `aichat-msg-text-${index}`,
-					type: 'fixedtext',
-					html: app.LOUtil.sanitize(this.markdownToHtml(displayText)),
-					enabled: true,
-				});
-			}
+				// Text message content - use displayContent for UI, content for API
+				const displayText = msg.displayContent || msg.content;
+				if (isUser || msg.isError) {
+					children.push({
+						id: `aichat-msg-text-${index}`,
+						type: 'fixedtext',
+						text: displayText,
+						enabled: true,
+					});
+				} else {
+					children.push({
+						id: `aichat-msg-text-${index}`,
+						type: 'fixedtext',
+						html: app.LOUtil.sanitize(this.markdownToHtml(displayText)),
+						enabled: true,
+					});
+				}
 
-			// Action buttons for assistant messages
-			if (!isUser && !msg.isError) {
-				var showInsert = this.shouldShowActions(index);
-				children.push(this.getActionsJSON(index, showInsert));
+				// Action buttons for text assistant messages
+				if (!isUser && !msg.isError) {
+					var showInsert = this.shouldShowActions(index);
+					children.push(this.getActionsJSON(index, showInsert));
+				}
 			}
 
 			// JSDialog builder only creates a wrapper div for containers
@@ -385,7 +430,7 @@ namespace cool {
 
 			if (showInsert) {
 				children.push({
-					id: `aichat-insert-${index}`,
+					id: `aichat-insert-text-${index}`,
 					type: 'pushbutton',
 					image: this.ICON_INSERT,
 					enabled: true,
@@ -393,7 +438,7 @@ namespace cool {
 			}
 
 			children.push({
-				id: `aichat-copy-${index}`,
+				id: `aichat-copy-text-${index}`,
 				type: 'pushbutton',
 				image: 'lc_copy.svg',
 				enabled: true,
@@ -416,6 +461,28 @@ namespace cool {
 				type: 'container',
 				horizontal: true,
 				children: children,
+			};
+		}
+
+		private getImageActionsJSON(index: number): any {
+			return {
+				id: `aichat-actions-${index}`,
+				type: 'container',
+				horizontal: true,
+				children: [
+					{
+						id: `aichat-insert-img-${index}`,
+						type: 'pushbutton',
+						image: this.ICON_INSERT,
+						enabled: true,
+					},
+					{
+						id: `aichat-copy-img-${index}`,
+						type: 'pushbutton',
+						image: 'lc_copy.svg',
+						enabled: true,
+					},
+				],
 			};
 		}
 
@@ -478,13 +545,25 @@ namespace cool {
 					this.hide();
 				} else if (id === 'aichat-clear-btn') {
 					this.clearConversation();
-				} else if (id.startsWith('aichat-insert-')) {
-					var insertIdx = parseInt(id.replace('aichat-insert-', ''));
+				} else if (id.startsWith('aichat-insert-img-')) {
+					var insertImgIdx = parseInt(id.replace('aichat-insert-img-', ''));
+					var insertImgData = this.messages[insertImgIdx]?.imageData;
+					if (insertImgData) {
+						this.insertImageAtCursor(insertImgData);
+					}
+				} else if (id.startsWith('aichat-copy-img-')) {
+					var copyImgIdx = parseInt(id.replace('aichat-copy-img-', ''));
+					var copyImgData = this.messages[copyImgIdx]?.imageData;
+					if (copyImgData) {
+						this.copyImageToClipboard(copyImgData, copyImgIdx);
+					}
+				} else if (id.startsWith('aichat-insert-text-')) {
+					var insertIdx = parseInt(id.replace('aichat-insert-text-', ''));
 					if (this.messages[insertIdx]) {
 						this.insertAtCursor(this.messages[insertIdx].content);
 					}
-				} else if (id.startsWith('aichat-copy-')) {
-					var copyIdx = parseInt(id.replace('aichat-copy-', ''));
+				} else if (id.startsWith('aichat-copy-text-')) {
+					var copyIdx = parseInt(id.replace('aichat-copy-text-', ''));
 					if (this.messages[copyIdx]) {
 						this.copyToClipboard(this.messages[copyIdx].content, copyIdx);
 					}
@@ -525,11 +604,18 @@ namespace cool {
 			return 0;
 		}
 
+		private isImageGenerationPrompt(text: string): boolean {
+			const lower = text.toLowerCase();
+			return this.IMAGE_KEYWORDS.some((kw) => lower.includes(kw));
+		}
+
 		async sendMessage(): Promise<void> {
 			const text = this.inputText.trim();
 			if (!text || this.isProcessing) return;
 
-			if (!TextSelections.isActive()) {
+			const isImageRequest = this.isImageGenerationPrompt(text);
+
+			if (!isImageRequest && !TextSelections.isActive()) {
 				this.hintText = _(
 					'Please select some text in the document first, so the AI assistant can help you with it.',
 				);
@@ -540,25 +626,27 @@ namespace cool {
 			this.hintText = '';
 
 			let selectedText = '';
-			try {
-				selectedText = await this.fetchSelectedMarkdown();
-			} catch (e: any) {
-				if (e?.message === 'complexselection') {
-					this.hintText = _(
-						'The selection contains images or other non-text content that cannot be sent as context.',
-					);
-					this.render();
-					return;
+			if (!isImageRequest) {
+				try {
+					selectedText = await this.fetchSelectedMarkdown();
+				} catch (e: any) {
+					if (e?.message === 'complexselection') {
+						this.hintText = _(
+							'The selection contains images or other non-text content that cannot be sent as context.',
+						);
+						this.render();
+						return;
+					}
+					// Other errors (timeout, parse failure) — silently continue without selection
 				}
-				// Other errors (timeout, parse failure) — silently continue without selection
-			}
 
-			// Don't re-send identical selection context
-			if (selectedText && selectedText === this.lastSentSelectedText) {
-				selectedText = '';
-			}
-			if (selectedText) {
-				this.lastSentSelectedText = selectedText;
+				// Don't re-send identical selection context
+				if (selectedText && selectedText === this.lastSentSelectedText) {
+					selectedText = '';
+				}
+				if (selectedText) {
+					this.lastSentSelectedText = selectedText;
+				}
 			}
 
 			// Build user content with context
@@ -589,32 +677,59 @@ namespace cool {
 			this.isProcessing = true;
 			this.render();
 
-			// Build OpenAI-format messages
-			const apiMessages: { role: string; content: string }[] = [
-				{ role: 'system', content: this.SYSTEM_PROMPT },
-			];
-			for (const msg of this.messages) {
-				apiMessages.push({ role: msg.role, content: msg.content });
-			}
-
 			this.currentRequestId = this.generateRequestId();
-			const payload = JSON.stringify({
-				messages: apiMessages,
-				requestId: this.currentRequestId,
-			});
-			app.socket.sendMessage('aichat: ' + payload);
 
-			// Client-side timeout
-			const requestId = this.currentRequestId;
-			setTimeout(() => {
-				if (this.isProcessing && this.currentRequestId === requestId) {
-					this.onAIChatResult({
-						success: false,
-						error: _('Request timeout'),
-						requestId: requestId,
-					});
+			if (isImageRequest) {
+				// Send image generation request
+				const payload = JSON.stringify({
+					prompt: text,
+					requestId: this.currentRequestId,
+				});
+				app.socket.sendMessage('aiimage: ' + payload);
+
+				// Client-side timeout (60s for image gen)
+				const requestId = this.currentRequestId;
+				setTimeout(() => {
+					if (this.isProcessing && this.currentRequestId === requestId) {
+						this.onAIImageResult({
+							success: false,
+							error: _('Request timeout'),
+							requestId: requestId,
+						});
+					}
+				}, 60000);
+			} else {
+				// Build OpenAI-format messages (skip image messages)
+				const apiMessages: { role: string; content: string }[] = [
+					{ role: 'system', content: this.SYSTEM_PROMPT },
+				];
+				for (const msg of this.messages) {
+					if (!msg.imageData) {
+						apiMessages.push({
+							role: msg.role,
+							content: msg.content,
+						});
+					}
 				}
-			}, 45000);
+
+				const payload = JSON.stringify({
+					messages: apiMessages,
+					requestId: this.currentRequestId,
+				});
+				app.socket.sendMessage('aichat: ' + payload);
+
+				// Client-side timeout
+				const requestId = this.currentRequestId;
+				setTimeout(() => {
+					if (this.isProcessing && this.currentRequestId === requestId) {
+						this.onAIChatResult({
+							success: false,
+							error: _('Request timeout'),
+							requestId: requestId,
+						});
+					}
+				}, 45000);
+			}
 		}
 
 		private onAIChatResult(data: any): void {
@@ -633,6 +748,32 @@ namespace cool {
 				const errorMsg: ChatMessage = {
 					role: 'assistant',
 					content: _('Error: ') + (data.error || _('AI request failed')),
+					timestamp: Date.now(),
+					isError: true,
+				};
+				this.messages.push(errorMsg);
+			}
+
+			this.render();
+		}
+
+		private onAIImageResult(data: any): void {
+			if (data.requestId !== this.currentRequestId) return;
+
+			this.isProcessing = false;
+
+			if (data.success) {
+				const imageMsg: ChatMessage = {
+					role: 'assistant',
+					content: _('Generated image'),
+					imageData: data.imageData,
+					timestamp: Date.now(),
+				};
+				this.messages.push(imageMsg);
+			} else {
+				const errorMsg: ChatMessage = {
+					role: 'assistant',
+					content: _('Error: ') + (data.error || _('Image generation failed')),
 					timestamp: Date.now(),
 					isError: true,
 				};
@@ -718,6 +859,43 @@ namespace cool {
 			app.socket.sendMessage(blob);
 		}
 
+		private insertImageAtCursor(base64Data: string): void {
+			const byteChars = atob(base64Data);
+			const bytes = new Uint8Array(byteChars.length);
+			for (let i = 0; i < byteChars.length; i++) {
+				bytes[i] = byteChars.charCodeAt(i);
+			}
+			const blob = new Blob(['paste mimetype=image/png\n', bytes.buffer]);
+			app.socket.sendMessage(blob);
+		}
+
+		private copyImageToClipboard(base64Data: string, index: number): void {
+			var byteChars = atob(base64Data);
+			var bytes = new Uint8Array(byteChars.length);
+			for (var i = 0; i < byteChars.length; i++) {
+				bytes[i] = byteChars.charCodeAt(i);
+			}
+			var imgBlob = new Blob([bytes], { type: 'image/png' });
+
+			if (navigator.clipboard && navigator.clipboard.write) {
+				navigator.clipboard
+					.write([
+						new ClipboardItem({
+							'image/png': Promise.resolve(imgBlob),
+						}),
+					])
+					.then(() => {
+						this.showCopyFeedback(index, 'aichat-copy-img-');
+					})
+					.catch((e: any) => {
+						window.console.error('Copy image failed:', e);
+					});
+			} else {
+				window.console.error('Clipboard API not available');
+			}
+		}
+
+
 		private attachKeyboardHandler(): void {
 			const textarea = document.querySelector(
 				'#aichat-input .ui-textarea',
@@ -732,8 +910,11 @@ namespace cool {
 			}
 		}
 
-		private showCopyFeedback(index: number): void {
-			const wrapper = document.getElementById('aichat-copy-' + index);
+		private showCopyFeedback(
+			index: number,
+			prefix: string = 'aichat-copy-text-',
+		): void {
+			const wrapper = document.getElementById(prefix + index);
 			if (!wrapper) return;
 			const img = wrapper.querySelector('button img') as HTMLImageElement;
 			if (!img) return;

@@ -1758,7 +1758,7 @@ static std::string extractViewSettings(const std::string& viewSettingsPath,
         }
 
         std::string zoteroAPIKey, signatureCertificate, signatureKey, signatureCa, aiProviderAPIKey,
-            aiProviderModel, aiProviderURL;
+            aiProviderModel, aiProviderURL, aiImageProviderAPIKey, aiImageProviderURL, aiImageModel;
 
         bool viewSettingsNeedUpdate = false;
 
@@ -1799,10 +1799,16 @@ static std::string extractViewSettings(const std::string& viewSettingsPath,
         JsonUtil::findJSONValue(viewSettings, "aiProviderAPIKey", aiProviderAPIKey);
         JsonUtil::findJSONValue(viewSettings, "aiProviderModel", aiProviderModel);
         JsonUtil::findJSONValue(viewSettings, "aiProviderURL", aiProviderURL);
+        JsonUtil::findJSONValue(viewSettings, "aiImageProviderAPIKey", aiImageProviderAPIKey);
+        JsonUtil::findJSONValue(viewSettings, "aiImageProviderURL", aiImageProviderURL);
+        JsonUtil::findJSONValue(viewSettings, "aiImageModel", aiImageModel);
 
         session->setAIProviderAPIKey(aiProviderAPIKey);
         session->setAIProviderModel(aiProviderModel);
         session->setAIProviderURL(aiProviderURL);
+        session->setAIImageProviderAPIKey(aiImageProviderAPIKey);
+        session->setAIImageProviderURL(aiImageProviderURL);
+        session->setAIImageModel(aiImageModel);
 
         if (viewSettingsNeedUpdate)
         {
@@ -1817,6 +1823,9 @@ static std::string extractViewSettings(const std::string& viewSettingsPath,
         viewSettings->remove("aiProviderAPIKey");
         viewSettings->remove("aiProviderModel");
         viewSettings->remove("aiProviderURL");
+        viewSettings->remove("aiImageProviderAPIKey");
+        viewSettings->remove("aiImageProviderURL");
+        viewSettings->remove("aiImageModel");
 
         // Let client know whether AI features are enabled based on the presence of necessary fields,
         // so client can decide to show/hide AI related UI

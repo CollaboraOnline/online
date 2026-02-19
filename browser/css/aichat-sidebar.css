@@ -516,6 +516,15 @@
 	font-style: italic;
 }
 
+/* ── Generated images ── */
+
+.aichat-generated-image {
+	max-width: 100%;
+	border-radius: var(--border-radius);
+	margin: 4px 0;
+	cursor: pointer;
+}
+
 /* ── Error messages ── */
 
 [id^='aichat-msg-'].aichat-msg-error {

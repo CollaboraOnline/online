@@ -579,7 +579,7 @@ void ClientSession::sendAIChatResult(bool success, const std::string& text,
 
     std::ostringstream oss;
     result->stringify(oss);
-    sendTextFrame("aichatresult:" + oss.str());
+    sendTextFrame("aichatresult: " + oss.str());
 }
 
 bool ClientSession::handleAIChatAction(const std::string& firstLine)
@@ -756,6 +756,200 @@ bool ClientSession::handleAIChatAction(const std::string& firstLine)
     http::Session::ConnectFailCallback connectFailCallback =
         [sendResult](const std::shared_ptr<http::Session>& /*session*/)
     { sendResult(false, "Network error - please check your connection"); };
+    httpSession->setConnectFailHandler(std::move(connectFailCallback));
+
+    http::Request httpRequest(Poco::URI(requestUrl).getPathAndQuery());
+    httpRequest.setVerb(http::Request::VERB_POST);
+    httpRequest.set("Content-Type", "application/json");
+    std::string authHeader = "Bearer ";
+    authHeader.append(apiKey);
+    httpRequest.set("Authorization", std::move(authHeader));
+    httpRequest.setBody(payloadStr, "application/json");
+
+    std::shared_ptr<DocumentBroker> docBroker = getDocumentBroker();
+    httpSession->asyncRequest(httpRequest, docBroker->getPoll());
+    return true;
+}
+
+void ClientSession::sendAIImageResult(bool success, const std::string& imageData,
+                                       const std::string& errorText,
+                                       const std::string& requestId)
+{
+    Poco::JSON::Object::Ptr result = new Poco::JSON::Object();
+    result->set("success", success);
+    if (success)
+        result->set("imageData", imageData);
+    else
+        result->set("error", errorText);
+    result->set("requestId", requestId);
+
+    std::ostringstream oss;
+    result->stringify(oss);
+    sendTextFrame("aiimageresult: " + oss.str());
+}
+
+bool ClientSession::handleAIImageAction(const std::string& firstLine)
+{
+    // Extract JSON payload after "aiimage: "
+    const std::string jsonPayload = firstLine.substr(strlen("aiimage: "));
+
+    Poco::JSON::Object::Ptr requestObj = new Poco::JSON::Object();
+    if (!JsonUtil::parseJSON(jsonPayload, requestObj))
+    {
+        sendAIImageResult(false, "", "Invalid request format", "");
+        return true;
+    }
+
+    std::string requestId;
+    JsonUtil::findJSONValue(requestObj, "requestId", requestId);
+
+    std::string prompt;
+    JsonUtil::findJSONValue(requestObj, "prompt", prompt);
+    if (prompt.empty())
+    {
+        sendAIImageResult(false, "", "No prompt provided", requestId);
+        return true;
+    }
+
+    // Get AI provider settings
+    std::string apiKey = getAIImageProviderAPIKey();
+    if (apiKey.empty())
+        apiKey = getAIProviderAPIKey();
+    std::string baseUrl = getAIImageProviderURL();
+    if (baseUrl.empty())
+        baseUrl = getAIProviderURL();
+
+    if (apiKey.empty() || baseUrl.empty())
+    {
+        sendAIImageResult(false, "", "AI settings not configured", requestId);
+        return true;
+    }
+
+    if (!baseUrl.empty() && baseUrl.back() == '/')
+        baseUrl.pop_back();
+
+    std::string requestUrl = baseUrl;
+    requestUrl.append("/v1/images/generations");
+
+    // Build HTTP payload
+    Poco::JSON::Object::Ptr payload = new Poco::JSON::Object();
+    payload->set("prompt", prompt);
+    payload->set("size", "1024x1024");
+    payload->set("n", 1);
+    payload->set("response_format", "b64_json");
+
+    const std::string imageModel = getAIImageModel();
+    if (imageModel.empty())
+    {
+        sendAIImageResult(false, "", "Image model not configured. Please set an image model in AI settings.", requestId);
+        return true;
+    }
+    payload->set("model", imageModel);
+
+    std::ostringstream payloadStream;
+    payload->stringify(payloadStream);
+    std::string payloadStr = payloadStream.str();
+
+    std::shared_ptr<http::Session> httpSession = http::Session::create(requestUrl);
+    if (!httpSession)
+    {
+        LOG_WRN("AIImageAction: failed to create HTTP session");
+        sendAIImageResult(false, "", "Failed to create HTTP session", requestId);
+        return true;
+    }
+
+    httpSession->setTimeout(std::chrono::seconds(60));
+
+    auto sendResult = [clientSession = client_from_this(),
+                       requestId](bool success, const std::string& data, const std::string& error)
+    { clientSession->sendAIImageResult(success, data, error, requestId); };
+
+    http::Session::FinishedCallback finishedCallback =
+        [sendResult](const std::shared_ptr<http::Session>& session)
+    {
+        const std::shared_ptr<const http::Response> httpResponse = session->response();
+        const http::StatusCode statusCode = httpResponse->statusLine().statusCode();
+
+        if (statusCode == http::StatusCode::None)
+        {
+            sendResult(false, "", "Request timeout");
+            return;
+        }
+
+        if (statusCode != http::StatusCode::OK)
+        {
+            std::string errorMessage;
+            switch (statusCode)
+            {
+                case http::StatusCode::BadRequest:
+                    errorMessage = "Invalid image request";
+                    break;
+                case http::StatusCode::Unauthorized:
+                    errorMessage = "Invalid API key";
+                    break;
+                case http::StatusCode::Forbidden:
+                    errorMessage = "API key lacks permissions";
+                    break;
+                case http::StatusCode::TooManyRequests:
+                    errorMessage = "Rate limited - please wait a moment and retry";
+                    break;
+                case http::StatusCode::InternalServerError:
+                    errorMessage = "API server error - try again later";
+                    break;
+                case http::StatusCode::ServiceUnavailable:
+                    errorMessage = "Service temporarily unavailable";
+                    break;
+                default:
+                    errorMessage = "API error (";
+                    errorMessage.append(std::to_string(static_cast<int>(statusCode)));
+                    errorMessage.append("): ");
+                    errorMessage.append(httpResponse->statusLine().reasonPhrase());
+                    break;
+            }
+
+            sendResult(false, "", errorMessage);
+            return;
+        }
+
+        const std::string& responseBody = httpResponse->getBody();
+        Poco::JSON::Object::Ptr responseObject = new Poco::JSON::Object();
+        if (!JsonUtil::parseJSON(responseBody, responseObject))
+        {
+            sendResult(false, "", "Failed to parse image generation response");
+            return;
+        }
+
+        Poco::JSON::Array::Ptr dataArray = responseObject->getArray("data");
+        if (!dataArray || dataArray->size() == 0)
+        {
+            sendResult(false, "", "No image generated");
+            return;
+        }
+
+        Poco::JSON::Object::Ptr firstItem = dataArray->getObject(0);
+        if (!firstItem)
+        {
+            sendResult(false, "", "No image generated");
+            return;
+        }
+
+        std::string b64Json;
+        JsonUtil::findJSONValue(firstItem, "b64_json", b64Json);
+
+        if (b64Json.empty())
+        {
+            sendResult(false, "", "No image data in response");
+            return;
+        }
+
+        sendResult(true, b64Json, "");
+    };
+
+    httpSession->setFinishedHandler(std::move(finishedCallback));
+
+    http::Session::ConnectFailCallback connectFailCallback =
+        [sendResult](const std::shared_ptr<http::Session>& /*session*/)
+    { sendResult(false, "", "Network error - please check your connection"); };
     httpSession->setConnectFailHandler(std::move(connectFailCallback));
 
     http::Request httpRequest(Poco::URI(requestUrl).getPathAndQuery());
@@ -1553,6 +1747,10 @@ bool ClientSession::_handleInput(const char *buffer, int length)
     else if (tokens.equals(0, "aichat:"))
     {
         return handleAIChatAction(firstLine);
+    }
+    else if (tokens.equals(0, "aiimage:"))
+    {
+        return handleAIImageAction(firstLine);
     }
 #endif
     else if (tokens.equals(0, "resetaccesstoken"))

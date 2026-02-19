@@ -546,6 +546,25 @@ ul {
   margin-bottom: 4px;
 }
 
+/* AI Settings sub-sections */
+.ai-settings-group {
+  border: 1px solid var(--settings-border);
+  border-radius: 6px;
+  padding: 16px 20px 8px;
+  margin: 16px 0;
+}
+
+.ai-settings-group legend {
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--settings-text);
+  padding: 0 8px;
+}
+
+.ai-settings-group .view-input-container {
+  margin: 10px 0;
+}
+
 .checkbox-wrapper {
   --icon-size: 24px;
   --icon-height: 24px;

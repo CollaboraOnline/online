@@ -299,6 +299,15 @@ public:
     std::string getAIProviderURL() const { return _aiProviderURL; }
     void setAIProviderURL(const std::string& val) { _aiProviderURL = val; }
 
+    std::string getAIImageModel() const { return _aiImageModel; }
+    void setAIImageModel(const std::string& val) { _aiImageModel = val; }
+
+    std::string getAIImageProviderAPIKey() const { return _aiImageProviderAPIKey; }
+    void setAIImageProviderAPIKey(const std::string& val) { _aiImageProviderAPIKey = val; }
+
+    std::string getAIImageProviderURL() const { return _aiImageProviderURL; }
+    void setAIImageProviderURL(const std::string& val) { _aiImageProviderURL = val; }
+
     const std::string& getSignatureCertificate() const { return _signatureCertificate; }
     void setSignatureCertificate(const std::string& cert) { _signatureCertificate = cert; }
 
@@ -474,6 +483,15 @@ private:
 
     // AI Provider custom URL, if not using the default one for the specified model.
     std::string _aiProviderURL;
+
+    // AI image generation model
+    std::string _aiImageModel;
+
+    // AI image generation API key (optional, falls back to _aiProviderAPIKey)
+    std::string _aiImageProviderAPIKey;
+
+    // AI image generation base URL (optional, falls back to _aiProviderURL)
+    std::string _aiImageProviderURL;
 
     /// Digital signature certificate, key, and CA
     std::string _signatureCertificate;
