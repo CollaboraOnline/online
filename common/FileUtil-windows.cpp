@@ -167,8 +167,10 @@ namespace FileUtil
 
         // Try some fallbacks
         wchar_t *tmp = _wgetenv(L"TEMP");
-        if (!tmp)
+        if (!tmp || tmp[0] == L'\0')
             tmp = _wgetenv(L"TMP");
+        if (tmp && tmp[0] == L'\0')
+            tmp = NULL;
 
         // We don't want to modify the environment string directly.
         if (tmp)
