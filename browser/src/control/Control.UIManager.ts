@@ -1915,11 +1915,15 @@ class UIManager extends window.L.Control {
 	 * Returns whether any context menu is currently open.
 	 */
 	isAnyContextMenuOpened(): boolean {
-		const contextMenu = document.querySelector(
+		const jqContextMenu = document.querySelector(
 			'.context-menu-root:not([style*="display: none"])',
 		);
 
-		return contextMenu !== null;
+		const jsdContextMenu = document.querySelector(
+			'#jsd-context-menu-dropdown-overlay:not([style*="display: none"])',
+		);
+
+		return (jqContextMenu !== null) || (jsdContextMenu !== null);
 	}
 
 	// TODO: remove and use JSDialog.generateModalId directly
