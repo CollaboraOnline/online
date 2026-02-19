@@ -134,6 +134,8 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Test jumping on large cell
 			// Real mouse move to trigger the issue that previous commit fixes.
 			cy.cGet('body').realMouseMove(centerX, topY);
 			cy.cGet('body').rightclick(centerX, topY);
+
+			// Note: The context menu of the headers are still jquery based.
 			cy.cGet('.context-menu-link.insert-columns-before').should('exist');
 			cy.cGet('.context-menu-link.insert-columns-before').should('be.visible');
 
@@ -142,6 +144,8 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Test jumping on large cell
 			cy.cGet('#document-canvas').realClick();
 			cy.wait(300);
 			cy.cGet('body').rightclick(centerX, centerY);
+
+			// Note: The context menu of the document area uses jsdialog dropdown.
 			const pasteEntry = helper.getContextMenuItem('Paste');
 			pasteEntry.should('exist');
 			pasteEntry.should('be.visible');
