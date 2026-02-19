@@ -593,6 +593,7 @@ var unoCommandsArray = {
 	'SortDescending':{spreadsheet:{menu:_('Sort Descending'),},},
 	'SpacePara1':{global:{menu:_('Line Spacing: 1'),},},
 	'SpacePara15':{global:{menu:_('Line Spacing: 1.5'),},},
+	'SpacePara115':{global:{menu:_('Line Spacing: 1.15'),},},
 	'SpacePara2':{global:{menu:_('Line Spacing: 2'),},},
 	'Spacing':{global:{context:_('Set Character Spacing'),menu:_('Character Spacing'),},},
 	'SpellCheckApplySuggestion':{global:{menu:_('Apply Suggestion'),},},

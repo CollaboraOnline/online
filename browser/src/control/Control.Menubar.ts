@@ -266,6 +266,7 @@ class Menubar extends window.L.Control {
 					{uno: '.uno:ParaRightToLeft'}]},
 				{name: _UNO('.uno:FormatSpacingMenu', 'text'), type: 'menu', menu: [
 					{uno: '.uno:SpacePara1'},
+					{uno: '.uno:SpacePara115'},
 					{uno: '.uno:SpacePara15'},
 					{uno: '.uno:SpacePara2'},
 					{type: 'separator'},

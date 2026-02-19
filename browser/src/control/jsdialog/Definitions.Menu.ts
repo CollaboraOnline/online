@@ -1683,6 +1683,12 @@ menuDefinitions.set('LineSpacingMenu', [
 		uno: 'SpacePara1',
 	},
 	{
+		id: 'spacepara115',
+		img: 'spacepara115',
+		text: _UNO('.uno:SpacePara115'),
+		uno: 'SpacePara115',
+	},
+	{
 		id: 'spacepara15',
 		img: 'spacepara15',
 		text: _UNO('.uno:SpacePara15'),
@@ -1706,6 +1712,13 @@ menuDefinitions.set('LineSpacingMenu', [
 		img: 'paraspacedecrease',
 		text: _UNO('.uno:ParaspaceDecrease'),
 		uno: 'ParaspaceDecrease',
+	},
+	{ type: 'separator' },
+	{
+		id: 'paragraphdialog',
+		img: 'paragraphdialog',
+		text: _UNO('.uno:ParagraphDialog'),
+		uno: 'ParagraphDialog',
 	},
 ] as Array<MenuDefinition>);
 
