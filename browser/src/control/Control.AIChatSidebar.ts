@@ -146,6 +146,7 @@ namespace cool {
 			this._isActive = true;
 			this.render();
 			this.wrapper.classList.add('visible');
+			this.focusInput();
 		}
 
 		hide(): void {
@@ -169,6 +170,9 @@ namespace cool {
 			this.applyMessageStyles();
 			this.scrollToBottom();
 			this.attachKeyboardHandler();
+			if (!this.isProcessing) {
+				this.focusInput();
+			}
 		}
 
 		private applyMessageStyles(): void {
@@ -185,6 +189,15 @@ namespace cool {
 					}
 				}
 			}
+			const sendBtn = document.querySelector(
+				'#aichat-send-btn button.ui-pushbutton',
+			);
+			if (sendBtn) {
+				sendBtn.classList.toggle(
+					'aichat-stop-mode',
+					this.isProcessing,
+				);
+			}
 			this.applyTooltips();
 		}
 
@@ -192,7 +205,9 @@ namespace cool {
 			const tooltips: Record<string, string> = {
 				'aichat-clear-btn': _('New conversation'),
 				'aichat-close-btn': _('Close'),
-				'aichat-send-btn': _('Send message (Enter)'),
+				'aichat-send-btn': this.isProcessing
+					? _('Stop generating')
+					: _('Send message (Enter)'),
 			};
 			// Action button tooltips
 			for (let i = 0; i < this.messages.length; i++) {
@@ -213,10 +228,23 @@ namespace cool {
 
 		private scrollToBottom(): void {
 			requestAnimationFrame(() => {
-				const messagesArea = document.getElementById('aichat-messages-area');
-				if (messagesArea) {
-					messagesArea.scrollTop = messagesArea.scrollHeight;
+				const messagesArea =
+					document.getElementById('aichat-messages-area');
+				if (messagesArea && messagesArea.lastElementChild) {
+					messagesArea.lastElementChild.scrollIntoView({
+						behavior: 'smooth',
+						block: 'end',
+					});
 				}
+			});
+		}
+
+		private focusInput(): void {
+			requestAnimationFrame(() => {
+				const textarea = document.querySelector(
+					'#aichat-input .ui-textarea',
+				) as HTMLTextAreaElement | null;
+				if (textarea) textarea.focus();
 			});
 		}
 
@@ -268,6 +296,11 @@ namespace cool {
 			"data:image/svg+xml,%3Csvg viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg' " +
 			"fill='none' stroke='%23666' stroke-width='2' stroke-linecap='round'%3E" +
 			"%3Cpath d='M12 5v14M5 12h14'/%3E%3C/svg%3E";
+
+		private readonly ICON_STOP: string =
+			"data:image/svg+xml,%3Csvg viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg' " +
+			"fill='%23fff' stroke='none'%3E%3Crect x='7' y='7' width='10' height='10' " +
+			"rx='2'/%3E%3C/svg%3E";
 
 		private getHeaderJSON(): any {
 			return {
@@ -343,6 +376,18 @@ namespace cool {
 				});
 			}
 
+			// JSDialog builder only creates a wrapper div for containers
+			// with >1 children; add a spacer to guarantee the div exists
+			// so #aichat-messages-area CSS (flex: 1) applies.
+			if (children.length < 2) {
+				children.push({
+					id: 'aichat-messages-spacer',
+					type: 'fixedtext',
+					text: '',
+					enabled: true,
+				});
+			}
+
 			return {
 				id: 'aichat-messages-area',
 				type: 'container',
@@ -402,6 +447,16 @@ namespace cool {
 				if (!isUser && !msg.isError) {
 					var showInsert = this.shouldShowActions(index);
 					children.push(this.getActionsJSON(index, showInsert));
+				}
+
+				// Retry button for error messages
+				if (msg.isError) {
+					children.push({
+						id: `aichat-retry-${index}`,
+						type: 'pushbutton',
+						text: _('Retry'),
+						enabled: true,
+					});
 				}
 			}
 
@@ -503,8 +558,12 @@ namespace cool {
 					{
 						id: 'aichat-send-btn',
 						type: 'pushbutton',
-						image: this.ICON_SEND,
-						enabled: !this.isProcessing && this.inputText.trim().length > 0,
+						image: this.isProcessing
+							? this.ICON_STOP
+							: this.ICON_SEND,
+						enabled:
+							this.isProcessing ||
+							this.inputText.trim().length > 0,
 					},
 				],
 			};
@@ -540,7 +599,13 @@ namespace cool {
 
 			if (eventType === 'click') {
 				if (id === 'aichat-send-btn') {
-					this.sendMessage();
+					if (this.isProcessing) {
+						this.isProcessing = false;
+						this.currentRequestId = '';
+						this.render();
+					} else {
+						this.sendMessage();
+					}
 				} else if (id === 'aichat-close-btn') {
 					this.hide();
 				} else if (id === 'aichat-clear-btn') {
@@ -550,6 +615,7 @@ namespace cool {
 					var insertImgData = this.messages[insertImgIdx]?.imageData;
 					if (insertImgData) {
 						this.insertImageAtCursor(insertImgData);
+						this.showCopyFeedback(insertImgIdx, 'aichat-insert-img-');
 					}
 				} else if (id.startsWith('aichat-copy-img-')) {
 					var copyImgIdx = parseInt(id.replace('aichat-copy-img-', ''));
@@ -561,6 +627,7 @@ namespace cool {
 					var insertIdx = parseInt(id.replace('aichat-insert-text-', ''));
 					if (this.messages[insertIdx]) {
 						this.insertAtCursor(this.messages[insertIdx].content);
+						this.showCopyFeedback(insertIdx, 'aichat-insert-text-');
 					}
 				} else if (id.startsWith('aichat-copy-text-')) {
 					var copyIdx = parseInt(id.replace('aichat-copy-text-', ''));
@@ -571,6 +638,19 @@ namespace cool {
 					var chipIdx = parseInt(id.replace('aichat-chip-', ''));
 					if (this.PROMPT_CHIPS[chipIdx]) {
 						this.inputText = this.PROMPT_CHIPS[chipIdx];
+						this.sendMessage();
+					}
+				} else if (id.startsWith('aichat-retry-')) {
+					var retryIdx = parseInt(id.replace('aichat-retry-', ''));
+					var userMsg = this.findPrecedingUserMessage(retryIdx);
+					if (userMsg) {
+						// Remove error message
+						this.messages.splice(retryIdx, 1);
+						// Remove preceding user message
+						var userIdx = this.messages.indexOf(userMsg);
+						if (userIdx >= 0) this.messages.splice(userIdx, 1);
+						this.inputText =
+							userMsg.displayContent || userMsg.content;
 						this.sendMessage();
 					}
 				}
@@ -591,6 +671,15 @@ namespace cool {
 								sendBtn.removeAttribute('disabled');
 							}
 						}
+					}
+					// Auto-resize textarea
+					var textarea = document.querySelector(
+						'#aichat-input .ui-textarea',
+					) as HTMLTextAreaElement | null;
+					if (textarea) {
+						textarea.style.height = 'auto';
+						textarea.style.height =
+							Math.min(textarea.scrollHeight, 120) + 'px';
 					}
 				}
 			}
@@ -793,15 +882,6 @@ namespace cool {
 			this.render();
 		}
 
-		private addMessage(role: 'user' | 'assistant', content: string): void {
-			this.messages.push({
-				role: role,
-				content: content,
-				timestamp: Date.now(),
-			});
-			this.render();
-		}
-
 		private async fetchSelectedMarkdown(): Promise<string> {
 			return new Promise((resolve, reject) => {
 				const cleanup = () => {
@@ -905,6 +985,15 @@ namespace cool {
 					if (e.key === 'Enter' && !e.shiftKey) {
 						e.preventDefault();
 						this.sendMessage();
+					}
+				});
+			}
+			const container = document.getElementById('aichat-main');
+			if (container) {
+				container.addEventListener('keydown', (e: KeyboardEvent) => {
+					if (e.key === 'Escape') {
+						e.preventDefault();
+						this.hide();
 					}
 				});
 			}

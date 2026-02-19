@@ -140,7 +140,7 @@
 #aichat-empty-state {
 	color: var(--color-text-lighter);
 	text-align: center;
-	padding: 48px 20px;
+	padding: 32px 20px 16px;
 	margin: auto;
 	font-size: 13px;
 	line-height: 1.6;
@@ -161,9 +161,9 @@
 	padding: 8px 14px;
 	font-size: 12px;
 	line-height: 1.5;
-	color: #7c6f2a;
-	background: #fef9e7;
-	border-top: 1px solid #f0e6b4;
+	color: var(--color-warning);
+	background: rgba(236, 167, 0, 0.08);
+	border-top: 1px solid rgba(236, 167, 0, 0.25);
 	flex-shrink: 0;
 }
 
@@ -330,7 +330,8 @@
 
 /* Hide spacer elements used to force JSDialog container creation */
 [id^='aichat-actions-spacer-'],
-[id^='aichat-msg-spacer-'] {
+[id^='aichat-msg-spacer-'],
+#aichat-messages-spacer {
 	display: none !important;
 }
 
@@ -409,6 +410,21 @@
 	background: var(--color-background-darker);
 	cursor: default;
 	transform: none;
+}
+
+/* ── Stop mode (send button restyled during processing) ── */
+
+#aichat-send-btn button.ui-pushbutton.aichat-stop-mode {
+	background: var(--color-error);
+}
+
+#aichat-send-btn button.ui-pushbutton.aichat-stop-mode:hover {
+	background: #c82323;
+}
+
+#aichat-send-btn button.ui-pushbutton.aichat-stop-mode img {
+	width: 14px;
+	height: 14px;
 }
 
 /* Remove default wrapper margin for send button */
@@ -533,8 +549,30 @@
 }
 
 [id^='aichat-msg-'].aichat-msg-error [id^='aichat-msg-text-'] {
-	color: #b91c1c;
+	color: var(--color-error);
 	font-size: 12px;
+}
+
+/* ── Retry button on error messages ── */
+
+[id^='aichat-retry-'] {
+	margin-top: 6px;
+}
+
+[id^='aichat-retry-'] button.ui-pushbutton {
+	font-size: 12px;
+	color: var(--color-error);
+	border: 1px solid rgba(220, 38, 38, 0.3);
+	background: transparent;
+	padding: 4px 12px;
+	border-radius: 12px;
+	cursor: pointer;
+	transition: all 0.15s ease;
+}
+
+[id^='aichat-retry-'] button.ui-pushbutton:hover {
+	background: rgba(220, 38, 38, 0.06);
+	border-color: var(--color-error);
 }
 
 /* ── Prompt chips ── */
@@ -554,7 +592,7 @@
 
 #aichat-chips button.ui-pushbutton {
 	padding: 6px 14px;
-	border: 1px solid var(--color-border);
+	border: 1px dashed var(--color-border);
 	border-radius: 20px;
 	background: var(--color-background-lighter);
 	color: var(--color-main-text);
@@ -567,6 +605,28 @@
 
 #aichat-chips button.ui-pushbutton:hover {
 	border-color: var(--color-primary);
+	border-style: solid;
 	background: rgba(11, 135, 231, 0.06);
 	color: var(--color-primary);
+}
+
+/* ── Accessibility: reduced motion ── */
+
+@media (prefers-reduced-motion: reduce) {
+	[id^='aichat-msg-'],
+	#aichat-loading-dots {
+		animation: none;
+	}
+
+	#aichat-empty-state::before {
+		animation: none;
+		opacity: 0.7;
+	}
+
+	#aichat-dot-1,
+	#aichat-dot-2,
+	#aichat-dot-3 {
+		animation: none !important;
+		opacity: 0.7;
+	}
 }
