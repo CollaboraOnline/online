@@ -221,6 +221,35 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Track Changes', function (
 		cy.cGet('.compare-changes-labels').should('not.have.css', 'display', 'none');
 	});
 
+	it('Tooltip position in compare changes mode', function () {
+		// Given a document in compare changes mode:
+		desktopHelper.switchUIToNotebookbar();
+		cy.cGet('#Review-tab-label').click();
+		desktopHelper.getNbIcon('TrackChanges', 'Review').click();
+		cy.cGet('#compare-tracked-change').filter(':visible').click();
+		cy.cGet('.compare-changes-labels').should('not.have.css', 'display', 'none');
+
+		// When faking a tooltip message for a tracked change on the right side:
+		cy.getFrameWindow().then(function(win) {
+			win.app.map.uiManager.showDocumentTooltip({
+				type: 'generaltooltip',
+				text: 'Inserted: LocalUser#0 - 02/11/2026 11:44:56',
+				rectangle: '5785, 2293, 1240, 275',
+			});
+		});
+
+		// Then the tooltip should appear on the right half of the viewport:
+		// Without the accompanying fix in place, this test would have failed, the
+		// tooltip x position was too small (on the left side, outside the right page).
+		// The viewport size is 1400, so the mid point is 700, the good position is 988, the
+		// bad one is 671.
+		cy.cGet('.ui-tooltip').should(function($el) {
+			const left = parseFloat($el.css('left'));
+			const viewportMidpoint = Cypress.config('viewportWidth') / 2;
+			expect(left, 'tooltip left position').to.be.greaterThan(viewportMidpoint);
+		});
+	});
+
 	it.skip('Comment Undo-Redo', function () {
 		for (var n = 0; n < 2; n++) {
 			desktopHelper.getCompactIconArrow('DefaultNumbering').click();

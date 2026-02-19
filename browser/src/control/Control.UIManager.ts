@@ -1649,8 +1649,11 @@ class UIManager extends window.L.Control {
 	 */
 	showDocumentTooltip(tooltipInfo: any): void {
 		var split = tooltipInfo.rectangle.split(',');
-		var latlng = this.map._docLayer._twipsToLatLng(new cool.Point(+split[0], +split[1]));
-		var pt = this.map.latLngToContainerPoint(latlng);
+
+		// Go via SimplePoint(), which is aware of the active layout.
+		const point = new cool.SimplePoint(+split[0], +split[1]);
+		const pt = { x: Math.round(point.vX / app.dpiScale), y: Math.round(point.vY / app.dpiScale) };
+
 		var elem = $('.leaflet-layer');
 
 		elem.tooltip();
