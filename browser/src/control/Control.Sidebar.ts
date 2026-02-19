@@ -54,9 +54,27 @@ class Sidebar extends SidebarBase {
 
 		const deckPref: { [key: string]: string } = {};
 		decks.forEach((deck: string) => {
-			deckPref[deck] = currentDeck === deck ? 'true' : 'false';
+			const isActive = currentDeck === deck ? 'true' : 'false';
+			deckPref[deck] = isActive;
+			const command = this.commandForDeck(deck);
+			if (command) {
+				this.map.fire('commandstatechanged', {
+					commandName: command,
+					state: isActive,
+				});
+			}
 		});
 		this.map.uiManager.setDocTypeMultiplePrefs(deckPref);
+	}
+
+	closeSidebar() {
+		if (this.targetDeckCommand) {
+			this.map.fire('commandstatechanged', {
+				commandName: this.targetDeckCommand,
+				state: 'false',
+			});
+		}
+		super.closeSidebar();
 	}
 
 	commandForDeck(deckId: string): string {
