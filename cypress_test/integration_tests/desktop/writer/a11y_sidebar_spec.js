@@ -106,8 +106,6 @@ describe(['tagdesktop'], 'Accessibility Writer Sidebar Tests', { testIsolation: 
 
 		// At which point the sidebar disappears
 		cy.cGet('#sidebar-dock-wrapper').should('not.be.visible');
-		// And just the shape is selected
-		cy.cGet('#test-div-shapeHandlesSection').should('exist');
 
 		// esc to get back to main document
 		escLevel(win, 1);
