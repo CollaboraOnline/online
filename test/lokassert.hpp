@@ -187,16 +187,6 @@ inline constexpr bool failed() { return false; }
 /// Assert the truth of a condition without logging on success.
 #define LOK_ASSERT_SILENT(condition) LOK_ASSERT_MESSAGE_IMPL("", condition, true, true)
 
-/// Check the equality of two expressions. WARNING: Multiple evaluations!
-/// Captures full expressions, but only meaningful when they have no side-effects when evaluated.
-#define LOK_CHECK_EQUAL_UNSAFE(expected, actual)                                                   \
-    LOK_ASSERT_EQUAL_MESSAGE_UNSAFE("", #expected, expected, #actual, actual, false)
-
-/// Assert the equality of two expressions. WARNING: Multiple evaluations!
-/// Captures full expressions, but only meaningful when they have no side-effects when evaluated.
-#define LOK_ASSERT_EQUAL_UNSAFE(expected, actual)                                                  \
-    LOK_ASSERT_EQUAL_MESSAGE_UNSAFE("", #expected, expected, #actual, actual, true)
-
 /// Assert the equality of two expressions with a custom message. WARNING: Multiple evaluations!
 /// Captures full expressions, but only meaningful when they have no side-effects when evaluated.
 /// Will break on failure if stop==true.
