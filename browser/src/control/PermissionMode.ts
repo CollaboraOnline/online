@@ -33,6 +33,8 @@ class PermissionViewMode extends JSDialogComponent {
 	viewModeContainer!: HTMLElement;
 	readonlyIndicator!: HTMLElement;
 	viewModeDropdown!: HTMLElement;
+	shareAsContainer!: HTMLElement;
+	notebookbarBuilder!: JSBuilder;
 
 	constructor(map: MapInterface) {
 		super(map, 'PermissionViewMode', 'permission');
@@ -56,6 +58,13 @@ class PermissionViewMode extends JSDialogComponent {
 			cssClass: 'jsdialog',
 			callback: this.onJSDialogEvent.bind(this),
 			noLabelsForUnoButtons: false,
+		});
+
+		this.notebookbarBuilder = new window.L.control.notebookbarBuilder({
+			mobileWizard: this,
+			map: this.map,
+			cssClass: 'notebookbar',
+			suffix: 'notebookbar',
 		});
 	}
 
@@ -87,6 +96,13 @@ class PermissionViewMode extends JSDialogComponent {
 			this.viewModeContainer,
 		);
 		this.viewModeDropdown.id = 'viewModeDropdown';
+		const separator = window.L.DomUtil.get('closebuttonwrapperseparator');
+		this.shareAsContainer = window.L.DomUtil.create(
+			'div',
+			'shareAsContainer notebookbar',
+		);
+		this.shareAsContainer.id = 'shareAsContainer';
+		separator.parentNode.insertBefore(this.shareAsContainer, separator);
 
 		this.createBuilder();
 		this._buildUI();
@@ -120,10 +136,30 @@ class PermissionViewMode extends JSDialogComponent {
 	}
 
 	private _buildUI(): void {
-		if (!this.viewModeDropdown) return;
+		if (this.viewModeDropdown) {
+			const data = [this._getMenuButtonJSON(_('Viewing'), false)];
+			this.builder?.build(this.viewModeDropdown, data, false);
+		}
 
-		const data = [this._getMenuButtonJSON(_('Viewing'), false)];
-		this.builder?.build(this.viewModeDropdown, data, false);
+		if (this.shareAsContainer) {
+			const data = [
+				{
+					type: 'customtoolitem',
+					id: 'shareas',
+					text: _('Share'),
+					command: 'shareas',
+					inlineLabel: true,
+					accessibility: {
+						focusBack: false,
+						combination: 'ZS',
+						de: null as any,
+					},
+					tabIndex: 0,
+					visible: false,
+				},
+			];
+			this.notebookbarBuilder?.build(this.shareAsContainer, data, false);
+		}
 	}
 
 	onJSDialogEvent(
@@ -204,6 +240,15 @@ class PermissionViewMode extends JSDialogComponent {
 					this.viewModeContainer,
 					this._getMenuButtonJSON(dropdownText, true),
 				);
+			}
+		}
+
+		if (this.map && (this.map.wopi as any).EnableShare) {
+			if (this.builder && this.viewModeContainer) {
+				this.notebookbarBuilder.executeAction(this.shareAsContainer, {
+					control_id: 'shareas',
+					action_type: showReadonly ? 'show' : 'hide',
+				});
 			}
 		}
 	}
