@@ -1,0 +1,109 @@
+#! /bin/bash
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at http://mozilla.org/MPL/2.0/.
+
+# -- Available env vars --
+# * CORE_ASSETS  - which prebuilt assets to build in core
+# * CORE_REPO    - which git repo to clone core from
+# * CORE_BRANCH  - which branch to build in core
+# * COLLABORA_ONLINE_REPO - which git repo to clone online from
+# * COLLABORA_ONLINE_BRANCH - which branch to build in online
+# * CORE_BUILD_TARGET - which make target to run (in core repo)
+# * ONLINE_EXTRA_BUILD_OPTIONS - extra build options for online
+
+if [ -z "$CORE_REPO" ]; then
+  CORE_REPO="https://git.libreoffice.org/core"
+fi;
+
+if [ -z "$CORE_ASSETS" ]; then
+  if [ -z "$CORE_BRANCH" ]; then
+    CORE_BRANCH="distro/collabora/co-26.04"
+  fi;
+  echo "Building core branch '$CORE_BRANCH' from '$CORE_REPO'"
+else
+  echo "Building from core assets $CORE_ASSETS"
+fi;
+
+if [ -z "$COLLABORA_ONLINE_REPO" ]; then
+  COLLABORA_ONLINE_REPO="https://github.com/CollaboraOnline/online.git"
+fi;
+if [ -z "$COLLABORA_ONLINE_BRANCH" ]; then
+  COLLABORA_ONLINE_BRANCH="main"
+fi;
+echo "Building online branch '$COLLABORA_ONLINE_BRANCH' from '$COLLABORA_ONLINE_REPO'"
+
+if [ -z "$CORE_BUILD_TARGET" ]; then
+  CORE_BUILD_TARGET=""
+fi;
+echo "LOKit (core) build target: '$CORE_BUILD_TARGET'"
+
+SRCDIR=$(realpath `dirname $0`)
+INSTDIR="$SRCDIR/instdir"
+BUILDDIR="$SRCDIR/builddir"
+
+mkdir -p "$BUILDDIR"
+cd "$BUILDDIR"
+
+rm -rf "$INSTDIR" || true
+mkdir -p "$INSTDIR"
+
+##### build static poco #####
+
+wget https://pocoproject.org/releases/poco-1.12.5p2/poco-1.12.5p2-all.tar.gz
+tar -xzf poco-1.12.5p2-all.tar.gz
+cd poco-1.12.5p2-all/
+./configure --static --no-tests --no-samples --no-sharedlibs --cflags="-fPIC" --omit=Zip,Data,Data/SQLite,Data/ODBC,Data/MySQL,MongoDB,PDF,CppParser,PageCompiler,Redis,Encodings,ActiveRecord --prefix=$BUILDDIR/poco
+make -s -j $(nproc)
+make -s install
+cd ..
+
+
+##### cloning & updating #####
+
+# core repo
+# only if CORE_ASSETS is not set
+if [ -z "$CORE_ASSETS" ]; then
+  git clone --depth=1 --branch "$CORE_BRANCH" "$CORE_REPO" core || exit 1
+else
+  mkdir -p core
+  ( cd core/ && wget "$CORE_ASSETS" -O core-assets.tar.xz && tar -xzf core-assets.tar.xz && rm core-assets.tar.xz) || exit 1
+fi
+
+
+# Clone online repo
+git clone --depth=1 --branch "$COLLABORA_ONLINE_BRANCH" "$COLLABORA_ONLINE_REPO" online || exit 1
+
+##### LOKit (core) #####
+
+# only if core assets are not set
+if [ -z "$CORE_ASSETS" ]; then
+  # build
+  ( cd core && ./autogen.sh --with-distro=CPLinux-LOKit --without-package-format --disable-symbols --with-lang=en-US ) || exit 1
+  ( cd core && make $CORE_BUILD_TARGET ) || exit 1
+else
+  echo "Using prebuilt core assets"
+fi
+
+# copy stuff
+mkdir -p "$INSTDIR"/opt/
+cp -a core/instdir "$INSTDIR"/opt/lokit
+
+##### coolwsd & cool #####
+
+# build
+( cd online && ./autogen.sh ) || exit 1
+( cd online && ./configure --prefix=/usr --sysconfdir=/etc --localstatedir=/var --enable-silent-rules --disable-tests --with-lokit-path="$BUILDDIR"/core/include --with-lo-path=/opt/lokit --with-poco-includes=$BUILDDIR/poco/include --with-poco-libs=$BUILDDIR/poco/lib $ONLINE_EXTRA_BUILD_OPTIONS) || exit 1
+( cd online && make -j $(nproc)) || exit 1
+
+# copy stuff
+( cd online && DESTDIR="$INSTDIR" make install ) || exit 1
+
+# Build online branding if available
+if test -d online-branding ; then
+  if ! which sass &> /dev/null; then npm install -g sass; fi
+  cd online-branding
+  ./brand.sh $INSTDIR/opt/lokit $INSTDIR/usr/share/coolwsd/browser/dist CODE # CODE
+  ./brand.sh $INSTDIR/opt/lokit $INSTDIR/usr/share/coolwsd/browser/dist NC-theme-community # Nextcloud Office
+  cd ..
+fi
