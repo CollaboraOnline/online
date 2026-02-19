@@ -142,8 +142,9 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Test jumping on large cell
 			cy.cGet('#document-canvas').realClick();
 			cy.wait(300);
 			cy.cGet('body').rightclick(centerX, centerY);
-			cy.cGet('#jsd-context-menu-dropdown-overlay').contains('.ui-combobox-entry.jsdialog.ui-grid-cell span', 'Paste').should('exist');
-			cy.cGet('#jsd-context-menu-dropdown-overlay').contains('.ui-combobox-entry.jsdialog.ui-grid-cell span', 'Paste').should('be.visible');
+			const pasteEntry = helper.getContextMenuItem('Paste');
+			pasteEntry.should('exist');
+			pasteEntry.should('be.visible');
 		});
 	});
 });
@@ -187,8 +188,9 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Test Cell Selections', fun
 		helper.typeIntoInputField(helper.addressInputSelector, 'Z1000');
 
 		cy.cGet('#document-container').rightclick();
-		cy.cGet('#jsd-context-menu-dropdown-overlay').contains('.ui-combobox-entry.jsdialog.ui-grid-cell span', 'Paste').should('exist');
-		cy.cGet('#jsd-context-menu-dropdown-overlay').contains('.ui-combobox-entry.jsdialog.ui-grid-cell span', 'Paste').should('be.visible');
+		const pasteEntry = helper.getContextMenuItem('Paste');
+		pasteEntry.should('exist');
+		pasteEntry.should('be.visible');
 
 		cy.cGet('#document-container').then(function(items) {
 			const rect = items[0].getBoundingClientRect();

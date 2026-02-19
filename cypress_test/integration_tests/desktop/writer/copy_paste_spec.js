@@ -16,9 +16,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Clipboard operations.', fu
 
 		helper.setDummyClipboardForCopy();
 
-		cy.cGet('#jsd-context-menu-dropdown-overlay')
-			.contains('.ui-combobox-entry.jsdialog.ui-grid-cell span', 'Copy')
-			.click();
+		helper.getContextMenuItem('Copy').click();
 
 		cy.cGet('#copy-paste-container div p').should('have.text', 'text');
 	});
