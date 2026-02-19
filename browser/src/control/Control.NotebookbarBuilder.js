@@ -765,6 +765,26 @@ window.L.Control.NotebookbarBuilder = window.L.Control.JSDialogBuilder.extend({
 		var control = builder._unoToolButton(parentContainer, data, builder);
 
 		$(control.button).unbind('click');
+
+		if (!control.label) {
+			const tooltip = document.createElement('span');
+			tooltip.id = 'save-status';
+			tooltip.className = 'tooltip-label visuallyhidden';
+			tooltip.setAttribute('role', 'tooltip');
+			control.label = tooltip;
+
+			control.button.parentElement.appendChild(tooltip);
+
+			builder.map.on('updatemodificationindicator', function(e) {
+				if (e.lastSaved) {
+					tooltip.textContent = e.lastSaved;
+				}
+			});
+
+			control.button.setAttribute('aria-describedby', tooltip.id);
+			control.label = tooltip;
+		}
+
 		$(control.label).unbind('click');
 		$(control.container).click(function () {
 			// Save only when not read-only.
