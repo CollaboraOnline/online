@@ -532,6 +532,35 @@
 	font-style: italic;
 }
 
+.aichat-msg-assistant table {
+	border-collapse: collapse;
+	margin: 6px 0;
+	font-size: 12px;
+	width: 100%;
+}
+
+.aichat-msg-assistant th,
+.aichat-msg-assistant td {
+	border: 1px solid var(--color-border);
+	padding: 4px 8px;
+}
+
+.aichat-msg-assistant th {
+	background: rgba(0, 0, 0, 0.04);
+	font-weight: 600;
+}
+
+.aichat-msg-assistant blockquote {
+	border-left: 3px solid var(--color-border);
+	margin: 6px 0;
+	padding: 4px 10px;
+	color: var(--color-text-lighter);
+}
+
+.aichat-msg-assistant del {
+	text-decoration: line-through;
+}
+
 /* ── Generated images ── */
 
 .aichat-generated-image {

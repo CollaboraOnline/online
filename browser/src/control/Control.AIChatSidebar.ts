@@ -17,9 +17,10 @@
  * Selected text is exchanged as markdown (text/markdown;charset=utf-8).
  */
 
-/* global app JSDialog Autolinker */
+/* global app JSDialog Autolinker marked */
 declare var JSDialog: any;
 declare var Autolinker: any;
+declare var marked: any;
 
 namespace cool {
 	interface ChatMessage {
@@ -178,10 +179,7 @@ namespace cool {
 		}
 
 		private updateMessagesArea(): void {
-			this.builder.updateWidget(
-				this.container,
-				this.getMessagesAreaJSON(),
-			);
+			this.builder.updateWidget(this.container, this.getMessagesAreaJSON());
 			app.layoutingService.onDrain(() => {
 				this.applyMessageStyles();
 				this.scrollToBottom();
@@ -189,10 +187,7 @@ namespace cool {
 		}
 
 		private updateInputArea(): void {
-			this.builder.updateWidget(
-				this.container,
-				this.getInputJSON(),
-			);
+			this.builder.updateWidget(this.container, this.getInputJSON());
 			app.layoutingService.onDrain(() => {
 				this.applyInputStyles();
 				if (!this.isProcessing) {
@@ -202,17 +197,11 @@ namespace cool {
 		}
 
 		private updateHint(): void {
-			this.builder.updateWidget(
-				this.container,
-				this.getHintJSON(),
-			);
+			this.builder.updateWidget(this.container, this.getHintJSON());
 		}
 
 		private updateHeader(): void {
-			this.builder.updateWidget(
-				this.container,
-				this.getHeaderJSON(),
-			);
+			this.builder.updateWidget(this.container, this.getHeaderJSON());
 			app.layoutingService.onDrain(() => this.applyHeaderTooltips());
 		}
 
@@ -265,10 +254,7 @@ namespace cool {
 				'#aichat-send-btn button.ui-pushbutton',
 			);
 			if (sendBtn) {
-				sendBtn.classList.toggle(
-					'aichat-stop-mode',
-					this.isProcessing,
-				);
+				sendBtn.classList.toggle('aichat-stop-mode', this.isProcessing);
 			}
 			const tip = this.isProcessing
 				? _('Stop generating')
@@ -292,8 +278,7 @@ namespace cool {
 
 		private scrollToBottom(): void {
 			requestAnimationFrame(() => {
-				const messagesArea =
-					document.getElementById('aichat-messages-area');
+				const messagesArea = document.getElementById('aichat-messages-area');
 				if (messagesArea && messagesArea.lastElementChild) {
 					messagesArea.lastElementChild.scrollIntoView({
 						behavior: 'smooth',
@@ -485,7 +470,7 @@ namespace cool {
 						'<img src="data:image/png;base64,' +
 							msg.imageData +
 							'" alt="' +
-							this.escapeHtml(_('AI generated image')) +
+							_('AI generated image') +
 							'" class="aichat-generated-image" />',
 					),
 					enabled: true,
@@ -625,12 +610,8 @@ namespace cool {
 					{
 						id: 'aichat-send-btn',
 						type: 'pushbutton',
-						image: this.isProcessing
-							? this.ICON_STOP
-							: this.ICON_SEND,
-						enabled:
-							this.isProcessing ||
-							this.inputText.trim().length > 0,
+						image: this.isProcessing ? this.ICON_STOP : this.ICON_SEND,
+						enabled: this.isProcessing || this.inputText.trim().length > 0,
 					},
 				],
 			};
@@ -716,8 +697,7 @@ namespace cool {
 						// Remove preceding user message
 						var userIdx = this.messages.indexOf(userMsg);
 						if (userIdx >= 0) this.messages.splice(userIdx, 1);
-						this.inputText =
-							userMsg.displayContent || userMsg.content;
+						this.inputText = userMsg.displayContent || userMsg.content;
 						this.sendMessage();
 					}
 				}
@@ -745,8 +725,7 @@ namespace cool {
 					) as HTMLTextAreaElement | null;
 					if (textarea) {
 						textarea.style.height = 'auto';
-						textarea.style.height =
-							Math.min(textarea.scrollHeight, 120) + 'px';
+						textarea.style.height = Math.min(textarea.scrollHeight, 120) + 'px';
 					}
 				}
 			}
@@ -1041,7 +1020,6 @@ namespace cool {
 			}
 		}
 
-
 		private _keyboardHandlerAttached: boolean = false;
 
 		private attachContainerKeyboardHandler(): void {
@@ -1120,116 +1098,31 @@ namespace cool {
 		}
 
 		private markdownToHtml(text: string): string {
-			text = text.trim();
-			// Protect code blocks from processing
-			var codeBlocks: string[] = [];
-			var processed = text.replace(
-				/```(\w*)\n([\s\S]*?)```/g,
-				function (_match: string, lang: string, code: string) {
-					var idx = codeBlocks.length;
-					var escaped = code
+			var html: string;
+
+			if (typeof marked !== 'undefined') {
+				html = marked.parse(text.trim(), {
+					gfm: true,
+					breaks: true,
+				});
+			} else {
+				// Fallback: plain text with basic escaping and line breaks
+				html =
+					'<p>' +
+					text
 						.replace(/&/g, '&amp;')
 						.replace(/</g, '&lt;')
-						.replace(/>/g, '&gt;');
-					codeBlocks.push(
-						'<pre><code' +
-							(lang ? ' class="lang-' + lang + '"' : '') +
-							'>' +
-							escaped +
-							'</code></pre>',
-					);
-					return '%%CODEBLOCK' + idx + '%%';
-				},
-			);
-
-			// Escape HTML in remaining text
-			processed = this.escapeHtml(processed);
-
-			// Inline code
-			processed = processed.replace(/`([^`]+)`/g, '<code>$1</code>');
-
-			// Headings (allow optional leading whitespace, process ### before ## before #)
-			processed = processed.replace(/^\s*### (.+)$/gm, '<h5>$1</h5>');
-			processed = processed.replace(/^\s*## (.+)$/gm, '<h4>$1</h4>');
-			processed = processed.replace(/^\s*# (.+)$/gm, '<h3>$1</h3>');
-
-			// Bold (must come before italic)
-			processed = processed.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
-
-			// Italic (safe after bold is already replaced)
-			processed = processed.replace(/\*([^*]+)\*/g, '<em>$1</em>');
-			processed = processed.replace(
-				/(?:^| )_([^_]+)_(?:$| )/gm,
-				' <em>$1</em> ',
-			);
-
-			// Links
-			processed = processed.replace(
-				/\[([^\]]+)\]\(([^)]+)\)/g,
-				'<a href="$2" target="_blank" rel="noopener">$1</a>',
-			);
-
-			// Lists
-			processed = this.processLists(processed);
-
-			// Paragraph breaks and line breaks
-			processed = processed.replace(/\n\n+/g, '</p><p>');
-			processed = processed.replace(/\n/g, '<br>');
-			processed = '<p>' + processed + '</p>';
-
-			// Clean up empty paragraphs around block elements
-			processed = processed.replace(/<p><\/p>/g, '');
-			processed = processed.replace(/<p>(<(?:h[3-5]|pre|ul|ol))/g, '$1');
-			processed = processed.replace(/(<\/(?:h[3-5]|pre|ul|ol)>)<\/p>/g, '$1');
-			processed = processed.replace(/<p>(%%CODEBLOCK\d+%%)<\/p>/g, '$1');
-
-			// Restore code blocks
-			processed = processed.replace(
-				/%%CODEBLOCK(\d+)%%/g,
-				function (_match: string, idx: string) {
-					return codeBlocks[parseInt(idx)];
-				},
-			);
+						.replace(/>/g, '&gt;')
+						.replace(/\n/g, '<br>') +
+					'</p>';
+			}
 
 			// Autolink bare URLs
 			if (typeof Autolinker !== 'undefined') {
-				processed = Autolinker.link(processed);
+				html = Autolinker.link(html);
 			}
 
-			return processed;
-		}
-
-		private escapeHtml(text: string): string {
-			return text
-				.replace(/&/g, '&amp;')
-				.replace(/</g, '&lt;')
-				.replace(/>/g, '&gt;');
-		}
-
-		private processLists(text: string): string {
-			// Unordered lists
-			text = text.replace(/((?:^[-*] .+$\n?)+)/gm, function (match: string) {
-				var items = match
-					.trim()
-					.split('\n')
-					.map(function (line: string) {
-						return '<li>' + line.replace(/^[-*] /, '') + '</li>';
-					})
-					.join('');
-				return '<ul>' + items + '</ul>';
-			});
-			// Ordered lists
-			text = text.replace(/((?:^\d+\. .+$\n?)+)/gm, function (match: string) {
-				var items = match
-					.trim()
-					.split('\n')
-					.map(function (line: string) {
-						return '<li>' + line.replace(/^\d+\. /, '') + '</li>';
-					})
-					.join('');
-				return '<ol>' + items + '</ol>';
-			});
-			return text;
+			return html;
 		}
 
 		private shouldShowActions(assistantMsgIndex: number): boolean {
