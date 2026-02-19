@@ -2029,7 +2029,7 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 		$(controls.label).on('click', clickFunction);
 		// We need a way to also handle the custom tooltip for any tool button like save in shortcut bar
 		if (data.isCustomTooltip) {
-			this._handleCutomTooltip(div, builder);
+			this._handleCustomTooltip(div, builder);
 		}
 		else if (!hasLabel || hasShortcut) {
 			$(div).on('mouseenter', mouseEnterFunction);
@@ -2055,8 +2055,10 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 		return controls;
 	},
 
-	_handleCutomTooltip: function(elem, builder) {
-		switch (elem.id) {
+	_handleCustomTooltip: function(elem, builder) {
+		// Prefer modelid, fallback to id if modelid is missing
+		const lookupId = elem.getAttribute('modelid') || elem.id;
+		switch (lookupId) {
 			case 'save':
 				$(elem).on('mouseenter', window.touch.mouseOnly(function() {
 					if (builder.map.tooltip)
