@@ -105,9 +105,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Delete Objects', function(
 			cy.cGet('body').rightclick(x + 20, y + 20);
 		});
 
-		cy.cGet('#jsd-context-menu-dropdown-overlay')
-			.contains('.ui-combobox-entry.jsdialog.ui-grid-cell span', 'Delete')
-			.click();
+		helper.getContextMenuItem('Delete').click();
 		cy.cGet('.table-column-resize-marker').should('not.exist');
 	});
 
