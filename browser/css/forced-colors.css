@@ -1,35 +1,35 @@
 @media (forced-colors: active) {
 
-  /* Active notebookbar tab: box-shadow is stripped, use border-bottom */
-  .ui-tab.selected.notebookbar {
-    border-bottom: 2px solid Highlight !important;
-    box-shadow: none !important;
-  }
-  .ui-tab.selected.notebookbar:hover {
-    box-shadow: none !important;
-    border-bottom: 2px solid Highlight !important;
-  }
-  .ui-tab.notebookbar:hover {
-    box-shadow: none !important;
-    border-bottom: 2px solid ButtonBorder !important;
-  }
+	/* Active notebookbar tab: box-shadow is stripped, use border-bottom */
+	.ui-tab.selected.notebookbar {
+		border-bottom: 2px solid Highlight !important;
+		box-shadow: none !important;
+	}
+	.ui-tab.selected.notebookbar:hover {
+		box-shadow: none !important;
+		border-bottom: 2px solid Highlight !important;
+	}
+	.ui-tab.notebookbar:hover {
+		box-shadow: none !important;
+		border-bottom: 2px solid ButtonBorder !important;
+	}
 
-  /* Preserve SVG toolbar icons */
-  .w2ui-icon,
-  .unoSave.savemodified .unobutton img,
-  .savemodified.unotoolbutton .unobutton img,
-  .StyleListPanel #TemplatePanel button,
-  .document-logo {
-    forced-color-adjust: none;
-  }
+	/* Preserve SVG toolbar icons */
+	.w2ui-icon,
+	.unoSave.savemodified .unobutton img,
+	.savemodified.unotoolbutton .unobutton img,
+	.StyleListPanel #TemplatePanel button,
+	.document-logo {
+		forced-color-adjust: none;
+	}
 
-  /* Restore native checkboxes (OS renders in user's HC colors) */
-  input[type='checkbox'].autofilter,
-  .jsdialog input[type='checkbox'] {
-    appearance: auto !important;
-    -webkit-appearance: auto !important;
-    -moz-appearance: auto !important;
-    background: none !important;
-  }
+	/* Restore native checkboxes (OS renders in user's HC colors) */
+	input[type='checkbox'].autofilter,
+	.jsdialog input[type='checkbox'] {
+		appearance: auto !important;
+		-webkit-appearance: auto !important;
+		-moz-appearance: auto !important;
+		background: none !important;
+	}
 
 }
