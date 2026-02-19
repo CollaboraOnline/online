@@ -1,26 +1,33 @@
 @media (forced-colors: active) {
 
 	/* Active notebookbar tab: box-shadow is stripped, use border-bottom */
-	.ui-tab.selected.notebookbar {
-		border-bottom: 2px solid Highlight !important;
+	.ui-tab.selected.notebookbar,
+	.main-nav.hasnotebookbar .ui-tabs > .ui-tab.selected.notebookbar {
+		border: 2px solid Highlight !important;
 		box-shadow: none !important;
+		background-color: Highlight !important;
 	}
+
 	.ui-tab.selected.notebookbar:hover {
 		box-shadow: none !important;
-		border-bottom: 2px solid Highlight !important;
+		border-bottom: 3px solid Highlight !important
 	}
+
 	.ui-tab.notebookbar:hover {
 		box-shadow: none !important;
-		border-bottom: 2px solid ButtonBorder !important;
+		border-bottom: 3px solid ButtonBorder !important
 	}
 
 	/* Preserve SVG toolbar icons */
-	.w2ui-icon,
-	.unoSave.savemodified .unobutton img,
+	.unobutton img,
 	.savemodified.unotoolbutton .unobutton img,
 	.StyleListPanel #TemplatePanel button,
-	.document-logo {
+	.document-logo,
+	.ui-tabs-content .unobutton>img,
+	.unotoolbutton.notebookbar .unobutton>img,
+	.unotoolbutton.notebookbar .unobutton {
 		forced-color-adjust: none;
+		background-color: #e9e9ed;
 	}
 
 	/* Restore native checkboxes (OS renders in user's HC colors) */
@@ -29,7 +36,58 @@
 		appearance: auto !important;
 		-webkit-appearance: auto !important;
 		-moz-appearance: auto !important;
-		background: none !important;
+		background: none !important
+	}
+
+	/* Shortcuts buttons: small save icon etc */
+	.notebookbar-shortcuts-bar .unotoolbutton.notebookbar .unobutton {
+		forced-color-adjust: auto;
+	}
+
+	/* Dropdown arrows */
+	.unoarrow, .menubutton .arrow, .ui-listbox-arrow {
+		forced-color-adjust: none;
+		border-top-color: #e9e9ed;
+	}
+
+	/* Restore original Sidebar expanders */
+	.ui-expander-label.expanded::before,
+	.ui-treeview-expandable:not(.collapsed) > div > .ui-treeview-expander::before,
+	.ui-treeview div[aria-expanded='true'] > div > .ui-treeview-expander::before {
+		forced-color-adjust: none;
+		filter: none;
+	}
+
+	/* Color picker swatches and selected-color indicator */
+	.ui-color-picker-entry,
+	.unotoolbutton .selected-color {
+		forced-color-adjust: none;
+	}
+
+	/* Styles sidebar: specificity boost over [id] button rules */
+	.StyleListPanel #TemplatePanel [id] button {
+		forced-color-adjust: none;
+		background-color: #e9e9ed;
+	}
+
+	/* Style preview images in sidebar treeview */
+	.StyleListPanel .ui-treeview-entry img {
+		forced-color-adjust: none;
+	}
+
+	/* Comment/annotation action buttons (SVG background icons) */
+	.cool-annotation-menu,
+	.cool-annotation-menu-redline,
+	.cool-annotation-menu-edit,
+	.cool-redline-accept-button,
+	.cool-redline-reject-button {
+		forced-color-adjust: none;
+	}
+
+	/* Overflow popup icons */
+	.ui-overflow-group-popup .unobutton > img {
+		forced-color-adjust: none;
+		background-color: #e9e9ed;
 	}
 
 }
