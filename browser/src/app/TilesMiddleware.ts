@@ -1360,9 +1360,9 @@ class TileManager {
 			this.beginTransaction();
 			const queue = this.checkRequestTiles(
 				app.activeDocument.activeLayout.getCurrentCoordList(),
-				false,
 			);
 			this.endTransaction(null);
+
 			return queue;
 		}
 
@@ -2046,20 +2046,20 @@ class TileManager {
 			}, 100);
 		}
 
+		if (!center) center = map.getCenter();
+		if (!zoom) zoom = Math.round(map.getZoom());
+		var pixelBounds = map.getPixelBoundsCore(center, zoom);
+
 		if (app.file.fileBasedView) {
 			this.updateFileBasedView();
 			return;
-		} else if (app.activeDocument.activeLayout.type === 'ViewLayoutMultiPage')
+		} else if (
+			['ViewLayoutMultiPage'].includes(app.activeDocument.activeLayout.type)
+		) {
+			this.getMissingTiles(pixelBounds, zoom);
 			return;
-
-		if (!center) {
-			center = map.getCenter();
-		}
-		if (!zoom) {
-			zoom = Math.round(map.getZoom());
 		}
 
-		var pixelBounds = map.getPixelBoundsCore(center, zoom);
 		var queue = this.getMissingTiles(pixelBounds, zoom, true);
 
 		app.map._docLayer._sendClientZoom();
