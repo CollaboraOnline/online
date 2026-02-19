@@ -32,6 +32,55 @@ class CalcTableTab implements NotebookbarTab {
 		} as NotebookbarTabEntry;
 	}
 
+	private generateTableStylesJSON() {
+		let tableStyles = new Array<TableStyleEntry>();
+		try {
+			tableStyles = window.structuredClone(app.tableStyles);
+		} catch (e) {
+			app.console.error('TableStylesList: ' + e);
+		}
+
+		if (!tableStyles) return {};
+
+		const currentStyle = app.map['stateChangeHandler'].getItemValue(
+			'.uno:DatabaseSettings',
+		);
+
+		const iconViewEntries = new Array<IconViewEntry>();
+		let i = 0;
+
+		iconViewEntries.push({
+			row: i++,
+			text: _('None'),
+			image: 'images/table_light_seven.svg',
+			selected: !currentStyle || currentStyle.name === '',
+		});
+
+		tableStyles.forEach((element) => {
+			iconViewEntries.push({
+				row: i++,
+				text: element.UIName,
+				image: 'images/table_light_seven.svg',
+				selected: currentStyle ? element.Name === currentStyle.name : false,
+			});
+		});
+
+		const tableStylesJSON = {
+			id: 'tablestyles_design',
+			type: 'iconview',
+			text: _('Table Styles'),
+			command: '.uno:DatabaseSettings',
+			aria: { label: _('Table Styles') },
+			accessibility: { focusBack: true, combination: 'TS' },
+			entries: iconViewEntries,
+			singleclickactivate: true,
+			textWithIconEnabled: false, // no translated strings for standard styles yet
+			selectionmode: 'single',
+		} as IconViewJSON;
+
+		return tableStylesJSON;
+	}
+
 	/* ids have to match transition pane ids from the .ui in the core */
 	public getContent(): NotebookbarTabContent {
 		const content = [
@@ -180,14 +229,7 @@ class CalcTableTab implements NotebookbarTab {
 				id: 'table-style-options-break',
 				orientation: 'vertical',
 			},
-			{
-				id: 'tablestyles_design',
-				type: 'tablestyles',
-				text: _('Table Styles'),
-				command: '.uno:DatabaseSettings',
-				aria: { label: _('Table Styles') },
-				accessibility: { focusBack: true, combination: 'TS' },
-			},
+			this.generateTableStylesJSON(),
 		];
 
 		return content as NotebookbarTabContent;
