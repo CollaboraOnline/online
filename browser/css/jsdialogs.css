@@ -2185,7 +2185,6 @@ button.menubutton.sidebar > span {
 	width: max-content;
 }
 
-.unoarrow::after,
 .jsdialog .ui-content.unobutton::after {
 	--click-increment: -1px;
 	position: absolute;
