@@ -151,5 +151,7 @@ window.L.WriterTileLayer = window.L.CanvasTileLayer.extend({
 			docType: this._docType
 		});
 		TileManager.resetPreFetching(true);
+		if (app.activeDocument.activeLayout.type === 'ViewLayoutMultiPage')
+			app.activeDocument.activeLayout.reset();
 	},
 });
