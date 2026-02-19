@@ -168,10 +168,59 @@ namespace cool {
 			var data = this.getWidgetJSON();
 			this.builder.build(this.container, [data], false);
 			this.applyMessageStyles();
+			this.applyInputStyles();
+			this.applyHeaderTooltips();
 			this.scrollToBottom();
-			this.attachKeyboardHandler();
+			this.attachContainerKeyboardHandler();
 			if (!this.isProcessing) {
 				this.focusInput();
+			}
+		}
+
+		private updateMessagesArea(): void {
+			this.builder.updateWidget(
+				this.container,
+				this.getMessagesAreaJSON(),
+			);
+			app.layoutingService.onDrain(() => {
+				this.applyMessageStyles();
+				this.scrollToBottom();
+			});
+		}
+
+		private updateInputArea(): void {
+			this.builder.updateWidget(
+				this.container,
+				this.getInputJSON(),
+			);
+			app.layoutingService.onDrain(() => {
+				this.applyInputStyles();
+				if (!this.isProcessing) {
+					this.focusInput();
+				}
+			});
+		}
+
+		private updateHint(): void {
+			this.builder.updateWidget(
+				this.container,
+				this.getHintJSON(),
+			);
+		}
+
+		private updateHeader(): void {
+			this.builder.updateWidget(
+				this.container,
+				this.getHeaderJSON(),
+			);
+			app.layoutingService.onDrain(() => this.applyHeaderTooltips());
+		}
+
+		private updateChatState(includeHeader: boolean = false): void {
+			this.updateMessagesArea();
+			this.updateInputArea();
+			if (includeHeader) {
+				this.updateHeader();
 			}
 		}
 
@@ -189,6 +238,29 @@ namespace cool {
 					}
 				}
 			}
+			this.applyMessageTooltips();
+		}
+
+		private applyMessageTooltips(): void {
+			for (let i = 0; i < this.messages.length; i++) {
+				const tooltips: Record<string, string> = {
+					[`aichat-insert-text-${i}`]: _('Insert at cursor'),
+					[`aichat-copy-text-${i}`]: _('Copy to clipboard'),
+					[`aichat-insert-img-${i}`]: _('Insert at cursor'),
+					[`aichat-copy-img-${i}`]: _('Copy to clipboard'),
+				};
+				for (const [id, tip] of Object.entries(tooltips)) {
+					const wrapper = document.getElementById(id);
+					if (wrapper) {
+						wrapper.title = tip;
+						const btn = wrapper.querySelector('button');
+						if (btn) btn.title = tip;
+					}
+				}
+			}
+		}
+
+		private applyInputStyles(): void {
 			const sendBtn = document.querySelector(
 				'#aichat-send-btn button.ui-pushbutton',
 			);
@@ -198,31 +270,23 @@ namespace cool {
 					this.isProcessing,
 				);
 			}
-			this.applyTooltips();
+			const tip = this.isProcessing
+				? _('Stop generating')
+				: _('Send message (Enter)');
+			this.setTooltip('aichat-send-btn', tip);
 		}
 
-		private applyTooltips(): void {
-			const tooltips: Record<string, string> = {
-				'aichat-clear-btn': _('New conversation'),
-				'aichat-close-btn': _('Close'),
-				'aichat-send-btn': this.isProcessing
-					? _('Stop generating')
-					: _('Send message (Enter)'),
-			};
-			// Action button tooltips
-			for (let i = 0; i < this.messages.length; i++) {
-				tooltips[`aichat-insert-text-${i}`] = _('Insert at cursor');
-				tooltips[`aichat-copy-text-${i}`] = _('Copy to clipboard');
-				tooltips[`aichat-insert-img-${i}`] = _('Insert at cursor');
-				tooltips[`aichat-copy-img-${i}`] = _('Copy to clipboard');
-			}
-			for (const [id, tip] of Object.entries(tooltips)) {
-				const wrapper = document.getElementById(id);
-				if (wrapper) {
-					wrapper.title = tip;
-					const btn = wrapper.querySelector('button');
-					if (btn) btn.title = tip;
-				}
+		private applyHeaderTooltips(): void {
+			this.setTooltip('aichat-clear-btn', _('New conversation'));
+			this.setTooltip('aichat-close-btn', _('Close'));
+		}
+
+		private setTooltip(id: string, tip: string): void {
+			const wrapper = document.getElementById(id);
+			if (wrapper) {
+				wrapper.title = tip;
+				const btn = wrapper.querySelector('button');
+				if (btn) btn.title = tip;
 			}
 		}
 
@@ -252,21 +316,24 @@ namespace cool {
 			const children: any[] = [
 				this.getHeaderJSON(),
 				this.getMessagesAreaJSON(),
+				this.getHintJSON(),
 			];
-			if (this.hintText) {
-				children.push({
-					id: 'aichat-hint',
-					type: 'fixedtext',
-					text: this.hintText,
-					enabled: true,
-				});
-			}
 			children.push(this.getInputJSON());
 			return {
 				id: 'aichat-main',
 				type: 'container',
 				vertical: true,
 				children: children,
+			};
+		}
+
+		private getHintJSON(): any {
+			return {
+				id: 'aichat-hint',
+				type: 'fixedtext',
+				text: this.hintText || '',
+				enabled: true,
+				visible: !!this.hintText,
 			};
 		}
 
@@ -602,7 +669,7 @@ namespace cool {
 					if (this.isProcessing) {
 						this.isProcessing = false;
 						this.currentRequestId = '';
-						this.render();
+						this.updateChatState();
 					} else {
 						this.sendMessage();
 					}
@@ -708,7 +775,7 @@ namespace cool {
 				this.hintText = _(
 					'Please select some text in the document first, so the AI assistant can help you with it.',
 				);
-				this.render();
+				this.updateHint();
 				return;
 			}
 
@@ -723,7 +790,7 @@ namespace cool {
 						this.hintText = _(
 							'The selection contains images or other non-text content that cannot be sent as context.',
 						);
-						this.render();
+						this.updateHint();
 						return;
 					}
 					// Other errors (timeout, parse failure) — silently continue without selection
@@ -758,13 +825,12 @@ namespace cool {
 			};
 			this.messages.push(userMsg);
 			this.inputText = '';
-
-			// Show user message
-			this.render();
-
-			// Start processing
 			this.isProcessing = true;
-			this.render();
+
+			// Update messages (shows user msg + loading dots), input (disabled
+			// + stop icon), header (enable clear btn), and hide any hint.
+			this.updateChatState(true);
+			this.updateHint();
 
 			this.currentRequestId = this.generateRequestId();
 
@@ -843,7 +909,7 @@ namespace cool {
 				this.messages.push(errorMsg);
 			}
 
-			this.render();
+			this.updateChatState(true);
 		}
 
 		private onAIImageResult(data: any): void {
@@ -869,7 +935,7 @@ namespace cool {
 				this.messages.push(errorMsg);
 			}
 
-			this.render();
+			this.updateChatState(true);
 		}
 
 		clearConversation(): void {
@@ -976,27 +1042,30 @@ namespace cool {
 		}
 
 
-		private attachKeyboardHandler(): void {
-			const textarea = document.querySelector(
-				'#aichat-input .ui-textarea',
-			) as HTMLTextAreaElement | null;
-			if (textarea) {
-				textarea.addEventListener('keydown', (e: KeyboardEvent) => {
-					if (e.key === 'Enter' && !e.shiftKey) {
+		private _keyboardHandlerAttached: boolean = false;
+
+		private attachContainerKeyboardHandler(): void {
+			if (this._keyboardHandlerAttached) return;
+			this._keyboardHandlerAttached = true;
+
+			this.container.addEventListener('keydown', (e: KeyboardEvent) => {
+				if (e.key === 'Escape') {
+					e.preventDefault();
+					this.hide();
+					return;
+				}
+				if (e.key === 'Enter' && !e.shiftKey) {
+					const target = e.target as HTMLElement;
+					if (
+						target &&
+						target.classList.contains('ui-textarea') &&
+						target.closest('#aichat-input')
+					) {
 						e.preventDefault();
 						this.sendMessage();
 					}
-				});
-			}
-			const container = document.getElementById('aichat-main');
-			if (container) {
-				container.addEventListener('keydown', (e: KeyboardEvent) => {
-					if (e.key === 'Escape') {
-						e.preventDefault();
-						this.hide();
-					}
-				});
-			}
+				}
+			});
 		}
 
 		private showCopyFeedback(
