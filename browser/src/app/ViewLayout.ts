@@ -103,9 +103,10 @@ class ViewLayoutBase {
 		this.lastViewedRectangle = new cool.SimpleRectangle(0, 0, 0, 0);
 	}
 
-	public sendClientVisibleArea(forceUpdate: boolean = false): void {
-		if (!app.map._docLoaded) return;
-
+	// Returns the current visible area parameters string (always computed).
+	// Also performs side effects (splitter updates, context toolbar hiding)
+	// when the area has changed.
+	public buildAreaPayload(forceUpdate: boolean = false): string {
 		var splitPos = app.map._docLayer._splitPanesContext
 			? app.map._docLayer._splitPanesContext.getSplitPos()
 			: new cool.Point(0, 0);
@@ -118,8 +119,8 @@ class ViewLayoutBase {
 		splitPos = app.map._docLayer._corePixelsToTwips(splitPos);
 		var size = visibleArea.getSize();
 		var visibleTopLeft = visibleArea.min;
-		var newClientVisibleAreaCommand =
-			'clientvisiblearea x=' +
+		var payload =
+			'x=' +
 			Math.round(visibleTopLeft.x) +
 			' y=' +
 			Math.round(visibleTopLeft.y) +
@@ -132,23 +133,21 @@ class ViewLayoutBase {
 			' splity=' +
 			Math.round(splitPos.y);
 
-		if (
-			this.clientVisibleAreaCommand !== newClientVisibleAreaCommand ||
-			forceUpdate
-		) {
-			// Only update on some change
+		var cacheKey = 'clientvisiblearea ' + payload;
+
+		if (this.clientVisibleAreaCommand !== cacheKey || forceUpdate) {
 			if (app.map._docLayer._ySplitter) {
 				app.map._docLayer._ySplitter.onPositionChange();
 			}
 			if (app.map._docLayer._xSplitter) {
 				app.map._docLayer._xSplitter.onPositionChange();
 			}
-			// Visible area is dirty, update it on the server
-			app.socket.sendMessage(newClientVisibleAreaCommand);
-			if (app.map.contextToolbar) app.map.contextToolbar.hideContextToolbar(); // hide context toolbar when scroll/window resize etc...
+			if (app.map.contextToolbar) app.map.contextToolbar.hideContextToolbar();
 			if (!app.map._fatal && app.idleHandler._active && app.socket.connected())
-				this.clientVisibleAreaCommand = newClientVisibleAreaCommand;
+				this.clientVisibleAreaCommand = cacheKey;
 		}
+
+		return payload;
 	}
 
 	public getLastPanDirection(): Array<number> {

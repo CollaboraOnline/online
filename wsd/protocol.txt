@@ -277,10 +277,6 @@ savetostorage force=<value>
     call this command with force=1 in that case to forcefully save it to storage
     after asking from the user.
 
-clientvisiblearea x=<x> y=<y> width=<width> height=<height>
-
-    Invokes lok::Document::setClientVisibleArea().
-
 outlinestate type=<type> level=<level> index=<index> state=<state>
 
     <type> is 'column' or 'row', <level> and <index> are numbers, <state> is 'visible' or 'hidden'.
@@ -363,19 +359,21 @@ paintwindow <id> rectangle=<x>,<y>,<width>,<height> dpiscale=<scale>
 
     <scale> is a scaling factor, e.g. 1 for non-HiDPI.
 
-clientzoom tilepixelwidth=<width> tilepixelheight=<height> tiletwipwidth=<twipWidth> tiletwipheight=<twipHeight> dpiscale=<scale> zoom=<zoomLevel>
+clientviewstate x=<x> y=<y> width=<width> height=<height> [splitx=<splitX> splity=<splitY>] tilepix=<tilePix> tiletwip=<tileTwip> dpiscale=<scale> zoompercent=<zoomLevel>
 
-    Requests an update of the client zoom level and tile size.
+    Sets the client visible area and zoom level.
 
-    <width> and <height> define the tile dimensions in pixels.
+    <x>, <y>, <width>, <height> define the client visible area in twips.
 
-    <twipWidth> and <twipHeight> define the tile dimensions in twips.
+    <splitX>, <splitY> are optional frozen pane split positions in twips.
 
-    <scale> is the scaling factor, e.g., 1 for non-HiDPI displays.
+    <tilePix> is the square tile dimension in pixels (tiles are always square).
+
+    <tileTwip> is the square tile dimension in twips.
+
+    <scale> is the DPI scaling factor, e.g., 1 for non-HiDPI displays.
 
     <zoomLevel> represents the zoom factor applied to the client view.
-
-    This command ensures that the rendered tiles match the correct zoom level and DPI scaling.
 
 commandvalues command=<UNOCommand>[?param1=value1&param2=value2...]
 

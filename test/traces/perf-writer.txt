@@ -10,32 +10,31 @@
 >+44>FoWfKnRzxrKHTLC4>05f>commandvalues command=.uno:ViewAnnotations
 >+38>FoWfKnRzxrKHTLC4>05f>commandvalues command=.uno:StyleApply
 >+78>FoWfKnRzxrKHTLC4>05f>commandvalues command=.uno:CharFontName
->+15139>FoWfKnRzxrKHTLC4>05f>clientvisiblearea x=-3195 y=0 width=19185 height=8685 splitx=0 splity=0
->+172>FoWfKnRzxrKHTLC4>05f>clientzoom tilepixelwidth=256 tilepixelheight=256 tiletwipwidth=2560 tiletwipheight=2560
+>+15139>FoWfKnRzxrKHTLC4>05f>clientviewstate x=-3195 y=0 width=19185 height=8685 splitx=0 splity=0 tilepix=256 tiletwip=2560
 >+191>FoWfKnRzxrKHTLC4>05f>tilecombine nviewid=0 part=0 width=256 height=256 tileposx=0,2560,5120,7680,10240,12800,0,2560,5120,7680,10240,12800,0,2560,5120,7680,10240,12800,0,2560,5120,7680,10240,12800 tileposy=0,0,0,0,0,0,2560,2560,2560,2560,2560,2560,5120,5120,5120,5120,5120,5120,7680,7680,7680,7680,7680,7680 oldwid=0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 tilewidth=2560 tileheight=2560
 >+73031>FoWfKnRzxrKHTLC4>05f>commandvalues command=.uno:ViewAnnotations
 >+191674>FoWfKnRzxrKHTLC4>05f>uno .uno:SidebarShow
 >+156>FoWfKnRzxrKHTLC4>05f>uno .uno:Navigator
 >+31468>FoWfKnRzxrKHTLC4>05f>tilecombine nviewid=0 part=0 width=256 height=256 tileposx=0,2560,5120,7680,10240,12800,0,2560,5120,7680,10240,12800,0,2560,5120,7680,10240,12800,0,2560,5120,7680,10240,12800 tileposy=7680,7680,7680,7680,7680,7680,10240,10240,10240,10240,10240,10240,12800,12800,12800,12800,12800,12800,15360,15360,15360,15360,15360,15360 oldwid=0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 tilewidth=2560 tileheight=2560
->+204079>FoWfKnRzxrKHTLC4>05f>clientvisiblearea x=-3045 y=0 width=18900 height=6975 splitx=0 splity=0
->+14437>FoWfKnRzxrKHTLC4>05f>clientvisiblearea x=-2910 y=0 width=18615 height=6975 splitx=0 splity=0
->+18439>FoWfKnRzxrKHTLC4>05f>clientvisiblearea x=-2640 y=0 width=18090 height=6975 splitx=0 splity=0
->+8919>FoWfKnRzxrKHTLC4>05f>clientvisiblearea x=-2490 y=0 width=17790 height=6975 splitx=0 splity=0
->+9385>FoWfKnRzxrKHTLC4>05f>clientvisiblearea x=-2340 y=0 width=17475 height=6975 splitx=0 splity=0
->+8400>FoWfKnRzxrKHTLC4>05f>clientvisiblearea x=-2190 y=0 width=17175 height=6975 splitx=0 splity=0
->+8378>FoWfKnRzxrKHTLC4>05f>clientvisiblearea x=-2040 y=0 width=16875 height=6975 splitx=0 splity=0
->+8204>FoWfKnRzxrKHTLC4>05f>clientvisiblearea x=-1875 y=0 width=16545 height=6975 splitx=0 splity=0
->+9187>FoWfKnRzxrKHTLC4>05f>clientvisiblearea x=-1680 y=0 width=16170 height=6975 splitx=0 splity=0
->+7962>FoWfKnRzxrKHTLC4>05f>clientvisiblearea x=-1545 y=0 width=15885 height=6975 splitx=0 splity=0
->+8336>FoWfKnRzxrKHTLC4>05f>clientvisiblearea x=-1425 y=0 width=15645 height=6975 splitx=0 splity=0
->+8305>FoWfKnRzxrKHTLC4>05f>clientvisiblearea x=-1275 y=0 width=15360 height=6975 splitx=0 splity=0
->+7706>FoWfKnRzxrKHTLC4>05f>clientvisiblearea x=-1155 y=0 width=15120 height=6975 splitx=0 splity=0
->+8592>FoWfKnRzxrKHTLC4>05f>clientvisiblearea x=-1050 y=0 width=14895 height=6975 splitx=0 splity=0
->+10255>FoWfKnRzxrKHTLC4>05f>clientvisiblearea x=-945 y=0 width=14685 height=6975 splitx=0 splity=0
->+7821>FoWfKnRzxrKHTLC4>05f>clientvisiblearea x=-870 y=0 width=14550 height=6975 splitx=0 splity=0
->+7816>FoWfKnRzxrKHTLC4>05f>clientvisiblearea x=-825 y=0 width=14445 height=6975 splitx=0 splity=0
->+8780>FoWfKnRzxrKHTLC4>05f>clientvisiblearea x=-795 y=0 width=14385 height=6975 splitx=0 splity=0
->+7607>FoWfKnRzxrKHTLC4>05f>clientvisiblearea x=-780 y=0 width=14370 height=6975 splitx=0 splity=0
+>+204079>FoWfKnRzxrKHTLC4>05f>clientviewstate x=-3045 y=0 width=18900 height=6975 splitx=0 splity=0 tilepix=256 tiletwip=2560
+>+14437>FoWfKnRzxrKHTLC4>05f>clientviewstate x=-2910 y=0 width=18615 height=6975 splitx=0 splity=0 tilepix=256 tiletwip=2560
+>+18439>FoWfKnRzxrKHTLC4>05f>clientviewstate x=-2640 y=0 width=18090 height=6975 splitx=0 splity=0 tilepix=256 tiletwip=2560
+>+8919>FoWfKnRzxrKHTLC4>05f>clientviewstate x=-2490 y=0 width=17790 height=6975 splitx=0 splity=0 tilepix=256 tiletwip=2560
+>+9385>FoWfKnRzxrKHTLC4>05f>clientviewstate x=-2340 y=0 width=17475 height=6975 splitx=0 splity=0 tilepix=256 tiletwip=2560
+>+8400>FoWfKnRzxrKHTLC4>05f>clientviewstate x=-2190 y=0 width=17175 height=6975 splitx=0 splity=0 tilepix=256 tiletwip=2560
+>+8378>FoWfKnRzxrKHTLC4>05f>clientviewstate x=-2040 y=0 width=16875 height=6975 splitx=0 splity=0 tilepix=256 tiletwip=2560
+>+8204>FoWfKnRzxrKHTLC4>05f>clientviewstate x=-1875 y=0 width=16545 height=6975 splitx=0 splity=0 tilepix=256 tiletwip=2560
+>+9187>FoWfKnRzxrKHTLC4>05f>clientviewstate x=-1680 y=0 width=16170 height=6975 splitx=0 splity=0 tilepix=256 tiletwip=2560
+>+7962>FoWfKnRzxrKHTLC4>05f>clientviewstate x=-1545 y=0 width=15885 height=6975 splitx=0 splity=0 tilepix=256 tiletwip=2560
+>+8336>FoWfKnRzxrKHTLC4>05f>clientviewstate x=-1425 y=0 width=15645 height=6975 splitx=0 splity=0 tilepix=256 tiletwip=2560
+>+8305>FoWfKnRzxrKHTLC4>05f>clientviewstate x=-1275 y=0 width=15360 height=6975 splitx=0 splity=0 tilepix=256 tiletwip=2560
+>+7706>FoWfKnRzxrKHTLC4>05f>clientviewstate x=-1155 y=0 width=15120 height=6975 splitx=0 splity=0 tilepix=256 tiletwip=2560
+>+8592>FoWfKnRzxrKHTLC4>05f>clientviewstate x=-1050 y=0 width=14895 height=6975 splitx=0 splity=0 tilepix=256 tiletwip=2560
+>+10255>FoWfKnRzxrKHTLC4>05e>clientviewstate x=-945 y=0 width=14685 height=6975 splitx=0 splity=0 tilepix=256 tiletwip=2560
+>+7821>FoWfKnRzxrKHTLC4>05e>clientviewstate x=-870 y=0 width=14550 height=6975 splitx=0 splity=0 tilepix=256 tiletwip=2560
+>+7816>FoWfKnRzxrKHTLC4>05e>clientviewstate x=-825 y=0 width=14445 height=6975 splitx=0 splity=0 tilepix=256 tiletwip=2560
+>+8780>FoWfKnRzxrKHTLC4>05e>clientviewstate x=-795 y=0 width=14385 height=6975 splitx=0 splity=0 tilepix=256 tiletwip=2560
+>+7607>FoWfKnRzxrKHTLC4>05e>clientviewstate x=-780 y=0 width=14370 height=6975 splitx=0 splity=0 tilepix=256 tiletwip=2560
 >+577925>FoWfKnRzxrKHTLC4>05f>mouse type=move x=4365 y=1609.99992 count=1 buttons=0 modifier=0
 >+309728>FoWfKnRzxrKHTLC4>05f>mouse type=buttondown x=4365 y=1609.99992 count=1 buttons=1 modifier=0
 >+358>FoWfKnRzxrKHTLC4>05f>mouse type=buttonup x=4365 y=1609.99992 count=1 buttons=1 modifier=0

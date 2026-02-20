@@ -744,7 +744,7 @@ class Dispatcher {
 					commandName: 'multipageview',
 					state: commandState ? 'true' : 'false',
 				});
-				app.activeDocument.activeLayout.sendClientVisibleArea();
+				TileManager.sendClientViewState();
 				app.sectionContainer.requestReDraw();
 			}
 		};
@@ -771,7 +771,7 @@ class Dispatcher {
 				if (commandState) {
 					TileManager.redraw();
 					app.map._docLayer._fitWidthZoom(null, null, true);
-					app.activeDocument.activeLayout.sendClientVisibleArea();
+					TileManager.sendClientViewState();
 					app.sectionContainer.requestReDraw();
 				}
 			}

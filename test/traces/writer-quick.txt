@@ -9,11 +9,10 @@
 >+3696>8OA2W8oMcgbJB52v>067>commandvalues command=.uno:ViewAnnotations
 >+828>8OA2W8oMcgbJB52v>067>commandvalues command=.uno:StyleApply
 >+2174>8OA2W8oMcgbJB52v>067>commandvalues command=.uno:CharFontName
->+15288>8OA2W8oMcgbJB52v>067>clientvisiblearea x=-2640 y=-3720 width=18090 height=23850 splitx=0 splity=0
->+921>8OA2W8oMcgbJB52v>067>clientzoom tilepixelwidth=256 tilepixelheight=256 tiletwipwidth=3072 tiletwipheight=3072
+>+15288>8OA2W8oMcgbJB52v>064>clientviewstate x=-2640 y=-3720 width=18090 height=23850 splitx=0 splity=0 tilepix=256 tiletwip=3072
 >+1343>8OA2W8oMcgbJB52v>067>canceltiles
 >+550>8OA2W8oMcgbJB52v>067>tilecombine nviewid=0 part=0 width=256 height=256 tileposx=0,3072,6144,9216,12288,0,3072,6144,9216,12288,0,3072,6144,9216,12288,0,3072,6144,9216,12288,0,3072,6144,9216,12288,0,3072,6144,9216,12288 tileposy=0,0,0,0,0,3072,3072,3072,3072,3072,6144,6144,6144,6144,6144,9216,9216,9216,9216,9216,12288,12288,12288,12288,12288,15360,15360,15360,15360,15360 tilewidth=3072 tileheight=3072
->+60612>8OA2W8oMcgbJB52v>067>clientvisiblearea x=-2640 y=-3255 width=18090 height=22920 splitx=0 splity=0
+>+60612>8OA2W8oMcgbJB52v>064>clientviewstate x=-2640 y=-3255 width=18090 height=22920 splitx=0 splity=0 tilepix=256 tiletwip=3072
 >+5524>8OA2W8oMcgbJB52v>067>canceltiles
 >+1220>8OA2W8oMcgbJB52v>067>tilecombine nviewid=0 part=0 width=256 height=256 tileposx=0,3072,6144,9216,12288,0,3072,6144,9216,12288,0,3072,6144,9216,12288,0,3072,6144,9216,12288,0,3072,6144,9216,12288,0,3072,6144,9216,12288 tileposy=0,0,0,0,0,3072,3072,3072,3072,3072,6144,6144,6144,6144,6144,9216,9216,9216,9216,9216,12288,12288,12288,12288,12288,15360,15360,15360,15360,15360 tilewidth=3072 tileheight=3072
 >+20371>8OA2W8oMcgbJB52v>067>mouse type=move x=5580 y=23.99997 count=1 buttons=0 modifier=0
