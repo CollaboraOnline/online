@@ -15,6 +15,9 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 		if (Cypress.env('INTEGRATION') === 'nextcloud') {
 			desktopHelper.showSidebar();
 		}
+		cy.getFrameWindow().then((win) => {
+			this.win = win;
+		})
 
 		writerHelper.selectAllTextOfDoc();
 	});
@@ -270,7 +273,7 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 
 		writerHelper.selectAllTextOfDoc();
 		helper.copy();
-		cy.wait(1000);
+		helper.processToIdle(this.win);
 		helper.expectTextForClipboard('text text1link');
 		cy.cGet('#copy-paste-container p a').should('have.attr', 'href', 'http://www.something.com/');
 	});
@@ -292,7 +295,7 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 
 		writerHelper.selectAllTextOfDoc();
 		helper.copy();
-		cy.wait(1000);
+		helper.processToIdle(this.win);
 		helper.expectTextForClipboard('text text1');
 		cy.cGet('#copy-paste-container p a').should('have.attr', 'href', 'mailto:john.doe@test.abc?subject=planning-meeting');
 	});
@@ -302,7 +305,7 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 		cy.cGet('#Insert-container .unoBasicShapes button').click();
 		cy.cGet('.col.w2ui-icon.basicshapes_octagon').click();
 		cy.cGet('#document-container svg g').should('exist');
-		cy.wait(1000);
+		helper.processToIdle(this.win);
 
 		cy.cGet('#Insert-tab-label').click();
 		cy.cGet('#Insert-container .hyperlinkdialog button').click();
@@ -355,17 +358,17 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 		helper.reloadDocument(newFilePath);
 		helper.setDummyClipboardForCopy();
 		writerHelper.selectAllTextOfDoc();
-		cy.wait(1000);
+		// document was reloaded, fetch the frame window again
+		cy.getFrameWindow().then((win) => {
+			helper.processToIdle(win);
+		})
 		helper.copy();
 		cy.cGet('#copy-paste-container p b').should('exist');
 	});
 
 	it('Print', function() {
 		// A new window should be opened with the PDF.
-		cy.getFrameWindow()
-			.then(function(win) {
-				cy.stub(win, 'open').as('windowOpen');
-			});
+		cy.stub(this.win, 'open').as('windowOpen');
 
 		cy.cGet('#File-tab-label').click();
 		cy.cGet('#File-container .unoPrint button').click();
@@ -378,14 +381,14 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 		//Do
 		desktopHelper.getNbIcon('Italic').click();
 		helper.copy();
-		cy.wait(500); // wait for new clipboard
+		helper.processToIdle(this.win); // wait for new clipboard
 		cy.cGet('#copy-paste-container p i').should('exist');
 
 		//Undo
 		cy.cGet('#Home-container .unoUndo').should('not.have.attr','disabled');
-		cy.cGet('#Home-container .unoUndo button').click({force: true});
+		cy.cGet('#Home-container .unoUndo button').click();
 		helper.copy();
-		cy.wait(500); // wait for new clipboard
+		helper.processToIdle(this.win); // wait for new clipboard
 		cy.cGet('#copy-paste-container p i').should('not.exist');
 
 		// Dismiss tooltip
@@ -395,9 +398,9 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 
 		//Redo
 		cy.cGet('#Home-container .unoRedo').should('not.have.attr','disabled');
-		cy.cGet('#Home-container .unoRedo button').click({force: true});
+		cy.cGet('#Home-container .unoRedo button').click();
 		helper.copy();
-		cy.wait(500); // wait for new clipboard
+		helper.processToIdle(this.win); // wait for new clipboard
 		cy.cGet('#copy-paste-container p i').should('exist');
 	});
 
