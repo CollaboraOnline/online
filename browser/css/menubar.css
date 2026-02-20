@@ -42,10 +42,20 @@
 .document-title {
 	white-space: nowrap;
 	display: flex;
-	align-items: flex-start;
+	align-items: baseline;
 	justify-content: center;
-	flex-direction: column;
+	flex-direction: row;
 	flex: 1 1 auto;
+	gap: 4px;
+}
+
+.document-title:focus-within > label[for='document-name-input'] {
+	clip: unset;
+	height: auto;
+	overflow: visible;
+	position: static;
+	width: auto;
+	color: var(--color-text-lighter);
 }
 
 .readonly .document-title {
