@@ -31,6 +31,9 @@ class DocumentViewBase {
 			0,
 			this.color,
 		);
+		// Remove any stale section with the same name so addSection succeeds.
+		if (app.sectionContainer.doesSectionExist(this._selectionSection.name))
+			app.sectionContainer.removeSection(this._selectionSection.name);
 		app.sectionContainer.addSection(this._selectionSection);
 		this._selectionSection.setShowSection(false);
 	}
