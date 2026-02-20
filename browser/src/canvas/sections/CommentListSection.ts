@@ -1896,10 +1896,15 @@ export class CommentSection extends CanvasSectionObject {
 			comment.cellRange = app.map._docLayer._parseCellRange(comment.cellRange);
 		}
 
-		var cellPos = comment.cellRange ? app.map._docLayer._cellRangeToTwipRect(comment.cellRange).toRectangle() : null;
-		comment.rectangles = this.stringToRectangles(comment.textRange || comment.anchorPos || comment.rectangle || cellPos); // Simple array of point arrays [x1, y1, x2, y2].
-		comment.rectanglesOriginal = this.stringToRectangles(comment.textRange || comment.anchorPos || comment.rectangle || cellPos); // This unmodified version will be kept for re-calculations.
-		comment.anchorPos = this.stringToRectangles(comment.anchorPos || comment.rectangle || cellPos)[0];
+		const cellPos = comment.cellRange ? app.map._docLayer._cellRangeToTwipRect(comment.cellRange).toRectangle() : null;
+		const rectangles = this.stringToRectangles(comment.textRange || comment.anchorPos || comment.rectangle); // Simple array of point arrays [x1, y1, x2, y2].
+		if (rectangles.length === 0 && cellPos.length) {
+			rectangles.push(cellPos);
+		}
+		console.assert(rectangles.length, 'Found no rectangles in comment!');
+		comment.rectangles = rectangles;
+		comment.rectanglesOriginal = structuredClone(rectangles);
+		comment.anchorPos = rectangles[0];
 		comment.anchorSPoint = new cool.SimplePoint(comment.anchorPos[0], comment.anchorPos[1]);
 
 		if (app.map._docLayer._docType === 'spreadsheet' && app.map._docLayer.sheetGeometry)
