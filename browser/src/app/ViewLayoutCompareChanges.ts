@@ -104,6 +104,7 @@ class ViewLayoutCompareChanges extends ViewLayoutNewBase {
 		if (app.map._docLayer?._cursorMarker)
 			app.map._docLayer._cursorMarker.update();
 
+		app.map._docLayer._sendClientZoom();
 		this.sendClientVisibleArea();
 
 		this.refreshCurrentCoordList();
