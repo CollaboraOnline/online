@@ -43,13 +43,6 @@ void LoggingTests::testGetTimeForLog()
 {
     constexpr std::string_view testname = __func__;
 
-    // getTimeForLog returns the time in local timezone.
-    // To get reliable tests across different timezones, we use GMT.
-    const char* tz = ::getenv("TZ");
-    const std::string timezoneName = (tz ? tz : "");
-    ::setenv("TZ", "GMT", 1);
-    tzset();
-
     const time_t t = 1760000000;
     const auto sys = std::chrono::system_clock::from_time_t(t);
     const auto now = Util::convertChronoClock<std::chrono::system_clock::time_point>(sys);
@@ -81,9 +74,6 @@ void LoggingTests::testGetTimeForLog()
 
     LOK_ASSERT_EQUAL_STR("Thu Oct 09 21:00:25.369 2025 (12h 7m 5s 369ms later)",
                          Util::getTimeForLog(now, now + 12h + 7min + 5s + 369ms));
-
-    ::setenv("TZ", timezoneName.data(), 1); // Restore the timeezone.
-    tzset();
 }
 
 void LoggingTests::testIso8601Time()

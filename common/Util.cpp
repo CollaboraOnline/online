@@ -683,7 +683,7 @@ namespace Util
 
 #endif // !MOBILEAPP
 
-    /// Returns the given system_clock time_point as string in the local time.
+    /// Returns the given system_clock time_point as string in GMT.
     /// Format: Thu Jan 27 03:45:27.123 2022
     std::string getSystemClockAsString(const std::chrono::system_clock::time_point time)
     {
@@ -695,7 +695,7 @@ namespace Util
         const int msFraction = msSinceEpoch.count() % 1000;
 
         std::tm tm;
-        time_t_to_localtime(t, tm);
+        time_t_to_gmtime(t, tm);
 
         char buffer[128] = { 0 };
         std::strftime(buffer, 80, "%a %b %d %H:%M:%S", &tm);

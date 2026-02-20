@@ -556,7 +556,7 @@ namespace Log
 
         auto t = std::chrono::system_clock::to_time_t(tp);
         std::tm tm;
-        Util::time_t_to_localtime(t, tm);
+        Util::time_t_to_gmtime(t, tm);
 
         // YYYY-MM-DD.
         to_ascii_fixed<4>(pos, tm.tm_year + 1900);
@@ -679,8 +679,8 @@ namespace Log
 
         const std::time_t t = std::time(nullptr);
         struct tm tm;
-        LOG_INF("Initializing " << name << ". Local time: "
-                                << std::put_time(Util::time_t_to_localtime(t, tm), "%a %F %T %z")
+        LOG_INF("Initializing " << name << ". GMT time: "
+                                << std::put_time(Util::time_t_to_gmtime(t, tm), "%a %F %T %z")
                                 << ". Log level is [" << logger->getLevel() << ']');
 
         StaticUILog.setName(name+"_ui");

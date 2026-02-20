@@ -1421,8 +1421,7 @@ int main(int argc, char**argv)
 
 #define N_ELEMENTS(arr)     (sizeof(Util::n_array_size(arr)))
 
-    // Wrap localtime_r() and gmtime_t() which are not portable
-    std::tm *time_t_to_localtime(std::time_t t, std::tm& tm);
+    // Wrap gmtime_r() which is not portable
     std::tm *time_t_to_gmtime(std::time_t t, std::tm& tm);
 
     /// Base-64 encode the given input.

@@ -83,11 +83,6 @@ namespace Util
         return getpid();
     }
 
-    std::tm *time_t_to_localtime(std::time_t t, std::tm& tm)
-    {
-        return localtime_r(&t, &tm);
-    }
-
     std::tm *time_t_to_gmtime(std::time_t t, std::tm& tm)
     {
         return gmtime_r(&t, &tm);

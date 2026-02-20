@@ -336,7 +336,7 @@ namespace FileUtil
             std::cout << " " << std::right << std::setw(size_len) << entry._size;
 
             struct tm tm;
-            std::cout << " " << std::put_time(localtime_r(&entry._mtime, &tm), "%F %R");
+            std::cout << " " << std::put_time(gmtime_r(&entry._mtime, &tm), "%F %R");
 
             std::cout << " " << entry._name;
 

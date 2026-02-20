@@ -46,13 +46,6 @@ namespace Util
         return _getpid();
     }
 
-    std::tm *time_t_to_localtime(std::time_t t, std::tm& tm)
-    {
-        if (localtime_s(&tm, &t) != 0)
-            return nullptr;
-        return &tm;
-    }
-
     std::tm *time_t_to_gmtime(std::time_t t, std::tm& tm)
     {
         if (gmtime_s(&tm, &t) != 0)

@@ -352,7 +352,7 @@ struct Stats {
 
         time_t now = time(0);
         struct tm datetime;
-        localtime_r(&now, &datetime);
+        gmtime_r(&now, &datetime);
 
         char formattedDate[50];
         strftime(formattedDate, 50, "%d/%m/%y", &datetime);
