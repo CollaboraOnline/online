@@ -1123,44 +1123,40 @@ class ShapeHandlesSection extends CanvasSectionObject {
 			}
 
 			// New view layouts are not tested for Calc yet. Transition to new structure is not complete.
-			if (app.map._docLayer.isCalc()) {
-				const left = GraphicSelection.rectangle.pX1;
-				const top = GraphicSelection.rectangle.pY1;
-
-				this.sectionProperties.svg.style.left = Math.round((left - app.activeDocument.activeLayout.viewedRectangle.pX1 + this.containerObject.getDocumentAnchor()[0]) / app.dpiScale) + 'px';
-				this.sectionProperties.svg.style.top = Math.round((top - app.activeDocument.activeLayout.viewedRectangle.pY1 + this.containerObject.getDocumentAnchor()[1]) / app.dpiScale) + 'px';
-				this.sectionProperties.svgPosition = [left, top];
-			}
-			else {
-				const left = GraphicSelection.rectangle.v1X;
-				const top = GraphicSelection.rectangle.v1Y;
-
-				const leftAddition = app.activeDocument.activeLayout.type === 'ViewLayoutBase' ? 0 : this.containerObject.getDocumentAnchor()[0];
-				const topAddition = app.activeDocument.activeLayout.type === 'ViewLayoutBase' ? 0 : this.containerObject.getDocumentAnchor()[1];
-
-				this.sectionProperties.svg.style.left = Math.round((left + leftAddition) / app.dpiScale) + 'px';
-				this.sectionProperties.svg.style.top = Math.round((top + topAddition) / app.dpiScale) + 'px';
-				this.sectionProperties.svgPosition = [left, top];
-			}
+			this.updateSVGPosition();
 		}
 		this.hideSVG();
 	}
 
+	// Shared positioning logic used by both adjustSVGProperties (initial
+	// placement) and onNewDocumentTopLeft (viewport change update).
+	private updateSVGPosition(): void {
+		if (!this.sectionProperties.svg || !GraphicSelection.hasActiveSelection()) return;
+
+		if (app.map._docLayer.isCalc()) {
+			const left = GraphicSelection.rectangle.pX1;
+			const top = GraphicSelection.rectangle.pY1;
+
+			this.sectionProperties.svg.style.left = Math.round((left - app.activeDocument.activeLayout.viewedRectangle.pX1 + this.containerObject.getDocumentAnchor()[0]) / app.dpiScale) + 'px';
+			this.sectionProperties.svg.style.top = Math.round((top - app.activeDocument.activeLayout.viewedRectangle.pY1 + this.containerObject.getDocumentAnchor()[1]) / app.dpiScale) + 'px';
+			this.sectionProperties.svgPosition = [left, top];
+		}
+		else {
+			const left = GraphicSelection.rectangle.v1X;
+			const top = GraphicSelection.rectangle.v1Y;
+
+			const leftAddition = app.activeDocument.activeLayout.type === 'ViewLayoutBase' ? 0 : this.containerObject.getDocumentAnchor()[0];
+			const topAddition = app.activeDocument.activeLayout.type === 'ViewLayoutBase' ? 0 : this.containerObject.getDocumentAnchor()[1];
+
+			this.sectionProperties.svg.style.left = Math.round((left + leftAddition) / app.dpiScale) + 'px';
+			this.sectionProperties.svg.style.top = Math.round((top + topAddition) / app.dpiScale) + 'px';
+			this.sectionProperties.svgPosition = [left, top];
+		}
+	}
+
 	onNewDocumentTopLeft(): void {
 		if (this.sectionProperties.svgPosition) {
-			if (app.map._docLayer.isCalc()) {
-				this.sectionProperties.svg.style.left = Math.round((this.sectionProperties.svgPosition[0] - app.activeDocument.activeLayout.viewedRectangle.pX1 + this.containerObject.getDocumentAnchor()[0]) / app.dpiScale) + 'px';
-				this.sectionProperties.svg.style.top = Math.round((this.sectionProperties.svgPosition[1] - app.activeDocument.activeLayout.viewedRectangle.pY1 + this.containerObject.getDocumentAnchor()[1]) / app.dpiScale) + 'px';
-			}
-			else if (GraphicSelection.hasActiveSelection()) {
-				const left = GraphicSelection.rectangle.v1X;
-				const top = GraphicSelection.rectangle.v1Y;
-				const leftAddition = app.activeDocument.activeLayout.type === 'ViewLayoutBase' ? 0 : this.containerObject.getDocumentAnchor()[0];
-				const topAddition = app.activeDocument.activeLayout.type === 'ViewLayoutBase' ? 0 : this.containerObject.getDocumentAnchor()[1];
-				this.sectionProperties.svg.style.left = Math.round((left + leftAddition) / app.dpiScale) + 'px';
-				this.sectionProperties.svg.style.top = Math.round((top + topAddition) / app.dpiScale) + 'px';
-				this.sectionProperties.svgPosition = [left, top];
-			}
+			this.updateSVGPosition();
 		}
 	}
 
