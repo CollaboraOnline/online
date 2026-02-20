@@ -1990,8 +1990,11 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 		const hasPopUp = hasPopupRole || isMainButtonDialog(data.command) || isMainButtonDropdown(data.command);
 
 		if (hasPopUp) {
-			button.setAttribute('aria-haspopup', true);
 			button.setAttribute('aria-expanded', false);
+			if(isMainButtonDialog(data.command))
+				button.setAttribute('aria-haspopup', 'dialog');
+			else
+				button.setAttribute('aria-haspopup', true);
 		}
 
 		JSDialog.SetupA11yLabelForNonLabelableElement(button, data, builder);
