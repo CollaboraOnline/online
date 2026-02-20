@@ -145,6 +145,10 @@ window.L.WriterTileLayer = window.L.CanvasTileLayer.extend({
 		this._currentPage = statusJSON.selectedpart;
 		this._pages = statusJSON.partscount;
 		app.file.writer.pageRectangleList = statusJSON.pagerectangles.slice(); // Copy the array.
+		// Recalculate view layout so view size reflects the new pages.
+		// Needed for ViewLayoutMultiPage where the viewSize setter is a no-op.
+		if (app.activeDocument.activeLayout.type === 'ViewLayoutMultiPage')
+			app.activeDocument.activeLayout.reset();
 		this._map.fire('pagenumberchanged', {
 			currentPage: this._currentPage,
 			pages: this._pages,
