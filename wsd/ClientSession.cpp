@@ -1463,7 +1463,7 @@ bool ClientSession::_handleInput(const char *buffer, int length)
                 auto result = parser.parse(tokens[2]);
                 int slideNumber = JsonUtil::getJSONValue<int>(result.extract<Poco::JSON::Object::Ptr>(), "currentSlide");
                 docBroker->setLeaderSlide(slideNumber);
-                docBroker->setLeaderEffect(-1);
+                docBroker->setLeaderEffect(0);
             }
             docBroker->broadcastMessageToOthers(tokens.substrFromToken(0), client_from_this());
             return true;

@@ -25,7 +25,7 @@ class SlideShowNavigator {
 	private lastClickTime: number = 0;
 	private readonly RAPID_CLICK_THRESHOLD = 500; // 500ms
 	private currentLeaderSlide: number = -1;
-	private currentLeaderEffect: number = -1;
+	private currentLeaderEffect: number = 0;
 
 	constructor(slideShowHandler: SlideShowHandler) {
 		this.slideShowHandler = slideShowHandler;
@@ -80,7 +80,8 @@ class SlideShowNavigator {
 		return this._canvasClickHandler;
 	}
 
-	dispatchEffect() {
+	dispatchEffect(userInitiated: boolean = true) {
+		if (userInitiated && !this.canUserAdvanceEffect()) return;
 		this.presenter.sendSlideShowFollowMessage('dispatcheffect');
 		const currentTime = Date.now();
 		const timeDiff = currentTime - this.lastClickTime;
@@ -143,6 +144,14 @@ class SlideShowNavigator {
 		);
 		if (this.backToLastSlide()) return;
 		this.slideShowHandler.rewindAllEffects();
+	}
+
+	canUserAdvanceEffect(): boolean {
+		if (!this.presenter.isFollower()) return true;
+		return (
+			this.currentSlide < this.getLeaderSlide() ||
+			this.slideShowHandler.getCurrentEffect() < this.currentLeaderEffect
+		);
 	}
 
 	goToFirstSlide() {
@@ -246,7 +255,7 @@ class SlideShowNavigator {
 	}
 
 	resetLeaderEffect() {
-		this.currentLeaderEffect = -1;
+		this.currentLeaderEffect = 0;
 	}
 
 	followLeaderSlide() {
