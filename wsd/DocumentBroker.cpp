@@ -242,7 +242,10 @@ DocumentBroker::DocumentBroker(ChildType type, const std::string& uri, const Poc
                                << "] created with docKey [" << _docKey
                                << "], always_save_on_exit: " << _alwaysSaveOnExit);
 
-    UNITWSD_CALL_INSTANCE(_unitWsd, onDocBrokerCreate(_docKey));
+    if (_unitWsd)
+    {
+        _unitWsd->onDocBrokerCreate(_docKey);
+    }
 }
 
 pid_t DocumentBroker::getPid() const { return _childProcess ? _childProcess->getPid() : 0; }
@@ -925,7 +928,10 @@ DocumentBroker::~DocumentBroker()
     _admin.rmDoc(_docKey);
 #endif
 
-    UNITWSD_CALL_INSTANCE(_unitWsd, DocBrokerDestroy(_docKey));
+    if (_unitWsd)
+    {
+        _unitWsd->DocBrokerDestroy(_docKey);
+    }
 }
 
 void DocumentBroker::joinThread()
@@ -994,7 +1000,10 @@ bool DocumentBroker::download(
     {
         _docState.setStatus(DocumentState::Status::Downloading);
 
-        UNITWSD_CALL_INSTANCE(_unitWsd, onPerfDocumentLoading());
+        if(_unitWsd != nullptr)
+        {
+            _unitWsd->onPerfDocumentLoading();
+        }
 
         // Pass the public URI to storage as it needs to load using the token
         // and other storage-specific data provided in the URI.
@@ -1860,10 +1869,11 @@ void DocumentBroker::asyncInstallPresets(const std::shared_ptr<ClientSession>& s
             stop("configfailed");
         }
 
-        UNITWSD_CALL_INSTANCE(_unitWsd, onDocBrokerPresetsInstallEnd(success));
+        if (_unitWsd)
+            _unitWsd->onDocBrokerPresetsInstallEnd(success);
     };
-
-    UNITWSD_CALL_INSTANCE(_unitWsd, onDocBrokerPresetsInstallStart());
+    if (_unitWsd)
+        _unitWsd->onDocBrokerPresetsInstallStart();
     _asyncInstallTask = asyncInstallPresets(_poll, configId, userSettingsUri,
                                             presetsPath, session, installFinishedCB);
     _asyncInstallTask->appendCallback([selfWeak = weak_from_this(), this,
@@ -3138,7 +3148,8 @@ void DocumentBroker::handleUploadToStorageResponse(const StorageBase::UploadResu
                                      << ", previousUploadSuccessful: " << previousUploadSuccessful);
     _storageManager.setLastUploadResult(lastUploadSuccessful);
 
-    UNITWSD_CALL_INSTANCE(_unitWsd, onDocumentUploaded(lastUploadSuccessful));
+    if (_unitWsd)
+        _unitWsd->onDocumentUploaded(lastUploadSuccessful);
 
 #if !MOBILEAPP
     if (lastUploadSuccessful && !isModified())
@@ -3363,7 +3374,11 @@ void DocumentBroker::setLoaded()
                              << " KB, total PSS: " << Util::getProcessTreePss(Util::getProcessId())
                              << " KB");
 
-        UNITWSD_CALL_INSTANCE(_unitWsd, onPerfDocumentLoaded());
+        if(_unitWsd != nullptr)
+        {
+            _unitWsd->onPerfDocumentLoaded();
+        }
+
     }
 }
 
@@ -3910,7 +3925,8 @@ std::size_t DocumentBroker::addSession(const std::shared_ptr<ClientSession>& ses
                 " session [" << id << "] to docKey [" <<
                 _docKey << "] to have " << count << " sessions.");
 
-        UNITWSD_CALL_INSTANCE(_unitWsd, onDocBrokerAddSession(_docKey, session));
+        if (_unitWsd)
+            _unitWsd->onDocBrokerAddSession(_docKey, session);
 
         return count;
     }
@@ -4158,8 +4174,11 @@ void DocumentBroker::finalRemoveSession(const std::shared_ptr<ClientSession>& se
     const std::string sessionId = session->getId();
     try
     {
-        // Notify test code before removal.
-        UNITWSD_CALL_INSTANCE(_unitWsd, onDocBrokerRemoveSession(_docKey, session));
+        if (_unitWsd)
+        {
+            // Notify test code before removal.
+            _unitWsd->onDocBrokerRemoveSession(_docKey, session);
+        }
 
         const bool readonly = session->isReadOnly();
         session->dispose();
