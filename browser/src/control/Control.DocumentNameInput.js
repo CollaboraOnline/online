@@ -22,6 +22,10 @@ window.L.Control.DocumentNameInput = window.L.Control.extend({
 		else
 			this.progressBar = document.getElementById('document-name-input-progress-bar');
 
+		var label = document.querySelector('label[for="document-name-input"]');
+		if (label)
+			label.textContent = _('Document name');
+
 		map.on('doclayerinit', this.onDocLayerInit, this);
 		map.on('wopiprops', this.onWopiProps, this);
 	},
