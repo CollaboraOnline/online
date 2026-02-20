@@ -28,7 +28,12 @@ class SaveState {
 
 	initialize() {
 		this.saveEle = document.querySelector('[id^="save"].unotoolbutton');
-		this.saveIconEl = this.saveEle.querySelector('img');
+		if (this.saveEle) {
+			this.saveIconEl = this.saveEle.querySelector('img');
+		} else {
+			app.console.debug('SaveState: no save icon - might be hidden');
+			this.saveIconEl = null;
+		}
 	}
 
 	// Function to show the saving status
@@ -44,7 +49,7 @@ class SaveState {
 			const savingText = _('Saving');
 			this.saveEle.style.setProperty('--save-state', `"${savingText}"`);
 			this.saveEle.classList.add('saving');
-			this.saveIconEl.classList.add('rotate-icon'); // Start the icon rotation
+			this.saveIconEl?.classList.add('rotate-icon'); // Start the icon rotation
 			this.saveEle.setAttribute('disabled', 'true'); // Disable the button
 		}
 	}
@@ -55,9 +60,9 @@ class SaveState {
 
 		if (!this.saveEle) this.initialize();
 
-		if (!this.saveEle.classList.contains('savemodified')) {
+		if (this.saveEle && !this.saveEle.classList.contains('savemodified')) {
 			this.saveEle.classList.remove('saving');
-			this.saveIconEl.classList.remove('rotate-icon'); // Stop the icon rotation
+			this.saveIconEl?.classList.remove('rotate-icon'); // Stop the icon rotation
 			// Dynamically set the content string for saved state
 			const savedText = _('Saved');
 			this.saveEle.style.setProperty('--save-state', `"${savedText}"`);
