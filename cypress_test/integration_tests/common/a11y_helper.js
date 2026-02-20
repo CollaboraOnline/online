@@ -23,7 +23,12 @@ function enableUICoverage(win) {
  * @param {boolean} hasLinguisticData - Whether linguistic data (thesaurus, etc.) is available
  */
 function reportUICoverage(win, hasLinguisticData = true) {
-	cy.spy(win.app.socket, '_onMessage').as('onMessage').log(false);
+	if (win.app.socket._onMessage.restore) {
+		// if _onMessage is already wrapped by Sinon, do not create a new spy
+		cy.wrap(win.app.socket._onMessage).as('onMessage');
+	} else {
+		cy.spy(win.app.socket, '_onMessage').as('onMessage').log(false);
+	}
 
 	cy.then(() => {
 		const endUICoverage = {
