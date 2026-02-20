@@ -119,6 +119,14 @@ window.L.Map.Scroll = window.L.Handler.extend({
 
 		this._stopZoomInterpolateRAFAt = this._zoomScrollTime.valueOf() + this._map.options.wheelZoomStepEndAfter;
 
+		// In multi-page or compare changes view, skip animation and zoom directly.
+		if (app.activeDocument && app.activeDocument.activeLayout &&
+			['ViewLayoutMultiPage', 'ViewLayoutCompareChanges'].includes(app.activeDocument.activeLayout.type)) {
+			map.setZoom(this._zoom, null, false);
+			this._zoomScrollTime = undefined;
+			return;
+		}
+
 		if (newAnimation) {
 			this._inZoomAnimation = true;
 			this._map._docLayer.preZoomAnimation(this._zoomCenter);
