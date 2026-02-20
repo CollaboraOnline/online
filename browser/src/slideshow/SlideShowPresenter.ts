@@ -151,6 +151,8 @@ class SlideShowPresenter {
 	private _isFollower: boolean = false;
 	private _isFollowing: boolean = false;
 	private _followBtn: HTMLElement | null = null;
+	private _prevButton: HTMLImageElement | null = null;
+	private _nextButton: HTMLImageElement | null = null;
 
 	private showFollow(me: boolean) {
 		this._map.uiManager.showButton('slide-presentation-follow', !me);
@@ -280,6 +282,8 @@ class SlideShowPresenter {
 				this.showFollow(false);
 				break;
 		}
+
+		this.updateControls();
 	}
 
 	private _handlePresenterCanvasClick(event: any) {
@@ -639,9 +643,19 @@ class SlideShowPresenter {
 	}
 
 	private _onPrevNextSlide = (e: Event) => {
-		if (this.isFollower()) this.setFollowing(false);
-		if ((e.target as any).id === 'previous') this._onPrevSlide(e);
-		else if ((e.target as any).id === 'next') this._onNextSlide(e);
+		const currentSlide = this._slideShowNavigator.currentSlideIndex;
+		const isFollowing = this.isFollowing();
+		if ((e.target as any).id === 'previous') {
+			if (this._canGoPrev(currentSlide)) {
+				this._onPrevSlide(e);
+				if (isFollowing) this.setFollowing(false);
+			}
+		} else if ((e.target as any).id === 'next') {
+			if (this._canGoNext(currentSlide)) {
+				this._onNextSlide(e);
+				if (isFollowing) this.setFollowing(false);
+			}
+		}
 	};
 
 	private _onPrevSlide = (e: Event) => {
@@ -686,6 +700,67 @@ class SlideShowPresenter {
 		);
 	}
 
+	private _setButtonState(
+		button: HTMLImageElement,
+		disabled: boolean,
+		tooltip: string,
+	) {
+		if (!button) return;
+		if (disabled) {
+			button.style.filter = 'brightness(0.5)';
+			button.style.cursor = 'default';
+			button.setAttribute('aria-disabled', 'true');
+		} else {
+			button.style.filter = '';
+			button.style.cursor = 'pointer';
+			button.setAttribute('aria-disabled', 'false');
+		}
+		button.setAttribute('aria-label', tooltip);
+		button.setAttribute('data-cooltip', tooltip);
+	}
+
+	private _canGoPrev(currentSlide: number): boolean {
+		if (this.isFollower()) {
+			return currentSlide > 0;
+		}
+		return true;
+	}
+
+	private _canGoNext(currentSlide: number): boolean {
+		if (this.isFollower()) {
+			const leaderSlide = this._slideShowNavigator.getLeaderSlide();
+			return leaderSlide !== -1 && currentSlide < leaderSlide;
+		}
+
+		// In normal mode, we can go next if there are more slides
+		return true;
+	}
+
+	private _updatePrevButtonState(currentSlide: number) {
+		const enabled = this._canGoPrev(currentSlide);
+		const tooltip = enabled ? _('Previous') : _("You're on the first slide");
+		this._setButtonState(this._prevButton, !enabled, tooltip);
+	}
+
+	private _updateNextButtonState(currentSlide: number) {
+		const enabled = this._canGoNext(currentSlide);
+		let tooltip = _('Next');
+		if (!enabled && this.isFollower()) {
+			tooltip = _('Waiting for presenter to advance');
+		}
+		this._setButtonState(this._nextButton, !enabled, tooltip);
+	}
+
+	updateControls() {
+		if (!this._prevButton || !this._nextButton || !this._slideShowNavigator)
+			return;
+
+		const currentSlide = this._slideShowNavigator.currentSlideIndex ?? 0;
+
+		this._updatePrevButtonState(currentSlide);
+		this._updateNextButtonState(currentSlide);
+	}
+
 	private _initializeSlideNavWidget(container: HTMLDivElement): void {
 		const closeImg = window.L.DomUtil.create('img', 'left-img', container);
 		const setImgSize = (img: HTMLImageElement) => {
@@ -712,6 +787,7 @@ class SlideShowPresenter {
 		leftImg.setAttribute('aria-label', slideshowPrevText);
 		leftImg.setAttribute('data-cooltip', slideshowPrevText);
 		setImgSize(leftImg);
+		this._prevButton = leftImg;
 		window.L.control.attachTooltipEventListener(leftImg, this._map);
 		app.LOUtil.setImage(leftImg, 'slideshow-slidePrevious.svg', this._map);
 		leftImg.addEventListener('click', this._onPrevNextSlide);
@@ -719,6 +795,7 @@ class SlideShowPresenter {
 		const rightImg = window.L.DomUtil.create('img', 'right-img', container);
 		rightImg.id = 'next';
 		const slideshowNextText = _('Next');
+		this._nextButton = rightImg;
 		window.L.control.attachTooltipEventListener(rightImg, this._map);
 		rightImg.setAttribute('aria-label', slideshowNextText);
 		rightImg.setAttribute('data-cooltip', slideshowNextText);
@@ -784,9 +861,13 @@ class SlideShowPresenter {
 				clearTimeout(this._slideControlsTimer);
 			}.bind(this),
 		);
-		container.addEventListener('click', () => {
+		container.addEventListener('click', (e: Event) => {
+			const target = e.target as HTMLElement;
+			if (target.getAttribute('aria-disabled') === 'true') return;
 			this.setFollowing(false);
 		});
+
+		this.updateControls();
 	}
 
 	private startTimer(loopAndRepeatDuration: number) {
@@ -1322,6 +1403,7 @@ class SlideShowPresenter {
 				this._followBtn.setAttribute('data-cooltip', followText);
 			}
 		}
+		this.updateControls();
 	}
 
 	isFollowing(): boolean {

@@ -331,6 +331,9 @@ class SlideShowNavigator {
 			if (this.prevSlide >= this.theMetaPres.numberOfSlides)
 				this.prevSlide = undefined;
 			this.currentSlide = nNewSlide;
+			if (this.presenter.updateControls) {
+				this.presenter.updateControls();
+			}
 
 			if (this.currentSlide === this.prevSlide) {
 				NAVDBG.print(
