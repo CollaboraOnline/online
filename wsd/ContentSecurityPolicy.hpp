@@ -45,7 +45,11 @@ public:
     void merge(const std::string& csp)
     {
         LOG_TRC("Merging CSP directives [" << csp << ']');
-        StringVector tokens = StringVector::tokenize(csp, ';');
+        // Replace newlines with spaces since StringVector::tokenize
+        // with a char delimiter stops at the first newline.
+        std::string cspLine = csp;
+        std::replace(cspLine.begin(), cspLine.end(), '\n', ' ');
+        StringVector tokens = StringVector::tokenize(cspLine, ';');
         for (std::size_t i = 0; i < tokens.size(); ++i)
         {
             const std::string token = Util::trimmed(tokens[i]);
