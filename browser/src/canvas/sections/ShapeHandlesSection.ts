@@ -1148,8 +1148,8 @@ class ShapeHandlesSection extends CanvasSectionObject {
 
 	onNewDocumentTopLeft(): void {
 		if (this.sectionProperties.svgPosition) {
-			this.sectionProperties.svg.style.left = (this.sectionProperties.svgPosition[0] - (app.activeDocument.activeLayout.viewedRectangle.pX1 + this.containerObject.getDocumentAnchor()[0]) / app.dpiScale) + 'px';
-			this.sectionProperties.svg.style.top = (this.sectionProperties.svgPosition[1] - (app.activeDocument.activeLayout.viewedRectangle.pY1 + this.containerObject.getDocumentAnchor()[1]) / app.dpiScale) + 'px';
+			this.sectionProperties.svg.style.left = Math.round((this.sectionProperties.svgPosition[0] - app.activeDocument.activeLayout.viewedRectangle.pX1 + this.containerObject.getDocumentAnchor()[0]) / app.dpiScale) + 'px';
+			this.sectionProperties.svg.style.top = Math.round((this.sectionProperties.svgPosition[1] - app.activeDocument.activeLayout.viewedRectangle.pY1 + this.containerObject.getDocumentAnchor()[1]) / app.dpiScale) + 'px';
 		}
 	}
 
