@@ -35,13 +35,22 @@ describe(['tagdesktop'], 'Editing Operations', function() {
 		desktopHelper.closeNavigatorSidebar();
 		desktopHelper.selectZoomLevel('30', false);
 
+		cy.getFrameWindow().then((win) => {
+			this.win = win;
+			helper.processToIdle(win);
+		});
+
 		impressHelper.selectTextShapeInTheCenter();
-		cy.wait(500); // Wait a little for server response.
+
+		cy.getFrameWindow().then(function(win) {
+			helper.processToIdle(win);
+		});
+
 		impressHelper.dblclickOnSelectedShape();
 	});
 
-	function undo() {
-		cy.wait(500); // Same, wait for server response.
+	function undo(win) {
+		helper.processToIdle(win);
 		helper.typeIntoDocument('Hello World');
 		expectTypedText();
 		helper.typeIntoDocument('{ctrl+z}');
@@ -50,14 +59,14 @@ describe(['tagdesktop'], 'Editing Operations', function() {
 
 	it('Undo', function() {
 		helper.setDummyClipboardForCopy();
-		undo();
+		undo(this.win);
 	});
 
 	it('Redo', function() {
 		helper.setDummyClipboardForCopy();
-		undo();
+		undo(this.win);
 		helper.typeIntoDocument('{ctrl+y}');
-		cy.wait(500); // Wait a little for server response.
+		helper.processToIdle(this.win);
 		expectTypedText();
 	});
 
