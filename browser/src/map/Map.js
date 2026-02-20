@@ -683,6 +683,11 @@ window.L.Map = window.L.Evented.extend({
 			return this;
 		}
 
+		// Do not animate zoom in multi-page or compare changes view.
+		if (animate && app.activeDocument &&
+			['ViewLayoutMultiPage', 'ViewLayoutCompareChanges'].includes(app.activeDocument.activeLayout.type))
+			animate = false;
+
 		var curCenter = this.getCenter();
 		if (this._docLayer && this._docLayer._docType === 'spreadsheet') {
 			// for spreadsheets, when the document is smaller than the viewing area
