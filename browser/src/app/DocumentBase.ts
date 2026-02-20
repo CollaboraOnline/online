@@ -61,6 +61,8 @@ class DocumentBase {
 		if (this.activeViewID !== activeViewID) {
 			this.activeViewID = activeViewID;
 			this.activeView.clearTextSelection();
+			// Remove the old active view's section before creating a new one.
+			app.sectionContainer.removeSection(this.activeView.selectionSection.name);
 			this.activeView = new DocumentViewBase(this.activeViewID);
 			this.activeView.setColor(this.activeViewSelectionColor);
 		}
