@@ -595,7 +595,10 @@ class UIManager extends window.L.Control {
 		// check for "presentation" dispatch event only after document gets fully loaded
 		// in case if the leader is defined we have to wait a little longer to get the viewer info
 		const startPresentation = () => {
-			if (startFolloMePresntationGet) {
+			if (startPresentationGet === 'true' || startPresentationGet === '1') {
+				app.dispatcher.dispatch('presentation');
+			}
+			else if (startFolloMePresntationGet) {
 				const dispatchFollowPresentation = () => {
 					app.dispatcher.dispatch('followpresentation');
 					this.map.off('slideshowfollowon', dispatchFollowPresentation);
@@ -621,9 +624,6 @@ class UIManager extends window.L.Control {
 					// This also help with if the follow me presentation is not running
 					this.map.on('slideshowfollowon', dispatchFollowPresentation);
 				}
-			}
-			else if (startPresentationGet === 'true' || startPresentationGet === '1') {
-				app.dispatcher.dispatch('presentation');
 			}
 
 			// docloaded event is fired multiple times, unfortunately
