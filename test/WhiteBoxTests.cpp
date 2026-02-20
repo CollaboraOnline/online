@@ -19,6 +19,7 @@
 #include <common/Common.hpp>
 #include <common/FileUtil.hpp>
 #include <common/JsonUtil.hpp>
+#include <common/Log.hpp>
 #include <common/Message.hpp>
 #include <common/Protocol.hpp>
 #include <common/RegexUtil.hpp>
@@ -29,6 +30,7 @@
 #include <wsd/TileDesc.hpp>
 
 #include <test/lokassert.hpp>
+#include <test/testlog.hpp>
 
 #include <cppunit/TestAssert.h>
 #include <cppunit/extensions/HelperMacros.h>
@@ -70,6 +72,7 @@ class WhiteBoxTests : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST(testFindInVector);
     CPPUNIT_TEST(testJoinPair);
     CPPUNIT_TEST(testThreadPool);
+    CPPUNIT_TEST(testLogCaptureCaller);
     CPPUNIT_TEST_SUITE_END();
 
     void testCOOLProtocolFunctions();
@@ -95,6 +98,7 @@ class WhiteBoxTests : public CPPUNIT_NS::TestFixture
     void testFindInVector();
     void testJoinPair();
     void testThreadPool();
+    void testLogCaptureCaller();
 
     size_t waitForThreads(size_t count);
 };
@@ -1001,6 +1005,35 @@ void WhiteBoxTests::testThreadPool()
     pool.start();
     LOK_ASSERT_EQUAL(size_t(7), pool._threads.size());
 //    LOK_ASSERT_EQUAL(size_t(7 + existingUnrelatedThreads), waitForThreads(8 + existingUnrelatedThreads));
+}
+
+void WhiteBoxTests::testLogCaptureCaller()
+{
+    constexpr std::string_view testname = __func__;
+
+    const auto logWithoutCaller = []() -> std::string
+    {
+        std::ostringstream oss;
+        LOG_END(oss);
+        return oss.str();
+    };
+    // Should return an empty string.
+    const std::string withoutCaller = logWithoutCaller();
+    TST_LOG("Without caller: [" << withoutCaller << ']');
+    LOK_ASSERT_MESSAGE("Unexpected to find the parent's source location",
+                       withoutCaller.find("(from") == std::string::npos);
+
+    const auto logWithCaller = [](LOG_CAPTURE_CALLER_DECLARATION) -> std::string
+    {
+        std::ostringstream oss;
+        LOG_END(oss);
+        return oss.str();
+    };
+    // Should return something like "(from WhiteBoxTests.cpp:1031)|"
+    const std::string withCaller = logWithCaller();
+    TST_LOG("With caller: [" << withCaller << ']');
+    LOK_ASSERT_MESSAGE("Expected to find the parent's source location",
+                       withCaller.find("|(from WhiteBoxTests.cpp:") != std::string::npos);
 }
 
 CPPUNIT_TEST_SUITE_REGISTRATION(WhiteBoxTests);
