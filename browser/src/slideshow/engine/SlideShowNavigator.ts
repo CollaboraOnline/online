@@ -253,9 +253,10 @@ class SlideShowNavigator {
 		if (this.presenter.isFollowing()) return;
 		this.presenter.setFollowing(true);
 		// const currentEffect = this.currentLeaderEffect;
-		if (this.currentLeaderSlide === this.currentSlide)
-			this.slideShowHandler.rewindAllEffects();
-		else this.displaySlide(this.currentLeaderSlide, true);
+		if (this.currentLeaderSlide === this.currentSlide) {
+			if (this.slideShowHandler.hasAnyEffectStarted())
+				this.slideShowHandler.rewindAllEffects();
+		} else this.displaySlide(this.currentLeaderSlide, true);
 		this.slideShowHandler.skipNEffects(this.currentLeaderEffect);
 	}
 
