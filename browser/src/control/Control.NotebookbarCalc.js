@@ -13,7 +13,7 @@
  * window.L.Control.NotebookbarCalc - definition of notebookbar content in Calc
  */
 
-/* global _ _UNO app */
+/* global _ _UNO app JSDialog */
 window.L.Control.NotebookbarCalc = window.L.Control.NotebookbarWriter.extend({
 
 	getTabs: function() {
@@ -94,13 +94,7 @@ window.L.Control.NotebookbarCalc = window.L.Control.NotebookbarWriter.extend({
 				'context': 'Sparkline',
 				'accessibility': { focusBack: true,	combination: 'K', de: null }
 			},
-			{
-				'id': 'Table-tab-label',
-				'text': _('Table Design'),
-				'name': 'Table',
-				'context': 'Table',
-				'accessibility': { focusBack: true,	combination: 'T', de: null }
-			},
+			JSDialog.CalcTableTab.getEntry(),
 			{
 				'id': 'Help-tab-label',
 				'text': _('Help'),
@@ -1653,137 +1647,8 @@ window.L.Control.NotebookbarCalc = window.L.Control.NotebookbarWriter.extend({
 	},
 
 	getCalcTableTab: function() {
-		var content = [
-			{
-				'id': 'insert-remove-calc-table',
-				'type': 'bigtoolitem',
-				'text': _UNO('.uno:RemoveCalcTable', 'spreadsheet'),
-				'command': '.uno:RemoveCalcTable',
-				'accessibility': { focusBack: true,	combination: 'DT', de: null }
-			},
-			{ type: 'separator', id: 'table-deletecalctable-break', orientation: 'vertical' },
-			{
-				'type': 'overflowgroup',
-				'id': 'table-style-options',
-				'name':_('Table Style Options'),
-				'accessibility': { focusBack: true,	combination: 'TO', de: null },
-				'children' : [
-					{
-						'type': 'container',
-						'children': [
-							{
-								'type': 'toolbox',
-								'children': [
-									{
-										'id': 'chk_header_row2',
-										'type': 'checkbox',
-										'command': '.uno:DatabaseSettings',
-										'text': _('Header Row'),
-										'accessibility': { focusBack: true,	combination: 'SH', de: null }
-									}
-								]
-							},
-							{
-								'type': 'toolbox',
-								'children': [
-									{
-										'id': 'chk_total_row2',
-										'type': 'checkbox',
-										'command': '.uno:DatabaseSettings',
-										'text': _('Total Row'),
-										'accessibility': { focusBack: true,	combination: 'ST', de: null }
-									}
-								]
-							}
-						],
-						'vertical': 'true'
-					},
-					{
-						'type': 'container',
-						'children': [
-							{
-								'type': 'toolbox',
-								'children': [
-									{
-										'id': 'chk_banded_rows2',
-										'type': 'checkbox',
-										'command': '.uno:DatabaseSettings',
-										'text': _('Banded Rows'),
-										'accessibility': { focusBack: true,	combination: 'BR', de: null }
-									}
-								]
-							},
-							{
-								'type': 'toolbox',
-								'children': [
-									{
-										'id': 'chk_banded_cols2',
-										'type': 'checkbox',
-										'command': '.uno:DatabaseSettings',
-										'text': _('Banded Columns'),
-										'accessibility': { focusBack: true,	combination: 'BC', de: null }
-									}
-								]
-							}
-						],
-						'vertical': 'true'
-					},
-					{
-						'type': 'container',
-						'children': [
-							{
-								'type': 'toolbox',
-								'children': [
-									{
-										'id': 'chk_first_column2',
-										'type': 'checkbox',
-										'command': '.uno:DatabaseSettings',
-										'text': _('First Column'),
-										'accessibility': { focusBack: true,	combination: 'FC', de: null }
-									}
-								]
-							},
-							{
-								'type': 'toolbox',
-								'children': [
-									{
-										'id': 'chk_last_column2',
-										'type': 'checkbox',
-										'command': '.uno:DatabaseSettings',
-										'text': _('Last Column'),
-										'accessibility': { focusBack: true,	combination: 'LC', de: null }
-									}
-								]
-							}
-						],
-						'vertical': 'true'
-					},
-					{
-						'type': 'toolbox',
-						'children': [
-							{
-								'id': 'chk_filter_buttons2',
-								'type': 'checkbox',
-								'command': '.uno:DatabaseSettings',
-								'text': _('Filter Buttons'),
-								'accessibility': { focusBack: true,	combination: 'SF', de: null }
-							},
-						]
-					},
-				]
-			},
-			{ type: 'separator', id: 'table-style-options-break', orientation: 'vertical' },
-			{
-				'id': 'tablestyles_design:TableStylesMenu',
-				'type': 'menubutton',
-				'text': _('Table Styles'),
-				'command': '.uno:DatabaseSettings',
-				'aria': { 'label': _('Table Styles') },
-				'accessibility': { focusBack: true,	combination: 'TS', de: null }
-			}
-		];
-
-		return this.getTabPage('Table', content);
+		const tab = JSDialog.CalcTableTab;
+		return this.getTabPage(tab.getName(), tab.getContent());
 	},
 
 	getSparklineTab: function() {
