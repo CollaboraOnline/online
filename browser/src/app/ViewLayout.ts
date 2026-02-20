@@ -12,7 +12,8 @@
 class ScrollProperties {
 	yOffset: number = 0;
 	verticalScrollLength: number = 0;
-	verticalScrollSize: number = 0;
+	verticalScrollSize: number = 0; // Clamped to minimum, used for drawing.
+	verticalScrollSizeForScrolling: number = 0; // Unclamped, used for scroll calculations.
 	minimumVerticalScrollSize: number = 80 * app.roundedDpiScale;
 	verticalScrollRatio: number = 0;
 	startY: number = 0; // Start position of the vertical scroll bar on canvas.
@@ -21,7 +22,8 @@ class ScrollProperties {
 
 	xOffset: number = 0;
 	horizontalScrollLength: number = 0;
-	horizontalScrollSize: number = 0;
+	horizontalScrollSize: number = 0; // Clamped to minimum, used for drawing.
+	horizontalScrollSizeForScrolling: number = 0; // Unclamped, used for scroll calculations.
 	minimumHorizontalScrollSize: number = 80 * app.roundedDpiScale;
 	horizontalScrollRatio: number = 0;
 	startX: number = 0;
@@ -254,6 +256,13 @@ class ViewLayoutBase {
 				this.viewSize.pX,
 		);
 
+		// Store unclamped values for scroll calculations.
+		this.scrollProperties.verticalScrollSizeForScrolling =
+			this.scrollProperties.verticalScrollSize;
+		this.scrollProperties.horizontalScrollSizeForScrolling =
+			this.scrollProperties.horizontalScrollSize;
+
+		// Clamp to minimum for drawing.
 		if (
 			this.scrollProperties.horizontalScrollSize <
 			this.scrollProperties.minimumHorizontalScrollSize
