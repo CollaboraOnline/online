@@ -394,7 +394,7 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 		// Dismiss tooltip
 		cy.cGet('#Home-tab-label').click();
 		cy.cGet('#Home-tab-label').click();
-		cy.cGet('[role="tooltip"]').should('not.exist');
+		cy.cGet('[role="tooltip"]:not(.visuallyhidden)').should('not.exist');
 
 		//Redo
 		cy.cGet('#Home-container .unoRedo').should('not.have.attr','disabled');
