@@ -43,23 +43,15 @@
         window.addEventListener(
             'message',
             (event) => {
-                if (event.origin !== window.origin) {
+                if (event.origin !== window.origin)
                     return;
-                }
 
-                if (typeof event.data !== 'object' || event.data === null) {
-                    return;
-                }
-
-                if (typeof event.data.name !== 'string') {
-                    return;
-                }
-
-                if (!event.data.name.endsWith("Error")) {
-                    return;
-                }
-
-                throw event.data;
+                // check if event is an error message
+                if (typeof event.data === 'object' &&
+                    event.data !== null &&
+                    typeof event.data.name === 'string' &&
+                    event.data.name.endsWith("Error"))
+                    throw event.data;
             }
         );
     </script>
