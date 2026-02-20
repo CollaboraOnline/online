@@ -18,9 +18,11 @@
 #include <cerrno>
 #include <chrono>
 #include <cstddef>
+#include <cstring>
 #include <functional>
 #include <iostream>
 #include <map>
+#include <source_location>
 #include <sstream>
 #include <string>
 #include <thread>
@@ -182,7 +184,66 @@ namespace Log
     static bool isDebuggerPresent;
 #endif
 
+    /// A helper class that captures an original location (the parent's) and a current location (actual).
+    /// Supports comparing them via the same() member.
+    class caller_location
+    {
+    public:
+        constexpr caller_location(std::source_location orig_loc,
+                                  std::source_location cur_loc = std::source_location::current())
+            : _orig_loc(orig_loc)
+            , _cur_loc(cur_loc)
+        {
+        }
+
+        constexpr bool same() const
+        {
+            return _orig_loc.line() == _cur_loc.line() &&
+                   (_orig_loc.file_name() == _cur_loc.file_name() ||
+                    std::strcmp(_orig_loc.file_name(), _cur_loc.file_name()) == 0);
+        }
+
+        auto file_name() const { return _orig_loc.file_name(); }
+        auto line() const { return _orig_loc.line(); }
+
+    private:
+        const std::source_location _orig_loc;
+        const std::source_location _cur_loc;
+    };
+
+    /// Serialize a caller_location, if it has an original location that is different from the current.
+    inline std::ostream& operator<<(std::ostream& lhs, const caller_location& loc)
+    {
+        if (!loc.same())
+        {
+            lhs << "(from " << loc.file_name() << ':' << loc.line() << ")|";
+        }
+
+        return lhs;
+    }
+
+    /// A callable object to mimick fetch_source_location but return that of the parent's.
+    class SourceLocationGetter : public std::source_location
+    {
+    public:
+        constexpr explicit SourceLocationGetter(
+            std::source_location loc = std::source_location::current())
+            : std::source_location(loc)
+        {
+        }
+        constexpr std::source_location operator()() const { return *this; }
+    };
+
 } // namespace Log
+
+/// A dummy fetch_source_location that returns the current location.
+/// This is the no-op version. Must be replaced via LOG_CAPTURE_CALLER
+/// to replace it with one that returns the parent's location.
+constexpr std::source_location
+fetch_source_location(std::source_location loc = std::source_location::current())
+{
+    return loc;
+}
 
 /// A default implementation that is a NOP.
 /// Any context can implement this to prefix its log entries.
@@ -252,7 +313,28 @@ static constexpr std::size_t skipPathPrefix(const char (&s)[N], std::size_t n = 
 
 #define LOG_END_NOFILE(LOG) (void)0
 
-#define LOG_END(LOG) LOG << "| " << LOG_FILE_NAME(__FILE__) << ":" STRING(__LINE__)
+/// Used to pass the current function's call site to capture the
+/// grandparent's call location, rather than the parent's.
+/// The current function must have LOG_CAPTURE_CALL(_DECLARATION).
+/// Example: in function f(LOG_CAPTURE_CALL_DECLARATION) { child(LOG_PASS_PARENT_CALLER); }
+#define LOG_PASS_PARENT_CALLER fetch_source_location
+/// Used as the last parameter in the definition of a function that needs
+/// to capture the caller's source location (filename and line number).
+#define LOG_CAPTURE_CALLER [[maybe_unused]] const Log::SourceLocationGetter& LOG_PASS_PARENT_CALLER
+/// Used as the last parameter in the declaration of a function that needs
+/// to capture the caller's source location (filename and line number).
+/// Logs from this function will include the caller's location,
+/// which is helpful for generic helpers. Example:
+/// WRN  WOPISrc validation error|(from wsd/FileServer.cpp:1416)|net/HttpHelper.hpp:79
+#define LOG_CAPTURE_CALLER_DECLARATION LOG_CAPTURE_CALLER = Log::SourceLocationGetter()
+
+/// Add the log-suffix.
+/// Calls fetch_source_location(), which returns Log::caller_location. If this is different
+/// from std::source_location::current(), we log that as the original local, like so:
+/// INF  Copying 7750 bytes from empty.ods to /tmp/empty.ods|(from ./common/FileUtil.hpp:180)|common/FileUtil.cpp:89
+#define LOG_END(LOG)                                                                               \
+    LOG << '|' << Log::caller_location(fetch_source_location()) << LOG_FILE_NAME(__FILE__)         \
+        << ":" STRING(__LINE__)
 
 #define LOG_MESSAGE_(LVL, A, X, PREFIX, SUFFIX)  \
     do                                          \
@@ -310,7 +392,9 @@ static constexpr std::size_t skipPathPrefix(const char (&s)[N], std::size_t n = 
 #define LOG_ERR(X)        LOG_MESSAGE_(ERR, Generic, X, logPrefix, LOG_END)
 
 #define LOG_WRN_ONCE(X) LOG_MESSAGE_ONCE_(WRN, Generic, X, logPrefix, LOG_END)
+#define LOG_WRN_ONCE_S(X) LOG_MESSAGE_ONCE_(WRN, Generic, X, (void), LOG_END)
 #define LOG_ERR_ONCE(X) LOG_MESSAGE_ONCE_(ERR, Generic, X, logPrefix, LOG_END)
+#define LOG_ERR_ONCE_S(X) LOG_MESSAGE_ONCE_(ERR, Generic, X, (void), LOG_END)
 
 #define LOGA_TRC(A,X)        LOG_MESSAGE_(TRC, A, X, logPrefix, LOG_END)
 #define LOGA_TRC_NOFILE(A,X) LOG_MESSAGE_(TRC, A, X, logPrefix, LOG_END_NOFILE)
