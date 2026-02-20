@@ -61,7 +61,6 @@ if [ "$LIBC" != "musl" ]; then
          usr/lib/locale/locale_archive \
          usr/lib/*/nss/*.so \
          usr/lib/*/libsqlite* \
-         usr/share/zoneinfo/* \
          usr/share/liblangtag \
          usr/share/hyphen \
          -type f 2>/dev/null
@@ -77,7 +76,6 @@ else
     find var/cache/fontconfig \
          etc/fonts \
          usr/lib/*/libsqlite* \
-         usr/share/zoneinfo/* \
          usr/share/liblangtag \
          usr/share/hyphen \
          -type f 2>/dev/null
@@ -112,7 +110,7 @@ cpio -p -d -L $CHROOT
 # Link the dynamic files, replacing any existing.
 rm -f $CHROOT/etc/copied
 mkdir -p $CHROOT/etc/
-ETC_FILES="hosts resolv.conf passwd group host.conf timezone localtime"
+ETC_FILES="hosts resolv.conf passwd group host.conf"
 if [ "$LIBC" != "musl" ]; then
     ETC_FILES="$ETC_FILES nsswitch.conf"
 fi

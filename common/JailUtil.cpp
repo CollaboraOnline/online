@@ -578,8 +578,9 @@ namespace SysTemplate
 /// the long lifetime of our process. Also, it's unlikely
 /// that systemplate will get re-generated after installation.
 static const auto DynamicFilePaths
-    = { "/etc/passwd",        "/etc/group",       "/etc/host.conf", "/etc/hosts",
-        "/etc/nsswitch.conf", "/etc/resolv.conf", "/etc/timezone",  "/etc/localtime" };
+    = { "/etc/passwd", "/etc/group",
+        "/etc/host.conf", "/etc/hosts",
+        "/etc/nsswitch.conf", "/etc/resolv.conf" };
 
 namespace
 {
