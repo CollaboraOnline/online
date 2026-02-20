@@ -295,7 +295,7 @@ window.L.Map.WOPI = window.L.Handler.extend({
 			this._allowedOrigins = ancestors;
 			// convert to JS regexps from localhost:* to https*://localhost:.*
 			for (i = 0; i < ancestors.length; i++) {
-				this._allowedOrigins[i] = '(http|https)://' + ancestors[i].replace(/:\*/, ':?.*');
+				this._allowedOrigins[i] = '^(http|https)://' + ancestors[i].replace(/:\*/, ':?.*') + '$';
 			}
 		}
 
