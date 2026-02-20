@@ -250,6 +250,8 @@ inline constexpr bool failed() { return false; }
 #define LOK_ASSERT_EQUAL_STR(EXP, ACT)                                                             \
     LOK_ASSERT_EQUAL_MESSAGE((#EXP) << " != " << (#ACT), Util::toString(EXP), Util::toString(ACT))
 
+#define LOK_ASSERT_PASS(message) TST_LOG("PASS: " << message)
+
 #define LOK_ASSERT_FAIL(message)                                                                   \
     do                                                                                             \
     {                                                                                              \
