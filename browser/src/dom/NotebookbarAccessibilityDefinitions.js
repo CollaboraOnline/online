@@ -144,20 +144,20 @@ var NotebookbarAccessibilityDefinitions = function() {
 	};
 
 	this.optionsToolButtons = function(selectedDefinitions) {
-				// add optionstoolbox accesskey information to selected definitions
+		// add optionstoolbox accesskey information to selected definitions
 
-				const optionsToolSectionData = app.map.uiManager.notebookbar.getDefaultToolItems();
-				const language = this.getLanguage();
-		
-				for (let option = 0; option < optionsToolSectionData.length; option++) {
-					let toolOption = optionsToolSectionData[option];
-					toolOption.id = (toolOption.id == null ? toolOption.command.replace('.uno:', '') : toolOption.id) + '-button';
-					selectedDefinitions[toolOption.id] = {
-						focusBack : toolOption.accessibility.focusBack,
-						combination : language && toolOption.accessibility[language] ? toolOption.accessibility[language]: toolOption.accessibility.combination,
-						contentList: []
-					};
-				}
+		const optionsToolSectionData = app.map.uiManager.notebookbar.getDefaultToolItems();
+		const language = this.getLanguage();
+
+		for (let option = 0; option < optionsToolSectionData.length; option++) {
+			let toolOption = optionsToolSectionData[option];
+			toolOption.id = (toolOption.id == null ? toolOption.command.replace('.uno:', '') : toolOption.id) + '-button';
+			selectedDefinitions[toolOption.id] = {
+				focusBack : toolOption.accessibility.focusBack,
+				combination : language && toolOption.accessibility[language] ? toolOption.accessibility[language]: toolOption.accessibility.combination,
+				contentList: []
+			};
+		}
 	}
 
 	this.getDefinitions = function() {
