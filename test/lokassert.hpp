@@ -260,4 +260,15 @@ inline constexpr bool failed() { return false; }
         CPPUNIT_FAIL(dummyStringstream.str().c_str());                                             \
     } while (false)
 
+/// A failed assertion with context.
+#define LOK_ASSERT_FAIL_CTX(message, CTX)                                                          \
+    do                                                                                             \
+    {                                                                                              \
+        TST_LOG("ERROR: Forced failure: " << message << ' ' << CTX);                               \
+        LOK_ASSERT_IMPL(!"Forced failure: " #message); /* NOLINT(misc-static-assert) */            \
+        std::stringstream dummyStringstream;                                                       \
+        dummyStringstream << message << ' ' << CTX;                                                \
+        CPPUNIT_FAIL(dummyStringstream.str().c_str());                                             \
+    } while (false)
+
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
