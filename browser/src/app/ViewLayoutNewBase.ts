@@ -78,9 +78,16 @@ class ViewLayoutNewBase extends ViewLayoutBase {
 
 			if (endPosition !== this.scrollProperties.startX) {
 				this.scrollProperties.startX = endPosition;
+				const hScrollMultiplier =
+					max > 0
+						? (this.scrollProperties.horizontalScrollLength -
+								this.scrollProperties.horizontalScrollSizeForScrolling) /
+							max
+						: 1;
 				this.scrollProperties.viewX = Math.round(
 					(endPosition / this.scrollProperties.horizontalScrollLength) *
-						this.viewSize.pX,
+						this.viewSize.pX *
+						hScrollMultiplier,
 				);
 				scrolled = true;
 			}
@@ -98,9 +105,16 @@ class ViewLayoutNewBase extends ViewLayoutBase {
 
 			if (endPosition !== this.scrollProperties.startY) {
 				this.scrollProperties.startY = endPosition;
+				const vScrollMultiplier =
+					max > 0
+						? (this.scrollProperties.verticalScrollLength -
+								this.scrollProperties.verticalScrollSizeForScrolling) /
+							max
+						: 1;
 				this.scrollProperties.viewY = Math.round(
 					(endPosition / this.scrollProperties.verticalScrollLength) *
-						this.viewSize.pY,
+						this.viewSize.pY *
+						vScrollMultiplier,
 				);
 				scrolled = true;
 			}
