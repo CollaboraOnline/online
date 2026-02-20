@@ -1785,6 +1785,16 @@ window.L.Control.NotebookbarWriter = window.L.Control.Notebookbar.extend({
 				'command': '.uno:Navigator',
 				'accessibility': { focusBack: true, combination: 'K', de: 'V' }
 			},
+			{ type: 'separator', id: 'view-navigator-break', orientation: 'vertical' },
+			{
+				'id': 'gatherwindows',
+				'class': 'unogatherwindows',
+				'type': 'bigcustomtoolitem',
+				'text': _('Gather windows'),
+				'command': 'gatherwindows',
+				'icon': 'lc_combine.svg',
+				'accessibility': { focusBack: true, combination: 'GW', de: null }
+			},
 		];
 
 		return this.getTabPage(viewTabName, content);

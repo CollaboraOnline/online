@@ -21,14 +21,16 @@
 #include <QDBusReply>
 #include <QDBusConnectionInterface>
 #include <QFileInfo>
+#include <QApplication>
 
 constexpr const char* SERVICE_NAME = "com.collaboraoffice.Office";
 constexpr const char* OBJECT_PATH = "/com/collaboraoffice/Office";
 
 namespace coda
 {
-    void openFiles(const QStringList& files)
+    void openFiles(const QStringList& files, Window* targetWindow)
     {
+        // The WebView constructor will automatically avoid reusing windows with starter screens.
         for (const QString& file : files)
         {
             Poco::URI fileURL(Poco::Path(file.toStdString()));
@@ -41,12 +43,20 @@ namespace coda
                 continue;
             }
 
-            WebView* webViewInstance = new WebView(Application::getProfile());
+            // For the first file, create a new top-level window (or use
+            // the active window if one exists). For subsequent files,
+            // reuse the first file's window so files open as tabs in the
+            // same window by default.
+            WebView* webViewInstance = new WebView(Application::getProfile(), /*isWelcome*/ false, targetWindow);
             webViewInstance->load(fileURL);
 
             QFileInfo fileInfo(file);
             Poco::URI uri(Poco::Path(fileInfo.absoluteFilePath().toStdString()));
             Application::getRecentFiles().add(uri.toString());
+            if (!targetWindow)
+            {
+                targetWindow = webViewInstance->mainWindow();
+            }
         }
     }
 
