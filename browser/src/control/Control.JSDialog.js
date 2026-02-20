@@ -136,6 +136,27 @@ window.L.Control.JSDialog = window.L.Control.extend({
 		this.focusToLastElement(id);
 
 		var builder = this.clearDialog(id);
+
+		// Special case: this dialog can be opened by toolbutton
+		if (builder.dialogId == 'BulletsAndNumberingDialog')
+		{
+			const toolButtons = document.querySelectorAll('.unotoolbutton[modelid="SetOutline"] .unobutton');
+
+			toolButtons.forEach(btn => {
+				if (btn.hasAttribute('aria-expanded'))
+					btn.setAttribute('aria-expanded', 'false');
+			});
+		}
+		else if (builder.dialogId == 'CharacterPropertiesDialog')
+		{
+			const toolButtons = document.querySelectorAll('.unotoolbutton[modelid="Spacing"] .unobutton');
+
+			toolButtons.forEach(btn => {
+				if (btn.hasAttribute('aria-expanded'))
+					btn.setAttribute('aria-expanded', 'false');
+			});
+		}
+
 		if (sendCloseEvent !== false && builder)
 			builder.callback('dialog', 'close', {id: '__DIALOG__'}, null, builder);
 	},
