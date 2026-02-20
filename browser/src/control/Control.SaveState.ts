@@ -80,7 +80,7 @@ class SaveState {
 		if (this.saveEle) {
 			this.saveEle.classList.remove('saving');
 			this.saveEle.classList.remove('saved');
-			this.saveIconEl.classList.remove('rotate-icon'); // Stop the icon rotation
+			this.saveIconEl?.classList.remove('rotate-icon'); // Stop the icon rotation
 			this.saveEle.removeAttribute('disabled'); // Enable the button
 			this.saveEle.classList.add('savemodified');
 		}
