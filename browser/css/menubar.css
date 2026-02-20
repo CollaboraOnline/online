@@ -181,14 +181,20 @@ nav.hasnotebookbar [id^='save'].saved::after {
 	scrollbar-width: none;
 	-ms-scrollbar: none;
 }
-.main-nav.hasnotebookbar::-webkit-scrollbar {
-	height: 0;
-}
+
 .main-nav.hasnotebookbar:not(.readonly) {
 	background: var(--color-main-background);
 	padding: 0px;
 	overflow: scroll hidden;
 	padding-inline-start: 5px;
+}
+
+@media (max-width: 480px) {
+
+	.main-nav.hasnotebookbar {
+		scrollbar-width: unset;
+		-ms-scrollbar: unset;
+	}
 }
 
 /* Customizations to sm-simple theme to make it look like LO menu, lo-menu class */
