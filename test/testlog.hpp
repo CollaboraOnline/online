@@ -38,13 +38,10 @@ inline std::chrono::milliseconds timeSinceTestStartMs()
 
 #if ENABLE_DEBUG
 #define TST_LOG_NAME(NAME, X)                                                                      \
-    do                                                                                             \
-    {                                                                                              \
-        LOG_TST(NAME << (std::string_view(NAME) != std::string_view(__func__)                      \
-                             ? (" [" + std::string(__func__) + "]")                                \
-                             : "")                                                                 \
-                     << " (+" << helpers::timeSinceTestStartMs() << "): " << std::boolalpha << X); \
-    } while (false)
+    LOG_TST(NAME << (std::string_view(NAME) != std::string_view(__func__)                          \
+                         ? (" [" + std::string(__func__) + "]")                                    \
+                         : "")                                                                     \
+                 << " (+" << helpers::timeSinceTestStartMs() << "): " << std::boolalpha << X)
 #else // Disable test logs in release.
 #define TST_LOG_NAME(NAME, X)                                                                      \
     do                                                                                             \

@@ -103,11 +103,7 @@ std::string inline lokFormatAssertEq(const std::string& expected_name, const std
 // When enabled, assertions that pass will be logged.
 // configure with --enable-logging-test-assert
 #if LOK_LOG_ASSERTIONS
-#define LOK_TRACE(X)                                                                               \
-    do                                                                                             \
-    {                                                                                              \
-        TST_LOG(X);                                                                                \
-    } while (false)
+#define LOK_TRACE(X) TST_LOG(X)
 #else
 #define LOK_TRACE(X)                                                                               \
     do                                                                                             \
