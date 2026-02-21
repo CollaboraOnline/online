@@ -80,6 +80,16 @@ namespace LOKitHelper
         return 0;
     }
 
+    inline std::string partHasComments(const std::string &partData)
+    {
+        Poco::JSON::Parser parser;
+        Poco::Dynamic::Var partJsonVar = parser.parse(partData);
+        const Poco::SharedPtr<Poco::JSON::Object>& partObject = partJsonVar.extract<Poco::JSON::Object::Ptr>();
+        if (partObject->has("partHasComments"))
+            return partObject->get("partHasComments").toString();
+        return "false";
+    }
+
     inline void fetchPartsData(LibreOfficeKitDocument *loKitDocument, std::unordered_map<std::string, std::string> &resultInfo, int partsCount, int &mode)
     {
         /*
@@ -103,7 +113,8 @@ namespace LOKitHelper
         resultInfo["parts"] = std::move(resultingPartsArray);
     }
 
-    inline void fetchWriterSpecificData(LibreOfficeKitDocument *loKitDocument, std::unordered_map<std::string, std::string> &resultInfo, int& mode)
+    // TODO: create a struct with all the resultInfo properties and
+    inline void fetchWriterSpecificData(LibreOfficeKitDocument *loKitDocument, std::unordered_map<std::string, std::string> &resultInfo, int& mode, std::string& hasComments)
     {
         std::string rectangles = loKitDocument->pClass->getPartPageRectangles(loKitDocument);
 
@@ -114,6 +125,7 @@ namespace LOKitHelper
         // Fetch mode for a potentially non-standard redline render mode.
         std::string partData = getPartData(loKitDocument, 0);
         mode = getMode(partData);
+        hasComments = partHasComments(partData);
     }
 
     inline void fetchCalcSpecificData(LibreOfficeKitDocument *loKitDocument, std::unordered_map<std::string, std::string> &resultInfo, int part)
@@ -189,16 +201,18 @@ namespace LOKitHelper
         }
 
         int mode = 0;
+        std::string hasComments = "false";
 
         if (type == LOK_DOCTYPE_SPREADSHEET)
             fetchCalcSpecificData(loKitDocument, resultInfo, selectedPart);
         else if (type == LOK_DOCTYPE_TEXT)
-            fetchWriterSpecificData(loKitDocument, resultInfo, mode);
+            fetchWriterSpecificData(loKitDocument, resultInfo, mode, hasComments);
 
         if (type == LOK_DOCTYPE_SPREADSHEET || type == LOK_DOCTYPE_PRESENTATION || type == LOK_DOCTYPE_DRAWING)
             fetchPartsData(loKitDocument, resultInfo, partsCount, mode);
 
         resultInfo["mode"] = std::to_string(mode);
+        resultInfo["partHasComments"] = hasComments;
 
         return MapToJSONString(resultInfo);
     }
