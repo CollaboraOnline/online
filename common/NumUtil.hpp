@@ -24,61 +24,6 @@
 namespace NumUtil
 {
 
-/**
-* Similar to std::atoi() but does not require p to be null-terminated.
-*
-* Returns std::numeric_limits<int>::min/max() if the result would overflow.
-*/
-inline int safe_atoi(const char* p, int len)
-{
-    long ret{};
-    if (!p || !len)
-    {
-        return ret;
-    }
-
-    int multiplier = 1;
-    int offset = 0;
-    while (isspace(p[offset]))
-    {
-        ++offset;
-        if (offset >= len)
-        {
-            return ret;
-        }
-    }
-
-    switch (p[offset])
-    {
-        case '-':
-            multiplier = -1;
-            ++offset;
-            break;
-        case '+':
-            ++offset;
-            break;
-    }
-    if (offset >= len)
-    {
-        return ret;
-    }
-
-    while (isdigit(p[offset]))
-    {
-        std::int64_t next = ret * 10 + (p[offset] - '0');
-        if (next >= std::numeric_limits<int>::max())
-            return multiplier * std::numeric_limits<int>::max();
-        ret = next;
-        ++offset;
-        if (offset >= len)
-        {
-            return multiplier * ret;
-        }
-    }
-
-    return multiplier * ret;
-}
-
 /// Convert from a string into an integer, like strto* family,
 /// supporting std::string_view arguments.
 /// The number must be base-10 and can start with
@@ -333,6 +278,17 @@ inline std::uint64_t strtouint64(const std::string_view str)
 inline std::uint64_t praseStrToUint64(const std::string_view str, std::size_t& offset)
 {
     return parseStrTo<std::uint64_t>(str, offset);
+}
+
+/**
+* Similar to std::atoi() but does not require p to be null-terminated.
+*
+* Returns std::numeric_limits<int>::min/max() if the result would overflow.
+*/
+inline int safe_atoi(const char* p, int len)
+{
+    std::size_t offset = 0;
+    return parseStrTo<std::int32_t>(std::string_view(p, len), offset);
 }
 
 } // namespace NumUtil
