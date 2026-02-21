@@ -65,9 +65,6 @@ TRACEEVENT name=<name> ph=<letter> ts=<timestamp> <more parameters>... [ args=<J
     ph is one of the following, and the rest of the parameters depend
     on what it is.
 
-    args is an optional parameter, and its value is a JSON string
-    where the keys and values are strings with no spaces in them.
-
     'i': An "Instant" event.
 
     'S', 'F': The start and finish of an "Async" event. In addition to
@@ -77,6 +74,9 @@ TRACEEVENT name=<name> ph=<letter> ts=<timestamp> <more parameters>... [ args=<J
     'X': A "complete" event. The "dur" parameter is the duration
     between the beginning of the thing being timed and the time when
     the 'X' message was emitted, also in microseconds.
+
+    args is an optional parameter, and its value is a JSON string
+    where the keys and values are strings with no spaces in them.
 
 tileprocessed wids=<wid1,wid2,...>
 
@@ -389,7 +389,7 @@ completefunction name=<FunctionName>
 
     <FunctionName> is the name of the function to be applied, such as SUM, MIN, AVG, MAX, etc.
 
-This command allows the client to request calculation functions dynamically.
+    This command allows the client to request calculation functions dynamically.
 
 dialogevent <windowId> { "id": "<objectId>", "cmd": "<eventType>", "data": "<data>", "type": "<objectType>" }
 
