@@ -124,6 +124,11 @@ window.L.WriterTileLayer = window.L.CanvasTileLayer.extend({
 			app.activeDocument.setActiveViewID(this._viewId);
 		}
 
+		if (statusJSON.partHasComments !== undefined &&  statusJSON.partHasComments !== app.activeDocument.partHasComments) {
+			app.activeDocument.partHasComments = statusJSON.partHasComments;
+			this._fitWidthZoom();
+		}
+
 		console.assert(this._viewId >= 0, 'Incorrect viewId received: ' + this._viewId);
 
 		if (sizeChanged) {

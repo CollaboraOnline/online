@@ -3203,6 +3203,13 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 		oldSize.x *= app.dpiScale;
 		oldSize.y *= app.dpiScale;
 
+		let bringCommentsIntoView = false;
+		if (this.isWriter() && app.activeDocument.partHasComments && (recalcFirstFit || !this._includedCommentsInFirstFit)) {
+			bringCommentsIntoView = true;
+			this._includedCommentsInFirstFit = true;
+			this._firstFitDone = false;
+		}
+
 		// `recalcFirstFit` is used to recalculate/reset the zoom levels to the
 		// maximum possible zoom level based on the window (canvas) size.
 		if (recalcFirstFit)
@@ -3214,7 +3221,12 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 		if (this._firstFitDone && newSize.x - oldSize.x === 0)
 			return;
 
-		var ratio = newSize.x / app.activeDocument.fileSize.pX;
+		const commentSection = app.sectionContainer.getSectionWithName(app.CSections.CommentList.name);
+		const commentWidth = commentSection ? commentSection.sectionProperties.commentWidth : 0;
+		let documentWidth = app.activeDocument.fileSize.pX;
+		if (bringCommentsIntoView) documentWidth += commentWidth;
+
+		var ratio = newSize.x / documentWidth;
 		var zoom = this._map.getScaleZoom(ratio);
 
 		if (maxZoom)
@@ -3735,6 +3747,7 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 		 * UI code which triggers them.
 		 */
 		this._invalidateZoomFirstFit = false;
+		this._includedCommentsInFirstFit = false;
 
 		this._referencesAll = [];
 
