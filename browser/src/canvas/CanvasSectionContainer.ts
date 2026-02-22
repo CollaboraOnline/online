@@ -1972,6 +1972,8 @@ class CanvasSectionContainer {
 			return true;
 		}
 		else {
+			app.console.warn(
+				'SectionContainer: addSection failed for ' + (newSection ? newSection.name : 'unknown'));
 			return false;
 		}
 	}
