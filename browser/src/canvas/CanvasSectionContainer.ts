@@ -1962,6 +1962,8 @@ class CanvasSectionContainer {
 			if (docLayer && docLayer.isCalcRTL())
 				return true;
 
+			app.console.error(
+				'SectionContainer: addSectionFunctions failed for ' + (section ? section.name : 'unknown'));
 			return false;
 		}.bind(section);
 	}
