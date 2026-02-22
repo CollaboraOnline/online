@@ -552,7 +552,7 @@ function getInitializerClass() {
 			   (global.socket instanceof global.app.definitions.Socket) && global.socket.connected()) {
 			global.socket.sendMessage(log);
 		} else {
-			fetch(global.location.pathname.match(/.*\//) + 'logging.html', {
+			fetch(global.location.pathname.match(/.*\//) + 'browser-logging', {
 				method: 'POST',
 				headers: { 'Content-Type' : 'application/json' },
 				body: global.coolLogging + ' ' + log

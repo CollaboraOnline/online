@@ -977,27 +977,41 @@ bool FileServerRequestHandler::handleRequest(const HTTPRequest& request,
         }
 
 #endif
-        if (request.getMethod() == HTTPRequest::HTTP_POST && endPoint == "logging.html")
+        if (request.getMethod() == HTTPRequest::HTTP_POST && endPoint == "browser-logging")
         {
             const std::string coolLogging = config.getString("browser_logging", "false");
-            if (coolLogging != "false")
+            if (coolLogging == "false")
             {
-                std::string token;
-                Poco::SHA1Engine engine;
-
-                engine.update(COOLWSD::LogToken);
-                std::getline(message, token, ' ');
-
-                if (Poco::DigestEngine::digestToHex(engine.digest()) == token)
-                {
-                    LOG_ERR(message.rdbuf());
-
-                    http::Response httpResponse(http::StatusCode::OK);
-                    FileServerRequestHandler::hstsHeaders(httpResponse);
-                    socket->send(httpResponse);
-                    return true;
-                }
+                sendError(http::StatusCode::Forbidden, requestUri.toString(), socket,
+                          "browser_logging is disabled.", "");
+                return true;
             }
+
+            std::string token;
+            Poco::SHA1Engine engine;
+
+            engine.update(COOLWSD::LogToken);
+            std::getline(message, token, ' ');
+
+            if (Poco::DigestEngine::digestToHex(engine.digest()) != token)
+            {
+                sendError(http::StatusCode::Forbidden, requestUri.toString(), socket,
+                          "Invalid log token.", "");
+                return true;
+            }
+
+            constexpr std::size_t maxLogSize = 4096;
+            std::string logMsg;
+            logMsg.resize(maxLogSize);
+            message.read(logMsg.data(), maxLogSize);
+            logMsg.resize(message.gcount());
+            std::replace(logMsg.begin(), logMsg.end(), '\n', ' ');
+            LOG_ERR("Browser: " << logMsg);
+
+            http::Response httpResponse(http::StatusCode::OK);
+            FileServerRequestHandler::hstsHeaders(httpResponse);
+            socket->send(httpResponse);
+            return true;
         }
 
         if (endPoint == "upload-settings")
