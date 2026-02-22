@@ -331,6 +331,10 @@ class LOUtil {
 			cleanName = encodeURIComponent(cleanName).replace(/%/g, '');
 			cleanName = cleanName.toLowerCase();
 		}
+
+		// Skip icon lookup for numeric-only IDs (JSDialog artifacts like 1, 5, 65535)
+		if (/^\d+$/.test(cleanName)) return '';
+
 		var iconURLAliases: IconNameMap = {
 			// lc_closemobile.svg is generated when loading in NB mode then
 			// switch to compact mode: 1st hidden element in the top toolbar
