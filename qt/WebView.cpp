@@ -346,7 +346,7 @@ void CODAWebEngineView::destroyPresentationFS()
     }
 }
 
-QWebEngineView* CODAWebEngineView::createWindow(QWebEnginePage::WebWindowType type)
+QWebEngineView* CODAWebEngineView::createWindow(QWebEnginePage::WebWindowType /*type*/)
 {
     _presenterConsole = new WebView(Application::getProfile(), false);
 
@@ -386,7 +386,7 @@ void CODAWebEngineView::exchangeMonitors()
 
     size_t origConsoleScreen = 0;
     size_t origPresentationScreen = 0;
-    for (size_t i = 0; i < screens.size(); ++i)
+    for (size_t i = 0; i < static_cast<size_t>(screens.size()); ++i)
     {
         if (consoleWindow && screens[i] == consoleWindow->screen())
             origConsoleScreen = i;
@@ -545,6 +545,7 @@ void WebView::load(const Poco::URI& fileURL, bool newFile, bool isStarterMode)
     {
         // Starter screen mode: no COOLWSD connection needed
         _document = {
+            ._fileURL = {},
             ._fakeClientFd = -1,
             ._appDocId = 0,
         };
