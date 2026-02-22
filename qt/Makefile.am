@@ -83,7 +83,7 @@ coda_qt_CXXFLAGS += -mno-direct-extern-access
 endif
 endif
 
-coda_qt_SOURCES = coda-qt.cpp WebView.cpp DBusService.cpp Document.cpp $(cmake_list)
+coda_qt_SOURCES = coda-qt.cpp QtClipboard.cpp WebView.cpp DBusService.cpp Document.cpp $(cmake_list)
 nodist_coda_qt_SOURCES = $(BUILT_SOURCES)
 
 metainfodir = $(datadir)/metainfo
