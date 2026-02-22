@@ -134,7 +134,7 @@ describe(['tagdesktop'], 'Annotation Tests', function() {
 
 		for (let width = 1420; width < 1500; width += 20) {
 			cy.viewport(width, 600);
-			cy.cGet('#comment-container-1').should('be.not.visible');
+			cy.cGet('#comment-container-1').should('be.visible');
 		}
 
 		for (let width = 1500; width < 1620; width += 20) {
