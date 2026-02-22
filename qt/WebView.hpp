@@ -11,14 +11,15 @@
 
 #pragma once
 
-#include <memory>
-
-#include <QObject>
-#include <QVariant>
-#include <QWebEngineView>
 #include "Document.hpp"
-#include <QMainWindow>
+
 #include <Poco/URI.h>
+
+#include <QMainWindow>
+#include <QObject>
+#include <QWebEngineView>
+
+#include <memory>
 
 class Bridge;
 class WebView;

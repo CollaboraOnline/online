@@ -11,12 +11,12 @@
 
 #include <config.h>
 
-#include "MobileApp.hpp"
-#include "qt.hpp"
+#include <common/MobileApp.hpp>
+#include <qt/qt.hpp>
 
-#include "Log.hpp"
-#include "common/RecentFiles.hpp"
-#include "common/SettingsStorage.hpp"
+#include <common/Log.hpp>
+#include <common/RecentFiles.hpp>
+#include <common/SettingsStorage.hpp>
 
 #include <Poco/File.h>
 #include <Poco/Path.h>
@@ -24,8 +24,6 @@
 #include <QDir>
 #include <QStandardPaths>
 #include <QWebEngineProfile>
-
-#include <string>
 
 QWebEngineProfile* Application::globalProfile = nullptr;
 RecentFiles Application::recentFiles;
