@@ -216,9 +216,12 @@ class LOUtil {
 
 	// Common images used in all modes, so the default one will be used.
 	public static commonItems: string[] = [
-		'serverauditok', 'serverauditerror',
+		'serverauditok',
+		'serverauditerror',
 		'compact_customanimation',
-		'slideshow-exit', 'slideshow-slideNext', 'slideshow-slidePrevious',
+		'slideshow-exit',
+		'slideshow-slideNext',
+		'slideshow-slidePrevious',
 	];
 
 	// Helper function to strip '.svg' suffix and 'lc_' prefix.
