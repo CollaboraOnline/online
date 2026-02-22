@@ -13,8 +13,8 @@
 
 #include "QtClipboard.hpp"
 
-#include "Log.hpp"
-#include "MobileApp.hpp"
+#include <common/Log.hpp>
+#include <common/MobileApp.hpp>
 
 #include <QApplication>
 #include <QByteArray>
@@ -27,7 +27,6 @@
 #include <atomic>
 #include <cstdlib>
 #include <memory>
-#include <string>
 #include <vector>
 
 std::atomic<unsigned> sClipboardSourceDocId{0};

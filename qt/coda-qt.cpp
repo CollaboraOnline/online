@@ -11,13 +11,13 @@
 
 #include <config.h>
 
-#include "COOLWSD.hpp"
-#include "DBusService.hpp"
-#include "FakeSocket.hpp"
-#include "Log.hpp"
-#include "Util.hpp"
-#include "WebView.hpp"
-#include "qt.hpp"
+#include <wsd/COOLWSD.hpp>
+#include <qt/DBusService.hpp>
+#include <net/FakeSocket.hpp>
+#include <common/Log.hpp>
+#include <common/Util.hpp>
+#include <qt/WebView.hpp>
+#include <qt/qt.hpp>
 
 #include <Poco/URI.h>
 
@@ -31,15 +31,11 @@
 #include <QLocale>
 #include <QLoggingCategory>
 #include <QString>
-#include <QStringList>
 #include <QTranslator>
-#include <QVariantMap>
 #include <QWebEngineProfile>
 
-#include <cstdlib>
 #include <pwd.h>
-#include <string>
-#include <thread>
+
 #include <unistd.h>
 
 const char* user_name = nullptr;

@@ -9,11 +9,13 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+#include <config.h>
+
 #include "DBusService.hpp"
-#include "WebView.hpp"
-#include "Log.hpp"
-#include "LibreOfficeKit/LibreOfficeKit.h"
-#include "qt.hpp"
+#include <qt/WebView.hpp>
+#include <common/Log.hpp>
+#include <LibreOfficeKit/LibreOfficeKit.h>
+#include <qt/qt.hpp>
 #include <Poco/URI.h>
 #include <Poco/Path.h>
 #include <QDBusConnection>

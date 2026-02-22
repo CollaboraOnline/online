@@ -9,10 +9,11 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-#include <common/MobileApp.hpp>
+#include <config.h>
+
 #include "Document.hpp"
 
-#include <atomic>
+#include <common/MobileApp.hpp>
 
 namespace coda
 {

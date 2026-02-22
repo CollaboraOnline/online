@@ -9,52 +9,47 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+#include <config.h>
+
 #include "WebView.hpp"
-#include "bridge.hpp"
-#include <QWebChannel>
-#include <QMainWindow>
-#include "FakeSocket.hpp"
-#include "MobileApp.hpp"
-#include "FileUtil.hpp"
-#include "Log.hpp"
-#include "qt.hpp"
-#include <Poco/URI.h>
+
+#include <qt/bridge.hpp>
+#include <net/FakeSocket.hpp>
+#include <common/Log.hpp>
+#include <common/MobileApp.hpp>
+#include <qt/qt.hpp>
+
 #include <Poco/Path.h>
+#include <Poco/URI.h>
 
-#include <cassert>
-#include <cstdlib>
-#include <cstring>
-#include <memory>
-#include <utility>
-
-#include <QMenuBar>
-#include <QMenu>
-#include <QAction>
-#include <QFileDialog>
-#include <QKeySequence>
-#include <QGuiApplication>
-#include <QScreen>
-#include <QTimer>
-#include <QWebEngineFullScreenRequest>
-#include <QWebEngineSettings>
-#include <QFile>
-#include <QFileInfo>
-#include <QDir>
-#include <QLabel>
 #include <QApplication>
-#include <QObject>
-#include <QUrl>
 #include <QCloseEvent>
-#include <QMessageBox>
-#include <algorithm>
 #include <QDBusConnection>
+#include <QDBusInterface>
 #include <QDBusMessage>
-#include <QDBusVariant>
 #include <QDBusPendingCallWatcher>
 #include <QDBusPendingReply>
-#include <QVariant>
-#include <QtDBus/QtDBus>
+#include <QDBusReply>
+#include <QDBusVariant>
+#include <QDir>
+#include <QFile>
+#include <QFileInfo>
+#include <QGuiApplication>
+#include <QLabel>
+#include <QMainWindow>
+#include <QMessageBox>
+#include <QObject>
+#include <QScreen>
 #include <QStandardPaths>
+#include <QUrl>
+#include <QVariant>
+#include <QWebChannel>
+#include <QWebEngineFullScreenRequest>
+#include <QWebEngineSettings>
+
+#include <algorithm>
+#include <memory>
+#include <utility>
 
 std::vector<WebView*> WebView::s_instances;
 

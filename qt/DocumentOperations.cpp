@@ -13,9 +13,9 @@
 
 #include "DocumentOperations.hpp"
 
-#include "FileUtil.hpp"
-#include "Log.hpp"
-#include "MobileApp.hpp"
+#include <common/FileUtil.hpp>
+#include <common/Log.hpp>
+#include <common/MobileApp.hpp>
 
 #include <Poco/Path.h>
 #include <Poco/URI.h>
@@ -33,13 +33,8 @@
 #include <QPrinterInfo>
 #include <QPushButton>
 #include <QString>
-#include <QStringList>
-#include <QVBoxLayout>
-#include <QWidget>
 
 #include <cstdlib>
-#include <string>
-#include <vector>
 
 std::vector<SaveAsFormat> getSaveAsFormats(int docType)
 {

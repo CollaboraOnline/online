@@ -13,17 +13,17 @@
 
 #include "bridge.hpp"
 
-#include "DBusService.hpp"
-#include "DocumentOperations.hpp"
-#include "FakeSocket.hpp"
-#include "FileUtil.hpp"
-#include "Log.hpp"
-#include "MobileApp.hpp"
-#include "Protocol.hpp"
-#include "QtClipboard.hpp"
-#include "qt.hpp"
-#include "Util.hpp"
-#include "WebView.hpp"
+#include <qt/DBusService.hpp>
+#include <qt/DocumentOperations.hpp>
+#include <net/FakeSocket.hpp>
+#include <common/FileUtil.hpp>
+#include <common/Log.hpp>
+#include <common/MobileApp.hpp>
+#include <common/Protocol.hpp>
+#include <qt/QtClipboard.hpp>
+#include <qt/qt.hpp>
+#include <common/Util.hpp>
+#include <qt/WebView.hpp>
 #include <common/SettingsStorage.hpp>
 #include <common/StringVector.hpp>
 
@@ -44,20 +44,9 @@
 #include <QMetaObject>
 #include <QObject>
 #include <QString>
-#include <QStringList>
 #include <QTimer>
 #include <QUrl>
-#include <QVariantMap>
 #include <QWidget>
-
-#include <algorithm>
-#include <cassert>
-#include <cstring>
-#include <poll.h>
-#include <string>
-#include <string_view>
-#include <thread>
-#include <vector>
 
 static const int SHOW_JS_MAXLEN = 300;
 
