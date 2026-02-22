@@ -1830,8 +1830,13 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 					buttonImage.src = data.image;
 				}
 				else {
-					buttonImage = window.L.DomUtil.create('img', '', button);
-					app.LOUtil.setImage(buttonImage, app.LOUtil.getIconNameOfCommand(data.command), builder.map);
+					var iconName = app.LOUtil.getIconNameOfCommand(data.command);
+					if (iconName) {
+						buttonImage = window.L.DomUtil.create('img', '', button);
+						app.LOUtil.setImage(buttonImage, iconName, builder.map);
+					} else {
+						buttonImage = false;
+					}
 				}
 			} else {
 				buttonImage = false;
