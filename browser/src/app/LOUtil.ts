@@ -215,7 +215,11 @@ class LOUtil {
 	public static onlydarkModeItems: string[] = ['invertbackground'];
 
 	// Common images used in all modes, so the default one will be used.
-	public static commonItems: string[] = ['serverauditok', 'serverauditerror'];
+	public static commonItems: string[] = [
+		'serverauditok', 'serverauditerror',
+		'compact_customanimation',
+		'slideshow-exit', 'slideshow-slideNext', 'slideshow-slidePrevious',
+	];
 
 	// Helper function to strip '.svg' suffix and 'lc_' prefix.
 	public static stripName(name: string): string {
