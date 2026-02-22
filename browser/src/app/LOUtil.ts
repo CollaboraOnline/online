@@ -567,6 +567,9 @@ class LOUtil {
 			'exportas-pdf': 'exportpdf',
 			'exportas-epub': 'exportepub',
 			'fullscreen-drawing': 'presentation',
+			endnotedialog: 'footnotedialog',
+			updateallindexes: 'insertmultiindex',
+			formatframemenu: 'framedialog',
 		};
 		if (iconURLAliases[cleanName]) {
 			cleanName = iconURLAliases[cleanName];
