@@ -50,6 +50,46 @@
 
 static const int SHOW_JS_MAXLEN = 300;
 
+namespace
+{
+    // Helper to extract JSON object from message (finds '{' and parses from there)
+    Poco::JSON::Object::Ptr parseJsonFromMessage(const std::string& message, size_t prefixLen)
+    {
+        std::string jsonPart = message.substr(prefixLen);
+        size_t jsonStart = jsonPart.find('{');
+        if (jsonStart == std::string::npos)
+            return nullptr;
+
+        jsonPart = jsonPart.substr(jsonStart);
+        try
+        {
+            Poco::JSON::Parser parser;
+            Poco::Dynamic::Var result = parser.parse(jsonPart);
+            return result.extract<Poco::JSON::Object::Ptr>();
+        }
+        catch (const std::exception& e)
+        {
+            LOG_ERR("Failed to parse JSON: " << e.what());
+            return nullptr;
+        }
+    }
+
+    void closeStarterScreen()
+    {
+        WebView* starterScreen = WebView::findStarterScreen();
+        if (starterScreen)
+        {
+            LOG_TRC("Closing starter screen after document action");
+            QTimer::singleShot(0, [starterScreen]() {
+                if (starterScreen->getMainWindow())
+                {
+                    starterScreen->getMainWindow()->close();
+                }
+            });
+        }
+    }
+} // namespace
+
 Bridge::~Bridge() {
     if (_document._fakeClientFd != -1) {
         fakeSocketClose(_document._fakeClientFd);
@@ -166,31 +206,6 @@ void Bridge::debug(const QString& msg) { LOG_TRC_NOFILE("From JS: debug: " << ms
 
 void Bridge::error(const QString& msg) { LOG_TRC_NOFILE("From JS: error: " << msg.toStdString()); }
 
-namespace
-{
-    // Helper to extract JSON object from message (finds '{' and parses from there)
-    Poco::JSON::Object::Ptr parseJsonFromMessage(const std::string& message, size_t prefixLen)
-    {
-        std::string jsonPart = message.substr(prefixLen);
-        size_t jsonStart = jsonPart.find('{');
-        if (jsonStart == std::string::npos)
-            return nullptr;
-
-        jsonPart = jsonPart.substr(jsonStart);
-        try
-        {
-            Poco::JSON::Parser parser;
-            Poco::Dynamic::Var result = parser.parse(jsonPart);
-            return result.extract<Poco::JSON::Object::Ptr>();
-        }
-        catch (const std::exception& e)
-        {
-            LOG_ERR("Failed to parse JSON: " << e.what());
-            return nullptr;
-        }
-    }
-} // namespace
-
 void Bridge::promptSaveLocation(std::function<void(const std::string&, const std::string&)> callback)
 {
     // Prompt user to pick a save location and format
@@ -300,21 +315,6 @@ void Bridge::saveDocumentAs()
                                      " options=";
             fakeSocketWriteQueue(fakeClientFd, saveasCmd.c_str(), saveasCmd.size());
     });
-}
-
-static void closeStarterScreen()
-{
-    WebView* starterScreen = WebView::findStarterScreen();
-    if (starterScreen)
-    {
-        LOG_TRC("Closing starter screen after document action");
-        QTimer::singleShot(0, [starterScreen]() {
-            if (starterScreen->getMainWindow())
-            {
-                starterScreen->getMainWindow()->close();
-            }
-        });
-    }
 }
 
 QVariant Bridge::cool(const QString& messageStr)
