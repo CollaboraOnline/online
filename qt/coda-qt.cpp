@@ -44,78 +44,79 @@ int coolwsd_server_socket_fd = -1;
 static COOLWSD* coolwsd = nullptr;
 static std::thread coolwsdThread;
 
-static const char* getUserName()
+// Disable accessibility
+void disableA11y() { qputenv("QT_LINUX_ACCESSIBILITY_ALWAYS_ON", "0"); }
+
+namespace
 {
-    static QByteArray storage;
-    storage.clear();
+    const char* getUserName()
+    {
+        static QByteArray storage;
+        storage.clear();
 
-    QDBusMessage message = QDBusMessage::createMethodCall(
-        "org.freedesktop.portal.Desktop",
-        "/org/freedesktop/portal/desktop",
-        "org.freedesktop.portal.Accounts",
-        "GetUserInformation"
-    );
+        QDBusMessage message = QDBusMessage::createMethodCall(
+            "org.freedesktop.portal.Desktop",
+            "/org/freedesktop/portal/desktop",
+            "org.freedesktop.portal.Accounts",
+            "GetUserInformation"
+        );
 
-    QDBusReply<QVariantMap> reply = QDBusConnection::sessionBus().call(message);
+        QDBusReply<QVariantMap> reply = QDBusConnection::sessionBus().call(message);
 
-    if (reply.isValid()) {
-        QVariantMap map = reply.value();
+        if (reply.isValid()) {
+            QVariantMap map = reply.value();
 
-        QString realName = map.value("realName").toString();
-        QString userName = map.value("userName").toString();
+            QString realName = map.value("realName").toString();
+            QString userName = map.value("userName").toString();
 
-        QString chosen;
-        if (!realName.isEmpty())
-            chosen = realName;
-        else if (!userName.isEmpty())
-            chosen = userName;
+            QString chosen;
+            if (!realName.isEmpty())
+                chosen = realName;
+            else if (!userName.isEmpty())
+                chosen = userName;
 
-        if (!chosen.isEmpty()) {
-            storage = chosen.toUtf8();
-            return storage.constData();
-        }
-    }
-
-    // fallback to /etc/passwd
-
-    struct passwd *pw = getpwuid(getuid());
-    if (pw) {
-        if (pw->pw_gecos && pw->pw_gecos[0] != '\0') {
-            QString gecos = QString::fromLocal8Bit(pw->pw_gecos);
-            QString full = gecos.section(',', 0, 0);
-
-            if (!full.isEmpty()) {
-                storage = full.toUtf8();
+            if (!chosen.isEmpty()) {
+                storage = chosen.toUtf8();
                 return storage.constData();
             }
         }
 
-        // fallback to Linux username
-        storage = QByteArray(pw->pw_name);
-        return storage.constData();
+        // fallback to /etc/passwd
+
+        struct passwd *pw = getpwuid(getuid());
+        if (pw) {
+            if (pw->pw_gecos && pw->pw_gecos[0] != '\0') {
+                QString gecos = QString::fromLocal8Bit(pw->pw_gecos);
+                QString full = gecos.section(',', 0, 0);
+
+                if (!full.isEmpty()) {
+                    storage = full.toUtf8();
+                    return storage.constData();
+                }
+            }
+
+            // fallback to Linux username
+            storage = QByteArray(pw->pw_name);
+            return storage.constData();
+        }
+
+        return nullptr;
     }
 
-    return nullptr;
-}
+    void stopServer()
+    {
+        LOG_TRC("Requesting shutdown");
+        SigUtil::requestShutdown();
 
+        // wait until coolwsdThread is torn down, so that we don't start cleaning up too early
+        coolwsdThread.join();
 
-// Disable accessibility
-void disableA11y() { qputenv("QT_LINUX_ACCESSIBILITY_ALWAYS_ON", "0"); }
-
-static void stopServer() {
-    LOG_TRC("Requesting shutdown");
-    SigUtil::requestShutdown();
-
-    // wait until coolwsdThread is torn down, so that we don't start cleaning up too early
-    coolwsdThread.join();
-
-    QWebEngineProfile* profile = Application::getProfile();
-    if (profile) {
-        profile->deleteLater();
+        QWebEngineProfile* profile = Application::getProfile();
+        if (profile) {
+            profile->deleteLater();
+        }
     }
-}
 
-namespace {
     void updateBrowserEnvironment(void)
     {
         const char *varName = "QTWEBENGINE_CHROMIUM_FLAGS";
@@ -124,7 +125,7 @@ namespace {
         val = "--disable-renderer-accessibility --force-renderer-accessibility=false " + val;
         setenv(varName, val.c_str(), 1);
     }
-}
+} // namespace
 
 int main(int argc, char** argv)
 {
