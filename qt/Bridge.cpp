@@ -469,7 +469,6 @@ QVariant Bridge::cool(const QString& messageStr)
         if (commandName != ".uno:ModifiedStatus")
             return {};
 
-        bool previousModified = _modified;
         _modified = (object->get("state").toString() == "true");
 
         LOG_TRC_NOFILE("Document modified status changed: " << (_modified ? "modified" : "unmodified"));
