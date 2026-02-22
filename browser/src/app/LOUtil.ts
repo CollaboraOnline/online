@@ -620,6 +620,9 @@ class LOUtil {
 			effects: 'pictureeffectsmenu',
 			fitwidthzoom: 'pagewidth',
 			open: 'formularesfapopen',
+			'exportas-pdf': 'exportpdf',
+			'exportas-epub': 'exportepub',
+			'fullscreen-drawing': 'presentation',
 		};
 		if (iconURLAliases[cleanName]) {
 			cleanName = iconURLAliases[cleanName];
