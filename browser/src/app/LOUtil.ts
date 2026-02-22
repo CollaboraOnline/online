@@ -557,6 +557,9 @@ class LOUtil {
 			graphicfiltersobel: 'graphicfiltersobel',
 			effects: 'pictureeffectsmenu',
 			fitwidthzoom: 'pagewidth',
+			'exportas-pdf': 'exportpdf',
+			'exportas-epub': 'exportepub',
+			'fullscreen-drawing': 'presentation',
 		};
 		if (iconURLAliases[cleanName]) {
 			cleanName = iconURLAliases[cleanName];
