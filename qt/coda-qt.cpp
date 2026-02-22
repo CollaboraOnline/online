@@ -18,11 +18,7 @@
 #include "Util.hpp"
 #include "WebView.hpp"
 #include "qt.hpp"
-#include "common/RecentFiles.hpp"
-#include "common/SettingsStorage.hpp"
 
-#include <Poco/File.h>
-#include <Poco/Path.h>
 #include <Poco/URI.h>
 
 #include <QApplication>
@@ -34,7 +30,6 @@
 #include <QDir>
 #include <QLocale>
 #include <QLoggingCategory>
-#include <QStandardPaths>
 #include <QString>
 #include <QStringList>
 #include <QTranslator>
@@ -52,8 +47,6 @@ const char* user_name = nullptr;
 int coolwsd_server_socket_fd = -1;
 static COOLWSD* coolwsd = nullptr;
 static std::thread coolwsdThread;
-QWebEngineProfile* Application::globalProfile = nullptr;
-RecentFiles Application::recentFiles;
 
 static const char* getUserName()
 {
@@ -125,48 +118,6 @@ static void stopServer() {
         profile->deleteLater();
     }
 }
-
-void Application::initialize()
-{
-    if (!globalProfile)
-    {
-        globalProfile = new QWebEngineProfile(QStringLiteral("PersistentProfile"));
-
-        QString appData = QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);
-        QString cacheData = QStandardPaths::writableLocation(QStandardPaths::CacheLocation);
-
-        globalProfile->setPersistentStoragePath(appData);
-        globalProfile->setCachePath(cacheData);
-        globalProfile->setHttpCacheType(QWebEngineProfile::DiskHttpCache);
-    }
-
-    // Initialize recent files
-    Poco::Path configDir = Desktop::getConfigPath();
-    recentFiles.load(configDir.append("RecentDocuments.conf").toString(), 15);
-}
-
-Poco::Path Desktop::getConfigPath()
-{
-    QString pathStr = QStandardPaths::writableLocation(QStandardPaths::AppConfigLocation);
-    QDir().mkpath(pathStr);
-    Poco::Path configPath(pathStr.toStdString());
-    Poco::File configDir(configPath);
-    if (!configDir.exists() || !configDir.isDirectory())
-    {
-        LOG_ERR("getConfigPath: following configuration directory does not exist, trouble ahead:"
-                << pathStr.toStdString());
-    }
-    return configPath;
-}
-
-std::string Desktop::getDataDir()
-{
-    return ::getDataDir();
-}
-
-QWebEngineProfile* Application::getProfile() { return globalProfile; }
-
-RecentFiles& Application::getRecentFiles() { return recentFiles; }
 
 namespace {
     void updateBrowserEnvironment(void)
