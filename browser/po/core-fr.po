@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: core-fr\n"
-"PO-Revision-Date: 2026-02-17 01:09+0000\n"
+"PO-Revision-Date: 2026-02-23 11:01+0000\n"
 "Last-Translator: Méven Car <meven.car@collabora.com>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/collabora-online/"
 "lokit/fr/>\n"
@@ -10,7 +10,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 5.16\n"
+"X-Generator: Weblate 5.16.1-dev\n"
 
 #. ygDfy
 #: module_graphicfilter.ulf
@@ -79,7 +79,7 @@ msgstr "Remplacer"
 #: uui/inc/strings.hrc:84
 msgctxt "STR_READONLY_FONT_TITLE"
 msgid "Font Disallows Editing"
-msgstr ""
+msgstr "La Police n'est pas éditable"
 
 #. YRahp
 #: uui/inc/strings.hrc:85
@@ -90,6 +90,10 @@ msgid ""
 "Pressing [ No ] will drop these fonts from the document:\n"
 "$(ARG1)"
 msgstr ""
+"Une ou plusieurs polices intégrées au document ne sont pas modifiable. \n"
+"Ouvrir le document en lecture seule ?\n"
+"Appuyer sur [Non] supprimera ces polices du document:\n"
+"$(ARG1)"
 
 #. 4NkMk
 #: readme.xrm
@@ -120,31 +124,31 @@ msgstr "Dégradés"
 #: chart2/uiconfig/ui/chartcolorpalettepopup.ui:46
 msgctxt "chartcolorpalettepopup|colorfulwin"
 msgid "Colorful"
-msgstr ""
+msgstr "Coloré"
 
 #. xmAmH
 #: chart2/uiconfig/ui/chartcolorpalettepopup.ui:98
 msgctxt "chartcolorpalettepopup|monochromaticwin"
 msgid "Monochromatic"
-msgstr ""
+msgstr "Monochrome"
 
 #. DrjDt
 #: chart2/uiconfig/ui/chartgradientpalettepopup.ui:46
 msgctxt "chartgradientpalettepopup|lightwin"
 msgid "Light Variations"
-msgstr ""
+msgstr "Variations clairs"
 
 #. Y3PP5
 #: chart2/uiconfig/ui/chartgradientpalettepopup.ui:97
 msgctxt "chartgradientpalettepopup|darkwin"
 msgid "Dark Variations"
-msgstr ""
+msgstr "Variations sombres"
 
 #. WWm9R
 #: chart2/uiconfig/ui/chartthemepopup.ui:51
 msgctxt "chartthemepopup|managechartstyle"
 msgid "_Manage chart styles"
-msgstr ""
+msgstr "_Gérer les style de Diagramme"
 
 #. BFxBa
 #: chart2/uiconfig/ui/dlg_Theme.ui:16
@@ -162,7 +166,7 @@ msgstr "Liste de styles de graphe sélectionnable."
 #: chart2/uiconfig/ui/dlg_Theme.ui:51
 msgctxt "dlg_Theme|iconviewlabel"
 msgid "_Chart styles:"
-msgstr "_Styles de graphe:"
+msgstr "_Styles de graphe :"
 
 #. DYH5e
 #: chart2/uiconfig/ui/dlg_Theme.ui:122
@@ -204,7 +208,6 @@ msgstr ""
 
 #. xGjwG
 #: chart2/uiconfig/ui/sidebarcolors.ui:42
-#, fuzzy
 msgctxt "sidebarcolors|cellbordertype-atkobject"
 msgid "Border Style"
 msgstr "Style de bordure"
@@ -220,7 +223,6 @@ msgstr ""
 
 #. 3xZSQ
 #: chart2/uiconfig/ui/sidebargradients.ui:42
-#, fuzzy
 msgctxt "sidebargradients|cellbordertype-atkobject"
 msgid "Border Style"
 msgstr "Style de bordure"
@@ -247,7 +249,7 @@ msgstr "_Sauvegarder dans un nouveau thème"
 #: chart2/uiconfig/ui/sidebartype.ui:102
 msgctxt "sidebartype|3dschemeft"
 msgid "3D _Scheme:"
-msgstr ""
+msgstr "_Schéma 3D :"
 
 #. x3adg
 #: chart2/uiconfig/ui/tp_ChartColorPalette.ui:68
@@ -283,13 +285,13 @@ msgstr "Sélectionner un sous-type du type de graphe de base."
 #: chart2/uiconfig/ui/tp_ChartType.ui:167
 msgctxt "tp_ChartType|3dschemeft"
 msgid "3D _Scheme:"
-msgstr ""
+msgstr "_Schéma 3D :"
 
 #. ChTwx
 #: cui/inc/strings.hrc:481
 msgctxt "REG_CALCDBFOCUS"
 msgid "Table Style focus"
-msgstr ""
+msgstr "donner le focus au Style de Tableau"
 
 #. EPGtZ
 #: cui/uiconfig/ui/hyperlinkinternetpage.ui:64
@@ -337,7 +339,7 @@ msgstr "Compact"
 #: include/svtools/strings.hrc:71
 msgctxt "STR_FORMAT_ID_MARKDOWN"
 msgid "Markdown"
-msgstr ""
+msgstr "Markdown"
 
 #. HASc5
 #: include/sfx2/strings.hrc:227
@@ -359,6 +361,9 @@ msgid ""
 "End User License and Subscription Agreement; choose EULA to see exact "
 "details in English."
 msgstr ""
+"Le binaire %PRODUCTNAME est disponible selon les termes de la License "
+"d'Utilisateur Finale (EULA) et de l'accord d'abonnement ; sélectionner EULA "
+"pour voir les détails en Anglais."
 
 #. YHTHB
 #: sfx2/uiconfig/ui/templatepanel.ui:137
@@ -586,8 +591,8 @@ msgid ""
 "1: min. quality\n"
 "100: max. quality"
 msgstr ""
-"1 : qualité min.\n"
-"100 : qualité max."
+"1 : qualité min\n"
+"100 : qualité max."
 
 #. oDK6o
 #: filter/uiconfig/ui/impswfdialog.ui:136
@@ -646,7 +651,7 @@ msgid ""
 "two file formats: PDF and ODF as an attachment. "
 msgstr ""
 "Ce paramètre vous permet d'exporter le document comme un fichier .pdf "
-"contenant deux formats de fichiers : PDF et ODF."
+"contenant deux formats de fichiers : PDF et ODF. "
 
 #. NCgBM
 #: filter/uiconfig/ui/pdfgeneralpage.ui:583
@@ -656,7 +661,7 @@ msgid ""
 "compliant PDF file, ideal for long-term document preservation."
 msgstr ""
 "Crée un fichier PDF conforme à ISO 19005-2, idéal pour la conservation à "
-"long terme des documents"
+"long terme des documents."
 
 #. Ac3Ga
 #: filter/uiconfig/ui/pdfgeneralpage.ui:587
@@ -725,7 +730,7 @@ msgctxt ""
 "UIName\n"
 "value.text"
 msgid "Markdown Document"
-msgstr ""
+msgstr "Document Markdown"
 
 #. 9Q5Zj
 #: draw_flash_Export.xcu
@@ -885,7 +890,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "New Canvas Slide"
-msgstr ""
+msgstr "Nouvelle diapo zone de dessin"
 
 #. w3Yib
 #: DrawImpressCommands.xcu
@@ -955,7 +960,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Nav~igator select comment."
-msgstr ""
+msgstr "Nav~igateur sélectionner commentaire."
 
 #. 77Q3c
 #: GenericCommands.xcu
@@ -965,7 +970,7 @@ msgctxt ""
 "TooltipLabel\n"
 "value.text"
 msgid "Select Comment In The Navigator Window/Sidebar"
-msgstr ""
+msgstr "Sélectionner le commentaire dans la fenêtre de navigation ou le volet"
 
 #. 83Euq
 #: GenericCommands.xcu
@@ -1006,7 +1011,7 @@ msgctxt ""
 "UIName\n"
 "value.text"
 msgid "Slide Sorter/Pane (Canvas)"
-msgstr ""
+msgstr "Trieur de diapo ou Panneau (Zone de dessin)"
 
 #. BQB9h
 #: ImpressWindowState.xcu
@@ -1017,7 +1022,7 @@ msgctxt ""
 "UIName\n"
 "value.text"
 msgid "Master Slide Sorter/Pane (Canvas)"
-msgstr ""
+msgstr "Trieur de Diapo maîtresse ou panneau (Zone de dessin)"
 
 #. kB8Ri
 #: Sidebar.xcu
@@ -1027,7 +1032,7 @@ msgctxt ""
 "Title\n"
 "value.text"
 msgid "Table Style Options"
-msgstr ""
+msgstr "Options de style de tableau"
 
 #. SYFXq
 #: Sidebar.xcu
@@ -1057,7 +1062,7 @@ msgctxt ""
 "Title\n"
 "value.text"
 msgid "Theme"
-msgstr ""
+msgstr "Thème"
 
 #. dgWCC
 #: Sidebar.xcu
@@ -1067,7 +1072,7 @@ msgctxt ""
 "Title\n"
 "value.text"
 msgid "Gradients"
-msgstr ""
+msgstr "Dégradés"
 
 #. ezFez
 #: WriterCommands.xcu
@@ -1193,13 +1198,13 @@ msgstr "~Modifications dans toutes les vues"
 #: sc/inc/globstr.hrc:70
 msgctxt "STR_UNDO_TABLETOTALS"
 msgid "Tabletotals"
-msgstr ""
+msgstr "Totaux des tableaux"
 
 #. Gip2L
 #: sc/inc/globstr.hrc:211
 msgctxt "STR_TABLE_TOTAL"
 msgid "Summary"
-msgstr ""
+msgstr "Résumé"
 
 #. cG7BY
 #: sc/inc/globstr.hrc:594
@@ -1314,7 +1319,7 @@ msgstr ""
 #: sc/inc/scfuncs.hrc:4282
 msgctxt "SC_OPCODE_DROP"
 msgid "Columns"
-msgstr ""
+msgstr "Colonnes"
 
 #. cAxPB
 #: sc/inc/scfuncs.hrc:4283
@@ -1366,7 +1371,7 @@ msgstr ""
 #: sc/inc/scfuncs.hrc:4294
 msgctxt "SC_OPCODE_EXPAND"
 msgid "Columns"
-msgstr ""
+msgstr "Colonnes"
 
 #. EVAXE
 #: sc/inc/scfuncs.hrc:4295
@@ -1394,7 +1399,7 @@ msgstr "La valeur avec laquelle compléter. La valeur par défaut est #N/D."
 #: sc/inc/scfuncs.hrc:4303
 msgctxt "SC_OPCODE_HSTACK"
 msgid "Appends arrays horizontally to create a larger array."
-msgstr ""
+msgstr "Ajouter des tableaux horizontalement pour créer un tableau plus grand."
 
 #. LnAFg
 #: sc/inc/scfuncs.hrc:4304 sc/inc/scfuncs.hrc:4306
@@ -1423,7 +1428,7 @@ msgstr ""
 #: sc/inc/scfuncs.hrc:4313
 msgctxt "SC_OPCODE_VSTACK"
 msgid "Appends arrays vertically to create a larger array."
-msgstr ""
+msgstr "Ajouter des tableaux verticalement pour créer un tableau plus grand."
 
 #. rhVRC
 #: sc/inc/scfuncs.hrc:4314 sc/inc/scfuncs.hrc:4316
@@ -1489,7 +1494,7 @@ msgstr ""
 #: sc/inc/scfuncs.hrc:4328
 msgctxt "SC_OPCODE_TAKE"
 msgid "Columns"
-msgstr ""
+msgstr "Colonnes"
 
 #. ZexcG
 #: sc/inc/scfuncs.hrc:4329
@@ -1770,7 +1775,7 @@ msgstr "La valeur avec laquelle compléter. La valeur par défaut est #N/D."
 #: sc/inc/scfuncs.hrc:4389
 msgctxt "SC_OPCODE_TOCOL"
 msgid "Transforms an array into a single column."
-msgstr ""
+msgstr "Transforme un tableau en tableau d'une seule colonne."
 
 #. UAzNC
 #: sc/inc/scfuncs.hrc:4390
@@ -1973,6 +1978,11 @@ msgid ""
 "individual cells first select all cells and toggle off the \"Protected\" "
 "option in the Format Cells dialog."
 msgstr ""
+"La protection de cellule n'est effective qu'une fois que la feuille ait été "
+"marquée comme protéger. Par défaut toutes les cellules sont protégées - pour "
+"protéger seulement des cellules spécifiques, if faut d'abord sélectionner "
+"toutes les cellules et désélectionner l'option \"Protégé\" dans le boîte de "
+"dialogue Formater des cellules."
 
 #. FVsyY
 #: sc/uiconfig/scalc/ui/conditionaleasydialog.ui:8
@@ -2020,426 +2030,424 @@ msgstr "Style de bordure"
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:22
 msgctxt "sidebardatabase|chk_header_row"
 msgid "Show Header Row"
-msgstr ""
+msgstr "Afficher la ligne d'En-tête"
 
 #. ECtUM
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:36
 msgctxt "sidebardatabase|chk_total_row"
 msgid "Show Total Row"
-msgstr ""
+msgstr "Afficher la ligne des totaux"
 
 #. htZbK
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:50
 msgctxt "sidebardatabase|chk_filter_buttons"
 msgid "Show Filter Buttons"
-msgstr ""
+msgstr "Afficher les boutons de filtre"
 
 #. MjALC
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:86
 msgctxt "sidebardatabase|chk_banded_rows"
 msgid "Banded Rows"
-msgstr ""
+msgstr "Lignes à bandes"
 
 #. GVkZ2
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:100
 msgctxt "sidebardatabase|chk_banded_cols"
 msgid "Banded Columns"
-msgstr ""
+msgstr "Colonnes à Bandes"
 
 #. S4bop
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:114
-#, fuzzy
 msgctxt "sidebardatabase|chk_first_column"
 msgid "First Column"
-msgstr "Colonne "
+msgstr "Première Colonne"
 
 #. QR56s
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:128
-#, fuzzy
 msgctxt "sidebardatabase|chk_last_column"
 msgid "Last Column"
-msgstr "Colonne "
+msgstr "Dernière Colonne"
 
 #. BJHqA
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:170
 msgctxt "sidebardatabase|lbl_styles"
 msgid "Table Styles"
-msgstr ""
+msgstr "Style de tableau"
 
 #. er8nh
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:187
 msgctxt "sidebardatabase|none"
 msgid "None"
-msgstr ""
+msgstr "Aucun"
 
 #. XXBL8
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:188
 msgctxt "sidebardatabase|tablestylelight1"
 msgid "Table Style Light 1"
-msgstr ""
+msgstr "Style de tableau clair 1"
 
 #. NaDRX
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:189
 msgctxt "sidebardatabase|tablestylelight2"
 msgid "Table Style Light 2"
-msgstr ""
+msgstr "Style de tableau clair 2"
 
 #. EWq9E
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:190
 msgctxt "sidebardatabase|tablestylelight3"
 msgid "Table Style Light 3"
-msgstr ""
+msgstr "Style de tableau clair 3"
 
 #. GdYaL
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:191
 msgctxt "sidebardatabase|tablestylelight4"
 msgid "Table Style Light 4"
-msgstr ""
+msgstr "Style de tableau clair 4"
 
 #. 8ZPyk
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:192
 msgctxt "sidebardatabase|tablestylelight5"
 msgid "Table Style Light 5"
-msgstr ""
+msgstr "Style de tableau clair 5"
 
 #. xcztA
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:193
 msgctxt "sidebardatabase|tablestylelight6"
 msgid "Table Style Light 6"
-msgstr ""
+msgstr "Style de tableau clair 6"
 
 #. pYufr
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:194
 msgctxt "sidebardatabase|tablestylelight7"
 msgid "Table Style Light 7"
-msgstr ""
+msgstr "Style de tableau clair 7"
 
 #. beC85
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:195
 msgctxt "sidebardatabase|tablestylelight8"
 msgid "Table Style Light 8"
-msgstr ""
+msgstr "Style de tableau clair 8"
 
 #. TSbAe
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:196
 msgctxt "sidebardatabase|tablestylelight9"
 msgid "Table Style Light 9"
-msgstr ""
+msgstr "Style de tableau clair 9"
 
 #. GPxe2
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:197
 msgctxt "sidebardatabase|tablestylelight10"
 msgid "Table Style Light 10"
-msgstr ""
+msgstr "Style de tableau clair 10"
 
 #. sedZT
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:198
 msgctxt "sidebardatabase|tablestylelight11"
 msgid "Table Style Light 11"
-msgstr ""
+msgstr "Style de tableau clair 11"
 
 #. VyEM2
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:199
 msgctxt "sidebardatabase|tablestylelight12"
 msgid "Table Style Light 12"
-msgstr ""
+msgstr "Style de tableau clair 12"
 
 #. FF2AT
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:200
 msgctxt "sidebardatabase|tablestylelight13"
 msgid "Table Style Light 13"
-msgstr ""
+msgstr "Style de tableau clair 13"
 
 #. pTuyt
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:201
 msgctxt "sidebardatabase|tablestylelight14"
 msgid "Table Style Light 14"
-msgstr ""
+msgstr "Style de tableau clair 14"
 
 #. zAgnL
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:202
 msgctxt "sidebardatabase|tablestylelight15"
 msgid "Table Style Light 15"
-msgstr ""
+msgstr "Style de tableau clair 15"
 
 #. L4B9t
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:203
 msgctxt "sidebardatabase|tablestylelight16"
 msgid "Table Style Light 16"
-msgstr ""
+msgstr "Style de tableau clair 16"
 
 #. ek54L
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:204
 msgctxt "sidebardatabase|tablestylelight17"
 msgid "Table Style Light 17"
-msgstr ""
+msgstr "Style de tableau clair 17"
 
 #. P6nBG
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:205
 msgctxt "sidebardatabase|tablestylelight18"
 msgid "Table Style Light 18"
-msgstr ""
+msgstr "Style de tableau clair 18"
 
 #. dnT2p
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:206
 msgctxt "sidebardatabase|tablestylelight19"
 msgid "Table Style Light 19"
-msgstr ""
+msgstr "Style de tableau clair 19"
 
 #. Bprxv
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:207
 msgctxt "sidebardatabase|tablestylelight20"
 msgid "Table Style Light 20"
-msgstr ""
+msgstr "Style de tableau clair 20"
 
 #. Z8foN
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:208
 msgctxt "sidebardatabase|tablestylelight21"
 msgid "Table Style Light 21"
-msgstr ""
+msgstr "Style de tableau clair 21"
 
 #. 2qyXC
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:209
 msgctxt "sidebardatabase|tablestylemedium1"
 msgid "Table Style Medium 1"
-msgstr ""
+msgstr "Style de tableau moyen 1"
 
 #. MWzKk
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:210
 msgctxt "sidebardatabase|tablestylemedium2"
 msgid "Table Style Medium 2"
-msgstr ""
+msgstr "Style de tableau moyen 2"
 
 #. fFFCC
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:211
 msgctxt "sidebardatabase|tablestylemedium3"
 msgid "Table Style Medium 3"
-msgstr ""
+msgstr "Style de tableau moyen 3"
 
 #. FthwA
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:212
 msgctxt "sidebardatabase|tablestylemedium4"
 msgid "Table Style Medium 4"
-msgstr ""
+msgstr "Style de tableau moyen 4"
 
 #. rCtpb
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:213
 msgctxt "sidebardatabase|tablestylemedium5"
 msgid "Table Style Medium 5"
-msgstr ""
+msgstr "Style de tableau moyen 5"
 
 #. UJ6BA
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:214
 msgctxt "sidebardatabase|tablestylemedium6"
 msgid "Table Style Medium 6"
-msgstr ""
+msgstr "Style de tableau moyen 6"
 
 #. EbA2b
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:215
 msgctxt "sidebardatabase|tablestylemedium7"
 msgid "Table Style Medium 7"
-msgstr ""
+msgstr "Style de tableau moyen 7"
 
 #. XQS9X
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:216
 msgctxt "sidebardatabase|tablestylemedium8"
 msgid "Table Style Medium 8"
-msgstr ""
+msgstr "Style de tableau moyen 8"
 
 #. Dho46
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:217
 msgctxt "sidebardatabase|tablestylemedium9"
 msgid "Table Style Medium 9"
-msgstr ""
+msgstr "Style de tableau moyen 9"
 
 #. P7SBG
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:218
 msgctxt "sidebardatabase|tablestylemedium10"
 msgid "Table Style Medium 10"
-msgstr ""
+msgstr "Style de tableau moyen 10"
 
 #. Rhfet
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:219
 msgctxt "sidebardatabase|tablestylemedium11"
 msgid "Table Style Medium 11"
-msgstr ""
+msgstr "Style de tableau moyen 11"
 
 #. JEdqF
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:220
 msgctxt "sidebardatabase|tablestylemedium12"
 msgid "Table Style Medium 12"
-msgstr ""
+msgstr "Style de tableau moyen 12"
 
 #. LWYBs
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:221
 msgctxt "sidebardatabase|tablestylemedium13"
 msgid "Table Style Medium 13"
-msgstr ""
+msgstr "Style de tableau moyen 13"
 
 #. HiGPB
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:222
 msgctxt "sidebardatabase|tablestylemedium14"
 msgid "Table Style Medium 14"
-msgstr ""
+msgstr "Style de tableau moyen 14"
 
 #. FKMSw
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:223
 msgctxt "sidebardatabase|tablestylemedium15"
 msgid "Table Style Medium 15"
-msgstr ""
+msgstr "Style de tableau moyen 15"
 
 #. CuPuC
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:224
 msgctxt "sidebardatabase|tablestylemedium16"
 msgid "Table Style Medium 16"
-msgstr ""
+msgstr "Style de tableau moyen 16"
 
 #. ACA7x
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:225
 msgctxt "sidebardatabase|tablestylemedium17"
 msgid "Table Style Medium 17"
-msgstr ""
+msgstr "Style de tableau moyen 17"
 
 #. bcDbJ
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:226
 msgctxt "sidebardatabase|tablestylemedium18"
 msgid "Table Style Medium 18"
-msgstr ""
+msgstr "Style de tableau moyen 18"
 
 #. d42En
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:227
 msgctxt "sidebardatabase|tablestylemedium19"
 msgid "Table Style Medium 19"
-msgstr ""
+msgstr "Style de tableau moyen 19"
 
 #. pfyP6
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:228
 msgctxt "sidebardatabase|tablestylemedium20"
 msgid "Table Style Medium 20"
-msgstr ""
+msgstr "Style de tableau moyen 20"
 
 #. n5kSb
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:229
 msgctxt "sidebardatabase|tablestylemedium21"
 msgid "Table Style Medium 21"
-msgstr ""
+msgstr "Style de tableau moyen 21"
 
 #. mYnu7
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:230
 msgctxt "sidebardatabase|tablestylemedium22"
 msgid "Table Style Medium 22"
-msgstr ""
+msgstr "Style de tableau moyen 22"
 
 #. jGs7c
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:231
 msgctxt "sidebardatabase|tablestylemedium23"
 msgid "Table Style Medium 23"
-msgstr ""
+msgstr "Style de tableau moyen 23"
 
 #. vMAB3
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:232
 msgctxt "sidebardatabase|tablestylemedium24"
 msgid "Table Style Medium 24"
-msgstr ""
+msgstr "Style de tableau moyen 24"
 
 #. xk5eg
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:233
 msgctxt "sidebardatabase|tablestylemedium25"
 msgid "Table Style Medium 25"
-msgstr ""
+msgstr "Style de tableau moyen 25"
 
 #. sA3q2
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:234
 msgctxt "sidebardatabase|tablestylemedium26"
 msgid "Table Style Medium 26"
-msgstr ""
+msgstr "Style de tableau moyen 26"
 
 #. usGBf
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:235
 msgctxt "sidebardatabase|tablestylemedium27"
 msgid "Table Style Medium 27"
-msgstr ""
+msgstr "Style de tableau moyen 27"
 
 #. 32DXC
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:236
 msgctxt "sidebardatabase|tablestylemedium28"
 msgid "Table Style Medium 28"
-msgstr ""
+msgstr "Style de tableau moyen 28"
 
 #. TiDzP
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:237
 msgctxt "sidebardatabase|tablestyledark1"
 msgid "Table Style Dark 1"
-msgstr ""
+msgstr "Style de tableau sombre 1"
 
 #. jTCaC
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:238
 msgctxt "sidebardatabase|tablestyledark2"
 msgid "Table Style Dark 2"
-msgstr ""
+msgstr "Style de tableau sombre 2"
 
 #. 2FCAs
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:239
 msgctxt "sidebardatabase|tablestyledark3"
 msgid "Table Style Dark 3"
-msgstr ""
+msgstr "Style de tableau sombre 3"
 
 #. B3BJY
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:240
 msgctxt "sidebardatabase|tablestyledark4"
 msgid "Table Style Dark 4"
-msgstr ""
+msgstr "Style de tableau sombre 4"
 
 #. TfBSE
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:241
 msgctxt "sidebardatabase|tablestyledark5"
 msgid "Table Style Dark 5"
-msgstr ""
+msgstr "Style de tableau sombre 5"
 
 #. jvA93
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:242
 msgctxt "sidebardatabase|tablestyledark6"
 msgid "Table Style Dark 6"
-msgstr ""
+msgstr "Style de tableau sombre 6"
 
 #. 2DAii
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:243
 msgctxt "sidebardatabase|tablestyledark7"
 msgid "Table Style Dark 7"
-msgstr ""
+msgstr "Style de tableau sombre 7"
 
 #. B6GrN
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:244
 msgctxt "sidebardatabase|tablestyledark8"
 msgid "Table Style Dark 8"
-msgstr ""
+msgstr "Style de tableau sombre 8"
 
 #. TcGzg
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:245
 msgctxt "sidebardatabase|tablestyledark9"
 msgid "Table Style Dark 9"
-msgstr ""
+msgstr "Style de tableau sombre 9"
 
 #. DEL7d
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:246
 msgctxt "sidebardatabase|tablestyledark10"
 msgid "Table Style Dark 10"
-msgstr ""
+msgstr "Style de tableau sombre 10"
 
 #. M2TB4
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:247
 msgctxt "sidebardatabase|tablestyledark11"
 msgid "Table Style Dark 11"
-msgstr ""
+msgstr "Style de tableau sombre 11"
 
 #. CJUkb
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:251
 msgctxt "sidebardatabase|tablestylenames"
 msgid "Table Style Names"
-msgstr ""
+msgstr "Noms de style de tableau"
 
 #. 3FfJ4
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:252
 msgctxt "sidebardatabase|defaulttablestylenames"
 msgid "Default Table Style Names"
-msgstr ""
+msgstr "Noms par défaut de style de tableau"
