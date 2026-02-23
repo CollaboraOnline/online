@@ -8,17 +8,17 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-02-13 19:20+0100\n"
-"PO-Revision-Date: 2026-02-10 19:09+0000\n"
+"PO-Revision-Date: 2026-02-21 07:09+0000\n"
 "Last-Translator: dukezas <dukezas@gmail.com>\n"
-"Language-Team: Lithuanian <https://hosted.weblate.org/projects/"
-"collabora-online/ui/lt/>\n"
-"Language: \n"
+"Language-Team: Lithuanian <https://hosted.weblate.org/projects/collabora-"
+"online/ui/lt/>\n"
+"Language: lt\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && (n"
-"%100<10 || n%100>=20) ? 1 : 2);\n"
-"X-Generator: Weblate 5.16-dev\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"(n%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Generator: Weblate 5.16.1-dev\n"
 
 #: admin/admin.strings.js:15
 msgid "Admin console"
@@ -1041,15 +1041,15 @@ msgstr "Įrašytas"
 
 #: src/canvas/sections/CompareChangesLabelSection.ts:111
 msgid "Last edited by %1 on %2"
-msgstr ""
+msgstr "Paskutinį kartą redagavo %1 %2"
 
 #: src/canvas/sections/CompareChangesLabelSection.ts:167
 msgid "%1: Initial Version"
-msgstr ""
+msgstr "%1: pradinė versija"
 
 #: src/canvas/sections/CompareChangesLabelSection.ts:171
 msgid "%1: Current Version"
-msgstr ""
+msgstr "%1: esama versija"
 
 #: src/canvas/sections/ShapeHandlesSection.ts:475
 msgid "Document contains unsupported media"
@@ -5122,9 +5122,8 @@ msgid "Resume"
 msgstr "Tęsti"
 
 #: src/slideshow/PresenterConsole.js:38
-#, fuzzy
 msgid "Present to all"
-msgstr "Rodyti visiems"
+msgstr "Rodyti Visiems"
 
 #: src/slideshow/PresenterConsole.js:39
 msgid "Go Back"
