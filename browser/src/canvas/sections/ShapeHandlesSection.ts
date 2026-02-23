@@ -421,6 +421,9 @@ class ShapeHandlesSection extends CanvasSectionObject {
 
 		if (GraphicSelection.hasActiveSelection())
 			this.size = [GraphicSelection.rectangle.pWidth, GraphicSelection.rectangle.pHeight];
+
+		if (this.sectionProperties.svg)
+			this.adjustSVGProperties();
 	}
 
 	isSVGVisible() {
