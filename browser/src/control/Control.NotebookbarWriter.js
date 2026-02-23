@@ -482,22 +482,20 @@ window.L.Control.NotebookbarWriter = window.L.Control.Notebookbar.extend({
 						'command': '.uno:SidebarDeck.A11yCheckDeck',
 						'accessibility': { focusBack: false, combination: 'A', de: null }
 					} : {},
-				hasAccessibilityCheck ?
 					{
 						'id': 'validatesidebara11y',
 						'type': 'bigcustomtoolitem',
 						'text': _('Validate Sidebar'),
 						'visible': isDebugOn ? 'true' : 'false',
 						'accessibility': { focusBack: true,	combination: 'VS', de: null }
-					} : {},
-				hasAccessibilityCheck ?
+					},
 					{
 						'id': 'validatedialogsa11y',
 						'type': 'bigcustomtoolitem',
 						'text': _('Validate Dialog'),
 						'visible': isDebugOn ? 'true' : 'false',
 						'accessibility': { focusBack: true,	combination: 'VD', de: null }
-					} : {},
+					},
 				hasAccessibilitySupport || hasAccessibilityCheck ?
 					{
 						'id': 'help-accessibility-break',
