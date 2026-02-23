@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-02-13 19:20+0100\n"
-"PO-Revision-Date: 2026-02-15 23:09+0000\n"
+"PO-Revision-Date: 2026-02-21 07:09+0000\n"
 "Last-Translator: Ole <knedlyk@users.noreply.hosted.weblate.org>\n"
 "Language-Team: Ukrainian <https://hosted.weblate.org/projects/collabora-"
 "online/ui/uk/>\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
 "n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
-"X-Generator: Weblate 5.16-dev\n"
+"X-Generator: Weblate 5.16.1-dev\n"
 
 #: admin/admin.strings.js:15
 msgid "Admin console"
@@ -487,7 +487,7 @@ msgstr "Усі аркуші"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:186
 msgid "Content"
-msgstr "Зміст"
+msgstr "Вміст"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:187
 msgid "Drawing"
@@ -1817,7 +1817,7 @@ msgstr "Перейменувати документ"
 #: src/control/Control.Menubar.ts:1059 src/control/Control.Menubar.ts:1124
 #: src/control/Control.Menubar.ts:1189 src/control/Control.Menubar.ts:1244
 msgid "Share..."
-msgstr "Поширити..."
+msgstr "Поділитися..."
 
 #: src/control/Control.Menubar.ts:111 src/control/Control.Menubar.ts:443
 #: src/control/Control.Menubar.ts:623 src/control/Control.Menubar.ts:764
@@ -1891,7 +1891,7 @@ msgstr "Відновити масштаб"
 
 #: src/control/Control.Menubar.ts:168
 msgid "Fit to Screen"
-msgstr "Допасувати до екрана"
+msgstr "Припасувати до екрана"
 
 #: src/control/Control.Menubar.ts:171 src/control/Control.Menubar.ts:495
 #: src/control/Control.Menubar.ts:662 src/control/Control.Menubar.ts:807
@@ -2486,17 +2486,17 @@ msgstr "Застосувати до всіх слайдів"
 
 #: src/control/Notebookbar.WriterReferencesTab.ts:41
 msgid "Table of content"
-msgstr "Зміст з контент"
+msgstr "Зміст"
 
 #: src/control/Notebookbar.WriterReferencesTab.ts:95
 msgid "Footnote/Endnote"
-msgstr "Виноска/Кінцева виноска"
+msgstr "Виноска/кінцева виноска"
 
 #: src/control/Notebookbar.WriterReferencesTab.ts:312
 #: src/control/Control.NotebookbarDraw.js:1578
 #: src/control/Control.NotebookbarImpress.js:1635
 msgid "Field"
-msgstr "Поли"
+msgstr "Поле"
 
 #: src/control/Sidebar.FromNotebookbarPanel.ts:121
 msgid "Animations"
@@ -3213,7 +3213,7 @@ msgstr "Стилі"
 
 #: src/control/Control.NotebookbarWriter.js:1086
 msgid "Lists/Bullets"
-msgstr "Списки/Маркери"
+msgstr "Списки/маркери"
 
 #: src/control/Control.NotebookbarWriter.js:1373
 msgid "Header & Footer"
@@ -4230,11 +4230,11 @@ msgstr "Титульний слайд"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2171
 msgid "Title, Content"
-msgstr "Назва, Зміст"
+msgstr "Назва, зміст"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2172
 msgid "Title and 2 Content"
-msgstr "Назва та 2 Зміст"
+msgstr "Назва та 2 елементи змісту"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2173
 msgid "Title Only"
@@ -4246,27 +4246,27 @@ msgstr "Центрований текст"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2175
 msgid "Title, 2 Content and Content"
-msgstr "Заголовок, 2 Зміст та Зміст"
+msgstr "Назва, 2 елементи змісту та зміст"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2176
 msgid "Title, Content and 2 Content"
-msgstr "Заголовок, Зміст та 2 Зміст"
+msgstr "Назва, зміст та 2 елементи змісту"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2177
 msgid "Title, 2 Content over Content"
-msgstr "Заголовок, 2 Зміст понад зміст"
+msgstr "Назва, 2 елементи змісту над змістом"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2178
 msgid "Title, Content over Content"
-msgstr "Заголовок, зміст понад змістом"
+msgstr "Назва, зміст над змістом"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2179
 msgid "Title, 4 Content"
-msgstr "Заголовок, 4 Зміст"
+msgstr "Назва, 4 елементи змісту"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2180
 msgid "Title, 6 Content"
-msgstr "Заголовок, 6 Зміст"
+msgstr "Назва, 6 елементів змісту"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2181
 msgid "Vertical Title, Text, Chart"
@@ -5177,7 +5177,7 @@ msgstr "Вітаємо в Collabora Online"
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h1:26-7
 msgid "Explore The New {coolversion}"
-msgstr "Ознайомтеся з новою {coolversion}"
+msgstr "Ознайомтеся з новою версією {coolversion}"
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h2:27-7
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h2:38-7
@@ -5192,11 +5192,10 @@ msgid ""
 "solutions/collabora-office-android-ios/\">apps</a> are also available for "
 "mobile."
 msgstr ""
-"Користуйтеся найновішими розробками в галузі онлайн-продуктивності, які ви "
-"можете безкоштовно використовувати, досліджувати та застосовувати у вашому "
-"браузері. Для мобільних пристроїв доступні відповідні <a target=\"_blank\" "
-"rel=\"noopener\" href=\"https://www.collaboraonline.com/solutions/"
-"collabora-office-android-ios/\">застосунки</a>."
+"Користуйтеся новішими функціями, які покращують досвіду співпраці в онлайні "
+"у вашому браузері. Для мобільних пристроїв доступні відповідні <a "
+"target=\"_blank\" rel=\"noopener\" href=\"https://www.collaboraonline.com/"
+"solutions/collabora-office-android-ios/\">застосунки</a>."
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h1:37-7
 msgid "Discover All The Changes"
