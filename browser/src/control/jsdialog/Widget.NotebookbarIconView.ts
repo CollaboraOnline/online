@@ -126,7 +126,7 @@ JSDialog.notebookbarIconViewList = function (
 	// Only render the first child inline; the rest are shown in the expanded dropdown.
 	JSDialog.iconView(commonContainer, data.children[0], builder);
 
-	const iconViews = commonContainer.querySelectorAll('.ui-iconview');
+	let currentIconView = commonContainer.querySelector('.ui-iconview') as any;
 
 	const buttonsContainer = window.L.DomUtil.create(
 		'div',
@@ -136,15 +136,15 @@ JSDialog.notebookbarIconViewList = function (
 	buttonsContainer.id = data.id + '-buttons-container';
 
 	const scrollUpCallback = () => {
-		iconViews[0].scrollBy({
-			top: -iconViews[0].offsetHeight,
+		currentIconView.scrollBy({
+			top: -currentIconView.offsetHeight,
 			behavior: 'smooth',
 		});
 	};
 
 	const scrollDownCallback = () => {
-		iconViews[0].scrollBy({
-			top: iconViews[0].offsetHeight,
+		currentIconView.scrollBy({
+			top: currentIconView.offsetHeight,
 			behavior: 'smooth',
 		});
 	};
@@ -304,20 +304,18 @@ JSDialog.notebookbarIconViewList = function (
 		// Step 1: Split the string by spaces:           ["96px", "96px", "96px"]
 		// Step 2: Remove any empty entries (if any):    ["96px", "96px", "96px"]
 		// Step 3: The length of this array is the number of columns in the grid.
-		iconViews.forEach((iconView: Element) => {
-			const gridTemplateColumns =
-				getComputedStyle(iconView).gridTemplateColumns;
-			const columns = gridTemplateColumns.split(' ').filter(Boolean).length;
+		const gridTemplateColumns =
+			getComputedStyle(currentIconView).gridTemplateColumns;
+		const columns = gridTemplateColumns.split(' ').filter(Boolean).length;
 
-			if (columns > 0) {
-				const entries = iconView.querySelectorAll('.ui-iconview-entry');
-				entries.forEach((entry: Element, flatIndex: number) => {
-					const row = Math.floor(flatIndex / columns);
-					const column = flatIndex % columns;
-					entry.setAttribute('index', row + ':' + column);
-				});
-			}
-		});
+		if (columns > 0) {
+			const entries = currentIconView.querySelectorAll('.ui-iconview-entry');
+			entries.forEach((entry: Element, flatIndex: number) => {
+				const row = Math.floor(flatIndex / columns);
+				const column = flatIndex % columns;
+				entry.setAttribute('index', row + ':' + column);
+			});
+		}
 	};
 
 	/*
@@ -344,10 +342,10 @@ JSDialog.notebookbarIconViewList = function (
 	resizeObserver.observe(commonContainer);
 
 	// Do not animate on creation - eg. when opening sidebar with icon view it might move the app
-	const firstSelected = $(iconViews[0]).children('.selected').get(0);
+	const firstSelected = $(currentIconView).children('.selected').get(0);
 	if (firstSelected) {
 		const offsetTop = firstSelected.offsetTop;
-		iconViews[0].scrollTop = offsetTop;
+		currentIconView.scrollTop = offsetTop;
 	}
 
 	/*
@@ -358,44 +356,80 @@ JSDialog.notebookbarIconViewList = function (
 		Only the first child is rendered inline; the rest appear in the dropdown.
 	*/
 	const firstChild = data.children[0];
+	let savedScrollTop = 0;
 
-	commonContainer.updateRenders = iconViews[0].updateRenders = (
-		pos: number,
-	) => {
-		iconViews[0].updateRendersImpl(pos, firstChild.id, iconViews[0]);
+	const applyOverrides = () => {
+		commonContainer.updateRenders = currentIconView.updateRenders = (
+			pos: number,
+		) => {
+			currentIconView.updateRendersImpl(pos, firstChild.id, currentIconView);
 
-		// also update the dropdown (if any)
-		const dropdownContainer = JSDialog.GetDropdown(firstChild.id);
-		if (dropdownContainer)
-			iconViews[0].updateRendersImpl(pos, firstChild.id, dropdownContainer);
+			// also update the dropdown (if any)
+			const dropdownContainer = JSDialog.GetDropdown(firstChild.id);
+			if (dropdownContainer)
+				currentIconView.updateRendersImpl(
+					pos,
+					firstChild.id,
+					dropdownContainer,
+				);
+		};
+
+		currentIconView.updateSelection = (position: number) => {
+			currentIconView.updateSelectionImpl(position, firstChild);
+		};
+
+		currentIconView.requestRenders = (
+			entry: IconViewEntry,
+			placeholder: Element,
+			entryContainer: Element,
+		) => {
+			currentIconView.requestRendersImpl(
+				firstChild.id,
+				entry,
+				placeholder,
+				entryContainer,
+			);
+		};
+
+		currentIconView.builderCallback = (
+			objectType: string,
+			eventType: string,
+			entry: any,
+			builderArg: JSBuilder,
+		) => {
+			builder.callback(objectType, eventType, firstChild, entry, builderArg);
+		};
+
+		commonContainer.onSelect = currentIconView.onSelect;
+
+		// Track scroll position so we can restore it after widget rebuilds.
+		currentIconView.addEventListener('scroll', () => {
+			savedScrollTop = currentIconView.scrollTop;
+		});
 	};
 
-	iconViews[0].updateSelection = (position: number) => {
-		iconViews[0].updateSelectionImpl(position, firstChild);
-	};
+	applyOverrides();
 
-	iconViews[0].requestRenders = (
-		entry: IconViewEntry,
-		placeholder: Element,
-		entryContainer: Element,
-	) => {
-		iconViews[0].requestRendersImpl(
-			firstChild.id,
-			entry,
-			placeholder,
-			entryContainer,
-		);
-	};
+	// When _updateWidgetImpl rebuilds the inner iconview, the element is
+	// replaced and all notebookbar-specific overrides are lost.  Detect
+	// the replacement via MutationObserver and re-apply them, also
+	// restoring the scroll position that the rebuild would otherwise reset.
+	new MutationObserver(() => {
+		const newIconView = commonContainer.querySelector('.ui-iconview') as any;
+		if (!newIconView || newIconView === currentIconView) return;
 
-	iconViews[0].builderCallback = (
-		objectType: string,
-		eventType: string,
-		entry: any,
-		builderArg: JSBuilder,
-	) => {
-		builder.callback(objectType, eventType, firstChild, entry, builderArg);
-	};
+		const restoreScroll = savedScrollTop;
+		currentIconView = newIconView;
+		applyOverrides();
 
-	commonContainer.onSelect = iconViews[0].onSelect;
+		// The new iconview's entries are populated in a layouting task
+		// (queued by JSDialog.iconView) which also scrolls to the
+		// selected entry.  Queue our own task to run afterwards and
+		// restore the user's scroll position instead.
+		app.layoutingService.appendLayoutingTask(() => {
+			currentIconView.scrollTop = restoreScroll;
+		});
+	}).observe(commonContainer, { childList: true });
+
 	return false;
 };
