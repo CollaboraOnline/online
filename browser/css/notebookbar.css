@@ -630,6 +630,14 @@ label.notebookbar.ui-checkbox-label {
 	flex-direction: row;
 }
 
+.ui-iconview-list-heading {
+	display: block;
+	font-size: var(--font-size-small, 11px);
+	color: var(--color-text-lighter, #888);
+	padding: 4px 4px 2px;
+	font-weight: 600;
+}
+
 .jsdialog #stylesview .icon-view-item-container,
 .notebookbar #stylesview .icon-view-item-container {
 	margin: unset;

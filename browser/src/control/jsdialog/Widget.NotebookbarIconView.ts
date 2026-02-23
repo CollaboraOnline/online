@@ -63,9 +63,12 @@ function _createButtonForNotebookbarIconview(
 	button.onclick = onClickCallback;
 }
 
-function _getDropdownContent(data: any) {
-	const dropdownContent = [{ type: 'json', content: data }];
-	if (data.id === 'stylesview') {
+function _getDropdownContent(data: IconViewListJSON) {
+	const dropdownContent: Array<any> = [];
+	for (const child of data.children) {
+		dropdownContent.push({ type: 'json', content: child });
+	}
+	if (data.children.length === 1 && data.children[0].id === 'stylesview') {
 		dropdownContent.push(
 			{
 				type: 'json',
@@ -163,10 +166,19 @@ JSDialog.notebookbarIconViewList = function (
 	};
 
 	const expanderCallback = () => {
+		// Use current data from live iconview elements: core may have called
+		// updateWidget on them since the list was first built, populating entries.
+		const liveChildren = data.children.map((child: IconViewJSON) => {
+			const liveIconView = commonContainer.querySelector(
+				"[id='" + child.id + "']",
+			) as any;
+			return liveIconView?.data ?? child;
+		});
+		const currentData: IconViewListJSON = { ...data, children: liveChildren };
 		JSDialog.OpenDropdown(
 			data.children[0].id,
 			commonContainer,
-			_getDropdownContent(data.children[0]),
+			_getDropdownContent(currentData),
 			iconViewListCallback,
 		);
 		bIsExpanded = true;
@@ -221,18 +233,67 @@ JSDialog.notebookbarIconViewList = function (
 					overlay.style.position = 'fixed';
 					overlay.style.zIndex = '20000';
 					commonContainer.appendChild(overlay);
-					//for (let i = 0; i < data.items.length; i++) {
-					//	const item = data.items[i];
-					//	const iconview = expander.querySelector("[id='" + item.id + "']");
-					//	if (item && iconview) {
-					//		const label = window.L.DomUtil.create(
-					//			'span',
-					//			builder.options.cssClass,
-					//		);
-					//		label.textContent = item.label;
-					//		iconview.parentNode.insertBefore(label, iconview);
-					//	}
-					//}
+					for (let i = 0; i < data.children.length; i++) {
+						const child = data.children[i];
+						const dropdownIconView = expander.querySelector(
+							"[id='" + child.id + "']",
+						) as HTMLElement;
+						if (!dropdownIconView) continue;
+
+						// Insert heading label above each iconview
+						if (child.label) {
+							const label = window.L.DomUtil.create(
+								'span',
+								builder.options.cssClass + ' ui-iconview-list-heading',
+							);
+							label.textContent = child.label;
+							dropdownIconView.parentNode?.insertBefore(
+								label,
+								dropdownIconView,
+							);
+						}
+
+						// Find the live inline iconview (may have been replaced
+						// by updateWidget since the list was first built)
+						const liveIconView = commonContainer.querySelector(
+							"[id='" + child.id + "']",
+						) as any;
+						if (!liveIconView) continue;
+
+						// Immediately fill in already-cached images,
+						// and request renders from core for the rest.
+						const cache = builder.rendersCache?.[child.id];
+						const liveData = liveIconView.data;
+						const dpr = Math.floor(100 * window.devicePixelRatio);
+						if (liveData?.entries) {
+							for (let pos = 0; pos < liveData.entries.length; pos++) {
+								if (cache?.images?.[pos]) {
+									liveIconView.updateRendersImpl(
+										pos,
+										child.id,
+										dropdownIconView,
+									);
+								} else if (liveData.entries[pos]?.ondemand) {
+									builder.callback(
+										'iconview',
+										'render_entry',
+										{ id: child.id },
+										pos + ';' + dpr + ';' + dpr,
+										builder,
+									);
+								}
+							}
+						}
+
+						// Override updateRenders on the live element so future
+						// renders also update the dropdown while it is open
+						const origUpdateRenders = liveIconView.updateRenders;
+						liveIconView.updateRenders = (pos: number) => {
+							origUpdateRenders?.call(liveIconView, pos);
+							if (dropdownIconView.isConnected)
+								liveIconView.updateRendersImpl(pos, child.id, dropdownIconView);
+						};
+					}
 				});
 			});
 		}
@@ -243,19 +304,20 @@ JSDialog.notebookbarIconViewList = function (
 		// Step 1: Split the string by spaces:           ["96px", "96px", "96px"]
 		// Step 2: Remove any empty entries (if any):    ["96px", "96px", "96px"]
 		// Step 3: The length of this array is the number of columns in the grid.
-		const gridTemplateColumns = getComputedStyle(
-			iconViews[0],
-		).gridTemplateColumns;
-		const columns = gridTemplateColumns.split(' ').filter(Boolean).length;
+		iconViews.forEach((iconView: Element) => {
+			const gridTemplateColumns =
+				getComputedStyle(iconView).gridTemplateColumns;
+			const columns = gridTemplateColumns.split(' ').filter(Boolean).length;
 
-		if (columns > 0) {
-			const entries = iconViews[0].querySelectorAll('.ui-iconview-entry');
-			entries.forEach((entry: HTMLElement, flatIndex: number) => {
-				const row = Math.floor(flatIndex / columns);
-				const column = flatIndex % columns;
-				entry.setAttribute('index', row + ':' + column);
-			});
-		}
+			if (columns > 0) {
+				const entries = iconView.querySelectorAll('.ui-iconview-entry');
+				entries.forEach((entry: Element, flatIndex: number) => {
+					const row = Math.floor(flatIndex / columns);
+					const column = flatIndex % columns;
+					entry.setAttribute('index', row + ':' + column);
+				});
+			}
+		});
 	};
 
 	/*
@@ -288,56 +350,49 @@ JSDialog.notebookbarIconViewList = function (
 		iconViews[0].scrollTop = offsetTop;
 	}
 
-	commonContainer.updateRenders = iconViews[0].updateRenders = (
-		pos: number,
-	) => {
-		iconViews[0].updateRendersImpl(pos, data.children[0].id, iconViews[0]);
-
-		// also update the dropdown (if any);
-		const dropdownContainer = JSDialog.GetDropdown(data.children[0].id);
-		if (dropdownContainer)
-			iconViews[0].updateRendersImpl(
-				pos,
-				data.children[0].id,
-				dropdownContainer,
-			);
-	};
-
-	iconViews[0].updateSelection = (position: number) => {
-		iconViews[0].updateSelectionImpl(position, data.children[0]);
-	};
-
 	/*
 		we need to override `iconview.requestRenders` because `iconview` is created
-		with an `id = data.id + '-iconview'` which core doesn't recoganize. so
+		with an `id = data.id + '-iconview'` which core doesn't recognize. so
 		we pass the original widget's id while requesting icons.
+		we override `builderCallback` and other callbacks for the same reason,
+		and to wire up each child with its own data.
 	*/
-	iconViews[0].requestRenders = (
-		entry: IconViewEntry,
-		placeholder: Element,
-		entryContainer: Element,
-	) => {
-		iconViews[0].requestRendersImpl(
-			data.children[0].id,
-			entry,
-			placeholder,
-			entryContainer,
-		);
-	};
+	for (let i = 0; i < data.children.length; i++) {
+		const child = data.children[i];
+		const iconView = iconViews[i] as any;
 
-	/*
-		we override this for the same reason for which we
-		override `iconview.requestRenders` above.
-	*/
-	iconViews[0].builderCallback = (
-		objectType: string,
-		eventType: string,
-		entry: any,
-		builder: JSBuilder,
-	) => {
-		builder.callback(objectType, eventType, data.children[0], entry, builder);
-	};
+		iconView.updateRenders = (pos: number) => {
+			iconView.updateRendersImpl(pos, child.id, iconView);
 
+			// also update the dropdown (if any)
+			const dropdownContainer = JSDialog.GetDropdown(data.children[0].id);
+			if (dropdownContainer)
+				iconView.updateRendersImpl(pos, child.id, dropdownContainer);
+		};
+
+		iconView.updateSelection = (position: number) => {
+			iconView.updateSelectionImpl(position, child);
+		};
+
+		iconView.requestRenders = (
+			entry: IconViewEntry,
+			placeholder: Element,
+			entryContainer: Element,
+		) => {
+			iconView.requestRendersImpl(child.id, entry, placeholder, entryContainer);
+		};
+
+		iconView.builderCallback = (
+			objectType: string,
+			eventType: string,
+			entry: any,
+			builderArg: JSBuilder,
+		) => {
+			builder.callback(objectType, eventType, child, entry, builderArg);
+		};
+	}
+
+	commonContainer.updateRenders = iconViews[0].updateRenders;
 	commonContainer.onSelect = iconViews[0].onSelect;
 	return false;
 };
