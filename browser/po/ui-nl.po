@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-02-13 19:20+0100\n"
-"PO-Revision-Date: 2026-02-13 17:53+0000\n"
-"Last-Translator: Stephan Paternotte <stephan@paternottes.net>\n"
+"PO-Revision-Date: 2026-02-22 11:09+0000\n"
+"Last-Translator: Sebastiaan Veld <notify@virtfields.nl>\n"
 "Language-Team: Dutch <https://hosted.weblate.org/projects/collabora-online/"
 "ui/nl/>\n"
-"Language: \n"
+"Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.16-dev\n"
+"X-Generator: Weblate 5.16.1-dev\n"
 
 #: admin/admin.strings.js:15
 msgid "Admin console"
@@ -2679,7 +2679,7 @@ msgstr "Exporteren als"
 #: src/control/Control.NotebookbarWriter.js:226
 #: src/control/Control.NotebookbarWriter.js:275
 msgid "See history"
-msgstr "Geschiedenis tonen"
+msgstr "Geschiedenis"
 
 #: src/control/Control.NotebookbarCalc.js:347
 #: src/control/Control.NotebookbarDraw.js:370
@@ -2788,7 +2788,7 @@ msgstr "Slecht"
 #: src/control/Control.NotebookbarCalc.js:1020
 #: src/control/PermissionMode.ts:173
 msgid "Editing"
-msgstr "In bewerking"
+msgstr "Bewerken"
 
 #: src/control/Control.NotebookbarCalc.js:1044
 #: src/control/Control.NotebookbarDraw.js:1197
@@ -3937,7 +3937,7 @@ msgstr "Bewerkingsmodus"
 #: src/control/PermissionMode.ts:125 src/control/PermissionMode.ts:176
 #: src/control/PermissionMode.ts:182 src/control/PermissionMode.ts:188
 msgid "Viewing"
-msgstr "Weergave"
+msgstr "Bekijken"
 
 #: src/control/jsdialog/Definitions.Menu.ts:111
 #: src/control/jsdialog/Definitions.Menu.ts:1748
