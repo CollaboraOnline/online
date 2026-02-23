@@ -23,8 +23,8 @@
 	.savemodified.unotoolbutton .unobutton img,
 	.StyleListPanel #TemplatePanel button,
 	.document-logo,
-	.ui-tabs-content .unobutton>img,
-	.unotoolbutton.notebookbar .unobutton>img,
+	.ui-tabs-content .unobutton > img,
+	.unotoolbutton.notebookbar .unobutton > img,
 	.unotoolbutton.notebookbar .unobutton {
 		forced-color-adjust: none;
 		background-color: #e9e9ed;
