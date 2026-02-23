@@ -27,7 +27,7 @@ def _short(s, max_len):
     Convert multi-line JSON into a single-line string
     for warnings and truncate if too long.
     """
-    s = s.replace("\r\n", "\\n").replace("\r", "\\n").replace("\n", "\\n")
+    s = "\\n".join(s.splitlines())
     return s[:max_len] + "…" if len(s) > max_len else s
 
 
