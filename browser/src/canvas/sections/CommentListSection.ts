@@ -89,6 +89,9 @@ export class CommentSection extends CanvasSectionObject {
 		calcLastTab: number;
 		// Keep a reference to the original set of comments received.
 		calcMasterList: Array<any>;
+		// Has the 'commandstatechanged' msg arrived after a tab switch.
+		// This a precondition for drawing spreadsheet comment marker.
+		calcCommandStateChanged: boolean;
 		commentList: Array<Comment>;
 		selectedComment: Comment | null;
 		calcCurrentComment: Comment | null;
@@ -134,6 +137,7 @@ export class CommentSection extends CanvasSectionObject {
 		this.sectionProperties.docLayer = this.map._docLayer;
 		this.sectionProperties.calcLastTab = -1;
 		this.sectionProperties.calcMasterList = [];
+		this.sectionProperties.calcCommandStateChanged = true;
 		this.sectionProperties.commentList = new Array(0);
 		this.sectionProperties.selectedComment = null;
 		this.sectionProperties.arrow = null;
@@ -171,6 +175,7 @@ export class CommentSection extends CanvasSectionObject {
 		this.map.on('AnnotationScrollDown', this.onAnnotationScrollDown, this);
 
 		this.map.on('commandstatechanged', function (event: any) {
+			this.sectionProperties.calcCommandStateChanged = true;
 			if (event.commandName === '.uno:ShowResolvedAnnotations')
 				this.setViewResolved(event.state === 'true');
 			else if (event.commandName === 'showannotations')
@@ -2553,6 +2558,8 @@ export class CommentSection extends CanvasSectionObject {
 			// To ignore updateparts events without actual change in sheet.
 			return;
 		}
+
+		this.sectionProperties.calcCommandStateChanged = false;
 
 		this.importComments();
 	}
