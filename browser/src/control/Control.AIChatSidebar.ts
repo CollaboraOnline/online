@@ -66,27 +66,6 @@ namespace cool {
 			'without wrapping it in code fences (do NOT use ```markdown or ``` blocks). ' +
 			'Just return the raw markdown content. Be concise and helpful.';
 
-		private readonly ACTION_KEYWORDS: string[] = [
-			'rewrite',
-			'fix',
-			'change',
-			'translate',
-			'rephrase',
-			'improve',
-			'edit',
-			'summarize',
-			'simplify',
-			'shorten',
-			'expand',
-			'formal',
-			'casual',
-			'correct',
-			'convert',
-			'make it',
-			'turn it',
-			'write it',
-		];
-
 		private readonly IMAGE_KEYWORDS: string[] = [
 			'generate image',
 			'generate an image',
@@ -499,8 +478,7 @@ namespace cool {
 
 				// Action buttons for text assistant messages
 				if (!isUser && !msg.isError) {
-					var showInsert = this.shouldShowActions(index);
-					children.push(this.getActionsJSON(index, showInsert));
+					children.push(this.getActionsJSON(index, true));
 				}
 
 				// Retry button for error messages
@@ -1117,14 +1095,6 @@ namespace cool {
 			}
 
 			return html;
-		}
-
-		private shouldShowActions(assistantMsgIndex: number): boolean {
-			const userMsg = this.findPrecedingUserMessage(assistantMsgIndex);
-			if (!userMsg || !userMsg.selectedText) return false;
-
-			const lower = userMsg.content.toLowerCase();
-			return this.ACTION_KEYWORDS.some((kw) => lower.includes(kw));
 		}
 
 		private findPrecedingUserMessage(
