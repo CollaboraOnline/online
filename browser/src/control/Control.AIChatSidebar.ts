@@ -56,9 +56,11 @@ namespace cool {
 		];
 
 		private readonly SYSTEM_PROMPT: string =
-			'You are a helpful document editing assistant for Collabora Online. ' +
+			'You are a helpful assistant for Collabora Online. ' +
 			'Help users with their documents — answering questions, suggesting edits, ' +
-			'rewriting text, and more. When the user shares selected text, provide relevant help. ' +
+			'rewriting text, and more. When the user shares selected text from their document, ' +
+			'provide relevant help with that text. When no selected text is provided, answer ' +
+			'general questions about documents, formatting, writing, and the application. ' +
 			'When providing rewritten or edited text, return it in markdown format preserving ' +
 			'the original formatting structure. IMPORTANT: Return the markdown text directly ' +
 			'without wrapping it in code fences (do NOT use ```markdown or ``` blocks). ' +
@@ -750,18 +752,10 @@ namespace cool {
 
 			const isImageRequest = this.isImageGenerationPrompt(text);
 
-			if (!isImageRequest && !TextSelections.isActive()) {
-				this.hintText = _(
-					'Please select some text in the document first, so the AI assistant can help you with it.',
-				);
-				this.updateHint();
-				return;
-			}
-
 			this.hintText = '';
 
 			let selectedText = '';
-			if (!isImageRequest) {
+			if (!isImageRequest && TextSelections.isActive()) {
 				try {
 					selectedText = await this.fetchSelectedMarkdown();
 				} catch (e: any) {
