@@ -533,6 +533,13 @@ algned to the bottom */
 	margin-top: 8px;
 }
 
+.ui-expander-heading {
+	margin: 0;
+	padding: 0;
+	font: inherit;
+	display: contents;
+}
+
 .ui-expander-label {
 	color: #666;
 }
