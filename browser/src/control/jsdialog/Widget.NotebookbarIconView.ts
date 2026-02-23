@@ -123,9 +123,8 @@ JSDialog.notebookbarIconViewList = function (
 	);
 	commonContainer.id = data.id;
 
-	for (let i = 0; i < data.children.length; i++) {
-		JSDialog.iconView(commonContainer, data.children[i], builder);
-	}
+	// Only render the first child inline; the rest are shown in the expanded dropdown.
+	JSDialog.iconView(commonContainer, data.children[0], builder);
 
 	const iconViews = commonContainer.querySelectorAll('.ui-iconview');
 
@@ -253,27 +252,18 @@ JSDialog.notebookbarIconViewList = function (
 							);
 						}
 
-						// Find the live inline iconview (may have been replaced
-						// by updateWidget since the list was first built)
-						const liveIconView = commonContainer.querySelector(
-							"[id='" + child.id + "']",
-						) as any;
-						if (!liveIconView) continue;
-
-						// Immediately fill in already-cached images,
-						// and request renders from core for the rest.
+						// The dropdown iconview has updateRendersImpl from
+						// Widget.IconView — use it to fill cached images and
+						// request renders from core for uncached entries.
+						const ddView = dropdownIconView as any;
 						const cache = builder.rendersCache?.[child.id];
-						const liveData = liveIconView.data;
+						const ddData = ddView.data;
 						const dpr = Math.floor(100 * window.devicePixelRatio);
-						if (liveData?.entries) {
-							for (let pos = 0; pos < liveData.entries.length; pos++) {
+						if (ddData?.entries) {
+							for (let pos = 0; pos < ddData.entries.length; pos++) {
 								if (cache?.images?.[pos]) {
-									liveIconView.updateRendersImpl(
-										pos,
-										child.id,
-										dropdownIconView,
-									);
-								} else if (liveData.entries[pos]?.ondemand) {
+									ddView.updateRendersImpl(pos, child.id, dropdownIconView);
+								} else if (ddData.entries[pos]?.ondemand) {
 									builder.callback(
 										'iconview',
 										'render_entry',
@@ -285,14 +275,24 @@ JSDialog.notebookbarIconViewList = function (
 							}
 						}
 
-						// Override updateRenders on the live element so future
-						// renders also update the dropdown while it is open
-						const origUpdateRenders = liveIconView.updateRenders;
-						liveIconView.updateRenders = (pos: number) => {
-							origUpdateRenders?.call(liveIconView, pos);
-							if (dropdownIconView.isConnected)
-								liveIconView.updateRendersImpl(pos, child.id, dropdownIconView);
-						};
+						// For the first child (which has a live inline element),
+						// override its updateRenders so future renders also
+						// update the dropdown while it is open.
+						const liveIconView = commonContainer.querySelector(
+							"[id='" + child.id + "']",
+						) as any;
+						if (liveIconView) {
+							const origUpdateRenders = liveIconView.updateRenders;
+							liveIconView.updateRenders = (pos: number) => {
+								origUpdateRenders?.call(liveIconView, pos);
+								if (dropdownIconView.isConnected)
+									liveIconView.updateRendersImpl(
+										pos,
+										child.id,
+										dropdownIconView,
+									);
+							};
+						}
 					}
 				});
 			});
@@ -354,45 +354,48 @@ JSDialog.notebookbarIconViewList = function (
 		we need to override `iconview.requestRenders` because `iconview` is created
 		with an `id = data.id + '-iconview'` which core doesn't recognize. so
 		we pass the original widget's id while requesting icons.
-		we override `builderCallback` and other callbacks for the same reason,
-		and to wire up each child with its own data.
+		we override `builderCallback` and other callbacks for the same reason.
+		Only the first child is rendered inline; the rest appear in the dropdown.
 	*/
-	for (let i = 0; i < data.children.length; i++) {
-		const child = data.children[i];
-		const iconView = iconViews[i] as any;
+	const firstChild = data.children[0];
 
-		iconView.updateRenders = (pos: number) => {
-			iconView.updateRendersImpl(pos, child.id, iconView);
+	commonContainer.updateRenders = iconViews[0].updateRenders = (
+		pos: number,
+	) => {
+		iconViews[0].updateRendersImpl(pos, firstChild.id, iconViews[0]);
 
-			// also update the dropdown (if any)
-			const dropdownContainer = JSDialog.GetDropdown(data.children[0].id);
-			if (dropdownContainer)
-				iconView.updateRendersImpl(pos, child.id, dropdownContainer);
-		};
+		// also update the dropdown (if any)
+		const dropdownContainer = JSDialog.GetDropdown(firstChild.id);
+		if (dropdownContainer)
+			iconViews[0].updateRendersImpl(pos, firstChild.id, dropdownContainer);
+	};
 
-		iconView.updateSelection = (position: number) => {
-			iconView.updateSelectionImpl(position, child);
-		};
+	iconViews[0].updateSelection = (position: number) => {
+		iconViews[0].updateSelectionImpl(position, firstChild);
+	};
 
-		iconView.requestRenders = (
-			entry: IconViewEntry,
-			placeholder: Element,
-			entryContainer: Element,
-		) => {
-			iconView.requestRendersImpl(child.id, entry, placeholder, entryContainer);
-		};
+	iconViews[0].requestRenders = (
+		entry: IconViewEntry,
+		placeholder: Element,
+		entryContainer: Element,
+	) => {
+		iconViews[0].requestRendersImpl(
+			firstChild.id,
+			entry,
+			placeholder,
+			entryContainer,
+		);
+	};
 
-		iconView.builderCallback = (
-			objectType: string,
-			eventType: string,
-			entry: any,
-			builderArg: JSBuilder,
-		) => {
-			builder.callback(objectType, eventType, child, entry, builderArg);
-		};
-	}
+	iconViews[0].builderCallback = (
+		objectType: string,
+		eventType: string,
+		entry: any,
+		builderArg: JSBuilder,
+	) => {
+		builder.callback(objectType, eventType, firstChild, entry, builderArg);
+	};
 
-	commonContainer.updateRenders = iconViews[0].updateRenders;
 	commonContainer.onSelect = iconViews[0].onSelect;
 	return false;
 };
