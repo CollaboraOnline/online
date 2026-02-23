@@ -27,12 +27,12 @@
     <message>
         <location filename="../coda-qt.cpp" line="315"/>
         <source>Enter file path...</source>
-        <translation type="unfinished"></translation>
+        <translation>Entrer le chemin de fichier...</translation>
     </message>
     <message>
         <location filename="../coda-qt.cpp" line="327"/>
         <source>Save Print Output As</source>
-        <translation type="unfinished"></translation>
+        <translation>Enregistrer l&apos;impression dans un fichier sous</translation>
     </message>
     <message>
         <location filename="../coda-qt.cpp" line="329"/>
@@ -52,12 +52,12 @@
     <message>
         <location filename="../coda-qt.cpp" line="370"/>
         <source>Print to File Error</source>
-        <translation type="unfinished"></translation>
+        <translation>Échec de l&apos;impression vers un fichier</translation>
     </message>
     <message>
         <location filename="../coda-qt.cpp" line="371"/>
         <source>Failed to save document to file. Please check the file path and permissions.</source>
-        <translation type="unfinished"></translation>
+        <translation>Impossible d&apos;enregistrer l&apos;impression dans un fichier. Veiller vérifier le chemin du fichier et les permissions.</translation>
     </message>
     <message>
         <location filename="../coda-qt.cpp" line="415"/>
@@ -77,7 +77,7 @@
     <message>
         <location filename="../coda-qt.cpp" line="577"/>
         <source>Spreadsheets (*.ods);;All Files (*)</source>
-        <translation type="unfinished"></translation>
+        <translation>Tableurs (*.ods);;Tous les fichiers (*)</translation>
     </message>
     <message>
         <location filename="../coda-qt.cpp" line="579"/>
@@ -93,27 +93,27 @@
     <message>
         <location filename="../coda-qt.cpp" line="585"/>
         <source>Save Document</source>
-        <translation type="unfinished"></translation>
+        <translation>Enregistrer le document</translation>
     </message>
     <message>
         <location filename="../coda-qt.cpp" line="902"/>
         <source>Open File</source>
-        <translation type="unfinished"></translation>
+        <translation>Ouvrir un fichier</translation>
     </message>
     <message>
         <location filename="../coda-qt.cpp" line="903"/>
         <source>All Files (*);;Text Documents (*.odt *.ott *.doc *.docx *.rtf *.txt);;Spreadsheets (*.ods *.ots *.xls *.xlsx *.csv);;Presentations (*.odp *.otp *.ppt *.pptx)</source>
-        <translation type="unfinished"></translation>
+        <translation>Tous les Fichiers (*);;Documents textes (*.odt *.ott *.doc *.docx *.rtf *.txt);;Tableurs (*.ods *.ots *.xls *.xlsx *.csv);;Présentations (*.odp *.otp *.ppt *.pptx)</translation>
     </message>
     <message>
         <location filename="../coda-qt.cpp" line="1017"/>
         <source>Export As</source>
-        <translation type="unfinished"></translation>
+        <translation>Exporter sous</translation>
     </message>
     <message>
         <location filename="../WebView.cpp" line="205"/>
         <source>Presenting</source>
-        <translation type="unfinished"></translation>
+        <translation>En cours de présentation</translation>
     </message>
 </context>
 <context>
@@ -121,17 +121,17 @@
     <message>
         <location filename="../WebView.cpp" line="121"/>
         <source>Unsaved Changes</source>
-        <translation type="unfinished"></translation>
+        <translation>Changements non enregistrés</translation>
     </message>
     <message>
         <location filename="../WebView.cpp" line="122"/>
         <source>The document has unsaved changes. Do you want to close anyway?</source>
-        <translation type="unfinished"></translation>
+        <translation>Le document a des changements non-enregistrés. Voulez-vous fermer malgré tout&#x202f;?</translation>
     </message>
     <message>
         <location filename="../WebView.cpp" line="533"/>
         <source>Start</source>
-        <translation type="unfinished"></translation>
+        <translation>Démarrer</translation>
     </message>
 </context>
 </TS>
