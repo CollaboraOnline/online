@@ -1089,6 +1089,13 @@ class CanvasSectionContainer {
 	}
 
 	public onClick (e: MouseEvent) {
+		if (this.touchEventInProgress) {
+			Object.defineProperty(e, 'pointerType', {
+				value: 'touch',
+				writable: false
+			});
+		}
+
 		if (!this.draggingSomething) { // Prevent click event after dragging.
 			if (this.positionOnMouseDown !== null && this.positionOnMouseUp !== null) {
 				this.positionOnClick = this.convertPositionToCanvasLocale(e);
