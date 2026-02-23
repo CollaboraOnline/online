@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-02-13 19:20+0100\n"
-"PO-Revision-Date: 2026-02-03 12:56+0000\n"
-"Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
-"Language-Team: Estonian <https://hosted.weblate.org/projects/"
-"collabora-online/ui/et/>\n"
-"Language: \n"
+"PO-Revision-Date: 2026-02-19 05:09+0000\n"
+"Last-Translator: Priit Jõerüüt <jrthwlate@users.noreply.hosted.weblate.org>\n"
+"Language-Team: Estonian <https://hosted.weblate.org/projects/collabora-"
+"online/ui/et/>\n"
+"Language: et\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.16-dev\n"
+"X-Generator: Weblate 5.16.1-dev\n"
 
 #: admin/admin.strings.js:15
 msgid "Admin console"
@@ -216,7 +216,7 @@ msgstr "Uuenda logi andmeid"
 
 #: admin/admin.strings.js:60
 msgid "Channel Filter:"
-msgstr ""
+msgstr "Kanalite filter:"
 
 #: admin/admin.strings.js:61 src/control/Control.JSDialogBuilder.js:524
 #: src/control/Control.StatusBar.js:198 src/control/Control.StatusBar.js:203
@@ -225,11 +225,11 @@ msgstr "Puudub"
 
 #: admin/admin.strings.js:62
 msgid "Set Log Levels"
-msgstr ""
+msgstr "Logitasemete seadistus"
 
 #: admin/admin.strings.js:63
 msgid "Log Levels"
-msgstr ""
+msgstr "Logimistasemed"
 
 #: admin/admin.strings.js:64 src/control/Control.AlertDialog.js:32
 #: src/control/Control.AlertDialog.js:38
@@ -242,11 +242,11 @@ msgstr "Sulge"
 
 #: admin/admin.strings.js:65
 msgid "Update Log Levels"
-msgstr ""
+msgstr "Uuenda logimistasemeid"
 
 #: admin/admin.strings.js:66
 msgid "Version Information"
-msgstr ""
+msgstr "Versiooniteave"
 
 #: admin/admin.strings.js:67
 msgid "License"
