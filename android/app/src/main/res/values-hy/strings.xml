@@ -71,7 +71,7 @@
     <string name="owncloud_wrong_connection">Հնարավոր չէ միանալ ամպային սերվերին։ Ստուգեք ձեր կարգավորումները։</string>
     <string name="owncloud_unauthorized">Հնարավոր չէ մուտք գործել ամպային սերվեր։ Ստուգեք ձեր կարգավորումները։</string>
     <string name="owncloud_unspecified_error">Անհայտ սխալ ամպային սերվերին միանալիս։ Ստուգեք ձեր կարգավորումները և/կամ փորձեք ավելի ուշ։</string>
-    <string name="ext_document_provider_error">Անվավեր արմատային նիշք։ Ստուգեք ձեր sd քարտի կարգավորումները։</string>
+    <string name="ext_document_provider_error">Անվավեր արմատային նիշք։ Ստուգեք ձեր SD քարտի կարգավորումները։</string>
     <string name="otg_missing_error">Անվավեր արմատային նիշք։ Ստուգեք ձեր OTG սարքը և/կամ կարգավորումները։</string>
     <string name="storage_provider_settings">Պահեստային ծառայության մատակարարի կարգավորումներ</string>
     <string name="owncloud_settings">Ամպային սերվերի կարգավորումներ</string>
