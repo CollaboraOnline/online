@@ -291,24 +291,28 @@ window.L.Map.include({
 		this._processPreviewQueue();
 	},
 
-	goToPage: function (page) {
-		const docLayer = this._docLayer;
-		const pageRects = app.file && app.file.writer && app.file.writer.pageRectangleList;
-		let sourcePage = docLayer._currentPage;
-		app.idleHandler.notifyActive();
+	_resolveCurrentPage: function (page, currentPage, pageRects) {
+		if ((page !== 'prev' && page !== 'next') || this.isEditMode() || !pageRects || pageRects.length === 0) {
+			return currentPage;
+		}
 
 		// In the mode where the cursor is absent, _currentPage may be stale.
 		// Determine the currently visible page from the viewport instead.
-		if ((page === 'prev' || page === 'next') && !this.isEditMode()
-			&& pageRects && pageRects.length > 0) {
-			for (let i = 0; i < pageRects.length; i++) {
-				if (!app.isRectangleVisibleInTheDisplayedArea(pageRects[i]))
-					continue;
+		for (let i = 0; i < pageRects.length; i++) {
+			if (!app.isRectangleVisibleInTheDisplayedArea(pageRects[i]))
+				continue;
 
-				sourcePage = i;
-				break;
-			}
+			return i;
 		}
+
+		return currentPage;
+	},
+
+	goToPage: function (page) {
+		const docLayer = this._docLayer;
+		const pageRects = app.file && app.file.writer && app.file.writer.pageRectangleList;
+		const sourcePage = this._resolveCurrentPage(page, docLayer._currentPage, pageRects);
+		app.idleHandler.notifyActive();
 
 		if (page === 'prev') {
 			if (sourcePage > 0) {
