@@ -756,7 +756,9 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 			if (data.children[0].text && data.children[0].text !== '') {
 				var prefix = data.children[0].id ? data.children[0].id : data.id;
 
-				var expanderBtn = window.L.DomUtil.create('button', 'ui-expander-btn ' + builder.options.cssClass, expander);
+				// W3C accordion pattern: https://www.w3.org/WAI/ARIA/apg/patterns/accordion/examples/accordion
+				var heading = window.L.DomUtil.create('h2', 'ui-expander-heading ' + builder.options.cssClass, expander);
+				var expanderBtn = window.L.DomUtil.create('button', 'ui-expander-btn ' + builder.options.cssClass, heading);
 				expanderBtn.tabIndex = '0';
 				expanderBtn.setAttribute('aria-controls', prefix + '-children');
 
@@ -798,6 +800,8 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 
 			var expanderChildren = window.L.DomUtil.create('div', 'ui-expander-content ' + builder.options.cssClass, container);
 			expanderChildren.id = prefix + '-children';
+			expanderChildren.setAttribute('role', 'region');
+			expanderChildren.setAttribute('aria-labelledby', prefix + '-label');
 
 			if (expanded) {
 				if (data.children.length > 1) {
