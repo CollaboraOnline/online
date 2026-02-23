@@ -438,6 +438,7 @@
 [id^='aichat-msg-'].aichat-msg-assistant > [id^='aichat-msg-text-'] {
 	white-space: normal;
 	display: block;
+	overflow-x: auto;
 }
 
 .aichat-msg-assistant h3 {
@@ -536,7 +537,6 @@
 	border-collapse: collapse;
 	margin: 6px 0;
 	font-size: 12px;
-	width: 100%;
 }
 
 .aichat-msg-assistant th,
