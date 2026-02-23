@@ -142,18 +142,30 @@ enum UNO_BorderLineStyle {
 
 function getLineStyleModificationCommand(
 	LineStyle: UNO_BorderLineStyle,
-	n1: number, // Corresponds to SvxBorderLineWidth
-	n2: number,
-	n3: number,
+	nOut: number, // outer line width, maps to SvxBorderLine nOut
+	nIn: number, // inner line width, maps to SvxBorderLine nIn
+	nDist: number, // distance between lines
 ): string {
-	const borderLine2Properties = {
-		LineStyle: { type: 'short', value: LineStyle },
-		InnerLineWidth: { type: 'short', value: n1 },
-		OuterLineWidth: { type: 'short', value: n2 },
-		LineDistance: { type: 'short', value: n3 },
+	// The LineStyle property must be a BorderLine2 struct for
+	// SvxLineItem::PutValue to parse it correctly (nMemId == 0).
+	const params = {
+		LineStyle: {
+			type: 'com.sun.star.table.BorderLine2',
+			value: {
+				Color: { type: 'com.sun.star.util.Color', value: 0 },
+				InnerLineWidth: { type: 'short', value: nIn },
+				OuterLineWidth: { type: 'short', value: nOut },
+				LineDistance: { type: 'short', value: nDist },
+				LineStyle: { type: 'short', value: LineStyle },
+				LineWidth: {
+					type: 'unsigned long',
+					value: nOut + nIn + nDist,
+				},
+			},
+		},
 	};
 
-	const jsonParams = JSON.stringify(borderLine2Properties);
+	const jsonParams = JSON.stringify(params);
 
 	// The UNO command name itself, from `scslots.hxx`
 	return `.uno:LineStyle ${jsonParams}`;
