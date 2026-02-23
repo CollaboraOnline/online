@@ -42,7 +42,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Scroll through document', 
 			expect(items).to.have.lengthOf(1);
 			var XPos = items[0].getBoundingClientRect().right - 280;
 			var YPos = items[0].getBoundingClientRect().bottom - 60;
-			cy.cGet('body').click(XPos, YPos);
+			cy.cGet('body').realClick(XPos, YPos);
 		});
 
 		// Select cells downwards with shift + arrow
@@ -65,7 +65,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Scroll through document', 
 			expect(items).to.have.lengthOf(1);
 			var XPos = items[0].getBoundingClientRect().right - 280;
 			var YPos = items[0].getBoundingClientRect().bottom - 60;
-			cy.cGet('body').click(XPos, YPos);
+			cy.cGet('body').realClick(XPos, YPos);
 		});
 
 		// Select cells to the right with shift + arrow
@@ -138,7 +138,8 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Scroll through document', 
 				helper.waitForTimers(this.win, 'autoscroll');
 
 				// Click on the ~center of the window.
-				cy.cGet('body').click(horizontalCenter, Math.round(right * 0.5));
+				cy.cGet('body').realClick(horizontalCenter, Math.round(right * 0.5));
+				helper.processToIdle(this.win);
 				cy.cGet(helper.addressInputSelector).then((item) => {
 					const addressInput = item[0];
 					const rowNumber = parseInt(addressInput.value.substring(1, addressInput.value.length));
