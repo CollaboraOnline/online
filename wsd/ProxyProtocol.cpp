@@ -84,11 +84,7 @@ void DocumentBroker::proxyOpenRequest(const std::shared_ptr<StreamSocket>& socke
                                       const std::string& id, const Poco::URI& uriPublic,
                                       const bool isReadOnly, const RequestDetails& requestDetails)
 {
-    bool isLocal = socket->isLocal();
-    if constexpr (Util::isDebugEnabled())
-    {
-        isLocal = true;
-    }
+    const bool isLocal = Util::isDebugEnabled() ? true : socket->isLocal();
 
     LOG_TRC("proxy: validate that socket is from localhost: " << isLocal);
     if (!isLocal)
