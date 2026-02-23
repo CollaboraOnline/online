@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-02-13 19:20+0100\n"
-"PO-Revision-Date: 2026-02-17 22:35+0000\n"
+"PO-Revision-Date: 2026-02-19 05:09+0000\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: Hebrew <https://hosted.weblate.org/projects/collabora-online/"
 "ui/he/>\n"
@@ -3325,7 +3325,7 @@ msgstr ""
 
 #: src/control/Control.ServerAuditDialog.ts:127
 msgid "Poorly performing proxying of all network requests."
-msgstr ""
+msgstr "ביצועים נחותים של כל בקשות הרשת."
 
 #: src/control/Control.ServerAuditDialog.ts:131
 msgid "Direct network connection"
@@ -3879,7 +3879,7 @@ msgstr "קריאה בלבד"
 
 #: src/control/PermissionMode.ts:108
 msgid "Viewing Mode"
-msgstr ""
+msgstr "מצב צפייה"
 
 #: src/control/PermissionMode.ts:114
 msgid "Editing Mode"
@@ -3913,11 +3913,11 @@ msgstr "מרבי"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1443
 msgid "Edit Single Sparkline"
-msgstr ""
+msgstr "עריכת תרשים זעיר יחיד"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1454
 msgid "Delete Single Sparkline"
-msgstr ""
+msgstr "מחיקת תרשים זעיר יחיד"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1491
 msgid "Portrait"
@@ -3969,27 +3969,27 @@ msgstr ""
 
 #: src/control/jsdialog/Definitions.Menu.ts:1513
 msgid "Tabloid"
-msgstr ""
+msgstr "צהובון"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1514
 msgid "B6 (JIS)"
-msgstr ""
+msgstr "B6 (JIS)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1515
 msgid "B5 (JIS)"
-msgstr ""
+msgstr "B5 (JIS)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1516
 msgid "B4 (JIS)"
-msgstr ""
+msgstr "B4 (JIS)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1517
 msgid "16 Kai"
-msgstr ""
+msgstr "16 Kai"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1518
 msgid "32 Kai"
-msgstr ""
+msgstr "32 Kai"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1519
 msgid "Big 32 Kai"
@@ -4051,7 +4051,7 @@ msgstr "מעטפת C6"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1542
 msgid "Japanese Postcard"
-msgstr ""
+msgstr "גלויה יפנית"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1728
 msgid "Insert Local Image"
@@ -4091,51 +4091,51 @@ msgstr "המשתמש הזה"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1919
 msgid "No Borders"
-msgstr ""
+msgstr "אין גבולות"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1925
 msgid "Left Border"
-msgstr ""
+msgstr "גבול שמאלי"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1931
 msgid "Right Border"
-msgstr ""
+msgstr "גבול ימני"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1937
 msgid "Left And Right Borders"
-msgstr ""
+msgstr "הגבולות השמאלי והימני"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1943
 msgid "Top Border"
-msgstr ""
+msgstr "גבול עליון"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1949
 msgid "Bottom Border"
-msgstr ""
+msgstr "גבול תחתון"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1955
 msgid "Top And Bottom Border"
-msgstr ""
+msgstr "הגבולות העליון והתחתון"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1961
 msgid "Outer Border"
-msgstr ""
+msgstr "מסגרת חיצונית"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1967
 msgid "All Horizontal Lines"
-msgstr ""
+msgstr "כל הקווים האופקיים"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1973
 msgid "Outer Border And Horizontal Lines"
-msgstr ""
+msgstr "מסגרת חיצונית וקווים אופקיים"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1979
 msgid "Outer Border and Vertical Lines"
-msgstr ""
+msgstr "מסגרת חיצונית וקווים אנכיים"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1985
 msgid "Outer Borders And All Inner lines"
-msgstr ""
+msgstr "מסגרות חיצוניות וכל הקווים הפנימיים"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1990
 msgid "Line color"
@@ -4175,15 +4175,15 @@ msgstr "עובי שערה כפול (1.10 נק׳)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2067
 msgid "Double Hairline (2.35 pt)"
-msgstr ""
+msgstr "עובי שערה כפול (2.35 נק׳)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2076
 msgid "Thin/Medium (3.00 pt)"
-msgstr ""
+msgstr "צר/בינוני (3.00 נק׳)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2085
 msgid "Medium/Hairline (3.05 pt)"
-msgstr ""
+msgstr "בינוני/עובי שערה (3.05 נק׳)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2094
 msgid "Medium/Medium (4.50 pt)"
@@ -4259,7 +4259,7 @@ msgstr "כותרת, טקסט אנכי"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2184
 msgid "Title, Vertical Text, Clipart"
-msgstr ""
+msgstr "כותרת, טקסט אנכי, אוסף תמונות"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2319
 msgid "Grayscale"
@@ -4304,7 +4304,7 @@ msgstr "ערכת צבעים"
 
 #: src/control/jsdialog/Widget.ColorPicker.ts:328
 msgid "Enter custom color in hex format"
-msgstr ""
+msgstr "נא למלא צבע בהתאמה אישית בתבנית הקסדצימלית"
 
 #: src/control/jsdialog/Widget.ColorPicker.ts:421
 msgid "Recent"
