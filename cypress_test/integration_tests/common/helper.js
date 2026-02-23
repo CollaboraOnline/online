@@ -742,6 +742,11 @@ function isImageWhite(selector, expectWhite = true) {
 		.should(function(images) {
 			var img = images[0];
 
+			// Ensure the image has actual rendered content, not a
+			// placeholder (e.g. SVG loading spinner for slide previews).
+			expect(img.complete).to.be.true;
+			expect(img.naturalWidth).to.be.greaterThan(0);
+
 			// Create an offscreen canvas to check the image's pixels
 			var canvas = document.createElement('canvas');
 			canvas.width = img.width;
