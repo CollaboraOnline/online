@@ -1437,7 +1437,10 @@ export class Comment extends CanvasSectionObject {
 				}
 			}
 			else if (app.map._docLayer._docType === 'spreadsheet' &&
-				 parseInt(this.sectionProperties.data.tab) === app.map._docLayer._selectedPart) {
+				 parseInt(this.sectionProperties.data.tab) === app.map._docLayer._selectedPart &&
+				 // Don't draw with stale section myTopLeft after a tab-switch.
+				 // Wait for a 'commandstatechanged'.
+				 this.sectionProperties.commentListSection.sectionProperties.calcCommandStateChanged === true) {
 
 				var cellSize = this.calcOptimumSizeForCalc();
 				if (cellSize[0] !== 0 && cellSize[1] !== 0) { // don't draw notes in hidden cells
