@@ -1725,6 +1725,9 @@ void COOLWSD::innerInitialize(Poco::Util::Application& self)
     {
         bool enableWebsocketURP =
             ConfigUtil::getConfigValue<bool>("security.enable_websocket_urp", false);
+        if (enableWebsocketURP)
+            LOG_WRN("NOTE: Deprecated config option security.enable_websocket_urp is enabled. "
+                    "This feature is deprecated and will be removed in a future release.");
         setenv("ENABLE_WEBSOCKET_URP", enableWebsocketURP ? "true" : "false", 1);
     }
 
