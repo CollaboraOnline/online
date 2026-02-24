@@ -914,55 +914,52 @@ namespace cool {
 			}
 		}
 
-		private onAIChatResult(data: any): void {
+		private handleAIResponse(
+			data: any,
+			buildSuccessMsg: (data: any) => ChatMessage,
+			defaultError: string,
+		): void {
 			if (data.requestId !== this.currentRequestId) return;
 
 			this.isProcessing = false;
 
 			if (data.success) {
-				const assistantMsg: ChatMessage = {
-					role: 'assistant',
-					content: data.content,
-					timestamp: Date.now(),
-				};
-				this.messages.push(assistantMsg);
+				this.messages.push(buildSuccessMsg(data));
 			} else {
-				const errorMsg: ChatMessage = {
+				this.messages.push({
 					role: 'assistant',
-					content: _('Error: ') + (data.error || _('AI request failed')),
+					content: _('Error: ') + (data.error || defaultError),
 					timestamp: Date.now(),
 					isError: true,
-				};
-				this.messages.push(errorMsg);
+				});
 			}
 
 			this.updateChatState(true);
 		}
 
+		private onAIChatResult(data: any): void {
+			this.handleAIResponse(
+				data,
+				(d) => ({
+					role: 'assistant',
+					content: d.content,
+					timestamp: Date.now(),
+				}),
+				_('AI request failed'),
+			);
+		}
+
 		private onAIImageResult(data: any): void {
-			if (data.requestId !== this.currentRequestId) return;
-
-			this.isProcessing = false;
-
-			if (data.success) {
-				const imageMsg: ChatMessage = {
+			this.handleAIResponse(
+				data,
+				(d) => ({
 					role: 'assistant',
 					content: _('Generated image'),
-					imageData: data.imageData,
+					imageData: d.imageData,
 					timestamp: Date.now(),
-				};
-				this.messages.push(imageMsg);
-			} else {
-				const errorMsg: ChatMessage = {
-					role: 'assistant',
-					content: _('Error: ') + (data.error || _('Image generation failed')),
-					timestamp: Date.now(),
-					isError: true,
-				};
-				this.messages.push(errorMsg);
-			}
-
-			this.updateChatState(true);
+				}),
+				_('Image generation failed'),
+			);
 		}
 
 		clearConversation(): void {
