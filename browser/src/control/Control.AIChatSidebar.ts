@@ -1036,23 +1036,25 @@ namespace cool {
 			app.socket.sendMessage(blob);
 		}
 
-		private insertImageAtCursor(base64Data: string): void {
-			const byteChars = atob(base64Data);
+		private base64ToUint8Array(data: string): Uint8Array {
+			const byteChars = atob(data);
 			const bytes = new Uint8Array(byteChars.length);
 			for (let i = 0; i < byteChars.length; i++) {
 				bytes[i] = byteChars.charCodeAt(i);
 			}
+			return bytes;
+		}
+
+		private insertImageAtCursor(base64Data: string): void {
+			const bytes = this.base64ToUint8Array(base64Data);
 			const blob = new Blob(['paste mimetype=image/png\n', bytes.buffer]);
 			app.socket.sendMessage(blob);
 		}
 
 		private copyImageToClipboard(base64Data: string, index: number): void {
-			var byteChars = atob(base64Data);
-			var bytes = new Uint8Array(byteChars.length);
-			for (var i = 0; i < byteChars.length; i++) {
-				bytes[i] = byteChars.charCodeAt(i);
-			}
-			var imgBlob = new Blob([bytes], { type: 'image/png' });
+			const imgBlob = new Blob([this.base64ToUint8Array(base64Data)], {
+				type: 'image/png',
+			});
 
 			if (navigator.clipboard && navigator.clipboard.write) {
 				navigator.clipboard
