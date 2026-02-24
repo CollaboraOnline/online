@@ -110,7 +110,10 @@ export class ScrollSection extends CanvasSectionObject {
 		// comes from a mouse-wheel or a touchpad.
 		this.sectionProperties.scrollQuirks = true;
 
-		this.sectionProperties.alwaysDrawVerticalScrollBar = this.map._docLayer._docType === 'spreadsheet' && !(<any>window).mode.isDesktop();
+		this.sectionProperties.alwaysDrawVerticalScrollBar =
+			(this.map._docLayer._docType === 'spreadsheet' &&
+				!(<any>window).mode.isDesktop()) ||
+			(app.map.getDocType() === 'text' && (<any>window).mode.isDesktop());
 	}
 
 	public completePendingScroll(): void {
