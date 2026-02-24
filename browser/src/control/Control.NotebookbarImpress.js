@@ -469,6 +469,7 @@ window.L.Control.NotebookbarImpress = window.L.Control.NotebookbarWriter.extend(
 				'id': 'slide-fullscreen-presentation',
 				'type': 'bigcustomtoolitem',
 				'text': _('From Beginning'),
+				'tooltip': _('Start slideshow in fullscreen from the first slide.'),
 				'command': 'fullscreen-presentation',
 				'accessibility': { focusBack: true, combination: 'FB', de: null }
 			},
@@ -476,6 +477,7 @@ window.L.Control.NotebookbarImpress = window.L.Control.NotebookbarWriter.extend(
 				'id': 'slide-presentation-currentslide',
 				'type': 'bigcustomtoolitem',
 				'text':  _('From Current Slide'),
+				'tooltip': _('Start slideshow in fullscreen from the current slide.'),
 				'command': 'presentation-currentslide',
 				'accessibility': { focusBack: true, combination: 'FC', de: null }
 			},
@@ -490,6 +492,7 @@ window.L.Control.NotebookbarImpress = window.L.Control.NotebookbarWriter.extend(
 					'id': 'slide-presentation-in-window',
 					'type': 'bigcustomtoolitem',
 					'text': _('Present in Window'),
+					'tooltip': _('Start slideshow from the first slide (without fullscreen).'),
 					'command': 'presentinwindow',
 					'accessibility': { focusBack: true, combination: 'PW', de: null }
 				} : {},
@@ -506,6 +509,7 @@ window.L.Control.NotebookbarImpress = window.L.Control.NotebookbarWriter.extend(
 					'id': 'slide-presentation-follow-me',
 					'type': 'bigcustomtoolitem',
 					'text': _('Present to All'),
+					'tooltip': _('Present slideshow to everyone viewing this document.'),
 					'command': 'followmepresentation',
 					'accessibility': { focusBack: true, combination: 'PL', de: null }
 				} : {},
@@ -514,6 +518,7 @@ window.L.Control.NotebookbarImpress = window.L.Control.NotebookbarWriter.extend(
 					'id': 'slide-presentation-follow',
 					'type': 'bigcustomtoolitem',
 					'text': _('Follow Presenter'),
+					'tooltip': _('Join the slideshow and follow the presenter.'),
 					'command': 'followpresentation',
 					'accessibility': { focusBack: true, combination: 'PF', de: null }
 				} : {},
