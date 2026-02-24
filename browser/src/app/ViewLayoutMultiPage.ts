@@ -335,8 +335,10 @@ class ViewLayoutMultiPage extends ViewLayoutNewBase {
 	public reset() {
 		if (!app.file.writer.pageRectangleList.length) return;
 
-		this.resetViewLayout();
-		this.updateViewData();
+		app.layoutingService.appendLayoutingTask(() => {
+			this.resetViewLayout();
+			this.updateViewData();
+		});
 	}
 
 	public getTotalSideSpace() {
