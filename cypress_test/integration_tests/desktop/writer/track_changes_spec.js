@@ -145,7 +145,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Track Changes', function (
 		// And when closing the dialog and entering doc compare mode:
 		cy.cGet('#AcceptRejectChangesDialog').parents('.jsdialog-window').find('.ui-dialog-titlebar-close').click();
 		cy.cGet('#AcceptRejectChangesDialog').should('not.exist');
-		desktopHelper.getNbIcon('TrackChanges', 'Review').click();
+		desktopHelper.getNbIconArrow('TrackChanges', 'Review').click();
 		cy.cGet('#compare-tracked-change').filter(':visible').click();
 
 		// Then the left label should show the old document name:
@@ -192,7 +192,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Track Changes', function (
 		cy.cGet('#Review-tab-label').click();
 
 		// When entering doc compare mode via View Changes:
-		desktopHelper.getNbIcon('TrackChanges', 'Review').click();
+		desktopHelper.getNbIconArrow('TrackChanges', 'Review').click();
 		cy.cGet('#compare-tracked-change').filter(':visible').click();
 
 		// Then tiles should exist for both mode=1 (LeftSide) and mode=2 (RightSide)
@@ -225,7 +225,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Track Changes', function (
 		// Given a document in compare changes mode:
 		desktopHelper.switchUIToNotebookbar();
 		cy.cGet('#Review-tab-label').click();
-		desktopHelper.getNbIcon('TrackChanges', 'Review').click();
+		desktopHelper.getNbIconArrow('TrackChanges', 'Review').click();
 		cy.cGet('#compare-tracked-change').filter(':visible').click();
 		cy.cGet('.compare-changes-labels').should('not.have.css', 'display', 'none');
 
