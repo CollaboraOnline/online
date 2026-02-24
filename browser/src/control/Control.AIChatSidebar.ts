@@ -183,7 +183,7 @@ namespace cool {
 		private render(): void {
 			if (!this._isActive) return;
 			this.container.innerHTML = '';
-			var data = this.getWidgetJSON();
+			const data = this.getWidgetJSON();
 			this.builder.build(this.container, [data], false);
 			this.applyMessageStyles();
 			this.applyInputStyles();
@@ -231,10 +231,10 @@ namespace cool {
 		}
 
 		private applyMessageStyles(): void {
-			for (var i = 0; i < this.messages.length; i++) {
-				var el = document.getElementById('aichat-msg-' + i);
+			for (let i = 0; i < this.messages.length; i++) {
+				const el = document.getElementById('aichat-msg-' + i);
 				if (el) {
-					var cls =
+					const cls =
 						this.messages[i].role === 'user'
 							? 'aichat-msg-user'
 							: 'aichat-msg-assistant';
@@ -249,17 +249,17 @@ namespace cool {
 		}
 
 		private applyCardStyles(): void {
-			var hasSelection = TextSelections.isActive();
-			var chips = document.getElementById('aichat-chips');
+			const hasSelection = TextSelections.isActive();
+			const chips = document.getElementById('aichat-chips');
 			if (!chips) return;
-			var cards = chips.querySelectorAll(
+			const cards = chips.querySelectorAll(
 				'[id^="aichat-chip-"]:not(#aichat-chip-formula-diagnosis) > button.ui-pushbutton',
 			);
 			cards.forEach((btn) => {
-				var existing = btn.querySelector('.aichat-sel-badge');
+				const existing = btn.querySelector('.aichat-sel-badge');
 				if (existing) existing.remove();
 				if (hasSelection) {
-					var badge = document.createElement('span');
+					const badge = document.createElement('span');
 					badge.className = 'aichat-sel-badge';
 					badge.textContent = _('selection');
 					btn.appendChild(badge);
@@ -637,7 +637,7 @@ namespace cool {
 		}
 
 		private getPromptChipsJSON(): any {
-			var cardChildren: any[] = [];
+			const cardChildren: any[] = [];
 
 			if (app.map.getDocType() === 'spreadsheet') {
 				cardChildren.push({
@@ -648,12 +648,12 @@ namespace cool {
 				});
 			}
 
-			var cardsToShow = this.showAllCards
+			const cardsToShow = this.showAllCards
 				? this.PROMPT_CARDS.length
 				: this.INITIAL_CARDS_SHOWN;
 
-			for (var i = 0; i < cardsToShow && i < this.PROMPT_CARDS.length; i++) {
-				var card = this.PROMPT_CARDS[i];
+			for (let i = 0; i < cardsToShow && i < this.PROMPT_CARDS.length; i++) {
+				const card = this.PROMPT_CARDS[i];
 				cardChildren.push({
 					id: 'aichat-chip-' + i,
 					type: 'pushbutton',
@@ -1177,7 +1177,7 @@ namespace cool {
 		}
 
 		private fallbackCopy(text: string, index: number): void {
-			var textArea = document.createElement('textarea');
+			const textArea = document.createElement('textarea');
 			textArea.style.position = 'absolute';
 			textArea.style.opacity = '0';
 			textArea.value = text;
@@ -1194,7 +1194,7 @@ namespace cool {
 		}
 
 		private markdownToHtml(text: string): string {
-			var html: string;
+			let html: string;
 
 			if (typeof marked !== 'undefined') {
 				html = marked.parse(text.trim(), {
@@ -1296,8 +1296,8 @@ namespace cool {
 		}
 
 		private buildFormulaDiagnosisPrompt(depChain: any): string {
-			var cell = depChain.cell;
-			var context = _('I have a formula error in my spreadsheet.') + '\n\n';
+			const cell = depChain.cell;
+			let context = _('I have a formula error in my spreadsheet.') + '\n\n';
 			context +=
 				_('Cell') +
 				' ' +
@@ -1331,12 +1331,12 @@ namespace cool {
 		}
 
 		private formatDependencies(deps: any[], indent: number): string {
-			var result = '';
-			var prefix = '';
-			for (var p = 0; p < indent; p++) prefix += '  ';
+			let result = '';
+			let prefix = '';
+			for (let p = 0; p < indent; p++) prefix += '  ';
 
-			for (var i = 0; i < deps.length; i++) {
-				var dep = deps[i];
+			for (let i = 0; i < deps.length; i++) {
+				const dep = deps[i];
 				if (dep.type === 'formula') {
 					result += prefix + '- ' + dep.address + ': ';
 					result += _('formula') + ' ' + dep.formula;
