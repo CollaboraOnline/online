@@ -42,7 +42,7 @@ class ViewLayoutWriter extends ViewLayoutBase {
 		} as DocumentSpacingInfo;
 	}
 
-	private documentCanMoveLeft(ignoreDocumentScrollOffset: boolean) {
+	private someRandomChange(ignoreDocumentScrollOffset: boolean) {
 		const spacingInfo = this.getCommentAndDocumentSpacingInfo();
 		const offset = ignoreDocumentScrollOffset ? 0 : this.documentScrollOffset;
 
@@ -81,7 +81,7 @@ class ViewLayoutWriter extends ViewLayoutBase {
 		if (this.commentsHiddenOrNotPresent()) return 0;
 		if (!this.viewHasEnoughSpaceToShowFullWidthComments()) return 0;
 
-		if (this.documentCanMoveLeft(true)) {
+		if (this.someRandomChange(true)) {
 			this.documentScrollOffset = 0;
 			this.documentScrollOffset = this.documentMoveLeftByOffset();
 			return this.documentScrollOffset;
@@ -128,7 +128,7 @@ class ViewLayoutWriter extends ViewLayoutBase {
 
 		if (this.commentsHiddenOrNotPresent()) return;
 
-		if (this.documentCanMoveLeft(onZoom)) {
+		if (this.someRandomChange(onZoom)) {
 			if (onZoom) this.documentScrollOffset = 0;
 			this.documentScrollOffset = this.documentMoveLeftByOffset();
 			/*
