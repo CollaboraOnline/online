@@ -351,6 +351,19 @@ namespace cool {
 			};
 		}
 
+		// JSDialog builder only creates a wrapper div for containers
+		// with >1 children; add a spacer to guarantee the div exists.
+		private ensureContainerChildren(children: any[], idPrefix: string): void {
+			if (children.length < 2) {
+				children.push({
+					id: idPrefix + '-spacer',
+					type: 'fixedtext',
+					text: '',
+					enabled: true,
+				});
+			}
+		}
+
 		private readonly ICON_TRASH: string =
 			"data:image/svg+xml,%3Csvg viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg' " +
 			"fill='none' stroke='%23666' stroke-width='1.5' stroke-linecap='round' " +
@@ -457,17 +470,7 @@ namespace cool {
 				});
 			}
 
-			// JSDialog builder only creates a wrapper div for containers
-			// with >1 children; add a spacer to guarantee the div exists
-			// so #aichat-messages-area CSS (flex: 1) applies.
-			if (children.length < 2) {
-				children.push({
-					id: 'aichat-messages-spacer',
-					type: 'fixedtext',
-					text: '',
-					enabled: true,
-				});
-			}
+			this.ensureContainerChildren(children, 'aichat-messages');
 
 			return {
 				id: 'aichat-messages-area',
@@ -540,17 +543,7 @@ namespace cool {
 				}
 			}
 
-			// JSDialog builder only creates a wrapper div for containers
-			// with >1 children; add a spacer to guarantee the div exists
-			// so applyMessageStyles can find it by ID.
-			if (children.length < 2) {
-				children.push({
-					id: `aichat-msg-spacer-${index}`,
-					type: 'fixedtext',
-					text: '',
-					enabled: true,
-				});
-			}
+			this.ensureContainerChildren(children, `aichat-msg-${index}`);
 
 			return {
 				id: `aichat-msg-${index}`,
@@ -579,17 +572,7 @@ namespace cool {
 				enabled: true,
 			});
 
-			// JSDialog builder only creates a wrapper div for containers
-			// with >1 children; add a spacer to ensure the actions div
-			// is always created so CSS selectors match.
-			if (children.length < 2) {
-				children.push({
-					id: `aichat-actions-spacer-${index}`,
-					type: 'fixedtext',
-					text: '',
-					enabled: true,
-				});
-			}
+			this.ensureContainerChildren(children, `aichat-actions-${index}`);
 
 			return {
 				id: `aichat-actions-${index}`,
