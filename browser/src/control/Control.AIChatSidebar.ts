@@ -46,14 +46,35 @@ namespace cool {
 		private container: HTMLElement;
 		private wrapper: HTMLElement;
 
-		private readonly PROMPT_CHIPS: string[] = [
-			'Make it more concise',
-			'Make it more formal',
-			'Make it more casual',
-			'Summarize this text',
-			'Expand this text',
-			'Fix grammar & spelling',
+		private readonly PROMPT_CARDS: { label: string; prompt: string }[] = [
+			{
+				label: _('Make the following text more concise'),
+				prompt: 'Make it more concise',
+			},
+			{
+				label: _('Rewrite to sound more professional and formal'),
+				prompt: 'Make it more formal',
+			},
+			{
+				label: _('Rewrite in a more casual, friendly tone'),
+				prompt: 'Make it more casual',
+			},
+			{
+				label: _('Summarize the key points of this text'),
+				prompt: 'Summarize this text',
+			},
+			{
+				label: _('Expand and add more detail to this text'),
+				prompt: 'Expand this text',
+			},
+			{
+				label: _('Fix grammar, spelling, and punctuation errors'),
+				prompt: 'Fix grammar & spelling',
+			},
 		];
+
+		private readonly INITIAL_CARDS_SHOWN: number = 3;
+		private showAllCards: boolean = false;
 
 		private readonly SYSTEM_PROMPT: string =
 			'You are a helpful assistant for Collabora Online. ' +
@@ -216,6 +237,26 @@ namespace cool {
 				}
 			}
 			this.applyMessageTooltips();
+			this.applyCardStyles();
+		}
+
+		private applyCardStyles(): void {
+			var hasSelection = TextSelections.isActive();
+			var chips = document.getElementById('aichat-chips');
+			if (!chips) return;
+			var cards = chips.querySelectorAll(
+				'[id^="aichat-chip-"]:not(#aichat-chip-formula-diagnosis) > button.ui-pushbutton',
+			);
+			cards.forEach((btn) => {
+				var existing = btn.querySelector('.aichat-sel-badge');
+				if (existing) existing.remove();
+				if (hasSelection) {
+					var badge = document.createElement('span');
+					badge.className = 'aichat-sel-badge';
+					badge.textContent = _('selection');
+					btn.appendChild(badge);
+				}
+			});
 		}
 
 		private applyMessageTooltips(): void {
@@ -605,10 +646,10 @@ namespace cool {
 		}
 
 		private getPromptChipsJSON(): any {
-			var chipChildren: any[] = [];
+			var cardChildren: any[] = [];
 
 			if (app.map.getDocType() === 'spreadsheet') {
-				chipChildren.push({
+				cardChildren.push({
 					id: 'aichat-chip-formula-diagnosis',
 					type: 'pushbutton',
 					text: _('Diagnose formula error'),
@@ -616,19 +657,35 @@ namespace cool {
 				});
 			}
 
-			for (var i = 0; i < this.PROMPT_CHIPS.length; i++) {
-				chipChildren.push({
+			var cardsToShow = this.showAllCards
+				? this.PROMPT_CARDS.length
+				: this.INITIAL_CARDS_SHOWN;
+
+			for (var i = 0; i < cardsToShow && i < this.PROMPT_CARDS.length; i++) {
+				var card = this.PROMPT_CARDS[i];
+				cardChildren.push({
 					id: 'aichat-chip-' + i,
 					type: 'pushbutton',
-					text: this.PROMPT_CHIPS[i],
+					text: card.label,
 					enabled: true,
 				});
 			}
+
+			// "See more" / "See less" toggle
+			if (this.PROMPT_CARDS.length > this.INITIAL_CARDS_SHOWN) {
+				cardChildren.push({
+					id: 'aichat-see-more',
+					type: 'pushbutton',
+					text: this.showAllCards ? _('See less') : _('See more'),
+					enabled: true,
+				});
+			}
+
 			return {
 				id: 'aichat-chips',
 				type: 'container',
-				vertical: false,
-				children: chipChildren,
+				vertical: true,
+				children: cardChildren,
 			};
 		}
 
@@ -681,10 +738,13 @@ namespace cool {
 					}
 				} else if (id === 'aichat-chip-formula-diagnosis') {
 					this.diagnoseFormulaError();
+				} else if (id === 'aichat-see-more') {
+					this.showAllCards = !this.showAllCards;
+					this.updateMessagesArea();
 				} else if (id.startsWith('aichat-chip-')) {
 					var chipIdx = parseInt(id.replace('aichat-chip-', ''));
-					if (this.PROMPT_CHIPS[chipIdx]) {
-						this.inputText = this.PROMPT_CHIPS[chipIdx];
+					if (this.PROMPT_CARDS[chipIdx]) {
+						this.inputText = this.PROMPT_CARDS[chipIdx].prompt;
 						this.sendMessage();
 					}
 				} else if (id.startsWith('aichat-retry-')) {
@@ -915,6 +975,7 @@ namespace cool {
 			this.inputText = '';
 			this.lastSentSelectedText = '';
 			this.hintText = '';
+			this.showAllCards = false;
 			this.render();
 		}
 
