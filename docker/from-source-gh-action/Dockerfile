@@ -72,8 +72,8 @@ RUN setcap cap_fowner,cap_chown,cap_sys_chroot=ep /usr/bin/coolforkit-caps && \
     touch /var/log/coolwsd.log && \
     chown cool:cool /var/log/coolwsd.log && \
     chown -R cool:cool /opt/ && \
-    chown -R cool:cool /etc/coolwsd \
-    chown -R root:root /usr/share/coolwsd/browser/dist \
+    chown -R cool:cool /etc/coolwsd && \
+    chown -R root:root /usr/share/coolwsd/browser/dist && \
     chmod -R 755 /usr/share/coolwsd/browser/dist
 
 EXPOSE 9980
