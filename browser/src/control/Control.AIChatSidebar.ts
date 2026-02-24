@@ -114,6 +114,13 @@ namespace cool {
 		private registerChatHandlers(): void {
 			app.map.on('aichatresult', this.onAIChatResult, this);
 			app.map.on('aiimageresult', this.onAIImageResult, this);
+			app.map.on('docloaded', this.onDocLoaded, this);
+		}
+
+		private onDocLoaded(e: any): void {
+			if (e.status === false && this._isActive) {
+				this.hide();
+			}
 		}
 
 		toggle(): void {
