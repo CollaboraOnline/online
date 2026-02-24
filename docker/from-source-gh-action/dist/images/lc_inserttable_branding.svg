@@ -1,0 +1,10 @@
+<svg width="24" height="24" version="1.1" xmlns="http://www.w3.org/2000/svg">
+ <path d="m3 3h6v6h-6z" fill="#4d82b8" fill-rule="evenodd"/>
+ <path d="m3 15h6v6h-6zm6 0h6v6h-6zm6 0h6v6h-6zm-12-6h6v6h-6z" fill="#0b87e7" fill-opacity=".502" fill-rule="evenodd"/>
+ <path d="m3 3v19" fill="none" stroke="#fff" stroke-width="2"/>
+ <path d="M9 9h6v6H9zm6 0h6v6h-6zM9 3h6v6H9zm6 0h6v6h-6z" fill="#0b87e7" fill-opacity=".502" fill-rule="evenodd"/>
+ <path d="M9 3v19m6-19v19M3 9h19M3 3h19M3 15h19M3 21h19M21 3v19" fill="none" stroke="#fff" stroke-width="2"/>
+ <path d="m3 2c-0.545 0-1 0.455-1 1v18c0 0.545 0.455 1 1 1h18c0.545 0 1-0.455 1-1v-18c0-0.545-0.455-1-1-1zm0 1h18v18h-18z" fill="#4d4d4d" style="font-feature-settings:normal;font-variant-alternates:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-variant-numeric:normal;font-variant-position:normal;isolation:auto;mix-blend-mode:normal;shape-padding:0;text-decoration-color:#000000;text-decoration-line:none;text-decoration-style:solid;text-indent:0;text-orientation:mixed;text-transform:none;white-space:normal"/>
+
+<!-- (C) Collabora Productivity 2020, All Rights Reserved -->
+</svg>

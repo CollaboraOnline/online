@@ -1,0 +1,15 @@
+<?xml-stylesheet type="text/css" href="icons.css" ?>
+<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+    <path
+       d="M 3,3 H 21"
+       style="stroke:#333333;stroke-width:2;stroke-linecap:round"
+       />
+    <path
+       d="M 3,12 H 21"
+       style="stroke:#333333;stroke-width:2;stroke-linecap:round"
+       />
+    <path
+       d="M 3,21 H 21"
+       style="stroke:#333333;stroke-width:2;stroke-linecap:round"
+       />
+</svg>

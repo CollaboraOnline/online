@@ -1,0 +1,50 @@
+<svg width="24" height="24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:cc="http://creativecommons.org/ns#" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:xlink="http://www.w3.org/1999/xlink">
+ <metadata>
+  <rdf:RDF>
+   <cc:Work rdf:about="">
+    <dc:format>image/svg+xml</dc:format>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:title/>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <linearGradient id="b" x1="-59.825" x2="-49.057" y1="12.503" y2="5.512" gradientTransform="rotate(32.994 -28.818 118.24)" gradientUnits="userSpaceOnUse">
+   <stop stop-color="#fff" offset="0"/>
+   <stop stop-color="#5c2983" offset="1"/>
+  </linearGradient>
+  <linearGradient id="c" x1="-8.78" x2="45.777" y1="3.183" y2="3.183" gradientTransform="matrix(.18035 0 0 .37732 .109 3.28)" gradientUnits="userSpaceOnUse">
+   <stop stop-color="#fff" offset="0"/>
+   <stop stop-color="#5c2983" offset="1"/>
+  </linearGradient>
+  <linearGradient id="d" x1="-8.78" x2="45.777" y1="3.183" y2="3.183" gradientTransform="matrix(.18035 0 0 .37732 -1.849 6.28)" gradientUnits="userSpaceOnUse">
+   <stop stop-color="#fff" offset="0"/>
+   <stop stop-color="#5c2983" offset="1"/>
+  </linearGradient>
+  <linearGradient id="e" x1="-8.78" x2="45.777" y1="3.183" y2="3.183" gradientTransform="matrix(.18035 0 0 .37732 -6.527 9.23)" gradientUnits="userSpaceOnUse">
+   <stop stop-color="#fff" offset="0"/>
+   <stop stop-color="#5c2983" offset="1"/>
+  </linearGradient>
+  <linearGradient id="f" x1="-8.78" x2="45.777" y1="3.183" y2="3.183" gradientTransform="matrix(.18035 0 0 .37732 -3.78 12.357)" gradientUnits="userSpaceOnUse">
+   <stop stop-color="#fff" offset="0"/>
+   <stop stop-color="#5c2983" offset="1"/>
+  </linearGradient>
+  <linearGradient id="g" x1="-8.78" x2="45.777" y1="3.183" y2="3.183" gradientTransform="matrix(.18035 0 0 .37732 -1.823 15.306)" gradientUnits="userSpaceOnUse">
+   <stop stop-color="#fff" offset="0"/>
+   <stop stop-color="#5c2983" offset="1"/>
+  </linearGradient>
+  <linearGradient id="h" x1="-8.78" x2="45.777" y1="3.183" y2="3.183" gradientTransform="matrix(.18035 0 0 .37732 -3.857 18.281)" gradientUnits="userSpaceOnUse">
+   <stop stop-color="#fff" offset="0"/>
+   <stop stop-color="#5c2983" offset="1"/>
+  </linearGradient>
+ </defs>
+ <path d="M17.175 14.72l1.223 7.125-6.399-3.364-6.398 3.365 1.221-7.125-5.177-5.045L8.8 8.636l3.198-6.483 3.2 6.482 7.154 1.039z" fill="url(#b)" paint-order="markers stroke fill"/>
+ <g color="#000000">
+  <path d="m0 4.094v0.777h7.86c0.098 0 0.18-0.173 0.18-0.379v-0.021c0-0.206-0.082-0.377-0.18-0.377z" fill="url(#c)" style="font-feature-settings:normal;font-variant-alternates:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-variant-numeric:normal;font-variant-position:normal;isolation:auto;mix-blend-mode:normal;shape-padding:0;text-decoration-color:#000000;text-decoration-line:none;text-decoration-style:solid;text-indent:0;text-orientation:mixed;text-transform:none;white-space:normal"/>
+  <path d="m0 7.094v0.777h5.902c0.099 0 0.18-0.173 0.18-0.379v-0.021c0-0.206-0.081-0.377-0.18-0.377z" fill="url(#d)" style="font-feature-settings:normal;font-variant-alternates:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-variant-numeric:normal;font-variant-position:normal;isolation:auto;mix-blend-mode:normal;shape-padding:0;text-decoration-color:#000000;text-decoration-line:none;text-decoration-style:solid;text-indent:0;text-orientation:mixed;text-transform:none;white-space:normal"/>
+  <path d="m0 10.043v0.775h1.223c0.098 0 0.181-0.17 0.181-0.377v-0.021c0-0.206-0.083-0.377-0.181-0.377z" fill="url(#e)" style="font-feature-settings:normal;font-variant-alternates:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-variant-numeric:normal;font-variant-position:normal;isolation:auto;mix-blend-mode:normal;shape-padding:0;text-decoration-color:#000000;text-decoration-line:none;text-decoration-style:solid;text-indent:0;text-orientation:mixed;text-transform:none;white-space:normal"/>
+  <path d="m0 13.17v0.777h3.969c0.098 0 0.181-0.173 0.181-0.379v-0.021c0-0.206-0.083-0.377-0.181-0.377z" fill="url(#f)" style="font-feature-settings:normal;font-variant-alternates:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-variant-numeric:normal;font-variant-position:normal;isolation:auto;mix-blend-mode:normal;shape-padding:0;text-decoration-color:#000000;text-decoration-line:none;text-decoration-style:solid;text-indent:0;text-orientation:mixed;text-transform:none;white-space:normal"/>
+  <path d="m0 16.119v0.777h5.928c0.098 0 0.18-0.173 0.18-0.379v-0.021c0-0.206-0.082-0.377-0.18-0.377z" fill="url(#g)" style="font-feature-settings:normal;font-variant-alternates:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-variant-numeric:normal;font-variant-position:normal;isolation:auto;mix-blend-mode:normal;shape-padding:0;text-decoration-color:#000000;text-decoration-line:none;text-decoration-style:solid;text-indent:0;text-orientation:mixed;text-transform:none;white-space:normal"/>
+  <path d="m0 19.094v0.777h3.893c0.098 0 0.181-0.173 0.181-0.379v-0.021c0-0.206-0.083-0.377-0.181-0.377z" fill="url(#h)" style="font-feature-settings:normal;font-variant-alternates:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-variant-numeric:normal;font-variant-position:normal;isolation:auto;mix-blend-mode:normal;shape-padding:0;text-decoration-color:#000000;text-decoration-line:none;text-decoration-style:solid;text-indent:0;text-orientation:mixed;text-transform:none;white-space:normal"/>
+ </g>
+</svg>

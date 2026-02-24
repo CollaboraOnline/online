@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   viewBox="0 0 24 24"
+   version="1.1"
+   id="svg260"
+   sodipodi:docname="format-float-parallel.svg"
+   inkscape:version="1.2 (1:1.2.1+202207142221+cd75a1ee6d)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs264" />
+  <sodipodi:namedview
+     id="namedview262"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     showgrid="false"
+     inkscape:zoom="24.218407"
+     inkscape:cx="14.410527"
+     inkscape:cy="15.731836"
+     inkscape:window-width="1920"
+     inkscape:window-height="1046"
+     inkscape:window-x="0"
+     inkscape:window-y="34"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg260" />
+  <path
+     id="path258"
+     d="M 3 3 L 3 5 L 21 5 L 21 3 L 3 3 z M 3 7 L 3 9 L 7 9 L 7 7 L 3 7 z M 9 7 L 9 13 L 15 13 L 15 7 L 9 7 z M 17 7 L 17 9 L 21 9 L 21 7 L 17 7 z M 3 11 L 3 13 L 7 13 L 7 11 L 3 11 z M 17 11 L 17 13 L 21 13 L 21 11 L 17 11 z M 3 15 L 3 17 L 21 17 L 21 15 L 3 15 z M 3 19 L 3 21 L 17 21 L 17 19 L 3 19 z " />
+</svg>

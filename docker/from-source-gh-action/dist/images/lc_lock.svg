@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg version="1.1" viewBox="0 0 24 48" xmlns="http://www.w3.org/2000/svg">
+ <g>
+  <g>
+   <path d="m12 3.3536c-3.7791 0-6.5 3.3752-6.5 7v3.5a3.0003 3.0003 0 0 0 3 3h7a3.0003 3.0003 0 0 0 3-3v-3.5c0-3.6248-2.7209-7-6.5-7zm0 3c1.939 0 3.5 1.784 3.5 4v3.5h-7v-3.5c0-2.216 1.561-4 3.5-4z" color="#000000" color-rendering="auto" dominant-baseline="auto" fill="#ccc" image-rendering="auto" shape-rendering="auto" solid-color="#000000" stop-color="#000000" style="font-feature-settings:normal;font-variant-alternates:normal;font-variant-caps:normal;font-variant-east-asian:normal;font-variant-ligatures:normal;font-variant-numeric:normal;font-variant-position:normal;font-variation-settings:normal;inline-size:0;isolation:auto;mix-blend-mode:normal;paint-order:markers stroke fill;shape-margin:0;shape-padding:0;text-decoration-color:#000000;text-decoration-line:none;text-decoration-style:solid;text-indent:0;text-orientation:mixed;text-transform:none;white-space:normal"/>
+   <rect x="5" y="12" width="14" height="9" rx="1" ry="1" fill="#808080" stroke-linecap="square" stroke-linejoin="round" stroke-width="16" style="paint-order:markers stroke fill"/>
+   <ellipse cx="12" cy="15.604" rx="2" ry="2" fill="#fff" stroke-width="0" style="paint-order:markers stroke fill"/>
+   <rect x="11" y="15.396" width="2" height="4" rx="1" ry="1" fill="#fff" stroke-width="0" style="paint-order:markers stroke fill"/>
+  </g>
+  <rect x="5" y="36" width="14" height="9" rx="1" ry="1" fill="#0b87e7" stroke-linecap="square" stroke-linejoin="round" stroke-width="16" style="paint-order:markers stroke fill"/>
+  <path d="m16.899 33.109c-0.066386-0.34781-0.16432-0.6831-0.29049-1.0024s-0.28059-0.62246-0.45994-0.9061c-0.17936-0.28365-0.38365-0.54773-0.60959-0.78873-0.90375-0.964-2.1538-1.5587-3.5388-1.5587-2.77 0-5 2.3787-5 5.3333v4.6667" fill="none" stroke="#0b87e7" stroke-linecap="round" stroke-linejoin="round" stroke-width="3" style="paint-order:markers stroke fill"/>
+  <path d="m10.589 42.847-1.8727-1.8727c-0.20344-0.20344-0.20344-0.53208 0-0.73552 0.20344-0.20344 0.53208-0.20344 0.73552 0l1.5075 1.5023 3.5889-3.5889c0.20344-0.20344 0.53208-0.20344 0.73552 0s0.20344 0.53208 0 0.73552l-3.9593 3.9593c-0.19823 0.20344-0.53208 0.20344-0.73552 0z" fill="#fff" stroke="#fff" stroke-width=".2"/>
+ </g>
+</svg>

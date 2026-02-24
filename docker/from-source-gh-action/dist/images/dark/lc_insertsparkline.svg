@@ -1,0 +1,27 @@
+<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+  <rect
+     style="fill:#fafafa"
+     width="20"
+     height="1"
+     x="2"
+     y="19"
+     ry="0.5" />
+  <rect
+     style="fill:#fafafa"
+     width="20"
+     height="1"
+     x="2"
+     y="4"
+     ry="0.5" />
+  <path
+     style="fill:none;stroke:#1e8bcd;stroke-width:1px;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1"
+     d="m 3.5,12.5 4,4 4,-7 4,4 3,-6 3,3"
+     />
+  <rect
+     style="fill:#fafafa"
+     width="1"
+     height="20"
+     x="3"
+     y="2"
+     ry="0.5" />
+</svg>

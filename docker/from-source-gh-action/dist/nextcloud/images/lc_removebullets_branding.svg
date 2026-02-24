@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   height="24"
+   viewBox="0 0 24 24"
+   width="24"
+   version="1.1"
+   id="svg6"
+   sodipodi:docname="lc_removebullets_branding.svg"
+   inkscape:version="1.1.2 (0a00cf5339, 2022-02-04)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs10" />
+  <sodipodi:namedview
+     id="namedview8"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     showgrid="false"
+     showguides="false"
+     inkscape:guide-bbox="true"
+     inkscape:snap-page="true"
+     inkscape:snap-bbox="true"
+     inkscape:bbox-paths="true"
+     inkscape:bbox-nodes="true"
+     inkscape:snap-bbox-midpoints="true"
+     inkscape:zoom="11.313708"
+     inkscape:cx="-2.3864855"
+     inkscape:cy="16.175068"
+     inkscape:window-width="1920"
+     inkscape:window-height="1019"
+     inkscape:window-x="0"
+     inkscape:window-y="32"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg6">
+    <sodipodi:guide
+       position="14,7"
+       orientation="1,0"
+       id="guide1140" />
+    <sodipodi:guide
+       position="14,7"
+       orientation="0,-1"
+       id="guide1924" />
+  </sodipodi:namedview>
+  <path
+     d="M0 0h24v24H0V0z"
+     fill="none"
+     id="path2" />
+  <path
+     d="m 4,10.5 c -0.83,0 -1.5,0.67 -1.5,1.5 0,0.83 0.67,1.5 1.5,1.5 0.83,0 1.5,-0.67 1.5,-1.5 0,-0.83 -0.67,-1.5 -1.5,-1.5 z m 0,-6 C 3.17,4.5 2.5,5.17 2.5,6 2.5,6.83 3.17,7.5 4,7.5 4.83,7.5 5.5,6.83 5.5,6 5.5,5.17 4.83,4.5 4,4.5 Z m 0,12 c -0.83,0 -1.5,0.68 -1.5,1.5 0,0.82 0.68,1.5 1.5,1.5 0.82,0 1.5,-0.68 1.5,-1.5 C 5.5,17.18 4.83,16.5 4,16.5 Z M 7,19 h 3.5 V 17 H 7 Z M 7,13 H 21 V 11 H 7 Z M 7,5 V 7 H 21 V 5 Z"
+     id="path4"
+     sodipodi:nodetypes="sssssssssssssssccccccccccccccc" />
+  <path
+     d="M 15.16,23 17.75,20.41 20.34,23 21.75,21.59 19.16,19 21.75,16.41 20.34,15 17.75,17.59 15.16,15 13.75,16.41 16.34,19 13.75,21.59 Z"
+     id="path977"
+     sodipodi:nodetypes="ccccccccccccc" />
+</svg>

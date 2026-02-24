@@ -1,0 +1,47 @@
+<script>
+  if (typeof brandProductName !== 'undefined') { l10nstrings.strProductName = brandProductName }
+  document.title = l10nstrings.strProductName + ' - ' + l10nstrings.strAdminConsole;
+  var host = (window.location.protocol === 'https:' ? 'wss://' : 'ws://') + window.location.host + '/controller/adminws';
+</script>
+
+<style>
+  .is-rounded {
+    border-radius: 8px;
+  }
+  
+  .is-top-rounded {
+    border-top-right-radius: 8px;
+    border-top-left-radius: 8px;
+  }
+  
+  /* Set to scroll otherwise tablets can spill over into other cards*/
+  .card {
+    overflow: auto;
+  }
+  
+  /* Decrease left panel when on laptop  */
+  @media screen and (max-width: 1024px) {
+    #column-admin-panel {
+      width: 20% !important;
+    }
+  }
+  
+  /* Hide left panel before reaching mobile (there is no space)  */
+  @media screen and (max-width: 960px) {
+    #column-admin-panel {
+      display: none !important;
+    }
+  }
+</style>
+
+<div class="is-fullwidth has-text-white" style="height:62px;background-color:#17191E;line-height:50px;">
+  <a style="margin-left:12px;color:#9D998D;">
+    <script>document.write(l10nstrings.strProductName + ' - ' + l10nstrings.strAdminConsole)</script>
+  </a>
+  <a style="margin-right:12px;color:#9D998D;" id="a-settings-tablet" href="adminClusterOverviewAbout.html"
+  class="is-hidden-mobile is-pulled-right">
+  <script>document.write(l10nstrings.strAbout)</script>
+</a>
+</div>
+
+<!--%MAIN_CONTENT%-->

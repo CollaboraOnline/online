@@ -1,0 +1,105 @@
+<main>
+  <div class="container">
+    <script>Admin.Overview(host);</script>
+
+    <h3 class="title is-3"><script>document.write(l10nstrings.strDashboard)</script></h3>
+
+    <div class="tile is-ancestor has-text-centered">
+      <div class="tile is-parent">
+        <div class="tile is-child has-text-centered">
+          <p class="heading"><script>document.write(l10nstrings.strUsersOnline)</script></p>
+          <p class="title" id="active_users_count">0</p>
+        </div>
+      </div>
+      <div class="tile is-parent">
+        <div class="tile is-child has-text-centered">
+          <p class="heading"><script>document.write(l10nstrings.strDocumentsOpen)</script></p>
+          <p class="title" id="active_docs_count">0</p>
+        </div>
+      </div>
+      <div class="tile is-parent">
+        <div class="tile is-child has-text-centered">
+          <p class="heading"><script>document.write(l10nstrings.strMemoryConsumed)</script></p>
+          <p class="title" id="mem_consumed">0</p>
+        </div>
+      </div>
+      <div class="tile is-parent">
+        <div class="tile is-child has-text-centered">
+          <p class="heading"><script>document.write(l10nstrings.strSentBytes)</script></p>
+          <p class="title" id="sent_bytes">0</p>
+        </div>
+      </div>
+      <div class="tile is-parent">
+        <div class="tile is-child has-text-centered">
+          <p class="heading"><script>document.write(l10nstrings.strRecvBytes)</script></p>
+          <p class="title" id="recv_bytes">0</p>
+        </div>
+      </div>
+      <div class="tile is-parent">
+        <div class="tile is-child has-text-centered">
+          <p class="heading"><script>document.write(l10nstrings.strServerUptime)</script></p>
+          <p class="title" id="uptime">0</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="tabs">
+      <ul>
+        <li id="tab-documents-open" class="is-active"><a><script>document.write(l10nstrings.strDocumentsOpen)</script></a></li>
+        <li id="tab-users-online"><a><script>document.write(l10nstrings.strUsersOnline)</script></a></li>
+      </ul>
+    </div>
+
+    <div class="table-container is-fullwidth" id="tab-content-documents-opened" style="display:grid;">
+      <table id="docview" class="table is-fullwidth is-striped is-hoverable is-bordered">
+        <thead>
+          <tr style="height:40px;">
+			      <th></th><!--This header doesn't need text, this column will hold session closer buttons.-->
+            <th class="has-text-centered"><script>document.write(l10nstrings.strWopihost)</script></th>
+			      <th class="has-text-centered"><script>document.write(l10nstrings.strViewers)</script></th>
+            <th class="has-text-centered"><script>document.write(l10nstrings.strPid)</script></th>
+            <th class="has-text-centered"><script>document.write(l10nstrings.strDocument)</script></th>
+            <th class="has-text-centered"><script>document.write(l10nstrings.strMemoryConsumed)</script></th>
+            <th class="has-text-centered"><script>document.write(l10nstrings.strElapsedTime)</script></th>
+            <th class="has-text-centered"><script>document.write(l10nstrings.strIdleTime)</script></th>
+            <th class="has-text-centered"><script>document.write(l10nstrings.strModified)</script></th>
+            <th class="has-text-centered"><script>document.write(l10nstrings.strUploaded)</script></th>
+          </tr>
+        </thead>
+        <tbody id="doclist"></tbody>
+      </table>
+    </div>
+
+    <div class="table-container is-fullwidth" id="tab-content-users-online" style="display:none;">
+      <table id="userview" class="table is-bordered is-hoverable is-striped is-fullwidth">
+        <thead>
+          <tr style="height:40px;">
+            <th class="has-text-centered"><script>document.write(l10nstrings.strWopihost)</script></th>
+            <th class="has-text-centered"><script>document.write(l10nstrings.strUserName)</script></th>
+            <th class="has-text-centered"><script>document.write(l10nstrings.strDocumentNumber)</script></th>
+          </tr>
+        </thead>
+        <tbody id="userlist"></tbody>
+      </table>
+    </div>
+  </div>
+</main>
+
+<script>
+  document.getElementById('a-overwiew-mobile').classList.add('is-active');
+  document.getElementById('a-overwiew-tablet').classList.add('is-active');
+
+  document.getElementById('tab-documents-open').onclick = function() {
+    document.getElementById('tab-documents-open').className = 'is-active';
+    document.getElementById('tab-users-online').className = '';
+    document.getElementById('tab-content-documents-opened').style.display = 'grid';
+    document.getElementById('tab-content-users-online').style.display = 'none';
+  }
+
+  document.getElementById('tab-users-online').onclick = function() {
+    document.getElementById('tab-users-online').className = 'is-active';
+    document.getElementById('tab-documents-open').className = '';
+    document.getElementById('tab-content-users-online').style.display = 'grid';
+    document.getElementById('tab-content-documents-opened').style.display = 'none';
+  }
+</script>

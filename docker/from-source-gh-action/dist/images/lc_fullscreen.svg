@@ -1,0 +1,14 @@
+<?xml-stylesheet type="text/css" href="icons.css" ?>
+<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+  <g id="symbol"
+     fill="#63BBEE" 
+     stroke="#0369A3" 
+	 stroke-linecap="round" 
+	 stroke-linejoin="round"
+      >
+      <path d="m 21.5,2.5 h -6 v 1 h 5 v 5 h 1 z" />
+      <path d="m 2.5,21.5 h 6 v -1 h -5 v -5 h -1 z" />
+      <path d="m 21.5,21.5 v -6 h -1 v 5 h -5 v 1 z" />
+      <path d="m 2.5,2.5 v 6 h 1 v -5 h 5 v -1 z" />
+  </g>
+</svg>

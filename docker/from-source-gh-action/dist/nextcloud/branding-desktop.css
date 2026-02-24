@@ -1,0 +1,6 @@
+/* (C) Collabora Productivity 2025, All Rights Reserved, (version 24.04-35) */
+
+.text-selection-handle-start,
+.text-selection-handle-end {
+  display: none;
+}

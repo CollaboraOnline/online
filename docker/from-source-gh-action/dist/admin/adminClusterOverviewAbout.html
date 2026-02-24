@@ -1,0 +1,43 @@
+<main>
+	<div class="columns is-fullwidth" style="background-color: #F5F5F5; min-height: 100vh">
+		<div class="container">
+			<script>
+				Admin.ClusterOverviewAbout(host, '%ROUTE_TOKEN%');
+				var aboutButton = document.getElementById('a-settings-tablet');
+				if (aboutButton) {
+					aboutButton.setAttribute('href', 'adminClusterOverview.html');
+					aboutButton.innerHTML = l10nstrings.strOverview;
+				}
+			</script>
+			<div class="columns">
+				<div class="column">
+					<h3 class="title is-3">
+						<script>document.write(l10nstrings.strAbout)</script>
+					</h3>
+				</div>
+			</div>
+			<div class="tabs">
+				<ul>
+					<li id="tab-documents-open" class="is-active"><a id="button-licenseview" href="#licenseview">
+							COOL Controller
+							<script>document.write(l10nstrings.strLicense)</script>
+						</a></li>
+				</ul>
+			</div>
+			<div id="licenseview" class="mtabs">
+				<p>
+				<div id="license-content"></div>
+				</p>
+			</div>
+		</div>
+	</div>
+</main>
+
+<script>
+
+	window.location.href += '#licenseview';
+
+	document.getElementById('button-licenseview').onclick = function (e) {
+		document.getElementById('button-licenseview').parentNode.className = 'is-active';
+	}
+</script>

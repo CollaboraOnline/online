@@ -1,0 +1,22 @@
+<?xml-stylesheet type="text/css" href="icons.css" ?>
+<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+  <g id="symbol"
+     class="icn icn--area-color-line"
+     fill="none"
+     stroke="#3a3a38"
+     stroke-linecap="round"
+     stroke-linejoin="round"
+      >
+      <path d="m 3.5,3.5 h 12 v 10 h -12 z" />
+      <path d="m 8.5,10.5 h 12 v 10 h -12 z" />
+  </g>
+  <g id="symbol"
+	 class="icn icn--highlight-color"  
+     fill="#83beec" 
+     stroke="#1e8bcd" 
+	 stroke-linecap="round" 
+	 stroke-linejoin="round"
+      >
+      <path d="m 2.5,2.5 v 2 h 2 v -2 z m 17,0 v 2 h 2 v -2 z m -17,17 v 2 h 2 v -2 z m 17,0 v 2 h 2 v -2 z" />
+  </g>
+</svg>

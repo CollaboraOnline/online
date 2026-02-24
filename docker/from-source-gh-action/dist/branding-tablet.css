@@ -1,0 +1,309 @@
+/* (C) Collabora Productivity 2025, All Rights Reserved, (version 24.04-35) */
+
+/*
+Any of these can be used either by omitting the prefix (it will default to --co)
+or by setting a different prefix by passing it and 2nd argument
+*/
+/**
+	* Use this mixin to DECLARE a set of CSS Custom Properties in the :root element.
+	* The variables in $css_variables will be properly prefixed.
+	* The use of this mixin is encoraged to keep a good scalability.
+	* @include set-cssvars((
+	*  primary-color: #504999,
+	*  secondary-color: #38257a,
+	* ), (
+	*  primary-color: #38257a,
+	*  secondary-color: #504999,
+	* ));
+	* result in:
+	* root {
+	*  --co-primary-color: #504999;
+	*  --co-secondary-color: #38257a;
+	* }
+	* [data-theme="dark"] {
+	*  --co-primary-color: #38257a;
+	*  --co-secondary-color: #504999;
+	* }
+*/
+/**
+	* ASSIGN a css variable value with prefix
+	* .selector {
+	*   color: get-cssvar(primary-color);
+	* }
+	*
+	* result in:
+	* .selector {
+	*    color: var(--co-primary-color);
+	* }
+ */
+/**
+	* ASSIGN a css variable value with prefix
+*.btn-primary {
+*   height: cssvar(button-height);
+*   &--big {
+*     // rewrite height for btn-primary--big
+*     @include update-cssvar(button-height, 56px);
+*  }
+*}
+ */
+:root {
+  --color-calc-header-selected: #D2D2D2 !important;
+  --color-calc-header-hover: #9FD5B7 !important;
+  --color-text-calc-header-selected: #106802 !important;
+  --color-doc-name-input-bg-hover: rgba(0, 0, 0, 0.2) !important;
+}
+
+[data-theme=dark] {
+  --color-calc-header-selected: #646464 !important;
+  --color-calc-header-hover: #217346 !important;
+  --color-text-calc-header-selected: #fff !important;
+  --color-doc-name-input-bg-hover: black !important;
+}
+
+:root {
+  --column-row-highlight: #9FD5B7 !important;
+}
+
+[data-theme=dark] {
+  --column-row-highlight: #9FD5B7 !important;
+}
+
+/*
+Any of these can be used either by omitting the prefix (it will default to --co)
+or by setting a different prefix by passing it and 2nd argument
+*/
+/**
+	* Use this mixin to DECLARE a set of CSS Custom Properties in the :root element.
+	* The variables in $css_variables will be properly prefixed.
+	* The use of this mixin is encoraged to keep a good scalability.
+	* @include set-cssvars((
+	*  primary-color: #504999,
+	*  secondary-color: #38257a,
+	* ), (
+	*  primary-color: #38257a,
+	*  secondary-color: #504999,
+	* ));
+	* result in:
+	* root {
+	*  --co-primary-color: #504999;
+	*  --co-secondary-color: #38257a;
+	* }
+	* [data-theme="dark"] {
+	*  --co-primary-color: #38257a;
+	*  --co-secondary-color: #504999;
+	* }
+*/
+/**
+	* ASSIGN a css variable value with prefix
+	* .selector {
+	*   color: get-cssvar(primary-color);
+	* }
+	*
+	* result in:
+	* .selector {
+	*    color: var(--co-primary-color);
+	* }
+ */
+/**
+	* ASSIGN a css variable value with prefix
+*.btn-primary {
+*   height: cssvar(button-height);
+*   &--big {
+*     // rewrite height for btn-primary--big
+*     @include update-cssvar(button-height, 56px);
+*  }
+*}
+ */
+:root {
+  --co-color-main-text: #212121 ;
+  --co-color-background-hover: #f5f5f5 ;
+  --co-color-background-dark: #ededed ;
+  --co-body-bg: #ffffff ;
+  --co-text-accent: #38257a ;
+  --co-primary-element: #4c566a ;
+  --co-primary-elment-rgb: 76, 86, 106 ;
+  --co-primary-element-light: #eaecf0 ;
+  --co-primary-text: #ffffff ;
+  --co-border-radius: 3px ;
+  --co-color-border-dark: #b0b4bd ;
+  --co-color-text-lighter: #636363 ;
+  --co-color-warning: #eca700 ;
+  --co-color-main-background-translucent: transparent ;
+  --co-color-background-light: #f1f1f1 ;
+  --co-color-text-nb-tab: #fff ;
+  --co-color-bg-nb-tab: rgba(255, 255, 255, 0.15) ;
+}
+
+[data-theme=dark] {
+  --co-color-main-text: #ededed ;
+  --co-color-background-hover: #262626 ;
+  --co-color-background-dark: #1E1E1E ;
+  --co-body-bg: #262626 ;
+  --co-text-accent: #83beec ;
+  --co-primary-element: #0b87e7 ;
+  --co-primary-element-light: #83beec ;
+  --co-primary-text: #000 ;
+  --co-color-border-dark: #1E1E1E ;
+  --co-color-text-lighter: #fff ;
+  --co-color-warning: #eca700 ;
+  --co-color-main-background-translucent: transparent ;
+  --co-color-background-light: #363636 ;
+  --co-color-bg-nb-tab: rgba(255, 255, 255, 0.05) ;
+}
+
+#toolbar-up .ui-toolbar {
+  padding-top: 5px !important;
+}
+
+/*avoid scroll indicators to be above other items*/
+.ui-tab.notebookbar {
+  line-height: normal;
+  padding: 2px 12px 2px 12px;
+}
+
+.ui-tabs.notebookbar {
+  height: auto !important;
+  border-radius: 8px;
+  box-shadow: inset 0 0 1px 0 rgba(0, 0, 0, 0.15);
+  -moz-box-shadow: inset 0 0 1px 0 rgba(0, 0, 0, 0.15);
+  -webkit-box-shadow: inset 0 0 1px 0 rgba(0, 0, 0, 0.15);
+}
+
+.notebookbar-tabs-container {
+  align-self: auto !important;
+}
+
+.main-nav.hasnotebookbar .ui-tab.selected.notebookbar {
+  text-shadow: none;
+  background-color: white;
+}
+
+.ui-tab.selected.notebookbar {
+  box-shadow: none;
+  border-radius: 8px !important;
+  box-shadow: inset 0 0 0px 1px #dbdbdb, 0 0 3px 0px #00000012;
+  -moz-box-shadow: inset 0 0 0px 1px #dbdbdb, 0 0 3px 0px #00000012;
+  -webkit-box-shadow: inset 0 0 0px 1px #dbdbdb, 0 0 3px 0px #00000012;
+}
+
+.ui-tabs.notebookbar .ui-tab {
+  height: auto !important;
+  background-color: transparent;
+  color: var(--co-color-text-lighter);
+}
+
+.main-nav:not(.hasnotebookbar) {
+  margin-right: 0px;
+  box-shadow: 0px 4px 2px -2px #adadad;
+}
+
+.ui-toolbar {
+  padding-top: 2px;
+}
+
+.ui-scroll-left, .ui-scroll-right {
+  box-shadow: 4px 0 13px 2px var(--co-primary-element), -6px 0 6px 6px var(--co-primary-element) !important;
+}
+
+#mobile-edit-button {
+  background-color: var(--co-primary-element) !important;
+}
+
+.leaflet-selection-marker-end {
+  margin-left: -4px;
+  background-size: 12px;
+  background-repeat: no-repeat;
+  background-image: url("images/ios_handle_end.svg");
+  margin-top: -24px;
+}
+
+.leaflet-selection-marker-start {
+  margin-left: -8px;
+  background-size: 12px;
+  background-repeat: no-repeat;
+  background-image: url("images/ios_handle_start.svg");
+  margin-top: -34px;
+}
+
+.leaflet-cursor-handler {
+  display: none;
+}
+
+/*porting some changes from iOSapp made by @tml and adjusting*/
+.cool-context-toolbar {
+  top: -32px;
+}
+
+#mobile-wizard button,
+#mobile-wizard #FontworkSameLetterHeights {
+  color: var(--co-primary-text);
+  background-color: var(--co-primary-element);
+  border: 1px solid var(--co-primary-element);
+}
+
+#mobile-wizard-titlebar {
+  color: var(--co-color-text-lighter);
+}
+
+.ui-tab.selected.mobile-wizard {
+  color: var(--co-primary-element);
+  border-bottom: 1px solid var(--co-primary-element);
+}
+
+.ui-tab.mobile-wizard {
+  color: var(--co-color-text-lighter);
+}
+
+div#mobile-wizard-content .spinfieldcontainer {
+  border: 1px solid var(--co-color-border-dark);
+  border-radius: var(--co-border-radius);
+}
+
+.spinfieldcontrols {
+  background-color: var(--co-color-background-dark);
+  border-left: 1px solid var(--co-color-border-dark);
+}
+
+.plus {
+  border-left: 1px solid var(--co-color-border-dark);
+  color: var(--co-color-text-lighter) !important;
+}
+
+.minus {
+  border-right: 1px solid var(--co-color-border-dark);
+  color: var(--co-color-text-lighter) !important;
+}
+
+.spinfieldunit {
+  color: var(--co-color-text-lighter) !important;
+}
+
+.colors-container-selected-basic-color {
+  box-shadow: 0 2px 3px -2px var(--co-primary-element);
+  border-radius: var(--co-border-radius);
+}
+
+.color-sample-small {
+  border-color: var(--co-body-bg);
+}
+
+.color-sample-big {
+  box-shadow: 0px 0px 0px 1px var(--co-color-background-dark), 1px 1px 0 3px var(--co-body-bg);
+}
+
+.menu-entry-icon {
+  background: var(--co-color-main-background-translucent);
+}
+
+#mobile-wizard-content #commands.selected {
+  border-color: var(--co-primary-element);
+}
+
+#mobile-wizard .cool-annotation-reply-count {
+  margin-inline-end: 32px !important;
+}
+
+#mobile-wizard .ui-content.unobutton.selected {
+  box-shadow: 0 0 0px 6px var(--color-background-darker) !important;
+  background-color: var(--color-background-darker) !important;
+}

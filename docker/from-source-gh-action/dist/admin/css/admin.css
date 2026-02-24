@@ -1,0 +1,11 @@
+:root {
+	--admin-font: 'Segoe UI', Tahoma, Arial, Helvetica, sans-serif;
+}
+
+html, body {
+	font-family: var(--admin-font);
+}
+
+.hidden {
+  display: none;
+}

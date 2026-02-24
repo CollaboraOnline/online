@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   id="svg20"
+   version="1.1"
+   viewBox="0 0 24 24">
+  <metadata
+     id="metadata26">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs24" />
+  <g
+     style="display:inline;opacity:1;stroke-width:0.26458332"
+     id="g1045">
+    <g
+       style="fill:#5d54b8;fill-opacity:1;stroke-width:0.26458332"
+       transform="scale(-1,1)"
+       id="g1020">
+      <rect
+         style="fill:#4c566a;fill-opacity:1;stroke-width:0.26458332"
+         rx="0.13229166"
+         height="1"
+         ry="0.13229166"
+         width="19"
+         x="-21.000002"
+         y="2"
+         id="rect1010" />
+      <rect
+         style="fill:#4c566a;fill-opacity:1;stroke-width:0.26458332"
+         rx="0.11547501"
+         height="1"
+         ry="0.11547501"
+         width="19"
+         x="-21.000002"
+         y="21"
+         id="rect1012" />
+      <rect
+         style="fill:#4c566a;fill-opacity:1;stroke-width:0.26458332"
+         rx="0.11326573"
+         height="1"
+         ry="0.11326573"
+         width="19.000002"
+         x="-21.000002"
+         y="17"
+         id="rect1014" />
+      <rect
+         style="fill:#8c86bc;fill-opacity:1;stroke-width:0.26458332"
+         rx="0.13229166"
+         height="1"
+         ry="0.13229166"
+         width="11"
+         x="-21.000002"
+         y="6"
+         id="rect1016" />
+      <rect
+         style="fill:#8c86bc;fill-opacity:1;stroke-width:0.26458332"
+         rx="0.13229166"
+         height="1"
+         ry="0.13229166"
+         width="11"
+         x="-21.000002"
+         y="12"
+         id="rect1018" />
+      <path
+         transform="matrix(0.76365636,0,0,1.1869963,-7.1661804,-1.6002212)"
+         d="m 0.80931115,9.4957163 5.95574515,-3.4385515 4e-7,6.8771022 z"
+         id="path1357-8"
+         style="display:inline;opacity:1;fill:#8c86bc;fill-opacity:1;stroke:none;stroke-width:0.13895006;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
+    </g>
+  </g>
+
+<!-- (C) Collabora Productivity 2020, All Rights Reserved -->
+</svg>
