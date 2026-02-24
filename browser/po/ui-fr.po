@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-02-13 19:20+0100\n"
-"PO-Revision-Date: 2026-02-21 07:09+0000\n"
+"PO-Revision-Date: 2026-02-24 12:09+0000\n"
 "Last-Translator: Méven Car <meven.car@collabora.com>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/collabora-online/"
 "ui/fr/>\n"
@@ -4031,7 +4031,7 @@ msgstr "Légal"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1512
 msgid "Long Bond"
-msgstr ""
+msgstr "Liaison longue"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1513
 msgid "Tabloid"
@@ -4054,15 +4054,15 @@ msgstr "B4 (ISO)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1517
 msgid "16 Kai"
-msgstr ""
+msgstr "16 Kai"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1518
 msgid "32 Kai"
-msgstr ""
+msgstr "32 Kai"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1519
 msgid "Big 32 Kai"
-msgstr ""
+msgstr "Big 32 Kai"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1520
 msgid "User"
@@ -4095,7 +4095,7 @@ msgstr "Enveloppe C6"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1533
 msgid "#7¾ (Monarch) Envelope"
-msgstr ""
+msgstr "#7¾ (Monarch) Envelope"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1536
 msgid "#9 Envelope"
