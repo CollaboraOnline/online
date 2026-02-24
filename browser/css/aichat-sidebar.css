@@ -314,12 +314,6 @@
 	gap: 6px;
 	margin-top: 8px;
 	flex-wrap: wrap;
-	opacity: 0;
-	transition: opacity 0.15s ease;
-}
-
-[id^='aichat-msg-']:hover [id^='aichat-actions-'] {
-	opacity: 1;
 }
 
 [id^='aichat-actions-'] .ui-pushbutton-wrapper {
