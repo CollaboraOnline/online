@@ -1662,9 +1662,22 @@ class UIManager extends window.L.Control {
 		elem.tooltip('option', 'items', elem[0]);
 		elem.tooltip('option', 'position', { my: 'left bottom',  at: 'left+' + pt.x + ' top+' + pt.y, collision: 'fit fit' });
 		elem.tooltip('open');
+
+		if (tooltipInfo.anchorRectangles) {
+			if (!app.sectionContainer.doesSectionExist(app.CSections.TooltipAnchor.name)) {
+				app.sectionContainer.addSection(new cool.TooltipAnchorSection());
+			}
+			var section = app.sectionContainer.getSectionWithName(app.CSections.TooltipAnchor.name) as cool.TooltipAnchorSection;
+			section.drawAnchorRectangles(tooltipInfo.anchorRectangles);
+		}
+
 		document.addEventListener('mousemove', function() {
 			elem.tooltip('close');
 			elem.tooltip('disable');
+			if (app.sectionContainer.doesSectionExist(app.CSections.TooltipAnchor.name)) {
+				var section = app.sectionContainer.getSectionWithName(app.CSections.TooltipAnchor.name) as cool.TooltipAnchorSection;
+				section.hideAnchorRectangles();
+			}
 		}, {once: true});
 	}
 
