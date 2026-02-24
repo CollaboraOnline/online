@@ -1663,7 +1663,10 @@ class UIManager extends window.L.Control {
 		elem.tooltip('option', 'position', { my: 'left bottom',  at: 'left+' + pt.x + ' top+' + pt.y, collision: 'fit fit' });
 		elem.tooltip('open');
 
-		if (tooltipInfo.anchorRectangles) {
+		if (
+			tooltipInfo.anchorRectangles &&
+			app.activeDocument?.activeLayout?.type === 'ViewLayoutCompareChanges'
+		) {
 			if (!app.sectionContainer.doesSectionExist(app.CSections.TooltipAnchor.name)) {
 				app.sectionContainer.addSection(new cool.TooltipAnchorSection());
 			}
