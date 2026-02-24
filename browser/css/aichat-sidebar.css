@@ -373,6 +373,7 @@
 }
 
 #aichat-input-area .ui-textarea {
+	box-sizing: border-box;
 	flex: 1;
 	min-height: 38px;
 	max-height: 120px;
@@ -432,7 +433,9 @@
 }
 
 #aichat-send-btn button.ui-pushbutton[disabled] {
-	background: var(--color-background-darker);
+	background-color: rgb(var(--aichat-accent)) !important;
+	border: none !important;
+	opacity: 0.35;
 	cursor: default;
 	transform: none;
 }
