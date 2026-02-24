@@ -56,6 +56,7 @@
 /* ── Main container ── */
 
 #aichat-main {
+	--aichat-accent: var(--doc-type, 11, 135, 231);
 	display: flex !important;
 	grid-auto-flow: unset !important;
 	flex-direction: column;
@@ -205,7 +206,7 @@
 
 [id^='aichat-msg-'].aichat-msg-user {
 	align-self: flex-end;
-	background: var(--color-primary);
+	background: rgb(var(--aichat-accent));
 	color: var(--color-primary-text);
 	padding: 10px 14px;
 	border-radius: 14px 14px 4px;
@@ -246,7 +247,7 @@
 	color: var(--color-text-lighter);
 	background-color: rgba(0, 0, 0, 0.04);
 	padding: 5px 10px;
-	border-left: 3px solid var(--color-primary-lighter);
+	border-left: 3px solid rgba(var(--aichat-accent), 0.5);
 	border-radius: 0 var(--border-radius-s) var(--border-radius-s) 0;
 	margin-bottom: 6px;
 	max-height: 120px;
@@ -290,7 +291,7 @@
 #aichat-dot-1,
 #aichat-dot-2,
 #aichat-dot-3 {
-	color: var(--color-primary) !important;
+	color: rgb(var(--aichat-accent)) !important;
 	font-size: 9px !important;
 	line-height: 1 !important;
 	display: inline-block !important;
@@ -342,8 +343,8 @@
 }
 
 [id^='aichat-actions-'] button.ui-pushbutton:hover {
-	border-color: rgba(11, 135, 231, 0.2);
-	background: rgba(11, 135, 231, 0.08);
+	border-color: rgba(var(--aichat-accent), 0.2);
+	background: rgba(var(--aichat-accent), 0.08);
 }
 
 [id^='aichat-actions-'] button.ui-pushbutton:hover img {
@@ -388,8 +389,8 @@
 }
 
 #aichat-input-area .ui-textarea:focus {
-	border-color: var(--color-primary);
-	box-shadow: 0 0 0 3px rgba(11, 135, 231, 0.12);
+	border-color: rgb(var(--aichat-accent));
+	box-shadow: 0 0 0 3px rgba(var(--aichat-accent), 0.12);
 	outline: none;
 }
 
@@ -405,7 +406,7 @@
 	width: 32px;
 	height: 32px;
 	flex-shrink: 0;
-	background: var(--color-primary);
+	background: rgb(var(--aichat-accent));
 	border: none;
 	border-radius: 50%;
 	cursor: pointer;
@@ -422,7 +423,8 @@
 }
 
 #aichat-send-btn button.ui-pushbutton:hover {
-	background: var(--color-primary-dark);
+	background: linear-gradient(rgba(0, 0, 0, 0.22), rgba(0, 0, 0, 0.22)),
+		rgb(var(--aichat-accent));
 }
 
 #aichat-send-btn button.ui-pushbutton:active {
@@ -534,13 +536,13 @@
 }
 
 .aichat-msg-assistant a {
-	color: var(--color-primary);
+	color: rgb(var(--aichat-accent));
 	text-decoration: underline;
-	text-decoration-color: rgba(11, 135, 231, 0.3);
+	text-decoration-color: rgba(var(--aichat-accent), 0.3);
 }
 
 .aichat-msg-assistant a:hover {
-	text-decoration-color: var(--color-primary);
+	text-decoration-color: rgb(var(--aichat-accent));
 }
 
 .aichat-msg-assistant p {
@@ -680,18 +682,18 @@
 }
 
 #aichat-chips > [id^='aichat-chip-'] > button.ui-pushbutton:hover {
-	border-color: var(--color-primary);
-	background: rgba(11, 135, 231, 0.04);
-	box-shadow: 0 2px 8px rgba(11, 135, 231, 0.1);
+	border-color: rgb(var(--aichat-accent));
+	background: rgba(var(--aichat-accent), 0.04);
+	box-shadow: 0 2px 8px rgba(var(--aichat-accent), 0.1);
 }
 
 /* "selection" badge — indicates selected text will be used */
 .aichat-sel-badge {
 	display: inline-block;
 	font-size: 11px;
-	color: var(--color-primary);
-	background: rgba(11, 135, 231, 0.08);
-	border: 1px solid rgba(11, 135, 231, 0.18);
+	color: rgb(var(--aichat-accent));
+	background: rgba(var(--aichat-accent), 0.08);
+	border: 1px solid rgba(var(--aichat-accent), 0.18);
 	padding: 2px 8px;
 	border-radius: 10px;
 	flex-shrink: 0;
@@ -712,7 +714,7 @@
 	border: none;
 	border-radius: 14px;
 	background: transparent;
-	color: var(--color-primary);
+	color: rgb(var(--aichat-accent));
 	font-size: 12px;
 	font-family: var(--cool-font);
 	cursor: pointer;
@@ -723,7 +725,7 @@
 }
 
 #aichat-chips > #aichat-see-more > button.ui-pushbutton:hover {
-	background: rgba(11, 135, 231, 0.06);
+	background: rgba(var(--aichat-accent), 0.06);
 }
 
 /* ── Accessibility: reduced motion ── */
