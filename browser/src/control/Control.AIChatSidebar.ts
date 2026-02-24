@@ -796,6 +796,22 @@ namespace cool {
 			return this.IMAGE_KEYWORDS.some((kw) => lower.includes(kw));
 		}
 
+		private startRequestTimeout(
+			requestId: string,
+			ms: number,
+			handler: (data: any) => void,
+		): void {
+			setTimeout(() => {
+				if (this.isProcessing && this.currentRequestId === requestId) {
+					handler({
+						success: false,
+						error: _('Request timeout'),
+						requestId: requestId,
+					});
+				}
+			}, ms);
+		}
+
 		async sendMessage(): Promise<void> {
 			const text = this.inputText.trim();
 			if (!text || this.isProcessing) return;
@@ -865,17 +881,11 @@ namespace cool {
 				});
 				app.socket.sendMessage('aiimage: ' + payload);
 
-				// Client-side timeout (60s for image gen)
-				const requestId = this.currentRequestId;
-				setTimeout(() => {
-					if (this.isProcessing && this.currentRequestId === requestId) {
-						this.onAIImageResult({
-							success: false,
-							error: _('Request timeout'),
-							requestId: requestId,
-						});
-					}
-				}, this.IMAGE_REQUEST_TIMEOUT_MS);
+				this.startRequestTimeout(
+					this.currentRequestId,
+					this.IMAGE_REQUEST_TIMEOUT_MS,
+					(d) => this.onAIImageResult(d),
+				);
 			} else {
 				// Build OpenAI-format messages (skip image messages)
 				const apiMessages: { role: string; content: string }[] = [
@@ -896,17 +906,11 @@ namespace cool {
 				});
 				app.socket.sendMessage('aichat: ' + payload);
 
-				// Client-side timeout
-				const requestId = this.currentRequestId;
-				setTimeout(() => {
-					if (this.isProcessing && this.currentRequestId === requestId) {
-						this.onAIChatResult({
-							success: false,
-							error: _('Request timeout'),
-							requestId: requestId,
-						});
-					}
-				}, this.CHAT_REQUEST_TIMEOUT_MS);
+				this.startRequestTimeout(
+					this.currentRequestId,
+					this.CHAT_REQUEST_TIMEOUT_MS,
+					(d) => this.onAIChatResult(d),
+				);
 			}
 		}
 
