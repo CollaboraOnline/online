@@ -1668,7 +1668,7 @@ class UIManager extends window.L.Control {
 				app.sectionContainer.addSection(new cool.TooltipAnchorSection());
 			}
 			var section = app.sectionContainer.getSectionWithName(app.CSections.TooltipAnchor.name) as cool.TooltipAnchorSection;
-			section.drawAnchorRectangles(tooltipInfo.anchorRectangles);
+			section.drawAnchorRectangles(tooltipInfo.anchorRectangles, tooltipInfo.redlineType);
 		}
 
 		document.addEventListener('mousemove', function() {

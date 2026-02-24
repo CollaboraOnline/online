@@ -24,10 +24,6 @@ namespace cool {
 			this.sectionProperties.polygonColor = 'black';
 		}
 
-		public override onInitialize(): void {
-			this.changeBorderStyle();
-		}
-
 		public override onResize(): void {
 			if (!this.sectionProperties.polygon) return;
 
@@ -51,7 +47,10 @@ namespace cool {
 		}
 
 		/// Draws anchor rectangles, used by UIManager.
-		public drawAnchorRectangles(anchorRectangles: string[]): void {
+		public drawAnchorRectangles(
+			anchorRectangles: string[],
+			redlineType: string,
+		): void {
 			const rectangles = this.getRectangles(anchorRectangles);
 			this.sectionProperties.lastRectangles = rectangles;
 			if (rectangles.length === 0) {
@@ -64,7 +63,8 @@ namespace cool {
 				rectangles,
 				app.twipsToPixels,
 			);
-			this.changeBorderStyle();
+			this.sectionProperties.polygonColor =
+				redlineType === 'Insert' ? 'green' : 'gray';
 			this.setPositionAndSizeFromTwipRectangles(rectangles);
 			app.sectionContainer.requestReDraw();
 		}
