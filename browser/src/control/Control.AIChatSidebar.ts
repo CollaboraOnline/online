@@ -680,6 +680,139 @@ namespace cool {
 			};
 		}
 
+		private parseActionIndex(id: string, prefix: string): number {
+			return parseInt(id.substring(prefix.length), 10);
+		}
+
+		private handleClick(id: string): void {
+			// Exact-match actions
+			const exactActions: Record<string, () => void> = {
+				'aichat-send-btn': () => {
+					if (this.isProcessing) {
+						this.isProcessing = false;
+						this.currentRequestId = '';
+						this.updateChatState();
+					} else {
+						this.sendMessage();
+					}
+				},
+				'aichat-close-btn': () => this.hide(),
+				'aichat-clear-btn': () => this.clearConversation(),
+				'aichat-chip-formula-diagnosis': () => this.diagnoseFormulaError(),
+				'aichat-see-more': () => {
+					this.showAllCards = !this.showAllCards;
+					this.updateMessagesArea();
+				},
+			};
+
+			if (exactActions[id]) {
+				exactActions[id]();
+				return;
+			}
+
+			// Prefix-based actions (order matters: longer prefixes first)
+			const prefixActions: {
+				prefix: string;
+				handler: (idx: number) => void;
+			}[] = [
+				{
+					prefix: 'aichat-insert-img-',
+					handler: (idx) => {
+						const imgData = this.messages[idx]?.imageData;
+						if (imgData) {
+							this.insertImageAtCursor(imgData);
+							this.showCopyFeedback(idx, 'aichat-insert-img-');
+						}
+					},
+				},
+				{
+					prefix: 'aichat-copy-img-',
+					handler: (idx) => {
+						const imgData = this.messages[idx]?.imageData;
+						if (imgData) {
+							this.copyImageToClipboard(imgData, idx);
+						}
+					},
+				},
+				{
+					prefix: 'aichat-insert-text-',
+					handler: (idx) => {
+						if (this.messages[idx]) {
+							this.insertAtCursor(this.messages[idx].content);
+							this.showCopyFeedback(idx, 'aichat-insert-text-');
+						}
+					},
+				},
+				{
+					prefix: 'aichat-copy-text-',
+					handler: (idx) => {
+						if (this.messages[idx]) {
+							this.copyToClipboard(this.messages[idx].content, idx);
+						}
+					},
+				},
+				{
+					prefix: 'aichat-chip-',
+					handler: (idx) => {
+						if (this.PROMPT_CARDS[idx]) {
+							this.inputText = this.PROMPT_CARDS[idx].prompt;
+							this.sendMessage();
+						}
+					},
+				},
+				{
+					prefix: 'aichat-retry-',
+					handler: (idx) => {
+						const userMsg = this.findPrecedingUserMessage(idx);
+						if (userMsg) {
+							this.messages.splice(idx, 1);
+							const userIdx = this.messages.indexOf(userMsg);
+							if (userIdx >= 0) this.messages.splice(userIdx, 1);
+							this.inputText = userMsg.displayContent || userMsg.content;
+							this.sendMessage();
+						}
+					},
+				},
+			];
+
+			for (const { prefix, handler } of prefixActions) {
+				if (id.startsWith(prefix)) {
+					handler(this.parseActionIndex(id, prefix));
+					return;
+				}
+			}
+		}
+
+		private handleInputChange(id: string, data: any): void {
+			if (id !== 'aichat-input') return;
+
+			const prevEmpty = this.inputText.trim().length === 0;
+			this.inputText = data;
+			const nowEmpty = this.inputText.trim().length === 0;
+
+			if (prevEmpty !== nowEmpty) {
+				const sendBtn = document.querySelector(
+					'#aichat-send-btn button.ui-pushbutton',
+				) as HTMLButtonElement | null;
+				if (sendBtn) {
+					if (nowEmpty) {
+						sendBtn.setAttribute('disabled', 'true');
+					} else {
+						sendBtn.removeAttribute('disabled');
+					}
+				}
+			}
+
+			const textarea = document.querySelector(
+				'#aichat-input .ui-textarea',
+			) as HTMLTextAreaElement | null;
+			if (textarea) {
+				textarea.style.height = 'auto';
+				textarea.style.height =
+					Math.min(textarea.scrollHeight, this.TEXTAREA_MAX_HEIGHT_PX) + 'px';
+			}
+		}
+
 		private jsdialogCallback(
 			objectType: string,
 			eventType: string,
@@ -688,98 +821,11 @@ namespace cool {
 			_builder: any,
 		): void {
 			if (!object || !object.id) return;
-			const id = object.id;
 
 			if (eventType === 'click') {
-				if (id === 'aichat-send-btn') {
-					if (this.isProcessing) {
-						this.isProcessing = false;
-						this.currentRequestId = '';
-						this.updateChatState();
-					} else {
-						this.sendMessage();
-					}
-				} else if (id === 'aichat-close-btn') {
-					this.hide();
-				} else if (id === 'aichat-clear-btn') {
-					this.clearConversation();
-				} else if (id.startsWith('aichat-insert-img-')) {
-					var insertImgIdx = parseInt(id.replace('aichat-insert-img-', ''));
-					var insertImgData = this.messages[insertImgIdx]?.imageData;
-					if (insertImgData) {
-						this.insertImageAtCursor(insertImgData);
-						this.showCopyFeedback(insertImgIdx, 'aichat-insert-img-');
-					}
-				} else if (id.startsWith('aichat-copy-img-')) {
-					var copyImgIdx = parseInt(id.replace('aichat-copy-img-', ''));
-					var copyImgData = this.messages[copyImgIdx]?.imageData;
-					if (copyImgData) {
-						this.copyImageToClipboard(copyImgData, copyImgIdx);
-					}
-				} else if (id.startsWith('aichat-insert-text-')) {
-					var insertIdx = parseInt(id.replace('aichat-insert-text-', ''));
-					if (this.messages[insertIdx]) {
-						this.insertAtCursor(this.messages[insertIdx].content);
-						this.showCopyFeedback(insertIdx, 'aichat-insert-text-');
-					}
-				} else if (id.startsWith('aichat-copy-text-')) {
-					var copyIdx = parseInt(id.replace('aichat-copy-text-', ''));
-					if (this.messages[copyIdx]) {
-						this.copyToClipboard(this.messages[copyIdx].content, copyIdx);
-					}
-				} else if (id === 'aichat-chip-formula-diagnosis') {
-					this.diagnoseFormulaError();
-				} else if (id === 'aichat-see-more') {
-					this.showAllCards = !this.showAllCards;
-					this.updateMessagesArea();
-				} else if (id.startsWith('aichat-chip-')) {
-					var chipIdx = parseInt(id.replace('aichat-chip-', ''));
-					if (this.PROMPT_CARDS[chipIdx]) {
-						this.inputText = this.PROMPT_CARDS[chipIdx].prompt;
-						this.sendMessage();
-					}
-				} else if (id.startsWith('aichat-retry-')) {
-					var retryIdx = parseInt(id.replace('aichat-retry-', ''));
-					var userMsg = this.findPrecedingUserMessage(retryIdx);
-					if (userMsg) {
-						// Remove error message
-						this.messages.splice(retryIdx, 1);
-						// Remove preceding user message
-						var userIdx = this.messages.indexOf(userMsg);
-						if (userIdx >= 0) this.messages.splice(userIdx, 1);
-						this.inputText = userMsg.displayContent || userMsg.content;
-						this.sendMessage();
-					}
-				}
+				this.handleClick(object.id);
 			} else if (eventType === 'change') {
-				if (id === 'aichat-input') {
-					var prevEmpty = this.inputText.trim().length === 0;
-					this.inputText = data;
-					var nowEmpty = this.inputText.trim().length === 0;
-					if (prevEmpty !== nowEmpty) {
-						// Toggle send button without full re-render
-						var sendBtn = document.querySelector(
-							'#aichat-send-btn button.ui-pushbutton',
-						) as HTMLButtonElement | null;
-						if (sendBtn) {
-							if (nowEmpty) {
-								sendBtn.setAttribute('disabled', 'true');
-							} else {
-								sendBtn.removeAttribute('disabled');
-							}
-						}
-					}
-					// Auto-resize textarea
-					var textarea = document.querySelector(
-						'#aichat-input .ui-textarea',
-					) as HTMLTextAreaElement | null;
-					if (textarea) {
-						textarea.style.height = 'auto';
-						textarea.style.height =
-							Math.min(textarea.scrollHeight, this.TEXTAREA_MAX_HEIGHT_PX) +
-							'px';
-					}
-				}
+				this.handleInputChange(object.id, data);
 			}
 		}
 
