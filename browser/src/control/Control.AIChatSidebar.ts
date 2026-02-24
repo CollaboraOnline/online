@@ -76,6 +76,14 @@ namespace cool {
 		private readonly INITIAL_CARDS_SHOWN: number = 3;
 		private showAllCards: boolean = false;
 
+		private readonly SELECTION_FETCH_TIMEOUT_MS = 5000;
+		private readonly CHAT_REQUEST_TIMEOUT_MS = 45000;
+		private readonly IMAGE_REQUEST_TIMEOUT_MS = 60000;
+		private readonly COPY_FEEDBACK_DURATION_MS = 1500;
+		private readonly TEXTAREA_MAX_HEIGHT_PX = 120;
+		private readonly FORMULA_FETCH_TIMEOUT_MS = 5000;
+		private readonly MAX_API_MESSAGES = 50;
+
 		private readonly SYSTEM_PROMPT: string =
 			'You are a helpful assistant for Collabora Online. ' +
 			'Help users with their documents — answering questions, suggesting edits, ' +
@@ -767,7 +775,9 @@ namespace cool {
 					) as HTMLTextAreaElement | null;
 					if (textarea) {
 						textarea.style.height = 'auto';
-						textarea.style.height = Math.min(textarea.scrollHeight, 120) + 'px';
+						textarea.style.height =
+							Math.min(textarea.scrollHeight, this.TEXTAREA_MAX_HEIGHT_PX) +
+							'px';
 					}
 				}
 			}
@@ -865,7 +875,7 @@ namespace cool {
 							requestId: requestId,
 						});
 					}
-				}, 60000);
+				}, this.IMAGE_REQUEST_TIMEOUT_MS);
 			} else {
 				// Build OpenAI-format messages (skip image messages)
 				const apiMessages: { role: string; content: string }[] = [
@@ -896,7 +906,7 @@ namespace cool {
 							requestId: requestId,
 						});
 					}
-				}, 45000);
+				}, this.CHAT_REQUEST_TIMEOUT_MS);
 			}
 		}
 
@@ -973,7 +983,7 @@ namespace cool {
 				const timeout = setTimeout(() => {
 					cleanup();
 					reject(new Error(_('Selection fetch timeout')));
-				}, 5000);
+				}, this.SELECTION_FETCH_TIMEOUT_MS);
 
 				const handleTextResponse = (e: any) => {
 					const textMsg = e.msg || '';
@@ -1099,7 +1109,7 @@ namespace cool {
 				if (img.isConnected) {
 					img.src = originalSrc;
 				}
-			}, 1500);
+			}, this.COPY_FEEDBACK_DURATION_MS);
 		}
 
 		private copyToClipboard(text: string, index: number): void {
@@ -1190,7 +1200,7 @@ namespace cool {
 				const timeout = setTimeout(() => {
 					app.map.off('commandvalues', handleResponse);
 					reject(new Error(_('Formula analysis timeout')));
-				}, 5000);
+				}, this.FORMULA_FETCH_TIMEOUT_MS);
 
 				const handleResponse = (e: any) => {
 					if (e.commandName === '.uno:FormulaDepChain') {
