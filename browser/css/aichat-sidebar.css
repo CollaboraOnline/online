@@ -133,6 +133,7 @@
 	gap: 12px;
 	scrollbar-width: var(--scrollbar-width);
 	scrollbar-color: var(--scrollbar-color);
+	user-select: text;
 }
 
 /* ── Empty state ── */
