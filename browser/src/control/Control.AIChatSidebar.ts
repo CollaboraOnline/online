@@ -858,14 +858,10 @@ namespace cool {
 			}, ms);
 		}
 
-		async sendMessage(): Promise<void> {
-			const text = this.inputText.trim();
-			if (!text || this.isProcessing) return;
-
-			const isImageRequest = this.isImageGenerationPrompt(text);
-
-			this.hintText = '';
-
+		private async buildUserMessage(
+			text: string,
+			isImageRequest: boolean,
+		): Promise<ChatMessage | null> {
 			let selectedText = '';
 			if (!isImageRequest && TextSelections.isActive()) {
 				try {
@@ -876,12 +872,10 @@ namespace cool {
 							'The selection contains images or other non-text content that cannot be sent as context.',
 						);
 						this.updateHint();
-						return;
+						return null;
 					}
-					// Other errors (timeout, parse failure) — silently continue without selection
 				}
 
-				// Don't re-send identical selection context
 				if (selectedText && selectedText === this.lastSentSelectedText) {
 					selectedText = '';
 				}
@@ -890,7 +884,6 @@ namespace cool {
 				}
 			}
 
-			// Build user content with context
 			let userContent = text;
 			if (selectedText) {
 				userContent =
@@ -900,64 +893,73 @@ namespace cool {
 					text;
 			}
 
-			// Add user message
-			const userMsg: ChatMessage = {
+			return {
 				role: 'user',
 				content: userContent,
 				displayContent: text,
 				selectedText: selectedText || undefined,
 				timestamp: Date.now(),
 			};
-			this.messages.push(userMsg);
-			this.inputText = '';
-			this.isProcessing = true;
+		}
 
-			// Update messages (shows user msg + loading dots), input (disabled
-			// + stop icon), header (enable clear btn), and hide any hint.
-			this.updateChatState(true);
-			this.updateHint();
+		private buildApiMessages(): { role: string; content: string }[] {
+			const apiMessages: { role: string; content: string }[] = [
+				{ role: 'system', content: this.SYSTEM_PROMPT },
+			];
+			const textMessages = this.messages.filter((m) => !m.imageData);
+			const recent = textMessages.slice(-this.MAX_API_MESSAGES);
+			for (const msg of recent) {
+				apiMessages.push({ role: msg.role, content: msg.content });
+			}
+			return apiMessages;
+		}
 
+		private dispatchRequest(text: string, isImageRequest: boolean): void {
 			this.currentRequestId = this.generateRequestId();
 
 			if (isImageRequest) {
-				// Send image generation request
 				const payload = JSON.stringify({
 					prompt: text,
 					requestId: this.currentRequestId,
 				});
 				app.socket.sendMessage('aiimage: ' + payload);
-
 				this.startRequestTimeout(
 					this.currentRequestId,
 					this.IMAGE_REQUEST_TIMEOUT_MS,
 					(d) => this.onAIImageResult(d),
 				);
 			} else {
-				// Build OpenAI-format messages (skip image messages)
-				const apiMessages: { role: string; content: string }[] = [
-					{ role: 'system', content: this.SYSTEM_PROMPT },
-				];
-				for (const msg of this.messages) {
-					if (!msg.imageData) {
-						apiMessages.push({
-							role: msg.role,
-							content: msg.content,
-						});
-					}
-				}
-
 				const payload = JSON.stringify({
-					messages: apiMessages,
+					messages: this.buildApiMessages(),
 					requestId: this.currentRequestId,
 				});
 				app.socket.sendMessage('aichat: ' + payload);
-
 				this.startRequestTimeout(
 					this.currentRequestId,
 					this.CHAT_REQUEST_TIMEOUT_MS,
 					(d) => this.onAIChatResult(d),
 				);
 			}
+		}
+
+		async sendMessage(): Promise<void> {
+			const text = this.inputText.trim();
+			if (!text || this.isProcessing) return;
+
+			const isImageRequest = this.isImageGenerationPrompt(text);
+			this.hintText = '';
+
+			const userMsg = await this.buildUserMessage(text, isImageRequest);
+			if (!userMsg) return;
+
+			this.messages.push(userMsg);
+			this.inputText = '';
+			this.isProcessing = true;
+
+			this.updateChatState(true);
+			this.updateHint();
+
+			this.dispatchRequest(text, isImageRequest);
 		}
 
 		private handleAIResponse(
