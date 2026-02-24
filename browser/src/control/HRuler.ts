@@ -839,6 +839,14 @@ class HRuler extends Ruler {
 			const newValue = rulerOffset + 'px';
 			if (this._rFace.style.marginInlineStart !== newValue)
 				this._rFace.style.marginInlineStart = newValue;
+		} else if (layout.type === 'ViewLayoutCompareChanges') {
+			let rulerOffset =
+				-layout.viewedRectangle.cX1 + this.options.tileMargin * app.getScale();
+			if (layout.type === 'ViewLayoutCompareChanges')
+				rulerOffset += Math.round(
+					layout.documentToViewX(new cool.SimplePoint(0, 0)) / app.dpiScale,
+				);
+			this._rFace.style.marginInlineStart = rulerOffset + 'px';
 		} else {
 			const rulerOffset =
 				-layout.viewedRectangle.cX1 + this.options.tileMargin * app.getScale();
