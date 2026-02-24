@@ -399,6 +399,18 @@ commandvalues command=<UNOCommand>[?param1=value1&param2=value2...]
         - <UNOCommand> is the command to be executed (e.g., .uno:ViewAnnotations).
         - Optional query parameters can be appended to specify additional command details.
 
+    .uno:FormulaDepChain (Calc only)
+        Requests the formula dependency chain for the currently selected cell.
+        Returns a JSON object with:
+        - hasError: boolean indicating if the cell has a formula error
+        - reason: if no error, one of "not_formula" or "no_error"
+        - cell: object with address, sheet, formula, error, errorCode
+        - dependencies: array of dependency objects (recursive), each with:
+          - address, sheet, type (formula/value/string/empty/range/circular)
+          - For formulas: formula text, optional error/value, nested dependencies
+          - For values/strings: the cell value
+        Maximum recursion depth: 10 levels. Maximum cells: 50.
+
 completefunction name=<FunctionName>
 
     Requests the execution of a spreadsheet function in MobileWizard.Clients can request to complete a function name partially typed in the formula input box.

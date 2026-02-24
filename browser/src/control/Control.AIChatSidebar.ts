@@ -599,6 +599,16 @@ namespace cool {
 
 		private getPromptChipsJSON(): any {
 			var chipChildren: any[] = [];
+
+			if (app.map.getDocType() === 'spreadsheet') {
+				chipChildren.push({
+					id: 'aichat-chip-formula-diagnosis',
+					type: 'pushbutton',
+					text: _('Diagnose formula error'),
+					enabled: true,
+				});
+			}
+
 			for (var i = 0; i < this.PROMPT_CHIPS.length; i++) {
 				chipChildren.push({
 					id: 'aichat-chip-' + i,
@@ -662,6 +672,8 @@ namespace cool {
 					if (this.messages[copyIdx]) {
 						this.copyToClipboard(this.messages[copyIdx].content, copyIdx);
 					}
+				} else if (id === 'aichat-chip-formula-diagnosis') {
+					this.diagnoseFormulaError();
 				} else if (id.startsWith('aichat-chip-')) {
 					var chipIdx = parseInt(id.replace('aichat-chip-', ''));
 					if (this.PROMPT_CHIPS[chipIdx]) {
@@ -1116,6 +1128,155 @@ namespace cool {
 			const match = result.match(fencePattern);
 			if (match) {
 				result = match[1];
+			}
+			return result;
+		}
+
+		private fetchFormulaDependencyChain(): Promise<any> {
+			return new Promise((resolve, reject) => {
+				const timeout = setTimeout(() => {
+					app.map.off('commandvalues', handleResponse);
+					reject(new Error(_('Formula analysis timeout')));
+				}, 5000);
+
+				const handleResponse = (e: any) => {
+					if (e.commandName === '.uno:FormulaDepChain') {
+						clearTimeout(timeout);
+						app.map.off('commandvalues', handleResponse);
+						resolve(e.commandValues);
+					}
+				};
+
+				app.map.on('commandvalues', handleResponse);
+				app.socket.sendMessage('commandvalues command=.uno:FormulaDepChain');
+			});
+		}
+
+		private async diagnoseFormulaError(): Promise<void> {
+			if (this.isProcessing) return;
+
+			this.hintText = _('Analyzing formula dependencies...');
+			this.updateHint();
+
+			let depChain: any;
+			try {
+				depChain = await this.fetchFormulaDependencyChain();
+			} catch {
+				this.hintText = _('Failed to analyze formula.');
+				this.updateHint();
+				return;
+			}
+
+			this.hintText = '';
+
+			if (!depChain || !depChain.hasError) {
+				if (depChain && depChain.reason === 'not_formula') {
+					this.hintText = _('The selected cell does not contain a formula.');
+				} else {
+					this.hintText = _('The selected cell does not have a formula error.');
+				}
+				this.updateHint();
+				return;
+			}
+
+			this.inputText = this.buildFormulaDiagnosisPrompt(depChain);
+			this.sendMessage();
+		}
+
+		private buildFormulaDiagnosisPrompt(depChain: any): string {
+			var cell = depChain.cell;
+			var context = _('I have a formula error in my spreadsheet.') + '\n\n';
+			context +=
+				_('Cell') +
+				' ' +
+				cell.address +
+				' (' +
+				_('Sheet') +
+				': ' +
+				cell.sheet +
+				') ' +
+				_('contains') +
+				':\n';
+			context += '  ' + _('Formula') + ': ' + cell.formula + '\n';
+			context += '  ' + _('Error') + ': ' + cell.error + '\n\n';
+
+			if (depChain.dependencies && depChain.dependencies.length > 0) {
+				context += _('Referenced cells') + ':\n';
+				context += this.formatDependencies(depChain.dependencies, 1);
+				context += '\n';
+			}
+
+			context +=
+				_('Please diagnose why this formula produces the') +
+				' ' +
+				cell.error +
+				' ' +
+				_('error.') +
+				' ';
+			context += _('Explain the root cause and suggest how to fix it.');
+
+			return context;
+		}
+
+		private formatDependencies(deps: any[], indent: number): string {
+			var result = '';
+			var prefix = '';
+			for (var p = 0; p < indent; p++) prefix += '  ';
+
+			for (var i = 0; i < deps.length; i++) {
+				var dep = deps[i];
+				if (dep.type === 'formula') {
+					result += prefix + '- ' + dep.address + ': ';
+					result += _('formula') + ' ' + dep.formula;
+					if (dep.error) {
+						result += ' => ' + _('ERROR') + ': ' + dep.error;
+					} else if (dep.value !== undefined) {
+						result += ' => ' + dep.value;
+					}
+					result += '\n';
+					if (dep.dependencies && dep.dependencies.length > 0) {
+						result += this.formatDependencies(dep.dependencies, indent + 1);
+					}
+				} else if (dep.type === 'value') {
+					result +=
+						prefix +
+						'- ' +
+						dep.address +
+						': ' +
+						_('value') +
+						' ' +
+						dep.value +
+						'\n';
+				} else if (dep.type === 'string') {
+					result +=
+						prefix +
+						'- ' +
+						dep.address +
+						': ' +
+						_('text') +
+						' "' +
+						dep.value +
+						'"\n';
+				} else if (dep.type === 'empty') {
+					result += prefix + '- ' + dep.address + ': (' + _('empty') + ')\n';
+				} else if (dep.type === 'range') {
+					result += prefix + '- ' + dep.address + ': ' + _('range');
+					if (dep.errorCells) {
+						result += ' (' + _('errors in') + ': ' + dep.errorCells + ')';
+					}
+					if (dep.scanLimited) {
+						result += ' (' + _('only partially scanned') + ')';
+					}
+					result += '\n';
+				} else if (dep.type === 'circular') {
+					result +=
+						prefix +
+						'- ' +
+						dep.address +
+						': (' +
+						_('circular reference') +
+						')\n';
+				}
 			}
 			return result;
 		}
