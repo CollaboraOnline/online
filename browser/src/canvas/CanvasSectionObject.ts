@@ -243,6 +243,54 @@ class CanvasSectionObject {
 	resetStrokeStyle(): void { return; }
 	hasAnyComments(): boolean { return false; }
 
+	/// Updates sectionProperties.polygonColor based on the current dark/light theme.
+	protected changeBorderStyle(): void {
+		const polygonColor = (<any>window).prefs.getBoolean('darkTheme') ? 'white' : 'black';
+		if (this.sectionProperties.polygonColor !== polygonColor)
+			this.sectionProperties.polygonColor = polygonColor;
+	}
+
+	/// Strokes the polygon stored in sectionProperties.polygon using sectionProperties.polygonColor.
+	protected drawPolygon(): void {
+		this.context.strokeStyle = this.sectionProperties.polygonColor;
+		this.context.beginPath();
+		this.context.moveTo(this.sectionProperties.polygon[0] - this.position[0], this.sectionProperties.polygon[0 + 1] - this.position[1]);
+		for (let i = 0; i < this.sectionProperties.polygon.length - 1; i++) {
+			this.context.lineTo(this.sectionProperties.polygon[i] - this.position[0], this.sectionProperties.polygon[i + 1] - this.position[1]);
+			i += 1;
+		}
+		this.context.closePath();
+		this.context.stroke();
+	}
+
+	/// Sets position and size from an array of twip rectangles [x, y, width, height].
+	protected setPositionAndSizeFromTwipRectangles(rectangles: Array<number[]>): void {
+		var xMin: number = Infinity, yMin: number = Infinity, xMax: number = 0, yMax: number = 0;
+		for (var i = 0; i < rectangles.length; i++) {
+			if (rectangles[i][0] < xMin)
+				xMin = rectangles[i][0];
+
+			if (rectangles[i][1] < yMin)
+				yMin = rectangles[i][1];
+
+			if (rectangles[i][0] + rectangles[i][2] > xMax)
+				xMax = rectangles[i][0] + rectangles[i][2];
+
+			if (rectangles[i][1] + rectangles[i][3] > yMax)
+				yMax = rectangles[i][1] + rectangles[i][3];
+		}
+
+		xMin = Math.round(xMin * app.twipsToPixels);
+		yMin = Math.round(yMin * app.twipsToPixels);
+		xMax = Math.round(xMax * app.twipsToPixels);
+		yMax = Math.round(yMax * app.twipsToPixels);
+
+		this.setPosition(xMin, yMin);
+		this.size = [xMax - xMin, yMax - yMin];
+		if (this.size[0] < 5)
+			this.size[0] = 5;
+	}
+
 	public getLineWidth(): number {
 		if (app.dpiScale > 1.0) {
 			return app.roundedDpiScale;
