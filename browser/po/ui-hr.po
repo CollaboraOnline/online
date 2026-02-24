@@ -8,17 +8,17 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-02-13 19:20+0100\n"
-"PO-Revision-Date: 2026-02-03 12:52+0000\n"
-"Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
-"Language-Team: Croatian <https://hosted.weblate.org/projects/"
-"collabora-online/ui/hr/>\n"
-"Language: \n"
+"PO-Revision-Date: 2026-02-24 12:09+0000\n"
+"Last-Translator: Milo Ivir <mail@milotype.de>\n"
+"Language-Team: Croatian <https://hosted.weblate.org/projects/collabora-"
+"online/ui/hr/>\n"
+"Language: hr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
-"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
-"X-Generator: Weblate 5.16-dev\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Generator: Weblate 5.16.1-dev\n"
 
 #: admin/admin.strings.js:15
 msgid "Admin console"
@@ -388,7 +388,7 @@ msgstr "Certifikacijski autoritet potpisa"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:160
 msgid "In-document Screen Reader"
-msgstr ""
+msgstr "Čitač ekrana u dokumentu"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:161
 #: src/control/Control.Menubar.ts:175 src/control/Control.Menubar.ts:500
@@ -1052,15 +1052,15 @@ msgstr "Ušteđeno"
 
 #: src/canvas/sections/CompareChangesLabelSection.ts:111
 msgid "Last edited by %1 on %2"
-msgstr ""
+msgstr "Zadnje uređivanje: %1, %2"
 
 #: src/canvas/sections/CompareChangesLabelSection.ts:167
 msgid "%1: Initial Version"
-msgstr ""
+msgstr "%1: Početna verzija"
 
 #: src/canvas/sections/CompareChangesLabelSection.ts:171
 msgid "%1: Current Version"
-msgstr ""
+msgstr "%1: Trenutačna verzija"
 
 #: src/canvas/sections/ShapeHandlesSection.ts:475
 msgid "Document contains unsupported media"
@@ -1091,13 +1091,12 @@ msgid "This version of {productname} is powered by"
 msgstr "Ovu verziju {productname}a omogućuje"
 
 #: src/control/Control.AboutDialog.ts:189
-#, fuzzy
 msgid "Served by: "
-msgstr "Uslugu pruža:"
+msgstr "Uslugu pruža: "
 
 #: src/control/Control.AboutDialog.ts:212
 msgid "View widgets"
-msgstr ""
+msgstr "Prikaži widgete"
 
 #: src/control/Control.AboutDialog.ts:236
 msgid "\"Slow Proxy\""
@@ -1887,7 +1886,7 @@ msgstr "Popravi"
 
 #: src/control/Control.Menubar.ts:143
 msgid "Compare Changes"
-msgstr ""
+msgstr "Usporedi promjene"
 
 #: src/control/Control.Menubar.ts:162 src/control/Control.Menubar.ts:483
 #: src/control/Control.Menubar.ts:489 src/control/Control.Menubar.ts:650
@@ -1902,7 +1901,7 @@ msgstr "Resetiraj zumiranje"
 
 #: src/control/Control.Menubar.ts:168
 msgid "Fit to Screen"
-msgstr ""
+msgstr "Prilagodi ekranu"
 
 #: src/control/Control.Menubar.ts:171 src/control/Control.Menubar.ts:495
 #: src/control/Control.Menubar.ts:662 src/control/Control.Menubar.ts:807
@@ -2411,7 +2410,7 @@ msgstr "Kraj gradijenta"
 
 #: src/control/Control.NavigatorPanel.ts:38
 msgid "Navigation Panel"
-msgstr ""
+msgstr "Ploča navigacije"
 
 #: src/control/Control.NavigatorPanel.ts:110
 msgid "Navigation"
@@ -2641,7 +2640,7 @@ msgstr "Minijatura grafikona"
 
 #: src/control/Control.NotebookbarCalc.js:99
 msgid "Table Design"
-msgstr ""
+msgstr "Dizajn tablica"
 
 #: src/control/Control.NotebookbarCalc.js:106
 #: src/control/Control.NotebookbarDraw.js:121
@@ -2870,7 +2869,7 @@ msgstr "Standardni prikaz"
 
 #: src/control/Control.NotebookbarCalc.js:1431
 msgid "Open Views List"
-msgstr ""
+msgstr "Otvori popis prikaza"
 
 #: src/control/Control.NotebookbarCalc.js:1438
 msgid "New Sheet View"
@@ -2922,11 +2921,11 @@ msgstr "Opcije stilova tablica"
 
 #: src/control/Control.NotebookbarCalc.js:1678
 msgid "Header Row"
-msgstr ""
+msgstr "Redak zaglavlja"
 
 #: src/control/Control.NotebookbarCalc.js:1690
 msgid "Total Row"
-msgstr ""
+msgstr "Redak za ukupno"
 
 #: src/control/Control.NotebookbarCalc.js:1708
 msgid "Banded Rows"
@@ -2946,7 +2945,7 @@ msgstr "Zadnji stupac"
 
 #: src/control/Control.NotebookbarCalc.js:1765
 msgid "Filter Buttons"
-msgstr ""
+msgstr "Gumbi za filtriranje"
 
 #: src/control/Control.NotebookbarCalc.js:1801
 #: src/control/Control.NotebookbarCalc.js:2549
@@ -3123,16 +3122,16 @@ msgstr "Prikaži u prozoru"
 
 #: src/control/Control.NotebookbarImpress.js:493
 msgid "Presenter View"
-msgstr ""
+msgstr "Prikaz prezentanta"
 
 #: src/control/Control.NotebookbarImpress.js:501
 msgid "Present to All"
-msgstr ""
+msgstr "Prezentiraj svima"
 
 #: src/control/Control.NotebookbarImpress.js:509
 #: src/slideshow/SlideShowPresenter.ts:759
 msgid "Follow Presenter"
-msgstr ""
+msgstr "Prati prezentanta"
 
 #: src/control/Control.NotebookbarImpress.js:637
 msgid "Slide Views"
@@ -3176,7 +3175,7 @@ msgstr "Predlošci master slajda"
 
 #: src/control/Control.NotebookbarImpress.js:1809
 msgid "Themes"
-msgstr ""
+msgstr "Teme"
 
 #: src/control/Control.NotebookbarImpress.js:1859
 msgid "Slide Size"
@@ -3213,11 +3212,11 @@ msgstr "Offline modus"
 
 #: src/control/Control.NotebookbarWriter.js:489
 msgid "Validate Sidebar"
-msgstr ""
+msgstr "Bočna traka validacije"
 
 #: src/control/Control.NotebookbarWriter.js:497
 msgid "Validate Dialog"
-msgstr ""
+msgstr "Dijalog validacije"
 
 #: src/control/Control.NotebookbarWriter.js:940
 #: src/control/Control.Zotero.js:828
@@ -3254,7 +3253,7 @@ msgstr "Rasklopiv izbornik"
 
 #: src/control/Control.NotebookbarWriter.js:1664
 msgid "Page Width"
-msgstr ""
+msgstr "Širina stranice"
 
 #: src/control/Control.NotebookbarWriter.js:2301
 msgid "Tracking"
@@ -3262,7 +3261,7 @@ msgstr "Praćenje"
 
 #: src/control/Control.NotebookbarWriter.js:2322
 msgid "View Changes"
-msgstr ""
+msgstr "Prikaži promjene"
 
 #: src/control/Control.NotebookbarWriter.js:2498
 msgid "Split"
@@ -3355,7 +3354,7 @@ msgstr "Brzo pokretanje Kit jail okruženja je uljučeno"
 
 #: src/control/Control.ServerAuditDialog.ts:119
 msgid "Fast kit jail bind mounting not configured"
-msgstr ""
+msgstr "Pokretanje brzog povezivanja s jail-om nije konfigurirano"
 
 #: src/control/Control.ServerAuditDialog.ts:127
 msgid "Poorly performing proxying of all network requests."
@@ -3491,7 +3490,7 @@ msgstr "Prikaz više stranica"
 
 #: src/control/Control.StatusBar.js:257
 msgid "Zoom to Fit Page Width"
-msgstr ""
+msgstr "Zumiraj na širinu stranice"
 
 #: src/control/Control.StatusBar.js:414
 msgid ""
@@ -3924,16 +3923,16 @@ msgstr "Samo-za-čitanje"
 
 #: src/control/PermissionMode.ts:108
 msgid "Viewing Mode"
-msgstr ""
+msgstr "Modus prikazivanja"
 
 #: src/control/PermissionMode.ts:114
 msgid "Editing Mode"
-msgstr ""
+msgstr "Modus uređivanja"
 
 #: src/control/PermissionMode.ts:125 src/control/PermissionMode.ts:176
 #: src/control/PermissionMode.ts:182 src/control/PermissionMode.ts:188
 msgid "Viewing"
-msgstr ""
+msgstr "Prikazivanje"
 
 #: src/control/jsdialog/Definitions.Menu.ts:111
 #: src/control/jsdialog/Definitions.Menu.ts:1748
@@ -4102,7 +4101,7 @@ msgstr "Umetni lokalnu multimediju"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1740
 msgid "Compare Local Document"
-msgstr ""
+msgstr "Usporedi lokalni dokument"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1746
 msgid "Very Tight"
@@ -4440,7 +4439,7 @@ msgstr "Ovdje će se pojaviti naslovi i objekti koje dodaš u dokument"
 
 #: src/control/jsdialog/Widget.TreeView.ts:1660
 msgid "Search items"
-msgstr ""
+msgstr "Traži stavke"
 
 #: src/app/Socket.ts:254
 msgid "Oops, there is a problem connecting to {productname}: "
@@ -4909,7 +4908,7 @@ msgstr "izbornik za „Prikaz”"
 
 #: src/layer/tile/CanvasTileLayer.js:461
 msgid "Online Editor"
-msgstr ""
+msgstr "Online uređivač"
 
 #: src/layer/tile/CanvasTileLayer.js:1459
 msgid "Functions"
@@ -5098,7 +5097,7 @@ msgstr "Stvaranje nove datoteke iz predloška …"
 
 #: src/map/handler/Map.WOPI.js:232
 msgid "Compare Document..."
-msgstr ""
+msgstr "Usporedi dokument …"
 
 #: src/map/handler/Map.WOPI.js:740
 msgid "File name should contain an extension."
@@ -5138,7 +5137,7 @@ msgstr "Nastavi"
 
 #: src/slideshow/PresenterConsole.js:38
 msgid "Present to all"
-msgstr ""
+msgstr "Prezentiraj svima"
 
 #: src/slideshow/PresenterConsole.js:39
 msgid "Go Back"

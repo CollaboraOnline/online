@@ -83,7 +83,7 @@
     <string name="enter_filename">Upiši ime datoteke:</string>
     <string name="action_create">Stvori</string>
     <string name="action_overwrite">Prepiši</string>
-    <string name="bmp_null">BMP je nula!</string>
+    <string name="bmp_null">Bmp je nula!</string>
     <string name="directory_not_saved">Mapa nije spremljena.</string>
     <string name="title_activity_show_html">Informacije</string>
     <string name="share_document">Dijeli dokument</string>
