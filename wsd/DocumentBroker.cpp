@@ -4856,7 +4856,7 @@ void DocumentBroker::handleMediaRequest(const std::string_view range,
 
             auto session = std::make_shared<http::ServerSession>();
             http::ServerSession::ResponseHeaders responseHeaders;
-            responseHeaders.emplace_back("Content-Type", (field == "url" ? "video/mp4" : "text/plain"));
+            responseHeaders.emplace_back("Content-Type", (field == "url" ? "video/mp4" : "text/vtt"));
             session->asyncUpload(std::move(path), std::move(responseHeaders), range);
             streamSocket->setHandler(std::static_pointer_cast<ProtocolHandlerInterface>(session));
         }

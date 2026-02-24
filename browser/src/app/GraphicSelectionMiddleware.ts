@@ -85,7 +85,7 @@ class GraphicSelection {
 					<track src="' +
 			videoDesc.srt +
 			'" kind="subtitles"' +
-			'"/>\
+			'/>\
 				</video>\
 			</body>\
 		</foreignObject>\
