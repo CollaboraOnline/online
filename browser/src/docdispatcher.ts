@@ -462,16 +462,57 @@ class Dispatcher {
 			document.getElementById('#addressInput input').focus();
 		};
 
+		interface TableStyleInfo {
+			ContainsHeader: boolean;
+			TotalsRow: boolean;
+			UseFirstColumnFormatting: boolean;
+			UseLastColumnFormatting: boolean;
+			UseRowStripes: boolean;
+			UseColStripes: boolean;
+			AutoFilter: boolean;
+			TableStyleName: string;
+		}
+
 		this.actionsMap['apply-table-style'] = function (entry: MenuDefinition) {
-			const windowId = WindowId.Notebookbar;
-			const data = entry.pos + ';' + entry.text;
-			const message =
-				'dialogevent ' +
-				windowId +
-				' {"id":"tablestyles_cb2", "cmd": "selected", "data": "' +
-				data +
-				'", "type": "combobox"}';
-			app.socket.sendMessage(message);
+			const newStyleId = entry.text.replace(/ /g, ''); // remove spaces for hardcoded names used here
+			const tableStyle = app.map['stateChangeHandler'].getItemValue(
+				'.uno:DatabaseSettings',
+			) as TableStyleInfo;
+
+			// PoolItem names ae different than ones from state handler
+			const args = {} as any;
+			args['DatabaseSettings.HeaderRow'] = {
+				type: 'boolean',
+				value: tableStyle.ContainsHeader,
+			};
+			args['DatabaseSettings.TotalRow'] = {
+				type: 'boolean',
+				value: tableStyle.TotalsRow,
+			};
+			args['DatabaseSettings.FirstCol'] = {
+				type: 'boolean',
+				value: tableStyle.UseFirstColumnFormatting,
+			};
+			args['DatabaseSettings.LastCol'] = {
+				type: 'boolean',
+				value: tableStyle.UseLastColumnFormatting,
+			};
+			args['DatabaseSettings.StrippedRows'] = {
+				type: 'boolean',
+				value: tableStyle.UseRowStripes,
+			};
+			args['DatabaseSettings.StrippedCols'] = {
+				type: 'boolean',
+				value: tableStyle.UseColStripes,
+			};
+			args['DatabaseSettings.ShowFilters'] = {
+				type: 'boolean',
+				value: tableStyle.AutoFilter,
+			};
+
+			args['DatabaseSettings.StyleID'] = { type: 'string', value: newStyleId };
+
+			app.map.sendUnoCommand('.uno:DatabaseSettings', args);
 		};
 
 		// sheets toolbar
