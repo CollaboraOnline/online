@@ -230,7 +230,6 @@ class CanvasSectionContainer {
 		this.canvas.ontouchcancel = this.onTouchCancel.bind(this);
 		this.canvas.ondrop = this.onDrop.bind(this);
 		this.canvas.ondragover = this.onDragOver.bind(this);
-		window.addEventListener('blur', this.onWindowBlur.bind(this));
 
 		// Some explanation first.
 		// When the user uses the mouse wheel for scrolling, different browsers use different technics for calculating the deltaY and deltaX values.
@@ -1304,31 +1303,6 @@ class CanvasSectionContainer {
 			if (windowSection.interactable)
 				windowSection.onMouseEnter(null, e);
 		}
-	}
-
-	// When the browser window/tab loses focus during a drag, we never receive the mouseup event.
-	// This leaves draggingSomething=true and sections (e.g. MouseControl) never send 'buttonup' to the core.
-	// This may cause a stuck selection in some cases.
-	private onWindowBlur () {
-		if (!this.draggingSomething && !this.positionOnMouseDown)
-			return;
-
-		// Propagate a synthetic mouseUp to the section that received the original
-		// mouseDown so it can clean up (e.g. MouseControl sends 'buttonup' to core).
-		if (this.sectionOnMouseDown) {
-			var section: CanvasSectionObject = this.getSectionWithName(this.sectionOnMouseDown);
-			if (section) {
-				var position = this.positionOnMouseUp || this.mousePosition || this.positionOnMouseDown;
-				// Create a synthetic MouseEvent so section handlers can safely access
-				// event properties (e.g. stopPropagation, modifiers).
-				var syntheticEvent = new MouseEvent('mouseup', { button: 0, buttons: 0 });
-				this.propagateOnMouseUp(section, this.convertPositionToSectionLocale(section, position), syntheticEvent);
-			}
-		}
-
-		this.clearMousePositions();
-		this.mousePosition = null;
-		this.mouseIsInside = false;
 	}
 
 	public onTouchStart (e: TouchEvent) { // Should be ignored unless this.draggingSomething = true.
