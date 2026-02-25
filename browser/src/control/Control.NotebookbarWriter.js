@@ -1000,7 +1000,7 @@ window.L.Control.NotebookbarWriter = window.L.Control.Notebookbar.extend({
 			{ type: 'separator', id: 'home-charmapcontrol-break', orientation: 'vertical' },
 			{
 				'type': 'overflowgroup',
-				'id': 'home-search',
+				'id': 'home-find-n-filter',
 				'name': _('Search'),
 				'accessibility': { focusBack: false,	combination: 'SS',	de: 'SS' },
 				'children': [

@@ -1169,7 +1169,7 @@ window.L.Control.NotebookbarDraw = window.L.Control.NotebookbarImpress.extend({
 			{ type: 'separator', id: 'home-inserttablemenu-break', orientation: 'vertical' },
 			{
 				'type': 'overflowgroup',
-				'id': 'home-search',
+				'id': 'home-find-n-filter',
 				'name':_('Search'),
 				'accessibility': { focusBack: true, combination: 'SS', de: null },
 				'children' : [
