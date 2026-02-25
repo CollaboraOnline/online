@@ -49,7 +49,7 @@ void lokit_main(
     bool noSeccomp, bool useMountNamespaces, bool queryVersionInfo, bool displayVersion,
     bool sysTemplateIncomplete,
 #else
-    int docBrokerSocket, const std::string& userInterface,
+    int docBrokerSocket,
 #endif
     std::size_t numericIdentifier);
 

@@ -938,7 +938,7 @@ std::shared_ptr<ChildProcess> getNewChild_Blocks(const std::shared_ptr<SocketPol
 
                     // Ugly to have that static global PrisonerServerSocketFD, Otoh we know
                     // there is just one COOLWSD object. (Even in real Online.)
-                    lokit_main(PrisonerServerSocketFD, COOLWSD::UserInterface, mobileAppDocId);
+                    lokit_main(PrisonerServerSocketFD, mobileAppDocId);
                 }).detach();
 #endif // MOBILEAPP
 
