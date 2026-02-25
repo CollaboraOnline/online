@@ -595,8 +595,18 @@ static const std::string AI_SYSTEM_PROMPT =
 
 bool ClientSession::handleAIChatAction(const std::string& firstLine)
 {
+    static constexpr size_t MAX_AI_PAYLOAD_SIZE = 5 * 1024 * 1024; // 5MB
+    static constexpr size_t MAX_AI_MESSAGE_LENGTH = 100 * 1024; // 100KB per message
+    static constexpr unsigned MAX_AI_MESSAGES = 50;
+
     // Extract JSON payload after "aichat: "
     const std::string jsonPayload = firstLine.substr(strlen("aichat: "));
+
+    if (jsonPayload.size() > MAX_AI_PAYLOAD_SIZE)
+    {
+        sendAIChatResult(false, "Request too large", "");
+        return true;
+    }
 
     Poco::JSON::Object::Ptr requestObj = new Poco::JSON::Object();
     if (!JsonUtil::parseJSON(jsonPayload, requestObj))
@@ -615,7 +625,7 @@ bool ClientSession::handleAIChatAction(const std::string& firstLine)
         return true;
     }
 
-    // Strip any system messages from client payload and prepend server-side system prompt
+    // Sanitize messages: strip system role, validate roles and content length
     Poco::JSON::Array::Ptr sanitizedMessages = new Poco::JSON::Array();
     Poco::JSON::Object::Ptr systemMsg = new Poco::JSON::Object();
     systemMsg->set("role", "system");
@@ -625,14 +635,30 @@ bool ClientSession::handleAIChatAction(const std::string& firstLine)
     for (unsigned i = 0; i < messages->size(); ++i)
     {
         auto msg = messages->getObject(i);
-        if (msg)
+        if (!msg)
+            continue;
+
+        std::string role;
+        JsonUtil::findJSONValue(msg, "role", role);
+
+        // Only allow user and assistant roles
+        if (role != "user" && role != "assistant")
+            continue;
+
+        std::string content;
+        JsonUtil::findJSONValue(msg, "content", content);
+        if (content.size() > MAX_AI_MESSAGE_LENGTH)
         {
-            std::string role;
-            JsonUtil::findJSONValue(msg, "role", role);
-            if (role != "system")
-                sanitizedMessages->add(msg);
+            sendAIChatResult(false, "Message too long", requestId);
+            return true;
         }
+
+        sanitizedMessages->add(msg);
     }
+
+    // Trim to most recent messages if over limit (keep system prompt at index 0)
+    while (sanitizedMessages->size() > MAX_AI_MESSAGES + 1)
+        sanitizedMessages->remove(1);
 
     // Get AI provider settings
     const std::string apiKey = getAIProviderAPIKey();
