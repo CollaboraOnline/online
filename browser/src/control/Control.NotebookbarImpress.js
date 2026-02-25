@@ -1260,7 +1260,7 @@ window.L.Control.NotebookbarImpress = window.L.Control.NotebookbarWriter.extend(
 			{ type: 'separator', id: 'home-insertobjectchart-break', orientation: 'vertical' },
 			{
 				'type': 'overflowgroup',
-				'id': 'home-search',
+				'id': 'home-find-n-filter',
 				'name':_('Search'),
 				'accessibility': { focusBack: true, combination: 'SS', de: null },
 				'children' : [
