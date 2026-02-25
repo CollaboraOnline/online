@@ -1,9 +1,16 @@
 ﻿// -*- tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4; fill-column: 100 -*-
 
 using OpenQA.Selenium.Edge;
+using OpenQA.Selenium.Interactions;
 using System;
+using System.IO;
+using System.IO.Compression;
+using System.Text;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Windows.Automation;
+using System.Windows.Forms;
+using Keys = OpenQA.Selenium.Keys;
 
 namespace WebDriverThing
 {
@@ -86,15 +93,36 @@ namespace WebDriverThing
             System.Windows.Forms.SendKeys.SendWait("{ENTER}");
         }
 
-        static void Main(string[] args)
+        static void RunOnSTA(Action action)
         {
-            // Use the Open button to load a document.
-            openFile(@"C:\Users\tml\sailing.odt");
+            Exception ex = null;
+            var t = new Thread(() => {
+                try { action(); }
+                catch (Exception e) { ex = e; }
+            });
+            t.SetApartmentState(ApartmentState.STA);
+            t.Start();
+            t.Join();
+            if (ex != null) throw ex;
+        }
+
+        static async Task Main(string[] args)
+        {
+            // Make a copy of an empty .otd. Assume we are running in <top>\windows\coda\WebDriverThing\bin\Debug.
+            var topDir = Path.GetFullPath(AppContext.BaseDirectory + @"\..\..\..\..\..");
+
+            var docCopy = Path.Combine(Path.GetTempPath(), $"{Guid.NewGuid()}.odt");
+
+            File.Copy(topDir + @"\browser\templates\TextDocument.odt", docCopy, true);
+
+            // Use the Open button to load it
+            openFile(docCopy);
+
+            // Then do some simple things with it
 
             var driver = connectToWebView2();
 
             // At first, click the button to enable editing.
-            // Give for the document time to load.
             var editButton = driver.FindElement(OpenQA.Selenium.By.Id("mobile-edit-button"));
 
             if (editButton == null)
@@ -103,7 +131,21 @@ namespace WebDriverThing
             Thread.Sleep(5000);
             editButton.Click();
 
-            Thread.Sleep(20000);
+            // Paste text from clipboard with shortcut
+            RunOnSTA(() => Clipboard.SetText("hello"));
+            new Actions(driver).KeyDown(Keys.Control).SendKeys("v").KeyUp(Keys.Control).Perform();
+
+            // Close the document (and app) using Control+W
+            new Actions(driver).KeyDown(Keys.Control).SendKeys("w").KeyUp(Keys.Control).Perform();
+
+            // Open the edited document and verify we edited it as expected
+            var stream = File.OpenRead(docCopy);
+            var archive = new ZipArchive(stream, ZipArchiveMode.Read);
+            var contentStream = archive.GetEntry("content.xml").Open();
+            var ms = new MemoryStream();
+            contentStream.CopyTo(ms);
+            byte[] content = ms.ToArray();
+            var s = Encoding.UTF8.GetString(content);
 
             driver.Quit();
         }
