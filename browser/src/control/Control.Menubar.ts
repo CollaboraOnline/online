@@ -1865,7 +1865,7 @@ class Menubar extends window.L.Control {
 			$mainMenuState[0].click();
 		}
 		
-		if (menu.parentElement?.id === 'menu-file' && window.mode.isCODesktop() && app.map.backstageView)
+		if (menu?.parentElement?.id === 'menu-file' && window.mode.isCODesktop() && app.map.backstageView)
 			app.map.backstageView.toggle();
 	}
 
