@@ -65,13 +65,13 @@ msgstr ""
 #: svx/inc/spacing.hrc:18
 msgctxt "RID_BEFORE"
 msgid "Before:"
-msgstr ""
+msgstr "Előtte:"
 
 #. jGRHH
 #: svx/inc/spacing.hrc:19
 msgctxt "RID_AFTER"
 msgid "After:"
-msgstr ""
+msgstr "Utána:"
 
 #. k9CGA
 #: svx/inc/spacing.hrc:20
@@ -125,13 +125,13 @@ msgstr ""
 #: svx/uiconfig/ui/sidebarline.ui:91
 msgctxt "sidebarline|SelectWidth|tooltip_text"
 msgid "Line Thickness"
-msgstr ""
+msgstr "Vonalvastagság"
 
 #. cDwyK
 #: svx/uiconfig/ui/sidebarline.ui:97
 msgctxt "sidebarline|SelectWidth-atkobject"
 msgid "Line Thickness"
-msgstr ""
+msgstr "Vonalvastagság"
 
 #. 7MFsT
 #: uui/inc/strings.hrc:84
@@ -313,7 +313,7 @@ msgstr "3D _séma:"
 #: chart2/uiconfig/ui/sidebartype.ui:323
 msgctxt "sidebartype|cmb_chartType-atkobject"
 msgid "Chart Type"
-msgstr ""
+msgstr "Diagramtípus"
 
 #. x3adg
 #: chart2/uiconfig/ui/tp_ChartColorPalette.ui:68
@@ -343,7 +343,7 @@ msgstr "Sötétebb változatok"
 #: chart2/uiconfig/ui/tp_ChartType.ui:114
 msgctxt "tp_ChartType|extended_tip|subtype_iconview"
 msgid "Select a sub type of the basic chart type."
-msgstr ""
+msgstr "Válassza az alapvető diagramtípus egyik altípusát."
 
 #. Wh4j6
 #: chart2/uiconfig/ui/tp_ChartType.ui:167
@@ -397,7 +397,7 @@ msgstr ""
 #: cui/uiconfig/ui/numberingformatpage.ui:541
 msgctxt "numberingformatpage|currencylb-atkobject"
 msgid "Currency"
-msgstr ""
+msgstr "Pénznem"
 
 #. vcAoU
 #: cui/uiconfig/ui/pageformatpage.ui:223
@@ -487,25 +487,25 @@ msgstr "Megjeleníti a jelszó erősségét"
 #: cui/uiconfig/ui/pickbulletpage.ui:45
 msgctxt "pickbulletpage|extended_tip|pick_bullet_iconview"
 msgid "Click the bullet style that you want to use."
-msgstr ""
+msgstr "Kattintson a használni kívánt felsorolásjel-típusra."
 
 #. rkoDB
 #: cui/uiconfig/ui/pickgraphicpage.ui:45
 msgctxt "pickgraphicpage|extended_tip|pick_graphic_iconview"
 msgid "Click the graphics that you want to use as bullets."
-msgstr ""
+msgstr "Kattintson arra a képre, amelyet felsorolásjelként akar használni."
 
 #. WGzy5
 #: cui/uiconfig/ui/picknumberingpage.ui:44
 msgctxt "picknumberingpage|extended_tip|pick_numbering_iconview"
 msgid "Click the numbering scheme that you want to use."
-msgstr ""
+msgstr "Kattintson a használni kívánt számozási stílusra."
 
 #. avppC
 #: cui/uiconfig/ui/pickoutlinepage.ui:44
 msgctxt "pickoutlinepage|extended_tip|pick_outline_iconview"
 msgid "Click the outline style that you want to use."
-msgstr ""
+msgstr "Kattintson a használni kívánt vázlatszintstílusra."
 
 #. hLcKE
 #: cui/uiconfig/ui/textflowpage.ui:812
@@ -523,7 +523,7 @@ msgstr ""
 #: cui/uiconfig/ui/thesaurus.ui:189
 msgctxt "thesaurus|langcb|accessible_name"
 msgid "Language"
-msgstr ""
+msgstr "Nyelv"
 
 #. qpArp
 #: cui/uiconfig/ui/toolbarmodedialog.ui:124
@@ -571,49 +571,49 @@ msgstr ""
 #: sfx2/uiconfig/ui/password.ui:200
 msgctxt "password|pass1bar-atkobject"
 msgid "Password Level Bar"
-msgstr ""
+msgstr "Jelszóerősségi sáv"
 
 #. 2Y4Ua
 #: sfx2/uiconfig/ui/password.ui:201
 msgctxt "password|pass1bar-atkobject"
 msgid "Shows the strength of password"
-msgstr ""
+msgstr "Megjeleníti a jelszó erősségét"
 
 #. EGBBE
 #: sfx2/uiconfig/ui/password.ui:342
 msgctxt "password|pass2bar-atkobject"
 msgid "Password Level Bar"
-msgstr ""
+msgstr "Jelszóerősségi sáv"
 
 #. nvEiq
 #: sfx2/uiconfig/ui/password.ui:343
 msgctxt "password|pass2bar-atkobject"
 msgid "Shows the strength of password"
-msgstr ""
+msgstr "Megjeleníti a jelszó erősségét"
 
 #. YHTHB
 #: sfx2/uiconfig/ui/templatepanel.ui:137
 msgctxt "templatepanel|accessible_name|watercan"
 msgid "Fill Format Mode"
-msgstr ""
+msgstr "Kitöltés formátum mód"
 
 #. qvBEu
 #: sfx2/uiconfig/ui/templatepanel.ui:156
 msgctxt "templatepanel|accessible_name|new"
 msgid "New Style from Selection"
-msgstr ""
+msgstr "Új stílus a kijelölésből"
 
 #. 5ZAqh
 #: sfx2/uiconfig/ui/templatepanel.ui:174
 msgctxt "templatepanel|accessible_name|newmenu"
 msgid "Styles actions"
-msgstr ""
+msgstr "Stílus műveletek"
 
 #. 7NfdA
 #: sfx2/uiconfig/ui/templatepanel.ui:192
 msgctxt "templatepanel|accessible_name|update"
 msgid "Update Style"
-msgstr ""
+msgstr "Stílus frissítése"
 
 #. BGAhD
 #: sfx2/uiconfig/ui/templatepanel.ui:242
@@ -681,24 +681,26 @@ msgctxt "columnpage|extended_tip|column-iconview"
 msgid ""
 "Enter the number of columns that you want in the page, frame, or section."
 msgstr ""
+"Adja meg az oldalon, a keretben vagy a szakaszban létrehozni kívánt hasábok "
+"számát."
 
 #. yLJG6
 #: sw/uiconfig/swriter/ui/dropcapspage.ui:336
 msgctxt "dropcapspage|drawingareaWN_EXAMPLE-atkobject"
 msgid "Example"
-msgstr ""
+msgstr "Példa"
 
 #. RdG95
 #: sw/uiconfig/swriter/ui/footnotesendnotestabpage.ui:179
 msgctxt "footnotesendnotestabpage|ftnnumviewbox-atkobject"
 msgid "Numbering"
-msgstr ""
+msgstr "Számozás"
 
 #. afJmD
 #: sw/uiconfig/swriter/ui/footnotesendnotestabpage.ui:455
 msgctxt "footnotesendnotestabpage|endnumviewbox-atkobject"
 msgid "Numbering"
-msgstr ""
+msgstr "Számozás"
 
 #. Ci9GE
 #: sw/uiconfig/swriter/ui/spellmenu.ui:34
@@ -716,7 +718,7 @@ msgstr ""
 #: sw/uiconfig/swriter/ui/tocentriespage.ui:277
 msgctxt "tocentriespage|characterstyleft"
 msgid "Character style:"
-msgstr ""
+msgstr "Karakterstílus:"
 
 #. GVCXE
 #: sw/uiconfig/swriter/ui/tocentriespage.ui:569
@@ -728,7 +730,7 @@ msgstr ""
 #: sw/uiconfig/swriter/ui/tokenwidget.ui:30
 msgctxt "tokenwidget|left"
 msgid "Scroll left"
-msgstr ""
+msgstr "Görgetés balra"
 
 #. Efssr
 #: sw/uiconfig/swriter/ui/tokenwidget.ui:98
@@ -914,7 +916,7 @@ msgstr "OLE-objektumok exportálása _JPEG-képekként"
 #: filter/uiconfig/ui/pdfgeneralpage.ui:550
 msgctxt "pdfgeneralpage|embed|tooltip_text"
 msgid "Creates a PDF that embeds the original ODF file as an attachment."
-msgstr ""
+msgstr "Készít egy PDF-et, ami beágyazza az eredeti ODF fájlt mellékletként."
 
 #. JS7DG
 #: filter/uiconfig/ui/pdfgeneralpage.ui:556
@@ -1082,7 +1084,7 @@ msgctxt ""
 "TooltipLabel\n"
 "value.text"
 msgid "Insert Table"
-msgstr ""
+msgstr "Táblázat beszúrása"
 
 #. kZEtN
 #: CalcCommands.xcu
@@ -1102,7 +1104,7 @@ msgctxt ""
 "TooltipLabel\n"
 "value.text"
 msgid "Delete Table"
-msgstr ""
+msgstr "Táblázat törlése"
 
 #. 3Ep4Y
 #: CalcCommands.xcu
@@ -1272,7 +1274,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Master Pages"
-msgstr ""
+msgstr "Mintaoldalak"
 
 #. FBZFX
 #: GenericCommands.xcu
@@ -1282,7 +1284,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Theme..."
-msgstr ""
+msgstr "Téma..."
 
 #. DCEaK
 #: GenericCommands.xcu
@@ -1292,7 +1294,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "~Hyperlink"
-msgstr ""
+msgstr "~Hiperhivatkozás"
 
 #. aFFu9
 #: GenericCommands.xcu
@@ -1302,7 +1304,7 @@ msgctxt ""
 "PopupLabel\n"
 "value.text"
 msgid "Insert Hyperlink..."
-msgstr ""
+msgstr "Hiperhivatkozás beszúrása..."
 
 #. czVMP
 #: GenericCommands.xcu
@@ -1312,7 +1314,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Nav~igator select comment."
-msgstr ""
+msgstr "Megjegyzés kiválasztása a Nav~igátorban."
 
 #. 77Q3c
 #: GenericCommands.xcu
@@ -1322,7 +1324,7 @@ msgctxt ""
 "TooltipLabel\n"
 "value.text"
 msgid "Select Comment In The Navigator Window/Sidebar"
-msgstr ""
+msgstr "Megjegyzés kiválasztása a Navigátor ablakban/oldalsávban"
 
 #. 83Euq
 #: GenericCommands.xcu
@@ -1332,7 +1334,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Change record mode"
-msgstr ""
+msgstr "Rögzítés módjának változtatása"
 
 #. nG2DH
 #: GenericCommands.xcu
@@ -1342,7 +1344,7 @@ msgctxt ""
 "ContextLabel\n"
 "value.text"
 msgid "Record mode"
-msgstr ""
+msgstr "Rögzítés módja"
 
 #. fDK7V
 #: GenericCommands.xcu
@@ -1352,7 +1354,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Add To Dictionary"
-msgstr ""
+msgstr "Hozzáadás a szótárhoz"
 
 #. 69GZH
 #: GenericCommands.xcu
@@ -1522,7 +1524,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Record changes in this view"
-msgstr ""
+msgstr "Változások követése ebben a nézetben"
 
 #. TADBE
 #: WriterCommands.xcu
@@ -1532,7 +1534,7 @@ msgctxt ""
 "ContextLabel\n"
 "value.text"
 msgid "~Changes in this view"
-msgstr ""
+msgstr "~Változások ebben a nézetben"
 
 #. nn4AU
 #: WriterCommands.xcu
@@ -1542,7 +1544,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Record changes in all views"
-msgstr ""
+msgstr "Változások követése az összes nézetben"
 
 #. DJphX
 #: WriterCommands.xcu
@@ -1552,7 +1554,7 @@ msgctxt ""
 "ContextLabel\n"
 "value.text"
 msgid "~Changes in all views"
-msgstr ""
+msgstr "Változások az össz~es nézetben"
 
 #. wCDa4
 #: xmlsecurity/uiconfig/ui/certdetails.ui:101
@@ -1564,7 +1566,7 @@ msgstr ""
 #: xmlsecurity/uiconfig/ui/selectcertificatedialog.ui:274
 msgctxt "selectcertificatedialog|searchbox-atkobject"
 msgid "Search"
-msgstr ""
+msgstr "Keresés"
 
 #. dw79G
 #: sc/inc/globstr.hrc:70
@@ -1582,7 +1584,7 @@ msgstr ""
 #: sc/inc/globstr.hrc:74
 msgctxt "STR_UNDO_DBTABLE"
 msgid "Delete table"
-msgstr ""
+msgstr "Táblázat törlése"
 
 #. AvAbD
 #: sc/inc/globstr.hrc:140
@@ -1654,7 +1656,7 @@ msgstr ""
 #: sc/inc/scfuncs.hrc:4260
 msgctxt "SC_OPCODE_CHOOSECOLS"
 msgid "Column "
-msgstr ""
+msgstr "Oszlop "
 
 #. Akc9t
 #: sc/inc/scfuncs.hrc:4261
@@ -1716,7 +1718,7 @@ msgstr ""
 #: sc/inc/scfuncs.hrc:4280
 msgctxt "SC_OPCODE_DROP"
 msgid "Rows"
-msgstr ""
+msgstr "Sorok"
 
 #. yyjnc
 #: sc/inc/scfuncs.hrc:4281
@@ -1762,7 +1764,7 @@ msgstr ""
 #: sc/inc/scfuncs.hrc:4292
 msgctxt "SC_OPCODE_EXPAND"
 msgid "Rows"
-msgstr ""
+msgstr "Sorok"
 
 #. QzQiB
 #: sc/inc/scfuncs.hrc:4293
@@ -1874,7 +1876,7 @@ msgstr ""
 #: sc/inc/scfuncs.hrc:4326
 msgctxt "SC_OPCODE_TAKE"
 msgid "Rows"
-msgstr ""
+msgstr "Sorok"
 
 #. KBPBn
 #: sc/inc/scfuncs.hrc:4327
@@ -1920,7 +1922,7 @@ msgstr ""
 #: sc/inc/scfuncs.hrc:4338
 msgctxt "SC_OPCODE_TEXTAFTER"
 msgid "Delimiter"
-msgstr ""
+msgstr "Elválasztó"
 
 #. YEbwu
 #: sc/inc/scfuncs.hrc:4339
@@ -1946,7 +1948,7 @@ msgstr ""
 #: sc/inc/scfuncs.hrc:4342
 msgctxt "SC_OPCODE_TEXTAFTER"
 msgid "Match Mode"
-msgstr ""
+msgstr "Egyezési_mód"
 
 #. iSfJi
 #: sc/inc/scfuncs.hrc:4343
@@ -2000,7 +2002,7 @@ msgstr ""
 #: sc/inc/scfuncs.hrc:4356
 msgctxt "SC_OPCODE_TEXTBEFORE"
 msgid "Delimiter"
-msgstr ""
+msgstr "Elválasztó"
 
 #. qDFZy
 #: sc/inc/scfuncs.hrc:4357
@@ -2026,7 +2028,7 @@ msgstr ""
 #: sc/inc/scfuncs.hrc:4360
 msgctxt "SC_OPCODE_TEXTBEFORE"
 msgid "Match Mode"
-msgstr ""
+msgstr "Egyezési_mód"
 
 #. Pi2Ti
 #: sc/inc/scfuncs.hrc:4361
@@ -2244,7 +2246,7 @@ msgstr ""
 #: sc/inc/scfuncs.hrc:4438
 msgctxt "SC_OPCODE_WRAPCOLS"
 msgid "Range"
-msgstr ""
+msgstr "Tartomány"
 
 #. nfZyj
 #: sc/inc/scfuncs.hrc:4439
@@ -2288,7 +2290,7 @@ msgstr ""
 #: sc/inc/scfuncs.hrc:4450
 msgctxt "SC_OPCODE_WRAPROWS"
 msgid "Range"
-msgstr ""
+msgstr "Tartomány"
 
 #. FLJwx
 #: sc/inc/scfuncs.hrc:4451
@@ -2346,13 +2348,13 @@ msgstr ""
 #: sc/uiconfig/scalc/ui/definetablerangedialog.ui:37
 msgctxt "definetablerangedialog|extended_tip|ok"
 msgid "Saves all changes and closes dialog."
-msgstr ""
+msgstr "Minden változtatást elment, és bezárja az ablakot."
 
 #. YJAAP
 #: sc/uiconfig/scalc/ui/definetablerangedialog.ui:56
 msgctxt "definetablerangedialog|extended_tip|cancel"
 msgid "Closes dialog and discards all changes."
-msgstr ""
+msgstr "Bezárja a párbeszédablakot, és eldobja a változásokat."
 
 #. ugt8G
 #: sc/uiconfig/scalc/ui/definetablerangedialog.ui:106
@@ -2363,6 +2365,10 @@ msgid ""
 "then automatically convert to the Maximize icon. Click it to restore the "
 "dialog to its original size."
 msgstr ""
+"Kattintson a Zsugorítás ikonra a párbeszédablak beviteli mező méretűre való "
+"csökkentéséhez. Így könnyebb a szükséges hivatkozást megjelölni a lapon. Az "
+"ikon ezután automatikusan átalakul a Maximalizálás ikonná. Erre kattintva a "
+"párbeszédablakot visszaállíthatja eredeti méretére."
 
 #. xUrKC
 #: sc/uiconfig/scalc/ui/definetablerangedialog.ui:123
@@ -2373,30 +2379,36 @@ msgid ""
 "then automatically convert to the Maximize icon. Click it to restore the "
 "dialog to its original size."
 msgstr ""
+"Kattintson a Zsugorítás ikonra a párbeszédablak beviteli mező méretűre való "
+"csökkentéséhez. Így könnyebb a szükséges hivatkozást megjelölni a lapon. Az "
+"ikon ezután automatikusan átalakul a Maximalizálás ikonná. Erre kattintva a "
+"párbeszédablakot visszaállíthatja eredeti méretére."
 
 #. 8FLdj
 #: sc/uiconfig/scalc/ui/definetablerangedialog.ui:139
 msgctxt "definetablerangedialog|range"
 msgid "Range"
-msgstr ""
+msgstr "Tartomány"
 
 #. 3a7g7
 #: sc/uiconfig/scalc/ui/definetablerangedialog.ui:162
 msgctxt "definetablerangedialog|containscolumnlabels"
 msgid "Co_ntains column labels"
-msgstr ""
+msgstr "Oszlop_címkéket tartalmaz"
 
 #. AEKGN
 #: sc/uiconfig/scalc/ui/definetablerangedialog.ui:171
 msgctxt "definetablerangedialog|extended_tip|ContainsColumnLabels"
 msgid "Selected cell ranges contain labels."
-msgstr ""
+msgstr "A kijelölt cellatartományok címkéket tartalmaznak."
 
 #. GCg88
 #: sc/uiconfig/scalc/ui/definetablerangedialog.ui:203
 msgctxt "definetablerangedialog|extended_tip|DefineTableRangeDialog"
 msgid "Defines a database range based on the selected cells in your sheet."
 msgstr ""
+"Adatbázis-tartományt hoz létre a munkalapon kiválasztott cellatartomány "
+"alapján."
 
 #. LVdkf
 #: sc/uiconfig/scalc/ui/erroralerttabpage.ui:15
@@ -2414,19 +2426,19 @@ msgstr ""
 #: sc/uiconfig/scalc/ui/gotosheetdialog.ui:100
 msgctxt "gotosheetdialog|entry-mask-atkobject"
 msgid "Sheet Name"
-msgstr ""
+msgstr "Munkalapnév"
 
 #. hMeBi
 #: sc/uiconfig/scalc/ui/numberbox.ui:17
 msgctxt "numberbox|numbertype|accessible_name"
 msgid "Number Format"
-msgstr ""
+msgstr "Számformátum"
 
 #. o8pcB
 #: sc/uiconfig/scalc/ui/protectsheetdlg.ui:195
 msgctxt "protectsheetdlg|passwordbar-atkobject"
 msgid "Password Level Bar"
-msgstr ""
+msgstr "Jelszóerősségi sáv"
 
 #. Q4fA3
 #: sc/uiconfig/scalc/ui/selectsheetviewdialog.ui:18
@@ -2438,13 +2450,13 @@ msgstr ""
 #: sc/uiconfig/scalc/ui/selectsheetviewdialog.ui:44
 msgctxt "selectsheetviewdialog|extended_tip|ok"
 msgid "Saves all changes and closes dialog."
-msgstr ""
+msgstr "Minden változtatást elment, és bezárja az ablakot."
 
 #. kGFYu
 #: sc/uiconfig/scalc/ui/selectsheetviewdialog.ui:63
 msgctxt "selectsheetviewdialog|extended_tip|cancel"
 msgid "Closes dialog and discards all changes."
-msgstr ""
+msgstr "Bezárja a párbeszédablakot, és eldobja a változásokat."
 
 #. sQPFE
 #: sc/uiconfig/scalc/ui/selectsheetviewdialog.ui:134
@@ -2462,7 +2474,7 @@ msgstr ""
 #: sc/uiconfig/scalc/ui/sidebarcellappearance.ui:87
 msgctxt "sidebarcellappearance|cellbordertype-atkobject"
 msgid "Border Style"
-msgstr ""
+msgstr "Szegélystílus"
 
 #. Y8RhG
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:22
@@ -2510,7 +2522,7 @@ msgstr "Oszlop"
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:170
 msgctxt "sidebardatabase|lbl_styles"
 msgid "Table Styles"
-msgstr ""
+msgstr "Táblázatstílusok"
 
 #. er8nh
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:187
@@ -3302,4 +3314,4 @@ msgstr ""
 #: sc/uiconfig/scalc/ui/tablestylesbox.ui:185
 msgctxt "tablestylebox|tablestyles_cb|accessible_name"
 msgid "Table Styles"
-msgstr ""
+msgstr "Táblázatstílusok"

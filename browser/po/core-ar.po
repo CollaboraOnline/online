@@ -69,7 +69,7 @@ msgstr ""
 #: svx/inc/spacing.hrc:19
 msgctxt "RID_AFTER"
 msgid "After:"
-msgstr ""
+msgstr "بعد:"
 
 #. k9CGA
 #: svx/inc/spacing.hrc:20
@@ -81,7 +81,7 @@ msgstr ""
 #: svx/uiconfig/ui/dropdownfielddialog.ui:31
 msgctxt "dropdownDialog|OK"
 msgid "OK"
-msgstr ""
+msgstr "حسنًا"
 
 #. 54Dmg
 #: svx/uiconfig/ui/dropdownfielddialog.ui:44
@@ -93,13 +93,13 @@ msgstr ""
 #: svx/uiconfig/ui/findreplacedialog.ui:67
 msgctxt "findreplacedialog|find_tab_btn"
 msgid "Find"
-msgstr ""
+msgstr "جِد"
 
 #. uknDS
 #: svx/uiconfig/ui/findreplacedialog.ui:85
 msgctxt "findreplacedialog|replace_tab_btn"
 msgid "Replace"
-msgstr ""
+msgstr "استبدل"
 
 #. v2oaz
 #: svx/uiconfig/ui/findreplacedialog.ui:172
@@ -162,7 +162,7 @@ msgstr ""
 #: chart2/inc/strings.hrc:51
 msgctxt "STR_PAGE_COLOR_PALETTE"
 msgid "Color Palette"
-msgstr ""
+msgstr "لوح الألوان"
 
 #. YZBr8
 #: chart2/inc/strings.hrc:52
@@ -174,7 +174,7 @@ msgstr ""
 #: chart2/uiconfig/ui/chartcolorpalettepopup.ui:46
 msgctxt "chartcolorpalettepopup|colorfulwin"
 msgid "Colorful"
-msgstr ""
+msgstr "ملون"
 
 #. xmAmH
 #: chart2/uiconfig/ui/chartcolorpalettepopup.ui:98
@@ -283,7 +283,7 @@ msgstr ""
 #: chart2/uiconfig/ui/sidebartheme.ui:37
 msgctxt "sidebartheme|themetype-atkobject"
 msgid "Themes"
-msgstr ""
+msgstr "السّمات"
 
 #. YB6Et
 #: chart2/uiconfig/ui/sidebartheme.ui:48
@@ -307,7 +307,7 @@ msgstr ""
 #: chart2/uiconfig/ui/tp_ChartColorPalette.ui:68
 msgctxt "tp_ChartColorPalette|colorfulwin"
 msgid "Colorful"
-msgstr ""
+msgstr "ملون"
 
 #. 8QjnP
 #: chart2/uiconfig/ui/tp_ChartColorPalette.ui:126
@@ -331,7 +331,7 @@ msgstr ""
 #: chart2/uiconfig/ui/tp_ChartType.ui:114
 msgctxt "tp_ChartType|extended_tip|subtype_iconview"
 msgid "Select a sub type of the basic chart type."
-msgstr ""
+msgstr "اختر نوع فرعي لنوع المخطط البياني الرئيسي."
 
 #. Wh4j6
 #: chart2/uiconfig/ui/tp_ChartType.ui:167
@@ -511,7 +511,7 @@ msgstr ""
 #: cui/uiconfig/ui/thesaurus.ui:189
 msgctxt "thesaurus|langcb|accessible_name"
 msgid "Language"
-msgstr ""
+msgstr "اللغة"
 
 #. qpArp
 #: cui/uiconfig/ui/toolbarmodedialog.ui:124
@@ -580,25 +580,25 @@ msgstr ""
 #: sfx2/uiconfig/ui/templatepanel.ui:137
 msgctxt "templatepanel|accessible_name|watercan"
 msgid "Fill Format Mode"
-msgstr ""
+msgstr "نمط نسَق الملء"
 
 #. qvBEu
 #: sfx2/uiconfig/ui/templatepanel.ui:156
 msgctxt "templatepanel|accessible_name|new"
 msgid "New Style from Selection"
-msgstr ""
+msgstr "طراز جديد من التحديد"
 
 #. 5ZAqh
 #: sfx2/uiconfig/ui/templatepanel.ui:174
 msgctxt "templatepanel|accessible_name|newmenu"
 msgid "Styles actions"
-msgstr ""
+msgstr "إجراءات الطُرُز"
 
 #. 7NfdA
 #: sfx2/uiconfig/ui/templatepanel.ui:192
 msgctxt "templatepanel|accessible_name|update"
 msgid "Update Style"
-msgstr ""
+msgstr "حدّث الطراز"
 
 #. BGAhD
 #: sfx2/uiconfig/ui/templatepanel.ui:242
@@ -616,31 +616,31 @@ msgstr ""
 #: sw/inc/strings.hrc:232
 msgctxt "STR_COLUMN_ICONVIEW_ITEM0"
 msgid "1 column"
-msgstr ""
+msgstr "عمود واحد"
 
 #. VAfCS
 #: sw/inc/strings.hrc:233
 msgctxt "STR_COLUMN_ICONVIEW_ITEM1"
 msgid "2 columns with equal size"
-msgstr ""
+msgstr "عمودين متساويين"
 
 #. g8pFG
 #: sw/inc/strings.hrc:234
 msgctxt "STR_COLUMN_ICONVIEW_ITEM2"
 msgid "3 columns with equal size"
-msgstr ""
+msgstr "ثلاثة أعمدة متساوية"
 
 #. QJxAd
 #: sw/inc/strings.hrc:235
 msgctxt "STR_COLUMN_ICONVIEW_ITEM3"
 msgid "2 columns with different size (left > right)"
-msgstr ""
+msgstr "عمودين غير متساويين (الأول أكبر من الثاني)"
 
 #. MHk4E
 #: sw/inc/strings.hrc:236
 msgctxt "STR_COLUMN_ICONVIEW_ITEM4"
 msgid "2 columns with different size (left < right)"
-msgstr ""
+msgstr "عمودين غير متساويين (الثاني أكبر من الأول)"
 
 #. xPgHS
 #: sw/inc/strings.hrc:498
@@ -658,7 +658,7 @@ msgstr ""
 #: sw/uiconfig/swriter/ui/columnpage.ui:122
 msgctxt "columnpage|columnft"
 msgid "Column"
-msgstr ""
+msgstr "عمود"
 
 #. Lurdj
 #: sw/uiconfig/swriter/ui/columnpage.ui:871
@@ -671,7 +671,7 @@ msgstr ""
 #: sw/uiconfig/swriter/ui/dropcapspage.ui:336
 msgctxt "dropcapspage|drawingareaWN_EXAMPLE-atkobject"
 msgid "Example"
-msgstr ""
+msgstr "مثال"
 
 #. RdG95
 #: sw/uiconfig/swriter/ui/footnotesendnotestabpage.ui:179
@@ -701,7 +701,7 @@ msgstr ""
 #: sw/uiconfig/swriter/ui/tocentriespage.ui:277
 msgctxt "tocentriespage|characterstyleft"
 msgid "Character style:"
-msgstr ""
+msgstr "طراز المحارف:"
 
 #. GVCXE
 #: sw/uiconfig/swriter/ui/tocentriespage.ui:569
@@ -713,7 +713,7 @@ msgstr ""
 #: sw/uiconfig/swriter/ui/tokenwidget.ui:30
 msgctxt "tokenwidget|left"
 msgid "Scroll left"
-msgstr ""
+msgstr "تمرير لليسار"
 
 #. Efssr
 #: sw/uiconfig/swriter/ui/tokenwidget.ui:98
@@ -725,7 +725,7 @@ msgstr ""
 #: sw/uiconfig/swriter/ui/wordcount-mobile.ui:643
 msgctxt "wordcount-mobile|comments"
 msgid "Comments"
-msgstr ""
+msgstr "تعليقات"
 
 #. SsL8u
 #: formula/inc/core_resource.hrc:2629
@@ -821,13 +821,13 @@ msgstr ""
 #: formula/uiconfig/ui/functionpage.ui:115
 msgctxt "functionpage|label_function"
 msgid "_Function:"
-msgstr ""
+msgstr "ال_دالة:"
 
 #. zRASZ
 #: formula/uiconfig/ui/structpage.ui:28
 msgctxt "structpage|label_struct"
 msgid "Content:"
-msgstr ""
+msgstr "المحتوى:"
 
 #. DPToC
 #: sd/uiconfig/simpress/ui/layoutpanel.ui:41
@@ -967,7 +967,7 @@ msgstr ""
 #: filter/uiconfig/ui/pdfgeneralpage.ui:1077
 msgctxt "pdfgeneralpage|structure_label"
 msgid "Structure"
-msgstr ""
+msgstr "البنية"
 
 #. BXRtj
 #: Markdown.xcu
@@ -1057,7 +1057,7 @@ msgctxt ""
 "TooltipLabel\n"
 "value.text"
 msgid "Insert Table"
-msgstr ""
+msgstr "أدرج جدولًا"
 
 #. kZEtN
 #: CalcCommands.xcu
@@ -1077,7 +1077,7 @@ msgctxt ""
 "TooltipLabel\n"
 "value.text"
 msgid "Delete Table"
-msgstr ""
+msgstr "احذف الجدول"
 
 #. 3Ep4Y
 #: CalcCommands.xcu
@@ -1267,7 +1267,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "~Hyperlink"
-msgstr ""
+msgstr "~رابط"
 
 #. aFFu9
 #: GenericCommands.xcu
@@ -1539,7 +1539,7 @@ msgstr ""
 #: xmlsecurity/uiconfig/ui/selectcertificatedialog.ui:274
 msgctxt "selectcertificatedialog|searchbox-atkobject"
 msgid "Search"
-msgstr ""
+msgstr "ابحث"
 
 #. dw79G
 #: sc/inc/globstr.hrc:70
@@ -1551,13 +1551,13 @@ msgstr ""
 #: sc/inc/globstr.hrc:73
 msgctxt "STR_UNDO_DBTABLE"
 msgid "Create table"
-msgstr ""
+msgstr "أنشئ جدولًا"
 
 #. J2Dh9
 #: sc/inc/globstr.hrc:74
 msgctxt "STR_UNDO_DBTABLE"
 msgid "Delete table"
-msgstr ""
+msgstr "احذف الجدول"
 
 #. AvAbD
 #: sc/inc/globstr.hrc:140
@@ -1575,7 +1575,7 @@ msgstr ""
 #: sc/inc/globstr.hrc:195
 msgctxt "STR_CALC_TABLE"
 msgid "Table"
-msgstr ""
+msgstr "جدول"
 
 #. GFiBr
 #: sc/inc/globstr.hrc:196
@@ -1587,7 +1587,7 @@ msgstr ""
 #: sc/inc/globstr.hrc:217
 msgctxt "STR_TABLE_TOTAL"
 msgid "Total"
-msgstr ""
+msgstr "المجموع"
 
 #. wCfcy
 #: sc/inc/globstr.hrc:220
@@ -1629,7 +1629,7 @@ msgstr ""
 #: sc/inc/scfuncs.hrc:4260
 msgctxt "SC_OPCODE_CHOOSECOLS"
 msgid "Column "
-msgstr ""
+msgstr "العمود "
 
 #. Akc9t
 #: sc/inc/scfuncs.hrc:4261
@@ -1659,7 +1659,7 @@ msgstr ""
 #: sc/inc/scfuncs.hrc:4270
 msgctxt "SC_OPCODE_CHOOSEROWS"
 msgid "Row "
-msgstr ""
+msgstr "الصّفّ "
 
 #. dXjgB
 #: sc/inc/scfuncs.hrc:4271
@@ -1691,7 +1691,7 @@ msgstr ""
 #: sc/inc/scfuncs.hrc:4280
 msgctxt "SC_OPCODE_DROP"
 msgid "Rows"
-msgstr ""
+msgstr "الصفوف"
 
 #. yyjnc
 #: sc/inc/scfuncs.hrc:4281
@@ -1705,7 +1705,7 @@ msgstr ""
 #: sc/inc/scfuncs.hrc:4282
 msgctxt "SC_OPCODE_DROP"
 msgid "Columns"
-msgstr ""
+msgstr "الأعمدة"
 
 #. cAxPB
 #: sc/inc/scfuncs.hrc:4283
@@ -1737,7 +1737,7 @@ msgstr ""
 #: sc/inc/scfuncs.hrc:4292
 msgctxt "SC_OPCODE_EXPAND"
 msgid "Rows"
-msgstr ""
+msgstr "الصفوف"
 
 #. QzQiB
 #: sc/inc/scfuncs.hrc:4293
@@ -1751,7 +1751,7 @@ msgstr ""
 #: sc/inc/scfuncs.hrc:4294
 msgctxt "SC_OPCODE_EXPAND"
 msgid "Columns"
-msgstr ""
+msgstr "الأعمدة"
 
 #. EVAXE
 #: sc/inc/scfuncs.hrc:4295
@@ -1849,7 +1849,7 @@ msgstr ""
 #: sc/inc/scfuncs.hrc:4326
 msgctxt "SC_OPCODE_TAKE"
 msgid "Rows"
-msgstr ""
+msgstr "الصفوف"
 
 #. KBPBn
 #: sc/inc/scfuncs.hrc:4327
@@ -1863,7 +1863,7 @@ msgstr ""
 #: sc/inc/scfuncs.hrc:4328
 msgctxt "SC_OPCODE_TAKE"
 msgid "Columns"
-msgstr ""
+msgstr "الأعمدة"
 
 #. ZexcG
 #: sc/inc/scfuncs.hrc:4329
@@ -2135,7 +2135,7 @@ msgstr ""
 #: sc/inc/scfuncs.hrc:4392
 msgctxt "SC_OPCODE_TOCOL"
 msgid "Ignore"
-msgstr ""
+msgstr "تجاهل"
 
 #. b7EQW
 #: sc/inc/scfuncs.hrc:4393
@@ -2182,7 +2182,7 @@ msgstr ""
 #: sc/inc/scfuncs.hrc:4404
 msgctxt "SC_OPCODE_TOROW"
 msgid "Ignore"
-msgstr ""
+msgstr "تجاهل"
 
 #. wcpQF
 #: sc/inc/scfuncs.hrc:4405
@@ -2219,7 +2219,7 @@ msgstr ""
 #: sc/inc/scfuncs.hrc:4438
 msgctxt "SC_OPCODE_WRAPCOLS"
 msgid "Range"
-msgstr ""
+msgstr "المجال"
 
 #. nfZyj
 #: sc/inc/scfuncs.hrc:4439
@@ -2263,7 +2263,7 @@ msgstr ""
 #: sc/inc/scfuncs.hrc:4450
 msgctxt "SC_OPCODE_WRAPROWS"
 msgid "Range"
-msgstr ""
+msgstr "المجال"
 
 #. FLJwx
 #: sc/inc/scfuncs.hrc:4451
@@ -2321,13 +2321,13 @@ msgstr ""
 #: sc/uiconfig/scalc/ui/definetablerangedialog.ui:37
 msgctxt "definetablerangedialog|extended_tip|ok"
 msgid "Saves all changes and closes dialog."
-msgstr ""
+msgstr "يحفظ كل التغييرات ويغلق الحوار."
 
 #. YJAAP
 #: sc/uiconfig/scalc/ui/definetablerangedialog.ui:56
 msgctxt "definetablerangedialog|extended_tip|cancel"
 msgid "Closes dialog and discards all changes."
-msgstr ""
+msgstr "يغلق الحوار ويستبعد كل التغييرات."
 
 #. ugt8G
 #: sc/uiconfig/scalc/ui/definetablerangedialog.ui:106
@@ -2353,7 +2353,7 @@ msgstr ""
 #: sc/uiconfig/scalc/ui/definetablerangedialog.ui:139
 msgctxt "definetablerangedialog|range"
 msgid "Range"
-msgstr ""
+msgstr "المجال"
 
 #. 3a7g7
 #: sc/uiconfig/scalc/ui/definetablerangedialog.ui:162
@@ -2395,7 +2395,7 @@ msgstr ""
 #: sc/uiconfig/scalc/ui/numberbox.ui:17
 msgctxt "numberbox|numbertype|accessible_name"
 msgid "Number Format"
-msgstr ""
+msgstr "تنسيق الأرقام"
 
 #. o8pcB
 #: sc/uiconfig/scalc/ui/protectsheetdlg.ui:195
@@ -2413,13 +2413,13 @@ msgstr ""
 #: sc/uiconfig/scalc/ui/selectsheetviewdialog.ui:44
 msgctxt "selectsheetviewdialog|extended_tip|ok"
 msgid "Saves all changes and closes dialog."
-msgstr ""
+msgstr "يحفظ كل التغييرات ويغلق الحوار."
 
 #. kGFYu
 #: sc/uiconfig/scalc/ui/selectsheetviewdialog.ui:63
 msgctxt "selectsheetviewdialog|extended_tip|cancel"
 msgid "Closes dialog and discards all changes."
-msgstr ""
+msgstr "يغلق الحوار ويستبعد كل التغييرات."
 
 #. sQPFE
 #: sc/uiconfig/scalc/ui/selectsheetviewdialog.ui:134
@@ -2485,7 +2485,7 @@ msgstr ""
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:170
 msgctxt "sidebardatabase|lbl_styles"
 msgid "Table Styles"
-msgstr ""
+msgstr "طُرُز الجداول"
 
 #. er8nh
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:187
@@ -3277,4 +3277,4 @@ msgstr ""
 #: sc/uiconfig/scalc/ui/tablestylesbox.ui:185
 msgctxt "tablestylebox|tablestyles_cb|accessible_name"
 msgid "Table Styles"
-msgstr ""
+msgstr "طُرُز الجداول"

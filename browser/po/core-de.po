@@ -126,13 +126,13 @@ msgstr ""
 #: svx/uiconfig/ui/sidebarline.ui:91
 msgctxt "sidebarline|SelectWidth|tooltip_text"
 msgid "Line Thickness"
-msgstr ""
+msgstr "Linienbreite"
 
 #. cDwyK
 #: svx/uiconfig/ui/sidebarline.ui:97
 msgctxt "sidebarline|SelectWidth-atkobject"
 msgid "Line Thickness"
-msgstr ""
+msgstr "Linienbreite"
 
 #. 7MFsT
 #: uui/inc/strings.hrc:84
@@ -316,7 +316,7 @@ msgstr "3D-_Schema:"
 #: chart2/uiconfig/ui/sidebartype.ui:323
 msgctxt "sidebartype|cmb_chartType-atkobject"
 msgid "Chart Type"
-msgstr ""
+msgstr "Diagrammtyp"
 
 #. x3adg
 #: chart2/uiconfig/ui/tp_ChartColorPalette.ui:68
@@ -576,25 +576,25 @@ msgstr ""
 #: sfx2/uiconfig/ui/password.ui:200
 msgctxt "password|pass1bar-atkobject"
 msgid "Password Level Bar"
-msgstr ""
+msgstr "Kennwortstärke-Balken"
 
 #. 2Y4Ua
 #: sfx2/uiconfig/ui/password.ui:201
 msgctxt "password|pass1bar-atkobject"
 msgid "Shows the strength of password"
-msgstr ""
+msgstr "Zeigt die Stärke des Kennworts"
 
 #. EGBBE
 #: sfx2/uiconfig/ui/password.ui:342
 msgctxt "password|pass2bar-atkobject"
 msgid "Password Level Bar"
-msgstr ""
+msgstr "Kennwortstärke-Balken"
 
 #. nvEiq
 #: sfx2/uiconfig/ui/password.ui:343
 msgctxt "password|pass2bar-atkobject"
 msgid "Shows the strength of password"
-msgstr ""
+msgstr "Zeigt die Stärke des Kennworts"
 
 #. YHTHB
 #: sfx2/uiconfig/ui/templatepanel.ui:137
@@ -693,7 +693,7 @@ msgstr ""
 #: sw/uiconfig/swriter/ui/dropcapspage.ui:336
 msgctxt "dropcapspage|drawingareaWN_EXAMPLE-atkobject"
 msgid "Example"
-msgstr ""
+msgstr "Beispiel"
 
 #. RdG95
 #: sw/uiconfig/swriter/ui/footnotesendnotestabpage.ui:179
@@ -1092,7 +1092,7 @@ msgctxt ""
 "TooltipLabel\n"
 "value.text"
 msgid "Insert Table"
-msgstr ""
+msgstr "Tabelle einfügen"
 
 #. kZEtN
 #: CalcCommands.xcu
@@ -1282,7 +1282,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Master Pages"
-msgstr ""
+msgstr "Masterseiten"
 
 #. FBZFX
 #: GenericCommands.xcu
@@ -1292,7 +1292,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Theme..."
-msgstr ""
+msgstr "Thema~..."
 
 #. DCEaK
 #: GenericCommands.xcu
@@ -1322,7 +1322,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Nav~igator select comment."
-msgstr ""
+msgstr "Wählt Kommentar im Navigator aus."
 
 #. 77Q3c
 #: GenericCommands.xcu
@@ -1574,7 +1574,7 @@ msgstr ""
 #: xmlsecurity/uiconfig/ui/selectcertificatedialog.ui:274
 msgctxt "selectcertificatedialog|searchbox-atkobject"
 msgid "Search"
-msgstr ""
+msgstr "Suchen"
 
 #. dw79G
 #: sc/inc/globstr.hrc:70
@@ -1592,7 +1592,7 @@ msgstr ""
 #: sc/inc/globstr.hrc:74
 msgctxt "STR_UNDO_DBTABLE"
 msgid "Delete table"
-msgstr ""
+msgstr "Tabelle löschen"
 
 #. AvAbD
 #: sc/inc/globstr.hrc:140
@@ -1610,7 +1610,7 @@ msgstr ""
 #: sc/inc/globstr.hrc:195
 msgctxt "STR_CALC_TABLE"
 msgid "Table"
-msgstr ""
+msgstr "Tabelle"
 
 #. GFiBr
 #: sc/inc/globstr.hrc:196
@@ -1828,7 +1828,7 @@ msgstr "Der Wert, mit dem aufgefüllt werden soll. Der Standardwert ist #NV."
 #: sc/inc/scfuncs.hrc:4303
 msgctxt "SC_OPCODE_HSTACK"
 msgid "Appends arrays horizontally to create a larger array."
-msgstr ""
+msgstr "Fügt Matrizen horizontal an, um eine größere Matrix zu erzeugen."
 
 #. LnAFg
 #: sc/inc/scfuncs.hrc:4304 sc/inc/scfuncs.hrc:4306
@@ -1857,7 +1857,7 @@ msgstr ""
 #: sc/inc/scfuncs.hrc:4313
 msgctxt "SC_OPCODE_VSTACK"
 msgid "Appends arrays vertically to create a larger array."
-msgstr ""
+msgstr "Fügt Matrizen vertikal an, um eine größere Matrix zu erzeugen."
 
 #. rhVRC
 #: sc/inc/scfuncs.hrc:4314 sc/inc/scfuncs.hrc:4316
@@ -2212,7 +2212,7 @@ msgstr "Der Wert, mit dem aufgefüllt werden soll. Der Standardwert ist #NV."
 #: sc/inc/scfuncs.hrc:4389
 msgctxt "SC_OPCODE_TOCOL"
 msgid "Transforms an array into a single column."
-msgstr ""
+msgstr "Wandelt eine Matrix in eine einzelne Spalte um."
 
 #. UAzNC
 #: sc/inc/scfuncs.hrc:4390
@@ -2437,13 +2437,13 @@ msgstr ""
 #: sc/uiconfig/scalc/ui/definetablerangedialog.ui:37
 msgctxt "definetablerangedialog|extended_tip|ok"
 msgid "Saves all changes and closes dialog."
-msgstr ""
+msgstr "Speichert alle Änderungen und schließt den Dialog."
 
 #. YJAAP
 #: sc/uiconfig/scalc/ui/definetablerangedialog.ui:56
 msgctxt "definetablerangedialog|extended_tip|cancel"
 msgid "Closes dialog and discards all changes."
-msgstr ""
+msgstr "Schließt den Dialog und verwirft alle Änderungen."
 
 #. ugt8G
 #: sc/uiconfig/scalc/ui/definetablerangedialog.ui:106
@@ -2454,6 +2454,11 @@ msgid ""
 "then automatically convert to the Maximize icon. Click it to restore the "
 "dialog to its original size."
 msgstr ""
+"Auf das Symbol »Verkleinern« klicken, um den Dialog auf die Größe des "
+"Eingabefelds zu verkleinern. So lässt sich der benötigte Bezug in der "
+"Tabelle leichter auswählen. Das Symbol wird automatisch zum Symbol "
+"»Vergrößern«. Darauf klicken, um die Originalgröße des Dialogs "
+"wiederherzustellen."
 
 #. xUrKC
 #: sc/uiconfig/scalc/ui/definetablerangedialog.ui:123
@@ -2464,6 +2469,11 @@ msgid ""
 "then automatically convert to the Maximize icon. Click it to restore the "
 "dialog to its original size."
 msgstr ""
+"Auf das Symbol »Verkleinern« klicken, um den Dialog auf die Größe des "
+"Eingabefelds zu verkleinern. So lässt sich der benötigte Bezug in der "
+"Tabelle leichter auswählen. Das Symbol wird automatisch zum Symbol "
+"»Vergrößern«. Darauf klicken, um die Originalgröße des Dialogs "
+"wiederherzustellen."
 
 #. 8FLdj
 #: sc/uiconfig/scalc/ui/definetablerangedialog.ui:139
@@ -2475,19 +2485,21 @@ msgstr ""
 #: sc/uiconfig/scalc/ui/definetablerangedialog.ui:162
 msgctxt "definetablerangedialog|containscolumnlabels"
 msgid "Co_ntains column labels"
-msgstr ""
+msgstr "Enthält _Spaltenbeschriftungen"
 
 #. AEKGN
 #: sc/uiconfig/scalc/ui/definetablerangedialog.ui:171
 msgctxt "definetablerangedialog|extended_tip|ContainsColumnLabels"
 msgid "Selected cell ranges contain labels."
-msgstr ""
+msgstr "Ausgewählte Zellbereiche enthalten Beschriftungen."
 
 #. GCg88
 #: sc/uiconfig/scalc/ui/definetablerangedialog.ui:203
 msgctxt "definetablerangedialog|extended_tip|DefineTableRangeDialog"
 msgid "Defines a database range based on the selected cells in your sheet."
 msgstr ""
+"Definiert einen Datenbereich auf Grundlage der ausgewählten Zellen in der "
+"Tabelle."
 
 #. LVdkf
 #: sc/uiconfig/scalc/ui/erroralerttabpage.ui:15
@@ -2517,13 +2529,13 @@ msgstr ""
 #: sc/uiconfig/scalc/ui/protectsheetdlg.ui:195
 msgctxt "protectsheetdlg|passwordbar-atkobject"
 msgid "Password Level Bar"
-msgstr ""
+msgstr "Kennwortstärke-Balken"
 
 #. Q4fA3
 #: sc/uiconfig/scalc/ui/selectsheetviewdialog.ui:18
 msgctxt "selectsheetviewdialog|SelectSheetView"
 msgid "Select Sheet View"
-msgstr ""
+msgstr "Tabellenansicht auswählen"
 
 #. GTQJA
 #: sc/uiconfig/scalc/ui/selectsheetviewdialog.ui:44

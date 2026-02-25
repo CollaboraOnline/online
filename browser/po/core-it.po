@@ -45,7 +45,7 @@ msgstr ""
 #: include/svx/strings.hrc:1040
 msgctxt "RID_SVXSTR_PASTE_AS_DIALOG_TITLE"
 msgid "Paste As"
-msgstr ""
+msgstr "Incolla come"
 
 #. dF6zk
 #: svx/inc/spacing.hrc:16
@@ -63,13 +63,13 @@ msgstr ""
 #: svx/inc/spacing.hrc:18
 msgctxt "RID_BEFORE"
 msgid "Before:"
-msgstr ""
+msgstr "Prima:"
 
 #. jGRHH
 #: svx/inc/spacing.hrc:19
 msgctxt "RID_AFTER"
 msgid "After:"
-msgstr ""
+msgstr "Dopo:"
 
 #. k9CGA
 #: svx/inc/spacing.hrc:20
@@ -81,25 +81,25 @@ msgstr ""
 #: svx/uiconfig/ui/dropdownfielddialog.ui:31
 msgctxt "dropdownDialog|OK"
 msgid "OK"
-msgstr ""
+msgstr "OK"
 
 #. 54Dmg
 #: svx/uiconfig/ui/dropdownfielddialog.ui:44
 msgctxt "dropdownDialog|CANCEL"
 msgid "Cancel"
-msgstr ""
+msgstr "Annulla"
 
 #. gPAYw
 #: svx/uiconfig/ui/findreplacedialog.ui:67
 msgctxt "findreplacedialog|find_tab_btn"
 msgid "Find"
-msgstr ""
+msgstr "Trova"
 
 #. uknDS
 #: svx/uiconfig/ui/findreplacedialog.ui:85
 msgctxt "findreplacedialog|replace_tab_btn"
 msgid "Replace"
-msgstr ""
+msgstr "Sostituisci"
 
 #. v2oaz
 #: svx/uiconfig/ui/findreplacedialog.ui:172
@@ -123,19 +123,19 @@ msgstr ""
 #: svx/uiconfig/ui/sidebarline.ui:91
 msgctxt "sidebarline|SelectWidth|tooltip_text"
 msgid "Line Thickness"
-msgstr ""
+msgstr "Spessore linea"
 
 #. cDwyK
 #: svx/uiconfig/ui/sidebarline.ui:97
 msgctxt "sidebarline|SelectWidth-atkobject"
 msgid "Line Thickness"
-msgstr ""
+msgstr "Spessore linea"
 
 #. 7MFsT
 #: uui/inc/strings.hrc:84
 msgctxt "STR_READONLY_FONT_TITLE"
 msgid "Font Disallows Editing"
-msgstr ""
+msgstr "Il tipo di carattere non consente la modifica"
 
 #. YRahp
 #: uui/inc/strings.hrc:85
@@ -146,6 +146,10 @@ msgid ""
 "Pressing [ No ] will drop these fonts from the document:\n"
 "$(ARG1)"
 msgstr ""
+"Uno o più tipi di carattere incorporati nel documento non dispongono dei permessi di modifica.\n"
+"Desideri aprire il documento in modalità di sola lettura?\n"
+"Premendo [ No ] questi tipi di carattere saranno eliminati dal documento:\n"
+"$(ARG1)"
 
 #. 4NkMk
 #: readme.xrm
@@ -174,13 +178,13 @@ msgstr ""
 #: chart2/uiconfig/ui/chartcolorpalettepopup.ui:46
 msgctxt "chartcolorpalettepopup|colorfulwin"
 msgid "Colorful"
-msgstr ""
+msgstr "Colorato"
 
 #. xmAmH
 #: chart2/uiconfig/ui/chartcolorpalettepopup.ui:98
 msgctxt "chartcolorpalettepopup|monochromaticwin"
 msgid "Monochromatic"
-msgstr ""
+msgstr "Monocromatico"
 
 #. DrjDt
 #: chart2/uiconfig/ui/chartgradientpalettepopup.ui:46
@@ -253,6 +257,8 @@ msgstr ""
 msgctxt "sidebarcolors|bordertype|tooltip_text"
 msgid "Allow to select a color palette to apply to current chart data series."
 msgstr ""
+"Consente di selezionare una tavolozza dei colori da applicare alla serie di "
+"dati del grafico attivo."
 
 #. xGjwG
 #: chart2/uiconfig/ui/sidebarcolors.ui:42
@@ -283,7 +289,7 @@ msgstr ""
 #: chart2/uiconfig/ui/sidebartheme.ui:37
 msgctxt "sidebartheme|themetype-atkobject"
 msgid "Themes"
-msgstr ""
+msgstr "Temi"
 
 #. YB6Et
 #: chart2/uiconfig/ui/sidebartheme.ui:48
@@ -301,19 +307,19 @@ msgstr ""
 #: chart2/uiconfig/ui/sidebartype.ui:323
 msgctxt "sidebartype|cmb_chartType-atkobject"
 msgid "Chart Type"
-msgstr ""
+msgstr "Tipo di grafico"
 
 #. x3adg
 #: chart2/uiconfig/ui/tp_ChartColorPalette.ui:68
 msgctxt "tp_ChartColorPalette|colorfulwin"
 msgid "Colorful"
-msgstr ""
+msgstr "Colorato"
 
 #. 8QjnP
 #: chart2/uiconfig/ui/tp_ChartColorPalette.ui:126
 msgctxt "tp_ChartColorPalette|monochromaticwin"
 msgid "Monochromatic"
-msgstr ""
+msgstr "Monocromatico"
 
 #. 6JxiC
 #: chart2/uiconfig/ui/tp_ChartGradients.ui:69
@@ -331,7 +337,7 @@ msgstr ""
 #: chart2/uiconfig/ui/tp_ChartType.ui:114
 msgctxt "tp_ChartType|extended_tip|subtype_iconview"
 msgid "Select a sub type of the basic chart type."
-msgstr ""
+msgstr "Seleziona un sottotipo del tipo di grafico."
 
 #. Wh4j6
 #: chart2/uiconfig/ui/tp_ChartType.ui:167
@@ -367,7 +373,7 @@ msgstr ""
 #: cui/uiconfig/ui/hyperlinkinternetpage.ui:64
 msgctxt "hyperlinkinternetpage|target_label"
 msgid "Link:"
-msgstr ""
+msgstr "Collegamento:"
 
 #. Ric9F
 #: cui/uiconfig/ui/imagetabpage.ui:503
@@ -385,7 +391,7 @@ msgstr ""
 #: cui/uiconfig/ui/numberingformatpage.ui:541
 msgctxt "numberingformatpage|currencylb-atkobject"
 msgid "Currency"
-msgstr ""
+msgstr "Valuta"
 
 #. vcAoU
 #: cui/uiconfig/ui/pageformatpage.ui:223
@@ -475,25 +481,25 @@ msgstr "Indica la robustezza della password"
 #: cui/uiconfig/ui/pickbulletpage.ui:45
 msgctxt "pickbulletpage|extended_tip|pick_bullet_iconview"
 msgid "Click the bullet style that you want to use."
-msgstr ""
+msgstr "Fai clic sullo stile da usare per l'elenco puntato."
 
 #. rkoDB
 #: cui/uiconfig/ui/pickgraphicpage.ui:45
 msgctxt "pickgraphicpage|extended_tip|pick_graphic_iconview"
 msgid "Click the graphics that you want to use as bullets."
-msgstr ""
+msgstr "Fai clic sulle immagini da utilizzare come elenco puntato."
 
 #. WGzy5
 #: cui/uiconfig/ui/picknumberingpage.ui:44
 msgctxt "picknumberingpage|extended_tip|pick_numbering_iconview"
 msgid "Click the numbering scheme that you want to use."
-msgstr ""
+msgstr "Fai clic sullo schema di numerazione da utilizzare."
 
 #. avppC
 #: cui/uiconfig/ui/pickoutlinepage.ui:44
 msgctxt "pickoutlinepage|extended_tip|pick_outline_iconview"
 msgid "Click the outline style that you want to use."
-msgstr ""
+msgstr "Fai clic sullo stile di struttura da utilizzare."
 
 #. hLcKE
 #: cui/uiconfig/ui/textflowpage.ui:812
@@ -511,7 +517,7 @@ msgstr ""
 #: cui/uiconfig/ui/thesaurus.ui:189
 msgctxt "thesaurus|langcb|accessible_name"
 msgid "Language"
-msgstr ""
+msgstr "Lingua"
 
 #. qpArp
 #: cui/uiconfig/ui/toolbarmodedialog.ui:124
@@ -529,13 +535,13 @@ msgstr ""
 #: include/svtools/strings.hrc:71
 msgctxt "STR_FORMAT_ID_MARKDOWN"
 msgid "Markdown"
-msgstr ""
+msgstr "Markdown"
 
 #. HASc5
 #: include/sfx2/strings.hrc:227
 msgctxt "STR_SID_QUICKFIND"
 msgid "Quick Find"
-msgstr ""
+msgstr "Ricerca rapida"
 
 #. 2VmCo
 #: sfx2/uiconfig/ui/licensedialog.ui:41
@@ -556,49 +562,49 @@ msgstr ""
 #: sfx2/uiconfig/ui/password.ui:200
 msgctxt "password|pass1bar-atkobject"
 msgid "Password Level Bar"
-msgstr ""
+msgstr "Barra del livello di protezione password"
 
 #. 2Y4Ua
 #: sfx2/uiconfig/ui/password.ui:201
 msgctxt "password|pass1bar-atkobject"
 msgid "Shows the strength of password"
-msgstr ""
+msgstr "Indica la robustezza della password"
 
 #. EGBBE
 #: sfx2/uiconfig/ui/password.ui:342
 msgctxt "password|pass2bar-atkobject"
 msgid "Password Level Bar"
-msgstr ""
+msgstr "Barra del livello di protezione password"
 
 #. nvEiq
 #: sfx2/uiconfig/ui/password.ui:343
 msgctxt "password|pass2bar-atkobject"
 msgid "Shows the strength of password"
-msgstr ""
+msgstr "Indica la robustezza della password"
 
 #. YHTHB
 #: sfx2/uiconfig/ui/templatepanel.ui:137
 msgctxt "templatepanel|accessible_name|watercan"
 msgid "Fill Format Mode"
-msgstr ""
+msgstr "Modo riempimento"
 
 #. qvBEu
 #: sfx2/uiconfig/ui/templatepanel.ui:156
 msgctxt "templatepanel|accessible_name|new"
 msgid "New Style from Selection"
-msgstr ""
+msgstr "Nuovo stile dalla selezione"
 
 #. 5ZAqh
 #: sfx2/uiconfig/ui/templatepanel.ui:174
 msgctxt "templatepanel|accessible_name|newmenu"
 msgid "Styles actions"
-msgstr ""
+msgstr "Azioni sugli stili"
 
 #. 7NfdA
 #: sfx2/uiconfig/ui/templatepanel.ui:192
 msgctxt "templatepanel|accessible_name|update"
 msgid "Update Style"
-msgstr ""
+msgstr "Aggiorna stile"
 
 #. BGAhD
 #: sfx2/uiconfig/ui/templatepanel.ui:242
@@ -610,37 +616,37 @@ msgstr "Evidenzia stili"
 #: sfx2/uiconfig/ui/templatepanel.ui:272
 msgctxt "templatepanel|filter-atkobject"
 msgid "Filter"
-msgstr ""
+msgstr "Filtro"
 
 #. 5xrhC
 #: sw/inc/strings.hrc:232
 msgctxt "STR_COLUMN_ICONVIEW_ITEM0"
 msgid "1 column"
-msgstr ""
+msgstr "Una colonna"
 
 #. VAfCS
 #: sw/inc/strings.hrc:233
 msgctxt "STR_COLUMN_ICONVIEW_ITEM1"
 msgid "2 columns with equal size"
-msgstr ""
+msgstr "Due colonne di uguali dimensioni"
 
 #. g8pFG
 #: sw/inc/strings.hrc:234
 msgctxt "STR_COLUMN_ICONVIEW_ITEM2"
 msgid "3 columns with equal size"
-msgstr ""
+msgstr "Tre colonne di uguali dimensioni"
 
 #. QJxAd
 #: sw/inc/strings.hrc:235
 msgctxt "STR_COLUMN_ICONVIEW_ITEM3"
 msgid "2 columns with different size (left > right)"
-msgstr ""
+msgstr "Due colonne con diverse dimensioni (sinistra > destra)"
 
 #. MHk4E
 #: sw/inc/strings.hrc:236
 msgctxt "STR_COLUMN_ICONVIEW_ITEM4"
 msgid "2 columns with different size (left < right)"
-msgstr ""
+msgstr "Due colonne con diverse dimensioni (sinistra > destra)"
 
 #. xPgHS
 #: sw/inc/strings.hrc:498
@@ -652,13 +658,13 @@ msgstr ""
 #: sw/inc/strings.hrc:1536
 msgctxt "STR_COMPAT_OPT_UNDERLINETRAILINGSPACE"
 msgid "Underline Word-compatible trailing blanks"
-msgstr ""
+msgstr "Spazi posteriori compatibili con Word"
 
 #. B3rfb
 #: sw/uiconfig/swriter/ui/columnpage.ui:122
 msgctxt "columnpage|columnft"
 msgid "Column"
-msgstr ""
+msgstr "Colonna"
 
 #. Lurdj
 #: sw/uiconfig/swriter/ui/columnpage.ui:871
@@ -666,12 +672,14 @@ msgctxt "columnpage|extended_tip|column-iconview"
 msgid ""
 "Enter the number of columns that you want in the page, frame, or section."
 msgstr ""
+"Specificare il numero di colonne in cui disporre il contenuto della pagina, "
+"della cornice o della sezione."
 
 #. yLJG6
 #: sw/uiconfig/swriter/ui/dropcapspage.ui:336
 msgctxt "dropcapspage|drawingareaWN_EXAMPLE-atkobject"
 msgid "Example"
-msgstr ""
+msgstr "Esempio"
 
 #. RdG95
 #: sw/uiconfig/swriter/ui/footnotesendnotestabpage.ui:179
@@ -701,7 +709,7 @@ msgstr ""
 #: sw/uiconfig/swriter/ui/tocentriespage.ui:277
 msgctxt "tocentriespage|characterstyleft"
 msgid "Character style:"
-msgstr ""
+msgstr "Stile di carattere:"
 
 #. GVCXE
 #: sw/uiconfig/swriter/ui/tocentriespage.ui:569
@@ -725,7 +733,7 @@ msgstr "Scorri a destra"
 #: sw/uiconfig/swriter/ui/wordcount-mobile.ui:643
 msgctxt "wordcount-mobile|comments"
 msgid "Comments"
-msgstr ""
+msgstr "Commenti"
 
 #. SsL8u
 #: formula/inc/core_resource.hrc:2629
@@ -815,25 +823,25 @@ msgstr "A.CAPO.RIGA"
 #: formula/uiconfig/ui/functionpage.ui:80
 msgctxt "functionpage|label_category"
 msgid "_Category:"
-msgstr ""
+msgstr "_Categoria:"
 
 #. BNnFg
 #: formula/uiconfig/ui/functionpage.ui:115
 msgctxt "functionpage|label_function"
 msgid "_Function:"
-msgstr ""
+msgstr "_Funzione:"
 
 #. zRASZ
 #: formula/uiconfig/ui/structpage.ui:28
 msgctxt "structpage|label_struct"
 msgid "Content:"
-msgstr ""
+msgstr "Contenuto:"
 
 #. DPToC
 #: sd/uiconfig/simpress/ui/layoutpanel.ui:41
 msgctxt "layoutpanel|extended_tip|layoutpanel_icons"
 msgid "List of available layout templates."
-msgstr ""
+msgstr "Elenco dei modelli di layout disponibili."
 
 #. Y3kBV
 #: filter/uiconfig/ui/impswfdialog.ui:14
@@ -987,7 +995,7 @@ msgctxt ""
 "UIName\n"
 "value.text"
 msgid "Markdown Document"
-msgstr ""
+msgstr "Documento Markdown"
 
 #. 9Q5Zj
 #: draw_flash_Export.xcu
@@ -1017,7 +1025,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Current Sheet View"
-msgstr ""
+msgstr "Vista foglio attivo"
 
 #. MKARo
 #: CalcCommands.xcu
@@ -1037,7 +1045,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "~Table"
-msgstr ""
+msgstr "~Tabella"
 
 #. Uhi2h
 #: CalcCommands.xcu
@@ -1067,7 +1075,7 @@ msgctxt ""
 "TooltipLabel\n"
 "value.text"
 msgid "Insert Table"
-msgstr ""
+msgstr "Inserisci tabella"
 
 #. kZEtN
 #: CalcCommands.xcu
@@ -1087,7 +1095,7 @@ msgctxt ""
 "TooltipLabel\n"
 "value.text"
 msgid "Delete Table"
-msgstr ""
+msgstr "Elimina tabella"
 
 #. 3Ep4Y
 #: CalcCommands.xcu
@@ -1097,7 +1105,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Insert Function"
-msgstr ""
+msgstr "Inserisci funzione"
 
 #. rxGTc
 #: CalcCommands.xcu
@@ -1117,7 +1125,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "New Sheet View"
-msgstr ""
+msgstr "Vista nuovo foglio"
 
 #. AKfar
 #: CalcCommands.xcu
@@ -1127,7 +1135,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Remove Sheet View"
-msgstr ""
+msgstr "Rimuovi vista foglio"
 
 #. M52nh
 #: CalcCommands.xcu
@@ -1137,7 +1145,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Switch To Next Sheet View"
-msgstr ""
+msgstr "Passa alla vista del foglio successivo"
 
 #. qfgad
 #: CalcCommands.xcu
@@ -1147,7 +1155,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Switch To Previous Sheet View"
-msgstr ""
+msgstr "Passa alla vista del foglio precedente"
 
 #. FJEd2
 #: CalcCommands.xcu
@@ -1157,7 +1165,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Select Sheet View"
-msgstr ""
+msgstr "Seleziona vista foglio"
 
 #. vCsC3
 #: CalcCommands.xcu
@@ -1167,7 +1175,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Exit Sheet View"
-msgstr ""
+msgstr "Esci dalla vista foglio"
 
 #. uuvrm
 #: ChartCommands.xcu
@@ -1247,7 +1255,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Slide Transitions"
-msgstr ""
+msgstr "Cambi diapositiva"
 
 #. 5pSJ6
 #: GenericCommands.xcu
@@ -1257,7 +1265,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Master Pages"
-msgstr ""
+msgstr "Pagine schema"
 
 #. FBZFX
 #: GenericCommands.xcu
@@ -1267,7 +1275,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Theme..."
-msgstr ""
+msgstr "Tema..."
 
 #. DCEaK
 #: GenericCommands.xcu
@@ -1277,7 +1285,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "~Hyperlink"
-msgstr ""
+msgstr "Collegamento ~ipertestuale"
 
 #. aFFu9
 #: GenericCommands.xcu
@@ -1287,7 +1295,7 @@ msgctxt ""
 "PopupLabel\n"
 "value.text"
 msgid "Insert Hyperlink..."
-msgstr ""
+msgstr "Inserisci collegamento ipertestuale..."
 
 #. czVMP
 #: GenericCommands.xcu
@@ -1297,7 +1305,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Nav~igator select comment."
-msgstr ""
+msgstr "Seleziona commento nav~igatore"
 
 #. 77Q3c
 #: GenericCommands.xcu
@@ -1307,7 +1315,7 @@ msgctxt ""
 "TooltipLabel\n"
 "value.text"
 msgid "Select Comment In The Navigator Window/Sidebar"
-msgstr ""
+msgstr "Seleziona un commento nel pannello/barra laterale del Navigatore"
 
 #. 83Euq
 #: GenericCommands.xcu
@@ -1317,7 +1325,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Change record mode"
-msgstr ""
+msgstr "Modifica modo registrazione"
 
 #. nG2DH
 #: GenericCommands.xcu
@@ -1327,7 +1335,7 @@ msgctxt ""
 "ContextLabel\n"
 "value.text"
 msgid "Record mode"
-msgstr ""
+msgstr "Modo registrazione"
 
 #. fDK7V
 #: GenericCommands.xcu
@@ -1407,7 +1415,7 @@ msgctxt ""
 "Title\n"
 "value.text"
 msgid "Theme"
-msgstr ""
+msgstr "Tema"
 
 #. dgWCC
 #: Sidebar.xcu
@@ -1507,7 +1515,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Record changes in this view"
-msgstr ""
+msgstr "Registra modifiche in questa vista"
 
 #. TADBE
 #: WriterCommands.xcu
@@ -1517,7 +1525,7 @@ msgctxt ""
 "ContextLabel\n"
 "value.text"
 msgid "~Changes in this view"
-msgstr ""
+msgstr "~Modifiche in questa vista"
 
 #. nn4AU
 #: WriterCommands.xcu
@@ -1527,7 +1535,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Record changes in all views"
-msgstr ""
+msgstr "Registra modifiche in tutte le viste"
 
 #. DJphX
 #: WriterCommands.xcu
@@ -1537,7 +1545,7 @@ msgctxt ""
 "ContextLabel\n"
 "value.text"
 msgid "~Changes in all views"
-msgstr ""
+msgstr "~Modifiche in tutte le viste"
 
 #. wCDa4
 #: xmlsecurity/uiconfig/ui/certdetails.ui:101
@@ -1549,7 +1557,7 @@ msgstr ""
 #: xmlsecurity/uiconfig/ui/selectcertificatedialog.ui:274
 msgctxt "selectcertificatedialog|searchbox-atkobject"
 msgid "Search"
-msgstr ""
+msgstr "Cerca"
 
 #. dw79G
 #: sc/inc/globstr.hrc:70
@@ -1561,13 +1569,13 @@ msgstr ""
 #: sc/inc/globstr.hrc:73
 msgctxt "STR_UNDO_DBTABLE"
 msgid "Create table"
-msgstr ""
+msgstr "Crea tabella"
 
 #. J2Dh9
 #: sc/inc/globstr.hrc:74
 msgctxt "STR_UNDO_DBTABLE"
 msgid "Delete table"
-msgstr ""
+msgstr "Elimina la tabella"
 
 #. AvAbD
 #: sc/inc/globstr.hrc:140
@@ -1585,7 +1593,7 @@ msgstr ""
 #: sc/inc/globstr.hrc:195
 msgctxt "STR_CALC_TABLE"
 msgid "Table"
-msgstr ""
+msgstr "Tabella"
 
 #. GFiBr
 #: sc/inc/globstr.hrc:196
@@ -1597,7 +1605,7 @@ msgstr ""
 #: sc/inc/globstr.hrc:217
 msgctxt "STR_TABLE_TOTAL"
 msgid "Total"
-msgstr ""
+msgstr "Totale"
 
 #. wCfcy
 #: sc/inc/globstr.hrc:220
@@ -1609,13 +1617,13 @@ msgstr ""
 #: sc/inc/globstr.hrc:601
 msgctxt "STR_SHEET_VIEW_DEFAULT_VIEW_NAME"
 msgid "Default View"
-msgstr ""
+msgstr "Vista predefinita"
 
 #. aYwkp
 #: sc/inc/globstr.hrc:602
 msgctxt "STR_SHEET_VIEW_TEMPORARY_NAME_TEMPLATE"
 msgid "Temporary View %1"
-msgstr ""
+msgstr "Vista temporanea %1"
 
 #. ADmez
 #: sc/inc/scfuncs.hrc:4257
@@ -1720,7 +1728,7 @@ msgstr ""
 #: sc/inc/scfuncs.hrc:4282
 msgctxt "SC_OPCODE_DROP"
 msgid "Columns"
-msgstr ""
+msgstr "Colonne"
 
 #. cAxPB
 #: sc/inc/scfuncs.hrc:4283
@@ -1772,7 +1780,7 @@ msgstr ""
 #: sc/inc/scfuncs.hrc:4294
 msgctxt "SC_OPCODE_EXPAND"
 msgid "Columns"
-msgstr ""
+msgstr "Colonne"
 
 #. EVAXE
 #: sc/inc/scfuncs.hrc:4295
@@ -1801,7 +1809,7 @@ msgstr ""
 #: sc/inc/scfuncs.hrc:4303
 msgctxt "SC_OPCODE_HSTACK"
 msgid "Appends arrays horizontally to create a larger array."
-msgstr ""
+msgstr "Aggiunge matrici orizzontalmente per creare una matrice più grande."
 
 #. LnAFg
 #: sc/inc/scfuncs.hrc:4304 sc/inc/scfuncs.hrc:4306
@@ -1830,7 +1838,7 @@ msgstr ""
 #: sc/inc/scfuncs.hrc:4313
 msgctxt "SC_OPCODE_VSTACK"
 msgid "Appends arrays vertically to create a larger array."
-msgstr ""
+msgstr "Aggiunge matrici verticalmente per creare una matrice più grande."
 
 #. rhVRC
 #: sc/inc/scfuncs.hrc:4314 sc/inc/scfuncs.hrc:4316
@@ -1897,7 +1905,7 @@ msgstr ""
 #: sc/inc/scfuncs.hrc:4328
 msgctxt "SC_OPCODE_TAKE"
 msgid "Columns"
-msgstr ""
+msgstr "Colonne"
 
 #. ZexcG
 #: sc/inc/scfuncs.hrc:4329
@@ -2182,7 +2190,7 @@ msgstr ""
 #: sc/inc/scfuncs.hrc:4389
 msgctxt "SC_OPCODE_TOCOL"
 msgid "Transforms an array into a single column."
-msgstr ""
+msgstr "Trasforma una matrice in un'unica colonna."
 
 #. UAzNC
 #: sc/inc/scfuncs.hrc:4390
@@ -2404,13 +2412,13 @@ msgstr ""
 #: sc/uiconfig/scalc/ui/definetablerangedialog.ui:37
 msgctxt "definetablerangedialog|extended_tip|ok"
 msgid "Saves all changes and closes dialog."
-msgstr ""
+msgstr "Salva tutte le modifiche e chiude la finestra di dialogo."
 
 #. YJAAP
 #: sc/uiconfig/scalc/ui/definetablerangedialog.ui:56
 msgctxt "definetablerangedialog|extended_tip|cancel"
 msgid "Closes dialog and discards all changes."
-msgstr ""
+msgstr "Chiude la finestra di dialogo e annulla tutte le modifiche."
 
 #. ugt8G
 #: sc/uiconfig/scalc/ui/definetablerangedialog.ui:106
@@ -2421,6 +2429,11 @@ msgid ""
 "then automatically convert to the Maximize icon. Click it to restore the "
 "dialog to its original size."
 msgstr ""
+"Fare clic sull'icona Riduci per ridurre la finestra di dialogo alla "
+"dimensione di un campo di digitazione. In questo modo sarà più semplice "
+"contrassegnare il riferimento richiesto nel foglio. Le icone vengono quindi "
+"convertite automaticamente nell'icona Espandi. Facendo clic su quest'ultima "
+"si può ripristinare la dimensione originale della finestra di dialogo."
 
 #. xUrKC
 #: sc/uiconfig/scalc/ui/definetablerangedialog.ui:123
@@ -2431,6 +2444,11 @@ msgid ""
 "then automatically convert to the Maximize icon. Click it to restore the "
 "dialog to its original size."
 msgstr ""
+"Fare clic sull'icona Riduci per ridurre la finestra di dialogo alla "
+"dimensione di un campo di digitazione. In questo modo sarà più semplice "
+"contrassegnare il riferimento richiesto nel foglio. Le icone vengono quindi "
+"convertite automaticamente nell'icona Espandi. Facendo clic su quest'ultima "
+"si può ripristinare la dimensione originale della finestra di dialogo."
 
 #. 8FLdj
 #: sc/uiconfig/scalc/ui/definetablerangedialog.ui:139
@@ -2442,19 +2460,21 @@ msgstr ""
 #: sc/uiconfig/scalc/ui/definetablerangedialog.ui:162
 msgctxt "definetablerangedialog|containscolumnlabels"
 msgid "Co_ntains column labels"
-msgstr ""
+msgstr "Co_ntiene intestazioni di colonne"
 
 #. AEKGN
 #: sc/uiconfig/scalc/ui/definetablerangedialog.ui:171
 msgctxt "definetablerangedialog|extended_tip|ContainsColumnLabels"
 msgid "Selected cell ranges contain labels."
-msgstr ""
+msgstr "Le aree di celle selezionate contengono intestazioni."
 
 #. GCg88
 #: sc/uiconfig/scalc/ui/definetablerangedialog.ui:203
 msgctxt "definetablerangedialog|extended_tip|DefineTableRangeDialog"
 msgid "Defines a database range based on the selected cells in your sheet."
 msgstr ""
+"Consente di definire un'area del database tramite la selezione di celle nel "
+"foglio."
 
 #. LVdkf
 #: sc/uiconfig/scalc/ui/erroralerttabpage.ui:15
@@ -2478,43 +2498,43 @@ msgstr ""
 #: sc/uiconfig/scalc/ui/numberbox.ui:17
 msgctxt "numberbox|numbertype|accessible_name"
 msgid "Number Format"
-msgstr ""
+msgstr "Formato numero"
 
 #. o8pcB
 #: sc/uiconfig/scalc/ui/protectsheetdlg.ui:195
 msgctxt "protectsheetdlg|passwordbar-atkobject"
 msgid "Password Level Bar"
-msgstr ""
+msgstr "Barra del livello di protezione password"
 
 #. Q4fA3
 #: sc/uiconfig/scalc/ui/selectsheetviewdialog.ui:18
 msgctxt "selectsheetviewdialog|SelectSheetView"
 msgid "Select Sheet View"
-msgstr ""
+msgstr "Seleziona vista foglio"
 
 #. GTQJA
 #: sc/uiconfig/scalc/ui/selectsheetviewdialog.ui:44
 msgctxt "selectsheetviewdialog|extended_tip|ok"
 msgid "Saves all changes and closes dialog."
-msgstr ""
+msgstr "Salva tutte le modifiche e chiude la finestra di dialogo."
 
 #. kGFYu
 #: sc/uiconfig/scalc/ui/selectsheetviewdialog.ui:63
 msgctxt "selectsheetviewdialog|extended_tip|cancel"
 msgid "Closes dialog and discards all changes."
-msgstr ""
+msgstr "Chiude la finestra di dialogo e annulla tutte le modifiche."
 
 #. sQPFE
 #: sc/uiconfig/scalc/ui/selectsheetviewdialog.ui:134
 msgctxt "selectsheetviewdialog|extended_tip|entry-list"
 msgid "Available sheet views."
-msgstr ""
+msgstr "Viste foglio disponibili."
 
 #. csyNB
 #: sc/uiconfig/scalc/ui/sheetviewbox.ui:17
 msgctxt "sheetviewbox|sheetview_combobox|accessible_name"
 msgid "Sheet View"
-msgstr ""
+msgstr "Vista foglio"
 
 #. FXK8B
 #: sc/uiconfig/scalc/ui/sidebarcellappearance.ui:87
@@ -2568,7 +2588,7 @@ msgstr "Ultima colonna"
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:170
 msgctxt "sidebardatabase|lbl_styles"
 msgid "Table Styles"
-msgstr ""
+msgstr "Stili di tabella"
 
 #. er8nh
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:187
@@ -3360,4 +3380,4 @@ msgstr ""
 #: sc/uiconfig/scalc/ui/tablestylesbox.ui:185
 msgctxt "tablestylebox|tablestyles_cb|accessible_name"
 msgid "Table Styles"
-msgstr ""
+msgstr "Stili di tabella"

@@ -65,13 +65,13 @@ msgstr ""
 #: svx/inc/spacing.hrc:18
 msgctxt "RID_BEFORE"
 msgid "Before:"
-msgstr ""
+msgstr "Antes:"
 
 #. jGRHH
 #: svx/inc/spacing.hrc:19
 msgctxt "RID_AFTER"
 msgid "After:"
-msgstr ""
+msgstr "Después:"
 
 #. k9CGA
 #: svx/inc/spacing.hrc:20
@@ -125,19 +125,19 @@ msgstr ""
 #: svx/uiconfig/ui/sidebarline.ui:91
 msgctxt "sidebarline|SelectWidth|tooltip_text"
 msgid "Line Thickness"
-msgstr ""
+msgstr "Grosor de línea"
 
 #. cDwyK
 #: svx/uiconfig/ui/sidebarline.ui:97
 msgctxt "sidebarline|SelectWidth-atkobject"
 msgid "Line Thickness"
-msgstr ""
+msgstr "Grosor de línea"
 
 #. 7MFsT
 #: uui/inc/strings.hrc:84
 msgctxt "STR_READONLY_FONT_TITLE"
 msgid "Font Disallows Editing"
-msgstr ""
+msgstr "El tipo de letra no permite la edición"
 
 #. YRahp
 #: uui/inc/strings.hrc:85
@@ -176,13 +176,13 @@ msgstr "Degradados"
 #: chart2/uiconfig/ui/chartcolorpalettepopup.ui:46
 msgctxt "chartcolorpalettepopup|colorfulwin"
 msgid "Colorful"
-msgstr ""
+msgstr "Colorido"
 
 #. xmAmH
 #: chart2/uiconfig/ui/chartcolorpalettepopup.ui:98
 msgctxt "chartcolorpalettepopup|monochromaticwin"
 msgid "Monochromatic"
-msgstr ""
+msgstr "Monocromático"
 
 #. DrjDt
 #: chart2/uiconfig/ui/chartgradientpalettepopup.ui:46
@@ -255,6 +255,8 @@ msgstr ""
 msgctxt "sidebarcolors|bordertype|tooltip_text"
 msgid "Allow to select a color palette to apply to current chart data series."
 msgstr ""
+"Permite seleccionar una paleta de colores para aplicar a la serie de datos "
+"del gráfico actual."
 
 #. xGjwG
 #: chart2/uiconfig/ui/sidebarcolors.ui:42
@@ -303,7 +305,7 @@ msgstr ""
 #: chart2/uiconfig/ui/sidebartype.ui:323
 msgctxt "sidebartype|cmb_chartType-atkobject"
 msgid "Chart Type"
-msgstr ""
+msgstr "Tipo de gráfico"
 
 #. x3adg
 #: chart2/uiconfig/ui/tp_ChartColorPalette.ui:68
@@ -387,7 +389,7 @@ msgstr ""
 #: cui/uiconfig/ui/numberingformatpage.ui:541
 msgctxt "numberingformatpage|currencylb-atkobject"
 msgid "Currency"
-msgstr ""
+msgstr "Moneda"
 
 #. vcAoU
 #: cui/uiconfig/ui/pageformatpage.ui:223
@@ -495,7 +497,7 @@ msgstr "Pulse sobre el modelo de numeración que quiere usar."
 #: cui/uiconfig/ui/pickoutlinepage.ui:44
 msgctxt "pickoutlinepage|extended_tip|pick_outline_iconview"
 msgid "Click the outline style that you want to use."
-msgstr ""
+msgstr "Pulse en el estilo de esquema que desee usar."
 
 #. hLcKE
 #: cui/uiconfig/ui/textflowpage.ui:812
@@ -513,7 +515,7 @@ msgstr ""
 #: cui/uiconfig/ui/thesaurus.ui:189
 msgctxt "thesaurus|langcb|accessible_name"
 msgid "Language"
-msgstr ""
+msgstr "Idioma"
 
 #. qpArp
 #: cui/uiconfig/ui/toolbarmodedialog.ui:124
@@ -567,7 +569,7 @@ msgstr ""
 #: sfx2/uiconfig/ui/password.ui:201
 msgctxt "password|pass1bar-atkobject"
 msgid "Shows the strength of password"
-msgstr ""
+msgstr "Muestra la fortaleza de la contraseña"
 
 #. EGBBE
 #: sfx2/uiconfig/ui/password.ui:342
@@ -579,7 +581,7 @@ msgstr ""
 #: sfx2/uiconfig/ui/password.ui:343
 msgctxt "password|pass2bar-atkobject"
 msgid "Shows the strength of password"
-msgstr ""
+msgstr "Muestra la fortaleza de la contraseña"
 
 #. YHTHB
 #: sfx2/uiconfig/ui/templatepanel.ui:137
@@ -639,13 +641,13 @@ msgstr "3 columnas de igual tamaño"
 #: sw/inc/strings.hrc:235
 msgctxt "STR_COLUMN_ICONVIEW_ITEM3"
 msgid "2 columns with different size (left > right)"
-msgstr ""
+msgstr "2 columnas de diferente tamaño (izquierda > derecha)"
 
 #. MHk4E
 #: sw/inc/strings.hrc:236
 msgctxt "STR_COLUMN_ICONVIEW_ITEM4"
 msgid "2 columns with different size (left < right)"
-msgstr ""
+msgstr "2 columnas de diferente tamaño (izquierda < derecha)"
 
 #. xPgHS
 #: sw/inc/strings.hrc:498
@@ -657,7 +659,7 @@ msgstr ""
 #: sw/inc/strings.hrc:1536
 msgctxt "STR_COMPAT_OPT_UNDERLINETRAILINGSPACE"
 msgid "Underline Word-compatible trailing blanks"
-msgstr ""
+msgstr "Subrayar espacios en blanco finales compatibles con Word"
 
 #. B3rfb
 #: sw/uiconfig/swriter/ui/columnpage.ui:122
@@ -676,19 +678,19 @@ msgstr ""
 #: sw/uiconfig/swriter/ui/dropcapspage.ui:336
 msgctxt "dropcapspage|drawingareaWN_EXAMPLE-atkobject"
 msgid "Example"
-msgstr ""
+msgstr "Ejemplo"
 
 #. RdG95
 #: sw/uiconfig/swriter/ui/footnotesendnotestabpage.ui:179
 msgctxt "footnotesendnotestabpage|ftnnumviewbox-atkobject"
 msgid "Numbering"
-msgstr ""
+msgstr "Numeración"
 
 #. afJmD
 #: sw/uiconfig/swriter/ui/footnotesendnotestabpage.ui:455
 msgctxt "footnotesendnotestabpage|endnumviewbox-atkobject"
 msgid "Numbering"
-msgstr ""
+msgstr "Numeración"
 
 #. Ci9GE
 #: sw/uiconfig/swriter/ui/spellmenu.ui:34
@@ -902,7 +904,7 @@ msgstr "Exportar objetos OLE como imágenes _JPEG"
 #: filter/uiconfig/ui/pdfgeneralpage.ui:550
 msgctxt "pdfgeneralpage|embed|tooltip_text"
 msgid "Creates a PDF that embeds the original ODF file as an attachment."
-msgstr ""
+msgstr "Crea un PDF que incorpora el archivo ODF original como adjunto."
 
 #. JS7DG
 #: filter/uiconfig/ui/pdfgeneralpage.ui:556
@@ -940,7 +942,7 @@ msgstr "PDF 2.0"
 #: filter/uiconfig/ui/pdfgeneralpage.ui:592
 msgctxt "pdfgeneralpage|pdf_version"
 msgid "PDF/A-4 (PDF 2.0 base)"
-msgstr ""
+msgstr "PDF/A-4 (base PDF 2.0)"
 
 #. S7DSM
 #: filter/uiconfig/ui/pdfgeneralpage.ui:599
@@ -1040,7 +1042,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "~Table"
-msgstr ""
+msgstr "~Tabla"
 
 #. Uhi2h
 #: CalcCommands.xcu
@@ -1070,7 +1072,7 @@ msgctxt ""
 "TooltipLabel\n"
 "value.text"
 msgid "Insert Table"
-msgstr ""
+msgstr "Insertar tabla"
 
 #. kZEtN
 #: CalcCommands.xcu
@@ -1090,7 +1092,7 @@ msgctxt ""
 "TooltipLabel\n"
 "value.text"
 msgid "Delete Table"
-msgstr ""
+msgstr "Eliminar tabla"
 
 #. 3Ep4Y
 #: CalcCommands.xcu
@@ -1270,7 +1272,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Theme..."
-msgstr ""
+msgstr "Tema…"
 
 #. DCEaK
 #: GenericCommands.xcu
@@ -1310,7 +1312,7 @@ msgctxt ""
 "TooltipLabel\n"
 "value.text"
 msgid "Select Comment In The Navigator Window/Sidebar"
-msgstr ""
+msgstr "Seleccionar comentario en ventana/barra lateral Navegador"
 
 #. 83Euq
 #: GenericCommands.xcu
@@ -1552,7 +1554,7 @@ msgstr ""
 #: xmlsecurity/uiconfig/ui/selectcertificatedialog.ui:274
 msgctxt "selectcertificatedialog|searchbox-atkobject"
 msgid "Search"
-msgstr ""
+msgstr "Buscar"
 
 #. dw79G
 #: sc/inc/globstr.hrc:70
@@ -1564,13 +1566,13 @@ msgstr ""
 #: sc/inc/globstr.hrc:73
 msgctxt "STR_UNDO_DBTABLE"
 msgid "Create table"
-msgstr ""
+msgstr "Crear tabla"
 
 #. J2Dh9
 #: sc/inc/globstr.hrc:74
 msgctxt "STR_UNDO_DBTABLE"
 msgid "Delete table"
-msgstr ""
+msgstr "Eliminar tabla"
 
 #. AvAbD
 #: sc/inc/globstr.hrc:140
@@ -1588,7 +1590,7 @@ msgstr ""
 #: sc/inc/globstr.hrc:195
 msgctxt "STR_CALC_TABLE"
 msgid "Table"
-msgstr ""
+msgstr "Tabla"
 
 #. GFiBr
 #: sc/inc/globstr.hrc:196
@@ -1600,7 +1602,7 @@ msgstr ""
 #: sc/inc/globstr.hrc:217
 msgctxt "STR_TABLE_TOTAL"
 msgid "Total"
-msgstr ""
+msgstr "Total"
 
 #. wCfcy
 #: sc/inc/globstr.hrc:220
@@ -1668,6 +1670,7 @@ msgstr "Matriz"
 msgctxt "SC_OPCODE_CHOOSEROWS"
 msgid "The array containing the rows to be returned in the new array."
 msgstr ""
+"La matriz que contiene las filas que se devolverán en la matriz nueva."
 
 #. PDBbE
 #: sc/inc/scfuncs.hrc:4270
@@ -1688,6 +1691,8 @@ msgid ""
 "Excludes a specified number of contiguous rows or columns from the start or "
 "end of an array."
 msgstr ""
+"Excluye un número específico de filas o columnas contiguas del principio o "
+"del final de una matriz."
 
 #. W6FYc
 #: sc/inc/scfuncs.hrc:4278
@@ -1760,6 +1765,8 @@ msgid ""
 "The number of rows in the expanded array. If missing, rows will not be "
 "expanded."
 msgstr ""
+"El número de filas en la matriz expandida. Si falta, las filas no se "
+"expandirán."
 
 #. qjcxB
 #: sc/inc/scfuncs.hrc:4294
@@ -1774,6 +1781,8 @@ msgid ""
 "The number of columns in the expanded array. If missing, columns will not be"
 " expanded."
 msgstr ""
+"El número de columnas en la matriz expandida. Si falta, las columnas no se "
+"expandirán."
 
 #. QPyBK
 #: sc/inc/scfuncs.hrc:4296
@@ -1892,6 +1901,7 @@ msgstr ""
 msgctxt "SC_OPCODE_TEXTAFTER"
 msgid "Returns the text that occurs after a given substring or delimiter."
 msgstr ""
+"Devuelve el texto que aparece después de una subcadena o delimitador dado."
 
 #. cicY2
 #: sc/inc/scfuncs.hrc:4336
@@ -1915,13 +1925,13 @@ msgstr "Delimitador"
 #: sc/inc/scfuncs.hrc:4339
 msgctxt "SC_OPCODE_TEXTAFTER"
 msgid "The delimiter. Multiple delimiters can be supplied."
-msgstr ""
+msgstr "El delimitador. Se pueden proporcionar varios delimitadores."
 
 #. HPDvF
 #: sc/inc/scfuncs.hrc:4340
 msgctxt "SC_OPCODE_TEXTAFTER"
 msgid "Instance Number"
-msgstr ""
+msgstr "Número de instancia"
 
 #. DmVZL
 #: sc/inc/scfuncs.hrc:4341
@@ -1966,12 +1976,15 @@ msgstr "Si no se encuentra"
 msgctxt "SC_OPCODE_TEXTAFTER"
 msgid "The value returned if no match is found. The default is #N/A."
 msgstr ""
+"El valor devuelto si no se encuentra ninguna correspondencia. El valor "
+"predeterminado es #N/D."
 
 #. f88EE
 #: sc/inc/scfuncs.hrc:4353
 msgctxt "SC_OPCODE_TEXTBEFORE"
 msgid "Returns the text that occurs before a given substring or delimiter."
 msgstr ""
+"Devuelve el texto que aparece antes de una subcadena o delimitador dado."
 
 #. NNriC
 #: sc/inc/scfuncs.hrc:4354
@@ -1995,7 +2008,7 @@ msgstr "Delimitador"
 #: sc/inc/scfuncs.hrc:4357
 msgctxt "SC_OPCODE_TEXTBEFORE"
 msgid "The delimiter. Multiple delimiters can be supplied."
-msgstr ""
+msgstr "El delimitador. Se pueden proporcionar varios delimitadores."
 
 #. gNHAi
 #: sc/inc/scfuncs.hrc:4358
@@ -2046,6 +2059,8 @@ msgstr "Si no se encuentra"
 msgctxt "SC_OPCODE_TEXTBEFORE"
 msgid "The value returned if no match is found. The default is #N/A."
 msgstr ""
+"El valor devuelto si no se encuentra ninguna correspondencia. El valor "
+"predeterminado es #N/D."
 
 #. wdZTd
 #: sc/inc/scfuncs.hrc:4371
@@ -2063,7 +2078,7 @@ msgstr "Texto"
 #: sc/inc/scfuncs.hrc:4373
 msgctxt "SC_OPCODE_TEXTSPLIT"
 msgid "The text to split."
-msgstr ""
+msgstr "El texto que se dividirá."
 
 #. pdpxt
 #: sc/inc/scfuncs.hrc:4374
@@ -2076,6 +2091,8 @@ msgstr "Delimitador de columnas"
 msgctxt "SC_OPCODE_TEXTSPLIT"
 msgid "The text to delimit the columns. Multiple delimiters can be supplied."
 msgstr ""
+"El texto para delimitar las columnas. Se pueden proporcionar varios "
+"delimitadores."
 
 #. qZGq2
 #: sc/inc/scfuncs.hrc:4376
@@ -2088,6 +2105,8 @@ msgstr "Delimitador de filas"
 msgctxt "SC_OPCODE_TEXTSPLIT"
 msgid "The text to delimit the rows. Multiple delimiters can be supplied."
 msgstr ""
+"El texto para delimitar las filas. Se pueden proporcionar varios "
+"delimitadores."
 
 #. jD3sa
 #: sc/inc/scfuncs.hrc:4378
@@ -2335,13 +2354,13 @@ msgstr ""
 #: sc/uiconfig/scalc/ui/definetablerangedialog.ui:37
 msgctxt "definetablerangedialog|extended_tip|ok"
 msgid "Saves all changes and closes dialog."
-msgstr ""
+msgstr "Guarda todos los cambios y cierra el diálogo."
 
 #. YJAAP
 #: sc/uiconfig/scalc/ui/definetablerangedialog.ui:56
 msgctxt "definetablerangedialog|extended_tip|cancel"
 msgid "Closes dialog and discards all changes."
-msgstr ""
+msgstr "Cierra el diálogo y descarta todos los cambios."
 
 #. ugt8G
 #: sc/uiconfig/scalc/ui/definetablerangedialog.ui:106
@@ -2352,6 +2371,10 @@ msgid ""
 "then automatically convert to the Maximize icon. Click it to restore the "
 "dialog to its original size."
 msgstr ""
+"Pulse en el icono Reducir para disminuir el diálogo al tamaño del campo de "
+"entrada. Esto facilita el marcar la referencia requerida en la hoja. El "
+"icono se convierte automáticamente en Maximizar. Pulse de nuevo para "
+"restaurar el tamaño original del diálogo."
 
 #. xUrKC
 #: sc/uiconfig/scalc/ui/definetablerangedialog.ui:123
@@ -2362,30 +2385,35 @@ msgid ""
 "then automatically convert to the Maximize icon. Click it to restore the "
 "dialog to its original size."
 msgstr ""
+"Pulse en el icono Reducir para disminuir el diálogo al tamaño del campo de "
+"entrada. Esto facilita el marcar la referencia requerida en la hoja. El "
+"icono se convierte automáticamente en Maximizar. Pulse de nuevo para "
+"restaurar el tamaño original del diálogo."
 
 #. 8FLdj
 #: sc/uiconfig/scalc/ui/definetablerangedialog.ui:139
 msgctxt "definetablerangedialog|range"
 msgid "Range"
-msgstr ""
+msgstr "Intervalo"
 
 #. 3a7g7
 #: sc/uiconfig/scalc/ui/definetablerangedialog.ui:162
 msgctxt "definetablerangedialog|containscolumnlabels"
 msgid "Co_ntains column labels"
-msgstr ""
+msgstr "Co_ntiene etiquetas de columnas"
 
 #. AEKGN
 #: sc/uiconfig/scalc/ui/definetablerangedialog.ui:171
 msgctxt "definetablerangedialog|extended_tip|ContainsColumnLabels"
 msgid "Selected cell ranges contain labels."
-msgstr ""
+msgstr "Los intervalos de celdas seleccionados contienen etiquetas."
 
 #. GCg88
 #: sc/uiconfig/scalc/ui/definetablerangedialog.ui:203
 msgctxt "definetablerangedialog|extended_tip|DefineTableRangeDialog"
 msgid "Defines a database range based on the selected cells in your sheet."
 msgstr ""
+"Define un área de base de datos en las celdas seleccionadas de la hoja."
 
 #. LVdkf
 #: sc/uiconfig/scalc/ui/erroralerttabpage.ui:15
@@ -2409,7 +2437,7 @@ msgstr ""
 #: sc/uiconfig/scalc/ui/numberbox.ui:17
 msgctxt "numberbox|numbertype|accessible_name"
 msgid "Number Format"
-msgstr ""
+msgstr "Formato numérico"
 
 #. o8pcB
 #: sc/uiconfig/scalc/ui/protectsheetdlg.ui:195
@@ -3291,4 +3319,4 @@ msgstr ""
 #: sc/uiconfig/scalc/ui/tablestylesbox.ui:185
 msgctxt "tablestylebox|tablestyles_cb|accessible_name"
 msgid "Table Styles"
-msgstr ""
+msgstr "Estilos de tabla"

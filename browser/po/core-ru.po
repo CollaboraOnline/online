@@ -63,13 +63,13 @@ msgstr ""
 #: svx/inc/spacing.hrc:18
 msgctxt "RID_BEFORE"
 msgid "Before:"
-msgstr ""
+msgstr "Перед:"
 
 #. jGRHH
 #: svx/inc/spacing.hrc:19
 msgctxt "RID_AFTER"
 msgid "After:"
-msgstr ""
+msgstr "После:"
 
 #. k9CGA
 #: svx/inc/spacing.hrc:20
@@ -81,7 +81,7 @@ msgstr ""
 #: svx/uiconfig/ui/dropdownfielddialog.ui:31
 msgctxt "dropdownDialog|OK"
 msgid "OK"
-msgstr ""
+msgstr "ОК"
 
 #. 54Dmg
 #: svx/uiconfig/ui/dropdownfielddialog.ui:44
@@ -93,13 +93,13 @@ msgstr ""
 #: svx/uiconfig/ui/findreplacedialog.ui:67
 msgctxt "findreplacedialog|find_tab_btn"
 msgid "Find"
-msgstr ""
+msgstr "Найти"
 
 #. uknDS
 #: svx/uiconfig/ui/findreplacedialog.ui:85
 msgctxt "findreplacedialog|replace_tab_btn"
 msgid "Replace"
-msgstr ""
+msgstr "Заменить"
 
 #. v2oaz
 #: svx/uiconfig/ui/findreplacedialog.ui:172
@@ -123,13 +123,13 @@ msgstr ""
 #: svx/uiconfig/ui/sidebarline.ui:91
 msgctxt "sidebarline|SelectWidth|tooltip_text"
 msgid "Line Thickness"
-msgstr ""
+msgstr "Толщина линии"
 
 #. cDwyK
 #: svx/uiconfig/ui/sidebarline.ui:97
 msgctxt "sidebarline|SelectWidth-atkobject"
 msgid "Line Thickness"
-msgstr ""
+msgstr "Толщина линии"
 
 #. 7MFsT
 #: uui/inc/strings.hrc:84
@@ -162,7 +162,7 @@ msgstr ""
 #: chart2/inc/strings.hrc:51
 msgctxt "STR_PAGE_COLOR_PALETTE"
 msgid "Color Palette"
-msgstr ""
+msgstr "Цветовая палитра"
 
 #. YZBr8
 #: chart2/inc/strings.hrc:52
@@ -174,13 +174,13 @@ msgstr ""
 #: chart2/uiconfig/ui/chartcolorpalettepopup.ui:46
 msgctxt "chartcolorpalettepopup|colorfulwin"
 msgid "Colorful"
-msgstr ""
+msgstr "Цветная"
 
 #. xmAmH
 #: chart2/uiconfig/ui/chartcolorpalettepopup.ui:98
 msgctxt "chartcolorpalettepopup|monochromaticwin"
 msgid "Monochromatic"
-msgstr ""
+msgstr "Монохромная"
 
 #. DrjDt
 #: chart2/uiconfig/ui/chartgradientpalettepopup.ui:46
@@ -253,12 +253,14 @@ msgstr ""
 msgctxt "sidebarcolors|bordertype|tooltip_text"
 msgid "Allow to select a color palette to apply to current chart data series."
 msgstr ""
+"Позволяет выбрать цветовую палитру для применения к текущему ряду данных "
+"диаграммы."
 
 #. xGjwG
 #: chart2/uiconfig/ui/sidebarcolors.ui:42
 msgctxt "sidebarcolors|cellbordertype-atkobject"
 msgid "Border Style"
-msgstr ""
+msgstr "Стиль обрамления"
 
 #. bEK2j
 #: chart2/uiconfig/ui/sidebargradients.ui:30
@@ -271,7 +273,7 @@ msgstr ""
 #: chart2/uiconfig/ui/sidebargradients.ui:42
 msgctxt "sidebargradients|cellbordertype-atkobject"
 msgid "Border Style"
-msgstr ""
+msgstr "Стиль обрамления"
 
 #. Aiqg6
 #: chart2/uiconfig/ui/sidebartheme.ui:25
@@ -283,7 +285,7 @@ msgstr ""
 #: chart2/uiconfig/ui/sidebartheme.ui:37
 msgctxt "sidebartheme|themetype-atkobject"
 msgid "Themes"
-msgstr ""
+msgstr "Темы"
 
 #. YB6Et
 #: chart2/uiconfig/ui/sidebartheme.ui:48
@@ -301,19 +303,19 @@ msgstr ""
 #: chart2/uiconfig/ui/sidebartype.ui:323
 msgctxt "sidebartype|cmb_chartType-atkobject"
 msgid "Chart Type"
-msgstr ""
+msgstr "Тип диаграммы"
 
 #. x3adg
 #: chart2/uiconfig/ui/tp_ChartColorPalette.ui:68
 msgctxt "tp_ChartColorPalette|colorfulwin"
 msgid "Colorful"
-msgstr ""
+msgstr "Цветная"
 
 #. 8QjnP
 #: chart2/uiconfig/ui/tp_ChartColorPalette.ui:126
 msgctxt "tp_ChartColorPalette|monochromaticwin"
 msgid "Monochromatic"
-msgstr ""
+msgstr "Монохромная"
 
 #. 6JxiC
 #: chart2/uiconfig/ui/tp_ChartGradients.ui:69
@@ -331,7 +333,7 @@ msgstr ""
 #: chart2/uiconfig/ui/tp_ChartType.ui:114
 msgctxt "tp_ChartType|extended_tip|subtype_iconview"
 msgid "Select a sub type of the basic chart type."
-msgstr ""
+msgstr "Выберите подтип базового типа диаграммы."
 
 #. Wh4j6
 #: chart2/uiconfig/ui/tp_ChartType.ui:167
@@ -385,7 +387,7 @@ msgstr ""
 #: cui/uiconfig/ui/numberingformatpage.ui:541
 msgctxt "numberingformatpage|currencylb-atkobject"
 msgid "Currency"
-msgstr ""
+msgstr "Денежный"
 
 #. vcAoU
 #: cui/uiconfig/ui/pageformatpage.ui:223
@@ -475,25 +477,27 @@ msgstr "Показывает надёжность пароля"
 #: cui/uiconfig/ui/pickbulletpage.ui:45
 msgctxt "pickbulletpage|extended_tip|pick_bullet_iconview"
 msgid "Click the bullet style that you want to use."
-msgstr ""
+msgstr "Выберите стиль маркера, который будет использоваться."
 
 #. rkoDB
 #: cui/uiconfig/ui/pickgraphicpage.ui:45
 msgctxt "pickgraphicpage|extended_tip|pick_graphic_iconview"
 msgid "Click the graphics that you want to use as bullets."
 msgstr ""
+"Щёлкните графический объект, который требуется использовать в качестве "
+"маркера."
 
 #. WGzy5
 #: cui/uiconfig/ui/picknumberingpage.ui:44
 msgctxt "picknumberingpage|extended_tip|pick_numbering_iconview"
 msgid "Click the numbering scheme that you want to use."
-msgstr ""
+msgstr "Выберите желаемую схему нумерации."
 
 #. avppC
 #: cui/uiconfig/ui/pickoutlinepage.ui:44
 msgctxt "pickoutlinepage|extended_tip|pick_outline_iconview"
 msgid "Click the outline style that you want to use."
-msgstr ""
+msgstr "Выберите стиль структуры, который будет использоваться."
 
 #. hLcKE
 #: cui/uiconfig/ui/textflowpage.ui:812
@@ -511,7 +515,7 @@ msgstr ""
 #: cui/uiconfig/ui/thesaurus.ui:189
 msgctxt "thesaurus|langcb|accessible_name"
 msgid "Language"
-msgstr ""
+msgstr "Язык"
 
 #. qpArp
 #: cui/uiconfig/ui/toolbarmodedialog.ui:124
@@ -535,7 +539,7 @@ msgstr ""
 #: include/sfx2/strings.hrc:227
 msgctxt "STR_SID_QUICKFIND"
 msgid "Quick Find"
-msgstr ""
+msgstr "Быстрый поиск"
 
 #. 2VmCo
 #: sfx2/uiconfig/ui/licensedialog.ui:41
@@ -556,49 +560,49 @@ msgstr ""
 #: sfx2/uiconfig/ui/password.ui:200
 msgctxt "password|pass1bar-atkobject"
 msgid "Password Level Bar"
-msgstr ""
+msgstr "Шкала уровня пароля"
 
 #. 2Y4Ua
 #: sfx2/uiconfig/ui/password.ui:201
 msgctxt "password|pass1bar-atkobject"
 msgid "Shows the strength of password"
-msgstr ""
+msgstr "Показывает надёжность пароля"
 
 #. EGBBE
 #: sfx2/uiconfig/ui/password.ui:342
 msgctxt "password|pass2bar-atkobject"
 msgid "Password Level Bar"
-msgstr ""
+msgstr "Шкала уровня пароля"
 
 #. nvEiq
 #: sfx2/uiconfig/ui/password.ui:343
 msgctxt "password|pass2bar-atkobject"
 msgid "Shows the strength of password"
-msgstr ""
+msgstr "Показывает надёжность пароля"
 
 #. YHTHB
 #: sfx2/uiconfig/ui/templatepanel.ui:137
 msgctxt "templatepanel|accessible_name|watercan"
 msgid "Fill Format Mode"
-msgstr ""
+msgstr "Стилевая заливка"
 
 #. qvBEu
 #: sfx2/uiconfig/ui/templatepanel.ui:156
 msgctxt "templatepanel|accessible_name|new"
 msgid "New Style from Selection"
-msgstr ""
+msgstr "Создать стиль по выбранному"
 
 #. 5ZAqh
 #: sfx2/uiconfig/ui/templatepanel.ui:174
 msgctxt "templatepanel|accessible_name|newmenu"
 msgid "Styles actions"
-msgstr ""
+msgstr "Действия со стилями"
 
 #. 7NfdA
 #: sfx2/uiconfig/ui/templatepanel.ui:192
 msgctxt "templatepanel|accessible_name|update"
 msgid "Update Style"
-msgstr ""
+msgstr "Обновить стиль"
 
 #. BGAhD
 #: sfx2/uiconfig/ui/templatepanel.ui:242
@@ -616,31 +620,31 @@ msgstr ""
 #: sw/inc/strings.hrc:232
 msgctxt "STR_COLUMN_ICONVIEW_ITEM0"
 msgid "1 column"
-msgstr ""
+msgstr "1 колонка"
 
 #. VAfCS
 #: sw/inc/strings.hrc:233
 msgctxt "STR_COLUMN_ICONVIEW_ITEM1"
 msgid "2 columns with equal size"
-msgstr ""
+msgstr "2 колонки одинаковой ширины"
 
 #. g8pFG
 #: sw/inc/strings.hrc:234
 msgctxt "STR_COLUMN_ICONVIEW_ITEM2"
 msgid "3 columns with equal size"
-msgstr ""
+msgstr "3 колонки одинаковой ширины"
 
 #. QJxAd
 #: sw/inc/strings.hrc:235
 msgctxt "STR_COLUMN_ICONVIEW_ITEM3"
 msgid "2 columns with different size (left > right)"
-msgstr ""
+msgstr "2 колонки разной ширины (левая > правой)"
 
 #. MHk4E
 #: sw/inc/strings.hrc:236
 msgctxt "STR_COLUMN_ICONVIEW_ITEM4"
 msgid "2 columns with different size (left < right)"
-msgstr ""
+msgstr "2 колонки разной ширины (левая < правой)"
 
 #. xPgHS
 #: sw/inc/strings.hrc:498
@@ -652,38 +656,38 @@ msgstr ""
 #: sw/inc/strings.hrc:1536
 msgctxt "STR_COMPAT_OPT_UNDERLINETRAILINGSPACE"
 msgid "Underline Word-compatible trailing blanks"
-msgstr ""
+msgstr "Подчёркивать совместимые с Word конечные пробелы"
 
 #. B3rfb
 #: sw/uiconfig/swriter/ui/columnpage.ui:122
 msgctxt "columnpage|columnft"
 msgid "Column"
-msgstr ""
+msgstr "Колонка"
 
 #. Lurdj
 #: sw/uiconfig/swriter/ui/columnpage.ui:871
 msgctxt "columnpage|extended_tip|column-iconview"
 msgid ""
 "Enter the number of columns that you want in the page, frame, or section."
-msgstr ""
+msgstr "Введите число колонок на странице, во врезке или в разделе."
 
 #. yLJG6
 #: sw/uiconfig/swriter/ui/dropcapspage.ui:336
 msgctxt "dropcapspage|drawingareaWN_EXAMPLE-atkobject"
 msgid "Example"
-msgstr ""
+msgstr "Пример"
 
 #. RdG95
 #: sw/uiconfig/swriter/ui/footnotesendnotestabpage.ui:179
 msgctxt "footnotesendnotestabpage|ftnnumviewbox-atkobject"
 msgid "Numbering"
-msgstr ""
+msgstr "Нумерация"
 
 #. afJmD
 #: sw/uiconfig/swriter/ui/footnotesendnotestabpage.ui:455
 msgctxt "footnotesendnotestabpage|endnumviewbox-atkobject"
 msgid "Numbering"
-msgstr ""
+msgstr "Нумерация"
 
 #. Ci9GE
 #: sw/uiconfig/swriter/ui/spellmenu.ui:34
@@ -701,7 +705,7 @@ msgstr ""
 #: sw/uiconfig/swriter/ui/tocentriespage.ui:277
 msgctxt "tocentriespage|characterstyleft"
 msgid "Character style:"
-msgstr ""
+msgstr "Стиль символов:"
 
 #. GVCXE
 #: sw/uiconfig/swriter/ui/tocentriespage.ui:569
@@ -713,7 +717,7 @@ msgstr ""
 #: sw/uiconfig/swriter/ui/tokenwidget.ui:30
 msgctxt "tokenwidget|left"
 msgid "Scroll left"
-msgstr ""
+msgstr "Отступ прокрутки слева"
 
 #. Efssr
 #: sw/uiconfig/swriter/ui/tokenwidget.ui:98
@@ -725,109 +729,109 @@ msgstr ""
 #: sw/uiconfig/swriter/ui/wordcount-mobile.ui:643
 msgctxt "wordcount-mobile|comments"
 msgid "Comments"
-msgstr ""
+msgstr "Комментарии"
 
 #. SsL8u
 #: formula/inc/core_resource.hrc:2629
 msgctxt "RID_STRLIST_FUNCTION_NAMES"
 msgid "CHOOSECOLS"
-msgstr ""
+msgstr "ВЫБОРСТОЛБЦ"
 
 #. zE6Vt
 #: formula/inc/core_resource.hrc:2630
 msgctxt "RID_STRLIST_FUNCTION_NAMES"
 msgid "CHOOSEROWS"
-msgstr ""
+msgstr "ВЫБОРСТРОК"
 
 #. TxBq7
 #: formula/inc/core_resource.hrc:2631
 msgctxt "RID_STRLIST_FUNCTION_NAMES"
 msgid "DROP"
-msgstr ""
+msgstr "ИСКЛ"
 
 #. eTG8r
 #: formula/inc/core_resource.hrc:2632
 msgctxt "RID_STRLIST_FUNCTION_NAMES"
 msgid "EXPAND"
-msgstr ""
+msgstr "РАЗВЕРНУТЬ"
 
 #. aJk9K
 #: formula/inc/core_resource.hrc:2633
 msgctxt "RID_STRLIST_FUNCTION_NAMES"
 msgid "HSTACK"
-msgstr ""
+msgstr "ГСТОЛБИК"
 
 #. 4HnRz
 #: formula/inc/core_resource.hrc:2634
 msgctxt "RID_STRLIST_FUNCTION_NAMES"
 msgid "VSTACK"
-msgstr ""
+msgstr "ВСТОЛБИК"
 
 #. JDHX2
 #: formula/inc/core_resource.hrc:2635
 msgctxt "RID_STRLIST_FUNCTION_NAMES"
 msgid "TAKE"
-msgstr ""
+msgstr "ВКЛ"
 
 #. CiTMM
 #: formula/inc/core_resource.hrc:2636
 msgctxt "RID_STRLIST_FUNCTION_NAMES"
 msgid "TEXTAFTER"
-msgstr ""
+msgstr "ТЕКСТПОСЛЕ"
 
 #. Uz9jV
 #: formula/inc/core_resource.hrc:2637
 msgctxt "RID_STRLIST_FUNCTION_NAMES"
 msgid "TEXTBEFORE"
-msgstr ""
+msgstr "ТЕКСТДО"
 
 #. u2Nq4
 #: formula/inc/core_resource.hrc:2638
 msgctxt "RID_STRLIST_FUNCTION_NAMES"
 msgid "TEXTSPLIT"
-msgstr ""
+msgstr "ТЕКСТРАЗД"
 
 #. FMVjv
 #: formula/inc/core_resource.hrc:2639
 msgctxt "RID_STRLIST_FUNCTION_NAMES"
 msgid "TOCOL"
-msgstr ""
+msgstr "ВСТОЛБЦ"
 
 #. xKDBC
 #: formula/inc/core_resource.hrc:2640
 msgctxt "RID_STRLIST_FUNCTION_NAMES"
 msgid "TOROW"
-msgstr ""
+msgstr "ВСТРОКУ"
 
 #. UDke3
 #: formula/inc/core_resource.hrc:2643
 msgctxt "RID_STRLIST_FUNCTION_NAMES"
 msgid "WRAPCOLS"
-msgstr ""
+msgstr "СВЕРНСТОЛБЦ"
 
 #. 3Tf94
 #: formula/inc/core_resource.hrc:2644
 msgctxt "RID_STRLIST_FUNCTION_NAMES"
 msgid "WRAPROWS"
-msgstr ""
+msgstr "СВЕРНСТРОК"
 
 #. Lrn3j
 #: formula/uiconfig/ui/functionpage.ui:80
 msgctxt "functionpage|label_category"
 msgid "_Category:"
-msgstr ""
+msgstr "Категория:"
 
 #. BNnFg
 #: formula/uiconfig/ui/functionpage.ui:115
 msgctxt "functionpage|label_function"
 msgid "_Function:"
-msgstr ""
+msgstr "Функция:"
 
 #. zRASZ
 #: formula/uiconfig/ui/structpage.ui:28
 msgctxt "structpage|label_struct"
 msgid "Content:"
-msgstr ""
+msgstr "Содержимое:"
 
 #. DPToC
 #: sd/uiconfig/simpress/ui/layoutpanel.ui:41
@@ -897,7 +901,7 @@ msgstr "Экспорт объектов OLE как изображений JPEG"
 #: filter/uiconfig/ui/pdfgeneralpage.ui:550
 msgctxt "pdfgeneralpage|embed|tooltip_text"
 msgid "Creates a PDF that embeds the original ODF file as an attachment."
-msgstr ""
+msgstr "Создаёт файл PDF, содержащий исходный файл ODF как вложение."
 
 #. JS7DG
 #: filter/uiconfig/ui/pdfgeneralpage.ui:556
@@ -922,19 +926,19 @@ msgstr ""
 #: filter/uiconfig/ui/pdfgeneralpage.ui:587
 msgctxt "pdfgeneralpage|pdf_version"
 msgid "PDF 1.7"
-msgstr ""
+msgstr "PDF 1.7"
 
 #. D6SQE
 #: filter/uiconfig/ui/pdfgeneralpage.ui:588
 msgctxt "pdfgeneralpage|pdf_version"
 msgid "PDF 2.0"
-msgstr ""
+msgstr "PDF 2.0"
 
 #. Pk2QP
 #: filter/uiconfig/ui/pdfgeneralpage.ui:592
 msgctxt "pdfgeneralpage|pdf_version"
 msgid "PDF/A-4 (PDF 2.0 base)"
-msgstr ""
+msgstr "PDF/A-4 (на основе PDF 2.0)"
 
 #. S7DSM
 #: filter/uiconfig/ui/pdfgeneralpage.ui:599
@@ -967,7 +971,7 @@ msgstr "Общие"
 #: filter/uiconfig/ui/pdfgeneralpage.ui:821
 msgctxt "pdfgeneralpage|forms_label"
 msgid "Forms"
-msgstr ""
+msgstr "Формы"
 
 #. kvAZK
 #: filter/uiconfig/ui/pdfgeneralpage.ui:1077
@@ -983,7 +987,7 @@ msgctxt ""
 "UIName\n"
 "value.text"
 msgid "Markdown Document"
-msgstr ""
+msgstr "Документ Markdown"
 
 #. 9Q5Zj
 #: draw_flash_Export.xcu
@@ -1063,7 +1067,7 @@ msgctxt ""
 "TooltipLabel\n"
 "value.text"
 msgid "Insert Table"
-msgstr ""
+msgstr "Вставить таблицу"
 
 #. kZEtN
 #: CalcCommands.xcu
@@ -1083,7 +1087,7 @@ msgctxt ""
 "TooltipLabel\n"
 "value.text"
 msgid "Delete Table"
-msgstr ""
+msgstr "Удалить таблицу"
 
 #. 3Ep4Y
 #: CalcCommands.xcu
@@ -1253,7 +1257,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Master Pages"
-msgstr ""
+msgstr "Мастер-страницы"
 
 #. FBZFX
 #: GenericCommands.xcu
@@ -1263,7 +1267,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Theme..."
-msgstr ""
+msgstr "Тема..."
 
 #. DCEaK
 #: GenericCommands.xcu
@@ -1273,7 +1277,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "~Hyperlink"
-msgstr ""
+msgstr "Гиперссылка"
 
 #. aFFu9
 #: GenericCommands.xcu
@@ -1313,7 +1317,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Change record mode"
-msgstr ""
+msgstr "Изменить режим записи"
 
 #. nG2DH
 #: GenericCommands.xcu
@@ -1323,7 +1327,7 @@ msgctxt ""
 "ContextLabel\n"
 "value.text"
 msgid "Record mode"
-msgstr ""
+msgstr "Режим записи"
 
 #. fDK7V
 #: GenericCommands.xcu
@@ -1333,7 +1337,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Add To Dictionary"
-msgstr ""
+msgstr "Добавить в словарь"
 
 #. 69GZH
 #: GenericCommands.xcu
@@ -1403,7 +1407,7 @@ msgctxt ""
 "Title\n"
 "value.text"
 msgid "Theme"
-msgstr ""
+msgstr "Тема"
 
 #. dgWCC
 #: Sidebar.xcu
@@ -1503,7 +1507,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Record changes in this view"
-msgstr ""
+msgstr "Записывать изменения в этом представлении"
 
 #. TADBE
 #: WriterCommands.xcu
@@ -1513,7 +1517,7 @@ msgctxt ""
 "ContextLabel\n"
 "value.text"
 msgid "~Changes in this view"
-msgstr ""
+msgstr "~Изменения в этом представлении"
 
 #. nn4AU
 #: WriterCommands.xcu
@@ -1523,7 +1527,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Record changes in all views"
-msgstr ""
+msgstr "Записывать изменения во всех представлениях"
 
 #. DJphX
 #: WriterCommands.xcu
@@ -1533,7 +1537,7 @@ msgctxt ""
 "ContextLabel\n"
 "value.text"
 msgid "~Changes in all views"
-msgstr ""
+msgstr "~Изменения во всех представлениях"
 
 #. wCDa4
 #: xmlsecurity/uiconfig/ui/certdetails.ui:101
@@ -1545,7 +1549,7 @@ msgstr ""
 #: xmlsecurity/uiconfig/ui/selectcertificatedialog.ui:274
 msgctxt "selectcertificatedialog|searchbox-atkobject"
 msgid "Search"
-msgstr ""
+msgstr "Поиск"
 
 #. dw79G
 #: sc/inc/globstr.hrc:70
@@ -1557,13 +1561,13 @@ msgstr ""
 #: sc/inc/globstr.hrc:73
 msgctxt "STR_UNDO_DBTABLE"
 msgid "Create table"
-msgstr ""
+msgstr "Создать таблицу"
 
 #. J2Dh9
 #: sc/inc/globstr.hrc:74
 msgctxt "STR_UNDO_DBTABLE"
 msgid "Delete table"
-msgstr ""
+msgstr "Удалить таблицу"
 
 #. AvAbD
 #: sc/inc/globstr.hrc:140
@@ -1581,7 +1585,7 @@ msgstr ""
 #: sc/inc/globstr.hrc:195
 msgctxt "STR_CALC_TABLE"
 msgid "Table"
-msgstr ""
+msgstr "Таблица"
 
 #. GFiBr
 #: sc/inc/globstr.hrc:196
@@ -1593,7 +1597,7 @@ msgstr ""
 #: sc/inc/globstr.hrc:217
 msgctxt "STR_TABLE_TOTAL"
 msgid "Total"
-msgstr ""
+msgstr "Итог"
 
 #. wCfcy
 #: sc/inc/globstr.hrc:220
@@ -1617,61 +1621,61 @@ msgstr ""
 #: sc/inc/scfuncs.hrc:4257
 msgctxt "SC_OPCODE_CHOOSECOLS"
 msgid "Returns the specified columns from an array."
-msgstr ""
+msgstr "Возвращает указанные столбцы из массива."
 
 #. mgCeG
 #: sc/inc/scfuncs.hrc:4258
 msgctxt "SC_OPCODE_CHOOSECOLS"
 msgid "Array"
-msgstr ""
+msgstr "Массив"
 
 #. vErtR
 #: sc/inc/scfuncs.hrc:4259
 msgctxt "SC_OPCODE_CHOOSECOLS"
 msgid "The array containing the columns to be returned in the new array."
-msgstr ""
+msgstr "Массив, содержащий столбцы для возвращения в новый массив."
 
 #. EuvxU
 #: sc/inc/scfuncs.hrc:4260
 msgctxt "SC_OPCODE_CHOOSECOLS"
 msgid "Column "
-msgstr ""
+msgstr "Столбец "
 
 #. Akc9t
 #: sc/inc/scfuncs.hrc:4261
 msgctxt "SC_OPCODE_CHOOSECOLS"
 msgid "Column 1, Column 2,... The list of column numbers to be returned."
-msgstr ""
+msgstr "Столбец 1, Столбец 2,... Список номеров столбцов для возвращения."
 
 #. 78gQu
 #: sc/inc/scfuncs.hrc:4267
 msgctxt "SC_OPCODE_CHOOSEROWS"
 msgid "Returns the specified rows from an array."
-msgstr ""
+msgstr "Возвращает указанные строки из массива."
 
 #. JAg4y
 #: sc/inc/scfuncs.hrc:4268
 msgctxt "SC_OPCODE_CHOOSEROWS"
 msgid "Array"
-msgstr ""
+msgstr "Массив"
 
 #. GFWtk
 #: sc/inc/scfuncs.hrc:4269
 msgctxt "SC_OPCODE_CHOOSEROWS"
 msgid "The array containing the rows to be returned in the new array."
-msgstr ""
+msgstr "Массив, содержащий строки для возвращения в новый массив."
 
 #. PDBbE
 #: sc/inc/scfuncs.hrc:4270
 msgctxt "SC_OPCODE_CHOOSEROWS"
 msgid "Row "
-msgstr ""
+msgstr "Строка "
 
 #. dXjgB
 #: sc/inc/scfuncs.hrc:4271
 msgctxt "SC_OPCODE_CHOOSEROWS"
 msgid "Row 1, Row 2,... The list of row numbers to be returned."
-msgstr ""
+msgstr "Строка 1, Строка 2,... Список номеров строк для возвращения."
 
 #. 4uTLx
 #: sc/inc/scfuncs.hrc:4277
@@ -1680,24 +1684,26 @@ msgid ""
 "Excludes a specified number of contiguous rows or columns from the start or "
 "end of an array."
 msgstr ""
+"Исключает указанное число соседних строк или столбцов с начала или с конца "
+"массива."
 
 #. W6FYc
 #: sc/inc/scfuncs.hrc:4278
 msgctxt "SC_OPCODE_DROP"
 msgid "Array"
-msgstr ""
+msgstr "Массив"
 
 #. zEu4G
 #: sc/inc/scfuncs.hrc:4279
 msgctxt "SC_OPCODE_DROP"
 msgid "The array from which to drop rows or columns."
-msgstr ""
+msgstr "Массив, строки или столбцы из которого следует отбросить."
 
 #. BFPt4
 #: sc/inc/scfuncs.hrc:4280
 msgctxt "SC_OPCODE_DROP"
 msgid "Rows"
-msgstr ""
+msgstr "Строки"
 
 #. yyjnc
 #: sc/inc/scfuncs.hrc:4281
@@ -1706,12 +1712,14 @@ msgid ""
 "The number of rows to drop. A negative value drops from the end of the "
 "array."
 msgstr ""
+"Количество строк для отбрасывания. При отрицательном значении отбрасываются "
+"строки с конца массива."
 
 #. 6sAoA
 #: sc/inc/scfuncs.hrc:4282
 msgctxt "SC_OPCODE_DROP"
 msgid "Columns"
-msgstr ""
+msgstr "Столбцы"
 
 #. cAxPB
 #: sc/inc/scfuncs.hrc:4283
@@ -1720,30 +1728,33 @@ msgid ""
 "The number of columns to drop. A negative value drops from the end of the "
 "array."
 msgstr ""
+"Количество столбцов для отбрасывания. При отрицательном значении "
+"отбрасываются строки с конца массива."
 
 #. cXvVY
 #: sc/inc/scfuncs.hrc:4289
 msgctxt "SC_OPCODE_EXPAND"
 msgid "Expands or pads an array to specified row and column dimensions."
 msgstr ""
+"Расширяет или заполняет массив до указанных размеров строк и столбцов."
 
 #. kuERH
 #: sc/inc/scfuncs.hrc:4290
 msgctxt "SC_OPCODE_EXPAND"
 msgid "Array"
-msgstr ""
+msgstr "Массив"
 
 #. E9YDC
 #: sc/inc/scfuncs.hrc:4291
 msgctxt "SC_OPCODE_EXPAND"
 msgid "The array to expand."
-msgstr ""
+msgstr "Массив для расширения."
 
 #. EaNgG
 #: sc/inc/scfuncs.hrc:4292
 msgctxt "SC_OPCODE_EXPAND"
 msgid "Rows"
-msgstr ""
+msgstr "Строки"
 
 #. QzQiB
 #: sc/inc/scfuncs.hrc:4293
@@ -1752,12 +1763,14 @@ msgid ""
 "The number of rows in the expanded array. If missing, rows will not be "
 "expanded."
 msgstr ""
+"Количество строк в расширенном массиве. Если отсутствует, строки не будут "
+"расширены."
 
 #. qjcxB
 #: sc/inc/scfuncs.hrc:4294
 msgctxt "SC_OPCODE_EXPAND"
 msgid "Columns"
-msgstr ""
+msgstr "Столбцы"
 
 #. EVAXE
 #: sc/inc/scfuncs.hrc:4295
@@ -1766,36 +1779,38 @@ msgid ""
 "The number of columns in the expanded array. If missing, columns will not be"
 " expanded."
 msgstr ""
+"Количество столбцов в расширенном массиве. Если отсутствует, столбцы не "
+"будут расширены."
 
 #. QPyBK
 #: sc/inc/scfuncs.hrc:4296
 msgctxt "SC_OPCODE_EXPAND"
 msgid "Pad with"
-msgstr ""
+msgstr "Заполнение"
 
 #. kHatA
 #: sc/inc/scfuncs.hrc:4297
 msgctxt "SC_OPCODE_EXPAND"
 msgid "The value with which to pad. The default is #N/A."
-msgstr ""
+msgstr "Значение для заполнения. По умолчанию: #Н/Д."
 
 #. m7qUf
 #: sc/inc/scfuncs.hrc:4303
 msgctxt "SC_OPCODE_HSTACK"
 msgid "Appends arrays horizontally to create a larger array."
-msgstr ""
+msgstr "Добавляет массивы по горизонтали, создавая массив большего размера."
 
 #. LnAFg
 #: sc/inc/scfuncs.hrc:4304 sc/inc/scfuncs.hrc:4306
 msgctxt "SC_OPCODE_HSTACK"
 msgid "Array"
-msgstr ""
+msgstr "Массив"
 
 #. uHbHC
 #: sc/inc/scfuncs.hrc:4305
 msgctxt "SC_OPCODE_HSTACK"
 msgid "The first array to append."
-msgstr ""
+msgstr "Первый массив для добавления."
 
 #. QRA57
 #: sc/inc/scfuncs.hrc:4307
@@ -1804,24 +1819,26 @@ msgid ""
 "Array 1, Array 2,... The following arrays to append. If an array has fewer "
 "rows, #N/A error will be returned in the additional rows."
 msgstr ""
+"Массив 1, Массив 2,... Последующие массивы для добавления. Если в массиве "
+"меньше строк, в дополнительных строках будет ошибка #Н/Д."
 
 #. 7zS24
 #: sc/inc/scfuncs.hrc:4313
 msgctxt "SC_OPCODE_VSTACK"
 msgid "Appends arrays vertically to create a larger array."
-msgstr ""
+msgstr "Добавляет массивы по вертикали, создавая массив большего размера."
 
 #. rhVRC
 #: sc/inc/scfuncs.hrc:4314 sc/inc/scfuncs.hrc:4316
 msgctxt "SC_OPCODE_VSTACK"
 msgid "Array"
-msgstr ""
+msgstr "Массив"
 
 #. tGHH9
 #: sc/inc/scfuncs.hrc:4315
 msgctxt "SC_OPCODE_VSTACK"
 msgid "The first array to append."
-msgstr ""
+msgstr "Первый массив для добавления."
 
 #. Kb6Xc
 #: sc/inc/scfuncs.hrc:4317
@@ -1830,6 +1847,8 @@ msgid ""
 "Array 1, Array 2,... The following arrays to append. If an array has fewer "
 "columns, #N/A error will be returned in the additional columns."
 msgstr ""
+"Массив 1, Массив 2,... Последующие массивы для добавления. Если в массиве "
+"меньше столбцов, в дополнительных столбцах будет ошибка #Н/Д."
 
 #. JnsYT
 #: sc/inc/scfuncs.hrc:4323
@@ -1838,24 +1857,26 @@ msgid ""
 "Returns a specified number of contiguous rows or columns from the start or "
 "end of an array."
 msgstr ""
+"Возвращает указанное число соседних строк или столбцов с начала или с конца "
+"массива."
 
 #. dFLFb
 #: sc/inc/scfuncs.hrc:4324
 msgctxt "SC_OPCODE_TAKE"
 msgid "Array"
-msgstr ""
+msgstr "Массив"
 
 #. ycFef
 #: sc/inc/scfuncs.hrc:4325
 msgctxt "SC_OPCODE_TAKE"
 msgid "The array from which to take rows or columns."
-msgstr ""
+msgstr "Массив, строки или столбцы из которого следует взять."
 
 #. DzBCL
 #: sc/inc/scfuncs.hrc:4326
 msgctxt "SC_OPCODE_TAKE"
 msgid "Rows"
-msgstr ""
+msgstr "Строки"
 
 #. KBPBn
 #: sc/inc/scfuncs.hrc:4327
@@ -1864,12 +1885,14 @@ msgid ""
 "The number of rows to take. A negative value takes from the end of the "
 "array."
 msgstr ""
+"Количество строк для взятия. При отрицательном значении берутся строки с "
+"конца массива."
 
 #. HJQKW
 #: sc/inc/scfuncs.hrc:4328
 msgctxt "SC_OPCODE_TAKE"
 msgid "Columns"
-msgstr ""
+msgstr "Столбцы"
 
 #. ZexcG
 #: sc/inc/scfuncs.hrc:4329
@@ -1878,42 +1901,45 @@ msgid ""
 "The number of columns to take. A negative value takes from the end of the "
 "array."
 msgstr ""
+"Количество столбцов для взятия. При отрицательном значении берутся столбцы с"
+" конца массива."
 
 #. GwyMB
 #: sc/inc/scfuncs.hrc:4335
 msgctxt "SC_OPCODE_TEXTAFTER"
 msgid "Returns the text that occurs after a given substring or delimiter."
 msgstr ""
+"Возвращает текст, который идёт после указанной подстроки или разделителя."
 
 #. cicY2
 #: sc/inc/scfuncs.hrc:4336
 msgctxt "SC_OPCODE_TEXTAFTER"
 msgid "Text"
-msgstr ""
+msgstr "Текст"
 
 #. 3WLYF
 #: sc/inc/scfuncs.hrc:4337
 msgctxt "SC_OPCODE_TEXTAFTER"
 msgid "The original text."
-msgstr ""
+msgstr "Исходный текст."
 
 #. z4pDr
 #: sc/inc/scfuncs.hrc:4338
 msgctxt "SC_OPCODE_TEXTAFTER"
 msgid "Delimiter"
-msgstr ""
+msgstr "Разделитель"
 
 #. YEbwu
 #: sc/inc/scfuncs.hrc:4339
 msgctxt "SC_OPCODE_TEXTAFTER"
 msgid "The delimiter. Multiple delimiters can be supplied."
-msgstr ""
+msgstr "Разделитель. Можно указать несколько разделителей."
 
 #. HPDvF
 #: sc/inc/scfuncs.hrc:4340
 msgctxt "SC_OPCODE_TEXTAFTER"
 msgid "Instance Number"
-msgstr ""
+msgstr "Номер экземпляра"
 
 #. DmVZL
 #: sc/inc/scfuncs.hrc:4341
@@ -1922,78 +1948,87 @@ msgid ""
 "The instance of the delimiter after which to extract text. The default is 1."
 " A negative number starts searching from the end."
 msgstr ""
+"Экземпляр разделителя, следующий после которого текст следует извлечь. По "
+"умолчанию: 1. При отрицательном числе поиск выполняется с конца."
 
 #. fpoGj
 #: sc/inc/scfuncs.hrc:4342
 msgctxt "SC_OPCODE_TEXTAFTER"
 msgid "Match Mode"
-msgstr ""
+msgstr "Режим сопоставления"
 
 #. iSfJi
 #: sc/inc/scfuncs.hrc:4343
 msgctxt "SC_OPCODE_TEXTAFTER"
 msgid "Set to 1 to perform a case-insensitive match. The default is 0."
 msgstr ""
+"Установите в значение 1, чтобы выполнить сопоставление без учёта регистра. "
+"По умолчанию: 0."
 
 #. nAF2s
 #: sc/inc/scfuncs.hrc:4344
 msgctxt "SC_OPCODE_TEXTAFTER"
 msgid "Match End"
-msgstr ""
+msgstr "Сопоставлять по концу"
 
 #. W2DGj
 #: sc/inc/scfuncs.hrc:4345
 msgctxt "SC_OPCODE_TEXTAFTER"
 msgid "Set to 1 to treat the end of text as a delimiter. The default is 0."
 msgstr ""
+"Установите в значение 1, чтобы конец текста считался разделителем. По "
+"умолчанию: 0."
 
 #. PG6qj
 #: sc/inc/scfuncs.hrc:4346
 msgctxt "SC_OPCODE_TEXTAFTER"
 msgid "If Not Found"
-msgstr ""
+msgstr "Если не найдено"
 
 #. vfgZc
 #: sc/inc/scfuncs.hrc:4347
 msgctxt "SC_OPCODE_TEXTAFTER"
 msgid "The value returned if no match is found. The default is #N/A."
 msgstr ""
+"Значение, которое возвращается при отсутствии совпадений. По умолчанию: "
+"#Н/Д."
 
 #. f88EE
 #: sc/inc/scfuncs.hrc:4353
 msgctxt "SC_OPCODE_TEXTBEFORE"
 msgid "Returns the text that occurs before a given substring or delimiter."
 msgstr ""
+"Возвращает текст, который идёт до указанной подстроки или разделителя."
 
 #. NNriC
 #: sc/inc/scfuncs.hrc:4354
 msgctxt "SC_OPCODE_TEXTBEFORE"
 msgid "Text"
-msgstr ""
+msgstr "Текст"
 
 #. HsEG8
 #: sc/inc/scfuncs.hrc:4355
 msgctxt "SC_OPCODE_TEXTBEFORE"
 msgid "The original text."
-msgstr ""
+msgstr "Исходный текст."
 
 #. E4a5z
 #: sc/inc/scfuncs.hrc:4356
 msgctxt "SC_OPCODE_TEXTBEFORE"
 msgid "Delimiter"
-msgstr ""
+msgstr "Разделитель"
 
 #. qDFZy
 #: sc/inc/scfuncs.hrc:4357
 msgctxt "SC_OPCODE_TEXTBEFORE"
 msgid "The delimiter. Multiple delimiters can be supplied."
-msgstr ""
+msgstr "Разделитель. Можно указать несколько разделителей."
 
 #. gNHAi
 #: sc/inc/scfuncs.hrc:4358
 msgctxt "SC_OPCODE_TEXTBEFORE"
 msgid "Instance Number"
-msgstr ""
+msgstr "Номер экземпляра"
 
 #. sD4zC
 #: sc/inc/scfuncs.hrc:4359
@@ -2002,90 +2037,100 @@ msgid ""
 "The instance of the delimiter before which to extract text. The default is "
 "1. A negative number starts searching from the end."
 msgstr ""
+"Экземпляр разделителя, предшествующий которому текст следует извлечь. По "
+"умолчанию: 1. При отрицательном числе поиск выполняется с конца."
 
 #. Adzeh
 #: sc/inc/scfuncs.hrc:4360
 msgctxt "SC_OPCODE_TEXTBEFORE"
 msgid "Match Mode"
-msgstr ""
+msgstr "Режим сопоставления"
 
 #. Pi2Ti
 #: sc/inc/scfuncs.hrc:4361
 msgctxt "SC_OPCODE_TEXTBEFORE"
 msgid "Set to 1 to perform a case-insensitive match. The default is 0."
 msgstr ""
+"Установите в значение 1, чтобы выполнить сопоставление без учёта регистра. "
+"По умолчанию: 0."
 
 #. sACA2
 #: sc/inc/scfuncs.hrc:4362
 msgctxt "SC_OPCODE_TEXTBEFORE"
 msgid "Match End"
-msgstr ""
+msgstr "Сопоставлять по концу"
 
 #. UxpD6
 #: sc/inc/scfuncs.hrc:4363
 msgctxt "SC_OPCODE_TEXTBEFORE"
 msgid "Set to 1 to treat the end of text as a delimiter. The default is 0."
 msgstr ""
+"Установите в значение 1, чтобы конец текста считался разделителем. По "
+"умолчанию: 0."
 
 #. aCnZX
 #: sc/inc/scfuncs.hrc:4364
 msgctxt "SC_OPCODE_TEXTBEFORE"
 msgid "If Not Found"
-msgstr ""
+msgstr "Если не найдено"
 
 #. xCZYH
 #: sc/inc/scfuncs.hrc:4365
 msgctxt "SC_OPCODE_TEXTBEFORE"
 msgid "The value returned if no match is found. The default is #N/A."
 msgstr ""
+"Значение, которое возвращается при отсутствии совпадений. По умолчанию: "
+"#Н/Д."
 
 #. wdZTd
 #: sc/inc/scfuncs.hrc:4371
 msgctxt "SC_OPCODE_TEXTSPLIT"
 msgid "Splits text by a given delimiter to an array of multiple cells."
 msgstr ""
+"Разбивает текст по указанному разделителю, создавая массив из нескольких "
+"ячеек."
 
 #. DH7h4
 #: sc/inc/scfuncs.hrc:4372
 msgctxt "SC_OPCODE_TEXTSPLIT"
 msgid "Text"
-msgstr ""
+msgstr "Текст"
 
 #. dqSdF
 #: sc/inc/scfuncs.hrc:4373
 msgctxt "SC_OPCODE_TEXTSPLIT"
 msgid "The text to split."
-msgstr ""
+msgstr "Текст для разбиения."
 
 #. pdpxt
 #: sc/inc/scfuncs.hrc:4374
 msgctxt "SC_OPCODE_TEXTSPLIT"
 msgid "Column Delimiter"
-msgstr ""
+msgstr "Разделитель столбцов"
 
 #. nfMAr
 #: sc/inc/scfuncs.hrc:4375
 msgctxt "SC_OPCODE_TEXTSPLIT"
 msgid "The text to delimit the columns. Multiple delimiters can be supplied."
-msgstr ""
+msgstr "Текст для разделения столбцов. Можно указать несколько разделителей."
 
 #. qZGq2
 #: sc/inc/scfuncs.hrc:4376
 msgctxt "SC_OPCODE_TEXTSPLIT"
 msgid "Row Delimiter"
-msgstr ""
+msgstr "Разделитель строк"
 
 #. dPnbc
 #: sc/inc/scfuncs.hrc:4377
 msgctxt "SC_OPCODE_TEXTSPLIT"
 msgid "The text to delimit the rows. Multiple delimiters can be supplied."
-msgstr ""
+msgstr "Текст для разделения строк. Можно указать несколько разделителей."
 
 #. jD3sa
 #: sc/inc/scfuncs.hrc:4378
 msgctxt "SC_OPCODE_TEXTSPLIT"
 msgid "Ignore Empty"
-msgstr ""
+msgstr "Игнорировать пустые"
 
 #. 6LwdP
 #: sc/inc/scfuncs.hrc:4379
@@ -2094,54 +2139,58 @@ msgid ""
 "Set to TRUE to ignore consecutive delimiters otherwise it creates an empty "
 "cell. The default is FALSE."
 msgstr ""
+"Установите в значение TRUE, чтобы игнорировать последовательные разделители "
+"(иначе создаётся пустая ячейка). По умолчанию: FALSE."
 
 #. kkAYp
 #: sc/inc/scfuncs.hrc:4380
 msgctxt "SC_OPCODE_TEXTSPLIT"
 msgid "Match mode"
-msgstr ""
+msgstr "Режим сопоставления"
 
 #. iX8cx
 #: sc/inc/scfuncs.hrc:4381
 msgctxt "SC_OPCODE_TEXTSPLIT"
 msgid "Set to 1 to perform a case-insensitive match. The default is 0."
 msgstr ""
+"Установите в значение 1, чтобы выполнить сопоставление без учёта регистра. "
+"По умолчанию: 0."
 
 #. vXECz
 #: sc/inc/scfuncs.hrc:4382
 msgctxt "SC_OPCODE_TEXTSPLIT"
 msgid "Pad with"
-msgstr ""
+msgstr "Заполнение"
 
 #. h4db2
 #: sc/inc/scfuncs.hrc:4383
 msgctxt "SC_OPCODE_TEXTSPLIT"
 msgid "The value with which to pad. The default is #N/A."
-msgstr ""
+msgstr "Значение для заполнения. По умолчанию: #Н/Д."
 
 #. DdFFE
 #: sc/inc/scfuncs.hrc:4389
 msgctxt "SC_OPCODE_TOCOL"
 msgid "Transforms an array into a single column."
-msgstr ""
+msgstr "Преобразует массив в один столбец."
 
 #. UAzNC
 #: sc/inc/scfuncs.hrc:4390
 msgctxt "SC_OPCODE_TOCOL"
 msgid "Array"
-msgstr ""
+msgstr "Массив"
 
 #. CHojs
 #: sc/inc/scfuncs.hrc:4391
 msgctxt "SC_OPCODE_TOCOL"
 msgid "The range or array to return as a single column."
-msgstr ""
+msgstr "Диапазон или массив для возвращения в виде одного столбца."
 
 #. uACXu
 #: sc/inc/scfuncs.hrc:4392
 msgctxt "SC_OPCODE_TOCOL"
 msgid "Ignore"
-msgstr ""
+msgstr "Игнорировать"
 
 #. b7EQW
 #: sc/inc/scfuncs.hrc:4393
@@ -2151,12 +2200,16 @@ msgid ""
 "(default). 1 - ignore blank cells. 2 - ignore cells with error. 3 - ignore "
 "blanks cells and cells with error."
 msgstr ""
+"Задаёт, игнорировать ли значения определённого типа. 0 или не указано — "
+"сохранять все значения (по умолчанию). 1 — игнорировать пустые ячейки. 2 — "
+"игнорировать ячейки с ошибками. 3 — игнорировать пустые ячейки и ячейки с "
+"ошибками."
 
 #. qNLAi
 #: sc/inc/scfuncs.hrc:4394
 msgctxt "SC_OPCODE_TOCOL"
 msgid "Scan by column"
-msgstr ""
+msgstr "Проанализировать по столбцу"
 
 #. bcArN
 #: sc/inc/scfuncs.hrc:4395
@@ -2165,30 +2218,32 @@ msgid ""
 "Scan the array by column. FALSE or omitted (default) - the array is scanned "
 "by row. TRUE - the array is scanned by column."
 msgstr ""
+"Проанализировать массив по столбцу. FALSE или не указано (по умолчанию) — "
+"массив анализируется по строке. TRUE — массив анализируется по столбцу."
 
 #. PGyxj
 #: sc/inc/scfuncs.hrc:4401
 msgctxt "SC_OPCODE_TOROW"
 msgid "transforms an array into a single row."
-msgstr ""
+msgstr "Преобразует массив в одну строку."
 
 #. W9bWe
 #: sc/inc/scfuncs.hrc:4402
 msgctxt "SC_OPCODE_TOROW"
 msgid "Array"
-msgstr ""
+msgstr "Массив"
 
 #. 5MEvT
 #: sc/inc/scfuncs.hrc:4403
 msgctxt "SC_OPCODE_TOROW"
 msgid "The range or array to return as a single row."
-msgstr ""
+msgstr "Диапазон или массив для возвращения в виде одной строки."
 
 #. AqqBC
 #: sc/inc/scfuncs.hrc:4404
 msgctxt "SC_OPCODE_TOROW"
 msgid "Ignore"
-msgstr ""
+msgstr "Игнорировать"
 
 #. wcpQF
 #: sc/inc/scfuncs.hrc:4405
@@ -2198,12 +2253,16 @@ msgid ""
 "(default). 1 - ignore blank cells. 2 - ignore cells with error. 3 - ignore "
 "blanks cells and cells with error."
 msgstr ""
+"Задаёт, игнорировать ли значения определённого типа. 0 или не указано — "
+"сохранять все значения (по умолчанию). 1 — игнорировать пустые ячейки. 2 — "
+"игнорировать ячейки с ошибками. 3 — игнорировать пустые ячейки и ячейки с "
+"ошибками."
 
 #. E4XDf
 #: sc/inc/scfuncs.hrc:4406
 msgctxt "SC_OPCODE_TOROW"
 msgid "Scan by column"
-msgstr ""
+msgstr "Проанализировать по строке"
 
 #. 5bZRy
 #: sc/inc/scfuncs.hrc:4407
@@ -2212,6 +2271,8 @@ msgid ""
 "Scan the array by column. FALSE or omitted (default) - the array is scanned "
 "by row. TRUE - the array is scanned by column."
 msgstr ""
+"Проанализировать массив по строке. FALSE или не указано (по умолчанию) — "
+"массив анализируется по столбцу. TRUE — массив анализируется по строке."
 
 #. oBDEA
 #: sc/inc/scfuncs.hrc:4437
@@ -2220,42 +2281,44 @@ msgid ""
 "Wraps the provided row or column of values by columns after a specified "
 "number of elements to form a new array."
 msgstr ""
+"Переносит предоставленную строку или столбец значений по столбцам после "
+"указанного количества элементов для формирования нового массива."
 
 #. fC6RK
 #: sc/inc/scfuncs.hrc:4438
 msgctxt "SC_OPCODE_WRAPCOLS"
 msgid "Range"
-msgstr ""
+msgstr "Диапазон"
 
 #. nfZyj
 #: sc/inc/scfuncs.hrc:4439
 msgctxt "SC_OPCODE_WRAPCOLS"
 msgid "the range to wrap."
-msgstr ""
+msgstr "Диапазон для переноса."
 
 #. GE3HQ
 #: sc/inc/scfuncs.hrc:4440
 msgctxt "SC_OPCODE_WRAPCOLS"
 msgid "Wrap count"
-msgstr ""
+msgstr "Количество для переноса"
 
 #. FWsCt
 #: sc/inc/scfuncs.hrc:4441
 msgctxt "SC_OPCODE_WRAPCOLS"
 msgid "The maximum number of values for each column."
-msgstr ""
+msgstr "Максимальное количество значений для каждого столбца."
 
 #. zkjFB
 #: sc/inc/scfuncs.hrc:4442
 msgctxt "SC_OPCODE_WRAPCOLS"
 msgid "Pad with"
-msgstr ""
+msgstr "Заполнение"
 
 #. knbjc
 #: sc/inc/scfuncs.hrc:4443
 msgctxt "SC_OPCODE_WRAPCOLS"
 msgid "The value with which to pad. The default is #N/A."
-msgstr ""
+msgstr "Значение для заполнения. По умолчанию: #Н/Д."
 
 #. BDA7q
 #: sc/inc/scfuncs.hrc:4449
@@ -2264,42 +2327,44 @@ msgid ""
 "Wraps the provided row or column of values by rows after a specified number "
 "of elements to form a new array."
 msgstr ""
+"Переносит предоставленную строку или столбец значений по строкам после "
+"указанного количества элементов для формирования нового массива."
 
 #. 7esii
 #: sc/inc/scfuncs.hrc:4450
 msgctxt "SC_OPCODE_WRAPROWS"
 msgid "Range"
-msgstr ""
+msgstr "Диапазон"
 
 #. FLJwx
 #: sc/inc/scfuncs.hrc:4451
 msgctxt "SC_OPCODE_WRAPROWS"
 msgid "the range to wrap."
-msgstr ""
+msgstr "Диапазон для переноса."
 
 #. aLHUi
 #: sc/inc/scfuncs.hrc:4452
 msgctxt "SC_OPCODE_WRAPROWS"
 msgid "Wrap count"
-msgstr ""
+msgstr "Количество для переноса"
 
 #. 3CEsK
 #: sc/inc/scfuncs.hrc:4453
 msgctxt "SC_OPCODE_WRAPROWS"
 msgid "The maximum number of values for each row."
-msgstr ""
+msgstr "Максимальное количество значений для каждой строки."
 
 #. iTCWg
 #: sc/inc/scfuncs.hrc:4454
 msgctxt "SC_OPCODE_WRAPROWS"
 msgid "Pad with"
-msgstr ""
+msgstr "Заполнение"
 
 #. e3K5s
 #: sc/inc/scfuncs.hrc:4455
 msgctxt "SC_OPCODE_WRAPROWS"
 msgid "The value with which to pad. The default is #N/A."
-msgstr ""
+msgstr "Значение для заполнения. По умолчанию: #Н/Д."
 
 #. 4af9a
 #: sc/uiconfig/scalc/ui/cellprotectionpage.ui:99
@@ -2315,7 +2380,7 @@ msgstr ""
 #: sc/uiconfig/scalc/ui/conditionaleasydialog.ui:8
 msgctxt "conditionaleasydialog|title"
 msgid "Highlight cells..."
-msgstr ""
+msgstr "Подсвечивать ячейки…"
 
 #. QpmnN
 #: sc/uiconfig/scalc/ui/definetablerangedialog.ui:10
@@ -2327,13 +2392,13 @@ msgstr ""
 #: sc/uiconfig/scalc/ui/definetablerangedialog.ui:37
 msgctxt "definetablerangedialog|extended_tip|ok"
 msgid "Saves all changes and closes dialog."
-msgstr ""
+msgstr "Сохраняет все изменения и закрывает диалоговое окно."
 
 #. YJAAP
 #: sc/uiconfig/scalc/ui/definetablerangedialog.ui:56
 msgctxt "definetablerangedialog|extended_tip|cancel"
 msgid "Closes dialog and discards all changes."
-msgstr ""
+msgstr "Закрывает диалоговое окно без сохранения изменений."
 
 #. ugt8G
 #: sc/uiconfig/scalc/ui/definetablerangedialog.ui:106
@@ -2344,6 +2409,9 @@ msgid ""
 "then automatically convert to the Maximize icon. Click it to restore the "
 "dialog to its original size."
 msgstr ""
+"Щёлкните значок Свернуть, чтобы уменьшить окно диалога до размера поля "
+"ввода. Так легче отметить желаемое на листе. Значок при этом поменяется на "
+"Развернуть. Щелчок вернёт окно к исходному размеру."
 
 #. xUrKC
 #: sc/uiconfig/scalc/ui/definetablerangedialog.ui:123
@@ -2354,30 +2422,34 @@ msgid ""
 "then automatically convert to the Maximize icon. Click it to restore the "
 "dialog to its original size."
 msgstr ""
+"Щёлкните значок Свернуть, чтобы уменьшить окно диалога до размера поля "
+"ввода. Так легче отметить желаемое на листе. Значок при этом поменяется на "
+"Развернуть. Щелчок вернёт окно к исходному размеру."
 
 #. 8FLdj
 #: sc/uiconfig/scalc/ui/definetablerangedialog.ui:139
 msgctxt "definetablerangedialog|range"
 msgid "Range"
-msgstr ""
+msgstr "Диапазон"
 
 #. 3a7g7
 #: sc/uiconfig/scalc/ui/definetablerangedialog.ui:162
 msgctxt "definetablerangedialog|containscolumnlabels"
 msgid "Co_ntains column labels"
-msgstr ""
+msgstr "Заголовки в первой строке"
 
 #. AEKGN
 #: sc/uiconfig/scalc/ui/definetablerangedialog.ui:171
 msgctxt "definetablerangedialog|extended_tip|ContainsColumnLabels"
 msgid "Selected cell ranges contain labels."
-msgstr ""
+msgstr "Выбранные диапазоны содержат заголовки."
 
 #. GCg88
 #: sc/uiconfig/scalc/ui/definetablerangedialog.ui:203
 msgctxt "definetablerangedialog|extended_tip|DefineTableRangeDialog"
 msgid "Defines a database range based on the selected cells in your sheet."
 msgstr ""
+"Здесь определяется диапазон баз данных на основе выбранных ячеек листа."
 
 #. LVdkf
 #: sc/uiconfig/scalc/ui/erroralerttabpage.ui:15
@@ -2395,19 +2467,19 @@ msgstr ""
 #: sc/uiconfig/scalc/ui/gotosheetdialog.ui:100
 msgctxt "gotosheetdialog|entry-mask-atkobject"
 msgid "Sheet Name"
-msgstr ""
+msgstr "Имя листа"
 
 #. hMeBi
 #: sc/uiconfig/scalc/ui/numberbox.ui:17
 msgctxt "numberbox|numbertype|accessible_name"
 msgid "Number Format"
-msgstr ""
+msgstr "Формат чисел"
 
 #. o8pcB
 #: sc/uiconfig/scalc/ui/protectsheetdlg.ui:195
 msgctxt "protectsheetdlg|passwordbar-atkobject"
 msgid "Password Level Bar"
-msgstr ""
+msgstr "Шкала уровня пароля"
 
 #. Q4fA3
 #: sc/uiconfig/scalc/ui/selectsheetviewdialog.ui:18
@@ -2419,13 +2491,13 @@ msgstr ""
 #: sc/uiconfig/scalc/ui/selectsheetviewdialog.ui:44
 msgctxt "selectsheetviewdialog|extended_tip|ok"
 msgid "Saves all changes and closes dialog."
-msgstr ""
+msgstr "Сохраняет все изменения и закрывает диалоговое окно."
 
 #. kGFYu
 #: sc/uiconfig/scalc/ui/selectsheetviewdialog.ui:63
 msgctxt "selectsheetviewdialog|extended_tip|cancel"
 msgid "Closes dialog and discards all changes."
-msgstr ""
+msgstr "Закрывает диалоговое окно без сохранения изменений."
 
 #. sQPFE
 #: sc/uiconfig/scalc/ui/selectsheetviewdialog.ui:134
@@ -2443,7 +2515,7 @@ msgstr ""
 #: sc/uiconfig/scalc/ui/sidebarcellappearance.ui:87
 msgctxt "sidebarcellappearance|cellbordertype-atkobject"
 msgid "Border Style"
-msgstr ""
+msgstr "Стиль обрамления"
 
 #. Y8RhG
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:22
@@ -2491,7 +2563,7 @@ msgstr ""
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:170
 msgctxt "sidebardatabase|lbl_styles"
 msgid "Table Styles"
-msgstr ""
+msgstr "Стили таблиц"
 
 #. er8nh
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:187
@@ -3283,4 +3355,4 @@ msgstr ""
 #: sc/uiconfig/scalc/ui/tablestylesbox.ui:185
 msgctxt "tablestylebox|tablestyles_cb|accessible_name"
 msgid "Table Styles"
-msgstr ""
+msgstr "Стили таблиц"

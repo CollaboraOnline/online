@@ -63,13 +63,13 @@ msgstr ""
 #: svx/inc/spacing.hrc:18
 msgctxt "RID_BEFORE"
 msgid "Before:"
-msgstr ""
+msgstr "前:"
 
 #. jGRHH
 #: svx/inc/spacing.hrc:19
 msgctxt "RID_AFTER"
 msgid "After:"
-msgstr ""
+msgstr "後:"
 
 #. k9CGA
 #: svx/inc/spacing.hrc:20
@@ -81,19 +81,19 @@ msgstr ""
 #: svx/uiconfig/ui/dropdownfielddialog.ui:31
 msgctxt "dropdownDialog|OK"
 msgid "OK"
-msgstr ""
+msgstr "OK"
 
 #. 54Dmg
 #: svx/uiconfig/ui/dropdownfielddialog.ui:44
 msgctxt "dropdownDialog|CANCEL"
 msgid "Cancel"
-msgstr ""
+msgstr "キャンセル"
 
 #. gPAYw
 #: svx/uiconfig/ui/findreplacedialog.ui:67
 msgctxt "findreplacedialog|find_tab_btn"
 msgid "Find"
-msgstr ""
+msgstr "検索"
 
 #. uknDS
 #: svx/uiconfig/ui/findreplacedialog.ui:85
@@ -123,13 +123,13 @@ msgstr ""
 #: svx/uiconfig/ui/sidebarline.ui:91
 msgctxt "sidebarline|SelectWidth|tooltip_text"
 msgid "Line Thickness"
-msgstr ""
+msgstr "線の太さ"
 
 #. cDwyK
 #: svx/uiconfig/ui/sidebarline.ui:97
 msgctxt "sidebarline|SelectWidth-atkobject"
 msgid "Line Thickness"
-msgstr ""
+msgstr "線の太さ"
 
 #. 7MFsT
 #: uui/inc/strings.hrc:84
@@ -162,7 +162,7 @@ msgstr ""
 #: chart2/inc/strings.hrc:51
 msgctxt "STR_PAGE_COLOR_PALETTE"
 msgid "Color Palette"
-msgstr ""
+msgstr "カラーパレット"
 
 #. YZBr8
 #: chart2/inc/strings.hrc:52
@@ -174,13 +174,13 @@ msgstr ""
 #: chart2/uiconfig/ui/chartcolorpalettepopup.ui:46
 msgctxt "chartcolorpalettepopup|colorfulwin"
 msgid "Colorful"
-msgstr ""
+msgstr "カラフル"
 
 #. xmAmH
 #: chart2/uiconfig/ui/chartcolorpalettepopup.ui:98
 msgctxt "chartcolorpalettepopup|monochromaticwin"
 msgid "Monochromatic"
-msgstr ""
+msgstr "モノクロ"
 
 #. DrjDt
 #: chart2/uiconfig/ui/chartgradientpalettepopup.ui:46
@@ -258,7 +258,7 @@ msgstr ""
 #: chart2/uiconfig/ui/sidebarcolors.ui:42
 msgctxt "sidebarcolors|cellbordertype-atkobject"
 msgid "Border Style"
-msgstr ""
+msgstr "罫線スタイル"
 
 #. bEK2j
 #: chart2/uiconfig/ui/sidebargradients.ui:30
@@ -271,7 +271,7 @@ msgstr ""
 #: chart2/uiconfig/ui/sidebargradients.ui:42
 msgctxt "sidebargradients|cellbordertype-atkobject"
 msgid "Border Style"
-msgstr ""
+msgstr "罫線スタイル"
 
 #. Aiqg6
 #: chart2/uiconfig/ui/sidebartheme.ui:25
@@ -283,7 +283,7 @@ msgstr ""
 #: chart2/uiconfig/ui/sidebartheme.ui:37
 msgctxt "sidebartheme|themetype-atkobject"
 msgid "Themes"
-msgstr ""
+msgstr "テーマ"
 
 #. YB6Et
 #: chart2/uiconfig/ui/sidebartheme.ui:48
@@ -301,19 +301,19 @@ msgstr ""
 #: chart2/uiconfig/ui/sidebartype.ui:323
 msgctxt "sidebartype|cmb_chartType-atkobject"
 msgid "Chart Type"
-msgstr ""
+msgstr "グラフの種類"
 
 #. x3adg
 #: chart2/uiconfig/ui/tp_ChartColorPalette.ui:68
 msgctxt "tp_ChartColorPalette|colorfulwin"
 msgid "Colorful"
-msgstr ""
+msgstr "カラフル"
 
 #. 8QjnP
 #: chart2/uiconfig/ui/tp_ChartColorPalette.ui:126
 msgctxt "tp_ChartColorPalette|monochromaticwin"
 msgid "Monochromatic"
-msgstr ""
+msgstr "モノクロ"
 
 #. 6JxiC
 #: chart2/uiconfig/ui/tp_ChartGradients.ui:69
@@ -331,7 +331,7 @@ msgstr ""
 #: chart2/uiconfig/ui/tp_ChartType.ui:114
 msgctxt "tp_ChartType|extended_tip|subtype_iconview"
 msgid "Select a sub type of the basic chart type."
-msgstr ""
+msgstr "基本的なグラフの種類のサブタイプを選択します。"
 
 #. Wh4j6
 #: chart2/uiconfig/ui/tp_ChartType.ui:167
@@ -385,7 +385,7 @@ msgstr ""
 #: cui/uiconfig/ui/numberingformatpage.ui:541
 msgctxt "numberingformatpage|currencylb-atkobject"
 msgid "Currency"
-msgstr ""
+msgstr "通貨"
 
 #. vcAoU
 #: cui/uiconfig/ui/pageformatpage.ui:223
@@ -475,13 +475,13 @@ msgstr ""
 #: cui/uiconfig/ui/pickbulletpage.ui:45
 msgctxt "pickbulletpage|extended_tip|pick_bullet_iconview"
 msgid "Click the bullet style that you want to use."
-msgstr ""
+msgstr "使用する箇条書きスタイルをクリックします。"
 
 #. rkoDB
 #: cui/uiconfig/ui/pickgraphicpage.ui:45
 msgctxt "pickgraphicpage|extended_tip|pick_graphic_iconview"
 msgid "Click the graphics that you want to use as bullets."
-msgstr ""
+msgstr "箇条書きの記号として使う画像をクリックします。"
 
 #. WGzy5
 #: cui/uiconfig/ui/picknumberingpage.ui:44
@@ -493,7 +493,7 @@ msgstr ""
 #: cui/uiconfig/ui/pickoutlinepage.ui:44
 msgctxt "pickoutlinepage|extended_tip|pick_outline_iconview"
 msgid "Click the outline style that you want to use."
-msgstr ""
+msgstr "使用するアウトラインスタイルをクリックします。"
 
 #. hLcKE
 #: cui/uiconfig/ui/textflowpage.ui:812
@@ -511,7 +511,7 @@ msgstr ""
 #: cui/uiconfig/ui/thesaurus.ui:189
 msgctxt "thesaurus|langcb|accessible_name"
 msgid "Language"
-msgstr ""
+msgstr "言語"
 
 #. qpArp
 #: cui/uiconfig/ui/toolbarmodedialog.ui:124
@@ -580,25 +580,25 @@ msgstr ""
 #: sfx2/uiconfig/ui/templatepanel.ui:137
 msgctxt "templatepanel|accessible_name|watercan"
 msgid "Fill Format Mode"
-msgstr ""
+msgstr "スタイル塗りつぶしモード"
 
 #. qvBEu
 #: sfx2/uiconfig/ui/templatepanel.ui:156
 msgctxt "templatepanel|accessible_name|new"
 msgid "New Style from Selection"
-msgstr ""
+msgstr "選択範囲からスタイルを新規作成"
 
 #. 5ZAqh
 #: sfx2/uiconfig/ui/templatepanel.ui:174
 msgctxt "templatepanel|accessible_name|newmenu"
 msgid "Styles actions"
-msgstr ""
+msgstr "スタイルの操作"
 
 #. 7NfdA
 #: sfx2/uiconfig/ui/templatepanel.ui:192
 msgctxt "templatepanel|accessible_name|update"
 msgid "Update Style"
-msgstr ""
+msgstr "スタイルの更新"
 
 #. BGAhD
 #: sfx2/uiconfig/ui/templatepanel.ui:242
@@ -610,37 +610,37 @@ msgstr "ハイライト"
 #: sfx2/uiconfig/ui/templatepanel.ui:272
 msgctxt "templatepanel|filter-atkobject"
 msgid "Filter"
-msgstr ""
+msgstr "フィルター"
 
 #. 5xrhC
 #: sw/inc/strings.hrc:232
 msgctxt "STR_COLUMN_ICONVIEW_ITEM0"
 msgid "1 column"
-msgstr ""
+msgstr "1列"
 
 #. VAfCS
 #: sw/inc/strings.hrc:233
 msgctxt "STR_COLUMN_ICONVIEW_ITEM1"
 msgid "2 columns with equal size"
-msgstr ""
+msgstr "列幅の等しい 2 列"
 
 #. g8pFG
 #: sw/inc/strings.hrc:234
 msgctxt "STR_COLUMN_ICONVIEW_ITEM2"
 msgid "3 columns with equal size"
-msgstr ""
+msgstr "列幅の等しい 3 列"
 
 #. QJxAd
 #: sw/inc/strings.hrc:235
 msgctxt "STR_COLUMN_ICONVIEW_ITEM3"
 msgid "2 columns with different size (left > right)"
-msgstr ""
+msgstr "列幅の違う2列（左列 > 右列）"
 
 #. MHk4E
 #: sw/inc/strings.hrc:236
 msgctxt "STR_COLUMN_ICONVIEW_ITEM4"
 msgid "2 columns with different size (left < right)"
-msgstr ""
+msgstr "列幅の違う2列（左列 < 右列）"
 
 #. xPgHS
 #: sw/inc/strings.hrc:498
@@ -652,7 +652,7 @@ msgstr ""
 #: sw/inc/strings.hrc:1536
 msgctxt "STR_COMPAT_OPT_UNDERLINETRAILINGSPACE"
 msgid "Underline Word-compatible trailing blanks"
-msgstr ""
+msgstr "行末にある空白の下線表示をWord互換の表示にする"
 
 #. B3rfb
 #: sw/uiconfig/swriter/ui/columnpage.ui:122
@@ -665,25 +665,25 @@ msgstr ""
 msgctxt "columnpage|extended_tip|column-iconview"
 msgid ""
 "Enter the number of columns that you want in the page, frame, or section."
-msgstr ""
+msgstr "段組み表示 (ページ、枠、セクション) における、段数を指定します。"
 
 #. yLJG6
 #: sw/uiconfig/swriter/ui/dropcapspage.ui:336
 msgctxt "dropcapspage|drawingareaWN_EXAMPLE-atkobject"
 msgid "Example"
-msgstr ""
+msgstr "例"
 
 #. RdG95
 #: sw/uiconfig/swriter/ui/footnotesendnotestabpage.ui:179
 msgctxt "footnotesendnotestabpage|ftnnumviewbox-atkobject"
 msgid "Numbering"
-msgstr ""
+msgstr "番号付け"
 
 #. afJmD
 #: sw/uiconfig/swriter/ui/footnotesendnotestabpage.ui:455
 msgctxt "footnotesendnotestabpage|endnumviewbox-atkobject"
 msgid "Numbering"
-msgstr ""
+msgstr "番号付け"
 
 #. Ci9GE
 #: sw/uiconfig/swriter/ui/spellmenu.ui:34
@@ -701,7 +701,7 @@ msgstr ""
 #: sw/uiconfig/swriter/ui/tocentriespage.ui:277
 msgctxt "tocentriespage|characterstyleft"
 msgid "Character style:"
-msgstr ""
+msgstr "文字スタイル:"
 
 #. GVCXE
 #: sw/uiconfig/swriter/ui/tocentriespage.ui:569
@@ -713,7 +713,7 @@ msgstr ""
 #: sw/uiconfig/swriter/ui/tokenwidget.ui:30
 msgctxt "tokenwidget|left"
 msgid "Scroll left"
-msgstr ""
+msgstr "左にスクロール"
 
 #. Efssr
 #: sw/uiconfig/swriter/ui/tokenwidget.ui:98
@@ -725,7 +725,7 @@ msgstr ""
 #: sw/uiconfig/swriter/ui/wordcount-mobile.ui:643
 msgctxt "wordcount-mobile|comments"
 msgid "Comments"
-msgstr ""
+msgstr "コメント"
 
 #. SsL8u
 #: formula/inc/core_resource.hrc:2629
@@ -821,13 +821,13 @@ msgstr ""
 #: formula/uiconfig/ui/functionpage.ui:115
 msgctxt "functionpage|label_function"
 msgid "_Function:"
-msgstr ""
+msgstr "関数(_F):"
 
 #. zRASZ
 #: formula/uiconfig/ui/structpage.ui:28
 msgctxt "structpage|label_struct"
 msgid "Content:"
-msgstr ""
+msgstr "内容:"
 
 #. DPToC
 #: sd/uiconfig/simpress/ui/layoutpanel.ui:41
@@ -962,7 +962,7 @@ msgstr "全般"
 #: filter/uiconfig/ui/pdfgeneralpage.ui:821
 msgctxt "pdfgeneralpage|forms_label"
 msgid "Forms"
-msgstr ""
+msgstr "フォーム"
 
 #. kvAZK
 #: filter/uiconfig/ui/pdfgeneralpage.ui:1077
@@ -1028,7 +1028,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "~Table"
-msgstr ""
+msgstr "表(~T)"
 
 #. Uhi2h
 #: CalcCommands.xcu
@@ -1058,7 +1058,7 @@ msgctxt ""
 "TooltipLabel\n"
 "value.text"
 msgid "Insert Table"
-msgstr ""
+msgstr "表の挿入"
 
 #. kZEtN
 #: CalcCommands.xcu
@@ -1248,7 +1248,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Master Pages"
-msgstr ""
+msgstr "マスターページ"
 
 #. FBZFX
 #: GenericCommands.xcu
@@ -1258,7 +1258,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Theme..."
-msgstr ""
+msgstr "テーマ..."
 
 #. DCEaK
 #: GenericCommands.xcu
@@ -1268,7 +1268,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "~Hyperlink"
-msgstr ""
+msgstr "ハイパーリンク(~H)"
 
 #. aFFu9
 #: GenericCommands.xcu
@@ -1278,7 +1278,7 @@ msgctxt ""
 "PopupLabel\n"
 "value.text"
 msgid "Insert Hyperlink..."
-msgstr ""
+msgstr "ハイパーリンクを挿入..."
 
 #. czVMP
 #: GenericCommands.xcu
@@ -1398,7 +1398,7 @@ msgctxt ""
 "Title\n"
 "value.text"
 msgid "Theme"
-msgstr ""
+msgstr "テーマ"
 
 #. dgWCC
 #: Sidebar.xcu
@@ -1540,7 +1540,7 @@ msgstr ""
 #: xmlsecurity/uiconfig/ui/selectcertificatedialog.ui:274
 msgctxt "selectcertificatedialog|searchbox-atkobject"
 msgid "Search"
-msgstr ""
+msgstr "検索"
 
 #. dw79G
 #: sc/inc/globstr.hrc:70
@@ -1588,7 +1588,7 @@ msgstr ""
 #: sc/inc/globstr.hrc:217
 msgctxt "STR_TABLE_TOTAL"
 msgid "Total"
-msgstr ""
+msgstr "合計"
 
 #. wCfcy
 #: sc/inc/globstr.hrc:220
@@ -1706,7 +1706,7 @@ msgstr "除外する行数を指定します。負の数を指定すると、行
 #: sc/inc/scfuncs.hrc:4282
 msgctxt "SC_OPCODE_DROP"
 msgid "Columns"
-msgstr ""
+msgstr "列"
 
 #. cAxPB
 #: sc/inc/scfuncs.hrc:4283
@@ -1752,7 +1752,7 @@ msgstr "拡張する配列の行数。省略すると、行は拡張されませ
 #: sc/inc/scfuncs.hrc:4294
 msgctxt "SC_OPCODE_EXPAND"
 msgid "Columns"
-msgstr ""
+msgstr "列"
 
 #. EVAXE
 #: sc/inc/scfuncs.hrc:4295
@@ -1778,7 +1778,7 @@ msgstr ""
 #: sc/inc/scfuncs.hrc:4303
 msgctxt "SC_OPCODE_HSTACK"
 msgid "Appends arrays horizontally to create a larger array."
-msgstr ""
+msgstr "複数の行列を水平方向に結合し、ひとつの大きな行列を作成します。"
 
 #. LnAFg
 #: sc/inc/scfuncs.hrc:4304 sc/inc/scfuncs.hrc:4306
@@ -1804,7 +1804,7 @@ msgstr "行列1、行列2のように結合する行列を指定します。行�
 #: sc/inc/scfuncs.hrc:4313
 msgctxt "SC_OPCODE_VSTACK"
 msgid "Appends arrays vertically to create a larger array."
-msgstr ""
+msgstr "複数の行列を垂直方向に結合して、ひとつの大きな行列を作成します。"
 
 #. rhVRC
 #: sc/inc/scfuncs.hrc:4314 sc/inc/scfuncs.hrc:4316
@@ -1864,7 +1864,7 @@ msgstr "取得する行数。負の値を指定すると行列の末尾から取
 #: sc/inc/scfuncs.hrc:4328
 msgctxt "SC_OPCODE_TAKE"
 msgid "Columns"
-msgstr ""
+msgstr "列"
 
 #. ZexcG
 #: sc/inc/scfuncs.hrc:4329
@@ -2118,7 +2118,7 @@ msgstr ""
 #: sc/inc/scfuncs.hrc:4389
 msgctxt "SC_OPCODE_TOCOL"
 msgid "Transforms an array into a single column."
-msgstr ""
+msgstr "単一列の配列に変換します。"
 
 #. UAzNC
 #: sc/inc/scfuncs.hrc:4390
@@ -2330,7 +2330,7 @@ msgstr ""
 #: sc/uiconfig/scalc/ui/definetablerangedialog.ui:56
 msgctxt "definetablerangedialog|extended_tip|cancel"
 msgid "Closes dialog and discards all changes."
-msgstr ""
+msgstr "ダイアログを閉じ、すべての変更を破棄します。"
 
 #. ugt8G
 #: sc/uiconfig/scalc/ui/definetablerangedialog.ui:106
@@ -2362,7 +2362,7 @@ msgstr ""
 #: sc/uiconfig/scalc/ui/definetablerangedialog.ui:162
 msgctxt "definetablerangedialog|containscolumnlabels"
 msgid "Co_ntains column labels"
-msgstr ""
+msgstr "列ラベルを含む(_N)"
 
 #. AEKGN
 #: sc/uiconfig/scalc/ui/definetablerangedialog.ui:171
@@ -2374,7 +2374,7 @@ msgstr ""
 #: sc/uiconfig/scalc/ui/definetablerangedialog.ui:203
 msgctxt "definetablerangedialog|extended_tip|DefineTableRangeDialog"
 msgid "Defines a database range based on the selected cells in your sheet."
-msgstr ""
+msgstr "シートで選択したセル範囲に基づいて、データベース範囲を定義します。"
 
 #. LVdkf
 #: sc/uiconfig/scalc/ui/erroralerttabpage.ui:15
@@ -2392,13 +2392,13 @@ msgstr ""
 #: sc/uiconfig/scalc/ui/gotosheetdialog.ui:100
 msgctxt "gotosheetdialog|entry-mask-atkobject"
 msgid "Sheet Name"
-msgstr ""
+msgstr "シート名"
 
 #. hMeBi
 #: sc/uiconfig/scalc/ui/numberbox.ui:17
 msgctxt "numberbox|numbertype|accessible_name"
 msgid "Number Format"
-msgstr ""
+msgstr "数の書式"
 
 #. o8pcB
 #: sc/uiconfig/scalc/ui/protectsheetdlg.ui:195
@@ -2422,7 +2422,7 @@ msgstr ""
 #: sc/uiconfig/scalc/ui/selectsheetviewdialog.ui:63
 msgctxt "selectsheetviewdialog|extended_tip|cancel"
 msgid "Closes dialog and discards all changes."
-msgstr ""
+msgstr "ダイアログを閉じ、すべての変更を破棄します。"
 
 #. sQPFE
 #: sc/uiconfig/scalc/ui/selectsheetviewdialog.ui:134
@@ -2440,7 +2440,7 @@ msgstr ""
 #: sc/uiconfig/scalc/ui/sidebarcellappearance.ui:87
 msgctxt "sidebarcellappearance|cellbordertype-atkobject"
 msgid "Border Style"
-msgstr ""
+msgstr "罫線スタイル"
 
 #. Y8RhG
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:22
@@ -2488,7 +2488,7 @@ msgstr "列 "
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:170
 msgctxt "sidebardatabase|lbl_styles"
 msgid "Table Styles"
-msgstr ""
+msgstr "表スタイル"
 
 #. er8nh
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:187
@@ -3280,4 +3280,4 @@ msgstr ""
 #: sc/uiconfig/scalc/ui/tablestylesbox.ui:185
 msgctxt "tablestylebox|tablestyles_cb|accessible_name"
 msgid "Table Styles"
-msgstr ""
+msgstr "表スタイル"

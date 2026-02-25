@@ -45,7 +45,7 @@ msgstr ""
 #: include/svx/strings.hrc:1040
 msgctxt "RID_SVXSTR_PASTE_AS_DIALOG_TITLE"
 msgid "Paste As"
-msgstr ""
+msgstr "Επικόλληση ως"
 
 #. dF6zk
 #: svx/inc/spacing.hrc:16
@@ -81,13 +81,13 @@ msgstr ""
 #: svx/uiconfig/ui/dropdownfielddialog.ui:31
 msgctxt "dropdownDialog|OK"
 msgid "OK"
-msgstr ""
+msgstr "Εντάξει"
 
 #. 54Dmg
 #: svx/uiconfig/ui/dropdownfielddialog.ui:44
 msgctxt "dropdownDialog|CANCEL"
 msgid "Cancel"
-msgstr ""
+msgstr "Ακύρωση"
 
 #. gPAYw
 #: svx/uiconfig/ui/findreplacedialog.ui:67
@@ -99,7 +99,7 @@ msgstr ""
 #: svx/uiconfig/ui/findreplacedialog.ui:85
 msgctxt "findreplacedialog|replace_tab_btn"
 msgid "Replace"
-msgstr ""
+msgstr "Αντικατάσταση"
 
 #. v2oaz
 #: svx/uiconfig/ui/findreplacedialog.ui:172
@@ -123,19 +123,19 @@ msgstr ""
 #: svx/uiconfig/ui/sidebarline.ui:91
 msgctxt "sidebarline|SelectWidth|tooltip_text"
 msgid "Line Thickness"
-msgstr ""
+msgstr "Πάχος γραμμής"
 
 #. cDwyK
 #: svx/uiconfig/ui/sidebarline.ui:97
 msgctxt "sidebarline|SelectWidth-atkobject"
 msgid "Line Thickness"
-msgstr ""
+msgstr "Πάχος γραμμής"
 
 #. 7MFsT
 #: uui/inc/strings.hrc:84
 msgctxt "STR_READONLY_FONT_TITLE"
 msgid "Font Disallows Editing"
-msgstr ""
+msgstr "Η γραμματοσειρά δεν επιτρέπει την επεξεργασία"
 
 #. YRahp
 #: uui/inc/strings.hrc:85
@@ -146,6 +146,10 @@ msgid ""
 "Pressing [ No ] will drop these fonts from the document:\n"
 "$(ARG1)"
 msgstr ""
+"Μία ή περισσότερες γραμματοσειρές που είναι ενσωματωμένες στο έγγραφο δεν έχουν άδεια επεξεργασίας.\n"
+"Να ανοιχτεί το έγγραφο σε λειτουργία μόνο για ανάγνωση;\n"
+"Πατώντας [ Όχι ] θα απομακρυνθούν αυτές οι γραμματοσειρές από το έγγραφο:\n"
+"$(ARG1)"
 
 #. 4NkMk
 #: readme.xrm
@@ -162,7 +166,7 @@ msgstr ""
 #: chart2/inc/strings.hrc:51
 msgctxt "STR_PAGE_COLOR_PALETTE"
 msgid "Color Palette"
-msgstr ""
+msgstr "Παλέτα χρωμάτων"
 
 #. YZBr8
 #: chart2/inc/strings.hrc:52
@@ -174,13 +178,13 @@ msgstr ""
 #: chart2/uiconfig/ui/chartcolorpalettepopup.ui:46
 msgctxt "chartcolorpalettepopup|colorfulwin"
 msgid "Colorful"
-msgstr ""
+msgstr "Χρωματιστός"
 
 #. xmAmH
 #: chart2/uiconfig/ui/chartcolorpalettepopup.ui:98
 msgctxt "chartcolorpalettepopup|monochromaticwin"
 msgid "Monochromatic"
-msgstr ""
+msgstr "Μονόχρωμος"
 
 #. DrjDt
 #: chart2/uiconfig/ui/chartgradientpalettepopup.ui:46
@@ -253,6 +257,8 @@ msgstr ""
 msgctxt "sidebarcolors|bordertype|tooltip_text"
 msgid "Allow to select a color palette to apply to current chart data series."
 msgstr ""
+"Να επιτρέπεται η επιλογή μιας παλέτας χρωμάτων για εφαρμογή στην τρέχουσα "
+"σειρά δεδομένων γραφήματος."
 
 #. xGjwG
 #: chart2/uiconfig/ui/sidebarcolors.ui:42
@@ -283,7 +289,7 @@ msgstr ""
 #: chart2/uiconfig/ui/sidebartheme.ui:37
 msgctxt "sidebartheme|themetype-atkobject"
 msgid "Themes"
-msgstr ""
+msgstr "Θέματα"
 
 #. YB6Et
 #: chart2/uiconfig/ui/sidebartheme.ui:48
@@ -301,19 +307,19 @@ msgstr ""
 #: chart2/uiconfig/ui/sidebartype.ui:323
 msgctxt "sidebartype|cmb_chartType-atkobject"
 msgid "Chart Type"
-msgstr ""
+msgstr "Τύπος διαγράμματος"
 
 #. x3adg
 #: chart2/uiconfig/ui/tp_ChartColorPalette.ui:68
 msgctxt "tp_ChartColorPalette|colorfulwin"
 msgid "Colorful"
-msgstr ""
+msgstr "Χρωματιστός"
 
 #. 8QjnP
 #: chart2/uiconfig/ui/tp_ChartColorPalette.ui:126
 msgctxt "tp_ChartColorPalette|monochromaticwin"
 msgid "Monochromatic"
-msgstr ""
+msgstr "Μονοχρωματικός"
 
 #. 6JxiC
 #: chart2/uiconfig/ui/tp_ChartGradients.ui:69
@@ -331,7 +337,7 @@ msgstr ""
 #: chart2/uiconfig/ui/tp_ChartType.ui:114
 msgctxt "tp_ChartType|extended_tip|subtype_iconview"
 msgid "Select a sub type of the basic chart type."
-msgstr ""
+msgstr "Επιλέξτε ένα δευτερεύοντα τύπο του βασικού τύπου διαγράμματος."
 
 #. Wh4j6
 #: chart2/uiconfig/ui/tp_ChartType.ui:167
@@ -367,7 +373,7 @@ msgstr ""
 #: cui/uiconfig/ui/hyperlinkinternetpage.ui:64
 msgctxt "hyperlinkinternetpage|target_label"
 msgid "Link:"
-msgstr ""
+msgstr "Σύνδεσμος:"
 
 #. Ric9F
 #: cui/uiconfig/ui/imagetabpage.ui:503
@@ -385,7 +391,7 @@ msgstr ""
 #: cui/uiconfig/ui/numberingformatpage.ui:541
 msgctxt "numberingformatpage|currencylb-atkobject"
 msgid "Currency"
-msgstr ""
+msgstr "Νόμισμα"
 
 #. vcAoU
 #: cui/uiconfig/ui/pageformatpage.ui:223
@@ -475,25 +481,27 @@ msgstr "Δείχνει την ισχύ του κωδικού πρόσβασης"
 #: cui/uiconfig/ui/pickbulletpage.ui:45
 msgctxt "pickbulletpage|extended_tip|pick_bullet_iconview"
 msgid "Click the bullet style that you want to use."
-msgstr ""
+msgstr "Κάντε κλικ στο στυλ κουκκίδων που θέλετε να χρησιμοποιήσετε."
 
 #. rkoDB
 #: cui/uiconfig/ui/pickgraphicpage.ui:45
 msgctxt "pickgraphicpage|extended_tip|pick_graphic_iconview"
 msgid "Click the graphics that you want to use as bullets."
 msgstr ""
+"Επιλέξτε το γραφικό ή βρείτε το γραφικό αρχείο που θέλετε να χρησιμοποιήσετε"
+" ως κουκκίδα."
 
 #. WGzy5
 #: cui/uiconfig/ui/picknumberingpage.ui:44
 msgctxt "picknumberingpage|extended_tip|pick_numbering_iconview"
 msgid "Click the numbering scheme that you want to use."
-msgstr ""
+msgstr "Πατήστε το σχήμα αρίθμησης που θέλετε να χρησιμοποήσετε."
 
 #. avppC
 #: cui/uiconfig/ui/pickoutlinepage.ui:44
 msgctxt "pickoutlinepage|extended_tip|pick_outline_iconview"
 msgid "Click the outline style that you want to use."
-msgstr ""
+msgstr "Κάντε κλικ στο στυλ διάρθρωσης που θέλετε να χρησιμοποιήσετε."
 
 #. hLcKE
 #: cui/uiconfig/ui/textflowpage.ui:812
@@ -511,7 +519,7 @@ msgstr ""
 #: cui/uiconfig/ui/thesaurus.ui:189
 msgctxt "thesaurus|langcb|accessible_name"
 msgid "Language"
-msgstr ""
+msgstr "Γλώσσα"
 
 #. qpArp
 #: cui/uiconfig/ui/toolbarmodedialog.ui:124
@@ -529,13 +537,13 @@ msgstr ""
 #: include/svtools/strings.hrc:71
 msgctxt "STR_FORMAT_ID_MARKDOWN"
 msgid "Markdown"
-msgstr ""
+msgstr "Σημειώνω με γλώσσα σήμανσης"
 
 #. HASc5
 #: include/sfx2/strings.hrc:227
 msgctxt "STR_SID_QUICKFIND"
 msgid "Quick Find"
-msgstr ""
+msgstr "Γρήγορη εύρεση"
 
 #. 2VmCo
 #: sfx2/uiconfig/ui/licensedialog.ui:41
@@ -556,49 +564,49 @@ msgstr ""
 #: sfx2/uiconfig/ui/password.ui:200
 msgctxt "password|pass1bar-atkobject"
 msgid "Password Level Bar"
-msgstr ""
+msgstr "Γραμμή επιπέδου κωδικού πρόσβασης"
 
 #. 2Y4Ua
 #: sfx2/uiconfig/ui/password.ui:201
 msgctxt "password|pass1bar-atkobject"
 msgid "Shows the strength of password"
-msgstr ""
+msgstr "Δείχνει την ισχύ του κωδικού πρόσβασης"
 
 #. EGBBE
 #: sfx2/uiconfig/ui/password.ui:342
 msgctxt "password|pass2bar-atkobject"
 msgid "Password Level Bar"
-msgstr ""
+msgstr "Γραμμή επιπέδου κωδικού πρόσβασης"
 
 #. nvEiq
 #: sfx2/uiconfig/ui/password.ui:343
 msgctxt "password|pass2bar-atkobject"
 msgid "Shows the strength of password"
-msgstr ""
+msgstr "Δείχνει την ισχύ του κωδικού πρόσβασης"
 
 #. YHTHB
 #: sfx2/uiconfig/ui/templatepanel.ui:137
 msgctxt "templatepanel|accessible_name|watercan"
 msgid "Fill Format Mode"
-msgstr ""
+msgstr "Λειτουργία μορφοποίησης γεμίσματος"
 
 #. qvBEu
 #: sfx2/uiconfig/ui/templatepanel.ui:156
 msgctxt "templatepanel|accessible_name|new"
 msgid "New Style from Selection"
-msgstr ""
+msgstr "Νέα τεχνοτροπία από επιλογή"
 
 #. 5ZAqh
 #: sfx2/uiconfig/ui/templatepanel.ui:174
 msgctxt "templatepanel|accessible_name|newmenu"
 msgid "Styles actions"
-msgstr ""
+msgstr "Ενέργειες τεχνοτροπιών"
 
 #. 7NfdA
 #: sfx2/uiconfig/ui/templatepanel.ui:192
 msgctxt "templatepanel|accessible_name|update"
 msgid "Update Style"
-msgstr ""
+msgstr "Ενημέρωση τεχνοτροπίας"
 
 #. BGAhD
 #: sfx2/uiconfig/ui/templatepanel.ui:242
@@ -610,37 +618,37 @@ msgstr "Φωτισμένοι"
 #: sfx2/uiconfig/ui/templatepanel.ui:272
 msgctxt "templatepanel|filter-atkobject"
 msgid "Filter"
-msgstr ""
+msgstr "Φίλτρο"
 
 #. 5xrhC
 #: sw/inc/strings.hrc:232
 msgctxt "STR_COLUMN_ICONVIEW_ITEM0"
 msgid "1 column"
-msgstr ""
+msgstr "1 στήλη"
 
 #. VAfCS
 #: sw/inc/strings.hrc:233
 msgctxt "STR_COLUMN_ICONVIEW_ITEM1"
 msgid "2 columns with equal size"
-msgstr ""
+msgstr "2 στήλες ισομεγέθεις"
 
 #. g8pFG
 #: sw/inc/strings.hrc:234
 msgctxt "STR_COLUMN_ICONVIEW_ITEM2"
 msgid "3 columns with equal size"
-msgstr ""
+msgstr "3 στήλες ισομεγέθεις"
 
 #. QJxAd
 #: sw/inc/strings.hrc:235
 msgctxt "STR_COLUMN_ICONVIEW_ITEM3"
 msgid "2 columns with different size (left > right)"
-msgstr ""
+msgstr "2 στήλες με διαφορετικό μέγεθος (αριστερή > δεξιά)"
 
 #. MHk4E
 #: sw/inc/strings.hrc:236
 msgctxt "STR_COLUMN_ICONVIEW_ITEM4"
 msgid "2 columns with different size (left < right)"
-msgstr ""
+msgstr "2 στήλες με διαφορετικό μέγεθος (αριστερή < δεξιά)"
 
 #. xPgHS
 #: sw/inc/strings.hrc:498
@@ -652,13 +660,13 @@ msgstr ""
 #: sw/inc/strings.hrc:1536
 msgctxt "STR_COMPAT_OPT_UNDERLINETRAILINGSPACE"
 msgid "Underline Word-compatible trailing blanks"
-msgstr ""
+msgstr "Υπογραμμίστε τα τελικά κενά συμβατά με το Word"
 
 #. B3rfb
 #: sw/uiconfig/swriter/ui/columnpage.ui:122
 msgctxt "columnpage|columnft"
 msgid "Column"
-msgstr ""
+msgstr "Στήλη"
 
 #. Lurdj
 #: sw/uiconfig/swriter/ui/columnpage.ui:871
@@ -666,24 +674,26 @@ msgctxt "columnpage|extended_tip|column-iconview"
 msgid ""
 "Enter the number of columns that you want in the page, frame, or section."
 msgstr ""
+"Εισάγετε τον αριθμό στηλών που θέλετε στη σελίδα, στο πλαίσιο, ή στην "
+"ενότητα."
 
 #. yLJG6
 #: sw/uiconfig/swriter/ui/dropcapspage.ui:336
 msgctxt "dropcapspage|drawingareaWN_EXAMPLE-atkobject"
 msgid "Example"
-msgstr ""
+msgstr "Παράδειγμα"
 
 #. RdG95
 #: sw/uiconfig/swriter/ui/footnotesendnotestabpage.ui:179
 msgctxt "footnotesendnotestabpage|ftnnumviewbox-atkobject"
 msgid "Numbering"
-msgstr ""
+msgstr "Αρίθμηση"
 
 #. afJmD
 #: sw/uiconfig/swriter/ui/footnotesendnotestabpage.ui:455
 msgctxt "footnotesendnotestabpage|endnumviewbox-atkobject"
 msgid "Numbering"
-msgstr ""
+msgstr "Αρίθμηση"
 
 #. Ci9GE
 #: sw/uiconfig/swriter/ui/spellmenu.ui:34
@@ -725,115 +735,115 @@ msgstr "Κύλιση προς τα δεξιά"
 #: sw/uiconfig/swriter/ui/wordcount-mobile.ui:643
 msgctxt "wordcount-mobile|comments"
 msgid "Comments"
-msgstr ""
+msgstr "Σχόλια"
 
 #. SsL8u
 #: formula/inc/core_resource.hrc:2629
 msgctxt "RID_STRLIST_FUNCTION_NAMES"
 msgid "CHOOSECOLS"
-msgstr ""
+msgstr "CHOOSECOLS"
 
 #. zE6Vt
 #: formula/inc/core_resource.hrc:2630
 msgctxt "RID_STRLIST_FUNCTION_NAMES"
 msgid "CHOOSEROWS"
-msgstr ""
+msgstr "CHOOSEROWS"
 
 #. TxBq7
 #: formula/inc/core_resource.hrc:2631
 msgctxt "RID_STRLIST_FUNCTION_NAMES"
 msgid "DROP"
-msgstr ""
+msgstr "DROP"
 
 #. eTG8r
 #: formula/inc/core_resource.hrc:2632
 msgctxt "RID_STRLIST_FUNCTION_NAMES"
 msgid "EXPAND"
-msgstr ""
+msgstr "EXPAND"
 
 #. aJk9K
 #: formula/inc/core_resource.hrc:2633
 msgctxt "RID_STRLIST_FUNCTION_NAMES"
 msgid "HSTACK"
-msgstr ""
+msgstr "HSTACK"
 
 #. 4HnRz
 #: formula/inc/core_resource.hrc:2634
 msgctxt "RID_STRLIST_FUNCTION_NAMES"
 msgid "VSTACK"
-msgstr ""
+msgstr "VSTACK"
 
 #. JDHX2
 #: formula/inc/core_resource.hrc:2635
 msgctxt "RID_STRLIST_FUNCTION_NAMES"
 msgid "TAKE"
-msgstr ""
+msgstr "TAKE"
 
 #. CiTMM
 #: formula/inc/core_resource.hrc:2636
 msgctxt "RID_STRLIST_FUNCTION_NAMES"
 msgid "TEXTAFTER"
-msgstr ""
+msgstr "TEXTAFTER"
 
 #. Uz9jV
 #: formula/inc/core_resource.hrc:2637
 msgctxt "RID_STRLIST_FUNCTION_NAMES"
 msgid "TEXTBEFORE"
-msgstr ""
+msgstr "TEXTBEFORE"
 
 #. u2Nq4
 #: formula/inc/core_resource.hrc:2638
 msgctxt "RID_STRLIST_FUNCTION_NAMES"
 msgid "TEXTSPLIT"
-msgstr ""
+msgstr "TEXTSPLIT"
 
 #. FMVjv
 #: formula/inc/core_resource.hrc:2639
 msgctxt "RID_STRLIST_FUNCTION_NAMES"
 msgid "TOCOL"
-msgstr ""
+msgstr "TOCOL"
 
 #. xKDBC
 #: formula/inc/core_resource.hrc:2640
 msgctxt "RID_STRLIST_FUNCTION_NAMES"
 msgid "TOROW"
-msgstr ""
+msgstr "TOROW"
 
 #. UDke3
 #: formula/inc/core_resource.hrc:2643
 msgctxt "RID_STRLIST_FUNCTION_NAMES"
 msgid "WRAPCOLS"
-msgstr ""
+msgstr "WRAPCOLS"
 
 #. 3Tf94
 #: formula/inc/core_resource.hrc:2644
 msgctxt "RID_STRLIST_FUNCTION_NAMES"
 msgid "WRAPROWS"
-msgstr ""
+msgstr "WRAPROWS"
 
 #. Lrn3j
 #: formula/uiconfig/ui/functionpage.ui:80
 msgctxt "functionpage|label_category"
 msgid "_Category:"
-msgstr ""
+msgstr "_Κατηγορία:"
 
 #. BNnFg
 #: formula/uiconfig/ui/functionpage.ui:115
 msgctxt "functionpage|label_function"
 msgid "_Function:"
-msgstr ""
+msgstr "_Συνάρτηση:"
 
 #. zRASZ
 #: formula/uiconfig/ui/structpage.ui:28
 msgctxt "structpage|label_struct"
 msgid "Content:"
-msgstr ""
+msgstr "Περιεχόμενο:"
 
 #. DPToC
 #: sd/uiconfig/simpress/ui/layoutpanel.ui:41
 msgctxt "layoutpanel|extended_tip|layoutpanel_icons"
 msgid "List of available layout templates."
-msgstr ""
+msgstr "Κατάλογος με τα διαθέσιμα πρότυπα διάταξης."
 
 #. Y3kBV
 #: filter/uiconfig/ui/impswfdialog.ui:14
@@ -986,7 +996,7 @@ msgctxt ""
 "UIName\n"
 "value.text"
 msgid "Markdown Document"
-msgstr ""
+msgstr "Έγγραφο Markdown"
 
 #. 9Q5Zj
 #: draw_flash_Export.xcu
@@ -1016,7 +1026,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Current Sheet View"
-msgstr ""
+msgstr "Τρέχουσα προβολή φύλλου"
 
 #. MKARo
 #: CalcCommands.xcu
@@ -1036,7 +1046,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "~Table"
-msgstr ""
+msgstr "~Πίνακας"
 
 #. Uhi2h
 #: CalcCommands.xcu
@@ -1066,7 +1076,7 @@ msgctxt ""
 "TooltipLabel\n"
 "value.text"
 msgid "Insert Table"
-msgstr ""
+msgstr "Εισαγωγή πίνακα"
 
 #. kZEtN
 #: CalcCommands.xcu
@@ -1086,7 +1096,7 @@ msgctxt ""
 "TooltipLabel\n"
 "value.text"
 msgid "Delete Table"
-msgstr ""
+msgstr "Διαγραφή πίνακα"
 
 #. 3Ep4Y
 #: CalcCommands.xcu
@@ -1096,7 +1106,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Insert Function"
-msgstr ""
+msgstr "Εισαγωγή συνάρτησης"
 
 #. rxGTc
 #: CalcCommands.xcu
@@ -1116,7 +1126,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "New Sheet View"
-msgstr ""
+msgstr "Νέα προβολή φύλλου"
 
 #. AKfar
 #: CalcCommands.xcu
@@ -1126,7 +1136,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Remove Sheet View"
-msgstr ""
+msgstr "Κατάργηση προβολής φύλλου"
 
 #. M52nh
 #: CalcCommands.xcu
@@ -1136,7 +1146,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Switch To Next Sheet View"
-msgstr ""
+msgstr "Μετάβαση στην επόμενη προβολή φύλλου"
 
 #. qfgad
 #: CalcCommands.xcu
@@ -1146,7 +1156,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Switch To Previous Sheet View"
-msgstr ""
+msgstr "Μετάβαση στην προηγούμενη προβολή φύλλου"
 
 #. FJEd2
 #: CalcCommands.xcu
@@ -1156,7 +1166,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Select Sheet View"
-msgstr ""
+msgstr "Επιλογή προβολής φύλλου"
 
 #. vCsC3
 #: CalcCommands.xcu
@@ -1166,7 +1176,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Exit Sheet View"
-msgstr ""
+msgstr "Έξοδος από την προβολή φύλλου"
 
 #. uuvrm
 #: ChartCommands.xcu
@@ -1246,7 +1256,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Slide Transitions"
-msgstr ""
+msgstr "Μεταβάσεις διαφανειών"
 
 #. 5pSJ6
 #: GenericCommands.xcu
@@ -1256,7 +1266,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Master Pages"
-msgstr ""
+msgstr "Κύριες σελίδες"
 
 #. FBZFX
 #: GenericCommands.xcu
@@ -1266,7 +1276,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Theme..."
-msgstr ""
+msgstr "Θέμα…"
 
 #. DCEaK
 #: GenericCommands.xcu
@@ -1276,7 +1286,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "~Hyperlink"
-msgstr ""
+msgstr "~Υπερσύνδεσμος"
 
 #. aFFu9
 #: GenericCommands.xcu
@@ -1286,7 +1296,7 @@ msgctxt ""
 "PopupLabel\n"
 "value.text"
 msgid "Insert Hyperlink..."
-msgstr ""
+msgstr "Εισαγωγή υπερσυνδέσμου..."
 
 #. czVMP
 #: GenericCommands.xcu
@@ -1296,7 +1306,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Nav~igator select comment."
-msgstr ""
+msgstr "Επιλογή σχολίου του Nav~igator"
 
 #. 77Q3c
 #: GenericCommands.xcu
@@ -1306,7 +1316,7 @@ msgctxt ""
 "TooltipLabel\n"
 "value.text"
 msgid "Select Comment In The Navigator Window/Sidebar"
-msgstr ""
+msgstr "Επιλογή σχολίου στο παράθυρο/πλαϊνή γραμμή του Navigator"
 
 #. 83Euq
 #: GenericCommands.xcu
@@ -1406,7 +1416,7 @@ msgctxt ""
 "Title\n"
 "value.text"
 msgid "Theme"
-msgstr ""
+msgstr "Θέμα"
 
 #. dgWCC
 #: Sidebar.xcu
@@ -1548,7 +1558,7 @@ msgstr ""
 #: xmlsecurity/uiconfig/ui/selectcertificatedialog.ui:274
 msgctxt "selectcertificatedialog|searchbox-atkobject"
 msgid "Search"
-msgstr ""
+msgstr "Αναζήτηση"
 
 #. dw79G
 #: sc/inc/globstr.hrc:70
@@ -1560,13 +1570,13 @@ msgstr ""
 #: sc/inc/globstr.hrc:73
 msgctxt "STR_UNDO_DBTABLE"
 msgid "Create table"
-msgstr ""
+msgstr "Δημιουργία πίνακα"
 
 #. J2Dh9
 #: sc/inc/globstr.hrc:74
 msgctxt "STR_UNDO_DBTABLE"
 msgid "Delete table"
-msgstr ""
+msgstr "Διαγραφή πίνακα"
 
 #. AvAbD
 #: sc/inc/globstr.hrc:140
@@ -1584,7 +1594,7 @@ msgstr ""
 #: sc/inc/globstr.hrc:195
 msgctxt "STR_CALC_TABLE"
 msgid "Table"
-msgstr ""
+msgstr "Πίνακας"
 
 #. GFiBr
 #: sc/inc/globstr.hrc:196
@@ -1596,7 +1606,7 @@ msgstr ""
 #: sc/inc/globstr.hrc:217
 msgctxt "STR_TABLE_TOTAL"
 msgid "Total"
-msgstr ""
+msgstr "Σύνολο"
 
 #. wCfcy
 #: sc/inc/globstr.hrc:220
@@ -1608,73 +1618,77 @@ msgstr ""
 #: sc/inc/globstr.hrc:601
 msgctxt "STR_SHEET_VIEW_DEFAULT_VIEW_NAME"
 msgid "Default View"
-msgstr ""
+msgstr "Προεπιλεγμένη προβολή"
 
 #. aYwkp
 #: sc/inc/globstr.hrc:602
 msgctxt "STR_SHEET_VIEW_TEMPORARY_NAME_TEMPLATE"
 msgid "Temporary View %1"
-msgstr ""
+msgstr "Προσωρινή προβολή του %1"
 
 #. ADmez
 #: sc/inc/scfuncs.hrc:4257
 msgctxt "SC_OPCODE_CHOOSECOLS"
 msgid "Returns the specified columns from an array."
-msgstr ""
+msgstr "Επιστρέφει τις καθορισμένες στήλες από έναν πίνακα."
 
 #. mgCeG
 #: sc/inc/scfuncs.hrc:4258
 msgctxt "SC_OPCODE_CHOOSECOLS"
 msgid "Array"
-msgstr ""
+msgstr "Πίνακας"
 
 #. vErtR
 #: sc/inc/scfuncs.hrc:4259
 msgctxt "SC_OPCODE_CHOOSECOLS"
 msgid "The array containing the columns to be returned in the new array."
-msgstr ""
+msgstr "Ο πίνακας που περιέχει τις στήλες που θα επιστραφούν στον νέο πίνακα."
 
 #. EuvxU
 #: sc/inc/scfuncs.hrc:4260
 msgctxt "SC_OPCODE_CHOOSECOLS"
 msgid "Column "
-msgstr ""
+msgstr "Στήλη "
 
 #. Akc9t
 #: sc/inc/scfuncs.hrc:4261
 msgctxt "SC_OPCODE_CHOOSECOLS"
 msgid "Column 1, Column 2,... The list of column numbers to be returned."
 msgstr ""
+"Στήλη 1, Στήλη 2,... Ο κατάλογος με τους αριθμούς των στηλών που θα "
+"επιστραφούν."
 
 #. 78gQu
 #: sc/inc/scfuncs.hrc:4267
 msgctxt "SC_OPCODE_CHOOSEROWS"
 msgid "Returns the specified rows from an array."
-msgstr ""
+msgstr "Επιστρέφει τις καθορισμένες σειρές από έναν πίνακα."
 
 #. JAg4y
 #: sc/inc/scfuncs.hrc:4268
 msgctxt "SC_OPCODE_CHOOSEROWS"
 msgid "Array"
-msgstr ""
+msgstr "Πίνακας"
 
 #. GFWtk
 #: sc/inc/scfuncs.hrc:4269
 msgctxt "SC_OPCODE_CHOOSEROWS"
 msgid "The array containing the rows to be returned in the new array."
-msgstr ""
+msgstr "Ο πίνακας που περιέχει τις σειρές που θα επιστραφούν στον νέο πίνακα."
 
 #. PDBbE
 #: sc/inc/scfuncs.hrc:4270
 msgctxt "SC_OPCODE_CHOOSEROWS"
 msgid "Row "
-msgstr ""
+msgstr "Σειρά "
 
 #. dXjgB
 #: sc/inc/scfuncs.hrc:4271
 msgctxt "SC_OPCODE_CHOOSEROWS"
 msgid "Row 1, Row 2,... The list of row numbers to be returned."
 msgstr ""
+"Σειρά 1, Σειρά 2,... ο κατάλογος με τους αριθμούς των σειρών που θα "
+"επιστραφούν."
 
 #. 4uTLx
 #: sc/inc/scfuncs.hrc:4277
@@ -1683,24 +1697,26 @@ msgid ""
 "Excludes a specified number of contiguous rows or columns from the start or "
 "end of an array."
 msgstr ""
+"Εξαιρεί έναν καθορισμένο αριθμό συνεχόμενων σειρών ή στηλών από την αρχή ή "
+"το τέλος ενός πίνακα."
 
 #. W6FYc
 #: sc/inc/scfuncs.hrc:4278
 msgctxt "SC_OPCODE_DROP"
 msgid "Array"
-msgstr ""
+msgstr "Πίνακας"
 
 #. zEu4G
 #: sc/inc/scfuncs.hrc:4279
 msgctxt "SC_OPCODE_DROP"
 msgid "The array from which to drop rows or columns."
-msgstr ""
+msgstr "Ο πίνακας από τον οποίο θα απορριφθοιύν γραμμές ή στήλες."
 
 #. BFPt4
 #: sc/inc/scfuncs.hrc:4280
 msgctxt "SC_OPCODE_DROP"
 msgid "Rows"
-msgstr ""
+msgstr "Γραμμές"
 
 #. yyjnc
 #: sc/inc/scfuncs.hrc:4281
@@ -1709,12 +1725,14 @@ msgid ""
 "The number of rows to drop. A negative value drops from the end of the "
 "array."
 msgstr ""
+"Ο αριθμός των σειρών προς απόρριψη. Μια αρνητική τιμή απορρίπτεται από το "
+"τέλος του πίνακα."
 
 #. 6sAoA
 #: sc/inc/scfuncs.hrc:4282
 msgctxt "SC_OPCODE_DROP"
 msgid "Columns"
-msgstr ""
+msgstr "Στήλες"
 
 #. cAxPB
 #: sc/inc/scfuncs.hrc:4283
@@ -1723,30 +1741,34 @@ msgid ""
 "The number of columns to drop. A negative value drops from the end of the "
 "array."
 msgstr ""
+"Ο αριθμός των στηλών προς απόρριψη. Μια αρνητική τιμή απορρίπτεται από το "
+"τέλος του πίνακα."
 
 #. cXvVY
 #: sc/inc/scfuncs.hrc:4289
 msgctxt "SC_OPCODE_EXPAND"
 msgid "Expands or pads an array to specified row and column dimensions."
 msgstr ""
+"Επεκτείνει ή συμπληρώνει έναν πίνακα σε καθορισμένες διαστάσεις σειρών και "
+"στηλών."
 
 #. kuERH
 #: sc/inc/scfuncs.hrc:4290
 msgctxt "SC_OPCODE_EXPAND"
 msgid "Array"
-msgstr ""
+msgstr "Πίνακας"
 
 #. E9YDC
 #: sc/inc/scfuncs.hrc:4291
 msgctxt "SC_OPCODE_EXPAND"
 msgid "The array to expand."
-msgstr ""
+msgstr "Ο πίνακας προς επέκταση."
 
 #. EaNgG
 #: sc/inc/scfuncs.hrc:4292
 msgctxt "SC_OPCODE_EXPAND"
 msgid "Rows"
-msgstr ""
+msgstr "Σειρές"
 
 #. QzQiB
 #: sc/inc/scfuncs.hrc:4293
@@ -1755,12 +1777,14 @@ msgid ""
 "The number of rows in the expanded array. If missing, rows will not be "
 "expanded."
 msgstr ""
+"Ο αριθμός των σειρών στον αναπτυγμένο πίνακα. Εάν λείπει, οι σειρές δεν θα "
+"επεκταθούν."
 
 #. qjcxB
 #: sc/inc/scfuncs.hrc:4294
 msgctxt "SC_OPCODE_EXPAND"
 msgid "Columns"
-msgstr ""
+msgstr "Στήλες"
 
 #. EVAXE
 #: sc/inc/scfuncs.hrc:4295
@@ -1769,36 +1793,39 @@ msgid ""
 "The number of columns in the expanded array. If missing, columns will not be"
 " expanded."
 msgstr ""
+"Ο αριθμός των στηλών στον αναπτυγμένο πίνακα. Εάν λείπει, οι στήλες δεν θα "
+"επεκταθούν."
 
 #. QPyBK
 #: sc/inc/scfuncs.hrc:4296
 msgctxt "SC_OPCODE_EXPAND"
 msgid "Pad with"
-msgstr ""
+msgstr "Συμπλήρωση με"
 
 #. kHatA
 #: sc/inc/scfuncs.hrc:4297
 msgctxt "SC_OPCODE_EXPAND"
 msgid "The value with which to pad. The default is #N/A."
-msgstr ""
+msgstr "Η τιμή με την οποία θα συμπληρωθεί. Η προεπιλογή είναι #N/A."
 
 #. m7qUf
 #: sc/inc/scfuncs.hrc:4303
 msgctxt "SC_OPCODE_HSTACK"
 msgid "Appends arrays horizontally to create a larger array."
 msgstr ""
+"Προσθέτει πίνακες οριζόντια για να δημιουργήσει έναν μεγαλύτερο πίνακα."
 
 #. LnAFg
 #: sc/inc/scfuncs.hrc:4304 sc/inc/scfuncs.hrc:4306
 msgctxt "SC_OPCODE_HSTACK"
 msgid "Array"
-msgstr ""
+msgstr "Πίνακας"
 
 #. uHbHC
 #: sc/inc/scfuncs.hrc:4305
 msgctxt "SC_OPCODE_HSTACK"
 msgid "The first array to append."
-msgstr ""
+msgstr "Ο πρώτος πίνακας για προσθήκη."
 
 #. QRA57
 #: sc/inc/scfuncs.hrc:4307
@@ -1807,24 +1834,26 @@ msgid ""
 "Array 1, Array 2,... The following arrays to append. If an array has fewer "
 "rows, #N/A error will be returned in the additional rows."
 msgstr ""
+"Πίνακας 1, Πίνακας 2,... Οι παρακάτω πίνακες προς προσθήκη. Εάν ένας πίνακας"
+" έχει λιγότερες σειρές, το σφάλμα #N/A θα επιστραφεί στις πρόσθετες σειρές."
 
 #. 7zS24
 #: sc/inc/scfuncs.hrc:4313
 msgctxt "SC_OPCODE_VSTACK"
 msgid "Appends arrays vertically to create a larger array."
-msgstr ""
+msgstr "Προσθέτει πίνακες κάθετα για να δημιουργήσει έναν μεγαλύτερο πίνακα."
 
 #. rhVRC
 #: sc/inc/scfuncs.hrc:4314 sc/inc/scfuncs.hrc:4316
 msgctxt "SC_OPCODE_VSTACK"
 msgid "Array"
-msgstr ""
+msgstr "Πίνακας"
 
 #. tGHH9
 #: sc/inc/scfuncs.hrc:4315
 msgctxt "SC_OPCODE_VSTACK"
 msgid "The first array to append."
-msgstr ""
+msgstr "Ο πρώτος πίνακας για προσθήκη."
 
 #. Kb6Xc
 #: sc/inc/scfuncs.hrc:4317
@@ -1833,6 +1862,8 @@ msgid ""
 "Array 1, Array 2,... The following arrays to append. If an array has fewer "
 "columns, #N/A error will be returned in the additional columns."
 msgstr ""
+"Πίνακας 1, Πίνακας 2,... Οι παρακάτω πίνακες προς προσθήκη. Εάν ένας πίνακας"
+" έχει λιγότερες στήλες, το σφάλμα #N/A θα επιστραφεί στις πρόσθετες στήλες."
 
 #. JnsYT
 #: sc/inc/scfuncs.hrc:4323
@@ -1841,24 +1872,26 @@ msgid ""
 "Returns a specified number of contiguous rows or columns from the start or "
 "end of an array."
 msgstr ""
+"Επιστρέφει έναν καθορισμένο αριθμό συνεχόμενων γραμμών ή στηλών από την αρχή"
+" ή το τέλος ενός πίνακα."
 
 #. dFLFb
 #: sc/inc/scfuncs.hrc:4324
 msgctxt "SC_OPCODE_TAKE"
 msgid "Array"
-msgstr ""
+msgstr "Πίνακας"
 
 #. ycFef
 #: sc/inc/scfuncs.hrc:4325
 msgctxt "SC_OPCODE_TAKE"
 msgid "The array from which to take rows or columns."
-msgstr ""
+msgstr "Ο πίνακας από τον οποίο λαμβάνονται γραμμές ή στήλες."
 
 #. DzBCL
 #: sc/inc/scfuncs.hrc:4326
 msgctxt "SC_OPCODE_TAKE"
 msgid "Rows"
-msgstr ""
+msgstr "Γραμμές"
 
 #. KBPBn
 #: sc/inc/scfuncs.hrc:4327
@@ -1867,12 +1900,14 @@ msgid ""
 "The number of rows to take. A negative value takes from the end of the "
 "array."
 msgstr ""
+"Ο αριθμός των γραμμών που πρέπει να ληφθούν. Μια αρνητική τιμή παίρνει από "
+"το τέλος του πίνακα."
 
 #. HJQKW
 #: sc/inc/scfuncs.hrc:4328
 msgctxt "SC_OPCODE_TAKE"
 msgid "Columns"
-msgstr ""
+msgstr "Στήλες"
 
 #. ZexcG
 #: sc/inc/scfuncs.hrc:4329
@@ -1881,42 +1916,46 @@ msgid ""
 "The number of columns to take. A negative value takes from the end of the "
 "array."
 msgstr ""
+"Ο αριθμός των στηλών που πρέπει να ληφθούν. Μια αρνητική τιμή παίρνει από το"
+" τέλος του πίνακα."
 
 #. GwyMB
 #: sc/inc/scfuncs.hrc:4335
 msgctxt "SC_OPCODE_TEXTAFTER"
 msgid "Returns the text that occurs after a given substring or delimiter."
 msgstr ""
+"Επιστρέφει το κείμενο που εμφανίζεται μετά από μια δεδομένη υποσυμβολοσειρά "
+"ή οριοθέτη."
 
 #. cicY2
 #: sc/inc/scfuncs.hrc:4336
 msgctxt "SC_OPCODE_TEXTAFTER"
 msgid "Text"
-msgstr ""
+msgstr "Κείμενο"
 
 #. 3WLYF
 #: sc/inc/scfuncs.hrc:4337
 msgctxt "SC_OPCODE_TEXTAFTER"
 msgid "The original text."
-msgstr ""
+msgstr "Το αρχικό κείμενο."
 
 #. z4pDr
 #: sc/inc/scfuncs.hrc:4338
 msgctxt "SC_OPCODE_TEXTAFTER"
 msgid "Delimiter"
-msgstr ""
+msgstr "Διαχωριστικό"
 
 #. YEbwu
 #: sc/inc/scfuncs.hrc:4339
 msgctxt "SC_OPCODE_TEXTAFTER"
 msgid "The delimiter. Multiple delimiters can be supplied."
-msgstr ""
+msgstr "Το διαχωριστικό. Μπορούν να παρασχεθούν πολλαπλά διαχωριστικά."
 
 #. HPDvF
 #: sc/inc/scfuncs.hrc:4340
 msgctxt "SC_OPCODE_TEXTAFTER"
 msgid "Instance Number"
-msgstr ""
+msgstr "Αριθμός παρουσίας"
 
 #. DmVZL
 #: sc/inc/scfuncs.hrc:4341
@@ -1925,78 +1964,87 @@ msgid ""
 "The instance of the delimiter after which to extract text. The default is 1."
 " A negative number starts searching from the end."
 msgstr ""
+"Η παρουσία του διαχωριστικού μετά την οποία θα εξαχθεί κείμενο. Η προεπιλογή"
+" είναι 1. Ένας αρνητικός αριθμός ξεκινά την αναζήτηση από το τέλος."
 
 #. fpoGj
 #: sc/inc/scfuncs.hrc:4342
 msgctxt "SC_OPCODE_TEXTAFTER"
 msgid "Match Mode"
-msgstr ""
+msgstr "Λειτουργία αντιστοίχισης"
 
 #. iSfJi
 #: sc/inc/scfuncs.hrc:4343
 msgctxt "SC_OPCODE_TEXTAFTER"
 msgid "Set to 1 to perform a case-insensitive match. The default is 0."
 msgstr ""
+"Ορίστε την τιμή σε 1 για να εκτελέσετε αντιστοίχιση χωρίς διάκριση πεζών-"
+"κεφαλαίων. Η προεπιλογή είναι 0."
 
 #. nAF2s
 #: sc/inc/scfuncs.hrc:4344
 msgctxt "SC_OPCODE_TEXTAFTER"
 msgid "Match End"
-msgstr ""
+msgstr "Τέλος αντιστοίχισης"
 
 #. W2DGj
 #: sc/inc/scfuncs.hrc:4345
 msgctxt "SC_OPCODE_TEXTAFTER"
 msgid "Set to 1 to treat the end of text as a delimiter. The default is 0."
 msgstr ""
+"Ορίστε την τιμή σε 1 για να θεωρήσετε το τέλος του κειμένου ως διαχωριστικό."
+" Η προεπιλογή είναι 0."
 
 #. PG6qj
 #: sc/inc/scfuncs.hrc:4346
 msgctxt "SC_OPCODE_TEXTAFTER"
 msgid "If Not Found"
-msgstr ""
+msgstr "Εάν δεν βρεθεί"
 
 #. vfgZc
 #: sc/inc/scfuncs.hrc:4347
 msgctxt "SC_OPCODE_TEXTAFTER"
 msgid "The value returned if no match is found. The default is #N/A."
 msgstr ""
+"Η τιμή που επιστρέφεται εάν δεν βρεθεί αντιστοιχία. Η προεπιλογή είναι #Δ/Υ."
 
 #. f88EE
 #: sc/inc/scfuncs.hrc:4353
 msgctxt "SC_OPCODE_TEXTBEFORE"
 msgid "Returns the text that occurs before a given substring or delimiter."
 msgstr ""
+"Επιστρέφει το κείμενο που εμφανίζεται πριν από μια δεδομένη υποσυμβολοσειρά "
+"ή διαχωριστικό."
 
 #. NNriC
 #: sc/inc/scfuncs.hrc:4354
 msgctxt "SC_OPCODE_TEXTBEFORE"
 msgid "Text"
-msgstr ""
+msgstr "Κείμενο"
 
 #. HsEG8
 #: sc/inc/scfuncs.hrc:4355
 msgctxt "SC_OPCODE_TEXTBEFORE"
 msgid "The original text."
-msgstr ""
+msgstr "Το αρχικό κείμενο."
 
 #. E4a5z
 #: sc/inc/scfuncs.hrc:4356
 msgctxt "SC_OPCODE_TEXTBEFORE"
 msgid "Delimiter"
-msgstr ""
+msgstr "Διαχωριστικό"
 
 #. qDFZy
 #: sc/inc/scfuncs.hrc:4357
 msgctxt "SC_OPCODE_TEXTBEFORE"
 msgid "The delimiter. Multiple delimiters can be supplied."
-msgstr ""
+msgstr "Το διαχωριστικό. Μπορούν να παρασχεθούν πολλαπλά διαχωριστικά."
 
 #. gNHAi
 #: sc/inc/scfuncs.hrc:4358
 msgctxt "SC_OPCODE_TEXTBEFORE"
 msgid "Instance Number"
-msgstr ""
+msgstr "Αριθμός παρουσίας"
 
 #. sD4zC
 #: sc/inc/scfuncs.hrc:4359
@@ -2005,90 +2053,104 @@ msgid ""
 "The instance of the delimiter before which to extract text. The default is "
 "1. A negative number starts searching from the end."
 msgstr ""
+"Η παρουσία του διαχωριστικού πριν από τον οποίο θα εξαχθεί κείμενο. Η "
+"προεπιλογή είναι 1. Ένας αρνητικός αριθμός ξεκινά την αναζήτηση από το "
+"τέλος."
 
 #. Adzeh
 #: sc/inc/scfuncs.hrc:4360
 msgctxt "SC_OPCODE_TEXTBEFORE"
 msgid "Match Mode"
-msgstr ""
+msgstr "Λειτουργία αντιστοίχισης"
 
 #. Pi2Ti
 #: sc/inc/scfuncs.hrc:4361
 msgctxt "SC_OPCODE_TEXTBEFORE"
 msgid "Set to 1 to perform a case-insensitive match. The default is 0."
 msgstr ""
+"Ορίστε την τιμή σε 1 για να εκτελέσετε αντιστοίχιση χωρίς διάκριση πεζών-"
+"κεφαλαίων. Η προεπιλογή είναι 0."
 
 #. sACA2
 #: sc/inc/scfuncs.hrc:4362
 msgctxt "SC_OPCODE_TEXTBEFORE"
 msgid "Match End"
-msgstr ""
+msgstr "Τέλος αντιστοίχισης"
 
 #. UxpD6
 #: sc/inc/scfuncs.hrc:4363
 msgctxt "SC_OPCODE_TEXTBEFORE"
 msgid "Set to 1 to treat the end of text as a delimiter. The default is 0."
 msgstr ""
+"Ορίστε την τιμή σε 1 για να θεωρήσετε το τέλος του κειμένου ως διαχωριστικό."
+" Η προεπιλογή είναι 0."
 
 #. aCnZX
 #: sc/inc/scfuncs.hrc:4364
 msgctxt "SC_OPCODE_TEXTBEFORE"
 msgid "If Not Found"
-msgstr ""
+msgstr "Εάν δεν βρεθεί"
 
 #. xCZYH
 #: sc/inc/scfuncs.hrc:4365
 msgctxt "SC_OPCODE_TEXTBEFORE"
 msgid "The value returned if no match is found. The default is #N/A."
 msgstr ""
+"Η τιμή που επιστρέφεται εάν δεν βρεθεί αντιστοιχία. Η προεπιλογή είναι #Δ/Υ."
 
 #. wdZTd
 #: sc/inc/scfuncs.hrc:4371
 msgctxt "SC_OPCODE_TEXTSPLIT"
 msgid "Splits text by a given delimiter to an array of multiple cells."
 msgstr ""
+"Διαχωρίζει το κείμενο με βάση έναν δεδομένο διαχωριστικό σε έναν πίνακα "
+"πολλαπλών κελιών."
 
 #. DH7h4
 #: sc/inc/scfuncs.hrc:4372
 msgctxt "SC_OPCODE_TEXTSPLIT"
 msgid "Text"
-msgstr ""
+msgstr "Κείμενο"
 
 #. dqSdF
 #: sc/inc/scfuncs.hrc:4373
 msgctxt "SC_OPCODE_TEXTSPLIT"
 msgid "The text to split."
-msgstr ""
+msgstr "Το κείμενο που θα διαιρεθεί."
 
 #. pdpxt
 #: sc/inc/scfuncs.hrc:4374
 msgctxt "SC_OPCODE_TEXTSPLIT"
 msgid "Column Delimiter"
-msgstr ""
+msgstr "Οριοθέτης στηλών"
 
 #. nfMAr
 #: sc/inc/scfuncs.hrc:4375
 msgctxt "SC_OPCODE_TEXTSPLIT"
 msgid "The text to delimit the columns. Multiple delimiters can be supplied."
 msgstr ""
+"Το κείμενο που θα οριοθετήσει τις στήλες. Μπορούν να παρασχεθούν πολλαπλοί "
+"οριοθέτες."
 
 #. qZGq2
 #: sc/inc/scfuncs.hrc:4376
 msgctxt "SC_OPCODE_TEXTSPLIT"
 msgid "Row Delimiter"
-msgstr ""
+msgstr "Οριοθέτης γραμμών"
 
 #. dPnbc
 #: sc/inc/scfuncs.hrc:4377
 msgctxt "SC_OPCODE_TEXTSPLIT"
 msgid "The text to delimit the rows. Multiple delimiters can be supplied."
 msgstr ""
+"Το κείμενο που θα οριοθετήσει τις γραμμές. Μπορούν να παρασχεθούν πολλαπλοί "
+"οριοθέτες."
 
 #. jD3sa
 #: sc/inc/scfuncs.hrc:4378
 msgctxt "SC_OPCODE_TEXTSPLIT"
 msgid "Ignore Empty"
-msgstr ""
+msgstr "Αγνόηση κενού"
 
 #. 6LwdP
 #: sc/inc/scfuncs.hrc:4379
@@ -2097,54 +2159,58 @@ msgid ""
 "Set to TRUE to ignore consecutive delimiters otherwise it creates an empty "
 "cell. The default is FALSE."
 msgstr ""
+"Ορίστε την τιμή σε TRUE για να αγνοήσετε τους διαδοχικούς οριοθέτες, "
+"διαφορετικά δημιουργείται ένα κενό κελί. Η προεπιλογή είναι FALSE."
 
 #. kkAYp
 #: sc/inc/scfuncs.hrc:4380
 msgctxt "SC_OPCODE_TEXTSPLIT"
 msgid "Match mode"
-msgstr ""
+msgstr "Λειτουργία αντιστοίχισης"
 
 #. iX8cx
 #: sc/inc/scfuncs.hrc:4381
 msgctxt "SC_OPCODE_TEXTSPLIT"
 msgid "Set to 1 to perform a case-insensitive match. The default is 0."
 msgstr ""
+"Ορίστε την τιμή σε 1 για να εκτελέσετε αντιστοίχιση χωρίς διάκριση πεζών-"
+"κεφαλαίων. Η προεπιλογή είναι 0."
 
 #. vXECz
 #: sc/inc/scfuncs.hrc:4382
 msgctxt "SC_OPCODE_TEXTSPLIT"
 msgid "Pad with"
-msgstr ""
+msgstr "Συμπλήρωση με"
 
 #. h4db2
 #: sc/inc/scfuncs.hrc:4383
 msgctxt "SC_OPCODE_TEXTSPLIT"
 msgid "The value with which to pad. The default is #N/A."
-msgstr ""
+msgstr "Η τιμή με την οποία θα γίνει συμπλήρωση. Η προεπιλογή είναι #Δ/Υ."
 
 #. DdFFE
 #: sc/inc/scfuncs.hrc:4389
 msgctxt "SC_OPCODE_TOCOL"
 msgid "Transforms an array into a single column."
-msgstr ""
+msgstr "Μετατρέπει έναν πίνακα σε μία στήλη."
 
 #. UAzNC
 #: sc/inc/scfuncs.hrc:4390
 msgctxt "SC_OPCODE_TOCOL"
 msgid "Array"
-msgstr ""
+msgstr "Πίνακας"
 
 #. CHojs
 #: sc/inc/scfuncs.hrc:4391
 msgctxt "SC_OPCODE_TOCOL"
 msgid "The range or array to return as a single column."
-msgstr ""
+msgstr "Το εύρος ή ο πίνακας που θα επιστρέψει ως μία στήλη."
 
 #. uACXu
 #: sc/inc/scfuncs.hrc:4392
 msgctxt "SC_OPCODE_TOCOL"
 msgid "Ignore"
-msgstr ""
+msgstr "Αγνόηση"
 
 #. b7EQW
 #: sc/inc/scfuncs.hrc:4393
@@ -2154,12 +2220,15 @@ msgid ""
 "(default). 1 - ignore blank cells. 2 - ignore cells with error. 3 - ignore "
 "blanks cells and cells with error."
 msgstr ""
+"Εάν θα αγνοηθούν ορισμένοι τύποι τιμών. 0 ή παράλειψη - διατήρηση όλων των "
+"τιμών (προεπιλογή). 1 - αγνόηση των κενών κελιών. 2 - αγνόηση των κελιών με "
+"σφάλμα. 3 - αγνόηση των κενών κελιών και των κελιών με σφάλμα."
 
 #. qNLAi
 #: sc/inc/scfuncs.hrc:4394
 msgctxt "SC_OPCODE_TOCOL"
 msgid "Scan by column"
-msgstr ""
+msgstr "Σάρωση ανά στήλη"
 
 #. bcArN
 #: sc/inc/scfuncs.hrc:4395
@@ -2168,30 +2237,32 @@ msgid ""
 "Scan the array by column. FALSE or omitted (default) - the array is scanned "
 "by row. TRUE - the array is scanned by column."
 msgstr ""
+"Σάρωση του πίνακα ανά στήλη. FALSE ή παράλειψη (προεπιλογή) - ο πίνακας "
+"σαρώνεται ανά σειρά. TRUE - ο πίνακας σαρώνεται ανά στήλη."
 
 #. PGyxj
 #: sc/inc/scfuncs.hrc:4401
 msgctxt "SC_OPCODE_TOROW"
 msgid "transforms an array into a single row."
-msgstr ""
+msgstr "μετατρέπει έναν πίνακα σε μία απλή γραμμή."
 
 #. W9bWe
 #: sc/inc/scfuncs.hrc:4402
 msgctxt "SC_OPCODE_TOROW"
 msgid "Array"
-msgstr ""
+msgstr "Πίνακας"
 
 #. 5MEvT
 #: sc/inc/scfuncs.hrc:4403
 msgctxt "SC_OPCODE_TOROW"
 msgid "The range or array to return as a single row."
-msgstr ""
+msgstr "Το εύρος ή ο πίνακας που θα επιστρέψει ως μία γραμμή."
 
 #. AqqBC
 #: sc/inc/scfuncs.hrc:4404
 msgctxt "SC_OPCODE_TOROW"
 msgid "Ignore"
-msgstr ""
+msgstr "Αγνόηση"
 
 #. wcpQF
 #: sc/inc/scfuncs.hrc:4405
@@ -2201,12 +2272,15 @@ msgid ""
 "(default). 1 - ignore blank cells. 2 - ignore cells with error. 3 - ignore "
 "blanks cells and cells with error."
 msgstr ""
+"Εάν θα αγνοηθούν ορισμένοι τύποι τιμών. 0 ή παράλειψη - διατήρηση όλων των "
+"τιμών (προεπιλογή). 1 - αγνόηση των κενών κελιών. 2 - αγνόηση των κελιών με "
+"σφάλμα. 3 - αγνόηση των κενών κελιών και των κελιών με σφάλμα."
 
 #. E4XDf
 #: sc/inc/scfuncs.hrc:4406
 msgctxt "SC_OPCODE_TOROW"
 msgid "Scan by column"
-msgstr ""
+msgstr "Σάρωση ανά στήλη"
 
 #. 5bZRy
 #: sc/inc/scfuncs.hrc:4407
@@ -2215,6 +2289,8 @@ msgid ""
 "Scan the array by column. FALSE or omitted (default) - the array is scanned "
 "by row. TRUE - the array is scanned by column."
 msgstr ""
+"Σάρωση του πίνακα ανά στήλη. FALSE ή παράλειψη (προεπιλογή) - ο πίνακας "
+"σαρώνεται ανά σειρά. TRUE - ο πίνακας σαρώνεται ανά στήλη."
 
 #. oBDEA
 #: sc/inc/scfuncs.hrc:4437
@@ -2223,42 +2299,44 @@ msgid ""
 "Wraps the provided row or column of values by columns after a specified "
 "number of elements to form a new array."
 msgstr ""
+"Αναδιπλώνει την παρεχόμενη σειρά ή στήλη τιμών ανά στήλες μετά από έναν "
+"καθορισμένο αριθμό στοιχείων για να σχηματίσει έναν νέο πίνακα."
 
 #. fC6RK
 #: sc/inc/scfuncs.hrc:4438
 msgctxt "SC_OPCODE_WRAPCOLS"
 msgid "Range"
-msgstr ""
+msgstr "Εύρος"
 
 #. nfZyj
 #: sc/inc/scfuncs.hrc:4439
 msgctxt "SC_OPCODE_WRAPCOLS"
 msgid "the range to wrap."
-msgstr ""
+msgstr "το εύρος αναδίπλωσης."
 
 #. GE3HQ
 #: sc/inc/scfuncs.hrc:4440
 msgctxt "SC_OPCODE_WRAPCOLS"
 msgid "Wrap count"
-msgstr ""
+msgstr "Αριθμός αναδιπλώσεων"
 
 #. FWsCt
 #: sc/inc/scfuncs.hrc:4441
 msgctxt "SC_OPCODE_WRAPCOLS"
 msgid "The maximum number of values for each column."
-msgstr ""
+msgstr "Ο μέγιστος αριθμός τιμών για κάθε στήλη."
 
 #. zkjFB
 #: sc/inc/scfuncs.hrc:4442
 msgctxt "SC_OPCODE_WRAPCOLS"
 msgid "Pad with"
-msgstr ""
+msgstr "Συμπλήρωση με"
 
 #. knbjc
 #: sc/inc/scfuncs.hrc:4443
 msgctxt "SC_OPCODE_WRAPCOLS"
 msgid "The value with which to pad. The default is #N/A."
-msgstr ""
+msgstr "Η τιμή με την οποία θα συμπληρωθεί. Η προεπιλογή είναι #N/A."
 
 #. BDA7q
 #: sc/inc/scfuncs.hrc:4449
@@ -2267,42 +2345,44 @@ msgid ""
 "Wraps the provided row or column of values by rows after a specified number "
 "of elements to form a new array."
 msgstr ""
+"Αναδιπλώνει την παρεχόμενη σειρά ή στήλη τιμών ανά γραμμές μετά από έναν "
+"καθορισμένο αριθμό στοιχείων για να σχηματίσει έναν νέο πίνακα."
 
 #. 7esii
 #: sc/inc/scfuncs.hrc:4450
 msgctxt "SC_OPCODE_WRAPROWS"
 msgid "Range"
-msgstr ""
+msgstr "Εύρος"
 
 #. FLJwx
 #: sc/inc/scfuncs.hrc:4451
 msgctxt "SC_OPCODE_WRAPROWS"
 msgid "the range to wrap."
-msgstr ""
+msgstr "το εύρος αναδίπλωσης."
 
 #. aLHUi
 #: sc/inc/scfuncs.hrc:4452
 msgctxt "SC_OPCODE_WRAPROWS"
 msgid "Wrap count"
-msgstr ""
+msgstr "Αριθμός αναδιπλώσεων"
 
 #. 3CEsK
 #: sc/inc/scfuncs.hrc:4453
 msgctxt "SC_OPCODE_WRAPROWS"
 msgid "The maximum number of values for each row."
-msgstr ""
+msgstr "Ο μέγιστος αριθμός τιμών για κάθε σειρά."
 
 #. iTCWg
 #: sc/inc/scfuncs.hrc:4454
 msgctxt "SC_OPCODE_WRAPROWS"
 msgid "Pad with"
-msgstr ""
+msgstr "Συμπλήρωση με"
 
 #. e3K5s
 #: sc/inc/scfuncs.hrc:4455
 msgctxt "SC_OPCODE_WRAPROWS"
 msgid "The value with which to pad. The default is #N/A."
-msgstr ""
+msgstr "Η τιμή με την οποία θα συμπληρωθεί. Η προεπιλογή είναι #N/A."
 
 #. 4af9a
 #: sc/uiconfig/scalc/ui/cellprotectionpage.ui:99
@@ -2318,7 +2398,7 @@ msgstr ""
 #: sc/uiconfig/scalc/ui/conditionaleasydialog.ui:8
 msgctxt "conditionaleasydialog|title"
 msgid "Highlight cells..."
-msgstr ""
+msgstr "Επισήμανση κελιών..."
 
 #. QpmnN
 #: sc/uiconfig/scalc/ui/definetablerangedialog.ui:10
@@ -2368,19 +2448,21 @@ msgstr ""
 #: sc/uiconfig/scalc/ui/definetablerangedialog.ui:162
 msgctxt "definetablerangedialog|containscolumnlabels"
 msgid "Co_ntains column labels"
-msgstr ""
+msgstr "Περιέ_χει ετικέτες στηλών"
 
 #. AEKGN
 #: sc/uiconfig/scalc/ui/definetablerangedialog.ui:171
 msgctxt "definetablerangedialog|extended_tip|ContainsColumnLabels"
 msgid "Selected cell ranges contain labels."
-msgstr ""
+msgstr "Οι επιλεγμένες περιοχές κελιών περιέχουν ετικέτες."
 
 #. GCg88
 #: sc/uiconfig/scalc/ui/definetablerangedialog.ui:203
 msgctxt "definetablerangedialog|extended_tip|DefineTableRangeDialog"
 msgid "Defines a database range based on the selected cells in your sheet."
 msgstr ""
+"Καθορίζει μία περιοχή βάσης δεδομένων που βασίζεται στα επιλεγμένα κελιά στο"
+" φύλλο σας."
 
 #. LVdkf
 #: sc/uiconfig/scalc/ui/erroralerttabpage.ui:15
@@ -2398,55 +2480,55 @@ msgstr ""
 #: sc/uiconfig/scalc/ui/gotosheetdialog.ui:100
 msgctxt "gotosheetdialog|entry-mask-atkobject"
 msgid "Sheet Name"
-msgstr ""
+msgstr "Όνομα φύλλου"
 
 #. hMeBi
 #: sc/uiconfig/scalc/ui/numberbox.ui:17
 msgctxt "numberbox|numbertype|accessible_name"
 msgid "Number Format"
-msgstr ""
+msgstr "Μορφή αριθμών"
 
 #. o8pcB
 #: sc/uiconfig/scalc/ui/protectsheetdlg.ui:195
 msgctxt "protectsheetdlg|passwordbar-atkobject"
 msgid "Password Level Bar"
-msgstr ""
+msgstr "Γραμμή επιπέδου κωδικού πρόσβασης"
 
 #. Q4fA3
 #: sc/uiconfig/scalc/ui/selectsheetviewdialog.ui:18
 msgctxt "selectsheetviewdialog|SelectSheetView"
 msgid "Select Sheet View"
-msgstr ""
+msgstr "Επιλογή προβολής φύλλου"
 
 #. GTQJA
 #: sc/uiconfig/scalc/ui/selectsheetviewdialog.ui:44
 msgctxt "selectsheetviewdialog|extended_tip|ok"
 msgid "Saves all changes and closes dialog."
-msgstr ""
+msgstr "Αποθηκεύει όλες τις αλλαγές και κλείνει το παράθυρο διαλόγου."
 
 #. kGFYu
 #: sc/uiconfig/scalc/ui/selectsheetviewdialog.ui:63
 msgctxt "selectsheetviewdialog|extended_tip|cancel"
 msgid "Closes dialog and discards all changes."
-msgstr ""
+msgstr "Κλείνει το παράθυρο διαλόγου και απορρίπτει όλες τις αλλαγές."
 
 #. sQPFE
 #: sc/uiconfig/scalc/ui/selectsheetviewdialog.ui:134
 msgctxt "selectsheetviewdialog|extended_tip|entry-list"
 msgid "Available sheet views."
-msgstr ""
+msgstr "Διαθέσιμες προβολές φύλλου."
 
 #. csyNB
 #: sc/uiconfig/scalc/ui/sheetviewbox.ui:17
 msgctxt "sheetviewbox|sheetview_combobox|accessible_name"
 msgid "Sheet View"
-msgstr ""
+msgstr "Προβολή φύλλου"
 
 #. FXK8B
 #: sc/uiconfig/scalc/ui/sidebarcellappearance.ui:87
 msgctxt "sidebarcellappearance|cellbordertype-atkobject"
 msgid "Border Style"
-msgstr ""
+msgstr "Τεχνοτροπία ορίων"
 
 #. Y8RhG
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:22
@@ -2494,7 +2576,7 @@ msgstr ""
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:170
 msgctxt "sidebardatabase|lbl_styles"
 msgid "Table Styles"
-msgstr ""
+msgstr "Τεχνοτροπίες πίνακα"
 
 #. er8nh
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:187
@@ -3286,4 +3368,4 @@ msgstr ""
 #: sc/uiconfig/scalc/ui/tablestylesbox.ui:185
 msgctxt "tablestylebox|tablestyles_cb|accessible_name"
 msgid "Table Styles"
-msgstr ""
+msgstr "Τεχνοτροπίες πίνακα"

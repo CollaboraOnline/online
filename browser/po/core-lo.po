@@ -126,13 +126,13 @@ msgstr ""
 #: svx/uiconfig/ui/sidebarline.ui:91
 msgctxt "sidebarline|SelectWidth|tooltip_text"
 msgid "Line Thickness"
-msgstr ""
+msgstr "ຄວາມໜາຂອງເສັ້ນ"
 
 #. cDwyK
 #: svx/uiconfig/ui/sidebarline.ui:97
 msgctxt "sidebarline|SelectWidth-atkobject"
 msgid "Line Thickness"
-msgstr ""
+msgstr "ຄວາມໜາຂອງເສັ້ນ"
 
 #. 7MFsT
 #: uui/inc/strings.hrc:84
@@ -394,7 +394,7 @@ msgstr ""
 #: cui/uiconfig/ui/numberingformatpage.ui:541
 msgctxt "numberingformatpage|currencylb-atkobject"
 msgid "Currency"
-msgstr ""
+msgstr "ສະກຸນເງິນ"
 
 #. vcAoU
 #: cui/uiconfig/ui/pageformatpage.ui:223
@@ -520,7 +520,7 @@ msgstr ""
 #: cui/uiconfig/ui/thesaurus.ui:189
 msgctxt "thesaurus|langcb|accessible_name"
 msgid "Language"
-msgstr ""
+msgstr "ພາສາ"
 
 #. qpArp
 #: cui/uiconfig/ui/toolbarmodedialog.ui:124
@@ -567,25 +567,25 @@ msgstr ""
 #: sfx2/uiconfig/ui/password.ui:200
 msgctxt "password|pass1bar-atkobject"
 msgid "Password Level Bar"
-msgstr ""
+msgstr "ແຖບລະດັບຄວາມປອດໄພຂອງລະຫັດຜ່ານ"
 
 #. 2Y4Ua
 #: sfx2/uiconfig/ui/password.ui:201
 msgctxt "password|pass1bar-atkobject"
 msgid "Shows the strength of password"
-msgstr ""
+msgstr "ສະແດງຄວາມແໜ້ນໜາຂອງລະຫັດຜ່ານ"
 
 #. EGBBE
 #: sfx2/uiconfig/ui/password.ui:342
 msgctxt "password|pass2bar-atkobject"
 msgid "Password Level Bar"
-msgstr ""
+msgstr "ແຖບລະດັບຄວາມປອດໄພຂອງລະຫັດຜ່ານ"
 
 #. nvEiq
 #: sfx2/uiconfig/ui/password.ui:343
 msgctxt "password|pass2bar-atkobject"
 msgid "Shows the strength of password"
-msgstr ""
+msgstr "ສະແດງຄວາມແໜ້ນໜາຂອງລະຫັດຜ່ານ"
 
 #. YHTHB
 #: sfx2/uiconfig/ui/templatepanel.ui:137
@@ -682,7 +682,7 @@ msgstr "ປ້ອນຈຳນວນຖັນທີ່ທ່ານຕ້ອງກ
 #: sw/uiconfig/swriter/ui/dropcapspage.ui:336
 msgctxt "dropcapspage|drawingareaWN_EXAMPLE-atkobject"
 msgid "Example"
-msgstr ""
+msgstr "ຕົວຢ່າງ"
 
 #. RdG95
 #: sw/uiconfig/swriter/ui/footnotesendnotestabpage.ui:179
@@ -712,7 +712,7 @@ msgstr ""
 #: sw/uiconfig/swriter/ui/tocentriespage.ui:277
 msgctxt "tocentriespage|characterstyleft"
 msgid "Character style:"
-msgstr ""
+msgstr "ຮູບແບບຕົວອັກສອນ"
 
 #. GVCXE
 #: sw/uiconfig/swriter/ui/tocentriespage.ui:569
@@ -724,7 +724,7 @@ msgstr ""
 #: sw/uiconfig/swriter/ui/tokenwidget.ui:30
 msgctxt "tokenwidget|left"
 msgid "Scroll left"
-msgstr ""
+msgstr "ເລື່ອນທາງຊ້າຍ"
 
 #. Efssr
 #: sw/uiconfig/swriter/ui/tokenwidget.ui:98
@@ -1048,7 +1048,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "~Table"
-msgstr ""
+msgstr "~ຕາຕະລາງ"
 
 #. Uhi2h
 #: CalcCommands.xcu
@@ -1278,7 +1278,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Theme..."
-msgstr ""
+msgstr "ຮູບແບບ..."
 
 #. DCEaK
 #: GenericCommands.xcu
@@ -1560,7 +1560,7 @@ msgstr ""
 #: xmlsecurity/uiconfig/ui/selectcertificatedialog.ui:274
 msgctxt "selectcertificatedialog|searchbox-atkobject"
 msgid "Search"
-msgstr ""
+msgstr "ຄົ້ນຫາ"
 
 #. dw79G
 #: sc/inc/globstr.hrc:70
@@ -1572,13 +1572,13 @@ msgstr ""
 #: sc/inc/globstr.hrc:73
 msgctxt "STR_UNDO_DBTABLE"
 msgid "Create table"
-msgstr ""
+msgstr "ສ້າງຕາຕະລາງ"
 
 #. J2Dh9
 #: sc/inc/globstr.hrc:74
 msgctxt "STR_UNDO_DBTABLE"
 msgid "Delete table"
-msgstr ""
+msgstr "ລຶບຕາຕະລາງ"
 
 #. AvAbD
 #: sc/inc/globstr.hrc:140
@@ -1596,7 +1596,7 @@ msgstr ""
 #: sc/inc/globstr.hrc:195
 msgctxt "STR_CALC_TABLE"
 msgid "Table"
-msgstr ""
+msgstr "ຕາຕະລາງ"
 
 #. GFiBr
 #: sc/inc/globstr.hrc:196
@@ -2420,19 +2420,19 @@ msgstr ""
 #: sc/uiconfig/scalc/ui/definetablerangedialog.ui:162
 msgctxt "definetablerangedialog|containscolumnlabels"
 msgid "Co_ntains column labels"
-msgstr ""
+msgstr "_ມີປ້າຍຊື່ຖັນ"
 
 #. AEKGN
 #: sc/uiconfig/scalc/ui/definetablerangedialog.ui:171
 msgctxt "definetablerangedialog|extended_tip|ContainsColumnLabels"
 msgid "Selected cell ranges contain labels."
-msgstr ""
+msgstr "ຂອບເຂດເຊວທີ່ເລືອກມີປ້າຍຊື່."
 
 #. GCg88
 #: sc/uiconfig/scalc/ui/definetablerangedialog.ui:203
 msgctxt "definetablerangedialog|extended_tip|DefineTableRangeDialog"
 msgid "Defines a database range based on the selected cells in your sheet."
-msgstr ""
+msgstr "ກຳນົດຂອບເຂດຖານຂໍ້ມູນໂດຍອີງຕາມເຊວທີ່ເລືອກໃນແຜ່ນງານຂອງທ່ານ."
 
 #. LVdkf
 #: sc/uiconfig/scalc/ui/erroralerttabpage.ui:15
@@ -2450,7 +2450,7 @@ msgstr ""
 #: sc/uiconfig/scalc/ui/gotosheetdialog.ui:100
 msgctxt "gotosheetdialog|entry-mask-atkobject"
 msgid "Sheet Name"
-msgstr ""
+msgstr "ຊື່ແຜ່ນງານ"
 
 #. hMeBi
 #: sc/uiconfig/scalc/ui/numberbox.ui:17
@@ -2462,7 +2462,7 @@ msgstr ""
 #: sc/uiconfig/scalc/ui/protectsheetdlg.ui:195
 msgctxt "protectsheetdlg|passwordbar-atkobject"
 msgid "Password Level Bar"
-msgstr ""
+msgstr "ແຖບລະດັບຄວາມປອດໄພຂອງລະຫັດຜ່ານ"
 
 #. Q4fA3
 #: sc/uiconfig/scalc/ui/selectsheetviewdialog.ui:18
@@ -3338,4 +3338,4 @@ msgstr ""
 #: sc/uiconfig/scalc/ui/tablestylesbox.ui:185
 msgctxt "tablestylebox|tablestyles_cb|accessible_name"
 msgid "Table Styles"
-msgstr ""
+msgstr "ຮູບແບບຕາຕະລາງ"

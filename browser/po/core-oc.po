@@ -87,7 +87,7 @@ msgstr ""
 #: svx/uiconfig/ui/dropdownfielddialog.ui:44
 msgctxt "dropdownDialog|CANCEL"
 msgid "Cancel"
-msgstr ""
+msgstr "Anullar"
 
 #. gPAYw
 #: svx/uiconfig/ui/findreplacedialog.ui:67
@@ -123,13 +123,13 @@ msgstr ""
 #: svx/uiconfig/ui/sidebarline.ui:91
 msgctxt "sidebarline|SelectWidth|tooltip_text"
 msgid "Line Thickness"
-msgstr ""
+msgstr "Espessor de linha"
 
 #. cDwyK
 #: svx/uiconfig/ui/sidebarline.ui:97
 msgctxt "sidebarline|SelectWidth-atkobject"
 msgid "Line Thickness"
-msgstr ""
+msgstr "Espessor de linha"
 
 #. 7MFsT
 #: uui/inc/strings.hrc:84
@@ -162,7 +162,7 @@ msgstr ""
 #: chart2/inc/strings.hrc:51
 msgctxt "STR_PAGE_COLOR_PALETTE"
 msgid "Color Palette"
-msgstr ""
+msgstr "Paleta de colors"
 
 #. YZBr8
 #: chart2/inc/strings.hrc:52
@@ -174,7 +174,7 @@ msgstr ""
 #: chart2/uiconfig/ui/chartcolorpalettepopup.ui:46
 msgctxt "chartcolorpalettepopup|colorfulwin"
 msgid "Colorful"
-msgstr ""
+msgstr "Colorat"
 
 #. xmAmH
 #: chart2/uiconfig/ui/chartcolorpalettepopup.ui:98
@@ -258,7 +258,7 @@ msgstr ""
 #: chart2/uiconfig/ui/sidebarcolors.ui:42
 msgctxt "sidebarcolors|cellbordertype-atkobject"
 msgid "Border Style"
-msgstr ""
+msgstr "Estil de bordadura"
 
 #. bEK2j
 #: chart2/uiconfig/ui/sidebargradients.ui:30
@@ -271,7 +271,7 @@ msgstr ""
 #: chart2/uiconfig/ui/sidebargradients.ui:42
 msgctxt "sidebargradients|cellbordertype-atkobject"
 msgid "Border Style"
-msgstr ""
+msgstr "Estil de bordadura"
 
 #. Aiqg6
 #: chart2/uiconfig/ui/sidebartheme.ui:25
@@ -283,7 +283,7 @@ msgstr ""
 #: chart2/uiconfig/ui/sidebartheme.ui:37
 msgctxt "sidebartheme|themetype-atkobject"
 msgid "Themes"
-msgstr ""
+msgstr "Tèmas"
 
 #. YB6Et
 #: chart2/uiconfig/ui/sidebartheme.ui:48
@@ -307,7 +307,7 @@ msgstr ""
 #: chart2/uiconfig/ui/tp_ChartColorPalette.ui:68
 msgctxt "tp_ChartColorPalette|colorfulwin"
 msgid "Colorful"
-msgstr ""
+msgstr "Colorat"
 
 #. 8QjnP
 #: chart2/uiconfig/ui/tp_ChartColorPalette.ui:126
@@ -385,7 +385,7 @@ msgstr ""
 #: cui/uiconfig/ui/numberingformatpage.ui:541
 msgctxt "numberingformatpage|currencylb-atkobject"
 msgid "Currency"
-msgstr ""
+msgstr "Moneda"
 
 #. vcAoU
 #: cui/uiconfig/ui/pageformatpage.ui:223
@@ -511,7 +511,7 @@ msgstr ""
 #: cui/uiconfig/ui/thesaurus.ui:189
 msgctxt "thesaurus|langcb|accessible_name"
 msgid "Language"
-msgstr ""
+msgstr "Lenga"
 
 #. qpArp
 #: cui/uiconfig/ui/toolbarmodedialog.ui:124
@@ -535,7 +535,7 @@ msgstr ""
 #: include/sfx2/strings.hrc:227
 msgctxt "STR_SID_QUICKFIND"
 msgid "Quick Find"
-msgstr ""
+msgstr "Cèrca rapida"
 
 #. 2VmCo
 #: sfx2/uiconfig/ui/licensedialog.ui:41
@@ -586,19 +586,19 @@ msgstr ""
 #: sfx2/uiconfig/ui/templatepanel.ui:156
 msgctxt "templatepanel|accessible_name|new"
 msgid "New Style from Selection"
-msgstr ""
+msgstr "Estil novèl a partir de la seleccion"
 
 #. 5ZAqh
 #: sfx2/uiconfig/ui/templatepanel.ui:174
 msgctxt "templatepanel|accessible_name|newmenu"
 msgid "Styles actions"
-msgstr ""
+msgstr "Accions d’estils"
 
 #. 7NfdA
 #: sfx2/uiconfig/ui/templatepanel.ui:192
 msgctxt "templatepanel|accessible_name|update"
 msgid "Update Style"
-msgstr ""
+msgstr "Actualizar l’estil"
 
 #. BGAhD
 #: sfx2/uiconfig/ui/templatepanel.ui:242
@@ -616,31 +616,31 @@ msgstr ""
 #: sw/inc/strings.hrc:232
 msgctxt "STR_COLUMN_ICONVIEW_ITEM0"
 msgid "1 column"
-msgstr ""
+msgstr "1 colomna"
 
 #. VAfCS
 #: sw/inc/strings.hrc:233
 msgctxt "STR_COLUMN_ICONVIEW_ITEM1"
 msgid "2 columns with equal size"
-msgstr ""
+msgstr "2 colomnas de talha egala"
 
 #. g8pFG
 #: sw/inc/strings.hrc:234
 msgctxt "STR_COLUMN_ICONVIEW_ITEM2"
 msgid "3 columns with equal size"
-msgstr ""
+msgstr "3 colomnas de talha egala"
 
 #. QJxAd
 #: sw/inc/strings.hrc:235
 msgctxt "STR_COLUMN_ICONVIEW_ITEM3"
 msgid "2 columns with different size (left > right)"
-msgstr ""
+msgstr "2 colomnas de talha diferenta (esquèrra > dreita)"
 
 #. MHk4E
 #: sw/inc/strings.hrc:236
 msgctxt "STR_COLUMN_ICONVIEW_ITEM4"
 msgid "2 columns with different size (left < right)"
-msgstr ""
+msgstr "2 colomnas de talha diferenta (esquèrra < dreita)"
 
 #. xPgHS
 #: sw/inc/strings.hrc:498
@@ -658,7 +658,7 @@ msgstr ""
 #: sw/uiconfig/swriter/ui/columnpage.ui:122
 msgctxt "columnpage|columnft"
 msgid "Column"
-msgstr ""
+msgstr "Colomna"
 
 #. Lurdj
 #: sw/uiconfig/swriter/ui/columnpage.ui:871
@@ -671,7 +671,7 @@ msgstr ""
 #: sw/uiconfig/swriter/ui/dropcapspage.ui:336
 msgctxt "dropcapspage|drawingareaWN_EXAMPLE-atkobject"
 msgid "Example"
-msgstr ""
+msgstr "Exemple"
 
 #. RdG95
 #: sw/uiconfig/swriter/ui/footnotesendnotestabpage.ui:179
@@ -713,7 +713,7 @@ msgstr ""
 #: sw/uiconfig/swriter/ui/tokenwidget.ui:30
 msgctxt "tokenwidget|left"
 msgid "Scroll left"
-msgstr ""
+msgstr "Far defilar cap a esquèrra"
 
 #. Efssr
 #: sw/uiconfig/swriter/ui/tokenwidget.ui:98
@@ -725,7 +725,7 @@ msgstr ""
 #: sw/uiconfig/swriter/ui/wordcount-mobile.ui:643
 msgctxt "wordcount-mobile|comments"
 msgid "Comments"
-msgstr ""
+msgstr "Comentaris"
 
 #. SsL8u
 #: formula/inc/core_resource.hrc:2629
@@ -815,7 +815,7 @@ msgstr ""
 #: formula/uiconfig/ui/functionpage.ui:80
 msgctxt "functionpage|label_category"
 msgid "_Category:"
-msgstr ""
+msgstr "_Categoria :"
 
 #. BNnFg
 #: formula/uiconfig/ui/functionpage.ui:115
@@ -965,7 +965,7 @@ msgstr "General"
 #: filter/uiconfig/ui/pdfgeneralpage.ui:821
 msgctxt "pdfgeneralpage|forms_label"
 msgid "Forms"
-msgstr ""
+msgstr "Formularis"
 
 #. kvAZK
 #: filter/uiconfig/ui/pdfgeneralpage.ui:1077
@@ -1081,7 +1081,7 @@ msgctxt ""
 "TooltipLabel\n"
 "value.text"
 msgid "Delete Table"
-msgstr ""
+msgstr "Suprimir lo tablèu"
 
 #. 3Ep4Y
 #: CalcCommands.xcu
@@ -1261,7 +1261,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Theme..."
-msgstr ""
+msgstr "Tèma..."
 
 #. DCEaK
 #: GenericCommands.xcu
@@ -1271,7 +1271,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "~Hyperlink"
-msgstr ""
+msgstr "~Iperligam"
 
 #. aFFu9
 #: GenericCommands.xcu
@@ -1401,7 +1401,7 @@ msgctxt ""
 "Title\n"
 "value.text"
 msgid "Theme"
-msgstr ""
+msgstr "Tèma"
 
 #. dgWCC
 #: Sidebar.xcu
@@ -1543,7 +1543,7 @@ msgstr ""
 #: xmlsecurity/uiconfig/ui/selectcertificatedialog.ui:274
 msgctxt "selectcertificatedialog|searchbox-atkobject"
 msgid "Search"
-msgstr ""
+msgstr "Recercar"
 
 #. dw79G
 #: sc/inc/globstr.hrc:70
@@ -1555,13 +1555,13 @@ msgstr ""
 #: sc/inc/globstr.hrc:73
 msgctxt "STR_UNDO_DBTABLE"
 msgid "Create table"
-msgstr ""
+msgstr "Crear un tablèu"
 
 #. J2Dh9
 #: sc/inc/globstr.hrc:74
 msgctxt "STR_UNDO_DBTABLE"
 msgid "Delete table"
-msgstr ""
+msgstr "Suprimir lo tablèu"
 
 #. AvAbD
 #: sc/inc/globstr.hrc:140
@@ -1591,7 +1591,7 @@ msgstr ""
 #: sc/inc/globstr.hrc:217
 msgctxt "STR_TABLE_TOTAL"
 msgid "Total"
-msgstr ""
+msgstr "Total"
 
 #. wCfcy
 #: sc/inc/globstr.hrc:220
@@ -1621,7 +1621,7 @@ msgstr ""
 #: sc/inc/scfuncs.hrc:4258
 msgctxt "SC_OPCODE_CHOOSECOLS"
 msgid "Array"
-msgstr ""
+msgstr "Matritz"
 
 #. vErtR
 #: sc/inc/scfuncs.hrc:4259
@@ -1633,7 +1633,7 @@ msgstr ""
 #: sc/inc/scfuncs.hrc:4260
 msgctxt "SC_OPCODE_CHOOSECOLS"
 msgid "Column "
-msgstr ""
+msgstr "Colomna "
 
 #. Akc9t
 #: sc/inc/scfuncs.hrc:4261
@@ -1651,7 +1651,7 @@ msgstr ""
 #: sc/inc/scfuncs.hrc:4268
 msgctxt "SC_OPCODE_CHOOSEROWS"
 msgid "Array"
-msgstr ""
+msgstr "Matritz"
 
 #. GFWtk
 #: sc/inc/scfuncs.hrc:4269
@@ -1663,7 +1663,7 @@ msgstr ""
 #: sc/inc/scfuncs.hrc:4270
 msgctxt "SC_OPCODE_CHOOSEROWS"
 msgid "Row "
-msgstr ""
+msgstr "Linha "
 
 #. dXjgB
 #: sc/inc/scfuncs.hrc:4271
@@ -1683,7 +1683,7 @@ msgstr ""
 #: sc/inc/scfuncs.hrc:4278
 msgctxt "SC_OPCODE_DROP"
 msgid "Array"
-msgstr ""
+msgstr "Matritz"
 
 #. zEu4G
 #: sc/inc/scfuncs.hrc:4279
@@ -1695,7 +1695,7 @@ msgstr ""
 #: sc/inc/scfuncs.hrc:4280
 msgctxt "SC_OPCODE_DROP"
 msgid "Rows"
-msgstr ""
+msgstr "Linhas"
 
 #. yyjnc
 #: sc/inc/scfuncs.hrc:4281
@@ -1709,7 +1709,7 @@ msgstr ""
 #: sc/inc/scfuncs.hrc:4282
 msgctxt "SC_OPCODE_DROP"
 msgid "Columns"
-msgstr ""
+msgstr "Colomnas"
 
 #. cAxPB
 #: sc/inc/scfuncs.hrc:4283
@@ -1729,7 +1729,7 @@ msgstr ""
 #: sc/inc/scfuncs.hrc:4290
 msgctxt "SC_OPCODE_EXPAND"
 msgid "Array"
-msgstr ""
+msgstr "Matritz"
 
 #. E9YDC
 #: sc/inc/scfuncs.hrc:4291
@@ -1741,7 +1741,7 @@ msgstr ""
 #: sc/inc/scfuncs.hrc:4292
 msgctxt "SC_OPCODE_EXPAND"
 msgid "Rows"
-msgstr ""
+msgstr "Linhas"
 
 #. QzQiB
 #: sc/inc/scfuncs.hrc:4293
@@ -1755,7 +1755,7 @@ msgstr ""
 #: sc/inc/scfuncs.hrc:4294
 msgctxt "SC_OPCODE_EXPAND"
 msgid "Columns"
-msgstr ""
+msgstr "Colomnas"
 
 #. EVAXE
 #: sc/inc/scfuncs.hrc:4295
@@ -1787,7 +1787,7 @@ msgstr ""
 #: sc/inc/scfuncs.hrc:4304 sc/inc/scfuncs.hrc:4306
 msgctxt "SC_OPCODE_HSTACK"
 msgid "Array"
-msgstr ""
+msgstr "Matritz"
 
 #. uHbHC
 #: sc/inc/scfuncs.hrc:4305
@@ -1813,7 +1813,7 @@ msgstr ""
 #: sc/inc/scfuncs.hrc:4314 sc/inc/scfuncs.hrc:4316
 msgctxt "SC_OPCODE_VSTACK"
 msgid "Array"
-msgstr ""
+msgstr "Matritz"
 
 #. tGHH9
 #: sc/inc/scfuncs.hrc:4315
@@ -1841,7 +1841,7 @@ msgstr ""
 #: sc/inc/scfuncs.hrc:4324
 msgctxt "SC_OPCODE_TAKE"
 msgid "Array"
-msgstr ""
+msgstr "Matritz"
 
 #. ycFef
 #: sc/inc/scfuncs.hrc:4325
@@ -1853,7 +1853,7 @@ msgstr ""
 #: sc/inc/scfuncs.hrc:4326
 msgctxt "SC_OPCODE_TAKE"
 msgid "Rows"
-msgstr ""
+msgstr "Linhas"
 
 #. KBPBn
 #: sc/inc/scfuncs.hrc:4327
@@ -1867,7 +1867,7 @@ msgstr ""
 #: sc/inc/scfuncs.hrc:4328
 msgctxt "SC_OPCODE_TAKE"
 msgid "Columns"
-msgstr ""
+msgstr "Colomnas"
 
 #. ZexcG
 #: sc/inc/scfuncs.hrc:4329
@@ -1899,7 +1899,7 @@ msgstr ""
 #: sc/inc/scfuncs.hrc:4338
 msgctxt "SC_OPCODE_TEXTAFTER"
 msgid "Delimiter"
-msgstr ""
+msgstr "Delimitador"
 
 #. YEbwu
 #: sc/inc/scfuncs.hrc:4339
@@ -1979,7 +1979,7 @@ msgstr ""
 #: sc/inc/scfuncs.hrc:4356
 msgctxt "SC_OPCODE_TEXTBEFORE"
 msgid "Delimiter"
-msgstr ""
+msgstr "Delimitador"
 
 #. qDFZy
 #: sc/inc/scfuncs.hrc:4357
@@ -2127,7 +2127,7 @@ msgstr ""
 #: sc/inc/scfuncs.hrc:4390
 msgctxt "SC_OPCODE_TOCOL"
 msgid "Array"
-msgstr ""
+msgstr "Matritz"
 
 #. CHojs
 #: sc/inc/scfuncs.hrc:4391
@@ -2139,7 +2139,7 @@ msgstr ""
 #: sc/inc/scfuncs.hrc:4392
 msgctxt "SC_OPCODE_TOCOL"
 msgid "Ignore"
-msgstr ""
+msgstr "Ignorar"
 
 #. b7EQW
 #: sc/inc/scfuncs.hrc:4393
@@ -2174,7 +2174,7 @@ msgstr ""
 #: sc/inc/scfuncs.hrc:4402
 msgctxt "SC_OPCODE_TOROW"
 msgid "Array"
-msgstr ""
+msgstr "Matritz"
 
 #. 5MEvT
 #: sc/inc/scfuncs.hrc:4403
@@ -2186,7 +2186,7 @@ msgstr ""
 #: sc/inc/scfuncs.hrc:4404
 msgctxt "SC_OPCODE_TOROW"
 msgid "Ignore"
-msgstr ""
+msgstr "Ignorar"
 
 #. wcpQF
 #: sc/inc/scfuncs.hrc:4405
@@ -2223,7 +2223,7 @@ msgstr ""
 #: sc/inc/scfuncs.hrc:4438
 msgctxt "SC_OPCODE_WRAPCOLS"
 msgid "Range"
-msgstr ""
+msgstr "Plaja"
 
 #. nfZyj
 #: sc/inc/scfuncs.hrc:4439
@@ -2267,7 +2267,7 @@ msgstr ""
 #: sc/inc/scfuncs.hrc:4450
 msgctxt "SC_OPCODE_WRAPROWS"
 msgid "Range"
-msgstr ""
+msgstr "Plaja"
 
 #. FLJwx
 #: sc/inc/scfuncs.hrc:4451
@@ -2325,7 +2325,7 @@ msgstr ""
 #: sc/uiconfig/scalc/ui/definetablerangedialog.ui:37
 msgctxt "definetablerangedialog|extended_tip|ok"
 msgid "Saves all changes and closes dialog."
-msgstr ""
+msgstr "Enregistrar totas las modificacions e tampar la fenèstra."
 
 #. YJAAP
 #: sc/uiconfig/scalc/ui/definetablerangedialog.ui:56
@@ -2357,13 +2357,13 @@ msgstr ""
 #: sc/uiconfig/scalc/ui/definetablerangedialog.ui:139
 msgctxt "definetablerangedialog|range"
 msgid "Range"
-msgstr ""
+msgstr "Plaja"
 
 #. 3a7g7
 #: sc/uiconfig/scalc/ui/definetablerangedialog.ui:162
 msgctxt "definetablerangedialog|containscolumnlabels"
 msgid "Co_ntains column labels"
-msgstr ""
+msgstr "Conten d'etiquetas de _colomna"
 
 #. AEKGN
 #: sc/uiconfig/scalc/ui/definetablerangedialog.ui:171
@@ -2399,7 +2399,7 @@ msgstr ""
 #: sc/uiconfig/scalc/ui/numberbox.ui:17
 msgctxt "numberbox|numbertype|accessible_name"
 msgid "Number Format"
-msgstr ""
+msgstr "Format numeric"
 
 #. o8pcB
 #: sc/uiconfig/scalc/ui/protectsheetdlg.ui:195
@@ -2417,7 +2417,7 @@ msgstr ""
 #: sc/uiconfig/scalc/ui/selectsheetviewdialog.ui:44
 msgctxt "selectsheetviewdialog|extended_tip|ok"
 msgid "Saves all changes and closes dialog."
-msgstr ""
+msgstr "Enregistrar totas las modificacions e tampar la fenèstra."
 
 #. kGFYu
 #: sc/uiconfig/scalc/ui/selectsheetviewdialog.ui:63
@@ -2441,7 +2441,7 @@ msgstr ""
 #: sc/uiconfig/scalc/ui/sidebarcellappearance.ui:87
 msgctxt "sidebarcellappearance|cellbordertype-atkobject"
 msgid "Border Style"
-msgstr ""
+msgstr "Estil de bordadura"
 
 #. Y8RhG
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:22
@@ -2489,7 +2489,7 @@ msgstr ""
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:170
 msgctxt "sidebardatabase|lbl_styles"
 msgid "Table Styles"
-msgstr ""
+msgstr "Estils de tablèu"
 
 #. er8nh
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:187
@@ -3281,4 +3281,4 @@ msgstr ""
 #: sc/uiconfig/scalc/ui/tablestylesbox.ui:185
 msgctxt "tablestylebox|tablestyles_cb|accessible_name"
 msgid "Table Styles"
-msgstr ""
+msgstr "Estils de tablèu"

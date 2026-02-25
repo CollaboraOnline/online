@@ -81,25 +81,25 @@ msgstr ""
 #: svx/uiconfig/ui/dropdownfielddialog.ui:31
 msgctxt "dropdownDialog|OK"
 msgid "OK"
-msgstr ""
+msgstr "확인"
 
 #. 54Dmg
 #: svx/uiconfig/ui/dropdownfielddialog.ui:44
 msgctxt "dropdownDialog|CANCEL"
 msgid "Cancel"
-msgstr ""
+msgstr "취소"
 
 #. gPAYw
 #: svx/uiconfig/ui/findreplacedialog.ui:67
 msgctxt "findreplacedialog|find_tab_btn"
 msgid "Find"
-msgstr ""
+msgstr "찾기"
 
 #. uknDS
 #: svx/uiconfig/ui/findreplacedialog.ui:85
 msgctxt "findreplacedialog|replace_tab_btn"
 msgid "Replace"
-msgstr ""
+msgstr "바꾸기"
 
 #. v2oaz
 #: svx/uiconfig/ui/findreplacedialog.ui:172
@@ -162,7 +162,7 @@ msgstr ""
 #: chart2/inc/strings.hrc:51
 msgctxt "STR_PAGE_COLOR_PALETTE"
 msgid "Color Palette"
-msgstr ""
+msgstr "색상표"
 
 #. YZBr8
 #: chart2/inc/strings.hrc:52
@@ -174,7 +174,7 @@ msgstr ""
 #: chart2/uiconfig/ui/chartcolorpalettepopup.ui:46
 msgctxt "chartcolorpalettepopup|colorfulwin"
 msgid "Colorful"
-msgstr ""
+msgstr "화려한"
 
 #. xmAmH
 #: chart2/uiconfig/ui/chartcolorpalettepopup.ui:98
@@ -283,7 +283,7 @@ msgstr ""
 #: chart2/uiconfig/ui/sidebartheme.ui:37
 msgctxt "sidebartheme|themetype-atkobject"
 msgid "Themes"
-msgstr ""
+msgstr "테마"
 
 #. YB6Et
 #: chart2/uiconfig/ui/sidebartheme.ui:48
@@ -307,7 +307,7 @@ msgstr ""
 #: chart2/uiconfig/ui/tp_ChartColorPalette.ui:68
 msgctxt "tp_ChartColorPalette|colorfulwin"
 msgid "Colorful"
-msgstr ""
+msgstr "화려한"
 
 #. 8QjnP
 #: chart2/uiconfig/ui/tp_ChartColorPalette.ui:126
@@ -331,7 +331,7 @@ msgstr ""
 #: chart2/uiconfig/ui/tp_ChartType.ui:114
 msgctxt "tp_ChartType|extended_tip|subtype_iconview"
 msgid "Select a sub type of the basic chart type."
-msgstr ""
+msgstr "기본 차트 유형의 하위 유형을 선택합니다."
 
 #. Wh4j6
 #: chart2/uiconfig/ui/tp_ChartType.ui:167
@@ -385,7 +385,7 @@ msgstr ""
 #: cui/uiconfig/ui/numberingformatpage.ui:541
 msgctxt "numberingformatpage|currencylb-atkobject"
 msgid "Currency"
-msgstr ""
+msgstr "통화"
 
 #. vcAoU
 #: cui/uiconfig/ui/pageformatpage.ui:223
@@ -475,13 +475,13 @@ msgstr ""
 #: cui/uiconfig/ui/pickbulletpage.ui:45
 msgctxt "pickbulletpage|extended_tip|pick_bullet_iconview"
 msgid "Click the bullet style that you want to use."
-msgstr ""
+msgstr "사용할 글머리 기호 스타일을 클릭합니다."
 
 #. rkoDB
 #: cui/uiconfig/ui/pickgraphicpage.ui:45
 msgctxt "pickgraphicpage|extended_tip|pick_graphic_iconview"
 msgid "Click the graphics that you want to use as bullets."
-msgstr ""
+msgstr "글머리 기호로 사용할 그래픽을 클릭하십시오."
 
 #. WGzy5
 #: cui/uiconfig/ui/picknumberingpage.ui:44
@@ -493,7 +493,7 @@ msgstr ""
 #: cui/uiconfig/ui/pickoutlinepage.ui:44
 msgctxt "pickoutlinepage|extended_tip|pick_outline_iconview"
 msgid "Click the outline style that you want to use."
-msgstr ""
+msgstr "사용할 개요 스타일을 클릭합니다."
 
 #. hLcKE
 #: cui/uiconfig/ui/textflowpage.ui:812
@@ -511,7 +511,7 @@ msgstr ""
 #: cui/uiconfig/ui/thesaurus.ui:189
 msgctxt "thesaurus|langcb|accessible_name"
 msgid "Language"
-msgstr ""
+msgstr "언어"
 
 #. qpArp
 #: cui/uiconfig/ui/toolbarmodedialog.ui:124
@@ -580,25 +580,25 @@ msgstr ""
 #: sfx2/uiconfig/ui/templatepanel.ui:137
 msgctxt "templatepanel|accessible_name|watercan"
 msgid "Fill Format Mode"
-msgstr ""
+msgstr "형식 채우기 모드"
 
 #. qvBEu
 #: sfx2/uiconfig/ui/templatepanel.ui:156
 msgctxt "templatepanel|accessible_name|new"
 msgid "New Style from Selection"
-msgstr ""
+msgstr "선택에서 새로운 스타일 만들기"
 
 #. 5ZAqh
 #: sfx2/uiconfig/ui/templatepanel.ui:174
 msgctxt "templatepanel|accessible_name|newmenu"
 msgid "Styles actions"
-msgstr ""
+msgstr "스타일 동작"
 
 #. 7NfdA
 #: sfx2/uiconfig/ui/templatepanel.ui:192
 msgctxt "templatepanel|accessible_name|update"
 msgid "Update Style"
-msgstr ""
+msgstr "스타일 업데이트"
 
 #. BGAhD
 #: sfx2/uiconfig/ui/templatepanel.ui:242
@@ -610,37 +610,37 @@ msgstr "스포트라이트"
 #: sfx2/uiconfig/ui/templatepanel.ui:272
 msgctxt "templatepanel|filter-atkobject"
 msgid "Filter"
-msgstr ""
+msgstr "필터"
 
 #. 5xrhC
 #: sw/inc/strings.hrc:232
 msgctxt "STR_COLUMN_ICONVIEW_ITEM0"
 msgid "1 column"
-msgstr ""
+msgstr "1단"
 
 #. VAfCS
 #: sw/inc/strings.hrc:233
 msgctxt "STR_COLUMN_ICONVIEW_ITEM1"
 msgid "2 columns with equal size"
-msgstr ""
+msgstr "같은 너비로 2단"
 
 #. g8pFG
 #: sw/inc/strings.hrc:234
 msgctxt "STR_COLUMN_ICONVIEW_ITEM2"
 msgid "3 columns with equal size"
-msgstr ""
+msgstr "같은 너비로 3단"
 
 #. QJxAd
 #: sw/inc/strings.hrc:235
 msgctxt "STR_COLUMN_ICONVIEW_ITEM3"
 msgid "2 columns with different size (left > right)"
-msgstr ""
+msgstr "다른 너비로 2단(왼쪽>오른쪽)"
 
 #. MHk4E
 #: sw/inc/strings.hrc:236
 msgctxt "STR_COLUMN_ICONVIEW_ITEM4"
 msgid "2 columns with different size (left < right)"
-msgstr ""
+msgstr "다른 너비로 2단(왼쪽<오른쪽)"
 
 #. xPgHS
 #: sw/inc/strings.hrc:498
@@ -665,7 +665,7 @@ msgstr ""
 msgctxt "columnpage|extended_tip|column-iconview"
 msgid ""
 "Enter the number of columns that you want in the page, frame, or section."
-msgstr ""
+msgstr "페이지, 프레임 또는 구역에 원하는 열 수를 입력합니다."
 
 #. yLJG6
 #: sw/uiconfig/swriter/ui/dropcapspage.ui:336
@@ -677,13 +677,13 @@ msgstr ""
 #: sw/uiconfig/swriter/ui/footnotesendnotestabpage.ui:179
 msgctxt "footnotesendnotestabpage|ftnnumviewbox-atkobject"
 msgid "Numbering"
-msgstr ""
+msgstr "번호 매기기"
 
 #. afJmD
 #: sw/uiconfig/swriter/ui/footnotesendnotestabpage.ui:455
 msgctxt "footnotesendnotestabpage|endnumviewbox-atkobject"
 msgid "Numbering"
-msgstr ""
+msgstr "번호 매기기"
 
 #. Ci9GE
 #: sw/uiconfig/swriter/ui/spellmenu.ui:34
@@ -701,7 +701,7 @@ msgstr ""
 #: sw/uiconfig/swriter/ui/tocentriespage.ui:277
 msgctxt "tocentriespage|characterstyleft"
 msgid "Character style:"
-msgstr ""
+msgstr "문자 스타일:"
 
 #. GVCXE
 #: sw/uiconfig/swriter/ui/tocentriespage.ui:569
@@ -713,7 +713,7 @@ msgstr ""
 #: sw/uiconfig/swriter/ui/tokenwidget.ui:30
 msgctxt "tokenwidget|left"
 msgid "Scroll left"
-msgstr ""
+msgstr "왼쪽으로 이동"
 
 #. Efssr
 #: sw/uiconfig/swriter/ui/tokenwidget.ui:98
@@ -725,7 +725,7 @@ msgstr ""
 #: sw/uiconfig/swriter/ui/wordcount-mobile.ui:643
 msgctxt "wordcount-mobile|comments"
 msgid "Comments"
-msgstr ""
+msgstr "주석"
 
 #. SsL8u
 #: formula/inc/core_resource.hrc:2629
@@ -815,13 +815,13 @@ msgstr ""
 #: formula/uiconfig/ui/functionpage.ui:80
 msgctxt "functionpage|label_category"
 msgid "_Category:"
-msgstr ""
+msgstr "카테고리(_C):"
 
 #. BNnFg
 #: formula/uiconfig/ui/functionpage.ui:115
 msgctxt "functionpage|label_function"
 msgid "_Function:"
-msgstr ""
+msgstr "함수(_F):"
 
 #. zRASZ
 #: formula/uiconfig/ui/structpage.ui:28
@@ -961,7 +961,7 @@ msgstr "일반"
 #: filter/uiconfig/ui/pdfgeneralpage.ui:821
 msgctxt "pdfgeneralpage|forms_label"
 msgid "Forms"
-msgstr ""
+msgstr "양식"
 
 #. kvAZK
 #: filter/uiconfig/ui/pdfgeneralpage.ui:1077
@@ -977,7 +977,7 @@ msgctxt ""
 "UIName\n"
 "value.text"
 msgid "Markdown Document"
-msgstr ""
+msgstr "Markdown 문서"
 
 #. 9Q5Zj
 #: draw_flash_Export.xcu
@@ -1027,7 +1027,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "~Table"
-msgstr ""
+msgstr "표(~T)"
 
 #. Uhi2h
 #: CalcCommands.xcu
@@ -1057,7 +1057,7 @@ msgctxt ""
 "TooltipLabel\n"
 "value.text"
 msgid "Insert Table"
-msgstr ""
+msgstr "표 삽입"
 
 #. kZEtN
 #: CalcCommands.xcu
@@ -1077,7 +1077,7 @@ msgctxt ""
 "TooltipLabel\n"
 "value.text"
 msgid "Delete Table"
-msgstr ""
+msgstr "표 삭제"
 
 #. 3Ep4Y
 #: CalcCommands.xcu
@@ -1539,7 +1539,7 @@ msgstr ""
 #: xmlsecurity/uiconfig/ui/selectcertificatedialog.ui:274
 msgctxt "selectcertificatedialog|searchbox-atkobject"
 msgid "Search"
-msgstr ""
+msgstr "검색"
 
 #. dw79G
 #: sc/inc/globstr.hrc:70
@@ -1557,7 +1557,7 @@ msgstr ""
 #: sc/inc/globstr.hrc:74
 msgctxt "STR_UNDO_DBTABLE"
 msgid "Delete table"
-msgstr ""
+msgstr "표 삭제"
 
 #. AvAbD
 #: sc/inc/globstr.hrc:140
@@ -1587,7 +1587,7 @@ msgstr ""
 #: sc/inc/globstr.hrc:217
 msgctxt "STR_TABLE_TOTAL"
 msgid "Total"
-msgstr ""
+msgstr "전체"
 
 #. wCfcy
 #: sc/inc/globstr.hrc:220
@@ -1617,7 +1617,7 @@ msgstr ""
 #: sc/inc/scfuncs.hrc:4258
 msgctxt "SC_OPCODE_CHOOSECOLS"
 msgid "Array"
-msgstr ""
+msgstr "배열"
 
 #. vErtR
 #: sc/inc/scfuncs.hrc:4259
@@ -1629,7 +1629,7 @@ msgstr ""
 #: sc/inc/scfuncs.hrc:4260
 msgctxt "SC_OPCODE_CHOOSECOLS"
 msgid "Column "
-msgstr ""
+msgstr "열 "
 
 #. Akc9t
 #: sc/inc/scfuncs.hrc:4261
@@ -1647,7 +1647,7 @@ msgstr ""
 #: sc/inc/scfuncs.hrc:4268
 msgctxt "SC_OPCODE_CHOOSEROWS"
 msgid "Array"
-msgstr ""
+msgstr "배열"
 
 #. GFWtk
 #: sc/inc/scfuncs.hrc:4269
@@ -1659,7 +1659,7 @@ msgstr ""
 #: sc/inc/scfuncs.hrc:4270
 msgctxt "SC_OPCODE_CHOOSEROWS"
 msgid "Row "
-msgstr ""
+msgstr "행 "
 
 #. dXjgB
 #: sc/inc/scfuncs.hrc:4271
@@ -1679,7 +1679,7 @@ msgstr ""
 #: sc/inc/scfuncs.hrc:4278
 msgctxt "SC_OPCODE_DROP"
 msgid "Array"
-msgstr ""
+msgstr "배열"
 
 #. zEu4G
 #: sc/inc/scfuncs.hrc:4279
@@ -1691,7 +1691,7 @@ msgstr ""
 #: sc/inc/scfuncs.hrc:4280
 msgctxt "SC_OPCODE_DROP"
 msgid "Rows"
-msgstr ""
+msgstr "행"
 
 #. yyjnc
 #: sc/inc/scfuncs.hrc:4281
@@ -1725,7 +1725,7 @@ msgstr ""
 #: sc/inc/scfuncs.hrc:4290
 msgctxt "SC_OPCODE_EXPAND"
 msgid "Array"
-msgstr ""
+msgstr "배열"
 
 #. E9YDC
 #: sc/inc/scfuncs.hrc:4291
@@ -1737,7 +1737,7 @@ msgstr ""
 #: sc/inc/scfuncs.hrc:4292
 msgctxt "SC_OPCODE_EXPAND"
 msgid "Rows"
-msgstr ""
+msgstr "행"
 
 #. QzQiB
 #: sc/inc/scfuncs.hrc:4293
@@ -1783,7 +1783,7 @@ msgstr ""
 #: sc/inc/scfuncs.hrc:4304 sc/inc/scfuncs.hrc:4306
 msgctxt "SC_OPCODE_HSTACK"
 msgid "Array"
-msgstr ""
+msgstr "배열"
 
 #. uHbHC
 #: sc/inc/scfuncs.hrc:4305
@@ -1809,7 +1809,7 @@ msgstr ""
 #: sc/inc/scfuncs.hrc:4314 sc/inc/scfuncs.hrc:4316
 msgctxt "SC_OPCODE_VSTACK"
 msgid "Array"
-msgstr ""
+msgstr "배열"
 
 #. tGHH9
 #: sc/inc/scfuncs.hrc:4315
@@ -1849,7 +1849,7 @@ msgstr ""
 #: sc/inc/scfuncs.hrc:4326
 msgctxt "SC_OPCODE_TAKE"
 msgid "Rows"
-msgstr ""
+msgstr "행"
 
 #. KBPBn
 #: sc/inc/scfuncs.hrc:4327
@@ -1895,7 +1895,7 @@ msgstr ""
 #: sc/inc/scfuncs.hrc:4338
 msgctxt "SC_OPCODE_TEXTAFTER"
 msgid "Delimiter"
-msgstr ""
+msgstr "구분문자"
 
 #. YEbwu
 #: sc/inc/scfuncs.hrc:4339
@@ -1975,7 +1975,7 @@ msgstr ""
 #: sc/inc/scfuncs.hrc:4356
 msgctxt "SC_OPCODE_TEXTBEFORE"
 msgid "Delimiter"
-msgstr ""
+msgstr "구분문자"
 
 #. qDFZy
 #: sc/inc/scfuncs.hrc:4357
@@ -2135,7 +2135,7 @@ msgstr ""
 #: sc/inc/scfuncs.hrc:4392
 msgctxt "SC_OPCODE_TOCOL"
 msgid "Ignore"
-msgstr ""
+msgstr "무시"
 
 #. b7EQW
 #: sc/inc/scfuncs.hrc:4393
@@ -2170,7 +2170,7 @@ msgstr ""
 #: sc/inc/scfuncs.hrc:4402
 msgctxt "SC_OPCODE_TOROW"
 msgid "Array"
-msgstr ""
+msgstr "배열"
 
 #. 5MEvT
 #: sc/inc/scfuncs.hrc:4403
@@ -2182,7 +2182,7 @@ msgstr ""
 #: sc/inc/scfuncs.hrc:4404
 msgctxt "SC_OPCODE_TOROW"
 msgid "Ignore"
-msgstr ""
+msgstr "무시"
 
 #. wcpQF
 #: sc/inc/scfuncs.hrc:4405
@@ -2219,7 +2219,7 @@ msgstr ""
 #: sc/inc/scfuncs.hrc:4438
 msgctxt "SC_OPCODE_WRAPCOLS"
 msgid "Range"
-msgstr ""
+msgstr "범위"
 
 #. nfZyj
 #: sc/inc/scfuncs.hrc:4439
@@ -2263,7 +2263,7 @@ msgstr ""
 #: sc/inc/scfuncs.hrc:4450
 msgctxt "SC_OPCODE_WRAPROWS"
 msgid "Range"
-msgstr ""
+msgstr "범위"
 
 #. FLJwx
 #: sc/inc/scfuncs.hrc:4451
@@ -2321,13 +2321,13 @@ msgstr ""
 #: sc/uiconfig/scalc/ui/definetablerangedialog.ui:37
 msgctxt "definetablerangedialog|extended_tip|ok"
 msgid "Saves all changes and closes dialog."
-msgstr ""
+msgstr "모든 변경 사항을 저장하고 대화 상자를 닫습니다."
 
 #. YJAAP
 #: sc/uiconfig/scalc/ui/definetablerangedialog.ui:56
 msgctxt "definetablerangedialog|extended_tip|cancel"
 msgid "Closes dialog and discards all changes."
-msgstr ""
+msgstr "모든 변경 사항을 버리고 대화 상자를 닫습니다."
 
 #. ugt8G
 #: sc/uiconfig/scalc/ui/definetablerangedialog.ui:106
@@ -2353,13 +2353,13 @@ msgstr ""
 #: sc/uiconfig/scalc/ui/definetablerangedialog.ui:139
 msgctxt "definetablerangedialog|range"
 msgid "Range"
-msgstr ""
+msgstr "범위"
 
 #. 3a7g7
 #: sc/uiconfig/scalc/ui/definetablerangedialog.ui:162
 msgctxt "definetablerangedialog|containscolumnlabels"
 msgid "Co_ntains column labels"
-msgstr ""
+msgstr "열 레이블 포함(_N)"
 
 #. AEKGN
 #: sc/uiconfig/scalc/ui/definetablerangedialog.ui:171
@@ -2371,7 +2371,7 @@ msgstr ""
 #: sc/uiconfig/scalc/ui/definetablerangedialog.ui:203
 msgctxt "definetablerangedialog|extended_tip|DefineTableRangeDialog"
 msgid "Defines a database range based on the selected cells in your sheet."
-msgstr ""
+msgstr "시트에서 선택한 셀에 기초하여 데이터베이스 범위를 지정합니다."
 
 #. LVdkf
 #: sc/uiconfig/scalc/ui/erroralerttabpage.ui:15
@@ -2389,7 +2389,7 @@ msgstr ""
 #: sc/uiconfig/scalc/ui/gotosheetdialog.ui:100
 msgctxt "gotosheetdialog|entry-mask-atkobject"
 msgid "Sheet Name"
-msgstr ""
+msgstr "시트 이름"
 
 #. hMeBi
 #: sc/uiconfig/scalc/ui/numberbox.ui:17
@@ -2413,13 +2413,13 @@ msgstr ""
 #: sc/uiconfig/scalc/ui/selectsheetviewdialog.ui:44
 msgctxt "selectsheetviewdialog|extended_tip|ok"
 msgid "Saves all changes and closes dialog."
-msgstr ""
+msgstr "모든 변경 사항을 저장하고 대화 상자를 닫습니다."
 
 #. kGFYu
 #: sc/uiconfig/scalc/ui/selectsheetviewdialog.ui:63
 msgctxt "selectsheetviewdialog|extended_tip|cancel"
 msgid "Closes dialog and discards all changes."
-msgstr ""
+msgstr "모든 변경 사항을 버리고 대화 상자를 닫습니다."
 
 #. sQPFE
 #: sc/uiconfig/scalc/ui/selectsheetviewdialog.ui:134
@@ -2485,13 +2485,13 @@ msgstr ""
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:170
 msgctxt "sidebardatabase|lbl_styles"
 msgid "Table Styles"
-msgstr ""
+msgstr "표 스타일"
 
 #. er8nh
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:187
 msgctxt "sidebardatabase|none"
 msgid "None"
-msgstr ""
+msgstr "없음"
 
 #. XXBL8
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:188
@@ -2911,7 +2911,7 @@ msgstr ""
 #: sc/uiconfig/scalc/ui/tablestylesbox.ui:121
 msgctxt "tablestylebox|none"
 msgid "None"
-msgstr ""
+msgstr "없음"
 
 #. hPKiF
 #: sc/uiconfig/scalc/ui/tablestylesbox.ui:122
@@ -3277,4 +3277,4 @@ msgstr ""
 #: sc/uiconfig/scalc/ui/tablestylesbox.ui:185
 msgctxt "tablestylebox|tablestyles_cb|accessible_name"
 msgid "Table Styles"
-msgstr ""
+msgstr "표 스타일"

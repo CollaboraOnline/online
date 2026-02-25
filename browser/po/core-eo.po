@@ -63,13 +63,13 @@ msgstr ""
 #: svx/inc/spacing.hrc:18
 msgctxt "RID_BEFORE"
 msgid "Before:"
-msgstr ""
+msgstr "Antaŭ:"
 
 #. jGRHH
 #: svx/inc/spacing.hrc:19
 msgctxt "RID_AFTER"
 msgid "After:"
-msgstr ""
+msgstr "Post:"
 
 #. k9CGA
 #: svx/inc/spacing.hrc:20
@@ -81,7 +81,7 @@ msgstr ""
 #: svx/uiconfig/ui/dropdownfielddialog.ui:31
 msgctxt "dropdownDialog|OK"
 msgid "OK"
-msgstr ""
+msgstr "Akcepti"
 
 #. 54Dmg
 #: svx/uiconfig/ui/dropdownfielddialog.ui:44
@@ -93,13 +93,13 @@ msgstr ""
 #: svx/uiconfig/ui/findreplacedialog.ui:67
 msgctxt "findreplacedialog|find_tab_btn"
 msgid "Find"
-msgstr ""
+msgstr "Serĉi"
 
 #. uknDS
 #: svx/uiconfig/ui/findreplacedialog.ui:85
 msgctxt "findreplacedialog|replace_tab_btn"
 msgid "Replace"
-msgstr ""
+msgstr "Anstataŭigi"
 
 #. v2oaz
 #: svx/uiconfig/ui/findreplacedialog.ui:172
@@ -123,13 +123,13 @@ msgstr ""
 #: svx/uiconfig/ui/sidebarline.ui:91
 msgctxt "sidebarline|SelectWidth|tooltip_text"
 msgid "Line Thickness"
-msgstr ""
+msgstr "Dikeco de linio"
 
 #. cDwyK
 #: svx/uiconfig/ui/sidebarline.ui:97
 msgctxt "sidebarline|SelectWidth-atkobject"
 msgid "Line Thickness"
-msgstr ""
+msgstr "Dikeco de linio"
 
 #. 7MFsT
 #: uui/inc/strings.hrc:84
@@ -162,7 +162,7 @@ msgstr ""
 #: chart2/inc/strings.hrc:51
 msgctxt "STR_PAGE_COLOR_PALETTE"
 msgid "Color Palette"
-msgstr ""
+msgstr "Farbaro"
 
 #. YZBr8
 #: chart2/inc/strings.hrc:52
@@ -174,7 +174,7 @@ msgstr ""
 #: chart2/uiconfig/ui/chartcolorpalettepopup.ui:46
 msgctxt "chartcolorpalettepopup|colorfulwin"
 msgid "Colorful"
-msgstr ""
+msgstr "Multkolora"
 
 #. xmAmH
 #: chart2/uiconfig/ui/chartcolorpalettepopup.ui:98
@@ -283,7 +283,7 @@ msgstr ""
 #: chart2/uiconfig/ui/sidebartheme.ui:37
 msgctxt "sidebartheme|themetype-atkobject"
 msgid "Themes"
-msgstr ""
+msgstr "Temoj"
 
 #. YB6Et
 #: chart2/uiconfig/ui/sidebartheme.ui:48
@@ -307,7 +307,7 @@ msgstr ""
 #: chart2/uiconfig/ui/tp_ChartColorPalette.ui:68
 msgctxt "tp_ChartColorPalette|colorfulwin"
 msgid "Colorful"
-msgstr ""
+msgstr "Multkolora"
 
 #. 8QjnP
 #: chart2/uiconfig/ui/tp_ChartColorPalette.ui:126
@@ -331,7 +331,7 @@ msgstr ""
 #: chart2/uiconfig/ui/tp_ChartType.ui:114
 msgctxt "tp_ChartType|extended_tip|subtype_iconview"
 msgid "Select a sub type of the basic chart type."
-msgstr ""
+msgstr "Elektu subtipon de la baza tipo de diagramo."
 
 #. Wh4j6
 #: chart2/uiconfig/ui/tp_ChartType.ui:167
@@ -385,7 +385,7 @@ msgstr ""
 #: cui/uiconfig/ui/numberingformatpage.ui:541
 msgctxt "numberingformatpage|currencylb-atkobject"
 msgid "Currency"
-msgstr ""
+msgstr "Valuto"
 
 #. vcAoU
 #: cui/uiconfig/ui/pageformatpage.ui:223
@@ -475,25 +475,25 @@ msgstr "Vidigas la fortecon de pasvorto"
 #: cui/uiconfig/ui/pickbulletpage.ui:45
 msgctxt "pickbulletpage|extended_tip|pick_bullet_iconview"
 msgid "Click the bullet style that you want to use."
-msgstr ""
+msgstr "Alklaku la bulan stilon uzotan."
 
 #. rkoDB
 #: cui/uiconfig/ui/pickgraphicpage.ui:45
 msgctxt "pickgraphicpage|extended_tip|pick_graphic_iconview"
 msgid "Click the graphics that you want to use as bullets."
-msgstr ""
+msgstr "Alklaku la grafikojn uzotajn kiel bulojn."
 
 #. WGzy5
 #: cui/uiconfig/ui/picknumberingpage.ui:44
 msgctxt "picknumberingpage|extended_tip|pick_numbering_iconview"
 msgid "Click the numbering scheme that you want to use."
-msgstr ""
+msgstr "Elektu la numeran skemon uzotan."
 
 #. avppC
 #: cui/uiconfig/ui/pickoutlinepage.ui:44
 msgctxt "pickoutlinepage|extended_tip|pick_outline_iconview"
 msgid "Click the outline style that you want to use."
-msgstr ""
+msgstr "Alklaku la konturan stilon uzotan."
 
 #. hLcKE
 #: cui/uiconfig/ui/textflowpage.ui:812
@@ -511,7 +511,7 @@ msgstr ""
 #: cui/uiconfig/ui/thesaurus.ui:189
 msgctxt "thesaurus|langcb|accessible_name"
 msgid "Language"
-msgstr ""
+msgstr "Lingvo"
 
 #. qpArp
 #: cui/uiconfig/ui/toolbarmodedialog.ui:124
@@ -535,7 +535,7 @@ msgstr ""
 #: include/sfx2/strings.hrc:227
 msgctxt "STR_SID_QUICKFIND"
 msgid "Quick Find"
-msgstr ""
+msgstr "Serĉi rapide"
 
 #. 2VmCo
 #: sfx2/uiconfig/ui/licensedialog.ui:41
@@ -556,49 +556,49 @@ msgstr ""
 #: sfx2/uiconfig/ui/password.ui:200
 msgctxt "password|pass1bar-atkobject"
 msgid "Password Level Bar"
-msgstr ""
+msgstr "Pasvorta nivela breto"
 
 #. 2Y4Ua
 #: sfx2/uiconfig/ui/password.ui:201
 msgctxt "password|pass1bar-atkobject"
 msgid "Shows the strength of password"
-msgstr ""
+msgstr "Vidigas la fortecon de pasvorto"
 
 #. EGBBE
 #: sfx2/uiconfig/ui/password.ui:342
 msgctxt "password|pass2bar-atkobject"
 msgid "Password Level Bar"
-msgstr ""
+msgstr "Pasvorta nivela breto"
 
 #. nvEiq
 #: sfx2/uiconfig/ui/password.ui:343
 msgctxt "password|pass2bar-atkobject"
 msgid "Shows the strength of password"
-msgstr ""
+msgstr "Vidigas la fortecon de pasvorto"
 
 #. YHTHB
 #: sfx2/uiconfig/ui/templatepanel.ui:137
 msgctxt "templatepanel|accessible_name|watercan"
 msgid "Fill Format Mode"
-msgstr ""
+msgstr "Formatpleniga reĝimo"
 
 #. qvBEu
 #: sfx2/uiconfig/ui/templatepanel.ui:156
 msgctxt "templatepanel|accessible_name|new"
 msgid "New Style from Selection"
-msgstr ""
+msgstr "Nova stilo el elektaĵo"
 
 #. 5ZAqh
 #: sfx2/uiconfig/ui/templatepanel.ui:174
 msgctxt "templatepanel|accessible_name|newmenu"
 msgid "Styles actions"
-msgstr ""
+msgstr "Stilaj agoj"
 
 #. 7NfdA
 #: sfx2/uiconfig/ui/templatepanel.ui:192
 msgctxt "templatepanel|accessible_name|update"
 msgid "Update Style"
-msgstr ""
+msgstr "Ĝisdatigi stilon"
 
 #. BGAhD
 #: sfx2/uiconfig/ui/templatepanel.ui:242
@@ -610,37 +610,37 @@ msgstr "Lumĵetilo"
 #: sfx2/uiconfig/ui/templatepanel.ui:272
 msgctxt "templatepanel|filter-atkobject"
 msgid "Filter"
-msgstr ""
+msgstr "Filtrilo"
 
 #. 5xrhC
 #: sw/inc/strings.hrc:232
 msgctxt "STR_COLUMN_ICONVIEW_ITEM0"
 msgid "1 column"
-msgstr ""
+msgstr "1 kolumno"
 
 #. VAfCS
 #: sw/inc/strings.hrc:233
 msgctxt "STR_COLUMN_ICONVIEW_ITEM1"
 msgid "2 columns with equal size"
-msgstr ""
+msgstr "2 kolumnoj egalgrandaj"
 
 #. g8pFG
 #: sw/inc/strings.hrc:234
 msgctxt "STR_COLUMN_ICONVIEW_ITEM2"
 msgid "3 columns with equal size"
-msgstr ""
+msgstr "3 kolumnoj egalgrandaj"
 
 #. QJxAd
 #: sw/inc/strings.hrc:235
 msgctxt "STR_COLUMN_ICONVIEW_ITEM3"
 msgid "2 columns with different size (left > right)"
-msgstr ""
+msgstr "2 kolumnoj malsamgrandaj (maldekstra > dekstra)"
 
 #. MHk4E
 #: sw/inc/strings.hrc:236
 msgctxt "STR_COLUMN_ICONVIEW_ITEM4"
 msgid "2 columns with different size (left < right)"
-msgstr ""
+msgstr "2 kolumnoj malsamgrandaj (maldekstra < dekstra)"
 
 #. xPgHS
 #: sw/inc/strings.hrc:498
@@ -652,38 +652,38 @@ msgstr ""
 #: sw/inc/strings.hrc:1536
 msgctxt "STR_COMPAT_OPT_UNDERLINETRAILINGSPACE"
 msgid "Underline Word-compatible trailing blanks"
-msgstr ""
+msgstr "Substreku Word-kongruajn vostajn spacetojn"
 
 #. B3rfb
 #: sw/uiconfig/swriter/ui/columnpage.ui:122
 msgctxt "columnpage|columnft"
 msgid "Column"
-msgstr ""
+msgstr "Kolumno"
 
 #. Lurdj
 #: sw/uiconfig/swriter/ui/columnpage.ui:871
 msgctxt "columnpage|extended_tip|column-iconview"
 msgid ""
 "Enter the number of columns that you want in the page, frame, or section."
-msgstr ""
+msgstr "Enigu la nombron da kolumnoj por la paĝo, kadro aŭ sekcio."
 
 #. yLJG6
 #: sw/uiconfig/swriter/ui/dropcapspage.ui:336
 msgctxt "dropcapspage|drawingareaWN_EXAMPLE-atkobject"
 msgid "Example"
-msgstr ""
+msgstr "Ekzemplo"
 
 #. RdG95
 #: sw/uiconfig/swriter/ui/footnotesendnotestabpage.ui:179
 msgctxt "footnotesendnotestabpage|ftnnumviewbox-atkobject"
 msgid "Numbering"
-msgstr ""
+msgstr "Numerado"
 
 #. afJmD
 #: sw/uiconfig/swriter/ui/footnotesendnotestabpage.ui:455
 msgctxt "footnotesendnotestabpage|endnumviewbox-atkobject"
 msgid "Numbering"
-msgstr ""
+msgstr "Numerado"
 
 #. Ci9GE
 #: sw/uiconfig/swriter/ui/spellmenu.ui:34
@@ -701,7 +701,7 @@ msgstr ""
 #: sw/uiconfig/swriter/ui/tocentriespage.ui:277
 msgctxt "tocentriespage|characterstyleft"
 msgid "Character style:"
-msgstr ""
+msgstr "Signostilo:"
 
 #. GVCXE
 #: sw/uiconfig/swriter/ui/tocentriespage.ui:569
@@ -713,7 +713,7 @@ msgstr ""
 #: sw/uiconfig/swriter/ui/tokenwidget.ui:30
 msgctxt "tokenwidget|left"
 msgid "Scroll left"
-msgstr ""
+msgstr "Rulumi maldekstren"
 
 #. Efssr
 #: sw/uiconfig/swriter/ui/tokenwidget.ui:98
@@ -725,49 +725,49 @@ msgstr ""
 #: sw/uiconfig/swriter/ui/wordcount-mobile.ui:643
 msgctxt "wordcount-mobile|comments"
 msgid "Comments"
-msgstr ""
+msgstr "Komentoj"
 
 #. SsL8u
 #: formula/inc/core_resource.hrc:2629
 msgctxt "RID_STRLIST_FUNCTION_NAMES"
 msgid "CHOOSECOLS"
-msgstr ""
+msgstr "ELEKTIKOLUMNOJN"
 
 #. zE6Vt
 #: formula/inc/core_resource.hrc:2630
 msgctxt "RID_STRLIST_FUNCTION_NAMES"
 msgid "CHOOSEROWS"
-msgstr ""
+msgstr "ELEKTIVICOJN"
 
 #. TxBq7
 #: formula/inc/core_resource.hrc:2631
 msgctxt "RID_STRLIST_FUNCTION_NAMES"
 msgid "DROP"
-msgstr ""
+msgstr "DEMETI"
 
 #. eTG8r
 #: formula/inc/core_resource.hrc:2632
 msgctxt "RID_STRLIST_FUNCTION_NAMES"
 msgid "EXPAND"
-msgstr ""
+msgstr "ETENDI"
 
 #. aJk9K
 #: formula/inc/core_resource.hrc:2633
 msgctxt "RID_STRLIST_FUNCTION_NAMES"
 msgid "HSTACK"
-msgstr ""
+msgstr "HSTAKI"
 
 #. 4HnRz
 #: formula/inc/core_resource.hrc:2634
 msgctxt "RID_STRLIST_FUNCTION_NAMES"
 msgid "VSTACK"
-msgstr ""
+msgstr "VSTAKI"
 
 #. JDHX2
 #: formula/inc/core_resource.hrc:2635
 msgctxt "RID_STRLIST_FUNCTION_NAMES"
 msgid "TAKE"
-msgstr ""
+msgstr "PRENI"
 
 #. CiTMM
 #: formula/inc/core_resource.hrc:2636
@@ -791,43 +791,43 @@ msgstr ""
 #: formula/inc/core_resource.hrc:2639
 msgctxt "RID_STRLIST_FUNCTION_NAMES"
 msgid "TOCOL"
-msgstr ""
+msgstr "ALKOL"
 
 #. xKDBC
 #: formula/inc/core_resource.hrc:2640
 msgctxt "RID_STRLIST_FUNCTION_NAMES"
 msgid "TOROW"
-msgstr ""
+msgstr "ALVICO"
 
 #. UDke3
 #: formula/inc/core_resource.hrc:2643
 msgctxt "RID_STRLIST_FUNCTION_NAMES"
 msgid "WRAPCOLS"
-msgstr ""
+msgstr "ĈIRKAŬFLUKOL"
 
 #. 3Tf94
 #: formula/inc/core_resource.hrc:2644
 msgctxt "RID_STRLIST_FUNCTION_NAMES"
 msgid "WRAPROWS"
-msgstr ""
+msgstr "ĈIRKAŬFLUVIC"
 
 #. Lrn3j
 #: formula/uiconfig/ui/functionpage.ui:80
 msgctxt "functionpage|label_category"
 msgid "_Category:"
-msgstr ""
+msgstr "Kategorio:"
 
 #. BNnFg
 #: formula/uiconfig/ui/functionpage.ui:115
 msgctxt "functionpage|label_function"
 msgid "_Function:"
-msgstr ""
+msgstr "Funkcio:"
 
 #. zRASZ
 #: formula/uiconfig/ui/structpage.ui:28
 msgctxt "structpage|label_struct"
 msgid "Content:"
-msgstr ""
+msgstr "Enhavo:"
 
 #. DPToC
 #: sd/uiconfig/simpress/ui/layoutpanel.ui:41
@@ -899,6 +899,7 @@ msgstr "Eksporti OLE-objektojn kiel JPEG-bildojn"
 msgctxt "pdfgeneralpage|embed|tooltip_text"
 msgid "Creates a PDF that embeds the original ODF file as an attachment."
 msgstr ""
+"Kreas PDF-dosieron kiu enkorpigas la originan ODF-dosieron kiel kunsendaĵo."
 
 #. JS7DG
 #: filter/uiconfig/ui/pdfgeneralpage.ui:556
@@ -924,19 +925,19 @@ msgstr ""
 #: filter/uiconfig/ui/pdfgeneralpage.ui:587
 msgctxt "pdfgeneralpage|pdf_version"
 msgid "PDF 1.7"
-msgstr ""
+msgstr "PDF 1.7"
 
 #. D6SQE
 #: filter/uiconfig/ui/pdfgeneralpage.ui:588
 msgctxt "pdfgeneralpage|pdf_version"
 msgid "PDF 2.0"
-msgstr ""
+msgstr "PDF 2.0"
 
 #. Pk2QP
 #: filter/uiconfig/ui/pdfgeneralpage.ui:592
 msgctxt "pdfgeneralpage|pdf_version"
 msgid "PDF/A-4 (PDF 2.0 base)"
-msgstr ""
+msgstr "PDF/A-4 (PDF 2.0 bazo)"
 
 #. S7DSM
 #: filter/uiconfig/ui/pdfgeneralpage.ui:599
@@ -970,7 +971,7 @@ msgstr "Ĝenerale"
 #: filter/uiconfig/ui/pdfgeneralpage.ui:821
 msgctxt "pdfgeneralpage|forms_label"
 msgid "Forms"
-msgstr ""
+msgstr "Formularoj"
 
 #. kvAZK
 #: filter/uiconfig/ui/pdfgeneralpage.ui:1077
@@ -1066,7 +1067,7 @@ msgctxt ""
 "TooltipLabel\n"
 "value.text"
 msgid "Insert Table"
-msgstr ""
+msgstr "Enmeti tabelon"
 
 #. kZEtN
 #: CalcCommands.xcu
@@ -1086,7 +1087,7 @@ msgctxt ""
 "TooltipLabel\n"
 "value.text"
 msgid "Delete Table"
-msgstr ""
+msgstr "Forigi tabelon"
 
 #. 3Ep4Y
 #: CalcCommands.xcu
@@ -1256,7 +1257,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Master Pages"
-msgstr ""
+msgstr "Ĉefaj paĝoj"
 
 #. FBZFX
 #: GenericCommands.xcu
@@ -1266,7 +1267,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Theme..."
-msgstr ""
+msgstr "Etoso..."
 
 #. DCEaK
 #: GenericCommands.xcu
@@ -1276,7 +1277,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "~Hyperlink"
-msgstr ""
+msgstr "Hiperligilo"
 
 #. aFFu9
 #: GenericCommands.xcu
@@ -1406,7 +1407,7 @@ msgctxt ""
 "Title\n"
 "value.text"
 msgid "Theme"
-msgstr ""
+msgstr "Etoso"
 
 #. dgWCC
 #: Sidebar.xcu
@@ -1548,7 +1549,7 @@ msgstr ""
 #: xmlsecurity/uiconfig/ui/selectcertificatedialog.ui:274
 msgctxt "selectcertificatedialog|searchbox-atkobject"
 msgid "Search"
-msgstr ""
+msgstr "Serĉi"
 
 #. dw79G
 #: sc/inc/globstr.hrc:70
@@ -1560,13 +1561,13 @@ msgstr ""
 #: sc/inc/globstr.hrc:73
 msgctxt "STR_UNDO_DBTABLE"
 msgid "Create table"
-msgstr ""
+msgstr "Krei tabelon"
 
 #. J2Dh9
 #: sc/inc/globstr.hrc:74
 msgctxt "STR_UNDO_DBTABLE"
 msgid "Delete table"
-msgstr ""
+msgstr "Forigi tabelon"
 
 #. AvAbD
 #: sc/inc/globstr.hrc:140
@@ -1584,7 +1585,7 @@ msgstr ""
 #: sc/inc/globstr.hrc:195
 msgctxt "STR_CALC_TABLE"
 msgid "Table"
-msgstr ""
+msgstr "Tabelo"
 
 #. GFiBr
 #: sc/inc/globstr.hrc:196
@@ -1620,61 +1621,61 @@ msgstr ""
 #: sc/inc/scfuncs.hrc:4257
 msgctxt "SC_OPCODE_CHOOSECOLS"
 msgid "Returns the specified columns from an array."
-msgstr ""
+msgstr "Liveros specifajn kolumnojn el tabelo."
 
 #. mgCeG
 #: sc/inc/scfuncs.hrc:4258
 msgctxt "SC_OPCODE_CHOOSECOLS"
 msgid "Array"
-msgstr ""
+msgstr "Tabelo"
 
 #. vErtR
 #: sc/inc/scfuncs.hrc:4259
 msgctxt "SC_OPCODE_CHOOSECOLS"
 msgid "The array containing the columns to be returned in the new array."
-msgstr ""
+msgstr "La tabelo enhavanta la kolumnojn liverotajn en la nova tabelo."
 
 #. EuvxU
 #: sc/inc/scfuncs.hrc:4260
 msgctxt "SC_OPCODE_CHOOSECOLS"
 msgid "Column "
-msgstr ""
+msgstr "Kolumno "
 
 #. Akc9t
 #: sc/inc/scfuncs.hrc:4261
 msgctxt "SC_OPCODE_CHOOSECOLS"
 msgid "Column 1, Column 2,... The list of column numbers to be returned."
-msgstr ""
+msgstr "Kolumno 1, kolumno 2,...  La listo de kolumnaj numeroj liverotaj."
 
 #. 78gQu
 #: sc/inc/scfuncs.hrc:4267
 msgctxt "SC_OPCODE_CHOOSEROWS"
 msgid "Returns the specified rows from an array."
-msgstr ""
+msgstr "Liveras la agorditajn vicojn el tabelo."
 
 #. JAg4y
 #: sc/inc/scfuncs.hrc:4268
 msgctxt "SC_OPCODE_CHOOSEROWS"
 msgid "Array"
-msgstr ""
+msgstr "Tabelo"
 
 #. GFWtk
 #: sc/inc/scfuncs.hrc:4269
 msgctxt "SC_OPCODE_CHOOSEROWS"
 msgid "The array containing the rows to be returned in the new array."
-msgstr ""
+msgstr "La tabelo enhavanta la vicojn liverotajn en la nova tabelo."
 
 #. PDBbE
 #: sc/inc/scfuncs.hrc:4270
 msgctxt "SC_OPCODE_CHOOSEROWS"
 msgid "Row "
-msgstr ""
+msgstr "Vico "
 
 #. dXjgB
 #: sc/inc/scfuncs.hrc:4271
 msgctxt "SC_OPCODE_CHOOSEROWS"
 msgid "Row 1, Row 2,... The list of row numbers to be returned."
-msgstr ""
+msgstr "Vico 1, vico 2,... La listo de vicaj nombroj liverotaj."
 
 #. 4uTLx
 #: sc/inc/scfuncs.hrc:4277
@@ -1683,24 +1684,26 @@ msgid ""
 "Excludes a specified number of contiguous rows or columns from the start or "
 "end of an array."
 msgstr ""
+"Ekskludas agorditan nombron da koneksaj vicoj aŭ kolumnoj ek de la komenco "
+"aŭ fino de tabelo."
 
 #. W6FYc
 #: sc/inc/scfuncs.hrc:4278
 msgctxt "SC_OPCODE_DROP"
 msgid "Array"
-msgstr ""
+msgstr "Tabelo"
 
 #. zEu4G
 #: sc/inc/scfuncs.hrc:4279
 msgctxt "SC_OPCODE_DROP"
 msgid "The array from which to drop rows or columns."
-msgstr ""
+msgstr "La tabelo de kiu forigi vicojn aŭ kolumnojn."
 
 #. BFPt4
 #: sc/inc/scfuncs.hrc:4280
 msgctxt "SC_OPCODE_DROP"
 msgid "Rows"
-msgstr ""
+msgstr "Vicoj"
 
 #. yyjnc
 #: sc/inc/scfuncs.hrc:4281
@@ -1709,12 +1712,14 @@ msgid ""
 "The number of rows to drop. A negative value drops from the end of the "
 "array."
 msgstr ""
+"La nombro da vicoj forigotaj. Negativa valoro forigas de la fino de la "
+"tabelo."
 
 #. 6sAoA
 #: sc/inc/scfuncs.hrc:4282
 msgctxt "SC_OPCODE_DROP"
 msgid "Columns"
-msgstr ""
+msgstr "Kolumnoj"
 
 #. cAxPB
 #: sc/inc/scfuncs.hrc:4283
@@ -1723,30 +1728,32 @@ msgid ""
 "The number of columns to drop. A negative value drops from the end of the "
 "array."
 msgstr ""
+"La nombro da kolumnoj forigotaj. Negativa valoro forigas de la fino de la "
+"tabelo."
 
 #. cXvVY
 #: sc/inc/scfuncs.hrc:4289
 msgctxt "SC_OPCODE_EXPAND"
 msgid "Expands or pads an array to specified row and column dimensions."
-msgstr ""
+msgstr "Etendas aŭ ŝtopas tabelon ĝis agorditaj vicaj kaj kolumnaj dimensioj."
 
 #. kuERH
 #: sc/inc/scfuncs.hrc:4290
 msgctxt "SC_OPCODE_EXPAND"
 msgid "Array"
-msgstr ""
+msgstr "Tabelo"
 
 #. E9YDC
 #: sc/inc/scfuncs.hrc:4291
 msgctxt "SC_OPCODE_EXPAND"
 msgid "The array to expand."
-msgstr ""
+msgstr "La tabelo etendota."
 
 #. EaNgG
 #: sc/inc/scfuncs.hrc:4292
 msgctxt "SC_OPCODE_EXPAND"
 msgid "Rows"
-msgstr ""
+msgstr "Vicoj"
 
 #. QzQiB
 #: sc/inc/scfuncs.hrc:4293
@@ -1755,12 +1762,13 @@ msgid ""
 "The number of rows in the expanded array. If missing, rows will not be "
 "expanded."
 msgstr ""
+"La nombro da vicoj en la etendota tabelo. Se mankanta, vicoj ne etendiĝos."
 
 #. qjcxB
 #: sc/inc/scfuncs.hrc:4294
 msgctxt "SC_OPCODE_EXPAND"
 msgid "Columns"
-msgstr ""
+msgstr "Kolumnoj"
 
 #. EVAXE
 #: sc/inc/scfuncs.hrc:4295
@@ -1769,36 +1777,38 @@ msgid ""
 "The number of columns in the expanded array. If missing, columns will not be"
 " expanded."
 msgstr ""
+"La nombro da kolumnoj en la etendota tabelo. Se mankanta, vicoj ne "
+"etendiĝos."
 
 #. QPyBK
 #: sc/inc/scfuncs.hrc:4296
 msgctxt "SC_OPCODE_EXPAND"
 msgid "Pad with"
-msgstr ""
+msgstr "Ŝtopi per"
 
 #. kHatA
 #: sc/inc/scfuncs.hrc:4297
 msgctxt "SC_OPCODE_EXPAND"
 msgid "The value with which to pad. The default is #N/A."
-msgstr ""
+msgstr "La valoro per kiu ŝtopi. La defaŭlto estas #N/A."
 
 #. m7qUf
 #: sc/inc/scfuncs.hrc:4303
 msgctxt "SC_OPCODE_HSTACK"
 msgid "Appends arrays horizontally to create a larger array."
-msgstr ""
+msgstr "Postgluas tabelojn horizontale por krei pli grandan tabelon."
 
 #. LnAFg
 #: sc/inc/scfuncs.hrc:4304 sc/inc/scfuncs.hrc:4306
 msgctxt "SC_OPCODE_HSTACK"
 msgid "Array"
-msgstr ""
+msgstr "Tabelo"
 
 #. uHbHC
 #: sc/inc/scfuncs.hrc:4305
 msgctxt "SC_OPCODE_HSTACK"
 msgid "The first array to append."
-msgstr ""
+msgstr "La unua tabelo postgluota."
 
 #. QRA57
 #: sc/inc/scfuncs.hrc:4307
@@ -1807,24 +1817,26 @@ msgid ""
 "Array 1, Array 2,... The following arrays to append. If an array has fewer "
 "rows, #N/A error will be returned in the additional rows."
 msgstr ""
+"Tabelo 1, tabelo 2,... La sekvantaj tabeloj postgluotaj. Se tabelo enhavas "
+"malpliajn vicojn, #N/A-eraro liveriĝos en la ekstraj vicoj."
 
 #. 7zS24
 #: sc/inc/scfuncs.hrc:4313
 msgctxt "SC_OPCODE_VSTACK"
 msgid "Appends arrays vertically to create a larger array."
-msgstr ""
+msgstr "Postgluas tabelojn vertikale por krei pli grandan tabelon."
 
 #. rhVRC
 #: sc/inc/scfuncs.hrc:4314 sc/inc/scfuncs.hrc:4316
 msgctxt "SC_OPCODE_VSTACK"
 msgid "Array"
-msgstr ""
+msgstr "Tabelo"
 
 #. tGHH9
 #: sc/inc/scfuncs.hrc:4315
 msgctxt "SC_OPCODE_VSTACK"
 msgid "The first array to append."
-msgstr ""
+msgstr "La unua tabelo postgluota."
 
 #. Kb6Xc
 #: sc/inc/scfuncs.hrc:4317
@@ -1833,6 +1845,8 @@ msgid ""
 "Array 1, Array 2,... The following arrays to append. If an array has fewer "
 "columns, #N/A error will be returned in the additional columns."
 msgstr ""
+"Tabelo 1, tabelo 2,...  La jenaj tabeloj postgluotaj. Se tabelo havas "
+"malpliajn kolumnojn, liveros je #N/A-eraron en la ekstraj kolumnoj."
 
 #. JnsYT
 #: sc/inc/scfuncs.hrc:4323
@@ -1841,24 +1855,26 @@ msgid ""
 "Returns a specified number of contiguous rows or columns from the start or "
 "end of an array."
 msgstr ""
+"Liveras agorditan nombron da koneksaj vicoj aŭ kolumnoj ek de la komenco aŭ "
+"fino de tabelo."
 
 #. dFLFb
 #: sc/inc/scfuncs.hrc:4324
 msgctxt "SC_OPCODE_TAKE"
 msgid "Array"
-msgstr ""
+msgstr "Tabelo"
 
 #. ycFef
 #: sc/inc/scfuncs.hrc:4325
 msgctxt "SC_OPCODE_TAKE"
 msgid "The array from which to take rows or columns."
-msgstr ""
+msgstr "La tabelo el kiu preni vicojn aŭ kolumnojn."
 
 #. DzBCL
 #: sc/inc/scfuncs.hrc:4326
 msgctxt "SC_OPCODE_TAKE"
 msgid "Rows"
-msgstr ""
+msgstr "Vicoj"
 
 #. KBPBn
 #: sc/inc/scfuncs.hrc:4327
@@ -1867,12 +1883,13 @@ msgid ""
 "The number of rows to take. A negative value takes from the end of the "
 "array."
 msgstr ""
+"La nombro da vicoj prenotaj. Negativa valoro prenas de la fino de la tabelo."
 
 #. HJQKW
 #: sc/inc/scfuncs.hrc:4328
 msgctxt "SC_OPCODE_TAKE"
 msgid "Columns"
-msgstr ""
+msgstr "Kolumnoj"
 
 #. ZexcG
 #: sc/inc/scfuncs.hrc:4329
@@ -1881,6 +1898,8 @@ msgid ""
 "The number of columns to take. A negative value takes from the end of the "
 "array."
 msgstr ""
+"La nombro da kolumnoj prenotaj. Negativa valoro prenas de la fino de la "
+"tabelo."
 
 #. GwyMB
 #: sc/inc/scfuncs.hrc:4335
@@ -1892,7 +1911,7 @@ msgstr ""
 #: sc/inc/scfuncs.hrc:4336
 msgctxt "SC_OPCODE_TEXTAFTER"
 msgid "Text"
-msgstr ""
+msgstr "Teksto"
 
 #. 3WLYF
 #: sc/inc/scfuncs.hrc:4337
@@ -1904,7 +1923,7 @@ msgstr ""
 #: sc/inc/scfuncs.hrc:4338
 msgctxt "SC_OPCODE_TEXTAFTER"
 msgid "Delimiter"
-msgstr ""
+msgstr "Disigilo"
 
 #. YEbwu
 #: sc/inc/scfuncs.hrc:4339
@@ -1930,7 +1949,7 @@ msgstr ""
 #: sc/inc/scfuncs.hrc:4342
 msgctxt "SC_OPCODE_TEXTAFTER"
 msgid "Match Mode"
-msgstr ""
+msgstr "Kongruigi reĝimon"
 
 #. iSfJi
 #: sc/inc/scfuncs.hrc:4343
@@ -1972,7 +1991,7 @@ msgstr ""
 #: sc/inc/scfuncs.hrc:4354
 msgctxt "SC_OPCODE_TEXTBEFORE"
 msgid "Text"
-msgstr ""
+msgstr "Teksto"
 
 #. HsEG8
 #: sc/inc/scfuncs.hrc:4355
@@ -1984,7 +2003,7 @@ msgstr ""
 #: sc/inc/scfuncs.hrc:4356
 msgctxt "SC_OPCODE_TEXTBEFORE"
 msgid "Delimiter"
-msgstr ""
+msgstr "Disigilo"
 
 #. qDFZy
 #: sc/inc/scfuncs.hrc:4357
@@ -2010,7 +2029,7 @@ msgstr ""
 #: sc/inc/scfuncs.hrc:4360
 msgctxt "SC_OPCODE_TEXTBEFORE"
 msgid "Match Mode"
-msgstr ""
+msgstr "Kongruigi reĝimon"
 
 #. Pi2Ti
 #: sc/inc/scfuncs.hrc:4361
@@ -2052,7 +2071,7 @@ msgstr ""
 #: sc/inc/scfuncs.hrc:4372
 msgctxt "SC_OPCODE_TEXTSPLIT"
 msgid "Text"
-msgstr ""
+msgstr "Teksto"
 
 #. dqSdF
 #: sc/inc/scfuncs.hrc:4373
@@ -2114,37 +2133,37 @@ msgstr ""
 #: sc/inc/scfuncs.hrc:4382
 msgctxt "SC_OPCODE_TEXTSPLIT"
 msgid "Pad with"
-msgstr ""
+msgstr "Ŝtopi per"
 
 #. h4db2
 #: sc/inc/scfuncs.hrc:4383
 msgctxt "SC_OPCODE_TEXTSPLIT"
 msgid "The value with which to pad. The default is #N/A."
-msgstr ""
+msgstr "La valoro per kiu ŝtopi. La defaŭlto estas #N/A."
 
 #. DdFFE
 #: sc/inc/scfuncs.hrc:4389
 msgctxt "SC_OPCODE_TOCOL"
 msgid "Transforms an array into a single column."
-msgstr ""
+msgstr "Transformas tabelon en unu kolumnon."
 
 #. UAzNC
 #: sc/inc/scfuncs.hrc:4390
 msgctxt "SC_OPCODE_TOCOL"
 msgid "Array"
-msgstr ""
+msgstr "Tabelo"
 
 #. CHojs
 #: sc/inc/scfuncs.hrc:4391
 msgctxt "SC_OPCODE_TOCOL"
 msgid "The range or array to return as a single column."
-msgstr ""
+msgstr "La tabelo aŭ amplekso liverota kiel unuopa kolumno."
 
 #. uACXu
 #: sc/inc/scfuncs.hrc:4392
 msgctxt "SC_OPCODE_TOCOL"
 msgid "Ignore"
-msgstr ""
+msgstr "Malatenti"
 
 #. b7EQW
 #: sc/inc/scfuncs.hrc:4393
@@ -2154,12 +2173,15 @@ msgid ""
 "(default). 1 - ignore blank cells. 2 - ignore cells with error. 3 - ignore "
 "blanks cells and cells with error."
 msgstr ""
+"Ĉu malatenti certajn tipojn da valoroj. 0 aŭ ellasita - konservi ĉiujn "
+"valorojn (defaŭlto). 1 - malatenti vakajn ĉelojn. 2 - malatenti ĉelojn kun "
+"eraro. 3 - malatenti vakajn ĉelojn kaj ĉelojn kun eraro."
 
 #. qNLAi
 #: sc/inc/scfuncs.hrc:4394
 msgctxt "SC_OPCODE_TOCOL"
 msgid "Scan by column"
-msgstr ""
+msgstr "Skani laŭ kolumno"
 
 #. bcArN
 #: sc/inc/scfuncs.hrc:4395
@@ -2168,30 +2190,32 @@ msgid ""
 "Scan the array by column. FALSE or omitted (default) - the array is scanned "
 "by row. TRUE - the array is scanned by column."
 msgstr ""
+"Skani la tabelon laŭ kolumno. FALSA aŭ ellasita (defaŭlto) - skani la "
+"tabelon laŭ vico. VERA - skani la tabelon laŭ kolumno."
 
 #. PGyxj
 #: sc/inc/scfuncs.hrc:4401
 msgctxt "SC_OPCODE_TOROW"
 msgid "transforms an array into a single row."
-msgstr ""
+msgstr "transformas tabelon en unuopan vicon."
 
 #. W9bWe
 #: sc/inc/scfuncs.hrc:4402
 msgctxt "SC_OPCODE_TOROW"
 msgid "Array"
-msgstr ""
+msgstr "Tabelo"
 
 #. 5MEvT
 #: sc/inc/scfuncs.hrc:4403
 msgctxt "SC_OPCODE_TOROW"
 msgid "The range or array to return as a single row."
-msgstr ""
+msgstr "La amplekso aŭ tabelo liverota kiel unuopa vico."
 
 #. AqqBC
 #: sc/inc/scfuncs.hrc:4404
 msgctxt "SC_OPCODE_TOROW"
 msgid "Ignore"
-msgstr ""
+msgstr "Malatenti"
 
 #. wcpQF
 #: sc/inc/scfuncs.hrc:4405
@@ -2201,12 +2225,15 @@ msgid ""
 "(default). 1 - ignore blank cells. 2 - ignore cells with error. 3 - ignore "
 "blanks cells and cells with error."
 msgstr ""
+"Ĉu malatenti certajn tipojn da valoroj. 0 aŭ ellasita - konservi ĉiujn "
+"ĉelojn (defaŭlta). 1 - malatenti vakajn ĉelojn. 2 - malatenti ĉelojn kun "
+"eraro. 3 - malatenti vakajn ĉelojn kaj ĉelojn kun eraro."
 
 #. E4XDf
 #: sc/inc/scfuncs.hrc:4406
 msgctxt "SC_OPCODE_TOROW"
 msgid "Scan by column"
-msgstr ""
+msgstr "Skani laŭ kolumno"
 
 #. 5bZRy
 #: sc/inc/scfuncs.hrc:4407
@@ -2215,6 +2242,8 @@ msgid ""
 "Scan the array by column. FALSE or omitted (default) - the array is scanned "
 "by row. TRUE - the array is scanned by column."
 msgstr ""
+"Skani la tabelon laŭ kolumno. FALSA aŭ ellasita (defaŭlto) - skani la "
+"tabelon laŭ vico. VERA - skani la tabelon laŭ kolumno."
 
 #. oBDEA
 #: sc/inc/scfuncs.hrc:4437
@@ -2223,42 +2252,44 @@ msgid ""
 "Wraps the provided row or column of values by columns after a specified "
 "number of elements to form a new array."
 msgstr ""
+"Ĉirkaŭfluigas la donitan vicon aŭ kolumnon laŭ kolumnoj post indikita nombro"
+" da elementoj por formi novan tabelon."
 
 #. fC6RK
 #: sc/inc/scfuncs.hrc:4438
 msgctxt "SC_OPCODE_WRAPCOLS"
 msgid "Range"
-msgstr ""
+msgstr "Amplekso"
 
 #. nfZyj
 #: sc/inc/scfuncs.hrc:4439
 msgctxt "SC_OPCODE_WRAPCOLS"
 msgid "the range to wrap."
-msgstr ""
+msgstr "la amplekso ĉirkaŭfluigota."
 
 #. GE3HQ
 #: sc/inc/scfuncs.hrc:4440
 msgctxt "SC_OPCODE_WRAPCOLS"
 msgid "Wrap count"
-msgstr ""
+msgstr "Ĉirkaŭflua nombro"
 
 #. FWsCt
 #: sc/inc/scfuncs.hrc:4441
 msgctxt "SC_OPCODE_WRAPCOLS"
 msgid "The maximum number of values for each column."
-msgstr ""
+msgstr "La maksimuma nombro da valoroj por ĉiu kolumno."
 
 #. zkjFB
 #: sc/inc/scfuncs.hrc:4442
 msgctxt "SC_OPCODE_WRAPCOLS"
 msgid "Pad with"
-msgstr ""
+msgstr "Ŝtopi per"
 
 #. knbjc
 #: sc/inc/scfuncs.hrc:4443
 msgctxt "SC_OPCODE_WRAPCOLS"
 msgid "The value with which to pad. The default is #N/A."
-msgstr ""
+msgstr "La valoro per kiu ŝtopi. La defaŭlto estas #N/A."
 
 #. BDA7q
 #: sc/inc/scfuncs.hrc:4449
@@ -2267,42 +2298,44 @@ msgid ""
 "Wraps the provided row or column of values by rows after a specified number "
 "of elements to form a new array."
 msgstr ""
+"Ĉirkaŭfluigos la donitan vicon aŭ kolumnon de valoroj laŭ vicoj post "
+"indikita nombro da elementoj por formi novan tabelon."
 
 #. 7esii
 #: sc/inc/scfuncs.hrc:4450
 msgctxt "SC_OPCODE_WRAPROWS"
 msgid "Range"
-msgstr ""
+msgstr "Amplekso"
 
 #. FLJwx
 #: sc/inc/scfuncs.hrc:4451
 msgctxt "SC_OPCODE_WRAPROWS"
 msgid "the range to wrap."
-msgstr ""
+msgstr "la amplekso ĉirkaŭfluigota."
 
 #. aLHUi
 #: sc/inc/scfuncs.hrc:4452
 msgctxt "SC_OPCODE_WRAPROWS"
 msgid "Wrap count"
-msgstr ""
+msgstr "Ĉirkaŭflua nombro"
 
 #. 3CEsK
 #: sc/inc/scfuncs.hrc:4453
 msgctxt "SC_OPCODE_WRAPROWS"
 msgid "The maximum number of values for each row."
-msgstr ""
+msgstr "La maksimuma nombro da valoroj por ĉiu vico."
 
 #. iTCWg
 #: sc/inc/scfuncs.hrc:4454
 msgctxt "SC_OPCODE_WRAPROWS"
 msgid "Pad with"
-msgstr ""
+msgstr "Ŝtopi per"
 
 #. e3K5s
 #: sc/inc/scfuncs.hrc:4455
 msgctxt "SC_OPCODE_WRAPROWS"
 msgid "The value with which to pad. The default is #N/A."
-msgstr ""
+msgstr "La valoro per kiu ŝtopi. La defaŭlto estas #N/A."
 
 #. 4af9a
 #: sc/uiconfig/scalc/ui/cellprotectionpage.ui:99
@@ -2318,7 +2351,7 @@ msgstr ""
 #: sc/uiconfig/scalc/ui/conditionaleasydialog.ui:8
 msgctxt "conditionaleasydialog|title"
 msgid "Highlight cells..."
-msgstr ""
+msgstr "Emfazi ĉelojn..."
 
 #. QpmnN
 #: sc/uiconfig/scalc/ui/definetablerangedialog.ui:10
@@ -2330,13 +2363,13 @@ msgstr ""
 #: sc/uiconfig/scalc/ui/definetablerangedialog.ui:37
 msgctxt "definetablerangedialog|extended_tip|ok"
 msgid "Saves all changes and closes dialog."
-msgstr ""
+msgstr "Konservas ĉiujn ŝanĝojn kaj fermas la dialogon."
 
 #. YJAAP
 #: sc/uiconfig/scalc/ui/definetablerangedialog.ui:56
 msgctxt "definetablerangedialog|extended_tip|cancel"
 msgid "Closes dialog and discards all changes."
-msgstr ""
+msgstr "Fermas la dialogon kaj forigas ĉiujn ŝanĝojn."
 
 #. ugt8G
 #: sc/uiconfig/scalc/ui/definetablerangedialog.ui:106
@@ -2362,25 +2395,25 @@ msgstr ""
 #: sc/uiconfig/scalc/ui/definetablerangedialog.ui:139
 msgctxt "definetablerangedialog|range"
 msgid "Range"
-msgstr ""
+msgstr "Amplekso"
 
 #. 3a7g7
 #: sc/uiconfig/scalc/ui/definetablerangedialog.ui:162
 msgctxt "definetablerangedialog|containscolumnlabels"
 msgid "Co_ntains column labels"
-msgstr ""
+msgstr "Enhavas kolumnajn etikedojn"
 
 #. AEKGN
 #: sc/uiconfig/scalc/ui/definetablerangedialog.ui:171
 msgctxt "definetablerangedialog|extended_tip|ContainsColumnLabels"
 msgid "Selected cell ranges contain labels."
-msgstr ""
+msgstr "Elektitaj ĉelaroj enhavas etikedojn."
 
 #. GCg88
 #: sc/uiconfig/scalc/ui/definetablerangedialog.ui:203
 msgctxt "definetablerangedialog|extended_tip|DefineTableRangeDialog"
 msgid "Defines a database range based on the selected cells in your sheet."
-msgstr ""
+msgstr "Difinas datumbazan ĉelaron baze de la elektitaj ĉeloj en via folio."
 
 #. LVdkf
 #: sc/uiconfig/scalc/ui/erroralerttabpage.ui:15
@@ -2398,19 +2431,19 @@ msgstr ""
 #: sc/uiconfig/scalc/ui/gotosheetdialog.ui:100
 msgctxt "gotosheetdialog|entry-mask-atkobject"
 msgid "Sheet Name"
-msgstr ""
+msgstr "Nomo de folio"
 
 #. hMeBi
 #: sc/uiconfig/scalc/ui/numberbox.ui:17
 msgctxt "numberbox|numbertype|accessible_name"
 msgid "Number Format"
-msgstr ""
+msgstr "Numerformato"
 
 #. o8pcB
 #: sc/uiconfig/scalc/ui/protectsheetdlg.ui:195
 msgctxt "protectsheetdlg|passwordbar-atkobject"
 msgid "Password Level Bar"
-msgstr ""
+msgstr "Pasvorta nivela breto"
 
 #. Q4fA3
 #: sc/uiconfig/scalc/ui/selectsheetviewdialog.ui:18
@@ -2422,13 +2455,13 @@ msgstr ""
 #: sc/uiconfig/scalc/ui/selectsheetviewdialog.ui:44
 msgctxt "selectsheetviewdialog|extended_tip|ok"
 msgid "Saves all changes and closes dialog."
-msgstr ""
+msgstr "Konservas ĉiujn ŝanĝojn kaj fermas la dialogon."
 
 #. kGFYu
 #: sc/uiconfig/scalc/ui/selectsheetviewdialog.ui:63
 msgctxt "selectsheetviewdialog|extended_tip|cancel"
 msgid "Closes dialog and discards all changes."
-msgstr ""
+msgstr "Fermas la dialogon kaj forigas ĉiujn ŝanĝojn."
 
 #. sQPFE
 #: sc/uiconfig/scalc/ui/selectsheetviewdialog.ui:134
@@ -2446,7 +2479,7 @@ msgstr ""
 #: sc/uiconfig/scalc/ui/sidebarcellappearance.ui:87
 msgctxt "sidebarcellappearance|cellbordertype-atkobject"
 msgid "Border Style"
-msgstr ""
+msgstr "Borderstilo"
 
 #. Y8RhG
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:22
@@ -2494,7 +2527,7 @@ msgstr ""
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:170
 msgctxt "sidebardatabase|lbl_styles"
 msgid "Table Styles"
-msgstr ""
+msgstr "Tabelaj stiloj"
 
 #. er8nh
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:187
@@ -3286,4 +3319,4 @@ msgstr ""
 #: sc/uiconfig/scalc/ui/tablestylesbox.ui:185
 msgctxt "tablestylebox|tablestyles_cb|accessible_name"
 msgid "Table Styles"
-msgstr ""
+msgstr "Tabelaj stiloj"

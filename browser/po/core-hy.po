@@ -126,13 +126,13 @@ msgstr ""
 #: svx/uiconfig/ui/sidebarline.ui:91
 msgctxt "sidebarline|SelectWidth|tooltip_text"
 msgid "Line Thickness"
-msgstr ""
+msgstr "Գծի հաստությունը"
 
 #. cDwyK
 #: svx/uiconfig/ui/sidebarline.ui:97
 msgctxt "sidebarline|SelectWidth-atkobject"
 msgid "Line Thickness"
-msgstr ""
+msgstr "Գծի հաստությունը"
 
 #. 7MFsT
 #: uui/inc/strings.hrc:84
@@ -524,7 +524,7 @@ msgstr ""
 #: cui/uiconfig/ui/thesaurus.ui:189
 msgctxt "thesaurus|langcb|accessible_name"
 msgid "Language"
-msgstr ""
+msgstr "Լեզու"
 
 #. qpArp
 #: cui/uiconfig/ui/toolbarmodedialog.ui:124
@@ -572,25 +572,25 @@ msgstr ""
 #: sfx2/uiconfig/ui/password.ui:200
 msgctxt "password|pass1bar-atkobject"
 msgid "Password Level Bar"
-msgstr ""
+msgstr "Գաղտնաբառի մակարդակի տող"
 
 #. 2Y4Ua
 #: sfx2/uiconfig/ui/password.ui:201
 msgctxt "password|pass1bar-atkobject"
 msgid "Shows the strength of password"
-msgstr ""
+msgstr "Ցույց է տալիս գաղտնաբառի ուժը"
 
 #. EGBBE
 #: sfx2/uiconfig/ui/password.ui:342
 msgctxt "password|pass2bar-atkobject"
 msgid "Password Level Bar"
-msgstr ""
+msgstr "Գաղտնաբառի մակարդակի տող"
 
 #. nvEiq
 #: sfx2/uiconfig/ui/password.ui:343
 msgctxt "password|pass2bar-atkobject"
 msgid "Shows the strength of password"
-msgstr ""
+msgstr "Ցույց է տալիս գաղտնաբառի ուժը"
 
 #. YHTHB
 #: sfx2/uiconfig/ui/templatepanel.ui:137
@@ -687,7 +687,7 @@ msgstr "Մուտքագրեք էջում, շրջանակում կամ բաժնո�
 #: sw/uiconfig/swriter/ui/dropcapspage.ui:336
 msgctxt "dropcapspage|drawingareaWN_EXAMPLE-atkobject"
 msgid "Example"
-msgstr ""
+msgstr "Օրինակ"
 
 #. RdG95
 #: sw/uiconfig/swriter/ui/footnotesendnotestabpage.ui:179
@@ -1056,7 +1056,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "~Table"
-msgstr ""
+msgstr "~Աղյուսակ"
 
 #. Uhi2h
 #: CalcCommands.xcu
@@ -1086,7 +1086,7 @@ msgctxt ""
 "TooltipLabel\n"
 "value.text"
 msgid "Insert Table"
-msgstr ""
+msgstr "Զետեղեք աղյուսակ"
 
 #. kZEtN
 #: CalcCommands.xcu
@@ -1286,7 +1286,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Theme..."
-msgstr ""
+msgstr "Թեմա..."
 
 #. DCEaK
 #: GenericCommands.xcu
@@ -1568,7 +1568,7 @@ msgstr ""
 #: xmlsecurity/uiconfig/ui/selectcertificatedialog.ui:274
 msgctxt "selectcertificatedialog|searchbox-atkobject"
 msgid "Search"
-msgstr ""
+msgstr "Որոնում"
 
 #. dw79G
 #: sc/inc/globstr.hrc:70
@@ -1604,7 +1604,7 @@ msgstr ""
 #: sc/inc/globstr.hrc:195
 msgctxt "STR_CALC_TABLE"
 msgid "Table"
-msgstr ""
+msgstr "Աղյուսակ"
 
 #. GFiBr
 #: sc/inc/globstr.hrc:196
@@ -1616,7 +1616,7 @@ msgstr ""
 #: sc/inc/globstr.hrc:217
 msgctxt "STR_TABLE_TOTAL"
 msgid "Total"
-msgstr ""
+msgstr "Ընդամենը"
 
 #. wCfcy
 #: sc/inc/globstr.hrc:220
@@ -2428,6 +2428,10 @@ msgid ""
 "then automatically convert to the Maximize icon. Click it to restore the "
 "dialog to its original size."
 msgstr ""
+"Սեղմեք Նեղացնել պատկերակը` երկխոսությունը մուտքագրման դաշտի չափով "
+"նվազեցնելու համար: Այնուհետև ավելի հեշտ է թերթիկում նշել անհրաժեշտ հղումը: "
+"Պատկերներն այնուհետև ինքնաշխատ կերպով վերածվում են Առավելագույն պատկերակի: "
+"Սեղմեք այն՝ երկխոսության սկզբնական չափը վերականգնելու համար:"
 
 #. xUrKC
 #: sc/uiconfig/scalc/ui/definetablerangedialog.ui:123
@@ -2438,30 +2442,36 @@ msgid ""
 "then automatically convert to the Maximize icon. Click it to restore the "
 "dialog to its original size."
 msgstr ""
+"Սեղմեք Նեղացնել պատկերակը` երկխոսությունը մուտքագրման դաշտի չափով "
+"նվազեցնելու համար: Այնուհետև ավելի հեշտ է թերթիկում նշել անհրաժեշտ հղումը: "
+"Պատկերներն այնուհետև ինքնաշխատ կերպով վերածվում են Առավելագույն պատկերակի: "
+"Սեղմեք այն՝ երկխոսության սկզբնական չափը վերականգնելու համար:"
 
 #. 8FLdj
 #: sc/uiconfig/scalc/ui/definetablerangedialog.ui:139
 msgctxt "definetablerangedialog|range"
 msgid "Range"
-msgstr ""
+msgstr "Տիրույթ"
 
 #. 3a7g7
 #: sc/uiconfig/scalc/ui/definetablerangedialog.ui:162
 msgctxt "definetablerangedialog|containscolumnlabels"
 msgid "Co_ntains column labels"
-msgstr ""
+msgstr "Պա_րունակում է սյունակների պիտակներ"
 
 #. AEKGN
 #: sc/uiconfig/scalc/ui/definetablerangedialog.ui:171
 msgctxt "definetablerangedialog|extended_tip|ContainsColumnLabels"
 msgid "Selected cell ranges contain labels."
-msgstr ""
+msgstr "Ընտրված բջիջների տիրույթները պարունակում են պիտակներ:"
 
 #. GCg88
 #: sc/uiconfig/scalc/ui/definetablerangedialog.ui:203
 msgctxt "definetablerangedialog|extended_tip|DefineTableRangeDialog"
 msgid "Defines a database range based on the selected cells in your sheet."
 msgstr ""
+"Սահմանում է տվյալների շտեմարանի տիրույթ՝ հիմնվելով ձեր թերթի ընտրված "
+"բջիջների վրա:"
 
 #. LVdkf
 #: sc/uiconfig/scalc/ui/erroralerttabpage.ui:15
@@ -2479,7 +2489,7 @@ msgstr ""
 #: sc/uiconfig/scalc/ui/gotosheetdialog.ui:100
 msgctxt "gotosheetdialog|entry-mask-atkobject"
 msgid "Sheet Name"
-msgstr ""
+msgstr "Թերթիկի անունը"
 
 #. hMeBi
 #: sc/uiconfig/scalc/ui/numberbox.ui:17
@@ -2491,7 +2501,7 @@ msgstr ""
 #: sc/uiconfig/scalc/ui/protectsheetdlg.ui:195
 msgctxt "protectsheetdlg|passwordbar-atkobject"
 msgid "Password Level Bar"
-msgstr ""
+msgstr "Գաղտնաբառի մակարդակի տող"
 
 #. Q4fA3
 #: sc/uiconfig/scalc/ui/selectsheetviewdialog.ui:18
@@ -3367,4 +3377,4 @@ msgstr ""
 #: sc/uiconfig/scalc/ui/tablestylesbox.ui:185
 msgctxt "tablestylebox|tablestyles_cb|accessible_name"
 msgid "Table Styles"
-msgstr ""
+msgstr "Աղյուսակի ոճեր"
