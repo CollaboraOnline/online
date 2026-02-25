@@ -298,7 +298,14 @@ class ViewLayoutMultiPage extends ViewLayoutNewBase {
 			if (layoutR) {
 				let scrolled = false;
 
-				if (!this.viewedRectangle.containsX(point.x)) {
+				// Check if the target X is already visible in the viewport.
+				const viewportWidth = this.getDocumentAnchorSection().size[0];
+				const xVisibleInViewport =
+					viewR.pX1 >= this.scrollProperties.viewX &&
+					viewR.pX1 + layoutR.pWidth <=
+						this.scrollProperties.viewX + viewportWidth;
+
+				if (!xVisibleInViewport) {
 					this.scrollProperties.startX = Math.round(
 						(viewR.pX1 / this._viewSize.pX) *
 							this.scrollProperties.horizontalScrollLength,
