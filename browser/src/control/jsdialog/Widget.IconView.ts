@@ -45,6 +45,8 @@ function _createEntryImage(
 	if (entryData.tooltip) img.title = entryData.tooltip;
 	else if (entryData.text) img.title = entryData.text;
 	else img.title = '';
+
+	setupSize(entryData, img);
 }
 
 function _createEntryText(parent: HTMLElement, entryData: IconViewEntry) {
@@ -56,6 +58,16 @@ function _createEntryText(parent: HTMLElement, entryData: IconViewEntry) {
 		parent,
 	);
 	placeholder.innerText = entryData.text ? entryData.text : '';
+}
+
+function setupSize(entry: IconViewEntry, placeholder: HTMLElement) {
+	// Ensure the placeholder is the same size as the image to avoid the dialog changing size
+	if (entry.width !== undefined && entry.height !== undefined) {
+		placeholder.style.width = entry.width + 'px';
+		placeholder.style.height = entry.height + 'px';
+		placeholder.style.overflow = 'hidden';
+		placeholder.style.display = 'block';
+	}
 }
 
 function _iconViewEntry(
@@ -105,13 +117,7 @@ function _iconViewEntry(
 			builder.options.cssClass,
 			entryContainer,
 		);
-		// Ensure the placeholder is the same size as the image to avoid the dialog changing size
-		if (entry.width !== undefined && entry.height !== undefined) {
-			placeholder.style.width = entry.width + 'px';
-			placeholder.style.height = entry.height + 'px';
-			placeholder.style.overflow = 'hidden';
-			placeholder.style.display = 'block';
-		}
+		setupSize(entry, placeholder);
 
 		placeholder.innerText = entry.text ? entry.text : '';
 		if (entry.tooltip) placeholder.title = entry.tooltip;
