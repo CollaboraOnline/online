@@ -50,6 +50,9 @@ window.L.Control.Notebookbar = window.L.Control.extend({
 			this.model.fullUpdate(this.getFullJSON(this.HOME_TAB_ID));
 
 		this.map.on('notebookbar', this.onNotebookbar, this);
+
+		if (typeof this.installTabs === 'function')
+			this.installTabs();
 	},
 
 	// on show
@@ -119,6 +122,9 @@ window.L.Control.Notebookbar = window.L.Control.extend({
 	},
 
 	onRemove: function() {
+		if (typeof this.uninstallTabs === 'function')
+			this.uninstallTabs();
+
 		app.events.off('contextchange', this.onContextChange);
 		$('.main-nav #document-header').remove();
 		$('.main-nav').removeClass('hasnotebookbar');

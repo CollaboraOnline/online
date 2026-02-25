@@ -16,6 +16,16 @@
 /* global _ _UNO app JSDialog */
 window.L.Control.NotebookbarCalc = window.L.Control.NotebookbarWriter.extend({
 
+	installTabs: function() {
+		app.console.debug('NotebookbarCalc: installTabs');
+		JSDialog.CalcTableTab.onAdd();
+	},
+
+	uninstallTabs: function() {
+		app.console.debug('NotebookbarCalc: uninstallTabs');
+		JSDialog.CalcTableTab.onRemove();
+	},
+
 	getTabs: function() {
 		return [
 			{

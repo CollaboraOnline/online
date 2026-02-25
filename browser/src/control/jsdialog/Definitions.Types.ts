@@ -177,6 +177,8 @@ interface NotebookbarTab {
 	getName: () => string;
 	getEntry: () => NotebookbarTabEntry;
 	getContent: () => NotebookbarTabContent;
+	onAdd?: () => void;
+	onRemove?: () => void;
 }
 
 // callback triggered for custom rendered entries

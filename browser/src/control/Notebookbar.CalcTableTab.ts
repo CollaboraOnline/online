@@ -18,6 +18,14 @@ class CalcTableTab implements NotebookbarTab {
 		return 'Table';
 	}
 
+	public onAdd() {
+		app.map.on('commandstatechanged', this.updateStyles, this);
+	}
+
+	public onRemove() {
+		app.map.off('commandstatechanged', this.updateStyles, this);
+	}
+
 	public getEntry(): NotebookbarTabEntry {
 		return {
 			id: 'Table-tab-label',
@@ -32,6 +40,20 @@ class CalcTableTab implements NotebookbarTab {
 		} as NotebookbarTabEntry;
 	}
 
+	public updateStyles(state: any) {
+		if (state.commandName !== '.uno:TableStyles') return;
+
+		app.map.fire('jsdialogupdate', {
+			data: {
+				id: '0',
+				type: '',
+				jsontype: 'notebookbar',
+				action: 'update',
+				control: this.generateTableStylesJSON(),
+			} as JSDialogJSON,
+		});
+	}
+
 	private generateTableStylesJSON() {
 		let tableStyles = new Array<TableStyleEntry>();
 		try {
@@ -40,7 +62,7 @@ class CalcTableTab implements NotebookbarTab {
 			app.console.error('TableStylesList: ' + e);
 		}
 
-		if (!tableStyles) return {};
+		if (!tableStyles) return { id: 'tablestyles_design', type: 'iconview' };
 
 		const currentStyle = app.map['stateChangeHandler'].getItemValue(
 			'.uno:DatabaseSettings',
