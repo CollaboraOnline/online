@@ -11,33 +11,30 @@
 namespace cool {
 	/// Draws polygon outlines around redline text when a redline tooltip is shown on hover.
 	export class TooltipAnchorSection extends CanvasSectionObject {
-		processingOrder: number = app.CSections.TooltipAnchor.processingOrder;
-		drawingOrder: number = app.CSections.TooltipAnchor.drawingOrder;
-		zIndex: number = app.CSections.TooltipAnchor.zIndex;
+		processingOrder: number = app.CSections.TooltipAnchorLeft.processingOrder;
+		drawingOrder: number = app.CSections.TooltipAnchorLeft.drawingOrder;
+		zIndex: number = app.CSections.TooltipAnchorLeft.zIndex;
 		interactable: boolean = false;
 		documentObject: boolean = true;
 
-		constructor() {
-			super(app.CSections.TooltipAnchor.name);
+		constructor(name: string, mode: number) {
+			super(name);
 
 			this.sectionProperties.polygon = null;
 			this.sectionProperties.polygonColor = 'black';
+			this.sectionProperties.mode = mode;
 		}
 
 		public override onResize(): void {
 			if (!this.sectionProperties.polygon) return;
 
-			this.setPositionAndSizeFromTwipRectangles(
-				this.sectionProperties.lastRectangles,
-			);
+			this.setTwipRectangles(this.sectionProperties.lastRectangles);
 		}
 
 		public override onNewDocumentTopLeft(): void {
 			if (!this.sectionProperties.polygon) return;
 
-			this.setPositionAndSizeFromTwipRectangles(
-				this.sectionProperties.lastRectangles,
-			);
+			this.setTwipRectangles(this.sectionProperties.lastRectangles);
 		}
 
 		public override onDraw(): void {
@@ -65,7 +62,7 @@ namespace cool {
 			);
 			this.sectionProperties.polygonColor =
 				redlineType === 'Insert' ? 'green' : 'gray';
-			this.setPositionAndSizeFromTwipRectangles(rectangles);
+			this.setTwipRectangles(rectangles);
 			app.sectionContainer.requestReDraw();
 		}
 
@@ -73,6 +70,14 @@ namespace cool {
 		public hideAnchorRectangles(): void {
 			this.sectionProperties.polygon = null;
 			app.sectionContainer.requestReDraw();
+		}
+
+		/// Sets position and size from twip rectangles, then applies the TileMode.
+		private setTwipRectangles(rectangles: Array<number[]>): void {
+			this.setPositionAndSizeFromTwipRectangles(rectangles);
+			this.documentPosition.mode = this.sectionProperties.mode;
+			this.myTopLeft[0] = this.documentPosition.vX;
+			this.myTopLeft[1] = this.documentPosition.vY;
 		}
 
 		/// Parses the rectangles string[] into an Array<number[]>.
