@@ -629,43 +629,36 @@ bool ClientSession::handleAIChatAction(const std::string& firstLine)
     payload->set("model", model);
     payload->set("messages", messages);
 
-    // If an image model is configured, provide a generate_image tool so the LLM
-    // can decide when image generation is appropriate.
-    const std::string imageModel = getAIImageModel();
-    if (!imageModel.empty())
-    {
-        Poco::JSON::Object::Ptr promptProp = new Poco::JSON::Object();
-        promptProp->set("type", "string");
-        promptProp->set("description", "A detailed description of the image to generate");
+    Poco::JSON::Object::Ptr promptProp = new Poco::JSON::Object();
+    promptProp->set("type", "string");
+    promptProp->set("description", "A detailed description of the image to generate");
 
-        Poco::JSON::Object::Ptr properties = new Poco::JSON::Object();
-        properties->set("prompt", promptProp);
+    Poco::JSON::Object::Ptr properties = new Poco::JSON::Object();
+    properties->set("prompt", promptProp);
 
-        Poco::JSON::Array::Ptr required = new Poco::JSON::Array();
-        required->add("prompt");
+    Poco::JSON::Array::Ptr required = new Poco::JSON::Array();
+    required->add("prompt");
 
-        Poco::JSON::Object::Ptr parameters = new Poco::JSON::Object();
-        parameters->set("type", "object");
-        parameters->set("properties", properties);
-        parameters->set("required", required);
+    Poco::JSON::Object::Ptr parameters = new Poco::JSON::Object();
+    parameters->set("type", "object");
+    parameters->set("properties", properties);
+    parameters->set("required", required);
 
-        Poco::JSON::Object::Ptr function = new Poco::JSON::Object();
-        function->set("name", "generate_image");
-        function->set("description",
-                       "Generate an image based on the user's description. Call this when the "
-                       "user asks to create, draw, generate, sketch, or make an image or picture.");
-        function->set("parameters", parameters);
+    Poco::JSON::Object::Ptr function = new Poco::JSON::Object();
+    function->set("name", "generate_image");
+    function->set("description",
+                    "Generate an image based on the user's description. Call this when the "
+                    "user asks to create, draw, generate, sketch, or make an image or picture.");
+    function->set("parameters", parameters);
 
-        Poco::JSON::Object::Ptr tool = new Poco::JSON::Object();
-        tool->set("type", "function");
-        tool->set("function", function);
+    Poco::JSON::Object::Ptr tool = new Poco::JSON::Object();
+    tool->set("type", "function");
+    tool->set("function", function);
 
-        Poco::JSON::Array::Ptr tools = new Poco::JSON::Array();
-        tools->add(tool);
+    Poco::JSON::Array::Ptr tools = new Poco::JSON::Array();
+    tools->add(tool);
 
-        payload->set("tools", tools);
-        LOG_DBG("AIChatAction: including generate_image tool (image model: " << imageModel << ")");
-    }
+    payload->set("tools", tools);
 
     std::ostringstream payloadStream;
     payload->stringify(payloadStream);
