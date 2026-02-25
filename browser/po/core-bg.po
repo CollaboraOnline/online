@@ -387,11 +387,29 @@ msgctxt "imagetabpage|tileoffmtr"
 msgid "Tiling Offset Value"
 msgstr ""
 
+#. yN5KM
+#: cui/uiconfig/ui/lineendstabpage.ui:281
+msgctxt "lineendstabpage|CTL_PREVIEW-atkobject"
+msgid "Example"
+msgstr "Пример"
+
+#. BfBfT
+#: cui/uiconfig/ui/linestyletabpage.ui:462
+msgctxt "linestyletabpage|CTL_PREVIEW-atkobject"
+msgid "Example"
+msgstr "Пример"
+
 #. cFYxJ
 #: cui/uiconfig/ui/numberingformatpage.ui:541
 msgctxt "numberingformatpage|currencylb-atkobject"
 msgid "Currency"
 msgstr "Валута"
+
+#. YnkND
+#: cui/uiconfig/ui/numberingformatpage.ui:682
+msgctxt "numberingformatpage|preview-atkobject"
+msgid "Preview"
+msgstr "Мостра"
 
 #. vcAoU
 #: cui/uiconfig/ui/pageformatpage.ui:223
@@ -673,6 +691,18 @@ msgid ""
 "Enter the number of columns that you want in the page, frame, or section."
 msgstr "Въведете желания брой на колоните страницата, рамката или раздела."
 
+#. nTezC
+#: sw/uiconfig/swriter/ui/columnpage.ui:913
+msgctxt "columnpage|pageexample-atkobject"
+msgid "Preview"
+msgstr "Мостра"
+
+#. FYPLQ
+#: sw/uiconfig/swriter/ui/columnpage.ui:930
+msgctxt "columnpage|frameexample-atkobject"
+msgid "Preview"
+msgstr "Мостра"
+
 #. yLJG6
 #: sw/uiconfig/swriter/ui/dropcapspage.ui:336
 msgctxt "dropcapspage|drawingareaWN_EXAMPLE-atkobject"
@@ -691,11 +721,23 @@ msgctxt "footnotesendnotestabpage|endnumviewbox-atkobject"
 msgid "Numbering"
 msgstr "Номерация"
 
+#. KFGXP
+#: sw/uiconfig/swriter/ui/outlinenumberingpage.ui:119
+msgctxt "outlinenumberingpage|preview-atkobject"
+msgid "Preview"
+msgstr "Мостра"
+
 #. Ci9GE
 #: sw/uiconfig/swriter/ui/spellmenu.ui:34
 msgctxt "spellmenu|add"
 msgid "Add to _Dictionary (standard.dic)"
 msgstr "Добавяне в речника (standard.dic)"
+
+#. Ngg9E
+#: sw/uiconfig/swriter/ui/textgridpage.ui:155
+msgctxt "textgridpage|drawingareaWN_EXAMPLE-atkobject"
+msgid "Preview"
+msgstr "Мостра"
 
 #. Kvz9V
 #: sw/uiconfig/swriter/ui/tocentriespage.ui:252
@@ -715,11 +757,23 @@ msgctxt "tocentriespage|authfield-atkobject"
 msgid "Authority field"
 msgstr ""
 
+#. risLD
+#: sw/uiconfig/swriter/ui/tokenwidget.ui:25
+msgctxt "tokenwidget|left|tooltip_text"
+msgid "Move left"
+msgstr "Преместване наляво"
+
 #. NF9Au
 #: sw/uiconfig/swriter/ui/tokenwidget.ui:30
 msgctxt "tokenwidget|left"
 msgid "Scroll left"
 msgstr "Ляв ръб на плъзгача"
+
+#. fn5SV
+#: sw/uiconfig/swriter/ui/tokenwidget.ui:93
+msgctxt "tokenwidget|right|tooltip_text"
+msgid "Move right"
+msgstr "Преместване надясно"
 
 #. Efssr
 #: sw/uiconfig/swriter/ui/tokenwidget.ui:98

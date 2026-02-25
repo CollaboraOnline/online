@@ -389,11 +389,29 @@ msgctxt "imagetabpage|tileoffmtr"
 msgid "Tiling Offset Value"
 msgstr ""
 
+#. yN5KM
+#: cui/uiconfig/ui/lineendstabpage.ui:281
+msgctxt "lineendstabpage|CTL_PREVIEW-atkobject"
+msgid "Example"
+msgstr "範例"
+
+#. BfBfT
+#: cui/uiconfig/ui/linestyletabpage.ui:462
+msgctxt "linestyletabpage|CTL_PREVIEW-atkobject"
+msgid "Example"
+msgstr "範例"
+
 #. cFYxJ
 #: cui/uiconfig/ui/numberingformatpage.ui:541
 msgctxt "numberingformatpage|currencylb-atkobject"
 msgid "Currency"
 msgstr "貨幣"
+
+#. YnkND
+#: cui/uiconfig/ui/numberingformatpage.ui:682
+msgctxt "numberingformatpage|preview-atkobject"
+msgid "Preview"
+msgstr "預覽"
 
 #. vcAoU
 #: cui/uiconfig/ui/pageformatpage.ui:223
@@ -675,6 +693,18 @@ msgid ""
 "Enter the number of columns that you want in the page, frame, or section."
 msgstr "輸入您想要在頁面、外框或區段中使用的欄數。"
 
+#. nTezC
+#: sw/uiconfig/swriter/ui/columnpage.ui:913
+msgctxt "columnpage|pageexample-atkobject"
+msgid "Preview"
+msgstr "預覽"
+
+#. FYPLQ
+#: sw/uiconfig/swriter/ui/columnpage.ui:930
+msgctxt "columnpage|frameexample-atkobject"
+msgid "Preview"
+msgstr "預覽"
+
 #. yLJG6
 #: sw/uiconfig/swriter/ui/dropcapspage.ui:336
 msgctxt "dropcapspage|drawingareaWN_EXAMPLE-atkobject"
@@ -693,11 +723,23 @@ msgctxt "footnotesendnotestabpage|endnumviewbox-atkobject"
 msgid "Numbering"
 msgstr "編號"
 
+#. KFGXP
+#: sw/uiconfig/swriter/ui/outlinenumberingpage.ui:119
+msgctxt "outlinenumberingpage|preview-atkobject"
+msgid "Preview"
+msgstr "預覽"
+
 #. Ci9GE
 #: sw/uiconfig/swriter/ui/spellmenu.ui:34
 msgctxt "spellmenu|add"
 msgid "Add to _Dictionary (standard.dic)"
 msgstr "新增至字典 (standard.dic) (_D)"
+
+#. Ngg9E
+#: sw/uiconfig/swriter/ui/textgridpage.ui:155
+msgctxt "textgridpage|drawingareaWN_EXAMPLE-atkobject"
+msgid "Preview"
+msgstr "預覽"
 
 #. Kvz9V
 #: sw/uiconfig/swriter/ui/tocentriespage.ui:252
@@ -717,11 +759,23 @@ msgctxt "tocentriespage|authfield-atkobject"
 msgid "Authority field"
 msgstr ""
 
+#. risLD
+#: sw/uiconfig/swriter/ui/tokenwidget.ui:25
+msgctxt "tokenwidget|left|tooltip_text"
+msgid "Move left"
+msgstr "左移"
+
 #. NF9Au
 #: sw/uiconfig/swriter/ui/tokenwidget.ui:30
 msgctxt "tokenwidget|left"
 msgid "Scroll left"
 msgstr "向左捲動"
+
+#. fn5SV
+#: sw/uiconfig/swriter/ui/tokenwidget.ui:93
+msgctxt "tokenwidget|right|tooltip_text"
+msgid "Move right"
+msgstr "右移"
 
 #. Efssr
 #: sw/uiconfig/swriter/ui/tokenwidget.ui:98

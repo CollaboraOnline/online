@@ -381,11 +381,29 @@ msgctxt "imagetabpage|tileoffmtr"
 msgid "Tiling Offset Value"
 msgstr ""
 
+#. yN5KM
+#: cui/uiconfig/ui/lineendstabpage.ui:281
+msgctxt "lineendstabpage|CTL_PREVIEW-atkobject"
+msgid "Example"
+msgstr ""
+
+#. BfBfT
+#: cui/uiconfig/ui/linestyletabpage.ui:462
+msgctxt "linestyletabpage|CTL_PREVIEW-atkobject"
+msgid "Example"
+msgstr ""
+
 #. cFYxJ
 #: cui/uiconfig/ui/numberingformatpage.ui:541
 msgctxt "numberingformatpage|currencylb-atkobject"
 msgid "Currency"
 msgstr "통화"
+
+#. YnkND
+#: cui/uiconfig/ui/numberingformatpage.ui:682
+msgctxt "numberingformatpage|preview-atkobject"
+msgid "Preview"
+msgstr ""
 
 #. vcAoU
 #: cui/uiconfig/ui/pageformatpage.ui:223
@@ -667,6 +685,18 @@ msgid ""
 "Enter the number of columns that you want in the page, frame, or section."
 msgstr "페이지, 프레임 또는 구역에 원하는 열 수를 입력합니다."
 
+#. nTezC
+#: sw/uiconfig/swriter/ui/columnpage.ui:913
+msgctxt "columnpage|pageexample-atkobject"
+msgid "Preview"
+msgstr ""
+
+#. FYPLQ
+#: sw/uiconfig/swriter/ui/columnpage.ui:930
+msgctxt "columnpage|frameexample-atkobject"
+msgid "Preview"
+msgstr ""
+
 #. yLJG6
 #: sw/uiconfig/swriter/ui/dropcapspage.ui:336
 msgctxt "dropcapspage|drawingareaWN_EXAMPLE-atkobject"
@@ -685,10 +715,22 @@ msgctxt "footnotesendnotestabpage|endnumviewbox-atkobject"
 msgid "Numbering"
 msgstr "번호 매기기"
 
+#. KFGXP
+#: sw/uiconfig/swriter/ui/outlinenumberingpage.ui:119
+msgctxt "outlinenumberingpage|preview-atkobject"
+msgid "Preview"
+msgstr ""
+
 #. Ci9GE
 #: sw/uiconfig/swriter/ui/spellmenu.ui:34
 msgctxt "spellmenu|add"
 msgid "Add to _Dictionary (standard.dic)"
+msgstr ""
+
+#. Ngg9E
+#: sw/uiconfig/swriter/ui/textgridpage.ui:155
+msgctxt "textgridpage|drawingareaWN_EXAMPLE-atkobject"
+msgid "Preview"
 msgstr ""
 
 #. Kvz9V
@@ -709,11 +751,23 @@ msgctxt "tocentriespage|authfield-atkobject"
 msgid "Authority field"
 msgstr ""
 
+#. risLD
+#: sw/uiconfig/swriter/ui/tokenwidget.ui:25
+msgctxt "tokenwidget|left|tooltip_text"
+msgid "Move left"
+msgstr "왼쪽으로 이동"
+
 #. NF9Au
 #: sw/uiconfig/swriter/ui/tokenwidget.ui:30
 msgctxt "tokenwidget|left"
 msgid "Scroll left"
 msgstr "왼쪽으로 이동"
+
+#. fn5SV
+#: sw/uiconfig/swriter/ui/tokenwidget.ui:93
+msgctxt "tokenwidget|right|tooltip_text"
+msgid "Move right"
+msgstr "오른쪽으로 이동"
 
 #. Efssr
 #: sw/uiconfig/swriter/ui/tokenwidget.ui:98

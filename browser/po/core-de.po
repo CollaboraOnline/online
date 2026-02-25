@@ -396,10 +396,28 @@ msgctxt "imagetabpage|tileoffmtr"
 msgid "Tiling Offset Value"
 msgstr ""
 
+#. yN5KM
+#: cui/uiconfig/ui/lineendstabpage.ui:281
+msgctxt "lineendstabpage|CTL_PREVIEW-atkobject"
+msgid "Example"
+msgstr "Beispiel"
+
+#. BfBfT
+#: cui/uiconfig/ui/linestyletabpage.ui:462
+msgctxt "linestyletabpage|CTL_PREVIEW-atkobject"
+msgid "Example"
+msgstr "Beispiel"
+
 #. cFYxJ
 #: cui/uiconfig/ui/numberingformatpage.ui:541
 msgctxt "numberingformatpage|currencylb-atkobject"
 msgid "Currency"
+msgstr ""
+
+#. YnkND
+#: cui/uiconfig/ui/numberingformatpage.ui:682
+msgctxt "numberingformatpage|preview-atkobject"
+msgid "Preview"
 msgstr ""
 
 #. vcAoU
@@ -689,6 +707,18 @@ msgstr ""
 "Geben Sie die Anzahl der Spalten ein, die Sie auf der Seite, im Rahmen oder "
 "im Abschnitt haben möchten."
 
+#. nTezC
+#: sw/uiconfig/swriter/ui/columnpage.ui:913
+msgctxt "columnpage|pageexample-atkobject"
+msgid "Preview"
+msgstr "Vorschau"
+
+#. FYPLQ
+#: sw/uiconfig/swriter/ui/columnpage.ui:930
+msgctxt "columnpage|frameexample-atkobject"
+msgid "Preview"
+msgstr "Vorschau"
+
 #. yLJG6
 #: sw/uiconfig/swriter/ui/dropcapspage.ui:336
 msgctxt "dropcapspage|drawingareaWN_EXAMPLE-atkobject"
@@ -707,11 +737,23 @@ msgctxt "footnotesendnotestabpage|endnumviewbox-atkobject"
 msgid "Numbering"
 msgstr ""
 
+#. KFGXP
+#: sw/uiconfig/swriter/ui/outlinenumberingpage.ui:119
+msgctxt "outlinenumberingpage|preview-atkobject"
+msgid "Preview"
+msgstr "Vorschau"
+
 #. Ci9GE
 #: sw/uiconfig/swriter/ui/spellmenu.ui:34
 msgctxt "spellmenu|add"
 msgid "Add to _Dictionary (standard.dic)"
 msgstr "Zum _Wörterbuch hinzufügen (standard.dic)"
+
+#. Ngg9E
+#: sw/uiconfig/swriter/ui/textgridpage.ui:155
+msgctxt "textgridpage|drawingareaWN_EXAMPLE-atkobject"
+msgid "Preview"
+msgstr "Vorschau"
 
 #. Kvz9V
 #: sw/uiconfig/swriter/ui/tocentriespage.ui:252
@@ -731,11 +773,23 @@ msgctxt "tocentriespage|authfield-atkobject"
 msgid "Authority field"
 msgstr ""
 
+#. risLD
+#: sw/uiconfig/swriter/ui/tokenwidget.ui:25
+msgctxt "tokenwidget|left|tooltip_text"
+msgid "Move left"
+msgstr "Nach links bewegen"
+
 #. NF9Au
 #: sw/uiconfig/swriter/ui/tokenwidget.ui:30
 msgctxt "tokenwidget|left"
 msgid "Scroll left"
 msgstr "Nach links rollen"
+
+#. fn5SV
+#: sw/uiconfig/swriter/ui/tokenwidget.ui:93
+msgctxt "tokenwidget|right|tooltip_text"
+msgid "Move right"
+msgstr "Nach rechts bewegen"
 
 #. Efssr
 #: sw/uiconfig/swriter/ui/tokenwidget.ui:98
