@@ -1720,6 +1720,14 @@ class UIManager extends window.L.Control {
 
 		// Go via SimplePoint(), which is aware of the active layout.
 		const point = new cool.SimplePoint(+split[0], +split[1]);
+
+		const layout = app.activeDocument?.activeLayout;
+		if (layout && layout.type === 'ViewLayoutCompareChanges') {
+			// Map from document to canvas coordinates using the last used tile mode.
+			const compareLayout = layout as ViewLayoutCompareChanges;
+			point.mode = compareLayout.lastTileMode;
+		}
+
 		const pt = { x: Math.round(point.vX / app.dpiScale), y: Math.round(point.vY / app.dpiScale) };
 
 		var elem = $('.leaflet-layer');
