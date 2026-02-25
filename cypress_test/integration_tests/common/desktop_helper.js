@@ -550,7 +550,7 @@ function getCompactIcon(unoCommand) {
 
 /// get icon for given uno command from notebookbar
 function getNbIcon(unoCommand, tabName) {
-	return cy.cGet((tabName ? '#' + tabName + '-container' : '') + '.notebookbar  .uno' + unoCommand + ' > button:visible');
+	return cy.cGet((tabName ? '#' + tabName + '-container' : '') + '.notebookbar  .uno' + unoCommand + ' > button.unobutton:visible');
 }
 
 /// get icon arrow for given uno command from classic toolbar to open the dropdown
