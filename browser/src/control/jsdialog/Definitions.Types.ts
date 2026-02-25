@@ -28,6 +28,7 @@ interface WidgetJSON {
 	labelledBy?: string;
 	allyRole?: string;
 	aria?: AriaLabelAttributes; // ARIA Label attributes
+	ariaLive?: 'polite' | 'assertive' | 'off';
 	gridKeyboardNavigation?: boolean; // receives keyboard navigation for elements in col/rows
 }
 

@@ -207,6 +207,13 @@ namespace cool {
 					if (this.messages[i].isError) {
 						el.classList.add('aichat-msg-error');
 					}
+					const label =
+						this.messages[i].role === 'user'
+							? _('Your message')
+							: this.messages[i].isError
+								? _('Error message')
+								: _('AI response');
+					el.setAttribute('aria-label', label);
 				}
 			}
 			this.applyMessageTooltips();
@@ -328,6 +335,8 @@ namespace cool {
 				text: this.hintText || '',
 				enabled: true,
 				visible: !!this.hintText,
+				allyRole: 'status',
+				ariaLive: 'polite' as const,
 			};
 		}
 
@@ -393,12 +402,14 @@ namespace cool {
 						type: 'pushbutton',
 						image: this.ICON_TRASH,
 						enabled: this.messages.length > 0,
+						aria: { label: _('New conversation') },
 					},
 					{
 						id: 'aichat-close-btn',
 						type: 'pushbutton',
 						image: this.ICON_CLOSE,
 						enabled: true,
+						aria: { label: _('Close') },
 					},
 				],
 			};
@@ -427,6 +438,9 @@ namespace cool {
 					id: 'aichat-loading-dots',
 					type: 'container',
 					horizontal: true,
+					allyRole: 'status',
+					ariaLive: 'polite' as const,
+					aria: { label: _('Loading') },
 					children: [
 						{
 							id: 'aichat-dot-1',
@@ -457,6 +471,9 @@ namespace cool {
 				type: 'container',
 				vertical: true,
 				children: children,
+				allyRole: 'log',
+				ariaLive: 'polite' as const,
+				aria: { label: _('Chat messages') },
 			};
 		}
 
@@ -542,6 +559,7 @@ namespace cool {
 					type: 'pushbutton',
 					image: this.ICON_INSERT,
 					enabled: true,
+					aria: { label: _('Insert at cursor') },
 				});
 			}
 
@@ -550,6 +568,7 @@ namespace cool {
 				type: 'pushbutton',
 				image: 'lc_copy.svg',
 				enabled: true,
+				aria: { label: _('Copy to clipboard') },
 			});
 
 			this.ensureContainerChildren(children, `aichat-actions-${index}`);
@@ -573,12 +592,14 @@ namespace cool {
 						type: 'pushbutton',
 						image: this.ICON_INSERT,
 						enabled: true,
+						aria: { label: _('Insert at cursor') },
 					},
 					{
 						id: `aichat-copy-img-${index}`,
 						type: 'pushbutton',
 						image: 'lc_copy.svg',
 						enabled: true,
+						aria: { label: _('Copy to clipboard') },
 					},
 				],
 			};
@@ -597,12 +618,18 @@ namespace cool {
 						placeholder: _('Ask AI...'),
 						cursor: true,
 						enabled: !this.isProcessing,
+						aria: { label: _('Message input') },
 					},
 					{
 						id: 'aichat-send-btn',
 						type: 'pushbutton',
 						image: this.isProcessing ? this.ICON_STOP : this.ICON_SEND,
 						enabled: this.isProcessing || this.inputText.trim().length > 0,
+						aria: {
+							label: this.isProcessing
+								? _('Stop generating')
+								: _('Send message'),
+						},
 					},
 				],
 			};
