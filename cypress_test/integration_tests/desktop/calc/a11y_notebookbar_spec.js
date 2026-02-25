@@ -30,6 +30,7 @@ describe(['tagdesktop'], 'Accessibility Calc Notebookbar Tests', { testIsolation
 	var skipContextTabs = ['Sparkline', 'Table'];
 
 	after(function () {
+		if (visitedTabNames.length === 0) return;
 		var unvisited = allTabNames.filter(function (name) {
 			return !visitedTabNames.includes(name) && !skipContextTabs.includes(name);
 		});
