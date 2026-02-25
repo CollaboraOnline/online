@@ -114,6 +114,9 @@ window.L.WriterTileLayer = window.L.CanvasTileLayer.extend({
 		if (!statusJSON.width || !statusJSON.height || this._documentInfo === textMsg)
 			return;
 
+		if (statusJSON.readonly && !this._documentInfo)
+			this._map.setPermission('readonly');
+
 		var sizeChanged = statusJSON.width !== app.activeDocument.fileSize.x || statusJSON.height !== app.activeDocument.fileSize.y;
 
 		if (statusJSON.viewid !== undefined) {

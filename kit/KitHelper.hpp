@@ -123,16 +123,7 @@ namespace LOKitHelper
         resultInfo["lastcolumn"] = std::to_string(lastColumn);
         resultInfo["lastrow"] = std::to_string(lastRow);
 
-        ScopedString value(loKitDocument->pClass->getCommandValues(loKitDocument, ".uno:ReadOnly"));
-        if (value)
-        {
-            const std::string isReadOnly = std::string(value.get());
-
-            bool readOnly = (isReadOnly.find("true") != std::string::npos);
-            resultInfo["readonly"] = readOnly ? "true": "false";
-        }
-
-        value.reset(loKitDocument->pClass->getCommandValues(loKitDocument, ".uno:DefinePrintArea"));
+        ScopedString value(loKitDocument->pClass->getCommandValues(loKitDocument, ".uno:DefinePrintArea"));
         if (value)
         {
             resultInfo["printranges"] = std::string(value.get());
@@ -166,6 +157,15 @@ namespace LOKitHelper
         resultInfo["width"] = std::to_string(width);
         resultInfo["height"] = std::to_string(height);
         resultInfo["viewid"] = std::to_string(viewId);
+
+        ScopedString value(loKitDocument->pClass->getCommandValues(loKitDocument, ".uno:ReadOnly"));
+        if (value)
+        {
+            const std::string isReadOnly = std::string(value.get());
+
+            bool readOnly = (isReadOnly.find("true") != std::string::npos);
+            resultInfo["readonly"] = readOnly ? "true": "false";
+        }
 
         ScopedString values(loKitDocument->pClass->getCommandValues(loKitDocument, ".uno:AllPageSize"));
         if (values)
