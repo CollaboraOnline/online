@@ -313,37 +313,17 @@ namespace cool {
 			}
 		}
 
-		private readonly ICON_TRASH: string =
-			"data:image/svg+xml,%3Csvg viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg' " +
-			"fill='none' stroke='%23666' stroke-width='1.5' stroke-linecap='round' " +
-			"stroke-linejoin='round'%3E%3Cpath d='M3 6h18M8 6V4a1 1 0 011-1h6a1 1 0 011 " +
-			"1v2m2 0v14a1 1 0 01-1 1H7a1 1 0 01-1-1V6h12z'/%3E%3Cpath d='M10 11v6M14 11v6'" +
-			'/%3E%3C/svg%3E';
+		private readonly ICON_TRASH = 'lc_aichat_trash.svg';
+		private readonly ICON_CLOSE = 'lc_aichat_close.svg';
+		private readonly ICON_SEND = 'lc_aichat_send.svg';
+		private readonly ICON_INSERT = 'lc_aichat_insert.svg';
+		private readonly ICON_STOP = 'lc_aichat_stop.svg';
 
-		private readonly ICON_CLOSE: string =
-			"data:image/svg+xml,%3Csvg viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg' " +
-			"fill='none' stroke='%23666' stroke-width='2' stroke-linecap='round'%3E" +
-			"%3Cpath d='M6 6l12 12M18 6L6 18'/%3E%3C/svg%3E";
-
-		private readonly ICON_SEND: string =
-			"data:image/svg+xml,%3Csvg viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg' " +
-			"fill='none' stroke='%23666' stroke-width='2.5' stroke-linecap='round' " +
-			"stroke-linejoin='round'%3E%3Cpath d='M12 19V5M5 12l7-7 7 7'/%3E%3C/svg%3E";
-
+		// Keep as data URI: transient success indicator with semantic green color
 		private readonly ICON_CHECK: string =
 			"data:image/svg+xml,%3Csvg viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg' " +
 			"fill='none' stroke='%2322c55e' stroke-width='2.5' stroke-linecap='round' " +
 			"stroke-linejoin='round'%3E%3Cpath d='M5 13l4 4L19 7'/%3E%3C/svg%3E";
-
-		private readonly ICON_INSERT: string =
-			"data:image/svg+xml,%3Csvg viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg' " +
-			"fill='none' stroke='%23666' stroke-width='2' stroke-linecap='round'%3E" +
-			"%3Cpath d='M12 5v14M5 12h14'/%3E%3C/svg%3E";
-
-		private readonly ICON_STOP: string =
-			"data:image/svg+xml,%3Csvg viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg' " +
-			"fill='%23fff' stroke='none'%3E%3Crect x='7' y='7' width='10' height='10' " +
-			"rx='2'/%3E%3C/svg%3E";
 
 		private getHeaderJSON(): any {
 			return {
