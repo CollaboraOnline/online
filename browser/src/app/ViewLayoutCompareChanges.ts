@@ -16,6 +16,10 @@ enum TileMode {
 
 class ViewLayoutCompareChanges extends ViewLayoutNewBase {
 	public readonly type: string = 'ViewLayoutCompareChanges';
+
+	/// Last tile mode seen when converting from canvas to document coordinates.
+	public lastTileMode: TileMode = TileMode.RightSide;
+
 	private halfWidth = 0; // Half width of the view.
 	private viewGap = Math.round(20 / app.dpiScale); // The gap between the 2 views.
 	private yStart = Math.round(20 / app.dpiScale); // The space above the first page.
@@ -142,6 +146,9 @@ class ViewLayoutCompareChanges extends ViewLayoutNewBase {
 
 		point.mode =
 			point.pX < this.halfWidth ? TileMode.LeftSide : TileMode.RightSide;
+
+		// Remember which tile mode was used last.
+		this.lastTileMode = point.mode;
 
 		result.pX -= this.getDeflectionX(point.mode);
 		result.pY += this.scrollProperties.viewY - this.yStart;
