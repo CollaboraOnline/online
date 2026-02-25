@@ -383,7 +383,7 @@ body {
 
 #aichat-dock-wrapper.visible {
 	display: block;
-	animation: 200ms ease-out appear-from-right;
+	animation: 200ms ease-out aichat-dock-open;
 	border-inline-start: 1px solid var(--color-border);
 }
 
@@ -393,6 +393,13 @@ body {
 	}
 	to {
 		transform: translateX(0);
+	}
+}
+
+@keyframes aichat-dock-open {
+	from {
+		max-width: 0;
+		border-inline-start-color: transparent;
 	}
 }
 
