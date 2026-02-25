@@ -82,6 +82,7 @@ namespace cool {
 		private readonly TEXTAREA_MAX_HEIGHT_PX = 120;
 		private readonly FORMULA_FETCH_TIMEOUT_MS = 5000;
 		private readonly MAX_API_MESSAGES = 50;
+		private readonly MAX_MESSAGE_LENGTH = 100000; // 100K characters
 
 		constructor() {
 			this.container = document.getElementById('aichat-panel') as HTMLElement;
@@ -767,6 +768,15 @@ namespace cool {
 				}
 			}
 
+			// Show warning when approaching message length limit
+			if (this.inputText.length > this.MAX_MESSAGE_LENGTH * 0.9) {
+				this.hintText = _('Approaching message length limit');
+				this.updateHint();
+			} else if (this.hintText && this.hintText.includes('length')) {
+				this.hintText = '';
+				this.updateHint();
+			}
+
 			const textarea = document.querySelector(
 				'#aichat-input .ui-textarea',
 			) as HTMLTextAreaElement | null;
@@ -886,6 +896,14 @@ namespace cool {
 		async sendMessage(): Promise<void> {
 			const text = this.inputText.trim();
 			if (!text || this.isProcessing) return;
+
+			if (text.length > this.MAX_MESSAGE_LENGTH) {
+				this.hintText = _(
+					'Message is too long. Please shorten it and try again.',
+				);
+				this.updateHint();
+				return;
+			}
 
 			this.hintText = '';
 
