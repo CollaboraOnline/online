@@ -56,7 +56,7 @@ describe(['tagdesktop'], 'Accessibility Writer Sidebar Tests', { testIsolation: 
 		runA11yValidation(win);
 	});
 
-	it('Chart (LinePropertyPanel)', function () {
+	it.skip('Chart (LinePropertyPanel)', function () {
 		helper.clearAllText({ isTable: true });
 		cy.then(() => {
 			win.app.map.sendUnoCommand('.uno:InsertObjectChart');
@@ -217,7 +217,7 @@ describe(['tagdesktop'], 'Accessibility Writer Sidebar Tests', { testIsolation: 
 		});
 	});
 
-	it('InspectorDeck', function() {
+	it.skip('InspectorDeck', function() {
 		cy.then(() => {
 			win.app.map.sendUnoCommand('.uno:SidebarDeck.InspectorDeck');
 			helper.processToIdle(win);

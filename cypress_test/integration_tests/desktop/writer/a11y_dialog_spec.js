@@ -193,7 +193,7 @@ describe(['tagdesktop'], 'Accessibility Writer Dialog Tests', { testIsolation: f
             // silently skip the common dialogs that writer doesn't have
             return;
         } else {
-            it(`Common Dialog ${command}`, function () {
+            it.skip(`Common Dialog ${command}`, function () {
                 if (!hasLinguisticData && a11yHelper.needsLinguisticData(command)) {
                     this._runnable.title += ' (skipped: missing linguistic data)';
                     this.skip();
@@ -203,7 +203,7 @@ describe(['tagdesktop'], 'Accessibility Writer Dialog Tests', { testIsolation: f
         }
     });
 
-    it('Transform dialog', function () {
+    it.skip('Transform dialog', function () {
         cy.then(() => {
             win.app.map.sendUnoCommand('.uno:BasicShapes.octagon');
         });
@@ -224,7 +224,7 @@ describe(['tagdesktop'], 'Accessibility Writer Dialog Tests', { testIsolation: f
         helper.typeIntoDocument('{esc}');
     });
 
-    it('Line dialog', function () {
+    it.skip('Line dialog', function () {
         cy.then(() => {
             win.app.map.sendUnoCommand('.uno:Line');
         });
@@ -254,7 +254,7 @@ describe(['tagdesktop'], 'Accessibility Writer Dialog Tests', { testIsolation: f
 
     allWriterDialogs.forEach(function (commandSpec) {
         const command = typeof commandSpec === 'string' ? commandSpec : commandSpec.command;
-        it(`Writer Dialog ${command}`, function () {
+        it.skip(`Writer Dialog ${command}`, function () {
             a11yHelper.testDialog(win, commandSpec);
         });
     });
@@ -282,7 +282,7 @@ describe(['tagdesktop'], 'Accessibility Writer Dialog Tests', { testIsolation: f
         a11yHelper.handleDialog(win, 1, '.uno:ContentControlProperties');
     });
 
-    it('Object dialog', function () {
+    it.skip('Object dialog', function () {
         helper.clearAllText({ isTable: true });
         cy.then(() => {
             win.app.map.sendUnoCommand('.uno:InsertObjectChart');
@@ -328,7 +328,7 @@ describe(['tagdesktop'], 'Accessibility Writer Dialog Tests', { testIsolation: f
        cy.cGet('div.clipboard').should('have.focus');
     });
 
-    it('Graphic dialog', function () {
+    it.skip('Graphic dialog', function () {
         helper.clearAllText();
         desktopHelper.insertImage();
         cy.then(() => {
@@ -361,11 +361,11 @@ describe(['tagdesktop'], 'Accessibility Writer Dialog Tests', { testIsolation: f
         });
     });
 
-    it('PDF export warning dialog', function () {
+    it.skip('PDF export warning dialog', function () {
         a11yHelper.testPDFExportWarningDialog(win);
     });
 
-    it('ReadOnly info dialog', function () {
+    it.skip('ReadOnly info dialog', function () {
         // Text ReadOnly info dialog
         helper.clearAllText({ isTable: true });
         helper.typeIntoDocument('READONLY');

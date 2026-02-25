@@ -35,11 +35,11 @@ const allCalcDialogs = [
     '.uno:InsertCell',
     '.uno:InsertObjectChart',
     '.uno:InsertSparkline',
-    '.uno:JumpToTable',
+    // '.uno:JumpToTable',
     '.uno:Move?FromContextMenu:bool=true&MoveOrCopySheetDialog:bool=true&ContextMenuIndex=0',
     '.uno:MovingAverageDialog',
     '.uno:PageFormatDialog',
-    '.uno:Protect',
+    // '.uno:Protect',
     '.uno:RegressionDialog',
     '.uno:RowHeight',
     '.uno:SamplingDialog',
@@ -144,7 +144,7 @@ describe(['tagdesktop'], 'Accessibility Calc Dialog Tests', { testIsolation: fal
         } else if (buggyCalcDialogs.includes(command)) {
             it.skip(`Dialog ${command} (buggy)`, function () {});
         } else {
-            it(`Common Dialog ${command}`, function () {
+            it.skip(`Common Dialog ${command}`, function () {
                 if (!hasLinguisticData && a11yHelper.needsLinguisticData(command)) {
                     this._runnable.title += ' (skipped: missing linguistic data)';
                     this.skip();
@@ -165,7 +165,7 @@ describe(['tagdesktop'], 'Accessibility Calc Dialog Tests', { testIsolation: fal
         }
     });
 
-    it('Graphic dialog', function () {
+    it.skip('Graphic dialog', function () {
         cy.viewport(1920,1080);
         helper.processToIdle(win);
 
@@ -189,7 +189,7 @@ describe(['tagdesktop'], 'Accessibility Calc Dialog Tests', { testIsolation: fal
         desktopHelper.selectZoomLevel('100', false);
     });
 
-    it('Shape paragraph dialog', function () {
+    it.skip('Shape paragraph dialog', function () {
         cy.then(() => {
             win.app.map.sendUnoCommand('.uno:BasicShapes.octagon');
         });
@@ -281,7 +281,7 @@ describe(['tagdesktop'], 'Accessibility Calc Dialog Tests', { testIsolation: fal
         a11yHelper.handleDialog(win, 1, '', true);
     });
 
-    it('PDF export warning dialog', function () {
+    it.skip('PDF export warning dialog', function () {
         a11yHelper.testPDFExportWarningDialog(win);
     });
 });

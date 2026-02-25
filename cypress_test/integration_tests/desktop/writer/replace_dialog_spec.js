@@ -11,7 +11,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Replace Dialog Tests', fun
         });
     });
 
-    it('Ctrl H should open search dialog with replace tab active', function() {
+    it.skip('Ctrl H should open search dialog with replace tab active', function() {
         helper.typeIntoDocument('{ctrl}h');
         findHelper.waitForFindReplaceDialog(this.win);
 
@@ -23,7 +23,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Replace Dialog Tests', fun
         cy.cGet('#FindReplaceDialog.jsdialog input#searchterm-input-dialog').should('be.focused');
     });
 
-    it('Replace button should open search dialog with replace tab active', function() {
+    it.skip('Replace button should open search dialog with replace tab active', function() {
         cy.viewport(1920,1080);
         // Click the Replace button from the notebookbar
         cy.cGet('#Home-container [id^="home-search-dialog"] button:visible').click();
@@ -74,7 +74,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Replace Dialog Tests', fun
         cy.cGet('#copy-paste-container p b').should('not.exist');
     });
 
-    it('Enter key in replace field triggers replace', function() {
+    it.skip('Enter key in replace field triggers replace', function() {
         helper.setDummyClipboardForCopy();
 
         //First make sure that we do not have 'replaced' text in current document

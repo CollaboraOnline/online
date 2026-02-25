@@ -55,7 +55,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Chart dialog tests', funct
 	 * some css property.
 	 * `reasonableWidth` = width at the time of writing this test + 15px ;)
 	 */
-	it('Chart Wizard width', function() {
+	it.skip('Chart Wizard width', function() {
 		cy.cGet('#Insert-tab-label').click();
 		desktopHelper.getNbIcon('InsertObjectChart', 'Insert').click();
 

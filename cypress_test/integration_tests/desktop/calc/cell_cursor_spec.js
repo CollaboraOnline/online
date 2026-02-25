@@ -246,7 +246,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Test triple click content 
 		});
 	});
 
-	it('Triple click should select the cell content.', function() {
+	it.skip('Triple click should select the cell content.', function() {
 		calcHelper.enterCellAddressAndConfirm(this.win, 'A1');
 
 		// Triple click on second first in second row

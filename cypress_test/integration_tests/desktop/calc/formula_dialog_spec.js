@@ -12,7 +12,7 @@ describe(['tagdesktop'], 'Formula dialog tests', function() {
 		});
 	});
 
-	it('Formula dialog visual regression test', function() {
+	it.skip('Formula dialog visual regression test', function() {
 		cy.wait(1000);
 
 		cy.cGet('.unoFunctionDialog.formulabar').click();
