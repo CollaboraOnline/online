@@ -4,13 +4,11 @@ msgstr ""
 "Project-Id-Version: core-hr\n"
 "PO-Revision-Date: 2026-02-03 12:58+0000\n"
 "Last-Translator: Anonymous <noreply@weblate.org>\n"
-"Language-Team: Croatian <https://hosted.weblate.org/projects/collabora-"
-"online/lokit/hr/>\n"
+"Language-Team: Croatian <https://hosted.weblate.org/projects/collabora-online/lokit/hr/>\n"
 "Language: hr\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
-"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 "X-Generator: Weblate 5.16-dev\n"
 
 #. ygDfy
@@ -39,8 +37,8 @@ msgctxt ""
 "LngText.text"
 msgid ""
 "Collabora Office, the office productivity suite based on LibreOffice "
-"Technology, provided by Collabora Productivity. See https://collaboraoffice."
-"com"
+"Technology, provided by Collabora Productivity. See "
+"https://collaboraoffice.com"
 msgstr ""
 "Collabora Office, uredski paket za produktivnost temeljen na LibreOffice "
 "tehnologiji od Collabora Productivity. Pogledaj https://collaboraoffice.com"
@@ -50,6 +48,36 @@ msgstr ""
 msgctxt "RID_SVXSTR_PASTE_AS_DIALOG_TITLE"
 msgid "Paste As"
 msgstr "Umetni kao"
+
+#. dF6zk
+#: svx/inc/spacing.hrc:16
+msgctxt "RID_ABOVE"
+msgid "Above:"
+msgstr ""
+
+#. uaiun
+#: svx/inc/spacing.hrc:17
+msgctxt "RID_BELOW"
+msgid "Below:"
+msgstr ""
+
+#. fvxsX
+#: svx/inc/spacing.hrc:18
+msgctxt "RID_BEFORE"
+msgid "Before:"
+msgstr ""
+
+#. jGRHH
+#: svx/inc/spacing.hrc:19
+msgctxt "RID_AFTER"
+msgid "After:"
+msgstr ""
+
+#. k9CGA
+#: svx/inc/spacing.hrc:20
+msgctxt "RID_FIRST"
+msgid "First:"
+msgstr ""
 
 #. aNZNw
 #: svx/uiconfig/ui/dropdownfielddialog.ui:31
@@ -70,10 +98,40 @@ msgid "Find"
 msgstr "Pronađi"
 
 #. uknDS
-#: svx/uiconfig/ui/findreplacedialog.ui:80
+#: svx/uiconfig/ui/findreplacedialog.ui:85
 msgctxt "findreplacedialog|replace_tab_btn"
 msgid "Replace"
 msgstr "Zamijeni"
+
+#. v2oaz
+#: svx/uiconfig/ui/findreplacedialog.ui:172
+msgctxt "findreplacedialog|searchlist-atkobject"
+msgid "Search list"
+msgstr ""
+
+#. BmvBD
+#: svx/uiconfig/ui/findreplacedialog.ui:491
+msgctxt "findreplacedialog|replacelist-atkobject"
+msgid "Replace list"
+msgstr ""
+
+#. gbVGs
+#: svx/uiconfig/ui/headfootformatpage.ui:407
+msgctxt "headfootformatpage|drawingareaPageHF-atkobject"
+msgid "Header and Footer Preview"
+msgstr ""
+
+#. LSYRB
+#: svx/uiconfig/ui/sidebarline.ui:91
+msgctxt "sidebarline|SelectWidth|tooltip_text"
+msgid "Line Thickness"
+msgstr ""
+
+#. cDwyK
+#: svx/uiconfig/ui/sidebarline.ui:97
+msgctxt "sidebarline|SelectWidth-atkobject"
+msgid "Line Thickness"
+msgstr ""
 
 #. 7MFsT
 #: uui/inc/strings.hrc:84
@@ -90,8 +148,7 @@ msgid ""
 "Pressing [ No ] will drop these fonts from the document:\n"
 "$(ARG1)"
 msgstr ""
-"Jedan ili više fontova koji su ugrađeni u dokumentu nemaju dozvole za "
-"uređivanje.\n"
+"Jedan ili više fontova koji su ugrađeni u dokumentu nemaju dozvole za uređivanje.\n"
 "Otvoriti dokument u modusu samo-za-čitanje?\n"
 "Pritiskom na [Ne] će se ovi fontovi ukloniti iz dokumenta:\n"
 "$(ARG1)"
@@ -252,6 +309,12 @@ msgctxt "sidebartype|3dschemeft"
 msgid "3D _Scheme:"
 msgstr "3D _shema:"
 
+#. gTE6L
+#: chart2/uiconfig/ui/sidebartype.ui:323
+msgctxt "sidebartype|cmb_chartType-atkobject"
+msgid "Chart Type"
+msgstr ""
+
 #. x3adg
 #: chart2/uiconfig/ui/tp_ChartColorPalette.ui:68
 msgctxt "tp_ChartColorPalette|colorfulwin"
@@ -294,17 +357,131 @@ msgctxt "REG_CALCDBFOCUS"
 msgid "Table Style focus"
 msgstr "Fokus na stil tablice"
 
+#. JPfVT
+#: cui/uiconfig/ui/areatabpage.ui:39
+msgctxt "areatabpage|tablelb-atkobject"
+msgid "Apply to"
+msgstr ""
+
+#. GYGFd
+#: cui/uiconfig/ui/borderpage.ui:94
+msgctxt "borderpage|framesel"
+msgid "Border Preview"
+msgstr ""
+
+#. 3DTib
+#: cui/uiconfig/ui/charnamepage.ui:930
+msgctxt "charnamepage|preview-atkobject"
+msgid "Font preview"
+msgstr ""
+
 #. EPGtZ
 #: cui/uiconfig/ui/hyperlinkinternetpage.ui:64
 msgctxt "hyperlinkinternetpage|target_label"
 msgid "Link:"
 msgstr "Poveznica:"
 
+#. Ric9F
+#: cui/uiconfig/ui/imagetabpage.ui:503
+msgctxt "imagetabpage|tileofflb"
+msgid "Tiling Offset Type"
+msgstr ""
+
+#. j9NqA
+#: cui/uiconfig/ui/imagetabpage.ui:522
+msgctxt "imagetabpage|tileoffmtr"
+msgid "Tiling Offset Value"
+msgstr ""
+
+#. cFYxJ
+#: cui/uiconfig/ui/numberingformatpage.ui:541
+msgctxt "numberingformatpage|currencylb-atkobject"
+msgid "Currency"
+msgstr ""
+
+#. vcAoU
+#: cui/uiconfig/ui/pageformatpage.ui:223
+msgctxt "pageformatpage|drawingareaPageDirection-atkobject"
+msgid "Page Direction"
+msgstr ""
+
 #. gfELk
-#: cui/uiconfig/ui/pageformatpage.ui:260
+#: cui/uiconfig/ui/pageformatpage.ui:265
 msgctxt "pageformatpage|checkResizeAllPages"
 msgid "Resize all pages"
 msgstr "Promijeni veličinu svih stranica"
+
+#. DRBM6
+#: cui/uiconfig/ui/paraindentspacing.ui:399
+msgctxt "paraindentspacing|comboLB_LINEDIST"
+msgid "Line Spacing Type"
+msgstr ""
+
+#. YtiHD
+#: cui/uiconfig/ui/paraindentspacing.ui:446
+msgctxt "paraindentspacing|spinED_LINEDISTPERCENT"
+msgid "Line Spacing Value"
+msgstr ""
+
+#. QE3Ad
+#: cui/uiconfig/ui/paraindentspacing.ui:466
+msgctxt "paraindentspacing|spinED_LINEDISTMETRIC"
+msgid "Line Spacing Value"
+msgstr ""
+
+#. VGEqG
+#: cui/uiconfig/ui/paraindentspacing.ui:487
+msgctxt "paraindentspacing|spinED_BLANK"
+msgid "Line Spacing Value"
+msgstr ""
+
+#. WHAZC
+#: cui/uiconfig/ui/paratabspage.ui:177
+msgctxt "paratabspage|drawingareaWIN_TABLEFT-atkobject"
+msgid "Left tab preview"
+msgstr ""
+
+#. akwMF
+#: cui/uiconfig/ui/paratabspage.ui:192
+msgctxt "paratabspage|drawingareaWIN_TABRIGHT-atkobject"
+msgid "Right tab preview"
+msgstr ""
+
+#. GF4AG
+#: cui/uiconfig/ui/paratabspage.ui:207
+msgctxt "paratabspage|drawingareaWIN_TABCENTER-atkobject"
+msgid "Center tab preview"
+msgstr ""
+
+#. pSa2J
+#: cui/uiconfig/ui/paratabspage.ui:222
+msgctxt "paratabspage|drawingareaWIN_TABDECIMAL-atkobject"
+msgid "Decimal tab preview"
+msgstr ""
+
+#. jt6Gv
+#: cui/uiconfig/ui/password.ui:258
+msgctxt "password|ropasslevelbar-atkobject"
+msgid "Password Level Bar"
+msgstr ""
+
+#. FC5te
+#: cui/uiconfig/ui/password.ui:259
+msgctxt "password|extended_tip|ropasslevelbar"
+msgid "Shows the strength of password"
+msgstr ""
+
+#. FCkVG
+#: cui/uiconfig/ui/password.ui:437
+msgctxt "password|passlevelbar-atkobject"
+msgid "Password Level Bar"
+msgstr ""
+
+#. 7XcGF
+#: cui/uiconfig/ui/password.ui:438
+msgctxt "password|extended_tip|passlevelbar"
+msgid "Shows the strength of password"
+msgstr ""
 
 #. NBdEp
 #: cui/uiconfig/ui/pickbulletpage.ui:45
@@ -330,11 +507,35 @@ msgctxt "pickoutlinepage|extended_tip|pick_outline_iconview"
 msgid "Click the outline style that you want to use."
 msgstr "Klikni stil strukture koji želiš koristiti."
 
+#. hLcKE
+#: cui/uiconfig/ui/textflowpage.ui:812
+msgctxt "textflowpage|spinOrphan-atkobject"
+msgid "No split at beginning of paragraph, lines"
+msgstr ""
+
+#. MimEj
+#: cui/uiconfig/ui/textflowpage.ui:832
+msgctxt "textflowpage|spinWidow-atkobject"
+msgid "No split at end of paragraph, lines"
+msgstr ""
+
+#. a9iXr
+#: cui/uiconfig/ui/thesaurus.ui:189
+msgctxt "thesaurus|langcb|accessible_name"
+msgid "Language"
+msgstr ""
+
 #. qpArp
 #: cui/uiconfig/ui/toolbarmodedialog.ui:124
 msgctxt "ToolbarmodeDialog|radiobutton1"
 msgid "Compact"
 msgstr "Kompaktno"
+
+#. gFzRC
+#: cui/uiconfig/ui/widgettestdialog.ui:161
+msgctxt "widgettestdialog|combo_box_disable-atkobject"
+msgid "Test Type"
+msgstr ""
 
 #. ZbYiG
 #: include/svtools/strings.hrc:71
@@ -363,8 +564,32 @@ msgid ""
 "details in English."
 msgstr ""
 "Binarni paket za %PRODUCTNAME dostupan je pod uvjetima licencnog ugovora "
-"korisnika i ugovora o pretplati; odaberi licencni ugovor korisnika (EULA) za "
-"prikaz točnih detalja na engleskom."
+"korisnika i ugovora o pretplati; odaberi licencni ugovor korisnika (EULA) za"
+" prikaz točnih detalja na engleskom."
+
+#. TCBEp
+#: sfx2/uiconfig/ui/password.ui:200
+msgctxt "password|pass1bar-atkobject"
+msgid "Password Level Bar"
+msgstr ""
+
+#. 2Y4Ua
+#: sfx2/uiconfig/ui/password.ui:201
+msgctxt "password|pass1bar-atkobject"
+msgid "Shows the strength of password"
+msgstr ""
+
+#. EGBBE
+#: sfx2/uiconfig/ui/password.ui:342
+msgctxt "password|pass2bar-atkobject"
+msgid "Password Level Bar"
+msgstr ""
+
+#. nvEiq
+#: sfx2/uiconfig/ui/password.ui:343
+msgctxt "password|pass2bar-atkobject"
+msgid "Shows the strength of password"
+msgstr ""
 
 #. YHTHB
 #: sfx2/uiconfig/ui/templatepanel.ui:137
@@ -451,7 +676,7 @@ msgid "Column"
 msgstr "Stupac"
 
 #. Lurdj
-#: sw/uiconfig/swriter/ui/columnpage.ui:868
+#: sw/uiconfig/swriter/ui/columnpage.ui:871
 msgctxt "columnpage|extended_tip|column-iconview"
 msgid ""
 "Enter the number of columns that you want in the page, frame, or section."
@@ -459,11 +684,59 @@ msgstr ""
 "Upiši željeni broj stupaca koje želiš imati na stranici, u okviru ili "
 "odjeljku."
 
+#. yLJG6
+#: sw/uiconfig/swriter/ui/dropcapspage.ui:336
+msgctxt "dropcapspage|drawingareaWN_EXAMPLE-atkobject"
+msgid "Example"
+msgstr ""
+
+#. RdG95
+#: sw/uiconfig/swriter/ui/footnotesendnotestabpage.ui:179
+msgctxt "footnotesendnotestabpage|ftnnumviewbox-atkobject"
+msgid "Numbering"
+msgstr ""
+
+#. afJmD
+#: sw/uiconfig/swriter/ui/footnotesendnotestabpage.ui:455
+msgctxt "footnotesendnotestabpage|endnumviewbox-atkobject"
+msgid "Numbering"
+msgstr ""
+
 #. Ci9GE
 #: sw/uiconfig/swriter/ui/spellmenu.ui:34
 msgctxt "spellmenu|add"
 msgid "Add to _Dictionary (standard.dic)"
 msgstr "Dodaj u _rječnik (standard.dic)"
+
+#. Kvz9V
+#: sw/uiconfig/swriter/ui/tocentriespage.ui:252
+msgctxt "tocentriespage|structure_label"
+msgid "_Structure"
+msgstr ""
+
+#. CW8Eb
+#: sw/uiconfig/swriter/ui/tocentriespage.ui:277
+msgctxt "tocentriespage|characterstyleft"
+msgid "Character style:"
+msgstr ""
+
+#. GVCXE
+#: sw/uiconfig/swriter/ui/tocentriespage.ui:569
+msgctxt "tocentriespage|authfield-atkobject"
+msgid "Authority field"
+msgstr ""
+
+#. NF9Au
+#: sw/uiconfig/swriter/ui/tokenwidget.ui:30
+msgctxt "tokenwidget|left"
+msgid "Scroll left"
+msgstr ""
+
+#. Efssr
+#: sw/uiconfig/swriter/ui/tokenwidget.ui:98
+msgctxt "tokenwidget|right"
+msgid "Scroll right"
+msgstr ""
 
 #. FxkzA
 #: sw/uiconfig/swriter/ui/wordcount-mobile.ui:643
@@ -472,85 +745,85 @@ msgid "Comments"
 msgstr "Komentari"
 
 #. SsL8u
-#: formula/inc/core_resource.hrc:2628
+#: formula/inc/core_resource.hrc:2629
 msgctxt "RID_STRLIST_FUNCTION_NAMES"
 msgid "CHOOSECOLS"
 msgstr "CHOOSECOLS"
 
 #. zE6Vt
-#: formula/inc/core_resource.hrc:2629
+#: formula/inc/core_resource.hrc:2630
 msgctxt "RID_STRLIST_FUNCTION_NAMES"
 msgid "CHOOSEROWS"
 msgstr "CHOOSEROWS"
 
 #. TxBq7
-#: formula/inc/core_resource.hrc:2630
+#: formula/inc/core_resource.hrc:2631
 msgctxt "RID_STRLIST_FUNCTION_NAMES"
 msgid "DROP"
 msgstr "DROP"
 
 #. eTG8r
-#: formula/inc/core_resource.hrc:2631
+#: formula/inc/core_resource.hrc:2632
 msgctxt "RID_STRLIST_FUNCTION_NAMES"
 msgid "EXPAND"
 msgstr "EXPAND"
 
 #. aJk9K
-#: formula/inc/core_resource.hrc:2632
+#: formula/inc/core_resource.hrc:2633
 msgctxt "RID_STRLIST_FUNCTION_NAMES"
 msgid "HSTACK"
 msgstr "HSTACK"
 
 #. 4HnRz
-#: formula/inc/core_resource.hrc:2633
+#: formula/inc/core_resource.hrc:2634
 msgctxt "RID_STRLIST_FUNCTION_NAMES"
 msgid "VSTACK"
 msgstr "VSTACK"
 
 #. JDHX2
-#: formula/inc/core_resource.hrc:2634
+#: formula/inc/core_resource.hrc:2635
 msgctxt "RID_STRLIST_FUNCTION_NAMES"
 msgid "TAKE"
 msgstr "TAKE"
 
 #. CiTMM
-#: formula/inc/core_resource.hrc:2635
+#: formula/inc/core_resource.hrc:2636
 msgctxt "RID_STRLIST_FUNCTION_NAMES"
 msgid "TEXTAFTER"
 msgstr "TEXTAFTER"
 
 #. Uz9jV
-#: formula/inc/core_resource.hrc:2636
+#: formula/inc/core_resource.hrc:2637
 msgctxt "RID_STRLIST_FUNCTION_NAMES"
 msgid "TEXTBEFORE"
 msgstr "TEXTBEFORE"
 
 #. u2Nq4
-#: formula/inc/core_resource.hrc:2637
+#: formula/inc/core_resource.hrc:2638
 msgctxt "RID_STRLIST_FUNCTION_NAMES"
 msgid "TEXTSPLIT"
 msgstr "TEXTSPLIT"
 
 #. FMVjv
-#: formula/inc/core_resource.hrc:2638
+#: formula/inc/core_resource.hrc:2639
 msgctxt "RID_STRLIST_FUNCTION_NAMES"
 msgid "TOCOL"
 msgstr "TOCOL"
 
 #. xKDBC
-#: formula/inc/core_resource.hrc:2639
+#: formula/inc/core_resource.hrc:2640
 msgctxt "RID_STRLIST_FUNCTION_NAMES"
 msgid "TOROW"
 msgstr "TOROW"
 
 #. UDke3
-#: formula/inc/core_resource.hrc:2642
+#: formula/inc/core_resource.hrc:2643
 msgctxt "RID_STRLIST_FUNCTION_NAMES"
 msgid "WRAPCOLS"
 msgstr "WRAPCOLS"
 
 #. 3Tf94
-#: formula/inc/core_resource.hrc:2643
+#: formula/inc/core_resource.hrc:2644
 msgctxt "RID_STRLIST_FUNCTION_NAMES"
 msgid "WRAPROWS"
 msgstr "WRAPROWS"
@@ -692,8 +965,8 @@ msgid ""
 "used in the source document will be embedded into the generated PDF file. "
 "PDF tags will be written."
 msgstr ""
-"Verzije mogu biti „klasični“ PDF (npr. PDF 1.7, PDF 2.0) ili PDF/A. PDF/A se "
-"definira kao elektronički format dokumenta za dugoročno čuvanje i "
+"Verzije mogu biti „klasični“ PDF (npr. PDF 1.7, PDF 2.0) ili PDF/A. PDF/A se"
+" definira kao elektronički format dokumenta za dugoročno čuvanje i "
 "arhiviranje. Omogućuje samo podskup PDF funkcija koje su kompatibilne s tim "
 "slučajem upotrebe. Na primjer: Svi fontovi koji su korišteni u izvornom "
 "dokumentu će se ugraditi u generiranu PDF datoteku. PDF oznake će se "
@@ -762,6 +1035,76 @@ msgctxt ""
 "value.text"
 msgid "Current Sheet View"
 msgstr "Prikaz trenutačne stranice"
+
+#. MKARo
+#: CalcCommands.xcu
+msgctxt ""
+"CalcCommands.xcu\n"
+"..CalcCommands.UserInterface.Commands..uno:DatabaseSettings\n"
+"Label\n"
+"value.text"
+msgid "Table Style Options"
+msgstr ""
+
+#. 4HzYH
+#: CalcCommands.xcu
+msgctxt ""
+"CalcCommands.xcu\n"
+"..CalcCommands.UserInterface.Commands..uno:DataTableMenu\n"
+"Label\n"
+"value.text"
+msgid "~Table"
+msgstr ""
+
+#. Uhi2h
+#: CalcCommands.xcu
+msgctxt ""
+"CalcCommands.xcu\n"
+"..CalcCommands.UserInterface.Commands..uno:RunInsCalcTable\n"
+"Label\n"
+"value.text"
+msgid "~Insert Table..."
+msgstr ""
+
+#. cFE7i
+#: CalcCommands.xcu
+msgctxt ""
+"CalcCommands.xcu\n"
+"..CalcCommands.UserInterface.Commands..uno:InsertCalcTable\n"
+"Label\n"
+"value.text"
+msgid "Table..."
+msgstr ""
+
+#. ms5Fm
+#: CalcCommands.xcu
+msgctxt ""
+"CalcCommands.xcu\n"
+"..CalcCommands.UserInterface.Commands..uno:InsertCalcTable\n"
+"TooltipLabel\n"
+"value.text"
+msgid "Insert Table"
+msgstr ""
+
+#. kZEtN
+#: CalcCommands.xcu
+msgctxt ""
+"CalcCommands.xcu\n"
+"..CalcCommands.UserInterface.Commands..uno:RemoveCalcTable\n"
+"Label\n"
+"value.text"
+msgid "~Remove Table..."
+msgstr ""
+
+#. DiD7K
+#: CalcCommands.xcu
+msgctxt ""
+"CalcCommands.xcu\n"
+"..CalcCommands.UserInterface.Commands..uno:RemoveCalcTable\n"
+"TooltipLabel\n"
+"value.text"
+msgid "Delete Table"
+msgstr ""
 
 #. 3Ep4Y
 #: CalcCommands.xcu
@@ -933,6 +1276,16 @@ msgctxt ""
 msgid "Master Pages"
 msgstr "Master stranica"
 
+#. FBZFX
+#: GenericCommands.xcu
+msgctxt ""
+"GenericCommands.xcu\n"
+"..GenericCommands.UserInterface.Commands..uno:ThemeSelectorPanel\n"
+"Label\n"
+"value.text"
+msgid "Theme..."
+msgstr ""
+
 #. DCEaK
 #: GenericCommands.xcu
 msgctxt ""
@@ -1003,12 +1356,21 @@ msgctxt ""
 msgid "Add To Dictionary"
 msgstr "Dodaj u rječnik"
 
+#. 69GZH
+#: GenericCommands.xcu
+msgctxt ""
+"GenericCommands.xcu\n"
+"..GenericCommands.UserInterface.Popups..uno:AddTheme\n"
+"Label\n"
+"value.text"
+msgid "Add Theme..."
+msgstr ""
+
 #. zETLd
 #: ImpressWindowState.xcu
 msgctxt ""
 "ImpressWindowState.xcu\n"
-"..ImpressWindowState.UIElements.States.private:resource/popupmenu/"
-"pagepanecanvas\n"
+"..ImpressWindowState.UIElements.States.private:resource/popupmenu/pagepanecanvas\n"
 "UIName\n"
 "value.text"
 msgid "Slide Sorter/Pane (Canvas)"
@@ -1018,8 +1380,7 @@ msgstr "Razvrstavanje slajdova / ploča (platno)"
 #: ImpressWindowState.xcu
 msgctxt ""
 "ImpressWindowState.xcu\n"
-"..ImpressWindowState.UIElements.States.private:resource/popupmenu/"
-"pagepanecanvasmaster\n"
+"..ImpressWindowState.UIElements.States.private:resource/popupmenu/pagepanecanvasmaster\n"
 "UIName\n"
 "value.text"
 msgid "Master Slide Sorter/Pane (Canvas)"
@@ -1195,26 +1556,80 @@ msgctxt ""
 msgid "~Changes in all views"
 msgstr "~Promjene u svim prikazima"
 
-#. YwxEM
+#. wCDa4
+#: xmlsecurity/uiconfig/ui/certdetails.ui:101
+msgctxt "certdetails|valuedetails-atkobject"
+msgid "Value Details"
+msgstr ""
+
+#. mpBGu
+#: xmlsecurity/uiconfig/ui/selectcertificatedialog.ui:274
+msgctxt "selectcertificatedialog|searchbox-atkobject"
+msgid "Search"
+msgstr ""
+
+#. dw79G
 #: sc/inc/globstr.hrc:70
 msgctxt "STR_UNDO_TABLETOTALS"
-msgid "Tabletotals"
-msgstr "Zbrojevi tablice"
+msgid "Table Total Row"
+msgstr ""
 
-#. Gip2L
-#: sc/inc/globstr.hrc:211
+#. KAH5t
+#: sc/inc/globstr.hrc:73
+msgctxt "STR_UNDO_DBTABLE"
+msgid "Create table"
+msgstr ""
+
+#. J2Dh9
+#: sc/inc/globstr.hrc:74
+msgctxt "STR_UNDO_DBTABLE"
+msgid "Delete table"
+msgstr ""
+
+#. AvAbD
+#: sc/inc/globstr.hrc:140
+msgctxt "STR_TABLE_ERR_ADD"
+msgid "Cannot add a new table to the sheet."
+msgstr ""
+
+#. kG2SE
+#: sc/inc/globstr.hrc:141
+msgctxt "STR_TABLE_ERR_DEL"
+msgid "Cannot delete table from the sheet."
+msgstr ""
+
+#. t6eDk
+#: sc/inc/globstr.hrc:195
+msgctxt "STR_CALC_TABLE"
+msgid "Table"
+msgstr ""
+
+#. GFiBr
+#: sc/inc/globstr.hrc:196
+msgctxt "STR_INVALIDTABLE"
+msgid "The selected area is already part of another Table."
+msgstr ""
+
+#. 76s4h
+#: sc/inc/globstr.hrc:217
 msgctxt "STR_TABLE_TOTAL"
-msgid "Summary"
-msgstr "Sažetak"
+msgid "Total"
+msgstr ""
+
+#. wCfcy
+#: sc/inc/globstr.hrc:220
+msgctxt "STR_TABLE_NOTFOUND"
+msgid "No Calc Table found at this position."
+msgstr ""
 
 #. cG7BY
-#: sc/inc/globstr.hrc:594
+#: sc/inc/globstr.hrc:601
 msgctxt "STR_SHEET_VIEW_DEFAULT_VIEW_NAME"
 msgid "Default View"
 msgstr "Standardni prikaz"
 
 #. aYwkp
-#: sc/inc/globstr.hrc:595
+#: sc/inc/globstr.hrc:602
 msgctxt "STR_SHEET_VIEW_TEMPORARY_NAME_TEMPLATE"
 msgid "Temporary View %1"
 msgstr "Privremeni prikaz %1"
@@ -1311,7 +1726,8 @@ msgstr "Redci"
 #: sc/inc/scfuncs.hrc:4281
 msgctxt "SC_OPCODE_DROP"
 msgid ""
-"The number of rows to drop. A negative value drops from the end of the array."
+"The number of rows to drop. A negative value drops from the end of the "
+"array."
 msgstr ""
 "Broj redaka koje treba ukloniti. Negativna vrijednost uklanja s kraja niza."
 
@@ -1360,7 +1776,8 @@ msgctxt "SC_OPCODE_EXPAND"
 msgid ""
 "The number of rows in the expanded array. If missing, rows will not be "
 "expanded."
-msgstr "Broj redaka u proširenom nizu. Ako nedostaje, redci se neće proširiti."
+msgstr ""
+"Broj redaka u proširenom nizu. Ako nedostaje, redci se neće proširiti."
 
 #. qjcxB
 #: sc/inc/scfuncs.hrc:4294
@@ -1372,9 +1789,10 @@ msgstr "Stupci"
 #: sc/inc/scfuncs.hrc:4295
 msgctxt "SC_OPCODE_EXPAND"
 msgid ""
-"The number of columns in the expanded array. If missing, columns will not be "
-"expanded."
-msgstr "Broj stupaca u proširenom nizu. Ako nedostaje, redci se neće proširiti."
+"The number of columns in the expanded array. If missing, columns will not be"
+" expanded."
+msgstr ""
+"Broj stupaca u proširenom nizu. Ako nedostaje, redci se neće proširiti."
 
 #. QPyBK
 #: sc/inc/scfuncs.hrc:4296
@@ -1475,8 +1893,10 @@ msgstr "Redci"
 #: sc/inc/scfuncs.hrc:4327
 msgctxt "SC_OPCODE_TAKE"
 msgid ""
-"The number of rows to take. A negative value takes from the end of the array."
-msgstr "Broj redaka koje treba uzeti. Negativna vrijednost uzima s kraja niza."
+"The number of rows to take. A negative value takes from the end of the "
+"array."
+msgstr ""
+"Broj redaka koje treba uzeti. Negativna vrijednost uzima s kraja niza."
 
 #. HJQKW
 #: sc/inc/scfuncs.hrc:4328
@@ -1490,13 +1910,15 @@ msgctxt "SC_OPCODE_TAKE"
 msgid ""
 "The number of columns to take. A negative value takes from the end of the "
 "array."
-msgstr "Broj stupaca koje treba uzeti. Negativna vrijednost uzima s kraja niza."
+msgstr ""
+"Broj stupaca koje treba uzeti. Negativna vrijednost uzima s kraja niza."
 
 #. GwyMB
 #: sc/inc/scfuncs.hrc:4335
 msgctxt "SC_OPCODE_TEXTAFTER"
 msgid "Returns the text that occurs after a given substring or delimiter."
-msgstr "Vraća tekst koji se pojavljuje nakon zadanog podniza ili razdjeljivača."
+msgstr ""
+"Vraća tekst koji se pojavljuje nakon zadanog podniza ili razdjeljivača."
 
 #. cicY2
 #: sc/inc/scfuncs.hrc:4336
@@ -1532,8 +1954,8 @@ msgstr "Broj instance"
 #: sc/inc/scfuncs.hrc:4341
 msgctxt "SC_OPCODE_TEXTAFTER"
 msgid ""
-"The instance of the delimiter after which to extract text. The default is 1. "
-"A negative number starts searching from the end."
+"The instance of the delimiter after which to extract text. The default is 1."
+" A negative number starts searching from the end."
 msgstr ""
 "Instanca razdjeljivača nakon kojeg se izdvaja tekst. Standardno je 1. "
 "Negativan broj počinje tražiti s kraja."
@@ -1563,8 +1985,8 @@ msgstr "Kraj poklapanja"
 msgctxt "SC_OPCODE_TEXTAFTER"
 msgid "Set to 1 to treat the end of text as a delimiter. The default is 0."
 msgstr ""
-"Postavi na 1 kako bi se kraj teksta tretirao kao razdjeljivač. Standardno je "
-"0."
+"Postavi na 1 kako bi se kraj teksta tretirao kao razdjeljivač. Standardno je"
+" 0."
 
 #. PG6qj
 #: sc/inc/scfuncs.hrc:4346
@@ -1584,7 +2006,8 @@ msgstr ""
 #: sc/inc/scfuncs.hrc:4353
 msgctxt "SC_OPCODE_TEXTBEFORE"
 msgid "Returns the text that occurs before a given substring or delimiter."
-msgstr "Vraća tekst koji se pojavljuje prije zadanog podniza ili razdjeljivača."
+msgstr ""
+"Vraća tekst koji se pojavljuje prije zadanog podniza ili razdjeljivača."
 
 #. NNriC
 #: sc/inc/scfuncs.hrc:4354
@@ -1651,8 +2074,8 @@ msgstr "Kraj podudaranja"
 msgctxt "SC_OPCODE_TEXTBEFORE"
 msgid "Set to 1 to treat the end of text as a delimiter. The default is 0."
 msgstr ""
-"Postavi na 1 kako bi se kraj teksta tretirao kao razdjeljivač. Standardno je "
-"0."
+"Postavi na 1 kako bi se kraj teksta tretirao kao razdjeljivač. Standardno je"
+" 0."
 
 #. aCnZX
 #: sc/inc/scfuncs.hrc:4364
@@ -1709,7 +2132,8 @@ msgstr "Razdjeljivač redaka"
 #: sc/inc/scfuncs.hrc:4377
 msgctxt "SC_OPCODE_TEXTSPLIT"
 msgid "The text to delimit the rows. Multiple delimiters can be supplied."
-msgstr "Tekst za razdjeljivanje redaka. Moguće je koristiti više razdjeljivača."
+msgstr ""
+"Tekst za razdjeljivanje redaka. Moguće je koristiti više razdjeljivača."
 
 #. jD3sa
 #: sc/inc/scfuncs.hrc:4378
@@ -1785,8 +2209,8 @@ msgid ""
 "(default). 1 - ignore blank cells. 2 - ignore cells with error. 3 - ignore "
 "blanks cells and cells with error."
 msgstr ""
-"Da li zanemariti određene vrste vrijednosti. 0 ili izostavljeno – zadrži sve "
-"vrijednosti (standardno). 1 – zanemari prazna polja. 2 – zanemari polja s "
+"Da li zanemariti određene vrste vrijednosti. 0 ili izostavljeno – zadrži sve"
+" vrijednosti (standardno). 1 – zanemari prazna polja. 2 – zanemari polja s "
 "greškom. 3 – zanemari prazna polja i polja s greškom."
 
 #. qNLAi
@@ -1837,8 +2261,8 @@ msgid ""
 "(default). 1 - ignore blank cells. 2 - ignore cells with error. 3 - ignore "
 "blanks cells and cells with error."
 msgstr ""
-"Da li zanemariti određene vrste vrijednosti. 0 ili izostavljeno – zadrži sve "
-"vrijednosti (standardno). 1 – zanemari prazna polja. 2 – zanemari polja s "
+"Da li zanemariti određene vrste vrijednosti. 0 ili izostavljeno – zadrži sve"
+" vrijednosti (standardno). 1 – zanemari prazna polja. 2 – zanemari polja s "
 "greškom. 3 – zanemari prazna polja i polja s greškom."
 
 #. E4XDf
@@ -1969,6 +2393,98 @@ msgctxt "conditionaleasydialog|title"
 msgid "Highlight cells..."
 msgstr "Istakni polja …"
 
+#. QpmnN
+#: sc/uiconfig/scalc/ui/definetablerangedialog.ui:10
+msgctxt "definetablerangedialog|DefineTableRangeDialog"
+msgid "Create Table"
+msgstr ""
+
+#. AGWSW
+#: sc/uiconfig/scalc/ui/definetablerangedialog.ui:37
+msgctxt "definetablerangedialog|extended_tip|ok"
+msgid "Saves all changes and closes dialog."
+msgstr ""
+
+#. YJAAP
+#: sc/uiconfig/scalc/ui/definetablerangedialog.ui:56
+msgctxt "definetablerangedialog|extended_tip|cancel"
+msgid "Closes dialog and discards all changes."
+msgstr ""
+
+#. ugt8G
+#: sc/uiconfig/scalc/ui/definetablerangedialog.ui:106
+msgctxt "definetablerangedialog|extended_tip|assign"
+msgid ""
+"Click the Shrink icon to reduce the dialog to the size of the input field. "
+"It is then easier to mark the required reference in the sheet. The icons "
+"then automatically convert to the Maximize icon. Click it to restore the "
+"dialog to its original size."
+msgstr ""
+
+#. xUrKC
+#: sc/uiconfig/scalc/ui/definetablerangedialog.ui:123
+msgctxt "definetablerangedialog|extended_tip|assignrb"
+msgid ""
+"Click the Shrink icon to reduce the dialog to the size of the input field. "
+"It is then easier to mark the required reference in the sheet. The icons "
+"then automatically convert to the Maximize icon. Click it to restore the "
+"dialog to its original size."
+msgstr ""
+
+#. 8FLdj
+#: sc/uiconfig/scalc/ui/definetablerangedialog.ui:139
+msgctxt "definetablerangedialog|range"
+msgid "Range"
+msgstr ""
+
+#. 3a7g7
+#: sc/uiconfig/scalc/ui/definetablerangedialog.ui:162
+msgctxt "definetablerangedialog|containscolumnlabels"
+msgid "Co_ntains column labels"
+msgstr ""
+
+#. AEKGN
+#: sc/uiconfig/scalc/ui/definetablerangedialog.ui:171
+msgctxt "definetablerangedialog|extended_tip|ContainsColumnLabels"
+msgid "Selected cell ranges contain labels."
+msgstr ""
+
+#. GCg88
+#: sc/uiconfig/scalc/ui/definetablerangedialog.ui:203
+msgctxt "definetablerangedialog|extended_tip|DefineTableRangeDialog"
+msgid "Defines a database range based on the selected cells in your sheet."
+msgstr ""
+
+#. LVdkf
+#: sc/uiconfig/scalc/ui/erroralerttabpage.ui:15
+msgctxt "erroralerttabpage|tsbshow"
+msgid "Handle invalid values"
+msgstr ""
+
+#. KfkR3
+#: sc/uiconfig/scalc/ui/erroralerttabpage.ui:156
+msgctxt "erroralerttabpage|actionCB"
+msgid "Reject silently"
+msgstr ""
+
+#. tdFx2
+#: sc/uiconfig/scalc/ui/gotosheetdialog.ui:100
+msgctxt "gotosheetdialog|entry-mask-atkobject"
+msgid "Sheet Name"
+msgstr ""
+
+#. hMeBi
+#: sc/uiconfig/scalc/ui/numberbox.ui:17
+msgctxt "numberbox|numbertype|accessible_name"
+msgid "Number Format"
+msgstr ""
+
+#. o8pcB
+#: sc/uiconfig/scalc/ui/protectsheetdlg.ui:195
+msgctxt "protectsheetdlg|passwordbar-atkobject"
+msgid "Password Level Bar"
+msgstr ""
+
 #. Q4fA3
 #: sc/uiconfig/scalc/ui/selectsheetviewdialog.ui:18
 msgctxt "selectsheetviewdialog|SelectSheetView"
@@ -2005,23 +2521,23 @@ msgctxt "sidebarcellappearance|cellbordertype-atkobject"
 msgid "Border Style"
 msgstr "Stil ruba"
 
-#. sBXLD
+#. Y8RhG
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:22
 msgctxt "sidebardatabase|chk_header_row"
-msgid "Show Header Row"
-msgstr "Prikaži redak zaglavlja"
+msgid "Header Row"
+msgstr ""
 
-#. ECtUM
+#. Pg4uw
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:36
 msgctxt "sidebardatabase|chk_total_row"
-msgid "Show Total Row"
-msgstr "Prikaži redak s ukupnim brojem"
+msgid "Total Row"
+msgstr ""
 
-#. htZbK
+#. CcWAd
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:50
 msgctxt "sidebardatabase|chk_filter_buttons"
-msgid "Show Filter Buttons"
-msgstr "Prikaži gumbove za filtriranje"
+msgid "Filter Buttons"
+msgstr ""
 
 #. MjALC
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:86
@@ -2430,3 +2946,417 @@ msgstr "Imena stilova tablica"
 msgctxt "sidebardatabase|defaulttablestylenames"
 msgid "Default Table Style Names"
 msgstr "Imena standardnih stilova tablica"
+
+#. y7K54
+#: sc/uiconfig/scalc/ui/tablestylesbox.ui:19
+msgctxt "tablestylebox|chk_header_row"
+msgid "Header Row"
+msgstr ""
+
+#. 8g5nk
+#: sc/uiconfig/scalc/ui/tablestylesbox.ui:33
+msgctxt "tablestylebox|chk_total_row"
+msgid "Total Row"
+msgstr ""
+
+#. RCDTD
+#: sc/uiconfig/scalc/ui/tablestylesbox.ui:47
+msgctxt "tablestylebox|chk_filter_buttons"
+msgid "Filter Buttons"
+msgstr ""
+
+#. zBNtc
+#: sc/uiconfig/scalc/ui/tablestylesbox.ui:61
+msgctxt "tablestylebox|chk_first_column"
+msgid "First Column"
+msgstr ""
+
+#. FYKpc
+#: sc/uiconfig/scalc/ui/tablestylesbox.ui:75
+msgctxt "tablestylebox|chk_last_column"
+msgid "Last Column"
+msgstr ""
+
+#. A9Eb2
+#: sc/uiconfig/scalc/ui/tablestylesbox.ui:89
+msgctxt "tablestylebox|chk_banded_rows"
+msgid "Banded Rows"
+msgstr ""
+
+#. 6mHnD
+#: sc/uiconfig/scalc/ui/tablestylesbox.ui:103
+msgctxt "tablestylebox|chk_banded_cols"
+msgid "Banded Columns"
+msgstr ""
+
+#. gbBp7
+#: sc/uiconfig/scalc/ui/tablestylesbox.ui:121
+msgctxt "tablestylebox|none"
+msgid "None"
+msgstr ""
+
+#. hPKiF
+#: sc/uiconfig/scalc/ui/tablestylesbox.ui:122
+msgctxt "tablestylebox|tablestylelight1"
+msgid "Table Style Light 1"
+msgstr ""
+
+#. GA5oq
+#: sc/uiconfig/scalc/ui/tablestylesbox.ui:123
+msgctxt "tablestylebox|tablestylelight2"
+msgid "Table Style Light 2"
+msgstr ""
+
+#. QNyUR
+#: sc/uiconfig/scalc/ui/tablestylesbox.ui:124
+msgctxt "tablestylebox|tablestylelight3"
+msgid "Table Style Light 3"
+msgstr ""
+
+#. 6Dg39
+#: sc/uiconfig/scalc/ui/tablestylesbox.ui:125
+msgctxt "tablestylebox|tablestylelight4"
+msgid "Table Style Light 4"
+msgstr ""
+
+#. ERFFS
+#: sc/uiconfig/scalc/ui/tablestylesbox.ui:126
+msgctxt "tablestylebox|tablestylelight5"
+msgid "Table Style Light 5"
+msgstr ""
+
+#. nC9A3
+#: sc/uiconfig/scalc/ui/tablestylesbox.ui:127
+msgctxt "tablestylebox|tablestylelight6"
+msgid "Table Style Light 6"
+msgstr ""
+
+#. vQm8c
+#: sc/uiconfig/scalc/ui/tablestylesbox.ui:128
+msgctxt "tablestylebox|tablestylelight7"
+msgid "Table Style Light 7"
+msgstr ""
+
+#. VELfG
+#: sc/uiconfig/scalc/ui/tablestylesbox.ui:129
+msgctxt "tablestylebox|tablestylelight8"
+msgid "Table Style Light 8"
+msgstr ""
+
+#. dJTtx
+#: sc/uiconfig/scalc/ui/tablestylesbox.ui:130
+msgctxt "tablestylebox|tablestylelight9"
+msgid "Table Style Light 9"
+msgstr ""
+
+#. JEsTR
+#: sc/uiconfig/scalc/ui/tablestylesbox.ui:131
+msgctxt "tablestylebox|tablestylelight10"
+msgid "Table Style Light 10"
+msgstr ""
+
+#. gvecy
+#: sc/uiconfig/scalc/ui/tablestylesbox.ui:132
+msgctxt "tablestylebox|tablestylelight11"
+msgid "Table Style Light 11"
+msgstr ""
+
+#. nhDGR
+#: sc/uiconfig/scalc/ui/tablestylesbox.ui:133
+msgctxt "tablestylebox|tablestylelight12"
+msgid "Table Style Light 12"
+msgstr ""
+
+#. 3Q7Py
+#: sc/uiconfig/scalc/ui/tablestylesbox.ui:134
+msgctxt "tablestylebox|tablestylelight13"
+msgid "Table Style Light 13"
+msgstr ""
+
+#. TjvkW
+#: sc/uiconfig/scalc/ui/tablestylesbox.ui:135
+msgctxt "tablestylebox|tablestylelight14"
+msgid "Table Style Light 14"
+msgstr ""
+
+#. Hzbs5
+#: sc/uiconfig/scalc/ui/tablestylesbox.ui:136
+msgctxt "tablestylebox|tablestylelight15"
+msgid "Table Style Light 15"
+msgstr ""
+
+#. EDG6W
+#: sc/uiconfig/scalc/ui/tablestylesbox.ui:137
+msgctxt "tablestylebox|tablestylelight16"
+msgid "Table Style Light 16"
+msgstr ""
+
+#. uU4F5
+#: sc/uiconfig/scalc/ui/tablestylesbox.ui:138
+msgctxt "tablestylebox|tablestylelight17"
+msgid "Table Style Light 17"
+msgstr ""
+
+#. BFm89
+#: sc/uiconfig/scalc/ui/tablestylesbox.ui:139
+msgctxt "tablestylebox|tablestylelight18"
+msgid "Table Style Light 18"
+msgstr ""
+
+#. vWYDa
+#: sc/uiconfig/scalc/ui/tablestylesbox.ui:140
+msgctxt "tablestylebox|tablestylelight19"
+msgid "Table Style Light 19"
+msgstr ""
+
+#. 7YymU
+#: sc/uiconfig/scalc/ui/tablestylesbox.ui:141
+msgctxt "tablestylebox|tablestylelight20"
+msgid "Table Style Light 20"
+msgstr ""
+
+#. iHcr3
+#: sc/uiconfig/scalc/ui/tablestylesbox.ui:142
+msgctxt "tablestylebox|tablestylelight21"
+msgid "Table Style Light 21"
+msgstr ""
+
+#. GZraD
+#: sc/uiconfig/scalc/ui/tablestylesbox.ui:143
+msgctxt "tablestylebox|tablestylemedium1"
+msgid "Table Style Medium 1"
+msgstr ""
+
+#. Dn8Ee
+#: sc/uiconfig/scalc/ui/tablestylesbox.ui:144
+msgctxt "tablestylebox|tablestylemedium2"
+msgid "Table Style Medium 2"
+msgstr ""
+
+#. t6CRD
+#: sc/uiconfig/scalc/ui/tablestylesbox.ui:145
+msgctxt "tablestylebox|tablestylemedium3"
+msgid "Table Style Medium 3"
+msgstr ""
+
+#. KcaiH
+#: sc/uiconfig/scalc/ui/tablestylesbox.ui:146
+msgctxt "tablestylebox|tablestylemedium4"
+msgid "Table Style Medium 4"
+msgstr ""
+
+#. hMwuq
+#: sc/uiconfig/scalc/ui/tablestylesbox.ui:147
+msgctxt "tablestylebox|tablestylemedium5"
+msgid "Table Style Medium 5"
+msgstr ""
+
+#. o938H
+#: sc/uiconfig/scalc/ui/tablestylesbox.ui:148
+msgctxt "tablestylebox|tablestylemedium6"
+msgid "Table Style Medium 6"
+msgstr ""
+
+#. 4sHDq
+#: sc/uiconfig/scalc/ui/tablestylesbox.ui:149
+msgctxt "tablestylebox|tablestylemedium7"
+msgid "Table Style Medium 7"
+msgstr ""
+
+#. kFZ6u
+#: sc/uiconfig/scalc/ui/tablestylesbox.ui:150
+msgctxt "tablestylebox|tablestylemedium8"
+msgid "Table Style Medium 8"
+msgstr ""
+
+#. 5ykFM
+#: sc/uiconfig/scalc/ui/tablestylesbox.ui:151
+msgctxt "tablestylebox|tablestylemedium9"
+msgid "Table Style Medium 9"
+msgstr ""
+
+#. cBYvR
+#: sc/uiconfig/scalc/ui/tablestylesbox.ui:152
+msgctxt "tablestylebox|tablestylemedium10"
+msgid "Table Style Medium 10"
+msgstr ""
+
+#. aVd2m
+#: sc/uiconfig/scalc/ui/tablestylesbox.ui:153
+msgctxt "tablestylebox|tablestylemedium11"
+msgid "Table Style Medium 11"
+msgstr ""
+
+#. h2fLN
+#: sc/uiconfig/scalc/ui/tablestylesbox.ui:154
+msgctxt "tablestylebox|tablestylemedium12"
+msgid "Table Style Medium 12"
+msgstr ""
+
+#. faSZi
+#: sc/uiconfig/scalc/ui/tablestylesbox.ui:155
+msgctxt "tablestylebox|tablestylemedium13"
+msgid "Table Style Medium 13"
+msgstr ""
+
+#. SvAiJ
+#: sc/uiconfig/scalc/ui/tablestylesbox.ui:156
+msgctxt "tablestylebox|tablestylemedium14"
+msgid "Table Style Medium 14"
+msgstr ""
+
+#. UFPEn
+#: sc/uiconfig/scalc/ui/tablestylesbox.ui:157
+msgctxt "tablestylebox|tablestylemedium15"
+msgid "Table Style Medium 15"
+msgstr ""
+
+#. XqMGM
+#: sc/uiconfig/scalc/ui/tablestylesbox.ui:158
+msgctxt "tablestylebox|tablestylemedium16"
+msgid "Table Style Medium 16"
+msgstr ""
+
+#. ZQGdq
+#: sc/uiconfig/scalc/ui/tablestylesbox.ui:159
+msgctxt "tablestylebox|tablestylemedium17"
+msgid "Table Style Medium 17"
+msgstr ""
+
+#. QYB5B
+#: sc/uiconfig/scalc/ui/tablestylesbox.ui:160
+msgctxt "tablestylebox|tablestylemedium18"
+msgid "Table Style Medium 18"
+msgstr ""
+
+#. NG8sw
+#: sc/uiconfig/scalc/ui/tablestylesbox.ui:161
+msgctxt "tablestylebox|tablestylemedium19"
+msgid "Table Style Medium 19"
+msgstr ""
+
+#. 2TsiD
+#: sc/uiconfig/scalc/ui/tablestylesbox.ui:162
+msgctxt "tablestylebox|tablestylemedium20"
+msgid "Table Style Medium 20"
+msgstr ""
+
+#. 49nES
+#: sc/uiconfig/scalc/ui/tablestylesbox.ui:163
+msgctxt "tablestylebox|tablestylemedium21"
+msgid "Table Style Medium 21"
+msgstr ""
+
+#. 5ckGG
+#: sc/uiconfig/scalc/ui/tablestylesbox.ui:164
+msgctxt "tablestylebox|tablestylemedium22"
+msgid "Table Style Medium 22"
+msgstr ""
+
+#. 74ydV
+#: sc/uiconfig/scalc/ui/tablestylesbox.ui:165
+msgctxt "tablestylebox|tablestylemedium23"
+msgid "Table Style Medium 23"
+msgstr ""
+
+#. CHGvC
+#: sc/uiconfig/scalc/ui/tablestylesbox.ui:166
+msgctxt "tablestylebox|tablestylemedium24"
+msgid "Table Style Medium 24"
+msgstr ""
+
+#. Ax32Z
+#: sc/uiconfig/scalc/ui/tablestylesbox.ui:167
+msgctxt "tablestylebox|tablestylemedium25"
+msgid "Table Style Medium 25"
+msgstr ""
+
+#. FN5L9
+#: sc/uiconfig/scalc/ui/tablestylesbox.ui:168
+msgctxt "tablestylebox|tablestylemedium26"
+msgid "Table Style Medium 26"
+msgstr ""
+
+#. DoAZW
+#: sc/uiconfig/scalc/ui/tablestylesbox.ui:169
+msgctxt "tablestylebox|tablestylemedium27"
+msgid "Table Style Medium 27"
+msgstr ""
+
+#. oEF93
+#: sc/uiconfig/scalc/ui/tablestylesbox.ui:170
+msgctxt "tablestylebox|tablestylemedium28"
+msgid "Table Style Medium 28"
+msgstr ""
+
+#. NjD4c
+#: sc/uiconfig/scalc/ui/tablestylesbox.ui:171
+msgctxt "tablestylebox|tablestyledark1"
+msgid "Table Style Dark 1"
+msgstr ""
+
+#. DSEdv
+#: sc/uiconfig/scalc/ui/tablestylesbox.ui:172
+msgctxt "tablestylebox|tablestyledark2"
+msgid "Table Style Dark 2"
+msgstr ""
+
+#. vGEDF
+#: sc/uiconfig/scalc/ui/tablestylesbox.ui:173
+msgctxt "tablestylebox|tablestyledark3"
+msgid "Table Style Dark 3"
+msgstr ""
+
+#. e4FMB
+#: sc/uiconfig/scalc/ui/tablestylesbox.ui:174
+msgctxt "tablestylebox|tablestyledark4"
+msgid "Table Style Dark 4"
+msgstr ""
+
+#. NeFVV
+#: sc/uiconfig/scalc/ui/tablestylesbox.ui:175
+msgctxt "tablestylebox|tablestyledark5"
+msgid "Table Style Dark 5"
+msgstr ""
+
+#. DwGCo
+#: sc/uiconfig/scalc/ui/tablestylesbox.ui:176
+msgctxt "tablestylebox|tablestyledark6"
+msgid "Table Style Dark 6"
+msgstr ""
+
+#. vCGm8
+#: sc/uiconfig/scalc/ui/tablestylesbox.ui:177
+msgctxt "tablestylebox|tablestyledark7"
+msgid "Table Style Dark 7"
+msgstr ""
+
+#. e5Aud
+#: sc/uiconfig/scalc/ui/tablestylesbox.ui:178
+msgctxt "tablestylebox|tablestyledark8"
+msgid "Table Style Dark 8"
+msgstr ""
+
+#. NdA4K
+#: sc/uiconfig/scalc/ui/tablestylesbox.ui:179
+msgctxt "tablestylebox|tablestyledark9"
+msgid "Table Style Dark 9"
+msgstr ""
+
+#. KoCes
+#: sc/uiconfig/scalc/ui/tablestylesbox.ui:180
+msgctxt "tablestylebox|tablestyledark10"
+msgid "Table Style Dark 10"
+msgstr ""
+
+#. BsbuB
+#: sc/uiconfig/scalc/ui/tablestylesbox.ui:181
+msgctxt "tablestylebox|tablestyledark11"
+msgid "Table Style Dark 11"
+msgstr ""
+
+#. pNhVi
+#: sc/uiconfig/scalc/ui/tablestylesbox.ui:185
+msgctxt "tablestylebox|tablestyles_cb|accessible_name"
+msgid "Table Styles"
+msgstr ""
