@@ -151,7 +151,17 @@ var NotebookbarAccessibilityDefinitions = function() {
 
 		for (let option = 0; option < optionsToolSectionData.length; option++) {
 			let toolOption = optionsToolSectionData[option];
-			toolOption.id = (toolOption.id == null ? toolOption.command.replace('.uno:', '') : toolOption.id) + '-button';
+			toolOption.id = (toolOption.id == null ? toolOption.command.replace('.uno:', '') : toolOption.id);
+
+			let element = document.getElementById(toolOption.id + '-button');
+			if (!element)
+			{
+				const button = document.querySelector('[modelid="'+ toolOption.id + '"] .unobutton');
+				toolOption.id = button ? button.id : toolOption.id + '-button';
+			}
+			else
+				toolOption.id += '-button';
+
 			selectedDefinitions[toolOption.id] = {
 				focusBack : toolOption.accessibility.focusBack,
 				combination : language && toolOption.accessibility[language] ? toolOption.accessibility[language]: toolOption.accessibility.combination,

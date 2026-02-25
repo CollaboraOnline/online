@@ -91,7 +91,6 @@ var NotebookbarAccessibility = function() {
 				this.resetState();
 				this.setTabDescription(this.getCurrentSelectedTab());
 				this.addTabAccelerators();
-				this.setupOptionsAccelerators();
 				this.accessibilityInputElement.focus();
 			}
 			else if (event.keyCode === 16) // ShiftLeft.
@@ -158,57 +157,11 @@ var NotebookbarAccessibility = function() {
 		}
 	};
 
-	this.setupOptionsAccelerators = function() {
-		this.processOptionsTools(function(btn, toolOption, combo) {
-			if (btn.offsetParent !== null) {
-				btn.accessKey = combo;
-				this.activeTabPointers.infoBoxList.push(this.addInfoBox(btn));
-			}
-		}.bind(this));
-	};
-
-	this.checkSidebarToolbarAccelerators = function() {
-		this.processOptionsTools(function(btn, toolOption, combo) {
-			if (combo === this.combination) {
-				btn.click();
-				this.accessibilityInputElement.blur();
-				if (toolOption.accessibility.focusBack === true) {
-					this.focusToMap();
-				}
-				return true;
-			}
-		}.bind(this));
-	};
-
-	this.processOptionsTools = function(callback) {
-		const optionsToolSectionData = app.map.uiManager.notebookbar.getDefaultToolItems();
-		const language = this.definitions.getLanguage();
-
-		for (let i = 0; i < optionsToolSectionData.length; i++) {
-			const toolOption = optionsToolSectionData[i];
-			const id = (toolOption.id == null ? toolOption.command.replace('.uno:', '') : toolOption.id);
-			const combo = language && toolOption.accessibility[language]
-				? toolOption.accessibility[language]
-				: toolOption.accessibility.combination;
-
-			const container = document.querySelector('[modelid="' + id + '"]');
-			const btn = container ? container.querySelector('.unobutton') : document.querySelector('[id="' + id + '-button"]');
-
-			if (btn) {
-				if(callback(btn, toolOption, combo, id))
-					return true;
-			}
-		}
-	};
-
 	this.checkCombinationAgainstAcccelerators = function() {
 		this.filteredItem = null;
 
 		if (this.state === 0)
-		{
 			this.checkTabAccelerators();
-			this.checkSidebarToolbarAccelerators();
-		}
 		else if (this.state === 1)
 			this.checkContentAccelerators();
 	};
