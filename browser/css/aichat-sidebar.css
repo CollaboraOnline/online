@@ -690,6 +690,18 @@
 	box-shadow: 0 2px 8px rgba(var(--aichat-accent), 0.1);
 }
 
+#aichat-chips > [id^='aichat-chip-'] > button.ui-pushbutton:focus-visible {
+	outline: 2px solid rgb(var(--aichat-accent));
+	outline-offset: -2px;
+	border-color: rgb(var(--aichat-accent));
+	box-shadow: 0 0 0 3px rgba(var(--aichat-accent), 0.15);
+}
+
+#aichat-chips > #aichat-see-more > button.ui-pushbutton:focus-visible {
+	outline: 2px solid rgb(var(--aichat-accent));
+	outline-offset: -2px;
+}
+
 /* "selection" badge — indicates selected text will be used */
 .aichat-sel-badge {
 	display: inline-block;

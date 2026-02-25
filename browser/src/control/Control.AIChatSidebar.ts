@@ -217,6 +217,11 @@ namespace cool {
 			const hasSelection = TextSelections.isActive();
 			const chips = document.getElementById('aichat-chips');
 			if (!chips) return;
+
+			chips.setAttribute('role', 'list');
+			const wrappers = chips.querySelectorAll('[id^="aichat-chip-"]');
+			wrappers.forEach((w) => w.setAttribute('role', 'listitem'));
+
 			const cards = chips.querySelectorAll(
 				'[id^="aichat-chip-"]:not(#aichat-chip-formula-diagnosis) > button.ui-pushbutton',
 			);
@@ -230,6 +235,8 @@ namespace cool {
 					btn.appendChild(badge);
 				}
 			});
+
+			this.setupChipKeyboardNavigation();
 		}
 
 		private applyMessageTooltips(): void {
@@ -974,6 +981,7 @@ namespace cool {
 			this.lastSentSelectedText = '';
 			this.hintText = '';
 			this.showAllCards = false;
+			this._chipKeyNavAttached = false;
 			this.render();
 		}
 
@@ -1072,7 +1080,44 @@ namespace cool {
 			}
 		}
 
+		private _chipKeyNavAttached: boolean = false;
 		private _keyboardHandlerAttached: boolean = false;
+
+		// Custom keyboard navigation for prompt chips. We can't use
+		// JSDialog.KeyboardListNavigation() because the pushbutton handler
+		// wraps each button in a div.ui-pushbutton-wrapper, so
+		// nextElementSibling from a <button> is null (no siblings inside
+		// the wrapper). Modifying the shared utility would risk breaking
+		// other components, so this small handler is safer.
+		private setupChipKeyboardNavigation(): void {
+			if (this._chipKeyNavAttached) return;
+			const chips = document.getElementById('aichat-chips');
+			if (!chips) return;
+			this._chipKeyNavAttached = true;
+
+			chips.addEventListener('keydown', (e: KeyboardEvent) => {
+				if (e.key !== 'ArrowDown' && e.key !== 'ArrowUp') return;
+				const buttons = Array.from(
+					chips.querySelectorAll<HTMLButtonElement>(
+						'[id^="aichat-chip-"] > button.ui-pushbutton',
+					),
+				);
+				if (!buttons.length) return;
+				const idx = buttons.indexOf(
+					document.activeElement as HTMLButtonElement,
+				);
+				const next =
+					e.key === 'ArrowDown'
+						? idx < buttons.length - 1
+							? idx + 1
+							: 0
+						: idx > 0
+							? idx - 1
+							: buttons.length - 1;
+				e.preventDefault();
+				buttons[next].focus();
+			});
+		}
 
 		private attachContainerKeyboardHandler(): void {
 			if (this._keyboardHandlerAttached) return;
