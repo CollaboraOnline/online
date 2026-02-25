@@ -3164,7 +3164,7 @@ namespace
 {
 
 /// Called by LOK main-loop the central location for data processing.
-int pollCallback(void* data, int timeoutUs)
+int pollCallback([[maybe_unused]] void* data, int timeoutUs)
 {
     if (!Util::isMobileApp())
         UnitKit::get().preKitPollCallback();
@@ -3226,7 +3226,7 @@ bool anyInputCallback(void* data, int mostUrgentPriority)
 
 } // namespace
 
-bool KitSocketPoll::kitHasAnyInput(int mostUrgentPriority) {
+bool KitSocketPoll::kitHasAnyInput([[maybe_unused]] int mostUrgentPriority) {
 #if !MOBILEAPP
     const std::shared_ptr<Document>& document = getDocument();
 

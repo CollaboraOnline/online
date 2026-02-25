@@ -2008,7 +2008,9 @@ bool ChildSession::keyEvent(const StringVector& tokens,
     // Don't close LO window!
     constexpr int KEY_CTRL = 0x2000;
     constexpr int KEY_W = 0x0216;
+#if !MOBILEAPP
     constexpr int KEY_INSERT = 0x0505;
+#endif
     if (keycode == (KEY_CTRL | KEY_W))
     {
         return true;
