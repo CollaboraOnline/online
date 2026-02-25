@@ -1223,7 +1223,7 @@ input[type='number']:hover::-webkit-outer-spin-button {
 	display: flex;
 }
 
-.ui-combobox label {
+.ui-combobox-label {
 	font-size: var(--default-font-size);
 	font-family: var(--jquery-ui-font);
 }
