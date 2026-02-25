@@ -14,5 +14,5 @@ Known poco issues are:
   Failed to initialize COOLWSD: Null pointer: strategy in file "./Foundation/src/FileChannel.cpp", line 283
 
   due to the use of rotation, never in coolwsd.xml for log rotation strategy.
-  This can be worked around by changing "never" in "monthly" in coolwsd.xml.
+  This can be worked around by changing "never" to "monthly" in coolwsd.xml.
   See: https://github.com/pocoproject/poco/issues/4411
