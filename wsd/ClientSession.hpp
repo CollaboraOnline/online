@@ -359,6 +359,11 @@ private:
     bool handleAIImageGeneration(const std::string& prompt,
                                   const std::string& requestId);
 
+    /// Map an HTTP status code from an AI API response to a user-facing error string.
+    static std::string mapAIHttpStatusToError(http::StatusCode statusCode,
+                                              const std::string& reasonPhrase,
+                                              const std::string& context = "");
+
     bool loadDocument(const char* buffer, int length, const StringVector& tokens,
                       const std::shared_ptr<DocumentBroker>& docBroker);
     bool getStatus(const char* buffer, int length,

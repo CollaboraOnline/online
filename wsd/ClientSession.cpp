@@ -582,6 +582,31 @@ void ClientSession::sendAIChatResult(bool success, const std::string& text,
     sendTextFrame("aichatresult: " + oss.str());
 }
 
+std::string ClientSession::mapAIHttpStatusToError(
+    http::StatusCode statusCode, const std::string& reasonPhrase,
+    const std::string& context)
+{
+    switch (statusCode)
+    {
+        case http::StatusCode::BadRequest:
+            return context.empty() ? "Invalid request"
+                                   : "Invalid " + context + " request";
+        case http::StatusCode::Unauthorized:     return "Invalid API key";
+        case http::StatusCode::Forbidden:        return "API key lacks permissions";
+        case http::StatusCode::TooManyRequests:  return "Rate limited - please wait a moment and retry";
+        case http::StatusCode::InternalServerError: return "API server error - try again later";
+        case http::StatusCode::ServiceUnavailable:  return "Service temporarily unavailable";
+        default:
+        {
+            std::string err = "API error (";
+            err.append(std::to_string(static_cast<int>(statusCode)));
+            err.append("): ");
+            err.append(reasonPhrase);
+            return err;
+        }
+    }
+}
+
 static const std::string AI_SYSTEM_PROMPT =
     "You are a helpful assistant for Collabora Online. "
     "Help users with their documents — answering questions, suggesting edits, "
@@ -751,35 +776,8 @@ bool ClientSession::handleAIChatAction(const std::string& firstLine)
 
         if (statusCode != http::StatusCode::OK)
         {
-            std::string errorMessage;
-            switch (statusCode)
-            {
-                case http::StatusCode::BadRequest:
-                    errorMessage = "Invalid request";
-                    break;
-                case http::StatusCode::Unauthorized:
-                    errorMessage = "Invalid API key";
-                    break;
-                case http::StatusCode::Forbidden:
-                    errorMessage = "API key lacks permissions";
-                    break;
-                case http::StatusCode::TooManyRequests:
-                    errorMessage = "Rate limited - please wait a moment and retry";
-                    break;
-                case http::StatusCode::InternalServerError:
-                    errorMessage = "API server error - try again later";
-                    break;
-                case http::StatusCode::ServiceUnavailable:
-                    errorMessage = "Service temporarily unavailable";
-                    break;
-                default:
-                    errorMessage = "API error (";
-                    errorMessage.append(std::to_string(static_cast<int>(statusCode)));
-                    errorMessage.append("): ");
-                    errorMessage.append(httpResponse->statusLine().reasonPhrase());
-                    break;
-            }
-
+            const std::string errorMessage = mapAIHttpStatusToError(
+                statusCode, httpResponse->statusLine().reasonPhrase());
             sendResult(false, errorMessage);
             return;
         }
@@ -1007,35 +1005,8 @@ bool ClientSession::handleAIImageGeneration(const std::string& prompt,
 
         if (statusCode != http::StatusCode::OK)
         {
-            std::string errorMessage;
-            switch (statusCode)
-            {
-                case http::StatusCode::BadRequest:
-                    errorMessage = "Invalid image request";
-                    break;
-                case http::StatusCode::Unauthorized:
-                    errorMessage = "Invalid API key";
-                    break;
-                case http::StatusCode::Forbidden:
-                    errorMessage = "API key lacks permissions";
-                    break;
-                case http::StatusCode::TooManyRequests:
-                    errorMessage = "Rate limited - please wait a moment and retry";
-                    break;
-                case http::StatusCode::InternalServerError:
-                    errorMessage = "API server error - try again later";
-                    break;
-                case http::StatusCode::ServiceUnavailable:
-                    errorMessage = "Service temporarily unavailable";
-                    break;
-                default:
-                    errorMessage = "API error (";
-                    errorMessage.append(std::to_string(static_cast<int>(statusCode)));
-                    errorMessage.append("): ");
-                    errorMessage.append(httpResponse->statusLine().reasonPhrase());
-                    break;
-            }
-
+            const std::string errorMessage = mapAIHttpStatusToError(
+                statusCode, httpResponse->statusLine().reasonPhrase(), "image");
             sendImageResult(false, "", errorMessage);
             return;
         }
