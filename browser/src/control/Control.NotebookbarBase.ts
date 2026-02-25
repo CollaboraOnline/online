@@ -86,7 +86,6 @@ class NotebookbarBase extends JSDialogComponent {
 	protected onJSUpdate(e: any) {
 		if (super.onJSUpdate(e)) {
 			this.impl?.setInitialized(true);
-			this._updateTableStyleStatus(e.data);
 			return true;
 		}
 		return false;
@@ -142,20 +141,6 @@ class NotebookbarBase extends JSDialogComponent {
 		widgetData.entries = entries;
 		if (this.container) {
 			this.builder.updateWidget(this.container, widgetData);
-		}
-	}
-
-	private _updateTableStyleStatus(data: any) {
-		const control = data.control;
-		if (
-			control.id === 'tablestyles_cb2' &&
-			control.selectedEntries.length > 0
-		) {
-			const index = parseInt(control.selectedEntries[0]);
-			this.map['stateChangeHandler'].setItemValue(
-				'.uno:TableStyleStatus',
-				index,
-			);
 		}
 	}
 
