@@ -361,11 +361,17 @@ html[data-theme='dark'] .savemodified.unotoolbutton:not(.notebookbar) .unobutton
 	flex-direction: row;
 }
 
+label.notebookbar {
+	padding-inline-start: 0;
+}
 label.notebookbar.ui-checkbox-label {
 	font-family: var(--cool-font);
 	font-size: var(--header-font-size);
 	white-space: nowrap;
-	padding-left: 0;
+}
+
+.notebookbar.ui-combobox-label {
+	margin-inline-start: 0;
 }
 
 .notebookbar #table-style-options #chk_filter_buttons2 {
