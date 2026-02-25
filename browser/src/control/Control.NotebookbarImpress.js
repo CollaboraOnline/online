@@ -469,7 +469,7 @@ window.L.Control.NotebookbarImpress = window.L.Control.NotebookbarWriter.extend(
 				'id': 'slide-fullscreen-presentation',
 				'type': 'bigcustomtoolitem',
 				'text': _('From Beginning'),
-				'tooltip': _('Start slideshow in fullscreen from the first slide.'),
+				'tooltip': _('Fullscreen, starting at slide 1'),
 				'command': 'fullscreen-presentation',
 				'accessibility': { focusBack: true, combination: 'FB', de: null }
 			},
@@ -477,7 +477,7 @@ window.L.Control.NotebookbarImpress = window.L.Control.NotebookbarWriter.extend(
 				'id': 'slide-presentation-currentslide',
 				'type': 'bigcustomtoolitem',
 				'text':  _('From Current Slide'),
-				'tooltip': _('Start slideshow in fullscreen from the current slide.'),
+				'tooltip': _('Fullscreen, starting at this slide'),
 				'command': 'presentation-currentslide',
 				'accessibility': { focusBack: true, combination: 'FC', de: null }
 			},
@@ -492,7 +492,7 @@ window.L.Control.NotebookbarImpress = window.L.Control.NotebookbarWriter.extend(
 					'id': 'slide-presentation-in-window',
 					'type': 'bigcustomtoolitem',
 					'text': _('Present in Window'),
-					'tooltip': _('Start slideshow from the first slide (without fullscreen).'),
+					'tooltip': _('Plays inside the document window. Starts at slide 1'),
 					'command': 'presentinwindow',
 					'accessibility': { focusBack: true, combination: 'PW', de: null }
 				} : {},
@@ -501,6 +501,7 @@ window.L.Control.NotebookbarImpress = window.L.Control.NotebookbarWriter.extend(
 					'id': 'slide-presentation-in-console',
 					'type': 'bigcustomtoolitem',
 					'text': _('Presenter View'),
+					'tooltip': _('Shows your notes, next slide, and a timer'),
 					'command': 'presenterconsole',
 					'accessibility': { focusBack: true, combination: 'PC', de: null }
 				}: {},
@@ -509,7 +510,7 @@ window.L.Control.NotebookbarImpress = window.L.Control.NotebookbarWriter.extend(
 					'id': 'slide-presentation-follow-me',
 					'type': 'bigcustomtoolitem',
 					'text': _('Present to All'),
-					'tooltip': _('Present slideshow to everyone viewing this document.'),
+					'tooltip': _('Starts a slideshow on every viewer\'s screen'),
 					'command': 'followmepresentation',
 					'accessibility': { focusBack: true, combination: 'PL', de: null }
 				} : {},
@@ -518,7 +519,7 @@ window.L.Control.NotebookbarImpress = window.L.Control.NotebookbarWriter.extend(
 					'id': 'slide-presentation-follow',
 					'type': 'bigcustomtoolitem',
 					'text': _('Follow Presenter'),
-					'tooltip': _('Join the slideshow and follow the presenter.'),
+					'tooltip': _('View slides as the presenter advances them'),
 					'command': 'followpresentation',
 					'accessibility': { focusBack: true, combination: 'PF', de: null }
 				} : {},
