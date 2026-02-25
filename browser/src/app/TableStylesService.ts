@@ -148,6 +148,39 @@ class TableStylesService {
 				app.console.error('Failed to parse TableStyles: ' + e);
 			}
 		}
+
+		// update ntoebookbar model - tab can not exist yet
+
+		if (
+			e.commandName !== '.uno:TableStyles' &&
+			e.commandName !== '.uno:DatabaseSettings'
+		)
+			return;
+
+		app.map.fire('jsdialogupdate', {
+			data: {
+				id: '0',
+				type: '',
+				jsontype: 'notebookbar',
+				action: 'update',
+				control: this.generateTableStylesJSON(),
+			} as JSDialogJSON,
+		});
+	}
+
+	public generateTableStylesJSON(): IconViewJSON {
+		return {
+			id: 'tablestyles_design',
+			type: 'iconview',
+			text: _('Table Styles'),
+			command: '.uno:DatabaseSettings',
+			aria: { label: _('Table Styles') },
+			accessibility: { focusBack: true, combination: 'TS' },
+			entries: this.generateJSON(),
+			singleclickactivate: true,
+			textWithIconEnabled: false, // standard names from core are not translated yet
+			selectionmode: 'single',
+		} as IconViewJSON;
 	}
 
 	public applyStyle(newStyleNumber: number) {
