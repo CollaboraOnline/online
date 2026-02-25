@@ -381,9 +381,10 @@ class Dispatcher {
 
 		this.actionsMap['aichat'] = function () {
 			if (!app.map.isAIConfigured) {
-				app.map.uiManager.showInfoModal(
-					'ai-not-configured',
-					_('AI settings not configured'),
+				app.map.uiManager.showSnackbar(
+					_(
+						'AI is not configured. Go to File > Options > View Settings to set it up.',
+					),
 				);
 				return;
 			}

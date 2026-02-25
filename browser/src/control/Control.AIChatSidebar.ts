@@ -123,6 +123,7 @@ namespace cool {
 		private onDocLoaded(e: any): void {
 			if (e.status === false && this._isActive) {
 				this.hide();
+				this.clearConversation();
 			}
 		}
 
