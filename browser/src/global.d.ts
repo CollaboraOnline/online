@@ -40,6 +40,17 @@ interface COOLTouch {
 	currentlyUsingTouchscreen: () => boolean;
 }
 
+interface TableStyleElement {
+	Type: string;
+	FillColor: string; // hex value
+}
+
+interface TableStyleEntry {
+	Name: string;
+	UIName: string;
+	Elements: Array<TableStyleElement>;
+}
+
 interface Window {
 	touch: COOLTouch;
 	setLogging(value: boolean): void;
@@ -224,6 +235,7 @@ interface AppInterface {
 	};
 	languages: Array<{ translated: string; neutral: string; iso: string }>;
 	favouriteLanguages: Array<string>;
+	tableStyles: Array<TableStyleEntry>;
 	colorLastSelection: any;
 	serverAudit: any;
 	events: DocEvents;
