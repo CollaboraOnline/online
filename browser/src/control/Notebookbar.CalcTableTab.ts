@@ -48,39 +48,6 @@ class CalcTableTab implements NotebookbarTab {
 		} as NotebookbarTabEntry;
 	}
 
-	public updateStyles(state: any) {
-		if (
-			state.commandName !== '.uno:TableStyles' &&
-			state.commandName !== '.uno:DatabaseSettings'
-		)
-			return;
-
-		app.map.fire('jsdialogupdate', {
-			data: {
-				id: '0',
-				type: '',
-				jsontype: 'notebookbar',
-				action: 'update',
-				control: this.generateTableStylesJSON(),
-			} as JSDialogJSON,
-		});
-	}
-
-	private generateTableStylesJSON(): IconViewJSON {
-		return {
-			id: 'tablestyles_design',
-			type: 'iconview',
-			text: _('Table Styles'),
-			command: '.uno:DatabaseSettings',
-			aria: { label: _('Table Styles') },
-			accessibility: { focusBack: true, combination: 'TS' },
-			entries: app.tableStyles.generateJSON(),
-			singleclickactivate: true,
-			textWithIconEnabled: false, // no translated strings for standard styles yet
-			selectionmode: 'single',
-		} as IconViewJSON;
-	}
-
 	/* ids have to match transition pane ids from the .ui in the core */
 	public getContent(): NotebookbarTabContent {
 		const content = [
@@ -229,7 +196,7 @@ class CalcTableTab implements NotebookbarTab {
 				id: 'table-style-options-break',
 				orientation: 'vertical',
 			},
-			this.generateTableStylesJSON(),
+			app.tableStyles?.generateTableStylesJSON(),
 		];
 
 		return content as NotebookbarTabContent;
