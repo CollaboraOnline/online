@@ -978,29 +978,29 @@ class SlideShowPresenter {
 	}
 
 	endPresentation(force: boolean) {
+		app.console.debug('SlideShowPresenter.endPresentation');
+		if (this._pauseTimer) this._pauseTimer.stopTimer();
+
+		const settings = this._presentationInfo;
+		if (!force && !settings.isEndless && this.exitSlideshowWithWarning()) {
+			return;
+		}
+
 		this.sendSlideShowFollowMessage('endpresentation');
 		this.checkDarkMode(false);
 		this.setLeader(false);
 		this.setFollowing(false);
 
-		app.console.debug('SlideShowPresenter.endPresentation');
-		if (this._pauseTimer) this._pauseTimer.stopTimer();
-
-		const settings = this._presentationInfo;
 		if (force || !settings.isEndless) {
-			if (!force && this.exitSlideshowWithWarning()) {
-				return;
-			}
 			this._stopFullScreen();
 			this._closeSlideShowWindow();
 			if (window.mode.isCODesktop() && this._isWelcomePresentation) {
 				this._isWelcomePresentation = false;
 				app.dispatcher.dispatch('closeapp');
 			}
-			return;
+		} else {
+			this.startTimer(settings.loopAndRepeatDuration);
 		}
-
-		this.startTimer(settings.loopAndRepeatDuration);
 	}
 
 	public handleSlideShowProgressBar(event: { isVisible: boolean }): void {
