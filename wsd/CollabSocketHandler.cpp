@@ -167,7 +167,7 @@ void CollabSocketHandler::onCheckFileInfoFinished(CheckFileInfo& cfi)
                     << ", userId: " << COOLWSD::anonymizeUsername(_userId)
                     << ", username: " << COOLWSD::anonymizeUsername(_username)
                     << ", canWrite: " << _userCanWrite);
-            sendTextMessage("authenticated");
+            sendTextMessage("{\"type\":\"authenticated\"}");
             break;
         }
         case CheckFileInfo::State::Unauthorized:
