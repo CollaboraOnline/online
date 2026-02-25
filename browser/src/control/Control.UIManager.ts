@@ -1733,21 +1733,34 @@ class UIManager extends window.L.Control {
 
 		if (
 			tooltipInfo.anchorRectangles &&
+			tooltipInfo.redlineType &&
 			app.activeDocument?.activeLayout?.type === 'ViewLayoutCompareChanges'
 		) {
-			if (!app.sectionContainer.doesSectionExist(app.CSections.TooltipAnchor.name)) {
-				app.sectionContainer.addSection(new cool.TooltipAnchorSection());
+			// Tooltip for a redline when comparing side by side: create the sections.
+			const sides = [
+				{ name: app.CSections.TooltipAnchorLeft.name, mode: TileMode.LeftSide },
+				{ name: app.CSections.TooltipAnchorRight.name, mode: TileMode.RightSide },
+			];
+			for (const side of sides) {
+				if (!app.sectionContainer.doesSectionExist(side.name)) {
+					app.sectionContainer.addSection(new cool.TooltipAnchorSection(side.name, side.mode));
+				}
+				const section = app.sectionContainer.getSectionWithName(side.name) as cool.TooltipAnchorSection;
+				section.drawAnchorRectangles(tooltipInfo.anchorRectangles, tooltipInfo.redlineType);
 			}
-			var section = app.sectionContainer.getSectionWithName(app.CSections.TooltipAnchor.name) as cool.TooltipAnchorSection;
-			section.drawAnchorRectangles(tooltipInfo.anchorRectangles, tooltipInfo.redlineType);
 		}
 
 		document.addEventListener('mousemove', function() {
 			elem.tooltip('close');
 			elem.tooltip('disable');
-			if (app.sectionContainer.doesSectionExist(app.CSections.TooltipAnchor.name)) {
-				var section = app.sectionContainer.getSectionWithName(app.CSections.TooltipAnchor.name) as cool.TooltipAnchorSection;
-				section.hideAnchorRectangles();
+
+			// Tooltip for a redline when comparing side by side: delete the sections.
+			const sideNames = [app.CSections.TooltipAnchorLeft.name, app.CSections.TooltipAnchorRight.name];
+			for (const name of sideNames) {
+				if (app.sectionContainer.doesSectionExist(name)) {
+					const section = app.sectionContainer.getSectionWithName(name) as cool.TooltipAnchorSection;
+					section.hideAnchorRectangles();
+				}
 			}
 		}, {once: true});
 	}
