@@ -244,6 +244,9 @@ window.L.ImpressTileLayer = window.L.CanvasTileLayer.extend({
 				}
 			}
 
+			if (statusJSON.readonly && !this._documentInfo)
+				this._map.setPermission('readonly');
+
 			app.activeDocument.fileSize = new cool.SimplePoint(statusJSON.width, statusJSON.height);
 
 			this._docType = statusJSON.type;
