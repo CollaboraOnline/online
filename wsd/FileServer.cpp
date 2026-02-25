@@ -464,7 +464,7 @@ bool FileServerRequestHandler::handleRequest(const HTTPRequest& request,
         if (endPoint == "fetch-settings-file")
         {
             fetchSettingFile(request, message, socket);
-            return true;
+            return false;
         }
 
         if (endPoint == "fetch-models")
@@ -1718,25 +1718,45 @@ void FileServerRequestHandler::fetchSettingFile(const Poco::Net::HTTPRequest& re
     httpRequest.setVerb(http::Request::VERB_GET);
     httpRequest.set("Content-Type", "text/plain");
 
-    auto httpSession = StorageConnectionManager::getHttpSession(dicUrl);
-    auto httpResponse = httpSession->syncRequest(httpRequest);
+    std::weak_ptr<StreamSocket> socketWeak(socket);
+    const std::string shortMessage = "Failed to fetch setting file";
 
-    if (httpResponse->statusLine().statusCode() != http::StatusCode::OK)
+    http::Session::FinishedCallback finishedCallback =
+        [uriAnonym, socketWeak, requestPath = getRequestPath(request),
+         shortMessage](const std::shared_ptr<http::Session>& wopiSession)
     {
-        std::ostringstream responseContent;
-        responseContent << httpResponse->getBody();
-        throw std::runtime_error(
-            "Integrator wopi call failed: " + httpResponse->statusLine().reasonPhrase() +
-            ". Response: " + responseContent.str());
-    }
+        std::shared_ptr<StreamSocket> destSocket = socketWeak.lock();
+        if (!destSocket)
+        {
+            LOG_ERR("Invalid socket while fetching setting file from [" << uriAnonym << ']');
+            return;
+        }
 
-    http::Response clientResponse(http::StatusCode::OK);
-    clientResponse.set("Content-Type", "text/plain; charset=utf-8");
-    clientResponse.set("Cache-Control", "no-cache");
-    clientResponse.set("Content-Disposition", "attachment");
-    clientResponse.setBody(httpResponse->getBody());
-    socket->send(clientResponse);
-    LOG_DBG("Successfully fetched setting file from [" << uriAnonym << "]");
+        const auto httpResponse = wopiSession->response();
+        if (httpResponse->statusLine().statusCode() != http::StatusCode::OK)
+        {
+            LOG_ERR("Failed to fetch setting file from [" << uriAnonym
+                    << "] with status [" << httpResponse->statusLine().reasonPhrase() << ']');
+            sendError(httpResponse->statusLine().statusCode(), requestPath, destSocket,
+                      shortMessage,
+                      httpResponse->statusLine().reasonPhrase() + ". Response: " +
+                          httpResponse->getBody());
+            return;
+        }
+
+        http::Response clientResponse(http::StatusCode::OK);
+        clientResponse.set("Content-Type", "text/plain; charset=utf-8");
+        clientResponse.set("Cache-Control", "no-cache");
+        clientResponse.set("Content-Disposition", "attachment");
+        clientResponse.setBody(httpResponse->getBody());
+        destSocket->sendAndShutdown(clientResponse);
+        LOG_DBG("Successfully fetched setting file from [" << uriAnonym << ']');
+    };
+
+    LOG_DBG("Fetching setting file from [" << uriAnonym << ']');
+    auto httpSession = StorageConnectionManager::getHttpSession(dicUrl);
+    httpSession->setFinishedHandler(std::move(finishedCallback));
+    httpSession->asyncRequest(httpRequest, COOLWSD::getWebServerPoll());
 }
 
 void FileServerRequestHandler::fetchModels(const Poco::Net::HTTPRequest& request,
