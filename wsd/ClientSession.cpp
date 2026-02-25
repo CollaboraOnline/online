@@ -1954,6 +1954,10 @@ bool ClientSession::_handleInput(const char *buffer, int length)
     {
         Admin::instance().routeTokenSanityCheck();
     }
+    else if (tokens.equals(0, "updateviewsettings") && tokens.size() >= 2)
+    {
+        return handleUpdateViewSettings(firstLine);
+    }
     else if (tokens.equals(0, "browsersetting") && tokens.size() >= 3)
     {
         std::string action;
@@ -2071,6 +2075,64 @@ void ClientSession::uploadViewSettingsToWopiHost()
     {
         LOG_ERR("Failed to upload viewsetting to WOPI host: " << e.what());
     }
+}
+
+bool ClientSession::handleUpdateViewSettings(const std::string& firstLine)
+{
+    const std::string jsonPayload = firstLine.substr(strlen("updateviewsettings "));
+
+    Poco::JSON::Object::Ptr viewSettings;
+    if (!JsonUtil::parseJSON(jsonPayload, viewSettings))
+    {
+        LOG_WRN("Failed to parse updateviewsettings JSON");
+        return true;
+    }
+
+    std::string aiProviderAPIKey, aiProviderModel, aiProviderURL;
+    std::string aiImageProviderAPIKey, aiImageProviderURL, aiImageModel;
+
+    JsonUtil::findJSONValue(viewSettings, "aiProviderAPIKey", aiProviderAPIKey);
+    JsonUtil::findJSONValue(viewSettings, "aiProviderModel", aiProviderModel);
+    JsonUtil::findJSONValue(viewSettings, "aiProviderURL", aiProviderURL);
+    JsonUtil::findJSONValue(viewSettings, "aiImageProviderAPIKey", aiImageProviderAPIKey);
+    JsonUtil::findJSONValue(viewSettings, "aiImageProviderURL", aiImageProviderURL);
+    JsonUtil::findJSONValue(viewSettings, "aiImageModel", aiImageModel);
+
+    setAIProviderAPIKey(aiProviderAPIKey);
+    setAIProviderModel(aiProviderModel);
+    setAIProviderURL(aiProviderURL);
+    setAIImageProviderAPIKey(aiImageProviderAPIKey);
+    setAIImageProviderURL(aiImageProviderURL);
+    setAIImageModel(aiImageModel);
+
+    std::string zoteroAPIKey, signatureCert, signatureKey, signatureCa;
+    JsonUtil::findJSONValue(viewSettings, "zoteroAPIKey", zoteroAPIKey);
+    JsonUtil::findJSONValue(viewSettings, "signatureCert", signatureCert);
+    JsonUtil::findJSONValue(viewSettings, "signatureKey", signatureKey);
+    JsonUtil::findJSONValue(viewSettings, "signatureCa", signatureCa);
+    setZoteroAPIKey(zoteroAPIKey);
+    setSignatureCertificate(signatureCert);
+    setSignatureKey(signatureKey);
+    setSignatureCa(signatureCa);
+
+    // Strip sensitive fields before sending sanitized version to client
+    viewSettings->remove("aiProviderAPIKey");
+    viewSettings->remove("aiProviderModel");
+    viewSettings->remove("aiProviderURL");
+    viewSettings->remove("aiImageProviderAPIKey");
+    viewSettings->remove("aiImageProviderURL");
+    viewSettings->remove("aiImageModel");
+
+    const bool aiConfigured = !aiProviderAPIKey.empty() &&
+                              !aiProviderModel.empty() &&
+                              !aiProviderURL.empty();
+    viewSettings->set("aiConfigured", aiConfigured);
+
+    sendTextFrame("viewsetting: " + JsonUtil::jsonToString(viewSettings));
+
+    LOG_DBG("Updated view settings for session [" << getId()
+            << "], aiConfigured=" << aiConfigured);
+    return true;
 }
 
 void ClientSession::updateBrowserSettingsJSON(const std::string& json)

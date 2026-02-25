@@ -125,9 +125,6 @@ window.L.Map.Settings = window.L.Handler.extend({
 				this._iframeDialog.postMessage({
 					MessageId: 'settings-save-all',
 				});
-				setTimeout(() => {
-					this.removeIframe();
-				}, 300);
 			},
 			this,
 		);
@@ -143,6 +140,13 @@ window.L.Map.Settings = window.L.Handler.extend({
 			this.removeIframe();
 		} else if (data.MessageId === 'settings-ready') {
 			this._iframeDialog.postMessage(data);
+		} else if (data.MessageId === 'settings-save-complete') {
+			this.removeIframe();
+			if (data.viewSettings) {
+				app.socket.sendMessage(
+					'updateviewsettings ' + JSON.stringify(data.viewSettings),
+				);
+			}
 		}
 	},
 });

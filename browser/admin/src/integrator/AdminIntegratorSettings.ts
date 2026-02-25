@@ -105,10 +105,24 @@ const onMessage = (e) => {
 					'xcu-save-button',
 					'browser-settings-save-button',
 					'document-settings-save-button',
+					'viewsettings-save-button',
 				];
-				for (const i in saveButtons) {
-					const button = document.getElementById(saveButtons[i]);
+				for (const id of saveButtons) {
+					const button = document.getElementById(id);
 					button?.click();
+				}
+				// Notify parent with current viewsettings so server can update in-memory state
+				const settingIframe = (window as any).settingIframe as SettingIframe;
+				if (settingIframe) {
+					setTimeout(() => {
+						window.parent.postMessage(
+							JSON.stringify({
+								MessageId: 'settings-save-complete',
+								viewSettings: settingIframe.getViewSettings(),
+							}),
+							'*',
+						);
+					}, 500);
 				}
 			}
 		}
@@ -501,6 +515,10 @@ class SettingIframe {
 		XcuUpload: () => this.settingConfigBasePath() + '/xcu/',
 	};
 	private browserSettingOptions: Record<string, any> = {};
+
+	getViewSettings(): ViewSettings {
+		return this._viewSetting;
+	}
 
 	init(): void {
 		this._allConfigSection = document.getElementById('allConfigSection');

@@ -350,6 +350,7 @@ private:
     bool handleAIAction(const StringVector& tokens);
 
     bool handleAIChatAction(const std::string& firstLine);
+    bool handleUpdateViewSettings(const std::string& firstLine);
     void sendAIChatResult(bool success, const std::string& text,
                           const std::string& requestId);
 
