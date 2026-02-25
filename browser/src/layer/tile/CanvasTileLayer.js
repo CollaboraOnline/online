@@ -1004,14 +1004,6 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 				window.app.console.error('Failed to parse aichatresult: ' + e);
 			}
 		}
-		else if (textMsg.startsWith('aiimageresult:')) {
-			try {
-				var imgJson = JSON.parse(textMsg.substring('aiimageresult:'.length));
-				this._map.fire('aiimageresult', imgJson);
-			} catch (e) {
-				window.app.console.error('Failed to parse aiimageresult: ' + e);
-			}
-		}
 		else if (textMsg.startsWith('hrulerupdate:')) {
 			this._onRulerUpdate(textMsg);
 		}

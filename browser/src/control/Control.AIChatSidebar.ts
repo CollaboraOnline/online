@@ -77,8 +77,7 @@ namespace cool {
 		private showAllCards: boolean = false;
 
 		private readonly SELECTION_FETCH_TIMEOUT_MS = 5000;
-		private readonly CHAT_REQUEST_TIMEOUT_MS = 45000;
-		private readonly IMAGE_REQUEST_TIMEOUT_MS = 60000;
+		private readonly REQUEST_TIMEOUT_MS = 60000;
 		private readonly COPY_FEEDBACK_DURATION_MS = 1500;
 		private readonly TEXTAREA_MAX_HEIGHT_PX = 120;
 		private readonly FORMULA_FETCH_TIMEOUT_MS = 5000;
@@ -94,30 +93,6 @@ namespace cool {
 			'the original formatting structure. IMPORTANT: Return the markdown text directly ' +
 			'without wrapping it in code fences (do NOT use ```markdown or ``` blocks). ' +
 			'Just return the raw markdown content. Be concise and helpful.';
-
-		private readonly IMAGE_KEYWORDS: string[] = [
-			'generate image',
-			'generate an image',
-			'generate a image',
-			'generate picture',
-			'generate a picture',
-			'create image',
-			'create an image',
-			'create a image',
-			'create picture',
-			'create a picture',
-			'draw image',
-			'draw an image',
-			'draw a image',
-			'draw picture',
-			'draw a picture',
-			'draw me',
-			'make image',
-			'make an image',
-			'make a image',
-			'make picture',
-			'make a picture',
-		];
 
 		constructor() {
 			this.container = document.getElementById('aichat-panel') as HTMLElement;
@@ -142,7 +117,6 @@ namespace cool {
 
 		private registerChatHandlers(): void {
 			app.map.on('aichatresult', this.onAIChatResult, this);
-			app.map.on('aiimageresult', this.onAIImageResult, this);
 			app.map.on('docloaded', this.onDocLoaded, this);
 		}
 
@@ -837,11 +811,6 @@ namespace cool {
 			return 0;
 		}
 
-		private isImageGenerationPrompt(text: string): boolean {
-			const lower = text.toLowerCase();
-			return this.IMAGE_KEYWORDS.some((kw) => lower.includes(kw));
-		}
-
 		private startRequestTimeout(
 			requestId: string,
 			ms: number,
@@ -858,12 +827,9 @@ namespace cool {
 			}, ms);
 		}
 
-		private async buildUserMessage(
-			text: string,
-			isImageRequest: boolean,
-		): Promise<ChatMessage | null> {
+		private async buildUserMessage(text: string): Promise<ChatMessage | null> {
 			let selectedText = '';
-			if (!isImageRequest && TextSelections.isActive()) {
+			if (TextSelections.isActive()) {
 				try {
 					selectedText = await this.fetchSelectedMarkdown();
 				} catch (e: any) {
@@ -914,42 +880,28 @@ namespace cool {
 			return apiMessages;
 		}
 
-		private dispatchRequest(text: string, isImageRequest: boolean): void {
+		private dispatchRequest(): void {
 			this.currentRequestId = this.generateRequestId();
 
-			if (isImageRequest) {
-				const payload = JSON.stringify({
-					prompt: text,
-					requestId: this.currentRequestId,
-				});
-				app.socket.sendMessage('aiimage: ' + payload);
-				this.startRequestTimeout(
-					this.currentRequestId,
-					this.IMAGE_REQUEST_TIMEOUT_MS,
-					(d) => this.onAIImageResult(d),
-				);
-			} else {
-				const payload = JSON.stringify({
-					messages: this.buildApiMessages(),
-					requestId: this.currentRequestId,
-				});
-				app.socket.sendMessage('aichat: ' + payload);
-				this.startRequestTimeout(
-					this.currentRequestId,
-					this.CHAT_REQUEST_TIMEOUT_MS,
-					(d) => this.onAIChatResult(d),
-				);
-			}
+			const payload = JSON.stringify({
+				messages: this.buildApiMessages(),
+				requestId: this.currentRequestId,
+			});
+			app.socket.sendMessage('aichat: ' + payload);
+			this.startRequestTimeout(
+				this.currentRequestId,
+				this.REQUEST_TIMEOUT_MS,
+				(d) => this.onAIChatResult(d),
+			);
 		}
 
 		async sendMessage(): Promise<void> {
 			const text = this.inputText.trim();
 			if (!text || this.isProcessing) return;
 
-			const isImageRequest = this.isImageGenerationPrompt(text);
 			this.hintText = '';
 
-			const userMsg = await this.buildUserMessage(text, isImageRequest);
+			const userMsg = await this.buildUserMessage(text);
 			if (!userMsg) return;
 
 			this.messages.push(userMsg);
@@ -959,7 +911,7 @@ namespace cool {
 			this.updateChatState(true);
 			this.updateHint();
 
-			this.dispatchRequest(text, isImageRequest);
+			this.dispatchRequest();
 		}
 
 		private handleAIResponse(
@@ -988,25 +940,22 @@ namespace cool {
 		private onAIChatResult(data: any): void {
 			this.handleAIResponse(
 				data,
-				(d) => ({
-					role: 'assistant',
-					content: d.content,
-					timestamp: Date.now(),
-				}),
+				(d) => {
+					if (d.imageData) {
+						return {
+							role: 'assistant',
+							content: _('Generated image'),
+							imageData: d.imageData,
+							timestamp: Date.now(),
+						};
+					}
+					return {
+						role: 'assistant',
+						content: d.content,
+						timestamp: Date.now(),
+					};
+				},
 				_('AI request failed'),
-			);
-		}
-
-		private onAIImageResult(data: any): void {
-			this.handleAIResponse(
-				data,
-				(d) => ({
-					role: 'assistant',
-					content: _('Generated image'),
-					imageData: d.imageData,
-					timestamp: Date.now(),
-				}),
-				_('Image generation failed'),
 			);
 		}
 

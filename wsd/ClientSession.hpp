@@ -353,10 +353,8 @@ private:
     void sendAIChatResult(bool success, const std::string& text,
                           const std::string& requestId);
 
-    bool handleAIImageAction(const std::string& firstLine);
-    void sendAIImageResult(bool success, const std::string& imageData,
-                           const std::string& errorText,
-                           const std::string& requestId);
+    bool handleAIImageGeneration(const std::string& prompt,
+                                  const std::string& requestId);
 
     bool loadDocument(const char* buffer, int length, const StringVector& tokens,
                       const std::shared_ptr<DocumentBroker>& docBroker);
