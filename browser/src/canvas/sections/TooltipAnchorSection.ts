@@ -60,8 +60,15 @@ namespace cool {
 				rectangles,
 				app.twipsToPixels,
 			);
-			this.sectionProperties.polygonColor =
-				redlineType === 'Insert' ? 'green' : 'gray';
+
+			// Set the polygon color to roughly match the auto text color.
+			const mode = this.sectionProperties.mode;
+			if (redlineType === 'Delete' && mode === TileMode.LeftSide)
+				this.sectionProperties.polygonColor = 'red';
+			else if (redlineType === 'Insert' && mode === TileMode.RightSide)
+				this.sectionProperties.polygonColor = 'green';
+			else this.sectionProperties.polygonColor = 'gray';
+
 			this.setTwipRectangles(rectangles);
 			app.sectionContainer.requestReDraw();
 		}
