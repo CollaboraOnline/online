@@ -582,6 +582,17 @@ void ClientSession::sendAIChatResult(bool success, const std::string& text,
     sendTextFrame("aichatresult: " + oss.str());
 }
 
+static const std::string AI_SYSTEM_PROMPT =
+    "You are a helpful assistant for Collabora Online. "
+    "Help users with their documents — answering questions, suggesting edits, "
+    "rewriting text, and more. When the user shares selected text from their document, "
+    "provide relevant help with that text. When no selected text is provided, answer "
+    "general questions about documents, formatting, writing, and the application. "
+    "When providing rewritten or edited text, return it in markdown format preserving "
+    "the original formatting structure. IMPORTANT: Return the markdown text directly "
+    "without wrapping it in code fences (do NOT use ```markdown or ``` blocks). "
+    "Just return the raw markdown content. Be concise and helpful.";
+
 bool ClientSession::handleAIChatAction(const std::string& firstLine)
 {
     // Extract JSON payload after "aichat: "
@@ -604,6 +615,25 @@ bool ClientSession::handleAIChatAction(const std::string& firstLine)
         return true;
     }
 
+    // Strip any system messages from client payload and prepend server-side system prompt
+    Poco::JSON::Array::Ptr sanitizedMessages = new Poco::JSON::Array();
+    Poco::JSON::Object::Ptr systemMsg = new Poco::JSON::Object();
+    systemMsg->set("role", "system");
+    systemMsg->set("content", AI_SYSTEM_PROMPT);
+    sanitizedMessages->add(systemMsg);
+
+    for (unsigned i = 0; i < messages->size(); ++i)
+    {
+        auto msg = messages->getObject(i);
+        if (msg)
+        {
+            std::string role;
+            JsonUtil::findJSONValue(msg, "role", role);
+            if (role != "system")
+                sanitizedMessages->add(msg);
+        }
+    }
+
     // Get AI provider settings
     const std::string apiKey = getAIProviderAPIKey();
     const std::string model = getAIProviderModel();
@@ -619,7 +649,7 @@ bool ClientSession::handleAIChatAction(const std::string& firstLine)
         baseUrl.pop_back();
 
     LOG_DBG("AIChatAction: request [" << requestId << "] with "
-            << messages->size() << " messages, model: " << model);
+            << sanitizedMessages->size() << " messages, model: " << model);
 
     std::string requestUrl = baseUrl;
     requestUrl.append("/v1/chat/completions");
@@ -627,7 +657,7 @@ bool ClientSession::handleAIChatAction(const std::string& firstLine)
     // Build HTTP payload with model and messages
     Poco::JSON::Object::Ptr payload = new Poco::JSON::Object();
     payload->set("model", model);
-    payload->set("messages", messages);
+    payload->set("messages", sanitizedMessages);
 
     Poco::JSON::Object::Ptr promptProp = new Poco::JSON::Object();
     promptProp->set("type", "string");

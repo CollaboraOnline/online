@@ -83,17 +83,6 @@ namespace cool {
 		private readonly FORMULA_FETCH_TIMEOUT_MS = 5000;
 		private readonly MAX_API_MESSAGES = 50;
 
-		private readonly SYSTEM_PROMPT: string =
-			'You are a helpful assistant for Collabora Online. ' +
-			'Help users with their documents — answering questions, suggesting edits, ' +
-			'rewriting text, and more. When the user shares selected text from their document, ' +
-			'provide relevant help with that text. When no selected text is provided, answer ' +
-			'general questions about documents, formatting, writing, and the application. ' +
-			'When providing rewritten or edited text, return it in markdown format preserving ' +
-			'the original formatting structure. IMPORTANT: Return the markdown text directly ' +
-			'without wrapping it in code fences (do NOT use ```markdown or ``` blocks). ' +
-			'Just return the raw markdown content. Be concise and helpful.';
-
 		constructor() {
 			this.container = document.getElementById('aichat-panel') as HTMLElement;
 			this.wrapper = document.getElementById(
@@ -870,9 +859,7 @@ namespace cool {
 		}
 
 		private buildApiMessages(): { role: string; content: string }[] {
-			const apiMessages: { role: string; content: string }[] = [
-				{ role: 'system', content: this.SYSTEM_PROMPT },
-			];
+			const apiMessages: { role: string; content: string }[] = [];
 			const textMessages = this.messages.filter((m) => !m.imageData);
 			const recent = textMessages.slice(-this.MAX_API_MESSAGES);
 			for (const msg of recent) {
