@@ -85,6 +85,8 @@ namespace cool {
 			this.documentPosition.mode = this.sectionProperties.mode;
 			this.myTopLeft[0] = this.documentPosition.vX;
 			this.myTopLeft[1] = this.documentPosition.vY;
+			if (this.containerObject.testing)
+				this.containerObject.createUpdateSingleDivElement(this);
 		}
 
 		/// Parses the rectangles string[] into an Array<number[]>.
