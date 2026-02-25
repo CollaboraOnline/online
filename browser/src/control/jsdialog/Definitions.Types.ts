@@ -306,6 +306,7 @@ interface MenuButtonWidgetJSON extends WidgetJSON {
 	applyCallback?: () => void; // split button callback for left part
 	class?: string;
 	image?: string | boolean;
+	accessKey?: string;
 }
 
 // type: 'buttonbox'

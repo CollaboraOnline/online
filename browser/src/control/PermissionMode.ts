@@ -118,6 +118,7 @@ class PermissionViewMode extends JSDialogComponent {
 			text: text,
 			image: false, // Suppress image generation
 			visible: visible, // JSDialogBuilder checks visible: false
+			accessKey: 'VM',
 			menu: [
 				{
 					id: 'view',
