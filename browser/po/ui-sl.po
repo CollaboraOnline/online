@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: Collabora Online UI\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-02-13 19:20+0100\n"
-"PO-Revision-Date: 2026-02-17 22:35+0000\n"
+"PO-Revision-Date: 2026-02-25 19:48+0000\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Slovenian <https://hosted.weblate.org/projects/collabora-"
 "online/ui/sl/>\n"
@@ -2914,11 +2914,11 @@ msgstr "Možnosti sloga tabele"
 
 #: src/control/Control.NotebookbarCalc.js:1678
 msgid "Header Row"
-msgstr ""
+msgstr "Vrstica glave"
 
 #: src/control/Control.NotebookbarCalc.js:1690
 msgid "Total Row"
-msgstr ""
+msgstr "Vrstica vsote"
 
 #: src/control/Control.NotebookbarCalc.js:1708
 msgid "Banded Rows"
@@ -2938,7 +2938,7 @@ msgstr "Zadnji stolpec"
 
 #: src/control/Control.NotebookbarCalc.js:1765
 msgid "Filter Buttons"
-msgstr ""
+msgstr "Gumbi filtra"
 
 #: src/control/Control.NotebookbarCalc.js:1801
 #: src/control/Control.NotebookbarCalc.js:2549
@@ -3115,16 +3115,16 @@ msgstr "Predstavi v oknu"
 
 #: src/control/Control.NotebookbarImpress.js:493
 msgid "Presenter View"
-msgstr ""
+msgstr "Pogled govorca"
 
 #: src/control/Control.NotebookbarImpress.js:501
 msgid "Present to All"
-msgstr ""
+msgstr "Predstavljaj vsem"
 
 #: src/control/Control.NotebookbarImpress.js:509
 #: src/slideshow/SlideShowPresenter.ts:759
 msgid "Follow Presenter"
-msgstr ""
+msgstr "Sledi govorcu"
 
 #: src/control/Control.NotebookbarImpress.js:637
 msgid "Slide Views"
@@ -3205,11 +3205,11 @@ msgstr "V nepovezan način"
 
 #: src/control/Control.NotebookbarWriter.js:489
 msgid "Validate Sidebar"
-msgstr ""
+msgstr "Stranska vrstica Preveri veljavnost"
 
 #: src/control/Control.NotebookbarWriter.js:497
 msgid "Validate Dialog"
-msgstr ""
+msgstr "Pogovorno okno Preveri veljavnost"
 
 #: src/control/Control.NotebookbarWriter.js:940
 #: src/control/Control.Zotero.js:828
@@ -3345,7 +3345,7 @@ msgstr "Hitri bind-mount za Jail-kit je omogočen"
 
 #: src/control/Control.ServerAuditDialog.ts:119
 msgid "Fast kit jail bind mounting not configured"
-msgstr ""
+msgstr "Hitri bind-mount za Jail-kit ni nastavljen"
 
 #: src/control/Control.ServerAuditDialog.ts:127
 msgid "Poorly performing proxying of all network requests."
@@ -3481,7 +3481,7 @@ msgstr "Pogled več strani"
 
 #: src/control/Control.StatusBar.js:257
 msgid "Zoom to Fit Page Width"
-msgstr ""
+msgstr "Približaj na širino strani"
 
 #: src/control/Control.StatusBar.js:414
 msgid ""
@@ -3913,16 +3913,16 @@ msgstr "Samo za branje"
 
 #: src/control/PermissionMode.ts:108
 msgid "Viewing Mode"
-msgstr ""
+msgstr "Ogledovalni način"
 
 #: src/control/PermissionMode.ts:114
 msgid "Editing Mode"
-msgstr ""
+msgstr "Urejevalni način"
 
 #: src/control/PermissionMode.ts:125 src/control/PermissionMode.ts:176
 #: src/control/PermissionMode.ts:182 src/control/PermissionMode.ts:188
 msgid "Viewing"
-msgstr ""
+msgstr "Ogledovanje"
 
 #: src/control/jsdialog/Definitions.Menu.ts:111
 #: src/control/jsdialog/Definitions.Menu.ts:1748
@@ -5131,7 +5131,7 @@ msgstr "Nadaljuj"
 
 #: src/slideshow/PresenterConsole.js:38
 msgid "Present to all"
-msgstr ""
+msgstr "Predstavljaj vsem"
 
 #: src/slideshow/PresenterConsole.js:39
 msgid "Go Back"
