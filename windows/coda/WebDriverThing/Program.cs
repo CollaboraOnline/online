@@ -1,9 +1,21 @@
 ﻿// -*- tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4; fill-column: 100 -*-
 
 using OpenQA.Selenium.Edge;
+using OpenQA.Selenium.Interactions;
 using System;
+using System.Diagnostics;
+using System.IO;
+using System.IO.Compression;
+using System.Linq;
+using System.Runtime.InteropServices;
+using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Windows.Automation;
+using System.Windows.Forms;
+using System.Xml.Linq;
+using Keys = OpenQA.Selenium.Keys;
 
 namespace WebDriverThing
 {
@@ -86,15 +98,69 @@ namespace WebDriverThing
             System.Windows.Forms.SendKeys.SendWait("{ENTER}");
         }
 
-        static void Main(string[] args)
+        static void RunOnSTA(Action action)
         {
-            // Use the Open button to load a document.
-            openFile(@"C:\Users\tml\sailing.odt");
+            Exception ex = null;
+            var t = new Thread(() => {
+                try { action(); }
+                catch (Exception e) { ex = e; }
+            });
+            t.SetApartmentState(ApartmentState.STA);
+            t.Start();
+            t.Join();
+            if (ex != null) throw ex;
+        }
+
+        static async Task Main(string[] args)
+        {
+            // Make a copy of an empty .otd. Assume we are running in <top>\windows\coda\WebDriverThing\bin\Debug.
+            var topDir = Path.GetFullPath(AppContext.BaseDirectory + @"\..\..\..\..\..");
+
+            // Find out the --with-app-name value from config.status
+            var regex = new Regex("S\\[\"APP_NAME\"\\]=\"([^\"]+)\"$");
+            var match = File.ReadLines(topDir + @"\config.status")
+                .Select(l => regex.Match(l))
+                .FirstOrDefault(m => m.Success);
+
+            string appName = match?.Groups[1].Value.Trim();
+
+            if (appName == null)
+                fatal("No APP_NAME in config.status");
+
+            var platform = (RuntimeInformation.OSArchitecture == Architecture.X64 ? "x64" : "ARM64");
+            const string configuration =
+#if DEBUG
+                "Debug"
+#else
+                "Release"
+#endif
+            ;
+            var codaExe = topDir + @"\windows\coda\" + platform + @"\" + configuration + @"\program\" + appName + ".exe";
+            var coda = new Process
+            {
+                StartInfo = new ProcessStartInfo
+                {
+                    FileName = codaExe,
+                    UseShellExecute = false
+                }
+            };
+
+            coda.StartInfo.Environment["CODA_ENABLE_WEBDRIVER"] = "YES";
+
+            coda.Start();
+
+            var docCopy = Path.Combine(Path.GetTempPath(), $"{Guid.NewGuid()}.odt");
+
+            File.Copy(topDir + @"\browser\templates\TextDocument.odt", docCopy, true);
+
+            // Use the Open button to load it
+            openFile(docCopy);
+
+            // Then do some simple things with it
 
             var driver = connectToWebView2();
 
             // At first, click the button to enable editing.
-            // Give for the document time to load.
             var editButton = driver.FindElement(OpenQA.Selenium.By.Id("mobile-edit-button"));
 
             if (editButton == null)
@@ -103,9 +169,47 @@ namespace WebDriverThing
             Thread.Sleep(5000);
             editButton.Click();
 
-            Thread.Sleep(20000);
+            // Paste text from clipboard with shortcut
+            RunOnSTA(() => Clipboard.SetText("hello"));
+            new Actions(driver).KeyDown(Keys.Control).SendKeys("v").KeyUp(Keys.Control).Perform();
 
+            // Save the document
+            Thread.Sleep(1000);
+            new Actions(driver).KeyDown(Keys.Control).SendKeys("s").KeyUp(Keys.Control).Perform();
+
+            // Close the document (and app) using Control+W
+            Thread.Sleep(1000);
+            new Actions(driver).KeyDown(Keys.Control).SendKeys("w").KeyUp(Keys.Control).Perform();
+
+            Thread.Sleep(1000);
             driver.Quit();
+
+            coda.WaitForExit();
+
+            // Open the edited document and verify we edited it as expected
+            var stream = File.OpenRead(docCopy);
+            var archive = new ZipArchive(stream, ZipArchiveMode.Read);
+            var contentStream = archive.GetEntry("content.xml").Open();
+            var ms = new MemoryStream();
+            contentStream.CopyTo(ms);
+
+            stream.Close();
+            File.Delete(docCopy);
+
+            byte[] content = ms.ToArray();
+            var s = Encoding.UTF8.GetString(content);
+
+            var doc = XDocument.Parse(s);
+            XNamespace office = "urn:oasis:names:tc:opendocument:xmlns:office:1.0";
+            XNamespace text = "urn:oasis:names:tc:opendocument:xmlns:text:1.0";
+            var paragraphs = doc.Descendants(text + "p");
+            if (paragraphs.Count() == 0)
+                fatal("No paragraphs?");
+            else if (paragraphs.Count() > 1)
+                fatal("More than one paragraph");
+            if (paragraphs.First().Value != "hello")
+
+            Console.WriteLine("OK");
         }
     }
 }
