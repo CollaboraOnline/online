@@ -362,23 +362,6 @@ class Dispatcher {
 	}
 
 	private addAICommands() {
-		this.actionsMap['rewritetextai'] = function () {
-			// Check if text is selected
-			const copyState =
-				app.map['stateChangeHandler']?.getItemValue('.uno:Copy');
-
-			if (copyState !== 'enabled') {
-				app.map.uiManager.showInfoModal(
-					'no-text-selected',
-					_('Please select text to rewrite.'),
-				);
-				return;
-			}
-
-			const dialog = JSDialog.aiRewriteTextDialog();
-			dialog.open();
-		};
-
 		this.actionsMap['aichat'] = function () {
 			if (!app.map.isAIConfigured) {
 				app.map.uiManager.showSnackbar(
