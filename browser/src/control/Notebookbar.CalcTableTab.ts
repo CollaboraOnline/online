@@ -74,17 +74,21 @@ class CalcTableTab implements NotebookbarTab {
 		iconViewEntries.push({
 			row: i++,
 			text: _('None'),
-			image: 'images/table_light_seven.svg',
+			image: 'images/lc_table_light_seven.svg',
+			width: 35,
+			height: 35,
 			selected: !currentStyle || currentStyle.name === '',
-		});
+		} as IconViewEntry);
 
 		tableStyles.forEach((element) => {
 			iconViewEntries.push({
 				row: i++,
 				text: element.UIName,
-				image: 'images/table_light_seven.svg',
+				image: 'images/lc_table_light_seven.svg',
+				width: 35,
+				height: 35,
 				selected: currentStyle ? element.Name === currentStyle.name : false,
-			});
+			} as IconViewEntry);
 		});
 
 		const tableStylesJSON = {
