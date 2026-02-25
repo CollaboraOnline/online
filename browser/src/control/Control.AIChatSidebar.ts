@@ -654,6 +654,7 @@ namespace cool {
 			const exactActions: Record<string, () => void> = {
 				'aichat-send-btn': () => {
 					if (this.isProcessing) {
+						app.socket.sendMessage('aichatcancel: ' + this.currentRequestId);
 						this.isProcessing = false;
 						this.currentRequestId = '';
 						this.updateChatState();

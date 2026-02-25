@@ -738,6 +738,8 @@ bool ClientSession::handleAIChatAction(const std::string& firstLine)
     http::Session::FinishedCallback finishedCallback =
         [clientSessionPtr, requestId, sendResult](const std::shared_ptr<http::Session>& session)
     {
+        clientSessionPtr->_activeAIChatSession.reset();
+
         const std::shared_ptr<const http::Response> httpResponse = session->response();
         const http::StatusCode statusCode = httpResponse->statusLine().statusCode();
 
@@ -882,8 +884,11 @@ bool ClientSession::handleAIChatAction(const std::string& firstLine)
     httpSession->setFinishedHandler(std::move(finishedCallback));
 
     http::Session::ConnectFailCallback connectFailCallback =
-        [sendResult](const std::shared_ptr<http::Session>& /*session*/)
-    { sendResult(false, "Network error - please check your connection"); };
+        [clientSessionPtr, sendResult](const std::shared_ptr<http::Session>& /*session*/)
+    {
+        clientSessionPtr->_activeAIChatSession.reset();
+        sendResult(false, "Network error - please check your connection");
+    };
     httpSession->setConnectFailHandler(std::move(connectFailCallback));
 
     http::Request httpRequest(Poco::URI(requestUrl).getPathAndQuery());
@@ -896,8 +901,22 @@ bool ClientSession::handleAIChatAction(const std::string& firstLine)
 
     LOG_DBG("AIChatAction: sending request [" << requestId << "] to " << requestUrl);
 
+    _activeAIChatSession = httpSession;
     std::shared_ptr<DocumentBroker> docBroker = getDocumentBroker();
     httpSession->asyncRequest(httpRequest, docBroker->getPoll());
+    return true;
+}
+
+bool ClientSession::handleAIChatCancel(const std::string& firstLine)
+{
+    const std::string cancelRequestId = firstLine.substr(strlen("aichatcancel: "));
+    LOG_DBG("AIChatCancel: cancelling request [" << cancelRequestId << ']');
+
+    if (_activeAIChatSession)
+    {
+        _activeAIChatSession->asyncShutdown();
+        _activeAIChatSession.reset();
+    }
     return true;
 }
 
@@ -1860,6 +1879,10 @@ bool ClientSession::_handleInput(const char *buffer, int length)
     else if (tokens.equals(0, "aichat:"))
     {
         return handleAIChatAction(firstLine);
+    }
+    else if (tokens.equals(0, "aichatcancel:"))
+    {
+        return handleAIChatCancel(firstLine);
     }
 #endif
     else if (tokens.equals(0, "resetaccesstoken"))

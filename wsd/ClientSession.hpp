@@ -34,6 +34,7 @@
 #include <optional>
 
 class DocumentBroker;
+namespace http { class Session; }
 
 /// Represents a session to a COOL client, in the WSD process.
 class ClientSession final : public Session
@@ -350,6 +351,7 @@ private:
     bool handleAIAction(const StringVector& tokens);
 
     bool handleAIChatAction(const std::string& firstLine);
+    bool handleAIChatCancel(const std::string& firstLine);
     bool handleUpdateViewSettings(const std::string& firstLine);
     void sendAIChatResult(bool success, const std::string& text,
                           const std::string& requestId);
@@ -527,6 +529,9 @@ private:
     bool _isConvertTo;
 
     Poco::SharedPtr<Poco::JSON::Object> _viewSettingsJSON;
+
+    /// Active AI chat HTTP session for cancellation support
+    std::shared_ptr<http::Session> _activeAIChatSession;
 };
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
