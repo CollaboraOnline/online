@@ -470,7 +470,7 @@ bool FileServerRequestHandler::handleRequest(const HTTPRequest& request,
         if (endPoint == "fetch-models")
         {
             fetchModels(request, message, socket);
-            return true;
+            return false;
         }
 
         // Is this a file we read at startup - if not; it's not for serving.
@@ -1802,26 +1802,43 @@ void FileServerRequestHandler::fetchModels(const Poco::Net::HTTPRequest& request
     httpRequest.setVerb(http::Request::VERB_GET);
     httpRequest.set("Content-Type", "application/json");
 
-    auto httpSession = StorageConnectionManager::getHttpSession(uri);
-    auto httpResponse = httpSession->syncRequest(httpRequest);
+    std::weak_ptr<StreamSocket> socketWeak(socket);
 
-    const auto statusCode = httpResponse->statusLine().statusCode();
-    if (statusCode != http::StatusCode::OK)
+    http::Session::FinishedCallback finishedCallback =
+        [uriAnonym, socketWeak, requestPath = getRequestPath(request),
+         shortMessage](const std::shared_ptr<http::Session>& httpSession)
     {
-        std::ostringstream responseContent;
-        responseContent << httpResponse->getBody();
-        sendError(statusCode, getRequestPath(request), socket, shortMessage,
-                  httpResponse->statusLine().reasonPhrase() +
-                      ". Response: " + responseContent.str());
-        return;
-    }
+        std::shared_ptr<StreamSocket> destSocket = socketWeak.lock();
+        if (!destSocket)
+        {
+            LOG_ERR("Invalid socket while fetching models from [" << uriAnonym << ']');
+            return;
+        }
 
-    http::Response clientResponse(http::StatusCode::OK);
-    clientResponse.set("Content-Type", "application/json; charset=utf-8");
-    clientResponse.set("Cache-Control", "no-cache");
-    clientResponse.setBody(httpResponse->getBody());
-    socket->send(clientResponse);
-    LOG_DBG("Successfully fetched models from [" << uriAnonym << "]");
+        const auto httpResponse = httpSession->response();
+        if (httpResponse->statusLine().statusCode() != http::StatusCode::OK)
+        {
+            LOG_ERR("Failed to fetch models from [" << uriAnonym
+                    << "] with status [" << httpResponse->statusLine().reasonPhrase() << ']');
+            sendError(httpResponse->statusLine().statusCode(), requestPath, destSocket,
+                      shortMessage,
+                      httpResponse->statusLine().reasonPhrase() + ". Response: " +
+                          httpResponse->getBody());
+            return;
+        }
+
+        http::Response clientResponse(http::StatusCode::OK);
+        clientResponse.set("Content-Type", "application/json; charset=utf-8");
+        clientResponse.set("Cache-Control", "no-cache");
+        clientResponse.setBody(httpResponse->getBody());
+        destSocket->sendAndShutdown(clientResponse);
+        LOG_DBG("Successfully fetched models from [" << uriAnonym << ']');
+    };
+
+    LOG_DBG("Fetching models from [" << uriAnonym << ']');
+    auto httpSession = StorageConnectionManager::getHttpSession(uri);
+    httpSession->setFinishedHandler(std::move(finishedCallback));
+    httpSession->asyncRequest(httpRequest, COOLWSD::getWebServerPoll());
 }
 
 void FileServerRequestHandler::deleteWopiSettingConfigs(const Poco::Net::HTTPRequest& request,
