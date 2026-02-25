@@ -16,3 +16,6 @@ Known poco issues are:
   due to the use of rotation, never in coolwsd.xml for log rotation strategy.
   This can be worked around by changing "never" to "monthly" in coolwsd.xml.
   See: https://github.com/pocoproject/poco/issues/4411
+
++ In Poco > 1.12.5p2 and < 1.14.2 there is believed to be a logging performance
+  issue not seen in 1.12.5p2 which appears to be fixed by 1.14.2.
