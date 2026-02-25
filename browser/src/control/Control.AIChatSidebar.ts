@@ -152,7 +152,6 @@ namespace cool {
 			this.builder.build(this.container, [data], false);
 			this.applyMessageStyles();
 			this.applyInputStyles();
-			this.applyHeaderTooltips();
 			this.scrollToBottom();
 			this.attachContainerKeyboardHandler();
 			if (!this.isProcessing) {
@@ -184,7 +183,6 @@ namespace cool {
 
 		private updateHeader(): void {
 			this.builder.updateWidget(this.container, this.getHeaderJSON());
-			app.layoutingService.onDrain(() => this.applyHeaderTooltips());
 		}
 
 		private updateChatState(includeHeader: boolean = false): void {
@@ -216,7 +214,6 @@ namespace cool {
 					el.setAttribute('aria-label', label);
 				}
 			}
-			this.applyMessageTooltips();
 			this.applyCardStyles();
 		}
 
@@ -246,49 +243,12 @@ namespace cool {
 			this.setupChipKeyboardNavigation();
 		}
 
-		private applyMessageTooltips(): void {
-			for (let i = 0; i < this.messages.length; i++) {
-				const tooltips: Record<string, string> = {
-					[`aichat-insert-text-${i}`]: _('Insert at cursor'),
-					[`aichat-copy-text-${i}`]: _('Copy to clipboard'),
-					[`aichat-insert-img-${i}`]: _('Insert at cursor'),
-					[`aichat-copy-img-${i}`]: _('Copy to clipboard'),
-				};
-				for (const [id, tip] of Object.entries(tooltips)) {
-					const wrapper = document.getElementById(id);
-					if (wrapper) {
-						wrapper.title = tip;
-						const btn = wrapper.querySelector('button');
-						if (btn) btn.title = tip;
-					}
-				}
-			}
-		}
-
 		private applyInputStyles(): void {
 			const sendBtn = document.querySelector(
 				'#aichat-send-btn button.ui-pushbutton',
 			);
 			if (sendBtn) {
 				sendBtn.classList.toggle('aichat-stop-mode', this.isProcessing);
-			}
-			const tip = this.isProcessing
-				? _('Stop generating')
-				: _('Send message (Enter)');
-			this.setTooltip('aichat-send-btn', tip);
-		}
-
-		private applyHeaderTooltips(): void {
-			this.setTooltip('aichat-clear-btn', _('New conversation'));
-			this.setTooltip('aichat-close-btn', _('Close'));
-		}
-
-		private setTooltip(id: string, tip: string): void {
-			const wrapper = document.getElementById(id);
-			if (wrapper) {
-				wrapper.title = tip;
-				const btn = wrapper.querySelector('button');
-				if (btn) btn.title = tip;
 			}
 		}
 
