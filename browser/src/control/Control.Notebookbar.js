@@ -52,6 +52,10 @@ window.L.Control.Notebookbar = window.L.Control.extend({
 		this.map.on('notebookbar', this.onNotebookbar, this);
 	},
 
+	onCallback: function (objectType, eventType, object, data, builder) {
+		return false;
+	},
+
 	// on show
 	create: function(container) {
 		const docType = this._map.getDocType();
