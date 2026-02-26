@@ -2,14 +2,15 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: core-sq\n"
-"PO-Revision-Date: 2026-02-03 12:50+0000\n"
-"Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
-"Language-Team: Albanian <https://hosted.weblate.org/projects/collabora-online/lokit/sq/>\n"
+"PO-Revision-Date: 2026-02-26 13:57+0000\n"
+"Last-Translator: Besnik Bleta <besnik@programeshqip.org>\n"
+"Language-Team: Albanian <https://hosted.weblate.org/projects/collabora-"
+"online/lokit/sq/>\n"
 "Language: sq\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.16-dev\n"
+"X-Generator: Weblate 5.16.1-dev\n"
 
 #. ygDfy
 #: module_graphicfilter.ulf
@@ -53,19 +54,19 @@ msgstr "Ngjite Si"
 #: svx/inc/spacing.hrc:16
 msgctxt "RID_ABOVE"
 msgid "Above:"
-msgstr ""
+msgstr "Mbi:"
 
 #. uaiun
 #: svx/inc/spacing.hrc:17
 msgctxt "RID_BELOW"
 msgid "Below:"
-msgstr ""
+msgstr "Nën:"
 
 #. fvxsX
 #: svx/inc/spacing.hrc:18
 msgctxt "RID_BEFORE"
 msgid "Before:"
-msgstr ""
+msgstr "Përpara:"
 
 #. jGRHH
 #: svx/inc/spacing.hrc:19
@@ -77,7 +78,7 @@ msgstr "Pas:"
 #: svx/inc/spacing.hrc:20
 msgctxt "RID_FIRST"
 msgid "First:"
-msgstr ""
+msgstr "I pari:"
 
 #. aNZNw
 #: svx/uiconfig/ui/dropdownfielddialog.ui:31
@@ -119,25 +120,25 @@ msgstr ""
 #: svx/uiconfig/ui/headfootformatpage.ui:407
 msgctxt "headfootformatpage|drawingareaPageHF-atkobject"
 msgid "Header and Footer Preview"
-msgstr ""
+msgstr "Paraparje Kryefaqeje dhe Fundfaqeje"
 
 #. LSYRB
 #: svx/uiconfig/ui/sidebarline.ui:91
 msgctxt "sidebarline|SelectWidth|tooltip_text"
 msgid "Line Thickness"
-msgstr ""
+msgstr "Trashësi Vije"
 
 #. cDwyK
 #: svx/uiconfig/ui/sidebarline.ui:97
 msgctxt "sidebarline|SelectWidth-atkobject"
 msgid "Line Thickness"
-msgstr ""
+msgstr "Trashësi Vije"
 
 #. 7MFsT
 #: uui/inc/strings.hrc:84
 msgctxt "STR_READONLY_FONT_TITLE"
 msgid "Font Disallows Editing"
-msgstr "LLOJI I SHKRONJAVE S’LEJON PËRPUNIM"
+msgstr "Lloji i Shkronjave S’lejon Përpunim"
 
 #. YRahp
 #: uui/inc/strings.hrc:85
@@ -163,7 +164,7 @@ msgid ""
 "For more information please visit ${PRODUCTNAME} home page at <a "
 "href=\"https://collaboraoffice.com\">https://CollaboraOffice.com/</a>."
 msgstr ""
-"Për më tepër informacion, ju lutemi vizitoni faqen hyrëse të ${PRODUCTNAME} "
+"Për më tepër informacion, ju lutemi, vizitoni faqen hyrëse të ${PRODUCTNAME} "
 "te <a href=\"https://collaboraoffice.com\">https://CollaboraOffice.com/</a>."
 
 #. SbQew
@@ -307,13 +308,13 @@ msgstr "_Ruaje në temë të re"
 #: chart2/uiconfig/ui/sidebartype.ui:102
 msgctxt "sidebartype|3dschemeft"
 msgid "3D _Scheme:"
-msgstr "_Skemë 2D:"
+msgstr "_Skemë 3D:"
 
 #. gTE6L
 #: chart2/uiconfig/ui/sidebartype.ui:323
 msgctxt "sidebartype|cmb_chartType-atkobject"
 msgid "Chart Type"
-msgstr ""
+msgstr "Lloj Grafiku"
 
 #. x3adg
 #: chart2/uiconfig/ui/tp_ChartColorPalette.ui:68
@@ -361,19 +362,19 @@ msgstr "Fokus Stilesh Tabelash"
 #: cui/uiconfig/ui/areatabpage.ui:39
 msgctxt "areatabpage|tablelb-atkobject"
 msgid "Apply to"
-msgstr ""
+msgstr "Zbatoje mbi"
 
 #. GYGFd
 #: cui/uiconfig/ui/borderpage.ui:94
 msgctxt "borderpage|framesel"
 msgid "Border Preview"
-msgstr ""
+msgstr "Paraparje Anësh"
 
 #. 3DTib
 #: cui/uiconfig/ui/charnamepage.ui:930
 msgctxt "charnamepage|preview-atkobject"
 msgid "Font preview"
-msgstr ""
+msgstr "Paraparje shkronjash"
 
 #. EPGtZ
 #: cui/uiconfig/ui/hyperlinkinternetpage.ui:64
@@ -409,19 +410,19 @@ msgstr "Shembull"
 #: cui/uiconfig/ui/numberingformatpage.ui:541
 msgctxt "numberingformatpage|currencylb-atkobject"
 msgid "Currency"
-msgstr ""
+msgstr "Monedhë"
 
 #. YnkND
 #: cui/uiconfig/ui/numberingformatpage.ui:682
 msgctxt "numberingformatpage|preview-atkobject"
 msgid "Preview"
-msgstr "Shikim paraprak"
+msgstr "Paraparje"
 
 #. vcAoU
 #: cui/uiconfig/ui/pageformatpage.ui:223
 msgctxt "pageformatpage|drawingareaPageDirection-atkobject"
 msgid "Page Direction"
-msgstr ""
+msgstr "Drejtim Faqeje"
 
 #. gfELk
 #: cui/uiconfig/ui/pageformatpage.ui:265
@@ -433,73 +434,73 @@ msgstr "Ripërmasoji krejt faqet"
 #: cui/uiconfig/ui/paraindentspacing.ui:399
 msgctxt "paraindentspacing|comboLB_LINEDIST"
 msgid "Line Spacing Type"
-msgstr ""
+msgstr "Lloj Ndërvije"
 
 #. YtiHD
 #: cui/uiconfig/ui/paraindentspacing.ui:446
 msgctxt "paraindentspacing|spinED_LINEDISTPERCENT"
 msgid "Line Spacing Value"
-msgstr ""
+msgstr "Vlerë Ndërvije"
 
 #. QE3Ad
 #: cui/uiconfig/ui/paraindentspacing.ui:466
 msgctxt "paraindentspacing|spinED_LINEDISTMETRIC"
 msgid "Line Spacing Value"
-msgstr ""
+msgstr "Vlerë Ndërvije"
 
 #. VGEqG
 #: cui/uiconfig/ui/paraindentspacing.ui:487
 msgctxt "paraindentspacing|spinED_BLANK"
 msgid "Line Spacing Value"
-msgstr ""
+msgstr "Vlerë Ndërvije"
 
 #. WHAZC
 #: cui/uiconfig/ui/paratabspage.ui:177
 msgctxt "paratabspage|drawingareaWIN_TABLEFT-atkobject"
 msgid "Left tab preview"
-msgstr ""
+msgstr "Paraparje skede majtas"
 
 #. akwMF
 #: cui/uiconfig/ui/paratabspage.ui:192
 msgctxt "paratabspage|drawingareaWIN_TABRIGHT-atkobject"
 msgid "Right tab preview"
-msgstr ""
+msgstr "Paraparje skede djathtas"
 
 #. GF4AG
 #: cui/uiconfig/ui/paratabspage.ui:207
 msgctxt "paratabspage|drawingareaWIN_TABCENTER-atkobject"
 msgid "Center tab preview"
-msgstr ""
+msgstr "Paraparje skede qendrore"
 
 #. pSa2J
 #: cui/uiconfig/ui/paratabspage.ui:222
 msgctxt "paratabspage|drawingareaWIN_TABDECIMAL-atkobject"
 msgid "Decimal tab preview"
-msgstr ""
+msgstr "Paraparje skede dhjetoresh"
 
 #. jt6Gv
 #: cui/uiconfig/ui/password.ui:258
 msgctxt "password|ropasslevelbar-atkobject"
 msgid "Password Level Bar"
-msgstr ""
+msgstr "Shtyllë Niveli Fjalëkalimi"
 
 #. FC5te
 #: cui/uiconfig/ui/password.ui:259
 msgctxt "password|extended_tip|ropasslevelbar"
 msgid "Shows the strength of password"
-msgstr ""
+msgstr "Bën shfaqjen e fortësisë së fjalëkalimit"
 
 #. FCkVG
 #: cui/uiconfig/ui/password.ui:437
 msgctxt "password|passlevelbar-atkobject"
 msgid "Password Level Bar"
-msgstr ""
+msgstr "Shtyllë Niveli Fjalëkalimi"
 
 #. 7XcGF
 #: cui/uiconfig/ui/password.ui:438
 msgctxt "password|extended_tip|passlevelbar"
 msgid "Shows the strength of password"
-msgstr ""
+msgstr "Bën shfaqjen e fortësisë së fjalëkalimit"
 
 #. NBdEp
 #: cui/uiconfig/ui/pickbulletpage.ui:45
@@ -517,7 +518,7 @@ msgstr "Klikoni elementët graikë që doni të përdoren si toptha."
 #: cui/uiconfig/ui/picknumberingpage.ui:44
 msgctxt "picknumberingpage|extended_tip|pick_numbering_iconview"
 msgid "Click the numbering scheme that you want to use."
-msgstr "Klikoni skemën e numërimit që doni të përdoret."
+msgstr "Klikoni skemën e numërtimit që doni të përdoret."
 
 #. avppC
 #: cui/uiconfig/ui/pickoutlinepage.ui:44
@@ -529,19 +530,19 @@ msgstr "Klikoni stilin e përvijimit që doni të përdoret."
 #: cui/uiconfig/ui/textflowpage.ui:812
 msgctxt "textflowpage|spinOrphan-atkobject"
 msgid "No split at beginning of paragraph, lines"
-msgstr ""
+msgstr "Pa ndarje në fillim të paragrafit, rreshta"
 
 #. MimEj
 #: cui/uiconfig/ui/textflowpage.ui:832
 msgctxt "textflowpage|spinWidow-atkobject"
 msgid "No split at end of paragraph, lines"
-msgstr ""
+msgstr "Pa ndarje në fund të paragrafit, rreshta"
 
 #. a9iXr
 #: cui/uiconfig/ui/thesaurus.ui:189
 msgctxt "thesaurus|langcb|accessible_name"
 msgid "Language"
-msgstr "Gjuha"
+msgstr "Gjuhë"
 
 #. qpArp
 #: cui/uiconfig/ui/toolbarmodedialog.ui:124
@@ -553,7 +554,7 @@ msgstr "Kompakte"
 #: cui/uiconfig/ui/widgettestdialog.ui:161
 msgctxt "widgettestdialog|combo_box_disable-atkobject"
 msgid "Test Type"
-msgstr ""
+msgstr "Lloj Testi"
 
 #. ZbYiG
 #: include/svtools/strings.hrc:71
@@ -589,25 +590,25 @@ msgstr ""
 #: sfx2/uiconfig/ui/password.ui:200
 msgctxt "password|pass1bar-atkobject"
 msgid "Password Level Bar"
-msgstr ""
+msgstr "Shtyllë Niveli Fjalëkalimi"
 
 #. 2Y4Ua
 #: sfx2/uiconfig/ui/password.ui:201
 msgctxt "password|pass1bar-atkobject"
 msgid "Shows the strength of password"
-msgstr ""
+msgstr "Bën shfaqjen e fortësisë së fjalëkalimit"
 
 #. EGBBE
 #: sfx2/uiconfig/ui/password.ui:342
 msgctxt "password|pass2bar-atkobject"
 msgid "Password Level Bar"
-msgstr ""
+msgstr "Shtyllë Niveli Fjalëkalimi"
 
 #. nvEiq
 #: sfx2/uiconfig/ui/password.ui:343
 msgctxt "password|pass2bar-atkobject"
 msgid "Shows the strength of password"
-msgstr ""
+msgstr "Bën shfaqjen e fortësisë së fjalëkalimit"
 
 #. YHTHB
 #: sfx2/uiconfig/ui/templatepanel.ui:137
@@ -704,13 +705,13 @@ msgstr "Jepni numrin e shtyllave që doni te faqja, korniza apo seksioni."
 #: sw/uiconfig/swriter/ui/columnpage.ui:913
 msgctxt "columnpage|pageexample-atkobject"
 msgid "Preview"
-msgstr "Shikim paraprak"
+msgstr "Paraparje"
 
 #. FYPLQ
 #: sw/uiconfig/swriter/ui/columnpage.ui:930
 msgctxt "columnpage|frameexample-atkobject"
 msgid "Preview"
-msgstr "Shikim paraprak"
+msgstr "Paraparje"
 
 #. yLJG6
 #: sw/uiconfig/swriter/ui/dropcapspage.ui:336
@@ -722,19 +723,19 @@ msgstr "Shembull"
 #: sw/uiconfig/swriter/ui/footnotesendnotestabpage.ui:179
 msgctxt "footnotesendnotestabpage|ftnnumviewbox-atkobject"
 msgid "Numbering"
-msgstr "Numërimi"
+msgstr "Numërtim"
 
 #. afJmD
 #: sw/uiconfig/swriter/ui/footnotesendnotestabpage.ui:455
 msgctxt "footnotesendnotestabpage|endnumviewbox-atkobject"
 msgid "Numbering"
-msgstr "Numërimi"
+msgstr "Numërtim"
 
 #. KFGXP
 #: sw/uiconfig/swriter/ui/outlinenumberingpage.ui:119
 msgctxt "outlinenumberingpage|preview-atkobject"
 msgid "Preview"
-msgstr "Shikim paraprak"
+msgstr "Paraparje"
 
 #. Ci9GE
 #: sw/uiconfig/swriter/ui/spellmenu.ui:34
@@ -746,25 +747,25 @@ msgstr "Shtoje në _Fjalor (standard.dic)"
 #: sw/uiconfig/swriter/ui/textgridpage.ui:155
 msgctxt "textgridpage|drawingareaWN_EXAMPLE-atkobject"
 msgid "Preview"
-msgstr "Shikim paraprak"
+msgstr "Paraparje"
 
 #. Kvz9V
 #: sw/uiconfig/swriter/ui/tocentriespage.ui:252
 msgctxt "tocentriespage|structure_label"
 msgid "_Structure"
-msgstr ""
+msgstr "_Strukturë"
 
 #. CW8Eb
 #: sw/uiconfig/swriter/ui/tocentriespage.ui:277
 msgctxt "tocentriespage|characterstyleft"
 msgid "Character style:"
-msgstr ""
+msgstr "Stil shenjash:"
 
 #. GVCXE
 #: sw/uiconfig/swriter/ui/tocentriespage.ui:569
 msgctxt "tocentriespage|authfield-atkobject"
 msgid "Authority field"
-msgstr ""
+msgstr "Fushë autoriteti"
 
 #. risLD
 #: sw/uiconfig/swriter/ui/tokenwidget.ui:25
@@ -776,7 +777,7 @@ msgstr "Lëvize majtas"
 #: sw/uiconfig/swriter/ui/tokenwidget.ui:30
 msgctxt "tokenwidget|left"
 msgid "Scroll left"
-msgstr ""
+msgstr "Rrëshqit për majtas"
 
 #. fn5SV
 #: sw/uiconfig/swriter/ui/tokenwidget.ui:93
@@ -788,7 +789,7 @@ msgstr "Lëvize djathtas"
 #: sw/uiconfig/swriter/ui/tokenwidget.ui:98
 msgctxt "tokenwidget|right"
 msgid "Scroll right"
-msgstr ""
+msgstr "Rrëshqit për djathtas"
 
 #. FxkzA
 #: sw/uiconfig/swriter/ui/wordcount-mobile.ui:643
@@ -932,7 +933,7 @@ msgstr ""
 #: filter/uiconfig/ui/impswfdialog.ui:155
 msgctxt "impswfdialog|exportmultiplefiles"
 msgid "Export as _multiple files"
-msgstr "Eksportoje si sh_umë kartela"
+msgstr "Eksportoje si _disa kartela"
 
 #. cDbFq
 #: filter/uiconfig/ui/impswfdialog.ui:175
@@ -1021,7 +1022,7 @@ msgid ""
 "used in the source document will be embedded into the generated PDF file. "
 "PDF tags will be written."
 msgstr ""
-"Versionet mund të jenë ose PDF “klasike” (pra, PDF 1.7, PDF 2.0) ose që "
+"Versionet mund të jenë ose PDF “klasike” (pra, PDF 1.7, PDF 2.0), ose që "
 "përputhen me PDF/A. PDF/A përkufizohet si një format kartelash dokumentesh "
 "elektronikë për ruajtje për një kohë të gjatë dhe për arkivim. Lejon vetëm "
 "një nëngrup të veçorive PDF që janë të përputhshme me atë rast përdorimi. "
@@ -1100,7 +1101,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Table Style Options"
-msgstr ""
+msgstr "Mundësi Stili Tabele"
 
 #. 4HzYH
 #: CalcCommands.xcu
@@ -1110,7 +1111,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "~Table"
-msgstr "~Tabelën"
+msgstr "~Tabelë"
 
 #. Uhi2h
 #: CalcCommands.xcu
@@ -1120,7 +1121,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "~Insert Table..."
-msgstr ""
+msgstr "~Futni Tabelë…"
 
 #. cFE7i
 #: CalcCommands.xcu
@@ -1130,7 +1131,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Table..."
-msgstr ""
+msgstr "Tabelë…"
 
 #. ms5Fm
 #: CalcCommands.xcu
@@ -1140,7 +1141,7 @@ msgctxt ""
 "TooltipLabel\n"
 "value.text"
 msgid "Insert Table"
-msgstr "Fut një tabelë"
+msgstr "Futni Tabelë"
 
 #. kZEtN
 #: CalcCommands.xcu
@@ -1150,7 +1151,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "~Remove Table..."
-msgstr ""
+msgstr "~Hiqni Tabelë…"
 
 #. DiD7K
 #: CalcCommands.xcu
@@ -1160,7 +1161,7 @@ msgctxt ""
 "TooltipLabel\n"
 "value.text"
 msgid "Delete Table"
-msgstr "Fshije tabelën"
+msgstr "Fshije Tabelën"
 
 #. 3Ep4Y
 #: CalcCommands.xcu
@@ -1340,7 +1341,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Theme..."
-msgstr ""
+msgstr "Temë…"
 
 #. DCEaK
 #: GenericCommands.xcu
@@ -1420,7 +1421,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Add Theme..."
-msgstr ""
+msgstr "Shtoni Temë…"
 
 #. zETLd
 #: ImpressWindowState.xcu
@@ -1510,7 +1511,7 @@ msgctxt ""
 "TooltipLabel\n"
 "value.text"
 msgid "Reinstate Track Change and select the next one"
-msgstr "Rivendos Ndryshim Pjese dhe përzgjidhni pasuesin"
+msgstr "Rivendosni Ndryshim Pjese dhe përzgjidhni pasuesin"
 
 #. KVYrC
 #: WriterCommands.xcu
@@ -1616,7 +1617,7 @@ msgstr "~Ndryshime në krejt parjet"
 #: xmlsecurity/uiconfig/ui/certdetails.ui:101
 msgctxt "certdetails|valuedetails-atkobject"
 msgid "Value Details"
-msgstr ""
+msgstr "Hollësi Vlere"
 
 #. mpBGu
 #: xmlsecurity/uiconfig/ui/selectcertificatedialog.ui:274
@@ -1628,7 +1629,7 @@ msgstr "Kërko"
 #: sc/inc/globstr.hrc:70
 msgctxt "STR_UNDO_TABLETOTALS"
 msgid "Table Total Row"
-msgstr ""
+msgstr "Rresht Gjithsej Tabele"
 
 #. KAH5t
 #: sc/inc/globstr.hrc:73
@@ -1646,25 +1647,25 @@ msgstr "Fshije tabelën"
 #: sc/inc/globstr.hrc:140
 msgctxt "STR_TABLE_ERR_ADD"
 msgid "Cannot add a new table to the sheet."
-msgstr ""
+msgstr "S’mund të shtoni një tabelë të re te fleta."
 
 #. kG2SE
 #: sc/inc/globstr.hrc:141
 msgctxt "STR_TABLE_ERR_DEL"
 msgid "Cannot delete table from the sheet."
-msgstr ""
+msgstr "S’mund të fshihet tabelë nga fleta."
 
 #. t6eDk
 #: sc/inc/globstr.hrc:195
 msgctxt "STR_CALC_TABLE"
 msgid "Table"
-msgstr ""
+msgstr "Tabelë"
 
 #. GFiBr
 #: sc/inc/globstr.hrc:196
 msgctxt "STR_INVALIDTABLE"
 msgid "The selected area is already part of another Table."
-msgstr ""
+msgstr "Pjesa e përzgjedhur është tashmë pjesë e një tjetër Tabele."
 
 #. 76s4h
 #: sc/inc/globstr.hrc:217
@@ -1676,7 +1677,7 @@ msgstr "Gjithsejt"
 #: sc/inc/globstr.hrc:220
 msgctxt "STR_TABLE_NOTFOUND"
 msgid "No Calc Table found at this position."
-msgstr ""
+msgstr "S’u gjet Tabelë Njehsimesh në këtë pozicion."
 
 #. cG7BY
 #: sc/inc/globstr.hrc:601
@@ -2276,7 +2277,7 @@ msgstr ""
 #: sc/inc/scfuncs.hrc:4394
 msgctxt "SC_OPCODE_TOCOL"
 msgid "Scan by column"
-msgstr "Kontrollo sipas shtyllash"
+msgstr "Skano sipas shtyllash"
 
 #. bcArN
 #: sc/inc/scfuncs.hrc:4395
@@ -2456,19 +2457,19 @@ msgstr "Theksoni kutiza…"
 #: sc/uiconfig/scalc/ui/definetablerangedialog.ui:10
 msgctxt "definetablerangedialog|DefineTableRangeDialog"
 msgid "Create Table"
-msgstr ""
+msgstr "Krijo Tabelë"
 
 #. AGWSW
 #: sc/uiconfig/scalc/ui/definetablerangedialog.ui:37
 msgctxt "definetablerangedialog|extended_tip|ok"
 msgid "Saves all changes and closes dialog."
-msgstr ""
+msgstr "Ruan krejt ndryshimet dhe mbyll dialogun."
 
 #. YJAAP
 #: sc/uiconfig/scalc/ui/definetablerangedialog.ui:56
 msgctxt "definetablerangedialog|extended_tip|cancel"
 msgid "Closes dialog and discards all changes."
-msgstr ""
+msgstr "Bën mbylljen e dialogut dhe hedh tej krejt ndryshimet."
 
 #. ugt8G
 #: sc/uiconfig/scalc/ui/definetablerangedialog.ui:106
@@ -2479,6 +2480,10 @@ msgid ""
 "then automatically convert to the Maximize icon. Click it to restore the "
 "dialog to its original size."
 msgstr ""
+"Klikoni ikonën e Tkurrjeve, që ta zvogëloni dialogun sa madhësia e fushës së "
+"dhënieve. Mandej është e lehtë t’i vihet shenjë referencës së duhur te "
+"fleta. Ikonat mandej shndërrohen automatikisht në ikonën Maksimizoje. "
+"Klikojeni që të rikthehet dialogu te madhësia e vet origjinale."
 
 #. xUrKC
 #: sc/uiconfig/scalc/ui/definetablerangedialog.ui:123
@@ -2489,12 +2494,16 @@ msgid ""
 "then automatically convert to the Maximize icon. Click it to restore the "
 "dialog to its original size."
 msgstr ""
+"Klikoni ikonën e Tkurrjeve, që ta zvogëloni dialogun sa madhësia e fushës së "
+"dhënieve. Mandej është e lehtë t’i vihet shenjë referencës së duhur te "
+"fleta. Ikonat mandej shndërrohen automatikisht në ikonën Maksimizoje. "
+"Klikojeni që të rikthehet dialogu te madhësia e vet origjinale."
 
 #. 8FLdj
 #: sc/uiconfig/scalc/ui/definetablerangedialog.ui:139
 msgctxt "definetablerangedialog|range"
 msgid "Range"
-msgstr ""
+msgstr "Interval"
 
 #. 3a7g7
 #: sc/uiconfig/scalc/ui/definetablerangedialog.ui:162
@@ -2506,43 +2515,45 @@ msgstr "Përmban etiketa _kolonash"
 #: sc/uiconfig/scalc/ui/definetablerangedialog.ui:171
 msgctxt "definetablerangedialog|extended_tip|ContainsColumnLabels"
 msgid "Selected cell ranges contain labels."
-msgstr ""
+msgstr "Intervalet e përzgjedhur për kutizat përmbajnë etiketa."
 
 #. GCg88
 #: sc/uiconfig/scalc/ui/definetablerangedialog.ui:203
 msgctxt "definetablerangedialog|extended_tip|DefineTableRangeDialog"
 msgid "Defines a database range based on the selected cells in your sheet."
 msgstr ""
+"Përcakton një interval baze të dhënash bazuar në kutizat e përzgjedhura te "
+"fleta juaj."
 
 #. LVdkf
 #: sc/uiconfig/scalc/ui/erroralerttabpage.ui:15
 msgctxt "erroralerttabpage|tsbshow"
 msgid "Handle invalid values"
-msgstr ""
+msgstr "Trajto vlera të pavlefshme"
 
 #. KfkR3
 #: sc/uiconfig/scalc/ui/erroralerttabpage.ui:156
 msgctxt "erroralerttabpage|actionCB"
 msgid "Reject silently"
-msgstr ""
+msgstr "Hidhe tej pa u ndjerë"
 
 #. tdFx2
 #: sc/uiconfig/scalc/ui/gotosheetdialog.ui:100
 msgctxt "gotosheetdialog|entry-mask-atkobject"
 msgid "Sheet Name"
-msgstr "Emri i fletës"
+msgstr "Emër Flete"
 
 #. hMeBi
 #: sc/uiconfig/scalc/ui/numberbox.ui:17
 msgctxt "numberbox|numbertype|accessible_name"
 msgid "Number Format"
-msgstr "Formati i numrit"
+msgstr "Format Numrash"
 
 #. o8pcB
 #: sc/uiconfig/scalc/ui/protectsheetdlg.ui:195
 msgctxt "protectsheetdlg|passwordbar-atkobject"
 msgid "Password Level Bar"
-msgstr ""
+msgstr "Shtyllë Niveli Fjalëkalimi"
 
 #. Q4fA3
 #: sc/uiconfig/scalc/ui/selectsheetviewdialog.ui:18
@@ -2584,19 +2595,19 @@ msgstr "Stil Anësh"
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:22
 msgctxt "sidebardatabase|chk_header_row"
 msgid "Header Row"
-msgstr ""
+msgstr "Rresht Kryesh"
 
 #. Pg4uw
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:36
 msgctxt "sidebardatabase|chk_total_row"
 msgid "Total Row"
-msgstr ""
+msgstr "Rresht Gjithsej"
 
 #. CcWAd
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:50
 msgctxt "sidebardatabase|chk_filter_buttons"
 msgid "Filter Buttons"
-msgstr ""
+msgstr "Butona Filtrimi"
 
 #. MjALC
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:86
@@ -3010,409 +3021,409 @@ msgstr "Emra Parazgjedhje Stilesh Tabelash"
 #: sc/uiconfig/scalc/ui/tablestylesbox.ui:19
 msgctxt "tablestylebox|chk_header_row"
 msgid "Header Row"
-msgstr ""
+msgstr "Rresht Kryesh"
 
 #. 8g5nk
 #: sc/uiconfig/scalc/ui/tablestylesbox.ui:33
 msgctxt "tablestylebox|chk_total_row"
 msgid "Total Row"
-msgstr ""
+msgstr "Rresht Gjithsej"
 
 #. RCDTD
 #: sc/uiconfig/scalc/ui/tablestylesbox.ui:47
 msgctxt "tablestylebox|chk_filter_buttons"
 msgid "Filter Buttons"
-msgstr ""
+msgstr "Butona Filtrimi"
 
 #. zBNtc
 #: sc/uiconfig/scalc/ui/tablestylesbox.ui:61
 msgctxt "tablestylebox|chk_first_column"
 msgid "First Column"
-msgstr ""
+msgstr "Shtylla e Parë"
 
 #. FYKpc
 #: sc/uiconfig/scalc/ui/tablestylesbox.ui:75
 msgctxt "tablestylebox|chk_last_column"
 msgid "Last Column"
-msgstr ""
+msgstr "Shtylla e Fundit"
 
 #. A9Eb2
 #: sc/uiconfig/scalc/ui/tablestylesbox.ui:89
 msgctxt "tablestylebox|chk_banded_rows"
 msgid "Banded Rows"
-msgstr ""
+msgstr "Rreshta të Bërë Tok"
 
 #. 6mHnD
 #: sc/uiconfig/scalc/ui/tablestylesbox.ui:103
 msgctxt "tablestylebox|chk_banded_cols"
 msgid "Banded Columns"
-msgstr ""
+msgstr "Shtylla të Bëra Tok"
 
 #. gbBp7
 #: sc/uiconfig/scalc/ui/tablestylesbox.ui:121
 msgctxt "tablestylebox|none"
 msgid "None"
-msgstr ""
+msgstr "Asnjë"
 
 #. hPKiF
 #: sc/uiconfig/scalc/ui/tablestylesbox.ui:122
 msgctxt "tablestylebox|tablestylelight1"
 msgid "Table Style Light 1"
-msgstr ""
+msgstr "Stil i Çelët Tabelash 1"
 
 #. GA5oq
 #: sc/uiconfig/scalc/ui/tablestylesbox.ui:123
 msgctxt "tablestylebox|tablestylelight2"
 msgid "Table Style Light 2"
-msgstr ""
+msgstr "Stil i Çelët Tabelash 2"
 
 #. QNyUR
 #: sc/uiconfig/scalc/ui/tablestylesbox.ui:124
 msgctxt "tablestylebox|tablestylelight3"
 msgid "Table Style Light 3"
-msgstr ""
+msgstr "Stil i Çelët Tabelash 3"
 
 #. 6Dg39
 #: sc/uiconfig/scalc/ui/tablestylesbox.ui:125
 msgctxt "tablestylebox|tablestylelight4"
 msgid "Table Style Light 4"
-msgstr ""
+msgstr "Stil i Çelët Tabelash 4"
 
 #. ERFFS
 #: sc/uiconfig/scalc/ui/tablestylesbox.ui:126
 msgctxt "tablestylebox|tablestylelight5"
 msgid "Table Style Light 5"
-msgstr ""
+msgstr "Stil i Çelët Tabelash 5"
 
 #. nC9A3
 #: sc/uiconfig/scalc/ui/tablestylesbox.ui:127
 msgctxt "tablestylebox|tablestylelight6"
 msgid "Table Style Light 6"
-msgstr ""
+msgstr "Stil i Çelët Tabelash 6"
 
 #. vQm8c
 #: sc/uiconfig/scalc/ui/tablestylesbox.ui:128
 msgctxt "tablestylebox|tablestylelight7"
 msgid "Table Style Light 7"
-msgstr ""
+msgstr "Stil i Çelët Tabelash 7"
 
 #. VELfG
 #: sc/uiconfig/scalc/ui/tablestylesbox.ui:129
 msgctxt "tablestylebox|tablestylelight8"
 msgid "Table Style Light 8"
-msgstr ""
+msgstr "Stil i Çelët Tabelash 8"
 
 #. dJTtx
 #: sc/uiconfig/scalc/ui/tablestylesbox.ui:130
 msgctxt "tablestylebox|tablestylelight9"
 msgid "Table Style Light 9"
-msgstr ""
+msgstr "Stil i Çelët Tabelash 9"
 
 #. JEsTR
 #: sc/uiconfig/scalc/ui/tablestylesbox.ui:131
 msgctxt "tablestylebox|tablestylelight10"
 msgid "Table Style Light 10"
-msgstr ""
+msgstr "Stil i Çelët Tabelash 10"
 
 #. gvecy
 #: sc/uiconfig/scalc/ui/tablestylesbox.ui:132
 msgctxt "tablestylebox|tablestylelight11"
 msgid "Table Style Light 11"
-msgstr ""
+msgstr "Stil i Çelët Tabelash 11"
 
 #. nhDGR
 #: sc/uiconfig/scalc/ui/tablestylesbox.ui:133
 msgctxt "tablestylebox|tablestylelight12"
 msgid "Table Style Light 12"
-msgstr ""
+msgstr "Stil i Çelët Tabelash 12"
 
 #. 3Q7Py
 #: sc/uiconfig/scalc/ui/tablestylesbox.ui:134
 msgctxt "tablestylebox|tablestylelight13"
 msgid "Table Style Light 13"
-msgstr ""
+msgstr "Stil i Çelët Tabelash 13"
 
 #. TjvkW
 #: sc/uiconfig/scalc/ui/tablestylesbox.ui:135
 msgctxt "tablestylebox|tablestylelight14"
 msgid "Table Style Light 14"
-msgstr ""
+msgstr "Stil i Çelët Tabelash 14"
 
 #. Hzbs5
 #: sc/uiconfig/scalc/ui/tablestylesbox.ui:136
 msgctxt "tablestylebox|tablestylelight15"
 msgid "Table Style Light 15"
-msgstr ""
+msgstr "Stil i Çelët Tabelash 15"
 
 #. EDG6W
 #: sc/uiconfig/scalc/ui/tablestylesbox.ui:137
 msgctxt "tablestylebox|tablestylelight16"
 msgid "Table Style Light 16"
-msgstr ""
+msgstr "Stil i Çelët Tabelash 16"
 
 #. uU4F5
 #: sc/uiconfig/scalc/ui/tablestylesbox.ui:138
 msgctxt "tablestylebox|tablestylelight17"
 msgid "Table Style Light 17"
-msgstr ""
+msgstr "Stil i Çelët Tabelash 17"
 
 #. BFm89
 #: sc/uiconfig/scalc/ui/tablestylesbox.ui:139
 msgctxt "tablestylebox|tablestylelight18"
 msgid "Table Style Light 18"
-msgstr ""
+msgstr "Stil i Çelët Tabelash 18"
 
 #. vWYDa
 #: sc/uiconfig/scalc/ui/tablestylesbox.ui:140
 msgctxt "tablestylebox|tablestylelight19"
 msgid "Table Style Light 19"
-msgstr ""
+msgstr "Stil i Çelët Tabelash 19"
 
 #. 7YymU
 #: sc/uiconfig/scalc/ui/tablestylesbox.ui:141
 msgctxt "tablestylebox|tablestylelight20"
 msgid "Table Style Light 20"
-msgstr ""
+msgstr "Stil i Çelët Tabelash 20"
 
 #. iHcr3
 #: sc/uiconfig/scalc/ui/tablestylesbox.ui:142
 msgctxt "tablestylebox|tablestylelight21"
 msgid "Table Style Light 21"
-msgstr ""
+msgstr "Stil i Çelët Tabelash 21"
 
 #. GZraD
 #: sc/uiconfig/scalc/ui/tablestylesbox.ui:143
 msgctxt "tablestylebox|tablestylemedium1"
 msgid "Table Style Medium 1"
-msgstr ""
+msgstr "Stil i Mesëm Tabelash 1"
 
 #. Dn8Ee
 #: sc/uiconfig/scalc/ui/tablestylesbox.ui:144
 msgctxt "tablestylebox|tablestylemedium2"
 msgid "Table Style Medium 2"
-msgstr ""
+msgstr "Stil i Mesëm Tabelash 2"
 
 #. t6CRD
 #: sc/uiconfig/scalc/ui/tablestylesbox.ui:145
 msgctxt "tablestylebox|tablestylemedium3"
 msgid "Table Style Medium 3"
-msgstr ""
+msgstr "Stil i Mesëm Tabelash 3"
 
 #. KcaiH
 #: sc/uiconfig/scalc/ui/tablestylesbox.ui:146
 msgctxt "tablestylebox|tablestylemedium4"
 msgid "Table Style Medium 4"
-msgstr ""
+msgstr "Stil i Mesëm Tabelash 4"
 
 #. hMwuq
 #: sc/uiconfig/scalc/ui/tablestylesbox.ui:147
 msgctxt "tablestylebox|tablestylemedium5"
 msgid "Table Style Medium 5"
-msgstr ""
+msgstr "Stil i Mesëm Tabelash 5"
 
 #. o938H
 #: sc/uiconfig/scalc/ui/tablestylesbox.ui:148
 msgctxt "tablestylebox|tablestylemedium6"
 msgid "Table Style Medium 6"
-msgstr ""
+msgstr "Stil i Mesëm Tabelash 6"
 
 #. 4sHDq
 #: sc/uiconfig/scalc/ui/tablestylesbox.ui:149
 msgctxt "tablestylebox|tablestylemedium7"
 msgid "Table Style Medium 7"
-msgstr ""
+msgstr "Stil i Mesëm Tabelash 7"
 
 #. kFZ6u
 #: sc/uiconfig/scalc/ui/tablestylesbox.ui:150
 msgctxt "tablestylebox|tablestylemedium8"
 msgid "Table Style Medium 8"
-msgstr ""
+msgstr "Stil i Mesëm Tabelash 8"
 
 #. 5ykFM
 #: sc/uiconfig/scalc/ui/tablestylesbox.ui:151
 msgctxt "tablestylebox|tablestylemedium9"
 msgid "Table Style Medium 9"
-msgstr ""
+msgstr "Stil i Mesëm Tabelash 9"
 
 #. cBYvR
 #: sc/uiconfig/scalc/ui/tablestylesbox.ui:152
 msgctxt "tablestylebox|tablestylemedium10"
 msgid "Table Style Medium 10"
-msgstr ""
+msgstr "Stil i Mesëm Tabelash 10"
 
 #. aVd2m
 #: sc/uiconfig/scalc/ui/tablestylesbox.ui:153
 msgctxt "tablestylebox|tablestylemedium11"
 msgid "Table Style Medium 11"
-msgstr ""
+msgstr "Stil i Mesëm Tabelash 11"
 
 #. h2fLN
 #: sc/uiconfig/scalc/ui/tablestylesbox.ui:154
 msgctxt "tablestylebox|tablestylemedium12"
 msgid "Table Style Medium 12"
-msgstr ""
+msgstr "Stil i Mesëm Tabelash 12"
 
 #. faSZi
 #: sc/uiconfig/scalc/ui/tablestylesbox.ui:155
 msgctxt "tablestylebox|tablestylemedium13"
 msgid "Table Style Medium 13"
-msgstr ""
+msgstr "Stil i Mesëm Tabelash 13"
 
 #. SvAiJ
 #: sc/uiconfig/scalc/ui/tablestylesbox.ui:156
 msgctxt "tablestylebox|tablestylemedium14"
 msgid "Table Style Medium 14"
-msgstr ""
+msgstr "Stil i Mesëm Tabelash 14"
 
 #. UFPEn
 #: sc/uiconfig/scalc/ui/tablestylesbox.ui:157
 msgctxt "tablestylebox|tablestylemedium15"
 msgid "Table Style Medium 15"
-msgstr ""
+msgstr "Stil i Mesëm Tabelash 15"
 
 #. XqMGM
 #: sc/uiconfig/scalc/ui/tablestylesbox.ui:158
 msgctxt "tablestylebox|tablestylemedium16"
 msgid "Table Style Medium 16"
-msgstr ""
+msgstr "Stil i Mesëm Tabelash 16"
 
 #. ZQGdq
 #: sc/uiconfig/scalc/ui/tablestylesbox.ui:159
 msgctxt "tablestylebox|tablestylemedium17"
 msgid "Table Style Medium 17"
-msgstr ""
+msgstr "Stil i Mesëm Tabelash 17"
 
 #. QYB5B
 #: sc/uiconfig/scalc/ui/tablestylesbox.ui:160
 msgctxt "tablestylebox|tablestylemedium18"
 msgid "Table Style Medium 18"
-msgstr ""
+msgstr "Stil i Mesëm Tabelash 18"
 
 #. NG8sw
 #: sc/uiconfig/scalc/ui/tablestylesbox.ui:161
 msgctxt "tablestylebox|tablestylemedium19"
 msgid "Table Style Medium 19"
-msgstr ""
+msgstr "Stil i Mesëm Tabelash 19"
 
 #. 2TsiD
 #: sc/uiconfig/scalc/ui/tablestylesbox.ui:162
 msgctxt "tablestylebox|tablestylemedium20"
 msgid "Table Style Medium 20"
-msgstr ""
+msgstr "Stil i Mesëm Tabelash 20"
 
 #. 49nES
 #: sc/uiconfig/scalc/ui/tablestylesbox.ui:163
 msgctxt "tablestylebox|tablestylemedium21"
 msgid "Table Style Medium 21"
-msgstr ""
+msgstr "Stil i Mesëm Tabelash 21"
 
 #. 5ckGG
 #: sc/uiconfig/scalc/ui/tablestylesbox.ui:164
 msgctxt "tablestylebox|tablestylemedium22"
 msgid "Table Style Medium 22"
-msgstr ""
+msgstr "Stil i Mesëm Tabelash 22"
 
 #. 74ydV
 #: sc/uiconfig/scalc/ui/tablestylesbox.ui:165
 msgctxt "tablestylebox|tablestylemedium23"
 msgid "Table Style Medium 23"
-msgstr ""
+msgstr "Stil i Mesëm Tabelash 23"
 
 #. CHGvC
 #: sc/uiconfig/scalc/ui/tablestylesbox.ui:166
 msgctxt "tablestylebox|tablestylemedium24"
 msgid "Table Style Medium 24"
-msgstr ""
+msgstr "Stil i Mesëm Tabelash 24"
 
 #. Ax32Z
 #: sc/uiconfig/scalc/ui/tablestylesbox.ui:167
 msgctxt "tablestylebox|tablestylemedium25"
 msgid "Table Style Medium 25"
-msgstr ""
+msgstr "Stil i Mesëm Tabelash 25"
 
 #. FN5L9
 #: sc/uiconfig/scalc/ui/tablestylesbox.ui:168
 msgctxt "tablestylebox|tablestylemedium26"
 msgid "Table Style Medium 26"
-msgstr ""
+msgstr "Stil i Mesëm Tabelash 26"
 
 #. DoAZW
 #: sc/uiconfig/scalc/ui/tablestylesbox.ui:169
 msgctxt "tablestylebox|tablestylemedium27"
 msgid "Table Style Medium 27"
-msgstr ""
+msgstr "Stil i Mesëm Tabelash 27"
 
 #. oEF93
 #: sc/uiconfig/scalc/ui/tablestylesbox.ui:170
 msgctxt "tablestylebox|tablestylemedium28"
 msgid "Table Style Medium 28"
-msgstr ""
+msgstr "Stil i Mesëm Tabelash 28"
 
 #. NjD4c
 #: sc/uiconfig/scalc/ui/tablestylesbox.ui:171
 msgctxt "tablestylebox|tablestyledark1"
 msgid "Table Style Dark 1"
-msgstr ""
+msgstr "Stil i Errët Tabelash 1"
 
 #. DSEdv
 #: sc/uiconfig/scalc/ui/tablestylesbox.ui:172
 msgctxt "tablestylebox|tablestyledark2"
 msgid "Table Style Dark 2"
-msgstr ""
+msgstr "Stil i Errët Tabelash 2"
 
 #. vGEDF
 #: sc/uiconfig/scalc/ui/tablestylesbox.ui:173
 msgctxt "tablestylebox|tablestyledark3"
 msgid "Table Style Dark 3"
-msgstr ""
+msgstr "Stil i Errët Tabelash 3"
 
 #. e4FMB
 #: sc/uiconfig/scalc/ui/tablestylesbox.ui:174
 msgctxt "tablestylebox|tablestyledark4"
 msgid "Table Style Dark 4"
-msgstr ""
+msgstr "Stil i Errët Tabelash 4"
 
 #. NeFVV
 #: sc/uiconfig/scalc/ui/tablestylesbox.ui:175
 msgctxt "tablestylebox|tablestyledark5"
 msgid "Table Style Dark 5"
-msgstr ""
+msgstr "Stil i Errët Tabelash 5"
 
 #. DwGCo
 #: sc/uiconfig/scalc/ui/tablestylesbox.ui:176
 msgctxt "tablestylebox|tablestyledark6"
 msgid "Table Style Dark 6"
-msgstr ""
+msgstr "Stil i Errët Tabelash 6"
 
 #. vCGm8
 #: sc/uiconfig/scalc/ui/tablestylesbox.ui:177
 msgctxt "tablestylebox|tablestyledark7"
 msgid "Table Style Dark 7"
-msgstr ""
+msgstr "Stil i Errët Tabelash 7"
 
 #. e5Aud
 #: sc/uiconfig/scalc/ui/tablestylesbox.ui:178
 msgctxt "tablestylebox|tablestyledark8"
 msgid "Table Style Dark 8"
-msgstr ""
+msgstr "Stil i Errët Tabelash 8"
 
 #. NdA4K
 #: sc/uiconfig/scalc/ui/tablestylesbox.ui:179
 msgctxt "tablestylebox|tablestyledark9"
 msgid "Table Style Dark 9"
-msgstr ""
+msgstr "Stil i Errët Tabelash 9"
 
 #. KoCes
 #: sc/uiconfig/scalc/ui/tablestylesbox.ui:180
 msgctxt "tablestylebox|tablestyledark10"
 msgid "Table Style Dark 10"
-msgstr ""
+msgstr "Stil i Errët Tabelash 10"
 
 #. BsbuB
 #: sc/uiconfig/scalc/ui/tablestylesbox.ui:181
 msgctxt "tablestylebox|tablestyledark11"
 msgid "Table Style Dark 11"
-msgstr ""
+msgstr "Stil i Errët Tabelash 11"
 
 #. pNhVi
 #: sc/uiconfig/scalc/ui/tablestylesbox.ui:185

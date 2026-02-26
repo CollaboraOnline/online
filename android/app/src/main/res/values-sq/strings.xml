@@ -68,7 +68,7 @@
     <string name="storage_provider_settings">Rregullime depozitimi nga shërbimi</string>
     <string name="owncloud_settings">Rregullime shërbyesi re</string>
     <string name="physical_storage_settings">Rregullime depozite materiale</string>
-    <string name="external_sd_path">Shteg SD të jashtme</string>
+    <string name="external_sd_path">Shteg SD-je të jashtme</string>
     <string name="otg_device_path">Shteg pajisjeje OTG</string>
     <string name="otg_warning">Veçori Eksperimentale: Përdoreni vetëm nëse pajisja OTG është e shkrueshme.</string>
     <string name="server_url">URL Shërbyesi</string>

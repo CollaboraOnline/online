@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-02-13 19:20+0100\n"
-"PO-Revision-Date: 2026-02-04 13:07+0000\n"
+"PO-Revision-Date: 2026-02-26 13:57+0000\n"
 "Last-Translator: Besnik Bleta <besnik@programeshqip.org>\n"
-"Language-Team: Albanian <https://hosted.weblate.org/projects/"
-"collabora-online/ui/sq/>\n"
-"Language: \n"
+"Language-Team: Albanian <https://hosted.weblate.org/projects/collabora-"
+"online/ui/sq/>\n"
+"Language: sq\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.16-dev\n"
+"X-Generator: Weblate 5.16.1-dev\n"
 
 #: admin/admin.strings.js:15
 msgid "Admin console"
@@ -457,9 +457,8 @@ msgid "Show Grid"
 msgstr "Shfaq Rrjetë"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:178
-#, fuzzy
 msgid "Snap to grid"
-msgstr "Madhësi sa rrjeta"
+msgstr ""
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:179
 #: admin/src/integrator/AdminIntegratorSettings.ts:185
@@ -471,9 +470,8 @@ msgid "Synchronize axes"
 msgstr "Njëkohëso boshtet"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:181
-#, fuzzy
 msgid "Snap grid"
-msgstr "Madhësi sa rrjeta"
+msgstr ""
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:182
 msgid "Empty Pages"
@@ -1056,15 +1054,15 @@ msgstr "U ruajt"
 
 #: src/canvas/sections/CompareChangesLabelSection.ts:111
 msgid "Last edited by %1 on %2"
-msgstr ""
+msgstr "Përpunuar së fundi nga %1 më %2"
 
 #: src/canvas/sections/CompareChangesLabelSection.ts:167
 msgid "%1: Initial Version"
-msgstr ""
+msgstr "%1: Versioni Fillestar"
 
 #: src/canvas/sections/CompareChangesLabelSection.ts:171
 msgid "%1: Current Version"
-msgstr ""
+msgstr "%1: Versioni i Tanishëm"
 
 #: src/canvas/sections/ShapeHandlesSection.ts:475
 msgid "Document contains unsupported media"
@@ -2131,7 +2129,7 @@ msgstr "Dokument HTML (.html)"
 #: src/control/Control.Menubar.ts:451
 #: src/control/Control.NotebookbarBuilder.js:467
 msgid "Shockwave Flash (.swf)"
-msgstr "Shockwave Flash (.swf)"
+msgstr ""
 
 #: src/control/Control.Menubar.ts:452
 #: src/control/Control.NotebookbarBuilder.js:479
@@ -3143,9 +3141,8 @@ msgid "Slide Views"
 msgstr "Parje Diapozitivash"
 
 #: src/control/Control.NotebookbarImpress.js:676
-#, fuzzy
 msgid "Snap to Grid"
-msgstr "Madhësi sa rrjeta"
+msgstr ""
 
 #: src/control/Control.NotebookbarImpress.js:800
 #: src/control/Control.NotebookbarImpress.js:1830
@@ -5027,7 +5024,7 @@ msgstr "Po ngarkohet…"
 
 #: src/map/handler/Map.FileInserter.js:254
 msgid "Uploading file to server failed with status: {0}"
-msgstr "Ngarkim i kartelës te shërbyesi dështoi me gjendjen: {0}"
+msgstr "Ngarkimi i kartelës te shërbyesi dështoi me gjendjen: {0}"
 
 #: src/map/handler/Map.Print.js:44
 msgid "Print dialog"
@@ -5148,9 +5145,8 @@ msgid "Resume"
 msgstr "Rimerre"
 
 #: src/slideshow/PresenterConsole.js:38
-#, fuzzy
 msgid "Present to all"
-msgstr "Paraqitja të Tërëve"
+msgstr "Paraqitja të tërëve"
 
 #: src/slideshow/PresenterConsole.js:39
 msgid "Go Back"
