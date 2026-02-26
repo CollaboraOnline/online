@@ -102,7 +102,16 @@ class TableStylesService {
 		app.map.sendUnoCommand('.uno:DatabaseSettings', args);
 	}
 
-	public generateIcon(style: TableStyleEntry): string {
+	private primaryName(id: number) {
+		return 'table-stl-' + id + '-primary';
+	}
+	public generateIcon(style: TableStyleEntry, id: number): string {
+		// setup color palette for an icon
+		document.documentElement.style.setProperty(
+			'--' + this.primaryName(id),
+			'#' + style.Elements[0]?.FillColor,
+		);
+
 		// probably standard names
 		if (style.Name.indexOf('Light') >= 0) return 'images/lc_table_light.svg';
 		else if (style.Name.indexOf('Medium') >= 0)
@@ -142,7 +151,8 @@ class TableStylesService {
 			iconViewEntries.push({
 				row: i++,
 				text: element.UIName,
-				image: this.generateIcon(element),
+				image: this.generateIcon(element, i),
+				hue: 'table-stl-' + i + '-primary', // adds class
 				width: 35,
 				height: 35,
 				selected: selected,

@@ -414,6 +414,7 @@ interface IconViewEntry {
 	text: string; // label of an entry
 	tooltip?: string; // tooltip of an entry
 	ondemand?: boolean; // if true then we ignore image property and request it on demand (when shown)
+	hue?: string; // used to colorize entry
 }
 
 interface IconViewJSON extends WidgetJSON {

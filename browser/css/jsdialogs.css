@@ -3116,3 +3116,26 @@ div [id^='themeview'].ui-iconview-entry, div [id^='themeview1col'].ui-iconview-e
 #ManageStylePage #box1 #desc {
 	display: block;
 }
+
+/* colorized icon view entry */
+
+.table-stl-0-primary {
+	border: 3px solid var(--table-stl-0-primary);
+}
+
+.table-stl-1-primary {
+	border: 3px solid var(--table-stl-1-primary);
+}
+
+.table-stl-2-primary {
+	border: 3px solid var(--table-stl-2-primary);
+}
+
+.table-stl-3-primary {
+	border: 3px solid var(--table-stl-3-primary);
+}
+
+.table-stl-4-primary {
+	border: 3px solid var(--table-stl-4-primary);
+}
+
