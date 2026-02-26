@@ -18,6 +18,22 @@ class CalcTableTab implements NotebookbarTab {
 		return 'Table';
 	}
 
+	public onCallback(
+		objectType: string,
+		eventType: string,
+		object: any,
+		data: any,
+		builder: JSBuilder,
+	) {
+		if (object.id === 'tablestyles_design') {
+			if (eventType === 'activate')
+				app.dispatcher.dispatch('apply-table-style', data);
+			return true;
+		}
+
+		return false;
+	}
+
 	public getEntry(): NotebookbarTabEntry {
 		return {
 			id: 'Table-tab-label',
