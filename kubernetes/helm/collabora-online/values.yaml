@@ -541,6 +541,8 @@ trusted_certs_install:
   enabled: false
   trusted_certs: []
 
+priorityClassName: ""
+
 nodeSelector: {}
 
 tolerations: []
