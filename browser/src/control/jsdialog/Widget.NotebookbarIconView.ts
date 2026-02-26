@@ -265,17 +265,27 @@ JSDialog.notebookbarIconViewList = function (
 							);
 						}
 
-						// The dropdown iconview has updateRendersImpl from
-						// Widget.IconView — use it to fill cached images and
-						// request renders from core for uncached entries.
-						const ddView = dropdownIconView as any;
+						// Get the inline (notebookbar) iconview — its
+						// updateRendersImpl closure holds the notebookbar
+						// builder's rendersCache, which has the cached images.
+						const liveIconView = commonContainer.querySelector(
+							":scope > [id='" + child.id + "']",
+						) as any;
+
+						// Fill cached images from the notebookbar builder's
+						// cache, and request renders from core for uncached
+						// entries.
 						const cache = builder.rendersCache?.[child.id];
-						const ddData = ddView.data;
+						const ddData = (dropdownIconView as any).data;
 						const dpr = Math.floor(100 * window.devicePixelRatio);
 						if (ddData?.entries) {
 							for (let pos = 0; pos < ddData.entries.length; pos++) {
-								if (cache?.images?.[pos]) {
-									ddView.updateRendersImpl(pos, child.id, dropdownIconView);
+								if (cache?.images?.[pos] && liveIconView) {
+									liveIconView.updateRendersImpl(
+										pos,
+										child.id,
+										dropdownIconView,
+									);
 								} else if (ddData.entries[pos]?.ondemand) {
 									builder.callback(
 										'iconview',
@@ -288,12 +298,9 @@ JSDialog.notebookbarIconViewList = function (
 							}
 						}
 
-						// Override the inline (possibly hidden) iconview's
-						// updateRenders so rendered_entry responses from core
-						// also update the dropdown copy while it is open.
-						const liveIconView = commonContainer.querySelector(
-							":scope > [id='" + child.id + "']",
-						) as any;
+						// Override the inline iconview's updateRenders so
+						// rendered_entry responses from core also update the
+						// dropdown copy while it is open.
 						if (liveIconView) {
 							const origUpdateRenders = liveIconView.updateRenders;
 							liveIconView.updateRenders = (pos: number) => {
@@ -433,7 +440,25 @@ JSDialog.notebookbarIconViewList = function (
 	// replaced and all notebookbar-specific overrides are lost.  Detect
 	// the replacement via MutationObserver and re-apply them, also
 	// restoring the scroll position that the rebuild would otherwise reset.
+	//
+	// Because the notebookbar builder maps 'iconview' to
+	// notebookbarIconView (which wraps in a ui-iconview-window +
+	// buttons), _updateWidgetImpl may produce a nested wrapper instead
+	// of a plain iconview.  Flatten such wrappers first.
 	new MutationObserver(() => {
+		// Flatten nested wrappers produced by _updateWidgetImpl
+		// rebuilding a child iconview via notebookbarIconView.
+		const nestedWrappers = commonContainer.querySelectorAll(
+			':scope > .ui-iconview-window',
+		);
+		for (const wrapper of Array.from(nestedWrappers) as HTMLElement[]) {
+			const innerView = wrapper.querySelector(':scope > .ui-iconview');
+			if (innerView) {
+				commonContainer.insertBefore(innerView, wrapper);
+				wrapper.remove();
+			}
+		}
+
 		// Re-apply first-child overrides if the visible iconview was replaced.
 		const newIconView = commonContainer.querySelector(
 			':scope > .ui-iconview',
