@@ -182,6 +182,11 @@ describe(['tagdesktop'], 'Accessibility Writer Sidebar Tests', { testIsolation: 
 		helper.processToIdle(win);
 		runA11yValidation(win);
 
+		// Verify expander heading hierarchy: depth 0 -> h2, depth 1 -> h3, depth 2 -> h4
+		cy.cGet('#A11yCheckDeck [data-expander-depth="0"] > .ui-expander > h2.ui-expander-heading').should('exist');
+		cy.cGet('#A11yCheckDeck [data-expander-depth="1"] > .ui-expander > h3.ui-expander-heading').should('exist');
+		cy.cGet('#A11yCheckDeck [data-expander-depth="2"] > .ui-expander > h4.ui-expander-heading').should('exist');
+
 		cy.then(() => {
 			win.app.map.sendUnoCommand('.uno:SidebarDeck.PropertyDeck');
 			helper.processToIdle(win);
