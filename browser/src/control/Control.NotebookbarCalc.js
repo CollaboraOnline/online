@@ -1420,7 +1420,7 @@ window.L.Control.NotebookbarCalc = window.L.Control.NotebookbarWriter.extend({
 										'selectedEntries': [
 											'1'
 										],
-										'command': '.uno:CurrentSheetView',
+										'command': '.uno:SelectSheetView',
 										'accessibility': { focusBack: true,	combination: 'FS', de: null }
 									}
 								]
