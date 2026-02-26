@@ -1,18 +1,7 @@
 /* global describe it cy require beforeEach */
 
 var helper = require('../../common/helper');
-
-function getSlideShow() {
-    return cy.cGet('#slideshow-cypress-iframe');
-}
-
-function getSlideShowContent() {
-    return getSlideShow().its('0.contentDocument');
-}
-
-function getSlideShowCanvas() {
-    return getSlideShowContent().find('#slideshow-canvas');
-}
+var { getSlideShow, getSlideShowContent, getSlideShowCanvas } = require('../../common/impress_helper');
 
 describe(['tagmultiuser'], 'Follow me slide show', function() {
 
