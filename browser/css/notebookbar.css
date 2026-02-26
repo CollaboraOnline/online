@@ -752,8 +752,6 @@ label.notebookbar.ui-checkbox-label {
 
 /* Design Tab */
 
-.jsdialog #masterpageall_icons,
-.jsdialog #masterpagecurrent_icons
 #masterpageall_icons,
 #masterpagecurrent_icons {
 	width: 15vw !important;
@@ -1042,3 +1040,4 @@ label.notebookbar.ui-checkbox-label {
 	height: 45px;
 	width: 80px;
 }
+
