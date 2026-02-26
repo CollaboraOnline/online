@@ -70,57 +70,19 @@ class CalcTableTab implements NotebookbarTab {
 		});
 	}
 
-	private generateTableStylesJSON() {
-		let tableStyles = new Array<TableStyleEntry>();
-		try {
-			tableStyles = window.structuredClone(app.tableStyles);
-		} catch (e) {
-			app.console.error('TableStylesList: ' + e);
-		}
-
-		if (!tableStyles) return { id: 'tablestyles_design', type: 'iconview' };
-
-		const currentStyle = app.map['stateChangeHandler'].getItemValue(
-			'.uno:DatabaseSettings',
-		);
-
-		const iconViewEntries = new Array<IconViewEntry>();
-		let i = 0;
-
-		iconViewEntries.push({
-			row: i++,
-			text: _('None'),
-			image: 'images/lc_table_light_seven.svg',
-			width: 35,
-			height: 35,
-			selected: !currentStyle || currentStyle.name === '',
-		} as IconViewEntry);
-
-		tableStyles.forEach((element) => {
-			iconViewEntries.push({
-				row: i++,
-				text: element.UIName,
-				image: 'images/lc_table_light_seven.svg',
-				width: 35,
-				height: 35,
-				selected: currentStyle ? element.Name === currentStyle.name : false,
-			} as IconViewEntry);
-		});
-
-		const tableStylesJSON = {
+	private generateTableStylesJSON(): IconViewJSON {
+		return {
 			id: 'tablestyles_design',
 			type: 'iconview',
 			text: _('Table Styles'),
 			command: '.uno:DatabaseSettings',
 			aria: { label: _('Table Styles') },
 			accessibility: { focusBack: true, combination: 'TS' },
-			entries: iconViewEntries,
+			entries: app.tableStyles.generateJSON(),
 			singleclickactivate: true,
 			textWithIconEnabled: false, // no translated strings for standard styles yet
 			selectionmode: 'single',
 		} as IconViewJSON;
-
-		return tableStylesJSON;
 	}
 
 	/* ids have to match transition pane ids from the .ui in the core */

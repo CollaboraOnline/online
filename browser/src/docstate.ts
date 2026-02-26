@@ -286,7 +286,7 @@
 		ThemeColors: { name: _('Theme colors'), colors: [] },
 		DocumentColors: { name: _('Document colors'), colors: [] },
 	},
-	tableStyles: [],
+	tableStyles: null, // TableStylesService
 	colorLastSelection: {}, // last used colors for uno commands
 
 	serverAudit: null, // contains list of warnings / errors detected on the server instance
