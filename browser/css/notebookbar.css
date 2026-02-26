@@ -638,6 +638,13 @@ label.notebookbar.ui-checkbox-label {
 	font-weight: 600;
 }
 
+/* Dropdown popups have no explicit grid height, so
+   repeat(auto-fit, …) for grid-template-rows collapses
+   to a single row.  Reset to allow natural row creation. */
+.modalpopup[id$='-dropdown'] .ui-iconview {
+	grid-template-rows: none !important;
+}
+
 .jsdialog #stylesview .icon-view-item-container,
 .notebookbar #stylesview .icon-view-item-container {
 	margin: unset;

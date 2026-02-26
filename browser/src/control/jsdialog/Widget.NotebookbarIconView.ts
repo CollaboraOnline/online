@@ -123,10 +123,23 @@ JSDialog.notebookbarIconViewList = function (
 	);
 	commonContainer.id = data.id;
 
-	// Only render the first child inline; the rest are shown in the expanded dropdown.
-	JSDialog.iconView(commonContainer, data.children[0], builder);
+	// Render all children inline so core's updateWidget can find and
+	// populate them with entries.  Only the first child is visible;
+	// the rest are hidden until the dropdown is opened.
+	for (let i = 0; i < data.children.length; i++) {
+		JSDialog.iconView(commonContainer, data.children[i], builder);
+	}
 
 	let currentIconView = commonContainer.querySelector('.ui-iconview') as any;
+
+	// Hide non-first iconviews — they exist only so core can update them.
+	const hideNonFirstIconViews = () => {
+		const allViews = commonContainer.querySelectorAll(':scope > .ui-iconview');
+		for (let i = 1; i < allViews.length; i++) {
+			(allViews[i] as HTMLElement).style.display = 'none';
+		}
+	};
+	hideNonFirstIconViews();
 
 	const buttonsContainer = window.L.DomUtil.create(
 		'div',
@@ -169,7 +182,7 @@ JSDialog.notebookbarIconViewList = function (
 		// updateWidget on them since the list was first built, populating entries.
 		const liveChildren = data.children.map((child: IconViewJSON) => {
 			const liveIconView = commonContainer.querySelector(
-				"[id='" + child.id + "']",
+				":scope > [id='" + child.id + "']",
 			) as any;
 			return liveIconView?.data ?? child;
 		});
@@ -275,11 +288,11 @@ JSDialog.notebookbarIconViewList = function (
 							}
 						}
 
-						// For the first child (which has a live inline element),
-						// override its updateRenders so future renders also
-						// update the dropdown while it is open.
+						// Override the inline (possibly hidden) iconview's
+						// updateRenders so rendered_entry responses from core
+						// also update the dropdown copy while it is open.
 						const liveIconView = commonContainer.querySelector(
-							"[id='" + child.id + "']",
+							":scope > [id='" + child.id + "']",
 						) as any;
 						if (liveIconView) {
 							const origUpdateRenders = liveIconView.updateRenders;
@@ -293,6 +306,13 @@ JSDialog.notebookbarIconViewList = function (
 									);
 							};
 						}
+
+						// CSS repeat(auto-fit, …) for grid-template-rows
+						// needs an explicit container height; without one it
+						// collapses to a single row.  Reset it so the grid
+						// creates implicit rows sized by content instead.
+						// (Also handled by CSS !important rule as belt-and-suspenders.)
+						dropdownIconView.style.gridTemplateRows = 'none';
 					}
 				});
 			});
@@ -353,7 +373,6 @@ JSDialog.notebookbarIconViewList = function (
 		with an `id = data.id + '-iconview'` which core doesn't recognize. so
 		we pass the original widget's id while requesting icons.
 		we override `builderCallback` and other callbacks for the same reason.
-		Only the first child is rendered inline; the rest appear in the dropdown.
 	*/
 	const firstChild = data.children[0];
 	let savedScrollTop = 0;
@@ -415,20 +434,27 @@ JSDialog.notebookbarIconViewList = function (
 	// the replacement via MutationObserver and re-apply them, also
 	// restoring the scroll position that the rebuild would otherwise reset.
 	new MutationObserver(() => {
-		const newIconView = commonContainer.querySelector('.ui-iconview') as any;
-		if (!newIconView || newIconView === currentIconView) return;
+		// Re-apply first-child overrides if the visible iconview was replaced.
+		const newIconView = commonContainer.querySelector(
+			':scope > .ui-iconview',
+		) as any;
+		if (newIconView && newIconView !== currentIconView) {
+			const restoreScroll = savedScrollTop;
+			currentIconView = newIconView;
+			applyOverrides();
 
-		const restoreScroll = savedScrollTop;
-		currentIconView = newIconView;
-		applyOverrides();
+			// The new iconview's entries are populated in a layouting task
+			// (queued by JSDialog.iconView) which also scrolls to the
+			// selected entry.  Queue our own task to run afterwards and
+			// restore the user's scroll position instead.
+			app.layoutingService.appendLayoutingTask(() => {
+				currentIconView.scrollTop = restoreScroll;
+			});
+		}
 
-		// The new iconview's entries are populated in a layouting task
-		// (queued by JSDialog.iconView) which also scrolls to the
-		// selected entry.  Queue our own task to run afterwards and
-		// restore the user's scroll position instead.
-		app.layoutingService.appendLayoutingTask(() => {
-			currentIconView.scrollTop = restoreScroll;
-		});
+		// Re-hide non-first iconviews (they may have been replaced
+		// by _updateWidgetImpl and lost their display:none).
+		hideNonFirstIconViews();
 	}).observe(commonContainer, { childList: true });
 
 	return false;
