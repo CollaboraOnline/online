@@ -221,7 +221,14 @@ window.L.Control.JSDialog = window.L.Control.extend({
 			}
 
 			try {
-				dialog.lastFocusedElement.focus();
+				if (dialog.lastFocusedElement.isConnected) {
+					dialog.lastFocusedElement.focus();
+				} else {
+					var focusId = document.getElementById(dialog.lastFocusedElementId);
+					if (focusId) {
+						focusId.focus();
+					}
+				}
 			}
 			catch (error) {
 				app.console.debug('Cannot focus last element in dialog with id: ' + id);
@@ -821,8 +828,10 @@ window.L.Control.JSDialog = window.L.Control.extend({
 		// Save last focused element, we will set the focus back to this element after this popup is closed.
 		if (this.dialogs[instance.id] && this.dialogs[instance.id].lastFocusedElement) {
 			instance.lastFocusedElement = this.dialogs[instance.id].lastFocusedElement;
+			instance.lastFocusedElementId = this.dialogs[instance.id].lastFocusedElementId;
 		} else if (!this.dialogs[instance.id] || !this.dialogs[instance.id].lastFocusedElement) { // Avoid to reset while updates.
 			instance.lastFocusedElement = document.activeElement;
+			instance.lastFocusedElementId = document.activeElement.id;
 		}
 
 		instance.callback = e.callback;
