@@ -248,6 +248,18 @@ function changeSlide(changeNum,direction) {
 	cy.log('<< changeSlide - end');
 }
 
+function getSlideShow() {
+	return cy.cGet('#slideshow-cypress-iframe');
+}
+
+function getSlideShowContent() {
+	return getSlideShow().its('0.contentDocument');
+}
+
+function getSlideShowCanvas() {
+	return getSlideShowContent().find('#slideshow-canvas');
+}
+
 module.exports.assertNotInTextEditMode = assertNotInTextEditMode;
 module.exports.assertInTextEditMode = assertInTextEditMode;
 module.exports.typeTextAndVerify = typeTextAndVerify;
@@ -261,3 +273,6 @@ module.exports.dblclickOnSelectedShape = dblclickOnSelectedShape;
 module.exports.addSlide = addSlide;
 module.exports.changeSlide = changeSlide;
 module.exports.selectTableInTheCenter = selectTableInTheCenter;
+module.exports.getSlideShow = getSlideShow;
+module.exports.getSlideShowContent = getSlideShowContent;
+module.exports.getSlideShowCanvas = getSlideShowCanvas;
