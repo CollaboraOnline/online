@@ -7,7 +7,7 @@
  * at TextInput.
  */
 
-/* global app UNOKey TileManager */
+/* global _ app UNOKey TileManager */
 
 window.L.Map.mergeOptions({
 	keyboard: true,
@@ -641,6 +641,13 @@ window.L.Map.Keyboard = window.L.Handler.extend({
 			}
 			else if (key in this._zoomKeys) {
 				map.setZoom(map.getZoom() + (ev.shiftKey ? 3 : 1) * this._zoomKeys[key], null, true /* animate? */);
+			}
+			else if (ev.key && ev.key.length === 1 && !ev.ctrlKey && !ev.altKey && !map.isEditMode()) {
+				let permissionMode = map.uiManager && map.uiManager.permissionViewMode;
+				let viewModeBtn = permissionMode && (permissionMode.viewModeDropdown || permissionMode.viewModeContainer);
+				if (viewModeBtn && map.uiManager && map.uiManager.showTimedTooltip) {
+					map.uiManager.showTimedTooltip(viewModeBtn, _('You are currently in View mode'), 5000);
+				}
 			}
 		}
 
