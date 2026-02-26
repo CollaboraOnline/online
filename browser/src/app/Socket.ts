@@ -618,7 +618,7 @@ class Socket {
 			this._map._debug.setOverlayMessage('postMessage', type + ': ' + msg);
 		}
 
-		if (!debugOn && msg.length > 256)
+		if (!debugOn && !window.L.Browser.cypressTest && msg.length > 256)
 			// for reasonable performance.
 			msg =
 				msg.substring(0, 256) + '<truncated ' + (msg.length - 256) + 'chars>';
