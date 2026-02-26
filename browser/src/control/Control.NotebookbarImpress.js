@@ -910,7 +910,6 @@ window.L.Control.NotebookbarImpress = window.L.Control.NotebookbarWriter.extend(
 								'type': 'container',
 								'children': [
 									{
-										'id': 'ExtTop4',
 										'type': 'toolbox',
 										'children': [
 											{
@@ -942,20 +941,26 @@ window.L.Control.NotebookbarImpress = window.L.Control.NotebookbarWriter.extend(
 												'accessibility': { focusBack: true, combination: '4', de: null }
 											},
 											{
-												'id': 'home-shadowed',
+												'id': 'home-subscript',
 												'type': 'toolitem',
-												'text': _UNO('.uno:Shadowed'),
-												'command': '.uno:Shadowed',
-												'accessibility': { focusBack: true, combination: 'SH', de: null }
+												'text': _UNO('.uno:SubScript'),
+												'command': '.uno:SubScript',
+												'accessibility': { focusBack: true, combination: '5', de: '5' }
 											},
 											{
-												'id': 'home-fontworkgalleryfloater',
+												'id': 'home-superscript',
 												'type': 'toolitem',
-												'text': _UNO('.uno:FontworkGalleryFloater'),
-												'command': '.uno:FontworkGalleryFloater',
-												// Fontwork export/import not supported in other formats.
-												'visible': (app.LOUtil.isFileODF(this.map)) ? 'true' : 'false',
-												'accessibility': { focusBack: true, combination: 'FL', de: null }
+												'text': _UNO('.uno:SuperScript'),
+												'command': '.uno:SuperScript',
+												'accessibility': { focusBack: true, combination: '6', de: '6' }
+											},
+											{
+												'id': 'home-spacing:CharSpacingMenu',
+												'type': 'menubutton',
+												'noLabel': true,
+												'text': _UNO('.uno:Spacing'),
+												'command': '.uno:CharSpacing',
+												'accessibility': { focusBack: false, combination: 'FT', de: null }
 											},
 											{
 												'id': 'home-charbackcolor:ColorPickerMenu',
