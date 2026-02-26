@@ -16,6 +16,12 @@
 /* global _ _UNO app JSDialog */
 window.L.Control.NotebookbarCalc = window.L.Control.NotebookbarWriter.extend({
 
+	onCallback: function(objectType, eventType, object, data, builder) {
+		const consumed
+			= JSDialog.CalcTableTab.onCallback(objectType, eventType, object, data, builder);
+		return consumed;
+	},
+
 	getTabs: function() {
 		return [
 			{
