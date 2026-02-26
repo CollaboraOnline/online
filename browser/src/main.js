@@ -145,7 +145,7 @@ if (uaLowerCase.indexOf('msie') != -1 || uaLowerCase.indexOf('trident') != -1) {
 		'', _('OK'), null, false);
 }
 
-if (window.ThisIsAMobileApp)
+if (window.ThisIsAMobileApp && !window.ThisIsTheEmscriptenApp)
 	window.postMobileMessage('SYNCSETTINGS');
 
 }(window));
