@@ -34,8 +34,8 @@ void initialize(const std::string& name, const std::string& logLevel, const bool
 
     const std::time_t t = std::time(nullptr);
     struct tm tm;
-    LOG_INF("Initializing " << name << ". Local time: "
-                            << std::put_time(Util::time_t_to_localtime(t, tm), "%a %F %T %z")
+    LOG_INF("Initializing " << name << ". UTC time: "
+                            << std::put_time(Util::time_t_to_gmtime(t, tm), "%a %F %T %z")
                             << ". Log level is [" << getLevelName() << ']');
 }
 
