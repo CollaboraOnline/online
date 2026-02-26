@@ -50,13 +50,6 @@ window.L.Map.StateChangeHandler = window.L.Handler.extend({
 		const commandName = this.ensureUnoCommandPrefix(e.commandName);
 
 		this._items[commandName] = state;
-
-		if (commandName === '.uno:TableStyles') {
-			try {
-				app.tableStyles = JSON.parse(e.state).TableStyles;
-			} catch (e) { app.console.error('Failed to parse TableStyles: ' + e); }
-		}
-
 		if (e.commandName === '.uno:CurrentTrackedChangeId') {
 			var redlineId = 'change-' + state;
 			const annotations = app.sectionContainer.getSectionWithName(app.CSections.CommentList.name);
