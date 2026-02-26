@@ -40,17 +40,6 @@ interface COOLTouch {
 	currentlyUsingTouchscreen: () => boolean;
 }
 
-interface TableStyleElement {
-	Type: string;
-	FillColor: string; // hex value
-}
-
-interface TableStyleEntry {
-	Name: string;
-	UIName: string;
-	Elements: Array<TableStyleElement>;
-}
-
 interface Window {
 	touch: COOLTouch;
 	setLogging(value: boolean): void;
