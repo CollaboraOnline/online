@@ -60,6 +60,7 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 	_responses: {}, // Button id = response
 
 	_currentDepth: 0,
+	_expanderDepth: 0,
 
 	rendersCache: {
 		fontnamecombobox: { persistent: true, images: [] },
@@ -182,6 +183,7 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 		this._menus = JSDialog.MenuDefinitions;
 
 		this._currentDepth = 0;
+		this._expanderDepth = 0;
 
 		app.localeService.initializeNumberFormatting();
 		this._decimal = app.localeService.getDecimalSeparator();
@@ -750,6 +752,7 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 		if (data.children.length > 0) {
 			var container = window.L.DomUtil.create('div', 'ui-expander-container ' + builder.options.cssClass, parentContainer);
 			container.id = data.id;
+			container.dataset.expanderDepth = builder._expanderDepth;
 
 			var expanded = data.expanded === true || (data.children[0] && data.children[0].checked === true);
 			var expander = window.L.DomUtil.create('div', 'ui-expander ' + builder.options.cssClass, container);
@@ -757,7 +760,10 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 				var prefix = data.children[0].id ? data.children[0].id : data.id;
 
 				// W3C accordion pattern: https://www.w3.org/WAI/ARIA/apg/patterns/accordion/examples/accordion
-				var heading = window.L.DomUtil.create('h2', 'ui-expander-heading ' + builder.options.cssClass, expander);
+				// For an initial expander (_expanderDepth of 0) we use h2 instead of h1
+				// to leave room for a conceptual parent heading
+				var headingLevel = Math.min(builder._expanderDepth + 2, 6);
+				var heading = window.L.DomUtil.create('h' + headingLevel, 'ui-expander-heading ' + builder.options.cssClass, expander);
 				var expanderBtn = window.L.DomUtil.create('button', 'ui-expander-btn ' + builder.options.cssClass, heading);
 				expanderBtn.tabIndex = '0';
 				expanderBtn.setAttribute('aria-controls', prefix + '-children');
@@ -828,7 +834,9 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 				children.push(data.children[i]);
 			}
 
+			builder._expanderDepth++;
 			builder.build(expanderChildren, children);
+			builder._expanderDepth--;
 		} else {
 			return true;
 		}
@@ -2531,6 +2539,13 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 		if (!parent)
 			return;
 
+		// Restore expander depth so heading levels are correct when
+		// rebuilding a nested expander on-demand (see _expanderHandler).
+		var savedExpanderDepth = this._expanderDepth;
+		if (control.dataset && control.dataset.expanderDepth !== undefined) {
+			this._expanderDepth = parseInt(control.dataset.expanderDepth);
+		}
+
 		var scrollTop = control.scrollTop;
 		var focusedElement = document.activeElement;
 		var focusedElementInDialog = focusedElement ? container.querySelector('[id=\'' + focusedElement.id + '\']') : null;
@@ -2543,6 +2558,7 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 		control.id = '';
 
 		buildFunc.bind(this)(temporaryParent, [data], false);
+		this._expanderDepth = savedExpanderDepth;
 		var backupGridColSpan = control.style.gridColumn;
 		var backupGridRowSpan = control.style.gridRow;
 
