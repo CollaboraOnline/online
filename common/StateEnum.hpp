@@ -7,6 +7,8 @@
 
 #pragma once
 
+#include <array>
+#include <cassert>
 #include <iosfwd>
 #include <type_traits>
 #include <string_view>
