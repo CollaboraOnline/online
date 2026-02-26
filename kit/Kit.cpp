@@ -3432,6 +3432,7 @@ void lokit_main(
                 bool sysTemplateIncomplete,
 #else
                 int docBrokerSocket,
+                const std::string& userInterface,
 #endif
                 std::size_t numericIdentifier
                 )
@@ -4054,7 +4055,7 @@ void lokit_main(
 #if MOBILEAPP && !defined(IOS) && !defined(QTAPP) && !defined(MACOS) && !defined(_WIN32)
         // For iOS we call it in -[AppDelegate application: didFinishLaunchingWithOptions:]
         // For QTAPP/MACOS/_WIN32 it is called in initKitRunLoopThread()
-        setupKitEnvironment(COOLWSD::UserInterface);
+        setupKitEnvironment(userInterface);
 #endif
 
 #if MOBILEAPP
