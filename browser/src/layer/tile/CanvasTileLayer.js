@@ -943,12 +943,21 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 				textMsgHtml = textMsgContent;
 			}
 
-			if (this._map._clip) {
-				this._map._clip.setTextSelectionHTML(textMsgHtml, textMsgPlainText);
-			} else
-				// hack for ios and android to get selected text into hyperlink insertion dialog
-				this._selectedTextContent = textMsgHtml;
+		if (this._map._clip) {
+			this._map._clip.setTextSelectionHTML(textMsgHtml, textMsgPlainText);
+		} else
+			// hack for ios and android to get selected text into hyperlink insertion dialog
+			this._selectedTextContent = textMsgHtml;
+
+		// Fire map event for external listeners
+		if (this._map) {
+			this._map.fire('textselectioncontent', {
+				msg: textMsg,
+				html: textMsgHtml,
+				plainText: textMsgPlainText
+			});
 		}
+	}
 		else if (textMsg.startsWith('clipboardchanged')) {
 			var jMessage = textMsg.substr(17);
 			jMessage = JSON.parse(jMessage);
@@ -978,6 +987,8 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 		else if (textMsg.startsWith('complexselection:')) {
 			if (this._map._clip)
 				this._map._clip.onComplexSelection(textMsg.substr('complexselection:'.length));
+			if (this._map)
+				this._map.fire('complexselection', { msg: textMsg });
 		}
 		else if (textMsg.startsWith('windowpaint:')) {
 			this._onDialogPaintMsg(textMsg, img);
@@ -987,6 +998,14 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 		}
 		else if (textMsg.startsWith('unocommandresult:')) {
 			this._onUnoCommandResultMsg(textMsg);
+		}
+		else if (textMsg.startsWith('aichatresult:')) {
+			try {
+				var json = JSON.parse(textMsg.substring('aichatresult:'.length));
+				this._map.fire('aichatresult', json);
+			} catch (e) {
+				window.app.console.error('Failed to parse aichatresult: ' + e);
+			}
 		}
 		else if (textMsg.startsWith('hrulerupdate:')) {
 			this._onRulerUpdate(textMsg);

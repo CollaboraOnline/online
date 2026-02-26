@@ -220,6 +220,7 @@ COOL_CSS_LST =\
 	$(srcdir)/css/backstage.css \
 	$(srcdir)/css/jssidebar.css \
 	$(srcdir)/css/forced-colors.css \
+	$(srcdir)/css/aichat-sidebar.css \
 	$(srcdir)/css/override-smartmenus.css \
 	$(srcdir)/css/jquery-ui-lightness.css \
 	$(srcdir)/css/infobar.css \
@@ -259,6 +260,7 @@ NODE_MODULES_JS =\
 	$(shell find node_modules/jquery-ui/ui/i18n -name '*.js' 2>/dev/null) \
 	node_modules/smartmenus/dist/jquery.smartmenus.js \
 	node_modules/fzstd/umd/index.js \
+	node_modules/marked/marked.min.js \
 	node_modules/gl-matrix/gl-matrix-min.js
 
 COOL_LIBS_JS =\
@@ -468,6 +470,7 @@ COOL_JS_LST =\
 	src/control/Control.Tooltip.js \
 	src/control/Control.ESignature.ts \
 	src/control/Control.ESignatureDialog.ts \
+	src/control/Control.AIChatSidebar.ts \
 	src/control/ColorPicker.ts \
 	src/control/jsdialog/Util.Shortcuts.ts \
 	src/control/jsdialog/Util.ModelState.ts \
