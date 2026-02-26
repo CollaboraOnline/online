@@ -52,8 +52,9 @@ window.L.Control.Notebookbar = window.L.Control.extend({
 		this.map.on('notebookbar', this.onNotebookbar, this);
 	},
 
-	onCallback: function (objectType, eventType, object, data, builder) {
-		return false;
+	// override in subclasses
+	onCallback: function () {
+		return false; // consumed
 	},
 
 	// on show
