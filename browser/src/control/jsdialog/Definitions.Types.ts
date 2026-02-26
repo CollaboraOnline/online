@@ -107,6 +107,14 @@ type JSDialogCallback = (
 	builder: JSBuilder,
 ) => void;
 
+type JSDialogCallbackConsumer = (
+	objectType: string,
+	eventType: string,
+	object: any,
+	data: any,
+	builder: JSBuilder,
+) => boolean;
+
 type JSDialogMenuCallback = (
 	objectType: string,
 	eventType: string,
@@ -179,6 +187,7 @@ interface NotebookbarTab {
 	getContent: () => NotebookbarTabContent;
 	onAdd?: () => void;
 	onRemove?: () => void;
+	onCallback?: JSDialogCallbackConsumer;
 }
 
 // callback triggered for custom rendered entries

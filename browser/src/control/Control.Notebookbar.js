@@ -55,6 +55,10 @@ window.L.Control.Notebookbar = window.L.Control.extend({
 			this.installTabs();
 	},
 
+	onCallback: function (objectType, eventType, object, data, builder) {
+		return false;
+	},
+
 	// on show
 	create: function(container) {
 		const docType = this._map.getDocType();
