@@ -563,6 +563,12 @@ class PresenterConsole {
 				button.style.justifyContent = 'center';
 				button.style.backgroundColor = 'transparent';
 				button.style.borderColor = 'none';
+
+				const img = button.querySelector('img');
+				if (img) {
+					img.style.width = '32px';
+					img.style.height = '32px';
+				}
 			}.bind(this),
 		);
 
