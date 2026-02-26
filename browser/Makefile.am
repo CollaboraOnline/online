@@ -149,7 +149,7 @@ BACKSTAGE_SVG_NAMES = \
 
 BACKSTAGE_SVGS = $(addprefix $(icons_dir)/,$(BACKSTAGE_SVG_NAMES))
 
-$(icons_js): tscompile.done Makefile.am Makefile $(BACKSTAGE_SVGS)
+$(icons_js): Makefile.am Makefile $(BACKSTAGE_SVGS)
 	@mkdir -p "$(dir $@)"
 	@{ \
 	  echo "// AUTO-GENERATED. DO NOT EDIT."; \
