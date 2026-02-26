@@ -30,7 +30,6 @@ describe(['tagdesktop'], 'Accessibility Calc Notebookbar Tests', { testIsolation
 	var skipContextTabs = ['Sparkline', 'Table'];
 
 	after(function () {
-		if (visitedTabNames.length === 0) return;
 		var unvisited = allTabNames.filter(function (name) {
 			return !visitedTabNames.includes(name) && !skipContextTabs.includes(name);
 		});
@@ -56,7 +55,7 @@ describe(['tagdesktop'], 'Accessibility Calc Notebookbar Tests', { testIsolation
 		return tabs.find(function (t) { return t.name === name; });
 	}
 
-	it.skip('Notebookbar tab: Shape (context)', function () {
+	it('Notebookbar tab: Shape (context)', function () {
 		cy.then(function () {
 			win.app.map.sendUnoCommand('.uno:BasicShapes.octagon');
 		});
@@ -71,7 +70,7 @@ describe(['tagdesktop'], 'Accessibility Calc Notebookbar Tests', { testIsolation
 		helper.typeIntoDocument('{esc}');
 	});
 
-	it.skip('Notebookbar tab: Picture (context)', function () {
+	it('Notebookbar tab: Picture (context)', function () {
 		cy.viewport(1920, 1080);
 
 		desktopHelper.insertImage();
@@ -87,7 +86,7 @@ describe(['tagdesktop'], 'Accessibility Calc Notebookbar Tests', { testIsolation
 	// TODO: Add a Sparkline to test document after merge of outstanding pr
 	// TODO: Table context is for "Table in Table" feature, not available in .ods format
 
-	it.skip('All non-context notebookbar tabs', function () {
+	it('All non-context notebookbar tabs', function () {
 		cy.then(function () {
 			var nonContextTabs = tabs.filter(function (tab) {
 				return !tab.context || tab.context.includes('default');
