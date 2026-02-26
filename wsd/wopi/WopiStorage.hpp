@@ -83,6 +83,7 @@ public:
         bool getDisableInsertLocalImage() const { return _disableInsertLocalImage; }
         bool getEnableRemoteLinkPicker() const { return _enableRemoteLinkPicker; }
         bool getEnableRemoteAIContent() const { return _enableRemoteAIContent; }
+        bool getDisableAISettings() const { return _disableAISettings; }
         bool getEnableShare() const { return _enableShare; }
         bool getSupportsRename() const { return _supportsRename; }
         bool getSupportsLocks() const { return _supportsLocks; }
@@ -174,6 +175,8 @@ public:
         bool _enableRemoteLinkPicker = false;
         /// If set to true, users can insert remote AI-generated content
         bool _enableRemoteAIContent = false;
+        /// If set to true, AI settings UI and AI features are disabled for the user
+        bool _disableAISettings = false;
         /// If set to true, users can access the file share functionality
         bool _enableShare = false;
         /// If WOPI host supports locking
