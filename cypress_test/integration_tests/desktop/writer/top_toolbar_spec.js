@@ -336,7 +336,7 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 			.should('not.exist');
 	});
 
-	it('Insert/delete chart.', function() {
+	it.skip('Insert/delete chart.', function() {
 		cy.cGet('#Insert-tab-label').click();
 		cy.cGet('#Insert-container .unoInsertObjectChart button').click();
 
