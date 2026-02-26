@@ -125,6 +125,22 @@ class UIManager extends window.L.Control {
 	// UI initialization
 
 	/**
+	 * Shows a tooltip attached to an element and auto-hides it after a timeout.
+	 */
+	showTimedTooltip(element: HTMLElement, text: string, timeMs: number): void {
+		if (!element || !this.map.tooltip)
+			return;
+
+		this.map.tooltip.show(element, text);
+		clearTimeout(this.map._timedTooltipTimeout);
+		this.map._timedTooltipTimeout = setTimeout(() => {
+			if (this.map.tooltip && this.map.tooltip._current === element) {
+				this.map.tooltip.hide();
+			}
+		}, timeMs);
+	}
+
+	/**
 	 * Returns the current UI mode ("notebookbar" or "classic").
 	 */
 	getCurrentMode(): UIMode {
