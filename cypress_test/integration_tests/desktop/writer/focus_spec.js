@@ -80,15 +80,15 @@ describe(['tagdesktop', 'tagproxy'], 'Focus tests', function() {
 		cy.cGet('body').type('{ctrl}a');
 
 		// Change font size by slow typing
-		cy.cGet('#toolbar-up #fontsizecombobox > input.ui-combobox-content').click();
-		cy.cGet('#toolbar-up #fontsizecombobox > input.ui-combobox-content').clear();
+		cy.cGet('#toolbar-up #fontsizecombobox .ui-combobox-content').click();
+		cy.cGet('#toolbar-up #fontsizecombobox .ui-combobox-content').clear();
 		helper.assertFocus('tagName', 'INPUT');
-		helper.assertFocus('parentElement.id', 'fontsizecombobox');
+		helper.assertFocus('parentElement.parentElement.id', 'fontsizecombobox');
 		var text = '999';
 		helper.typeText('body', text, 500);
 
 		// Font size combobox should retain focus
 		helper.assertFocus('tagName', 'INPUT');
-		helper.assertFocus('parentElement.id', 'fontsizecombobox');
+		helper.assertFocus('parentElement.parentElement.id', 'fontsizecombobox');
 	});
 });
