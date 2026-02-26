@@ -33,6 +33,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Top toolbar tests.', funct
 	});
 
 	it('Apply italic on text shape.', function() {
+		desktopHelper.getCompactIconArrow('Bold').click();
 		desktopHelper.getCompactIcon('Italic').click();
 
 		impressHelper.triggerNewSVGForShapeInTheCenter();
@@ -41,6 +42,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Top toolbar tests.', funct
 	});
 
 	it('Apply underline on text shape.', function() {
+		desktopHelper.getCompactIconArrow('Bold').click();
 		desktopHelper.getCompactIcon('Underline').click();
 
 		impressHelper.triggerNewSVGForShapeInTheCenter();
@@ -49,6 +51,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Top toolbar tests.', funct
 	});
 
 	it('Apply strikethrough on text shape.', function() {
+		desktopHelper.getCompactIconArrow('Bold').click();
 		desktopHelper.getCompactIcon('Strikeout').click();
 
 		impressHelper.triggerNewSVGForShapeInTheCenter();
