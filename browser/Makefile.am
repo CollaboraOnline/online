@@ -253,6 +253,7 @@ COOL_JS_LST =\
 	src/docstate.ts \
 	src/docstatefunctions.js \
 	src/docdispatcher.ts \
+	src/app/TableStylesService.ts \
 	src/app/DocEvents.ts \
 	src/core/geometry.ts \
 	src/core/TimerRegistry.ts \
@@ -1116,6 +1117,7 @@ pot:
 		js/global.js \
 		src/app/Debug.ts \
 		src/app/IconUtil.ts \
+		src/app/TableStylesService.ts \
 		src/canvas/sections/CommentListSection.ts \
 		src/canvas/sections/CommentSection.ts \
 		src/canvas/sections/CompareChangesLabelSection.ts \
