@@ -19,6 +19,7 @@ interface ViewSetting {
 	zoteroAPIKey?: string;
 	accessibilityState: boolean;
 	signatureCertificate?: string;
+	aiConfigured?: boolean;
 }
 
 class ServerConnectionService {
@@ -41,6 +42,8 @@ class ServerConnectionService {
 			app.console.error('ServerConnectionService: missing map reference');
 			return;
 		}
+
+		app.map.isAIConfigured = !!viewSetting.aiConfigured;
 
 		let zoteroPlugin = app.map.zotero;
 		const zoteroAPIKey = viewSetting.zoteroAPIKey;

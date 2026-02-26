@@ -37,6 +37,7 @@ window.L.Map.WOPI = window.L.Handler.extend({
 	DisableInsertLocalImage: false,
 	EnableInsertRemoteLink: false,
 	EnableRemoteAIContent: false,
+	DisableAISettings: false,
 	EnableShare: false,
 	HideUserList: null,
 	CallPythonScriptSource: null,
@@ -159,6 +160,7 @@ window.L.Map.WOPI = window.L.Handler.extend({
 		this.DisableInsertLocalImage = !!wopiInfo['DisableInsertLocalImage'];
 		this.EnableRemoteLinkPicker = !!wopiInfo['EnableRemoteLinkPicker'];
 		this.EnableRemoteAIContent = !!wopiInfo['EnableRemoteAIContent'];
+		this.DisableAISettings = !!wopiInfo['DisableAISettings'];
 		this.SupportsRename = !!wopiInfo['SupportsRename'];
 		this.UserCanRename = !!wopiInfo['UserCanRename'];
 		this.EnableShare = !!wopiInfo['EnableShare'];
