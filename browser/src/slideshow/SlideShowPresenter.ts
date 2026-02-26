@@ -765,7 +765,7 @@ class SlideShowPresenter {
 
 	private _updatePrevButtonState(currentSlide: number) {
 		const enabled = this._canGoPrev(currentSlide);
-		const tooltip = enabled ? _('Previous') : _("You're on the first slide");
+		const tooltip = enabled ? _('Previous') : _('You are on the first slide');
 		this._setButtonState(this._prevButton, !enabled, tooltip);
 	}
 
