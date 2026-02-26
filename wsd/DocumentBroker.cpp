@@ -1490,6 +1490,7 @@ DocumentBroker::updateSessionWithWopiInfo(const std::shared_ptr<ClientSession>& 
     wopiInfo->set("DisableInsertLocalImage", wopiFileInfo->getDisableInsertLocalImage());
     wopiInfo->set("EnableRemoteLinkPicker", wopiFileInfo->getEnableRemoteLinkPicker());
     wopiInfo->set("EnableRemoteAIContent", wopiFileInfo->getEnableRemoteAIContent());
+    wopiInfo->set("DisableAISettings", wopiFileInfo->getDisableAISettings());
     wopiInfo->set("EnableShare", wopiFileInfo->getEnableShare());
     wopiInfo->set("HideUserList", wopiFileInfo->getHideUserList());
     wopiInfo->set("SupportsRename", wopiFileInfo->getSupportsRename());
@@ -1760,7 +1761,8 @@ static std::string extractViewSettings(const std::string& viewSettingsPath,
             }
         }
 
-        std::string zoteroAPIKey, signatureCertificate, signatureKey, signatureCa;
+        std::string zoteroAPIKey, signatureCertificate, signatureKey, signatureCa, aiProviderAPIKey,
+            aiProviderModel, aiProviderURL, aiImageProviderAPIKey, aiImageProviderURL, aiImageModel;
 
         bool viewSettingsNeedUpdate = false;
 
@@ -1798,6 +1800,20 @@ static std::string extractViewSettings(const std::string& viewSettingsPath,
 
         _isViewSettingsUpdated = true;
 
+        JsonUtil::findJSONValue(viewSettings, "aiProviderAPIKey", aiProviderAPIKey);
+        JsonUtil::findJSONValue(viewSettings, "aiProviderModel", aiProviderModel);
+        JsonUtil::findJSONValue(viewSettings, "aiProviderURL", aiProviderURL);
+        JsonUtil::findJSONValue(viewSettings, "aiImageProviderAPIKey", aiImageProviderAPIKey);
+        JsonUtil::findJSONValue(viewSettings, "aiImageProviderURL", aiImageProviderURL);
+        JsonUtil::findJSONValue(viewSettings, "aiImageModel", aiImageModel);
+
+        session->setAIProviderAPIKey(aiProviderAPIKey);
+        session->setAIProviderModel(aiProviderModel);
+        session->setAIProviderURL(aiProviderURL);
+        session->setAIImageProviderAPIKey(aiImageProviderAPIKey);
+        session->setAIImageProviderURL(aiImageProviderURL);
+        session->setAIImageModel(aiImageModel);
+
         if (viewSettingsNeedUpdate)
         {
             LOG_INF("View settings updated with migrated signature fields, uploading to WOPI host");
@@ -1805,6 +1821,21 @@ static std::string extractViewSettings(const std::string& viewSettingsPath,
             session->uploadViewSettingsToWopiHost();
         }
 
+        // remove API key from view settings before sending to client, client doesn't need to know about it
+        // and it will be set in session for later use when calling AI provider,
+        // also it is safer to not expose it to client side
+        viewSettings->remove("aiProviderAPIKey");
+        viewSettings->remove("aiProviderModel");
+        viewSettings->remove("aiProviderURL");
+        viewSettings->remove("aiImageProviderAPIKey");
+        viewSettings->remove("aiImageProviderURL");
+        viewSettings->remove("aiImageModel");
+
+        // Let client know whether AI features are enabled based on the presence of necessary fields,
+        // so client can decide to show/hide AI related UI
+        const bool aiConfigured = !aiProviderAPIKey.empty() && !aiProviderModel.empty() &&
+                                  !aiProviderURL.empty();
+        viewSettings->set("aiConfigured", aiConfigured);
         viewSettingsString = JsonUtil::jsonToString(viewSettings);
     }
     catch (const std::exception& exc)
