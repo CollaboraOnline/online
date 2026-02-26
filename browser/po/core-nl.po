@@ -2,14 +2,15 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: core-nl\n"
-"PO-Revision-Date: 2026-02-03 12:58+0000\n"
-"Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
-"Language-Team: Dutch <https://hosted.weblate.org/projects/collabora-online/lokit/nl/>\n"
+"PO-Revision-Date: 2026-02-26 13:57+0000\n"
+"Last-Translator: Sebastiaan Veld <notify@virtfields.nl>\n"
+"Language-Team: Dutch <https://hosted.weblate.org/projects/collabora-online/"
+"lokit/nl/>\n"
 "Language: nl\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.16-dev\n"
+"X-Generator: Weblate 5.16.1-dev\n"
 
 #. ygDfy
 #: module_graphicfilter.ulf
@@ -54,31 +55,31 @@ msgstr "Plakken als"
 #: svx/inc/spacing.hrc:16
 msgctxt "RID_ABOVE"
 msgid "Above:"
-msgstr ""
+msgstr "Boven:"
 
 #. uaiun
 #: svx/inc/spacing.hrc:17
 msgctxt "RID_BELOW"
 msgid "Below:"
-msgstr ""
+msgstr "Onder:"
 
 #. fvxsX
 #: svx/inc/spacing.hrc:18
 msgctxt "RID_BEFORE"
 msgid "Before:"
-msgstr ""
+msgstr "Voor:"
 
 #. jGRHH
 #: svx/inc/spacing.hrc:19
 msgctxt "RID_AFTER"
 msgid "After:"
-msgstr ""
+msgstr "Na:"
 
 #. k9CGA
 #: svx/inc/spacing.hrc:20
 msgctxt "RID_FIRST"
 msgid "First:"
-msgstr ""
+msgstr "Eerste:"
 
 #. aNZNw
 #: svx/uiconfig/ui/dropdownfielddialog.ui:31
@@ -108,19 +109,19 @@ msgstr "Vervangen"
 #: svx/uiconfig/ui/findreplacedialog.ui:172
 msgctxt "findreplacedialog|searchlist-atkobject"
 msgid "Search list"
-msgstr ""
+msgstr "Zoeklijst"
 
 #. BmvBD
 #: svx/uiconfig/ui/findreplacedialog.ui:491
 msgctxt "findreplacedialog|replacelist-atkobject"
 msgid "Replace list"
-msgstr ""
+msgstr "Lijst vervangen"
 
 #. gbVGs
 #: svx/uiconfig/ui/headfootformatpage.ui:407
 msgctxt "headfootformatpage|drawingareaPageHF-atkobject"
 msgid "Header and Footer Preview"
-msgstr ""
+msgstr "Voorbeeld van kop- en voettekst"
 
 #. LSYRB
 #: svx/uiconfig/ui/sidebarline.ui:91
@@ -364,19 +365,19 @@ msgstr "Tabelstijl focus"
 #: cui/uiconfig/ui/areatabpage.ui:39
 msgctxt "areatabpage|tablelb-atkobject"
 msgid "Apply to"
-msgstr ""
+msgstr "Toepassen op"
 
 #. GYGFd
 #: cui/uiconfig/ui/borderpage.ui:94
 msgctxt "borderpage|framesel"
 msgid "Border Preview"
-msgstr ""
+msgstr "Rand voorbeeld"
 
 #. 3DTib
 #: cui/uiconfig/ui/charnamepage.ui:930
 msgctxt "charnamepage|preview-atkobject"
 msgid "Font preview"
-msgstr ""
+msgstr "Lettertypevoorbeeld"
 
 #. EPGtZ
 #: cui/uiconfig/ui/hyperlinkinternetpage.ui:64
@@ -388,13 +389,13 @@ msgstr "Link:"
 #: cui/uiconfig/ui/imagetabpage.ui:503
 msgctxt "imagetabpage|tileofflb"
 msgid "Tiling Offset Type"
-msgstr ""
+msgstr "Tegelverschuivingstype"
 
 #. j9NqA
 #: cui/uiconfig/ui/imagetabpage.ui:522
 msgctxt "imagetabpage|tileoffmtr"
 msgid "Tiling Offset Value"
-msgstr ""
+msgstr "Tegelverschuivingswaarde"
 
 #. yN5KM
 #: cui/uiconfig/ui/lineendstabpage.ui:281
@@ -412,7 +413,7 @@ msgstr "Voorbeeld"
 #: cui/uiconfig/ui/numberingformatpage.ui:541
 msgctxt "numberingformatpage|currencylb-atkobject"
 msgid "Currency"
-msgstr ""
+msgstr "Valuta"
 
 #. YnkND
 #: cui/uiconfig/ui/numberingformatpage.ui:682
@@ -424,7 +425,7 @@ msgstr "Voorbeeld"
 #: cui/uiconfig/ui/pageformatpage.ui:223
 msgctxt "pageformatpage|drawingareaPageDirection-atkobject"
 msgid "Page Direction"
-msgstr ""
+msgstr "Pagina Richting"
 
 #. gfELk
 #: cui/uiconfig/ui/pageformatpage.ui:265
@@ -436,49 +437,49 @@ msgstr "Formaat van alle pagina's wijzigen"
 #: cui/uiconfig/ui/paraindentspacing.ui:399
 msgctxt "paraindentspacing|comboLB_LINEDIST"
 msgid "Line Spacing Type"
-msgstr ""
+msgstr "Regelafstand Type"
 
 #. YtiHD
 #: cui/uiconfig/ui/paraindentspacing.ui:446
 msgctxt "paraindentspacing|spinED_LINEDISTPERCENT"
 msgid "Line Spacing Value"
-msgstr ""
+msgstr "Regelafstandwaarde"
 
 #. QE3Ad
 #: cui/uiconfig/ui/paraindentspacing.ui:466
 msgctxt "paraindentspacing|spinED_LINEDISTMETRIC"
 msgid "Line Spacing Value"
-msgstr ""
+msgstr "Regelafstandwaarde"
 
 #. VGEqG
 #: cui/uiconfig/ui/paraindentspacing.ui:487
 msgctxt "paraindentspacing|spinED_BLANK"
 msgid "Line Spacing Value"
-msgstr ""
+msgstr "Regelafstandwaarde"
 
 #. WHAZC
 #: cui/uiconfig/ui/paratabspage.ui:177
 msgctxt "paratabspage|drawingareaWIN_TABLEFT-atkobject"
 msgid "Left tab preview"
-msgstr ""
+msgstr "Voorbeeld links tabblad"
 
 #. akwMF
 #: cui/uiconfig/ui/paratabspage.ui:192
 msgctxt "paratabspage|drawingareaWIN_TABRIGHT-atkobject"
 msgid "Right tab preview"
-msgstr ""
+msgstr "Voorbeeld rechts tabblad"
 
 #. GF4AG
 #: cui/uiconfig/ui/paratabspage.ui:207
 msgctxt "paratabspage|drawingareaWIN_TABCENTER-atkobject"
 msgid "Center tab preview"
-msgstr ""
+msgstr "Voorbeeld van het tabblad Centrum"
 
 #. pSa2J
 #: cui/uiconfig/ui/paratabspage.ui:222
 msgctxt "paratabspage|drawingareaWIN_TABDECIMAL-atkobject"
 msgid "Decimal tab preview"
-msgstr ""
+msgstr "Voorbeeld van decimale tab"
 
 #. jt6Gv
 #: cui/uiconfig/ui/password.ui:258
@@ -532,13 +533,13 @@ msgstr "Klik op de omtrekstijl die u wilt gebruiken."
 #: cui/uiconfig/ui/textflowpage.ui:812
 msgctxt "textflowpage|spinOrphan-atkobject"
 msgid "No split at beginning of paragraph, lines"
-msgstr ""
+msgstr "Geen splitsing aan het begin van de alinea, regels"
 
 #. MimEj
 #: cui/uiconfig/ui/textflowpage.ui:832
 msgctxt "textflowpage|spinWidow-atkobject"
 msgid "No split at end of paragraph, lines"
-msgstr ""
+msgstr "Geen splitsing aan het einde van de alinea, regels"
 
 #. a9iXr
 #: cui/uiconfig/ui/thesaurus.ui:189
@@ -556,7 +557,7 @@ msgstr "Compact"
 #: cui/uiconfig/ui/widgettestdialog.ui:161
 msgctxt "widgettestdialog|combo_box_disable-atkobject"
 msgid "Test Type"
-msgstr ""
+msgstr "Test Type"
 
 #. ZbYiG
 #: include/svtools/strings.hrc:71
@@ -758,7 +759,7 @@ msgstr "Voorbeeld"
 #: sw/uiconfig/swriter/ui/tocentriespage.ui:252
 msgctxt "tocentriespage|structure_label"
 msgid "_Structure"
-msgstr ""
+msgstr "_Structuur"
 
 #. CW8Eb
 #: sw/uiconfig/swriter/ui/tocentriespage.ui:277
@@ -770,7 +771,7 @@ msgstr "Tekenopmaakprofiel:"
 #: sw/uiconfig/swriter/ui/tocentriespage.ui:569
 msgctxt "tocentriespage|authfield-atkobject"
 msgid "Authority field"
-msgstr ""
+msgstr "Autoriteitsveld"
 
 #. risLD
 #: sw/uiconfig/swriter/ui/tokenwidget.ui:25
@@ -1102,7 +1103,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Table Style Options"
-msgstr ""
+msgstr "Opties voor tabelstijl"
 
 #. 4HzYH
 #: CalcCommands.xcu
@@ -1122,7 +1123,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "~Insert Table..."
-msgstr ""
+msgstr "~Tabel invoegen..."
 
 #. cFE7i
 #: CalcCommands.xcu
@@ -1132,7 +1133,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Table..."
-msgstr ""
+msgstr "Tabel..."
 
 #. ms5Fm
 #: CalcCommands.xcu
@@ -1152,7 +1153,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "~Remove Table..."
-msgstr ""
+msgstr "~Tabel verwijderen..."
 
 #. DiD7K
 #: CalcCommands.xcu
@@ -1422,7 +1423,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Add Theme..."
-msgstr ""
+msgstr "Thema toevoegen..."
 
 #. zETLd
 #: ImpressWindowState.xcu
@@ -1618,7 +1619,7 @@ msgstr "~Wijzigingen in alle weergaves"
 #: xmlsecurity/uiconfig/ui/certdetails.ui:101
 msgctxt "certdetails|valuedetails-atkobject"
 msgid "Value Details"
-msgstr ""
+msgstr "Waarde Details"
 
 #. mpBGu
 #: xmlsecurity/uiconfig/ui/selectcertificatedialog.ui:274
@@ -1630,7 +1631,7 @@ msgstr "Zoeken"
 #: sc/inc/globstr.hrc:70
 msgctxt "STR_UNDO_TABLETOTALS"
 msgid "Table Total Row"
-msgstr ""
+msgstr "Tabel Totaal Rij"
 
 #. KAH5t
 #: sc/inc/globstr.hrc:73
@@ -1648,13 +1649,13 @@ msgstr "Tabel verwijderen"
 #: sc/inc/globstr.hrc:140
 msgctxt "STR_TABLE_ERR_ADD"
 msgid "Cannot add a new table to the sheet."
-msgstr ""
+msgstr "Er kan geen nieuwe tabel aan het blad worden toegevoegd."
 
 #. kG2SE
 #: sc/inc/globstr.hrc:141
 msgctxt "STR_TABLE_ERR_DEL"
 msgid "Cannot delete table from the sheet."
-msgstr ""
+msgstr "Kan tabel niet uit het blad verwijderen."
 
 #. t6eDk
 #: sc/inc/globstr.hrc:195
@@ -1666,7 +1667,7 @@ msgstr "Tabel"
 #: sc/inc/globstr.hrc:196
 msgctxt "STR_INVALIDTABLE"
 msgid "The selected area is already part of another Table."
-msgstr ""
+msgstr "Het geselecteerde gebied maakt al deel uit van een andere tabel."
 
 #. 76s4h
 #: sc/inc/globstr.hrc:217
@@ -1678,7 +1679,7 @@ msgstr "Totaal"
 #: sc/inc/globstr.hrc:220
 msgctxt "STR_TABLE_NOTFOUND"
 msgid "No Calc Table found at this position."
-msgstr ""
+msgstr "Geen Calc-tabel gevonden op deze positie."
 
 #. cG7BY
 #: sc/inc/globstr.hrc:601
@@ -2481,19 +2482,19 @@ msgstr "Cellen markeren..."
 #: sc/uiconfig/scalc/ui/definetablerangedialog.ui:10
 msgctxt "definetablerangedialog|DefineTableRangeDialog"
 msgid "Create Table"
-msgstr ""
+msgstr "Tabel maken"
 
 #. AGWSW
 #: sc/uiconfig/scalc/ui/definetablerangedialog.ui:37
 msgctxt "definetablerangedialog|extended_tip|ok"
 msgid "Saves all changes and closes dialog."
-msgstr ""
+msgstr "Slaat alle wijzigingen op en sluit het dialoogvenster."
 
 #. YJAAP
 #: sc/uiconfig/scalc/ui/definetablerangedialog.ui:56
 msgctxt "definetablerangedialog|extended_tip|cancel"
 msgid "Closes dialog and discards all changes."
-msgstr ""
+msgstr "Sluit het dialoogvenster en verwijdert alle wijzigingen."
 
 #. ugt8G
 #: sc/uiconfig/scalc/ui/definetablerangedialog.ui:106
@@ -2504,6 +2505,11 @@ msgid ""
 "then automatically convert to the Maximize icon. Click it to restore the "
 "dialog to its original size."
 msgstr ""
+"Klik op het pictogram Verkleinen om het dialoogvenster te verkleinen tot het "
+"formaat van het invoerveld. Het is dan gemakkelijker om de gewenste "
+"referentie in het blad te markeren. De pictogrammen worden dan automatisch "
+"omgezet in het pictogram Maximaliseren. Klik hierop om het dialoogvenster in "
+"zijn oorspronkelijke formaat te herstellen."
 
 #. xUrKC
 #: sc/uiconfig/scalc/ui/definetablerangedialog.ui:123
@@ -2514,12 +2520,17 @@ msgid ""
 "then automatically convert to the Maximize icon. Click it to restore the "
 "dialog to its original size."
 msgstr ""
+"Klik op het pictogram Verkleinen om het dialoogvenster te verkleinen tot het "
+"formaat van het invoerveld. Het is dan gemakkelijker om de gewenste "
+"referentie in het blad te markeren. De pictogrammen worden dan automatisch "
+"omgezet in het pictogram Maximaliseren. Klik hierop om het dialoogvenster "
+"weer in de oorspronkelijke grootte weer te geven."
 
 #. 8FLdj
 #: sc/uiconfig/scalc/ui/definetablerangedialog.ui:139
 msgctxt "definetablerangedialog|range"
 msgid "Range"
-msgstr ""
+msgstr "Bereik"
 
 #. 3a7g7
 #: sc/uiconfig/scalc/ui/definetablerangedialog.ui:162
@@ -2545,13 +2556,13 @@ msgstr ""
 #: sc/uiconfig/scalc/ui/erroralerttabpage.ui:15
 msgctxt "erroralerttabpage|tsbshow"
 msgid "Handle invalid values"
-msgstr ""
+msgstr "Ongeldige waarden afhandelen"
 
 #. KfkR3
 #: sc/uiconfig/scalc/ui/erroralerttabpage.ui:156
 msgctxt "erroralerttabpage|actionCB"
 msgid "Reject silently"
-msgstr ""
+msgstr "Stilzwijgend afwijzen"
 
 #. tdFx2
 #: sc/uiconfig/scalc/ui/gotosheetdialog.ui:100
@@ -2611,19 +2622,19 @@ msgstr "Randstijl"
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:22
 msgctxt "sidebardatabase|chk_header_row"
 msgid "Header Row"
-msgstr ""
+msgstr "Koptekstrij"
 
 #. Pg4uw
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:36
 msgctxt "sidebardatabase|chk_total_row"
 msgid "Total Row"
-msgstr ""
+msgstr "Totaal rij"
 
 #. CcWAd
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:50
 msgctxt "sidebardatabase|chk_filter_buttons"
 msgid "Filter Buttons"
-msgstr ""
+msgstr "Filterknoppen"
 
 #. MjALC
 #: sc/uiconfig/scalc/ui/sidebardatabase.ui:86
@@ -3037,43 +3048,43 @@ msgstr "Standaard tabelstijlnamen"
 #: sc/uiconfig/scalc/ui/tablestylesbox.ui:19
 msgctxt "tablestylebox|chk_header_row"
 msgid "Header Row"
-msgstr ""
+msgstr "Koptekstrij"
 
 #. 8g5nk
 #: sc/uiconfig/scalc/ui/tablestylesbox.ui:33
 msgctxt "tablestylebox|chk_total_row"
 msgid "Total Row"
-msgstr ""
+msgstr "Totaal rij"
 
 #. RCDTD
 #: sc/uiconfig/scalc/ui/tablestylesbox.ui:47
 msgctxt "tablestylebox|chk_filter_buttons"
 msgid "Filter Buttons"
-msgstr ""
+msgstr "Filterknoppen"
 
 #. zBNtc
 #: sc/uiconfig/scalc/ui/tablestylesbox.ui:61
 msgctxt "tablestylebox|chk_first_column"
 msgid "First Column"
-msgstr ""
+msgstr "Eerste kolom"
 
 #. FYKpc
 #: sc/uiconfig/scalc/ui/tablestylesbox.ui:75
 msgctxt "tablestylebox|chk_last_column"
 msgid "Last Column"
-msgstr ""
+msgstr "Laatste kolom"
 
 #. A9Eb2
 #: sc/uiconfig/scalc/ui/tablestylesbox.ui:89
 msgctxt "tablestylebox|chk_banded_rows"
 msgid "Banded Rows"
-msgstr ""
+msgstr "Gekoppelde rijen"
 
 #. 6mHnD
 #: sc/uiconfig/scalc/ui/tablestylesbox.ui:103
 msgctxt "tablestylebox|chk_banded_cols"
 msgid "Banded Columns"
-msgstr ""
+msgstr "Gekoppelde kolommen"
 
 #. gbBp7
 #: sc/uiconfig/scalc/ui/tablestylesbox.ui:121
@@ -3085,364 +3096,364 @@ msgstr "Geen"
 #: sc/uiconfig/scalc/ui/tablestylesbox.ui:122
 msgctxt "tablestylebox|tablestylelight1"
 msgid "Table Style Light 1"
-msgstr ""
+msgstr "Tabelstijl Licht 1"
 
 #. GA5oq
 #: sc/uiconfig/scalc/ui/tablestylesbox.ui:123
 msgctxt "tablestylebox|tablestylelight2"
 msgid "Table Style Light 2"
-msgstr ""
+msgstr "Tabelstijl Licht 2"
 
 #. QNyUR
 #: sc/uiconfig/scalc/ui/tablestylesbox.ui:124
 msgctxt "tablestylebox|tablestylelight3"
 msgid "Table Style Light 3"
-msgstr ""
+msgstr "Tabelstijl Licht 3"
 
 #. 6Dg39
 #: sc/uiconfig/scalc/ui/tablestylesbox.ui:125
 msgctxt "tablestylebox|tablestylelight4"
 msgid "Table Style Light 4"
-msgstr ""
+msgstr "Tabelstijl Licht 4"
 
 #. ERFFS
 #: sc/uiconfig/scalc/ui/tablestylesbox.ui:126
 msgctxt "tablestylebox|tablestylelight5"
 msgid "Table Style Light 5"
-msgstr ""
+msgstr "Tabelstijl Licht 5"
 
 #. nC9A3
 #: sc/uiconfig/scalc/ui/tablestylesbox.ui:127
 msgctxt "tablestylebox|tablestylelight6"
 msgid "Table Style Light 6"
-msgstr ""
+msgstr "Tabelstijl Licht 6"
 
 #. vQm8c
 #: sc/uiconfig/scalc/ui/tablestylesbox.ui:128
 msgctxt "tablestylebox|tablestylelight7"
 msgid "Table Style Light 7"
-msgstr ""
+msgstr "Tabelstijl Licht 7"
 
 #. VELfG
 #: sc/uiconfig/scalc/ui/tablestylesbox.ui:129
 msgctxt "tablestylebox|tablestylelight8"
 msgid "Table Style Light 8"
-msgstr ""
+msgstr "Tabelstijl Licht 8"
 
 #. dJTtx
 #: sc/uiconfig/scalc/ui/tablestylesbox.ui:130
 msgctxt "tablestylebox|tablestylelight9"
 msgid "Table Style Light 9"
-msgstr ""
+msgstr "Tabelstijl Licht 9"
 
 #. JEsTR
 #: sc/uiconfig/scalc/ui/tablestylesbox.ui:131
 msgctxt "tablestylebox|tablestylelight10"
 msgid "Table Style Light 10"
-msgstr ""
+msgstr "Tabelstijl Licht 10"
 
 #. gvecy
 #: sc/uiconfig/scalc/ui/tablestylesbox.ui:132
 msgctxt "tablestylebox|tablestylelight11"
 msgid "Table Style Light 11"
-msgstr ""
+msgstr "Tabelstijl Licht 11"
 
 #. nhDGR
 #: sc/uiconfig/scalc/ui/tablestylesbox.ui:133
 msgctxt "tablestylebox|tablestylelight12"
 msgid "Table Style Light 12"
-msgstr ""
+msgstr "Tabelstijl Licht 12"
 
 #. 3Q7Py
 #: sc/uiconfig/scalc/ui/tablestylesbox.ui:134
 msgctxt "tablestylebox|tablestylelight13"
 msgid "Table Style Light 13"
-msgstr ""
+msgstr "Tabelstijl Licht 13"
 
 #. TjvkW
 #: sc/uiconfig/scalc/ui/tablestylesbox.ui:135
 msgctxt "tablestylebox|tablestylelight14"
 msgid "Table Style Light 14"
-msgstr ""
+msgstr "Tabelstijl Licht 14"
 
 #. Hzbs5
 #: sc/uiconfig/scalc/ui/tablestylesbox.ui:136
 msgctxt "tablestylebox|tablestylelight15"
 msgid "Table Style Light 15"
-msgstr ""
+msgstr "Tabelstijl Licht 15"
 
 #. EDG6W
 #: sc/uiconfig/scalc/ui/tablestylesbox.ui:137
 msgctxt "tablestylebox|tablestylelight16"
 msgid "Table Style Light 16"
-msgstr ""
+msgstr "Tabelstijl Licht 16"
 
 #. uU4F5
 #: sc/uiconfig/scalc/ui/tablestylesbox.ui:138
 msgctxt "tablestylebox|tablestylelight17"
 msgid "Table Style Light 17"
-msgstr ""
+msgstr "Tabelstijl Licht 17"
 
 #. BFm89
 #: sc/uiconfig/scalc/ui/tablestylesbox.ui:139
 msgctxt "tablestylebox|tablestylelight18"
 msgid "Table Style Light 18"
-msgstr ""
+msgstr "Tabelstijl Licht 18"
 
 #. vWYDa
 #: sc/uiconfig/scalc/ui/tablestylesbox.ui:140
 msgctxt "tablestylebox|tablestylelight19"
 msgid "Table Style Light 19"
-msgstr ""
+msgstr "Tabelstijl Licht 19"
 
 #. 7YymU
 #: sc/uiconfig/scalc/ui/tablestylesbox.ui:141
 msgctxt "tablestylebox|tablestylelight20"
 msgid "Table Style Light 20"
-msgstr ""
+msgstr "Tabelstijl Licht 20"
 
 #. iHcr3
 #: sc/uiconfig/scalc/ui/tablestylesbox.ui:142
 msgctxt "tablestylebox|tablestylelight21"
 msgid "Table Style Light 21"
-msgstr ""
+msgstr "Tabelstijl Licht 21"
 
 #. GZraD
 #: sc/uiconfig/scalc/ui/tablestylesbox.ui:143
 msgctxt "tablestylebox|tablestylemedium1"
 msgid "Table Style Medium 1"
-msgstr ""
+msgstr "Tabelstijl Medium 1"
 
 #. Dn8Ee
 #: sc/uiconfig/scalc/ui/tablestylesbox.ui:144
 msgctxt "tablestylebox|tablestylemedium2"
 msgid "Table Style Medium 2"
-msgstr ""
+msgstr "Tabelstijl Medium 2"
 
 #. t6CRD
 #: sc/uiconfig/scalc/ui/tablestylesbox.ui:145
 msgctxt "tablestylebox|tablestylemedium3"
 msgid "Table Style Medium 3"
-msgstr ""
+msgstr "Tabelstijl Medium 3"
 
 #. KcaiH
 #: sc/uiconfig/scalc/ui/tablestylesbox.ui:146
 msgctxt "tablestylebox|tablestylemedium4"
 msgid "Table Style Medium 4"
-msgstr ""
+msgstr "Tabelstijl Medium 4"
 
 #. hMwuq
 #: sc/uiconfig/scalc/ui/tablestylesbox.ui:147
 msgctxt "tablestylebox|tablestylemedium5"
 msgid "Table Style Medium 5"
-msgstr ""
+msgstr "Tabelstijl Medium 5"
 
 #. o938H
 #: sc/uiconfig/scalc/ui/tablestylesbox.ui:148
 msgctxt "tablestylebox|tablestylemedium6"
 msgid "Table Style Medium 6"
-msgstr ""
+msgstr "Tabelstijl Medium 6"
 
 #. 4sHDq
 #: sc/uiconfig/scalc/ui/tablestylesbox.ui:149
 msgctxt "tablestylebox|tablestylemedium7"
 msgid "Table Style Medium 7"
-msgstr ""
+msgstr "Tabelstijl Medium 7"
 
 #. kFZ6u
 #: sc/uiconfig/scalc/ui/tablestylesbox.ui:150
 msgctxt "tablestylebox|tablestylemedium8"
 msgid "Table Style Medium 8"
-msgstr ""
+msgstr "Tabelstijl Medium 8"
 
 #. 5ykFM
 #: sc/uiconfig/scalc/ui/tablestylesbox.ui:151
 msgctxt "tablestylebox|tablestylemedium9"
 msgid "Table Style Medium 9"
-msgstr ""
+msgstr "Tabelstijl Medium 9"
 
 #. cBYvR
 #: sc/uiconfig/scalc/ui/tablestylesbox.ui:152
 msgctxt "tablestylebox|tablestylemedium10"
 msgid "Table Style Medium 10"
-msgstr ""
+msgstr "Tabelstijl Medium 10"
 
 #. aVd2m
 #: sc/uiconfig/scalc/ui/tablestylesbox.ui:153
 msgctxt "tablestylebox|tablestylemedium11"
 msgid "Table Style Medium 11"
-msgstr ""
+msgstr "Tabelstijl Medium 11"
 
 #. h2fLN
 #: sc/uiconfig/scalc/ui/tablestylesbox.ui:154
 msgctxt "tablestylebox|tablestylemedium12"
 msgid "Table Style Medium 12"
-msgstr ""
+msgstr "Tabelstijl Medium 12"
 
 #. faSZi
 #: sc/uiconfig/scalc/ui/tablestylesbox.ui:155
 msgctxt "tablestylebox|tablestylemedium13"
 msgid "Table Style Medium 13"
-msgstr ""
+msgstr "Tabelstijl Medium 13"
 
 #. SvAiJ
 #: sc/uiconfig/scalc/ui/tablestylesbox.ui:156
 msgctxt "tablestylebox|tablestylemedium14"
 msgid "Table Style Medium 14"
-msgstr ""
+msgstr "Tabelstijl Medium 14"
 
 #. UFPEn
 #: sc/uiconfig/scalc/ui/tablestylesbox.ui:157
 msgctxt "tablestylebox|tablestylemedium15"
 msgid "Table Style Medium 15"
-msgstr ""
+msgstr "Tabelstijl Medium 15"
 
 #. XqMGM
 #: sc/uiconfig/scalc/ui/tablestylesbox.ui:158
 msgctxt "tablestylebox|tablestylemedium16"
 msgid "Table Style Medium 16"
-msgstr ""
+msgstr "Tabelstijl Medium 16"
 
 #. ZQGdq
 #: sc/uiconfig/scalc/ui/tablestylesbox.ui:159
 msgctxt "tablestylebox|tablestylemedium17"
 msgid "Table Style Medium 17"
-msgstr ""
+msgstr "Tabelstijl Medium 17"
 
 #. QYB5B
 #: sc/uiconfig/scalc/ui/tablestylesbox.ui:160
 msgctxt "tablestylebox|tablestylemedium18"
 msgid "Table Style Medium 18"
-msgstr ""
+msgstr "Tabelstijl Medium 18"
 
 #. NG8sw
 #: sc/uiconfig/scalc/ui/tablestylesbox.ui:161
 msgctxt "tablestylebox|tablestylemedium19"
 msgid "Table Style Medium 19"
-msgstr ""
+msgstr "Tabelstijl Medium 19"
 
 #. 2TsiD
 #: sc/uiconfig/scalc/ui/tablestylesbox.ui:162
 msgctxt "tablestylebox|tablestylemedium20"
 msgid "Table Style Medium 20"
-msgstr ""
+msgstr "Tabelstijl Medium 20"
 
 #. 49nES
 #: sc/uiconfig/scalc/ui/tablestylesbox.ui:163
 msgctxt "tablestylebox|tablestylemedium21"
 msgid "Table Style Medium 21"
-msgstr ""
+msgstr "Tabelstijl Medium 21"
 
 #. 5ckGG
 #: sc/uiconfig/scalc/ui/tablestylesbox.ui:164
 msgctxt "tablestylebox|tablestylemedium22"
 msgid "Table Style Medium 22"
-msgstr ""
+msgstr "Tabelstijl Medium 22"
 
 #. 74ydV
 #: sc/uiconfig/scalc/ui/tablestylesbox.ui:165
 msgctxt "tablestylebox|tablestylemedium23"
 msgid "Table Style Medium 23"
-msgstr ""
+msgstr "Tabelstijl Medium 23"
 
 #. CHGvC
 #: sc/uiconfig/scalc/ui/tablestylesbox.ui:166
 msgctxt "tablestylebox|tablestylemedium24"
 msgid "Table Style Medium 24"
-msgstr ""
+msgstr "Tabelstijl Medium 24"
 
 #. Ax32Z
 #: sc/uiconfig/scalc/ui/tablestylesbox.ui:167
 msgctxt "tablestylebox|tablestylemedium25"
 msgid "Table Style Medium 25"
-msgstr ""
+msgstr "Tabelstijl Medium 25"
 
 #. FN5L9
 #: sc/uiconfig/scalc/ui/tablestylesbox.ui:168
 msgctxt "tablestylebox|tablestylemedium26"
 msgid "Table Style Medium 26"
-msgstr ""
+msgstr "Tabelstijl Medium 26"
 
 #. DoAZW
 #: sc/uiconfig/scalc/ui/tablestylesbox.ui:169
 msgctxt "tablestylebox|tablestylemedium27"
 msgid "Table Style Medium 27"
-msgstr ""
+msgstr "Tabelstijl Medium 27"
 
 #. oEF93
 #: sc/uiconfig/scalc/ui/tablestylesbox.ui:170
 msgctxt "tablestylebox|tablestylemedium28"
 msgid "Table Style Medium 28"
-msgstr ""
+msgstr "Tabelstijl Medium 28"
 
 #. NjD4c
 #: sc/uiconfig/scalc/ui/tablestylesbox.ui:171
 msgctxt "tablestylebox|tablestyledark1"
 msgid "Table Style Dark 1"
-msgstr ""
+msgstr "Tabelstijl Donker 1"
 
 #. DSEdv
 #: sc/uiconfig/scalc/ui/tablestylesbox.ui:172
 msgctxt "tablestylebox|tablestyledark2"
 msgid "Table Style Dark 2"
-msgstr ""
+msgstr "Tabelstijl Donker 2"
 
 #. vGEDF
 #: sc/uiconfig/scalc/ui/tablestylesbox.ui:173
 msgctxt "tablestylebox|tablestyledark3"
 msgid "Table Style Dark 3"
-msgstr ""
+msgstr "Tabelstijl Donker 3"
 
 #. e4FMB
 #: sc/uiconfig/scalc/ui/tablestylesbox.ui:174
 msgctxt "tablestylebox|tablestyledark4"
 msgid "Table Style Dark 4"
-msgstr ""
+msgstr "Tabelstijl Donker 4"
 
 #. NeFVV
 #: sc/uiconfig/scalc/ui/tablestylesbox.ui:175
 msgctxt "tablestylebox|tablestyledark5"
 msgid "Table Style Dark 5"
-msgstr ""
+msgstr "Tabelstijl Donker 5"
 
 #. DwGCo
 #: sc/uiconfig/scalc/ui/tablestylesbox.ui:176
 msgctxt "tablestylebox|tablestyledark6"
 msgid "Table Style Dark 6"
-msgstr ""
+msgstr "Tabelstijl Donker 6"
 
 #. vCGm8
 #: sc/uiconfig/scalc/ui/tablestylesbox.ui:177
 msgctxt "tablestylebox|tablestyledark7"
 msgid "Table Style Dark 7"
-msgstr ""
+msgstr "Tabelstijl Donker 7"
 
 #. e5Aud
 #: sc/uiconfig/scalc/ui/tablestylesbox.ui:178
 msgctxt "tablestylebox|tablestyledark8"
 msgid "Table Style Dark 8"
-msgstr ""
+msgstr "Tabelstijl Donker 8"
 
 #. NdA4K
 #: sc/uiconfig/scalc/ui/tablestylesbox.ui:179
 msgctxt "tablestylebox|tablestyledark9"
 msgid "Table Style Dark 9"
-msgstr ""
+msgstr "Tabelstijl Donker 9"
 
 #. KoCes
 #: sc/uiconfig/scalc/ui/tablestylesbox.ui:180
 msgctxt "tablestylebox|tablestyledark10"
 msgid "Table Style Dark 10"
-msgstr ""
+msgstr "Tabelstijl Donker 10"
 
 #. BsbuB
 #: sc/uiconfig/scalc/ui/tablestylesbox.ui:181
 msgctxt "tablestylebox|tablestyledark11"
 msgid "Table Style Dark 11"
-msgstr ""
+msgstr "Tabelstijl Donker 11"
 
 #. pNhVi
 #: sc/uiconfig/scalc/ui/tablestylesbox.ui:185
 msgctxt "tablestylebox|tablestyles_cb|accessible_name"
 msgid "Table Styles"
-msgstr ""
+msgstr "Tabelstijlen"
