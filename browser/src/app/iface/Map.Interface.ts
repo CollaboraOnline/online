@@ -82,6 +82,7 @@ interface MapInterface extends Evented {
 		IsOwner: boolean;
 		BaseFileName: string;
 		HideExportOption: boolean;
+		DisableAISettings: boolean;
 		UserCanWrite: boolean;
 		HideChangeTrackingControls: boolean;
 		EnableRemoteLinkPicker: boolean;
@@ -225,4 +226,5 @@ interface MapInterface extends Evented {
 
 	// TODO: window.L.control.lokDialog
 	dialog: any;
+	isAIConfigured?: boolean;
 }

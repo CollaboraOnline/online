@@ -23,6 +23,7 @@ interface Window {
 	accessTokenTTL?: string;
 	enableAccessibility?: boolean;
 	enableDebug?: boolean;
+	disableAISettings?: boolean;
 	wopiSettingBaseUrl?: string;
 	iframeType?: string;
 	cssVars?: string;
@@ -49,6 +50,19 @@ interface ViewSettings {
 	signatureCert: string;
 	signatureKey: string;
 	signatureCa: string;
+	aiProviderURL: string;
+	aiProviderAPIKey: string;
+	aiProviderModel: string;
+	aiImageProviderAPIKey: string;
+	aiImageProviderURL: string;
+	aiImageModel: string;
+}
+
+interface AIProvider {
+	id: string;
+	name: string;
+	baseUrl: string;
+	isCustom?: boolean;
 }
 
 interface SectionConfig {
@@ -91,10 +105,24 @@ const onMessage = (e) => {
 					'xcu-save-button',
 					'browser-settings-save-button',
 					'document-settings-save-button',
+					'viewsettings-save-button',
 				];
-				for (const i in saveButtons) {
-					const button = document.getElementById(saveButtons[i]);
+				for (const id of saveButtons) {
+					const button = document.getElementById(id);
 					button?.click();
+				}
+				// Notify parent with current viewsettings so server can update in-memory state
+				const settingIframe = (window as any).settingIframe as SettingIframe;
+				if (settingIframe) {
+					setTimeout(() => {
+						window.parent.postMessage(
+							JSON.stringify({
+								MessageId: 'settings-save-complete',
+								viewSettings: settingIframe.getViewSettings(),
+							}),
+							'*',
+						);
+					}, 500);
 				}
 			}
 		}
@@ -331,17 +359,71 @@ try {
 	isCODesktop = false;
 }
 
+const AI_PROVIDERS: Array<AIProvider> = [
+	{
+		id: 'openai',
+		name: 'OpenAI',
+		baseUrl: 'https://api.openai.com',
+	},
+	{
+		id: 'groq',
+		name: 'Groq',
+		baseUrl: 'https://api.groq.com/openai',
+	},
+	{
+		id: 'together',
+		name: 'Together AI',
+		baseUrl: 'https://api.together.xyz',
+	},
+	{
+		id: 'mistral',
+		name: 'Mistral AI',
+		baseUrl: 'https://api.mistral.ai',
+	},
+	{
+		id: 'custom',
+		name: 'Custom (OpenAI Compatible)',
+		baseUrl: '',
+		isCustom: true,
+	},
+];
+
+const AI_ERROR_MESSAGES: Record<number, string> = {
+	400: 'Invalid request',
+	401: 'Invalid API key',
+	403: 'API key lacks permissions',
+	429: 'Rate limited - please wait a moment and retry',
+	500: 'API server error - try again later',
+	503: 'Service temporarily unavailable',
+};
+
 class SettingIframe {
 	private settingsStorage: SettingsStorage;
 	private wordbook;
 	private xcuEditor;
-	private _viewSetting;
+	private _viewSetting!: ViewSettings;
 	private xcuInitializationAttempted = false;
+	private _aiModelFetchTimeout: number | null = null;
+	private _aiModelFetchAbort: AbortController | null = null;
+	private _aiModelFetchSeq = 0;
+	private _lastCustomAIProviderURL = '';
+	private _lastCustomAIImageProviderURL = '';
+	private _aiImageModelFetchTimeout: number | null = null;
+	private _aiImageModelFetchAbort: AbortController | null = null;
+	private _aiImageModelFetchSeq = 0;
 	private _viewSettingLabels = {
 		zoteroAPIKey: 'Zotero',
 		signatureCert: _('Signature Certificate'),
 		signatureKey: _('Signature Key'),
 		signatureCa: _('Signature CA'),
+		aiProvider: _('Provider'),
+		aiProviderAPIKey: _('API Key'),
+		aiProviderModel: _('Model'),
+		aiProviderURL: _('Base URL'),
+		aiImageProvider: _('Provider'),
+		aiImageProviderAPIKey: _('API Key'),
+		aiImageProviderURL: _('Base URL'),
+		aiImageModel: _('Model'),
 	};
 	private readonly settingLabels: Record<string, string> = {
 		lockAccessibilityOn: _('In-document Screen Reader'),
@@ -416,6 +498,22 @@ class SettingIframe {
 	private _sectionObserver: IntersectionObserver | null = null;
 	private _visibleSections: Set<Element> = new Set();
 
+	private getAPIEndpoints() {
+		return {
+			uploadSettings: window.serviceRoot + '/browser/dist/upload-settings',
+
+			fetchSharedConfig:
+				window.serviceRoot + '/browser/dist/fetch-settings-config',
+
+			deleteSharedConfig:
+				window.serviceRoot + '/browser/dist/delete-settings-config',
+
+			fetchSettingFile:
+				window.serviceRoot + '/browser/dist/fetch-settings-file',
+			fetchModels: window.serviceRoot + '/browser/dist/fetch-models',
+		};
+	}
+
 	private PATH = {
 		autoTextUpload: () => this.settingConfigBasePath() + '/autotext/',
 		wordBookUpload: () => this.settingConfigBasePath() + '/wordbook/',
@@ -425,6 +523,10 @@ class SettingIframe {
 		XcuUpload: () => this.settingConfigBasePath() + '/xcu/',
 	};
 	private browserSettingOptions: Record<string, any> = {};
+
+	getViewSettings(): ViewSettings {
+		return this._viewSetting;
+	}
 
 	init(): void {
 		this._allConfigSection = document.getElementById('allConfigSection');
@@ -472,6 +574,7 @@ class SettingIframe {
 		window.accessTokenTTL = element.dataset.accessTokenTtl;
 		window.enableDebug = element.dataset.enableDebug === 'true';
 		window.enableAccessibility = element.dataset.enableAccessibility === 'true';
+		window.disableAISettings = element.dataset.disableAiSettings === 'true';
 		window.wopiSettingBaseUrl = element.dataset.wopiSettingBaseUrl ?? '';
 		window.iframeType = element.dataset.iframeType || 'user';
 		window.cssVars = element.dataset.cssVars || '';
@@ -669,6 +772,31 @@ class SettingIframe {
 			onChangeHandler(inputEl);
 		});
 		return inputEl;
+	}
+
+	private createSelectInput(
+		id: string,
+		options: Array<{ value: string; label: string }>,
+		selectedValue: string,
+		onChangeHandler = (select) => {},
+	) {
+		const selectEl = document.createElement('select');
+		selectEl.id = id;
+		selectEl.classList.add('dic-input-container');
+
+		options.forEach((option) => {
+			const optionEl = document.createElement('option');
+			optionEl.value = option.value;
+			optionEl.textContent = option.label;
+			selectEl.appendChild(optionEl);
+		});
+
+		selectEl.value = selectedValue;
+
+		selectEl.addEventListener('change', () => {
+			onChangeHandler(selectEl);
+		});
+		return selectEl;
 	}
 
 	private createTextArea(
@@ -1424,6 +1552,9 @@ class SettingIframe {
 
 	private generateViewSettingUI(data: ViewSettings) {
 		this._viewSetting = data;
+		this._viewSetting.aiProviderURL =
+			this.normalizeBaseUrl(data.aiProviderURL || '') ||
+			this.getDefaultAIProviderURL();
 		const settingsContainer = this._allConfigSection;
 		if (!settingsContainer) {
 			return;
@@ -1431,6 +1562,7 @@ class SettingIframe {
 
 		this.generateZoteroUI(data, settingsContainer);
 		this.generateDocSigningUI(data, settingsContainer);
+		this.generateAISettingsUI(data, settingsContainer);
 	}
 
 	private generateZoteroUI(data: ViewSettings, settingsContainer: HTMLElement) {
@@ -1554,6 +1686,66 @@ class SettingIframe {
 		}
 	}
 
+	private generateAISettingsUI(
+		data: ViewSettings,
+		settingsContainer: HTMLElement,
+	) {
+		if (window.disableAISettings) {
+			return;
+		}
+
+		const oldAIContainer = document.getElementById('ai-section');
+
+		const aiContainer = document.createElement('div');
+		aiContainer.id = 'ai-section';
+		aiContainer.classList.add('section');
+
+		aiContainer.appendChild(this.createHeading(_('AI Settings')));
+		const aiDesc = document.createElement('p');
+		aiDesc.className = 'view-setting-description';
+		aiDesc.textContent = _(
+			'Configure AI provider credentials and model. Models are fetched automatically when credentials change.',
+		);
+		aiContainer.appendChild(aiDesc);
+
+		const aiDivContainer = document.createElement('div');
+		aiDivContainer.id = 'ai-editor';
+		aiContainer.appendChild(aiDivContainer);
+
+		aiDivContainer.appendChild(this.createAISettingsBlock(data));
+
+		aiContainer.appendChild(
+			this.createSettingsActions(
+				'ai',
+				'AI Settings',
+				'viewsetting.json',
+				() => {
+					const defaultSettings = this.getDefaultViewSettings();
+					return {
+						...this._viewSetting,
+						aiProviderURL: defaultSettings.aiProviderURL,
+						aiProviderAPIKey: defaultSettings.aiProviderAPIKey,
+						aiProviderModel: defaultSettings.aiProviderModel,
+						aiImageProviderURL: defaultSettings.aiImageProviderURL,
+						aiImageProviderAPIKey: defaultSettings.aiImageProviderAPIKey,
+						aiImageModel: defaultSettings.aiImageModel,
+					};
+				},
+				() => this._viewSetting,
+				(settings) =>
+					this.uploadViewSettingFile(
+						'viewsetting.json',
+						JSON.stringify(settings),
+					),
+			),
+		);
+		if (oldAIContainer) {
+			oldAIContainer.replaceWith(aiContainer);
+		} else {
+			settingsContainer.appendChild(aiContainer);
+		}
+	}
+
 	private createViewSettingsTextBox(
 		key: keyof ViewSettings,
 		data: ViewSettings,
@@ -1571,6 +1763,697 @@ class SettingIframe {
 			skipHeading,
 			isSmallHeading,
 		);
+	}
+
+	private createAISettingsBlock(data: ViewSettings): HTMLDivElement {
+		const container = document.createElement('div');
+		container.id = 'ai-settings-container';
+
+		container.appendChild(this.createTextAIGroup(data));
+		container.appendChild(this.createImageAIGroup(data));
+
+		this.attachAISettingsAutoFetch(data, container);
+		this.attachAIImageSettingsAutoFetch(data, container);
+
+		if (data.aiProviderAPIKey) {
+			this.scheduleAIModelFetch(data);
+		}
+		this.scheduleAIImageModelFetch(data);
+
+		return container;
+	}
+
+	private createTextAIGroup(data: ViewSettings): HTMLFieldSetElement {
+		const group = document.createElement('fieldset');
+		group.classList.add('ai-settings-group');
+		const legend = document.createElement('legend');
+		legend.textContent = _('Text Generation');
+		group.appendChild(legend);
+
+		const providerOptions = AI_PROVIDERS.map((provider) => ({
+			value: provider.id,
+			label: provider.name,
+		}));
+
+		const providerField = document.createElement('div');
+		providerField.id = 'aiProvidercontainer';
+		providerField.classList.add('view-input-container');
+
+		const providerHeading = this.createHeading(
+			this._viewSettingLabels.aiProvider,
+		);
+		providerHeading.classList.add('view-setting-small-label');
+		providerField.appendChild(providerHeading);
+
+		const providerSelect = this.createSelectInput(
+			'aiProvider',
+			providerOptions,
+			this.getProviderIdFromUrl(data.aiProviderURL),
+			(selectEl) => {
+				const provider = this.getProviderById(selectEl.value);
+				if (provider && !provider.isCustom) {
+					data.aiProviderURL = provider.baseUrl;
+				}
+			},
+		);
+		providerField.appendChild(providerSelect);
+		group.appendChild(providerField);
+
+		group.appendChild(
+			this.createViewSettingsTextBox('aiProviderURL', data, false, true),
+		);
+		const customUrlContainer = group.querySelector(
+			'#aiProviderURLcontainer',
+		) as HTMLElement | null;
+		if (customUrlContainer) {
+			customUrlContainer.style.display = this.isCustomProviderSelected(
+				group,
+				data,
+			)
+				? 'block'
+				: 'none';
+		}
+		const customUrlInput = group.querySelector(
+			'#aiProviderURL',
+		) as HTMLInputElement | null;
+		if (customUrlInput) {
+			customUrlInput.placeholder = _('e.g.') + ' http://localhost:11434/v1';
+		}
+
+		group.appendChild(
+			this.createViewSettingsTextBox('aiProviderAPIKey', data, false, true),
+		);
+
+		const modelField = document.createElement('div');
+		modelField.id = 'aiModelcontainer';
+		modelField.classList.add('view-input-container');
+
+		const modelHeading = this.createHeading(
+			this._viewSettingLabels.aiProviderModel,
+		);
+		modelHeading.classList.add('view-setting-small-label');
+		modelField.appendChild(modelHeading);
+
+		const modelSelect = this.createSelectInput(
+			'aiProviderModel',
+			[{ value: '', label: _('Fetch models to select') }],
+			data.aiProviderModel || '',
+			(selectEl) => {
+				data.aiProviderModel = selectEl.value;
+			},
+		);
+		modelSelect.disabled = true;
+		modelField.appendChild(modelSelect);
+		group.appendChild(modelField);
+
+		const status = document.createElement('div');
+		status.id = 'ai-model-status';
+		status.className = 'view-setting-description';
+		status.style.display = 'none';
+		group.appendChild(status);
+
+		if (this.getProviderIdFromUrl(data.aiProviderURL) === 'custom') {
+			this._lastCustomAIProviderURL = data.aiProviderURL;
+		}
+
+		this.syncAISettingsVisibility(data, group);
+
+		return group;
+	}
+
+	private createImageAIGroup(data: ViewSettings): HTMLFieldSetElement {
+		const group = document.createElement('fieldset');
+		group.classList.add('ai-settings-group');
+		const legend = document.createElement('legend');
+		legend.textContent = _('Image Generation');
+		group.appendChild(legend);
+
+		// Provider dropdown with "Same as Text AI" option
+		const imageProviderOptions = [
+			{ value: '', label: _('Same as Text AI') },
+			...AI_PROVIDERS.map((provider) => ({
+				value: provider.id,
+				label: provider.name,
+			})),
+		];
+
+		const providerField = document.createElement('div');
+		providerField.id = 'aiImageProvidercontainer';
+		providerField.classList.add('view-input-container');
+
+		const providerHeading = this.createHeading(
+			this._viewSettingLabels.aiImageProvider,
+		);
+		providerHeading.classList.add('view-setting-small-label');
+		providerField.appendChild(providerHeading);
+
+		const selectedImageProvider = data.aiImageProviderURL
+			? this.getProviderIdFromUrl(data.aiImageProviderURL)
+			: '';
+
+		const providerSelect = this.createSelectInput(
+			'aiImageProvider',
+			imageProviderOptions,
+			selectedImageProvider,
+			(selectEl) => {
+				if (selectEl.value === '') {
+					data.aiImageProviderURL = '';
+				} else {
+					const provider = this.getProviderById(selectEl.value);
+					if (provider && !provider.isCustom) {
+						data.aiImageProviderURL = provider.baseUrl;
+					}
+				}
+			},
+		);
+		providerField.appendChild(providerSelect);
+		group.appendChild(providerField);
+
+		group.appendChild(
+			this.createViewSettingsTextBox('aiImageProviderURL', data, false, true),
+		);
+		const imageUrlContainer = group.querySelector(
+			'#aiImageProviderURLcontainer',
+		) as HTMLElement | null;
+		if (imageUrlContainer) {
+			imageUrlContainer.style.display =
+				selectedImageProvider === 'custom' ? 'block' : 'none';
+		}
+		const imageUrlInput = group.querySelector(
+			'#aiImageProviderURL',
+		) as HTMLInputElement | null;
+		if (imageUrlInput) {
+			imageUrlInput.placeholder = _('e.g.') + ' http://localhost:11434/v1';
+		}
+
+		group.appendChild(
+			this.createViewSettingsTextBox(
+				'aiImageProviderAPIKey',
+				data,
+				false,
+				true,
+			),
+		);
+		const imageApiKeyInput = group.querySelector(
+			'#aiImageProviderAPIKey',
+		) as HTMLInputElement | null;
+		if (imageApiKeyInput) {
+			imageApiKeyInput.type = 'password';
+			imageApiKeyInput.placeholder = _('Leave empty to use Text AI key');
+		}
+
+		const modelField = document.createElement('div');
+		modelField.id = 'aiImageModelcontainer';
+		modelField.classList.add('view-input-container');
+
+		const modelHeading = this.createHeading(
+			this._viewSettingLabels.aiImageModel,
+		);
+		modelHeading.classList.add('view-setting-small-label');
+		modelField.appendChild(modelHeading);
+
+		const modelSelect = this.createSelectInput(
+			'aiImageModel',
+			[{ value: '', label: _('Fetch models to select') }],
+			data.aiImageModel || '',
+			(selectEl) => {
+				data.aiImageModel = selectEl.value;
+			},
+		);
+		modelSelect.disabled = true;
+		modelField.appendChild(modelSelect);
+		group.appendChild(modelField);
+
+		const status = document.createElement('div');
+		status.id = 'ai-image-model-status';
+		status.className = 'view-setting-description';
+		status.style.display = 'none';
+		group.appendChild(status);
+
+		if (
+			data.aiImageProviderURL &&
+			this.getProviderIdFromUrl(data.aiImageProviderURL) === 'custom'
+		) {
+			this._lastCustomAIImageProviderURL = data.aiImageProviderURL;
+		}
+
+		return group;
+	}
+
+	private syncAISettingsVisibility(
+		data: ViewSettings,
+		root: ParentNode = document,
+	): void {
+		const isCustomProvider = this.isCustomProviderSelected(root, data);
+		const customUrlContainer = root.querySelector(
+			'#aiProviderURLcontainer',
+		) as HTMLElement | null;
+		if (customUrlContainer) {
+			customUrlContainer.style.display = isCustomProvider ? 'block' : 'none';
+		}
+	}
+
+	private attachAISettingsAutoFetch(
+		data: ViewSettings,
+		root: ParentNode = document,
+	): void {
+		const providerInput = root.querySelector(
+			'#aiProvider',
+		) as HTMLSelectElement | null;
+		const apiKeyInput = root.querySelector(
+			'#aiProviderAPIKey',
+		) as HTMLInputElement | null;
+		const customUrlInput = root.querySelector(
+			'#aiProviderURL',
+		) as HTMLInputElement | null;
+		const modelSelect = root.querySelector(
+			'#aiProviderModel',
+		) as HTMLSelectElement | null;
+
+		const queueFetch = () => {
+			this.scheduleAIModelFetch(data);
+			// Re-fetch image models too when image inherits chat credentials
+			this.scheduleAIImageModelFetch(data);
+		};
+
+		providerInput?.addEventListener('change', () => {
+			const selectedProvider = this.getProviderById(providerInput.value);
+			if (selectedProvider && !selectedProvider.isCustom) {
+				if (customUrlInput) {
+					this._lastCustomAIProviderURL = customUrlInput.value;
+				}
+				data.aiProviderURL = selectedProvider.baseUrl;
+				if (customUrlInput) {
+					customUrlInput.value = selectedProvider.baseUrl;
+				}
+			} else if (customUrlInput) {
+				customUrlInput.value = this._lastCustomAIProviderURL;
+				data.aiProviderURL = customUrlInput.value;
+			} else {
+				data.aiProviderURL = '';
+			}
+			this.syncAISettingsVisibility(data, root);
+			queueFetch();
+		});
+
+		apiKeyInput?.addEventListener('input', () => {
+			data.aiProviderAPIKey = apiKeyInput.value;
+			queueFetch();
+		});
+
+		customUrlInput?.addEventListener('input', () => {
+			if (this.isCustomProviderSelected(root, data)) {
+				data.aiProviderURL = customUrlInput.value;
+				this._lastCustomAIProviderURL = customUrlInput.value;
+				queueFetch();
+			}
+		});
+
+		modelSelect?.addEventListener('change', () => {
+			data.aiProviderModel = modelSelect.value;
+		});
+	}
+
+	private attachAIImageSettingsAutoFetch(
+		data: ViewSettings,
+		root: ParentNode = document,
+	): void {
+		const providerInput = root.querySelector(
+			'#aiImageProvider',
+		) as HTMLSelectElement | null;
+		const apiKeyInput = root.querySelector(
+			'#aiImageProviderAPIKey',
+		) as HTMLInputElement | null;
+		const customUrlInput = root.querySelector(
+			'#aiImageProviderURL',
+		) as HTMLInputElement | null;
+		const modelSelect = root.querySelector(
+			'#aiImageModel',
+		) as HTMLSelectElement | null;
+
+		const queueFetch = () => {
+			this.scheduleAIImageModelFetch(data);
+		};
+
+		providerInput?.addEventListener('change', () => {
+			if (providerInput.value === '') {
+				// "Same as Text AI"
+				data.aiImageProviderURL = '';
+			} else {
+				const selectedProvider = this.getProviderById(providerInput.value);
+				if (selectedProvider && !selectedProvider.isCustom) {
+					if (customUrlInput) {
+						this._lastCustomAIImageProviderURL = customUrlInput.value;
+					}
+					data.aiImageProviderURL = selectedProvider.baseUrl;
+					if (customUrlInput) {
+						customUrlInput.value = selectedProvider.baseUrl;
+					}
+				} else if (customUrlInput) {
+					customUrlInput.value = this._lastCustomAIImageProviderURL;
+					data.aiImageProviderURL = customUrlInput.value;
+				} else {
+					data.aiImageProviderURL = '';
+				}
+			}
+			this.syncAIImageSettingsVisibility(data, root);
+			queueFetch();
+		});
+
+		apiKeyInput?.addEventListener('input', () => {
+			data.aiImageProviderAPIKey = apiKeyInput.value;
+			queueFetch();
+		});
+
+		customUrlInput?.addEventListener('input', () => {
+			const imageProvider = root.querySelector(
+				'#aiImageProvider',
+			) as HTMLSelectElement | null;
+			if (imageProvider?.value === 'custom') {
+				data.aiImageProviderURL = customUrlInput.value;
+				this._lastCustomAIImageProviderURL = customUrlInput.value;
+				queueFetch();
+			}
+		});
+
+		modelSelect?.addEventListener('change', () => {
+			data.aiImageModel = modelSelect.value;
+		});
+	}
+
+	private syncAIImageSettingsVisibility(
+		data: ViewSettings,
+		root: ParentNode = document,
+	): void {
+		const imageProvider = root.querySelector(
+			'#aiImageProvider',
+		) as HTMLSelectElement | null;
+		const imageUrlContainer = root.querySelector(
+			'#aiImageProviderURLcontainer',
+		) as HTMLElement | null;
+		if (imageUrlContainer) {
+			imageUrlContainer.style.display =
+				imageProvider?.value === 'custom' ? 'block' : 'none';
+		}
+	}
+
+	private scheduleAIModelFetch(data: ViewSettings): void {
+		if (this._aiModelFetchTimeout) {
+			window.clearTimeout(this._aiModelFetchTimeout);
+		}
+		this._aiModelFetchTimeout = window.setTimeout(() => {
+			this.fetchAIModels(data);
+		}, 600);
+	}
+
+	private scheduleAIImageModelFetch(data: ViewSettings): void {
+		if (this._aiImageModelFetchTimeout) {
+			window.clearTimeout(this._aiImageModelFetchTimeout);
+		}
+		this._aiImageModelFetchTimeout = window.setTimeout(() => {
+			this.fetchAIImageModels(data);
+		}, 600);
+	}
+
+	private async fetchAIImageModels(data: ViewSettings): Promise<void> {
+		// Compute effective credentials (image-specific or fallback to chat)
+		const effectiveUrl =
+			this.normalizeBaseUrl(data.aiImageProviderURL || '') ||
+			this.normalizeBaseUrl(data.aiProviderURL || '');
+		const effectiveKey =
+			data.aiImageProviderAPIKey || data.aiProviderAPIKey || '';
+		const effectiveProviderId = this.getProviderIdFromUrl(effectiveUrl);
+		const provider = this.getProviderById(effectiveProviderId);
+
+		if (!effectiveKey || !effectiveUrl) {
+			this.setAIImageStatus('', false, true);
+			this.resetAIImageModelSelect();
+			return;
+		}
+
+		this._aiImageModelFetchSeq += 1;
+		const seq = this._aiImageModelFetchSeq;
+
+		this._aiImageModelFetchAbort?.abort();
+		this._aiImageModelFetchAbort = new AbortController();
+
+		this.setAIImageStatus(_('Fetching models...'), false);
+
+		try {
+			const formData = new FormData();
+			formData.append('provider', provider ? provider.id : effectiveProviderId);
+			formData.append('apiKey', effectiveKey);
+			formData.append('baseUrl', effectiveUrl);
+
+			const response = await fetch(this.getAPIEndpoints().fetchModels, {
+				method: 'POST',
+				body: formData,
+				signal: this._aiImageModelFetchAbort.signal,
+			});
+
+			if (!response.ok) {
+				const errorCode = response.status;
+				const errorText = await response.text();
+				const fallbackMsg =
+					AI_ERROR_MESSAGES[errorCode] ||
+					_(`API error (${errorCode}): ${response.statusText}`);
+				const errorMsg = errorText
+					? `${fallbackMsg}. ${errorText}`
+					: fallbackMsg;
+				throw new Error(errorMsg);
+			}
+
+			const json = await response.json();
+			const models: Array<{ id: string }> = json.data || [];
+			if (!Array.isArray(models) || models.length === 0) {
+				this.setAIImageStatus(_('No models found'), true);
+				return;
+			}
+
+			if (seq !== this._aiImageModelFetchSeq) {
+				return;
+			}
+
+			const modelIds = models.map((m) => m.id).filter(Boolean);
+			if (modelIds.length === 0) {
+				this.setAIImageStatus(_('No models found'), true);
+				return;
+			}
+
+			const selectedModel = modelIds.includes(data.aiImageModel)
+				? data.aiImageModel
+				: '';
+			data.aiImageModel = selectedModel;
+			this.updateAIImageModelSelect(modelIds, selectedModel);
+
+			this.setAIImageStatus(_('Models fetched successfully'), false);
+		} catch (error) {
+			if ((error as any)?.name === 'AbortError') {
+				return;
+			}
+			const message =
+				error instanceof Error ? error.message : _('Failed to fetch models');
+			this.setAIImageStatus(message, true);
+			this.resetAIImageModelSelect();
+		}
+	}
+
+	private async fetchAIModels(data: ViewSettings): Promise<void> {
+		const providerId = this.getSelectedProviderId(data);
+		const provider = this.getProviderById(providerId);
+		if (!provider) {
+			this.setAIStatus(_('Invalid provider configuration'), true);
+			return;
+		}
+
+		const isCustom = provider.isCustom ?? false;
+		const baseUrl = isCustom
+			? this.normalizeBaseUrl(data.aiProviderURL || '')
+			: provider.baseUrl;
+		const apiKey = data.aiProviderAPIKey || '';
+
+		if (!apiKey || (isCustom && !baseUrl)) {
+			this.setAIStatus('', false, true);
+			this.resetAIModelSelect();
+			return;
+		}
+
+		this._aiModelFetchSeq += 1;
+		const seq = this._aiModelFetchSeq;
+
+		this._aiModelFetchAbort?.abort();
+		this._aiModelFetchAbort = new AbortController();
+
+		this.setAIStatus(_('Fetching models...'), false);
+
+		try {
+			const formData = new FormData();
+			formData.append('provider', provider.id);
+			formData.append('apiKey', apiKey);
+			formData.append('baseUrl', baseUrl);
+
+			const response = await fetch(this.getAPIEndpoints().fetchModels, {
+				method: 'POST',
+				body: formData,
+				signal: this._aiModelFetchAbort.signal,
+			});
+
+			if (!response.ok) {
+				const errorCode = response.status;
+				const errorText = await response.text();
+				const fallbackMsg =
+					AI_ERROR_MESSAGES[errorCode] ||
+					_(`API error (${errorCode}): ${response.statusText}`);
+				const errorMsg = errorText
+					? `${fallbackMsg}. ${errorText}`
+					: fallbackMsg;
+				throw new Error(errorMsg);
+			}
+
+			const json = await response.json();
+			const models: Array<{ id: string }> = json.data || [];
+			if (!Array.isArray(models) || models.length === 0) {
+				this.setAIStatus(_('No models found'), true);
+				return;
+			}
+
+			if (seq !== this._aiModelFetchSeq) {
+				return;
+			}
+
+			const modelIds = models.map((m) => m.id).filter(Boolean);
+			if (modelIds.length === 0) {
+				this.setAIStatus(_('No models found'), true);
+				return;
+			}
+
+			const selectedModel = modelIds.includes(data.aiProviderModel)
+				? data.aiProviderModel
+				: modelIds[0];
+			data.aiProviderModel = selectedModel;
+			this.updateAIModelSelect(modelIds, selectedModel);
+
+			this.setAIStatus(_('Models fetched successfully'), false);
+		} catch (error) {
+			if ((error as any)?.name === 'AbortError') {
+				return;
+			}
+			const message =
+				error instanceof Error ? error.message : _('Failed to fetch models');
+			this.setAIStatus(message, true);
+			this.resetAIModelSelect();
+		}
+	}
+
+	private updateAIModelSelect(modelIds: string[], selectedModel: string): void {
+		const modelSelect = document.getElementById(
+			'aiProviderModel',
+		) as HTMLSelectElement | null;
+		if (!modelSelect) {
+			return;
+		}
+		modelSelect.innerHTML = '';
+		modelIds.forEach((modelId) => {
+			const option = document.createElement('option');
+			option.value = modelId;
+			option.textContent = modelId;
+			modelSelect.appendChild(option);
+		});
+		modelSelect.value = selectedModel;
+		modelSelect.disabled = modelIds.length === 0;
+	}
+
+	private updateAIImageModelSelect(
+		modelIds: string[],
+		selectedModel: string,
+	): void {
+		const select = document.getElementById(
+			'aiImageModel',
+		) as HTMLSelectElement | null;
+		if (!select) return;
+		select.innerHTML = '';
+		const noneOpt = document.createElement('option');
+		noneOpt.value = '';
+		noneOpt.textContent = _('None (disable image generation)');
+		select.appendChild(noneOpt);
+		modelIds.forEach((modelId) => {
+			const option = document.createElement('option');
+			option.value = modelId;
+			option.textContent = modelId;
+			select.appendChild(option);
+		});
+		select.value = selectedModel;
+		select.disabled = false;
+	}
+
+	private resetAIImageModelSelect(): void {
+		const select = document.getElementById(
+			'aiImageModel',
+		) as HTMLSelectElement | null;
+		if (!select) return;
+		select.innerHTML = '';
+		const option = document.createElement('option');
+		option.value = '';
+		option.textContent = _('Fetch models to select');
+		select.appendChild(option);
+		select.value = '';
+		select.disabled = true;
+	}
+
+	private resetAIModelSelect(): void {
+		const modelSelect = document.getElementById(
+			'aiProviderModel',
+		) as HTMLSelectElement | null;
+		if (!modelSelect) {
+			return;
+		}
+		modelSelect.innerHTML = '';
+		const option = document.createElement('option');
+		option.value = '';
+		option.textContent = _('Fetch models to select');
+		modelSelect.appendChild(option);
+		modelSelect.value = '';
+		modelSelect.disabled = true;
+	}
+
+	private setAIStatus(
+		message: string,
+		isError: boolean,
+		hide: boolean = false,
+	): void {
+		const status = document.getElementById('ai-model-status');
+		if (!status) {
+			return;
+		}
+		if (hide) {
+			status.textContent = '';
+			status.style.display = 'none';
+			status.classList.remove('ui-state-error-text');
+			return;
+		}
+		status.textContent = message;
+		status.style.display = message ? 'block' : 'none';
+		status.classList.toggle('ui-state-error-text', isError);
+	}
+
+	private setAIImageStatus(
+		message: string,
+		isError: boolean,
+		hide: boolean = false,
+	): void {
+		const status = document.getElementById('ai-image-model-status');
+		if (!status) {
+			return;
+		}
+		if (hide) {
+			status.textContent = '';
+			status.style.display = 'none';
+			status.classList.remove('ui-state-error-text');
+			return;
+		}
+		status.textContent = message;
+		status.style.display = message ? 'block' : 'none';
+		status.classList.toggle('ui-state-error-text', isError);
 	}
 
 	private async populateSharedConfigUI(data: ConfigData): Promise<void> {
@@ -1830,6 +2713,8 @@ class SettingIframe {
 			'signatureCa',
 		].includes(key);
 
+		const isSecretField = key === 'aiProviderAPIKey';
+
 		if (isSignatureField) {
 			const textarea = this.createTextArea(
 				key as string,
@@ -1849,6 +2734,9 @@ class SettingIframe {
 					(data as any)[key] = inputElement.value;
 				},
 			);
+			if (isSecretField) {
+				input.type = 'password';
+			}
 			container.appendChild(input);
 		}
 
@@ -1913,7 +2801,60 @@ class SettingIframe {
 			signatureCert: '',
 			signatureKey: '',
 			signatureCa: '',
+			aiProviderURL: this.getDefaultAIProviderURL(),
+			aiProviderAPIKey: '',
+			aiProviderModel: '',
+			aiImageProviderAPIKey: '',
+			aiImageProviderURL: '',
+			aiImageModel: '',
 		};
+	}
+
+	private normalizeBaseUrl(value: string): string {
+		return value ? value.replace(/\/+$/, '') : '';
+	}
+
+	private getProviderById(id: string): AIProvider | undefined {
+		return AI_PROVIDERS.find((provider) => provider.id === id);
+	}
+
+	private getProviderByUrl(url: string): AIProvider | undefined {
+		const normalizedUrl = this.normalizeBaseUrl(url || '');
+		return AI_PROVIDERS.find(
+			(provider) =>
+				!provider.isCustom &&
+				this.normalizeBaseUrl(provider.baseUrl) === normalizedUrl,
+		);
+	}
+
+	private getProviderIdFromUrl(url: string): string {
+		const provider = this.getProviderByUrl(url);
+		return provider ? provider.id : 'custom';
+	}
+
+	private getSelectedProviderId(
+		data: ViewSettings,
+		root: ParentNode = document,
+	): string {
+		const providerSelect = root.querySelector(
+			'#aiProvider',
+		) as HTMLSelectElement | null;
+		if (providerSelect?.value) {
+			return providerSelect.value;
+		}
+		return this.getProviderIdFromUrl(data.aiProviderURL);
+	}
+
+	private isCustomProviderSelected(
+		root: ParentNode,
+		data: ViewSettings,
+	): boolean {
+		return this.getSelectedProviderId(data, root) === 'custom';
+	}
+
+	private getDefaultAIProviderURL(): string {
+		const provider = this.getProviderById('openai');
+		return provider ? provider.baseUrl : '';
 	}
 
 	private getConfigType(): string {
