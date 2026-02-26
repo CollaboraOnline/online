@@ -3171,7 +3171,7 @@ int pollCallback([[maybe_unused]] void* data, int timeoutUs)
 
     if (timeoutUs < 0)
         timeoutUs = SocketPoll::DefaultPollTimeoutMicroS.count();
-#if !MOBILEAPP
+#if !defined(IOS) && !defined(QTAPP) && !defined(MACOS) && !defined(_WIN32)
     if (!data)
         return 0;
     else
@@ -3227,7 +3227,7 @@ bool anyInputCallback(void* data, int mostUrgentPriority)
 } // namespace
 
 bool KitSocketPoll::kitHasAnyInput([[maybe_unused]] int mostUrgentPriority) {
-#if !MOBILEAPP
+#if !defined(IOS) && !defined(QTAPP) && !defined(MACOS) && !defined(_WIN32)
     const std::shared_ptr<Document>& document = getDocument();
 
     if (document)
@@ -3284,7 +3284,7 @@ void wakeCallback(void* data)
 } // namespace
 
 void KitSocketPoll::kitWakeup() {
-#if !MOBILEAPP
+#if !defined(IOS) && !defined(QTAPP) && !defined(MACOS) && !defined(_WIN32)
     wakeup();
 #else
     std::unique_lock<std::mutex> lock(KitSocketPoll::KSPollsMutex);
@@ -4050,6 +4050,12 @@ void lokit_main(
 
         auto mainKit = KitSocketPoll::create();
         mainKit->runOnClientThread(); // We will do the polling on this thread.
+
+#if MOBILEAPP && !defined(IOS) && !defined(QTAPP) && !defined(MACOS) && !defined(_WIN32)
+        // For iOS we call it in -[AppDelegate application: didFinishLaunchingWithOptions:]
+        // For QTAPP/MACOS/_WIN32 it is called in initKitRunLoopThread()
+        setupKitEnvironment(COOLWSD::UserInterface);
+#endif
 
 #if MOBILEAPP
 #if (defined(__linux__) && !defined(__ANDROID__) && !defined(QTAPP)) || defined(__FreeBSD__)
