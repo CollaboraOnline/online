@@ -2,14 +2,16 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: core-he\n"
-"PO-Revision-Date: 2026-02-03 12:15+0000\n"
-"Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
-"Language-Team: Hebrew <https://hosted.weblate.org/projects/collabora-online/lokit/he/>\n"
+"PO-Revision-Date: 2026-02-26 13:57+0000\n"
+"Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
+"Language-Team: Hebrew <https://hosted.weblate.org/projects/collabora-online/"
+"lokit/he/>\n"
 "Language: he\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=(n == 1) ? 0 : ((n == 2) ? 1 : ((n > 10 && n % 10 == 0) ? 2 : 3));\n"
-"X-Generator: Weblate 5.16-dev\n"
+"Plural-Forms: nplurals=4; plural=(n == 1) ? 0 : ((n == 2) ? 1 : ((n > 10 && "
+"n % 10 == 0) ? 2 : 3));\n"
+"X-Generator: Weblate 5.16.1-dev\n"
 
 #. ygDfy
 #: module_graphicfilter.ulf
@@ -63,19 +65,19 @@ msgstr ""
 #: svx/inc/spacing.hrc:18
 msgctxt "RID_BEFORE"
 msgid "Before:"
-msgstr ""
+msgstr "לפני:"
 
 #. jGRHH
 #: svx/inc/spacing.hrc:19
 msgctxt "RID_AFTER"
 msgid "After:"
-msgstr ""
+msgstr "אחרי:"
 
 #. k9CGA
 #: svx/inc/spacing.hrc:20
 msgctxt "RID_FIRST"
 msgid "First:"
-msgstr ""
+msgstr "ראשון:"
 
 #. aNZNw
 #: svx/uiconfig/ui/dropdownfielddialog.ui:31
@@ -105,31 +107,31 @@ msgstr "החלפה"
 #: svx/uiconfig/ui/findreplacedialog.ui:172
 msgctxt "findreplacedialog|searchlist-atkobject"
 msgid "Search list"
-msgstr ""
+msgstr "חיפוש ברשימה"
 
 #. BmvBD
 #: svx/uiconfig/ui/findreplacedialog.ui:491
 msgctxt "findreplacedialog|replacelist-atkobject"
 msgid "Replace list"
-msgstr ""
+msgstr "החלפת הרשימה"
 
 #. gbVGs
 #: svx/uiconfig/ui/headfootformatpage.ui:407
 msgctxt "headfootformatpage|drawingareaPageHF-atkobject"
 msgid "Header and Footer Preview"
-msgstr ""
+msgstr "תצוגה מקדימה של כותרת עליונה ותחתונה"
 
 #. LSYRB
 #: svx/uiconfig/ui/sidebarline.ui:91
 msgctxt "sidebarline|SelectWidth|tooltip_text"
 msgid "Line Thickness"
-msgstr ""
+msgstr "עובי קו"
 
 #. cDwyK
 #: svx/uiconfig/ui/sidebarline.ui:97
 msgctxt "sidebarline|SelectWidth-atkobject"
 msgid "Line Thickness"
-msgstr ""
+msgstr "עובי קו"
 
 #. 7MFsT
 #: uui/inc/strings.hrc:84
