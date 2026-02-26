@@ -30,6 +30,7 @@ interface WidgetJSON {
 	allyRole?: string;
 	accessibility?: NotebookbarAccessibilityDescriptor;
 	aria?: AriaLabelAttributes; // ARIA Label attributes
+	ariaLive?: 'polite' | 'assertive' | 'off';
 	gridKeyboardNavigation?: boolean; // receives keyboard navigation for elements in col/rows
 }
 
