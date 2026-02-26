@@ -2,14 +2,15 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: core-gl\n"
-"PO-Revision-Date: 2026-02-03 12:04+0000\n"
-"Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
-"Language-Team: Galician <https://hosted.weblate.org/projects/collabora-online/lokit/gl/>\n"
+"PO-Revision-Date: 2026-02-26 13:57+0000\n"
+"Last-Translator: \"Miguel A. Bouzada\" <mbouzada@gmail.com>\n"
+"Language-Team: Galician <https://hosted.weblate.org/projects/collabora-"
+"online/lokit/gl/>\n"
 "Language: gl\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.16-dev\n"
+"X-Generator: Weblate 5.16.1-dev\n"
 
 #. ygDfy
 #: module_graphicfilter.ulf
@@ -54,13 +55,13 @@ msgstr "Pegar como"
 #: svx/inc/spacing.hrc:16
 msgctxt "RID_ABOVE"
 msgid "Above:"
-msgstr ""
+msgstr "Enriba:"
 
 #. uaiun
 #: svx/inc/spacing.hrc:17
 msgctxt "RID_BELOW"
 msgid "Below:"
-msgstr ""
+msgstr "Embaixo:"
 
 #. fvxsX
 #: svx/inc/spacing.hrc:18
@@ -78,7 +79,7 @@ msgstr "Despois:"
 #: svx/inc/spacing.hrc:20
 msgctxt "RID_FIRST"
 msgid "First:"
-msgstr ""
+msgstr "Primeiro:"
 
 #. aNZNw
 #: svx/uiconfig/ui/dropdownfielddialog.ui:31
@@ -108,19 +109,19 @@ msgstr "Substituir"
 #: svx/uiconfig/ui/findreplacedialog.ui:172
 msgctxt "findreplacedialog|searchlist-atkobject"
 msgid "Search list"
-msgstr ""
+msgstr "Lista de busca"
 
 #. BmvBD
 #: svx/uiconfig/ui/findreplacedialog.ui:491
 msgctxt "findreplacedialog|replacelist-atkobject"
 msgid "Replace list"
-msgstr ""
+msgstr "Lista de substitucións"
 
 #. gbVGs
 #: svx/uiconfig/ui/headfootformatpage.ui:407
 msgctxt "headfootformatpage|drawingareaPageHF-atkobject"
 msgid "Header and Footer Preview"
-msgstr ""
+msgstr "Vista previa da cabeceira e do rodapé"
 
 #. LSYRB
 #: svx/uiconfig/ui/sidebarline.ui:91
@@ -362,19 +363,19 @@ msgstr "Foco no estilo de táboa"
 #: cui/uiconfig/ui/areatabpage.ui:39
 msgctxt "areatabpage|tablelb-atkobject"
 msgid "Apply to"
-msgstr ""
+msgstr "Aplicar a"
 
 #. GYGFd
 #: cui/uiconfig/ui/borderpage.ui:94
 msgctxt "borderpage|framesel"
 msgid "Border Preview"
-msgstr ""
+msgstr "Vista previa do bordo"
 
 #. 3DTib
 #: cui/uiconfig/ui/charnamepage.ui:930
 msgctxt "charnamepage|preview-atkobject"
 msgid "Font preview"
-msgstr ""
+msgstr "Vista previa do tipo de letra"
 
 #. EPGtZ
 #: cui/uiconfig/ui/hyperlinkinternetpage.ui:64
@@ -386,13 +387,13 @@ msgstr "Ligazón:"
 #: cui/uiconfig/ui/imagetabpage.ui:503
 msgctxt "imagetabpage|tileofflb"
 msgid "Tiling Offset Type"
-msgstr ""
+msgstr "Tipo de desprazamento de teselado"
 
 #. j9NqA
 #: cui/uiconfig/ui/imagetabpage.ui:522
 msgctxt "imagetabpage|tileoffmtr"
 msgid "Tiling Offset Value"
-msgstr ""
+msgstr "Valor de desprazamento do teselado"
 
 #. yN5KM
 #: cui/uiconfig/ui/lineendstabpage.ui:281
@@ -416,13 +417,13 @@ msgstr "Moeda"
 #: cui/uiconfig/ui/numberingformatpage.ui:682
 msgctxt "numberingformatpage|preview-atkobject"
 msgid "Preview"
-msgstr ""
+msgstr "Vista previa"
 
 #. vcAoU
 #: cui/uiconfig/ui/pageformatpage.ui:223
 msgctxt "pageformatpage|drawingareaPageDirection-atkobject"
 msgid "Page Direction"
-msgstr ""
+msgstr "Dirección da páxina"
 
 #. gfELk
 #: cui/uiconfig/ui/pageformatpage.ui:265
@@ -790,7 +791,7 @@ msgstr "Mover cara á dereita"
 #: sw/uiconfig/swriter/ui/tokenwidget.ui:98
 msgctxt "tokenwidget|right"
 msgid "Scroll right"
-msgstr ""
+msgstr "Desprazar cara á dereita"
 
 #. FxkzA
 #: sw/uiconfig/swriter/ui/wordcount-mobile.ui:643
