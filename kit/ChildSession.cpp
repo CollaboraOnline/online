@@ -1674,7 +1674,14 @@ bool ChildSession::setClipboard(const StringVector& tokens)
             return false;
         }
 
-        SigUtil::addActivity(getId(), "setClipboard " + std::to_string(FileUtil::Stat(clipFile).size()) + " bytes");
+        const auto clipFileSize = FileUtil::Stat(clipFile).size();
+        SigUtil::addActivity(getId(), "setClipboard " + std::to_string(clipFileSize) + " bytes");
+
+        if (clipFileSize == 0)
+        {
+            LOG_WRN("Ignoring empty clipboard file: " << clipFile);
+            return false;
+        }
 
         // See if the data is in the usual mimetype-size-content format or is just plain HTML.
         std::string firstLine;

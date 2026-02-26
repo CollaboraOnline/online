@@ -60,7 +60,7 @@ struct ClipboardData
 
     bool read(std::istream& inStream)
     {
-        while (!inStream.eof())
+        while (!inStream.eof() && !inStream.fail())
         {
             std::string mime, hexLen, newline;
             std::getline(inStream, mime, '\n');
