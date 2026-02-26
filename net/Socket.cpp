@@ -1153,6 +1153,10 @@ bool StreamSocket::send(const http::Response& response)
     return false;
 }
 
+#ifndef _WIN32
+// CODA-W builds fine without HttpRequest.cpp, which is where the below writeData() is, and also
+// without this function.
+
 bool StreamSocket::send(http::Request& request)
 {
     if (request.writeData(_outBuffer, getSendBufferCapacity()))
@@ -1164,6 +1168,7 @@ bool StreamSocket::send(http::Request& request)
     asyncShutdown();
     return false;
 }
+#endif
 
 bool StreamSocket::sendAndShutdown(http::Response& response)
 {
