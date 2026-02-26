@@ -26,6 +26,12 @@ window.L.Control.NotebookbarCalc = window.L.Control.NotebookbarWriter.extend({
 		JSDialog.CalcTableTab.onRemove();
 	},
 
+	onCallback: function(objectType, eventType, object, data, builder) {
+		const consumed
+			= JSDialog.CalcTableTab.onCallback(objectType, eventType, object, data, builder);
+		return consumed;
+	},
+
 	getTabs: function() {
 		return [
 			{

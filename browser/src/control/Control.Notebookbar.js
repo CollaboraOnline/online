@@ -55,8 +55,9 @@ window.L.Control.Notebookbar = window.L.Control.extend({
 			this.installTabs();
 	},
 
-	onCallback: function (objectType, eventType, object, data, builder) {
-		return false;
+	// override in subclasses
+	onCallback: function () {
+		return false; // consumed
 	},
 
 	// on show

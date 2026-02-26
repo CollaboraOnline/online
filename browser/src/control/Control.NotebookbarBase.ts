@@ -61,7 +61,7 @@ class NotebookbarBase extends JSDialogComponent {
 		data: any,
 		builder: JSBuilder,
 	) {
-		if (this.impl && typeof this.impl.onCallback === 'function') {
+		if (this.impl && this.impl.onCallback) {
 			const consumed = this.impl.onCallback(
 				objectType,
 				eventType,
@@ -88,7 +88,7 @@ class NotebookbarBase extends JSDialogComponent {
 			cssClass: 'notebookbar',
 			useSetTabs: true,
 			suffix: 'notebookbar',
-			callback: this.onCallback,
+			callback: this.onCallback.bind(this),
 		});
 	}
 

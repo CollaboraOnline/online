@@ -473,8 +473,7 @@ class Dispatcher {
 			TableStyleName: string;
 		}
 
-		this.actionsMap['apply-table-style'] = function (entry: MenuDefinition) {
-			const newStyleId = entry.text.replace(/ /g, ''); // remove spaces for hardcoded names used here
+		this.actionsMap['apply-table-style'] = function (newStyleNumber: number) {
 			const tableStyle = app.map['stateChangeHandler'].getItemValue(
 				'.uno:DatabaseSettings',
 			) as TableStyleInfo;
@@ -510,6 +509,7 @@ class Dispatcher {
 				value: tableStyle.AutoFilter,
 			};
 
+			const newStyleId = app.tableStyles[newStyleNumber]?.Name;
 			args['DatabaseSettings.StyleID'] = { type: 'string', value: newStyleId };
 
 			app.map.sendUnoCommand('.uno:DatabaseSettings', args);
