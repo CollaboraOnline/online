@@ -20,7 +20,9 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdint.h>
+#ifndef _WIN32
 #include <endian.h>
+#endif
 
 #include "DeltaSimd.h"
 
