@@ -80,7 +80,7 @@ class CalcTableTab implements NotebookbarTab {
 			accessibility: { focusBack: true, combination: 'TS' },
 			entries: app.tableStyles.generateJSON(),
 			singleclickactivate: true,
-			textWithIconEnabled: false, // no translated strings for standard styles yet
+			textWithIconEnabled: true,
 			selectionmode: 'single',
 		} as IconViewJSON;
 	}
