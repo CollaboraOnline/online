@@ -103,7 +103,17 @@ class TableStylesService {
 	}
 
 	public generateIcon(style: TableStyleEntry): string {
-		return 'images/lc_table_light_seven.svg';
+		// probably standard names
+		if (style.Name.indexOf('Light') >= 0) return 'images/lc_table_light.svg';
+		else if (style.Name.indexOf('Medium') >= 0)
+			return 'images/lc_table_medium.svg';
+		else if (style.Name.indexOf('Dark') >= 0) return 'images/lc_table_dark.svg';
+
+		// custom style - use dummy heuristic
+		if (style.Elements.length > 1) return 'images/lc_table_medium.svg';
+		else if (style.Elements.length > 2) return 'images/lc_table_dark.svg';
+
+		return 'images/lc_table_light.svg';
 	}
 
 	public generateJSON(): Array<IconViewEntry> {
