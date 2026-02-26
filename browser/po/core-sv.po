@@ -2,14 +2,15 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: core-sv\n"
-"PO-Revision-Date: 2026-02-03 13:04+0000\n"
-"Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
-"Language-Team: Swedish <https://hosted.weblate.org/projects/collabora-online/lokit/sv/>\n"
+"PO-Revision-Date: 2026-02-26 13:57+0000\n"
+"Last-Translator: Leif-Jöran Olsson <info@friprogramvarusyndikatet.se>\n"
+"Language-Team: Swedish <https://hosted.weblate.org/projects/collabora-online/"
+"lokit/sv/>\n"
 "Language: sv\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.16-dev\n"
+"X-Generator: Weblate 5.16.1-dev\n"
 
 #. ygDfy
 #: module_graphicfilter.ulf
@@ -54,13 +55,13 @@ msgstr "Klistra in som"
 #: svx/inc/spacing.hrc:16
 msgctxt "RID_ABOVE"
 msgid "Above:"
-msgstr ""
+msgstr "Ovan:"
 
 #. uaiun
 #: svx/inc/spacing.hrc:17
 msgctxt "RID_BELOW"
 msgid "Below:"
-msgstr ""
+msgstr "Nedan:"
 
 #. fvxsX
 #: svx/inc/spacing.hrc:18
@@ -78,7 +79,7 @@ msgstr "Efter:"
 #: svx/inc/spacing.hrc:20
 msgctxt "RID_FIRST"
 msgid "First:"
-msgstr ""
+msgstr "Först:"
 
 #. aNZNw
 #: svx/uiconfig/ui/dropdownfielddialog.ui:31
@@ -108,19 +109,19 @@ msgstr "Ersätt"
 #: svx/uiconfig/ui/findreplacedialog.ui:172
 msgctxt "findreplacedialog|searchlist-atkobject"
 msgid "Search list"
-msgstr ""
+msgstr "Sök lista"
 
 #. BmvBD
 #: svx/uiconfig/ui/findreplacedialog.ui:491
 msgctxt "findreplacedialog|replacelist-atkobject"
 msgid "Replace list"
-msgstr ""
+msgstr "Ersätt lista"
 
 #. gbVGs
 #: svx/uiconfig/ui/headfootformatpage.ui:407
 msgctxt "headfootformatpage|drawingareaPageHF-atkobject"
 msgid "Header and Footer Preview"
-msgstr ""
+msgstr "Förhandsgranska sidhuvud och -fot"
 
 #. LSYRB
 #: svx/uiconfig/ui/sidebarline.ui:91
@@ -360,19 +361,19 @@ msgstr "Fokus tabellstilar"
 #: cui/uiconfig/ui/areatabpage.ui:39
 msgctxt "areatabpage|tablelb-atkobject"
 msgid "Apply to"
-msgstr ""
+msgstr "Tillämpa på"
 
 #. GYGFd
 #: cui/uiconfig/ui/borderpage.ui:94
 msgctxt "borderpage|framesel"
 msgid "Border Preview"
-msgstr ""
+msgstr "Förhandsgranska ramar"
 
 #. 3DTib
 #: cui/uiconfig/ui/charnamepage.ui:930
 msgctxt "charnamepage|preview-atkobject"
 msgid "Font preview"
-msgstr ""
+msgstr "Förhandsgranska typsnitt"
 
 #. EPGtZ
 #: cui/uiconfig/ui/hyperlinkinternetpage.ui:64
@@ -384,13 +385,13 @@ msgstr "Länk:"
 #: cui/uiconfig/ui/imagetabpage.ui:503
 msgctxt "imagetabpage|tileofflb"
 msgid "Tiling Offset Type"
-msgstr ""
+msgstr "Mellanrumstyp för kaklingar"
 
 #. j9NqA
 #: cui/uiconfig/ui/imagetabpage.ui:522
 msgctxt "imagetabpage|tileoffmtr"
 msgid "Tiling Offset Value"
-msgstr ""
+msgstr "Mellanrumsvärde för kaklingar"
 
 #. yN5KM
 #: cui/uiconfig/ui/lineendstabpage.ui:281
@@ -414,13 +415,13 @@ msgstr "Valuta"
 #: cui/uiconfig/ui/numberingformatpage.ui:682
 msgctxt "numberingformatpage|preview-atkobject"
 msgid "Preview"
-msgstr ""
+msgstr "Förhandsgranska"
 
 #. vcAoU
 #: cui/uiconfig/ui/pageformatpage.ui:223
 msgctxt "pageformatpage|drawingareaPageDirection-atkobject"
 msgid "Page Direction"
-msgstr ""
+msgstr "Sidriktning"
 
 #. gfELk
 #: cui/uiconfig/ui/pageformatpage.ui:265
@@ -432,43 +433,43 @@ msgstr "Ändra storlek på alla sidor"
 #: cui/uiconfig/ui/paraindentspacing.ui:399
 msgctxt "paraindentspacing|comboLB_LINEDIST"
 msgid "Line Spacing Type"
-msgstr ""
+msgstr "Radavståndstyp"
 
 #. YtiHD
 #: cui/uiconfig/ui/paraindentspacing.ui:446
 msgctxt "paraindentspacing|spinED_LINEDISTPERCENT"
 msgid "Line Spacing Value"
-msgstr ""
+msgstr "Radavståndsvärde"
 
 #. QE3Ad
 #: cui/uiconfig/ui/paraindentspacing.ui:466
 msgctxt "paraindentspacing|spinED_LINEDISTMETRIC"
 msgid "Line Spacing Value"
-msgstr ""
+msgstr "Radavståndsvärde"
 
 #. VGEqG
 #: cui/uiconfig/ui/paraindentspacing.ui:487
 msgctxt "paraindentspacing|spinED_BLANK"
 msgid "Line Spacing Value"
-msgstr ""
+msgstr "Radavståndsvärde"
 
 #. WHAZC
 #: cui/uiconfig/ui/paratabspage.ui:177
 msgctxt "paratabspage|drawingareaWIN_TABLEFT-atkobject"
 msgid "Left tab preview"
-msgstr ""
+msgstr "Förhandsgranska vänstra panelen"
 
 #. akwMF
 #: cui/uiconfig/ui/paratabspage.ui:192
 msgctxt "paratabspage|drawingareaWIN_TABRIGHT-atkobject"
 msgid "Right tab preview"
-msgstr ""
+msgstr "Förhandsgranska högra panelen"
 
 #. GF4AG
 #: cui/uiconfig/ui/paratabspage.ui:207
 msgctxt "paratabspage|drawingareaWIN_TABCENTER-atkobject"
 msgid "Center tab preview"
-msgstr ""
+msgstr "Förhandsgranska mittenpanelen"
 
 #. pSa2J
 #: cui/uiconfig/ui/paratabspage.ui:222
@@ -528,19 +529,19 @@ msgstr "Klicka på dispositionsstilen du vill använda."
 #: cui/uiconfig/ui/textflowpage.ui:812
 msgctxt "textflowpage|spinOrphan-atkobject"
 msgid "No split at beginning of paragraph, lines"
-msgstr ""
+msgstr "Bryt inte i början av stycke, rader"
 
 #. MimEj
 #: cui/uiconfig/ui/textflowpage.ui:832
 msgctxt "textflowpage|spinWidow-atkobject"
 msgid "No split at end of paragraph, lines"
-msgstr ""
+msgstr "Bryt inte i slutet av stycke, rader"
 
 #. a9iXr
 #: cui/uiconfig/ui/thesaurus.ui:189
 msgctxt "thesaurus|langcb|accessible_name"
 msgid "Language"
-msgstr ""
+msgstr "Språk"
 
 #. qpArp
 #: cui/uiconfig/ui/toolbarmodedialog.ui:124
@@ -722,7 +723,7 @@ msgstr "Exempel"
 #: sw/uiconfig/swriter/ui/footnotesendnotestabpage.ui:179
 msgctxt "footnotesendnotestabpage|ftnnumviewbox-atkobject"
 msgid "Numbering"
-msgstr ""
+msgstr "Numrering"
 
 #. afJmD
 #: sw/uiconfig/swriter/ui/footnotesendnotestabpage.ui:455
