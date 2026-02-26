@@ -30,6 +30,8 @@ class ServerConnectionService {
 
 	public onBasicUI() {
 		app.console.debug('ServerConnectionService: onBasicUI');
+
+		app.tableStyles = new TableStylesService();
 	}
 
 	public onViewSetting(viewSetting: ViewSetting) {
