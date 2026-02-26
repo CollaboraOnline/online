@@ -176,7 +176,7 @@ class ContextToolbar extends JSDialogComponent {
 		const currentFontName = this.map._getCurrentFontName();
 		const currentFontSize =
 			this.map['stateChangeHandler'].getItemValue('.uno:FontHeight');
-		return [
+		const contextItems: ToolItemWidgetJSON[] = [
 			{
 				type: 'container',
 				children: [
@@ -310,6 +310,7 @@ class ContextToolbar extends JSDialogComponent {
 				command: '.uno:InsertAnnotation',
 			} as ToolItemWidgetJSON,
 		];
+		return contextItems;
 	}
 
 	insertAdditionalContextButton(button: any) {

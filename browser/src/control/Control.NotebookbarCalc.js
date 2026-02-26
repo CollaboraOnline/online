@@ -1648,6 +1648,14 @@ window.L.Control.NotebookbarCalc = window.L.Control.NotebookbarWriter.extend({
 				'command': '.uno:Navigator',
 				'accessibility': { focusBack: true,	combination: 'NV', de: null }
 			},
+			!this.map['wopi'].DisableAISettings ? {
+				'id': 'view-ai-sidebar',
+				'type': 'bigcustomtoolitem',
+				'text': _('AI Assistant'),
+				'icon': 'lc_ai_sidebar.svg',
+				'command': 'aichat',
+				'accessibility': { focusBack: true, combination: 'AI', de: null }
+			} : {},
 
 		];
 

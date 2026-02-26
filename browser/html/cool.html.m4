@@ -203,6 +203,9 @@ m4_ifelse(MOBILEAPP,[true],
       <div id="sidebar-dock-wrapper">
         <div id="sidebar-panel" class="sidebar-panel"></div>
       </div>
+      <div id="aichat-dock-wrapper">
+        <div id="aichat-panel"></div>
+      </div>
     </div>
 
     <div id="spreadsheet-toolbar" class="hidden"></div>
