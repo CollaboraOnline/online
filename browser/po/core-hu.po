@@ -2,14 +2,15 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: core-hu\n"
-"PO-Revision-Date: 2026-02-03 12:49+0000\n"
+"PO-Revision-Date: 2026-02-26 13:57+0000\n"
 "Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
-"Language-Team: Hungarian <https://hosted.weblate.org/projects/collabora-online/lokit/hu/>\n"
+"Language-Team: Hungarian <https://hosted.weblate.org/projects/collabora-"
+"online/lokit/hu/>\n"
 "Language: hu\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.16-dev\n"
+"X-Generator: Weblate 5.16.1-dev\n"
 
 #. ygDfy
 #: module_graphicfilter.ulf
@@ -53,13 +54,13 @@ msgstr "Beillesztés mint"
 #: svx/inc/spacing.hrc:16
 msgctxt "RID_ABOVE"
 msgid "Above:"
-msgstr ""
+msgstr "Felette:"
 
 #. uaiun
 #: svx/inc/spacing.hrc:17
 msgctxt "RID_BELOW"
 msgid "Below:"
-msgstr ""
+msgstr "Alatta:"
 
 #. fvxsX
 #: svx/inc/spacing.hrc:18
@@ -77,7 +78,7 @@ msgstr "Utána:"
 #: svx/inc/spacing.hrc:20
 msgctxt "RID_FIRST"
 msgid "First:"
-msgstr ""
+msgstr "Első:"
 
 #. aNZNw
 #: svx/uiconfig/ui/dropdownfielddialog.ui:31
@@ -107,19 +108,19 @@ msgstr "Csere"
 #: svx/uiconfig/ui/findreplacedialog.ui:172
 msgctxt "findreplacedialog|searchlist-atkobject"
 msgid "Search list"
-msgstr ""
+msgstr "Keresési lista"
 
 #. BmvBD
 #: svx/uiconfig/ui/findreplacedialog.ui:491
 msgctxt "findreplacedialog|replacelist-atkobject"
 msgid "Replace list"
-msgstr ""
+msgstr "Helyettesítési lista"
 
 #. gbVGs
 #: svx/uiconfig/ui/headfootformatpage.ui:407
 msgctxt "headfootformatpage|drawingareaPageHF-atkobject"
 msgid "Header and Footer Preview"
-msgstr ""
+msgstr "Élőfej és élőláb előnézet"
 
 #. LSYRB
 #: svx/uiconfig/ui/sidebarline.ui:91
@@ -367,13 +368,13 @@ msgstr ""
 #: cui/uiconfig/ui/borderpage.ui:94
 msgctxt "borderpage|framesel"
 msgid "Border Preview"
-msgstr ""
+msgstr "Szegély előnézet"
 
 #. 3DTib
 #: cui/uiconfig/ui/charnamepage.ui:930
 msgctxt "charnamepage|preview-atkobject"
 msgid "Font preview"
-msgstr ""
+msgstr "Betű előnézet"
 
 #. EPGtZ
 #: cui/uiconfig/ui/hyperlinkinternetpage.ui:64
@@ -421,7 +422,7 @@ msgstr "Előnézet"
 #: cui/uiconfig/ui/pageformatpage.ui:223
 msgctxt "pageformatpage|drawingareaPageDirection-atkobject"
 msgid "Page Direction"
-msgstr ""
+msgstr "Oldal iránya"
 
 #. gfELk
 #: cui/uiconfig/ui/pageformatpage.ui:265
@@ -433,49 +434,49 @@ msgstr "Minden oldal átméretezése"
 #: cui/uiconfig/ui/paraindentspacing.ui:399
 msgctxt "paraindentspacing|comboLB_LINEDIST"
 msgid "Line Spacing Type"
-msgstr ""
+msgstr "Sortávolság típusa"
 
 #. YtiHD
 #: cui/uiconfig/ui/paraindentspacing.ui:446
 msgctxt "paraindentspacing|spinED_LINEDISTPERCENT"
 msgid "Line Spacing Value"
-msgstr ""
+msgstr "Sortávolság értéke"
 
 #. QE3Ad
 #: cui/uiconfig/ui/paraindentspacing.ui:466
 msgctxt "paraindentspacing|spinED_LINEDISTMETRIC"
 msgid "Line Spacing Value"
-msgstr ""
+msgstr "Sortávolság értéke"
 
 #. VGEqG
 #: cui/uiconfig/ui/paraindentspacing.ui:487
 msgctxt "paraindentspacing|spinED_BLANK"
 msgid "Line Spacing Value"
-msgstr ""
+msgstr "Sortávolság értéke"
 
 #. WHAZC
 #: cui/uiconfig/ui/paratabspage.ui:177
 msgctxt "paratabspage|drawingareaWIN_TABLEFT-atkobject"
 msgid "Left tab preview"
-msgstr ""
+msgstr "Baloldali lap előnézete"
 
 #. akwMF
 #: cui/uiconfig/ui/paratabspage.ui:192
 msgctxt "paratabspage|drawingareaWIN_TABRIGHT-atkobject"
 msgid "Right tab preview"
-msgstr ""
+msgstr "Jobboldali lap előnézete"
 
 #. GF4AG
 #: cui/uiconfig/ui/paratabspage.ui:207
 msgctxt "paratabspage|drawingareaWIN_TABCENTER-atkobject"
 msgid "Center tab preview"
-msgstr ""
+msgstr "Középső lap előnézete"
 
 #. pSa2J
 #: cui/uiconfig/ui/paratabspage.ui:222
 msgctxt "paratabspage|drawingareaWIN_TABDECIMAL-atkobject"
 msgid "Decimal tab preview"
-msgstr ""
+msgstr "Decimális lap előnézete"
 
 #. jt6Gv
 #: cui/uiconfig/ui/password.ui:258
@@ -529,13 +530,13 @@ msgstr "Kattintson a használni kívánt vázlatszintstílusra."
 #: cui/uiconfig/ui/textflowpage.ui:812
 msgctxt "textflowpage|spinOrphan-atkobject"
 msgid "No split at beginning of paragraph, lines"
-msgstr ""
+msgstr "Nincs törés a bekezdések, sorok elején"
 
 #. MimEj
 #: cui/uiconfig/ui/textflowpage.ui:832
 msgctxt "textflowpage|spinWidow-atkobject"
 msgid "No split at end of paragraph, lines"
-msgstr ""
+msgstr "Nincs törés a bekezdések, sorok végén"
 
 #. a9iXr
 #: cui/uiconfig/ui/thesaurus.ui:189
@@ -553,7 +554,7 @@ msgstr "Kompakt"
 #: cui/uiconfig/ui/widgettestdialog.ui:161
 msgctxt "widgettestdialog|combo_box_disable-atkobject"
 msgid "Test Type"
-msgstr ""
+msgstr "Teszttípus"
 
 #. ZbYiG
 #: include/svtools/strings.hrc:71
@@ -679,13 +680,13 @@ msgstr "2 különböző méretű oszlop (bal < jobb)"
 #: sw/inc/strings.hrc:498
 msgctxt "STR_REINSTATE_REDLINE"
 msgid "Reinstate change: $1"
-msgstr ""
+msgstr "Változás visszaállítása: $1"
 
 #. afEVQ
 #: sw/inc/strings.hrc:1536
 msgctxt "STR_COMPAT_OPT_UNDERLINETRAILINGSPACE"
 msgid "Underline Word-compatible trailing blanks"
-msgstr ""
+msgstr "A Word-kompatibilis sorvégi szóközök aláhúzása"
 
 #. B3rfb
 #: sw/uiconfig/swriter/ui/columnpage.ui:122
@@ -754,7 +755,7 @@ msgstr "Előnézet"
 #: sw/uiconfig/swriter/ui/tocentriespage.ui:252
 msgctxt "tocentriespage|structure_label"
 msgid "_Structure"
-msgstr ""
+msgstr "_Szerkezet"
 
 #. CW8Eb
 #: sw/uiconfig/swriter/ui/tocentriespage.ui:277
@@ -766,7 +767,7 @@ msgstr "Karakterstílus:"
 #: sw/uiconfig/swriter/ui/tocentriespage.ui:569
 msgctxt "tocentriespage|authfield-atkobject"
 msgid "Authority field"
-msgstr ""
+msgstr "Hatóság mező"
 
 #. risLD
 #: sw/uiconfig/swriter/ui/tokenwidget.ui:25
@@ -790,13 +791,13 @@ msgstr "Mozgatás jobbra"
 #: sw/uiconfig/swriter/ui/tokenwidget.ui:98
 msgctxt "tokenwidget|right"
 msgid "Scroll right"
-msgstr ""
+msgstr "Görgetés jobbra"
 
 #. FxkzA
 #: sw/uiconfig/swriter/ui/wordcount-mobile.ui:643
 msgctxt "wordcount-mobile|comments"
 msgid "Comments"
-msgstr ""
+msgstr "Megjegyzések"
 
 #. SsL8u
 #: formula/inc/core_resource.hrc:2629
@@ -1098,7 +1099,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Table Style Options"
-msgstr ""
+msgstr "Táblázatstílus beállításai"
 
 #. 4HzYH
 #: CalcCommands.xcu
@@ -1108,7 +1109,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "~Table"
-msgstr ""
+msgstr "~Táblázat"
 
 #. Uhi2h
 #: CalcCommands.xcu
@@ -1118,7 +1119,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "~Insert Table..."
-msgstr ""
+msgstr "~Táblázat beszúrása..."
 
 #. cFE7i
 #: CalcCommands.xcu
@@ -1128,7 +1129,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Table..."
-msgstr ""
+msgstr "Táblázat..."
 
 #. ms5Fm
 #: CalcCommands.xcu
@@ -1148,7 +1149,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "~Remove Table..."
-msgstr ""
+msgstr "~Táblázat törlése..."
 
 #. DiD7K
 #: CalcCommands.xcu
