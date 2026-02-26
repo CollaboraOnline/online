@@ -168,6 +168,7 @@ function createColor(
 	});
 	color.addEventListener('keydown', (event: KeyboardEvent) => {
 		if (event.code === 'Enter') {
+			event.preventDefault();
 			handleColorSelection(
 				event.target as HTMLElement, // The clicked element
 				builder, // Pass the builder object
