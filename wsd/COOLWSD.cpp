@@ -3683,7 +3683,7 @@ void COOLWSD::innerMain()
     remoteConfigThread->start();
 #endif
 
-#if !MOBILEAPP
+#if !defined(IOS) && !defined(MACOS) && !defined(_WIN32) && !defined(QTAPP)
     // Force a uniform UTF-8 locale for ourselves & our children.
     char* locale = std::setlocale(LC_ALL, "C.UTF-8");
     if (!locale)
@@ -3699,7 +3699,7 @@ void COOLWSD::innerMain()
         LOG_INF("Locale is set to " << std::string(locale));
         ::setenv("LC_ALL", locale, 1);
     }
-#endif // !IOS
+#endif // !IOS && !MACOS && !_WIN32 && !QTAPP
 
 #if !MOBILEAPP
     // We use the same option set for both parent and child coolwsd,
