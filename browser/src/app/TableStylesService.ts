@@ -15,6 +15,7 @@
  * with the core.
  */
 
+// for uno
 interface TableStyleInfo {
 	ContainsHeader: boolean;
 	TotalsRow: boolean;
@@ -24,6 +25,18 @@ interface TableStyleInfo {
 	UseColStripes: boolean;
 	AutoFilter: boolean;
 	TableStyleName: string;
+}
+
+// from state change
+interface TableStyleElement {
+	Type: string;
+	FillColor: string; // hex value
+}
+
+interface TableStyleEntry {
+	Name: string;
+	UIName: string;
+	Elements: Array<TableStyleElement>;
 }
 
 class TableStylesService {
@@ -89,6 +102,10 @@ class TableStylesService {
 		app.map.sendUnoCommand('.uno:DatabaseSettings', args);
 	}
 
+	public generateIcon(style: TableStyleEntry): string {
+		return 'images/lc_table_light_seven.svg';
+	}
+
 	public generateJSON(): Array<IconViewEntry> {
 		if (!this.styles) return [];
 
@@ -102,7 +119,7 @@ class TableStylesService {
 		iconViewEntries.push({
 			row: i++,
 			text: _('None'),
-			image: 'images/lc_table_light_seven.svg',
+			image: 'images/lc_table_none.svg',
 			width: 35,
 			height: 35,
 			selected: !currentStyle || currentStyle.name === '',
@@ -112,7 +129,7 @@ class TableStylesService {
 			iconViewEntries.push({
 				row: i++,
 				text: element.UIName,
-				image: 'images/lc_table_light_seven.svg',
+				image: this.generateIcon(element),
 				width: 35,
 				height: 35,
 				selected: currentStyle ? element.Name === currentStyle.name : false,
