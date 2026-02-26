@@ -23,10 +23,14 @@ interface LogMsg {
 class Logger {
 	private _logs: LogMsg[];
 	private startTime: number;
+	private _cypressTest: boolean;
 
 	constructor() {
 		this._logs = [];
 		this.startTime = null;
+		this._cypressTest =
+			typeof navigator !== 'undefined' &&
+			navigator.userAgent.toLowerCase().indexOf('cypress') !== -1;
 	}
 
 	public log(msg: string, direction: Direction, status: string = ''): void {
@@ -35,13 +39,13 @@ class Logger {
 
 		// Limit memory usage of log by only keeping the latest entries
 		let maxEntries = 100;
-		if ((window as any).enableDebug) maxEntries = 1000;
+		if ((window as any).enableDebug || this._cypressTest) maxEntries = 1000;
 
 		if (time - this.startTime < 60 * 1000 /* ms */) maxEntries = 500; // enough to capture early start.
 		while (this._logs.length > maxEntries) this._logs.shift();
 
 		// Limit memory usage of log by limiting length of message
-		const maxMsgLen = 128;
+		const maxMsgLen = this._cypressTest ? 1024 : 128;
 		if (msg.length > maxMsgLen) msg = msg.substring(0, maxMsgLen);
 		msg = msg.replace(/(\r\n|\n|\r)/gm, ' ');
 		this._logs.push({
