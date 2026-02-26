@@ -845,7 +845,7 @@ Document::~Document()
         session.second->resetDocManager();
     }
 
-#if MOBILEAPP
+#if defined(IOS) || defined(MACOS) || defined(_WIN32) || defined(QTAPP)
     DocumentData::deallocate(_mobileAppDocId);
 #endif
 
@@ -2963,7 +2963,7 @@ std::shared_ptr<DocumentBroker> getDocumentBrokerForAndroidOnly()
 
 KitSocketPoll::KitSocketPoll() : SocketPoll("kit")
 {
-#if MOBILEAPP
+#if defined(IOS) || defined(QTAPP) || defined(MACOS) || defined(_WIN32)
     termination = std::make_shared<KitSocketPoll::TerminationData>();
     termination->flag = false;
 #endif
@@ -2996,7 +2996,7 @@ std::shared_ptr<KitSocketPoll> KitSocketPoll::create() // static
 {
     std::shared_ptr<KitSocketPoll> result(new KitSocketPoll());
 
-#if MOBILEAPP
+#if defined(IOS) || defined(QTAPP) || defined(MACOS) || defined(_WIN32)
     {
         std::unique_lock<std::mutex> lock(KSPollsMutex);
         KSPolls.push_back(result);
@@ -3145,7 +3145,7 @@ bool pushToMainThread(LibreOfficeKitCallback cb, int type, const char *p, void *
     return KitSocketPoll::pushToMainThread(cb, type, p, data);
 }
 
-#if MOBILEAPP
+#if defined(IOS) || defined(QTAPP) || defined(MACOS) || defined(_WIN32)
 
 std::mutex KitSocketPoll::KSPollsMutex;
 std::condition_variable KitSocketPoll::KSPollsCV;
@@ -4130,7 +4130,7 @@ void lokit_main(
         Log::setDisabledAreas(LogDisabledAreas);
 #endif
 
-#if !MOBILEAPP
+#if !defined(IOS) && !defined(QTAPP) && !defined(MACOS) && !defined(_WIN32)
         startMainLoop(kit, loKit, mainKit);
 
         // Trap the signal handler, if invoked,
@@ -4139,7 +4139,7 @@ void lokit_main(
 
         // Let forkit handle the jail cleanup.
 
-#else // !MOBILEAPP
+#else // IOS or QTAPP or MACOS or _WIN32
         auto const termination = mainKit->termination;
 #if defined(QTAPP) || defined(MACOS) || defined(_WIN32)
         // Release the mainKit KitSocketPoll instance early here, so that its destructor will
@@ -4155,7 +4155,7 @@ void lokit_main(
             std::unique_lock<std::mutex> lock(termination->mutex);
             termination->cv.wait(lock,[&]{ return termination->flag; } );
         }
-#endif // !MOBILEAPP
+#endif // !defined(IOS) && !defined(QTAPP) && !defined(MACOS) && !defined(_WIN32)
     }
     catch (const Exception& exc)
     {

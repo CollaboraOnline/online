@@ -930,7 +930,9 @@ std::shared_ptr<ChildProcess> getNewChild_Blocks(const std::shared_ptr<SocketPol
 #else // MOBILEAPP
     const auto timeout = std::chrono::hours(100);
 
+#if defined(IOS) || defined(QTAPP) || defined(MACOS) || defined(_WIN32)
     assert(mobileAppDocId > 0 && "Unexpected to have no mobileAppDocId in the mobile build");
+#endif
 
     std::thread([&]
                 {
