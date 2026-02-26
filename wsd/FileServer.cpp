@@ -478,7 +478,13 @@ bool FileServerRequestHandler::handleRequest(const HTTPRequest& request,
         if (endPoint == "fetch-settings-file")
         {
             fetchSettingFile(request, message, socket);
-            return true;
+            return false;
+        }
+
+        if (endPoint == "fetch-models")
+        {
+            fetchModels(request, message, socket);
+            return false;
         }
 
         // Is this a file we read at startup - if not; it's not for serving.
@@ -1726,30 +1732,132 @@ void FileServerRequestHandler::fetchSettingFile(const Poco::Net::HTTPRequest& re
     httpRequest.setVerb(http::Request::VERB_GET);
     httpRequest.set("Content-Type", "text/plain");
 
-    auto httpSession = StorageConnectionManager::getHttpSession(dicUrl);
-    auto httpResponse = httpSession->syncRequest(httpRequest);
+    std::weak_ptr<StreamSocket> socketWeak(socket);
+    const std::string shortMessage = "Failed to fetch setting file";
 
-    if (httpResponse->statusLine().statusCode() != http::StatusCode::OK)
+    http::Session::FinishedCallback finishedCallback =
+        [uriAnonym, socketWeak, requestPath = getRequestPath(request),
+         shortMessage](const std::shared_ptr<http::Session>& wopiSession)
     {
-        std::ostringstream responseContent;
-        responseContent << httpResponse->getBody();
-        throw std::runtime_error(
-            "Integrator wopi call failed: " + httpResponse->statusLine().reasonPhrase() +
-            ". Response: " + responseContent.str());
-    }
+        std::shared_ptr<StreamSocket> destSocket = socketWeak.lock();
+        if (!destSocket)
+        {
+            LOG_ERR("Invalid socket while fetching setting file from [" << uriAnonym << ']');
+            return;
+        }
 
-    http::Response clientResponse(http::StatusCode::OK);
-    clientResponse.set("Content-Type", "text/plain; charset=utf-8");
-    clientResponse.set("Cache-Control", "no-cache");
-    clientResponse.set("Content-Disposition", "attachment");
-    clientResponse.setBody(httpResponse->getBody());
-    socket->send(clientResponse);
-    LOG_DBG("Successfully fetched setting file from [" << uriAnonym << "]");
+        const auto httpResponse = wopiSession->response();
+        if (httpResponse->statusLine().statusCode() != http::StatusCode::OK)
+        {
+            LOG_ERR("Failed to fetch setting file from [" << uriAnonym
+                    << "] with status [" << httpResponse->statusLine().reasonPhrase() << ']');
+            sendError(httpResponse->statusLine().statusCode(), requestPath, destSocket,
+                      shortMessage,
+                      httpResponse->statusLine().reasonPhrase() + ". Response: " +
+                          httpResponse->getBody());
+            return;
+        }
+
+        http::Response clientResponse(http::StatusCode::OK);
+        clientResponse.set("Content-Type", "text/plain; charset=utf-8");
+        clientResponse.set("Cache-Control", "no-cache");
+        clientResponse.set("Content-Disposition", "attachment");
+        clientResponse.setBody(httpResponse->getBody());
+        destSocket->sendAndShutdown(clientResponse);
+        LOG_DBG("Successfully fetched setting file from [" << uriAnonym << ']');
+    };
+
+    LOG_DBG("Fetching setting file from [" << uriAnonym << ']');
+    auto httpSession = StorageConnectionManager::getHttpSession(dicUrl);
+    httpSession->setFinishedHandler(std::move(finishedCallback));
+    httpSession->asyncRequest(httpRequest, COOLWSD::getWebServerPoll());
 }
 
-void FileServerRequestHandler::deleteWopiSettingConfigs(
-    const Poco::Net::HTTPRequest& request, std::istream& message,
-    const std::shared_ptr<StreamSocket>& socket)
+void FileServerRequestHandler::fetchModels(const Poco::Net::HTTPRequest& request,
+                                           std::istream& message,
+                                           const std::shared_ptr<StreamSocket>& socket)
+{
+    Poco::Net::HTMLForm form(request, message);
+
+    const std::string& provider = form.get("provider", std::string());
+    const std::string& apiKey = form.get("apiKey", std::string());
+    std::string baseUrl = form.get("baseUrl", std::string());
+
+    const std::string& shortMessage = "Failed to fetch AI models";
+    if (provider.empty() || apiKey.empty())
+    {
+        sendError(http::StatusCode::BadRequest, getRequestPath(request), socket, shortMessage,
+                  "Missing provider or apiKey in the payload");
+        return;
+    }
+
+    if (provider == "custom" && baseUrl.empty())
+    {
+        sendError(http::StatusCode::BadRequest, getRequestPath(request), socket, shortMessage,
+                  "Missing baseUrl for custom provider");
+        return;
+    }
+
+    if (baseUrl.empty())
+    {
+        sendError(http::StatusCode::BadRequest, getRequestPath(request), socket, shortMessage,
+                  "Missing baseUrl for provider");
+        return;
+    }
+    if (baseUrl.back() == '/')
+        baseUrl.pop_back();
+    baseUrl += "/v1/models";
+
+    Poco::URI uri(baseUrl);
+    const std::string& uriAnonym = COOLWSD::anonymizeUrl(uri.toString());
+
+    Authorization auth(Authorization::Type::Token, apiKey, false);
+    auto httpRequest = StorageConnectionManager::createHttpRequest(uri, auth);
+    httpRequest.setVerb(http::Request::VERB_GET);
+    httpRequest.set("Content-Type", "application/json");
+
+    std::weak_ptr<StreamSocket> socketWeak(socket);
+
+    http::Session::FinishedCallback finishedCallback =
+        [uriAnonym, socketWeak, requestPath = getRequestPath(request),
+         shortMessage](const std::shared_ptr<http::Session>& httpSession)
+    {
+        std::shared_ptr<StreamSocket> destSocket = socketWeak.lock();
+        if (!destSocket)
+        {
+            LOG_ERR("Invalid socket while fetching models from [" << uriAnonym << ']');
+            return;
+        }
+
+        const auto httpResponse = httpSession->response();
+        if (httpResponse->statusLine().statusCode() != http::StatusCode::OK)
+        {
+            LOG_ERR("Failed to fetch models from [" << uriAnonym
+                    << "] with status [" << httpResponse->statusLine().reasonPhrase() << ']');
+            sendError(httpResponse->statusLine().statusCode(), requestPath, destSocket,
+                      shortMessage,
+                      httpResponse->statusLine().reasonPhrase() + ". Response: " +
+                          httpResponse->getBody());
+            return;
+        }
+
+        http::Response clientResponse(http::StatusCode::OK);
+        clientResponse.set("Content-Type", "application/json; charset=utf-8");
+        clientResponse.set("Cache-Control", "no-cache");
+        clientResponse.setBody(httpResponse->getBody());
+        destSocket->sendAndShutdown(clientResponse);
+        LOG_DBG("Successfully fetched models from [" << uriAnonym << ']');
+    };
+
+    LOG_DBG("Fetching models from [" << uriAnonym << ']');
+    auto httpSession = StorageConnectionManager::getHttpSession(uri);
+    httpSession->setFinishedHandler(std::move(finishedCallback));
+    httpSession->asyncRequest(httpRequest, COOLWSD::getWebServerPoll());
+}
+
+void FileServerRequestHandler::deleteWopiSettingConfigs(const Poco::Net::HTTPRequest& request,
+                                                        std::istream& message,
+                                                        const std::shared_ptr<StreamSocket>& socket)
 {
     Poco::Net::HTMLForm form(request, message);
 
@@ -1950,6 +2058,12 @@ void FileServerRequestHandler::preprocessIntegratorAdminFile(const HTTPRequest& 
 
     std::string enableAccessibility = stringifyBoolFromConfig(config, "accessibility.enable", false);
     Poco::replaceInPlace(adminFile, std::string("%ENABLE_ACCESSIBILITY%"), enableAccessibility);
+
+    // AI settings are disabled if the WOPI integrator requests it
+    const std::string disableAIFromWopi = form.get("disable_ai_settings", "false");
+    const bool disableAISettings = disableAIFromWopi == "true";
+    Poco::replaceInPlace(adminFile, std::string("%DISABLE_AI_SETTINGS%"),
+                         std::string(disableAISettings ? "true" : "false"));
 
     updateThemeResources(adminFile, responseRoot, urv[BRANDING_THEME], config);
 
