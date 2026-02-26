@@ -127,7 +127,7 @@ class TableStylesService {
 		let i = 0;
 
 		iconViewEntries.push({
-			row: i++,
+			row: -1,
 			text: _('None'),
 			image: 'images/lc_table_none.svg',
 			width: 35,
