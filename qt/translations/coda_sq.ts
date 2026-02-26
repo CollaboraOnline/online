@@ -32,7 +32,7 @@
     <message>
         <location filename="../coda-qt.cpp" line="327"/>
         <source>Save Print Output As</source>
-        <translation>Ruaj Ç’Prodhon Shtypja Si</translation>
+        <translation>Ç’Prodhon Shtypja Ruaje Si</translation>
     </message>
     <message>
         <location filename="../coda-qt.cpp" line="329"/>
@@ -67,7 +67,7 @@
     <message>
         <location filename="../coda-qt.cpp" line="416"/>
         <source>Failed to print document. Please check your printer settings.</source>
-        <translation>S’u arrit të shtypet dokumenti. Ju lutemi kontrolloni rregullimet tuaja për shtypësin.</translation>
+        <translation>S’u arrit të shtypet dokumenti. Ju lutemi, kontrolloni rregullimet tuaja për shtypësin.</translation>
     </message>
     <message>
         <location filename="../coda-qt.cpp" line="575"/>
