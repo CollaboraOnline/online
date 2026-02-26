@@ -130,6 +130,11 @@ button.jsdialog img {
 	max-height: 100%;
 }
 
+button.jsdialog[disabled] img {
+	filter: grayscale(100%);
+	opacity: 0.5;
+}
+
 .annotation-btns-container {
 	display: flex;
 	flex-direction: row;
