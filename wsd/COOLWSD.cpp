@@ -644,7 +644,12 @@ static void rebalanceChildren(const std::string& configId, int64_t balance)
     }
 
     if (OutstandingForks[configId] != 0)
+    {
+        LOG_DBG("prespawnChildren ["
+                << configId << "]: Have " << OutstandingForks[configId]
+                << " outstanding fork requests. Time since last request: " << durationMs);
         return;
+    }
 
     balance -= available;
 
