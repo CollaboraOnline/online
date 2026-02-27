@@ -2558,7 +2558,7 @@ void Document::drainCallbacks()
 void Document::drainQueue()
 {
 #if !WASMAPP
-    if (UnitKit::get().filterDrainQueue())
+    if (!Util::isMobileApp() && UnitKit::get().filterDrainQueue())
     {
         LOG_TRC("Filter disabled drainQueue");
         return;

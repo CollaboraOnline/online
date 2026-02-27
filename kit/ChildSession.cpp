@@ -722,7 +722,8 @@ bool ChildSession::_handleInput(const char *buffer, int length)
             if (!saving)
             { // fallback to foreground save
 
-                UnitKit::get().preSaveHook();
+                if (!Util::isMobileApp())
+                    UnitKit::get().preSaveHook();
 
                 // Disable processing of other messages while saving document
                 InputProcessingManager processInput(getProtocol(), false);
