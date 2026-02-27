@@ -45,6 +45,9 @@ function getFocusableElements(container) {
 		ret = container.querySelectorAll('select:not([disabled]):not(.hidden)');
 	if (!ret.length)
 		ret = container.querySelectorAll('button:not([disabled]):not(.hidden)');
+
+	ret = Array.from(ret).filter(function(elem) { return elem.checkVisibility() });
+
 	return ret;
 }
 
@@ -205,7 +208,7 @@ function findNextElementInContainer(container, currentElement, direction) {
 
 	let diffX = 0;
 	let diffY = 0;
-	
+
 	// Ray casting sensitivity for spatial navigation
 	var rayCastingSensitivity = 10; // Pixels
 
