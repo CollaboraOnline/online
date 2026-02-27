@@ -283,6 +283,30 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Track Changes', function (
 		});
 	});
 
+	it('Context toolbar position in compare changes mode', function () {
+		// Given a document in compare changes mode with some text:
+		desktopHelper.switchUIToNotebookbar();
+		helper.typeIntoDocument('x');
+		cy.cGet('#Review-tab-label').click();
+		desktopHelper.getNbIconArrow('TrackChanges', 'Review').click();
+		cy.cGet('#compare-tracked-change').filter(':visible').click();
+		cy.cGet('.compare-changes-labels').should('not.have.css', 'display', 'none');
+
+		// When double-clicking at the cursor position on the right side to create a selection:
+		helper.getBlinkingCursorPosition('cursorPos');
+		helper.clickAt('cursorPos', true);
+
+		// Then the context toolbar should appear on the right half of the viewport:
+		// Without the accompanying fix in place, this test would have failed, the
+		// context toolbar x position was too small (on the left side, outside the right page).
+		cy.cGet('#context-toolbar').should('not.have.class', 'hidden').should(function(elements) {
+			const left = parseFloat(elements[0].style.left);
+			const viewportMidpoint = Cypress.config('viewportWidth') / 2;
+			// Context toolbar x position: 716 to be above 500; was 66.
+			expect(left, 'context toolbar left position').to.be.greaterThan(viewportMidpoint);
+		});
+	});
+
 	it.skip('Comment Undo-Redo', function () {
 		for (var n = 0; n < 2; n++) {
 			desktopHelper.getCompactIconArrow('DefaultNumbering').click();
