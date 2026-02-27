@@ -315,7 +315,7 @@ protected:
     void dumpState(std::ostream& os) override;
 
     std::string getLogPrefix() const { return _name + ": "; }
-    void logPrefix(std::ostream& os) const { os << getLogPrefix(); }
+    void logPrefix(std::ostream& os) const { os <<  _name + ": "; }
 
     void setSignToUserPrivateConfig(const std::string& key,
                                     const Poco::JSON::Object::Ptr& signatureDataObject,
