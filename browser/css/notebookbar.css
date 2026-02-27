@@ -490,11 +490,12 @@ label.notebookbar.ui-checkbox-label {
 	line-height: 22px;
 }
 
-/* Styles preview #<originalid>-iconview-list */
-.jsdialog #stylesview-iconview-list:not(.sidebar),
-.jsdialog #masterpagenb-iconview-list:not(.sidebar),
-.jsdialog #transitions_icons-iconview-list:not(.sidebar),
-.jsdialog #iconview_theme_colors-iconview-list:not(.sidebar) {
+/* Styles preview (dropdown context) */
+.jsdialog #stylesview:not(.sidebar),
+.jsdialog #masterpagecurrent_icons:not(.sidebar),
+.jsdialog #masterpageall_icons:not(.sidebar),
+.jsdialog #transitions_icons:not(.sidebar),
+.jsdialog #iconview_theme_colors:not(.sidebar) {
 	height: auto !important;
 	min-height: 64px !important;
 	border: none !important;
@@ -542,10 +543,11 @@ label.notebookbar.ui-checkbox-label {
 	box-sizing: border-box;
 }
 
-/* #<originalid> (inner iconview) */
-.jsdialog #stylesview-iconview-list:not(.sidebar),
-.jasialog #masterpagenb-iconview-list:not(.sidebar),
-.jsdialog #transitions_icons-iconview-list:not(.sidebar),
+/* iconview: inline (notebookbar) + dropdown (jsdialog) */
+.jsdialog #stylesview:not(.sidebar),
+.jsdialog #masterpagecurrent_icons:not(.sidebar),
+.jsdialog #masterpageall_icons:not(.sidebar),
+.jsdialog #transitions_icons:not(.sidebar),
 .notebookbar #stylesview,
 .notebookbar #masterpageall_icons,
 .notebookbar #masterpagecurrent_icons,
@@ -590,7 +592,7 @@ label.notebookbar.ui-checkbox-label {
 	justify-content: center;
 }
 
-#masterpagenb-dropdown,
+#masterpagecurrent_icons-dropdown,
 #stylesview-dropdown,
 #iconview_theme_colors-dropdown {
 	margin-top: 37px !important;
@@ -1029,14 +1031,14 @@ label.notebookbar.ui-checkbox-label {
 	height: var(--btn-img-size);
 }
 
-#masterpageall_icons .notebookbar.ui-iconview-entry,
-#masterpagecurrent_icons .notebookbar.ui-iconview-entry {
+#masterpageall_icons .ui-iconview-entry,
+#masterpagecurrent_icons .ui-iconview-entry {
 	align-self: start;
 	margin-top: 6px;
 }
 
-#masterpageall_icons .notebookbar.ui-iconview-entry img,
-#masterpagecurrent_icons .notebookbar.ui-iconview-entry img {
+#masterpageall_icons .ui-iconview-entry img,
+#masterpagecurrent_icons .ui-iconview-entry img {
 	height: 45px;
 	width: 80px;
 }
