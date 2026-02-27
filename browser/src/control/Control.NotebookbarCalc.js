@@ -1394,7 +1394,6 @@ window.L.Control.NotebookbarCalc = window.L.Control.NotebookbarWriter.extend({
 
 	getViewTab: function() {
 		var content = [
-			app.isExperimentalMode() ?
 			{
 				'type': 'overflowgroup',
 				'id': 'view-sheetview',
@@ -1460,8 +1459,8 @@ window.L.Control.NotebookbarCalc = window.L.Control.NotebookbarWriter.extend({
 						'vertical': 'true'
 					},
 				]
-			} : {},
-			app.isExperimentalMode() ? { type: 'separator', id: 'layout-sheetview-break', orientation: 'vertical' } : {},
+			},
+			{ type: 'separator', id: 'layout-sheetview-break', orientation: 'vertical' },
 			{
 				'type': 'overflowgroup',
 				'id': 'view-freeze',
