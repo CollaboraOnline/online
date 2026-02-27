@@ -184,10 +184,23 @@ function setupOverflowMenu(
 		isCollapsed = false;
 	};
 
+	const updateAriaExpandedAttr = (
+		container: HTMLElement,
+		expectedValue: boolean,
+	) => {
+		const buttons = container.querySelectorAll<HTMLElement>(
+			`[aria-expanded="${!expectedValue}"]`,
+		);
+		buttons.forEach((button: HTMLElement) => {
+			button.setAttribute('aria-expanded', String(expectedValue));
+		});
+	};
+
 	// fill the updated menu after it is open
 	(overflowMenuButton as any)._onDropDown = (opened: boolean) => {
 		if (opened) {
 			overflowMenuButton.classList.add('overflow-dropdown-active');
+			updateAriaExpandedAttr(overflowMenuButton, opened);
 
 			// we need to schedule it 2 times as the first one happens just before
 			// layouting task adds menu container to the DOM
@@ -291,6 +304,7 @@ function setupOverflowMenu(
 			});
 		} else {
 			overflowMenuButton.classList.remove('overflow-dropdown-active');
+			updateAriaExpandedAttr(overflowMenuButton, opened);
 
 			const menu = JSDialog.GetDropdown(dropdownId);
 			migrateItems(menu, hiddenItems);
