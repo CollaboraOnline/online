@@ -82,12 +82,48 @@
 	.cool-redline-accept-button,
 	.cool-redline-reject-button {
 		forced-color-adjust: none;
+		background-color: #e9e9ed !important;
 	}
 
 	/* Overflow popup icons */
 	.ui-overflow-group-popup .unobutton > img {
 		forced-color-adjust: none;
 		background-color: #e9e9ed;
+	}
+
+	/* Dark mode: invert hardcoded light backgrounds for icon visibility */
+	[data-theme='dark'] .unobutton img,
+	[data-theme='dark'] .savemodified.unotoolbutton .unobutton img,
+	[data-theme='dark'] .StyleListPanel #TemplatePanel button,
+	[data-theme='dark'] .document-logo,
+	[data-theme='dark'] .ui-tabs-content .unobutton > img,
+	[data-theme='dark'] .unotoolbutton.notebookbar .unobutton > img,
+	[data-theme='dark'] .unotoolbutton.notebookbar .unobutton,
+	[data-theme='dark'] .StyleListPanel #TemplatePanel [id] button,
+	[data-theme='dark'] .ui-overflow-group-popup .unobutton > img {
+		background-color: #1E1E1E;
+	}
+
+	[data-theme='dark'] .cool-annotation-menu,
+	[data-theme='dark'] .cool-annotation-menu-redline,
+	[data-theme='dark'] .cool-annotation-menu-edit,
+	[data-theme='dark'] .cool-redline-accept-button,
+	[data-theme='dark'] .cool-redline-reject-button {
+		background-color: #1E1E1E !important;
+	}
+
+	[data-theme='dark'] .unoarrow,
+	[data-theme='dark'] .menubutton .arrow,
+	[data-theme='dark'] .ui-listbox-arrow {
+		border-top-color: #1E1E1E;
+	}
+
+	/* Dark mode: restore brightness for sidebar expanders (filter: none
+	   overrides dark mode's brightness(1), leaving dark chevron on dark bg) */
+	[data-theme='dark'] .ui-expander-label.expanded::before,
+	[data-theme='dark'] .ui-treeview-expandable:not(.collapsed) > div > .ui-treeview-expander::before,
+	[data-theme='dark'] .ui-treeview div[aria-expanded='true'] > div > .ui-treeview-expander::before {
+		filter: brightness(1);
 	}
 
 }
