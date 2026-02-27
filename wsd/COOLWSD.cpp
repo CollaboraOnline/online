@@ -470,30 +470,53 @@ void COOLWSD::cleanupDocBrokers()
                                                              3600);
 
         // consider shutting down unused subforkits
-        for (auto it = SubForKitProcs.begin(); it != SubForKitProcs.end(); )
+        // Always drop those older than IdleServerSettingsTimeoutSecs, and cap
+        // the remainder to a reasonable number of recently-used entries.
+        CONFIG_STATIC const size_t MaxRecentlyUsedSubForKits =
+            ConfigUtil::getConfigValue<size_t>("serverside_config.max_idle_subforkits", 5);
+
+        // idle candidates: pair of (idle duration, configId)
+        std::vector<std::pair<std::chrono::steady_clock::duration, std::string>> idleCandidates;
+
+        for (const auto& [configId, subForKitProc] : SubForKitProcs)
         {
-            // copy as it will be used after erase()
-            std::string configId = it->first;
 
             if (configId.empty()) {
                 // ignore primordial forkit
-                ++it;
             } else if (activeConfigs.contains(configId)) {
                 LOG_DBG("subforkit " << configId << " has active document, keep it");
-                ++it;
             } else if (OutstandingForks[configId] > 0) {
                 LOG_DBG("subforkit " << configId << " has a pending fork underway, keep it");
-                ++it;
+            } else {
+                auto idleDuration = now - LastSubForKitBrokerExitTimes[configId];
+                idleCandidates.emplace_back(idleDuration, configId);
             }
-            else if (now - LastSubForKitBrokerExitTimes[configId] < IdleServerSettingsTimeoutSecs)
+        }
+
+        // sort shortest-idle first so we keep the most recently used
+        std::sort(idleCandidates.begin(), idleCandidates.end());
+
+        size_t recentlyUsedKept = 0;
+        for (const auto& [idleDuration, configId] : idleCandidates)
+        {
+            if (idleDuration >= IdleServerSettingsTimeoutSecs)
             {
-                LOG_DBG("subforkit " << configId << " recently used, keep it");
-                ++it;
+                LOG_DBG("subforkit " << configId << " is unused, dropping it");
+                auto it = SubForKitProcs.find(configId);
+                assert(it != SubForKitProcs.end());
+                dropSubForKit(it);
+            }
+            else if (recentlyUsedKept >= MaxRecentlyUsedSubForKits)
+            {
+                LOG_DBG("subforkit " << configId << " recently used but excess idle subforkit, dropping it");
+                auto it = SubForKitProcs.find(configId);
+                assert(it != SubForKitProcs.end());
+                dropSubForKit(it);
             }
             else
             {
-                LOG_DBG("subforkit " << configId << " is unused, dropping it");
-                it = dropSubForKit(it);
+                LOG_DBG("subforkit " << configId << " recently used, keep it");
+                ++recentlyUsedKept;
             }
         }
 
