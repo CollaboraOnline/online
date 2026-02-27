@@ -99,18 +99,15 @@ class ContextToolbar extends JSDialogComponent {
 			let statRect;
 			if (!TextSelections || !(statRect = TextSelections.getStartRectangle()))
 				return;
-			const pos = { x: statRect.cX1, y: statRect.cY1 };
 			Util.ensureValue(app.activeDocument);
-			pos.x -=
-				(app.activeDocument.activeLayout.viewedRectangle.pX1 -
-					app.sectionContainer.getDocumentAnchor()[0]) /
-					app.dpiScale -
-				app.sectionContainer.getCanvasBoundingClientRect().x;
-			pos.y -=
-				(app.activeDocument.activeLayout.viewedRectangle.pY1 -
-					app.sectionContainer.getDocumentAnchor()[1]) /
-					app.dpiScale -
-				app.sectionContainer.getCanvasBoundingClientRect().y;
+
+			// Go via SimplePoint(), which is aware of the active layout.
+			const point = new cool.SimplePoint(statRect.x1, statRect.y1);
+			const canvasRect = app.sectionContainer.getCanvasBoundingClientRect();
+			const pos = {
+				x: Math.round(point.vX / app.dpiScale) + canvasRect.x,
+				y: Math.round(point.vY / app.dpiScale) + canvasRect.y,
+			};
 
 			window.L.DomUtil.removeClass(this.container, 'hidden');
 			app.layoutingService.appendLayoutingTask(() => {
