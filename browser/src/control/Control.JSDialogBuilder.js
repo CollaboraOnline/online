@@ -1834,7 +1834,14 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 				'toggledarktheme',
 			];
 
-			return mainBtnToggleCmds.includes(commandName);
+			// fallback: if any command is not included in above list
+			const stateValue = builder.map['stateChangeHandler']
+				? builder.map['stateChangeHandler'].getItemValue(data.command)
+				: 'false';
+
+			const isToggle =  stateValue === 'false' || stateValue === 'true';
+
+			return mainBtnToggleCmds.includes(commandName) || isToggle;
 		};
 
 		const isMainButtonDialog = function(commandName) {
@@ -2053,14 +2060,9 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 			div.setAttribute('data-cooltip', tooltip);
 
 			// Set aria-pressed only if:
-			// 1. No dropdown arrow and
-			// 2. A real toggle button
+			// 1. A real toggle button
 			const setAriaPressedForToggleBtn = (value) => {
-				if ((!shouldHaveArrowbackground &&
-					data.command &&
-					builder.map['stateChangeHandler'] &&
-					builder.map['stateChangeHandler'].getItemValue(data.command) !== undefined)
-					|| isMainButtonToggle(data.command)) {
+				if (isMainButtonToggle(data.command)) {
 					button.setAttribute('aria-pressed', value);
 				}
 			};
