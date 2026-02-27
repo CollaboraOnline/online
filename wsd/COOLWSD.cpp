@@ -428,6 +428,10 @@ SubForKitMap::iterator dropSubForKit(SubForKitMap::iterator it)
 
 }
 
+#if !MOBILEAPP
+static void rebalanceChildren(const std::string& configId, int64_t balance);
+#endif
+
 /// Remove dead and idle DocBrokers.
 /// The client of idle document should've greyed-out long ago.
 void COOLWSD::cleanupDocBrokers()
@@ -474,6 +478,7 @@ void COOLWSD::cleanupDocBrokers()
                     }
                 });
 
+#if !MOBILEAPP
         CONFIG_STATIC const std::chrono::seconds IdleServerSettingsTimeoutSecs =
             ConfigUtil::getConfigValue<std::chrono::seconds>("serverside_config.idle_timeout_secs",
                                                              3600);
@@ -493,7 +498,17 @@ void COOLWSD::cleanupDocBrokers()
             if (configId.empty()) {
                 // ignore primordial forkit
             } else if (activeConfigs.contains(configId)) {
-                LOG_DBG("subforkit " << configId << " has active document, keep it");
+                auto idleDuration = now - SubForKitActivityTimes[configId].lastSpareConsumed;
+                if (idleDuration >= IdleServerSettingsTimeoutSecs)
+                {
+                    LOG_DBG("subforkit " << configId << " has active document but no recent new documents, reducing spares");
+                    std::unique_lock<std::mutex> lock(NewChildrenMutex);
+                    rebalanceChildren(configId, 1);
+                }
+                else
+                {
+                    LOG_DBG("subforkit " << configId << " has active document, keep it");
+                }
             } else if (OutstandingForks[configId] > 0) {
                 LOG_DBG("subforkit " << configId << " has a pending fork underway, keep it");
             } else {
@@ -528,6 +543,7 @@ void COOLWSD::cleanupDocBrokers()
                 ++recentlyUsedKept;
             }
         }
+#endif // !MOBILEAPP
 
 #if !MOBILEAPP && ENABLE_DEBUG
         if (COOLWSD::SingleKit && DocBrokers.empty())
