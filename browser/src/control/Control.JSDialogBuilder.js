@@ -2668,6 +2668,7 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 			&& data.type !== 'deck'
 			&& data.type !== 'pushbutton'
 			&& data.type !== 'iconview'
+			&& data.type !== 'overflowgroup'
 			)
 			control.setAttribute('tabIndex', '0');
 	},
