@@ -643,15 +643,17 @@ static void rebalanceChildren(const std::string& configId, int64_t balance)
         OutstandingForks[configId] = 0;
     }
 
-    balance -= available;
-    balance -= OutstandingForks[configId];
+    if (OutstandingForks[configId] != 0)
+        return;
 
-    if (balance > 0 && OutstandingForks[configId] == 0)
+    balance -= available;
+
+    if (balance > 0)
     {
         LOG_DBG("prespawnChildren ["
                 << configId << "]: Have " << available << " spare "
-                << (available == 1 ? "child" : "children") << ", and " << OutstandingForks[configId]
-                << " outstanding (total: " << NewChildren.size() << "), forking " << balance
+                << (available == 1 ? "child" : "children")
+                << " (total: " << NewChildren.size() << "), forking " << balance
                 << " more. Time since last request: " << durationMs);
         forkChildren(configId, balance);
     }
