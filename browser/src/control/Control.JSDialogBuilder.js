@@ -1777,173 +1777,6 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 			}
 		};
 
-		const isMainButtonToggle = function(commandName) {
-			const mainBtnToggleCmds = [
-				'.uno:AccessibilityCheck',
-				'.uno:AlignCenter',
-				'.uno:AlignDown',
-				'.uno:AlignHorizontalCenter',
-				'.uno:AlignLeft',
-				'.uno:AlignMiddle',
-				'.uno:AlignRight',
-				'.uno:AlignUp',
-				'.uno:Bold',
-				'.uno:CenterPara',
-				'.uno:CharBackgroundExt',
-				'.uno:ControlCodes',
-				'.uno:DefaultBullet',
-				'.uno:DefaultNumbering',
-				'.uno:DocumentRepair',
-				'.uno:EditDoc',
-				'.uno:FormatPaintbrush',
-				'.uno:invertbackground',
-				'.uno:Italic',
-				'.uno:JustifyPara',
-				'.uno:LeftPara',
-				'.uno:ModifiedStatus',
-				'.uno:nderlin',
-				'.uno:ObjectAlignLeft',
-				'.uno:ObjectAlignRight',
-				'.uno:OnlineAutoFormat',
-				'.uno:OutlineFont',
-				'.uno:ParaLeftToRight',
-				'.uno:ParaRightToLeft',
-				'.uno:RightPara',
-				'.uno:Shadowed',
-				'.uno:showannotations',
-				'.uno:ShowResolvedAnnotations',
-				'.uno:showruler',
-				'.uno:showstatusbar',
-				'.uno:ShowTrackedChanges',
-				'.uno:Sidebar',
-				'.uno:SidebarDeck.PropertyDeck',
-				'.uno:SidebarDeck.StyleListDeck',
-				'.uno:SpacePara1',
-				'.uno:SpacePara15',
-				'.uno:SpacePara2',
-				'.uno:SpellOnline',
-				'.uno:Strikeout',
-				'.uno:SubScript',
-				'.uno:SuperScript',
-				'.uno:TrackChanges',
-				'.uno:TrackChangesInAllViews',
-				'.uno:TrackChangesInThisView',
-				'.uno:Underline',
-				'comparechanges',
-				'showannotations',
-				'toggledarktheme',
-			];
-
-			// fallback: if any command is not included in above list
-			const stateValue = builder.map['stateChangeHandler']
-				? builder.map['stateChangeHandler'].getItemValue(data.command)
-				: 'false';
-
-			const isToggle =  stateValue === 'false' || stateValue === 'true';
-
-			return mainBtnToggleCmds.includes(commandName) || isToggle;
-		};
-
-		const isMainButtonDialog = function(commandName) {
-			const mainButtonDialogCmds = [
-				'.uno:About',
-				'.uno:AcceptTrackedChanges',
-				'.uno:ChangeAlignment',
-				'.uno:ChangeDistance',
-				'.uno:ChangeFont',
-				'.uno:ChangeFontSize',
-				'.uno:ChapterNumberingDialog',
-				'.uno:ContentControlProperties',
-				'.uno:EditRegion',
-				'.uno:FontDialog',
-				'.uno:FootnoteDialog',
-				'.uno:FormatColumns',
-				'.uno:FormatLine',
-				'.uno:ForumHelp',
-				'.uno:InsertAnnotation',
-				'.uno:InsertBookmark',
-				'.uno:InsertBreak',
-				'.uno:InsertFieldCtrl',
-				'.uno:InsertFrame',
-				'.uno:InsertIndexesEntry',
-				'.uno:InsertMultiIndex',
-				'.uno:InsertQrCode',
-				'.uno:InsertReferenceField',
-				'.uno:InsertSection',
-				'.uno:KeyboardShortcuts',
-				'.uno:LineNumberingDialog',
-				'.uno:NameGroup',
-				'.uno:ObjectTitleDescription',
-				'.uno:OnlineHelp',
-				'.uno:OutlineBullet',
-				'.uno:PageDialog',
-				'.uno:PageNumberWizard',
-				'.uno:ParagraphDialog',
-				'.uno:Print',
-				'.uno:ReportIssue',
-				'.uno:SearchDialog?InitialFocusReplace:bool=true',
-				'.uno:SetDocumentProperties',
-				'.uno:SetOutline',
-				'.uno:Settings',
-				'.uno:Signature',
-				'.uno:Spacing',
-				'.uno:SpellingAndGrammarDialog',
-				'.uno:SplitCell',
-				'.uno:SplitTable',
-				'.uno:TableDialog',
-				'.uno:TableNumberFormatDialog',
-				'.uno:TableSort',
-				'.uno:ThemeDialog',
-				'.uno:ThesaurusDialog',
-				'.uno:TitlePageDialog',
-				'.uno:TransformDialog',
-				'.uno:UpdateCurIndex',
-				'.uno:Watermark',
-				'.uno:WordCountDialog',
-				'charmapcontrol',
-				'hyperlinkdialog',
-				'remotelink',
-				'renamedocument',
-				'serveraudit',
-			];
-
-			return mainButtonDialogCmds.includes(commandName);
-		};
-
-		const isMainButtonDropdown = function(commandName) {
-			const mainBtnDropdownCmds = [
-				'.uno:BasicShapes',
-				'.uno:CharSpacing',
-				'.uno:CompareDocuments',
-				'.uno:FormatMenu',
-				'.uno:FormattingMarkMenu',
-				'.uno:GrafContrast',
-				'.uno:GrafLuminance',
-				'.uno:GrafMode',
-				'.uno:GrafTransparence',
-				'.uno:InsertGraphic',
-				'.uno:InsertTable',
-				'.uno:LanguageMenu',
-				'.uno:LineSpacing',
-				'.uno:Paste',
-				'.uno:SetBorderStyle',
-				'.uno:XLineColor',
-				'downloadas',
-				'exportas',
-				'home-search',
-				'LanguageStatusMenu',
-				'MenuMargins',
-				'MenuOrientation',
-				'MenuPageSizesWriter',
-				'saveas',
-				'StateTableCellMenu',
-				'viewModeDropdownButton',
-				'zoom',
-			];
-
-			return mainBtnDropdownCmds.includes(commandName);
-		};
-
 		if (data.command || data.postmessage === true) {
 			var id = data.id ? data.id : (data.command && data.command !== '') ? data.command.replace('.uno:', '') : data.text;
 			var isUnoCommand = data.command && data.command.indexOf('.uno:') >= 0;
@@ -2036,7 +1869,7 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 			// Set aria-pressed only if:
 			// 1. A real toggle button
 			const setAriaPressedForToggleBtn = (value) => {
-				if (isMainButtonToggle(data.command)) {
+				if (JSDialog.IsToggleButton(id, data.command, builder)) {
 					button.setAttribute('aria-pressed', value);
 				}
 			};
@@ -2090,11 +1923,11 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 			controls['label'] = span;
 		}
 
-		const hasPopUp = hasPopupRole || isMainButtonDialog(data.command) || isMainButtonDropdown(data.command);
+		const hasPopUp = hasPopupRole || JSDialog.IsDialogButton(id, data.command) || JSDialog.IsDropdownButton(id, data.command);
 
 		if (hasPopUp) {
 			button.setAttribute('aria-expanded', false);
-			if(isMainButtonDialog(data.command))
+			if (JSDialog.IsDialogButton(id, data.command))
 				button.setAttribute('aria-haspopup', 'dialog');
 			else
 				button.setAttribute('aria-haspopup', true);
@@ -2114,13 +1947,13 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 		}
 
 		const getAriaLabelGroupText = function(command) {
-			if (isMainButtonToggle(command))
+			if (JSDialog.IsToggleButton(id, command, builder))
 				return _('Toggle dropdown');
-			else if (isMainButtonDialog(command))
+			else if (JSDialog.IsDialogButton(id, command))
 				return _('Dialog dropdown');
-			else if (isMainButtonDropdown(command))
+			else if (JSDialog.IsDropdownButton(id, data.command))
 				return _('Dropdown');
-				
+
 			return _('Apply action dropdown');
 		};
 
@@ -2141,7 +1974,7 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 			// shouldHaveArrowbackground is true when we have dropdown arrow or dropdown button
 			// if main button and arrowbackground opens same dropdown then only arrowbackground should be div.
 			// otherwise, it should be button always.
-			const shouldArrowbackgroundButton = isSplitButton || !isMainButtonDropdown(data.command);
+			const shouldArrowbackgroundButton = isSplitButton || !JSDialog.IsDropdownButton(id, data.command);
 			if (shouldArrowbackgroundButton) {
 				// Arrow should be a real button (user can interact with it)
 				arrowbackground = window.L.DomUtil.create('button', 'arrowbackground', div);
@@ -2194,7 +2027,7 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 		// for decorative button we need to manage it via click function and closeDropdown
 		div._onDropDown = function(open) {
 
-			if (isMainButtonDropdown(data.command))
+			if (JSDialog.IsDropdownButton(id, data.command))
 				button.setAttribute('aria-expanded', open);
 			else
 				arrowbackground.setAttribute('aria-expanded', open);
