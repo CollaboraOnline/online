@@ -267,7 +267,7 @@ namespace cool {
 		private focusInput(): void {
 			requestAnimationFrame(() => {
 				const textarea = document.querySelector(
-					'#aichat-input .ui-textarea',
+					'#aichat-input.ui-textarea',
 				) as HTMLTextAreaElement | null;
 				if (textarea) textarea.focus();
 			});
@@ -753,7 +753,7 @@ namespace cool {
 			}
 
 			const textarea = document.querySelector(
-				'#aichat-input .ui-textarea',
+				'#aichat-input.ui-textarea',
 			) as HTMLTextAreaElement | null;
 			if (textarea) {
 				textarea.style.height = 'auto';
