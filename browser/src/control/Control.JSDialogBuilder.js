@@ -1910,32 +1910,6 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 			return mainButtonDialogCmds.includes(commandName);
 		};
 
-		const isMainButtonApplyAction = function(commandName, elementId) {
-			if (elementId.startsWith('overflow-button')) return true;
-
-			const mainBtnApplyActionCmds = [
-				'.uno:AcceptTrackedChangeToNext',
-				'.uno:BackgroundColor',
-				'.uno:CharBackColor',
-				'.uno:FillColor',
-				'.uno:FontColor',
-				'.uno:FormatBulletsMenu',
-				'.uno:GrafContrast',
-				'.uno:GrafLuminance',
-				'.uno:GrafMode',
-				'.uno:GrafTransparence',
-				'.uno:InsertAnnotation',
-				'.uno:InsertPageHeader',
-				'.uno:NumberFormatCurrency',
-				'.uno:RejectTrackedChangeToNext',
-				'.uno:TableCellBackgroundColor',
-				'.uno:XLineColor',
-				'.uno:Zoom',
-			];
-
-			return mainBtnApplyActionCmds.includes(commandName);
-		};
-
 		const isMainButtonDropdown = function(commandName) {
 			const mainBtnDropdownCmds = [
 				'.uno:BasicShapes',
@@ -2144,10 +2118,10 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 				return _('Toggle dropdown');
 			else if (isMainButtonDialog(command))
 				return _('Dialog dropdown');
-			else if (isMainButtonApplyAction(command, id))
-				return _('Apply action dropdown');
-
-			return _('Dropdown');
+			else if (isMainButtonDropdown(command))
+				return _('Dropdown');
+				
+			return _('Apply action dropdown');
 		};
 
 		var arrowbackground;
