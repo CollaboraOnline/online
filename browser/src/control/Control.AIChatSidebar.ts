@@ -108,12 +108,21 @@ namespace cool {
 		private registerChatHandlers(): void {
 			app.map.on('aichatresult', this.onAIChatResult, this);
 			app.map.on('docloaded', this.onDocLoaded, this);
+			app.map.on('textselectionchange', this.onTextSelectionChange, this);
 		}
 
 		private onDocLoaded(e: any): void {
 			if (e.status === false && this._isActive) {
 				this.hide();
 				this.clearConversation();
+			}
+		}
+
+		private onTextSelectionChange(): void {
+			if (!this._isActive) return;
+			const selCtx = document.getElementById('aichat-selection-context');
+			if (selCtx) {
+				selCtx.style.display = TextSelections.isActive() ? '' : 'none';
 			}
 		}
 
@@ -218,7 +227,6 @@ namespace cool {
 		}
 
 		private applyCardStyles(): void {
-			const hasSelection = TextSelections.isActive();
 			const chips = document.getElementById('aichat-chips');
 			if (!chips) return;
 
@@ -226,19 +234,10 @@ namespace cool {
 			const wrappers = chips.querySelectorAll('[id^="aichat-chip-"]');
 			wrappers.forEach((w) => w.setAttribute('role', 'listitem'));
 
-			const cards = chips.querySelectorAll(
-				'[id^="aichat-chip-"]:not(#aichat-chip-formula-diagnosis) > button.ui-pushbutton',
-			);
-			cards.forEach((btn) => {
-				const existing = btn.querySelector('.aichat-sel-badge');
-				if (existing) existing.remove();
-				if (hasSelection) {
-					const badge = document.createElement('span');
-					badge.className = 'aichat-sel-badge';
-					badge.textContent = _('selection');
-					btn.appendChild(badge);
-				}
-			});
+			const selCtx = document.getElementById('aichat-selection-context');
+			if (selCtx) {
+				selCtx.style.display = TextSelections.isActive() ? '' : 'none';
+			}
 
 			this.setupChipKeyboardNavigation();
 		}
@@ -577,6 +576,14 @@ namespace cool {
 
 		private getPromptChipsJSON(): any {
 			const cardChildren: any[] = [];
+
+			// Selection context indicator — shown/hidden in applyCardStyles()
+			cardChildren.push({
+				id: 'aichat-selection-context',
+				type: 'fixedtext',
+				text: '\u2726  ' + _('Using selected text as context'),
+				enabled: true,
+			});
 
 			if (app.map.getDocType() === 'spreadsheet') {
 				cardChildren.push({
