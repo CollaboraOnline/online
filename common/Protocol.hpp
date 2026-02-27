@@ -11,6 +11,7 @@
 
 #pragma once
 
+#include <common/NumUtil.hpp>
 #include <common/StringVector.hpp>
 #include <common/Util.hpp>
 
@@ -78,21 +79,21 @@ namespace COOLProtocol
     inline bool stringToInteger(const std::string_view input, int& value)
     {
         bool res;
-        std::tie(value, res) = Util::i32FromString(input);
+        std::tie(value, res) = NumUtil::i32FromString(input);
         return res;
     }
 
     inline bool stringToUInt32(const std::string_view input, uint32_t& value)
     {
         bool res;
-        std::tie(value, res) = Util::i32FromString(input);
+        std::tie(value, res) = NumUtil::i32FromString(input);
         return res;
     }
 
     inline bool stringToUInt64(const std::string_view input, uint64_t& value)
     {
         bool res;
-        std::tie(value, res) = Util::u64FromString(input);
+        std::tie(value, res) = NumUtil::u64FromString(input);
         return res;
     }
 
@@ -140,7 +141,7 @@ namespace COOLProtocol
         if (token.size() > N && token[N - 1] == '=' && token.compare(0, N - 1, name) == 0)
         {
             bool success;
-            std::tie(value, success) = Util::i32FromString(token.substr(N));
+            std::tie(value, success) = NumUtil::i32FromString(token.substr(N));
             return success;
         }
 

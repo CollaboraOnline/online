@@ -62,7 +62,7 @@ namespace COOLProtocol
             token[name.size()] == '=')
         {
             bool success;
-            std::tie(value, success) = Util::i32FromString(token.substr(name.size() + 1));
+            std::tie(value, success) = NumUtil::i32FromString(token.substr(name.size() + 1));
             return success;
         }
 
