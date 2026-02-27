@@ -127,7 +127,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Track Changes', function (
 		helper.expectTextForClipboard('Hello World');
 	});
 
-	it.skip('Compare documents', function () {
+	it('Compare documents', function () {
 		// Given an ~empty (new) document:
 		desktopHelper.switchUIToNotebookbar();
 		cy.cGet('#Review-tab-label').click();
@@ -154,7 +154,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Track Changes', function (
 		});
 	});
 
-	it.skip('Compare remote documents', function () {
+	it('Compare remote documents', function () {
 		// Given a document:
 		desktopHelper.switchUIToNotebookbar();
 		// Switch to the 'Review' tab.
