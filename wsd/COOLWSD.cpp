@@ -662,6 +662,28 @@ static void rebalanceChildren(const std::string& configId, int64_t balance)
                 << " more. Time since last request: " << durationMs);
         forkChildren(configId, balance);
     }
+    else if (balance < 0)
+    {
+        const int64_t excess = -balance;
+        LOG_DBG("prespawnChildren ["
+                << configId << "]: Have " << available << " spare "
+                << (available == 1 ? "child" : "children")
+                << " (total: " << NewChildren.size() << "), removing " << excess);
+        int64_t removed = 0;
+        for (auto it = NewChildren.begin(); it != NewChildren.end() && removed < excess; )
+        {
+            if ((*it)->getConfigId() == configId)
+            {
+                (*it)->close();
+                it = NewChildren.erase(it);
+                ++removed;
+            }
+            else
+            {
+                ++it;
+            }
+        }
+    }
 }
 
 /// Proactively spawn children processes
