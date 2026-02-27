@@ -267,6 +267,10 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 		cy.cGet('#indication').should('exist').should('be.visible');
 		cy.cGet('#name').should('exist').should('be.visible');
 
+		// Wait for the dialog to fully initialize
+		helper.processToIdle(this.win);
+		cy.cGet('#indication-input').should('have.value', 'text text1');
+
 		cy.cGet('#indication-input').type('link');
 		cy.cGet('#target-input').type('www.something.com');
 		cy.cGet('#ok').click();
