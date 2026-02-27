@@ -320,6 +320,8 @@ public:
 
     void uploadViewSettingsToWopiHost();
 
+    void uploadServerPrivateInfoToWopiHost();
+
     /// Override parsedDocOption values we get from browser setting json
     /// Because when client sends `load url` it doesn't have information about browser setting json
     void overrideDocOption();
@@ -333,6 +335,10 @@ private:
     {
         return std::static_pointer_cast<ClientSession>(shared_from_this());
     }
+
+    /// Helper function to upload settings to WOPI host
+    void uploadSettingsToWopiHost(const std::string& filePath, const std::string& jsonBody,
+                                   const std::string& settingName);
 
     /// SocketHandler: disconnection event.
     void onDisconnect() override;
