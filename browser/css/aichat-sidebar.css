@@ -636,6 +636,20 @@
 	border-color: var(--color-error);
 }
 
+/* ── Selection context indicator (above prompt chips) ── */
+
+#aichat-selection-context {
+	font-size: 11px;
+	color: rgb(var(--aichat-accent));
+	background: rgba(var(--aichat-accent), 0.04);
+	border-left: 2px solid rgba(var(--aichat-accent), 0.4);
+	border-radius: 0 var(--border-radius-s) var(--border-radius-s) 0;
+	padding: 6px 10px;
+	margin: 0 4px 10px;
+	line-height: 1.4;
+	animation: aichat-slide-up 0.15s ease-out;
+}
+
 /* ── Prompt suggestion cards ── */
 
 #aichat-chips {
@@ -702,20 +716,6 @@
 	outline-offset: -2px;
 }
 
-/* "selection" badge — indicates selected text will be used */
-.aichat-sel-badge {
-	display: inline-block;
-	font-size: 11px;
-	color: rgb(var(--aichat-accent));
-	background: rgba(var(--aichat-accent), 0.08);
-	border: 1px solid rgba(var(--aichat-accent), 0.18);
-	padding: 2px 8px;
-	border-radius: 10px;
-	flex-shrink: 0;
-	letter-spacing: 0.01em;
-	line-height: 1.4;
-	margin-left: auto;
-}
 
 /* ── "See more" / "See less" button ── */
 
@@ -748,7 +748,8 @@
 @media (prefers-reduced-motion: reduce) {
 	[id^='aichat-msg-'],
 	#aichat-loading-dots,
-	#aichat-chips > [id^='aichat-chip-'] {
+	#aichat-chips > [id^='aichat-chip-'],
+	#aichat-selection-context {
 		animation: none;
 	}
 
