@@ -24,6 +24,7 @@
 #include <common/ConfigUtil.hpp>
 #include <common/HexUtil.hpp>
 #include <common/JsonUtil.hpp>
+#include <common/NumUtil.hpp>
 #include <common/Log.hpp>
 #include <common/Protocol.hpp>
 #include <common/Session.hpp>
@@ -1170,7 +1171,7 @@ bool ClientSession::_handleInput(const char *buffer, int length)
         // call onTileProcessed on each tileID of tileid1, tileid2, ...
         auto lambda = [this](size_t /*nIndex*/, const std::string_view token)
         {
-            const auto [wireId, res] = Util::i32FromString(token);
+            const auto [wireId, res] = NumUtil::i32FromString(token);
             if (!res)
                 LOG_WRN("Invalid syntax for tileprocessed wireid '" << token << "'");
             onTileProcessed(wireId);
