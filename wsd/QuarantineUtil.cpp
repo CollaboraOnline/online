@@ -21,6 +21,7 @@
 #include <common/Common.hpp>
 #include <common/FileUtil.hpp>
 #include <common/Log.hpp>
+#include <common/NumUtil.hpp>
 #include <common/StringVector.hpp>
 #include <common/Util.hpp>
 #include <wsd/ClientSession.hpp>
@@ -454,10 +455,10 @@ Quarantine::Entry::Entry(const std::string& root, const std::string& filename)
     if (tokens.size() > 3)
     {
         _secondsSinceEpoch =
-            Util::u64FromString(filename.substr(tokens[0]._index, tokens[0]._length), /*def=*/0)
+            NumUtil::u64FromString(filename.substr(tokens[0]._index, tokens[0]._length), /*def=*/0)
                 .first;
 
-        _pid = Util::u64FromString(filename.substr(tokens[1]._index, tokens[1]._length), /*def=*/0)
+        _pid = NumUtil::u64FromString(filename.substr(tokens[1]._index, tokens[1]._length), /*def=*/0)
                    .first;
 
         // Note: this is unreliable since both the dockey and filename can (and often do) contain the Delimiter '_'.
@@ -488,10 +489,10 @@ Quarantine::Entry::Entry(const std::string& root, const std::string& docKey,
     if (tokens.size() >= 3)
     {
         _secondsSinceEpoch =
-            Util::u64FromString(filename.substr(tokens[0]._index, tokens[0]._length), /*def=*/0)
+            NumUtil::u64FromString(filename.substr(tokens[0]._index, tokens[0]._length), /*def=*/0)
                 .first;
 
-        _pid = Util::u64FromString(filename.substr(tokens[1]._index, tokens[1]._length), /*def=*/0)
+        _pid = NumUtil::u64FromString(filename.substr(tokens[1]._index, tokens[1]._length), /*def=*/0)
                    .first;
 
         _filename = filename.substr(tokens[2]._index, tokens[2]._length);

@@ -38,6 +38,7 @@
 #include <math.h>
 
 #include <common/HexUtil.hpp>
+#include <common/NumUtil.hpp>
 #include <common/Util.hpp>
 
 #if !defined(__GLIBC__)
@@ -786,7 +787,7 @@ int main(int argc, char **argv)
 
         if (*dir_proc->d_name > '0' && *dir_proc->d_name <= '9')
         {
-            const unsigned pid_proc = Util::u64FromString(dir_proc->d_name, 0).first;
+            const unsigned pid_proc = NumUtil::u64FromString(dir_proc->d_name, 0).first;
 
             snprintf(path_proc, sizeof(path_proc), "/proc/%s/%s", dir_proc->d_name, "cmdline");
             if (read_buffer(cmdline, sizeof(cmdline), path_proc, ' ') &&

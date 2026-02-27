@@ -17,6 +17,7 @@
 #include <config.h>
 
 #include <common/Log.hpp>
+#include <common/NumUtil.hpp>
 #include <common/StringVector.hpp>
 #include <common/Util.hpp>
 
@@ -349,7 +350,7 @@ std::size_t getProcessTreePss(pid_t pid)
             std::string child;
             while (children >> child)
             {
-                const auto pair = Util::i32FromString(child);
+                const auto pair = NumUtil::i32FromString(child);
                 if (pair.second)
                 {
                     pss += getProcessTreePss(pair.first);
@@ -434,7 +435,7 @@ std::size_t getStatFromPid(const pid_t pid, int ind)
                     if (index == ind)
                     {
                         fclose(fp);
-                        return Util::u64FromString(&s[pos], 0).first;
+                        return NumUtil::u64FromString(&s[pos], 0).first;
                     }
                     ++index;
                     pos = s.find(' ', pos + 1);

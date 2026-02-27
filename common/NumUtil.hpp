@@ -13,6 +13,7 @@
 
 #include <cctype>
 #include <cstdint>
+#include <cstdlib>
 #include <limits>
 
 /// Utilities for numeric conversions.
@@ -73,6 +74,47 @@ inline int safe_atoi(const char* p, int len)
     }
 
     return multiplier * ret;
+}
+
+/// Convert a string to 32-bit signed int.
+/// Returns the parsed value and a boolean indicating success or failure.
+/// const auto [number, success] = NumUtil::i32FromString(portString);
+inline std::pair<std::int32_t, bool> i32FromString(const std::string_view input)
+{
+    const char* str = input.data();
+    char* endptr = nullptr;
+    errno = 0;
+    const auto value = std::strtol(str, &endptr, 10);
+    return std::make_pair(value, endptr > str && errno != ERANGE);
+}
+
+/// Convert a string to 32-bit signed int. On failure, returns the default
+/// value, and sets the bool to false (to signify that parsing had failed).
+inline std::pair<std::int32_t, bool> i32FromString(const std::string_view input,
+                                                   const std::int32_t def)
+{
+    const auto pair = i32FromString(input);
+    return pair.second ? pair : std::make_pair(def, false);
+}
+
+/// Convert a string to 64-bit unsigned int.
+/// Returns the parsed value and a boolean indicating success or failure.
+inline std::pair<std::uint64_t, bool> u64FromString(const std::string_view input)
+{
+    const char* str = input.data();
+    char* endptr = nullptr;
+    errno = 0;
+    const auto value = std::strtoul(str, &endptr, 10);
+    return std::make_pair(value, endptr > str && errno != ERANGE);
+}
+
+/// Convert a string to 64-bit unsigned int. On failure, returns the default
+/// value, and sets the bool to false (to signify that parsing had failed).
+inline std::pair<std::uint64_t, bool> u64FromString(const std::string_view input,
+                                                    const std::uint64_t def)
+{
+    const auto pair = u64FromString(input);
+    return pair.second ? pair : std::make_pair(def, false);
 }
 
 } // namespace NumUtil
