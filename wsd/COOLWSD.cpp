@@ -149,7 +149,14 @@ std::map<std::string, int> OutstandingForks;
 std::map<std::string, std::chrono::steady_clock::time_point> LastForkRequestTimes;
 using SubForKitMap = std::map<std::string, std::shared_ptr<ForKitProcess>>;
 SubForKitMap SubForKitProcs;
-std::map<std::string, std::chrono::steady_clock::time_point> LastSubForKitBrokerExitTimes;
+struct SubForKitActivity
+{
+    // When a document was last closed for this configId.
+    std::chrono::steady_clock::time_point lastDocClosed;
+    // When a spare child was last consumed (i.e. a new document opened).
+    std::chrono::steady_clock::time_point lastSpareConsumed;
+};
+std::map<std::string, SubForKitActivity> SubForKitActivityTimes;
 Poco::AutoPtr<Poco::Util::XMLConfiguration> KitXmlConfig;
 std::string LoggableConfigEntries;
 
@@ -412,7 +419,7 @@ SubForKitMap::iterator dropSubForKit(SubForKitMap::iterator it)
     // copy as it will be used after erase()
     std::string configId = it->first;
 
-    LastSubForKitBrokerExitTimes.erase(configId);
+    SubForKitActivityTimes.erase(configId);
     OutstandingForks.erase(configId);
     it = SubForKitProcs.erase(it);
     UNITWSD_CALL(killSubForKit(configId));
@@ -444,7 +451,7 @@ void COOLWSD::cleanupDocBrokers()
         // Remove only when not alive.
         if (!docBroker->isAlive())
         {
-            LastSubForKitBrokerExitTimes[docBroker->getConfigId()] = now;
+            SubForKitActivityTimes[docBroker->getConfigId()].lastDocClosed = now;
             LOG_INF("Removing DocumentBroker for docKey ["
                     << it->first << "], " << docBroker.use_count() << " references");
             docBroker->dispose();
@@ -498,7 +505,7 @@ void COOLWSD::cleanupDocBrokers()
             } else if (OutstandingForks[configId] > 0) {
                 LOG_DBG("subforkit " << configId << " has a pending fork underway, keep it");
             } else {
-                auto idleDuration = now - LastSubForKitBrokerExitTimes[configId];
+                auto idleDuration = now - SubForKitActivityTimes[configId].lastDocClosed;
                 idleCandidates.emplace_back(idleDuration, configId);
             }
         }
@@ -1027,6 +1034,7 @@ std::shared_ptr<ChildProcess> getNewChild_Blocks(const std::shared_ptr<SocketPol
         LOG_TRC("NewChildrenCV wait successful");
         std::shared_ptr<ChildProcess> child = NewChildren.back();
         NewChildren.pop_back();
+        SubForKitActivityTimes[configId].lastSpareConsumed = std::chrono::steady_clock::now();
         const size_t available = NewChildren.size();
 
         // Release early before moving sockets.
