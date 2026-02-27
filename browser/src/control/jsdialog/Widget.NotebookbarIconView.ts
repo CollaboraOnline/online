@@ -20,6 +20,7 @@ function _createButtonForNotebookbarIconview(
 	builder: JSBuilder,
 	onClickCallback: any,
 	accessibility?: NotebookbarAccessibilityDescriptor,
+	opensPopup?: boolean,
 ) {
 	const container = window.L.DomUtil.create(
 		'div',
@@ -37,6 +38,8 @@ function _createButtonForNotebookbarIconview(
 	);
 	button.id = id + '-button';
 	if (accessibility?.combination) button.accessKey = accessibility?.combination;
+
+	if (opensPopup) button.setAttribute('aria-haspopup', 'dialog');
 
 	const a11yData: WidgetJSON = {
 		id: id,
@@ -198,6 +201,7 @@ JSDialog.notebookbarIconView = function (
 		builder,
 		expanderCallback,
 		{ focusBack: true, combination: 'SD', de: null },
+		true /* opensPopup */,
 	);
 
 	commonContainer.appendChild(buttonsContainer);
