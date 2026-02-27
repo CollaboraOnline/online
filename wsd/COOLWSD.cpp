@@ -591,11 +591,10 @@ bool COOLWSD::ensureSubForKit(const std::string& configId)
 }
 
 /// Cleans up dead children.
-/// Returns true if removed at least one.
-static bool cleanupChildren()
+static void cleanupChildren()
 {
     if (Util::isKitInProcess())
-        return 0;
+        return;
 
     Util::assertIsLocked(NewChildrenMutex);
 
@@ -612,14 +611,15 @@ static bool cleanupChildren()
     if (static_cast<int>(NewChildren.size()) != count)
         SigUtil::addActivity("removed " + std::to_string(count - NewChildren.size()) +
                              " children");
-
-    return static_cast<int>(NewChildren.size()) != count;
 }
 
 /// Decides how many children need spawning and spawns.
 static void rebalanceChildren(const std::string& configId, int64_t balance)
 {
     Util::assertIsLocked(NewChildrenMutex);
+
+    // Remove dead children first so the available count is accurate.
+    cleanupChildren();
 
     int64_t available = 0;
     for (const auto& elem : NewChildren)
@@ -630,9 +630,6 @@ static void rebalanceChildren(const std::string& configId, int64_t balance)
 
     LOG_TRC("Rebalance children to " << balance << ", have " << available << " and "
                                      << OutstandingForks[configId] << " outstanding requests");
-
-    // Do the cleanup first.
-    const bool rebalance = cleanupChildren();
 
     const auto duration = (std::chrono::steady_clock::now() - LastForkRequestTimes[configId]);
     const auto durationMs = std::chrono::duration_cast<std::chrono::milliseconds>(duration);
@@ -649,7 +646,7 @@ static void rebalanceChildren(const std::string& configId, int64_t balance)
     balance -= available;
     balance -= OutstandingForks[configId];
 
-    if (balance > 0 && (rebalance || OutstandingForks[configId] == 0))
+    if (balance > 0 && OutstandingForks[configId] == 0)
     {
         LOG_DBG("prespawnChildren ["
                 << configId << "]: Have " << available << " spare "
