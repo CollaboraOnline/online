@@ -340,7 +340,6 @@ JSDialog.OverflowGroup = function (
 		parentContainer,
 	);
 	overflowGroupContainer.id = data.id;
-	overflowGroupContainer.setAttribute('tabindex', '-1');
 
 	const overflowGroupInnerContainer = window.L.DomUtil.create(
 		'div',
