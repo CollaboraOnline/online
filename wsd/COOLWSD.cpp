@@ -706,6 +706,8 @@ static void rebalanceChildren(const std::string& configId, int64_t balance)
                 ++it;
             }
         }
+
+        UNITWSD_CALL(sparesReduced(configId, excess));
     }
 }
 

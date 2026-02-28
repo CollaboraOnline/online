@@ -74,6 +74,7 @@ all_la_unit_tests = \
 	unit-join-disconnect.la \
 	unit-timeout_inactive.la \
 	unit-multi-tenant.la \
+	unit-spare-reduction.la \
 	unit-password-protected.la \
 	unit-calc.la \
 	unit-wopi-temp.la \
@@ -378,6 +379,8 @@ unit_quarantine_la_SOURCES = UnitQuarantine.cpp
 unit_quarantine_la_LIBADD = $(CPPUNIT_LIBS)
 unit_multi_tenant_la_SOURCES = UnitMultiTenant.cpp
 unit_multi_tenant_la_LIBADD = $(CPPUNIT_LIBS)
+unit_spare_reduction_la_SOURCES = UnitSpareReduction.cpp
+unit_spare_reduction_la_LIBADD = $(CPPUNIT_LIBS)
 unit_user_presets_la_SOURCES = UnitUserPresets.cpp
 unit_user_presets_la_LIBADD = $(CPPUNIT_LIBS)
 unit_perf_la_SOURCES = UnitPerf.cpp
