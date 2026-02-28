@@ -272,6 +272,8 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 		cy.cGet('#indication-input').should('have.value', 'text text1');
 
 		cy.cGet('#indication-input').type('link');
+		// Wait for indication field response to be processed before typing in target
+		helper.processToIdle(this.win);
 		cy.cGet('#target-input').type('www.something.com');
 		cy.cGet('#ok').click();
 
@@ -282,7 +284,7 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 		cy.cGet('#copy-paste-container p a').should('have.attr', 'href', 'http://www.something.com/');
 	});
 
-	it.skip('Insert mail hyperlink.', function() {
+	it('Insert mail hyperlink.', function() {
 		helper.setDummyClipboardForCopy();
 
 		cy.cGet('#Insert-tab-label').click();
@@ -293,7 +295,12 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 		cy.cGet('#receiver').should('exist').should('be.visible');
 		cy.cGet('#subject').should('exist').should('be.visible');
 
+		// Wait for the dialog to fully initialize
+		helper.processToIdle(this.win);
+
 		cy.cGet('#receiver-input').type('john.doe@test.abc');
+		// Wait for receiver field response to be processed before typing in target
+		helper.processToIdle(this.win);
 		cy.cGet('#subject-input').type('planning-meeting');
 		cy.cGet('#ok').click();
 
