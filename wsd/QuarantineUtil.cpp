@@ -455,11 +455,10 @@ Quarantine::Entry::Entry(const std::string& root, const std::string& filename)
     if (tokens.size() > 3)
     {
         _secondsSinceEpoch =
-            NumUtil::u64FromString(filename.substr(tokens[0]._index, tokens[0]._length), /*def=*/0)
-                .first;
+            NumUtil::u64FromString(filename.substr(tokens[0]._index, tokens[0]._length), /*def=*/0);
 
-        _pid = NumUtil::u64FromString(filename.substr(tokens[1]._index, tokens[1]._length), /*def=*/0)
-                   .first;
+        _pid =
+            NumUtil::u64FromString(filename.substr(tokens[1]._index, tokens[1]._length), /*def=*/0);
 
         // Note: this is unreliable since both the dockey and filename can (and often do) contain the Delimiter '_'.
         _docKey = filename.substr(tokens[2]._index,
@@ -489,11 +488,10 @@ Quarantine::Entry::Entry(const std::string& root, const std::string& docKey,
     if (tokens.size() >= 3)
     {
         _secondsSinceEpoch =
-            NumUtil::u64FromString(filename.substr(tokens[0]._index, tokens[0]._length), /*def=*/0)
-                .first;
+            NumUtil::u64FromString(filename.substr(tokens[0]._index, tokens[0]._length), /*def=*/0);
 
-        _pid = NumUtil::u64FromString(filename.substr(tokens[1]._index, tokens[1]._length), /*def=*/0)
-                   .first;
+        _pid =
+            NumUtil::u64FromString(filename.substr(tokens[1]._index, tokens[1]._length), /*def=*/0);
 
         _filename = filename.substr(tokens[2]._index, tokens[2]._length);
 
