@@ -368,6 +368,8 @@ function switchUIToCompact() {
 		if (userInterfaceMode === 'notebookbar') {
 			cy.cGet('#View-tab-label').click();
 			getNbIcon('toggleuimode', 'View').click();
+			// Wait for the compact toolbar to load
+			cy.cGet('#toolbar-up').should('be.visible');
 		}
 	});
 
