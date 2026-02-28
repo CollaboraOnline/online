@@ -17,7 +17,7 @@ describe(['tagdesktop'], 'Searching via find dialog' ,function() {
 		findHelper.openFindDialog(this.win);
 		findHelper.typeIntoSearchField('a');
 
-		findHelper.findNext();
+		findHelper.findNext(this.win);
 		findHelper.closeFindDialog(); // we cant copy the document text while the dialog is still open
 		// A shape and some text should be selected
 		//cy.get('.transform-handler--rotate')
@@ -36,7 +36,7 @@ describe(['tagdesktop'], 'Searching via find dialog' ,function() {
 
 		findHelper.openFindDialog(this.win);
 		findHelper.typeIntoSearchField('q');
-		findHelper.findNext();
+		findHelper.findNext(this.win);
 
 		helper.textSelectionShouldNotExist();
 	});
@@ -46,7 +46,7 @@ describe(['tagdesktop'], 'Searching via find dialog' ,function() {
 		findHelper.openFindDialog(this.win);
 		findHelper.typeIntoSearchField('a');
 
-		findHelper.findNext();
+		findHelper.findNext(this.win);
 		findHelper.closeFindDialog();
 
 		// A shape and some text should be selected
@@ -62,7 +62,7 @@ describe(['tagdesktop'], 'Searching via find dialog' ,function() {
 		// Search next instance
 		findHelper.openFindDialog(this.win);
 		findHelper.typeIntoSearchField('a');
-		findHelper.findNext();
+		findHelper.findNext(this.win);
 		findHelper.closeFindDialog();
 
 		//cy.get('.transform-handler--rotate')
@@ -83,7 +83,7 @@ describe(['tagdesktop'], 'Searching via find dialog' ,function() {
 		// Search prev instance
 		findHelper.openFindDialog(this.win);
 		findHelper.typeIntoSearchField('a');
-		findHelper.findPrev();
+		findHelper.findPrev(this.win);
 		findHelper.closeFindDialog();
 
 		//cy.get('.transform-handler--rotate')
@@ -107,7 +107,7 @@ describe(['tagdesktop'], 'Searching via find dialog' ,function() {
 		findHelper.openFindDialog(this.win);
 		findHelper.typeIntoSearchField('a');
 
-		findHelper.findNext();
+		findHelper.findNext(this.win);
 		findHelper.closeFindDialog();
 
 		// A shape and some text should be selected
@@ -122,7 +122,7 @@ describe(['tagdesktop'], 'Searching via find dialog' ,function() {
 		// Search next instance
 		findHelper.openFindDialog(this.win);
 		findHelper.typeIntoSearchField('a');
-		findHelper.findNext();
+		findHelper.findNext(this.win);
 		findHelper.closeFindDialog();
 
 		//cy.get('.transform-handler--rotate')
@@ -142,7 +142,7 @@ describe(['tagdesktop'], 'Searching via find dialog' ,function() {
 		// Search next instance, which is in the beginning of the document.
 		findHelper.openFindDialog(this.win);
 		findHelper.typeIntoSearchField('a');
-		findHelper.findNext();
+		findHelper.findNext(this.win);
 		findHelper.closeFindDialog();
 
 		//cy.get('.transform-handler--rotate')
