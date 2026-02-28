@@ -35,8 +35,9 @@ class ColorPicker {
 	_selectedBasicColorIndex: number;
 	_selectedTintIndex: number;
 
+	static ID = 0;
+
 	statics = {
-		ID: 0,
 		ID_TAG: 'color-picker-',
 
 		// we need a tight layout in order to be able to show 11 colors as in gdoc
@@ -200,7 +201,7 @@ class ColorPicker {
 		this._selectedBasicColorIndex = 0;
 		this._selectedTintIndex = 0;
 
-		const pickerID = this.statics.ID++;
+		const pickerID = ColorPicker.ID++;
 
 		this._basicColorSampleIdTag =
 			this.statics.ID_TAG + pickerID + '-basic-color-';
