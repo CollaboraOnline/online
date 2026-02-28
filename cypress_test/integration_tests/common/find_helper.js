@@ -42,21 +42,24 @@ function typeIntoSearchField(text) {
 }
 
 // Move to the next search result in the document.
-function findNext() {
+function findNext(win) {
     cy.log('>> findNext - start');
 
     cy.cGet('#search-button').should('not.have.attr', 'disabled');
     cy.cGet('#search-button').click();
+    helper.processToIdle(win);
 
     cy.log('<< findNext - end');
 }
 
 // Move to the previous search result in the document.
-function findPrev() {
+function findPrev(win) {
     cy.log('>> findPrev - start');
 
     cy.cGet('#backsearch-button').should('not.have.attr', 'disabled');
     cy.cGet('#backsearch-button').click();
+    if (win)
+        helper.processToIdle(win);
 
     cy.log('<< findPrev - end');
 }

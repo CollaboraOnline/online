@@ -20,23 +20,23 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Searching via find dialog.
 		findHelper.openFindDialog(this.win);
 		findHelper.typeIntoSearchField('a');
 
-		findHelper.findNext();
+		findHelper.findNext(this.win);
 		// First cell should be selected
 		calcHelper.assertAddressAfterIdle(this.win, 'A1');
 		helper.copy();
 		cy.cGet('#copy-paste-container table td').should('have.text', 'a');
 
-		findHelper.findNext();
+		findHelper.findNext(this.win);
 		calcHelper.assertAddressAfterIdle(this.win, 'B1');
 
 		findHelper.typeIntoSearchField('c');
-		findHelper.findNext();
+		findHelper.findNext(this.win);
 		calcHelper.assertAddressAfterIdle(this.win, 'C1');
 
 		helper.copy();
 		cy.cGet('#copy-paste-container table td').should('have.text', 'c');
 
-		findHelper.findNext();
+		findHelper.findNext(this.win);
 		calcHelper.assertAddressAfterIdle(this.win, 'A301');
 	});
 
@@ -61,7 +61,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Searching via find dialog.
 		findHelper.typeIntoSearchField('a');
 		helper.processToIdle(this.win);
 
-		findHelper.findNext();
+		findHelper.findNext(this.win);
 		calcHelper.assertAddressAfterIdle(this.win, 'A1');
 		desktopHelper.assertScrollbarPosition('vertical', 10, 30);
 
@@ -69,7 +69,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Searching via find dialog.
 		helper.processToIdle(this.win);
 
 		findHelper.typeIntoSearchField('c');
-		findHelper.findNext();
+		findHelper.findNext(this.win);
 		calcHelper.assertAddressAfterIdle(this.win, 'C1');
 		desktopHelper.assertScrollbarPosition('vertical', 10, 30);
 	});
@@ -86,19 +86,19 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Searching via find dialog.
 		helper.setDummyClipboardForCopy();
 		findHelper.openFindDialog(this.win);
 		findHelper.typeIntoSearchField('d');
-		findHelper.findNext();
+		findHelper.findNext(this.win);
 		calcHelper.assertAddressAfterIdle(this.win, 'A472');
 		helper.copy();
 		cy.cGet('#copy-paste-container table td').should('have.text', 'd');
 
 		// Search next instance
-		findHelper.findNext();
+		findHelper.findNext(this.win);
 		calcHelper.assertAddressAfterIdle(this.win, 'D1');
 		helper.copy();
 		cy.cGet('#copy-paste-container table td').should('have.text', 'd');
 
 		// Search prev instance
-		findHelper.findPrev();
+		findHelper.findPrev(this.win);
 		calcHelper.assertAddressAfterIdle(this.win, 'A472');
 		helper.copy();
 		cy.cGet('#copy-paste-container table td').should('have.text', 'd');
@@ -109,19 +109,19 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Searching via find dialog.
 		findHelper.openFindDialog(this.win);
 		findHelper.typeIntoSearchField('a');
 
-		findHelper.findNext();
+		findHelper.findNext(this.win);
 		calcHelper.assertAddressAfterIdle(this.win, 'A1');
 		helper.copy();
 		cy.cGet('#copy-paste-container table td').should('have.text', 'a');
 
 		// Search next instance
-		findHelper.findNext();
+		findHelper.findNext(this.win);
 		calcHelper.assertAddressAfterIdle(this.win, 'B1');
 		helper.copy();
 		cy.cGet('#copy-paste-container table td').should('have.text', 'a');
 
 		// Search next instance, which is in the beginning of the document.
-		findHelper.findNext();
+		findHelper.findNext(this.win);
 		calcHelper.assertAddressAfterIdle(this.win, 'A1');
 		helper.copy();
 		cy.cGet('#copy-paste-container table td').should('have.text', 'a');
@@ -143,23 +143,23 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Jump to result.', function
 		findHelper.openFindDialog(this.win);
 		findHelper.typeIntoSearchField('result');
 
-		findHelper.findNext();
+		findHelper.findNext(this.win);
 		// First cell should be selected
 		calcHelper.assertAddressAfterIdle(this.win, 'C8');
 		helper.copy();
 		cy.cGet('#copy-paste-container table td').should('have.text', 'result top');
 		desktopHelper.assertScrollbarPosition('vertical', 0, 30);
 
-		findHelper.findNext();
+		findHelper.findNext(this.win);
 		calcHelper.assertAddressAfterIdle(this.win, 'C300');
 		desktopHelper.assertScrollbarPosition('vertical', 40, 60);
 
-		findHelper.findNext();
+		findHelper.findNext(this.win);
 		calcHelper.assertAddressAfterIdle(this.win, 'C2303');
 		helper.copy();
 		cy.cGet('#copy-paste-container table td').should('have.text', 'result bottom');
 
-		findHelper.findNext();
+		findHelper.findNext(this.win);
 		calcHelper.assertAddressAfterIdle(this.win, 'C8');
 	});
 });
