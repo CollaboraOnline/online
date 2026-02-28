@@ -36,128 +36,126 @@ class ColorPicker {
 	_selectedTintIndex: number;
 
 	static ID = 0;
+	static readonly ID_TAG = 'color-picker-';
 
-	statics = {
-		ID_TAG: 'color-picker-',
+	// we need a tight layout in order to be able to show 11 colors as in gdoc
+	static readonly BASIC_COLORS = [
+		'#000000',
+		'#980000',
+		'#ff0000',
+		'#ff9900',
+		'#ffff00',
+		'#00ff00',
+		'#00ffff' /*'#4a86e8',*/,
+		'#0000ff',
+		'#9900ff',
+		'#ff00ff',
+	] as const;
 
-		// we need a tight layout in order to be able to show 11 colors as in gdoc
-		BASIC_COLORS: [
+	static readonly TINTS = {
+		'#000000': [
 			'#000000',
+			'#434343',
+			'#666666',
+			'#888888',
+			'#bbbbbb',
+			'#dddddd',
+			'#eeeeee',
+			'#ffffff',
+		],
+		'#980000': [
+			'#5b0f00',
+			'#85200c',
+			'#a61c00',
 			'#980000',
+			'#cc4125',
+			'#dd7e6b',
+			'#e6b8af',
+			'#ffffff',
+		],
+		'#ff0000': [
+			'#660000',
+			'#990000',
+			'#cc0000',
 			'#ff0000',
+			'#e06666',
+			'#ea9999',
+			'#f4cccc',
+			'#ffffff',
+		],
+		'#ff9900': [
+			'#783f04',
+			'#b45f06',
+			'#e69138',
 			'#ff9900',
+			'#f6b26b',
+			'#f9cb9c',
+			'#fce5cd',
+			'#ffffff',
+		],
+		'#ffff00': [
+			'#7f6000',
+			'#bf9000',
+			'#f1c232',
 			'#ffff00',
+			'#ffd966',
+			'#ffe599',
+			'#fff2cc',
+			'#ffffff',
+		],
+		'#00ff00': [
+			'#274e13',
+			'#38761d',
+			'#6aa84f',
 			'#00ff00',
-			'#00ffff' /*'#4a86e8',*/,
+			'#93c47d',
+			'#b6d7a8',
+			'#d9ead3',
+			'#ffffff',
+		],
+		'#00ffff': [
+			'#0c343d',
+			'#134f5c',
+			'#45818e',
+			'#00ffff',
+			'#76a5af',
+			'#a2c4c9',
+			'#d0e0e3',
+			'#ffffff',
+		],
+		// '#4a86e8': ['#1c4587', '#1155cc', '#3c78d8', '#4a86e8',
+		// 	'#6d9eeb', '#a4c2f4', '#c9daf8', '#ffffff'],
+		'#0000ff': [
+			'#073763',
+			'#0b5394',
+			'#3d85c6',
 			'#0000ff',
+			'#6fa8dc',
+			'#9fc5e8',
+			'#cfe2f3',
+			'#ffffff',
+		],
+		'#9900ff': [
+			'#20124d',
+			'#351c75',
+			'#674ea7',
 			'#9900ff',
+			'#8e7cc3',
+			'#b4a7d6',
+			'#d9d2e9',
+			'#ffffff',
+		],
+		'#ff00ff': [
+			'#4c1130',
+			'#741b47',
+			'#a64d79',
 			'#ff00ff',
-		] as const,
-		TINTS: {
-			'#000000': [
-				'#000000',
-				'#434343',
-				'#666666',
-				'#888888',
-				'#bbbbbb',
-				'#dddddd',
-				'#eeeeee',
-				'#ffffff',
-			],
-			'#980000': [
-				'#5b0f00',
-				'#85200c',
-				'#a61c00',
-				'#980000',
-				'#cc4125',
-				'#dd7e6b',
-				'#e6b8af',
-				'#ffffff',
-			],
-			'#ff0000': [
-				'#660000',
-				'#990000',
-				'#cc0000',
-				'#ff0000',
-				'#e06666',
-				'#ea9999',
-				'#f4cccc',
-				'#ffffff',
-			],
-			'#ff9900': [
-				'#783f04',
-				'#b45f06',
-				'#e69138',
-				'#ff9900',
-				'#f6b26b',
-				'#f9cb9c',
-				'#fce5cd',
-				'#ffffff',
-			],
-			'#ffff00': [
-				'#7f6000',
-				'#bf9000',
-				'#f1c232',
-				'#ffff00',
-				'#ffd966',
-				'#ffe599',
-				'#fff2cc',
-				'#ffffff',
-			],
-			'#00ff00': [
-				'#274e13',
-				'#38761d',
-				'#6aa84f',
-				'#00ff00',
-				'#93c47d',
-				'#b6d7a8',
-				'#d9ead3',
-				'#ffffff',
-			],
-			'#00ffff': [
-				'#0c343d',
-				'#134f5c',
-				'#45818e',
-				'#00ffff',
-				'#76a5af',
-				'#a2c4c9',
-				'#d0e0e3',
-				'#ffffff',
-			],
-			// '#4a86e8': ['#1c4587', '#1155cc', '#3c78d8', '#4a86e8',
-			// 	'#6d9eeb', '#a4c2f4', '#c9daf8', '#ffffff'],
-			'#0000ff': [
-				'#073763',
-				'#0b5394',
-				'#3d85c6',
-				'#0000ff',
-				'#6fa8dc',
-				'#9fc5e8',
-				'#cfe2f3',
-				'#ffffff',
-			],
-			'#9900ff': [
-				'#20124d',
-				'#351c75',
-				'#674ea7',
-				'#9900ff',
-				'#8e7cc3',
-				'#b4a7d6',
-				'#d9d2e9',
-				'#ffffff',
-			],
-			'#ff00ff': [
-				'#4c1130',
-				'#741b47',
-				'#a64d79',
-				'#ff00ff',
-				'#c27ba0',
-				'#d5a6bd',
-				'#ead1dc',
-				'#ffffff',
-			],
-		} as const,
-	};
+			'#c27ba0',
+			'#d5a6bd',
+			'#ead1dc',
+			'#ffffff',
+		],
+	} as const;
 
 	_pickerID: number;
 	_basicColorSampleIdTag: string;
@@ -204,10 +202,10 @@ class ColorPicker {
 		const pickerID = ColorPicker.ID++;
 
 		this._basicColorSampleIdTag =
-			this.statics.ID_TAG + pickerID + '-basic-color-';
-		this._tintSampleIdTag = this.statics.ID_TAG + pickerID + '-tint-';
-		this._noColorControlId = this.statics.ID_TAG + pickerID + '-no-color';
-		this._autoColorControlId = this.statics.ID_TAG + pickerID + '-auto-color';
+			ColorPicker.ID_TAG + pickerID + '-basic-color-';
+		this._tintSampleIdTag = ColorPicker.ID_TAG + pickerID + '-tint-';
+		this._noColorControlId = ColorPicker.ID_TAG + pickerID + '-no-color';
+		this._autoColorControlId = ColorPicker.ID_TAG + pickerID + '-auto-color';
 		this._createBasicColorSelectionMark();
 		this._selectedColorElement = selectedColorSample;
 		this._selectedColor = this.options.selectedColor;
@@ -411,16 +409,16 @@ class ColorPicker {
 	}
 
 	_getBasicColorCount() {
-		return this.statics.BASIC_COLORS.length;
+		return ColorPicker.BASIC_COLORS.length;
 	}
 
 	_getBasicColor(
 		index: number,
-	): (typeof this.statics.BASIC_COLORS)[number] | '' {
-		if (!(index >= 0 && index < this.statics.BASIC_COLORS.length)) {
+	): (typeof ColorPicker.BASIC_COLORS)[number] | '' {
+		if (!(index >= 0 && index < ColorPicker.BASIC_COLORS.length)) {
 			return '';
 		}
-		return this.statics.BASIC_COLORS[index];
+		return ColorPicker.BASIC_COLORS[index];
 	}
 
 	_getTintSet(basicColorIndex: number) {
@@ -428,7 +426,7 @@ class ColorPicker {
 
 		if (basicColor === '') return [] as const;
 
-		return this.statics.TINTS[basicColor];
+		return ColorPicker.TINTS[basicColor];
 	}
 
 	_extractBasicColorIndex(sampleId: string) {
