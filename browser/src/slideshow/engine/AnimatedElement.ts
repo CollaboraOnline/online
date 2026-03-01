@@ -509,6 +509,18 @@ class AnimatedElement {
 		layer: ImageBitmap,
 		bounds: BoundingBoxType,
 	): AnimatedObjectType {
+		if (!layer) {
+			window.app.console.error(
+				'AnimatedElement.createBaseElement: layer is null/undefined',
+			);
+			return null;
+		}
+		if (!bounds || bounds.width <= 0 || bounds.height <= 0) {
+			window.app.console.error(
+				`AnimatedElement.createBaseElement: invalid bounds: ${JSON.stringify(bounds)}`,
+			);
+			return null;
+		}
 		const canvas = new OffscreenCanvas(bounds.width, bounds.height);
 		const context = canvas.getContext('2d');
 		context.drawImage(
@@ -597,6 +609,12 @@ class AnimatedElement {
 	}
 
 	private getTextureFromElement(element: AnimatedObjectType) {
+		if (!element || element.width <= 0 || element.height <= 0) {
+			window.app.console.error(
+				`AnimatedElement.getTextureFromElement: invalid element (null or zero-sized)`,
+			);
+			return null;
+		}
 		return this.tfContext.loadTexture(element);
 	}
 
