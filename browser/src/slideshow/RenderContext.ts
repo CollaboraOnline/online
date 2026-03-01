@@ -112,6 +112,11 @@ class RenderContextGl extends RenderContext {
 	): WebGLTexture | ImageBitmap {
 		if (this.isDisposed()) return null;
 
+		if (!image) {
+			app.console.error('RenderContextGl.loadTexture: Invalid image provided');
+			return null;
+		}
+
 		const gl = this.getGl();
 
 		const texture = gl.createTexture();
