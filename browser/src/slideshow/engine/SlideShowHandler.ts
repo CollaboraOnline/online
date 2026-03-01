@@ -300,7 +300,7 @@ class SlideShowHandler {
 
 		const sCurSlideHash = this.theMetaPres.getCurrentSlideHash();
 		const curMetaSlide = this.theMetaPres.getMetaSlide(sCurSlideHash);
-		if (curMetaSlide.animationsHandler) {
+		if (curMetaSlide?.animationsHandler) {
 			const aAnimatedElementMap =
 				curMetaSlide.animationsHandler.getAnimatedElementMap();
 			let effect = 0;
@@ -386,7 +386,7 @@ class SlideShowHandler {
 
 		if (nOldSlideIndex !== undefined) {
 			const metaOldSlide = this.theMetaPres.getMetaSlideByIndex(nOldSlideIndex);
-			if (metaOldSlide.animationsHandler) {
+			if (metaOldSlide?.animationsHandler) {
 				const aAnimatedElementMap =
 					metaOldSlide.animationsHandler.getAnimatedElementMap();
 
@@ -396,7 +396,7 @@ class SlideShowHandler {
 			}
 		}
 		const metaNewSlide = this.theMetaPres.getMetaSlideByIndex(nNewSlideIndex);
-		if (metaNewSlide.animationsHandler) {
+		if (metaNewSlide?.animationsHandler) {
 			const aAnimatedElementMap =
 				metaNewSlide.animationsHandler.getAnimatedElementMap();
 
