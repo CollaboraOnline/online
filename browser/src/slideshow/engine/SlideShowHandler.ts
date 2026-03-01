@@ -330,7 +330,10 @@ class SlideShowHandler {
 		ANIMDBG.print('SlideShowHandler.notifyNextEffectEnd invoked.');
 		this.bIsNextEffectRunning = false;
 
-		this.aStartedEffectList[this.aStartedEffectIndexMap.get(-1)].end();
+		const effectIndex = this.aStartedEffectIndexMap.get(-1);
+		if (effectIndex !== undefined && this.aStartedEffectList[effectIndex]) {
+			this.aStartedEffectList[effectIndex].end();
+		}
 		if (this.automaticAdvanceTimeout !== null) {
 			if (this.automaticAdvanceTimeoutRewindedEffect === this.nCurrentEffect) {
 				this.automaticAdvanceTimeout = null;
@@ -484,7 +487,10 @@ class SlideShowHandler {
 			'SlideShow.notifyInteractiveAnimationSequenceEnd: no interactive effect playing.',
 		);
 
-		this.aStartedEffectList[this.aStartedEffectIndexMap.get(nNodeId)].end();
+		const effectIndex = this.aStartedEffectIndexMap.get(nNodeId);
+		if (effectIndex !== undefined && this.aStartedEffectList[effectIndex]) {
+			this.aStartedEffectList[effectIndex].end();
+		}
 		--this.nTotalInteractivePlayingEffects;
 	}
 
