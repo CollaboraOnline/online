@@ -467,13 +467,6 @@
                     "dest-filename": "liborcus-0.19.2.tar.xz"
                 },
                 {
-                    "url": "https://dev-www.libreoffice.org/src/postgresql-14.19.tar.bz2",
-                    "sha256": "727e9e334bc1a31940df808259f69fe47a59f6d42174b22ae62d67fe7a01ad80",
-                    "type": "file",
-                    "dest": "external/tarballs",
-                    "dest-filename": "postgresql-14.19.tar.bz2"
-                },
-                {
                     "url": "https://dev-www.libreoffice.org/src/raptor2-2.0.16.tar.gz",
                     "sha256": "089db78d7ac982354bdbf39d973baf09581e6904ac4c92a98c5caadb3de44680",
                     "type": "file",
