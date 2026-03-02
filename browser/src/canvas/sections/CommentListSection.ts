@@ -976,10 +976,11 @@ export class CommentSection extends CanvasSectionObject {
 		const topBottom = this.getScreenTopBottom();
 
 		if (!topVisible || !bottomVisible) {
+			const topPixels = topTwips * app.twipsToPixels;
 			if (!topVisible)
-				app.activeDocument.activeLayout.scroll(0, topBottom[0] - anchorPos.pY);
+				app.activeDocument.activeLayout.scroll(0, topBottom[0] - topPixels);
 			else if (!bottomVisible)
-				app.activeDocument.activeLayout.scroll(0, (anchorPos.pY + rootComment.getCommentHeight() - topBottom[1]));
+				app.activeDocument.activeLayout.scroll(0, (topPixels + rootComment.getCommentHeight() - topBottom[1]));
 
 			if (app.map._docLayer._docType === 'spreadsheet' && rootComment) {
 				rootComment.positionCalcComment();
