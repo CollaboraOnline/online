@@ -74,18 +74,30 @@ static std::atomic<std::size_t> convertToBrokerInstanceCounter;
 
 std::size_t ConvertToBroker::getInstanceCount() { return convertToBrokerInstanceCounter; }
 
+/// Split ",infilterOptions=..." out of the combined options string so that
+/// import options go to the load command and export options go to saveas.
+static std::pair<std::string, std::string> splitInFilterOptions(const std::string& options)
+{
+    const std::string tag = ",infilterOptions=";
+    auto pos = options.find(tag);
+    if (pos != std::string::npos)
+        return { options.substr(0, pos), options.substr(pos + tag.size()) };
+    return { options, std::string() };
+}
+
 ConvertToBroker::ConvertToBroker(const std::string& uri, const Poco::URI& uriPublic,
                                  const std::string& docKey, const std::string& format,
                                  const std::string& options, const std::string& lang)
     : StatelessBatchBroker(uri, uriPublic, docKey)
     , _format(format)
-    , _sOptions(options)
+    , _options(splitInFilterOptions(options).first)
+    , _inFilterOptions(splitInFilterOptions(options).second)
     , _lang(lang)
 {
     LOG_TRC("Created ConvertToBroker: uri: ["
             << uri << "], uriPublic: [" << uriPublic.toString() << "], docKey: [" << docKey
-            << "], format: [" << format << "], options: [" << options << "], lang: [" << lang
-            << "].");
+            << "], format: [" << format << "], options: [" << _options << "], infilterOptions: ["
+            << _inFilterOptions << "], lang: [" << lang << "].");
 
     CONFIG_STATIC const std::chrono::seconds limit_convert_secs(
         ConfigUtil::getConfigValue<std::chrono::seconds>("per_document.limit_convert_secs", 100));
@@ -144,8 +156,8 @@ void ConvertToBroker::sendStartMessage(const std::shared_ptr<ClientSession>& cli
     std::string load = "load url=" + encodedFrom + " batch=true";
     if (!getLang().empty())
         load += " lang=" + getLang();
-    if(!_sOptions.empty() && _sOptions.starts_with(",infilterOptions="))
-        load +=  " " + _sOptions.substr(1);
+    if (!_inFilterOptions.empty())
+        load += " infilterOptions=" + _inFilterOptions;
     std::vector<char> loadRequest(load.begin(), load.end());
     clientSession->handleMessage(loadRequest);
 }
@@ -231,7 +243,7 @@ void ConvertToBroker::setLoaded()
 
     // Convert it to the requested format.
     const std::string saveAsCmd =
-        "saveas url=" + encodedTo + " format=" + _format + " options=" + _sOptions;
+        "saveas url=" + encodedTo + " format=" + _format + " options=" + _options;
 
     // Send the save request ...
     std::vector<char> saveasRequest(saveAsCmd.begin(), saveAsCmd.end());

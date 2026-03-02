@@ -51,7 +51,8 @@ public:
 class ConvertToBroker : public StatelessBatchBroker
 {
     const std::string _format;
-    const std::string _sOptions;
+    const std::string _options;
+    const std::string _inFilterOptions;
     const std::string _lang;
 
 public:
