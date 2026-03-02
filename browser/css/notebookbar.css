@@ -759,8 +759,8 @@ label.notebookbar.ui-checkbox-label {
 	width: 15vw !important;
 	max-width: 265px;
 	min-width: 90px;
-	grid-template-columns: repeat(auto-fit, minmax(85px, 1fr));
-	grid-template-rows: repeat(auto-fit, minmax(62px, 1fr));
+	grid-template-columns: repeat(auto-fill, 85px);
+	grid-template-rows: repeat(auto-fill, minmax(62px, max-content));
 	margin-left: 5px;
 }
 
@@ -1035,6 +1035,7 @@ label.notebookbar.ui-checkbox-label {
 #masterpagecurrent_icons .ui-iconview-entry {
 	align-self: start;
 	margin-top: 6px;
+	max-width: 82px;
 }
 
 #masterpageall_icons .ui-iconview-entry img,
