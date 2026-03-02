@@ -311,6 +311,7 @@ function getInsertTablePopupElements(closeCallback) {
 
 	const grid = document.createElement('div');
 	grid.className = 'inserttable-grid';
+	grid.setAttribute('role', 'grid');
 	grid.onmouseover = highlightTableFunction;
 	grid.onclick = sendInsertTableFunction;
 
@@ -344,10 +345,12 @@ function insertTable(grid = document.getElementsByClassName('inserttable-grid')[
 	for (var r = 0; r < rows; r++) {
 		const row = document.createElement('div');
 		row.className = 'row';
+		row.setAttribute('role', 'row');
 		grid.appendChild(row);
 
 		for (var c = 0; c < cols; c++) {
 			const col = document.createElement('button');
+			col.setAttribute('role', 'gridcell');
 			col.setAttribute('aria-label', (1 + r) + 'x' + (1 + c));
 			col.onfocus = highlightTableFunction;
 			col.className = 'col';
@@ -606,6 +609,7 @@ function insertShapes(shapeType, grid = document.getElementsByClassName('inserts
 		var idx = 0;
 		const row = document.createElement('div');
 		row.className = 'row';
+		row.setAttribute('role', 'row');
 		grid.appendChild(row);
 		for (let r = 0; r < rows; r++) {
 
@@ -618,6 +622,7 @@ function insertShapes(shapeType, grid = document.getElementsByClassName('inserts
 				const col = document.createElement('div');
 
 				col.className = 'col w2ui-icon ' + shape.img;
+				col.setAttribute('role', 'gridcell');
 				col.dataset.uno = shape.uno;
 				col.setAttribute('data-cooltip', shape.text);
 				window.L.control.attachTooltipEventListener(col, map);
@@ -637,6 +642,7 @@ function getShapesPopupElements(closeCallback) {
 
 	const grid = document.createElement('div');
 	grid.className = 'insertshape-grid';
+	grid.setAttribute('role', 'grid');
 	grid.onclick = onShapeClickFunction;
 	grid.onkeyup = onShapeKeyUpFunction;
 	grid.onkeydown = onShapeKeyDownFunction;
@@ -671,6 +677,7 @@ function getConnectorsPopupElements(closeCallback) {
 
 	const grid = document.createElement('div');
 	grid.className = 'insertshape-grid';
+	grid.setAttribute('role', 'grid');
 	grid.onclick = onShapeClickFunction;
 	grid.onkeyup = onShapeKeyUpFunction;
 	grid.onkeydown = onShapeKeyDownFunction;
