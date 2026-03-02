@@ -625,6 +625,7 @@ function insertShapes(shapeType, grid = document.getElementsByClassName('inserts
 				col.setAttribute('role', 'gridcell');
 				col.dataset.uno = shape.uno;
 				col.setAttribute('data-cooltip', shape.text);
+				col.setAttribute('aria-label', shape.text);
 				window.L.control.attachTooltipEventListener(col, map);
 				col.tabIndex = 0;
 				col.setAttribute('index', r + ':' + c);
