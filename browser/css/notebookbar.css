@@ -573,13 +573,8 @@ label.notebookbar.ui-checkbox-label {
 	box-sizing: border-box;
 }
 
-/*
- * with each iconview, there exist two kinds of IDs
- * one with the `-iconview` prefix and one without it.
- * see `JSDialog.notebookbarIconView` for details.
- */
 .jsdialog #stylesview,
-.notebookbar #stylesview-iconview {
+.notebookbar #stylesview {
 	width: 36.8vw !important;
 	/* Preview base64's width = 100px + container border's etc */
 	grid-template-columns: repeat(auto-fit, minmax(122px, 1fr));
@@ -766,8 +761,7 @@ label.notebookbar.ui-checkbox-label {
 
 /* Transition Tab */
 
-#transitions_icons:not(.sidebar),
-#transitions_icons-iconview:not(.sidebar) {
+#transitions_icons:not(.sidebar) {
 	width: 35vw;
 	grid-template-columns: repeat(auto-fit, minmax(122px, 1fr));
 	grid-template-rows: repeat(auto-fit, minmax(60px, 1fr));
@@ -784,7 +778,7 @@ label.notebookbar.ui-checkbox-label {
 }
 
 .jsdialog #transitions_icons,
-.notebookbar #transitions_icons-iconview {
+.notebookbar #transitions_icons {
 	margin-left: 10px;
 }
 
