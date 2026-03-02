@@ -2163,11 +2163,11 @@ window.L.Control.NotebookbarWriter = window.L.Control.Notebookbar.extend({
 		var hideChangeTrackingControls = this._map['wopi'].HideChangeTrackingControls;
 		var content = [
 			{
-				'id': 'review-spelling-and-grammar-dialog',
+				'id': 'review-word-count-dialog',
 				'type': 'bigtoolitem',
-				'text': _UNO('.uno:SpellingAndGrammarDialog'),
-				'command': '.uno:SpellingAndGrammarDialog',
-				'accessibility': { focusBack: false, combination: 'SP', de: 'C' }
+				'text': _UNO('.uno:WordCountDialog', 'text'),
+				'command': '.uno:WordCountDialog',
+				'accessibility': { focusBack: false, combination: 'W', de: 'W' }
 			},
 			{
 				'id': 'review-thesaurus-dialog',
@@ -2191,51 +2191,61 @@ window.L.Control.NotebookbarWriter = window.L.Control.Notebookbar.extend({
 					'command': '.uno:Translate',
 					'accessibility': { focusBack: false, combination: 'ZT', de: null }
 				}: {},
-			{
-				'type': 'container',
-				'children': [
-					{
-						'type': 'toolbox',
-						'children': [
-							{
-								'id': 'review-spell-online',
-								'type': 'toolitem',
-								'text': _UNO('.uno:SpellOnline'),
-								'command': '.uno:SpellOnline',
-								'accessibility': { focusBack: true, combination: 'SO', de: null }
-							}
-						]
-					},
-					{
-						'type': 'toolbox',
-						'children': [
-							{
-								'id': 'review-word-count-dialog',
-								'type': 'toolitem',
-								'text': _UNO('.uno:WordCountDialog', 'text'),
-								'command': '.uno:WordCountDialog',
-								'accessibility': { focusBack: false, combination: 'W', de: 'W' }
-							}
-						]
-					}
-				],
-				'vertical': 'true'
-			},
 			{ type: 'separator', id: 'review-wordcountdialog-break', orientation: 'vertical' },
-						{
+			{
 				'type': 'overflowgroup',
-				'id': 'review-comments',
-				'name':_('Comments'),
-				'accessibility': { focusBack: false, combination: 'C', de: 'N' },
+				'id': 'review-Spellcheck',
+				'name': _('Spellcheck'),
+				'accessibility': { focusBack: false,combination: 'SP',	de:	'SP' },
 				'children' : [
 					{
-						'id': 'review-insert-annotation:AnnotationMenu',
-						'type': 'menubutton',
-						'text': _UNO('.uno:InsertAnnotation'),
-						'applyCallback': 'insertcomment',
-						'command': '.uno:InsertAnnotation',
-						'accessibility': { focusBack: false, combination: 'C', de: 'N' }
+						'type': 'container',
+						'children': [
+							{
+								'type': 'toolbox',
+								'children': [
+									{
+										'id': 'review-spelling-and-grammar-dialog',
+										'type': 'toolitem',
+										'text': _UNO('.uno:SpellingAndGrammarDialog'),
+										'command': '.uno:SpellingAndGrammarDialog',
+										'accessibility': { focusBack: false, combination: 'SP', de: 'C' }
+									}
+								]
+							},
+							{
+								'type': 'toolbox',
+								'children': [
+									{
+										'id': 'review-spell-online',
+										'type': 'toolitem',
+										'text': _UNO('.uno:SpellOnline'),
+										'command': '.uno:SpellOnline',
+										'accessibility': { focusBack: true, combination: 'SO', de: null }
+									}
+								]
+							},
+						],
+						'vertical': 'true'
 					},
+				]
+			},
+			{ type: 'separator', id: 'review-spell-break', orientation: 'vertical' },
+			{
+				'id': 'review-insert-annotation:AnnotationMenu',
+				'type': 'menubutton',
+				'text': _UNO('.uno:InsertAnnotation'),
+				'applyCallback': 'insertcomment',
+				'command': '.uno:InsertAnnotation',
+				'accessibility': { focusBack: false, combination: 'C', de: 'N' }
+			},
+			{ type: 'separator', id: 'review-comment-break', orientation: 'vertical' },
+			{
+				'type': 'overflowgroup',
+				'id': 'review-comments',
+				'name':_('Show Comments'),
+				'accessibility': { focusBack: false, combination: 'SC', de: 'N' },
+				'children' : [
 					{
 						'type': 'container',
 						'children': [
@@ -2245,7 +2255,7 @@ window.L.Control.NotebookbarWriter = window.L.Control.Notebookbar.extend({
 									{
 										'id': 'showannotations',
 										'type': 'customtoolitem',
-										'text': _UNO('.uno:ShowAnnotations', 'text'),
+										'text': _('Show Comments'),
 										'command': 'showannotations',
 										'accessibility': { focusBack: true, combination: 'SA', de: null }
 									}
