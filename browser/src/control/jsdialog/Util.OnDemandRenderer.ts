@@ -26,6 +26,7 @@ function onDemandRenderer(
 	entryText: string | undefined,
 ) {
 	const setupOnDemandRenderer = () => {
+		if (!parentContainer.contains(placeholder)) return;
 		const cachedComboboxEntries = builder.rendersCache[controlId];
 		let requestRender = true;
 
