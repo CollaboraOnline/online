@@ -53,6 +53,7 @@ all_la_unit_tests = \
 	unit-synthetic-lok.la \
 	unit-any-input.la \
 	unit-convert.la \
+	unit-convert-csv.la \
 	unit-copy-paste.la \
 	unit-wopi-save-on-exit.la \
 	unit-uno-command.la \
@@ -247,6 +248,7 @@ unit_clipboard_close_la_LIBADD = $(CPPUNIT_LIBS)
 unit_copy_paste_writer_la_SOURCES = UnitCopyPasteWriter.cpp
 unit_copy_paste_writer_la_LIBADD = $(CPPUNIT_LIBS)
 unit_convert_la_SOURCES = UnitConvert.cpp
+unit_convert_csv_la_SOURCES = UnitConvertCSV.cpp
 unit_initial_load_fail_la_SOURCES = UnitInitialLoadFail.cpp
 unit_initial_load_fail_la_LIBADD = $(CPPUNIT_LIBS)
 unit_join_disconnect_la_SOURCES = UnitJoinDisconnect.cpp
