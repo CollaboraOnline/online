@@ -265,6 +265,11 @@ void CollabSocketHandler::handleAuthenticatedMessage(const std::string& msg)
         const std::string ifModifiedSince = json->optValue<std::string>("ifModifiedSince", std::string());
         handleFetch(stream, requestId, ifNoneMatch, ifModifiedSince);
     }
+    else if (type == "upload")
+    {
+        const std::string stream = json->optValue<std::string>("stream", "contents");
+        handleUpload(stream, requestId);
+    }
     else
     {
         LOG_WRN("Collab: unknown message type: " << type);
@@ -475,6 +480,74 @@ void CollabSocketHandler::handleFetch(const std::string& stream, const std::stri
 
     sendTextMessage(oss.str());
     LOG_DBG("Collab: sent fetch URL for stream: " << stream << ", token: " << token);
+}
+
+void CollabSocketHandler::handleUpload(const std::string& stream, const std::string& requestId)
+{
+    LOG_INF("Collab: handling upload request for stream: " << stream
+            << ", requestId: " << requestId);
+
+    if (SigUtil::getShutdownRequestFlag())
+    {
+        LOG_WRN("Collab: shutdown in progress, rejecting upload");
+        std::ostringstream oss;
+        oss << "{\"type\":\"upload_error\",\"stream\":\"" << JsonUtil::escapeJSONValue(stream) << "\"";
+        if (!requestId.empty())
+            oss << ",\"requestId\":\"" << JsonUtil::escapeJSONValue(requestId) << "\"";
+        oss << ",\"error\":\"Server shutting down\"}";
+        sendTextMessage(oss.str());
+        return;
+    }
+
+    if (stream != "contents")
+    {
+        LOG_WRN("Collab: upload only supported for 'contents' stream, got: " << stream);
+        std::ostringstream oss;
+        oss << "{\"type\":\"upload_error\",\"stream\":\"" << JsonUtil::escapeJSONValue(stream) << "\"";
+        if (!requestId.empty())
+            oss << ",\"requestId\":\"" << JsonUtil::escapeJSONValue(requestId) << "\"";
+        oss << ",\"error\":\"Upload only supported for contents stream\"}";
+        sendTextMessage(oss.str());
+        return;
+    }
+
+    // Build the target URL by appending /contents to the WOPISrc path.
+    // _wopiSrc may already contain query parameters (access_token etc.),
+    // so use Poco::URI to modify only the path component.
+    Poco::URI targetUri(_wopiSrc);
+    targetUri.setPath(targetUri.getPath() + "/contents");
+    const std::string targetUrl = targetUri.toString();
+
+    auto broker = _broker.lock();
+    if (!broker)
+    {
+        LOG_ERR("Collab: broker no longer available for upload");
+        std::ostringstream oss;
+        oss << "{\"type\":\"upload_error\",\"stream\":\"" << JsonUtil::escapeJSONValue(stream) << "\"";
+        if (!requestId.empty())
+            oss << ",\"requestId\":\"" << JsonUtil::escapeJSONValue(requestId) << "\"";
+        oss << ",\"error\":\"Session expired\"}";
+        sendTextMessage(oss.str());
+        return;
+    }
+
+    const std::string brokerTag = broker->getCurrentAccessToken();
+
+    // Create an upload token that the client can use to POST via HTTP
+    const std::string token = createCollabUploadRequest(targetUrl, _accessToken, _wopiSrc,
+                                                         _docKey, brokerTag, requestId);
+
+    // Send the upload URL to the client
+    std::ostringstream oss;
+    oss << "{\"type\":\"upload_url\"";
+    oss << ",\"stream\":\"" << JsonUtil::escapeJSONValue(stream) << "\"";
+    if (!requestId.empty())
+        oss << ",\"requestId\":\"" << JsonUtil::escapeJSONValue(requestId) << "\"";
+    oss << ",\"url\":\"/co/collab/put?token=" << token << "\"";
+    oss << "}";
+
+    sendTextMessage(oss.str());
+    LOG_DBG("Collab: sent upload URL for stream: " << stream << ", token: " << token);
 }
 
 void CollabSocketHandler::onFetchComplete(const std::string& /* requestId */,

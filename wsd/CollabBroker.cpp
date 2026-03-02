@@ -32,6 +32,10 @@ std::mutex CollabBrokersMutex;
 std::map<std::string, CollabFetchRequest> CollabFetchRequests;
 std::mutex CollabFetchRequestsMutex;
 
+/// Global upload requests map - keyed by token
+std::map<std::string, CollabUploadRequest> CollabUploadRequests;
+std::mutex CollabUploadRequestsMutex;
+
 namespace
 {
 std::atomic<uint64_t> HandlerIdCounter{0};
@@ -396,6 +400,77 @@ void cleanupCollabFetchRequests()
         {
             LOG_DBG("Removing expired fetch request for token [" << it->first << ']');
             it = CollabFetchRequests.erase(it);
+        }
+        else
+        {
+            ++it;
+        }
+    }
+}
+
+std::string createCollabUploadRequest(const std::string& targetUrl,
+                                       const std::string& accessToken,
+                                       const std::string& wopiSrc,
+                                       const std::string& docKey,
+                                       const std::string& brokerTag,
+                                       const std::string& requestId)
+{
+    const std::string token = Util::rng::getHexString(CollabAccessTokenLength);
+
+    CollabUploadRequest request;
+    request.targetUrl = targetUrl;
+    request.accessToken = accessToken;
+    request.wopiSrc = wopiSrc;
+    request.docKey = docKey;
+    request.brokerTag = brokerTag;
+    request.requestId = requestId;
+    request.expiry = std::chrono::steady_clock::now() + CollabUploadTokenExpiry;
+
+    {
+        std::lock_guard<std::mutex> lock(CollabUploadRequestsMutex);
+        CollabUploadRequests[token] = std::move(request);
+    }
+
+    LOG_DBG("Created upload request with token [" << token << "] for docKey [" << docKey << ']');
+    return token;
+}
+
+bool consumeCollabUploadRequest(const std::string& token, CollabUploadRequest& request)
+{
+    std::lock_guard<std::mutex> lock(CollabUploadRequestsMutex);
+
+    auto it = CollabUploadRequests.find(token);
+    if (it == CollabUploadRequests.end())
+    {
+        LOG_WRN("Upload request not found for token [" << token << ']');
+        return false;
+    }
+
+    if (std::chrono::steady_clock::now() > it->second.expiry)
+    {
+        LOG_WRN("Upload request expired for token [" << token << ']');
+        CollabUploadRequests.erase(it);
+        return false;
+    }
+
+    request = std::move(it->second);
+    CollabUploadRequests.erase(it);
+
+    LOG_DBG("Consumed upload request for token [" << token << ']');
+    return true;
+}
+
+void cleanupCollabUploadRequests()
+{
+    std::lock_guard<std::mutex> lock(CollabUploadRequestsMutex);
+
+    const auto now = std::chrono::steady_clock::now();
+    for (auto it = CollabUploadRequests.begin(); it != CollabUploadRequests.end(); )
+    {
+        if (now > it->second.expiry)
+        {
+            LOG_DBG("Removing expired upload request for token [" << it->first << ']');
+            it = CollabUploadRequests.erase(it);
         }
         else
         {

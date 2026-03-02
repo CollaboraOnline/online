@@ -36,6 +36,9 @@ constexpr auto CollabAccessTokenRotation = std::chrono::minutes(5);
 /// How long fetch tokens are valid (5 minutes)
 constexpr auto CollabFetchTokenExpiry = std::chrono::minutes(5);
 
+/// How long upload tokens are valid (5 minutes)
+constexpr auto CollabUploadTokenExpiry = std::chrono::minutes(5);
+
 /// Details for a pending fetch request (for HTTP download)
 struct CollabFetchRequest
 {
@@ -46,6 +49,18 @@ struct CollabFetchRequest
     std::string brokerTag;       ///< Broker access token at time of request
     std::string requestId;       ///< Client-provided request ID
     std::string stream;          ///< Stream name (contents, userSettings, etc.)
+    std::chrono::steady_clock::time_point expiry;  ///< When this token expires
+};
+
+/// Details for a pending upload request (for HTTP upload via PutFile)
+struct CollabUploadRequest
+{
+    std::string targetUrl;       ///< WOPI /contents URL to upload to
+    std::string accessToken;     ///< WOPI access token
+    std::string wopiSrc;         ///< Original WOPISrc for validation
+    std::string docKey;          ///< Document key to verify live CollabBroker
+    std::string brokerTag;       ///< Broker access token at time of request
+    std::string requestId;       ///< Client-provided request ID
     std::chrono::steady_clock::time_point expiry;  ///< When this token expires
 };
 
@@ -162,5 +177,25 @@ bool consumeCollabFetchRequest(const std::string& token, CollabFetchRequest& req
 
 /// Clean up expired fetch requests
 void cleanupCollabFetchRequests();
+
+/// Global upload requests map and mutex
+extern std::map<std::string, CollabUploadRequest> CollabUploadRequests;
+extern std::mutex CollabUploadRequestsMutex;
+
+/// Create an upload request and return the token.
+/// The token can be used with /co/collab/put?token=... endpoint.
+std::string createCollabUploadRequest(const std::string& targetUrl,
+                                       const std::string& accessToken,
+                                       const std::string& wopiSrc,
+                                       const std::string& docKey,
+                                       const std::string& brokerTag,
+                                       const std::string& requestId);
+
+/// Look up and consume an upload request by token.
+/// Returns true if found and valid, fills in the request details.
+bool consumeCollabUploadRequest(const std::string& token, CollabUploadRequest& request);
+
+/// Clean up expired upload requests
+void cleanupCollabUploadRequests();
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

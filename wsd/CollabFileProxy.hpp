@@ -42,6 +42,12 @@ public:
                             const std::shared_ptr<TerminatingPoll>& poll,
                             SocketDisposition& disposition);
 
+    /// Handle an upload request with a pre-authorized URL (from WebSocket token)
+    /// This bypasses CheckFileInfo since the token already validated access.
+    void handleUploadRequest(const std::string& targetUrl, std::istream& message,
+                             const std::shared_ptr<TerminatingPoll>& poll,
+                             SocketDisposition& disposition);
+
     /// Handle download/upload with pre-validated WOPI info from CollabBroker.
     /// This bypasses CheckFileInfo since the collab session already authenticated.
     void handleDirectRequest(std::istream& message,
