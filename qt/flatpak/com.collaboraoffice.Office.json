@@ -236,11 +236,11 @@
                     "dest-filename": "libe-book-0.1.3.tar.xz"
                 },
                 {
-                    "url": "https://dev-www.libreoffice.org/src/libetonyek-0.1.12.tar.xz",
-                    "sha256": "b9fa82fbeb8cb7a701101060e4f3e1e4ef7c38f574b2859d3ecbe43604c21f83",
+                    "url": "https://dev-www.libreoffice.org/src/libetonyek-0.1.13.tar.xz",
+                    "sha256": "032b71cb597edd92a0b270b916188281bc35be55296b263f6817b29adbcb1709",
                     "type": "file",
                     "dest": "external/tarballs",
-                    "dest-filename": "libetonyek-0.1.12.tar.xz"
+                    "dest-filename": "libetonyek-0.1.13.tar.xz"
                 },
                 {
                     "url": "https://dev-www.libreoffice.org/src/libexttextcat-3.4.7.tar.xz",
