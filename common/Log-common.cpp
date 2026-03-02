@@ -105,7 +105,6 @@ namespace Log
         : _last_tm({})
         , _last_time(0)
         , _year_pos(nullptr)
-        , _tz_pos(nullptr)
         , _level_pos(nullptr)
     {
         const std::chrono::time_point<std::chrono::system_clock> tp =
@@ -193,12 +192,6 @@ namespace Log
         pos[6] = ' ';
         pos += 7;
 
-        // Time zone differential
-        _tz_pos = pos;
-        const auto tz_wrote = std::strftime(pos, 10, "%z", &tm);
-        pos[tz_wrote] = ' ';
-        pos += tz_wrote + 1; // + Skip the space we added.
-
         // Thread name and log level
         pos[0] = '[';
         pos[1] = ' ';
@@ -248,8 +241,6 @@ namespace Log
                 if (tm.tm_hour != _last_tm.tm_hour || delta >= 60 * 60)
                 {
                     to_ascii_fixed<2>(_year_pos + hr_offset_from_year, tm.tm_hour);
-                    const auto tz_wrote = std::strftime(_tz_pos, 10, "%z", &tm);
-                    _tz_pos[tz_wrote] = ' ';
 
                     // Day of Month.
                     if (tm.tm_mday != _last_tm.tm_mday || delta >= 24 * 60 * 60)
@@ -362,11 +353,6 @@ namespace Log
         to_ascii_fixed<6>(pos, fractional_seconds);
         pos[6] = ' ';
         pos += 7;
-
-        // Time zone differential
-        const auto tz_wrote = std::strftime(pos, 10, "%z", &tm);
-        pos[tz_wrote] = ' ';
-        pos += tz_wrote + 1; // + Skip the space we added.
 
         // Thread name and log level
         pos[0] = '[';
