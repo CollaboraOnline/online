@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-02-13 19:20+0100\n"
-"PO-Revision-Date: 2026-02-26 13:57+0000\n"
+"PO-Revision-Date: 2026-02-27 15:09+0000\n"
 "Last-Translator: Besnik Bleta <besnik@programeshqip.org>\n"
 "Language-Team: Albanian <https://hosted.weblate.org/projects/collabora-"
 "online/ui/sq/>\n"
@@ -2101,7 +2101,7 @@ msgstr "Ndryshimi i fundit"
 #: src/control/Control.NotebookbarBuilder.js:420
 #: src/control/Control.NotebookbarBuilder.js:594
 msgid "ODF presentation (.odp)"
-msgstr "Prezantim ODF (.odp)"
+msgstr "Paraqitje ODF (.odp)"
 
 #: src/control/Control.Menubar.ts:435 src/control/Control.Menubar.ts:448
 #: src/control/Control.Menubar.ts:1133
@@ -2643,7 +2643,7 @@ msgstr "Vijëzor"
 
 #: src/control/Control.NotebookbarCalc.js:99
 msgid "Table Design"
-msgstr ""
+msgstr "Hartim Tabele"
 
 #: src/control/Control.NotebookbarCalc.js:106
 #: src/control/Control.NotebookbarDraw.js:121
@@ -2932,11 +2932,11 @@ msgstr ""
 
 #: src/control/Control.NotebookbarCalc.js:1708
 msgid "Banded Rows"
-msgstr ""
+msgstr "Rreshta të Bërë Tok"
 
 #: src/control/Control.NotebookbarCalc.js:1720
 msgid "Banded Columns"
-msgstr ""
+msgstr "Shtylla të Bëra Tok"
 
 #: src/control/Control.NotebookbarCalc.js:1738
 msgid "First Column"
@@ -2948,7 +2948,7 @@ msgstr "Shtylla e Fundit"
 
 #: src/control/Control.NotebookbarCalc.js:1765
 msgid "Filter Buttons"
-msgstr ""
+msgstr "Butona Filtrimi"
 
 #: src/control/Control.NotebookbarCalc.js:1801
 #: src/control/Control.NotebookbarCalc.js:2549
@@ -3485,7 +3485,7 @@ msgstr "Numër përzgjedhjesh"
 
 #: src/control/Control.StatusBar.js:250
 msgid "Multi Page View"
-msgstr ""
+msgstr "Parje e Disa Faqeve"
 
 #: src/control/Control.StatusBar.js:257
 msgid "Zoom to Fit Page Width"
@@ -3955,11 +3955,11 @@ msgstr "Maks."
 
 #: src/control/jsdialog/Definitions.Menu.ts:1443
 msgid "Edit Single Sparkline"
-msgstr ""
+msgstr "Përpunoni Grafik Vijor Njësh"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1454
 msgid "Delete Single Sparkline"
-msgstr ""
+msgstr "Fshi Grafik Vijor Njësh"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1491
 msgid "Portrait"
@@ -4437,7 +4437,7 @@ msgstr "Krye dhe objekte që shtoni te dokumenti do të duken këtu"
 
 #: src/control/jsdialog/Widget.TreeView.ts:1660
 msgid "Search items"
-msgstr ""
+msgstr "Kërkoni te objekte"
 
 #: src/app/Socket.ts:254
 msgid "Oops, there is a problem connecting to {productname}: "
