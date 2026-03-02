@@ -230,6 +230,9 @@ JSDialog.notebookbarIconViewList = function (
 
 	commonContainer._onDropDown = function (opened: boolean) {
 		if (opened) {
+			// Two nested layouting tasks: the first waits for the dropdown
+			// DOM to be inserted, the second waits for iconView inside it
+			// to finish populating entries.
 			app.layoutingService.appendLayoutingTask(() => {
 				app.layoutingService.appendLayoutingTask(() => {
 					const expander = JSDialog.GetDropdown(data.children[0].id);
@@ -318,7 +321,6 @@ JSDialog.notebookbarIconViewList = function (
 						// needs an explicit container height; without one it
 						// collapses to a single row.  Reset it so the grid
 						// creates implicit rows sized by content instead.
-						// (Also handled by CSS !important rule as belt-and-suspenders.)
 						dropdownIconView.style.gridTemplateRows = 'none';
 					}
 				});
@@ -375,12 +377,9 @@ JSDialog.notebookbarIconViewList = function (
 		currentIconView.scrollTop = offsetTop;
 	}
 
-	/*
-		we need to override `iconview.requestRenders` because `iconview` is created
-		with an `id = data.id + '-iconview'` which core doesn't recognize. so
-		we pass the original widget's id while requesting icons.
-		we override `builderCallback` and other callbacks for the same reason.
-	*/
+	// Override iconview callbacks so they use the first child's ID
+	// (which core recognises) instead of the iconviewlist container's ID.
+	// Also track scroll position so we can restore it after widget rebuilds.
 	const firstChild = data.children[0];
 	let savedScrollTop = 0;
 
