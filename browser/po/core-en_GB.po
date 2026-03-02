@@ -2,14 +2,15 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: core-en-GB\n"
-"PO-Revision-Date: 2026-02-03 12:14+0000\n"
-"Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
-"Language-Team: English (United Kingdom) <https://hosted.weblate.org/projects/collabora-online/lokit/en_GB/>\n"
+"PO-Revision-Date: 2026-02-28 16:09+0000\n"
+"Last-Translator: Andi Chandler <andi@gowling.com>\n"
+"Language-Team: English (United Kingdom) <https://hosted.weblate.org/projects/"
+"collabora-online/lokit/en_GB/>\n"
 "Language: en_GB\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.16-dev\n"
+"X-Generator: Weblate 5.16.1-dev\n"
 
 #. ygDfy
 #: module_graphicfilter.ulf
@@ -54,7 +55,7 @@ msgstr "Paste As"
 #: svx/inc/spacing.hrc:16
 msgctxt "RID_ABOVE"
 msgid "Above:"
-msgstr ""
+msgstr "Above:"
 
 #. uaiun
 #: svx/inc/spacing.hrc:17
