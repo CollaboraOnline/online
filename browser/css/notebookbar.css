@@ -754,16 +754,6 @@ label.notebookbar.ui-checkbox-label {
 
 /* Design Tab */
 
-/* In the inline notebookbar view, only the first iconview in a list
-   should be visible; the rest are shown in the expanded dropdown. */
-#masterpageall_icons {
-	display: none !important;
-}
-
-.modalpopup[id$='-dropdown'] #masterpageall_icons {
-	display: grid !important;
-}
-
 #masterpageall_icons,
 #masterpagecurrent_icons {
 	width: 15vw !important;

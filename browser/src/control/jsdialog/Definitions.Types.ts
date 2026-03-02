@@ -429,10 +429,6 @@ interface IconViewElement extends HTMLElement {
 	) => void;
 }
 
-interface IconViewWrapper extends Element {
-	updateDropdown?: (id: string, pos: number) => void;
-}
-
 interface EditWidgetJSON extends WidgetJSON {
 	placeholder: string; // show when empty
 	text: string; // text value
