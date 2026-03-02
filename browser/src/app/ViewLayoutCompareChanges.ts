@@ -27,9 +27,21 @@ class ViewLayoutCompareChanges extends ViewLayoutNewBase {
 	constructor() {
 		super();
 
+		app.map.on('zoomend', this.onZoomEnd.bind(this));
+
 		this.adjustViewZoomLevel();
 
 		app.layoutingService.appendLayoutingTask(() => this.updateViewData());
+	}
+
+	/// Refresh the view after scroll or zoom change.
+	private refreshView(): void {
+		this.updateViewData();
+		app.sectionContainer.requestReDraw();
+	}
+
+	private onZoomEnd(): void {
+		this.refreshView();
 	}
 
 	public adjustViewZoomLevel() {
@@ -164,8 +176,7 @@ class ViewLayoutCompareChanges extends ViewLayoutNewBase {
 		const scrolled = super.scroll(pX, pY);
 
 		if (scrolled) {
-			this.updateViewData();
-			app.sectionContainer.requestReDraw();
+			this.refreshView();
 		}
 
 		return scrolled;
