@@ -307,6 +307,37 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Track Changes', function (
 		});
 	});
 
+	it('Zoom out updates visible area in compare changes mode', function () {
+		// Given a document in compare changes mode:
+		desktopHelper.switchUIToNotebookbar();
+		cy.cGet('#Review-tab-label').click();
+		desktopHelper.getNbIconArrow('TrackChanges', 'Review').click();
+		cy.cGet('#compare-tracked-change').filter(':visible').click();
+		cy.cGet('.compare-changes-labels').should('not.have.css', 'display', 'none');
+
+		// When zooming out:
+		let initialWidth = 0;
+		cy.getFrameWindow().then(function(win) {
+			cy.wrap(null).should(function() {
+				initialWidth = win.app.activeDocument.activeLayout.viewedRectangle.width;
+				expect(initialWidth, 'initial viewedRectangle.width').to.be.greaterThan(0);
+			});
+		});
+		desktopHelper.zoomOut();
+
+		// Then the visible area width (in twips) should increase, since each pixel now covers
+		// more twips at a smaller zoom level:
+		cy.getFrameWindow().then(function(win) {
+			cy.wrap(null).should(function() {
+				let newWidth = win.app.activeDocument.activeLayout.viewedRectangle.width;
+				// Without the accompanying fix in place, this test would have failed, the
+				// visible area was not updated on zoom change: 14689 didn't
+				// increase to 17627
+				expect(newWidth, 'viewedRectangle.width after zoom out').to.be.greaterThan(initialWidth);
+			});
+		});
+	});
+
 	it.skip('Comment Undo-Redo', function () {
 		for (var n = 0; n < 2; n++) {
 			desktopHelper.getCompactIconArrow('DefaultNumbering').click();
