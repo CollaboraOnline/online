@@ -415,13 +415,17 @@ class Menubar extends window.L.Control {
 				{name: _UNO('.uno:RunMacro'), id: 'runmacro', uno: '.uno:RunMacro'}
 			]},
 			{name: _UNO('.uno:HelpMenu', 'text'), id: 'help', type: 'menu', menu: [
-				{name: _('Forum'), id: 'forum', type: 'action'},
 				{name: _('Online Help'), id: 'online-help', type: 'action', iosapp: false},
+				{type: 'separator', iosapp: false},
 				{name: _('Keyboard shortcuts'), id: 'keyboard-shortcuts', type: 'action', iosapp: false},
+				{type: 'separator'},
+				{name: _('Forum'), id: 'forum', type: 'action'},
 				{name: _('Report an issue'), id: 'report-an-issue', type: 'action', iosapp: false},
 				{name: _('Latest Updates'), id: 'latestupdates', type: 'action', iosapp: false},
 				{name: _('Send Feedback'), id: 'feedback', type: 'action', mobileapp: false},
+				{type: 'separator'},
 				{name: _('Server audit'), id: 'serveraudit', type: 'action', mobileapp: false},
+				{type: 'separator'},
 				{name: _('About'), id: 'about', type: 'action'}]
 			},
 			{name: _('Last modification'), id: 'last-mod', type: 'action', tablet: false}
@@ -600,11 +604,16 @@ class Menubar extends window.L.Control {
 			]},
 			{name: _UNO('.uno:HelpMenu', 'presentation'), id: 'help', type: 'menu', menu: [
 				{name: _('Online Help'), id: 'online-help', type: 'action', iosapp: false},
+				{type: 'separator', iosapp: false},
 				{name: _('Keyboard shortcuts'), id: 'keyboard-shortcuts', type: 'action', iosapp: false},
+				{type: 'separator'},
+				{name: _('Forum'), id: 'forum', type: 'action'},
 				{name: _('Report an issue'), id: 'report-an-issue', type: 'action', iosapp: false},
 				{name: _('Latest Updates'), id: 'latestupdates', type: 'action', iosapp: false},
 				{name: _('Send Feedback'), id: 'feedback', type: 'action', mobileapp: false},
+				{type: 'separator'},
 				{name: _('Server audit'), id: 'serveraudit', type: 'action', mobileapp: false},
+				{type: 'separator'},
 				{name: _('About'), id: 'about', type: 'action'}]
 			},
 			{name: _('Last modification'), id: 'last-mod', type: 'action', tablet: false}
@@ -739,11 +748,16 @@ class Menubar extends window.L.Control {
 			]},
 			{name: _UNO('.uno:HelpMenu', 'presentation'), id: 'help', type: 'menu', menu: [
 				{name: _('Online Help'), id: 'online-help', type: 'action', iosapp: false},
+				{type: 'separator', iosapp: false},
 				{name: _('Keyboard shortcuts'), id: 'keyboard-shortcuts', type: 'action', iosapp: false},
+				{type: 'separator'},
+				{name: _('Forum'), id: 'forum', type: 'action'},
 				{name: _('Report an issue'), id: 'report-an-issue', type: 'action', iosapp: false},
 				{name: _('Latest Updates'), id: 'latestupdates', type: 'action', iosapp: false},
 				{name: _('Send Feedback'), id: 'feedback', type: 'action', mobileapp: false},
+				{type: 'separator'},
 				{name: _('Server audit'), id: 'serveraudit', type: 'action', mobileapp: false},
+				{type: 'separator'},
 				{name: _('About'), id: 'about', type: 'action'}]
 			},
 			{name: _('Last modification'), id: 'last-mod', type: 'action', tablet: false}
@@ -1037,11 +1051,16 @@ class Menubar extends window.L.Control {
 			]},
 			{name: _UNO('.uno:HelpMenu', 'spreadsheet'), id: 'help', type: 'menu', menu: [
 				{name: _('Online Help'), id: 'online-help', type: 'action', iosapp: false},
+				{type: 'separator', iosapp: false},
 				{name: _('Keyboard shortcuts'), id: 'keyboard-shortcuts', type: 'action', iosapp: false},
+				{type: 'separator'},
+				{name: _('Forum'), id: 'forum', type: 'action'},
 				{name: _('Report an issue'), id: 'report-an-issue', type: 'action', iosapp: false},
 				{name: _('Latest Updates'), id: 'latestupdates', type: 'action', iosapp: false},
 				{name: _('Send Feedback'), id: 'feedback', type: 'action', mobileapp: false},
+				{type: 'separator'},
 				{name: _('Server audit'), id: 'serveraudit', type: 'action', mobileapp: false},
+				{type: 'separator'},
 				{name: _('About'), id: 'about', type: 'action'}]
 			},
 			{name: _('Last modification'), id: 'last-mod', type: 'action', tablet: false}
