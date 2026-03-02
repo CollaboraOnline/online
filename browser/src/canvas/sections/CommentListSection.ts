@@ -966,10 +966,16 @@ export class CommentSection extends CanvasSectionObject {
 
 		const anchorPos = rootComment.sectionProperties.data.anchorSPoint;
 
-		const topLeftArray = anchorPos.toArray();
-		const topVisible = app.isYVisibleInTheDisplayedArea(topLeftArray[1]);
+		let topTwips: number = anchorPos.toArray()[1];
+		if (app.map._docLayer._docType === 'spreadsheet' && rootComment.sectionProperties.data.id !== 'new') {
+			// anchorPos is in display twips but
+			// app.isYVisibleInTheDisplayedArea() expects print-twips.
+			topTwips = (app.map._docLayer.sheetGeometry as cool.SheetGeometry)
+				.getPrintTwipsPointFromTile(new cool.Point(0, topTwips)).y;
+		}
+		const topVisible = app.isYVisibleInTheDisplayedArea(topTwips);
 		const bottomVisible = app.isYVisibleInTheDisplayedArea(
-			topLeftArray[1] + Math.round(rootComment.getCommentHeight() * app.pixelsToTwips)
+			topTwips + Math.round(rootComment.getCommentHeight() * app.pixelsToTwips)
 		);
 
 		const topBottom = this.getScreenTopBottom();
