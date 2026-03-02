@@ -198,7 +198,7 @@ describe(['tagdesktop'], 'Accessibility Calc Dialog Tests', { testIsolation: fal
         helper.typeIntoDocument('{esc}');
     });
 
-    it.skip('PasteSpecial Dialog (Buggy)', function () {
+    it('PasteSpecial Dialog', function () {
         helper.setDummyClipboardForCopy('text/html');
         // Select some text
         helper.selectAllText();
@@ -226,7 +226,7 @@ describe(['tagdesktop'], 'Accessibility Calc Dialog Tests', { testIsolation: fal
         a11yHelper.handleDialog(win, 1, '.uno:PasteTextImportDialog');
     });
 
-    it.skip('Font Dialog (Buggy)', function () {
+    it('Font Dialog', function () {
         calcHelper.dblClickOnFirstCell();
 
         cy.then(() => {
