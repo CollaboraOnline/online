@@ -2512,6 +2512,10 @@ window.L.Control.JSDialogBuilder = window.L.Control.extend({
 			if (found)
 				found.focus();
 		}
+
+		if (typeof parent._onChildWidgetUpdated === 'function') {
+			parent._onChildWidgetUpdated(newControl, elementId);
+		}
 	},
 
 	// replaces widget in-place with new instance with updated data

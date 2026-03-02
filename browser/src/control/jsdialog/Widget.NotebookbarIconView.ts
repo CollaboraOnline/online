@@ -436,16 +436,15 @@ JSDialog.notebookbarIconViewList = function (
 
 	applyOverrides();
 
-	// When _updateWidgetImpl rebuilds the inner iconview, the element is
-	// replaced and all notebookbar-specific overrides are lost.  Detect
-	// the replacement via MutationObserver and re-apply them, also
-	// restoring the scroll position that the rebuild would otherwise reset.
+	// When _updateWidgetImpl rebuilds an inner iconview, it calls this
+	// hook on the parent (commonContainer) so we can fix up the DOM.
 	//
 	// Because the notebookbar builder maps 'iconview' to
 	// notebookbarIconView (which wraps in a ui-iconview-window +
-	// buttons), _updateWidgetImpl may produce a nested wrapper instead
-	// of a plain iconview.  Flatten such wrappers first.
-	new MutationObserver(() => {
+	// buttons), _updateWidgetImpl produces a nested wrapper instead
+	// of a plain iconview.  Flatten such wrappers, re-apply overrides,
+	// and re-hide non-first iconviews.
+	(commonContainer as any)._onChildWidgetUpdated = () => {
 		// Flatten nested wrappers produced by _updateWidgetImpl
 		// rebuilding a child iconview via notebookbarIconView.
 		const nestedWrappers = commonContainer.querySelectorAll(
@@ -480,7 +479,7 @@ JSDialog.notebookbarIconViewList = function (
 		// Re-hide non-first iconviews (they may have been replaced
 		// by _updateWidgetImpl and lost their display:none).
 		hideNonFirstIconViews();
-	}).observe(commonContainer, { childList: true });
+	};
 
 	return false;
 };
