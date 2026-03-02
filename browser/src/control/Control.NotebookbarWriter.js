@@ -434,18 +434,6 @@ window.L.Control.NotebookbarWriter = window.L.Control.Notebookbar.extend({
 					'type': 'toolbox',
 					'children': [
 						{
-							'id': 'forum',
-							'type': 'bigtoolitem',
-							'text': _('Forum'),
-							'command': '.uno:ForumHelp',
-							'accessibility': { focusBack: true, combination: 'C', de: null }
-						}
-					]
-				},
-				{
-					'type': 'toolbox',
-					'children': [
-						{
 							'id': 'online-help',
 							'type': 'bigtoolitem',
 							'text': _('Online Help'),
@@ -468,6 +456,77 @@ window.L.Control.NotebookbarWriter = window.L.Control.Notebookbar.extend({
 					]
 				},
 				{ type: 'separator', id: 'help-keyboardshortcuts-break', orientation: 'vertical' },
+				{
+					'type': 'toolbox',
+					'children': [
+						{
+							'id': 'forum',
+							'type': 'bigtoolitem',
+							'text': _('Forum'),
+							'command': '.uno:ForumHelp',
+							'accessibility': { focusBack: true, combination: 'C', de: null }
+						}
+					]
+				},
+				{
+					'type': 'toolbox',
+					'children': [
+						{
+							'id': 'report-an-issue',
+							'type': 'bigtoolitem',
+							'text': _('Report an issue'),
+							'command': '.uno:ReportIssue',
+							'accessibility': { focusBack: true, combination: 'K', de: null }
+						},
+					]
+				},
+				hasLatestUpdates ?
+					{
+						'type': 'toolbox',
+						'children': [
+							{
+								'id': 'latestupdates',
+								'type': 'bigtoolitem',
+								'text': _('Latest Updates'),
+								'command': '.uno:LatestUpdates',
+								'accessibility': { focusBack: true,	combination: 'LU', de: null }
+
+							}
+						]
+					} : {},
+				hasFeedback ?
+					{
+						'type': 'toolbox',
+						'children': [
+							{
+								'id': 'feedback',
+								'type': 'bigtoolitem',
+								'text': _('Send Feedback'),
+								'command': '.uno:Feedback',
+								'accessibility': { focusBack: true,	combination: 'SF', de: null }
+							}
+						]
+					} : {},
+				hasServerAudit ?
+					{
+						'id': 'help-serveraudit-break',
+						'type': 'separator',
+						'orientation': 'vertical'
+					} : {},
+				hasServerAudit ? 
+					{
+						'id': 'server-audit',
+						'type': 'bigcustomtoolitem',
+						'text': _('Server audit'),
+						'command': 'serveraudit',
+						'accessibility': { focusBack: false, combination: 'SA', de: null }
+					} : {},
+				hasAccessibilitySupport || hasAccessibilityCheck ?
+					{
+						'id': 'help-accessibility-break',
+						'type': 'separator',
+						'orientation': 'vertical'
+					} : {},
 				hasAccessibilitySupport ?
 					{
 						'id':'togglea11ystate',
@@ -498,67 +557,13 @@ window.L.Control.NotebookbarWriter = window.L.Control.Notebookbar.extend({
 						'visible': isDebugOn ? 'true' : 'false',
 						'accessibility': { focusBack: true,	combination: 'VD', de: null }
 					},
-				hasAccessibilitySupport || hasAccessibilityCheck ?
+				hasAbout ?
 					{
-						'id': 'help-accessibility-break',
+						'id': 'help-about-break',
 						'type': 'separator',
 						'orientation': 'vertical'
 					} : {},
-				hasServerAudit ?
-				{
-					'id': 'server-audit',
-					'type': 'bigcustomtoolitem',
-					'text': _('Server audit'),
-					'command': 'serveraudit',
-					'accessibility': { focusBack: false, combination: 'SA', de: null }
-				} : {},
-				hasServerAudit ?
-				{
-				'id': 'help-serveraudit-break',
-				'type': 'separator',
-				'orientation': 'vertical'
-				} : {},
-				{
-					'type': 'toolbox',
-					'children': [
-						{
-							'id': 'report-an-issue',
-							'type': 'bigtoolitem',
-							'text': _('Report an issue'),
-							'command': '.uno:ReportIssue',
-							'accessibility': { focusBack: true, combination: 'K', de: null }
-						},
-					]
-				},
-				{ 'type': 'separator', 'id': 'help-reportissue-break', 'orientation': 'vertical' },
-				hasLatestUpdates ?
-					{
-						'type': 'toolbox',
-						'children': [
-							{
-								'id': 'latestupdates',
-								'type': 'bigtoolitem',
-								'text': _('Latest Updates'),
-								'command': '.uno:LatestUpdates',
-								'accessibility': { focusBack: true,	combination: 'LU', de: null }
-
-							}
-						]
-					} : {},
-				hasFeedback ?
-					{
-						'type': 'toolbox',
-						'children': [
-							{
-								'id': 'feedback',
-								'type': 'bigtoolitem',
-								'text': _('Send Feedback'),
-								'command': '.uno:Feedback',
-								'accessibility': { focusBack: true,	combination: 'SF', de: null }
-							}
-						]
-					} : {},
-				hasAbout ?
+				hasAbout ? 
 					{
 						'type': 'toolbox',
 						'children': [
