@@ -474,8 +474,15 @@ void COOLWSD::cleanupDocBrokers()
         // consider shutting down unused subforkits
         // Always drop those older than IdleServerSettingsTimeoutSecs, and cap
         // the remainder to a reasonable number of recently-used entries.
-        CONFIG_STATIC const size_t MaxRecentlyUsedSubForKits =
-            ConfigUtil::getConfigValue<size_t>("serverside_config.max_idle_subforkits", 5);
+        CONFIG_STATIC const size_t MaxRecentlyUsedSubForKits = []{
+            size_t value = ConfigUtil::getConfigValue<size_t>("serverside_config.max_idle_subforkits", 5);
+            if (value < 1)
+            {
+                LOG_WRN("max_idle_subforkits is 0, clamping to 1.");
+                value = 1;
+            }
+            return value;
+        }();
 
         // idle candidates: pair of (idle duration, configId)
         std::vector<std::pair<std::chrono::steady_clock::duration, std::string>> idleCandidates;

@@ -345,7 +345,7 @@
 
     <serverside_config>
         <idle_timeout_secs desc="The maximum number of seconds before unloading an idle sub forkit. Defaults to 1 hour." type="uint" default="3600">3600</idle_timeout_secs>
-        <max_idle_subforkits desc="The maximum number of recently-used idle sub forkits to keep alive. Defaults to 5." type="uint" default="5">5</max_idle_subforkits>
+        <max_idle_subforkits desc="The maximum number of recently-used idle sub forkits to keep alive. Defaults to 5. Clamped to at least 1." type="uint" default="5">5</max_idle_subforkits>
     </serverside_config>
 
     <remote_config>
