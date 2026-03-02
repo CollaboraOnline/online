@@ -27,7 +27,7 @@
 	.unotoolbutton.notebookbar .unobutton > img,
 	.unotoolbutton.notebookbar .unobutton {
 		forced-color-adjust: none;
-		background-color: #e9e9ed;
+		background-color: #e9e9ed !important;
 	}
 
 	/* Restore native checkboxes (OS renders in user's HC colors) */
@@ -47,7 +47,7 @@
 	/* Dropdown arrows */
 	.unoarrow, .menubutton .arrow, .ui-listbox-arrow {
 		forced-color-adjust: none;
-		border-top-color: #e9e9ed;
+		border-top-color: #e9e9ed !important;
 	}
 
 	/* Restore original Sidebar expanders */
@@ -101,7 +101,7 @@
 	[data-theme='dark'] .unotoolbutton.notebookbar .unobutton,
 	[data-theme='dark'] .StyleListPanel #TemplatePanel [id] button,
 	[data-theme='dark'] .ui-overflow-group-popup .unobutton > img {
-		background-color: #1E1E1E;
+		background-color: #1E1E1E !important;
 	}
 
 	[data-theme='dark'] .cool-annotation-menu,
@@ -115,7 +115,7 @@
 	[data-theme='dark'] .unoarrow,
 	[data-theme='dark'] .menubutton .arrow,
 	[data-theme='dark'] .ui-listbox-arrow {
-		border-top-color: #1E1E1E;
+		border-top-color: #FFFF;
 	}
 
 	/* Dark mode: restore brightness for sidebar expanders (filter: none
