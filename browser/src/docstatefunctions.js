@@ -322,6 +322,89 @@ app.calc.isSelectedPartSheetViewSynced = function () {
 	return app.calc.isPartSheetViewSynced(app.map._docLayer._selectedPart);
 };
 
+// Returns the name of the default sheet a given sheet view part.
+app.calc.getDefaultViewNameForPart = function (part) {
+	if (!app.map._docLayer || !app.map._docLayer._lastStatusJSON) return null;
+	var parts = app.map._docLayer._lastStatusJSON.parts;
+	if (part >= parts.length) return null;
+
+	var partData = parts[part];
+	if (partData.sheetviewid === undefined || partData.sheetviewid < 0)
+		return null;
+
+	var defaultViewHash = partData.defaultviewhash;
+	if (!defaultViewHash) return null;
+
+	for (var i = 0; i < parts.length; i++) {
+		if (parts[i].hash === defaultViewHash) {
+			return parts[i].name;
+		}
+	}
+
+	return null;
+};
+
+// Checks if the given part is the default (base) sheet of the currently selected sheet view.
+app.calc.isDefaultPartOfSelectedSheetView = function (part) {
+	if (!app.map._docLayer || !app.map._docLayer._lastStatusJSON) return false;
+	var selectedPart = app.map._docLayer._selectedPart;
+	if (!app.calc.isPartSheetView(selectedPart)) return false;
+
+	var parts = app.map._docLayer._lastStatusJSON.parts;
+	if (part >= parts.length) return false;
+
+	var selectedPartData = parts[selectedPart];
+	return (
+		selectedPartData.defaultviewhash &&
+		selectedPartData.defaultviewhash === parts[part].hash
+	);
+};
+
+// Returns the sheet view part index that corresponds to the given default (base) part, or -1 if none.
+app.calc.getSheetViewPartForDefaultPart = function (part) {
+	if (!app.map._docLayer || !app.map._docLayer._lastStatusJSON) return -1;
+	var parts = app.map._docLayer._lastStatusJSON.parts;
+	if (part >= parts.length) return -1;
+
+	var partHash = parts[part].hash;
+	if (!partHash) return -1;
+
+	for (var i = 0; i < parts.length; i++) {
+		if (parts[i].sheetviewid >= 0 && parts[i].defaultviewhash === partHash) {
+			return i;
+		}
+	}
+
+	return -1;
+};
+
+// Updates the active sheet view part based on the selected part.
+app.calc.updateActiveSheetView = function (selectedPart) {
+	if (!app.map._docLayer || !app.map._docLayer._lastStatusJSON) return;
+
+	if (app.calc.isPartSheetView(selectedPart)) {
+		var parts = app.map._docLayer._lastStatusJSON.parts;
+		var defaultViewHash = parts[selectedPart].defaultviewhash;
+		if (defaultViewHash) {
+			for (var i = 0; i < parts.length; i++) {
+				if (parts[i].hash === defaultViewHash) {
+					app.calc.partWithActiveSheetView = i;
+					return;
+				}
+			}
+		}
+	}
+
+	// Only clear when navigating back to the default part itself.
+	if (selectedPart === app.calc.partWithActiveSheetView)
+		app.calc.partWithActiveSheetView = -1;
+};
+
+// Checks if the given part has an active sheet view.
+app.calc.hasActiveSheetView = function (part) {
+	return app.calc.partWithActiveSheetView === part;
+};
+
 app.calc.isAnyPartHidden = function () {
 	if (!app.map._docLayer || !app.map._docLayer._lastStatusJSON) return false;
 
