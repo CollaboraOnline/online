@@ -114,7 +114,6 @@ namespace Log
         std::tm _last_tm; ///< The local timestamp in the prefix.
         std::time_t _last_time; ///< The system timestamp in the prefix.
         char* _year_pos;
-        char* _tz_pos;
         char* _level_pos;
     };
 

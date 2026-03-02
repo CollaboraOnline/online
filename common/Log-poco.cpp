@@ -477,7 +477,7 @@ namespace Log
 
         const std::time_t t = std::time(nullptr);
         struct tm tm;
-        LOG_INF("Initializing " << name << ". GMT time: "
+        LOG_INF("Initializing " << name << ". Log timestamps are in GMT time. Now: "
                                 << std::put_time(Util::time_t_to_gmtime(t, tm), "%a %F %T %z")
                                 << ". Log level is [" << logger->getLevel() << ']');
 
