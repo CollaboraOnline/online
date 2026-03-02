@@ -134,12 +134,16 @@ class SheetsBar {
 				continue;
 			}
 
+			if (app.calc.isPartSheetView(i)) {
+				continue;
+			}
+
 			let displayText = this.partNames[i];
 
 			sheetEntries.push({
 				id: 'selectsheet-' + i,
 				text: displayText,
-				selected: (i === this.selectedPart)
+				selected: (i === this.selectedPart || app.calc.isDefaultPartOfSelectedSheetView(i))
 			});
 		}
 		

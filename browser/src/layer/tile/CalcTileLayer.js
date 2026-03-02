@@ -422,7 +422,7 @@ window.L.CalcTileLayer = window.L.CanvasTileLayer.extend({
 		const statusJSON = JSON.parse(textMsg.replace('status:', '').replace('statusupdate:', ''));
 
 		if (statusJSON.width && statusJSON.height && this._documentInfo !== textMsg) {
-			const temp = this._lastStatusJSON ? Object.assign({}, this._lastStatusJSON): null;
+			const previousStatusJSON = this._lastStatusJSON ? Object.assign({}, this._lastStatusJSON): null;
 			this._lastStatusJSON = statusJSON;
 			this._documentInfo = textMsg;
 
@@ -487,7 +487,7 @@ window.L.CalcTileLayer = window.L.CanvasTileLayer.extend({
 			this._refreshPartHashes(statusJSON);
 
 			// if the number of parts, or order has changed then refresh comment positions
-			if (this._hasPartsCountOrNamesChanged(temp, statusJSON))
+			if (this._hasPartsCountOrNamesChanged(previousStatusJSON, statusJSON))
 				app.socket.sendMessage('commandvalues command=.uno:ViewAnnotationsPosition');
 
 
@@ -512,7 +512,7 @@ window.L.CalcTileLayer = window.L.CanvasTileLayer.extend({
 					this._printRanges[info[i]['sheet']] = info[i]['ranges'];
 			}
 
-			if (firstSelectedPart)
+			if (firstSelectedPart || (previousStatusJSON && previousStatusJSON.selectedpart !== statusJSON.selectedpart))
 				this._switchSplitPanesContext();
 
 			this._map.fire('statusupdated');
