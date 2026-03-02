@@ -132,6 +132,45 @@ void CollabFileProxy::handleFetchRequest(const std::string& streamUrl,
         });
 }
 
+void CollabFileProxy::handleUploadRequest(const std::string& targetUrl, std::istream& message,
+                                          const std::shared_ptr<TerminatingPoll>& poll,
+                                          SocketDisposition& disposition)
+{
+    LOG_INF("CollabFileProxy: handling upload request to ["
+            << COOLWSD::anonymizeUrl(targetUrl) << ']');
+
+    std::shared_ptr<StreamSocket> socket = _socket.lock();
+    if (!socket)
+    {
+        LOG_ERR("CollabFileProxy: invalid socket for upload request");
+        return;
+    }
+
+    // Read the POST body
+    _uploadBody = std::string(std::istreambuf_iterator<char>(message), {});
+
+    // Parse the target URL and add access token
+    std::string uploadUrl = targetUrl;
+    if (uploadUrl.find('?') == std::string::npos)
+        uploadUrl += "?access_token=" + _accessToken;
+    else
+        uploadUrl += "&access_token=" + _accessToken;
+
+    Poco::URI uri(uploadUrl);
+
+    // Transfer to poll and start upload directly (bypassing CheckFileInfo)
+    disposition.setTransfer(*poll,
+        [this, poll, uri, keepalive = shared_from_this()](
+            const std::shared_ptr<Socket>& moveSocket)
+        {
+            LOG_TRC('#' << moveSocket->getFD()
+                        << ": CollabFileProxy: starting direct upload to ["
+                        << COOLWSD::anonymizeUrl(uri.toString()) << ']');
+
+            doUpload(poll, uri, _uploadBody);
+        });
+}
+
 void CollabFileProxy::handleDirectRequest(std::istream& message,
                                           Poco::JSON::Object::Ptr wopiInfo,
                                           const std::shared_ptr<TerminatingPoll>& poll,

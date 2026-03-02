@@ -2352,6 +2352,108 @@ function TODO_REDIRECT(url) {
 		});
 	};
 
+	// Upload a file using the /co/collab WebSocket endpoint (token-based).
+	// Used by WASM builds for saving documents back to the WOPI host.
+	global.collabUploadFile = function(wopiSrc, accessToken, fileBytes) {
+		return new Promise(function(resolve, reject) {
+			var wsProtocol = global.location.protocol === 'https:' ? 'wss:' : 'ws:';
+			var wsUrl = wsProtocol + '//' + global.location.host +
+				global.serviceRoot + '/co/collab?WOPISrc=' + encodeURIComponent(wopiSrc);
+
+			global.app.console.log('Collab upload: connecting to ' + wsUrl);
+
+			var ws;
+			try {
+				ws = new WebSocket(wsUrl);
+			} catch (err) {
+				reject(new Error('Failed to create WebSocket: ' + err.message));
+				return;
+			}
+
+			var authenticated = false;
+			var timeoutId = setTimeout(function() {
+				if (ws.readyState !== WebSocket.CLOSED) {
+					ws.close();
+				}
+				reject(new Error('Collab upload timeout'));
+			}, 30000);
+
+			ws.onopen = function() {
+				global.app.console.log('Collab upload: sending access_token');
+				ws.send('access_token ' + accessToken);
+			};
+
+			ws.onmessage = function(event) {
+				var data = event.data;
+				global.app.console.log('Collab upload message: ' + data.substring(0, 100));
+
+				try {
+					var msg = JSON.parse(data);
+
+					if (msg.type === 'authenticated') {
+						authenticated = true;
+						ws.send(JSON.stringify({
+							type: 'upload',
+							stream: 'contents',
+							requestId: 'wasm-save'
+						}));
+					} else if (msg.type === 'upload_url' && msg.requestId === 'wasm-save') {
+						clearTimeout(timeoutId);
+						ws.close();
+						if (msg.url) {
+							global.app.console.log('Collab upload URL: ' + msg.url);
+							// POST the file bytes to the upload URL
+							fetch(msg.url, {
+								method: 'POST',
+								body: fileBytes,
+								headers: {
+									'Content-Type': 'application/octet-stream'
+								}
+							}).then(function(response) {
+								if (response.ok) {
+									return response.json();
+								}
+								throw new Error('Upload failed with status ' + response.status);
+							}).then(function(json) {
+								resolve(json);
+							}).catch(function(err) {
+								reject(err);
+							});
+						} else {
+							reject(new Error('Collab upload response missing URL'));
+						}
+					} else if (msg.type === 'upload_error') {
+						clearTimeout(timeoutId);
+						ws.close();
+						reject(new Error('Collab upload error: ' + (msg.error || 'Unknown error')));
+					} else if (msg.type === 'error') {
+						clearTimeout(timeoutId);
+						ws.close();
+						reject(new Error('Collab error: ' + (msg.message || msg.error || 'Unknown error')));
+					}
+				} catch (e) {
+					if (data.startsWith('error:')) {
+						clearTimeout(timeoutId);
+						ws.close();
+						reject(new Error('Collab error: ' + data));
+					}
+				}
+			};
+
+			ws.onerror = function() {
+				clearTimeout(timeoutId);
+				reject(new Error('Collab upload WebSocket error'));
+			};
+
+			ws.onclose = function() {
+				clearTimeout(timeoutId);
+				if (!authenticated) {
+					reject(new Error('Collab upload WebSocket closed before authentication'));
+				}
+			};
+		});
+	};
+
 	function handleViewportChange(event) {
 		var visualViewport = event.target;
 

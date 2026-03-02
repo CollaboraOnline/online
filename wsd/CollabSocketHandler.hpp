@@ -107,6 +107,9 @@ private:
     void handleFetch(const std::string& stream, const std::string& requestId,
                      const std::string& ifNoneMatch, const std::string& ifModifiedSince);
 
+    /// Handle upload request - returns a one-time upload URL for HTTP PUT
+    void handleUpload(const std::string& stream, const std::string& requestId);
+
     /// Callback when fetch completes
     void onFetchComplete(const std::string& requestId, const std::string& stream,
                          const std::shared_ptr<http::Session>& session);

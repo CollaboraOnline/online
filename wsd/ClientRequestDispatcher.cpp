@@ -1412,6 +1412,72 @@ ClientRequestDispatcher::MessageResult ClientRequestDispatcher::handleMessage(Po
         }
         else if (requestDetails.equals(0, "co") &&
                  requestDetails.equals(1, "collab") &&
+                 requestDetails.equals(2, "put"))
+        {
+            // /co/collab/put?token=... endpoint - upload via token from WebSocket upload command
+            LOG_INF("CollabPut request: " << request.getURI());
+
+            // Extract token from query parameters
+            std::string token;
+            Poco::URI requestUri(request.getURI());
+            for (const auto& param : requestUri.getQueryParameters())
+            {
+                if (param.first == "token")
+                {
+                    token = param.second;
+                    break;
+                }
+            }
+
+            if (token.empty())
+            {
+                LOG_ERR("Missing token parameter in collab put request");
+                HttpHelper::sendErrorAndShutdown(http::StatusCode::BadRequest, socket);
+                return MessageResult::Ignore;
+            }
+
+            // Look up and consume the upload request
+            CollabUploadRequest uploadRequest;
+            if (!consumeCollabUploadRequest(token, uploadRequest))
+            {
+                LOG_ERR("Invalid or expired token in collab put request");
+                HttpHelper::sendErrorAndShutdown(http::StatusCode::Unauthorized, socket);
+                return MessageResult::Ignore;
+            }
+
+            // Verify the CollabBroker still exists with active handlers
+            auto broker = findCollabBroker(uploadRequest.docKey);
+            if (!broker)
+            {
+                LOG_ERR("CollabPut: No active collab session for docKey ["
+                        << uploadRequest.docKey << ']');
+                HttpHelper::sendErrorAndShutdown(http::StatusCode::Gone, socket);
+                return MessageResult::Ignore;
+            }
+
+            // Verify the broker access token (handles rotation gracefully)
+            if (!broker->matchesAccessToken(uploadRequest.brokerTag))
+            {
+                LOG_ERR("CollabPut: Invalid broker access token for docKey ["
+                        << uploadRequest.docKey << ']');
+                HttpHelper::sendErrorAndShutdown(http::StatusCode::Unauthorized, socket);
+                return MessageResult::Ignore;
+            }
+
+            LOG_INF("CollabPut: proxying upload to ["
+                    << COOLWSD::anonymizeUrl(uploadRequest.targetUrl) << ']');
+
+            // Create a proxy to handle the upload (bypasses CheckFileInfo)
+            auto proxy = std::make_shared<CollabFileProxy>(
+                _id, requestDetails, socket, uploadRequest.wopiSrc,
+                uploadRequest.accessToken, /*isUpload=*/true);
+
+            // Upload directly to the pre-authorized target URL
+            proxy->handleUploadRequest(uploadRequest.targetUrl, message,
+                                        COOLWSD::getWebServerPoll(), disposition);
+        }
+        else if (requestDetails.equals(0, "co") &&
+                 requestDetails.equals(1, "collab") &&
                  requestDetails.isWebSocket())
         {
             // /co/collab WebSocket endpoint

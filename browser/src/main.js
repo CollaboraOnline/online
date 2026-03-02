@@ -123,6 +123,18 @@ if (window.ThisIsTheEmscriptenApp) {
 		var docParamsPart = docParamsString ? (docURL.includes('?') ? '&' : '?') + docParamsString : '';
 		var fullDocUrl = docURL + docParamsPart;
 
+		// Set up save callback before initializing the module.
+		// The C++ saveToServer() calls this via MAIN_THREAD_EM_ASM
+		// with the file bytes, and we handle the token exchange and upload.
+		globalThis.collabSaveToServer = function(fileBytes) {
+			window.app.console.log('WASM: collabSaveToServer called with ' + fileBytes.length + ' bytes');
+			global.collabUploadFile(fullDocUrl, accessToken, fileBytes).then(function(result) {
+				window.app.console.log('WASM: save completed successfully');
+			}).catch(function(err) {
+				window.app.console.error('WASM: save failed: ' + err.message);
+			});
+		};
+
 		global.collabFetchFile(fullDocUrl, accessToken).then(function(downloadUrl) {
 			window.app.console.log('WASM: Using collab fetch URL: ' + downloadUrl);
 			initEmscriptenModule('collab', downloadUrl);
