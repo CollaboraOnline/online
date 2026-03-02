@@ -56,7 +56,7 @@ describe(['tagdesktop'], 'Accessibility Writer Sidebar Tests', { testIsolation: 
 		runA11yValidation(win);
 	});
 
-	it.skip('Chart (LinePropertyPanel)', function () {
+	it('Chart (LinePropertyPanel)', function () {
 		helper.clearAllText({ isTable: true });
 		cy.then(() => {
 			win.app.map.sendUnoCommand('.uno:InsertObjectChart');
@@ -71,7 +71,11 @@ describe(['tagdesktop'], 'Accessibility Writer Sidebar Tests', { testIsolation: 
 		// Default chart deck panels
 		runA11yValidation(win);
 
-		// Now use tab to select the inner 'Chart' element
+		// Enter the chart's inner object hierarchy
+		cy.realPress('Enter');
+		helper.processToIdle(win);
+
+		// Select the first sub-object
 		cy.realPress('Tab');
 		helper.processToIdle(win);
 		runA11yValidation(win);
@@ -86,22 +90,24 @@ describe(['tagdesktop'], 'Accessibility Writer Sidebar Tests', { testIsolation: 
 		helper.processToIdle(win);
 		runA11yValidation(win);
 
-		cy.realPress('Escape'); // back up a level
-		cy.realPress('Tab'); // Data Series: Column 2
-		cy.realPress('Tab'); // Data Series: Column 3
-		cy.realPress('Tab'); // X Axis
+		// Back up to Data Series: Column 1
+		cy.realPress('Escape');
 		helper.processToIdle(win);
 		runA11yValidation(win);
 
-		cy.realPress('Escape'); // Go a level up the hierarchy
+		// Data Series: Column 2
+		cy.realPress('Tab');
 		helper.processToIdle(win);
-
-		helper.processToIdle(win);
-		// Data series selected, expect data series panel to be tested.
 		runA11yValidation(win);
 
-		// Two esc get us out of the chart navigation and then chart edit mode
-		escLevel(win, 2);
+		// X Axis
+		cy.realPress('Tab');
+		cy.realPress('Tab');
+		helper.processToIdle(win);
+		runA11yValidation(win);
+
+		// Esc out of chart navigation, chart edit mode, and chart selection
+		escLevel(win, 3);
 		helper.processToIdle(win);
 
 		// At which point the sidebar disappears
@@ -222,7 +228,7 @@ describe(['tagdesktop'], 'Accessibility Writer Sidebar Tests', { testIsolation: 
 		});
 	});
 
-	it.skip('InspectorDeck', function() {
+	it('InspectorDeck', function() {
 		cy.then(() => {
 			win.app.map.sendUnoCommand('.uno:SidebarDeck.InspectorDeck');
 			helper.processToIdle(win);
