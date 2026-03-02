@@ -165,7 +165,7 @@ describe(['tagdesktop'], 'Accessibility Calc Dialog Tests', { testIsolation: fal
         }
     });
 
-    it.skip('Graphic dialog', function () {
+    it('Graphic dialog', function () {
         cy.viewport(1920,1080);
         helper.processToIdle(win);
 
@@ -189,7 +189,7 @@ describe(['tagdesktop'], 'Accessibility Calc Dialog Tests', { testIsolation: fal
         desktopHelper.selectZoomLevel('100', false);
     });
 
-    it.skip('Shape paragraph dialog', function () {
+    it('Shape paragraph dialog', function () {
         cy.then(() => {
             win.app.map.sendUnoCommand('.uno:BasicShapes.octagon');
         });
@@ -207,7 +207,7 @@ describe(['tagdesktop'], 'Accessibility Calc Dialog Tests', { testIsolation: fal
         helper.typeIntoDocument('{esc}');
     });
 
-    it.skip('PasteSpecial Dialog (Buggy)', function () {
+    it('PasteSpecial Dialog', function () {
         helper.setDummyClipboardForCopy('text/html');
         // Select some text
         helper.selectAllText();
@@ -235,7 +235,7 @@ describe(['tagdesktop'], 'Accessibility Calc Dialog Tests', { testIsolation: fal
         a11yHelper.handleDialog(win, 1, '.uno:PasteTextImportDialog');
     });
 
-    it.skip('Font Dialog (Buggy)', function () {
+    it('Font Dialog', function () {
         calcHelper.dblClickOnFirstCell();
 
         cy.then(() => {
