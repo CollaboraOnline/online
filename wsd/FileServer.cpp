@@ -1521,6 +1521,7 @@ FileServerRequestHandler::ResourceAccessDetails FileServerRequestHandler::prepro
         httpResponse.add("Cross-Origin-Opener-Policy", "same-origin");
         httpResponse.add("Cross-Origin-Embedder-Policy", "require-corp");
         httpResponse.add("Cross-Origin-Resource-Policy", "cross-origin");
+        httpResponse.add("Document-Isolation-Policy", "isolate-and-require-corp");
     }
 
     const bool wasm = (relPath.find("wasm") != std::string::npos);
