@@ -534,14 +534,19 @@ function createShapesPanel(shapeType) {
 	var collection = shapes[shapeType];
 
 	for (var s in collection) {
+		const rowGroup = document.createElement('div');
+		rowGroup.setAttribute('role', 'rowgroup');
+		rowGroup.setAttribute('aria-label', _(s));
+
 		const rowHeader = document.createElement('div');
 		rowHeader.className = 'row-header cool-font';
+		rowHeader.setAttribute('role', 'presentation');
 		rowHeader.textContent = _(s);
-		grid.appendChild(rowHeader);
+		rowGroup.appendChild(rowHeader);
 
 		const row = document.createElement('div');
 		row.className = 'row';
-		grid.appendChild(row);
+		rowGroup.appendChild(row);
 
 		for (let idx = 0; idx < collection[s].length; ++idx) {
 			const shape = collection[s][idx];
@@ -551,6 +556,8 @@ function createShapesPanel(shapeType) {
 			col.dataset.uno = shape.uno;
 			row.appendChild(col);
 		}
+
+		grid.appendChild(rowGroup);
 	}
 
 	grid.onclick = function(e) {
@@ -600,17 +607,22 @@ function insertShapes(shapeType, grid = document.getElementsByClassName('inserts
 	var collection = shapes[shapeType];
 
 	for (let s in collection) {
+		const rowGroup = document.createElement('div');
+		rowGroup.setAttribute('role', 'rowgroup');
+		rowGroup.setAttribute('aria-label', _(s));
+
 		const rowHeader = document.createElement('div');
 		rowHeader.className = 'row-header cool-font';
+		rowHeader.setAttribute('role', 'presentation');
 		rowHeader.textContent = _(s);
-		grid.appendChild(rowHeader);
+		rowGroup.appendChild(rowHeader);
 
 		var rows = Math.ceil(collection[s].length / width);
 		var idx = 0;
 		const row = document.createElement('div');
 		row.className = 'row';
 		row.setAttribute('role', 'row');
-		grid.appendChild(row);
+		rowGroup.appendChild(row);
 		for (let r = 0; r < rows; r++) {
 
 			for (let c = 0; c < width; c++) {
@@ -634,6 +646,8 @@ function insertShapes(shapeType, grid = document.getElementsByClassName('inserts
 			if (idx >= collection[s].length)
 				break;
 		}
+
+		grid.appendChild(rowGroup);
 	}
 }
 
