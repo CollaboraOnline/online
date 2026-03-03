@@ -57,7 +57,11 @@ class CalcTableTab implements NotebookbarTab {
 	}
 
 	public updateStyles(state: any) {
-		if (state.commandName !== '.uno:TableStyles') return;
+		if (
+			state.commandName !== '.uno:TableStyles' &&
+			state.commandName !== '.uno:DatabaseSettings'
+		)
+			return;
 
 		app.map.fire('jsdialogupdate', {
 			data: {
