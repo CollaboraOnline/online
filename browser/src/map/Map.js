@@ -1066,7 +1066,7 @@ window.L.Map = window.L.Evented.extend({
 	// Returns true iff the document has input focus,
 	// as opposed to a dialog, sidebar, formula bar, etc.
 	editorHasFocus: function () {
-		return this.getWinId() === 0 && !this.calcInputBarHasFocus();
+		return this.getWinId() === 0 && !this.calcInputBarHasFocus() && !this._iframeDialog;
 	},
 
 	// Returns true iff the formula-bar has the focus.
