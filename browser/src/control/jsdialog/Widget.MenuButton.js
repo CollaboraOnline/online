@@ -112,7 +112,8 @@ function _menubuttonControl (parentContainer, data, builder) {
 					return true;
 				} else if (eventType === 'selected' && entry && entry.action) {
 					app.dispatcher.dispatch(entry.action);
-					JSDialog.CloseDropdown(dropdownId);
+					const opensExternal = entry.action.startsWith('exportas-') || entry.action.startsWith('saveas-');
+					JSDialog.CloseDropdown(dropdownId, opensExternal);
 					return true;
 				} else if (eventType === 'selected' && entry && entry.id) {
 					builder.callback('menubutton', 'select', control.container, entry.id, builder);
