@@ -1583,6 +1583,11 @@ class SettingIframe {
 		if (data.wordbook)
 			this.populateList('wordbookList', data.wordbook, '/wordbook');
 		if (data.xcu) this.populateList('XcuList', data.xcu, '/xcu');
+
+		var navItem = document.querySelector<HTMLElement>(
+			'#settings-nav .settings-nav-item',
+		);
+		if (navItem) navItem.focus();
 	}
 
 	private setupLeftNavbar(): void {

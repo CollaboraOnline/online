@@ -175,6 +175,7 @@ window.L.IFrameDialog = window.L.Class.extend({
 		window.L.DomEvent.off(this._iframe, 'load', this.onLoad, this);
 		window.L.DomUtil.remove(this._container);
 		this._container = this._iframe = null;
+		app.map._iframeDialog = null;
 		app.map.focus();
 	},
 
@@ -204,6 +205,7 @@ window.L.IFrameDialog = window.L.Class.extend({
 			var pos = new cool.Point(rect.left, rect.top);
 			window.L.DomUtil.setPosition(this._container, pos);
 		}
+		app.map._iframeDialog = this;
 		this.focus();
 	}
 });
