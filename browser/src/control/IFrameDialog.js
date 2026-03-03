@@ -122,6 +122,14 @@ window.L.IFrameDialog = window.L.Class.extend({
 		if (this.options.stylesheets) {
 			this.addStyleSheets(this.options.stylesheets);
 		}
+
+		// Listen for Escape inside the iframe for when the iframe has focus.
+		var self = this;
+		this._iframe.contentDocument.addEventListener('keydown', function(e) {
+			if (e.key === 'Escape') {
+				self.remove();
+			}
+		});
 	},
 
 	addStyleSheet: function (href) {
