@@ -1064,6 +1064,28 @@ class BackstageView extends window.L.Class {
 		templates.forEach((template) => {
 			row.appendChild(this.createTemplateCard(template, cardOptions));
 		});
+
+		setTimeout(() => {
+			if (!document.body.contains(row)) return;
+			let maxHeight = 0;
+			const cards = Array.from(
+				row.querySelectorAll('.backstage-template-card'),
+			) as HTMLElement[];
+			cards.forEach((card) => {
+				const name = card.querySelector('.template-name') as HTMLElement;
+				if (name && name.offsetHeight > maxHeight) {
+					maxHeight = name.offsetHeight;
+				}
+			});
+
+			if (maxHeight > 0) {
+				cards.forEach((card) => {
+					const name = card.querySelector('.template-name') as HTMLElement;
+					if (name) name.style.height = `${maxHeight}px`;
+				});
+			}
+		}, 0);
+
 		return row;
 	}
 
@@ -1101,6 +1123,60 @@ class BackstageView extends window.L.Class {
 		templates.forEach((template) => {
 			grid.appendChild(this.createTemplateCard(template));
 		});
+
+		const updateLabelHeights = () => {
+			if (!document.body.contains(grid)) return;
+
+			const cards = Array.from(
+				grid.querySelectorAll('.backstage-template-card'),
+			) as HTMLElement[];
+
+			const rows = new Map<number, HTMLElement[]>();
+			cards.forEach((card) => {
+				const top = card.offsetTop;
+				let foundRowTop = -1;
+				rows.forEach((_, rowTop) => {
+					if (Math.abs(rowTop - top) < 5) {
+						foundRowTop = rowTop;
+					}
+				});
+
+				const row = rows.get(foundRowTop);
+				if (row) {
+					row.push(card);
+				} else {
+					rows.set(top, [card]);
+				}
+			});
+
+			rows.forEach((rowCards) => {
+				let maxHeight = 0;
+				rowCards.forEach((card) => {
+					const name = card.querySelector('.template-name') as HTMLElement;
+					if (name && name.offsetHeight > maxHeight) {
+						maxHeight = name.offsetHeight;
+					}
+				});
+				rowCards.forEach((card) => {
+					const name = card.querySelector('.template-name') as HTMLElement;
+					if (name) name.style.height = `${maxHeight}px`;
+				});
+			});
+		};
+
+		const resizeObserver = new ResizeObserver(() => {
+			updateLabelHeights();
+		});
+
+		resizeObserver.observe(grid);
+		const mutationObserver = new MutationObserver((mutations, obs) => {
+			if (!document.body.contains(grid)) {
+				resizeObserver.disconnect();
+				obs.disconnect();
+			}
+		});
+
+		mutationObserver.observe(document.body, { childList: true, subtree: true });
 
 		return grid;
 	}
