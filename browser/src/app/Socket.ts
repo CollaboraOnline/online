@@ -229,7 +229,7 @@ class Socket {
 		if (window.enableExperimentalFeatures) {
 			// Use the new Cool WS URL.
 			return window.makeWopiCoolWsUrl(
-				window.makeWsUrl('/cool/'),
+				window.makeWsUrl('/cool'),
 				$.param(map.options.docParams),
 			);
 		} else {

@@ -845,7 +845,7 @@ void RequestDetailsTests::testCoolWs()
 
     {
         static const std::string URI =
-            "/cool//"
+            "/cool/"
             "ws?WOPISrc=http%3A%2F%2Flocalhost%2Fnextcloud%2Findex.php%2Fapps%2Frichdocuments%"
             "2Fwopi%2Ffiles%2F593_ocqiesh0cngs&access_token=MN0KXXDv9GJ1wCCLnQcjVQT2T7WrfYpA&"
             "access_token_ttl=0&reuse_cookies=oc_sessionPassphrase%"
@@ -927,7 +927,7 @@ void RequestDetailsTests::testCoolWs()
 
     {
         static const std::string URI =
-            "/cool//"
+            "/cool/"
             "ws?WOPISrc=http%3A%2F%2Flocalhost%2Fnextcloud%2Findex.php%2Fapps%2Frichdocuments%"
             "2Fwopi%2Ffiles%2F6734_ocqiesh0cngs&access_token%3DO87cwh0WlwIawoDkafkqOtVNTygxbiBN%"
             "26access_token_ttl%3D0%26no_a";
