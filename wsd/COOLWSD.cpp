@@ -1915,6 +1915,9 @@ void COOLWSD::innerInitialize(Poco::Util::Application& self)
     bool UseMountNamespaces = true;
 
     NoCapsForKit = Util::isKitInProcess() ||
+#if !HAVE_LIBCAP
+                   true ||
+#endif
                    !ConfigUtil::getConfigValue<bool>(conf, "security.capabilities", true);
     if (NoCapsForKit && UseMountNamespaces)
     {
@@ -2080,6 +2083,9 @@ void COOLWSD::innerInitialize(Poco::Util::Application& self)
     NoSeccomp =
         Util::isKitInProcess() || !ConfigUtil::getConfigValue<bool>(conf, "security.seccomp", true);
     NoCapsForKit = Util::isKitInProcess() ||
+#if !HAVE_LIBCAP
+                   true ||
+#endif
                    !ConfigUtil::getConfigValue<bool>(conf, "security.capabilities", true);
     AdminEnabled = ConfigUtil::getConfigValue<bool>(conf, "admin_console.enable", true);
     IndirectionServerEnabled =
