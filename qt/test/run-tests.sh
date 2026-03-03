@@ -17,6 +17,7 @@
 #   AT_SPI_DRIVER_PATH  (required) Path to selenium-webdriver-at-spi.py
 #   CODA_QT_BINARY      Path to coda-qt (default: ../coda-qt)
 #   AT_SPI_VENV         Path to the AT-SPI driver virtualenv (default: <AT_SPI_DRIVER_PATH>/venv)
+#   CODA_QT_TEST_GUI    Set to 1 to run on the host display instead of a virtual Wayland compositor.
 
 set -euo pipefail
 
@@ -60,12 +61,14 @@ cleanup() {
 trap cleanup EXIT
 
 run_tests() {
-    export LIBGL_ALWAYS_SOFTWARE=1
+    [ -z "${CODA_QT_TEST_GUI:-}" ] && export LIBGL_ALWAYS_SOFTWARE=1
     export QT_QPA_PLATFORM=wayland
     export XKB_DEFAULT_LAYOUT=us
 
-    kwin_wayland --virtual --no-lockscreen --no-global-shortcuts \
-        --socket "$WAYLAND_SOCKET" &>/dev/null &
+    local kwin_args=(--no-lockscreen --no-global-shortcuts --socket "$WAYLAND_SOCKET")
+    [ -z "${CODA_QT_TEST_GUI:-}" ] && kwin_args+=(--virtual)
+
+    kwin_wayland "${kwin_args[@]}" &>/dev/null &
     KWIN_PID=$!
 
     # Wait for kwin to create the wayland socket.
