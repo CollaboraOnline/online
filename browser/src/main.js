@@ -128,10 +128,13 @@ if (window.ThisIsTheEmscriptenApp) {
 		// with the file bytes, and we handle the token exchange and upload.
 		globalThis.collabSaveToServer = function(fileBytes) {
 			window.app.console.log('WASM: collabSaveToServer called with ' + fileBytes.length + ' bytes');
+			map.fire('showbusy', {label: _('Saving...')});
 			global.collabUploadFile(fullDocUrl, accessToken, fileBytes).then(function(result) {
 				window.app.console.log('WASM: save completed successfully');
+				map.fire('hidebusy');
 			}).catch(function(err) {
 				window.app.console.error('WASM: save failed: ' + err.message);
+				map.fire('hidebusy');
 			});
 		};
 
