@@ -900,14 +900,15 @@ window.L.Clipboard = window.L.Class.extend({
 		} else {
 			const url = this.getMetaURL() + '&MimeType=text/html,text/plain;charset=utf-8';
 
-			const text = (async () => {
+			// It's important in DisableCopy to write something to the clipboard so that future paste actions can trigger an internal paste
+			const text = (this._map['wopi'].DisableCopy ? this._getDisabledCopyStubHtml() : (async () => {
 				if (await check_ === null)
 					throw new Error('Failed check, either wrong command or pending event');
 					// We need to throw an error here rather than just returning so that a failure halts copying the ClipboardItem to the clipboard
 
 				const result = await fetch(url);
 				return await result.text();
-			})();
+			})());
 
 			const clipboardItem = new ClipboardItem({
 				'text/html': this._parseClipboardFetchResult(text, 'text/html', 'html'),
@@ -1088,12 +1089,6 @@ window.L.Clipboard = window.L.Class.extend({
 	// Pull UNO clipboard commands out from menus and normal user input.
 	// We try to massage and re-emit these, to get good security event / credentials.
 	filterExecCopyPaste: function(cmd, params) {
-		if (this._map['wopi'].DisableCopy && (cmd === '.uno:Copy' || cmd === '.uno:Cut' || cmd === '.uno:CopyHyperlinkLocation')) {
-			// perform internal operations
-			app.socket.sendMessage('uno ' + cmd);
-			return true;
-		}
-
 		if (window.ThisIsTheAndroidApp) {
 			// perform internal operations
 			app.socket.sendMessage('uno ' + cmd);
@@ -1133,6 +1128,7 @@ window.L.Clipboard = window.L.Class.extend({
 
 		if (this._map['wopi'].DisableCopy === true)
 		{
+			app.socket.sendMessage('uno .uno:' + unoName);
 			var text = this._getDisabledCopyStubHtml();
 			var plainText = DocUtil.stripHTML(text);
 			if (ev.clipboardData) {

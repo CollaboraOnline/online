@@ -65,4 +65,36 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Clipboard operations.', fu
 			expect(json.Values.content).to.equal('foo *bar* baz\n');
 		});
 	});
+
+	it('Copy and Paste text with DisableCopy', function () {
+		helper.setupAndLoadDocument('writer/copy_paste.odt', /* isMultiUser */ false, /* copy .wopi.json */ true);
+		// Select some text
+		helper.selectAllText();
+
+		cy.getFrameWindow().then(win => {
+			const selectionStart = win.TextSelections.getStartRectangle();
+			cy.cGet('#document-container').rightclick(selectionStart.pX1, selectionStart.pY1);
+		});
+
+		helper.setDummyClipboardForCopy();
+
+		cy.cGet('body').contains('.context-menu-link', 'Copy')
+			.click();
+
+		// With DisableCopy active we should not copy to clipboard
+		cy.cGet('#copy-paste-container div p').should('not.have.text', 'text');
+
+		// But paste should still work properly
+		helper.typeIntoDocument('{end}');
+		helper.getCursorPos('left', 'beforePaste');
+		cy.getFrameWindow().then(win => {
+			win.app.map.sendUnoCommand('.uno:Paste');
+			helper.processToIdle(win);
+		});
+		helper.getCursorPos('left', 'afterPaste');
+		cy.get('@beforePaste').then(beforeValue => {
+			cy.get('@afterPaste').should('be.gt', beforeValue);
+		});
+
+	});
 });
