@@ -47,7 +47,7 @@
 #include <thread>
 #include <unistd.h>
 
-#if defined(__GLIBC__)
+#if defined(__GLIBC__) || defined(MACOS)
 #  include <execinfo.h>
 #endif
 
@@ -473,7 +473,7 @@ void resetTerminationFlags()
 
     void dumpBacktrace()
     {
-#if defined(__GLIBC__)
+#if defined(__GLIBC__) || defined(MACOS)
         signalLog("\nBacktrace ");
         signalLogNumber(static_cast<std::size_t>(getpid()));
         if (VersionInfo)
