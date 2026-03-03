@@ -813,11 +813,38 @@ class HRuler extends Ruler {
 	protected _fixOffsetImpl(): void {
 		if (!app.activeDocument || app.activeDocument.fileSize.x === 0) return;
 
-		const rulerOffset =
-			-app.activeDocument.activeLayout.viewedRectangle.cX1 +
-			this.options.tileMargin * app.getScale();
+		const layout = app.activeDocument.activeLayout;
 
-		this._rFace.style.marginInlineStart = rulerOffset + 'px';
+		if (layout.type === 'ViewLayoutMultiPage') {
+			const multiPageLayout = layout as ViewLayoutMultiPage;
+			const pageRectList = app.file.writer.pageRectangleList;
+			if (pageRectList.length === 0) return;
+
+			// Find which page the cursor is on.
+			let pageIndex = 0;
+			const cursorRect = app.file.textCursor.rectangle;
+			if (cursorRect) {
+				const cursorPoint = new cool.SimplePoint(cursorRect.x1, cursorRect.y1);
+				pageIndex = multiPageLayout.getClosestRectangleIndex(cursorPoint);
+			}
+
+			// Get the page's top-left corner in document coordinates.
+			const pageRect = pageRectList[pageIndex];
+			const pageTopLeft = new cool.SimplePoint(pageRect[0], pageRect[1]);
+
+			// Convert to screen position (core pixels -> CSS pixels).
+			const screenXCorePixels = layout.documentToViewX(pageTopLeft);
+			const rulerOffset = screenXCorePixels / app.dpiScale;
+
+			const newValue = rulerOffset + 'px';
+			if (this._rFace.style.marginInlineStart !== newValue)
+				this._rFace.style.marginInlineStart = newValue;
+		} else {
+			const rulerOffset =
+				-layout.viewedRectangle.cX1 + this.options.tileMargin * app.getScale();
+
+			this._rFace.style.marginInlineStart = rulerOffset + 'px';
+		}
 
 		this._updateParagraphIndentations();
 	}
