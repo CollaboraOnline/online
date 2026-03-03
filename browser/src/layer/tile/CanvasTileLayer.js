@@ -1792,6 +1792,13 @@ window.L.CanvasTileLayer = window.L.Layer.extend({
 
 		// Only for reference equality comparison.
 		this._lastVisibleCursorRef = app.file.textCursor.rectangle.clone();
+
+		// Normally we don't need to refresh the ruler offset.
+		// But in multi page view, user may have clicked at the page next to the current one.
+		// In that case, we need to fix offset again (if required - it checks values before changing offset).
+		const layout = app.activeDocument ? (app.activeDocument.activeLayout ?  app.activeDocument.activeLayout.type : "") : "";
+		if (layout === 'ViewLayoutMultiPage' && app.UI.horizontalRuler)
+			app.UI.horizontalRuler._fixOffset();
 	},
 
 	_isHyperlinkChanged: function(hyperlink)
