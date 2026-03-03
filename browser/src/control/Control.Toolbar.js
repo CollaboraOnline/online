@@ -572,18 +572,18 @@ var onShapeClickFunction = function(e) {
 	e.stopPropagation();
 };
 
-var onShapeKeyUpFunction = function(event) {
-	if (event.code === 'Enter' || event.code === 'Space') {
-		app.map.sendUnoCommand('.uno:' + event.target.dataset.uno);
-		closePopup();
-	}
-	event.stopPropagation();
-};
-
 var onShapeKeyDownFunction = function(event) {
 	if (event.code === 'Escape') {
 		closePopup();
 		app.map.focus();
+	}
+	else if (event.code === 'Enter' || event.code === 'Space') {
+		let name = $(event.target).data().uno;
+		if (name) {
+			app.map.sendUnoCommand('.uno:' + name);
+			closePopup();
+		}
+		event.preventDefault();
 	}
 };
 
@@ -655,8 +655,7 @@ function getShapesPopupElements(closeCallback) {
 	const grid = document.createElement('div');
 	grid.className = 'insertshape-grid';
 	grid.setAttribute('role', 'grid');
-	grid.onclick = onShapeClickFunction;
-	grid.onkeyup = onShapeKeyUpFunction;
+	JSDialog.AddOnClick(grid, onShapeClickFunction);
 	grid.onkeydown = onShapeKeyDownFunction;
 
 	const container = document.createElement('div');
@@ -690,8 +689,7 @@ function getConnectorsPopupElements(closeCallback) {
 	const grid = document.createElement('div');
 	grid.className = 'insertshape-grid';
 	grid.setAttribute('role', 'grid');
-	grid.onclick = onShapeClickFunction;
-	grid.onkeyup = onShapeKeyUpFunction;
+	JSDialog.AddOnClick(grid, onShapeClickFunction);
 	grid.onkeydown = onShapeKeyDownFunction;
 
 	gridContainer.appendChild(grid);
