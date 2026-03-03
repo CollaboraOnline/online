@@ -24,42 +24,6 @@ msgctxt "1Xt-HY-uBw.title"
 msgid "ProductName"
 msgstr "ProductName"
 
-msgctxt "1b7-l0-nxx.title"
-msgid "Find"
-msgstr "Canfod"
-
-msgctxt "1tx-W0-xDw.title"
-msgid "Lower"
-msgstr "Isaf"
-
-msgctxt "2h7-ER-AoG.title"
-msgid "Raise"
-msgstr "Codi"
-
-msgctxt "2oI-Rn-ZJC.title"
-msgid "Transformations"
-msgstr "Trawsffurfiadau"
-
-msgctxt "3IN-sU-3Bg.title"
-msgid "Spelling"
-msgstr "Sillafu"
-
-msgctxt "3Om-Ey-2VK.title"
-msgid "Use Default"
-msgstr "Defnyddio'r Rhagosodiad"
-
-msgctxt "3rS-ZA-NoH.title"
-msgid "Speech"
-msgstr "Lleferydd"
-
-msgctxt "46P-cB-AYj.title"
-msgid "Tighten"
-msgstr "Tynhau"
-
-msgctxt "4EN-yA-p0u.title"
-msgid "Find"
-msgstr "Canfod"
-
 msgctxt "4J7-dP-txa.title"
 msgid "Enter Full Screen"
 msgstr "Mynd i'r Sgrin Llawn"
@@ -73,10 +37,6 @@ msgctxt "5QF-Oa-p0T.title"
 msgid "Edit"
 msgstr "Golygu"
 
-msgctxt "5Vv-lz-BsD.title"
-msgid "Copy Style"
-msgstr "Arddull Copïo"
-
 #. Do not change the placeholder ProductName!
 msgctxt "5kV-Vb-QxS.title"
 msgid "About ProductName"
@@ -86,22 +46,6 @@ msgctxt "6dh-zS-Vam.title"
 msgid "Redo"
 msgstr "Ailwneud"
 
-msgctxt "78Y-hA-62v.title"
-msgid "Correct Spelling Automatically"
-msgstr "Cywiro Sillafu'n Awtomatig"
-
-msgctxt "8mr-sm-Yjd.title"
-msgid "Writing Direction"
-msgstr "Cyfeiriad Ysgrifennu"
-
-msgctxt "9ic-FL-obx.title"
-msgid "Substitutions"
-msgstr "Amnewidiad"
-
-msgctxt "9yt-4B-nSM.title"
-msgid "Smart Copy/Paste"
-msgstr "Copïo/Gludo Clyfar"
-
 msgctxt "AYu-sK-qS6.title"
 msgid "Main Menu"
 msgstr "Prif Ddewislen"
@@ -109,10 +53,6 @@ msgstr "Prif Ddewislen"
 msgctxt "BOF-NM-1cW.title"
 msgid "Preferences…"
 msgstr "Dewisiadau…"
-
-msgctxt "BgM-ve-c93.title"
-msgid "\tLeft to Right"
-msgstr "\tChwith i'r Dde"
 
 msgctxt "Bw7-FT-i3A.title"
 msgid "Save As…"
@@ -122,78 +62,21 @@ msgctxt "DVo-aG-piG.title"
 msgid "Close"
 msgstr "Cau"
 
-msgctxt "Dv1-io-Yv7.title"
-msgid "Spelling and Grammar"
-msgstr "Sillafu a Gramadeg"
-
 msgctxt "F2S-fz-NVQ.title"
 msgid "Help"
 msgstr "Cymorth"
-
-#. Do not change the placeholder ProductName!
-msgctxt "FKE-Sm-Kum.title"
-msgid "ProductName Help"
-msgstr "Cymorth ProductName"
-
-msgctxt "Fal-I4-PZk.title"
-msgid "Text"
-msgstr "Testun"
-
-msgctxt "FeM-D8-WVr.title"
-msgid "Substitutions"
-msgstr "Amnewidiadau"
-
-msgctxt "GB9-OM-e27.title"
-msgid "Bold"
-msgstr "Trwm"
-
-msgctxt "GEO-Iw-cKr.title"
-msgid "Format"
-msgstr "Fformat"
-
-msgctxt "GUa-eO-cwY.title"
-msgid "Use Default"
-msgstr "Defnyddio'r Rhagosodiad"
-
-msgctxt "Gi5-1S-RQB.title"
-msgid "Font"
-msgstr "Ffont"
-
-msgctxt "H1b-Si-o9J.title"
-msgid "Writing Direction"
-msgstr "Cyfeiriad Ysgrifennu"
 
 msgctxt "H8h-7b-M4v.title"
 msgid "View"
 msgstr "Golwg"
 
-msgctxt "HFQ-gK-NFA.title"
-msgid "Text Replacement"
-msgstr "Amnewid Testun"
-
-msgctxt "HFo-cy-zxI.title"
-msgid "Show Spelling and Grammar"
-msgstr "Dangos Sillafu a Gramadeg"
-
 msgctxt "HyV-fh-RgO.title"
 msgid "View"
 msgstr "Golwg"
 
-msgctxt "I0S-gh-46l.title"
-msgid "Subscript"
-msgstr "Isysgrif"
-
 msgctxt "IAo-SY-fd9.title"
 msgid "Open…"
 msgstr "Agor…"
-
-msgctxt "J5U-5w-g23.title"
-msgid "Justify"
-msgstr "Unioni"
-
-msgctxt "J7y-lM-qPV.title"
-msgid "Use None"
-msgstr "Defnyddio Dim"
 
 msgctxt "KaW-ft-85H.title"
 msgid "Revert to Saved"
@@ -207,102 +90,34 @@ msgctxt "LE2-aR-0XJ.title"
 msgid "Bring All to Front"
 msgstr "Dod a'r Cyfan i'r Blaen"
 
-msgctxt "LVM-kO-fVI.title"
-msgid "Paste Ruler"
-msgstr "Pren Mesur Gludo"
-
-msgctxt "Lbh-J2-qVU.title"
-msgid "\tLeft to Right"
-msgstr "\tChwith i'r Dde"
-
-msgctxt "MkV-Pr-PK5.title"
-msgid "Copy Ruler"
-msgstr "Pren Mesur Copio"
-
 msgctxt "NMo-om-nkz.title"
 msgid "Services"
 msgstr "Gwasanaethau"
 
-msgctxt "Nop-cj-93Q.title"
-msgid "\tDefault"
-msgstr "\tRhagosodiad"
-
 msgctxt "OY7-WF-poV.title"
 msgid "Minimize"
 msgstr "Lleihau"
-
-msgctxt "OaQ-X3-Vso.title"
-msgid "Baseline"
-msgstr "Llinell sylfaen"
 
 #. Do not change the placeholder ProductName!
 msgctxt "Olw-nP-bQN.title"
 msgid "Hide ProductName"
 msgstr "Cuddio ProductName"
 
-msgctxt "OwM-mh-QMV.title"
-msgid "Find Previous"
-msgstr "Canfod y Blaenorol"
-
-msgctxt "Oyz-dy-DGm.title"
-msgid "Stop Speaking"
-msgstr "Peidio Llefaru"
-
-msgctxt "Ptp-SP-VEL.title"
-msgid "Bigger"
-msgstr "Mwy"
-
-msgctxt "Q5e-8K-NDq.title"
-msgid "Show Fonts"
-msgstr "Dangos Ffontiau"
-
 msgctxt "R4o-n2-Eq4.title"
 msgid "Zoom"
 msgstr "Chwyddo"
-
-msgctxt "RB4-Sm-HuC.title"
-msgid "\tRight to Left"
-msgstr "\tDde i'r Chwith"
-
-msgctxt "Rqc-34-cIF.title"
-msgid "Superscript"
-msgstr "Uwchysgrif"
-
-msgctxt "Ruw-6m-B2m.title"
-msgid "Select All"
-msgstr "Dewis y Cyfan"
-
-msgctxt "S0p-oC-mLd.title"
-msgid "Jump to Selection"
-msgstr "Mynd i'r Dewis"
 
 msgctxt "Td7-aD-5lo.title"
 msgid "Window"
 msgstr "Ffenestr"
 
-msgctxt "UEZ-Bs-lqG.title"
-msgid "Capitalize"
-msgstr "Prif Lythrennu"
-
-msgctxt "VIY-Ag-zcb.title"
-msgid "Center"
-msgstr "Canoli"
-
 msgctxt "Vdr-fp-XzO.title"
 msgid "Hide Others"
 msgstr "Cuddio'r Gweddill"
 
-msgctxt "Vjx-xi-njq.title"
-msgid "Italic"
-msgstr "Italig"
-
 msgctxt "W48-6f-4Dl.title"
 msgid "Edit"
 msgstr "Golygu"
-
-msgctxt "WRG-CD-K1S.title"
-msgid "Underline"
-msgstr "Tanlinellu"
 
 msgctxt "Was-JA-tGl.title"
 msgid "New"
@@ -312,30 +127,6 @@ msgctxt "WeT-3V-zwk.title"
 msgid "Paste and Match Style"
 msgstr "Arddull Gludo a Chydweddu"
 
-msgctxt "Xz5-n4-O0W.title"
-msgid "Find…"
-msgstr "Canfod…"
-
-msgctxt "YEy-JH-Tfz.title"
-msgid "Find and Replace…"
-msgstr "Canfod ac Amnewid…"
-
-msgctxt "YGs-j5-SAR.title"
-msgid "\tDefault"
-msgstr "\tRhagosodiad"
-
-msgctxt "Ynk-f8-cLZ.title"
-msgid "Start Speaking"
-msgstr "Cychwyn Llefaru"
-
-msgctxt "ZM1-6Q-yy1.title"
-msgid "Align Left"
-msgstr "Alinio i'r Chwith"
-
-msgctxt "ZvO-Gk-QUH.title"
-msgid "Paragraph"
-msgstr "Paragraff"
-
 msgctxt "aTl-1u-JFS.title"
 msgid "Print…"
 msgstr "Argraffu…"
@@ -344,49 +135,9 @@ msgctxt "aUF-d1-5bR.title"
 msgid "Window"
 msgstr "Ffenestr"
 
-msgctxt "aXa-aM-Jaq.title"
-msgid "Font"
-msgstr "Ffont"
-
-msgctxt "agt-UL-0e3.title"
-msgid "Use Default"
-msgstr "Defnyddio'r Rhagosodiad"
-
-msgctxt "bgn-CT-cEk.title"
-msgid "Show Colors"
-msgstr "Dangos Lliwiau"
-
 msgctxt "bib-Uj-vzu.title"
 msgid "File"
 msgstr "Ffeil"
-
-msgctxt "buJ-ug-pKt.title"
-msgid "Use Selection for Find"
-msgstr "Defnyddio'r Dewis ar gyfer Canfod"
-
-msgctxt "c8a-y6-VQd.title"
-msgid "Transformations"
-msgstr "Trawsnewidiadau"
-
-msgctxt "cDB-IK-hbR.title"
-msgid "Use None"
-msgstr "Defnyddio Dim"
-
-msgctxt "cqv-fj-IhA.title"
-msgid "Selection"
-msgstr "Dewis"
-
-msgctxt "cwL-P1-jid.title"
-msgid "Smart Links"
-msgstr "Dolenni Clyfar"
-
-msgctxt "d9M-CD-aMd.title"
-msgid "Make Lower Case"
-msgstr "Gwneud yn Llythrennau Bach"
-
-msgctxt "d9c-me-L2H.title"
-msgid "Text"
-msgstr "Testun"
 
 msgctxt "dMs-cI-mzQ.title"
 msgid "File"
@@ -400,97 +151,33 @@ msgctxt "gVA-U4-sdL.title"
 msgid "Paste"
 msgstr "Gludo"
 
-msgctxt "hQb-2v-fYv.title"
-msgid "Smart Quotes"
-msgstr "Dyfyniadau Clyfar"
-
-msgctxt "hz2-CU-CR7.title"
-msgid "Check Document Now"
-msgstr "Gwirio'r Ddogfen Nawr"
-
 msgctxt "hz9-B4-Xy5.title"
 msgid "Services"
 msgstr "Gwasanaethau"
-
-msgctxt "i1d-Er-qST.title"
-msgid "Smaller"
-msgstr "Llai"
-
-msgctxt "ijk-EB-dga.title"
-msgid "Baseline"
-msgstr "Llinell sylfaen"
-
-msgctxt "jBQ-r6-VK2.title"
-msgid "Kern"
-msgstr "Kern"
-
-msgctxt "jFq-tB-4Kx.title"
-msgid "\tRight to Left"
-msgstr "\tDde i'r Chwith"
-
-msgctxt "jxT-CU-nIS.title"
-msgid "Format"
-msgstr "Fformat"
 
 msgctxt "kIP-vf-haE.title"
 msgid "Show Sidebar"
 msgstr "Dangos y Bar Ochr"
 
-msgctxt "mK6-2p-4JG.title"
-msgid "Check Grammar With Spelling"
-msgstr "Gwirio Gramadeg a Sillafu"
-
-msgctxt "o6e-r0-MWq.title"
-msgid "Ligatures"
-msgstr "Clymau"
-
 msgctxt "oas-Oc-fiZ.title"
 msgid "Open Recent"
 msgstr "Agor Diweddar"
-
-msgctxt "ogc-rX-tC1.title"
-msgid "Loosen"
-msgstr "Llacio"
-
-msgctxt "pa3-QI-u2k.title"
-msgid "Delete"
-msgstr "Dileu"
 
 msgctxt "pxx-59-PXV.title"
 msgid "Save…"
 msgstr "Cadw…"
 
-msgctxt "q09-fT-Sye.title"
-msgid "Find Next"
-msgstr "Canfod y Nesaf"
-
 msgctxt "qIS-W8-SiK.title"
 msgid "Page Setup…"
 msgstr "Gosodiad Tudalen…"
-
-msgctxt "rbD-Rh-wIN.title"
-msgid "Check Spelling While Typing"
-msgstr "Gwirio Sillafu wrth Deipio"
-
-msgctxt "rgM-f4-ycn.title"
-msgid "Smart Dashes"
-msgstr "Toriadau Clyfar"
 
 msgctxt "snW-S8-Cw5.title"
 msgid "Show Toolbar"
 msgstr "Dangos y Bar Offer"
 
-msgctxt "tRr-pd-1PS.title"
-msgid "Data Detectors"
-msgstr "Synwyryddion Data"
-
 msgctxt "tXI-mr-wws.title"
 msgid "Open Recent"
 msgstr "Agor Diweddar"
-
-msgctxt "tlD-Oa-oAM.title"
-msgid "Kern"
-msgstr "Kern"
 
 #. Do not change the placeholder ProductName!
 msgctxt "uQy-DD-JDr.title"
@@ -505,29 +192,9 @@ msgctxt "vFu-3Y-2xa.title"
 msgid "Window"
 msgstr "Ffenestr"
 
-msgctxt "vKC-jM-MkH.title"
-msgid "Paste Style"
-msgstr "Arddull Gludo"
-
-msgctxt "vLm-3I-IUL.title"
-msgid "Show Ruler"
-msgstr "Dangos y Pren Mesur"
-
 msgctxt "vNY-rz-j42.title"
 msgid "Clear Menu"
 msgstr "Clirio'r Ddewislen"
-
-msgctxt "vmV-6d-7jI.title"
-msgid "Make Upper Case"
-msgstr "Gwneud yn Llythrennau Mawr"
-
-msgctxt "w0m-vy-SC9.title"
-msgid "Ligatures"
-msgstr "Clymau"
-
-msgctxt "wb2-vD-lq4.title"
-msgid "Align Right"
-msgstr "Alinio i'r Dde"
 
 msgctxt "wpr-3q-Mcd.title"
 msgid "Help"
@@ -536,15 +203,3 @@ msgstr "Cymorth"
 msgctxt "x3v-GG-iWU.title"
 msgid "Copy"
 msgstr "Copïo"
-
-msgctxt "xQD-1f-W4t.title"
-msgid "Use All"
-msgstr "Defnyddio'r Cyfan"
-
-msgctxt "xrE-MZ-jX0.title"
-msgid "Speech"
-msgstr "Lleferydd"
-
-msgctxt "z6F-FW-3nz.title"
-msgid "Show Substitutions"
-msgstr "Dangos Amnewidiadau"
