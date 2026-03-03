@@ -1977,7 +1977,7 @@ function showWelcomeSVG() {
 				wopiSrc += '&RouteToken=' + global.routeToken;
 		}
 
-		return root + '/ws' + wopiSrc + '&' + encodeURIComponent(docParams);
+		return root + '/ws' + wopiSrc + '&' + docParams;
 	};
 
 	// Form a valid WS URL to the host with the given path and
