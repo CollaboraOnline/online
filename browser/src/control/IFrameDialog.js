@@ -160,7 +160,9 @@ window.L.IFrameDialog = window.L.Class.extend({
 	},
 
 	focus: function() {
-		if (this._container) {
+		if (this._iframe && this._iframe.contentWindow) {
+			this._iframe.contentWindow.focus();
+		} else if (this._container) {
 			this._container.focus();
 		}
 	},
