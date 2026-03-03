@@ -351,6 +351,9 @@ keyboardShortcuts.definitions.set('default', new Array<ShortcutDescriptor>(
     new ShortcutDescriptor({ docType: 'drawing', eventType: 'keydown', key: 'Home', dispatchAction: 'firstpart', viewType: ViewType.ReadOnly }),
 
 
+    // Prevent F7 from triggering Caret Browsing in desktop apps.
+    new ShortcutDescriptor({ eventType: 'keydown', key: 'F7', unoAction: '.uno:SpellingAndGrammarDialog', platform: Platform.CODAWINDOWS | Platform.CODAMAC | Platform.CODAQT }),
+
     new ShortcutDescriptor({ eventType: 'keydown', modifier: Mod.ALT | Mod.CTRL, key: 'p', dispatchAction: 'userlist' }),
 
     // Passthrough some system shortcuts
