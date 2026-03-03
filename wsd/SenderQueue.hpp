@@ -9,13 +9,20 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * Message queue for sending data to clients.
+ * Classes: SenderQueue
+ */
+
 #pragma once
 
-#include "common/SigUtil.hpp"
-#include "Log.hpp"
-#include "TileDesc.hpp"
-#include "JsonUtil.hpp"
-#include "Protocol.hpp"
+#include <common/SigUtil.hpp>
+#include <common/Log.hpp>
+#include <TileDesc.hpp>
+#include <Protocol.hpp>
+
+#include <Poco/JSON/Parser.h>
+#include <Poco/JSON/Object.h>
 
 #include <deque>
 #include <mutex>
@@ -25,10 +32,7 @@ template <typename Item>
 class SenderQueue final
 {
 public:
-
-    SenderQueue()
-    {
-    }
+    SenderQueue() = default;
 
     size_t enqueue(const Item& item)
     {
@@ -77,7 +81,7 @@ public:
         os << "\t\tqueue items: " << queueSize << '\n';
 
         std::size_t repeats = 0;
-        std::string lastStr = "";
+        std::string lastStr;
         for (const Item &item : _queue)
         {
             std::string itemStr = COOLProtocol::getAbbreviatedMessage(
@@ -154,7 +158,7 @@ private:
         else if (command == "progress:")
         {
             // find other progress commands with similar content
-            static constexpr std::string_view setvalueTag = "\"id\":\"setvalue\"";
+            static constexpr std::string_view setvalueTag = R"("id":"setvalue")";
             if (item->contains(setvalueTag))
             {
                 const auto& pos = std::find_if(_queue.begin(), _queue.end(),
@@ -203,7 +207,7 @@ private:
 private:
     mutable std::mutex _mutex;
     std::deque<Item> _queue;
-    typedef typename std::deque<Item>::value_type queue_item_t;
+    using queue_item_t = typename std::deque<Item>::value_type;
 };
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

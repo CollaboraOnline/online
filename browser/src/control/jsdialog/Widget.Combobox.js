@@ -24,12 +24,14 @@
  * customEntryRenderer - specifies if entries have custom content which is rendered by the core
  */
 
-/* global JSDialog app _ $ */
+/* global JSDialog app _ $ _UNO */
 
 JSDialog.comboboxEntry = function (parentContainer, data, builder) {
 	var entry = window.L.DomUtil.create('div', 'ui-combobox-entry ' + builder.options.cssClass, parentContainer);
 	entry.id = data.id;
 	entry.setAttribute('role', 'option');
+	entry.setAttribute('tabindex', '-1');
+	entry.setAttribute('data-filter-text', data.text.toLowerCase());
 
 	if (data.hasSubMenu)
 		window.L.DomUtil.addClass(entry, 'ui-has-menu');
@@ -55,6 +57,8 @@ JSDialog.comboboxEntry = function (parentContainer, data, builder) {
     if (data.selected) {
         entry.setAttribute('aria-selected', 'true');
 		window.L.DomUtil.addClass(entry, 'selected');
+    } else {
+        entry.setAttribute('aria-selected', 'false');
     }
 
 	if (data.checked)
@@ -75,6 +79,13 @@ JSDialog.comboboxEntry = function (parentContainer, data, builder) {
 	entry.addEventListener('keypress', function (event) {
         if (event.key === 'Enter' || event.key === ' ') {
 			clickFunction();
+			event.preventDefault();
+		}
+	});
+
+	entry.addEventListener('keydown', function (event) {
+        if (event.key === 'Tab') {
+			JSDialog.CloseDropdown(data.comboboxId);
 			event.preventDefault();
 		}
 	});
@@ -192,33 +203,45 @@ function _extractText(selectCommandData) {
 JSDialog.combobox = function (parentContainer, data, builder) {
 	var container = window.L.DomUtil.create('div', 'ui-combobox ' + builder.options.cssClass, parentContainer);
 	container.id = data.id;
+	var inputId = data.id + '-input-' + builder.options.suffix;
 
-	var content = window.L.DomUtil.create('input', 'ui-combobox-content ' + builder.options.cssClass, container);
-	content.id = data.id + '-input-' + builder.options.suffix;
+	if (data.command) {
+		// TODO replace with data.label, changing ui file
+		var labelText = _UNO(data.command, 'label', true);
+		if (labelText) {
+			var label = L.DomUtil.create('label', 'ui-combobox-label ' + builder.options.cssClass, container);
+			label.textContent = labelText + ':';
+			label.htmlFor = inputId;
+		}
+	}
+
+	var wrapper = window.L.DomUtil.create('div', 'ui-combobox-wrapper ' + builder.options.cssClass, container);
+	var content = window.L.DomUtil.create('input', 'ui-combobox-content ' + builder.options.cssClass, wrapper);
+	content.id = inputId;
 	content.value = data.text;
 	content.role = 'combobox';
 	content.setAttribute('autocomplete', 'off');
 	content.setAttribute('aria-autocomplete', 'list');
 
-	if (data.aria && data.aria.label) {
-		content.setAttribute('aria-label', data.aria.label);
-	} else if (data.labelledBy) {
-		content.setAttribute('aria-labelledby', data.labelledBy);
-	}
+	JSDialog.SetupA11yLabelForLabelableElement(parentContainer, content, data, builder);
 
 	var dropDownId = JSDialog.CreateDropdownEntriesId(data.id);
 	content.setAttribute('aria-expanded', false);
-	content.setAttribute('aria-controls', dropDownId);
 
-	var button = window.L.DomUtil.create('button', 'ui-combobox-button ' + builder.options.cssClass, container);
+	var button = window.L.DomUtil.create('button', 'ui-combobox-button ' + builder.options.cssClass, wrapper);
 	button.setAttribute('aria-expanded', false);
-	button.setAttribute('aria-controls', dropDownId);
 
-	if (data.aria && data.aria.label) {
-		button.setAttribute('aria-label', _('Open ') + data.aria.label + _(' list'));
-	} else if (data.labelledBy) {
-		button.setAttribute('aria-labelledby', data.labelledBy);
+	const dataAriaLabel = data.aria && data.aria.label ? data.aria.label : '';
+	const buttonARIALabel = dataAriaLabel
+		? _('Open ') + dataAriaLabel + _(' list')
+		: _('Open list');
+	const updatedAriaLabelData = {
+		labelledBy: data.labelledBy,
+		aria: {
+			label: buttonARIALabel
+		}
 	}
+	JSDialog.SetupA11yLabelForLabelableElement(parentContainer, button, updatedAriaLabelData, builder);
 
 	var arrow = window.L.DomUtil.create('span', builder.options.cssClass + ' ui-listbox-arrow', button);
 	arrow.id = 'listbox-arrow-' + data.id;
@@ -226,6 +249,15 @@ JSDialog.combobox = function (parentContainer, data, builder) {
 	container._onDropDown = function (open) {
 		content.setAttribute('aria-expanded', open);
 		button.setAttribute('aria-expanded', open);
+
+		// Only set aria-controls when dropdown is open to avoid screen reader confusion
+		if (open) {
+			content.setAttribute('aria-controls', dropDownId);
+			button.setAttribute('aria-controls', dropDownId);
+		} else {
+			content.removeAttribute('aria-controls');
+			button.removeAttribute('aria-controls');
+		}
 	};
 
 	if (data.selectedCount > 0)
@@ -293,21 +325,88 @@ JSDialog.combobox = function (parentContainer, data, builder) {
 		var parentBuilder = builder;
 		var callback = function(objectType, eventType, object, data) {
 			// send command with correct WindowId (from parent, not dropdown)
+			let result;
 			if (eventType !== 'close')
-				parentBuilder.callback(objectType, eventType, object, data, parentBuilder);
+				result = parentBuilder.callback(objectType, eventType, object, data, parentBuilder);
 
 			// close after selection
 			if (eventType === 'selected') {
 				container.onSelect(_extractPos(data));
 				container.onSetText(_extractText(data));
 
-				JSDialog.CloseDropdown(comboboxId);
+				// Pass through if the parent callback has already set the focus
+				// somewhere that shouldn't be changed by the CloseDropdown, e.g.
+				// toolbar font name/size
+				JSDialog.CloseDropdown(comboboxId, result === 'focusHandled');
 			}
 
 			return true;
 		};
 
 		JSDialog.OpenDropdown(data.id, container, entries, callback);
+
+		if (entries.length > 0) {
+			// Inject search field after dropdown DOM is created.
+			// Double-nest so it runs after setupInitialFocus.
+			app.layoutingService.appendLayoutingTask(function () {
+				app.layoutingService.appendLayoutingTask(function () {
+					var dropdownRoot = JSDialog.GetDropdown(data.id);
+					if (!dropdownRoot)
+						return;
+
+					var grid = dropdownRoot.querySelector('.ui-grid[role="listbox"]');
+					if (!grid || grid.querySelector('.ui-combobox-search-input'))
+						return;
+
+					var searchContainer = document.createElement('div');
+					searchContainer.className = 'ui-combobox-search-container';
+
+					var searchInput = document.createElement('input');
+					searchInput.type = 'search';
+					searchInput.className = 'jsdialog ui-edit ui-combobox-search-input';
+					searchInput.setAttribute('placeholder', _('Search...'));
+					searchInput.setAttribute('aria-label', _('Filter entries'));
+					searchInput.setAttribute('autocomplete', 'off');
+					searchContainer.appendChild(searchInput);
+
+					grid.insertAdjacentElement('afterbegin', searchContainer);
+
+					searchInput.addEventListener('input', function () {
+						var filterText = searchInput.value.trim().toLowerCase();
+						var allEntries = grid.querySelectorAll('.ui-combobox-entry');
+						allEntries.forEach(function (entry) {
+							var text = entry.getAttribute('data-filter-text') || '';
+							if (filterText === '' || text.indexOf(filterText) >= 0) {
+								window.L.DomUtil.removeClass(entry, 'hidden');
+							} else {
+								window.L.DomUtil.addClass(entry, 'hidden');
+							}
+						});
+					});
+
+					searchInput.addEventListener('keydown', function (event) {
+						if (event.key === 'ArrowDown') {
+							var firstVisible = grid.querySelector('.ui-combobox-entry:not(.hidden)');
+							if (firstVisible) {
+								firstVisible.focus();
+								event.preventDefault();
+							}
+						} else if (event.key === 'Enter') {
+							var firstVisible = grid.querySelector('.ui-combobox-entry:not(.hidden)');
+							if (firstVisible)
+								firstVisible.click();
+							event.preventDefault();
+						} else if (event.key === 'Escape') {
+							JSDialog.CloseDropdown(comboboxId);
+							content.focus();
+							event.preventDefault();
+						}
+					});
+
+					searchInput.focus();
+				});
+			});
+		}
 	};
 
 	button.addEventListener('click', clickFunction);
@@ -343,6 +442,19 @@ JSDialog.combobox = function (parentContainer, data, builder) {
 		if (document.activeElement === content)
 			return;
 		content.value = text;
+	};
+
+	container.updateEntries = function (newEntries) {
+		entries = [];
+		for (var i = 0; i < newEntries.length; i++) {
+			entries.push({
+				text: newEntries[i].toString(),
+				selected: false,
+				customRenderer: data.customEntryRenderer
+			});
+		}
+		if (JSDialog.GetDropdown(data.id))
+			JSDialog.CloseDropdown(data.id);
 	};
 
 	return false;

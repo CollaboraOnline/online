@@ -19,6 +19,11 @@ Requires(post): coreutils grep sed cpio
 Provides: loolwsd
 Obsoletes: loolwsd collaboraoffice-dict-br collaboraoffice-dict-et collaboraoffice-dict-gd collaboraoffice-dict-gu collaboraoffice-dict-hi collaboraoffice-dict-lt collaboraoffice-dict-lv collaboraoffice-dict-ro collaboraoffice-dict-sr collaboraoffice-dict-te collaboraofficebasis-as collaboraofficebasis-bn-IN collaboraofficebasis-ast collaboraofficebasis-br collaboraofficebasis-ca-valencia collaboraofficebasis-cy collaboraofficebasis-et collaboraofficebasis-ga collaboraofficebasis-gd collaboraofficebasis-gu collaboraofficebasis-hi collaboraofficebasis-km collaboraofficebasis-kn collaboraofficebasis-lt collaboraofficebasis-lv collaboraofficebasis-ml collaboraofficebasis-mr collaboraofficebasis-nn collaboraofficebasis-or collaboraofficebasis-pa-IN collaboraofficebasis-ro collaboraofficebasis-sr collaboraofficebasis-sr-Latn collaboraofficebasis-ta collaboraofficebasis-te
 
+%define _source_filedigest_algorithm 8
+%define _binary_filedigest_algorithm 8
+%define _source_payload w2.xzdio
+%define _binary_payload w2.xzdio
+
 %description
 
 %package deprecated

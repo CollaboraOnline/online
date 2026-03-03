@@ -44,6 +44,15 @@ inline int hasUID(const char *userId)
 inline int isInContainer()
 {
 #ifdef __linux__
+    /* Docker creates /.dockerenv */
+    if (access("/.dockerenv", F_OK) == 0)
+        return 1;
+
+    /* Podman creates /run/.containerenv */
+    if (access("/run/.containerenv", F_OK) == 0)
+        return 1;
+
+    /* Legacy cgroups v1 check */
     FILE *cgroup;
     char line[80];
     const char *docker = ":/docker/";

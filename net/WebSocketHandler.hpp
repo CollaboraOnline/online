@@ -9,6 +9,11 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * WebSocket protocol handler for frame parsing, masking, and message handling.
+ * Classes: WebSocketHandler
+ */
+
 #pragma once
 
 #include <common/HexUtil.hpp>
@@ -28,6 +33,7 @@
 #include <chrono>
 #include <memory>
 #include <string>
+#include <string_view>
 #include <vector>
 
 class WebSocketHandler : public ProtocolHandlerInterface
@@ -498,10 +504,12 @@ private:
         //Process data frame
         readPayload(data, payloadLen, mask, _wsPayload);
 #else
-        unsigned char * const p = reinterpret_cast<unsigned char*>(socket->getInBuffer().data());
-        _wsPayload.insert(_wsPayload.end(), p, p + len);
-        const size_t headerLen = 0;
-        const size_t payloadLen = len;
+        // Unwrap what StreamSocket::readIncomingData() did
+        const size_t headerLen = sizeof(ssize_t);
+        ssize_t payloadLen;
+        memcpy(&payloadLen, socket->getInBuffer().data(), headerLen);
+        unsigned char * const p = reinterpret_cast<unsigned char*>(socket->getInBuffer().data() + headerLen);
+        _wsPayload.insert(_wsPayload.end(), p, p + payloadLen);
 #endif
 
         socket->eraseFirstInputBytes(headerLen + payloadLen);
@@ -703,14 +711,9 @@ public:
     }
 
     /// Sends a WebSocket Text message.
-    int sendMessage(const std::string& msg) const
+    int sendMessage(const std::string_view msg) const
     {
-        return sendTextMessage(msg.c_str(), msg.size());
-    }
-
-    template <std::size_t N> int sendMessage(const char (&msg)[N]) const
-    {
-        return sendTextMessage(msg, N - 1); // Minus the null-terminator.
+        return sendTextMessage(msg.data(), msg.size());
     }
 
     /// Implementation of the ProtocolHandlerInterface.
@@ -817,7 +820,7 @@ protected:
             ssize_t i = 0, toSend;
             while (true)
             {
-                toSend = std::min(sizeof(copy), len - i);
+                toSend = std::min(static_cast<uint64_t>(sizeof(copy)), len - i);
                 if (toSend == 0)
                     break;
                 for (ssize_t j = 0; j < toSend; ++j, ++i)

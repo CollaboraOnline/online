@@ -13,13 +13,15 @@
 
 #pragma once
 
+#include <common/Util.hpp>
+
 #include <string>
 #include <utility>
 #include <vector>
 #include <chrono>
 #include <memory>
 
-typedef std::vector<std::pair<std::string, std::string>> VecOfStringPairs;
+using VecOfStringPairs = std::vector<std::pair<std::string, std::string>>;
 
 namespace Poco {
     namespace Crypto {
@@ -41,12 +43,17 @@ class Proof {
     Proof(Type);
 public:
     Proof();
-    VecOfStringPairs GetProofHeaders(const std::string& access_token, const std::string& uri) const;
-    const VecOfStringPairs& GetProofKeyAttributes() const { return m_aAttribs; }
+    [[nodiscard]] VecOfStringPairs GetProofHeaders(const std::string& access_token,
+                                                   const std::string& uri) const;
+    const VecOfStringPairs& GetProofKeyAttributes() const { return _aAttribs; }
 private:
     static std::string ProofKeyPath();
 
-    static std::string BytesToBase64(const std::vector<unsigned char>& bytes);
+    static std::string BytesToBase64(const std::vector<unsigned char>& bytes)
+    {
+        return Util::base64EncodeRemovingNewLines(bytes);
+    }
+
     static std::vector<unsigned char> Base64ToBytes(const std::string &str);
 
     // modulus and exponent are big-endian vectors
@@ -63,8 +70,8 @@ private:
     // Signs bytes and returns base64-encoded string
     std::string SignProof(const std::vector<unsigned char>& proof) const;
 
-    std::unique_ptr<const Poco::Crypto::RSAKey> m_pKey;
-    VecOfStringPairs m_aAttribs;
+    std::unique_ptr<const Poco::Crypto::RSAKey> _pKey;
+    VecOfStringPairs _aAttribs;
 };
 
 

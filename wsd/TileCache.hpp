@@ -9,6 +9,11 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * Tile caching for rendered document tiles.
+ * Classes: TileCache
+ */
+
 #pragma once
 
 #include <iosfwd>
@@ -20,9 +25,9 @@
 
 #include <Rectangle.hpp>
 
-#include "Log.hpp"
-#include "Common.hpp"
-#include "TileDesc.hpp"
+#include <common/Log.hpp>
+#include <Common.hpp>
+#include <TileDesc.hpp>
 
 class ClientSession;
 
@@ -238,7 +243,7 @@ public:
     /// Otherwise returns false to signify a subscription already exists.
     bool subscribeToTileRendering(const TileDesc& tile,
                                   const std::shared_ptr<ClientSession>& subscriber,
-                                  const std::chrono::steady_clock::time_point now);
+                                  std::chrono::steady_clock::time_point now);
 
     /// Cancels all tile requests by the given subscriber.
     std::string cancelTiles(const std::shared_ptr<ClientSession>& subscriber);
@@ -248,7 +253,8 @@ public:
 
     void saveTileAndNotify(const TileDesc& tile, const char* data, size_t size);
 
-    enum StreamType : std::uint8_t {
+    enum StreamType : std::uint8_t
+    {
         Font,
         Style,
         CmdValues,
@@ -375,8 +381,8 @@ public:
         const TileWireId curSeq = desc.getWireId();
         TileWireId last = it->getWireId();
         // id is not included in the hash.
-        auto pDesc = const_cast<TileDesc *>(&(*it));
-        pDesc->setWireId(curSeq);
+        auto descPointer = const_cast<TileDesc *>(&(*it));
+        descPointer->setWireId(curSeq);
         return last;
     }
 
@@ -386,8 +392,8 @@ public:
         if (it == _cache.end())
             return;
         // id is not included in the hash.
-        auto pDesc = const_cast<TileDesc *>(&(*it));
-        pDesc->setWireId(0);
+        auto descPointer = const_cast<TileDesc *>(&(*it));
+        descPointer->setWireId(0);
     }
 };
 

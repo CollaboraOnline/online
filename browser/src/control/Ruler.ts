@@ -152,9 +152,16 @@ abstract class Ruler {
 			});
 		}
 
-		// Fire the 'rulerchanged' event
-		map.fire('rulerchanged');
+		if (showRuler) map.uiManager.showRuler();
 	}
+
+	public _fixOffset() {
+		app.layoutingService.appendLayoutingTask(() => {
+			this._fixOffsetImpl();
+		});
+	}
+
+	protected abstract _fixOffsetImpl(): void;
 }
 
 app.definitions.ruler = Ruler;

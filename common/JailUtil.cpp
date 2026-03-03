@@ -9,38 +9,48 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * Jail filesystem setup and management utilities.
+ * Functions: setupJail(), cleanupJails(), loopMountroot()
+ */
+
 #include <config.h>
 
-#include "FileUtil.hpp"
 #include "JailUtil.hpp"
 
+#include <common/FileUtil.hpp>
+#include <common/Log.hpp>
+#include <common/Util.hpp>
+
+#include <SigUtil.hpp>
+#include <csignal>
+#include <cstdio>
+#include <cstdlib>
+#include <cstring>
 #include <fcntl.h>
+#include <fstream>
+#include <string>
 #include <sys/mount.h>
 #include <sys/stat.h>
 #include <sys/types.h>
 #include <sysexits.h>
 #include <unistd.h>
+
 #ifdef __linux__
 #include <sys/sysmacros.h>
 #endif
-
-#include <csignal>
-#include <cstdio>
-#include <cstdlib>
-#include <cstring>
-#include <fstream>
-#include <string>
-
-#include "Log.hpp"
-#include <SigUtil.hpp>
 
 extern int domount(int argc, const char* const* argv);
 
 namespace JailUtil
 {
 
+namespace
+{
+
 static const std::string CoolTestMountpoint = "cool_test_mount";
 
+#ifdef __linux__
 static void setdeny()
 {
     std::ofstream of("/proc/self/setgroups");
@@ -59,47 +69,48 @@ static void mapuser(uid_t origuid, uid_t newuid, gid_t origgid, gid_t newgid)
         of << newgid << " " << origgid << " 1";
     }
 }
+#endif // __linux__
 
+} // namespace
+
+#ifdef __linux__
 bool enterMountingNS(uid_t uid, gid_t gid)
 {
-#ifdef __linux__
     // Put this process into its own user and mount namespace.
-    if (unshare(CLONE_NEWNS | CLONE_NEWUSER) != 0)
+    // Note: Having multiple threads at unshare time is a known source of failure.
+    if (unshare(CLONE_NEWUSER) != 0)
     {
-        // having multiple threads is a source of failure f.e.
-        LOG_ERR("enterMountingNS, unshare failed: " << strerror(errno));
+        LOG_SYS("enterMountingNS, CLONE_NEWUSER unshare failed");
         return false;
     }
 
     setdeny();
 
-    // Do not propagate any mounts from this new namespace to the system.
-    if (mount("none", "/", nullptr, MS_REC | MS_PRIVATE, nullptr) != 0)
-    {
-        LOG_ERR("enterMountingNS, root mount failed: " << strerror(errno));
-        // set to original uid so coolmount check isn't surprised by 'nobody'
-        mapuser(uid, uid, gid, gid);
-        return false;
-    }
-
     // Map this user as the root user of the new namespace
     mapuser(uid, 0, gid, 0);
 
+    if (unshare(CLONE_NEWNS) != 0)
+    {
+        LOG_SYS("enterMountingNS, CLONE_NEWNS unshare failed");
+        return false;
+    }
+
+    // Do not propagate any mounts from this new namespace to the system.
+    if (mount("none", "/", nullptr, MS_REC | MS_PRIVATE, nullptr) != 0)
+    {
+        LOG_SYS("enterMountingNS, root mount failed");
+        return false;
+    }
+
     return true;
-#else
-    (void)uid;
-    (void)gid;
-    return false;
-#endif
 }
 
 bool enterUserNS(uid_t uid, gid_t gid)
 {
-#ifdef __linux__
     if (unshare(CLONE_NEWUSER) != 0)
     {
         // having multiple threads is a source of failure f.e.
-        LOG_ERR("enterMountingNS, unshare failed: " << strerror(errno));
+        LOG_SYS("enterMountingNS, unshare failed");
         return false;
     }
 
@@ -110,12 +121,11 @@ bool enterUserNS(uid_t uid, gid_t gid)
     assert(getegid() == gid);
 
     return true;
-#else
-    (void)uid;
-    (void)gid;
-    return false;
-#endif
 }
+#endif // __linux__
+
+namespace
+{
 
 static bool coolmount(const std::string& arg, std::string source, std::string target,
                       bool silent = false)
@@ -144,6 +154,7 @@ static bool coolmount(const std::string& arg, std::string source, std::string ta
     LOG_TRC("Executing coolmount command: " << cmd);
     return !system(cmd.c_str());
 }
+} // namespace
 
 bool bind(const std::string& source, const std::string& target)
 {
@@ -187,6 +198,9 @@ bool remountReadonly(const std::string& source, const std::string& target)
     return false;
 }
 
+namespace
+{
+
 /// Unmount a bind-mounted jail directory.
 static bool unmount(const std::string& target, bool silent = false)
 {
@@ -208,6 +222,7 @@ static bool unmount(const std::string& target, bool silent = false)
 
     return res;
 }
+} // namespace
 
 // This file signifies that we copied instead of mounted.
 // NOTE: jail cleanup helpers are called from forkit and
@@ -223,18 +238,24 @@ constexpr const char* COPIED_JAIL_MARKER_FILE = "delete.me";
 
 void markJailCopied(const std::string& root)
 {
+#if ENABLE_CHILDROOTS
     // The reason we should be able to create this file
     // is because the jail must be writable.
     // Failing this will cause an exception, signaling an error.
     Poco::File(root + '/' + COPIED_JAIL_MARKER_FILE).createFile();
+#endif
 }
 
+#if ENABLE_CHILDROOTS
 bool isJailCopied(const std::string& root)
 {
     // If the marker file exists, the jail was copied.
     FileUtil::Stat delFileStat(root + '/' + COPIED_JAIL_MARKER_FILE);
     return delFileStat.exists();
 }
+
+namespace
+{
 
 static bool safeRemoveDir(const std::string& path)
 {
@@ -270,6 +291,7 @@ void removeAuxFolders(const std::string &root)
     FileUtil::removeFile(Poco::Path(root, "tmp").toString(), true);
     FileUtil::removeFile(Poco::Path(root, "linkable").toString(), true);
 }
+#endif
 
 /*
     The tmp dir of a path/<jailid>/tmp is mounted from (or linked to) a
@@ -280,6 +302,7 @@ void removeAuxFolders(const std::string &root)
 */
 void removeAssocTmpOfJail(const std::string &root)
 {
+#if ENABLE_CHILDROOTS
     Poco::Path jailPath(root);
     jailPath.makeDirectory();
     const std::string jailId = jailPath[jailPath.depth() - 1];
@@ -289,10 +312,14 @@ void removeAssocTmpOfJail(const std::string &root)
     jailPath.pushDirectory(std::string("cool-") + jailId);
 
     FileUtil::removeFile(jailPath.toString(), true);
+#endif
 }
+
+} // namespace
 
 bool tryRemoveJail(const std::string& root)
 {
+#if ENABLE_CHILDROOTS
     const bool emptyJail = FileUtil::isEmptyDirectory(root);
     if (!emptyJail && !FileUtil::Stat(root + '/' + LO_JAIL_SUBPATH).exists())
         return false; // not a jail.
@@ -323,6 +350,7 @@ bool tryRemoveJail(const std::string& root)
     safeRemoveDir(root);
 
     removeAssocTmpOfJail(root);
+#endif
 
     return true;
 }
@@ -334,6 +362,7 @@ bool tryRemoveJail(const std::string& root)
 /// inadvertently delete the contents of the mount-points.
 void cleanupJails(const std::string& root)
 {
+#if ENABLE_CHILDROOTS
     LOG_INF("Cleaning up childroot directory [" << root << "].");
 
     FileUtil::Stat stRoot(root);
@@ -359,19 +388,23 @@ void cleanupJails(const std::string& root)
             if (pidSepPos != std::string::npos)
             {
                 bool skip = false;
-                std::string pidStr = jail.substr(0, pidSepPos);
-                try {
-                    int pid = std::stoi(pidStr);
+                const std::string_view pidStr = std::string_view(jail).substr(0, pidSepPos);
+                const auto [pid, success] = Util::i32FromString(pidStr);
+                if (success && pid > 1)
+                {
                     LOG_TRC("Checking pid for jail " << pid << " " << root);
                     if (pid != getpid() && ::kill(pid, 0) == 0)
                     {
                         LOG_TRC("Skipping cleaning jails directory for running coolwsd with pid " << pid);
                         skip = true;
                     }
-                } catch(...) {
+                }
+                else
+                {
                     // Problematic - may delete a jail that is not ours then ...
                     LOG_WRN("Exception parsing pid '" << pidStr << "' from '" << jail << "'");
                 }
+
                 if (!skip)
                 {
                     std::vector<std::string> newJails;
@@ -413,18 +446,22 @@ void cleanupJails(const std::string& root)
         safeRemoveDir(root);
     else
         LOG_WRN("Jails root directory [" << root << "] is not empty. Will not remove it.");
+#endif
 }
 
 void createJailPath(const std::string& path)
 {
+#if ENABLE_CHILDROOTS
     LOG_INF("Creating jail path (if missing): " << path);
     Poco::File(path).createDirectories();
     if (chmod(path.c_str(), S_IXUSR | S_IWUSR | S_IRUSR) != 0)
-        LOG_WRN("chmod(\"" << path << "\") failed: " << strerror(errno));
+        LOG_WRN_SYS("chmod(\"" << path << "\") failed");
+#endif
 }
 
 void setupChildRoot(bool bindMount, const std::string& childRoot, const std::string& sysTemplate)
 {
+#if ENABLE_CHILDROOTS
     // Start with a clean slate.
     cleanupJails(childRoot);
 
@@ -458,10 +495,13 @@ void setupChildRoot(bool bindMount, const std::string& childRoot, const std::str
     else
         LOG_INF("Disabling Bind-Mounting of jail contents per "
                 "mount_jail_tree config in coolwsd.xml.");
+#endif
 }
 
 /// The envar name used to control bind-mounting of systemplate/jails.
 constexpr const char* BIND_MOUNTING_ENVAR_NAME = "COOL_BIND_MOUNT";
+/// The envar name used to signal whether bind-mounting is configured.
+constexpr const char* BIND_MOUNTING_CONFIGURED_ENVAR_NAME = "COOL_BIND_MOUNT_CONFIGURED";
 
 void enableBindMounting()
 {
@@ -479,6 +519,24 @@ bool isBindMountingEnabled()
 {
     // Check if we have a valid envar set.
     return std::getenv(BIND_MOUNTING_ENVAR_NAME) != nullptr;
+}
+
+void enableBindMountingConfigured()
+{
+    // Set the envar to enable.
+    setenv(BIND_MOUNTING_CONFIGURED_ENVAR_NAME, "1", 1);
+}
+
+void disableBindMountingConfigured()
+{
+    // Remove the envar to disable.
+    unsetenv(BIND_MOUNTING_CONFIGURED_ENVAR_NAME);
+}
+
+bool isBindMountingConfigured()
+{
+    // Check if we have a valid envar set.
+    return std::getenv(BIND_MOUNTING_CONFIGURED_ENVAR_NAME) != nullptr;
 }
 
 constexpr const char* NAMESPACE_MOUNTING_ENVAR_NAME = "COOL_NAMESPACE_MOUNT";
@@ -502,6 +560,7 @@ bool isMountNamespacesEnabled()
 }
 
 
+#if ENABLE_CHILDROOTS
 namespace SysTemplate
 {
 /// The network and other system files we need to keep up-to-date in jails.
@@ -509,42 +568,14 @@ namespace SysTemplate
 /// the long lifetime of our process. Also, it's unlikely
 /// that systemplate will get re-generated after installation.
 static const auto DynamicFilePaths
-    = { "/etc/passwd",        "/etc/group",       "/etc/host.conf", "/etc/hosts",
-        "/etc/nsswitch.conf", "/etc/resolv.conf", "/etc/timezone",  "/etc/localtime" };
+    = { "/etc/passwd", "/etc/group",
+        "/etc/host.conf", "/etc/hosts",
+        "/etc/nsswitch.conf", "/etc/resolv.conf" };
 
+namespace
+{
 /// Copy (false) by default for KIT_IN_PROCESS.
 static bool LinkDynamicFiles = false;
-
-static bool updateDynamicFilesImpl(const std::string& sysTemplate);
-
-void setupDynamicFiles(const std::string& sysTemplate)
-{
-    LOG_INF("Setting up systemplate dynamic files in [" << sysTemplate << "].");
-
-    LinkDynamicFiles = true; // Prefer linking, unless it fails.
-
-    const bool uptodate = updateDynamicFilesImpl(sysTemplate);
-    if (!uptodate)
-    {
-        // Can't copy!
-        LOG_WRN("Failed to update the dynamic files in ["
-                << sysTemplate
-                << "]. Will clone dynamic elements of systemplate to the jails.");
-        LinkDynamicFiles = false;
-    }
-
-    FileUtil::Stat copiedFileStat(Poco::Path(sysTemplate, "etc/copied").toString());
-    if (copiedFileStat.exists())
-    {
-        // At least one file is copied, we must check for changes before each jail setup.
-        LinkDynamicFiles = false;
-    }
-
-    LOG_INF("Systemplate dynamic files in ["
-            << sysTemplate << "] "
-            << (LinkDynamicFiles ? "are linked and will remain" : "will be copied to keep them")
-            << " up-to-date.");
-}
 
 bool updateDynamicFilesImpl(const std::string& sysTemplate)
 {
@@ -619,9 +650,11 @@ bool updateDynamicFilesImpl(const std::string& sysTemplate)
             }
 
             // Failed to link a file. Disable linking and copy instead.
-            LOG_WRN("Failed to link ["
-                    << srcFilename << "] -> [" << dstFilename << "] (" << strerror(linkerr)
-                    << "). Will copy and disable linking dynamic system files in this run.");
+            LOG_WRN_ERRNO(
+                linkerr,
+                "Failed to link ["
+                    << srcFilename << "] -> [" << dstFilename
+                    << "]. Will copy and disable linking dynamic system files in this run");
             LinkDynamicFiles = false;
         }
 
@@ -645,12 +678,44 @@ bool updateDynamicFilesImpl(const std::string& sysTemplate)
 
     return true;
 }
+} // namespace
+
+void setupDynamicFiles(const std::string& sysTemplate)
+{
+    LOG_INF("Setting up systemplate dynamic files in [" << sysTemplate << "].");
+
+    LinkDynamicFiles = true; // Prefer linking, unless it fails.
+
+    const bool uptodate = updateDynamicFilesImpl(sysTemplate);
+    if (!uptodate)
+    {
+        // Can't copy!
+        LOG_WRN("Failed to update the dynamic files in ["
+                << sysTemplate << "]. Will clone dynamic elements of systemplate to the jails.");
+        LinkDynamicFiles = false;
+    }
+
+    FileUtil::Stat copiedFileStat(Poco::Path(sysTemplate, "etc/copied").toString());
+    if (copiedFileStat.exists())
+    {
+        // At least one file is copied, we must check for changes before each jail setup.
+        LinkDynamicFiles = false;
+    }
+
+    LOG_INF("Systemplate dynamic files in ["
+            << sysTemplate << "] "
+            << (LinkDynamicFiles ? "are linked and will remain" : "will be copied to keep them")
+            << " up-to-date.");
+}
 
 bool updateDynamicFiles(const std::string& sysTemplate)
 {
     // If the files are linked, they are always up-to-date.
     return LinkDynamicFiles ? true : updateDynamicFilesImpl(sysTemplate);
 }
+
+namespace
+{
 
 void setupRandomDeviceLink(const std::string& sysTemplate, const std::string& name)
 {
@@ -689,6 +754,7 @@ void setupRandomDeviceLink(const std::string& sysTemplate, const std::string& na
             << "]. Some features, such us password-protection and document-signing might not work");
     }
 }
+} // namespace
 
 // The random devices are setup in two stages.
 // This is the first stage, where we create symbolic links
@@ -703,6 +769,7 @@ void setupRandomDeviceLinks(const std::string& sysTemplate)
 }
 
 } // namespace SysTemplate
+#endif // ENABLE_CHILDROOTS
 
 } // namespace JailUtil
 

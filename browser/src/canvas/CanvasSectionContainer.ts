@@ -188,6 +188,7 @@ class CanvasSectionContainer {
 	private scrollLineHeight: number = 30; // This will be overridden.
 	private mouseIsInside: boolean = false;
 	private inZoomAnimation: boolean = false;
+	private postZoomReplay: boolean = false;
 	private zoomChanged: boolean = false;
 	private documentAnchorSectionName: string = null; // This section's top left point declares the point where document starts.
 	private documentAnchor: Array<number> = null; // This is the point where document starts inside canvas element. Initial value shouldn't be [0, 0].
@@ -195,6 +196,7 @@ class CanvasSectionContainer {
 	private drawRequest: number = null;
 	private drawingPaused: number = 0;
 	private drawingEnabled: boolean = true;
+	private deferredDrawCallback: () => void = null;
 	private sectionsDirty: boolean = false;
 	private framesRendered: number = 0; // Total frame count for debugging
 
@@ -274,6 +276,9 @@ class CanvasSectionContainer {
 		else {
 			this.documentAnchorSectionName = null;
 			this.documentAnchor = null;
+
+			if (app.activeDocument?.activeLayout)
+				app.activeDocument.activeLayout.documentAnchorPosition = [0, 0];
 		}
 	}
 
@@ -316,6 +321,14 @@ class CanvasSectionContainer {
 
 	public isInZoomAnimation (): boolean {
 		return this.inZoomAnimation;
+	}
+
+	public setPostZoomReplay (postZoomReplay: boolean) {
+		this.postZoomReplay = postZoomReplay;
+	}
+
+	public isPostZoomReplay (): boolean {
+		return this.postZoomReplay;
 	}
 
 	public setZoomChanged (zoomChanged: boolean) {
@@ -374,6 +387,12 @@ class CanvasSectionContainer {
 		if (this.drawingEnabled && wasNonZero && this.drawingPaused === 0) {
 			this.paintOnResumeOrEnable();
 		}
+	}
+
+	// Drawing requests will call this callback instead of queueing a redraw. Set the
+	// callback to null to resume the standard drawing chain.
+	public deferDrawing (callback: () => void) {
+		this.deferredDrawCallback = callback;
 	}
 
 	private paintOnResumeOrEnable() {
@@ -474,7 +493,8 @@ class CanvasSectionContainer {
 	}
 
 	public isDocumentObjectVisible (section: CanvasSectionObject): boolean {
-		return app.isRectangleVisibleInTheDisplayedArea(
+		return section.isAlwaysVisible ||
+			app.isRectangleVisibleInTheDisplayedArea(
 			[
 				Math.round(section.position[0] * app.pixelsToTwips),
 				Math.round(section.position[1] * app.pixelsToTwips),
@@ -577,6 +597,9 @@ class CanvasSectionContainer {
 			layoutingService.cancelFrame();
 
 		while (layoutingService.runTheTopTask());
+
+		// Trigger drain callbacks since we bypassed the normal async flow
+		layoutingService.triggerDrainCallbacks();
 	}
 
 	private isCanvasSizeValidAfterDisplayChange(): boolean {
@@ -591,7 +614,7 @@ class CanvasSectionContainer {
 			if (documentContainer && documentContainer.clientWidth !== 0 || documentContainer.clientHeight !== 0) {
 				if (app.map._docLayer) {
 					app.map._docLayer._syncTileContainerSize(true);
-					app.activeDocument.activeView.sendClientVisibleArea();
+					app.activeDocument.activeLayout.sendClientVisibleArea();
 					this.requestReDraw();
 					return false;
 				}
@@ -633,6 +656,10 @@ class CanvasSectionContainer {
 
 	public requestReDraw() {
 		if (!this.drawingAllowed()) return;
+		if (this.deferredDrawCallback) {
+			this.deferredDrawCallback();
+			return;
+		}
 		if (this.drawRequest === null)
 			this.drawRequest = requestAnimationFrame(this.redrawCallback.bind(this));
 	}
@@ -792,6 +819,8 @@ class CanvasSectionContainer {
 					break; // Stop propagation.
 			}
 		}
+
+		this.lowestPropagatedBoundSection = null; // onMouseMove event doesn't clear the mouse positions, so we need to clear the property here.
 	}
 
 	private propagateOnMouseDown(section: CanvasSectionObject, position: Array<number>, e: MouseEvent) {
@@ -1005,24 +1034,34 @@ class CanvasSectionContainer {
 		}
 	}
 
+	private getMyTopLeftForDocumentObject(section: CanvasSectionObject): number[] {
+		if (this.documentAnchor === null) return;
+
+		if (app.map._docLayer._docType === 'spreadsheet') {
+			return [
+				this.documentAnchor[0] +
+					section.position[0] -
+					(app.isXOrdinateInFrozenPane(section.position[0])
+						? 0
+						: app.activeDocument.activeLayout.viewedRectangle.pX1),
+				this.documentAnchor[1] +
+					section.position[1] -
+					(app.isYOrdinateInFrozenPane(section.position[1])
+						? 0
+						: app.activeDocument.activeLayout.viewedRectangle.pY1),
+			];
+		}
+		else
+			return [section.documentPosition.vX, section.documentPosition.vY];
+	}
+
 	// Called when document position is changed.
 	public onNewDocumentTopLeft() {
 		for (var i: number = 0; i < this.sections.length; i++) {
 			var section: CanvasSectionObject = this.sections[i];
 
 			if (section.documentObject === true) {
-				section.myTopLeft = [
-					this.documentAnchor[0] +
-						section.position[0] -
-						(app.isXOrdinateInFrozenPane(section.position[0])
-							? 0
-							: app.activeDocument.activeView.viewedRectangle.pX1),
-					this.documentAnchor[1] +
-						section.position[1] -
-						(app.isYOrdinateInFrozenPane(section.position[1])
-							? 0
-							: app.activeDocument.activeView.viewedRectangle.pY1),
-				];
+				section.myTopLeft = this.getMyTopLeftForDocumentObject(section);
 
 				const isVisible = this.isDocumentObjectVisible(section);
 				if (isVisible !== section.isVisible) {
@@ -1050,6 +1089,13 @@ class CanvasSectionContainer {
 	}
 
 	public onClick (e: MouseEvent) {
+		if (this.touchEventInProgress) {
+			Object.defineProperty(e, 'pointerType', {
+				value: 'touch',
+				writable: false
+			});
+		}
+
 		if (!this.draggingSomething) { // Prevent click event after dragging.
 			if (this.positionOnMouseDown !== null && this.positionOnMouseUp !== null) {
 				this.positionOnClick = this.convertPositionToCanvasLocale(e);
@@ -1155,7 +1201,7 @@ class CanvasSectionContainer {
 	}
 
 	public onMouseDown (e: MouseEvent) { // Ignore this event, just rely on this.draggingSomething variable.
-		if (e.button === 0 && !this.touchEventInProgress) { // So, we only handle left button.
+		if (e.button === 0 && !this.touchEventInProgress && this.mouseIsInside ) { // So, we only handle left button (and only when mouse is inside).
 			this.clearMousePositions();
 			this.positionOnMouseDown = this.convertPositionToCanvasLocale(e);
 
@@ -1415,7 +1461,8 @@ class CanvasSectionContainer {
 	}
 
 	public doesSectionIncludePoint (section: any, point: number[]): boolean { // No ray casting here, it is a rectangle.
-		return ((point[0] >= section.myTopLeft[0] && point[0] <= section.myTopLeft[0] + section.size[0]) && (point[1] >= section.myTopLeft[1] && point[1] <= section.myTopLeft[1] + section.size[1]));
+		// use isHit from section, that does check against bounds of local range (position, size)
+		return section.isHit(point);
 	}
 
 	private doSectionsIntersectOnYAxis (section1: any, section2: any): boolean {
@@ -1540,8 +1587,8 @@ class CanvasSectionContainer {
 			if (section.name === 'tiles') {
 				// For tiles section add document coordinates of top and left too.
 				element.innerText = JSON.stringify({
-					top: Math.round(app.activeDocument.activeView.viewedRectangle.pY1),
-					left: Math.round(app.activeDocument.activeView.viewedRectangle.pX1),
+					top: Math.round(app.activeDocument.activeLayout.viewedRectangle.pY1),
+					left: Math.round(app.activeDocument.activeLayout.viewedRectangle.pX1),
 					width: Math.round(section.size[0]),
 					height: Math.round(section.size[1])
 				});
@@ -1696,10 +1743,7 @@ class CanvasSectionContainer {
 			if (section.documentObject === true) { // "Document anchor" section should be processed before "document object" sections.
 				if (section.size && section.position) {
 					section.isLocated = true;
-					section.myTopLeft = [
-						this.documentAnchor[0] + section.position[0] - (app.isXOrdinateInFrozenPane(section.position[0]) ? 0 : app.activeDocument.activeView.viewedRectangle.pX1),
-						this.documentAnchor[1] + section.position[1] - (app.isYOrdinateInFrozenPane(section.position[1]) ? 0 : app.activeDocument.activeView.viewedRectangle.pY1)
-					];
+					section.myTopLeft = [section.documentPosition.vX, section.documentPosition.vY];
 				}
 			}
 			else if (section.boundToSection) { // Don't set boundToSection property for "window sections".
@@ -1735,6 +1779,9 @@ class CanvasSectionContainer {
 
 			if (section.name === this.documentAnchorSectionName) {
 				this.documentAnchor = [section.myTopLeft[0], section.myTopLeft[1]];
+
+				if (app.activeDocument?.activeLayout)
+					app.activeDocument.activeLayout.documentAnchorPosition = this.documentAnchor.slice();
 			}
 		}
 	}

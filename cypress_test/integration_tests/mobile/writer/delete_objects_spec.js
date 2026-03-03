@@ -10,6 +10,10 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Delete Objects', function()
 
 		// Click on edit button
 		mobileHelper.enableEditingMobile();
+
+		cy.getFrameWindow().then((win) => {
+			this.win = win;
+		});
 	});
 
 	it('Delete Text', function() {
@@ -105,6 +109,12 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Delete Objects', function()
 		mobileHelper.openInsertionWizard();
 		cy.cGet('body').contains('.menu-entry-with-icon', 'Chart...').click();
 		cy.cGet('#test-div-shapeHandlesSection').should('exist');
+
+		// exit active object mode
+		helper.typeIntoDocument('{esc}');
+
+		// wait for core to finish processing OLE deactivation
+		helper.processToIdle(this.win);
 
 		cy.cGet('#document-container').then(function(item) {
 			const boundingRectangle = item[0].getBoundingClientRect();

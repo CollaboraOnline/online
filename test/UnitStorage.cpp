@@ -9,10 +9,14 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * Unit test for storage functionality.
+ */
+
 #include <config.h>
 
-#include "Unit.hpp"
-#include "WopiTestServer.hpp"
+#include <Unit.hpp>
+#include <WopiTestServer.hpp>
 
 using namespace helpers;
 

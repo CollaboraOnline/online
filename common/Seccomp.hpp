@@ -13,12 +13,17 @@
 
 #include <Protocol.hpp>
 
-namespace Seccomp {
-    enum Type : std::uint8_t { KIT, WSD };
-
-    /// Lock-down a process hard - @returns true on success.
-    bool lockdown(Type type);
+namespace Seccomp
+{
+enum class Type : std::uint8_t
+{
+    KIT,
+    WSD
 };
+
+/// Lock-down a process hard - @returns true on success.
+bool lockdown(Type type);
+}; // namespace Seccomp
 
 namespace Rlimit {
     /// Handles setconfig command with limit_... subcommands.

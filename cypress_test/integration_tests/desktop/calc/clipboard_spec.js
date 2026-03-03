@@ -21,6 +21,10 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Calc clipboard tests.', fu
 		cy.cGet('#map').focus();
 		calcHelper.clickOnFirstCell();
 		cy.cGet(helper.addressInputSelector).should('have.prop', 'value', 'A1');
+
+		cy.getFrameWindow().then((win) => {
+			this.win = win;
+		});
 	});
 
 	function setDummyClipboard(type, content, image = false, fail = false, imageHtml = undefined) {
@@ -80,7 +84,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Calc clipboard tests.', fu
 		var html = '<div id="meta-origin" data-coolorigin="%META_URL%">ignored</div>';
 		setDummyClipboard('text/html', html);
 
-		cy.wait(200);
+		helper.processToIdle(this.win);
 
 		// When pasting C1 to D1:
 		helper.typeIntoInputField(helper.addressInputSelector, 'D1');
@@ -190,18 +194,21 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Calc clipboard tests.', fu
 		helper.setDummyClipboardForCopy();
 
 		calcHelper.dblClickOnFirstCell();
-		helper.clearAllText();
-		cy.cGet('.ui-custom-textarea-text-layer').should('have.text', '');
+		cy.cGet('.ui-custom-textarea-text-layer').should('not.have.text', '');
 
 		let url = 'http://www.example.com/';
-		helper.typeIntoDocument(url + '{enter}');
+		helper.typeIntoDocument('{rightArrow}{backspace}' + url + '{enter}');
+		helper.processToIdle(this.win);
 
 		// We need to close the hyperlink popup because currently mouse cursor is on the cell and it opens hyperlink popup window.
 		helper.typeIntoDocument('{rightArrow}');
 		helper.typeIntoDocument('{leftArrow}');
+		helper.processToIdle(this.win);
 
 		calcHelper.clickOnFirstCell();
 		cy.cGet('.arrow-div.reverse').should('be.visible'); // Ensure that hyperlink doesn't overlap with the cell.
+
+		helper.processToIdle(this.win);
 		cy.cGet('#hyperlink-pop-up-copy').click();
 
 		cy.cGet('#copy-paste-container').should('contain.text', url); // TODO: There is an extra \n here.

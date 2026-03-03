@@ -34,10 +34,10 @@ function hideSidebar() {
 function hideSidebarImpress() {
 	cy.log('>> hideSidebarImpress - start');
 
-	cy.cGet('#modifypage').should('have.class', 'selected');
+	cy.cGet('.unoModifyPage').should('have.class', 'selected');
 	cy.cGet('#sidebar-dock-wrapper').should('be.visible').should('not.be.empty');
-	cy.cGet('#modifypage button').click();
-	cy.cGet('#modifypage').should('not.have.class', 'selected');
+	cy.cGet('.unoModifyPage button').click();
+	cy.cGet('.unoModifyPage').should('not.have.class', 'selected');
 	cy.cGet('#sidebar-dock-wrapper').should('not.be.visible');
 
 	cy.log('<< hideSidebarImpress - end');
@@ -83,16 +83,15 @@ function selectColorFromPalette(color) {
 	cy.log('<< selectColorFromPalette - end');
 }
 
-// Select an item from a listbox widget used on top toolbar.
+// Select an item from a listbox/combobox widget used on top toolbar.
 // Parameters:
 // item - item string, that we use a selector to find the right list item.
 function selectFromListbox(item) {
 	cy.log('>> selectFromListbox - start');
 
-	cy.cGet('.select2-dropdown').should('be.visible');
-	// We use force because the tooltip sometimes hides the items.
-	cy.cGet('body').contains('.select2-results__option', item).click();
-	cy.cGet('.select2-dropdown').should('not.exist');
+	cy.cGet('[id$="-dropdown"].modalpopup').should('be.visible');
+	cy.cGet('[id$="-dropdown"].modalpopup').contains('span', item).click();
+	cy.cGet('[id$="-dropdown"].modalpopup').should('not.exist');
 
 	cy.log('<< selectFromListbox - end');
 }
@@ -104,7 +103,6 @@ function selectFromJSDialogListbox(item, isImage) {
 	cy.log('>> selectFromJSDialogListbox - start');
 
 	cy.cGet('[id$="-dropdown"].modalpopup').should('be.visible');
-	// We use force because the tooltip sometimes hides the items.
 	if (isImage) {
 		cy.wait(1000); // We need some time to render custom entries
 		cy.cGet('[id$="-dropdown"].modalpopup img[alt="' + item + '"]').click();
@@ -219,6 +217,7 @@ function selectZoomLevel(zoomLevel, makeZoomVisible = true) {
 }
 
 // Reset zoom level to 100%.
+// WARN: doesn't work for writer, use fitWidthZoom for that.
 function resetZoomLevel() {
 	cy.log('>> resetZoomLevel - start');
 
@@ -227,6 +226,14 @@ function resetZoomLevel() {
 	shouldHaveZoomLevel('100');
 
 	cy.log('<< resetZoomLevel - end');
+}
+
+function fitWidthZoom() {
+	cy.log('>> fitWidthZoom - start');
+
+	cy.cGet('#toolbar-down #fitwidthzoom').click();
+
+	cy.log('<< fitWidthZoom - end');
 }
 
 function insertImage() {
@@ -284,7 +291,7 @@ function insertComment(text = 'some text0', save = true) {
 	var mode = Cypress.env('USER_INTERFACE');
 	if (mode === 'notebookbar') {
 		cy.cGet('#Insert-tab-label').click();
-		cy.cGet('#insert-insert-annotation').click();
+		cy.cGet('#Insert .unoInsertAnnotation').click();
 	} else {
 		cy.cGet('#menu-insert').click();
 		cy.cGet('#menu-insertcomment').click();
@@ -325,8 +332,8 @@ function toggleComments(resolved = false) {
 	var mode = Cypress.env('USER_INTERFACE');
 	if (mode === 'notebookbar') {
 		cy.cGet('#Review-tab-label').click();
-		if (resolved) cy.cGet('#review-show-resolved-annotations').click();
-		else cy.cGet('#showannotations').click();
+		if (resolved) getNbIcon('ShowResolvedAnnotations', 'Review').click();
+		else cy.cGet('.showannotations').click();
 		// to avoid notebookbar collapse in subsequent calls to toggleComments.
 		cy.cGet('#Home-tab-label').click();
 	} else {
@@ -360,7 +367,9 @@ function switchUIToCompact() {
 		var userInterfaceMode = win['0'].userInterfaceMode;
 		if (userInterfaceMode === 'notebookbar') {
 			cy.cGet('#View-tab-label').click();
-			cy.cGet('#toggleuimode').click();
+			getNbIcon('toggleuimode', 'View').click();
+			// Wait for the compact toolbar to load
+			cy.cGet('#toolbar-up').should('be.visible');
 		}
 	});
 
@@ -507,13 +516,11 @@ function scrollWriterDocumentToTop() {
 	assertScrollbarPosition('vertical', 0, 10);
 }
 
-function scrollViewDown() {
-	cy.getFrameWindow()
-		.its('L')
-		.then(function(L) {
-			L.Map.THIS.panBy({x: 0, y: 4000});
-			updateFollowingUsers();
-		});
+function scrollViewDown(win) {
+	cy.then(function() {
+		win.L.Map.THIS.panBy({x: 0, y: 4000});
+		win.app.updateFollowingUsers();
+	});
 }
 
 function updateFollowingUsers() {
@@ -538,6 +545,51 @@ function assertVisiblePage(min, max, allPages) {
 	cy.cGet('#StatePageNumber').invoke('text').should('be.oneOf', expectedArray);
 }
 
+/// get icon for given uno command from classic toolbar
+function getCompactIcon(unoCommand) {
+	return cy.cGet('#toolbar-up .uno' + unoCommand + ':visible');
+}
+
+/// get icon for given uno command from notebookbar
+function getNbIcon(unoCommand, tabName) {
+	return cy.cGet((tabName ? '#' + tabName + '-container' : '') + '.notebookbar  .uno' + unoCommand + ' > button.unobutton:visible');
+}
+
+/// get icon arrow for given uno command from classic toolbar to open the dropdown
+function getCompactIconArrow(unoCommand) {
+	return cy.cGet('#toolbar-up .uno' + unoCommand + ' > .arrowbackground:visible');
+}
+
+/// get icon arrow for given uno command from notebookbar to open the dropdown
+function getNbIconArrow(unoCommand, tabName) {
+	return cy.cGet((tabName ? '#' + tabName + '-container' : '') + '.notebookbar  .uno' + unoCommand + ' > .arrowbackground:visible');
+}
+
+/// get gropdown element for menu with given id
+function getDropdown(dropdownId) {
+	return cy.cGet('[id^="' + dropdownId + '"].modalpopup');
+}
+
+// Undo all changes until undo is no longer possible
+function undoAll() {
+	cy.log('>> undoAll - start');
+
+	cy.getFrameWindow().then(function(win) {
+		helper.processToIdle(win);
+		cy.cGet('#Home-container .unoUndo').then(function undoStep($undo) {
+			if ($undo.attr('disabled') === undefined) {
+				cy.cGet('#Home-container .unoUndo button').click({force: true});
+				helper.processToIdle(win);
+				cy.cGet('#Home-container .unoUndo').then(undoStep);
+			}
+		});
+	});
+
+	cy.cGet('#Home-container .unoUndo').should('not.have','disabled');
+
+	cy.log('<< undoAll - end');
+}
+
 module.exports.showSidebar = showSidebar;
 module.exports.hideSidebar = hideSidebar;
 module.exports.hideSidebarImpress = hideSidebarImpress;
@@ -552,6 +604,7 @@ module.exports.zoomOut = zoomOut;
 module.exports.shouldHaveZoomLevel = shouldHaveZoomLevel;
 module.exports.selectZoomLevel = selectZoomLevel;
 module.exports.resetZoomLevel = resetZoomLevel;
+module.exports.fitWidthZoom = fitWidthZoom;
 module.exports.insertImage = insertImage;
 module.exports.insertVideo = insertVideo;
 module.exports.deleteImage = deleteImage;
@@ -571,3 +624,9 @@ module.exports.updateFollowingUsers = updateFollowingUsers;
 module.exports.assertVisiblePage = assertVisiblePage;
 module.exports.closeNavigatorSidebar = closeNavigatorSidebar;
 module.exports.sidebarToggle = sidebarToggle;
+module.exports.getCompactIcon = getCompactIcon;
+module.exports.getNbIcon = getNbIcon;
+module.exports.getCompactIconArrow = getCompactIconArrow;
+module.exports.getNbIconArrow = getNbIconArrow;
+module.exports.getDropdown = getDropdown;
+module.exports.undoAll = undoAll;

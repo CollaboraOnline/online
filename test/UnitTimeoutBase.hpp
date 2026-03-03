@@ -9,21 +9,22 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-#include <config.h>
+/*
+ * Base class for timeout-related unit tests.
+ */
+
+#include <common/Unit.hpp>
+#include <common/Util.hpp>
+#include <net/HttpRequest.hpp>
+#include <net/Socket.hpp>
+#include <test/helpers.hpp>
+#include <test/lokassert.hpp>
+#include <wsd/UserMessages.hpp>
+
+#include <Poco/Util/LayeredConfiguration.h>
 
 #include <memory>
 #include <string>
-
-#include <HttpRequest.hpp>
-#include <Socket.hpp>
-
-#include <Poco/Util/LayeredConfiguration.h>
-#include <test/lokassert.hpp>
-
-#include <Unit.hpp>
-#include <UserMessages.hpp>
-#include <Util.hpp>
-#include <helpers.hpp>
 #include <vector>
 
 /// Base test suite class for timeout and connection limit using HTTP and WS sessions.
@@ -35,20 +36,25 @@ public:
         std::vector<char> res = session.poll(
             [&](const std::vector<char>& message) -> bool
             {
-                const std::string msg(std::string(message.begin(), message.end()));
+                const std::string_view msg(message.begin(), message.end());
                 TST_LOG("Got WS response: " << msg);
                 if (!msg.starts_with("error:"))
                 {
-                    if( expectedPrefix == "progress:") {
+                    if (expectedPrefix == "progress:")
+                    {
                         LOK_ASSERT_EQUAL(COOLProtocol::matchPrefix(expectedPrefix, msg), true);
                         LOK_ASSERT(helpers::getProgressWithIdValue(msg, expectedId));
                         TST_LOG("Good WS response(0): " << msg);
                         return true;
-                    } else if( msg.find(expectedId) != std::string::npos ) {
+                    }
+                    else if (msg.find(expectedId) != std::string::npos)
+                    {
                         // simple match
                         TST_LOG("Good WS response(1): " << msg);
                         return true;
-                    } else {
+                    }
+                    else
+                    {
                         const bool c = session.isConnected();
                         TST_LOG("Some WS response(2): " << msg << ", connected " << c);
                         return !c; // continue waiting for 'it' if still connected
@@ -57,7 +63,7 @@ public:
                 else
                 {
                     // check error message
-                    LOK_ASSERT_EQUAL(std::string(SERVICE_UNAVAILABLE_INTERNAL_ERROR), msg);
+                    LOK_ASSERT_EQUAL_STR(SERVICE_UNAVAILABLE_INTERNAL_ERROR, msg);
 
                     // close frame message
                     return true;
@@ -113,9 +119,9 @@ public:
 class UnitTimeoutBase1 : public UnitTimeoutBase0
 {
 public:
-    TestResult testHttp(const size_t connectionLimit, const size_t connectionsCount);
-    TestResult testWSPing(const size_t connectionLimit, const size_t connectionsCount);
-    TestResult testWSDChatPing(const size_t connectionLimit, const size_t connectionsCount);
+    TestResult testHttp(size_t connectionLimit, size_t connectionsCount);
+    TestResult testWSPing(size_t connectionLimit, size_t connectionsCount);
+    TestResult testWSDChatPing(size_t connectionLimit, size_t connectionsCount);
 
     UnitTimeoutBase1(const std::string& testname_)
         : UnitTimeoutBase0(testname_)
@@ -207,7 +213,7 @@ inline UnitBase::TestResult UnitTimeoutBase1::testHttp(const size_t connectionLi
     TST_LOG("Clearing Poller: " << testname);
     socketPollers.clear();
     // TCP Connection Count: Just an estimation, no locking on server side
-    TST_LOG("TCP Connection Count: " << testname << ", "
+    TST_LOG("TCP Connection Count: "
                                      << StreamSocket::getExternalConnectionCount() << " / "
                                      << net::Defaults.maxExtConnections);
     TST_LOG("Ending Test: " << testname);
@@ -315,7 +321,7 @@ inline UnitBase::TestResult UnitTimeoutBase1::testWSPing(const size_t connection
     TST_LOG("Clearing Poller: " << testname);
     socketPollers.clear();
     // TCP Connection Count: Just an estimation, no locking on server side
-    TST_LOG("TCP Connection Count: " << testname << ", "
+    TST_LOG("TCP Connection Count: "
                                      << StreamSocket::getExternalConnectionCount() << " / "
                                      << net::Defaults.maxExtConnections);
     TST_LOG("Ending Test: " << testname);
@@ -421,7 +427,7 @@ inline UnitBase::TestResult UnitTimeoutBase1::testWSDChatPing(const size_t conne
     TST_LOG("Clearing Poller: " << testname);
     socketPollers.clear();
     // TCP Connection Count: Just an estimation, no locking on server side
-    TST_LOG("TCP Connection Count: " << testname << ", "
+    TST_LOG("TCP Connection Count: "
                                      << StreamSocket::getExternalConnectionCount() << " / "
                                      << net::Defaults.maxExtConnections);
     TST_LOG("Ending Test: " << testname);

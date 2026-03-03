@@ -9,11 +9,15 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * Unit test for WOPI language handling.
+ */
+
 #include <config.h>
 
-#include "Unit.hpp"
+#include <Unit.hpp>
 #include <WopiTestServer.hpp>
-#include <Log.hpp>
+#include <common/Log.hpp>
 
 class UnitWopiLanguages : public WopiTestServer
 {

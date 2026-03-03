@@ -7,6 +7,12 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
+
+/*
+ * Platform-specific code for desktop systems.
+ * Functions: checkDiskSpaceOnRegisteredFileSystems()
+ */
+
 #pragma once
 
 #if !MOBILEAPP
@@ -15,11 +21,11 @@
 #include <stdexcept>
 #include <unordered_map>
 
-#include "Admin.hpp"
-#include "Auth.hpp"
-#include "CacheUtil.hpp"
-#include "FileServer.hpp"
-#include "UserMessages.hpp"
+#include <Admin.hpp>
+#include <Auth.hpp>
+#include <CacheUtil.hpp>
+#include <FileServer.hpp>
+#include <UserMessages.hpp>
 #include <wopi/CheckFileInfo.hpp>
 #include <wopi/StorageConnectionManager.hpp>
 #include <net/HttpHelper.hpp>

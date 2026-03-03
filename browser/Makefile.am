@@ -13,20 +13,20 @@ TYPESCRIPT_JS_DIR = $(builddir)/typescript_js
 export NODE_PATH=$(abs_builddir)/node_module
 
 if !ENABLE_MOBILEAPP
-L10N_JSON = $(patsubst $(srcdir)/po/%.po,$(DIST_FOLDER)/l10n/%.json,$(L10N_PO))
+L10N_JSON = $(patsubst $(srcdir)/po/help-%.po,$(DIST_FOLDER)/l10n/help-%.json,$(L10N_PO))
+L10N_JSON += $(patsubst $(srcdir)/po/ui-%.po,$(DIST_FOLDER)/l10n/ui-%.json,$(L10N_PO))
 else
-L10N_IOS_ALL_JS = $(DIST_FOLDER)/l10n-all.js
-L10N_JSON = $(L10N_IOS_ALL_JS)
+L10N_ALL_JS = $(DIST_FOLDER)/l10n-all.js
+L10N_JSON = $(L10N_ALL_JS)
+L10N_ALL_JS_ENTRY = l10n-all.js
 
-$(L10N_IOS_ALL_JS) : $(wildcard $(srcdir)/po/ui-*.po) $(shell find $(srcdir)/l10n -name '*.*') $(srcdir)/util/create-l10n-all-js.pl
-	for F in $(wildcard $(srcdir)/po/ui-*.po); do \
-		$(srcdir)/util/po2json.py $$F -o $$F.json; \
-	done
+$(L10N_ALL_JS) : $(wildcard $(srcdir)/po/ui-*.po) $(wildcard $(srcdir)/po/help-*.po) $(shell find $(srcdir)/l10n -name '*.*') $(srcdir)/util/create-l10n-all-js.pl
+	find $(srcdir)/po -name 'ui-*.po' -exec $(srcdir)/util/po2json.py {} -o {}.json \;
+	find $(srcdir)/po -name 'help-*.po' -exec $(srcdir)/util/po2json.py {} -o {}.json \;
 	@mkdir -p $(dir $@)
 	perl $(srcdir)/util/create-l10n-all-js.pl >$@
-	for F in $(wildcard $(srcdir)/po/ui-*.po); do \
-		rm $$F.json; \
-	done
+	find $(srcdir)/po -name 'ui-*.po.json' -delete
+	find $(srcdir)/po -name 'help-*.po.json' -delete
 endif
 
 QUIET_TSC = $(QUIET_TSC_$(V))
@@ -80,7 +80,7 @@ JQUERY_MINIFIED_IMAGE_PATH = node_modules/jquery-ui/themes/base/images
 JQUERY_MINIFIED_IMAGES = $(wildcard $(JQUERY_MINIFIED_IMAGE_PATH)/*.png)
 JQUERY_MINIFIED_DIST_IMAGES = $(patsubst $(JQUERY_MINIFIED_IMAGE_PATH)/%.png,$(DIST_FOLDER)/images/%.png,$(JQUERY_MINIFIED_IMAGES))
 
-COOL_IMAGES_SRC = $(shell find $(srcdir)/images -name '*.*')
+COOL_IMAGES_SRC = $(shell find $(srcdir)/images \( -name '*.png' -o -name '*.svg' -o -name '*.gif' \))
 COOL_IMAGES_DST = $(patsubst $(srcdir)/%,$(DIST_FOLDER)/%,$(COOL_IMAGES_SRC))
 COOL_IMAGES_CUSTOM_SRC = $(shell if test -n "$(CUSTOM_ICONS_DIRECTORY)"; then find $(CUSTOM_ICONS_DIRECTORY) -name '*.*'; fi)
 COOL_IMAGES_CUSTOM_DST = $(patsubst $(CUSTOM_ICONS_DIRECTORY)/%,$(DIST_FOLDER)/images/%,$(COOL_IMAGES_CUSTOM_SRC))
@@ -129,6 +129,40 @@ define npm_source
 	done
 endef
 
+# SVG icons
+icons_dir = $(srcdir)/images
+
+# Generate into the source tree so tsc --rootDir ./src sees it
+icons_js = $(DIST_FOLDER)/src/control/Control.BackstageSVGIcons.js
+
+# Backstage icons have to be embedded, so that the coloring works on the DOM
+BACKSTAGE_SVG_NAMES = \
+	lc_home.svg \
+	lc_newdoc.svg \
+	lc_open.svg \
+	lc_shareas.svg \
+	lc_printpreview.svg \
+	lc_save.svg \
+	lc_saveacopy.svg \
+	lc_printlayout.svg \
+	lc_exportto.svg
+
+BACKSTAGE_SVGS = $(addprefix $(icons_dir)/,$(BACKSTAGE_SVG_NAMES))
+
+$(icons_js): Makefile.am Makefile $(BACKSTAGE_SVGS)
+	@mkdir -p "$(dir $@)"
+	@{ \
+	  echo "// AUTO-GENERATED. DO NOT EDIT."; \
+	  echo "var BackstageSVGIcons = {"; \
+	  for f in $(BACKSTAGE_SVGS); do \
+	    name=$$(basename "$$f"); \
+	    echo "  \"$$name\": \"" | tr -d '\n'; \
+	    sed -e 's/\\/\\\\/g' -e 's/"/\\"/g' -e 's/\r//g' "$$f" | tr -d '\n'; \
+	    echo "\","; \
+	  done; \
+	  echo "};"; \
+	} > "$@"
+
 COOL_ADMIN_TS = \
 	admin/src/ModalDialogCreator.ts \
 	admin/src/integrator/AdminIntegratorSettings.ts \
@@ -154,12 +188,10 @@ NODE_MODULES_SRC =\
 	autolinker@3.14.1 \
 	dompurify@3.2.4 \
 	json-js@1.1.2 \
-	select2@4.0.13 \
 	l10n-for-node@0.0.1 \
 	@braintree/sanitize-url@6.0.0
 
 COOL_CSS_LST =\
-	$(builddir)/node_modules/select2/dist/css/select2.css \
 	$(srcdir)/css/leaflet.css \
 	$(srcdir)/css/leaflet-spinner.css \
 	$(srcdir)/css/selectionMarkers.css \
@@ -185,7 +217,9 @@ COOL_CSS_LST =\
 	$(srcdir)/css/helpdialog.css \
 	$(srcdir)/css/btns.css \
 	$(srcdir)/css/notebookbar.css \
+	$(srcdir)/css/backstage.css \
 	$(srcdir)/css/jssidebar.css \
+	$(srcdir)/css/forced-colors.css \
 	$(srcdir)/css/override-smartmenus.css \
 	$(srcdir)/css/jquery-ui-lightness.css \
 	$(srcdir)/css/infobar.css \
@@ -203,21 +237,20 @@ $(eval $(call file_targets,$(COOL_CSS)))
 WORKER_NODE_MODULES_JS =\
 	node_modules/fzstd/umd/index.js
 
-$(DIST_FOLDER)/src/layer/tile/TileWorker.js: \
-	$(srcdir)/src/layer/tile/CanvasTileWorker.js.m4 \
-	$(srcdir)/src/layer/tile/CanvasTileWorkerSrc.js \
+$(DIST_FOLDER)/src/app/TaskWorker.js: \
+	$(srcdir)/src/app/TaskWorker.js.m4 \
+	$(srcdir)/src/app/TaskWorkerSrc.js \
 	$(WORKER_NODE_MODULES_JS)
 
 	$(QUIET_M4) m4 -PE -DDEBUG=$(ENABLE_DEBUG) \
 		-DNODE_MODULES_JS=$(subst $(SPACE),$(COMMA),$(WORKER_NODE_MODULES_JS)) \
-		-DWORKER_JS=$(srcdir)/src/layer/tile/CanvasTileWorkerSrc.js \
-		$(srcdir)/src/layer/tile/CanvasTileWorker.js.m4 > $@
+		-DWORKER_JS=$(srcdir)/src/app/TaskWorkerSrc.js \
+		$(srcdir)/src/app/TaskWorker.js.m4 > $@
 
 NODE_MODULES_JS =\
 	$(if $(IS_SEPARATE),node_modules/hammerjs/hammer.js,node_modules/hammerjs/hammer.min.js) \
 	node_modules/dompurify/dist/purify.min.js \
 	node_modules/jquery/dist/jquery.js \
-	node_modules/jquery-mousewheel/jquery.mousewheel.js \
 	node_modules/jquery-contextmenu/dist/jquery.contextMenu.js \
 	node_modules/jquery-ui/dist/jquery-ui.js \
 	$(shell find node_modules/jquery-ui/ui/i18n -name '*.js' 2>/dev/null) \
@@ -228,7 +261,6 @@ NODE_MODULES_JS =\
 COOL_LIBS_JS =\
 	ResizeObserverPolyfill.js \
 	Autolinker.js \
-	select2.js \
 	sanitize-url.js
 
 if !ENABLE_MOBILEAPP
@@ -255,17 +287,20 @@ COOL_JS_LST =\
 	src/docdispatcher.ts \
 	src/app/DocEvents.ts \
 	src/core/geometry.ts \
+	src/core/TimerRegistry.ts \
 	src/app/GraphicSelectionMiddleware.ts \
 	src/app/TextSelectionMiddleware.ts \
 	src/app/CellSelectionMarkerMiddleware.ts \
 	src/app/TableMiddleware.ts \
 	src/app/ImpressSelectionMiddleware.ts \
 	src/app/ViewLayout.ts \
+	src/app/ViewLayoutNewBase.ts \
 	src/app/ViewLayoutWriter.ts \
 	src/app/ViewLayoutMultiPage.ts \
+	src/app/ViewLayoutCompareChanges.ts \
 	src/app/DocumentBase.ts \
+	src/app/DocumentView.ts \
 	src/app/TilesMiddleware.ts \
-	src/app/SlideshowMiddleware.ts \
 	src/app/SearchService.ts \
 	src/app/BaseClass.ts \
 	src/app/Events.ts \
@@ -278,7 +313,8 @@ COOL_JS_LST =\
 	src/app/iface/Control.Interface.ts \
 	src/app/Log.ts \
 	src/app/Debug.ts \
-	src/app/SocketBase.ts \
+	src/app/A11yValidator.ts \
+	src/app/Socket.ts \
 	src/app/TracingEvents.ts \
 	src/app/ServerCommand.ts \
 	src/Leaflet.js \
@@ -288,7 +324,6 @@ COOL_JS_LST =\
 	src/core/Util.js \
 	src/core/Class.js \
 	src/core/Events.js \
-	src/core/Socket.js \
 	src/geometry/Point.ts \
 	src/geometry/Bounds.ts \
 	src/geometry/Transformation.ts \
@@ -308,6 +343,7 @@ COOL_JS_LST =\
 	src/canvas/CanvasSectionContainer.ts \
 	src/canvas/CanvasSectionObject.ts \
 	src/canvas/sections/HTMLObjectSection.ts \
+	src/canvas/sections/CompareChangesLabelSection.ts \
 	src/canvas/sections/CommentMarkerSubSection.ts \
 	src/canvas/sections/CommentSection.ts \
 	src/canvas/sections/CommentListSection.ts \
@@ -318,8 +354,10 @@ COOL_JS_LST =\
 	src/canvas/sections/DebugOverlaySection.ts \
 	src/canvas/sections/PreloadMapSection.ts \
 	src/canvas/sections/TilesSection.ts \
-	src/canvas/sections/AutoFillMarkerSection.ts \
+	src/canvas/sections/AutoFillBaseSection.ts \
+	src/canvas/sections/CellFillMarkerSection.ts \
 	src/canvas/sections/ImpressSelectionRectangle.ts \
+	src/canvas/sections/TableFillMarkerSection.ts \
 	src/canvas/sections/TableResizeMarkerSection.ts \
 	src/canvas/sections/TableSelectMarkerSection.ts \
 	src/canvas/sections/FocusCellSection.ts \
@@ -331,12 +369,14 @@ COOL_JS_LST =\
 	src/canvas/sections/ShapeHandleGluePointSubSection.ts \
 	src/canvas/sections/ShapeHandleAnchorSubSection.ts \
 	src/canvas/sections/ShapeHandleRotationSubSection.ts \
+	src/canvas/sections/ShapeHandleDiagramSubSection.ts \
 	src/canvas/sections/ShapeHandleScalingSubSection.ts \
 	src/canvas/sections/ValidityInputHelpSection.ts \
 	src/canvas/sections/CellCursorSection.ts \
 	src/canvas/sections/CellSelectionHandleSection.ts \
 	src/canvas/sections/CalcValidityDropDownSection.ts \
 	src/canvas/sections/TextSelectionHandleSection.ts \
+	src/canvas/sections/TextSelectionSection.ts \
 	src/canvas/sections/OtherViewGraphicSelectionSection.ts \
 	src/canvas/sections/OtherViewCellCursorSection.ts \
 	src/canvas/sections/FormFieldButton.ts \
@@ -353,6 +393,7 @@ COOL_JS_LST =\
 	src/layer/vector/CanvasOverlay.ts \
 	src/canvas/sections/ScrollSection.ts \
 	src/canvas/sections/MouseControl.ts \
+	src/app/LayerUtil.ts \
 	src/layer/tile/CanvasTileLayer.js \
 	src/layer/vector/CDarkOverlay.ts \
 	src/layer/SplitPanesContext.ts \
@@ -363,15 +404,17 @@ COOL_JS_LST =\
 	src/canvas/sections/CursorHeaderSection.ts \
 	src/canvas/sections/CursorHandler.ts \
 	src/canvas/sections/TableInsertMarkerSection.ts \
+	src/canvas/sections/GenericButtonSection.ts \
 	src/canvas/sections/ChartContextButtonSection.ts \
+	src/canvas/sections/DiagramButtonSection.ts \
 	src/canvas/sections/ContentControlDropdownSubSection.ts \
 	src/canvas/sections/ContentControlSection.ts \
+	src/canvas/sections/TooltipAnchorSection.ts \
 	src/layer/marker/ProgressOverlay.js \
 	src/layer/marker/TextInput.js \
 	src/layer/marker/A11yTextInput.js \
 	src/layer/LayerGroup.js \
 	src/geometry/LineUtil.js \
-	src/geometry/PolyUtil.js \
 	src/core/Handler.js \
 	src/dom/DomEvent.js \
 	src/dom/Draggable.js \
@@ -391,6 +434,8 @@ COOL_JS_LST =\
 	src/map/handler/Map.FileInserter.js \
 	src/map/handler/Map.StateChanges.js \
 	src/map/handler/Map.WOPI.js \
+	src/control/jsdialog/Util.UniqueId.ts \
+	src/control/jsdialog/Definitions.MenuCommands.ts \
 	src/control/Control.AboutDialog.ts \
 	src/control/Control.Toolbar.js \
 	src/control/Control.Command.js \
@@ -425,11 +470,14 @@ COOL_JS_LST =\
 	src/control/jsdialog/Definitions.Menu.ts \
 	src/control/jsdialog/Definitions.DialogModification.ts \
 	src/control/jsdialog/Definitions.WindowId.ts \
-	src/control/jsdialog/Util.Dropdown.js \
+	src/control/jsdialog/Util.Accessibility.ts \
+	src/control/jsdialog/Util.ButtonType.ts \
+	src/control/jsdialog/Util.Dropdown.ts \
 	src/control/jsdialog/Util.Events.ts \
 	src/control/jsdialog/Util.KeyboardTabNavigation.ts \
 	src/control/jsdialog/Util.KeyboardGridNavigation.ts \
 	src/control/jsdialog/Util.KeyboardListNavigation.ts \
+	src/control/jsdialog/Util.KeyboardRadioGroupNavigation.ts \
 	src/control/jsdialog/Util.FocusCycle.js \
 	src/control/jsdialog/Util.FormulaBarSelectionHandle.ts \
 	src/control/jsdialog/Util.MessageRouter.ts \
@@ -455,10 +503,13 @@ COOL_JS_LST =\
 	src/control/jsdialog/Widget.Frame.js \
 	src/control/jsdialog/Widget.HTMLContent.ts \
 	src/control/jsdialog/Widget.IconView.ts \
+	src/control/jsdialog/Widget.NotebookbarIconView.ts \
 	src/control/jsdialog/Widget.MenuButton.js \
+	src/control/jsdialog/Widget.Listbox.ts \
 	src/control/jsdialog/Widget.MobileBorderSelector.js \
 	src/control/jsdialog/Widget.MobileTabControl.js \
 	src/control/jsdialog/Widget.MultilineEdit.js \
+	src/control/jsdialog/Widget.NewSlideLayoutEntry.ts \
 	src/control/jsdialog/Widget.OverflowGroup.ts \
 	src/control/jsdialog/Widget.OverflowManager.ts \
 	src/control/jsdialog/Widget.Progressbar.js \
@@ -466,6 +517,7 @@ COOL_JS_LST =\
 	src/control/jsdialog/Widget.ScrolledWindow.js \
 	src/control/jsdialog/Widget.SearchEdit.ts \
 	src/control/jsdialog/Widget.SidebarContainers.ts \
+	src/control/jsdialog/Widget.Toolitem.ts \
 	src/control/jsdialog/Widget.Text.ts \
 	src/control/jsdialog/Widget.Timefield.js \
 	src/control/jsdialog/Widget.TreeView.ts \
@@ -496,6 +548,8 @@ COOL_JS_LST =\
 	src/control/Control.NotebookbarImpress.js \
 	src/control/Control.NotebookbarDraw.js \
 	src/control/Control.NotebookbarBuilder.js \
+	$(icons_js) \
+	src/control/Control.BackstageView.ts \
 	src/control/Control.ContextToolbar.ts \
 	src/control/Control.Layers.js \
 	src/control/Control.SidebarBase.ts \
@@ -520,6 +574,7 @@ COOL_JS_LST =\
 	src/control/Ruler.ts \
 	src/control/VRuler.ts \
 	src/control/HRuler.ts \
+	src/control/PermissionMode.ts \
 	src/slideshow/SlideCache.ts \
 	src/slideshow/SlideCompositor.ts \
 	src/slideshow/LayerRenderer.ts \
@@ -528,6 +583,7 @@ COOL_JS_LST =\
 	src/slideshow/RenderContext.ts \
 	src/slideshow/VideoRenderer.ts \
 	src/slideshow/SlideRenderer.ts \
+	src/slideshow/SlideshowMiddleware.ts \
 	src/slideshow/SlideShowPresenter.ts \
 	src/slideshow/PresenterConsole.js \
 	src/slideshow/SimpleTextureRenderer.ts \
@@ -642,7 +698,7 @@ COOL_TS_SRC = $(filter %.ts,$(COOL_JS_WEBORDER))
 
 # beware these are not helpfully ordered
 COOL_TS_JS_DST = $(patsubst src/%.ts,$(DIST_FOLDER)/src/%.js,$(COOL_TS_SRC))
-COOL_JS_DST = $(patsubst src/%.js,$(DIST_FOLDER)/src/%.js,$(COOL_JS_SRC)) $(COOL_TS_JS_DST) $(DIST_FOLDER)/src/layer/tile/TileWorker.js
+COOL_JS_DST = $(patsubst src/%.js,$(DIST_FOLDER)/src/%.js,$(COOL_JS_SRC)) $(COOL_TS_JS_DST) $(DIST_FOLDER)/src/app/TaskWorker.js
 # should be no lingering / obsolete files:
 COOL_ASSERT_INTERSECT = $(filter $(COOL_JS_SRC), $(patsubst %.ts,%.js,$(COOL_TS_SRC)))
 
@@ -652,9 +708,22 @@ SPACE := $(EMPTY) $(EMPTY)
 COOL_VERSION = $(shell cd $(srcdir) && git log -1 --format=%h --abbrev=10)
 INTERMEDIATE_DIR ?= $(if $(IS_SEPARATE),$(abs_builddir)/debug,$(abs_builddir)/release)
 
-EXTRA_DIST = $(shell find . -type f -not -path './.git/*' -not -path './node_modules/*' -not -path './l10n/*' -not -path './images/*' | sed 's/.\///')
+# Don't use EXTRA_DIST with $(shell find) as it causes "Argument list too long" errors
+# Instead, use dist-hook to copy files
+EXTRA_DIST =
 
-SUBDIRS = . l10n images
+dist-hook:
+	cd $(srcdir) && find . -type f \
+		-not -path './.git/*' \
+		-not -path './node_modules/*' \
+		-not -path './l10n/*' \
+		-not -path './images/*' \
+		-not -path './dist/*' \
+		-not -path './debug/*' \
+		-not -path './release/*' \
+		-exec cp -p --parents {} $(distdir) \;
+
+SUBDIRS = l10n images
 
 COOL_JS_BUNDLE = $(patsubst %.ts,%.js,$(COOL_JS_WEBORDER))
 
@@ -662,7 +731,9 @@ define bundle_cool
 	$(if $(IS_SEPARATE),\
 		@touch $@,
 		$(QUIET_M4) m4 -PE -DIOSAPP=$(ENABLE_IOSAPP) \
-			-DGTKAPP=$(ENABLE_GTKAPP) \
+			-DMACOSAPP=$(ENABLE_MACOSAPP) \
+			-DQTAPP=$(ENABLE_QTAPP) \
+			-DWINDOWSAPP=$(ENABLE_WINDOWSAPP) \
 			-DANDROIDAPP=$(ENABLE_ANDROIDAPP) \
 			-DMOBILEAPPNAME="$(APP_NAME)" \
 			-DVERSION=$(COOL_VERSION) \
@@ -689,7 +760,7 @@ endef
 define bundle_all
 	$(if $(IS_SEPARATE),\
 		@touch $@,\
-		$(QUIET_M4) m4 -PE -DL10N_IOS_ALL_JS=$(L10N_IOS_ALL_JS) \
+		$(QUIET_M4) m4 -PE -DL10N_ALL_JS=$(L10N_ALL_JS) \
 			-DNODE_MODULES_JS=$(subst $(SPACE),$(COMMA),$(NODE_MODULES_JS)) \
 			-DCOOL_LIBS_JS=$(subst $(SPACE),$(COMMA),$(COOL_LIBS_JS_SRC)) \
 			-DCOOL_JS=$(INTERMEDIATE_DIR)/cool-src.js \
@@ -733,9 +804,7 @@ endef
 
 all-local: build-cool
 
-if !ENABLE_MOBILEAPP
 ADMIN_BUNDLE = $(DIST_FOLDER)/admin-bundle.js
-endif
 
 if ENABLE_WASM
 $(DIST_FOLDER)/emscripten-module.js: ../wasm/emscripten-module.js
@@ -801,6 +870,8 @@ if ENABLE_WASM_FALLBACK
 WASM_FALLBACK_FILES += $(DIST_FOLDER)/wasm
 endif
 
+TEMPLATE_MANIFEST = $(DIST_FOLDER)/templates/templates.js
+
 $(TYPESCRIPT_JS_DIR)/%.js: $(srcdir)/%.ts
 	@mkdir -p $(dir $@)
 	$(QUIET_TSC) $(builddir)/node_modules/typescript/bin/tsc --outFile $@ $<
@@ -808,9 +879,9 @@ $(TYPESCRIPT_JS_DIR)/%.js: $(srcdir)/%.ts
 build-cool: \
 	$(COOL_L10N_DST) \
 	$(L10N_JSON) \
-	$(SRC_TS_JS_DST) \
 	$(COOL_IMAGES_DST) \
 	$(COOL_IMAGES_CUSTOM_DST) \
+	$(COOL_TEMPLATES_DST) \
 	$(JQUERY_LIGHTNESS_DIST_IMAGES) \
 	$(JQUERY_MINIFIED_DIST_IMAGES) \
 	$(ADMIN_BUNDLE) \
@@ -819,15 +890,23 @@ build-cool: \
 	$(DIST_FOLDER)/device-tablet.css \
 	$(DIST_FOLDER)/device-desktop.css \
 	$(DIST_FOLDER)/progressbar.css \
+	$(DIST_FOLDER)/settings.css \
+	$(DIST_FOLDER)/color-palette.css \
+	$(DIST_FOLDER)/color-palette-dark.css \
 	$(DIST_FOLDER)/bundle.js \
 	$(DIST_FOLDER)/cool.html \
 	$(WASM_FILES) \
-	$(WASM_FALLBACK_FILES)
+	$(WASM_FALLBACK_FILES) \
+	$(TEMPLATE_MANIFEST) \
+	adminIntegratorSettings
 	@echo "build cool completed"
 if APP_HAS_BRANDING
 	@if test -d "$(APP_BRANDING_DIR)" ; then cp -a "$(APP_BRANDING_DIR)"/branding* $(DIST_FOLDER)/ ; fi
 	@if test -d "$(APP_BRANDING_DIR)" ; then cp -a "$(APP_BRANDING_DIR)"/images/*.svg $(DIST_FOLDER)/images/ ; fi
 	@if test -d "$(APP_BRANDING_DIR)" ; then cp -a "$(APP_BRANDING_DIR)/images/toolbar-bg-logo.svg" $(DIST_FOLDER)/images/toolbar-bg.svg ; fi
+if ENABLE_MACOS
+	@if test -d "$(APP_BRANDING_DIR)" ; then cp -a "$(APP_BRANDING_DIR)/welcome" "$(DIST_FOLDER)/" ; fi
+endif
 	@echo
 	@echo "JS, HTML and CSS has been updated ($(DIST_FOLDER))."
 endif
@@ -836,6 +915,16 @@ if ENABLE_CYPRESS
 	cp -a  "$(srcdir)/../cypress_test/data/multiuser/cypress-multiuser.html" "$(DIST_FOLDER)/cypress-multiuser.html"
 	@echo "Added HTML file for multiuser tests"
 endif
+
+# Stands in for the whole templates subdirectory.
+# Just copy all of it to dist/templates.
+$(TEMPLATE_MANIFEST):
+	mkdir -p $(dir $@)
+	cp -r $(srcdir)/templates $(DIST_FOLDER)
+
+$(DIST_FOLDER)/images/templates/preview/%.png: $(srcdir)/images/templates/preview/%.png
+	@mkdir -p $(dir $@)
+	@cp $< $@
 
 $(DIST_FOLDER)/admin-bundle.js: $(COOL_ADMIN_DST) \
 	$(INTERMEDIATE_DIR)/admin-src.js
@@ -871,11 +960,13 @@ $(DIST_FOLDER)/global.js: $(srcdir)/js/global.js
 	$(call global_file)
 
 $(INTERMEDIATE_DIR)/COOL_JS.m4.jslist: $(COOL_JS_DST)
-	$(QUIET_ECHO) echo $(COOL_JS_DST) > $(INTERMEDIATE_DIR)/COOL_JS.m4.jslist.tmp
-	$(QUIET_CMP) if cmp -s $(INTERMEDIATE_DIR)/COOL_JS.m4.jslist.tmp $(INTERMEDIATE_DIR)/COOL_JS.m4.jslist; then rm $(INTERMEDIATE_DIR)/COOL_JS.m4.jslist.tmp; else mv $(INTERMEDIATE_DIR)/COOL_JS.m4.jslist.tmp $(INTERMEDIATE_DIR)/COOL_JS.m4.jslist; fi
+	@mkdir -p $(INTERMEDIATE_DIR)
+	@rm -f $@.tmp
+	@for file in $^; do echo "$$file" >> $@.tmp; done
+	$(QUIET_CMP) if cmp -s $@.tmp $@; then rm $@.tmp; else mv $@.tmp $@; fi
 
 $(INTERMEDIATE_DIR)/COOL_JS.m4: $(INTERMEDIATE_DIR)/COOL_JS.m4.jslist
-	$(foreach file,$(NODE_MODULES_JS) $(COOL_LIBS_JS) $(patsubst %.ts,%.js,$(COOL_JS_WEBORDER)), $(shell echo -n $(file), >> $(INTERMEDIATE_DIR)/COOL_JS.m4.tmp))
+	$(foreach file,$(L10N_ALL_JS_ENTRY) $(NODE_MODULES_JS) $(COOL_LIBS_JS) $(patsubst %.ts,%.js,$(patsubst $(DIST_FOLDER)/src/%,src/%,$(COOL_JS_WEBORDER))), $(shell echo -n $(file), >> $(INTERMEDIATE_DIR)/COOL_JS.m4.tmp))
 	@truncate $(if $(filter Darwin FreeBSD,$(shell uname -s)),-s -1,--size=-1) $(INTERMEDIATE_DIR)/COOL_JS.m4.tmp
 	@mv $(INTERMEDIATE_DIR)/COOL_JS.m4.tmp $(INTERMEDIATE_DIR)/COOL_JS.m4
 
@@ -890,19 +981,44 @@ $(DIST_FOLDER)/cool.html: $(srcdir)/html/cool.html.m4 \
 	$(QUIET_M4) m4 -PE -I $(INTERMEDIATE_DIR) \
 	    -DBUNDLE=$(IS_BUNDLE) \
 		-DIOSAPP=$(ENABLE_IOSAPP) \
-		-DGTKAPP=$(ENABLE_GTKAPP) \
+		-DMACOSAPP=$(ENABLE_MACOSAPP) \
+		-DQTAPP=$(ENABLE_QTAPP) \
 		-DDEBUG=$(ENABLE_DEBUG) \
+		-DWINDOWSAPP=$(ENABLE_WINDOWSAPP) \
 		-DANDROIDAPP=$(ENABLE_ANDROIDAPP) \
 		-DEMSCRIPTENAPP=$(ENABLE_EMSCRIPTENAPP) \
 		-DMOBILEAPPNAME="$(APP_NAME)" \
 		-DCOOL_CSS="$(subst $(SPACE),$(COMMA),$(COOL_CSS_M4))" \
 		-DGLOBAL_JS="$(DIST_FOLDER)/global.js" \
 		-DVENDOR="$(VENDOR)" \
+		-DINFO_URL="$(INFO_URL)" \
 		$(srcdir)/html/cool.html.m4 > $@
 
-node_modules: package.json archived-packages
-	@npm install
+.PHONY: adminIntegratorSettings
+adminIntegratorSettings:
+	@mkdir -p $(DIST_FOLDER)
+	$(QUIET_M4) m4 -PE -I $(INTERMEDIATE_DIR) \
+		-DIOSAPP=$(ENABLE_IOSAPP) \
+		-DMACOSAPP=$(ENABLE_MACOSAPP) \
+		-DQTAPP=$(ENABLE_QTAPP) \
+		-DDEBUG=$(ENABLE_DEBUG) \
+		-DWINDOWSAPP=$(ENABLE_WINDOWSAPP) \
+		-DANDROIDAPP=$(ENABLE_ANDROIDAPP) \
+		-DEMSCRIPTENAPP=$(ENABLE_EMSCRIPTENAPP) \
+		-DMOBILEAPPNAME="$(APP_NAME)" \
+		$(srcdir)/admin/adminIntegratorSettings.html.m4 \
+		> $(DIST_FOLDER)/adminIntegratorSettings.html
+
+node_modules: package.json node_shrinkpack
+	@UV_USE_IO_URING=0 npm ci --offline
 	@touch node_modules
+
+update-shrinkpack:
+	npm update
+	npm shrinkwrap
+	npx shrinkpack
+	cp npm-shrinkwrap.json npm-shrinkwrap.json.in
+	@echo "Done. Remember to commit node_shrinkpack/ and npm-shrinkwrap.json.in"
 
 $(DIST_FOLDER)/device-%.css: $(srcdir)/css/device-%.css
 	@mkdir -p $(dir $@)
@@ -999,7 +1115,10 @@ $(DIST_FOLDER)/l10n/%: $(srcdir)/l10n/%
 	@mkdir -p $(dir $@)
 	@cp $< $@
 
-$(DIST_FOLDER)/l10n/%.json: $(srcdir)/po/%.po
+$(DIST_FOLDER)/l10n/help-%.json: $(srcdir)/po/help-%.po
+	@$(srcdir)/util/po2json.py --quiet $< -o $@
+
+$(DIST_FOLDER)/l10n/ui-%.json: $(srcdir)/po/ui-%.po
 	@$(srcdir)/util/po2json.py --quiet $< -o $@
 
 $(DIST_FOLDER)/admin/%: $(srcdir)/admin/%
@@ -1015,22 +1134,34 @@ install-data-hook:
 	mkdir -p $(DESTDIR)$(pkgdatadir)/browser; \
 	cp -a dist/ $(DESTDIR)$(pkgdatadir)/browser/;
 else
-install-data-hook:
-	mkdir -p $(DESTDIR)$(pkgdatadir)/browser; \
-	rsync -a --exclude='src' \
-		--exclude='debug.html' \
-		--exclude='framed.doc.html' \
-		--exclude='framed.html' \
-		--exclude='load.doc.html' \
-		--exclude='multidocs.html' \
-		--exclude='tsconfig.tsbuildinfo' \
-		dist $(DESTDIR)$(pkgdatadir)/browser/;
-	mkdir -p $(DESTDIR)$(pkgdatadir)/browser/dist/src/layer/tile;
-	cp -a dist/src/layer/tile/CanvasTileUtils.js $(DESTDIR)$(pkgdatadir)/browser/dist/src/layer/tile/CanvasTileUtils.js;
-	cp -a dist/src/layer/tile/TileWorker.js $(DESTDIR)$(pkgdatadir)/browser/dist/src/layer/tile/TileWorker.js;
-if ENABLE_WASM
-	find $(DESTDIR)$(pkgdatadir)/browser/dist -type f ! -iname "*.png" -exec brotli --force {} \;
+EXCLUDES = \
+        --exclude='src' \
+        --exclude='debug.html' \
+        --exclude='framed.doc.html' \
+        --exclude='framed.html' \
+        --exclude='load.doc.html' \
+        --exclude='multidocs.html' \
+        --exclude='tsconfig.tsbuildinfo'
+
+if ENABLE_MOBILEAPP
+EXCLUDES += --exclude='l10n-all.js'
 endif
+
+if !ENABLE_WASM
+EXCLUDES += --exclude='wasm.html'
+WASM_BROTLI_CMD =
+else
+WASM_BROTLI_CMD = find $(DESTDIR)$(pkgdatadir)/browser/dist -type f ! -iname "*.png" -exec brotli --force {} \;
+endif
+
+install-data-hook:
+	mkdir -p $(DESTDIR)$(pkgdatadir)/browser
+	rsync -a $(EXCLUDES) dist $(DESTDIR)$(pkgdatadir)/browser/
+	mkdir -p $(DESTDIR)$(pkgdatadir)/browser/dist/src/app
+	mkdir -p $(DESTDIR)$(pkgdatadir)/browser/dist/src/layer/tile
+	cp -a dist/src/layer/tile/CanvasTileUtils.js $(DESTDIR)$(pkgdatadir)/browser/dist/src/layer/tile/CanvasTileUtils.js
+	cp -a dist/src/app/TaskWorker.js $(DESTDIR)$(pkgdatadir)/browser/dist/src/app/TaskWorker.js
+	$(WASM_BROTLI_CMD)
 endif
 
 libs:
@@ -1055,14 +1186,19 @@ pot:
 		src/app/IconUtil.ts \
 		src/canvas/sections/CommentListSection.ts \
 		src/canvas/sections/CommentSection.ts \
+		src/canvas/sections/CompareChangesLabelSection.ts \
 		src/canvas/sections/ShapeHandlesSection.ts \
 		src/canvas/sections/URLPopUpSection.ts \
 		src/canvas/sections/TableInsertMarkerSection.ts \
+		src/canvas/sections/GenericButtonSection.ts \
 		src/canvas/sections/ChartContextButtonSection.ts \
+		src/canvas/sections/DiagramButtonSection.ts \
+		src/control/jsdialog/Definitions.MenuCommands.ts \
 		src/control/ColorPicker.ts \
 		src/control/Control.AboutDialog.ts \
 		src/control/Control.AddressInputField.ts \
 		src/control/Control.AlertDialog.js \
+		src/control/Control.BackstageView.ts \
 		src/control/Control.Command.js \
 		src/control/Control.ContextMenu.js \
 		src/control/Control.DocumentNameInput.js \
@@ -1113,6 +1249,7 @@ pot:
 		src/control/Signing.js \
 		src/control/Toolbar.js \
 		src/control/VRuler.ts \
+		src/control/PermissionMode.ts \
 		src/control/jsdialog/Definitions.Menu.ts \
 		src/control/jsdialog/Util.SnackbarController.ts \
 		src/control/jsdialog/Widget.ColorPicker.ts \
@@ -1120,13 +1257,13 @@ pot:
 		src/control/jsdialog/Widget.PageSizeEntry.ts \
 		src/control/jsdialog/Widget.HTMLContent.ts \
 		src/control/jsdialog/Widget.MobileBorderSelector.js \
+		src/control/jsdialog/Widget.NewSlideLayoutEntry.ts \
 		src/control/jsdialog/Widget.RadioButton.ts \
 		src/control/jsdialog/Widget.SidebarContainers.ts \
 		src/control/jsdialog/Widget.TreeView.ts \
-		src/app/SocketBase.ts \
+		src/app/Socket.ts \
 		src/app/TracingEvents.ts \
 		src/app/ServerCommand.ts \
-		src/core/Socket.js \
 		src/docdispatcher.ts \
 		src/docstate.ts \
 		src/docstatefunctions.js \
@@ -1148,7 +1285,8 @@ pot:
 		src/map/handler/Map.Settings.ts \
 		src/slideshow/PauseTimer.ts \
 		src/slideshow/PresenterConsole.js \
-		src/slideshow/SlideShowPresenter.ts
+		src/slideshow/SlideShowPresenter.ts \
+		templates/templates.js
 
 	html2po --pot --input=html/cool-help.html --output=po/templates/cool-help.pot --duplicates=merge
 	html2po --pot --input=descriptions/google-play.html --output=po/templates/descriptions.pot --duplicates=merge --keepcomments
@@ -1169,7 +1307,7 @@ clean-local:
 	@rm -f $(abs_srcdir)/jsconfig.json
 	@rm -f $(abs_srcdir)/admin/jsconfig.json
 
-CLEANFILES = tscompile.done $(INTERMEDIATE_DIR)/cool-src.js $(DIST_FOLDER)/bundle.css $(DIST_FOLDER)/bundle.js $(INTERMEDIATE_DIR)/cool-src.js
+CLEANFILES = tscompile.done $(INTERMEDIATE_DIR)/cool-src.js $(DIST_FOLDER)/bundle.css $(DIST_FOLDER)/bundle.js $(INTERMEDIATE_DIR)/cool-src.js admin/adminIntegratorSettings.html
 
 $(abs_srcdir)/jsconfig.json:
 	@printf "{\n \

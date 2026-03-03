@@ -149,7 +149,6 @@ window.L.Control.NotebookbarWriter = window.L.Control.Notebookbar.extend({
 		var hasRepair = !this.map['wopi'].HideRepairOption;
 		var hasSaveAs = !this.map['wopi'].UserCanNotWriteRelative;
 		var hasShare = this.map['wopi'].EnableShare;
-		var hideDownload = this.map['wopi'].HideExportOption;
 		var hasGroupedSaveAs = window.prefs.get('saveAsMode') === 'group';
 		var hasRunMacro = window.enableMacrosExecution;
 		var hasSave = !this.map['wopi'].HideSaveOption;
@@ -311,13 +310,16 @@ window.L.Control.NotebookbarWriter = window.L.Control.Notebookbar.extend({
 			});
 		}
 
-		if (!hideDownload) {
+		if (!this.map['wopi'].HideExportOption) {
 			content.push({
 				'id': 'downloadas:DownloadAsMenu',
 				'command': 'downloadas',
 				'class': 'unodownloadas',
 				'type': 'exportmenubutton',
-				'text': !window.ThisIsAMobileApp ? _('Download') : _('Save As'),
+				// In CODA-W, the functionality that we actually have at the moment is "Export as".
+				'text': !window.ThisIsAMobileApp ? _('Download') :
+					(window.ThisIsTheWindowsApp? _('Export as') :
+					 _('Save As')),
 				'accessibility': { focusBack: true,	combination: 'A', de: 'M' }
 			});
 		}
@@ -419,10 +421,11 @@ window.L.Control.NotebookbarWriter = window.L.Control.Notebookbar.extend({
 	},
 
 	getHelpTab: function() {
-		var hasLatestUpdates = window.enableWelcomeMessage;
+		let hasLatestUpdates = window.enableWelcomeMessage || window.mode.isCODesktop();
 		var hasFeedback = this.map.feedback;
 		var hasAccessibilitySupport = window.enableAccessibility;
 		var hasAccessibilityCheck = this.map.getDocType() === 'text';
+		const isDebugOn = this.map._debug.debugOn;
 		var hasAbout = window.L.DomUtil.get('about-dialog') !== null;
 		var hasServerAudit = this.getHiddenItems() ? !this.getHiddenItems().includes('server-audit') : true;
 
@@ -477,10 +480,24 @@ window.L.Control.NotebookbarWriter = window.L.Control.Notebookbar.extend({
 						'id': 'accessibility-check',
 						'class': 'unoAccessibilityCheck',
 						'type': 'bigtoolitem',
-						'text': _UNO('.uno:AccessibilityCheck', 'text'),
+						'text': _UNO('.uno:AccessibilityCheck', 'text', true),
 						'command': '.uno:SidebarDeck.A11yCheckDeck',
 						'accessibility': { focusBack: false, combination: 'A', de: null }
 					} : {},
+					{
+						'id': 'validatesidebara11y',
+						'type': 'bigcustomtoolitem',
+						'text': _('Validate Sidebar'),
+						'visible': isDebugOn ? 'true' : 'false',
+						'accessibility': { focusBack: true,	combination: 'VS', de: null }
+					},
+					{
+						'id': 'validatedialogsa11y',
+						'type': 'bigcustomtoolitem',
+						'text': _('Validate Dialog'),
+						'visible': isDebugOn ? 'true' : 'false',
+						'accessibility': { focusBack: true,	combination: 'VD', de: null }
+					},
 				hasAccessibilitySupport || hasAccessibilityCheck ?
 					{
 						'id': 'help-accessibility-break',
@@ -931,35 +948,6 @@ window.L.Control.NotebookbarWriter = window.L.Control.Notebookbar.extend({
 			   ]
 			},
 			{
-				'id': 'stylesview-btn',
-				'type': 'container',
-				'children': [
-					{
-						'id': 'scroll-up',
-						'type': 'customtoolitem',
-						'text': _('Scroll up'),
-						'command': 'scrollpreviewup',
-						'icon': 'lc_searchprev.svg',
-					},
-					{
-						'id': 'scroll-down',
-						'type': 'customtoolitem',
-						'text': _('Scroll down'),
-						'command': 'scrollpreviewdown',
-						'icon': 'lc_searchnext.svg',
-					},
-					{
-						'id': 'format-style-list-dialog',
-						'type': 'toolitem',
-						'text': _('Style list'),
-						'command': '.uno:SidebarDeck.StyleListDeck',
-						'icon': 'lc_stylepreviewmore.svg',
-						'accessibility': { focusBack: true, combination: 'SD', de: null }
-					},
-				],
-				'vertical': 'true'
-			},
-			{
 				'type': 'overflowgroup',
 				'id': 'home-insert',
 				'name':_('Insert'),
@@ -1012,7 +1000,7 @@ window.L.Control.NotebookbarWriter = window.L.Control.Notebookbar.extend({
 			{ type: 'separator', id: 'home-charmapcontrol-break', orientation: 'vertical' },
 			{
 				'type': 'overflowgroup',
-				'id': 'home-search',
+				'id': 'home-find-n-filter',
 				'name': _('Search'),
 				'accessibility': { focusBack: false,	combination: 'SS',	de: 'SS' },
 				'children': [
@@ -1663,18 +1651,18 @@ window.L.Control.NotebookbarWriter = window.L.Control.Notebookbar.extend({
 				'accessibility': { focusBack: false, combination: 'F', de: 'E' },
 				'children' : [
 					{
-						'id': 'fullscreen',
-						'type': 'bigtoolitem',
-						'text': _UNO('.uno:FullScreen'),
-						'command': '.uno:FullScreen',
-						'accessibility': { focusBack: true, combination: 'F', de: 'E' }
-					},
-					{
 						'id': 'zoomreset',
 						'class': 'unozoomreset',
 						'type': 'bigcustomtoolitem',
-						'text': _('Reset zoom'),
-						'accessibility': { focusBack: true, combination: 'J', de: 'O' }
+						'text': '100%',
+						'accessibility': { focusBack: true, combination: 'Q', de: 'O' }
+					},
+					{
+						'id': 'fitwidthzoom',
+						'class': 'unofitwidthzoom',
+						'type': 'bigcustomtoolitem',
+						'text': _('Page Width'),
+						'accessibility': { focusBack: true, combination: 'J', de: 'Ö' }
 					},
 					{
 						'type': 'container',
@@ -1725,7 +1713,8 @@ window.L.Control.NotebookbarWriter = window.L.Control.Notebookbar.extend({
 							{
 								'id': 'showruler',
 								'class': 'unoshowruler',
-								'type': 'customtoolitem',
+								'type': 'checkbox',
+								'command': 'showruler',
 								'text': _('Ruler'),
 								'accessibility': { focusBack: true, combination: 'R', de: 'L' }
 							}
@@ -1737,7 +1726,8 @@ window.L.Control.NotebookbarWriter = window.L.Control.Notebookbar.extend({
 							{
 								'id': 'showstatusbar',
 								'class': 'unoshowstatusbar',
-								'type': 'customtoolitem',
+								'type': 'checkbox',
+								'command': 'showstatusbar',
 								'text': _('Status Bar'),
 								'accessibility': { focusBack: true, combination: 'AH', de: null }
 							}
@@ -1817,7 +1807,7 @@ window.L.Control.NotebookbarWriter = window.L.Control.Notebookbar.extend({
 					{
 						'id': 'Layout-OrientationMenu:MenuOrientation',
 						'type': 'menubutton',
-						'text': _UNO('.uno:Orientation'),
+						'text': _UNO('.uno:Orientation', 'text'),
 						'enabled': 'true',
 						'accessibility': { focusBack: true, combination: 'O', de: '4' }
 					}
@@ -2327,6 +2317,13 @@ window.L.Control.NotebookbarWriter = window.L.Control.Notebookbar.extend({
 						'accessibility': { focusBack: true, combination: 'SC', de: null }
 					},
 					{
+						'id': 'compare-tracked-change',
+						'type': 'bigcustomtoolitem',
+						'text': _('View Changes'),
+						'command': 'comparechanges',
+						'accessibility': { focusBack: true, combination: 'CC' }
+					},
+					{
 						'type': 'container',
 						'children': [
 							{
@@ -2405,11 +2402,19 @@ window.L.Control.NotebookbarWriter = window.L.Control.Notebookbar.extend({
 				]
 			},
 			{ type: 'separator', id: 'review-accepttrackedchanges-break', orientation: 'vertical' },
+			hideChangeTrackingControls ? {} : {
+				'id': 'review-compare:CompareDocumentsMenu',
+				'type': 'menubutton',
+				'text': _UNO('.uno:CompareDocuments', 'text'),
+				'command': '.uno:CompareDocuments',
+				'accessibility': { focusBack: true, combination: 'RO', de: null }
+			},
+			hideChangeTrackingControls ? {} : { type: 'separator', id: 'review-compare-break', orientation: 'vertical' },
 			{
 				'id': 'review-accessibility-check',
 				'class': 'unoAccessibilityCheck',
 				'type': 'bigtoolitem',
-				'text': _UNO('.uno:AccessibilityCheck', 'text'),
+				'text': _UNO('.uno:AccessibilityCheck', 'text', true),
 				'command': '.uno:SidebarDeck.A11yCheckDeck',
 				'accessibility': { focusBack: false, combination: 'A1', de: 'B' }
 			}
@@ -3445,6 +3450,36 @@ window.L.Control.NotebookbarWriter = window.L.Control.Notebookbar.extend({
 				}
 			]
 		};
+	},
+
+	getListOfUnoCommandsForDialogs: function() {
+		const tabJson = this.getTabsJSON();
+		const commands = new Set();
+
+		function extractCommands(items) {
+			if (!items || !Array.isArray(items)) return;
+
+			items.forEach(item => {
+				// Extract command if it exists and starts with .uno: and include 'Dialog'
+				if (item.command
+					&& item.command.startsWith('.uno:')
+					&& item.command.includes('Dialog')) {
+					commands.add(item.command);
+				}
+
+				if (item.children && Array.isArray(item.children)) {
+					extractCommands(item.children);
+				}
+			});
+		}
+
+		tabJson.forEach(tab => {
+			if (tab.children && Array.isArray(tab.children)) {
+				extractCommands(tab.children);
+			}
+		});
+
+		return Array.from(commands);
 	}
 });
 

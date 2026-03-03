@@ -4,7 +4,7 @@
 
 /*
  * Cursor implements a blinking cursor.
- * This is used as the text-cursor(in and out of document).
+ * This is used as the text-cursor of the document.
  */
 
 class Cursor {
@@ -16,19 +16,19 @@ class Cursor {
 	headerName: string;
 	headerTimeout: number = 3000;
 
-	private position: cool.Point;
-	private size: cool.Point;
+	private rectangle: cool.SimpleRectangle;
 	private width: number;
 	private container: HTMLDivElement;
 	private cursorHeader: HTMLDivElement;
 	private cursor: HTMLDivElement;
 	private map: any;
 	private blinkTimeout: NodeJS.Timeout;
+	private blinkSuspendTimeout: any;
 	private visible: boolean = false;
 	private domAttached: boolean = false;
 
 	// position and size should be in core pixels.
-	constructor(position: cool.Point, size: cool.Point, map: any, options: any) {
+	constructor(rectangle: cool.SimpleRectangle, map: any, options: any) {
 		this.opacity = options.opacity !== undefined ? options.opacity : this.opacity;
 		this.zIndex = options.zIndex !== undefined ? options.zIndex : this.zIndex;
 		this.blink = options.blink !== undefined ? options.blink : this.blink;
@@ -37,8 +37,7 @@ class Cursor {
 		this.headerName = options.headerName !== undefined ? options.headerName : this.headerName;
 		this.headerTimeout = options.headerTimeout !== undefined ? options.headerTimeout : this.headerTimeout;
 
-		this.position = position;
-		this.size = size;
+		this.rectangle = rectangle;
 		this.map = map;
 
 		this.initLayout();
@@ -83,7 +82,7 @@ class Cursor {
 			$('.leaflet-interactive').css('cursor', 'text');
 		}
 		this.addCursorClass(app.file.textCursor.visible);
-		this.setOpacity(app.file.textCursor.visible ? 1: 0);
+		this.setOpacity(app.file.textCursor.visible ? 1 : 0);
 	}
 
 	remove() {
@@ -125,75 +124,36 @@ class Cursor {
 	}
 
 	onResize = () => {
-		if (window.devicePixelRatio !== 1 )
+		if (window.devicePixelRatio !== 1)
 			this.cursor.style.width = this.width / window.devicePixelRatio + 'px';
 		else
 			this.cursor.style.removeProperty('width');
 	}
 
 	// position and size should be in core pixels.
-	setPositionSize(position: cool.Point, size: cool.Point) {
-		this.position = position;
-		this.size = size;
+	setRectangle(rectangle: cool.SimpleRectangle) {
+		this.rectangle = rectangle;
 		this.update();
 	}
 
-	getPosition(): cool.Point {
-		return this.position;
-	}
-
-	private update() {
-		if (!this.container || !this.map || !this.map.hasDocBounds())
+	public update() {
+		if (!this.container || !this.map || !app.activeDocument || app.activeDocument.fileSize.x === 0)
 			return;
 
-		var docBounds = <cool.Bounds>this.map.getCorePxDocBounds();
-		var inDocCursor = docBounds.contains(this.position);
-		// Calculate position and size in CSS pixels.
-		var viewBounds = <cool.Bounds>(this.map.getPixelBoundsCore());
-		var spCxt = this.map.getSplitPanesContext();
-		var origin = viewBounds.min.clone();
-		var paneSize = viewBounds.getSize();
-		var splitPos = new cool.Point(0, 0);
-		if (inDocCursor && spCxt) {
-			splitPos = spCxt.getSplitPos().multiplyBy(app.dpiScale);
-			if (this.position.x <= splitPos.x && this.position.x >= 0) {
-				origin.x = 0;
-				paneSize.x = splitPos.x;
-			}
-			else {
-				paneSize.x -= splitPos.x;
-			}
-
-			if (this.position.y <= splitPos.y && this.position.y >= 0) {
-				origin.y = 0;
-				paneSize.y = splitPos.y;
-			}
-			else {
-				paneSize.y -= splitPos.y;
-			}
-		}
-		var canvasOffset = this.position.subtract(origin);
-
-		if (inDocCursor) {
-			if (!app.isRectangleVisibleInTheDisplayedArea(app.file.textCursor.rectangle.toArray())) {
-				this.container.style.visibility = 'hidden';
-				this.visible = false;
-				this.addCursorClass(this.visible);
-				this.showCursorHeader();
-				return;
-			}
+		if (!app.isRectangleVisibleInTheDisplayedArea(app.file.textCursor.rectangle.toArray())) {
+			this.container.style.visibility = 'hidden';
+			this.visible = false;
+			this.addCursorClass(this.visible);
+			this.showCursorHeader();
+			return;
 		}
 
 		this.container.style.visibility = 'visible';
 		this.visible = true;
 		this.addCursorClass(this.visible);
 
-		var tileSectionPos = this.map._docLayer.getTileSectionPos();
 		// Compute tile-section offset in css pixels.
-		var pos = canvasOffset.add(tileSectionPos)._divideBy(app.dpiScale)._round();
-		var size = this.size.divideBy(app.dpiScale)._round();
-		this.setSize(size);
-		this.setPos(pos);
+		this.updatePositionAndSize();
 		this.showCursorHeader();
 	}
 
@@ -264,20 +224,44 @@ class Cursor {
 		return this.map._size.x - xpos;
 	}
 
-	private setPos(pos: cool.Point) {
-		this.container.style.top = pos.y + 'px';
-		this.container.style.left = this.transformX(pos.x) + 'px';
-		this.container.style.zIndex = this.zIndex + '';
-		// Restart blinking animation
-		if (this.blink) {
-			window.L.DomUtil.removeClass(this.cursor, 'blinking-cursor');
-			window.L.DomUtil.addClass(this.cursor, 'blinking-cursor');
-		}
-	}
+	private updatePositionAndSize() {
+		let x;
+		let y;
 
-	private setSize(size: cool.Point) {
-		this.cursor.style.height = size.y + 'px';
-		this.container.style.top = '-' + (this.container.clientHeight - size.y - 2) / 2 + 'px';
+		if (app.map.getDocType() === 'spreadsheet') {
+			let diffX = -app.activeDocument.activeLayout.viewedRectangle.pX1;
+			let diffY = -app.activeDocument.activeLayout.viewedRectangle.pY1;
+
+			if (app.isXOrdinateInFrozenPane(this.rectangle.pX1))
+				diffX = 0;
+
+			if (app.isYOrdinateInFrozenPane(this.rectangle.pY1))
+				diffY = 0;
+
+			x = Math.round((this.rectangle.pX1 + diffX + app.sectionContainer.getDocumentAnchor()[0]) / app.dpiScale);
+			y = Math.round((this.rectangle.pY1 + diffY + app.sectionContainer.getDocumentAnchor()[1]) / app.dpiScale);
+		}
+		else {
+			x = Math.round(this.rectangle.v1X / app.dpiScale);
+			y = Math.round(this.rectangle.v1Y / app.dpiScale);
+		}
+
+		this.container.style.top = y + 'px';
+		this.container.style.left = this.transformX(x) + 'px';
+		this.container.style.zIndex = this.zIndex + '';
+		// Suspend blinking animation during cursor movement
+		if (this.blink) {
+			window.L.DomUtil.addClass(this.cursor, 'blinking-suspended');
+			if (this.blinkSuspendTimeout) {
+				clearTimeout(this.blinkSuspendTimeout);
+			}
+			this.blinkSuspendTimeout = setTimeout(() => {
+				window.L.DomUtil.removeClass(this.cursor, 'blinking-suspended');
+			}, 500);
+		}
+
+		this.cursor.style.height = this.rectangle.cHeight + 'px';
+		this.container.style.top = '-' + (this.container.clientHeight - this.rectangle.cHeight - 2) / 2 + 'px';
 	}
 
 	static hotSpot = new Map<string, cool.Point>([['fill', new cool.Point(7, 16)]]);
@@ -297,8 +281,7 @@ class Cursor {
 
 		if (Cursor.isCustomCursor(cursorName)) {
 			var cursorHotSpot = Cursor.hotSpot.get(cursorName) || new cool.Point(0, 0);
-			customCursor = window.L.Browser.ie ? // IE10 does not like item with left/top position in the url list
-				'url(' + Cursor.imagePath + '/' + cursorName + '.cur), default' :
+			customCursor =
 				'url(' + Cursor.imagePath + '/' + cursorName + '.png) ' + cursorHotSpot.x + ' ' + cursorHotSpot.y + ', default';
 		}
 		return customCursor;

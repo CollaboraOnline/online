@@ -23,6 +23,12 @@ if ENABLE_SSL
 include_paths += ${OPENSSL_CFLAGS}
 endif
 
+if ENABLE_MACOS
+util_platform_cpp = ../common/Util-macos.cpp
+else
+util_platform_cpp = ../common/Util-linux.cpp
+endif
+
 AM_CXXFLAGS = $(CPPUNIT_CFLAGS) -DTDOC=\"$(abs_top_srcdir)/test/data\" -DTDIST=\"$(DIST_FOLDER)\" \
 	-I${top_srcdir}/common -I${top_srcdir}/net -I${top_srcdir}/wsd -I${top_srcdir}/kit \
 	-I${top_srcdir} -I${top_srcdir}/test \
@@ -53,6 +59,7 @@ all_la_unit_tests = \
 	unit-synthetic-lok.la \
 	unit-any-input.la \
 	unit-convert.la \
+	unit-convert-csv.la \
 	unit-copy-paste.la \
 	unit-wopi-save-on-exit.la \
 	unit-uno-command.la \
@@ -106,7 +113,8 @@ all_la_unit_tests = \
 	unit-timeout_none.la \
 	unit-serversock_accept1.la \
 	unit-streamsock_ctor1.la \
-	unit-base.la
+	unit-clipboard-close.la \
+	unit-kit-child-session.la
 #	unit-admin.la
 #	unit-tilecache.la # Empty test.
 
@@ -145,26 +153,32 @@ wsd_sources = \
 	../wsd/TileCache.cpp
 
 test_base_sources = \
+	DeltaTests.cpp \
+	FileServeWhiteBoxTests.cpp \
+	HostUtilTests.cpp \
+	HttpWhiteBoxTests.cpp \
 	KitQueueTests.cpp \
+	LoggingWhiteBoxTests.cpp \
+	NetUtilWhiteBoxTests.cpp \
 	RequestDetailsTests.cpp \
 	StringVectorTests.cpp \
-	FileServeWhiteBoxTests.cpp \
-	NetUtilWhiteBoxTests.cpp \
-	WhiteBoxTests.cpp \
-	HttpWhiteBoxTests.cpp \
-	DeltaTests.cpp \
-	UtilTests.cpp \
-	WopiProofTests.cpp \
+	TestGlobals.cpp \
 	UriTests.cpp \
+	UtilTests.cpp \
+	WhiteBoxTests.cpp \
+	WopiProofTests.cpp \
 	$(wsd_sources)
 
 common_sources = \
+	$(util_platform_cpp) \
 	../common/Authorization.cpp \
+	../common/CommandControl.cpp \
 	../common/ConfigUtil.cpp \
 	../common/DummyTraceEventEmitter.cpp \
-	../common/FileUtil.cpp \
 	../common/FileUtil-unix.cpp \
-	../common/Log.cpp \
+	../common/FileUtil.cpp \
+	../common/Log-common.cpp \
+	../common/Log-poco.cpp \
 	../common/Protocol.cpp \
 	../common/RegexUtil.cpp \
 	../common/Session.cpp \
@@ -172,49 +186,51 @@ common_sources = \
 	../common/Simd.cpp \
 	../common/SpookyV2.cpp \
 	../common/StringVector.cpp \
+	../common/Syscall.cpp \
 	../common/TraceEvent.cpp \
-	../common/Unit.cpp \
 	../common/Unit-server.cpp \
+	../common/Unit.cpp \
 	../common/Uri.cpp \
 	../common/Util-server.cpp \
 	../common/Util-unix.cpp \
 	../common/Util.cpp \
 	../kit/KitQueue.cpp \
 	../kit/LogUI.cpp \
-	../wsd/Exceptions.cpp \
 	../net/HttpRequest.cpp \
-	../net/Socket.cpp \
 	../net/NetUtil.cpp \
-	../wsd/Auth.cpp
+	../net/Socket.cpp \
+	../wsd/Auth.cpp \
+	../wsd/Exceptions.cpp \
+	../wsd/HostUtil.cpp
+
+globals_sources = ../common/Globals.cpp
 
 unithttplib_CPPFLAGS = -I$(top_srcdir) -DBUILDING_TESTS -DSTANDALONE_CPPUNIT -g
-unithttplib_SOURCES = $(common_sources) test.cpp HttpRequestTests.cpp
+unithttplib_SOURCES = $(common_sources) $(globals_sources) test.cpp HttpRequestTests.cpp
 unithttplib_LDADD = $(CPPUNIT_LIBS)
 
 unittest_CPPFLAGS = -I$(top_srcdir) -DBUILDING_TESTS -DSTANDALONE_CPPUNIT -g
 unittest_SOURCES = \
-	$(test_base_sources) \
 	$(common_sources) \
+	$(test_base_sources) \
+	../common/Globals.cpp \
 	../wsd/TestStubs.cpp \
 	test.cpp
 
-unittest_LDADD = $(CPPUNIT_LIBS)
-unit_base_la_LIBADD = $(CPPUNIT_LIBS)
+unittest_LDADD = $(top_builddir)/libsimd.a $(CPPUNIT_LIBS)
 if ENABLE_SSL
 unittest_SOURCES += ../net/Ssl.cpp
 unithttplib_SOURCES += ../net/Ssl.cpp
 else
 unittest_LDADD += -lssl -lcrypto
 unithttplib_LDADD += -lssl -lcrypto
-unit_base_la_LIBADD += -lssl -lcrypto
 endif
 
 fakesockettest_CPPFLAGS = -g
-fakesockettest_SOURCES = fakesockettest.cpp  ../net/FakeSocket.cpp ../common/DummyTraceEventEmitter.cpp ../common/Log.cpp ../common/Util.cpp ../common/Util-server.cpp ../common/Util-unix.cpp
+fakesockettest_SOURCES = fakesockettest.cpp  ../net/FakeSocket.cpp ../common/DummyTraceEventEmitter.cpp ../common/Log-common.cpp ../common/Log-poco.cpp ../common/Util.cpp ../common/Util-server.cpp $(util_platform_cpp) ../common/Util-unix.cpp ../common/Globals.cpp
 fakesockettest_LDADD = $(CPPUNIT_LIBS)
 
 # old-style unit tests - bootstrapped via UnitClient
-unit_base_la_SOURCES = UnitClient.cpp ${test_base_sources}
 unit_tiletest_la_SOURCES = UnitClient.cpp TileCacheTests.cpp KitPidHelpers.cpp
 unit_tiletest_la_LIBADD = $(CPPUNIT_LIBS)
 unit_integration_la_SOURCES = UnitClient.cpp integration-http-server.cpp KitPidHelpers.cpp
@@ -236,9 +252,12 @@ unit_typing_la_SOURCES = UnitTyping.cpp
 unit_typing_la_LIBADD = $(CPPUNIT_LIBS)
 unit_copy_paste_la_SOURCES = UnitCopyPaste.cpp
 unit_copy_paste_la_LIBADD = $(CPPUNIT_LIBS)
+unit_clipboard_close_la_SOURCES = UnitClipboardClose.cpp
+unit_clipboard_close_la_LIBADD = $(CPPUNIT_LIBS)
 unit_copy_paste_writer_la_SOURCES = UnitCopyPasteWriter.cpp
 unit_copy_paste_writer_la_LIBADD = $(CPPUNIT_LIBS)
 unit_convert_la_SOURCES = UnitConvert.cpp
+unit_convert_csv_la_SOURCES = UnitConvertCSV.cpp
 unit_initial_load_fail_la_SOURCES = UnitInitialLoadFail.cpp
 unit_initial_load_fail_la_LIBADD = $(CPPUNIT_LIBS)
 unit_join_disconnect_la_SOURCES = UnitJoinDisconnect.cpp
@@ -311,6 +330,8 @@ unit_save_la_SOURCES = UnitSave.cpp
 unit_save_la_LIBADD = $(CPPUNIT_LIBS)
 unit_any_input_la_SOURCES = UnitAnyInput.cpp
 unit_any_input_la_LIBADD = $(CPPUNIT_LIBS)
+unit_kit_child_session_la_SOURCES = UnitKitChildSession.cpp
+unit_kit_child_session_la_LIBADD = $(CPPUNIT_LIBS)
 unit_large_paste_la_SOURCES = UnitLargePaste.cpp
 unit_large_paste_la_LIBADD = $(CPPUNIT_LIBS)
 unit_paste_la_SOURCES = UnitPaste.cpp

@@ -25,7 +25,7 @@
 class AuthBase
 {
 public:
-    virtual ~AuthBase() {}
+    virtual ~AuthBase() = default;
     /// Called to acquire an access token.
     virtual const std::string getAccessToken() = 0;
 
@@ -69,35 +69,6 @@ private:
 
     static std::unique_ptr<Poco::Crypto::RSAKey> _key;
     Poco::Crypto::RSADigestEngine _digestEngine;
-};
-
-/// OAuth Authorization.
-class OAuth : public AuthBase
-{
-public:
-    OAuth(const std::string& clientId,
-          const std::string& clientSecret,
-          const std::string& tokenEndPoint,
-          const std::string& authVerifyUrl,
-          const std::string& authorizationCode) :
-        _clientId(clientId),
-        _clientSecret(clientSecret),
-        _tokenEndPoint(tokenEndPoint),
-        _authVerifyUrl(authVerifyUrl),
-        _authorizationCode(authorizationCode)
-    {
-    }
-
-    const std::string getAccessToken() override;
-
-    bool verify(const std::string& token) override;
-
-private:
-    const std::string _clientId;
-    const std::string _clientSecret;
-    const std::string _tokenEndPoint;
-    const std::string _authVerifyUrl;
-    const std::string _authorizationCode;
 };
 
 #endif

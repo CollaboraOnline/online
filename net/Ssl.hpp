@@ -9,6 +9,11 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * OpenSSL context management for SSL/TLS connections.
+ * Classes: SslContext, ssl::CertificateVerification
+ */
+
 #pragma once
 
 #include <common/Util.hpp>
@@ -21,9 +26,7 @@
 #include <openssl/rand.h>
 #include <openssl/crypto.h>
 #include <openssl/err.h>
-#if OPENSSL_VERSION_NUMBER >= 0x0907000L
 #include <openssl/conf.h>
-#endif
 
 namespace ssl
 {
@@ -55,13 +58,6 @@ private:
     void shutdown();
 
     std::string getLastErrorMsg();
-
-    // Multithreading support for OpenSSL.
-    // Not needed in recent (1.x?) versions.
-    static unsigned long id();
-    static struct CRYPTO_dynlock_value* dynlockCreate(const char* file, int line);
-    static void dynlock(int mode, struct CRYPTO_dynlock_value* lock, const char* file, int line);
-    static void dynlockDestroy(struct CRYPTO_dynlock_value* lock, const char* file, int line);
 
 private:
     SSL_CTX* _ctx;

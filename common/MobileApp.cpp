@@ -9,17 +9,22 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-#include "config.h"
+/*
+ * Mobile app document data management.
+ * Classes: DocumentData - Document lifecycle and data storage
+ */
+
+#include <config.h>
 
 #if MOBILEAPP
 
 #include "MobileApp.hpp"
 
+#include <common/Log.hpp>
+
 #include <cassert>
 #include <map>
 #include <mutex>
-
-#include "Log.hpp"
 
 static std::map<unsigned, DocumentData*> idToDocDataMap;
 static std::mutex idToDocDataMapMutex;
@@ -44,12 +49,21 @@ DocumentData & DocumentData::get(unsigned docId)
 
 void DocumentData::deallocate(unsigned docId)
 {
-    assert(idToDocDataMap.find(docId) != idToDocDataMap.end());
+    if (idToDocDataMap.find(docId) == idToDocDataMap.end())
+    {
+        // FIXME: Something is wrong, whatever.
+        return;
+    }
     // Does get() really need to called during the destructor?
     get(docId);
     auto p = idToDocDataMap.find(docId);
     delete p->second;
     idToDocDataMap.erase(docId);
+}
+
+int DocumentData::count()
+{
+    return idToDocDataMap.size();
 }
 
 #endif

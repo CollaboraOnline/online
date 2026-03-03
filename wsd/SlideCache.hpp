@@ -9,14 +9,19 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * Caching for slide previews and thumbnails.
+ * Classes: SlideCache
+ */
+
 #pragma once
+
+#include <common/Message.hpp>
 
 #include <string>
 #include <vector>
 #include <memory>
 #include <unordered_map>
-#include <queue>
-#include <common/Message.hpp>
 
 /**
  Used for caching rendered slide layers for slideshow
@@ -26,7 +31,7 @@
  key consists of all the parameters browser sends us for particular slide rendering
  value vector will be in order layers should be rendered and displayed and last message will be sliderenderingcomplete
 */
-class SlideLayerCacheMap
+class SlideLayerCacheMap final
 {
     std::unordered_map<std::string, std::vector<std::shared_ptr<Message>>> cache_map;
 
@@ -42,7 +47,7 @@ public:
     {
     }
 
-    void insert(const std::string& key, const std::shared_ptr<Message> cachedData);
+    void insert(const std::string& key, std::shared_ptr<Message> cachedData);
 
     std::size_t reduceSizeTo(std::size_t desiredSize);
 

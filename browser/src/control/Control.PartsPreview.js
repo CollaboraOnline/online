@@ -12,7 +12,7 @@
  * window.L.Control.PartsPreview
  */
 
-/* global _ app $ Hammer _UNO cool TileManager */
+/* global _ app $ Hammer _UNO cool */
 window.L.Control.PartsPreview = window.L.Control.extend({
 	options: {
 		fetchThumbnail: true,
@@ -43,6 +43,12 @@ window.L.Control.PartsPreview = window.L.Control.extend({
 		this._idNum = 0;
 		this._width = 0;
 		this._height = 0;
+		this.scrollTimer = null;
+
+		document.body.addEventListener('click', (e) => {
+			if (!e.partsFocusedApplied && this.partsFocused)
+				this.partsFocused = false;
+		});
 	},
 
 	onAdd: function (map) {
@@ -229,15 +235,11 @@ window.L.Control.PartsPreview = window.L.Control.extend({
 		}, this);
 
 		var that = this;
-		img.onfocus = function () {
+		img.onfocus = function (e) {
 			that._map._clip.clearSelection();
 			that._map._clip.setTextSelectionType('slide');
 			that.partsFocused = true;
-		};
-
-		img.onblur = function () {
-			that._map._clip.clearSelection();
-			that.partsFocused = false;
+			e.partsFocusedApplied = true;
 		};
 
 		var that = this;
@@ -245,7 +247,7 @@ window.L.Control.PartsPreview = window.L.Control.extend({
 			var isMasterView = this._map['stateChangeHandler'].getItemValue('.uno:SlideMasterPage');
 			var pcw = document.getElementById('presentation-controls-wrapper');
 			var $trigger = $(pcw);
-			if (isMasterView === 'true' || app.isReadOnly()) {
+			if (isMasterView === 'true' || app.map.isReadOnlyMode()) {
 				$trigger.contextMenu(false);
 				return;
 			}
@@ -254,6 +256,8 @@ window.L.Control.PartsPreview = window.L.Control.extend({
 			if (this.isPaddingClick(frame, e, 'top'))
 				nPos = that._findClickedPart(frame) - 1;
 			else if (this.isPaddingClick(frame, e, 'bottom'))
+				nPos = that._findClickedPart(frame);
+			else if (this.isPaddingClick(frame, e, 'right') || this.isPaddingClick(frame, e, 'left'))
 				nPos = that._findClickedPart(frame);
 
 			$trigger.contextMenu(true);
@@ -267,11 +271,10 @@ window.L.Control.PartsPreview = window.L.Control.extend({
 						name: app.IconUtil.createMenuItemLink(_('Paste Slide'), 'Paste'),
 						isHtmlName: true,
 						callback: function(key, options) {
-							var part = that._findClickedPart(options.$trigger[0].parentNode);
-							if (part !== null) {
+								if (!nPos)
+									nPos = that._findClickedPart(options.$trigger[0]);
 								that._setPart(that.copiedSlide);
-								that._map.duplicatePage(parseInt(part));
-							}
+								that._map.duplicatePage(nPos);
 						},
 						visible: function() {
 							return that.copiedSlide;
@@ -282,6 +285,11 @@ window.L.Control.PartsPreview = window.L.Control.extend({
 						isHtmlName: true,
 						callback: function() { that._map.insertPage(nPos); }
 					}
+				},
+				events: {
+					hide: function() {
+						img.focus();
+					}
 				}
 			});
 		}, this);
@@ -289,7 +297,7 @@ window.L.Control.PartsPreview = window.L.Control.extend({
 		window.L.DomEvent.on(img, 'contextmenu', function(e) {
 			var isMasterView = this._map['stateChangeHandler'].getItemValue('.uno:SlideMasterPage');
 			var $trigger = $('#' + img.id);
-			if (isMasterView === 'true' || app.isReadOnly()) {
+			if (isMasterView === 'true' || app.map.isReadOnlyMode()) {
 				$trigger.contextMenu(false);
 				return;
 			}
@@ -311,14 +319,14 @@ window.L.Control.PartsPreview = window.L.Control.extend({
 							that._map._clip._execCopyCutPaste('copy', '.uno:CopySlide');
 						},
 						visible: function() {
-							return true;
+							return !(app.impress.hasOverviewPage && that._map._docLayer._selectedPart === 0);
 						}
 					},
 					paste: {
 						name: app.IconUtil.createMenuItemLink(_('Paste'), 'Paste'),
 						isHtmlName: true,
 						callback: function() {
-							that._map._clip._execCopyCutPaste('paste', ".uno:Paste")
+							that._map._clip.filterExecCopyPaste('.uno:Paste');
 						},
 					},
 					newslide: {
@@ -374,6 +382,12 @@ window.L.Control.PartsPreview = window.L.Control.extend({
 							return that._map._docLayer._docType === 'presentation' && !app.impress.isSlideHidden(parseInt(part) - 1);
 						}
 					}
+				},
+				events: {
+					hide: function() {
+						// Restore focus to the element that opened the menu
+						img.focus();
+					}
 				}
 			});
 		}, this);
@@ -398,18 +412,12 @@ window.L.Control.PartsPreview = window.L.Control.extend({
 		var node = this._partsPreviewCont.children[partNo];
 
 		if (node && (!this._previewTiles[partNo] || !this._isPreviewVisible(partNo))) {
-			var nodePos = this._direction === 'x' ? $(node).position().left : $(node).position().top;
-			var scrollDirection = window.mode.isDesktop() || window.mode.isTablet() ? 'scrollTop': (window.L.DomUtil.isPortrait() ? 'scrollLeft': 'scrollTop');
-			var that = this;
-			if (this._map._partsDirection < 0) {
-				setTimeout(function() {
-					that._partsPreviewCont[scrollDirection] += nodePos;
-				}, 50);
-			} else {
-				setTimeout(function() {
-					that._partsPreviewCont[scrollDirection] += nodePos;
-				}, 50);
-			}
+			if (this.scrollTimer) clearTimeout(this.scrollTimer);
+
+			 this.scrollTimer = setTimeout(() => {
+				node.scrollIntoView();
+				this.scrollTimer = null;
+			}, 50);
 		}
 	},
 
@@ -427,10 +435,14 @@ window.L.Control.PartsPreview = window.L.Control.extend({
 	_scrollViewToPartPosition: function (partNumber, fromBottom) {
 		if (this._map._docLayer && this._map._docLayer._isZooming)
 			return;
+
+		if (partNumber < 0) partNumber = 0;
+		if (partNumber >= this._map._docLayer._parts) partNumber = this._map._docLayer._parts - 1;
+
 		var partHeightPixels = Math.round((this._map._docLayer._partHeightTwips + this._map._docLayer._spaceBetweenParts) * app.twipsToPixels);
 		var scrollTop = partHeightPixels * partNumber;
 		var viewHeight = app.sectionContainer.getViewSize()[1];
-		var currentScrollX = app.activeDocument.activeView.viewedRectangle.cX1;
+		var currentScrollX = app.activeDocument.activeLayout.viewedRectangle.pX1;
 
 		if (viewHeight > partHeightPixels && partNumber > 0)
 			scrollTop -= Math.round((viewHeight - partHeightPixels) * 0.5);
@@ -438,39 +450,18 @@ window.L.Control.PartsPreview = window.L.Control.extend({
 		// scroll to the bottom of the selected part/page instead of its top px
 		if (fromBottom)
 			scrollTop += partHeightPixels - viewHeight;
-		scrollTop = Math.round(scrollTop / app.dpiScale);
-		app.sectionContainer.getSectionWithName(app.CSections.Scroll.name).onScrollTo({x: currentScrollX, y: scrollTop});
+
+		app.activeDocument.activeLayout.scrollTo(currentScrollX, scrollTop);
 	},
 
 	_scrollViewByDirection: function(buttonType) {
 		if (this._map._docLayer && this._map._docLayer._isZooming)
 			return;
-		var ratio = TileManager.tileSize / app.tile.size.y;
-		var partHeightPixels = Math.round((this._map._docLayer._partHeightTwips + this._map._docLayer._spaceBetweenParts) * ratio);
-		var scroll = Math.floor(partHeightPixels / app.dpiScale);
 		var viewHeight = Math.floor(app.sectionContainer.getViewSize()[1]);
 		var viewHeightScaled = Math.round(Math.floor(viewHeight) / app.dpiScale);
 		var scrollBySize = Math.floor(viewHeightScaled * 0.75);
-		var topPx = app.activeDocument.activeView.viewedRectangle.cY1;
-		var currentScrollX = app.activeDocument.activeView.viewedRectangle.cX1;
+		var currentScrollX = app.activeDocument.activeLayout.viewedRectangle.cX1;
 
-		if (buttonType === 'prev') {
-			if (this._map.getCurrentPartNumber() == 0) {
-				if (topPx - scrollBySize <= 0) {
-					this._scrollViewToPartPosition(0);
-					return;
-				}
-			}
-		} else if (buttonType === 'next') {
-			if (this._map._docLayer._parts == this._map.getCurrentPartNumber() + 1) {
-				scroll *= this._map.getCurrentPartNumber();
-				var veryEnd = scroll + (Math.floor(partHeightPixels / app.dpiScale) - viewHeightScaled);
-				if (topPx + viewHeightScaled >= veryEnd) {
-					this._scrollViewToPartPosition(this._map.getCurrentPartNumber(), true);
-					return;
-				}
-			}
-		}
 		app.sectionContainer.getSectionWithName(app.CSections.Scroll.name).onScrollBy({x: currentScrollX, y: buttonType === 'prev' ? -scrollBySize : scrollBySize});
 	},
 
@@ -484,8 +475,12 @@ window.L.Control.PartsPreview = window.L.Control.extend({
 	},
 
 	_setPart: function (e) {
-		if (cool.Comment.isAnyEdit()) {
-			cool.CommentSection.showCommentEditingWarning();
+		const editingComment = cool.Comment.isAnyEdit();
+		if (editingComment) {
+			const commentSection = app.sectionContainer.getSectionWithName(app.CSections.CommentList.name);
+			if (commentSection) {
+				commentSection.navigateAndFocusComment(editingComment);
+			}
 			return;
 		}
 
@@ -495,7 +490,7 @@ window.L.Control.PartsPreview = window.L.Control.extend({
 
 			if (app.file.fileBasedView) {
 				this._map.setPart(partId);
-				this._scrollViewToPartPosition(part - 1);
+				this._scrollViewToPartPosition(partId);
 				return;
 			}
 

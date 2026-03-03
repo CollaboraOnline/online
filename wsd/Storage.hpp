@@ -18,12 +18,12 @@
 #include <common/ConfigUtil.hpp>
 #include <common/Log.hpp>
 #include <common/Util.hpp>
+#include <common/Uri.hpp>
 #include <wsd/COOLWSD.hpp>
 
 #include <Poco/URI.h>
 
 #include <chrono>
-#include <ios>
 #include <memory>
 #include <string>
 #include <string_view>
@@ -339,7 +339,8 @@ public:
     /// localStorePath the absolute root path of the chroot.
     /// jailPath the path within the jail that the child uses for documents.
     StorageBase(const Poco::URI& uri, const std::string& localStorePath,
-                const std::string& jailPath)
+                const std::string& jailPath,
+                const AdditionalFilePocoUris& additionalFileUrisPublic = {})
         : _fileInfo(/*size=*/0, /*filename=*/std::string(), /*ownerId=*/"cool",
                     /*modifiedTime=*/std::string())
         , _localStorePath(localStorePath)
@@ -347,12 +348,15 @@ public:
         , _isDownloaded(false)
     {
         setUri(uri);
+        setAdditionalFileUris(additionalFileUrisPublic);
         LOG_DBG("Storage ctor: " << COOLWSD::anonymizeUrl(_uri.toString()));
     }
 
     virtual ~StorageBase() { LOG_TRC("~StorageBase " << _uri.toString()); }
 
     const Poco::URI& getUri() const { return _uri; }
+
+    const AdditionalFilePocoUris& getAdditionalFileUris() const { return _additionalFileUris; }
 
     const std::string& getJailPath() const { return _jailPath; }
 
@@ -424,7 +428,8 @@ public:
     /// Returns a local file path for the given URI.
     /// If necessary copies the file locally first.
     virtual std::string downloadStorageFileToLocal(const Authorization& auth, LockContext& lockCtx,
-                                                   const std::string& templateUri) = 0;
+                                                   const std::string& templateUri,
+                                                   AdditionalFilePaths& additionalFileLocalPaths) = 0;
 
     /// The asynchronous upload completion callback function.
     using AsyncUploadCallback = std::function<void(const AsyncUpload&)>;
@@ -475,7 +480,8 @@ public:
     /// @takeOwnership is for local files that are temporary,
     /// such as convert-to requests.
     static std::unique_ptr<StorageBase> create(const Poco::URI& uri, const std::string& jailRoot,
-                                               const std::string& jailPath, bool takeOwnership);
+                                               const std::string& jailPath, bool takeOwnership,
+                                               const AdditionalFilePocoUris& additionalFileUrisPublic);
 
     virtual void dumpState(std::ostream& os, const std::string& indent = "\n  ") const
     {
@@ -525,11 +531,21 @@ protected:
         sanitizeUri(_uri);
     }
 
+    void setAdditionalFileUris(const AdditionalFilePocoUris& additionalFileUris)
+    {
+        _additionalFileUris = additionalFileUris;
+        for (auto& uri : _additionalFileUris)
+        {
+            sanitizeUri(uri.second);
+        }
+    }
+
     /// Returns the root path of the jail directory of docs.
     std::string getLocalRootPath() const;
 
 private:
     Poco::URI _uri;
+    AdditionalFilePocoUris _additionalFileUris;
     FileInfo _fileInfo;
     const std::string _localStorePath;
     const std::string _jailPath;
@@ -548,8 +564,9 @@ class LocalStorage final : public StorageBase
 {
 public:
     LocalStorage(const Poco::URI& uri, const std::string& localStorePath,
-                 const std::string& jailPath, [[maybe_unused]] bool isTemporaryFile)
-        : StorageBase(uri, localStorePath, jailPath)
+                 const std::string& jailPath, [[maybe_unused]] bool isTemporaryFile,
+                 const AdditionalFilePocoUris& additionalFileUrisPublic = {})
+        : StorageBase(uri, localStorePath, jailPath, additionalFileUrisPublic)
 #if !MOBILEAPP
         , _isTemporaryFile(isTemporaryFile)
 #endif
@@ -603,7 +620,8 @@ public:
     }
 
     std::string downloadStorageFileToLocal(const Authorization& auth, LockContext& lockCtx,
-                                           const std::string& templateUri) override;
+                                           const std::string& templateUri,
+                                           AdditionalFilePaths& additionalFileLocalPaths) override;
 
     std::size_t
     uploadLocalFileToStorageAsync(const Authorization& auth, LockContext& lockCtx,
@@ -673,7 +691,7 @@ public:
     void bumpTimer() { _lastLockTime = std::chrono::steady_clock::now(); }
 
     /// do we need to refresh our lock ?
-    bool needsRefresh(const std::chrono::steady_clock::time_point now) const;
+    bool needsRefresh(std::chrono::steady_clock::time_point now) const;
 
     void dumpState(std::ostream& os) const;
 };

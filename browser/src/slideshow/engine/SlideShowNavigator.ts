@@ -191,19 +191,18 @@ class SlideShowNavigator {
 		);
 
 		this.slideShowHandler.exitSlideShow();
-		setTimeout(
-			function () {
-				this.endPresentation(true);
-				this.currentSlide = undefined;
-				this.prevSlide = undefined;
-				this.removeHandlers();
-			}.bind(this),
-			500,
-		);
+		this.endPresentation(true);
+		this.currentSlide = undefined;
+		this.prevSlide = undefined;
+		this.removeHandlers();
 	}
 
 	switchSlide(nOffset: number, bSkipTransition: boolean) {
 		NAVDBG.print('SlideShowNavigator.switchSlide: nOffset: ' + nOffset);
+		if (this.currentSlide === undefined) {
+			NAVDBG.print('SlideShowNavigator.switchSlide: currentSlide undefined');
+			return;
+		}
 		this.displaySlide(this.currentSlide + nOffset, bSkipTransition);
 	}
 
@@ -251,11 +250,13 @@ class SlideShowNavigator {
 	}
 
 	followLeaderSlide() {
+		if (this.presenter.isFollowing()) return;
 		this.presenter.setFollowing(true);
 		// const currentEffect = this.currentLeaderEffect;
-		if (this.currentLeaderSlide === this.currentSlide)
-			this.slideShowHandler.rewindAllEffects();
-		else this.displaySlide(this.currentLeaderSlide, true);
+		if (this.currentLeaderSlide === this.currentSlide) {
+			if (this.slideShowHandler.hasAnyEffectStarted())
+				this.slideShowHandler.rewindAllEffects();
+		} else this.displaySlide(this.currentLeaderSlide, true);
 		this.slideShowHandler.skipNEffects(this.currentLeaderEffect);
 	}
 
@@ -290,7 +291,7 @@ class SlideShowNavigator {
 			this.currentSlide = nNewSlide;
 			const force = nNewSlide > this.theMetaPres.numberOfSlides;
 			if (force) this.quit();
-			else this.endPresentation(false);
+			else this.endPresentation(this.presenter._isWelcomePresentation);
 			return;
 		}
 
@@ -331,12 +332,35 @@ class SlideShowNavigator {
 			if (this.prevSlide >= this.theMetaPres.numberOfSlides)
 				this.prevSlide = undefined;
 			this.currentSlide = nNewSlide;
+			if (this.presenter.updateControls) {
+				this.presenter.updateControls();
+			}
 
 			if (this.currentSlide === this.prevSlide) {
 				NAVDBG.print(
 					'SlideShowNavigator.displaySlide: slideCompositor.fetchAndRun: this.currentSlide === this.prevSlide',
 				);
 				return;
+			}
+
+			// show welcome slideshow once 1st slide is rendered
+			if (
+				app.map.slideShowPresenter._isWelcomePresentation &&
+				this.currentSlide === 0 &&
+				window.mode.isCODesktop()
+			) {
+				const loader = document.getElementById('welcome-loader');
+				if (loader) {
+					loader.style.opacity = '0';
+					// Wait for transition to complete before removing
+					loader.addEventListener(
+						'transitionend',
+						function () {
+							loader.parentNode.removeChild(loader);
+						},
+						{ once: true },
+					);
+				}
 			}
 
 			this.slideShowHandler.displaySlide(
@@ -522,6 +546,7 @@ class SlideShowNavigator {
 		if (handler) {
 			aEvent.preventDefault();
 			aEvent.stopPropagation();
+			if (this.presenter.isFollower()) this.presenter.setFollowing(false);
 			handler();
 		}
 	}

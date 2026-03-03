@@ -17,6 +17,7 @@
 class Sidebar extends SidebarBase {
 	targetDeckCommand: string;
 	isUserRequest: boolean; /// automatic or user request to show the sidebar
+	sidebarShownTheFirstTime: boolean = true;
 
 	constructor(map: MapInterface) {
 		super(map, SidebarType.Sidebar);
@@ -143,26 +144,33 @@ class Sidebar extends SidebarBase {
 				this.builder.build(this.container, [this.model.getSnapshot()], false);
 
 				if (!this.isVisible()) {
-					if ((this.builder as any).windowId === WindowId.Sidebar)
-						$('#sidebar-dock-wrapper').addClass('coreBased');
-					$('#sidebar-dock-wrapper').addClass('visible');
+					this.showSidebar();
 
 					// schedule focus after animation so it will not shift the browser page
 					if (this.isUserRequest) {
-						setTimeout(() => {
-							app.layoutingService.appendLayoutingTask(() => {
-								const focusables = JSDialog.GetFocusableElements(
-									this.container,
-								);
-								if (focusables && focusables.length) {
-									focusables[0].focus();
-								}
-							});
-						}, 250); // see animation time in #sidebar-dock-wrapper.visible
+						app.timerRegistry.setTimeout(
+							'sidebarstealfocus',
+							() => {
+								app.layoutingService.appendLayoutingTask(() => {
+									const focusables = JSDialog.GetFocusableElements(
+										this.container,
+									);
+									if (focusables && focusables.length) {
+										focusables[0].focus();
+									}
+								});
+							},
+							250,
+						); // see animation time in #sidebar-dock-wrapper.visible
 					}
 				}
 
 				this.map.uiManager.setDocTypePref('ShowSidebar', true);
+
+				if (this.sidebarShownTheFirstTime) {
+					app.serverConnectionService.onShowSidebar();
+					this.sidebarShownTheFirstTime = false;
+				}
 			} else {
 				this.closeSidebar();
 			}

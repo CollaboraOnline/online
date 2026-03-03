@@ -9,6 +9,11 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * Unit tests for tile delta generation and compression.
+ * Classes: DeltaTests
+ */
+
 #include <config.h>
 
 #include <test/lokassert.hpp>
@@ -36,6 +41,7 @@ class DeltaTests : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST(testDeltaSequence);
     CPPUNIT_TEST(testRandomDeltas);
     CPPUNIT_TEST(testDeltaCopyOutOfBounds);
+    CPPUNIT_TEST(testSimdCopyRowSwapRB);
 
     CPPUNIT_TEST_SUITE_END();
 
@@ -46,6 +52,7 @@ class DeltaTests : public CPPUNIT_NS::TestFixture
     void testDeltaSequence();
     void testRandomDeltas();
     void testDeltaCopyOutOfBounds();
+    void testSimdCopyRowSwapRB();
 
     std::vector<char> applyDelta(const std::vector<char>& pixmap, uint32_t width, uint32_t height,
                                  const std::vector<char>& delta, const std::string_view testname);
@@ -67,7 +74,7 @@ void checkzDelta(const std::vector<char> &zDelta, const char *legend)
 #endif
 
     LOK_ASSERT(zDelta.size() >= 4);
-    LOK_ASSERT(zDelta[0] == 'D');
+    LOK_ASSERT_EQUAL('D', zDelta[0]);
 
     std::vector<char> delta;
     delta.resize(1024*1024*4); // lots of extra space.
@@ -116,7 +123,7 @@ void checkzDelta(const std::vector<char> &zDelta, const char *legend)
             break;
         }
         case 't': // termination
-            LOK_ASSERT(i == delta.size() - 1);
+            LOK_ASSERT_EQUAL(delta.size() - 1, i);
 #if DEBUG_DELTA_TESTS
             std::cout << "t(ermination) - delta ended\n";
 #endif
@@ -138,7 +145,7 @@ std::vector<char> DeltaTests::applyDelta(const std::vector<char>& pixmap, uint32
                                          const std::string_view testname)
 {
     LOK_ASSERT(zDelta.size() >= 4);
-    LOK_ASSERT(zDelta[0] == 'D');
+    LOK_ASSERT_EQUAL('D', zDelta[0]);
 
     std::vector<char> delta;
     delta.resize(1024*1024*4); // lots of extra space.
@@ -200,7 +207,7 @@ std::vector<char> DeltaTests::applyDelta(const std::vector<char>& pixmap, uint32
             break;
         }
         case 't': // termination
-            LOK_ASSERT(i == delta.size() - 1);
+            LOK_ASSERT_EQUAL(delta.size() - 1, i);
             i++;
             break;
         default:
@@ -331,7 +338,7 @@ void DeltaTests::testRleRandom()
         TileLocation(42, 2, 3, 0, CanonicalViewId(1), 0),
         output, 1, true, false, LOK_TILEMODE_RGBA);
     LOK_ASSERT(size > 1);
-    LOK_ASSERT(output[0] == 'Z');
+    LOK_ASSERT_EQUAL('Z', output[0]);
 
     // Decompress
     std::vector<char> frame;
@@ -372,8 +379,8 @@ void DeltaTests::testRleIdentical()
     {
         for (int y2 = 0; y2 < 256; y2++)
         {
-            auto &row = data.getRow(y);
-            auto &row2 = data2.getRow(y2);
+            const auto& row = data.getRow(y);
+            const auto& row2 = data2.getRow(y2);
             if (row.identical(row2))
             {
                 DeltaGenerator::DeltaBitmapRow::PixIterator it(row);
@@ -453,6 +460,66 @@ void DeltaTests::testDeltaSequence()
 
 void DeltaTests::testRandomDeltas()
 {
+}
+
+void DeltaTests::testSimdCopyRowSwapRB()
+{
+    constexpr std::string_view testname = __func__;
+
+    // Simple reference
+    auto simpleSwapRB = [](unsigned char *dest, const unsigned char *src, unsigned int count) {
+        for (size_t i = 0; i < count * 4; i += 4)
+        {
+            dest[i + 0] = src[i + 2];  // R <- B
+            dest[i + 1] = src[i + 1];  // G <- G
+            dest[i + 2] = src[i + 0];  // B <- R
+            dest[i + 3] = src[i + 3];  // A <- A
+        }
+    };
+
+    // Test various sizes: aligned (multiple of 8), unaligned, and edge cases
+    const std::vector<unsigned int> testSizes = { 1, 2, 3, 7, 8, 9, 15, 16, 17, 31, 32, 64, 128, 255, 256 };
+
+    std::mt19937 random;
+    random.seed(12345);
+    std::uniform_int_distribution<unsigned char> dist(0, 255);
+
+    for (unsigned int count : testSizes)
+    {
+        std::vector<unsigned char> input(count * 4);
+        std::vector<unsigned char> simdOutput(count * 4);
+        std::vector<unsigned char> goodOutput(count * 4);
+
+        // Fill with random data
+        for (size_t i = 0; i < input.size(); ++i)
+            input[i] = dist(random);
+
+        // Run simple version for reference
+        simpleSwapRB(goodOutput.data(), input.data(), count);
+
+        // Run SIMD version
+        int simdUsed = simd_copyRowSwapRB(simdOutput.data(), input.data(), count);
+
+        if (simdUsed)
+        {
+            // Compare results
+            for (size_t i = 0; i < count * 4; ++i)
+            {
+                if (simdOutput[i] != goodOutput[i])
+                {
+                    std::cerr << "Mismatch at byte " << i << " (pixel " << (i / 4)
+                              << ", component " << (i % 4) << ") for count=" << count
+                              << ": SIMD=" << (int)simdOutput[i]
+                              << " scalar=" << (int)goodOutput[i] << '\n';
+                }
+                LOK_ASSERT_EQUAL(goodOutput[i], simdOutput[i]);
+            }
+        }
+
+        if (count == 256)
+            TST_LOG("simd_copyRowSwapRB for " << count << " pixels: SIMD "
+                    << (simdUsed ? "used" : "not used (fallback)"));
+    }
 }
 
 void DeltaTests::testDeltaCopyOutOfBounds()

@@ -11,10 +11,13 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 		newFilePath = helper.setupAndLoadDocument('calc/top_toolbar.ods');
 		desktopHelper.switchUIToCompact();
 		helper.typeIntoInputField(helper.addressInputSelector, 'A1');
+		cy.getFrameWindow().then((win) => {
+			this.win = win;
+		});
 	});
 
 	it('Save.', function () {
-		cy.cGet('#bold').click();
+		desktopHelper.getCompactIcon('Bold').click();
 		cy.cGet('#save').click();
 
 		helper.reloadDocument(newFilePath);
@@ -39,8 +42,8 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 		helper.typeIntoDocument('{downarrow}');
 
 		// Apply bold and try to clone it to the whole word.
-		cy.cGet('#bold').click();
-		cy.cGet('#toolbar-up #formatpaintbrush').click();
+		desktopHelper.getCompactIcon('Bold').click();
+		desktopHelper.getCompactIcon('FormatPaintbrush').click();
 
 		calcHelper.clickOnFirstCell(true,false);
 
@@ -86,17 +89,18 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 		helper.typeIntoDocument('{enter}');
 		// Wait for enter to work before clicking on first cell again
 		cy.cGet(helper.addressInputSelector).should('have.prop', 'value', 'A2');
-		cy.wait(100);
+		helper.processToIdle(this.win);
 
 		// Turn text wrap on
 		calcHelper.clickOnFirstCell();
-		cy.cGet('.ui-toolbar .unoWrapText').click();
+		desktopHelper.getCompactIconArrow('LeftPara').click();
+		desktopHelper.getCompactIcon('WrapText').click();
 
 		// Leave cell
 		helper.typeIntoDocument('{enter}');
 		// Wait for enter to work before clicking on first cell again
 		cy.cGet(helper.addressInputSelector).should('have.prop', 'value', 'A2');
-		cy.wait(100);
+		helper.processToIdle(this.win);
 
 		// Get cursor position at end of line after wrap
 		calcHelper.dblClickOnFirstCell();
@@ -118,20 +122,20 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 		// Despite the selection is there, merge cells needs more time here.
 		cy.wait(1000);
 
-		cy.cGet('#toolbar-up #togglemergecells').click();
+		desktopHelper.getCompactIcon('ToggleMergeCells').click();
 
 		desktopHelper.checkDialogAndClose('Merge Cells');
 	});
 
 	it('Clear Direct formatting.', function() {
 		helper.setDummyClipboardForCopy();
-		cy.cGet('#bold').click();
+		desktopHelper.getCompactIcon('Bold').click();
 
 		calcHelper.selectEntireSheet();
 		helper.copy();
 
 		cy.cGet('#copy-paste-container table td b').should('exist');
-		cy.cGet('#reset').click();
+		desktopHelper.getCompactIcon('ResetAttributes').click();
 
 		calcHelper.selectEntireSheet();
 		helper.copy();
@@ -141,7 +145,7 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 
 	it('Apply font style.', function() {
 		helper.setDummyClipboardForCopy();
-		cy.cGet('#toolbar-up #fontnamecombobox').click();
+		cy.cGet('#toolbar-up #fontnamecombobox .ui-combobox-button').click();
 		desktopHelper.selectFromListbox('Alef');
 		calcHelper.selectEntireSheet();
 		helper.copy();
@@ -150,7 +154,7 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 
 	it('Apply font size.', function() {
 		helper.setDummyClipboardForCopy();
-		cy.cGet('#toolbar-up #fontsizecombobox').click();
+		cy.cGet('#toolbar-up #fontsizecombobox .ui-combobox-button').click();
 		desktopHelper.selectFromListbox('12');
 		calcHelper.selectEntireSheet();
 		helper.copy();
@@ -159,7 +163,7 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 
 	it('Apply bold font.', function() {
 		helper.setDummyClipboardForCopy();
-		cy.cGet('#bold').click();
+		desktopHelper.getCompactIcon('Bold').click();
 		calcHelper.selectEntireSheet();
 		helper.copy();
 		cy.cGet('#copy-paste-container table td b').should('exist');
@@ -167,7 +171,7 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 
 	it('Apply underline.', function() {
 		helper.setDummyClipboardForCopy();
-		cy.cGet('#underline').click();
+		desktopHelper.getCompactIcon('Underline').click();
 		calcHelper.selectEntireSheet();
 		helper.copy();
 		cy.cGet('#copy-paste-container table td u').should('exist');
@@ -175,7 +179,7 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 
 	it('Apply italic.', function() {
 		helper.setDummyClipboardForCopy();
-		cy.cGet('#italic').click();
+		desktopHelper.getCompactIcon('Italic').click();
 		calcHelper.selectEntireSheet();
 		helper.copy();
 		cy.cGet('#copy-paste-container table td i').should('exist');
@@ -183,7 +187,7 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 
 	it('Apply strikethrough.', function() {
 		helper.setDummyClipboardForCopy();
-		cy.cGet('#strikeout').click();
+		desktopHelper.getCompactIcon('Strikeout').click();
 		calcHelper.selectEntireSheet();
 		helper.copy();
 		cy.cGet('#copy-paste-container table td s').should('exist');
@@ -191,7 +195,7 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 
 	it('Apply highlight color.', function() {
 		helper.setDummyClipboardForCopy();
-		cy.cGet('#backgroundcolor .arrowbackground').click();
+		desktopHelper.getCompactIconArrow('BackgroundColor').click();
 		desktopHelper.selectColorFromPalette('3FAF46');
 		calcHelper.selectEntireSheet();
 		helper.copy();
@@ -200,7 +204,7 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 
 	it('Apply font color.', function() {
 		helper.setDummyClipboardForCopy();
-		cy.cGet('#fontcolor .arrowbackground').click();
+		desktopHelper.getCompactIconArrow('Color').click();
 		desktopHelper.selectColorFromPalette('FFB66C');
 		calcHelper.selectEntireSheet();
 		helper.copy();
@@ -210,8 +214,8 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 	it('Add/Delete decimal places', function() {
 		helper.setDummyClipboardForCopy();
 		// Add decimal place
-		cy.cGet('#toolbar-up #overflow-button-other-toptoolbar .arrowbackground').click();
-		cy.cGet('#numberformatincdecimals').click();
+		desktopHelper.getCompactIconArrow('DefaultNumbering').click();
+		desktopHelper.getCompactIcon('NumberFormatIncDecimals').click();
 		calcHelper.selectEntireSheet();
 		helper.copy();
 
@@ -223,8 +227,8 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 		// Delete Decimal place
 		calcHelper.clickOnFirstCell();
 
-		cy.cGet('#toolbar-up #overflow-button-other-toptoolbar .arrowbackground').click();
-		cy.cGet('#numberformatdecdecimals').click();
+		desktopHelper.getCompactIconArrow('DefaultNumbering').click();
+		desktopHelper.getCompactIcon('NumberFormatDecDecimals').click();
 
 		calcHelper.selectEntireSheet();
 		helper.copy();
@@ -236,8 +240,8 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 
 	it('Format as currency.', function() {
 		helper.setDummyClipboardForCopy();
-		cy.cGet('#toolbar-up #overflow-button-other-toptoolbar .arrowbackground').click();
-		cy.cGet('#numberformatcurrency').click();
+		desktopHelper.getCompactIconArrow('DefaultNumbering').click();
+		desktopHelper.getCompactIcon('NumberFormatCurrency').click();
 
 		calcHelper.selectEntireSheet();
 		helper.copy();
@@ -250,8 +254,8 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 
 	it('Format as Percent.', function() {
 		helper.setDummyClipboardForCopy();
-		cy.cGet('#toolbar-up #overflow-button-other-toptoolbar .arrowbackground').click();
-		cy.cGet('#numberformatpercent').click();
+		desktopHelper.getCompactIconArrow('DefaultNumbering').click();
+		desktopHelper.getCompactIcon('NumberFormatPercent').click();
 
 		calcHelper.selectEntireSheet();
 		helper.copy();
@@ -265,6 +269,7 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 	it('Apply left/right alignment', function() {
 		helper.setDummyClipboardForCopy();
 		// Set right alignment first
+		desktopHelper.getCompactIconArrow('LeftPara').click();
 		cy.cGet('#textalign .arrowbackground').click();
 		cy.cGet('body').contains('.ui-combobox-entry', 'Align Right').click();
 		calcHelper.selectEntireSheet();
@@ -274,6 +279,7 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 		// Change alignment back
 		calcHelper.clickOnFirstCell();
 
+		desktopHelper.getCompactIconArrow('LeftPara').click();
 		cy.cGet('#textalign .arrowbackground').click();
 		cy.cGet('body').contains('.ui-combobox-entry', 'Align Left').click();
 

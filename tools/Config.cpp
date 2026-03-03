@@ -9,26 +9,20 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * Configuration file manipulation utility.
+ * Functions: Password generation, config setting/getting, XML editing
+ */
+
 #include <config.h>
 
 #include <common/Anonymizer.hpp>
 #include <common/ConfigUtil.hpp>
 #include <common/Crypto.hpp>
-#include <common/Globals.hpp>
 #include <common/Util.hpp>
 
-#include <iostream>
-#include <iomanip>
-#include <pwd.h>
-#include <sstream>
-#include <sys/stat.h>
-#include <sys/types.h>
-#include <sysexits.h>
-#include <termios.h>
-#include <unistd.h>
-
-#include <openssl/rand.h>
 #include <openssl/evp.h>
+#include <openssl/rand.h>
 
 #include <Poco/Crypto/RSAKey.h>
 #include <Poco/Exception.h>
@@ -38,6 +32,16 @@
 #include <Poco/Util/Option.h>
 #include <Poco/Util/OptionSet.h>
 #include <Poco/Util/XMLConfiguration.h>
+
+#include <iomanip>
+#include <iostream>
+#include <pwd.h>
+#include <sstream>
+#include <sys/stat.h>
+#include <sys/types.h>
+#include <sysexits.h>
+#include <termios.h>
+#include <unistd.h>
 
 using Poco::Util::Application;
 using Poco::Util::HelpFormatter;
@@ -54,8 +58,7 @@ bool EnableExperimental = false;
 class CoolConfig final: public XMLConfiguration
 {
 public:
-    CoolConfig()
-        {}
+    CoolConfig() = default;
 };
 
 struct AdminConfig
@@ -64,8 +67,9 @@ private:
     unsigned _pwdSaltLength = 128;
     unsigned _pwdIterations = 10000;
     unsigned _pwdHashLength = 128;
-    std::string _adminUser = "";
-    std::string _adminPwd = "";
+    std::string _adminUser;
+    std::string _adminPwd;
+
 public:
 
     void setPwdSaltLength(unsigned pwdSaltLength) { _pwdSaltLength = pwdSaltLength; }

@@ -19,11 +19,11 @@
 #include <Exceptions.hpp>
 #include <HostUtil.hpp>
 #include <HttpRequest.hpp>
-#include <Log.hpp>
+#include <common/Log.hpp>
 #include <NetUtil.hpp>
 #include <ProofKey.hpp>
 #include <Unit.hpp>
-#include <Util.hpp>
+#include <common/Util.hpp>
 #include <common/Anonymizer.hpp>
 #include <common/FileUtil.hpp>
 #include <common/JsonUtil.hpp>
@@ -235,6 +235,7 @@ WopiStorage::WOPIFileInfo::WOPIFileInfo(const FileInfo& fileInfo, Poco::JSON::Ob
     JsonUtil::findJSONValue(object, "FileUrl", _fileUrl);
     JsonUtil::findJSONValue(object, "UserCanOnlyComment", _userCanOnlyComment);
     JsonUtil::findJSONValue(object, "UserCanOnlyManageRedlines", _userCanOnlyManageRedlines);
+    JsonUtil::findJSONValue(object, "PresentationLeader", _presentationLeader);
 
     // check if user is admin on the integrator side
     bool isAdminUser = false;
@@ -467,7 +468,6 @@ void WopiStorage::updateLockStateAsync(const Authorization& auth, LockContext& l
         _lockHttpSession.reset();
 
         assert(httpSession && "Expected a valid http::Session");
-        httpSession->asyncShutdown();
         const std::shared_ptr<const http::Response> httpResponse = httpSession->response();
 
         _wopiSaveDuration = std::chrono::duration_cast<std::chrono::milliseconds>(
@@ -523,7 +523,8 @@ void WopiStorage::updateLockStateAsync(const Authorization& auth, LockContext& l
 /// uri format: http://server/<...>/wopi*/files/<id>/content
 std::string WopiStorage::downloadStorageFileToLocal(const Authorization& auth,
                                                     LockContext& /*lockCtx*/,
-                                                    const std::string& templateUri)
+                                                    const std::string& templateUri,
+                                                    AdditionalFilePaths& /*additionalFileLocalPaths*/)
 {
     ProfileZone profileZone("WopiStorage::downloadStorageFileToLocal", { { "url", _fileUrl } });
 
@@ -540,7 +541,7 @@ std::string WopiStorage::downloadStorageFileToLocal(const Authorization& auth,
         }
         catch (const std::exception& ex)
         {
-            LOG_ERR("Could not download template from [" + templateUriAnonym + "]. Error: "
+            LOG_ERR("Could not download template from [" << templateUriAnonym << "]. Error: "
                     << ex.what());
             throw; // Bubble-up the exception.
         }
@@ -562,7 +563,7 @@ std::string WopiStorage::downloadStorageFileToLocal(const Authorization& auth,
         }
         catch (const std::exception& ex)
         {
-            LOG_ERR("Could not download document from WOPI FileUrl [" + fileUrlAnonym +
+            LOG_ERR("Could not download document from WOPI FileUrl [" << fileUrlAnonym <<
                         "]. Will use default URL. Error: "
                     << ex.what());
         }
@@ -586,7 +587,7 @@ std::string WopiStorage::downloadStorageFileToLocal(const Authorization& auth,
     }
     catch (const std::exception& ex)
     {
-        LOG_ERR("Cannot download document from WOPI storage uri [" + uriAnonym + "]. Error: "
+        LOG_ERR("Cannot download document from WOPI storage uri [" << uriAnonym << "]. Error: "
                 << ex.what());
         throw; // Bubble-up the exception.
     }
@@ -849,7 +850,6 @@ std::size_t WopiStorage::uploadLocalFileToStorageAsync(
             _uploadHttpSession.reset();
 
             assert(httpSession && "Expected a valid http::Session");
-            httpSession->asyncShutdown();
             const std::shared_ptr<const http::Response> httpResponse = httpSession->response();
 
             _wopiSaveDuration = std::chrono::duration_cast<std::chrono::milliseconds>(
@@ -906,7 +906,7 @@ std::size_t WopiStorage::uploadLocalFileToStorageAsync(
     }
     catch (const std::exception& ex)
     {
-        LOG_ERR(wopiLog << " cannot upload file to WOPI storage uri [" + uriAnonym + "]. Error: "
+        LOG_ERR(wopiLog << " cannot upload file to WOPI storage uri [" << uriAnonym << "]. Error: "
                         << ex.what());
         _uploadHttpSession.reset();
     }
@@ -1074,7 +1074,7 @@ WopiStorage::handleUploadToStorageResponse(const WopiUploadDetails& details,
     }
     catch (const BadRequestException& exc)
     {
-        LOG_ERR("Cannot upload file to WOPI storage uri [" + details.uriAnonym + "]. Error: "
+        LOG_ERR("Cannot upload file to WOPI storage uri [" << details.uriAnonym << "]. Error: "
                 << exc.what());
         result.setResult(StorageBase::UploadResult::Result::FAILED);
     }

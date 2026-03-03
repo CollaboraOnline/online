@@ -9,16 +9,21 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * Dummy LibreOfficeKit implementation for testing.
+ * Classes: LibLODocument_Impl, LibLibreOffice_Impl - Mock LOK interfaces
+ */
+
 #include <config.h>
 
 #include "DummyLibreOfficeKit.hpp"
 
+#include <LibreOfficeKit/LibreOfficeKitEnums.h>
+#include <LibreOfficeKit/LibreOfficeKitTypes.h>
+
 #include <cstdlib>
 #include <cstring>
 #include <memory>
-
-#include <LibreOfficeKit/LibreOfficeKitEnums.h>
-#include <LibreOfficeKit/LibreOfficeKitTypes.h>
 
 struct LibLODocument_Impl : public _LibreOfficeKitDocument
 {
@@ -45,100 +50,100 @@ static std::weak_ptr< LibreOfficeKitDocumentClass > gDocumentClass;
 extern "C"
 {
 
-static void doc_destroy(LibreOfficeKitDocument* pThis);
-static int doc_saveAs(LibreOfficeKitDocument* pThis, const char* pUrl, const char* pFormat, const char* pFilterOptions);
-static int doc_getDocumentType(LibreOfficeKitDocument* pThis);
-static int doc_getParts(LibreOfficeKitDocument* pThis);
-static char* doc_getPartPageRectangles(LibreOfficeKitDocument* pThis);
-static int doc_getPart(LibreOfficeKitDocument* pThis);
-static void doc_setPart(LibreOfficeKitDocument* pThis, int nPart);
-static char* doc_getPartName(LibreOfficeKitDocument* pThis, int nPart);
-static void doc_setPartMode(LibreOfficeKitDocument* pThis, int nPartMode);
-static int doc_getEditMode(LibreOfficeKitDocument* pThis);
-static void doc_paintTile(LibreOfficeKitDocument* pThis,
-                          unsigned char* pBuffer,
-                          const int nCanvasWidth, const int nCanvasHeight,
-                          const int nTilePosX, const int nTilePosY,
-                          const int nTileWidth, const int nTileHeight);
-static void doc_paintPartTile(LibreOfficeKitDocument* pThis,
-                              unsigned char* pBuffer,
-                              const int nPart,
-                              const int nCanvasWidth, const int nCanvasHeight,
-                              const int nTilePosX, const int nTilePosY,
-                              const int nTileWidth, const int nTileHeight);
-static int doc_getTileMode(LibreOfficeKitDocument* pThis);
-static void doc_getDocumentSize(LibreOfficeKitDocument* pThis,
-                                long* pWidth,
-                                long* pHeight);
-static void doc_getDataArea(LibreOfficeKitDocument* pThis,
-                            long nPart,
-                            long* pCol,
-                            long* pRow);
-static void doc_initializeForRendering(LibreOfficeKitDocument* pThis,
-                                       const char* pArguments);
+static void doc_destroy(LibreOfficeKitDocument* self);
+static int doc_saveAs(LibreOfficeKitDocument* self, const char* url, const char* format, const char* filterOptions);
+static int doc_getDocumentType(LibreOfficeKitDocument* self);
+static int doc_getParts(LibreOfficeKitDocument* self);
+static char* doc_getPartPageRectangles(LibreOfficeKitDocument* self);
+static int doc_getPart(LibreOfficeKitDocument* self);
+static void doc_setPart(LibreOfficeKitDocument* self, int part);
+static char* doc_getPartName(LibreOfficeKitDocument* self, int part);
+static void doc_setPartMode(LibreOfficeKitDocument* self, int partMode);
+static int doc_getEditMode(LibreOfficeKitDocument* self);
+static void doc_paintTile(LibreOfficeKitDocument* self,
+                          unsigned char* buffer,
+                          const int canvasWidth, const int canvasHeight,
+                          const int tilePosX, const int tilePosY,
+                          const int tileWidth, const int tileHeight);
+static void doc_paintPartTile(LibreOfficeKitDocument* self,
+                              unsigned char* buffer,
+                              const int part,
+                              const int canvasWidth, const int canvasHeight,
+                              const int tilePosX, const int tilePosY,
+                              const int tileWidth, const int tileHeight);
+static int doc_getTileMode(LibreOfficeKitDocument* self);
+static void doc_getDocumentSize(LibreOfficeKitDocument* self,
+                                long* width,
+                                long* height);
+static void doc_getDataArea(LibreOfficeKitDocument* self,
+                            long part,
+                            long* col,
+                            long* row);
+static void doc_initializeForRendering(LibreOfficeKitDocument* self,
+                                       const char* arguments);
 
-static void doc_registerCallback(LibreOfficeKitDocument* pThis,
-                                LibreOfficeKitCallback pCallback,
-                                void* pData);
-static void doc_postKeyEvent(LibreOfficeKitDocument* pThis,
-                             int nType,
-                             int nCharCode,
-                             int nKeyCode);
-static void doc_postMouseEvent (LibreOfficeKitDocument* pThis,
-                                int nType,
-                                int nX,
-                                int nY,
-                                int nCount,
-                                int nButtons,
-                                int nModifier);
-static void doc_postUnoCommand(LibreOfficeKitDocument* pThis,
-                               const char* pCommand,
-                               const char* pArguments,
-                               bool bNotifyWhenFinished);
-static void doc_setTextSelection (LibreOfficeKitDocument* pThis,
-                                  int nType,
-                                  int nX,
-                                  int nY);
-static char* doc_getTextSelection(LibreOfficeKitDocument* pThis,
-                                  const char* pMimeType,
-                                  char** pUsedMimeType);
-static bool doc_paste(LibreOfficeKitDocument* pThis,
-                      const char* pMimeType,
-                      const char* pData,
-                      size_t nSize);
-static void doc_setGraphicSelection (LibreOfficeKitDocument* pThis,
-                                  int nType,
-                                  int nX,
-                                  int nY);
-static void doc_resetSelection (LibreOfficeKitDocument* pThis);
-static char* doc_getCommandValues(LibreOfficeKitDocument* pThis, const char* pCommand);
-static void doc_setClientZoom(LibreOfficeKitDocument* pThis,
-                                    int nTilePixelWidth,
-                                    int nTilePixelHeight,
-                                    int nTileTwipWidth,
-                                    int nTileTwipHeight);
-static void doc_setClientVisibleArea(LibreOfficeKitDocument* pThis, int nX, int nY, int nWidth, int nHeight);
-static void doc_setOutlineState(LibreOfficeKitDocument* pThis, bool bColumn, int nLevel, int nIndex, bool bHidden);
-static int doc_createView(LibreOfficeKitDocument* pThis);
-static void doc_destroyView(LibreOfficeKitDocument* pThis, int nId);
-static void doc_setView(LibreOfficeKitDocument* pThis, int nId);
-static int doc_getView(LibreOfficeKitDocument* pThis);
-static int doc_getViewsCount(LibreOfficeKitDocument* pThis);
-static bool doc_getViewIds(LibreOfficeKitDocument* pThis, int* pArray, size_t nSize);
-static unsigned char* doc_renderFont(LibreOfficeKitDocument* pThis,
-                          const char *pFontName,
-                          const char *pChar,
-                          int* pFontWidth,
-                          int* pFontHeight);
-static unsigned char* doc_renderFontOrientation(LibreOfficeKitDocument* pThis,
-                          const char *pFontName,
-                          const char *pChar,
-                          int* pFontWidth,
-                          int* pFontHeight,
-                          int pOrientation);
-static char* doc_getPartHash(LibreOfficeKitDocument* pThis, int nPart);
+static void doc_registerCallback(LibreOfficeKitDocument* self,
+                                LibreOfficeKitCallback callback,
+                                void* data);
+static void doc_postKeyEvent(LibreOfficeKitDocument* self,
+                             int type,
+                             int charCode,
+                             int keyCode);
+static void doc_postMouseEvent (LibreOfficeKitDocument* self,
+                                int type,
+                                int x,
+                                int y,
+                                int count,
+                                int buttons,
+                                int modifier);
+static void doc_postUnoCommand(LibreOfficeKitDocument* self,
+                               const char* command,
+                               const char* arguments,
+                               bool notifyWhenFinished);
+static void doc_setTextSelection (LibreOfficeKitDocument* self,
+                                  int type,
+                                  int x,
+                                  int y);
+static char* doc_getTextSelection(LibreOfficeKitDocument* self,
+                                  const char* mimeType,
+                                  char** usedMimeType);
+static bool doc_paste(LibreOfficeKitDocument* self,
+                      const char* mimeType,
+                      const char* data,
+                      size_t size);
+static void doc_setGraphicSelection (LibreOfficeKitDocument* self,
+                                  int type,
+                                  int x,
+                                  int y);
+static void doc_resetSelection (LibreOfficeKitDocument* self);
+static char* doc_getCommandValues(LibreOfficeKitDocument* self, const char* command);
+static void doc_setClientZoom(LibreOfficeKitDocument* self,
+                                    int tilePixelWidth,
+                                    int tilePixelHeight,
+                                    int tileTwipWidth,
+                                    int tileTwipHeight);
+static void doc_setClientVisibleArea(LibreOfficeKitDocument* self, int x, int y, int width, int height);
+static void doc_setOutlineState(LibreOfficeKitDocument* self, bool column, int level, int index, bool hidden);
+static int doc_createView(LibreOfficeKitDocument* self);
+static void doc_destroyView(LibreOfficeKitDocument* self, int id);
+static void doc_setView(LibreOfficeKitDocument* self, int id);
+static int doc_getView(LibreOfficeKitDocument* self);
+static int doc_getViewsCount(LibreOfficeKitDocument* self);
+static bool doc_getViewIds(LibreOfficeKitDocument* self, int* array, size_t size);
+static unsigned char* doc_renderFont(LibreOfficeKitDocument* self,
+                          const char *fontName,
+                          const char *character,
+                          int* fontWidth,
+                          int* fontHeight);
+static unsigned char* doc_renderFontOrientation(LibreOfficeKitDocument* self,
+                          const char *fontName,
+                          const char *character,
+                          int* fontWidth,
+                          int* fontHeight,
+                          int orientation);
+static char* doc_getPartHash(LibreOfficeKitDocument* self, int part);
 
-static size_t doc_renderShapeSelection(LibreOfficeKitDocument* pThis, char** pOutput);
+static size_t doc_renderShapeSelection(LibreOfficeKitDocument* self, char** output);
 
 LibLODocument_Impl::LibLODocument_Impl()
 {
@@ -146,7 +151,7 @@ LibLODocument_Impl::LibLODocument_Impl()
     {
         m_pDocumentClass = std::make_shared<LibreOfficeKitDocumentClass>();
 
-        m_pDocumentClass->nSize = sizeof(LibreOfficeKitDocument);
+        m_pDocumentClass->size = sizeof(LibreOfficeKitDocument);
 
         m_pDocumentClass->destroy = doc_destroy;
         m_pDocumentClass->saveAs = doc_saveAs;
@@ -193,31 +198,31 @@ LibLODocument_Impl::LibLODocument_Impl()
 
         gDocumentClass = m_pDocumentClass;
     }
-    pClass = m_pDocumentClass.get();
+    classPointer = m_pDocumentClass.get();
 }
 
-static void                    lo_destroy       (LibreOfficeKit* pThis);
-static LibreOfficeKitDocument* lo_documentLoad  (LibreOfficeKit* pThis, const char* pURL);
-static char *                  lo_getError      (LibreOfficeKit* pThis);
-static void                    lo_freeError     (char* pFree);
-static LibreOfficeKitDocument* lo_documentLoadWithOptions  (LibreOfficeKit* pThis,
-                                                           const char* pURL,
-                                                           const char* pOptions);
-static void                    lo_registerCallback (LibreOfficeKit* pThis,
-                                                    LibreOfficeKitCallback pCallback,
-                                                    void* pData);
-static char* lo_getFilterTypes(LibreOfficeKit* pThis);
-static void lo_setOptionalFeatures(LibreOfficeKit* pThis, unsigned long long features);
-static void                    lo_setDocumentPassword(LibreOfficeKit* pThis,
-                                                       const char* pURL,
-                                                       const char* pPassword);
-static char*                   lo_getVersionInfo(LibreOfficeKit* pThis);
+static void                    lo_destroy       (LibreOfficeKit* self);
+static LibreOfficeKitDocument* lo_documentLoad  (LibreOfficeKit* self, const char* url);
+static char *                  lo_getError      (LibreOfficeKit* self);
+static void                    lo_freeError     (char* freePointer);
+static LibreOfficeKitDocument* lo_documentLoadWithOptions  (LibreOfficeKit* self,
+                                                           const char* url,
+                                                           const char* options);
+static void                    lo_registerCallback (LibreOfficeKit* self,
+                                                    LibreOfficeKitCallback callback,
+                                                    void* data);
+static char* lo_getFilterTypes(LibreOfficeKit* self);
+static void lo_setOptionalFeatures(LibreOfficeKit* self, unsigned long long features);
+static void                    lo_setDocumentPassword(LibreOfficeKit* self,
+                                                       const char* url,
+                                                       const char* password);
+static char*                   lo_getVersionInfo(LibreOfficeKit* self);
 
 LibLibreOffice_Impl::LibLibreOffice_Impl()
 {
     if(!m_pOfficeClass) {
         m_pOfficeClass.reset(new LibreOfficeKitClass);
-        m_pOfficeClass->nSize = sizeof(LibreOfficeKitClass);
+        m_pOfficeClass->size = sizeof(LibreOfficeKitClass);
 
         m_pOfficeClass->destroy = lo_destroy;
         m_pOfficeClass->documentLoad = lo_documentLoad;
@@ -233,393 +238,393 @@ LibLibreOffice_Impl::LibLibreOffice_Impl()
         gOfficeClass = m_pOfficeClass;
     }
 
-    pClass = m_pOfficeClass.get();
+    classPointer = m_pOfficeClass.get();
 }
 
-static LibreOfficeKitDocument* lo_documentLoad(LibreOfficeKit* pThis, const char* pURL)
+static LibreOfficeKitDocument* lo_documentLoad(LibreOfficeKit* self, const char* url)
 {
-    return lo_documentLoadWithOptions(pThis, pURL, nullptr);
+    return lo_documentLoadWithOptions(self, url, nullptr);
 }
 
-static LibreOfficeKitDocument* lo_documentLoadWithOptions(LibreOfficeKit* pThis, const char* pURL, const char* pOptions)
+static LibreOfficeKitDocument* lo_documentLoadWithOptions(LibreOfficeKit* self, const char* url, const char* options)
 {
-    (void) pThis;
-    (void) pURL;
-    (void) pOptions;
+    (void) self;
+    (void) url;
+    (void) options;
 
     return new LibLODocument_Impl();
 }
 
-static void lo_registerCallback (LibreOfficeKit* pThis,
-                                 LibreOfficeKitCallback pCallback,
-                                 void* pData)
+static void lo_registerCallback (LibreOfficeKit* self,
+                                 LibreOfficeKitCallback callback,
+                                 void* data)
 {
-    (void) pThis;
-    (void) pCallback;
-    (void) pData;
+    (void) self;
+    (void) callback;
+    (void) data;
 }
 
-static int doc_saveAs(LibreOfficeKitDocument* pThis, const char* sUrl, const char* pFormat, const char* pFilterOptions)
+static int doc_saveAs(LibreOfficeKitDocument* self, const char* url, const char* format, const char* filterOptions)
 {
-    (void) pThis;
-    (void) sUrl;
-    (void) pFormat;
-    (void) pFilterOptions;
+    (void) self;
+    (void) url;
+    (void) format;
+    (void) filterOptions;
 
     return true;
 }
 
-static int doc_getDocumentType (LibreOfficeKitDocument* pThis)
+static int doc_getDocumentType (LibreOfficeKitDocument* self)
 {
-    (void) pThis;
+    (void) self;
     return LOK_DOCTYPE_TEXT;
 }
 
-static int doc_getParts (LibreOfficeKitDocument* pThis)
+static int doc_getParts (LibreOfficeKitDocument* self)
 {
-    (void) pThis;
+    (void) self;
     return 1;
 }
 
-static int doc_getPart (LibreOfficeKitDocument* pThis)
+static int doc_getPart (LibreOfficeKitDocument* self)
 {
-    (void) pThis;
+    (void) self;
     return 0;
 }
 
-static void doc_setPart(LibreOfficeKitDocument* pThis, int nPart)
+static void doc_setPart(LibreOfficeKitDocument* self, int part)
 {
-    (void) pThis;
-    (void) nPart;
+    (void) self;
+    (void) part;
 }
 
-static char* doc_getPartPageRectangles(LibreOfficeKitDocument* pThis)
+static char* doc_getPartPageRectangles(LibreOfficeKitDocument* self)
 {
-    (void) pThis;
+    (void) self;
     return nullptr;
 }
 
-static char* doc_getPartName(LibreOfficeKitDocument* pThis, int nPart)
+static char* doc_getPartName(LibreOfficeKitDocument* self, int part)
 {
-    (void) pThis;
-    (void) nPart;
+    (void) self;
+    (void) part;
 
-    char* pMemory = strdup("Dummy part");
-    return pMemory;
+    char* memory = strdup("Dummy part");
+    return memory;
 
 }
 
-static char* doc_getPartHash(LibreOfficeKitDocument* pThis, int nPart)
+static char* doc_getPartHash(LibreOfficeKitDocument* self, int part)
 {
-    (void) pThis;
-    (void) nPart;
+    (void) self;
+    (void) part;
     return nullptr;
 }
 
-static void doc_setPartMode(LibreOfficeKitDocument* pThis,
-                            int nPartMode)
+static void doc_setPartMode(LibreOfficeKitDocument* self,
+                            int partMode)
 {
-    (void) pThis;
-    (void) nPartMode;
+    (void) self;
+    (void) partMode;
 }
 
-static int doc_getEditMode(LibreOfficeKitDocument* pThis)
+static int doc_getEditMode(LibreOfficeKitDocument* self)
 {
-    (void) pThis;
+    (void) self;
 }
 
-static void doc_paintTile(LibreOfficeKitDocument* pThis,
-                          unsigned char* pBuffer,
-                          const int nCanvasWidth, const int nCanvasHeight,
-                          const int nTilePosX, const int nTilePosY,
-                          const int nTileWidth, const int nTileHeight)
+static void doc_paintTile(LibreOfficeKitDocument* self,
+                          unsigned char* buffer,
+                          const int canvasWidth, const int canvasHeight,
+                          const int tilePosX, const int tilePosY,
+                          const int tileWidth, const int tileHeight)
 {
-    (void) pThis;
-    (void) pBuffer;
-    (void) nCanvasWidth;
-    (void) nCanvasHeight;
-    (void) nTilePosX;
-    (void) nTilePosY;
-    (void) nTileWidth;
-    (void) nTileHeight;
+    (void) self;
+    (void) buffer;
+    (void) canvasWidth;
+    (void) canvasHeight;
+    (void) tilePosX;
+    (void) tilePosY;
+    (void) tileWidth;
+    (void) tileHeight;
 
     // TODO maybe at least clean the buffer?
 }
 
 
-static void doc_paintPartTile(LibreOfficeKitDocument* pThis,
-                              unsigned char* pBuffer,
-                              const int nPart,
-                              const int nCanvasWidth, const int nCanvasHeight,
-                              const int nTilePosX, const int nTilePosY,
-                              const int nTileWidth, const int nTileHeight)
+static void doc_paintPartTile(LibreOfficeKitDocument* self,
+                              unsigned char* buffer,
+                              const int part,
+                              const int canvasWidth, const int canvasHeight,
+                              const int tilePosX, const int tilePosY,
+                              const int tileWidth, const int tileHeight)
 {
-    (void) nPart;
+    (void) part;
 
-    doc_paintTile(pThis, pBuffer, nCanvasWidth, nCanvasHeight, nTilePosX, nTilePosY, nTileWidth, nTileHeight);
+    doc_paintTile(self, buffer, canvasWidth, canvasHeight, tilePosX, tilePosY, tileWidth, tileHeight);
 }
 
-static int doc_getTileMode(LibreOfficeKitDocument* /*pThis*/)
+static int doc_getTileMode(LibreOfficeKitDocument* /*self*/)
 {
     return LOK_TILEMODE_RGBA;
 }
 
-static void doc_getDocumentSize(LibreOfficeKitDocument* pThis,
-                                long* pWidth,
-                                long* pHeight)
+static void doc_getDocumentSize(LibreOfficeKitDocument* self,
+                                long* width,
+                                long* height)
 {
-    (void) pThis;
+    (void) self;
     // TODO better values here maybe?
-    *pWidth = 10000;
-    *pHeight = 10000;
+    *width = 10000;
+    *height = 10000;
 }
 
-static void doc_getDataArea(LibreOfficeKitDocument* pThis,
-                            long nPart,
-                            long* pCol,
-                            long* pRow)
+static void doc_getDataArea(LibreOfficeKitDocument* self,
+                            long part,
+                            long* col,
+                            long* row)
 {
-    (void) pThis;
-    (void) nPart;
+    (void) self;
+    (void) part;
 
-    *pCol = 999;
-    *pRow = 999;
+    *col = 999;
+    *row = 999;
 }
 
-static void doc_initializeForRendering(LibreOfficeKitDocument* pThis,
-                                       const char* pArguments)
+static void doc_initializeForRendering(LibreOfficeKitDocument* self,
+                                       const char* arguments)
 {
-    (void) pThis;
-    (void) pArguments;
+    (void) self;
+    (void) arguments;
 }
 
-static void doc_registerCallback(LibreOfficeKitDocument* pThis,
-                                 LibreOfficeKitCallback pCallback,
-                                 void* pData)
+static void doc_registerCallback(LibreOfficeKitDocument* self,
+                                 LibreOfficeKitCallback callback,
+                                 void* data)
 {
-    (void) pThis;
-    (void) pCallback;
-    (void) pData;
+    (void) self;
+    (void) callback;
+    (void) data;
 }
 
-static void doc_postKeyEvent(LibreOfficeKitDocument* pThis, int nType, int nCharCode, int nKeyCode)
+static void doc_postKeyEvent(LibreOfficeKitDocument* self, int type, int charCode, int keyCode)
 {
-    (void) pThis;
-    (void) nType;
-    (void) nCharCode;
-    (void) nKeyCode;
+    (void) self;
+    (void) type;
+    (void) charCode;
+    (void) keyCode;
 }
 
-static void doc_postUnoCommand(LibreOfficeKitDocument* pThis, const char* pCommand, const char* pArguments, bool bNotifyWhenFinished)
+static void doc_postUnoCommand(LibreOfficeKitDocument* self, const char* command, const char* arguments, bool notifyWhenFinished)
 {
-    (void) pThis;
-    (void) pCommand;
-    (void) pArguments;
-    (void) bNotifyWhenFinished;
+    (void) self;
+    (void) command;
+    (void) arguments;
+    (void) notifyWhenFinished;
 }
 
-static void doc_postMouseEvent(LibreOfficeKitDocument* pThis, int nType, int nX, int nY, int nCount, int nButtons, int nModifier)
+static void doc_postMouseEvent(LibreOfficeKitDocument* self, int type, int x, int y, int count, int buttons, int modifier)
 {
-    (void) pThis;
-    (void) nType;
-    (void) nX;
-    (void) nY;
-    (void) nCount;
-    (void) nButtons;
-    (void) nModifier;
+    (void) self;
+    (void) type;
+    (void) x;
+    (void) y;
+    (void) count;
+    (void) buttons;
+    (void) modifier;
 }
 
-static void doc_setTextSelection(LibreOfficeKitDocument* pThis, int nType, int nX, int nY)
+static void doc_setTextSelection(LibreOfficeKitDocument* self, int type, int x, int y)
 {
-    (void) pThis;
-    (void) nType;
-    (void) nX;
-    (void) nY;
+    (void) self;
+    (void) type;
+    (void) x;
+    (void) y;
 }
 
-static char* doc_getTextSelection(LibreOfficeKitDocument* pThis, const char* pMimeType, char** pUsedMimeType)
+static char* doc_getTextSelection(LibreOfficeKitDocument* self, const char* mimeType, char** usedMimeType)
 {
-    (void) pThis;
-    (void) pMimeType;
-    (void) pUsedMimeType;
+    (void) self;
+    (void) mimeType;
+    (void) usedMimeType;
 
-    char* pMemory = strdup("Dummy text");
+    char* memory = strdup("Dummy text");
 
-    if (pUsedMimeType)
+    if (usedMimeType)
     {
-        *pUsedMimeType = strdup("text/plain;charset=utf-8");
+        *usedMimeType = strdup("text/plain;charset=utf-8");
     }
 
-    return pMemory;
+    return memory;
 }
 
-static bool doc_paste(LibreOfficeKitDocument* pThis, const char* pMimeType, const char* pData, size_t nSize)
+static bool doc_paste(LibreOfficeKitDocument* self, const char* mimeType, const char* data, size_t size)
 {
-    (void) pThis;
-    (void) pMimeType;
-    (void) pData;
-    (void) nSize;
+    (void) self;
+    (void) mimeType;
+    (void) data;
+    (void) size;
 
     return true;
 }
 
-static void doc_setGraphicSelection(LibreOfficeKitDocument* pThis, int nType, int nX, int nY)
+static void doc_setGraphicSelection(LibreOfficeKitDocument* self, int type, int x, int y)
 {
-    (void) pThis;
-    (void) nType;
-    (void) nX;
-    (void) nY;
+    (void) self;
+    (void) type;
+    (void) x;
+    (void) y;
 }
 
-static void doc_resetSelection(LibreOfficeKitDocument* pThis)
+static void doc_resetSelection(LibreOfficeKitDocument* self)
 {
-    (void) pThis;
+    (void) self;
 }
 
-static char* doc_getCommandValues(LibreOfficeKitDocument* pThis, const char* pCommand)
+static char* doc_getCommandValues(LibreOfficeKitDocument* self, const char* command)
 {
-    (void) pThis;
-    (void) pCommand;
+    (void) self;
+    (void) command;
 
-    char* pMemory = strdup("");
-    return pMemory;
+    char* memory = strdup("");
+    return memory;
 }
 
-static void doc_setClientZoom(LibreOfficeKitDocument* pThis, int nTilePixelWidth, int nTilePixelHeight,
-        int nTileTwipWidth, int nTileTwipHeight)
+static void doc_setClientZoom(LibreOfficeKitDocument* self, int tilePixelWidth, int tilePixelHeight,
+        int tileTwipWidth, int tileTwipHeight)
 {
-    (void) pThis;
-    (void) nTilePixelWidth;
-    (void) nTilePixelHeight;
-    (void) nTileTwipWidth;
-    (void) nTileTwipHeight;
+    (void) self;
+    (void) tilePixelWidth;
+    (void) tilePixelHeight;
+    (void) tileTwipWidth;
+    (void) tileTwipHeight;
 }
 
-static void doc_setClientVisibleArea(LibreOfficeKitDocument* pThis, int nX, int nY, int nWidth, int nHeight)
+static void doc_setClientVisibleArea(LibreOfficeKitDocument* self, int x, int y, int width, int height)
 {
-    (void) pThis;
-    (void) nX;
-    (void) nY;
-    (void) nWidth;
-    (void) nHeight;
+    (void) self;
+    (void) x;
+    (void) y;
+    (void) width;
+    (void) height;
 }
 
-static void doc_setOutlineState(LibreOfficeKitDocument* pThis, bool bColumn, int nLevel, int nIndex, bool bHidden)
+static void doc_setOutlineState(LibreOfficeKitDocument* self, bool column, int level, int index, bool hidden)
 {
-    (void) pThis;
-    (void) bColumn;
-    (void) nLevel;
-    (void) nIndex;
-    (void) bHidden;
+    (void) self;
+    (void) column;
+    (void) level;
+    (void) index;
+    (void) hidden;
 }
 
-static int doc_createView(LibreOfficeKitDocument* /*pThis*/)
+static int doc_createView(LibreOfficeKitDocument* /*self*/)
 {
     return 1;
 }
 
-static void doc_destroyView(LibreOfficeKitDocument* /*pThis*/, int nId)
+static void doc_destroyView(LibreOfficeKitDocument* /*self*/, int id)
 {
-    (void) nId;
+    (void) id;
 }
 
-static void doc_setView(LibreOfficeKitDocument* /*pThis*/, int nId)
+static void doc_setView(LibreOfficeKitDocument* /*self*/, int id)
 {
-    (void) nId;
+    (void) id;
 }
 
-static int doc_getView(LibreOfficeKitDocument* /*pThis*/)
+static int doc_getView(LibreOfficeKitDocument* /*self*/)
 {
     return 1;
 }
 
-static int doc_getViewsCount(LibreOfficeKitDocument* /*pThis*/)
+static int doc_getViewsCount(LibreOfficeKitDocument* /*self*/)
 {
     return 1;
 }
 
-static bool doc_getViewIds(LibreOfficeKitDocument* /*pThis*/, int* pArray, size_t nSize)
+static bool doc_getViewIds(LibreOfficeKitDocument* /*self*/, int* array, size_t size)
 {
-    (void) pArray;
-    (void) nSize;
+    (void) array;
+    (void) size;
 
     // TODO Should we return something here?
     return true;
 }
 
-unsigned char* doc_renderFont(LibreOfficeKitDocument* /*pThis*/,
-                    const char* pFontName,
-                    const char* pChar,
-                    int* pFontWidth,
-                    int* pFontHeight)
+unsigned char* doc_renderFont(LibreOfficeKitDocument* /*self*/,
+                    const char* fontName,
+                    const char* character,
+                    int* fontWidth,
+                    int* fontHeight)
 {
-    (void) pFontName;
-    (void) pChar;
-    (void) pFontWidth;
-    (void) pFontHeight;
+    (void) fontName;
+    (void) character;
+    (void) fontWidth;
+    (void) fontHeight;
 
     return nullptr;
 }
 
-unsigned char* doc_renderFontOrientation(LibreOfficeKitDocument* /*pThis*/,
-                    const char* pFontName,
-                    const char* pChar,
-                    int* pFontWidth,
-                    int* pFontHeight,
-                    int pOrientation)
+unsigned char* doc_renderFontOrientation(LibreOfficeKitDocument* /*self*/,
+                    const char* fontName,
+                    const char* character,
+                    int* fontWidth,
+                    int* fontHeight,
+                    int orientation)
 {
-    (void) pFontName;
-    (void) pChar;
-    (void) pFontWidth;
-    (void) pFontHeight;
-    (void) pOrientation;
+    (void) fontName;
+    (void) character;
+    (void) fontWidth;
+    (void) fontHeight;
+    (void) orientation;
 
     return nullptr;
 }
 
-static size_t doc_renderShapeSelection(LibreOfficeKitDocument* pThis, char** pOutput)
+static size_t doc_renderShapeSelection(LibreOfficeKitDocument* self, char** output)
 {
-    (void) pThis;
-    (void) pOutput;
+    (void) self;
+    (void) output;
     return 0;
 }
 
-static char* lo_getError (LibreOfficeKit *pThis)
+static char* lo_getError (LibreOfficeKit *self)
 {
-    (void) pThis;
+    (void) self;
 
-    char* pMemory = strdup("Dummy error");
-    return pMemory;
+    char* memory = strdup("Dummy error");
+    return memory;
 }
 
-static void lo_freeError(char* pFree)
+static void lo_freeError(char* freePointer)
 {
-    free(pFree);
+    free(freePointer);
 }
 
-static char* lo_getFilterTypes(LibreOfficeKit* pThis)
+static char* lo_getFilterTypes(LibreOfficeKit* self)
 {
-    (void) pThis;
+    (void) self;
 
-    // TODO anything more here?
+    // TODO aything more here?
     return nullptr;
 }
 
-static void lo_setOptionalFeatures(LibreOfficeKit* pThis, unsigned long long const features)
+static void lo_setOptionalFeatures(LibreOfficeKit* self, unsigned long long const features)
 {
-    (void) pThis;
+    (void) self;
     (void) features;
 }
 
-static void lo_setDocumentPassword(LibreOfficeKit* pThis,
-        const char* pURL, const char* pPassword)
+static void lo_setDocumentPassword(LibreOfficeKit* self,
+        const char* url, const char* password)
 {
-    (void) pThis;
-    (void) pURL;
-    (void) pPassword;
+    (void) self;
+    (void) url;
+    (void) password;
 }
 
-static char* lo_getVersionInfo(LibreOfficeKit* /*pThis*/)
+static char* lo_getVersionInfo(LibreOfficeKit* /*self*/)
 {
     const char version[] =
         "{ "
@@ -629,8 +634,8 @@ static char* lo_getVersionInfo(LibreOfficeKit* /*pThis*/)
         "\"BuildId\": \"1\" "
         "}";
 
-    char* pVersion = strdup(version);
-    return pVersion;
+    char* version = strdup(version);
+    return version;
 }
 
 LibreOfficeKit* dummy_lok_init_2(const char *install_path,  const char *user_profile_url)
@@ -645,18 +650,18 @@ LibreOfficeKit* dummy_lok_init_2(const char *install_path,  const char *user_pro
     return static_cast<LibreOfficeKit*>(gImpl);
 }
 
-static void doc_destroy(LibreOfficeKitDocument *pThis)
+static void doc_destroy(LibreOfficeKitDocument *self)
 {
-    LibLODocument_Impl *pDocument = static_cast<LibLODocument_Impl*>(pThis);
-    delete pDocument;
+    LibLODocument_Impl *document = static_cast<LibLODocument_Impl*>(self);
+    delete document;
 }
 
-static void lo_destroy(LibreOfficeKit* pThis)
+static void lo_destroy(LibreOfficeKit* self)
 {
-    LibLibreOffice_Impl* pLib = static_cast<LibLibreOffice_Impl*>(pThis);
+    LibLibreOffice_Impl* lib = static_cast<LibLibreOffice_Impl*>(self);
     gImpl = nullptr;
 
-    delete pLib;
+    delete lib;
 }
 
 }

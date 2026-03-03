@@ -9,6 +9,10 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * Unit test for fuzzing functionality.
+ */
+
 #include <config.h>
 
 #include <iostream>
@@ -17,7 +21,7 @@
 #include <Common.hpp>
 #include <Protocol.hpp>
 #include <Unit.hpp>
-#include <Util.hpp>
+#include <common/Util.hpp>
 
 #include <Poco/Net/HTTPServerRequest.h>
 

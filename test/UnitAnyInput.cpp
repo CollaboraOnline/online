@@ -9,6 +9,10 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * Unit test for handling arbitrary input events.
+ */
+
 #include <config.h>
 
 #include <memory>
@@ -19,7 +23,7 @@
 #include <kit/Kit.hpp>
 
 #include <Unit.hpp>
-#include <Util.hpp>
+#include <common/Util.hpp>
 #include <helpers.hpp>
 
 /// Tests the anyInput callback.

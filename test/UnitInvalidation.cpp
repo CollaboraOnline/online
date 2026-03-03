@@ -9,6 +9,10 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * Unit test for tile invalidation functionality.
+ */
+
 #include <config.h>
 
 #include <memory>
@@ -18,7 +22,7 @@
 #include <test/lokassert.hpp>
 
 #include <Unit.hpp>
-#include <Util.hpp>
+#include <common/Util.hpp>
 #include <helpers.hpp>
 
 using namespace std::literals;
@@ -74,7 +78,7 @@ void UnitInvalidation::renderArea(const std::shared_ptr<http::WebSocketSession> 
             }
         }
 
-        helpers::sendTextFrame(session, "tileprocessed wids=" + Util::join(wids, ","));
+        helpers::sendTextFrame(session, "tileprocessed wids=" + Util::joinPair(wids, ","));
 }
 
 void UnitInvalidation::invokeWSDTest()

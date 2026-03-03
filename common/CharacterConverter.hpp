@@ -11,7 +11,7 @@
 
 #pragma once
 
-#include <Log.hpp>
+#include <common/Log.hpp>
 
 #include <cstdint>
 #include <iconv.h>
@@ -51,7 +51,7 @@ public:
     {
         if (reinterpret_cast<int64_t>(_iconvd) == -1)
         {
-            LOG_WRN("Failed to initize iconv and cannot convert [" + source + ']');
+            LOG_WRN("Failed to initize iconv and cannot convert [" << source << ']');
             return source;
         }
 

@@ -9,16 +9,14 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * Implementation of special purpose brokers.
+ * Classes: ThumbnailBroker, SystemTemplatesBroker
+ */
+
 #include <config.h>
 
 #include "SpecialBrokers.hpp"
-
-#include <atomic>
-#include <cassert>
-#include <chrono>
-#include <ctime>
-#include <memory>
-#include <string>
 
 #include <Poco/DigestStream.h>
 #include <Poco/Exception.h>
@@ -27,13 +25,13 @@
 #include <Poco/StreamCopier.h>
 #include <Poco/URI.h>
 
-#include "ClientSession.hpp"
-#include "Common.hpp"
-#include "COOLWSD.hpp"
-#include "FileServer.hpp"
-#include "Socket.hpp"
-#include "TileCache.hpp"
-#include "QuarantineUtil.hpp"
+#include <ClientSession.hpp>
+#include <Common.hpp>
+#include <COOLWSD.hpp>
+#include <FileServer.hpp>
+#include <Socket.hpp>
+#include <TileCache.hpp>
+#include <QuarantineUtil.hpp>
 #include <common/JsonUtil.hpp>
 #include <common/Log.hpp>
 #include <common/Message.hpp>
@@ -48,6 +46,14 @@
 #include <wopi/CheckFileInfo.hpp>
 #include <net/HttpHelper.hpp>
 #endif
+
+#include <atomic>
+#include <cassert>
+#include <chrono>
+#include <ctime>
+#include <memory>
+#include <string>
+
 #include <sys/types.h>
 #include <sys/wait.h>
 
@@ -64,43 +70,62 @@ void StatelessBatchBroker::removeFile(const std::string& uriOrig)
         FileUtil::removeFile(dir);
 }
 
-static std::atomic<std::size_t> gConvertToBrokerInstanceCouter;
+static std::atomic<std::size_t> convertToBrokerInstanceCounter;
 
-std::size_t ConvertToBroker::getInstanceCount() { return gConvertToBrokerInstanceCouter; }
+std::size_t ConvertToBroker::getInstanceCount() { return convertToBrokerInstanceCounter; }
+
+/// Split ",infilterOptions=..." out of the combined options string so that
+/// import options go to the load command and export options go to saveas.
+static std::pair<std::string, std::string> splitInFilterOptions(const std::string& options)
+{
+    const std::string tag = ",infilterOptions=";
+    auto pos = options.find(tag);
+    if (pos != std::string::npos)
+        return { options.substr(0, pos), options.substr(pos + tag.size()) };
+    return { options, std::string() };
+}
 
 ConvertToBroker::ConvertToBroker(const std::string& uri, const Poco::URI& uriPublic,
                                  const std::string& docKey, const std::string& format,
-                                 const std::string& sOptions, const std::string& lang)
+                                 const std::string& options, const std::string& lang)
     : StatelessBatchBroker(uri, uriPublic, docKey)
     , _format(format)
-    , _sOptions(sOptions)
+    , _options(splitInFilterOptions(options).first)
+    , _inFilterOptions(splitInFilterOptions(options).second)
     , _lang(lang)
 {
     LOG_TRC("Created ConvertToBroker: uri: ["
             << uri << "], uriPublic: [" << uriPublic.toString() << "], docKey: [" << docKey
-            << "], format: [" << format << "], options: [" << sOptions << "], lang: [" << lang
-            << "].");
+            << "], format: [" << format << "], options: [" << _options << "], infilterOptions: ["
+            << _inFilterOptions << "], lang: [" << lang << "].");
 
     CONFIG_STATIC const std::chrono::seconds limit_convert_secs(
         ConfigUtil::getConfigValue<std::chrono::seconds>("per_document.limit_convert_secs", 100));
     _limitLifeSeconds = limit_convert_secs;
-    ++gConvertToBrokerInstanceCouter;
+    ++convertToBrokerInstanceCounter;
 }
 
 ConvertToBroker::~ConvertToBroker() {}
 
-bool ConvertToBroker::startConversion(SocketDisposition& disposition, const std::string& id)
+bool ConvertToBroker::startConversion(SocketDisposition& disposition, const std::string& id, const AdditionalFilePocoUris& additionalFileUrisPublic)
 {
     std::shared_ptr<ConvertToBroker> docBroker =
         std::static_pointer_cast<ConvertToBroker>(shared_from_this());
 
     // Create a session to load the document.
-    const bool isReadOnly = docBroker->isReadOnly();
+    bool isReadOnly = docBroker->isReadOnly();
+    if (isReadOnly && additionalFileUrisPublic.contains("compare"))
+    {
+        // Comparing means modifying the new document to have redlines against the baseline, so all
+        // this to modify the throwaway document model.
+        isReadOnly = false;
+    }
     // FIXME: associate this with moveSocket (?)
     std::shared_ptr<ProtocolHandlerInterface> nullPtr;
     RequestDetails requestDetails("convert-to");
     _clientSession = std::make_shared<ClientSession>(nullPtr, id, docBroker, getPublicUri(),
-                                                     isReadOnly, requestDetails);
+                                                     isReadOnly, requestDetails,
+                                                     additionalFileUrisPublic);
     _clientSession->construct();
 
     docBroker->setupTransfer(
@@ -131,8 +156,8 @@ void ConvertToBroker::sendStartMessage(const std::shared_ptr<ClientSession>& cli
     std::string load = "load url=" + encodedFrom + " batch=true";
     if (!getLang().empty())
         load += " lang=" + getLang();
-    if(!_sOptions.empty() && _sOptions.starts_with(",infilterOptions="))
-        load +=  " " + _sOptions.substr(1);
+    if (!_inFilterOptions.empty())
+        load += " infilterOptions=" + _inFilterOptions;
     std::vector<char> loadRequest(load.begin(), load.end());
     clientSession->handleMessage(loadRequest);
 }
@@ -180,7 +205,7 @@ void ConvertToBroker::dispose()
 {
     if (!_uriOrig.empty())
     {
-        gConvertToBrokerInstanceCouter--;
+        convertToBrokerInstanceCounter--;
         removeFile(_uriOrig);
         _uriOrig.clear();
     }
@@ -192,6 +217,18 @@ void ConvertToBroker::setLoaded()
 
     if (isGetThumbnail())
         return;
+
+    auto it = getAdditionalFileUrisJailed().find("compare");
+    if (it != getAdditionalFileUrisJailed().end())
+    {
+        // We have a baseline to compare against, do that before saving.
+        std::string unoCmd =
+            "uno .uno:CompareDocuments { \"URL\": { \"type\": \"string\", \"value\": \"" +
+            it->second +
+            "\" }, \"NoAcceptDialog\": { \"type\": \"boolean\", \"value\": \"true\" } }";
+        std::vector<char> unoRequest(unoCmd.begin(), unoCmd.end());
+        _clientSession->handleMessage(unoRequest);
+    }
 
     // FIXME: Check for security violations.
     Poco::Path toPath(getPublicUri().getPath());
@@ -206,7 +243,7 @@ void ConvertToBroker::setLoaded()
 
     // Convert it to the requested format.
     const std::string saveAsCmd =
-        "saveas url=" + encodedTo + " format=" + _format + " options=" + _sOptions;
+        "saveas url=" + encodedTo + " format=" + _format + " options=" + _options;
 
     // Send the save request ...
     std::vector<char> saveasRequest(saveAsCmd.begin(), saveAsCmd.end());
@@ -214,11 +251,11 @@ void ConvertToBroker::setLoaded()
     _clientSession->handleMessage(saveasRequest);
 }
 
-static std::atomic<std::size_t> gRenderSearchResultBrokerInstanceCouter;
+static std::atomic<std::size_t> renderSearchResultBrokerInstanceCouter;
 
 std::size_t RenderSearchResultBroker::getInstanceCount()
 {
-    return gRenderSearchResultBrokerInstanceCouter;
+    return renderSearchResultBrokerInstanceCouter;
 }
 
 RenderSearchResultBroker::RenderSearchResultBroker(
@@ -230,7 +267,7 @@ RenderSearchResultBroker::RenderSearchResultBroker(
     LOG_TRC("Created RenderSearchResultBroker: uri: ["
             << uri << "], uriPublic: [" << uriPublic.toString() << "], docKey: [" << docKey
             << "].");
-    gConvertToBrokerInstanceCouter++;
+    convertToBrokerInstanceCounter++;
 }
 
 RenderSearchResultBroker::~RenderSearchResultBroker() {}
@@ -287,7 +324,7 @@ void RenderSearchResultBroker::dispose()
 {
     if (!_uriOrig.empty())
     {
-        gRenderSearchResultBrokerInstanceCouter--;
+        renderSearchResultBrokerInstanceCouter--;
         removeFile(_uriOrig);
         _uriOrig.clear();
     }
@@ -295,9 +332,9 @@ void RenderSearchResultBroker::dispose()
 
 bool RenderSearchResultBroker::handleInput(const std::shared_ptr<Message>& message)
 {
-    bool bResult = DocumentBroker::handleInput(message);
+    bool result = DocumentBroker::handleInput(message);
 
-    if (bResult)
+    if (result)
     {
         auto const& messageData = message->data();
 
@@ -306,9 +343,9 @@ bool RenderSearchResultBroker::handleInput(const std::shared_ptr<Message>& messa
 
         if (messageData.size() >= commandStringVector.size())
         {
-            bool bEquals = std::equal(commandStringVector.begin(), commandStringVector.end(),
+            bool equals = std::equal(commandStringVector.begin(), commandStringVector.end(),
                                       messageData.begin());
-            if (bEquals)
+            if (equals)
             {
                 _responseData.resize(messageData.size() - commandStringVector.size());
                 std::copy(messageData.begin() + commandStringVector.size(), messageData.end(),
@@ -332,7 +369,7 @@ bool RenderSearchResultBroker::handleInput(const std::shared_ptr<Message>& messa
             }
         }
     }
-    return bResult;
+    return result;
 }
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

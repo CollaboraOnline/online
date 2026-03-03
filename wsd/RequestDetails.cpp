@@ -9,6 +9,11 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * Implementation of request detail parsing.
+ * Classes: RequestDetails
+ */
+
 #include <config.h>
 
 #include "RequestDetails.hpp"
@@ -23,8 +28,10 @@
 
 #include <Poco/URI.h>
 
+#include <cctype>
 #include <sstream>
 #include <stdexcept>
+#include <utility>
 
 namespace
 {
@@ -39,17 +46,14 @@ std::map<std::string, std::string> getParams(const std::string& uri)
         {
             LOG_WRN("WOPISrc validation error: unencoded WOPISrc [" << param.second
                                                                     << "] in URL: " << uri);
-#if ENABLE_DEBUG
-            throw std::runtime_error("WOPISrc must be URI-encoded");
-#endif // ENABLE_DEBUG
+            if constexpr (Util::isDebugEnabled())
+            {
+                throw std::runtime_error("WOPISrc must be URI-encoded");
+            }
         }
 
-        std::string key = Uri::decode(param.first);
-        std::string value = Uri::decode(param.second);
-        LOG_TRC("Decoding param [" << param.first << "] = [" << param.second << "] -> [" << key
-                                   << "] = [" << value << ']');
-
-        result.emplace(std::move(key), std::move(value));
+        LOG_TRC("Found param [" << param.first << "] = [" << param.second << ']');
+        result.emplace(param);
     }
 
     return result;
@@ -105,13 +109,13 @@ RequestDetails::RequestDetails(http::RequestParser& request, const std::string& 
     processURI();
 }
 
-RequestDetails::RequestDetails(const std::string &mobileURI)
-    : _method(Method::GET)
+RequestDetails::RequestDetails(std::string mobileURI)
+    : _uriString(std::move(mobileURI))
+    , _method(Method::GET)
     , _isProxy(false)
     , _isWebSocket(false)
     , _closeConnection(false)
 {
-    _uriString = mobileURI;
     dehexify();
     processURI();
 }
@@ -151,7 +155,8 @@ RequestDetails::RequestDetails(const std::string& wopiSrc, const std::vector<std
     processURI();
 }
 
-RequestDetails::Method RequestDetails::stringToMethod(std::string const & method) {
+RequestDetails::Method RequestDetails::stringToMethod(const std::string_view method)
+{
     if (method == "GET") {
         return Method::GET;
     } else if (method == "HEAD") {
@@ -228,8 +233,9 @@ void RequestDetails::processURI()
     _fields[Field::Type] = _uriString.substr(off, posDocUri - off); // The first is always the type.
     std::string uriRes = _uriString.substr(posDocUri + 1);
 
-    const auto posLastWS = uriRes.rfind("/ws");
-    // DocumentURI is the second segment in cool URIs.
+    // Cool URI 2.0 starts with /cool/ws.
+    const bool isCool2 = _pathSegs.equals(0, "cool") && _pathSegs.equals(1, "ws");
+
     if (_pathSegs.equals(0, "cool") || _pathSegs.equals(0, "wasm"))
     {
         // Find the DocumentURI proper.
@@ -245,26 +251,55 @@ void RequestDetails::processURI()
 
     _fields[Field::WOPISrc] = getParam("WOPISrc");
 
+    // DocumentURI is the second segment in cool URIs.
+    if (isCool2)
+    {
+        // The params are now part of the main URI, not a sub-section (i.e. Document-URI).
+        _docUriParams = _params;
+        _docUriParams.erase("WOPISrc"); // Remove circular reference.
+        _docUriParams.erase("compat"); // This is internal (for proxies), not for the host.
+        std::string docUri;
+        docUri.reserve(_fields[Field::WOPISrc].size() + _docUriParams.size());
+        docUri = _fields[Field::WOPISrc];
+        bool first = true;
+        for (const auto& [key, value] : _docUriParams)
+        {
+            docUri += first ? '?' : '&';
+            docUri += key;
+            docUri += '=';
+            docUri += Uri::encode(value);
+            first = false;
+        }
+
+        _fields[Field::DocumentURI] = docUri;
+    }
+
     // &compat=
     std::string compat = getParam("compat");
+    std::string lastWS = compat;
     if (!compat.empty())
         _fields[Field::Compat] = std::move(compat);
 
-    // /ws[/<sessionId>/<command>/<serial>]
-    if (posLastWS != std::string::npos)
+    if (!isCool2)
     {
-        std::string lastWS = uriRes.substr(posLastWS);
-        const auto proxyTokens = StringVector::tokenize(std::move(lastWS), '/');
+        // /ws[/<sessionId>/<command>/<serial>]
+        const auto posLastWS = uriRes.rfind("/ws");
+        if (posLastWS != std::string::npos)
+        {
+            lastWS = uriRes.substr(posLastWS + 3);
+        }
+    }
+
+    const auto proxyTokens = StringVector::tokenize(std::move(lastWS), '/');
+    if (proxyTokens.size() > 0)
+    {
+        _fields[Field::SessionId] = proxyTokens[0];
         if (proxyTokens.size() > 1)
         {
-            _fields[Field::SessionId] = proxyTokens[1];
+            _fields[Field::Command] = proxyTokens[1];
             if (proxyTokens.size() > 2)
             {
-                _fields[Field::Command] = proxyTokens[2];
-                if (proxyTokens.size() > 3)
-                {
-                    _fields[Field::Serial] = proxyTokens[3];
-                }
+                _fields[Field::Serial] = proxyTokens[2];
             }
         }
     }
@@ -272,13 +307,22 @@ void RequestDetails::processURI()
 
 Poco::URI RequestDetails::sanitizeURI(const std::string& uri)
 {
-    // The URI of the document should be url-encoded.
+    // The URI of the document is url-encoded, except that in a mobile app it isn't?
     Poco::URI uriPublic((Util::isMobileApp() ? uri : Uri::decode(uri)));
 
     if (uriPublic.isRelative() || uriPublic.getScheme() == "file")
     {
         // TODO: Validate and limit access to local paths!
         uriPublic.normalize();
+#ifdef _WIN32
+        // Change a bogus path like /C:/Users/tml/foo.odt to C:/Users/tml/foo.odt. If this path then
+        // later is changed back into a file: URI, as in ClientSession::loadDocument(), we can't
+        // just prefix "file://" but need one more slash. So maybe it would in fact be simpler to
+        // just keep the seemingly bogus /C:/Users/tml/foo.odt?
+        std::string p = uriPublic.getPath();
+        if (p.length() > 4 && p[0] == '/' && std::isalpha(p[1]) && p[2] == ':' && p[3] == '/')
+            uriPublic.setPath(p.substr(1));
+#endif
     }
 
     if (uriPublic.getPath().empty())

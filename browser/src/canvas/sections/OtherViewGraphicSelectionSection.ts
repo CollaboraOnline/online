@@ -32,6 +32,7 @@ class OtherViewGraphicSelectionSection extends CanvasSectionObject {
         this.sectionProperties.viewId = viewId;
         this.sectionProperties.part = part;
         this.sectionProperties.mode = mode;
+        this.sectionProperties.viewLockInfo = null;
     }
 
     onDraw(frameCount?: number, elapsedTime?: number): void {
@@ -41,11 +42,14 @@ class OtherViewGraphicSelectionSection extends CanvasSectionObject {
     }
 
     checkMyVisibility() {
+        Util.ensureValue(app.activeDocument);
+
         let result = this.size[0] > 0 && this.size[1] > 0;
 
         if (result) {
             if (!app.map._docLayer.isWriter()) {
-                if (this.sectionProperties.part !== app.map._docLayer._selectedPart || this.sectionProperties.mode !== app.map._docLayer._selectedMode)
+                if (this.sectionProperties.part !== app.map._docLayer._selectedPart ||
+                    !app.activeDocument.isModeActive(this.sectionProperties.mode))
                     result = false;
             }
         }
@@ -56,6 +60,9 @@ class OtherViewGraphicSelectionSection extends CanvasSectionObject {
         let rectangle = new cool.SimpleRectangle(0, 0, 0, 0);
         if (rectangleData)
             rectangle = new cool.SimpleRectangle(parseInt(rectangleData[0]), parseInt(rectangleData[1]), parseInt(rectangleData[2]), parseInt(rectangleData[3]));
+
+        if (app.map._docLayer.isCalc() && app.map._docLayer.sheetGeometry)
+            app.map._docLayer.sheetGeometry.convertRectangleToTileTwips(rectangle);
 
         const sectionName = OtherViewGraphicSelectionSection.sectionNamePrefix + viewId;
         let section: OtherViewGraphicSelectionSection;
@@ -85,6 +92,23 @@ class OtherViewGraphicSelectionSection extends CanvasSectionObject {
             app.sectionContainer.removeSection(sectionName);
             app.sectionContainer.requestReDraw();
         }
+    }
+
+    public static setViewLockInfo(viewId: number, viewLockInfo: any) {
+        const sectionName = OtherViewGraphicSelectionSection.sectionNamePrefix + viewId;
+        if (app.sectionContainer.doesSectionExist(sectionName)) {
+            const section = app.sectionContainer.getSectionWithName(sectionName) as OtherViewGraphicSelectionSection;
+            section.sectionProperties.viewLockInfo = viewLockInfo;
+        }
+    }
+
+    public static hasViewLockInfo(viewId: number) {
+        const sectionName = OtherViewGraphicSelectionSection.sectionNamePrefix + viewId;
+        if (app.sectionContainer.doesSectionExist(sectionName)) {
+            const section = app.sectionContainer.getSectionWithName(sectionName) as OtherViewGraphicSelectionSection;
+            return section.sectionProperties.viewLockInfo !== null;
+        }
+        else return false;
     }
 
     public static updateVisibilities() {

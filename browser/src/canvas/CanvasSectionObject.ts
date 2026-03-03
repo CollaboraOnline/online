@@ -22,6 +22,7 @@ class CanvasSectionObject {
 	boundToSection: string = null;
 	anchor: Array<string> | Array<Array<string>> = [];
 	documentObject: boolean; // If true, the section is a document object.
+	documentPosition: cool.SimplePoint = new cool.SimplePoint(0, 0); // Used with document objects.
 	// When section is a document object, its position should be the real position inside the document, in core pixels.
 	isVisible: boolean = false; // Is section visible on the viewed area of the document? This property is valid for document objects. This is managed by the section container.
 	showSection: boolean = true; // Show / hide section.
@@ -36,12 +37,16 @@ class CanvasSectionObject {
 	zIndex: number;
 	interactable: boolean = true;
 	isAnimating: boolean = false;
+	isAlwaysVisible: boolean = false;
 	windowSection: boolean = false;
 	sectionProperties: any = {};
 	boundsList: Array<CanvasSectionObject> = []; // The sections those this section can propagate events to. Updated by container.
 
 	constructor(name: string) {
-		this.name= name;
+		this.name = name;
+
+		if (this.documentObject)
+			this.documentPosition = cool.SimplePoint.fromCorePixels([...this.position]);
 	}
 
 	onInitialize(): void { return; }
@@ -60,10 +65,9 @@ class CanvasSectionObject {
 		if (this.containerObject) { // Is section added to container.
 			this.isVisible = this.containerObject.isDocumentObjectVisible(this);
 			this.onDocumentObjectVisibilityChange();
-		}
 
-		if (this.containerObject.testing) {
-			this.containerObject.createUpdateSingleDivElement(this);
+			if (this.containerObject.testing)
+				this.containerObject.createUpdateSingleDivElement(this);
 		}
 	}
 
@@ -142,6 +146,19 @@ class CanvasSectionObject {
 		return null;
 	}
 
+	setSize(w: number, h: number): void  {
+		if (!this.containerObject)
+			return;
+
+		w = Math.round(w);
+		h = Math.round(h);
+
+		if (this.size[0] === w && this.size[1] === h)
+			return;
+
+		this.size = [w, h];
+	}
+
 	// Document objects only.
 	setPosition(x: number, y: number): void {
 		if (this.documentObject !== true || !this.containerObject)
@@ -149,27 +166,39 @@ class CanvasSectionObject {
 
 		x = Math.round(x);
 		y = Math.round(y);
-		let sectionXcoord = x;
-		const positionAddition = app.activeDocument.activeView.viewedRectangle.clone();
 
-		if (this.isCalcRTL()) {
-			// the document coordinates are not always in sync(fixing that is non-trivial!), so use the latest from map.
-			const docLayer = this.sectionProperties.docLayer;
-			const docSize = docLayer._map.getPixelBoundsCore().getSize();
-			sectionXcoord = docSize.x - sectionXcoord - this.size[0];
+		// Setting the position.
+		this.position[0] = x;
+		this.position[1] = y;
+		this.documentPosition = cool.SimplePoint.fromCorePixels([x, y]);
+
+		// myTopLeft calculation. Keep Calc separate for now, until we have a ViewLayout class for Calc.
+		if (app.map.getDocType() === 'spreadsheet') {
+			let sectionXcoord = x;
+
+			if (this.isCalcRTL()) {
+				// the document coordinates are not always in sync(fixing that is non-trivial!), so use the latest from map.
+				sectionXcoord = app.sectionContainer.getWidth() - sectionXcoord - this.size[0];
+			}
+
+			const positionAddition = app.activeDocument.activeLayout.viewedRectangle.clone();
+			const documentAnchor = this.containerObject.getDocumentAnchor();
+
+			if (app.isXOrdinateInFrozenPane(sectionXcoord))
+				positionAddition.pX1 = 0;
+
+			if (app.isYOrdinateInFrozenPane(y))
+				positionAddition.pY1 = 0;
+
+			this.myTopLeft[0] = documentAnchor[0] + sectionXcoord - positionAddition.pX1;
+			this.myTopLeft[1] = documentAnchor[1] + y - positionAddition.pY1;
+		}
+		else {
+			this.myTopLeft[0] = this.documentPosition.vX;
+			this.myTopLeft[1] = this.documentPosition.vY;
 		}
 
-		if (app.isXOrdinateInFrozenPane(sectionXcoord))
-			positionAddition.pX1 = 0;
-
-		if (app.isYOrdinateInFrozenPane(y))
-			positionAddition.pY1 = 0;
-
-		this.myTopLeft[0] = this.containerObject.getDocumentAnchor()[0] + sectionXcoord - positionAddition.pX1;
-		this.myTopLeft[1] = this.containerObject.getDocumentAnchor()[1] + y - positionAddition.pY1;
-
-		this.position[0] = sectionXcoord;
-		this.position[1] = y;
+		// Visibility check.
 		const isVisible = this.containerObject.isDocumentObjectVisible(this);
 		if (isVisible !== this.isVisible) {
 			this.isVisible = isVisible;
@@ -181,23 +210,15 @@ class CanvasSectionObject {
 	}
 
 	/*
-		This function is (for now) required because sometimes
-		we need to handle the event before leaflet. So we check if the mouse pointer
-		is inside the section.
+		Allow locally to influence if this object is hit by the given point.
+		This can be used e.g. to have CanvasSectionObjects with 'holes',
+		e.g. a frame around something and you only want the frame to be hittable
 	*/
-	containsPoint(point: number[]) {
-		if (
-			this.position[0] <= point[0] &&
-			this.position[0] + this.size[0] >= point[0]
-		) {
-			if (
-				this.position[1] <= point[1] &&
-				this.position[1] + this.size[1] >= point[1]
-			)
-				return true;
-		}
-
-		return false;
+	isHit(point: number[]): boolean {
+		// return result of inside local range (position, size) check
+		return (
+			(point[0] >= this.myTopLeft[0] && point[0] <= this.myTopLeft[0] + this.size[0]) &&
+			(point[1] >= this.myTopLeft[1] && point[1] <= this.myTopLeft[1] + this.size[1]))
 	}
 
 	// All below functions should be included in their respective section definitions (or other classes), not here.
@@ -221,6 +242,54 @@ class CanvasSectionObject {
 	deleteRow (index: number): void { return; }
 	resetStrokeStyle(): void { return; }
 	hasAnyComments(): boolean { return false; }
+
+	/// Updates sectionProperties.polygonColor based on the current dark/light theme.
+	protected changeBorderStyle(): void {
+		const polygonColor = (<any>window).prefs.getBoolean('darkTheme') ? 'white' : 'black';
+		if (this.sectionProperties.polygonColor !== polygonColor)
+			this.sectionProperties.polygonColor = polygonColor;
+	}
+
+	/// Strokes the polygon stored in sectionProperties.polygon using sectionProperties.polygonColor.
+	protected drawPolygon(): void {
+		this.context.strokeStyle = this.sectionProperties.polygonColor;
+		this.context.beginPath();
+		this.context.moveTo(this.sectionProperties.polygon[0] - this.position[0], this.sectionProperties.polygon[0 + 1] - this.position[1]);
+		for (let i = 0; i < this.sectionProperties.polygon.length - 1; i++) {
+			this.context.lineTo(this.sectionProperties.polygon[i] - this.position[0], this.sectionProperties.polygon[i + 1] - this.position[1]);
+			i += 1;
+		}
+		this.context.closePath();
+		this.context.stroke();
+	}
+
+	/// Sets position and size from an array of twip rectangles [x, y, width, height].
+	protected setPositionAndSizeFromTwipRectangles(rectangles: Array<number[]>): void {
+		var xMin: number = Infinity, yMin: number = Infinity, xMax: number = 0, yMax: number = 0;
+		for (var i = 0; i < rectangles.length; i++) {
+			if (rectangles[i][0] < xMin)
+				xMin = rectangles[i][0];
+
+			if (rectangles[i][1] < yMin)
+				yMin = rectangles[i][1];
+
+			if (rectangles[i][0] + rectangles[i][2] > xMax)
+				xMax = rectangles[i][0] + rectangles[i][2];
+
+			if (rectangles[i][1] + rectangles[i][3] > yMax)
+				yMax = rectangles[i][1] + rectangles[i][3];
+		}
+
+		xMin = Math.round(xMin * app.twipsToPixels);
+		yMin = Math.round(yMin * app.twipsToPixels);
+		xMax = Math.round(xMax * app.twipsToPixels);
+		yMax = Math.round(yMax * app.twipsToPixels);
+
+		this.setPosition(xMin, yMin);
+		this.size = [xMax - xMin, yMax - yMin];
+		if (this.size[0] < 5)
+			this.size[0] = 5;
+	}
 
 	public getLineWidth(): number {
 		if (app.dpiScale > 1.0) {

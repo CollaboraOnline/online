@@ -22,6 +22,8 @@
 
 #include <test/testlog.hpp>
 
+#include <LibreOfficeKit/LibreOfficeKitInit.h>
+
 class UnitBase;
 class UnitWSD;
 class UnitKit;
@@ -52,14 +54,14 @@ namespace Poco
 class Session;
 class StorageBase;
 
+namespace http { class Session; }
+
 typedef UnitBase *(CreateUnitHooksFunction)();
 typedef UnitBase**(CreateUnitHooksFunctionMulti)();
 extern "C" {
     UnitBase *unit_create_wsd(void);
     UnitBase** unit_create_wsd_multi(void);
     UnitBase *unit_create_kit(void);
-    typedef struct _LibreOfficeKit LibreOfficeKit;
-    typedef LibreOfficeKit *(LokHookFunction2)( const char *install_path, const char *user_profile_url );
 }
 /// Derive your WSD unit test / hooks from me.
 class UnitBase
@@ -148,7 +150,7 @@ public:
     /// Do we have a unit test library hooking things & loaded
     static bool isUnitTesting()
     {
-#ifdef ENABLE_DEBUG
+#if ENABLE_DEBUG
         return DlHandle;
 #else
         return false; // In non-debug builds unit-tests cannot be run. See test/run_unit.sh.
@@ -183,8 +185,8 @@ public:
     /// Message that is about to be sent via the websocket.
     /// To override, handle onFilterSendWebSocketMessage or any of the onDocument...() handlers.
     /// Returns true to stop processing the message further.
-    bool filterSendWebSocketMessage(const char* data, const std::size_t len, const WSOpCode code,
-                                    const bool flush, int& unitReturn);
+    bool filterSendWebSocketMessage(const char* data, std::size_t len, WSOpCode code, bool flush,
+                                    int& unitReturn);
 
     /// Hook the disk space check
     virtual bool filterCheckDiskSpace(const std::string & /* path */,
@@ -306,7 +308,7 @@ public:
     static std::string getUnitLibPath() { return std::string(UnitLibPath); }
 
     const std::string& getTestname() const { return testname; }
-    void setTestname(const std::string& name) { testname = name; }
+    void setTestname(std::string name) { testname = std::move(name); }
 
     std::shared_ptr<SocketPoll> socketPoll();
 
@@ -317,7 +319,7 @@ private:
     /// Dynamically load the unit-test .so.
     static UnitBase** linkAndCreateUnit(UnitType type, const std::string& unitLibPath);
 
-    /// Close the dynamicallu loaded unit-test .so.
+    /// Close the dynamically loaded unit-test .so.
     static void closeUnit();
 
     /// Initialize the Test Suite options.
@@ -356,11 +358,6 @@ private:
     }
 
     std::string getReason() const;
-
-    static UnitBase* get(UnitType type);
-
-    /// setup global instance for get() method
-    static void rememberInstance(UnitType type, UnitBase* instance);
 
     static void* DlHandle; ///< The handle to the unit-test .so.
     static char *UnitLibPath;
@@ -404,7 +401,7 @@ class UnitWSD : public UnitBase
     bool _hasKitHooks;
 
 public:
-    UnitWSD(const std::string& testname);
+    explicit UnitWSD(const std::string& testname);
 
     virtual ~UnitWSD();
 
@@ -561,6 +558,17 @@ public:
     {
         return false;
     }
+
+    /// Called before a clipboard download URL is used.
+    /// Override to replace the URL, e.g. with a non-routable address to test timeouts.
+    virtual void filterClipboardDownloadURL(std::string& /*url*/) {}
+
+    /// Called after an async clipboard download request is set up.
+    /// Override to adjust the session, e.g. to set a shorter timeout.
+    virtual void onClipboardDownloadRequest(std::shared_ptr<http::Session>& /*httpSession*/) {}
+
+    /// Called when the clipboard download callback detects its session has already been destroyed.
+    virtual void onClipboardDownloadSessionGone() {}
 
     /// Called before uri is set as a preinstall settings asset
     virtual void filterRegisterPresetAsset(std::string& /*uri*/) {}
@@ -726,5 +734,13 @@ private:
 
 #define LOK_ASSERT_STATE(VAR, STATE)                                                               \
     LOK_ASSERT_MESSAGE("Expected " #VAR " to be in " #STATE " but was " << name(VAR), VAR == STATE)
+
+#ifdef ENABLE_DEBUG
+#define UNITWSD_CALL(X) UnitWSD::get().X
+#define UNITWSD_CALL_INSTANCE(INST, X) ((INST) ? (INST)->X : decltype((INST)->X)())
+#else // !ENABLE_DEBUG
+#define UNITWSD_CALL(X) (void)0
+#define UNITWSD_CALL_INSTANCE(INST, X) false
+#endif // !ENABLE_DEBUG
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

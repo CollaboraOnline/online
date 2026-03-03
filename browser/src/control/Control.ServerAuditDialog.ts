@@ -108,9 +108,18 @@ class ServerAuditDialog {
 				slow: [
 					_('Slow Kit jail setup with copying, cannot bind-mount.'),
 					'SDK: bindmount',
-					'',
+					'https://sdk.collaboraonline.com/docs/installation/Configuration.html#performance',
 				],
-				ok: [_('Fast kit jail bind mounting enabled'), 'SDK: bindmount', ''],
+				ok: [
+					_('Fast kit jail bind mounting enabled'),
+					'SDK: bindmount',
+					'https://sdk.collaboraonline.com/docs/installation/Configuration.html#performance',
+				],
+				not_recommended: [
+					_('Fast kit jail bind mounting not configured'),
+					'SDK: bindmount',
+					'https://sdk.collaboraonline.com/docs/installation/Configuration.html#performance',
+				],
 			},
 			proxy: {
 				priority: 12,
@@ -195,6 +204,7 @@ class ServerAuditDialog {
 		if (!sourceUnsorted) return entries;
 
 		const errorIcon = { collapsed: 'serverauditerror.svg' };
+		const warnIcon = { collapsed: 'serverauditwarn.svg' };
 		const okIcon = { collapsed: 'serverauditok.svg' };
 
 		const source = sourceUnsorted.sort(
@@ -211,8 +221,10 @@ class ServerAuditDialog {
 					entries.push({
 						row: 0,
 						columns: [
-							entry.status === 'ok' || this.isInfoEntry(entry)
-								? okIcon
+							!this.isErrorEntry(entry)
+								? this.isWarnEntry(entry)
+									? warnIcon
+									: okIcon
 								: errorIcon,
 							{ text: status[0] },
 							status[1] && status[2]
@@ -355,8 +367,19 @@ class ServerAuditDialog {
 		return entry.code.startsWith('info_');
 	}
 
+	/// Warning entries are marked with 'not_recommended'.
+	/// This makes it flexible and allows for having a third
+	/// option, besides 'ok' and !'ok', independent of info.
+	private isWarnEntry(entry: AuditEntry): boolean {
+		return entry.status === 'not_recommended';
+	}
+
 	private isErrorEntry(entry: AuditEntry): boolean {
-		return !this.isInfoEntry(entry) && entry.status !== 'ok';
+		return (
+			!this.isInfoEntry(entry) &&
+			!this.isWarnEntry(entry) &&
+			entry.status !== 'ok'
+		);
 	}
 
 	private onServerAudit() {

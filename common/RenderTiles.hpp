@@ -24,10 +24,10 @@
 
 #include <common/ThreadPool.hpp>
 
-#include "Png.hpp"
-#include "Delta.hpp"
-#include "Rectangle.hpp"
-#include "TileDesc.hpp"
+#include <Png.hpp>
+#include <Delta.hpp>
+#include <Rectangle.hpp>
+#include <TileDesc.hpp>
 
 namespace RenderTiles
 {

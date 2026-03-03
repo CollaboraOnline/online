@@ -12,11 +12,15 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Apply paragraph properties
 
 		cy.cGet('.close-navigation-button').click();
 		cy.cGet('#navigator-sidebar').should('not.exist');
+		cy.getFrameWindow().then((win) => {
+			this.win = win;
+		});
 	});
 
-	function selectText() {
+	function selectText(win) {
 		impressHelper.triggerNewSVGForShapeInTheCenter();
 		impressHelper.selectTextOfShape();
+		helper.processToIdle(win);
 	}
 
 	it.skip('Apply horizontal alignment on selected text.', function() {
@@ -58,39 +62,37 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Apply paragraph properties
 	});
 
 	it('Apply default bulleting on selected text.', function() {
-		selectText();
-		cy.wait(500);
+		selectText(this.win);
 
 		// We have no bulleting by default
 		cy.cGet('#document-container g.Page .BulletChars')
 			.should('not.exist');
 
-		cy.cGet('#toolbar-up #overflow-button-other-toptoolbar .arrowbackground').click();
+		desktopHelper.getCompactIconArrow('DefaultNumbering').click();
 
 		// Apply bulleting
-		cy.cGet('#defaultbullet').click();
+		desktopHelper.getCompactIcon('DefaultBullet').click();
 
-		selectText();
+		selectText(this.win);
 		cy.cGet('#document-container g.Page .BulletChars')
 			.should('exist');
 	});
 
 	it('Apply default numbering on selected text.', function() {
-		selectText();
-		cy.wait(500);
+		selectText(this.win);
 
-		// We have no bulleting by default
-		cy.cGet('#document-container g.Page .SVGTextShape tspan')
-			.should('not.have.attr', 'ooo:numbering-type');
+		// We have no numbering by default
+		cy.cGet('#document-container g.Page .SVGTextShape tspan[ooo\\:numbering-type]')
+			.should('not.exist');
 
-		cy.cGet('#toolbar-up #overflow-button-other-toptoolbar .arrowbackground').click();
+		desktopHelper.getCompactIconArrow('DefaultNumbering').click();
 
 		// Apply numbering
-		cy.cGet('#defaultnumbering').click();
+		desktopHelper.getCompactIcon('DefaultNumbering').click();
 
-		selectText();
-		cy.cGet('#document-container g.Page .SVGTextShape tspan')
-			.should('have.attr', 'ooo:numbering-type', 'number-style');
+		selectText(this.win);
+		cy.cGet('#document-container g.Page .SVGTextShape tspan[ooo\\:numbering-type="number-style"]')
+			.should('exist');
 	});
 
 	// FIXME: fails on 6600 might be related to recent core margin updates
@@ -100,7 +102,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Apply paragraph properties
 			.should('have.attr', 'y', '6600');
 
 		// Increase spacing
-		cy.cGet('#linespacing').click();
+		desktopHelper.getCompactIconArrow('LineSpacing').click();
 		cy.cGet('#linespacing-dropdown .ui-combobox-entry').contains('Increase Paragraph Spacing').click();
 
 		selectText();
@@ -108,7 +110,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Apply paragraph properties
 			.should('have.attr', 'y', '6700');
 
 		// Decrease spacing
-		cy.cGet('#linespacing').click();
+		desktopHelper.getCompactIconArrow('LineSpacing').click();
 		cy.cGet('#linespacing-dropdown .ui-combobox-entry').contains('Decrease Paragraph Spacing').click();
 
 		selectText();

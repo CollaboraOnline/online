@@ -12,7 +12,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Sign operations.', functio
 
 		// When signing that document:
 		cy.cGet('#File-tab-label').click();
-		cy.cGet('#signature-button').click();
+		desktopHelper.getNbIcon('Signature').click();
 		// Without the accompanying fix in place, this test would have failed with:
 		// This element `<button#sign.ui-pushbutton.jsdialog.hidden>` is not visible because it has CSS property: `display: none`
 		cy.cGet('#DigitalSignaturesDialog #sign.ui-pushbutton-wrapper button').click();
@@ -22,6 +22,6 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Sign operations.', functio
 		cy.cGet('#DigitalSignaturesDialog #close.ui-pushbutton-wrapper button').click();
 
 		// Then make sure the resulting signature is valid:
-		cy.cGet('#signstatus-button div').should('have.class', 'sign_ok');
+		cy.cGet('[id^="signstatus"] div').should('have.class', 'sign_ok');
 	});
 });

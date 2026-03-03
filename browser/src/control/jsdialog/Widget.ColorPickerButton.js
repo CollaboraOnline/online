@@ -217,6 +217,22 @@ JSDialog.colorPickerButton = function (parentContainer, data, builder) {
 				} else {
 					valueNode.style.borderColor = 'var(--color-border)';
 				}
+
+				// Update the button tooltip with the current color name
+				if (menubutton.container && data.text) {
+					var colorName = '';
+					var hexColor = selectedColor;
+					if (hexColor && hexColor[0] === '#') hexColor = hexColor.substr(1);
+					if (hexColor && hexColor !== 'transparent' && window.app.colorNames) {
+						var entry = window.app.colorNames.find(function (c) {
+							return c.hexCode.toLowerCase() === hexColor.toLowerCase();
+						});
+						if (entry) colorName = entry.name;
+					}
+					var tooltip = data.text;
+					if (colorName) tooltip += ' (' + colorName + ')';
+					menubutton.container.setAttribute('data-cooltip', tooltip);
+				}
 			};
 
 			builder.map.on(

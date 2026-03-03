@@ -9,13 +9,17 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * Unit test for proxy functionality.
+ */
+
 #include <config.h>
 
 #include <Common.hpp>
-#include <FileUtil.hpp>
+#include <common/FileUtil.hpp>
 #include <Protocol.hpp>
 #include <Unit.hpp>
-#include <Util.hpp>
+#include <common/Util.hpp>
 #include <helpers.hpp>
 #include <net/HttpRequest.hpp>
 
@@ -64,7 +68,7 @@ public:
                 exitTest(TestResult::Ok);
             });
 
-        httpSession->asyncRequest(_req, _poll);
+        httpSession->asyncRequest(_req, _poll, false);
 
         _poll->startThread();
     }

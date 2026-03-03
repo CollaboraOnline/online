@@ -1,7 +1,40 @@
 #!/bin/perl -w
+#
+# Copyright the Collabora Online contributors.
+#
+# SPDX-License-Identifier: MPL-2.0
+#
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at http://mozilla.org/MPL/2.0/.
+#
 
 use strict;
+use warnings;
 use File::Basename;
+
+my ($decode_json, $encode_json, $json_pretty);
+
+# Find the JSON module
+BEGIN {
+    # Prefer XS, fall back to pure-Perl JSON::PP
+    eval {
+        require Cpanel::JSON::XS;
+        Cpanel::JSON::XS->import(qw(decode_json encode_json));
+        $json_pretty = Cpanel::JSON::XS->new->utf8->canonical->pretty->allow_nonref;
+        1;
+    } or eval {
+        require JSON::XS;
+        JSON::XS->import(qw(decode_json encode_json));
+        $json_pretty = JSON::XS->new->utf8->canonical->pretty->allow_nonref;
+        1;
+    } or eval {
+        require JSON::PP;
+        JSON::PP->import(qw(decode_json encode_json));
+        $json_pretty = JSON::PP->new->utf8->canonical->pretty->allow_nonref;
+        1;
+    } or die "Need a JSON module (Cpanel::JSON::XS / JSON::XS / JSON::PP)\n";
+}
 
 my $path = dirname(dirname($0)) . "/";
 
@@ -12,18 +45,55 @@ sub readwhole($) {
     return <$fh>;
 }
 
-sub insert($) {
-    my ($locale) = @_;
-    my $ui = readwhole($path . "po/ui-$locale.po.json");
-    # Different convention: Change underscore to hyphen.
-    $locale =~ s/_/-/;
-    my $uno = readwhole($path . "l10n/uno/$locale.json");
-    my $locore = readwhole($path . "l10n/locore/$locale.json");
-    # Merge the fields of all three objects into one. The result of
-    # po2json.py starts with "{" not followed by a newline and ends
-    # with a "}" without any final newline. The json files that are in
-    # the repo start with "{\n" and end with "}\n".
-    return substr($ui, 0, length($ui)-1) . ",\n" . substr($uno, 2, length($uno)-4) . ",\n" . substr($locore, 2, length($locore)-3);
+# Merge one or more JSON translation files into a single JSON object.
+# Later files win on key collisions; we warn only when the value actually changes.
+sub insert(@) {
+    my (@relfiles) = @_;
+    die "insert(): no files specified\n" unless @relfiles;
+
+    my %merged;
+    my %seen_in;   # key -> first file where it appeared
+
+    for my $rel (@relfiles) {
+        my $raw = readwhole($path . $rel);
+        my $obj = decode_json($raw);
+
+        die "insert(): $rel is not a JSON object\n" unless ref($obj) eq 'HASH';
+
+        for my $k (keys %$obj) {
+            # Warn if/when we've seen the key already in another file
+            if (exists $merged{$k}) {
+                my $prev = $seen_in{$k} // '(unknown)';
+
+                # Also, warn only if the value changes (stringify via JSON for a simple deep-ish compare).
+                my $old_json = $json_pretty->encode($merged{$k});
+                my $new_json = $json_pretty->encode($obj->{$k});
+
+                if ($old_json ne $new_json) {
+                    my $old_s = _short($old_json, 140);
+                    my $new_s = _short($new_json, 140);
+                    warn "insert(): key '$k' overwritten ($prev -> $rel): $old_s -> $new_s\n";
+                }
+            } else {
+                $seen_in{$k} = $rel;
+            }
+
+            $merged{$k} = $obj->{$k};
+        }
+    }
+
+    # Stable output helps diffs and reproducibility across platforms.
+    return $json_pretty->encode(\%merged);
+}
+
+# Make a string safe for one-line warnings by escaping newlines and truncating.
+sub _short($$) {
+    my ($s, $max) = @_;
+
+    # Normalize CRLF/CR/LF to a literal "\n" so warn() stays on one line.
+    $s =~ s/\r\n|\r|\n/\\n/g;
+
+    return (length($s) > $max) ? (substr($s, 0, $max) . '…') : $s;
 }
 
 # The list of locales handled in the JavaScript we output below is
@@ -45,63 +115,45 @@ if (underscore > 0) {
 
 if (false) {
     ;
-} else if (onlylang == 'ar') {
-    window.LOCALIZATIONS = " . insert('ar') . ";
-} else if (onlylang == 'cs') {
-    window.LOCALIZATIONS = " . insert('cs') . ";
-} else if (onlylang == 'da') {
-    window.LOCALIZATIONS = " . insert('da') . ";
-} else if (onlylang == 'de') {
-    window.LOCALIZATIONS = " . insert('de') . ";
-} else if (onlylang == 'el') {
-    window.LOCALIZATIONS = " . insert('el') . ";
-} else if (window.LANG == 'en-GB' || window.LANG == 'en_GB') {
-    window.LOCALIZATIONS = " . insert('en_GB') . ";
-} else if (onlylang == 'es') {
-    window.LOCALIZATIONS = " . insert('es') . ";
-} else if (onlylang == 'fr') {
-    window.LOCALIZATIONS = " . insert('fr') . ";
-} else if (onlylang == 'he') {
-    window.LOCALIZATIONS = " . insert('he') . ";
-} else if (onlylang == 'hu') {
-    window.LOCALIZATIONS = " . insert('hu') . ";
-} else if (onlylang == 'is') {
-    window.LOCALIZATIONS = " . insert('is') . ";
-} else if (onlylang == 'it') {
-    window.LOCALIZATIONS = " . insert('it') . ";
-} else if (onlylang == 'ja') {
-    window.LOCALIZATIONS = " . insert('ja') . ";
-} else if (onlylang == 'ko') {
-    window.LOCALIZATIONS = " . insert('ko') . ";
-} else if (onlylang == 'nb') {
-    window.LOCALIZATIONS = " . insert('nb') . ";
-} else if (onlylang == 'nl') {
-    window.LOCALIZATIONS = " . insert('nl') . ";
-} else if (onlylang == 'nn') {
-    window.LOCALIZATIONS = " . insert('nn') . ";
-} else if (onlylang == 'pl') {
-    window.LOCALIZATIONS = " . insert('pl') . ";
-} else if (window.LANG == 'pt-BR' || window.LANG == 'pt_BR') {
-    window.LOCALIZATIONS = " . insert('pt_BR') . ";
-} else if (onlylang == 'pt') {
-    window.LOCALIZATIONS = " . insert('pt') . ";
-} else if (onlylang == 'ru') {
-    window.LOCALIZATIONS = " . insert('ru') . ";
-} else if (onlylang == 'sk') {
-    window.LOCALIZATIONS = " . insert('sk') . ";
-} else if (onlylang == 'sl') {
-    window.LOCALIZATIONS = " . insert('sl') . ";
-} else if (onlylang == 'sv') {
-    window.LOCALIZATIONS = " . insert('sv') . ";
-} else if (onlylang == 'tr') {
-    window.LOCALIZATIONS = " . insert('tr') . ";
-} else if (onlylang == 'uk') {
-    window.LOCALIZATIONS = " . insert('uk') . ";
-} else if (window.LANG == 'zh-CN' || window.LANG == 'zh-Hans-CN' || window.LANG == 'zh_CN' || window.LANG == 'zh_Hans_CN'  ) {
-    window.LOCALIZATIONS = " . insert('zh_CN') . ";
-} else if (window.LANG == 'zh-TW' || window.LANG == 'zh-Hant-TW' || window.LANG == 'zh_TW' || window.LANG == 'zh_Hant_TW') {
-    window.LOCALIZATIONS = " . insert('zh_TW') . ";
-} else {
+}
+";
+
+# Simple languages that use onlylang == 'xx'
+my @simple = qw(
+   ar ca cs cy da de el es eu fi fr ga gl he hr hu hy id is it ja kk ko nl pl pt ro ru sk sl sq sv tr uk
+);
+
+# Languages that use window.LANG alias matching
+my %aliases = (
+    en_GB => [ 'en-GB', 'en_GB' ],
+    pt_BR => [ 'pt-BR', 'pt_BR' ],
+    zh_CN => [ 'zh-CN', 'zh-Hans-CN', 'zh_CN', 'zh_Hans_CN' ],
+    zh_TW => [ 'zh-TW', 'zh-Hant-TW', 'zh_TW', 'zh_Hant_TW' ],
+);
+
+for my $lang (@simple) {
+    my $lang_hyphen = $lang;
+    $lang_hyphen =~ s/_/-/g;
+
+    print "else if (onlylang == '$lang') {\n";
+    print "    window.LOCALIZATIONS = " . insert("po/ui-$lang.po.json", "l10n/uno/$lang_hyphen.json", "l10n/locore/$lang_hyphen.json") . ";\n";
+    print "    window.LOCALIZATIONS_HELP = " . insert("po/help-$lang.po.json") . ";\n";
+    print "}\n";
+}
+
+for my $lang (sort keys %aliases) {
+    my $cond = join(' || ', map { "window.LANG == '$_'" } @{$aliases{$lang}});
+    my $lang_hyphen = $lang;
+    $lang_hyphen =~ s/_/-/g;
+
+    print "else if ($cond) {\n";
+    print "    window.LOCALIZATIONS = " . insert("po/ui-$lang.po.json", "l10n/uno/$lang_hyphen.json", "l10n/locore/$lang_hyphen.json") . ";\n";
+    print "    window.LOCALIZATIONS_HELP = " . insert("po/help-$lang.po.json") . ";\n";
+    print "}\n";
+}
+
+print "
+else {
     window.LOCALIZATIONS = {};
 }
 ";

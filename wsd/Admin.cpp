@@ -9,7 +9,34 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * Implementation of administrative interface and websocket handlers.
+ * Classes: AdminSocketHandler, MonitorSocketHandler, Admin
+ */
+
 #include <config.h>
+
+#include <common/Common.hpp>
+#include <common/ConfigUtil.hpp>
+#include <common/JsonUtil.hpp>
+#include <common/Log.hpp>
+#include <common/Protocol.hpp>
+#include <common/SigUtil.hpp>
+#include <common/StringVector.hpp>
+#include <common/Unit.hpp>
+#include <common/Uri.hpp>
+#include <common/Util.hpp>
+#include <net/Socket.hpp>
+#if ENABLE_SSL
+#include <SslSocket.hpp>
+#endif
+#include <net/WebSocketHandler.hpp>
+#include <wsd/Admin.hpp>
+#include <wsd/AdminModel.hpp>
+#include <wsd/Auth.hpp>
+#include <wsd/COOLWSD.hpp>
+
+#include <Poco/Net/HTTPRequest.h>
 
 #include <chrono>
 #include <csignal>
@@ -17,32 +44,8 @@
 #include <iomanip>
 #include <sstream>
 #include <string>
-#include <sys/poll.h>
+#include <poll.h>
 #include <unistd.h>
-
-#include <Poco/Net/HTTPRequest.h>
-
-#include "Admin.hpp"
-#include "AdminModel.hpp"
-#include "Auth.hpp"
-#include "ConfigUtil.hpp"
-#include <Common.hpp>
-#include <COOLWSD.hpp>
-#include <Log.hpp>
-#include <Protocol.hpp>
-#include <StringVector.hpp>
-#include <Unit.hpp>
-#include <Util.hpp>
-#include <common/JsonUtil.hpp>
-#include <common/Uri.hpp>
-
-#include <net/Socket.hpp>
-#if ENABLE_SSL
-#include <SslSocket.hpp>
-#endif
-#include <net/WebSocketHandler.hpp>
-
-#include <common/SigUtil.hpp>
 
 using namespace COOLProtocol;
 
@@ -380,7 +383,7 @@ void AdminSocketHandler::handleMessage(const std::vector<char> &payload)
         }
         else
         {
-            LOG_WRN("Document migration failed for dockey:" + dockey +
+            LOG_WRN("Document migration failed for dockey:" << dockey <<
                         ", reason has been changed");
         }
     }
@@ -453,7 +456,7 @@ void AdminSocketHandler::sendTextFrame(const std::string& message)
 {
     if constexpr (!Util::isFuzzing())
     {
-        UnitWSD::get().onAdminQueryMessage(message);
+        UNITWSD_CALL(onAdminQueryMessage(message));
     }
 
     if (_isAuthenticated)
@@ -1017,11 +1020,14 @@ void Admin::notifyForkit()
     COOLWSD::sendMessageToForKit(oss.str());
 }
 
+namespace
+{
 /// Similar to std::clamp(), old libstdc++ doesn't have it.
 template <typename T> T clamp(const T& n, const T& lower, const T& upper)
 {
     return std::max(lower, std::min(n, upper));
 }
+} // namespace
 
 void Admin::triggerMemoryCleanup(const size_t totalMem)
 {
@@ -1259,7 +1265,7 @@ void Admin::getMetrics(std::ostream& metrics) const
 }
 
 void Admin::sendMetrics(const std::shared_ptr<StreamSocket>& socket,
-                        const std::shared_ptr<http::Response>& response)
+                        const std::shared_ptr<http::Response>& response) const
 {
     std::ostringstream oss;
     getMetrics(oss);

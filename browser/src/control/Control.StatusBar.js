@@ -1,4 +1,4 @@
-/* -*- js-indent-level: 8 -*- */
+/* -*- js-indent-level: 8; fill-column: 100 -*- */
 /*
  * Copyright the Collabora Online contributors.
  *
@@ -247,10 +247,14 @@ class StatusBar extends JSDialog.Toolbar {
 			{type: 'toolitem', id: 'signstatus', command: '.uno:Signature', w2icon: '', text: _UNO('.uno:Signature'), visible: false},
 			{type: 'spacer',  id: 'permissionspacer'},
 			this._generateHtmlItem('documentstatus', 2),					// spreadsheet, text, presentation, drawing
-			{type: 'customtoolitem',  id: 'prev', command: 'prev', text: _UNO('.uno:PageUp', 'text'), pressAndHold: true, dataPriority: 9},
-			{type: 'customtoolitem',  id: 'next', command: 'next', text: _UNO('.uno:PageDown', 'text'), pressAndHold: true, dataPriority: 9},
+			{type: 'customtoolitem',  id: 'multi-page-view', command: 'multipageview', text: _('Multi Page View'), dataPriority: 10,  visible: false}, // text
+			{type: 'customtoolitem',  id: 'prevpage', command: 'prev', text: _UNO('.uno:PageUp', 'text'), pressAndHold: true, dataPriority: 9},
+			{type: 'customtoolitem',  id: 'nextpage', command: 'next', text: _UNO('.uno:PageDown', 'text'), pressAndHold: true, dataPriority: 9},
 			{type: 'separator', id: 'prevnextbreak', orientation: 'vertical', dataPriority: 9},
+			{type: 'toolitem',  id: 'overview', command: '.uno:InsertCanvasSlide', text: _('Overview'), dataPriority: 9, visible: !app.isReadOnly()},
+			{type: 'separator', id: 'overviewbreak', orientation: 'vertical', dataPriority: 9, visible: !app.isReadOnly()},
 		].concat(window.mode.isTablet() ? [] : [
+			{type: 'customtoolitem',  id: 'fitwidthzoom', command: 'fitwidthzoom', text: _('Zoom to Fit Page Width'), icon: 'pagewidth.svg', dataPriority: 8, visible: false},
 			{type: 'customtoolitem',  id: 'zoomreset', command: 'zoomreset', text: _('Reset zoom'), icon: 'zoomreset.svg', dataPriority: 8},
 			{type: 'customtoolitem',  id: 'zoomout', command: 'zoomout', text: _UNO('.uno:ZoomMinus'), icon: 'minus.svg'},
 			{type: 'menubutton', id: 'zoom', text: '100', selected: 'zoom100', menu: this._generateZoomItems(), image: false},
@@ -269,20 +273,30 @@ class StatusBar extends JSDialog.Toolbar {
 		JSDialog.RefreshScrollables();
 	}
 
-	onDocLayerInit() {
-		var showStatusbar = this.map.uiManager.getBooleanDocTypePref('ShowStatusbar', true);
+
+	initialize() {
+		const showStatusbar = this.map.uiManager.getBooleanDocTypePref('ShowStatusbar', true);
+
 		if (showStatusbar)
 			this.map.uiManager.showStatusBar();
 		else
 			this.map.uiManager.hideStatusBar(true);
 
-		var docType = this.map.getDocType();
+		const statusbarState = showStatusbar ? 'true' : 'false';
+		app.map['stateChangeHandler'].setItemValue('showstatusbar', statusbarState);
+		this.map.fire('commandstatechanged', {commandName : 'showstatusbar', state : statusbarState});
+	}
 
-		switch (docType) {
+	onDocLayerInit() {
+		this.initialize();
+
+		switch (this.map.getDocType()) {
 		case 'spreadsheet':
 			this.showItem('prev', false);
 			this.showItem('next', false);
 			this.showItem('prevnextbreak', false);
+			this.showItem('overview', false);
+			this.showItem('overviewbreak', false);
 
 			if (!window.mode.isMobile()) {
 				this.showItem('statusdocpos-container', true);
@@ -300,6 +314,9 @@ class StatusBar extends JSDialog.Toolbar {
 			break;
 
 		case 'text':
+			this.showItem('overview', false);
+			this.showItem('overviewbreak', false);
+
 			if (!window.mode.isMobile()) {
 				this.showItem('statepagenumber-container', true);
 				this.showItem('statewordcount-container', true);
@@ -310,6 +327,10 @@ class StatusBar extends JSDialog.Toolbar {
 				this.showItem('permissionmode-container', true);
 				this.showItem('showcomments-container', true);
 				this.showItem('documentstatus-container', true);
+				this.showItem('fitwidthzoom', true);
+				this.showItem('zoomreset', false);
+
+				this.showItem('multi-page-view', true);
 			}
 			break;
 
@@ -389,8 +410,19 @@ class StatusBar extends JSDialog.Toolbar {
 		var NotEditDocMode = false;
 		if (app.map['stateChangeHandler'].getItemValue('EditDoc') !== undefined) {
 			NotEditDocMode = app.map['stateChangeHandler'].getItemValue('EditDoc') === "false"; // can be true, false or disabled
-			if (NotEditDocMode)
-				app.map.uiManager.showSnackbar(_('To prevent accidental changes, the author has set this file to open as view-only'));
+			if (NotEditDocMode) {
+				if (window.mode.isCODesktop()) {
+					app.map.uiManager.showSnackbar(_('The document is probably locked and has been opened as view-only'));
+					// Don't let the user even try to make the document
+					// editable, as that will lead to things Online is not
+					// prepared to handle.
+					const button = document.querySelector('#mobile-edit-button');
+					if (button)
+						button.style.setProperty('display', 'none');
+				}
+				else
+					app.map.uiManager.showSnackbar(_('To prevent accidental changes, the author has set this file to open as view-only'));
+			}
 		}
 
 		canUserWrite = canUserWrite && !NotEditDocMode;

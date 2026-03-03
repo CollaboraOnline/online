@@ -9,10 +9,14 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * Unit test for stress testing document loading under heavy load.
+ */
+
 #include <config.h>
 
 #include <Unit.hpp>
-#include <Util.hpp>
+#include <common/Util.hpp>
 #include <helpers.hpp>
 #include <WebSocketSession.hpp>
 #include <test/lokassert.hpp>

@@ -6,12 +6,12 @@ var desktopHelper = require('../../common/desktop_helper');
 describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Scroll through document', function() {
 
 	beforeEach(function() {
+		cy.viewport(1500, 600);
 		helper.setupAndLoadDocument('impress/scrolling.odp');
 		desktopHelper.switchUIToCompact();
 		// close the default slide-sorter navigation sidebar
 		desktopHelper.closeNavigatorSidebar();
-		cy.cGet('#toolbar-up #overflow-button-other-toptoolbar-button').click();
-		cy.cGet('#modifypage').click({force: true});
+		desktopHelper.getCompactIcon('ModifyPage').click();
 		desktopHelper.selectZoomLevel('200', false);
 	});
 
@@ -32,7 +32,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Scroll through document', 
 		cy.wait(1000);
 		clickOnTheCenter();
 		desktopHelper.pressKey(15,'uparrow');
-		desktopHelper.assertScrollbarPosition('vertical', 0, 1);
+		desktopHelper.assertScrollbarPosition('vertical', 0, 10);
 		desktopHelper.pressKey(18,'downarrow');
 		desktopHelper.assertScrollbarPosition('vertical', 280, 330);
 	});

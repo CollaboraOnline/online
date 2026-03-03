@@ -49,14 +49,14 @@ interface AutomatedTaskSet {
 
 class DebugManager {
 	private _map: MapInterface;
-	private _docLayer: DocLayerInterface;
-	private _painter: PainterInterface;
-	private debugOn: boolean;
-	private debugNeverStarted: boolean;
+	private _docLayer: DocLayerInterface | null;
+	private _painter: PainterInterface | null;
+	public debugOn: boolean;
+	public debugNeverStarted: boolean;
 	private _controls: ControlsInterface;
 	private _toolLayers: BaseClass[];
 
-	private overlayOn: boolean;
+	public overlayOn: boolean;
 	private _overlayData: OverlaysInterface;
 
 	private tileOverlaysOn: boolean;
@@ -75,28 +75,28 @@ class DebugManager {
 	private _tileDataTotalDeltas: number;
 	private _tileDataTotalInvalidates: number;
 
-	private pingOn: boolean;
+	public pingOn: boolean;
 	private _pingQueue: number[];
 	private _pingTimes: DebugTimeArray;
 	private _pingTimeoutId: TimeoutHdl;
 
-	private logIncomingMessages: boolean;
+	public logIncomingMessages: boolean;
 	private logOutgoingMessages: boolean;
 	private logKeyboardEvents: boolean;
 	private logTrace: boolean;
 
-	private eventDelayWatchdog: boolean;
-	private _eventDelayTimeout: TimeoutHdl;
-	private _lastEventDelayTime: number;
-	private _lastEventDelay: number;
-	private _eventDelayWatchStart: number;
+	public eventDelayWatchdog: boolean;
+	private _eventDelayTimeout: TimeoutHdl | null;
+	private _lastEventDelayTime?: number;
+	private _lastEventDelay?: number;
+	private _eventDelayWatchStart?: number;
 
 	private _typerLorem: string;
 	private _typerLoremPos: number;
 	private _typerTimeoutId: TimeoutHdl;
 
 	private _automatedUserTimeoutId: TimeoutHdl;
-	private _automatedUserTask: string;
+	private _automatedUserTask?: string;
 	private _automatedUserTasks: AutomatedTaskSet;
 	private _automatedUserQueue: string[];
 	private _automatedUserPhase: number;
@@ -116,8 +116,20 @@ class DebugManager {
 			this._stop();
 		}
 
+		Util.ensureValue(this._painter);
+
 		// redraw canvas with changed debug overlays
 		this._painter.update();
+
+		if (this._map.uiManager.notebookbar) {
+			if (this.debugOn) {
+				this._map.uiManager.notebookbar.showItem('validatesidebara11y');
+				this._map.uiManager.notebookbar.showItem('validatedialogsa11y');
+			} else {
+				this._map.uiManager.notebookbar.hideItem('validatesidebara11y');
+				this._map.uiManager.notebookbar.hideItem('validatedialogsa11y');
+			}
+		}
 	}
 
 	private _start(): void {
@@ -218,6 +230,7 @@ class DebugManager {
 	}
 
 	private _addDebugTools(): void {
+		Util.ensureValue(this._docLayer);
 		// eslint-disable-next-line @typescript-eslint/no-this-alias
 		const self = this; // easier than using (function (){}).bind(this) each time
 
@@ -226,11 +239,13 @@ class DebugManager {
 			category: 'Display',
 			startsOn: true,
 			onAdd: function () {
+				Util.ensureValue(self._painter);
 				self.overlayOn = true;
 				self._overlayData = {};
 				self._painter._addDebugOverlaySection();
 			},
 			onRemove: function () {
+				Util.ensureValue(self._painter);
 				self.overlayOn = false;
 				self._overlayData = {};
 				self._painter._removeDebugOverlaySection();
@@ -242,10 +257,12 @@ class DebugManager {
 			category: 'Display',
 			startsOn: false,
 			onAdd: function () {
+				Util.ensureValue(self._painter);
 				self.tileOverlaysOn = true;
 				self._painter.update();
 			},
 			onRemove: function () {
+				Util.ensureValue(self._painter);
 				self.tileOverlaysOn = false;
 				self._painter.update();
 			},
@@ -264,6 +281,7 @@ class DebugManager {
 				self._tileInvalidationTimeout();
 			},
 			onRemove: function () {
+				Util.ensureValue(self._painter);
 				self.tileInvalidationsOn = false;
 				self.clearOverlayMessage('tileInvalidationMessages');
 				self.clearOverlayMessage('tileInvalidationTime');
@@ -323,9 +341,11 @@ class DebugManager {
 			category: 'Display',
 			startsOn: false,
 			onAdd: function () {
+				Util.ensureValue(self._painter);
 				self._painter._addTilePixelGridSection();
 			},
 			onRemove: function () {
+				Util.ensureValue(self._painter);
 				self._painter._removeTilePixelGridSection();
 			},
 		});
@@ -335,9 +355,11 @@ class DebugManager {
 			category: 'Display',
 			startsOn: false,
 			onAdd: function () {
+				Util.ensureValue(self._painter);
 				self._painter._addPreloadMap();
 			},
 			onRemove: function () {
+				Util.ensureValue(self._painter);
 				self._painter._removePreloadMap();
 			},
 		});
@@ -348,9 +370,11 @@ class DebugManager {
 				category: 'Display',
 				startsOn: false,
 				onAdd: function () {
+					Util.ensureValue(self._painter);
 					self._painter._addSplitsSection();
 				},
 				onRemove: function () {
+					Util.ensureValue(self._painter);
 					self._painter._removeSplitsSection();
 				},
 			});
@@ -373,6 +397,21 @@ class DebugManager {
 				clearTimeout(self._pingTimeoutId);
 			},
 		});
+
+		if (this._docLayer.isCalc()) {
+			this._addDebugTool({
+				name: 'Disable workers',
+				category: 'Display',
+				startsOn: false,
+				onAdd: function () {
+					Util.ensureValue(self._painter);
+					app.socket.disableTaskWorkers();
+				},
+				onRemove: function () {
+					Util.ensureValue(self._painter);
+				},
+			});
+		}
 
 		this._addDebugTool({
 			name: 'Performance Tracing',
@@ -486,7 +525,7 @@ class DebugManager {
 				self.clearOverlayMessage('eventDelayTime');
 
 				if (self._eventDelayTimeout) clearTimeout(self._eventDelayTimeout);
-				delete self._eventDelayTimeout;
+				self._eventDelayTimeout = null;
 				delete self._eventDelayWatchStart;
 				delete self._lastEventDelayTime;
 				delete self._lastEventDelay;
@@ -619,6 +658,8 @@ class DebugManager {
 	}
 
 	private _randomizeSettings(): void {
+		Util.ensureValue(this._docLayer);
+		Util.ensureValue(this._painter);
 		// Toggle dark mode
 		const isDark = window.prefs.getBoolean('darkTheme');
 		if (Math.random() < 0.5) {
@@ -728,6 +769,7 @@ class DebugManager {
 	}
 
 	private _randomizeSidebar(): void {
+		Util.ensureValue(this._docLayer);
 		let sidebars = ['none', '.uno:SidebarDeck.PropertyDeck', '.uno:Navigator'];
 		if (this._docLayer.isImpress()) {
 			sidebars = sidebars.concat(['.uno:CustomAnimation', '.uno:ModifyPage']);
@@ -840,6 +882,7 @@ class DebugManager {
 	}
 
 	private _automatedUserTypeCellFormula(phase: number): number {
+		Util.ensureValue(this._docLayer);
 		let waitTime = 0;
 		switch (phase) {
 			case 0:
@@ -895,6 +938,7 @@ class DebugManager {
 	}
 
 	private _automatedUserInsertTypeShape(phase: number): number {
+		Util.ensureValue(this._docLayer);
 		let waitTime = 0;
 		switch (phase) {
 			case 0:
@@ -1113,6 +1157,7 @@ class DebugManager {
 	}
 
 	private _typeChar(charCode: number): void {
+		Util.ensureValue(this._docLayer);
 		if (this.tileInvalidationsOn) {
 			this.addTileInvalidationKeypress();
 		}
@@ -1271,6 +1316,7 @@ class DebugManager {
 		rectangleArray: number[] /* [x, y, width, height] in twips */,
 		command: string,
 	): void {
+		Util.ensureValue(this._docLayer);
 		if (!this.tileInvalidationsOn) {
 			return;
 		}
@@ -1299,7 +1345,7 @@ class DebugManager {
 		// Keypresses at the front of the queue that are older than 1s
 		// are probably stale and should be ignored.
 		const now = +new Date();
-		let oldestKeypress: number;
+		let oldestKeypress: number | undefined;
 		do {
 			oldestKeypress = this._tileInvalidationKeypressQueue.shift();
 		} while (oldestKeypress && now - oldestKeypress > 1000);
@@ -1349,6 +1395,7 @@ class DebugManager {
 
 		this._eventDelayWatchStart = performance.now();
 		this._eventDelayTimeout = setTimeout(() => {
+			Util.ensureValue(this._eventDelayWatchStart);
 			this._eventDelayTimeout = null;
 			this.reportEventDelay(performance.now() - this._eventDelayWatchStart);
 		}, 0);
@@ -1367,6 +1414,8 @@ class DebugManager {
 		const very_slow_time_threshold = 250;
 
 		const currentTime = performance.now();
+		Util.ensureValue(this._lastEventDelay);
+		Util.ensureValue(this._lastEventDelayTime);
 		if (
 			this._lastEventDelay < slow_time_threshold ||
 			delayMs > this._lastEventDelay ||

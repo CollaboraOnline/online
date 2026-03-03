@@ -10,6 +10,9 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Changing slide properties.'
 		mobileHelper.enableEditingMobile();
 		previewShouldBeFullWhite();
 		mobileHelper.openMobileWizard();
+		cy.getFrameWindow().then((win) => {
+			this.win = win;
+		});
 	});
 
 	function previewShouldBeFullWhite(fullWhite = true, slideNumber = 1) {
@@ -219,7 +222,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Changing slide properties.'
 
 		// Reopen mobile wizard and change the settings again
 		mobileHelper.closeMobileWizard();
-		cy.wait(100);
+		helper.processToIdle(this.win);
 		mobileHelper.openMobileWizard();
 		// Wait for mobile wizard menu
 		cy.wait(500);

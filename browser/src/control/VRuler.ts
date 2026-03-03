@@ -47,6 +47,8 @@ class VRuler extends Ruler {
 		Object.assign(this.options, options);
 		this._map = map;
 		this.onAdd(); // VRuler created
+
+		app.UI.verticalRuler = this;
 	}
 
 	onAdd() {
@@ -112,6 +114,15 @@ class VRuler extends Ruler {
 				this._bMarginDrag.style.cursor = 'default';
 			}
 		}
+	}
+
+	public show() {
+		this._rFace.parentElement.style.display = '';
+		this._updateParagraphIndentations();
+	}
+
+	public hide() {
+		this._rFace.parentElement.style.display = 'none';
 	}
 
 	_initiateIndentationMarkers() {
@@ -247,7 +258,7 @@ class VRuler extends Ruler {
 		this._updateBreakPoints();
 	}
 
-	_updateParagraphIndentations() {
+	public _updateParagraphIndentations() {
 		// if ruler is hidden no need to calculate the indentation of the para
 		if (!this.options.showruler) return;
 		// for horizontal Ruler we need to also consider height of navigation and toolbar-wrapper
@@ -391,9 +402,14 @@ class VRuler extends Ruler {
 		}
 	}
 
-	_fixOffset() {
+	protected _fixOffsetImpl(): void {
 		// in case of disabled ruler at docload or event like 'moveend' calculation of offset can be ignored
-		if (!this._map.options.docBounds || !this.options.showruler) return;
+		if (
+			!app.activeDocument ||
+			app.activeDocument.fileSize.x === 0 ||
+			!this.options.showruler
+		)
+			return;
 
 		// we need to also consider  if there is more then 1 page then pageoffset is crucial to consider
 		// i have calculated current page using pageoffset and pageWidth coming from CORE
@@ -410,7 +426,7 @@ class VRuler extends Ruler {
 				(this._map._docLayer._docPixelSize.y / this._map._docLayer._pages);
 
 		const rulerOffset: number =
-			-app.activeDocument.activeView.viewedRectangle.cY1 +
+			-app.activeDocument.activeLayout.viewedRectangle.cY1 +
 			this.options.tileMargin * app.getScale() +
 			pageoffset;
 

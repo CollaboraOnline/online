@@ -17,7 +17,7 @@
     <string name="restarting">Po riniset…</string>
     <string name="view_only">Vetëm parje</string>
     <string name="edit_copy">Përpunoni një kopje</string>
-    <string name="ask_for_copy">Ky dokument është vetëm-lexim. Doni të bëhet një kopje për përpunim\?</string>
+    <string name="ask_for_copy">Ky dokument është vetëm-lexim. Doni të bëhet një kopje për përpunim?</string>
     <string name="use_text">Përdor Formatin Tekst</string>
     <string name="use_odf">Përdorim Formatin ODF</string>
     <string name="ask_for_convert_odf">Ripohoni Format Kartele</string>

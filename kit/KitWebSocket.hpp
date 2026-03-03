@@ -8,6 +8,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
+
 /*
  * The main entry point for the LibreOfficeKit process serving
  * a document editing session.
@@ -15,9 +16,18 @@
 
 #include <net/WebSocketHandler.hpp>
 
+#include <memory>
+#include <string>
+
+class ChildSession;
 class Document;
 class KitQueue;
 class KitSocketPoll;
+
+namespace lok
+{
+class Office;
+}
 
 class KitWebSocketHandler final : public WebSocketHandler
 {
@@ -50,8 +60,6 @@ public:
     }
 
     void shutdownForBackgroundSave();
-
-    int getKitId() const { return _mobileAppDocId; }
 
 protected:
     virtual void handleMessage(const std::vector<char>& data) override;
@@ -88,24 +96,11 @@ class BgSaveParentWebSocketHandler final : public WebSocketHandler
     std::shared_ptr<ChildSession> _session;
 
 public:
-    BgSaveParentWebSocketHandler(const std::string& socketName,
-                                 const pid_t childPid,
+    BgSaveParentWebSocketHandler(const std::string& socketName, const pid_t childPid,
                                  std::shared_ptr<Document> document,
-                                 const std::shared_ptr<ChildSession> &session)
-        : WebSocketHandler(/* isClient = */ false, /* isMasking */ false)
-        , _childPid(childPid)
-        , _saveCompleted(false)
-        , _socketName(socketName)
-        , _document(std::move(document))
-        , _session(session)
-    {
-        _document->bgSaveStarted();
-    }
+                                 const std::shared_ptr<ChildSession>& session);
 
-    ~BgSaveParentWebSocketHandler()
-    {
-        _document->bgSaveEnded();
-    }
+    ~BgSaveParentWebSocketHandler();
 
 protected:
     virtual void handleMessage(const std::vector<char>& data) override;

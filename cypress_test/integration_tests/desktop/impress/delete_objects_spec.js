@@ -24,10 +24,38 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Delete Objects', function(
 		helper.textSelectionShouldNotExist();
 	});
 
+	it('Delete Text From Second Page', function() {
+		// Insert second page.
+		cy.cGet('#insertpage-button').click();
+
+		// Check / wait for the inserted page.
+		cy.cGet('#preview-img-part-1').should('exist');
+
+		// Activate the inserted page.
+		cy.cGet('#preview-img-part-1').click();
+
+		// Click on canvas to activate the document.
+		cy.cGet('#document-canvas').click(100, 100);
+
+		// Press delete button. If the document is correctly activated, the second page shouldn't be deleted.
+		helper.typeIntoDocument('{del}');
+
+		/*
+			Manually tested the failing case.
+			This wait is a little long but it takes more than 3 seconds to remove the preview while testing.
+			We are testing if we accidentaly delete the slide or not. To be sure we didn't delete it, we need to wait.
+			Or below condition will succeed first, then the page will be deleted = false positive.
+		*/
+		cy.wait(5000);
+
+		// Check if the second page still exists.
+		cy.cGet('#preview-img-part-1').should('exist');
+	});
+
 	it('Delete Shapes', function() {
 		//insert
-		cy.cGet('#toolbar-up #overflow-button-other-toptoolbar .arrowbackground').click();
-		cy.cGet('.ui-toolbar #insertshapes').click();
+		desktopHelper.getCompactIconArrow('DefaultNumbering').click();
+		desktopHelper.getCompactIconArrow('BasicShapes').click();
 		cy.cGet('.col.w2ui-icon.symbolshapes').should($el => { expect(Cypress.dom.isDetached($el)).to.eq(false); }).click();
 		cy.cGet('#test-div-shapeHandlesSection').should('exist');
 
@@ -37,9 +65,9 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Delete Objects', function(
 	});
 
 	it('Delete Chart' , function() {
-		cy.cGet('#toolbar-up #overflow-button-other-toptoolbar .arrowbackground').click();
+		desktopHelper.getCompactIconArrow('DefaultNumbering').click();
 		//insert
-		cy.cGet('.ui-toolbar #insertobjectchart').click();
+		desktopHelper.getCompactIcon('InsertObjectChart').click();
 		cy.cGet('#test-div-shapeHandlesSection').should('exist');
 		//delete
 		helper.typeIntoDocument('{del}');

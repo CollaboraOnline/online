@@ -311,6 +311,7 @@ function getInsertTablePopupElements(closeCallback) {
 
 	const grid = document.createElement('div');
 	grid.className = 'inserttable-grid';
+	grid.setAttribute('role', 'grid');
 	grid.onmouseover = highlightTableFunction;
 	grid.onclick = sendInsertTableFunction;
 
@@ -344,10 +345,12 @@ function insertTable(grid = document.getElementsByClassName('inserttable-grid')[
 	for (var r = 0; r < rows; r++) {
 		const row = document.createElement('div');
 		row.className = 'row';
+		row.setAttribute('role', 'row');
 		grid.appendChild(row);
 
 		for (var c = 0; c < cols; c++) {
 			const col = document.createElement('button');
+			col.setAttribute('role', 'gridcell');
 			col.setAttribute('aria-label', (1 + r) + 'x' + (1 + c));
 			col.onfocus = highlightTableFunction;
 			col.className = 'col';
@@ -606,6 +609,7 @@ function insertShapes(shapeType, grid = document.getElementsByClassName('inserts
 		var idx = 0;
 		const row = document.createElement('div');
 		row.className = 'row';
+		row.setAttribute('role', 'row');
 		grid.appendChild(row);
 		for (let r = 0; r < rows; r++) {
 
@@ -618,8 +622,10 @@ function insertShapes(shapeType, grid = document.getElementsByClassName('inserts
 				const col = document.createElement('div');
 
 				col.className = 'col w2ui-icon ' + shape.img;
+				col.setAttribute('role', 'gridcell');
 				col.dataset.uno = shape.uno;
 				col.setAttribute('data-cooltip', shape.text);
+				col.setAttribute('aria-label', shape.text);
 				window.L.control.attachTooltipEventListener(col, map);
 				col.tabIndex = 0;
 				col.setAttribute('index', r + ':' + c);
@@ -637,6 +643,7 @@ function getShapesPopupElements(closeCallback) {
 
 	const grid = document.createElement('div');
 	grid.className = 'insertshape-grid';
+	grid.setAttribute('role', 'grid');
 	grid.onclick = onShapeClickFunction;
 	grid.onkeyup = onShapeKeyUpFunction;
 	grid.onkeydown = onShapeKeyDownFunction;
@@ -671,6 +678,7 @@ function getConnectorsPopupElements(closeCallback) {
 
 	const grid = document.createElement('div');
 	grid.className = 'insertshape-grid';
+	grid.setAttribute('role', 'grid');
 	grid.onclick = onShapeClickFunction;
 	grid.onkeyup = onShapeKeyUpFunction;
 	grid.onkeydown = onShapeKeyDownFunction;
@@ -827,6 +835,21 @@ function onInsertBackground() {
 	return false;
 }
 
+function onCompareDocuments() {
+	const compareDocuments = window.L.DomUtil.get('comparedocuments');
+	if ('files' in compareDocuments) {
+		for (let i = 0; i < compareDocuments.files.length; i++) {
+			const file = compareDocuments.files[i];
+			// Remember old file name for CompareChangesLabelSection
+			app.writer.compareDocumentOldFileName = file.name;
+			map.compareDocuments(file);
+		}
+	}
+
+	compareDocuments.value = null;
+	return false;
+}
+
 function onWopiProps(e) {
 	if (e.DisableCopy) {
 		$('#addressInput input').bind('copy', function(evt) {
@@ -881,11 +904,12 @@ function processStateChangedCommand(commandName, state) {
 		}
 	}
 	else if (commandName === '.uno:ModifiedStatus') {
-		if (document.getElementById('save')) {
+		const saveIcon = document.querySelector('[id^="save"]');
+		if (saveIcon) {
 			if (state === 'true' && map.saveState)
 				map.saveState.showModifiedStatus();
 			else
-				document.getElementById('save').classList.remove('savemodified');
+				saveIcon.classList.remove('savemodified');
 		}
 		state = ''; // stop processing below
 	}
@@ -991,7 +1015,7 @@ function onUpdatePermission(e) {
 	var toolbar = window.mode.isMobile() ? app.map.mobileBottomBar : app.map.topToolbar;
 	if (toolbar) {
 		// always enabled items
-		var enabledButtons = ['closemobile', 'undo', 'redo', 'hamburger-tablet'];
+		var enabledButtons = ['closemobile', 'undo', 'redo', 'fold'];
 
 		// copy the first array
 		var items = toolbar.getToolItems(app.map.getDocType()).slice();
@@ -1012,6 +1036,9 @@ function onUpdatePermission(e) {
 				toolbar.enableItem(items[idx].id, false);
 			}
 		}
+
+		if (window.mode.isDesktop())
+			return;
 
 		if (e.detail.perm === 'edit') {
 			$('#toolbar-mobile-back').removeClass('editmode-off');
@@ -1044,9 +1071,34 @@ global.editorUpdate = editorUpdate;
 
 $(document).ready(function() {
 	// Attach insert file action
-	$('#insertgraphic').on('change', onInsertGraphic);
-	$('#insertmultimedia').on('change', onInsertMultimedia);
-	$('#selectbackground').on('change', onInsertBackground);
+	// Update supported media mime type insertion
+	const supportedGraphicMime = app.LOUtil.graphicMimeFilter.join(",");
+	const supportedMediaMime = app.LOUtil.mediaMimeFilter.join(",");
+	const supportedDocumentMime = app.LOUtil.documentMimeFilter.join(",");
+
+	const insertgraphic = window.L.DomUtil.get('insertgraphic');
+	if (insertgraphic) {
+		insertgraphic.accept = supportedGraphicMime;
+		insertgraphic.addEventListener('change', onInsertGraphic);
+	}
+
+	const insertmultimedia = window.L.DomUtil.get('insertmultimedia');
+	if (insertmultimedia) {
+		insertmultimedia.accept = supportedMediaMime;
+		insertmultimedia.addEventListener('change', onInsertMultimedia);
+	}
+
+	const selectbackground = window.L.DomUtil.get('selectbackground');
+	if (selectbackground) {
+		selectbackground.accept = supportedGraphicMime;
+		selectbackground.addEventListener('change', onInsertBackground);
+	}
+
+	const comparedocuments = window.L.DomUtil.get('comparedocuments');
+	if (comparedocuments) {
+		comparedocuments.accept = supportedDocumentMime;
+		comparedocuments.addEventListener('change', onCompareDocuments);
+	}
 });
 
 function setupToolbar(e) {

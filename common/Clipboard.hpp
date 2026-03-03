@@ -13,6 +13,7 @@
 
 #pragma once
 
+#include <common/ClipboardData.hpp>
 #include <common/Common.hpp>
 #include <common/FileUtil.hpp>
 #include <common/JailUtil.hpp>
@@ -20,104 +21,12 @@
 #include <common/Protocol.hpp>
 #include <common/Util.hpp>
 #include <wsd/COOLWSD.hpp>
-#include <wsd/Exceptions.hpp>
 
 #include <cstdlib>
 #include <mutex>
 #include <string>
 #include <unordered_map>
 #include <vector>
-
-struct ClipboardData
-{
-    std::vector<std::string> _mimeTypes;
-    std::vector<std::string> _content;
-    ClipboardData()
-    {
-    }
-
-    /// Determines if inStream is a list of mimetype-length-bytes tuples, as expected.
-    static bool isOwnFormat(std::istream& inStream)
-    {
-        if (inStream.eof())
-        {
-            return false;
-        }
-
-        std::string mime, hexLen;
-        std::getline(inStream, mime, '\n');
-        if (mime.empty())
-        {
-            return false;
-        }
-
-        std::getline(inStream, hexLen, '\n');
-        if (hexLen.empty())
-        {
-            return false;
-        }
-
-        uint64_t len = strtoll(hexLen.c_str(), nullptr, 16);
-        if (len == 0)
-        {
-            return false;
-        }
-
-        return true;
-    }
-
-    void read(std::istream& inStream)
-    {
-        while (!inStream.eof())
-        {
-            std::string mime, hexLen, newline;
-            std::getline(inStream, mime, '\n');
-            std::getline(inStream, hexLen, '\n');
-            if (mime.length() && hexLen.length() && !inStream.fail())
-            {
-                uint64_t len = strtoll( hexLen.c_str(), nullptr, 16 );
-                std::string content(len, ' ');
-                inStream.read(content.data(), len);
-                if (inStream.fail())
-                    throw ParseError("error during reading the stream");
-                std::getline(inStream, newline, '\n');
-                if (mime.length() > 0)
-                {
-                    _mimeTypes.push_back(std::move(mime));
-                    _content.push_back(std::move(content));
-                }
-            }
-        }
-    }
-
-    std::size_t size() const
-    {
-        assert(_mimeTypes.size() == _content.size());
-        return _mimeTypes.size();
-    }
-
-    void dumpState(std::ostream& os)
-    {
-        os << "Clipboard with " << size() << " entries:\n";
-        for (size_t i = 0; i < size(); ++i)
-            os << "\t[" << i << "] - size " << _content[i].size() <<
-                " type: '" << _mimeTypes[i] << "'\n";
-    }
-
-    bool findType(const std::string &mime, std::string &value)
-    {
-        for (size_t i = 0; i < _mimeTypes.size(); ++i)
-        {
-            if (_mimeTypes[i] == mime)
-            {
-                value = _content[i];
-                return true;
-            }
-        }
-        value.clear();
-        return false;
-    }
-};
 
 /// Used to store expired view's clipboards
 class ClipboardCache

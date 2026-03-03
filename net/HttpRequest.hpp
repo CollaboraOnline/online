@@ -9,6 +9,11 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * Asynchronous HTTP/1.1 client implementation with request/response handling.
+ * Classes: http::Session, http::Request, http::Response, http::Header
+ */
+
 #pragma once
 
 #include <common/Common.hpp>
@@ -353,6 +358,7 @@ public:
     static constexpr std::string_view CONTENT_TYPE = "Content-Type";
     static constexpr std::string_view CONTENT_LENGTH = "Content-Length";
     static constexpr std::string_view TRANSFER_ENCODING = "Transfer-Encoding";
+    static constexpr std::string_view Authorization = "Authorization";
     static constexpr std::string_view COOKIE = "Cookie";
     static constexpr std::string_view HOST = "Host";
 
@@ -419,7 +425,7 @@ public:
     }
 
     // Returns true if the HTTP header field exists (case insensitive)
-    bool has(const std::string_view key) const
+    [[nodiscard]] bool has(const std::string_view key) const
     {
         const ConstIterator end = this->end();
         return std::find_if(begin(), end, [&key](const Pair& pair) -> bool
@@ -442,7 +448,8 @@ public:
     }
 
     /// Get a header entry value by key, if found, defaulting to @def, if missing.
-    std::string get(const std::string_view key, const std::string& def = std::string()) const
+    [[nodiscard]] std::string get(const std::string_view key,
+                                  const std::string& def = std::string()) const
     {
         // There are typically half a dozen header
         // entries, rarely much more. A map would
@@ -456,30 +463,30 @@ public:
     }
 
     /// Return the HOST header.
-    std::string getHost() const { return get(HOST); }
+    [[nodiscard]] std::string getHost() const { return get(HOST); }
 
     /// Set the Content-Type header.
     void setContentType(std::string type) { set(CONTENT_TYPE, std::move(type)); }
     /// Get the Content-Type header.
-    std::string getContentType() const { return get(CONTENT_TYPE); }
+    [[nodiscard]] std::string getContentType() const { return get(CONTENT_TYPE); }
     /// Returns true iff a Content-Type header exists.
-    bool hasContentType() const { return has(CONTENT_TYPE); }
+    [[nodiscard]] bool hasContentType() const { return has(CONTENT_TYPE); }
 
     /// Set the Content-Length header.
     void setContentLength(int64_t length) { set(CONTENT_LENGTH, std::to_string(length)); }
     /// Get the Content-Length header.
-    int64_t getContentLength() const;
+    [[nodiscard]] int64_t getContentLength() const;
     /// Returns true iff a Content-Length header exists.
-    bool hasContentLength() const { return has(CONTENT_LENGTH); }
+    [[nodiscard]] bool hasContentLength() const { return has(CONTENT_LENGTH); }
 
     /// Get the Transfer-Encoding header, if any.
-    std::string getTransferEncoding() const { return get(TRANSFER_ENCODING); }
+    [[nodiscard]] std::string getTransferEncoding() const { return get(TRANSFER_ENCODING); }
 
     /// Return true iff Transfer-Encoding is set to chunked (the last entry).
     bool getChunkedTransferEncoding() const { return _chunked; }
 
-    bool hasConnectionToken() const { return has(CONNECTION); }
-    ConnectionToken getConnectionToken() const
+    [[nodiscard]] bool hasConnectionToken() const { return has(CONNECTION); }
+    [[nodiscard]] ConnectionToken getConnectionToken() const
     {
         const std::string token = get(CONNECTION);
         if (Util::iequal("close", token))
@@ -543,7 +550,7 @@ public:
     }
 
     /// Gets the name=value pairs of all "Cookie" header entries.
-    Container getCookies() const
+    [[nodiscard]] Container getCookies() const
     {
         Container cookies;
         for (const auto& pair : _headers)
@@ -589,7 +596,7 @@ public:
     }
 
     /// Serialize the header to string. For logging only.
-    std::string toString() const
+    [[nodiscard]] std::string toString() const
     {
         std::ostringstream oss;
         return serialize(oss).str();
@@ -647,7 +654,8 @@ public:
     bool has(const std::string& key) const { return _header.has(key); }
 
     /// Get a header entry value by key, if found, defaulting to @def, if missing.
-    std::string get(const std::string& key, const std::string& def = std::string()) const
+    [[nodiscard]] std::string get(const std::string_view& key,
+                                  const std::string& def = std::string()) const
     {
         return _header.get(key, def);
     }
@@ -655,7 +663,7 @@ public:
     Stage stage() const { return _stage; }
 
     /// True if we are a Keep-Alive request.
-    bool isKeepAlive() const
+    [[nodiscard]] bool isKeepAlive() const
     {
         const std::string token = get(Header::CONNECTION);
         if (!token.empty())
@@ -797,12 +805,33 @@ public:
     /// Serialize the Request into the buffer.
     bool writeData(Buffer& out, std::size_t capacity);
 
+    /// Sets the username and password in the Authorization header, per RFC-7235.
     void setBasicAuth(std::string_view username, std::string_view password)
     {
         std::string basicAuth{ username };
         basicAuth.append(":");
         basicAuth.append(password);
-        editHeader().add("Authorization", "Basic " + Util::base64Encode(basicAuth));
+        editHeader().add(std::string(Header::Authorization),
+                         "Basic " + Util::base64Encode(basicAuth));
+    }
+
+    /// Returns the username and password from the Authorization header, per RFC-7235.
+    /// Only 'Basic' Authentication is supported. Retuns empty pair if not found.
+    [[nodiscard]] std::pair<std::string, std::string> getBasicAuth() const
+    {
+        const auto& [scheme, param] = getCredentials();
+        if (Util::iequal(scheme, "Basic"))
+        {
+            return Util::split(Util::base64Decode(param), ':');
+        }
+
+        return {};
+    }
+
+    /// Returns the auth-scheme and auth-param from the Authorization header, per RFC-7235.
+    [[nodiscard]] std::pair<std::string, std::string> getCredentials() const
+    {
+        return Util::split(get(Header::Authorization));
     }
 
 private:
@@ -816,7 +845,7 @@ class MultipartDataParser final
     static constexpr std::size_t MaxLineLength = 512;
 
 public:
-    MultipartDataParser(const std::string& boundary)
+    explicit MultipartDataParser(const std::string& boundary)
         : _delimiter("\r\n--" + boundary)
         , _dashBoundary(&_delimiter[2], _delimiter.size() - 2) // Skip CRLF
         , _boundary(&_delimiter[4], _delimiter.size() - 4) // Skip CRLF--
@@ -841,8 +870,8 @@ private:
     /// the offset to the end of the marker, true if last boundary}.
     /// The first value is -1 when there is not enough data.
     /// The second value is 0, if no end is found, -1 for invalid data.
-    std::tuple<int64_t, int64_t, bool> findBoundary(const std::string_view data,
-                                                    const std::string_view delimiter, int64_t off);
+    std::tuple<int64_t, int64_t, bool> findBoundary(std::string_view data,
+                                                    std::string_view delimiter, int64_t off);
 
     /// Finds and parses the next part.
     int64_t parsePart(std::string_view data, Header& header, std::string_view& body);
@@ -871,7 +900,7 @@ public:
 
     /// Construct a parser from a Request instance.
     /// Typically used for testing.
-    RequestParser(http::Request& request)
+    explicit RequestParser(http::Request& request)
         : _recvBodySize(0)
     {
         // By default we store the body in memory.
@@ -970,7 +999,7 @@ public:
 
     /// Construct a StatusLine with a given code and
     /// the default protocol version.
-    StatusLine(unsigned statusCodeNumber)
+    explicit StatusLine(unsigned statusCodeNumber)
         : _httpVersion(HTTP_1_1)
         , _versionMajor(1)
         , _versionMinor(1)
@@ -979,7 +1008,7 @@ public:
     {
     }
 
-    StatusLine(StatusCode statusCode)
+    explicit StatusLine(StatusCode statusCode)
         : StatusLine(static_cast<unsigned>(statusCode))
     {
     }
@@ -995,7 +1024,7 @@ public:
                Server_Error ///< Bad server, cannot respond.
     );
 
-    StatusCodeClass statusCategory() const
+    [[nodiscard]] StatusCodeClass statusCategory() const
     {
         if (_statusCode >= 500 && _statusCode < 600)
             return StatusCodeClass::Server_Error;
@@ -1127,7 +1156,8 @@ public:
     void addCookie(const std::string& cookie) { _header.addCookie(cookie); }
 
     /// Get a header entry value by key, if found, defaulting to @def, if missing.
-    std::string get(const std::string& key, const std::string& def = std::string()) const
+    [[nodiscard]] std::string get(const std::string& key,
+                                  const std::string& def = std::string()) const
     {
         return _header.get(key, def);
     }
@@ -1308,6 +1338,7 @@ private:
         , _handshakeSslVerifyFailure(0)
         , _timeout(getDefaultTimeout())
         , _connected(false)
+        , _asyncShutdownOnFinish(false)
         , _result(net::AsyncConnectResult::Ok)
     {
         assert(!_host.empty() && portNumber > 0 && !_port.empty() &&
@@ -1372,9 +1403,9 @@ public:
         if (portString.empty())
             return create(std::move(hostname), protocol, getDefaultPort(protocol));
 
-        const std::pair<std::int32_t, bool> portPair = Util::i32FromString(portString);
-        if (portPair.second && portPair.first > 0)
-            return create(std::move(hostname), protocol, portPair.first);
+        const auto [port, success] = Util::i32FromString(portString);
+        if (success && port > 0)
+            return create(std::move(hostname), protocol, port);
 
         LOG_ERR_S("Invalid port [" << portString << "] in URI [" << uri
                                    << "] to http::Session::create");
@@ -1442,7 +1473,7 @@ public:
         LOG_TRC_S("syncDownload: " << req.getVerb() << ' ' << host() << ':' << port() << ' '
                                    << req.getUrl());
 
-        newRequest(req);
+        newRequest(req, false);
 
         if (!saveToFilePath.empty())
             _response->saveBodyToFile(saveToFilePath);
@@ -1467,7 +1498,7 @@ public:
         LOG_TRC_S("syncRequest: " << req.getVerb() << ' ' << host() << ':' << port() << ' '
                                   << req.getUrl());
 
-        newRequest(req);
+        newRequest(req, false);
         syncRequestImpl(poller);
         return _response;
     }
@@ -1501,11 +1532,13 @@ public:
 
     /// Start an asynchronous request on the given SocketPoll.
     /// Return true when it dispatches the socket to the SocketPoll.
+    /// Use asyncShutdownOnFinish of true to shutdown when finished (typical).
+    /// Use asyncShutdownOnFinish of false to leave socket open to reuse.
     /// Note: when reusing this Session, it is assumed that the socket
     /// is already added to the SocketPoll on a previous call (do not
     /// use multiple SocketPoll instances on the same Session).
     /// Returns false when it fails to start the async request.
-    bool asyncRequest(const Request& req, const std::weak_ptr<SocketPoll>& poll)
+    bool asyncRequest(const Request& req, const std::weak_ptr<SocketPoll>& poll, bool asyncShutdownOnFinish = true)
     {
         std::shared_ptr<SocketPoll> socketPoll(poll.lock());
         if (!socketPoll)
@@ -1526,7 +1559,7 @@ public:
         LOG_TRC("New asyncRequest on [" << socketPoll->name() << "]: " << req.getVerb() << ' '
                                         << host() << ':' << port() << ' ' << req.getUrl());
 
-        newRequest(req);
+        newRequest(req, asyncShutdownOnFinish);
 
         if (!isConnected())
         {
@@ -1605,6 +1638,7 @@ public:
         os << indent << "http::Session: #" << _fd << " (" << (_socket.lock() ? "have" : "no")
            << " socket)";
         os << indent << "\tconnected: " << _connected;
+        os << indent << "\tasyncShutdownOnFinish: " << _asyncShutdownOnFinish;
         os << indent << "\ttimeout: " << _timeout;
         os << indent << "\thost: " << _host;
         os << indent << "\tport: " << _port;
@@ -1666,6 +1700,9 @@ private:
 
     void callOnFinished()
     {
+        if (_asyncShutdownOnFinish)
+            asyncShutdown();
+
         if (!_onFinished)
             return;
 
@@ -1689,7 +1726,7 @@ private:
     }
 
     /// Set up a new request and response.
-    void newRequest(const Request& req)
+    void newRequest(const Request& req, bool asyncShutdownOnFinish)
     {
         _startTime = std::chrono::steady_clock::now();
 
@@ -1723,6 +1760,8 @@ private:
         _response = std::make_shared<Response>(onFinished, _fd);
 
         _request = req;
+
+        _asyncShutdownOnFinish = asyncShutdownOnFinish;
 
         std::string host = _host;
 
@@ -2024,6 +2063,7 @@ private:
     std::chrono::microseconds _timeout;
     std::chrono::steady_clock::time_point _startTime;
     bool _connected;
+    bool _asyncShutdownOnFinish;
     Request _request;
     net::AsyncConnectResult _result; // last connection tentative result
     FinishedCallback _onFinished;

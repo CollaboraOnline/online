@@ -9,6 +9,10 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * Unit test for multi-view functionality.
+ */
+
 #include <config.h>
 
 #include <memory>
@@ -19,7 +23,7 @@
 #include <test/lokassert.hpp>
 
 #include <Unit.hpp>
-#include <Util.hpp>
+#include <common/Util.hpp>
 #include <helpers.hpp>
 
 using namespace std::literals;

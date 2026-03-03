@@ -183,6 +183,9 @@ class Tooltip {
 		elem.addEventListener('mouseleave', function () {
 			map.tooltip.beginHide(elem);
 		});
+		elem.addEventListener('click', function () {
+			map.tooltip.mouseLeave();
+		});
 	}
 }
 

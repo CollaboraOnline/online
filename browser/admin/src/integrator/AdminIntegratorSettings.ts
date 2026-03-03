@@ -45,7 +45,6 @@ interface ConfigData {
 }
 
 interface ViewSettings {
-	accessibilityState: boolean;
 	zoteroAPIKey: string;
 	signatureCert: string;
 	signatureKey: string;
@@ -53,6 +52,7 @@ interface ViewSettings {
 }
 
 interface SectionConfig {
+	id: string;
 	sectionTitle: string;
 	sectionDesc: string;
 	listId: string;
@@ -111,6 +111,7 @@ const defaultBrowserSetting: Record<string, any> = {
 		customType: 'compactToggle',
 	},
 	darkTheme: false,
+	accessibilityState: false,
 	spreadsheet: {
 		ShowStatusbar: false,
 		A11yCheckDeck: false,
@@ -144,19 +145,198 @@ const defaultBrowserSetting: Record<string, any> = {
 	},
 };
 
+abstract class SettingsStorage {
+	abstract fetchSettingsConfig(): Promise<ConfigData>;
+	abstract uploadSettings(filePath: string, file: File): Promise<void>;
+	abstract fetchSettingFile(fileUrl: string): Promise<string | null>;
+	abstract deleteSettingsConfig(fileId: string): Promise<void>;
+}
+
+class DesktopSettingsStorage extends SettingsStorage {
+	async fetchSettingsConfig(): Promise<ConfigData> {
+		const configJson = await (window.parent as any).postMobileCall(
+			'FETCHSETTINGSCONFIG',
+		);
+		return JSON.parse(configJson);
+	}
+
+	async uploadSettings(filePath: string, file: File): Promise<void> {
+		const text = await file.text();
+		(window.parent as any).postMobileMessage(
+			'UPLOADSETTINGS ' +
+				JSON.stringify({
+					filePath,
+					fileName: file.name,
+					mimeType: file.type,
+					content: text,
+				}),
+		);
+	}
+
+	async fetchSettingFile(fileUrl: string): Promise<string | null> {
+		const result = await (window.parent as any).postMobileCall(
+			'FETCHSETTINGSFILE ' + fileUrl,
+		);
+		return result.content;
+	}
+
+	async deleteSettingsConfig(fileId: string): Promise<void> {
+		console.warn('Delete settings config not needed on desktop: ' + fileId);
+	}
+}
+
+class OnlineSettingsStorage extends SettingsStorage {
+	private getAPIEndpoints() {
+		return {
+			uploadSettings: window.serviceRoot + '/browser/dist/upload-settings',
+
+			fetchSharedConfig:
+				window.serviceRoot + '/browser/dist/fetch-settings-config',
+
+			deleteSharedConfig:
+				window.serviceRoot + '/browser/dist/delete-settings-config',
+
+			fetchSettingFile:
+				window.serviceRoot + '/browser/dist/fetch-settings-file',
+		};
+	}
+
+	private getConfigType(): string {
+		return window.iframeType === 'admin' ? 'systemconfig' : 'userconfig';
+	}
+
+	async fetchSettingsConfig(): Promise<ConfigData> {
+		if (!window.wopiSettingBaseUrl) {
+			console.error(_('Shared Config URL is missing in initial variables.'));
+			throw new Error('Shared Config URL is missing');
+		}
+		if (!window.accessToken) {
+			console.error(_('Access token is missing in initial variables.'));
+			throw new Error('Access token is missing');
+		}
+
+		const formData = new FormData();
+		formData.append('sharedConfigUrl', window.wopiSettingBaseUrl);
+		formData.append('accessToken', window.accessToken);
+		formData.append('type', this.getConfigType());
+
+		const response: Response = await fetch(
+			this.getAPIEndpoints().fetchSharedConfig,
+			{
+				method: 'POST',
+				headers: {
+					Authorization: `Bearer ${window.accessToken}`,
+				},
+				body: formData,
+			},
+		);
+
+		if (!response.ok) {
+			console.error(
+				'something went wrong shared config response',
+				response.text(),
+			);
+			throw new Error(`Could not fetch shared config: ${response.statusText}`);
+		}
+
+		return await response.json();
+	}
+
+	async uploadSettings(filePath: string, file: File): Promise<void> {
+		const formData = new FormData();
+		formData.append('file', file);
+		formData.append('filePath', filePath);
+		if (window.wopiSettingBaseUrl) {
+			formData.append('wopiSettingBaseUrl', window.wopiSettingBaseUrl);
+		}
+
+		const apiUrl = this.getAPIEndpoints().uploadSettings;
+
+		const response = await fetch(apiUrl, {
+			method: 'POST',
+			headers: {
+				Authorization: `Bearer ${window.accessToken}`,
+			},
+			body: formData,
+		});
+
+		if (!response.ok) {
+			throw new Error(`Upload failed: ${response.statusText}`);
+		}
+	}
+
+	async fetchSettingFile(fileUrl: string): Promise<string | null> {
+		try {
+			const formData = new FormData();
+			formData.append('fileUrl', fileUrl);
+			formData.append('accessToken', window.accessToken ?? '');
+
+			const apiUrl = this.getAPIEndpoints().fetchSettingFile;
+
+			const response = await fetch(apiUrl, {
+				method: 'POST',
+				headers: {
+					Authorization: `Bearer ${window.accessToken}`,
+				},
+				body: formData,
+			});
+
+			if (!response.ok) {
+				throw new Error(`Upload failed: ${response.statusText}`);
+			}
+
+			return await response.text();
+		} catch (error) {
+			SettingIframe.showErrorModal(
+				_(
+					'Something went wrong while fetching setting file. Please try to refresh the page.',
+				),
+			);
+			return null;
+		}
+	}
+
+	async deleteSettingsConfig(fileId: string): Promise<void> {
+		if (!window.accessToken) {
+			throw new Error('Access token is missing.');
+		}
+		if (!window.wopiSettingBaseUrl) {
+			throw new Error('wopiSettingBaseUrl is missing.');
+		}
+
+		const formData = new FormData();
+		formData.append('fileId', fileId);
+		formData.append('sharedConfigUrl', window.wopiSettingBaseUrl);
+		formData.append('accessToken', window.accessToken);
+
+		const response = await fetch(this.getAPIEndpoints().deleteSharedConfig, {
+			method: 'POST',
+			headers: {
+				Authorization: `Bearer ${window.accessToken}`,
+			},
+			body: formData,
+		});
+
+		if (!response.ok) {
+			throw new Error(`Delete failed: ${response.statusText}`);
+		}
+	}
+}
+
 class SettingIframe {
+	private settingsStorage: SettingsStorage;
 	private wordbook;
 	private xcuEditor;
 	private _viewSetting;
 	private xcuInitializationAttempted = false;
 	private _viewSettingLabels = {
-		accessibilityState: _('Accessibility'),
 		zoteroAPIKey: 'Zotero',
 		signatureCert: _('Signature Certificate'),
 		signatureKey: _('Signature Key'),
 		signatureCa: _('Signature CA'),
 	};
 	private readonly settingLabels: Record<string, string> = {
+		accessibilityState: _('In-document Screen Reader'),
 		darkTheme: _('Dark Mode'),
 		compactMode: _('Compact layout'),
 		ShowStatusbar: _('Show status bar'),
@@ -224,21 +404,9 @@ class SettingIframe {
 		checkboxMarked: `<svg fill="currentColor" width="24" height="24" viewBox="0 0 24 24"><path d="M10,17L5,12L6.41,10.58L10,14.17L17.59,6.58L19,8M19,3H5C3.89,3 3,3.89 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5C21,3.89 20.1,3 19,3Z"></path></svg>`,
 		checkboxBlankOutline: `<svg fill="currentColor" width="24" height="24" viewBox="0 0 24 24"><path d="M19,3H5C3.89,3 3,3.89 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5C21,3.89 20.1,3 19,3M19,5V19H5V5H19Z"></path></svg>`,
 	};
-
-	private getAPIEndpoints() {
-		return {
-			uploadSettings: window.serviceRoot + '/browser/dist/upload-settings',
-
-			fetchSharedConfig:
-				window.serviceRoot + '/browser/dist/fetch-settings-config',
-
-			deleteSharedConfig:
-				window.serviceRoot + '/browser/dist/delete-settings-config',
-
-			fetchSettingFile:
-				window.serviceRoot + '/browser/dist/fetch-settings-file',
-		};
-	}
+	private _allConfigSection: HTMLElement | null;
+	private _sectionObserver: IntersectionObserver | null = null;
+	private _visibleSections: Set<Element> = new Set();
 
 	private PATH = {
 		autoTextUpload: () => this.settingConfigBasePath() + '/autotext/',
@@ -251,8 +419,17 @@ class SettingIframe {
 	private browserSettingOptions: Record<string, any> = {};
 
 	init(): void {
+		this._allConfigSection = document.getElementById('allConfigSection');
 		this.initWindowVariables();
-		this.insertConfigSections();
+		if ((window as any).parent.mode.isCODesktop()) {
+			this.settingsStorage = new DesktopSettingsStorage();
+		} else {
+			this.settingsStorage = new OnlineSettingsStorage();
+		}
+		if (!(window.parent as any).mode.isCODesktop()) {
+			this.insertConfigSections();
+			this.setupLeftNavbar();
+		}
 		this.fetchAndPopulateSharedConfigs();
 		this.wordbook = (window as any).WordBook;
 	}
@@ -280,12 +457,16 @@ class SettingIframe {
 		if (!element) return;
 
 		window.accessToken = element.dataset.accessToken;
+		if (!window.accessToken) {
+			throw new Error('Access token is missing in initial variables.');
+		}
+
 		window.accessTokenTTL = element.dataset.accessTokenTtl;
 		window.enableDebug = element.dataset.enableDebug === 'true';
 		window.enableAccessibility = element.dataset.enableAccessibility === 'true';
-		window.wopiSettingBaseUrl = element.dataset.wopiSettingBaseUrl;
-		window.iframeType = element.dataset.iframeType;
-		window.cssVars = element.dataset.cssVars;
+		window.wopiSettingBaseUrl = element.dataset.wopiSettingBaseUrl ?? '';
+		window.iframeType = element.dataset.iframeType || 'user';
+		window.cssVars = element.dataset.cssVars || '';
 		if (window.cssVars) {
 			window.cssVars = atob(window.cssVars);
 			const sheet = new CSSStyleSheet();
@@ -318,11 +499,11 @@ class SettingIframe {
 	}
 
 	private insertConfigSections(): void {
-		const sharedConfigsContainer = document.getElementById('allConfigSection');
-		if (!sharedConfigsContainer) return;
+		if (!this._allConfigSection) return;
 
 		const configSections: SectionConfig[] = [
 			{
+				id: 'autotext',
 				sectionTitle: _('Autotext'),
 				sectionDesc: _(
 					'Upload reusable text snippets (.bau). To insert the text in your document, type the shortcut for an AutoText entry and press F3.',
@@ -335,6 +516,7 @@ class SettingIframe {
 				uploadPath: this.PATH.autoTextUpload(),
 			},
 			{
+				id: 'wordbook',
 				sectionTitle: _('Custom dictionaries'),
 				sectionDesc: _(
 					'Add or edit words in a spell check dictionary. Words in your wordbook (.dic) will be available for spelling checks.',
@@ -347,6 +529,7 @@ class SettingIframe {
 				uploadPath: this.PATH.wordBookUpload(),
 			},
 			{
+				id: 'xcu',
 				sectionTitle: _('Document settings'),
 				sectionDesc: _('Adjust how office documents behave.'),
 				listId: 'XcuList',
@@ -399,50 +582,13 @@ class SettingIframe {
 				});
 			}
 
-			sharedConfigsContainer.appendChild(sectionEl);
+			this._allConfigSection!.appendChild(sectionEl);
 		});
 	}
 
 	private async fetchAndPopulateSharedConfigs(): Promise<void> {
-		if (!window.wopiSettingBaseUrl) {
-			console.error(_('Shared Config URL is missing in initial variables.'));
-			return;
-		}
-		console.debug('iframeType page', window.iframeType);
-
-		if (!window.accessToken) {
-			console.error(_('Access token is missing in initial variables.'));
-			return;
-		}
-
-		const formData = new FormData();
-		formData.append('sharedConfigUrl', window.wopiSettingBaseUrl);
-		formData.append('accessToken', window.accessToken);
-		formData.append('type', this.getConfigType());
-
 		try {
-			const response: Response = await fetch(
-				this.getAPIEndpoints().fetchSharedConfig,
-				{
-					method: 'POST',
-					headers: {
-						Authorization: `Bearer ${window.accessToken}`,
-					},
-					body: formData,
-				},
-			);
-
-			if (!response.ok) {
-				console.error(
-					'something went wrong shared config response',
-					response.text(),
-				);
-				throw new Error(
-					`Could not fetch shared config: ${response.statusText}`,
-				);
-			}
-
-			const data: ConfigData = await response.json();
+			const data = await this.settingsStorage.fetchSettingsConfig();
 			await this.populateSharedConfigUI(data);
 			console.debug('Shared config data: ', data);
 		} catch (error: unknown) {
@@ -456,6 +602,7 @@ class SettingIframe {
 	private createConfigSection(config: SectionConfig): HTMLDivElement {
 		const sectionEl = document.createElement('div');
 		sectionEl.classList.add('section');
+		sectionEl.id = config.id;
 
 		sectionEl.appendChild(this.createHeading(config.sectionTitle, 'h3'));
 		sectionEl.appendChild(this.createParagraph(config.sectionDesc));
@@ -559,41 +706,10 @@ class SettingIframe {
 		return buttonEl;
 	}
 
-	private async fetchSettingFile(fileId: string) {
-		try {
-			const formData = new FormData();
-			formData.append('fileUrl', fileId);
-			formData.append('accessToken', window.accessToken ?? '');
-
-			const apiUrl = this.getAPIEndpoints().fetchSettingFile;
-
-			const response = await fetch(apiUrl, {
-				method: 'POST',
-				headers: {
-					Authorization: `Bearer ${window.accessToken}`,
-				},
-				body: formData,
-			});
-
-			if (!response.ok) {
-				throw new Error(`Upload failed: ${response.statusText}`);
-			}
-
-			return await response.text();
-		} catch (error) {
-			SettingIframe.showErrorModal(
-				_(
-					'Something went wrong while fetching setting file. Please try to refresh the page.',
-				),
-			);
-			return null;
-		}
-	}
-
 	private async fetchWordbookFile(fileId: string): Promise<void> {
 		this.wordbook.startLoader();
 		try {
-			const textValue = await this.fetchSettingFile(fileId);
+			const textValue = await this.settingsStorage.fetchSettingFile(fileId);
 
 			if (!textValue) {
 				throw new Error('Failed to fetch wordbook file');
@@ -780,6 +896,9 @@ class SettingIframe {
 				);
 
 				await this.uploadFile(this.PATH.browserSettingsUpload(), file);
+				if ((window as any).parent.mode.isCODesktop()) {
+					(window.parent as any).postMobileMessage('SYNCSETTINGS');
+				}
 				button.disabled = false;
 			},
 		);
@@ -952,7 +1071,6 @@ class SettingIframe {
 		onClickHandler: (
 			checkboxInput: HTMLInputElement,
 			checkboxWrapper: HTMLSpanElement,
-			materialIconContainer: HTMLSpanElement, // This is the inner span holding the SVG
 		) => void,
 		isDisabled: boolean = false,
 		warningText: string | null = null,
@@ -972,36 +1090,41 @@ class SettingIframe {
 		checkboxContent.id = id + '-content';
 		checkboxWrapper.appendChild(checkboxContent);
 
-		const checkboxContentIcon = document.createElement('span');
-		checkboxContentIcon.className = `${isDisabled ? 'checkbox-content-icon-disabled' : 'checkbox-content-icon'} checkbox-content-icon checkbox-radio-switch__icon ${isChecked ? '' : 'checkbox-content-icon--checked'}`;
-		checkboxContentIcon.ariaHidden = 'true';
-		checkboxContent.appendChild(checkboxContentIcon);
+		checkboxContent.appendChild(inputCheckbox);
 
-		const materialIconContainer = this.createMaterialDesignIconContainer(
-			isChecked
-				? this.SVG_ICONS.checkboxMarked
-				: this.SVG_ICONS.checkboxBlankOutline,
-		);
-		checkboxContentIcon.appendChild(materialIconContainer);
-
-		const textElement = document.createElement('span');
-		textElement.className =
+		const checkboxLabel = document.createElement('label');
+		checkboxLabel.className =
 			'checkbox-content__text checkbox-radio-switch__text';
-		textElement.textContent = labelText;
-		checkboxContent.appendChild(textElement);
+		checkboxLabel.textContent = labelText;
+		checkboxLabel.htmlFor = inputCheckbox.id;
+		checkboxContent.appendChild(checkboxLabel);
 
 		if (warningText) {
-			const warningEl = document.createElement('span');
+			const container = document.createElement('div');
+			container.className = 'checkbox-content__inner';
+			container.appendChild(checkboxLabel);
+			const warningEl = document.createElement('label');
 			warningEl.className = 'ui-state-error-text';
 			warningEl.textContent = warningText;
-			checkboxContent.appendChild(warningEl);
+			container.appendChild(warningEl);
+			checkboxContent.appendChild(container);
+			checkboxContent.classList.add('checkbox-content--with-warning');
 		}
 
 		if (!isDisabled) {
-			checkboxWrapper.addEventListener('click', () => {
-				onClickHandler(inputCheckbox, checkboxWrapper, materialIconContainer);
+			let that = this;
+			const checkboxClickHandler = function () {
+				onClickHandler(inputCheckbox, checkboxWrapper);
 				if (checkboxWrapper.id === 'Grid-ShowGrid-container') {
-					this.toggleGridOptionsVisibility(checkboxWrapper);
+					that.toggleGridOptionsVisibility(checkboxWrapper);
+				}
+			};
+
+			inputCheckbox.addEventListener('click', checkboxClickHandler);
+			inputCheckbox.addEventListener('keydown', (event) => {
+				if (event.key === ' ' || event.key === 'Enter') {
+					event.preventDefault();
+					inputCheckbox.click();
 				}
 			});
 			if (checkboxWrapper.id === 'Grid-ShowGrid-container') {
@@ -1022,23 +1145,31 @@ class SettingIframe {
 		data: any,
 	): HTMLSpanElement {
 		const labelText = this.settingLabels[key] || key;
+		let isDisabled = false;
+		let warningText: string | null = null;
+
+		if (key === 'accessibilityState') {
+			isDisabled = !window.enableAccessibility;
+			if (isDisabled) {
+				warningText = _(
+					'(Warning: Server accessibility must be enabled to toggle)',
+				);
+			}
+		}
 
 		return this.createCheckbox(
 			uniqueId,
-			value,
+			value && !isDisabled,
 			labelText,
-			(inputCheckbox, checkboxWrapper, materialIconContainer) => {
-				const currentChecked = !inputCheckbox.checked;
-				inputCheckbox.checked = currentChecked;
+			(inputCheckbox, checkboxWrapper) => {
 				checkboxWrapper.classList.toggle(
 					'checkbox-radio-switch--checked',
-					!currentChecked,
+					!inputCheckbox.checked,
 				);
-				materialIconContainer.innerHTML = currentChecked
-					? this.SVG_ICONS.checkboxMarked
-					: this.SVG_ICONS.checkboxBlankOutline;
-				data[key] = currentChecked;
+				data[key] = inputCheckbox.checked;
 			},
+			isDisabled,
+			warningText,
 		);
 	}
 
@@ -1140,7 +1271,10 @@ class SettingIframe {
 		optionDiv.className = 'toggle-option';
 
 		const image = document.createElement('img');
-		image.src = `${window.serviceRoot}/browser/${window.versionHash}/admin/images/${imageSrc}`;
+		let src = `${window.serviceRoot}/browser/${window.versionHash}/admin/images/${imageSrc}`;
+		if ((window as any).parent.mode.isCODesktop())
+			src = `admin/images/${imageSrc}`;
+		image.src = src;
 		image.alt = imageAlt;
 		image.className = `toggle-image ${isSelected ? 'selected' : ''}`;
 		optionDiv.appendChild(image);
@@ -1156,28 +1290,8 @@ class SettingIframe {
 	}
 
 	private async uploadFile(filePath: string, file: File): Promise<void> {
-		const formData = new FormData();
-		formData.append('file', file);
-		formData.append('filePath', filePath);
-		if (window.wopiSettingBaseUrl) {
-			formData.append('wopiSettingBaseUrl', window.wopiSettingBaseUrl);
-		}
-
 		try {
-			const apiUrl = this.getAPIEndpoints().uploadSettings;
-
-			const response = await fetch(apiUrl, {
-				method: 'POST',
-				headers: {
-					Authorization: `Bearer ${window.accessToken}`,
-				},
-				body: formData,
-			});
-
-			if (!response.ok) {
-				throw new Error(`Upload failed: ${response.statusText}`);
-			}
-
+			await this.settingsStorage.uploadSettings(filePath, file);
 			await this.fetchAndPopulateSharedConfigs();
 		} catch (error: unknown) {
 			const message = error instanceof Error ? error.message : 'Unknown error';
@@ -1263,36 +1377,9 @@ class SettingIframe {
 				['button--vue-secondary', 'delete-icon'],
 				async (button) => {
 					try {
-						if (!window.accessToken) {
-							throw new Error('Access token is missing.');
-						}
-						if (!window.wopiSettingBaseUrl) {
-							throw new Error('wopiSettingBaseUrl is missing.');
-						}
-
 						const fileId =
 							this.settingConfigBasePath() + category + '/' + fileName;
-
-						const formData = new FormData();
-						formData.append('fileId', fileId);
-						formData.append('sharedConfigUrl', window.wopiSettingBaseUrl);
-						formData.append('accessToken', window.accessToken);
-
-						const response = await fetch(
-							this.getAPIEndpoints().deleteSharedConfig,
-							{
-								method: 'POST',
-								headers: {
-									Authorization: `Bearer ${window.accessToken}`,
-								},
-								body: formData,
-							},
-						);
-
-						if (!response.ok) {
-							throw new Error(`Delete failed: ${response.statusText}`);
-						}
-
+						await this.settingsStorage.deleteSettingsConfig(fileId);
 						await this.fetchAndPopulateSharedConfigs();
 					} catch (error: unknown) {
 						SettingIframe.showErrorModal(
@@ -1324,7 +1411,7 @@ class SettingIframe {
 
 	private generateViewSettingUI(data: ViewSettings) {
 		this._viewSetting = data;
-		const settingsContainer = document.getElementById('allConfigSection');
+		const settingsContainer = this._allConfigSection;
 		if (!settingsContainer) {
 			return;
 		}
@@ -1352,7 +1439,6 @@ class SettingIframe {
 		fieldset.appendChild(this.createLegend(_('Option')));
 
 		const allViewSettingsKeys: (keyof ViewSettings)[] = [
-			'accessibilityState',
 			'zoteroAPIKey',
 			'signatureCert',
 			'signatureKey',
@@ -1365,50 +1451,44 @@ class SettingIframe {
 				continue;
 			}
 
-			const value = data[key] ?? (typeof data[key] === 'boolean' ? false : '');
+			// Add Zotero section with description
+			if (key === 'zoteroAPIKey') {
+				fieldset.appendChild(this.createHeading('Zotero'));
+				const zoteroDescription = this.createParagraph(
+					_(
+						'To use Zotero specify your API key here. You can create your API key in your ',
+					),
+				);
+				zoteroDescription.className = 'view-setting-description';
 
-			if (typeof value === 'boolean') {
-				fieldset.appendChild(this.createViewSettingCheckbox(key, data, label));
-			} else if (typeof value === 'string') {
-				// Add Zotero section with description
-				if (key === 'zoteroAPIKey') {
-					fieldset.appendChild(this.createHeading('Zotero'));
-					const zoteroDescription = this.createParagraph(
-						_(
-							'To use Zotero specify your API key here. You can create your API key in your ',
-						),
-					);
-					zoteroDescription.className = 'view-setting-description';
+				const zoteroAccountLink = document.createElement('a');
+				zoteroAccountLink.href = 'https://www.zotero.org/settings/keys';
+				zoteroAccountLink.target = '_blank';
+				zoteroAccountLink.textContent = _('Zotero account API settings');
 
-					const zoteroAccountLink = document.createElement('a');
-					zoteroAccountLink.href = 'https://www.zotero.org/settings/keys';
-					zoteroAccountLink.target = '_blank';
-					zoteroAccountLink.textContent = _('Zotero account API settings');
+				zoteroDescription.appendChild(zoteroAccountLink);
 
-					zoteroDescription.appendChild(zoteroAccountLink);
-
-					fieldset.appendChild(zoteroDescription);
-					fieldset.appendChild(this.createViewSettingsTextBox(key, data, true));
-				}
-				// Add Document Signing section with description (only once for first field)
-				else if (key === 'signatureCert') {
-					fieldset.appendChild(this.createHeading(_('Document Signing')));
-					const signingDesc = document.createElement('p');
-					signingDesc.className = 'view-setting-description';
-					signingDesc.textContent = _(
-						'To use document signing, specify your signing certificate, key and CA chain here.',
-					);
-					fieldset.appendChild(signingDesc);
-					fieldset.appendChild(
-						this.createViewSettingsTextBox(key, data, false, true),
-					);
-				}
-				// Add remaining signature fields with smaller labels
-				else if (key === 'signatureKey' || key === 'signatureCa') {
-					fieldset.appendChild(
-						this.createViewSettingsTextBox(key, data, false, true),
-					);
-				}
+				fieldset.appendChild(zoteroDescription);
+				fieldset.appendChild(this.createViewSettingsTextBox(key, data, true));
+			}
+			// Add Document Signing section with description (only once for first field)
+			else if (key === 'signatureCert') {
+				fieldset.appendChild(this.createHeading(_('Document Signing')));
+				const signingDesc = document.createElement('p');
+				signingDesc.className = 'view-setting-description';
+				signingDesc.textContent = _(
+					'To use document signing, specify your signing certificate, key and CA chain here.',
+				);
+				fieldset.appendChild(signingDesc);
+				fieldset.appendChild(
+					this.createViewSettingsTextBox(key, data, false, true),
+				);
+			}
+			// Add remaining signature fields with smaller labels
+			else if (key === 'signatureKey' || key === 'signatureCa') {
+				fieldset.appendChild(
+					this.createViewSettingsTextBox(key, data, false, true),
+				);
 			}
 		}
 
@@ -1438,46 +1518,6 @@ class SettingIframe {
 			data,
 			skipHeading,
 			isSmallHeading,
-		);
-	}
-
-	private createViewSettingCheckbox(
-		key: keyof ViewSettings,
-		data: ViewSettings,
-		label: string,
-	): HTMLSpanElement {
-		const isChecked = data[key] as boolean;
-		let isDisabled = false;
-		let warningText: string | null = null;
-
-		if (key === 'accessibilityState') {
-			isDisabled = !window.enableAccessibility;
-			if (isDisabled) {
-				warningText = _(
-					'(Warning: Server accessibility must be enabled to toggle)',
-				);
-			}
-		}
-
-		// Replaced direct checkbox input creation with the new helper
-		return this.createCheckbox(
-			key as string,
-			isChecked && !isDisabled,
-			label,
-			(inputCheckbox, checkboxWrapper, materialIconContainer) => {
-				const currentChecked = !inputCheckbox.checked;
-				inputCheckbox.checked = currentChecked;
-				checkboxWrapper.classList.toggle(
-					'checkbox-radio-switch--checked',
-					!currentChecked,
-				);
-				materialIconContainer.innerHTML = currentChecked
-					? this.SVG_ICONS.checkboxMarked
-					: this.SVG_ICONS.checkboxBlankOutline;
-				(data as any)[key] = currentChecked;
-			},
-			isDisabled,
-			warningText,
 		);
 	}
 
@@ -1523,14 +1563,21 @@ class SettingIframe {
 
 		if (data.kind === 'user') {
 			if (data.viewsetting && data.viewsetting.length > 0) {
-				const fileId = data.viewsetting[0].uri;
-				const fetchContent = await this.fetchSettingFile(fileId);
+				const fetchContent = await this.settingsStorage.fetchSettingFile(
+					data.viewsetting[0].uri,
+				);
 				if (fetchContent) {
 					const loadedSettings = JSON.parse(fetchContent);
 					// Merge with default values to ensure all fields are present
 					const defaultViewSetting = this.getDefaultViewSettings();
-					const mergedSettings = { ...defaultViewSetting, ...loadedSettings };
+					const mergedSettings = this.mergeWithDefault(
+						defaultViewSetting,
+						loadedSettings,
+					);
 					this.generateViewSettingUI(mergedSettings);
+				} else {
+					const defaultViewSetting = this.getDefaultViewSettings();
+					this.generateViewSettingUI(defaultViewSetting);
 				}
 			} else {
 				const defaultViewSetting = this.getDefaultViewSettings();
@@ -1539,8 +1586,10 @@ class SettingIframe {
 
 			// browser settings
 			if (data.browsersetting && data.browsersetting.length > 0) {
-				const fileId = data.browsersetting[0].uri;
-				const browserSettingContent = await this.fetchSettingFile(fileId);
+				const browserSettingContent =
+					await this.settingsStorage.fetchSettingFile(
+						data.browsersetting[0].uri,
+					);
 				this.browserSettingOptions = browserSettingContent
 					? this.mergeWithDefault(
 							defaultBrowserSetting,
@@ -1550,52 +1599,55 @@ class SettingIframe {
 			} else {
 				this.browserSettingOptions = defaultBrowserSetting;
 			}
-			this.createBrowserSettingForm(
-				document.getElementById('allConfigSection')!,
-			);
+			this.createBrowserSettingForm(this._allConfigSection!);
 		}
 
-		const settingsContainer = document.getElementById('allConfigSection');
+		const settingsContainer = this._allConfigSection;
 		if (!settingsContainer) return;
-		if (data.xcu && data.xcu.length > 0) {
-			const fileId = data.xcu[0].uri;
-			const xcuFileContent = await this.fetchSettingFile(fileId);
-			this.xcuEditor = new (window as any).Xcu(
-				this.getFilename(fileId, false),
-				xcuFileContent,
-			);
-
-			const existingXcuSection = document.getElementById('xcu-section');
-			if (existingXcuSection) {
-				existingXcuSection.remove();
-			}
-
-			const xcuContainer = document.createElement('div');
-			xcuContainer.id = 'xcu-section';
-			xcuContainer.classList.add('section');
-			settingsContainer.appendChild(
-				this.xcuEditor.createXcuEditorUI(xcuContainer),
-			);
-		} else {
-			// If user doesn't have any xcu file, we generate with default settings...
-			try {
-				if (!this.xcuInitializationAttempted) {
-					this.xcuInitializationAttempted = true;
-					this.xcuEditor = new (window as any).Xcu('documentView.xcu', null);
-					await this.xcuEditor.generateXcuAndUpload();
-					return await this.fetchAndPopulateSharedConfigs();
-				} else {
-					document.getElementById('xcu-section')?.remove();
-					console.warn('XCU file not found and automatic creation failed.');
-				}
-			} catch (error) {
-				console.error(
-					'Something went wrong while generating or uploading xcu file:',
-					error,
+		if (!(window.parent as any).mode.isCODesktop()) {
+			if (data.xcu && data.xcu.length > 0) {
+				const xcuFileContent = await this.settingsStorage.fetchSettingFile(
+					data.xcu[0].uri,
 				);
-				document.getElementById('xcu-section')?.remove();
+				this.xcuEditor = new (window as any).Xcu(
+					this.getFilename(data.xcu[0].uri, false),
+					xcuFileContent,
+				);
+
+				const existingXcuSection = document.getElementById('xcu-section');
+				if (existingXcuSection) {
+					existingXcuSection.remove();
+				}
+
+				const xcuContainer = document.createElement('div');
+				xcuContainer.id = 'xcu-section';
+				xcuContainer.classList.add('section');
+				settingsContainer.appendChild(
+					this.xcuEditor.createXcuEditorUI(xcuContainer),
+				);
+			} else {
+				// If user doesn't have any xcu file, we generate with default settings...
+				try {
+					if (!this.xcuInitializationAttempted) {
+						this.xcuInitializationAttempted = true;
+						this.xcuEditor = new (window as any).Xcu('documentView.xcu', null);
+						await this.xcuEditor.generateXcuAndUpload();
+						return await this.fetchAndPopulateSharedConfigs();
+					} else {
+						document.getElementById('xcu-section')?.remove();
+						console.warn('XCU file not found and automatic creation failed.');
+					}
+				} catch (error) {
+					console.error(
+						'Something went wrong while generating or uploading xcu file:',
+						error,
+					);
+					document.getElementById('xcu-section')?.remove();
+				}
 			}
 		}
+
+		this.setupLeftNavbar();
 
 		if (data.autotext)
 			this.populateList('autotextList', data.autotext, '/autotext');
@@ -1604,13 +1656,90 @@ class SettingIframe {
 		if (data.xcu) this.populateList('XcuList', data.xcu, '/xcu');
 	}
 
+	private setupLeftNavbar(): void {
+		if (this.isAdmin()) return;
+
+		// Prevent double scrollbars
+		document.body.style.margin = '0';
+
+		const content = this._allConfigSection;
+		if (!content) return;
+
+		const newNav = document.createElement('nav');
+		newNav.id = 'settings-nav';
+
+		if (this._sectionObserver) {
+			this._sectionObserver.disconnect();
+		}
+
+		this._visibleSections.clear();
+
+		const observerOptions = {
+			root: content,
+			rootMargin: '-30px 0px 0px 0px',
+		};
+
+		this._sectionObserver = new IntersectionObserver((entries) => {
+			entries.forEach((entry) => {
+				if (entry.isIntersecting) {
+					this._visibleSections.add(entry.target);
+				} else {
+					this._visibleSections.delete(entry.target);
+				}
+			});
+
+			let activeSection: Element | null = null;
+			let minTop = Infinity;
+
+			for (const section of Array.from(this._visibleSections)) {
+				const rect = section.getBoundingClientRect();
+				if (rect.top < minTop) {
+					minTop = rect.top;
+					activeSection = section;
+				}
+			}
+
+			if (activeSection) {
+				const id = activeSection.id;
+				newNav.querySelectorAll('.settings-nav-item').forEach((link) => {
+					if (link.getAttribute('href') === '#' + id) {
+						link.classList.add('active');
+					} else {
+						link.classList.remove('active');
+					}
+				});
+			}
+		}, observerOptions);
+
+		content.querySelectorAll('.section').forEach((section) => {
+			this._sectionObserver?.observe(section);
+			const header = section.querySelector('h3');
+			if (header) {
+				const link = document.createElement('a');
+				link.textContent = header.textContent;
+				link.classList.add('settings-nav-item');
+				link.href = '#' + section.id;
+				newNav.appendChild(link);
+			}
+		});
+
+		const oldNav = document.getElementById('settings-nav');
+		if (oldNav) {
+			oldNav.replaceWith(newNav);
+		} else {
+			let wrapper = document.getElementById('settingIframe');
+			wrapper!.insertBefore(newNav, content);
+		}
+	}
+
 	private mergeWithDefault(defaults: any, overrides: any): any {
 		const result: any = {};
 
 		for (const key in defaults) {
 			const value = defaults[key];
-			const override = overrides?.[key];
-
+			let override = overrides?.[key];
+			if (override === 'true') override = true;
+			else if (override === 'false') override = false;
 			if (
 				typeof value === 'boolean' ||
 				(typeof value === 'object' && value !== null && 'customType' in value)
@@ -1739,7 +1868,6 @@ class SettingIframe {
 
 	private getDefaultViewSettings(): ViewSettings {
 		return {
-			accessibilityState: false,
 			zoteroAPIKey: '',
 			signatureCert: '',
 			signatureKey: '',

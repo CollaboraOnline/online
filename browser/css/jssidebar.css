@@ -26,6 +26,10 @@ img.sidebar.ui-image {
 	height: 44px;
 }
 
+#layoutpanel_icons {
+	width: 100%;
+}
+
 .sidebar.ui-grid {
 	row-gap: 8px;
 }
@@ -61,10 +65,18 @@ img.sidebar.ui-image {
 	align-items: center;
 }
 
+.sidebar.ui-expander-btn {
+	background: transparent;
+	border: none;
+	padding-inline-end: 2px;
+	display: flex;
+	align-items: center;
+}
+
 .sidebar.ui-expander-label {
 	color: var(--color-main-text);
 	font-size: var(--header-font-size);
-	line-height: var(--header-height);
+	line-height: var(--sidebar-header-height);
 	padding-inline: 8px;
 	flex: 1;
 	display: flex;
@@ -84,7 +96,7 @@ img.sidebar.ui-image {
 	width: 10px;
 	height: 10px;
 	padding: 0;
-	margin: 0;
+	margin: 4px;
 }
 
 .ui-expander-icon-right.jsdialog.sidebar .ui-overflow-group-more.unotoolbutton,
@@ -176,6 +188,7 @@ div.sidebar.ui-grid .checkbutton.sidebar,
 #gradientstyle > .sidebar.ui-listbox,
 #gradangle > .sidebar.spinfield,
 #fontsizecombobox .sidebar.ui-listbox,
+#fontsizecombobox .sidebar.ui-combobox,
 #TableEditPanel .sidebar.spinfieldcontainer input,
 #ParaPropertyPanel .sidebar.spinfieldcontainer input {
 	min-width: 87px;
@@ -183,7 +196,9 @@ div.sidebar.ui-grid .checkbutton.sidebar,
 }
 
 #fontnamecombobox > .sidebar.jsdialog.ui-listbox,
-#applystyle > .sidebar.jsdialog.ui-listbox {
+#fontnamecombobox > .sidebar.jsdialog.ui-combobox,
+#applystyle > .sidebar.jsdialog.ui-listbox,
+#applystyle > .sidebar.jsdialog.ui-combobox {
 	width: 198px;
 }
 
@@ -286,10 +301,12 @@ button#button2.ui-pushbutton.jsdialog.sidebar {
 	grid-gap: inherit;
 }
 #textorientbox button {
-	min-width: auto;
+	padding: 0 5px !important;
+	min-width: 0 !important;
+	margin-inline-end: 2px !important;
+	margin-inline-start: -8px !important;
 	width: auto;
 }
-
 
 /* Charts */
 
@@ -493,10 +510,6 @@ span.jsdialog.sidebar.ui-treeview-notexpandable {
 	padding: 16px;
 }
 
-.navigation-title {
-	font-weight: bold;
-}
-
 .close-navigation-wrapper {
 	display: flex;
 	box-sizing: border-box;
@@ -637,8 +650,8 @@ span.jsdialog.sidebar.ui-treeview-notexpandable {
 
 #quickfind-dock-wrapper #searchfinds {
 	overflow-y: auto;
-	scrollbar-width: thin;
-	scrollbar-color: var(--color-border) transparent;
+	scrollbar-width: var(--scrollbar-width);
+	scrollbar-color: var(--scrollbar-color);
 	max-height: calc(100vh - 350px);
 }
 
@@ -783,6 +796,11 @@ span.jsdialog.sidebar.ui-treeview-notexpandable {
 	width: 100%;
 }
 
+/* new button icon */
+#TemplatePanel #right .unotoolbutton.new button img { visibility: hidden; }
+#TemplatePanel #right .unotoolbutton.new button { background: transparent url('images/lc_stylenewbyexample.svg') no-repeat center; }
+[data-theme='dark'] #TemplatePanel #right .unotoolbutton.new button { background: transparent url('images/dark/lc_stylenewbyexample.svg') no-repeat center; }
+
 /* required to dynamically resize treeviews or lists inside sidebar */
 .sidebar-container, .navigator-container
 .sidebar-container > .root-container.jsdialog.sidebar,.navigator-container > .root-container.jsdialog.sidebar > .root-container.jsdialog.sidebar
@@ -790,6 +808,8 @@ span.jsdialog.sidebar.ui-treeview-notexpandable {
 	height: 100%;
 }
 
+#sidebar-container,
+#sidebar-container > div,
 #StyleListDeck,
 #StyleListDeck .root-container.jsdialog.sidebar,
 #StyleListDeck .vertical.jsdialog.sidebar,
@@ -801,16 +821,21 @@ span.jsdialog.sidebar.ui-treeview-notexpandable {
 	flex-direction: column;
 }
 
+#sidebar-container > div {
+	display: flex !important;
+}
+
 .StyleListPanel .ui-expander-content.jsdialog.sidebar.expanded {
 	height: calc(100% - 45px);
 }
 
 #TemplatePanel .sidebar .unotoolbutton {
-	padding: 4px;
+	padding: 4px !important;
 	border: 0 solid transparent !important;
 	border-bottom-width: 2px !important;
 	background-color: transparent !important;
 	border-radius: 0 !important;
+	margin: 0 5px;
 }
 
 #TemplatePanel .sidebar .unotoolbutton:hover,
@@ -841,11 +866,6 @@ span.jsdialog.sidebar.ui-treeview-notexpandable {
 #ElementsDeck #elements {
 	display: inline-flex;
 	flex-wrap: wrap;
-}
-
-/* Sidebar - Style List */
-#StyleListDeck #left .sidebar.unotoolbutton {
-	margin: 0 5px;
 }
 
 /* Writer - Table - Sort */

@@ -9,13 +9,20 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * Mobile platform signal handling and process state management.
+ * Functions: State transitions, shutdown handling
+ */
+
 #include <config.h>
-#include <Socket.hpp>
+
 #include "SigUtil.hpp"
+
+#include <common/Log.hpp>
+#include <net/Socket.hpp>
 
 #include <string>
 
-#include "Log.hpp"
 
 namespace
 {

@@ -9,12 +9,17 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * Request validation and authorization gateway.
+ * Classes: RequestVettingStation
+ */
+
 #pragma once
 
-#include "RequestDetails.hpp"
+#include <RequestDetails.hpp>
 #include <Storage.hpp>
-#include "Util.hpp"
-#include "WebSocketHandler.hpp"
+#include <common/Util.hpp>
+#include <WebSocketHandler.hpp>
 
 #include <Poco/URI.h>
 

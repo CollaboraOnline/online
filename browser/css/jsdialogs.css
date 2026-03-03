@@ -47,6 +47,11 @@
 	padding-right: 5px;
 }
 
+div.ui-treeview-icon-column {
+	height: 100%;
+	text-align: right;
+}
+
 #AcceptRejectChangesDialog {
 	width: max-content;
 	max-width: 1000px;
@@ -65,7 +70,7 @@
 	margin: 5px;
 }
 
-#AcceptRejectChangesDialog .ui-treeview-headers { 
+#AcceptRejectChangesDialog .ui-treeview-headers {
 	grid-template-columns: 120px 120px 150px 130px;
 	position: sticky;
 	top: 0;
@@ -73,7 +78,7 @@
 	z-index: 1;
 }
 
-#AcceptRejectChangesDialog .jsdialog.ui-treeview-entry { 
+#AcceptRejectChangesDialog .jsdialog.ui-treeview-entry {
 	padding: 0 !important;
 	height: 26px;
 }
@@ -117,7 +122,7 @@
 	padding-left: 8.5ch;
 }
 
-.jsdialog.one-child-popup {
+.jsdialog.one-child-popup:not(.ui-iconview) {
 	border: 0;
 	margin: 0 !important;
 	padding: 0 !important;
@@ -164,6 +169,8 @@ div#autoFillPreviewTooltip .lokdialog.ui-dialog-content.ui-widget-content {
 	background-color: var(--color-background-lighter) !important;
 	font-family: var(--jquery-ui-font);
 	line-height: 1.5;
+	scrollbar-color: var(--scrollbar-color);
+	scrollbar-width: var(--scrollbar-width);
 }
 [data-docType='spreadsheet'] .jsdialog-container .ui-dialog-content,
 [data-docType='text'] .jsdialog-container .ui-dialog-content {
@@ -190,7 +197,7 @@ div#autoFillPreviewTooltip .lokdialog.ui-dialog-content.ui-widget-content {
 	overflow: hidden;
 }
 
-.jsdialog.vertical label, .ui-frame-label {
+.jsdialog.vertical label, .ui-frame-label, #ui-color-picker-recent-label {
 	margin: auto 0px;
 	color: var(--color-main-text);
 	font-size: var(--default-font-size);
@@ -303,6 +310,8 @@ td.jsdialog > [id^='table-box']:not(.sidebar) {
 	overflow: auto;
 	max-height: 500px;
 	max-width: 650px;
+	scrollbar-width: var(--scrollbar-width);
+	scrollbar-color: var(--scrollbar-color);
 }
 /* - Also used in SpellingDialog where suggestion come in form
      of an image*/
@@ -323,6 +332,10 @@ td.jsdialog > [id^='table-box']:not(.sidebar) {
 .jsdialog.ui-separator.vertical {
 	margin: 5px 0px;
 	background-color: var(--color-background-darker);
+}
+
+[data-userinterfacemode='classic'] #toolbar-up .jsdialog.ui-separator.vertical {
+	opacity: 0.4;
 }
 
 .ui-toolbar .ui-separator.vertical {
@@ -438,8 +451,22 @@ algned to the bottom */
 	margin-bottom: 14px !important;
 }
 
+#table-style-options .notebookbar.ui-overflow-group-inner,
+.unotoolbutton.notebookbar.ui-content.has-label > *:not(.arrowbackground) {
+	height: var(--notebookbar-element-height) !important;
+	align-content: center;
+}
+
 .ui-overflow-manager .notebookbar.ui-overflow-group-container-with-label {
 	justify-content: center;
+}
+
+/* Overflow dropdown highlighting */
+.overflow-dropdown-active {
+	background-color: rgba(var(--doc-type), 0.1) !important;
+	border: 1px solid rgb(var(--doc-type)) !important;
+	color: var(--color-text-dark) !important;
+	border-radius: var(--border-radius) !important;
 }
 
 .ui-toggle button,
@@ -488,6 +515,7 @@ algned to the bottom */
 
 /* Expander */
 
+.jsdialog.ui-linkbutton,
 .jsdialog.ui-expander {
 	box-shadow: 0 1px 0px 0 var(--color-border-lighter);
 	background-color: transparent;
@@ -503,6 +531,13 @@ algned to the bottom */
 
 #options.ui-expander {
 	margin-top: 8px;
+}
+
+.ui-expander-heading {
+	margin: 0;
+	padding: 0;
+	font: inherit;
+	display: contents;
 }
 
 .ui-expander-label {
@@ -622,9 +657,37 @@ algned to the bottom */
 	line-height: var(--default-height);
 	align-content: start;
 	justify-content: stretch;
+	scrollbar-width: var(--scrollbar-width);
+	scrollbar-color: var(--scrollbar-color);
 }
 
-.modalpopup .ui-treeview {
+.ui-treeview:has(> .ui-treeview-search-container) {
+	padding-top: 0;
+	/* otherwise position: sticky will leave a gap. We can't top: -1 on the search container or it'll scroll... */
+}
+
+.ui-treeview-search-container {
+	/* we're using position: sticky at all since as we don't want to nest this in
+		 another div and we don't want to scroll offscreen... it's a little ugly, but I
+		 didn't think position: fixed and margin hacks would go down any more nicely...
+	*/
+	position: sticky;
+	top: 0;
+	background-color: var(--color-background-lighter);
+
+	/* margin-left and margin-right can counterbalance the .ui-treeview padding here */
+	margin-left: -1px;
+	margin-right: -1px;
+	padding-left: 1px;
+	padding-right: 1px;
+}
+
+[id^='ui-treeview-search-input'] {
+	width: 100%;
+	box-sizing: border-box;
+}
+
+#__MENU__.ui-treeview {
 	min-height: min-content;
 }
 
@@ -960,7 +1023,11 @@ img.context-menu-icon {
 	padding-inline: 4px;
 }
 
-#search_edit.ui-edit.autofilter {
+.ui-treeview-search-input.jsdialog.ui-edit {
+	line-height: var(--default-height);
+}
+.autofilter .ui-treeview-search-input.jsdialog.ui-edit,
+.autofilter .ui-treeview-search-input.jsdialog.ui-edit:hover {
 	width: 100%;
 	width: -moz-available;
 	width: -webkit-fill-available;
@@ -1140,7 +1207,7 @@ input[type='number']:hover::-webkit-outer-spin-button {
 }
 
 .ui-listbox,
-.ui-combobox,
+.ui-combobox-wrapper,
 .ui-timefield {
 	box-sizing: border-box;
 	-webkit-appearance: none;
@@ -1153,6 +1220,12 @@ input[type='number']:hover::-webkit-outer-spin-button {
 	border-radius: var(--border-radius);
 	background-color: var(--color-background-dark);
 	color: var(--color-text-dark);
+	display: flex;
+}
+
+.ui-combobox-label {
+	font-size: var(--default-font-size);
+	font-family: var(--jquery-ui-font);
 }
 
 .jsdialog-window .ui-listbox,
@@ -1209,7 +1282,7 @@ input[type='number']:hover::-webkit-outer-spin-button {
 }
 
 /* ui-combobox */
-.ui-combobox,
+.ui-combobox-wrapper,
 .ui-timefield {
 	border: 1px solid var(--color-border);
 }
@@ -1269,6 +1342,20 @@ input[type='number']:hover::-webkit-outer-spin-button {
 	grid-gap: 0px;
 }
 
+.ui-combobox-search-container {
+	position: sticky;
+	top: 0;
+	z-index: 1;
+	background-color: var(--color-background-lighter);
+	padding: 4px;
+}
+
+.ui-combobox-search-input {
+	width: 100%;
+	box-sizing: border-box;
+	line-height: var(--default-height);
+}
+
 .ui-combobox-entry {
 	width: calc(100% + 15px); /* + padding for scrollbar */
 	display: flex;
@@ -1276,14 +1363,12 @@ input[type='number']:hover::-webkit-outer-spin-button {
 }
 
 .ui-combobox-entry:hover {
-	background-color: var(--color-background-dark);
+	background-color: var(--color-background-hover);
 }
 
 .ui-combobox-entry.selected:not(:hover) span,
 .margin-item.selected {
-	border: 1px solid var(--color-primary);
-	background-color: var(--color-primary);
-	color: var(--color-primary-text);
+	background-color: var(--color-background-darker);
 }
 
 .ui-combobox-entry span {
@@ -1408,10 +1493,6 @@ input[type='number']:hover::-webkit-outer-spin-button {
 	box-sizing: border-box;
 }
 
-.notebookbar .ui-overflow-group-inner {
-	height: var(--notebookbar-element-height);
-	align-content: center;
-}
 
 .ui-overflow-group-label {
 	font-family: var(--jquery-ui-font);
@@ -1608,9 +1689,10 @@ input[type='number']:hover::-webkit-outer-spin-button {
 	display: none;
 }
 
-/* hide arrow icons in the autofilter menu*/
-#menu img.jsdialog.autofilter.ui-treeview-checkbox {
-	display: none;
+/* border-less arrow icons in the autofilter menu */
+#menu img.jsdialog.autofilter.ui-treeview-checkbox.ui-treeview-image {
+	display: inline;
+	outline: none;
 }
 
 /* Word count dialog */
@@ -1797,6 +1879,10 @@ input[type='number']:hover::-webkit-outer-spin-button {
 	margin-inline-end: 4px;
 }
 
+[data-userinterfacemode='classic'] #toolbar-wrapper .jsdialog.menubutton img {
+	margin-inline-end: 0;
+}
+
 button.menubutton.sidebar > span {
 	box-shadow: none !important;
 	font-size: var(--default-font-size) !important;
@@ -1869,8 +1955,8 @@ button.menubutton.sidebar > span {
 .ui-color-picker-entry {
 	border: 1px solid transparent;
 	cursor: pointer;
-	width: 16px;
-	height: 16px;
+	width: 24px;
+	height: 24px;
 	appearance: none;
 	webkit-appearance: none;
 	margin: 0;
@@ -2112,7 +2198,6 @@ button.menubutton.sidebar > span {
 	width: max-content;
 }
 
-.unoarrow::after,
 .jsdialog .ui-content.unobutton::after {
 	--click-increment: -1px;
 	position: absolute;
@@ -2777,7 +2862,7 @@ kbd,
 	max-height: 19vh;
 }
 
-#ColorPage.jsdialog :is(#iconview_colors, #iconview_recent_colors).ui-iconview .ui-iconview-entry img,
+#ColorPage.jsdialog :is(#iconview_colors, #iconview_recent_colors).ui-iconview .ui-iconview-entry :is(img, span),
 :is(#colorwindow_iv_colors, #colorwindow_iv_recentcolors) .ui-iconview-entry img {
 	padding: 1px;
 }
@@ -2935,10 +3020,15 @@ kbd,
 }
 
 /* Listbox UI grid */
+.jsdialog.ui-grid[role='listbox']:not(:has(> .ui-iconview)) {
+	max-height: min(470px, 45vh);
+}
+
 .jsdialog.ui-grid[role='listbox'] {
-	max-height: 470px;
 	overflow-x: hidden;
 	overflow-y: auto;
+	scrollbar-width: var(--scrollbar-width);
+	scrollbar-color: var(--scrollbar-color);
 }
 
 /* Writer - Form - Properties(Dropdown) */
@@ -2953,9 +3043,7 @@ kbd,
 }
 
 /* Apply label styling to static text for consistent appearance */
-#FormulaDialog #ParameterPage :is(#editdesc, #pardesc),
-#FormulaDialog #ALTBOX #funcdesc,
-#GotoPageDialog #grid1 #page_count {
+.static-label {
 	margin: auto 0px;
 	color: var(--color-main-text);
 	font-size: var(--default-font-size);
@@ -3000,4 +3088,31 @@ div [id^='themeview1col'] {
 div [id^='themeview'].ui-iconview-entry, div [id^='themeview1col'].ui-iconview-entry {
 	width: 200px;
 	height: 146px
+}
+
+#SpecialCharactersDialog #showcharset.jsdialog.ui-iconview {
+	grid-template-columns: repeat(16, 1fr);
+}
+
+/* Writer - Select Table Cell - Sidebar - Table - Miscellaneous - Border */
+#borders.ui-iconview.one-child-popup {
+	grid-template-columns: repeat(4, 1fr);
+}
+
+/* Calc - Format Cells - Borders - Line - Style */
+#iconview_lines.ui-iconview {
+	grid-template-columns: repeat(1, 1fr);
+}
+
+/* Writer - References - Table of Content... - Entries - Level */
+#TocDialog #entries #box1 span.ui-text {
+	font-weight: bold;
+}
+
+#imSetInsMode {
+	content: url('images/queryinsmode.svg');
+}
+
+#ManageStylePage #box1 #desc {
+	display: block;
 }

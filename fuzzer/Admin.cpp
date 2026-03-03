@@ -9,10 +9,17 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-#include "config.h"
+/*
+ * Fuzzer for Admin console message handling.
+ * Functions: LLVMFuzzerTestOneInput() - Tests Admin::handleMessage()
+ */
+
+#include <config.h>
 
 #include "Admin.hpp"
+
 #include <fuzzer/Common.hpp>
+
 #include <sstream>
 
 extern "C" int LLVMFuzzerTestOneInput(const uint8_t* data, size_t size)

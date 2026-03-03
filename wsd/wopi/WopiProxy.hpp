@@ -15,8 +15,8 @@
 #error This file should be excluded from Mobile App builds
 #endif // MOBILEAPP
 
-#include "RequestDetails.hpp"
-#include "wopi/CheckFileInfo.hpp"
+#include <RequestDetails.hpp>
+#include <wopi/CheckFileInfo.hpp>
 #include <Storage.hpp>
 
 #include <istream>

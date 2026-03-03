@@ -1,0 +1,42 @@
+diff --git a/node_modules/cypress/lib/exec/spawn.js b/node_modules/cypress/lib/exec/spawn.js
+index 9d9374c..00f2359 100644
+--- a/node_modules/cypress/lib/exec/spawn.js
++++ b/node_modules/cypress/lib/exec/spawn.js
+@@ -121,6 +121,10 @@ module.exports = {
+         if (!options.dev && verify.needsSandbox()) {
+           electronArgs.push('--no-sandbox');
+         }
++        const headedIdx = args.indexOf('--headed');
++        if (headedIdx === -1 || args[headedIdx + 1] !== true) {
++          electronArgs.push('--headless');
++        }
+ 
+         // strip dev out of child process options
+         /**
+diff --git a/node_modules/cypress/lib/exec/xvfb.js b/node_modules/cypress/lib/exec/xvfb.js
+index ad5f3f1..9b77d5e 100644
+--- a/node_modules/cypress/lib/exec/xvfb.js
++++ b/node_modules/cypress/lib/exec/xvfb.js
+@@ -81,8 +81,8 @@ module.exports = {
+       return false;
+     }
+     debug('undefined DISPLAY environment variable');
+-    debug('Cypress will spawn its own Xvfb');
+-    return true;
++    debug('Cypress will use --headless instead of Xvfb');
++    return false;
+   },
+   // async method, resolved with Boolean
+   verify() {
+diff --git a/node_modules/cypress/lib/tasks/verify.js b/node_modules/cypress/lib/tasks/verify.js
+index 90e0459..3ff1a05 100644
+--- a/node_modules/cypress/lib/tasks/verify.js
++++ b/node_modules/cypress/lib/tasks/verify.js
+@@ -75,6 +75,7 @@ const runSmokeTest = (binaryDir, options) => {
+       debug('disabling Electron sandbox');
+       args.unshift('--no-sandbox');
+     }
++    args.unshift('--headless');
+     if (options.dev) {
+       executable = 'node';
+       args.unshift(path.resolve(__dirname, '..', '..', '..', 'scripts', 'start.js'));

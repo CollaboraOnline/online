@@ -12,126 +12,187 @@
 
 // This is used for other views' cursors.
 
-class OtherViewCursorSection extends HTMLObjectSection {
-    documentObject: boolean = true;
-    interactable: boolean = false; // We don't bother with events.
-    zIndex: number = app.CSections.DefaultForDocumentObjects.processingOrder;
-    drawingOrder: number = app.CSections.DefaultForDocumentObjects.drawingOrder;
-    processingOrder: number = app.CSections.DefaultForDocumentObjects.processingOrder;
+class TextCursorSection extends HTMLObjectSection {
+	documentObject: boolean = true;
+	interactable: boolean = true;
+	zIndex: number = app.CSections.DefaultForDocumentObjects.processingOrder;
+	drawingOrder: number = app.CSections.DefaultForDocumentObjects.drawingOrder;
+	processingOrder: number =
+		app.CSections.DefaultForDocumentObjects.processingOrder;
 
-    static sectionNamePrefix = 'OtherViewCursor ';
-    static sectionPointers: Array<OtherViewCursorSection> = [];
+	static sectionNamePrefix = 'OtherViewCursor ';
+	static sectionPointers: Array<TextCursorSection> = [];
 
-    constructor(viewId: number, color: string, rectangle: cool.SimpleRectangle, part: number, mode: number) {
-        super(OtherViewCursorSection.sectionNamePrefix + viewId, rectangle.pWidth / app.dpiScale, rectangle.pHeight / app.dpiScale, new cool.SimplePoint(rectangle.x1, rectangle.y1));
+	constructor(
+		viewId: number,
+		color: string,
+		rectangle: cool.SimpleRectangle,
+		part: number,
+		mode: number,
+	) {
+		super(
+			TextCursorSection.sectionNamePrefix + viewId,
+			rectangle.pWidth / app.dpiScale,
+			rectangle.pHeight / app.dpiScale,
+			new cool.SimplePoint(rectangle.x1, rectangle.y1),
+		);
 
-        this.sectionProperties.color = color;
-        this.sectionProperties.viewId = viewId;
-        this.sectionProperties.part = part;
-        this.sectionProperties.mode = mode;
-        this.sectionProperties.showCursor = true;
-        this.showSection = true;
-        this.getHTMLObject().style.backgroundColor = this.sectionProperties.color;
-    }
+		this.sectionProperties.color = color;
+		this.sectionProperties.viewId = viewId;
+		this.sectionProperties.part = part;
+		this.sectionProperties.mode = mode;
+		this.sectionProperties.showCursor = true;
+		this.showSection = true;
+		this.getHTMLObject().style.backgroundColor = this.sectionProperties.color;
+	}
 
-    checkMyVisibility() {
-        let result = this.sectionProperties.showCursor && this.size[1] > 0;
+	checkMyVisibility() {
+		Util.ensureValue(app.activeDocument);
 
-        if (result) {
-            if (!app.map._docLayer.isWriter()) {
-                if (this.sectionProperties.part !== app.map._docLayer._selectedPart || this.sectionProperties.mode !== app.map._docLayer._selectedMode)
-                    result = false;
-            }
-        }
+		let result = this.sectionProperties.showCursor && this.size[1] > 0;
 
-        if (result && app.file.textCursor.visible) {
-            const pos = [app.file.textCursor.rectangle.pX1, app.file.textCursor.rectangle.pY1];
-            if (this.position[0] === pos[0] && this.position[1] === pos[1])
-                result = false;
-        }
+		if (result) {
+			if (!app.map._docLayer.isWriter()) {
+				if (
+					this.sectionProperties.part !== app.map._docLayer._selectedPart ||
+					!app.activeDocument.isModeActive(this.sectionProperties.mode)
+				)
+					result = false;
+			}
+		}
 
-        if (result && app.map.isViewReadOnly(this.sectionProperties.viewId))
-            result = false;
+		if (result && app.file.textCursor.visible) {
+			Util.ensureValue(app.file.textCursor.rectangle);
+			const pos = [
+				app.file.textCursor.rectangle.pX1,
+				app.file.textCursor.rectangle.pY1,
+			];
+			if (this.position[0] === pos[0] && this.position[1] === pos[1])
+				result = false;
+		}
 
-        return result;
-    }
+		if (result && app.map.isViewReadOnly(this.sectionProperties.viewId))
+			result = false;
 
-    public static addOrUpdateOtherViewCursor(viewId: number, username: string, rectangleData: Array<string>, part: number, mode: number) {
-        let rectangle = new cool.SimpleRectangle(0, 0, 0, 0);
-        const color = app.LOUtil.rgbToHex(app.LOUtil.getViewIdColor(viewId));
+		return result;
+	}
 
-        if (rectangleData) {
-            rectangle = new cool.SimpleRectangle(parseInt(rectangleData[0]), parseInt(rectangleData[1]), parseInt(rectangleData[2]), parseInt(rectangleData[3]));
-        }
+	// Calculate the position of the cursor header above the actual cursor.
+	getHeaderPosition(): cool.SimplePoint {
+		return new cool.SimplePoint(
+			this.position[0] * app.pixelsToTwips,
+			(this.position[1] - 20) * app.pixelsToTwips,
+		);
+	}
 
-        rectangle.pWidth = 2 * app.dpiScale; // Width of the cursor.
+	onMouseEnter(): void {
+		if (!this.sectionProperties.username) {
+			return;
+		}
 
-        const sectionName = OtherViewCursorSection.sectionNamePrefix + viewId;
-        let section: OtherViewCursorSection;
-        if (app.sectionContainer.doesSectionExist(sectionName)) {
-            section = app.sectionContainer.getSectionWithName(sectionName) as OtherViewCursorSection;
-            section.sectionProperties.part = part;
-            section.sectionProperties.mode = mode;
-            section.size[0] = rectangle.pWidth;
-            section.size[1] = rectangle.pHeight;
+		// Show the name of the other user, even if the cursor position didn't change.
+		app.definitions.cursorHeaderSection.showCursorHeader(
+			this.sectionProperties.viewId,
+			this.sectionProperties.username,
+			this.getHeaderPosition(),
+			this.sectionProperties.color,
+		);
+	}
 
-            section.getHTMLObject().style.width = (section.size[0] / app.dpiScale) + 'px';
-            section.getHTMLObject().style.height = (section.size[1] / app.dpiScale) + 'px';
+	public static addOrUpdateOtherViewCursor(
+		viewId: number,
+		username: string,
+		rectangleData: Array<string>,
+		part: number,
+		mode: number,
+	) {
+		let rectangle = new cool.SimpleRectangle(0, 0, 0, 0);
+		const color = app.LOUtil.rgbToHex(app.LOUtil.getViewIdColor(viewId));
 
-            section.setPosition(rectangle.pX1, rectangle.pY1);
-        }
-        else {
-            section = new OtherViewCursorSection(viewId, color, rectangle, part, mode);
-            app.sectionContainer.addSection(section);
-            OtherViewCursorSection.sectionPointers.push(section);
-        }
+		if (rectangleData) {
+			rectangle = new cool.SimpleRectangle(
+				parseInt(rectangleData[0]),
+				parseInt(rectangleData[1]),
+				parseInt(rectangleData[2]),
+				parseInt(rectangleData[3]),
+			);
+		}
 
-        section.setShowSection(section.checkMyVisibility());
-        section.onNewDocumentTopLeft();
-        section.adjustHTMLObjectPosition();
-        const documentPosition = new cool.SimplePoint(section.position[0] * app.pixelsToTwips, (section.position[1] - 20) * app.pixelsToTwips);
+		rectangle.pWidth = 2 * app.dpiScale; // Width of the cursor.
 
-        if (section.showSection && section.isVisible)
-            app.definitions.cursorHeaderSection.showCursorHeader(viewId, username, documentPosition, color);
+		const sectionName = TextCursorSection.sectionNamePrefix + viewId;
+		let section: TextCursorSection;
+		if (app.sectionContainer.doesSectionExist(sectionName)) {
+			section = app.sectionContainer.getSectionWithName(
+				sectionName,
+			) as TextCursorSection;
+			section.sectionProperties.part = part;
+			section.sectionProperties.mode = mode;
+			section.size[0] = rectangle.pWidth;
+			section.size[1] = rectangle.pHeight;
 
-        app.sectionContainer.requestReDraw();
-    }
+			section.getHTMLObject().style.width =
+				section.size[0] / app.dpiScale + 'px';
+			section.getHTMLObject().style.height =
+				section.size[1] / app.dpiScale + 'px';
 
-    public static removeView(viewId: number) {
-        const sectionName = OtherViewCursorSection.sectionNamePrefix + viewId;
-        if (app.sectionContainer.doesSectionExist(sectionName)) {
-            const section = app.sectionContainer.getSectionWithName(sectionName) as OtherViewCursorSection;
-            OtherViewCursorSection.sectionPointers.splice(OtherViewCursorSection.sectionPointers.indexOf(section), 1);
-            app.sectionContainer.removeSection(sectionName);
-            app.sectionContainer.requestReDraw();
-        }
-    }
+			section.setPosition(rectangle.pX1, rectangle.pY1);
+		} else {
+			section = new TextCursorSection(viewId, color, rectangle, part, mode);
+			app.sectionContainer.addSection(section);
+			TextCursorSection.sectionPointers.push(section);
+		}
 
-    public static doesViewCursorSectionExist(viewId: number) {
-        const name = OtherViewCursorSection.sectionNamePrefix + viewId;
-        return app.sectionContainer.doesSectionExist(name);
-    }
+		section.setShowSection(section.checkMyVisibility());
+		section.onNewDocumentTopLeft();
+		section.adjustHTMLObjectPosition();
+		section.sectionProperties.username = username;
 
-    public static getViewCursorSection(viewId: number) {
-        if (OtherViewCursorSection.doesViewCursorSectionExist(viewId)) {
-            const name = OtherViewCursorSection.sectionNamePrefix + viewId;
-            return app.sectionContainer.getSectionWithName(name);
-        }
-        else
-            return null;
-    }
+		if (section.showSection && section.isVisible)
+			app.definitions.cursorHeaderSection.showCursorHeader(
+				viewId,
+				username,
+				section.getHeaderPosition(),
+				color,
+			);
 
-    public static updateVisibilities(hideCursors: boolean = false) {
-        for (let i = 0; i < OtherViewCursorSection.sectionPointers.length; i++) {
-            const section = OtherViewCursorSection.sectionPointers[i];
-            section.setShowSection(section.checkMyVisibility());
-            if (hideCursors)
-                section.getHTMLObject().style.opacity = '0';
-            else
-                section.getHTMLObject().style.opacity = '1';
-        }
-        app.sectionContainer.requestReDraw();
-    }
+		app.sectionContainer.requestReDraw();
+	}
+
+	public static removeView(viewId: number) {
+		const sectionName = TextCursorSection.sectionNamePrefix + viewId;
+		if (app.sectionContainer.doesSectionExist(sectionName)) {
+			const section = app.sectionContainer.getSectionWithName(
+				sectionName,
+			) as TextCursorSection;
+			TextCursorSection.sectionPointers.splice(
+				TextCursorSection.sectionPointers.indexOf(section),
+				1,
+			);
+			app.sectionContainer.removeSection(sectionName);
+			app.sectionContainer.requestReDraw();
+		}
+	}
+
+	public static doesViewCursorSectionExist(viewId: number) {
+		const name = TextCursorSection.sectionNamePrefix + viewId;
+		return app.sectionContainer.doesSectionExist(name);
+	}
+
+	public static getViewCursorSection(viewId: number) {
+		if (TextCursorSection.doesViewCursorSectionExist(viewId)) {
+			const name = TextCursorSection.sectionNamePrefix + viewId;
+			return app.sectionContainer.getSectionWithName(name);
+		} else return null;
+	}
+
+	public static updateVisibilities(hideCursors: boolean = false) {
+		for (let i = 0; i < TextCursorSection.sectionPointers.length; i++) {
+			const section = TextCursorSection.sectionPointers[i];
+			section.setShowSection(section.checkMyVisibility());
+			if (hideCursors) section.getHTMLObject().style.opacity = '0';
+			else section.getHTMLObject().style.opacity = '1';
+		}
+		app.sectionContainer.requestReDraw();
+	}
 }
-
-app.definitions.otherViewCursorSection = OtherViewCursorSection;

@@ -20,13 +20,14 @@ interface MapInterface extends Evented {
 	_docLayer: DocLayerInterface;
 	uiManager: UIManager;
 	_textInput: { debug(value: boolean): void };
+	addressInputField: AddressInputField;
 
 	removeLayer(layer: any): void;
 	addLayer(layer: any): void;
 	setZoom(
 		targetZoom: number,
-		options: { [key: string]: any },
-		animate: boolean,
+		options: { [key: string]: any } | null,
+		animate?: boolean,
 	): void;
 
 	stateChangeHandler: {
@@ -73,6 +74,8 @@ interface MapInterface extends Evented {
 		DisableInactiveMessages: boolean;
 		UserCanNotWriteRelative: boolean;
 		BaseFileName: string;
+		HideExportOption: boolean;
+		UserCanWrite: boolean;
 	};
 
 	loadDocument(socket?: SockInterface): void;
@@ -83,7 +86,7 @@ interface MapInterface extends Evented {
 
 	_clip: ClipboardInterface;
 
-	setPermission(permission: 'edit' | 'readonly' | 'view'): void;
+	setPermission(permission: string): void;
 	onLockFailed(reason: string): void;
 	updateModificationIndicator(newModificationTime: string): void;
 	isEditMode(): boolean;
@@ -95,7 +98,8 @@ interface MapInterface extends Evented {
 	_setRestrictions(restrictionInfo: ParsedJSONResult): void;
 	hideRestrictedItems(it: any, item: any, button: any): void;
 	disableLockedItem(it: any, item: any, button: any): void;
-	openUnlockPopup(cmd: ParsedJSONResult): void;
+	isLockedItem(data: any): boolean;
+	openUnlockPopup(cmd: ControlCommand): void;
 	isLockedUser(): boolean;
 	isRestrictedUser(): boolean;
 
@@ -109,8 +113,14 @@ interface MapInterface extends Evented {
 
 	addControl(control: any): void;
 
+	_shouldStartReadOnly(): boolean;
+	_switchToEditMode(): void;
+
+	_permission: 'edit' | 'readonly' | 'view';
+
 	toolbarUpTemplate: any;
 	menubar: Menubar;
 	userList: UserList;
 	sidebar: Sidebar;
+	getViewColor(viewId: number): number;
 }

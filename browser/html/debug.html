@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, interactive-widget=resizes-content">
     <title>Online</title>
     <style>
         html, body, iframe
@@ -48,6 +48,15 @@
                   wopiSrc += ':' + wopiPort;
                 wopiSrc += "/wopi/files/" + encodeURIComponent(filePath);
             }
+            var filename = "Document"; // default
+            if (wopiSrc) {
+                var decodedWopiSrc = decodeURIComponent(wopiSrc);
+                var lastSlash = decodedWopiSrc.lastIndexOf('/');
+                if (lastSlash !== -1) {
+                    filename = decodedWopiSrc.substring(lastSlash + 1);
+                }
+            }
+            document.getElementById("coolframe").title = filename + " - Collabora Online";
             if (req)
               localUrl += 'req=' + req + '&';
 

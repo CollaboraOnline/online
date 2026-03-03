@@ -25,7 +25,7 @@ describe.skip(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Searching via search 
 
 	it('Search existing word in table.', function() {
 		helper.setDummyClipboardForCopy();
-		cy.cGet('input#search-input').clear().type('b'); // check character inside table
+		cy.cGet('input#search-input').type('{selectall}{backspace}b'); // check character inside table
 		cy.wait(500);
 		cy.cGet('input#search-input').should('have.focus');
 

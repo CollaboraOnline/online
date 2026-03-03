@@ -10,7 +10,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-// This is used for other views' cursors.
+// This is used for showing mobile cursor handler. User can grab and move this section's HTML object to move the text cursor.
 
 class CursorHandler extends HTMLObjectSection {
 	public static objectWidth = 30; // cursor-handler CSS width and height.
@@ -25,13 +25,6 @@ class CursorHandler extends HTMLObjectSection {
 			'cursor-handler',
 			false,
 		);
-
-		const htmlObject = this.getHTMLObject();
-		const mapElement = document.getElementById('map');
-		if (htmlObject && mapElement) {
-			htmlObject.remove();
-			mapElement.appendChild(this.getHTMLObject());
-		}
 
 		this.sectionProperties.lastPosition = null;
 	}

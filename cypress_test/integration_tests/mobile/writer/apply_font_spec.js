@@ -33,7 +33,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Apply font changes.', funct
 
 	it('Apply bold font.', function() {
 		helper.setDummyClipboardForCopy();
-		cy.cGet('#Bold').click();
+		cy.cGet('.unoBold:visible').click();
 		writerHelper.selectAllTextOfDoc();
 		helper.copy();
 		cy.cGet('#copy-paste-container p b').should('exist');
@@ -41,7 +41,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Apply font changes.', funct
 
 	it('Apply italic font.', function() {
 		helper.setDummyClipboardForCopy();
-		cy.cGet('#Italic').click();
+		cy.cGet('.unoItalic:visible').click();
 		writerHelper.selectAllTextOfDoc();
 		helper.copy();
 		cy.cGet('#copy-paste-container p i').should('exist');
@@ -49,7 +49,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Apply font changes.', funct
 
 	it('Apply underline.', function() {
 		helper.setDummyClipboardForCopy();
-		cy.cGet('#Underline').click();
+		cy.cGet('.unoUnderline:visible').click();
 		writerHelper.selectAllTextOfDoc();
 		helper.copy();
 		cy.cGet('#copy-paste-container p u').should('exist');
@@ -57,14 +57,14 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Apply font changes.', funct
 
 	it('Apply strikeout.', function() {
 		helper.setDummyClipboardForCopy();
-		cy.cGet('#Strikeout').click();
+		cy.cGet('.unoStrikeout').click();
 		writerHelper.selectAllTextOfDoc();
 		helper.copy();
 		cy.cGet('#copy-paste-container p strike').should('exist');
 	});
 
 	it('Apply shadowed.', function() {
-		cy.cGet('#Shadowed').click();
+		cy.cGet('.unoShadowed').click();
 		writerHelper.selectAllTextOfDoc();
 		// TODO: Shadowed is not in the clipboard content.
 	});
@@ -105,7 +105,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Apply font changes.', funct
 
 	it('Apply superscript.', function() {
 		helper.setDummyClipboardForCopy();
-		cy.cGet('#SuperScript').click();
+		cy.cGet('.unoSuperScript').click();
 		writerHelper.selectAllTextOfDoc();
 		helper.copy();
 		cy.cGet('#copy-paste-container p sup').should('exist');
@@ -113,7 +113,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Apply font changes.', funct
 
 	it('Apply subscript.', function() {
 		helper.setDummyClipboardForCopy();
-		cy.cGet('#SubScript').click();
+		cy.cGet('.unoSubScript').click();
 		writerHelper.selectAllTextOfDoc();
 		helper.copy();
 		cy.cGet('#copy-paste-container p sub').should('exist');
@@ -121,28 +121,31 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Apply font changes.', funct
 
 	it('Character spacing item is hidden.', function() {
 		// Check that mobile wizard is opened
-		cy.cGet('#SubScript').scrollIntoView().should('be.visible');
+		cy.cGet('.unoSubScript').scrollIntoView().should('be.visible');
 		// Character spacing item triggers the character dialog
 		// So better to hide it.
-		cy.cGet('#Spacing').should('not.exist');
+		cy.cGet('.unoSpacing').should('not.exist');
 	});
 
-	it('Apply style.', {retries : 0}, function() {
-		cy.cGet('#applystyle').click();
-		cy.cGet('body').contains('#fontstyletoolbox', 'Title').click();
-		writerHelper.selectAllTextOfDoc();
-		//cy.cGet('#copy-paste-container p font').should('have.attr', 'face', 'Liberation Sans, sans-serif');
-		//cy.cGet('#copy-paste-container p font font').should('have.attr', 'style', 'font-size: 28pt');
+	it('Apply style.', function() {
+		helper.setDummyClipboardForCopy();
 
-		// Close the mobile wizard before opening it again.
-		cy.cGet('#mobile_wizard').click();
+		cy.cGet('#applystyle').click();
+		cy.cGet('body').contains('#fontstyletoolbox .ui-combobox-text', 'Title').click();
+
+		writerHelper.selectAllTextOfDoc();
+		helper.copy();
+		cy.cGet('#copy-paste-container p font').should('have.attr', 'face', 'Liberation Sans, sans-serif');
+		cy.cGet('#copy-paste-container p font font').should('have.attr', 'style', 'font-size: 28pt');
 
 		// Clear formatting
 		mobileHelper.openMobileWizard();
 		cy.cGet('#applystyle').click();
-		cy.cGet('body').contains('#fontstyletoolbox', 'Clear formatting').click();
+		cy.cGet('body').contains('#fontstyletoolbox .ui-combobox-text', 'Clear formatting').click();
+
 		writerHelper.selectAllTextOfDoc();
-		//cy.cGet('#copy-paste-container p').should('have.attr', 'style', 'line-height: 100%; margin-bottom: 0in');
+		helper.copy();
+		cy.cGet('#copy-paste-container p font font').should('not.exist');
 	});
 
 	it.skip('New style and update style items are hidden.', function() {

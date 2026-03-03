@@ -76,7 +76,7 @@ JSDialog.panel = function (
 			{
 				type: 'toolitem',
 				command: expanderData.command,
-				aria: { label: moreOptionsText },
+				aria: { label: moreOptionsText, role: 'popup' },
 				icon: app.LOUtil.getIconNameOfCommand('morebutton'),
 				tooltip: moreOptionsText,
 			} as any as WidgetJSON, // FIXME: use toolitem JSON type

@@ -22,7 +22,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Apply font on selected shap
 	it('Apply bold on text shape.', function() {
 		mobileHelper.openTextPropertiesPanel();
 
-		cy.cGet('#Bold').click();
+		cy.cGet('.unoBold:visible').click();
 
 		triggerNewSVG();
 
@@ -33,7 +33,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Apply font on selected shap
 	it('Apply italic on text shape.', function() {
 		mobileHelper.openTextPropertiesPanel();
 
-		cy.cGet('#Italic').click();
+		cy.cGet('.unoItalic:visible').click();
 
 		triggerNewSVG();
 
@@ -44,7 +44,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Apply font on selected shap
 	it('Apply underline on text shape.', function() {
 		mobileHelper.openTextPropertiesPanel();
 
-		cy.cGet('#Underline').click();
+		cy.cGet('.unoUnderline:visible').click();
 
 		triggerNewSVG();
 
@@ -55,7 +55,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Apply font on selected shap
 	it('Apply strikeout on text shape.', function() {
 		mobileHelper.openTextPropertiesPanel();
 
-		cy.cGet('#Strikeout').click();
+		cy.cGet('.unoStrikeout:visible').click();
 
 		triggerNewSVG();
 
@@ -66,7 +66,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Apply font on selected shap
 	it('Apply shadowed on text shape.', function() {
 		mobileHelper.openTextPropertiesPanel();
 
-		cy.cGet('#Shadowed').click();
+		cy.cGet('.unoShadowed:visible').click();
 
 		triggerNewSVG();
 
@@ -143,7 +143,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Apply font on selected shap
 		cy.cGet('#document-container g.Page .TextParagraph .TextPosition tspan')
 			.should('have.attr', 'font-size', '635px');
 
-		cy.cGet('#SuperScript').click();
+		cy.cGet('.unoSuperScript').click();
 
 		triggerNewSVG();
 
@@ -161,7 +161,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Apply font on selected shap
 		cy.cGet('#document-container g.Page .TextParagraph .TextPosition tspan')
 			.should('have.attr', 'font-size', '635px');
 
-		cy.cGet('#SubScript').click();
+		cy.cGet('.unoSubScript').click();
 
 		triggerNewSVG();
 
@@ -178,7 +178,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Apply font on selected shap
 		cy.cGet('#document-container g.Page .TextParagraph .TextPosition tspan')
 			.should('have.attr', 'font-size', '635px');
 
-		cy.cGet('#SuperScript').click();
+		cy.cGet('.unoSuperScript').click();
 
 		triggerNewSVG();
 

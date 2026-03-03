@@ -11,23 +11,23 @@
 
 #include <config.h>
 
-#include <iterator>
-#include <optional>
-
 #include "WopiProxy.hpp"
 
 #include <common/Anonymizer.hpp>
-#include "FileUtil.hpp"
-#include "HttpHelper.hpp"
-#include "HttpRequest.hpp"
-#include "Protocol.hpp"
+#include <common/FileUtil.hpp>
+#include <HttpHelper.hpp>
+#include <HttpRequest.hpp>
+#include <Protocol.hpp>
 #include <COOLWSD.hpp>
 #include <Exceptions.hpp>
-#include <Log.hpp>
-#include <Util.hpp>
+#include <common/Log.hpp>
+#include <common/Util.hpp>
 #include <common/JsonUtil.hpp>
 #include <wopi/StorageConnectionManager.hpp>
 #include <wopi/WopiStorage.hpp>
+
+#include <iterator>
+#include <optional>
 
 void WopiProxy::handleRequest(std::istream & message,
                               [[maybe_unused]] const std::shared_ptr<TerminatingPoll>& poll,
@@ -123,7 +123,7 @@ void WopiProxy::handleRequest(std::istream & message,
             }
             // Remove from the current poll and transfer.
             disposition.setTransfer(*poll,
-                [this, &poll, docKey = std::move(docKey), url = std::move(url),
+                [this, poll, docKey = std::move(docKey), url = std::move(url),
                  uriPublic, postBody](const std::shared_ptr<Socket>& moveSocket)
                 {
                     LOG_TRC_S('#' << moveSocket->getFD()
@@ -197,7 +197,7 @@ void WopiProxy::checkFileInfo(const std::shared_ptr<TerminatingPoll>& poll, cons
                 }
                 catch (const std::exception& ex)
                 {
-                    LOG_ERR("Could not download document from WOPI FileUrl [" + fileUrlAnonym +
+                    LOG_ERR("Could not download document from WOPI FileUrl [" << fileUrlAnonym <<
                                 "]. Will use default URL. Error: "
                             << ex.what());
                     // Fall-through.
@@ -219,7 +219,7 @@ void WopiProxy::checkFileInfo(const std::shared_ptr<TerminatingPoll>& poll, cons
             catch (const std::exception& ex)
             {
                 LOG_ERR(
-                    "Cannot download document from WOPI storage uri [" + uriAnonym + "]. Error: "
+                    "Cannot download document from WOPI storage uri [" << uriAnonym << "]. Error: "
                     << ex.what());
                 // Fall-through.
             }
@@ -347,7 +347,7 @@ void WopiProxy::transfer(const std::shared_ptr<TerminatingPoll>& poll, const std
     _httpSession->setFinishedHandler(std::move(finishedCallback));
 
     // Run the GET request on the WebServer Poll.
-    _httpSession->asyncRequest(httpRequest, poll);
+    _httpSession->asyncRequest(httpRequest, poll, false);
 }
 #endif //!MOBILEAPP
 

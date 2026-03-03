@@ -9,52 +9,65 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * Implementation of storage backends and WOPI protocol.
+ * Classes: StorageBase, LocalStorage
+ */
+
 #include <config.h>
+
+#include "Storage.hpp"
+
+#if !MOBILEAPP
+
+#include <net/HttpRequest.hpp>
+#include <wopi/WopiStorage.hpp>
+#include <wsd/Auth.hpp>
+#include <wsd/HostUtil.hpp>
+#include <wsd/ProofKey.hpp>
+
+#include <cassert>
+#include <cerrno>
+
+#endif // !MOBILEAPP
+
+#include <common/CommandControl.hpp>
+#include <common/Common.hpp>
+#include <common/ConfigUtil.hpp>
+#include <common/FileUtil.hpp>
+#include <common/JsonUtil.hpp>
+#include <common/Log.hpp>
+#include <common/TraceEvent.hpp>
+#include <common/Unit.hpp>
+#include <common/Util.hpp>
+#include <net/NetUtil.hpp>
+#include <wsd/COOLWSD.hpp>
+#include <wsd/Exceptions.hpp>
+
+#include <Poco/Exception.h>
+#include <Poco/Path.h>
+#include <Poco/StreamCopier.h>
+#include <Poco/URI.h>
 
 #include <chrono>
 #include <memory>
 #include <string>
 
-#include <Poco/Exception.h>
-
-#if !MOBILEAPP
-
-#include <cassert>
-#include <cerrno>
-
-#include <Auth.hpp>
-#include <HostUtil.hpp>
-#include <ProofKey.hpp>
-#include <HttpRequest.hpp>
-#include <wopi/WopiStorage.hpp>
-
-#endif
-
-#include <Poco/StreamCopier.h>
-#include <Poco/Path.h>
-#include <Poco/URI.h>
-
-#include <CommandControl.hpp>
-#include <Common.hpp>
-#include <Exceptions.hpp>
-#include <Log.hpp>
-#include <NetUtil.hpp>
-#include <Storage.hpp>
-#include <Unit.hpp>
-#include <Util.hpp>
-#include <common/ConfigUtil.hpp>
-#include <common/FileUtil.hpp>
-#include <common/JsonUtil.hpp>
-#include <common/TraceEvent.hpp>
-#include <wsd/COOLWSD.hpp>
-
+#if MOBILEAPP
 #ifdef IOS
 #include <ios.h>
+#elif defined(MACOS)
+#include <macos.h>
 #elif defined(__ANDROID__)
-#include "androidapp.hpp"
-#elif defined(GTKAPP)
-#include "gtk.hpp"
-#endif // IOS
+#include <androidapp.hpp>
+#elif defined(_WIN32)
+#include <windows.hpp>
+#elif defined(QTAPP)
+#include <qt.hpp>
+#elif WASMAPP
+#include <wasmapp.hpp>
+#endif
+#endif // MOBILEAPP
 
 #if ENABLE_LOCAL_FILESYSTEM
 bool StorageBase::FilesystemEnabled;
@@ -121,7 +134,7 @@ void StorageBase::initialize()
 
 #if !MOBILEAPP
 
-bool isLocalhost(const std::string& targetHost)
+static bool isLocalhost(const std::string& targetHost)
 {
     const std::string targetAddress = net::resolveHostAddress(targetHost);
 
@@ -185,7 +198,7 @@ StorageBase::StorageType StorageBase::validate(const Poco::URI& uri,
         LOG_DBG("Local Storage is disabled in this build. Enable in the config file.");
 #endif // ENABLE_LOCAL_FILESYSTEM
     }
-#if !MOBILEAPP
+#if !MOBILEAPP // Breaks IOS when removed.
     else if (HostUtil::isWopiEnabled())
     {
         const auto& targetHost = uri.getHost();
@@ -220,7 +233,8 @@ StorageBase::StorageType StorageBase::validate(const Poco::URI& uri,
 }
 
 std::unique_ptr<StorageBase> StorageBase::create(const Poco::URI& uri, const std::string& jailRoot,
-                                                 const std::string& jailPath, bool takeOwnership)
+                                                 const std::string& jailPath, bool takeOwnership,
+                                                 const AdditionalFilePocoUris& additionalFileUrisPublic)
 {
     // FIXME: By the time this gets called we have already sent to the client three
     // 'progress:' messages: "id":"find", "id":"connect" and "id":"ready". We should ideally do the checks
@@ -256,7 +270,7 @@ std::unique_ptr<StorageBase> StorageBase::create(const Poco::URI& uri, const std
             break;
 
         case StorageBase::StorageType::Conversion:
-            return std::make_unique<LocalStorage>(uri, jailRoot, jailPath, /*takeOwnership=*/true);
+            return std::make_unique<LocalStorage>(uri, jailRoot, jailPath, /*takeOwnership=*/true, additionalFileUrisPublic);
             break;
 
 #if ENABLE_LOCAL_FILESYSTEM
@@ -305,15 +319,27 @@ std::unique_ptr<LocalStorage::LocalFileInfo> LocalStorage::getLocalFileInfo()
 
 std::string LocalStorage::downloadStorageFileToLocal(const Authorization& /*auth*/,
                                                      LockContext& /*lockCtx*/,
-                                                     const std::string& /*templateUri*/)
+                                                     const std::string& /*templateUri*/,
+                                                     [[maybe_unused]]
+                                                     AdditionalFilePaths& additionalFileLocalPaths)
 {
 #if !MOBILEAPP
     // /chroot/jailId/user/doc/childId/file.ext
     const std::string filename = Poco::Path(getUri().getPath()).getFileName();
+    AdditionalFilePaths additionalFileFilenames;
+    for (const auto& it : getAdditionalFileUris())
+    {
+        additionalFileFilenames[it.first] = Poco::Path(it.second.getPath()).getFileName();
+    }
     setRootFilePath(Poco::Path(getLocalRootPath(), filename).toString());
     setRootFilePathAnonym(COOLWSD::anonymizeUrl(getRootFilePath()));
     LOG_INF("Public URI [" << COOLWSD::anonymizeUrl(getUri().getPath()) <<
             "] jailed to [" << getRootFilePathAnonym() << "].");
+    AdditionalFilePaths additionalFileJailedFilePaths;
+    for (const auto& it : additionalFileFilenames)
+    {
+        additionalFileJailedFilePaths[it.first] = Poco::Path(getLocalRootPath(), it.second).toString();
+    }
 
     // Despite the talk about URIs it seems that _uri is actually just a pathname here
     const std::string publicFilePath = getUri().getPath();
@@ -321,6 +347,11 @@ std::string LocalStorage::downloadStorageFileToLocal(const Authorization& /*auth
     {
         LOG_ERR("Local file URI [" << publicFilePath << "] invalid or doesn't exist.");
         throw BadRequestException("Invalid URI: " + getUri().toString());
+    }
+    AdditionalFilePaths additionalFilePublicFilePaths;
+    for (const auto& it : getAdditionalFileUris())
+    {
+        additionalFilePublicFilePaths[it.first] = it.second.getPath();
     }
 
     // Make sure the path is valid.
@@ -344,6 +375,14 @@ std::string LocalStorage::downloadStorageFileToLocal(const Authorization& /*auth
             const std::string dir = Poco::Path(publicFilePath).parent().toString();
             if (FileUtil::isEmptyDirectory(dir))
                 FileUtil::removeFile(dir);
+
+            for (const auto& it : additionalFilePublicFilePaths)
+            {
+                Poco::File(it.second).moveTo(additionalFileJailedFilePaths[it.first]);
+                const std::string additionalFileDir = Poco::Path(it.second).parent().toString();
+                if (FileUtil::isEmptyDirectory(additionalFileDir))
+                    FileUtil::removeFile(additionalFileDir);
+            }
         }
         catch (const Poco::Exception& exc)
         {
@@ -361,9 +400,8 @@ std::string LocalStorage::downloadStorageFileToLocal(const Authorization& /*auth
             && link(publicFilePath.c_str(), getRootFilePath().c_str()) == -1)
         {
             // Failed
-            LOG_INF("link(\"" << COOLWSD::anonymizeUrl(publicFilePath) << "\", \""
-                              << getRootFilePathAnonym() << "\") failed. Will copy. Linking error: "
-                              << Util::symbolicErrno(errno) << ' ' << strerror(errno));
+            LOG_INF_SYS("link(\"" << COOLWSD::anonymizeUrl(publicFilePath) << "\", \""
+                                  << getRootFilePathAnonym() << "\") failed. Will copy");
         }
     }
 
@@ -387,9 +425,17 @@ std::string LocalStorage::downloadStorageFileToLocal(const Authorization& /*auth
 
     // Now return the jailed path.
     if (COOLWSD::NoCapsForKit)
+    {
+        for (const auto& it : additionalFileJailedFilePaths)
+            additionalFileLocalPaths[it.first] = it.second;
         return getRootFilePath();
+    }
     else
+    {
+        for (const auto& it : additionalFileFilenames)
+            additionalFileLocalPaths[it.first] = Poco::Path(getJailPath(), it.second).toString();
         return Poco::Path(getJailPath(), filename).toString();
+    }
 
 #else // MOBILEAPP
 

@@ -9,10 +9,15 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * Implementation of client request routing and handling.
+ * Classes: ClientRequestDispatcher
+ */
+
 #include <config.h>
 
 #if ENABLE_FEATURE_LOCK
-#include "CommandControl.hpp"
+#include <CommandControl.hpp>
 #endif
 
 #include <common/Anonymizer.hpp>
@@ -23,13 +28,13 @@
 #include <Exceptions.hpp>
 #include <FileServer.hpp>
 #include <HttpRequest.hpp>
-#include <JsonUtil.hpp>
+#include <common/JsonUtil.hpp>
 #include <ProofKey.hpp>
 #include <ProxyRequestHandler.hpp>
 #include <RequestDetails.hpp>
 #include <Socket.hpp>
 #include <UserMessages.hpp>
-#include <Util.hpp>
+#include <common/Util.hpp>
 #include <net/AsyncDNS.hpp>
 #include <net/HttpHelper.hpp>
 #include <net/NetUtil.hpp>
@@ -64,6 +69,7 @@
 #include <map>
 #include <memory>
 #include <string>
+#include <string_view>
 #include <vector>
 
 std::map<std::string, std::string> ClientRequestDispatcher::StaticFileContentCache;
@@ -75,7 +81,10 @@ std::unordered_map<std::string, std::shared_ptr<RequestVettingStation>>
 extern std::map<std::string, std::shared_ptr<DocumentBroker>> DocBrokers;
 extern std::mutex DocBrokersMutex;
 
-extern void cleanupDocBrokers();
+#if !MOBILEAPP
+static constexpr std::string_view MEDIA_STR = "str";
+static constexpr std::string_view MEDIA_MP4 = "url";
+#endif
 
 namespace
 {
@@ -114,11 +123,10 @@ inline void shutdownLimitReached(const std::shared_ptr<ProtocolHandlerInterface>
 /// Otherwise, creates and adds a new one to DocBrokers.
 /// May return null if terminating or MaxDocuments limit is reached.
 /// Returns the error message, if any, when no DocBroker is created/found.
-std::pair<std::shared_ptr<DocumentBroker>, std::string>
+extern std::pair<std::shared_ptr<DocumentBroker>, std::string>
 findOrCreateDocBroker(DocumentBroker::ChildType type, const std::string& uri,
-                      const std::string& docKey, const std::string& configId,
-                      const std::string& id, const Poco::URI& uriPublic,
-                      unsigned mobileAppDocId)
+                      const std::string& docKey, const std::string& configId, const std::string& id,
+                      const Poco::URI& uriPublic, unsigned mobileAppDocId)
 {
     LOG_INF("Find or create DocBroker for docKey ["
             << docKey << "] for session [" << id << "] on url ["
@@ -127,7 +135,7 @@ findOrCreateDocBroker(DocumentBroker::ChildType type, const std::string& uri,
 
     std::unique_lock<std::mutex> docBrokersLock(DocBrokersMutex);
 
-    cleanupDocBrokers();
+    COOLWSD::cleanupDocBrokers();
 
     if (SigUtil::getShutdownRequestFlag())
     {
@@ -244,22 +252,24 @@ public:
 /// Also owns the file - cleaning it up when destroyed.
 class ConvertToPartHandler : public Poco::Net::PartHandler
 {
-    std::string _filename;
+    /// Parameter name -> filename map.
+    AdditionalFilePaths _filenames;
 
 public:
-    std::string getFilename() const { return _filename; }
+    const AdditionalFilePaths& getFilenames() const { return _filenames; }
 
     /// Afterwards someone else is responsible for cleaning that up.
-    void takeFile() { _filename.clear(); }
+    void takeFiles() { _filenames.clear(); }
 
-    ConvertToPartHandler() {}
+    ConvertToPartHandler() = default;
 
-    virtual ~ConvertToPartHandler()
+    ~ConvertToPartHandler() override
     {
-        if (!_filename.empty())
+        for (const auto& it : _filenames)
         {
-            LOG_TRC("Remove un-handled temporary file '" << _filename << '\'');
-            StatelessBatchBroker::removeFile(_filename);
+            const std::string& filename = it.second;
+            LOG_TRC("Remove un-handled temporary file '" << filename << '\'');
+            StatelessBatchBroker::removeFile(filename);
         }
     }
 
@@ -298,12 +308,17 @@ public:
             tempPath.setFileName("incoming_file"); // A sensible name.
         else
             tempPath.setFileName(filenameParam.getFileName()); //TODO: Sanitize.
-        _filename = tempPath.toString();
-        LOG_DBG("Storing incoming file to: " << _filename);
+        std::string paramName = "data";
+        if (params.has("name"))
+        {
+            paramName = params.get("name");
+        }
+        _filenames[paramName] = tempPath.toString();
+        LOG_DBG("Storing incoming file to: " << _filenames[paramName]);
 
-        // Copy the stream to _filename.
+        // Copy the stream to the temp path.
         std::ofstream fileStream;
-        fileStream.open(_filename);
+        fileStream.open(tempPath.toString());
         Poco::StreamCopier::copyStream(stream, fileStream);
         fileStream.close();
     }
@@ -389,7 +404,7 @@ public:
 };
 
 /// Constructs ConvertToBroker implamentation based on request type
-std::shared_ptr<ConvertToBroker>
+static std::shared_ptr<ConvertToBroker>
 getConvertToBrokerImplementation(const std::string& requestType, const std::string& fromPath,
                                  const Poco::URI& uriPublic, const std::string& docKey,
                                  const std::string& format, const std::string& options,
@@ -524,7 +539,7 @@ public:
         };
 
         net::AsyncDNS::lookup(_addressesToResolve.front(), std::move(pushHostnameResolvedToPoll),
-                              dumpState);
+                              std::move(dumpState));
     }
 
     void hostnameResolved(const net::HostEntry& hostEntry)
@@ -657,6 +672,9 @@ void ClientRequestDispatcher::onConnect(const std::shared_ptr<StreamSocket>& soc
                           << ") to ClientRequestDispatcher " << this);
 }
 
+namespace
+{
+#if !MOBILEAPP
 /// Starts an asynchronous CheckFileInfo request in parallel to serving
 /// static files. At this point, we don't have the client's WebSocket
 /// yet, and we're proactively trying to authenticate the client.
@@ -712,11 +730,8 @@ void launchAsyncCheckFileInfo(
     }
 }
 
-#if !MOBILEAPP
-static void socketEraseConsumedBytes(const std::shared_ptr<StreamSocket>& socket,
-                                     ssize_t headerSize,
-                                     ssize_t contentSize,
-                                     bool servedSync)
+void socketEraseConsumedBytes(const std::shared_ptr<StreamSocket>& socket, ssize_t headerSize,
+                              ssize_t contentSize, bool servedSync)
 {
     if( socket->getInBuffer().size() > 0 ) // erase request from inBuffer if not cleared by ignoreInput
     {
@@ -731,6 +746,7 @@ static void socketEraseConsumedBytes(const std::shared_ptr<StreamSocket>& socket
     }
 }
 #endif // !MOBILEAPP
+} // namespace
 
 void ClientRequestDispatcher::handleIncomingMessage(SocketDisposition& disposition)
 {
@@ -855,36 +871,48 @@ void ClientRequestDispatcher::handleIncomingMessage(SocketDisposition& dispositi
 #else // !MOBILEAPP
     Poco::Net::HTTPRequest request;
 
-#ifdef IOS
-    // The URL of the document is sent over the FakeSocket by the code in
+    // In the iOS app, the URL of the document is sent over the FakeSocket by the code in
     // -[DocumentViewController userContentController:didReceiveScriptMessage:] when it gets the
     // HULLO message from the JavaScript in global.js.
 
-    // The "app document id", the numeric id of the document, from the appDocIdCounter in CODocument.mm.
-    char* space = strchr(socket->getInBuffer().data(), ' ');
-    assert(space != nullptr);
+    // In other mobile apps and in CODA, it is done in some similar place.
 
-    // The socket buffer is not nul-terminated so we can't just call strtoull() on the number at
-    // its end, it might be followed in memory by more digits. Is there really no better way to
-    // parse the number at the end of the buffer than to copy the bytes into a nul-terminated
-    // buffer?
-    const size_t appDocIdLen =
-        (socket->getInBuffer().data() + socket->getInBuffer().size()) - (space + 1);
-    char* appDocIdBuffer = (char*)malloc(appDocIdLen + 1);
-    memcpy(appDocIdBuffer, space + 1, appDocIdLen);
-    appDocIdBuffer[appDocIdLen] = '\0';
-    unsigned appDocId = std::strtoul(appDocIdBuffer, nullptr, 10);
-    free(appDocIdBuffer);
+    // It's currently relevant only for iOS, macOS, and Windows, so fallback if it is not found
+    // (Android?).
 
-    handleClientWsUpgrade(
-        request, std::string(socket->getInBuffer().data(), space - socket->getInBuffer().data()),
-        disposition, socket, appDocId);
-#else // IOS
-    handleClientWsUpgrade(
-        request,
-        RequestDetails(std::string(socket->getInBuffer().data(), socket->getInBuffer().size())),
-        disposition, socket);
-#endif // !IOS
+    // Unwrap what StreamSocket::readIncomingData() did
+    ssize_t len;
+    memcpy(&len, socket->getInBuffer().data(), sizeof(ssize_t));
+    const char* payload = socket->getInBuffer().data() + sizeof(ssize_t);
+    auto const space = std::string_view(payload, len).find(' ');
+    if (space != std::string_view::npos)
+    {
+        // The socket buffer is not nul-terminated so we can't just call strtoull() on the number at
+        // its end, it might be followed in memory by more digits. Is there really no better way to
+        // parse the number at the end of the buffer than to copy the bytes into a nul-terminated
+        // buffer?
+        const size_t appDocIdLen = len - (space + 1);
+        char* appDocIdBuffer = (char*)malloc(appDocIdLen + 1);
+        memcpy(appDocIdBuffer, payload + space + 1, appDocIdLen);
+        appDocIdBuffer[appDocIdLen] = '\0';
+        const auto [mobileAppDocId, docIdOk] = Util::u64FromString(appDocIdBuffer, 0);
+        if (!docIdOk) {
+            LOG_ERR("Bad document ID \"" << appDocIdBuffer << "\" in \"" << std::string_view(payload, len) << "\"");
+        }
+        free(appDocIdBuffer);
+
+        handleClientWsUpgrade(request,
+                              RequestDetails(std::string(payload, space)),
+                              disposition, socket, mobileAppDocId);
+    }
+    else
+    {
+        // no appDocId provided
+        handleClientWsUpgrade(
+            request,
+            RequestDetails(std::string(payload, len)),
+            disposition, socket);
+    }
     socket->getInBuffer().clear();
 #endif // MOBILEAPP
 }
@@ -906,7 +934,14 @@ bool allowedOriginByHost(const std::string& host, const std::string& actualOrigi
 
 template <typename T> bool allowedOrigin(const T& request, const RequestDetails& requestDetails)
 {
-    const std::string actualOrigin = request.get("Origin");
+    auto const it = request.find("Origin");
+    if (it == request.end())
+    {
+        LOG_ERR("Rejecting message with no Origin header");
+        return false;
+    }
+
+    const std::string actualOrigin = it->second;
     const ServerURL cnxDetails(requestDetails);
 
     if (net::sameOrigin(cnxDetails.getWebServerUrl(), actualOrigin))
@@ -966,7 +1001,7 @@ void ClientRequestDispatcher::handleFullMessage(Poco::Net::HTTPRequest& request,
     _lastSeenHTTPHeader = now;
 
     const bool closeConnection = !request.getKeepAlive(); // HTTP/1.1: closeConnection true w/ "Connection: close" only!
-    LOG_DBG("Handling request: " << request.getURI() << ", closeConnection " << closeConnection);
+    LOG_DBG("Handling request: " << request.getURI() << ", closeConnection: " << closeConnection);
 
     ClientRequestDispatcher::MessageResult result = handleMessage(request, message, disposition, socket, headerSize);
     if (result == MessageResult::Ignore)
@@ -988,7 +1023,7 @@ ClientRequestDispatcher::MessageResult ClientRequestDispatcher::handleMessage(Po
                                                                               ssize_t headerSize)
 {
     const bool closeConnection = !request.getKeepAlive(); // HTTP/1.1: closeConnection true w/ "Connection: close" only!
-    LOG_DBG("Handling request: " << request.getURI() << ", closeConnection " << closeConnection);
+    LOG_DBG("Handling request: " << request << ", closeConnection: " << closeConnection);
 
     // denotes whether the request has been served synchronously
     bool servedSync = false;
@@ -1142,7 +1177,7 @@ ClientRequestDispatcher::MessageResult ClientRequestDispatcher::handleMessage(Po
                 bool skipAuthentication = ConfigUtil::getConfigValue<bool>(
                     "security.enable_metrics_unauthenticated", false);
                 if (!skipAuthentication)
-                    if (!COOLWSD::FileRequestHandler->isAdminLoggedIn(request, *response))
+                    if (!FileServerRequestHandler::isAdminLoggedIn(request, *response))
                         throw Poco::Net::NotAuthenticatedException("Invalid admin login");
             }
             catch (const Poco::Net::NotAuthenticatedException& exc)
@@ -1197,7 +1232,11 @@ ClientRequestDispatcher::MessageResult ClientRequestDispatcher::handleMessage(Po
 
         else if (requestDetails.equals(RequestDetails::Field::Type, "cool") &&
                  requestDetails.equals(1, "media"))
-            servedSync = handleMediaRequest(request, disposition, socket);
+            servedSync = handleMediaRequest(request, disposition, socket, false);
+
+        else if (requestDetails.equals(RequestDetails::Field::Type, "cool") &&
+                 requestDetails.equals(1, "mediaVTT"))
+            servedSync = handleMediaRequest(request, disposition, socket, true);
 
         else if (requestDetails.equals(RequestDetails::Field::Type, "cool") &&
                  requestDetails.equals(1, "clipboard"))
@@ -1212,9 +1251,13 @@ ClientRequestDispatcher::MessageResult ClientRequestDispatcher::handleMessage(Po
 
         else if (requestDetails.isProxy() && requestDetails.equals(2, "ws"))
             servedSync = handleClientProxyRequest(request, requestDetails, message, disposition);
-        else if (requestDetails.equals(RequestDetails::Field::Type, "cool") &&
-                 requestDetails.equals(2, "ws") && requestDetails.isWebSocket())
+        else if (requestDetails.isWebSocket() &&
+                 requestDetails.equals(RequestDetails::Field::Type, "cool") &&
+                 (requestDetails.equals(1, "ws") || requestDetails.equals(2, "ws")))
+        {
+            // The new WebSocket URL has 'ws' as the second segment; support both old and new.
             servedSync = handleClientWsUpgrade(request, requestDetails, disposition, socket);
+        }
 
         else if (!requestDetails.isWebSocket() &&
                  (requestDetails.equals(RequestDetails::Field::Type, "cool") ||
@@ -1249,11 +1292,12 @@ ClientRequestDispatcher::MessageResult ClientRequestDispatcher::handleMessage(Po
             return MessageResult::Ignore;
         }
     }
-    catch (const BadRequestException& ex)
+    catch (const BadRequestException& exc)
     {
-        LOG_ERR('#' << socket->getFD() << " bad request: ["
-                    << COOLProtocol::getAbbreviatedMessage(socket->getInBuffer())
-                    << "]: " << ex.what());
+        LOG_ERR("Bad request: " << request << ", closeConnection: " << closeConnection
+                                << ", socket-data: ["
+                                << COOLProtocol::getAbbreviatedMessage(socket->getInBuffer())
+                                << "]: " << exc.what());
 
         // Bad request.
         HttpHelper::sendErrorAndShutdown(http::StatusCode::BadRequest, socket);
@@ -1261,9 +1305,10 @@ ClientRequestDispatcher::MessageResult ClientRequestDispatcher::handleMessage(Po
     }
     catch (const std::exception& exc)
     {
-        LOG_ERR('#' << socket->getFD() << " Exception while processing incoming request: ["
-                    << COOLProtocol::getAbbreviatedMessage(socket->getInBuffer())
-                    << "]: " << exc.what());
+        LOG_ERR("Exception while processing incoming request: "
+                << request << ", closeConnection: " << closeConnection << ", socket-data: ["
+                << COOLProtocol::getAbbreviatedMessage(socket->getInBuffer())
+                << "]: " << exc.what());
 
         // Bad request.
         // NOTE: Check _wsState to choose between HTTP response or WebSocket (app-level) error.
@@ -1353,17 +1398,19 @@ bool ClientRequestDispatcher::handleWopiDiscoveryRequest(
     LOG_DBG("Wopi discovery request: " << requestDetails.getURI());
 
     std::string xml = getFileContent("discovery.xml");
-    std::string srvUrl =
+    bool isSsl =
 #if ENABLE_SSL
-        ((ConfigUtil::isSslEnabled() || ConfigUtil::isSSLTermination()) ? "https://" : "http://")
+        (ConfigUtil::isSslEnabled() || ConfigUtil::isSSLTermination());
 #else
-        "http://"
+        false;
 #endif
+    std::string srvUrl = (isSsl ? "https://" : "http://")
         + (COOLWSD::ServerName.empty() ? requestDetails.getHostUntrusted() : COOLWSD::ServerName) +
         COOLWSD::ServiceRoot;
     if (requestDetails.isProxy())
         srvUrl = requestDetails.getProxyPrefix();
     Poco::replaceInPlace(xml, std::string("%SRV_URI%"), srvUrl);
+    Poco::replaceInPlace(xml, std::string("%SRV_PROTO%"), std::string(isSsl ? "https" : "http"));
 
     http::Response httpResponse(http::StatusCode::OK);
     FileServerRequestHandler::hstsHeaders(httpResponse);
@@ -1378,28 +1425,10 @@ bool ClientRequestDispatcher::handleWopiDiscoveryRequest(
     return true;
 }
 
-
-// NB: these names are part of the published API, and should not be renamed or altered but can be expanded
-STATE_ENUM(CheckStatus,
-    Ok,
-    NotHttpSuccess,
-    HostNotFound,
-    WopiHostNotAllowed,
-    UnspecifiedError,
-    ConnectionAborted,
-    CertificateValidation,
-    SelfSignedCertificate,
-    ExpiredCertificate,
-    SslHandshakeFail,
-    MissingSsl,
-    NotHttps,
-    NoScheme,
-    Timeout,
-);
-
+//static
 void ClientRequestDispatcher::sendResult(const std::shared_ptr<StreamSocket>& socket, CheckStatus result)
 {
-    std::string output = "{\"status\": \"" + JsonUtil::escapeJSONValue(nameShort(result)) + "\"}\n";
+    std::string output = R"({"status": ")" + JsonUtil::escapeJSONValue(nameShort(result)) + "\"}\n";
 
     http::Response jsonResponse(http::StatusCode::OK);
     FileServerRequestHandler::hstsHeaders(jsonResponse);
@@ -1408,7 +1437,7 @@ void ClientRequestDispatcher::sendResult(const std::shared_ptr<StreamSocket>& so
     jsonResponse.set("X-Content-Type-Options", "nosniff");
 
     socket->sendAndShutdown(jsonResponse);
-    LOG_INF("Wopi Access Check request, result: " << nameShort(result));
+    LOG_INF_S("Wopi Access Check request, result: " << nameShort(result));
 }
 
 bool ClientRequestDispatcher::handleWopiAccessCheckRequest(
@@ -1532,9 +1561,10 @@ bool ClientRequestDispatcher::handleWopiAccessCheckRequest(
     httpProbeSession->setTimeout(std::chrono::seconds(2));
 
     std::weak_ptr<StreamSocket> socketWeak(socket);
+    const std::string logPfx = getLogPrefix();
 
     httpProbeSession->setConnectFailHandler(
-        [socketWeak, callbackUrlStr, this](const std::shared_ptr<http::Session>& probeSession)
+        [socketWeak, callbackUrlStr, logPfx](const std::shared_ptr<http::Session>& probeSession)
         {
             CheckStatus status = CheckStatus::UnspecifiedError;
 
@@ -1559,35 +1589,32 @@ bool ClientRequestDispatcher::handleWopiAccessCheckRequest(
                     status = CheckStatus::ExpiredCertificate;
                 } else {
                     status = CheckStatus::CertificateValidation;
-                    LOG_DBG("Result ssl: " << probeSession->getSslVerifyMessage());
+                    LOG_DBG_S(logPfx << "Result ssl: " << probeSession->getSslVerifyMessage());
                 }
             }
-#else
-            (void) this; // to make the compiler happy wrt. the lambda capture
 #endif
 
             std::shared_ptr<StreamSocket> destSocket = socketWeak.lock();
             if (!destSocket)
             {
-                LOG_ERR("Invalid socket while sending wopi access check result for: "
+                LOG_ERR_S(logPfx << "Invalid socket while sending wopi access check result for: "
                         << callbackUrlStr);
                 return;
             }
             sendResult(destSocket, status);
     });
 
-    auto finishHandler = [socketWeak, callbackUrlStr = std::move(callbackUrlStr),
-                          this](const std::shared_ptr<http::Session>& probeSession)
+    auto finishHandler = [socketWeak, callbackUrlStr = std::move(callbackUrlStr), logPfx]
+                          (const std::shared_ptr<http::Session>& probeSession)
     {
-        LOG_TRC("finishHandler ");
+        LOG_TRC_S(logPfx << "finishHandler ");
 
         const auto lastErrno = errno;
 
-        probeSession->asyncShutdown();
         const std::shared_ptr<http::Response> httpResponse = probeSession->response();
         const http::Response::State responseState = httpResponse->state();
         const http::StatusCode statusCode = httpResponse->statusCode();
-        LOG_DBG("Wopi Access Check: got response state: " << responseState << " "
+        LOG_DBG_S(logPfx << "Wopi Access Check: got response state: " << responseState << " "
                                             << ", response status code: " << statusCode << " "
                                             << ", last errno: " << lastErrno);
 
@@ -1620,7 +1647,7 @@ bool ClientRequestDispatcher::handleWopiAccessCheckRequest(
                 status = CheckStatus::Ok;
             } else {
                 status = CheckStatus::CertificateValidation;
-                LOG_WRN("Unexpected failed Result ssl in a connection success: " << probeSession->getSslVerifyMessage());
+                LOG_WRN_S(logPfx << "Unexpected failed Result ssl in a connection success: " << probeSession->getSslVerifyMessage());
             }
         }
 #endif
@@ -1628,8 +1655,8 @@ bool ClientRequestDispatcher::handleWopiAccessCheckRequest(
         std::shared_ptr<StreamSocket> destSocket = socketWeak.lock();
         if (!destSocket)
         {
-            LOG_ERR(
-                "Invalid socket while sending wopi access check result for: " << callbackUrlStr);
+            LOG_ERR_S(logPfx
+                << "Invalid socket while sending wopi access check result for: " << callbackUrlStr);
             return;
         }
         sendResult(destSocket, status);
@@ -1857,7 +1884,8 @@ bool ClientRequestDispatcher::handleRobotsTxtRequest(const Poco::Net::HTTPReques
 
 bool ClientRequestDispatcher::handleMediaRequest(const Poco::Net::HTTPRequest& request,
                                                  SocketDisposition& /*disposition*/,
-                                                 const std::shared_ptr<StreamSocket>& socket)
+                                                 const std::shared_ptr<StreamSocket>& socket,
+                                                 bool bVTT)
 {
     assert(socket && "Must have a valid socket");
 
@@ -1941,7 +1969,8 @@ bool ClientRequestDispatcher::handleMediaRequest(const Poco::Net::HTTPRequest& r
         LOG_TRC_S("Move media request " << tag << " to docbroker thread");
 
         std::string range = request.get("Range", "none");
-        docBroker->handleMediaRequest(std::move(range), socket, tag);
+        docBroker->handleMediaRequest(std::move(range), socket, tag, (bVTT ? std::string(MEDIA_STR)
+                                                                      : std::string(MEDIA_MP4)));
     }
     return false; // async
 }
@@ -2088,9 +2117,9 @@ std::string ClientRequestDispatcher::getContentType(const std::string& fileName)
         { "pdf", "application/pdf" },
     };
 
-    const std::string sExt = Poco::Path(fileName).getExtension();
+    const std::string ext = Poco::Path(fileName).getExtension();
 
-    const auto it = contentTypes.find(sExt);
+    const auto it = contentTypes.find(ext);
     if (it != contentTypes.end())
         return it->second;
 
@@ -2099,11 +2128,11 @@ std::string ClientRequestDispatcher::getContentType(const std::string& fileName)
 
 bool ClientRequestDispatcher::isSpreadsheet(const std::string& fileName)
 {
-    const std::string sContentType = getContentType(fileName);
+    const std::string contentType = getContentType(fileName);
 
-    return sContentType == "application/vnd.oasis.opendocument.spreadsheet" ||
-           sContentType == "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" ||
-           sContentType == "application/vnd.ms-excel";
+    return contentType == "application/vnd.oasis.opendocument.spreadsheet" ||
+           contentType == "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" ||
+           contentType == "application/vnd.ms-excel";
 }
 
 bool ClientRequestDispatcher::handlePostRequest(const RequestDetails& requestDetails,
@@ -2143,11 +2172,34 @@ bool ClientRequestDispatcher::handlePostRequest(const RequestDetails& requestDet
         if (requestDetails.equals(1, "convert-to") && format.empty())
             hasRequiredParameters = false;
 
-        const std::string fromPath = handler.getFilename();
+        const AdditionalFilePaths& fromPaths = handler.getFilenames();
+        std::string fromPath;
+        auto it = fromPaths.find("data");
+        if (it != fromPaths.end())
+        {
+            fromPath = it->second;
+        }
+        if (fromPath.empty() && fromPaths.size() == 1)
+        {
+            // Compatibility: if there is a single stream, then allow any name and assume 'data'.
+            it = fromPaths.begin();
+            fromPath = it->second;
+        }
         LOG_INF("Conversion request for URI [" << fromPath << "] format [" << format << "].");
         if (!fromPath.empty() && hasRequiredParameters)
         {
             Poco::URI uriPublic = RequestDetails::sanitizeURI(fromPath);
+            AdditionalFilePocoUris additionalFileUrisPublic;
+            for (const auto& key : {"template", "compare"})
+            {
+                it = fromPaths.find(key);
+                if (it == fromPaths.end())
+                {
+                    continue;
+                }
+
+                additionalFileUrisPublic[key] = RequestDetails::sanitizeURI(it->second);
+            }
             const std::string docKey = RequestDetails::getDocKey(uriPublic);
 
             std::string options;
@@ -2212,19 +2264,19 @@ bool ClientRequestDispatcher::handlePostRequest(const RequestDetails& requestDet
             auto docBroker = getConvertToBrokerImplementation(
                 requestDetails[1], fromPath, uriPublic, docKey, format, options, lang, target,
                 filter, encodedTransformJSON);
-            handler.takeFile();
+            handler.takeFiles();
 
-            cleanupDocBrokers();
+            COOLWSD::cleanupDocBrokers();
 
             DocBrokers.emplace(docKey, docBroker);
             LOG_TRC("Have " << DocBrokers.size() << " DocBrokers after inserting [" << docKey
                             << "].");
 
-            if (!docBroker->startConversion(disposition, _id))
+            if (!docBroker->startConversion(disposition, _id, additionalFileUrisPublic))
             {
                 LOG_WRN("Failed to create Client Session with id [" << _id << "] on docKey ["
                                                                     << docKey << "].");
-                cleanupDocBrokers();
+                COOLWSD::cleanupDocBrokers();
             }
         }
         else
@@ -2277,14 +2329,22 @@ bool ClientRequestDispatcher::handlePostRequest(const RequestDetails& requestDet
                 LOG_INF("Perform insertfile: " << formChildid << ", " << formName
                                                << ", filename: " << fileName);
                 Poco::File(dirPath).createDirectories();
-                Poco::File(handler.getFilename()).moveTo(fileName);
+                std::string filename;
+                const std::map<std::string, std::string>& filenames = handler.getFilenames();
+                if (!filenames.empty())
+                {
+                    // Expect a single parameter, don't care about the name.
+                    auto it = filenames.begin();
+                    filename = it->second;
+                }
+                Poco::File(filename).moveTo(fileName);
 
                 // Cleanup the directory after moving.
-                const std::string dir = Poco::Path(handler.getFilename()).parent().toString();
+                const std::string dir = Poco::Path(filename).parent().toString();
                 if (FileUtil::isEmptyDirectory(dir))
                     FileUtil::removeFile(dir);
 
-                handler.takeFile();
+                handler.takeFiles();
 
                 http::Response httpResponse(http::StatusCode::OK);
                 FileServerRequestHandler::hstsHeaders(httpResponse);
@@ -2412,7 +2472,7 @@ bool ClientRequestDispatcher::handlePostRequest(const RequestDetails& requestDet
             fromPath, uriPublic, docKey, handler.getSearchResultContent());
         handler.takeFile();
 
-        cleanupDocBrokers();
+        COOLWSD::cleanupDocBrokers();
 
         DocBrokers.emplace(docKey, docBroker);
         LOG_TRC("Have " << DocBrokers.size() << " DocBrokers after inserting [" << docKey << "].");
@@ -2421,7 +2481,7 @@ bool ClientRequestDispatcher::handlePostRequest(const RequestDetails& requestDet
         {
             LOG_WRN("Failed to create Client Session with id [" << _id << "] on docKey [" << docKey
                                                                 << "].");
-            cleanupDocBrokers();
+            COOLWSD::cleanupDocBrokers();
         }
 
         return false;
@@ -2569,7 +2629,7 @@ bool ClientRequestDispatcher::handleClientWsUpgrade(const Poco::Net::HTTPRequest
         }
 
         // Indicate to the client that document broker is searching.
-        static constexpr const char* const status = "progress: { \"id\":\"find\" }";
+        static constexpr const char* const status = R"(progress: { "id":"find" })";
         LOG_TRC("Sending to Client [" << status << ']');
         ws->sendMessage(status);
 
@@ -2720,8 +2780,11 @@ void ClientRequestDispatcher::CleanupRequestVettingStations()
 
 #if !MOBILEAPP
 
+namespace
+{
+
 /// Create the /hosting/capabilities JSON and return as string.
-static std::string getCapabilitiesJson(bool convertToAvailable)
+std::string getCapabilitiesJson(bool convertToAvailable)
 {
     // Can the convert-to be used?
     Poco::JSON::Object::Ptr convert_to = new Poco::JSON::Object;
@@ -2755,6 +2818,12 @@ static std::string getCapabilitiesJson(bool convertToAvailable)
 
     // Set the product version hash
     capabilities->set("productVersionHash", Util::getCoolVersionHash());
+
+    // Set the kit version
+    capabilities->set("productKitVersion", COOLWSD::LOKitVersionNumber);
+
+    // Set the kit version hash
+    capabilities->set("productKitVersionHash", COOLWSD::LOKitVersionHash);
 
     // Set that this is a proxy.php-enabled instance
     capabilities->set("hasProxyPrefix", COOLWSD::IsProxyPrefixEnabled);
@@ -2796,8 +2865,8 @@ static std::string getCapabilitiesJson(bool convertToAvailable)
 }
 
 /// Send the /hosting/capabilities JSON to socket
-static void sendCapabilities(bool convertToAvailable, bool closeConnection,
-                             const std::weak_ptr<StreamSocket>& socketWeak)
+void sendCapabilities(bool convertToAvailable, bool closeConnection,
+                      const std::weak_ptr<StreamSocket>& socketWeak)
 {
     std::shared_ptr<StreamSocket> socket = socketWeak.lock();
     if (!socket)
@@ -2817,6 +2886,8 @@ static void sendCapabilities(bool convertToAvailable, bool closeConnection,
         socket->send(httpResponse);
     LOG_INF("Sent capabilities.json successfully.");
 }
+
+} // namespace
 
 bool ClientRequestDispatcher::handleCapabilitiesRequest(const Poco::Net::HTTPRequest& request,
                                                         const std::shared_ptr<StreamSocket>& socket)
@@ -2838,6 +2909,6 @@ bool ClientRequestDispatcher::handleCapabilitiesRequest(const Poco::Net::HTTPReq
     return false;
 }
 
-#endif
+#endif // !MOBILEAPP
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

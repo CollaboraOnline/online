@@ -105,7 +105,8 @@ public:
             removeSessionClipboardMeta(body);
             std::istringstream responseStream(body);
             auto clipboard = std::make_shared<ClipboardData>();
-            clipboard->read(responseStream);
+            if (!clipboard->read(responseStream))
+                throw ParseError("error during reading the stream");
             std::ostringstream oss(Util::makeDumpStateStream());
             clipboard->dumpState(oss);
 

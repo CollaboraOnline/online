@@ -61,9 +61,29 @@ function _multiLineEditControl(parentContainer, data, builder, callback) {
 	}
 
 	edit.id = data.id;
+	if(controlType === 'textarea')
+	{
+		JSDialog.SetupA11yLabelForLabelableElement(
+			parentContainer,
+			edit,
+			data,
+			builder,
+		);
+	}
+	else {
+		JSDialog.SetupA11yLabelForNonLabelableElement(
+			edit,
+			data,
+			builder,
+		);
+	}
 
 	if (data.enabled === false) {
 		edit.disabled = true;
+	}
+
+	if (controlType === 'textarea' && data.readonly === true) {
+		edit.readOnly = true;
 	}
 
 	function _keyupChangeHandler() {

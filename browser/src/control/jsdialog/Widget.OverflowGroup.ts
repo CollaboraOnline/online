@@ -61,7 +61,7 @@ function createMoreButton(
 	moreOptionsButton.className = 'ui-content unobutton';
 	moreOptionsButton.id = `${id}-more-button`;
 	moreOptionsButton.setAttribute('aria-label', `More options for ${id}`);
-	moreOptionsButton.setAttribute('aria-pressed', 'false');
+	moreOptionsButton.setAttribute('aria-haspopup', 'dialog');
 
 	const img = document.createElement('img');
 	img.alt = '';
@@ -184,9 +184,24 @@ function setupOverflowMenu(
 		isCollapsed = false;
 	};
 
+	const updateAriaExpandedAttr = (
+		container: HTMLElement,
+		expectedValue: boolean,
+	) => {
+		const buttons = container.querySelectorAll<HTMLElement>(
+			`[aria-expanded="${!expectedValue}"]`,
+		);
+		buttons.forEach((button: HTMLElement) => {
+			button.setAttribute('aria-expanded', String(expectedValue));
+		});
+	};
+
 	// fill the updated menu after it is open
 	(overflowMenuButton as any)._onDropDown = (opened: boolean) => {
 		if (opened) {
+			overflowMenuButton.classList.add('overflow-dropdown-active');
+			updateAriaExpandedAttr(overflowMenuButton, opened);
+
 			// we need to schedule it 2 times as the first one happens just before
 			// layouting task adds menu container to the DOM
 			app.layoutingService.appendLayoutingTask(() => {
@@ -213,6 +228,18 @@ function setupOverflowMenu(
 					const overflowNode = menu.parentNode;
 					overflowNode.style.position = 'fixed';
 					overflowNode.style.zIndex = '20000';
+
+					// calculate baseline-aligned position specifically for overflow menus
+					const tabContainer = overflowMenuButton.closest(
+						'.ui-tabs-content, [id$="-container"]',
+					);
+
+					if (tabContainer) {
+						// use tab container's bottom as baseline for overflow menus only
+						const tabRect = tabContainer.getBoundingClientRect();
+						menu.style.marginTop = tabRect.bottom + 'px';
+					}
+
 					overflowGroupContainer.appendChild(overflowNode);
 					menu?.replaceChildren();
 					menu?.classList.add('ui-toolbar');
@@ -276,6 +303,9 @@ function setupOverflowMenu(
 				});
 			});
 		} else {
+			overflowMenuButton.classList.remove('overflow-dropdown-active');
+			updateAriaExpandedAttr(overflowMenuButton, opened);
+
 			const menu = JSDialog.GetDropdown(dropdownId);
 			migrateItems(menu, hiddenItems);
 		}
@@ -291,7 +321,8 @@ function findFirstToolitem(
 		if (
 			item.type.indexOf('toolitem') >= 0 ||
 			item.type.indexOf('colorlistbox') >= 0 ||
-			item.type.indexOf('menubutton') >= 0
+			item.type.indexOf('menubutton') >= 0 ||
+			item.type.indexOf('checkbox') >= 0
 		)
 			return item;
 		else if (item.children && item.children.length) {
@@ -330,6 +361,7 @@ JSDialog.OverflowGroup = function (
 		overflowGroupContainer,
 	);
 	overflowGroupInnerContainer.id = data.id + '-inner';
+	overflowGroupInnerContainer.setAttribute('role', 'group');
 
 	const contentContainer = window.L.DomUtil.create(
 		'div',
@@ -351,7 +383,10 @@ JSDialog.OverflowGroup = function (
 		builder.options.cssClass + ' ui-overflow-group-label',
 		bottomBar,
 	);
+	label.id = data.id + '-label';
 	if (data.name) label.innerText = data.name;
+
+	overflowGroupInnerContainer.setAttribute('aria-labelledby', label.id);
 
 	// content
 	if (data.children) builder.build(contentContainer, data.children, false);

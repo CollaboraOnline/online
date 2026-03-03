@@ -9,13 +9,18 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * Client session management in WSD process.
+ * Classes: ClientSession
+ */
+
 #pragma once
 
-#include "Session.hpp"
-#include "Storage.hpp"
-#include "SenderQueue.hpp"
-#include "ServerURL.hpp"
-#include "DocumentBroker.hpp"
+#include <Session.hpp>
+#include <Storage.hpp>
+#include <SenderQueue.hpp>
+#include <ServerURL.hpp>
+#include <DocumentBroker.hpp>
 
 #include <Poco/JSON/Object.h>
 #include <Poco/SharedPtr.h>
@@ -24,7 +29,7 @@
 #include <Rectangle.hpp>
 #include <deque>
 #include <utility>
-#include "Util.hpp"
+#include <common/Util.hpp>
 
 #include <optional>
 
@@ -36,11 +41,12 @@ class ClientSession final : public Session
 public:
     ClientSession(const std::shared_ptr<ProtocolHandlerInterface>& ws, const std::string& id,
                   const std::shared_ptr<DocumentBroker>& docBroker, const Poco::URI& uriPublic,
-                  bool isReadOnly, const RequestDetails& requestDetails);
+                  bool isReadOnly, const RequestDetails& requestDetails,
+                  const AdditionalFilePocoUris& additionalFileUrisPublic = {});
     void construct();
     virtual ~ClientSession();
 
-    void setReadOnly(bool bValue = true) override;
+    void setReadOnly(bool value = true) override;
 
     void sendFileMode(bool readOnly, bool editComments, bool manageRedlines);
 
@@ -175,6 +181,8 @@ public:
     /// the URI of the initial request.
     const Poco::URI& getPublicUri() const { return _uriPublic; }
 
+    const AdditionalFilePocoUris& getAdditionalFilePublicUri() const { return _additionalFileUrisPublic; }
+
     /// The access token of this session.
     const Authorization& getAuthorization() const { return _auth; }
 
@@ -202,7 +210,8 @@ public:
     Util::Rectangle getNormalizedVisibleArea() const;
 
     /// The client's visible area can be divided into a maximum of 4 panes.
-    enum SplitPaneName {
+    enum SplitPaneName : std::uint8_t
+    {
         TOPLEFT_PANE,
         TOPRIGHT_PANE,
         BOTTOMLEFT_PANE,
@@ -363,6 +372,9 @@ private:
     /// Eg. in readonly mode only few messages should be allowed
     bool filterMessage(const std::string& msg) const;
 
+    /// Returns true if the download message of type 'id' should be allowed or not
+    bool filterDownloadAs(const std::string& id) const;
+
     void dumpState(std::ostream& os) override;
 
     /// Handle invalidation message coming from a kit and transfer it to a tile request.
@@ -391,6 +403,8 @@ private:
 private:
     /// URI with which client made request to us
     const Poco::URI _uriPublic;
+
+    const AdditionalFilePocoUris _additionalFileUrisPublic;
 
     SenderQueue<std::shared_ptr<Message>> _senderQueue;
 

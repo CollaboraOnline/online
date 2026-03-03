@@ -10,19 +10,22 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Slide operations', functio
 	beforeEach(function() {
 		helper.setupAndLoadDocument('impress/slide_operations.odp');
 		desktopHelper.switchUIToNotebookbar();
+		cy.getFrameWindow().then((win) => {
+			this.win = win;
+		});
 	});
 
 	it('Add slides', function() {
 		cy.cGet('#presentation-toolbar #insertpage').click();
 
-		impressHelper.assertNumberOfSlidePreviews(2);
+		impressHelper.assertSlidePreviewCountAfterIdle(this.win, 2);
 	});
 
 	it('Remove slides', function() {
 		// Add slides
 		cy.cGet('#presentation-toolbar #insertpage').click();
 
-		impressHelper.assertNumberOfSlidePreviews(2);
+		impressHelper.assertSlidePreviewCountAfterIdle(this.win, 2);
 
 		// Remove Slides
 		cy.cGet('#presentation-toolbar #deletepage')
@@ -36,20 +39,42 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Slide operations', functio
 		cy.cGet('#presentation-toolbar #deletepage')
 			.should('have.attr', 'disabled')
 
-		impressHelper.assertNumberOfSlidePreviews(1);
+		impressHelper.assertSlidePreviewCountAfterIdle(this.win, 1);
 
+	});
+
+	it('Check slide sorter focus', function() {
+		cy.cGet('#insertpage-button').click();
+		helper.processToIdle(this.win);
+
+		// Set the focus to slide sorter.
+		cy.cGet('#preview-frame-part-0').click();
+		cy.cGet('#preview-frame-part-1').click();
+
+		// Slide sorter should keep focus while user clicks on different slides.
+		cy.window().then(win => {
+			const app = win['0'].app;
+			cy.expect(app.map._docLayer._preview.partsFocused).to.be.equal(true);
+		});
+
+		cy.cGet('#toolbar-up').click();
+		// Slide sorter should have lost the focus after user clicked somewhere.
+		cy.window().then(win => {
+			const app = win['0'].app;
+			cy.expect(app.map._docLayer._preview.partsFocused).to.be.equal(false);
+		});
 	});
 
 	it('Duplicate slide', function() {
 		// Also check if comments are getting duplicated
 		desktopHelper.closeNavigatorSidebar();
-		cy.cGet('#options-modify-page').click();
+		desktopHelper.getNbIcon('ModifyPage').click();
 		desktopHelper.insertComment();
 		cy.cGet('[id^=annotation-content-area-]').should('include.text', 'some text0');
 		cy.cGet('#Insert-tab-label').click();
-		cy.cGet('#insert-duplicate-slide').click();
+		desktopHelper.getNbIcon('DuplicatePage', 'Insert').click();
 
-		impressHelper.assertNumberOfSlidePreviews(2);
+		impressHelper.assertSlidePreviewCountAfterIdle(this.win, 2);
 		cy.cGet('#SlideStatus').should('have.text', 'Slide 2 of 2');
 		cy.cGet('[id^=annotation-content-area-]').should('include.text', 'some text0');
 

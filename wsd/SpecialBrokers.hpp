@@ -9,6 +9,11 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * Special document brokers for system operations.
+ * Classes: ThumbnailBroker, SystemTemplatesBroker
+ */
+
 #pragma once
 
 #if MOBILEAPP
@@ -37,7 +42,7 @@ public:
     {
     }
 
-    virtual ~StatelessBatchBroker() {}
+    virtual ~StatelessBatchBroker() = default;
 
     /// Cleanup path and its parent
     static void removeFile(const std::string& uri);
@@ -46,13 +51,14 @@ public:
 class ConvertToBroker : public StatelessBatchBroker
 {
     const std::string _format;
-    const std::string _sOptions;
+    const std::string _options;
+    const std::string _inFilterOptions;
     const std::string _lang;
 
 public:
     /// Construct DocumentBroker with URI and docKey
     ConvertToBroker(const std::string& uri, const Poco::URI& uriPublic, const std::string& docKey,
-                    const std::string& format, const std::string& sOptions,
+                    const std::string& format, const std::string& options,
                     const std::string& lang);
     virtual ~ConvertToBroker();
 
@@ -60,7 +66,7 @@ public:
     const std::string& getLang() { return _lang; }
 
     /// Move socket to this broker for response & do conversion
-    bool startConversion(SocketDisposition& disposition, const std::string& id);
+    bool startConversion(SocketDisposition& disposition, const std::string& id, const AdditionalFilePocoUris& additionalFileUrisPublic);
 
     /// When the load completes - lets start saving
     void setLoaded() override;

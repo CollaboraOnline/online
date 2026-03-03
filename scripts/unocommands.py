@@ -96,7 +96,7 @@ def extractContextCommands(path):
     commands = []
 
     # extract from the comments whitelist
-    f = open(path + '/browser/src/control/Control.ContextMenu.js', 'r', encoding='utf-8')
+    f = open(path + '/browser/src/control/jsdialog/Definitions.MenuCommands.ts', 'r', encoding='utf-8')
     readingCommands = False
     for line in f:
         if line.find('UNOCOMMANDS_EXTRACT_START') >= 0:
@@ -168,6 +168,11 @@ def extractToolbarCommands(path):
         if line.find("_UNO(") >= 0:
             commands += commandFromMenuLine(line)
 
+    f = open(path + '/browser/src/control/Notebookbar.WriterReferencesTab.ts', 'r', encoding='utf-8')
+    for line in f:
+        if line.find("_UNO(") >= 0:
+            commands += commandFromMenuLine(line)
+
     f = open(path + '/browser/src/control/Control.NotebookbarCalc.js', 'r', encoding='utf-8')
     for line in f:
         if line.find("_UNO(") >= 0:
@@ -200,6 +205,11 @@ def extractToolbarCommands(path):
             commands += commandFromMenuLine(line)
 
     f = open(path + '/browser/src/control/Control.TopToolbar.js', 'r', encoding='utf-8')
+    for line in f:
+        if line.find("_UNO(") >= 0:
+            commands += commandFromMenuLine(line)
+
+    f = open(path + '/browser/src/control/Control.AboutDialog.ts', 'r', encoding='utf-8')
     for line in f:
         if line.find("_UNO(") >= 0:
             commands += commandFromMenuLine(line)
@@ -429,13 +439,24 @@ def writeTranslations(onlineDir, translationsDir, strings):
         f.write('{\n')
 
         writeComma = False
+
         for key in sorted(translations.keys()):
             if writeComma:
                 f.write(',\n')
             else:
                 writeComma = True
+
+            value = translations[key]
+
+            # Remove trailing access keys like " (~T)", they are unused
+            value = re.sub(r' \(~[A-Z]\)', '', value)
+
+            # Sometimes translation contains ~ when source does not, and it may leak
+            if '~' not in key:
+                value = value.replace('~', '')
+
             f.write('"' + key.replace('"', '\\\"') + '":"' +
-                    translations[key].replace('"', '\\\"') + '"')
+                    value.replace('"', '\\\"') + '"')
 
         f.write('\n}\n')
 
@@ -499,7 +520,11 @@ if __name__ == "__main__":
     dif = requiredCommands - processedCommands
 
     if len(dif) > 0:
-        sys.stderr.write("ERROR: The following commands are not covered in unocommands.js, run scripts/unocommands.py --update:\n\n.uno:" + '\n.uno:'.join(dif) + "\n\n")
+        if check:
+            sys.stderr.write("ERROR: The following commands are not covered in unocommands.js, run scripts/unocommands.py --update:\n\n")
+        else:
+            sys.stderr.write("ERROR: The following commands are referenced in Online but have no description in the core XCU files:\n\n")
+        sys.stderr.write(".uno:" + '\n.uno:'.join(sorted(dif)) + "\n\n")
         exit(1)
 
     if (translate):

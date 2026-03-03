@@ -18,10 +18,10 @@
 #include <vector>
 #include <functional>
 
-#include "Protocol.hpp"
-#include "StringVector.hpp"
-#include "Log.hpp"
-#include "Util.hpp"
+#include <Protocol.hpp>
+#include <common/StringVector.hpp>
+#include <common/Log.hpp>
+#include <common/Util.hpp>
 
 /// The payload type used to send/receive data.
 class Message
@@ -148,17 +148,11 @@ private:
 
     Type detectType() const
     {
-        if (_tokens.equals(0, "tile:") ||
-            _tokens.equals(0, "tilecombine:") ||
-            _tokens.equals(0, "delta:") ||
-            _tokens.equals(0, "renderfont:") ||
-            _tokens.equals(0, "rendersearchresult:") ||
-            _tokens.equals(0, "slidelayer:") ||
-            _tokens.equals(0, "windowpaint:") ||
-            _tokens.equals(0, "urp:") )
-        {
-            return Type::Binary;
-        }
+        for (auto i : COOLProtocol::binaryMessageTypes)
+            if (_tokens.equals(0, i))
+            {
+                return Type::Binary;
+            }
 
         if (_data.size() > 0 && (_data[_data.size() - 1] == '}' || _data[_data.size() - 1] == ']'))
         {

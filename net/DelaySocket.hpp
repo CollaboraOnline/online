@@ -9,6 +9,11 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * Network latency simulation for local debugging and testing.
+ * Classes: Delay
+ */
+
 #pragma once
 
 #include <Socket.hpp>
@@ -23,7 +28,7 @@
 class Delay final
 {
 public:
-    Delay(std::size_t latencyMs);
+    explicit Delay(std::size_t latencyMs);
     ~Delay();
 
     static int create(int delayMs, int physicalFd);

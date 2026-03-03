@@ -9,10 +9,14 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * Unit test for WOPI protocol functionality.
+ */
+
 #include <config.h>
 
-#include "Util.hpp"
-#include "lokassert.hpp"
+#include <common/Util.hpp>
+#include <lokassert.hpp>
 
 #include <WopiTestServer.hpp>
 

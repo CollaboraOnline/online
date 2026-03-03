@@ -1,4 +1,4 @@
-/* global describe it cy Cypress require beforeEach */
+/* global describe it cy require beforeEach */
 
 var helper = require('../../common/helper');
 var calcHelper = require('../../common/calc_helper');
@@ -20,21 +20,16 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Interact with bottom toolba
 	function getTextEndPosForFirstCell() {
 		calcHelper.dblClickOnFirstCell();
 
-		helper.getCursorPos('left', 'currentTextEndPos');
+		helper.getCursorPos('left', 'currentTextEndPos')
 
-		cy.cGet('#toolbar-up #acceptformula').should('be.visible')
-			.then($ele =>{
-				if (Cypress.dom.isVisible($ele)) {
-					cy.wrap($ele).click();
-				}
-			});
+		mobileHelper.getCompactIcon('AcceptFormula').should('not.be.disabled').click();
 
 		cy.cGet('.cursor-overlay .blinking-cursor').should('not.exist');
 	}
 
 	it('Apply bold.', function() {
 		helper.setDummyClipboardForCopy();
-		cy.cGet('#toolbar-down #bold').click();
+		mobileHelper.getCompactIcon('Bold').should('not.be.disabled').click();
 		calcHelper.selectEntireSheet();
 		helper.copy();
 		cy.cGet('#copy-paste-container table td b').should('exist');
@@ -42,8 +37,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Interact with bottom toolba
 
 	it('Apply italic.', function() {
 		helper.setDummyClipboardForCopy();
-
-		cy.cGet('#toolbar-down #italic').click();
+		mobileHelper.getCompactIcon('Italic').should('not.be.disabled').click();
 		calcHelper.selectEntireSheet();
 		helper.copy();
 		cy.cGet('#copy-paste-container table td i').should('exist');
@@ -51,21 +45,21 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Interact with bottom toolba
 
 	it('Apply underline.', function() {
 		helper.setDummyClipboardForCopy();
-		cy.cGet('#toolbar-down #underline').click();
+		mobileHelper.getCompactIcon('Underline').should('not.be.disabled').click();
 		calcHelper.selectEntireSheet();
 		helper.copy();
 		cy.cGet('#copy-paste-container table td u').should('exist');
 	});
 
 	it.skip('Apply strikeout.', function() {
-		cy.cGet('#toolbar-down #strikeout').click();
+		mobileHelper.getCompactIcon('Strikeout').should('not.be.disabled').click();
 		calcHelper.selectEntireSheet();
 		cy.cGet('#copy-paste-container table td s').should('exist');
 	});
 
 	it('Apply font color.', function() {
 		helper.setDummyClipboardForCopy();
-		cy.cGet('#toolbar-down #fontcolor').click();
+		cy.cGet('#toolbar-down #fontcolor').should('not.be.disabled').click();
 		mobileHelper.selectFromColorPalette(0, 5);
 		calcHelper.selectEntireSheet();
 		helper.copy();
@@ -74,7 +68,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Interact with bottom toolba
 
 	it('Apply highlight color.', function() {
 		helper.setDummyClipboardForCopy();
-		cy.cGet('#toolbar-down #backcolor').click();
+		cy.cGet('#toolbar-down #backcolor').should('not.be.disabled').click();
 		mobileHelper.selectFromColorPalette(0, 5);
 		calcHelper.selectEntireSheet();
 		helper.copy();
@@ -111,5 +105,27 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Interact with bottom toolba
 						});
 				});
 		});
+	});
+
+	it('Hides the bottom toolbar when the screen is too small', function() {
+		// By default in edit mode, the bottom toolbar is shown...
+		cy.cGet('#toolbar-down').should('be.visible');
+		cy.cGet('#spreadsheet-toolbar').should('be.visible');
+
+		// ...even when we are in landscape mode...
+		cy.viewport('iphone-6', 'landscape');
+		cy.cGet('#toolbar-down').should('be.visible');
+		cy.cGet('#spreadsheet-toolbar').should('be.visible');
+
+		// ...but not if our onscreen keyboard is shown. Here simulated by setting our height just under the limit
+		// ...there's no way to know exactly how big the size will be on different devices - particularly when taking into account browser UI - but 150px is still enough to edit the document so it's kind of OK
+		cy.viewport(667, 149);
+		cy.cGet('#toolbar-down').should('not.be.visible');
+		cy.cGet('#spreadsheet-toolbar').should('not.be.visible');
+
+		// ...and closing the keyboard should make it appear again
+		cy.viewport('iphone-6', 'landscape');
+		cy.cGet('#toolbar-down').should('be.visible');
+		cy.cGet('#spreadsheet-toolbar').should('be.visible');
 	});
 });

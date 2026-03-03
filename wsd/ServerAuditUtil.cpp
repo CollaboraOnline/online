@@ -9,8 +9,16 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * Implementation of audit logging.
+ * Functions: auditLog()
+ */
+
+#include <config.h>
+
 #include "ServerAuditUtil.hpp"
-#include "Process.hpp"
+
+#include <wsd/Process.hpp>
 
 ServerAuditUtil::ServerAuditUtil()
     : _disabled(false)
@@ -40,7 +48,7 @@ std::string ServerAuditUtil::getResultsJSON() const
     return result;
 }
 
-void ServerAuditUtil::set(std::string code, std::string status)
+void ServerAuditUtil::set(const std::string& code, std::string status)
 {
     std::lock_guard<std::mutex> lock(_mutex);
 
@@ -49,7 +57,9 @@ void ServerAuditUtil::set(std::string code, std::string status)
 
 void ServerAuditUtil::mergeSettings(const std::shared_ptr<ChildProcess> &proc)
 {
-    auto props = proc->getJailProps();
+    std::lock_guard<std::mutex> lock(_mutex);
+
+    const auto& props = proc->getJailProps();
     _entries.insert(props.begin(), props.end());
 }
 

@@ -79,6 +79,8 @@ class ShapeHandleAnchorSubSection extends HTMLObjectSection {
 			else {
 				this.tableMouseUp(point, e);
 			}
+
+			this.sectionProperties.parentHandlerSection.hideSVG();
 		}
 	}
 

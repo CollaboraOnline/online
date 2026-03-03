@@ -55,13 +55,15 @@ function typeTextAndVerify(text, expected, copy) {
 // We use the number of slide previews as indicators.
 // Parameters:
 // slides - number of expected slides
-function assertNumberOfSlidePreviews(slides) {
-	cy.log('>> assertNumberOfSlidePreviews - start');
+function assertSlidePreviewCountAfterIdle(win, slides) {
+	cy.log('>> assertSlidePreviewCountAfterIdle - start');
 
+	helper.processToIdle(win);
+	// +1 to account for #first-drop-site which also has the .preview-frame class
 	cy.cGet('#slide-sorter .preview-frame')
 		.should('have.length', slides + 1);
 
-	cy.log('<< assertNumberOfSlidePreviews - end');
+	cy.log('<< assertSlidePreviewCountAfterIdle - end');
 }
 
 // Trigger mouse click on center of the screen
@@ -119,23 +121,30 @@ function removeShapeSelection() {
 	cy.log('>> removeShapeSelection - start');
 
 	// Remove selection with clicking on the top-left corner of the slide
-	cy.waitUntil(function() {
-		cy.cGet('.leaflet-canvas-container canvas')
-			.then(function(items) {
-				var XPos = items[0].getBoundingClientRect().left + 10;
-				var YPos = items[0].getBoundingClientRect().top + 10;
-				cy.cGet('body').click(XPos, YPos);
-				cy.cGet('body').type('{esc}');
-				cy.cGet('body').type('{esc}');
-			});
+	cy.cGet('.leaflet-canvas-container canvas')
+		.then(function(items) {
+			var XPos = items[0].getBoundingClientRect().left + 10;
+			var YPos = items[0].getBoundingClientRect().top + 10;
+			cy.cGet('body').click(XPos, YPos);
+		});
 
-		return cy.cGet('#document-container')
-			.then(function(overlay) {
-				return overlay.children('svg').length === 0;
-			});
+	// The click triggers MouseControl.onClick which calls focus(false),
+	// blurring the textarea on mobile. Re-focus depends on INCOMING
+	// invalidatecursor from core. processToIdle ensures that message
+	// has been received before we send the Esc keys.
+	cy.getFrameWindow().then(function(win) {
+		helper.processToIdle(win);
 	});
 
-	cy.cGet('.leaflet-drag-transform-marker').should('not.exist');
+	cy.cGet('body').type('{esc}');
+	cy.cGet('body').type('{esc}');
+
+	cy.cGet('#document-container')
+		.should(function(overlay) {
+			expect(overlay.children('svg').length).to.equal(0);
+		});
+
+	cy.cGet('#test-div-shapeHandlesSection').should('not.exist');
 
 	cy.log('<< removeShapeSelection - end');
 }
@@ -226,9 +235,9 @@ function changeSlide(changeNum,direction) {
 
 	var slideButton;
 	if (direction === 'next') {
-		slideButton = cy.cGet('#next-button');
+		slideButton = cy.cGet('#nextpage-button');
 	} else if (direction === 'previous') {
-		slideButton = cy.cGet('#prev-button');
+		slideButton = cy.cGet('#prevpage-button');
 	}
 	if (slideButton) {
 		for (var n = 0; n < changeNum; n++) {
@@ -242,7 +251,7 @@ function changeSlide(changeNum,direction) {
 module.exports.assertNotInTextEditMode = assertNotInTextEditMode;
 module.exports.assertInTextEditMode = assertInTextEditMode;
 module.exports.typeTextAndVerify = typeTextAndVerify;
-module.exports.assertNumberOfSlidePreviews = assertNumberOfSlidePreviews;
+module.exports.assertSlidePreviewCountAfterIdle = assertSlidePreviewCountAfterIdle;
 module.exports.clickCenterOfSlide = clickCenterOfSlide;
 module.exports.selectTextShapeInTheCenter = selectTextShapeInTheCenter;
 module.exports.triggerNewSVGForShapeInTheCenter = triggerNewSVGForShapeInTheCenter;

@@ -9,6 +9,10 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * White box unit test for HTTP request parsing and clipboard functionality.
+ */
+
 #include <config.h>
 
 #include <string>
@@ -180,7 +184,7 @@ void HttpWhiteBoxTests::testHeader()
     http::Header header;
 
     const std::string data = "\r\na=\r\n\r\n";
-    LOK_ASSERT_EQUAL(8L, header.parse(data.c_str(), data.size()));
+    LOK_ASSERT_EQUAL(static_cast<std::int64_t>(8), header.parse(data.c_str(), data.size()));
     LOK_ASSERT_EQUAL(0UL, header.size());
 }
 
@@ -248,7 +252,7 @@ void HttpWhiteBoxTests::testRequestParserValidIncomplete()
     for (std::size_t i = 0; i < 33; ++i)
     {
         // Should return 0 to signify that data is incomplete.
-        LOK_ASSERT_EQUAL_MESSAGE("i = " << i << " of " << data.size() - 1, 0L,
+        LOK_ASSERT_EQUAL_MESSAGE("i = " << i << " of " << data.size() - 1, static_cast<std::int64_t>(0),
                                  req.readData(data.c_str(), i));
     }
 
@@ -264,7 +268,7 @@ void HttpWhiteBoxTests::testRequestParserValidIncomplete()
     for (std::size_t i = off; i < data.size(); ++i)
     {
         // Should return 0 to signify that data is incomplete.
-        LOK_ASSERT_EQUAL_MESSAGE("i = " << i << " of " << data.size() - 1, 0L,
+        LOK_ASSERT_EQUAL_MESSAGE("i = " << i << " of " << data.size() - 1, static_cast<std::int64_t>(0),
                                  req.readData(data.c_str() + off, i - off));
     }
 
@@ -566,16 +570,16 @@ void HttpWhiteBoxTests::testMultiPartDataParser()
     LOK_ASSERT(r.hasNextPart());
     Poco::Net::MessageHeader h;
     r.nextPart(h);
-    LOK_ASSERT(h.size() == 2);
-    LOK_ASSERT(h["Content-Disposition"] == firstContentDisposition);
-    LOK_ASSERT(h["Content-Type"] == firstContentType);
+    LOK_ASSERT_EQUAL(2UL, h.size());
+    LOK_ASSERT_EQUAL(firstContentDisposition, h["Content-Disposition"]);
+    LOK_ASSERT_EQUAL(firstContentType, h["Content-Type"]);
     LOK_ASSERT_EQUAL_STR(firstPartData, getStreamData(r.stream()));
 
     LOK_ASSERT(r.hasNextPart());
     r.nextPart(h);
-    LOK_ASSERT(h.size() == 2);
-    LOK_ASSERT(h["Content-Disposition"] == secondContentDisposition);
-    LOK_ASSERT(h["Content-Type"] == secondContentType);
+    LOK_ASSERT_EQUAL(2UL, h.size());
+    LOK_ASSERT_EQUAL(secondContentDisposition, h["Content-Disposition"]);
+    LOK_ASSERT_EQUAL(secondContentType, h["Content-Type"]);
     LOK_ASSERT_EQUAL_STR(secondPartData, getStreamData(r.stream()));
 
     http::MultipartDataParser multipart(boundary);

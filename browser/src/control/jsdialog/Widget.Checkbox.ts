@@ -15,7 +15,7 @@ function _createCheckboxContainer(
 	parentContainer: HTMLElement,
 	data: CheckboxWidgetJSON,
 	builder: JSBuilder,
-) {
+): HTMLDivElement {
 	const container = window.L.DomUtil.create(
 		'div',
 		builder.options.cssClass + ' ui-checkbox checkbutton',
@@ -29,10 +29,10 @@ function _createCheckboxControl(
 	parentContainer: HTMLElement,
 	data: CheckboxWidgetJSON,
 	builder: JSBuilder,
-) {
+): HTMLInputElement {
 	const checkbox = window.L.DomUtil.create(
 		'input',
-		builder.options.cssClass,
+		builder.options.cssClass + ' ui-checkbox-input',
 		parentContainer,
 	);
 	checkbox.type = 'checkbox';
@@ -45,10 +45,10 @@ function _createCheckboxLabel(
 	parentContainer: HTMLElement,
 	data: CheckboxWidgetJSON,
 	builder: JSBuilder,
-) {
+): HTMLLabelElement {
 	const label = window.L.DomUtil.create(
 		'label',
-		builder.options.cssClass,
+		builder.options.cssClass + ' ui-checkbox-label',
 		parentContainer,
 	);
 	label.id = data.id + '-label';
@@ -64,10 +64,24 @@ JSDialog.Checkbox = function (
 ) {
 	const container = _createCheckboxContainer(parentContainer, data, builder);
 	const checkbox = _createCheckboxControl(container, data, builder);
-	const label = _createCheckboxLabel(container, data, builder);
+	let label: HTMLElement | null = null;
+	if (data.text) label = _createCheckboxLabel(container, data, builder);
+	else
+		JSDialog.SetupA11yLabelForLabelableElement(
+			parentContainer,
+			checkbox,
+			data,
+			builder,
+		);
 
 	checkbox.addEventListener('change', () => {
-		if (container.hasAttribute('disabled')) return;
+		if (container.getAttribute('disabled') === 'true') return;
+
+		if (data.command) {
+			app.dispatcher.dispatch(data.command);
+			return;
+		}
+
 		builder.callback(
 			'checkbox',
 			'change',
@@ -77,24 +91,54 @@ JSDialog.Checkbox = function (
 		);
 	});
 
-	if (data.enabled === false) {
-		container.setAttribute('disabled', 'true');
-		container.disabled = true;
-		checkbox.setAttribute('disabled', 'true');
-		checkbox.disabled = true;
-		checkbox.setAttribute('aria-disabled', true);
-	}
+	const setDisabled = (disable: boolean) => {
+		if (disable) {
+			container.setAttribute('disabled', 'true');
 
-	JSDialog.SynchronizeDisabledState(container, [checkbox, label]);
+			checkbox.disabled = true;
+			checkbox.setAttribute('aria-disabled', 'true');
+		} else {
+			container.removeAttribute('disabled');
 
-	if (!container.hasAttribute('disabled')) {
-		const state = data.checked;
+			checkbox.disabled = false;
+			checkbox.removeAttribute('aria-disabled');
+		}
+	};
+
+	setDisabled(data.enabled === false);
+
+	JSDialog.SynchronizeDisabledState(
+		container,
+		[checkbox, label].filter(Boolean),
+	); // filter(Boolean) removes nulls
+
+	const toggleFunction = () => {
+		if (container.getAttribute('disabled') === 'true') return;
+
+		const items = app.map['stateChangeHandler'];
+		const state = data.command
+			? items.getItemValue(data.command) === 'true'
+			: data.checked;
+
 		if (state === true) {
 			$(checkbox).prop('checked', true);
 		} else if (state) {
 			$(checkbox).prop('checked', false);
 		}
-	}
+	};
+
+	toggleFunction();
+
+	app.map.on(
+		'commandstatechanged',
+		function (e: any) {
+			if (e.commandName === data.command) {
+				toggleFunction();
+				setDisabled(e.disabled || e.state == 'disabled');
+			}
+		},
+		this,
+	);
 
 	if (data.hidden) $(checkbox).hide();
 	return false;

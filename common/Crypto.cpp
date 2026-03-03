@@ -9,21 +9,28 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * Cryptographic support key validation using RSA signatures.
+ * Classes: SupportKey - Key verification and expiry checking
+ */
+
 #include <config.h>
 
-#include <Poco/DigestStream.h>
+#include "Crypto.hpp"
+
+#include <common/Log.hpp>
+
 #include <Poco/Base64Decoder.h>
-#include <Poco/DateTimeParser.h>
 #include <Poco/Crypto/RSADigestEngine.h>
+#include <Poco/DateTimeParser.h>
+#include <Poco/DigestStream.h>
 
 #include <fstream>
-#include <sstream>
 #include <iostream>
+#include <sstream>
 
-#include "Log.hpp"
-#include "Crypto.hpp"
 #if ENABLE_SUPPORT_KEY
-#include "support-public-key.hpp"
+#include <support-public-key.hpp>
 #endif
 
 using namespace Poco;

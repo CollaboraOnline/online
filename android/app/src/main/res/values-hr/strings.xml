@@ -23,7 +23,7 @@
     <string name="filter_spreadsheets">Proračunske tablice</string>
     <string name="filter_presentations">Prezentacije</string>
     <string name="app_version">Verzija: %1$s, ID gradnje: %2$s</string>
-    <string name="app_description">$APP_NAME je moderan softverski paket otvorenog koda s modernim programima za obradu teksta, proračunskih tablica, prezentacija i još mnogo toga.</string>
+    <string name="app_description">$APP_NAME je moderan softverski paket otvorenog koda s modernim aplikacijama za obradu teksta, proračunskih tablica, prezentacija i još mnogo toga.</string>
     <string name="app_vendor">Proizvođač izdanja je $VENDOR.</string>
     <string name="no_items">Nema stavki</string>
     <string name="temp_file_saving_disabled">Datoteka je zaštićena, spremanje je deaktivirano.</string>
@@ -83,7 +83,7 @@
     <string name="enter_filename">Upiši ime datoteke:</string>
     <string name="action_create">Stvori</string>
     <string name="action_overwrite">Prepiši</string>
-    <string name="bmp_null">BMP je nula!</string>
+    <string name="bmp_null">Bmp je nula!</string>
     <string name="directory_not_saved">Mapa nije spremljena.</string>
     <string name="title_activity_show_html">Informacije</string>
     <string name="share_document">Dijeli dokument</string>
@@ -107,9 +107,7 @@
     <string name="remove_from_list">Ukloni s popisa</string>
     <string name="file_actions_icon_desc">Radnje datoteke</string>
     <string name="pref_category_editor">Postavke uređivača</string>
-    <string name="app_version_and_hash">Verzija: %1$s
-\nonline git-hash: %2$s
-\ncore git-hash: %3$s</string>
+    <string name="app_version_and_hash">Verzija: %1$s \nonline git-hash: %2$s \ncore git-hash: %3$s</string>
     <string name="pref_user_name_guest">Gost korisnik</string>
     <string name="pref_user_name_info">Koristi se prilikom dodavanja komentara</string>
     <string name="pref_user_name">Korisničko ime</string>

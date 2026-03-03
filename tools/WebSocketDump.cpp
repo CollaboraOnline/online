@@ -13,7 +13,6 @@
 
 #include <config.h>
 
-#include <common/Globals.hpp>
 #include <common/HexUtil.hpp>
 #include <common/Log.hpp>
 #include <common/Util.hpp>
@@ -68,7 +67,7 @@ private:
     void onConnect(const std::shared_ptr<StreamSocket>& socket) override
     {
         _socket = socket;
-        LOG_TRC('#' << socket->getFD() << " Connected to ClientRequestDispatcher.");
+        LOG_TRC('#' << socket->getFD() << " Connected to ClientRequestDispatcher");
     }
 
     void onDisconnect() override
@@ -88,12 +87,12 @@ private:
         std::shared_ptr<StreamSocket> socket = _socket.lock();
         if (!socket)
         {
-            LOG_ERR("Invalid socket while reading client message.");
+            LOG_ERR("Invalid socket while reading client message");
             return;
         }
 
         Buffer& in = socket->getInBuffer();
-        LOG_TRC('#' << socket->getFD() << " handling incoming " << in.size() << " bytes.");
+        LOG_TRC('#' << socket->getFD() << " handling incoming " << in.size() << " bytes");
 
         // Find the end of the header, if any.
         constexpr std::string_view marker("\r\n\r\n");
@@ -101,7 +100,7 @@ private:
                                   marker.begin(), marker.end());
         if (itBody == in.end())
         {
-            LOG_DBG('#' << socket->getFD() << " doesn't have enough data yet.");
+            LOG_DBG('#' << socket->getFD() << " doesn't have enough data yet");
             return;
         }
 
@@ -114,9 +113,7 @@ private:
         {
             request.read(message);
 
-            LOG_INF('#' << socket->getFD() << ": Client HTTP Request: " << request.getMethod()
-                        << ' ' << request.getURI() << ' ' << request.getVersion() << ' '
-                        << [&](auto& log) { Util::joinPair(log, request, " / "); });
+            LOG_INF('#' << socket->getFD() << ": Client HTTP Request: " << request);
 
             const std::streamsize contentLength = request.getContentLength();
             const auto offset = itBody - in.begin();
@@ -239,7 +236,7 @@ int main (int argc, char **argv)
 
     if (!UnitWSD::init(UnitWSD::UnitType::Wsd, ""))
     {
-        throw std::runtime_error("Failed to load wsd unit test library.");
+        throw std::runtime_error("Failed to load wsd unit test library");
     }
 
     Log::initialize("WebSocketDump", "trace", true, false,

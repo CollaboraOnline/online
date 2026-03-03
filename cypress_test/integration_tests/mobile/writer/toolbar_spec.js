@@ -38,33 +38,33 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Toolbar tests', function() 
 
 	it('State of undo toolbar item.', function() {
 		// Insertion mobile wizard toolbar button is disabled by default
-		cy.cGet('#toolbar-up #undo').should('have.attr', 'disabled');
+		cy.cGet('#toolbar-up .unoUndo').should('have.attr', 'disabled');
 		// Click on edit button
 		mobileHelper.enableEditingMobile();
 		// Button should be still disabled
-		cy.cGet('#toolbar-up #undo').should('have.attr', 'disabled');
+		cy.cGet('#toolbar-up .unoUndo').should('have.attr', 'disabled');
 		// Type something in the document
 		helper.typeIntoDocument('x');
 		// Button should become enabled
-		cy.cGet('#toolbar-up #undo').should('not.have.attr', 'disabled');
+		cy.cGet('#toolbar-up .unoUndo').should('not.have.attr', 'disabled');
 	});
 
 	it('State of redo toolbar item.', function() {
 		// Insertion mobile wizard toolbar button is disabled by default
-		cy.cGet('#toolbar-up #redo').should('have.attr', 'disabled');
+		cy.cGet('#toolbar-up .unoRedo').should('have.attr', 'disabled');
 		// Click on edit button
 		mobileHelper.enableEditingMobile();
 		// Button should be still disabled
-		cy.cGet('#toolbar-up #redo').should('have.attr', 'disabled');
+		cy.cGet('#toolbar-up .unoRedo').should('have.attr', 'disabled');
 		// Type something in the document
 		helper.typeIntoDocument('x');
 		// Button should be still disabled
-		cy.cGet('#toolbar-up #redo').should('have.attr', 'disabled');
+		cy.cGet('#toolbar-up .unoRedo').should('have.attr', 'disabled');
 		// Do an undo
-		cy.cGet('#toolbar-up #undo').should('not.have.attr', 'disabled');
-		cy.cGet('#toolbar-up #undo').click();
+		cy.cGet('#toolbar-up .unoUndo').should('not.have.attr', 'disabled');
+		cy.cGet('#toolbar-up .unoUndo').click();
 		// Button should become enabled
-		cy.cGet('#toolbar-up #redo').should('not.have.attr', 'disabled');
+		cy.cGet('#toolbar-up .unoRedo').should('not.have.attr', 'disabled');
 	});
 
 	it('Open and close mobile wizard by toolbar item.', function() {
@@ -105,5 +105,29 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Toolbar tests', function() 
 		// Mobile wizard is closed
 		cy.cGet('#mobile-wizard').should('not.be.visible');
 		cy.cGet('#toolbar-up #comment_wizard').should('not.have.class', 'selected');
+	});
+
+	it('Hides the top toolbar when the screen is too small', function() {
+		// We use #toolbar-wrapper here since as #toolbar-up only has the editing actions, whereas toolbar-wrapper has the back button and hamburger menu as well
+
+		// By default, the top toolbar is shown...
+		cy.cGet('#toolbar-wrapper:has(#toolbar-up)').should('be.visible');
+
+		// ...including in edit mode...
+		mobileHelper.enableEditingMobile();
+		cy.cGet('#toolbar-wrapper:has(#toolbar-up)').should('be.visible');
+
+		// ...even when we are in landscape mode...
+		cy.viewport('iphone-6', 'landscape');
+		cy.cGet('#toolbar-wrapper:has(#toolbar-up)').should('be.visible');
+
+		// ...but not if our onscreen keyboard is shown. Here simulated by setting our height just under the limit
+		// ...there's no way to know exactly how big the size will be on different devices - particularly when taking into account browser UI - but 150px is still enough to edit the document so it's kind of OK
+		cy.viewport(667, 149);
+		cy.cGet('#toolbar-wrapper:has(#toolbar-up)').should('not.be.visible');
+
+		// ...and closing the keyboard should make it appear again
+		cy.viewport('iphone-6', 'landscape');
+		cy.cGet('#toolbar-wrapper:has(#toolbar-up)').should('be.visible');
 	});
 });

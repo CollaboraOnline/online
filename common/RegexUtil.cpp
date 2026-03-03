@@ -9,12 +9,20 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * Regular expression matching utilities.
+ * Classes: RegexListMatcher - Functions: matchRegex()
+ */
+
 #include <config.h>
 #include <config_version.h>
 
+// Work around a problem in Poco 1.14.2 and/or Visual Studio and clang-cl: Incude <typeinfo> here.
+#include <typeinfo>
+
 #include "RegexUtil.hpp"
 
-#include <Poco/RegularExpression.h>
+#include <regex>
 
 namespace RegexUtil
 {
@@ -31,12 +39,10 @@ bool matchRegex(const std::set<std::string>& set, const std::string& subject)
         try
         {
             // Not performance critical to warrant caching.
-            Poco::RegularExpression re(value, Poco::RegularExpression::RE_CASELESS);
-            Poco::RegularExpression::Match reMatch;
+            std::regex re(value, std::regex_constants::icase);
 
             // Must be a full match.
-            if (re.match(subject, reMatch) && reMatch.offset == 0 &&
-                reMatch.length == subject.size())
+            if (std::regex_match(subject, re))
             {
                 return true;
             }
@@ -63,12 +69,10 @@ std::string getValue(const std::map<std::string, std::string>& map, const std::s
         try
         {
             // Not performance critical to warrant caching.
-            Poco::RegularExpression re(value.first, Poco::RegularExpression::RE_CASELESS);
-            Poco::RegularExpression::Match reMatch;
+            std::regex re(value.first, std::regex_constants::icase);
 
             // Must be a full match.
-            if (re.match(subject, reMatch) && reMatch.offset == 0 &&
-                reMatch.length == subject.size())
+            if (std::regex_match(subject, re))
             {
                 return value.second;
             }
@@ -96,12 +100,10 @@ std::string getValue(const std::set<std::string>& set, const std::string& subjec
         try
         {
             // Not performance critical to warrant caching.
-            Poco::RegularExpression re(value, Poco::RegularExpression::RE_CASELESS);
-            Poco::RegularExpression::Match reMatch;
+            std::regex re(value, std::regex_constants::icase);
 
             // Must be a full match.
-            if (re.match(subject, reMatch) && reMatch.offset == 0 &&
-                reMatch.length == subject.size())
+            if (std::regex_match(subject, re))
             {
                 return value;
             }
@@ -113,6 +115,18 @@ std::string getValue(const std::set<std::string>& set, const std::string& subjec
     }
 
     return std::string();
+}
+
+bool isRegexValid(const std::string& regex)
+{
+    try
+    {
+        std::regex re(regex, std::regex_constants::icase);
+        return true;
+    }
+    catch (const std::regex_error&){}
+
+    return false;
 }
 
 } // namespace RegexUtil

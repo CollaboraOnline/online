@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="temp_file_saving_disabled">Failil on vaid lugemisõigused ja salvestamine pole võimalik.</string>
+    <string name="loading">Laadin...</string>
+    <string name="exiting">Väljun...</string>
+    <string name="restarting">Käivitan uuesti...</string>
+    <string name="cant_open_the_document">Dokumendi avamine polnud võimalik</string>
+    <string name="view_only">Ainult vaatamiseks</string>
+    <string name="edit_copy">Muuda koopiat</string>
+    <string name="ask_for_copy">Sellel dokumendil on vaid lugemisõigused. Kas tahad teha koopia, mida saad muuta?</string>
+    <string name="use_text">Kasuta tekstivormingut</string>
+    <string name="use_odf">Kasuta ODF-vormingut</string>
+    <string name="ask_for_convert_odf">Kinnita failivorming</string>
+    <string name="failed_to_load_file">Ei õnnestunud tuvastada faili, mida peaks laadima</string>
+    <string name="failed_to_insert_image">Pildi lisamine ei õnnestunud</string>
+    <string name="cannot_open_file_chooser">Failivalija avamine ei õnnestunud</string>
+    <string name="rate_now">Arvusta kohe</string>
+    <string name="preparing_for_the_first_start_after_an_update">Valmistan ette esimest uuendusejärgset käivitust.</string>
+    <string name="later">Hiljem</string>
+    <string name="rate_our_app_title">Tänud, et kasutad rakendust %1$s!</string>
+    <string name="rate_our_app_text">Kui ta sulle meeldib, siis hinda meid Google Play teenuses 5 tärniga. Sinu hea arvustus on meile parimaks motivaatoriks.</string>
+    <string name="storage_permission_required">Vajalik on andmeruumi kasutamise õigus</string>
+    <string name="file_chromeos_read_only">Seda faili ei saa antud asukohta salvestada ja avame ta vaid lugemisõigustega. Salvestamiseks tõsta ta kausta, kus sul on vastavad õigused.</string>
+    <string name="convert_odf_message">Selles dokumendis tundub leiduma vormindust või sisu, mida ei saa salvestada hetkel valitud tekstivormingus.</string>
+</resources>

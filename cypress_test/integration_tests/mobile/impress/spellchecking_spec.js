@@ -34,6 +34,8 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Spell checking menu.', func
 		openContextMenu();
 
 		cy.cGet('body').contains('.context-menu-link', 'hello').click();
+		// Press ESC because "selectTextOfShape" assumes that the shape is selected but editing has not started yet.
+		cy.cGet('body').type('{esc}');
 		impressHelper.selectTextOfShape();
 		helper.copy();
 

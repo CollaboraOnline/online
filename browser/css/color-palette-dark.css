@@ -12,6 +12,7 @@
 	--color-text-lighter: #fff; /* secondard text, disabled */
 	--color-status-badge: #d6d6d6;
 	--color-slideshow: #d6d6d6;
+	--color-date-text: #d6d6d6;
 
 	--color-main-background: #121212;
 	--color-background-dark: #1E1E1E;  /* select */
@@ -40,7 +41,7 @@
 	--color-btn-border: #b6b6b6;
 	--color-btn-border-dis: #c0bfbc;
 
-	--color-stylesview-border: transparent;
+	--color-stylesview-border: var(--color-toolbar-border);
 	--color-toolbar-border: #323130;
 
 
@@ -73,6 +74,11 @@
 	--color-smart-guides-helper-line: #f36d4f;
 
 	--color-quickfind-border: #444;
+	--scrollbar-color: #c0bfbc transparent;
+	--color-background-hover: #363636;
+
+	--color-backstage-background: #1E1E1E;
+	--color-backstage-background-dark: #121212;
 }
 
 [data-bg-theme='dark'] {

@@ -28,7 +28,7 @@ var NotebookbarAccessibility = function() {
 
 	this.addInfoBox = function(anchorElement) {
 		var visible = anchorElement.id.replace('-button', '');
-		visible = document.getElementById(visible);
+		visible = document.querySelector('[id^="' + visible + '"]');
 
 		if (visible)
 			visible = visible.style.display !== 'none';
@@ -60,7 +60,7 @@ var NotebookbarAccessibility = function() {
 		this.activeTabPointers.infoBoxList = [];
 
 		for (var i = 0; i < this.activeTabPointers.contentList.length; i++) {
-			var element = document.getElementById(this.activeTabPointers.contentList[i].id);
+			var element = document.querySelector('[id^="' + this.activeTabPointers.contentList[i].id + '"]');
 			if (element && element.offsetParent !== null) {
 				element.accessKey = this.activeTabPointers.contentList[i].combination;
 				this.activeTabPointers.infoBoxList.push(this.addInfoBox(element));
@@ -135,7 +135,7 @@ var NotebookbarAccessibility = function() {
 	this.checkTabAccelerators = function() {
 		for (var tabId in this.tabInfoList) {
 			if (Object.prototype.hasOwnProperty.call(this.tabInfoList, tabId)) {
-				var element = document.getElementById(tabId);
+				var element = document.querySelector('[id^="' + tabId + '"]');
 				if (element && !element.classList.contains('hidden')) {
 					if (this.tabInfoList[tabId].combination === this.combination) {
 						this.filteredItem = this.tabInfoList[tabId];
@@ -170,7 +170,7 @@ var NotebookbarAccessibility = function() {
 		var itemWasClicked = false;
 
 		if (this.filteredItem !== null) {
-			var element = document.getElementById(this.filteredItem.id);
+			var element = document.querySelector('[id^="' + this.filteredItem.id + '"]');
 			if (element) {
 				// menu button & overflow button - prioritize dropdown arrow
 				var dropdownArrow = element.querySelector('.arrowbackground');
@@ -259,8 +259,9 @@ var NotebookbarAccessibility = function() {
 		this.mayShowAcceleratorInfoBoxes = false;
 		this.filteredItem = null;
 		for (var i = 0; i < this.activeTabPointers.contentList.length; i++) {
-			if (document.getElementById(this.activeTabPointers.contentList[i].id))
-				document.getElementById(this.activeTabPointers.contentList[i].id).accessKey = null;
+			const found = document.querySelector('[id^="' + this.activeTabPointers.contentList[i].id + '"]');
+			if (found)
+				found.accessKey = null;
 			else
 				console.warn('Accessibility - no element with id:' + this.activeTabPointers.contentList[i].id);
 		}
@@ -357,7 +358,7 @@ var NotebookbarAccessibility = function() {
 		this.tabInfoList = this.definitions.getDefinitions();
 		for (var tabId in this.tabInfoList) {
 			if (Object.prototype.hasOwnProperty.call(this.tabInfoList, tabId)) {
-				var element = document.getElementById(tabId);
+				var element = document.querySelector('[id^="' + tabId + '"]');
 				if (element && element.offsetParent !== null) {
 					element.accessKey = this.tabInfoList[tabId].combination;
 					this.addInfoBox(element);
@@ -368,7 +369,7 @@ var NotebookbarAccessibility = function() {
 
 	this.initTabListeners = function() {
 		Object.keys(this.tabInfoList).forEach(function(tabId) {
-			var element = document.getElementById(tabId);
+			var element = document.querySelector('[id^="' + tabId + '"]');
 			if (element) {
 				element.addEventListener('keydown', function(event) {
 					if (event.key === 'Alt') {

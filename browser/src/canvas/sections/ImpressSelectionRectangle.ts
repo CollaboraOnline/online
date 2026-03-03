@@ -42,7 +42,8 @@ class SelectionRectangle extends CanvasSectionObject {
 
 		if (
 			this.containerObject.isDraggingSomething() &&
-			this.containerObject.targetSection === this.name
+			this.containerObject.targetSection === this.name &&
+			this.sectionProperties.positionOnMouseDown
 		) {
 			this.sectionProperties.selectionSize = [
 				point.pX - this.sectionProperties.positionOnMouseDown.pX,
@@ -66,8 +67,8 @@ class SelectionRectangle extends CanvasSectionObject {
 
 	public onNewDocumentTopLeft(): void {
 		this.setPosition(
-			app.activeDocument.activeView.viewedRectangle.pX1,
-			app.activeDocument.activeView.viewedRectangle.pY1,
+			app.activeDocument.activeLayout.viewedRectangle.pX1,
+			app.activeDocument.activeLayout.viewedRectangle.pY1,
 		);
 	}
 

@@ -3,16 +3,24 @@
 // Find dialog related helper methods
 var helper = require('./helper');
 
+// Wait for Find/Replace dialog to be fully visible
+// (fadein animation complete and dialog exists)
+function waitForFindReplaceDialog(win) {
+    cy.cGet('.jsdialog-window.fadein').should('have.css', 'opacity', '1');
+    cy.cGet('#FindReplaceDialog').should('be.visible');
+    // Wait for dialog initialization to complete (grab_focus messages etc)
+    helper.processToIdle(win);
+}
+
 // Open the find dialog
-function openFindDialog() {
+function openFindDialog(win) {
     cy.log('>> openFindDialog - start');
 
     cy.cGet('.jsdialog-window').should('not.exist');
 
     helper.typeIntoDocument('{ctrl}f');
 
-    cy.cGet('.jsdialog-window').should('exist');
-    cy.cGet('#FindReplaceDialog').should('exist');
+    waitForFindReplaceDialog(win);
 
     cy.log('<< openFindDialog - end');
 }
@@ -24,32 +32,34 @@ function openFindDialog() {
 function typeIntoSearchField(text) {
     cy.log('>> typeIntoSearchField - start');
 
-    cy.cGet('input#searchterm-input-dialog').clear().type(text);
+    cy.cGet('input#searchterm-input-dialog').type('{selectall}{backspace}' + text);
     cy.cGet('input#searchterm-input-dialog').should('have.prop', 'value', text);
 
-    cy.cGet('#search').should('not.be.disabled');
-    cy.cGet('#searchall').should('not.be.disabled'); //doesnt seem to exist in impress
-    cy.cGet('#backsearch').should('not.be.disabled');
+    cy.cGet('#search-button').should('not.have.attr', 'disabled');
+    cy.cGet('#backsearch-button').should('not.have.attr', 'disabled');
 
     cy.log('<< typeIntoSearchField - end');
 }
 
 // Move to the next search result in the document.
-function findNext() {
+function findNext(win) {
     cy.log('>> findNext - start');
 
-    cy.cGet('#search').should('not.have.attr', 'disabled');
-    cy.cGet('#search').click();
+    cy.cGet('#search-button').should('not.have.attr', 'disabled');
+    cy.cGet('#search-button').click();
+    helper.processToIdle(win);
 
     cy.log('<< findNext - end');
 }
 
 // Move to the previous search result in the document.
-function findPrev() {
+function findPrev(win) {
     cy.log('>> findPrev - start');
 
-    cy.cGet('#backsearch').should('not.have.attr', 'disabled');
-    cy.cGet('#backsearch').click();
+    cy.cGet('#backsearch-button').should('not.have.attr', 'disabled');
+    cy.cGet('#backsearch-button').click();
+    if (win)
+        helper.processToIdle(win);
 
     cy.log('<< findPrev - end');
 }
@@ -68,6 +78,7 @@ function closeFindDialog() {
     cy.log('<< closeFindDialog - end');
 }
 
+module.exports.waitForFindReplaceDialog = waitForFindReplaceDialog;
 module.exports.openFindDialog = openFindDialog;
 module.exports.typeIntoSearchField = typeIntoSearchField;
 module.exports.findNext = findNext;

@@ -13,10 +13,10 @@
 
 #include "wasmapp.hpp"
 
-#include <FakeSocket.hpp>
-#include <Log.hpp>
-#include <COOLWSD.hpp>
-#include <Util.hpp>
+#include <common/Log.hpp>
+#include <common/Util.hpp>
+#include <net/FakeSocket.hpp>
+#include <wsd/COOLWSD.hpp>
 
 #include <emscripten/fetch.h>
 
@@ -126,11 +126,7 @@ void handle_cool_message(const char *string_value)
         LOG_TRC_NOFILE("Actually sending to Online:" << fileURL);
         std::cout << "Loading file [" << fileURL << "]" << std::endl;
 
-        struct pollfd pollfd;
-        pollfd.fd = fakeClientFd;
-        pollfd.events = POLLOUT;
-        fakeSocketPoll(&pollfd, 1, -1);
-        fakeSocketWrite(fakeClientFd, fileURL.c_str(), fileURL.size());
+        fakeSocketWriteQueue(fakeClientFd, fileURL.c_str(), fileURL.size());
     }
     else if (strcmp(string_value, "BYE") == 0)
     {
@@ -141,12 +137,7 @@ void handle_cool_message(const char *string_value)
     }
     else
     {
-        // As above
-        struct pollfd pollfd;
-        pollfd.fd = fakeClientFd;
-        pollfd.events = POLLOUT;
-        fakeSocketPoll(&pollfd, 1, -1);
-        fakeSocketWrite(fakeClientFd, string_value, strlen(string_value));
+        fakeSocketWriteQueue(fakeClientFd, string_value, strlen(string_value));
     }
 }
 
@@ -205,7 +196,7 @@ int main(int argc, char* argv_main[])
 
     assert(argc == 3);
 
-    Log::initialize("WASM", "error", false, false, {}, false, {});
+    Log::initialize("WASM", "error");
     Util::setThreadName("main");
 
     fakeSocketSetLoggingCallback([](const std::string& line)

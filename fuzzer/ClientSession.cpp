@@ -9,10 +9,16 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-#include "config.h"
+/*
+ * Fuzzer for ClientSession message handling.
+ * Functions: LLVMFuzzerTestOneInput() - Tests ClientSession::_handleInput()
+ */
+
+#include <config.h>
+
+#include "ClientSession.hpp"
 
 #include <common/Anonymizer.hpp>
-#include "ClientSession.hpp"
 #include <fuzzer/Common.hpp>
 
 bool DoInitialization()

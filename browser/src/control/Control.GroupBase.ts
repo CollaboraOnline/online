@@ -34,16 +34,23 @@ export interface GroupEntryStrings {
 	This class is an extended version of "CanvasSectionObject".
 */
 
+type GroupColors = { backgroundColor: string, borderColor: string, textColor?: string, strokeColor?: string };
+
 export abstract class GroupBase extends CanvasSectionObject {
 	_map: any;
 	_textColor: string;
+	_cachedColors: GroupColors;
 	_getFont: () => string;
 	_levelSpacing: number;
 	_groupHeadSize: number;
 	_groups: Array<Array<GroupEntry>>;
 	isRemoved: boolean = false;
 
-	constructor (name: string) { super(name); }
+	constructor (name: string) {
+		super(name);
+		this._textColor = null;
+		this._cachedColors = null;
+	}
 
 	// This function is called by CanvasSectionContainer when the section is added to the sections list.
 	onInitialize(): void {
@@ -57,9 +64,9 @@ export abstract class GroupBase extends CanvasSectionObject {
 
 		this._map.on('sheetgeometrychanged', this.update, this);
 		this._map.on('viewrowcolumnheaders', this.update, this);
-		this._map.on('darkmodechanged', this._groupBaseColors, this);
+		this._map.on('darkmodechanged', this._updateColors, this);
 		this._createFont();
-		this._groupBaseColors();
+		this._updateColors();
 		this.update();
 		this.isRemoved = false;
 	}
@@ -80,29 +87,31 @@ export abstract class GroupBase extends CanvasSectionObject {
 		window.L.DomUtil.remove(elem);
 	}
 
-	public getColors(): { backgroundColor: string, borderColor: string, textColor?: string, strokeColor?: string } {
-		const baseElem = document.getElementsByTagName('body')[0];
-		const elem = window.L.DomUtil.create('div', 'spreadsheet-header-row', baseElem);
-		const isDark = window.prefs.getBoolean('darkTheme');
+	public getColors(): GroupColors {
+		if (!this._cachedColors) {
+			const baseElem = document.getElementsByTagName('body')[0];
+			const elem = window.L.DomUtil.create('div', 'spreadsheet-header-row', baseElem);
+			const isDark = window.prefs.getBoolean('darkTheme');
 
-		this.backgroundColor = window.L.DomUtil.getStyle(elem, 'background-color');
-		this.borderColor = this.backgroundColor;
+			this.backgroundColor = window.L.DomUtil.getStyle(elem, 'background-color');
+			this.borderColor = this.backgroundColor;
 
-		this._textColor = window.L.DomUtil.getStyle(elem, 'color');
-		window.L.DomUtil.remove(elem);
-		return {
-			backgroundColor: this.backgroundColor,
-			borderColor: this.borderColor,
-			textColor: this._textColor,
-			strokeColor: isDark ? 'white' : 'black'
-		};
+			this._textColor = window.L.DomUtil.getStyle(elem, 'color');
+			window.L.DomUtil.remove(elem);
+			this._cachedColors = {
+				backgroundColor: this.backgroundColor,
+				borderColor: this.borderColor,
+				textColor: this._textColor,
+				strokeColor: isDark ? 'white' : 'black'
+			};
+		}
+
+		return this._cachedColors;
 	}
 
-	private _groupBaseColors(): void {
-		const colors = this.getColors();
-		this.backgroundColor = colors.backgroundColor;
-		this.borderColor = colors.borderColor;
-		this._textColor = colors.textColor;
+	protected _updateColors(): void {
+		this._cachedColors = null; // reset cache
+		this.getColors(); // refresh the cache
 	}
 
 	// This returns the required width for the section.

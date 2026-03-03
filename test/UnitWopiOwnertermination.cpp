@@ -9,11 +9,15 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-#include "config.h"
+/*
+ * Unit test for WOPI owner termination scenarios.
+ */
 
-#include "WopiTestServer.hpp"
-#include "Unit.hpp"
-#include "lokassert.hpp"
+#include <config.h>
+
+#include <WopiTestServer.hpp>
+#include <Unit.hpp>
+#include <lokassert.hpp>
 
 #include <Poco/Net/HTTPRequest.h>
 

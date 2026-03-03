@@ -8,12 +8,35 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
+
 /*
  * A very simple, single threaded helper to efficiently pre-init and
  * spawn lots of kits as children.
  */
 
 #include <config.h>
+
+#include <WebSocketHandler.hpp>
+#include <common/Common.hpp>
+#include <common/ConfigUtil.hpp>
+#include <common/FileUtil.hpp>
+#include <common/JailUtil.hpp>
+#include <common/Log.hpp>
+#include <common/Seccomp.hpp>
+#include <common/SigUtil.hpp>
+#include <common/Simd.hpp>
+#include <common/Unit.hpp>
+#include <common/Uri.hpp>
+#include <common/Util.hpp>
+#include <common/Watchdog.hpp>
+#include <common/security.h>
+#include <kit/DeltaSimd.h>
+#include <kit/Kit.hpp>
+#include <kit/SetupKitEnvironment.hpp>
+#include <net/ServerSocket.hpp>
+
+#include <Poco/Path.h>
+#include <Poco/URI.h>
 
 #if HAVE_LIBCAP
 #include <sys/capability.h>
@@ -31,57 +54,40 @@
 #include <chrono>
 #include <utility>
 
-#include <Poco/Path.h>
-#include <Poco/URI.h>
+namespace
+{
 
-#include <Common.hpp>
-#include "Kit.hpp"
-#include "SetupKitEnvironment.hpp"
-#include <Log.hpp>
-#include <Simd.hpp>
-#include <Unit.hpp>
-#include <Util.hpp>
-#include <WebSocketHandler.hpp>
-
-#include <common/FileUtil.hpp>
-#include <common/JailUtil.hpp>
-#include <common/Seccomp.hpp>
-#include <common/SigUtil.hpp>
-#include <common/security.h>
-#include <common/ConfigUtil.hpp>
-#include <common/Uri.hpp>
-#include <common/Watchdog.hpp>
-#include <kit/DeltaSimd.h>
-
-static bool NoCapsForKit = false;
-static bool NoSeccomp = false;
+bool NoCapsForKit = false;
+bool NoSeccomp = false;
 #if ENABLE_DEBUG
-static bool SingleKit = false;
+bool SingleKit = false;
 #endif
 
-static int parentPid;
+int parentPid;
 
-static std::string ForKitIdent;
+std::string ForKitIdent;
 
-static std::string UserInterface;
+std::string UserInterface;
 
-static bool DisplayVersion = false;
-static std::string UnitTestLibrary;
-static std::string LogLevel;
-static std::string LogDisabledAreas;
-static std::string LogLevelStartup;
-static std::atomic<unsigned> ForkCounter(0);
-static std::vector<std::string> SubForKitRequests;
+bool DisplayVersion = false;
+std::string UnitTestLibrary;
+std::string LogLevel;
+std::string LogDisabledAreas;
+std::string LogLevelStartup;
+std::atomic<unsigned> ForkCounter(0);
+std::vector<std::string> SubForKitRequests;
 
 /// The [child pid -> jail path] map.
-static std::map<pid_t, std::string> childJails;
+std::map<pid_t, std::string> childJails;
 /// The jails that need cleaning up. This should be small.
-static std::vector<std::string> cleanupJailPaths;
+std::vector<std::string> cleanupJailPaths;
 /// The [subforkit pid -> subforkit id] map.
-static std::map<pid_t, std::string> subForKitPids;
+std::map<pid_t, std::string> subForKitPids;
 
 /// The Main polling main-loop of this (single threaded) process
-static std::unique_ptr<SocketPoll> ForKitPoll;
+std::unique_ptr<SocketPoll> ForKitPoll;
+
+} // namespace
 
 extern "C" { void dump_forkit_state(void); /* easy for gdb */ }
 
@@ -216,8 +222,11 @@ protected:
     }
 };
 
+namespace
+{
+
 #if HAVE_LIBCAP
-static bool haveCapability(cap_value_t capability)
+bool haveCapability(cap_value_t capability)
 {
     using ScopedCaps = std::unique_ptr<std::remove_pointer<cap_t>::type, int (*)(void*)>;
     ScopedCaps caps(cap_get_proc(), cap_free);
@@ -271,7 +280,7 @@ static bool haveCapability(cap_value_t capability)
     return true;
 }
 
-static bool haveCorrectCapabilities()
+bool haveCorrectCapabilities()
 {
     bool result = true;
 
@@ -286,7 +295,7 @@ static bool haveCorrectCapabilities()
     return result;
 }
 #else
-static bool haveCorrectCapabilities()
+bool haveCorrectCapabilities()
 {
     // chroot() can only be called by root
     return getuid() == 0;
@@ -294,7 +303,7 @@ static bool haveCorrectCapabilities()
 #endif // HAVE_LIBCAP
 
 /// Check if some previously forked kids have died.
-static void cleanupChildren(const std::string& childRoot)
+void cleanupChildren(const std::string& childRoot)
 {
     if (Util::isKitInProcess())
         return;
@@ -332,13 +341,13 @@ static void cleanupChildren(const std::string& childRoot)
                     int noteCrashFD = open(noteCrashFile.c_str(), O_CREAT | O_TRUNC | O_WRONLY,
                                            S_IRUSR | S_IWUSR);
                     if (noteCrashFD < 0)
-                        LOG_ERR("Couldn't create file: " << noteCrashFile
-                                                         << " due to error: " << strerror(errno));
+                        LOG_SYS("Couldn't create file: " << noteCrashFile);
                     else
                         close(noteCrashFD);
                 }
                 else if (status == SIGKILL)
                 {
+#if !defined(MACOS)
                     // TODO differentiate with docker
                     if (info.si_code == SI_KERNEL)
                     {
@@ -347,6 +356,7 @@ static void cleanupChildren(const std::string& childRoot)
                                          << status);
                     }
                     else
+#endif
                     {
                         ++killedCount;
                         LOG_WRN("Child " << exitedChildPid << " was killed, with status "
@@ -450,9 +460,8 @@ void sleepForDebugger()
     Util::sleepFromEnvIfSet("Kit", "SLEEPKITFORDEBUGGER");
 }
 
-static int forkKit(const std::function<void()> &childFunc,
-                   const std::string& childProcessName,
-                   const std::function<void(pid_t)> &parentFunc)
+int forkKit(const std::function<void()>& childFunc, const std::string& childProcessName,
+            const std::function<void(pid_t)>& parentFunc)
 {
     pid_t pid = 0;
 
@@ -515,18 +524,19 @@ static int forkKit(const std::function<void()> &childFunc,
     return pid;
 }
 
-static int createLibreOfficeKit(const std::string& childRoot,
-                                const std::string& sysTemplate,
-                                const std::string& loTemplate,
-                                const std::string& configId,
-                                bool useMountNamespaces,
-                                bool queryVersion = false)
+int createLibreOfficeKit(const std::string& childRoot, const std::string& sysTemplate,
+                         const std::string& loTemplate, const std::string& configId,
+                         bool useMountNamespaces, bool queryVersion = false)
 {
     // Generate a jail ID to be used for in the jail path.
     std::string jailId = Util::rng::getFilename(16);
 
     // Update the dynamic files as necessary.
+#if ENABLE_CHILDROOTS
     const bool sysTemplateIncomplete = !JailUtil::SysTemplate::updateDynamicFiles(sysTemplate);
+#else
+    const bool sysTemplateIncomplete = false;
+#endif
 
     // Used to label the spare kit instances
     static size_t spareKitId = 0;
@@ -539,7 +549,11 @@ static int createLibreOfficeKit(const std::string& childRoot,
     if (Util::isKitInProcess())
     {
         std::thread([childRoot, jailId = std::move(jailId), configId, sysTemplate,
-                     loTemplate, queryVersion, sysTemplateIncomplete] {
+                     loTemplate, queryVersion
+#if ENABLE_CHILDROOTS
+                     , sysTemplateIncomplete
+#endif
+                    ] {
             sleepForDebugger();
             lokit_main(childRoot, jailId, configId, sysTemplate, loTemplate, true,
                        true, false, queryVersion, DisplayVersion,
@@ -583,11 +597,9 @@ static int createLibreOfficeKit(const std::string& childRoot,
     return childPid;
 }
 
-static int createSubForKit(const std::string& subForKitIdent,
-                           const std::string& childRoot,
-                           const std::string& sysTemplate,
-                           const std::string& loTemplate,
-                           bool useMountNamespaces)
+int createSubForKit(const std::string& subForKitIdent, const std::string& childRoot,
+                    const std::string& sysTemplate, const std::string& loTemplate,
+                    bool useMountNamespaces)
 {
     static size_t subForKitId = 0;
     ++subForKitId;
@@ -666,10 +678,8 @@ static int createSubForKit(const std::string& subForKitIdent,
     return childPid;
 }
 
-static void createSubForKits(const std::string& childRoot,
-                             const std::string& sysTemplate,
-                             const std::string& loTemplate,
-                             bool useMountNamespaces)
+void createSubForKits(const std::string& childRoot, const std::string& sysTemplate,
+                      const std::string& loTemplate, bool useMountNamespaces)
 {
     std::vector<std::string> subForKitRequests = std::move(SubForKitRequests);
     for (const auto& subForKitIdent : subForKitRequests)
@@ -681,6 +691,8 @@ static void createSubForKits(const std::string& childRoot,
         }
     }
 }
+
+} // namespace
 
 void forkLibreOfficeKit(const std::string& childRoot,
                         const std::string& sysTemplate,
@@ -905,7 +917,7 @@ int forkit_main(int argc, char** argv)
         else if (std::strstr(cmd, "--masterport=") == cmd)
         {
             eq = std::strchr(cmd, '=');
-            MasterLocation = std::string(eq+1);
+            MasterLocation = UnxSocketPath(std::string(eq+1));
         }
         else if (std::strstr(cmd, "--version") == cmd)
         {
@@ -1018,16 +1030,18 @@ int forkit_main(int argc, char** argv)
     if (Util::ThreadCounter().count() != 1)
         LOG_ERR("forkit has more than a single thread after pre-init" << Util::ThreadCounter().count());
 
+#if ENABLE_CHILDROOTS
     // Link the network and system files in sysTemplate, if possible.
     JailUtil::SysTemplate::setupDynamicFiles(sysTemplate);
 
     // Make dev/[u]random point to the writable devices in tmp/dev/.
     JailUtil::SysTemplate::setupRandomDeviceLinks(sysTemplate);
+#endif
 
     if (!Util::isKitInProcess())
     {
         // Parse the configuration.
-        const auto conf = std::getenv("COOL_CONFIG");
+        char* const conf = std::getenv("COOL_CONFIG");
         ConfigUtil::initialize(std::string(conf ? conf : std::string()));
         EnableExperimental = ConfigUtil::getBool("experimental_features", false);
     }

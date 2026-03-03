@@ -9,6 +9,11 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * Implementation of asynchronous HTTP/1.1 client with header parsing and state management.
+ * Classes: http::Session, http::Request, http::Response, http::Header
+ */
+
 #include <config.h>
 
 #include "HttpRequest.hpp"
@@ -167,11 +172,11 @@ int64_t Header::parse(const char* p, int64_t len)
 
         _chunked = getTransferEncoding() == "chunked";
 
-        LOG_TRC("Read " << data.tellg()
+        LOG_TRC("Read " << static_cast<std::size_t>(data.tellg())
                         << " bytes of header. hasContentLength: " << hasContentLength()
                         << ", contentLength: " << (hasContentLength() ? getContentLength() : -1)
                         << ", chunked: " << getChunkedTransferEncoding() << ":\n"
-                        << std::string(p, data.tellg()));
+                        << std::string_view(p, data.tellg()));
 
         // We consumed the full header, including the blank line.
         return endPos + 1;
@@ -631,7 +636,7 @@ int64_t RequestParser::readData(const char* p, const int64_t len)
 #ifdef DEBUG_HTTP
                     LOG_TRC("New Chunk, "
                             << available << " bytes available\n"
-                            << HexUtil::dumpHex(std::string(p, std::min(available, 10 * 1024L))));
+                            << HexUtil::dumpHex(std::string(p, std::min(available, 10 * 1024UL))));
 #endif //DEBUG_HTTP
 
                     // Read ahead to see if we have enough data

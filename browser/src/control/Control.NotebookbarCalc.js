@@ -95,6 +95,13 @@ window.L.Control.NotebookbarCalc = window.L.Control.NotebookbarWriter.extend({
 				'accessibility': { focusBack: true,	combination: 'K', de: null }
 			},
 			{
+				'id': 'Table-tab-label',
+				'text': _('Table Design'),
+				'name': 'Table',
+				'context': 'Table',
+				'accessibility': { focusBack: true,	combination: 'T', de: null }
+			},
+			{
 				'id': 'Help-tab-label',
 				'text': _('Help'),
 				'name': 'Help',
@@ -117,6 +124,7 @@ window.L.Control.NotebookbarCalc = window.L.Control.NotebookbarWriter.extend({
 			this.getPictureTab(),
 			this.getViewTab(),
 			this.getSparklineTab(),
+			this.getCalcTableTab(),
 			this.getHelpTab()
 		]
 	},
@@ -293,7 +301,9 @@ window.L.Control.NotebookbarCalc = window.L.Control.NotebookbarWriter.extend({
 				'command': 'downloadas',
 				'class': 'unodownloadas',
 				'type': 'exportmenubutton',
-				'text': _('Download'),
+				'text': !window.ThisIsAMobileApp ? _('Download') :
+					(window.ThisIsTheWindowsApp ? _('Export as') :
+					 _('Save As')),
 				'accessibility': { focusBack: true,	combination: 'DA', de: null }
 			});
 		}
@@ -779,6 +789,7 @@ window.L.Control.NotebookbarCalc = window.L.Control.NotebookbarWriter.extend({
 							'selectedEntries': [
 								'0'
 							],
+							'aria': { 'label': _('Number Format') },
 							'accessibility': { focusBack: true,	combination: 'N', de: null }
 						},
 						{
@@ -1111,7 +1122,7 @@ window.L.Control.NotebookbarCalc = window.L.Control.NotebookbarWriter.extend({
 					{
 						'id': 'Layout-OrientationMenu:MenuOrientation',
 						'type': 'menubutton',
-						'text': _UNO('.uno:Orientation'),
+						'text': _UNO('.uno:Orientation', 'text'),
 						'enabled': 'true',
 						'accessibility': { focusBack: true,	combination: 'O', de: '4' }
 					},
@@ -1420,7 +1431,7 @@ window.L.Control.NotebookbarCalc = window.L.Control.NotebookbarWriter.extend({
 									{
 										'id': 'selectsheetview',
 										'type': 'toolitem',
-										'text': _('Select Sheet View'),
+										'text': _('Open Views List'),
 										'command': '.uno:SelectSheetView',
 										'accessibility': { focusBack: true,	combination: 'SS', de: null }
 									},
@@ -1595,7 +1606,8 @@ window.L.Control.NotebookbarCalc = window.L.Control.NotebookbarWriter.extend({
 							{
 								'id': 'showstatusbar',
 								'class': 'unoshowstatusbar',
-								'type': 'customtoolitem',
+								'type': 'checkbox',
+								'command': 'showstatusbar',
 								'text': _('Status Bar'),
 								'accessibility': { focusBack: true,	combination: 'SB', de: null }
 							}
@@ -1638,6 +1650,143 @@ window.L.Control.NotebookbarCalc = window.L.Control.NotebookbarWriter.extend({
 		];
 
 		return this.getTabPage('View', content);
+	},
+
+	getCalcTableTab: function() {
+		var content = [
+			{
+				'id': 'insert-remove-calc-table',
+				'type': 'bigtoolitem',
+				'text': _UNO('.uno:RemoveCalcTable', 'spreadsheet'),
+				'command': '.uno:RemoveCalcTable',
+				'accessibility': { focusBack: true,	combination: 'DT', de: null }
+			},
+			{ type: 'separator', id: 'table-deletecalctable-break', orientation: 'vertical' },
+			{
+				'type': 'overflowgroup',
+				'id': 'table-style-options',
+				'name':_('Table Style Options'),
+				'accessibility': { focusBack: true,	combination: 'TO', de: null },
+				'children' : [
+					{
+						'type': 'container',
+						'children': [
+							{
+								'type': 'toolbox',
+								'children': [
+									{
+										'id': 'chk_header_row2',
+										'type': 'checkbox',
+										'command': '.uno:DatabaseSettings',
+										'text': _('Header Row'),
+										'accessibility': { focusBack: true,	combination: 'SH', de: null }
+									}
+								]
+							},
+							{
+								'type': 'toolbox',
+								'children': [
+									{
+										'id': 'chk_total_row2',
+										'type': 'checkbox',
+										'command': '.uno:DatabaseSettings',
+										'text': _('Total Row'),
+										'accessibility': { focusBack: true,	combination: 'ST', de: null }
+									}
+								]
+							}
+						],
+						'vertical': 'true'
+					},
+					{
+						'type': 'container',
+						'children': [
+							{
+								'type': 'toolbox',
+								'children': [
+									{
+										'id': 'chk_banded_rows2',
+										'type': 'checkbox',
+										'command': '.uno:DatabaseSettings',
+										'text': _('Banded Rows'),
+										'accessibility': { focusBack: true,	combination: 'BR', de: null }
+									}
+								]
+							},
+							{
+								'type': 'toolbox',
+								'children': [
+									{
+										'id': 'chk_banded_cols2',
+										'type': 'checkbox',
+										'command': '.uno:DatabaseSettings',
+										'text': _('Banded Columns'),
+										'accessibility': { focusBack: true,	combination: 'BC', de: null }
+									}
+								]
+							}
+						],
+						'vertical': 'true'
+					},
+					{
+						'type': 'container',
+						'children': [
+							{
+								'type': 'toolbox',
+								'children': [
+									{
+										'id': 'chk_first_column2',
+										'type': 'checkbox',
+										'command': '.uno:DatabaseSettings',
+										'text': _('First Column'),
+										'accessibility': { focusBack: true,	combination: 'FC', de: null }
+									}
+								]
+							},
+							{
+								'type': 'toolbox',
+								'children': [
+									{
+										'id': 'chk_last_column2',
+										'type': 'checkbox',
+										'command': '.uno:DatabaseSettings',
+										'text': _('Last Column'),
+										'accessibility': { focusBack: true,	combination: 'LC', de: null }
+									}
+								]
+							}
+						],
+						'vertical': 'true'
+					},
+					{
+						'type': 'toolbox',
+						'children': [
+							{
+								'id': 'chk_filter_buttons2',
+								'type': 'checkbox',
+								'command': '.uno:DatabaseSettings',
+								'text': _('Filter Buttons'),
+								'accessibility': { focusBack: true,	combination: 'SF', de: null }
+							},
+						]
+					},
+				]
+			},
+			{ type: 'separator', id: 'table-style-options-break', orientation: 'vertical' },
+			{
+				'id': 'tablestyles_cb2',
+				'type': 'listbox',
+				'selectedCount': '1',
+				'selectedEntries': [
+					'0'
+				],
+				'command': '.uno:DatabaseSettings',
+				'aria': { 'label': _('Table Styles') },
+				'accessibility': { focusBack: true,	combination: 'TS', de: null }
+			}
+		];
+
+		return this.getTabPage('Table', content);
 	},
 
 	getSparklineTab: function() {
@@ -1728,6 +1877,22 @@ window.L.Control.NotebookbarCalc = window.L.Control.NotebookbarWriter.extend({
 				]
 			},
 			{ type: 'separator', id: 'insert-deletepivottable-break', orientation: 'vertical' },
+			{
+				'type': 'overflowgroup',
+				'id': 'insert-calc-table',
+				'name':_('Table'),
+				'accessibility': { focusBack: true,	combination: 'IT', de: null },
+				'children' : [
+					{
+						'id': 'insert-insert-calc-table',
+						'type': 'bigtoolitem',
+						'text': _UNO('.uno:InsertCalcTable', 'spreadsheet'),
+						'command': '.uno:InsertCalcTable',
+						'accessibility': { focusBack: true,	combination: 'IT', de: null }
+					}
+				]
+			},
+			{ type: 'separator', id: 'insert-deletecalctable-break', orientation: 'vertical' },
 			{
 				'type': 'overflowgroup',
 				'id': 'insert-illustrations',
@@ -2561,9 +2726,10 @@ window.L.Control.NotebookbarCalc = window.L.Control.NotebookbarWriter.extend({
 				'accessibility': { focusBack: true,	combination: 'IA', de: null },
 				'children' : [
 					{
-						'id': 'review-insert-annotation',
-						'type': 'bigtoolitem',
+						'id': 'review-insert-annotation:AnnotationMenu',
+						'type': 'menubutton',
 						'text': _UNO('.uno:InsertAnnotation'),
+						'applyCallback': 'insertcomment',
 						'command': '.uno:InsertAnnotation',
 						'accessibility': { focusBack: true,	combination: 'IA', de: null }
 					},
@@ -2720,12 +2886,25 @@ window.L.Control.NotebookbarCalc = window.L.Control.NotebookbarWriter.extend({
 			},
 			{ type: 'separator', id: 'format-sparkline-break', orientation: 'vertical' },
 			{
-				'id': 'format-theme-dialog',
+				'id': 'themes-group',
+				'type': 'overflowgroup',
+				'name': _('Themes'),
+				'nofold': true,
+				'icon': 'lc_themesthames.svg',
+				'children': [
+					{
+						'id': 'iconview_theme_colors', // has to match core id
+						'type': 'iconview'
+					}
+				]
+			},
+			{
+				'id': 'add-theme-dialog',
 				'type': 'bigtoolitem',
-				'text': _UNO('.uno:ThemeDialog'),
-				'command': '.uno:ThemeDialog',
-				'accessibility': { focusBack: false, combination: 'J', de: null }
-			}
+				'text': _UNO('.uno:AddTheme'),
+				'command': '.uno:AddTheme',
+				'accessibility': { focusBack: false, combination: 'AT', de: null }
+			},
 		];
 
 		return this.getTabPage('Format', content);

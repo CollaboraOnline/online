@@ -1,4 +1,4 @@
-/* -*- js-indent-level: 8 -*- */
+/* -*- js-indent-level: 8; fill-column: 100 -*- */
 /*
  * Copyright the Collabora Online contributors.
  *
@@ -28,10 +28,11 @@ window.L.Clipboard = window.L.Class.extend({
 		this._accessKey = [ '', '' ];
 		this._clipboardSerial = 0; // incremented on each operation
 		this._failedTimer = null;
-		this._dummyDivName = 'copy-paste-container';
 		this._unoCommandForCopyCutPaste = null;
 		// Tracks if we're in paste special mode for the navigator.clipboard case
 		this._navigatorClipboardPasteSpecial = false;
+		// Is handling an 'Action_Copy' in progress?
+		this._isActionCopy = false;
 
 		var div = document.createElement('div');
 		this._dummyDiv = div;
@@ -43,7 +44,7 @@ window.L.Clipboard = window.L.Class.extend({
 		this._map.on('commandresult', this._onCommandResult, this);
 		this._map.on('clipboardchanged', this._onCommandResult, this);
 
-		div.setAttribute('id', this._dummyDivName);
+		div.setAttribute('id', 'copy-paste-container');
 		div.style.userSelect = 'text !important';
 		div.style.opacity = '0';
 		div.setAttribute('contenteditable', 'true');
@@ -78,9 +79,31 @@ window.L.Clipboard = window.L.Class.extend({
 		var that = this;
 		var beforeSelect = function(ev) { return that._beforeSelect(ev); };
 
-		document.oncut = function(ev)   { return that.cut(ev); };
-		document.oncopy = function(ev)  { return that.copy(ev); };
-		document.onpaste = function(ev) { return that.paste(ev); };
+		if (window.ThisIsTheWindowsApp)
+		{
+			// We can have very trivial implementations, native code does everything
+			document.oncut = function(ev) {
+				if (ev.srcElement['id'] === 'copy-paste-container')
+					window.postMobileMessage('CUT');
+			};
+			document.oncopy = function(ev) {
+				if (ev.srcElement['id'] === 'copy-paste-container')
+					window.postMobileMessage('COPY');
+			};
+			document.onpaste = function(ev) {
+				if (ev.srcElement['id'] === 'pre-space' || ev.srcElement['id'] === 'clipboard-area') {
+					ev.preventDefault();
+					if (ev.clipboardData.types.length == 1 && ev.clipboardData.types[0] === 'text/plain')
+						window.postMobileMessage('PASTEUNFORMATTED');
+					else
+						window.postMobileMessage('PASTE');
+				}
+			};
+		} else {
+			document.oncut = function(ev)   { return that.cut(ev); };
+			document.oncopy = function(ev)  { return that.copy(ev); };
+			document.onpaste = function(ev) { return that.paste(ev); };
+		}
 		document.onbeforecut = beforeSelect;
 		document.onbeforecopy = beforeSelect;
 		document.onbeforepaste = beforeSelect;
@@ -386,7 +409,19 @@ window.L.Clipboard = window.L.Class.extend({
 
 	// Sends a paste event with the specified mime type and content
 	_pasteTypedBlob: function(fileType, fileBlob) {
-		var blob = new Blob(['paste mimetype=' + fileType + '\n', fileBlob]);
+		var header = 'paste mimetype=' + fileType + '\n';
+		var blob;
+		if (window.ThisIsTheQtApp || window.ThisIsTheWindowsApp) {
+			// To work around a qtwebchannel "Could not convert argument
+			// QJsonValue(object, QJsonObject()) to target type QString ." bug, send the
+			// playload as a base64-encoded string rather than as an ArrayBuffer blob
+			// (and decode it in ChildSession::paste in kit/ChildSession.cpp):
+			blob = header + window.btoa(
+				Array.from(new Uint8Array(fileBlob), (b) => String.fromCodePoint(b))
+				.join(''));
+                } else {
+			blob = new Blob([header, fileBlob]);
+		}
 		app.socket.sendMessage(blob);
 	},
 
@@ -447,8 +482,10 @@ window.L.Clipboard = window.L.Class.extend({
 	},
 
 	_sendToInternalClipboard: async function (content) {
-		if (window.ThisIsTheiOSApp) {
+		if (window.ThisIsTheiOSApp || window.ThisIsTheMacOSApp) {
 			await window.webkit.messageHandlers.clipboard.postMessage(`sendToInternal ${await content.text()}`); // no need to base64 in this direction...
+		} else if (window.ThisIsTheWindowsApp) {
+			await window.postMobileMessage(`CLIPBOARDSET ${await content.text()}`);
 		} else {
 			var formData = new FormData();
 			formData.append('file', content);
@@ -708,6 +745,9 @@ window.L.Clipboard = window.L.Class.extend({
 		}
 
 		if (!window.ThisIsTheiOSApp && // in mobile apps, we want to drop straight to navigatorClipboardRead as execCommand will require user interaction...
+			!window.ThisIsTheMacOSApp &&
+			!window.ThisIsTheWindowsApp &&
+			!window.ThisIsTheQtApp &&
 			document.execCommand(operation) &&
 			serial !== this._clipboardSerial) {
 			window.app.console.log('copied successfully');
@@ -865,7 +905,7 @@ window.L.Clipboard = window.L.Class.extend({
 
 	// Executes the navigator.clipboard.write() call, if it's available.
 	_navigatorClipboardWrite: function(params) {
-		if (!window.L.Browser.clipboardApiAvailable && !window.ThisIsTheiOSApp) {
+		if (!window.L.Browser.clipboardApiAvailable && !window.ThisIsTheiOSApp && !window.ThisIsTheMacOSApp && !window.ThisIsTheWindowsApp && !window.ThisIsTheQtApp) {
 			return false;
 		}
 
@@ -879,14 +919,34 @@ window.L.Clipboard = window.L.Class.extend({
 
 	_asyncAttemptNavigatorClipboardWrite: async function(params) {
 		const command = this._unoCommandForCopyCutPaste;
+
+		if (window.ThisIsTheQtApp) {
+			// Qt handles UNO command and clipboard sync only via COPY/CUT/COPYSLIDE messages.
+			if (command === '.uno:Cut')
+				window.postMobileMessage('CUT');
+			else if (command === '.uno:CopySlide')
+				window.postMobileMessage('COPYSLIDE');
+			else
+				window.postMobileMessage('COPY');
+			return;
+		}
+
 		const check_ = this._sendCommandAndWaitForCompletion(command, params);
 
-		// I strongly disrecommend awaiting before the clipboard.write line in the non-iOS-app path
-		// It turns out there are some rather precarious conditions for copy/paste to be allowed in Safari on mobile - and awaiting seems to tip us over into "too late to copy/paste"
-		// Deferring like this is kinda horrible - it certainly looks gross in places - but it's absolutely necessary to avoid errors on the clipboard.write line
-		// I don't like it either :). If you change this make sure to thoroughly test cross-browser and cross-device!
+		// I strongly disrecommend awaiting before the clipboard.write line in the
+		// non-iOS-app path
 
-		if (window.ThisIsTheiOSApp) {
+		// It turns out there are some rather precarious conditions for copy/paste to be
+		// allowed in Safari on mobile - and awaiting seems to tip us over into "too late to
+		// copy/paste"
+
+		// Deferring like this is kinda horrible - it certainly looks gross in places - but
+		// it's absolutely necessary to avoid errors on the clipboard.write line
+
+		// I don't like it either :). If you change this make sure to thoroughly test
+		// cross-browser and cross-device!
+
+		if (window.ThisIsTheiOSApp || window.ThisIsTheMacOSApp) {
 			// This is sent down the fakewebsocket which can race with the
 			// native message - so first step is to wait for the result of
 			// that command so we are sure the clipboard is set before
@@ -895,6 +955,11 @@ window.L.Clipboard = window.L.Class.extend({
 				return; // Either wrong command or a pending event.
 
 			await window.webkit.messageHandlers.clipboard.postMessage(`write`);
+		} else if (window.ThisIsTheWindowsApp) {
+			// As above.
+			if (await check_ === null)
+				return;
+			await window.postMobileMessage(`CLIPBOARDWRITE`);
 		} else {
 			const url = this.getMetaURL() + '&MimeType=text/html,text/plain;charset=utf-8';
 
@@ -974,7 +1039,7 @@ window.L.Clipboard = window.L.Class.extend({
 
 	// Executes the navigator.clipboard.read() call, if it's available.
 	_navigatorClipboardRead: function(isSpecial) {
-		if (!window.L.Browser.clipboardApiAvailable && !window.ThisIsTheiOSApp) {
+		if (!window.L.Browser.clipboardApiAvailable && !window.ThisIsTheiOSApp && !window.ThisIsTheMacOSApp && !window.ThisIsTheWindowsApp) {
 			return false;
 		}
 
@@ -982,9 +1047,7 @@ window.L.Clipboard = window.L.Class.extend({
 		return true;
 	},
 
-	_iOSReadClipboard: async function() {
-		const encodedClipboardData = await window.webkit.messageHandlers.clipboard.postMessage('read');
-
+	_MobileAppReadClipboard: function(encodedClipboardData) {
 		if (encodedClipboardData === "(internal)") {
 			return null;
 		}
@@ -1012,6 +1075,22 @@ window.L.Clipboard = window.L.Class.extend({
 		return [new ClipboardItem(dataByMimeType)];
 	},
 
+	_iOSReadClipboard: async function() {
+		const encodedClipboardData = await window.webkit.messageHandlers.clipboard.postMessage('read');
+		return this._MobileAppReadClipboard(encodedClipboardData);
+	},
+
+	_WindowsReadClipboard: async function() {
+		// FIXME: Unclear whether this function ever is invoked and whether it actually
+		// would do anything sane if invoked. Especially the expectation that
+		// window.postMobileMessage() would return some value is surely wrong. The
+		// CLIPBOARDREAD handling in CODA.cpp certainly does not attempt to return any
+		// value, and I don't see how one would even do that in the WebView2 API.
+		const encodedClipboardData = await window.postMobileMessage('CLIPBOARDREAD');
+		// FIXME: Is the same code as for iOS OK? Will see.
+		return this._MobileAppReadClipboard(encodedClipboardData);
+	},
+
 	_asyncAttemptNavigatorClipboardRead: async function(isSpecial) {
 		var clipboard = navigator.clipboard;
 		if (window.L.Browser.cypressTest) {
@@ -1019,9 +1098,12 @@ window.L.Clipboard = window.L.Class.extend({
 		}
 		let clipboardContents;
 		try {
-			clipboardContents = window.ThisIsTheiOSApp
-				? await this._iOSReadClipboard()
-				: await clipboard.read();
+			if (window.ThisIsTheiOSApp || window.ThisIsTheMacOSApp)
+				clipboardContents = await this._iOSReadClipboard();
+			else if (window.ThisIsTheWindowsApp)
+				clipboardContents = await this._WindowsReadClipboard();
+			else
+				clipboardContents = await clipboard.read();
 
 			if (clipboardContents === null) {
 				this._doInternalPaste(this._map, false);
@@ -1068,6 +1150,15 @@ window.L.Clipboard = window.L.Class.extend({
 				return;
 			}
 			this._navigatorClipboardGetTypeCallback(clipboardContent, blob, 'text/plain');
+		} else if (clipboardContent.types.includes('image/png')) {
+			let blob;
+			try {
+				blob = await clipboardContent.getType('image/png');
+			} catch (error) {
+				window.app.console.log('clipboardContent.getType(image/png) failed: ' + error.message);
+				return;
+			}
+			this._navigatorClipboardGetTypeCallback(clipboardContent, blob, 'image/png');
 		} else {
 			window.app.console.log('navigator.clipboard has no text/html or text/plain');
 			return;
@@ -1087,6 +1178,39 @@ window.L.Clipboard = window.L.Class.extend({
 			// perform internal operations
 			app.socket.sendMessage('uno ' + cmd);
 			return true;
+		}
+
+		if (window.ThisIsTheWindowsApp) {
+			// Here, too, just let native code handle it
+			if (cmd === '.uno:Cut') {
+				window.postMobileMessage('CUT');
+				return true;
+			} else if (cmd === '.uno:Copy') {
+				window.postMobileMessage('COPY');
+				return true;
+			} else if (cmd === '.uno:Paste') {
+				window.postMobileMessage('PASTE');
+				return true;
+			}
+		}
+
+		if (window.ThisIsTheQtApp) {
+			if (cmd === '.uno:Cut') {
+				window.postMobileMessage('CUT');
+				return true;
+			} else if (cmd === '.uno:Copy') {
+				window.postMobileMessage('COPY');
+				return true;
+			} else if (cmd === '.uno:CopySlide') {
+				window.postMobileMessage('COPYSLIDE');
+				return true;
+			} else if (cmd === '.uno:Paste') {
+				window.postMobileMessage('PASTE');
+				return true;
+			} else if (cmd === '.uno:PasteSpecial') {
+				window.postMobileMessage('PASTESPECIAL');
+				return true;
+			}
 		}
 
 		if (cmd === '.uno:Copy' || cmd === '.uno:CopyHyperlinkLocation' || cmd === '.uno:CopySlide') {
@@ -1191,13 +1315,20 @@ window.L.Clipboard = window.L.Class.extend({
 
 		if (ev.clipboardData) {
 			ev.preventDefault();
+			this._map._textInput._abortComposition(ev);
+			this._clipboardSerial++;
+
+			if (window.ThisIsTheQtApp) {
+				// Like Windows: native code handles clipboard sync + paste entirely.
+				window.postMobileMessage('PASTE');
+				return false;
+			}
+
 			var usePasteKeyEvent = ev.usePasteKeyEvent;
 			// Always capture the html content separate as we may lose it when we
 			// pass the clipboard data to a different context (async calls, f.e.).
 			var htmlText = ev.clipboardData.getData('text/html');
 			var hasFinished = this.dataTransferToDocument(ev.clipboardData, /* preferInternal = */ true, htmlText, usePasteKeyEvent);
-			this._map._textInput._abortComposition(ev);
-			this._clipboardSerial++;
 			if (hasFinished)
 				this._stopHideDownload();
 		}
@@ -1242,6 +1373,14 @@ window.L.Clipboard = window.L.Class.extend({
 		this._selectionContent = this._originWrapBody(text);
 		this._selectionPlainTextContent = text;
 		this._scheduleHideDownload();
+	},
+
+	setActionCopy: function(isActionCopy) {
+		this._isActionCopy = isActionCopy;
+	},
+
+	isActionCopy: function() {
+		return this._isActionCopy;
 	},
 
 	// complexselection: message
@@ -1395,6 +1534,12 @@ window.L.Clipboard = window.L.Class.extend({
 	},
 
 	_openPasteSpecialPopup: function () {
+		if (window.ThisIsTheWindowsApp) {
+			// No warning dialog necessary, just do it
+			app.socket.sendMessage('uno .uno:PasteSpecial');
+			return;
+		}
+
 		// We will use this for closing the dialog.
 		this.pasteSpecialDialogId = this._map.uiManager.generateModalId('paste_special_dialog') + '-box';
 

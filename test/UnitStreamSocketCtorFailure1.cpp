@@ -9,6 +9,10 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * Unit test for stream socket constructor failure scenarios.
+ */
+
 #include <config.h>
 
 #include <memory>
@@ -22,10 +26,10 @@
 
 #include <Unit.hpp>
 #include <UserMessages.hpp>
-#include <Util.hpp>
+#include <common/Util.hpp>
 #include <helpers.hpp>
 
-#include "UnitTimeoutBase.hpp"
+#include <UnitTimeoutBase.hpp>
 
 /// Test suite class for injected StreamSocket ctor exceptions, handled by ServerSocket::accept
 class UnitStreamSocketCtorFailure1 : public UnitTimeoutBase0
@@ -51,8 +55,9 @@ void UnitStreamSocketCtorFailure1::simulateExternalSocketCtorException(std::shar
     const size_t extStreamSocketCount = ++_externalStreamSocketCount;
     if (extStreamSocketCount % ExternalStreamSocketCtorFailureInterval == 0)
     {
-        LOG_DBG("Injecting recoverable StreamSocket ctor exception " << extStreamSocketCount
-                << "/" << ExternalStreamSocketCtorFailureInterval << ": " << socket);
+        LOG_DBG("Injecting recoverable StreamSocket ctor exception "
+                << extStreamSocketCount << "/" << ExternalStreamSocketCtorFailureInterval << ": "
+                << socket.get());
         throw std::runtime_error("Test: StreamSocket exception: fd " + std::to_string(socket->getFD()));
     }
 }
@@ -60,8 +65,8 @@ void UnitStreamSocketCtorFailure1::simulateExternalSocketCtorException(std::shar
 inline UnitBase::TestResult UnitStreamSocketCtorFailure1::testHttp()
 {
     setTestname(__func__);
-    TST_LOG("Starting Test: " << testname << ": StreamSocketCtorFailureInterval "
-                              << ExternalStreamSocketCtorFailureInterval);
+    TST_LOG("Starting Test: StreamSocketCtorFailureInterval "
+            << ExternalStreamSocketCtorFailureInterval);
 
     const std::string documentURL = "/favicon.ico";
 
@@ -89,13 +94,13 @@ inline UnitBase::TestResult UnitStreamSocketCtorFailure1::testHttp()
         session = http::Session::create(helpers::getTestServerURI());
         bool connected00 = false;
         {
-            TST_LOG("Test[" << iteration << "] Req1: " << testname << ": `" << documentURL << "`");
+            TST_LOG("Test[" << iteration << "] Req1: `" << documentURL << "`");
             http::Request request(documentURL, http::Request::VERB_GET);
             const std::shared_ptr<const http::Response> response =
                 session->syncRequest(request, *socketPoller);
             TST_LOG("Test[" << iteration << "] Connected: " << session->isConnected());
             TST_LOG("Test[" << iteration << "] Response1: " << response->header().toString());
-            TST_LOG("Test[" << iteration << "] Response1 size: " << testname << ": `" << documentURL
+            TST_LOG("Test[" << iteration << "] Response1 size: `" << documentURL
                             << "`: " << response->header().getContentLength());
             if( session->isConnected() ) {
                 connected00 = true;

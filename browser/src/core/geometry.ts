@@ -41,6 +41,8 @@
 			* x => to get and set x.
 			* pX => to get and set x using core / canvas units. Internally, it is converted into twips.
 			* cX => to get and set x using CSS units. Internally, it is converted into twips.
+			* vX1, vX.., vY.. => to get the screen coordinates of the points. These properties can not be set, because they depend on the view.
+				-> Though sometimes we need to go from view to document. For that, we use canvasToDocumentX and canvasToDocumentY functions of the current view layout.
 		* Every type has its own sub functions:
 			* toArray (native-twips), cToArray (CSS), pToArray (core / canvas), containsPoint (takes number array as input), pContainsPoint, cContainsPoint and the like.
 		* twips is an integer unit. We also prefer integer types here, since other types are pixels.
@@ -61,11 +63,15 @@ namespace cool {
 export class SimplePoint {
 	private _x: number;
 	private _y: number;
+	public part: number; // Affects nothing. To be used in view layouts that redesign coordinate space.
+	public mode: number; // mode, along with part property, enables easier design for different view layouts.
 
 	// Constructor uses twips.
-	constructor(x: number, y: number) {
+	constructor(x: number, y: number, part = -1, mode = -1) {
 		this._x = Math.round(x);
 		this._y = Math.round(y);
+		this.part = part;
+		this.mode = mode;
 	}
 
 	// twips.
@@ -101,10 +107,25 @@ export class SimplePoint {
 	public cToArray(): number[] { return [this.cX, this.cY]; }
 	public cDistanceTo(point: number[]): number { return Math.sqrt(Math.pow(this.cX - point[0], 2) + Math.pow(this.cY - point[1], 2)); }
 
-	public clone(): SimplePoint { return new SimplePoint(this._x, this._y); }
+	public clone(): SimplePoint { return new SimplePoint(this._x, this._y, this.part, this.mode); }
 
-	public static fromCorePixels(point: Array<number>): SimplePoint {
-		return new SimplePoint(Math.round(point[0] * app.pixelsToTwips), Math.round(point[1] * app.pixelsToTwips));
+	public static fromCorePixels(point: Array<number>, part = -1, mode = -1): SimplePoint {
+		return new SimplePoint(Math.round(point[0] * app.pixelsToTwips), Math.round(point[1] * app.pixelsToTwips), part, mode);
+	}
+
+	// View pixel.
+	public get vX(): number {
+		Util.ensureValue(app.activeDocument);
+		return app.activeDocument.activeLayout ? app.activeDocument.activeLayout.documentToViewX(this) : this.pX;
+	}
+	public get vY(): number {
+		Util.ensureValue(app.activeDocument);
+		return app.activeDocument.activeLayout ? app.activeDocument.activeLayout.documentToViewY(this) : this.pY;
+	}
+
+	public vToArray(): number[] {
+		Util.ensureValue(app.activeDocument);
+		return app.activeDocument.activeLayout ? [this.vX, this.vY] : [this.pX, this.pY];
 	}
 }
 
@@ -118,13 +139,17 @@ export class SimpleRectangle {
 	private _y1: number;
 	private _width: number;
 	private _height: number;
+	public part: number;
+	public mode: number;
 
 	// Constructor uses twips.
-	constructor (x: number, y: number, width: number, height: number) {
+	constructor (x: number, y: number, width: number, height: number, part = -1, mode = -1) {
 		this._x1 = Math.round(x);
 		this._y1 = Math.round(y);
 		this._width = Math.round(width);
 		this._height = Math.round(height);
+		this.part = part;
+		this.mode = mode;
 	}
 
 	// twips.
@@ -238,10 +263,44 @@ export class SimpleRectangle {
 	public cMoveTo (point: number[]): void { this._x1 = Math.round(point[0] * app.dpiScale * app.pixelsToTwips); this._y1 = Math.round(point[1] * app.dpiScale * app.pixelsToTwips); }
 	public cMoveBy (point: number[]): void { this._x1 += Math.round(point[0] * app.dpiScale * app.pixelsToTwips); this._y1 += Math.round(point[1] * app.dpiScale * app.pixelsToTwips); }
 
-	public clone(): SimpleRectangle { return new SimpleRectangle(this.x1, this.y1, this.width, this.height); }
+	public clone(): SimpleRectangle { return new SimpleRectangle(this.x1, this.y1, this.width, this.height, this.part, this.mode); }
 
-	public static fromCorePixels(rectangle: Array<number>): SimpleRectangle {
-		return new SimpleRectangle(Math.round(rectangle[0] * app.pixelsToTwips), Math.round(rectangle[1] * app.pixelsToTwips), Math.round(rectangle[2] * app.pixelsToTwips), Math.round(rectangle[3] * app.pixelsToTwips));
+	public static fromCorePixels(rectangle: Array<number>, part = -1, mode = -1): SimpleRectangle {
+		return new SimpleRectangle(Math.round(rectangle[0] * app.pixelsToTwips), Math.round(rectangle[1] * app.pixelsToTwips), Math.round(rectangle[2] * app.pixelsToTwips), Math.round(rectangle[3] * app.pixelsToTwips), part, mode);
+	}
+
+	// View pixel. 1..4 represents the 4 corners of the rectangle: TopLeft, TopRight, BottomLeft, BottomRight respectively.
+	public get v1X(): number {
+		Util.ensureValue(app.activeDocument);
+		return app.activeDocument.activeLayout ? app.activeDocument.activeLayout.documentToViewX(new cool.SimplePoint(this.x1, this.y1)) : this.pX1;
+	}
+	public get v1Y(): number {
+		Util.ensureValue(app.activeDocument);
+		return app.activeDocument.activeLayout ? app.activeDocument.activeLayout.documentToViewY(new cool.SimplePoint(this.x1, this.y1)) : this.pY1;
+	}
+	public get v2X(): number {
+		Util.ensureValue(app.activeDocument);
+		return app.activeDocument.activeLayout ? app.activeDocument.activeLayout.documentToViewX(new cool.SimplePoint(this.x2, this.y1)) : this.pX2;
+	}
+	public get v2Y(): number {
+		Util.ensureValue(app.activeDocument);
+		return app.activeDocument.activeLayout ? app.activeDocument.activeLayout.documentToViewY(new cool.SimplePoint(this.x2, this.y1)) : this.pY1;
+	}
+	public get v3X(): number {
+		Util.ensureValue(app.activeDocument);
+		return app.activeDocument.activeLayout ? app.activeDocument.activeLayout.documentToViewX(new cool.SimplePoint(this.x1, this.y2)) : this.pX1;
+	}
+	public get v3Y(): number {
+		Util.ensureValue(app.activeDocument);
+		return app.activeDocument.activeLayout ? app.activeDocument.activeLayout.documentToViewY(new cool.SimplePoint(this.x1, this.y2)) : this.pY2;
+	}
+	public get v4X(): number {
+		Util.ensureValue(app.activeDocument);
+		return app.activeDocument.activeLayout ? app.activeDocument.activeLayout.documentToViewX(new cool.SimplePoint(this.x2, this.y2)) : this.pX2;
+	}
+	public get v4Y(): number {
+		Util.ensureValue(app.activeDocument);
+		return app.activeDocument.activeLayout ? app.activeDocument.activeLayout.documentToViewY(new cool.SimplePoint(this.x2, this.y2)) : this.pY2;
 	}
 }
 

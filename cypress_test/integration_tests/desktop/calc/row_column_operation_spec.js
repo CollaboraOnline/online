@@ -4,11 +4,13 @@ var calcHelper = require('../../common/calc_helper');
 var desktopHelper = require('../../common/desktop_helper');
 
 describe(['tagdesktop'], 'Row Column Operation', function() {
-
 	beforeEach(function() {
 		helper.setupAndLoadDocument('calc/row_column_operation.ods');
 		desktopHelper.switchUIToNotebookbar();
 		cy.viewport(1920,1080);
+		cy.getFrameWindow().then(function(frameWindow) {
+			this.win = frameWindow;
+		});
 		helper.setDummyClipboardForCopy();
 		calcHelper.assertSheetContents(['Hello','Hi','World','Bye'], true);
 		calcHelper.clickOnFirstCell(true,false);
@@ -16,35 +18,38 @@ describe(['tagdesktop'], 'Row Column Operation', function() {
 
 	it('Insert/Delete row' , function() {
 		//Insert row above
-		cy.cGet('#home-insert-columns-before-button').click();
+		desktopHelper.getNbIcon('InsertColumnsBefore', 'Home').click();
+		helper.processToIdle(this.win);
 
 		//calcHelper.assertSheetContents(['','','Hello','Hi','World','Bye']);
 		//delete row
 		calcHelper.clickOnFirstCell(true, false);
 
-		cy.cGet('#home-delete-rows-button').click();
+		desktopHelper.getNbIcon('DeleteRows', 'Home').click();
+		helper.processToIdle(this.win);
 		//calcHelper.assertSheetContents(['Hello','Hi','World','Bye']);
 
 		//insert row below
 		calcHelper.clickOnFirstCell(true, false);
-		cy.cGet('#home-insert-rows-after-button').click();
+		desktopHelper.getNbIcon('InsertRowsAfter', 'Home').click();
 		//calcHelper.assertSheetContents(['Hello','Hi','','','World','Bye']);
 	});
 
 	it('Insert/Delete Column', function() {
 		//insert column before
-		cy.cGet('#home-insert-columns-before-button').click();
+		desktopHelper.getNbIcon('InsertColumnsBefore', 'Home').click();
+		helper.processToIdle(this.win);
 		//calcHelper.assertSheetContents(['','Hello','Hi','','World','Bye']);
 		calcHelper.clickOnFirstCell(true, false);
 
 		//delete column
-		cy.cGet('#home-delete-columns-button').click();
-		cy.wait(500);
+		desktopHelper.getNbIcon('DeleteColumns', 'Home').click();
+		helper.processToIdle(this.win);
 		//calcHelper.assertSheetContents(['Hello','Hi','World','Bye']);
-		calcHelper.clickOnFirstCell(true,false);
+		calcHelper.clickOnFirstCell(true, false);
 
 		//insert column after
-		cy.cGet('#home-insert-columns-after-button').click();
+		desktopHelper.getNbIcon('InsertColumnsAfter', 'Home').click();
 		//calcHelper.assertSheetContents(['Hello','','Hi','World','','Bye']);
 	});
 });

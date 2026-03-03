@@ -164,6 +164,10 @@ describe(['taga11yenabled'], 'Editable area - Basic typing and caret moving', fu
 	beforeEach(function () {
 		helper.setupAndLoadDocument('writer/undo_redo.odt');
 		cy.cGet('div.clipboard').as('clipboard');
+
+		cy.getFrameWindow().then((win) => {
+			this.win = win;
+		});
 	});
 
 	it('Moving inside paragraph', function () {
@@ -943,10 +947,6 @@ describe(['taga11yenabled'], 'Editable area - More typing', function() {
 		ceHelper.type('Hello World');
 		ceHelper.checkPlainContent('Hello World');
 		ceHelper.type('{ctrl+z}');
-		// After undo/redo client makes an explicit request for a new version of current paragraph.
-		// So we need to skip to send new input to core until client receives the updated content.
-		// So let's do a tiny wait before starting typing.
-		// cy.wait(50);
 		ceHelper.type('Duck');
 		ceHelper.checkPlainContent('Hello Duck');
 		ceHelper.checkSelectionIsNull();

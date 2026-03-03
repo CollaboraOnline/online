@@ -11,8 +11,8 @@
 
 #pragma once
 
-#include <StringVector.hpp>
-#include <Util.hpp>
+#include <common/StringVector.hpp>
+#include <common/Util.hpp>
 
 #include <cstdint>
 #include <cstdlib>
@@ -31,6 +31,39 @@ namespace COOLProtocol
     // See protocol.txt.
     constexpr unsigned ProtocolMajorVersionNumber = 0;
     constexpr unsigned ProtocolMinorVersionNumber = 1;
+
+    static constexpr const char* binaryMessageTypes[] {
+        "tile:",
+        "tilecombine:",
+        "delta:",
+        "renderfont:",
+        "rendersearchresult:",
+        "slidelayer:",
+        "zstdslidelayer:",
+        "windowpaint:",
+        "urp:"
+    };
+
+    static inline bool isMessageOfType(const char* message, const std::string& type, size_t length)
+    {
+        if (length < type.length() + 2)
+            return false;
+        for (size_t i = 0; i < type.length(); i++)
+            if (message[i] != type[i])
+                return false;
+        return true;
+    }
+
+    static inline bool isBinaryMessage(const char *buffer, size_t length)
+    {
+        for (auto i : COOLProtocol::binaryMessageTypes)
+        {
+            if (isMessageOfType(buffer, i, length))
+                return true;
+        }
+
+        return false;
+    }
 
     inline std::string GetProtocolVersion()
     {
@@ -77,15 +110,15 @@ namespace COOLProtocol
         return false;
     }
 
-    bool getTokenInteger(const std::string_view token, const std::string_view name, int& value);
-    bool getTokenUInt32(const std::string_view token, const std::string_view name, uint32_t& value);
-    bool getTokenUInt64(const std::string_view token, const std::string_view name, uint64_t& value);
-    bool getTokenString(const std::string_view token, const std::string_view name,
-                        std::string& value);
-    bool getTokenKeyword(const std::string_view token, const std::string_view name,
+    bool getTokenInteger(std::string_view token, std::string_view name, int& value);
+    bool getTokenUInt32(std::string_view token, std::string_view name, uint32_t& value);
+    bool getTokenUInt64(std::string_view token, std::string_view name, uint64_t& value);
+    bool getTokenString(std::string_view token, std::string_view name, std::string& value);
+    bool getTokenKeyword(std::string_view token, std::string_view name,
                          const std::map<std::string, int>& map, int& value);
 
-    bool getTokenKeyword(const StringVector& tokens, const std::string_view name, const std::map<std::string, int>& map, int& value);
+    bool getTokenKeyword(const StringVector& tokens, std::string_view name,
+                         const std::map<std::string, int>& map, int& value);
 
     inline bool getTokenInteger(const StringVector& tokens, const std::string_view name,
                                 int& value)
@@ -106,10 +139,9 @@ namespace COOLProtocol
         static_assert(N > 1, "Token name must be at least one character long.");
         if (token.size() > N && token[N - 1] == '=' && token.compare(0, N - 1, name) == 0)
         {
-            const char* str = token.data() + N;
-            char* endptr = nullptr;
-            value = std::strtol(str, &endptr, 10);
-            return (endptr > str);
+            bool success;
+            std::tie(value, success) = Util::i32FromString(token.substr(N));
+            return success;
         }
 
         return false;
@@ -138,7 +170,7 @@ namespace COOLProtocol
         return false;
     }
 
-    bool getTokenStringFromMessage(const std::string_view message, const std::string_view name,
+    bool getTokenStringFromMessage(std::string_view message, std::string_view name,
                                    std::string& value);
 
     inline

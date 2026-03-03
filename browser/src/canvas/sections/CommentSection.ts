@@ -92,7 +92,7 @@ export class Comment extends CanvasSectionObject {
 		if (data.parent === undefined)
 			data.parent = '0';
 
-		this.sectionProperties.data = data;
+		this.setData(data);
 
 		/*
 			possibleParentCommentId:
@@ -151,8 +151,7 @@ export class Comment extends CanvasSectionObject {
 		this.sectionProperties.childLines = [];
 		this.sectionProperties.childCommentOffset = 8;
 		this.sectionProperties.commentMarkerSubSection = null; // For Impress and Draw documents.
-
-		this.convertRectanglesToCoreCoordinates(); // Convert rectangle coordiantes into core pixels on initialization.
+		this.sectionProperties.calcCommentAreaWidth = 40; // Calc comment area doesn't cover the whole cell, in order to allow multi-cell selections.
 
 		app.map.on('sheetgeometrychanged', this.setPositionAndSize.bind(this));
 	}
@@ -235,6 +234,13 @@ export class Comment extends CanvasSectionObject {
 
 		this.sectionProperties.contentNode = window.L.DomUtil.create('div', 'cool-annotation-content cool-dont-break', this.sectionProperties.wrapper);
 		this.sectionProperties.contentNode.id = 'annotation-content-area-' + this.sectionProperties.data.id;
+
+		const commentFooter = window.L.DomUtil.create('div', 'cool-annotation-footer', this.sectionProperties.wrapper);
+		this.sectionProperties.contentDate = window.L.DomUtil.create('div', 'cool-annotation-date', commentFooter);
+		const resolvedEl = window.L.DomUtil.create('div', 'cool-annotation-content-resolved', commentFooter);
+		this.sectionProperties.resolvedTextElement = resolvedEl;
+		this.updateResolvedField(this.sectionProperties.data.resolved);
+
 		this.sectionProperties.nodeModify = window.L.DomUtil.create('div', 'cool-annotation-edit' + ' modify-annotation', this.sectionProperties.wrapper);
 		this.sectionProperties.nodeModifyText = window.L.DomUtil.create('div', 'cool-annotation-textarea', this.sectionProperties.nodeModify);
 		this.createReplyHint(this.sectionProperties.nodeModify);
@@ -291,14 +297,8 @@ export class Comment extends CanvasSectionObject {
 		this.sectionProperties.author = window.L.DomUtil.create('table', 'cool-annotation-table', this.sectionProperties.wrapper);
 
 		var tbody = window.L.DomUtil.create('tbody', '', this.sectionProperties.author);
-		var rowResolved = window.L.DomUtil.create('tr', '', tbody);
-		var tdResolved = window.L.DomUtil.create('td', 'cool-annotation-resolved', rowResolved);
-		var pResolved = window.L.DomUtil.create('div', 'cool-annotation-content-resolved', tdResolved);
-		this.sectionProperties.resolvedTextElement = pResolved;
 
-		this.updateResolvedField(this.sectionProperties.data.resolved);
-
-		var tr = window.L.DomUtil.create('tr', '', tbody);
+		var tr = window.L.DomUtil.create('tr', 'cool-annotation-author-header', tbody);
 		this.sectionProperties.authorRow = tr;
 		tr.id = 'author table row ' + this.sectionProperties.data.id;
 		var tdImg = window.L.DomUtil.create('td', 'cool-annotation-img', tr);
@@ -318,11 +318,17 @@ export class Comment extends CanvasSectionObject {
 		this.sectionProperties.authorAvatarImg = imgAuthor;
 		this.sectionProperties.authorAvatartdImg = tdImg;
 		this.sectionProperties.contentAuthor = window.L.DomUtil.create('div', 'cool-annotation-content-author', tdAuthor);
-		this.sectionProperties.contentDate = window.L.DomUtil.create('div', 'cool-annotation-date', tdAuthor);
 	}
 
 	private createMenu (): void {
 		var tdMenu = window.L.DomUtil.create('td', 'cool-annotation-menubar', this.sectionProperties.authorRow);
+		const edit = window.L.DomUtil.create('div', 'cool-annotation-menu-edit', tdMenu);
+		edit.id = 'comment-annotation-menu-edit-' + this.sectionProperties.data.id;
+		edit.tabIndex = 0;
+		edit.onclick = this.onEditComment.bind(this);
+		edit.dataset.title = Comment.editCommentLabel;
+		edit.setAttribute('aria-label', Comment.editCommentLabel);
+
 		this.sectionProperties.menu = window.L.DomUtil.create('div', this.sectionProperties.data.trackchange ? 'cool-annotation-menu-redline' : 'cool-annotation-menu', tdMenu);
 		this.sectionProperties.menu.id = 'comment-annotation-menu-' + this.sectionProperties.data.id;
 		this.sectionProperties.menu.tabIndex = 0;
@@ -392,6 +398,14 @@ export class Comment extends CanvasSectionObject {
 	// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 	public setData (data: any): void {
 		this.sectionProperties.data = data;
+		const rectangles = this.sectionProperties.data.rectangles;
+
+		if (rectangles) {
+			// Convert the rectangles into simple rectangles as soon as possible.
+			for (let i = 0; i < rectangles.length; i++) {
+				rectangles[i] = new cool.SimpleRectangle(rectangles[i][0], rectangles[i][1], rectangles[i][2], rectangles[i][3]);
+			}
+		}
 	}
 
 	private createTrackChangeButtons (): void {
@@ -513,7 +527,7 @@ export class Comment extends CanvasSectionObject {
 			this.sectionProperties.authorAvatarImg.setAttribute('src', this.sectionProperties.data.avatar);
 		}
 		else {
-			$(this.sectionProperties.authorAvatarImg).css('padding-top', '4px');
+			$(this.sectionProperties.authorAvatarImg).css('padding', '1.8px');
 		}
 		var user = this.map.getViewId(this.sectionProperties.data.author);
 		if (user >= 0) {
@@ -568,7 +582,7 @@ export class Comment extends CanvasSectionObject {
 				this.size[0] = 5;
 		}
 		else if (this.sectionProperties.data.cellRange && app.map._docLayer._docType === 'spreadsheet') {
-			this.size = this.calcCellSize();
+			this.size = this.calcOptimumSizeForCalc();
 			var cellPos = app.map._docLayer._cellRangeToTwipRect(this.sectionProperties.data.cellRange).toRectangle();
 			let startX = cellPos[0];
 			if (this.isCalcRTL()) { // Mirroring is done in setPosition
@@ -576,7 +590,7 @@ export class Comment extends CanvasSectionObject {
 				startX += sizeX;  // but adjust for width of the cell.
 			}
 			this.setShowSection(true);
-			var position: Array<number> = [Math.round(cellPos[0] * app.twipsToPixels), Math.round(cellPos[1] * app.twipsToPixels)];
+			var position: Array<number> = [Math.round((cellPos[0] + cellPos[2]) * app.twipsToPixels - this.size[0]), Math.round(cellPos[1] * app.twipsToPixels)];
 
 			this.setPosition(position[0], position[1]);
 		}
@@ -638,73 +652,25 @@ export class Comment extends CanvasSectionObject {
 		return false;
 	}
 
-	/*
-		This function doesn't take topleft positions of sections into account.
-		This just returns bare pixel coordinates of the rectangles.
-	*/
-	private convertRectanglesToCoreCoordinates() {
-		var pixelBasedOrgRectangles = new Array<Array<number>>();
-
-		var originals = this.sectionProperties.data.rectanglesOriginal;
-		var pos: number[], size: number[];
-
-		if (originals) {
-			for (var i = 0; i < originals.length; i++) {
-				pos = [
-					Math.round(originals[i][0] * app.twipsToPixels),
-					Math.round(originals[i][1] * app.twipsToPixels)
-				];
-				size = [
-					Math.round(originals[i][2] * app.twipsToPixels),
-					Math.round(originals[i][3] * app.twipsToPixels)
-				];
-
-				pixelBasedOrgRectangles.push([pos[0], pos[1], size[0], size[1]]);
-			}
-
-			this.sectionProperties.pixelBasedOrgRectangles = pixelBasedOrgRectangles;
-		}
-	}
-
 	// This is for svg elements that will be bound to document-container.
 	// This also returns whether any rectangle has an intersection with the visible area/panes.
 	// This function calculates the core pixel coordinates then converts them into view coordinates.
 	private convertRectanglesToViewCoordinates () : boolean {
 		var rectangles = this.sectionProperties.data.rectangles;
-		var originals = this.sectionProperties.data.rectanglesOriginal;
 		var viewContext = this.map.getTileSectionMgr()._paintContext();
 		var intersectsVisibleArea = false;
-		var pos: number[], size: number[];
 
 		if (rectangles) {
-			var documentAnchorSection = this.containerObject.getDocumentAnchorSection();
-			var diff = [documentAnchorSection.myTopLeft[0] - app.activeDocument.activeView.viewedRectangle.pX1, documentAnchorSection.myTopLeft[1] - app.activeDocument.activeView.viewedRectangle.pY1];
-
-			for (var i = 0; i < rectangles.length; i++) {
-				pos = [
-					Math.round(originals[i][0] * app.twipsToPixels),
-					Math.round(originals[i][1] * app.twipsToPixels)
-				];
-				size = [
-					Math.round(originals[i][2] * app.twipsToPixels),
-					Math.round(originals[i][3] * app.twipsToPixels)
-				];
-
-				if (!intersectsVisibleArea && Comment.doesRectIntersectView(pos, size, viewContext))
+			for (let i = 0; i < rectangles.length; i++) {
+				if (app.activeDocument.activeLayout.viewedRectangle.intersectsRectangle(rectangles[i].toArray())) {
 					intersectsVisibleArea = true;
-
-				rectangles[i][0] = pos[0] + diff[0];
-				rectangles[i][1] = pos[1] + diff[1];
-				rectangles[i][2] = size[0];
-				rectangles[i][3] = size[1];
+					break;
+				}
 			}
 		} else if (this.sectionProperties.data.trackchange && this.sectionProperties.data.anchorPos) {
 			// For redline comments there are no 'rectangles' or 'rectangleOriginal' properties in sectionProperties.data
 			// So use the comment rectangle stored in anchorPos (in display? twips).
-			pos = this.getPosition();
-			size = this.getSize();
-
-			intersectsVisibleArea = Comment.doesRectIntersectView(pos, size, viewContext);
+			intersectsVisibleArea = Comment.doesRectIntersectView(this.getPosition(), this.getSize(), viewContext);
 		}
 
 		return intersectsVisibleArea;
@@ -739,8 +705,6 @@ export class Comment extends CanvasSectionObject {
 	}
 
 	private updatePosition (): void {
-		this.convertRectanglesToViewCoordinates();
-		this.convertRectanglesToCoreCoordinates();
 		this.setPositionAndSize();
 		if (app.map._docLayer._docType === 'spreadsheet')
 			this.positionCalcComment();
@@ -841,10 +805,7 @@ export class Comment extends CanvasSectionObject {
 
 	public positionCalcComment(): void {
 		if (!(<any>window).mode.isMobile()) {
-			var cellPos = app.map._docLayer._cellRangeToTwipRect(this.sectionProperties.data.cellRange).toRectangle();
-			var originalSize = [Math.round((cellPos[2]) * app.twipsToPixels), Math.round((cellPos[3]) * app.twipsToPixels)];
-
-			const startX = this.isCalcRTL() ? this.myTopLeft[0] - this.getCommentWidth() : this.myTopLeft[0] + originalSize[0] - 3;
+			const startX = this.isCalcRTL() ? this.myTopLeft[0] - this.getCommentWidth() : this.myTopLeft[0] + this.calcOptimumSizeForCalc()[0] - 3;
 
 			var pos: Array<number> = [Math.round(startX / app.dpiScale), Math.round(this.myTopLeft[1] / app.dpiScale)];
 			this.sectionProperties.container.style.transform = 'translate3d(' + pos[0] + 'px, ' + pos[1] + 'px, 0px)';
@@ -985,6 +946,12 @@ export class Comment extends CanvasSectionObject {
 		window.L.DomEvent.stopPropagation(e);
 	}
 
+	private onEditComment (e: any): void {
+		this.sectionProperties.commentListSection.modify(this);
+		window.L.DomEvent.stopPropagation(e);
+	}
+
+
 	// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 	private menuOnKeyPress (e: any): void {
 		if (e.code === 'Space' || e.code === 'Enter')
@@ -1006,8 +973,14 @@ export class Comment extends CanvasSectionObject {
 	// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 	private onEscKey (e: any): void {
 		if ((<any>window).mode.isDesktop()) {
+			// When a comment is being edited and focus is in comment textbox,
+			// Esc should not close the comment being edited, but should just mark it with an attention.
 			if (e.keyCode === 27) {
-				this.onCancelClick(e);
+				const editingComment = Comment.isAnyEdit();
+				if (editingComment) {
+					this.sectionProperties.commentListSection.addCommentAttention(editingComment);
+					return;
+				}
 			} else if (e.keyCode === 33 /*PageUp*/ || e.keyCode === 34 /*PageDown*/) {
 				// work around for a chrome issue https://issues.chromium.org/issues/41417806
 				window.L.DomEvent.preventDefault(e);
@@ -1357,15 +1330,17 @@ export class Comment extends CanvasSectionObject {
 		For adjusting, we need to take document top left and documentAnchor top left into account.
 		No need to do that for now.
 	*/
-	private checkIfCursorIsOnThisCommentWriter(rectangles: any, point: Array<number>) {
+	private checkIfCursorIsOnThisCommentWriter(newPosition: cool.SimpleRectangle) {
 		if (this.sectionProperties.commentListSection.sectionProperties.show == false)
 			return;
 
+		const rectangles: cool.SimpleRectangle[] = this.sectionProperties.data.rectangles;
+
 		for (var i: number = 0; i < rectangles.length; i++) {
-			if (this.doesRectangleContainPoint(rectangles[i], point)) {
-				if (!this.isSelected()) {
+			if (rectangles[i].containsPoint([newPosition.x1, newPosition.y1])) {
+				if (!this.isSelected())
 					this.sectionProperties.commentListSection.selectById(this.sectionProperties.data.id);
-				}
+
 				this.stopPropagating();
 				return;
 			}
@@ -1381,10 +1356,8 @@ export class Comment extends CanvasSectionObject {
 
 	/// This event is Writer-only. Fired by CanvasSectionContainer.
 	public onCursorPositionChanged(newPosition: cool.SimpleRectangle): void {
-		var x = newPosition.pX1;
-		var y = Math.round(newPosition.pCenter[1]);
-		if (this.sectionProperties.pixelBasedOrgRectangles) {
-			this.checkIfCursorIsOnThisCommentWriter(this.sectionProperties.pixelBasedOrgRectangles, [x, y]);
+		if (this.sectionProperties.data.rectangles) {
+			this.checkIfCursorIsOnThisCommentWriter(newPosition);
 		}
 	}
 
@@ -1392,13 +1365,8 @@ export class Comment extends CanvasSectionObject {
 	// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 	public onCellAddressChanged(): void {
 		if (this.sectionProperties.data.rectangles) {
-			var midX = this.containerObject.getDocumentAnchor()[0] + Math.round(app.calc.cellCursorRectangle.pCenter[0]);
-			var midY = this.containerObject.getDocumentAnchor()[1] + Math.round(app.calc.cellCursorRectangle.pCenter[1]);
-
-			if (midX > this.sectionProperties.data.rectangles[0][0] && midX < this.sectionProperties.data.rectangles[0][0] + this.sectionProperties.data.rectangles[0][2]
-				&& midY > this.sectionProperties.data.rectangles[0][1] && midY < this.sectionProperties.data.rectangles[0][1] + this.sectionProperties.data.rectangles[0][3]) {
+			if (this.sectionProperties.data.rectangles[0].containsPoint(app.calc.cellCursorRectangle.center))
 				this.sectionProperties.commentListSection.sectionProperties.calcCurrentComment = this;
-			}
 			else if (this.isSelected()) {
 				this.hide();
 				this.sectionProperties.commentListSection.sectionProperties.calcCurrentComment = null;
@@ -1408,42 +1376,73 @@ export class Comment extends CanvasSectionObject {
 		}
 	}
 
+	private sendClickToCore(point: cool.SimplePoint, count: number) {
+		/*
+			On Calc, comments are shown when user focuses to the cell or moves the mouse pointer over the cell.
+			Comment class (this class) covers the cell area. So the document is blocked now.
+			We need to pass the click and double click events to the document.
+		*/
+		app.map._docLayer._postMouseEvent('buttondown', point.x, point.y, count, 1, 0);
+		app.map._docLayer._postMouseEvent('buttonup', point.x, point.y, count, 1, 0);
+		app.map.focus();
+	}
+
 	public onClick (point: cool.SimplePoint, e: MouseEvent): void {
-		if (app.map._docLayer._docType === 'presentation' || app.map._docLayer._docType === 'drawing') {
+		const docType = app.map._docLayer._docType;
+
+		if (['presentation', 'drawing'].includes(docType)) {
 			this.sectionProperties.commentListSection.selectById(this.sectionProperties.data.id);
 		}
-		else if (app.map._docLayer._docType === 'text') {
+		else if (docType === 'text') {
 			const mousePoint = point.clone();
 			mousePoint.pX += this.myTopLeft[0];
 			mousePoint.pY += this.myTopLeft[1];
 			app.activeDocument.mouseControl.onClick(mousePoint, e);
+		}
+		else if (docType === 'spreadsheet') {
+			point.pX += this.position[0];
+			point.pY += this.position[1];
+			this.sendClickToCore(point, 1);
+		}
+	}
+
+	public onDoubleClick(point: cool.SimplePoint, e: MouseEvent): void {
+		if ('spreadsheet' === app.map._docLayer._docType) {
+			point.pX += this.position[0];
+			point.pY += this.position[1];
+			this.sendClickToCore(point, 2);
 		}
 	}
 
 	public onDraw (): void {
 		if (this.sectionProperties.showSelectedCoordinate) {
 			if (app.map._docLayer._docType === 'text') {
-				var rectangles: Array<any> = this.sectionProperties.data.rectangles;
+				const rectangles: Array<cool.SimpleRectangle> = this.sectionProperties.data.rectangles;
 				if (rectangles) {
+					// We are using view coordinates and it ignores myTopLeft values.
+					// We set the pen position to canvas origin here. Then we set it back at the end of this block, after drawing.
+					this.context.translate(-this.myTopLeft[0], -this.myTopLeft[1]);
+
 					this.context.fillStyle = this.sectionProperties.usedTextColor;
 					this.context.globalAlpha = 0.25;
 
-					for (var i: number = 0; i < this.sectionProperties.data.rectangles.length;i ++) {
-						var x = rectangles[i][0] - this.myTopLeft[0];
-						var y = rectangles[i][1] - this.myTopLeft[1];
-						var w = rectangles[i][2] > 3 ? rectangles[i][2]: 3;
-						var h = rectangles[i][3];
-
-						this.context.fillRect(x, y, w , h);
+					for (let i = 0; i < rectangles.length;i ++) {
+						const height = Math.max(rectangles[i].v4Y - rectangles[i].v1Y, 3);
+						const width = Math.max(rectangles[i].v4X - rectangles[i].v1X, 3);
+						this.context.fillRect(rectangles[i].v1X, rectangles[i].v1Y, width, height);
 					}
 
 					this.context.globalAlpha = 1;
+					this.context.translate(this.myTopLeft[0], this.myTopLeft[1]);
 				}
 			}
 			else if (app.map._docLayer._docType === 'spreadsheet' &&
-				 parseInt(this.sectionProperties.data.tab) === app.map._docLayer._selectedPart) {
+				 parseInt(this.sectionProperties.data.tab) === app.map._docLayer._selectedPart &&
+				 // Don't draw with stale section myTopLeft after a tab-switch.
+				 // Wait for a 'commandstatechanged'.
+				 this.sectionProperties.commentListSection.sectionProperties.calcCommandStateChanged === true) {
 
-				var cellSize = this.calcCellSize();
+				var cellSize = this.calcOptimumSizeForCalc();
 				if (cellSize[0] !== 0 && cellSize[1] !== 0) { // don't draw notes in hidden cells
 					// `zoom` represents the current zoom level of the map, retrieved from `this.map.getZoom()`.
 					// `baseSize` is a constant that defines the base size of the square at the initial zoom level.
@@ -1500,12 +1499,20 @@ export class Comment extends CanvasSectionObject {
 		}
 	}
 
-	public calcCellSize (): number[] {
+	private calcCellSize(): number[] {
 		var cellPos = app.map._docLayer._cellRangeToTwipRect(this.sectionProperties.data.cellRange).toRectangle();
 		return [Math.round((cellPos[2]) * app.twipsToPixels), Math.round((cellPos[3]) * app.twipsToPixels)];
 	}
 
-	public onMouseEnter (): void {
+	private calcOptimumSizeForCalc(): number[] {
+		const size = this.calcCellSize();
+
+		if (size[0] > this.sectionProperties.calcCommentAreaWidth) size[0] = this.sectionProperties.calcCommentAreaWidth;
+
+		return size;
+	}
+
+	public onMouseEnter(): void {
 		if (this.calcContinueWithMouseEvent()) {
 			// When mouse is above this section, comment's HTML element will be shown.
 			// If mouse pointer goes to HTML element, onMouseLeave event shouldn't be fired.
@@ -1529,11 +1536,11 @@ export class Comment extends CanvasSectionObject {
 		}
 	}
 
-	public onMouseLeave (point: cool.SimplePoint): void {
+	public onMouseLeave(point: cool.SimplePoint): void {
 		if (this.calcContinueWithMouseEvent()) {
 			if (parseInt(this.sectionProperties.data.tab) === app.map._docLayer._selectedPart) {
 				// Revert the changes we did on "onMouseEnter" event.
-				this.size = this.calcCellSize();
+				this.size = this.calcOptimumSizeForCalc();
 				if (point) {
 					this.hide();
 				}
@@ -1633,8 +1640,10 @@ export class Comment extends CanvasSectionObject {
 	public setCollapsed(): void {
 		this.isCollapsed = true;
 
-		if (this.sectionProperties.commentListSection.sectionProperties.show != false && !this.isEdit())
+		if (this.sectionProperties.commentListSection.sectionProperties.show != false && !this.isEdit()) {
 			this.show();
+			this.sectionProperties.commentListSection.removeCommentAttention(this);
+		}
 
 		if (this.isRootComment() || app.map._docLayer._docType === 'presentation' || app.map._docLayer._docType === 'drawing') {
 			this.sectionProperties.container.style.display = '';
@@ -1677,7 +1686,10 @@ export class Comment extends CanvasSectionObject {
 		|| this.sectionProperties.data.resolved === 'false'
 		|| this.sectionProperties.commentListSection.sectionProperties.showResolved) {
 			this.sectionProperties.container.style.display = '';
-			this.sectionProperties.container.style.visibility = '';
+			// For presentations, only expand if the comment is on the active slide.
+			if ((app.map.getDocType() !== 'presentation' && app.map.getDocType() !== 'drawing') || this.isInsideActivePart()) {
+				this.sectionProperties.container.style.visibility = '';
+			}
 		}
 		if (app.map._docLayer._docType === 'text')
 			this.sectionProperties.collapsedInfoNode.style.display = 'none';
@@ -1732,14 +1744,41 @@ export class Comment extends CanvasSectionObject {
 
 	public autoCompleteMention(username: string, profileLink: string, replacement: string): void {
 		const selection = window.getSelection();
-		if (!selection.rangeCount) return;
+		if (!selection)
+			return;
 
-		const range = selection.getRangeAt(0);
+		const editorElement = this.getActiveEditorElement();
+		let range: Range | null = null;
+		if (selection.rangeCount) {
+			const candidateRange = selection.getRangeAt(0);
+			if (
+				!editorElement ||
+				editorElement.contains(candidateRange.startContainer)
+			)
+				range = candidateRange;
+		}
+		const container = range ? range.startContainer : null;
+		let textNode: Text | null = null;
+		let cursorPosition = range ? range.endOffset : 0;
 
-		const cursorPosition = range.endOffset;
-		const container = range.startContainer;
+		if (container && container.nodeType === Node.TEXT_NODE) {
+			textNode = container as Text;
+		} else if (!range) {
+			if (!editorElement) return;
+			const walker = document.createTreeWalker(
+				editorElement,
+				NodeFilter.SHOW_TEXT,
+				null,
+			);
+			textNode = walker.nextNode() as Text | null;
+			if (!textNode) {
+				textNode = document.createTextNode('');
+				editorElement.appendChild(textNode);
+			}
+			cursorPosition = textNode.textContent?.length ?? 0;
+		}
 
-		const containerText = container.textContent || '';
+		const containerText = textNode?.textContent || container?.textContent || editorElement?.textContent || '';
 		const mentionStart = containerText.lastIndexOf(replacement, cursorPosition);
 
 		if (mentionStart !== -1) {
@@ -1752,8 +1791,12 @@ export class Comment extends CanvasSectionObject {
 			hyperlink.href = profileLink;
 			hyperlink.textContent = `@${username}`;
 
-			container.textContent = beforeMention;
-			container.parentNode?.insertBefore(hyperlink, container.nextSibling);
+			if (!textNode || !textNode.parentNode) {
+				return;
+			}
+
+			textNode.textContent = beforeMention;
+			textNode.parentNode?.insertBefore(hyperlink, textNode.nextSibling);
 
 			const afterTextNode = document.createTextNode(afterMention);
 			const extraSpaceNode = document.createTextNode('\u00A0');
@@ -1767,6 +1810,33 @@ export class Comment extends CanvasSectionObject {
 			selection.removeAllRanges();
 			selection.addRange(newRange);
 		}
+	}
+
+	private getActiveEditorElement(): HTMLElement | null {
+		if ((<any>window).mode.isMobile()) {
+			const commentSection = app.sectionContainer.getSectionWithName(
+				app.CSections.CommentList.name,
+			);
+			const isMobileCommentActive = commentSection?.isMobileCommentActive();
+			if (!isMobileCommentActive) return null;
+			const mobileCommentModalId = commentSection?.getMobileCommentModalId();
+			return document.getElementById(mobileCommentModalId);
+		}
+		if (
+			this.sectionProperties.nodeModify &&
+			this.sectionProperties.nodeModify.style.display !== 'none'
+		)
+			return this.sectionProperties.nodeModifyText;
+		if (
+			this.sectionProperties.nodeReply &&
+			this.sectionProperties.nodeReply.style.display !== 'none'
+		)
+			return this.sectionProperties.nodeReplyText;
+		return (
+			this.sectionProperties.nodeModifyText ||
+			this.sectionProperties.nodeReplyText ||
+			null
+		);
 	}
 }
 

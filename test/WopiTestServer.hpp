@@ -9,19 +9,24 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * WOPI test server implementation for unit tests.
+ */
+
 #pragma once
 
-#include "Protocol.hpp"
-#include "HttpRequest.hpp"
-#include "helpers.hpp"
-#include "Log.hpp"
-#include "Unit.hpp"
-#include "Util.hpp"
-#include "UnitWSDClient.hpp"
-#include "StringVector.hpp"
-#include "lokassert.hpp"
+#include <common/JsonUtil.hpp>
+#include <common/Log.hpp>
+#include <common/Protocol.hpp>
+#include <common/StringVector.hpp>
+#include <common/Unit.hpp>
+#include <common/Util.hpp>
+#include <net/HttpRequest.hpp>
 
-#include <JsonUtil.hpp>
+#include <test/UnitWSDClient.hpp>
+#include <test/helpers.hpp>
+#include <test/lokassert.hpp>
+
 #include <Poco/URI.h>
 #include <Poco/Util/LayeredConfiguration.h>
 
@@ -547,20 +552,15 @@ protected:
     {
         Poco::URI uriReq(Uri::decode(request.getURI()));
 
-        {
-            std::ostringstream oss;
-            oss << "FakeWOPIHost: " << request.getMethod() << " request URI [" << uriReq.toString()
-                << "]:\n";
-            Util::joinPair(oss, request, " / ");
+        TST_LOG("FakeWOPIHost: " << request.getMethod() << " request URI [" << uriReq.toString()
+                                 << "]: " <<
+                [&](auto& log)
+                {
+                    Util::joinPair(log, request, " / ");
+                } << (UnitBase::get().isFinished() ? " - Ignoring as test has finished" : ""));
 
-            if (UnitBase::get().isFinished())
-                oss << "\nIgnoring as test has finished";
-
-            TST_LOG(oss.str());
-
-            if (UnitBase::get().isFinished())
-                return false;
-        }
+        if (UnitBase::get().isFinished())
+            return false;
 
         assertTargetTest(uriReq);
 

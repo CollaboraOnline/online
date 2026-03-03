@@ -9,7 +9,15 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * Data model for admin console views and document tracking.
+ * Classes: View, DocCleanupSettings, DocProcSettings, Document, Subscriber, AdminModel
+ */
+
 #pragma once
+
+#include <common/Log.hpp>
+#include <net/WebSocketHandler.hpp>
 
 #include <ctime>
 #include <deque>
@@ -18,10 +26,8 @@
 #include <set>
 #include <string>
 #include <utility>
-#include <Poco/URI.h>
 
-#include <common/Log.hpp>
-#include "net/WebSocketHandler.hpp"
+#include <Poco/URI.h>
 
 struct DocumentAggregateStats;
 
@@ -151,11 +157,11 @@ public:
 };
 
 /// A document in Admin controller.
-class Document final
+class AdminDocument final
 {
 public:
-    Document(const std::string& docKey, pid_t pid,
-             const std::string& filename, const Poco::URI& wopiSrc)
+    AdminDocument(const std::string& docKey, pid_t pid, const std::string& filename,
+                  const Poco::URI& wopiSrc)
         : _wopiSrc(wopiSrc.toString())
         , _hostName(wopiSrc.getHost())
         , _docKey(docKey)
@@ -239,7 +245,7 @@ public:
     std::chrono::milliseconds getWopiDownloadDuration() const { return _wopiDownloadDuration; }
     void setWopiUploadDuration(const std::chrono::milliseconds wopiUploadDuration) { _wopiUploadDuration = wopiUploadDuration; }
     std::chrono::milliseconds getWopiUploadDuration() const { return _wopiUploadDuration; }
-    void setProcSMapsFp(std::weak_ptr<FILE> procSMaps) { _procSMaps = procSMaps; }
+    void setProcSMapsFp(std::weak_ptr<FILE> procSMaps) { _procSMaps = std::move(procSMaps); }
     bool hasMemDirtyChanged() const { return _hasMemDirtyChanged; }
     void setMemDirtyChanged(bool changeStatus) { _hasMemDirtyChanged = changeStatus; }
     time_t getBadBehaviorDetectionTime() const { return _badBehaviorDetectionTime; }
@@ -439,7 +445,7 @@ public:
     void sendShutdownReceivedMsg();
 
 private:
-    void doRemove(std::map<std::string, Document>::iterator &docIt);
+    void doRemove(std::map<std::string, AdminDocument>::iterator &docIt);
 
     std::string getMemStats() const;
 
@@ -461,7 +467,7 @@ private:
     DocProcSettings _defDocProcSettings;
 
     std::map<int, Subscriber> _subscribers;
-    std::map<std::string, Document> _documents;
+    std::map<std::string, AdminDocument> _documents;
 
     /// The serialized histories of all expired documents.
     std::vector<std::string> _expiredDocumentsHistories;

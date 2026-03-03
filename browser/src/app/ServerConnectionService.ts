@@ -103,6 +103,13 @@ class ServerConnectionService {
 
 		// initialize notebookbar in core
 		app.map.uiManager.initializeLateComponents();
+		JSDialog.RefreshScrollables();
+	}
+
+	/// only called the first time the sidebar is shown
+	public onShowSidebar() {
+		app.console.debug('ServerConnectionService: onShowSidebar');
+		app.map._docLayer.recalculateZoomOnResize();
 	}
 
 	public onNotebookbarInCoreInit() {

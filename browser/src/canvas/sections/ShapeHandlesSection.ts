@@ -57,14 +57,14 @@ class HelperLineStyles {
 }
 
 class ShapeHandlesSection extends CanvasSectionObject {
-	processingOrder: number = app.CSections.DefaultForDocumentObjects.processingOrder;
-	drawingOrder: number = app.CSections.DefaultForDocumentObjects.drawingOrder;
-	zIndex: number = app.CSections.DefaultForDocumentObjects.zIndex;
+	processingOrder: number = app.CSections.ShapeHandlesSection.processingOrder;
+	drawingOrder: number = app.CSections.ShapeHandlesSection.drawingOrder;
+	zIndex: number = app.CSections.ShapeHandlesSection.zIndex;
 	documentObject: boolean = true;
 	showSection: boolean = false;
 
 	constructor (info: any) {
-        super("shapeHandlesSection");
+		super(app.CSections.ShapeHandlesSection.name);
 
 		this.sectionProperties.info = null;
 		this.sectionProperties.handles = [];
@@ -214,34 +214,33 @@ class ShapeHandlesSection extends CanvasSectionObject {
 
 		const center = this.getShapeCenter();
 
-		const radians = Math.atan2((center[1] - topMiddle.y), (topMiddle.x - center[0]));
+		const radians = Math.atan2((center.y - topMiddle.y), (topMiddle.x - center.x));
 		return radians - Math.PI * 0.5;
 	}
 
-	getShapeCenter(twips = true) {
+	private getShapeCenter() {
 		let topLeft = this.sectionProperties.info.handles.kinds.rectangle['1'][0];
 		topLeft = new cool.SimplePoint(parseInt(topLeft.point.x), parseInt(topLeft.point.y));
 
 		let bottomRight = this.sectionProperties.info.handles.kinds.rectangle['8'][0];
 		bottomRight = new cool.SimplePoint(parseInt(bottomRight.point.x), parseInt(bottomRight.point.y));
 
-		if (twips)
-			return [Math.round((topLeft.x + bottomRight.x) / 2), Math.round((topLeft.y + bottomRight.y) / 2)]; // number array in twips.
-		else
-			return [Math.round((topLeft.pX + bottomRight.pX) / 2), Math.round((topLeft.pY + bottomRight.pY) / 2)]; // number array in core pixels.
+		const center = new cool.SimplePoint((topLeft.x + bottomRight.x) * 0.5, (topLeft.y + bottomRight.y) * 0.5);
+
+		return center;
 	}
 
 	/*
 		Selection rectangle is different from the object's inner rectangle.
 		Handlers are positioned based on object's inner rectangle (~borders). So we need to get the object's inner rectangle and its rotation angle.
 	*/
-	getShapeRectangleProperties() {
+	private getShapeRectangleProperties() {
 		if (!this.sectionProperties.info.handles?.kinds?.rectangle)
 			return null;
 
 		return {
 			angleRadian: this.getShapeAngleRadians(),
-			center: this.getShapeCenter(false),
+			center: this.getShapeCenter(),
 			height: this.getShapeHeight(false),
 			width: this.getShapeWidth(false)
 		};
@@ -373,6 +372,33 @@ class ShapeHandlesSection extends CanvasSectionObject {
 		}
 	}
 
+	private getDiagram(halfWidth: number, halfHeight: number) {
+		if (this.isDiagram() && this.sectionProperties.info?.handles?.kinds?.rectangle) {
+			// get a scaled oversize measurement in X and Y
+			const scaleFactor = 3;
+			halfWidth *= scaleFactor;
+			halfHeight *= scaleFactor;
+
+			// get object size as base for calculations
+			const topLeft = this.sectionProperties.info.handles.kinds.rectangle['1'][0];
+
+			// create a shape with overhang of halfWidth/Height on all sides,
+			const width : number = this.getShapeWidth(true) + 2 * halfWidth;
+			const height : number = this.getShapeHeight(true) + 2 * halfHeight;
+			const info = {
+				kind: 'DiagramHandle',
+				size: new cool.SimplePoint(width, height),
+				halfWidth: halfWidth,
+				halfHeight: halfHeight
+			};
+			this.sectionProperties.handles.push({
+				info: info,
+				point: new cool.SimplePoint(
+					topLeft.point.x - info.halfWidth,
+					topLeft.point.y - info.halfHeight) });
+		}
+	}
+
 	// Get the handle positions and other information from the info that core side sent us.
 	private getHandles() {
 		this.sectionProperties.handles = [];
@@ -380,6 +406,7 @@ class ShapeHandlesSection extends CanvasSectionObject {
 		const halfWidth = app.pixelsToTwips * (this.sectionProperties.handleWidth * 0.5);
 		const halfHeight = app.pixelsToTwips * (this.sectionProperties.handleHeight * 0.5);
 
+		this.getDiagram(halfWidth, halfHeight);
 		this.getScalingHandles(halfWidth, halfHeight);
 		this.getAnchorHandle(halfWidth, halfHeight);
 		this.getRotationHandle();
@@ -394,11 +421,21 @@ class ShapeHandlesSection extends CanvasSectionObject {
 
 		if (GraphicSelection.hasActiveSelection())
 			this.size = [GraphicSelection.rectangle.pWidth, GraphicSelection.rectangle.pHeight];
+
+		if (this.sectionProperties.svg)
+			this.adjustSVGProperties();
 	}
 
 	isSVGVisible() {
 		if (this.sectionProperties.svg)
 			return this.sectionProperties.svg.style.display === '';
+		else
+			return false;
+	}
+
+	isDiagram() {
+		if (GraphicSelection?.extraInfo?.isDiagram === true)
+			return true;
 		else
 			return false;
 	}
@@ -450,7 +487,7 @@ class ShapeHandlesSection extends CanvasSectionObject {
 		document.getElementById('canvas-container').appendChild(this.sectionProperties.svg);
 		this.sectionProperties.svg.style.zIndex = 11; // Update z-index or video buttons are unreachable.
 
-		if (!this.sectionProperties.svg.innerHTML.includes('foreignobject')) {
+		if (!this.sectionProperties.svg.innerHTML.includes('foreignObject')) {
 			console.error('Failed to parse svg for embedded video');
 			return;
 		}
@@ -505,7 +542,7 @@ class ShapeHandlesSection extends CanvasSectionObject {
 		this.sectionProperties.svg.style.pointerEvents = 'none';
 		document.getElementById('canvas-container').appendChild(this.sectionProperties.svg);
 
-		this.sectionProperties.svg.innerHTML = data;
+		this.sectionProperties.svg.innerHTML = app.LOUtil.sanitize(data, 'svg');
 		this.sectionProperties.svg.style.position = 'absolute';
 		this.sectionProperties.svg.children[0].style.width = this.sectionProperties.svg.children[0].style.height = 'auto';
 		this.sectionProperties.svg.children[0].style.transformOrigin = 'center';
@@ -598,6 +635,39 @@ class ShapeHandlesSection extends CanvasSectionObject {
 		}
 	}
 
+	checkDiagramSubSection(handle: any) {
+		let newSubSection = app.sectionContainer.getSectionWithName(this.sectionProperties.subSectionPrefix + 'diagram');
+
+		if (!newSubSection) {
+			newSubSection = new app.definitions.shapeHandleDiagramSubSection(
+				this,
+				this.sectionProperties.subSectionPrefix + 'diagram',
+				[handle.info.size.pX, handle.info.size.pY],
+				new cool.SimplePoint(
+					handle.point.x,
+					handle.point.y),
+				handle.info
+			);
+			return newSubSection;
+		}
+		else {
+			newSubSection.sectionProperties.ownInfo = handle.info;
+			newSubSection.setPosition(
+				handle.point.pX,
+				handle.point.pY);
+			newSubSection.setSize(
+				handle.info.size.pX,
+				handle.info.size.pY);
+
+			// we also need to update the edit button by resetting it's
+			// last remembered zoom value
+			if (GraphicSelection.diagramButton)
+				GraphicSelection.diagramButton.forceNextReposition();
+
+			return null;
+		}
+	}
+
 	checkCustomSubSection(handle: any): any {
 		let newSubSection = app.sectionContainer.getSectionWithName(this.sectionProperties.subSectionPrefix + handle.info.id);
 
@@ -667,6 +737,8 @@ class ShapeHandlesSection extends CanvasSectionObject {
 				newSubSection = this.checkScalingSubSection(this.sectionProperties.handles[i]);
 			else if (this.sectionProperties.handles[i].info.kind === 'ShapeRotationHandle')
 				newSubSection = this.checkRotationSubSection(this.sectionProperties.handles[i]);
+			else if (this.sectionProperties.handles[i].info.kind === 'DiagramHandle')
+				newSubSection = this.checkDiagramSubSection(this.sectionProperties.handles[i]);
 			else if (this.sectionProperties.handles[i].info.kind === '22')
 				newSubSection = this.checkCustomSubSection(this.sectionProperties.handles[i]);
 			else if (this.sectionProperties.handles[i].info.kind === '9')
@@ -731,7 +803,7 @@ class ShapeHandlesSection extends CanvasSectionObject {
 	}
 
 	public onMouseDown(point: cool.SimplePoint, e: MouseEvent): void {
-		this.sectionProperties.viewedRectangleOnMouseDown = app.activeDocument.activeView.viewedRectangle.clone();
+		this.sectionProperties.viewedRectangleOnMouseDown = app.activeDocument.activeLayout.viewedRectangle.clone();
 		this.sectionProperties.initialPosition = this.position.slice();
 		this.sectionProperties.positionOnMouseDown = point.clone();
 		this.sectionProperties.positionOnMouseDown.pX += this.position[0];
@@ -748,8 +820,8 @@ class ShapeHandlesSection extends CanvasSectionObject {
 			app.map.fire('scrollvelocity', { vx: 0, vy: 0 });
 
 			if (app.map._docLayer._docType !== 'spreadsheet') {
-				point.x += app.activeDocument.activeView.viewedRectangle.x1 - this.sectionProperties.viewedRectangleOnMouseDown.x1;
-				point.y += app.activeDocument.activeView.viewedRectangle.y1 - this.sectionProperties.viewedRectangleOnMouseDown.y1;
+				point.x += app.activeDocument.activeLayout.viewedRectangle.x1 - this.sectionProperties.viewedRectangleOnMouseDown.x1;
+				point.y += app.activeDocument.activeLayout.viewedRectangle.y1 - this.sectionProperties.viewedRectangleOnMouseDown.y1;
 				this.sendTransformCommand(point);
 			}
 			else {
@@ -927,6 +999,54 @@ class ShapeHandlesSection extends CanvasSectionObject {
 		this.containerObject.requestReDraw();
 	}
 
+	private constrainDragToSheetArea(dragDistance: number[]) {
+		if (app.map.getDocType() === 'spreadsheet') {
+			// Cap the drag distance to the document boundaries
+			const calcGridSection = app.sectionContainer.getSectionWithName(
+				app.CSections.CalcGrid.name,
+			);
+			const rowHeaderSection = app.sectionContainer.getSectionWithName(
+				app.CSections.RowHeader.name,
+			) as cool.RowHeader;
+			const columnHeaderSection = app.sectionContainer.getSectionWithName(
+				app.CSections.ColumnHeader.name,
+			) as cool.ColumnHeader;
+
+			if (calcGridSection && rowHeaderSection && columnHeaderSection) {
+				dragDistance[0] = Math.max(
+					calcGridSection.myTopLeft[0] -
+						this.myTopLeft[0] -
+						columnHeaderSection.getHeaderInfo().getDocVisStart(),
+					dragDistance[0],
+				);
+				dragDistance[1] = Math.max(
+					calcGridSection.myTopLeft[1] -
+						this.myTopLeft[1] -
+						rowHeaderSection.getHeaderInfo().getDocVisStart(),
+					dragDistance[1],
+				);
+				// Clip svg at the header edges
+				if (this.sectionProperties.svg) {
+					const cropLeft =
+						Math.max(
+							calcGridSection.myTopLeft[0] -
+								this.myTopLeft[0] -
+								dragDistance[0],
+							0,
+						) / app.dpiScale;
+					const cropTop =
+						Math.max(
+							calcGridSection.myTopLeft[1] -
+								this.myTopLeft[1] -
+								dragDistance[1],
+							0,
+						) / app.dpiScale;
+					this.sectionProperties.svg.style.clipPath = `inset(${cropTop}px 0px 0px ${cropLeft}px)`;
+				}
+			}
+		}
+	}
+
 	onMouseMove(position: cool.SimplePoint, dragDistance: number[]) {
 		let canDrag = !app.file.textCursor.visible;
 
@@ -938,10 +1058,12 @@ class ShapeHandlesSection extends CanvasSectionObject {
 		}
 
 		if (this.containerObject.isDraggingSomething() && canDrag) {
-			if (!app.activeDocument.activeView.viewedRectangle.equals(this.sectionProperties.viewedRectangleOnMouseDown.toArray())) {
+			this.constrainDragToSheetArea(dragDistance);
+
+			if (!app.activeDocument.activeLayout.viewedRectangle.equals(this.sectionProperties.viewedRectangleOnMouseDown.toArray())) {
 				const diff = new cool.SimplePoint(
-					app.activeDocument.activeView.viewedRectangle.x1 - this.sectionProperties.viewedRectangleOnMouseDown.x1,
-					app.activeDocument.activeView.viewedRectangle.y1 - this.sectionProperties.viewedRectangleOnMouseDown.y1
+					app.activeDocument.activeLayout.viewedRectangle.x1 - this.sectionProperties.viewedRectangleOnMouseDown.x1,
+					app.activeDocument.activeLayout.viewedRectangle.y1 - this.sectionProperties.viewedRectangleOnMouseDown.y1
 				);
 
 				this.setPosition(this.sectionProperties.initialPosition[0] + diff.pX, this.sectionProperties.initialPosition[1] + diff.pY);
@@ -1003,20 +1125,41 @@ class ShapeHandlesSection extends CanvasSectionObject {
 				}
 			}
 
-			const left = GraphicSelection.rectangle.pX1;
-			const top = GraphicSelection.rectangle.pY1;
-
-			this.sectionProperties.svg.style.left = Math.round((left - app.activeDocument.activeView.viewedRectangle.pX1 + this.containerObject.getDocumentAnchor()[0]) / app.dpiScale) + 'px';
-			this.sectionProperties.svg.style.top = Math.round((top - app.activeDocument.activeView.viewedRectangle.pY1 + this.containerObject.getDocumentAnchor()[1]) / app.dpiScale) + 'px';
-			this.sectionProperties.svgPosition = [left, top];
+			// New view layouts are not tested for Calc yet. Transition to new structure is not complete.
+			this.updateSVGPosition();
 		}
 		this.hideSVG();
 	}
 
+	// Shared positioning logic used by both adjustSVGProperties (initial
+	// placement) and onNewDocumentTopLeft (viewport change update).
+	private updateSVGPosition(): void {
+		if (!this.sectionProperties.svg || !GraphicSelection.hasActiveSelection()) return;
+
+		if (app.map._docLayer.isCalc()) {
+			const left = GraphicSelection.rectangle.pX1;
+			const top = GraphicSelection.rectangle.pY1;
+
+			this.sectionProperties.svg.style.left = Math.round((left - app.activeDocument.activeLayout.viewedRectangle.pX1 + this.containerObject.getDocumentAnchor()[0]) / app.dpiScale) + 'px';
+			this.sectionProperties.svg.style.top = Math.round((top - app.activeDocument.activeLayout.viewedRectangle.pY1 + this.containerObject.getDocumentAnchor()[1]) / app.dpiScale) + 'px';
+			this.sectionProperties.svgPosition = [left, top];
+		}
+		else {
+			const left = GraphicSelection.rectangle.v1X;
+			const top = GraphicSelection.rectangle.v1Y;
+
+			const leftAddition = app.activeDocument.activeLayout.type === 'ViewLayoutBase' ? 0 : this.containerObject.getDocumentAnchor()[0];
+			const topAddition = app.activeDocument.activeLayout.type === 'ViewLayoutBase' ? 0 : this.containerObject.getDocumentAnchor()[1];
+
+			this.sectionProperties.svg.style.left = Math.round((left + leftAddition) / app.dpiScale) + 'px';
+			this.sectionProperties.svg.style.top = Math.round((top + topAddition) / app.dpiScale) + 'px';
+			this.sectionProperties.svgPosition = [left, top];
+		}
+	}
+
 	onNewDocumentTopLeft(): void {
 		if (this.sectionProperties.svgPosition) {
-			this.sectionProperties.svg.style.left = (this.sectionProperties.svgPosition[0] - (app.activeDocument.activeView.viewedRectangle.pX1 + this.containerObject.getDocumentAnchor()[0]) / app.dpiScale) + 'px';
-			this.sectionProperties.svg.style.top = (this.sectionProperties.svgPosition[1] - (app.activeDocument.activeView.viewedRectangle.pY1 + this.containerObject.getDocumentAnchor()[1]) / app.dpiScale) + 'px';
+			this.updateSVGPosition();
 		}
 	}
 
@@ -1042,10 +1185,10 @@ class ShapeHandlesSection extends CanvasSectionObject {
 		this.context.beginPath();
 
 		if (this.sectionProperties.closestX !== null)
-			this.drawXAxis(this.containerObject.getDocumentAnchor()[0] + this.sectionProperties.closestX - app.activeDocument.activeView.viewedRectangle.pX1);
+			this.drawXAxis(this.containerObject.getDocumentAnchor()[0] + this.sectionProperties.closestX - app.activeDocument.activeLayout.viewedRectangle.pX1);
 
 		if (this.sectionProperties.closestY !== null)
-			this.drawYAxis(this.containerObject.getDocumentAnchor()[1] + this.sectionProperties.closestY - app.activeDocument.activeView.viewedRectangle.pY1);
+			this.drawYAxis(this.containerObject.getDocumentAnchor()[1] + this.sectionProperties.closestY - app.activeDocument.activeLayout.viewedRectangle.pY1);
 
 		this.context.closePath();
 
@@ -1063,7 +1206,7 @@ class ShapeHandlesSection extends CanvasSectionObject {
 			this.context.strokeStyle = HelperLineStyles.gridSolidStyle;
 			this.context.setLineDash([]);
 
-			const x = this.containerObject.getDocumentAnchor()[0] + this.sectionProperties.closestX - app.activeDocument.activeView.viewedRectangle.pX1;
+			const x = this.containerObject.getDocumentAnchor()[0] + this.sectionProperties.closestX - app.activeDocument.activeLayout.viewedRectangle.pX1;
 
 			this.drawXAxis(x);
 
@@ -1078,7 +1221,7 @@ class ShapeHandlesSection extends CanvasSectionObject {
 			this.context.strokeStyle = HelperLineStyles.gridSolidStyle;
 			this.context.setLineDash([]);
 
-			const y = this.containerObject.getDocumentAnchor()[1] + this.sectionProperties.closestY - app.activeDocument.activeView.viewedRectangle.pY1;
+			const y = this.containerObject.getDocumentAnchor()[1] + this.sectionProperties.closestY - app.activeDocument.activeLayout.viewedRectangle.pY1;
 
 			this.drawYAxis(y);
 
@@ -1147,8 +1290,9 @@ class ShapeHandlesSection extends CanvasSectionObject {
 	onClick(point: cool.SimplePoint, e: MouseEvent): void {
 		point.pX += this.position[0];
 		point.pY += this.position[1];
-		app.map._docLayer._postMouseEvent('buttondown', point.x, point.y, 1, 1, 0);
-		app.map._docLayer._postMouseEvent('buttonup', point.x, point.y, 1, 1, 0);
+		var modifier = MouseControl.readModifier(e);
+		app.map._docLayer._postMouseEvent('buttondown', point.x, point.y, 1, 1, modifier);
+		app.map._docLayer._postMouseEvent('buttonup', point.x, point.y, 1, 1, modifier);
 
 		// There is no native "double-click" event for touch devices. But we need to support double-tap.
 		if ((e as any).pointerType === 'touch') {

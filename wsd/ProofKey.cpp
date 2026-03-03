@@ -9,26 +9,31 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * Implementation of WOPI proof key verification.
+ * Classes: ProofKey
+ */
+
 #include <config.h>
 
 #include "ProofKey.hpp"
+
+#include <common/Log.hpp>
+#include <common/Util.hpp>
+#include <wsd/Exceptions.hpp>
+
+#include <Poco/Base64Decoder.h>
+#include <Poco/Crypto/RSADigestEngine.h>
+#include <Poco/Crypto/RSAKey.h>
+#include <Poco/LineEndingConverter.h>
 
 #include <algorithm>
 #include <cassert>
 #include <cstdlib>
 #include <vector>
 
-#include <Poco/Base64Decoder.h>
-#include <Poco/Base64Encoder.h>
-#include <Poco/Crypto/RSADigestEngine.h>
-#include <Poco/Crypto/RSAKey.h>
-#include <Poco/LineEndingConverter.h>
-
-#include "Exceptions.hpp"
-#include <Log.hpp>
-#include <Util.hpp>
-
-namespace{
+namespace
+{
 
 std::vector<unsigned char> getBytesLE(const unsigned char* bytesInHostOrder, const size_t n)
 {
@@ -72,18 +77,6 @@ std::vector<unsigned char> ToNetworkOrderBytes(const T& x)
 
 } // namespace
 
-std::string Proof::BytesToBase64(const std::vector<unsigned char>& bytes)
-{
-    std::ostringstream oss;
-    // The signature generated contains CRLF line endings.
-    // Use a line ending converter to remove these CRLF
-    Poco::OutputLineEndingConverter lineEndingConv(oss, "");
-    Poco::Base64Encoder encoder(lineEndingConv);
-    encoder << std::string(bytes.begin(), bytes.end());
-    encoder.close();
-    return oss.str();
-}
-
 std::vector<unsigned char> Proof::Base64ToBytes(const std::string &str)
 {
     std::istringstream oss(str);
@@ -99,31 +92,31 @@ std::vector<unsigned char> Proof::Base64ToBytes(const std::string &str)
 
 void Proof::initialize()
 {
-    if (m_pKey)
+    if ( _pKey)
     {
-        const auto m = m_pKey->modulus();
-        const auto e = m_pKey->encryptionExponent();
+        const auto m = _pKey->modulus();
+        const auto e = _pKey->encryptionExponent();
         const auto capiBlob = RSA2CapiBlob(m, e);
 
         const auto sv = BytesToBase64(capiBlob);
         const auto sm = BytesToBase64(m);
         const auto se = BytesToBase64(e);
 
-        m_aAttribs.emplace_back("value", sv);
-        m_aAttribs.emplace_back("modulus", sm);
-        m_aAttribs.emplace_back("exponent", se);
+        _aAttribs.emplace_back("value", sv);
+        _aAttribs.emplace_back("modulus", sm);
+        _aAttribs.emplace_back("exponent", se);
 
         // TODO: implement proper rotation; for now, just duplicate * to old*
 
-        m_aAttribs.emplace_back("oldvalue", sv);
-        m_aAttribs.emplace_back("oldmodulus", sm);
-        m_aAttribs.emplace_back("oldexponent", se);
+        _aAttribs.emplace_back("oldvalue", sv);
+        _aAttribs.emplace_back("oldmodulus", sm);
+        _aAttribs.emplace_back("oldexponent", se);
     }
 
 }
 
 Proof::Proof(Type)
-    : m_pKey(new Poco::Crypto::RSAKey(
+    : _pKey(new Poco::Crypto::RSAKey(
                  Poco::Crypto::RSAKey::KeyLength::KL_2048,
                  Poco::Crypto::RSAKey::Exponent::EXP_LARGE))
 {
@@ -131,7 +124,7 @@ Proof::Proof(Type)
 }
 
 Proof::Proof()
-    : m_pKey([]() -> Poco::Crypto::RSAKey* {
+    : _pKey([]() -> Poco::Crypto::RSAKey* {
         const auto keyPath = ProofKeyPath();
         try
         {
@@ -245,9 +238,9 @@ std::vector<unsigned char> Proof::GetProof(const std::string& access_token, cons
 
 std::string Proof::SignProof(const std::vector<unsigned char>& proof) const
 {
-    assert(m_pKey);
+    assert( _pKey);
     // One per DocumentBroker that uses this via WopiStorage
-    static thread_local Poco::Crypto::RSADigestEngine digestEngine(*m_pKey, "SHA256");
+    static thread_local Poco::Crypto::RSADigestEngine digestEngine(* _pKey, "SHA256");
     digestEngine.reset();
     digestEngine.update(proof.data(), proof.size());
     return BytesToBase64(digestEngine.signature());
@@ -256,14 +249,14 @@ std::string Proof::SignProof(const std::vector<unsigned char>& proof) const
 VecOfStringPairs Proof::GetProofHeaders(const std::string& access_token, const std::string& uri) const
 {
     VecOfStringPairs vec;
-    if (m_pKey)
+    if ( _pKey)
     {
         int64_t ticks = DotNetTicks(std::chrono::system_clock::now());
         vec.emplace_back("X-WOPI-TimeStamp", std::to_string(ticks));
-        const auto sProof = SignProof(GetProof(access_token, uri, ticks));
-        vec.emplace_back("X-WOPI-Proof", sProof);
+        const auto proof = SignProof(GetProof(access_token, uri, ticks));
+        vec.emplace_back("X-WOPI-Proof", proof);
         // TODO: implement proper rotation; for now, just duplicate X-WOPI-Proof to X-WOPI-ProofOld
-        vec.emplace_back("X-WOPI-ProofOld", sProof);
+        vec.emplace_back("X-WOPI-ProofOld", proof);
     }
     return vec;
 }

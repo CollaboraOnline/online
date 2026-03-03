@@ -39,17 +39,20 @@ class NotebookbarBase extends JSDialogComponent {
 				this.builder.onCommandStateChanged,
 				this.builder,
 			);
+			this.map.on('updatetoolbarcommandvalues', this.onCommandValues, this);
 		}
 	}
 
 	// when we hide the UI
 	public onRemove() {
-		if (this.builder)
+		if (this.builder) {
 			this.map.off(
 				'commandstatechanged',
 				this.builder.onCommandStateChanged,
 				this.builder,
 			);
+			this.map.off('updatetoolbarcommandvalues', this.onCommandValues, this);
+		}
 
 		if (this.impl) this.impl.onRemove();
 	}
@@ -88,6 +91,58 @@ class NotebookbarBase extends JSDialogComponent {
 		return false;
 	}
 
+	private onCommandValues(e: any) {
+		if (e.commandName === '.uno:StyleApply') {
+			const commandValues = e.commandValues;
+			if (!commandValues) return;
+
+			let styles: any[] = [];
+			if (this.map.getDocType() === 'text') {
+				styles = commandValues.ParagraphStyles;
+			} else if (this.map.getDocType() === 'spreadsheet') {
+				styles = commandValues.CellStyles;
+			}
+
+			if (styles && styles.length > 0) {
+				this.updateStylesView(styles);
+			}
+		}
+	}
+
+	private updateStylesView(styles: any[]) {
+		const widgetData = this.model.getById('stylesview') as IconViewJSON;
+		if (!widgetData || !this.builder) return;
+
+		const entries: any[] = [];
+		styles.forEach((style: string, index: number) => {
+			let localeStyle: string;
+			if (style.startsWith('outline')) {
+				const parts = style.split('outline');
+				const outlineLevel = parts.length > 1 ? parts[1] : '';
+				localeStyle = _('Outline %OutlineLevel%').replace(
+					'%OutlineLevel%',
+					outlineLevel,
+				);
+			} else {
+				localeStyle = window.L.Styles.styleMappings[style];
+				localeStyle = localeStyle === undefined ? style : _(localeStyle);
+			}
+			entries.push({
+				text: localeStyle,
+				id: style,
+				row: index,
+				selected: false,
+				ondemand: true,
+				width: 96,
+				height: 72,
+			});
+		});
+
+		widgetData.entries = entries;
+		if (this.container) {
+			this.builder.updateWidget(this.container, widgetData);
+		}
+	}
 	protected onJSAction(e: any) {
 		if (super.onJSAction(e)) {
 			this.impl?.setInitialized(true);
@@ -116,8 +171,8 @@ class NotebookbarBase extends JSDialogComponent {
 		this.impl?.reloadShortcutsBar();
 	}
 
-	public showNotebookbarCommand(commandId: string, show: boolean) {
-		this.impl?.showNotebookbarCommand(commandId, show);
+	public showNotebookbarCommand(commandId: string, show: boolean): boolean {
+		return this.impl?.showNotebookbarCommand(commandId, show);
 	}
 
 	// tabs

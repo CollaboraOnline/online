@@ -85,8 +85,9 @@ window.L.CalcTileLayer = window.L.CanvasTileLayer.extend({
 			}
 		}.bind(this));
 
-		app.sectionContainer.addSection(new app.definitions.AutoFillMarkerSection());
+		app.sectionContainer.addSection(new app.definitions.CellFillMarkerSection());
 		app.sectionContainer.addSection(new SplitterLinesSection());
+		app.sectionContainer.addSection(new app.definitions.TableFillMarkerSection());
 
 		this.insertMode = false;
 		this._resetInternalState();
@@ -249,7 +250,7 @@ window.L.CalcTileLayer = window.L.CanvasTileLayer.extend({
 
 		this._docPixelSize = newSizePx.clone();
 		app.activeDocument.fileSize = new cool.SimplePoint(newDocWidth, newDocHeight);
-		app.activeDocument.activeView.viewSize = app.activeDocument.fileSize.clone();
+		app.activeDocument.activeLayout.viewSize = app.activeDocument.fileSize.clone();
 
 		this._map.setMaxBounds(new window.L.LatLngBounds(topLeft, bottomRight));
 
@@ -427,10 +428,11 @@ window.L.CalcTileLayer = window.L.CanvasTileLayer.extend({
 
 			var firstSelectedPart = (typeof this._selectedPart !== 'number');
 
-			if (statusJSON.readonly) this._map.setPermission('readonly');
+			if (statusJSON.readonly && !this._documentInfo)
+				this._map.setPermission('readonly');
 
 			app.activeDocument.fileSize = new cool.SimplePoint(statusJSON.width, statusJSON.height);
-			app.activeDocument.activeView.viewSize = app.activeDocument.fileSize.clone();
+			app.activeDocument.activeLayout.viewSize = app.activeDocument.fileSize.clone();
 
 			if (app.map._docLoaded)
 				this._syncTileContainerSize();
@@ -448,7 +450,9 @@ window.L.CalcTileLayer = window.L.CanvasTileLayer.extend({
 
 			this._lastColumn = statusJSON.lastcolumn;
 			this._lastRow = statusJSON.lastrow;
-			this._selectedMode = (statusJSON.mode !== undefined) ? statusJSON.mode : 0;
+
+			const mode = (statusJSON.mode !== undefined) ? statusJSON.mode : 0;
+			app.activeDocument.activeModes = [mode];
 
 			if (this.sheetGeometry && this._selectedPart != this.sheetGeometry.getPart()) {
 				// Core initiated sheet switch, need to get full sheetGeometry data for the selected sheet.
@@ -456,6 +460,7 @@ window.L.CalcTileLayer = window.L.CanvasTileLayer.extend({
 			}
 
 			this._viewId = statusJSON.viewid;
+			app.activeDocument.setActiveViewID(this._viewId);
 
 			console.assert(this._viewId >= 0, 'Incorrect viewId received: ' + this._viewId);
 
@@ -800,8 +805,17 @@ window.L.CalcTileLayer = window.L.CanvasTileLayer.extend({
 
 		this._replayPrintTwipsMsgs(differentSheet);
 
-		this.sheetGeometry.setViewArea(this._pixelsToTwips(this._map._getTopLeftPoint()),
-			this._pixelsToTwips(this._map.getSize()));
+		if (this.sheetGeometry.autoFilterChanged) {
+			this.sheetGeometry.autoFilterChanged = false;
+			let firstVisibleRow = this.sheetGeometry.getFirstNewVisibleRow();
+			app.activeDocument.activeLayout.scrollTo(
+				this._map._getTopLeftPoint().x,
+				this.sheetGeometry.getRowsGeometry().getElementData(firstVisibleRow).startpos);
+		} else {
+			this.sheetGeometry.setViewArea(
+				this._pixelsToTwips(this._map._getTopLeftPoint()),
+				this._pixelsToTwips(this._map.getSize()));
+		}
 
 		this._addRemoveGroupSections();
 
@@ -929,8 +943,42 @@ window.L.CalcTileLayer = window.L.CanvasTileLayer.extend({
 		else if (e.commandName === 'AutoFilterInfo') {
 			app.calc.autoFilterCell = { 'row': e.state.row, 'column': e.state.column };
 		}
+		else if (e.commandName === 'AutoFilterChange')
+		{
+			this.sheetGeometry.autoFilterChanged = true;
+		}
 		else if (e.commandName === 'PivotTableFilterInfo') {
 			app.calc.pivotTableFilterCell = { 'row': e.state.row, 'column': e.state.column };
+		}
+		else if (e.commandName === 'TableAutoFillInfo') {
+			this._onTableAutoFillStateChanged(e.state.rectangle);
+		}
+	},
+
+	_onTableAutoFillStateChanged: function (textMsg) {
+		var tablefillMarkerSection = app.sectionContainer.getSectionWithName(app.CSections.TableFillMarker.name);
+		if (textMsg.match('EMPTY')) {
+			if (tablefillMarkerSection)
+				tablefillMarkerSection.calculatePositionViaCellCursor(null);
+			this._tableAutoFillAreaPixels = null;
+		}
+		else
+		{
+			var strTwips = textMsg.match(/\d+/g);
+			if (strTwips != null && this._map.isEditMode()) {
+				var topLeftTwips = new cool.Point(parseInt(strTwips[0]), parseInt(strTwips[1]));
+				var offset = new cool.Point(parseInt(strTwips[2]), parseInt(strTwips[3]));
+
+				var topLeftPixels = this._twipsToCorePixels(topLeftTwips);
+				var offsetPixels = this._twipsToCorePixels(offset);
+				this._tableAutoFillAreaPixels = app.LOUtil.createRectangle(topLeftPixels.x, topLeftPixels.y, offsetPixels.x, offsetPixels.y);
+
+				if (tablefillMarkerSection)
+					tablefillMarkerSection.calculatePositionViaCellCursor([this._tableAutoFillAreaPixels.x1, this._tableAutoFillAreaPixels.y1]);
+			}
+			else {
+				this._tableAutoFillAreaPixels = null;
+			}
 		}
 	},
 
@@ -1056,19 +1104,12 @@ window.L.CalcTileLayer = window.L.CanvasTileLayer.extend({
 		// If this is a cellSelection message, user shouldn't be editing a cell. Below check is for ensuring that.
 		if ((this.insertMode === false || app.file.textCursor.visible === false) && app.calc.cellCursorVisible) {
 			// When insertMode is false, this is a cell selection message.
-			textMsg = textMsg.replace('textselection:', '');
-			if (textMsg.trim() !== 'EMPTY' && textMsg.trim() !== '') {
-				this._cellSelections = textMsg.split(';');
-				var that = this;
-				this._cellSelections = this._cellSelections.map(function(element) {
-					element = element.split(',');
-					var topLeftTwips = new cool.Point(parseInt(element[0]), parseInt(element[1]));
-					var offset = new cool.Point(parseInt(element[2]), parseInt(element[3]));
-					var bottomRightTwips = topLeftTwips.add(offset);
-					var boundsTwips = that._convertToTileTwipsSheetArea(new cool.Bounds(topLeftTwips, bottomRightTwips));
+			textMsg = textMsg.replace('textselection:', '').trim();
+			if (textMsg !== 'EMPTY' && textMsg !== '') {
+				this._cellSelections = this._getRawRectangles(textMsg);
 
-					element = app.LOUtil.createRectangle(boundsTwips.min.x * app.twipsToPixels, boundsTwips.min.y * app.twipsToPixels, boundsTwips.getSize().x * app.twipsToPixels, boundsTwips.getSize().y * app.twipsToPixels);
-					return element;
+				this._cellSelections = this._cellSelections.map(function(element) {
+					return new cool.SimpleRectangle(element[0], element[1], element[2], element[3]);
 				});
 			}
 			else {

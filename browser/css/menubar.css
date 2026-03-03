@@ -42,10 +42,20 @@
 .document-title {
 	white-space: nowrap;
 	display: flex;
-	align-items: flex-start;
+	align-items: baseline;
 	justify-content: center;
-	flex-direction: column;
+	flex-direction: row;
 	flex: 1 1 auto;
+	gap: 4px;
+}
+
+.document-title:focus-within > label[for='document-name-input'] {
+	clip: unset;
+	height: auto;
+	overflow: visible;
+	position: static;
+	width: auto;
+	color: var(--color-text-lighter);
 }
 
 .readonly .document-title {
@@ -67,7 +77,8 @@
 		transform: rotate(360deg);
 	}
 }
-#save {
+nav [id^='save'].unotoolbutton,
+#toolbar-up [id^='save'].unotoolbutton {
 	display: flex;
 	font-size: var(--default-font-size);
 	font-family: var(--cool-font);
@@ -78,34 +89,46 @@
 	justify-content: center;
 }
 
-#save.saving img {
+nav [id^='save'].saving img {
 	background: url('images/lc_saving.svg') no-repeat center;
 }
 
-nav.hasnotebookbar #save::after {
+#toolbar-up [id^='save'].saving img {
+	background: url('images/compact_saving.svg') no-repeat center;
+}
+
+nav.hasnotebookbar [id^='save'].unotoolbutton::after {
 	position: absolute;
 	bottom: 0px;
 }
 
-nav.hasnotebookbar #save.saving::after {
+nav.hasnotebookbar [id^='save'].saving::after {
 	content: var(--save-state);
 	font-size: var(--default-font-size);
 	font-family: var(--cool-font);
 	color: var(--color-main-text);
 }
 
-#save.saved img {
+nav [id^='save'].saved img {
 	background: url('images/lc_saved.svg') no-repeat center;
 	filter: grayscale(0);
 }
 
-nav.hasnotebookbar #save.saved::after {
+#toolbar-up [id^='save'].saved img {
+	background: url('images/compact_saved.svg') no-repeat center;
+	filter: grayscale(0);
+}
+
+nav.hasnotebookbar [id^='save'].saved::after {
 	content: var(--save-state);
 	color: #309048;
 }
 
-[data-theme='dark'] #save.saving img {
+[data-theme='dark'] nav [id^='save'].saving img {
 	background: url('images/dark/lc_saving.svg') no-repeat center;
+}
+[data-theme='dark'] #toolbar-up [id^='save'].saving img {
+	background: url('images/dark/compact_saving.svg') no-repeat center;
 }
 #document-titlebar {
 	display: inline-table; /*new*/
@@ -158,14 +181,20 @@ nav.hasnotebookbar #save.saved::after {
 	scrollbar-width: none;
 	-ms-scrollbar: none;
 }
-.main-nav.hasnotebookbar::-webkit-scrollbar {
-	height: 0;
-}
+
 .main-nav.hasnotebookbar:not(.readonly) {
 	background: var(--color-main-background);
 	padding: 0px;
 	overflow: scroll hidden;
 	padding-inline-start: 5px;
+}
+
+@media (max-width: 480px) {
+
+	.main-nav.hasnotebookbar {
+		scrollbar-width: unset;
+		-ms-scrollbar: unset;
+	}
 }
 
 /* Customizations to sm-simple theme to make it look like LO menu, lo-menu class */

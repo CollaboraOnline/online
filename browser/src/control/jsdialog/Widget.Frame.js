@@ -41,7 +41,7 @@ function _extractLabelText(data) {
 
 JSDialog.frame = function _frameHandler(parentContainer, data, builder) {
 	if (data.children.length > 1) {
-		buildFrame(parentContainer, data, builder, isFormControlGroup(data));
+		buildFrame(parentContainer, data, builder);
 	} else {
 		return builder._controlHandlers['container'](
 			parentContainer,
@@ -53,22 +53,25 @@ JSDialog.frame = function _frameHandler(parentContainer, data, builder) {
 	return false;
 };
 
-function isFormControlGroup(data) {
+function isGroupControl(data) {
 	if (!data.children || data.children.length < 2) return false;
 
-	// First child must be a fixedtext (label) to eligible as a form control group
-	if (data.children[0].type !== 'fixedtext') return false;
+	// Eligible as group if:
+	// First child is a fixedtext (label)
+	// OR first child is container whose children are all fixedtext
+	const firstChild = data.children[0];
+	if (
+		firstChild.type !== 'fixedtext' &&
+		(!firstChild.children ||
+			firstChild.children.some((item) => item.type !== 'fixedtext'))
+	) {
+		return false;
+	}
 
-	const formControlTypes = new Set([
-		'spinfield',
-		'edit',
-		'formattedfield',
-		'metricfield',
-		'combobox',
-		'radiobutton',
-		'checkbox',
-		'time',
-	]);
+	return true;
+}
+
+function shouldUseFieldsetLegend(data) {
 	let formControlCount = 0;
 	const minRequiredControls = 2;
 
@@ -83,7 +86,9 @@ function isFormControlGroup(data) {
 
 		let count = 0;
 		for (const child of node.children) {
-			if (formControlTypes.has(child.type)) {
+			if (JSDialog.GetFormControlTypesInLO().has(child.type)) {
+				count++;
+			} else if (JSDialog.TreeViewHasSearchField(child)) {
 				count++;
 			} else {
 				count += countFormControls(child);
@@ -103,12 +108,15 @@ function isFormControlGroup(data) {
 	return false;
 }
 
-function buildFrame(parentContainer, data, builder, isFormControlGroup) {
-	let container, frame, label;
+function buildFrame(parentContainer, data, builder) {
+	const groupControl = isGroupControl(data);
+	const fieldsetLegend = groupControl ? shouldUseFieldsetLegend(data) : false;
 
-	if (isFormControlGroup) {
+	let container, frame, label, groupLabelCandidateId;
+
+	if (groupControl) {
 		container = window.L.DomUtil.create(
-			'fieldset',
+			fieldsetLegend ? 'fieldset' : 'div',
 			'ui-frame-container ui-fieldset ' + builder.options.cssClass,
 			parentContainer,
 		);
@@ -116,11 +124,31 @@ function buildFrame(parentContainer, data, builder, isFormControlGroup) {
 
 		frame = container; // No inner frame for form control group
 
-		label = window.L.DomUtil.create(
-			'legend',
-			'ui-frame-label ui-legend ' + builder.options.cssClass,
-			frame,
-		);
+		const firstChild = data.children[0];
+
+		const fixedTexts =
+			firstChild.type === 'fixedtext'
+				? [firstChild]
+				: firstChild.children || [];
+
+		for (const fixedText of fixedTexts) {
+			label = window.L.DomUtil.create(
+				fieldsetLegend ? 'legend' : 'div',
+				'ui-frame-label ui-legend ' + builder.options.cssClass,
+				frame,
+			);
+
+			label.innerText = builder._cleanText(_extractLabelText(fixedText));
+			label.id = fixedText.id;
+
+			if (fixedText.visible === false) {
+				window.L.DomUtil.addClass(label, 'hidden');
+			} else {
+				groupLabelCandidateId = fixedText.id;
+			}
+
+			builder.postProcess(frame, fixedText);
+		}
 	} else {
 		container = window.L.DomUtil.create(
 			'div',
@@ -135,19 +163,7 @@ function buildFrame(parentContainer, data, builder, isFormControlGroup) {
 			container,
 		);
 		frame.id = data.id + '-frame';
-
-		label = window.L.DomUtil.create(
-			'label',
-			'ui-frame-label ' + builder.options.cssClass,
-			frame,
-		);
-		label.htmlFor = data.id + '-content';
 	}
-	label.innerText = builder._cleanText(_extractLabelText(data.children[0]));
-	label.id = data.children[0].id;
-	if (data.children[0].visible === false)
-		window.L.DomUtil.addClass(label, 'hidden');
-	builder.postProcess(frame, data.children[0]);
 
 	const frameChildren = window.L.DomUtil.create(
 		'div',
@@ -157,7 +173,17 @@ function buildFrame(parentContainer, data, builder, isFormControlGroup) {
 	frameChildren.id = data.id + '-content';
 	$(frameChildren).addClass('expanded');
 
-	// skipping the first child(label/legend)
-	const children = data.children.slice(1);
+	const children = groupControl ? data.children.slice(1) : data.children;
 	builder.build(frameChildren, children);
+
+	if (
+		groupControl &&
+		!fieldsetLegend &&
+		JSDialog.FindFocusableWithin(frameChildren, 'next')
+	) {
+		frame.setAttribute('role', 'group');
+		if (groupLabelCandidateId) {
+			frame.setAttribute('aria-labelledby', groupLabelCandidateId);
+		}
+	}
 }

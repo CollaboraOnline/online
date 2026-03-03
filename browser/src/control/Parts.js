@@ -13,7 +13,7 @@
  */
 
 /* global app _ cool */
-/* global _ JSDialog app OtherViewCellCursorSection TileManager */
+/* global _ JSDialog app OtherViewCellCursorSection TileManager TextCursorSection */
 
 window.L.Map.include({
 	/*
@@ -22,10 +22,16 @@ window.L.Map.include({
 		@param {boolean} calledFromSetPartHandler - Requests a scroll to the cursor
 	*/
 	setPart: function (part, external, calledFromSetPartHandler) {
-		if (cool.Comment.isAnyEdit()) {
-			cool.CommentSection.showCommentEditingWarning();
+		const editingComment = cool.Comment.isAnyEdit();
+		if (editingComment) {
+			const commentSection = app.sectionContainer.getSectionWithName(app.CSections.CommentList.name);
+			if (commentSection) {
+				commentSection.navigateAndFocusComment(editingComment);
+			}
 			return;
 		}
+
+		app.idleHandler.notifyActive();
 
 		var docLayer = this._docLayer;
 		var docType = docLayer._docType;
@@ -84,12 +90,6 @@ window.L.Map.include({
 
 		if (app.file.fileBasedView)
 		{
-			docLayer._selectedPart = docLayer._prevSelectedPart;
-			if (typeof(part) !== 'number') {
-				docLayer._preview._scrollViewByDirection(part);
-				this._docLayer._checkSelectedPart();
-				return;
-			}
 			docLayer._preview._scrollViewToPartPosition(docLayer._selectedPart);
 			this._docLayer._checkSelectedPart();
 			notifyServer(part);
@@ -112,9 +112,8 @@ window.L.Map.include({
 		});
 
 		OtherViewCellCursorSection.updateVisibilities();
-		app.definitions.otherViewCursorSection.updateVisibilities();
+		TextCursorSection.updateVisibilities();
 		app.definitions.otherViewGraphicSelectionSection.updateVisibilities();
-		docLayer.eachView(docLayer._viewSelections, docLayer._onUpdateTextViewSelection, docLayer);
 		docLayer._clearSelections(calledFromSetPartHandler);
 		TileManager.updateOnChangePart();
 		TileManager.pruneTiles();
@@ -246,7 +245,7 @@ window.L.Map.include({
 		else maxHeight = Math.round(tileHeight * maxWidth / tileWidth);
 
 		if (fetchThumbnail) {
-			var mode = docLayer._selectedMode;
+			var mode = app.activeDocument.activeModes[0];
 			this._addPreviewToQueue(part, 'tile ' +
 							'nviewid=0' + ' ' +
 							'part=' + String(part) + ' ' +
@@ -276,7 +275,7 @@ window.L.Map.include({
 		this._docPreviews[id] = {id: id, part: part, width: width, height: height, tilePosX: tilePosX,
 			tilePosY: tilePosY, tileWidth: tileWidth, tileHeight: tileHeight, autoUpdate: autoUpdate, invalid: false};
 
-		var mode = this._docLayer._selectedMode;
+		var mode = app.activeDocument.activeModes[0];
 		this._addPreviewToQueue(part, 'tile ' +
 							'nviewid=0' + ' ' +
 							'part=' + part + ' ' +
@@ -293,6 +292,7 @@ window.L.Map.include({
 
 	goToPage: function (page) {
 		var docLayer = this._docLayer;
+		app.idleHandler.notifyActive();
 		if (page === 'prev') {
 			if (docLayer._currentPage > 0) {
 				docLayer._currentPage -= 1;
@@ -329,11 +329,16 @@ window.L.Map.include({
 	},
 
 	insertPage: function(nPos) {
-		if (cool.Comment.isAnyEdit()) {
-			cool.CommentSection.showCommentEditingWarning();
+		const editingComment = cool.Comment.isAnyEdit();
+		if (editingComment) {
+			const commentSection = app.sectionContainer.getSectionWithName(app.CSections.CommentList.name);
+			if (commentSection) {
+				commentSection.navigateAndFocusComment(editingComment);
+			}
 			return;
 		}
 
+		app.idleHandler.notifyActive();
 		if (this.isPresentationOrDrawing()) {
 			if (nPos === undefined) {
 				app.socket.sendMessage('uno .uno:InsertPage');
@@ -391,6 +396,7 @@ window.L.Map.include({
 		if (!this.isPresentationOrDrawing()) {
 			return;
 		}
+		app.idleHandler.notifyActive();
 
 		if (pos === undefined) {
 			app.socket.sendMessage('uno .uno:DuplicatePage');
@@ -422,6 +428,7 @@ window.L.Map.include({
 		else {
 			return;
 		}
+		app.idleHandler.notifyActive();
 
 		var docLayer = this._docLayer;
 		// TO DO: Deleting all the pages causes problem.

@@ -44,6 +44,7 @@ window.L.Map.WOPI = window.L.Handler.extend({
 	UserCanRename: false,
 	UserCanWrite: false,
 	DisablePresentation: false,
+	PresentationLeader: '',
 
 	_appLoadedConditions: {
 		docloaded: false,
@@ -55,19 +56,29 @@ window.L.Map.WOPI = window.L.Handler.extend({
 	_appLoaded: false,
 	_insertImageMenuSetupDone: false,
 
+	postLoadEnable: function() {
+		this._map.on('docloaded', this._postLoaded, this);
+		app.events.on('updatepermission', this._postLoadedBound);
+		this._map.on('viewinfo', this._postLoaded, this);
+		this._map.on('initializedui', this._postLoaded, this);
+	},
+
+	postLoadDisable: function() {
+		this._map.off('docloaded', this._postLoaded, this);
+		app.events.off('updatepermission', this._postLoadedBound);
+		this._map.off('viewinfo', this._postLoaded, this);
+		this._map.off('initializedui', this._postLoaded, this);
+	},
+
 	initialize: function(map) {
 		this._map = map;
+		this._postLoadedBound = this._postLoaded.bind(this);
+		// init messages handlers should be available as soon as possible
+		this.postLoadEnable();
 	},
 
 	addHooks: function() {
 		this._map.on('postMessage', this._postMessage, this);
-
-		// init messages
-		this._map.on('docloaded', this._postLoaded, this);
-		app.events.on('updatepermission', this._postLoaded.bind(this));
-		// This indicates that 'viewinfo' message has already arrived
-		this._map.on('viewinfo', this._postLoaded, this);
-		this._map.on('initializedui', this._postLoaded, this);
 
 		this._map.on('wopiprops', this._setWopiProps, this);
 		window.L.DomEvent.on(window, 'message', this._postMessageListener, this);
@@ -106,9 +117,7 @@ window.L.Map.WOPI = window.L.Handler.extend({
 	removeHooks: function() {
 		this._map.off('postMessage', this._postMessage, this);
 
-		// init messages
-		this._map.off('docloaded', this._postLoaded, this);
-		this._map.off('viewinfo', this._postLoaded, this);
+		this.postLoadDisable();
 
 		this._map.off('wopiprops', this._setWopiProps, this);
 		window.L.DomEvent.off(window, 'message', this._postMessageListener, this);
@@ -155,6 +164,7 @@ window.L.Map.WOPI = window.L.Handler.extend({
 		this.EnableShare = !!wopiInfo['EnableShare'];
 		this.UserCanWrite = !!wopiInfo['UserCanWrite'];
 		this.DisablePresentation = wopiInfo['DisablePresentation'];
+		this.PresentationLeader = wopiInfo['PresentationLeader'];
 
 		if (this.UserCanWrite && !app.isReadOnly()) // There are 2 places that set the file permissions, WOPI and URI. Don't change permission if URI doesn't allow.
 			app.setPermission('edit');
@@ -204,10 +214,12 @@ window.L.Map.WOPI = window.L.Handler.extend({
 		if (this.DisableInsertLocalImage) {
 			JSDialog.MenuDefinitions.set('InsertImageMenu', []);
 			JSDialog.MenuDefinitions.set('InsertMultimediaMenu', []);
+			JSDialog.MenuDefinitions.set('CompareDocumentsMenu', []);
 		}
 
 		var menuEntriesImage = JSDialog.MenuDefinitions.get('InsertImageMenu');
 		var menuEntriesMultimedia = JSDialog.MenuDefinitions.get('InsertMultimediaMenu');
+		var menuEntriesCompare = JSDialog.MenuDefinitions.get('CompareDocumentsMenu');
 
 		if (this.EnableInsertRemoteImage) {
 			menuEntriesImage.push({action: 'remotegraphic', text: _UNO('.uno:InsertGraphic', '', true)});
@@ -216,6 +228,8 @@ window.L.Map.WOPI = window.L.Handler.extend({
 		if (this.EnableInsertRemoteFile) {
 			/* Separate, because needs explicit integration support */
 			menuEntriesMultimedia.push({action: 'remotemultimedia', text: _UNO('.uno:InsertAVMedia', '', true)});
+
+			menuEntriesCompare.unshift({action: 'remotecomparedocuments', text: _('Compare Document...')});
 		}
 
 		this._insertImageMenuSetupDone = true;
@@ -281,7 +295,7 @@ window.L.Map.WOPI = window.L.Handler.extend({
 			this._allowedOrigins = ancestors;
 			// convert to JS regexps from localhost:* to https*://localhost:.*
 			for (i = 0; i < ancestors.length; i++) {
-				this._allowedOrigins[i] = '(http|https)://' + ancestors[i].replace(/:\*/, ':?.*');
+				this._allowedOrigins[i] = '^(http|https)://' + ancestors[i].replace(/:\*/, ':?.*') + '$';
 			}
 		}
 
@@ -626,6 +640,16 @@ window.L.Map.WOPI = window.L.Handler.extend({
 				this._map.insertURL(msg.Values.url, "multimediaurl");
 			}
 		}
+		else if (msg.MessageId == 'Action_CompareDocuments') {
+			if (msg.Values) {
+				if (msg.Values.filename) {
+					// Remember old file name for CompareChangesLabelSection.
+					app.writer.compareDocumentOldFileName = msg.Values.filename;
+				}
+
+				this._map.insertURL(msg.Values.url, "comparedocumentsurl");
+			}
+		}
 		else if (msg.MessageId == 'Action_InsertLink') {
 			if (msg.Values) {
 				var link = this._map.makeURLFromStr(msg.Values.url);
@@ -681,6 +705,13 @@ window.L.Map.WOPI = window.L.Handler.extend({
 			if (msg.Values && msg.Values.Mimetype && msg.Values.Data) {
 				var blob = new Blob(['paste mimetype=' + msg.Values.Mimetype + '\n', msg.Values.Data]);
 				app.socket.sendMessage(blob);
+			}
+		}
+		else if (msg.MessageId == 'Action_Copy') {
+			// Request the current text selection in some format.
+			if (msg.Values && msg.Values.Mimetype && this._map._clip) {
+				this._map._clip.setActionCopy(true);
+				app.socket.sendMessage('gettextselection mimetype=' + msg.Values.Mimetype);
 			}
 		}
 		else if (msg.MessageId === 'Action_ShowBusy') {

@@ -11,21 +11,15 @@
 
 #pragma once
 
-#include <stdexcept>
-#include <algorithm>
-#include <functional>
-#include <map>
+#include <wsd/TileDesc.hpp>
+
 #include <string>
 #include <vector>
-
-#include "Log.hpp"
-#include "TileDesc.hpp"
-#include "Protocol.hpp"
 
 class TilePrioritizer
 {
 public:
-    virtual ~TilePrioritizer() {}
+    virtual ~TilePrioritizer() = default;
 
     enum class Priority : std::int8_t {
         NONE = -1,  // an error
@@ -38,7 +32,7 @@ public:
     };
     virtual Priority getTilePriority(const TileDesc &) const { return Priority::NORMAL; }
 
-    typedef std::pair<CanonicalViewId, float> ViewIdInactivity;
+    using ViewIdInactivity = std::pair<CanonicalViewId, float>;
     virtual std::vector<ViewIdInactivity> getViewIdsByInactivity() const { return {}; }
 };
 
@@ -49,10 +43,10 @@ class KitQueue
 
     const TilePrioritizer &_prio;
 public:
-    typedef std::vector<char> Payload;
+    using Payload = std::vector<char>;
 
     KitQueue(const TilePrioritizer &prio) : _prio(prio) { }
-    ~KitQueue() { }
+    ~KitQueue() = default;
 
     KitQueue(const KitQueue&) = delete;
     KitQueue& operator=(const KitQueue&) = delete;
@@ -104,7 +98,15 @@ public:
     /// render queue, with it's priority.
     TileCombined popTileQueue(TilePrioritizer::Priority& priority);
     size_t getTileQueueSize() const;
-    bool isTileQueueEmpty() const;
+    [[nodiscard]] bool isTileQueueEmpty() const
+    {
+        for (const auto& queue : _tileQueues)
+        {
+            if (!queue.second.empty())
+                return false;
+        }
+        return true;
+    }
 
     /// Obtain the next callback
     Callback getCallback()
@@ -175,7 +177,6 @@ private:
     /// @return New message to put into the queue.  If empty, use what was in callbackMsg.
     std::string removeCallbackDuplicate(const std::string& callbackMsg);
 
-    std::vector<TileDesc>* getTileQueue(CanonicalViewId viewid);
     std::vector<TileDesc>& ensureTileQueue(CanonicalViewId viewid);
     TileCombined popTileQueue(std::vector<TileDesc>& tileQueue, TilePrioritizer::Priority &priority);
 
@@ -184,7 +185,7 @@ private:
     std::vector<Payload> _queue;
 
     /// Queues of incoming tile requests from coolwsd
-    typedef std::pair<CanonicalViewId, std::vector<TileDesc>> viewTileQueue;
+    using viewTileQueue = std::pair<CanonicalViewId, std::vector<TileDesc>>;
     std::vector<viewTileQueue> _tileQueues;
 
     /// Queue of callbacks from Kit to send out to coolwsd

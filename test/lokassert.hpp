@@ -9,9 +9,13 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * Custom assertion utilities and output operators for test framework integration.
+ */
+
 #pragma once
 
-#include "testlog.hpp"
+#include <testlog.hpp>
 
 #include <cassert>
 #include <vector>
@@ -99,11 +103,7 @@ std::string inline lokFormatAssertEq(const std::string& expected_name, const std
 // When enabled, assertions that pass will be logged.
 // configure with --enable-logging-test-assert
 #if LOK_LOG_ASSERTIONS
-#define LOK_TRACE(X)                                                                               \
-    do                                                                                             \
-    {                                                                                              \
-        TST_LOG(X);                                                                                \
-    } while (false)
+#define LOK_TRACE(X) TST_LOG(X)
 #else
 #define LOK_TRACE(X)                                                                               \
     do                                                                                             \
@@ -150,7 +150,7 @@ inline constexpr bool failed() { return false; }
             }                                                                                      \
             else if (!silent)                                                                      \
             {                                                                                      \
-                LOK_TRACE("PASS: " << (#condition) << " [true]");                                  \
+                LOK_TRACE("PASS: " << (#condition) << " [true], context: [" << message << "]");    \
             }                                                                                      \
         }                                                                                          \
     } while (false)
@@ -174,24 +174,17 @@ inline constexpr bool failed() { return false; }
 /// Check the truth of a condition, logging on success.
 #define LOK_CHECK(condition) LOK_ASSERT_MESSAGE_IMPL("", condition, false, false)
 
+/// Assert the truth of a condition, logging on success, with a context.
+#define LOK_ASSERT_CTX(condition, CTX) LOK_ASSERT_MESSAGE_IMPL(CTX, condition, false, true)
+
 /// Assert the truth of a condition, logging on success.
-#define LOK_ASSERT(condition) LOK_ASSERT_MESSAGE_IMPL("", condition, false, true)
+#define LOK_ASSERT(condition) LOK_ASSERT_CTX(condition, "")
 
 /// Check the truth of a condition without logging on success.
 #define LOK_CHECK_SILENT(condition) LOK_ASSERT_MESSAGE_IMPL("", condition, true, false)
 
 /// Assert the truth of a condition without logging on success.
 #define LOK_ASSERT_SILENT(condition) LOK_ASSERT_MESSAGE_IMPL("", condition, true, true)
-
-/// Check the equality of two expressions. WARNING: Multiple evaluations!
-/// Captures full expressions, but only meaningful when they have no side-effects when evaluated.
-#define LOK_CHECK_EQUAL_UNSAFE(expected, actual)                                                   \
-    LOK_ASSERT_EQUAL_MESSAGE_UNSAFE("", #expected, expected, #actual, actual, false)
-
-/// Assert the equality of two expressions. WARNING: Multiple evaluations!
-/// Captures full expressions, but only meaningful when they have no side-effects when evaluated.
-#define LOK_ASSERT_EQUAL_UNSAFE(expected, actual)                                                  \
-    LOK_ASSERT_EQUAL_MESSAGE_UNSAFE("", #expected, expected, #actual, actual, true)
 
 /// Assert the equality of two expressions with a custom message. WARNING: Multiple evaluations!
 /// Captures full expressions, but only meaningful when they have no side-effects when evaluated.
@@ -206,7 +199,7 @@ inline constexpr bool failed() { return false; }
             std::ostringstream oss##__LINE__;                                                      \
             oss##__LINE__ << message;                                                              \
             const auto msg##__LINE__ = oss##__LINE__.str();                                        \
-            TST_LOG("ERROR: " << (stop ? "Assertion" : "Check") << " failure: "                    \
+            TST_LOG("ERROR: " << ((stop) ? "Assertion" : "Check") << " failure: "                  \
                               << (msg##__LINE__.empty() ? "" : msg##__LINE__ + ' ')                \
                               << lokFormatAssertEq(expected_name, expected, actual_name, actual)); \
             if (stop)                                                                              \
@@ -245,8 +238,18 @@ inline constexpr bool failed() { return false; }
 /// Check the equality of two expressions with guarantees of single evaluation.
 #define LOK_CHECK_EQUAL(EXP, ACT) LOK_CHECK_EQUAL_MESSAGE((#EXP) << " != " << (#ACT), EXP, ACT)
 
+/// Check the equality of two expressions with guarantees of single evaluation, with a context.
+/// ERROR: Check failure: 1 != 0, context: [comparing 0 and 1], Expected 0 [0] == 1 [1]
+#define LOK_CHECK_EQUAL_CTX(EXP, ACT, CTX)                                                         \
+    LOK_CHECK_EQUAL_MESSAGE((#EXP) << " != " << (#ACT) << ", context: [" << CTX << "],", EXP, ACT)
+
 /// Assert the equality of two expressions with guarantees of single evaluation.
 #define LOK_ASSERT_EQUAL(EXP, ACT) LOK_ASSERT_EQUAL_MESSAGE((#EXP) << " != " << (#ACT), EXP, ACT)
+
+/// Check the equality of two expressions with guarantees of single evaluation, with a context.
+/// ERROR: Assertion failure: 1 != 0, context: [comparing 0 and 1], Expected 0 [0] == 1 [1]
+#define LOK_ASSERT_EQUAL_CTX(EXP, ACT, CTX)                                                        \
+    LOK_ASSERT_EQUAL_MESSAGE((#EXP) << " != " << (#ACT) << ", context: [" << CTX << "],", EXP, ACT)
 
 /// Check the equality of two expressions with guarantees of single evaluation.
 #define LOK_CHECK_EQUAL_STR(EXP, ACT)                                                              \
@@ -256,6 +259,8 @@ inline constexpr bool failed() { return false; }
 #define LOK_ASSERT_EQUAL_STR(EXP, ACT)                                                             \
     LOK_ASSERT_EQUAL_MESSAGE((#EXP) << " != " << (#ACT), Util::toString(EXP), Util::toString(ACT))
 
+#define LOK_ASSERT_PASS(message) TST_LOG("PASS: " << message)
+
 #define LOK_ASSERT_FAIL(message)                                                                   \
     do                                                                                             \
     {                                                                                              \
@@ -263,6 +268,17 @@ inline constexpr bool failed() { return false; }
         LOK_ASSERT_IMPL(!"Forced failure: " #message); /* NOLINT(misc-static-assert) */            \
         std::stringstream dummyStringstream;                                                       \
         dummyStringstream << message;                                                              \
+        CPPUNIT_FAIL(dummyStringstream.str().c_str());                                             \
+    } while (false)
+
+/// A failed assertion with context.
+#define LOK_ASSERT_FAIL_CTX(message, CTX)                                                          \
+    do                                                                                             \
+    {                                                                                              \
+        TST_LOG("ERROR: Forced failure: " << message << ' ' << CTX);                               \
+        LOK_ASSERT_IMPL(!"Forced failure: " #message); /* NOLINT(misc-static-assert) */            \
+        std::stringstream dummyStringstream;                                                       \
+        dummyStringstream << message << ' ' << CTX;                                                \
         CPPUNIT_FAIL(dummyStringstream.str().c_str());                                             \
     } while (false)
 

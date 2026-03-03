@@ -32,6 +32,11 @@ interface UIModeCommand {
 	mode: UIMode;
 }
 
+// Type of the 'statusindicator' event payload.
+interface StatusIndicatorEvent {
+	statusType: string;
+}
+
 /**
  * UIManager class – initializes UI elements (toolbars, menubar, ruler, etc.) and controls their visibility.
  */
@@ -45,6 +50,7 @@ class UIManager extends window.L.Control {
 	hiddenCommands: { [key: string]: boolean } = {};
 	// Hidden Notebookbar tabs.
 	hiddenTabs: { [key: string]: boolean } = {};
+	permissionViewMode?: PermissionViewMode;
 
 	/**
 	 * Called when the UIManager control is added to the map.
@@ -111,6 +117,9 @@ class UIManager extends window.L.Control {
 		this.map['stateChangeHandler'].setItemValue('toggledarktheme', 'false');
 		this.map['stateChangeHandler'].setItemValue('invertbackground', 'false');
 		this.map['stateChangeHandler'].setItemValue('showannotations', 'true');
+		window.addEventListener('browsersettingchanged', () => {
+			this.initDarkModeFromSettings();
+		});
 	}
 
 	// UI initialization
@@ -356,6 +365,9 @@ class UIManager extends window.L.Control {
 
 		if (!isMobile && !enableNotebookbar)
 			this.map.topToolbar = JSDialog.TopToolbar(this.map);
+
+		this.permissionViewMode = new PermissionViewMode(this.map);
+		this.permissionViewMode.init();
 	}
 
 	/**
@@ -389,8 +401,10 @@ class UIManager extends window.L.Control {
 
 		window.setupToolbar(this.map);
 
-		this.documentNameInput = window.L.control.documentNameInput();
-		this.map.addControl(this.documentNameInput);
+		if (!((window as any).mode.isCODesktop())) {
+			this.documentNameInput = window.L.control.documentNameInput();
+			this.map.addControl(this.documentNameInput);
+		}
 		this.map.addControl(window.L.control.alertDialog());
 		if (window.mode.isMobile()) {
 			this.mobileWizard = window.L.control.mobileWizard();
@@ -457,12 +471,59 @@ class UIManager extends window.L.Control {
 		app.serverConnectionService.onBasicUI();
 	}
 
+
+	initializeNonInteractiveUI() {
+		app.console.debug('UIManager: initialize non-interactive basic UI');
+
+		this.map.jsdialog = window.L.control.jsDialog();
+		this.map.addControl(this.map.jsdialog);
+		this.map.dialog = window.L.control.lokDialog();
+		this.map.addControl(this.map.dialog);
+
+		app.serverConnectionService.onBasicUI();
+	}
+
+	initializeBackstageView(): void {
+		if (!(window as any).mode.isCODesktop())
+			return;
+
+		if (!this.map.backstageView) {
+			this.map.backstageView = new window.L.Control.BackstageView(this.map);
+			console.log('UIManager: BackstageView created for starter mode');
+		}
+
+		console.log('UIManager: Showing BackstageView for starter mode');
+
+		this.initDarkModeFromSettings();
+
+		// Use requestAnimationFrame to ensure DOM is ready
+		window.requestAnimationFrame(() => {
+			if (this.map.backstageView) {
+				this.map.backstageView.show();
+			}
+		});
+	}
+
 	/**
 	 * Initializes specialized UI components based on the document type.
 	 * @param docType - Document type (e.g. 'spreadsheet', 'presentation', 'text').
 	 */
 	initializeSpecializedUI(docType: string): void {
 		app.console.debug('UIManager: initialize specialized UI for: ' + docType);
+
+		const startWelcomePresentation = window.coolParams.get('welcome');
+
+		// Return early when we are loading welcome slideshow
+		if (startWelcomePresentation) {
+			this.map.on('docloaded', () => {
+				app.dispatcher.dispatch('presentinwindow');
+			});
+			this.map.slideShowPresenter = new SlideShow.SlideShowPresenter(
+				this.map,
+				window.enableAccessibility,
+			);
+			return;
+		}
 
 		var isDesktop = window.mode.isDesktop();
 		var currentMode = this.getCurrentMode();
@@ -483,6 +544,17 @@ class UIManager extends window.L.Control {
 		} else {
 			this.createNotebookbarControl(docType, enableNotebookbar);
 			// makeSpaceForNotebookbar call in onUpdatePermission
+		}
+
+		if ((window as any).mode.isCODesktop()) {
+			if (!this.map.backstageView) {
+				this.map.backstageView = new window.L.Control.BackstageView(this.map);
+				console.log('UIManager: BackstageView created and attached to map');
+			} else {
+				console.log('UIManager: BackstageView already exists');
+			}
+		} else {
+			console.log('UIManager: Not a CODA app, skipping backstage view initialization');
 		}
 
 		if (!window.prefs.getBoolean(`${docType}.ShowToolbar`, true)) {
@@ -545,6 +617,23 @@ class UIManager extends window.L.Control {
 				this.map.quickFindPanel = JSDialog.QuickFindPanel(this.map);
 				this.map.addControl(this.map.quickFindPanel);
 			}
+
+			if (this.getStartCompareChanges()) {
+				// Don't switch to the comparechanges view yet, first wait for the
+				// initializationcomplete event, which fires after
+				// app.activeDocument.fileSize is set, otherwise the tile manager
+				// would discard valid tiles.
+				const enterCompareChanges = (
+					e: StatusIndicatorEvent,
+				) => {
+					if (e.statusType !== 'initializationcomplete') {
+						return;
+					}
+					app.dispatcher.dispatch('comparechanges');
+					this.map.off('statusindicator', enterCompareChanges);
+				};
+				this.map.on('statusindicator', enterCompareChanges);
+			}
 		}
 
 		if (this.map.isPresentationOrDrawing() && (isDesktop || window.mode.isTablet())) {
@@ -556,33 +645,72 @@ class UIManager extends window.L.Control {
 		}
 
 		this.map.on('changeuimode', this.onChangeUIMode, this);
+		window.addEventListener('browsersettingchanged', () => {
+			this.onChangeUIMode({ mode: this.getCurrentMode(), force: true });
+		});
+		this.map.on('backstagehide', () => {
+			setTimeout(() => {
+				this.map.invalidateSize(); // triggers Leaflet layout recalculation
+				const docLayer = this.map._docLayer;
+				if (docLayer && docLayer._docType === 'spreadsheet') {
+					docLayer._resetClientVisArea();
+					docLayer._requestNewTiles();
+				}
+			}, 0);
+		});
 
 		this.refreshTheme();
 
-		var startFolloMePresntationGet = this.map.isPresentationOrDrawing() && window.coolParams.get('startFollowMePresentation');
+		var startFolloMePresntationGet = this.map.isPresentationOrDrawing();
+		var presentationLeaderIdGet = this.map.isPresentationOrDrawing() && window.coolParams.get('presentationLeaderId');
 		var startPresentationGet = this.map.isPresentationOrDrawing() && window.coolParams.get('startPresentation');
+		if (this.map.wopi.PresentationLeader)
+		{
+			presentationLeaderIdGet = this.map.wopi.PresentationLeader;
+		}
 		// check for "presentation" dispatch event only after document gets fully loaded
+		// in case if the leader is defined we have to wait a little longer to get the viewer info
 		const startPresentation = () => {
-			if (startFolloMePresntationGet === 'true' || startFolloMePresntationGet === '1') {
+			if (startPresentationGet === 'true' || startPresentationGet === '1') {
+				app.dispatcher.dispatch('presentation');
+			}
+			else if (startFolloMePresntationGet) {
 				const dispatchFollowPresentation = () => {
 					app.dispatcher.dispatch('followpresentation');
 					this.map.off('slideshowfollowon', dispatchFollowPresentation);
 				}
-				// have to wait until we get all the leader slide details
-				// if we start the follow me presentation directly then
-				// it will start from beginning and not where the leader is
-				// This also help with if the follow me presentation is not running
-				this.map.on('slideshowfollowon', dispatchFollowPresentation);
-			}
-			else if (startPresentationGet === 'true' || startPresentationGet === '1') {
-				app.dispatcher.dispatch('presentation');
+
+				if (presentationLeaderIdGet !== ''){
+					// we can start presentation and wait for the leader
+					var myViewId = this.map._docLayer._viewId;
+					if (!myViewId)
+						return;
+					var myViewData = this.map._viewInfo[myViewId];
+					if (myViewData.userid === presentationLeaderIdGet) {
+						app.dispatcher.dispatch('followmepresentation');
+					}
+					else {
+						app.dispatcher.dispatch('followpresentation');
+					}
+				}
+				else {
+					// have to wait until we get all the leader slide details
+					// if we start the follow me presentation directly then
+					// it will start from beginning and not where the leader is
+					// This also help with if the follow me presentation is not running
+					this.map.on('slideshowfollowon', dispatchFollowPresentation);
+				}
 			}
 
 			// docloaded event is fired multiple times, unfortunately
             // but presentation should start only once
+			this.map.off('updateviewslist', startPresentation);
 			this.map.off('docloaded', startPresentation);
 		};
-		this.map.on('docloaded', startPresentation);
+		if (presentationLeaderIdGet !== '')
+			this.map.on('updateviewslist', startPresentation);
+		else
+			this.map.on('docloaded', startPresentation);
 		this.map.contextToolbar = new ContextToolbar(this.map);
 
 		app.serverConnectionService.onSpecializedUI(docType);
@@ -662,6 +790,10 @@ class UIManager extends window.L.Control {
 				interactive: interactiveRuler,
 				showruler: showRuler
 			});
+
+			const rulerState = showRuler ? 'true' : 'false';
+			this.map['stateChangeHandler'].setItemValue('showruler', rulerState);
+			this._map.fire('commandstatechanged', {commandName : 'showruler', state : rulerState});
 		}
 	}
 
@@ -832,24 +964,16 @@ class UIManager extends window.L.Control {
 
 		this.map.fire('postMessage', {msgId: 'Action_ChangeUIMode_Resp', args: {Mode: uiMode.mode}});
 
-		switch (currentMode) {
-		case 'classic':
-			this.removeClassicUI();
-			break;
-
-		case 'notebookbar':
-			this.removeNotebookbarUI();
-			break;
-		}
-
 		window.userInterfaceMode = uiMode.mode;
 
 		switch (uiMode.mode) {
 		case 'classic':
+			this.removeNotebookbarUI();
 			this.addClassicUI();
 			break;
 
 		case 'notebookbar':
+			this.removeClassicUI();
 			this.addNotebookbarUI();
 			break;
 		}
@@ -1095,13 +1219,21 @@ class UIManager extends window.L.Control {
 
 		var found = false;
 		if (this.getCurrentMode() === 'classic') {
-			found ||= this.showCommandInClassicToolbar(command, show);
-			found ||= this.showCommandInMenubar(command, show);
+			if (this.showCommandInClassicToolbar(command, show)) {
+				found = true;
+			}
+			if (this.showCommandInMenubar(command, show)) {
+				found = true;
+			}
 		}
 
 		if (this.notebookbar) {
-			if (this.getCurrentMode() === 'notebookbar') this.notebookbar.reloadShortcutsBar();
-			found ||= this.notebookbar.showNotebookbarCommand(command, show);
+			if (this.getCurrentMode() === 'notebookbar') {
+				this.notebookbar.reloadShortcutsBar();
+			}
+			if (this.notebookbar.showNotebookbarCommand(command, show)) {
+				found = true;
+			}
 		}
 
 		if (!found)
@@ -1184,21 +1316,26 @@ class UIManager extends window.L.Control {
 	// Ruler
 
 	/**
-	 * Shows the ruler.
+	 * Shows the rulers.
 	 */
 	showRuler(): void {
 		this._map.sendUnoCommand('.uno:ShowRuler');
-		$('.cool-ruler').show();
+
+		if (app.UI.horizontalRuler) app.UI.horizontalRuler.show();
+		if (app.UI.verticalRuler) app.UI.verticalRuler.show();
+
 		$('#map').addClass('hasruler');
 		this.setDocTypePref('ShowRuler', true);
 		this.map.fire('rulerchanged');
 	}
 
 	/**
-	 * Hides the ruler.
+	 * Hides the rulers.
 	 */
 	hideRuler(): void {
-		$('.cool-ruler').hide();
+		if (app.UI.horizontalRuler) app.UI.horizontalRuler.hide();
+		if (app.UI.verticalRuler) app.UI.verticalRuler.hide();
+
 		$('#map').removeClass('hasruler');
 		this.setDocTypePref('ShowRuler', false);
 		this.map.fire('rulerchanged');
@@ -1219,6 +1356,20 @@ class UIManager extends window.L.Control {
 	 */
 	isRulerVisible(): boolean {
 		return $('.cool-ruler').is(':visible');
+	}
+
+	/*
+	 * Shows the StyleListDeck (sidebar).
+	 * If 'visible' already, then does nothing as this
+	 * is called from 'stylesview' dropdown and buttons
+	 * in a dropdown aren't toggle buttons.
+	 */
+	showStyleListDeck(): void {
+		const styleListDeck = document.querySelector('#StyleListDeck');
+		JSDialog.CloseAllDropdowns();
+		if (styleListDeck && (styleListDeck as any).checkVisibility())
+			return;
+		this._map.sendUnoCommand('.uno:SidebarDeck.StyleListDeck');
 	}
 
 	/**
@@ -1281,8 +1432,7 @@ class UIManager extends window.L.Control {
 		if (this.isNotebookbarCollapsed() || this.isMenubarHidden())
 			return;
 
-		this.moveObjectVertically($('#formulabar'), -1);
-		$('#toolbar-wrapper').css('display', 'none');
+		$('#toolbar-row').css('display', 'none');
 
 		$('#document-container').addClass('tabs-collapsed');
 	}
@@ -1296,8 +1446,7 @@ class UIManager extends window.L.Control {
 		if (!this.isNotebookbarCollapsed())
 			return;
 
-		this.moveObjectVertically($('#formulabar'), 1);
-		$('#toolbar-wrapper').css('display', '');
+		$('#toolbar-row').css('display', '');
 
 		$('#document-container').removeClass('tabs-collapsed');
 	}
@@ -1384,6 +1533,12 @@ class UIManager extends window.L.Control {
 		this.map.fire('focussearch');
 	}
 
+	isNotebookbarInitialized() {
+		// `.notebookbar-scroll-wrapper.initialized`.
+		const wrapper = document.querySelector('.notebookbar-scroll-wrapper') as HTMLElement | null;
+		return !!wrapper && wrapper.classList.contains('initialized');
+	}
+
 	/**
 	 * Returns whether the status bar is visible.
 	 */
@@ -1412,26 +1567,29 @@ class UIManager extends window.L.Control {
 		var enableNotebookbar = this.shouldUseNotebookbarMode();
 		if (enableNotebookbar && !window.mode.isMobile()) {
 			if (e.detail.perm === 'edit') {
-				if (this.map.menubar) {
-					this.map.removeControl(this.map.menubar);
-					this.map.menubar = null;
+				this.removeClassicUI();
+				// Avoid re-refreshing the notebookbar if it is already initialized.
+				// `addNotebookbarUI()` triggers a full refresh (remove + re-add), which temporarily
+				if (!this.isNotebookbarInitialized()) {
+					this.makeSpaceForNotebookbar();
+					this.addNotebookbarUI();
+				} else {
+					// Still refresh command values when switching back to edit.
+					this.map.sendInitNotebookbarCommands();
 				}
-				this.makeSpaceForNotebookbar();
 			} else if (e.detail.perm === 'readonly') {
-				if (!this.map.menubar) {
-					var menubar = new Menubar();
-					this.map.menubar = menubar;
-					this.map.addControl(menubar);
+				if (this.map.sidebar && this.map.sidebar.isVisible()) {
+					this.map.sidebar.closeSidebar();
+					app.socket.sendMessage('uno .uno:SidebarHide');
 				}
-
-				if (this.notebookbar && $('#mobile-edit-button').is(':hidden')) {
-					this.notebookbar.onRemove();
-				}
+				this.removeNotebookbarUI();
+				this.addClassicUI();
 			} else {
 				app.socket.sendMessage('uno .uno:SidebarHide');
 			}
 		}
 	}
+
 
 	refreshTheme(): void {
 		if (typeof window.initializedUI === 'function') {
@@ -1559,8 +1717,19 @@ class UIManager extends window.L.Control {
 	 */
 	showDocumentTooltip(tooltipInfo: any): void {
 		var split = tooltipInfo.rectangle.split(',');
-		var latlng = this.map._docLayer._twipsToLatLng(new cool.Point(+split[0], +split[1]));
-		var pt = this.map.latLngToContainerPoint(latlng);
+
+		// Go via SimplePoint(), which is aware of the active layout.
+		const point = new cool.SimplePoint(+split[0], +split[1]);
+
+		const layout = app.activeDocument?.activeLayout;
+		if (layout && layout.type === 'ViewLayoutCompareChanges') {
+			// Map from document to canvas coordinates using the last used tile mode.
+			const compareLayout = layout as ViewLayoutCompareChanges;
+			point.mode = compareLayout.lastTileMode;
+		}
+
+		const pt = { x: Math.round(point.vX / app.dpiScale), y: Math.round(point.vY / app.dpiScale) };
+
 		var elem = $('.leaflet-layer');
 
 		elem.tooltip();
@@ -1569,9 +1738,38 @@ class UIManager extends window.L.Control {
 		elem.tooltip('option', 'items', elem[0]);
 		elem.tooltip('option', 'position', { my: 'left bottom',  at: 'left+' + pt.x + ' top+' + pt.y, collision: 'fit fit' });
 		elem.tooltip('open');
+
+		if (
+			tooltipInfo.anchorRectangles &&
+			tooltipInfo.redlineType &&
+			app.activeDocument?.activeLayout?.type === 'ViewLayoutCompareChanges'
+		) {
+			// Tooltip for a redline when comparing side by side: create the sections.
+			const sides = [
+				{ name: app.CSections.TooltipAnchorLeft.name, mode: TileMode.LeftSide },
+				{ name: app.CSections.TooltipAnchorRight.name, mode: TileMode.RightSide },
+			];
+			for (const side of sides) {
+				if (!app.sectionContainer.doesSectionExist(side.name)) {
+					app.sectionContainer.addSection(new cool.TooltipAnchorSection(side.name, side.mode));
+				}
+				const section = app.sectionContainer.getSectionWithName(side.name) as cool.TooltipAnchorSection;
+				section.drawAnchorRectangles(tooltipInfo.anchorRectangles, tooltipInfo.redlineType);
+			}
+		}
+
 		document.addEventListener('mousemove', function() {
 			elem.tooltip('close');
 			elem.tooltip('disable');
+
+			// Tooltip for a redline when comparing side by side: delete the sections.
+			const sideNames = [app.CSections.TooltipAnchorLeft.name, app.CSections.TooltipAnchorRight.name];
+			for (const name of sideNames) {
+				if (app.sectionContainer.doesSectionExist(name)) {
+					const section = app.sectionContainer.getSectionWithName(name) as cool.TooltipAnchorSection;
+					section.hideAnchorRectangles();
+				}
+			}
 		}, {once: true});
 	}
 
@@ -1596,11 +1794,11 @@ class UIManager extends window.L.Control {
 	 */
 	showSnackbar(
 		label: string,
-		action: string,
-		callback: any,
-		timeout: number,
-		hasProgress: boolean,
-		withDismiss: boolean,
+		action?: string | null,
+		callback?: any,
+		timeout?: number,
+		hasProgress?: boolean,
+		withDismiss?: boolean,
 	): void {
 		JSDialog.SnackbarController.showSnackbar(label, action, callback, timeout, hasProgress, withDismiss);
 	}
@@ -1680,8 +1878,21 @@ class UIManager extends window.L.Control {
 	isAnyDialogOpen(): boolean {
 		if (this.map.jsdialog)
 			return this.map.jsdialog.hasDialogOpened();
-		else
+		else if (this.mobileWizard)
 			return this.mobileWizard.isOpen();
+		else
+			return false;
+	}
+
+	/**
+	 * Returns whether any context menu is currently open.
+	 */
+	isAnyContextMenuOpened(): boolean {
+		const contextMenu = document.querySelector(
+			'.context-menu-root:not([style*="display: none"])',
+		);
+
+		return contextMenu !== null;
 	}
 
 	// TODO: remove and use JSDialog.generateModalId directly
@@ -1744,7 +1955,7 @@ class UIManager extends window.L.Control {
 		id: string,
 		title: string | undefined,
 		message1: string,
-		message2: string,
+		message2: string | null,
 		buttonText: string,
 		callback: any = null,
 		withCancel: boolean = false,
@@ -2271,5 +2482,10 @@ class UIManager extends window.L.Control {
 	getBooleanDocTypePref(name: string, defaultValue: boolean = false): boolean {
 		const docType = this.map.getDocType();
 		return window.prefs.getBoolean(`${docType}.${name}`, defaultValue);
+	}
+
+	getStartCompareChanges(): boolean {
+		const compareChangesOption = window.coolParams.get('comparechanges');
+		return compareChangesOption === 'true' || compareChangesOption === '1';
 	}
 }

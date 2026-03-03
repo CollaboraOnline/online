@@ -8,6 +8,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
+
 /*
  * Code to lock-down the environment of the processes we run, to avoid
  * exotic or un-necessary system calls to be used to break containment.
@@ -15,29 +16,29 @@
 
 #include <config.h>
 
-#include <sysexits.h>
 #include "Seccomp.hpp"
+
+#include <common/Log.hpp>
+#include <common/SigUtil.hpp>
 
 #include <dlfcn.h>
 #include <ftw.h>
+#include <sys/resource.h>
+#include <sys/time.h>
+#include <sysexits.h>
+#include <unistd.h>
+#include <utime.h>
+
 #ifdef __linux__
 #include <linux/audit.h>
 #include <linux/filter.h>
 #if DISABLE_SECCOMP == 0
 #include <linux/seccomp.h>
 #endif
-#include <malloc.h>
 #include <signal.h>
 #include <sys/prctl.h>
 #include <sys/syscall.h>
 #endif // __linux__
-#include <sys/resource.h>
-#include <sys/time.h>
-#include <unistd.h>
-#include <utime.h>
-
-#include <common/Log.hpp>
-#include <common/SigUtil.hpp>
 
 #if DISABLE_SECCOMP == 0
 #ifndef SYS_SECCOMP
@@ -57,7 +58,11 @@
 #  define SECCOMP_REG(_ctx, _reg) ((_ctx)->uc_mcontext.arm_##_reg)
 #  define SECCOMP_SYSCALL(_ctx)   SECCOMP_REG(_ctx, r7)
 #elif defined(__powerpc64__)
-#  define AUDIT_ARCH_NR AUDIT_ARCH_PPC64
+#  if __BYTE_ORDER__ == __ORDER_LITTLE_ENDIAN__
+#    define AUDIT_ARCH_NR AUDIT_ARCH_PPC64LE
+#  else
+#    define AUDIT_ARCH_NR AUDIT_ARCH_PPC64
+#  endif
 #  define SECCOMP_REG(_ctx, _reg) ((_ctx)->uc_mcontext.regs->gpr[_reg])
 #  define SECCOMP_SYSCALL(_ctx)   SECCOMP_REG(_ctx, 0)
 #else
@@ -133,7 +138,7 @@ bool lockdown([[maybe_unused]] Type type)
         ACCEPT_SYSCALL(write),
         ACCEPT_SYSCALL(futex),
 
-        // glibc's 'poll' has to answer for this lot:
+        // 'poll' implementation may use these epoll syscalls:
 #if !defined(__NR_epoll_wait) && defined(__NR_epoll_pwait)
         ACCEPT_SYSCALL(epoll_pwait),
 #else
@@ -174,7 +179,9 @@ bool lockdown([[maybe_unused]] Type type)
         KILL_SYSCALL(wait4),
 #endif
         KILL_SYSCALL(kill),   // !
+#ifdef __NR_shmctl
         KILL_SYSCALL(shmctl),
+#endif
         KILL_SYSCALL(ptrace), // tracing
         KILL_SYSCALL(capset),
 #ifdef __NR_uselib

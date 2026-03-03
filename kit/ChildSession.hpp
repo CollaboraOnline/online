@@ -11,20 +11,16 @@
 
 #pragma once
 
-#include <chrono>
-#include <unordered_map>
-#include <queue>
-
-#include <atomic>
+#include <common/Session.hpp>
+#include <kit/Kit.hpp>
+#include <kit/StateRecorder.hpp>
+#include <kit/Watermark.hpp>
 
 #define LOK_USE_UNSTABLE_API
 #include <LibreOfficeKit/LibreOfficeKit.hxx>
 
-#include "Common.hpp"
-#include "Kit.hpp"
-#include "Session.hpp"
-#include "Watermark.hpp"
-#include "StateRecorder.hpp"
+#include <chrono>
+#include <queue>
 
 class Document;
 class ChildSession;
@@ -117,7 +113,10 @@ public:
     {
         if (_docManager == nullptr)
         {
-            LOG_TRC("ERR dropping - client-" + getId() + ' ' + std::string(buffer, length));
+
+            LOG_TRC("No DocManager; dropping message to client-"
+                    << getId() << ": " << std::string_view(buffer, length));
+
             return false;
         }
         const auto msg = "client-" + getId() + ' ' + std::string(buffer, length);
@@ -128,7 +127,8 @@ public:
     {
         if (_docManager == nullptr)
         {
-            LOG_TRC("ERR dropping binary - client-" + getId());
+            LOG_TRC("No DocManager; dropping binary to client-" << getId());
+
             return false;
         }
         const auto msg = "client-" + getId() + ' ' + std::string(buffer, length);
@@ -155,7 +155,7 @@ public:
 
     void setViewRenderState(const std::string& state) { _viewRenderState = state; }
 
-    bool getDumpTiles() { return _isDumpingTiles; }
+    bool getDumpTiles() const { return _isDumpingTiles; }
 
     void setDumpTiles(bool dumpTiles) { _isDumpingTiles = dumpTiles; }
 
@@ -195,11 +195,11 @@ private:
     bool dialogEvent(const StringVector& tokens);
     bool completeFunction(const StringVector& tokens);
     bool unoCommand(const StringVector& tokens);
-    bool unoSignatureCommand(const std::string_view commandName);
+    bool unoSignatureCommand(std::string_view commandName);
     bool selectText(const StringVector& tokens, LokEventTargetEnum target);
     bool selectGraphic(const StringVector& tokens);
     bool renderNextSlideLayer(SlideCompressor& scomp, unsigned width, unsigned height,
-                              double dDevicePixelRatio, bool& done, const std::string& cacheKey,
+                              double devicePixelRatio, bool& done, const std::string& cacheKey,
                               bool isCompressed);
     bool renderSlide(const StringVector& tokens);
     bool renderWindow(const StringVector& tokens);
@@ -260,6 +260,7 @@ private:
     void updateCursorPosition(const std::string &rect);
     void updateCursorPositionJSON(const std::string &payload);
     std::string getJailDocRoot() const;
+    std::string getZoomPercent(const std::string &payload);
 
 public:
     // simple one line for priming

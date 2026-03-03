@@ -9,6 +9,10 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * HTTP test utilities and helper classes.
+ */
+
 #pragma once
 
 #include <sstream>
@@ -18,9 +22,8 @@
 #include <Poco/Net/HTTPServerRequest.h>
 #include <Poco/Net/HTTPServerResponse.h>
 #include <Poco/Net/SocketAddress.h>
-#include <Poco/Version.h>
 
-#include "Common.hpp"
+#include <Common.hpp>
 
 /// Unit test stub for a server response
 class UnitHTTPServerResponse : public Poco::Net::HTTPServerResponse
@@ -78,18 +81,10 @@ public:
     {
         return _dummyStream;
     }
-#if POCO_VERSION < 0x01080000
-    virtual bool expectContinue() const override
-    {
-        return false;
-    }
-#endif
-#if POCO_VERSION >= 0x01080000
     virtual bool secure() const override
     {
         return true;
     }
-#endif
     virtual const Poco::Net::SocketAddress& clientAddress() const override
     {
         return _clientAddress;

@@ -9,7 +9,12 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-#include "config.h"
+/*
+ * Implementation of exception classes and counters.
+ * Classes: CoolException
+ */
+
+#include <config.h>
 
 #include "Exceptions.hpp"
 

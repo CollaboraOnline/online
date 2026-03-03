@@ -486,6 +486,7 @@ window.L.Control.Zotero = window.L.Control.extend({
 							function(item) { return { text: item }; }
 						),
 						entries: this.items,
+						sortLocally: true,
 					},
 				},
 				callback: this._onAction.bind(this)

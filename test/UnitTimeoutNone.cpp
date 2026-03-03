@@ -9,6 +9,10 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * Unit test for disabled timeout functionality.
+ */
+
 #include <config.h>
 
 #include <string>
@@ -20,10 +24,10 @@
 
 #include <Unit.hpp>
 #include <UserMessages.hpp>
-#include <Util.hpp>
+#include <common/Util.hpp>
 #include <helpers.hpp>
 
-#include "UnitTimeoutBase.hpp"
+#include <UnitTimeoutBase.hpp>
 
 static constexpr size_t ConnectionLimit = 9999;
 static constexpr size_t ConnectionCount = 9;

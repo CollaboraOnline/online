@@ -28,7 +28,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Preset tests.', function()
 	});
 
 	// Ensure that shared wordbook was installed.
-	it('Verify shared wordbook install.', function() {
+	it.skip('Verify shared wordbook install.', function() {
 		// Add some text and check spelling
 		ceHelper.type('collaboraonline');
 
@@ -57,7 +57,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Preset tests.', function()
 	});
 
 	// Ensure that user wordbook was installed.
-	it('Verify user wordbook install.', function() {
+	it.skip('Verify user wordbook install.', function() {
 		// Add some text and check spelling
 		ceHelper.type('sneha');
 

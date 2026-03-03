@@ -5,13 +5,21 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * URI encoding and decoding utilities.
+ * Classes: Uri - Functions: encode(), decode(), needsEncoding()
+ */
+
 #include <config.h>
 
 #include "Uri.hpp"
-#include <common/Util.hpp>
+
 #include <common/Log.hpp>
+#include <common/Util.hpp>
 
 #include <Poco/URI.h>
+
+
 
 const std::string Uri::Reserved = ",/?:@&=+$#";
 

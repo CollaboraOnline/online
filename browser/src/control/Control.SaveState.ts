@@ -23,22 +23,33 @@ class SaveState {
 	// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 	constructor(map: any) {
 		this.map = map;
-		this.saveEle = document.getElementById('save');
-		this.saveIconEl = document.querySelector('#save img');
+		this.initialize();
+	}
+
+	initialize() {
+		this.saveEle = document.querySelector('[id^="save"].unotoolbutton');
+		if (this.saveEle) {
+			this.saveIconEl = this.saveEle.querySelector('img');
+		} else {
+			app.console.debug('SaveState: no save icon - might be hidden');
+			this.saveIconEl = null;
+		}
 	}
 
 	// Function to show the saving status
 	showSavingStatus(): void {
 		if (window.mode.isMobile()) return;
 
+		if (!this.saveEle) this.initialize();
+
 		// Only do saving animation if any content is modified in document
-		if (this.saveEle.classList.contains('savemodified')) {
+		if (this.saveEle && this.saveEle.classList.contains('savemodified')) {
 			this.saveEle.classList.remove('savemodified');
 			// Dynamically set the content string for saving state
 			const savingText = _('Saving');
 			this.saveEle.style.setProperty('--save-state', `"${savingText}"`);
 			this.saveEle.classList.add('saving');
-			this.saveIconEl.classList.add('rotate-icon'); // Start the icon rotation
+			this.saveIconEl?.classList.add('rotate-icon'); // Start the icon rotation
 			this.saveEle.setAttribute('disabled', 'true'); // Disable the button
 		}
 	}
@@ -46,9 +57,12 @@ class SaveState {
 	// Function to show the saved status
 	showSavedStatus(): void {
 		if (window.mode.isMobile()) return;
-		if (!this.saveEle.classList.contains('savemodified')) {
+
+		if (!this.saveEle) this.initialize();
+
+		if (this.saveEle && !this.saveEle.classList.contains('savemodified')) {
 			this.saveEle.classList.remove('saving');
-			this.saveIconEl.classList.remove('rotate-icon'); // Stop the icon rotation
+			this.saveIconEl?.classList.remove('rotate-icon'); // Stop the icon rotation
 			// Dynamically set the content string for saved state
 			const savedText = _('Saved');
 			this.saveEle.style.setProperty('--save-state', `"${savedText}"`);
@@ -62,11 +76,14 @@ class SaveState {
 	}
 
 	showModifiedStatus(): void {
-		this.saveEle.classList.remove('saving');
-		this.saveEle.classList.remove('saved');
-		this.saveIconEl.classList.remove('rotate-icon'); // Stop the icon rotation
-		this.saveEle.removeAttribute('disabled'); // Enable the button
-		this.saveEle.classList.add('savemodified');
+		if (!this.saveEle) this.initialize();
+		if (this.saveEle) {
+			this.saveEle.classList.remove('saving');
+			this.saveEle.classList.remove('saved');
+			this.saveIconEl?.classList.remove('rotate-icon'); // Stop the icon rotation
+			this.saveEle.removeAttribute('disabled'); // Enable the button
+			this.saveEle.classList.add('savemodified');
+		}
 	}
 }
 

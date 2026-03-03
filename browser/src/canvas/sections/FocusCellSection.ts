@@ -37,6 +37,7 @@ class FocusCellSection extends CanvasSectionObject {
 		this.sectionProperties.rowRectangle = null;
 		this.sectionProperties.maxCol = 268435455;
 		this.sectionProperties.maxRow = 20971124;
+		this.isAlwaysVisible = true;
 	}
 
 	public onCellAddressChanged(): void {
@@ -84,13 +85,13 @@ class FocusCellSection extends CanvasSectionObject {
 
 		this.context.fillRect(
 			0,
-			-this.position[1],
+			-app.calc.cellCursorRectangle.pY1,
 			app.calc.cellCursorRectangle.pWidth,
 			this.sectionProperties.maxCol,
 		);
 
 		this.context.fillRect(
-			-this.position[0],
+			-app.calc.cellCursorRectangle.pX1,
 			0,
 			this.sectionProperties.maxRow,
 			app.calc.cellCursorRectangle.pHeight,
@@ -101,13 +102,13 @@ class FocusCellSection extends CanvasSectionObject {
 
 		this.context.strokeRect(
 			0,
-			-this.position[1],
+			-app.calc.cellCursorRectangle.pY1,
 			app.calc.cellCursorRectangle.pWidth,
 			this.sectionProperties.maxCol,
 		);
 
 		this.context.strokeRect(
-			-this.position[0],
+			-app.calc.cellCursorRectangle.pX1,
 			0,
 			this.sectionProperties.maxRow,
 			app.calc.cellCursorRectangle.pHeight,

@@ -9,19 +9,23 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * Unix-specific file utility implementations.
+ * Functions: linkOrCopyFile(), realpath(), file operations
+ */
+
 #include <config.h>
 
 #include <common/Anonymizer.hpp>
 #include <common/FileUtil.hpp>
-
-#include <filesystem>
-#include <iostream>
-#include <string>
-
+#include <common/Log.hpp>
 #include <dirent.h>
+#include <filesystem>
 #include <ftw.h>
 #include <grp.h>
+#include <iostream>
 #include <pwd.h>
+#include <string>
 #include <sys/stat.h>
 #include <sys/time.h>
 #include <unistd.h>
@@ -43,10 +47,7 @@ namespace FileUtil
         if (link(source.c_str(), newPath.c_str()) == 0)
             return true;
 
-        const auto onrre = errno;
-        LOG_DBG("Failed to link [" << source << "] to [" << newPath << "] ("
-                                   << Util::symbolicErrno(onrre) << ": " << std::strerror(onrre)
-                                   << "), will try to copy");
+        LOG_DBG_SYS("Failed to link [" << source << "] to [" << newPath << "], will try to copy");
 
         return FileUtil::copy(source, newPath, /*log=*/true, /*throw_on_error=*/false);
     }
@@ -65,7 +66,7 @@ namespace FileUtil
         return path;
     }
 
-#ifndef IOS // iOS-specific implementation in FileUtil-apple.cpp
+#if !defined(__APPLE__) // iOS-specific implementation in FileUtil-apple.cpp
 
     bool platformDependentCheckDiskSpace(const std::string& path, int64_t enoughSpace)
     {
@@ -93,6 +94,13 @@ namespace FileUtil
             return false;
 #endif
 
+        return true;
+    }
+#elif defined(MACOS) && !MOBILEAPP
+
+    bool platformDependentCheckDiskSpace(const std::string&, int64_t)
+    {
+        // FIXME Use the FileUtil-apple.mm instead
         return true;
     }
 #endif
@@ -328,7 +336,7 @@ namespace FileUtil
             std::cout << " " << std::right << std::setw(size_len) << entry._size;
 
             struct tm tm;
-            std::cout << " " << std::put_time(localtime_r(&entry._mtime, &tm), "%F %R");
+            std::cout << " " << std::put_time(gmtime_r(&entry._mtime, &tm), "%F %R");
 
             std::cout << " " << entry._name;
 
@@ -405,6 +413,11 @@ namespace FileUtil
         stream.open(file, mode);
     }
 
+    void openFileToOFStream(const std::string& file, std::ofstream& stream, std::ios_base::openmode mode)
+    {
+        stream.open(file, mode);
+    }
+
     int getStatOfFile(const std::string& file, struct stat& sb)
     {
         return ::stat(file.c_str(), &sb);
@@ -465,14 +478,14 @@ namespace FileUtil
                           {
                               {
                                   tsAccess.tv_sec,
-#ifdef IOS
+#if defined(IOS) || defined(MACOS)
                                   (__darwin_suseconds_t)
 #endif
                                   (tsAccess.tv_nsec / 1000)
                               },
                               {
                                   tsModified.tv_sec,
-#ifdef IOS
+#if defined(IOS) || defined(MACOS)
                                   (__darwin_suseconds_t)
 #endif
                                   (tsModified.tv_nsec / 1000)

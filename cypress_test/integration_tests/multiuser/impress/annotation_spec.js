@@ -1,4 +1,4 @@
-/* global describe it cy require beforeEach Cypress */
+/* global describe it cy require beforeEach */
 
 var desktopHelper = require('../../common/desktop_helper');
 var helper = require('../../common/helper');
@@ -12,19 +12,13 @@ describe(['tagmultiuser'], 'Multiuser Annotation Tests', function() {
 		desktopHelper.switchUIToNotebookbar();
 
 		cy.cSetActiveFrame('#iframe1');
-		if (Cypress.env('INTEGRATION') === 'nextcloud') {
-			desktopHelper.hideSidebar();
-		}
 		desktopHelper.closeNavigatorSidebar();
-		cy.cGet('#options-modify-page').click();
+		desktopHelper.hideSidebarImpress();
 		desktopHelper.selectZoomLevel('50', false);
 
 		cy.cSetActiveFrame('#iframe2');
-		if (Cypress.env('INTEGRATION') === 'nextcloud') {
-			desktopHelper.hideSidebar();
-		}
 		desktopHelper.closeNavigatorSidebar();
-		cy.cGet('#options-modify-page').click();
+		desktopHelper.hideSidebarImpress();
 		desktopHelper.selectZoomLevel('50', false);
 	});
 
@@ -70,7 +64,8 @@ describe(['tagmultiuser'], 'Multiuser Annotation Tests', function() {
 		cy.cGet('.annotation-marker').should('not.exist');
 	});
 
-	it('Reply',function() {
+	// Skipping reply tests in Impress since reply functionality is temporarily disabled.
+	it.skip('Reply',function() {
 		cy.cSetActiveFrame('#iframe1');
 		desktopHelper.insertComment();
 		cy.cGet('.annotation-marker').should('exist');
@@ -94,19 +89,13 @@ describe(['tagmultiuser'], 'Multiuser Collapsed Annotation Tests', function() {
 		desktopHelper.switchUIToNotebookbar();
 
 		cy.cSetActiveFrame('#iframe1');
-		if (Cypress.env('INTEGRATION') === 'nextcloud') {
-			desktopHelper.hideSidebar();
-		}
 		desktopHelper.closeNavigatorSidebar();
-		cy.cGet('#options-modify-page').click();
+		desktopHelper.hideSidebarImpress();
 		desktopHelper.selectZoomLevel('50', false);
 
 		cy.cSetActiveFrame('#iframe2');
-		if (Cypress.env('INTEGRATION') === 'nextcloud') {
-			desktopHelper.hideSidebar();
-		}
 		desktopHelper.closeNavigatorSidebar();
-		cy.cGet('#options-modify-page').click();
+		desktopHelper.hideSidebarImpress();
 		desktopHelper.selectZoomLevel('50', false);
 	});
 
@@ -154,7 +143,8 @@ describe(['tagmultiuser'], 'Multiuser Collapsed Annotation Tests', function() {
 		cy.cGet('.annotation-marker').should('not.exist');
 	});
 
-	it('Reply',function() {
+	// Skipping reply tests in Impress since reply functionality is temporarily disabled.
+	it.skip('Reply',function() {
 		cy.cSetActiveFrame('#iframe1');
 		desktopHelper.insertComment();
 		cy.cGet('.annotation-marker').should('exist');
@@ -179,19 +169,13 @@ describe(['tagmultiuser'], 'Multiuser Annotation Autosave Tests', function() {
 		desktopHelper.switchUIToNotebookbar();
 
 		cy.cSetActiveFrame('#iframe1');
-		if (Cypress.env('INTEGRATION') === 'nextcloud') {
-			desktopHelper.hideSidebar();
-		}
 		desktopHelper.closeNavigatorSidebar();
-		cy.cGet('#options-modify-page').click();
+		desktopHelper.hideSidebarImpress();
 		desktopHelper.selectZoomLevel('50', false);
 
 		cy.cSetActiveFrame('#iframe2');
-		if (Cypress.env('INTEGRATION') === 'nextcloud') {
-			desktopHelper.hideSidebar();
-		}
 		desktopHelper.closeNavigatorSidebar();
-		cy.cGet('#options-modify-page').click();
+		desktopHelper.hideSidebarImpress();
 		desktopHelper.selectZoomLevel('50', false);
 	});
 
@@ -309,7 +293,8 @@ describe(['tagmultiuser'], 'Multiuser Annotation Autosave Tests', function() {
 		cy.cGet('.cool-annotation-content > div').should('have.text','some text0');
 	});
 
-	it('Reply autosave',function() {
+	// Skipping reply tests in Impress since reply functionality is temporarily disabled.
+	it.skip('Reply autosave',function() {
 		cy.cSetActiveFrame('#iframe1');
 		desktopHelper.insertComment();
 		cy.cGet('.annotation-marker').should('exist');
@@ -329,7 +314,7 @@ describe(['tagmultiuser'], 'Multiuser Annotation Autosave Tests', function() {
 		cy.cGet('.cool-annotation-content > div').should('include.text','some reply text');
 	});
 
-	it('Reply autosave save',function() {
+	it.skip('Reply autosave save',function() {
 		cy.cSetActiveFrame('#iframe1');
 		desktopHelper.insertComment();
 		cy.cGet('.annotation-marker').should('exist');
@@ -355,7 +340,7 @@ describe(['tagmultiuser'], 'Multiuser Annotation Autosave Tests', function() {
 		cy.cGet('.cool-annotation-content > div').should('include.text','some reply text');
 	});
 
-	it('Reply autosave cancel',function() {
+	it.skip('Reply autosave cancel',function() {
 		cy.cSetActiveFrame('#iframe1');
 		desktopHelper.insertComment();
 		cy.cGet('.annotation-marker').should('exist');

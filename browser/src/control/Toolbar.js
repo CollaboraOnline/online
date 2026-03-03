@@ -37,79 +37,41 @@ window.L.Map.include({
 		}
 	},
 
-	onFontSelect: function(e) {
-		var font = e.target.value;
-		this.applyFont(font);
-		this.focus();
-	},
-
 	_getCurrentFontName: function() {
 		return this['stateChangeHandler'].getItemValue('.uno:CharFontName');
 	},
 
-	createFontSelector: function(nodeSelector) {
+	createFontSelector: function(containerId) {
 		var that = this;
+		var container = document.getElementById(containerId);
+		if (!container)
+			return;
 
-		var fontcombobox = $(nodeSelector);
-		if (!fontcombobox.hasClass('select2')) {
-			fontcombobox.select2({
-				placeholder: _('Font')
-			});
-		}
-
-		var createSelector = function() {
+		var populateEntries = function() {
 			var commandValues = that.getToolbarCommandValues('.uno:CharFontName');
-
-			var data = []; // reset data in order to avoid that the font select box is populated with styles, too.
-			// Old browsers don't like Object.keys with
-			// empty arguments
-			if (typeof commandValues === 'object') {
-				data = data.concat(Object.keys(commandValues));
+			if (typeof commandValues === 'object' && container.updateEntries) {
+				var fontNames = Object.keys(commandValues);
+				container.updateEntries(fontNames);
 			}
-			fontcombobox.empty();
-			for (var i = 0; i < data.length; ++i) {
-				if (!data[i]) continue;
-				var option = document.createElement('option');
-				option.text = data[i];
-				option.value = data[i];
-				fontcombobox.append(option);
-			}
-			fontcombobox.on('select2:select', that.onFontSelect.bind(that));
-
-			fontcombobox.val(that._getCurrentFontName()).trigger('change');
+			var currentFont = that._getCurrentFontName();
+			if (currentFont && container.onSetText)
+				container.onSetText(currentFont);
 		};
 
-		createSelector();
+		populateEntries();
 
 		var onCommandStateChanged = function(e) {
-			var commandName = e.commandName;
-
-			if (commandName !== '.uno:CharFontName')
+			if (e.commandName !== '.uno:CharFontName')
 				return;
 
-			var state = e.state;
-			var found = false;
-			fontcombobox.children('option').each(function () {
-				var value = this.value;
-				if (value.toLowerCase() === state.toLowerCase()) {
-					found = true;
-					return;
-				}
-			});
-
-			if (!found && state) {
-				fontcombobox
-					.append($('<option></option>')
-						.text(state));
-			}
-
-			fontcombobox.val(state).trigger('change');
-			this['stateChangeHandler'].setItemValue('.uno:CharFontName', state);
+			if (container.onSetText)
+				container.onSetText(e.state);
+			this['stateChangeHandler'].setItemValue('.uno:CharFontName', e.state);
 		};
 
 		var onFontListChanged = function(e) {
 			if (e.commandName === '.uno:CharFontName')
-				createSelector();
+				populateEntries();
 		};
 
 		this.off('commandstatechanged', onCommandStateChanged);
@@ -118,77 +80,32 @@ window.L.Map.include({
 		this.on('updatetoolbarcommandvalues', onFontListChanged);
 	},
 
-	onFontSizeSelect: function(e) {
-		this.applyFontSize(e.target.value);
-		this.focus();
-	},
-
-	createFontSizeSelector: function(nodeSelector) {
-		var data = [6, 7, 8, 9, 10, 10.5, 11, 12, 13, 14, 15, 16, 18, 20,
-			22, 24, 26, 28, 32, 36, 40, 44, 48, 54, 60, 66, 72, 80, 88, 96];
-
-		var fontsizecombobox = $(nodeSelector);
-		if (!fontsizecombobox.hasClass('select2')) {
-			fontsizecombobox.select2({
-				dropdownAutoWidth: true,
-				width: 'auto',
-				placeholder: _('Font Size'),
-				//Allow manually entered font size.
-				createTag: function(query) {
-					return {
-						id: query.term,
-						text: query.term,
-						tag: true
-					};
-				},
-				tags: true,
-				sorter: function(data) { return data.sort(function(a, b) {
-					return parseFloat(a.text) - parseFloat(b.text);
-				});}
-			});
-		}
-
-		fontsizecombobox.empty();
-		for (var i = 0; i < data.length; ++i) {
-			var option = document.createElement('option');
-			option.text = data[i];
-			option.value = data[i];
-			fontsizecombobox.append(option);
-		}
-		fontsizecombobox.off('select2:select', this.onFontSizeSelect.bind(this)).on('select2:select', this.onFontSizeSelect.bind(this));
+	createFontSizeSelector: function(containerId) {
+		var container = document.getElementById(containerId);
+		if (!container)
+			return;
 
 		var onCommandStateChanged = function(e) {
-			var commandName = e.commandName;
-
-			if (commandName !== '.uno:FontHeight')
+			if (e.commandName !== '.uno:FontHeight')
 				return;
 
 			var state = e.state;
-			var found = false;
-
-			if (state === '0') {
+			if (state === '0')
 				state = '';
-			}
 
-			fontsizecombobox.children('option').each(function (i, e) {
-				if ($(e).text() === state) {
-					found = true;
-				}
-			});
-
-			if (!found) {
-				// we need to add the size
-				fontsizecombobox
-					.append($('<option>')
-						.text(state).val(state));
-			}
-
-			fontsizecombobox.val(state).trigger('change');
+			if (container.onSetText)
+				container.onSetText(state);
 			this['stateChangeHandler'].setItemValue('.uno:FontHeight', state);
 		};
 
 		this.off('commandstatechanged', onCommandStateChanged);
 		this.on('commandstatechanged', onCommandStateChanged);
+
+		// Initialize with current state value if available
+		var currentState = this['stateChangeHandler'].getItemValue('.uno:FontHeight');
+		if (currentState) {
+			onCommandStateChanged.call(this, {commandName: '.uno:FontHeight', state: currentState});
+		}
 	},
 
 	applyFont: function (fontName) {
@@ -260,7 +177,7 @@ window.L.Map.include({
 	},
 
 	print: function (options) {
-		if (window.ThisIsTheiOSApp || window.ThisIsTheAndroidApp) {
+		if (window.ThisIsTheiOSApp || window.ThisIsTheAndroidApp || window.ThisIsTheMacOSApp || window.ThisIsTheWindowsApp || window.ThisIsTheQtApp) {
 			window.postMobileMessage('PRINT');
 		} else {
 			this.showBusy(_('Downloading...'), false);
@@ -360,8 +277,8 @@ window.L.Map.include({
 
 		if ((command.startsWith('.uno:Sidebar') && !command.startsWith('.uno:SidebarShow')) ||
 			command.startsWith('.uno:CustomAnimation') || command.startsWith('.uno:ModifyPage') ||
-			command.startsWith('.uno:MasterSlidesPanel') || command.startsWith('.uno:SidebarDeck') || 
-			command.startsWith('.uno:EditStyle')) {
+			command.startsWith('.uno:MasterSlidesPanel') || command.startsWith('.uno:SidebarDeck') ||
+			(command.startsWith('.uno:EditStyle') && command.indexOf('Family:short=') == -1)) {
 
 			// sidebar control is present only in desktop/tablet case
 			if (this.sidebar) {
@@ -380,10 +297,10 @@ window.L.Map.include({
 		var isAllowedInReadOnly = false;
 		var allowedCommands = ['.uno:Save', '.uno:WordCountDialog',
 			'.uno:Signature', '.uno:PrepareSignature', '.uno:DownloadSignature', '.uno:InsertSignatureLine',
-			'.uno:ShowResolvedAnnotations',
+			'.uno:ShowResolvedAnnotations', '.uno:Open', '.uno:CloseWin',
 			'.uno:ToolbarMode?Mode:string=notebookbar_online.ui', '.uno:ToolbarMode?Mode:string=Default',
 			'.uno:ExportToEPUB', '.uno:ExportToPDF', '.uno:ExportDirectToPDF', '.uno:MoveKeepInsertMode', '.uno:ShowRuler',
-			'.uno:Navigator'];
+			'.uno:Navigator', '.uno:GotoPage'];
 		if (app.isCommentEditingAllowed()) {
 			allowedCommands.push('.uno:InsertAnnotation','.uno:DeleteCommentThread', '.uno:DeleteAnnotation', '.uno:DeleteNote',
 				'.uno:DeleteComment', '.uno:ReplyComment', '.uno:ReplyToAnnotation', '.uno:PromoteComment', '.uno:ResolveComment',
@@ -463,6 +380,10 @@ window.L.Map.include({
 		this.fire('selectbackground', {file: file});
 	},
 
+	compareDocuments: function (file) {
+		this.fire('comparedocuments', {file: file});
+	},
+
 	onHelpOpen: function(id, map, productName) {
 		var i;
 		// Display keyboard shortcut or online help
@@ -519,28 +440,28 @@ window.L.Map.include({
 		var max;
 		var translatableContent = contentElement.querySelectorAll('h1');
 		for (i = 0, max = translatableContent.length; i < max; i++) {
-			translatableContent[i].innerHTML = translatableContent[i].innerHTML.toLocaleString();
+			translatableContent[i].innerHTML = translatableContent[i].innerHTML.toLocaleHelpString();
 		}
 		translatableContent = contentElement.querySelectorAll('h2');
 		for (i = 0, max = translatableContent.length; i < max; i++) {
-			translatableContent[i].innerHTML = translatableContent[i].innerHTML.toLocaleString();
+			translatableContent[i].innerHTML = translatableContent[i].innerHTML.toLocaleHelpString();
 		}
 		translatableContent = contentElement.querySelectorAll('h3');
 		for (i = 0, max = translatableContent.length; i < max; i++) {
-			translatableContent[i].innerHTML = translatableContent[i].innerHTML.toLocaleString();
+			translatableContent[i].innerHTML = translatableContent[i].innerHTML.toLocaleHelpString();
 		}
 		translatableContent = contentElement.querySelectorAll('h4');
 		for (i = 0, max = translatableContent.length; i < max; i++) {
-			translatableContent[i].innerHTML = translatableContent[i].innerHTML.toLocaleString();
+			translatableContent[i].innerHTML = translatableContent[i].innerHTML.toLocaleHelpString();
 		}
 		translatableContent = contentElement.querySelectorAll('td');
 		for (i = 0, max = translatableContent.length; i < max; i++) {
 			var orig = translatableContent[i].innerHTML;
-			var trans = translatableContent[i].innerHTML.toLocaleString();
+			var trans = translatableContent[i].innerHTML.toLocaleHelpString();
 			// Try harder to get translation of keyboard shortcuts (html2po trims starting <kbd> and ending </kbd>)
 			if (orig === trans && orig.indexOf('kbd') != -1) {
 				var trimmedOrig = orig.replace(/^(<kbd>)/,'').replace(/(<\/kbd>$)/,'');
-				var trimmedTrans = trimmedOrig.toLocaleString();
+				var trimmedTrans = trimmedOrig.toLocaleHelpString();
 				if (trimmedOrig !== trimmedTrans) {
 					trans = '<kbd>' + trimmedTrans + '</kbd>';
 				}
@@ -549,11 +470,11 @@ window.L.Map.include({
 		}
 		translatableContent = contentElement.querySelectorAll('p');
 		for (i = 0, max = translatableContent.length; i < max; i++) {
-			translatableContent[i].innerHTML = translatableContent[i].innerHTML.toLocaleString();
+			translatableContent[i].innerHTML = translatableContent[i].innerHTML.toLocaleHelpString();
 		}
 		translatableContent = contentElement.querySelectorAll('button'); // TOC
 		for (i = 0, max = translatableContent.length; i < max; i++) {
-			translatableContent[i].innerHTML = translatableContent[i].innerHTML.toLocaleString();
+			translatableContent[i].innerHTML = translatableContent[i].innerHTML.toLocaleHelpString();
 		}
 
 		//translatable screenshots
@@ -771,7 +692,8 @@ window.L.Map.include({
 	},
 
 	showLOAboutDialog: function() {
-		this.aboutDialog.show();
+		if (this.aboutDialog)
+			this.aboutDialog.show();
 	},
 
 	extractContent: function(html) {

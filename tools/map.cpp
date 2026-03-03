@@ -8,6 +8,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
+
 /* A debugging tool to detect un-shared pages between
  * forkit and its children */
 
@@ -20,11 +21,12 @@
 #include <unordered_map>
 #include <unordered_set>
 
+#include <stdarg.h>
 #include <stdint.h>
 #include <string.h>
 #include <ctype.h>
 #include <errno.h>
-#ifndef __FreeBSD__
+#if defined(__GLIBC__)
 #include <error.h>
 #endif
 #include <fcntl.h>
@@ -36,9 +38,9 @@
 #include <math.h>
 
 #include <common/HexUtil.hpp>
-#include <Util.hpp>
+#include <common/Util.hpp>
 
-#ifdef __FreeBSD__
+#if !defined(__GLIBC__)
 void error(int status, int errnum, const char *format, ...)
 {
     va_list args;
@@ -434,15 +436,15 @@ static void dumpPages(unsigned proc_id, unsigned parent_id, const char *type, co
         const char *style;
         if (parentData.size() > 0)
         {
-            bool bZeroParent = true;
+            bool zeroParent = true;
             for (size_t i = 0; i < pageData.size(); ++i)
             {
                 if (pageData[i] != parentData[i])
                     touched++;
                 if (parentData[i] != 0)
-                    bZeroParent = false;
+                    zeroParent = false;
             }
-            if (bZeroParent)
+            if (zeroParent)
             {
                 style = "zero parent page";
                 touched = 0; // ignore tedious diff.
@@ -517,7 +519,7 @@ static std::vector<char> compressBitmap(const std::vector<char> &bitmap)
         {
             char num[16];
             output.push_back('[');
-            sprintf(num, "%d", cnt);
+            snprintf(num, sizeof(num), "%d", cnt);
             for (int cpy = 0; num[cpy] != '\0'; ++cpy)
                 output.push_back(num[cpy]);
             output.push_back(']');
@@ -784,7 +786,7 @@ int main(int argc, char **argv)
 
         if (*dir_proc->d_name > '0' && *dir_proc->d_name <= '9')
         {
-            unsigned pid_proc = strtoul(dir_proc->d_name, nullptr, 10);
+            const unsigned pid_proc = Util::u64FromString(dir_proc->d_name, 0).first;
 
             snprintf(path_proc, sizeof(path_proc), "/proc/%s/%s", dir_proc->d_name, "cmdline");
             if (read_buffer(cmdline, sizeof(cmdline), path_proc, ' ') &&

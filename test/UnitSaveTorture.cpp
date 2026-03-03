@@ -9,15 +9,19 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * Unit test for stress testing document saving under heavy load.
+ */
+
 #include <config.h>
 
 #include <Unit.hpp>
-#include <Util.hpp>
-#include <JsonUtil.hpp>
-#include <FileUtil.hpp>
+#include <common/Util.hpp>
+#include <common/JsonUtil.hpp>
+#include <common/FileUtil.hpp>
 #include <JailUtil.hpp>
 #include <helpers.hpp>
-#include <StringVector.hpp>
+#include <common/StringVector.hpp>
 #include <WebSocketSession.hpp>
 #include <wsd/COOLWSD.hpp>
 #include <wsd/DocumentBroker.hpp>
@@ -165,14 +169,14 @@ void UnitSaveTorture::testModified()
     {
         TST_LOG("modify document");
         modifyDocument(wsSession);
-        LOK_ASSERT_EQUAL(waitForModifiedStatus(name, wsSession, 3s), true);
+        LOK_ASSERT(waitForModifiedStatus(name, wsSession, 3s));
 
         std::string args = "{ \"Modified\": { \"type\": \"boolean\", \"value\": \"false\" } }";
         TST_LOG("post force modified command: .uno:Modified " << args);
         wsSession->sendMessage(std::string("uno .uno:Modified ") + args);
 
         TST_LOG("wait for confirmation of (non-)modification:");
-        LOK_ASSERT_EQUAL(waitForModifiedStatus(name, wsSession, 3s), false);
+        LOK_ASSERT(!waitForModifiedStatus(name, wsSession, 3s));
     }
 
     poll->joinThread();
@@ -217,7 +221,7 @@ void UnitSaveTorture::testTileCombineRace()
         bool success;
         if (getSaveResult(message, success))
         {
-            LOK_ASSERT_EQUAL(success, true);
+            LOK_ASSERT(success);
             break;
         }
     }
@@ -244,7 +248,7 @@ void UnitSaveTorture::testBgSaveCrash()
 
     TST_LOG("modify document");
     modifyDocument(wsSession);
-    LOK_ASSERT_EQUAL(waitForModifiedStatus(name, wsSession, timeout), true);
+    LOK_ASSERT(waitForModifiedStatus(name, wsSession, timeout));
 
     createStamp("crashkitonsave");
 
@@ -260,7 +264,7 @@ void UnitSaveTorture::testBgSaveCrash()
         bool success;
         if (getSaveResult(message, success))
         {
-            LOK_ASSERT_EQUAL(success, false); // bg save should crash and burn
+            LOK_ASSERT(!success); // bg save should crash and burn
             break;
         }
     }
@@ -278,7 +282,7 @@ void UnitSaveTorture::testBgSaveCrash()
         if (getSaveResult(message, success))
         {
             // non-bg save has no crash hook & should be fine.
-            LOK_ASSERT_EQUAL(success, true);
+            LOK_ASSERT(success);
             break;
         }
     }
@@ -330,7 +334,7 @@ void UnitSaveTorture::saveTortureOne(
             modifyDocument(wsSession);
 
             TST_LOG("wait for first modified status");
-            LOK_ASSERT_EQUAL(waitForModifiedStatus(name, wsSession), true);
+            LOK_ASSERT(waitForModifiedStatus(name, wsSession));
         }
 
         createStamp("holdsave");
@@ -344,7 +348,7 @@ void UnitSaveTorture::saveTortureOne(
             TST_LOG("Modify after saving starts");
             modifyDocument(wsSession);
 
-            LOK_ASSERT_EQUAL(waitForModifiedStatus(name, wsSession, 10s), true);
+            LOK_ASSERT(waitForModifiedStatus(name, wsSession, 10s));
         }
 
         TST_LOG("Allow saving to continue");
@@ -362,7 +366,7 @@ void UnitSaveTorture::saveTortureOne(
             bool success;
             if (getSaveResult(message, success))
             {
-                LOK_ASSERT_EQUAL(success, true);
+                LOK_ASSERT(success);
                 break;
             }
         }
@@ -372,14 +376,14 @@ void UnitSaveTorture::saveTortureOne(
             TST_LOG("wait for modified status");
 
             // Autosaves and synthetically notifies us of clean modification state
-            LOK_ASSERT_EQUAL(waitForModifiedStatus(name, wsSession), false);
+            LOK_ASSERT(!waitForModifiedStatus(name, wsSession));
         }
         else // we don't get this - it is still modified
         {
             // Restore the document un-modified state
             wsSession->sendMessage(std::string("save dontTerminateEdit=0 dontSaveIfUnmodified=0"));
             TST_LOG("wait for cleanup of modified state before end of test");
-            LOK_ASSERT_EQUAL(waitForModifiedStatus(name, wsSession), false);
+            LOK_ASSERT(!waitForModifiedStatus(name, wsSession));
         }
     }
 

@@ -18,11 +18,11 @@
 #include <TraceEvent.hpp>
 #include <wopi/StorageConnectionManager.hpp>
 #include <Exceptions.hpp>
-#include <Log.hpp>
+#include <common/Log.hpp>
 #include <DocumentBroker.hpp>
 #include <ClientSession.hpp>
 #include <common/JsonUtil.hpp>
-#include <Util.hpp>
+#include <common/Util.hpp>
 
 bool CheckFileInfo::checkFileInfo(int redirectLimit)
 {
@@ -42,8 +42,6 @@ bool CheckFileInfo::checkFileInfo(int redirectLimit)
         [selfWeak = weak_from_this(), this, startTime,
          uriAnonym = std::move(uriAnonym), redirectLimit](const std::shared_ptr<http::Session>& session)
     {
-        session->asyncShutdown();
-
         std::shared_ptr<CheckFileInfo> selfLifecycle = selfWeak.lock();
         if (!selfLifecycle)
             return;

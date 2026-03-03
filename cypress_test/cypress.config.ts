@@ -16,6 +16,7 @@ export default defineConfig({
 	logServerResponse: false,
 	env: {
 		USER_INTERFACE: process.env.USER_INTERFACE,
+		WSD_VERSION_HASH: process.env.COOLWSD_VERSION_HASH,
 		visualRegressionType: 'regression',
 		visualRegressionBaseDirectory: './integration_tests/snapshots/base',
 	},

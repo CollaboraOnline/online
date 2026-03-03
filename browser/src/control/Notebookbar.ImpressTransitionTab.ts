@@ -74,6 +74,7 @@ class ImpressTransitionTab implements NotebookbarTab {
 						entries: [],
 						top: '0',
 						left: '1',
+						labelledBy: 'variant_label',
 					} as ListBoxWidget,
 					{
 						id: 'duration_label',
@@ -88,6 +89,7 @@ class ImpressTransitionTab implements NotebookbarTab {
 						text: '',
 						top: '1',
 						left: '1',
+						labelledBy: 'duration_label',
 					},
 				],
 			} as GridWidgetJSON,
@@ -131,6 +133,12 @@ class ImpressTransitionTab implements NotebookbarTab {
 				type: 'separator',
 				orientation: 'vertical',
 			} as SeparatorWidgetJSON,
+			{
+				id: 'apply_to_all',
+				type: 'pushbutton',
+				text: _('Apply to All Slides'),
+				image: app.LOUtil.getImageURL('lc_applytoallslides.svg'),
+			},
 		];
 
 		return content as NotebookbarTabContent;

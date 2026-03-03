@@ -9,7 +9,32 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * Manages document lifecycle and coordinates client/kit communication.
+ * Classes: DocumentBroker, ConvertToBroker
+ */
+
 #pragma once
+
+#include <common/Authorization.hpp>
+#include <common/Log.hpp>
+#include <common/Session.hpp>
+#include <common/SigUtil.hpp>
+#include <common/Util.hpp>
+#include <net/Socket.hpp>
+#include <wsd/QuarantineUtil.hpp>
+#include <wsd/ServerAuditUtil.hpp>
+#include <wsd/SlideCache.hpp>
+#include <wsd/Storage.hpp>
+#include <wsd/TileCache.hpp>
+#include <wsd/TileDesc.hpp>
+
+#if !MOBILEAPP
+#include <wopi/WopiStorage.hpp>
+#include <wsd/Admin.hpp>
+#else // MOBILEAPP
+#include <common/MobileApp.hpp>
+#endif // MOBILEAPP
 
 #include <atomic>
 #include <chrono>
@@ -21,30 +46,9 @@
 #include <string>
 #include <utility>
 
+#include <Poco/JSON/Object.h>
 #include <Poco/SharedPtr.h>
 #include <Poco/URI.h>
-#include <Poco/JSON/Object.h>
-
-#include "Authorization.hpp"
-#include "Log.hpp"
-#include "QuarantineUtil.hpp"
-#include "TileDesc.hpp"
-#include "Util.hpp"
-#include "net/Socket.hpp"
-#include "net/WebSocketHandler.hpp"
-#include "Storage.hpp"
-#include "ServerAuditUtil.hpp"
-#include "SlideCache.hpp"
-
-#include "common/SigUtil.hpp"
-#include "common/Session.hpp"
-
-#if !MOBILEAPP
-#include "Admin.hpp"
-#include <wopi/WopiStorage.hpp>
-#else // MOBILEAPP
-#include <MobileApp.hpp>
-#endif // MOBILEAPP
 
 // Forwards.
 class PrisonerRequestDispatcher;
@@ -274,7 +278,7 @@ public:
 
     /// setup the transfer of a socket into this DocumentBroker poll.
     void setupTransfer(SocketPoll& from, const std::weak_ptr<StreamSocket>& socket,
-                       SocketDisposition::MoveFunction transferFn);
+                       SocketDisposition::MoveFunction transferFn) const;
 
     /// Flag for termination. Note that this doesn't save any unsaved changes in the document
     void stop(const std::string& reason);
@@ -295,7 +299,7 @@ public:
 
     void proxyOpenRequest(const std::shared_ptr<StreamSocket>& socket,
                           std::shared_ptr<ClientSession>& clientSession, const std::string& id,
-                          const Poco::URI& uriPublic, const bool isReadOnly,
+                          const Poco::URI& uriPublic, bool isReadOnly,
                           const RequestDetails& requestDetails);
 
     /// Thread safe termination of this broker if it has a lingering thread
@@ -313,11 +317,14 @@ public:
     /// If not yet locked, try to lock
     bool attemptLock(ClientSession& session, std::string& failReason);
 
-    bool isDocumentChangedInStorage() { return _documentChangedInStorage; }
+    bool isDocumentChangedInStorage() const { return _documentChangedInStorage; }
 
     /// Invoked by the client to rename the document filename.
     /// Returns an error message in case of failure, otherwise an empty string.
     std::string handleRenameFileCommand(std::string sessionId, std::string newFilename);
+
+    /// Get whether the next save operation is an autosave.
+    bool isNextSaveAutosave() const;
 
     /// Handle the save response from Core and upload to storage as necessary.
     /// Also notifies clients of the result.
@@ -361,6 +368,7 @@ public:
     bool isAsyncUploading() const;
 
     Poco::URI getPublicUri() const { return _uriPublic; }
+    const AdditionalFilePaths& getAdditionalFileUrisJailed() const { return _additionalFileUrisJailed; }
     const std::string& getJailId() const { return _jailId; }
     const std::string& getDocKey() const { return _docKey; }
     // id of wopi shared config
@@ -465,7 +473,7 @@ public:
                                                  const std::string &tag, bool sendError = false);
 
     void handleMediaRequest(std::string_view range, const std::shared_ptr<Socket>& socket,
-                            const std::string& tag);
+                            const std::string& tag, const std::string& field);
 
     /// True if any flag to close, terminate, or to unload is set.
     bool isUnloading() const { return isUnloadingUnrecoverably() || _docState.isUnloadRequested(); }
@@ -485,7 +493,7 @@ public:
     bool forwardToChild(const std::shared_ptr<ClientSession>& session, const std::string& message,
                         bool binary = false);
 
-    int getRenderedTileCount() { return _debugRenderedTileCount; }
+    int getRenderedTileCount() const { return _debugRenderedTileCount; }
 
     /// Ask the document broker to close. Makes sure that the document is saved.
     void closeDocument(const std::string& reason);
@@ -530,16 +538,10 @@ public:
                                   const std::shared_ptr<ClientSession>& session) const;
 
     /// Broadcasts 'blockui' command to all users with an optional message.
-    void blockUI(const std::string& msg)
-    {
-        broadcastMessage("blockui: " + msg);
-    }
+    void blockUI(const std::string& msg) const { broadcastMessage("blockui: " + msg); }
 
     /// Broadcasts 'unblockui' command to all users.
-    void unblockUI()
-    {
-        broadcastMessage("unblockui: ");
-    }
+    void unblockUI() const { broadcastMessage("unblockui: "); }
 
     /// Returns true iff an initial setting by the given name is already initialized.
     bool isInitialSettingSet(const std::string& name) const;
@@ -645,7 +647,7 @@ private:
     /// Checks if we really need to request tile rendering or it's in progress
     /// returns true if all tiles are of the same part and size so can be grouped
     inline bool requestTileRendering(TileDesc& tile, bool forceKeyFrame, int version,
-                                     const std::chrono::steady_clock::time_point now,
+                                     std::chrono::steady_clock::time_point now,
                                      std::vector<TileDesc>& tilesNeedsRendering,
                                      const std::shared_ptr<ClientSession>& session);
 
@@ -661,6 +663,7 @@ private:
     /// Loads a document from the public URI into the jail.
     bool download(const std::shared_ptr<ClientSession>& session, const std::string& jailId,
                   const Poco::URI& uriPublic,
+                  const AdditionalFilePocoUris& additionalFileUrisPublic,
                   std::unique_ptr<WopiStorage::WOPIFileInfo> wopiFileInfo);
 
     /// Actual document download and post-download processing.
@@ -833,7 +836,7 @@ private:
      * @param errorMsg: Long error msg (Error message from WOPI host if any)
      */
     void broadcastSaveResult(bool success, std::string_view result,
-                             const std::string& errorMsg = std::string());
+                             const std::string& errorMsg = std::string()) const;
 
     /// Broadcasts to all sessions the last modification time of the document.
     void broadcastLastModificationTime(const std::shared_ptr<ClientSession>& session = nullptr) const;
@@ -1732,15 +1735,12 @@ private:
     /// Called when document conflict is detected (i.e. it changed in storage).
     void handleDocumentConflict();
 
-    /// if _isViewSettingsAccessibilityEnabled is set then set
-    /// accessibilityState=true in @message and force-enable
-    /// accessibility on for viewId
-    std::string applyViewAccessibility(const std::string& message,
+    std::string applyBrowserAccessibility(const std::string& message,
                                        const std::string& viewId);
 
     /// Apply signature view settings to the message
     std::string applySignViewSettings(const std::string& message,
-                                      const std::shared_ptr<ClientSession>& session);
+                                      const std::shared_ptr<ClientSession>& session) const;
 
     /// Apply all view settings (signature and accessibility) to the message
     std::string applyViewSetting(const std::string& message, const std::string& viewId,
@@ -1792,6 +1792,7 @@ private:
     const std::string _docId;
     std::string _uriJailed;
     std::string _uriJailedAnonym;
+    AdditionalFilePaths _additionalFileUrisJailed;
     std::string _jailId;
     std::string _filename;
 
@@ -1879,8 +1880,6 @@ private:
     /// True for file that COOLWSD::IsViewFileExtension return true.
     /// These files, such as PDF, don't have a reliable ModifiedStatus.
     bool _isViewFileExtension;
-
-    bool _isViewSettingsAccessibilityEnabled;
 
     bool _isViewSettingsUpdated;
 

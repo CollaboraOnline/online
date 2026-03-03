@@ -1,12 +1,12 @@
 /* -*- js-indent-level: 8 -*- */
 module.exports.list = {
 	fontColor: ['#Home #home-color .unoarrow', '#toolbar-up [id^="fontcolor"]'],
-	fontName: ['#fontnamecombobox.notebookbar > .ui-combobox-button', '#toolbar-up #fontnamecombobox'],
+	fontName: ['#fontnamecombobox.notebookbar .ui-combobox-button', '#toolbar-up #fontnamecombobox'],
 	bold: ['#Bold', '#toolbar-up #bold'],
 	italic: ['#Italic', '#toolbar-up #italic'],
 	underline: ['#Underline', '#toolbar-up #underline'],
 	strikeout: ['#Strikeout', '#toolbar-up #strikeout'],
-	fontSize: ['#fontsizecombobox.notebookbar > .ui-combobox-button', '#toolbar-up #fontsizecombobox'],
+	fontSize: ['#fontsizecombobox.notebookbar .ui-combobox-button', '#toolbar-up #fontsizecombobox'],
 	leftPara: ['#LeftPara', '#toolbar-up #leftpara'],
 	rightPara: ['#RightPara', '#toolbar-up #rightpara'],
 	centerPara: ['#CenterPara', '#toolbar-up #centerpara'],
@@ -22,7 +22,7 @@ module.exports.list = {
 	clearFormat: ['#Home .unoResetAttributes', '#toolbar-up #reset'],
 	hyperLink: ['#HyperlinkDialog', '#toolbar-up #link'],
 	insertShape: ['#BasicShapes', '#toolbar-up #insertshapes'],
-	save: ['#Save', '#toolbar-up #save'],
+	save: ['#Save', '#toolbar-up [id^="save"]'],
 	print: ['#Print', '#toolbar-up #print'],
 	undo: ['#Undo', '#toolbar-up #undo'],
 	redo: ['#Redo', '#toolbar-up #redo'],

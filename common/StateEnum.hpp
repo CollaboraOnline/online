@@ -7,9 +7,9 @@
 
 #pragma once
 
+#include <array>
 #include <iosfwd>
 #include <type_traits>
-#include <string>
 #include <string_view>
 
 /// Enum macro specifically for state-machines.
@@ -19,9 +19,15 @@
 /// Some ideas from https://stackoverflow.com/questions/28828957/enum-to-string-in-modern-c11-c14-c17-and-future-c20
 /// and from https://github.com/pfultz2/Cloak/wiki/C-Preprocessor-tricks,-tips,-and-idioms
 
-#define STRINGIFY1(_, e) #e,
+// Macro expansion doesn't happen when # or ## operators are used,
+// so we need an indirection to expand macros before using the result.
+#define CONCATINATE_IMPL(X, Y) X##Y
+#define CONCATINATE(X, Y) CONCATINATE_IMPL(X, Y)
+#define STRINGIFY(X) #X
+#define STRING(X) STRINGIFY(X)
+
+#define STRINGIFY1(_, e) STRINGIFY(e),
 #define STRINGIFY2(NAME, e) #NAME "::" #e,
-#define CONCAT(X, Y) X##Y
 #define CALL(X, ...) X(__VA_ARGS__)
 
 #define APPLY1(MACRO, NAME, e) MACRO(NAME, e)
@@ -45,7 +51,7 @@
 #define COUNT_ARGS(...) GET_COUNT(__VA_ARGS__, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1)
 
 #define APPLY(MACRO, NAME, ...)                                                                    \
-    CALL(CONCAT, APPLY, COUNT_ARGS(__VA_ARGS__))(MACRO, NAME, __VA_ARGS__)
+    CALL(CONCATINATE, APPLY, COUNT_ARGS(__VA_ARGS__))(MACRO, NAME, __VA_ARGS__)
 #define FOR_EACH(MACRO, NAME, ...) APPLY(MACRO, NAME, __VA_ARGS__)
 
 /// Define a state-machine with various independent states.
@@ -53,20 +59,20 @@
 #define STATE_ENUM(NAME, ...)                                                                      \
     enum class NAME : char;                                                                        \
     /* Returns the state name only, without the namespace. */                                      \
-    [[maybe_unused]] static inline constexpr std::string_view nameShort(NAME e) noexcept           \
+    [[maybe_unused]] static inline constexpr std::string_view nameShort(NAME elm) noexcept         \
     {                                                                                              \
-        constexpr std::string_view NAME##_names[] = { FOR_EACH(STRINGIFY1, NAME, __VA_ARGS__) };   \
-        assert(static_cast<unsigned>(e) < N_ELEMENTS(NAME##_names) &&                              \
-               "Enum value is out of range.");                                                     \
-        return NAME##_names[static_cast<int>(e)];                                                  \
+        constexpr std::array<std::string_view, COUNT_ARGS(__VA_ARGS__)> NAME##_names = { FOR_EACH( \
+            STRINGIFY1, NAME, __VA_ARGS__) };                                                      \
+        assert(static_cast<unsigned>(elm) < NAME##_names.size() && "Enum value is out of range."); \
+        return NAME##_names[static_cast<int>(elm)];                                                \
     }                                                                                              \
     /* Returns the state name with the namespace. */                                               \
-    [[maybe_unused]] static inline constexpr std::string_view name(NAME e) noexcept                \
+    [[maybe_unused]] static inline constexpr std::string_view name(NAME elm) noexcept              \
     {                                                                                              \
-        constexpr std::string_view NAME##_names[] = { FOR_EACH(STRINGIFY2, NAME, __VA_ARGS__) };   \
-        assert(static_cast<unsigned>(e) < N_ELEMENTS(NAME##_names) &&                              \
-               "Enum value is out of range.");                                                     \
-        return NAME##_names[static_cast<int>(e)];                                                  \
+        constexpr std::array<std::string_view, COUNT_ARGS(__VA_ARGS__)> NAME##_names = { FOR_EACH( \
+            STRINGIFY2, NAME, __VA_ARGS__) };                                                      \
+        assert(static_cast<unsigned>(elm) < NAME##_names.size() && "Enum value is out of range."); \
+        return NAME##_names[static_cast<int>(elm)];                                                \
     }                                                                                              \
     [[maybe_unused]] static constexpr size_t NAME##Max = COUNT_ARGS(__VA_ARGS__);                  \
     enum class NAME : char                                                                         \
@@ -75,9 +81,9 @@
     }
 
 /// Support seamless serialization of STATE_ENUM to ostream.
-template <typename T, typename std::enable_if<std::is_same<
-                          decltype(name(T())), std::string_view>::value>::type* = nullptr>
+template <typename T>
 inline std::ostream& operator<<(std::ostream& os, const T state)
+    requires std::is_same_v<decltype(name(T())), std::string_view>
 {
     os << name(state);
     return os;

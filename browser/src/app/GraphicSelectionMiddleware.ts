@@ -14,13 +14,14 @@
 declare var JSDialog: any;
 
 class GraphicSelection {
-	public static rectangle: cool.SimpleRectangle = null;
+	public static rectangle: cool.SimpleRectangle | null = null;
 	public static extraInfo: any = null;
 	public static selectionAngle: number = 0;
 	public static handlesSection: ShapeHandlesSection = null;
 	public static chartContextToolbarSelectStyle: ChartContextButtonSection =
 		null;
 	public static chartContextToolbarSaveStyle: ChartContextButtonSection = null;
+	public static diagramButton: DiagramButtonSection = null;
 
 	public static hasActiveSelection() {
 		return this.rectangle !== null;
@@ -64,7 +65,8 @@ class GraphicSelection {
 
 		var videoToInsert =
 			'<?xml version="1.0" encoding="UTF-8"?>\
-		<foreignObject xmlns="http://www.w3.org/2000/svg" overflow="visible" width="' +
+		<svg xmlns="http://www.w3.org/2000/svg">\
+		<foreignObject overflow="visible" width="' +
 			videoDesc.width +
 			'" height="' +
 			videoDesc.height +
@@ -80,9 +82,14 @@ class GraphicSelection {
 			'" type="' +
 			videoDesc.mimeType +
 			'"/>\
+					<track src="' +
+			videoDesc.srt +
+			'" kind="subtitles"' +
+			'"/>\
 				</video>\
 			</body>\
-		</foreignObject>';
+		</foreignObject>\
+		</svg>';
 
 		this.handlesSection.addEmbeddedVideo(videoToInsert);
 	}
@@ -247,7 +254,39 @@ class GraphicSelection {
 		}
 	}
 
+	private static checkDiagramData() {
+		if (GraphicSelection.extraInfo && GraphicSelection.extraInfo.isDiagram) {
+			if (!GraphicSelection.diagramButton) {
+				// need to create DiagramButtonSection
+				const subSection = app.sectionContainer.getSectionWithName(
+					this.handlesSection.sectionProperties.subSectionPrefix + 'diagram',
+				);
+				var halfWidth: number = 0;
+
+				if (subSection && subSection.sectionProperties) {
+					// get distance that frame occupies from frame object
+					halfWidth = subSection.sectionProperties.ownInfo.halfWidth;
+				}
+
+				GraphicSelection.diagramButton = new DiagramButtonSection(
+					halfWidth * app.twipsToPixels,
+				);
+				GraphicSelection.diagramButton.forceNextReposition();
+				app.sectionContainer.addSection(GraphicSelection.diagramButton);
+			}
+
+			GraphicSelection.diagramButton.updatePosition();
+		} else if (GraphicSelection.diagramButton) {
+			app.sectionContainer.removeSection(GraphicSelection.diagramButton.name);
+			GraphicSelection.diagramButton = null;
+		}
+	}
+
 	private static checkChartData() {
+		// Chart Context Buttons are disabled now.
+		// we will probably enable it when chart styles will work fine.
+		var disabled = true;
+		if (disabled) return;
 		if (
 			GraphicSelection.extraInfo &&
 			GraphicSelection.extraInfo.isChartPage &&
@@ -405,6 +444,7 @@ class GraphicSelection {
 		}
 
 		GraphicSelection.checkChartData();
+		GraphicSelection.checkDiagramData();
 	}
 
 	/*

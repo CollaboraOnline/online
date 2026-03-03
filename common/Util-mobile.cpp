@@ -8,16 +8,19 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
+
+/*
+ * Mobile platform no-op implementations of desktop utility functions.
+ * Classes: DirectoryCounter - Functions: spawnProcess(), getMemoryUsage*()
+ */
+
 #include <config.h>
 
-#include "Util.hpp"
+#include <common/Util.hpp>
 
 namespace Util
 {
 /// No-op implementation of desktop only functions
-DirectoryCounter::DirectoryCounter(const char*) { (void)_tasks; }
-DirectoryCounter::~DirectoryCounter() {}
-int DirectoryCounter::count() { return 0; }
 int spawnProcess(const std::string&, const StringVector&) { return 0; }
 
 std::string getHumanizedBytes(unsigned long) { return std::string(); }

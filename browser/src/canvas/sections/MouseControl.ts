@@ -46,7 +46,7 @@ class MouseControl extends CanvasSectionObject {
 		super(name);
 	}
 
-	private readModifier(e: MouseEvent) {
+	static readModifier(e: MouseEvent) {
 		let modifier = 0;
 		const shift = e.shiftKey ? app.UNOModifier.SHIFT : 0;
 		const ctrl = e.ctrlKey ? app.UNOModifier.CTRL : 0;
@@ -57,30 +57,68 @@ class MouseControl extends CanvasSectionObject {
 		return modifier;
 	}
 
-	private readButtons(e: MouseEvent) {
-		let buttons = 0;
-		buttons |= e.button === app.JSButtons.left ? app.LOButtons.left : 0;
-		buttons |= e.button === app.JSButtons.middle ? app.LOButtons.middle : 0;
-		buttons |= e.button === app.JSButtons.right ? app.LOButtons.right : 0;
+	/*
+		We need to map view coordinates to document coordinates.
+		When user clicks at a position on the screen, we have its document coordinate according to
+		traditional document view: It starts from top-left and ends at bottom-right. Now the new ViewLayouts
+		can paint multiple parts at the same time and they can paint objects in different locations than the objects' original positions.
+		This means that the point user clicks/taps may not overlap with the document through simple math.
+		During this transition phase (to view layouts), we need both point.pX and point.vX properties. Later, we may use only vX, vY etc.
 
-		return buttons;
+		This function should be used only for real user interactions. If you want to simulate a click at a certain position, call _postMouseEvent directly.
+	*/
+	private postCoreMouseEvent(
+		eventType: string,
+		point: cool.SimplePoint,
+		clickCount: number,
+		buttons: number,
+		modifier: number,
+	) {
+		let viewToDocumentPos = point.clone();
+		Util.ensureValue(app.activeDocument);
+
+		// Convert to pure canvas html element coordinate.
+		viewToDocumentPos.pX +=
+			-app.activeDocument.activeLayout.viewedRectangle.pX1 +
+			app.sectionContainer.getDocumentAnchor()[0];
+		viewToDocumentPos.pY +=
+			-app.activeDocument.activeLayout.viewedRectangle.pY1 +
+			app.sectionContainer.getDocumentAnchor()[1];
+
+		viewToDocumentPos =
+			app.activeDocument.activeLayout.canvasToDocumentPoint(viewToDocumentPos);
+
+		if (Number.isNaN(viewToDocumentPos.x) || Number.isNaN(viewToDocumentPos.y))
+			return;
+		else {
+			app.map._docLayer._postMouseEvent(
+				eventType,
+				viewToDocumentPos.x,
+				viewToDocumentPos.y,
+				clickCount,
+				buttons,
+				modifier,
+			);
+		}
 	}
 
 	public onContextMenu(point: cool.SimplePoint, e: MouseEvent): void {
 		// We need this to prevent native context menu.
 		e.preventDefault();
 
+		$.contextMenu('destroy', '#canvas-container');
+
 		// We will remove below ones after we remove map HTML element.
 		e.stopPropagation();
 		e.stopImmediatePropagation();
 
 		const buttons = app.LOButtons.right;
-		const modifier = this.readModifier(e);
+		const modifier = MouseControl.readModifier(e);
+
 		if (modifier === 0) {
-			app.map._docLayer._postMouseEvent(
+			this.postCoreMouseEvent(
 				'buttondown',
-				this.currentPosition.x,
-				this.currentPosition.y,
+				this.currentPosition,
 				1,
 				buttons,
 				modifier,
@@ -90,13 +128,14 @@ class MouseControl extends CanvasSectionObject {
 
 	// Gets the mouse position on browser page in CSS pixels.
 	public getMousePagePosition() {
+		Util.ensureValue(app.activeDocument);
 		const boundingClientRectangle = this.context.canvas.getBoundingClientRect();
 		const pagePosition = this.currentPosition.clone();
 		pagePosition.pX -=
-			app.activeDocument.activeView.viewedRectangle.pX1 -
+			app.activeDocument.activeLayout.viewedRectangle.pX1 -
 			this.containerObject.getDocumentAnchor()[0];
 		pagePosition.pY -=
-			app.activeDocument.activeView.viewedRectangle.pY1 -
+			app.activeDocument.activeLayout.viewedRectangle.pY1 -
 			this.containerObject.getDocumentAnchor()[1];
 		return {
 			x: pagePosition.cX + boundingClientRectangle.left,
@@ -104,37 +143,34 @@ class MouseControl extends CanvasSectionObject {
 		};
 	}
 
-	// This useful when a section handles the event but wants to set the document mouse position.
+	// This is useful when a section handles the event but wants to set the document mouse position.
 	public setMousePosition(point: cool.SimplePoint) {
 		this.currentPosition = point.clone();
 	}
 
 	private refreshPosition(point: cool.SimplePoint) {
-		this.currentPosition.pX =
-			app.activeDocument.activeView.viewedRectangle.pX1 + point.pX;
-		this.currentPosition.pY =
-			app.activeDocument.activeView.viewedRectangle.pY1 + point.pY;
-	}
+		Util.ensureValue(app.activeDocument);
+		let topLeftX = app.activeDocument.activeLayout.viewedRectangle.pX1;
+		let topLeftY = app.activeDocument.activeLayout.viewedRectangle.pY1;
 
-	private sendMouseMove(count: number, buttons: number, modifier: number) {
-		app.map._docLayer._postMouseEvent(
-			'move',
-			this.currentPosition.x,
-			this.currentPosition.y,
-			count,
-			buttons,
-			modifier,
-		);
+		if (app.map.getDocType() === 'spreadsheet') {
+			if (app.isXOrdinateInFrozenPane(point.pX)) topLeftX = 0;
+
+			if (app.isYOrdinateInFrozenPane(point.pY)) topLeftY = 0;
+		}
+
+		this.currentPosition.pX = point.pX + topLeftX;
+		this.currentPosition.pY = point.pY + topLeftY;
 	}
 
 	private setCursorType() {
 		// If we have blinking cursor visible
 		// we need to change cursor from default style
-		if (app.map._docLayer._cursorMarker)
-			app.map._docLayer._cursorMarker.setMouseCursor();
+		if (app.file.textCursor.visible) this.context.canvas.style.cursor = 'text';
 		else if (app.map._docLayer._docType === 'spreadsheet') {
 			const textCursor =
 				app.file.textCursor.visible &&
+				app.calc.cellCursorRectangle &&
 				app.calc.cellCursorRectangle.pContainsPoint(
 					this.currentPosition.pToArray(),
 				);
@@ -156,6 +192,8 @@ class MouseControl extends CanvasSectionObject {
 					this.context.canvas.classList.add('spreadsheet-cursor');
 				}
 			}
+		} else if (app.map._docLayer._docType === 'presentation') {
+			this.context.canvas.style.cursor = '';
 		}
 	}
 
@@ -174,16 +212,18 @@ class MouseControl extends CanvasSectionObject {
 				this.amplitude[1] * Math.exp(-elapsed / 650),
 			];
 
+			Util.ensureValue(app.activeDocument);
+
 			if (Math.abs(delta[0]) > 0.2 || Math.abs(delta[1]) > 0.2) {
-				app.activeDocument.activeView.scrollTo(
-					app.activeDocument.activeView.viewedRectangle.pX1 + delta[0],
-					app.activeDocument.activeView.viewedRectangle.pY1 + delta[1],
+				app.activeDocument.activeLayout.scrollTo(
+					app.activeDocument.activeLayout.viewedRectangle.pX1 + delta[0],
+					app.activeDocument.activeLayout.viewedRectangle.pY1 + delta[1],
 				);
 				app.sectionContainer.requestReDraw();
 
 				if (this.previousViewedRectangle) {
 					if (
-						app.activeDocument.activeView.viewedRectangle.equals(
+						app.activeDocument.activeLayout.viewedRectangle.equals(
 							this.previousViewedRectangle.toArray(),
 						)
 					)
@@ -191,7 +231,7 @@ class MouseControl extends CanvasSectionObject {
 				}
 
 				this.previousViewedRectangle =
-					app.activeDocument.activeView.viewedRectangle.clone();
+					app.activeDocument.activeLayout.viewedRectangle.clone();
 			} else this.cancelSwipe();
 		}
 	}
@@ -242,12 +282,17 @@ class MouseControl extends CanvasSectionObject {
 		clearTimeout(this.mouseMoveTimer);
 
 		const count = 1;
-		const buttons = this.readButtons(e);
-		const modifier = this.readModifier(e);
+		const modifier = MouseControl.readModifier(e);
 
 		if (!this.containerObject.isDraggingSomething()) {
 			this.mouseMoveTimer = setTimeout(() => {
-				this.sendMouseMove(count, buttons, modifier);
+				this.postCoreMouseEvent(
+					'move',
+					this.currentPosition,
+					count,
+					0,
+					modifier,
+				);
 			}, 100);
 		} else if (e.type === 'touchmove' && this.positionOnMouseDown) {
 			// For non-touch events, we can select text etc, so we send the mouse button events to core while dragging.
@@ -258,22 +303,22 @@ class MouseControl extends CanvasSectionObject {
 			diff.x -= this.positionOnMouseDown.x;
 			diff.y -= this.positionOnMouseDown.y;
 
+			Util.ensureValue(app.activeDocument);
 			const viewedRectangle =
-				app.activeDocument.activeView.viewedRectangle.clone();
+				app.activeDocument.activeLayout.viewedRectangle.clone();
 
 			// Use scrollTo, or repeating events break the scrolling.
-			app.activeDocument.activeView.scrollTo(
+			app.activeDocument.activeLayout.scrollTo(
 				viewedRectangle.pX1 - diff.pX,
 				viewedRectangle.pY1 - diff.pY,
 			);
 		} else {
 			if (!this.mouseDownSent && this.positionOnMouseDown) {
-				app.map._docLayer._postMouseEvent(
+				this.postCoreMouseEvent(
 					'buttondown',
-					this.positionOnMouseDown.x,
-					this.positionOnMouseDown.y,
+					this.positionOnMouseDown,
 					count,
-					buttons,
+					app.LOButtons.left,
 					modifier,
 				);
 				this.mouseDownSent = true;
@@ -288,7 +333,13 @@ class MouseControl extends CanvasSectionObject {
 				});
 			} else app.map.fire('scrollvelocity', { vx: 0, vy: 0 });
 
-			this.sendMouseMove(count, buttons, modifier);
+			this.postCoreMouseEvent(
+				'move',
+				this.currentPosition,
+				count,
+				app.LOButtons.left,
+				modifier,
+			);
 		}
 
 		app.idleHandler.notifyActive();
@@ -309,13 +360,12 @@ class MouseControl extends CanvasSectionObject {
 		this.refreshPosition(point);
 
 		if (this.mouseDownSent) {
-			app.map._docLayer._postMouseEvent(
+			this.postCoreMouseEvent(
 				'buttonup',
-				this.currentPosition.x,
-				this.currentPosition.y,
+				this.currentPosition,
 				1,
-				this.readButtons(e),
-				this.readModifier(e),
+				app.LOButtons.left,
+				MouseControl.readModifier(e),
 			);
 
 			app.map.fire('scrollvelocity', { vx: 0, vy: 0 });
@@ -362,11 +412,29 @@ class MouseControl extends CanvasSectionObject {
 		else if (app.map._docLayer._docType === 'spreadsheet') {
 			const acceptInput =
 				app.calc.cellCursorVisible &&
+				app.calc.cellCursorRectangle &&
 				app.calc.cellCursorRectangle.containsPoint(
 					this.currentPosition.toArray(),
 				);
-			return acceptInput;
+			return acceptInput as boolean;
 		} else return false;
+	}
+
+	private sendClick(clickInfo: any, count: number) {
+		this.postCoreMouseEvent(
+			'buttondown',
+			clickInfo.sendingPosition,
+			count,
+			clickInfo.buttons,
+			clickInfo.modifier,
+		);
+		this.postCoreMouseEvent(
+			'buttonup',
+			clickInfo.sendingPosition,
+			count,
+			clickInfo.buttons,
+			clickInfo.modifier,
+		);
 	}
 
 	onClick(point: cool.SimplePoint, e: MouseEvent): void {
@@ -378,8 +446,10 @@ class MouseControl extends CanvasSectionObject {
 
 		if (!(<any>window).mode.isDesktop()) app.map.fire('closemobilewizard');
 
-		let buttons = this.readButtons(e);
-		let modifier = this.readModifier(e);
+		// Right click is not supported. And click event doesn't have "buttons" property set. Safe to set it here to default.
+		let buttons = app.LOButtons.left;
+
+		let modifier = MouseControl.readModifier(e);
 		const sendingPosition = this.currentPosition.clone();
 
 		// Turn ctrl-left-click into right-click for browsers on macOS
@@ -390,25 +460,16 @@ class MouseControl extends CanvasSectionObject {
 			}
 		}
 
-		if (this.clickTimer) clearTimeout(this.clickTimer);
+		const clickInfo = {
+			sendingPosition: sendingPosition,
+			buttons: buttons,
+			modifier: modifier,
+		};
+
+		if (this.clickTimer) app.timerRegistry.clearTimeout(this.clickTimer);
 		else {
 			// Old code always sends the first click, so do we.
-			app.map._docLayer._postMouseEvent(
-				'buttondown',
-				sendingPosition.x,
-				sendingPosition.y,
-				1,
-				buttons,
-				modifier,
-			);
-			app.map._docLayer._postMouseEvent(
-				'buttonup',
-				sendingPosition.x,
-				sendingPosition.y,
-				1,
-				buttons,
-				modifier,
-			);
+			this.sendClick(clickInfo, 1);
 
 			// For future: Here, we are checking the window size to determine the view mode, we can also check the event type (touch/click).
 			app.map.focus(
@@ -418,29 +479,22 @@ class MouseControl extends CanvasSectionObject {
 			);
 		}
 
-		this.clickTimer = setTimeout(() => {
-			if (this.clickCount > 1) {
-				app.map._docLayer._postMouseEvent(
-					'buttondown',
-					sendingPosition.x,
-					sendingPosition.y,
-					this.clickCount,
-					buttons,
-					modifier,
-				);
-				app.map._docLayer._postMouseEvent(
-					'buttonup',
-					sendingPosition.x,
-					sendingPosition.y,
-					this.clickCount,
-					buttons,
-					modifier,
-				);
-			}
+		this.clickTimer = app.timerRegistry.setTimeout(
+			'clicktimer',
+			() => {
+				if (this.clickCount === 3 && app.map._docLayer.isCalc()) {
+					// Also send a double click for a triple click in Calc.
+					this.sendClick(clickInfo, 2);
+					this.sendClick(clickInfo, 3);
+				} else if (this.clickCount > 1) {
+					this.sendClick(clickInfo, this.clickCount);
+				}
 
-			this.clickTimer = null;
-			this.clickCount = 0;
-		}, 250);
+				this.clickTimer = null;
+				this.clickCount = 0;
+			},
+			250,
+		);
 	}
 
 	onMultiTouchStart(e: TouchEvent): void {
@@ -541,24 +595,21 @@ class MouseControl extends CanvasSectionObject {
 	onDrop(position: cool.SimplePoint, e: DragEvent): void {
 		this.refreshPosition(position);
 
-		const buttons = this.readButtons(e);
-		const modifier = this.readModifier(e);
+		const modifier = MouseControl.readModifier(e);
 
 		// Move the cursor, so that the insert position is as close to the drop coordinates as possible.
-		app.map._docLayer._postMouseEvent(
+		this.postCoreMouseEvent(
 			'buttondown',
-			this.currentPosition.x,
-			this.currentPosition.y,
+			this.currentPosition,
 			1,
-			buttons,
+			app.LOButtons.left,
 			modifier,
 		);
-		app.map._docLayer._postMouseEvent(
+		this.postCoreMouseEvent(
 			'buttonup',
-			this.currentPosition.x,
-			this.currentPosition.y,
+			this.currentPosition,
 			1,
-			buttons,
+			app.LOButtons.left,
 			modifier,
 		);
 

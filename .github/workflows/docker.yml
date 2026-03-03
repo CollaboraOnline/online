@@ -3,6 +3,7 @@ name: Build nightly docker image
 on:
   schedule:
     - cron: "30 0 * * *"
+  workflow_dispatch:
 
 jobs:
   docker:
@@ -32,7 +33,7 @@ jobs:
             ghcr.io/collaboraonline/code-nightly:${{ github.sha }}
       - name: Push container image
         uses: docker/build-push-action@v6
-        # if: github.ref == 'refs/heads/master' || github.event_name == 'release'
+        # if: github.ref == 'refs/heads/main' || github.event_name == 'release'
         with:
           push: true
           context: docker/from-source-gh-action/

@@ -11,10 +11,10 @@
 
 #pragma once
 
-#include "CharacterConverter.hpp"
+#include <CharacterConverter.hpp>
 #include <COOLWSD.hpp>
 #include <HttpRequest.hpp>
-#include <Log.hpp>
+#include <common/Log.hpp>
 #include <Storage.hpp>
 #include <common/Authorization.hpp>
 #include <net/HttpRequest.hpp>
@@ -61,6 +61,7 @@ public:
         const std::string& getFileUrl() const { return _fileUrl; }
         const std::string& getPostMessageOrigin() { return _postMessageOrigin; }
         const std::string& getHideUserList() { return _hideUserList; }
+        const std::string& getPresentationLeader() const { return _presentationLeader; }
 
         bool getUserCanWrite() const { return _userCanWrite; }
         void setHidePrintOption(bool hidePrintOption) { _hidePrintOption = hidePrintOption; }
@@ -185,6 +186,8 @@ public:
         bool _userCanOnlyComment = false;
         /// If user is limited to only managing redlines (accept/reject)
         bool _userCanOnlyManageRedlines = false;
+        /// Used for directly starting follow me presentation
+        std::string _presentationLeader;
     };
 
     WopiStorage(const Poco::URI& uri, const std::string& localStorePath,
@@ -220,12 +223,13 @@ public:
 
     /// uri format: http://server/<...>/wopi*/files/<id>/content
     std::string downloadStorageFileToLocal(const Authorization& auth, LockContext& lockCtx,
-                                           const std::string& templateUri) override;
+                                           const std::string& templateUri,
+                                           AdditionalFilePaths& additionalFileLocalPaths) override;
 
     std::size_t
     uploadLocalFileToStorageAsync(const Authorization& auth, LockContext& lockCtx,
                                   const std::string& saveAsPath, const std::string& saveAsFilename,
-                                  const bool isRename, const Attributes&,
+                                  bool isRename, const Attributes&,
                                   const std::shared_ptr<SocketPoll>& socketPoll,
                                   const AsyncUploadCallback& asyncUploadCallback) override;
 

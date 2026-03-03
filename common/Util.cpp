@@ -9,21 +9,60 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * General utility functions and helpers.
+ * Functions: String manipulation, encoding, process management, system info
+ */
+
 #include <config.h>
 #include <config_version.h>
+
+#include "Util.hpp"
+
+#include <common/Common.hpp>
+#include <common/Log.hpp>
+#include <common/Protocol.hpp>
+#include <common/Rectangle.hpp>
+#include <common/TraceEvent.hpp>
+
+#include <Poco/Base64Decoder.h>
+#include <Poco/Base64Encoder.h>
+#include <Poco/ConsoleChannel.h>
+#include <Poco/Exception.h>
+#include <Poco/Format.h>
+#include <Poco/HexBinaryEncoder.h>
+#include <Poco/LineEndingConverter.h>
+#include <Poco/TemporaryFile.h>
+#include <Poco/URI.h>
+#include <Poco/Util/Application.h>
+
+#include <atomic>
+#include <cassert>
+#include <chrono>
+#include <cstdio>
+#include <cstdlib>
+#include <cstring>
+#include <ctime>
+#include <iomanip>
+#include <iostream>
+#include <limits>
+#include <mutex>
+#include <random>
+#include <sstream>
+#include <string>
+#include <sys/stat.h>
+#include <sys/types.h>
+#include <thread>
 
 #ifndef COOLWSD_BUILDCONFIG
 #define COOLWSD_BUILDCONFIG
 #endif
 
-#include "Util.hpp"
-#include "Rectangle.hpp"
-
 #if !MOBILEAPP
-#include "SigHandlerTrap.hpp"
+#include <SigHandlerTrap.hpp>
 #endif
 
-#if !defined(__ANDROID__) && !defined(__EMSCRIPTEN__)
+#if defined(__GLIBC__)
 #  include <execinfo.h>
 #  include <cxxabi.h>
 #endif
@@ -32,20 +71,21 @@
 #  include <sys/syscall.h>
 #  include <sys/vfs.h>
 #  include <sys/resource.h>
+#  include <dlfcn.h>
 #elif defined __FreeBSD__
 #  include <sys/resource.h>
 #  include <sys/thr.h>
 #elif defined IOS
 #import <Foundation/Foundation.h>
 #endif
-#include <sys/stat.h>
-#include <sys/types.h>
 
+#ifndef _WIN32
 #include <sys/uio.h>
 #include <unistd.h>
 #include <dirent.h>
 #include <fcntl.h>
 #include <spawn.h>
+#endif
 
 #if defined __GLIBC__
 #include <malloc.h>
@@ -58,32 +98,9 @@
 #include <emscripten/console.h>
 #endif
 
-#include <atomic>
-#include <cassert>
-#include <chrono>
-#include <cstdio>
-#include <cstdlib>
-#include <cstring>
-#include <ctime>
-#include <iomanip>
-#include <iostream>
-#include <mutex>
-#include <unordered_map>
-#include <random>
-#include <sstream>
-#include <string>
-#include <thread>
-#include <limits>
-
-#include <Poco/Base64Encoder.h>
-#include <Poco/HexBinaryEncoder.h>
-#include <Poco/ConsoleChannel.h>
-#include <Poco/Exception.h>
-#include <Poco/Format.h>
-
-#include <Poco/TemporaryFile.h>
-#include <Poco/Util/Application.h>
-#include <Poco/URI.h>
+#ifdef _WIN32
+#include <processthreadsapi.h>
+#endif
 
 // for version info
 #include <Poco/Version.h>
@@ -95,10 +112,6 @@
 #include <png.h>
 #undef PNG_VERSION_INFO_ONLY
 
-#include "Log.hpp"
-#include "Protocol.hpp"
-#include "TraceEvent.hpp"
-#include "common/Common.hpp"
 
 namespace Util
 {
@@ -183,17 +196,17 @@ namespace Util
     void setKitInProcess(bool value) { kitInProcess = value; }
     bool isKitInProcess() { return isFuzzing() || isMobileApp() || kitInProcess; }
 
-    std::string replace(std::string result, const std::string& a, const std::string& b)
+    std::string replace(std::string result, const std::string& from, const std::string& to)
     {
-        const std::size_t aSize = a.size();
-        if (aSize > 0)
+        const std::size_t fromSize = from.size();
+        if (fromSize > 0)
         {
-            const std::size_t bSize = b.size();
+            const std::size_t toSize = to.size();
             std::string::size_type pos = 0;
-            while ((pos = result.find(a, pos)) != std::string::npos)
+            while ((pos = result.find(from, pos)) != std::string::npos)
             {
-                result.replace(pos, aSize, b);
-                pos += bSize; // Skip the replacee to avoid endless recursion.
+                result.replace(pos, fromSize, to);
+                pos += toSize; // Skip the replace to avoid endless recursion.
             }
         }
 
@@ -265,6 +278,22 @@ namespace Util
         if (!ThreadTid)
             thr_self(&ThreadTid);
         return ThreadTid;
+#elif defined __APPLE__
+        if (!ThreadTid)
+        {
+            uint64_t tid;
+            if (pthread_threadid_np(NULL, &tid) == 0)
+                ThreadTid = tid;
+        }
+        return ThreadTid;
+#elif defined _WIN32
+        if (!ThreadTid)
+        {
+            DWORD tid = GetThreadId(GetCurrentThread());
+            if (tid)
+                ThreadTid = tid;
+        }
+        return ThreadTid;
 #else
         static long threadCounter = 1;
         if (!ThreadTid)
@@ -278,6 +307,7 @@ namespace Util
 #if defined __linux__
         ::syscall(SYS_tgkill, getpid(), tid, signal);
 #else
+        (void) signal;
         LOG_WRN("No tgkill for thread " << tid);
 #endif
     }
@@ -311,20 +341,20 @@ namespace Util
                               << " is now called [" << s << ']');
 #elif defined IOS
         [[NSThread currentThread] setName:[NSString stringWithUTF8String:ThreadName]];
-        LOG_INF("Thread " << getThreadId() << ") is now called [" << s << ']');
+        LOG_INF("Thread " << getThreadId() << " is now called [" << s << ']');
 #elif defined __EMSCRIPTEN__
         emscripten_console_logf("COOL thread name: \"%s\"", s.c_str());
+#elif defined _WIN32
+        SetThreadDescription(GetCurrentThread(), string_to_wide_string(s).c_str());
+        LOG_INF("Thread " << getThreadId() << " is now called [" << s << ']');
 #endif
 
         // Emit a metadata Trace Event identifying this thread. This will invoke a different function
         // depending on which executable this is in.
-        TraceEvent::emitOneRecordingIfEnabled("{\"name\":\"thread_name\",\"ph\":\"M\",\"args\":{\"name\":\""
-                                              + s
-                                              + "\"},\"pid\":"
-                                              + std::to_string(Util::getProcessId())
-                                              + ",\"tid\":"
-                                              + std::to_string(Util::getThreadId())
-                                              + "},\n");
+        TraceEvent::emitOneRecordingIfEnabled(
+            R"({"name":"thread_name","ph":"M","args":{"name":")" + s + R"("},"pid":)" +
+            std::to_string(Util::getProcessId()) +
+            ",\"tid\":" + std::to_string(Util::getThreadId()) + "},\n");
     }
 
     const char *getThreadName()
@@ -339,6 +369,11 @@ namespace Util
 #elif defined IOS
             const char *const name = [[[NSThread currentThread] name] UTF8String];
             strncpy(ThreadName, name, sizeof(ThreadName) - 1);
+#elif defined _WIN32
+            PWSTR description;
+            if (SUCCEEDED(GetThreadDescription(GetCurrentThread(), &description)))
+                strncpy(ThreadName, wide_string_to_string(description).c_str(), sizeof(ThreadName) - 1);
+            LocalFree(description);
 #endif
             ThreadName[sizeof(ThreadName) - 1] = '\0';
         }
@@ -378,7 +413,7 @@ namespace Util
         zstdVersion += std::to_string(ZSTD_VERSION_MINOR) + ".";
         zstdVersion += std::to_string(ZSTD_VERSION_RELEASE);
 
-        std::string json = "{ \"Version\":     \"" + version +
+        std::string json = R"({ "Version":     ")" + version +
                            "\", "
                            "\"Hash\":        \"" +
                            hash +
@@ -407,9 +442,9 @@ namespace Util
                            Util::getProcessIdentifier() + "\", ";
 
         if (!timezone.empty())
-            json += "\"TimeZone\":     \"" + timezone + "\", ";
+            json += R"("TimeZone":     ")" + timezone + "\", ";
 
-        json += "\"Options\":     \"" + std::string(enableExperimental ? " (E)" : "") + "\" }";
+        json += R"("Options":     ")" + std::string(enableExperimental ? " (E)" : "") + "\" }";
         return json;
     }
 
@@ -503,6 +538,9 @@ namespace Util
         return std::string::npos;
     }
 
+    namespace
+    {
+
     // For copyToMatch/seekToMatch
     bool processToMatch(std::istream& in, std::ostream* out, std::string_view search)
     {
@@ -560,6 +598,8 @@ namespace Util
             out->write(buffer, carrySize);
         return false;
     }
+
+    } // namespace
 
     bool seekToMatch(std::istream& in, std::string_view search)
     {
@@ -657,7 +697,7 @@ namespace Util
 
 #endif // !MOBILEAPP
 
-    /// Returns the given system_clock time_point as string in the local time.
+    /// Returns the given system_clock time_point as string in GMT.
     /// Format: Thu Jan 27 03:45:27.123 2022
     std::string getSystemClockAsString(const std::chrono::system_clock::time_point time)
     {
@@ -669,7 +709,7 @@ namespace Util
         const int msFraction = msSinceEpoch.count() % 1000;
 
         std::tm tm;
-        time_t_to_localtime(t, tm);
+        time_t_to_gmtime(t, tm);
 
         char buffer[128] = { 0 };
         std::strftime(buffer, 80, "%a %b %d %H:%M:%S", &tm);
@@ -917,7 +957,7 @@ namespace Util
     Backtrace::Backtrace([[maybe_unused]] const int maxFrames, const int skip)
         : skipFrames(skip)
     {
-#if defined(__linux) && !defined(__ANDROID__) && !defined(__EMSCRIPTEN__)
+#if defined(__GLIBC__)
         std::vector<void*> backtraceBuffer(maxFrames + skip, nullptr);
 
         const int numSlots = ::backtrace(backtraceBuffer.data(), backtraceBuffer.size());
@@ -944,6 +984,8 @@ namespace Util
                 free(rawSymbols);
             }
         }
+#else
+        (void) maxFrames;
 #endif
         if (0 == _frames.size())
         {
@@ -1016,6 +1058,26 @@ namespace Util
         encoder << input;
         encoder.close();
         return oss.str();
+    }
+
+    std::string base64EncodeRemovingNewLines(const std::string_view& input)
+    {
+        std::ostringstream oss;
+        // Use a line ending converter to remove these CRLF.
+        Poco::OutputLineEndingConverter lineEndingConv(oss, "");
+        Poco::Base64Encoder encoder(lineEndingConv);
+        encoder << input;
+        encoder.close();
+        return oss.str();
+    }
+
+    std::string base64Decode(const std::string& input)
+    {
+        std::istringstream istr(input);
+        std::string decoded;
+        Poco::Base64Decoder decoder(istr);
+        decoder >> decoded;
+        return decoded;
     }
 
 } // namespace Util

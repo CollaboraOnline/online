@@ -8,6 +8,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
+
 /*
  * The main entry point for the LibreOfficeKit process serving
  * a document editing session.
@@ -15,24 +16,29 @@
 
 #include <config.h>
 
-#include <Poco/URI.h>
+// Work around a problem in Poco 1.14.2 and/or Visual Studio and clang-cl: Incude <typeinfo> here.
+#include <typeinfo>
 
-#include <sysexits.h>
-#include <sys/wait.h>
+#include "KitWebSocket.hpp"
+
+#include <common/Anonymizer.hpp>
+#include <common/JsonUtil.hpp>
+#include <common/Seccomp.hpp>
+#include <common/SigUtil.hpp>
+#include <common/TraceEvent.hpp>
+#include <common/Uri.hpp>
+#include <common/Util.hpp>
+#include <kit/ChildSession.hpp>
+#include <kit/Kit.hpp>
+
+#include <Poco/URI.h>
 
 #include <sys/types.h>
 
-#include <common/Anonymizer.hpp>
-#include <common/Seccomp.hpp>
-#include <common/JsonUtil.hpp>
-#include <common/TraceEvent.hpp>
-#include <common/Uri.hpp>
-
-#include "Kit.hpp"
-#include "ChildSession.hpp"
-#include "SigUtil.hpp"
-#include "Util.hpp"
-#include "KitWebSocket.hpp"
+#ifndef _WIN32
+#include <sys/wait.h>
+#include <sysexits.h>
+#endif
 
 using Poco::Exception;
 
@@ -87,7 +93,7 @@ void KitWebSocketHandler::handleMessage(const std::vector<char>& data)
 
         if (!_document)
         {
-#ifndef IOS
+#if !defined(IOS) && !defined(QTAPP) && !defined(MACOS) && !defined(_WIN32)
             Util::setThreadName("kit" SHARED_DOC_THREADNAME_SUFFIX + docId);
 #endif
             _document = std::make_shared<Document>(
@@ -127,11 +133,11 @@ void KitWebSocketHandler::handleMessage(const std::vector<char>& data)
         }
         else
         {
-#ifdef IOS
+#if defined(IOS) || defined(QTAPP) || defined(MACOS) || defined(_WIN32)
             LOG_INF("Setting our KitSocketPoll's termination flag due to 'exit' command.");
-            std::unique_lock<std::mutex> lock(_ksPoll->terminationMutex);
-            _ksPoll->terminationFlag = true;
-            _ksPoll->terminationCV.notify_all();
+            std::unique_lock<std::mutex> lock(_ksPoll->termination->mutex);
+            _ksPoll->termination->flag = true;
+            _ksPoll->termination->cv.notify_all();
 #else
             LOG_INF("Setting TerminationFlag due to 'exit' command.");
             SigUtil::setTerminationFlag();
@@ -208,11 +214,11 @@ void KitWebSocketHandler::onDisconnect()
                 << "] connection lost without exit arriving from wsd. Setting TerminationFlag");
         SigUtil::setTerminationFlag();
     }
-#ifdef IOS
+#if defined(IOS) || defined(QTAPP) || defined(MACOS) || defined(_WIN32)
     {
-        std::unique_lock<std::mutex> lock(_ksPoll->terminationMutex);
-        _ksPoll->terminationFlag = true;
-        _ksPoll->terminationCV.notify_all();
+        std::unique_lock<std::mutex> lock(_ksPoll->termination->mutex);
+        _ksPoll->termination->flag = true;
+        _ksPoll->termination->cv.notify_all();
     }
 #endif
     _ksPoll.reset();
@@ -242,6 +248,21 @@ BgSaveChildWebSocketHandler::~BgSaveChildWebSocketHandler()
 }
 
 // Kit handler for messages from transient background save Kit
+
+BgSaveParentWebSocketHandler::BgSaveParentWebSocketHandler(
+    const std::string& socketName, const pid_t childPid, std::shared_ptr<Document> document,
+    const std::shared_ptr<ChildSession>& session)
+    : WebSocketHandler(/* isClient = */ false, /* isMasking */ false)
+    , _childPid(childPid)
+    , _saveCompleted(false)
+    , _socketName(socketName)
+    , _document(std::move(document))
+    , _session(session)
+{
+    _document->bgSaveStarted();
+}
+
+BgSaveParentWebSocketHandler::~BgSaveParentWebSocketHandler() { _document->bgSaveEnded(); }
 
 void BgSaveParentWebSocketHandler::terminateSave(const std::string &reason)
 {
@@ -299,7 +320,7 @@ void BgSaveParentWebSocketHandler::handleMessage(const std::vector<char>& data)
              object->get("jsontype").toString() == "formulabar"))
             // white-listing to avoid popup & dialog & other interactive errors
         {
-            LOG_DBG("Unexpected but benign jsdialog message from bgsave process " +
+            LOG_DBG("Unexpected but benign jsdialog message from bgsave process " <<
                     COOLProtocol::getAbbreviatedMessage(data));
             return;
         }
@@ -343,16 +364,20 @@ void BgSaveParentWebSocketHandler::onDisconnect()
 {
     LOG_TRC("Disconnected background web socket to child " << _childPid);
 
-#if !MOBILEAPP
-    // reap and de-zombify children.
-    const auto [ret, sig] = SigUtil::reapZombieChild(_childPid, /*sighandler=*/false);
-    if (sig)
-        reportFailedSave(std::string("crashed with status ") + SigUtil::signalName(sig));
-    else if (ret <= 0)
-        LOG_WRN("Background save process disconnected but not terminated " << _childPid);
-#endif
+    if constexpr (!Util::isMobileApp())
+    {
+        // reap and de-zombify children.
+        const auto [ret, sig] = SigUtil::reapZombieChild(_childPid, /*sighandler=*/false);
+        if (sig)
+            reportFailedSave(std::string("crashed with status ") + SigUtil::signalName(sig));
+        else if (ret <= 0)
+            LOG_WRN("Background save process disconnected but not terminated " << _childPid);
+    }
+
     if (!_saveCompleted)
         reportFailedSave("terminated without saving");
+
+    WebSocketHandler::onDisconnect(); // Invoke the default handler.
 }
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

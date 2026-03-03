@@ -9,7 +9,14 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * Simple HTTP/WebSocket client for testing and benchmarking purposes.
+ * Application: command-line test client using Poco networking
+ */
+
 #include <config.h>
+
+#include <common/Util.hpp>
 
 #include <cstdlib>
 #include <cstring>
@@ -17,8 +24,6 @@
 #include <thread>
 #include <memory>
 #include <assert.h>
-
-#include <common/Globals.hpp>
 
 #include <Poco/Net/HTMLForm.h>
 #include <Poco/Net/HTTPClientSession.h>
@@ -36,8 +41,6 @@
 #include <Poco/Util/Option.h>
 #include <Poco/Util/OptionSet.h>
 #include <Poco/Runnable.h>
-
-#include <Util.hpp>
 
 using Poco::Runnable;
 using Poco::Net::HTTPRequest;

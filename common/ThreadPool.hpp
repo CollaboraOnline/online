@@ -20,7 +20,7 @@
 #include <unordered_map>
 #include <vector>
 
-#include <Util.hpp>
+#include <common/Util.hpp>
 
 class ThreadPool
 {
@@ -46,7 +46,7 @@ public:
     {
 #if WASMAPP
         // Leave it at that.
-#elif MOBILEAPP && !defined(GTKAPP)
+#elif MOBILEAPP
         _maxConcurrency = std::max<int>(std::thread::hardware_concurrency(), 2);
 #else
         // coverity[tainted_data_return] - we trust the contents of this variable

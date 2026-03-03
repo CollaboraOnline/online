@@ -143,6 +143,7 @@ window.L.Control.DocumentRepair = window.L.Control.extend({
 						text: '',
 						enabled: true,
 						entries: this.actions,
+						sortLocally: true,
 					},
 				},
 				callback: this._onAction.bind(this)

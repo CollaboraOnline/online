@@ -30,6 +30,11 @@ function enableEditingMobile() {
 			.should('be.visible');
 	});
 
+	// Wait until core has processed outstanding input and has returned to idle.
+	cy.getFrameWindow().then((win) => {
+		helper.processToIdle(win);
+	});
+
 	cy.log('<< enableEditingMobile - end');
 }
 
@@ -230,7 +235,7 @@ function openTextPropertiesPanel() {
 
 	cy.cGet('#TextPropertyPanel, .TextPropertyPanel').click();
 
-	cy.cGet('#Bold').should('be.visible');
+	cy.cGet('.unoBold').should('be.visible');
 
 	cy.log('<< openTextPropertiesPanel - end');
 }
@@ -366,6 +371,10 @@ function pressPushButtonOfDialog(name) {
 	cy.log('<< pressPushButtonOfDialog - end');
 }
 
+function getCompactIcon(unoCommand) {
+	return cy.cGet('#toolbar-down .uno' + unoCommand + ':visible');
+}
+
 module.exports.enableEditingMobile = enableEditingMobile;
 module.exports.longPressOnDocument = longPressOnDocument;
 module.exports.openHamburgerMenu = openHamburgerMenu;
@@ -386,3 +395,4 @@ module.exports.insertImage = insertImage;
 module.exports.deleteImage = deleteImage;
 module.exports.insertComment = insertComment;
 module.exports.pressPushButtonOfDialog = pressPushButtonOfDialog;
+module.exports.getCompactIcon = getCompactIcon;

@@ -9,9 +9,14 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * HAProxy protocol support for client IP forwarding.
+ * Functions: parseProxyHeader()
+ */
+
 #pragma once
 
-#include "StateEnum.hpp"
+#include <StateEnum.hpp>
 #include <map>
 #include <memory>
 #include <net/Socket.hpp>
@@ -22,7 +27,7 @@
  *
  * we use a trivial framing: [T(ext)|B(inary)]<hex-serial->\n<hex-length>\n<content>\n
  */
-class ProxyProtocolHandler : public ProtocolHandlerInterface
+class ProxyProtocolHandler final : public ProtocolHandlerInterface
 {
 public:
     ProxyProtocolHandler() :
@@ -30,8 +35,6 @@ public:
         _outSerial(1)
     {
     }
-
-    virtual ~ProxyProtocolHandler() { }
 
     /// Will be called exactly once by setHandler
     void onConnect(const std::shared_ptr<StreamSocket>& /* socket */) override {}

@@ -9,9 +9,12 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-#pragma once
+/*
+ * Core socket abstractions: non-blocking I/O, polling, and protocol handling.
+ * Classes: Socket, StreamSocket, SocketPoll, ProtocolHandlerInterface, SocketDisposition
+ */
 
-#include <config.h>
+#pragma once
 
 #if !MOBILEAPP
 #include <poll.h>
@@ -36,13 +39,13 @@
 #include <thread>
 
 #include <common/StateEnum.hpp>
-#include "Log.hpp"
-#include "NetUtil.hpp"
-#include "Util.hpp"
-#include "Buffer.hpp"
-#include "SigUtil.hpp"
+#include <common/Log.hpp>
+#include <NetUtil.hpp>
+#include <common/Util.hpp>
+#include <Buffer.hpp>
+#include <SigUtil.hpp>
 
-#include "FakeSocket.hpp"
+#include <FakeSocket.hpp>
 
 #ifdef __linux__
 #define HAVE_ABSTRACT_UNIX_SOCKETS
@@ -75,6 +78,7 @@ std::ostream& operator<<(std::ostream& os, const Socket &s);
 
 class Watchdog;
 class SocketPoll;
+class UnxSocketPath;
 
 /// Helper to allow us to easily defer the movement of a socket
 /// between polls to clarify thread ownership.
@@ -83,7 +87,7 @@ class SocketDisposition final
     STATE_ENUM(Type, CONTINUE, CLOSED, TRANSFER);
 
 public:
-    typedef std::function<void(const std::shared_ptr<Socket> &)> MoveFunction;
+    using MoveFunction = std::function<void(const std::shared_ptr<Socket>&)>;
 
     SocketDisposition(const std::shared_ptr<Socket> &socket)
         : _socket(socket)
@@ -257,14 +261,9 @@ public:
             const int val = 1;
             if (::setsockopt(_fd, IPPROTO_TCP, TCP_NODELAY, (char*)&val, sizeof(val)) == -1)
             {
-                static std::once_flag once;
-                std::call_once(once,
-                               [&]()
-                               {
-                                   LOG_WRN("Failed setsockopt TCP_NODELAY. Will not report further "
-                                           "failures to set TCP_NODELAY: "
-                                           << strerror(errno));
-                               });
+                LOG_WRN_ONCE("Failed setsockopt TCP_NODELAY. Will not report further "
+                             "failures to set TCP_NODELAY: "
+                             << strerror(errno));
             }
         }
     }
@@ -311,7 +310,7 @@ public:
     }
 
     /// Gets the actual send buffer size in bytes, -1 for failure.
-    int getSocketBufferSize() const
+    [[nodiscard]] int getSocketBufferSize() const
     {
 #if !MOBILEAPP
         int size;
@@ -567,8 +566,11 @@ protected:
     /// Sets the context used by logPrefix.
     void setLogContext(int fd) { _fdSocket = fd; }
 
+    /// Returns the log prefix string for use outside of member context.
+    std::string getLogPrefix() const { return '#' + std::to_string(_fdSocket) + ": "; }
+
     /// Used by the logging macros to automatically log a context prefix.
-    inline void logPrefix(std::ostream& os) const { os << '#' << _fdSocket << ": "; }
+    inline void logPrefix(std::ostream& os) const { os << getLogPrefix(); }
 
 public:
     ProtocolHandlerInterface()
@@ -737,7 +739,7 @@ class MessageHandlerInterface :
 {
 protected:
     std::shared_ptr<ProtocolHandlerInterface> _protocol;
-    MessageHandlerInterface(std::shared_ptr<ProtocolHandlerInterface> protocol)
+    explicit MessageHandlerInterface(std::shared_ptr<ProtocolHandlerInterface> protocol)
         : _protocol(std::move(protocol))
     {
     }
@@ -989,17 +991,17 @@ public:
                                 const std::shared_ptr<WebSocketHandler>& websocketHandler);
 
     bool insertNewUnixSocket(
-        const std::string &location,
+        const UnxSocketPath &location,
         const std::string &pathAndQuery,
         const std::shared_ptr<WebSocketHandler>& websocketHandler,
         const std::vector<int>* shareFDs = nullptr);
 #else
-    void insertNewFakeSocket(
+    bool insertNewFakeSocket(
         int peerSocket,
         const std::shared_ptr<ProtocolHandlerInterface>& websocketHandler);
 #endif
 
-    typedef std::function<void()> CallbackFn;
+    using CallbackFn = std::function<void()>;
 
     /// Add a callback to be invoked in the polling thread
     void addCallback(CallbackFn fn)
@@ -1117,7 +1119,8 @@ private:
         _pollFds[size].revents = 0;
     }
 
-    std::string logInfo() const {
+    [[nodiscard]] std::string logInfo() const
+    {
         std::ostringstream os;
         os << "SocketPoll[this " << std::hex << this << std::dec
            << ", thread[name " << _name
@@ -1407,7 +1410,7 @@ public:
         msg.msg_iovlen = 1;
 
         const size_t fds_size = sizeof(int) * fds.size();
-        auto adata = static_cast<char*>(alloca(CMSG_SPACE(fds_size)));
+        auto* adata = static_cast<char*>(alloca(CMSG_SPACE(fds_size)));
         cmsghdr *cmsg = (cmsghdr*)adata;
         cmsg->cmsg_type = SCM_RIGHTS;
         cmsg->cmsg_level = SOL_SOCKET;
@@ -1475,7 +1478,7 @@ public:
                         else
                         {
                             // Unexpected read error while draining the read buffer.
-                            LOG_SYS_ERRNO(last_errno, "Read failed, have " << _inBuffer.size()
+                            LOG_ERR_ERRNO(last_errno, "Read failed, have " << _inBuffer.size()
                                                                            << " buffered bytes");
                         }
                     }
@@ -1527,7 +1530,11 @@ public:
                 len = readData(buf.data(), available);
                 assert(len == available);
                 notifyBytesRcvd(len);
-                assert(_inBuffer.empty());
+                // It might happen that several messages need to be buffered if they arrive quicker
+                // than we can handle them. In the non-MOBILEAPP case they are WebSocket messages so
+                // they already contain a header indicating their length. Not so in the MOBILEAPP
+                // case, so prefix them with a length header.
+                _inBuffer.append((const char*)&len, sizeof(ssize_t));
                 _inBuffer.append(buf.data(), len);
             }
         }
@@ -1555,13 +1562,13 @@ public:
     /// Create a socket of type TSocket derived from StreamSocket given an FD and a handler.
     /// We need this helper since the handler needs a shared_ptr to the socket
     /// but we can't have a shared_ptr in the ctor.
-    template <typename TSocket,
-              std::enable_if_t<std::is_base_of_v<StreamSocket, TSocket>, bool> = true>
-    static std::shared_ptr<TSocket> create(std::string hostname, int fd, Type type,
-                                           bool isClient, HostType hostType,
-                                           std::shared_ptr<ProtocolHandlerInterface> handler,
-                                           ReadType readType = ReadType::NormalRead,
-                                           std::chrono::steady_clock::time_point creationTime = std::chrono::steady_clock::now())
+    template <typename TSocket>
+    static std::shared_ptr<TSocket>
+    create(std::string hostname, int fd, Type type, bool isClient, HostType hostType,
+           std::shared_ptr<ProtocolHandlerInterface> handler,
+           ReadType readType = ReadType::NormalRead,
+           std::chrono::steady_clock::time_point creationTime = std::chrono::steady_clock::now())
+        requires(std::is_base_of_v<StreamSocket, TSocket>)
     {
         // Without a handler we make no sense object.
         if (!handler)
@@ -1606,18 +1613,17 @@ public:
     /// returns true if we did any re-sizing/movement of _inBuffer.
     bool compactChunks(MessageMap& map);
 
-    ssize_t readHeader(const std::string_view clientName, std::istream& message,
-                       size_t messagesize, Poco::Net::HTTPRequest& request,
+    ssize_t readHeader(std::string_view clientName, std::istream& message, size_t messagesize,
+                       Poco::Net::HTTPRequest& request,
                        std::chrono::duration<float, std::milli> delayMs);
 
     /// Detects if we have an HTTP header in the provided message and
     /// populates a request for that.
-    bool parseHeader(const std::string_view clientName, size_t headerSize, size_t bufferSize,
+    bool parseHeader(std::string_view clientName, size_t headerSize, size_t bufferSize,
                      const Poco::Net::HTTPRequest& request,
-                     std::chrono::duration<float, std::milli> delayMs,
-                     MessageMap& map);
+                     std::chrono::duration<float, std::milli> delayMs, MessageMap& map);
 
-    void handleExpect(const std::string_view expect);
+    void handleExpect(std::string_view expect);
 
     bool checkChunks(const Poco::Net::HTTPRequest& request, size_t headerSize, MessageMap& map,
                      std::chrono::duration<float, std::milli> delayMs);
@@ -1829,7 +1835,7 @@ public:
 
                 // 0 len is unspecified result, according to man write(2).
                 if (len < 0 && last_errno != EAGAIN && last_errno != EWOULDBLOCK)
-                    LOG_SYS_ERRNO(last_errno, "Socket write returned " << len);
+                    LOG_ERR_ERRNO(last_errno, "Socket write returned " << len);
                 else if (len <= 0) // Trace errno for debugging, even for "unspecified result."
                     LOGA_TRC(Socket, "Write failed, have " << _outBuffer.size() << " buffered bytes ("
                              << Util::symbolicErrno(last_errno) << ": "

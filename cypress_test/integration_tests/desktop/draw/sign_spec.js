@@ -8,6 +8,8 @@ describe(['tagdesktop'], 'Signature operations.', function() {
 		// Given a document that can be signed:
 		helper.setupAndLoadDocument('draw/sign.pdf', /*isMultiUser=*/false, /*copyCertificates=*/true);
 
+		cy.wait(1000); // wait for resize after the first tile is received
+
 		// When visually signing that document:
 		cy.cGet('#menu-insert').click();
 		// Insert signature line/shape:
@@ -23,6 +25,6 @@ describe(['tagdesktop'], 'Signature operations.', function() {
 		cy.cGet('#menu-signature').click();
 
 		// Then make sure the resulting signature is valid:
-		cy.cGet('#signstatus-button div').should('have.class', 'sign_ok');
+		cy.cGet('[id^="signstatus"] div').should('have.class', 'sign_ok');
 	});
 });

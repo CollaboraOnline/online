@@ -8,19 +8,19 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
+
 /*
  * Benchmark various bits of cool code.
  */
 
-#include "config.h"
+#include <config.h>
 
 #include <chrono>
 
-#include <common/Globals.hpp>
 #include <common/Png.hpp>
 #include <kit/Delta.hpp>
 
-typedef std::vector<char> Pixmap;
+using Pixmap = std::vector<char>;
 
 std::vector<Pixmap> pixmaps;
 

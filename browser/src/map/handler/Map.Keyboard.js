@@ -313,11 +313,13 @@ window.L.Map.Keyboard = window.L.Handler.extend({
 
 		window.L.DomEvent.on(this._map.getContainer(), 'keydown keyup keypress', this._onKeyDown, this);
 		window.L.DomEvent.on(window.document, 'keydown', this._globalKeyEvent, this);
+		window.document.addEventListener('keyup', this._globalKeyUp.bind(this), true);
 	},
 
 	removeHooks: function () {
 		window.L.DomEvent.off(this._map.getContainer(), 'keydown keyup keypress', this._onKeyDown, this);
 		window.L.DomEvent.off(window.document, 'keydown', this._globalKeyEvent, this);
+		window.document.removeEventListener('keyup', this._globalKeyUp.bind(this));
 	},
 
 	_ignoreKeyEvent: function(ev) {
@@ -400,6 +402,10 @@ window.L.Map.Keyboard = window.L.Handler.extend({
 		if (this._map.uiManager.isUIBlocked())
 			return;
 
+		if (app.UI.notebookbarAccessibility) {
+			app.UI.notebookbarAccessibility.onDocumentKeyDown(ev);
+		}
+
 		if (ev.shortCutActivated === true) {
 			window.app.console.log('Shortcut for: ' + ev.code + ' already handled');
 			return;
@@ -415,7 +421,6 @@ window.L.Map.Keyboard = window.L.Handler.extend({
 			return;
 		}
 		else if (this._map._docLayer && (this._map._docLayer._docType === 'presentation' || this._map._docLayer._docType === 'drawing') && this._map._docLayer._preview.partsFocused === true) {
-
 			if (!this.modifier && (ev.keyCode === this.keyCodes.DOWN || ev.keyCode === this.keyCodes.UP ||
 				               ev.keyCode === this.keyCodes.RIGHT || ev.keyCode === this.keyCodes.LEFT ||
 				               ev.keyCode === this.keyCodes.PAGEDOWN || ev.keyCode === this.keyCodes.PAGEUP ||
@@ -440,21 +445,31 @@ window.L.Map.Keyboard = window.L.Handler.extend({
 					this._map.deletePage(this._map._docLayer._selectedPart);
 				}
 				ev.preventDefault();
-				return;
 			}
-			else if (ev.ctrlKey) {
-				if (!ev.altKey && ev.keyCode === this.keyCodes.HOME)
-					this._map.setPart(0);
-				else if (!ev.altKey && ev.keyCode === this.keyCodes.END)
-					this._map.setPart(this._map._docLayer._parts - 1);
-				else {
-					this._handleCtrlCommand(ev);
-					return;
-				}
+			else if (ev.ctrlKey && !ev.altKey && ev.keyCode === this.keyCodes.HOME)
+				app.map.setPart(0);
+			else if (ev.ctrlKey && !ev.altKey && ev.keyCode === this.keyCodes.END)
+				app.map.setPart(app.map._docLayer._parts - 1);
+			else if (ev.ctrlKey && !ev.altKey && this.keyCodes.C.includes(ev.keyCode)) {
+				app.map._clip.clearSelection();
+				app.map._clip.setTextSelectionType('slide');
 			}
-			else {
+			else if (!ev.ctrlKey) {
 				this._map._docLayer._preview.partsFocused = false;
+				app.map._clip.clearSelection();
+				app.map.focus();
 			}
+		}
+	},
+
+	_globalKeyUp: function (ev) {
+		if (this._map.uiManager.isUIBlocked()) {
+			return;
+		}
+
+		if (app.UI.notebookbarAccessibility &&
+		    app.UI.notebookbarAccessibility.accessibilityInputElement !== document.activeElement) {
+			app.UI.notebookbarAccessibility.onDocumentKeyUp(ev);
 		}
 	},
 
@@ -696,13 +711,6 @@ window.L.Map.Keyboard = window.L.Handler.extend({
 			return true;
 		}
 
-		// Handles paste special. The "Your browser" thing seems to indicate that this code
-		// snippet is relevant in a browser only.
-		if (!window.ThisIsAMobileApp && e.ctrlKey && e.shiftKey && e.altKey && this.keyCodes.V.includes(e.keyCode)) {
-			this._map._clip._openPasteSpecialPopup();
-			return true;
-		}
-
 		// Handles unformatted paste
 		if (this._isCtrlKey(e) && e.shiftKey && this.keyCodes.V.includes(e.keyCode)) {
 			return true;
@@ -794,7 +802,11 @@ window.L.Map.Keyboard = window.L.Handler.extend({
 			return false;
 		}
 		/* Without specifying the key type, the messages are sent twice (both keydown/up) */
-		if (e.type === 'keydown' && window.ThisIsAMobileApp) {
+
+		// Don't do this in CODA-W, there it is the sending of
+		// the PASTE message in document,onpaste() in
+		// Clipboard.js that does the paste.
+		if (e.type === 'keydown' && window.ThisIsAMobileApp && !window.ThisIsTheWindowsApp && !window.ThisIsTheQtApp) {
 			if (this.keyCodes.C.includes(e.keyCode)) {
 				app.socket.sendMessage('uno .uno:Copy');
 				return true;

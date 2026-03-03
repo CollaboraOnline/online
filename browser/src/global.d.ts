@@ -11,6 +11,20 @@
 
 // TypeScript declarations for the global scope (e.g., window, document, etc.)
 
+interface DocumentMetadata {
+	modifiedBy: string;
+	modificationDate: string;
+}
+
+interface CompareDocumentsMetadata {
+	otherDocument: DocumentMetadata;
+	thisDocument: DocumentMetadata;
+}
+
+interface CompareDocumentProperties {
+	metadata: CompareDocumentsMetadata;
+}
+
 interface COOLTouch {
 	isTouchEvent: (e: Event | HammerInput) => boolean;
 	touchOnly: <F extends (e: Event | HammerInput) => void>(
@@ -107,11 +121,125 @@ declare namespace L {
     const map: window.L.Map;
 }
 */
-// Add the app declaration
-declare const app: {
+
+interface AppInterface {
 	sectionContainer: CanvasSectionContainer;
+	LOUtil: typeof LOUtil;
+	socket: Socket;
+	setPermission: (permission: string) => void;
+	util: typeof Util;
+	CSections: any;
+	activeDocument: null | DocumentBase;
+	definitions: any;
+	dpiScale: number;
+	canvasSize: null | cool.SimplePoint;
+	viewId: null | number;
+	isAdminUser: null | boolean;
+	UNOModifier: { SHIFT: number; CTRL: number; ALT: number; CTRLMAC: number };
+	JSButtons: {
+		left: number;
+		middle: number;
+		right: number;
+	};
+	LOButtons: {
+		left: number;
+		middle: number;
+		right: number;
+	};
+	calc: {
+		cellAddress: null | cool.SimplePoint;
+		cellCursorVisible: boolean;
+		cellCursorRectangle: null | cool.SimpleRectangle;
+		decimalSeparator: null | string; // Current cell's decimal separator.
+		otherCellCursors: any;
+		splitCoordinate: null | cool.SimplePoint;
+		partHashes: null | Array<any>; // hashes used to distinguish parts (we use sheet name)
+		autoFilterCell: any; // The cell of the current autofilter popup.
+		pivotTableFilterCell: any; // The cell of the current pivot table filter popup.
+		isRTL(): boolean;
+		isSelectedPartSheetView(): boolean;
+		isSelectedPartSheetViewSynced(): boolean;
+	};
+	impress: {
+		partList: any; // Info for parts.
+		notesMode: boolean;
+		twipsCorrection: number;
+		getIndexFromSlideHash(hash: number): number;
+		isSlideHidden(partNo: number): boolean;
+		areAllSlidesHidden(): boolean;
+	};
+	writer: {
+		compareDocumentProperties: CompareDocumentProperties | null;
+		compareDocumentOldFileName: string | null;
+	};
+	IconUtil: typeof IconUtil;
+	Evented: typeof Evented;
+	Log: Logger;
+	DebugManager: typeof DebugManager;
+	dispatcher: any;
+	layoutingService: any;
+	serverConnectionService: any;
+	timerRegistry: any;
+	twipsToPixels: number;
+	pixelsToTwips: number;
+	accessibilityState: boolean;
+	UI: {
+		language: {
+			fromURL: string;
+			fromBrowser: string;
+			notebookbarAccessibility: any;
+		};
+		notebookbarAccessibility: any;
+		horizontalRuler: HRuler | null;
+		verticalRuler: VRuler | null;
+	};
+	colorPalettes: any; // TODO declare according to Widget.ColorPicker.ts
+	colorNames: any; // TODO declare according to Widget.ColorPicker.ts
+	console: Console;
+	map: any; // TODO should be window.L.Map
+	// file defined in: src/docstate.ts
+	file: {
+		editComment: boolean;
+		allowManageRedlines: boolean;
+		readOnly: boolean;
+		permission: string;
+		viewModeExtensions: string;
+		disableSidebar: boolean;
+		textCursor: {
+			visible: boolean;
+			rectangle: null | cool.SimpleRectangle;
+		};
+		fileBasedView: boolean;
+		writer: {
+			pageRectangleList: Array<any>;
+		};
+		exportFormats: Array<any>;
+	};
+	roundedDpiScale: number;
+	following: {
+		mode: string;
+		viewId: number;
+	};
+	tile: {
+		size: null | cool.SimplePoint;
+	};
+	languages: Array<{ translated: string; neutral: string; iso: string }>;
+	favouriteLanguages: Array<string>;
+	colorLastSelection: any;
+	serverAudit: any;
+	events: DocEvents;
+	showNavigator: boolean;
+
+	// Below are only used for Cypress tests
+	allDialogs?: string[];
+	a11yValidator?: A11yValidator;
+	A11yValidatorException?: typeof A11yValidatorException;
+	serverInfo: ServerInfo;
 	[key: string]: any; // other properties as needed
-};
+}
+
+// Add the app declaration
+declare const app: AppInterface;
 
 // Extend the global Document interface
 interface Document {
@@ -137,6 +265,18 @@ interface SockInterface {
 
 	readyState: 0 | 1 | 2 | 3;
 	binaryType: 'blob' | 'arraybuffer';
+}
+
+interface ServerInfo {
+	coolwsdVersion: string;
+	coolwsdHash: string;
+	lokitVersionName: string;
+	lokitVersionNumber: string;
+	lokitVersionSuffix: string;
+	lokitHash: string;
+	serverId: string;
+	osInfo: string;
+	wsdOptions: any;
 }
 
 interface ErrorMessages {
@@ -177,94 +317,16 @@ interface ErrorMessages {
 	};
 }
 
+// Accessibility validator interface for Cypress tests
+interface A11yValidator {
+	checkWidget(type: string, element: HTMLElement): void;
+}
+
 // Extend the global Window interface
 // Defined in: js/global.js
 interface Window {
 	// app defined in: js/bundle.js
-	app: {
-		UNOModifier: any;
-		JSButtons: any;
-		LOButtons: any;
-		CSections: any;
-		activeDocument: null | DocumentBase;
-		definitions: any;
-		dpiScale: number;
-		canvasSize: null | cool.SimplePoint;
-		viewId: null | number;
-		isAdminUser: null | boolean;
-		calc: {
-			cellAddress: null | cool.SimplePoint;
-			cellCursorVisible: boolean;
-			cellCursorRectangle: null | cool.SimpleRectangle;
-			decimalSeparator: null | string; // Current cell's decimal separator.
-			otherCellCursors: any;
-			splitCoordinate: null | cool.SimplePoint;
-			partHashes: null | Array<any>; // hashes used to distinguish parts (we use sheet name)
-			autoFilterCell: any; // The cell of the current autofilter popup.
-			pivotTableFilterCell: any; // The cell of the current pivot table filter popup.
-		};
-		impress: {
-			partList: any; // Info for parts.
-			notesMode: boolean;
-			twipsCorrection: number;
-		};
-		util: any;
-		LOUtil: any;
-		IconUtil: any;
-		Evented: any;
-		Log: any;
-		DebugManager: any;
-		dispatcher: any;
-		layoutingService: any;
-		serverConnectionService: any;
-		twipsToPixels: number;
-		pixelsToTwips: number;
-		accessibilityState: boolean;
-		UI: {
-			language: {
-				fromURL: string;
-				fromBrowser: string;
-				notebookbarAccessibility: any;
-			};
-		};
-		colorPalettes: any; // TODO declare according to Widget.ColorPicker.ts
-		colorNames: any; // TODO declare according to Widget.ColorPicker.ts
-		console: Console;
-		map: any; // TODO should be window.L.Map
-		// file defined in: src/docstate.ts
-		file: {
-			editComment: boolean;
-			allowManageRedlines: boolean;
-			readOnly: boolean;
-			permission: string;
-			disableSidebar: boolean;
-			textCursor: {
-				visible: boolean;
-				rectangle: null | cool.SimpleRectangle;
-			};
-			fileBasedView: boolean;
-			writer: {
-				pageRectangleList: Array<any>;
-				multiPageView: boolean;
-			};
-			exportFormats: Array<any>;
-		};
-		roundedDpiScale: number;
-		following: {
-			mode: string;
-			viewId: number;
-		};
-		tile: {
-			size: null | cool.SimplePoint;
-		};
-		socket: any;
-		languages: Array<string>;
-		favouriteLanguages: Array<string>;
-		colorLastSelection: any;
-		serverAudit: any;
-		events: any;
-		showNavigator: boolean;
-	};
+	app: AppInterface;
 	// coolParams defined in: js/global.js
 	coolParams: {
 		p: URLSearchParams;
@@ -275,6 +337,8 @@ interface Window {
 		isMobile(): boolean;
 		isDesktop(): boolean;
 		isTablet(): boolean;
+		isCODesktop(): boolean;
+		isNewDocument(): boolean;
 		getDeviceFormFactor(): string;
 	};
 	prefs: {
@@ -289,6 +353,7 @@ interface Window {
 	};
 	KeyboardShortcuts: KeyboardShortcuts;
 
+	starterScreen: boolean;
 	allowUpdateNotification: boolean;
 	autoShowWelcome: boolean;
 	bundlejsLoaded: boolean;
@@ -296,6 +361,7 @@ interface Window {
 	documentSigningEnabled: boolean;
 	deviceFormFactor?: string;
 	enableAccessibility: boolean;
+	enableExperimentalFeatures: boolean;
 	enableDebug: boolean;
 	enableMacrosExecution: boolean;
 	enableWelcomeMessage: boolean;
@@ -313,7 +379,10 @@ interface Window {
 	userInterfaceMode: string;
 	ThisIsAMobileApp: boolean;
 	ThisIsTheEmscriptenApp: boolean;
-	ThisIsTheGtkApp: boolean;
+	ThisIsTheiOSApp: boolean;
+	ThisIsTheMacOSApp: boolean;
+	ThisIsTheQtApp: boolean;
+	ThisIsTheWindowsApp: boolean;
 	wopiSrc: string;
 	zoteroEnabled: boolean;
 	accessToken: string;
@@ -322,11 +391,17 @@ interface Window {
 	socketProxy: boolean;
 	langParam: string;
 	logoURL?: string;
+	MobileAppName: string;
+	geolocationSetup: boolean;
+	wopiHostId: string;
+	vendor: string;
+	copyrightYear: string;
 
 	socket: SockInterface;
 	errorMessages: ErrorMessages;
 	queueMsg: MessageInterface[];
 
+	makeWopiCoolWsUrl(path: string, docUrlParams: string): string;
 	makeWsUrlWopiSrc(
 		path: string,
 		docUrlParams: string,

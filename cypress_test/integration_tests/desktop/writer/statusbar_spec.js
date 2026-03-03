@@ -27,12 +27,12 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Statubar tests.', function
 		cy.cGet('#menu-insert').click();
 		cy.cGet('body').contains('#menu-insert li a', 'Page Break').click();
 		desktopHelper.assertVisiblePage(1, 2, 2);
-		cy.cGet('#toolbar-down #prev').click();
+		cy.cGet('#toolbar-down #prevpage').click();
 		desktopHelper.assertVisiblePage(1, 1, 2);
 		desktopHelper.assertScrollbarPosition('vertical', 0, 10);
-		cy.cGet('#toolbar-down #next').click();
+		cy.cGet('#toolbar-down #nextpage').click();
 		desktopHelper.assertVisiblePage(1, 2, 2);
-		desktopHelper.assertScrollbarPosition('vertical',190, 205);
+		desktopHelper.assertScrollbarPosition('vertical',195, 205);
 	});
 
 	it('Text entering mode.', function() {
@@ -42,17 +42,17 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Statubar tests.', function
 	});
 
 	it('Change zoom level.', function() {
-		desktopHelper.resetZoomLevel();
-		desktopHelper.shouldHaveZoomLevel('100');
+		desktopHelper.fitWidthZoom();
+		desktopHelper.shouldHaveZoomLevel('70');
 		desktopHelper.zoomIn();
-		desktopHelper.shouldHaveZoomLevel('120');
+		desktopHelper.shouldHaveZoomLevel('85');
 		desktopHelper.zoomOut();
-		desktopHelper.shouldHaveZoomLevel('100');
+		desktopHelper.shouldHaveZoomLevel('70');
 	});
 
 	it('Select zoom level.', function() {
-		desktopHelper.resetZoomLevel();
-		desktopHelper.shouldHaveZoomLevel('100');
+		desktopHelper.fitWidthZoom();
+		desktopHelper.shouldHaveZoomLevel('70');
 		desktopHelper.selectZoomLevel('280', false);
 		desktopHelper.shouldHaveZoomLevel('280');
 	});

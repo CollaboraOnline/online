@@ -1,6 +1,13 @@
 /* -*- js-indent-level: 8 -*- */
 /* global cy Cypress expect */
 
+// Maximum viewport height for consistent screenshots across environments.
+// Some Chrome/Chromium headless configurations reserve space for UI (or
+// something of that nature) so viewport must be <= 581px to fit within that
+// max available space to produce identical screenshots.
+// See cypress-io/cypress#27260.
+const maxScreenshotableViewportHeight = 581;
+
 /*
  * Prepares the test document by copying or uploading it
  * filePath: test document file path
@@ -366,8 +373,9 @@ function waitForInterferingUser() {
 function documentChecks(skipInitializedCheck = false) {
 	cy.log('>> documentChecks - start');
 
-	cy.cGet('#document-canvas', {timeout : Cypress.config('defaultCommandTimeout') * 2.0});
+	var canvasCheck = cy.cGet('#document-canvas', {timeout : Cypress.config('defaultCommandTimeout') * 2.0});
 	if (!skipInitializedCheck) {
+		canvasCheck.should('be.visible');
 		cy.cGet('#map', {timeout : Cypress.config('defaultCommandTimeout') * 2.0})
 			.should('have.class', 'initialized');
 	}
@@ -388,7 +396,7 @@ function documentChecks(skipInitializedCheck = false) {
 	if (Cypress.env('INTEGRATION') !== 'nextcloud') {
 		doIfOnDesktop(function() {
 			if (Cypress.env('pdf-view') !== true)
-				cy.cGet('#sidebar-panel').should('be.visible').should('not.be.empty');
+				cy.cGet('#sidebar-panel', { timeout: 20000 }).should('be.visible').should('not.be.empty');
 
 			// Check that the document does not take the whole window width.
 			cy.window()
@@ -416,6 +424,11 @@ function documentChecks(skipInitializedCheck = false) {
 			cy.cGet('#pos_window-input-address.addressInput').should('exist');
 			//cy.cGet('#pos_window-input-address.addressInput').should('not.be.empty');
 		});
+	}
+
+	// Ensure the busypopup overlay is gone so it doesn't swallow clicks.
+	if (!skipInitializedCheck) {
+		cy.cGet('#busypopup-overlay').should('not.exist');
 	}
 
 	if (Cypress.env('INTERFERENCE_TEST') === true) {
@@ -462,10 +475,19 @@ function assertCursorAndFocus() {
 }
 
 // Select all text via CTRL+A shortcut.
-function selectAllText() {
+// options.isTable: when true, use multiple ctrl+a to select all text beyond current table
+function selectAllText(options) {
+	var isTable = options && options.isTable;
+
 	cy.log('>> selectAllText - start');
 
-	typeIntoDocument('{ctrl}a');
+	if (isTable) {
+		typeIntoDocument('{ctrl}a');
+		typeIntoDocument('{ctrl}a');
+		typeIntoDocument('{ctrl}a');
+	} else {
+		typeIntoDocument('{ctrl}a');
+	}
 
 	textSelectionShouldExist();
 
@@ -473,13 +495,14 @@ function selectAllText() {
 }
 
 // Clear all text by selecting all and deleting.
-function clearAllText() {
+// options.isTable: when true, use multiple ctrl+a to select all text beyond current table
+function clearAllText(options) {
 	cy.log('>> clearAllText - start');
 
 	//assertCursorAndFocus();
 
 	// Trigger select all
-	selectAllText();
+	selectAllText(options);
 
 	// Then remove
 	typeIntoDocument('{backspace}');
@@ -718,6 +741,11 @@ function isImageWhite(selector, expectWhite = true) {
 	cy.cGet(selector)
 		.should(function(images) {
 			var img = images[0];
+
+			// Ensure the image has actual rendered content, not a
+			// placeholder (e.g. SVG loading spinner for slide previews).
+			expect(img.complete).to.be.true;
+			expect(img.naturalWidth).to.be.greaterThan(0);
 
 			// Create an offscreen canvas to check the image's pixels
 			var canvas = document.createElement('canvas');
@@ -1151,7 +1179,7 @@ function setDummyClipboardForCopy(type) {
 // Clicks the Copy button on the UI.
 function copy() {
 	cy.log('helper.copy()');
-	cy.window({log: false}).then(win => {
+	return cy.window({log: false}).then(win => {
 		const app = win['0'].app;
 		const clipboard = app.map._clip;
 		clipboard.filterExecCopyPaste('.uno:Copy');
@@ -1190,7 +1218,7 @@ function getSubFolder(filePath) {
 function assertImageSize(expectedWidth, expectedHeight) {
 	cy.log('>> assertImageSize - start');
 
-	cy.cGet('#canvas-container > svg')
+	cy.cGet('#canvas-container > svg', {timeout: 1000})
 		.then(function (element) {
 			expect(element).to.have.length(1);
 			const actualWidth = parseInt(element[0].style.width.replace('px', ''));
@@ -1199,6 +1227,9 @@ function assertImageSize(expectedWidth, expectedHeight) {
 			expect(actualWidth).to.be.closeTo(expectedWidth, 10);
 			expect(actualHeight).to.be.closeTo(expectedHeight, 10);
 		});
+
+	// wait for above async result
+	cy.wait(3000);
 
 	cy.log('<< assertImageSize - end');
 }
@@ -1212,6 +1243,94 @@ function containsFocusElement(container, doesContain) {
 function getMenuEntry(index) {
 	cy.log('>> getMenuEntry - ' + index);
 	return cy.cGet('.ui-dialog-content div.ui-combobox-entry span').eq(index);
+}
+
+var idleCounter = 0;
+
+function waitUntilCoreIsIdle(win) {
+	var expectedIdleID = String(++idleCounter);
+	var spy;
+	var ownSpy = false;
+
+	cy.then(function() {
+		// Check if _onMessage is already wrapped/spied
+		if (win.app.socket._onMessage.restore) {
+			// Already wrapped, use the existing spy
+			spy = win.app.socket._onMessage;
+		} else {
+			// Create our own spy
+			spy = Cypress.sinon.spy(win.app.socket, '_onMessage');
+			ownSpy = true;
+		}
+
+		var idleArgs = {
+			'idleID': { 'type': 'string', 'value': expectedIdleID }
+		};
+		// Use sendMessage directly to avoid side effects from sendUnoCommand
+		// (e.g. re-enabling following state)
+		win.app.socket.sendMessage('uno .uno:ReportWhenIdle ' + JSON.stringify(idleArgs));
+	});
+
+	cy.wrap(null).should(function() {
+		var matchingCall = spy.getCalls().find(function(call) {
+			var evt = call.args && call.args[0];
+			var textMsg = evt && evt.textMsg;
+			if (!textMsg || !textMsg.startsWith('unocommandresult:')) {
+				return false;
+			}
+			var jsonPart = textMsg.replace('unocommandresult:', '').trim();
+			var data = JSON.parse(jsonPart);
+			if (data.commandName !== '.uno:ReportWhenIdle') {
+				return false;
+			}
+			return data.idleID === expectedIdleID;
+		});
+
+		expect(matchingCall, '.uno:ReportWhenIdle result with idleID ' + expectedIdleID).to.be.an('object');
+	});
+
+	return cy.then(function() {
+		// Only restore if we created our own spy
+		if (ownSpy && spy && spy.restore) {
+			spy.restore();
+		}
+	});
+}
+
+function waitUntilLayoutingIsIdle(win) {
+	return cy.then(function() {
+		return new Cypress.Promise(function(resolve) {
+			win.app.layoutingService.onDrain(function() {
+				resolve();
+			});
+		});
+	});
+}
+
+function processToIdle(win) {
+	return waitUntilCoreIsIdle(win).then(function() {
+		return waitUntilLayoutingIsIdle(win);
+	});
+}
+
+// Wait until no timers of the given tag exist.
+// If no timers with the tag exist at call time resolve immediately.
+function waitForTimers(win, tag) {
+	return cy.waitUntil(function() {
+		return !win.app.timerRegistry.hasActive(tag);
+	}, { timeout: Cypress.config('defaultCommandTimeout'), interval: 50 });
+}
+
+// Waits for a map stateChangeHandler item to reach the expected value.
+// Useful after sending uno commands where the state change message from
+// core may arrive asynchronously based on a state change timer from core
+function waitForMapState(command, expectedValue) {
+	cy.log('>> waitForMapState - start');
+	cy.log('Param - command: ' + command + ', expectedValue: ' + expectedValue);
+	cy.getFrameWindow().should(win => {
+		expect(win.app.map['stateChangeHandler'].getItemValue(command)).to.equal(expectedValue);
+	});
+	cy.log('<< waitForMapState - end');
 }
 
 module.exports.setupDocument = setupDocument;
@@ -1264,3 +1383,9 @@ module.exports.addressInputSelector = "#addressInput input";
 module.exports.assertImageSize = assertImageSize;
 module.exports.containsFocusElement = containsFocusElement;
 module.exports.getMenuEntry = getMenuEntry;
+module.exports.waitUntilCoreIsIdle = waitUntilCoreIsIdle;
+module.exports.waitUntilLayoutingIsIdle = waitUntilLayoutingIsIdle;
+module.exports.processToIdle = processToIdle;
+module.exports.waitForTimers = waitForTimers;
+module.exports.waitForMapState = waitForMapState;
+module.exports.maxScreenshotableViewportHeight = maxScreenshotableViewportHeight;

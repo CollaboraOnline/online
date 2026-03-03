@@ -9,10 +9,17 @@
 #
 ETAGS=ctags -e
 
+build-samples:
+	$(QUIET_MKDIRP) mkdir -p $(abs_top_builddir)/test/samples
+	$(QUIET_SAMPLES) $(abs_top_srcdir)/scripts/build-samples.py $(abs_top_srcdir)/test/samples $(abs_top_srcdir)/test/samples
+
 if ENABLE_MOBILEAPP
 
-if ENABLE_GTKAPP
-SUBDIRS = gtk browser
+if ENABLE_MACOS
+SUBDIRS = macos browser
+else
+if ENABLE_QTAPP
+SUBDIRS = qt browser
 else
 if ENABLE_WASM
 SUBDIRS = wasm browser
@@ -20,10 +27,11 @@ else !ENABLE_WASM
 SUBDIRS = browser
 endif !ENABLE_WASM
 endif
+endif
 
 else
 
-SUBDIRS = . browser
+SUBDIRS = browser .
 
 if ENABLE_TESTS
 SUBDIRS += test
@@ -40,11 +48,12 @@ QUIET_MKDIRP_ = $(QUIET_MKDIRP_$(AM_DEFAULT_VERBOSITY))
 QUIET_MKDIRP_0 = @echo "  MKDIRP  " $@;
 
 bin_PROGRAMS = \
+	coolconvert \
 	coolforkit-caps \
 	coolforkit-ns \
 	coolmount \
 	coolstress \
-	coolconvert coolconfig
+	coolconfig
 
 if ENABLE_LIBFUZZER
 else
@@ -106,52 +115,68 @@ if !ENABLE_DEBUG
 AM_CPPFLAGS += -DNDEBUG
 endif
 
-AM_LDFLAGS = -Wl,-E -lpam $(ZLIB_LIBS) $(ZSTD_LIBS) ${PNG_LIBS}
+AM_LDFLAGS = -lpam $(ZLIB_LIBS) $(ZSTD_LIBS) ${PNG_LIBS}
+if !ENABLE_MACOS
+AM_LDFLAGS += -Wl,-E
+endif
 
 # Clang's linker doesn't like -pthread.
 if !HAVE_CLANG
 AM_LDFLAGS += -pthread
 endif
 
+coolwsd_LDADD = libwsdglobals.a
+coolconfig_LDADD = libglobals.a
+
 if ENABLE_SSL
 AM_LDFLAGS += ${OPENSSL_LIBS}
 else
-coolwsd_LDADD = ${OPENSSL_LIBS}
-coolconfig_LDADD = ${OPENSSL_LIBS}
+coolwsd_LDADD += ${OPENSSL_LIBS}
+coolconfig_LDADD += ${OPENSSL_LIBS}
+endif
+
+if ENABLE_MACOS
+util_platform_cpp = common/Util-macos.cpp
+else
+util_platform_cpp = common/Util-linux.cpp
 endif
 
 AM_ETAGSFLAGS = --c++-kinds=+p --fields=+iaS --extra=+q -R --totals=yes --exclude=browser/node_modules --exclude=browser/dist *
 AM_CTAGSFLAGS = $(AM_ETAGSFLAGS)
 
-shared_sources = common/FileUtil.cpp \
-                 common/FileUtil-unix.cpp \
-                 common/JailUtil.cpp \
-                 common/Log.cpp \
-                 common/Protocol.cpp \
-                 common/StringVector.cpp \
-                 common/Session.cpp \
-                 common/Seccomp.cpp \
-                 common/MobileApp.cpp \
-                 common/RegexUtil.cpp \
-                 common/SigUtil-server.cpp \
-                 common/SpookyV2.cpp \
-                 common/TraceEvent.cpp \
-                 common/Unit.cpp \
-                 common/Unit-server.cpp \
-                 common/Uri.cpp \
-                 common/Util.cpp \
-                 common/Util-server.cpp \
-                 common/Util-unix.cpp \
-                 common/ConfigUtil.cpp \
+shared_sources = \
+                 $(util_platform_cpp) \
                  common/Authorization.cpp \
                  common/CommandControl.cpp \
-                 common/Simd.cpp \
+                 common/ConfigUtil.cpp \
                  common/CoolMount.cpp \
+                 common/FileUtil-unix.cpp \
+                 common/FileUtil.cpp \
+                 common/JailUtil.cpp \
+                 common/Log-common.cpp \
+                 common/Log-poco.cpp \
+                 common/MobileApp.cpp \
+                 common/Protocol.cpp \
+                 common/RegexUtil.cpp \
+                 common/Seccomp.cpp \
+                 common/Session.cpp \
+                 common/SigUtil-server.cpp \
+                 common/Simd.cpp \
+                 common/SpookyV2.cpp \
+                 common/StringVector.cpp \
+                 common/Syscall.cpp \
+                 common/TraceEvent.cpp \
+                 common/Unit-server.cpp \
+                 common/Unit.cpp \
+                 common/Uri.cpp \
+                 common/Util-server.cpp \
+                 common/Util-unix.cpp \
+                 common/Util.cpp \
                  kit/KitQueue.cpp \
                  kit/LogUI.cpp \
                  net/DelaySocket.cpp \
-                 net/HttpRequest.cpp \
                  net/HttpHelper.cpp \
+                 net/HttpRequest.cpp \
                  net/NetUtil.cpp \
                  net/Socket.cpp \
                  wsd/Exceptions.cpp
@@ -159,13 +184,13 @@ if ENABLE_SSL
 shared_sources += net/Ssl.cpp
 endif
 
-coolwsd_sources = common/Crypto.cpp \
+coolwsd_sources = \
+                  common/Crypto.cpp \
                   wsd/Admin.cpp \
                   wsd/AdminModel.cpp \
                   wsd/Auth.cpp \
-                  wsd/CacheUtil.cpp \
                   wsd/COOLWSD.cpp \
-                  wsd/dumpWsdState.cpp \
+                  wsd/CacheUtil.cpp \
                   wsd/ClientRequestDispatcher.cpp \
                   wsd/ClientSession.cpp \
                   wsd/DocumentBroker.cpp \
@@ -184,6 +209,7 @@ coolwsd_sources = common/Crypto.cpp \
                   wsd/SpecialBrokers.cpp \
                   wsd/Storage.cpp \
                   wsd/TileCache.cpp \
+                  wsd/dumpWsdState.cpp \
                   wsd/wopi/CheckFileInfo.cpp \
                   wsd/wopi/StorageConnectionManager.cpp \
                   wsd/wopi/WopiProxy.cpp \
@@ -195,12 +221,13 @@ coolwsd_SOURCES = $(coolwsd_sources) \
 
 EXTRA_coolwsd_DEPENDENCIES = browser/node_modules
 
-noinst_PROGRAMS = clientnb \
+noinst_PROGRAMS = \
+                  clientnb \
                   connect \
-                  lokitclient \
-                  coolmap \
                   coolbench \
-                  coolsocketdump
+                  coolmap \
+                  coolsocketdump \
+                  lokitclient
 
 if ENABLE_LIBFUZZER
 noinst_PROGRAMS += \
@@ -210,35 +237,55 @@ noinst_PROGRAMS += \
 		   httpecho_fuzzer
 endif
 
-connect_SOURCES = tools/Connect.cpp \
+connect_SOURCES = \
+                  $(util_platform_cpp) \
                   common/DummyTraceEventEmitter.cpp \
-                  common/Log.cpp \
+                  common/Log-common.cpp \
+                  common/Log-poco.cpp \
                   common/Protocol.cpp \
                   common/StringVector.cpp \
-                  common/Util.cpp \
                   common/Util-server.cpp \
-                  common/Util-unix.cpp
+                  common/Util-unix.cpp \
+                  common/Util.cpp \
+                  tools/Connect.cpp
 
-lokitclient_SOURCES = common/Log.cpp \
+connect_LDADD = libglobals.a
+
+lokitclient_SOURCES = \
+                      $(util_platform_cpp) \
                       common/DummyTraceEventEmitter.cpp \
-                      tools/KitClient.cpp \
+                      common/Log-common.cpp \
+                      common/Log-poco.cpp \
                       common/Protocol.cpp \
                       common/StringVector.cpp \
                       common/TraceEvent.cpp \
-                      common/Util.cpp \
                       common/Util-server.cpp \
-                      common/Util-unix.cpp
+                      common/Util-unix.cpp \
+                      common/Util.cpp \
+                      tools/KitClient.cpp
 
-noinst_LIBRARIES = libsimd.a
+lokitclient_LDADD = libglobals.a
+
+noinst_LIBRARIES = libsimd.a libglobals.a libkitglobals.a libwsdglobals.a libkitwsdglobals.a
+
 libsimd_a_SOURCES = kit/DeltaSimd.c
 libsimd_a_CFLAGS = @SIMD_CFLAGS@
 
-coolforkit_sources = kit/ChildSession.cpp \
+libglobals_a_SOURCES = common/Globals.cpp
+
+libkitglobals_a_SOURCES = kit/KitGlobals.cpp
+
+libwsdglobals_a_SOURCES = wsd/WSDGlobals.cpp
+
+libkitwsdglobals_a_SOURCES = wsd/KitWSDGlobals.cpp
+
+coolforkit_sources = \
+                     kit/ChildSession.cpp \
                      kit/ForKit.cpp \
                      kit/Kit.cpp \
                      kit/KitWebSocket.cpp
 
-coolforkit_ldadd = libsimd.a
+coolforkit_ldadd = libsimd.a libkitglobals.a
 
 coolforkit_caps_SOURCES = $(coolforkit_sources) \
                           $(shared_sources) \
@@ -246,11 +293,17 @@ coolforkit_caps_SOURCES = $(coolforkit_sources) \
 
 coolforkit_caps_LDADD = ${coolforkit_ldadd}
 
+# Define variant to ensure different binary content and thus different build-id
+coolforkit_caps_CPPFLAGS = $(AM_CPPFLAGS) -DCOOL_FORKIT_VARIANT=\"caps\"
+
 coolforkit_ns_SOURCES = $(coolforkit_sources) \
                         $(shared_sources) \
                         kit/forkit-main.cpp
 
 coolforkit_ns_LDADD = ${coolforkit_ldadd}
+
+# Define variant to ensure different binary content and thus different build-id
+coolforkit_ns_CPPFLAGS = $(AM_CPPFLAGS) -DCOOL_FORKIT_VARIANT=\"ns\"
 
 if ENABLE_DEBUG
 coolwsd_inproc_SOURCES = $(coolwsd_sources) \
@@ -258,8 +311,12 @@ coolwsd_inproc_SOURCES = $(coolwsd_sources) \
                          $(coolforkit_sources) \
                          wsd/coolwsd-inproc.cpp
 
-coolwsd_inproc_LDADD = ${coolwsd_LDADD} \
-                       ${coolforkit_ldadd}
+coolwsd_inproc_LDADD = libsimd.a libkitwsdglobals.a
+
+if !ENABLE_SSL
+coolwsd_inproc_LDADD += ${OPENSSL_LIBS}
+endif
+
 endif
 
 if ENABLE_LIBFUZZER
@@ -273,6 +330,7 @@ common_fuzzer_sources = \
 		       common/DummyTraceEventEmitter.cpp \
 		       $(coolwsd_sources) \
 		       wsd/coolwsd-inproc.cpp \
+		       wsd/KitWSDGlobals.cpp \
 		       $(coolforkit_sources) \
 		       $(shared_sources)
 
@@ -311,29 +369,37 @@ httpecho_fuzzer_LDADD = libsimd.a
 
 endif # ENABLE_LIBFUZZER
 
-clientnb_SOURCES = net/clientnb.cpp \
+clientnb_SOURCES = \
+                   $(util_platform_cpp) \
                    common/DummyTraceEventEmitter.cpp \
-                   common/Log.cpp \
+                   common/Log-common.cpp \
+                   common/Log-poco.cpp \
                    common/StringVector.cpp \
-                   common/Util.cpp \
                    common/Util-server.cpp \
-                   common/Util-unix.cpp
+                   common/Util-unix.cpp \
+                   common/Util.cpp \
+                   net/clientnb.cpp
+
+clientnb_LDADD = libsimd.a libglobals.a
 
 coolmount_SOURCES = tools/mount.cpp \
                     common/CoolMount.cpp
 
 coolmap_SOURCES = tools/map.cpp
 
-coolbench_SOURCES = tools/Benchmark.cpp \
+coolbench_SOURCES = \
+                    $(util_platform_cpp) \
                     common/DummyTraceEventEmitter.cpp \
-                    common/Log.cpp \
+                    common/Log-common.cpp \
+                    common/Log-poco.cpp \
+                    common/Simd.cpp \
                     common/StringVector.cpp \
-                    common/Util.cpp \
                     common/Util-server.cpp \
                     common/Util-unix.cpp \
-                    common/Simd.cpp
+                    common/Util.cpp \
+                    tools/Benchmark.cpp
 
-coolbench_LDADD = libsimd.a
+coolbench_LDADD = libsimd.a libglobals.a
 
 coolconvert_SOURCES = tools/Tool.cpp
 
@@ -344,26 +410,34 @@ coolstress_SOURCES = tools/Stress.cpp \
                      common/DummyTraceEventEmitter.cpp \
                      $(shared_sources)
 
-coolconfig_SOURCES = tools/Config.cpp \
-                    tools/ConfigMigrationAssistant.cpp \
+coolstress_LDADD = libglobals.a
+
+coolconfig_SOURCES = \
                     common/ConfigUtil.cpp \
                     common/Crypto.cpp \
                     common/DummyTraceEventEmitter.cpp \
-                    common/Log.cpp \
+                    common/Log-common.cpp \
+                    common/Log-poco.cpp \
                     common/StringVector.cpp \
                     common/Util-server.cpp \
                     common/Util-unix.cpp \
-                    common/Util.cpp
+                    common/Util.cpp \
+                    tools/Config.cpp \
+                    tools/ConfigMigrationAssistant.cpp
 
 coolsocketdump_SOURCES = tools/WebSocketDump.cpp \
 			 common/DummyTraceEventEmitter.cpp \
 			 $(shared_sources)
 
-wsd_headers = wsd/Admin.hpp \
+coolsocketdump_LDADD = libglobals.a
+
+wsd_headers = \
+              wsd/Admin.hpp \
               wsd/AdminModel.hpp \
               wsd/Auth.hpp \
-              wsd/CacheUtil.hpp \
               wsd/COOLWSD.hpp \
+              wsd/COOLWSDServer.hpp \
+              wsd/CacheUtil.hpp \
               wsd/ClientRequestDispatcher.hpp \
               wsd/ClientSession.hpp \
               wsd/ContentSecurityPolicy.hpp \
@@ -394,59 +468,66 @@ wsd_headers = wsd/Admin.hpp \
               wsd/TileDesc.hpp \
               wsd/TraceFile.hpp \
               wsd/UserMessages.hpp \
+              wsd/WSDGlobals.hpp \
               wsd/wopi/CheckFileInfo.hpp \
               wsd/wopi/StorageConnectionManager.hpp \
               wsd/wopi/WopiProxy.hpp \
               wsd/wopi/WopiStorage.hpp
 
-shared_headers = common/Anonymizer.hpp \
-                 common/Common.hpp \
+shared_headers = \
+                 common/Anonymizer.hpp \
+                 common/Authorization.hpp \
                  common/CharacterConverter.hpp \
                  common/Clipboard.hpp \
+                 common/ClipboardData.hpp \
+                 common/CommandControl.hpp \
+                 common/Common.hpp \
+                 common/ConfigUtil.hpp \
                  common/Crypto.hpp \
+                 common/FileUtil.hpp \
                  common/Globals.hpp \
                  common/HexUtil.hpp \
-                 common/JsonUtil.hpp \
-                 common/FileUtil.hpp \
                  common/JailUtil.hpp \
+                 common/JsonUtil.hpp \
                  common/LangUtil.hpp \
                  common/Log.hpp \
-                 common/Protocol.hpp \
-                 common/RegexUtil.hpp \
-                 common/StateEnum.hpp \
-                 common/StaticLogHelper.hpp \
-                 common/StringVector.hpp \
-                 common/Seccomp.hpp \
-                 common/Session.hpp \
-                 common/Unit.hpp \
-                 common/Uri.hpp \
-                 common/Util.hpp \
-                 common/ConfigUtil.hpp \
-                 common/Authorization.hpp \
                  common/Message.hpp \
                  common/MobileApp.hpp \
                  common/Png.hpp \
-                 common/TraceEvent.hpp \
+                 common/Protocol.hpp \
                  common/Rectangle.hpp \
+                 common/RegexUtil.hpp \
                  common/RenderTiles.hpp \
-                 common/SigUtil.hpp \
+                 common/Seccomp.hpp \
+                 common/Session.hpp \
+                 common/SettingsStorage.hpp \
                  common/SigHandlerTrap.hpp \
-                 common/security.h \
-                 common/SpookyV2.h \
-                 common/CommandControl.hpp \
+                 common/SigUtil.hpp \
                  common/Simd.hpp \
+                 common/SpookyV2.h \
+                 common/StateEnum.hpp \
+                 common/StaticLogHelper.hpp \
+                 common/StringVector.hpp \
+                 common/Syscall.hpp \
                  common/ThreadPool.hpp \
+                 common/TraceEvent.hpp \
+                 common/Unit.hpp \
+                 common/Uri.hpp \
+                 common/Util.hpp \
                  common/Watchdog.hpp \
                  common/base64.hpp \
+                 common/security.h \
+                 kit/BgSaveWatchDog.hpp \
+                 kit/KitGlobals.hpp \
                  kit/KitQueue.hpp \
                  kit/LogUI.hpp \
                  net/AsyncDNS.hpp \
                  net/Buffer.hpp \
                  net/DelaySocket.hpp \
                  net/FakeSocket.hpp \
+                 net/HttpHelper.hpp \
                  net/HttpRequest.hpp \
                  net/HttpServer.hpp \
-                 net/HttpHelper.hpp \
                  net/NetUtil.hpp \
                  net/ServerSocket.hpp \
                  net/Socket.hpp \
@@ -458,7 +539,8 @@ shared_headers += net/Ssl.hpp \
                   net/SslSocket.hpp
 endif
 
-kit_headers = kit/ChildSession.hpp \
+kit_headers = \
+              kit/ChildSession.hpp \
               kit/Delta.hpp \
               kit/DeltaSimd.h \
               kit/DummyLibreOfficeKit.hpp \
@@ -466,12 +548,14 @@ kit_headers = kit/ChildSession.hpp \
               kit/KitHelper.hpp \
               kit/KitWebSocket.hpp \
               kit/SetupKitEnvironment.hpp \
-	      kit/SlideCompressor.hpp \
+              kit/SlideCompressor.hpp \
               kit/StateRecorder.hpp \
               kit/Watermark.hpp
 
-noinst_HEADERS = $(wsd_headers) $(shared_headers) $(kit_headers) \
-                 tools/COOLWebSocket.hpp \
+noinst_HEADERS = \
+                 $(kit_headers) \
+                 $(shared_headers) \
+                 $(wsd_headers) \
                  test/HttpTestServer.hpp \
                  test/KitPidHelpers.hpp \
                  test/UnitHTTP.hpp \
@@ -483,7 +567,8 @@ noinst_HEADERS = $(wsd_headers) $(shared_headers) $(kit_headers) \
                  test/helpers.hpp \
                  test/lokassert.hpp \
                  test/test.hpp \
-                 test/testlog.hpp
+                 test/testlog.hpp \
+                 tools/COOLWebSocket.hpp
 
 GIT_BRANCH := $(shell git symbolic-ref --short HEAD)
 GIT_HASH := $(shell git log -1 --format=%h --abbrev=10)
@@ -498,38 +583,39 @@ dist-hook:
 	   @LOKIT_PATH@/LibreOfficeKit/LibreOfficeKitTypes.h \
 	   $(distdir)/bundled/include/LibreOfficeKit/
 
-EXTRA_DIST = discovery.xml \
-             favicon.ico \
-             cool-sbom-template.spdx.json \
-             coolkitconfig.xcu.in \
-             coolwsd.spec \
-             coolwsd.xml.in \
-             coolwsd.service \
-             debian/apparmor-profile \
-             debian/compat \
-             debian/copyright \
-             debian/coolwsd.preinst \
-             debian/coolwsd.service \
-             debian/rules \
-             debian/source/format \
-             debian/changelog \
-             debian/control \
-             debian/coolwsd.install \
-             debian/coolwsd-deprecated.install \
-             debian/coolwsd-deprecated.postinst \
-             debian/coolwsd.postinst \
-             debian/coolwsd.postrm \
-             etc/key.pem \
-             etc/cert.pem \
-             etc/ca-chain.cert.pem \
-             etc/apache2/coolwsd.conf \
-             etc/nginx/coolwsd.conf \
-             scripts/create-sbom.py \
-             scripts/unocommands.py \
-             scripts/refresh-git-hooks \
+EXTRA_DIST = \
+             $(man_MANS) \
              README.md \
              THIRDPARTYLICENSES \
-             $(man_MANS)
+             cool-sbom-template.spdx.json \
+             coolkitconfig.xcu.in \
+             coolwsd.service \
+             coolwsd.spec \
+             coolwsd.xml.in \
+             debian/apparmor-profile \
+             debian/changelog \
+             debian/compat \
+             debian/control \
+             debian/coolwsd-deprecated.install \
+             debian/coolwsd-deprecated.postinst \
+             debian/coolwsd.install \
+             debian/coolwsd.postinst \
+             debian/coolwsd.postrm \
+             debian/coolwsd.preinst \
+             debian/coolwsd.service \
+             debian/copyright \
+             debian/rules \
+             debian/source/format \
+             discovery.xml \
+             etc/apache2/coolwsd.conf \
+             etc/ca-chain.cert.pem \
+             etc/cert.pem \
+             etc/key.pem \
+             etc/nginx/coolwsd.conf \
+             favicon.ico \
+             scripts/create-sbom.py \
+             scripts/refresh-git-hooks \
+             scripts/unocommands.py
 
 if ENABLE_LIBFUZZER
 CLEANUP_COMMAND=true
@@ -600,6 +686,7 @@ clean-local:
 if ENABLE_DEBUG
 # can write to /tmp/coolwsd.log
   OUTPUT_TO_FILE=true
+  FIND_FREE_PORT_PARAM=--find-free-port
 else
 # can't write to /var/log/coolwsd.log
   OUTPUT_TO_FILE=false
@@ -613,14 +700,13 @@ QUIET_SBOM = $(QUIET_SBOM_$(V))
 QUIET_SBOM_ = $(QUIET_SBOM_$(AM_DEFAULT_VERBOSITY))
 QUIET_SBOM_0 = @echo "  SBOM    " $@;
 
-setup-wsd: all @JAILS_PATH@ @CACHE_PATH@ presets-dir
+setup-wsd: all @JAILS_PATH@ @CACHE_PATH@ presets-dir build-samples
 	@echo "Launching coolwsd"
 	@fc-cache "@LO_PATH@"/share/fonts/truetype
-	$(QUIET_MKDIRP) mkdir -p $(abs_top_builddir)/test/samples
-	$(QUIET_SAMPLES) $(abs_top_srcdir)/scripts/build-samples.py $(abs_top_srcdir)/test/samples $(abs_top_srcdir)/test/samples
 	@echo
 
 COMMON_PARAMS = \
+	$(FIND_FREE_PORT_PARAM) \
 	$(if $(TEST_APPARMOR),--disable-cool-user-checking) \
 	--o:sys_template_path="@SYSTEMPLATE_PATH@" \
 	--o:child_root_path="@JAILS_PATH@" \
@@ -814,8 +900,8 @@ clean-clangd:
 clean-vscode: clean-clangd
 	cd $(abs_srcdir) && rm -rf .vscode
 
-browser/node_modules: browser/package.json browser/archived-packages
-	@cd browser && npm install
+browser/node_modules: browser/package.json browser/node_shrinkpack
+	@cd browser && UV_USE_IO_URING=0 npm ci --offline
 
 eslint: browser/node_modules
 	@$(MAKE) -C browser eslint
@@ -828,9 +914,9 @@ prettier-write: browser/node_modules
 
 install-exec-hook:
 	cd $(DESTDIR)$(bindir) && \
-	$(LN_S) coolconfig loolconfig && \
-	$(LN_S) coolwsd loolwsd && \
-	$(LN_S) coolwsd-systemplate-setup loolwsd-systemplate-setup
+	test -e coolconfig && $(LN_S) coolconfig loolconfig || true; \
+	test -e coolwsd && $(LN_S) coolwsd loolwsd || true; \
+	test -e coolwsd-systemplate-setup && $(LN_S) coolwsd-systemplate-setup loolwsd-systemplate-setup || true
 
 stress_file=$(abs_top_srcdir)/test/data/hello-world.odt
 trace_dir=$(abs_top_srcdir)/test/traces
@@ -869,7 +955,7 @@ check-for-system-nss:
 
 check-recursive: eslint
 
-check: check-for-system-nss prettier eslint presets-dir check-recursive
+check: all-local check-for-system-nss prettier eslint presets-dir check-recursive
 	$(GEN_COVERAGE_COMMAND)
 
 coverage-report:

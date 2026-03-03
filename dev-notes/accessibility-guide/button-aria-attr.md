@@ -1,0 +1,22 @@
+| ARIA Attribute           | Can be used on `<button>`?       | When to Use                                                                        | Example                                                              | Notes                                                                         |
+| ------------------------ | ----------------------------- | ---------------------------------------------------------------------------------- | -------------------------------------------------------------------- | ----------------------------------------------------------------------------- |
+| **aria-pressed**         | *Yes*                       | For **toggle buttons** (on/off states).                                            | `<button aria-pressed="true">Bold</button>`                        | 1. Screen readers announce “pressed”/“not pressed.” <br/>2. Don’t use on normal buttons. |
+| **aria-expanded**        | *Yes*                       | When the button **expands/collapses** content (e.g., accordion, dropdown).         | `<button aria-expanded="false" aria-controls="menu1">Menu</button>` | Must pair with `aria-controls`.                                               |
+| **aria-controls**        | *Yes*                       | When the button **controls visibility** of another element.                        | `<button aria-controls="section1">Toggle</button>`                 | Doesn’t change behavior, only provides relationships.                         |
+| **aria-describedby**     | *Yes*                       | Add extra descriptive text beyond the button label.                                | `<button aria-describedby="tip1">Info</button>`                    | Use when tooltip/help text is important.                                      |
+| **aria-labelledby**      | *Yes*                       | When another element provides the accessible name.                                 | `<button aria-labelledby="btn-label">...</button>`                 | Typically used when button has no readable text.                              |
+| **aria-label**           | *Yes*                       | When the button needs an accessible name but has no text.                          | `<button aria-label="Close">×</button>`                            | Prefer visible text; use only when necessary.                                 |
+| **aria-hidden**          | *Avoid*                     | Only if hiding from assistive tech.                                                | (Avoid)                                                              | If a button shouldn’t be accessible, it shouldn’t be a button.                |
+| **aria-disabled**        | *Yes*                       | When you can't use the native `disabled` attribute (e.g., custom button behavior). | `<button aria-disabled="true">...</button>`                        | Prefer `disabled`—native is better.                                           |
+| **aria-busy**            | *Yes*                       | When the button’s contents are **loading or updating**.                            | `<button aria-busy="true">Saving...</button>`                      | Rare but valid.                                                               |
+| **aria-haspopup**        | *Yes*                       | When button opens a dialog or popup.                                               | `<button aria-haspopup="menu">Options</button>`                    | Don’t misuse it for simple dropdowns.                                         |
+| **aria-roledescription** | Use cautiously              | Custom role description for AT users.                                              | `<button aria-roledescription="chat send">Send</button>`           | Can confuse users; rarely appropriate.                                        |
+| **role="button"**        | *Never on real `<button>`* | Not needed.                                                                        | (Do not use)                                                         | all non-button elements acting as buttons should be real `<button>` instead and do not use this role on real `<button>`                           |
+
+**NOTE:** Update the ARIA attribute values based on the **current state**. Do **not** hard-code only the initial value.
+<br/>
+e.g.:  
+- `aria-expanded="true"` / `"false"`  
+- `aria-pressed="true"` / `"false"`  
+
+

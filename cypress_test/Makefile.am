@@ -23,6 +23,7 @@ FREE_PORT = $(lastword $(SERVER_ARG))
 
 export COOLWSD_SERVER
 export FREE_PORT
+export COOLWSD_VERSION_HASH
 
 PARALLEL_SCRIPT = $(abs_srcdir)/run_parallel.sh
 
@@ -33,6 +34,12 @@ COOLWSD_OUTPUT=$(abs_builddir)/cypress/wsd_logs/coolwsd_output.log
 
 SUPPORT_FILE_ABS = $(abs_srcdir)/support/index.js
 SUPPORT_FILE = $(if $(findstring $(abs_srcdir),$(abs_builddir)),support/index.js,$(SUPPORT_FILE_ABS))
+
+LIGHTHOUSE_USER_AGENT = "cypress"
+LIGHTHOUSE_TEST_FOLDER = $(abs_srcdir)/integration_tests/lighthouse
+LIGHTHOUSE_DATA_FOLDER = $(DESKTOP_DATA_FOLDER)
+LIGHTHOUSE_DATA_WORKDIR = $(DESKTOP_DATA_WORKDIR)
+LIGHTHOUSE_TRACK_FOLDER = $(abs_builddir)/workdir/track/lighthouse
 
 DESKTOP_USER_AGENT = "cypress"
 DESKTOP_TEST_FOLDER = $(abs_srcdir)/integration_tests/desktop
@@ -66,11 +73,8 @@ ALLOWED_PORTS = $(if $(findstring php-proxy, $(CYPRESS_INTEGRATION)),$(PHP_PROXY
 			$(if $(findstring nextcloud, $(CYPRESS_INTEGRATION)),$(NEXTCLOUD_PORT),$(shell seq 9900 1 9980)))
 
 KILL_COMMAND=$(if $(coolwsd),true,pkill -F $(PID_FILE) || pkill --signal SIGKILL -F $(PID_FILE))
+LOAD_PID_FILE=$(abs_builddir)/workdir/load.pids
 PARALLEL_BUILD = $(findstring -j,$(MAKEFLAGS))
-DISPLAY_NUMBER = 100
-HEADLESS_BUILD := $(findstring Command failed,$(shell xhost > /dev/null 2>&1 || echo "Command failed, so we are in a headless environment."))
-export HEADLESS_DISPLAY=$(shell who | grep `whoami` | grep -v ": " | xargs | cut -d " " -f2)
-export DISPLAY=$(if $(HEADLESS_BUILD),:$(DISPLAY_NUMBER),$(shell echo $$DISPLAY))
 
 COMMA :=,
 EMPTY :=
@@ -90,6 +94,8 @@ endif
 if HAVE_LO_PATH
 
 MOBILE_TEST_FILES=$(subst $(MOBILE_TEST_FOLDER)/,,$(wildcard $(MOBILE_TEST_FOLDER)/*_spec.js) $(wildcard $(MOBILE_TEST_FOLDER)/*/*_spec.js))
+
+LIGHTHOUSE_TEST_FILES=$(subst $(LIGHTHOUSE_TEST_FOLDER)/,,$(wildcard $(LIGHTHOUSE_TEST_FOLDER)/*_spec.js) $(wildcard $(LIGHTHOUSE_TEST_FOLDER)/*/*_spec.js))
 
 DESKTOP_TEST_FILES=$(subst $(DESKTOP_TEST_FOLDER)/,,$(wildcard $(DESKTOP_TEST_FOLDER)/*_spec.js) $(wildcard $(DESKTOP_TEST_FOLDER)/*/*_spec.js))
 
@@ -115,13 +121,11 @@ check-local: do-check
 # TODO: enable multiuser tests $(MULTIUSER_TESTS_DONE)
 do-check: $(DESKTOP_TEST_FILES_DONE) $(MOBILE_TEST_FILES_DONE) $(IDLE_TEST_FILES_DONE)
 	$(V)$(KILL_COMMAND) || true
-	$(if $(HEADLESS_BUILD),$(V)pkill Xvfb,)
 	$(if $(wildcard $(ERROR_LOG)),$(V)cat $(ERROR_LOG))
 
 $(PID_FILE): @JAILS_PATH@ @CACHE_PATH@ $(NODE_BINS)
 	$(call cleanup_before_run)
 	$(call run_JS_error_check)
-	$(if $(HEADLESS_BUILD),$(call start_Xvfb),)
 	$(call start_coolwsd)
 
 setup_short_idle:
@@ -132,10 +136,8 @@ setup_regular_idle:
 
 start_short_idle_coolwsd: @JAILS_PATH@ @CACHE_PATH@ $(NODE_BINS) setup_short_idle
 	$(V)$(KILL_COMMAND) || true
-	$(if $(HEADLESS_BUILD),$(V)pkill Xvfb,)
 	$(call cleanup_before_run)
 	$(call run_JS_error_check)
-	$(if $(HEADLESS_BUILD),$(call start_Xvfb),)
 	$(call start_coolwsd)
 
 $(MOBILE_TEST_FILES_DONE): $(PID_FILE) $(DESKTOP_TEST_FILES_DONE)
@@ -230,14 +232,6 @@ define start_coolwsd_instance
 	$(V)echo
 endef
 
-#https://docs.cypress.io/guides/guides/continuous-integration.html#Xvfb
-define start_Xvfb
-	$(V)echo "Launching Xvfb..."
-	Xvfb :$(DISPLAY_NUMBER) -screen 0 1280x800x24 &
-	while [ ! -f /tmp/.X$(DISPLAY_NUMBER)-lock ] ; do sleep 1; done
-	$(V)echo
-endef
-
 define cleanup_before_run
 	$(V)rm -f $(ERROR_LOG)
 	$(V)rm -f $(PID_FILE)
@@ -255,8 +249,12 @@ NODE_BINS = \
 
 $(NODE_BINS): $(NPM_INSTALLED);
 
-$(NPM_INSTALLED): package.json eslint_plugin/index.js eslint_plugin/package.json
-	$(V)npm install
+$(NPM_INSTALLED): package.json eslint_plugin/index.js eslint_plugin/package.json $(wildcard patches/*.patch)
+#	patch-package cannot apply updated patches over already-patched files
+#	remove patched packages so npm install restores clean originals first.
+#	https://github.com/ds300/patch-package/issues/227
+	$(V)rm -rf node_modules/cypress node_modules/cypress-log-to-output
+	$(V)UV_USE_IO_URING=0 npm install --no-audit
 	$(V)echo node_modules:
 	$(V)ls node_modules
 	$(V)mkdir -p $(dir $(NPM_INSTALLED))
@@ -278,10 +276,8 @@ clean-local:
 check-mobile: @JAILS_PATH@ @CACHE_PATH@ $(NODE_BINS)
 	$(call cleanup_before_run)
 	$(call run_JS_error_check)
-	$(if $(HEADLESS_BUILD),$(call start_Xvfb),)
 	$(call start_coolwsd)
 	$(call run_mobile_tests,$(spec))
-	$(if $(HEADLESS_BUILD),$(V)pkill Xvfb,)
 	$(V)$(KILL_COMMAND) || true
 
 run-mobile: @JAILS_PATH@ @CACHE_PATH@ $(NODE_BINS)
@@ -295,7 +291,7 @@ MOBILE_CONFIG = \
 	specPattern=$(MOBILE_TEST_FOLDER)/**/*_spec.js,supportFile=$(SUPPORT_FILE),userAgent=$(MOBILE_USER_AGENT)
 
 MOBILE_ENV = \
-	CYPRESS_INCLUDE_TAGS=tagmobile,DATA_FOLDER=$(MOBILE_DATA_FOLDER),DATA_WORKDIR=$(MOBILE_DATA_WORKDIR),WSD_VERSION_HASH=$(COOLWSD_VERSION_HASH),SERVER=$(COOLWSD_SERVER),SERVER_PORT=$(FREE_PORT),LO_CORE_VERSION="$(CORE_VERSION)",INTEGRATION=$(CYPRESS_INTEGRATION)
+	CYPRESS_INCLUDE_TAGS=tagmobile,DATA_FOLDER=$(MOBILE_DATA_FOLDER),DATA_WORKDIR=$(MOBILE_DATA_WORKDIR),SERVER=$(COOLWSD_SERVER),SERVER_PORT=$(FREE_PORT),LO_CORE_VERSION="$(CORE_VERSION)",INTEGRATION=$(CYPRESS_INTEGRATION)
 
 # Run one mobile test / all mobile tests in interactive test runner.
 # Parameters:
@@ -333,16 +329,57 @@ define run_mobile_tests
 endef
 
 ################
+# Lighthouse tests.
+################
+
+check-lighthouse: @JAILS_PATH@ @CACHE_PATH@ $(NODE_BINS)
+	$(call cleanup_before_run)
+	$(call run_JS_error_check)
+	$(call start_coolwsd)
+	$(call run_lighthouse_tests,$(spec))
+	$(V)$(KILL_COMMAND) || true
+
+LIGHTHOUSE_CONFIG = \
+	specPattern=$(LIGHTHOUSE_TEST_FOLDER)/**/*_spec.js,supportFile=$(SUPPORT_FILE),userAgent=$(LIGHTHOUSE_USER_AGENT)
+
+LIGHTHOUSE_ENV = \
+	DATA_FOLDER=$(LIGHTHOUSE_DATA_FOLDER),DATA_WORKDIR=$(LIGHTHOUSE_DATA_WORKDIR),SERVER=$(COOLWSD_SERVER),SERVER_PORT=$(FREE_PORT),LO_CORE_VERSION="$(CORE_VERSION)",INTEGRATION=$(CYPRESS_INTEGRATION),IMAGES_FOLDER=$(abs_top_srcdir)/browser/images/help/en/
+
+LIGHTHOUSE_INCLUDE_TAGS = \
+	taglighthouse,$(A11Y_TAG)
+
+# Run lighthouse accessibility tests with Chrome browser.
+# Parameters:
+# 1 - spec (optional):	test file to run, if not specified all lighthouse tests are run.
+define run_lighthouse_tests
+	$(V)echo $(if $(1),"Running lighthouse test: $(1)","Running all lighthouse accessibility tests...")
+	$(V)echo
+	$(eval CYPRESS_INCLUDE_TAGS=$(LIGHTHOUSE_INCLUDE_TAGS))
+	$(V)echo Cypress tags: $(CYPRESS_INCLUDE_TAGS)
+	$(V)echo
+	$(eval export CYPRESS_INCLUDE_TAGS)
+	$(eval LIGHTHOUSE_BROWSER=chrome)
+	$(eval SPEC_FILE=$(if $(1),$(LIGHTHOUSE_TEST_FOLDER)/$(1)))
+	$(if $(1),$(call check_spec_existence,$(1),lighthouse))
+	$(CYPRESS_BINARY) run \
+		--browser $(LIGHTHOUSE_BROWSER) \
+		--headless \
+		--config-file $(CYPRESS_CONFIG) \
+		--config $(LIGHTHOUSE_CONFIG) \
+		--env $(LIGHTHOUSE_ENV) \
+		$(if $(SPEC_FILE),--spec=$(SPEC_FILE)) \
+		|| ($(KILL_COMMAND) && false)
+endef
+
+################
 # Desktop tests.
 ################
 
 check-desktop: @JAILS_PATH@ @CACHE_PATH@ $(NODE_BINS)
 	$(call cleanup_before_run)
 	$(call run_JS_error_check)
-	$(if $(HEADLESS_BUILD),$(call start_Xvfb),)
 	$(call start_coolwsd)
 	$(call run_desktop_tests,$(spec))
-	$(if $(HEADLESS_BUILD),$(V)pkill Xvfb,)
 	$(V)$(KILL_COMMAND) || true
 
 run-desktop: @JAILS_PATH@ @CACHE_PATH@ $(NODE_BINS)
@@ -356,7 +393,7 @@ DESKTOP_CONFIG = \
 	specPattern=$(DESKTOP_TEST_FOLDER)/**/*_spec.js,supportFile=$(SUPPORT_FILE),userAgent=$(DESKTOP_USER_AGENT)
 
 DESKTOP_ENV = \
-	DATA_FOLDER=$(DESKTOP_DATA_FOLDER),DATA_WORKDIR=$(DESKTOP_DATA_WORKDIR),WSD_VERSION_HASH=$(COOLWSD_VERSION_HASH),SERVER=$(COOLWSD_SERVER),SERVER_PORT=$(FREE_PORT),LO_CORE_VERSION="$(CORE_VERSION)",INTEGRATION=$(CYPRESS_INTEGRATION),IMAGES_FOLDER=$(abs_top_srcdir)/browser/images/help/en/
+	DATA_FOLDER=$(DESKTOP_DATA_FOLDER),DATA_WORKDIR=$(DESKTOP_DATA_WORKDIR),SERVER=$(COOLWSD_SERVER),SERVER_PORT=$(FREE_PORT),LO_CORE_VERSION="$(CORE_VERSION)",INTEGRATION=$(CYPRESS_INTEGRATION),IMAGES_FOLDER=$(abs_top_srcdir)/browser/images/help/en/
 
 DESKTOP_INCLUDE_TAGS = \
 	tagdesktop,$(A11Y_TAG)
@@ -410,7 +447,6 @@ endef
 
 check-idle: @JAILS_PATH@ @CACHE_PATH@ $(NODE_BINS) start_short_idle_coolwsd $(PID_FILE)
 	$(call run_idle_tests,$(spec))
-	$(if $(HEADLESS_BUILD),$(V)pkill Xvfb,)
 	$(V)$(KILL_COMMAND) || true
 
 run-idle: @JAILS_PATH@ @CACHE_PATH@ $(NODE_BINS) start_short_idle_coolwsd $(PID_FILE)
@@ -421,7 +457,7 @@ IDLE_CONFIG = \
 	specPattern=$(IDLE_TEST_FOLDER)/**/*_spec.js,supportFile=$(SUPPORT_FILE),userAgent=$(IDLE_USER_AGENT)
 
 IDLE_ENV = \
-	DATA_FOLDER=$(IDLE_DATA_FOLDER),DATA_WORKDIR=$(IDLE_DATA_WORKDIR),WSD_VERSION_HASH=$(COOLWSD_VERSION_HASH),SERVER=$(COOLWSD_SERVER),SERVER_PORT=$(FREE_PORT),LO_CORE_VERSION="$(CORE_VERSION)",INTEGRATION=$(CYPRESS_INTEGRATION),IMAGES_FOLDER=$(abs_top_srcdir)/browser/images/help/en/
+	DATA_FOLDER=$(IDLE_DATA_FOLDER),DATA_WORKDIR=$(IDLE_DATA_WORKDIR),SERVER=$(COOLWSD_SERVER),SERVER_PORT=$(FREE_PORT),LO_CORE_VERSION="$(CORE_VERSION)",INTEGRATION=$(CYPRESS_INTEGRATION),IMAGES_FOLDER=$(abs_top_srcdir)/browser/images/help/en/
 
 IDLE_INCLUDE_TAGS = \
 	tagdesktop,$(A11Y_TAG)
@@ -475,12 +511,10 @@ endef
 check-multi: @JAILS_PATH@ @CACHE_PATH@ $(NODE_BINS)
 	$(call cleanup_before_run)
 	$(call run_JS_error_check)
-	$(if $(HEADLESS_BUILD),$(call start_Xvfb),)
 	$(call start_coolwsd)
 	$(if $(spec), \
 		$(call run_multiuser_test,$(spec)), \
 		$(call run_all_multiuser_tests))
-	$(if $(HEADLESS_BUILD),$(V)pkill Xvfb,)
 	$(V)$(KILL_COMMAND) || true
 
 run-multi: @JAILS_PATH@ @CACHE_PATH@ $(NODE_BINS)
@@ -494,13 +528,17 @@ MULTIUSER_CONFIG = \
 	specPattern=$(MULTIUSER_TEST_FOLDER)/**/*_spec.js,supportFile=$(SUPPORT_FILE),userAgent=$(DESKTOP_USER_AGENT)
 
 MULTIUSER_ENV = \
-	CYPRESS_INCLUDE_TAGS=tagmultiuser,DATA_FOLDER=$(MULTIUSER_DATA_FOLDER),DATA_WORKDIR=$(MULTIUSER_DATA_WORKDIR),WSD_VERSION_HASH=$(COOLWSD_VERSION_HASH),SERVER=$(COOLWSD_SERVER),SERVER_PORT=$(FREE_PORT),LO_CORE_VERSION="$(CORE_VERSION)",INTEGRATION=$(CYPRESS_INTEGRATION)
+	CYPRESS_INCLUDE_TAGS=tagmultiuser,DATA_FOLDER=$(MULTIUSER_DATA_FOLDER),DATA_WORKDIR=$(MULTIUSER_DATA_WORKDIR),SERVER=$(COOLWSD_SERVER),SERVER_PORT=$(FREE_PORT),LO_CORE_VERSION="$(CORE_VERSION)",INTEGRATION=$(CYPRESS_INTEGRATION)
 
 # Run all multi-user tests in headless mode.
 # Parameters:
 # 1 - +env (optional):	additional env variables (will be appended to $(MULTIUSER_ENV).
 define run_all_multiuser_tests
-	$(foreach test,$(MULTIUSER_TEST_FILES),$(call run_multiuser_test,$(test),$(1)))
+	$(V)echo "Running cypress multi-user tests..."
+	$(V)echo
+	$(eval ENV_EXTENDED=$(MULTIUSER_ENV)$(if $(1),$(COMMA)$(1)))
+	$(call run_test_headless,\
+		$(MULTIUSER_CONFIG),$(ENV_EXTENDED),)
 endef
 
 # Run one multiuser test / all multiuser tests in interactive test runner.
@@ -573,13 +611,13 @@ INTERFER_MOBILE_CONFIG1 = \
 	specPattern=$(MOBILE_TEST_FOLDER)/**/*_spec.js,supportFile=$(SUPPORT_FILE),userAgent=$(MOBILE_USER_AGENT),defaultCommandTimeout=30000
 
 INTERFER_MOBILE_ENV1 = \
-	CYPRESS_INCLUDE_TAGS=tagmobile,DATA_FOLDER=$(MOBILE_DATA_FOLDER),DATA_WORKDIR=$(MULTIUSER_DATA_WORKDIR),WSD_VERSION_HASH=$(COOLWSD_VERSION_HASH),SERVER=$(COOLWSD_SERVER),SERVER_PORT=$(FREE_PORT),LO_CORE_VERSION="$(CORE_VERSION)",INTEGRATION=$(CYPRESS_INTEGRATION),INTERFERENCE_TEST=true
+	CYPRESS_INCLUDE_TAGS=tagmobile,DATA_FOLDER=$(MOBILE_DATA_FOLDER),DATA_WORKDIR=$(MULTIUSER_DATA_WORKDIR),SERVER=$(COOLWSD_SERVER),SERVER_PORT=$(FREE_PORT),LO_CORE_VERSION="$(CORE_VERSION)",INTEGRATION=$(CYPRESS_INTEGRATION),INTERFERENCE_TEST=true
 
 INTERFER_MOBILE_CONFIG2 = \
 	supportFile=$(SUPPORT_FILE),userAgent=$(MOBILE_USER_AGENT),defaultCommandTimeout=30000,retries=0
 
 INTERFER_MOBILE_ENV2 = \
-	CYPRESS_INCLUDE_TAGS=tagmobile,DATA_FOLDER=$(MOBILE_DATA_FOLDER),DATA_WORKDIR=$(MULTIUSER_DATA_WORKDIR),WSD_VERSION_HASH=$(COOLWSD_VERSION_HASH),SERVER=$(COOLWSD_SERVER),SERVER_PORT=$(FREE_PORT),LO_CORE_VERSION="$(CORE_VERSION)",INTEGRATION=$(CYPRESS_INTEGRATION)
+	CYPRESS_INCLUDE_TAGS=tagmobile,DATA_FOLDER=$(MOBILE_DATA_FOLDER),DATA_WORKDIR=$(MULTIUSER_DATA_WORKDIR),SERVER=$(COOLWSD_SERVER),SERVER_PORT=$(FREE_PORT),LO_CORE_VERSION="$(CORE_VERSION)",INTEGRATION=$(CYPRESS_INTEGRATION)
 
 # Run all mobile interference tests in headless mode.
 define run_mobile_interference_tests
@@ -668,13 +706,13 @@ INTERFER_DESKTOP_CONFIG1 = \
 	specPattern=$(DESKTOP_TEST_FOLDER)/**/*_spec.js,supportFile=$(SUPPORT_FILE),userAgent=$(DESKTOP_USER_AGENT),defaultCommandTimeout=30000
 
 INTERFER_DESKTOP_ENV1 = \
-	DATA_FOLDER=$(DESKTOP_DATA_FOLDER),DATA_WORKDIR=$(MULTIUSER_DATA_WORKDIR),WSD_VERSION_HASH=$(COOLWSD_VERSION_HASH),SERVER=$(COOLWSD_SERVER),SERVER_PORT=$(FREE_PORT),LO_CORE_VERSION="$(CORE_VERSION)",INTEGRATION=$(CYPRESS_INTEGRATION),INTERFERENCE_TEST=true
+	DATA_FOLDER=$(DESKTOP_DATA_FOLDER),DATA_WORKDIR=$(MULTIUSER_DATA_WORKDIR),SERVER=$(COOLWSD_SERVER),SERVER_PORT=$(FREE_PORT),LO_CORE_VERSION="$(CORE_VERSION)",INTEGRATION=$(CYPRESS_INTEGRATION),INTERFERENCE_TEST=true
 
 INTERFER_DESKTOP_CONFIG2 = \
 	supportFile=$(SUPPORT_FILE),userAgent=$(DESKTOP_USER_AGENT),defaultCommandTimeout=30000,retries=0
 
 INTERFER_DESKTOP_ENV2 = \
-	DATA_FOLDER=$(DESKTOP_DATA_FOLDER),DATA_WORKDIR=$(MULTIUSER_DATA_WORKDIR),WSD_VERSION_HASH=$(COOLWSD_VERSION_HASH),SERVER=$(COOLWSD_SERVER),SERVER_PORT=$(FREE_PORT),LO_CORE_VERSION="$(CORE_VERSION)",INTEGRATION=$(CYPRESS_INTEGRATION)
+	DATA_FOLDER=$(DESKTOP_DATA_FOLDER),DATA_WORKDIR=$(MULTIUSER_DATA_WORKDIR),SERVER=$(COOLWSD_SERVER),SERVER_PORT=$(FREE_PORT),LO_CORE_VERSION="$(CORE_VERSION)",INTEGRATION=$(CYPRESS_INTEGRATION)
 
 # Run all desktop interference test in headless mode.
 define run_desktop_interference_tests
@@ -713,7 +751,7 @@ do-run-cov: @JAILS_PATH@ @CACHE_PATH@ $(NODE_BINS)
 	$(V)echo
 	rm -rf .nyc_output
 	rm -rf coverage
-	npm install @cypress/code-coverage --no-save
+	UV_USE_IO_URING=0 npm install @cypress/code-coverage --no-save
 	$(V)echo "import '@cypress/code-coverage/support';" >> $(SUPPORT_FILE_ABS)
 	$(V)echo "" >> $(SUPPORT_FILE_ABS)
 	cd .. && npx nyc instrument --compact=false browser/src browser/dist/src && cd cypress_test
@@ -741,7 +779,6 @@ do-run-cov: @JAILS_PATH@ @CACHE_PATH@ $(NODE_BINS)
 # 3 - env:    list of environment variables (e.g. cypress' --env argument).
 define run_interactive_all
 	DEBUG='cypress:*' \
-	DISPLAY=$(if $(HEADLESS_BUILD),$(HEADLESS_DISPLAY),$(DISPLAY)) \
 		$(CYPRESS_BINARY) open \
 		--config-file $(CYPRESS_CONFIG) \
 		--config $(1) \
@@ -757,7 +794,6 @@ endef
 # 4 - spec:   test file path (e.g. cypress' --spec argument)
 define run_interactive_single
 	DEBUG='cypress:*' \
-	DISPLAY=$(if $(HEADLESS_BUILD),$(HEADLESS_DISPLAY),$(DISPLAY)) \
 		$(CYPRESS_BINARY) run \
 		--browser $(BROWSER) \
 		--headed --no-exit \
@@ -787,6 +823,22 @@ define run_test_parallel
 		--config-file $(CYPRESS_CONFIG)
 endef
 
+# Shell commands for CPU load generation (expanded conditionally based on ENABLE_CPULOAD)
+LOAD_START_CMD = $(if $(ENABLE_CPULOAD),\
+	echo "Starting CPU load generators..."; \
+	rm -f $(LOAD_PID_FILE); \
+	for i in $$(seq 1 $$(nproc)); do \
+		(while true; do :; done) & echo $$! >> $(LOAD_PID_FILE); \
+	done; \
+	echo "Load generators started";)
+LOAD_STOP_CMD = $(if $(ENABLE_CPULOAD),\
+	echo "Stopping CPU load generators..."; \
+	if [ -f $(LOAD_PID_FILE) ]; then \
+		while read pid; do kill $$pid 2>/dev/null || true; done < $(LOAD_PID_FILE); \
+		rm -f $(LOAD_PID_FILE); \
+	fi; \
+	echo "Load generators stopped";)
+
 # Run one test \ tests in headless mode.
 #
 # Parameters:
@@ -795,14 +847,15 @@ endef
 # 3 - env:		 list of environment variables (e.g. cypress' --env argument).
 # 4 - spec (optional):   test file path (e.g. cypress' --spec argument)
 define run_test_headless
+	$(LOAD_START_CMD) \
 	$(CYPRESS_BINARY) run \
 		--browser $(BROWSER) \
 		--headless \
 		--config-file $(CYPRESS_CONFIG) \
 		--config $(1) \
 		--env $(2) \
-		$(if $(3),--spec=$(3)) \
-		|| ($(KILL_COMMAND) && false)
+		$(if $(3),--spec=$(3)); \
+		rc=$$?; $(LOAD_STOP_CMD) $(KILL_COMMAND) || true; exit $$rc
 endef
 
 # Checks whether the given spec file exists.
@@ -816,7 +869,8 @@ define check_spec_existence
 	$(eval TEST_FILES=$(if $(filter mobile,$(2)),$(MOBILE_TEST_FILES),\
 				$(if $(filter desktop,$(2)),$(DESKTOP_TEST_FILES),\
 				$(if $(filter idle,$(2)),$(IDLE_TEST_FILES),\
-				$(if $(filter multi,$(2)),$(MULTIUSER_TEST_FILES))))))
+				$(if $(filter lighthouse,$(2)),$(LIGHTHOUSE_TEST_FILES),\
+				$(if $(filter multi,$(2)),$(MULTIUSER_TEST_FILES)))))))
 	$(if $(filter $(1),$(TEST_FILES)),,$(error CypressError: Can't find the given spec file!))
 
 endef

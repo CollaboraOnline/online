@@ -32,6 +32,13 @@ L.ProgressOverlay = window.L.Layer.extend({
 		} else {
 			productName = (typeof brandProductName !== 'undefined') ? brandProductName : 'Collabora Online Development Edition (unbranded)';
 		}
+		if (window.logoURL) {
+			this._spinner.style.setProperty(
+				'--spinner-logo',
+				`url("${window.logoURL}")`
+			);
+			this._spinnerCanvas.style.opacity = '0';
+		}
 		this._brandLabel = window.L.DomUtil.create('div', 'leaflet-progress-label brand-label', this._container);
 		this._brandLabel.innerHTML = productName;
 

@@ -9,19 +9,23 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * Unit test for cursor positioning and movement functionality.
+ */
+
 #include <config.h>
+
+#include <common/Unit.hpp>
+
+#include <test/helpers.hpp>
+#include <test/lokassert.hpp>
+
+#include <Poco/Exception.h>
+#include <Poco/URI.h>
 
 #include <memory>
 #include <sstream>
 #include <string>
-
-#include <Poco/Exception.h>
-#include <Poco/RegularExpression.h>
-#include <Poco/URI.h>
-#include <test/lokassert.hpp>
-
-#include <Unit.hpp>
-#include <helpers.hpp>
 
 using namespace std::literals;
 

@@ -12,18 +12,28 @@
 
 class DocumentBase {
 	public readonly type: string = 'DocumentBase';
-	public activeView: ViewLayoutBase;
+	public activeLayout: ViewLayoutBase;
 	public tableMiddleware: TableMiddleware;
 	public selectionMiddleware: ImpressSelectionMiddleware | null;
 	public mouseControl: MouseControl | null = null;
+	private _activeModes: number[] = [0];
+	protected views: Map<number, DocumentViewBase> = new Map<
+		number,
+		DocumentViewBase
+	>();
+	protected activeViewID: number;
+	public activeView: DocumentViewBase;
+	private activeViewSelectionColor = 'lightblue'; // Overwritten in constructor.
 
 	protected _fileSize: cool.SimplePoint;
 
 	constructor() {
+		if (!app.activeDocument) app.activeDocument = this;
+
 		if (app.map._docLayer._docType === 'text') {
-			this.activeView = new ViewLayoutWriter();
+			this.activeLayout = new ViewLayoutWriter();
 		} else {
-			this.activeView = new ViewLayoutBase();
+			this.activeLayout = new ViewLayoutBase();
 		}
 		this._fileSize = new cool.SimplePoint(0, 0);
 		this.tableMiddleware = new TableMiddleware();
@@ -35,6 +45,27 @@ class DocumentBase {
 		else this.selectionMiddleware = null;
 
 		this.addSections();
+		this.activeViewID = 0;
+		this.activeView = new DocumentViewBase(this.activeViewID);
+
+		const dummyDiv = document.createElement('div');
+		dummyDiv.className = 'selections-data';
+		document.body.appendChild(dummyDiv);
+		this.activeViewSelectionColor =
+			getComputedStyle(dummyDiv).getPropertyValue('background-color');
+		this.activeView.setColor(this.activeViewSelectionColor);
+		dummyDiv.remove();
+	}
+
+	public setActiveViewID(activeViewID: number) {
+		if (this.activeViewID !== activeViewID) {
+			this.activeViewID = activeViewID;
+			this.activeView.clearTextSelection();
+			// Remove the old active view's section before creating a new one.
+			app.sectionContainer.removeSection(this.activeView.selectionSection.name);
+			this.activeView = new DocumentViewBase(this.activeViewID);
+			this.activeView.setColor(this.activeViewSelectionColor);
+		}
 	}
 
 	private addSections() {
@@ -48,5 +79,36 @@ class DocumentBase {
 
 	public set fileSize(value: cool.SimplePoint) {
 		this._fileSize = value;
+	}
+
+	public removeView(viewID: number) {
+		if (this.views.has(viewID)) {
+			app.sectionContainer.removeSection(
+				(this.views.get(viewID) as DocumentViewBase).selectionSection.name,
+			);
+			this.views.delete(viewID);
+		}
+	}
+
+	// This shouldn't create views if not found. But it will happen when we use only this class for views.
+	public getView(viewID: number): DocumentViewBase {
+		if (this.views.has(viewID))
+			return this.views.get(viewID) as DocumentViewBase;
+		else {
+			this.views.set(viewID, new DocumentViewBase(viewID));
+			return this.views.get(viewID) as DocumentViewBase;
+		}
+	}
+
+	public set activeModes(modes: number[]) {
+		this._activeModes = modes.slice();
+	}
+
+	public get activeModes() {
+		return this._activeModes.slice();
+	}
+
+	public isModeActive(mode: number): boolean {
+		return this._activeModes.includes(mode);
 	}
 }

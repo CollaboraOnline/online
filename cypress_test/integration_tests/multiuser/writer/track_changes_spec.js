@@ -6,6 +6,10 @@ describe.skip(['tagmultiuser'], 'Track Changes', function () {
 
 	beforeEach(function () {
 		helper.setupAndLoadDocument('writer/track_changes.odt',true);
+
+		cy.getFrameWindow().then((win) => {
+			this.win = win;
+		});
 	});
 
 	function confirmChange(action) {
@@ -18,7 +22,7 @@ describe.skip(['tagmultiuser'], 'Track Changes', function () {
 	}
 
 	//enable record for track changes
-	function enableRecord() {
+	function enableRecord(win) {
 		cy.cGet('body').find('#menu-editmenu')
 			.click()
 			.find('#menu-changesmenu')
@@ -27,7 +31,7 @@ describe.skip(['tagmultiuser'], 'Track Changes', function () {
 			.click();
 
 		//if we don't wait , the test will fail in CLI
-		cy.wait(200);
+		helper.processToIdle(win);
 
 		cy.cGet('body').find('#menu-editmenu')
 			.click()
@@ -40,15 +44,15 @@ describe.skip(['tagmultiuser'], 'Track Changes', function () {
 		cy.cGet('body').find('#menu-changesmenu').click();
 	}
 
-	function acceptAll(frameId1, frameId2) {
+	function acceptAll(frameId1, frameId2, win) {
 		cy.cSetActiveFrame(frameId1);
 		cy.cGet('#document-container').click();
 		helper.typeIntoDocument('Hello World');
-		enableRecord();
+		enableRecord(win);
 		cy.wait(1000);
 		helper.clearAllText();
 		//if we don't wait , the test will fail in CLI
-		cy.wait(200);
+		helper.processToIdle(win);
 		helper.selectAllText();
 
 		cy.cSetActiveFrame(frameId2);
@@ -65,11 +69,11 @@ describe.skip(['tagmultiuser'], 'Track Changes', function () {
 		helper.textSelectionShouldNotExist();
 	}
 
-	function rejectAll(frameId1, frameId2) {
+	function rejectAll(frameId1, frameId2, win) {
 		cy.cSetActiveFrame(frameId1);
 		cy.cGet('#document-container').click();
 		helper.typeIntoDocument('Hello World');
-		enableRecord();
+		enableRecord(win);
 		cy.wait(1000);
 		helper.clearAllText();
 		cy.wait(400);
@@ -91,18 +95,18 @@ describe.skip(['tagmultiuser'], 'Track Changes', function () {
 	}
 
 	it('Accept All by user-2', function () {
-		acceptAll('#iframe1', '#iframe2');
+		acceptAll('#iframe1', '#iframe2', this.win);
 	});
 
 	it('Accept All by user-1', function () {
-		acceptAll('#iframe2', '#iframe1');
+		acceptAll('#iframe2', '#iframe1', this.win);
 	});
 
 	it.skip('Reject All by user-2', function() {
-		rejectAll('#iframe1', '#iframe2');
+		rejectAll('#iframe1', '#iframe2', this.win);
 	});
 
 	it.skip('Reject All by user-1', function() {
-		rejectAll('#iframe2', '#iframe1');
+		rejectAll('#iframe2', '#iframe1', this.win);
 	});
 });

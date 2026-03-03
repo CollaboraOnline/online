@@ -9,6 +9,11 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * Feature lock and command control management.
+ * Classes: LockManager - Manages locked commands and read-only hosts
+ */
+
 #include <config.h>
 
 #include "CommandControl.hpp"
@@ -32,8 +37,6 @@ std::map<std::string, std::string> LockManager::unlockLinkMap;
 bool LockManager::lockHostEnabled = false;
 std::string LockManager::translationPath = std::string();
 std::string LockManager::unlockLink = std::string();
-
-LockManager::LockManager() {}
 
 void LockManager::generateLockedCommandList()
 {

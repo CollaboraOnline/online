@@ -9,22 +9,27 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * Implementation of file quarantine mechanism.
+ * Functions: quarantineFile()
+ */
+
 #include <config.h>
 
 #include "QuarantineUtil.hpp"
 
+#include <common/Common.hpp>
+#include <common/FileUtil.hpp>
+#include <common/Log.hpp>
+#include <common/StringVector.hpp>
+#include <common/Util.hpp>
+#include <wsd/ClientSession.hpp>
+#include <wsd/DocumentBroker.hpp>
+
 #include <Poco/Path.h>
 #include <Poco/URI.h>
-#include "ClientSession.hpp"
-#include "DocumentBroker.hpp"
-#include "FileUtil.hpp"
-#include "Util.hpp"
 
 #include <chrono>
-#include <common/Common.hpp>
-#include <common/StringVector.hpp>
-#include <common/Log.hpp>
-
 #include <exception>
 #include <mutex>
 #include <stdexcept>

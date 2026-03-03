@@ -15,8 +15,8 @@
 #include <unordered_map>
 #include <cstdlib>
 
-#include <JsonUtil.hpp>
-#include <Util.hpp>
+#include <common/JsonUtil.hpp>
+#include <common/Util.hpp>
 
 #define LOK_USE_UNSTABLE_API
 #include <LibreOfficeKit/LibreOfficeKit.h>
@@ -103,13 +103,17 @@ namespace LOKitHelper
         resultInfo["parts"] = std::move(resultingPartsArray);
     }
 
-    inline void fetchWriterSpecificData(LibreOfficeKitDocument *loKitDocument, std::unordered_map<std::string, std::string> &resultInfo)
+    inline void fetchWriterSpecificData(LibreOfficeKitDocument *loKitDocument, std::unordered_map<std::string, std::string> &resultInfo, int& mode)
     {
         std::string rectangles = loKitDocument->pClass->getPartPageRectangles(loKitDocument);
 
         rectangles = Util::replace(rectangles, ";", "], [");
 
         resultInfo["pagerectangles"] = "[ [" + rectangles + "] ]";
+
+        // Fetch mode for a potentially non-standard redline render mode.
+        std::string partData = getPartData(loKitDocument, 0);
+        mode = getMode(partData);
     }
 
     inline void fetchCalcSpecificData(LibreOfficeKitDocument *loKitDocument, std::unordered_map<std::string, std::string> &resultInfo, int part)
@@ -119,16 +123,7 @@ namespace LOKitHelper
         resultInfo["lastcolumn"] = std::to_string(lastColumn);
         resultInfo["lastrow"] = std::to_string(lastRow);
 
-        ScopedString value(loKitDocument->pClass->getCommandValues(loKitDocument, ".uno:ReadOnly"));
-        if (value)
-        {
-            const std::string isReadOnly = std::string(value.get());
-
-            bool readOnly = (isReadOnly.find("true") != std::string::npos);
-            resultInfo["readonly"] = readOnly ? "true": "false";
-        }
-
-        value.reset(loKitDocument->pClass->getCommandValues(loKitDocument, ".uno:DefinePrintArea"));
+        ScopedString value(loKitDocument->pClass->getCommandValues(loKitDocument, ".uno:DefinePrintArea"));
         if (value)
         {
             resultInfo["printranges"] = std::string(value.get());
@@ -163,6 +158,15 @@ namespace LOKitHelper
         resultInfo["height"] = std::to_string(height);
         resultInfo["viewid"] = std::to_string(viewId);
 
+        ScopedString value(loKitDocument->pClass->getCommandValues(loKitDocument, ".uno:ReadOnly"));
+        if (value)
+        {
+            const std::string isReadOnly = std::string(value.get());
+
+            bool readOnly = (isReadOnly.find("true") != std::string::npos);
+            resultInfo["readonly"] = readOnly ? "true": "false";
+        }
+
         ScopedString values(loKitDocument->pClass->getCommandValues(loKitDocument, ".uno:AllPageSize"));
         if (values)
         {
@@ -189,7 +193,7 @@ namespace LOKitHelper
         if (type == LOK_DOCTYPE_SPREADSHEET)
             fetchCalcSpecificData(loKitDocument, resultInfo, selectedPart);
         else if (type == LOK_DOCTYPE_TEXT)
-            fetchWriterSpecificData(loKitDocument, resultInfo);
+            fetchWriterSpecificData(loKitDocument, resultInfo, mode);
 
         if (type == LOK_DOCTYPE_SPREADSHEET || type == LOK_DOCTYPE_PRESENTATION || type == LOK_DOCTYPE_DRAWING)
             fetchPartsData(loKitDocument, resultInfo, partsCount, mode);

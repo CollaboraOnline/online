@@ -286,6 +286,11 @@ class Util {
 		}
 	}
 
+	public static ensureValue<T>(obj: T | undefined | null): asserts obj is T {
+		if (obj === undefined) throw new Error('Object is undefined!');
+		if (obj === null) throw new Error('Object is null!');
+	}
+
 	public static MAX_SAFE_INTEGER = Math.pow(2, 53) - 1;
 	public static MIN_SAFE_INTEGER = -Util.MAX_SAFE_INTEGER;
 }

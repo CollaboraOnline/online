@@ -8,12 +8,18 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
-#include "config.h"
 
-#include "StringVector.hpp"
-#include "Util.hpp"
-#include "COOLWSD.hpp"
-#include "Kit.hpp"
+/*
+ * In-process mode entry point for COOLWSD.
+ * Functions: main()
+ */
+
+#include <config.h>
+
+#include <common/StringVector.hpp>
+#include <common/Util.hpp>
+#include <COOLWSD.hpp>
+#include <Kit.hpp>
 
 void setKitInProcess() { Util::setKitInProcess(true); }
 

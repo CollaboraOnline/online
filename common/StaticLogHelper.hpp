@@ -11,8 +11,6 @@
 
 #pragma once
 
-#include <config.h>
-
 #include <atomic>
 #include <string>
 

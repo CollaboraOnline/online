@@ -1,0 +1,6 @@
+#!/bin/sh
+
+HOMEBREW_PATH="@HOMEBREW_PATH@"
+eval "$(@HOMEBREW_PATH@/bin/brew shellenv)"
+
+exec "@HOMEBREW_PATH@/bin/gmake" "$@"

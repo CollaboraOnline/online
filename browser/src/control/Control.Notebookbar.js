@@ -41,6 +41,10 @@ window.L.Control.Notebookbar = window.L.Control.extend({
 		this.map = map;
 		this.additionalShortcutButtons = [];
 
+		if (window.L.Browser.cypressTest) {
+			window.app.allDialogs = this.getListOfUnoCommandsForDialogs();
+		}
+
 		// initialize the model only once, remember updates from core
 		if (this.model.getSnapshot() === null)
 			this.model.fullUpdate(this.getFullJSON(this.HOME_TAB_ID));
@@ -50,7 +54,7 @@ window.L.Control.Notebookbar = window.L.Control.extend({
 
 	// on show
 	create: function(container) {
-		var docType = this._map.getDocType();
+		const docType = this._map.getDocType();
 
 		if (document.documentElement.dir === 'rtl')
 			this._RTL = true;
@@ -62,8 +66,6 @@ window.L.Control.Notebookbar = window.L.Control.extend({
 		this.onContextChange = this.onContextChange.bind(this);
 		app.events.on('contextchange', this.onContextChange);
 		app.events.on('updatepermission', this.onUpdatePermission.bind(this));
-		this.map.on('statusbarchanged', this.onStatusbarChange, this);
-		this.map.on('rulerchanged', this.onRulerChange, this);
 		this.map.on('darkmodechanged', this.onDarkModeToggleChange, this);
 		this.map.on('showannotationschanged', this.onShowAnnotationsChange, this);
 		this.map.on('a11ystatechanged', this.onAccessibilityToggleChange, this);
@@ -80,29 +82,21 @@ window.L.Control.Notebookbar = window.L.Control.extend({
 		document.getElementById('document-container').classList.add('notebookbar-active');
 
 		if (!window.logoURL || window.logoURL != "none") {
-			var docLogoHeader = window.L.DomUtil.create('div', '');
+			const docLogoHeader = window.L.DomUtil.create('div', '');
 			docLogoHeader.id = 'document-header';
 
-			var iconClass = 'document-logo';
-			var iconTooltip;
+			let iconClass = '';
+			let iconTooltip;
 			if (!window.logoURL) {
-				if (docType === 'text') {
-					iconClass += ' writer-icon-img';
-					iconTooltip = 'Writer';
-				} else if (docType === 'spreadsheet') {
-					iconClass += ' calc-icon-img';
-					iconTooltip = 'Calc';
-				} else if (docType === 'presentation') {
-					iconClass += ' impress-icon-img';
-					iconTooltip = 'Impress';
-				} else if (docType === 'drawing') {
-					iconClass += ' draw-icon-img';
-					iconTooltip = 'Draw';
-				}
+				[iconClass, iconTooltip] = app.LOUtil.getDocumentLogoClass(docType);
 			}
-			var docLogo = window.L.DomUtil.create('div', iconClass, docLogoHeader);
-			$(docLogo).data('id', 'document-logo');
-			$(docLogo).data('type', 'action');
+			const docLogo = window.L.DomUtil.create('a', 'document-logo ' + iconClass, docLogoHeader);
+
+			docLogo.setAttribute('id', 'document-logo');
+			docLogo.setAttribute('type', 'action');
+			docLogo.setAttribute('target', '_blank');
+			docLogo.setAttribute('tabIndex', 0);
+
 			if (iconTooltip) {
 				docLogo.setAttribute('data-cooltip', iconTooltip);
 			}
@@ -114,7 +108,7 @@ window.L.Control.Notebookbar = window.L.Control.extend({
 			}
 		}
 
-		var isDarkMode = window.prefs.getBoolean('darkTheme');
+		const isDarkMode = window.prefs.getBoolean('darkTheme');
 		if (!isDarkMode)
 			$('#invertbackground').hide();
 
@@ -198,6 +192,11 @@ window.L.Control.Notebookbar = window.L.Control.extend({
 	},
 
 	clearNotebookbar: function() {
+		// viewMode and shareas are injected into the optionstoolbox, which belongs to the notebookbar.
+		// When switching to Viewing mode the notebookbar is removed, so we first detach
+		// viewMode and shareas to keep both from disappearing.
+		this._detachViewModeAndShareAs();
+
 		$('.root-container.notebookbar').remove();
 		$('.notebookbar-tabs-container').remove();
 		$('.notebookbar-shortcuts-bar').remove();
@@ -276,6 +275,10 @@ window.L.Control.Notebookbar = window.L.Control.extend({
 	createShortcutsBar: function() {
 		var shortcutsBar = window.L.DomUtil.create('div', 'notebookbar-shortcuts-bar');
 		$('#main-menu-state').after(shortcutsBar);
+
+		if (window.mode.isDesktop()) {
+			$('#main-menu-state').attr('type', 'hidden');
+		}
 
 		var shortcutsBarData = this.getShortcutsBarData();
 		var toolitems = shortcutsBarData[0].children;
@@ -556,24 +559,6 @@ window.L.Control.Notebookbar = window.L.Control.extend({
 			$('#hideslide').show();
 	},
 
-	onStatusbarChange: function() {
-		if (this.map.uiManager.isStatusBarVisible()) {
-			$('#showstatusbar').addClass('selected');
-		}
-		else {
-			$('#showstatusbar').removeClass('selected');
-		}
-	},
-
-	onRulerChange: function() {
-		if (this.map.uiManager.isRulerVisible()) {
-			$('#showruler').addClass('selected');
-		}
-		else {
-			$('#showruler').removeClass('selected');
-		}
-	},
-
 	onDarkModeToggleChange: function() {
 		if (window.prefs.getBoolean('darkTheme')) {
 			$('#invertbackground').show();
@@ -648,15 +633,62 @@ window.L.Control.Notebookbar = window.L.Control.extend({
 				'text': _('Share'),
 				'command': 'shareas',
 				'inlineLabel': true,
-				'accessibility': { focusBack: false, combination: 'ZS', de: null }
+				'accessibility': { focusBack: false, combination: 'ZS', de: null },
+				'tabIndex': 0,
 			});
 		}
 
 		return optionsToolItems;
 	},
 
+	_detachButtonFromNotebookbar: function (buttonId, targetId) {
+		const button = document.getElementById(buttonId);
+		if (!button) return;
+
+		const optionsSection = document.querySelector('.notebookbar-options-section');
+		if (!optionsSection || !optionsSection.contains(button)) return;
+
+		const target = document.getElementById(targetId);
+		if (!target || !target.parentNode) return;
+
+		target.parentNode.insertBefore(button, target);
+	},
+
+	_detachViewModeAndShareAs: function () {
+		this._detachButtonFromNotebookbar('shareas', 'closebuttonwrapperseparator');
+
+		const viewModeTarget = document.getElementById('shareas') ? 'shareas' : 'closebuttonwrapperseparator';
+		this._detachButtonFromNotebookbar('viewMode', viewModeTarget);
+	},
+
+	_moveViewModeIntoOptionsToolbox: function () {
+		// Check for viewMode which exists in cool.html.m4
+		const viewMode = document.getElementById('viewMode');
+		if (!viewMode)
+			return;
+
+		const optionsSection = document.querySelector('.notebookbar-options-section');
+		if (!optionsSection)
+			return;
+
+		const toolboxRow = optionsSection.querySelector('.toolbox.level-0#optionstoolboxdown');
+		if (!toolboxRow)
+			return;
+
+		// Move viewMode before Share (if Share exists), otherwise append to the end
+		const share = toolboxRow.querySelector('#shareas');
+		if (share)
+			toolboxRow.insertBefore(viewMode, share);
+		else
+			toolboxRow.appendChild(viewMode);
+	},
+
 	createOptionsSection: function(childrenArray) {
+		// First detach viewMode and shareas to avoid them being removed with the options section
+		this._detachViewModeAndShareAs();
 		$('.notebookbar-options-section').remove();
+		// Remove shareas if it still exists, to avoid duplication in creation
+		$('#shareas').remove();
 
 		var optionsSection = window.L.DomUtil.create('div', 'notebookbar-options-section');
 		$(optionsSection).insertBefore('#closebuttonwrapperseparator');
@@ -672,6 +704,8 @@ window.L.Control.Notebookbar = window.L.Control.extend({
 		if (childrenArray === undefined)
 			childrenArray = this.getOptionsSectionData();
 		builder.build(optionsSection, childrenArray);
+
+		this._moveViewModeIntoOptionsToolbox();
 	},
 
 	// dynamically show/hide items

@@ -124,6 +124,7 @@ function createColor(
 	widgetData: ColorPaletteWidgetData,
 	isCurrent: boolean,
 	themeColors: ThemeColor[],
+	groupName: string,
 ): Element {
 	const color = window.L.DomUtil.create(
 		'input',
@@ -131,7 +132,7 @@ function createColor(
 		parentContainer,
 	);
 	color.type = 'radio';
-	color.name = 'color';
+	color.name = groupName;
 	color.value = colorItem;
 	color.style.backgroundColor = '#' + colorItem;
 	color.setAttribute('index', index);
@@ -140,12 +141,16 @@ function createColor(
 
 	// Set color tooltips
 	var colorTooltip;
-	const found = themeColors.find(
-		(item: ThemeColor) => item.Value.toLowerCase() === colorItem.toLowerCase(),
-	);
-	if (found) colorTooltip = found.Name;
-	else if (window.app.colorNames) colorTooltip = findColorName(colorItem);
-	else colorTooltip = _('Unknown color');
+	if (themeData) {
+		const found = themeColors.find(
+			(item: ThemeColor) =>
+				item.Value.toLowerCase() === colorItem.toLowerCase(),
+		);
+		if (found) colorTooltip = found.Name;
+	}
+	if (!colorTooltip && window.app.colorNames)
+		colorTooltip = findColorName(colorItem);
+	if (!colorTooltip) colorTooltip = _('Unknown color');
 
 	if (window.enableAccessibility) {
 		color.setAttribute('aria-label', colorTooltip);
@@ -163,6 +168,7 @@ function createColor(
 	});
 	color.addEventListener('keydown', (event: KeyboardEvent) => {
 		if (event.code === 'Enter') {
+			event.preventDefault();
 			handleColorSelection(
 				event.target as HTMLElement, // The clicked element
 				builder, // Pass the builder object
@@ -257,7 +263,8 @@ function createPaletteSwitch(
 		paletteListbox,
 	);
 
-	listbox.setAttribute('aria-labelledby', 'color-palette');
+	listbox.id = 'color-palette-listbox';
+	listbox.setAttribute('aria-label', _('Color palette'));
 	listbox.setAttribute('tabindex', '0');
 
 	for (const i in window.app.colorPalettes) {
@@ -314,6 +321,7 @@ function updatePalette(
 				data,
 				currentColor == palette[i][j],
 				themeColors,
+				'palette-color',
 			);
 		}
 	}
@@ -321,6 +329,8 @@ function updatePalette(
 	customContainer.replaceChildren();
 
 	const customInput = window.L.DomUtil.create('input', '', customContainer);
+	customInput.id = 'ui-color-picker-custom-input';
+	customInput.setAttribute('aria-label', _('Enter custom color in hex format'));
 	customInput.placeholder = '#FFF000';
 	customInput.maxlength = 7;
 	customInput.type = 'text';
@@ -361,6 +371,7 @@ function updatePalette(
 			data,
 			currentColor == customColors[i],
 			themeColors,
+			'custom-color',
 		);
 	}
 
@@ -376,6 +387,7 @@ function updatePalette(
 			data,
 			currentColor == recentColors[i],
 			themeColors,
+			'recent-color',
 		);
 	}
 }
@@ -409,15 +421,17 @@ JSDialog.colorPicker = function (
 		container,
 	);
 
-	const recentLabel = window.L.DomUtil.create('label', '', container);
+	const recentLabel = window.L.DomUtil.create('span', '', container);
+	recentLabel.id = 'ui-color-picker-recent-label';
 	recentLabel.innerText = _('Recent');
-	recentLabel.htmlFor = 'ui-color-picker-recent';
 
 	const recentContainer = window.L.DomUtil.createWithId(
 		'div',
 		'ui-color-picker-recent',
 		container,
 	);
+	recentContainer.setAttribute('role', 'radiogroup');
+	recentContainer.setAttribute('aria-labelledby', recentLabel.id);
 
 	updatePalette(
 		getCurrentPaletteName(),

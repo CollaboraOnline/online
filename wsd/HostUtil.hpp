@@ -9,6 +9,11 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * Host and alias management utilities.
+ * Functions: parseAliases(), isHostAllowed()
+ */
+
 #pragma once
 
 // HostUtil is only used in non-mobile apps.
@@ -69,8 +74,18 @@ public:
     static bool allowedWSOrigin(const std::string& origin);
 
 private:
+    /// parse a single alias from groups of alias_groups, return an empty string if the pattern was invalid
+    ///
+    /// valid shared.*\.com
+    /// valid my-domain-(sub1|sub2).com
+    /// valid my-domain.com
+    /// invalid my-domain[1
+    static std::string parseAlias(const std::string& aliasPattern);
+
     /// add host to WopiHosts
     static void addWopiHost(const std::string& host, bool allow);
+
+    friend class HostUtilTests;
 };
 #endif // !MOBILEAPP
 

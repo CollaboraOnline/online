@@ -4,6 +4,8 @@
 	display: flex;
 	overflow-x: auto;
 	overflow-y: hidden;
+	scrollbar-color: var(--scrollbar-color);
+	scrollbar-width: var(--scrollbar-width);
 }
 
 /* stretch the fields */
@@ -82,7 +84,13 @@ button.ui-tab.notebookbar {
 	color: var(--color-main-text);
 }
 
-#shareas { & .unolabel { color: var(--color-main-text) } }
+#shareas {
+	overflow: visible;
+}
+
+#shareas .unolabel {
+	color: var(--color-main-text);
+}
 
 .ui-tab.notebookbar[style*='block'] {
 	display: inline-flex !important;
@@ -153,21 +161,30 @@ button.ui-tab.notebookbar {
 
 .unoSave.savemodified .unobutton img,
 .savemodified.unotoolbutton .unobutton img,
-#save.saving img,
-#save.saved img {
+nav [id^='save'].saving img,
+#toolbar-up [id^='save'].saving img,
+nav [id^='save'].saved img,
+#toolbar-up [id^='save'].saved img {
 	box-sizing: border-box;
 	padding-left: var(--btn-img-size) !important;
 }
 
-html:not([data-theme='dark']) .unoSave.savemodified .unobutton img,
-html:not([data-theme='dark']) .savemodified.unotoolbutton .unobutton img {
+html:not([data-theme='dark']) .unoSave.savemodified .unobutton img {
 	background: url('images/lc_savemodified.svg') no-repeat center;
 }
 
-html[data-theme='dark'] .unoSave.savemodified .unobutton img,
-html[data-theme='dark'] .savemodified.unotoolbutton .unobutton img {
+html:not([data-theme='dark']) .savemodified.unotoolbutton:not(.notebookbar) .unobutton img {
+	background: url('images/compact_savemodified.svg') no-repeat center;
+}
+
+html[data-theme='dark'] .unoSave.savemodified .unobutton img {
 	background: url('images/dark/lc_savemodified.svg') no-repeat center;
 }
+
+html[data-theme='dark'] .savemodified.unotoolbutton:not(.notebookbar) .unobutton img {
+	background: url('images/dark/compact_savemodified.svg') no-repeat center;
+}
+
 
 .notebookbar-shortcuts-bar .notebookbar.unotoolbutton {
 	margin: 0px !important;
@@ -218,6 +235,7 @@ html[data-theme='dark'] .savemodified.unotoolbutton .unobutton img {
 .root-container.notebookbar {
 	display: table-cell;
 	vertical-align: middle;
+	align-content: center;
 }
 
 #toolbar-wrapper.hasnotebookbar {
@@ -259,8 +277,10 @@ html[data-theme='dark'] .savemodified.unotoolbutton .unobutton img {
 	color: var(--color-main-text);
 }
 
-.horizontal.notebookbar:has(.unoBezier_Unfilled) {
-	height: 100%;
+/* Curve isn't in a vertical notebookbar, so it's center-aligned by default instead of top-aligned.
+	This rule ensures it aligns to the top. */
+.horizontal.notebookbar #insert-illustrations.ui-overflow-group .ui-overflow-group-content,
+.horizontal.notebookbar #insert-illustrations.ui-overflow-group .top-row-overflow-group {
 	align-items: start;
 }
 
@@ -334,6 +354,28 @@ html[data-theme='dark'] .savemodified.unotoolbutton .unobutton img {
 	padding: 0px 5px !important;
 	line-height: normal;
 	grid-column: 2;
+}
+
+.notebookbar.ui-checkbox {
+	display: flex;
+	flex-direction: row;
+}
+
+label.notebookbar {
+	padding-inline-start: 0;
+}
+label.notebookbar.ui-checkbox-label {
+	font-family: var(--cool-font);
+	font-size: var(--header-font-size);
+	white-space: nowrap;
+}
+
+.notebookbar.ui-combobox-label {
+	margin-inline-start: 0;
+}
+
+.notebookbar #table-style-options #chk_filter_buttons2 {
+	margin-bottom: 23px;
 }
 
 #table-HomeTab .unospan-uptoolbar:not(.disabled) {
@@ -449,10 +491,64 @@ html[data-theme='dark'] .savemodified.unotoolbutton .unobutton img {
 }
 
 /* Styles preview */
+.jsdialog #stylesview:not(.sidebar),
+.jsdialog #masterpageall_icons:not(.sidebar),
+.jsdialog #transitions_icons:not(.sidebar),
+.jsdialog #iconview_theme_colors:not(.sidebar) {
+	height: auto !important;
+	min-height: 64px !important;
+	border: none !important;
+	margin: 0 auto !important;
 
-#stylesview,
-#masterpageall_icons,
-#transitions_icons,
+	/*
+	 * NOTE: `jsdialog-container .ui-dialog-content` has a
+	 *        `max-height` set to `calc( 90vh - 98px)`. this
+	 *        max height is a little less than that so that
+	 *        if there are buttons in the dropdown below the
+	 *        iconview, they wouldn't go into the overflow.
+	 */
+	max-height: min(calc( 72vh - 98px), 400px) !important;
+}
+
+.ui-iconview-buttons-container {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	border: 1px solid var(--color-stylesview-border);
+	border-top-right-radius: var(--border-radius);
+	border-bottom-right-radius: var(--border-radius);
+	height: var(--notebookbar-element-height);
+	margin-inline-start: -1px;
+	box-sizing: border-box;
+}
+
+.ui-iconview-buttons-container .unotoolbutton:hover {
+	border: 1px solid transparent;
+}
+
+.ui-iconview-button button {
+	width: calc(var(--btn-size-s) - var(--border-radius-s)) !important;
+	height : calc(var(--btn-size-s) - var(--border-radius-s)) !important;
+	border: 0;
+}
+
+.ui-iconview-button:hover {
+	border: 1px solid transparent !important;
+}
+
+.ui-iconview-button-icon {
+	width: var(--btn-img-size-s) !important;
+	height: var(--btn-img-size-s) !important;
+	box-sizing: border-box;
+}
+
+.jsdialog #stylesview:not(.sidebar),
+.jsdialog #masterpageall_icons:not(.sidebar),
+.jsdialog #transitions_icons:not(.sidebar),
+.notebookbar #stylesview-iconview,
+.notebookbar #masterpageall_icons-iconview,
+.notebookbar #transitions_icons-iconview,
+.notebookbar #iconview_theme_colors-iconview,
 #custom_animation_list,
 #effect_list {
 	height: var(--notebookbar-element-height);
@@ -460,72 +556,55 @@ html[data-theme='dark'] .savemodified.unotoolbutton .unobutton img {
 	display: grid;
 	row-gap: 0;
 	padding: 0px;
+
 	border: 1px solid var(--color-stylesview-border);
 	border-radius: var(--border-radius);
+	border-top-right-radius: 0;
+	border-bottom-right-radius: 0;
 	border-collapse: separate; /*To use box-shadow in Internet Explorer 9 or later*/
+
 	scrollbar-width: none;
 	background-color: var(--color-stylesview-background);
 	filter: brightness(var(--brightness-stylesview));
 	box-sizing: border-box;
 }
 
-#stylesview {
-	width: 35vw;
+/*
+ * with each iconview, there exist two kinds of IDs
+ * one with the `-iconview` prefix and one without it.
+ * see `JSDialog.notebookbarIconView` for details.
+ */
+.jsdialog #stylesview,
+.notebookbar #stylesview-iconview {
+	width: 36.8vw !important;
 	/* Preview base64's width = 100px + container border's etc */
 	grid-template-columns: repeat(auto-fit, minmax(122px, 1fr));
 	/* Preview base64's height = 30px  + container border's etc */
 	grid-template-rows: repeat(auto-fit, minmax(33px, 1fr));
-	border-top-right-radius: 0;
-	border-bottom-right-radius: 0;
 }
 
-#masterpageall_icons {
-	width: 15vw !important;
-	max-width: 265px;
-	min-width: 90px;
-	grid-template-columns: repeat(auto-fit, minmax(85px, 1fr));
-	grid-template-rows: repeat(auto-fit, minmax(80px, 1fr));
-	margin-left: 5px;
+#stylesview {
+	min-width: 36.8vw !important;
+	justify-content: center;
 }
 
-#transitions_icons:not(.sidebar) {
-	width: 35vw;
-	grid-template-columns: repeat(auto-fit, minmax(122px, 1fr));
-	grid-template-rows: repeat(auto-fit, minmax(60px, 1fr));
-	margin-left: 10px;
+#masterpageall_icons-dropdown,
+#stylesview-dropdown,
+#iconview_theme_colors-dropdown {
+	margin-top: 37px !important;
 }
 
-#transitions_icons.sidebar {
-	height: inherit;
-	width: 100%;
+#transitions_icons-dropdown {
+	margin-top: 42px !important;
 }
 
-#stylesview-btn {
-	border: 1px solid var(--color-stylesview-border);
-	border-top-right-radius: var(--border-radius);
-	border-bottom-right-radius: var(--border-radius);
-	height: var(--notebookbar-element-height);
-	margin-inline-start: -5px;
-	box-sizing: border-box;
+.jsdialog#iconview_theme_colors:not(.sidebar) {
+	gap: 8px !important;
+	padding: 8px 0 !important;
 }
 
-#stylesview-btn.vertical {
-	gap: 0;
-}
-
-#stylesview-btn div {
-	border: none;
-}
-
-#stylesview-btn button img {
-	width: var(--btn-img-size-s) !important;
-	height: var(--btn-img-size-s) !important;
-	box-sizing: border-box;
-}
-
-#stylesview-btn button {
-	width: var(--btn-size-s) !important;
-	height: var(--btn-size-s) !important;
+#iconview_theme_colors:not(.sidebar) .ui-iconview-entry img {
+	border: 1px solid transparent;
 }
 
 #stylesview:hover {
@@ -537,36 +616,69 @@ html[data-theme='dark'] .savemodified.unotoolbutton .unobutton img {
 	height: 0;
 }
 
-#stylesview .ui-iconview-entry {
+.jsdialog #stylesview .ui-iconview-entry,
+.notebookbar #stylesview-iconview .ui-iconview-entry {
 	box-sizing: border-box;
 	padding-top: 0px;
 	align-self: start;
 }
 
-#stylesview .icon-view-item-container {
+.ui-iconview-window {
+	display: flex;
+	flex-direction: row;
+}
+
+.jsdialog #stylesview .icon-view-item-container,
+.notebookbar #stylesview-iconview .icon-view-item-container {
 	margin: unset;
 }
 
-#stylesview .ui-iconview-entry-title {
+.jsdialog #stylesview .ui-iconview-entry-title,
+.notebookbar #stylesview-iconview .ui-iconview-entry-title {
 	display: none;
 }
 
-#stylesview .ui-iconview-entry.selected {
+[id^='stylesview'] .ui-iconview-entry.selected {
 	border: 1px solid var(--color-border-darker);
 	border-collapse: separate; /*To use box-shadow in Internet Explorer 9 or later*/
 	background-color: transparent;
 }
 
-#stylesview .ui-iconview-entry:not(.selected) {
+[id^='stylesview'] .ui-iconview-entry:not(.selected) {
 	border: 1px solid transparent;
 }
 
-#stylesview .ui-iconview-entry:not(.selected):hover {
+[id^='stylesview'] .ui-iconview-entry:not(.selected):hover {
 	border: 1px solid var(--color-border-dark);
 	-webkit-box-shadow: 0 0 2px 0 var(--color-background-darker);
 	box-shadow: 0 0 2px 0 var(--color-background-darker);
 	cursor: pointer;
 	background-color: transparent;
+}
+
+#format-style-list-dialog-button {
+	display: flex;
+	flex-direction: row;
+	width: 100%;
+	position: relative;
+	justify-content: start;
+}
+
+#stylesview-dropdown hr {
+	margin: 14px;
+	margin-top: 0px;
+	margin-bottom: 4px;
+}
+
+/* this represents the button 'Open Styles Sidebar' */
+/* in the writer 'stylesview' dropdown. */
+#format-style-list-dialog {
+	margin: 5px;
+}
+
+#format-style-list-dialog:hover {
+	border: 1px solid transparent;
+	margin: 5px;
 }
 
 /* Insert Tab */
@@ -580,6 +692,12 @@ html[data-theme='dark'] .savemodified.unotoolbutton .unobutton img {
 /* Table Tab */
 
 /* Review Tab */
+
+/* View Tab */
+
+#View-container #showstatusbar {
+	width: 109px;
+}
 
 /* Help tab */
 
@@ -615,13 +733,51 @@ html[data-theme='dark'] .savemodified.unotoolbutton .unobutton img {
 
 /* Review Tab */
 
+/* Design Tab */
+
+.jsdialog #masterpageall_icons,
+#masterpageall_icons-iconview {
+	width: 15vw !important;
+	max-width: 265px;
+	min-width: 90px;
+	grid-template-columns: repeat(auto-fit, minmax(85px, 1fr));
+	grid-template-rows: repeat(auto-fit, minmax(62px, 1fr));
+	margin-left: 5px;
+}
+
 /* Transition Tab */
+
+#transitions_icons:not(.sidebar),
+#transitions_icons-iconview:not(.sidebar) {
+	width: 35vw;
+	grid-template-columns: repeat(auto-fit, minmax(122px, 1fr));
+	grid-template-rows: repeat(auto-fit, minmax(60px, 1fr));
+	margin-left: 10px;
+}
+
+.jsdialog #transitions_icons {
+	width: 33.6vw !important;
+}
+
+#transitions_icons.sidebar {
+	height: inherit;
+	width: 100%;
+}
+
+.jsdialog #transitions_icons,
+.notebookbar #transitions_icons-iconview {
+	margin-left: 10px;
+}
+
+#transitions-group {
+	margin-bottom: 7px;
+}
 
 #Transition-container.notebookbar {
 	justify-items: stretch;
 }
 
-#transitions_icons.ui-iconview.notebookbar {
+.notebookbar #transitions_icons.ui-iconview {
 	max-height: 75px;
 	grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
 	flex-grow: 1;
@@ -629,7 +785,7 @@ html[data-theme='dark'] .savemodified.unotoolbutton .unobutton img {
 	scroll-behavior: smooth;
 }
 
-#transitions_icons.ui-iconview.notebookbar > * {
+.notebookbar #transitions_icons.ui-iconview > * {
 	scroll-snap-align: start;
 }
 

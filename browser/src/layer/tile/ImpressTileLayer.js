@@ -77,7 +77,8 @@ window.L.ImpressTileLayer = window.L.CanvasTileLayer.extend({
 		}
 
 		if (isDrawOrNotesPage) {
-			this._selectedMode = newContext === 'NotesPage' ? 2 : 0;
+			const mode = newContext === 'NotesPage' ? 2 : 0;
+			app.activeDocument.activeModes = [mode];
 			TileManager.refreshTilesInBackground();
 			TileManager.update();
 		}
@@ -124,8 +125,8 @@ window.L.ImpressTileLayer = window.L.CanvasTileLayer.extend({
 	},
 
 	newAnnotation: function (commentData) {
-		commentData.anchorPos = [app.activeDocument.activeView.viewedRectangle.x1, app.activeDocument.activeView.viewedRectangle.y1];
-		commentData.rectangle = [app.activeDocument.activeView.viewedRectangle.x1, app.activeDocument.activeView.viewedRectangle.y1, 566, 566];
+		commentData.anchorPos = [app.activeDocument.activeLayout.viewedRectangle.x1, app.activeDocument.activeLayout.viewedRectangle.y1];
+		commentData.rectangle = [app.activeDocument.activeLayout.viewedRectangle.x1, app.activeDocument.activeLayout.viewedRectangle.y1, 566, 566];
 
 		commentData.parthash = app.impress.partList[this._selectedPart].hash;
 
@@ -243,6 +244,9 @@ window.L.ImpressTileLayer = window.L.CanvasTileLayer.extend({
 				}
 			}
 
+			if (statusJSON.readonly && !this._documentInfo)
+				this._map.setPermission('readonly');
+
 			app.activeDocument.fileSize = new cool.SimplePoint(statusJSON.width, statusJSON.height);
 
 			this._docType = statusJSON.type;
@@ -266,12 +270,13 @@ window.L.ImpressTileLayer = window.L.CanvasTileLayer.extend({
 				app.activeDocument.fileSize.y = totalHeight;
 			}
 
-			app.activeDocument.activeView.viewSize = app.activeDocument.fileSize.clone();
+			app.activeDocument.activeLayout.viewSize = app.activeDocument.fileSize.clone();
 
 			let allPagesResized = !statusJSON.currentpageresized;
 			this._updateMaxBounds(true, allPagesResized);
 
 			this._viewId = statusJSON.viewid;
+			app.activeDocument.setActiveViewID(this._viewId);
 			console.assert(this._viewId >= 0, 'Incorrect viewId received: ' + this._viewId);
 			if (app.socket._reconnecting) {
 				app.socket.sendMessage('setclientpart part=' + this._selectedPart);
@@ -299,8 +304,9 @@ window.L.ImpressTileLayer = window.L.CanvasTileLayer.extend({
 
 				this._documentInfo = textMsg;
 
-				this._selectedMode = (statusJSON.mode !== undefined) ? statusJSON.mode : (statusJSON.parts.length > 0 && statusJSON.parts[0].mode !== undefined ? statusJSON.parts[0].mode : 0);
-				this._map.fire('impressmodechanged', {mode: this._selectedMode});
+				const mode = (statusJSON.mode !== undefined) ? statusJSON.mode : (statusJSON.parts.length > 0 && statusJSON.parts[0].mode !== undefined ? statusJSON.parts[0].mode : 0);
+				app.activeDocument.activeModes = [mode];
+				this._map.fire('impressmodechanged', {mode: mode});
 
 				this._map.fire('updateparts', {});
 

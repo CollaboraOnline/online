@@ -1,0 +1,215 @@
+﻿// -*- tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4; fill-column: 100 -*-
+
+using OpenQA.Selenium.Edge;
+using OpenQA.Selenium.Interactions;
+using System;
+using System.Diagnostics;
+using System.IO;
+using System.IO.Compression;
+using System.Linq;
+using System.Runtime.InteropServices;
+using System.Text;
+using System.Text.RegularExpressions;
+using System.Threading;
+using System.Threading.Tasks;
+using System.Windows.Automation;
+using System.Windows.Forms;
+using System.Xml.Linq;
+using Keys = OpenQA.Selenium.Keys;
+
+namespace WebDriverThing
+{
+    internal class Program
+    {
+        static void fatal(string message)
+        {
+            Console.WriteLine(message);
+            System.Environment.Exit(1);
+        }
+
+        static EdgeDriver connectToWebView2()
+        {
+            EdgeDriverService service = EdgeDriverService.CreateDefaultService();
+            service.EnableVerboseLogging = true;
+
+            EdgeOptions eo = new EdgeOptions();
+
+            eo.UseWebView = true;
+            eo.DebuggerAddress = "localhost:9222";
+            // This file needs to exist but it can be totally random, even empty, huh?
+            eo.BinaryLocation = @"C:\Users\tml\lo\online-coda25-coda\foobar.exe";
+
+            EdgeDriver driver = new EdgeDriver(service, eo);
+            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(2);
+
+            return driver;
+        }
+
+        static void openFile(string pathname)
+        {
+            var driver = connectToWebView2();
+
+            var openButton = driver.FindElement(OpenQA.Selenium.By.Id("backstage-open"));
+            if (openButton == null)
+                fatal("Could not find the 'Open' button on the initial backstage");
+
+            openButton.Click();
+
+            // The File Open dialog is a native one so we need to use the System.Windows.Automation
+            // API to manipulate it.
+
+            // How long should we wait for the File Open dialog to appear? Let's try 5 s.
+            Thread.Sleep(5000);
+
+            var openDialog = AutomationElement.RootElement.FindFirst(
+                TreeScope.Children,
+                new PropertyCondition(AutomationElement.NameProperty, "Open")
+            );
+
+            if (openDialog == null)
+                fatal("File Open dialog did not show up");
+
+            var openDialogOpenButton = openDialog.FindFirst(
+                TreeScope.Descendants,
+                new PropertyCondition(AutomationElement.AutomationIdProperty, "1")
+            );
+
+            if (openDialogOpenButton == null)
+                fatal("No 'Open' button in the File Open dialog");
+
+            var fileNameField = openDialog.FindFirst(
+                TreeScope.Descendants,
+                new PropertyCondition(AutomationElement.AutomationIdProperty, "1148")
+            );
+
+            if (fileNameField == null)
+                fatal("No file name field in the File Open dialog");
+
+            var valuePattern = (ValuePattern)fileNameField.GetCurrentPattern(ValuePattern.Pattern);
+            valuePattern.SetValue(pathname);
+
+            // This does not seem to work. Would love to figure out some bette, sane, and reliable
+            // way to do this.
+            // ((InvokePattern)openDialogOpenButton.GetCurrentPattern(InvokePattern.Pattern)).Invoke();
+
+            // This works, and is mad and scary! Just pretend Enter is pressed to whatever window
+            // that has the focus. This means that you have to be very careful when debugging this
+            // code. You can't let VS have the focus when this line is executed.
+            System.Windows.Forms.SendKeys.SendWait("{ENTER}");
+        }
+
+        static void RunOnSTA(Action action)
+        {
+            Exception ex = null;
+            var t = new Thread(() => {
+                try { action(); }
+                catch (Exception e) { ex = e; }
+            });
+            t.SetApartmentState(ApartmentState.STA);
+            t.Start();
+            t.Join();
+            if (ex != null) throw ex;
+        }
+
+        static async Task Main(string[] args)
+        {
+            // Make a copy of an empty .otd. Assume we are running in <top>\windows\coda\WebDriverThing\bin\Debug.
+            var topDir = Path.GetFullPath(AppContext.BaseDirectory + @"\..\..\..\..\..");
+
+            // Find out the --with-app-name value from config.status
+            var regex = new Regex("S\\[\"APP_NAME\"\\]=\"([^\"]+)\"$");
+            var match = File.ReadLines(topDir + @"\config.status")
+                .Select(l => regex.Match(l))
+                .FirstOrDefault(m => m.Success);
+
+            string appName = match?.Groups[1].Value.Trim();
+
+            if (appName == null)
+                fatal("No APP_NAME in config.status");
+
+            var platform = (RuntimeInformation.OSArchitecture == Architecture.X64 ? "x64" : "ARM64");
+            const string configuration =
+#if DEBUG
+                "Debug"
+#else
+                "Release"
+#endif
+            ;
+            var codaExe = topDir + @"\windows\coda\" + platform + @"\" + configuration + @"\program\" + appName + ".exe";
+            var coda = new Process
+            {
+                StartInfo = new ProcessStartInfo
+                {
+                    FileName = codaExe,
+                    UseShellExecute = false
+                }
+            };
+
+            coda.StartInfo.Environment["CODA_ENABLE_WEBDRIVER"] = "YES";
+
+            coda.Start();
+
+            var docCopy = Path.Combine(Path.GetTempPath(), $"{Guid.NewGuid()}.odt");
+
+            File.Copy(topDir + @"\browser\templates\TextDocument.odt", docCopy, true);
+
+            // Use the Open button to load it
+            openFile(docCopy);
+
+            // Then do some simple things with it
+
+            var driver = connectToWebView2();
+
+            // At first, click the button to enable editing.
+            var editButton = driver.FindElement(OpenQA.Selenium.By.Id("mobile-edit-button"));
+
+            if (editButton == null)
+                fatal("No mobile-edit-button");
+
+            Thread.Sleep(5000);
+            editButton.Click();
+
+            // Paste text from clipboard with shortcut
+            RunOnSTA(() => Clipboard.SetText("hello"));
+            new Actions(driver).KeyDown(Keys.Control).SendKeys("v").KeyUp(Keys.Control).Perform();
+
+            // Save the document
+            Thread.Sleep(1000);
+            new Actions(driver).KeyDown(Keys.Control).SendKeys("s").KeyUp(Keys.Control).Perform();
+
+            // Close the document (and app) using Control+W
+            Thread.Sleep(1000);
+            new Actions(driver).KeyDown(Keys.Control).SendKeys("w").KeyUp(Keys.Control).Perform();
+
+            Thread.Sleep(1000);
+            driver.Quit();
+
+            coda.WaitForExit();
+
+            // Open the edited document and verify we edited it as expected
+            var stream = File.OpenRead(docCopy);
+            var archive = new ZipArchive(stream, ZipArchiveMode.Read);
+            var contentStream = archive.GetEntry("content.xml").Open();
+            var ms = new MemoryStream();
+            contentStream.CopyTo(ms);
+
+            stream.Close();
+            File.Delete(docCopy);
+
+            byte[] content = ms.ToArray();
+            var s = Encoding.UTF8.GetString(content);
+
+            var doc = XDocument.Parse(s);
+            XNamespace office = "urn:oasis:names:tc:opendocument:xmlns:office:1.0";
+            XNamespace text = "urn:oasis:names:tc:opendocument:xmlns:text:1.0";
+            var paragraphs = doc.Descendants(text + "p");
+            if (paragraphs.Count() == 0)
+                fatal("No paragraphs?");
+            else if (paragraphs.Count() > 1)
+                fatal("More than one paragraph");
+            if (paragraphs.First().Value != "hello")
+
+            Console.WriteLine("OK");
+        }
+    }
+}

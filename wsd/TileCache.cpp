@@ -9,9 +9,22 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * Implementation of tile cache storage and retrieval.
+ * Classes: TileCache
+ */
+
 #include <config.h>
 
 #include "TileCache.hpp"
+
+#include <common/Common.hpp>
+#include <common/FileUtil.hpp>
+#include <common/Protocol.hpp>
+#include <common/StringVector.hpp>
+#include <common/Unit.hpp>
+#include <common/Util.hpp>
+#include <wsd/ClientSession.hpp>
 
 #include <cassert>
 #include <climits>
@@ -24,14 +37,6 @@
 #include <string>
 #include <utility>
 #include <vector>
-
-#include "ClientSession.hpp"
-#include <Common.hpp>
-#include <Protocol.hpp>
-#include <StringVector.hpp>
-#include <Unit.hpp>
-#include <Util.hpp>
-#include <common/FileUtil.hpp>
 
 using namespace COOLProtocol;
 
@@ -177,10 +182,9 @@ Tile TileCache::lookupTile(const TileDesc& tile)
 
     Tile ret = findTile(tile);
 
-    UnitWSD::get().lookupTile(tile.getPart(), tile.getEditMode(),
-                              tile.getWidth(), tile.getHeight(),
-                              tile.getTilePosX(), tile.getTilePosY(),
-                              tile.getTileWidth(), tile.getTileHeight(), ret);
+    UNITWSD_CALL(lookupTile(tile.getPart(), tile.getEditMode(), tile.getWidth(), tile.getHeight(),
+                            tile.getTilePosX(), tile.getTilePosY(), tile.getTileWidth(),
+                            tile.getTileHeight(), ret));
 
     return ret;
 }

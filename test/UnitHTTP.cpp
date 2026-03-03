@@ -9,6 +9,10 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * Unit test for HTTP protocol functionality.
+ */
+
 #include <config.h>
 
 #include <helpers.hpp>
@@ -22,8 +26,8 @@
 #include <Poco/Net/HTTPSClientSession.h>
 #include <Poco/StreamCopier.h>
 
-#include <Log.hpp>
-#include <Util.hpp>
+#include <common/Log.hpp>
+#include <common/Util.hpp>
 #include <Unit.hpp>
 #include <lokassert.hpp>
 

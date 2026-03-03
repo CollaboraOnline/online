@@ -11,7 +11,6 @@
 
 #include <config.h>
 
-#include <common/Globals.hpp>
 #include <tools/Replay.hpp>
 
 #include <sysexits.h>

@@ -9,16 +9,19 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * Test for HTTP and WebSocket functionality.
+ */
+
 #include <config.h>
 
-#include "WebSocketSession.hpp"
+#include <WebSocketSession.hpp>
 
 #include <Poco/Net/AcceptCertificateHandler.h>
 #include <Poco/Net/HTTPRequest.h>
 #include <Poco/Net/HTTPResponse.h>
 #include <Poco/Net/InvalidCertificateHandler.h>
 #include <Poco/Net/SSLManager.h>
-#include <Poco/RegularExpression.h>
 #include <Poco/URI.h>
 
 #include <cppunit/extensions/HelperMacros.h>

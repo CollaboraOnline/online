@@ -313,6 +313,7 @@ describe(['tagdesktop'], 'Collapsed Annotation Tests', function() {
 
 	it('Autosave Collapse', function() {
 		desktopHelper.selectZoomLevel('100', false);
+		helper.typeIntoDocument('placeholder text');
 		desktopHelper.insertComment(undefined, false);
 		cy.cGet('#map').focus();
 		helper.typeIntoDocument('{home}');

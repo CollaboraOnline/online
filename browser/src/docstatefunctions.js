@@ -31,7 +31,7 @@ window.addEventListener('load', function () {
 app.getViewRectangles = function () {
 	if (app.map._docLayer._splitPanesContext)
 		return app.map._docLayer._splitPanesContext.getViewRectangles();
-	else return [app.activeDocument.activeView.viewedRectangle.clone()];
+	else return [app.activeDocument.activeLayout.viewedRectangle.clone()];
 };
 
 // ToDo: _splitPanesContext should be an app variable.
@@ -43,7 +43,7 @@ app.isPointVisibleInTheDisplayedArea = function (twipsArray /* x, y */) {
 		}
 		return false;
 	} else {
-		return app.activeDocument.activeView.viewedRectangle.containsPoint(
+		return app.activeDocument.activeLayout.viewedRectangle.containsPoint(
 			twipsArray,
 		);
 	}
@@ -57,7 +57,7 @@ app.isXVisibleInTheDisplayedArea = function (twipsX) {
 		}
 		return false;
 	} else {
-		return app.activeDocument.activeView.viewedRectangle.containsX(twipsX);
+		return app.activeDocument.activeLayout.viewedRectangle.containsX(twipsX);
 	}
 };
 
@@ -69,7 +69,7 @@ app.isYVisibleInTheDisplayedArea = function (twipsY) {
 		}
 		return false;
 	} else {
-		return app.activeDocument.activeView.viewedRectangle.containsY(twipsY);
+		return app.activeDocument.activeLayout.viewedRectangle.containsY(twipsY);
 	}
 };
 
@@ -83,7 +83,7 @@ app.isRectangleVisibleInTheDisplayedArea = function (
 		}
 		return false;
 	} else {
-		return app.activeDocument.activeView.viewedRectangle.intersectsRectangle(
+		return app.activeDocument.activeLayout.viewedRectangle.intersectsRectangle(
 			twipsArray,
 		);
 	}
@@ -93,7 +93,7 @@ app.isXOrdinateInFrozenPane = function (pixelX) {
 	if (app.map._docLayer._splitPanesContext) {
 		const splitPos = app.map._docLayer._splitPanesContext.getSplitPos();
 
-		if (pixelX < splitPos.x) return true;
+		if (pixelX < splitPos.x && pixelX >= 0) return true;
 		else return false;
 	} else return false;
 };
@@ -102,13 +102,21 @@ app.isYOrdinateInFrozenPane = function (pixelY) {
 	if (app.map._docLayer._splitPanesContext) {
 		const splitPos = app.map._docLayer._splitPanesContext.getSplitPos();
 
-		if (pixelY < splitPos.y) return true;
+		if (pixelY < splitPos.y && pixelY >= 0) return true;
 		else return false;
 	} else return false;
 };
 
 app.isReadOnly = function () {
 	return app.file.readOnly;
+};
+
+app.isViewModeExtension = function (extension) {
+	if (app.file.viewModeExtensions && extension) {
+		var extensionList = app.file.viewModeExtensions.split('|');
+		return extensionList.indexOf(extension.toLowerCase()) !== -1;
+	}
+	return false;
 };
 
 app.getScale = function () {

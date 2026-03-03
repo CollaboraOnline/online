@@ -9,6 +9,11 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * Memory-efficient buffer for network I/O with offset-based reading.
+ * Classes: Buffer
+ */
+
 #pragma once
 
 #include <common/HexUtil.hpp>
@@ -42,8 +47,8 @@ public:
     {
     }
 
-    typedef std::vector<char>::iterator iterator;
-    typedef std::vector<char>::const_iterator const_iterator;
+    using iterator = std::vector<char>::iterator;
+    using const_iterator = std::vector<char>::const_iterator;
 
     std::size_t size() const { return _buffer.size() - _offset; }
     std::size_t capacity() const { return _buffer.capacity(); }

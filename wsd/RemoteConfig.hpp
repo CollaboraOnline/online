@@ -9,6 +9,11 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * Remote configuration fetching and management.
+ * Classes: RemoteConfigPoll
+ */
+
 #pragma once
 
 #if defined(MOBILEAPP) && MOBILEAPP

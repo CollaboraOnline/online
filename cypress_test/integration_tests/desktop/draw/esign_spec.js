@@ -57,6 +57,6 @@ describe(['tagdesktop'], 'Electronic sign operations.', function() {
 		cy.cGet('#DigitalSignaturesDialog #close.ui-pushbutton-wrapper button').click();
 
 		// Then make sure the document now has a (test / "not OK") signature:
-		cy.cGet('#signstatus-button div').should('have.class', 'sign_not_ok');
+		cy.cGet('[id^="signstatus"] div').should('have.class', 'sign_not_ok');
 	});
 });

@@ -9,6 +9,10 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * Unit test for Kit queue and message handling functionality.
+ */
+
 #include <config.h>
 
 #include <test/lokassert.hpp>
@@ -18,7 +22,7 @@
 #include <Message.hpp>
 #include <kit/KitQueue.hpp>
 #include <SenderQueue.hpp>
-#include <Util.hpp>
+#include <common/Util.hpp>
 
 #include <cppunit/extensions/HelperMacros.h>
 

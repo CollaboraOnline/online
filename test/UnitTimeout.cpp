@@ -9,14 +9,18 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * Unit test for timeout functionality.
+ */
+
 #include <config.h>
 
 #include <chrono>
 
 #include <sysexits.h>
 
-#include <Log.hpp>
-#include <Util.hpp>
+#include <common/Log.hpp>
+#include <common/Util.hpp>
 #include <Unit.hpp>
 
 using namespace std::literals;

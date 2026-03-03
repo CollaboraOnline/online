@@ -8,13 +8,24 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
-#include "config.h"
-#include "Common.hpp"
-#include "Globals.hpp"
-#include "Kit.hpp"
+
+/*
+ * Main entry point for the ForKit process.
+ * Functions: main() - Initializes and runs ForKit
+ */
+
+#include <config.h>
+#include <Common.hpp>
+#include <Kit.hpp>
+#include <ServerSocket.hpp>
 
 int ClientPortNumber = DEFAULT_CLIENT_PORT_NUMBER;
-std::string MasterLocation;
+UnxSocketPath MasterLocation;
+
+// Embed variant string to ensure different build-id for coolforkit-caps vs coolforkit-ns
+#ifdef COOL_FORKIT_VARIANT
+__attribute__((used)) static const char* const ForkitVariant = COOL_FORKIT_VARIANT;
+#endif
 
 int main (int argc, char **argv)
 {

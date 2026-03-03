@@ -36,7 +36,7 @@ class LockManager
     static void generateLockedCommandList();
 
 public:
-    LockManager();
+    LockManager() = delete;
     static const std::unordered_set<std::string>& getLockedCommandList();
     static const std::string getLockedCommandListString();
 
@@ -106,7 +106,7 @@ public:
             return ConfigUtil::getString(translationPath + ".draw_unlock_highlights", "");
         return ConfigUtil::getString("feature_lock.draw_unlock_highlights", "");
     }
-    static const Poco::URI getUnlockImageUri()
+    static Poco::URI getUnlockImageUri()
     {
         const std::string unlockImageUrl = ConfigUtil::getString("feature_lock.unlock_image", "");
         if (!unlockImageUrl.empty())

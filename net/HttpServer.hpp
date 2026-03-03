@@ -9,7 +9,14 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * HTTP server session for handling asynchronous responses with range support.
+ * Classes: http::ServerSession
+ */
+
 #pragma once
+
+#include <net/HttpRequest.hpp>
 
 #include <algorithm>
 #include <chrono>
@@ -17,8 +24,6 @@
 #include <iostream>
 #include <string>
 #include <utility>
-
-#include <net/HttpRequest.hpp>
 
 namespace http
 {

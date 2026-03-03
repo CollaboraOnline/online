@@ -9,10 +9,14 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-#include "helpers.hpp"
-#include "lokassert.hpp"
-#include "testlog.hpp"
-#include "Unit.hpp"
+/*
+ * Base class for WSD client unit tests.
+ */
+
+#include <helpers.hpp>
+#include <lokassert.hpp>
+#include <testlog.hpp>
+#include <Unit.hpp>
 #include <common/Uri.hpp>
 
 #include <Poco/URI.h>

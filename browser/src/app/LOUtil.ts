@@ -48,6 +48,77 @@ class LOUtil {
 		[209, 118, 0],
 	];
 
+	// This list is based on supported filters defined in core in
+	// filter/Configuration_filter.mk
+	public static graphicMimeFilter = [
+		// bitmaps (well-defined)
+		'image/bmp',
+		'image/gif',
+		'image/jpeg',
+		'image/png',
+		'image/webp',
+		'image/tiff',
+
+		// vector graphics (canonical MIME)
+		'image/svg+xml',
+		'image/x-emf',
+		'image/x-wmf',
+
+		// PDF as image
+		'application/pdf',
+
+		// extensions for everything else (or as fallback)
+		// file pickers don't recognize them by MIME type
+		// Windows file picker doesn't recognize vector images by MIME type
+		'.svg',
+		'.svgz',
+		'.emf',
+		'.emz',
+		'.wmf',
+		'.wmz',
+		'.eps',
+		'.dxf',
+		'.pct',
+		'.pcx',
+		'.pcd',
+		'.psd',
+		'.tga',
+		'.ras',
+		'.svm',
+		'.met',
+		'.pbm',
+		'.pgm',
+		'.ppm',
+		'.xbm',
+		'.xpm',
+	];
+
+	public static mediaMimeFilter = [
+		'video/mp2t',
+		'video/mp4',
+		'video/mpeg',
+		'video/ogg',
+		'video/quicktime',
+		'video/webm',
+		'video/x-matroska',
+		'video/x-ms-wmv',
+		'video/x-msvideo',
+		'audio/aac',
+		'audio/flac',
+		'audio/mp4',
+		'audio/mpeg',
+		'audio/ogg',
+		'audio/wav',
+	];
+
+	// Not spreadsheet, presentation or drawing.
+	public static documentMimeFilter = [
+		'application/vnd.oasis.opendocument.text',
+		'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+		'application/msword',
+		'text/rtf',
+	];
+
 	public static onRemoveHTMLElement(
 		element: Element,
 		onDetachCallback: () => void,
@@ -139,12 +210,74 @@ class LOUtil {
 		return rectangles;
 	}
 
+	// Map of locale → icon filenames that have locale-specific variants.
+	private static localizedIcons: Record<string, string[]> = {
+		ar: ['lc_chapternumberingdialog.svg', 'lc_linenumberingdialog.svg'],
+		de: [
+			'lc_bold.svg',
+			'lc_italic.svg',
+			'lc_numberformatdecdecimals.svg',
+			'lc_numberformatdecimal.svg',
+			'lc_numberformatincdecimals.svg',
+			'lc_numberformatthousands.svg',
+		],
+		es: ['lc_bold.svg', 'lc_underline.svg', 'lc_underlinedouble.svg'],
+		fr: ['lc_bold.svg'],
+		hu: ['lc_italic.svg', 'lc_underline.svg', 'lc_underlinedouble.svg'],
+		it: ['lc_italic.svg'],
+		km: [
+			'lc_bold.svg',
+			'lc_italic.svg',
+			'lc_underline.svg',
+			'lc_underlinedouble.svg',
+		],
+		ko: [
+			'lc_bold.svg',
+			'lc_charfontname.svg',
+			'lc_color.svg',
+			'lc_datasort.svg',
+			'lc_editstyle.svg',
+			'lc_fontdialog.svg',
+			'lc_grow.svg',
+			'lc_italic.svg',
+			'lc_overline.svg',
+			'lc_shadowed.svg',
+			'lc_shrink.svg',
+			'lc_sortascending.svg',
+			'lc_sortdescending.svg',
+			'lc_strikeout.svg',
+			'lc_stylenewbyexample.svg',
+			'lc_styleupdatebyexample.svg',
+			'lc_text.svg',
+			'lc_underline.svg',
+			'lc_underlinedouble.svg',
+			'lc_verticaltext.svg',
+		],
+		nl: ['lc_bold.svg', 'lc_underline.svg', 'lc_underlinedouble.svg'],
+		pl: ['lc_underline.svg', 'lc_underlinedouble.svg'],
+		ru: ['lc_bold.svg', 'lc_underline.svg', 'lc_underlinedouble.svg'],
+		sl: ['lc_bold.svg', 'lc_italic.svg'],
+		tr: ['lc_italic.svg'],
+	};
+
+	private static getUILanguageCode(): string {
+		const lang = (String as any).locale || '';
+		return lang.split('-')[0].split('_')[0].toLowerCase();
+	}
+
 	// Some items will only be present in dark mode so we will not check errors
 	// for those in other mode.
 	public static onlydarkModeItems: string[] = ['invertbackground'];
 
 	// Common images used in all modes, so the default one will be used.
-	public static commonItems: string[] = ['serverauditok', 'serverauditerror'];
+	public static commonItems: string[] = [
+		'serverauditok',
+		'serverauditerror',
+		'compact_customanimation',
+		'slideshow-exit',
+		'slideshow-slideNext',
+		'slideshow-slidePrevious',
+	];
 
 	// Helper function to strip '.svg' suffix and 'lc_' prefix.
 	public static stripName(name: string): string {
@@ -235,9 +368,16 @@ class LOUtil {
 			return defaultImageURL;
 		}
 
+		const lang = LOUtil.getUILanguageCode();
+		const hasLocalized = lang && LOUtil.localizedIcons[lang]?.includes(imgName);
+
 		if ((window as any).prefs.getBoolean('darkTheme')) {
+			if (hasLocalized)
+				return LOUtil.getURL('images/dark/' + lang + '/' + imgName);
 			return LOUtil.getURL('images/dark/' + imgName);
 		}
+
+		if (hasLocalized) return LOUtil.getURL('images/' + lang + '/' + imgName);
 
 		const dummyEmptyImg =
 			'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=';
@@ -260,6 +400,13 @@ class LOUtil {
 			cleanName = encodeURIComponent(cleanName).replace(/%/g, '');
 			cleanName = cleanName.toLowerCase();
 		}
+
+		// Skip icon lookup for numeric-only IDs (JSDialog artifacts like 1, 5, 65535)
+		if (/^\d+$/.test(cleanName)) return '';
+
+		// Skip icon lookup for overflow button pseudo-commands
+		if (cleanName.startsWith('overflow-button-')) return '';
+
 		var iconURLAliases: IconNameMap = {
 			// lc_closemobile.svg is generated when loading in NB mode then
 			// switch to compact mode: 1st hidden element in the top toolbar
@@ -364,6 +511,9 @@ class LOUtil {
 			masterslidespanel: 'masterslide',
 			slidemasterpage: 'masterslide',
 			tabledeletemenu: 'deletetable',
+			insertcalctable: 'inserttable',
+			removecalctable: 'deletetable',
+			databasesettings: 'tabledesign',
 			tracechangemode: 'trackchanges',
 			deleteallannotation: 'deleteallnotes',
 			sdtabledesignpanel: 'tabledesign',
@@ -434,7 +584,6 @@ class LOUtil {
 			printoptions: 'print',
 			togglesheetgrid: 'show',
 			toggleprintgrid: 'printgrid',
-			'hamburger-tablet': 'fold',
 			exportdirectpdf: 'exportpdf',
 			textcolumnspropertypanel: 'entirecolumn',
 			'sidebardeck.stylelistdeck': 'editstyle',
@@ -476,8 +625,14 @@ class LOUtil {
 			graphicfiltersharpen: 'graphicfiltersharpen',
 			graphicfiltersobel: 'graphicfiltersobel',
 			effects: 'pictureeffectsmenu',
-			selectsheetview: 'selecttable',
-			exitsheetview: 'delete',
+			fitwidthzoom: 'pagewidth',
+			open: 'formularesfapopen',
+			'exportas-pdf': 'exportpdf',
+			'exportas-epub': 'exportepub',
+			'fullscreen-drawing': 'presentation',
+			endnotedialog: 'footnotedialog',
+			updateallindexes: 'insertmultiindex',
+			formatframemenu: 'framedialog',
 		};
 		if (iconURLAliases[cleanName]) {
 			cleanName = iconURLAliases[cleanName];
@@ -684,7 +839,16 @@ class LOUtil {
 
 	public static isFileODF(map: any): boolean {
 		var ext = LOUtil.getFileExtension(map);
-		return ext === 'odt' || ext === 'ods' || ext === 'odp' || ext == 'odg';
+		return (
+			ext === 'odt' ||
+			ext === 'ods' ||
+			ext === 'odp' ||
+			ext === 'odg' ||
+			ext === 'fodt' ||
+			ext === 'fods' ||
+			ext === 'fodp' ||
+			ext === 'fodg'
+		);
 	}
 
 	public static containsDOMRect(
@@ -702,11 +866,71 @@ class LOUtil {
 	public static Rectangle = cool.Rectangle;
 	public static createRectangle = cool.createRectangle;
 
-	public static sanitize(html: string): string {
+	public static sanitize(
+		html: string,
+		profile: 'html' | 'svg' = 'html',
+	): string {
 		if (DOMPurify.isSupported) {
-			return DOMPurify.sanitize(html, { USE_PROFILES: { html: true } });
+			if (profile === 'svg') {
+				return DOMPurify.sanitize(html, {
+					// Enable both SVG and HTML profiles to support HTML content inside foreignObject
+					USE_PROFILES: { svg: true, svgFilters: true, html: true },
+					ADD_TAGS: ['foreignObject'],
+					// Allow ODF namespaced attributes used by LibreOffice SVG export.
+					// See: core/filter/source/svg/svgexport.cxx for the full list.
+					ADD_ATTR: [
+						'ooo:background-visibility',
+						'ooo:date-time-field',
+						'ooo:date-time-format',
+						'ooo:date-time-visibility',
+						'ooo:display-name',
+						'ooo:footer-field',
+						'ooo:footer-visibility',
+						'ooo:has-custom-background',
+						'ooo:has-transition',
+						'ooo:header-field',
+						'ooo:id-list',
+						'ooo:master',
+						'ooo:master-objects-visibility',
+						'ooo:name',
+						'ooo:number-of-slides',
+						'ooo:numbering-type',
+						'ooo:page-number-visibility',
+						'ooo:page-numbering-type',
+						'ooo:slide',
+						'ooo:slide-duration',
+						'ooo:start-slide-number',
+						'ooo:text-adjust',
+						'ooo:use-positioned-chars',
+					],
+					// Allow HTML content inside foreignObject (for embedded video)
+					// See: https://github.com/cure53/DOMPurify/issues/1002
+					HTML_INTEGRATION_POINTS: { foreignobject: true },
+				});
+			}
+			return DOMPurify.sanitize(html, { USE_PROFILES: { [profile]: true } });
 		}
 		return '';
+	}
+
+	public static getDocumentLogoClass(docType: string) {
+		let iconClass: string;
+		let iconTooltip: string;
+		if (docType === 'text') {
+			iconClass = 'writer-icon-img';
+			iconTooltip = 'Writer';
+		} else if (docType === 'spreadsheet') {
+			iconClass = 'calc-icon-img';
+			iconTooltip = 'Calc';
+		} else if (docType === 'presentation') {
+			iconClass = 'impress-icon-img';
+			iconTooltip = 'Impress';
+		} else if (docType === 'drawing') {
+			iconClass = 'draw-icon-img';
+			iconTooltip = 'Draw';
+		}
+
+		return [iconClass, iconTooltip];
 	}
 }
 

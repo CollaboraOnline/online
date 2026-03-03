@@ -41,7 +41,7 @@ JSDialog.container = function (
 
 	let id = data.id;
 	if ((!id || id === '') && builder)
-		id = builder._makeIdUnique('unnamed-container');
+		id = JSDialog.MakeIdUnique('unnamed-container');
 
 	if (parentContainer && !parentContainer.id) parentContainer.id = id;
 
@@ -70,7 +70,13 @@ JSDialog.grid = function (
 
 	if (data.allyRole) {
 		table.role = data.allyRole;
+
+		if (data.allyRole === 'listbox')
+			table.setAttribute('aria-activedescendant', data.initialSelectedId);
 	}
+
+	if (data.tabIndex !== undefined)
+		table.setAttribute('tabindex', data.tabIndex);
 
 	const gridRowColStyle =
 		'grid-template-rows: repeat(' +
@@ -87,6 +93,10 @@ JSDialog.grid = function (
 
 		for (let col = 0; col < cols; col++) {
 			const child = _getGridChild(data.children, row, col);
+			const isMergedCell =
+				prevChild &&
+				prevChild.width &&
+				parseInt(prevChild.left) + parseInt(prevChild.width) > col;
 
 			if (child) {
 				if (!child.id || child.id === '')
@@ -104,6 +114,9 @@ JSDialog.grid = function (
 
 				processedChildren.push(child);
 				prevChild = child;
+			} else if (!isMergedCell) {
+				// empty placeholder to keep correct layout in some cases.
+				window.L.DomUtil.create('div', 'ui-grid-cell', table);
 			}
 		}
 	}
@@ -148,6 +161,10 @@ JSDialog.toolbox = function (
 		}
 	}
 
+	if (data.aria?.role) {
+		toolbox.setAttribute('role', data.aria.role);
+	}
+
 	const enabledCallback = function (enable: boolean) {
 		for (const j in data.children) {
 			const childId = data.children[j].id;
@@ -171,6 +188,15 @@ JSDialog.toolbox = function (
 	const inlineLabels = builder.options.useInLineLabelsForUnoButtons;
 	if (data.hasVerticalParent === true && data.children.length === 1)
 		builder.options.useInLineLabelsForUnoButtons = true;
+
+	if (data.children.length === 1) {
+		if (!data.children[0].labelledBy && data.labelledBy)
+			data.children[0].labelledBy = data.labelledBy;
+		else if (!data.children[0].aria && data.aria)
+			data.children[0].aria = data.aria;
+	} else {
+		JSDialog.SetupA11yLabelForNonLabelableElement(toolbox, data, builder);
+	}
 
 	builder.build(toolbox, data.children, false);
 

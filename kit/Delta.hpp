@@ -11,23 +11,23 @@
 
 #pragma once
 
-#include <vector>
+#include <common/Common.hpp>
+#include <common/FileUtil.hpp>
+#include <common/HexUtil.hpp>
+#include <common/Log.hpp>
+#include <common/Png.hpp>
+#include <common/Simd.hpp>
+#include <kit/DeltaSimd.h>
+#include <wsd/TileDesc.hpp>
+
+#include <cassert>
+#include <cstdint>
+#include <fstream>
 #include <memory>
 #include <unordered_set>
-#include <fstream>
-#include <assert.h>
+#include <vector>
 #include <zlib.h>
 #include <zstd.h>
-#include <stdint.h>
-
-#include <common/HexUtil.hpp>
-#include <Log.hpp>
-#include <Common.hpp>
-#include <FileUtil.hpp>
-#include <TileDesc.hpp>
-#include <Png.hpp>
-#include <Simd.hpp>
-#include <DeltaSimd.h>
 
 #ifndef TILE_WIRE_ID
 #  define TILE_WIRE_ID
@@ -88,7 +88,7 @@ class DeltaGenerator {
         class PixIterator final
         {
             const DeltaBitmapRow &_row;
-            unsigned int _nMask; // which mask to operate on
+            unsigned int _mask; // which mask to operate on
             uint32_t _lastPix; // last pixel (or possibly plain alpha)
             uint64_t _lastMask; // holding slot for mask
             uint64_t _bitToCheck; // which bit should we check.
@@ -96,7 +96,7 @@ class DeltaGenerator {
             const uint32_t *_endRleData; // end of pixel data
         public:
             PixIterator(const DeltaBitmapRow &row)
-                : _row(row), _nMask(0),
+                : _row(row), _mask(0),
                   _lastPix(0x00000000),
                   _lastMask(0),
                   _bitToCheck(0),
@@ -121,8 +121,8 @@ class DeltaGenerator {
 
                 if (!_bitToCheck)
                 { // slow path
-                    if (_nMask < 4)
-                        _lastMask = _row._rleMask[_nMask++];
+                    if (_mask < 4)
+                        _lastMask = _row._rleMask[_mask++];
                     else
                         _lastMask = 0xffffffffffffffff;
                     _bitToCheck = 1;
@@ -197,7 +197,7 @@ class DeltaGenerator {
             unsigned int x = 0, outp = 0;
 
             // non-accelerated path
-            for (unsigned int nMask = 0; nMask < 4; ++nMask)
+            for (unsigned int mask = 0; mask < 4; ++mask)
             {
                 uint64_t rleMask = 0;
                 uint64_t bitToSet = 1;
@@ -229,7 +229,7 @@ class DeltaGenerator {
                         }
                     }
                 }
-                rleMaskBlock[nMask] = rleMask;
+                rleMaskBlock[mask] = rleMask;
             }
 
             if (x < width)
@@ -244,7 +244,7 @@ class DeltaGenerator {
 
         void initRow(const uint32_t *from, unsigned int width)
         {
-            auto scratch = static_cast<uint32_t*>(alloca(sizeof(uint32_t) * width));
+            auto* scratch = static_cast<uint32_t*>(alloca(sizeof(uint32_t) * width));
 
             bool done = false;
             if (simd::HasAVX2 && width == 256)
@@ -498,14 +498,14 @@ class DeltaGenerator {
     std::unordered_set<std::shared_ptr<DeltaData>, DeltaHasher, DeltaCompare> _deltaEntries;
     size_t _maxEntries;
 
-    void rebalanceDeltasT(bool bDropAll = false)
+    void rebalanceDeltasT(bool dropAll = false)
     {
         assert(!_deltaGuard.try_lock() && "Expected to have _deltaGuard lock taken");
 
-        if (_deltaEntries.size() > _maxEntries || bDropAll)
+        if (_deltaEntries.size() > _maxEntries || dropAll)
         {
             size_t toRemove = _deltaEntries.size();
-            if (!bDropAll)
+            if (!dropAll)
                 toRemove -= (_maxEntries * 3 / 4);
             std::vector<std::shared_ptr<DeltaData>> entries;
             entries.insert(entries.end(), _deltaEntries.begin(), _deltaEntries.end());
@@ -520,19 +520,28 @@ class DeltaGenerator {
         }
     }
 
-    static void
-    copy_row (unsigned char *dest, const unsigned char *srcBytes, unsigned int count, LibreOfficeKitTileMode mode)
+    static void copy_row(unsigned char *dest, const unsigned char *srcBytes,
+                         unsigned int count, LibreOfficeKitTileMode mode)
     {
         switch (mode)
         {
-            case LOK_TILEMODE_RGBA:
-                std::memcpy(dest, srcBytes, count * 4);
+        case LOK_TILEMODE_RGBA:
+            std::memcpy(dest, srcBytes, count * 4);
+            break;
+        case LOK_TILEMODE_BGRA:
+            if (simd::HasAVX2 &&
+                simd_copyRowSwapRB(dest, srcBytes, count))
                 break;
-            case LOK_TILEMODE_BGRA:
-                std::memcpy(dest, srcBytes, count * 4);
-                for (size_t j = 0; j < count * 4; j += 4)
-                    std::swap(dest[j], dest[j+2]);
-                break;
+
+            // Scalar fallback
+            for (size_t i = 0; i < count * 4; i += 4)
+            {
+                dest[i + 0] = srcBytes[i + 2];
+                dest[i + 1] = srcBytes[i + 1];
+                dest[i + 2] = srcBytes[i + 0];
+                dest[i + 3] = srcBytes[i + 3];
+            }
+            break;
         }
     }
 
@@ -845,7 +854,7 @@ class DeltaGenerator {
             outb.size = maxCompressed;
             outb.pos = 0;
 
-            auto packedLine = static_cast<unsigned char*>(alloca(rowSize));
+            auto* packedLine = static_cast<unsigned char*>(alloca(rowSize));
 
             for (int y = 0; y < height; ++y)
             {
@@ -912,13 +921,13 @@ class DeltaGenerator {
         Blob img = std::make_shared<BlobData>();
         img->resize(1024*1024*4); // lots of extra space.
 
-        size_t const dSize = ZSTD_decompress(img->data(), img->size(), blob->data(), blob->size());
-        if (ZSTD_isError(dSize))
+        size_t const size = ZSTD_decompress(img->data(), img->size(), blob->data(), blob->size());
+        if (ZSTD_isError(size))
         {
-            LOG_ERR("Failed to decompress blob of size " << blob->size() << " with " << ZSTD_getErrorName(dSize));
+            LOG_ERR("Failed to decompress blob of size " << blob->size() << " with " << ZSTD_getErrorName(size));
             return Blob();
         }
-        img->resize(dSize);
+        img->resize(size);
 
 
         // cf. CanvasTileLayer's _applyDelta

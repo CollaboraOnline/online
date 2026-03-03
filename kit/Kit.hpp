@@ -24,16 +24,22 @@
 
 #include <wsd/TileDesc.hpp>
 
-#include "Socket.hpp"
+#include <Socket.hpp>
 
 #define LOK_USE_UNSTABLE_API
 #include <LibreOfficeKit/LibreOfficeKit.hxx>
 
 #if MOBILEAPP
 
-#include "ClientSession.hpp"
-#include "DocumentBroker.hpp"
+#include <future>
 
+#include <ClientSession.hpp>
+#include <DocumentBroker.hpp>
+
+#endif
+
+#ifdef IOS
+void runKitLoopInAThread();
 #endif
 
 void lokit_main(
@@ -47,13 +53,9 @@ void lokit_main(
 #endif
     std::size_t numericIdentifier);
 
-#ifdef IOS
-void runKitLoopInAThread();
-#endif
-
 bool globalPreinit(const std::string& loTemplate);
 /// Wrapper around private Document::ViewCallback().
-void documentViewCallback(const int type, const char* p, void* data);
+void documentViewCallback(int type, const char* p, void* data);
 
 class Document;
 class DeltaGenerator;
@@ -153,7 +155,7 @@ public:
 
     static void cleanupChildProcess();
 
-    virtual void wakeupHook() override;
+    void wakeupHook() override;
 
     static KitSocketPoll* getMainPoll() { return mainPoll; }
 
@@ -169,7 +171,16 @@ public:
         ~ReEntrancyGuard() { _count--; }
     };
 #endif
+
+    /// Handle the poll from the unipoll callback.
     int kitPoll(int timeoutMicroS);
+
+    /// Handle the wake up from the unipoll callback.
+    void kitWakeup();
+
+    /// Handle the 'has any input?' unipoll callback.
+    bool kitHasAnyInput(int mostUrgentPriority);
+
     void setDocument(std::shared_ptr<Document> document) { _document = std::move(document); }
     const std::shared_ptr<Document>& getDocument() const { return _document; }
 
@@ -177,14 +188,18 @@ public:
     static bool pushToMainThread(LibreOfficeKitCallback callback, int type, const char* p,
                                  void* data);
 
-#ifdef IOS
+#if defined(IOS) || defined(QTAPP) || defined(MACOS) || defined(_WIN32)
     static std::mutex KSPollsMutex;
     static std::condition_variable KSPollsCV;
     static std::vector<std::weak_ptr<KitSocketPoll>> KSPolls;
 
-    std::mutex terminationMutex;
-    std::condition_variable terminationCV;
-    bool terminationFlag;
+    struct TerminationData
+    {
+        std::mutex mutex;
+        std::condition_variable cv;
+        bool flag;
+    };
+    std::shared_ptr<TerminationData> termination;
 #endif
 };
 
@@ -203,12 +218,12 @@ public:
     Document(const std::shared_ptr<lok::Office>& loKit, const std::string& jailId,
              const std::string& docKey, const std::string& docId, const std::string& url,
              const std::shared_ptr<WebSocketHandler>& websocketHandler, unsigned mobileAppDocId);
-    virtual ~Document();
+    ~Document() final;
 
     const std::string& getUrl() const { return _url; }
 
     /// Post the message - in the unipoll world we're in the right thread anyway
-    bool postMessage(const char* data, int size, const WSOpCode code) const;
+    bool postMessage(const char* data, int size, WSOpCode code) const;
 
     bool createSession(const std::string& sessionId);
 
@@ -221,43 +236,42 @@ public:
 
     void renderTiles(TileCombined& tileCombined);
 
-
-    bool sendTextFrame(const std::string& message)
+    bool sendTextFrame(const std::string& message) const
     {
         return sendFrame(message.data(), message.size());
     }
 
-    bool sendFrame(const char* buffer, int length, WSOpCode opCode = WSOpCode::Text);
+    bool sendFrame(const char* buffer, int length, WSOpCode opCode = WSOpCode::Text) const;
 
-    void alertNotAsync()
+    void alertNotAsync() const
     {
         // load unfortunately enables inputprocessing in some cases.
         if (processInputEnabled() && !_duringLoad && !isBackgroundSaveProcess())
             notifyAll("error: cmd=notasync kind=failure");
     }
 
-    void alertAllUsers(const std::string& cmd, const std::string& kind)
+    void alertAllUsers(const std::string& cmd, const std::string& kind) const
     {
         sendTextFrame("errortoall: cmd=" + cmd + " kind=" + kind);
     }
 
     /// Notify all views with the given message
-    bool notifyAll(const std::string& msg)
+    bool notifyAll(const std::string& msg) const
     {
         // Broadcast updated viewinfo to all clients.
         return sendTextFrame("client-all " + msg);
     }
 
     unsigned getMobileAppDocId() const { return _mobileAppDocId; }
-    const std::string getDocId() const { return _docId; }
+    const std::string& getDocId() const { return _docId; }
 
     /// See if we should clear out our memory
     void trimIfInactive();
     void trimAfterInactivity();
 
     // LibreOfficeKit callback entry points
-    static void GlobalCallback(const int type, const char* p, void* data);
-    static void ViewCallback(const int type, const char* p, void* data);
+    static void GlobalCallback(int type, const char* p, void* data);
+    static void ViewCallback(int type, const char* p, void* data);
 
 private:
     /// Helper method to broadcast callback and its payload to all clients
@@ -270,7 +284,7 @@ private:
     static void reapZombieChildren();
 
     /// Calculate tile rendering priority from a TileDesc
-    virtual Priority getTilePriority(const TileDesc &desc) const override;
+    Priority getTilePriority(const TileDesc& desc) const override;
     virtual std::vector<ViewIdInactivity> getViewIdsByInactivity() const override;
 
 public:
@@ -358,7 +372,7 @@ private:
     std::shared_ptr<lok::Document> load(const std::shared_ptr<ChildSession>& session,
                                         const std::string& renderOpts);
 
-    bool forwardToChild(const std::string_view prefix, const std::vector<char>& payload);
+    bool forwardToChild(std::string_view prefix, const std::vector<char>& payload);
 
     static std::string makeRenderParams(const std::string& renderOpts, const std::string& userName,
                                         const std::string& spellOnline, const std::string& theme,
@@ -548,7 +562,7 @@ std::shared_ptr<lok::Document> getLOKDocumentForAndroidOnly();
 std::shared_ptr<DocumentBroker> getDocumentBrokerForAndroidOnly();
 #endif
 
-extern _LibreOfficeKit* loKitPtr;
+extern LibreOfficeKit* loKitPtr;
 
 /// Check if URP is enabled
 bool isURPEnabled();

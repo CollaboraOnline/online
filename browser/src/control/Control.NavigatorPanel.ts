@@ -35,6 +35,8 @@ class NavigatorPanel extends SidebarBase {
 		this.map.on('doclayerinit', this.onDocLayerInit, this);
 		this.map.on('focussearch', this.focusSearch, this);
 		this.navigationPanel = document.getElementById(`navigation-sidebar`);
+		this.navigationPanel.setAttribute('aria-label', _('Navigation Panel'));
+
 		this.floatingNavIcon = document.getElementById(`navigator-floating-icon`);
 		this.presentationControlsWrapper = this.navigationPanel.querySelector(
 			'#presentation-controls-wrapper',
@@ -104,11 +106,7 @@ class NavigatorPanel extends SidebarBase {
 			navContainer,
 		);
 
-		var navTitle = window.L.DomUtil.create(
-			'span',
-			'navigation-title',
-			navHeader,
-		);
+		var navTitle = window.L.DomUtil.create('h2', 'navigation-title', navHeader);
 		navTitle.textContent = _('Navigation');
 
 		// Create wrapper for search
@@ -150,6 +148,11 @@ class NavigatorPanel extends SidebarBase {
 			'keydown',
 			function (e: KeyboardEvent) {
 				if (e.code === 'Escape') {
+					const contextMenu = app.map.uiManager.isAnyContextMenuOpened();
+					if (contextMenu) {
+						// Do not close navigator if any context menu is open
+						return;
+					}
 					clickFunction();
 					e.preventDefault();
 					e.stopPropagation();
@@ -286,17 +289,17 @@ class NavigatorPanel extends SidebarBase {
 		// Create the button wrapper (square container)
 		const buttonWrapper = document.createElement('div');
 		buttonWrapper.className = 'navigator-btn-wrapper'; // Class for styling
-		buttonWrapper.setAttribute('aria-label', navigatorText);
 
 		// Create the button
 		const button = document.createElement('button');
 		button.className = 'ui-content unobutton';
 		button.id = 'floating-navigator';
 		button.accessKey = 'ZN';
-		button.setAttribute('aria-pressed', 'false');
+		button.setAttribute('aria-label', navigatorText);
 
 		// Create the image inside the button
 		const img = document.createElement('img');
+		img.alt = ''; // empty alt for accessibility
 		app.LOUtil.setImage(img, 'lc_navigator.svg', this.map);
 
 		// Append elements
@@ -413,7 +416,7 @@ class NavigatorPanel extends SidebarBase {
 	handleFloatingButtonVisibilityOnZoomChange() {
 		// Handle special case for impress as the view there is landscape so better to hide Floating Nav ICON on lower zoom compare to other app
 		if (
-			this.map.getZoom() >= 14 ||
+			this.map.getZoom() > 14 ||
 			(this.map.getZoom() >= 13 && this.map.getDocType() === 'presentation')
 		) {
 			this.floatingNavIcon.classList.remove('visible');
@@ -480,6 +483,9 @@ class NavigatorPanel extends SidebarBase {
 							type: 'pushbutton',
 							text: '',
 							image: 'lc_recsearch.svg',
+							aria: {
+								label: _('Search'),
+							},
 						},
 					],
 				},

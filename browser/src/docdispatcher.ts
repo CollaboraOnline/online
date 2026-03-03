@@ -127,23 +127,20 @@ class Dispatcher {
 				msgId: 'UI_InsertFile',
 				args: {
 					callback: 'Action_InsertMultimedia',
-					mimeTypeFilter: [
-						'video/MP2T',
-						'video/mp4',
-						'video/mpeg',
-						'video/ogg',
-						'video/quicktime',
-						'video/webm',
-						'video/x-matroska',
-						'video/x-ms-wmv',
-						'video/x-msvideo',
-						'audio/aac',
-						'audio/flac',
-						'audio/mp4',
-						'audio/mpeg',
-						'audio/ogg',
-						'audio/x-wav',
-					],
+					mimeTypeFilter: app.LOUtil.mediaMimeFilter,
+				},
+			});
+		};
+
+		this.actionsMap['localcomparedocuments'] = function () {
+			window.L.DomUtil.get('comparedocuments').click();
+		};
+		this.actionsMap['remotecomparedocuments'] = function () {
+			app.map.fire('postMessage', {
+				msgId: 'UI_InsertFile',
+				args: {
+					callback: 'Action_CompareDocuments',
+					mimeTypeFilter: app.LOUtil.documentMimeFilter,
 				},
 			});
 		};
@@ -248,6 +245,10 @@ class Dispatcher {
 		this.actionsMap['zoomreset'] = () => {
 			app.map.setZoom(app.map.options.zoom, null, true);
 		};
+		this.actionsMap['fitwidthzoom'] = () => {
+			if (app.activeDocument.activeLayout)
+				app.activeDocument.activeLayout.adjustViewZoomLevel();
+		};
 
 		this.actionsMap['searchprev'] = () => {
 			app.searchService.searchPrevious();
@@ -290,7 +291,7 @@ class Dispatcher {
 			app.map.insertComment();
 		};
 
-		this.actionsMap['fold'] = this.actionsMap['hamburger-tablet'] = () => {
+		this.actionsMap['fold'] = () => {
 			app.map.uiManager.toggleMenubar();
 		};
 
@@ -323,6 +324,10 @@ class Dispatcher {
 			app.map.uiManager.toggleRuler();
 		};
 
+		this.actionsMap['showstylelistdeck'] = () => {
+			app.map.uiManager.showStyleListDeck();
+		};
+
 		this.actionsMap['showstatusbar'] = () => {
 			app.map.uiManager.toggleStatusBar();
 		};
@@ -331,20 +336,28 @@ class Dispatcher {
 			app.map.uiManager.collapseNotebookbar();
 		};
 
-		this.actionsMap['scrollpreviewup'] = () => {
-			const stylePreview = document.getElementById('stylesview');
-			stylePreview.scrollBy({
-				top: -stylePreview.offsetHeight,
-				behavior: 'smooth',
-			}); // Scroll up based on stylepreview height
+		this.actionsMap['validatedialogsa11y'] = () => {
+			if (window.app.a11yValidator) {
+				window.app.a11yValidator.validateAllOpenDialogs();
+			} else {
+				console.warn('A11yValidator not available');
+			}
 		};
 
-		this.actionsMap['scrollpreviewdown'] = () => {
-			const stylePreview = document.getElementById('stylesview');
-			stylePreview.scrollBy({
-				top: stylePreview.offsetHeight,
-				behavior: 'smooth',
-			}); // Scroll up based on stylepreview height
+		this.actionsMap['validatesidebara11y'] = () => {
+			if (window.app.a11yValidator) {
+				window.app.a11yValidator.validateSidebar();
+			} else {
+				console.warn('A11yValidator not available');
+			}
+		};
+
+		this.actionsMap['validatenotebookbara11y'] = () => {
+			if (window.app.a11yValidator) {
+				window.app.a11yValidator.validateNotebookbar();
+			} else {
+				console.warn('A11yValidator not available');
+			}
 		};
 	}
 
@@ -495,7 +508,11 @@ class Dispatcher {
 		this.actionsMap['presentation'] = this.actionsMap[
 			'fullscreen-presentation'
 		] = () => {
-			if ((window as any).canvasSlideshowEnabled) app.map.fire('newfullscreen');
+			if ((window as any).canvasSlideshowEnabled)
+				app.map.fire('newfullscreen', {
+					isWelcomePresentation:
+						window.coolParams.get('welcome') === 'true' ? true : false,
+				});
 			else app.map.fire('fullscreen');
 		};
 
@@ -514,9 +531,16 @@ class Dispatcher {
 
 		this.actionsMap['presentinwindow'] = this.actionsMap['present-in-window'] =
 			() => {
+				const welcomePresentation =
+					window.coolParams.get('welcome') === 'true' ? true : false;
 				if ((window as any).canvasSlideshowEnabled)
-					app.map.fire('newpresentinwindow');
-				else app.map.fire('presentinwindow');
+					app.map.fire('newpresentinwindow', {
+						isWelcomePresentation: welcomePresentation,
+					});
+				else
+					app.map.fire('presentinwindow', {
+						isWelcomePresentation: welcomePresentation,
+					});
 			};
 
 		this.actionsMap['followmepresentation'] = this.actionsMap[
@@ -715,6 +739,54 @@ class Dispatcher {
 		this.actionsMap['rejectTrackedChangeToNext'] = function () {
 			app.map.sendUnoCommand('.uno:RejectTrackedChangeToNext');
 		};
+
+		this.actionsMap['multipageview'] = function () {
+			if (app.activeDocument && app.activeDocument.activeLayout) {
+				let commandState = false;
+				if (app.activeDocument.activeLayout.type === 'ViewLayoutMultiPage') {
+					app.activeDocument.activeLayout = new ViewLayoutWriter();
+					app.activeDocument.activeLayout.adjustViewZoomLevel();
+				} else {
+					app.activeDocument.activeLayout = new ViewLayoutMultiPage();
+					commandState = true;
+				}
+
+				app.map.fire('commandstatechanged', {
+					commandName: 'multipageview',
+					state: commandState ? 'true' : 'false',
+				});
+				app.activeDocument.activeLayout.sendClientVisibleArea();
+				app.sectionContainer.requestReDraw();
+			}
+		};
+
+		this.actionsMap['comparechanges'] = function () {
+			if (app.activeDocument && app.activeDocument.activeLayout) {
+				Util.ensureValue(app.activeDocument);
+				app.socket.sendMessage('uno .uno:RedlineRenderMode');
+
+				const commandState =
+					app.activeDocument.activeLayout.type === 'ViewLayoutCompareChanges';
+
+				app.map.fire('commandstatechanged', {
+					commandName: 'comparechanges',
+					state: !commandState ? 'true' : 'false',
+				});
+
+				app.activeDocument.activeLayout = commandState
+					? new ViewLayoutWriter()
+					: new ViewLayoutCompareChanges();
+
+				// Do this only if we are switching to Writer normal layout.
+				// Try to handle this in constructor for compare-changes layout.
+				if (commandState) {
+					TileManager.redraw();
+					app.map._docLayer._fitWidthZoom(null, null, true);
+					app.activeDocument.activeLayout.sendClientVisibleArea();
+					app.sectionContainer.requestReDraw();
+				}
+			}
+		};
 	}
 
 	private addMobileCommands() {
@@ -818,9 +890,11 @@ class Dispatcher {
 	public dispatch(action: string, data?: any) {
 		// Don't allow to execute new actions while any dialog is visible.
 		// It prevents launching multiple instances of the same dialog.
+		// Exception: validatedialogsa11y needs to run when dialogs are open.
 		if (
-			app.map.dialog.hasOpenedDialog() ||
-			(app.map.jsdialog && app.map.jsdialog.hasDialogOpened())
+			action !== 'validatedialogsa11y' &&
+			(app.map.dialog.hasOpenedDialog() ||
+				(app.map.jsdialog && app.map.jsdialog.hasDialogOpened()))
 		) {
 			app.map.dialog.blinkOpenDialog();
 			console.debug('Cannot dispatch: ' + action + ' when dialog is opened.');
@@ -858,6 +932,11 @@ class Dispatcher {
 
 		if (this.actionsMap[action] !== undefined) {
 			this.actionsMap[action](data);
+			return;
+		}
+
+		if (window.ThisIsTheWindowsApp && action.startsWith('new-')) {
+			window.postMobileMessage(action);
 			return;
 		}
 

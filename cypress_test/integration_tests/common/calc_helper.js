@@ -14,24 +14,52 @@ function clickFormulaBar() {
 	cy.log('<< clickFormulaBar - end');
 }
 
+// Click on the document at the specified offset from the origin of cell A1.
+function clickAtOffset(offsetX, offsetY, right=false) {
+	cy.log('>> clickAtOffset - start');
+	cy.log('Param - offsetX: ' + offsetX);
+	cy.log('Param - offsetY: ' + offsetY);
+
+	cy.cGet('#map').should('exist');
+	cy.cGet('#map').should('be.visible');
+	cy.cGet('#map')
+		.then(function(items) {
+			expect(items).to.have.lengthOf(1);
+			const XPos = items[0].getBoundingClientRect().left + 2 + offsetX;
+			const YPos = items[0].getBoundingClientRect().top + 2 + offsetY;
+			if (right) {
+				cy.cGet('body').rightclick(XPos, YPos);
+			} else {
+				cy.cGet('body').click(XPos, YPos);
+			}
+		});
+
+	cy.log('<< clickAtOffset - end');
+}
+
 // Click on the first cell of the sheet (A1), we use the document
-// top left corner to achive that, so it work's if the view is at the
+// top left corner to achieve that, so it works if the view is at the
 // start of the sheet.
 // Parameters:
 // firstClick - this is the first click on the cell. It matters on mobile only,
 //              because on mobile, the first click/tap selects the cell, the second
 //              one makes the document to step in cell editing.
 // dblClick - to do a double click or not. The result of double click is that the cell
-//            editing it triggered both on desktop and mobile.
-function clickOnFirstCell(firstClick = true, dblClick = false, isA1 = true) {
+//            editing is triggered both on desktop and mobile.
+// expectedCell - the expected cell address after clicking (default 'A1').
+function clickOnFirstCell(firstClick = true, dblClick = false, expectedCell = 'A1') {
 	cy.log('>> clickOnFirstCell - start');
 	cy.log('Param - firstClick: ' + firstClick);
 	cy.log('Param - dblClick: ' + dblClick);
+	cy.log('Param - expectedCell: ' + expectedCell);
+
+	// Flush any pending layouting tasks before clicking
+	cy.getFrameWindow().then(function(win) {
+		helper.processToIdle(win);
+	});
 
 	// Use the tile's edge to find the first cell's position
-	cy.cGet('#canvas-container').should('exist');
-	cy.cGet('#canvas-container')
-		.then(function(items) {
+	cy.cGet('#canvas-container').then(function(items) {
 			expect(items).to.have.lengthOf(1);
 			const XPos = items[0].getBoundingClientRect().left + 60;
 			const YPos = items[0].getBoundingClientRect().top + 30;
@@ -47,15 +75,9 @@ function clickOnFirstCell(firstClick = true, dblClick = false, isA1 = true) {
 		cy.cGet('.cursor-overlay .blinking-cursor').should('be.visible');
 	}
 
-	if (isA1) {
-		cy.waitUntil(() => {
-			return cy.cGet(helper.addressInputSelector)
-				.should('have.prop', 'value', 'A1');
-		});
-
-		cy.cGet(helper.addressInputSelector)
-			.should('have.prop', 'value', 'A1');
-	}
+	cy.getFrameWindow().then(function(win) {
+		assertAddressAfterIdle(win, expectedCell);
+	});
 
 	cy.log('<< clickOnFirstCell - end');
 }
@@ -279,8 +301,7 @@ function selectCellsInRange(range) {
 	cy.log('>> selectCellsInRange - start');
 
 	cy.cGet(helper.addressInputSelector)
-		.clear()
-		.type(range + '{enter}');
+		.type('{selectall}{backspace}' + range + '{enter}');
 
 	cy.log('<< selectCellsInRange - end');
 }
@@ -335,6 +356,23 @@ function selectOptionMobileWizard(menu) {
 		.click();
 }
 
+// Wait for the core to be idle and then assert the address input has the expected value.
+// This is useful after operations that navigate to a cell (e.g., find, goto)
+// where there is a round-trip from browser to core before the address updates.
+// Parameters:
+// win - the frame window object (from cy.getFrameWindow())
+// expectedAddress - the expected cell address (e.g., 'A1', 'C300')
+function assertAddressAfterIdle(win, expectedAddress) {
+	cy.log('>> assertAddressAfterIdle - start');
+	cy.log('Param - expectedAddress: ' + expectedAddress);
+
+	helper.processToIdle(win);
+	cy.cGet(helper.addressInputSelector).should('have.value', expectedAddress);
+
+	cy.log('<< assertAddressAfterIdle - end');
+}
+
+module.exports.clickAtOffset = clickAtOffset;
 module.exports.clickOnFirstCell = clickOnFirstCell;
 module.exports.clickOnACell = clickOnACell;
 module.exports.dblClickOnFirstCell = dblClickOnFirstCell;
@@ -351,3 +389,12 @@ module.exports.assertNumberofSheets = assertNumberofSheets;
 module.exports.selectOptionFromContextMenu = selectOptionFromContextMenu;
 module.exports.selectOptionMobileWizard = selectOptionMobileWizard;
 module.exports.hideSelectedRows = hideSelectedRows;
+module.exports.assertAddressAfterIdle = assertAddressAfterIdle;
+
+// Navigate to a cell address by typing into the address input field,
+// then wait for the core to be idle and assert the address is correct.
+function enterCellAddressAndConfirm(win, address) {
+	helper.typeIntoInputField(helper.addressInputSelector, address);
+	assertAddressAfterIdle(win, address);
+}
+module.exports.enterCellAddressAndConfirm = enterCellAddressAndConfirm;

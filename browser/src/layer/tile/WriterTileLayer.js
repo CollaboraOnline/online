@@ -31,7 +31,16 @@ window.L.WriterTileLayer = window.L.CanvasTileLayer.extend({
 	},
 
 	beforeAdd: function (map) {
+		map.on('commandstatechanged', this._onCommandStateChanged, this);
 		map.uiManager.initializeSpecializedUI('text');
+	},
+
+	_onCommandStateChanged: function (e) {
+		if (e.commandName === 'CompareDocumentsProperties') {
+			if (e.state) {
+				app.writer.compareDocumentProperties = e.state;
+			}
+		}
 	},
 
 	_onCommandValuesMsg: function (textMsg) {
@@ -51,6 +60,7 @@ window.L.WriterTileLayer = window.L.CanvasTileLayer.extend({
 				comment.parent = comment.parentId.toString();
 			});
 			app.sectionContainer.getSectionWithName(app.CSections.CommentList.name).importComments(values.comments);
+			app.map.fire('importannotations');
 		}
 		else if (values.redlines && values.redlines.length > 0) {
 			app.sectionContainer.getSectionWithName(app.CSections.CommentList.name).importChanges(values.redlines);
@@ -104,26 +114,44 @@ window.L.WriterTileLayer = window.L.CanvasTileLayer.extend({
 		if (!statusJSON.width || !statusJSON.height || this._documentInfo === textMsg)
 			return;
 
+		if (statusJSON.readonly && !this._documentInfo)
+			this._map.setPermission('readonly');
+
 		var sizeChanged = statusJSON.width !== app.activeDocument.fileSize.x || statusJSON.height !== app.activeDocument.fileSize.y;
 
-		if (statusJSON.viewid !== undefined) this._viewId = statusJSON.viewid;
+		if (statusJSON.viewid !== undefined) {
+			this._viewId = statusJSON.viewid;
+			app.activeDocument.setActiveViewID(this._viewId);
+		}
 
 		console.assert(this._viewId >= 0, 'Incorrect viewId received: ' + this._viewId);
 
 		if (sizeChanged) {
 			app.activeDocument.fileSize = new cool.SimplePoint(statusJSON.width, statusJSON.height);
-			app.activeDocument.activeView.viewSize = app.activeDocument.fileSize.clone();
+			app.activeDocument.activeLayout.viewSize = app.activeDocument.fileSize.clone();
+
 			this._docType = statusJSON.type;
 			this._updateMaxBounds(true);
 		}
 
 		this._documentInfo = textMsg;
 		this._selectedPart = 0;
-		this._selectedMode = (statusJSON.mode !== undefined) ? statusJSON.mode : 0;
+
+		const mode = (statusJSON.mode !== undefined) ? statusJSON.mode : 0;
+
+		if (mode === 2)
+			app.activeDocument.activeModes = [1, 2];
+		else
+			app.activeDocument.activeModes = [mode];
+
 		this._parts = 1;
 		this._currentPage = statusJSON.selectedpart;
 		this._pages = statusJSON.partscount;
 		app.file.writer.pageRectangleList = statusJSON.pagerectangles.slice(); // Copy the array.
+		// Recalculate view layout so view size reflects the new pages.
+		// Needed for ViewLayoutMultiPage where the viewSize setter is a no-op.
+		if (app.activeDocument.activeLayout.type === 'ViewLayoutMultiPage')
+			app.activeDocument.activeLayout.reset();
 		this._map.fire('pagenumberchanged', {
 			currentPage: this._currentPage,
 			pages: this._pages,

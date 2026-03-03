@@ -9,6 +9,10 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * Test for HTTP crash scenarios and resilience.
+ */
+
 #include <config.h>
 
 #include <sys/types.h>
@@ -31,7 +35,7 @@
 
 #include <Common.hpp>
 #include <UserMessages.hpp>
-#include <Util.hpp>
+#include <common/Util.hpp>
 #include <Protocol.hpp>
 #include <test.hpp>
 #include <helpers.hpp>

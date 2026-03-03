@@ -17,10 +17,10 @@
 #include <cstring>
 #include <unordered_map>
 
-#include "Socket.hpp"
-#include "WebSocketHandler.hpp"
+#include <Socket.hpp>
+#include <WebSocketHandler.hpp>
 #include <TraceFile.hpp>
-#include <Util.hpp>
+#include <common/Util.hpp>
 #include <common/Log.hpp>
 #include <net/Ssl.hpp>
 #include <wsd/TileDesc.hpp>
@@ -352,7 +352,7 @@ struct Stats {
 
         time_t now = time(0);
         struct tm datetime;
-        localtime_r(&now, &datetime);
+        gmtime_r(&now, &datetime);
 
         char formattedDate[50];
         strftime(formattedDate, 50, "%d/%m/%y", &datetime);
@@ -570,7 +570,7 @@ public:
             TileDesc desc = TileDesc::parse(tokens);
 
             sendMessage("tileprocessed tile=" + desc.generateID());
-            LOG_TST(_logPre << "Sent tileprocessed tile= " + desc.generateID());
+            LOG_TST(_logPre << "Sent tileprocessed tile= " << desc.generateID());
         }
         else if (tokens.equals(0, "error:"))
         {

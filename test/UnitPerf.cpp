@@ -9,15 +9,19 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+/*
+ * Unit test for performance measurements.
+ */
+
 #include <config.h>
 #include <config_version.h>
 
 #include <Unit.hpp>
-#include <Util.hpp>
-#include <JsonUtil.hpp>
-#include <FileUtil.hpp>
+#include <common/Util.hpp>
+#include <common/JsonUtil.hpp>
+#include <common/FileUtil.hpp>
 #include <helpers.hpp>
-#include <StringVector.hpp>
+#include <common/StringVector.hpp>
 #include <WebSocketSession.hpp>
 #include <wsd/COOLWSD.hpp>
 #include <wsd/DocumentBroker.hpp>
@@ -65,7 +69,11 @@ void UnitPerf::testPerf(std::string testType, std::string fileType, std::string 
     helpers::getDocumentPathAndURL(docName, filePath, dummy, "testPerf");
 
     const std::string tracePath = TDOC + traceStr;
+#if ENABLE_RUNTIME_OPTIMIZATIONS
     constexpr float latencyFactor = 0.1; // ~10x faster replay than recorded.
+#else
+    constexpr float latencyFactor = 0.5; // ~2x faster replay than recorded.
+#endif
     StressSocketHandler::addPollFor(*poll, helpers::getTestServerURI("ws"), filePath, tracePath,
                                     stats, latencyFactor);
 

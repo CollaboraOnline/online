@@ -36,7 +36,7 @@ describe.skip(['tagdesktop'], 'Navigator tests.', function () {
 		cy.cGet('.spreadsheet-tab.spreadsheet-tab-selected').rightclick();
 		cy.cGet('body').contains('.context-menu-link', 'Rename Sheet...').click();
 		cy.cGet('#modal-dialog-rename-calc-sheet').should('exist');
-		cy.cGet('#input-modal-input').clear().type('renameSheet');
+		cy.cGet('#input-modal-input').type('{selectall}{backspace}renameSheet');
 		cy.cGet('#response-ok').click();
 		cy.cGet('.spreadsheet-tab.spreadsheet-tab-selected').should('have.text', 'renameSheet');
 		cy.cGet('#contentbox').contains('.jsdialog.sidebar.ui-treeview-cell-text', 'renameSheet').should('exist');
@@ -47,8 +47,8 @@ describe.skip(['tagdesktop'], 'Navigator tests.', function () {
 		cy.cGet('#menu-data').click();
 		cy.cGet('#menu-data').contains('.has-submenu', 'Named Ranges and Expressions').parent().click();
 		cy.cGet('#menu-data').contains('Define...').parent().click();
-		cy.cGet('#DefineNameDialog').find('#edit').clear().type('rName2');
-		cy.cGet('#DefineNameDialog').find('#range').clear().type('$Sheet5.$C$55:$C$56');
+		cy.cGet('#DefineNameDialog').find('#edit').type('{selectall}{backspace}rName2');
+		cy.cGet('#DefineNameDialog').find('#range').type('{selectall}{backspace}$Sheet5.$C$55:$C$56');
 		cy.cGet('#DefineNameDialog').find('#add').click();
 
 		// Check if it exist in Navigator
