@@ -279,7 +279,7 @@ class AboutDialog {
 
 		text = text.replace(/\u00A0/g, ' ');
 
-		if ((window as any).ThisIsTheQtApp) {
+		if ((window as any).ThisIsTheQtApp || (window as any).ThisIsTheMacOSApp) {
 			(window as any).postMobileMessage('TEXTCLIPBOARD ' + text);
 			this.contentHasBeenCopiedShowSnackbar();
 		} else if (navigator.clipboard && window.isSecureContext) {
