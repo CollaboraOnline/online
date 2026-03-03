@@ -192,7 +192,8 @@ var NotebookbarAccessibility = function() {
 				else if (this.state === 1) {
 					itemWasClicked = true;
 					this.setTabItemDescription(element);
-					element.click();
+					var clickTarget = element.querySelector('button.unobutton') || element;
+					clickTarget.click();
 					if (this.filteredItem && this.filteredItem.focusBack === true) {
 						this.focusToMap();
 					}
