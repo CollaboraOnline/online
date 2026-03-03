@@ -445,6 +445,23 @@ class StatusBar extends JSDialog.Toolbar {
 		});
 
 		JSDialog.RefreshScrollables();
+
+		if (!window.mode.isMobile()) {
+			this.showItem('languagestatus', !isReadOnlyMode);
+			this.showItem('languagestatusbreak', !isReadOnlyMode);
+			if (this.map.getDocType() === 'spreadsheet') {
+				this.showItem('StateTableCellMenu', !isReadOnlyMode);
+				this.showItem('statetablebreak', !isReadOnlyMode);
+			}
+
+			// updateLanguageItem() is a no-op in read-only mode, so the
+			// widget may never have received its text.  Populate it now.
+			if (!isReadOnlyMode) {
+				var language = app.map['stateChangeHandler'].getItemValue('.uno:LanguageStatus');
+				if (language)
+					this.updateLanguageItem(this.extractLanguageFromStatus(language));
+			}
+		}
 	}
 
 	extractLanguageFromStatus(state) {
