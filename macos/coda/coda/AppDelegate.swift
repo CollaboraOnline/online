@@ -99,7 +99,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         replaceProductName(in: mainMenu, withAction: #selector(NSApplication.orderFrontStandardAboutPanel(_:)), appName: name)
         replaceProductName(in: mainMenu, withAction: #selector(NSApplication.hide(_:)), appName: name)
         replaceProductName(in: mainMenu, withAction: #selector(NSApplication.terminate(_:)), appName: name)
-        replaceProductName(in: mainMenu, withAction: #selector(NSApplication.showHelp(_:)), appName: name)
     }
 
     /**

@@ -23,42 +23,6 @@ msgctxt "1Xt-HY-uBw.title"
 msgid "ProductName"
 msgstr ""
 
-msgctxt "1b7-l0-nxx.title"
-msgid "Find"
-msgstr "Gjej"
-
-msgctxt "1tx-W0-xDw.title"
-msgid "Lower"
-msgstr "Ule"
-
-msgctxt "2h7-ER-AoG.title"
-msgid "Raise"
-msgstr "Ngrije"
-
-msgctxt "2oI-Rn-ZJC.title"
-msgid "Transformations"
-msgstr "Shndërrime"
-
-msgctxt "3IN-sU-3Bg.title"
-msgid "Spelling"
-msgstr "Drejtshkrim"
-
-msgctxt "3Om-Ey-2VK.title"
-msgid "Use Default"
-msgstr "Përdor Parazgjedhjen"
-
-msgctxt "3rS-ZA-NoH.title"
-msgid "Speech"
-msgstr "E folur"
-
-msgctxt "46P-cB-AYj.title"
-msgid "Tighten"
-msgstr ""
-
-msgctxt "4EN-yA-p0u.title"
-msgid "Find"
-msgstr "Gjej"
-
 msgctxt "4J7-dP-txa.title"
 msgid "Enter Full Screen"
 msgstr "Kalo në mënyrën “Sa krejt ekrani”"
@@ -72,10 +36,6 @@ msgctxt "5QF-Oa-p0T.title"
 msgid "Edit"
 msgstr "Përpunoni"
 
-msgctxt "5Vv-lz-BsD.title"
-msgid "Copy Style"
-msgstr "Kopjoji Stilin"
-
 #. Do not change the placeholder ProductName!
 msgctxt "5kV-Vb-QxS.title"
 msgid "About ProductName"
@@ -85,22 +45,6 @@ msgctxt "6dh-zS-Vam.title"
 msgid "Redo"
 msgstr "Ribëje"
 
-msgctxt "78Y-hA-62v.title"
-msgid "Correct Spelling Automatically"
-msgstr "Ndreqe Automatikisht Shkrimin"
-
-msgctxt "8mr-sm-Yjd.title"
-msgid "Writing Direction"
-msgstr "Kah Shkrimi"
-
-msgctxt "9ic-FL-obx.title"
-msgid "Substitutions"
-msgstr "Zëvendësime"
-
-msgctxt "9yt-4B-nSM.title"
-msgid "Smart Copy/Paste"
-msgstr "Kopjo/Ngjite e Mençur"
-
 msgctxt "AYu-sK-qS6.title"
 msgid "Main Menu"
 msgstr "Menuja Kryesore"
@@ -108,10 +52,6 @@ msgstr "Menuja Kryesore"
 msgctxt "BOF-NM-1cW.title"
 msgid "Preferences…"
 msgstr "Parapëlqime…"
-
-msgctxt "BgM-ve-c93.title"
-msgid "\tLeft to Right"
-msgstr "\tNga e Majta në të Djathtë"
 
 msgctxt "Bw7-FT-i3A.title"
 msgid "Save As…"
@@ -121,78 +61,21 @@ msgctxt "DVo-aG-piG.title"
 msgid "Close"
 msgstr "Mbylle"
 
-msgctxt "Dv1-io-Yv7.title"
-msgid "Spelling and Grammar"
-msgstr "Drejtshkrim dhe Gramatikë"
-
 msgctxt "F2S-fz-NVQ.title"
 msgid "Help"
 msgstr "Ndihmë"
-
-#. Do not change the placeholder ProductName!
-msgctxt "FKE-Sm-Kum.title"
-msgid "ProductName Help"
-msgstr "Ndihmë për ProductName"
-
-msgctxt "Fal-I4-PZk.title"
-msgid "Text"
-msgstr "Tekst"
-
-msgctxt "FeM-D8-WVr.title"
-msgid "Substitutions"
-msgstr "Zëvendësime"
-
-msgctxt "GB9-OM-e27.title"
-msgid "Bold"
-msgstr "Të trasha"
-
-msgctxt "GEO-Iw-cKr.title"
-msgid "Format"
-msgstr "Format"
-
-msgctxt "GUa-eO-cwY.title"
-msgid "Use Default"
-msgstr "Përdor Parazgjedhjen"
-
-msgctxt "Gi5-1S-RQB.title"
-msgid "Font"
-msgstr "Shkronja"
-
-msgctxt "H1b-Si-o9J.title"
-msgid "Writing Direction"
-msgstr "Kah Shkrimi"
 
 msgctxt "H8h-7b-M4v.title"
 msgid "View"
 msgstr "Shiheni"
 
-msgctxt "HFQ-gK-NFA.title"
-msgid "Text Replacement"
-msgstr "Zëvendësim Teksti"
-
-msgctxt "HFo-cy-zxI.title"
-msgid "Show Spelling and Grammar"
-msgstr "Shfaq Drejtshkrim dhe Gramatikë"
-
 msgctxt "HyV-fh-RgO.title"
 msgid "View"
 msgstr "Shiheni"
 
-msgctxt "I0S-gh-46l.title"
-msgid "Subscript"
-msgstr "Poshtëshkrim"
-
 msgctxt "IAo-SY-fd9.title"
 msgid "Open…"
 msgstr "Hapni…"
-
-msgctxt "J5U-5w-g23.title"
-msgid "Justify"
-msgstr "Përligje"
-
-msgctxt "J7y-lM-qPV.title"
-msgid "Use None"
-msgstr "Mos Përdor Ndonjë"
 
 msgctxt "KaW-ft-85H.title"
 msgid "Revert to Saved"
@@ -206,102 +89,34 @@ msgctxt "LE2-aR-0XJ.title"
 msgid "Bring All to Front"
 msgstr "Sill Gjithçka Përpara"
 
-msgctxt "LVM-kO-fVI.title"
-msgid "Paste Ruler"
-msgstr ""
-
-msgctxt "Lbh-J2-qVU.title"
-msgid "\tLeft to Right"
-msgstr "\tNga e Majta në të Djathtë"
-
-msgctxt "MkV-Pr-PK5.title"
-msgid "Copy Ruler"
-msgstr ""
-
 msgctxt "NMo-om-nkz.title"
 msgid "Services"
 msgstr "Shërbime"
 
-msgctxt "Nop-cj-93Q.title"
-msgid "\tDefault"
-msgstr "\tParazgjedhje"
-
 msgctxt "OY7-WF-poV.title"
 msgid "Minimize"
 msgstr "Minimizoje"
-
-msgctxt "OaQ-X3-Vso.title"
-msgid "Baseline"
-msgstr ""
 
 #. Do not change the placeholder ProductName!
 msgctxt "Olw-nP-bQN.title"
 msgid "Hide ProductName"
 msgstr "Fshihe ProductName"
 
-msgctxt "OwM-mh-QMV.title"
-msgid "Find Previous"
-msgstr "Gjej të Mëparshmen"
-
-msgctxt "Oyz-dy-DGm.title"
-msgid "Stop Speaking"
-msgstr "Ndalni të Folurën"
-
-msgctxt "Ptp-SP-VEL.title"
-msgid "Bigger"
-msgstr ""
-
-msgctxt "Q5e-8K-NDq.title"
-msgid "Show Fonts"
-msgstr "Shfaq Shkronja"
-
 msgctxt "R4o-n2-Eq4.title"
 msgid "Zoom"
 msgstr ""
-
-msgctxt "RB4-Sm-HuC.title"
-msgid "\tRight to Left"
-msgstr "\tNga e Djathta në të Majtë"
-
-msgctxt "Rqc-34-cIF.title"
-msgid "Superscript"
-msgstr "Sipërshkrim"
-
-msgctxt "Ruw-6m-B2m.title"
-msgid "Select All"
-msgstr "Përzgjidhe Krejt"
-
-msgctxt "S0p-oC-mLd.title"
-msgid "Jump to Selection"
-msgstr "Hidhu te Përzgjedhja"
 
 msgctxt "Td7-aD-5lo.title"
 msgid "Window"
 msgstr "Dritare"
 
-msgctxt "UEZ-Bs-lqG.title"
-msgid "Capitalize"
-msgstr "Kaloje në shkronjë të madhe"
-
-msgctxt "VIY-Ag-zcb.title"
-msgid "Center"
-msgstr "Në qendër"
-
 msgctxt "Vdr-fp-XzO.title"
 msgid "Hide Others"
 msgstr "Fshihi të Tjerat"
 
-msgctxt "Vjx-xi-njq.title"
-msgid "Italic"
-msgstr "Të pjerrëta"
-
 msgctxt "W48-6f-4Dl.title"
 msgid "Edit"
 msgstr "Përpunojeni"
-
-msgctxt "WRG-CD-K1S.title"
-msgid "Underline"
-msgstr "Nënvijë"
 
 msgctxt "Was-JA-tGl.title"
 msgid "New"
@@ -311,30 +126,6 @@ msgctxt "WeT-3V-zwk.title"
 msgid "Paste and Match Style"
 msgstr "Ngjite dhe Përputhi Stilin"
 
-msgctxt "Xz5-n4-O0W.title"
-msgid "Find…"
-msgstr "Gjeni…"
-
-msgctxt "YEy-JH-Tfz.title"
-msgid "Find and Replace…"
-msgstr "Gjeni dhe Zëvendësoni…"
-
-msgctxt "YGs-j5-SAR.title"
-msgid "\tDefault"
-msgstr "\tParazgjedhje"
-
-msgctxt "Ynk-f8-cLZ.title"
-msgid "Start Speaking"
-msgstr "Filloni të Folurën"
-
-msgctxt "ZM1-6Q-yy1.title"
-msgid "Align Left"
-msgstr "Vendose Majtas"
-
-msgctxt "ZvO-Gk-QUH.title"
-msgid "Paragraph"
-msgstr "Paragraf"
-
 msgctxt "aTl-1u-JFS.title"
 msgid "Print…"
 msgstr "Shtypni…"
@@ -343,49 +134,9 @@ msgctxt "aUF-d1-5bR.title"
 msgid "Window"
 msgstr "Dritare"
 
-msgctxt "aXa-aM-Jaq.title"
-msgid "Font"
-msgstr "Shkronja"
-
-msgctxt "agt-UL-0e3.title"
-msgid "Use Default"
-msgstr "Përdor Parazgjedhjen"
-
-msgctxt "bgn-CT-cEk.title"
-msgid "Show Colors"
-msgstr "Shfaq Ngjyra"
-
 msgctxt "bib-Uj-vzu.title"
 msgid "File"
 msgstr "Kartelë"
-
-msgctxt "buJ-ug-pKt.title"
-msgid "Use Selection for Find"
-msgstr "Përdor përzgjedhjen për Gjetje"
-
-msgctxt "c8a-y6-VQd.title"
-msgid "Transformations"
-msgstr "Shndërrime"
-
-msgctxt "cDB-IK-hbR.title"
-msgid "Use None"
-msgstr "Mos Përdor Ndonjë"
-
-msgctxt "cqv-fj-IhA.title"
-msgid "Selection"
-msgstr "Përzgjedhje"
-
-msgctxt "cwL-P1-jid.title"
-msgid "Smart Links"
-msgstr "Lidhje të Mençura"
-
-msgctxt "d9M-CD-aMd.title"
-msgid "Make Lower Case"
-msgstr "Kaloje në Shkronja të Vogla"
-
-msgctxt "d9c-me-L2H.title"
-msgid "Text"
-msgstr "Tekst"
 
 msgctxt "dMs-cI-mzQ.title"
 msgid "File"
@@ -399,97 +150,33 @@ msgctxt "gVA-U4-sdL.title"
 msgid "Paste"
 msgstr "Ngjite"
 
-msgctxt "hQb-2v-fYv.title"
-msgid "Smart Quotes"
-msgstr "Thonjëza të Mençura"
-
-msgctxt "hz2-CU-CR7.title"
-msgid "Check Document Now"
-msgstr "Kontrolloje Dokumentin Tani"
-
 msgctxt "hz9-B4-Xy5.title"
 msgid "Services"
 msgstr "Shërbime"
-
-msgctxt "i1d-Er-qST.title"
-msgid "Smaller"
-msgstr ""
-
-msgctxt "ijk-EB-dga.title"
-msgid "Baseline"
-msgstr ""
-
-msgctxt "jBQ-r6-VK2.title"
-msgid "Kern"
-msgstr ""
-
-msgctxt "jFq-tB-4Kx.title"
-msgid "\tRight to Left"
-msgstr "\tNga e Djathta në të Majtë"
-
-msgctxt "jxT-CU-nIS.title"
-msgid "Format"
-msgstr "Format"
 
 msgctxt "kIP-vf-haE.title"
 msgid "Show Sidebar"
 msgstr "Shfaq Anështyllën"
 
-msgctxt "mK6-2p-4JG.title"
-msgid "Check Grammar With Spelling"
-msgstr "Kontrollojini Gramatikën Me Drejtshkrimin"
-
-msgctxt "o6e-r0-MWq.title"
-msgid "Ligatures"
-msgstr "Ligatura"
-
 msgctxt "oas-Oc-fiZ.title"
 msgid "Open Recent"
 msgstr "Hap Një Nga të Rejat"
-
-msgctxt "ogc-rX-tC1.title"
-msgid "Loosen"
-msgstr ""
-
-msgctxt "pa3-QI-u2k.title"
-msgid "Delete"
-msgstr "Fshije"
 
 msgctxt "pxx-59-PXV.title"
 msgid "Save…"
 msgstr "Ruajeni…"
 
-msgctxt "q09-fT-Sye.title"
-msgid "Find Next"
-msgstr "Gjej Pasuesen"
-
 msgctxt "qIS-W8-SiK.title"
 msgid "Page Setup…"
 msgstr "Ujdisje Faqeje…"
-
-msgctxt "rbD-Rh-wIN.title"
-msgid "Check Spelling While Typing"
-msgstr "Kontrolloji Drejtshkrimin Teksa Shtypet"
-
-msgctxt "rgM-f4-ycn.title"
-msgid "Smart Dashes"
-msgstr "Vija Ndarëse të Mençura"
 
 msgctxt "snW-S8-Cw5.title"
 msgid "Show Toolbar"
 msgstr "Shfaq Panelin"
 
-msgctxt "tRr-pd-1PS.title"
-msgid "Data Detectors"
-msgstr "Pikasës të Dhëna"
-
 msgctxt "tXI-mr-wws.title"
 msgid "Open Recent"
 msgstr "Hap Një Nga të Rejat"
-
-msgctxt "tlD-Oa-oAM.title"
-msgid "Kern"
-msgstr ""
 
 #. Do not change the placeholder ProductName!
 msgctxt "uQy-DD-JDr.title"
@@ -504,29 +191,9 @@ msgctxt "vFu-3Y-2xa.title"
 msgid "Window"
 msgstr "Dritare"
 
-msgctxt "vKC-jM-MkH.title"
-msgid "Paste Style"
-msgstr "Stil Ngjitjesh"
-
-msgctxt "vLm-3I-IUL.title"
-msgid "Show Ruler"
-msgstr "Shfaq Vizore"
-
 msgctxt "vNY-rz-j42.title"
 msgid "Clear Menu"
 msgstr "Spastroje Menunë"
-
-msgctxt "vmV-6d-7jI.title"
-msgid "Make Upper Case"
-msgstr "Kaloje në Shkronja të Mëdha"
-
-msgctxt "w0m-vy-SC9.title"
-msgid "Ligatures"
-msgstr "Ligatura"
-
-msgctxt "wb2-vD-lq4.title"
-msgid "Align Right"
-msgstr "Vendose Djathtas"
 
 msgctxt "wpr-3q-Mcd.title"
 msgid "Help"
@@ -535,15 +202,3 @@ msgstr "Ndihmë"
 msgctxt "x3v-GG-iWU.title"
 msgid "Copy"
 msgstr "Kopjoje"
-
-msgctxt "xQD-1f-W4t.title"
-msgid "Use All"
-msgstr "Përdore Krejt"
-
-msgctxt "xrE-MZ-jX0.title"
-msgid "Speech"
-msgstr "E folur"
-
-msgctxt "z6F-FW-3nz.title"
-msgid "Show Substitutions"
-msgstr "Shfaq Zëvendësime"

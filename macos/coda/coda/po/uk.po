@@ -24,42 +24,6 @@ msgctxt "1Xt-HY-uBw.title"
 msgid "ProductName"
 msgstr "ProductName"
 
-msgctxt "1b7-l0-nxx.title"
-msgid "Find"
-msgstr "Знайти"
-
-msgctxt "1tx-W0-xDw.title"
-msgid "Lower"
-msgstr "Нижня"
-
-msgctxt "2h7-ER-AoG.title"
-msgid "Raise"
-msgstr "Підвищити"
-
-msgctxt "2oI-Rn-ZJC.title"
-msgid "Transformations"
-msgstr "Трансформації"
-
-msgctxt "3IN-sU-3Bg.title"
-msgid "Spelling"
-msgstr "Орфографія"
-
-msgctxt "3Om-Ey-2VK.title"
-msgid "Use Default"
-msgstr "Використовувати за замовчуванням"
-
-msgctxt "3rS-ZA-NoH.title"
-msgid "Speech"
-msgstr "Промова"
-
-msgctxt "46P-cB-AYj.title"
-msgid "Tighten"
-msgstr "Затягніть"
-
-msgctxt "4EN-yA-p0u.title"
-msgid "Find"
-msgstr "Знайти"
-
 msgctxt "4J7-dP-txa.title"
 msgid "Enter Full Screen"
 msgstr "Увійти в повноекранний режим"
@@ -73,10 +37,6 @@ msgctxt "5QF-Oa-p0T.title"
 msgid "Edit"
 msgstr "Редагувати"
 
-msgctxt "5Vv-lz-BsD.title"
-msgid "Copy Style"
-msgstr "Стиль копіювання"
-
 #. Do not change the placeholder ProductName!
 msgctxt "5kV-Vb-QxS.title"
 msgid "About ProductName"
@@ -86,22 +46,6 @@ msgctxt "6dh-zS-Vam.title"
 msgid "Redo"
 msgstr "Повторити"
 
-msgctxt "78Y-hA-62v.title"
-msgid "Correct Spelling Automatically"
-msgstr "Автоматичне виправлення орфографії"
-
-msgctxt "8mr-sm-Yjd.title"
-msgid "Writing Direction"
-msgstr "Напрямок написання"
-
-msgctxt "9ic-FL-obx.title"
-msgid "Substitutions"
-msgstr "Заміни"
-
-msgctxt "9yt-4B-nSM.title"
-msgid "Smart Copy/Paste"
-msgstr "Розумне копіювання/вставка"
-
 msgctxt "AYu-sK-qS6.title"
 msgid "Main Menu"
 msgstr "Головне меню"
@@ -109,10 +53,6 @@ msgstr "Головне меню"
 msgctxt "BOF-NM-1cW.title"
 msgid "Preferences…"
 msgstr "Налаштування…"
-
-msgctxt "BgM-ve-c93.title"
-msgid "\tLeft to Right"
-msgstr "\tЗліва направо"
 
 msgctxt "Bw7-FT-i3A.title"
 msgid "Save As…"
@@ -122,78 +62,21 @@ msgctxt "DVo-aG-piG.title"
 msgid "Close"
 msgstr "Закрити"
 
-msgctxt "Dv1-io-Yv7.title"
-msgid "Spelling and Grammar"
-msgstr "Орфографія та граматика"
-
 msgctxt "F2S-fz-NVQ.title"
 msgid "Help"
 msgstr "Допомога"
-
-#. Do not change the placeholder ProductName!
-msgctxt "FKE-Sm-Kum.title"
-msgid "ProductName Help"
-msgstr "Довідка ProductName"
-
-msgctxt "Fal-I4-PZk.title"
-msgid "Text"
-msgstr "Текст"
-
-msgctxt "FeM-D8-WVr.title"
-msgid "Substitutions"
-msgstr "Заміни"
-
-msgctxt "GB9-OM-e27.title"
-msgid "Bold"
-msgstr "Жирний шрифт"
-
-msgctxt "GEO-Iw-cKr.title"
-msgid "Format"
-msgstr "Формат"
-
-msgctxt "GUa-eO-cwY.title"
-msgid "Use Default"
-msgstr "Використовувати усталено"
-
-msgctxt "Gi5-1S-RQB.title"
-msgid "Font"
-msgstr "Шрифт"
-
-msgctxt "H1b-Si-o9J.title"
-msgid "Writing Direction"
-msgstr "Напрямок написання"
 
 msgctxt "H8h-7b-M4v.title"
 msgid "View"
 msgstr "Переглянути"
 
-msgctxt "HFQ-gK-NFA.title"
-msgid "Text Replacement"
-msgstr "Заміна тексту"
-
-msgctxt "HFo-cy-zxI.title"
-msgid "Show Spelling and Grammar"
-msgstr "Показати орфографію та граматику"
-
 msgctxt "HyV-fh-RgO.title"
 msgid "View"
 msgstr "Переглянути"
 
-msgctxt "I0S-gh-46l.title"
-msgid "Subscript"
-msgstr "Підрядковий індекс"
-
 msgctxt "IAo-SY-fd9.title"
 msgid "Open…"
 msgstr "Відкрити…"
-
-msgctxt "J5U-5w-g23.title"
-msgid "Justify"
-msgstr "Вирівнювання"
-
-msgctxt "J7y-lM-qPV.title"
-msgid "Use None"
-msgstr "Не використовувати"
 
 msgctxt "KaW-ft-85H.title"
 msgid "Revert to Saved"
@@ -207,102 +90,34 @@ msgctxt "LE2-aR-0XJ.title"
 msgid "Bring All to Front"
 msgstr "Вивести все на передній план"
 
-msgctxt "LVM-kO-fVI.title"
-msgid "Paste Ruler"
-msgstr "Вставити лінійку"
-
-msgctxt "Lbh-J2-qVU.title"
-msgid "\tLeft to Right"
-msgstr "\tЗліва направо"
-
-msgctxt "MkV-Pr-PK5.title"
-msgid "Copy Ruler"
-msgstr "Копіювати лінійку"
-
 msgctxt "NMo-om-nkz.title"
 msgid "Services"
 msgstr "Служби"
 
-msgctxt "Nop-cj-93Q.title"
-msgid "\tDefault"
-msgstr "\tУсталено"
-
 msgctxt "OY7-WF-poV.title"
 msgid "Minimize"
 msgstr "Згорнути"
-
-msgctxt "OaQ-X3-Vso.title"
-msgid "Baseline"
-msgstr "Базовий рівень"
 
 #. Do not change the placeholder ProductName!
 msgctxt "Olw-nP-bQN.title"
 msgid "Hide ProductName"
 msgstr "Приховати ProductName"
 
-msgctxt "OwM-mh-QMV.title"
-msgid "Find Previous"
-msgstr "Знайти попередній"
-
-msgctxt "Oyz-dy-DGm.title"
-msgid "Stop Speaking"
-msgstr "Припини говорити"
-
-msgctxt "Ptp-SP-VEL.title"
-msgid "Bigger"
-msgstr "Більший"
-
-msgctxt "Q5e-8K-NDq.title"
-msgid "Show Fonts"
-msgstr "Показати шрифти"
-
 msgctxt "R4o-n2-Eq4.title"
 msgid "Zoom"
 msgstr "Збільшити"
-
-msgctxt "RB4-Sm-HuC.title"
-msgid "\tRight to Left"
-msgstr "\tСправа наліво"
-
-msgctxt "Rqc-34-cIF.title"
-msgid "Superscript"
-msgstr "Надрядковий індекс"
-
-msgctxt "Ruw-6m-B2m.title"
-msgid "Select All"
-msgstr "Вибрати все"
-
-msgctxt "S0p-oC-mLd.title"
-msgid "Jump to Selection"
-msgstr "Перейти до виділення"
 
 msgctxt "Td7-aD-5lo.title"
 msgid "Window"
 msgstr "Вікно"
 
-msgctxt "UEZ-Bs-lqG.title"
-msgid "Capitalize"
-msgstr "З великої літери"
-
-msgctxt "VIY-Ag-zcb.title"
-msgid "Center"
-msgstr "Центр"
-
 msgctxt "Vdr-fp-XzO.title"
 msgid "Hide Others"
 msgstr "Приховати інших"
 
-msgctxt "Vjx-xi-njq.title"
-msgid "Italic"
-msgstr "Курсив"
-
 msgctxt "W48-6f-4Dl.title"
 msgid "Edit"
 msgstr "Редагувати"
-
-msgctxt "WRG-CD-K1S.title"
-msgid "Underline"
-msgstr "Підкреслення"
 
 msgctxt "Was-JA-tGl.title"
 msgid "New"
@@ -312,30 +127,6 @@ msgctxt "WeT-3V-zwk.title"
 msgid "Paste and Match Style"
 msgstr "Вставити та наслідувати стиль"
 
-msgctxt "Xz5-n4-O0W.title"
-msgid "Find…"
-msgstr "Знайти…"
-
-msgctxt "YEy-JH-Tfz.title"
-msgid "Find and Replace…"
-msgstr "Знайти та замінити…"
-
-msgctxt "YGs-j5-SAR.title"
-msgid "\tDefault"
-msgstr "\tЗа замовчуванням"
-
-msgctxt "Ynk-f8-cLZ.title"
-msgid "Start Speaking"
-msgstr "Почніть говорити"
-
-msgctxt "ZM1-6Q-yy1.title"
-msgid "Align Left"
-msgstr "Вирівняти за лівим краєм"
-
-msgctxt "ZvO-Gk-QUH.title"
-msgid "Paragraph"
-msgstr "Абзац"
-
 msgctxt "aTl-1u-JFS.title"
 msgid "Print…"
 msgstr "Друк…"
@@ -344,49 +135,9 @@ msgctxt "aUF-d1-5bR.title"
 msgid "Window"
 msgstr "Вікно"
 
-msgctxt "aXa-aM-Jaq.title"
-msgid "Font"
-msgstr "Шрифт"
-
-msgctxt "agt-UL-0e3.title"
-msgid "Use Default"
-msgstr "Використовувати за замовчуванням"
-
-msgctxt "bgn-CT-cEk.title"
-msgid "Show Colors"
-msgstr "Показати кольори"
-
 msgctxt "bib-Uj-vzu.title"
 msgid "File"
 msgstr "Файл"
-
-msgctxt "buJ-ug-pKt.title"
-msgid "Use Selection for Find"
-msgstr "Використати вибір для пошуку"
-
-msgctxt "c8a-y6-VQd.title"
-msgid "Transformations"
-msgstr "Трансформації"
-
-msgctxt "cDB-IK-hbR.title"
-msgid "Use None"
-msgstr "Не використовувати"
-
-msgctxt "cqv-fj-IhA.title"
-msgid "Selection"
-msgstr "Вибір"
-
-msgctxt "cwL-P1-jid.title"
-msgid "Smart Links"
-msgstr "Розумні посилання"
-
-msgctxt "d9M-CD-aMd.title"
-msgid "Make Lower Case"
-msgstr "Зробити нижнім регістром"
-
-msgctxt "d9c-me-L2H.title"
-msgid "Text"
-msgstr "Текст"
 
 msgctxt "dMs-cI-mzQ.title"
 msgid "File"
@@ -400,97 +151,33 @@ msgctxt "gVA-U4-sdL.title"
 msgid "Paste"
 msgstr "Вставити"
 
-msgctxt "hQb-2v-fYv.title"
-msgid "Smart Quotes"
-msgstr "Розумні цитати"
-
-msgctxt "hz2-CU-CR7.title"
-msgid "Check Document Now"
-msgstr "Перевірте документ зараз"
-
 msgctxt "hz9-B4-Xy5.title"
 msgid "Services"
 msgstr "Послуги"
-
-msgctxt "i1d-Er-qST.title"
-msgid "Smaller"
-msgstr "Менший"
-
-msgctxt "ijk-EB-dga.title"
-msgid "Baseline"
-msgstr "Базовий рівень"
-
-msgctxt "jBQ-r6-VK2.title"
-msgid "Kern"
-msgstr "Керн"
-
-msgctxt "jFq-tB-4Kx.title"
-msgid "\tRight to Left"
-msgstr "\tСправа наліво"
-
-msgctxt "jxT-CU-nIS.title"
-msgid "Format"
-msgstr "Формат"
 
 msgctxt "kIP-vf-haE.title"
 msgid "Show Sidebar"
 msgstr "Показати бічну панель"
 
-msgctxt "mK6-2p-4JG.title"
-msgid "Check Grammar With Spelling"
-msgstr "Перевірте граматику та орфографію"
-
-msgctxt "o6e-r0-MWq.title"
-msgid "Ligatures"
-msgstr "Лігатури"
-
 msgctxt "oas-Oc-fiZ.title"
 msgid "Open Recent"
 msgstr "Відкрити Нещодавні"
-
-msgctxt "ogc-rX-tC1.title"
-msgid "Loosen"
-msgstr "Розслабити"
-
-msgctxt "pa3-QI-u2k.title"
-msgid "Delete"
-msgstr "Видалити"
 
 msgctxt "pxx-59-PXV.title"
 msgid "Save…"
 msgstr "Зберегти…"
 
-msgctxt "q09-fT-Sye.title"
-msgid "Find Next"
-msgstr "Знайти далі"
-
 msgctxt "qIS-W8-SiK.title"
 msgid "Page Setup…"
 msgstr "Налаштування сторінки…"
-
-msgctxt "rbD-Rh-wIN.title"
-msgid "Check Spelling While Typing"
-msgstr "Перевірка орфографії під час введення тексту"
-
-msgctxt "rgM-f4-ycn.title"
-msgid "Smart Dashes"
-msgstr "Розумні тире"
 
 msgctxt "snW-S8-Cw5.title"
 msgid "Show Toolbar"
 msgstr "Показати панель інструментів"
 
-msgctxt "tRr-pd-1PS.title"
-msgid "Data Detectors"
-msgstr "Детектори даних"
-
 msgctxt "tXI-mr-wws.title"
 msgid "Open Recent"
 msgstr "Відкрити Нещодавні"
-
-msgctxt "tlD-Oa-oAM.title"
-msgid "Kern"
-msgstr "Керн"
 
 #. Do not change the placeholder ProductName!
 msgctxt "uQy-DD-JDr.title"
@@ -505,29 +192,9 @@ msgctxt "vFu-3Y-2xa.title"
 msgid "Window"
 msgstr "Вікно"
 
-msgctxt "vKC-jM-MkH.title"
-msgid "Paste Style"
-msgstr "Вставити стиль"
-
-msgctxt "vLm-3I-IUL.title"
-msgid "Show Ruler"
-msgstr "Показати лінійку"
-
 msgctxt "vNY-rz-j42.title"
 msgid "Clear Menu"
 msgstr "Очистити меню"
-
-msgctxt "vmV-6d-7jI.title"
-msgid "Make Upper Case"
-msgstr "Зробити великим регістром"
-
-msgctxt "w0m-vy-SC9.title"
-msgid "Ligatures"
-msgstr "Лігатури"
-
-msgctxt "wb2-vD-lq4.title"
-msgid "Align Right"
-msgstr "Вирівняти по правому краю"
 
 msgctxt "wpr-3q-Mcd.title"
 msgid "Help"
@@ -536,15 +203,3 @@ msgstr "Допомога"
 msgctxt "x3v-GG-iWU.title"
 msgid "Copy"
 msgstr "Копіювати"
-
-msgctxt "xQD-1f-W4t.title"
-msgid "Use All"
-msgstr "Використати все"
-
-msgctxt "xrE-MZ-jX0.title"
-msgid "Speech"
-msgstr "Промова"
-
-msgctxt "z6F-FW-3nz.title"
-msgid "Show Substitutions"
-msgstr "Показати заміни"
