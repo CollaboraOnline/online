@@ -8,11 +8,11 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Debug tools', function() {
 	});
 
 	it('Enter and exit debug mode', function() {
-		cy.cGet('.leaflet-control-layers.leaflet-control-layers-expanded.leaflet-control').should('not.exist');
+		cy.cGet('#debug-panel').should('not.exist');
 		helper.typeIntoDocument('{ctrl}{alt}{shift}D');
-		cy.cGet('.leaflet-control-layers.leaflet-control-layers-expanded.leaflet-control').should('be.visible');
+		cy.cGet('#debug-panel').should('be.visible');
 		helper.typeIntoDocument('{ctrl}{alt}{shift}D');
-		cy.cGet('.leaflet-control-layers.leaflet-control-layers-expanded.leaflet-control').should('not.exist');
+		cy.cGet('#debug-panel').should('not.exist');
 	});
 
 });

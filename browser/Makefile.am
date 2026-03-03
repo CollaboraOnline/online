@@ -413,7 +413,6 @@ COOL_JS_LST =\
 	src/layer/marker/ProgressOverlay.js \
 	src/layer/marker/TextInput.js \
 	src/layer/marker/A11yTextInput.js \
-	src/layer/LayerGroup.js \
 	src/geometry/LineUtil.js \
 	src/core/Handler.js \
 	src/dom/DomEvent.js \
@@ -551,7 +550,6 @@ COOL_JS_LST =\
 	$(icons_js) \
 	src/control/Control.BackstageView.ts \
 	src/control/Control.ContextToolbar.ts \
-	src/control/Control.Layers.js \
 	src/control/Control.SidebarBase.ts \
 	src/control/Control.Sidebar.ts \
 	src/control/Notebookbar.ImpressAnimationTab.ts \
