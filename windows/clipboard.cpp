@@ -347,12 +347,8 @@ static std::vector<formatAndData> get_current_clipboard_contents(const std::set<
     return result;
 }
 
-static void drop(int argc, char** argv)
+static void keep(const std::vector<formatAndData>& oldData)
 {
-    const auto toDrop = parse_present_format_list(argv[0]);
-
-    const auto oldData = get_current_clipboard_contents({}, toDrop);
-
     EmptyClipboard();
 
     for (const auto i : oldData)
@@ -372,29 +368,22 @@ static void drop(int argc, char** argv)
     }
 }
 
+static void drop(int argc, char** argv)
+{
+    const auto toDrop = parse_present_format_list(argv[0]);
+
+    const auto oldData = get_current_clipboard_contents({}, toDrop);
+
+    keep(oldData);
+}
+
 static void keep(int argc, char** argv)
 {
     const auto toKeep = parse_present_format_list(argv[0]);
 
     const auto oldData = get_current_clipboard_contents(toKeep, {});
 
-    EmptyClipboard();
-
-    for (const auto i : oldData)
-    {
-        if (format_has_handle(i.format))
-        {
-            SetClipboardData(i.format, i.handle);
-        }
-        else
-        {
-            HANDLE handle = GlobalAlloc(GMEM_MOVEABLE, i.data.size());
-            char* p = (char*)GlobalLock(handle);
-            memcpy(p, i.data.data(), i.data.size());
-            GlobalUnlock(handle);
-            SetClipboardData(i.format, handle);
-        }
-    }
+    keep(oldData);
 }
 
 int main(int argc, char** argv)
