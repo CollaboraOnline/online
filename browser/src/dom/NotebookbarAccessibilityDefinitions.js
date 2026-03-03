@@ -158,10 +158,11 @@ var NotebookbarAccessibilityDefinitions = function() {
 			if (!element)
 			{
 				const button = document.querySelector('[modelid="'+ toolOption.id + '"] .unobutton');
-				toolOption.id = button ? button.id : toolOption.id + '-button';
+				toolOption.id = button && button.checkVisibility() ? button.id : toolOption.id + '-button';
 			}
-			else
+			else if (element.checkVisibility()) {
 				toolOption.id += '-button';
+			}
 
 			selectedDefinitions[toolOption.id] = {
 				focusBack : toolOption.accessibility.focusBack,
