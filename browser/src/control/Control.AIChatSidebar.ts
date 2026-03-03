@@ -90,6 +90,7 @@ namespace cool {
 				'aichat-dock-wrapper',
 			) as HTMLElement;
 			this.createBuilder();
+			this.setupCellRefNavigation();
 			this.registerChatHandlers();
 		}
 
@@ -592,6 +593,12 @@ namespace cool {
 					text: _('Diagnose formula error'),
 					enabled: true,
 				});
+				cardChildren.push({
+					id: 'aichat-chip-sanity-check',
+					type: 'pushbutton',
+					text: _('Sanity check data'),
+					enabled: true,
+				});
 			}
 
 			const cardsToShow = this.showAllCards
@@ -638,6 +645,7 @@ namespace cool {
 						app.socket.sendMessage('aichatcancel: ' + this.currentRequestId);
 						this.isProcessing = false;
 						this.currentRequestId = '';
+						this.hintText = '';
 						this.updateChatState();
 					} else {
 						this.sendMessage();
@@ -646,6 +654,7 @@ namespace cool {
 				'aichat-close-btn': () => this.hide(),
 				'aichat-clear-btn': () => this.clearConversation(),
 				'aichat-chip-formula-diagnosis': () => this.diagnoseFormulaError(),
+				'aichat-chip-sanity-check': () => this.sanityCheckData(),
 				'aichat-see-more': () => {
 					this.showAllCards = !this.showAllCards;
 					this.updateMessagesArea();
@@ -835,10 +844,13 @@ namespace cool {
 			let userContent = text;
 			if (selectedText) {
 				userContent =
-					'[Selected text from document:\n```\n' +
-					selectedText +
-					'\n```]\n\n' +
-					text;
+					'[Selected text from document:\n```\n' + selectedText + '\n```]\n\n';
+
+				if (app.map.getDocType() === 'spreadsheet') {
+					userContent += this.getCellReferenceInstructions() + '\n\n';
+				}
+
+				userContent += text;
 			}
 
 			return {
@@ -866,6 +878,7 @@ namespace cool {
 			const payload = JSON.stringify({
 				messages: this.buildApiMessages(),
 				requestId: this.currentRequestId,
+				docType: app.map.getDocType(),
 			});
 			app.socket.sendMessage('aichat: ' + payload);
 			this.startRequestTimeout(
@@ -910,6 +923,7 @@ namespace cool {
 			if (data.requestId !== this.currentRequestId) return;
 
 			this.isProcessing = false;
+			this.hintText = '';
 
 			if (data.success) {
 				this.messages.push(buildSuccessMsg(data));
@@ -1188,6 +1202,18 @@ namespace cool {
 					'</p>';
 			}
 
+			// Convert cell:// links to clickable spans before sanitization
+			// Handles <a href="cell://A1">A1</a> produced by marked from [A1](cell://A1)
+			html = html.replace(
+				/<a\s+href="cell:\/\/([A-Z]{1,3}\d{1,7})"[^>]*>([^<]*)<\/a>/gi,
+				(_, addr, label) =>
+					'<span class="aichat-cell-ref" data-cell="' +
+					addr.toUpperCase() +
+					'" role="link" tabindex="0">' +
+					label +
+					'</span>',
+			);
+
 			// Autolink bare URLs
 			if (typeof Autolinker !== 'undefined') {
 				html = Autolinker.link(html);
@@ -1366,6 +1392,144 @@ namespace cool {
 				}
 			}
 			return result;
+		}
+
+		private setupCellRefNavigation(): void {
+			const handleCellRef = (target: HTMLElement) => {
+				const cellAddr = target.getAttribute('data-cell');
+				if (cellAddr) {
+					this.navigateToCell(cellAddr);
+				}
+			};
+
+			this.container.addEventListener('click', (e: MouseEvent) => {
+				const target = (e.target as HTMLElement).closest(
+					'.aichat-cell-ref',
+				) as HTMLElement | null;
+				if (target) {
+					e.preventDefault();
+					handleCellRef(target);
+				}
+			});
+
+			this.container.addEventListener('keydown', (e: KeyboardEvent) => {
+				if (e.key !== 'Enter' && e.key !== ' ') return;
+				const target = e.target as HTMLElement;
+				if (target && target.classList.contains('aichat-cell-ref')) {
+					e.preventDefault();
+					handleCellRef(target);
+				}
+			});
+		}
+
+		private navigateToCell(cellAddress: string): void {
+			// Use the Name Box (address input, windowId -4) to navigate
+			const msg = JSON.stringify({
+				id: 'pos_window',
+				cmd: 'change',
+				data: cellAddress,
+				type: 'combobox',
+			});
+			app.socket.sendMessage('dialogevent -4 ' + msg);
+		}
+
+		private async sanityCheckData(): Promise<void> {
+			if (this.isProcessing) return;
+
+			if (!TextSelections.isActive()) {
+				this.hintText = _('Select the data you want to sanity-check first.');
+				this.updateHint();
+				return;
+			}
+
+			this.hintText = _('Analyzing selected data...');
+			this.updateHint();
+
+			let markdown: string;
+			try {
+				markdown = await this.fetchSelectedMarkdown();
+			} catch (e: any) {
+				if (e?.message === 'complexselection') {
+					this.hintText = _(
+						'The selection contains images or other non-text content that cannot be sent as context.',
+					);
+				} else {
+					this.hintText = _('Failed to extract spreadsheet data.');
+				}
+				this.updateHint();
+				return;
+			}
+
+			if (!markdown || !markdown.trim()) {
+				this.hintText = _('No data found in selection.');
+				this.updateHint();
+				return;
+			}
+
+			const prompt = this.buildSanityCheckPrompt();
+			const content =
+				'[Selected text from document:\n```\n' +
+				markdown +
+				'\n```]\n\n' +
+				prompt;
+			this.messages.push({
+				role: 'user',
+				content: content,
+				displayContent: prompt,
+				selectedText: markdown,
+				timestamp: Date.now(),
+			});
+			this.inputText = '';
+			this.hintText = '';
+			this.isProcessing = true;
+			this.updateChatState(true);
+			this.updateHint();
+			this.dispatchRequest();
+		}
+
+		private getCellReferenceInstructions(): string {
+			let instructions = '';
+			instructions +=
+				_(
+					'Read row numbers from the "Row" column — do not count or estimate row positions.',
+				) + ' ';
+			instructions +=
+				_(
+					"To identify a cell's column, match the value to the column letter in the header row — do not guess.",
+				) + ' ';
+			instructions +=
+				_(
+					'Reference a cell by combining its column header with the row number (e.g., CL + row 1008 = CL1008).',
+				) + ' ';
+			instructions += _(
+				'When referencing specific cells, format each cell as a clickable link: [CL1008](cell://CL1008).',
+			);
+			return instructions;
+		}
+
+		private buildSanityCheckPrompt(): string {
+			let prompt = _('Sanity check the following spreadsheet data.') + '\n\n';
+			prompt += _('Please analyze this data for:') + '\n';
+			prompt +=
+				'1. ' +
+				_(
+					"Benford's Law violations — check if leading digit distribution of numeric values deviates significantly from the expected distribution, which may suggest data manipulation.",
+				) +
+				'\n';
+			prompt +=
+				'2. ' +
+				_(
+					'Statistical outliers — identify values that deviate significantly from their column or group.',
+				) +
+				'\n';
+			prompt +=
+				'3. ' +
+				_(
+					'General anomalies — suspicious patterns, unexpected duplicates, inconsistencies, or formatting issues.',
+				) +
+				'\n\n';
+			prompt += this.getCellReferenceInstructions();
+			return prompt;
 		}
 
 		private generateRequestId(): string {
