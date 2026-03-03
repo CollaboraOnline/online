@@ -279,7 +279,10 @@ class AboutDialog {
 
 		text = text.replace(/\u00A0/g, ' ');
 
-		if (navigator.clipboard && window.isSecureContext) {
+		if ((window as any).ThisIsTheQtApp) {
+			(window as any).postMobileMessage('TEXTCLIPBOARD ' + text);
+			this.contentHasBeenCopiedShowSnackbar();
+		} else if (navigator.clipboard && window.isSecureContext) {
 			navigator.clipboard
 				.writeText(text)
 				.then(
