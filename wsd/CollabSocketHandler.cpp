@@ -81,13 +81,9 @@ void CollabSocketHandler::startValidation()
     sendTextMessage("progress: validating");
 
     // Build the WOPI URL with access_token
-    std::string wopiUrl = _wopiSrc;
-    if (wopiUrl.find('?') == std::string::npos)
-        wopiUrl += "?access_token=" + _accessToken;
-    else
-        wopiUrl += "&access_token=" + _accessToken;
-
-    const Poco::URI wopiUri = RequestDetails::sanitizeURI(wopiUrl);
+    Poco::URI wopiUrl(_wopiSrc);
+    wopiUrl.addQueryParameter("access_token", _accessToken);
+    const Poco::URI wopiUri = RequestDetails::sanitizeURI(wopiUrl.toString());
     LOG_INF("Collab: starting CheckFileInfo validation for: "
             << COOLWSD::anonymizeUrl(wopiUri.toString()));
 
