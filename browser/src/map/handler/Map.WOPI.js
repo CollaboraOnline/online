@@ -550,6 +550,7 @@ window.L.Map.WOPI = window.L.Handler.extend({
 
 		if (msg.MessageId === 'Grab_Focus') {
 			app.idleHandler._activate();
+			app.map.focus();
 			return;
 		}
 
