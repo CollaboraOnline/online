@@ -20,6 +20,12 @@ SUBDIRS = macos browser
 else
 if ENABLE_QTAPP
 SUBDIRS = qt browser
+
+if ENABLE_QTAPP_TESTS
+check-qtapp:
+	$(MAKE) $(AM_MAKEFLAGS) -C qt check-qtapp
+endif ENABLE_QTAPP_TESTS
+
 else
 if ENABLE_WASM
 SUBDIRS = wasm browser
