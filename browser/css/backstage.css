@@ -321,7 +321,6 @@
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	min-height: 200px;
 	max-width: 10rem;
 }
 
@@ -339,7 +338,6 @@
 	align-items: end;
 	background: transparent;
 	flex: 1;
-	min-height: 120px;
 }
 
 .template-thumbnail img {
