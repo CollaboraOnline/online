@@ -176,7 +176,6 @@
 /src/map/Map.js
 /src/UNO/Key.js
 /js/global.js
-/js/ResizeObserverPolyfill.js
 /admin/src/AdminClusterOverview.js
 /admin/src/AdminClusterOverviewAbout.js
 /admin/src/AdminSocketAnalytics.js

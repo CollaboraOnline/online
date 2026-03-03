@@ -259,7 +259,6 @@ NODE_MODULES_JS =\
 	node_modules/gl-matrix/gl-matrix-min.js
 
 COOL_LIBS_JS =\
-	ResizeObserverPolyfill.js \
 	Autolinker.js \
 	sanitize-url.js
 
