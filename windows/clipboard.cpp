@@ -115,6 +115,7 @@ static UINT match_cf_name(const std::string& s)
     CASE(TIFF);
     CASE(UNICODETEXT);
     CASE(WAVE);
+#undef CASE
 
     return 0;
 }
