@@ -297,8 +297,13 @@ bool haveCorrectCapabilities()
 #else
 bool haveCorrectCapabilities()
 {
+#if defined(MACOS)
+    // No capability infrastructure on macOS, jailing works differently.
+    return true;
+#else
     // chroot() can only be called by root
     return getuid() == 0;
+#endif
 }
 #endif // HAVE_LIBCAP
 
