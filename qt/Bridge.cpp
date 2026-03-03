@@ -561,6 +561,11 @@ QVariant Bridge::cool(const QString& messageStr)
             }
         });
     }
+    else if (message.starts_with("TEXTCLIPBOARD "))
+    {
+        QString text = QString::fromStdString(message.substr(14));
+        QApplication::clipboard()->setText(text);
+    }
     else if (message == "COPY")
     {
         // Forward to Kit; clipboardchanged: response will trigger getClipboard() in send2JS.
