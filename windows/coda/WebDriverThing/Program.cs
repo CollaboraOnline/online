@@ -23,8 +23,7 @@ namespace WebDriverThing
     {
         static void fatal(string message)
         {
-            Console.WriteLine(message);
-            System.Environment.Exit(1);
+            throw new Exception(message);
         }
 
         static EdgeDriver connectToWebView2()
@@ -166,22 +165,41 @@ namespace WebDriverThing
             if (editButton == null)
                 fatal("No mobile-edit-button");
 
-            Thread.Sleep(5000);
+            Thread.Sleep(1000);
             editButton.Click();
 
             // Paste text from clipboard with shortcut
             RunOnSTA(() => Clipboard.SetText("hello"));
             new Actions(driver).KeyDown(Keys.Control).SendKeys("v").KeyUp(Keys.Control).Perform();
 
+            Thread.Sleep(500);
+            new Actions(driver).SendKeys(Keys.Enter).Perform();
+
+            RunOnSTA(() => Clipboard.SetText("tööt"));
+            Thread.Sleep(500);
+            new Actions(driver).KeyDown(Keys.Control).SendKeys("v").KeyUp(Keys.Control).Perform();
+
+            Thread.Sleep(500);
+            new Actions(driver).SendKeys(Keys.Enter).Perform();
+
+            Thread.Sleep(500);
+            new Actions(driver).SendKeys("Third paragraph").Perform();
+
+            // Next paste an image into the document
+            byte[] imageData = File.ReadAllBytes(topDir + @"\cypress_test\data\desktop\writer\image_to_insert.png");
+            RunOnSTA(() => Clipboard.SetData("PNG", new MemoryStream(imageData)));
+            Thread.Sleep(500);
+            new Actions(driver).KeyDown(Keys.Control).SendKeys("v").KeyUp(Keys.Control).Perform();
+
             // Save the document
-            Thread.Sleep(1000);
+            Thread.Sleep(500);
             new Actions(driver).KeyDown(Keys.Control).SendKeys("s").KeyUp(Keys.Control).Perform();
 
             // Close the document (and app) using Control+W
-            Thread.Sleep(1000);
+            Thread.Sleep(500);
             new Actions(driver).KeyDown(Keys.Control).SendKeys("w").KeyUp(Keys.Control).Perform();
 
-            Thread.Sleep(1000);
+            Thread.Sleep(500);
             driver.Quit();
 
             coda.WaitForExit();
@@ -193,21 +211,41 @@ namespace WebDriverThing
             var ms = new MemoryStream();
             contentStream.CopyTo(ms);
 
-            stream.Close();
-            File.Delete(docCopy);
-
             byte[] content = ms.ToArray();
             var s = Encoding.UTF8.GetString(content);
 
             var doc = XDocument.Parse(s);
             XNamespace office = "urn:oasis:names:tc:opendocument:xmlns:office:1.0";
             XNamespace text = "urn:oasis:names:tc:opendocument:xmlns:text:1.0";
+            XNamespace draw = "urn:oasis:names:tc:opendocument:xmlns:drawing:1.0";
+            XNamespace xlink = "http://www.w3.org/1999/xlink";
             var paragraphs = doc.Descendants(text + "p");
-            if (paragraphs.Count() == 0)
-                fatal("No paragraphs?");
-            else if (paragraphs.Count() > 1)
-                fatal("More than one paragraph");
-            if (paragraphs.First().Value != "hello")
+            if (paragraphs.Count() != 3)
+                fatal("Unexpected number of paragraphs: " + paragraphs.Count());
+            if (paragraphs.ElementAt(0).Value != "Hello")
+                fatal("Unexpected paragraph 0");
+            if (paragraphs.ElementAt(1).Value != "tööt")
+                fatal("Unexpected paragraph 1");
+            if (paragraphs.ElementAt(2).Value != "Third paragraph")
+                fatal("Unexpected paragraph 2");
+
+            var images = doc.Descendants(draw + "image");
+            if (images.Count() != 1)
+                fatal("Unexpected number of images: " + images.Count());
+
+            var imagePath = images.ElementAt(0).Attribute(xlink + "href").Value;
+            var imageStream = archive.GetEntry(imagePath).Open();
+            byte[] documentImageData;
+            ms = new MemoryStream();
+            imageStream.CopyTo(ms);
+            documentImageData = ms.ToArray();
+#if false
+            // It seems that pasting a PNG changes at least its metadata, go figure. So don't bother
+            // attempting to verify that it is the same image.
+            etc...
+#endif
+            stream.Close();
+            File.Delete(docCopy);
 
             Console.WriteLine("OK");
         }
