@@ -58,13 +58,9 @@ void CollabFileProxy::handleRequest(std::istream& message,
     }
 
     // Build the WOPI URI with access_token
-    std::string wopiUrl = _wopiSrc;
-    if (wopiUrl.find('?') == std::string::npos)
-        wopiUrl += "?access_token=" + _accessToken;
-    else
-        wopiUrl += "&access_token=" + _accessToken;
-
-    const Poco::URI uriPublic = RequestDetails::sanitizeURI(wopiUrl);
+    Poco::URI wopiUri(_wopiSrc);
+    wopiUri.addQueryParameter("access_token", _accessToken);
+    const Poco::URI uriPublic = RequestDetails::sanitizeURI(wopiUri.toString());
 
     // Validate storage type
     const StorageBase::StorageType storageType =
@@ -110,14 +106,10 @@ void CollabFileProxy::handleFetchRequest(const std::string& streamUrl,
         return;
     }
 
-    // Parse the stream URL and add access token
-    std::string fetchUrl = streamUrl;
-    if (fetchUrl.find('?') == std::string::npos)
-        fetchUrl += "?access_token=" + _accessToken;
-    else
-        fetchUrl += "&access_token=" + _accessToken;
-
-    Poco::URI uri(fetchUrl);
+    // Parse the stream URL and add access token; the URL may already
+    // contain query parameters, so use Poco::URI to add it properly.
+    Poco::URI uri(streamUrl);
+    uri.addQueryParameter("access_token", _accessToken);
 
     // Transfer to poll and start download directly (bypassing CheckFileInfo)
     disposition.setTransfer(*poll,
@@ -149,14 +141,10 @@ void CollabFileProxy::handleUploadRequest(const std::string& targetUrl, std::ist
     // Read the POST body
     _uploadBody = std::string(std::istreambuf_iterator<char>(message), {});
 
-    // Parse the target URL and add access token
-    std::string uploadUrl = targetUrl;
-    if (uploadUrl.find('?') == std::string::npos)
-        uploadUrl += "?access_token=" + _accessToken;
-    else
-        uploadUrl += "&access_token=" + _accessToken;
-
-    Poco::URI uri(uploadUrl);
+    // Parse the target URL and add access token; the URL may already
+    // contain query parameters, so use Poco::URI to add it properly.
+    Poco::URI uri(targetUrl);
+    uri.addQueryParameter("access_token", _accessToken);
 
     // Transfer to poll and start upload directly (bypassing CheckFileInfo)
     disposition.setTransfer(*poll,
@@ -214,13 +202,9 @@ void CollabFileProxy::handleDirectRequest(std::istream& message,
     }
 
     // Build WOPI URL with access token
-    std::string wopiUrl = _wopiSrc;
-    if (wopiUrl.find('?') == std::string::npos)
-        wopiUrl += "?access_token=" + _accessToken;
-    else
-        wopiUrl += "&access_token=" + _accessToken;
-
-    const Poco::URI baseUri = RequestDetails::sanitizeURI(wopiUrl);
+    Poco::URI wopiUri(_wopiSrc);
+    wopiUri.addQueryParameter("access_token", _accessToken);
+    const Poco::URI baseUri = RequestDetails::sanitizeURI(wopiUri.toString());
 
     // Transfer to poll and execute
     disposition.setTransfer(*poll,
