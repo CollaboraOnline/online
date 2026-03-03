@@ -961,7 +961,7 @@ std::shared_ptr<ChildProcess> getNewChild_Blocks(const std::shared_ptr<SocketPol
 #else // MOBILEAPP
     const auto timeout = std::chrono::hours(100);
 
-#if defined(IOS) || defined(QTAPP) || defined(MACOS) || defined(_WIN32)
+#if MOBILEAPP
     assert(mobileAppDocId > 0 && "Unexpected to have no mobileAppDocId in the mobile build");
 #endif
 
@@ -1243,6 +1243,7 @@ void COOLWSD::requestTerminateSpareKits()
     }
 }
 
+#ifdef __linux__
 // Due to the possibility of enterMountingNS failing at an intermediate stage
 // after entering a usernamespace, but unable to enter a useful mounting namespace
 // do a test mount in another separate child whose failure don't affect the parent
@@ -1293,8 +1294,9 @@ bool COOLWSD::testMountingNSInFork()
     LOG_DBG("testMountingNSInFork status: " << std::hex << status << std::dec);
     return status == 1;
 }
+#endif // __linux__
 
-void COOLWSD::setupChildRoot(const bool UseMountNamespaces)
+void COOLWSD::setupChildRoot([[maybe_unused]] const bool UseMountNamespaces)
 {
     JailUtil::disableBindMounting(); // Default to assume failure
     JailUtil::disableMountNamespaces();
@@ -1313,6 +1315,7 @@ void COOLWSD::setupChildRoot(const bool UseMountNamespaces)
         // Do the setup in a fork so we have no other threads running which
         // disrupt creation of linux namespaces
 
+#ifdef __linux__
         if (UseMountNamespaces)
         {
             // setupChildRoot does a test bind mount + umount to see if that fully works
@@ -1329,6 +1332,7 @@ void COOLWSD::setupChildRoot(const bool UseMountNamespaces)
             else
                 LOG_ERR("creating usernamespace for mount user failed.");
         }
+#endif // __linux__
 
         // Setup the jails.
         JailUtil::cleanupJails(CleanupChildRoot);
@@ -3719,8 +3723,10 @@ void COOLWSD::innerMain()
     remoteConfigThread->start();
 #endif
 
-#if !defined(IOS) && !defined(MACOS) && !defined(_WIN32) && !defined(QTAPP)
+#if !(MOBILEAPP && (defined(IOS) || defined(MACOS) || defined(_WIN32) || defined(QTAPP)))
     // Force a uniform UTF-8 locale for ourselves & our children.
+    // CODA apps (IOS, MACOS, _WIN32, QTAPP) handle locale themselves,
+    // but Android, WASM, and server builds need this.
     char* locale = std::setlocale(LC_ALL, "C.UTF-8");
     if (!locale)
     {
@@ -3735,7 +3741,7 @@ void COOLWSD::innerMain()
         LOG_INF("Locale is set to " << std::string(locale));
         ::setenv("LC_ALL", locale, 1);
     }
-#endif // !IOS && !MACOS && !_WIN32 && !QTAPP
+#endif
 
 #if !MOBILEAPP
     // We use the same option set for both parent and child coolwsd,
