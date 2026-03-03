@@ -8,18 +8,21 @@
 // information.
 
 // To build, in a Visual Studio 2022 x64 native tools command prompt:
-// cl.exe -std:c++23preview -MD clipboard.cpp user32.lib
+// cl.exe -std:c++23preview -EHsc -MD clipboard.cpp user32.lib
 
 #include <fcntl.h>
 #include <io.h>
 
 #include <cerrno>
 #include <cstdlib>
+#include <cstdint>
 #include <iomanip>
 #include <iostream>
+#include <iterator>
 #include <vector>
 #include <ranges>
 #include <set>
+#include <streambuf>
 #include <string>
 #include <string_view>
 
@@ -84,15 +87,49 @@ static std::wstring get_clipboard_format_name(UINT format)
     }
 }
 
+static UINT match_cf_name(const std::string& s)
+{
+#define CASE(x)                                                                                    \
+    if (s == "CF_"#x)                                                                              \
+        return CF_##x;
+
+    CASE(BITMAP);
+    CASE(DIB);
+    CASE(DIBV5);
+    CASE(DIF);
+    CASE(DSPBITMAP);
+    CASE(DSPENHMETAFILE);
+    CASE(DSPMETAFILEPICT);
+    CASE(DSPTEXT);
+    CASE(ENHMETAFILE);
+    CASE(HDROP);
+    CASE(LOCALE);
+    CASE(METAFILEPICT);
+    CASE(OEMTEXT);
+    CASE(OWNERDISPLAY);
+    CASE(PALETTE);
+    CASE(PENDATA);
+    CASE(RIFF);
+    CASE(SYLK);
+    CASE(TEXT);
+    CASE(TIFF);
+    CASE(UNICODETEXT);
+    CASE(WAVE);
+
+    return 0;
+}
+
 static void help()
 {
     std::cout << R"(Usage:
 clipboard help                  -- show this text
 clipboard list                  -- list formats on the clipboard
+clipboard load fmt1,fmt2,...    -- load formats from stdin
 clipboard dump fmt              -- output data for a format to stdout
 clipboard show fmt              -- show data for a format as hex dump
 clipboard drop fmt1,fmt2,...    -- drop a set of formats from the clipboard
 clipboard keep fmt1,fmt2,...    -- keep only a set of formats on the clipboard
+clipboard empty                 -- empty the clipboard
 )";
 }
 
@@ -112,7 +149,7 @@ static void list()
     }
 }
 
-static UINT parse_format(const std::string& s)
+static UINT parse_present_format(const std::string& s)
 {
     errno = 0;
     char* end = nullptr;
@@ -136,7 +173,27 @@ static UINT parse_format(const std::string& s)
         return (UINT)format;
 }
 
-static std::set<UINT> parse_format_list(const std::string& s)
+static UINT parse_any_format(const std::string& s)
+{
+    errno = 0;
+    char* end = nullptr;
+    auto format = std::strtoul(s.c_str(), &end, 10);
+    if (errno == ERANGE || format == 0)
+    {
+        format = match_cf_name(s);
+        if (format != 0)
+            return format;
+        return RegisterClipboardFormatA(s.c_str());
+    }
+    else if (format > UINT32_MAX)
+    {
+        return 0;
+    }
+    else
+        return (UINT)format;
+}
+
+static std::set<UINT> parse_present_format_list(const std::string& s)
 {
     constexpr auto delim{ ","sv };
     std::set<UINT> result;
@@ -144,7 +201,7 @@ static std::set<UINT> parse_format_list(const std::string& s)
     for (const auto word : std::views::split(s, delim))
     {
         auto sv = std::string_view(word);
-        auto format = parse_format(std::string(sv));
+        auto format = parse_present_format(std::string(sv));
         if (format != 0)
             result.insert(format);
     }
@@ -152,9 +209,43 @@ static std::set<UINT> parse_format_list(const std::string& s)
     return result;
 }
 
+static std::set<UINT> parse_any_format_list(const std::string& s)
+{
+    constexpr auto delim{ ","sv };
+    std::set<UINT> result;
+
+    for (const auto word : std::views::split(s, delim))
+    {
+        auto sv = std::string_view(word);
+        auto format = parse_any_format(std::string(sv));
+        if (format != 0)
+            result.insert(format);
+    }
+
+    return result;
+}
+
+static void load(int argc, char** argv)
+{
+    _setmode(_fileno(stdin), _O_BINARY);
+    std::vector<uint8_t> stdinContents(std::istreambuf_iterator<char>(std::cin.rdbuf()),
+                                       std::istreambuf_iterator<char>());
+
+    const auto toLoad = parse_any_format_list(argv[0]);
+
+    for (const auto i : toLoad)
+    {
+        HANDLE handle = GlobalAlloc(GMEM_MOVEABLE, stdinContents.size());
+        char* p = (char*)GlobalLock(handle);
+        memcpy(p, stdinContents.data(), stdinContents.size());
+        GlobalUnlock(handle);
+        SetClipboardData(i, handle);
+    }
+}
+
 static void dump(int argc, char** argv)
 {
-    UINT format = parse_format(argv[0]);
+    UINT format = parse_present_format(argv[0]);
 
     if (format == 0 || !IsClipboardFormatAvailable(format))
         return;
@@ -178,7 +269,7 @@ static void dump(int argc, char** argv)
 
 static void show(int argc, char** argv)
 {
-    UINT format = parse_format(argv[0]);
+    UINT format = parse_present_format(argv[0]);
 
     if (format == 0 || !IsClipboardFormatAvailable(format))
         return;
@@ -258,7 +349,7 @@ static std::vector<formatAndData> get_current_clipboard_contents(const std::set<
 
 static void drop(int argc, char** argv)
 {
-    const auto toDrop = parse_format_list(argv[0]);
+    const auto toDrop = parse_present_format_list(argv[0]);
 
     const auto oldData = get_current_clipboard_contents({}, toDrop);
 
@@ -283,7 +374,7 @@ static void drop(int argc, char** argv)
 
 static void keep(int argc, char** argv)
 {
-    const auto toKeep = parse_format_list(argv[0]);
+    const auto toKeep = parse_present_format_list(argv[0]);
 
     const auto oldData = get_current_clipboard_contents(toKeep, {});
 
@@ -326,6 +417,8 @@ int main(int argc, char** argv)
             help();
         else if (verb == "list")
             list();
+        else if (verb == "load")
+            load(argc - 2, argv + 2);
         else if (verb == "dump")
             dump(argc - 2, argv + 2);
         else if (verb == "show")
@@ -334,6 +427,8 @@ int main(int argc, char** argv)
             drop(argc - 2, argv + 2);
         else if (verb == "keep")
             keep(argc - 2, argv + 2);
+        else if (verb == "empty")
+            EmptyClipboard();
     }
 
     CloseClipboard();
