@@ -9,7 +9,7 @@
  */
 
 import { spawn } from 'child_process';
-import { mkdirSync, mkdtempSync, rmSync } from 'fs';
+import { mkdirSync, mkdtempSync, rmSync, cpSync } from 'fs';
 import http from 'http';
 import { tmpdir } from 'os';
 import { join } from 'path';
@@ -85,6 +85,7 @@ export class CodaQtServiceLauncher {
 			webEngineDriverPort,
 			codaQtBinary,
 			remoteDebuggingPort,
+			fixturesDir,
 		} = this.#options;
 
 		console.log('Starting AT-SPI Flask server...');
@@ -119,6 +120,13 @@ export class CodaQtServiceLauncher {
 
 		this.#testHomeDir = mkdtempSync(join(tmpdir(), 'coda-qt-test-'));
 		mkdirSync(join(this.#testHomeDir, 'Documents'));
+		cpSync(fixturesDir, join(this.#testHomeDir, 'Documents'), {
+			recursive: true,
+		});
+		process.env.CODA_QT_TEST_DOCUMENTS_DIR = join(
+			this.#testHomeDir,
+			'Documents',
+		);
 
 		console.log('Starting coda-qt...');
 		this.#codaQtProcess = spawn(codaQtBinary, [], {
@@ -128,6 +136,8 @@ export class CodaQtServiceLauncher {
 				QTWEBENGINE_REMOTE_DEBUGGING: remoteDebuggingPort.toString(),
 				QT_ACCESSIBILITY: '1',
 				QT_LINUX_ACCESSIBILITY_ALWAYS_ON: '1',
+				// enforce qt dialogs, instead of native ones for consistency in tests
+				QT_QPA_PLATFORMTHEME: 'generic',
 			},
 			stdio: ['ignore', 'pipe', 'pipe'],
 		});

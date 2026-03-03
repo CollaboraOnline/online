@@ -8,45 +8,42 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-let currentHandle = null;
+// Handles seen before the most recent transition; new handles are detected by absence.
+let knownHandles = new Set();
 
 /**
- * Initialize the tracker with the current window handle. Called from
+ * Initialize the tracker with all currently live handles. Called from
  * the wdio `before` hook - tests never need to call this.
  */
 export async function init(webEngine) {
-	currentHandle = await webEngine.getWindowHandle();
+	const handles = await webEngine.getWindowHandles();
+	knownHandles = new Set(handles);
 }
 
 /**
- * Wait for a new WebView to replace the current one, then switch to it.
- * coda-qt destroys and recreates the WebView when transitioning between
- * views (e.g. backstage -> document editor).
- *
- * Usage in tests:
- *   await browser.webEngine.execute(() => { ... trigger transition ... });
- *   await webview.reconnect(browser.webEngine);
+ * Wait for coda-qt to open a new WebView, then switch the session to it.
  */
-export async function reconnect(
+export async function switchToNewWebView(
 	webEngine,
 	timeoutMs = 30000,
 	intervalMs = 300,
 ) {
 	let newHandle = null;
+	let latestHandles = [];
 
 	await webEngine.waitUntil(
 		async () => {
-			const handles = await webEngine.getWindowHandles();
-			newHandle = handles.find((h) => h !== currentHandle) ?? null;
+			latestHandles = await webEngine.getWindowHandles();
+			newHandle = latestHandles.find((h) => !knownHandles.has(h)) ?? null;
 			return newHandle !== null;
 		},
 		{
 			timeout: timeoutMs,
 			interval: intervalMs,
-			timeoutMsg: `New WebView did not become available within ${timeoutMs}ms`,
+			timeoutMsg: `New WebView did not appear within ${timeoutMs}ms`,
 		},
 	);
 
 	await webEngine.switchToWindow(newHandle);
-	currentHandle = newHandle;
+	knownHandles = new Set(latestHandles);
 }

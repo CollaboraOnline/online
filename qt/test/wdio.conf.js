@@ -54,6 +54,7 @@ export const config = {
 		harness: ['./specs/harness.spec.js'],
 		functional: [[
 			'./specs/document-lifecycle.spec.js',
+			'./specs/open-file.spec.js',
 		]],
 	},
 
@@ -97,6 +98,7 @@ export const config = {
 			webEngineDriverPort: WEBENGINE_DRIVER_PORT,
 			codaQtBinary: CODA_QT_BINARY,
 			remoteDebuggingPort: REMOTE_DEBUGGING_PORT,
+			fixturesDir: join(__dirname, 'fixtures'),
 		}],
 	],
 
@@ -133,6 +135,20 @@ export const config = {
 					timeoutMsg: opts.timeoutMsg ?? 'waitForCondition: condition not met',
 				});
 			},
+		);
+
+		// The AT-SPI driver does not return the expected handshake fields,
+		// so WDIO assumes it is talking to a legacy driver and wraps typed
+		// text in an array instead of sending a plain string. The underlying
+		// send-keys command expects a plain string, so typing would fail.
+		// This override bypasses that formatting step and sends the string
+		// directly.
+		browser.native.overwriteCommand(
+			'addValue',
+			async function (origFn, value) {
+				await this.elementSendKeys(this.elementId, String(value));
+			},
+			true,
 		);
 	},
 };

@@ -172,7 +172,9 @@ EXTRA_DIST += \
 	$(TEST_DIR)/run-tests.sh \
 	$(TEST_DIR)/lib/coda-qt.service.js \
 	$(TEST_DIR)/lib/webview.js \
+	$(TEST_DIR)/fixtures/simple.odt \
 	$(TEST_DIR)/specs/harness.spec.js \
-	$(TEST_DIR)/specs/document-lifecycle.spec.js
+	$(TEST_DIR)/specs/document-lifecycle.spec.js \
+	$(TEST_DIR)/specs/open-file.spec.js
 
 ### --- WebdriverIO test integration end ---

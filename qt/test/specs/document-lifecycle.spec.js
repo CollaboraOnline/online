@@ -34,8 +34,8 @@ describe('Document lifecycle', () => {
 			}, 100);
 		});
 
-		// Wait for a new WebView to replace the backstage, then reconnect.
-		await webview.reconnect(browser.webEngine);
+		// Wait for a new WebView to replace the backstage, then switch to it.
+		await webview.switchToNewWebView(browser.webEngine);
 
 		// Wait for the document editor to finish loading
 		await browser.webEngine.waitForCondition(
