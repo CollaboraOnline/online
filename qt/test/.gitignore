@@ -1,0 +1,12 @@
+# Node modules
+node_modules/
+
+# npm lock file
+package-lock.json
+
+# Test results
+*.log
+
+# WebdriverIO logs
+wdio-*.log
+logs/

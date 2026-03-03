@@ -141,3 +141,42 @@ EXTRA_DIST += $(TS_FILES) run-from-build.in
 CLEANFILES += $(QM_FILES)
 
 ### --- Qt translations integration end ---
+
+### --- WebdriverIO test integration begin ---
+
+TEST_DIR = test
+
+if ENABLE_QTAPP_TESTS
+
+$(TEST_DIR)/node_modules: $(TEST_DIR)/package.json
+	cd $(TEST_DIR) && npm install
+	@touch $(TEST_DIR)/node_modules
+
+# Run Qt app tests
+check-qtapp: coda-qt $(TEST_DIR)/node_modules
+	@echo "Running WebdriverIO tests..."
+	cd $(TEST_DIR) && AT_SPI_DRIVER_PATH='@AT_SPI_DRIVER_PATH@' \
+	    CODA_QT_BINARY=$(abs_builddir)/coda-qt \
+	    ./run-tests.sh
+
+# Clean test artifacts
+clean-local:
+	rm -rf $(TEST_DIR)/node_modules
+	rm -f $(TEST_DIR)/package-lock.json
+
+endif ENABLE_QTAPP_TESTS
+
+# Distribute test files regardless of ENABLE_QTAPP_TESTS
+EXTRA_DIST += \
+	$(TEST_DIR)/README.md \
+	$(TEST_DIR)/package.json \
+	$(TEST_DIR)/tsconfig.json \
+	$(TEST_DIR)/wdio.conf.ts \
+	$(TEST_DIR)/wdio.d.ts \
+	$(TEST_DIR)/run-tests.sh \
+	$(TEST_DIR)/lib/coda-qt.service.ts \
+	$(TEST_DIR)/lib/webview.ts \
+	$(TEST_DIR)/specs/harness.spec.ts \
+	$(TEST_DIR)/specs/document-lifecycle.spec.ts
+
+### --- WebdriverIO test integration end ---
