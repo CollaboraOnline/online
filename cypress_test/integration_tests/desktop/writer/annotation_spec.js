@@ -1,4 +1,4 @@
-/* global describe it cy require beforeEach */
+/* global describe it cy require beforeEach expect */
 
 var helper = require('../../common/helper');
 var desktopHelper = require('../../common/desktop_helper');
@@ -53,6 +53,29 @@ describe(['tagdesktop'], 'Annotation Tests', function() {
 		cy.cGet('.cool-annotation-menu').click();
 		cy.cGet('body').contains('.context-menu-item', 'Remove').click();
 		cy.cGet('.cool-annotation-content-wrapper').should('not.exist');
+	});
+
+	it('Click on comment emits Clicked_Comment postMessage', function() {
+		desktopHelper.insertComment();
+
+		// This will record usage of window.postMessage (called from
+		// _postMessage in browser/src/map/handler/Map.WOPI.js
+		cy.getFrameWindow().then(win => {
+			cy.stub(win.parent, 'postMessage').as('postMessage');
+		});
+
+		// <div class="cool-annotation-content-wrapper" ...> is the topmost element of the comment
+		cy.cGet('.cool-annotation-content-wrapper').should('be.visible');
+		cy.cGet('.cool-annotation-content-wrapper').click();
+
+		cy.get('@postMessage').should(stub => {
+			const found = stub.getCalls().some(call => {
+				const msg = JSON.parse(call.args[0]);
+				return msg.MessageId === 'Clicked_Comment'
+					&& msg.Values && msg.Values.Id !== undefined;
+			});
+			expect(found, "Clicked_Comment was not posted").to.be.true;
+		});
 	});
 
 	it('Toggle Resolved/Unresolved', function() {
