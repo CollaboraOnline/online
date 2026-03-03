@@ -23,42 +23,6 @@ msgctxt "1Xt-HY-uBw.title"
 msgid "ProductName"
 msgstr "Ainm an Táirge"
 
-msgctxt "1b7-l0-nxx.title"
-msgid "Find"
-msgstr "Aimsigh"
-
-msgctxt "1tx-W0-xDw.title"
-msgid "Lower"
-msgstr "Íochtarach"
-
-msgctxt "2h7-ER-AoG.title"
-msgid "Raise"
-msgstr "Ardaigh"
-
-msgctxt "2oI-Rn-ZJC.title"
-msgid "Transformations"
-msgstr "Claochluithe"
-
-msgctxt "3IN-sU-3Bg.title"
-msgid "Spelling"
-msgstr "Litriú"
-
-msgctxt "3Om-Ey-2VK.title"
-msgid "Use Default"
-msgstr "Úsáid Réamhshocraithe"
-
-msgctxt "3rS-ZA-NoH.title"
-msgid "Speech"
-msgstr "Óráid"
-
-msgctxt "46P-cB-AYj.title"
-msgid "Tighten"
-msgstr "Teannaigh"
-
-msgctxt "4EN-yA-p0u.title"
-msgid "Find"
-msgstr "Aimsigh"
-
 msgctxt "4J7-dP-txa.title"
 msgid "Enter Full Screen"
 msgstr "Téigh isteach sa Lánscáileán"
@@ -72,10 +36,6 @@ msgctxt "5QF-Oa-p0T.title"
 msgid "Edit"
 msgstr "Cuir in Eagar"
 
-msgctxt "5Vv-lz-BsD.title"
-msgid "Copy Style"
-msgstr "Cóipeáil Stíl"
-
 #. Do not change the placeholder ProductName!
 msgctxt "5kV-Vb-QxS.title"
 msgid "About ProductName"
@@ -85,22 +45,6 @@ msgctxt "6dh-zS-Vam.title"
 msgid "Redo"
 msgstr "Athdhéan"
 
-msgctxt "78Y-hA-62v.title"
-msgid "Correct Spelling Automatically"
-msgstr "Ceartú Litrithe go hUathoibríoch"
-
-msgctxt "8mr-sm-Yjd.title"
-msgid "Writing Direction"
-msgstr "Treo Scríbhneoireachta"
-
-msgctxt "9ic-FL-obx.title"
-msgid "Substitutions"
-msgstr "Ionadaithe"
-
-msgctxt "9yt-4B-nSM.title"
-msgid "Smart Copy/Paste"
-msgstr "Cóipeáil/Greamaigh Chliste"
-
 msgctxt "AYu-sK-qS6.title"
 msgid "Main Menu"
 msgstr "Príomh-Roghchlár"
@@ -108,10 +52,6 @@ msgstr "Príomh-Roghchlár"
 msgctxt "BOF-NM-1cW.title"
 msgid "Preferences…"
 msgstr "Roghanna…"
-
-msgctxt "BgM-ve-c93.title"
-msgid "\tLeft to Right"
-msgstr "\tClé go Deas"
 
 msgctxt "Bw7-FT-i3A.title"
 msgid "Save As…"
@@ -121,78 +61,21 @@ msgctxt "DVo-aG-piG.title"
 msgid "Close"
 msgstr "Dún"
 
-msgctxt "Dv1-io-Yv7.title"
-msgid "Spelling and Grammar"
-msgstr "Litriú agus Gramadach"
-
 msgctxt "F2S-fz-NVQ.title"
 msgid "Help"
 msgstr "Cabhair"
-
-#. Do not change the placeholder ProductName!
-msgctxt "FKE-Sm-Kum.title"
-msgid "ProductName Help"
-msgstr "Cabhair le Ainm an Táirge"
-
-msgctxt "Fal-I4-PZk.title"
-msgid "Text"
-msgstr "Téacs"
-
-msgctxt "FeM-D8-WVr.title"
-msgid "Substitutions"
-msgstr "Ionadaithe"
-
-msgctxt "GB9-OM-e27.title"
-msgid "Bold"
-msgstr "Trom"
-
-msgctxt "GEO-Iw-cKr.title"
-msgid "Format"
-msgstr "Formáid"
-
-msgctxt "GUa-eO-cwY.title"
-msgid "Use Default"
-msgstr "Úsáid Réamhshocraithe"
-
-msgctxt "Gi5-1S-RQB.title"
-msgid "Font"
-msgstr "Cló"
-
-msgctxt "H1b-Si-o9J.title"
-msgid "Writing Direction"
-msgstr "Treo Scríbhneoireachta"
 
 msgctxt "H8h-7b-M4v.title"
 msgid "View"
 msgstr "Amharc"
 
-msgctxt "HFQ-gK-NFA.title"
-msgid "Text Replacement"
-msgstr "Athsholáthar Téacs"
-
-msgctxt "HFo-cy-zxI.title"
-msgid "Show Spelling and Grammar"
-msgstr "Taispeáin Litriú agus Gramadach"
-
 msgctxt "HyV-fh-RgO.title"
 msgid "View"
 msgstr "Amharc"
 
-msgctxt "I0S-gh-46l.title"
-msgid "Subscript"
-msgstr "Fo-scríbhinn"
-
 msgctxt "IAo-SY-fd9.title"
 msgid "Open…"
 msgstr "Oscail…"
-
-msgctxt "J5U-5w-g23.title"
-msgid "Justify"
-msgstr "Údaraigh"
-
-msgctxt "J7y-lM-qPV.title"
-msgid "Use None"
-msgstr "Úsáid Gan Aon"
 
 msgctxt "KaW-ft-85H.title"
 msgid "Revert to Saved"
@@ -206,102 +89,34 @@ msgctxt "LE2-aR-0XJ.title"
 msgid "Bring All to Front"
 msgstr "Tabhair Gach Rud chun Tosaigh"
 
-msgctxt "LVM-kO-fVI.title"
-msgid "Paste Ruler"
-msgstr "Greamaigh Rialóir"
-
-msgctxt "Lbh-J2-qVU.title"
-msgid "\tLeft to Right"
-msgstr "\tClé go Deas"
-
-msgctxt "MkV-Pr-PK5.title"
-msgid "Copy Ruler"
-msgstr "Cóipeáil Rialóir"
-
 msgctxt "NMo-om-nkz.title"
 msgid "Services"
 msgstr "Seirbhísí"
 
-msgctxt "Nop-cj-93Q.title"
-msgid "\tDefault"
-msgstr "\tRéamhshocrú"
-
 msgctxt "OY7-WF-poV.title"
 msgid "Minimize"
 msgstr "Íoslaghdaigh"
-
-msgctxt "OaQ-X3-Vso.title"
-msgid "Baseline"
-msgstr "Bonnlíne"
 
 #. Do not change the placeholder ProductName!
 msgctxt "Olw-nP-bQN.title"
 msgid "Hide ProductName"
 msgstr "Folaigh Ainm an Táirge"
 
-msgctxt "OwM-mh-QMV.title"
-msgid "Find Previous"
-msgstr "Aimsigh Roimhe Seo"
-
-msgctxt "Oyz-dy-DGm.title"
-msgid "Stop Speaking"
-msgstr "Stop ag Labhairt"
-
-msgctxt "Ptp-SP-VEL.title"
-msgid "Bigger"
-msgstr "Níos mó"
-
-msgctxt "Q5e-8K-NDq.title"
-msgid "Show Fonts"
-msgstr "Taispeáin Clónna"
-
 msgctxt "R4o-n2-Eq4.title"
 msgid "Zoom"
 msgstr "Zúmáil"
-
-msgctxt "RB4-Sm-HuC.title"
-msgid "\tRight to Left"
-msgstr "\tDeas go Clé"
-
-msgctxt "Rqc-34-cIF.title"
-msgid "Superscript"
-msgstr "Forscríbhinn"
-
-msgctxt "Ruw-6m-B2m.title"
-msgid "Select All"
-msgstr "Roghnaigh Uile"
-
-msgctxt "S0p-oC-mLd.title"
-msgid "Jump to Selection"
-msgstr "Léim go dtí an Roghnú"
 
 msgctxt "Td7-aD-5lo.title"
 msgid "Window"
 msgstr "Fuinneog"
 
-msgctxt "UEZ-Bs-lqG.title"
-msgid "Capitalize"
-msgstr "Príomhscríobh"
-
-msgctxt "VIY-Ag-zcb.title"
-msgid "Center"
-msgstr "Lár"
-
 msgctxt "Vdr-fp-XzO.title"
 msgid "Hide Others"
 msgstr "Folaigh Daoine Eile"
 
-msgctxt "Vjx-xi-njq.title"
-msgid "Italic"
-msgstr "Iodálach"
-
 msgctxt "W48-6f-4Dl.title"
 msgid "Edit"
 msgstr "Cuir in Eagar"
-
-msgctxt "WRG-CD-K1S.title"
-msgid "Underline"
-msgstr "Folínigh"
 
 msgctxt "Was-JA-tGl.title"
 msgid "New"
@@ -311,30 +126,6 @@ msgctxt "WeT-3V-zwk.title"
 msgid "Paste and Match Style"
 msgstr "Greamaigh agus Meaitseáil Stíl"
 
-msgctxt "Xz5-n4-O0W.title"
-msgid "Find…"
-msgstr "Aimsigh…"
-
-msgctxt "YEy-JH-Tfz.title"
-msgid "Find and Replace…"
-msgstr "Aimsigh agus Ionadaigh…"
-
-msgctxt "YGs-j5-SAR.title"
-msgid "\tDefault"
-msgstr "\tRéamhshocrú"
-
-msgctxt "Ynk-f8-cLZ.title"
-msgid "Start Speaking"
-msgstr "Tosaigh ag Labhairt"
-
-msgctxt "ZM1-6Q-yy1.title"
-msgid "Align Left"
-msgstr "Ailínigh ar Chlé"
-
-msgctxt "ZvO-Gk-QUH.title"
-msgid "Paragraph"
-msgstr "Paragraf"
-
 msgctxt "aTl-1u-JFS.title"
 msgid "Print…"
 msgstr "Priontáil…"
@@ -343,49 +134,9 @@ msgctxt "aUF-d1-5bR.title"
 msgid "Window"
 msgstr "Fuinneog"
 
-msgctxt "aXa-aM-Jaq.title"
-msgid "Font"
-msgstr "Cló"
-
-msgctxt "agt-UL-0e3.title"
-msgid "Use Default"
-msgstr "Úsáid Réamhshocraithe"
-
-msgctxt "bgn-CT-cEk.title"
-msgid "Show Colors"
-msgstr "Taispeáin Dathanna"
-
 msgctxt "bib-Uj-vzu.title"
 msgid "File"
 msgstr "Comhad"
-
-msgctxt "buJ-ug-pKt.title"
-msgid "Use Selection for Find"
-msgstr "Úsáid Roghnú le haghaidh Aimsigh"
-
-msgctxt "c8a-y6-VQd.title"
-msgid "Transformations"
-msgstr "Claochluithe"
-
-msgctxt "cDB-IK-hbR.title"
-msgid "Use None"
-msgstr "Úsáid Gan Aon"
-
-msgctxt "cqv-fj-IhA.title"
-msgid "Selection"
-msgstr "Rogha"
-
-msgctxt "cwL-P1-jid.title"
-msgid "Smart Links"
-msgstr "Naisc Chliste"
-
-msgctxt "d9M-CD-aMd.title"
-msgid "Make Lower Case"
-msgstr "Déan Cás Íochtarach"
-
-msgctxt "d9c-me-L2H.title"
-msgid "Text"
-msgstr "Téacs"
 
 msgctxt "dMs-cI-mzQ.title"
 msgid "File"
@@ -399,97 +150,33 @@ msgctxt "gVA-U4-sdL.title"
 msgid "Paste"
 msgstr "Greamaigh"
 
-msgctxt "hQb-2v-fYv.title"
-msgid "Smart Quotes"
-msgstr "Sleachta Cliste"
-
-msgctxt "hz2-CU-CR7.title"
-msgid "Check Document Now"
-msgstr "Seiceáil an Doiciméad Anois"
-
 msgctxt "hz9-B4-Xy5.title"
 msgid "Services"
 msgstr "Seirbhísí"
-
-msgctxt "i1d-Er-qST.title"
-msgid "Smaller"
-msgstr "Níos lú"
-
-msgctxt "ijk-EB-dga.title"
-msgid "Baseline"
-msgstr "Bonnlíne"
-
-msgctxt "jBQ-r6-VK2.title"
-msgid "Kern"
-msgstr "Kern"
-
-msgctxt "jFq-tB-4Kx.title"
-msgid "\tRight to Left"
-msgstr "\tDeas go Clé"
-
-msgctxt "jxT-CU-nIS.title"
-msgid "Format"
-msgstr "Formáid"
 
 msgctxt "kIP-vf-haE.title"
 msgid "Show Sidebar"
 msgstr "Taispeáin an Barra Taoibh"
 
-msgctxt "mK6-2p-4JG.title"
-msgid "Check Grammar With Spelling"
-msgstr "Seiceáil Gramadach le Litriú"
-
-msgctxt "o6e-r0-MWq.title"
-msgid "Ligatures"
-msgstr "Ligatúir"
-
 msgctxt "oas-Oc-fiZ.title"
 msgid "Open Recent"
 msgstr "Oscail Le Déanaí"
-
-msgctxt "ogc-rX-tC1.title"
-msgid "Loosen"
-msgstr "Scaoil"
-
-msgctxt "pa3-QI-u2k.title"
-msgid "Delete"
-msgstr "Scrios"
 
 msgctxt "pxx-59-PXV.title"
 msgid "Save…"
 msgstr "Sábháil…"
 
-msgctxt "q09-fT-Sye.title"
-msgid "Find Next"
-msgstr "Aimsigh an chéad cheann eile"
-
 msgctxt "qIS-W8-SiK.title"
 msgid "Page Setup…"
 msgstr "Socrú Leathanaigh…"
-
-msgctxt "rbD-Rh-wIN.title"
-msgid "Check Spelling While Typing"
-msgstr "Seiceáil Litriú agus Clóscríobh"
-
-msgctxt "rgM-f4-ycn.title"
-msgid "Smart Dashes"
-msgstr "Dashes Cliste"
 
 msgctxt "snW-S8-Cw5.title"
 msgid "Show Toolbar"
 msgstr "Taispeáin an Barra Uirlisí"
 
-msgctxt "tRr-pd-1PS.title"
-msgid "Data Detectors"
-msgstr "Brathadóirí Sonraí"
-
 msgctxt "tXI-mr-wws.title"
 msgid "Open Recent"
 msgstr "Oscail Le Déanaí"
-
-msgctxt "tlD-Oa-oAM.title"
-msgid "Kern"
-msgstr "Kern"
 
 #. Do not change the placeholder ProductName!
 msgctxt "uQy-DD-JDr.title"
@@ -504,29 +191,9 @@ msgctxt "vFu-3Y-2xa.title"
 msgid "Window"
 msgstr "Fuinneog"
 
-msgctxt "vKC-jM-MkH.title"
-msgid "Paste Style"
-msgstr "Stíl Ghreamaigh"
-
-msgctxt "vLm-3I-IUL.title"
-msgid "Show Ruler"
-msgstr "Taispeáin Rialóir"
-
 msgctxt "vNY-rz-j42.title"
 msgid "Clear Menu"
 msgstr "Glan an Roghchlár"
-
-msgctxt "vmV-6d-7jI.title"
-msgid "Make Upper Case"
-msgstr "Déan Cás Uachtarach"
-
-msgctxt "w0m-vy-SC9.title"
-msgid "Ligatures"
-msgstr "Ligatúir"
-
-msgctxt "wb2-vD-lq4.title"
-msgid "Align Right"
-msgstr "Ailínigh ar Dheis"
 
 msgctxt "wpr-3q-Mcd.title"
 msgid "Help"
@@ -535,15 +202,3 @@ msgstr "Cabhair"
 msgctxt "x3v-GG-iWU.title"
 msgid "Copy"
 msgstr "Cóipeáil"
-
-msgctxt "xQD-1f-W4t.title"
-msgid "Use All"
-msgstr "Úsáid Uile"
-
-msgctxt "xrE-MZ-jX0.title"
-msgid "Speech"
-msgstr "Óráid"
-
-msgctxt "z6F-FW-3nz.title"
-msgid "Show Substitutions"
-msgstr "Taispeáin Ionadaithe"
