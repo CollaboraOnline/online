@@ -743,6 +743,36 @@
 	background: rgba(var(--aichat-accent), 0.06);
 }
 
+/* ── Clickable cell references ── */
+
+.aichat-cell-ref {
+	font-family: 'Courier New', Courier, monospace;
+	color: rgb(var(--aichat-accent));
+	background: rgba(var(--aichat-accent), 0.08);
+	padding: 1px 4px;
+	border-radius: 3px;
+	border-bottom: 1px dotted rgba(var(--aichat-accent), 0.5);
+	cursor: pointer;
+	transition: background 0.15s ease, border-color 0.15s ease;
+	font-size: 12px;
+	white-space: nowrap;
+}
+
+.aichat-cell-ref:hover {
+	background: rgba(var(--aichat-accent), 0.15);
+	border-bottom-color: rgb(var(--aichat-accent));
+}
+
+.aichat-cell-ref:focus-visible {
+	outline: 2px solid rgb(var(--aichat-accent));
+	outline-offset: 1px;
+	border-bottom-color: rgb(var(--aichat-accent));
+}
+
+.aichat-cell-ref:active {
+	background: rgba(var(--aichat-accent), 0.22);
+}
+
 /* ── Accessibility: reduced motion ── */
 
 @media (prefers-reduced-motion: reduce) {
