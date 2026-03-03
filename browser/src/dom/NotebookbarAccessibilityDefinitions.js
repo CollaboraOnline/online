@@ -47,6 +47,9 @@ var NotebookbarAccessibilityDefinitions = function() {
 					} else if (element) {
 						// regular uno button
 						list.push({ id: id + '-button', focusBack: rawList[i].accessibility.focusBack, combination: combination });
+					} else if (document.getElementById(id + '-input')) {
+						// checkbox
+						list.push({ id: id + '-input', focusBack: rawList[i].accessibility.focusBack, combination: combination });
 					} else {
 						// other
 						list.push({ id: id, focusBack: rawList[i].accessibility.focusBack, combination: combination });
