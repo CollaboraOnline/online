@@ -643,6 +643,12 @@ bool ClientSession::handleAIChatAction(const std::string& firstLine)
     std::string requestId;
     JsonUtil::findJSONValue(requestObj, "requestId", requestId);
 
+    std::string docType;
+    JsonUtil::findJSONValue(requestObj, "docType", docType);
+
+    if (docType != "text" && docType != "spreadsheet" && docType != "presentation" && docType != "drawing")
+        docType.clear();
+
     Poco::JSON::Array::Ptr messages = requestObj->getArray("messages");
     if (!messages || messages->size() == 0)
     {
@@ -650,11 +656,21 @@ bool ClientSession::handleAIChatAction(const std::string& firstLine)
         return true;
     }
 
-    // Sanitize messages: strip system role, validate roles and content length
+    // Build system prompt with document-type context
+    std::string systemPrompt = AI_SYSTEM_PROMPT;
+    if (!docType.empty())
+        systemPrompt += " You are currently working with a " + docType + " document.";
+
+    if (docType == "spreadsheet")
+        systemPrompt +=
+            " When referencing specific spreadsheet cells in your responses, "
+            "format them as clickable links using this pattern: [CL1008](cell://CL1008), "
+            "where the column letters come from the header row and the row number from the Row column.";
+
     Poco::JSON::Array::Ptr sanitizedMessages = new Poco::JSON::Array();
     Poco::JSON::Object::Ptr systemMsg = new Poco::JSON::Object();
     systemMsg->set("role", "system");
-    systemMsg->set("content", AI_SYSTEM_PROMPT);
+    systemMsg->set("content", systemPrompt);
     sanitizedMessages->add(systemMsg);
 
     for (unsigned i = 0; i < messages->size(); ++i)
