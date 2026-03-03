@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: core-sv\n"
-"PO-Revision-Date: 2026-02-26 13:57+0000\n"
+"PO-Revision-Date: 2026-03-03 08:09+0000\n"
 "Last-Translator: Leif-Jöran Olsson <info@friprogramvarusyndikatet.se>\n"
 "Language-Team: Swedish <https://hosted.weblate.org/projects/collabora-online/"
 "lokit/sv/>\n"
@@ -10,7 +10,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.16.1-dev\n"
+"X-Generator: Weblate 5.17-dev\n"
 
 #. ygDfy
 #: module_graphicfilter.ulf
@@ -553,7 +553,7 @@ msgstr "Kompakt"
 #: cui/uiconfig/ui/widgettestdialog.ui:161
 msgctxt "widgettestdialog|combo_box_disable-atkobject"
 msgid "Test Type"
-msgstr ""
+msgstr "Testtyp"
 
 #. ZbYiG
 #: include/svtools/strings.hrc:71
@@ -729,7 +729,7 @@ msgstr "Numrering"
 #: sw/uiconfig/swriter/ui/footnotesendnotestabpage.ui:455
 msgctxt "footnotesendnotestabpage|endnumviewbox-atkobject"
 msgid "Numbering"
-msgstr ""
+msgstr "Numrering"
 
 #. KFGXP
 #: sw/uiconfig/swriter/ui/outlinenumberingpage.ui:119
@@ -753,7 +753,7 @@ msgstr "Förhandsgranskning"
 #: sw/uiconfig/swriter/ui/tocentriespage.ui:252
 msgctxt "tocentriespage|structure_label"
 msgid "_Structure"
-msgstr ""
+msgstr "_Struktur"
 
 #. CW8Eb
 #: sw/uiconfig/swriter/ui/tocentriespage.ui:277
@@ -765,7 +765,7 @@ msgstr "Teckenformatmall:"
 #: sw/uiconfig/swriter/ui/tocentriespage.ui:569
 msgctxt "tocentriespage|authfield-atkobject"
 msgid "Authority field"
-msgstr ""
+msgstr "Auktoritetsfält"
 
 #. risLD
 #: sw/uiconfig/swriter/ui/tokenwidget.ui:25
@@ -1097,7 +1097,7 @@ msgctxt ""
 "Label\n"
 "value.text"
 msgid "Table Style Options"
-msgstr ""
+msgstr "Inställningar för tabellstilar"
 
 #. 4HzYH
 #: CalcCommands.xcu
