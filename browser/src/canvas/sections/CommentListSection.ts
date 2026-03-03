@@ -734,6 +734,10 @@ export class CommentSection extends CanvasSectionObject {
 
 	public click (annotation: any): void {
 		this.select(annotation);
+		app.map.fire('postMessage', {
+			msgId: 'Clicked_Comment',
+			args: { Id: annotation.sectionProperties.data.id }
+		});
 	}
 
 	public save (annotation: any): void {
