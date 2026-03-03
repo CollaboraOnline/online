@@ -132,17 +132,20 @@ class TableStylesService {
 			image: 'images/lc_table_none.svg',
 			width: 35,
 			height: 35,
-			selected: !currentStyle || currentStyle.name === '',
+			selected: !currentStyle || currentStyle.TableStyleName === '',
 		} as IconViewEntry);
 
 		this.styles.forEach((element) => {
+			const selected = currentStyle
+				? element.Name === currentStyle.TableStyleName
+				: false;
 			iconViewEntries.push({
 				row: i++,
 				text: element.UIName,
 				image: this.generateIcon(element),
 				width: 35,
 				height: 35,
-				selected: currentStyle ? element.Name === currentStyle.name : false,
+				selected: selected,
 			} as IconViewEntry);
 		});
 
