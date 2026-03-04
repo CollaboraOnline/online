@@ -2,8 +2,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: core-uk\n"
-"PO-Revision-Date: 2026-03-03 08:09+0000\n"
-"Last-Translator: Tarás Lavrentiev <fromkaniv@gmail.com>\n"
+"PO-Revision-Date: 2026-03-03 14:39+0000\n"
+"Last-Translator: Ole <knedlyk@users.noreply.hosted.weblate.org>\n"
 "Language-Team: Ukrainian <https://hosted.weblate.org/projects/collabora-"
 "online/lokit/uk/>\n"
 "Language: uk\n"
@@ -1038,7 +1038,7 @@ msgstr "Версія PDF_/A:"
 #: filter/uiconfig/ui/pdfgeneralpage.ui:677
 msgctxt "pdfgeneralpage|general_label"
 msgid "General"
-msgstr "Загальні"
+msgstr "Загальне"
 
 #. 9iu3h
 #: filter/uiconfig/ui/pdfgeneralpage.ui:821
