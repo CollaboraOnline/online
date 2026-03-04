@@ -209,6 +209,8 @@ class CanvasSectionContainer {
 	private duration: number = null; // Duration for the animation.
 	private elapsedTime: number = null; // Time that passed since the animation started.
 
+	private dpiMediaQuery: MediaQueryList = null;
+
 	constructor (canvasDOMElement: HTMLCanvasElement, disableDrawing?: boolean) {
 		this.canvas = canvasDOMElement;
 		this.context = canvasDOMElement.getContext('2d', { alpha: false });
@@ -252,6 +254,25 @@ class CanvasSectionContainer {
 
 			this.disableDrawing();
 		}
+
+		this.setupDPIChangeListener();
+	}
+
+	private setupDPIChangeListener(): void {
+		const updateDPI = (): void => {
+			if (window.devicePixelRatio !== app.dpiScale) {
+				this.onResize(0, 0);
+			}
+			// Re-register since the query is for a specific dppx value
+			this.setupDPIChangeListener();
+		};
+		if (this.dpiMediaQuery) {
+			this.dpiMediaQuery.removeEventListener('change', updateDPI);
+		}
+		this.dpiMediaQuery = window.matchMedia(
+			'(resolution: ' + window.devicePixelRatio + 'dppx)'
+		);
+		this.dpiMediaQuery.addEventListener('change', updateDPI, { once: true });
 	}
 
 	private clearCanvas() {
