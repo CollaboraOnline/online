@@ -191,6 +191,9 @@ public:
     /// Decode and sanitize a URI.
     static Poco::URI sanitizeURI(const std::string& uri);
 
+    /// Sanitize a local file path where '%' is always a literal character.
+    static Poco::URI sanitizeLocalPath(const std::string& path);
+
     /// Returns a document-specific key, based
     /// on the URI of the document (aka the wopiSrc).
     static std::string getDocKey(const Poco::URI& uri);

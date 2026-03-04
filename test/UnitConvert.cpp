@@ -181,6 +181,24 @@ public:
                     return;
                 }
 
+                // Test filename with bare percent character (not valid
+                // percent-encoding).
+                sendConvertTo(session, "he%llo.txt");
+                if(!checkConvertTo(session))
+                {
+                    exitTest(TestResult::Failed);
+                    return;
+                }
+
+                // Test filename with literal %25 (percent-encoded percent)
+                // — ensures local paths treat '%' as literal, not URI encoding.
+                sendConvertTo(session, "hello%25world.txt");
+                if(!checkConvertTo(session))
+                {
+                    exitTest(TestResult::Failed);
+                    return;
+                }
+
                 // Given a markdown input + docx template:
                 // When converting that to HTML:
                 sendConvertTo(session, "test.md", /*isTemplate=*/true);
