@@ -327,6 +327,7 @@ html[data-theme='dark'] .savemodified.unotoolbutton:not(.notebookbar) .unobutton
 	right: var(--click-increment);
 	bottom: var(--click-increment);
 	left: var(--click-increment);
+	pointer-events: none;
 }
 
 .unotoolbutton.notebookbar.inline:hover {
