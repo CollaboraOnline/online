@@ -2742,31 +2742,39 @@ window.L.Control.NotebookbarWriter = window.L.Control.Notebookbar.extend({
 	getFormulaTab: function() {
 		var content = [
 			{
+				'id': 'change-font',
 				'type': 'bigtoolitem',
 				'text': _UNO('.uno:ChangeFont', 'text'),
 				'command': '.uno:ChangeFont',
-				'icon': 'lc_fontdialog.svg'
+				'icon': 'lc_fontdialog.svg',
+				'accessibility': { focusBack: true, combination: 'CF', de: null },
 			},
 			{ type: 'separator', id: 'formula-changefont-break', orientation: 'vertical' },
 			{
+				'id': 'change-font-size',
 				'type': 'bigtoolitem',
 				'text': _UNO('.uno:ChangeFontSize', 'text'),
 				'command': '.uno:ChangeFontSize',
-				'icon': 'lc_fontheight.svg'
+				'icon': 'lc_fontheight.svg',
+				'accessibility': { focusBack: true, combination: 'FZ', de: null },
 			},
 			{ type: 'separator', id: 'formula-changefontsize-break', orientation: 'vertical' },
 			{
+				'id': 'change-distance',
 				'type': 'bigtoolitem',
 				'text': _UNO('.uno:ChangeDistance', 'text'),
 				'command': '.uno:ChangeDistance',
 				'icon': 'lc_spacing.svg',
+				'accessibility': { focusBack: true, combination: 'CD', de: null },
 			},
 			{ type: 'separator', id: 'formula-changedistance-break', orientation: 'vertical' },
 			{
+				'id': 'change-alignment',
 				'type': 'bigtoolitem',
 				'text': _UNO('.uno:ChangeAlignment', 'text'),
 				'command': '.uno:ChangeAlignment',
-				'icon': 'lc_fontworkalignmentfloater.svg'
+				'icon': 'lc_fontworkalignmentfloater.svg',
+				'accessibility': { focusBack: true, combination: 'CA', de: null },
 			}
         ];
 		return this.getTabPage(formulaTabName, content);
