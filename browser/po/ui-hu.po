@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-03 09:42+0100\n"
+"POT-Creation-Date: 2026-03-04 08:24+0100\n"
 "PO-Revision-Date: 2025-12-08 11:24+0000\n"
 "Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
 "Language-Team: Hungarian <https://hosted.weblate.org/projects/"
@@ -300,7 +300,7 @@ msgstr "Figyelmeztetés"
 #: admin/src/AdminClusterOverview.js:560 admin/src/AdminSocketBase.js:63
 #: admin/src/AdminSocketBase.js:74 admin/src/AdminSocketOverview.js:108
 #: admin/src/AdminSocketOverview.js:431 admin/src/AdminSocketSettings.js:47
-#: admin/src/integrator/AdminIntegratorSettings.ts:1906 src/app/Debug.ts:1440
+#: admin/src/integrator/AdminIntegratorSettings.ts:1906 src/app/Debug.ts:1448
 #: src/canvas/sections/CommentListSection.ts:1553
 #: src/control/Control.AboutDialog.ts:280
 #: src/control/Control.AlertDialog.js:56
@@ -405,7 +405,7 @@ msgstr "Aláíró CA"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:339
 msgid "In-document Screen Reader"
-msgstr ""
+msgstr "Képernyőolvasó a dokumentumhoz"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:340
 #: src/control/Control.Menubar.ts:175 src/control/Control.Menubar.ts:500
@@ -501,7 +501,7 @@ msgstr "Törések kényszerítése"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:363
 #: src/control/Control.Menubar.ts:779 src/control/Control.TopToolbar.js:139
-#: src/control/jsdialog/Definitions.Menu.ts:1575
+#: src/control/jsdialog/Definitions.Menu.ts:1587
 msgid "All Sheets"
 msgstr "Minden munkalap"
 
@@ -938,11 +938,11 @@ msgstr "Nem sikerült megszerezni a RouteTokent a kontrollertől."
 msgid "Debug Tools"
 msgstr "Hibakereső eszközök"
 
-#: src/app/Debug.ts:150
+#: src/app/Debug.ts:153
 msgid "Ctrl+Shift+Alt+D to exit"
 msgstr "Kilépés: Ctrl+Shift+Alt+D"
 
-#: src/app/Debug.ts:1433
+#: src/app/Debug.ts:1441
 msgid "Event handling has been delayed for an unexpectedly long time: {0}ms"
 msgstr "Az eseménykezelést váratlanul hosszú ideig késleltették: {0} ms"
 
@@ -1068,23 +1068,25 @@ msgstr "Mentve"
 
 #: src/canvas/sections/CompareChangesLabelSection.ts:118
 msgid "Last edited by %1 on %2"
-msgstr ""
+msgstr "Utolsó szerkesztés %1 %2"
 
 #: src/canvas/sections/CompareChangesLabelSection.ts:181
 msgid "%1: Initial Version"
-msgstr ""
+msgstr "%1: Kezdeti verzió"
 
 #: src/canvas/sections/CompareChangesLabelSection.ts:185
 msgid "%1: Current Version"
-msgstr ""
+msgstr "%1: Jelenlegi verzió"
 
 #: src/canvas/sections/CompareChangesLabelSection.ts:194
+#, fuzzy
 msgid "Initial Version"
-msgstr ""
+msgstr "%1: Kezdeti verzió"
 
 #: src/canvas/sections/CompareChangesLabelSection.ts:198
+#, fuzzy
 msgid "Current Version"
-msgstr ""
+msgstr "%1: Jelenlegi verzió"
 
 #: src/canvas/sections/ShapeHandlesSection.ts:478
 msgid "Document contains unsupported media"
@@ -1115,13 +1117,12 @@ msgid "This version of {productname} is powered by"
 msgstr "{productname} verzióinformációk:"
 
 #: src/control/Control.AboutDialog.ts:190
-#, fuzzy
 msgid "Served by: "
-msgstr "Kiszolgáló:"
+msgstr "Kiszolgáló: "
 
 #: src/control/Control.AboutDialog.ts:213
 msgid "View widgets"
-msgstr ""
+msgstr "Widgetek megtekintése"
 
 #: src/control/Control.AboutDialog.ts:248
 msgid "\"Slow Proxy\""
@@ -2123,7 +2124,7 @@ msgstr "Helyreállítás"
 
 #: src/control/Control.Menubar.ts:143
 msgid "Compare Changes"
-msgstr ""
+msgstr "Változások összehasonlítása"
 
 #: src/control/Control.Menubar.ts:162 src/control/Control.Menubar.ts:483
 #: src/control/Control.Menubar.ts:489 src/control/Control.Menubar.ts:650
@@ -2138,7 +2139,7 @@ msgstr "Alaphelyzet"
 
 #: src/control/Control.Menubar.ts:168
 msgid "Fit to Screen"
-msgstr ""
+msgstr "Képernyőhöz igazítás"
 
 #: src/control/Control.Menubar.ts:171 src/control/Control.Menubar.ts:495
 #: src/control/Control.Menubar.ts:662 src/control/Control.Menubar.ts:807
@@ -2454,7 +2455,7 @@ msgid "CSV file (.csv)"
 msgstr "CSV-fájl (.csv)"
 
 #: src/control/Control.Menubar.ts:778
-#: src/control/jsdialog/Definitions.Menu.ts:1574
+#: src/control/jsdialog/Definitions.Menu.ts:1586
 msgid "Active sheet"
 msgstr "Aktív munkalap"
 
@@ -2464,78 +2465,78 @@ msgid "Focus Cell"
 msgstr "Fókuszálás a cellára"
 
 #: src/control/Control.Menubar.ts:912
-#: src/control/jsdialog/Definitions.Menu.ts:1828
+#: src/control/jsdialog/Definitions.Menu.ts:1840
 msgid "Highlight cells with..."
 msgstr "Cellák kiemelése..."
 
 #: src/control/Control.Menubar.ts:913
-#: src/control/jsdialog/Definitions.Menu.ts:1831
+#: src/control/jsdialog/Definitions.Menu.ts:1843
 msgid "Values greater than..."
 msgstr "Az értékek nagyobbak, mint..."
 
 #: src/control/Control.Menubar.ts:914
-#: src/control/jsdialog/Definitions.Menu.ts:1835
+#: src/control/jsdialog/Definitions.Menu.ts:1847
 msgid "Values less than..."
 msgstr "Az értékek kevesebbek, mint..."
 
 #: src/control/Control.Menubar.ts:915
-#: src/control/jsdialog/Definitions.Menu.ts:1839
+#: src/control/jsdialog/Definitions.Menu.ts:1851
 msgid "Values equal to..."
 msgstr "Az értékek egyenlőek..."
 
 #: src/control/Control.Menubar.ts:916
-#: src/control/jsdialog/Definitions.Menu.ts:1843
+#: src/control/jsdialog/Definitions.Menu.ts:1855
 msgid "Values between..."
 msgstr "Az értékek egy intervallumban vannak..."
 
 #: src/control/Control.Menubar.ts:917
-#: src/control/jsdialog/Definitions.Menu.ts:1847
+#: src/control/jsdialog/Definitions.Menu.ts:1859
 msgid "Values duplicate..."
 msgstr "Az értékek többször előfordulnak..."
 
 #: src/control/Control.Menubar.ts:918
-#: src/control/jsdialog/Definitions.Menu.ts:1851
+#: src/control/jsdialog/Definitions.Menu.ts:1863
 msgid "Containing text..."
 msgstr "Tartalmazza a szöveget..."
 
 #: src/control/Control.Menubar.ts:920 src/control/Control.Menubar.ts:930
-#: src/control/jsdialog/Definitions.Menu.ts:1855
-#: src/control/jsdialog/Definitions.Menu.ts:1886
+#: src/control/jsdialog/Definitions.Menu.ts:1867
+#: src/control/jsdialog/Definitions.Menu.ts:1898
 msgid "More highlights..."
 msgstr "További kiemelési szempontok..."
 
 #: src/control/Control.Menubar.ts:922
-#: src/control/jsdialog/Definitions.Menu.ts:1859
+#: src/control/jsdialog/Definitions.Menu.ts:1871
 msgid "Top/Bottom Rules..."
 msgstr "Felső/alsó szabályok..."
 
 #: src/control/Control.Menubar.ts:923
-#: src/control/jsdialog/Definitions.Menu.ts:1862
+#: src/control/jsdialog/Definitions.Menu.ts:1874
 msgid "Top N elements..."
 msgstr "Felső N elem..."
 
 #: src/control/Control.Menubar.ts:924
-#: src/control/jsdialog/Definitions.Menu.ts:1866
+#: src/control/jsdialog/Definitions.Menu.ts:1878
 msgid "Top N percent..."
 msgstr "Felső N százalék..."
 
 #: src/control/Control.Menubar.ts:925
-#: src/control/jsdialog/Definitions.Menu.ts:1870
+#: src/control/jsdialog/Definitions.Menu.ts:1882
 msgid "Bottom N elements..."
 msgstr "Alsó N elem..."
 
 #: src/control/Control.Menubar.ts:926
-#: src/control/jsdialog/Definitions.Menu.ts:1874
+#: src/control/jsdialog/Definitions.Menu.ts:1886
 msgid "Bottom N percent..."
 msgstr "Alsó N százalék..."
 
 #: src/control/Control.Menubar.ts:927
-#: src/control/jsdialog/Definitions.Menu.ts:1878
+#: src/control/jsdialog/Definitions.Menu.ts:1890
 msgid "Above Average..."
 msgstr "Átlag felett..."
 
 #: src/control/Control.Menubar.ts:928
-#: src/control/jsdialog/Definitions.Menu.ts:1882
+#: src/control/jsdialog/Definitions.Menu.ts:1894
 msgid "Below Average..."
 msgstr "Átlag alatt..."
 
@@ -2575,7 +2576,7 @@ msgstr "Vissza az alapértelmezett nyelvre"
 
 #: src/control/Control.Menubar.ts:1640 src/control/Control.Menubar.ts:1641
 #: src/control/Control.Menubar.ts:1642 src/control/Control.Toolbar.js:247
-#: src/control/jsdialog/Definitions.Menu.ts:2108
+#: src/control/jsdialog/Definitions.Menu.ts:2120
 msgid "More..."
 msgstr "További..."
 
@@ -2638,7 +2639,7 @@ msgstr "Végszín"
 
 #: src/control/Control.NavigatorPanel.ts:38
 msgid "Navigation Panel"
-msgstr ""
+msgstr "Navigációs panel"
 
 #: src/control/Control.NavigatorPanel.ts:110
 msgid "Navigation"
@@ -2842,7 +2843,7 @@ msgstr "Értékgörbe"
 
 #: src/control/Control.NotebookbarCalc.js:99
 msgid "Table Design"
-msgstr ""
+msgstr "Táblázattervező"
 
 #: src/control/Control.NotebookbarCalc.js:106
 #: src/control/Control.NotebookbarDraw.js:121
@@ -2955,7 +2956,7 @@ msgid "Cells"
 msgstr "Cellák"
 
 #: src/control/Control.NotebookbarCalc.js:967
-#: src/control/jsdialog/Definitions.Menu.ts:2314
+#: src/control/jsdialog/Definitions.Menu.ts:2326
 msgid "Default"
 msgstr "Alapértelmezett"
 
@@ -3069,7 +3070,7 @@ msgstr "Alapértelmezett nézet"
 
 #: src/control/Control.NotebookbarCalc.js:1434
 msgid "Open Views List"
-msgstr ""
+msgstr "Nézetlista megnyitása"
 
 #: src/control/Control.NotebookbarCalc.js:1441
 msgid "New Sheet View"
@@ -3121,11 +3122,11 @@ msgstr "Táblázatstílus beállításai"
 
 #: src/control/Control.NotebookbarCalc.js:1681
 msgid "Header Row"
-msgstr ""
+msgstr "Fejlécsor"
 
 #: src/control/Control.NotebookbarCalc.js:1693
 msgid "Total Row"
-msgstr ""
+msgstr "Összegsor"
 
 #: src/control/Control.NotebookbarCalc.js:1711
 msgid "Banded Rows"
@@ -3145,11 +3146,11 @@ msgstr "Utolsó oszlop"
 
 #: src/control/Control.NotebookbarCalc.js:1768
 msgid "Filter Buttons"
-msgstr ""
+msgstr "Szűrőgombok"
 
 #: src/control/Control.NotebookbarCalc.js:1784
 msgid "Table Styles"
-msgstr ""
+msgstr "Táblázatstílusok"
 
 #: src/control/Control.NotebookbarCalc.js:1805
 #: src/control/Control.NotebookbarCalc.js:2553
@@ -3266,7 +3267,7 @@ msgstr "Cellák formázása"
 #: src/control/Control.NotebookbarCalc.js:2891
 #: src/control/Control.NotebookbarImpress.js:1816
 msgid "Themes"
-msgstr ""
+msgstr "Témák"
 
 #: src/control/Control.NotebookbarCalc.js:2990
 #: src/control/Control.NotebookbarCalc.js:3347
@@ -3331,16 +3332,16 @@ msgstr "Diavetítés ablakban"
 
 #: src/control/Control.NotebookbarImpress.js:500
 msgid "Presenter View"
-msgstr ""
+msgstr "Előadói nézet"
 
 #: src/control/Control.NotebookbarImpress.js:508
 msgid "Present to All"
-msgstr ""
+msgstr "Prezentálás mindenkinek"
 
 #: src/control/Control.NotebookbarImpress.js:516
 #: src/slideshow/SlideShowPresenter.ts:1484
 msgid "Follow Presenter"
-msgstr ""
+msgstr "Előadó követése"
 
 #: src/control/Control.NotebookbarImpress.js:644
 msgid "Slide Views"
@@ -3412,11 +3413,11 @@ msgstr "Offline üzemmódba váltás"
 
 #: src/control/Control.NotebookbarWriter.js:490
 msgid "Validate Sidebar"
-msgstr ""
+msgstr "Ellenőrzés oldalsáv"
 
 #: src/control/Control.NotebookbarWriter.js:497
 msgid "Validate Dialog"
-msgstr ""
+msgstr "Ellenőrzés párbeszédpanel"
 
 #: src/control/Control.NotebookbarWriter.js:940
 #: src/control/Control.Zotero.js:828
@@ -3449,7 +3450,7 @@ msgstr "Jelölőnégyzet"
 
 #: src/control/Control.NotebookbarWriter.js:1664
 msgid "Page Width"
-msgstr ""
+msgstr "Oldal szélessége"
 
 #: src/control/Control.NotebookbarWriter.js:2301
 msgid "Tracking"
@@ -3457,7 +3458,7 @@ msgstr "Változáskövetés"
 
 #: src/control/Control.NotebookbarWriter.js:2322
 msgid "View Changes"
-msgstr ""
+msgstr "Változások megtekintése"
 
 #: src/control/Control.NotebookbarWriter.js:2498
 msgid "Split"
@@ -3544,7 +3545,7 @@ msgstr "A Kit jail elkészítése gyors, bind mount segítségével"
 
 #: src/control/Control.ServerAuditDialog.ts:119
 msgid "Fast kit jail bind mounting not configured"
-msgstr ""
+msgstr "A gyors kit jail bind mounting nincs konfigurálva"
 
 #: src/control/Control.ServerAuditDialog.ts:127
 msgid "Poorly performing proxying of all network requests."
@@ -3639,12 +3640,12 @@ msgid "On"
 msgstr "Be"
 
 #: src/control/Control.StatusBar.js:158
-#: src/control/jsdialog/Definitions.Menu.ts:1775
+#: src/control/jsdialog/Definitions.Menu.ts:1787
 msgid "Off"
 msgstr "Ki"
 
 #: src/control/Control.StatusBar.js:191
-#: src/control/jsdialog/Definitions.Menu.ts:163
+#: src/control/jsdialog/Definitions.Menu.ts:175
 msgid "Average"
 msgstr "Átlag"
 
@@ -3653,7 +3654,7 @@ msgid "CountA"
 msgstr "Darab2"
 
 #: src/control/Control.StatusBar.js:193
-#: src/control/jsdialog/Definitions.Menu.ts:166
+#: src/control/jsdialog/Definitions.Menu.ts:178
 msgid "Count"
 msgstr "Darab"
 
@@ -3666,7 +3667,7 @@ msgid "Minimum"
 msgstr "Minimum"
 
 #: src/control/Control.StatusBar.js:196
-#: src/control/jsdialog/Definitions.Menu.ts:162
+#: src/control/jsdialog/Definitions.Menu.ts:174
 msgid "Sum"
 msgstr "Összeg"
 
@@ -3680,7 +3681,7 @@ msgstr "Több oldalas nézet"
 
 #: src/control/Control.StatusBar.js:257
 msgid "Zoom to Fit Page Width"
-msgstr ""
+msgstr "Nagyítás az oldalszélességhez"
 
 #: src/control/Control.StatusBar.js:415
 msgid "The document is probably locked and has been opened as view-only"
@@ -4119,19 +4120,19 @@ msgstr "Írásvédett"
 
 #: src/control/PermissionMode.ts:125
 msgid "Viewing Mode"
-msgstr ""
+msgstr "Megtekintési mód"
 
 #: src/control/PermissionMode.ts:131
 msgid "Editing Mode"
-msgstr ""
+msgstr "Szerkesztési mód"
 
 #: src/control/PermissionMode.ts:141 src/control/PermissionMode.ts:213
 #: src/control/PermissionMode.ts:219 src/control/PermissionMode.ts:225
 msgid "Viewing"
-msgstr ""
+msgstr "Megtekintés"
 
 #: src/control/jsdialog/Definitions.Menu.ts:111
-#: src/control/jsdialog/Definitions.Menu.ts:1748
+#: src/control/jsdialog/Definitions.Menu.ts:1760
 msgid "Normal"
 msgstr "Normál"
 
@@ -4143,375 +4144,375 @@ msgstr "Széles"
 msgid "Narrow"
 msgstr "Keskeny"
 
-#: src/control/jsdialog/Definitions.Menu.ts:164
+#: src/control/jsdialog/Definitions.Menu.ts:176
 msgid "Min"
 msgstr "Min"
 
-#: src/control/jsdialog/Definitions.Menu.ts:165
+#: src/control/jsdialog/Definitions.Menu.ts:177
 msgid "Max"
 msgstr "Max"
 
-#: src/control/jsdialog/Definitions.Menu.ts:1443
+#: src/control/jsdialog/Definitions.Menu.ts:1455
 msgid "Edit Single Sparkline"
 msgstr "Egyetlen sparkline szerkesztése"
 
-#: src/control/jsdialog/Definitions.Menu.ts:1454
+#: src/control/jsdialog/Definitions.Menu.ts:1466
 msgid "Delete Single Sparkline"
 msgstr "Egyetlen sparkline törlése"
 
-#: src/control/jsdialog/Definitions.Menu.ts:1491
+#: src/control/jsdialog/Definitions.Menu.ts:1503
 msgid "Portrait"
 msgstr "Álló"
 
-#: src/control/jsdialog/Definitions.Menu.ts:1497
+#: src/control/jsdialog/Definitions.Menu.ts:1509
 msgid "Landscape"
 msgstr "Fekvő"
 
-#: src/control/jsdialog/Definitions.Menu.ts:1503
+#: src/control/jsdialog/Definitions.Menu.ts:1515
 msgid "A6"
 msgstr "A6"
 
-#: src/control/jsdialog/Definitions.Menu.ts:1504
+#: src/control/jsdialog/Definitions.Menu.ts:1516
 msgid "A5"
 msgstr "A5"
 
-#: src/control/jsdialog/Definitions.Menu.ts:1505
+#: src/control/jsdialog/Definitions.Menu.ts:1517
 msgid "A4"
 msgstr "A4"
 
-#: src/control/jsdialog/Definitions.Menu.ts:1506
+#: src/control/jsdialog/Definitions.Menu.ts:1518
 msgid "A3"
 msgstr "A3"
 
-#: src/control/jsdialog/Definitions.Menu.ts:1507
+#: src/control/jsdialog/Definitions.Menu.ts:1519
 msgid "B6 (ISO)"
 msgstr "B6 (ISO)"
 
-#: src/control/jsdialog/Definitions.Menu.ts:1508
+#: src/control/jsdialog/Definitions.Menu.ts:1520
 msgid "B5 (ISO)"
 msgstr "B5 (ISO)"
 
-#: src/control/jsdialog/Definitions.Menu.ts:1509
+#: src/control/jsdialog/Definitions.Menu.ts:1521
 msgid "B4 (ISO)"
 msgstr "B4 (ISO)"
 
-#: src/control/jsdialog/Definitions.Menu.ts:1510
+#: src/control/jsdialog/Definitions.Menu.ts:1522
 msgid "Letter"
 msgstr "Letter"
 
-#: src/control/jsdialog/Definitions.Menu.ts:1511
+#: src/control/jsdialog/Definitions.Menu.ts:1523
 msgid "Legal"
 msgstr "Legal"
 
-#: src/control/jsdialog/Definitions.Menu.ts:1512
+#: src/control/jsdialog/Definitions.Menu.ts:1524
 msgid "Long Bond"
 msgstr "Long Bond"
 
-#: src/control/jsdialog/Definitions.Menu.ts:1513
+#: src/control/jsdialog/Definitions.Menu.ts:1525
 msgid "Tabloid"
 msgstr "Tabloid"
 
-#: src/control/jsdialog/Definitions.Menu.ts:1514
+#: src/control/jsdialog/Definitions.Menu.ts:1526
 msgid "B6 (JIS)"
 msgstr "B6 (JIS)"
 
-#: src/control/jsdialog/Definitions.Menu.ts:1515
+#: src/control/jsdialog/Definitions.Menu.ts:1527
 msgid "B5 (JIS)"
 msgstr "B5 (JIS)"
 
-#: src/control/jsdialog/Definitions.Menu.ts:1516
+#: src/control/jsdialog/Definitions.Menu.ts:1528
 msgid "B4 (JIS)"
 msgstr "B4 (JIS)"
 
-#: src/control/jsdialog/Definitions.Menu.ts:1517
+#: src/control/jsdialog/Definitions.Menu.ts:1529
 msgid "16 Kai"
 msgstr "16 Kai"
 
-#: src/control/jsdialog/Definitions.Menu.ts:1518
+#: src/control/jsdialog/Definitions.Menu.ts:1530
 msgid "32 Kai"
 msgstr "32 Kai"
 
-#: src/control/jsdialog/Definitions.Menu.ts:1519
+#: src/control/jsdialog/Definitions.Menu.ts:1531
 msgid "Big 32 Kai"
 msgstr "Big 32 Kai"
 
-#: src/control/jsdialog/Definitions.Menu.ts:1520
+#: src/control/jsdialog/Definitions.Menu.ts:1532
 msgid "User"
 msgstr "Egyéni"
 
-#: src/control/jsdialog/Definitions.Menu.ts:1521
+#: src/control/jsdialog/Definitions.Menu.ts:1533
 msgid "DL Envelope"
 msgstr "DL boríték"
 
-#: src/control/jsdialog/Definitions.Menu.ts:1522
+#: src/control/jsdialog/Definitions.Menu.ts:1534
 msgid "C6 Envelope"
 msgstr "C6-os boríték"
 
-#: src/control/jsdialog/Definitions.Menu.ts:1523
+#: src/control/jsdialog/Definitions.Menu.ts:1535
 msgid "C6/5 Envelope"
 msgstr "C6/5-ös boríték"
 
-#: src/control/jsdialog/Definitions.Menu.ts:1524
+#: src/control/jsdialog/Definitions.Menu.ts:1536
 msgid "C5 Envelope"
 msgstr "C5-ös boríték"
 
-#: src/control/jsdialog/Definitions.Menu.ts:1525
+#: src/control/jsdialog/Definitions.Menu.ts:1537
 msgid "C4 Envelope"
 msgstr "C4-es boríték"
 
-#: src/control/jsdialog/Definitions.Menu.ts:1528
+#: src/control/jsdialog/Definitions.Menu.ts:1540
 msgid "#6¾ Envelope"
 msgstr "#6¾-es boríték"
 
-#: src/control/jsdialog/Definitions.Menu.ts:1533
+#: src/control/jsdialog/Definitions.Menu.ts:1545
 msgid "#7¾ (Monarch) Envelope"
 msgstr "#7¾-es (Monarch) boríték"
 
-#: src/control/jsdialog/Definitions.Menu.ts:1536
+#: src/control/jsdialog/Definitions.Menu.ts:1548
 msgid "#9 Envelope"
 msgstr "#9-es boríték"
 
-#: src/control/jsdialog/Definitions.Menu.ts:1537
+#: src/control/jsdialog/Definitions.Menu.ts:1549
 msgid "#10 Envelope"
 msgstr "#10-es boríték"
 
-#: src/control/jsdialog/Definitions.Menu.ts:1538
+#: src/control/jsdialog/Definitions.Menu.ts:1550
 msgid "#11 Envelope"
 msgstr "#11-es boríték"
 
-#: src/control/jsdialog/Definitions.Menu.ts:1539
+#: src/control/jsdialog/Definitions.Menu.ts:1551
 msgid "#12 Envelope"
 msgstr "#12-es boríték"
 
-#: src/control/jsdialog/Definitions.Menu.ts:1542
+#: src/control/jsdialog/Definitions.Menu.ts:1554
 msgid "Japanese Postcard"
 msgstr "Japán levelezőlap"
 
-#: src/control/jsdialog/Definitions.Menu.ts:1728
+#: src/control/jsdialog/Definitions.Menu.ts:1740
 msgid "Insert Local Image"
 msgstr "Helyi kép beszúrása"
 
-#: src/control/jsdialog/Definitions.Menu.ts:1734
+#: src/control/jsdialog/Definitions.Menu.ts:1746
 msgid "Insert Local Multimedia"
 msgstr "Multimédia beillesztése helyi gépről"
 
-#: src/control/jsdialog/Definitions.Menu.ts:1740
+#: src/control/jsdialog/Definitions.Menu.ts:1752
 msgid "Compare Local Document"
-msgstr ""
+msgstr "Összehasonlítás helyi dokumentummal"
 
-#: src/control/jsdialog/Definitions.Menu.ts:1746
+#: src/control/jsdialog/Definitions.Menu.ts:1758
 msgid "Very Tight"
 msgstr "Nagyon szoros"
 
-#: src/control/jsdialog/Definitions.Menu.ts:1747
+#: src/control/jsdialog/Definitions.Menu.ts:1759
 msgid "Tight"
 msgstr "Szoros"
 
-#: src/control/jsdialog/Definitions.Menu.ts:1749
+#: src/control/jsdialog/Definitions.Menu.ts:1761
 msgid "Loose"
 msgstr "Laza"
 
-#: src/control/jsdialog/Definitions.Menu.ts:1750
+#: src/control/jsdialog/Definitions.Menu.ts:1762
 msgid "Very Loose"
 msgstr "Nagyon laza"
 
-#: src/control/jsdialog/Definitions.Menu.ts:1780
+#: src/control/jsdialog/Definitions.Menu.ts:1792
 msgid "All users"
 msgstr "Minden felhasználó"
 
-#: src/control/jsdialog/Definitions.Menu.ts:1785
+#: src/control/jsdialog/Definitions.Menu.ts:1797
 msgid "This user"
 msgstr "Ez a felhasználó"
 
-#: src/control/jsdialog/Definitions.Menu.ts:1919
+#: src/control/jsdialog/Definitions.Menu.ts:1931
 msgid "No Borders"
 msgstr "Szegély nélkül"
 
-#: src/control/jsdialog/Definitions.Menu.ts:1925
+#: src/control/jsdialog/Definitions.Menu.ts:1937
 msgid "Left Border"
 msgstr "Bal szegély"
 
-#: src/control/jsdialog/Definitions.Menu.ts:1931
+#: src/control/jsdialog/Definitions.Menu.ts:1943
 msgid "Right Border"
 msgstr "Jobb szegély"
 
-#: src/control/jsdialog/Definitions.Menu.ts:1937
+#: src/control/jsdialog/Definitions.Menu.ts:1949
 msgid "Left And Right Borders"
 msgstr "Bal és jobb szegély"
 
-#: src/control/jsdialog/Definitions.Menu.ts:1943
+#: src/control/jsdialog/Definitions.Menu.ts:1955
 msgid "Top Border"
 msgstr "Felső szegély"
 
-#: src/control/jsdialog/Definitions.Menu.ts:1949
+#: src/control/jsdialog/Definitions.Menu.ts:1961
 msgid "Bottom Border"
 msgstr "Alsó szegély"
 
-#: src/control/jsdialog/Definitions.Menu.ts:1955
+#: src/control/jsdialog/Definitions.Menu.ts:1967
 msgid "Top And Bottom Border"
 msgstr "Alsó és felső szegély"
 
-#: src/control/jsdialog/Definitions.Menu.ts:1961
+#: src/control/jsdialog/Definitions.Menu.ts:1973
 msgid "Outer Border"
 msgstr "Külső szegély"
 
-#: src/control/jsdialog/Definitions.Menu.ts:1967
+#: src/control/jsdialog/Definitions.Menu.ts:1979
 msgid "All Horizontal Lines"
 msgstr "Összes vízszintes vonal"
 
-#: src/control/jsdialog/Definitions.Menu.ts:1973
+#: src/control/jsdialog/Definitions.Menu.ts:1985
 msgid "Outer Border And Horizontal Lines"
 msgstr "Külső szegély és vízszintes vonalak"
 
-#: src/control/jsdialog/Definitions.Menu.ts:1979
+#: src/control/jsdialog/Definitions.Menu.ts:1991
 msgid "Outer Border and Vertical Lines"
 msgstr "Külső szegély és függőleges vonalak"
 
-#: src/control/jsdialog/Definitions.Menu.ts:1985
+#: src/control/jsdialog/Definitions.Menu.ts:1997
 msgid "Outer Borders And All Inner lines"
 msgstr "Külső szegély és minden belső vonal"
 
-#: src/control/jsdialog/Definitions.Menu.ts:1990
+#: src/control/jsdialog/Definitions.Menu.ts:2002
 msgid "Line color"
 msgstr "Vonalszín"
 
-#: src/control/jsdialog/Definitions.Menu.ts:2001
+#: src/control/jsdialog/Definitions.Menu.ts:2013
 msgid "Line style"
 msgstr "Vonalstílus"
 
-#: src/control/jsdialog/Definitions.Menu.ts:2004
+#: src/control/jsdialog/Definitions.Menu.ts:2016
 msgid "Hairline (0.05 pt)"
 msgstr "Hajszálvékony (0,05 pt)"
 
-#: src/control/jsdialog/Definitions.Menu.ts:2013
+#: src/control/jsdialog/Definitions.Menu.ts:2025
 msgid "Very thin (0.50 pt)"
 msgstr "Nagyon vékony (0,5 pt)"
 
-#: src/control/jsdialog/Definitions.Menu.ts:2022
+#: src/control/jsdialog/Definitions.Menu.ts:2034
 msgid "Thin (0.75 pt)"
 msgstr "Vékony (0,75 pt)"
 
-#: src/control/jsdialog/Definitions.Menu.ts:2031
+#: src/control/jsdialog/Definitions.Menu.ts:2043
 msgid "Medium (1.50 pt)"
 msgstr "Közepes (1,50 pt)"
 
-#: src/control/jsdialog/Definitions.Menu.ts:2040
+#: src/control/jsdialog/Definitions.Menu.ts:2052
 msgid "Thick (2.25 pt)"
 msgstr "Vastag (2,25 pt)"
 
-#: src/control/jsdialog/Definitions.Menu.ts:2049
+#: src/control/jsdialog/Definitions.Menu.ts:2061
 msgid "Extra thick (4.50 pt)"
 msgstr "Extra vastag (4,50 pt)"
 
-#: src/control/jsdialog/Definitions.Menu.ts:2058
+#: src/control/jsdialog/Definitions.Menu.ts:2070
 msgid "Double Hairline (1.10 pt)"
 msgstr "Dupla hajszálvékony (1,10 pt)"
 
-#: src/control/jsdialog/Definitions.Menu.ts:2067
+#: src/control/jsdialog/Definitions.Menu.ts:2079
 msgid "Double Hairline (2.35 pt)"
 msgstr "Dupla hajszálvékony (2,35 pt)"
 
-#: src/control/jsdialog/Definitions.Menu.ts:2076
+#: src/control/jsdialog/Definitions.Menu.ts:2088
 msgid "Thin/Medium (3.00 pt)"
 msgstr "Vékony/közepes (3,00 pt)"
 
-#: src/control/jsdialog/Definitions.Menu.ts:2085
+#: src/control/jsdialog/Definitions.Menu.ts:2097
 msgid "Medium/Hairline (3.05 pt)"
 msgstr "Közepes/hajszálvékony (3,05 pt)"
 
-#: src/control/jsdialog/Definitions.Menu.ts:2094
+#: src/control/jsdialog/Definitions.Menu.ts:2106
 msgid "Medium/Medium (4.50 pt)"
 msgstr "Közepes/közepes (4,50 pt)"
 
-#: src/control/jsdialog/Definitions.Menu.ts:2154
+#: src/control/jsdialog/Definitions.Menu.ts:2166
 msgid "Standard (4:3)"
 msgstr "Szabványos (4:3)"
 
-#: src/control/jsdialog/Definitions.Menu.ts:2159
+#: src/control/jsdialog/Definitions.Menu.ts:2171
 msgid "Widescreen (16:9)"
 msgstr "Szélesvásznú (16:9)"
 
-#: src/control/jsdialog/Definitions.Menu.ts:2169
+#: src/control/jsdialog/Definitions.Menu.ts:2181
 msgid "Blank Slide"
 msgstr "Üres dia"
 
-#: src/control/jsdialog/Definitions.Menu.ts:2170
+#: src/control/jsdialog/Definitions.Menu.ts:2182
 msgid "Title Slide"
 msgstr "Címdia"
 
-#: src/control/jsdialog/Definitions.Menu.ts:2171
+#: src/control/jsdialog/Definitions.Menu.ts:2183
 msgid "Title, Content"
 msgstr "Cím, tartalom"
 
-#: src/control/jsdialog/Definitions.Menu.ts:2172
+#: src/control/jsdialog/Definitions.Menu.ts:2184
 msgid "Title and 2 Content"
 msgstr "Cím és 2 tartalom"
 
-#: src/control/jsdialog/Definitions.Menu.ts:2173
+#: src/control/jsdialog/Definitions.Menu.ts:2185
 msgid "Title Only"
 msgstr "Csak cím"
 
-#: src/control/jsdialog/Definitions.Menu.ts:2174
+#: src/control/jsdialog/Definitions.Menu.ts:2186
 msgid "Centered Text"
 msgstr "Középre igazított szöveg"
 
-#: src/control/jsdialog/Definitions.Menu.ts:2175
+#: src/control/jsdialog/Definitions.Menu.ts:2187
 msgid "Title, 2 Content and Content"
 msgstr "Cím, 2 tartalom és tartalom"
 
-#: src/control/jsdialog/Definitions.Menu.ts:2176
+#: src/control/jsdialog/Definitions.Menu.ts:2188
 msgid "Title, Content and 2 Content"
 msgstr "Cím, tartalom és 2 tartalom"
 
-#: src/control/jsdialog/Definitions.Menu.ts:2177
+#: src/control/jsdialog/Definitions.Menu.ts:2189
 msgid "Title, 2 Content over Content"
 msgstr "Cím, 2 tartalom tartalom felett"
 
-#: src/control/jsdialog/Definitions.Menu.ts:2178
+#: src/control/jsdialog/Definitions.Menu.ts:2190
 msgid "Title, Content over Content"
 msgstr "Cím, tartalom tartalom felett"
 
-#: src/control/jsdialog/Definitions.Menu.ts:2179
+#: src/control/jsdialog/Definitions.Menu.ts:2191
 msgid "Title, 4 Content"
 msgstr "Cím, 4 tartalom"
 
-#: src/control/jsdialog/Definitions.Menu.ts:2180
+#: src/control/jsdialog/Definitions.Menu.ts:2192
 msgid "Title, 6 Content"
 msgstr "Cím, 6 tartalom"
 
-#: src/control/jsdialog/Definitions.Menu.ts:2181
+#: src/control/jsdialog/Definitions.Menu.ts:2193
 msgid "Vertical Title, Text, Chart"
 msgstr "Függőleges cím, szöveg, grafikon"
 
-#: src/control/jsdialog/Definitions.Menu.ts:2182
+#: src/control/jsdialog/Definitions.Menu.ts:2194
 msgid "Vertical Title, Vertical Text"
 msgstr "Függőleges cím, függőleges szöveg"
 
-#: src/control/jsdialog/Definitions.Menu.ts:2183
+#: src/control/jsdialog/Definitions.Menu.ts:2195
 msgid "Title, Vertical Text"
 msgstr "Cím, függőleges szöveg"
 
-#: src/control/jsdialog/Definitions.Menu.ts:2184
+#: src/control/jsdialog/Definitions.Menu.ts:2196
 msgid "Title, Vertical Text, Clipart"
 msgstr "Cím, függőleges szöveg, clipart"
 
-#: src/control/jsdialog/Definitions.Menu.ts:2319
+#: src/control/jsdialog/Definitions.Menu.ts:2331
 msgid "Grayscale"
 msgstr "Szürkeárnyalatos"
 
-#: src/control/jsdialog/Definitions.Menu.ts:2324
+#: src/control/jsdialog/Definitions.Menu.ts:2336
 msgid "Black/White"
 msgstr "Fekete-fehér"
 
-#: src/control/jsdialog/Definitions.Menu.ts:2329
+#: src/control/jsdialog/Definitions.Menu.ts:2341
 msgid "Watermark"
 msgstr "Vízjel"
 
-#: src/control/jsdialog/Definitions.Menu.ts:2337
+#: src/control/jsdialog/Definitions.Menu.ts:2349
 msgid "Insert comment"
 msgstr "Megjegyzés beszúrása"
 
-#: src/control/jsdialog/Definitions.Menu.ts:2341
+#: src/control/jsdialog/Definitions.Menu.ts:2353
 msgid "Comments list"
 msgstr "Megjegyzések listája"
 
@@ -4633,7 +4634,7 @@ msgstr "Itt jelennek meg a dokumentumhoz hozzáadott címsorok és objektumok."
 
 #: src/control/jsdialog/Widget.TreeView.ts:1672
 msgid "Search items"
-msgstr ""
+msgstr "Elemek keresése"
 
 #: src/app/Socket.ts:262
 msgid "Oops, there is a problem connecting to {productname}: "
@@ -4785,7 +4786,7 @@ msgstr "Dokumentumszínek"
 msgid ", cluster configuration error: mis-matching serverid"
 msgstr ", klaszterkonfigurációs hiba: eltérő kiszolgálóazonosító"
 
-#: src/dom/NotebookbarAccessibility.js:234
+#: src/dom/NotebookbarAccessibility.js:235
 msgid "{0} tab selected"
 msgstr "{0} fül kiválasztva"
 
@@ -5110,7 +5111,7 @@ msgstr "a Nézet menü"
 
 #: src/layer/tile/CanvasTileLayer.js:461
 msgid "Online Editor"
-msgstr ""
+msgstr "Online szerkesztő"
 
 #: src/layer/tile/CanvasTileLayer.js:1459
 msgid "Functions"
@@ -5303,7 +5304,7 @@ msgstr "Új fájl létrehozása sablonból..."
 
 #: src/map/handler/Map.WOPI.js:232
 msgid "Compare Document..."
-msgstr ""
+msgstr "Dokumentumok összehasonlítása..."
 
 #: src/map/handler/Map.WOPI.js:745
 msgid "File name should contain an extension."
@@ -5347,8 +5348,9 @@ msgid "Resume"
 msgstr "Folytatás"
 
 #: src/slideshow/PresenterConsole.js:39
+#, fuzzy
 msgid "Present to all"
-msgstr ""
+msgstr "Prezentálás mindenkinek"
 
 #: src/slideshow/PresenterConsole.js:40
 msgid "Go Back"
@@ -5785,27 +5787,26 @@ msgstr ""
 #~ msgstr "ServerId"
 
 #~ msgid ""
-#~ "The async Clipboard API is not supported by your browser, switching to "
-#~ "HTTPS is meant to fix that."
+#~ "The async Clipboard API is not supported by your browser, switching to HTTPS"
+#~ " is meant to fix that."
 #~ msgstr ""
 #~ "A böngésző nem támogatja az aszinkron vágólap API-t. Valószínűleg HTTPS "
 #~ "használata esetén működne."
 
 #~ msgid ""
 #~ "<p>Your browser has very limited access to the clipboard, so use these "
-#~ "keyboard shortcuts:</p><table class=\"warn-copy-paste\"><tr><td><kbd>Ctrl</"
-#~ "kbd><span class=\"kbd--plus\">+</span><kbd>C</kbd></td><td><kbd>Ctrl</"
-#~ "kbd><span class=\"kbd--plus\">+</span><kbd>X</kbd></td><td><kbd>Ctrl</"
-#~ "kbd><span class=\"kbd--plus\">+</span><kbd>V</kbd></td></tr><tr><td>Copy</"
-#~ "td><td>Cut</td><td>Paste</td></tr></table>"
+#~ "keyboard shortcuts:</p><table class=\"warn-copy-"
+#~ "paste\"><tr><td><kbd>Ctrl</kbd><span class=\"kbd--"
+#~ "plus\">+</span><kbd>C</kbd></td><td><kbd>Ctrl</kbd><span class=\"kbd--"
+#~ "plus\">+</span><kbd>X</kbd></td><td><kbd>Ctrl</kbd><span class=\"kbd--"
+#~ "plus\">+</span><kbd>V</kbd></td></tr><tr><td>Copy</td><td>Cut</td><td>Paste</td></tr></table>"
 #~ msgstr ""
 #~ "<p>A böngészője csak korlátozottan fér hozzá a vágólaphoz, ezért használja "
-#~ "az alábbi gyorsbillentyűket:</p><table class=\"warn-copy-paste\""
-#~ "><tr><td><kbd>Ctrl</kbd><span class=\"kbd--plus\""
-#~ ">+</span><kbd>C</kbd></td><td><kbd>Ctrl</kbd><span class=\"kbd--plus\""
-#~ ">+</span><kbd>X</kbd></td><td><kbd>Ctrl</kbd><span class=\"kbd--plus\">+</spa"
-#~ "n><kbd>V</kbd></td></tr><tr><td>Másolás</td><td>Kivágás</td><td>Beillesztés</"
-#~ "td></tr></table>"
+#~ "az alábbi gyorsbillentyűket:</p><table class=\"warn-copy-"
+#~ "paste\"><tr><td><kbd>Ctrl</kbd><span class=\"kbd--"
+#~ "plus\">+</span><kbd>C</kbd></td><td><kbd>Ctrl</kbd><span class=\"kbd--"
+#~ "plus\">+</span><kbd>X</kbd></td><td><kbd>Ctrl</kbd><span class=\"kbd--"
+#~ "plus\">+</span><kbd>V</kbd></td></tr><tr><td>Másolás</td><td>Kivágás</td><td>Beillesztés</td></tr></table>"
 
 #~ msgid ""
 #~ "<p>Your browser has very limited access to the clipboard</p><p><b>Please "
@@ -5813,9 +5814,9 @@ msgstr ""
 #~ "see more options</p><p>Close popup to ignore paste special</p>"
 #~ msgstr ""
 #~ "<p>A böngészője csak korlátozottan fér hozzá a vágólaphoz.</p><p>A további "
-#~ "lehetőségek megtekintéséhez használja az alábbi gyorsbillentyűt: <kbd>Ctrl</"
-#~ "kbd><span class=\"kbd--plus\">+</span><kbd>V</kbd>.</p><p>A speciális "
-#~ "beillesztés elvetéséhez zárja be ezt a felugró ablakot.</p>"
+#~ "lehetőségek megtekintéséhez használja az alábbi gyorsbillentyűt: "
+#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>V</kbd>.</p><p>A "
+#~ "speciális beillesztés elvetéséhez zárja be ezt a felugró ablakot.</p>"
 
 #~ msgid "Normal View"
 #~ msgstr "Normál nézet"
@@ -5856,12 +5857,12 @@ msgstr ""
 
 #~ msgid ""
 #~ "<a id=\"slide-1-indicator\" class=\"active\" href=\"#slide-1\">1</a> <a "
-#~ "id=\"slide-2-indicator\" href=\"#slide-2\">2</a> <a id=\"slide-3-"
-#~ "indicator\" href=\"#slide-3\">3</a>"
+#~ "id=\"slide-2-indicator\" href=\"#slide-2\">2</a> <a id=\"slide-3-indicator\""
+#~ " href=\"#slide-3\">3</a>"
 #~ msgstr ""
-#~ "<a id=\"slide-1-indicator\" class=\"active\" href=\"#slide-1\">1</a> <a id="
-#~ "\"slide-2-indicator\" href=\"#slide-2\">2</a> <a id=\"slide-3-indicator\" "
-#~ "href=\"#slide-3\">3</a>"
+#~ "<a id=\"slide-1-indicator\" class=\"active\" href=\"#slide-1\">1</a> <a "
+#~ "id=\"slide-2-indicator\" href=\"#slide-2\">2</a> <a id=\"slide-3-indicator\""
+#~ " href=\"#slide-3\">3</a>"
 
 #~ msgid "ODF Spreadsheet (.ods)"
 #~ msgstr "ODF munkafüzet (.ods)"
@@ -5907,8 +5908,8 @@ msgstr ""
 #~ "documents inside {productname}, there is no need to download.</p>"
 #~ msgstr ""
 #~ "<p>Ha a dokumentum nagyobb darabját akarja egy külső alkalmazással "
-#~ "megosztani, akkor először le kell töltenie azt az eszközre. Ehhez nyomja meg "
-#~ "a az alábbi „Letöltés indítása” gombot, és amikor a letöltés kész, nyomja "
+#~ "megosztani, akkor először le kell töltenie azt az eszközre. Ehhez nyomja meg"
+#~ " a az alábbi „Letöltés indítása” gombot, és amikor a letöltés kész, nyomja "
 #~ "meg a „Vágólapra másolás megerősítése” gombot.</p><p>Ha a {productname}-on "
 #~ "belül másol egyik dokumentumból a másikba, akkor nem kell a dokumentumot "
 #~ "letöltenie.</p>"
@@ -5944,9 +5945,9 @@ msgstr ""
 #, javascript-format
 #~ msgid ""
 #~ "Save failed because the document is too large or disk quota exceeded. "
-#~ "Document will now be read-only but you may still download it now to "
-#~ "preserve a copy locally. Please contact the server (%storageserver) "
-#~ "administrator to resolve the issue."
+#~ "Document will now be read-only but you may still download it now to preserve"
+#~ " a copy locally. Please contact the server (%storageserver) administrator to"
+#~ " resolve the issue."
 #~ msgstr ""
 #~ "A mentés nem sikerült, mert a dokumentum túl nagy, vagy túllépte a "
 #~ "lemezkvótát. A dokumentum most már írásvédett lesz, de most is letöltheti, "
@@ -6152,21 +6153,21 @@ msgstr ""
 #~ "{coolversion} introduces important improvements, in the areas of usability, "
 #~ "visual presentation and performance."
 #~ msgstr ""
-#~ "Élvezze a legújabb fejlesztések eredményét, használja ingyen és szabadon ezt "
-#~ "a böngészőben futó szoftvert önállóan vagy másokkal közösen. Androidot és "
+#~ "Élvezze a legújabb fejlesztések eredményét, használja ingyen és szabadon ezt"
+#~ " a böngészőben futó szoftvert önállóan vagy másokkal közösen. Androidot és "
 #~ "iOS-t futtató mobileszközére is letöltheti az <a href=\"%coolAppsURL\" "
 #~ "target=\"_blank\">alkalmazást</a>. A {coolversion} a használhatóság, a "
 #~ "megjelenés és a teljesítmény terén számos újdonsággal jelentkezik."
 
 #, javascript-format
 #~ msgid ""
-#~ "Check the <a href=\"%coolReleaseNotesURL\" target=\"_blank\">release notes</"
-#~ "a> and learn all about the latest milestone in performance particularly for "
-#~ "larger groups working on documents, new native sidebar, new re-worked avatar "
-#~ "list, asynchronous saving, faster spell checking and more."
+#~ "Check the <a href=\"%coolReleaseNotesURL\" target=\"_blank\">release "
+#~ "notes</a> and learn all about the latest milestone in performance "
+#~ "particularly for larger groups working on documents, new native sidebar, new"
+#~ " re-worked avatar list, asynchronous saving, faster spell checking and more."
 #~ msgstr ""
-#~ "Olvassa el az <a href=\"%coolReleaseNotesURL\" target=\"_blank\">angol „"
-#~ "release notes”-ot</a>, ahol részletesen le vannak írva az újdonságok, "
+#~ "Olvassa el az <a href=\"%coolReleaseNotesURL\" target=\"_blank\">angol "
+#~ "„release notes”-ot</a>, ahol részletesen le vannak írva az újdonságok, "
 #~ "például a sok ember által egyszerre végzett dokumentumszerkesztés "
 #~ "teljesítménynövekedése, az új natív oldalsáv, az újratervezett avatárlista, "
 #~ "az aszinkron mentés, a gyorsabb helyesírás-ellenőrzés stb."
@@ -6179,22 +6180,23 @@ msgstr ""
 
 #, javascript-format
 #~ msgid ""
-#~ "Learn more about integrating into your web application in the <a href="
-#~ "\"%coolSdkURL\" target=\"_blank\">Collabora Online SDK</a>. Or head over to "
-#~ "the <a href=\"%coolStepByStepURL\" target=\"_blank\">step-by-step "
+#~ "Learn more about integrating into your web application in the <a "
+#~ "href=\"%coolSdkURL\" target=\"_blank\">Collabora Online SDK</a>. Or head "
+#~ "over to the <a href=\"%coolStepByStepURL\" target=\"_blank\">step-by-step "
 #~ "instructions</a> and build CODE from scratch. You can also help out with <a "
 #~ "href=\"%coolTranslationsURL\" target=\"_blank\">translations</a> or by <a "
 #~ "href=\"%coolBugreportURL\" target=\"_blank\">filing a bug report</a> with "
 #~ "all the essential steps on how to reproduce it."
 #~ msgstr ""
 #~ "Ha szeretné megtudni, hogyan integrálja a Collabora Online-t saját "
-#~ "webalkalmazásába, látogasson el a <a href=\"%coolSdkURL\" target=\"_blank\">"
-#~ "Collabora Online SDK</a> weboldalra. Vagy nézze meg a CODE forráskódból való "
-#~ "lefordításának <a href=\"%coolStepByStepURL\" target=\"_blank\">részletes "
-#~ "utasításait</a>. Segíthet a <a href=\"%coolTranslationsURL\" target=\""
-#~ "_blank\">fordításban</a> is, vagy ha hibát talál, <a href=\"%"
-#~ "coolBugreportURL\" target=\"_blank\">bejelentheti</a> a hiba "
-#~ "reprodukálásának rövid leírása mellett."
+#~ "webalkalmazásába, látogasson el a <a href=\"%coolSdkURL\" "
+#~ "target=\"_blank\">Collabora Online SDK</a> weboldalra. Vagy nézze meg a CODE"
+#~ " forráskódból való lefordításának <a href=\"%coolStepByStepURL\" "
+#~ "target=\"_blank\">részletes utasításait</a>. Segíthet a <a "
+#~ "href=\"%coolTranslationsURL\" target=\"_blank\">fordításban</a> is, vagy ha "
+#~ "hibát talál, <a href=\"%coolBugreportURL\" "
+#~ "target=\"_blank\">bejelentheti</a> a hiba reprodukálásának rövid leírása "
+#~ "mellett."
 
 #~ msgid "Learn more about the enterprise-ready versions"
 #~ msgstr "Tudjon meg többet az intézményi használatra kész verziókról"
@@ -6251,20 +6253,21 @@ msgstr ""
 
 #~ msgid ""
 #~ "<p>Your browser has very limited access to the clipboard, so use these "
-#~ "keyboard shortcuts:<ul><li><b>Ctrl+C</b>: For copying.</li><li><b>Ctrl+X</"
-#~ "b>: For cutting.</li><li><b>Ctrl+V</b>: For pasting.</li></ul></p>"
+#~ "keyboard shortcuts:<ul><li><b>Ctrl+C</b>: For "
+#~ "copying.</li><li><b>Ctrl+X</b>: For cutting.</li><li><b>Ctrl+V</b>: For "
+#~ "pasting.</li></ul></p>"
 #~ msgstr ""
-#~ "<p>A böngészője csak korlátozottan fér hozzá a vágólaphoz, ezért "
-#~ "használja az alábbi gyorsbillentyűket:<ul><li><b>Ctrl+C</b>: másolás</"
-#~ "li><li><b>Ctrl+X</b>: kivágás</li><li><b>Ctrl+V</b>: beillesztés</li></"
-#~ "ul></p>"
+#~ "<p>A böngészője csak korlátozottan fér hozzá a vágólaphoz, ezért használja "
+#~ "az alábbi gyorsbillentyűket:<ul><li><b>Ctrl+C</b>: "
+#~ "másolás</li><li><b>Ctrl+X</b>: kivágás</li><li><b>Ctrl+V</b>: "
+#~ "beillesztés</li></ul></p>"
 
 #~ msgid "Subtitle"
 #~ msgstr "Alcím"
 
 #~ msgid ""
-#~ "The Personal edition is supported by volunteers and intended for "
-#~ "individual use."
+#~ "The Personal edition is supported by volunteers and intended for individual "
+#~ "use."
 #~ msgstr ""
 #~ "A „Personal” változathoz csak önkéntesek nyújtanak terméktámogatást, és "
 #~ "egyéni felhasználásra van szánva."

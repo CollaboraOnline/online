@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-03 09:42+0200\n"
+"POT-Creation-Date: 2026-03-04 08:24+0200\n"
 "PO-Revision-Date: 2026-01-06 12:01+0000\n"
 "Last-Translator: Jeff Huang <jeff.huang@ossii.com.tw>\n"
 "Language-Team: Chinese (Traditional Han script) <https://hosted.weblate.org/"
@@ -27,47 +27,50 @@ msgid "Undo"
 msgstr "取消動作"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:10-69
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>Z</kbd>"
-msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Z</kbd>"
+msgstr ""
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>Z</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:11-38
 msgid "Redo"
 msgstr "再次動作"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:11-69
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>Y</kbd>"
-msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Y</kbd>"
+msgstr ""
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>Y</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:12-38
 msgid "Cut"
 msgstr "剪下"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:12-68
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>X</kbd>"
-msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>X</kbd>"
+msgstr ""
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>X</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:13-38
 msgid "Copy"
 msgstr "複製"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:13-69
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>C</kbd>,<br /><kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-"
 "hidden=\"true\">+</span><kbd>Insert</kbd>"
 msgstr ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>C</kbd>,<br "
-"/><kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Insert</kbd>"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>C</kbd>,<br /><kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-"
+"hidden=\"true\">+</span><kbd>Insert</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:14-38
 msgid "Paste as unformatted text"
@@ -79,6 +82,9 @@ msgid ""
 ">+</span><kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>V</kbd>"
 msgstr ""
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>V</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:15-38
 msgid "Paste special"
@@ -91,17 +97,22 @@ msgid ""
 ">+</span><kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>V</kbd>"
 msgstr ""
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>Alt</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>V</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:16-38
 msgid "Print (Download as PDF)"
 msgstr "列印（下載為 PDF 檔）"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:16-88
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>P</kbd>"
-msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>P</kbd>"
+msgstr ""
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>P</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:17-38
 msgid "Display the Keyboard shortcuts help"
@@ -113,6 +124,9 @@ msgid ""
 ">+</span><kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>?</kbd>"
 msgstr ""
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>?</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:18-38
 msgid "Focus to notebookbar menu"
@@ -124,6 +138,9 @@ msgid ""
 ">+</span><kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>F1</kbd>"
 msgstr ""
+"<kbd>Alt</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>F1</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:19-38
 msgid "Focus to document from menu"
@@ -138,11 +155,12 @@ msgid "Focus to selected comment's menu"
 msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:20-97
-#, fuzzy
 msgid ""
 "<kbd>Alt</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>C</kbd>"
-msgstr "<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>C</kbd>"
+msgstr ""
+"<kbd>Alt</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>C</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.h2:25-9
 #: html/cool-help.html%2Bdiv.div.div.h2:193-9
@@ -161,11 +179,12 @@ msgstr "粗體"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:162-69
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:195-69
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:260-69
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>B</kbd>"
-msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>B</kbd>"
+msgstr ""
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>B</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:28-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:163-38
@@ -178,11 +197,12 @@ msgstr "斜體"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:163-71
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:196-71
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:261-71
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>I</kbd>"
-msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>I</kbd>"
+msgstr ""
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>I</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:29-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:164-38
@@ -195,11 +215,12 @@ msgstr "底線"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:164-74
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:197-74
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:262-74
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>U</kbd>"
-msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>U</kbd>"
+msgstr ""
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>U</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:30-38
 msgid "Double Underline"
@@ -207,11 +228,12 @@ msgstr "雙底線"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:30-81
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:169-74
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>D</kbd>"
-msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>D</kbd>"
+msgstr ""
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>D</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:31-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:165-38
@@ -229,6 +251,9 @@ msgid ""
 ">+</span><kbd>Alt</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>5</kbd>"
 msgstr ""
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>Alt</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>5</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:32-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:199-38
@@ -244,6 +269,9 @@ msgid ""
 ">+</span><kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>P</kbd>"
 msgstr ""
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>P</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:33-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:200-38
@@ -259,6 +287,9 @@ msgid ""
 ">+</span><kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>B</kbd>"
 msgstr ""
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>B</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:34-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:166-38
@@ -267,11 +298,12 @@ msgstr "移除直接格式設定"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:34-89
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:166-89
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>M</kbd>"
-msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>M</kbd>"
+msgstr ""
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>M</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.h2:38-9
 #: html/cool-help.html%2Bdiv.div.div.h2:205-9
@@ -290,11 +322,12 @@ msgstr "置中"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:171-77
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:207-77
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:272-77
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>E</kbd>"
-msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>E</kbd>"
+msgstr ""
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>E</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:41-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:172-38
@@ -307,11 +340,12 @@ msgstr "向左對齊"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:172-75
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:208-75
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:273-75
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>L</kbd>"
-msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>L</kbd>"
+msgstr ""
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>L</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:42-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:173-38
@@ -324,11 +358,12 @@ msgstr "向右對齊"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:173-76
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:209-76
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:274-76
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>R</kbd>"
-msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>R</kbd>"
+msgstr ""
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>R</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:43-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:174-38
@@ -341,44 +376,48 @@ msgstr "左右對齊"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:174-72
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:210-72
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:275-72
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>J</kbd>"
-msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>J</kbd>"
+msgstr ""
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>J</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:44-38
 msgid "Apply Default paragraph style"
 msgstr "套用預設段落樣式"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:44-94
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>0</kbd>"
-msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>0</kbd>"
+msgstr ""
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>0</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:45-38
 msgid "Apply Heading 1 paragraph style"
 msgstr "套用標題 1 段落樣式"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:45-96
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>1</kbd>"
-msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>1</kbd>"
+msgstr ""
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>1</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:46-38
 msgid "Apply Heading 2 paragraph style"
 msgstr "套用標題 2 段落樣式"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:46-96
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>2</kbd>"
-msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>2</kbd>"
+msgstr ""
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>2</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:47-38
 msgid "Apply Heading 3 paragraph style"
@@ -386,33 +425,36 @@ msgstr "套用標題 3 段落樣式"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:47-96
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:175-89
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>3</kbd>"
-msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>3</kbd>"
+msgstr ""
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>3</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:48-38
 msgid "Apply Heading 4 paragraph style"
 msgstr "套用標題 4 段落樣式"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:48-96
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>4</kbd>"
-msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>4</kbd>"
+msgstr ""
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>4</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:49-38
 msgid "Apply Heading 5 paragraph style"
 msgstr "套用標題 5 段落樣式"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:49-96
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>5</kbd>"
-msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>5</kbd>"
+msgstr ""
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>5</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.h2:53-9
 msgid "Text selection and navigation in document"
@@ -436,11 +478,12 @@ msgstr "全部選取"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:266-75
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:283-75
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:317-91
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>A</kbd>"
-msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>A</kbd>"
+msgstr ""
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>A</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:56-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:219-38
@@ -735,11 +778,15 @@ msgstr "往前選取至文件起始位置"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:75-104
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:238-103
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:303-103
+#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>Home</kbd>"
 msgstr ""
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>V</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:76-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:239-38
@@ -794,11 +841,15 @@ msgstr "往後選取至文件尾端"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:79-102
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:242-101
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:307-101
+#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>End</kbd>"
 msgstr ""
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>V</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:80-38
 msgid "Move the view up one page"
@@ -901,11 +952,15 @@ msgid "Delete to end of sentence"
 msgstr "刪除至句子結尾"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:89-90
+#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>Del</kbd>"
 msgstr ""
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>V</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.h2:93-9
 msgid "Shortcut Keys for Tables"
@@ -993,12 +1048,17 @@ msgid "Like Alt, but only the active cell is modified"
 msgstr "類似 Alt，但是僅修改使用中儲存格"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:102-38
+#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>Alt</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</"
 "span><kbd>Arrow Keys</kbd>"
 msgstr ""
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>Alt</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>V</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:103-38
 #, fuzzy
@@ -1035,11 +1095,14 @@ msgstr ""
 ">+</span><kbd>箭頭方向鍵與相鄰儲存格合併"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:105-38
+#, fuzzy
 msgid ""
 "<kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>Del</kbd>"
 msgstr ""
+"Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</kbd><span class=\"kbd"
+"--plus\">+</span><kbd>Del"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td.p:105-235
 msgid ""
@@ -1074,22 +1137,30 @@ msgid "Insert footnote"
 msgstr "插入註腳"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:114-80
+#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>Alt</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>F</kbd>"
 msgstr ""
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>Alt</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>5</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:115-38
 msgid "Insert endnote"
 msgstr "插入尾註"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:115-79
+#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>Alt</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>D</kbd>"
 msgstr ""
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>Alt</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>5</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:116-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:167-38
@@ -1098,11 +1169,15 @@ msgstr "插入評註"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:116-79
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:167-79
+#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>Alt</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>C</kbd>"
 msgstr ""
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>Alt</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>5</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:118-38
 msgid "Insert soft hyphen"
@@ -1120,22 +1195,29 @@ msgid "Insert non-breaking hyphen"
 msgstr "插入不斷行連字符"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:119-91
+#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>-</kbd>"
 msgstr ""
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>V</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:121-38
 msgid "Insert non-breaking space"
 msgstr "插入不斷行空格"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:121-90
+#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>Space</kbd>"
 msgstr ""
+"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
+"--plus\">+</span><kbd>Backspace"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:122-38
 msgid "Insert line break"
@@ -1166,11 +1248,15 @@ msgid "Column break (in multicolumnar text)"
 msgstr "斷欄符（多欄式文字）"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:124-101
+#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>Enter</kbd>"
 msgstr ""
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>V</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:125-38
 msgid ""
@@ -1308,22 +1394,29 @@ msgid "Go to next sheet."
 msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:146-82
+#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>Alt</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</"
 "span><kbd>Page Down</kbd>"
 msgstr ""
+"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
+"--plus\">+</span><kbd>下箭頭"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:147-38
 msgid "Go to previous sheet."
 msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:147-86
+#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>Alt</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</"
 "span><kbd>Page Up</kbd>"
 msgstr ""
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>Alt</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>5</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:148-38
 msgid ""
@@ -1334,11 +1427,14 @@ msgid ""
 msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:148-292
+#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>Arrow</kbd>"
 msgstr ""
+"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
+"--plus\">+</span><kbd>上箭頭"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:149-38
 msgid "Moves one sheet to the left."
@@ -1370,11 +1466,14 @@ msgid ""
 msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:151-280
+#, fuzzy
 msgid ""
 "<kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</"
 "span><kbd>Page Up</kbd>"
 msgstr ""
+"Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</kbd><span class=\"kbd"
+"--plus\">+</span><kbd>Del"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:152-38
 msgid ""
@@ -1470,66 +1569,90 @@ msgid "Two decimal places, thousands separator"
 msgstr "小數點下兩位、千位分隔符"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:176-104
+#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>1</kbd>"
 msgstr ""
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>V</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:177-38
 msgid "Standard exponential format"
 msgstr "標準指數格式"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:177-92
+#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>2</kbd>"
 msgstr ""
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>V</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:178-38
 msgid "Standard date format"
 msgstr "標準日期格式"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:178-85
+#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>3</kbd>"
 msgstr ""
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>V</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:179-38
 msgid "Standard currency format"
 msgstr "標準貨幣格式"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:179-89
+#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>4</kbd>"
 msgstr ""
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>V</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:180-38
 msgid "Standard percentage format (two decimal places)"
 msgstr "標準百分比格式（小數點下兩位）"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:180-112
+#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>5</kbd>"
 msgstr ""
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>V</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:181-38
 msgid "Standard format"
 msgstr "標準格式"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:181-80
+#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>6</kbd>"
 msgstr ""
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>V</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.h2:185-9
 msgid "Insert"
@@ -3065,236 +3188,236 @@ msgid "Set the properties of the element of the object."
 msgstr ""
 
 #~ msgid ""
-#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-#~ "\"kbd--plus\">+</span><kbd>V</kbd>"
+#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
+#~ "class=\"kbd--plus\">+</span><kbd>V</kbd>"
 #~ msgstr ""
-#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-#~ "\"kbd--plus\">+</span><kbd>V</kbd>"
+#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
+#~ "class=\"kbd--plus\">+</span><kbd>V</kbd>"
 
 #~ msgid ""
-#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class="
-#~ "\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd--plus\""
-#~ ">+</span><kbd>V</kbd>"
+#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span "
+#~ "class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd--"
+#~ "plus\">+</span><kbd>V</kbd>"
 #~ msgstr ""
-#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class="
-#~ "\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd--plus\""
-#~ ">+</span><kbd>V</kbd>"
+#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span "
+#~ "class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd--"
+#~ "plus\">+</span><kbd>V</kbd>"
 
 #~ msgid ""
-#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-#~ "\"kbd--plus\">+</span><kbd>?</kbd>"
+#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
+#~ "class=\"kbd--plus\">+</span><kbd>?</kbd>"
 #~ msgstr ""
-#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-#~ "\"kbd--plus\">+</span><kbd>?</kbd>"
+#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
+#~ "class=\"kbd--plus\">+</span><kbd>?</kbd>"
 
 #~ msgid ""
-#~ "<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-#~ "\"kbd--plus\">+</span><kbd>F1</kbd>"
+#~ "<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
+#~ "class=\"kbd--plus\">+</span><kbd>F1</kbd>"
 #~ msgstr ""
-#~ "<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-#~ "\"kbd--plus\">+</span><kbd>F1</kbd>"
+#~ "<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
+#~ "class=\"kbd--plus\">+</span><kbd>F1</kbd>"
 
 #~ msgid ""
-#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class="
-#~ "\"kbd--plus\">+</span><kbd>5</kbd>"
+#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span "
+#~ "class=\"kbd--plus\">+</span><kbd>5</kbd>"
 #~ msgstr ""
-#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class="
-#~ "\"kbd--plus\">+</span><kbd>5</kbd>"
+#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span "
+#~ "class=\"kbd--plus\">+</span><kbd>5</kbd>"
 
 #~ msgid ""
-#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-#~ "\"kbd--plus\">+</span><kbd>P</kbd>"
+#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
+#~ "class=\"kbd--plus\">+</span><kbd>P</kbd>"
 #~ msgstr ""
-#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-#~ "\"kbd--plus\">+</span><kbd>P</kbd>"
+#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
+#~ "class=\"kbd--plus\">+</span><kbd>P</kbd>"
 
 #~ msgid ""
-#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-#~ "\"kbd--plus\">+</span><kbd>B</kbd>"
+#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
+#~ "class=\"kbd--plus\">+</span><kbd>B</kbd>"
 #~ msgstr ""
-#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-#~ "\"kbd--plus\">+</span><kbd>B</kbd>"
-
-#, fuzzy
-#~ msgid ""
-#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-#~ "\"kbd--plus\">+</span><kbd>Home</kbd>"
-#~ msgstr ""
-#~ "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
-#~ "--plus\">+</span><kbd>Home"
+#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
+#~ "class=\"kbd--plus\">+</span><kbd>B</kbd>"
 
 #, fuzzy
 #~ msgid ""
-#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-#~ "\"kbd--plus\">+</span><kbd>End</kbd>"
+#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
+#~ "class=\"kbd--plus\">+</span><kbd>Home</kbd>"
 #~ msgstr ""
-#~ "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
-#~ "--plus\">+</span><kbd>End"
+#~ "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
+#~ "class=\"kbd--plus\">+</span><kbd>Home"
 
 #, fuzzy
 #~ msgid ""
-#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-#~ "\"kbd--plus\">+</span><kbd>Del</kbd>"
+#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
+#~ "class=\"kbd--plus\">+</span><kbd>End</kbd>"
 #~ msgstr ""
-#~ "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
-#~ "--plus\">+</span><kbd>Del"
+#~ "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
+#~ "class=\"kbd--plus\">+</span><kbd>End"
 
 #, fuzzy
 #~ msgid ""
-#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class="
-#~ "\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd--plus\">+</"
-#~ "span><kbd>Arrow Keys</kbd>"
+#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
+#~ "class=\"kbd--plus\">+</span><kbd>Del</kbd>"
 #~ msgstr ""
-#~ "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class=\"kbd--"
-#~ "plus\">+</span><kbd>Shift</kbd><span class=\"kbd--plus\""
-#~ ">+</span><kbd>箭頭方向鍵"
+#~ "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
+#~ "class=\"kbd--plus\">+</span><kbd>Del"
 
 #, fuzzy
 #~ msgid ""
-#~ "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</kbd><span class="
-#~ "\"kbd--plus\">+</span><kbd>Del</kbd>"
+#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span "
+#~ "class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd--"
+#~ "plus\">+</span><kbd>Arrow Keys</kbd>"
 #~ msgstr ""
-#~ "Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</kbd><span class=\"kbd"
-#~ "--plus\">+</span><kbd>Del"
+#~ "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class=\"kbd"
+#~ "--plus\">+</span><kbd>Shift</kbd><span class=\"kbd--"
+#~ "plus\">+</span><kbd>箭頭方向鍵"
 
 #, fuzzy
 #~ msgid ""
-#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class="
-#~ "\"kbd--plus\">+</span><kbd>F</kbd>"
+#~ "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</kbd><span "
+#~ "class=\"kbd--plus\">+</span><kbd>Del</kbd>"
 #~ msgstr ""
-#~ "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class=\"kbd--"
-#~ "plus\">+</span><kbd>F"
+#~ "Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</kbd><span "
+#~ "class=\"kbd--plus\">+</span><kbd>Del"
 
 #, fuzzy
 #~ msgid ""
-#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class="
-#~ "\"kbd--plus\">+</span><kbd>D</kbd>"
+#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span "
+#~ "class=\"kbd--plus\">+</span><kbd>F</kbd>"
 #~ msgstr ""
-#~ "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class=\"kbd--"
-#~ "plus\">+</span><kbd>D"
+#~ "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class=\"kbd"
+#~ "--plus\">+</span><kbd>F"
 
 #, fuzzy
 #~ msgid ""
-#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class="
-#~ "\"kbd--plus\">+</span><kbd>C</kbd>"
+#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span "
+#~ "class=\"kbd--plus\">+</span><kbd>D</kbd>"
 #~ msgstr ""
-#~ "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class=\"kbd--"
-#~ "plus\">+</span><kbd>C"
+#~ "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class=\"kbd"
+#~ "--plus\">+</span><kbd>D"
 
 #, fuzzy
 #~ msgid ""
-#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-#~ "\"kbd--plus\">+</span><kbd>-</kbd>"
+#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span "
+#~ "class=\"kbd--plus\">+</span><kbd>C</kbd>"
 #~ msgstr ""
-#~ "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
-#~ "--plus\">+</span><kbd>-"
+#~ "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class=\"kbd"
+#~ "--plus\">+</span><kbd>C"
 
 #, fuzzy
 #~ msgid ""
-#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-#~ "\"kbd--plus\">+</span><kbd>Space</kbd>"
+#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
+#~ "class=\"kbd--plus\">+</span><kbd>-</kbd>"
 #~ msgstr ""
-#~ "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
-#~ "--plus\">+</span><kbd>Space"
+#~ "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
+#~ "class=\"kbd--plus\">+</span><kbd>-"
 
 #, fuzzy
 #~ msgid ""
-#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-#~ "\"kbd--plus\">+</span><kbd>Enter</kbd>"
+#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
+#~ "class=\"kbd--plus\">+</span><kbd>Space</kbd>"
 #~ msgstr ""
-#~ "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
-#~ "--plus\">+</span><kbd>Enter"
+#~ "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
+#~ "class=\"kbd--plus\">+</span><kbd>Space"
 
 #, fuzzy
 #~ msgid ""
-#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class="
-#~ "\"kbd--plus\">+</span><kbd>Page Down</kbd>"
+#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
+#~ "class=\"kbd--plus\">+</span><kbd>Enter</kbd>"
 #~ msgstr ""
-#~ "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class=\"kbd--"
-#~ "plus\">+</span><kbd>D"
+#~ "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
+#~ "class=\"kbd--plus\">+</span><kbd>Enter"
 
 #, fuzzy
 #~ msgid ""
-#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class="
-#~ "\"kbd--plus\">+</span><kbd>Page Up</kbd>"
+#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span "
+#~ "class=\"kbd--plus\">+</span><kbd>Page Down</kbd>"
 #~ msgstr ""
-#~ "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class=\"kbd--"
-#~ "plus\">+</span><kbd>5"
+#~ "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class=\"kbd"
+#~ "--plus\">+</span><kbd>D"
 
 #, fuzzy
 #~ msgid ""
-#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-#~ "\"kbd--plus\">+</span><kbd>Arrow</kbd>"
+#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span "
+#~ "class=\"kbd--plus\">+</span><kbd>Page Up</kbd>"
 #~ msgstr ""
-#~ "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
-#~ "--plus\">+</span><kbd>上箭頭"
-
-#, fuzzy
-#~ msgid ""
-#~ "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</kbd><span class="
-#~ "\"kbd--plus\">+</span><kbd>Page Up</kbd>"
-#~ msgstr ""
-#~ "Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</kbd><span class=\"kbd"
-#~ "--plus\">+</span><kbd>Del"
-
-#, fuzzy
-#~ msgid ""
-#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-#~ "\"kbd--plus\">+</span><kbd>1</kbd>"
-#~ msgstr ""
-#~ "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
-#~ "--plus\">+</span><kbd>1"
-
-#, fuzzy
-#~ msgid ""
-#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-#~ "\"kbd--plus\">+</span><kbd>2</kbd>"
-#~ msgstr ""
-#~ "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
-#~ "--plus\">+</span><kbd>2"
-
-#, fuzzy
-#~ msgid ""
-#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-#~ "\"kbd--plus\">+</span><kbd>3</kbd>"
-#~ msgstr ""
-#~ "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
-#~ "--plus\">+</span><kbd>3"
-
-#, fuzzy
-#~ msgid ""
-#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-#~ "\"kbd--plus\">+</span><kbd>4</kbd>"
-#~ msgstr ""
-#~ "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
-#~ "--plus\">+</span><kbd>4"
-
-#, fuzzy
-#~ msgid ""
-#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-#~ "\"kbd--plus\">+</span><kbd>5</kbd>"
-#~ msgstr ""
-#~ "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
+#~ "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class=\"kbd"
 #~ "--plus\">+</span><kbd>5"
 
 #, fuzzy
 #~ msgid ""
-#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-#~ "\"kbd--plus\">+</span><kbd>6</kbd>"
+#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
+#~ "class=\"kbd--plus\">+</span><kbd>Arrow</kbd>"
 #~ msgstr ""
-#~ "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
-#~ "--plus\">+</span><kbd>6"
+#~ "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
+#~ "class=\"kbd--plus\">+</span><kbd>上箭頭"
+
+#, fuzzy
+#~ msgid ""
+#~ "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</kbd><span "
+#~ "class=\"kbd--plus\">+</span><kbd>Page Up</kbd>"
+#~ msgstr ""
+#~ "Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</kbd><span "
+#~ "class=\"kbd--plus\">+</span><kbd>Del"
+
+#, fuzzy
+#~ msgid ""
+#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
+#~ "class=\"kbd--plus\">+</span><kbd>1</kbd>"
+#~ msgstr ""
+#~ "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
+#~ "class=\"kbd--plus\">+</span><kbd>1"
+
+#, fuzzy
+#~ msgid ""
+#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
+#~ "class=\"kbd--plus\">+</span><kbd>2</kbd>"
+#~ msgstr ""
+#~ "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
+#~ "class=\"kbd--plus\">+</span><kbd>2"
+
+#, fuzzy
+#~ msgid ""
+#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
+#~ "class=\"kbd--plus\">+</span><kbd>3</kbd>"
+#~ msgstr ""
+#~ "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
+#~ "class=\"kbd--plus\">+</span><kbd>3"
+
+#, fuzzy
+#~ msgid ""
+#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
+#~ "class=\"kbd--plus\">+</span><kbd>4</kbd>"
+#~ msgstr ""
+#~ "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
+#~ "class=\"kbd--plus\">+</span><kbd>4"
+
+#, fuzzy
+#~ msgid ""
+#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
+#~ "class=\"kbd--plus\">+</span><kbd>5</kbd>"
+#~ msgstr ""
+#~ "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
+#~ "class=\"kbd--plus\">+</span><kbd>5"
+
+#, fuzzy
+#~ msgid ""
+#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
+#~ "class=\"kbd--plus\">+</span><kbd>6</kbd>"
+#~ msgstr ""
+#~ "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
+#~ "class=\"kbd--plus\">+</span><kbd>6"
 
 #~ msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>E"
 #~ msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>E"
 
 #, fuzzy
 #~ msgid ""
-#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-#~ "\"kbd--plus\">+</span>B"
+#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
+#~ "class=\"kbd--plus\">+</span>B"
 #~ msgstr ""
-#~ "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
-#~ "--plus\">+</span><kbd>B"
+#~ "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
+#~ "class=\"kbd--plus\">+</span><kbd>B"
 
 #, fuzzy
 #~ msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span>E"
@@ -3322,11 +3445,11 @@ msgstr ""
 
 #, fuzzy
 #~ msgid ""
-#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-#~ "\"kbd--plus\">+</span>Arrow Down"
+#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
+#~ "class=\"kbd--plus\">+</span>Arrow Down"
 #~ msgstr ""
-#~ "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
-#~ "--plus\">+</span><kbd>下箭頭"
+#~ "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
+#~ "class=\"kbd--plus\">+</span><kbd>下箭頭"
 
 #, fuzzy
 #~ msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span>Enter"

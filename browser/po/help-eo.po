@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-03 09:42+0200\n"
+"POT-Creation-Date: 2026-03-04 08:24+0200\n"
 "PO-Revision-Date: 2023-02-11 17:35+0000\n"
 "Last-Translator: Marc Rodrigues <marc.rodrigues@collabora.com>\n"
 "Language-Team: Esperanto <https://hosted.weblate.org/projects/"
@@ -74,11 +74,14 @@ msgid "Paste as unformatted text"
 msgstr "Alglui neformatitan tekston"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:14-90
+#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>V</kbd>"
 msgstr ""
+"Stir</kbd><span class=\"kbd--plus\">+</span><kbd>Maj</kbd><span class=\"kbd--"
+"plus\">+</span><kbd>Sago supren"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:15-38
 msgid "Paste special"
@@ -108,22 +111,28 @@ msgid "Display the Keyboard shortcuts help"
 msgstr "Vidigi la helpon pri fulmoklavoj"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:17-100
+#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>?</kbd>"
 msgstr ""
+"Stir</kbd><span class=\"kbd--plus\">+</span><kbd>Maj</kbd><span class=\"kbd--"
+"plus\">+</span><kbd>Sago supren"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:18-38
 msgid "Focus to notebookbar menu"
 msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:18-90
+#, fuzzy
 msgid ""
 "<kbd>Alt</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>F1</kbd>"
 msgstr ""
+"Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Maj</kbd><span class=\"kbd--"
+"plus\">+</span><kbd>Sagoklavo"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:19-38
 msgid "Focus to document from menu"
@@ -224,11 +233,14 @@ msgstr "Trastrekite"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:165-78
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:198-78
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:263-78
+#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>Alt</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>5</kbd>"
 msgstr ""
+"Stir</kbd><span class=\"kbd--plus\">+</span><kbd>Maj</kbd><span class=\"kbd--"
+"plus\">+</span><kbd>Sago supren"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:32-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:199-38
@@ -239,11 +251,14 @@ msgstr "Alta skribo"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:32-76
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:199-76
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:264-76
+#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>P</kbd>"
 msgstr ""
+"Stir</kbd><span class=\"kbd--plus\">+</span><kbd>Maj</kbd><span class=\"kbd--"
+"plus\">+</span><kbd>Sago supren"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:33-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:200-38
@@ -254,11 +269,14 @@ msgstr "Malalta skribo"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:33-74
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:200-74
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:265-74
+#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>B</kbd>"
 msgstr ""
+"Stir</kbd><span class=\"kbd--plus\">+</span><kbd>Maj</kbd><span class=\"kbd--"
+"plus\">+</span><kbd>Retropaŝo"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:34-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:166-38
@@ -735,11 +753,14 @@ msgstr "Iri kaj elekti tekston al la komenco de dokumento"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:75-104
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:238-103
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:303-103
+#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>Home</kbd>"
 msgstr ""
+"Stir</kbd><span class=\"kbd--plus\">+</span><kbd>Maj</kbd><span class=\"kbd--"
+"plus\">+</span><kbd>Sago supren"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:76-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:239-38
@@ -794,11 +815,14 @@ msgstr "Iri kaj elekti tekston al la fino de dokumento"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:79-102
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:242-101
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:307-101
+#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>End</kbd>"
 msgstr ""
+"Stir</kbd><span class=\"kbd--plus\">+</span><kbd>Maj</kbd><span class=\"kbd--"
+"plus\">+</span><kbd>Sago supren"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:80-38
 msgid "Move the view up one page"
@@ -901,11 +925,14 @@ msgid "Delete to end of sentence"
 msgstr "Forigi ĝis la fino de frazo"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:89-90
+#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>Del</kbd>"
 msgstr ""
+"Stir</kbd><span class=\"kbd--plus\">+</span><kbd>Maj</kbd><span class=\"kbd--"
+"plus\">+</span><kbd>Sago supren"
 
 #: html/cool-help.html%2Bdiv.div.div.h2:93-9
 msgid "Shortcut Keys for Tables"
@@ -947,15 +974,14 @@ msgid ""
 msgstr "Stir</kbd><span class=\"kbd--plus\">+</span><kbd>Tab"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:98-146
-#, fuzzy
 msgid ""
 "Inserts a tab stop (only in tables). Depending on the Window Manager in use, "
 "<kbd>Alt</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>Tab</kbd> may be used instead."
 msgstr ""
 "Enigas tabon (nur en tabeloj). Depende de la Fenestroadministrilo uzata, "
-"<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Tab</kbd> estas uzebla "
-"anstataŭe."
+"<kbd>Alt</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>Tab</kbd> estas uzebla anstataŭe."
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:99-38
 #, fuzzy
@@ -1018,14 +1044,14 @@ msgid ""
 msgstr "Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Enmeti"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:103-148
-#, fuzzy
 msgid ""
 "3 seconds in Insert mode, Arrow Key inserts row/column, <kbd>Ctrl</kbd><span "
 "class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>Arrow Key</kbd> "
 "inserts cell"
 msgstr ""
 "3 sekundoj en enmeta reĝimo, Sagoklavo enmetas vicon/kolumnon, <kbd>Ctrl</"
-"kbd><span class=\"kbd--plus\">+</span><kbd>Sagoklavo</kbd> enmetas ĉelon"
+"kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>Sagoklavo</"
+"kbd> enmetas ĉelon"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:104-38
 #, fuzzy
@@ -1035,22 +1061,24 @@ msgid ""
 msgstr "Alt</kbd><span class=\"kbd--plus\">+</span><kbd>For"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:104-145
-#, fuzzy
 msgid ""
 "3 seconds in Delete mode, Arrow key deletes row/column, <kbd>Ctrl</kbd><span "
 "class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>Arrow key</kbd> merges "
 "cell with neighboring cell"
 msgstr ""
 "3 sekundoj en Forigi-reĝimo, Sagoklavo forigas vicon/kolumnon, <kbd>Stir</"
-"kbd><span class=\"kbd--plus\">+</span><kbd>Sagoklavo</kbd> kunfandas ĉelon "
-"kun najbara ĉelo"
+"kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>Sagoklavo</"
+"kbd> kunfandas ĉelon kun najbara ĉelo"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:105-38
+#, fuzzy
 msgid ""
 "<kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>Del</kbd>"
 msgstr ""
+"Maj</kbd><span class=\"kbd--plus\">+</span><kbd>Stir</kbd><span class=\"kbd--"
+"plus\">+</span><kbd>For"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td.p:105-235
 msgid ""
@@ -1091,22 +1119,28 @@ msgid "Insert footnote"
 msgstr "Enmeti piednoton"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:114-80
+#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>Alt</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>F</kbd>"
 msgstr ""
+"Stir</kbd><span class=\"kbd--plus\">+</span><kbd>Maj</kbd><span class=\"kbd--"
+"plus\">+</span><kbd>Sago supren"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:115-38
 msgid "Insert endnote"
 msgstr "Enmeti finnoton"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:115-79
+#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>Alt</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>D</kbd>"
 msgstr ""
+"Stir</kbd><span class=\"kbd--plus\">+</span><kbd>Maj</kbd><span class=\"kbd--"
+"plus\">+</span><kbd>Sago supren"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:116-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:167-38
@@ -1115,11 +1149,14 @@ msgstr "Enmeti komenton"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:116-79
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:167-79
+#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>Alt</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>C</kbd>"
 msgstr ""
+"Stir</kbd><span class=\"kbd--plus\">+</span><kbd>Maj</kbd><span class=\"kbd--"
+"plus\">+</span><kbd>Sago supren"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:118-38
 msgid "Insert soft hyphen"
@@ -1137,22 +1174,28 @@ msgid "Insert non-breaking hyphen"
 msgstr "Enmeti nerompeman streketon"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:119-91
+#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>-</kbd>"
 msgstr ""
+"Stir</kbd><span class=\"kbd--plus\">+</span><kbd>Maj</kbd><span class=\"kbd--"
+"plus\">+</span><kbd>Sago supren"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:121-38
 msgid "Insert non-breaking space"
 msgstr "Enmeti nerompeman spaceton"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:121-90
+#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>Space</kbd>"
 msgstr ""
+"Stir</kbd><span class=\"kbd--plus\">+</span><kbd>Maj</kbd><span class=\"kbd--"
+"plus\">+</span><kbd>Retropaŝo"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:122-38
 msgid "Insert line break"
@@ -1183,11 +1226,14 @@ msgid "Column break (in multicolumnar text)"
 msgstr "Kolumna salto (en plurkolumna teksto)"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:124-101
+#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>Enter</kbd>"
 msgstr ""
+"Stir</kbd><span class=\"kbd--plus\">+</span><kbd>Maj</kbd><span class=\"kbd--"
+"plus\">+</span><kbd>Sago supren"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:125-38
 msgid ""
@@ -1332,22 +1378,28 @@ msgid "Go to next sheet."
 msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:146-82
+#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>Alt</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</"
 "span><kbd>Page Down</kbd>"
 msgstr ""
+"Stir</kbd><span class=\"kbd--plus\">+</span><kbd>Maj</kbd><span class=\"kbd--"
+"plus\">+</span><kbd>Sago malsupren"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:147-38
 msgid "Go to previous sheet."
 msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:147-86
+#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>Alt</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</"
 "span><kbd>Page Up</kbd>"
 msgstr ""
+"Stir</kbd><span class=\"kbd--plus\">+</span><kbd>Maj</kbd><span class=\"kbd--"
+"plus\">+</span><kbd>Sago supren"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:148-38
 msgid ""
@@ -1358,11 +1410,14 @@ msgid ""
 msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:148-292
+#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>Arrow</kbd>"
 msgstr ""
+"Stir</kbd><span class=\"kbd--plus\">+</span><kbd>Maj</kbd><span class=\"kbd--"
+"plus\">+</span><kbd>Sago supren"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:149-38
 msgid "Moves one sheet to the left."
@@ -1394,11 +1449,14 @@ msgid ""
 msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:151-280
+#, fuzzy
 msgid ""
 "<kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</"
 "span><kbd>Page Up</kbd>"
 msgstr ""
+"Maj</kbd><span class=\"kbd--plus\">+</span><kbd>Stir</kbd><span class=\"kbd--"
+"plus\">+</span><kbd>For"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:152-38
 msgid ""
@@ -1494,66 +1552,84 @@ msgid "Two decimal places, thousands separator"
 msgstr "Du dekumaj pozicioj, disigilo de miloj"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:176-104
+#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>1</kbd>"
 msgstr ""
+"Stir</kbd><span class=\"kbd--plus\">+</span><kbd>Maj</kbd><span class=\"kbd--"
+"plus\">+</span><kbd>Sago supren"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:177-38
 msgid "Standard exponential format"
 msgstr "Normala eksponenciala formato"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:177-92
+#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>2</kbd>"
 msgstr ""
+"Stir</kbd><span class=\"kbd--plus\">+</span><kbd>Maj</kbd><span class=\"kbd--"
+"plus\">+</span><kbd>Sago supren"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:178-38
 msgid "Standard date format"
 msgstr "Normala data formato"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:178-85
+#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>3</kbd>"
 msgstr ""
+"Stir</kbd><span class=\"kbd--plus\">+</span><kbd>Maj</kbd><span class=\"kbd--"
+"plus\">+</span><kbd>Sago supren"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:179-38
 msgid "Standard currency format"
 msgstr "Normala valuta formato"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:179-89
+#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>4</kbd>"
 msgstr ""
+"Stir</kbd><span class=\"kbd--plus\">+</span><kbd>Maj</kbd><span class=\"kbd--"
+"plus\">+</span><kbd>Sago supren"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:180-38
 msgid "Standard percentage format (two decimal places)"
 msgstr "Normala elcenta formato (du dekumaj pozicioj)"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:180-112
+#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>5</kbd>"
 msgstr ""
+"Stir</kbd><span class=\"kbd--plus\">+</span><kbd>Maj</kbd><span class=\"kbd--"
+"plus\">+</span><kbd>Sago supren"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:181-38
 msgid "Standard format"
 msgstr "Normala formato"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:181-80
+#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>6</kbd>"
 msgstr ""
+"Stir</kbd><span class=\"kbd--plus\">+</span><kbd>Maj</kbd><span class=\"kbd--"
+"plus\">+</span><kbd>Sago supren"
 
 #: html/cool-help.html%2Bdiv.div.div.h2:185-9
 msgid "Insert"
@@ -2002,7 +2078,6 @@ msgid "Copy and Paste"
 msgstr "Kopii kaj alglui"
 
 #: html/cool-help.html%2Bdiv.div.div.p:419-5
-#, fuzzy
 msgid ""
 "Rich content copy/cut and paste is supported, not only within a given "
 "document, but also across documents on the same or different <span class="
@@ -2022,14 +2097,14 @@ msgstr ""
 "ankaŭ trans dokumentoj en la sama aŭ malsama  <span class=\"productname\""
 ">{productname}</span>. Por tiaj internaj uzoj, uzantoj povas kopii/alglui "
 "enhavon, inklude bildojn kaj miksitan enhavon, ĉe PK (persona komputilo) per "
-"la fulmoklavoj rekte (<kbd>Stir</kbd><span class=\"kbd--plus\""
-">+</span><kbd>X</kbd>, <kbd>Stir</kbd><span class=\"kbd--plus\""
-">+</span><kbd>C</kbd>, <kbd>Stir</kbd><span class=\"kbd--plus\""
-">+</span><kbd>V</kbd>). Pro sekurecaj kialoj necesas uzi je <kbd>Stir</"
-"kbd><span class=\"kbd--plus\">+</span><kbd>V</kbd> por alglui ĉe PK, sed oni "
-"povas uzi kuntekstajn menuojn por tondi kaj kopii. Ĉe Android aŭ iOS necesas "
-"elekti tekston per duobla frapeto, kaj per longa tuŝo kopii/tondi/alglui per "
-"la kunteksta menuo."
+"la fulmoklavoj rekte (<kbd>Stir</kbd><span class=\"kbd--plus\" aria-hidden="
+"\"true\">+</span><kbd>X</kbd>, <kbd>Stir</kbd><span class=\"kbd--plus\" aria-"
+"hidden=\"true\">+</span><kbd>C</kbd>, <kbd>Stir</kbd><span class=\"kbd--"
+"plus\" aria-hidden=\"true\">+</span><kbd>V</kbd>). Pro sekurecaj kialoj "
+"necesas uzi je <kbd>Stir</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>V</kbd> por alglui ĉe PK, sed oni povas uzi kuntekstajn "
+"menuojn por tondi kaj kopii. Ĉe Android aŭ iOS necesas elekti tekston per "
+"duobla frapeto, kaj per longa tuŝo kopii/tondi/alglui per la kunteksta menuo."
 
 #: html/cool-help.html%2Bdiv.div.div.p:420-5
 msgid ""
@@ -2077,7 +2152,6 @@ msgid "document repair"
 msgstr "Ripari dokumenton"
 
 #: html/cool-help.html%2Bdiv.div.div.p:427-5
-#, fuzzy
 msgid ""
 "This is particularly useful – say when a colleague inadvertently selected "
 "all text in the document with <kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-"
@@ -2085,9 +2159,9 @@ msgid ""
 "destroying it – while you were concurrently editing."
 msgstr ""
 "Tio estas speciale utila - ekzemple kiam kolego senintence elektis la tutan "
-"tekston en dokumento per <kbd>Stir</kbd><span class=\"kbd--plus\""
-">+</span><kbd>A</kbd> kaj anstataŭigis ĝin detruante la antaŭan tekston - "
-"dum vi samtempe redaktis ĝin."
+"tekston en dokumento per <kbd>Stir</kbd><span class=\"kbd--plus\" aria-"
+"hidden=\"true\">+</span><kbd>A</kbd> kaj anstataŭigis ĝin detruante la "
+"antaŭan tekston - dum vi samtempe redaktis ĝin."
 
 #: html/cool-help.html%2Bdiv.div.div.h4:430-5
 msgid "Inactive document"
@@ -2137,15 +2211,14 @@ msgstr ""
 "riĉan tekston."
 
 #: html/cool-help.html%2Bdiv.div.div.p:438-5
-#, fuzzy
 msgid ""
 "You can paste as unformatted text with the keyboard shortcut: <kbd>Ctrl</"
 "kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>Shift</"
 "kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>V</kbd>"
 msgstr ""
 "Vi povas alglui kiel neformatitan tekston per la fulmoklavo: <kbd>Stir</"
-"kbd><span class=\"kbd--plus\">+</span><kbd>Maj</kbd><span class=\"kbd--plus\""
-">+</span><kbd>V</kbd>"
+"kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>Maj</"
+"kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>V</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.p:439-5
 msgid ""
@@ -2379,7 +2452,6 @@ msgstr ""
 "\"_blank\" rel=\"noopener noreferrer\">normo OASIS OpenFormula</a>."
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:500-5
-#, fuzzy
 msgid ""
 "<span class=\"def\">Direct formatting:</span> You can format spreadsheets "
 "cells, columns, rows and sheets by formatting directly from the menus, "
@@ -2393,9 +2465,9 @@ msgstr ""
 "ĉelojn, kolumnojn, vicojn kaj foliojn formatante rekte per la menuoj, "
 "ilobreto aŭ kuntekstaj menuoj. Rekta formatado aplikiĝas nur al la aktuala "
 "objekto elektita. Por formati ĉelon aŭ uzu la menuon aŭ klavu je  <kbd>Stir</"
-"kbd><span class=\"kbd--plus\">+</span><kbd>1</kbd>. La dialogo ebligas "
-"kompleksajn kaj proprajn formatadon, kaj ankaŭ eblojn pri tiparo, kompleksa "
-"bordero, fono, ĉelprotekto, ktp."
+"kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>1</kbd>. La "
+"dialogo ebligas kompleksajn kaj proprajn formatadon, kaj ankaŭ eblojn pri "
+"tiparo, kompleksa bordero, fono, ĉelprotekto, ktp."
 
 #: html/cool-help.html%2Bdiv.div.div.div.div.img[alt]:501-29
 msgid "format cells"
@@ -3381,7 +3453,6 @@ msgstr ""
 "fenestron."
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li:769-7
-#, fuzzy
 msgid ""
 "Paste from the browser <span class=\"ui\">Edit</span> → <span class=\"ui\""
 ">Paste</span> or press <kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden="
@@ -3389,9 +3460,10 @@ msgid ""
 "dialog opens to let you describe the precise format of the CSV data."
 msgstr ""
 "Algluu el la foliumilo <span class=\"ui\">Redakti</span> → <span class=\"ui\""
-">Alglui</span> aŭ premu je <kbd>Stir</kbd><span class=\"kbd--plus\""
-">+</span><kbd>V</kbd>. La dialogo <span class=\"ui\">Importi tekston</span> "
-"malfermiĝas por lasi vin priskribi la formaton por la CSV-datumojn."
+">Alglui</span> aŭ premu je <kbd>Stir</kbd><span class=\"kbd--plus\" aria-"
+"hidden=\"true\">+</span><kbd>V</kbd>. La dialogo <span class=\"ui\">Importi "
+"tekston</span> malfermiĝas por lasi vin priskribi la formaton por la CSV-"
+"datumojn."
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.div.img[alt]:772-31
 msgid "import"
@@ -3509,229 +3581,230 @@ msgstr "Agordu la atributojn de la elemento de la objekto."
 
 #, fuzzy
 #~ msgid ""
-#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-#~ "\"kbd--plus\">+</span><kbd>V</kbd>"
+#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
+#~ "class=\"kbd--plus\">+</span><kbd>V</kbd>"
 #~ msgstr ""
-#~ "Stir</kbd><span class=\"kbd--plus\">+</span><kbd>Maj</kbd><span class=\"kbd--"
-#~ "plus\">+</span><kbd>V"
+#~ "Stir</kbd><span class=\"kbd--plus\">+</span><kbd>Maj</kbd><span class=\"kbd"
+#~ "--plus\">+</span><kbd>V"
 
 #, fuzzy
 #~ msgid ""
-#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class="
-#~ "\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd--plus\""
-#~ ">+</span><kbd>V</kbd>"
+#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span "
+#~ "class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd--"
+#~ "plus\">+</span><kbd>V</kbd>"
 #~ msgstr ""
-#~ "Stir</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class=\"kbd--"
-#~ "plus\">+</span><kbd>Maj</kbd><span class=\"kbd--plus\">+</span><kbd>V"
+#~ "Stir</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class=\"kbd"
+#~ "--plus\">+</span><kbd>Maj</kbd><span class=\"kbd--plus\">+</span><kbd>V"
 
 #, fuzzy
 #~ msgid ""
-#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-#~ "\"kbd--plus\">+</span><kbd>?</kbd>"
+#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
+#~ "class=\"kbd--plus\">+</span><kbd>?</kbd>"
 #~ msgstr ""
-#~ "Stir</kbd><span class=\"kbd--plus\">+</span><kbd>Maj</kbd><span class=\"kbd--"
-#~ "plus\">+</span><kbd>?"
+#~ "Stir</kbd><span class=\"kbd--plus\">+</span><kbd>Maj</kbd><span class=\"kbd"
+#~ "--plus\">+</span><kbd>?"
 
 #, fuzzy
 #~ msgid ""
-#~ "<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-#~ "\"kbd--plus\">+</span><kbd>F1</kbd>"
+#~ "<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
+#~ "class=\"kbd--plus\">+</span><kbd>F1</kbd>"
 #~ msgstr ""
-#~ "Stir</kbd><span class=\"kbd--plus\">+</span><kbd>Maj</kbd><span class=\"kbd--"
-#~ "plus\">+</span><kbd>1"
+#~ "Stir</kbd><span class=\"kbd--plus\">+</span><kbd>Maj</kbd><span class=\"kbd"
+#~ "--plus\">+</span><kbd>1"
 
 #, fuzzy
 #~ msgid ""
-#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class="
-#~ "\"kbd--plus\">+</span><kbd>5</kbd>"
+#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span "
+#~ "class=\"kbd--plus\">+</span><kbd>5</kbd>"
 #~ msgstr ""
-#~ "Stir</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class=\"kbd--"
-#~ "plus\">+</span><kbd>5"
+#~ "Stir</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class=\"kbd"
+#~ "--plus\">+</span><kbd>5"
 
 #, fuzzy
 #~ msgid ""
-#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-#~ "\"kbd--plus\">+</span><kbd>P</kbd>"
+#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
+#~ "class=\"kbd--plus\">+</span><kbd>P</kbd>"
 #~ msgstr ""
-#~ "Stir</kbd><span class=\"kbd--plus\">+</span><kbd>Maj</kbd><span class=\"kbd--"
-#~ "plus\">+</span><kbd>P"
+#~ "Stir</kbd><span class=\"kbd--plus\">+</span><kbd>Maj</kbd><span class=\"kbd"
+#~ "--plus\">+</span><kbd>P"
 
 #, fuzzy
 #~ msgid ""
-#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-#~ "\"kbd--plus\">+</span><kbd>B</kbd>"
+#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
+#~ "class=\"kbd--plus\">+</span><kbd>B</kbd>"
 #~ msgstr ""
-#~ "Stir</kbd><span class=\"kbd--plus\">+</span><kbd>Maj</kbd><span class=\"kbd--"
-#~ "plus\">+</span><kbd>B"
+#~ "Stir</kbd><span class=\"kbd--plus\">+</span><kbd>Maj</kbd><span class=\"kbd"
+#~ "--plus\">+</span><kbd>B"
 
 #, fuzzy
 #~ msgid ""
-#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-#~ "\"kbd--plus\">+</span><kbd>Home</kbd>"
+#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
+#~ "class=\"kbd--plus\">+</span><kbd>Home</kbd>"
 #~ msgstr ""
-#~ "Stir</kbd><span class=\"kbd--plus\">+</span><kbd>Maj</kbd><span class=\"kbd--"
-#~ "plus\">+</span><kbd>Hejmo"
+#~ "Stir</kbd><span class=\"kbd--plus\">+</span><kbd>Maj</kbd><span class=\"kbd"
+#~ "--plus\">+</span><kbd>Hejmo"
 
 #, fuzzy
 #~ msgid ""
-#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-#~ "\"kbd--plus\">+</span><kbd>End</kbd>"
+#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
+#~ "class=\"kbd--plus\">+</span><kbd>End</kbd>"
 #~ msgstr ""
-#~ "Stir</kbd><span class=\"kbd--plus\">+</span><kbd>Maj</kbd><span class=\"kbd--"
-#~ "plus\">+</span><kbd>Fino"
+#~ "Stir</kbd><span class=\"kbd--plus\">+</span><kbd>Maj</kbd><span class=\"kbd"
+#~ "--plus\">+</span><kbd>Fino"
 
 #, fuzzy
 #~ msgid ""
-#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-#~ "\"kbd--plus\">+</span><kbd>Del</kbd>"
+#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
+#~ "class=\"kbd--plus\">+</span><kbd>Del</kbd>"
 #~ msgstr ""
-#~ "Stir</kbd><span class=\"kbd--plus\">+</span><kbd>Maj</kbd><span class=\"kbd--"
-#~ "plus\">+</span><kbd>For"
+#~ "Stir</kbd><span class=\"kbd--plus\">+</span><kbd>Maj</kbd><span class=\"kbd"
+#~ "--plus\">+</span><kbd>For"
 
 #, fuzzy
 #~ msgid ""
-#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class="
-#~ "\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd--plus\">+</"
-#~ "span><kbd>Arrow Keys</kbd>"
+#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span "
+#~ "class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd--"
+#~ "plus\">+</span><kbd>Arrow Keys</kbd>"
 #~ msgstr ""
-#~ "Stir</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class=\"kbd--"
-#~ "plus\">+</span><kbd>Maj</kbd><span class=\"kbd--plus\">+</span><kbd>Sagoklavo"
+#~ "Stir</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class=\"kbd"
+#~ "--plus\">+</span><kbd>Maj</kbd><span class=\"kbd--"
+#~ "plus\">+</span><kbd>Sagoklavo"
 
 #, fuzzy
 #~ msgid ""
-#~ "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</kbd><span class="
-#~ "\"kbd--plus\">+</span><kbd>Del</kbd>"
+#~ "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</kbd><span "
+#~ "class=\"kbd--plus\">+</span><kbd>Del</kbd>"
 #~ msgstr ""
-#~ "Maj</kbd><span class=\"kbd--plus\">+</span><kbd>Stir</kbd><span class=\"kbd--"
-#~ "plus\">+</span><kbd>For"
+#~ "Maj</kbd><span class=\"kbd--plus\">+</span><kbd>Stir</kbd><span class=\"kbd"
+#~ "--plus\">+</span><kbd>For"
 
 #, fuzzy
 #~ msgid ""
-#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class="
-#~ "\"kbd--plus\">+</span><kbd>F</kbd>"
+#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span "
+#~ "class=\"kbd--plus\">+</span><kbd>F</kbd>"
 #~ msgstr ""
-#~ "Stir</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class=\"kbd--"
-#~ "plus\">+</span><kbd>F"
+#~ "Stir</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class=\"kbd"
+#~ "--plus\">+</span><kbd>F"
 
 #, fuzzy
 #~ msgid ""
-#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class="
-#~ "\"kbd--plus\">+</span><kbd>D</kbd>"
+#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span "
+#~ "class=\"kbd--plus\">+</span><kbd>D</kbd>"
 #~ msgstr ""
-#~ "Stir</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class=\"kbd--"
-#~ "plus\">+</span><kbd>D"
+#~ "Stir</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class=\"kbd"
+#~ "--plus\">+</span><kbd>D"
 
 #, fuzzy
 #~ msgid ""
-#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class="
-#~ "\"kbd--plus\">+</span><kbd>C</kbd>"
+#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span "
+#~ "class=\"kbd--plus\">+</span><kbd>C</kbd>"
 #~ msgstr ""
-#~ "Stir</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class=\"kbd--"
-#~ "plus\">+</span><kbd>C"
+#~ "Stir</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class=\"kbd"
+#~ "--plus\">+</span><kbd>C"
 
 #, fuzzy
 #~ msgid ""
-#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-#~ "\"kbd--plus\">+</span><kbd>-</kbd>"
+#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
+#~ "class=\"kbd--plus\">+</span><kbd>-</kbd>"
 #~ msgstr ""
-#~ "Stir</kbd><span class=\"kbd--plus\">+</span><kbd>Maj</kbd><span class=\"kbd--"
-#~ "plus\">+</span><kbd>-"
+#~ "Stir</kbd><span class=\"kbd--plus\">+</span><kbd>Maj</kbd><span class=\"kbd"
+#~ "--plus\">+</span><kbd>-"
 
 #, fuzzy
 #~ msgid ""
-#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-#~ "\"kbd--plus\">+</span><kbd>Space</kbd>"
+#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
+#~ "class=\"kbd--plus\">+</span><kbd>Space</kbd>"
 #~ msgstr ""
-#~ "Stir</kbd><span class=\"kbd--plus\">+</span><kbd>Maj</kbd><span class=\"kbd--"
-#~ "plus\">+</span><kbd>Spaceto"
+#~ "Stir</kbd><span class=\"kbd--plus\">+</span><kbd>Maj</kbd><span class=\"kbd"
+#~ "--plus\">+</span><kbd>Spaceto"
 
 #, fuzzy
 #~ msgid ""
-#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-#~ "\"kbd--plus\">+</span><kbd>Enter</kbd>"
+#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
+#~ "class=\"kbd--plus\">+</span><kbd>Enter</kbd>"
 #~ msgstr ""
-#~ "Stir</kbd><span class=\"kbd--plus\">+</span><kbd>Maj</kbd><span class=\"kbd--"
-#~ "plus\">+</span><kbd>Eniga klavo"
+#~ "Stir</kbd><span class=\"kbd--plus\">+</span><kbd>Maj</kbd><span class=\"kbd"
+#~ "--plus\">+</span><kbd>Eniga klavo"
 
 #, fuzzy
 #~ msgid ""
-#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class="
-#~ "\"kbd--plus\">+</span><kbd>Page Down</kbd>"
+#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span "
+#~ "class=\"kbd--plus\">+</span><kbd>Page Down</kbd>"
 #~ msgstr ""
-#~ "Stir</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class=\"kbd--"
-#~ "plus\">+</span><kbd>D"
+#~ "Stir</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class=\"kbd"
+#~ "--plus\">+</span><kbd>D"
 
 #, fuzzy
 #~ msgid ""
-#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class="
-#~ "\"kbd--plus\">+</span><kbd>Page Up</kbd>"
+#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span "
+#~ "class=\"kbd--plus\">+</span><kbd>Page Up</kbd>"
 #~ msgstr ""
-#~ "Stir</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class=\"kbd--"
-#~ "plus\">+</span><kbd>5"
+#~ "Stir</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class=\"kbd"
+#~ "--plus\">+</span><kbd>5"
 
 #, fuzzy
 #~ msgid ""
-#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-#~ "\"kbd--plus\">+</span><kbd>Arrow</kbd>"
+#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
+#~ "class=\"kbd--plus\">+</span><kbd>Arrow</kbd>"
 #~ msgstr ""
-#~ "Stir</kbd><span class=\"kbd--plus\">+</span><kbd>Maj</kbd><span class=\"kbd--"
-#~ "plus\">+</span><kbd>Sago supren"
+#~ "Stir</kbd><span class=\"kbd--plus\">+</span><kbd>Maj</kbd><span class=\"kbd"
+#~ "--plus\">+</span><kbd>Sago supren"
 
 #, fuzzy
 #~ msgid ""
-#~ "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</kbd><span class="
-#~ "\"kbd--plus\">+</span><kbd>Page Up</kbd>"
+#~ "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</kbd><span "
+#~ "class=\"kbd--plus\">+</span><kbd>Page Up</kbd>"
 #~ msgstr ""
-#~ "Maj</kbd><span class=\"kbd--plus\">+</span><kbd>Stir</kbd><span class=\"kbd--"
-#~ "plus\">+</span><kbd>For"
+#~ "Maj</kbd><span class=\"kbd--plus\">+</span><kbd>Stir</kbd><span class=\"kbd"
+#~ "--plus\">+</span><kbd>For"
 
 #, fuzzy
 #~ msgid ""
-#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-#~ "\"kbd--plus\">+</span><kbd>1</kbd>"
+#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
+#~ "class=\"kbd--plus\">+</span><kbd>1</kbd>"
 #~ msgstr ""
-#~ "Stir</kbd><span class=\"kbd--plus\">+</span><kbd>Maj</kbd><span class=\"kbd--"
-#~ "plus\">+</span><kbd>1"
+#~ "Stir</kbd><span class=\"kbd--plus\">+</span><kbd>Maj</kbd><span class=\"kbd"
+#~ "--plus\">+</span><kbd>1"
 
 #, fuzzy
 #~ msgid ""
-#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-#~ "\"kbd--plus\">+</span><kbd>2</kbd>"
+#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
+#~ "class=\"kbd--plus\">+</span><kbd>2</kbd>"
 #~ msgstr ""
-#~ "Stir</kbd><span class=\"kbd--plus\">+</span><kbd>Maj</kbd><span class=\"kbd--"
-#~ "plus\">+</span><kbd>2"
+#~ "Stir</kbd><span class=\"kbd--plus\">+</span><kbd>Maj</kbd><span class=\"kbd"
+#~ "--plus\">+</span><kbd>2"
 
 #, fuzzy
 #~ msgid ""
-#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-#~ "\"kbd--plus\">+</span><kbd>3</kbd>"
+#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
+#~ "class=\"kbd--plus\">+</span><kbd>3</kbd>"
 #~ msgstr ""
 #~ "Stir</kbd><span class=\"kbd--plus\">+</span><kbd>Ma</kbd><span class=\"kbd--"
 #~ "plus\">+</span><kbd>3"
 
 #, fuzzy
 #~ msgid ""
-#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-#~ "\"kbd--plus\">+</span><kbd>4</kbd>"
+#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
+#~ "class=\"kbd--plus\">+</span><kbd>4</kbd>"
 #~ msgstr ""
-#~ "Stir</kbd><span class=\"kbd--plus\">+</span><kbd>Maj</kbd><span class=\"kbd--"
-#~ "plus\">+</span><kbd>4"
+#~ "Stir</kbd><span class=\"kbd--plus\">+</span><kbd>Maj</kbd><span class=\"kbd"
+#~ "--plus\">+</span><kbd>4"
 
 #, fuzzy
 #~ msgid ""
-#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-#~ "\"kbd--plus\">+</span><kbd>5</kbd>"
+#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
+#~ "class=\"kbd--plus\">+</span><kbd>5</kbd>"
 #~ msgstr ""
-#~ "Stir</kbd><span class=\"kbd--plus\">+</span><kbd>Maj</kbd><span class=\"kbd--"
-#~ "plus\">+</span><kbd>5"
+#~ "Stir</kbd><span class=\"kbd--plus\">+</span><kbd>Maj</kbd><span class=\"kbd"
+#~ "--plus\">+</span><kbd>5"
 
 #, fuzzy
 #~ msgid ""
-#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-#~ "\"kbd--plus\">+</span><kbd>6</kbd>"
+#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
+#~ "class=\"kbd--plus\">+</span><kbd>6</kbd>"
 #~ msgstr ""
-#~ "Stir</kbd><span class=\"kbd--plus\">+</span><kbd>Maj</kbd><span class=\"kbd--"
-#~ "plus\">+</span><kbd>6"
+#~ "Stir</kbd><span class=\"kbd--plus\">+</span><kbd>Maj</kbd><span class=\"kbd"
+#~ "--plus\">+</span><kbd>6"
 
 #~ msgid ""
 #~ "<span class=\"def\">The information bar:</span> At the right of the search "
@@ -3744,29 +3817,31 @@ msgstr "Agordu la atributojn de la elemento de la objekto."
 
 #, fuzzy
 #~ msgid ""
-#~ "Click on the clone formatting icon <img class=\"icon-size\" alt=\"\" src="
-#~ "\"images/lc_formatpaintbrush.svg\" />. The mouse pointer turns to a paint "
-#~ "bucket."
+#~ "Click on the clone formatting icon <img class=\"icon-size\" alt=\"\" "
+#~ "src=\"images/lc_formatpaintbrush.svg\" />. The mouse pointer turns to a "
+#~ "paint bucket."
 #~ msgstr ""
-#~ "Klaku al la bildsimbolo Kloni formatadon <img style=\"height:0.6cm;width:0."
-#~ "6cm;\" alt=\"\" src=\"images/lc_formatpaintbrush.svg\">. La musmontrilo "
-#~ "ŝanĝiĝas al farbujo."
+#~ "Klaku al la bildsimbolo Kloni formatadon <img "
+#~ "style=\"height:0.6cm;width:0.6cm;\" alt=\"\" "
+#~ "src=\"images/lc_formatpaintbrush.svg\">. La musmontrilo ŝanĝiĝas al farbujo."
 
 #, fuzzy
 #~ msgid ""
 #~ "<span class=\"def\">The menu bar:</span> The main menu is placed on the top "
-#~ "and includes many options, commands for printing, editing, viewing and other "
-#~ "advanced commands. You can hide the menu bar clicking on the <span style="
-#~ "\"height:0.6cm;width:0.6cm; margin: 0px;\" class=\"w2ui-icon fold\"></span> "
-#~ "icon on the far right. Click on the <span style=\"height:0.6cm;width:0.6cm; "
-#~ "margin: 0px;\" class=\"w2ui-icon unfold\"></span> icon to show the menu."
+#~ "and includes many options, commands for printing, editing, viewing and other"
+#~ " advanced commands. You can hide the menu bar clicking on the <span "
+#~ "style=\"height:0.6cm;width:0.6cm; margin: 0px;\" class=\"w2ui-icon "
+#~ "fold\"></span> icon on the far right. Click on the <span "
+#~ "style=\"height:0.6cm;width:0.6cm; margin: 0px;\" class=\"w2ui-icon "
+#~ "unfold\"></span> icon to show the menu."
 #~ msgstr ""
-#~ "<span class=\"def\">La menua breto:</span> La ĉefa menuo lokiĝas ĉe la supro "
-#~ "kaj inkludas multajn eblojn, komandojn por presi, redakti, vidigi, kaj "
+#~ "<span class=\"def\">La menua breto:</span> La ĉefa menuo lokiĝas ĉe la supro"
+#~ " kaj inkludas multajn eblojn, komandojn por presi, redakti, vidigi, kaj "
 #~ "aliajn specialajn komandojn. Vi povas kaŝi la menuan breton klakante al la "
 #~ "<img style=\"height:0.6cm;width:0.6cm;\" src=\"images/fold.svg\"> "
-#~ "bildsimbolo tute dekstre. Klaku al la <img style=\"height:0.6cm;width:0.6cm;"
-#~ "\" src=\"images/unfold.svg\"> bildsimbolo por vidigi la menuon."
+#~ "bildsimbolo tute dekstre. Klaku al la <img "
+#~ "style=\"height:0.6cm;width:0.6cm;\" src=\"images/unfold.svg\"> bildsimbolo "
+#~ "por vidigi la menuon."
 
 #~ msgid "General"
 #~ msgstr "Ĝenerala"
@@ -3775,29 +3850,29 @@ msgstr "Agordu la atributojn de la elemento de la objekto."
 #~ msgstr "Stir</kbd><span class=\"kbd--plus\">+</span><kbd>E"
 
 #~ msgid ""
-#~ "Click on the submenu (<img style=\"height:0.6cm;width:0.6cm;\" alt=\"\" src="
-#~ "\"images/lc_more.svg\">) icon to reply, move and delete comments."
+#~ "Click on the submenu (<img style=\"height:0.6cm;width:0.6cm;\" alt=\"\" "
+#~ "src=\"images/lc_more.svg\">) icon to reply, move and delete comments."
 #~ msgstr ""
-#~ "Klaku al la submenuo (<img style=\"height:0.6cm;width:0.6cm;\" alt=\"\" src="
-#~ "\"images/lc_more.svg\">) por respondi, movi kaj forigi komentojn."
+#~ "Klaku al la submenuo (<img style=\"height:0.6cm;width:0.6cm;\" alt=\"\" "
+#~ "src=\"images/lc_more.svg\">) por respondi, movi kaj forigi komentojn."
 
 #~ msgid ""
-#~ "Either choose <span class=\"ui\">Slide Show</span> → <span class=\"ui\">Full "
-#~ "Screen Presentation</span> or click on the left-most icon in the bottom of "
-#~ "the slide panel: <img style=\"height:0.6cm;width:0.6cm;\" alt=\"\" src=\""
-#~ "images/lc_dia.svg\">"
+#~ "Either choose <span class=\"ui\">Slide Show</span> → <span class=\"ui\">Full"
+#~ " Screen Presentation</span> or click on the left-most icon in the bottom of "
+#~ "the slide panel: <img style=\"height:0.6cm;width:0.6cm;\" alt=\"\" "
+#~ "src=\"images/lc_dia.svg\">"
 #~ msgstr ""
-#~ "Aŭ elektu je <span class=\"ui\">Lumbilda prezentaĵo</span> → <span class=\""
-#~ "ui\">Tutekrana prezentaĵo</span> aŭ klaku al la plejmaldekstra bildsimbolo "
-#~ "ĉe la malsupro de la lumbilda panelo: <img style=\"height:0.6cm;width:0.6cm;"
-#~ "\" alt=\"\" src=\"images/lc_dia.svg\">"
+#~ "Aŭ elektu je <span class=\"ui\">Lumbilda prezentaĵo</span> → <span "
+#~ "class=\"ui\">Tutekrana prezentaĵo</span> aŭ klaku al la plejmaldekstra "
+#~ "bildsimbolo ĉe la malsupro de la lumbilda panelo: <img "
+#~ "style=\"height:0.6cm;width:0.6cm;\" alt=\"\" src=\"images/lc_dia.svg\">"
 
 #~ msgid ""
-#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-#~ "\"kbd--plus\">+</span>B"
+#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
+#~ "class=\"kbd--plus\">+</span>B"
 #~ msgstr ""
-#~ "<kbd>Stir</kbd><span class=\"kbd--plus\">+</span><kbd>Maj</kbd><span class="
-#~ "\"kbd--plus\">+</span>B"
+#~ "<kbd>Stir</kbd><span class=\"kbd--plus\">+</span><kbd>Maj</kbd><span "
+#~ "class=\"kbd--plus\">+</span>B"
 
 #~ msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span>E"
 #~ msgstr "<kbd>Stir</kbd><span class=\"kbd--plus\">+</span>E"
@@ -3818,14 +3893,16 @@ msgstr "Agordu la atributojn de la elemento de la objekto."
 #~ msgstr "<kbd>Stir</kbd><span class=\"kbd--plus\">+</span>A"
 
 #~ msgid ""
-#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-#~ "\"kbd--plus\">+</span>Arrow Down"
+#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
+#~ "class=\"kbd--plus\">+</span>Arrow Down"
 #~ msgstr ""
-#~ "<kbd>Stir</kbd><span class=\"kbd--plus\">+</span><kbd>Maj</kbd><span class="
-#~ "\"kbd--plus\">+</span>Sago malsupren"
+#~ "<kbd>Stir</kbd><span class=\"kbd--plus\">+</span><kbd>Maj</kbd><span "
+#~ "class=\"kbd--plus\">+</span>Sago malsupren"
 
 #~ msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span>Enter"
 #~ msgstr "<kbd>Stir</kbd><span class=\"kbd--plus\">+</span>Eniga klavo"
 
-#~ msgid "In addition it can provide viewing for Visio, Keynote, Numbers, and Pages formats."
+#~ msgid ""
+#~ "In addition it can provide viewing for Visio, Keynote, Numbers, and Pages "
+#~ "formats."
 #~ msgstr "Aldone ĝi povas vidigi formatojn Visio, Keynote, Numbers, kaj Pages."

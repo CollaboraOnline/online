@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-03 09:42+0100\n"
+"POT-Creation-Date: 2026-03-04 08:24+0100\n"
 "PO-Revision-Date: 2025-12-10 20:00+0000\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: Hebrew <https://hosted.weblate.org/projects/collabora-online/"
@@ -295,7 +295,7 @@ msgstr "אזהרה"
 #: admin/src/AdminClusterOverview.js:560 admin/src/AdminSocketBase.js:63
 #: admin/src/AdminSocketBase.js:74 admin/src/AdminSocketOverview.js:108
 #: admin/src/AdminSocketOverview.js:431 admin/src/AdminSocketSettings.js:47
-#: admin/src/integrator/AdminIntegratorSettings.ts:1906 src/app/Debug.ts:1440
+#: admin/src/integrator/AdminIntegratorSettings.ts:1906 src/app/Debug.ts:1448
 #: src/canvas/sections/CommentListSection.ts:1553
 #: src/control/Control.AboutDialog.ts:280
 #: src/control/Control.AlertDialog.js:56
@@ -399,7 +399,7 @@ msgstr "רשות אישורים של חתימה"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:339
 msgid "In-document Screen Reader"
-msgstr ""
+msgstr "מקריא מסך בתוך המסמך"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:340
 #: src/control/Control.Menubar.ts:175 src/control/Control.Menubar.ts:500
@@ -495,7 +495,7 @@ msgstr "אילוץ מעברים"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:363
 #: src/control/Control.Menubar.ts:779 src/control/Control.TopToolbar.js:139
-#: src/control/jsdialog/Definitions.Menu.ts:1575
+#: src/control/jsdialog/Definitions.Menu.ts:1587
 msgid "All Sheets"
 msgstr "כל הגיליונות"
 
@@ -926,11 +926,11 @@ msgstr "קבלת RouteToken (אסימון נתיב) מהבקר נכשלה"
 msgid "Debug Tools"
 msgstr "כלי ניפוי תקלות"
 
-#: src/app/Debug.ts:150
+#: src/app/Debug.ts:153
 msgid "Ctrl+Shift+Alt+D to exit"
 msgstr "Ctrl+Shift+Alt+D ליציאה"
 
-#: src/app/Debug.ts:1433
+#: src/app/Debug.ts:1441
 msgid "Event handling has been delayed for an unexpectedly long time: {0}ms"
 msgstr "טיפול באירועים הושהה לזמן ארוך מהצפוי: {0} מילישניות"
 
@@ -1101,9 +1101,8 @@ msgid "This version of {productname} is powered by"
 msgstr "גרסה זו של {productname} מופעלת על גבי"
 
 #: src/control/Control.AboutDialog.ts:190
-#, fuzzy
 msgid "Served by: "
-msgstr "מוגש על ידי:"
+msgstr "מוגש על ידי: "
 
 #: src/control/Control.AboutDialog.ts:213
 msgid "View widgets"
@@ -2101,7 +2100,7 @@ msgstr "תיקון"
 
 #: src/control/Control.Menubar.ts:143
 msgid "Compare Changes"
-msgstr ""
+msgstr "השוואת שינויים"
 
 #: src/control/Control.Menubar.ts:162 src/control/Control.Menubar.ts:483
 #: src/control/Control.Menubar.ts:489 src/control/Control.Menubar.ts:650
@@ -2116,7 +2115,7 @@ msgstr "איפוס מרחק מתצוגה"
 
 #: src/control/Control.Menubar.ts:168
 msgid "Fit to Screen"
-msgstr ""
+msgstr "התאמה למסך"
 
 #: src/control/Control.Menubar.ts:171 src/control/Control.Menubar.ts:495
 #: src/control/Control.Menubar.ts:662 src/control/Control.Menubar.ts:807
@@ -2432,7 +2431,7 @@ msgid "CSV file (.csv)"
 msgstr "קובץ CSV‏ (‎.csv)"
 
 #: src/control/Control.Menubar.ts:778
-#: src/control/jsdialog/Definitions.Menu.ts:1574
+#: src/control/jsdialog/Definitions.Menu.ts:1586
 msgid "Active sheet"
 msgstr "גיליון פעיל"
 
@@ -2442,78 +2441,78 @@ msgid "Focus Cell"
 msgstr "התמקדות על תא"
 
 #: src/control/Control.Menubar.ts:912
-#: src/control/jsdialog/Definitions.Menu.ts:1828
+#: src/control/jsdialog/Definitions.Menu.ts:1840
 msgid "Highlight cells with..."
 msgstr "הדגשת תאים ב…"
 
 #: src/control/Control.Menubar.ts:913
-#: src/control/jsdialog/Definitions.Menu.ts:1831
+#: src/control/jsdialog/Definitions.Menu.ts:1843
 msgid "Values greater than..."
 msgstr "ערכים גדולים מ…"
 
 #: src/control/Control.Menubar.ts:914
-#: src/control/jsdialog/Definitions.Menu.ts:1835
+#: src/control/jsdialog/Definitions.Menu.ts:1847
 msgid "Values less than..."
 msgstr "ערכים קטנים מ…"
 
 #: src/control/Control.Menubar.ts:915
-#: src/control/jsdialog/Definitions.Menu.ts:1839
+#: src/control/jsdialog/Definitions.Menu.ts:1851
 msgid "Values equal to..."
 msgstr "ערכים ששווים ל…"
 
 #: src/control/Control.Menubar.ts:916
-#: src/control/jsdialog/Definitions.Menu.ts:1843
+#: src/control/jsdialog/Definitions.Menu.ts:1855
 msgid "Values between..."
 msgstr "ערכים בין…"
 
 #: src/control/Control.Menubar.ts:917
-#: src/control/jsdialog/Definitions.Menu.ts:1847
+#: src/control/jsdialog/Definitions.Menu.ts:1859
 msgid "Values duplicate..."
 msgstr "ערכים כפולים…"
 
 #: src/control/Control.Menubar.ts:918
-#: src/control/jsdialog/Definitions.Menu.ts:1851
+#: src/control/jsdialog/Definitions.Menu.ts:1863
 msgid "Containing text..."
 msgstr "מכילים טקסט…"
 
 #: src/control/Control.Menubar.ts:920 src/control/Control.Menubar.ts:930
-#: src/control/jsdialog/Definitions.Menu.ts:1855
-#: src/control/jsdialog/Definitions.Menu.ts:1886
+#: src/control/jsdialog/Definitions.Menu.ts:1867
+#: src/control/jsdialog/Definitions.Menu.ts:1898
 msgid "More highlights..."
 msgstr "הדגשות נוספות…"
 
 #: src/control/Control.Menubar.ts:922
-#: src/control/jsdialog/Definitions.Menu.ts:1859
+#: src/control/jsdialog/Definitions.Menu.ts:1871
 msgid "Top/Bottom Rules..."
 msgstr "כללים עליונים/תחתונים…"
 
 #: src/control/Control.Menubar.ts:923
-#: src/control/jsdialog/Definitions.Menu.ts:1862
+#: src/control/jsdialog/Definitions.Menu.ts:1874
 msgid "Top N elements..."
 msgstr "N הרכיבים העליונים…"
 
 #: src/control/Control.Menubar.ts:924
-#: src/control/jsdialog/Definitions.Menu.ts:1866
+#: src/control/jsdialog/Definitions.Menu.ts:1878
 msgid "Top N percent..."
 msgstr "N האחוזים העליונים…"
 
 #: src/control/Control.Menubar.ts:925
-#: src/control/jsdialog/Definitions.Menu.ts:1870
+#: src/control/jsdialog/Definitions.Menu.ts:1882
 msgid "Bottom N elements..."
 msgstr "N הרכיבים התחתונים…"
 
 #: src/control/Control.Menubar.ts:926
-#: src/control/jsdialog/Definitions.Menu.ts:1874
+#: src/control/jsdialog/Definitions.Menu.ts:1886
 msgid "Bottom N percent..."
 msgstr "N האחוזים התחתונים…"
 
 #: src/control/Control.Menubar.ts:927
-#: src/control/jsdialog/Definitions.Menu.ts:1878
+#: src/control/jsdialog/Definitions.Menu.ts:1890
 msgid "Above Average..."
 msgstr "מעל לממוצע…"
 
 #: src/control/Control.Menubar.ts:928
-#: src/control/jsdialog/Definitions.Menu.ts:1882
+#: src/control/jsdialog/Definitions.Menu.ts:1894
 msgid "Below Average..."
 msgstr "מתחת לממוצע…"
 
@@ -2553,7 +2552,7 @@ msgstr "איפוס לשפת ברירת מחדל"
 
 #: src/control/Control.Menubar.ts:1640 src/control/Control.Menubar.ts:1641
 #: src/control/Control.Menubar.ts:1642 src/control/Control.Toolbar.js:247
-#: src/control/jsdialog/Definitions.Menu.ts:2108
+#: src/control/jsdialog/Definitions.Menu.ts:2120
 msgid "More..."
 msgstr "עוד…"
 
@@ -2614,7 +2613,7 @@ msgstr "סוף מדרג"
 
 #: src/control/Control.NavigatorPanel.ts:38
 msgid "Navigation Panel"
-msgstr ""
+msgstr "לוח ניווט"
 
 #: src/control/Control.NavigatorPanel.ts:110
 msgid "Navigation"
@@ -2818,7 +2817,7 @@ msgstr "תרשים מזערי"
 
 #: src/control/Control.NotebookbarCalc.js:99
 msgid "Table Design"
-msgstr ""
+msgstr "עיצוב טבלה"
 
 #: src/control/Control.NotebookbarCalc.js:106
 #: src/control/Control.NotebookbarDraw.js:121
@@ -2931,7 +2930,7 @@ msgid "Cells"
 msgstr "תאים"
 
 #: src/control/Control.NotebookbarCalc.js:967
-#: src/control/jsdialog/Definitions.Menu.ts:2314
+#: src/control/jsdialog/Definitions.Menu.ts:2326
 msgid "Default"
 msgstr "ברירת מחדל"
 
@@ -3045,7 +3044,7 @@ msgstr "תצוגת ברירת מחדל"
 
 #: src/control/Control.NotebookbarCalc.js:1434
 msgid "Open Views List"
-msgstr ""
+msgstr "פתיחת רשימת התצוגות"
 
 #: src/control/Control.NotebookbarCalc.js:1441
 msgid "New Sheet View"
@@ -3097,11 +3096,11 @@ msgstr "אפשרויות סגנון טבלה"
 
 #: src/control/Control.NotebookbarCalc.js:1681
 msgid "Header Row"
-msgstr ""
+msgstr "שורת כותרת"
 
 #: src/control/Control.NotebookbarCalc.js:1693
 msgid "Total Row"
-msgstr ""
+msgstr "שורת סיכום"
 
 #: src/control/Control.NotebookbarCalc.js:1711
 msgid "Banded Rows"
@@ -3121,7 +3120,7 @@ msgstr "עמודה אחרונה"
 
 #: src/control/Control.NotebookbarCalc.js:1768
 msgid "Filter Buttons"
-msgstr ""
+msgstr "כפתורי סינון"
 
 #: src/control/Control.NotebookbarCalc.js:1784
 msgid "Table Styles"
@@ -3242,7 +3241,7 @@ msgstr "עיצוב תאים"
 #: src/control/Control.NotebookbarCalc.js:2891
 #: src/control/Control.NotebookbarImpress.js:1816
 msgid "Themes"
-msgstr ""
+msgstr "ערכות עיצוב"
 
 #: src/control/Control.NotebookbarCalc.js:2990
 #: src/control/Control.NotebookbarCalc.js:3347
@@ -3307,20 +3306,20 @@ msgstr "הצגה בחלון"
 
 #: src/control/Control.NotebookbarImpress.js:500
 msgid "Presenter View"
-msgstr ""
+msgstr "תצוגת מציג"
 
 #: src/control/Control.NotebookbarImpress.js:508
 msgid "Present to All"
-msgstr ""
+msgstr "הצגה להכול"
 
 #: src/control/Control.NotebookbarImpress.js:516
 #: src/slideshow/SlideShowPresenter.ts:1484
 msgid "Follow Presenter"
-msgstr ""
+msgstr "מעקב אחר מציג"
 
 #: src/control/Control.NotebookbarImpress.js:644
 msgid "Slide Views"
-msgstr ""
+msgstr "תצוגות שקופיות"
 
 #: src/control/Control.NotebookbarImpress.js:683
 msgid "Snap to Grid"
@@ -3329,7 +3328,7 @@ msgstr "הצמדה לרשת"
 #: src/control/Control.NotebookbarImpress.js:807
 #: src/control/Control.NotebookbarImpress.js:1837
 msgid "Slide Layout"
-msgstr ""
+msgstr "פריסת שקופיות"
 
 #: src/control/Control.NotebookbarImpress.js:829
 #: src/control/Control.NotebookbarImpress.js:1847
@@ -3339,7 +3338,7 @@ msgstr "החלפת פריסה"
 #: src/control/Control.NotebookbarImpress.js:837
 #: src/control/Control.NotebookbarImpress.js:1854
 msgid "Reset Layout"
-msgstr ""
+msgstr "איפוס פריסה"
 
 #: src/control/Control.NotebookbarImpress.js:851
 msgid "Character"
@@ -3388,11 +3387,11 @@ msgstr "ניתוק מהאינטרנט"
 
 #: src/control/Control.NotebookbarWriter.js:490
 msgid "Validate Sidebar"
-msgstr ""
+msgstr "סרגל צד אימות"
 
 #: src/control/Control.NotebookbarWriter.js:497
 msgid "Validate Dialog"
-msgstr ""
+msgstr "חלונית אימות"
 
 #: src/control/Control.NotebookbarWriter.js:940
 #: src/control/Control.Zotero.js:828
@@ -3425,7 +3424,7 @@ msgstr "תיבת סימון"
 
 #: src/control/Control.NotebookbarWriter.js:1664
 msgid "Page Width"
-msgstr ""
+msgstr "רוחב עמוד"
 
 #: src/control/Control.NotebookbarWriter.js:2301
 msgid "Tracking"
@@ -3433,7 +3432,7 @@ msgstr "מעקב"
 
 #: src/control/Control.NotebookbarWriter.js:2322
 msgid "View Changes"
-msgstr ""
+msgstr "הצגת שינויים"
 
 #: src/control/Control.NotebookbarWriter.js:2498
 msgid "Split"
@@ -3478,21 +3477,21 @@ msgstr "לא התגלו בעיות עם אימות ה־SSL"
 #: src/control/Control.ServerAuditDialog.ts:72
 msgid ""
 "Documents are not effectively contained: missing capabilities or namespaces."
-msgstr ""
+msgstr "המסמכים לא מוכלים ביעילות: יכולות או שמות תחום חסרים."
 
 #: src/control/Control.ServerAuditDialog.ts:77
 msgid "Each document is securely contained"
-msgstr ""
+msgstr "כל מסמך מוכל בצורה מאובטחת"
 
 #: src/control/Control.ServerAuditDialog.ts:83
 msgid ""
 "BPF filtering of potentially risky system calls (seccomp) is not enabled; a "
 "security hazard."
-msgstr ""
+msgstr "סינון BPF של קריאות מערכת מסוכנות (seccomp) לא פעיל, זאת סכנת אבטחה."
 
 #: src/control/Control.ServerAuditDialog.ts:88
 msgid "System call security filtering enabled"
-msgstr ""
+msgstr "סינון אבטחת קריאות מערכת פעילה"
 
 #: src/control/Control.ServerAuditDialog.ts:95
 msgid ""
@@ -3609,12 +3608,12 @@ msgid "On"
 msgstr "פעיל"
 
 #: src/control/Control.StatusBar.js:158
-#: src/control/jsdialog/Definitions.Menu.ts:1775
+#: src/control/jsdialog/Definitions.Menu.ts:1787
 msgid "Off"
 msgstr "כבוי"
 
 #: src/control/Control.StatusBar.js:191
-#: src/control/jsdialog/Definitions.Menu.ts:163
+#: src/control/jsdialog/Definitions.Menu.ts:175
 msgid "Average"
 msgstr "ממוצע"
 
@@ -3623,7 +3622,7 @@ msgid "CountA"
 msgstr "כמות (לא ריקים)"
 
 #: src/control/Control.StatusBar.js:193
-#: src/control/jsdialog/Definitions.Menu.ts:166
+#: src/control/jsdialog/Definitions.Menu.ts:178
 msgid "Count"
 msgstr "כמות"
 
@@ -3636,7 +3635,7 @@ msgid "Minimum"
 msgstr "מזערי"
 
 #: src/control/Control.StatusBar.js:196
-#: src/control/jsdialog/Definitions.Menu.ts:162
+#: src/control/jsdialog/Definitions.Menu.ts:174
 msgid "Sum"
 msgstr "סכום"
 
@@ -4091,7 +4090,7 @@ msgid "Viewing"
 msgstr ""
 
 #: src/control/jsdialog/Definitions.Menu.ts:111
-#: src/control/jsdialog/Definitions.Menu.ts:1748
+#: src/control/jsdialog/Definitions.Menu.ts:1760
 msgid "Normal"
 msgstr "רגיל"
 
@@ -4103,375 +4102,381 @@ msgstr ""
 msgid "Narrow"
 msgstr ""
 
-#: src/control/jsdialog/Definitions.Menu.ts:164
+#: src/control/jsdialog/Definitions.Menu.ts:176
 msgid "Min"
 msgstr "מזערי"
 
-#: src/control/jsdialog/Definitions.Menu.ts:165
+#: src/control/jsdialog/Definitions.Menu.ts:177
 msgid "Max"
 msgstr "מרבי"
 
-#: src/control/jsdialog/Definitions.Menu.ts:1443
+#: src/control/jsdialog/Definitions.Menu.ts:1455
 msgid "Edit Single Sparkline"
 msgstr ""
 
-#: src/control/jsdialog/Definitions.Menu.ts:1454
+#: src/control/jsdialog/Definitions.Menu.ts:1466
 msgid "Delete Single Sparkline"
 msgstr ""
 
-#: src/control/jsdialog/Definitions.Menu.ts:1491
+#: src/control/jsdialog/Definitions.Menu.ts:1503
 msgid "Portrait"
 msgstr "אנכי"
 
-#: src/control/jsdialog/Definitions.Menu.ts:1497
+#: src/control/jsdialog/Definitions.Menu.ts:1509
 msgid "Landscape"
 msgstr "אופקי"
 
-#: src/control/jsdialog/Definitions.Menu.ts:1503
+#: src/control/jsdialog/Definitions.Menu.ts:1515
 msgid "A6"
 msgstr ""
 
-#: src/control/jsdialog/Definitions.Menu.ts:1504
+#: src/control/jsdialog/Definitions.Menu.ts:1516
 msgid "A5"
 msgstr ""
 
-#: src/control/jsdialog/Definitions.Menu.ts:1505
+#: src/control/jsdialog/Definitions.Menu.ts:1517
 msgid "A4"
 msgstr ""
 
-#: src/control/jsdialog/Definitions.Menu.ts:1506
+#: src/control/jsdialog/Definitions.Menu.ts:1518
 msgid "A3"
 msgstr ""
 
-#: src/control/jsdialog/Definitions.Menu.ts:1507
+#: src/control/jsdialog/Definitions.Menu.ts:1519
 msgid "B6 (ISO)"
 msgstr ""
 
-#: src/control/jsdialog/Definitions.Menu.ts:1508
+#: src/control/jsdialog/Definitions.Menu.ts:1520
 msgid "B5 (ISO)"
 msgstr ""
 
-#: src/control/jsdialog/Definitions.Menu.ts:1509
+#: src/control/jsdialog/Definitions.Menu.ts:1521
 msgid "B4 (ISO)"
 msgstr ""
 
-#: src/control/jsdialog/Definitions.Menu.ts:1510
+#: src/control/jsdialog/Definitions.Menu.ts:1522
 msgid "Letter"
 msgstr ""
 
-#: src/control/jsdialog/Definitions.Menu.ts:1511
+#: src/control/jsdialog/Definitions.Menu.ts:1523
 msgid "Legal"
 msgstr ""
 
-#: src/control/jsdialog/Definitions.Menu.ts:1512
+#: src/control/jsdialog/Definitions.Menu.ts:1524
 msgid "Long Bond"
 msgstr ""
 
-#: src/control/jsdialog/Definitions.Menu.ts:1513
+#: src/control/jsdialog/Definitions.Menu.ts:1525
 msgid "Tabloid"
 msgstr ""
 
-#: src/control/jsdialog/Definitions.Menu.ts:1514
+#: src/control/jsdialog/Definitions.Menu.ts:1526
 msgid "B6 (JIS)"
 msgstr ""
 
-#: src/control/jsdialog/Definitions.Menu.ts:1515
+#: src/control/jsdialog/Definitions.Menu.ts:1527
 msgid "B5 (JIS)"
 msgstr ""
 
-#: src/control/jsdialog/Definitions.Menu.ts:1516
+#: src/control/jsdialog/Definitions.Menu.ts:1528
 msgid "B4 (JIS)"
 msgstr ""
 
-#: src/control/jsdialog/Definitions.Menu.ts:1517
+#: src/control/jsdialog/Definitions.Menu.ts:1529
 msgid "16 Kai"
 msgstr ""
 
-#: src/control/jsdialog/Definitions.Menu.ts:1518
+#: src/control/jsdialog/Definitions.Menu.ts:1530
 msgid "32 Kai"
 msgstr ""
 
-#: src/control/jsdialog/Definitions.Menu.ts:1519
+#: src/control/jsdialog/Definitions.Menu.ts:1531
 msgid "Big 32 Kai"
 msgstr ""
 
-#: src/control/jsdialog/Definitions.Menu.ts:1520
+#: src/control/jsdialog/Definitions.Menu.ts:1532
 msgid "User"
-msgstr ""
-
-#: src/control/jsdialog/Definitions.Menu.ts:1521
-msgid "DL Envelope"
-msgstr ""
-
-#: src/control/jsdialog/Definitions.Menu.ts:1522
-msgid "C6 Envelope"
-msgstr ""
-
-#: src/control/jsdialog/Definitions.Menu.ts:1523
-msgid "C6/5 Envelope"
-msgstr ""
-
-#: src/control/jsdialog/Definitions.Menu.ts:1524
-msgid "C5 Envelope"
-msgstr ""
-
-#: src/control/jsdialog/Definitions.Menu.ts:1525
-msgid "C4 Envelope"
-msgstr ""
-
-#: src/control/jsdialog/Definitions.Menu.ts:1528
-msgid "#6¾ Envelope"
-msgstr ""
+msgstr "משתמש"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1533
+#, fuzzy
+msgid "DL Envelope"
+msgstr "מעטפת C6"
+
+#: src/control/jsdialog/Definitions.Menu.ts:1534
+msgid "C6 Envelope"
+msgstr "מעטפת C6"
+
+#: src/control/jsdialog/Definitions.Menu.ts:1535
+msgid "C6/5 Envelope"
+msgstr "מעטפת C6/5"
+
+#: src/control/jsdialog/Definitions.Menu.ts:1536
+msgid "C5 Envelope"
+msgstr "מעטפת C5"
+
+#: src/control/jsdialog/Definitions.Menu.ts:1537
+msgid "C4 Envelope"
+msgstr "מעטפת C4"
+
+#: src/control/jsdialog/Definitions.Menu.ts:1540
+#, fuzzy
+msgid "#6¾ Envelope"
+msgstr "מעטפת C6"
+
+#: src/control/jsdialog/Definitions.Menu.ts:1545
 msgid "#7¾ (Monarch) Envelope"
 msgstr ""
 
-#: src/control/jsdialog/Definitions.Menu.ts:1536
+#: src/control/jsdialog/Definitions.Menu.ts:1548
+#, fuzzy
 msgid "#9 Envelope"
-msgstr ""
+msgstr "מעטפת C6"
 
-#: src/control/jsdialog/Definitions.Menu.ts:1537
+#: src/control/jsdialog/Definitions.Menu.ts:1549
+#, fuzzy
 msgid "#10 Envelope"
-msgstr ""
+msgstr "מעטפת C6"
 
-#: src/control/jsdialog/Definitions.Menu.ts:1538
+#: src/control/jsdialog/Definitions.Menu.ts:1550
+#, fuzzy
 msgid "#11 Envelope"
-msgstr ""
+msgstr "מעטפת C6"
 
-#: src/control/jsdialog/Definitions.Menu.ts:1539
+#: src/control/jsdialog/Definitions.Menu.ts:1551
+#, fuzzy
 msgid "#12 Envelope"
-msgstr ""
+msgstr "מעטפת C6"
 
-#: src/control/jsdialog/Definitions.Menu.ts:1542
+#: src/control/jsdialog/Definitions.Menu.ts:1554
 msgid "Japanese Postcard"
 msgstr ""
 
-#: src/control/jsdialog/Definitions.Menu.ts:1728
+#: src/control/jsdialog/Definitions.Menu.ts:1740
 msgid "Insert Local Image"
 msgstr "הוספת תמונה מקומית"
 
-#: src/control/jsdialog/Definitions.Menu.ts:1734
+#: src/control/jsdialog/Definitions.Menu.ts:1746
 msgid "Insert Local Multimedia"
 msgstr "הוספת מולטימדיה מקומית"
 
-#: src/control/jsdialog/Definitions.Menu.ts:1740
+#: src/control/jsdialog/Definitions.Menu.ts:1752
 msgid "Compare Local Document"
-msgstr ""
+msgstr "השוואת מסמך מקומי"
 
-#: src/control/jsdialog/Definitions.Menu.ts:1746
+#: src/control/jsdialog/Definitions.Menu.ts:1758
 msgid "Very Tight"
 msgstr "הדוק מאוד"
 
-#: src/control/jsdialog/Definitions.Menu.ts:1747
+#: src/control/jsdialog/Definitions.Menu.ts:1759
 msgid "Tight"
 msgstr "הדוק"
 
-#: src/control/jsdialog/Definitions.Menu.ts:1749
+#: src/control/jsdialog/Definitions.Menu.ts:1761
 msgid "Loose"
 msgstr "משוחרר"
 
-#: src/control/jsdialog/Definitions.Menu.ts:1750
+#: src/control/jsdialog/Definitions.Menu.ts:1762
 msgid "Very Loose"
 msgstr "משוחרר מאוד"
 
-#: src/control/jsdialog/Definitions.Menu.ts:1780
+#: src/control/jsdialog/Definitions.Menu.ts:1792
 msgid "All users"
 msgstr "כל המשתמשים"
 
-#: src/control/jsdialog/Definitions.Menu.ts:1785
+#: src/control/jsdialog/Definitions.Menu.ts:1797
 msgid "This user"
 msgstr "המשתמש הזה"
 
-#: src/control/jsdialog/Definitions.Menu.ts:1919
+#: src/control/jsdialog/Definitions.Menu.ts:1931
 msgid "No Borders"
 msgstr ""
 
-#: src/control/jsdialog/Definitions.Menu.ts:1925
+#: src/control/jsdialog/Definitions.Menu.ts:1937
 msgid "Left Border"
 msgstr ""
 
-#: src/control/jsdialog/Definitions.Menu.ts:1931
+#: src/control/jsdialog/Definitions.Menu.ts:1943
 msgid "Right Border"
 msgstr ""
 
-#: src/control/jsdialog/Definitions.Menu.ts:1937
+#: src/control/jsdialog/Definitions.Menu.ts:1949
 msgid "Left And Right Borders"
 msgstr ""
 
-#: src/control/jsdialog/Definitions.Menu.ts:1943
+#: src/control/jsdialog/Definitions.Menu.ts:1955
 msgid "Top Border"
 msgstr ""
 
-#: src/control/jsdialog/Definitions.Menu.ts:1949
+#: src/control/jsdialog/Definitions.Menu.ts:1961
 msgid "Bottom Border"
 msgstr ""
 
-#: src/control/jsdialog/Definitions.Menu.ts:1955
+#: src/control/jsdialog/Definitions.Menu.ts:1967
 msgid "Top And Bottom Border"
 msgstr ""
 
-#: src/control/jsdialog/Definitions.Menu.ts:1961
+#: src/control/jsdialog/Definitions.Menu.ts:1973
 msgid "Outer Border"
 msgstr ""
 
-#: src/control/jsdialog/Definitions.Menu.ts:1967
+#: src/control/jsdialog/Definitions.Menu.ts:1979
 msgid "All Horizontal Lines"
 msgstr ""
 
-#: src/control/jsdialog/Definitions.Menu.ts:1973
+#: src/control/jsdialog/Definitions.Menu.ts:1985
 msgid "Outer Border And Horizontal Lines"
 msgstr ""
 
-#: src/control/jsdialog/Definitions.Menu.ts:1979
+#: src/control/jsdialog/Definitions.Menu.ts:1991
 msgid "Outer Border and Vertical Lines"
 msgstr ""
 
-#: src/control/jsdialog/Definitions.Menu.ts:1985
+#: src/control/jsdialog/Definitions.Menu.ts:1997
 msgid "Outer Borders And All Inner lines"
 msgstr ""
 
-#: src/control/jsdialog/Definitions.Menu.ts:1990
+#: src/control/jsdialog/Definitions.Menu.ts:2002
 msgid "Line color"
 msgstr "צבע קו"
 
-#: src/control/jsdialog/Definitions.Menu.ts:2001
+#: src/control/jsdialog/Definitions.Menu.ts:2013
 msgid "Line style"
 msgstr "סגנון קו"
 
-#: src/control/jsdialog/Definitions.Menu.ts:2004
+#: src/control/jsdialog/Definitions.Menu.ts:2016
 msgid "Hairline (0.05 pt)"
 msgstr ""
 
-#: src/control/jsdialog/Definitions.Menu.ts:2013
+#: src/control/jsdialog/Definitions.Menu.ts:2025
 msgid "Very thin (0.50 pt)"
 msgstr ""
 
-#: src/control/jsdialog/Definitions.Menu.ts:2022
+#: src/control/jsdialog/Definitions.Menu.ts:2034
 msgid "Thin (0.75 pt)"
 msgstr ""
 
-#: src/control/jsdialog/Definitions.Menu.ts:2031
+#: src/control/jsdialog/Definitions.Menu.ts:2043
 msgid "Medium (1.50 pt)"
 msgstr ""
 
-#: src/control/jsdialog/Definitions.Menu.ts:2040
+#: src/control/jsdialog/Definitions.Menu.ts:2052
 msgid "Thick (2.25 pt)"
 msgstr ""
 
-#: src/control/jsdialog/Definitions.Menu.ts:2049
+#: src/control/jsdialog/Definitions.Menu.ts:2061
 msgid "Extra thick (4.50 pt)"
 msgstr ""
 
-#: src/control/jsdialog/Definitions.Menu.ts:2058
+#: src/control/jsdialog/Definitions.Menu.ts:2070
 msgid "Double Hairline (1.10 pt)"
 msgstr ""
 
-#: src/control/jsdialog/Definitions.Menu.ts:2067
+#: src/control/jsdialog/Definitions.Menu.ts:2079
 msgid "Double Hairline (2.35 pt)"
 msgstr ""
 
-#: src/control/jsdialog/Definitions.Menu.ts:2076
+#: src/control/jsdialog/Definitions.Menu.ts:2088
 msgid "Thin/Medium (3.00 pt)"
 msgstr ""
 
-#: src/control/jsdialog/Definitions.Menu.ts:2085
+#: src/control/jsdialog/Definitions.Menu.ts:2097
 msgid "Medium/Hairline (3.05 pt)"
 msgstr ""
 
-#: src/control/jsdialog/Definitions.Menu.ts:2094
+#: src/control/jsdialog/Definitions.Menu.ts:2106
 msgid "Medium/Medium (4.50 pt)"
 msgstr "בינוני/בינוני (4.50 נק׳)"
 
-#: src/control/jsdialog/Definitions.Menu.ts:2154
+#: src/control/jsdialog/Definitions.Menu.ts:2166
 msgid "Standard (4:3)"
 msgstr "רגיל (4:3)"
 
-#: src/control/jsdialog/Definitions.Menu.ts:2159
+#: src/control/jsdialog/Definitions.Menu.ts:2171
 msgid "Widescreen (16:9)"
 msgstr "מסך רחב (16:9)"
 
-#: src/control/jsdialog/Definitions.Menu.ts:2169
+#: src/control/jsdialog/Definitions.Menu.ts:2181
 msgid "Blank Slide"
 msgstr "שקופית ריקה"
 
-#: src/control/jsdialog/Definitions.Menu.ts:2170
+#: src/control/jsdialog/Definitions.Menu.ts:2182
 msgid "Title Slide"
 msgstr "שקופית תוכן"
 
-#: src/control/jsdialog/Definitions.Menu.ts:2171
+#: src/control/jsdialog/Definitions.Menu.ts:2183
 msgid "Title, Content"
 msgstr "כותרת, תוכן"
 
-#: src/control/jsdialog/Definitions.Menu.ts:2172
+#: src/control/jsdialog/Definitions.Menu.ts:2184
 msgid "Title and 2 Content"
 msgstr "כותרת ותוכן 2"
 
-#: src/control/jsdialog/Definitions.Menu.ts:2173
+#: src/control/jsdialog/Definitions.Menu.ts:2185
 msgid "Title Only"
 msgstr "כותרת בלבד"
 
-#: src/control/jsdialog/Definitions.Menu.ts:2174
+#: src/control/jsdialog/Definitions.Menu.ts:2186
 msgid "Centered Text"
 msgstr "טקסט ממורכז"
 
-#: src/control/jsdialog/Definitions.Menu.ts:2175
+#: src/control/jsdialog/Definitions.Menu.ts:2187
 msgid "Title, 2 Content and Content"
 msgstr "כותרת, תוכן 2 ותוכן"
 
-#: src/control/jsdialog/Definitions.Menu.ts:2176
+#: src/control/jsdialog/Definitions.Menu.ts:2188
 msgid "Title, Content and 2 Content"
 msgstr "כותרת, תוכן ותוכן 2"
 
-#: src/control/jsdialog/Definitions.Menu.ts:2177
+#: src/control/jsdialog/Definitions.Menu.ts:2189
 msgid "Title, 2 Content over Content"
 msgstr "כותרת, תוכן 2 על גבי תוכן"
 
-#: src/control/jsdialog/Definitions.Menu.ts:2178
+#: src/control/jsdialog/Definitions.Menu.ts:2190
 msgid "Title, Content over Content"
 msgstr "כותרת, תוכן על תוכן"
 
-#: src/control/jsdialog/Definitions.Menu.ts:2179
+#: src/control/jsdialog/Definitions.Menu.ts:2191
 msgid "Title, 4 Content"
 msgstr "כותרת, תוכן 4"
 
-#: src/control/jsdialog/Definitions.Menu.ts:2180
+#: src/control/jsdialog/Definitions.Menu.ts:2192
 msgid "Title, 6 Content"
 msgstr "כותרת, תוכן 6"
 
-#: src/control/jsdialog/Definitions.Menu.ts:2181
+#: src/control/jsdialog/Definitions.Menu.ts:2193
 msgid "Vertical Title, Text, Chart"
 msgstr "כותרת אנכית, טקסט, תרשים"
 
-#: src/control/jsdialog/Definitions.Menu.ts:2182
+#: src/control/jsdialog/Definitions.Menu.ts:2194
 msgid "Vertical Title, Vertical Text"
 msgstr "כותרת אנכית, טקסט אנכי"
 
-#: src/control/jsdialog/Definitions.Menu.ts:2183
+#: src/control/jsdialog/Definitions.Menu.ts:2195
 msgid "Title, Vertical Text"
 msgstr "כותרת, טקסט אנכי"
 
-#: src/control/jsdialog/Definitions.Menu.ts:2184
+#: src/control/jsdialog/Definitions.Menu.ts:2196
 msgid "Title, Vertical Text, Clipart"
 msgstr ""
 
-#: src/control/jsdialog/Definitions.Menu.ts:2319
+#: src/control/jsdialog/Definitions.Menu.ts:2331
 msgid "Grayscale"
 msgstr "גווני אפור"
 
-#: src/control/jsdialog/Definitions.Menu.ts:2324
+#: src/control/jsdialog/Definitions.Menu.ts:2336
 msgid "Black/White"
 msgstr "שחור/לבן"
 
-#: src/control/jsdialog/Definitions.Menu.ts:2329
+#: src/control/jsdialog/Definitions.Menu.ts:2341
 msgid "Watermark"
 msgstr "סימן מים"
 
-#: src/control/jsdialog/Definitions.Menu.ts:2337
+#: src/control/jsdialog/Definitions.Menu.ts:2349
 msgid "Insert comment"
 msgstr "הוספת תגובה"
 
-#: src/control/jsdialog/Definitions.Menu.ts:2341
+#: src/control/jsdialog/Definitions.Menu.ts:2353
 msgid "Comments list"
 msgstr "רשימת הערות"
 
@@ -4737,7 +4742,7 @@ msgstr "צבעי מסמך"
 msgid ", cluster configuration error: mis-matching serverid"
 msgstr ", שגיאת הגדרות צביר: מזהה שרת לא תואם"
 
-#: src/dom/NotebookbarAccessibility.js:234
+#: src/dom/NotebookbarAccessibility.js:235
 msgid "{0} tab selected"
 msgstr "לשונית {0} נבחרה"
 
@@ -5222,7 +5227,7 @@ msgstr "נוצר קובץ חדש מתבנית…"
 
 #: src/map/handler/Map.WOPI.js:232
 msgid "Compare Document..."
-msgstr ""
+msgstr "השוואת מסמך…"
 
 #: src/map/handler/Map.WOPI.js:745
 msgid "File name should contain an extension."
@@ -5266,8 +5271,9 @@ msgid "Resume"
 msgstr "המשך"
 
 #: src/slideshow/PresenterConsole.js:39
+#, fuzzy
 msgid "Present to all"
-msgstr ""
+msgstr "הצגה להכול"
 
 #: src/slideshow/PresenterConsole.js:40
 msgid "Go Back"
@@ -5563,7 +5569,8 @@ msgstr ""
 #~ msgid ""
 #~ "Restoring older revision. Any unsaved changes will be available in version "
 #~ "history"
-#~ msgstr "מהדורה ישנה משוחזרת. שינויים שלא יישמרו יהיו זמינים בהיסטוריית הגרסאות"
+#~ msgstr ""
+#~ "מהדורה ישנה משוחזרת. שינויים שלא יישמרו יהיו זמינים בהיסטוריית הגרסאות"
 
 #~ msgid "Reloading the document after rename"
 #~ msgstr "רענון המסמך אחרי שינוי שם"
@@ -5662,26 +5669,26 @@ msgstr ""
 #~ msgstr "המצגת מושהית - החלון הראשי מוסתר"
 
 #~ msgid ""
-#~ "The async Clipboard API is not supported by your browser, switching to "
-#~ "HTTPS is meant to fix that."
+#~ "The async Clipboard API is not supported by your browser, switching to HTTPS"
+#~ " is meant to fix that."
 #~ msgstr ""
-#~ "ה־API האסינכרוני של לוח הגזירים לא נתמך על ידי הדפדפן שלך, מעבר ל־HTTPS אמור "
-#~ "לתקן את זה."
+#~ "ה־API האסינכרוני של לוח הגזירים לא נתמך על ידי הדפדפן שלך, מעבר ל־HTTPS אמור"
+#~ " לתקן את זה."
 
 #~ msgid ""
 #~ "<p>Your browser has very limited access to the clipboard, so use these "
-#~ "keyboard shortcuts:</p><table class=\"warn-copy-paste\"><tr><td><kbd>Ctrl</"
-#~ "kbd><span class=\"kbd--plus\">+</span><kbd>C</kbd></td><td><kbd>Ctrl</"
-#~ "kbd><span class=\"kbd--plus\">+</span><kbd>X</kbd></td><td><kbd>Ctrl</"
-#~ "kbd><span class=\"kbd--plus\">+</span><kbd>V</kbd></td></tr><tr><td>Copy</"
-#~ "td><td>Cut</td><td>Paste</td></tr></table>"
+#~ "keyboard shortcuts:</p><table class=\"warn-copy-"
+#~ "paste\"><tr><td><kbd>Ctrl</kbd><span class=\"kbd--"
+#~ "plus\">+</span><kbd>C</kbd></td><td><kbd>Ctrl</kbd><span class=\"kbd--"
+#~ "plus\">+</span><kbd>X</kbd></td><td><kbd>Ctrl</kbd><span class=\"kbd--"
+#~ "plus\">+</span><kbd>V</kbd></td></tr><tr><td>Copy</td><td>Cut</td><td>Paste</td></tr></table>"
 #~ msgstr ""
 #~ "<p>לדפדפן שלך יש גישה מאוד מוגבלת ללוח הגזירים, לכן כדאי להשתמש בקיצורי "
 #~ "המקלדת:</p><table class=\"warn-copy-paste\"><tr><td><kbd>Ctrl</kbd><span "
-#~ "class=\"kbd--plus\">+</span><kbd>C</kbd></td><td><kbd>Ctrl</kbd><span class="
-#~ "\"kbd--plus\">+</span><kbd>X</kbd></td><td><kbd>Ctrl</kbd><span class=\"kbd--"
-#~ "plus\">+</span><kbd>V</kbd></td></tr><tr><td>העתקה</td><td>גזירה</td><td>הדבק"
-#~ "ה</td></tr></table>"
+#~ "class=\"kbd--plus\">+</span><kbd>C</kbd></td><td><kbd>Ctrl</kbd><span "
+#~ "class=\"kbd--plus\">+</span><kbd>X</kbd></td><td><kbd>Ctrl</kbd><span "
+#~ "class=\"kbd--"
+#~ "plus\">+</span><kbd>V</kbd></td></tr><tr><td>העתקה</td><td>גזירה</td><td>הדבקה</td></tr></table>"
 
 #~ msgid ""
 #~ "<p>Your browser has very limited access to the clipboard</p><p><b>Please "
@@ -5722,12 +5729,12 @@ msgstr ""
 
 #~ msgid ""
 #~ "<a id=\"slide-1-indicator\" class=\"active\" href=\"#slide-1\">1</a> <a "
-#~ "id=\"slide-2-indicator\" href=\"#slide-2\">2</a> <a id=\"slide-3-"
-#~ "indicator\" href=\"#slide-3\">3</a>"
+#~ "id=\"slide-2-indicator\" href=\"#slide-2\">2</a> <a id=\"slide-3-indicator\""
+#~ " href=\"#slide-3\">3</a>"
 #~ msgstr ""
-#~ "<a id=\"slide-1-indicator\" class=\"active\" href=\"#slide-1\">1</a> <a id="
-#~ "\"slide-2-indicator\" href=\"#slide-2\">2</a> <a id=\"slide-3-indicator\" "
-#~ "href=\"#slide-3\">3</a>"
+#~ "<a id=\"slide-1-indicator\" class=\"active\" href=\"#slide-1\">1</a> <a "
+#~ "id=\"slide-2-indicator\" href=\"#slide-2\">2</a> <a id=\"slide-3-indicator\""
+#~ " href=\"#slide-3\">3</a>"
 
 #~ msgid "ODF Spreadsheet (.ods)"
 #~ msgstr "גיליון ODF‏ (‎.ods)"
@@ -5769,10 +5776,10 @@ msgstr ""
 #~ "\"Confirm copy to clipboard\".</p><p>If you are copy and pasting between "
 #~ "documents inside {productname}, there is no need to download.</p>"
 #~ msgstr ""
-#~ "<p>אם ברצונך לשתף רכיבים גדולים יותר מהמסמך שלך עם יישומים אחרים צריך להוריד "
-#~ "אותם למכשיר שלך קודם. כדי לעשות זאת, יש ללחוץ על הכפתור „התחלת הורדה” שלהלן, "
-#~ "לאחר סיום ההורדה יש ללחוץ על „אישור העתקה ללוח הגזירים”.</p><p>אם העתקת "
-#~ "והדבקת בין מסמכים בתוך {productname}, אין צורך להוריד.</p>"
+#~ "<p>אם ברצונך לשתף רכיבים גדולים יותר מהמסמך שלך עם יישומים אחרים צריך להוריד"
+#~ " אותם למכשיר שלך קודם. כדי לעשות זאת, יש ללחוץ על הכפתור „התחלת הורדה” "
+#~ "שלהלן, לאחר סיום ההורדה יש ללחוץ על „אישור העתקה ללוח הגזירים”.</p><p>אם "
+#~ "העתקת והדבקת בין מסמכים בתוך {productname}, אין צורך להוריד.</p>"
 
 #~ msgid "Collapse Notebook Bar"
 #~ msgstr "צמצום סרגל מחברת"
@@ -5805,9 +5812,9 @@ msgstr ""
 #, javascript-format
 #~ msgid ""
 #~ "Save failed because the document is too large or disk quota exceeded. "
-#~ "Document will now be read-only but you may still download it now to "
-#~ "preserve a copy locally. Please contact the server (%storageserver) "
-#~ "administrator to resolve the issue."
+#~ "Document will now be read-only but you may still download it now to preserve"
+#~ " a copy locally. Please contact the server (%storageserver) administrator to"
+#~ " resolve the issue."
 #~ msgstr ""
 #~ "השמירה נכשלה כיוון שהמסמך גדול מדי או שהגעת למכסת הכונן. המסמך יהיה לקריאה "
 #~ "בלבד אך עדיין ניתן להוריד אותו כדי לשמור עותק מקומית. נא ליצור קשר עם הנהלת "
@@ -5824,8 +5831,8 @@ msgstr ""
 #~ "Document cannot be renamed. Check your permissions or contact the storage "
 #~ "server administrator."
 #~ msgstr ""
-#~ "לא ניתן לשנות את שם המסמך. נא לבדוק את ההרשאות שלך או ליצור קשר עם הנהלת שרת "
-#~ "האחסון."
+#~ "לא ניתן לשנות את שם המסמך. נא לבדוק את ההרשאות שלך או ליצור קשר עם הנהלת שרת"
+#~ " האחסון."
 
 #~ msgid ""
 #~ "Document cannot be exported. Please contact the storage server "
@@ -6010,18 +6017,18 @@ msgstr ""
 #~ msgstr ""
 #~ "מזמינים אותך ליהנות מההתפתחויות העדכניות ביותר בעבודה משרדית דרך הדפדפן, "
 #~ "לשימושך באופן חופשי, כדי לחקור ולהשתמש בשילוב עם שותפים בדפדפן. קיימים <a "
-#~ "href=\"%coolAppsURL\" target=\"_blank\">יישומונים</a> גם ל־Android ול־iOS.‏ %"
-#~ "coolVersion מציגה שיפורים חשובים מבחינת שימושיות, ייצוג חזותי וביצועים."
+#~ "href=\"%coolAppsURL\" target=\"_blank\">יישומונים</a> גם ל־Android ול־iOS.‏ "
+#~ "%coolVersion מציגה שיפורים חשובים מבחינת שימושיות, ייצוג חזותי וביצועים."
 
 #, javascript-format
 #~ msgid ""
-#~ "Check the <a href=\"%coolReleaseNotesURL\" target=\"_blank\">release notes</"
-#~ "a> and learn all about the latest milestone in performance particularly for "
-#~ "larger groups working on documents, new native sidebar, new re-worked avatar "
-#~ "list, asynchronous saving, faster spell checking and more."
+#~ "Check the <a href=\"%coolReleaseNotesURL\" target=\"_blank\">release "
+#~ "notes</a> and learn all about the latest milestone in performance "
+#~ "particularly for larger groups working on documents, new native sidebar, new"
+#~ " re-worked avatar list, asynchronous saving, faster spell checking and more."
 #~ msgstr ""
-#~ "מומלץ לעיין ב<a href=\"%coolReleaseNotesURL\" target=\"_blank\">הערות ההוצאה "
-#~ "לאור</a> וללמוד על אבן הדרך העדכנית ביותר בביצועים, במיוחד בקבוצות גדולות "
+#~ "מומלץ לעיין ב<a href=\"%coolReleaseNotesURL\" target=\"_blank\">הערות ההוצאה"
+#~ " לאור</a> וללמוד על אבן הדרך העדכנית ביותר בביצועים, במיוחד בקבוצות גדולות "
 #~ "שעובדות על מסמכים, סרגל צד מובנה חדש, רשימת תמונות ייצוגיות שנבנתה מחדש, "
 #~ "שמירה אסינכרונית, בדיקת איות מהירה יותר ועוד."
 
@@ -6033,20 +6040,20 @@ msgstr ""
 
 #, javascript-format
 #~ msgid ""
-#~ "Learn more about integrating into your web application in the <a href="
-#~ "\"%coolSdkURL\" target=\"_blank\">Collabora Online SDK</a>. Or head over to "
-#~ "the <a href=\"%coolStepByStepURL\" target=\"_blank\">step-by-step "
+#~ "Learn more about integrating into your web application in the <a "
+#~ "href=\"%coolSdkURL\" target=\"_blank\">Collabora Online SDK</a>. Or head "
+#~ "over to the <a href=\"%coolStepByStepURL\" target=\"_blank\">step-by-step "
 #~ "instructions</a> and build CODE from scratch. You can also help out with <a "
 #~ "href=\"%coolTranslationsURL\" target=\"_blank\">translations</a> or by <a "
 #~ "href=\"%coolBugreportURL\" target=\"_blank\">filing a bug report</a> with "
 #~ "all the essential steps on how to reproduce it."
 #~ msgstr ""
-#~ "אפשר ללמוד עוד על שילוב יישומי הדפדפן שלך מול <a href=\"%coolSdkURL\" target="
-#~ "\"_blank\">ה־SDK של Collabora Online</a>. או לגשת אל <a href=\"%"
-#~ "coolStepByStepURL\" target=\"_blank\">ההנחיות המפורטות</a> ולבנות את CODE "
-#~ "מאפס. אפשר לסייע גם על ידי <a href=\"%coolTranslationsURL\" target=\"_blank\""
-#~ ">תרגום</a> או ב<a href=\"%coolBugreportURL\" target=\"_blank\">הגשת דוח "
-#~ "תקלה</a> עם כל הצעדים הנחוצים לשחזר אותה."
+#~ "אפשר ללמוד עוד על שילוב יישומי הדפדפן שלך מול <a href=\"%coolSdkURL\" "
+#~ "target=\"_blank\">ה־SDK של Collabora Online</a>. או לגשת אל <a "
+#~ "href=\"%coolStepByStepURL\" target=\"_blank\">ההנחיות המפורטות</a> ולבנות את"
+#~ " CODE מאפס. אפשר לסייע גם על ידי <a href=\"%coolTranslationsURL\" "
+#~ "target=\"_blank\">תרגום</a> או ב<a href=\"%coolBugreportURL\" "
+#~ "target=\"_blank\">הגשת דוח תקלה</a> עם כל הצעדים הנחוצים לשחזר אותה."
 
 #~ msgid "Learn more about the enterprise-ready versions"
 #~ msgstr "מידע נוסף על הגרסה שמוכנה לסביבה תעשייתית"
@@ -6095,11 +6102,12 @@ msgstr ""
 
 #~ msgid ""
 #~ "<p>Your browser has very limited access to the clipboard, so use these "
-#~ "keyboard shortcuts:<ul><li><b>Ctrl+C</b>: For copying.</li><li><b>Ctrl+X</"
-#~ "b>: For cutting.</li><li><b>Ctrl+V</b>: For pasting.</li></ul></p>"
+#~ "keyboard shortcuts:<ul><li><b>Ctrl+C</b>: For "
+#~ "copying.</li><li><b>Ctrl+X</b>: For cutting.</li><li><b>Ctrl+V</b>: For "
+#~ "pasting.</li></ul></p>"
 #~ msgstr ""
-#~ "<p>הגישה של הדפדפן שלך ללוח הגזירים היא מוגבלת מאוד, לכן מוטב להשתמש בקיצורי "
-#~ "מקלדת אלו:<ul><li><b>Ctrl+C</b>: להעתקה.</li><li><b>Ctrl+X</b>: "
+#~ "<p>הגישה של הדפדפן שלך ללוח הגזירים היא מוגבלת מאוד, לכן מוטב להשתמש בקיצורי"
+#~ " מקלדת אלו:<ul><li><b>Ctrl+C</b>: להעתקה.</li><li><b>Ctrl+X</b>: "
 #~ "לגזירה.</li><li><b>Ctrl+V</b>: להדבקה.</li></ul></p>"
 
 #~ msgid "Subtitle"
@@ -6145,7 +6153,6 @@ msgstr ""
 #~ msgstr "תבנית"
 
 #, fuzzy
-#~| msgid "Text orientation"
 #~ msgid "Toggle Page Orientation"
 #~ msgstr "כיווניות טקסט"
 

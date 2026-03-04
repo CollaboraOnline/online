@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-03 09:42+0200\n"
+"POT-Creation-Date: 2026-03-04 08:24+0200\n"
 "PO-Revision-Date: 2025-08-20 07:51+0000\n"
 "Last-Translator: procellarium <procellarium@gmail.com>\n"
 "Language-Team: Russian <https://hosted.weblate.org/projects/collabora-online/"
@@ -28,33 +28,36 @@ msgid "Undo"
 msgstr "Отменить"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:10-69
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>Z</kbd>"
-msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Z</kbd>"
+msgstr ""
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>Z</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:11-38
 msgid "Redo"
 msgstr "Повторить"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:11-69
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>Y</kbd>"
-msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Y</kbd>"
+msgstr ""
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>Y</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:12-38
 msgid "Cut"
 msgstr "Вырезать"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:12-68
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>X</kbd>"
-msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>X</kbd>"
+msgstr ""
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>X</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:13-38
 msgid "Copy"
@@ -80,6 +83,9 @@ msgid ""
 ">+</span><kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>V</kbd>"
 msgstr ""
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>V</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:15-38
 msgid "Paste special"
@@ -92,17 +98,22 @@ msgid ""
 ">+</span><kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>V</kbd>"
 msgstr ""
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>Alt</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>V</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:16-38
 msgid "Print (Download as PDF)"
 msgstr "Печать (Загрузить как PDF)"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:16-88
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>P</kbd>"
-msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>P</kbd>"
+msgstr ""
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>P</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:17-38
 msgid "Display the Keyboard shortcuts help"
@@ -114,6 +125,9 @@ msgid ""
 ">+</span><kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>?</kbd>"
 msgstr ""
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>?</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:18-38
 msgid "Focus to notebookbar menu"
@@ -125,6 +139,9 @@ msgid ""
 ">+</span><kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>F1</kbd>"
 msgstr ""
+"<kbd>Alt</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>F1</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:19-38
 msgid "Focus to document from menu"
@@ -139,11 +156,12 @@ msgid "Focus to selected comment's menu"
 msgstr "Перейти к меню выбранного комментария"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:20-97
-#, fuzzy
 msgid ""
 "<kbd>Alt</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>C</kbd>"
-msgstr "<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>C</kbd>"
+msgstr ""
+"<kbd>Alt</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>C</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.h2:25-9
 #: html/cool-help.html%2Bdiv.div.div.h2:193-9
@@ -162,11 +180,12 @@ msgstr "Жирный"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:162-69
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:195-69
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:260-69
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>B</kbd>"
-msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>B</kbd>"
+msgstr ""
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>B</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:28-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:163-38
@@ -179,11 +198,12 @@ msgstr "Курсив"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:163-71
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:196-71
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:261-71
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>I</kbd>"
-msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>I</kbd>"
+msgstr ""
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>I</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:29-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:164-38
@@ -196,11 +216,12 @@ msgstr "Подчёркивание"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:164-74
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:197-74
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:262-74
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>U</kbd>"
-msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>U</kbd>"
+msgstr ""
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>U</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:30-38
 msgid "Double Underline"
@@ -208,11 +229,12 @@ msgstr "Двойное подчёркивание"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:30-81
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:169-74
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>D</kbd>"
-msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>D</kbd>"
+msgstr ""
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>D</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:31-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:165-38
@@ -230,6 +252,9 @@ msgid ""
 ">+</span><kbd>Alt</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>5</kbd>"
 msgstr ""
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>Alt</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>5</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:32-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:199-38
@@ -245,6 +270,9 @@ msgid ""
 ">+</span><kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>P</kbd>"
 msgstr ""
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>P</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:33-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:200-38
@@ -260,6 +288,9 @@ msgid ""
 ">+</span><kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>B</kbd>"
 msgstr ""
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>B</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:34-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:166-38
@@ -268,11 +299,12 @@ msgstr "Очистить форматирование"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:34-89
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:166-89
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>M</kbd>"
-msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>M</kbd>"
+msgstr ""
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>M</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.h2:38-9
 #: html/cool-help.html%2Bdiv.div.div.h2:205-9
@@ -291,11 +323,12 @@ msgstr "Выровнять по центру"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:171-77
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:207-77
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:272-77
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>E</kbd>"
-msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>E</kbd>"
+msgstr ""
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>E</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:41-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:172-38
@@ -308,11 +341,12 @@ msgstr "Выровнять по левому краю"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:172-75
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:208-75
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:273-75
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>L</kbd>"
-msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>L</kbd>"
+msgstr ""
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>L</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:42-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:173-38
@@ -325,11 +359,12 @@ msgstr "Выровнять по правому краю"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:173-76
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:209-76
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:274-76
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>R</kbd>"
-msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>R</kbd>"
+msgstr ""
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>R</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:43-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:174-38
@@ -342,44 +377,48 @@ msgstr "Выровнять по ширине"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:174-72
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:210-72
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:275-72
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>J</kbd>"
-msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>J</kbd>"
+msgstr ""
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>J</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:44-38
 msgid "Apply Default paragraph style"
 msgstr "Применить Базовый стиль абзаца"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:44-94
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>0</kbd>"
-msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>0</kbd>"
+msgstr ""
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>0</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:45-38
 msgid "Apply Heading 1 paragraph style"
 msgstr "Применить стиль абзаца «Заголовок 1»"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:45-96
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>1</kbd>"
-msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>1</kbd>"
+msgstr ""
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>1</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:46-38
 msgid "Apply Heading 2 paragraph style"
 msgstr "Применить стиль абзаца «Заголовок 2»"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:46-96
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>2</kbd>"
-msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>2</kbd>"
+msgstr ""
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>2</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:47-38
 msgid "Apply Heading 3 paragraph style"
@@ -387,33 +426,36 @@ msgstr "Применить стиль абзаца «Заголовок 3»"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:47-96
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:175-89
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>3</kbd>"
-msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>3</kbd>"
+msgstr ""
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>3</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:48-38
 msgid "Apply Heading 4 paragraph style"
 msgstr "Применить стиль абзаца «Заголовок 4»"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:48-96
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>4</kbd>"
-msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>4</kbd>"
+msgstr ""
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>4</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:49-38
 msgid "Apply Heading 5 paragraph style"
 msgstr "Применить стиль абзаца «Заголовок 5»"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:49-96
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>5</kbd>"
-msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>5</kbd>"
+msgstr ""
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>5</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.h2:53-9
 msgid "Text selection and navigation in document"
@@ -437,11 +479,12 @@ msgstr "Выделить всё"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:266-75
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:283-75
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:317-91
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>A</kbd>"
-msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>A</kbd>"
+msgstr ""
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>A</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:56-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:219-38
@@ -464,12 +507,12 @@ msgstr "Переместить курсор влево с выделением"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:57-103
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:220-103
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:285-103
-#, fuzzy
 msgid ""
 "<kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</"
 "span><kbd>Arrow Left</kbd>"
 msgstr ""
-"<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Стрелка влево</kbd>"
+"<kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</"
+"span><kbd>Стрелка влево</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:58-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:221-38
@@ -480,12 +523,12 @@ msgstr "Перейти к началу слова"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:58-90
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:221-90
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:286-90
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</"
 "span><kbd>Arrow Left</kbd>"
 msgstr ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Стрелка влево</kbd>"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</"
+"span><kbd>Стрелка влево</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:59-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:222-38
@@ -496,14 +539,14 @@ msgstr "Выделять влево по словам"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:59-96
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:222-96
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:287-96
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</"
 "span><kbd>Arrow Left</kbd>"
 msgstr ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-"\"kbd--plus\">+</span><kbd>Стрелка влево</kbd>"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</"
+"span><kbd>Стрелка влево</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:60-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:223-38
@@ -526,12 +569,12 @@ msgstr "Переместить курсор вправо с выделением
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:61-104
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:224-104
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:289-104
-#, fuzzy
 msgid ""
 "<kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</"
 "span><kbd>Arrow Right</kbd>"
 msgstr ""
-"<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Стрелка вправо</kbd>"
+"<kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</"
+"span><kbd>Стрелка вправо</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:62-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:225-38
@@ -542,12 +585,12 @@ msgstr "Перейти к началу следующего слова"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:62-93
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:225-93
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:290-93
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</"
 "span><kbd>Arrow Right</kbd>"
 msgstr ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Стрелка вправо</kbd>"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</"
+"span><kbd>Стрелка вправо</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:63-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:226-38
@@ -558,14 +601,14 @@ msgstr "Выделять вправо по словам"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:63-97
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:226-97
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:291-97
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</"
 "span><kbd>Arrow Right</kbd>"
 msgstr ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-"\"kbd--plus\">+</span><kbd>Стрелка вправо</kbd>"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</"
+"span><kbd>Стрелка вправо</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:64-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:227-38
@@ -588,12 +631,12 @@ msgstr "Выделять по строкам вверх"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:65-98
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:228-98
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:293-98
-#, fuzzy
 msgid ""
 "<kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</"
 "span><kbd>Arrow Up</kbd>"
 msgstr ""
-"<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Стрелка вверх</kbd>"
+"<kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</"
+"span><kbd>Стрелка вверх</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:66-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:229-38
@@ -604,12 +647,12 @@ msgstr "Переместить курсор к началу предыдущег
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:66-115
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:229-115
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:294-115
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</"
 "span><kbd>Arrow Up</kbd>"
 msgstr ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Стрелка вверх</kbd>"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</"
+"span><kbd>Стрелка вверх</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:67-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:230-38
@@ -620,14 +663,14 @@ msgstr "Выделить до начала абзаца"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:67-97
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:230-97
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:295-97
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</"
 "span><kbd>Arrow Up</kbd>"
 msgstr ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-"\"kbd--plus\">+</span><kbd>Стрелка вверх</kbd>"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</"
+"span><kbd>Стрелка вверх</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:68-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:231-38
@@ -650,12 +693,12 @@ msgstr "Выделение по строкам вниз"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:69-100
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:232-100
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:297-100
-#, fuzzy
 msgid ""
 "<kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</"
 "span><kbd>Arrow Down</kbd>"
 msgstr ""
-"<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Стрелка вниз</kbd>"
+"<kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</"
+"span><kbd>Стрелка вниз</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:70-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:233-38
@@ -666,12 +709,12 @@ msgstr "Переместить курсор к началу следующего
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:70-111
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:233-111
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:298-111
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</"
 "span><kbd>Arrow Down</kbd>"
 msgstr ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Стрелка вниз</kbd>"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</"
+"span><kbd>Стрелка вниз</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:71-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:234-38
@@ -682,14 +725,14 @@ msgstr "Выделить до конца абзаца"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:71-91
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:234-91
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:299-91
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</"
 "span><kbd>Arrow Down</kbd>"
 msgstr ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-"\"kbd--plus\">+</span><kbd>Стрелка вниз</kbd>"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</"
+"span><kbd>Стрелка вниз</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:72-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:235-38
@@ -714,11 +757,12 @@ msgstr "Перейти к началу строки с выделением"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:138-138
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:236-105
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:301-105
-#, fuzzy
 msgid ""
 "<kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>Home</kbd>"
-msgstr "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Home</kbd>"
+msgstr ""
+"<kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>Home</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:74-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:237-38
@@ -731,11 +775,12 @@ msgstr "Перейти к началу документа"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:134-118
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:237-88
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:302-88
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>Home</kbd>"
-msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Home</kbd>"
+msgstr ""
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>Home</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:75-38
 msgid "Go and select text to start of document"
@@ -749,6 +794,9 @@ msgid ""
 ">+</span><kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>Home</kbd>"
 msgstr ""
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>Home</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:76-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:239-38
@@ -773,11 +821,12 @@ msgstr "Перейти к концу строки с выделением"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:139-137
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:240-99
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:305-99
-#, fuzzy
 msgid ""
 "<kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>End</kbd>"
-msgstr "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>End</kbd>"
+msgstr ""
+"<kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>End</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:78-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:241-38
@@ -790,11 +839,12 @@ msgstr "Перейти к концу документа"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:135-131
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:241-86
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:306-86
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>End</kbd>"
-msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>End</kbd>"
+msgstr ""
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>End</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:79-38
 msgid "Go and select text to end of document"
@@ -808,6 +858,9 @@ msgid ""
 ">+</span><kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>End</kbd>"
 msgstr ""
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>End</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:80-38
 msgid "Move the view up one page"
@@ -822,22 +875,24 @@ msgid "Switch cursor between text and header"
 msgstr "Переключиться между текстом и верхним колонтитулом"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:81-102
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>PageUp</kbd>"
-msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>PageUp</kbd>"
+msgstr ""
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>PageUp</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:82-38
 msgid "Extend the selection up one page"
 msgstr "Пролистать на страницу вверх с выделением"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:82-97
-#, fuzzy
 msgid ""
 "<kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>PageUp</kbd>"
-msgstr "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>PageUp</kbd>"
+msgstr ""
+"<kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>PageUp</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:83-38
 msgid "Move the view down one page"
@@ -852,58 +907,62 @@ msgid "Switch cursor between text and footer"
 msgstr "Переключиться между текстом и нижним колонтитулом"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:84-102
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>PageDown</kbd>"
-msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>PageDown</kbd>"
+msgstr ""
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>PageDown</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:85-38
 msgid "Extend the selection down one page"
 msgstr "Пролистать на страницу вниз с выделением"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:85-99
-#, fuzzy
 msgid ""
 "<kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>PageDown</kbd>"
-msgstr "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>PageDown</kbd>"
+msgstr ""
+"<kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>PageDown</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:86-38
 msgid "Delete to beginning of word"
 msgstr "Удалить до начала слова"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:86-92
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>Backspace</kbd>"
-msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Backspace</kbd>"
+msgstr ""
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>Backspace</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:87-38
 msgid "Delete to end of word"
 msgstr "Удалить до конца слова"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:87-86
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>Del</kbd>"
-msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Del</kbd>"
+msgstr ""
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>Del</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:88-38
 msgid "Delete to beginning of sentence"
 msgstr "Удалить до начала предложения"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:88-96
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>Backspace</kbd>"
 msgstr ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-"\"kbd--plus\">+</span><kbd>Backspace</kbd>"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>Backspace</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:89-38
 msgid "Delete to end of sentence"
@@ -915,6 +974,9 @@ msgid ""
 ">+</span><kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>Del</kbd>"
 msgstr ""
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>Del</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.h2:93-9
 msgid "Shortcut Keys for Tables"
@@ -949,31 +1011,30 @@ msgstr ""
 "таблицы, при третьем — в конец документа."
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:98-38
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>Tab</kbd>"
-msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Tab</kbd>"
+msgstr ""
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>Tab</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:98-146
-#, fuzzy
 msgid ""
 "Inserts a tab stop (only in tables). Depending on the Window Manager in use, "
 "<kbd>Alt</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>Tab</kbd> may be used instead."
 msgstr ""
 "вставляет символ табуляции (только в таблицах). В зависимости от менеджера "
-"окон может использоваться <kbd>Alt</kbd><span class=\"kbd--plus\""
-">+</span><kbd>Tab</kbd>."
+"окон может использоваться <kbd>Alt</kbd><span class=\"kbd--plus\" aria-"
+"hidden=\"true\">+</span><kbd>Tab</kbd>."
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:99-38
-#, fuzzy
 msgid ""
 "<kbd>Alt</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</"
 "span><kbd>Arrow Keys</kbd>"
 msgstr ""
-"<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>клавиши со "
-"стрелками</kbd>"
+"<kbd>Alt</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</"
+"span><kbd>клавиши со стрелками</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:99-152
 msgid ""
@@ -982,14 +1043,14 @@ msgstr ""
 "Увеличение/уменьшение размера столбца/строки с правого/нижнего края ячейки"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:100-38
-#, fuzzy
 msgid ""
 "<kbd>Alt</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</"
 "span><kbd>Arrow Keys</kbd>"
 msgstr ""
-"<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-"\"kbd--plus\">+</span><kbd>клавиши со стрелками</kbd>"
+"<kbd>Alt</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</"
+"span><kbd>клавиши со стрелками</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:100-219
 msgid "Increase/decrease the size of the column/row on the left/top cell edge"
@@ -997,14 +1058,14 @@ msgstr ""
 "Увеличение/уменьшение размера столбца/строки с левого/верхнего края ячейки"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:101-38
-#, fuzzy
 msgid ""
 "<kbd>Alt</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</"
 "span><kbd>Arrow Keys</kbd>"
 msgstr ""
-"<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</kbd><span class="
-"\"kbd--plus\">+</span><kbd>клавиши со стрелками</kbd>"
+"<kbd>Alt</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</"
+"span><kbd>клавиши со стрелками</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:101-218
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:102-285
@@ -1018,41 +1079,46 @@ msgid ""
 ">+</span><kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</"
 "span><kbd>Arrow Keys</kbd>"
 msgstr ""
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>Alt</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</"
+"span><kbd>клавиши со стрелками</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:103-38
-#, fuzzy
 msgid ""
 "<kbd>Alt</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>Insert</kbd>"
-msgstr "<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Insert</kbd>"
+msgstr ""
+"<kbd>Alt</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>Insert</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:103-148
-#, fuzzy
 msgid ""
 "3 seconds in Insert mode, Arrow Key inserts row/column, <kbd>Ctrl</kbd><span "
 "class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>Arrow Key</kbd> "
 "inserts cell"
 msgstr ""
 "3 секунды в режиме вставки, стрелки вставляют строку/столбец, <kbd>Ctrl</"
-"kbd><span class=\"kbd--plus\">+</span><kbd>стрелки</kbd> — ячейку"
+"kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>стрелки</"
+"kbd> — ячейку"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:104-38
-#, fuzzy
 msgid ""
 "<kbd>Alt</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>Del</kbd>"
-msgstr "<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Del</kbd>"
+msgstr ""
+"<kbd>Alt</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>Del</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:104-145
-#, fuzzy
 msgid ""
 "3 seconds in Delete mode, Arrow key deletes row/column, <kbd>Ctrl</kbd><span "
 "class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>Arrow key</kbd> merges "
 "cell with neighboring cell"
 msgstr ""
 "3 секунды в режиме удаления, стрелки удаляют строку/столбец, <kbd>Сtrl</"
-"kbd><span class=\"kbd--plus\">+</span><kbd>стрелки</kbd> объединяют ячейку с "
-"соседней"
+"kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>стрелки</"
+"kbd> объединяют ячейку с соседней"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:105-38
 msgid ""
@@ -1060,6 +1126,9 @@ msgid ""
 ">+</span><kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>Del</kbd>"
 msgstr ""
+"<kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>Del</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td.p:105-235
 msgid ""
@@ -1103,6 +1172,9 @@ msgid ""
 ">+</span><kbd>Alt</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>F</kbd>"
 msgstr ""
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>Alt</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>F</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:115-38
 msgid "Insert endnote"
@@ -1114,6 +1186,9 @@ msgid ""
 ">+</span><kbd>Alt</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>D</kbd>"
 msgstr ""
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>Alt</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>D</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:116-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:167-38
@@ -1127,17 +1202,21 @@ msgid ""
 ">+</span><kbd>Alt</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>C</kbd>"
 msgstr ""
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>Alt</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>C</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:118-38
 msgid "Insert soft hyphen"
 msgstr "Вставить мягкий перенос"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:118-83
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>-</kbd>"
-msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>-</kbd>"
+msgstr ""
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>-</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:119-38
 msgid "Insert non-breaking hyphen"
@@ -1149,6 +1228,9 @@ msgid ""
 ">+</span><kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>-</kbd>"
 msgstr ""
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>-</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:121-38
 msgid "Insert non-breaking space"
@@ -1160,17 +1242,21 @@ msgid ""
 ">+</span><kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>Space</kbd>"
 msgstr ""
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>Пробел</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:122-38
 msgid "Insert line break"
 msgstr "Разрыв строки"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:122-82
-#, fuzzy
 msgid ""
 "<kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>Enter</kbd>"
-msgstr "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Enter</kbd>"
+msgstr ""
+"<kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>Enter</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:123-38
 msgid "Manual page break"
@@ -1179,11 +1265,12 @@ msgstr "Разрыв страницы"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:123-82
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:251-98
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:316-105
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>Enter</kbd>"
-msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Enter</kbd>"
+msgstr ""
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>Enter</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:124-38
 msgid "Column break (in multicolumnar text)"
@@ -1195,6 +1282,9 @@ msgid ""
 ">+</span><kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>Enter</kbd>"
 msgstr ""
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>Enter</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:125-38
 msgid ""
@@ -1203,11 +1293,12 @@ msgstr "Вставить абзац до или после раздела или
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:125-139
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:126-175
-#, fuzzy
 msgid ""
 "<kbd>Alt</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>Enter</kbd>"
-msgstr "<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Enter</kbd>"
+msgstr ""
+"<kbd>Alt</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>Enter</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:126-38
 msgid ""
@@ -1256,11 +1347,12 @@ msgstr ""
 "расширяет существующую область на одну страницу вверх."
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:140-184
-#, fuzzy
 msgid ""
 "<kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</"
 "span><kbd>Page Up</kbd>"
-msgstr "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Page Up</kbd>"
+msgstr ""
+"<kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</"
+"span><kbd>Page Up</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:141-38
 msgid ""
@@ -1271,11 +1363,12 @@ msgstr ""
 "расширяет существующее выделение на одну страницу вниз."
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:141-188
-#, fuzzy
 msgid ""
 "<kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</"
 "span><kbd>Page Down</kbd>"
-msgstr "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Page Down</kbd>"
+msgstr ""
+"<kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</"
+"span><kbd>Page Down</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:142-38
 msgid ""
@@ -1288,12 +1381,12 @@ msgstr ""
 "данные столбец слева"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:142-265
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</"
 "span><kbd>Left Arrow</kbd>"
 msgstr ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Стрелка влево</kbd>"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</"
+"span><kbd>Стрелка влево</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:143-38
 msgid ""
@@ -1306,12 +1399,12 @@ msgstr ""
 "данные столбец справа."
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:143-269
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</"
 "span><kbd>Right Arrow</kbd>"
 msgstr ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Стрелка вправо</kbd>"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</"
+"span><kbd>Стрелка вправо</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:144-38
 msgid ""
@@ -1324,12 +1417,12 @@ msgstr ""
 "содержащую данные строку выше."
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:144-241
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</"
 "span><kbd>Up Arrow</kbd>"
 msgstr ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Стрелка вверх</kbd>"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</"
+"span><kbd>Стрелка вверх</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:145-38
 msgid ""
@@ -1342,12 +1435,12 @@ msgstr ""
 "данные строку ниже."
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:145-246
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</"
 "span><kbd>Down Arrow</kbd>"
 msgstr ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Стрелка вниз</kbd>"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</"
+"span><kbd>Стрелка вниз</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:146-38
 msgid "Go to next sheet."
@@ -1359,6 +1452,9 @@ msgid ""
 ">+</span><kbd>Alt</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</"
 "span><kbd>Page Down</kbd>"
 msgstr ""
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>Alt</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</"
+"span><kbd>Page Down</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:147-38
 msgid "Go to previous sheet."
@@ -1370,6 +1466,9 @@ msgid ""
 ">+</span><kbd>Alt</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</"
 "span><kbd>Page Up</kbd>"
 msgstr ""
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>Alt</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</"
+"span><kbd>Page Up</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:148-38
 msgid ""
@@ -1389,28 +1488,33 @@ msgid ""
 ">+</span><kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>Arrow</kbd>"
 msgstr ""
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</"
+"span><kbd>клавиши со стрелками</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:149-38
 msgid "Moves one sheet to the left."
 msgstr "Перемещает на один лист влево."
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:149-93
-#, fuzzy
 msgid ""
 "<kbd>Alt</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</"
 "span><kbd>Page Up</kbd>"
-msgstr "<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Page Up</kbd>"
+msgstr ""
+"<kbd>Alt</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</"
+"span><kbd>Page Up</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:150-38
 msgid "Moves one screen page to the right."
 msgstr "Перемещает на одну страницу экрана вправо."
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:150-100
-#, fuzzy
 msgid ""
 "<kbd>Alt</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</"
 "span><kbd>Page Down</kbd>"
-msgstr "<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Page Down</kbd>"
+msgstr ""
+"<kbd>Alt</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</"
+"span><kbd>Page Down</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:151-38
 msgid ""
@@ -1428,6 +1532,9 @@ msgid ""
 ">+</span><kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</"
 "span><kbd>Page Up</kbd>"
 msgstr ""
+"<kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</"
+"span><kbd>Page Up</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:152-38
 msgid ""
@@ -1440,14 +1547,14 @@ msgstr ""
 "лист. Делает следующий лист текущим листом."
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:152-268
-#, fuzzy
 msgid ""
 "<kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</"
 "span><kbd>Page Down</kbd>"
 msgstr ""
-"<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</kbd><span class="
-"\"kbd--plus\">+</span><kbd>Page Down</kbd>"
+"<kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</"
+"span><kbd>Page Down</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:153-38
 msgid ""
@@ -1460,11 +1567,12 @@ msgstr ""
 "столбцами."
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:153-269
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>*</kbd>"
-msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>*</kbd>"
+msgstr ""
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>*</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:154-38
 msgid ""
@@ -1475,35 +1583,36 @@ msgstr ""
 "курсором диапазон матричных формул."
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:154-178
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>/</kbd>"
-msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>/</kbd>"
+msgstr ""
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>/</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:155-38
 msgid "Insert cells (as in menu Insert - Cells)"
 msgstr "Вставить ячейки (как в меню Вставить - Ячейки)"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:155-105
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</"
 "span><kbd>Plus key</kbd>"
 msgstr ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Клавиша плюс</kbd>"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</"
+"span><kbd>Клавиша плюс</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:156-38
 msgid "Delete cells (as in menu Edit - Delete Cells)"
 msgstr "Удалить ячейки (как в меню Правка - Удалить ячейки)"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:156-110
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</"
 "span><kbd>Minus key</kbd>"
 msgstr ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Клавиша минус</kbd>"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</"
+"span><kbd>Клавиша минус</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.h2:160-9
 msgid "Cell formatting"
@@ -1514,11 +1623,12 @@ msgid "Display comment"
 msgstr "Показать примечание"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:168-80
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>F1</kbd>"
-msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>F1</kbd>"
+msgstr ""
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>F1</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:169-38
 msgid "Fill Down"
@@ -1538,6 +1648,9 @@ msgid ""
 ">+</span><kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>1</kbd>"
 msgstr ""
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>1</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:177-38
 msgid "Standard exponential format"
@@ -1549,6 +1662,9 @@ msgid ""
 ">+</span><kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>2</kbd>"
 msgstr ""
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>2</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:178-38
 msgid "Standard date format"
@@ -1560,6 +1676,9 @@ msgid ""
 ">+</span><kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>3</kbd>"
 msgstr ""
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>3</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:179-38
 msgid "Standard currency format"
@@ -1571,6 +1690,9 @@ msgid ""
 ">+</span><kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>4</kbd>"
 msgstr ""
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>4</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:180-38
 msgid "Standard percentage format (two decimal places)"
@@ -1582,6 +1704,9 @@ msgid ""
 ">+</span><kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>5</kbd>"
 msgstr ""
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>5</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:181-38
 msgid "Standard format"
@@ -1593,6 +1718,9 @@ msgid ""
 ">+</span><kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>6</kbd>"
 msgstr ""
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>6</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.h2:185-9
 msgid "Insert"
@@ -1631,11 +1759,12 @@ msgstr "Повысить уровень элемента списка (долж�
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:250-127
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:277-113
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:315-127
-#, fuzzy
 msgid ""
 "<kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>Tab</kbd>"
-msgstr "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Tab</kbd>"
+msgstr ""
+"<kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>Tab</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.h2:216-9
 #: html/cool-help.html%2Bdiv.div.div.h2:281-9
@@ -2053,7 +2182,6 @@ msgid "Copy and Paste"
 msgstr "Копировать и Вставить"
 
 #: html/cool-help.html%2Bdiv.div.div.p:419-5
-#, fuzzy
 msgid ""
 "Rich content copy/cut and paste is supported, not only within a given "
 "document, but also across documents on the same or different <span class="
@@ -2074,14 +2202,15 @@ msgstr ""
 "\"productname\">{productname}</span>. Чтобы воспользоваться этой функцией, "
 "пользователи могут копировать или вырезать данные, включая изображения и "
 "смешанное содержимое, используя клавиатурные комбинации на ПК (<kbd>Ctrl</"
-"kbd><span class=\"kbd--plus\">+</span><kbd>X</kbd>, <kbd>Ctrl</kbd><span "
-"class=\"kbd--plus\">+</span><kbd>C</kbd>, <kbd>Ctrl</kbd><span class=\"kbd--"
-"plus\">+</span><kbd>V</kbd>). Из соображений безопасности требуется "
-"использовать <kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>V</kbd> "
-"для вставки на ПК, но копировать и вырезать можно и с помощью контекстного "
-"меню. На Android или iOS требуется выделение текста двойным тапом и "
-"использование долгого нажатия для доступа к копированию/вырезанию/вставке в "
-"контекстном меню."
+"kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>X</kbd>, "
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>C</kbd>, <kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden="
+"\"true\">+</span><kbd>V</kbd>). Из соображений безопасности требуется "
+"использовать <kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>V</kbd> для вставки на ПК, но копировать и вырезать можно и с "
+"помощью контекстного меню. На Android или iOS требуется выделение текста "
+"двойным тапом и использование долгого нажатия для доступа к "
+"копированию/вырезанию/вставке в контекстном меню."
 
 #: html/cool-help.html%2Bdiv.div.div.p:420-5
 msgid ""
@@ -2130,7 +2259,6 @@ msgid "document repair"
 msgstr "исправить документ"
 
 #: html/cool-help.html%2Bdiv.div.div.p:427-5
-#, fuzzy
 msgid ""
 "This is particularly useful – say when a colleague inadvertently selected "
 "all text in the document with <kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-"
@@ -2139,8 +2267,8 @@ msgid ""
 msgstr ""
 "Это достаточно полезно – например, если один из пользователей случайно "
 "выделил весь текст сочетанием клавиш <kbd>Ctrl</kbd><span class=\"kbd--plus\""
-">+</span><kbd>A</kbd> и стал печатать \"поверх\", уничтожая его в то время, "
-"как вы продолжали работать с содержимым."
+" aria-hidden=\"true\">+</span><kbd>A</kbd> и стал печатать \"поверх\", "
+"уничтожая его в то время, как вы продолжали работать с содержимым."
 
 #: html/cool-help.html%2Bdiv.div.div.h4:430-5
 msgid "Inactive document"
@@ -2191,15 +2319,15 @@ msgstr ""
 "внешнего приложения, будет сохранён только форматированный текст."
 
 #: html/cool-help.html%2Bdiv.div.div.p:438-5
-#, fuzzy
 msgid ""
 "You can paste as unformatted text with the keyboard shortcut: <kbd>Ctrl</"
 "kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>Shift</"
 "kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>V</kbd>"
 msgstr ""
 "Вы можете вставить текст без сохранения форматирования сочетанием клавиш "
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-"\"kbd--plus\">+</span><kbd>V</kbd>"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>V</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.p:439-5
 msgid ""
@@ -2435,7 +2563,6 @@ msgstr ""
 "noreferrer\">спецификации OASIS OpenFormula</a>."
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:500-5
-#, fuzzy
 msgid ""
 "<span class=\"def\">Direct formatting:</span> You can format spreadsheets "
 "cells, columns, rows and sheets by formatting directly from the menus, "
@@ -2449,10 +2576,10 @@ msgstr ""
 "ячейки таблиц, столбцы, строки и листы напрямую с помощью меню, панели "
 "инструментов или контекстных меню. Прямое форматирование применяется только "
 "к текущему выделенному объекту. Для форматирования ячейки используйте меню "
-"или нажмите <kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>1</kbd>. "
-"Диалог предоставляет доступ к сложному и кастомизируемому форматированию "
-"чисел, а также свойствам шрифта, сложного обрамления, фона, защиты ячеек и "
-"другим опциям."
+"или нажмите <kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>1</kbd>. Диалог предоставляет доступ к сложному и "
+"кастомизируемому форматированию чисел, а также свойствам шрифта, сложного "
+"обрамления, фона, защиты ячеек и другим опциям."
 
 #: html/cool-help.html%2Bdiv.div.div.div.div.img[alt]:501-29
 msgid "format cells"
@@ -3366,211 +3493,212 @@ msgid "Set the properties of the element of the object."
 msgstr "Укажите свойства элемента объекта."
 
 #~ msgid ""
-#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-#~ "\"kbd--plus\">+</span><kbd>V</kbd>"
+#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
+#~ "class=\"kbd--plus\">+</span><kbd>V</kbd>"
 #~ msgstr ""
-#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-#~ "\"kbd--plus\">+</span><kbd>V</kbd>"
+#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
+#~ "class=\"kbd--plus\">+</span><kbd>V</kbd>"
 
 #~ msgid ""
-#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class="
-#~ "\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd--plus\""
-#~ ">+</span><kbd>V</kbd>"
+#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span "
+#~ "class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd--"
+#~ "plus\">+</span><kbd>V</kbd>"
 #~ msgstr ""
-#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class="
-#~ "\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd--plus\""
-#~ ">+</span><kbd>V</kbd>"
+#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span "
+#~ "class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd--"
+#~ "plus\">+</span><kbd>V</kbd>"
 
 #~ msgid ""
-#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-#~ "\"kbd--plus\">+</span><kbd>?</kbd>"
+#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
+#~ "class=\"kbd--plus\">+</span><kbd>?</kbd>"
 #~ msgstr ""
-#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-#~ "\"kbd--plus\">+</span><kbd>?</kbd>"
+#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
+#~ "class=\"kbd--plus\">+</span><kbd>?</kbd>"
 
 #~ msgid ""
-#~ "<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-#~ "\"kbd--plus\">+</span><kbd>F1</kbd>"
+#~ "<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
+#~ "class=\"kbd--plus\">+</span><kbd>F1</kbd>"
 #~ msgstr ""
-#~ "<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-#~ "\"kbd--plus\">+</span><kbd>F1</kbd>"
+#~ "<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
+#~ "class=\"kbd--plus\">+</span><kbd>F1</kbd>"
 
 #~ msgid ""
-#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class="
-#~ "\"kbd--plus\">+</span><kbd>5</kbd>"
+#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span "
+#~ "class=\"kbd--plus\">+</span><kbd>5</kbd>"
 #~ msgstr ""
-#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class="
-#~ "\"kbd--plus\">+</span><kbd>5</kbd>"
+#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span "
+#~ "class=\"kbd--plus\">+</span><kbd>5</kbd>"
 
 #~ msgid ""
-#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-#~ "\"kbd--plus\">+</span><kbd>P</kbd>"
+#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
+#~ "class=\"kbd--plus\">+</span><kbd>P</kbd>"
 #~ msgstr ""
-#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-#~ "\"kbd--plus\">+</span><kbd>P</kbd>"
+#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
+#~ "class=\"kbd--plus\">+</span><kbd>P</kbd>"
 
 #~ msgid ""
-#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-#~ "\"kbd--plus\">+</span><kbd>B</kbd>"
+#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
+#~ "class=\"kbd--plus\">+</span><kbd>B</kbd>"
 #~ msgstr ""
-#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-#~ "\"kbd--plus\">+</span><kbd>B</kbd>"
+#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
+#~ "class=\"kbd--plus\">+</span><kbd>B</kbd>"
 
 #~ msgid ""
-#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-#~ "\"kbd--plus\">+</span><kbd>Home</kbd>"
+#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
+#~ "class=\"kbd--plus\">+</span><kbd>Home</kbd>"
 #~ msgstr ""
-#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-#~ "\"kbd--plus\">+</span><kbd>Home</kbd>"
+#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
+#~ "class=\"kbd--plus\">+</span><kbd>Home</kbd>"
 
 #~ msgid ""
-#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-#~ "\"kbd--plus\">+</span><kbd>End</kbd>"
+#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
+#~ "class=\"kbd--plus\">+</span><kbd>End</kbd>"
 #~ msgstr ""
-#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-#~ "\"kbd--plus\">+</span><kbd>End</kbd>"
+#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
+#~ "class=\"kbd--plus\">+</span><kbd>End</kbd>"
 
 #~ msgid ""
-#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-#~ "\"kbd--plus\">+</span><kbd>Del</kbd>"
+#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
+#~ "class=\"kbd--plus\">+</span><kbd>Del</kbd>"
 #~ msgstr ""
-#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-#~ "\"kbd--plus\">+</span><kbd>Del</kbd>"
+#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
+#~ "class=\"kbd--plus\">+</span><kbd>Del</kbd>"
 
 #~ msgid ""
-#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class="
-#~ "\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd--plus\">+</"
-#~ "span><kbd>Arrow Keys</kbd>"
+#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span "
+#~ "class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd--"
+#~ "plus\">+</span><kbd>Arrow Keys</kbd>"
 #~ msgstr ""
-#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class="
-#~ "\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd--plus\">+</"
-#~ "span><kbd>клавиши со стрелками</kbd>"
+#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span "
+#~ "class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd--"
+#~ "plus\">+</span><kbd>клавиши со стрелками</kbd>"
 
 #~ msgid ""
-#~ "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</kbd><span class="
-#~ "\"kbd--plus\">+</span><kbd>Del</kbd>"
+#~ "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</kbd><span "
+#~ "class=\"kbd--plus\">+</span><kbd>Del</kbd>"
 #~ msgstr ""
-#~ "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</kbd><span class="
-#~ "\"kbd--plus\">+</span><kbd>Del</kbd>"
+#~ "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</kbd><span "
+#~ "class=\"kbd--plus\">+</span><kbd>Del</kbd>"
 
 #~ msgid ""
-#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class="
-#~ "\"kbd--plus\">+</span><kbd>F</kbd>"
+#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span "
+#~ "class=\"kbd--plus\">+</span><kbd>F</kbd>"
 #~ msgstr ""
-#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class="
-#~ "\"kbd--plus\">+</span><kbd>F</kbd>"
+#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span "
+#~ "class=\"kbd--plus\">+</span><kbd>F</kbd>"
 
 #~ msgid ""
-#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class="
-#~ "\"kbd--plus\">+</span><kbd>D</kbd>"
+#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span "
+#~ "class=\"kbd--plus\">+</span><kbd>D</kbd>"
 #~ msgstr ""
-#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class="
-#~ "\"kbd--plus\">+</span><kbd>D</kbd>"
+#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span "
+#~ "class=\"kbd--plus\">+</span><kbd>D</kbd>"
 
 #~ msgid ""
-#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class="
-#~ "\"kbd--plus\">+</span><kbd>C</kbd>"
+#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span "
+#~ "class=\"kbd--plus\">+</span><kbd>C</kbd>"
 #~ msgstr ""
-#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class="
-#~ "\"kbd--plus\">+</span><kbd>C</kbd>"
+#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span "
+#~ "class=\"kbd--plus\">+</span><kbd>C</kbd>"
 
 #~ msgid ""
-#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-#~ "\"kbd--plus\">+</span><kbd>-</kbd>"
+#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
+#~ "class=\"kbd--plus\">+</span><kbd>-</kbd>"
 #~ msgstr ""
-#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-#~ "\"kbd--plus\">+</span><kbd>-</kbd>"
+#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
+#~ "class=\"kbd--plus\">+</span><kbd>-</kbd>"
 
 #~ msgid ""
-#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-#~ "\"kbd--plus\">+</span><kbd>Space</kbd>"
+#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
+#~ "class=\"kbd--plus\">+</span><kbd>Space</kbd>"
 #~ msgstr ""
-#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-#~ "\"kbd--plus\">+</span><kbd>Пробел</kbd>"
+#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
+#~ "class=\"kbd--plus\">+</span><kbd>Пробел</kbd>"
 
 #~ msgid ""
-#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-#~ "\"kbd--plus\">+</span><kbd>Enter</kbd>"
+#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
+#~ "class=\"kbd--plus\">+</span><kbd>Enter</kbd>"
 #~ msgstr ""
-#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-#~ "\"kbd--plus\">+</span><kbd>Enter</kbd>"
+#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
+#~ "class=\"kbd--plus\">+</span><kbd>Enter</kbd>"
 
 #~ msgid ""
-#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class="
-#~ "\"kbd--plus\">+</span><kbd>Page Down</kbd>"
+#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span "
+#~ "class=\"kbd--plus\">+</span><kbd>Page Down</kbd>"
 #~ msgstr ""
-#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class="
-#~ "\"kbd--plus\">+</span><kbd>Page Down</kbd>"
+#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span "
+#~ "class=\"kbd--plus\">+</span><kbd>Page Down</kbd>"
 
 #~ msgid ""
-#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class="
-#~ "\"kbd--plus\">+</span><kbd>Page Up</kbd>"
+#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span "
+#~ "class=\"kbd--plus\">+</span><kbd>Page Up</kbd>"
 #~ msgstr ""
-#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class="
-#~ "\"kbd--plus\">+</span><kbd>Page Up</kbd>"
+#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span "
+#~ "class=\"kbd--plus\">+</span><kbd>Page Up</kbd>"
 
 #~ msgid ""
-#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-#~ "\"kbd--plus\">+</span><kbd>Arrow</kbd>"
+#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
+#~ "class=\"kbd--plus\">+</span><kbd>Arrow</kbd>"
 #~ msgstr ""
-#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-#~ "\"kbd--plus\">+</span><kbd>клавиши со стрелками</kbd>"
+#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
+#~ "class=\"kbd--plus\">+</span><kbd>клавиши со стрелками</kbd>"
 
 #~ msgid ""
-#~ "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</kbd><span class="
-#~ "\"kbd--plus\">+</span><kbd>Page Up</kbd>"
+#~ "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</kbd><span "
+#~ "class=\"kbd--plus\">+</span><kbd>Page Up</kbd>"
 #~ msgstr ""
-#~ "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</kbd><span class="
-#~ "\"kbd--plus\">+</span><kbd>Page Up</kbd>"
+#~ "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</kbd><span "
+#~ "class=\"kbd--plus\">+</span><kbd>Page Up</kbd>"
 
 #~ msgid ""
-#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-#~ "\"kbd--plus\">+</span><kbd>1</kbd>"
+#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
+#~ "class=\"kbd--plus\">+</span><kbd>1</kbd>"
 #~ msgstr ""
-#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-#~ "\"kbd--plus\">+</span><kbd>1</kbd>"
+#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
+#~ "class=\"kbd--plus\">+</span><kbd>1</kbd>"
 
 #~ msgid ""
-#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-#~ "\"kbd--plus\">+</span><kbd>2</kbd>"
+#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
+#~ "class=\"kbd--plus\">+</span><kbd>2</kbd>"
 #~ msgstr ""
-#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-#~ "\"kbd--plus\">+</span><kbd>2</kbd>"
+#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
+#~ "class=\"kbd--plus\">+</span><kbd>2</kbd>"
 
 #~ msgid ""
-#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-#~ "\"kbd--plus\">+</span><kbd>3</kbd>"
+#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
+#~ "class=\"kbd--plus\">+</span><kbd>3</kbd>"
 #~ msgstr ""
-#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-#~ "\"kbd--plus\">+</span><kbd>3</kbd>"
+#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
+#~ "class=\"kbd--plus\">+</span><kbd>3</kbd>"
 
 #~ msgid ""
-#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-#~ "\"kbd--plus\">+</span><kbd>4</kbd>"
+#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
+#~ "class=\"kbd--plus\">+</span><kbd>4</kbd>"
 #~ msgstr ""
-#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-#~ "\"kbd--plus\">+</span><kbd>4</kbd>"
+#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
+#~ "class=\"kbd--plus\">+</span><kbd>4</kbd>"
 
 #~ msgid ""
-#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-#~ "\"kbd--plus\">+</span><kbd>5</kbd>"
+#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
+#~ "class=\"kbd--plus\">+</span><kbd>5</kbd>"
 #~ msgstr ""
-#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-#~ "\"kbd--plus\">+</span><kbd>5</kbd>"
+#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
+#~ "class=\"kbd--plus\">+</span><kbd>5</kbd>"
 
 #~ msgid ""
-#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-#~ "\"kbd--plus\">+</span><kbd>6</kbd>"
+#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
+#~ "class=\"kbd--plus\">+</span><kbd>6</kbd>"
 #~ msgstr ""
-#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-#~ "\"kbd--plus\">+</span><kbd>6</kbd>"
+#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
+#~ "class=\"kbd--plus\">+</span><kbd>6</kbd>"
 
 #~ msgid ""
 #~ "<span class=\"def\">The menu bar:</span> The main menu is placed on the top "
-#~ "and includes many options, commands for printing, editing, viewing and other "
-#~ "advanced commands. You can hide the menu bar clicking on the <span class"
-#~ "=\"w2ui-icon fold icon-size\"></span> icon on the far right. Click on the "
-#~ "<span class=\"w2ui-icon unfold icon-size\"></span> icon to show the menu."
+#~ "and includes many options, commands for printing, editing, viewing and other"
+#~ " advanced commands. You can hide the menu bar clicking on the <span "
+#~ "class=\"w2ui-icon fold icon-size\"></span> icon on the far right. Click on "
+#~ "the <span class=\"w2ui-icon unfold icon-size\"></span> icon to show the "
+#~ "menu."
 #~ msgstr ""
 #~ "<span class=\"def\">The menu bar:</span> Главное меню размещено наверху и "
 #~ "включает в себя множество опций, команд для печати, редактирования, "
@@ -3584,24 +3712,25 @@ msgstr "Укажите свойства элемента объекта."
 #~ "information depends on the nature of the document."
 #~ msgstr ""
 #~ "<span class=\"def\">Панель информации:</span> Справа от панели поиска "
-#~ "отображается набор информации о документе. Фактическая информация зависит от "
-#~ "типа документа."
+#~ "отображается набор информации о документе. Фактическая информация зависит от"
+#~ " типа документа."
 
 #~ msgid ""
 #~ "<span class=\"def\">The menu bar:</span> The main menu is placed on the top "
-#~ "and includes many options, commands for printing, editing, viewing and other "
-#~ "advanced commands. You can hide the menu bar clicking on the <span style="
-#~ "\"height:0.6cm;width:0.6cm; margin: 0px;\" class=\"w2ui-icon fold\"></span> "
-#~ "icon on the far right. Click on the <span style=\"height:0.6cm;width:0.6cm; "
-#~ "margin: 0px;\" class=\"w2ui-icon unfold\"></span> icon to show the menu."
+#~ "and includes many options, commands for printing, editing, viewing and other"
+#~ " advanced commands. You can hide the menu bar clicking on the <span "
+#~ "style=\"height:0.6cm;width:0.6cm; margin: 0px;\" class=\"w2ui-icon "
+#~ "fold\"></span> icon on the far right. Click on the <span "
+#~ "style=\"height:0.6cm;width:0.6cm; margin: 0px;\" class=\"w2ui-icon "
+#~ "unfold\"></span> icon to show the menu."
 #~ msgstr ""
 #~ "<span class=\"def\">Строка меню:</span> Главное меню располагается сверху и "
 #~ "содержит множество опций, команд для печати, редактирования, просмотра и "
-#~ "других команд. Вы можете скрыть строку меню, нажав на значок <span style="
-#~ "\"height:0.6cm;width:0.6cm; margin: 0px;\" class=\"w2ui-icon fold\"></span> "
-#~ "в крайнем правом углу. Нажмите на значок <span style=\"height:0.6cm;width:0."
-#~ "6cm; margin: 0px;\" class=\"w2ui-icon unfold\"></span>, чтобы отобразить "
-#~ "меню."
+#~ "других команд. Вы можете скрыть строку меню, нажав на значок <span "
+#~ "style=\"height:0.6cm;width:0.6cm; margin: 0px;\" class=\"w2ui-icon "
+#~ "fold\"></span> в крайнем правом углу. Нажмите на значок <span "
+#~ "style=\"height:0.6cm;width:0.6cm; margin: 0px;\" class=\"w2ui-icon "
+#~ "unfold\"></span>, чтобы отобразить меню."
 
 #~ msgid "General"
 #~ msgstr "Общий"

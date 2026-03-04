@@ -4,19 +4,19 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Collabora Online - Help\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-03 09:42+0200\n"
+"POT-Creation-Date: 2026-03-04 08:24+0200\n"
 "PO-Revision-Date: 2026-03-04 07:00+0000\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
-"Language-Team: Slovenian <https://hosted.weblate.org/projects/collabora-"
-"online/help/sl/>\n"
+"Language-Team: Slovenian <https://hosted.weblate.org/projects/"
+"collabora-online/help/sl/>\n"
 "Language: sl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || "
-"n%100==4 ? 2 : 3;\n"
+"Plural-Forms: nplurals=4; plural=n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n"
+"%100==4 ? 2 : 3;\n"
 "X-Accelerator-Marker: ~\n"
-"X-Generator: Weblate 5.17-dev\n"
+"X-Generator: Translate Toolkit 3.6.0\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 
 #: html/cool-help.html%2Bdiv.h1:6-5
@@ -36,8 +36,8 @@ msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>Z</kbd>"
 msgstr ""
-"<kbd>Krmilka</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span>"
-"<kbd>Z</kbd>"
+"<kbd>Krmilka</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>Z</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:11-38
 msgid "Redo"
@@ -48,8 +48,8 @@ msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>Y</kbd>"
 msgstr ""
-"<kbd>Krmilka</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span>"
-"<kbd>Y</kbd>"
+"<kbd>Krmilka</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>Y</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:12-38
 msgid "Cut"
@@ -60,22 +60,22 @@ msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>X</kbd>"
 msgstr ""
-"<kbd>Krmilka</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span>"
-"<kbd>X</kbd>"
+"<kbd>Krmilka</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>X</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:13-38
 msgid "Copy"
 msgstr "Kopiraj"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:13-69
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>C</kbd>,<br /><kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-"
 "hidden=\"true\">+</span><kbd>Insert</kbd>"
 msgstr ""
-"<kbd>Krmilka</kbd><span class=\"kbd--plus\">+</span><kbd>C</kbd>, <br "
-"/><kbd>krmilka</kbd><span class=\"kbd--plus\">+</span><kbd>vstavljalka</kbd>"
+"<kbd>Krmilka</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>C</kbd>, <br /><kbd>krmilka</kbd><span class=\"kbd--plus\" "
+"aria-hidden=\"true\">+</span><kbd>vstavljalka</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:14-38
 msgid "Paste as unformatted text"
@@ -87,6 +87,9 @@ msgid ""
 ">+</span><kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>V</kbd>"
 msgstr ""
+"<kbd>Krmilka</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>dvigalka</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>V</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:15-38
 msgid "Paste special"
@@ -99,17 +102,22 @@ msgid ""
 ">+</span><kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>V</kbd>"
 msgstr ""
+"<kbd>Krmilka</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>izmenjalka</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>dvigalka</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>V</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:16-38
 msgid "Print (Download as PDF)"
 msgstr "Natisni (Prenesi kot dokument PDF)"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:16-88
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>P</kbd>"
-msgstr "<kbd>Krmilka</kbd><span class=\"kbd--plus\">+</span><kbd>P</kbd>"
+msgstr ""
+"<kbd>Krmilka</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>P</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:17-38
 msgid "Display the Keyboard shortcuts help"
@@ -121,6 +129,9 @@ msgid ""
 ">+</span><kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>?</kbd>"
 msgstr ""
+"<kbd>Krmilka</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>dvigalka</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>?</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:18-38
 msgid "Focus to notebookbar menu"
@@ -132,6 +143,9 @@ msgid ""
 ">+</span><kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>F1</kbd>"
 msgstr ""
+"<kbd>Izmenjalka</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>dvigalka</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>F1</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:19-38
 msgid "Focus to document from menu"
@@ -146,11 +160,12 @@ msgid "Focus to selected comment's menu"
 msgstr "Pozornost na meni izbranega komentarja"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:20-97
-#, fuzzy
 msgid ""
 "<kbd>Alt</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>C</kbd>"
-msgstr "<kbd>Izmenjalka</kbd><span class=\"kbd--plus\">+</span><kbd>C</kbd>"
+msgstr ""
+"<kbd>Izmenjalka</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>C</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.h2:25-9
 #: html/cool-help.html%2Bdiv.div.div.h2:193-9
@@ -169,11 +184,12 @@ msgstr "Krepko"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:162-69
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:195-69
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:260-69
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>B</kbd>"
-msgstr "<kbd>Krmilka</kbd><span class=\"kbd--plus\">+</span><kbd>B</kbd>"
+msgstr ""
+"<kbd>Krmilka</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>B</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:28-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:163-38
@@ -186,11 +202,12 @@ msgstr "Ležeče"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:163-71
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:196-71
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:261-71
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>I</kbd>"
-msgstr "<kbd>Krmilka</kbd><span class=\"kbd--plus\">+</span><kbd>I</kbd>"
+msgstr ""
+"<kbd>Krmilka</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>I</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:29-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:164-38
@@ -203,11 +220,12 @@ msgstr "Podčrtano"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:164-74
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:197-74
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:262-74
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>U</kbd>"
-msgstr "<kbd>Krmilka</kbd><span class=\"kbd--plus\">+</span><kbd>U</kbd>"
+msgstr ""
+"<kbd>Krmilka</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>U</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:30-38
 msgid "Double Underline"
@@ -215,11 +233,12 @@ msgstr "Dvojno podčrtano"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:30-81
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:169-74
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>D</kbd>"
-msgstr "<kbd>Krmilka</kbd><span class=\"kbd--plus\">+</span><kbd>D</kbd>"
+msgstr ""
+"<kbd>Krmilka</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>D</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:31-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:165-38
@@ -237,6 +256,9 @@ msgid ""
 ">+</span><kbd>Alt</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>5</kbd>"
 msgstr ""
+"<kbd>Krmilka</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>izmenjalka</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>5</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:32-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:199-38
@@ -252,6 +274,9 @@ msgid ""
 ">+</span><kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>P</kbd>"
 msgstr ""
+"<kbd>Krmilka</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>dvigalka</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>P</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:33-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:200-38
@@ -267,6 +292,9 @@ msgid ""
 ">+</span><kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>B</kbd>"
 msgstr ""
+"<kbd>Krmilka</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>dvigalka</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>B</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:34-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:166-38
@@ -275,11 +303,12 @@ msgstr "Odstrani neposredno oblikovanje"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:34-89
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:166-89
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>M</kbd>"
-msgstr "<kbd>Krmilka</kbd><span class=\"kbd--plus\">+</span><kbd>M</kbd>"
+msgstr ""
+"<kbd>Krmilka</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>M</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.h2:38-9
 #: html/cool-help.html%2Bdiv.div.div.h2:205-9
@@ -298,11 +327,12 @@ msgstr "Poravnaj na sredino"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:171-77
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:207-77
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:272-77
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>E</kbd>"
-msgstr "<kbd>Krmilka</kbd><span class=\"kbd--plus\">+</span><kbd>E</kbd>"
+msgstr ""
+"<kbd>Krmilka</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>E</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:41-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:172-38
@@ -315,11 +345,12 @@ msgstr "Poravnaj levo"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:172-75
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:208-75
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:273-75
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>L</kbd>"
-msgstr "<kbd>Krmilka</kbd><span class=\"kbd--plus\">+</span><kbd>L</kbd>"
+msgstr ""
+"<kbd>Krmilka</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>L</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:42-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:173-38
@@ -332,11 +363,12 @@ msgstr "Poravnaj desno"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:173-76
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:209-76
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:274-76
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>R</kbd>"
-msgstr "<kbd>Krmilka</kbd><span class=\"kbd--plus\">+</span><kbd>R</kbd>"
+msgstr ""
+"<kbd>Krmilka</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>R</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:43-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:174-38
@@ -349,44 +381,48 @@ msgstr "Poravnaj obojestransko"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:174-72
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:210-72
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:275-72
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>J</kbd>"
-msgstr "<kbd>Krmilka</kbd><span class=\"kbd--plus\">+</span><kbd>J</kbd>"
+msgstr ""
+"<kbd>Krmilka</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>J</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:44-38
 msgid "Apply Default paragraph style"
 msgstr "Uporabi privzeti slog odstavka"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:44-94
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>0</kbd>"
-msgstr "<kbd>Krmilka</kbd><span class=\"kbd--plus\">+</span><kbd>0</kbd>"
+msgstr ""
+"<kbd>Krmilka</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>0</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:45-38
 msgid "Apply Heading 1 paragraph style"
 msgstr "Uporabi slog odstavka Naslov 1"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:45-96
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>1</kbd>"
-msgstr "<kbd>Krmilka</kbd><span class=\"kbd--plus\">+</span><kbd>1</kbd>"
+msgstr ""
+"<kbd>Krmilka</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>1</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:46-38
 msgid "Apply Heading 2 paragraph style"
 msgstr "Uporabi slog odstavka Naslov 2"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:46-96
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>2</kbd>"
-msgstr "<kbd>Krmilka</kbd><span class=\"kbd--plus\">+</span><kbd>2</kbd>"
+msgstr ""
+"<kbd>Krmilka</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>2</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:47-38
 msgid "Apply Heading 3 paragraph style"
@@ -394,33 +430,36 @@ msgstr "Uporabi slog odstavka Naslov 3"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:47-96
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:175-89
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>3</kbd>"
-msgstr "<kbd>Krmilka</kbd><span class=\"kbd--plus\">+</span><kbd>3</kbd>"
+msgstr ""
+"<kbd>Krmilka</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>3</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:48-38
 msgid "Apply Heading 4 paragraph style"
 msgstr "Uporabi slog odstavka Naslov 4"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:48-96
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>4</kbd>"
-msgstr "<kbd>Krmilka</kbd><span class=\"kbd--plus\">+</span><kbd>4</kbd>"
+msgstr ""
+"<kbd>Krmilka</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>4</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:49-38
 msgid "Apply Heading 5 paragraph style"
 msgstr "Uporabi slog odstavka Naslov 5"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:49-96
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>5</kbd>"
-msgstr "<kbd>Krmilka</kbd><span class=\"kbd--plus\">+</span><kbd>5</kbd>"
+msgstr ""
+"<kbd>Krmilka</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>5</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.h2:53-9
 msgid "Text selection and navigation in document"
@@ -444,11 +483,12 @@ msgstr "Izberi vse"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:266-75
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:283-75
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:317-91
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>A</kbd>"
-msgstr "<kbd>Krmilka</kbd><span class=\"kbd--plus\">+</span><kbd>A</kbd>"
+msgstr ""
+"<kbd>Krmilka</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>A</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:56-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:219-38
@@ -471,13 +511,12 @@ msgstr "Premakne kazalko z izbiro vred na levo"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:57-103
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:220-103
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:285-103
-#, fuzzy
 msgid ""
 "<kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</"
 "span><kbd>Arrow Left</kbd>"
 msgstr ""
-"<kbd>Dvigalka</kbd><span class=\"kbd--plus\">+</span><kbd>smerna tipka "
-"levo</kbd>"
+"<kbd>Dvigalka</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</"
+"span><kbd>smerna tipka levo</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:58-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:221-38
@@ -488,13 +527,12 @@ msgstr "Skoči na začetek besede"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:58-90
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:221-90
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:286-90
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</"
 "span><kbd>Arrow Left</kbd>"
 msgstr ""
-"<kbd>Krmilka</kbd><span class=\"kbd--plus\">+</span><kbd>smerna tipka "
-"levo</kbd>"
+"<kbd>Krmilka</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</"
+"span><kbd>smerna tipka levo</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:59-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:222-38
@@ -505,14 +543,14 @@ msgstr "Izberi na levo, besedo za besedo"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:59-96
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:222-96
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:287-96
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</"
 "span><kbd>Arrow Left</kbd>"
 msgstr ""
-"<kbd>Krmilka</kbd><span class=\"kbd--plus\">+</span><kbd>dvigalka</kbd><span "
-"class=\"kbd--plus\">+</span><kbd>smerna tipka levo</kbd>"
+"<kbd>Krmilka</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>dvigalka</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>smerna tipka levo</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:60-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:223-38
@@ -535,13 +573,12 @@ msgstr "Premakni kazalko z izbiro na desno"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:61-104
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:224-104
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:289-104
-#, fuzzy
 msgid ""
 "<kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</"
 "span><kbd>Arrow Right</kbd>"
 msgstr ""
-"<kbd>Dvigalka</kbd><span class=\"kbd--plus\">+</span><kbd>smerna tipka "
-"desno</kbd>"
+"<kbd>Dvigalka</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</"
+"span><kbd>smerna tipka desno</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:62-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:225-38
@@ -552,13 +589,12 @@ msgstr "Skoči na začetek naslednje besede"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:62-93
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:225-93
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:290-93
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</"
 "span><kbd>Arrow Right</kbd>"
 msgstr ""
-"<kbd>Krmilka</kbd><span class=\"kbd--plus\">+</span><kbd>smerna tipka "
-"desno</kbd>"
+"<kbd>Krmilka</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</"
+"span><kbd>smerna tipka desno</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:63-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:226-38
@@ -569,14 +605,14 @@ msgstr "Izberi na desno, besedo za besedo"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:63-97
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:226-97
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:291-97
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</"
 "span><kbd>Arrow Right</kbd>"
 msgstr ""
-"<kbd>Krmilka</kbd><span class=\"kbd--plus\">+</span><kbd>dvigalka</kbd><span "
-"class=\"kbd--plus\">+</span><kbd>smerna tipka desno</kbd>"
+"<kbd>Krmilka</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>dvigalka</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>smerna tipka desno</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:64-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:227-38
@@ -599,13 +635,12 @@ msgstr "Izberi vrstice v smeri navzgor"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:65-98
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:228-98
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:293-98
-#, fuzzy
 msgid ""
 "<kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</"
 "span><kbd>Arrow Up</kbd>"
 msgstr ""
-"<kbd>Dvigalka</kbd><span class=\"kbd--plus\">+</span><kbd>smerna tipka "
-"navzgor</kbd>"
+"<kbd>Dvigalka</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</"
+"span><kbd>smerna tipka navzgor</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:66-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:229-38
@@ -616,13 +651,12 @@ msgstr "Premakne kazalko na začetek prejšnjega odstavka"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:66-115
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:229-115
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:294-115
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</"
 "span><kbd>Arrow Up</kbd>"
 msgstr ""
-"<kbd>Krmilka</kbd><span class=\"kbd--plus\">+</span><kbd>smerna tipka "
-"navzgor</kbd>"
+"<kbd>Krmilka</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</"
+"span><kbd>smerna tipka navzgor</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:67-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:230-38
@@ -633,14 +667,14 @@ msgstr "Izberi besedilo do začetka odstavka"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:67-97
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:230-97
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:295-97
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</"
 "span><kbd>Arrow Up</kbd>"
 msgstr ""
-"<kbd>Krmilka</kbd><span class=\"kbd--plus\">+</span><kbd>dvigalka</kbd><span "
-"class=\"kbd--plus\">+</span><kbd>smerna tipka navzgor</kbd>"
+"<kbd>Krmilka</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>dvigalka</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>smerna tipka navzgor</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:68-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:231-38
@@ -663,13 +697,12 @@ msgstr "Izberi vrstice v smeri navzdol"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:69-100
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:232-100
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:297-100
-#, fuzzy
 msgid ""
 "<kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</"
 "span><kbd>Arrow Down</kbd>"
 msgstr ""
-"<kbd>Dvigalka</kbd><span class=\"kbd--plus\">+</span><kbd>smerna tipka "
-"navzdol</kbd>"
+"<kbd>Dvigalka</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</"
+"span><kbd>smerna tipka navzdol</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:70-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:233-38
@@ -680,13 +713,12 @@ msgstr "Premakne kazalko na začetek naslednjega odstavka"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:70-111
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:233-111
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:298-111
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</"
 "span><kbd>Arrow Down</kbd>"
 msgstr ""
-"<kbd>Krmilka</kbd><span class=\"kbd--plus\">+</span><kbd>smerna tipka "
-"navzdol</kbd>"
+"<kbd>Krmilka</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</"
+"span><kbd>smerna tipka navzdol</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:71-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:234-38
@@ -697,14 +729,14 @@ msgstr "Izberi besedilo do konca odstavka"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:71-91
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:234-91
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:299-91
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</"
 "span><kbd>Arrow Down</kbd>"
 msgstr ""
-"<kbd>Krmilka</kbd><span class=\"kbd--plus\">+</span><kbd>dvigalka</kbd><span "
-"class=\"kbd--plus\">+</span><kbd>smerna tipka navzdol</kbd>"
+"<kbd>Krmilka</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>dvigalka</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>smerna tipka navzdol</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:72-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:235-38
@@ -729,11 +761,12 @@ msgstr "Skoči in izberi do začetka vrstice"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:138-138
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:236-105
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:301-105
-#, fuzzy
 msgid ""
 "<kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>Home</kbd>"
-msgstr "<kbd>Dvigalka</kbd><span class=\"kbd--plus\">+</span><kbd>začetek</kbd>"
+msgstr ""
+"<kbd>Dvigalka</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>začetek</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:74-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:237-38
@@ -746,11 +779,12 @@ msgstr "Skoči na začetek dokumenta"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:134-118
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:237-88
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:302-88
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>Home</kbd>"
-msgstr "<kbd>Krmilka</kbd><span class=\"kbd--plus\">+</span><kbd>začetek</kbd>"
+msgstr ""
+"<kbd>Krmilka</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>začetek</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:75-38
 msgid "Go and select text to start of document"
@@ -764,6 +798,9 @@ msgid ""
 ">+</span><kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>Home</kbd>"
 msgstr ""
+"<kbd>Krmilka</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>dvigalka</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>začetek</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:76-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:239-38
@@ -788,11 +825,12 @@ msgstr "Skoči in izberi do konca vrstice"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:139-137
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:240-99
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:305-99
-#, fuzzy
 msgid ""
 "<kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>End</kbd>"
-msgstr "<kbd>Dvigalka</kbd><span class=\"kbd--plus\">+</span><kbd>konec</kbd>"
+msgstr ""
+"<kbd>Dvigalka</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>konec</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:78-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:241-38
@@ -805,11 +843,12 @@ msgstr "Pojdi na konec dokumenta"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:135-131
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:241-86
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:306-86
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>End</kbd>"
-msgstr "<kbd>Krmilka</kbd><span class=\"kbd--plus\">+</span><kbd>konec</kbd>"
+msgstr ""
+"<kbd>Krmilka</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>konec</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:79-38
 msgid "Go and select text to end of document"
@@ -823,6 +862,9 @@ msgid ""
 ">+</span><kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>End</kbd>"
 msgstr ""
+"<kbd>Krmilka</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>dvigalka</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>konec</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:80-38
 msgid "Move the view up one page"
@@ -837,25 +879,24 @@ msgid "Switch cursor between text and header"
 msgstr "Preklopi kazalko med besedilom in glavo"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:81-102
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>PageUp</kbd>"
 msgstr ""
-"<kbd>Krmilka</kbd><span class=\"kbd--plus\">+</span><kbd>prejšnja stran</kbd>"
+"<kbd>Krmilka</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</"
+"span><kbd>prejšnja stran</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:82-38
 msgid "Extend the selection up one page"
 msgstr "Razširi izbor eno stran navzgor"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:82-97
-#, fuzzy
 msgid ""
 "<kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>PageUp</kbd>"
 msgstr ""
-"<kbd>Dvigalka</kbd><span class=\"kbd--plus\">+</span><kbd>prejšnja "
-"stran</kbd>"
+"<kbd>Dvigalka</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</"
+"span><kbd>prejšnja stran</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:83-38
 msgid "Move the view down one page"
@@ -870,62 +911,62 @@ msgid "Switch cursor between text and footer"
 msgstr "Preklopi kazalko med besedilom in nogo"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:84-102
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>PageDown</kbd>"
 msgstr ""
-"<kbd>Krmilka</kbd><span class=\"kbd--plus\">+</span><kbd>naslednja "
-"stran</kbd>"
+"<kbd>Krmilka</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</"
+"span><kbd>naslednja stran</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:85-38
 msgid "Extend the selection down one page"
 msgstr "Razširi izbor eno stran navzdol"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:85-99
-#, fuzzy
 msgid ""
 "<kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>PageDown</kbd>"
 msgstr ""
-"<kbd>Dvigalka</kbd><span class=\"kbd--plus\">+</span><kbd>naslednja "
-"stran</kbd>"
+"<kbd>Dvigalka</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</"
+"span><kbd>naslednja stran</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:86-38
 msgid "Delete to beginning of word"
 msgstr "Izbriši do začetka besede"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:86-92
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>Backspace</kbd>"
-msgstr "<kbd>Krmilka</kbd><span class=\"kbd--plus\">+</span><kbd>vračalka</kbd>"
+msgstr ""
+"<kbd>Krmilka</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>vračalka</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:87-38
 msgid "Delete to end of word"
 msgstr "Izbriši do konca besede"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:87-86
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>Del</kbd>"
-msgstr "<kbd>Krmilka</kbd><span class=\"kbd--plus\">+</span><kbd>brisalka</kbd>"
+msgstr ""
+"<kbd>Krmilka</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>brisalka</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:88-38
 msgid "Delete to beginning of sentence"
 msgstr "Izbriše besedilo do začetka stavka"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:88-96
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>Backspace</kbd>"
 msgstr ""
-"<kbd>Krmilka</kbd><span class=\"kbd--plus\">+</span><kbd>dvigalka</kbd><span "
-"class=\"kbd--plus\">+</span><kbd>vračalka</kbd>"
+"<kbd>Krmilka</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>dvigalka</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>vračalka</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:89-38
 msgid "Delete to end of sentence"
@@ -937,6 +978,9 @@ msgid ""
 ">+</span><kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>Del</kbd>"
 msgstr ""
+"<kbd>Krmilka</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>dvigalka</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>brisalka</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.h2:93-9
 msgid "Shortcut Keys for Tables"
@@ -971,15 +1015,14 @@ msgstr ""
 "tabele, s tretjim klikom pojdi na konec dokumenta."
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:98-38
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>Tab</kbd>"
 msgstr ""
-"<kbd>Krmilka</kbd><span class=\"kbd--plus\">+</span><kbd>tabulatorka</kbd>"
+"<kbd>Krmilka</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>tabulatorka</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:98-146
-#, fuzzy
 msgid ""
 "Inserts a tab stop (only in tables). Depending on the Window Manager in use, "
 "<kbd>Alt</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
@@ -987,16 +1030,15 @@ msgid ""
 msgstr ""
 "Vstavi tabulatorsko mesto (le v tabelah). Glede na uporabljenega upravitelja "
 "oken je morda potrebno uporabiti kombinacijo tipk <kbd>izmenjalka</kbd><span "
-"class=\"kbd--plus\">+</span><kbd>tabulatorka</kbd>."
+"class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>tabulatorka</kbd>."
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:99-38
-#, fuzzy
 msgid ""
 "<kbd>Alt</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</"
 "span><kbd>Arrow Keys</kbd>"
 msgstr ""
-"<kbd>Izmenjalka</kbd><span class=\"kbd--plus\">+</span><kbd>smerne "
-"tipke</kbd>"
+"<kbd>Izmenjalka</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</"
+"span><kbd>smerne tipke</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:99-152
 msgid ""
@@ -1004,28 +1046,28 @@ msgid ""
 msgstr "Poveča/zmanjša velikost stolpca/vrstice na desnem/spodnjem robu celice"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:100-38
-#, fuzzy
 msgid ""
 "<kbd>Alt</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</"
 "span><kbd>Arrow Keys</kbd>"
 msgstr ""
-"<kbd>Izmenjalka</kbd><span class=\"kbd--plus\">+</span><kbd>dvigalka</"
-"kbd><span class=\"kbd--plus\">+</span><kbd>smerne tipke</kbd>"
+"<kbd>Izmenjalka</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>dvigalka</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>smerne tipke</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:100-219
 msgid "Increase/decrease the size of the column/row on the left/top cell edge"
 msgstr "Poveča/zmanjša velikost stolpca/vrstice na levem/vrhnjem robu celice"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:101-38
-#, fuzzy
 msgid ""
 "<kbd>Alt</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</"
 "span><kbd>Arrow Keys</kbd>"
 msgstr ""
-"<kbd>Izmenjalka</kbd><span class=\"kbd--plus\">+</span><kbd>krmilka</"
-"kbd><span class=\"kbd--plus\">+</span><kbd>smerne tipke</kbd>"
+"<kbd>Izmenjalka</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>krmilka</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</"
+"span><kbd>smerne tipke</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:101-218
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:102-285
@@ -1039,44 +1081,46 @@ msgid ""
 ">+</span><kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</"
 "span><kbd>Arrow Keys</kbd>"
 msgstr ""
+"<kbd>Krmilka</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>izmenjalka</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>dvigalka</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>smerne tipke</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:103-38
-#, fuzzy
 msgid ""
 "<kbd>Alt</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>Insert</kbd>"
 msgstr ""
-"<kbd>Izmenjalka</kbd><span class=\"kbd--plus\">+</span><kbd>vstavljalka</kbd>"
+"<kbd>Izmenjalka</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>vstavljalka</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:103-148
-#, fuzzy
 msgid ""
 "3 seconds in Insert mode, Arrow Key inserts row/column, <kbd>Ctrl</kbd><span "
 "class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>Arrow Key</kbd> "
 "inserts cell"
 msgstr ""
 "Po treh sekundah v vstavnem načinu smerna tipka vstavi vrstico/stolpec, "
-"<kbd>krmilka</kbd><span class=\"kbd--plus\">+</span><kbd>smerna tipka</kbd> "
-"vstavita celico"
+"<kbd>krmilka</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</"
+"span><kbd>smerna tipka</kbd> vstavita celico"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:104-38
-#, fuzzy
 msgid ""
 "<kbd>Alt</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>Del</kbd>"
 msgstr ""
-"<kbd>Izmenjalka</kbd><span class=\"kbd--plus\">+</span><kbd>brisalka</kbd>"
+"<kbd>Izmenjalka</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>brisalka</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:104-145
-#, fuzzy
 msgid ""
 "3 seconds in Delete mode, Arrow key deletes row/column, <kbd>Ctrl</kbd><span "
 "class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>Arrow key</kbd> merges "
 "cell with neighboring cell"
 msgstr ""
 "Po treh sekundah v brisalnem načinu smerna tipka izbriše vrstico/stolpec, "
-"<kbd>krmilka</kbd><span class=\"kbd--plus\">+</span><kbd>smerna tipka</kbd> "
-"spoji celico s sosednjo"
+"<kbd>krmilka</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</"
+"span><kbd>smerna tipka</kbd> spoji celico s sosednjo"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:105-38
 msgid ""
@@ -1084,6 +1128,9 @@ msgid ""
 ">+</span><kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>Del</kbd>"
 msgstr ""
+"<kbd>Dvigalka</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>krmilka</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>brisalka</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td.p:105-235
 msgid ""
@@ -1128,6 +1175,9 @@ msgid ""
 ">+</span><kbd>Alt</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>F</kbd>"
 msgstr ""
+"<kbd>Krmilka</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>izmenjalka</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>F</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:115-38
 msgid "Insert endnote"
@@ -1139,6 +1189,9 @@ msgid ""
 ">+</span><kbd>Alt</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>D</kbd>"
 msgstr ""
+"<kbd>Krmilka</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>izmenjalka</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>D</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:116-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:167-38
@@ -1152,17 +1205,21 @@ msgid ""
 ">+</span><kbd>Alt</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>C</kbd>"
 msgstr ""
+"<kbd>Krmilka</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>izmenjalka</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>C</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:118-38
 msgid "Insert soft hyphen"
 msgstr "Vstavi delilni vezaj"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:118-83
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>-</kbd>"
-msgstr "<kbd>Krmilka</kbd><span class=\"kbd--plus\">+</span><kbd>-</kbd>"
+msgstr ""
+"<kbd>Krmilka</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>-</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:119-38
 msgid "Insert non-breaking hyphen"
@@ -1174,6 +1231,9 @@ msgid ""
 ">+</span><kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>-</kbd>"
 msgstr ""
+"<kbd>Krmilka</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>dvigalka</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>-</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:121-38
 msgid "Insert non-breaking space"
@@ -1185,18 +1245,21 @@ msgid ""
 ">+</span><kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>Space</kbd>"
 msgstr ""
+"<kbd>Krmilka</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>dvigalka</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>preslednica</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:122-38
 msgid "Insert line break"
 msgstr "Vstavi prelom vrstice"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:122-82
-#, fuzzy
 msgid ""
 "<kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>Enter</kbd>"
 msgstr ""
-"<kbd>Dvigalka</kbd><span class=\"kbd--plus\">+</span><kbd>vnašalka</kbd>"
+"<kbd>Dvigalka</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>vnašalka</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:123-38
 msgid "Manual page break"
@@ -1205,11 +1268,12 @@ msgstr "Ročni prelom strani"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:123-82
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:251-98
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:316-105
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>Enter</kbd>"
-msgstr "<kbd>Krmilka</kbd><span class=\"kbd--plus\">+</span><kbd>vnašalka</kbd>"
+msgstr ""
+"<kbd>Krmilka</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>vnašalka</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:124-38
 msgid "Column break (in multicolumnar text)"
@@ -1221,6 +1285,9 @@ msgid ""
 ">+</span><kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>Enter</kbd>"
 msgstr ""
+"<kbd>Krmilka</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>dvigalka</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>vnašalka</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:125-38
 msgid ""
@@ -1229,12 +1296,12 @@ msgstr "Vstavi nov odstavek neposredno pred ali za odsek ali pred tabelo"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:125-139
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:126-175
-#, fuzzy
 msgid ""
 "<kbd>Alt</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>Enter</kbd>"
 msgstr ""
-"<kbd>Izmenjalka</kbd><span class=\"kbd--plus\">+</span><kbd>vnašalka</kbd>"
+"<kbd>Izmenjalka</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>vnašalka</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:126-38
 msgid ""
@@ -1283,13 +1350,12 @@ msgstr ""
 "razširi obstoječi izbor eno stran navzgor."
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:140-184
-#, fuzzy
 msgid ""
 "<kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</"
 "span><kbd>Page Up</kbd>"
 msgstr ""
-"<kbd>Dvigalka</kbd><span class=\"kbd--plus\">+</span><kbd>prejšnja "
-"stran</kbd>"
+"<kbd>Dvigalka</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</"
+"span><kbd>prejšnja stran</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:141-38
 msgid ""
@@ -1300,13 +1366,12 @@ msgstr ""
 "ali razširi obstoječi izbor eno stran navzdol."
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:141-188
-#, fuzzy
 msgid ""
 "<kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</"
 "span><kbd>Page Down</kbd>"
 msgstr ""
-"<kbd>Dvigalka</kbd><span class=\"kbd--plus\">+</span><kbd>naslednja "
-"stran</kbd>"
+"<kbd>Dvigalka</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</"
+"span><kbd>naslednja stran</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:142-38
 msgid ""
@@ -1319,13 +1384,12 @@ msgstr ""
 "naslednji stolpec na levi, ki vsebuje podatke."
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:142-265
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</"
 "span><kbd>Left Arrow</kbd>"
 msgstr ""
-"<kbd>Krmilka</kbd><span class=\"kbd--plus\">+</span><kbd>smerna tipka "
-"levo</kbd>"
+"<kbd>Krmilka</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</"
+"span><kbd>smerna tipka levo</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:143-38
 msgid ""
@@ -1338,13 +1402,12 @@ msgstr ""
 "naslednji stolpec na desni, ki vsebuje podatke."
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:143-269
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</"
 "span><kbd>Right Arrow</kbd>"
 msgstr ""
-"<kbd>Krmilka</kbd><span class=\"kbd--plus\">+</span><kbd>smerna tipka "
-"desno</kbd>"
+"<kbd>Krmilka</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</"
+"span><kbd>smerna tipka desno</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:144-38
 msgid ""
@@ -1357,13 +1420,12 @@ msgstr ""
 "vrstico navzgor, ki vsebuje podatke."
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:144-241
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</"
 "span><kbd>Up Arrow</kbd>"
 msgstr ""
-"<kbd>Krmilka</kbd><span class=\"kbd--plus\">+</span><kbd>smerna tipka "
-"navzgor</kbd>"
+"<kbd>Krmilka</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</"
+"span><kbd>smerna tipka navzgor</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:145-38
 msgid ""
@@ -1376,13 +1438,12 @@ msgstr ""
 "vrstico navzdol, ki vsebuje podatke."
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:145-246
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</"
 "span><kbd>Down Arrow</kbd>"
 msgstr ""
-"<kbd>Krmilka</kbd><span class=\"kbd--plus\">+</span><kbd>smerna tipka "
-"navzdol</kbd>"
+"<kbd>Krmilka</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</"
+"span><kbd>smerna tipka navzdol</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:146-38
 msgid "Go to next sheet."
@@ -1394,6 +1455,9 @@ msgid ""
 ">+</span><kbd>Alt</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</"
 "span><kbd>Page Down</kbd>"
 msgstr ""
+"<kbd>Krmilka</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>izmenjalka</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>prejšnja stran</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:147-38
 msgid "Go to previous sheet."
@@ -1405,6 +1469,9 @@ msgid ""
 ">+</span><kbd>Alt</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</"
 "span><kbd>Page Up</kbd>"
 msgstr ""
+"<kbd>Krmilka</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>izmenjalka</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>naslednja stran</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:148-38
 msgid ""
@@ -1423,32 +1490,33 @@ msgid ""
 ">+</span><kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>Arrow</kbd>"
 msgstr ""
+"<kbd>Krmilka</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>dvigalka</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>smerna tipka</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:149-38
 msgid "Moves one sheet to the left."
 msgstr "Premakne en delovni list na levo."
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:149-93
-#, fuzzy
 msgid ""
 "<kbd>Alt</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</"
 "span><kbd>Page Up</kbd>"
 msgstr ""
-"<kbd>Izmenjalka</kbd><span class=\"kbd--plus\">+</span><kbd>prejšnja "
-"stran</kbd>"
+"<kbd>Izmenjalka</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</"
+"span><kbd>prejšnja stran</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:150-38
 msgid "Moves one screen page to the right."
 msgstr "Premakne eno stran zaslona na desno."
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:150-100
-#, fuzzy
 msgid ""
 "<kbd>Alt</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</"
 "span><kbd>Page Down</kbd>"
 msgstr ""
-"<kbd>Izmenjalka</kbd><span class=\"kbd--plus\">+</span><kbd>naslednja "
-"stran</kbd>"
+"<kbd>Izmenjalka</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</"
+"span><kbd>naslednja stran</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:151-38
 msgid ""
@@ -1466,6 +1534,9 @@ msgid ""
 ">+</span><kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</"
 "span><kbd>Page Up</kbd>"
 msgstr ""
+"<kbd>Dvigalka</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>krmilka</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</"
+"span><kbd>prejšnja stran</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:152-38
 msgid ""
@@ -1478,14 +1549,14 @@ msgstr ""
 "delovni list. Naslednji delovni list postane trenutni delovni list."
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:152-268
-#, fuzzy
 msgid ""
 "<kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</"
 "span><kbd>Page Down</kbd>"
 msgstr ""
-"<kbd>Dvigalka</kbd><span class=\"kbd--plus\">+</span><kbd>krmilka</kbd><span "
-"class=\"kbd--plus\">+</span><kbd>naslednja stran</kbd>"
+"<kbd>Dvigalka</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>krmilka</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</"
+"span><kbd>naslednja stran</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:153-38
 msgid ""
@@ -1498,11 +1569,12 @@ msgstr ""
 "je obkrožen s praznimi vrsticami in stolpci."
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:153-269
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>*</kbd>"
-msgstr "<kbd>Krmilka</kbd><span class=\"kbd--plus\">+</span><kbd>*</kbd>"
+msgstr ""
+"<kbd>Krmilka</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>*</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:154-38
 msgid ""
@@ -1513,35 +1585,36 @@ msgstr ""
 "formule, ki vsebuje kazalec."
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:154-178
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>/</kbd>"
-msgstr "<kbd>Krmilka</kbd><span class=\"kbd--plus\">+</span><kbd>/</kbd>"
+msgstr ""
+"<kbd>Krmilka</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>/</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:155-38
 msgid "Insert cells (as in menu Insert - Cells)"
 msgstr "Vstavi celice (kot menijski ukaz Vstavi > Celice)"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:155-105
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</"
 "span><kbd>Plus key</kbd>"
 msgstr ""
-"<kbd>Krmilka</kbd><span class=\"kbd--plus\">+</span><kbd>tipka plus</kbd>"
+"<kbd>Krmilka</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</"
+"span><kbd>tipka plus</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:156-38
 msgid "Delete cells (as in menu Edit - Delete Cells)"
 msgstr "Izbriši celice (kot menijski ukaz Uredi > Izbriši celice)"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:156-110
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</"
 "span><kbd>Minus key</kbd>"
 msgstr ""
-"<kbd>Krmilka</kbd><span class=\"kbd--plus\">+</span><kbd>tipka minus</kbd>"
+"<kbd>Krmilka</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</"
+"span><kbd>tipka minus</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.h2:160-9
 msgid "Cell formatting"
@@ -1552,11 +1625,12 @@ msgid "Display comment"
 msgstr "Prikaži komentar"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:168-80
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>F1</kbd>"
-msgstr "<kbd>Krmilka</kbd><span class=\"kbd--plus\">+</span><kbd>F1</kbd>"
+msgstr ""
+"<kbd>Krmilka</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>F1</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:169-38
 msgid "Fill Down"
@@ -1576,6 +1650,9 @@ msgid ""
 ">+</span><kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>1</kbd>"
 msgstr ""
+"<kbd>Krmilka</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>dvigalka</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>1</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:177-38
 msgid "Standard exponential format"
@@ -1587,6 +1664,9 @@ msgid ""
 ">+</span><kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>2</kbd>"
 msgstr ""
+"<kbd>Krmilka</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>dvigalka</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>2</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:178-38
 msgid "Standard date format"
@@ -1598,6 +1678,9 @@ msgid ""
 ">+</span><kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>3</kbd>"
 msgstr ""
+"<kbd>Krmilka</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>dvigalka</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>3</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:179-38
 msgid "Standard currency format"
@@ -1609,6 +1692,9 @@ msgid ""
 ">+</span><kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>4</kbd>"
 msgstr ""
+"<kbd>Krmilka</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>dvigalka</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>4</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:180-38
 msgid "Standard percentage format (two decimal places)"
@@ -1620,6 +1706,9 @@ msgid ""
 ">+</span><kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>5</kbd>"
 msgstr ""
+"<kbd>Krmilka</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>dvigalka</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>5</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:181-38
 msgid "Standard format"
@@ -1631,6 +1720,9 @@ msgid ""
 ">+</span><kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>6</kbd>"
 msgstr ""
+"<kbd>Krmilka</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>dvigalka</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>6</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.h2:185-9
 msgid "Insert"
@@ -1641,13 +1733,12 @@ msgid "Insert date"
 msgstr "Vstavite datum"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:187-76
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>;</kbd> or <kbd>,</kbd>"
 msgstr ""
-"<kbd>Krmilka</kbd><span class=\"kbd--plus\">+</span><kbd>;</kbd> ali "
-"<kbd>,</kbd>"
+"<kbd>Krmilka</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>;</kbd> ali <kbd>,</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:211-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:276-38
@@ -1670,12 +1761,12 @@ msgstr "Povišaj element seznama (slednji mora biti izbran)"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:250-127
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:277-113
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:315-127
-#, fuzzy
 msgid ""
 "<kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>Tab</kbd>"
 msgstr ""
-"<kbd>Dvigalka</kbd><span class=\"kbd--plus\">+</span><kbd>tabulatorka</kbd>"
+"<kbd>Dvigalka</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>tabulatorka</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.h2:216-9
 #: html/cool-help.html%2Bdiv.div.div.h2:281-9
@@ -1924,6 +2015,14 @@ msgid ""
 "click the show icon <span class=\"w2ui-icon unfold icon-size\" role=\"img\" "
 "aria-label=\"show menu bar\" title=\"Show menu bar\"></span>."
 msgstr ""
+"<span class=\"def\">Menijska vrstica:</span> Glavni meni je na vrhu in "
+"vključuje številne možnosti, kot so ukazi za tiskanje, urejanje, "
+"pregledovanje in druge napredne ukaze. Menijsko vrstico lahko skrijete s "
+"klikom na ikono za skritje <span class=\"w2ui-icon fold icon-size\" role="
+"\"img\" aria-label=„hide menu bar“ title=\"Skrij menijsko vrstico\"></span> "
+"na skrajni desni. Da jo ponovno prikažete, kliknite ikono za prikaz <span "
+"class=\"w2ui-icon unfold icon-size\" role=\"img\" aria-label=\"show menu "
+"bar\" title=\"Pokaži menijsko vrstico\"></span>."
 
 #: html/cool-help.html%2Bdiv.div.div.p:378-5
 msgid ""
@@ -1954,7 +2053,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.div.img[alt]:385-29
 msgid "The status bar"
-msgstr ""
+msgstr "Vrstica stanja"
 
 #: html/cool-help.html%2Bdiv.div.div.p:388-5
 msgid ""
@@ -1969,7 +2068,6 @@ msgstr ""
 "črkami. Na desni strani iskalnega polja so trije gumbi:"
 
 #: html/cool-help.html%2Bdiv.div.div.ul.li:390-7
-#, fuzzy
 msgid "Search backwards>"
 msgstr "Išči nazaj"
 
@@ -1982,15 +2080,14 @@ msgid "Cancel the search (appears only when a text has been searched)"
 msgstr "Prekličite iskanje (pojavi se, le če je besedilo preiskano)"
 
 #: html/cool-help.html%2Bdiv.div.div.p:396-5
-#, fuzzy
 msgid ""
 "<span class=\"def\">The zoom bar:</span> The zoom bar includes buttons to "
 "reset zoom to 100%, zoom out and zoom in. The zoom applies to the document "
 "area, the user interface is not affected. The current level of zoom is shown "
 "in this area."
 msgstr ""
-"<span class=\"def\">Vrstica povečave:</span> na desni strani vrstice stanja "
-"je nabor gumbov, ki omogočajo povečavo na 100 %, pomanjšanje in povečanje. "
+"<span class=\"def\">Vrstica povečave:</span> vrstica povečave vključuje "
+"nabor gumbov, ki omogočajo povečavo na 100 %, pomanjšanje in povečanje. "
 "Povečava se nanaša na področje dokumenta, na uporabniški vmesnik ne "
 "učinkuje. V tem območju je prikazana trenutna raven povečave."
 
@@ -2015,10 +2112,13 @@ msgid ""
 "details about the current document. The actual information depends on the "
 "nature of the document."
 msgstr ""
+"<span class=\"def\">Informacijska vrstica:</span> informacijska vrstica "
+"prikazuje podrobnosti o trenutnem dokumentu. Dejanske informacije so odvisne "
+"od naravi dokumenta."
 
 #: html/cool-help.html%2Bdiv.div.div.div.img[alt]:402-29
 msgid "The information bar"
-msgstr ""
+msgstr "Informacijska vrstica"
 
 #: html/cool-help.html%2Bdiv.div.p:407-5
 msgid ""
@@ -2088,7 +2188,6 @@ msgid "Copy and Paste"
 msgstr "Kopiraj in prilepi"
 
 #: html/cool-help.html%2Bdiv.div.div.p:419-5
-#, fuzzy
 msgid ""
 "Rich content copy/cut and paste is supported, not only within a given "
 "document, but also across documents on the same or different <span class="
@@ -2109,14 +2208,16 @@ msgstr ""
 "\"productname\">{productname}</span>. Za interno rabo lahko uporabniki "
 "kopirajo/izrežejo vsebino, vključno s slikami in mešano vsebino, na osebnem "
 "računalniku z neposredno uporabo tipk za bližnjice (<kbd>krmilka</kbd><span "
-"class=\"kbd--plus\">+</span><kbd>X</kbd>, <kbd>krmilka</kbd><span class=\"kbd"
-"--plus\">+</span><kbd>C</kbd>, <kbd>krmilka</kbd><span class=\"kbd--plus\""
+"class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>X</kbd>, <kbd>krmilka</"
+"kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>C</kbd>, "
+"<kbd>krmilka</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>V</kbd>). Iz varnostnih razlogov je potrebno uporabiti "
-"<kbd>krmilka</kbd><span class=\"kbd--plus\">+</span><kbd>V</kbd> za "
-"lepljenje na osebnem računalniku, medtem ko za izrezovanje in kopiranje "
-"lahko uporabite kontekstne menije. Na sistemih Android in iOS besedilo "
-"izberete z dvojim tapkanjem, z dolgim tapkom pa dostopate prek kontekstnega "
-"menija do ukazov za kopiranje/izrezovanje/lepljenje."
+"<kbd>krmilka</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>V</kbd> za lepljenje na osebnem računalniku, medtem ko za "
+"izrezovanje in kopiranje lahko uporabite kontekstne menije. Na sistemih "
+"Android in iOS besedilo izberete z dvojim tapkanjem, z dolgim tapkom pa "
+"dostopate prek kontekstnega menija do ukazov za kopiranje/izrezovanje/"
+"lepljenje."
 
 #: html/cool-help.html%2Bdiv.div.div.p:420-5
 msgid ""
@@ -2164,7 +2265,6 @@ msgid "document repair"
 msgstr "Popravilo dokumenta"
 
 #: html/cool-help.html%2Bdiv.div.div.p:427-5
-#, fuzzy
 msgid ""
 "This is particularly useful – say when a colleague inadvertently selected "
 "all text in the document with <kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-"
@@ -2173,8 +2273,9 @@ msgid ""
 msgstr ""
 "To je še posebej uporabno, če je npr. kolega nenamerno izbral celotno "
 "besedilo dokumenta s kombinacijo tipk <kbd>krmilka</kbd><span class=\"kbd--"
-"plus\">+</span><kbd>A</kbd> ter v nadaljevanju nadaljeval z vnosom besedila "
-"in ga s tem prepisal, medtem ko ste hkrati tudi sami urejali besedilo."
+"plus\" aria-hidden=\"true\">+</span><kbd>A</kbd> ter v nadaljevanju "
+"nadaljeval z vnosom besedila in ga s tem prepisal, medtem ko ste hkrati tudi "
+"sami urejali besedilo."
 
 #: html/cool-help.html%2Bdiv.div.div.h4:430-5
 msgid "Inactive document"
@@ -2222,15 +2323,15 @@ msgstr ""
 "izvedn brskalnika, bo prilepljena vsebina ohranila obogateno besedilo."
 
 #: html/cool-help.html%2Bdiv.div.div.p:438-5
-#, fuzzy
 msgid ""
 "You can paste as unformatted text with the keyboard shortcut: <kbd>Ctrl</"
 "kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>Shift</"
 "kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>V</kbd>"
 msgstr ""
 "Besedilo lahko kot neoblikovano prilepite s tipkami za bližnjico: "
-"<kbd>krmilka</kbd><span class=\"kbd--plus\">+</span><kbd>dvigalka</kbd><span "
-"class=\"kbd--plus\">+</span><kbd>V</kbd>"
+"<kbd>krmilka</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>dvigalka</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
+">+</span><kbd>V</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.p:439-5
 msgid ""
@@ -2465,7 +2566,6 @@ msgstr ""
 "OASIS</a>."
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:500-5
-#, fuzzy
 msgid ""
 "<span class=\"def\">Direct formatting:</span> You can format spreadsheets "
 "cells, columns, rows and sheets by formatting directly from the menus, "
@@ -2479,14 +2579,14 @@ msgstr ""
 "in delovne liste preglednic lahko oblikujete z neposrednim oblikovanjem iz "
 "menijev, orodnih vrstic in kontekstnih menijev. Neposredno oblikovanje se "
 "nanaša na trenutno izbrani predmet. Če želite oblikovati celico, uporabite "
-"meni ali kombinacijo tipk <kbd>krmilka</kbd><span class=\"kbd--plus\""
-">+</span><kbd>1</kbd>. Pogovorno okno omogoča kompleksno in povsem "
-"prilagojeno oblikovanje števil, kot tudi pisav, naprednih obrob, ozadja, "
-"zaščite celic ter druge možnosti."
+"meni ali kombinacijo tipk <kbd>krmilka</kbd><span class=\"kbd--plus\" aria-"
+"hidden=\"true\">+</span><kbd>1</kbd>. Pogovorno okno omogoča kompleksno in "
+"povsem prilagojeno oblikovanje števil, kot tudi pisav, naprednih obrob, "
+"ozadja, zaščite celic ter druge možnosti."
 
 #: html/cool-help.html%2Bdiv.div.div.div.div.img[alt]:501-29
 msgid "format cells"
-msgstr ""
+msgstr "oblikuj celice"
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:506-30
 msgid ""
@@ -2558,7 +2658,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.div.div.img[alt]:519-29
 msgid "outlining"
-msgstr ""
+msgstr "orisovanje"
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:522-5
 msgid ""
@@ -2628,7 +2728,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.div.div.img[alt]:538-29
 msgid "cell comments"
-msgstr ""
+msgstr "komentarji celice"
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:541-5
 msgid ""
@@ -2646,7 +2746,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.div.div.img[alt]:542-29
 msgid "conditional formatting"
-msgstr ""
+msgstr "pogojno oblikovanje"
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:550-30
 msgid ""
@@ -2737,9 +2837,8 @@ msgstr ""
 "span> → <span class=\"ui\">Uredi sloge</span>, da spremenite slog."
 
 #: html/cool-help.html%2Bdiv.div.div.div.div.img[alt]:565-29
-#, fuzzy
 msgid "style formatting"
-msgstr "Oblikovanje celice"
+msgstr "oblikovanje sloga"
 
 #: html/cool-help.html%2Bdiv.div.div.div.h4:571-5
 msgid "Handling Tables"
@@ -2759,7 +2858,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.div.div.img[alt]:573-29
 msgid "insert table"
-msgstr ""
+msgstr "vstavi tabelo"
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:576-5
 msgid ""
@@ -2922,7 +3021,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.div.div.img[alt]:619-29
 msgid "slide layouts"
-msgstr ""
+msgstr "postavitve prosojnic"
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:621-30
 msgid ""
@@ -3108,7 +3207,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.div.img[alt]:669-29
 msgid "thesaurus"
-msgstr ""
+msgstr "slovar sopomenk"
 
 #: html/cool-help.html%2Bdiv.div.div.h4:672-5
 msgid ""
@@ -3292,7 +3391,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.div.div.img[alt]:712-29
 msgid "manage changes"
-msgstr ""
+msgstr "upravljaj spremembe"
 
 #: html/cool-help.html%2Bdiv.div.div.div.h4:715-5
 msgid "How do I set the margins of the document?"
@@ -3324,7 +3423,7 @@ msgstr "Robove strani določite v pogovornem oknu."
 
 #: html/cool-help.html%2Bdiv.div.div.div.div.img[alt]:722-29
 msgid "page style"
-msgstr ""
+msgstr "slog strani"
 
 #: html/cool-help.html%2Bdiv.div.div.div.h4:725-5
 msgid "How do I change the page orientation to landscape inside my document"
@@ -3384,14 +3483,14 @@ msgstr "Izberite besedilo z obstoječim oblikovanjem."
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li:740-7
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li:782-7
-#, fuzzy
 msgid ""
 "Click on the clone formatting icon <img alt=\"format paintbrush\" class"
 "=\"icon-size\" src=\"images/lc_formatpaintbrush.svg\" />. The mouse pointer "
 "turns to a paint bucket."
 msgstr ""
-"Kliknite ikono kloniranja oblikovanja <img class=\"icon-size\" src=\"images"
-"/lc_formatpaintbrush.svg\" />. Kazalec miške se spremeni v vedro barve."
+"Kliknite ikono kloniranja oblikovanja <img alt=\"format paintbrush\" class"
+"=\"icon-size\" src=\"images/lc_formatpaintbrush.svg\" />. Kazalec miške se "
+"spremeni v vedro barve."
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li:741-7
 msgid "Select the text you want to apply the new format."
@@ -3469,7 +3568,6 @@ msgstr ""
 ">{productname}</span>."
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li:769-7
-#, fuzzy
 msgid ""
 "Paste from the browser <span class=\"ui\">Edit</span> → <span class=\"ui\""
 ">Paste</span> or press <kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden="
@@ -3478,8 +3576,9 @@ msgid ""
 msgstr ""
 "Iz brskalnika jih prilepite z <span class=\"ui\">Uredi</span> → <span class="
 "\"ui\">Prilepi</span> ali kombinacijo tipk <kbd>krmilka</kbd><span class="
-"\"kbd--plus\">+</span><kbd>V</kbd>. Odpre se pogovorno okno <span class=\"ui"
-"\">Uvoz besedila</span>, kjer lahko natančno opišete zapis podatkov CSV."
+"\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>V</kbd>. Odpre se pogovorno "
+"okno <span class=\"ui\">Uvoz besedila</span>, kjer lahko natančno opišete "
+"zapis podatkov CSV."
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.div.img[alt]:772-31
 msgid "import"
@@ -3568,9 +3667,8 @@ msgstr ""
 "strani na dnu podokna prosojnice:"
 
 #: html/cool-help.html%2Bdiv.div.div.div.ol.li.img[alt]:803-176
-#, fuzzy
 msgid "slide show"
-msgstr "Projekcija"
+msgstr "projekcija"
 
 #: html/cool-help.html%2Bdiv.div.div.div.h4:807-5
 msgid "How can I change the line, area and position of a shape in my slides?"
@@ -3599,217 +3697,227 @@ msgid "Set the properties of the element of the object."
 msgstr "Nastavite lastnosti elementa predmeta."
 
 #~ msgid ""
-#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-#~ "\"kbd--plus\">+</span><kbd>V</kbd>"
-#~ msgstr ""
-#~ "<kbd>Krmilka</kbd><span class=\"kbd--plus\">+</span><kbd>dvigalka</kbd><span "
+#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
 #~ "class=\"kbd--plus\">+</span><kbd>V</kbd>"
+#~ msgstr ""
+#~ "<kbd>Krmilka</kbd><span class=\"kbd--plus\">+</span><kbd>dvigalka</kbd><span"
+#~ " class=\"kbd--plus\">+</span><kbd>V</kbd>"
 
 #~ msgid ""
-#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class="
-#~ "\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd--plus\""
-#~ ">+</span><kbd>V</kbd>"
+#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span "
+#~ "class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd--"
+#~ "plus\">+</span><kbd>V</kbd>"
 #~ msgstr ""
-#~ "<kbd>Krmilka</kbd><span class=\"kbd--plus\">+</span><kbd>izmenjalka</"
-#~ "kbd><span class=\"kbd--plus\">+</span><kbd>dvigalka</kbd><span class=\"kbd--"
+#~ "<kbd>Krmilka</kbd><span class=\"kbd--"
+#~ "plus\">+</span><kbd>izmenjalka</kbd><span class=\"kbd--"
+#~ "plus\">+</span><kbd>dvigalka</kbd><span class=\"kbd--"
 #~ "plus\">+</span><kbd>V</kbd>"
 
 #~ msgid ""
-#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-#~ "\"kbd--plus\">+</span><kbd>?</kbd>"
-#~ msgstr ""
-#~ "<kbd>Krmilka</kbd><span class=\"kbd--plus\">+</span><kbd>dvigalka</kbd><span "
+#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
 #~ "class=\"kbd--plus\">+</span><kbd>?</kbd>"
+#~ msgstr ""
+#~ "<kbd>Krmilka</kbd><span class=\"kbd--plus\">+</span><kbd>dvigalka</kbd><span"
+#~ " class=\"kbd--plus\">+</span><kbd>?</kbd>"
 
 #~ msgid ""
-#~ "<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-#~ "\"kbd--plus\">+</span><kbd>F1</kbd>"
+#~ "<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
+#~ "class=\"kbd--plus\">+</span><kbd>F1</kbd>"
 #~ msgstr ""
-#~ "<kbd>Izmenjalka</kbd><span class=\"kbd--plus\">+</span><kbd>dvigalka</"
-#~ "kbd><span class=\"kbd--plus\">+</span><kbd>F1</kbd>"
+#~ "<kbd>Izmenjalka</kbd><span class=\"kbd--"
+#~ "plus\">+</span><kbd>dvigalka</kbd><span class=\"kbd--"
+#~ "plus\">+</span><kbd>F1</kbd>"
 
 #~ msgid ""
-#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class="
-#~ "\"kbd--plus\">+</span><kbd>5</kbd>"
+#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span "
+#~ "class=\"kbd--plus\">+</span><kbd>5</kbd>"
 #~ msgstr ""
-#~ "<kbd>Krmilka</kbd><span class=\"kbd--plus\">+</span><kbd>izmenjalka</"
-#~ "kbd><span class=\"kbd--plus\">+</span><kbd>5</kbd>"
+#~ "<kbd>Krmilka</kbd><span class=\"kbd--"
+#~ "plus\">+</span><kbd>izmenjalka</kbd><span class=\"kbd--"
+#~ "plus\">+</span><kbd>5</kbd>"
 
 #~ msgid ""
-#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-#~ "\"kbd--plus\">+</span><kbd>P</kbd>"
-#~ msgstr ""
-#~ "<kbd>Krmilka</kbd><span class=\"kbd--plus\">+</span><kbd>dvigalka</kbd><span "
+#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
 #~ "class=\"kbd--plus\">+</span><kbd>P</kbd>"
+#~ msgstr ""
+#~ "<kbd>Krmilka</kbd><span class=\"kbd--plus\">+</span><kbd>dvigalka</kbd><span"
+#~ " class=\"kbd--plus\">+</span><kbd>P</kbd>"
 
 #~ msgid ""
-#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-#~ "\"kbd--plus\">+</span><kbd>B</kbd>"
-#~ msgstr ""
-#~ "<kbd>Krmilka</kbd><span class=\"kbd--plus\">+</span><kbd>dvigalka</kbd><span "
+#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
 #~ "class=\"kbd--plus\">+</span><kbd>B</kbd>"
+#~ msgstr ""
+#~ "<kbd>Krmilka</kbd><span class=\"kbd--plus\">+</span><kbd>dvigalka</kbd><span"
+#~ " class=\"kbd--plus\">+</span><kbd>B</kbd>"
 
 #~ msgid ""
-#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-#~ "\"kbd--plus\">+</span><kbd>Home</kbd>"
+#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
+#~ "class=\"kbd--plus\">+</span><kbd>Home</kbd>"
 #~ msgstr ""
-#~ "<kbd>Krmilka</kbd><span class=\"kbd--plus\">+</span><kbd>dvigalka</kbd><span "
-#~ "class=\"kbd--plus\">+</span><kbd>začetek</kbd>"
+#~ "<kbd>Krmilka</kbd><span class=\"kbd--plus\">+</span><kbd>dvigalka</kbd><span"
+#~ " class=\"kbd--plus\">+</span><kbd>začetek</kbd>"
 
 #~ msgid ""
-#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-#~ "\"kbd--plus\">+</span><kbd>End</kbd>"
+#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
+#~ "class=\"kbd--plus\">+</span><kbd>End</kbd>"
 #~ msgstr ""
-#~ "<kbd>Krmilka</kbd><span class=\"kbd--plus\">+</span><kbd>dvigalka</kbd><span "
-#~ "class=\"kbd--plus\">+</span><kbd>konec</kbd>"
+#~ "<kbd>Krmilka</kbd><span class=\"kbd--plus\">+</span><kbd>dvigalka</kbd><span"
+#~ " class=\"kbd--plus\">+</span><kbd>konec</kbd>"
 
 #~ msgid ""
-#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-#~ "\"kbd--plus\">+</span><kbd>Del</kbd>"
+#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
+#~ "class=\"kbd--plus\">+</span><kbd>Del</kbd>"
 #~ msgstr ""
-#~ "<kbd>Krmilka</kbd><span class=\"kbd--plus\">+</span><kbd>dvigalka</kbd><span "
-#~ "class=\"kbd--plus\">+</span><kbd>brisalka</kbd>"
+#~ "<kbd>Krmilka</kbd><span class=\"kbd--plus\">+</span><kbd>dvigalka</kbd><span"
+#~ " class=\"kbd--plus\">+</span><kbd>brisalka</kbd>"
 
 #~ msgid ""
-#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class="
-#~ "\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd--plus\">+</"
-#~ "span><kbd>Arrow Keys</kbd>"
+#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span "
+#~ "class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd--"
+#~ "plus\">+</span><kbd>Arrow Keys</kbd>"
 #~ msgstr ""
-#~ "<kbd>Krmilka</kbd><span class=\"kbd--plus\">+</span><kbd>izmenjalka</"
-#~ "kbd><span class=\"kbd--plus\">+</span><kbd>dvigalka</kbd><span class=\"kbd--"
+#~ "<kbd>Krmilka</kbd><span class=\"kbd--"
+#~ "plus\">+</span><kbd>izmenjalka</kbd><span class=\"kbd--"
+#~ "plus\">+</span><kbd>dvigalka</kbd><span class=\"kbd--"
 #~ "plus\">+</span><kbd>smerne tipke</kbd>"
 
 #~ msgid ""
-#~ "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</kbd><span class="
-#~ "\"kbd--plus\">+</span><kbd>Del</kbd>"
+#~ "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</kbd><span "
+#~ "class=\"kbd--plus\">+</span><kbd>Del</kbd>"
 #~ msgstr ""
-#~ "<kbd>Dvigalka</kbd><span class=\"kbd--plus\">+</span><kbd>krmilka</kbd><span "
-#~ "class=\"kbd--plus\">+</span><kbd>brisalka</kbd>"
+#~ "<kbd>Dvigalka</kbd><span class=\"kbd--plus\">+</span><kbd>krmilka</kbd><span"
+#~ " class=\"kbd--plus\">+</span><kbd>brisalka</kbd>"
 
 #~ msgid ""
-#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class="
-#~ "\"kbd--plus\">+</span><kbd>F</kbd>"
+#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span "
+#~ "class=\"kbd--plus\">+</span><kbd>F</kbd>"
 #~ msgstr ""
-#~ "<kbd>Krmilka</kbd><span class=\"kbd--plus\">+</span><kbd>izmenjalka</"
-#~ "kbd><span class=\"kbd--plus\">+</span><kbd>F</kbd>"
+#~ "<kbd>Krmilka</kbd><span class=\"kbd--"
+#~ "plus\">+</span><kbd>izmenjalka</kbd><span class=\"kbd--"
+#~ "plus\">+</span><kbd>F</kbd>"
 
 #~ msgid ""
-#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class="
-#~ "\"kbd--plus\">+</span><kbd>D</kbd>"
+#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span "
+#~ "class=\"kbd--plus\">+</span><kbd>D</kbd>"
 #~ msgstr ""
-#~ "<kbd>Krmilka</kbd><span class=\"kbd--plus\">+</span><kbd>izmenjalka</"
-#~ "kbd><span class=\"kbd--plus\">+</span><kbd>D</kbd>"
+#~ "<kbd>Krmilka</kbd><span class=\"kbd--"
+#~ "plus\">+</span><kbd>izmenjalka</kbd><span class=\"kbd--"
+#~ "plus\">+</span><kbd>D</kbd>"
 
 #~ msgid ""
-#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class="
-#~ "\"kbd--plus\">+</span><kbd>C</kbd>"
+#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span "
+#~ "class=\"kbd--plus\">+</span><kbd>C</kbd>"
 #~ msgstr ""
-#~ "<kbd>Krmilka</kbd><span class=\"kbd--plus\">+</span><kbd>izmenjalka</"
-#~ "kbd><span class=\"kbd--plus\">+</span><kbd>C</kbd>"
+#~ "<kbd>Krmilka</kbd><span class=\"kbd--"
+#~ "plus\">+</span><kbd>izmenjalka</kbd><span class=\"kbd--"
+#~ "plus\">+</span><kbd>C</kbd>"
 
 #~ msgid ""
-#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-#~ "\"kbd--plus\">+</span><kbd>-</kbd>"
-#~ msgstr ""
-#~ "<kbd>Krmilka</kbd><span class=\"kbd--plus\">+</span><kbd>dvigalka</kbd><span "
+#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
 #~ "class=\"kbd--plus\">+</span><kbd>-</kbd>"
+#~ msgstr ""
+#~ "<kbd>Krmilka</kbd><span class=\"kbd--plus\">+</span><kbd>dvigalka</kbd><span"
+#~ " class=\"kbd--plus\">+</span><kbd>-</kbd>"
 
 #~ msgid ""
-#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-#~ "\"kbd--plus\">+</span><kbd>Space</kbd>"
+#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
+#~ "class=\"kbd--plus\">+</span><kbd>Space</kbd>"
 #~ msgstr ""
-#~ "<kbd>Krmilka</kbd><span class=\"kbd--plus\">+</span><kbd>dvigalka</kbd><span "
-#~ "class=\"kbd--plus\">+</span><kbd>preslednica</kbd>"
+#~ "<kbd>Krmilka</kbd><span class=\"kbd--plus\">+</span><kbd>dvigalka</kbd><span"
+#~ " class=\"kbd--plus\">+</span><kbd>preslednica</kbd>"
 
 #~ msgid ""
-#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-#~ "\"kbd--plus\">+</span><kbd>Enter</kbd>"
+#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
+#~ "class=\"kbd--plus\">+</span><kbd>Enter</kbd>"
 #~ msgstr ""
-#~ "<kbd>Krmilka</kbd><span class=\"kbd--plus\">+</span><kbd>dvigalka</kbd><span "
-#~ "class=\"kbd--plus\">+</span><kbd>vnašalka</kbd>"
+#~ "<kbd>Krmilka</kbd><span class=\"kbd--plus\">+</span><kbd>dvigalka</kbd><span"
+#~ " class=\"kbd--plus\">+</span><kbd>vnašalka</kbd>"
 
 #~ msgid ""
-#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class="
-#~ "\"kbd--plus\">+</span><kbd>Page Down</kbd>"
+#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span "
+#~ "class=\"kbd--plus\">+</span><kbd>Page Down</kbd>"
 #~ msgstr ""
-#~ "<kbd>Krmilka</kbd><span class=\"kbd--plus\">+</span><kbd>izmenjalka</"
-#~ "kbd><span class=\"kbd--plus\">+</span><kbd>prejšnja stran</kbd>"
+#~ "<kbd>Krmilka</kbd><span class=\"kbd--"
+#~ "plus\">+</span><kbd>izmenjalka</kbd><span class=\"kbd--"
+#~ "plus\">+</span><kbd>prejšnja stran</kbd>"
 
 #~ msgid ""
-#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class="
-#~ "\"kbd--plus\">+</span><kbd>Page Up</kbd>"
+#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span "
+#~ "class=\"kbd--plus\">+</span><kbd>Page Up</kbd>"
 #~ msgstr ""
-#~ "<kbd>Krmilka</kbd><span class=\"kbd--plus\">+</span><kbd>izmenjalka</"
-#~ "kbd><span class=\"kbd--plus\">+</span><kbd>naslednja stran</kbd>"
+#~ "<kbd>Krmilka</kbd><span class=\"kbd--"
+#~ "plus\">+</span><kbd>izmenjalka</kbd><span class=\"kbd--"
+#~ "plus\">+</span><kbd>naslednja stran</kbd>"
 
 #~ msgid ""
-#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-#~ "\"kbd--plus\">+</span><kbd>Arrow</kbd>"
+#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
+#~ "class=\"kbd--plus\">+</span><kbd>Arrow</kbd>"
 #~ msgstr ""
-#~ "<kbd>Krmilka</kbd><span class=\"kbd--plus\">+</span><kbd>dvigalka</kbd><span "
-#~ "class=\"kbd--plus\">+</span><kbd>smerna tipka</kbd>"
+#~ "<kbd>Krmilka</kbd><span class=\"kbd--plus\">+</span><kbd>dvigalka</kbd><span"
+#~ " class=\"kbd--plus\">+</span><kbd>smerna tipka</kbd>"
 
 #~ msgid ""
-#~ "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</kbd><span class="
-#~ "\"kbd--plus\">+</span><kbd>Page Up</kbd>"
+#~ "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</kbd><span "
+#~ "class=\"kbd--plus\">+</span><kbd>Page Up</kbd>"
 #~ msgstr ""
-#~ "<kbd>Dvigalka</kbd><span class=\"kbd--plus\">+</span><kbd>krmilka</kbd><span "
-#~ "class=\"kbd--plus\">+</span><kbd>prejšnja stran</kbd>"
+#~ "<kbd>Dvigalka</kbd><span class=\"kbd--plus\">+</span><kbd>krmilka</kbd><span"
+#~ " class=\"kbd--plus\">+</span><kbd>prejšnja stran</kbd>"
 
 #~ msgid ""
-#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-#~ "\"kbd--plus\">+</span><kbd>1</kbd>"
-#~ msgstr ""
-#~ "<kbd>Krmilka</kbd><span class=\"kbd--plus\">+</span><kbd>dvigalka</kbd><span "
+#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
 #~ "class=\"kbd--plus\">+</span><kbd>1</kbd>"
+#~ msgstr ""
+#~ "<kbd>Krmilka</kbd><span class=\"kbd--plus\">+</span><kbd>dvigalka</kbd><span"
+#~ " class=\"kbd--plus\">+</span><kbd>1</kbd>"
 
 #~ msgid ""
-#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-#~ "\"kbd--plus\">+</span><kbd>2</kbd>"
-#~ msgstr ""
-#~ "<kbd>Krmilka</kbd><span class=\"kbd--plus\">+</span><kbd>dvigalka</kbd><span "
+#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
 #~ "class=\"kbd--plus\">+</span><kbd>2</kbd>"
+#~ msgstr ""
+#~ "<kbd>Krmilka</kbd><span class=\"kbd--plus\">+</span><kbd>dvigalka</kbd><span"
+#~ " class=\"kbd--plus\">+</span><kbd>2</kbd>"
 
 #~ msgid ""
-#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-#~ "\"kbd--plus\">+</span><kbd>3</kbd>"
-#~ msgstr ""
-#~ "<kbd>Krmilka</kbd><span class=\"kbd--plus\">+</span><kbd>dvigalka</kbd><span "
+#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
 #~ "class=\"kbd--plus\">+</span><kbd>3</kbd>"
+#~ msgstr ""
+#~ "<kbd>Krmilka</kbd><span class=\"kbd--plus\">+</span><kbd>dvigalka</kbd><span"
+#~ " class=\"kbd--plus\">+</span><kbd>3</kbd>"
 
 #~ msgid ""
-#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-#~ "\"kbd--plus\">+</span><kbd>4</kbd>"
-#~ msgstr ""
-#~ "<kbd>Krmilka</kbd><span class=\"kbd--plus\">+</span><kbd>dvigalka</kbd><span "
+#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
 #~ "class=\"kbd--plus\">+</span><kbd>4</kbd>"
+#~ msgstr ""
+#~ "<kbd>Krmilka</kbd><span class=\"kbd--plus\">+</span><kbd>dvigalka</kbd><span"
+#~ " class=\"kbd--plus\">+</span><kbd>4</kbd>"
 
 #~ msgid ""
-#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-#~ "\"kbd--plus\">+</span><kbd>5</kbd>"
-#~ msgstr ""
-#~ "<kbd>Krmilka</kbd><span class=\"kbd--plus\">+</span><kbd>dvigalka</kbd><span "
+#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
 #~ "class=\"kbd--plus\">+</span><kbd>5</kbd>"
+#~ msgstr ""
+#~ "<kbd>Krmilka</kbd><span class=\"kbd--plus\">+</span><kbd>dvigalka</kbd><span"
+#~ " class=\"kbd--plus\">+</span><kbd>5</kbd>"
 
 #~ msgid ""
-#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-#~ "\"kbd--plus\">+</span><kbd>6</kbd>"
-#~ msgstr ""
-#~ "<kbd>Krmilka</kbd><span class=\"kbd--plus\">+</span><kbd>dvigalka</kbd><span "
+#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
 #~ "class=\"kbd--plus\">+</span><kbd>6</kbd>"
+#~ msgstr ""
+#~ "<kbd>Krmilka</kbd><span class=\"kbd--plus\">+</span><kbd>dvigalka</kbd><span"
+#~ " class=\"kbd--plus\">+</span><kbd>6</kbd>"
 
 #~ msgid ""
 #~ "<span class=\"def\">The menu bar:</span> The main menu is placed on the top "
-#~ "and includes many options, commands for printing, editing, viewing and other "
-#~ "advanced commands. You can hide the menu bar clicking on the <span class"
-#~ "=\"w2ui-icon fold icon-size\"></span> icon on the far right. Click on the "
-#~ "<span class=\"w2ui-icon unfold icon-size\"></span> icon to show the menu."
+#~ "and includes many options, commands for printing, editing, viewing and other"
+#~ " advanced commands. You can hide the menu bar clicking on the <span "
+#~ "class=\"w2ui-icon fold icon-size\"></span> icon on the far right. Click on "
+#~ "the <span class=\"w2ui-icon unfold icon-size\"></span> icon to show the "
+#~ "menu."
 #~ msgstr ""
-#~ "<span class=\"def\">Menijska vrstica:</span>Glavni meni se nahaja na vrhu in "
-#~ "vsebuje številne možnosti, ukaze za tiskanje, urejanje, ogledovanje in druge "
-#~ "napredne ukaze. Menijsko vrstico lahko skrijete s klikom ikone <span class"
-#~ "=\"w2ui-icon fold icon-size\"></span> na skrajni desni. Kliknite ikono <span "
-#~ "class=\"w2ui-icon unfold icon-size\"></span>, da prikažete meni."
+#~ "<span class=\"def\">Menijska vrstica:</span>Glavni meni se nahaja na vrhu in"
+#~ " vsebuje številne možnosti, ukaze za tiskanje, urejanje, ogledovanje in "
+#~ "druge napredne ukaze. Menijsko vrstico lahko skrijete s klikom ikone <span "
+#~ "class=\"w2ui-icon fold icon-size\"></span> na skrajni desni. Kliknite ikono "
+#~ "<span class=\"w2ui-icon unfold icon-size\"></span>, da prikažete meni."
 
 #~ msgid ""
 #~ "<span class=\"def\">The information bar:</span> At the right of the search "
@@ -3821,29 +3929,30 @@ msgstr "Nastavite lastnosti elementa predmeta."
 #~ "odvisne od narave dokumenta."
 
 #~ msgid ""
-#~ "Click on the clone formatting icon <img class=\"icon-size\" alt=\"\" src="
-#~ "\"images/lc_formatpaintbrush.svg\" />. The mouse pointer turns to a paint "
-#~ "bucket."
+#~ "Click on the clone formatting icon <img class=\"icon-size\" alt=\"\" "
+#~ "src=\"images/lc_formatpaintbrush.svg\" />. The mouse pointer turns to a "
+#~ "paint bucket."
 #~ msgstr ""
-#~ "Kliknite ikono kloniranja oblikovanja <img class=\"icon-size\" alt=\"\" src="
-#~ "\"images/lc_formatpaintbrush.svg\" />. Kazalec miške se spremeni v vedro "
-#~ "barve."
+#~ "Kliknite ikono kloniranja oblikovanja <img class=\"icon-size\" alt=\"\" "
+#~ "src=\"images/lc_formatpaintbrush.svg\" />. Kazalec miške se spremeni v vedro"
+#~ " barve."
 
 #~ msgid ""
 #~ "<span class=\"def\">The menu bar:</span> The main menu is placed on the top "
-#~ "and includes many options, commands for printing, editing, viewing and other "
-#~ "advanced commands. You can hide the menu bar clicking on the <span style="
-#~ "\"height:0.6cm;width:0.6cm; margin: 0px;\" class=\"w2ui-icon fold\"></span> "
-#~ "icon on the far right. Click on the <span style=\"height:0.6cm;width:0.6cm; "
-#~ "margin: 0px;\" class=\"w2ui-icon unfold\"></span> icon to show the menu."
+#~ "and includes many options, commands for printing, editing, viewing and other"
+#~ " advanced commands. You can hide the menu bar clicking on the <span "
+#~ "style=\"height:0.6cm;width:0.6cm; margin: 0px;\" class=\"w2ui-icon "
+#~ "fold\"></span> icon on the far right. Click on the <span "
+#~ "style=\"height:0.6cm;width:0.6cm; margin: 0px;\" class=\"w2ui-icon "
+#~ "unfold\"></span> icon to show the menu."
 #~ msgstr ""
 #~ "<span class=\"def\">Menijska vrstica:</span> glavni meni je postavljen na "
 #~ "vrh in vključuje številne možnosti, kot so ukazi za tiskanje, urejanje, "
 #~ "ogledovanje in druge napredne ukaze. Menijsko vrstico lahko skrijete s "
-#~ "klikom ikone <span style=\"height:0.6cm;width:0.6cm; margin: 0px;\" class"
-#~ "=\"w2ui-icon fold\"></span> na skrajni desni. Kliknite ikono <span style="
-#~ "\"height:0.6cm;width:0.6cm; margin: 0px;\" class=\"w2ui-icon unfold\"></"
-#~ "span>, da prikažete meni."
+#~ "klikom ikone <span style=\"height:0.6cm;width:0.6cm; margin: 0px;\" "
+#~ "class=\"w2ui-icon fold\"></span> na skrajni desni. Kliknite ikono <span "
+#~ "style=\"height:0.6cm;width:0.6cm; margin: 0px;\" class=\"w2ui-icon "
+#~ "unfold\"></span>, da prikažete meni."
 
 #~ msgid "General"
 #~ msgstr "Splošno"
@@ -3852,28 +3961,28 @@ msgstr "Nastavite lastnosti elementa predmeta."
 #~ msgstr "Krmilka</kbd><span class=\"kbd--plus\">+</span><kbd>E"
 
 #~ msgid ""
-#~ "Click on the submenu (<img style=\"height:0.6cm;width:0.6cm;\" alt=\"\" src="
-#~ "\"images/lc_more.svg\">) icon to reply, move and delete comments."
+#~ "Click on the submenu (<img style=\"height:0.6cm;width:0.6cm;\" alt=\"\" "
+#~ "src=\"images/lc_more.svg\">) icon to reply, move and delete comments."
 #~ msgstr ""
-#~ "Kliknite ikono (<img style=\"height:0.6cm;width:0.6cm;\" alt=\"\" src=\""
-#~ "images/lc_more.svg\">) podmenija za odgovarjanje, premikanje in brisanje "
-#~ "komentarjev."
+#~ "Kliknite ikono (<img style=\"height:0.6cm;width:0.6cm;\" alt=\"\" "
+#~ "src=\"images/lc_more.svg\">) podmenija za odgovarjanje, premikanje in "
+#~ "brisanje komentarjev."
 
 #~ msgid ""
-#~ "Either choose <span class=\"ui\">Slide Show</span> → <span class=\"ui\">Full "
-#~ "Screen Presentation</span> or click on the left-most icon in the bottom of "
-#~ "the slide panel: <img style=\"height:0.6cm;width:0.6cm;\" alt=\"\" src=\""
-#~ "images/lc_dia.svg\">"
-#~ msgstr ""
-#~ "Izberite <span class=\"ui\">Projekcija</span> → <span class=\"ui\">"
-#~ "Celozaslonska predstavitev</span> ali pa kliknite ikono na skrajni levi na "
-#~ "dnu podokna prosojnice: <img style=\"height:0.6cm;width:0.6cm;\" alt=\"\" "
+#~ "Either choose <span class=\"ui\">Slide Show</span> → <span class=\"ui\">Full"
+#~ " Screen Presentation</span> or click on the left-most icon in the bottom of "
+#~ "the slide panel: <img style=\"height:0.6cm;width:0.6cm;\" alt=\"\" "
 #~ "src=\"images/lc_dia.svg\">"
+#~ msgstr ""
+#~ "Izberite <span class=\"ui\">Projekcija</span> → <span "
+#~ "class=\"ui\">Celozaslonska predstavitev</span> ali pa kliknite ikono na "
+#~ "skrajni levi na dnu podokna prosojnice: <img "
+#~ "style=\"height:0.6cm;width:0.6cm;\" alt=\"\" src=\"images/lc_dia.svg\">"
 
 #, fuzzy
 #~ msgid ""
-#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-#~ "\"kbd--plus\">+</span>B"
+#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
+#~ "class=\"kbd--plus\">+</span>B"
 #~ msgstr ""
 #~ "Krmilka</kbd><span class=\"kbd--plus\">+</span><kbd>dvigalka</kbd><span "
 #~ "class=\"kbd--plus\">+</span><kbd>B"
@@ -3904,8 +4013,8 @@ msgstr "Nastavite lastnosti elementa predmeta."
 
 #, fuzzy
 #~ msgid ""
-#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-#~ "\"kbd--plus\">+</span>Arrow Down"
+#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
+#~ "class=\"kbd--plus\">+</span>Arrow Down"
 #~ msgstr ""
 #~ "Krmilka</kbd><span class=\"kbd--plus\">+</span><kbd>dvigalka</kbd><span "
 #~ "class=\"kbd--plus\">+</span><kbd>smerna tipka navzdol"
@@ -3914,5 +4023,9 @@ msgstr "Nastavite lastnosti elementa predmeta."
 #~ msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span>Enter"
 #~ msgstr "Krmilka</kbd><span class=\"kbd--plus\">+</span><kbd>vnašalka"
 
-#~ msgid "In addition it can provide viewing for Visio, Keynote, Numbers, and Pages formats."
-#~ msgstr "Poleg tega ponuja ogled dokumentov v zapisih Visio, Keynote, Numbers in Pages."
+#~ msgid ""
+#~ "In addition it can provide viewing for Visio, Keynote, Numbers, and Pages "
+#~ "formats."
+#~ msgstr ""
+#~ "Poleg tega ponuja ogled dokumentov v zapisih Visio, Keynote, Numbers in "
+#~ "Pages."
