@@ -244,7 +244,6 @@ class TableStylesService {
 				row: i++,
 				text: element.UIName,
 				image: this.generateIcon(element),
-				hue: 'table-stl-' + i + '-primary', // adds class
 				width: 35,
 				height: 35,
 				selected: selected,

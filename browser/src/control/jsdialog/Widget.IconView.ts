@@ -46,10 +46,6 @@ function _createEntryImage(
 	else if (entryData.text) img.title = entryData.text;
 	else img.title = '';
 
-	if (entryData.hue) {
-		window.L.DomUtil.addClass(img, entryData.hue);
-	}
-
 	setupSize(entryData, img);
 }
 
