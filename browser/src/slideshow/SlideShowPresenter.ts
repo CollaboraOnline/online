@@ -1248,7 +1248,7 @@ class SlideShowPresenter {
 		this._map.uiManager.showInfoModal(
 			'allslidehidden-modal',
 			_('Empty Slide Show'),
-			'All slides are hidden!',
+			_('All slides are hidden!'),
 			'',
 			_('OK'),
 			() => {

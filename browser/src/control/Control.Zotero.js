@@ -1525,7 +1525,7 @@ window.L.Control.Zotero = window.L.Control.extend({
 		}
 		this.map.sendUnoCommand(command, parametes, true);
 		this.resetCitation();
-		this.map.uiManager.showSnackbar('Unlinked citations');
+		this.map.uiManager.showSnackbar(_('Unlinked citations'));
 	},
 
 	unlinkCitations: function() {
