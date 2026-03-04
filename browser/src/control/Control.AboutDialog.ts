@@ -424,7 +424,7 @@ class AboutDialog {
 	private contentHasBeenCopiedShowSnackbar() {
 		const timeout = 1000;
 		this.map.uiManager.showSnackbar(
-			'Version information has been copied',
+			_('Version information has been copied'),
 			null,
 			null,
 			timeout,

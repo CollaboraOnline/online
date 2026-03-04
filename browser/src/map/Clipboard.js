@@ -1466,7 +1466,7 @@ window.L.Clipboard = window.L.Class.extend({
 		else {
 			const ctrlText = app.util.replaceCtrlAltInMac('Ctrl');
 			const p = document.createElement('p');
-			p.textContent = 'Your browser has very limited access to the clipboard, so use these keyboard shortcuts:';
+			p.textContent = _('Your browser has very limited access to the clipboard, so use these keyboard shortcuts:');
 			innerDiv.appendChild(p);
 
 			const table = document.createElement('table');
@@ -1500,7 +1500,7 @@ window.L.Clipboard = window.L.Class.extend({
 			table.appendChild(row);
 			for (let i = 0; i < 3; i++) {
 				const cell = document.createElement('td');
-				cell.textContent = i === 0 ? 'Copy': (i === 1 ? 'Cut': 'Paste');
+				cell.textContent = i === 0 ? _('Copy'): (i === 1 ? _('Cut'): _('Paste'));
 				row.appendChild(cell);
 			}
 		}
