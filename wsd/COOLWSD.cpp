@@ -149,7 +149,14 @@ std::map<std::string, int> OutstandingForks;
 std::map<std::string, std::chrono::steady_clock::time_point> LastForkRequestTimes;
 using SubForKitMap = std::map<std::string, std::shared_ptr<ForKitProcess>>;
 SubForKitMap SubForKitProcs;
-std::map<std::string, std::chrono::steady_clock::time_point> LastSubForKitBrokerExitTimes;
+struct SubForKitActivity
+{
+    // When a document was last closed for this configId.
+    std::chrono::steady_clock::time_point lastDocClosed;
+    // When a spare child was last consumed (i.e. a new document opened).
+    std::chrono::steady_clock::time_point lastSpareConsumed;
+};
+std::map<std::string, SubForKitActivity> SubForKitActivityTimes;
 Poco::AutoPtr<Poco::Util::XMLConfiguration> KitXmlConfig;
 std::string LoggableConfigEntries;
 
@@ -412,7 +419,7 @@ SubForKitMap::iterator dropSubForKit(SubForKitMap::iterator it)
     // copy as it will be used after erase()
     std::string configId = it->first;
 
-    LastSubForKitBrokerExitTimes.erase(configId);
+    SubForKitActivityTimes.erase(configId);
     OutstandingForks.erase(configId);
     it = SubForKitProcs.erase(it);
     UNITWSD_CALL(killSubForKit(configId));
@@ -421,6 +428,10 @@ SubForKitMap::iterator dropSubForKit(SubForKitMap::iterator it)
 }
 
 }
+
+#if !MOBILEAPP
+static void rebalanceChildren(const std::string& configId, int64_t balance);
+#endif
 
 /// Remove dead and idle DocBrokers.
 /// The client of idle document should've greyed-out long ago.
@@ -444,7 +455,7 @@ void COOLWSD::cleanupDocBrokers()
         // Remove only when not alive.
         if (!docBroker->isAlive())
         {
-            LastSubForKitBrokerExitTimes[docBroker->getConfigId()] = now;
+            SubForKitActivityTimes[docBroker->getConfigId()].lastDocClosed = now;
             LOG_INF("Removing DocumentBroker for docKey ["
                     << it->first << "], " << docBroker.use_count() << " references");
             docBroker->dispose();
@@ -468,6 +479,7 @@ void COOLWSD::cleanupDocBrokers()
                     }
                 });
 
+#if !MOBILEAPP
         CONFIG_STATIC const std::chrono::seconds IdleServerSettingsTimeoutSecs =
             ConfigUtil::getConfigValue<std::chrono::seconds>("serverside_config.idle_timeout_secs",
                                                              3600);
@@ -494,11 +506,21 @@ void COOLWSD::cleanupDocBrokers()
             if (configId.empty()) {
                 // ignore primordial forkit
             } else if (activeConfigs.contains(configId)) {
-                LOG_DBG("subforkit " << configId << " has active document, keep it");
+                auto idleDuration = now - SubForKitActivityTimes[configId].lastSpareConsumed;
+                if (idleDuration >= IdleServerSettingsTimeoutSecs)
+                {
+                    LOG_DBG("subforkit " << configId << " has active document but no recent new documents, reducing spares");
+                    std::unique_lock<std::mutex> lock(NewChildrenMutex);
+                    rebalanceChildren(configId, 1);
+                }
+                else
+                {
+                    LOG_DBG("subforkit " << configId << " has active document, keep it");
+                }
             } else if (OutstandingForks[configId] > 0) {
                 LOG_DBG("subforkit " << configId << " has a pending fork underway, keep it");
             } else {
-                auto idleDuration = now - LastSubForKitBrokerExitTimes[configId];
+                auto idleDuration = now - SubForKitActivityTimes[configId].lastDocClosed;
                 idleCandidates.emplace_back(idleDuration, configId);
             }
         }
@@ -529,6 +551,7 @@ void COOLWSD::cleanupDocBrokers()
                 ++recentlyUsedKept;
             }
         }
+#endif // !MOBILEAPP
 
 #if !MOBILEAPP && ENABLE_DEBUG
         if (COOLWSD::SingleKit && DocBrokers.empty())
@@ -591,11 +614,10 @@ bool COOLWSD::ensureSubForKit(const std::string& configId)
 }
 
 /// Cleans up dead children.
-/// Returns true if removed at least one.
-static bool cleanupChildren()
+static void cleanupChildren()
 {
     if (Util::isKitInProcess())
-        return 0;
+        return;
 
     Util::assertIsLocked(NewChildrenMutex);
 
@@ -612,14 +634,15 @@ static bool cleanupChildren()
     if (static_cast<int>(NewChildren.size()) != count)
         SigUtil::addActivity("removed " + std::to_string(count - NewChildren.size()) +
                              " children");
-
-    return static_cast<int>(NewChildren.size()) != count;
 }
 
 /// Decides how many children need spawning and spawns.
 static void rebalanceChildren(const std::string& configId, int64_t balance)
 {
     Util::assertIsLocked(NewChildrenMutex);
+
+    // Remove dead children first so the available count is accurate.
+    cleanupChildren();
 
     int64_t available = 0;
     for (const auto& elem : NewChildren)
@@ -630,9 +653,6 @@ static void rebalanceChildren(const std::string& configId, int64_t balance)
 
     LOG_TRC("Rebalance children to " << balance << ", have " << available << " and "
                                      << OutstandingForks[configId] << " outstanding requests");
-
-    // Do the cleanup first.
-    const bool rebalance = cleanupChildren();
 
     const auto duration = (std::chrono::steady_clock::now() - LastForkRequestTimes[configId]);
     const auto durationMs = std::chrono::duration_cast<std::chrono::milliseconds>(duration);
@@ -646,17 +666,48 @@ static void rebalanceChildren(const std::string& configId, int64_t balance)
         OutstandingForks[configId] = 0;
     }
 
-    balance -= available;
-    balance -= OutstandingForks[configId];
+    if (OutstandingForks[configId] != 0)
+    {
+        LOG_DBG("prespawnChildren ["
+                << configId << "]: Have " << OutstandingForks[configId]
+                << " outstanding fork requests. Time since last request: " << durationMs);
+        return;
+    }
 
-    if (balance > 0 && (rebalance || OutstandingForks[configId] == 0))
+    balance -= available;
+
+    if (balance > 0)
     {
         LOG_DBG("prespawnChildren ["
                 << configId << "]: Have " << available << " spare "
-                << (available == 1 ? "child" : "children") << ", and " << OutstandingForks[configId]
-                << " outstanding (total: " << NewChildren.size() << "), forking " << balance
+                << (available == 1 ? "child" : "children")
+                << " (total: " << NewChildren.size() << "), forking " << balance
                 << " more. Time since last request: " << durationMs);
         forkChildren(configId, balance);
+    }
+    else if (balance < 0)
+    {
+        const int64_t excess = -balance;
+        LOG_DBG("prespawnChildren ["
+                << configId << "]: Have " << available << " spare "
+                << (available == 1 ? "child" : "children")
+                << " (total: " << NewChildren.size() << "), removing " << excess);
+        int64_t removed = 0;
+        for (auto it = NewChildren.begin(); it != NewChildren.end() && removed < excess; )
+        {
+            if ((*it)->getConfigId() == configId)
+            {
+                (*it)->close();
+                it = NewChildren.erase(it);
+                ++removed;
+            }
+            else
+            {
+                ++it;
+            }
+        }
+
+        UNITWSD_CALL(sparesReduced(configId, excess));
     }
 }
 
@@ -1000,6 +1051,7 @@ std::shared_ptr<ChildProcess> getNewChild_Blocks(const std::shared_ptr<SocketPol
         LOG_TRC("NewChildrenCV wait successful");
         std::shared_ptr<ChildProcess> child = NewChildren.back();
         NewChildren.pop_back();
+        SubForKitActivityTimes[configId].lastSpareConsumed = std::chrono::steady_clock::now();
         const size_t available = NewChildren.size();
 
         // Release early before moving sockets.

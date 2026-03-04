@@ -478,6 +478,9 @@ public:
     /// When a new child kit process reports
     virtual void newChild(const std::shared_ptr<ChildProcess>& /*child*/) {}
 
+    /// When spare children are reduced for a configId
+    virtual void sparesReduced(const std::string& /*configId*/, int64_t /*excess*/) {}
+
     /// When a new subforkit process reports
     virtual void newSubForKit(const std::shared_ptr<ForKitProcess>& /*subforkit*/, const std::string& /*configId*/) {}
 
