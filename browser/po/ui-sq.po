@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-03-03 09:42+0100\n"
-"PO-Revision-Date: 2025-11-19 08:51+0000\n"
+"PO-Revision-Date: 2026-03-03 14:39+0000\n"
 "Last-Translator: Besnik Bleta <besnik@programeshqip.org>\n"
-"Language-Team: Albanian <https://hosted.weblate.org/projects/"
-"collabora-online/ui/sq/>\n"
-"Language: \n"
+"Language-Team: Albanian <https://hosted.weblate.org/projects/collabora-"
+"online/ui/sq/>\n"
+"Language: sq\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.15-dev\n"
+"X-Generator: Weblate 5.17-dev\n"
 
 #: admin/admin.strings.js:15
 msgid "Admin console"
@@ -406,7 +406,7 @@ msgstr "AD Nënshkrimi"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:339
 msgid "In-document Screen Reader"
-msgstr ""
+msgstr "Lexues Ekrani Brenda Dokumenti"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:340
 #: src/control/Control.Menubar.ts:175 src/control/Control.Menubar.ts:500
@@ -476,9 +476,8 @@ msgid "Show Grid"
 msgstr "Shfaq Rrjetë"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:357
-#, fuzzy
 msgid "Snap to grid"
-msgstr "Madhësi sa rrjeta"
+msgstr ""
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:358
 #: admin/src/integrator/AdminIntegratorSettings.ts:364
@@ -490,9 +489,8 @@ msgid "Synchronize axes"
 msgstr "Njëkohëso boshtet"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:360
-#, fuzzy
 msgid "Snap grid"
-msgstr "Madhësi sa rrjeta"
+msgstr ""
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:361
 msgid "Empty Pages"
@@ -596,7 +594,7 @@ msgstr ""
 #: admin/src/integrator/AdminIntegratorSettings.ts:381
 #: src/control/Control.NavigatorPanel.ts:208
 msgid "Outline"
-msgstr ""
+msgstr "Përvijim"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:382
 msgid "Handout horizontal"
@@ -1073,23 +1071,23 @@ msgstr "U ruajt"
 
 #: src/canvas/sections/CompareChangesLabelSection.ts:118
 msgid "Last edited by %1 on %2"
-msgstr ""
+msgstr "Përpunuar së fundi nga %1 më %2"
 
 #: src/canvas/sections/CompareChangesLabelSection.ts:181
 msgid "%1: Initial Version"
-msgstr ""
+msgstr "%1: Versioni Fillestar"
 
 #: src/canvas/sections/CompareChangesLabelSection.ts:185
 msgid "%1: Current Version"
-msgstr ""
+msgstr "%1: Versioni i Tanishëm"
 
 #: src/canvas/sections/CompareChangesLabelSection.ts:194
 msgid "Initial Version"
-msgstr ""
+msgstr "Versioni Fillestar"
 
 #: src/canvas/sections/CompareChangesLabelSection.ts:198
 msgid "Current Version"
-msgstr ""
+msgstr "Versioni i Tanishëm"
 
 #: src/canvas/sections/ShapeHandlesSection.ts:478
 msgid "Document contains unsupported media"
@@ -1120,13 +1118,12 @@ msgid "This version of {productname} is powered by"
 msgstr "Ky version i {productname} bazohet në"
 
 #: src/control/Control.AboutDialog.ts:190
-#, fuzzy
 msgid "Served by: "
-msgstr "Shërbyer nga:"
+msgstr "Shërbyer nga: "
 
 #: src/control/Control.AboutDialog.ts:213
 msgid "View widgets"
-msgstr ""
+msgstr "Shihni widget-e"
 
 #: src/control/Control.AboutDialog.ts:248
 msgid "\"Slow Proxy\""
@@ -1210,7 +1207,7 @@ msgstr ""
 #: src/control/Control.BackstageView.ts:223
 #: src/control/Control.BackstageView.ts:224
 msgid "Back to document"
-msgstr ""
+msgstr "Mbrapsht te dokumenti"
 
 #: src/control/Control.BackstageView.ts:272
 #: src/control/Control.BackstageView.ts:406
@@ -1249,7 +1246,7 @@ msgstr "Ndajeni me të tjerët"
 
 #: src/control/Control.BackstageView.ts:304
 msgid "Info"
-msgstr ""
+msgstr "Hollësi"
 
 #: src/control/Control.BackstageView.ts:320
 #: src/control/Control.NotebookbarCalc.js:165
@@ -1263,7 +1260,7 @@ msgstr "Ruaje Si"
 
 #: src/control/Control.BackstageView.ts:336
 msgid "Export"
-msgstr ""
+msgstr "Eksportoni"
 
 #: src/control/Control.BackstageView.ts:350 src/control/Control.Menubar.ts:123
 #: src/control/Control.Menubar.ts:460 src/control/Control.Menubar.ts:631
@@ -1278,12 +1275,12 @@ msgstr "Mundësi"
 
 #: src/control/Control.BackstageView.ts:407
 msgid "Start a new document from one of the following templates."
-msgstr ""
+msgstr "Filloni një dokument të ri që nga një prej gjedheve."
 
 #: src/control/Control.BackstageView.ts:450
 #: src/control/Control.BackstageView.ts:453
 msgid "More Templates"
-msgstr ""
+msgstr "Më Tepër Gjedhe"
 
 #: src/control/Control.BackstageView.ts:479
 #: src/control/jsdialog/Widget.ColorPicker.ts:426
@@ -1292,31 +1289,31 @@ msgstr "Së fundi"
 
 #: src/control/Control.BackstageView.ts:511
 msgid "Recently opened documents will appear here"
-msgstr ""
+msgstr "Këtu do të shfaqen dokumente të hapur së fundi"
 
 #: src/control/Control.BackstageView.ts:550
 msgid "Name"
-msgstr ""
+msgstr "Emër"
 
 #: src/control/Control.BackstageView.ts:556
 msgid "Modified Date"
-msgstr ""
+msgstr "Datë Ndryshimi"
 
 #: src/control/Control.BackstageView.ts:779
 msgid "Document Info"
-msgstr ""
+msgstr "Hollësi Dokumenti"
 
 #: src/control/Control.BackstageView.ts:780
 msgid "View document properties and information"
-msgstr ""
+msgstr "Shihni veti dhe hollësi dokumenti"
 
 #: src/control/Control.BackstageView.ts:796
 msgid "Export Document"
-msgstr ""
+msgstr "Eksportoni Dokument"
 
 #: src/control/Control.BackstageView.ts:797
 msgid "export your documents in different formats"
-msgstr ""
+msgstr "eksportoni dokumentet tuaj në formate të ndryshëm"
 
 #: src/control/Control.BackstageView.ts:849 src/control/Control.Menubar.ts:385
 #: src/control/Control.Menubar.ts:1358
@@ -1330,26 +1327,25 @@ msgstr "Veti"
 
 #: src/control/Control.BackstageView.ts:855
 msgid "More Property Info"
-msgstr ""
+msgstr "MëTtepër Hollësi Vetie"
 
 #: src/control/Control.BackstageView.ts:934 templates/templates.js:50
 #: templates/templates.js:60 templates/templates.js:70
 msgid "Text Document"
-msgstr ""
+msgstr "Dokument Tekst"
 
 #: src/control/Control.BackstageView.ts:934
 #: src/control/Control.BackstageView.ts:937
-#, fuzzy
 msgid "Pages"
 msgstr "Faqe"
 
 #: src/control/Control.BackstageView.ts:935
 msgid "Spreadsheet"
-msgstr ""
+msgstr "Fletëllogaritje"
 
 #: src/control/Control.BackstageView.ts:935
 msgid "Sheets"
-msgstr ""
+msgstr "Fletë"
 
 #: src/control/Control.BackstageView.ts:936
 #: src/control/Control.NavigatorPanel.ts:187
@@ -1360,7 +1356,7 @@ msgstr "Diapozitiva"
 
 #: src/control/Control.BackstageView.ts:942
 msgid "Parts"
-msgstr ""
+msgstr "Pjesë"
 
 #: src/control/Control.BackstageView.ts:946
 #: src/control/Control.DocumentRepair.js:140
@@ -1369,44 +1365,43 @@ msgstr "Shtypje"
 
 #: src/control/Control.BackstageView.ts:952
 msgid "Mode"
-msgstr ""
+msgstr "Mënyrë"
 
 #: src/control/Control.BackstageView.ts:953
 msgid "View Only"
-msgstr ""
+msgstr "Vetëm Parje"
 
 #: src/control/Control.BackstageView.ts:960
 msgid "File Name"
-msgstr ""
+msgstr "Emër Kartele"
 
 #: src/control/Control.BackstageView.ts:1065
 msgid "Loading templates…"
-msgstr ""
+msgstr "Po ngarkohen gjedhe…"
 
 #: src/control/Control.BackstageView.ts:1111
 msgid "Search templates"
-msgstr ""
+msgstr "Kërkoni për gjedhe"
 
 #: src/control/Control.BackstageView.ts:1179
 msgid "No templates match your search."
-msgstr ""
+msgstr "S’ka gjedhe me përputhje kundrejt kërkimit tuaj."
 
 #: src/control/Control.BackstageView.ts:1285
 msgid "Blank Spreadsheet"
-msgstr ""
+msgstr "Fletëllogaritje e Zbrazët"
 
 #: src/control/Control.BackstageView.ts:1289
-#, fuzzy
 msgid "Blank Presentation"
-msgstr "Përfundojeni Paraqitjen"
+msgstr "Paraqitje e Zbrazët"
 
 #: src/control/Control.BackstageView.ts:1294
 msgid "Blank Document"
-msgstr ""
+msgstr "Dokument i Zbrazët"
 
 #: src/control/Control.BackstageView.ts:1446
 msgid "Untitled"
-msgstr ""
+msgstr "Pa titull"
 
 #: src/control/Control.Command.js:90
 msgid "Unlock"
@@ -1426,7 +1421,7 @@ msgstr "Plotësoni Seri"
 
 #: src/control/Control.DocumentNameInput.js:27
 msgid "Document name"
-msgstr ""
+msgstr "Emër dokumenti"
 
 #: src/control/Control.DocumentNameInput.js:119
 msgid "Path"
@@ -1955,11 +1950,11 @@ msgstr "Futni Koment"
 
 #: src/control/Control.JSDialogBuilder.js:1956
 msgid "Toggle dropdown"
-msgstr ""
+msgstr "Shfaq/fshih menu hapmbyll"
 
 #: src/control/Control.JSDialogBuilder.js:1958
 msgid "Dialog dropdown"
-msgstr ""
+msgstr "Menu hapmbyll dialogu"
 
 #: src/control/Control.JSDialogBuilder.js:1960
 #: src/control/Control.NotebookbarWriter.js:1596
@@ -2133,7 +2128,7 @@ msgstr "Riparoje"
 
 #: src/control/Control.Menubar.ts:143
 msgid "Compare Changes"
-msgstr ""
+msgstr "Krahasoni Ndryshime"
 
 #: src/control/Control.Menubar.ts:162 src/control/Control.Menubar.ts:483
 #: src/control/Control.Menubar.ts:489 src/control/Control.Menubar.ts:650
@@ -2148,7 +2143,7 @@ msgstr "Zeroje zoom-in"
 
 #: src/control/Control.Menubar.ts:168
 msgid "Fit to Screen"
-msgstr ""
+msgstr "Sa Ta Nxërë Ekrani"
 
 #: src/control/Control.Menubar.ts:171 src/control/Control.Menubar.ts:495
 #: src/control/Control.Menubar.ts:662 src/control/Control.Menubar.ts:807
@@ -2646,7 +2641,7 @@ msgstr "Fund Gradienti"
 
 #: src/control/Control.NavigatorPanel.ts:38
 msgid "Navigation Panel"
-msgstr ""
+msgstr "Panel Lëvizjesh"
 
 #: src/control/Control.NavigatorPanel.ts:110
 msgid "Navigation"
@@ -2725,7 +2720,7 @@ msgstr "Pas"
 
 #: src/control/Notebookbar.ImpressTransitionTab.ts:139
 msgid "Apply to All Slides"
-msgstr ""
+msgstr "Aplikoje te Krejt Diapozitivat"
 
 #: src/control/Notebookbar.WriterReferencesTab.ts:41
 msgid "Table of content"
@@ -3078,7 +3073,7 @@ msgstr "Pamje Parazgjedhje"
 
 #: src/control/Control.NotebookbarCalc.js:1434
 msgid "Open Views List"
-msgstr ""
+msgstr "Hap Listë Pamjesh"
 
 #: src/control/Control.NotebookbarCalc.js:1441
 msgid "New Sheet View"
@@ -3126,39 +3121,39 @@ msgstr "Shtyllë Gjendjesh"
 
 #: src/control/Control.NotebookbarCalc.js:1668
 msgid "Table Style Options"
-msgstr ""
+msgstr "Mundësi Stili Tabele"
 
 #: src/control/Control.NotebookbarCalc.js:1681
 msgid "Header Row"
-msgstr ""
+msgstr "Rresht Kryesh"
 
 #: src/control/Control.NotebookbarCalc.js:1693
 msgid "Total Row"
-msgstr ""
+msgstr "Rresht Gjithsej"
 
 #: src/control/Control.NotebookbarCalc.js:1711
 msgid "Banded Rows"
-msgstr ""
+msgstr "Rreshta të Bërë Tok"
 
 #: src/control/Control.NotebookbarCalc.js:1723
 msgid "Banded Columns"
-msgstr ""
+msgstr "Shtylla të Bëra Tok"
 
 #: src/control/Control.NotebookbarCalc.js:1741
 msgid "First Column"
-msgstr ""
+msgstr "Shtylla e Parë"
 
 #: src/control/Control.NotebookbarCalc.js:1753
 msgid "Last Column"
-msgstr ""
+msgstr "Shtylla e Fundit"
 
 #: src/control/Control.NotebookbarCalc.js:1768
 msgid "Filter Buttons"
-msgstr ""
+msgstr "Butona Filtri"
 
 #: src/control/Control.NotebookbarCalc.js:1784
 msgid "Table Styles"
-msgstr ""
+msgstr "Stile Tabelash"
 
 #: src/control/Control.NotebookbarCalc.js:1805
 #: src/control/Control.NotebookbarCalc.js:2553
@@ -3275,7 +3270,7 @@ msgstr "Formato Kutiza"
 #: src/control/Control.NotebookbarCalc.js:2891
 #: src/control/Control.NotebookbarImpress.js:1816
 msgid "Themes"
-msgstr ""
+msgstr "Tema"
 
 #: src/control/Control.NotebookbarCalc.js:2990
 #: src/control/Control.NotebookbarCalc.js:3347
@@ -3340,25 +3335,24 @@ msgstr "Paraqite Në Dritare"
 
 #: src/control/Control.NotebookbarImpress.js:500
 msgid "Presenter View"
-msgstr ""
+msgstr "Pamje Paraqitësi"
 
 #: src/control/Control.NotebookbarImpress.js:508
 msgid "Present to All"
-msgstr ""
+msgstr "Paraqitja të Tërëve"
 
 #: src/control/Control.NotebookbarImpress.js:516
 #: src/slideshow/SlideShowPresenter.ts:1484
 msgid "Follow Presenter"
-msgstr ""
+msgstr "Ndiq Paraqitësin"
 
 #: src/control/Control.NotebookbarImpress.js:644
 msgid "Slide Views"
 msgstr "Parje Diapozitivash"
 
 #: src/control/Control.NotebookbarImpress.js:683
-#, fuzzy
 msgid "Snap to Grid"
-msgstr "Madhësi sa rrjeta"
+msgstr ""
 
 #: src/control/Control.NotebookbarImpress.js:807
 #: src/control/Control.NotebookbarImpress.js:1837
@@ -3422,11 +3416,11 @@ msgstr "Kalo Jashtë Linje"
 
 #: src/control/Control.NotebookbarWriter.js:490
 msgid "Validate Sidebar"
-msgstr ""
+msgstr "Anështyllë Vleftësimi"
 
 #: src/control/Control.NotebookbarWriter.js:497
 msgid "Validate Dialog"
-msgstr ""
+msgstr "Dialog Vleftësimi"
 
 #: src/control/Control.NotebookbarWriter.js:940
 #: src/control/Control.Zotero.js:828
@@ -3459,7 +3453,7 @@ msgstr "Kutizë"
 
 #: src/control/Control.NotebookbarWriter.js:1664
 msgid "Page Width"
-msgstr ""
+msgstr "Gjerësi Faqeje"
 
 #: src/control/Control.NotebookbarWriter.js:2301
 msgid "Tracking"
@@ -3467,7 +3461,7 @@ msgstr "Ndjekje"
 
 #: src/control/Control.NotebookbarWriter.js:2322
 msgid "View Changes"
-msgstr ""
+msgstr "Shihni Ndryshime"
 
 #: src/control/Control.NotebookbarWriter.js:2498
 msgid "Split"
@@ -3616,7 +3610,7 @@ msgstr "Shihni sinjalizime të shërbyesit tuaj"
 
 #: src/control/Control.ServerAuditDialog.ts:397
 msgid "OPEN"
-msgstr ""
+msgstr "HAPE"
 
 #: src/control/Control.SheetsBar.js:51
 msgid "Scroll to the first sheet"
@@ -3684,15 +3678,15 @@ msgstr "Numër përzgjedhjesh"
 
 #: src/control/Control.StatusBar.js:250
 msgid "Multi Page View"
-msgstr ""
+msgstr "Pamje Me Shumë Faqe"
 
 #: src/control/Control.StatusBar.js:257
 msgid "Zoom to Fit Page Width"
-msgstr ""
+msgstr "Zmadhoje Sa Ta Nxërë Gjerësia e Faqes"
 
 #: src/control/Control.StatusBar.js:415
 msgid "The document is probably locked and has been opened as view-only"
-msgstr ""
+msgstr "Dokumenti ka gjasa të jetë i kyçur dhe është hapur si vetëm-për-parje"
 
 #: src/control/Control.StatusBar.js:424
 msgid ""
@@ -4126,16 +4120,16 @@ msgstr "Vetëm për lexim"
 
 #: src/control/PermissionMode.ts:125
 msgid "Viewing Mode"
-msgstr ""
+msgstr "Mënyrë Parjeje"
 
 #: src/control/PermissionMode.ts:131
 msgid "Editing Mode"
-msgstr ""
+msgstr "Mënyrë Përpunimi"
 
 #: src/control/PermissionMode.ts:141 src/control/PermissionMode.ts:213
 #: src/control/PermissionMode.ts:219 src/control/PermissionMode.ts:225
 msgid "Viewing"
-msgstr ""
+msgstr "Po shihet"
 
 #: src/control/jsdialog/Definitions.Menu.ts:111
 #: src/control/jsdialog/Definitions.Menu.ts:1748
@@ -4160,11 +4154,11 @@ msgstr "Maks."
 
 #: src/control/jsdialog/Definitions.Menu.ts:1443
 msgid "Edit Single Sparkline"
-msgstr ""
+msgstr "Përpunoni Grafik Vijor Njësh"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1454
 msgid "Delete Single Sparkline"
-msgstr ""
+msgstr "Fshini Grafik Vijor Njësh"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1491
 msgid "Portrait"
@@ -4216,7 +4210,7 @@ msgstr ""
 
 #: src/control/jsdialog/Definitions.Menu.ts:1513
 msgid "Tabloid"
-msgstr ""
+msgstr "Tabloid"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1514
 msgid "B6 (JIS)"
@@ -4304,7 +4298,7 @@ msgstr "Futni Multimedia lokale"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1740
 msgid "Compare Local Document"
-msgstr ""
+msgstr "Krahasoni Dokument Vendor"
 
 #: src/control/jsdialog/Definitions.Menu.ts:1746
 msgid "Very Tight"
@@ -4412,11 +4406,11 @@ msgstr "Tejet e trashë (4.50 pt)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2058
 msgid "Double Hairline (1.10 pt)"
-msgstr ""
+msgstr "Fije floku Dyshe (1.10 pt)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2067
 msgid "Double Hairline (2.35 pt)"
-msgstr ""
+msgstr "Fije floku Dyshe (2.35 pt)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2076
 msgid "Thin/Medium (3.00 pt)"
@@ -4424,11 +4418,11 @@ msgstr "E hollë/Mesatare (3.00 pt)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2085
 msgid "Medium/Hairline (3.05 pt)"
-msgstr ""
+msgstr "Mesatare/Fije floku (3.05 pt)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2094
 msgid "Medium/Medium (4.50 pt)"
-msgstr ""
+msgstr "Mesatare/Mesatare (4.50 pt)"
 
 #: src/control/jsdialog/Definitions.Menu.ts:2154
 msgid "Standard (4:3)"
@@ -4541,11 +4535,11 @@ msgstr "I vetvetishëm"
 
 #: src/control/jsdialog/Widget.ColorPicker.ts:267
 msgid "Color palette"
-msgstr ""
+msgstr "Paletë ngjyrash"
 
 #: src/control/jsdialog/Widget.ColorPicker.ts:333
 msgid "Enter custom color in hex format"
-msgstr ""
+msgstr "Jepni ngjyrë vetjake në format gjashtëmbëdhjetësh"
 
 #: src/control/jsdialog/Widget.PageMarginEntry.ts:40
 msgid "Page margin options"
@@ -4638,7 +4632,7 @@ msgstr "Krye dhe objekte që shtoni te dokumenti do të duken këtu"
 
 #: src/control/jsdialog/Widget.TreeView.ts:1672
 msgid "Search items"
-msgstr ""
+msgstr "Kërkoni për objekte"
 
 #: src/app/Socket.ts:262
 msgid "Oops, there is a problem connecting to {productname}: "
@@ -5112,7 +5106,7 @@ msgstr "menunë Shiheni"
 
 #: src/layer/tile/CanvasTileLayer.js:461
 msgid "Online Editor"
-msgstr ""
+msgstr "Përpunues Në Internet"
 
 #: src/layer/tile/CanvasTileLayer.js:1459
 msgid "Functions"
@@ -5229,7 +5223,7 @@ msgstr "Ngarkim i kartelës te shërbyesi dështoi me gjendjen: {0}"
 
 #: src/map/handler/Map.FileInserter.js:281
 msgid "Failed to read the selected file."
-msgstr ""
+msgstr "S’u arrit të lexohej kartela e përzgjedhur."
 
 #: src/map/handler/Map.Print.js:44
 msgid "Print dialog"
@@ -5311,7 +5305,7 @@ msgstr "Po krijohet kartelë e re prej gjedheje…"
 
 #: src/map/handler/Map.WOPI.js:232
 msgid "Compare Document..."
-msgstr ""
+msgstr "Krahasoni Dokument…"
 
 #: src/map/handler/Map.WOPI.js:745
 msgid "File name should contain an extension."
@@ -5340,7 +5334,7 @@ msgstr "Diapozitivi Pasues"
 #: src/slideshow/PresenterConsole.js:35
 #: src/slideshow/SlideShowPresenter.ts:871
 msgid "Exchange"
-msgstr ""
+msgstr "Shkëmbim"
 
 #: src/slideshow/PresenterConsole.js:36
 msgid "Pause"
@@ -5356,7 +5350,7 @@ msgstr "Rimerre"
 
 #: src/slideshow/PresenterConsole.js:39
 msgid "Present to all"
-msgstr ""
+msgstr "Paraqitja të tërëve"
 
 #: src/slideshow/PresenterConsole.js:40
 msgid "Go Back"
@@ -5393,11 +5387,11 @@ msgstr "Klikoni që të dilet nga paraqitja…"
 
 #: src/slideshow/SlideShowPresenter.ts:768
 msgid "You're on the first slide"
-msgstr ""
+msgstr "Gjendeni te diapozitivi i parë"
 
 #: src/slideshow/SlideShowPresenter.ts:776
 msgid "Waiting for presenter to advance"
-msgstr ""
+msgstr "Po pritet të përparojë paraqitësi"
 
 #: src/slideshow/SlideShowPresenter.ts:805
 msgid "End Show"
@@ -5413,37 +5407,36 @@ msgid "Enable Animations"
 msgstr "Aktivizo Animacione"
 
 #: src/slideshow/SlideShowPresenter.ts:1479
-#, fuzzy
 msgid "Stop Following"
-msgstr "Ndale ndjekjen"
+msgstr "Resht Së Ndjekuri"
 
 #: templates/templates.js:6
 msgid "Modern Business Letter (sans-serif)"
-msgstr ""
+msgstr "Letër Moderne Biznesi (sans-serif)"
 
 #: templates/templates.js:10 templates/templates.js:20
 msgid "Business Letter"
-msgstr ""
+msgstr "Letër Biznesi"
 
 #: templates/templates.js:16
 msgid "Modern Business Letter (serif)"
-msgstr ""
+msgstr "Letër Moderne Biznesi (serif)"
 
 #: templates/templates.js:26 templates/templates.js:30
 msgid "CV"
-msgstr ""
+msgstr "CV"
 
 #: templates/templates.js:36
 msgid "Resume (one-page)"
-msgstr ""
+msgstr "Rimerre (një-faqe)"
 
 #: templates/templates.js:56
 msgid "Modern Style"
-msgstr ""
+msgstr "Stil Modern"
 
 #: templates/templates.js:66
 msgid "Simple Style"
-msgstr ""
+msgstr "Stil i Thjeshtë"
 
 #: templates/templates.js:76
 msgid "Beehive"
@@ -5463,15 +5456,15 @@ msgstr ""
 
 #: templates/templates.js:116
 msgid "DNA"
-msgstr ""
+msgstr "DNA"
 
 #: templates/templates.js:126
 msgid "Focus"
-msgstr ""
+msgstr "Fokus"
 
 #: templates/templates.js:136
 msgid "Forestbird"
-msgstr ""
+msgstr "Zog pylli"
 
 #: templates/templates.js:146
 msgid "Freshes"
@@ -5479,7 +5472,7 @@ msgstr ""
 
 #: templates/templates.js:156
 msgid "Grey Elegant"
-msgstr ""
+msgstr "Gri Elegante"
 
 #: templates/templates.js:166
 msgid "Growing Liberty"
@@ -5487,43 +5480,43 @@ msgstr ""
 
 #: templates/templates.js:176
 msgid "Inspiration"
-msgstr ""
+msgstr "Frymëzim"
 
 #: templates/templates.js:186
 msgid "Lights"
-msgstr ""
+msgstr "Drita"
 
 #: templates/templates.js:196
 msgid "Metropolis"
-msgstr ""
+msgstr "Metropolis"
 
 #: templates/templates.js:206
 msgid "Midnight Blue"
-msgstr ""
+msgstr "Blu Mesnate"
 
 #: templates/templates.js:216
 msgid "Nature Illustration"
-msgstr ""
+msgstr "Ilustrim Natyrë"
 
 #: templates/templates.js:226
 msgid "Pencil"
-msgstr ""
+msgstr "Laps"
 
 #: templates/templates.js:236
 msgid "Piano"
-msgstr ""
+msgstr "Piano"
 
 #: templates/templates.js:246
 msgid "Portfolio"
-msgstr ""
+msgstr "Portofol"
 
 #: templates/templates.js:256
 msgid "Progress"
-msgstr ""
+msgstr "Ecuri"
 
 #: templates/templates.js:266
 msgid "Sunset"
-msgstr ""
+msgstr "Perëndim Dielli"
 
 #: templates/templates.js:276
 msgid "Vintage"
@@ -5531,11 +5524,11 @@ msgstr ""
 
 #: templates/templates.js:286
 msgid "Vivid"
-msgstr ""
+msgstr "E ndezur"
 
 #: templates/templates.js:296
 msgid "Yellow Idea"
-msgstr ""
+msgstr "Ide e Verdhë"
 
 #: welcome/welcome.html%2Bhtml.head.title:9-3
 msgid "Collabora Online Welcome"
