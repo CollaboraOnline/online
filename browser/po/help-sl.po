@@ -5,18 +5,18 @@ msgstr ""
 "Project-Id-Version: Collabora Online - Help\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-03-03 09:42+0200\n"
-"PO-Revision-Date: 2025-09-23 07:30+0000\n"
+"PO-Revision-Date: 2026-03-04 07:00+0000\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
-"Language-Team: Slovenian <https://hosted.weblate.org/projects/"
-"collabora-online/help/sl/>\n"
+"Language-Team: Slovenian <https://hosted.weblate.org/projects/collabora-"
+"online/help/sl/>\n"
 "Language: sl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n"
-"%100==4 ? 2 : 3;\n"
+"Plural-Forms: nplurals=4; plural=n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || "
+"n%100==4 ? 2 : 3;\n"
 "X-Accelerator-Marker: ~\n"
-"X-Generator: Translate Toolkit 3.6.0\n"
+"X-Generator: Weblate 5.17-dev\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 
 #: html/cool-help.html%2Bdiv.h1:6-5
@@ -32,33 +32,36 @@ msgid "Undo"
 msgstr "Razveljavi"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:10-69
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>Z</kbd>"
-msgstr "<kbd>Krmilka</kbd><span class=\"kbd--plus\">+</span><kbd>Z</kbd>"
+msgstr ""
+"<kbd>Krmilka</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span>"
+"<kbd>Z</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:11-38
 msgid "Redo"
 msgstr "Ponovi"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:11-69
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>Y</kbd>"
-msgstr "<kbd>Krmilka</kbd><span class=\"kbd--plus\">+</span><kbd>Y</kbd>"
+msgstr ""
+"<kbd>Krmilka</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span>"
+"<kbd>Y</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:12-38
 msgid "Cut"
 msgstr "Izreži"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:12-68
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>X</kbd>"
-msgstr "<kbd>Krmilka</kbd><span class=\"kbd--plus\">+</span><kbd>X</kbd>"
+msgstr ""
+"<kbd>Krmilka</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span>"
+"<kbd>X</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:13-38
 msgid "Copy"
