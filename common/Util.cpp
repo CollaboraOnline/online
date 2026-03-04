@@ -753,56 +753,6 @@ namespace Util
         return ApplicationPath;
     }
 
-    int safe_atoi(const char* p, int len)
-    {
-        long ret{};
-        if (!p || !len)
-        {
-            return ret;
-        }
-
-        int multiplier = 1;
-        int offset = 0;
-        while (isspace(p[offset]))
-        {
-            ++offset;
-            if (offset >= len)
-            {
-                return ret;
-            }
-        }
-
-        switch (p[offset])
-        {
-            case '-':
-                multiplier = -1;
-                ++offset;
-                break;
-            case '+':
-                ++offset;
-                break;
-        }
-        if (offset >= len)
-        {
-            return ret;
-        }
-
-        while (isdigit(p[offset]))
-        {
-            std::int64_t next = ret * 10 + (p[offset] - '0');
-            if (next >= std::numeric_limits<int>::max())
-                return multiplier * std::numeric_limits<int>::max();
-            ret = next;
-            ++offset;
-            if (offset >= len)
-            {
-                return multiplier * ret;
-            }
-        }
-
-        return multiplier * ret;
-    }
-
     void forcedExit(int code)
     {
         if (code)

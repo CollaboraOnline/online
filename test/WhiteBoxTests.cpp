@@ -65,7 +65,6 @@ class WhiteBoxTests : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST(testAnonymization);
     CPPUNIT_TEST(testStat);
     CPPUNIT_TEST(testStringCompare);
-    CPPUNIT_TEST(testSafeAtoi);
     CPPUNIT_TEST(testJsonUtilEscapeJSONValue);
     CPPUNIT_TEST(testStateEnum);
     CPPUNIT_TEST(testFindInVector);
@@ -91,7 +90,6 @@ class WhiteBoxTests : public CPPUNIT_NS::TestFixture
     void testAnonymization();
     void testStat();
     void testStringCompare();
-    void testSafeAtoi();
     void testJsonUtilEscapeJSONValue();
     void testStateEnum();
     void testFindInVector();
@@ -852,55 +850,6 @@ void WhiteBoxTests::testStringCompare()
     LOK_ASSERT(!Util::iequal("abc", "abcd"));
 
     LOK_ASSERT(!Util::iequal("abc", 3, "abcd", 4));
-}
-
-void WhiteBoxTests::testSafeAtoi()
-{
-    constexpr std::string_view testname = __func__;
-
-    {
-        std::string s("7");
-        LOK_ASSERT_EQUAL(7, Util::safe_atoi(s.data(), s.size()));
-    }
-    {
-        std::string s("+7");
-        LOK_ASSERT_EQUAL(7, Util::safe_atoi(s.data(), s.size()));
-    }
-    {
-        std::string s("-7");
-        LOK_ASSERT_EQUAL(-7, Util::safe_atoi(s.data(), s.size()));
-    }
-    {
-        std::string s("42");
-        LOK_ASSERT_EQUAL(42, Util::safe_atoi(s.data(), s.size()));
-    }
-    {
-        std::string s("42");
-        LOK_ASSERT_EQUAL(4, Util::safe_atoi(s.data(), 1));
-    }
-    {
-        std::string s("  42");
-        LOK_ASSERT_EQUAL(42, Util::safe_atoi(s.data(), s.size()));
-    }
-    {
-        std::string s("42xy");
-        LOK_ASSERT_EQUAL(42, Util::safe_atoi(s.data(), s.size()));
-    }
-    {
-        // Make sure signed integer overflow doesn't happen.
-        std::string s("9999999990");
-        // Good:       2147483647
-        // Bad:        1410065398
-        LOK_ASSERT_EQUAL(std::numeric_limits<int>::max(), Util::safe_atoi(s.data(), s.size()));
-    }
-    {
-        std::string s("123");
-        s[1] = '\0';
-        LOK_ASSERT_EQUAL(1, Util::safe_atoi(s.data(), s.size()));
-    }
-    {
-        LOK_ASSERT_EQUAL(0, Util::safe_atoi(nullptr, 0));
-    }
 }
 
 void WhiteBoxTests::testJsonUtilEscapeJSONValue()

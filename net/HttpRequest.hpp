@@ -18,6 +18,7 @@
 
 #include <common/Common.hpp>
 #include <common/Log.hpp>
+#include <common/NumUtil.hpp>
 #include <common/StateEnum.hpp>
 #include <common/StringVector.hpp>
 #include <common/Util.hpp>
@@ -1403,7 +1404,7 @@ public:
         if (portString.empty())
             return create(std::move(hostname), protocol, getDefaultPort(protocol));
 
-        const auto [port, success] = Util::i32FromString(portString);
+        const auto [port, success] = NumUtil::i32FromString(portString);
         if (success && port > 0)
             return create(std::move(hostname), protocol, port);
 
