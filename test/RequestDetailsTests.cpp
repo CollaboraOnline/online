@@ -36,6 +36,7 @@ class RequestDetailsTests : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST(testRequestDetails);
     CPPUNIT_TEST(testCoolWs);
     CPPUNIT_TEST(testAuthorization);
+    CPPUNIT_TEST(testSanitizePercent);
 
     CPPUNIT_TEST_SUITE_END();
 
@@ -46,6 +47,7 @@ class RequestDetailsTests : public CPPUNIT_NS::TestFixture
     void testRequestDetails();
     void testCoolWs();
     void testAuthorization();
+    void testSanitizePercent();
 };
 
 void RequestDetailsTests::testDownloadURI()
@@ -1342,6 +1344,37 @@ void RequestDetailsTests::testAuthorization()
         Authorization auth7(Authorization::create(URI));
         Poco::Net::HTTPRequest req;
         auth7.authorizeRequest(req);
+    }
+}
+
+void RequestDetailsTests::testSanitizePercent()
+{
+    constexpr std::string_view testname = __func__;
+
+    // sanitizeURI with file:// scheme: Uri::decode turns %25 -> %, then sanitizeLocalPath
+    // treats % as literal.
+    {
+        Poco::URI result = RequestDetails::sanitizeURI("file:///tmp/he%25llo.odt");
+        LOK_ASSERT_EQUAL(std::string("/tmp/he%llo.odt"), result.getPath());
+    }
+
+    // sanitizeURI with relative path: Uri::decode turns %2525 -> %25, then sanitizeLocalPath
+    // treats %25 as literal.
+    {
+        Poco::URI result = RequestDetails::sanitizeURI("/tmp/hello%2525world.odt");
+        LOK_ASSERT_EQUAL(std::string("/tmp/hello%25world.odt"), result.getPath());
+    }
+
+    // sanitizeLocalPath: '%' in path is always literal, never URI encoding.
+    {
+        Poco::URI result = RequestDetails::sanitizeLocalPath("/tmp/he%llo.odt");
+        LOK_ASSERT_EQUAL(std::string("/tmp/he%llo.odt"), result.getPath());
+    }
+
+    // sanitizeLocalPath: '%25' in path is literal text, not an encoded '%'.
+    {
+        Poco::URI result = RequestDetails::sanitizeLocalPath("/tmp/hello%25world.odt");
+        LOK_ASSERT_EQUAL(std::string("/tmp/hello%25world.odt"), result.getPath());
     }
 }
 
