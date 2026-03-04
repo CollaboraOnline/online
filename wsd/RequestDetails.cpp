@@ -274,13 +274,17 @@ void RequestDetails::processURI()
 
 Poco::URI RequestDetails::sanitizeURI(const std::string& uri)
 {
-    Poco::URI uriPublic((Util::isMobileApp() ? uri : Uri::decode(uri)));
+    const std::string decoded = Util::isMobileApp() ? uri : Uri::decode(uri);
 
-    if (uriPublic.isRelative() || uriPublic.getScheme() == "file")
+    // Detect local file paths before constructing Poco::URI, because a bare '%'
+    // (from the WebSocket URL decode of %25) would cause Poco::URI to throw.
+    if (decoded[0] == '/' || decoded.starts_with("file://"))
     {
-        // TODO: Validate and limit access to local paths!
-        uriPublic.normalize();
+        // Any remaining '%' after the decode is literal, not URI encoding.
+        return sanitizeLocalPath(decoded);
     }
+
+    Poco::URI uriPublic(decoded);
 
     if (uriPublic.getPath().empty())
     {
