@@ -2467,6 +2467,13 @@ bool ClientSession::handleKitToClientMessage(const std::shared_ptr<Message>& pay
                     }
                     return false;
                 }
+
+                // Handle all other load failures in convert-to mode.
+                if (_isConvertTo)
+                {
+                    abortConversion(docBroker, saveAsSocket, std::move(errorKind));
+                    return false;
+                }
             }
             else if (_isConvertTo && errorCommand == "saveas")
             {
@@ -3125,6 +3132,37 @@ ClientSession::handleOpenDocKitToClientMessage(const std::shared_ptr<Message>& p
     return std::nullopt;
 }
 
+/// Map a file extension to a document type for password-protected icons.
+static std::string getDocTypeFromExtension(const std::string& ext)
+{
+    static const std::unordered_map<std::string, std::string> extToType = {
+        // Writer
+        { "odt", "writer" }, { "fodt", "writer" }, { "doc", "writer" }, { "docx", "writer" },
+        { "docm", "writer" }, { "dot", "writer" }, { "dotx", "writer" }, { "dotm", "writer" },
+        { "rtf", "writer" }, { "txt", "writer" }, { "wpd", "writer" }, { "wps", "writer" },
+        { "sxw", "writer" }, { "stw", "writer" }, { "ott", "writer" }, { "otm", "writer" },
+        { "hwp", "writer" }, { "wri", "writer" }, { "abw", "writer" }, { "pages", "writer" },
+        // Calc
+        { "ods", "calc" }, { "fods", "calc" }, { "xls", "calc" }, { "xlsx", "calc" },
+        { "xlsm", "calc" }, { "xlsb", "calc" }, { "xla", "calc" }, { "xltx", "calc" },
+        { "xltm", "calc" }, { "csv", "calc" }, { "tsv", "calc" }, { "sxc", "calc" },
+        { "stc", "calc" }, { "ots", "calc" }, { "dbf", "calc" }, { "numbers", "calc" },
+        // Impress
+        { "odp", "impress" }, { "fodp", "impress" }, { "ppt", "impress" }, { "pptx", "impress" },
+        { "pptm", "impress" }, { "pot", "impress" }, { "potx", "impress" }, { "potm", "impress" },
+        { "ppsx", "impress" }, { "sxi", "impress" }, { "sti", "impress" }, { "otp", "impress" },
+        { "key", "impress" },
+        // Draw
+        { "odg", "draw" }, { "fodg", "draw" }, { "vsd", "draw" }, { "vss", "draw" },
+        { "pub", "draw" }, { "sxd", "draw" }, { "std", "draw" }, { "otg", "draw" },
+        { "cdr", "draw" }, { "wpg", "draw" }, { "cgm", "draw" }, { "emf", "draw" },
+        { "wmf", "draw" },
+    };
+
+    auto it = extToType.find(ext);
+    return (it != extToType.end()) ? it->second : "writer";
+}
+
 void ClientSession::abortConversion(const std::shared_ptr<DocumentBroker>& docBroker,
                                     const std::shared_ptr<StreamSocket>& saveAsSocket,
                                     std::string errorKind)
@@ -3134,9 +3172,40 @@ void ClientSession::abortConversion(const std::shared_ptr<DocumentBroker>& docBr
     LOG_DBG("Conversion request of [" << docBroker->getDocKey() << "] failed: " << errorKind);
     if (!saveAsSocket)
         LOG_ERR("Error saveas socket missing in isConvertTo mode");
+    else if (errorKind == "passwordrequired:to-view" ||
+             errorKind == "passwordrequired:to-modify")
+    {
+        // Return a locked document icon as the thumbnail.
+        const std::string docPath = docBroker->getPublicUri().getPath();
+        const auto dotPos = docPath.find_last_of('.');
+        const std::string ext = (dotPos != std::string::npos)
+                                    ? docPath.substr(dotPos + 1)
+                                    : std::string();
+        const std::string docType = getDocTypeFromExtension(ext);
+
+        const std::string iconPath = COOLWSD::FileServerRoot +
+            "/browser/images/password-protected-" + docType + ".png";
+
+        std::vector<char> iconData;
+        if (FileUtil::readFile(iconPath, iconData) > 0)
+        {
+            http::Response response(http::StatusCode::OK);
+            FileServerRequestHandler::hstsHeaders(response);
+            response.setBody(std::string(iconData.data(), iconData.size()), "image/png");
+            response.set("X-ERROR-KIND", std::move(errorKind));
+            saveAsSocket->sendAndShutdown(response);
+        }
+        else
+        {
+            LOG_ERR("Failed to read locked document icon: " << iconPath);
+            http::Response response(http::StatusCode::Unauthorized);
+            response.set("X-ERROR-KIND", std::move(errorKind));
+            saveAsSocket->sendAndShutdown(response);
+        }
+    }
     else
     {
-        http::Response response(http::StatusCode::Unauthorized);
+        http::Response response(http::StatusCode::InternalServerError);
         response.set("X-ERROR-KIND", std::move(errorKind));
         saveAsSocket->sendAndShutdown(response);
     }
