@@ -163,6 +163,18 @@ div#autoFillPreviewTooltip .lokdialog.ui-dialog-content.ui-widget-content {
 	background-color: var(--color-background-lighter);
 }
 
+/* Draw close "X" icon with SVG instead of bitmap sprite.
+   Branding layers override this background-image via higher specificity. */
+.ui-dialog-titlebar-close .ui-icon-closethick {
+	background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16'%3E%3Cpath d='M3 3 L13 13 M13 3 L3 13' stroke='%23222' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E");
+	background-position: center;
+	background-size: 16px 16px;
+}
+
+[data-theme='dark'] .ui-dialog-titlebar-close .ui-icon-closethick {
+	filter: invert(1);
+}
+
 .jsdialog-container .ui-dialog-content {
 	max-height: calc( 90vh - 34px);
 	overflow-y: auto !important;
