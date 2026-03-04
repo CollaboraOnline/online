@@ -606,7 +606,7 @@ function insertShapes(shapeType, grid = document.getElementsByClassName('inserts
 
 		const rowHeader = document.createElement('div');
 		rowHeader.setAttribute('role', 'presentation');
-		rowHeader.id = `row_${cIdx++}`;
+		rowHeader.id = `${shapeType}_row_${cIdx++}`;
 		rowHeader.className = 'row-header cool-font';
 		rowHeader.textContent = _(s);
 		group.appendChild(rowHeader);
