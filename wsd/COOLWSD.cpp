@@ -2340,6 +2340,10 @@ void COOLWSD::setLokitEnvironmentVariables(const Poco::Util::LayeredConfiguratio
         }
 #endif
     }
+
+#if !MOBILEAPP
+    setenv("LOK_ALLOWED_EXTREF_PATHS", "", true);
+#endif
 }
 
 void COOLWSD::initializeSSL()
