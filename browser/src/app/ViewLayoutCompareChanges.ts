@@ -44,7 +44,7 @@ class ViewLayoutCompareChanges extends ViewLayoutNewBase {
 		this.refreshView();
 	}
 
-	public adjustViewZoomLevel() {
+	public override adjustViewZoomLevel() {
 		Util.ensureValue(app.activeDocument);
 
 		const min = 0.1;
@@ -62,7 +62,7 @@ class ViewLayoutCompareChanges extends ViewLayoutNewBase {
 		app.map.setZoom(zoom, { animate: false });
 	}
 
-	protected refreshCurrentCoordList() {
+	protected override refreshCurrentCoordList() {
 		super.refreshCurrentCoordList();
 
 		const additionalCoords: Array<TileCoordData> = [];
@@ -142,7 +142,7 @@ class ViewLayoutCompareChanges extends ViewLayoutNewBase {
 		else return this.halfWidth + this.viewGap - this.scrollProperties.viewX;
 	}
 
-	public documentToViewX(point: cool.SimplePoint): number {
+	public override documentToViewX(point: cool.SimplePoint): number {
 		Util.ensureValue(app.activeDocument);
 
 		// Default to right side.
@@ -151,11 +151,13 @@ class ViewLayoutCompareChanges extends ViewLayoutNewBase {
 		return point.pX + this.getDeflectionX(point.mode);
 	}
 
-	public documentToViewY(point: cool.SimplePoint): number {
+	public override documentToViewY(point: cool.SimplePoint): number {
 		return point.pY + this.yStart - this.scrollProperties.viewY;
 	}
 
-	public canvasToDocumentPoint(point: cool.SimplePoint): cool.SimplePoint {
+	public override canvasToDocumentPoint(
+		point: cool.SimplePoint,
+	): cool.SimplePoint {
 		const result = point.clone();
 
 		point.mode =
@@ -170,11 +172,13 @@ class ViewLayoutCompareChanges extends ViewLayoutNewBase {
 		return result;
 	}
 
-	public canScrollHorizontal(documentAnchor: CanvasSectionObject): boolean {
+	public override canScrollHorizontal(
+		documentAnchor: CanvasSectionObject,
+	): boolean {
 		return this.viewSize.pX > Math.round(documentAnchor.size[0] * 0.5);
 	}
 
-	public scroll(pX: number, pY: number): boolean {
+	public override scroll(pX: number, pY: number): boolean {
 		const scrolled = super.scroll(pX, pY);
 
 		if (scrolled) {
