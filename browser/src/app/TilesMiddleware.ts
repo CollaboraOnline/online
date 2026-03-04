@@ -490,6 +490,8 @@ class TileManager {
 				this.pausedForCoherency = false;
 			}
 			app.sectionContainer.deferDrawing(null);
+			// Ensure that requestReDraw is called at least once. It may not get called in tileReady function.
+			app.sectionContainer.requestReDraw();
 		}
 
 		if (this.nPendingWorkerTasks === 0)
@@ -940,6 +942,15 @@ class TileManager {
 	}
 
 	private static rehydrateCurrentTiles() {
+		// Clear the deferred callback immediately. This function is a one-shot
+		// callback that drains dehydratedCurrentTiles; keeping it registered
+		// causes every subsequent requestReDraw() to invoke it instead of
+		// scheduling a requestAnimationFrame, which freezes the canvas.
+		// Drawing is paused via pauseDrawing()/resumeDrawing() inside
+		// rehydrateTile() until worker bitmaps arrive, so clearing the
+		// callback here does not cause premature draws.
+		app.sectionContainer.deferDrawing(null);
+
 		// If the graphics memory of visible tiles was reclaimed, we have tiles that
 		// have a valid delta cache, but no corresponding bitmap.
 		this.beginTransaction();
