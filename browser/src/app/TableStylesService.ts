@@ -155,7 +155,7 @@ class TableStylesService {
 			'.uno:DatabaseSettings',
 		) as TableStyleInfo;
 
-		// PoolItem names ae different than ones from state handler
+		// PoolItem names are different than ones from state handler
 		const args = {} as any;
 		args['DatabaseSettings.HeaderRow'] = {
 			type: 'boolean',
