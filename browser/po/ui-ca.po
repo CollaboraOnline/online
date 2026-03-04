@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-03-03 09:42+0100\n"
-"PO-Revision-Date: 2025-11-28 09:31+0000\n"
-"Last-Translator: Adolfo Jayme Barrientos <fitojb@ubuntu.com>\n"
+"PO-Revision-Date: 2026-03-03 14:39+0000\n"
+"Last-Translator: Héctor Gonzàlvez Escolano <hector.gie@gcloud.ua.es>\n"
 "Language-Team: Catalan <https://hosted.weblate.org/projects/collabora-online/"
 "ui/ca/>\n"
-"Language: \n"
+"Language: ca\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.15-dev\n"
+"X-Generator: Weblate 5.17-dev\n"
 
 #: admin/admin.strings.js:15
 msgid "Admin console"
@@ -281,7 +281,7 @@ msgstr "Memòria"
 
 #: admin/src/AdminClusterOverview.js:540
 msgid "Please wait kubernetes cluster is scaling..."
-msgstr ""
+msgstr "Per favor, espera: el clúster de Kubernetes s’està escalant…"
 
 #: admin/src/AdminClusterOverview.js:550 admin/src/AdminSocketOverview.js:420
 msgid "Failed to set jwt authentication cookie over insecure connection"
@@ -382,7 +382,7 @@ msgstr "Falta l'URL de configuració compartida a les variables inicials."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:214
 msgid "Access token is missing in initial variables."
-msgstr ""
+msgstr "Falta el token d'accés en les variables inicials."
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:292
 msgid ""
@@ -406,7 +406,7 @@ msgstr "CA de signatura"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:339
 msgid "In-document Screen Reader"
-msgstr ""
+msgstr "Lector de pantalla dins del document"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:340
 #: src/control/Control.Menubar.ts:175 src/control/Control.Menubar.ts:500
@@ -498,7 +498,7 @@ msgstr "Pàgines buides"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:362
 msgid "Force Breaks"
-msgstr ""
+msgstr "Salts forçats"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:363
 #: src/control/Control.Menubar.ts:779 src/control/Control.TopToolbar.js:139
@@ -524,23 +524,23 @@ msgstr "Pàgina"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:368
 msgid "Fit to page"
-msgstr ""
+msgstr "Ajusta a la pàgina"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:369
 msgid "Tile pages"
-msgstr ""
+msgstr "Pàgines en mosaic"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:370
 msgid "Booklet"
-msgstr ""
+msgstr "Fullet"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:371
 msgid "Booklet front"
-msgstr ""
+msgstr "Portada del fullet"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:372
 msgid "Booklet back"
-msgstr ""
+msgstr "Contraportada del fullet"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:373
 msgid "Page name"
@@ -564,7 +564,7 @@ msgstr "Pàgines amagades"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:377
 msgid "From printer setup"
-msgstr ""
+msgstr "Des de la configuració de la impressora"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:378
 #: src/control/Control.BackstageView.ts:936 templates/templates.js:80
@@ -589,7 +589,7 @@ msgstr "Notes"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:380
 msgid "Handouts"
-msgstr ""
+msgstr "Fullets"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:381
 #: src/control/Control.NavigatorPanel.ts:208
@@ -598,7 +598,7 @@ msgstr "Esquema"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:382
 msgid "Handout horizontal"
-msgstr ""
+msgstr "Fullet horitzontal"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:383
 msgid "Images"
@@ -831,10 +831,12 @@ msgstr "Diccionari d'excepcions"
 #: admin/src/integrator/WordBook.ts:123
 msgid "Exception words are underlined while checking spelling"
 msgstr ""
+"Les paraules que són excepcions apareixen subratllades quan es comprova "
+"l'ortografia"
 
 #: admin/src/integrator/WordBook.ts:132
 msgid "Loading Wordbook..."
-msgstr ""
+msgstr "Carregant el diccionari de paraules..."
 
 #: admin/src/integrator/WordBook.ts:333
 msgid "Type to add a word"
@@ -851,11 +853,11 @@ msgstr "El format del diccionari no és vàlid. Comproveu el fitxer."
 
 #: admin/src/integrator/WordBook.ts:486
 msgid "Something went wrong while uploading dictionary file"
-msgstr ""
+msgstr "Hi ha hagut un error en pujar el fitxer del diccionari"
 
 #: admin/src/integrator/Xcu.ts:160 admin/src/integrator/Xcu.ts:172
 msgid "Something went wrong while loading Document settings."
-msgstr ""
+msgstr "Hi ha hagut un error a l'hora de carregar la configuració del document."
 
 #: admin/src/integrator/Xcu.ts:312
 msgid "Document Settings"
@@ -918,10 +920,12 @@ msgid ""
 "The system is currently adjusting resources. Please wait a moment while we "
 "retry your request..."
 msgstr ""
+"El sistema està ajustant els recursos en aquest moment. Per favor, espera "
+"mentre es reintenta la sol·licitud..."
 
 #: js/global.js:1764
 msgid "The document is being migrated to a new server. Retrying shortly..."
-msgstr ""
+msgstr "El document s'està migrant a un servidor nou. Es reintentarà en breu..."
 
 #: js/global.js:1766
 msgid "Failed to get RouteToken from controller"
@@ -937,7 +941,7 @@ msgstr "Ctrl+Maj+Alt+D per a sortir"
 
 #: src/app/Debug.ts:1433
 msgid "Event handling has been delayed for an unexpectedly long time: {0}ms"
-msgstr ""
+msgstr "El tractament de l'esdeveniment s'ha retardat durant massa temps: {0}ms"
 
 #: src/canvas/sections/CommentListSection.ts:1249
 msgid "Modify"
@@ -977,7 +981,7 @@ msgstr "Resol el fil"
 
 #: src/canvas/sections/CommentListSection.ts:1285
 msgid "Promote to top comment"
-msgstr ""
+msgstr "Promociona a comentari principal"
 
 #: src/canvas/sections/CommentListSection.ts:1291
 msgid "Show on the side"
@@ -985,7 +989,7 @@ msgstr "Mostra al costat"
 
 #: src/canvas/sections/CommentListSection.ts:1291
 msgid "Open in full view"
-msgstr ""
+msgstr "Obri en vista completa"
 
 #: src/canvas/sections/CommentListSection.ts:1297
 msgid "Show in navigator"
