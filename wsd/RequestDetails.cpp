@@ -307,7 +307,6 @@ void RequestDetails::processURI()
 
 Poco::URI RequestDetails::sanitizeURI(const std::string& uri)
 {
-    // The URI of the document is url-encoded, except that in a mobile app it isn't?
     Poco::URI uriPublic((Util::isMobileApp() ? uri : Uri::decode(uri)));
 
     if (uriPublic.isRelative() || uriPublic.getScheme() == "file")
@@ -345,6 +344,31 @@ Poco::URI RequestDetails::sanitizeURI(const std::string& uri)
     uriPublic.setQueryParameters(queryParams);
 
     LOG_DBG("Sanitized URI [" << uri << "] to [" << uriPublic.toString() << ']');
+    return uriPublic;
+}
+
+Poco::URI RequestDetails::sanitizeLocalPath(const std::string& path)
+{
+    // For local file paths, '%' is always a literal character, never URI encoding.
+    // Encode every '%' so that Poco::URI's automatic decoding restores the originals.
+    Poco::URI uriPublic(Uri::encodeAllPercent(path));
+
+    if (uriPublic.isRelative() || uriPublic.getScheme() == "file")
+    {
+        uriPublic.normalize();
+#ifdef _WIN32
+        std::string p = uriPublic.getPath();
+        if (p.length() > 4 && p[0] == '/' && std::isalpha(p[1]) && p[2] == ':' && p[3] == '/')
+            uriPublic.setPath(p.substr(1));
+#endif
+    }
+
+    if (uriPublic.getPath().empty())
+    {
+        throw std::runtime_error("Invalid URI.");
+    }
+
+    LOG_DBG("Sanitized local path [" << path << "] to [" << uriPublic.toString() << ']');
     return uriPublic;
 }
 

@@ -3189,11 +3189,9 @@ bool ClientSession::handleSaveAs(const std::shared_ptr<Message>& payload,
     // Prepend the jail path in the normal (non-nocaps) case
     if (resultURL.getScheme() == "file" && !COOLWSD::NoCapsForKit)
     {
-        std::string relative;
-        if (_isConvertTo || isExportAs)
-            relative = Uri::decode(resultURL.getPath());
-        else
-            relative = resultURL.getPath();
+        // getPath() already returns the decoded path (Poco::URI decodes
+        // percent-encoded sequences internally), so no extra Uri::decode().
+        std::string relative = resultURL.getPath();
 
         if (relative.size() > 0 && relative[0] == '/')
             relative = relative.substr(1);
@@ -3203,18 +3201,11 @@ bool ClientSession::handleSaveAs(const std::shared_ptr<Message>& payload,
             COOLWSD::EnableMountNamespaces, docBroker->getJailRoot(), std::move(relative)));
         if (Poco::File(path).exists())
         {
-            if (!_isConvertTo)
-            {
-                // Encode path for special characters (i.e '%') since Poco::URI::setPath implicitly decodes the input param
-                std::string encodedPath;
-                Poco::URI::encode(path.toString(), "", encodedPath);
+            // Encode path for special characters (i.e '%') since Poco::URI::setPath implicitly decodes the input param
+            std::string encodedPath;
+            Poco::URI::encode(path.toString(), "", encodedPath);
 
-                resultURL.setPath(encodedPath);
-            }
-            else
-            {
-                resultURL.setPath(path.toString());
-            }
+            resultURL.setPath(encodedPath);
         }
         else
         {
