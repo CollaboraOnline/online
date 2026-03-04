@@ -2166,7 +2166,7 @@ bool ClientRequestDispatcher::handlePostRequest(const RequestDetails& requestDet
         LOG_INF("Conversion request for URI [" << fromPath << "] format [" << format << "].");
         if (!fromPath.empty() && hasRequiredParameters)
         {
-            Poco::URI uriPublic = RequestDetails::sanitizeURI(fromPath);
+            Poco::URI uriPublic = RequestDetails::sanitizeLocalPath(fromPath);
             AdditionalFilePocoUris additionalFileUrisPublic;
             for (const auto& key : {"template", "compare"})
             {
@@ -2176,7 +2176,7 @@ bool ClientRequestDispatcher::handlePostRequest(const RequestDetails& requestDet
                     continue;
                 }
 
-                additionalFileUrisPublic[key] = RequestDetails::sanitizeURI(it->second);
+                additionalFileUrisPublic[key] = RequestDetails::sanitizeLocalPath(it->second);
             }
             const std::string docKey = RequestDetails::getDocKey(uriPublic);
 
@@ -2438,7 +2438,7 @@ bool ClientRequestDispatcher::handlePostRequest(const RequestDetails& requestDet
         if (fromPath.empty())
             return false;
 
-        Poco::URI uriPublic = RequestDetails::sanitizeURI(fromPath);
+        Poco::URI uriPublic = RequestDetails::sanitizeLocalPath(fromPath);
         const std::string docKey = RequestDetails::getDocKey(uriPublic);
 
         // This lock could become a bottleneck.
