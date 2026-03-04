@@ -11,6 +11,7 @@
 
 #pragma once
 
+#include <common/HexUtil.hpp>
 #include <common/Log.hpp>
 #include <common/Util.hpp>
 
@@ -20,6 +21,10 @@
 #include <string_view>
 #include <memory>
 #include <unordered_map>
+#include <vector>
+
+#include <openssl/evp.h>
+#include <openssl/rand.h>
 
 /// Responsible for anonymizing names and URLs.
 /// The anonymized version is always the same for
@@ -32,8 +37,9 @@
 /// will have a different prefix counter.
 class Anonymizer
 {
-    explicit Anonymizer(const std::uint64_t salt)
+    explicit Anonymizer(const std::uint64_t salt, bool highStrength)
         : _salt(salt)
+        , _highStrength(highStrength)
     {
     }
 
@@ -41,12 +47,12 @@ public:
     static constexpr std::uint64_t DefaultSalt = 82589933;
 
     /// Used for anonymizing URLs
-    static void initialize(bool anonymize, const std::uint64_t salt)
+    static void initialize(bool anonymize, const std::uint64_t salt, bool highStrength = false)
     {
         _instance.reset();
         if (anonymize)
         {
-            _instance.reset(new Anonymizer(salt));
+            _instance.reset(new Anonymizer(salt, highStrength));
         }
     }
 
@@ -112,6 +118,24 @@ public:
             return std::string(anonymized);
         }
 
+        std::string res;
+        if (_highStrength)
+        {
+            res = highStrengthHash(text);
+        }
+        else
+        {
+            res = fnvHash(text);
+        }
+
+        map(text, res);
+        return res;
+    }
+
+private:
+    /// Fast FNV-1a hash (original algorithm).
+    std::string fnvHash(const std::string& text)
+    {
         // Modified 64-bit FNV-1a to add salting.
         // For the algorithm and the magic numbers, see http://isthe.com/chongo/tech/comp/fnv/
         std::uint64_t hash = 0xCBF29CE484222325LL;
@@ -130,11 +154,39 @@ public:
         // Prepend with count to make it unique within a single process instance,
         // in case we get collisions (which we will, eventually). N.B.: Identical
         // strings likely to have different prefixes when logged in WSD process vs. Kit.
-        std::string res = '#' + Util::encodeId(_prefix++, 0) + '#' + Util::encodeId(hash, 0) + '#';
-        map(text, res);
-        return res;
+        return '#' + Util::encodeId(_prefix++, 0) + '#' + Util::encodeId(hash, 0) + '#';
     }
 
+    /// Cryptographic one-way hash using PBKDF2-HMAC-SHA512 via OpenSSL.
+    /// This is irreversible even with knowledge of the salt, unlike the FNV-1a hash.
+    static constexpr int HighStrengthIterations = 10000;
+    static constexpr int HighStrengthHashLen = 32; // 256-bit output, truncated for readability.
+
+    std::string highStrengthHash(const std::string& text)
+    {
+        // Use the 64-bit salt as an 8-byte salt buffer for PBKDF2.
+        const unsigned char saltBytes[8] = {
+            static_cast<unsigned char>((_salt >> 56) & 0xFF),
+            static_cast<unsigned char>((_salt >> 48) & 0xFF),
+            static_cast<unsigned char>((_salt >> 40) & 0xFF),
+            static_cast<unsigned char>((_salt >> 32) & 0xFF),
+            static_cast<unsigned char>((_salt >> 24) & 0xFF),
+            static_cast<unsigned char>((_salt >> 16) & 0xFF),
+            static_cast<unsigned char>((_salt >> 8) & 0xFF),
+            static_cast<unsigned char>(_salt & 0xFF),
+        };
+
+        std::vector<unsigned char> hash(HighStrengthHashLen);
+        PKCS5_PBKDF2_HMAC(text.c_str(), text.size(),
+                          saltBytes, sizeof(saltBytes),
+                          HighStrengthIterations,
+                          EVP_sha512(),
+                          HighStrengthHashLen, hash.data());
+
+        return '#' + HexUtil::dataToHexString(hash, 0, HighStrengthHashLen) + '#';
+    }
+
+public:
     /// Clears the shared state of mapAnonymized() / anonymize().
     static void clear()
     {
@@ -168,6 +220,9 @@ private:
 
     /// The salt used to hash.
     const std::uint64_t _salt;
+
+    /// Whether to use PBKDF2-HMAC-SHA512 (high-strength) instead of FNV-1a.
+    const bool _highStrength;
 
     /// The prefix counter.
     std::atomic<unsigned> _prefix;
