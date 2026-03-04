@@ -2186,6 +2186,7 @@ button.menubutton.sidebar > span {
 	right: var(--click-increment);
 	bottom: var(--click-increment);
 	left: var(--click-increment);
+	pointer-events: none;
 }
 
 /* targetting buttons inside of split button */
