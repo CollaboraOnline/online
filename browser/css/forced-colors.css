@@ -25,7 +25,8 @@
 	.document-logo,
 	.ui-tabs-content .unobutton > img,
 	.unotoolbutton.notebookbar .unobutton > img,
-	.unotoolbutton.notebookbar .unobutton {
+	.unotoolbutton.notebookbar .unobutton, 
+	.lokdialog_container .ui-dialog-titlebar-close {
 		forced-color-adjust: none;
 		background-color: #e9e9ed !important;
 	}
@@ -100,7 +101,8 @@
 	[data-theme='dark'] .unotoolbutton.notebookbar .unobutton > img,
 	[data-theme='dark'] .unotoolbutton.notebookbar .unobutton,
 	[data-theme='dark'] .StyleListPanel #TemplatePanel [id] button,
-	[data-theme='dark'] .ui-overflow-group-popup .unobutton > img {
+	[data-theme='dark'] .ui-overflow-group-popup .unobutton > img,
+	[data-theme='dark'] .lokdialog_container .ui-dialog-titlebar-close {
 		background-color: #1E1E1E !important;
 	}
 
