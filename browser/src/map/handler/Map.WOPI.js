@@ -787,6 +787,17 @@ window.L.Map.WOPI = window.L.Handler.extend({
 			var list = msg.Values.list;
 			this._map.mention.openMentionPopup(list);
 		}
+		else if (msg.MessageId === 'Action_ResolveComment') {
+			if (msg.Values) {
+				const commentSection = app.sectionContainer.getSectionWithName(app.CSections.CommentList.name);
+				if (commentSection) {
+					const comment = commentSection.getComment(msg.Values.Id);
+					if (comment && comment.sectionProperties.data.resolved !== 'true') {
+						commentSection.resolve(comment);
+					}
+				}
+			}
+		}
 		else if (msg.sender === 'EIDEASY_SINGLE_METHOD_SIGNATURE') {
 			// This is produced by the esign popup.
 			const eSignature = this._map.eSignature;
