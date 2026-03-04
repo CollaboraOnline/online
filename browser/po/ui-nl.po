@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-03-03 09:42+0100\n"
-"PO-Revision-Date: 2025-12-13 18:47+0000\n"
-"Last-Translator: Sebastiaan Veld <sebastiaan.veld@gmail.com>\n"
+"PO-Revision-Date: 2026-03-04 07:01+0000\n"
+"Last-Translator: Sebastiaan Veld <notify@virtfields.nl>\n"
 "Language-Team: Dutch <https://hosted.weblate.org/projects/collabora-online/"
 "ui/nl/>\n"
-"Language: \n"
+"Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.15-dev\n"
+"X-Generator: Weblate 5.17-dev\n"
 
 #: admin/admin.strings.js:15
 msgid "Admin console"
@@ -405,7 +405,7 @@ msgstr "Handtekening CA"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:339
 msgid "In-document Screen Reader"
-msgstr ""
+msgstr "Schermlezer in document"
 
 #: admin/src/integrator/AdminIntegratorSettings.ts:340
 #: src/control/Control.Menubar.ts:175 src/control/Control.Menubar.ts:500
@@ -1074,23 +1074,23 @@ msgstr "Opgeslagen"
 
 #: src/canvas/sections/CompareChangesLabelSection.ts:118
 msgid "Last edited by %1 on %2"
-msgstr ""
+msgstr "Laatst bewerkt door %1 op %2"
 
 #: src/canvas/sections/CompareChangesLabelSection.ts:181
 msgid "%1: Initial Version"
-msgstr ""
+msgstr "%1: Eerste versie"
 
 #: src/canvas/sections/CompareChangesLabelSection.ts:185
 msgid "%1: Current Version"
-msgstr ""
+msgstr "%1: Huidige versie"
 
 #: src/canvas/sections/CompareChangesLabelSection.ts:194
 msgid "Initial Version"
-msgstr ""
+msgstr "Eerste versie"
 
 #: src/canvas/sections/CompareChangesLabelSection.ts:198
 msgid "Current Version"
-msgstr ""
+msgstr "Huidige versie"
 
 #: src/canvas/sections/ShapeHandlesSection.ts:478
 msgid "Document contains unsupported media"
@@ -1121,13 +1121,12 @@ msgid "This version of {productname} is powered by"
 msgstr "Deze versie van {productname} werk op basis van"
 
 #: src/control/Control.AboutDialog.ts:190
-#, fuzzy
 msgid "Served by: "
-msgstr "Ondersteund door:"
+msgstr "Ondersteund door: "
 
 #: src/control/Control.AboutDialog.ts:213
 msgid "View widgets"
-msgstr ""
+msgstr "Widgets bekijken"
 
 #: src/control/Control.AboutDialog.ts:248
 msgid "\"Slow Proxy\""
@@ -1235,7 +1234,7 @@ msgstr "Nieuw"
 
 #: src/control/Control.BackstageView.ts:288
 msgid "Open"
-msgstr ""
+msgstr "Openen"
 
 #: src/control/Control.BackstageView.ts:296
 #: src/control/Control.Notebookbar.js:633
@@ -1283,12 +1282,12 @@ msgstr "Opties"
 
 #: src/control/Control.BackstageView.ts:407
 msgid "Start a new document from one of the following templates."
-msgstr ""
+msgstr "Maak een nieuw document aan op basis van een van de volgende sjablonen."
 
 #: src/control/Control.BackstageView.ts:450
 #: src/control/Control.BackstageView.ts:453
 msgid "More Templates"
-msgstr ""
+msgstr "Meer sjablonen"
 
 #: src/control/Control.BackstageView.ts:479
 #: src/control/jsdialog/Widget.ColorPicker.ts:426
@@ -1301,11 +1300,11 @@ msgstr "Recent geopende documenten verschijnen hier"
 
 #: src/control/Control.BackstageView.ts:550
 msgid "Name"
-msgstr ""
+msgstr "Naam"
 
 #: src/control/Control.BackstageView.ts:556
 msgid "Modified Date"
-msgstr ""
+msgstr "Datum gewijzigd"
 
 #: src/control/Control.BackstageView.ts:779
 msgid "Document Info"
@@ -1409,7 +1408,7 @@ msgstr "Blanco document"
 
 #: src/control/Control.BackstageView.ts:1446
 msgid "Untitled"
-msgstr ""
+msgstr "Zonder titel"
 
 #: src/control/Control.Command.js:90
 msgid "Unlock"
@@ -1429,7 +1428,7 @@ msgstr "Serie vullen"
 
 #: src/control/Control.DocumentNameInput.js:27
 msgid "Document name"
-msgstr ""
+msgstr "Documentnaam"
 
 #: src/control/Control.DocumentNameInput.js:119
 msgid "Path"
@@ -1953,11 +1952,11 @@ msgstr "Notitie toevoegen"
 
 #: src/control/Control.JSDialogBuilder.js:1956
 msgid "Toggle dropdown"
-msgstr ""
+msgstr "Dropdown-menu in-/uitschakelen"
 
 #: src/control/Control.JSDialogBuilder.js:1958
 msgid "Dialog dropdown"
-msgstr ""
+msgstr "Dialoogvenster dropdown"
 
 #: src/control/Control.JSDialogBuilder.js:1960
 #: src/control/Control.NotebookbarWriter.js:1596
@@ -1966,7 +1965,7 @@ msgstr "Vervolgkeuzemenu"
 
 #: src/control/Control.JSDialogBuilder.js:1962
 msgid "Apply action dropdown"
-msgstr ""
+msgstr "Actie-dropdown toepassen"
 
 #: src/control/Control.JSDialogBuilder.js:1989
 msgid "Open {name}"
@@ -2131,7 +2130,7 @@ msgstr "Herstellen"
 
 #: src/control/Control.Menubar.ts:143
 msgid "Compare Changes"
-msgstr ""
+msgstr "Veranderingen vergelijken"
 
 #: src/control/Control.Menubar.ts:162 src/control/Control.Menubar.ts:483
 #: src/control/Control.Menubar.ts:489 src/control/Control.Menubar.ts:650
@@ -2146,7 +2145,7 @@ msgstr "Zoom herstellen"
 
 #: src/control/Control.Menubar.ts:168
 msgid "Fit to Screen"
-msgstr ""
+msgstr "Aan schermgrootte aanpassen"
 
 #: src/control/Control.Menubar.ts:171 src/control/Control.Menubar.ts:495
 #: src/control/Control.Menubar.ts:662 src/control/Control.Menubar.ts:807

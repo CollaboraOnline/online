@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-03-03 09:42+0200\n"
-"PO-Revision-Date: 2025-12-10 20:00+0000\n"
-"Last-Translator: Stephan Paternotte <stephan@paternottes.net>\n"
+"PO-Revision-Date: 2026-03-04 07:00+0000\n"
+"Last-Translator: Sebastiaan Veld <notify@virtfields.nl>\n"
 "Language-Team: Dutch <https://hosted.weblate.org/projects/collabora-online/"
 "help/nl/>\n"
 "Language: nl\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Translate Toolkit 3.6.0\n"
+"X-Generator: Weblate 5.17-dev\n"
 
 #: html/cool-help.html%2Bdiv.h1:6-5
 msgid "Keyboard Shortcuts"
@@ -27,47 +27,50 @@ msgid "Undo"
 msgstr "Ongedaan maken"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:10-69
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>Z</kbd>"
-msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Z</kbd>"
+msgstr ""
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>"
+"Z</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:11-38
 msgid "Redo"
 msgstr "Opnieuw"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:11-69
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>Y</kbd>"
-msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Y</kbd>"
+msgstr ""
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>"
+"Y</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:12-38
 msgid "Cut"
 msgstr "Knippen"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:12-68
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>X</kbd>"
-msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>X</kbd>"
+msgstr ""
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>"
+"X</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:13-38
 msgid "Copy"
 msgstr "Kopiëren"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:13-69
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>C</kbd>,<br /><kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-"
 "hidden=\"true\">+</span><kbd>Insert</kbd>"
 msgstr ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>C</kbd>,<br "
-"/><kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Insert</kbd>"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>"
+"C</kbd>,<br /><kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">"
+"+</span><kbd>Insert</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:14-38
 msgid "Paste as unformatted text"
@@ -79,6 +82,9 @@ msgid ""
 ">+</span><kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>V</kbd>"
 msgstr ""
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>"
+"Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>V</"
+"kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:15-38
 msgid "Paste special"
@@ -91,17 +97,21 @@ msgid ""
 ">+</span><kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>V</kbd>"
 msgstr ""
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\" >+</span><kbd>"
+"Alt</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>Shift</"
+"kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>V</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:16-38
 msgid "Print (Download as PDF)"
 msgstr "Afdrukken (downloaden als PDF)"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:16-88
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>P</kbd>"
-msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>P</kbd>"
+msgstr ""
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>"
+"P</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:17-38
 msgid "Display the Keyboard shortcuts help"
@@ -113,6 +123,9 @@ msgid ""
 ">+</span><kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>?</kbd>"
 msgstr ""
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>"
+"Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>?</"
+"kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:18-38
 msgid "Focus to notebookbar menu"
@@ -124,6 +137,9 @@ msgid ""
 ">+</span><kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>F1</kbd>"
 msgstr ""
+"<kbd>Alt</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>"
+"Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>F1</"
+"kbd>"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:19-38
 msgid "Focus to document from menu"
@@ -138,11 +154,12 @@ msgid "Focus to selected comment's menu"
 msgstr "Focus op het menu van geselecteerde opmerking"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:20-97
-#, fuzzy
 msgid ""
 "<kbd>Alt</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>C</kbd>"
-msgstr "<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>C</kbd>"
+msgstr ""
+"<kbd>Alt</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>C</"
+"kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.h2:25-9
 #: html/cool-help.html%2Bdiv.div.div.h2:193-9
@@ -161,11 +178,12 @@ msgstr "Vet"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:162-69
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:195-69
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:260-69
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>B</kbd>"
-msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>B</kbd>"
+msgstr ""
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>"
+"B</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:28-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:163-38
@@ -178,11 +196,12 @@ msgstr "Cursief"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:163-71
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:196-71
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:261-71
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>I</kbd>"
-msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>I</kbd>"
+msgstr ""
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>"
+"I</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:29-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:164-38
@@ -195,11 +214,12 @@ msgstr "Onderstrepen"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:164-74
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:197-74
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:262-74
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>U</kbd>"
-msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>U</kbd>"
+msgstr ""
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>"
+"U</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:30-38
 msgid "Double Underline"
@@ -207,11 +227,12 @@ msgstr "Dubbel onderstrepen"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:30-81
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:169-74
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>D</kbd>"
-msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>D</kbd>"
+msgstr ""
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>"
+"D</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:31-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:165-38
@@ -229,6 +250,8 @@ msgid ""
 ">+</span><kbd>Alt</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>5</kbd>"
 msgstr ""
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>"
+"Alt</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>5</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:32-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:199-38
@@ -244,6 +267,9 @@ msgid ""
 ">+</span><kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>P</kbd>"
 msgstr ""
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>"
+"Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>P</"
+"kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:33-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:200-38
@@ -259,6 +285,9 @@ msgid ""
 ">+</span><kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>B</kbd>"
 msgstr ""
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>"
+"Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>B</"
+"kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:34-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:166-38
@@ -267,11 +296,12 @@ msgstr "Directe opmaak wissen"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:34-89
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:166-89
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>M</kbd>"
-msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>M</kbd>"
+msgstr ""
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>"
+"M</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.h2:38-9
 #: html/cool-help.html%2Bdiv.div.div.h2:205-9
@@ -290,11 +320,12 @@ msgstr "Gecentreerd uitlijnen"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:171-77
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:207-77
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:272-77
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>E</kbd>"
-msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>E</kbd>"
+msgstr ""
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>"
+"E</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:41-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:172-38
@@ -307,11 +338,12 @@ msgstr "Links uitlijnen"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:172-75
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:208-75
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:273-75
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>L</kbd>"
-msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>L</kbd>"
+msgstr ""
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>"
+"L</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:42-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:173-38
@@ -324,11 +356,12 @@ msgstr "Rechts uitlijnen"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:173-76
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:209-76
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:274-76
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>R</kbd>"
-msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>R</kbd>"
+msgstr ""
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>"
+"R</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:43-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:174-38
@@ -341,44 +374,48 @@ msgstr "Uitvullen"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:174-72
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:210-72
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:275-72
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>J</kbd>"
-msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>J</kbd>"
+msgstr ""
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>"
+"J</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:44-38
 msgid "Apply Default paragraph style"
 msgstr "Standaard alinea-opmaakprofiel toepassen"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:44-94
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>0</kbd>"
-msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>0</kbd>"
+msgstr ""
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>"
+"0</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:45-38
 msgid "Apply Heading 1 paragraph style"
 msgstr "Alinea-opmaakprofiel Kop 1 toepassen"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:45-96
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>1</kbd>"
-msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>1</kbd>"
+msgstr ""
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>"
+"1</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:46-38
 msgid "Apply Heading 2 paragraph style"
 msgstr "Alinea-opmaakprofiel Kop 2 toepassen"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:46-96
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>2</kbd>"
-msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>2</kbd>"
+msgstr ""
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>"
+"2</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:47-38
 msgid "Apply Heading 3 paragraph style"
@@ -386,33 +423,36 @@ msgstr "Alinea-opmaakprofiel Kop 3 toepassen"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:47-96
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:175-89
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>3</kbd>"
-msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>3</kbd>"
+msgstr ""
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>"
+"3</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:48-38
 msgid "Apply Heading 4 paragraph style"
 msgstr "Alinea-opmaakprofiel Kop 4 toepassen"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:48-96
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>4</kbd>"
-msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>4</kbd>"
+msgstr ""
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>"
+"4</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:49-38
 msgid "Apply Heading 5 paragraph style"
 msgstr "Alinea-opmaakprofiel Kop 5 toepassen"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:49-96
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>5</kbd>"
-msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>5</kbd>"
+msgstr ""
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>"
+"5</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.h2:53-9
 msgid "Text selection and navigation in document"
@@ -436,11 +476,12 @@ msgstr "Alles selecteren"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:266-75
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:283-75
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:317-91
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>A</kbd>"
-msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>A</kbd>"
+msgstr ""
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>"
+"A</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:56-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:219-38
@@ -463,11 +504,12 @@ msgstr "Selectie met cursor naar links uitbreiden"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:57-103
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:220-103
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:285-103
-#, fuzzy
 msgid ""
 "<kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</"
 "span><kbd>Arrow Left</kbd>"
-msgstr "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Pijl Links</kbd>"
+msgstr ""
+"<kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>"
+"Pijl Links</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:58-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:221-38
@@ -478,11 +520,12 @@ msgstr "Naar begin van woord gaan"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:58-90
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:221-90
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:286-90
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</"
 "span><kbd>Arrow Left</kbd>"
-msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Pijl Links</kbd>"
+msgstr ""
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>"
+"Pijl Links</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:59-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:222-38
@@ -493,14 +536,14 @@ msgstr "Woord voor woord naar links selecteren"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:59-96
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:222-96
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:287-96
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</"
 "span><kbd>Arrow Left</kbd>"
 msgstr ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-"\"kbd--plus\">+</span><kbd>Pijl Links</kbd>"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>"
+"Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>Pijl "
+"Links</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:60-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:223-38
@@ -523,13 +566,12 @@ msgstr "Selectie met cursor naar rechts uitbreiden"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:61-104
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:224-104
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:289-104
-#, fuzzy
 msgid ""
 "<kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</"
 "span><kbd>Arrow Right</kbd>"
 msgstr ""
-"Shift+pijl naar rechts<kbd>Shift</kbd><span class=\"kbd--plus\">+</"
-"span><kbd>Pijl Rechts</kbd>"
+"<kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>"
+"Pijl Rechts</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:62-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:225-38
@@ -540,11 +582,12 @@ msgstr "Ga naar begin van het volgende woord"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:62-93
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:225-93
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:290-93
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</"
 "span><kbd>Arrow Right</kbd>"
-msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Pijl Rechts</kbd>"
+msgstr ""
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>"
+"Pijl Rechts</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:63-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:226-38
@@ -555,14 +598,14 @@ msgstr "Woord voor woord naar rechts selecteren"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:63-97
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:226-97
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:291-97
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</"
 "span><kbd>Arrow Right</kbd>"
 msgstr ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-"\"kbd--plus\">+</span><kbd>Pijl Rechts</kbd>"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>"
+"Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>Pijl "
+"Rechts</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:64-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:227-38
@@ -585,12 +628,12 @@ msgstr "Regels naar boven selecteren"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:65-98
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:228-98
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:293-98
-#, fuzzy
 msgid ""
 "<kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</"
 "span><kbd>Arrow Up</kbd>"
 msgstr ""
-"<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Pijl Omhoog</kbd>"
+"<kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>"
+"Pijl Omhoog</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:66-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:229-38
@@ -601,11 +644,12 @@ msgstr "Verplaats cursor naar het begin van de vorige alinea"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:66-115
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:229-115
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:294-115
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</"
 "span><kbd>Arrow Up</kbd>"
-msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Pijl Omhoog</kbd>"
+msgstr ""
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>"
+"Pijl Omhoog</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:67-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:230-38
@@ -616,14 +660,14 @@ msgstr "Selecteer tot aan het begin van de alinea"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:67-97
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:230-97
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:295-97
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</"
 "span><kbd>Arrow Up</kbd>"
 msgstr ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-"\"kbd--plus\">+</span><kbd>Pijl Omhoog</kbd>"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>"
+"Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>Pijl "
+"Omhoog</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:68-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:231-38
@@ -646,12 +690,12 @@ msgstr "Regels naar beneden selecteren"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:69-100
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:232-100
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:297-100
-#, fuzzy
 msgid ""
 "<kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</"
 "span><kbd>Arrow Down</kbd>"
 msgstr ""
-"<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Pijl Omlaag</kbd>"
+"<kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>"
+"Pijl Omlaag</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:70-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:233-38
@@ -662,11 +706,12 @@ msgstr "Verplaats cursor naar het begin van de volgende alinea"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:70-111
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:233-111
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:298-111
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</"
 "span><kbd>Arrow Down</kbd>"
-msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Pijl Omlaag</kbd>"
+msgstr ""
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>"
+"Pijl Omlaag</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:71-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:234-38
@@ -677,14 +722,14 @@ msgstr "Tot aan einde alinea selecteren"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:71-91
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:234-91
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:299-91
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</"
 "span><kbd>Arrow Down</kbd>"
 msgstr ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-"\"kbd--plus\">+</span><kbd>Pijl Omlaag</kbd>"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>"
+"Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>Pijl "
+"Omlaag</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:72-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:235-38
@@ -709,11 +754,12 @@ msgstr "Selecteer tot aan het begin van een regel"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:138-138
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:236-105
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:301-105
-#, fuzzy
 msgid ""
 "<kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>Home</kbd>"
-msgstr "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Home</kbd>"
+msgstr ""
+"<kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>"
+"Home</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:74-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:237-38
@@ -726,11 +772,12 @@ msgstr "Naar begin van document"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:134-118
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:237-88
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:302-88
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>Home</kbd>"
-msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Home</kbd>"
+msgstr ""
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>"
+"Home</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:75-38
 msgid "Go and select text to start of document"
@@ -744,6 +791,9 @@ msgid ""
 ">+</span><kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>Home</kbd>"
 msgstr ""
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>"
+"Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>Home</"
+"kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:76-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:239-38
@@ -768,11 +818,12 @@ msgstr "Selecteer tot aan het einde van een regel"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:139-137
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:240-99
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:305-99
-#, fuzzy
 msgid ""
 "<kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>End</kbd>"
-msgstr "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>End</kbd>"
+msgstr ""
+"<kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>"
+"End</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:78-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:241-38
@@ -785,11 +836,12 @@ msgstr "Naar einde van document"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:135-131
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:241-86
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:306-86
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>End</kbd>"
-msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>End</kbd>"
+msgstr ""
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>"
+"End</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:79-38
 msgid "Go and select text to end of document"
@@ -803,6 +855,9 @@ msgid ""
 ">+</span><kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>End</kbd>"
 msgstr ""
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>"
+"Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>End</"
+"kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:80-38
 msgid "Move the view up one page"
@@ -817,22 +872,24 @@ msgid "Switch cursor between text and header"
 msgstr "Schakelt de cursor tussen tekst en koptekst"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:81-102
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>PageUp</kbd>"
-msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>PageUp</kbd>"
+msgstr ""
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>"
+"PageUp</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:82-38
 msgid "Extend the selection up one page"
 msgstr "Breid de selectie één pagina naar boven uit"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:82-97
-#, fuzzy
 msgid ""
 "<kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>PageUp</kbd>"
-msgstr "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>PageUp</kbd>"
+msgstr ""
+"<kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>"
+"PageUp</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:83-38
 msgid "Move the view down one page"
@@ -847,58 +904,62 @@ msgid "Switch cursor between text and footer"
 msgstr "Schakelt de cursor tussen tekst en voettekst"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:84-102
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>PageDown</kbd>"
-msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>PageDown</kbd>"
+msgstr ""
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>"
+"PageDown</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:85-38
 msgid "Extend the selection down one page"
 msgstr "Breid de selectie één pagina naar beneden uit"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:85-99
-#, fuzzy
 msgid ""
 "<kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>PageDown</kbd>"
-msgstr "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>PageDown</kbd>"
+msgstr ""
+"<kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>"
+"PageDown</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:86-38
 msgid "Delete to beginning of word"
 msgstr "Verwijder tekst tot aan het begin van het woord"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:86-92
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>Backspace</kbd>"
-msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Backspace</kbd>"
+msgstr ""
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>"
+"Backspace</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:87-38
 msgid "Delete to end of word"
 msgstr "Verwijder tekst tot aan het einde van het woord"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:87-86
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>Del</kbd>"
-msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Del</kbd>"
+msgstr ""
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>"
+"Del</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:88-38
 msgid "Delete to beginning of sentence"
 msgstr "Verwijder tekst tot aan het begin van de zin"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:88-96
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>Backspace</kbd>"
 msgstr ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-"\"kbd--plus\">+</span><kbd>Backspace</kbd>"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>"
+"Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>"
+"Backspace</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:89-38
 msgid "Delete to end of sentence"
@@ -910,6 +971,9 @@ msgid ""
 ">+</span><kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>Del</kbd>"
 msgstr ""
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>"
+"Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>Del</"
+"kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.h2:93-9
 msgid "Shortcut Keys for Tables"
@@ -947,29 +1011,30 @@ msgstr ""
 "document."
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:98-38
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>Tab</kbd>"
-msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Tab</kbd>"
+msgstr ""
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>"
+"Tab</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:98-146
-#, fuzzy
 msgid ""
 "Inserts a tab stop (only in tables). Depending on the Window Manager in use, "
 "<kbd>Alt</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>Tab</kbd> may be used instead."
 msgstr ""
-"Voeg een tab stop in (alleen in tabellen). Afhankelijk van de gebruikte "
-"Vensterbeheerder moet wellicht <kbd>Alt</kbd><span class=\"kbd--plus\""
-">+</span><kbd>Tab</kbd> worden gebruikt."
+"Voegt een tabstop in (alleen in tabellen). Afhankelijk van de gebruikte "
+"Window Manager kan in plaats daarvan <kbd>Alt</kbd><span class=\"kbd--plus\" "
+"aria-hidden=\"true\">+</span><kbd>Tab</kbd> worden gebruikt."
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:99-38
-#, fuzzy
 msgid ""
 "<kbd>Alt</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</"
 "span><kbd>Arrow Keys</kbd>"
-msgstr "<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Pijltoetsen</kbd>"
+msgstr ""
+"<kbd>Alt</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>"
+"Pijltjestoetsen</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:99-152
 msgid ""
@@ -977,14 +1042,14 @@ msgid ""
 msgstr "Vergroot/verkleint de kolom/rij aan de rechterkant/onderkant van de cel"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:100-38
-#, fuzzy
 msgid ""
 "<kbd>Alt</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</"
 "span><kbd>Arrow Keys</kbd>"
 msgstr ""
-"<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-"\"kbd--plus\">+</span><kbd>Pijltoetsen</kbd>"
+"<kbd>Alt</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>"
+"Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>"
+"Pijltjestoetsen</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:100-219
 msgid "Increase/decrease the size of the column/row on the left/top cell edge"
@@ -993,14 +1058,14 @@ msgstr ""
 "van de cel"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:101-38
-#, fuzzy
 msgid ""
 "<kbd>Alt</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</"
 "span><kbd>Arrow Keys</kbd>"
 msgstr ""
-"<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</kbd><span class="
-"\"kbd--plus\">+</span><kbd>Pijltoetsen</kbd>"
+"<kbd>Alt</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>"
+"Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>"
+"Pijltjestoetsen</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:101-218
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:102-285
@@ -1014,41 +1079,46 @@ msgid ""
 ">+</span><kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</"
 "span><kbd>Arrow Keys</kbd>"
 msgstr ""
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\" >+</span><kbd>"
+"Alt</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>Shift</"
+"kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>"
+"Pijltjestoetsen</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:103-38
-#, fuzzy
 msgid ""
 "<kbd>Alt</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>Insert</kbd>"
-msgstr "<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Insert</kbd>"
+msgstr ""
+"<kbd>Alt</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>"
+"Invoegen</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:103-148
-#, fuzzy
 msgid ""
 "3 seconds in Insert mode, Arrow Key inserts row/column, <kbd>Ctrl</kbd><span "
 "class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>Arrow Key</kbd> "
 "inserts cell"
 msgstr ""
-"3 seconden in Invoeg modus, Pijltoetsen voegen rij/kolom in, <kbd>Ctrl</"
-"kbd><span class=\"kbd--plus\">+</span><kbd>Pijltoetsen</kbd> voegen cel in"
+"3 seconden in invoegmodus, pijltjestoets voegt rij/kolom in, <kbd>Ctrl</kbd>"
+"<span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>pijltjestoets</"
+"kbd> voegt cel in"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:104-38
-#, fuzzy
 msgid ""
 "<kbd>Alt</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>Del</kbd>"
-msgstr "<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Del</kbd>"
+msgstr ""
+"<kbd>Alt</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>"
+"Del</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:104-145
-#, fuzzy
 msgid ""
 "3 seconds in Delete mode, Arrow key deletes row/column, <kbd>Ctrl</kbd><span "
 "class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>Arrow key</kbd> merges "
 "cell with neighboring cell"
 msgstr ""
-"3 seconden in Verwijder modus, Pijltoetsen verwijderen rij/kolom, <kbd>Ctrl</"
-"kbd><span class=\"kbd--plus\">+</span><kbd>Pijltoetsen</kbd> voegen cel "
-"samen met naastgelegen cel"
+"3 seconden in de verwijdermodus, pijltjestoets verwijdert rij/kolom, <kbd>"
+"Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>"
+"pijltjestoets</kbd> voegt cel samen met aangrenzende cel"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:105-38
 msgid ""
@@ -1056,6 +1126,9 @@ msgid ""
 ">+</span><kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>Del</kbd>"
 msgstr ""
+"<kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>"
+"Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>Del</"
+"kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td.p:105-235
 msgid ""
@@ -1102,6 +1175,8 @@ msgid ""
 ">+</span><kbd>Alt</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>F</kbd>"
 msgstr ""
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>"
+"Alt</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>F</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:115-38
 msgid "Insert endnote"
@@ -1113,6 +1188,8 @@ msgid ""
 ">+</span><kbd>Alt</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>D</kbd>"
 msgstr ""
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>"
+"Alt</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>D</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:116-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:167-38
@@ -1126,17 +1203,20 @@ msgid ""
 ">+</span><kbd>Alt</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>C</kbd>"
 msgstr ""
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>"
+"Alt</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>C</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:118-38
 msgid "Insert soft hyphen"
 msgstr "Zacht koppelteken invoegen"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:118-83
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>-</kbd>"
-msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>-</kbd>"
+msgstr ""
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>-"
+"</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:119-38
 msgid "Insert non-breaking hyphen"
@@ -1148,6 +1228,9 @@ msgid ""
 ">+</span><kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>-</kbd>"
 msgstr ""
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>"
+"Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>-</"
+"kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:121-38
 msgid "Insert non-breaking space"
@@ -1159,17 +1242,21 @@ msgid ""
 ">+</span><kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>Space</kbd>"
 msgstr ""
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>"
+"Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>"
+"Spatiebalk</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:122-38
 msgid "Insert line break"
 msgstr "Regeleinde invoegen"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:122-82
-#, fuzzy
 msgid ""
 "<kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>Enter</kbd>"
-msgstr "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Enter</kbd>"
+msgstr ""
+"<kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>"
+"Enter</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:123-38
 msgid "Manual page break"
@@ -1178,11 +1265,12 @@ msgstr "Handmatige pagina-einde"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:123-82
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:251-98
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:316-105
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>Enter</kbd>"
-msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Enter</kbd>"
+msgstr ""
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>"
+"Enter</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:124-38
 msgid "Column break (in multicolumnar text)"
@@ -1194,6 +1282,9 @@ msgid ""
 ">+</span><kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>Enter</kbd>"
 msgstr ""
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>"
+"Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>"
+"Enter</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:125-38
 msgid ""
@@ -1204,11 +1295,12 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:125-139
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:126-175
-#, fuzzy
 msgid ""
 "<kbd>Alt</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>Enter</kbd>"
-msgstr "<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Enter</kbd>"
+msgstr ""
+"<kbd>Alt</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>"
+"Enter</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:126-38
 msgid ""
@@ -1260,11 +1352,12 @@ msgstr ""
 "huidige kolom of breid de selectie uit tot een pagina hoger."
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:140-184
-#, fuzzy
 msgid ""
 "<kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</"
 "span><kbd>Page Up</kbd>"
-msgstr "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Page Up</kbd>"
+msgstr ""
+"<kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>"
+"Page Up</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:141-38
 msgid ""
@@ -1275,11 +1368,12 @@ msgstr ""
 "huidige kolom of breid de selectie uit tot een pagina lager."
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:141-188
-#, fuzzy
 msgid ""
 "<kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</"
 "span><kbd>Page Down</kbd>"
-msgstr "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Page Down</kbd>"
+msgstr ""
+"<kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>"
+"Page Down</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:142-38
 msgid ""
@@ -1293,11 +1387,12 @@ msgstr ""
 "linkerzijde die gegevens bevat"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:142-265
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</"
 "span><kbd>Left Arrow</kbd>"
-msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Pijl Links</kbd>"
+msgstr ""
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>"
+"Pijl Links</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:143-38
 msgid ""
@@ -1311,11 +1406,12 @@ msgstr ""
 "rechterzijde die gegevens bevat."
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:143-269
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</"
 "span><kbd>Right Arrow</kbd>"
-msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Pijl Rechts</kbd>"
+msgstr ""
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>"
+"Pijl Rechts</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:144-38
 msgid ""
@@ -1328,11 +1424,12 @@ msgstr ""
 "verplaatst de cursor zich naar de volgende rij die gegevens bevat."
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:144-241
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</"
 "span><kbd>Up Arrow</kbd>"
-msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Pijl Omhoog</kbd>"
+msgstr ""
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>"
+"Pijl Omhoog</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:145-38
 msgid ""
@@ -1345,11 +1442,12 @@ msgstr ""
 "verplaatst de cursor zich naar de volgende rij die gegevens bevat."
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:145-246
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</"
 "span><kbd>Down Arrow</kbd>"
-msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Pijl Omlaag</kbd>"
+msgstr ""
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>"
+"Pijl Omlaag</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:146-38
 msgid "Go to next sheet."
@@ -1361,6 +1459,9 @@ msgid ""
 ">+</span><kbd>Alt</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</"
 "span><kbd>Page Down</kbd>"
 msgstr ""
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>"
+"Alt</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>Page "
+"Down</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:147-38
 msgid "Go to previous sheet."
@@ -1372,6 +1473,9 @@ msgid ""
 ">+</span><kbd>Alt</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</"
 "span><kbd>Page Up</kbd>"
 msgstr ""
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>"
+"Alt</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>Page "
+"Up</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:148-38
 msgid ""
@@ -1391,28 +1495,33 @@ msgid ""
 ">+</span><kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>Arrow</kbd>"
 msgstr ""
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>"
+"Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>Pijl</"
+"kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:149-38
 msgid "Moves one sheet to the left."
 msgstr "Hiermee verplaatst u één werkblad naar links."
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:149-93
-#, fuzzy
 msgid ""
 "<kbd>Alt</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</"
 "span><kbd>Page Up</kbd>"
-msgstr "<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Page Up</kbd>"
+msgstr ""
+"<kbd>Alt</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>"
+"Page Up</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:150-38
 msgid "Moves one screen page to the right."
 msgstr "Hiermee verplaatst u één werkblad naar rechts."
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:150-100
-#, fuzzy
 msgid ""
 "<kbd>Alt</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</"
 "span><kbd>Page Down</kbd>"
-msgstr "<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Page Down</kbd>"
+msgstr ""
+"<kbd>Alt</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>"
+"Page Down</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:151-38
 msgid ""
@@ -1431,6 +1540,9 @@ msgid ""
 ">+</span><kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</"
 "span><kbd>Page Up</kbd>"
 msgstr ""
+"<kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>"
+"Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>Page "
+"Up</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:152-38
 msgid ""
@@ -1444,14 +1556,14 @@ msgstr ""
 "blad."
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:152-268
-#, fuzzy
 msgid ""
 "<kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</"
 "span><kbd>Page Down</kbd>"
 msgstr ""
-"<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</kbd><span class="
-"\"kbd--plus\">+</span><kbd>Page Down</kbd>"
+"<kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>"
+"Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>Page "
+"Down</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:153-38
 msgid ""
@@ -1464,11 +1576,12 @@ msgstr ""
 "celbereik dat data bevat en is begrenst door lege rij en kolommen."
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:153-269
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>*</kbd>"
-msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>*</kbd>"
+msgstr ""
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>"
+"*</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:154-38
 msgid ""
@@ -1479,33 +1592,36 @@ msgstr ""
 "formule bereik dat de cursor bevat."
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:154-178
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>/</kbd>"
-msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>/</kbd>"
+msgstr ""
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>/"
+"</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:155-38
 msgid "Insert cells (as in menu Insert - Cells)"
 msgstr "Cellen toevoegen (als in menu Invoegen - Cellen)"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:155-105
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</"
 "span><kbd>Plus key</kbd>"
-msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Plus toets</kbd>"
+msgstr ""
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>"
+"Plus toets</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:156-38
 msgid "Delete cells (as in menu Edit - Delete Cells)"
 msgstr "Verwijder cellen (als in menu Bewerken - Verwijder Cellen)"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:156-110
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</"
 "span><kbd>Minus key</kbd>"
-msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Min toets</kbd>"
+msgstr ""
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>"
+"Min toets</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.h2:160-9
 msgid "Cell formatting"
@@ -1516,11 +1632,12 @@ msgid "Display comment"
 msgstr "Notitie weergeven"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:168-80
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>F1</kbd>"
-msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>F1</kbd>"
+msgstr ""
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>"
+"F1</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:169-38
 msgid "Fill Down"
@@ -1540,6 +1657,9 @@ msgid ""
 ">+</span><kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>1</kbd>"
 msgstr ""
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>"
+"Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>1</"
+"kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:177-38
 msgid "Standard exponential format"
@@ -1551,6 +1671,9 @@ msgid ""
 ">+</span><kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>2</kbd>"
 msgstr ""
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>"
+"Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>2</"
+"kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:178-38
 msgid "Standard date format"
@@ -1562,6 +1685,9 @@ msgid ""
 ">+</span><kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>3</kbd>"
 msgstr ""
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>"
+"Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>3</"
+"kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:179-38
 msgid "Standard currency format"
@@ -1573,6 +1699,9 @@ msgid ""
 ">+</span><kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>4</kbd>"
 msgstr ""
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>"
+"Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>4</"
+"kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:180-38
 msgid "Standard percentage format (two decimal places)"
@@ -1584,6 +1713,9 @@ msgid ""
 ">+</span><kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>5</kbd>"
 msgstr ""
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>"
+"Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>5</"
+"kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:181-38
 msgid "Standard format"
@@ -1595,6 +1727,9 @@ msgid ""
 ">+</span><kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>6</kbd>"
 msgstr ""
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>"
+"Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>6</"
+"kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.h2:185-9
 msgid "Insert"
@@ -1605,12 +1740,12 @@ msgid "Insert date"
 msgstr "Datum invoegen"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:187-76
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>;</kbd> or <kbd>,</kbd>"
 msgstr ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>;</kbd> of <kbd>,</kbd>"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>"
+";</kbd> of <kbd>,</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:211-38
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:276-38
@@ -1633,11 +1768,12 @@ msgstr "Bevorder lijstitem (het lijstitem moet zijn geselecteerd)"
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:250-127
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:277-113
 #: html/cool-help.html%2Bdiv.div.div.table.tr.td:315-127
-#, fuzzy
 msgid ""
 "<kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\""
 ">+</span><kbd>Tab</kbd>"
-msgstr "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Tab</kbd>"
+msgstr ""
+"<kbd>Shift</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>"
+"Tab</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.h2:216-9
 #: html/cool-help.html%2Bdiv.div.div.h2:281-9
@@ -1885,6 +2021,14 @@ msgid ""
 "click the show icon <span class=\"w2ui-icon unfold icon-size\" role=\"img\" "
 "aria-label=\"show menu bar\" title=\"Show menu bar\"></span>."
 msgstr ""
+"<span class=\"def\">De menubalk:</span> Het hoofdmenu bevindt zich bovenaan "
+"en bevat veel opties, zoals opdrachten voor afdrukken, bewerken, bekijken en "
+"andere geavanceerde opdrachten. U kunt de menubalk verbergen door op het "
+"pictogram Verbergen <span class=\"w2ui-icon fold icon-size\" role=\"img\" "
+"aria-label=\"Menu bar verbergen\" title=\"Menu bar verbergen\"></span> "
+"helemaal rechts te klikken. Om deze weer te tonen, klikt u op het pictogram "
+"voor weergeven <span class=\"w2ui-icon unfold icon-size\" role=\"img\" aria-"
+"label=\"Menu bar tonen\" title=\"Menu bar tonen\"></span>."
 
 #: html/cool-help.html%2Bdiv.div.div.p:378-5
 msgid ""
@@ -1915,7 +2059,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.div.img[alt]:385-29
 msgid "The status bar"
-msgstr ""
+msgstr "De statusbalk"
 
 #: html/cool-help.html%2Bdiv.div.div.p:388-5
 msgid ""
@@ -1930,9 +2074,8 @@ msgstr ""
 "hoofdlettergevoelig. Er zijn drie knoppen direct naast het zoekvak:"
 
 #: html/cool-help.html%2Bdiv.div.div.ul.li:390-7
-#, fuzzy
 msgid "Search backwards>"
-msgstr "Terugwaarts zoeken"
+msgstr "Achterwaarts zoeken>"
 
 #: html/cool-help.html%2Bdiv.div.div.ul.li:391-7
 msgid "Search forward"
@@ -1944,18 +2087,16 @@ msgstr ""
 "Annuleer de zoekopdracht (verschijnt alleen wanneer een tekst is doorzocht)"
 
 #: html/cool-help.html%2Bdiv.div.div.p:396-5
-#, fuzzy
 msgid ""
 "<span class=\"def\">The zoom bar:</span> The zoom bar includes buttons to "
 "reset zoom to 100%, zoom out and zoom in. The zoom applies to the document "
 "area, the user interface is not affected. The current level of zoom is shown "
 "in this area."
 msgstr ""
-"<span class=\"def\">De Zoombalk:</span> Rechts van de Statusbalk bevindt "
-"zich een set knoppen waarmee u tot 100% kunt inzoomen, uitzoomen en "
-"inzoomen. De zoom is van toepassing op het documentgebied, de "
-"gebruikersinterface wordt niet beïnvloed. Het huidige zoomniveau wordt in "
-"dit gebied weergegeven."
+"<span class=\"def\">De zoom balk:</span> De zoom balk bevat knoppen om de "
+"zoom terug te zetten naar 100%, uit te zoomen en in te zoomen. De zoom is "
+"van toepassing op het documentgebied, de gebruikersinterface wordt niet "
+"beïnvloed. Het huidige zoomniveau wordt in dit gebied weergegeven."
 
 #: html/cool-help.html%2Bdiv.div.div.p:397-5
 msgid ""
@@ -1978,10 +2119,13 @@ msgid ""
 "details about the current document. The actual information depends on the "
 "nature of the document."
 msgstr ""
+"<span class=\"def\">De informatiebalk:</span> De informatiebalk geeft "
+"details weer over het huidige document. De daadwerkelijke informatie is "
+"afhankelijk van de aard van het document."
 
 #: html/cool-help.html%2Bdiv.div.div.div.img[alt]:402-29
 msgid "The information bar"
-msgstr ""
+msgstr "De informatiebalk"
 
 #: html/cool-help.html%2Bdiv.div.p:407-5
 msgid ""
@@ -2056,7 +2200,6 @@ msgid "Copy and Paste"
 msgstr "Kopiëren en plakken"
 
 #: html/cool-help.html%2Bdiv.div.div.p:419-5
-#, fuzzy
 msgid ""
 "Rich content copy/cut and paste is supported, not only within a given "
 "document, but also across documents on the same or different <span class="
@@ -2072,19 +2215,21 @@ msgid ""
 "tapping, and using a long-tap to access copy/cut/paste via the context menu "
 "is required."
 msgstr ""
-"Kopiëren/knippen en plakken van uitgebreide inhoud wordt ondersteund, niet "
-"alleen binnen een bepaald document, maar ook tussen documenten op dezelfde "
-"of verschillende <span class=\"productname\">{productname}</span>. Voor deze "
+"Het kopiëren en plakken van rijke inhoud wordt ondersteund, niet alleen "
+"binnen een bepaald document, maar ook tussen documenten op dezelfde of "
+"verschillende <span class=\"productname\">{productname}</span>. Voor deze "
 "interne toepassingen kunnen gebruikers inhoud, inclusief afbeeldingen en "
-"gemengde inhoud, kopiëren/knippen op de pc door de sneltoetsen rechtstreeks "
-"te gebruiken (<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span ><kbd>X</"
-"kbd>, <kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>C</kbd>, "
-"<kbd>Ctrl</kbd ><span class=\"kbd--plus\">+</span><kbd>V</kbd>). Om "
-"veiligheidsredenen is het noodzakelijk om <kbd>Ctrl</kbd><span class=\"kbd--"
-"plus\">+</span><kbd>V</kbd> te gebruiken om op pc te plakken, maar "
-"contextmenu's kunnen gebruikt voor knippen en kopiëren. Op Android of iOS is "
-"het vereist om tekst te selecteren door dubbel te tikken en lang te tikken "
-"om toegang te krijgen tot kopiëren/knippen/plakken via het contextmenu."
+"gemengde inhoud, op de pc kopiëren/knippen door rechtstreeks de sneltoetsen "
+"te gebruiken (<kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-hidden=\"true\">"
+"+</span><kbd>X</kbd>, <kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-"
+"hidden=\"true\">+</span><kbd>C</kbd>, <kbd>Ctrl</kbd><span class=\"kbd--"
+"plus\" aria-hidden=\"true\">+</span><kbd>V</kbd>). Om veiligheidsredenen is "
+"het noodzakelijk om <kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-"
+"hidden=\"true\">+</span><kbd>V</kbd> te gebruiken om op een pc te plakken, "
+"maar contextmenu's kunnen worden gebruikt voor knippen en kopiëren. Op "
+"Android of iOS moet u tekst selecteren door dubbel te tikken en lang te "
+"tikken om toegang te krijgen tot kopiëren/knippen/plakken via het "
+"contextmenu."
 
 #: html/cool-help.html%2Bdiv.div.div.p:420-5
 msgid ""
@@ -2133,17 +2278,17 @@ msgid "document repair"
 msgstr "documentreparatie"
 
 #: html/cool-help.html%2Bdiv.div.div.p:427-5
-#, fuzzy
 msgid ""
 "This is particularly useful – say when a colleague inadvertently selected "
 "all text in the document with <kbd>Ctrl</kbd><span class=\"kbd--plus\" aria-"
 "hidden=\"true\">+</span><kbd>A</kbd> and proceeded to type over it "
 "destroying it – while you were concurrently editing."
 msgstr ""
-"Dit is vooral handig - bijvoorbeeld wanneer een collega per ongeluk alle "
-"tekst in het document met <kbd>Ctrl</kbd><span class=\"kbd--plus\""
-">+</span><kbd>A</kbd> selecteerde en eroverheen typte en het vernietigde - "
-"terwijl u tegelijkertijd aan het bewerken was."
+"Dit is vooral handig wanneer een collega per ongeluk alle tekst in het "
+"document heeft geselecteerd met <kbd>Ctrl</kbd><span class=\"kbd--plus\" "
+"aria-hidden=\"true\">+</span><kbd>A</kbd> en vervolgens eroverheen is gaan "
+"typen, waardoor de tekst verloren is gegaan, terwijl u tegelijkertijd aan "
+"het bewerken was."
 
 #: html/cool-help.html%2Bdiv.div.div.h4:430-5
 msgid "Inactive document"
@@ -2194,15 +2339,14 @@ msgstr ""
 "inhoud geplakt als Rich Text (RTF)."
 
 #: html/cool-help.html%2Bdiv.div.div.p:438-5
-#, fuzzy
 msgid ""
 "You can paste as unformatted text with the keyboard shortcut: <kbd>Ctrl</"
 "kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>Shift</"
 "kbd><span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>V</kbd>"
 msgstr ""
-"U kunt als niet-opgemaakte tekst plakken met de toetscombinatie: <kbd>Ctrl</"
-"kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd--"
-"plus\">+</span><kbd>V</kbd>"
+"Je kunt als onopgemaakte tekst plakken met de sneltoets: <kbd>Ctrl</kbd>"
+"<span class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>Shift</kbd><span "
+"class=\"kbd--plus\" aria-hidden=\"true\">+</span><kbd>V</kbd>"
 
 #: html/cool-help.html%2Bdiv.div.div.p:439-5
 msgid ""
@@ -2444,7 +2588,6 @@ msgstr ""
 "\"_blank\" rel=\"noopener noreferrer\">OASIS OpenFormula-specificatie</a>."
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:500-5
-#, fuzzy
 msgid ""
 "<span class=\"def\">Direct formatting:</span> You can format spreadsheets "
 "cells, columns, rows and sheets by formatting directly from the menus, "
@@ -2454,18 +2597,18 @@ msgid ""
 "dialog allows complex and custom number formatting, as well as font, complex "
 "border, background, cell protection and other options."
 msgstr ""
-"<span class=\"def\">Directe opmaak:</span> u kunt cellen, kolommen, rijen en "
-"bladen van spreadsheets opmaken door rechtstreeks op te maken vanuit de "
-"menu's, werkbalk of contextmenu's. Directe opmaak is alleen van toepassing "
-"op het huidige geselecteerde object. Gebruik het menu om een cel op te maken "
-"of druk op <kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>1</kbd>. "
-"Het dialoogvenster maakt complexe en aangepaste nummeropmaak mogelijk, "
-"evenals lettertype, complexe rand, achtergrond, celbeveiliging en andere "
-"opties."
+"<span class=\"def\">Directe opmaak:</span> U kunt cellen, kolommen, rijen en "
+"bladen in spreadsheets opmaken door rechtstreeks vanuit de menu's, werkbalk "
+"of contextmenu's opmaak toe te passen. Directe opmaak is alleen van "
+"toepassing op het momenteel geselecteerde object. Om een cel op te maken, "
+"gebruikt u het menu of drukt u op <kbd>Ctrl</kbd><span class=\"kbd--plus\" "
+"aria-hidden=\"true\">+</span><kbd>1</kbd>. In het dialoogvenster kunt u "
+"complexe en aangepaste getalopmaak instellen, evenals lettertypen, complexe "
+"randen, achtergronden, celbeveiliging en andere opties."
 
 #: html/cool-help.html%2Bdiv.div.div.div.div.img[alt]:501-29
 msgid "format cells"
-msgstr ""
+msgstr "cellen opmaken"
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:506-30
 msgid ""
@@ -2540,7 +2683,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.div.div.img[alt]:519-29
 msgid "outlining"
-msgstr ""
+msgstr "schetsen"
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:522-5
 msgid ""
@@ -2611,7 +2754,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.div.div.img[alt]:538-29
 msgid "cell comments"
-msgstr ""
+msgstr "celopmerkingen"
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:541-5
 msgid ""
@@ -2629,7 +2772,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.div.div.img[alt]:542-29
 msgid "conditional formatting"
-msgstr ""
+msgstr "voorwaardelijke opmaak"
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:550-30
 msgid ""
@@ -2721,9 +2864,8 @@ msgstr ""
 "span> → <span class=\"ui\">Bewerk stijlen</span> om de stijl te wijzigen."
 
 #: html/cool-help.html%2Bdiv.div.div.div.div.img[alt]:565-29
-#, fuzzy
 msgid "style formatting"
-msgstr "Celopmaak"
+msgstr "opmaakstijl"
 
 #: html/cool-help.html%2Bdiv.div.div.div.h4:571-5
 msgid "Handling Tables"
@@ -2743,7 +2885,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.div.div.img[alt]:573-29
 msgid "insert table"
-msgstr ""
+msgstr "tabel invoegen"
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:576-5
 msgid ""
@@ -2908,7 +3050,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.div.div.img[alt]:619-29
 msgid "slide layouts"
-msgstr ""
+msgstr "dia indelingen"
 
 #: html/cool-help.html%2Bdiv.div.div.div.p:621-30
 msgid ""
@@ -3095,7 +3237,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.div.div.img[alt]:669-29
 msgid "thesaurus"
-msgstr ""
+msgstr "thesaurus"
 
 #: html/cool-help.html%2Bdiv.div.div.h4:672-5
 msgid ""
