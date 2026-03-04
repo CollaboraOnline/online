@@ -655,7 +655,7 @@ function getShapesPopupElements(closeCallback) {
 	const grid = document.createElement('div');
 	grid.className = 'insertshape-grid';
 	grid.setAttribute('role', 'grid');
-	JSDialog.AddOnClick(grid, onShapeClickFunction);
+	grid.onclick = onShapeClickFunction;
 	grid.onkeydown = onShapeKeyDownFunction;
 
 	const container = document.createElement('div');
@@ -689,7 +689,7 @@ function getConnectorsPopupElements(closeCallback) {
 	const grid = document.createElement('div');
 	grid.className = 'insertshape-grid';
 	grid.setAttribute('role', 'grid');
-	JSDialog.AddOnClick(grid, onShapeClickFunction);
+	grid.onclick = onShapeClickFunction;
 	grid.onkeydown = onShapeKeyDownFunction;
 
 	gridContainer.appendChild(grid);
