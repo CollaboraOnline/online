@@ -77,6 +77,7 @@ all_la_unit_tests = \
 	unit-wopi-languages.la \
 	unit-insert-delete.la \
 	unit-password-protected.la \
+	unit-convert-to-password-protected.la \
 	unit-wopi-httpredirect.la \
 	unit-calc.la \
 	unit-http.la \
@@ -258,6 +259,7 @@ unit_copy_paste_writer_la_SOURCES = UnitCopyPasteWriter.cpp
 unit_copy_paste_writer_la_LIBADD = $(CPPUNIT_LIBS)
 unit_convert_la_SOURCES = UnitConvert.cpp
 unit_convert_csv_la_SOURCES = UnitConvertCSV.cpp
+unit_convert_to_password_protected_la_SOURCES = UnitConvertToPasswordProtected.cpp
 unit_initial_load_fail_la_SOURCES = UnitInitialLoadFail.cpp
 unit_initial_load_fail_la_LIBADD = $(CPPUNIT_LIBS)
 unit_join_disconnect_la_SOURCES = UnitJoinDisconnect.cpp
