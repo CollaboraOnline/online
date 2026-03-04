@@ -654,7 +654,6 @@ function getShapesPopupElements(closeCallback) {
 
 	const grid = document.createElement('div');
 	grid.className = 'insertshape-grid';
-	grid.setAttribute('role', 'grid');
 	grid.onclick = onShapeClickFunction;
 	grid.onkeydown = onShapeKeyDownFunction;
 
