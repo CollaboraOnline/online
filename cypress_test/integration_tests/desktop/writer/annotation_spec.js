@@ -78,6 +78,25 @@ describe(['tagdesktop'], 'Annotation Tests', function() {
 		});
 	});
 
+	it('Action_ResolveComment postMessage resolves a comment', function() {
+		desktopHelper.insertComment();
+
+		cy.cGet('.cool-annotation-content-wrapper').should('be.visible');
+		cy.cGet('.cool-annotation-content-resolved').should('have.text', '');
+
+		// Send Action_ResolveComment postMessage with the comment's Id
+		cy.getFrameWindow().then(win => {
+			const message = {
+				'MessageId': 'Action_ResolveComment',
+				'Values': {'Id': '1'}
+			};
+			win.postMessage(JSON.stringify(message), '*');
+		});
+
+		// The comment should now show as resolved
+		cy.cGet('.cool-annotation-content-resolved').should('have.text', 'Resolved');
+	});
+
 	it('Toggle Resolved/Unresolved', function() {
 		desktopHelper.insertComment("unresolved comment", true);
 		cy.cGet('#comment-container-1').should('exist');
