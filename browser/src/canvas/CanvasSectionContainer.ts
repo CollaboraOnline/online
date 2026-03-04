@@ -1546,8 +1546,8 @@ class CanvasSectionContainer {
 			this.createUpdateDivElements();
 		if (redraw && this.drawingAllowed())
 			this.requestReDraw();
-		else if (window.L && window.L.Browser.safari && window.L.Browser.mobile)
-			this.resizeCanvas(); // HACK: On Mobile/Tablet Safari, not resizing the canvas here causes it to blur later... I have seen no evidence that this is a problem on Desktop Safari
+		else
+			this.resizeCanvas(); // Ensure canvas backing store is correctly sized even when drawing is disabled, to prevent blurriness on HiDPI displays
 	}
 
 	private roundPositionAndSize(section: CanvasSectionObject) {
