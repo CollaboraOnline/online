@@ -3490,7 +3490,9 @@ void lokit_main(
     if (const char* anonymizationSalt = std::getenv("COOL_ANONYMIZATION_SALT"))
     {
         const auto salt = std::stoull(anonymizationSalt);
-        Anonymizer::initialize(true, salt);
+        const char* highStrengthEnv = std::getenv("COOL_ANONYMIZATION_HIGH_STRENGTH");
+        const bool highStrength = highStrengthEnv && std::string(highStrengthEnv) == "1";
+        Anonymizer::initialize(true, salt, highStrength);
     }
 
     LOG_INF("User-data anonymization is " << (Anonymizer::enabled() ? "enabled." : "disabled."));

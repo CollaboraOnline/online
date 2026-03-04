@@ -1737,6 +1737,7 @@ void COOLWSD::innerInitialize(Poco::Util::Application& self)
     }
 
     std::uint64_t anonymizationSalt = 82589933;
+    bool highStrengthAnonymize = false;
     LOG_INF("Anonymization of user-data is " << (AnonymizeUserData ? "enabled." : "disabled."));
     if (AnonymizeUserData)
     {
@@ -1745,9 +1746,17 @@ void COOLWSD::innerInitialize(Poco::Util::Application& self)
             conf, "logging.anonymize.anonymization_salt", 82589933);
         const std::string anonymizationSaltStr = std::to_string(anonymizationSalt);
         setenv("COOL_ANONYMIZATION_SALT", anonymizationSaltStr.c_str(), true);
+
+        highStrengthAnonymize = ConfigUtil::getConfigValue<bool>(
+            conf, "logging.anonymize.high_strength", false);
+        if (highStrengthAnonymize)
+        {
+            LOG_INF("Using high-strength cryptographic anonymization (PBKDF2-HMAC-SHA512).");
+            setenv("COOL_ANONYMIZATION_HIGH_STRENGTH", "1", true);
+        }
     }
 
-    Anonymizer::initialize(AnonymizeUserData, anonymizationSalt);
+    Anonymizer::initialize(AnonymizeUserData, anonymizationSalt, highStrengthAnonymize);
 
     {
         bool enableWebsocketURP =
