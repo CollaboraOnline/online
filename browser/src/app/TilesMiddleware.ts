@@ -2127,7 +2127,8 @@ class TileManager {
 					tile.updateCount++;
 					this.nullDeltaUpdate++;
 					if (app.map._docLayer._emptyDeltaDiv) {
-						app.map._docLayer._emptyDeltaDiv.innerText = this.nullDeltaUpdate;
+						app.map._docLayer._emptyDeltaDiv.innerText =
+							this.nullDeltaUpdate.toString();
 					}
 					if (app.map._debug.tileDataOn) {
 						app.map._debug.tileDataAddUpdate();

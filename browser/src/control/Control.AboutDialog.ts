@@ -215,7 +215,7 @@ class AboutDialog {
 			link.addEventListener('click', (e: MouseEvent) => {
 				e.preventDefault();
 				app.socket.sendMessage('uno .uno:WidgetTestDialog');
-				app.map.uiManager.closeModal('modal-dialog-about-dialog-box', false);
+				app.map.uiManager.closeModal('modal-dialog-about-dialog-box');
 			});
 
 			elements.jsDialog.appendChild(label);

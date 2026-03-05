@@ -577,6 +577,10 @@ export class SheetDimension {
 		this._visibleSizes = undefined;
 	}
 
+	public getVisibleSizes(): SpanList {
+		return this._visibleSizes;
+	}
+
 	public getInvisibleSpanList(): BoolSpanList { return this._invisibleSpanList; }
 
 	public update(jsonObject: SheetDimensionCoreData): boolean {

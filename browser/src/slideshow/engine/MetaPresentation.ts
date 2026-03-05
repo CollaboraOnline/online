@@ -12,8 +12,8 @@
  */
 
 class MetaPresentation {
-	private docWidth: number;
-	private docHeight: number;
+	public docWidth: number;
+	public docHeight: number;
 	private _numberOfSlides: number;
 	private firstSlideHash: string;
 	private lastSlideHash: string;

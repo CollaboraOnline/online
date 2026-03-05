@@ -134,7 +134,7 @@ class SlideShowPresenter {
 	private _slideControlsTimer: ReturnType<typeof setTimeout> | null = null;
 	private _slideShowHandler: SlideShowHandler;
 	private _slideShowNavigator: SlideShowNavigator;
-	private _metaPresentation: MetaPresentation;
+	public _metaPresentation: MetaPresentation;
 	private _startSlide: number;
 	private _startEffect: number;
 	private _presentationInfoChanged: boolean = false;

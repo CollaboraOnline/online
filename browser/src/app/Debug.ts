@@ -61,14 +61,14 @@ class DebugManager {
 
 	private tileOverlaysOn: boolean;
 
-	private tileInvalidationsOn: boolean;
+	public tileInvalidationsOn: boolean;
 	private _tileInvalidationMessages: Map<number, string>;
 	private _tileInvalidationId: number;
 	private _tileInvalidationKeypressQueue: number[];
 	private _tileInvalidationKeypressTimes: DebugTimeArray;
 	private _tileInvalidationTimeoutId: TimeoutHdl;
 
-	private tileDataOn: boolean;
+	public tileDataOn: boolean;
 	private _tileDataTotalMessages: number;
 	private _tileDataTotalLoads: number;
 	private _tileDataTotalUpdates: number;

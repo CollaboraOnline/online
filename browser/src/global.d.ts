@@ -196,7 +196,7 @@ interface AppInterface {
 	colorPalettes: any; // TODO declare according to Widget.ColorPicker.ts
 	colorNames: any; // TODO declare according to Widget.ColorPicker.ts
 	console: Console;
-	map: any; // TODO should be window.L.Map
+	map: MapInterface; // TODO should be window.L.Map
 	// file defined in: src/docstate.ts
 	file: {
 		editComment: boolean;
