@@ -305,7 +305,7 @@ window.L.Control.NotebookbarWriter = window.L.Control.Notebookbar.extend({
 						'type': 'bigtoolitem',
 						'text': _UNO('.uno:RunMacro', 'text'),
 						'command': '.uno:RunMacro',
-						'accessibility': { focusBack: true,	combination: 'R' }
+						'accessibility': { focusBack: true,	combination: 'Z' }
 					}
 				]
 			});
