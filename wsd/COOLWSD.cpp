@@ -1472,7 +1472,6 @@ void COOLWSD::innerInitialize(Poco::Util::Application& self)
     // Load view mode file extensions configuration
     COOLWSD::ViewModeFileExtensions = ConfigUtil::getConfigValue<std::string>(
         conf, "view_mode.file_extensions", "");
-    LOG_DBG_S("View mode extensions: [" << COOLWSD::ViewModeFileExtensions << ']');
 
     // Set the log-level after complete initialization to force maximum details at startup.
     LogLevel = ConfigUtil::getConfigValue<std::string>(conf, "logging.level", "trace");
@@ -1614,6 +1613,7 @@ void COOLWSD::innerInitialize(Poco::Util::Application& self)
     std::ostringstream ossConfig;
     ossConfig << "Loaded config file [" << configFilePath << "] (non-default values):\n";
     ossConfig << ConfigUtil::getLoggableConfig(conf);
+    LOG_DBG_S("View mode extensions: [" << COOLWSD::ViewModeFileExtensions << ']');
 
     LoggableConfigEntries = ossConfig.str();
     LOG_INF(LoggableConfigEntries);

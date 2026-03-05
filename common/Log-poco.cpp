@@ -568,6 +568,11 @@ namespace Log
         if (IsShutdown)
             return false;
 
+        // Check if logger is properly initialized before calling logger()
+        // to avoid invalid downcast from Poco::Logger to GenericLogger.
+        if (!Static.getThreadLocalLogger() && !Static.getLogger())
+            return false;
+
         Log::Level logLevel = GenericLogger::mapToLevel(
             static_cast<Poco::Message::Priority>(logger().getLevel()));
 
