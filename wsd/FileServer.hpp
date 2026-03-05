@@ -18,6 +18,7 @@
 
 #include <COOLWSD.hpp>
 #include <ConfigUtil.hpp>
+#include <FileUtil.hpp>
 #include <HttpRequest.hpp>
 #include <Poco/Net/PartHandler.h>
 #include <Socket.hpp>
@@ -249,11 +250,17 @@ class FilePartHandler : public Poco::Net::PartHandler
 public:
     void handlePart(const Poco::Net::MessageHeader& header, std::istream& stream) override;
     const std::string& getFileName() const { return _fileName; }
-    const std::string& getFileContent() const { return _fileContent; }
+    const std::string& getFilePath() const { return _filePath; }
+    /// Take shared ownership of the temp dir (and file within it).
+    /// Caller keeps this alive until the file is no longer needed.
+    std::shared_ptr<FileUtil::OwnedFile> getFileOwnership() const { return _fileDir; }
 
 private:
     std::string _fileName;
-    std::string _fileContent;
+    /// Path to temp file containing the uploaded content.
+    std::string _filePath;
+    /// Temp directory holding the file, removed recursively on destruction.
+    std::shared_ptr<FileUtil::OwnedFile> _fileDir;
 };
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

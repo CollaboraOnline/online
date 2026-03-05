@@ -24,6 +24,7 @@
 #include <common/ConfigUtil.hpp>
 #include <common/Crypto.hpp>
 #include <common/FileUtil.hpp>
+#include <common/JailUtil.hpp>
 #include <common/JsonUtil.hpp>
 #include <common/LangUtil.hpp>
 #include <common/Log.hpp>
@@ -1594,9 +1595,24 @@ void FilePartHandler::handlePart(const Poco::Net::MessageHeader& header, std::is
             if (endPos != std::string::npos)
                 _fileName = _fileName.substr(0, endPos);
 
-            std::ostringstream oss;
-            Poco::StreamCopier::copyStream(stream, oss);
-            _fileContent = oss.str();
+            std::string dirPath = FileUtil::createRandomTmpDir(
+                COOLWSD::ChildRoot + JailUtil::CHILDROOT_TMP_INCOMING_PATH) + '/';
+            _filePath = dirPath + "upload";
+
+            std::ofstream fileStream;
+            fileStream.open(_filePath, std::ios::binary);
+            if (fileStream.good())
+            {
+                Poco::StreamCopier::copyStream(stream, fileStream);
+                fileStream.close();
+                _fileDir = std::make_shared<FileUtil::OwnedFile>(std::move(dirPath), true);
+            }
+            else
+            {
+                LOG_ERR("Unable to open [" << _filePath << "] for FilePartHandler streaming");
+                _filePath.clear();
+                FileUtil::removeFile(dirPath);
+            }
         }
     }
 }
@@ -1838,8 +1854,8 @@ void FileServerRequestHandler::uploadFileToIntegrator(const Poco::Net::HTTPReque
 
     const std::string& shortMessage = "Failed to upload preset file.";
     const std::string& fileName = partHandler.getFileName();
-    const std::string& fileContent = partHandler.getFileContent();
-    if (fileName.empty() || fileContent.empty())
+    const std::string& uploadedFilePath = partHandler.getFilePath();
+    if (fileName.empty() || uploadedFilePath.empty())
     {
         sendError(http::StatusCode::BadRequest, getRequestPath(request), socket, shortMessage,
                   "No valid file uploaded.");
@@ -1874,15 +1890,17 @@ void FileServerRequestHandler::uploadFileToIntegrator(const Poco::Net::HTTPReque
     httpRequest.setVerb(http::Request::VERB_POST);
 
     httpRequest.set("Content-Type", "application/octet-stream");
-    httpRequest.setBody(fileContent);
+    httpRequest.setBodyFile(uploadedFilePath);
 
     auto httpSession = StorageConnectionManager::getHttpSession(wopiUri);
 
     std::weak_ptr<StreamSocket> socketWeak(socket);
 
+    auto uploadedFileOwnership = partHandler.getFileOwnership();
+
     http::Session::FinishedCallback finishedCallback =
         [fileName, uriAnonym, socketWeak, requestPath = getRequestPath(request),
-         shortMessage](const std::shared_ptr<http::Session>& wopiSession)
+         shortMessage, uploadedFileOwnership](const std::shared_ptr<http::Session>& wopiSession)
     {
         std::shared_ptr<StreamSocket> destSocket = socketWeak.lock();
         if (!destSocket)

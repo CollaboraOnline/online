@@ -547,29 +547,24 @@ void handleSettingsRequest(const Poco::Net::HTTPRequest& request, const std::str
         FilePartHandler partHandler;
         Poco::Net::HTMLForm form(request, message, partHandler);
         const std::string& fileName = partHandler.getFileName();
-        const std::string& fileContent = partHandler.getFileContent();
+        const std::string& uploadedFilePath = partHandler.getFilePath();
 
-        if (fileName.empty() || fileContent.empty())
+        if (fileName.empty() || uploadedFilePath.empty())
         {
             http::Response httpResponse(http::StatusCode::BadRequest);
             socket->send(httpResponse);
             LOG_ERR("No valid file uploaded.");
         }
 
-        LOG_INF("File uploaded: " << fileName << ", Size: " << fileContent.size() << " bytes");
+        LOG_INF("File uploaded: " << fileName << " from [" << uploadedFilePath << ']');
 
-        std::streamsize size = fileContent.size();
-
-        std::ofstream outfile;
         // TODO: hardcoded save to shared directory, add support for user directory
         // when adminIntegratorSettings allow it
         const std::string testSharedDir = "test/data/presets/shared";
         Poco::File(testSharedDir).createDirectories();
         LOG_DBG("Saving uploaded file[" << fileName << "] to directory[" << testSharedDir << ']');
 
-        outfile.open(testSharedDir + '/' + fileName, std::ofstream::binary);
-        outfile.write(fileContent.data(), size);
-        outfile.close();
+        FileUtil::copyFileTo(uploadedFilePath, testSharedDir + '/' + fileName);
 
         std::string timestamp = Util::getIso8601FracformatTime(std::chrono::system_clock::now());
         std::string body = R"({"LastModifiedTime": ")" + timestamp + "\" }";
