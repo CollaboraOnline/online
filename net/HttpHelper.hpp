@@ -16,8 +16,9 @@
 
 #pragma once
 
+#include <common/Log.hpp>
 #include <common/Uri.hpp>
-#include <HttpRequest.hpp>
+#include <net/HttpRequest.hpp>
 
 #include <memory>
 #include <string>
@@ -66,7 +67,8 @@ void sendFile(const std::shared_ptr<StreamSocket>& socket, const std::string& pa
 /// The idea is to only warn in release builds, but to help developers in debug builds.
 /// Returns false only in debug build.
 inline bool verifyWOPISrc(const std::string& uri, const std::string& wopiSrc,
-                          [[maybe_unused]] const std::shared_ptr<StreamSocket>& socket = {})
+                          [[maybe_unused]] const std::shared_ptr<StreamSocket>& socket = {},
+                          LOG_CAPTURE_CALLER_DECLARATION)
 {
     // getQueryParameters(), which is used to extract wopiSrc, decodes the values.
     // Compare with the URI. WopiSrc is complex enough to require encoding.
