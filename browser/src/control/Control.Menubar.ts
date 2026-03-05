@@ -1951,7 +1951,7 @@ class Menubar extends window.L.Control {
 					} else {
 						$(aItem).removeClass(constChecked);
 					}
-					if (this.options.math.includes(unoCommand) && app.map.context.context !== 'Math') {
+					if (this.options.math.includes(unoCommand) && app.map.context && app.map.context.context !== 'Math') {
 						$(aItem).addClass('disabled');
 					}
 				} else if (type === 'action') { // enable all except fullscreen on windows
@@ -2290,7 +2290,10 @@ class Menubar extends window.L.Control {
 				};
 				app.map.sendUnoCommand('.uno:InsertSignatureLine', args);
 				const finishMessage = _('The signature line can now be moved or resized as needed.');
-				const finishFunc = () => app.map.eSignature.insert();
+				const finishFunc = () => {
+					Util.ensureValue(app.map.eSignature);
+					app.map.eSignature.insert();
+				};
 				app.map.uiManager.showSnackbar(finishMessage, _('Finish electronic signing'), finishFunc, -1);
 			} else {
 				app.map.sendUnoCommand('.uno:InsertSignatureLine');

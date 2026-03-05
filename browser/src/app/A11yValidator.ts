@@ -348,7 +348,9 @@ class A11yValidator {
 			return;
 		}
 
-		const errorCount = this.validateContainer(currentSidebar.container);
+		const container = currentSidebar.getContainer();
+		Util.ensureValue(container);
+		const errorCount = this.validateContainer(container);
 
 		if (errorCount === 0) {
 			console.error('A11yValidator: sidebar passed all checks');

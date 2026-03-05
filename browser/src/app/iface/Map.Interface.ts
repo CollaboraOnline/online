@@ -16,6 +16,11 @@ interface CRSInterface {
 	scale(zoom: number): number;
 }
 
+interface LatLngLike {
+	lat: number;
+	lng: number;
+}
+
 interface MapInterface extends Evented {
 	_docLayer: DocLayerInterface;
 	uiManager: UIManager;
@@ -31,11 +36,11 @@ interface MapInterface extends Evented {
 	): void;
 
 	stateChangeHandler: {
-		getItemValue(unoCmd: string): string;
+		getItemValue(unoCmd: string): any;
 		setItemValue(unoCmd: string, value: any): void;
 	};
 
-	sendUnoCommand(unoCmd: string): void;
+	sendUnoCommand(unoCmd: string, json?: any, force?: boolean): void;
 
 	getDocType(): 'text' | 'presentation' | 'spreadsheet' | 'drawing';
 	isText(): boolean;
@@ -43,7 +48,7 @@ interface MapInterface extends Evented {
 
 	getDocSize(): cool.Point;
 	getSize(): cool.Point;
-	getCenter(): { lat: number; lng: number };
+	getCenter(): LatLngLike;
 	_getCurrentFontName(): string;
 
 	_docLoadedOnce: boolean;
@@ -77,6 +82,9 @@ interface MapInterface extends Evented {
 		BaseFileName: string;
 		HideExportOption: boolean;
 		UserCanWrite: boolean;
+		HideChangeTrackingControls: boolean;
+		EnableRemoteLinkPicker: boolean;
+		HideSaveOption: boolean;
 	};
 
 	loadDocument(socket?: SockInterface): void;
@@ -104,7 +112,7 @@ interface MapInterface extends Evented {
 	isLockedUser(): boolean;
 	isRestrictedUser(): boolean;
 
-	focus(): void;
+	focus(acceptInput?: boolean): void;
 	editorHasFocus(): boolean;
 
 	_fireInitComplete(condition: string): void;
@@ -124,4 +132,96 @@ interface MapInterface extends Evented {
 	userList: UserList;
 	sidebar: Sidebar;
 	getViewColor(viewId: number): number;
+
+	// TODO fix types:
+	jsdialog: any;
+	zotero: any;
+
+	_cacheSVG: string[];
+	calcInputBarHasFocus(): boolean;
+	lockAccessibilityOn(): void;
+	getPixelBounds(center?: LatLngLike, zoom?: number): cool.Bounds;
+	getPixelBoundsCore(center?: LatLngLike, zoom?: number): cool.Bounds;
+	_partsDirection: number;
+	getZoomScale(toZoom: number, fomZoom?: number): number;
+	_docLoaded: boolean;
+	contextToolbar?: ContextToolbar;
+	getSplitPanesContext(): cool.SplitPanesContext | undefined;
+	getScaleZoom(scale: number, fromZoom?: number): number;
+	scrollingIsHandled: boolean;
+	showComments(on?: boolean): void;
+	showResolvedComments(on?: boolean): void;
+	navigator: NavigatorPanel;
+	setPart(
+		part: number | string,
+		external?: boolean,
+		calledFromSetPartHandler?: boolean,
+	): void;
+	mouseEventToLatLng(e: any): LatLngLike;
+	_limitZoom(zoom: number): number;
+	setView(
+		center: [number, number],
+		zoom?: number,
+		reset?: boolean,
+	): MapInterface;
+	isViewReadOnly(viewid: number): boolean;
+	scrollHandler: typeof window.L.Map.Scroll;
+	context?: { appId: string; context: string };
+	eSignature?: cool.ESignature;
+
+	// TODO: Fix type.
+	formulabar: any;
+	backstageView: any;
+	topToolbar: any;
+	statusBar: any;
+
+	mobileSearchBar: MobileSearchBar;
+	_disableDefaultAction: Record<string, boolean>;
+	save(
+		dontTerminateEdit: boolean,
+		dontSaveIfUnmodified: boolean,
+		extendedData?: string,
+	): void;
+	_everModified: boolean;
+	print(options?: string): void;
+	openRevisionHistory(): void;
+	openShare(): void;
+	showHelp(id: string): void;
+	openSaveAs(format?: string): void;
+	downloadAs(
+		name: string,
+		format?: string,
+		options?: string | null,
+		id?: string,
+	): void;
+	insertComment(): void;
+	zoomIn(delta: number, options?: any, animate?: boolean): MapInterface;
+	zoomOut(delta: number, options?: any, animate?: boolean): MapInterface;
+	cancelSearch(): void;
+	goToPage(page: string): void;
+	serverAuditDialog?: ServerAuditDialog;
+	_lockAccessibilityOn: boolean;
+	setAccessibilityState(enable: boolean): void;
+
+	// TODO: L.Map.Keyboard
+	keyboard: any;
+
+	onFormulaBarBlur(): void;
+	onFormulaBarFocus(): void;
+	formulabarBlur(): void;
+	formulabarFocus(): void;
+	formulabarSetDirty(): void;
+	_functionWizardData: WidgetJSON;
+
+	insertPage: ((nPos?: number) => void) & { scrollToEnd: boolean };
+	deletePage(nPos?: number): void;
+	duplicatePage(pos?: number): void;
+	slideShowPresenter?: SlideShowPresenter;
+	hideSlide(): void;
+	showSlide(): void;
+	sidebarFromNotebookbar: SidebarFromNotebookbarPanel;
+	mobileTopBar?: MobileTopBar;
+
+	// TODO: window.L.control.lokDialog
+	dialog: any;
 }
