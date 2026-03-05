@@ -3185,7 +3185,7 @@ void ClientSession::abortConversion(const std::shared_ptr<DocumentBroker>& docBr
         const std::string docType = getDocTypeFromExtension(ext);
 
         const std::string iconPath = COOLWSD::FileServerRoot +
-            "/browser/images/password-protected-" + docType + ".png";
+            "/browser/dist/images/password-protected-" + docType + ".png";
 
         std::vector<char> iconData;
         if (FileUtil::readFile(iconPath, iconData) > 0)
